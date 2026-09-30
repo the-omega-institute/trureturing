@@ -21,18 +21,18 @@ internal sealed partial class ProductionCliEnvironment
         try
         {
             string? commonRound = null, commonPlan = null, commonChanges = null;
-            while (!delta && arguments.Count >= 2 && arguments[^2].StartsWith("--common-", StringComparison.Ordinal))
+            while (arguments.Count >= 2 && arguments[^2].StartsWith("--common-", StringComparison.Ordinal))
             {
                 switch (arguments[^2])
                 {
                     case "--common-build-round" when commonRound is null: commonRound = arguments[^1]; break;
-                    case "--common-plan" when commonPlan is null: commonPlan = arguments[^1]; break;
-                    case "--common-changes" when commonChanges is null: commonChanges = arguments[^1]; break;
+                    case "--common-plan" when !delta && commonPlan is null: commonPlan = arguments[^1]; break;
+                    case "--common-changes" when !delta && commonChanges is null: commonChanges = arguments[^1]; break;
                     default: throw new InvalidDataException("invalid common current option");
                 }
                 arguments = arguments.Take(arguments.Count - 2).ToArray();
             }
-            var resourcePlan = ResourceExecutionPlan.Load(repositoryRoot, commonPlan, commonChanges);
+            var resourcePlan = delta ? null : ResourceExecutionPlan.Load(repositoryRoot, commonPlan, commonChanges);
             if (resourcePlan is not null && commonRound is null) throw new InvalidDataException("selected current requires a common build round");
             var options = ParseCheckArguments(arguments);
             var reportRequired = delta || commonRound is null || resourcePlan is null || resourcePlan.CurrentSteps.Contains("lean-report");
@@ -51,11 +51,11 @@ internal sealed partial class ProductionCliEnvironment
             planeObservations = observedPlane;
             var current = timing.Measure("snapshot-load", () => Decode(raw));
             var validation = new CommonExecutionEvidence.ValidationScope(current);
-            var manifest = validation.CheckManifest();
+            var manifest = delta ? [] : validation.CheckManifest();
             var selectedIds = resourcePlan?.CheckUnits.Except(CommonExecutionEvidence.EngineeringCheckIds).Order(StringComparer.Ordinal).ToArray();
             if (!reportRequired && manifest.Any(check => selectedIds!.Contains(check.Id) && check.ReportInputs.Length != 0))
                 throw new InvalidDataException("selected current checks require Lean report evidence");
-            var report = !reportRequired ? null : timing.Measure("lean-report-load", () => !delta && commonRound is null
+            var report = !reportRequired ? null : timing.Measure("lean-report-load", () => commonRound is null
                 ? RawLeanReportArtifact.ReadFile(options.CandidateLeanReport!, current, validateMaterials: true)
                 : validation.Report(options.CandidateLeanReport!));
             var policy = timing.Measure("policy-load", () => RepositoryPolicyLoader.Load(current) switch
@@ -76,11 +76,23 @@ internal sealed partial class ProductionCliEnvironment
                     .Where(project => project.Ci).Select(project => project.Path).Order(StringComparer.Ordinal).ToArray();
                 removedProjectOutput = string.Concat(baseProjects.Where(path => !current.TryGetFile(path, out _))
                     .Select(path => $"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(path)}\n"));
-                var common = timing.Measure("common-evidence", () => CommonExecutionEvidence.ValidateCommon(repositoryRoot, validation, baseProjects, prepared.Revision));
-                acceptedBaseTests = common.Tests?.Projects
-                    .Where(row => baseProjects.Contains(row.Project, StringComparer.Ordinal)).ToArray() ?? [];
-                if (!string.Equals(Path.GetFullPath(options.CandidateLeanReport!), Path.Combine(repositoryRoot, CommonExecutionEvidence.ReportPath), StringComparison.Ordinal))
-                    throw new InvalidDataException("check-delta requires this round's canonical report");
+                var currentBaseProjects = EngineeringProjectRegistry.Read(current).Projects.Where(project => project.Ci)
+                    .Select(project => project.Path).ToHashSet(StringComparer.Ordinal);
+                foreach (var project in baseProjects)
+                    if (!currentBaseProjects.Contains(project))
+                        throw new InvalidDataException($"base test project is missing from current CI registration: {project}");
+                CandidateCommonResults? commonResults = null;
+                // The transitional stage caller explicitly requests its original evidence contract.
+                if (commonRound is not null)
+                {
+                    var common = timing.Measure("common-evidence", () => CommonExecutionEvidence.ValidateCommon(repositoryRoot, validation, baseProjects, prepared.Revision));
+                    if (common.Current.Round != commonRound) throw new InvalidDataException("common delta round mismatch");
+                    acceptedBaseTests = common.Tests?.Projects
+                        .Where(row => baseProjects.Contains(row.Project, StringComparer.Ordinal)).ToArray() ?? [];
+                    if (!string.Equals(Path.GetFullPath(options.CandidateLeanReport!), Path.Combine(repositoryRoot, CommonExecutionEvidence.ReportPath), StringComparison.Ordinal))
+                        throw new InvalidDataException("check-delta requires this round's canonical report");
+                    commonResults = new CandidateCommonResults(common.Current.Candidate, common.Current.Round);
+                }
                 if (planeFailure is not null)
                     return new(2, RenderPlaneObservations(planeObservations), planeFailure.Message + "\n");
                 var topology = timing.Measure("test-topology", () => RepositoryRules.EvaluateSnapshots(baseline, current), static outcome => !outcome.IsAccepted);
@@ -92,7 +104,7 @@ internal sealed partial class ProductionCliEnvironment
                     BootstrapOutcome.InfrastructureFailure failure => throw new InvalidDataException(failure.Message),
                 };
                 result = timing.Measure("rule-passes", () => AdmissionPipeline.CheckDelta(DeltaRuleContext.Create(current, baseline, policy, lean!, prepared.Changes, meta, null,
-                    commonResults: new CandidateCommonResults(common.Current.Candidate, common.Current.Round)), MeasureRule), Blocked);
+                    commonResults: commonResults), MeasureRule), Blocked);
             }
             else
             {

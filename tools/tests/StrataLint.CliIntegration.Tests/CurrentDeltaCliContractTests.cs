@@ -307,6 +307,13 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
     }
 
     [Theory]
+    [InlineData("standalone-valid", 0, "")]
+    [InlineData("standalone-unowned-project", 1, "TEST_PROJECT_TOPOLOGY")]
+    [InlineData("standalone-disabled-base-project", 2, "base test project")]
+    [InlineData("standalone-missing-base-project", 2, "base test project")]
+    [InlineData("standalone-invalid-report", 2, "Raw Lean report is not valid JSON")]
+    [InlineData("standalone-missing-report-archive", 2, "materials")]
+    [InlineData("standalone-stale-report", 2, "source hash")]
     [InlineData("valid", 0, "")]
     [InlineData("reused", 0, "")]
     [InlineData("template-changed-undeclared", 1, "DTR-Undeclared")]
@@ -371,6 +378,8 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
     [InlineData("staged-candidate-mismatch", 2, "candidate identity")]
     public void DeltaConsumesValidatedCommonResultsAndEnforcesOnlyCrossTreePredicates(string scenario, int expectedExit, string diagnostic)
     {
+        var standalone = scenario.StartsWith("standalone-", StringComparison.Ordinal);
+        if (standalone) scenario = scenario["standalone-".Length..];
         var staged = scenario.StartsWith("staged-", StringComparison.Ordinal);
         var afterValid = scenario.StartsWith("after-valid-", StringComparison.Ordinal);
         var mixedEvidenceFailure = scenario is "mixed-missing-report" or "mixed-invalid-report" or "mixed-stale-report"
@@ -581,7 +590,7 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             }
         }
         Write(EngineeringRegistrationFixture.Path, registration.ToJsonString());
-        var report = Path.Combine(root, CommonExecutionEvidence.ReportPath);
+        var report = Path.Combine(root, standalone ? ".lake/custom.json" : CommonExecutionEvidence.ReportPath);
         var candidateSnapshot = CommonExecutionEvidence.Snapshot(root);
         RawLeanReportArtifact.WriteFile(report, candidateSnapshot, template
             ? TemplateReport(fixture.Reports, scenario) : LeanAxiomReport.Create(fixture.Reports));
@@ -596,6 +605,26 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             File.WriteAllText(report + suffix, "synthetic producer sidecar\n");
         var environment = new ProductionCliEnvironment(root, new GitRepositoryGateway(root), new FakeLeanReportSource(null),
             scribeEmissionVerifier: null, new SecondPerReadTimeProvider());
+        if (standalone)
+        {
+            File.WriteAllText(Path.Combine(root, "Meta/ci-checks.json"), "invalid retired check manifest");
+            if (scenario == "invalid-report") File.WriteAllText(report, "not JSON");
+            if (scenario == "missing-report-archive") File.Delete(report + ".materials.zip");
+            if (scenario == "stale-report") File.AppendAllText(Path.Combine(root, RuleFixture.RingPath), "-- changed source\n");
+            var result = environment.CheckDelta(["--protected-base", basis, "--candidate-lean-report", report]);
+            Assert.True(result.ExitCode == expectedExit, $"expected {expectedExit}, actual {result.ExitCode}: {result.Output}{result.Error}");
+            Assert.Contains(diagnostic, result.Output + result.Error, StringComparison.Ordinal);
+            Assert.False(Directory.Exists(Path.Combine(root, "build/ci")));
+            if (scenario == "missing-base-project")
+                Assert.Contains("ENGINEERING_TEST_PROJECT_REMOVED", result.Output, StringComparison.Ordinal);
+            if (expectedExit == 0)
+            {
+                using var verdict = JsonDocument.Parse(result.Output);
+                Assert.Contains(verdict.RootElement.GetProperty("executed").EnumerateArray(), value => value.GetString() == "SL-003");
+                Assert.Empty(verdict.RootElement.GetProperty("accepted_base_tests").EnumerateArray());
+            }
+            return;
+        }
         var currentConsole = new BufferedConsole();
         var currentExit = CliApplication.Run(["check-current", "--candidate-lean-report", report], environment, currentConsole);
         if (scenario is "mixed-missing-filemap" or "mixed-malformed-filemap" or "mixed-ambiguous-filemap"
@@ -680,7 +709,7 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
         }
         if (afterValid || mixedEvidenceFailure || scenario == "mixed-missing-base")
         {
-            var (accepted, stages) = CaptureStageTiming(() => environment.CheckDelta(["--protected-base", basis, "--candidate-lean-report", report]));
+            var (accepted, stages) = CaptureStageTiming(() => environment.CheckDelta(["--protected-base", basis, "--candidate-lean-report", report, "--common-build-round", build.Round]));
             Assert.True(accepted.ExitCode == (afterValid ? 0 : 3), accepted.Output + accepted.Error);
             foreach (var stage in new[] { "repository-prepare", "common-evidence", "test-topology", "rule-passes" })
                 Assert.Contains(stage, stages);
@@ -747,7 +776,7 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             }
             else exit = CliApplication.Run(scenario == "mixed-missing-base"
                 ? ["check-delta", "--candidate-lean-report", report]
-                : ["check-delta", "--protected-base", basis, "--candidate-lean-report", report], environment, console);
+                : ["check-delta", "--protected-base", basis, "--candidate-lean-report", report, "--common-build-round", build.Round], environment, console);
         }
         finally
         {
