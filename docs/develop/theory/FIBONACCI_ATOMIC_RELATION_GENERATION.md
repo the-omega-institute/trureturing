@@ -26672,3 +26672,179 @@ $$
 而不能以候选原子的大小、互素性或低于大幂门槛代替命中关系。
 
 ## 追加锚（本行以下为增补区）
+
+## 219. 保留尺度核的大素数幂过滤与临界预算
+
+沿用 §216–218 的实际整数族、$s=y\ell$、$R=y/\ell^2$、$\delta=y/\ell^3$、
+$t=e^\gamma\ell$，以及固定 $a>b_2=\pi^2/6$ 时的
+$H=e^{aR}$、$D=X/H$。充分大时每个 $d\in\mathcal H_D$ 只命中一个
+实际整数 $n(d)=dh$。令
+
+$$
+\Lambda=\frac{XU(s)}{t^s},\qquad C_s=4e^2s^2,
+\qquad B(n)=\max_{p^v\parallel n}p^v\ (n>1),\quad B(1)=1.
+$$
+
+§216 给概率尾 $\mu_s\{d:B(d)>u\}\le C_s/u$，适用于 $u\ge2$。
+这里保留 §217 的实际尺度核，定义
+
+$$
+\mathcal B_D^{\mathrm{pow}}(B)
+=\sum_{\substack{d\in\mathcal H_D\\B(n(d))>B}}
+\frac dX\mu_s(d).
+\tag{219.1}
+$$
+
+### 219.1 同一整数的尺度核抵消互补因子损失
+
+**定理 219.1（核加权的大幂上界）。** 设 $s\ge4$、$B\ge C_s$。则
+
+$$
+\boxed{
+\mathcal B_D^{\mathrm{pow}}(B)
+\le\frac{C_s}{B}\left(1+\log\frac{B}{C_s}\right).
+}
+\tag{219.2}
+$$
+
+证明。对左侧某一项，取 $p^v\parallel n(d)$ 使 $p^v=B(n(d))>B$。
+同一分解 $n(d)=dh$ 给
+
+$$
+p^v=p^{v_p(d)}p^{v_p(h)}\le B(d)h.
+$$
+
+这个式子在 $p\nmid d$ 时也成立，因为 $p^{v_p(d)}=1\le B(d)$。
+因此 $h>B/B(d)$，而 $n(d)\le X$，故
+
+$$
+\frac dX=\frac{n(d)}{hX}\le\frac1h<\frac{B(d)}B,
+\qquad \frac dX\le1.
+$$
+
+各个 $d$ 没有重复计数；扩大到全域概率空间可得
+
+$$
+\mathcal B_D^{\mathrm{pow}}(B)
+\le\mathbb E_{\mu_s}\min\left\{1,\frac{B(d)}B\right\}
+=\frac1B\int_0^B\mu_s\{d:B(d)>u\}\,du.
+\tag{219.3}
+$$
+
+最后的等式是非负函数的层集积分，由 Tonelli 定理得到。
+$C_s>2$，所以在 $[0,C_s]$ 上用概率上界 $1$，在 $[C_s,B]$ 上用
+§216 的上界 $C_s/u$，得到
+
+$$
+\frac1B\int_0^B\mu_s\{B(d)>u\}\,du
+\le\frac{C_s}{B}+\frac{C_s}{B}\log\frac B{C_s}.
+$$
+
+这证明式（219.2）。此处无需 $B/H\ge2$，也没有粗互补因子的假设。$\square$
+
+式（216.20）估计的是不带核的命中质量，其 $H$ 因子来自仅知道 $h<H$。
+式（219.2）估计不同的、直接进入真实矩的量：同一 $h$ 越大，
+对应 $d/X$ 越小。它保留这份逐项关联，而未将两边分别取极值。
+
+### 219.2 按真实矩的临界预算选择阈值
+
+**推论 219.2（四分之一真实矩预算的截断）。** 在 $\Lambda\ge1$ 时，取
+
+$$
+\boxed{
+B_\dagger=8C_s\Lambda\bigl(1+\log(8\Lambda)\bigr).
+}
+\tag{219.4}
+$$
+
+则
+
+$$
+\boxed{\Lambda\mathcal B_D^{\mathrm{pow}}(B_\dagger)\le\frac14.}
+\tag{219.5}
+$$
+
+在当前渐近尺度上还有
+
+$$
+\log B_\dagger
+=b_2R-b_2\delta+O(y/\ell^4).
+\tag{219.6}
+$$
+
+证明。置 $L=1+\log(8\Lambda)>1$，则 $B_\dagger/C_s=8\Lambda L$，
+并且 $1+\log(B_\dagger/C_s)=L+\log L\le2L$。
+代入式（219.2），得到
+
+$$
+\Lambda\mathcal B_D^{\mathrm{pow}}(B_\dagger)
+\le\frac{L+\log L}{8L}\le\frac14.
+$$
+
+§217 的展开给
+
+$$
+\log\Lambda=\log(X/A)+b_2R-b_2\delta+O(y/\ell^4),
+$$
+
+所以 $\Lambda\to\infty$。另一方面，
+$\log C_s=O(\ell)$、$\log L=O(\ell)$，而
+$\ell=o(y/\ell^4)$、$\log(X/A)=O(1)$。
+对式（219.4）取对数即得式（219.6）。$\square$
+
+与式（216.24）的不带核门槛 $\log B_*=(2a+o(1))R$ 相比，
+式（219.6）将真实矩中的剩余完整素数幂门槛降至主项 $b_2R$。
+两个门槛使用不同预算：前者是 $\mu_s(\mathcal H_D)$ 的目标预算，
+后者是 $\mathcal Q_r$ 的实际增量预算，不能将式（219.5）改称
+不带核质量的上界。
+
+令剩余核为
+
+$$
+\mathcal B_D^{\mathrm{cap}}
+=\sum_{\substack{d\in\mathcal H_D\\B(n(d))\le B_\dagger}}
+\frac dX\mu_s(d).
+$$
+
+§217 的小除数分解与式（219.5）给充分大的实际参数下
+
+$$
+\mathcal Q_r
+\le\Lambda\frac TX+\Lambda\frac DX+\frac14
++\Lambda\mathcal B_D^{\mathrm{cap}},
+\qquad
+\Lambda T/X+\Lambda D/X=o(1).
+\tag{219.7}
+$$
+
+所以 $\limsup_{r\to\infty}\Lambda\mathcal B_D^{\mathrm{cap}}<3/4$
+是该实际 FIB 族最终满足指定矩证书的充分条件。
+当前没有建立这个剩余核上界；仅有每个完整素数幂低于 $B_\dagger$ 并不能推出它。
+
+### 219.3 近极大原子仍与新的截断相容
+
+**命题 219.3（条件命中的近极大原子未被过滤）。** 取 §218 的
+$z=y-\delta$ 及有限整数 $n_z$。若 $n_z$ 实际命中某个
+$N_g=n_zh$，则充分大时
+
+$$
+B(N_g)\le\exp(\delta+o(\delta))<B_\dagger.
+\tag{219.8}
+$$
+
+证明。§218 给 $\log n_z=y-\delta+o(\delta)$，而
+$\log X=y+O(1)$。所以实际互补因子满足
+
+$$
+h\le X/n_z=\exp(\delta+o(\delta)).
+$$
+
+该构造中 $B(n_z)\le s^{3/2}$，且每个完整素数幂在乘积中至多乘以 $h$，
+故 $B(N_g)\le s^{3/2}h\le\exp(\delta+o(\delta))$。
+再由 $\delta=o(R)$ 和式（219.6），得到严格的不等式。$\square$
+
+这没有证明该近极大原子实际命中，也没有证明它不命中。
+它说明更强的大幂截断仍须与实际同余及价格亏损联合使用；
+§218 已给出的单个除数增量趋零结论，不替代剩余全部除数的加权求和。
+
+## 追加锚（本行以下为增补区）
