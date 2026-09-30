@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:303c0e686138e3b06193f7d7f5c1042fb1af67ecf23db199887b79761644e953
   normalized_sha256: sha256:303c0e686138e3b06193f7d7f5c1042fb1af67ecf23db199887b79761644e953
 cas_ref: sha256:303c0e686138e3b06193f7d7f5c1042fb1af67ecf23db199887b79761644e953
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/FibonacciRankEulerTail.result
+    target_statement_id: sha256:17af9071c6ced32ad8a2d19cf02f5f2449fdf91993c69fd77021ba9f52b353a9
 receipts:
   unresolved_subitems: []
