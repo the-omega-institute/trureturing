@@ -41,7 +41,11 @@ internal sealed class KauffmanMukherjeeVojtechovskyRCliqueRefutationsDocument
                 "Printed page 19, Proposition 5.15, states: \"Let Q be a rack and let C "
                 + "be a maximal R-clique of Q. Then C is a subrack of Q.\" Its proof uses "
                 + "\"Since C is maximal, b ∈ C.\" Thus maximal means that every R-clique "
-                + "D containing C equals C; it does not mean maximum cardinality."),
+                + "D containing C equals C; it does not mean maximum cardinality. "
+                + "The paper's Example 5.11 on printed page 18 already answers Problem 5.23 "
+                + "negatively: ConnectedQuandle(10,1) has [R_0,R_1] = [R_1,R_3] = 1 but "
+                + "[R_0,R_3] ≠ 1, and maximal R-cliques partition a rack exactly when "
+                + "R-commutation is transitive. No settlement of Problem 5.23 is claimed here."),
             LiteratureDefinition("kmv-connected", "Connected racks", "Connected", ConnectedFormula(),
                 "Printed page 17 states: \"Recall that a rack Q is connected if the "
                 + "permutation group Mltr(Q) acts transitively on Q.\" Connected is encoded "
@@ -93,7 +97,9 @@ internal sealed class KauffmanMukherjeeVojtechovskyRCliqueRefutationsDocument
         string problemSlug) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create(problemSlug),
+                ResolutionKind.Refuted));
 
     private static Formula Q() => F.Id("Q");
     private static Formula Mul() => F.Id("mul");

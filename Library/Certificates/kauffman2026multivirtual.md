@@ -5,7 +5,7 @@ year: 2026
 title: Algebraic invariants of multi-virtual links
 doi: 10.1016/j.jalgebra.2026.03.018
 url: https://arxiv.org/abs/2504.09368v1
-claim: Problems 5.22–5.24 ask about maximal R-cliques in finite connected racks.
+claim: Problems 5.22 and 5.24 ask about maximal R-cliques in finite connected racks.
 strata_touched:
   - D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations
 license: citation-only
@@ -41,17 +41,17 @@ Printed page 21 concludes section 5.5 with the following questions:
 
 > Problem 5.24. Does there exist a finite connected rack Q and a maximal R-clique C of Q such that |C| does not divide |Q|?
 
-The formal refutations use finite conjugation racks: 105 fixed-point-free
-involutions in S₈ with maximal R-cliques of sizes 7 and 9; ten
-transpositions in S₅ with two distinct intersecting maximal R-cliques;
-and 70 three-cycles in S₇ with a maximal R-clique of size 4. The last
-refutes universal divisibility and answers the existence question Yes.
-Problem 5.25 is outside these results.
+The paper's Example 5.11 on printed page 18 already answers Problem 5.23 negatively: ConnectedQuandle(10,1) has [R_0,R_1] = [R_1,R_3] = 1 but [R_0,R_3] ≠ 1, and maximal R-cliques partition a rack exactly when R-commutation is transitive. This delivery does not claim a settlement of Problem 5.23.
+
+The formal refutations concern Problems 5.22 and 5.24 and use finite
+conjugation racks: 105 fixed-point-free involutions in S₈ with maximal
+R-cliques of sizes 7 and 9, and 70 three-cycles in S₇ with a maximal
+R-clique of size 4. The latter refutes universal divisibility and answers
+Problem 5.24 Yes. Problem 5.25 is outside these results.
 
 A literature check reported on 2026-09-30 inspected the TeX sources of
 five Semantic Scholar citing works (arXiv:2606.22501, 2606.01035,
-2511.08045, 2506.16536, 2506.04437); none contained “clique” or the three
-problem numbers. MathDB queries “maximal R-clique”, “R-clique rack”, and
+2511.08045, 2506.16536, 2506.04437); none contained “clique” or the problem numbers 5.22 and 5.24. MathDB queries “maximal R-clique”, “R-clique rack”, and
 “multi-virtual links” returned no entry for these problems. These are
 bounded search results, not a claim that all literature was searched.
 

@@ -50,7 +50,7 @@ $$\forall Q \in Type,\; \forall mul \in Q \to \left(Q \to Q\right),\; \forall C 
 
 *Commentary.*
 
-Printed page 19, Proposition 5.15, states: "Let Q be a rack and let C be a maximal R-clique of Q. Then C is a subrack of Q." Its proof uses "Since C is maximal, b ∈ C." Thus maximal means that every R-clique D containing C equals C; it does not mean maximum cardinality.
+Printed page 19, Proposition 5.15, states: "Let Q be a rack and let C be a maximal R-clique of Q. Then C is a subrack of Q." Its proof uses "Since C is maximal, b ∈ C." Thus maximal means that every R-clique D containing C equals C; it does not mean maximum cardinality. The paper's Example 5.11 on printed page 18 already answers Problem 5.23 negatively: ConnectedQuandle(10,1) has [R_0,R_1] = [R_1,R_3] = 1 but [R_0,R_3] ≠ 1, and maximal R-cliques partition a rack exactly when R-commutation is transitive. No settlement of Problem 5.23 is claimed here.
 
 **Definition 1.5 (Connected racks).**
 
@@ -94,6 +94,10 @@ $$\neg claim22$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result22` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kauffman-mukherjee-vojtechovsky-2025-maximal-r-clique-equal-size-refutation` (refuted) by `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result22`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kauffman-mukherjee-vojtechovsky-2025-maximal-r-clique-equal-size-refutation","declaration_gid":"D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result22","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
@@ -105,6 +109,10 @@ Use the conjugation rack of the 105 fixed-point-free involutions in S₈, x ∗ 
 $$\neg claim24$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result24` (`✓ std3`). ∎
+
+*Resolves.* `Problems/kauffman-mukherjee-vojtechovsky-2025-maximal-r-clique-divisibility-refutation` (refuted) by `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result24`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kauffman-mukherjee-vojtechovsky-2025-maximal-r-clique-divisibility-refutation","declaration_gid":"D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result24","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
