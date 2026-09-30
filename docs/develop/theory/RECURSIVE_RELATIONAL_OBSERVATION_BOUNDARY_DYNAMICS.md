@@ -20860,3 +20860,202 @@ Udi Boker 与 Karoliina Lehtinen，[*Good for Games Automata: From Nondeterminis
 产地：本节为 codex-cli 的 THEORY-ONLY 实施，复用已完成的候选构造代码并在本文公开自足生成器及独立原坐标验证器；恢复标识为 `6abca92e2b72653bc33a2dd2`。正文只承载数学结果、程序和范围，不把既往评审意见当作证明。
 
 ## 101.99 追加锚
+
+## 102. 原语完成后报告批奇偶仍不能保证取得初始商
+
+本节只加强97.1的观察接口：每个原语完成时，报告其前隐藏批的奇偶。下面用两个预先固定的正整数来源及一个共同因果日程规则，证明完整初始商仍不能保证有限取得。第101节隐藏相位的全一证明不是本节前提；这里的共同响应可以是31。
+
+### 102.1 报告时序与固定来源
+
+仍取
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad
+E=M^{15}=\begin{pmatrix}377&610\\610&987\end{pmatrix},\quad
+\alpha=(1,0),\quad q=(2,3),\quad H=341=11\cdot31.
+$$
+
+控制器先选定一个原语 $A\in\{R,G,T\}$，随后在该原语前执行有限隐藏批 $E^k$，再完成已选定的原语：$R(s)=Ms$、$G(s)=s+\alpha$，$T$ 付费返回精确的 $\gcd(qs,341)$ 且不扰动来源。只有完成后才报告 $\epsilon=k\bmod2$，控制器取得本次全部响应后再选择下一原语，不能因本次奇偶改选已经选定的动作。首原语为 $R/G$ 时规定 $k=0$；首原语为 $T$ 时允许任意有限 $k\ge0$。原语内部没有隐藏事件，每个请求均完成；不另加公平日程、复位、额外查询、来源相关时钟或完整坐标观察。
+
+每次执行从一个固定未知实际来源连续推进，初始可见资料相同且与来源无关；确定性控制器允许任意内部记忆及本地计算。模剩余只用于证明，不能替换当前实际整数来源。按97.1置
+
+$$
+c=a+81b,\qquad w=a+261b\pmod{341}.
+$$
+
+预先选定实际正整数来源
+
+$$
+s_A=(186,124),\qquad s_B=(310,217),\qquad
+(c,w)(s_A)=(0,155),\quad(c,w)(s_B)=(155,0).
+$$
+
+两原向量模31均为 $(0,0)$；模11的商坐标分别为 $(0,1)$ 与 $(1,0)$，初始目标 $c_0$ 分别为0与155。以下在 $\mathbb F_{11}$ 中把两当前坐标写成 $(c,w)$、$(\bar c,\bar w)$，避免与固定批指数15混用。由97.4约化得
+
+$$
+E(c,w)=(c,-w),\quad R(c,w)=(4c,8w),\quad
+G(c,w)=(c+1,w+1),\quad qs=6c+7w.
+$$
+
+**引理 102.2（共同符号保持双源相容）。** 令
+
+$$
+B=c\bar w+\bar c w,\qquad
+(c-\bar c)(w-\bar w)B\ne0.
+$$
+
+对于任一已经选定的下一原语，可只依当前这对坐标及该原语选择同一个实际 $k\in\{0,1\}$，使原语完成后仍满足此不变量；若原语为 $T$，还使两次局部标量均为模11单位。
+
+证明。记共同符号 $\sigma=(-1)^k$。同时施加 $E$ 时，$c-\bar c$ 不变，$w-\bar w$ 与 $B$ 各变号，故保持不变量。
+
+对于 $R$ 总选 $k=0$。两坐标差分别乘单位4、8，$B$ 乘单位32，因而仍非零。
+
+对于 $G$，施加共同符号后再接枝，两后继为 $(c+1,\sigma w+1)$、$(\bar c+1,\sigma\bar w+1)$。坐标差仍非零，新交叉项为
+
+$$
+B_\sigma=\sigma(B+w+\bar w)+(c+\bar c+2).
+$$
+
+若 $B_+=B_-=0$，因2在 $\mathbb F_{11}$ 可逆，有 $c+\bar c+2=0$ 及 $B+w+\bar w=0$。代入 $\bar c=-c-2$ 得
+
+$$
+(c+1)(\bar w-w)=0.
+$$
+
+由 $w\ne\bar w$ 推出 $c=-1$，继而 $\bar c=-1$，与 $c\ne\bar c$ 矛盾。因此若 $B_+\ne0$ 就选 $k=0$，否则选 $k=1$。
+
+对于 $T$，置
+
+$$
+P_+=(6c+7w)(6\bar c+7\bar w),\qquad
+P_-=(6c-7w)(6\bar c-7\bar w).
+$$
+
+两式相减得
+
+$$
+P_+-P_-=2\cdot6\cdot7\,B\ne0.
+$$
+
+故至少一个乘积非零。若 $P_+\ne0$ 就选 $k=0$，否则选 $k=1$；对应的两个标量都非零，强于仅使整除指示相同。读取后的状态只经历共同的 $E^k$，所以不变量仍成立。证毕。
+
+**定理 102.3（后报奇偶下的固定双源取得障碍）。** 在102.1接口中，不存在确定性协议对所有实际来源及所有合法日程保证有限停止并准确输出完整初始 $c_0\in\mathbb Z/341\mathbb Z$。同一反例也排除任何满足 $f(0)\ne f(155)$ 的初始任务 $f(c_0)$。上述两个来源在协议之前固定；引理102.2给出一个对所有确定性协议通用的共同因果日程规则，使两执行的全部动作、奇偶及 gcd 历史相同。
+
+证明。初始局部对 $(0,1),(1,0)$ 的 $B=1$，两坐标差均非零。启动逐项核对：首个 $R$ 取 $k=0$ 并由引理保持不变量；首个 $G$ 取 $k=0$ 后得到 $(1,2),(2,1)$，其 $B=5\ne0$；首个 $T$ 在 $k=0$ 时两标量为7、6，故引理的优先零规则也选 $k=0$。因此同一见证甚至满足更严格的“所有首原语一律 $k=0$”，并未利用首读独有的启动自由。
+
+之后每一步，在两份实际整数来源上执行引理所选的同一个 $k\in\{0,1\}$，再执行共同的原语。每个整数后继均由这两个固定来源连续产生；$M,E$ 及接枝保持其严格正性。$E^2\equiv I\pmod{341}$ 只解释奇偶的模作用，没有在整数轨迹中取消 $E^2$、重选提升或复位。共同的 $k$ 是全局选择，不能在11与31分量上各选一个符号。
+
+由于两来源最初模31相等，且每步实际批数及原语相同，它们的当前原向量始终模31相等。在每个 $T$，引理保证两标量都不被11整除，而模31的整除状态相同。因此完整 gcd 响应相同，且属于 $\{1,31\}$。每步报告的奇偶也相同。
+
+从相同初始可见资料归纳，任意确定性控制器的整个可见历史及内部状态相同，故下一动作、停止决定及最终答案都相同。日程规则只使用当前双源状态和刚选定的动作，不读取未来协议；这给出“先固定两来源及同一个规则，再对所有协议”的量词次序。若协议停止，同一个答案不可能同时等于0与155，亦不可能同时等于分离二者的两个函数值；不发任何命令就停止也如此。若不在有限执行及本地计算后停止，则不满足有限取得要求。证毕。
+
+同一证明还覆盖原语完成后报告准确批数 $k$ 的接口，因为构造中两执行的实际 $k$ 逐次相同。它不覆盖按来源另加事件读数，也不把奇偶提前至动作选择前；这里没有改变动作选择时序。
+
+### 102.4 保留运输与真正取得的区别
+
+第94节的运输记录及95.7的条件恢复仍然成立。具体地，对一个假定初始剩余 $v$，记录当前仿射候选映射 $F(v)$；收到本次奇偶后分别更新为
+
+$$
+R:\ F\longmapsto ME^\epsilon F,\qquad
+G:\ F\longmapsto E^\epsilon F+\alpha,\qquad
+T:\ F\longmapsto E^\epsilon F
+\quad(\bmod341).
+$$
+
+从 $F(v)=v$ 出发，这恰好追踪实际端点的模运输。已观察标签恢复的是条件确定的候选更新；它没有把可区分的查询交给控制器，因为本次动作已经选定，而下次仍可能有新的批。已知两个假定端点之间的可逆映射，并不提供任一未知端点。102.3的双源始终同转录，正好显示运输记忆不能自行完成取得。
+
+Petra van den Bos 与 Frits Vaandrager，[*State Identification for Labeled Transition Systems with Inputs and Outputs*, arXiv:1907.11034v2](https://arxiv.org/html/1907.11034v2#S3.SS2)，§3.2 “Compatibility” 说明对抗系统可使相容状态无法区分，并以共同后继关系定义相容性。这里已核对该版本原文小节，只将其作为成熟的相容性背景，不移用编号定理或其模型的识别算法；本实例的共同响应与因果规则由102.2—102.3直接证明。
+
+### 102.5 有限算术复核
+
+以下 Python 标准库代码枚举全部 $11^4=14,641$ 个有序四元组，其中11,100个满足不变量；逐一核对选定的 $R/G/T$ 符号及局部后继，并从原始整数 $M,q$ 核对坐标、来源提升与启动。预算为14,641个枚举项及33,300个不变量内的成对原语检查，不枚举模341的全对局或信念幂集。程序是本有限实例的复核；任意长度执行及任意记忆的结论依赖上面的归纳证明。
+
+```python
+from itertools import product
+from math import gcd
+
+def rot(s):
+    a, b = s
+    return b, a + b
+
+def advance(s, action, k):
+    for _ in range(15 * k):
+        s = rot(s)
+    if action == "R":
+        s = rot(s)
+    elif action == "G":
+        s = (s[0] + 1, s[1])
+    return s
+
+def cw(s, modulus):
+    a, b = s
+    return ((a + 81 * b) % modulus, (a + 261 * b) % modulus)
+
+def scalar(s):
+    return 2 * s[0] + 3 * s[1]
+
+def invariant(p):
+    c, w, d, z = p  # d is the second c-coordinate, not the batch exponent.
+    return ((c - d) * (w - z) * (c * z + d * w)) % 11 != 0
+
+def choose(p, action):
+    c, w, d, z = p
+    if action == "R":
+        return 0
+    plus = ((c * z + d * w + w + z + c + d + 2) if action == "G"
+            else (6 * c + 7 * w) * (6 * d + 7 * z))
+    return 0 if plus % 11 else 1
+
+raw = {cw(s, 11): s for s in product(range(11), repeat=2)}
+assert len(raw) == 121
+for (c, w), s in raw.items():
+    assert scalar(s) % 11 == (6 * c + 7 * w) % 11
+    assert cw(advance(s, "T", 1), 11) == (c, -w % 11)
+    assert cw(rot(s), 11) == (4 * c % 11, 8 * w % 11)
+    assert cw(advance(s, "G", 0), 11) == ((c + 1) % 11, (w + 1) % 11)
+
+examined = valid = checks = 0
+for p in product(range(11), repeat=4):
+    examined += 1
+    if not invariant(p):
+        continue
+    valid += 1
+    for action in "RGT":
+        k = choose(p, action)
+        a = advance(raw[p[:2]], action, k)
+        b = advance(raw[p[2:]], action, k)
+        assert invariant(cw(a, 11) + cw(b, 11)), (p, action, k)
+        if action == "T":
+            assert scalar(a) * scalar(b) % 11 != 0, (p, action, k)
+        checks += 1
+
+sources = ((186, 124), (310, 217))
+assert [cw(s, 341) for s in sources] == [(0, 155), (155, 0)]
+assert all(a > 0 and b > 0 and a % 31 == b % 31 == 0 for a, b in sources)
+assert advance((1, 0), "T", 1) == (377, 610)
+assert advance((0, 1), "T", 1) == (610, 987)
+initial = cw(sources[0], 11) + cw(sources[1], 11)
+assert invariant(initial)
+for action in "RGT":
+    assert choose(initial, action) == 0
+    a, b = [advance(s, action, 0) for s in sources]
+    assert invariant(cw(a, 11) + cw(b, 11))
+    assert tuple(x % 31 for x in a) == tuple(x % 31 for x in b)
+    if action == "G":
+        assert cw(a, 11) + cw(b, 11) == (1, 2, 2, 1)
+    if action == "T":
+        assert (scalar(a) % 11, scalar(b) % 11) == (7, 6)
+        assert gcd(scalar(a), 341) == gcd(scalar(b), 341) == 31
+assert (examined, valid, checks) == (14641, 11100, 33300)
+print(examined, valid, checks)
+```
+
+### 102.6 适用边界与来源
+
+本节仅否定此接口对完整 $c_0$ 及分离0与155的函数的保证；不能据此断言每个非恒定函数均不可取得。第100节迫使某次非单位的来源相关词与本证明不冲突，因为31本来就是非单位响应。第101节保留其隐藏相位合同与量词，本节没有借用其全一语言结论。
+
+[Fibonacci 卷](FIBONACCI_ATOMIC_RELATION_GENERATION.md)第38、130节供应闭合缺陷及实际正向接枝的代数背景；第133节的取得合同允许同源重置，本节没有该权限。最小成功接口仍未确定：尚缺能够打破这对来源相容性的操作条件、在该条件下可实际执行的有限协议及界。本节不增设此类查询，不推广到一般 $H$，不作物理统一、原创优先权或 Lean 核验主张。
+
+产地：codex-cli 的 THEORY-ONLY 实施，恢复标识 `6abcb8e78ffcf3fbe6a5e83d`；交付为本算术实例的正文证明与有限复核代码。
+
+## 102.99 追加锚
