@@ -9665,3 +9665,320 @@ in§5–§6. The existing FC354–FC359 arithmetic is reused, not recomputed
 or represented as a new numerical experiment. Unrestricted old phase
 families, arbitrary old prefix incidences, and the middle-prime gap
 remain unresolved.
+
+## The private-role atlas inherits the one-pair continuation and a uniform grouped profile
+
+The actual55 rectangle is sufficient to transfer the one-pair query
+comparison to every family in (FC417), including families outside the
+canonical common-prefix orbit. Its numerical comparison is unchanged,
+so the stronger head and tail constants (FC373)--(FC378) transfer.
+
+All first-depth groups also admit a uniform positive query comparison
+over this atlas. It uses a lower bound on each actual private forbidden
+union and an upper comparison obtained by increasing only zero-run
+coefficients. This profile is generally different from the canonical
+full-group profile. Its validity and positive head conditions follow
+below; its new moments and continuation are not evaluated here.
+
+### 1. One actual source for each complete family
+
+Fix either the FC110 or FC131 head-row/root assignment, one finite
+N>=max(2,N_+), and one complete actual phase assignment theta satisfying
+(FC417). At each private q the depth-one digits for(F5,S5,F7,S7) lie
+outside{0,1,6}, with the two5 digits distinct and the two7 digits
+distinct. All higher groups, pure/star originals, head addresses,
+selected roots and numerical labels stay fixed. The entire finite
+old nongroup remainder has the FC159 inventory and globally fixed
+phases. In particular no additional old-only pure, star, shallow
+group or higher-ternary label is introduced.
+
+The source constructed in (FC426)--(FC427) satisfies
+
+    eta_theta=mu_theta/D0, eta_theta<=H_R,
+    eta_theta(total)=h=36518862868606981/1816999451688960000,
+    support(eta_theta) subset the actual complete old survivor. (FC430)
+
+It is fixed before every subsequent query and cost. Different theta
+generally have different actual survivor laws. A common numerical
+comparison bounds each law separately; it does not identify them.
+Uniform lifting preserves (FC430) on a larger finite period resolving
+all planned query labels.
+
+Use the first TWO actual pure/star layers as the upper reference.
+For each root r, let beta_(p,r), a_(p,r), z_(p,r)=a_(p,r)-1/p and
+nu_(p,r) be the unchanged measures and factors of (FC350)--(FC351).
+Every positive-depth cylinder retains its absolute cap p^(-e).
+The physical source still avoids all actual layers through N;
+retaining two layers does not rescale that source.
+
+### 2. The one-pair profile is exactly unchanged
+
+Both head assignments have free5 at private11 on head5 row2. Its
+actual numerical55 original in the theta family is the CRT class
+with components x5=2 and x11=alpha_11, where alpha_11 avoids0,1,6.
+It is free of3 and active on both retained ternary roots. Put
+A={x5=2 mod5}, C_theta={x11=alpha_11 mod11}. The unchanged pure/star
+holes occupy head5 rows4,3,0,1 and private11 first roots0,1,6. Thus
+
+    beta_(5,r)(A)=1/5,
+    beta_(11,r)(C_theta)=1/11, on each root r.        (FC431)
+
+The actual eta_theta avoids this actual A times C_theta rectangle.
+Ignoring all other group deletions enlarges its reference. Other
+grouped originals may intersect this rectangle; their disjointness
+is not needed.
+
+The general rectangle lemma (FC362)--(FC363) only uses these masses
+and absolute cylinder caps, not the numerical value of alpha_11.
+Its conditions hold with alpha=1/5, b=1/11 and delta=1/55 by (FC364).
+Consequently the labelled two-coordinate comparison is
+
+    Omega_r(j5,j11)=nu_(5,r)(j5)nu_(11,r)(j11)
+                      -(1/55)1_(j5=j11=0).         (FC432)
+
+Every query label, phase, depth-zero term and ternary indicator stays
+in its prescribed sum. The remaining factors and the common colour
+count are unchanged, so (FC365)--(FC367) give EXACTLY the previous
+Xi_pair for every theta and both assignments. Since h is unchanged,
+Top_h(Xi_pair) is also identical. This proves the required all-query
+comparison on each eta_theta; it does not infer it solely from the
+shared raw signature(w,g,X,Y).
+
+The fixed half-clipping sequence43,47,53,59,61,67,71,73 therefore
+inherits the already established (FC373)--(FC378) values:
+
+    m73>1/1000, M4<11301000,
+    eta73<=256 H_head,
+    Haar(actual head survivor)>1/256000,
+    conditional above10000 distorted reserve>7/8000. (FC433)
+
+The tail has the SAME Report734/779 analytic prime-product premise
+and fixed parameters B=10000, ell=8, delta=2/5 and growth exponent25.
+Additional primes in(73,10000] remain excluded. The final reserve
+is distorted mass, not a final Haar density. The unchanged comparator
+also retains (FC375)--(FC376)'s necessary-mean obstruction at79;
+this is not an upper bound on actual physical survival.
+
+Each actual family uses its own restriction and one family/stage
+scalar at every positive step, fixed before later queries. These
+give consistent source sequences with the same certified masses.
+New originals may have arbitrary finite exponents, including ternary
+ones, and arbitrary mixed supports touching an admitted new prime;
+each is assigned once to its final new coordinate. No excluded
+old-only label is added. No new continuation computation is required
+for (FC433), because its input comparison is exactly unchanged.
+
+### 3. Actual private unions have a uniform deletion floor
+
+For a fixed assignment, root r and actual head rows(i5,i7), let
+
+    n5=1_(i5=F5row(q))
+         +1_(r=S5root(q))1_(i5=S5row(q)),
+    n7=1_(i7=F7row(q))
+         +1_(r=S7root(q))1_(i7=S7row(q)).
+
+Each lies in{0,1,2}. Within either active head family the private
+digits are distinct. If e_theta counts active cross-head matching
+edges, the number of distinct actual active private digits is
+n5+n7-e_theta, at least max(n5,n7). Every participating first-digit
+cylinder survives the retained pure/star holes and has beta_q mass
+1/q. Define
+
+    w_theta=(n5+n7-e_theta)/q,
+    w* =max(n5,n7)/q,
+    wcan=(n5+n7)/q,
+    0<=w*<=w_theta<=wcan<=4/q.                       (FC434)
+
+These are unnormalized beta masses, not the normalized
+c_(q,N)/q masses in the old head-signature computation. The canonical
+wcan is precisely (FC379)'s disjoint-role count on these same rows
+and roots. The lower floor w* depends on the fixed head assignment
+but not on theta's private matching.
+
+Holding the actual heads fixed, the retained private reference is
+beta_q restricted outside its actual active group union. Its true
+mass is a_q-w_theta and its cylinder caps are unchanged. Since
+z_q>4/q by (FC380), this mass is greater than1/q.
+
+### 4. Increasing only zero-run mass preserves every required inequality
+
+The following is a direct use of (FC331)--(FC332). Suppose a positive
+coordinate measure has actual mass a, an upper mass A>=a>=1/p and
+positive-depth event caps p^(-d). For the same labelled coefficients,
+baseline c and nonnegative increasing convex f, absorb every depth-zero
+term into c so that the remaining d_i>=1. Those equations give
+
+    integral f(c+sum_i b_i 1_(E_i)) d beta
+      <=a f(c)+sum_i p^(-d_i)Delta_i
+      <=A f(c)+sum_i p^(-d_i)Delta_i
+      =sum_j nu_(p,A)(j)
+             f(c+sum_i b_i 1_(d_i<=j)),
+    nu_(p,A)(0)=A-1/p.                              (FC435)
+
+Only the zero coefficient increases, by A-a. The second inequality
+uses f(c)>=0; it does not renormalize the actual law or assume an
+actual extremizer. Positive-run coefficients remain(p-1)/p^(j+1).
+The upper mass may depend on other coordinates held fixed, provided
+the inequalities hold there pointwise.
+
+Apply this to the actual conditional q measure with
+A=a_q-w*. Its zero coefficient becomes z_q-w*, while the additional
+zero mass is w_theta-w*>=0. Every actual query label and all remaining
+coordinate indicators stay as their nonnegative coefficients. The
+physical eta_theta is first dominated by its ACTUAL retained reference
+with all36 modified first-depth group originals. Conditional on the
+actual heads and root, that reference factors across private primes.
+Successive applications of (FC435) therefore give a common upper
+integral for every theta, without independence of actual survivors.
+
+This does not select one global matching that attains w* on all rows
+and roots. No such joint realization is needed: each actual integral
+is bounded at its own fixed head cell before integrating those bounds.
+
+### 5. The positive head elimination survives uniformly
+
+For a private zero set Z and t in{can,theta,*}, define
+
+    K_Z=product_(q in Z)z_q,
+    h_Z^t(i5,i7)=product_(q in Z)(1-w_q^t(i5,i7)/z_q),
+    H_Z^t(i7)=integral h_Z^t(i5,i7)d beta5(i5),
+    M_Z^t=integral H_Z^t(i7)d beta7(i7).             (FC436)
+
+The unprocessed head measure for the uniform branch is the positive
+auxiliary measure K_Z h_Z^* beta5 tensor beta7, multiplied by the
+unchanged positive private-run coefficients. Because all factors
+lie in[0,1], (FC434) gives
+
+    h_Z^can<=h_Z^theta<=h_Z^*<=1,
+    H_Z^can<=H_Z^theta<=H_Z^*<=a5,
+    M_Z^can<=M_Z^theta<=M_Z^*<=a5*a7.                (FC437)
+
+The exact canonical source conditions (FC382), with the full-set
+reduction (FC384), already give H_Z^can>=1/5 on every live beta7 row
+and M_Z^can>=a5*a7-z5*z7 for all512 sets Z, both roots and both
+assignments. Thus the SAME sufficient conditions hold for every
+actual theta and for the uniform profile. Zero-mass beta7 rows
+remain irrelevant to these integral inequalities.
+
+For completeness, the5-then7 positive comparison proceeds as follows.
+Fix i7 and the private runs. The measure h_Z^* beta5 has mass H_Z^*,
+is dominated by beta5 and retains its absolute caps. After applying
+the weighted5 lemma, its positive5-run branches are unchanged. The
+zero5 branch leaves the7 measure
+
+    g_Z^*=(H_Z^*(i7)-1/5)beta7,
+    0<=g_Z^*<=z5 beta7,
+    mass(g_Z^*)=M_Z^*-a7/5>=z5/7.                   (FC438)
+
+Divide by z5>0 and apply the weighted7 comparison. Its positive-run
+coefficients are z5 times the usual7 weights. Its zero coefficient
+is M_Z^*-a7/5-z5/7, nonnegative by (FC438). Therefore, putting
+
+    delta_Z^t=K_Z(a5*a7-M_Z^t),
+    0<=delta_Z^*<=delta_Z^theta<=delta_Z^can<=K_Z z5 z7, (FC439)
+
+the head pair differs from the old product only by subtracting
+delta_Z^* at j5=j7=0. These are positive intermediate measures;
+no unrelated query upper estimate is subtracted from another.
+The same argument with t=theta gives the exact retained-reference
+comparison for that matching. Empty Z has delta=0, and equalities
+at the positive-mass thresholds cause no problem.
+
+### 6. A common all-query profile with an artificial reference mass
+
+For each of the two fixed assignments separately, on the common
+run set j in N_0^V put Z={q in Q:j_q=0} and
+
+    pi_r^t(j)=[K_Z nu5_r(j5)nu7_r(j7)
+                   -1_(j5=j7=0)delta_(Z,r)^t]
+                *product_(q outside Z)(q-1)/q^(j_q+1). (FC440)
+
+The uniform weights t=* depend only on the chosen head assignment
+and root, not theta. Every numerical query label, including repeated
+depths with different phases, keeps its actual ternary indicator.
+Hence the unchanged deterministic count C1(j,K)+C2(j,K)<=B(j)K
+still applies. Form Xi* by
+
+    load B(j): coefficient min(pi_1^*(j),pi_2^*(j))/3,
+    load vB(j): coefficient2max(pi_1^*(j),pi_2^*(j))/3^v, v>=2.
+    integral f(L_Phi)deta_theta<=integral f dXi*.     (FC441)
+
+The inequality holds for EVERY atlas theta in that fixed assignment,
+every finite complete query layout and every nonnegative increasing
+convex cost. It uses one actual law for all queries of each family.
+The min/max is taken after constructing both root weights of the
+same assignment; no FC110/FC131 source coefficients are mixed.
+
+The corresponding canonical, actual-matching and uniform auxiliary
+measures satisfy
+
+    Xi_can<=Xi_theta<=Xi*<=Xi_purestar               (FC442)
+
+as positive scalar measures. These are upper profiles, not physical
+survivor laws. The left inequality does not make Xi_can an upper
+bound for every atlas family; borrowing the unchanged116/117
+constants from that smaller comparison would reverse the safe
+direction. The one-pair law is not ordered by this argument, because
+its correction acts on different run patterns.
+
+The complete mass of the uniform comparison is
+
+    mass(Xi*)=(1/3)sum_(r=1,2)sum_(i5,i7)
+       beta5_r[i5]beta7_r[i7]
+         *product_q(a_(q,r)-w*_(q,r)(i5,i7)).        (FC443)
+
+This is an ARTIFICIAL upper-comparison identity. The actual retained
+reference for theta has w_theta in place of w*, so its mass is at
+most (FC443). Equality is not asserted. The pointwise relaxation
+does not require a global phase assignment realizing that row sum.
+In contrast, the t=theta mass is the true retained-reference mass,
+as in the actual conditional product proof of (FC390).
+
+Taking f=1 in (FC441) gives mass(Xi*)>=h. Polynomial moments are
+finite because all positive-run tails are geometric, so Top_h(Xi*)
+is a legal complete-query comparison for each eta_theta. Moreover
+the already known canonical bracket (FC393) and the pure/star cutoff8
+following (FC352), combined with (FC442), imply
+
+    Xi*(M>8)<=h<=Xi*(M>=8).                         (FC444)
+
+Thus8 is a valid split location without computing the new atoms.
+This gives neither their values nor the new complete moments.
+
+There is a strict theoretical gain over the pure/star comparator.
+For Z={11}, the actual free5 head address2 has beta5 mass1/5 and
+w*>=1/11 there on both roots. Hence
+
+    delta_({11},r)^*=integral w*_(11,r)d(beta5_r tensor beta7_r)
+                     >=a_(7,r)/55>0.               (FC445)
+
+Take j5=j7=j11=0, every other private run positive, and let j13 grow.
+Both root weights decrease strictly at unbounded scalar loads, so
+both their minimum and maximum decrease. The positive deficit
+Xi_purestar-Xi* has mass above every finite threshold. The same
+finite-first-moment Top_h tail argument as in (FC369) gives strict
+hinge improvement at every finite threshold. No magnitude of that
+gain or new prime step follows without further quantitative work.
+
+### 7. Scope of the two transfers
+
+The first transfer is already quantitative because its complete
+one-pair profile is identical to the saved comparison. The second
+produces a well-defined uniform profile with all required positivity
+conditions discharged by monotonicity from the existing exact
+conditions. Its future initialization can use (FC389) with the new
+coefficients and check mass against (FC443), interpreted as an
+artificial upper mass. Its continuation requires those new values
+or another proved estimate; the canonical full-group values are
+not substituted for them.
+
+The proofs use actual phases to verify atlas membership and define
+each complete survivor. They do not reconstruct discarded phase
+information from the old raw signature. Both retain the prescribed
+within-head injections, excluded private roots, fixed head and
+selected-root assignments, actual finite N and old nongroup inventory.
+Arbitrary old phase families, arbitrary shared-prefix incidences,
+extra old-only9, the middle-prime gap and unrestricted Erdős#7 remain
+unresolved. These are ordinary mathematical deductions using the
+existing positive comparisons, without new Lean verification or
+an external novelty claim.
