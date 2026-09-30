@@ -70,11 +70,29 @@ public sealed class RegistrationSelfAssessmentTests
             "def label := \"--\" /- real block comment\nrun_meta do\n  pure ()\n-/\n"))));
 
     [Fact]
-    public void TemplateBindingTextInStringPasses()
-    {
-        // String literal contents are data, not code tokens for this guard.
-        AssertNoBlock(Evaluate(Files(), Files((Registration, "def label := \"TemplateBinding\"\n"))));
-    }
+    public void TemplateBindingTextInStringLiteralBlocks() =>
+        AssertBlocked("def label := \"TemplateBinding\"\n", "TemplateBinding");
+
+    [Fact]
+    public void TemplateBindingRecordsInStringInterpolationBlocks() =>
+        AssertBlocked("logInfo s!\"{(TemplateBinding.records (← getEnv)).size}\"\n", "TemplateBinding");
+
+    [Fact]
+    public void TemplateBindingRecordJsonInThrowErrorInterpolationBlocks() =>
+        AssertBlocked("throwError \"registration: {(← LeanInformationAudit.TemplateBinding.recordJson record).compress}\"\n",
+            "TemplateBinding");
+
+    [Fact]
+    public void InformationRegistryInMessageInterpolationBlocks() =>
+        AssertBlocked("logInfo m!\"{InformationRegistry.entries env}\"\n", "InformationRegistry");
+
+    [Fact]
+    public void TemplateBindingInMultilineStringLiteralBlocks() =>
+        AssertBlocked("def label := \"summary\nTemplateBinding\"\ndef helper := 1\n", "TemplateBinding");
+
+    [Fact]
+    public void RunMetaAfterMultilineStringLiteralBlocks() =>
+        AssertBlocked("def label := \"summary\nlabel\"\nrun_meta do\n  pure ()\n", "run_meta");
 
     [Fact]
     public void CommentsDoNotJoinIdentifierFragments() => AssertNoBlock(Evaluate(Files(), Files((Registration,

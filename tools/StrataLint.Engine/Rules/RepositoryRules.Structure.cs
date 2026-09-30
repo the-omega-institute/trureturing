@@ -123,9 +123,8 @@ internal static partial class RepositoryRules
         var column = 0;
         foreach (var token in LeanSourceTokenizer.ReadTokens(source))
         {
-            // The shared tokenizer owns comments, strings and escapes. Literal
-            // contents are data; keep only code at its original token boundaries.
-            if (token.Text.StartsWith('"')) continue;
+            // The shared tokenizer removes comments and preserves whole strings.
+            // Scan string literals too, including interpolation expressions.
             while (line < token.Line)
             {
                 code.Append('\n');
@@ -135,7 +134,16 @@ internal static partial class RepositoryRules
 
             code.Append(' ', token.Column - column);
             code.Append(token.Text);
-            column = token.Column + token.Text.Length;
+            column = token.Column;
+            foreach (var value in token.Text)
+            {
+                if (value == '\n')
+                {
+                    line++;
+                    column = 0;
+                }
+                else column++;
+            }
         }
 
         return code.ToString();
