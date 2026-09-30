@@ -7446,3 +7446,79 @@ Increasing pure depth within this fixed-h, cap-one, mass-only anchor abstraction
 The [endpoint consumer](../../../frontier/cover-geometry/pure-support-profiles/ideal_depth_envelope.py) and its [exact result](../../../frontier/cover-geometry/pure-support-profiles/ideal_depth_envelope.json) use the [depth-two arithmetic definitions](../../../frontier/cover-geometry/pure-support-profiles/depth_two_profile.py). It accepts an explicit arithmetic-library path and output path, records the library SHA256 as provenance and loads its definitions without invoking its main or finite controls. The source digest is not a cache or reuse gate. It checks the declared prime support, moment orders and inventory, and uses the existing depth-two factor/convolution/trim routines only as arithmetic primitives. All retained dependency metadata uses a basename. Its177 checks cover these input parameters, factor domains, the exact feasibility identity(FC310), complete moments and tail remainders, resolved quantiles, fixed-stage charges, first failure and strict witness(FC321). No previous numerical suite or finite-layout control is rerun.
 
 The exact endpoint arithmetic supplies the witness used with the ordinary monotonicity proof. Finite arithmetic controls do not replace that universal proof; no Lean verification is claimed.
+
+## Tighter finite-depth source caps still leave the73 barrier
+
+For the actual FC159 skeleton at each N>=max(2,N_+), its finite pure-survivor cap permits the larger initial source mass h_N=m_star*A_N. Nevertheless the fixed half-clipping predecessors43,47,53,59,61,67,71 still cannot be followed by a positive73 ledger for any legal constant clipping parameter. A version may instead fail earlier. The finite N=2 comparison is the optimistic endpoint for all N>=2, and its mean after71 is81.461019318218428...>81>72.
+
+This closes precisely the finite-density-cap improvement left outside the fixed-h depth obstruction. It uses the same m_star lower bound, cap-one anchor abstraction and declared predecessor schedule. The endpoint may be purely algebraic if N_+>2; no unsupported physical source at N=2 is asserted. The statement excludes neither actual survivors nor other methods. The proof uses ordinary mathematics, with one exact rational endpoint calculation and no Lean claim.
+
+### Source premise checked against FC147–FC159 and FC230
+
+Let m_star=36518862868606981/466438558966380000. For nonternary p in V={5,7,11,13,17,19,23,29,31,37,41}, the N actual pure cylinders are pairwise disjoint by their explicit digit words, so put
+
+    A_pN=1−sum_(e=1..N)p^(−e)=(p−2+p^(−N))/(p−1).
+    A_3N=2/3, A_N=product_(p in R) A_pN.               (FC324)
+
+Define E_N to avoid exactly these pure originals, including0 mod3. On any finite lifted full head carrier H, the actual two-root predeletion law in FC159/230 is Lambda_N=H restricted to E_N divided by A_N. FC159's lambda_N alone denotes the nonternary product; adjoining the equally weighted surviving ternary roots gives Lambda_N. This distinction supplies the factor2/3 and avoids a normalization error.
+
+Let U be the full actual core survivor after the admitted stars, groups and nongroup remainder. FC159 gives s_N=Lambda_N(U)>=m_star for N>=N_+. FC230 defines mu_N=Lambda_N(.|U). Set
+
+    h_N=m_star*A_N, eta_N=h_N*mu_N.                   (FC325)
+
+Then exactly eta_N=(m_star/s_N) H restricted to U. Therefore eta_N<=H restricted to E_N, mass(eta_N)=h_N, and its actual support is the full survivor U. Its probability-normalized density cap is1/h_N, sharper than FC230's uniform limiting cap. Uniform lifting preserves this identity. This changes the initial physical scaling but never adds forbidden originals or mixes different source realizations. The bound remains conditional on the original FC159 skeleton, remainder and N_+ premises.
+
+### Initial auxiliary order
+
+For A>=1/p use the existing positive anchor measure nu_pA with atom A−1/p at load1 and (p−1)/p^v at v>=2; its mass is A. Let P_pA=nu_pA/A. For each integer t>=1,
+
+    P_pA(V>t)=p^(−t)/A.                              (FC326)
+
+The law's tail is1 below1, and is constant between successive integers. As N increases, A_pN decreases, so P_p,A_pN increases in first-order stochastic order. The ternary factor is unchanged. Independent auxiliary factor products preserve this order, by conditioning or a common quantile coupling with positive factors. No independence assertion about the actual survivor is used.
+
+Write raw_N for the pushforward product of unnormalized anchor measures; its mass is A_N, and Q_N=raw_N/A_N is the product of the normalized factors above. Thus Q_N increases stochastically with N. The physical comparison eta_N<=H restricted to E_N permits the existing simultaneous increasing-convex raw anchor comparison, and its equal-mass form is
+
+    Pi_N=Top_(h_N)(raw_N)=A_N*Top_(m_star)(Q_N).
+    Pi_N/h_N=Top_(m_star)(Q_N)/m_star.                (FC327)
+
+The retained fraction m_star is constant. The upper-mass tail identity shows that stochastic order is preserved by this same fractional truncation. Consequently, for N2>=N1,
+
+    h_N1>=h_N2>0,
+    Pi_N1/h_N1 <=st Pi_N2/h_N2.                       (FC328)
+
+This is exactly FC311–FC318's joint order on mass and normalized law, now with the tighter finite-dependent initial mass. It is the reverse depth direction from FC305–FC323: finite depth2 is the optimistic endpoint for all N>=2.
+
+### The fixed schedule preserves the order
+
+For a common prime q and common legal0<delta<1, C=1/(1−delta)<=q, let T=delta(q−1), D=(1−delta)(q−1) and r(P)=1−E_P[(Z−T)_+]/D. Smaller normalized law gives larger r; larger incoming mass and larger positive r give larger outgoing mass. Multiplication by the same nonnegative capped probability factor preserves normalized stochastic order. Finally the normalized outgoing tail is min(1,S_Q/r), so the smaller numerator and larger retained fraction preserve it after Top. This proves induction for every common successful prefix; if the optimistic reference fails, a worse version has failed earlier or also fails at that stage.
+
+In particular, all actual N>=max(2,N_+) are worse than the algebraic N=2 endpoint for the fixed half predecessors. The N=2 endpoint need not itself be a physical source if N_+>2; the comparison implication does not assume that it is. The exact endpoint below reaches71 with E[Z]>81>72; therefore every actual N whose predecessor succeeds has at least that mean. At73, for each legal constant delta,
+
+    candidate=m[1−E(Z−72delta)_+/(72(1−delta))]
+             <=m(72−E Z)/(72(1−delta))<0.             (FC329)
+
+Thus no legal constant final clipping passes. The strict witness therefore closes this finite-cap variation of the fixed comparison scheme.
+
+Only the fixed h_N=m_star*A_N is analyzed, not the unknown exact survivor mass A_N*s_N, an improved m_star, altered query geometry, different earlier clipping or a different order. Failure remains failure of the declared sufficient comparison ledger, not actual coverage. No Lean verification is claimed.
+
+### Exact single-endpoint result
+
+The calculation uses N=2, A_3=2/3, A_p=1−1/p−1/p² on the eleven nonternary axes, m_star=36518862868606981/466438558966380000, and h2=m_star*product A_p. No other depth, parameter or order was evaluated. Its exact initial mass is displayed as0.02049162480888043628792472289744707732171; the previous uniform h was0.020098444627851434....
+
+| Stage | Candidate mass | Post-trim cutoff |
+|---|---:|---:|
+| initial | .0204916248088804363 | 12 |
+|43|.0170745110158408789|12|
+|47|.0138591941331113216|12|
+|53|.0110577684241693669|16|
+|59|.00858062455860033754|16|
+|61|.00602185292953946709|24|
+|67|.00376200907269555149|32|
+|71|.00158600036471993955|48|
+|73|−.000416810558036578351|not appended|
+
+All values are rational; the table displays decimals. The exact witness is W71>81*m71 and candidate73<−1/2500. The normalized mean is81.46101931821842803094176536817702776778; complete M2=15.04654661680805003643702661876749584247 and complete M4=8012129.915202242043709618533824610183080. No momentwise dominance claim is made from these raw values.
+
+The last comparison is exactly the successful71 output; no multiplier, trim or successor is constructed at73. The state retains all complete moments0/1/2/4, exact atoms1..256, and exact residual moments above256. All actual exponents and all auxiliary tails remain untruncated. The consumer derives geometric raw moments through factorial moments and Stirling transforms and performs divisor-based convolution. The [finite-cap consumer](../../../frontier/cover-geometry/pure-support-profiles/finite_cap_endpoint.py) and its [exact result](../../../frontier/cover-geometry/pure-support-profiles/finite_cap_endpoint.json) supply132 exact checks. The saved fractions also verify the fixed stopping stage, unchanged last-positive state, strict mean bound, negative candidate bound and finite-mass identity. The consumer accepts a required explicit output path and uses only the Python standard library.
+
+Physical validity still requires the FC159 actual finite source. The uniform conclusion uses the common m_star, not a larger assignment-specific mu_i or the unknown actual survival probability. Different earlier parameters/order, stronger phase-dependent or joint query information, improved survivor lower bounds, and other continuation interfaces remain outside this result. No new tail continuation or resolution of the missing73..10000 range is asserted.
