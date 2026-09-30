@@ -1,0 +1,64 @@
+**Theorem 50.1 (dyadic series nonintegrality).** Let $r\geq1$ and
+$x>2$ be integers. For $j\geq0$, put $e_j=j+v_2(j!)$. Let
+$(s_j)_{j\geq0}$ be a complex sequence with $s_0=1$, such that
+$2^{e_j}s_j$ is an odd integer for every $j\geq1$ and
+
+$$
+|s_j|\leq(\sqrt2)^r4^j\qquad(j\geq0).
+$$
+
+Suppose that $\sum_{j\geq0}s_jx^{-2j}=\mu$ and
+$128\cdot6^r<x^2-4$. Then
+
+$$
+x^r\mu\notin\mathbb Z.
+$$
+
+**Proof.** Set $J=\lfloor(r+1)/2\rfloor$, $q=x^2$, and
+$C=(\sqrt2)^r$. The exponents $e_j$ increase strictly, since
+$j!\mid(j+1)!$. Thus
+
+$$
+T=\sum_{j=0}^J2^{e_J}s_jx^{2(J-j)}\in\mathbb Z.
+$$
+
+For $N\geq0$, the tail $R_N=\sum_{j\geq N}s_jq^{-j}$ satisfies
+
+$$
+|R_N|\leq\frac{C(4/q)^N}{1-4/q}.
+$$
+
+The factorial valuation bound $v_2(j!)<j$ for $j\geq1$,
+$2J\leq r+1$, and $\sqrt2\leq3/2$ give
+
+$$
+2^{e_J}C4^{J+1}\leq8\cdot6^r,
+\qquad
+2^{e_{J+1}}C4^{J+2}\leq128\cdot6^r.
+$$
+
+Since the odd integer $2^{e_{J+1}}s_{J+1}$ is nonzero,
+$|s_{J+1}|\geq2^{-e_{J+1}}$. The second estimate and the assumed
+gap therefore imply
+
+$$
+|R_{J+2}|
+ \leq\frac{C4^{J+2}}{q-4}q^{-(J+1)}
+ <2^{-e_{J+1}}q^{-(J+1)}
+ \leq|s_{J+1}q^{-(J+1)}|.
+$$
+
+Hence $R_{J+1}\ne0$. The first estimate also yields
+
+$$
+0<|2^{e_J}x^{2J}\mu-T|
+ \leq\frac{2^{e_J}C4^{J+1}}{q-4}<1.
+$$
+
+If $x^r\mu=M\in\mathbb Z$, then $r\leq2J$ makes
+$2^{e_J}x^{2J}\mu=2^{e_J}x^{2J-r}M$ an integer. Its difference
+from $T$ is a nonzero integer of modulus less than one, a
+contradiction. This analytic and arithmetic argument supplies the
+nonintegrality step in Theorem 33.1; the polynomial factorization
+and coefficient identification supply its application hypotheses.
+
