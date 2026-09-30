@@ -106,7 +106,6 @@ theorem result :
     have hc := Finset.card_image_iff.mpr hinj
     refine ⟨hsub, hc, ?_, ?_, ?_⟩
     · simpa [hcard] using (Finset.card_filter_add_card_filter_not (s := S) (fun x => x < k))
-  
     · ext x
       constructor
       · intro hx
@@ -145,7 +144,6 @@ theorem result :
           rw [hmin] at hry
           have hxy : x = y := by omega
           exact hxy ▸ Finset.mem_filter.mpr ⟨hyS, hyk⟩
-  
     · intro r hr
       by_cases hp : r ≤ (k-1)/2
       · exact Or.inl hp
@@ -165,18 +163,15 @@ theorem result :
 
   let decode {n k : ℕ} (c : Code n k) : Finset ℕ :=
     (c.L ∪ (c.R \ c.L).image (fun r => k - r)) ∪ c.T
-
   have lower_bounds {n k : ℕ} (c : Code n k) {r : ℕ} (hr : r ∈ c.L) :
       1 ≤ r ∧ 2 * r ≤ k := by
     have := Finset.mem_Icc.mp (c.hR (c.hL hr))
     omega
-
   have right_bounds {n k : ℕ} (c : Code n k) {r : ℕ}
       (hr : r ∈ c.R) (hn : r ∉ c.L) : 1 ≤ r ∧ 2 * r < k := by
     have := Finset.mem_Icc.mp (c.hR hr)
     have hm : 2 * r ≠ k := fun h => hn (c.hmid r hr h)
     omega
-
   have decode_subset {n k : ℕ} (c : Code n k) (hk : 1 ≤ k) (hkn : k ≤ n) :
       decode c ⊆ Finset.Icc 1 n := by
     intro x hx
@@ -188,7 +183,6 @@ theorem result :
       exact Finset.mem_Icc.mpr (by omega)
     · have := Finset.mem_Icc.mp (c.hT hx)
       exact Finset.mem_Icc.mpr (by omega)
-
   have decode_card {n k : ℕ} (c : Code n k) : (decode c).card = k := by
     have hd : Disjoint c.L ((c.R \ c.L).image (fun r => k-r)) := by
       apply Finset.disjoint_left.mpr
@@ -273,7 +267,6 @@ theorem result :
         omega
     · intro hx
       exact ⟨Finset.mem_union_left _ (Finset.mem_union_left _ hx), (lower_bounds c hx).2⟩
-
   have recover_T {n k : ℕ} (c : Code n k) :
       (decode c).filter (fun x => k ≤ x) = c.T := by
     ext x
@@ -289,7 +282,6 @@ theorem result :
       · exact hx
     · intro hx
       exact ⟨Finset.mem_union_right _ hx, (Finset.mem_Icc.mp (c.hT hx)).1⟩
-
   have recover_R {n k : ℕ} (c : Code n k) :
       ((decode c).filter (fun x => x < k)).image (fun x => min x (k-x)) = c.R := by
     ext r
@@ -329,7 +321,6 @@ theorem result :
 
   let Selected (n k : ℕ) := { S : Finset ℕ // S ⊆ Finset.Icc 1 n ∧ S.card = k ∧
     ∀ x ∈ S, ∀ y ∈ S, x ≠ y → x+y ≠ k }
-
   let encode (n k : ℕ) (s : Selected n k) : Code n k := by
     let S := s.val
     refine ⟨(S.filter (fun x => x < k)).image (fun x => min x (k-x)),
@@ -388,7 +379,6 @@ theorem result :
       S.filter (fun x => k ≤ x)) = S
     rw [hd, hL, ← hsplit]
     simpa using Finset.filter_union_filter_not_eq (fun x => x < k) S
-
   have encode_decode (n k : ℕ) (hk : 1 ≤ k) (hkn : k ≤ n) (c : Code n k) :
       encode n k ⟨decode c, decode_subset c hk hkn, decode_card c, decode_valid c hk⟩ = c := by
     have hR := recover_R c
@@ -426,15 +416,12 @@ theorem result :
     dsimp at hR hL
     subst_vars
     rfl
-
   have lower_card_le (k : ℕ) (l : Lower k) : l.R.card ≤ k := by
     have h := Finset.card_le_card l.hR
     simp only [Nat.card_Icc] at h
     omega
-
   let tailFamily (n k : ℕ) (l : Lower k) : Finset (Finset ℕ) :=
     (Finset.Icc k n).powersetCard (k - l.R.card)
-
   let codeTailEquiv (n k : ℕ) : Code n k ≃ Σ l : Lower k, (tailFamily n k l) := {
     toFun c := ⟨⟨c.R, c.L, c.hR, c.hL, c.hmid⟩,
       ⟨c.T, Finset.mem_powersetCard.mpr ⟨c.hT, by change c.T.card = k - c.R.card; have := c.hcard; omega⟩⟩⟩
@@ -446,10 +433,8 @@ theorem result :
     left_inv c := by cases c; rfl
     right_inv s := by rcases s with ⟨l, t⟩; cases l; cases t; rfl
   }
-
   letI codeFintype (n k : ℕ) : Fintype (Code n k) :=
     Fintype.ofEquiv (Σ l : Lower k, (tailFamily n k l)) (codeTailEquiv n k).symm
-
   let selectedFintype (n k : ℕ) (hk : 1 ≤ k) (hkn : k ≤ n) :
       Fintype (Selected n k) := Fintype.ofEquiv (Code n k) (pairingEquiv n k hk hkn).symm
 
@@ -466,10 +451,8 @@ theorem result :
     simp only [tailFamily, Finset.card_powersetCard, Nat.card_Icc]
     congr 1
     omega
-
   let freeRepresentatives (k : ℕ) (R : Finset ℕ) : Finset ℕ :=
     R.filter (fun r => 2*r ≠ k)
-
   let forcedRepresentatives (k : ℕ) (R : Finset ℕ) : Finset ℕ :=
     R.filter (fun r => 2*r = k)
 
@@ -530,7 +513,6 @@ theorem result :
     classical
     rw [Fintype.card_congr (lowerFiberEquiv k R hR), Fintype.card_coe,
       Finset.card_powerset]
-
   have forcedRepresentatives_card (k : ℕ) (R : Finset ℕ) :
       (forcedRepresentatives k R).card =
         if k % 2 = 0 ∧ k/2 ∈ R then 1 else 0 := by
@@ -577,7 +559,6 @@ theorem result :
         intro l hl
         rw [(Finset.mem_filter.mp hl).2]
       _ = _ := by simp [hc, nsmul_eq_mul]
-
   have representative_weight_product (k : ℕ) (R : Finset ℕ) :
       (2 : Polynomial ℕ) ^ (freeRepresentatives k R).card * Polynomial.X ^ R.card =
         ∏ r ∈ R, (if 2*r = k then (Polynomial.X : Polynomial ℕ) else 2*Polynomial.X) := by
@@ -600,7 +581,6 @@ theorem result :
     change (R.filter (fun r => 2*r = k)).card + (freeRepresentatives k R).card = R.card at hc
     rw [← hc, pow_add]
     ring
-
   have lower_weighted_product_bridge (k : ℕ) :
       (∑ l : Lower k, (Polynomial.X : Polynomial ℕ) ^ l.R.card) =
         ∏ r ∈ Finset.Icc 1 (k/2), (1 + if 2*r = k then (Polynomial.X : Polynomial ℕ) else 2*Polynomial.X) := by
@@ -648,7 +628,6 @@ theorem result :
 
   let P (k : ℕ) : Polynomial ℕ :=
     (1 + 2*Polynomial.X) ^ ((k-1)/2) * (1+Polynomial.X) ^ (if k % 2 = 0 then 1 else 0)
-
   have lower_coefficient_card (k : ℕ) (hk : 1 ≤ k) (j : ℕ) :
       (P k).coeff j =
         ((Finset.univ : Finset (Lower k)).filter (fun l => l.R.card = j)).card := by
@@ -657,7 +636,6 @@ theorem result :
       (1+Polynomial.X) ^ (if k % 2 = 0 then 1 else 0) : Polynomial ℕ).coeff j = _
     rw [← lower_size_polynomial k hk, finsetSum_coeff]
     simp [Polynomial.coeff_X_pow, eq_comm, Finset.sum_boole]
-
   have selected_coefficient_count (n k : ℕ) (hk : 1 ≤ k) (hkn : k ≤ n) :
       @Fintype.card (Selected n k) (selectedFintype n k hk hkn) =
         ∑ j ∈ Finset.range (k/2+1), (P k).coeff j * Nat.choose (n-k+1) (k-j) := by
@@ -739,18 +717,15 @@ theorem result :
     exact selected_coefficient_count n k hkpos hkn
 
   let U (d : ℕ) : PowerSeries ℚ := (invOneSubPow ℚ d).val
-
   let F (k : ℕ) : PowerSeries ℚ := mk fun n =>
     if k ≤ n then
       ∑ j ∈ Finset.range (k/2+1), ((P k).coeff j : ℚ) * (Nat.choose (n-k+1) (k-j) : ℚ)
     else 0
-
   have original_summand_coeff (n k : ℕ) :
       PowerSeries.coeff n (F k) = if k ≤ n then
         ((∑ j ∈ Finset.range (k/2+1), (P k).coeff j * Nat.choose (n-k+1) (k-j) : ℕ) : ℚ)
       else 0 := by
     simp [F, Nat.cast_sum, Nat.cast_mul]
-
   have shifted_binomial (k r : ℕ) (hk : 1 ≤ k) (hr : 1 ≤ r) :
       (mk fun n => if k ≤ n then (Nat.choose (n-k+1) r : ℚ) else 0) =
         (PowerSeries.X : PowerSeries ℚ)^(k+r-1) * U (r+1) := by
@@ -798,7 +773,6 @@ theorem result :
 
   let E : MvPolynomial (Fin 2) ℚ →+* PowerSeries ℚ :=
     MvPolynomial.eval₂Hom PowerSeries.C ![1-PowerSeries.X, PowerSeries.X]
-
   have homogenized_sum (p : Polynomial ℚ) (d : ℕ) (hp : p.natDegree ≤ d) :
       E (p.homogenize d) = ∑ j ∈ Finset.range (d+1),
         PowerSeries.C (p.coeff j) * (1-PowerSeries.X)^j * (PowerSeries.X : PowerSeries ℚ)^(d-j) := by
@@ -831,11 +805,8 @@ theorem result :
     ring
 
   let polyA : Polynomial ℚ := 1 + Polynomial.C 2 * Polynomial.X
-
   let B : Polynomial ℚ := 1 + Polynomial.X
-
   let R : PowerSeries ℚ := PowerSeries.X^3 * (2-PowerSeries.X) * U 2
-
   have parity_factorization (m : ℕ) :
       F (2*m+1) = PowerSeries.X * U 2 * R^m ∧
       F (2*m+2) = PowerSeries.X^2 * U 3 * R^m := by
@@ -901,12 +872,9 @@ theorem result :
 
   letI : TopologicalSpace ℚ := ⊥
   letI : DiscreteTopology ℚ := ⟨rfl⟩
-
   let seriesA : PowerSeries ℚ := mk fun n => (a n : ℚ)
-
   have coeff_F_vanish (n k : ℕ) (h : n < k) : PowerSeries.coeff n (F k) = 0 := by
     simp [F, not_le.mpr h]
-
   have F_summable : Summable (fun k : ℕ => F (k+1)) := by
     rw [PowerSeries.WithPiTopology.summable_iff_summable_coeff]
     intro n
@@ -966,7 +934,6 @@ theorem result :
 
   have R_constantCoeff : constantCoeff R = 0 := by
     simp [R]
-
   have parity_sum : (∑' k : ℕ, F (k+1)) =
       (PowerSeries.X * U 2 + PowerSeries.X^2 * U 3) * ∑' m : ℕ, R^m := by
     have hp := PowerSeries.WithPiTopology.summable_pow_of_constantCoeff_eq_zero R_constantCoeff
