@@ -24878,3 +24878,239 @@ applications with independent symbolic review, not new Lean results.
 Unrestricted Erdős #7 remains unresolved: a same-family argument
 must still force a usable general head or control its extra mixed
 incidence without losing the complete source and suffix obligations.
+
+## Reuse the published tail from actual head survival
+
+Keep the literal Haar-started process P_i of
+[BBMST, arXiv1811.03547v1](https://arxiv.org/abs/1811.03547v1),
+equations(4)--(5). B_i is the union of ALL original classes assigned
+to prime p_i, and R_i avoids all B_j with j<=i. Every coordinate has
+the full height required anywhere in the original family. As in the
+paper's Section6, indices include absent primes. At a head cutoff k put
+
+    r_k=P_k(R_k),
+    muhat_i=r_k-sum_(k<j<=i)P_j(B_j), i>=k.        (FC1083)
+
+This changes only the scalar starting reserve. It changes no event,
+probability law, future row or original phase. Relative to the paper's
+mu_i=1-sum_(j<=i)P_j(B_j), the difference is the constant r_k-mu_k.
+Earlier marginal preservation gives P_n(R_n)>=muhat_n. The paper's
+equation(20) bounds the next second moment by a product with coefficient
+kappa; that product does not depend on the scalar reserve. Lemma6.2
+therefore has the same recurrence with muhat and its corresponding f.
+Reuse Theorem6.1's continuation argument, without repeating its prime
+estimate or induction: a sufficient input is
+
+    k>=10, r_k>0,
+    kappa/r_k<=k(log k+loglog k-3)^2.              (FC1084)
+
+The printed theorem defines mu_k using its original cumulative budget;
+FC1084 is the explicitly stated scalar restart of its argument, not a
+silent renaming of that definition. The squarefree sequel
+[arXiv1901.11465v1](https://arxiv.org/abs/1901.11465v1), Section2.1,
+also uses an arbitrary surviving head initialization and reuses this
+endpoint in Section5. Its nonparallel-hyperplane geometry is not being
+substituted for arbitrary original prime-power heights here.
+
+The paper's generic supplier(21) remains available on this SAME law.
+An improved supplier must likewise concern this law. For example,
+Lemma3.4 directly gives, for eta=P_k restricted to R_k,
+
+    eta(C_m)<=min(r_k, product_(p:m_p>0)a_p*p^(-m_p)),
+    a_p=(1-delta_p)^(-1).                         (FC1085)
+
+These are the hypotheses already consumed by FC1054--1058's clipped
+cylinder calculation, with these a_p and s=r_k. The old pure/raw
+constants cannot be carried over unchanged. Lemma3.6's existing
+ordered-pair/LCM method similarly uses the head quantity
+
+    J_k=sum_(d|Q_k)ell_2(d)*max_a P_k(R_k intersect[a]_d),
+    ell_2(p^e)=2e+1.                              (FC1086)
+
+This identifies a reusable supplier, not a proof that J_k/r_k is
+small enough. In a hypothetical irredundant whole cover, a future
+original's private point gives r_k>=1/Q_k at a proper prefix: on a
+surviving point each paper row's density multiplier is at least one.
+That height-dependent positive bound alone does not supply FC1084.
+
+## Pure conditioning has an exact source boundary
+
+At one complete p-power fibre let U be Haar, E the union of all
+actual pure-p originals, and D(x) the union of all active nonpure
+originals. Write
+
+    u=U(E), nu=U(.|E^c), beta(x)=nu(D(x)),
+    alpha(x)=U(E union D(x))=u+(1-u)beta(x).       (FC1087)
+
+Distinct pure moduli give u<1/(p-1)<=1/2. BBMST's delta row has one
+common density on the entire bad union, namely
+(alpha-delta)_+/[alpha(1-delta)], relative to U. The pure-first
+half-threshold row of FC936 instead has zero mass on E. When u>0,
+these two rows coincide for a fixed delta in[0,1/2] exactly when
+alpha<=delta. Both then fully condition off E union D. Thus some
+admissible delta matches a whole stage exactly when alpha(x)<=1/2
+at every positive-mass earlier history; delta=1/2 works simultaneously.
+If u=0, the pure-first half row is the ordinary half row without this
+restriction. If u>0 and alpha>1/2, every admissible paper row retains
+at least u(2alpha-1)/alpha mass on E, so equality is impossible.
+
+The existing complete27-original family FC918 already witnesses this
+failure at its positive ternary cell Z_8 and p=5: u=1/5, beta=3/4,
+alpha=4/5. The BBMST half row gives pure root0 mass3/20; FC936's
+pure-first row gives it zero. All original labels and heights of that
+family are retained. No second counterexample family is needed.
+
+There is a further distinction between sequential zero-fee rows and
+global conditioning. Let eta=(tensor_i nu_i) restricted to R_k, with
+mass s>0. If a BBMST prefix equals eta/s, every prefix fee must vanish:
+later marginal preservation cannot remove positive mass on an earlier
+B_i. Its rows must therefore be the unique sequential conditioning
+outside each full assigned union. On R_k their joint density is
+
+    dQ_k^0/d(tensor_i nu_i)=1/W(x),
+    W(x)=product_(i<=k)(1-beta_i(x_<i)).           (FC1088)
+
+Consequently eta/s is a BBMST prefix exactly when the sequential
+construction exists, every reachable total alpha_i<=1/2, and W(x)=s
+almost everywhere on R_k. Local row matching alone omits the last
+condition. FC1073--1075's complete G family already realizes that
+omission: its zero-fee BBMST ternary marginal is(1/2,1/2), whereas
+the global conditioned source has marginal(15/37,22/37). At the7
+stage the maximal total fraction2/7 is over reachable histories;
+the deleted history(t,x)=(1,1) is not in that maximum. These source
+identities are direct applications of the paper's row formula and
+marginal lemma. They do not require another tail theorem or repeated
+finite-family computations.
+
+## The published no-2-or-3 margin supplies arbitrary companion heads
+
+BBMST Corollary6.3 and Table1, as explicitly used in its Theorem7.1,
+give g_2>1.26. Reuse their successful comparison schedule from
+f_2=5/4<1.26: start the scalar reserve at4/5 and take kappa=1.
+For any actual distinct family whose moduli have neither2 nor3, run
+the paper's rows with that schedule. The schedule depends only on
+the prime-index comparison, not on the family's phases. Its synthetic
+reserve stays positive at every finite prefix; after reaching the
+published stopping criterion use the already proved continuation.
+With B_i^o and P_i^o denoting this actual companion process,
+
+    muhat_i^o=4/5-sum_(2<j<=i)P_j^o(B_j^o)>0,
+    mu_i^o=1/5+muhat_i^o>1/5,
+    P_i^o(R_i^o)>=mu_i^o>1/5.                    (FC1089)
+
+Only the scalar reserve was reduced; there is no artificial forbidden
+class. This reuses the published successful comparison certificate,
+not a newly computed table or optimization. All its deltas lie in
+[0,1/2]. Absent-prime stages have empty bad union and do not alter
+the actual law. The statement bounds distorted survivor mass, not
+Haar density, and permits arbitrarily many companion primes and
+arbitrary finite heights and interactions.
+
+## Only the head component containing3 needs a separate density input
+
+For an integer B form the HEAD interaction graph from originals whose
+entire prime support is at most B. Join primes occurring together in
+one such original. Let C be its connected component containing3,
+adjoining3 as an isolated vertex if needed. This is NOT the induced
+old-vertex graph of the full family: a future original may connect
+different head components. Let k=pi(B)>=10 and suppose the actual
+C-supported head subfamily has Haar survivor proportion at least h>0.
+Resolve its coordinates to the full original heights; uniform lifting
+does not change this proportion.
+
+Run half-threshold BBMST rows on C. Surviving-point density multipliers
+are at least one, hence this core's actual survivor mass r_C is at
+least h. Apply FC1089 to ALL remaining head originals together. Their
+moduli avoid2 and3; there is no restriction on their connected
+components. Since every head original lies entirely in C or in its
+complement, each row depends only on earlier coordinates of its own
+block. Interleaving their prime stages therefore gives ONE legitimate
+BBMST prefix and the exact factorization
+
+    P_k=P_k^C tensor P_k^o,
+    r_k=r_C*r_o>h/5.                             (FC1090)
+
+In the standalone companion process, primes of C are empty stages.
+Replacing their irrelevant deltas by the core's half thresholds does
+not change any companion row or fee. This is actual disjoint-coordinate
+factorization at the HEAD, not an independence claim about future
+classes. After k, retain every future original and use the paper's
+ordinary full-history rows, even when those originals join the blocks.
+
+Every prefix delta is at most1/2, so the generic supplier(21) gives
+
+    kappa<=product_(3<=p<=B, p prime)
+                  [1+2(3p-1)/(p-1)^2],
+    kappa/r_k<(5/h)product_(3<=p<=B)(p/(p-1))^6.   (FC1091)
+
+For the second inequality put t=1/(p-1) and use
+1+6t+4t^2<=(1+t)^6. Including absent primes only increases this
+upper bound. Combining with FC1084 supplies the explicit sufficient
+test
+
+    (5/h)product_(3<=p<=B)(p/(p-1))^6
+          <=pi(B)(log pi(B)+loglog pi(B)-3)^2.     (FC1092)
+
+There is no bound on the total number of primes<=B in this test.
+The unbounded complementary head has already been paid by FC1089.
+
+For any uniform h>=h0>0, the existing
+[Rosser--Schoenfeld prime-product bound](../../../../../../Library/Arith/rosser1962approximate.md)
+makes the left side O_h0((log B)^6). Standard prime counting gives
+pi(B)(log pi(B)+loglog pi(B)-3)^2 asymptotic to B log B. Hence
+there is an absolute cutoff B0(h0) after which FC1092 holds for all B.
+No numerical value or optimality of B0 is asserted. If there are no
+future originals, FC1090 itself already proves noncoverage.
+
+Two existing density inputs instantiate this same interface:
+
+- **At most three primes in C.** Use Harrington--Klein--Lowrance--
+  Trifonov Theorem1.9 and its explicit any-three-primes extension
+  cited above. Complete the finite exponent box with missing distinct
+  nonunit moduli and arbitrary phases; this enlarges the covered set.
+  If A,D,E are its three pure-power reciprocal sums, the theorem's
+  complete-box covered bound is A+D+E-ADE. This is increasing in each
+  variable in the odd-prime ranges. With t_p=1/(p-1), the original
+  core therefore leaves at least1-t_p-t_q-t_r+t_pt_qt_r>=5/48.
+  Omit absent directions. Thus h0=5/48 and r_k>1/48 are valid.
+- **At most eight primes in C.** The already recorded
+  [Schroeder edition1.0.1 density corollary](../../../../../../Library/Arith/schroeder2026nine.md),
+  `cor:uncovered-density`, gives h0=1/1002375 for arbitrary original
+  heights and phases. It supplies r_k>1/5011875 here. This remains an
+  attributed external theorem: the existing local finite-certificate
+  verification is not a complete local kernel replay of its
+  arbitrary-height proof. Its source geometry and computations are
+  reused, not reconstructed or counted as new results.
+
+Consequently, using the stated source result, there is an absolute B0
+such that a distinct odd family is noncovering whenever, for some
+B>=B0, its HEAD component containing3 has at most eight vertices.
+All other head components and all future originals are unrestricted.
+This does not assert noncoverage merely from an eight-prime component
+at an arbitrary small cutoff. Nor is it the earlier contract limiting
+the TOTAL number of small primes, or Report599's restriction on
+blocks of the FULL interaction graph.
+
+## The remaining head obligation is concentrated but not discharged
+
+If a hypothetical whole cover is globally minimal, divisor closure
+already implies that a future original's complete nonunit old part
+is a head original. It is therefore contained in a single head
+component. This is the same old-part classification used in FC1079;
+it does not constrain the size of C, and different future originals
+can connect different head components through the same new prime.
+
+The preceding reuse removes any need to separately prove a general
+no3 companion theorem or another tail induction. It leaves the
+substantive requirement: force a proper cutoff with a sufficiently
+large actual ternary-connected core reserve, or a sufficiently small
+complete same-source query supplier, to meet FC1084. Private-point
+existence gives neither a uniform core density nor the needed ratio.
+Under the eight-prime source premise a hypothetical cover must have
+more than eight vertices in that head component at the stated large
+cutoff; nothing here excludes such a component.
+
+FC1083--1092 and their source applications are ordinary mathematical
+interface derivations with independent symbolic review. They add no
+Lean declaration, repeat no published tail proof, and make no claim
+of literature priority. Unrestricted Erdős #7 remains unresolved.
