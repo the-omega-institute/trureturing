@@ -114,9 +114,9 @@ supplies a smooth structure on the actual project orbit quotient in its
 existing quotient topology, with a locally diffeomorphic projection. Given
 a smooth source metric and deck transformations preserving its tangent
 inner products, the external metric descent theorem then supplies the
-unique quotient metric preserving projection differentials. Smoothness and
-metric invariance of arbitrary hyperbolic deck transformations remain
-premises of this construction.
+unique quotient metric preserving projection differentials. The concrete
+hyperbolic source construction below supplies the required smoothness
+and tangent-metric invariance for its isometric deck maps.
 
 A separate transient check connects the source metrics. On the existing
 `HyperbolicThreeSpace`, choose an orthonormal identification of its ambient
@@ -140,15 +140,37 @@ This derives the distance identity without assuming it. Existing
 hyperbolic completeness consequently gives `MetricComplete` for this
 same constructed source metric.
 
+Every isometric self-equivalence of the model's original hyperbolic distance
+is smooth in this same chart and preserves this metric on tangent vectors.
+Four fixed target anchors recover reciprocal height and the two horizontal
+coordinates from cosh distances. Pulling the anchors back by the inverse
+isometry expresses those coordinates using smooth squared coordinate
+norms divided by positive heights, including at coincident anchor points.
+This proves smoothness without a regularity premise. The cosh-distance
+identity then gives an equality between squared coordinate differences
+and endpoint heights. Along short coordinate lines, the punctured slope
+limit yields the differential norm identity; polarization gives preservation
+of the metric's tangent inner products. This check uses the same source
+chart and metric as the distance and completeness checks above.
+
+For every group acting by isometries of that original hyperbolic distance,
+freeness and compact-set proper discontinuity now give a smooth structure
+on the actual project `OrbitQuotient` with its existing quotient topology.
+The canonical orbit projection is a smooth local diffeomorphism. In that
+constructed smooth structure there is a unique Riemannian metric whose
+inner products pull back to the same concrete source metric through the
+projection differential. The check applies the smooth covering-branch and
+metric-descent constructions above, using the verified arbitrary-isometry
+smoothness and invariance rather than assuming them. No finite group,
+cocompactness or finite-volume premise is used for this construction.
+
 These checks compiled under the project pins using the unchanged cited
 external sources and only `propext`, `Classical.choice` and `Quot.sound`.
 They are temporary applications of existing results; no new named project
 declaration or external dependency is installed by this note.
 
-The remaining bridge needs smoothness and tangent-metric invariance for all
-relevant hyperbolic deck transformations, equality of the descended
-Riemannian path distance with the actual orbit metric, and completeness
-downstairs. The model's curvature of minus one and its Levi-Civita data must
+The remaining bridge needs equality of the descended Riemannian path
+distance with the actual orbit metric and completeness downstairs. The model's curvature of minus one and its Levi-Civita data must
 also be supplied before applying curvature transport. Finite covolume,
 noncompact cusp analysis, and the global Mostow-Prasad existence and
 uniqueness argument remain separate obligations. Compact positive-curvature
