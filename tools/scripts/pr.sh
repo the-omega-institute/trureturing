@@ -98,17 +98,41 @@ gh_create() {
 parse_snapshot() {
   local required="$1" head="$2" number="$3"
   jq -Rsec --argjson required "$required" --arg head "$head" --argjson number "$number" --arg repo "$PR_REPO" '
+    def member($xs): . as $value | $xs | index($value) != null;
+    def database_id: type == "number" and . > 0 and . <= 9007199254740991 and floor == .;
+    def sha: type == "string" and test("^[0-9a-f]{40}$");
     fromjson | select(type == "object" and (.errors == null or .errors == [])) |
     .data.repository |
     select(type == "object" and .nameWithOwner == $repo and .pullRequest.number == $number) |
     .pullRequest as $pr |
+    select(($pr.headRefOid | sha) and ($pr.state | member(["OPEN","CLOSED","MERGED"]))) |
     select((.object | type == "object") and .object.oid == $head) |
-    select(.object.statusCheckRollup.contexts.pageInfo.hasNextPage == false) |
+    select((.object | has("statusCheckRollup")) and
+      (.object.statusCheckRollup == null or
+        ((.object.statusCheckRollup.contexts.nodes | type == "array") and
+         .object.statusCheckRollup.contexts.pageInfo.hasNextPage == false))) |
     (.object.statusCheckRollup.contexts.nodes // []) as $all |
     select($all | type == "array") |
-    select(all($all[]; .__typename == "StatusContext" or .__typename == "CheckRun")) |
-    select(all($all[]; if .__typename == "CheckRun" then .checkSuite.commit.oid == $head
-        and .checkSuite.checkRuns.pageInfo.hasNextPage == false else .commit.oid == $head end)) |
+    select(all($all[]; type == "object" and (if .__typename == "CheckRun" then
+        (.databaseId | database_id) and (.name | type == "string" and length > 0) and
+        (.status | member(["QUEUED","IN_PROGRESS","COMPLETED","WAITING","REQUESTED","PENDING"])) and
+        (if .status == "COMPLETED" then (.conclusion | member(["FAILURE","CANCELLED","TIMED_OUT","SUCCESS","NEUTRAL","SKIPPED","ACTION_REQUIRED","STARTUP_FAILURE","STALE"])) else .conclusion == null end) and
+        (.checkSuite.databaseId | database_id) and .checkSuite.commit.oid == $head and
+        .checkSuite.checkRuns.pageInfo.hasNextPage == false and
+        (.checkSuite.checkRuns.nodes | type == "array" and all(.[]; .databaseId | database_id))
+      elif .__typename == "StatusContext" then
+        (.id | type == "string" and length > 0) and (.context | type == "string" and length > 0) and
+        (.state | member(["FAILURE","ERROR","PENDING","EXPECTED","SUCCESS"])) and .commit.oid == $head
+      else false end))) |
+    [$all[] | select(.__typename == "CheckRun")] as $actions |
+    select(($actions | map(.databaseId) | length) == ($actions | map(.databaseId) | unique | length)) |
+    select(all($actions | map(select(.checkSuite.workflowRun != null)) | group_by(.checkSuite.databaseId)[];
+      (map(.checkSuite.checkRuns.nodes | map(.databaseId) | sort) | unique | length) == 1 and
+      (. as $suite | ($suite[0].checkSuite.checkRuns.nodes | map(.databaseId)) as $latest |
+        ($latest | length) == ($latest | unique | length) and
+        all($latest[]; . as $id | any($suite[]; .databaseId == $id)) and
+        ([$suite[] | select(.databaseId as $id | $latest | index($id) != null) | .name] |
+          length == (unique | length))))) |
     [$all[] | select(. as $c | .__typename == "StatusContext"
         or any(.checkSuite.checkRuns.nodes[]; .databaseId == $c.databaseId))] as $items |
     def name: if .__typename == "CheckRun" then .name else .context end;
@@ -122,7 +146,7 @@ parse_snapshot() {
         elif pending then {kind:"pending",check:name,state:state}
         elif green then {kind:"terminal",check:name,state:state}
         else error("invalid required-check state") end end] as $checks |
-    {state:$pr.state, stale:($pr.headRefOid != $head),
+    {state:$pr.state, stale:($pr.headRefOid != $head), observed_head:$pr.headRefOid,
      red:($checks | map(select(.kind == "red")) | first // null),
      pending:($checks | map(select(.kind == "pending")) | length),
      missing:($checks | map(select(.kind == "missing")) | length),
