@@ -7253,3 +7253,196 @@ The producer performs7387 checks, including1799 new literal two-depth query layo
 The computations are exact arithmetic controls of the stated ordinary mathematical argument, not Lean verification.
 
 The remaining obstruction is now sharper: adding these actual second-layer relations materially improves the71 reserve, yet the declared comparison still has mean above72. Deeper actual support, cross-coordinate actual exclusions or a different finite-block estimate are possible further inputs; none is assumed in this result. In particular the smaller infinite-pure mass (p-2)/(p-1) cannot replace the finite actual mask mass as an upper reference.
+
+## Every finite pure-mask depth retains the73 barrier for the fixed clipping prefix
+
+For the fixed FC159 initial mass and complete-query anchor comparison, increasing only the retained pure-prime depths cannot make the declared clipping scheme pass73. This applies to every finite vector of nonternary mask depths, and more generally to every finite subset of the specified actual pure combs. The predecessor operations43,47,53,59,61,67,71 remain in that order with half clipping. A finite-depth version either fails earlier, or its state after71 fails the73 ledger for every legal constant clipping parameter.
+
+The initial mass lower bound remains exactly h=1/D0 from(FC306), even when a finite mask is deepened. The result does not analyze a larger finite-depth-dependent source mass obtained from a tighter density cap. It follows by a monotonicity proof and one exact optimistic endpoint calculation. The endpoint normalized mean after71 is
+
+    87.13772129204611... >87>72.                       (FC305)
+
+Every finite-depth version which reaches that stage has normalized mean at least this large. The value72 is the necessary next-stage mean threshold at prime73.
+
+The endpoint is an optimistic ALGORITHMIC comparison, not a supported physical source. It removes no actual residue and proves no absence of actual survivors. The obstruction concerns this fixed initial mass, fixed predecessor order and parameters, cap-one anchor abstraction, and clipping/upper-mass update. It does not exclude a different initial source, earlier parameter choices, order, phase-dependent query caps, joint exclusions or another proof of noncoverage. Unrestricted Erdős #7 remains unresolved.
+
+### 1. The finite-source contract and its comparison family
+
+Keep the old prime set
+
+    R={3,5,7,11,13,17,19,23,29,31,37,41},
+
+either actual FC110/FC131 pure/star/group skeleton, N>=N_+, old-only ternary height at most one, and the FC159 nongroup remainder restrictions: no additional pure/star numerical label and no shallow head/private grouped label. Its fixed positive source constants are
+
+    m_star=36518862868606981/466438558966380000,
+    C_V=1048576/403767,
+    D0=(3/2)*C_V/m_star
+       =1816999451688960000/36518862868606981,
+    h=1/D0.                                          (FC306)
+
+The same initial physical submeasure eta0=mu/D0 has mass h, full-Haar density at most one, and support inside the actual full core survivor. Queries may use every finite head height required by the entire actual family, via uniform lifting.
+
+For each nonternary p, the skeleton's actual pure cylinders at different depths are pairwise disjoint, as shown in Report528 FC147–FC150. If the first n_p such cylinders are retained as support information, their reference complement has Haar mass
+
+    A_(p,n_p)=1-sum_(e=1..n_p)p^(-e)
+             =(p-2+p^(-n_p))/(p-1).                 (FC307)
+
+Only cylinders actually present in the finite original family may be used for its physical domination statement. In particular n_p cannot exceed the available skeleton depth. The formula also allows n_p=0, when none of that coordinate's pure support information is used. Independent finite depths on the different nonternary axes are permitted.
+
+The ternary reference remains the two roots avoiding the actual0 mod3, of mass A_3=2/3. No pure9 or further ternary exclusion is invented. Every restricted factor has absolute depth-e cylinder cap p^(-e). Reuse the general anchor law of Reports771/779 on positive integer load v:
+
+    nu_(p,A)(1)=A-1/p,
+    nu_(p,A)(v)=(p-1)/p^v for each v>=2.             (FC308)
+
+It is a positive measure for A>=1/p, of total mass A. The product of these factors, pushed forward by the load product, is the raw auxiliary comparison Pi_raw(A). The existing all-layout comparison retains unrelated query phases across different numerical divisors and exponent depths; its conditional ordered-increment/Jensen argument does not factor the actual source or identify different layouts.
+
+For physical finite masks, domination of eta0 by the enlarged product reference and the existing theorem give its simultaneous increasing-convex comparison. Initialize the equal-mass comparator as Top_h(Pi_raw(A)), with a split cutoff atom where necessary.
+
+Define the optimistic masses
+
+    A_(p,infinity)=(p-2)/(p-1), p!=3,
+    A_(3,infinity)=2/3.                              (FC309)
+
+Every finite value(FC307) is strictly larger. The same lower envelope holds for any finite subset of the specified actual pure cylinders, whose deleted mass cannot exceed the full geometric sum. The endpoint is NOT used as an upper reference for a finite actual source: it can be too small for that purpose.
+
+Its initialization is nonetheless mathematically well-defined. The constants in(FC306) give exactly
+
+    mass(Pi_raw(infinity))=2/(3*C_V),
+    h=m_star*mass(Pi_raw(infinity)),
+    0<m_star<1.                                     (FC310)
+
+These equalities and inequalities are also checked by exact rational arithmetic. Thus Top_h can be taken at the endpoint without assuming any nonexistent finite realization of all pure exclusions.
+
+### 2. Compare both mass and normalized law
+
+For a probability law P on positive integer loads, write S_P(t)=P(Z>t). The first-order stochastic order P_G<=st P_B means S_G(t)<=S_B(t) for every real t. The order on comparison states is
+
+    (m_G,P_G) better than (m_B,P_B)
+      iff m_G>=m_B>0 and P_G<=st P_B.                (FC311)
+
+The actual auxiliary measure is Pi=mP. Normalization here only expresses a comparison order; it does not normalize or replace a physical covering source. The laws have finite moments of every order used below.
+
+For a finite positive measure nu and0<a<=mass(nu), retaining its largest a units of mass gives
+
+    Top_a(nu)((t,infinity))=min(a,nu((t,infinity))).  (FC312)
+
+If nu has at least a mass above t, all retained mass is above t. Otherwise all mass above t is retained and the remainder is at or below t. This includes a split boundary atom. On the positive integers a finite cutoff exists because the tails tend to zero, although a bounded numerical inventory must still establish that it resolves that cutoff.
+
+For a probability Q and retained fraction0<r<=1, define U_r(Q)=Top_r(Q)/r. Then
+
+    S_(U_r(Q))(t)=min(1,S_Q(t)/r).                    (FC313)
+
+Consequently Q_G<=st Q_B and r_G>=r_B>0 imply U_(r_G)(Q_G)<=st U_(r_B)(Q_B). This step handles the different retained masses: the better state's numerator is smaller and its denominator is larger.
+
+The order of the initial states follows directly. If A_p^G<=A_p^B, then
+
+    nu_(p,A_p^B)-nu_(p,A_p^G)
+       =(A_p^B-A_p^G)*delta_1
+
+is nonnegative. Products and pushforward by the product load preserve measure domination, so Pi_raw^G<=Pi_raw^B. Taking Top_h on both and using(FC312) preserves every tail inequality; dividing both by h gives the normalized stochastic order. Their masses are equal. In particular the optimistic endpoint is better than every finite mask initialization in the sense of(FC311).
+
+### 3. The full fixed clipping update preserves this order
+
+At a prime q take the SAME parameter in both compared algorithms, satisfying
+
+    0<delta<1,
+    C=1/(1-delta)<=q.                               (FC314)
+
+The latter condition ensures that the normalized capped factor has a nonnegative load-one atom. Every actual predecessor stage here uses delta=1/2 and q>=43, so it satisfies(FC314).
+
+Put T=delta(q-1), D=(1-delta)(q-1), and
+
+    r(P)=1-E_P[(Z-T)_+]/D.                           (FC315)
+
+The stage is admitted only if r(P)>0, and then r(P)<=1. The existing charge recurrence is m'=m*r(P). Stochastic order gives the order for every increasing payoff, including this stop-loss. Therefore P_G<=st P_B implies r_G>=r_B. If the worse state passes, the better state passes and
+
+    m_G'=m_G*r_G >= m_B*r_B=m_B'.                   (FC316)
+
+Append the common normalized capped multiplier V with
+
+    kappa(1)=1-C/q,
+    kappa(v)=C(q-1)/q^v for v>=2.
+
+If Q is the law of ZV, conditioning on the common positive V gives
+
+    S_(Q_G)(t)=integral S_(P_G)(t/v) dkappa(v)
+              <=integral S_(P_B)(t/v) dkappa(v)
+              =S_(Q_B)(t).                          (FC317)
+
+This couples only auxiliary comparison variables, not actual covering histories. The next comparison is
+
+    Pi'=Top_(m*r)(m*Q)=m*Top_r(Q),
+
+whose normalized law is U_r(Q). Apply(FC313) with Q_G<=st Q_B and r_G>=r_B to obtain P_G'<=st P_B'. Together with(FC316), this proves preservation of the full state order through append, changed mass and split-atom trimming.
+
+Induction handles any finite common legal schedule. If the optimistic version fails at some stage, every finite version either failed earlier or also fails there, because its retained fraction cannot be larger. No ordering of negative candidate masses is asserted.
+
+For every finite mask which survives the declared seven-step half-clipping prefix,
+
+    m_infinity>=m_finite,
+    P_infinity<=st P_finite.                        (FC318)
+
+Hence its normalized mean is at least the optimistic normalized mean. Normalized higher moments and stop-losses are also ordered. The unnormalized moments m*E[Z^k] are not asserted to be monotone, since the mass and normalized law move in opposite directions. A comparison of raw first/fourth moments alone would not prove this induction.
+
+### 4. Exact endpoint witness with every auxiliary tail retained
+
+The endpoint calculation uses(FC309), the unchanged initial h and exactly the schedule43,47,53,59,61,67,71,73 with half clipping, stopping before any append at the first nonpositive candidate mass. There is no depth, parameter or ordering search.
+
+For each factor the complete moments of orders0,1,2,4 are
+
+    M0=A,
+    M1=p/(p-1)-(1-A),
+    M2=p(p+1)/(p-1)^2-(1-A),
+    M4=p(p^3+11p^2+11p+1)/(p-1)^4-(1-A).            (FC319)
+
+Product moments multiply. The fixed inventory stores exact load atoms through256, together with these COMPLETE moments. The full stop-loss at a resolved threshold is
+
+    H_Pi(T)=W-T*m+sum_(z<T)(T-z)*pi_z.               (FC320)
+
+Appending a positive multiplier cannot send a load above256 back into the low inventory. Trimming removes exact lower atoms and their moment contributions. Every cutoff in this calculation is at most48. All complete tail mass and moments above256 remain in the state; neither original exponents nor auxiliary tails are cut off.
+
+The following decimals display exact fractions:
+
+| After optimistic stage | Ledger mass | Normalized mean | Top cutoff |
+|---|---:|---:|---:|
+| initial | .020098444627851434 | recorded in exact data | 12 |
+| 43 | .016706254674579275 | 22.1650330517 | 12 |
+| 47 | .013515201350816035 | 25.7563174320 | 12 |
+| 53 | .010735026563290662 | 29.7840370766 | 16 |
+| 59 | .008277099389001690 | 35.2088814694 | 18 |
+| 61 | .005739318480923232 | 43.2011949025 | 24 |
+| 67 | .003498073806514308 | 55.9566813839 | 32 |
+| 71 | .001342666777763802 | 87.1377212920 | 48 |
+
+These are auxiliary ledger values, not claimed masses of an actual infinite-mask source. At73, the exact half-clipping candidate is
+
+    m_candidate=-.0005645809852743903...<-1/2000,
+    72*m71-W71=-.020324915469878052...<-1/50.        (FC321)
+
+The calculation stops before a73 multiplier or trim is appended. It certifies the simpler reusable witness W71>87*m71, which proves(FC305).
+
+### 5. The universal finite-depth obstruction
+
+Take any finite mask of actual old pure-comb cylinders, with the same fixed initial h and anchor-cap-one comparison. If it fails during the seven predecessors, it already cannot pass the full declared schedule. Otherwise(FC318) and(FC305) imply
+
+    E_(P_finite)Z >= E_(P_infinity)Z >87>72.          (FC322)
+
+At73, take any legal constant delta satisfying(FC314). Write T=72delta and D=72(1-delta). The elementary inequality (Z-T)_+>=Z-T gives
+
+    m_candidate
+      =m*[1-E_P(Z-T)_+/D]
+      <=m*(72-E_PZ)/[72(1-delta)]<0.                (FC323)
+
+Thus no such final parameter gives a positive ledger. This is the necessary direction of the existing mean criterion in Report773, and its direct proof avoids applying a capped probability factor outside its legal domain. Indeed the debit obstruction alone holds for every0<delta<1; only the legal subset is relevant to the actual update.
+
+The result covers every finite independent axis-depth vector and any finite subset of the specified combs, because each initialization has masses at least(FC309). Physical source validity is claimed only when those finite cylinders are actually present. It requires no exchange of a finite covering family with an infinite one and no assertion that the optimistic raw measure dominates a finite source.
+
+Increasing pure depth within this fixed-h, cap-one, mass-only anchor abstraction is therefore insufficient. The proof leaves open using actual phase-dependent cylinder caps, cross-coordinate exclusions, a larger initial mass justified by a finite-depth density cap, different earlier clipping parameters or order, and other continuation methods. It does not rule out all methods using pure-depth source information. It also leaves open all statements about actual covering or survival outside the previously proved source results.
+
+### 6. Reuse and verification
+
+[Report771](../750-799/771-stop-loss-profiles-preserve-the-ordinary-source-through-thirteen-primes.md) and [Report779](../750-799/779-the-original-capped-source-lowers-the-general-eight-prime-tail-cutoff.md) provide the general anchor and capped-coordinate comparisons. [Report773](../750-799/773-repeated-upper-mass-comparison-lowers-the-fourteen-prime-tail-cutoff.md) provides the upper-mass construction, exact clipping/Top update and mean criterion. [Report778](../750-799/778-upper-mass-haar-comparison-lowers-the-general-eight-prime-tail-cutoff.md) already uses stochastic comparison of auxiliary run products. The proof above exposes the varying-retained-mass normalized-law order needed to compose those interfaces; it is ordinary mathematics, not a new Lean verification or a claim of literature priority. Targeted repository searches found these ingredients but no existing standalone statement of this exact iterated depth-envelope obstruction.
+
+The [endpoint consumer](../../../frontier/cover-geometry/pure-support-profiles/ideal_depth_envelope.py) and its [exact result](../../../frontier/cover-geometry/pure-support-profiles/ideal_depth_envelope.json) use the [depth-two arithmetic definitions](../../../frontier/cover-geometry/pure-support-profiles/depth_two_profile.py). It accepts an explicit arithmetic-library path and output path, records the library SHA256 as provenance and loads its definitions without invoking its main or finite controls. The source digest is not a cache or reuse gate. It checks the declared prime support, moment orders and inventory, and uses the existing depth-two factor/convolution/trim routines only as arithmetic primitives. All retained dependency metadata uses a basename. Its177 checks cover these input parameters, factor domains, the exact feasibility identity(FC310), complete moments and tail remainders, resolved quantiles, fixed-stage charges, first failure and strict witness(FC321). No previous numerical suite or finite-layout control is rerun.
+
+The exact endpoint arithmetic supplies the witness used with the ordinary monotonicity proof. Finite arithmetic controls do not replace that universal proof; no Lean verification is claimed.
