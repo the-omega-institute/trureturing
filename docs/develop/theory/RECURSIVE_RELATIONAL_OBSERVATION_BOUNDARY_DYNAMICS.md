@@ -24923,3 +24923,257 @@ $$
 本节的层次判断是仓内理论综合：它复用 Fibonacci 卷 §§2–5 的自由树、替换、组成和数量商，以及本卷的动态充分边界条件；没有新增 Lean 声明，也不把两叶生成基宣称为物理时空或原胞自动机。
 
 ## 113.99 追加锚
+
+## 114. 表示核判据与生成秩下界
+
+本节把空间、时间、边界和记忆的互相恢复写成同一个核判据，并给出“保留两条独立组成方向”时的最小生成秩。组成读数可以精确恢复组成商，但它不自动保留有序过程的顺序与括号。
+
+### 定义 114.1（表示核与共同载体）
+
+令 $S$ 为共同来源，表示
+
+$$
+r_i:S\to R_i,
+\qquad
+K_i=\ker r_i:=\{(s,t)\in S\times S:r_i(s)=r_i(t)\}.
+$$
+
+在实际像 $r_i(S)$ 上定义候选转换
+
+$$
+t_{ij}:r_i(S)\to r_j(S),
+\qquad
+t_{ij}(r_i(s)):=r_j(s).
+\tag{114.1}
+$$
+
+### 定理 114.2（核包含、互相恢复与动态自然性）
+
+候选转换 (114.1) 良定义当且仅当
+
+$$
+K_i\subseteq K_j.
+\tag{114.2}
+$$
+
+因此 $r_i$ 与 $r_j$ 互相可恢复（即 $t_{ij}$ 与 $t_{ji}$ 都良定义且互为逆）当且仅当
+
+$$
+K_i=K_j=:K.
+\tag{114.3}
+$$
+
+在此情形，一族表示若具有同一个核，就共同因子化经过商载体 $S/K$：
+
+$$
+\bar r_i:S/K\longrightarrow r_i(S),
+\qquad
+\bar r_i([s])=r_i(s),
+$$
+
+且每个 $\bar r_i$ 都是双射，转换满足 $t_{ij}=\bar r_j\circ\bar r_i^{-1}$。
+
+若 $a$ 是共同合法动作，$T_a$ 是其在 $S$ 上的作用，且各表示上的下降作用满足
+
+$$
+\bar T_{i,a}\circ r_i=r_i\circ T_a,
+\qquad
+\bar T_{j,a}\circ r_j=r_j\circ T_a,
+$$
+
+则互相恢复的动态自然性条件为
+
+$$
+\boxed{\quad t_{ij}\circ\bar T_{i,a}
+=\bar T_{j,a}\circ t_{ij}.\quad}
+\tag{114.4}
+$$
+
+若动作是部分定义的，上式还要求表示之间运输同一个合法域、失败标签、输出标签、记录和选择器：若 $D_{i,a}$ 是表示 $i$ 的合法域，则
+
+$$
+t_{ij}(D_{i,a})=D_{j,a},\qquad
+O_{j,a}\circ t_{ij}=O_{i,a},\qquad
+t_{ij}\circ U_{i,a}=U_{j,a}\circ t_{ij},\qquad
+\pi_j\circ t_{ij}=\pi_i.
+\tag{114.13}
+$$
+
+这些等式在相应的实际像上比较；失败、记录和权限也必须包含在 $O$ 或 $U$ 的标签中，不能只要求两个表示在交集上恰好都有定义。
+
+**证明。** 若 $K_i\subseteq K_j$ 且 $r_i(s)=r_i(t)$，则 $(s,t)\in K_i$，从而 $(s,t)\in K_j$，故 $r_j(s)=r_j(t)$，所以 (114.1) 与代表元无关。反之，若 (114.1) 良定义，任取 $(s,t)\in K_i$，由 $r_i(s)=r_i(t)$ 得 $r_j(s)=t_{ij}(r_i(s))=t_{ij}(r_i(t))=r_j(t)$，故 $(s,t)\in K_j$。这证明了 (114.2) 的充要性。
+
+若两个转换互为逆，则各自良定义，(114.2) 对 $(i,j)$ 和 $(j,i)$ 同时成立，因而 $K_i=K_j$。反过来，若 $K_i=K_j$，两转换都良定义，并且
+
+$$
+t_{ji}(t_{ij}(r_i(s)))=t_{ji}(r_j(s))=r_i(s),
+\qquad
+t_{ij}(t_{ji}(r_j(s)))=r_j(s),
+$$
+
+所以它们互为逆。共同因子化由核的定义给出；将下降方程代入 $t_{ij}\circ\bar T_{i,a}\circ r_i$ 与 $\bar T_{j,a}\circ t_{ij}\circ r_i$，再利用 $r_i(S)$ 上的满射性，得到 (114.4)。证毕。$\square$
+
+这一定理应用于四种表达时，$K$ 必须是同一个任务核；若组成摘要删去了任务要求的失败、权限、顺序或括号信息，它的核就会更粗，不能据此声称动态的四表达恢复。
+
+### 推论 114.3（有限共同任务商上的四图表恢复）
+
+采用 §42.7 的有限实际来源：$S$ 有限，$W$ 是带完整输出、失败、记录和后继标签的有限动作词族，
+
+$$
+\Phi_W(s)=\bigl(\operatorname{Resp}(s,w)\bigr)_{w\in W},
+\qquad
+K=\ker\Phi_W,
+\qquad
+q:S\to Q=S/K.
+\tag{114.14}
+$$
+
+令 $S=\bigcup_iS_i$，$S_{ij}=S_i\cap S_j$，其中 $S_i\subseteq S$ 为空间、时间、边界和记忆四个局部来源；取 $e_i:S_i\to R_i$ 满足
+
+$$
+\ker e_i=\ker(q|_{S_i}),
+\qquad Q_i=q[S_i].
+\tag{114.15}
+$$
+
+若 $Q_i=Q$，各实际重叠 $S_{ij}$ 对 $K$ 饱和，且所有声明后继的实际像闭合，则
+
+$$
+d_i(e_i(s))=q(s),
+\qquad
+t_{ij}=d_j^{-1}\circ d_i
+\tag{114.16}
+$$
+
+在实际重叠像上给出四种表达之间的双射。它们满足三重重叠上的 cocycle；若再满足 (114.13) 的合法域、失败、输出、记录、选择器和后继运输，则得到 §42.7 的动态自然性。实际来源闭路上的运输为恒等；形式接口若要得到同样结论，还必须另加商上的 holonomy 平凡和来源像闭合。
+
+若某个 $Q_i$ 只是 $Q$ 的真子集，或者实际后继把一个图表像送出其声明来源，则只能得到局部图册，不能声称四种表达在同一个全局任务商上互相恢复。
+
+### 定义 114.3（零元原子与有序二元组合）
+
+令 $A$ 为有限原子集合，签名只有零元原子和有序二元组合：
+
+$$
+\mathcal T_A::=a\ (a\in A)\mid\langle u,v\rangle.
+$$
+
+令 $G$ 为自由阿贝尔群，组成映射 $c:\mathcal T_A\to G$ 满足
+
+$$
+c(\langle u,v\rangle)=c(u)+c(v).
+\tag{114.5}
+$$
+
+任务要求恢复两条独立组成方向，记为
+
+$$
+\operatorname{rank}_{\mathbb Z}\langle c(\mathcal T_A)\rangle\ge 2.
+\tag{114.6}
+$$
+
+### 定理 114.4（生成秩下界与两原子实现）
+
+对任意这样的签名，
+
+$$
+\operatorname{rank}_{\mathbb Z}\langle c(\mathcal T_A)\rangle\le |A|.
+\tag{114.7}
+$$
+
+特别地，单原子 $A=\{\gamma\}$ 只能产生秩至多 $1$；若 $c(\gamma)$ 为零，秩更低。两原子可以达到秩 $2$：取 $A=\{\alpha,\beta\}$、$G=\mathbb Z^2$，并令
+
+$$
+c(\alpha)=(1,0),
+\qquad
+c(\beta)=(0,1).
+\tag{114.8}
+$$
+
+此时 $c(\mathcal T_A)$ 生成整个 $\mathbb Z^2$。
+
+**证明。** 令 $\ell_a(t)$ 为项 $t$ 中原子 $a$ 的出现次数。对项的结构作归纳，得到
+
+$$
+c(t)=\sum_{a\in A}\ell_a(t)c(a).
+\tag{114.9}
+$$
+
+所以生成子群由至多 $|A|$ 个元素 $c(a)$ 生成，秩至多 $|A|$；单原子时它包含在循环群 $\mathbb Zc(\gamma)$ 中。取 (114.8) 时，两个叶项已经给出标准基，故生成子群正是 $\mathbb Z^2$，达到秩 $2$。证毕。$\square$
+
+### 定理 114.5（已有两次数量恢复公式的 Fibonacci 特例）
+
+这是前文已有组成—替换读数恢复的一个具体特例；它只说明代数上的恢复，不提供付费观测、来源取得或物理执行接口。在 $G=\mathbb Z^2$ 上写组成向量 $v=(a,b)^{\mathsf T}$，取
+
+$$
+q=(2,3),
+\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},
+\qquad
+qM=(3,5).
+$$
+
+两次读数的矩阵为
+
+$$
+H=\begin{pmatrix}2&3\\3&5\end{pmatrix},
+\qquad
+\det H=1,
+\qquad
+H^{-1}=\begin{pmatrix}5&-3\\-3&2\end{pmatrix}.
+\tag{114.10}
+$$
+
+因此 $q(v)$ 与 $q(Mv)$ 唯一恢复 $v$：若读数为 $(x,y)^{\mathsf T}$，则
+
+$$
+\begin{pmatrix}a\\b\end{pmatrix}
+=H^{-1}\begin{pmatrix}x\\y\end{pmatrix}
+=\begin{pmatrix}5x-3y\\-3x+2y\end{pmatrix}.
+\tag{114.11}
+$$
+
+**证明。** 直接乘法给出 $(2,3)M=(3,5)$，且 $10-9=1$，故 $H$ 在 $\mathbb Z^2$ 上可逆，(114.11) 即为恢复公式。$\square$
+
+### 命题 114.6（数量与组成摘要遗忘顺序和括号）
+
+令
+
+$$
+t_{12}=\langle\alpha,\beta\rangle,
+\qquad
+t_{21}=\langle\beta,\alpha\rangle.
+$$
+
+加法组成给出
+
+$$
+c(t_{12})=c(t_{21})=(1,1),
+$$
+
+所以它们的数量读数 $q(c(t))$、$q(Mc(t))$ 以及由这些读数计算出的组成未来族
+
+$$
+\bigl\{q(M^k c(t)):k\ge0\bigr\}
+$$
+
+都相同。但是有序过程读取区分它们：
+
+$$
+\operatorname{Obs}_{\mathrm{ord}}(t_{12})=(\alpha,\beta)
+\ne(\beta,\alpha)=\operatorname{Obs}_{\mathrm{ord}}(t_{21}).
+\tag{114.12}
+$$
+
+括号也会被遗忘。例如
+
+$$
+\langle\langle\alpha,\beta\rangle,\alpha\rangle
+\quad\text{与}\quad
+\langle\alpha,\langle\beta,\alpha\rangle\rangle
+$$
+
+都有组成 $(2,1)$，却有不同的二叉括号结构。故数量/组成摘要不能自动恢复完整过程；只有把顺序、括号及其他任务要求的事件标签加入共同任务核，四表达才可能按定理 114.2 动态互相恢复。
+
+本节是理论综合，未新增 Lean。
+
+## 114.99 追加锚
