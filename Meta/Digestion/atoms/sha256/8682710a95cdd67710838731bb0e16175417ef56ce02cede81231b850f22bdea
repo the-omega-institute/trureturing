@@ -1,0 +1,29 @@
+**定理 15.4（负单位的全局半周期同步）。** $e=2$ 时 $-I\in\langle g\rangle$；$4\mid e$ 时不属于。其余模数写成
+
+$$
+e=2^\epsilon\prod_{i=1}^r p_i^{a_i},\qquad
+\epsilon\in\{0,1\},\quad r\ge1,
+$$
+
+其中 $p_i$ 为不同奇素数，则
+
+$$
+-I\in\langle g\rangle\pmod e
+\quad\Longleftrightarrow\quad
+\nu_2(\pi(p_1))=\cdots=\nu_2(\pi(p_r))=s\ge2.
+\tag{15.3}
+$$
+
+证明。模 $2$ 时 $-I=I$。模 $4$ 时 $M^3=I+2M\ne I,-I$，$M^2=\left(\begin{smallmatrix}1&1\\1&2\end{smallmatrix}\right)\ne I$，而 $M^6\equiv I$；其阶为 $6$，唯一非平凡二阶元素是 $M^3$，所以 $-I$ 不属于循环群。取逆转置保留此成员关系，约化即排除所有 $4\mid e$。
+
+令 $T_i=T_{p_i^{a_i}}$。引理 15.3 说明每个奇局部分量首先须有 $4\mid T_i$，然后实现 $-I$ 的指数恰为
+
+$$
+k\equiv T_i/2\pmod{T_i}.
+\tag{15.4}
+$$
+
+若 $\nu_2(T_i)<\nu_2(T_j)$，前一半周期模 $2^{\nu_2(T_i)}$ 非零，后一半周期则为零，故没有同一个 $k$。反之，若所有赋值为同一个 $s\ge2$，置 $L=\operatorname{lcm}_iT_i$；每个 $L/T_i$ 为奇数，故 $k=L/2$ 满足全部 (15.4)。若还有模 $2$ 分量，其周期为 $3$、所需指数类为 $0$；改取 $L'=\operatorname{lcm}(L,3)$、$k=L'/2$ 即同时满足它，而 $L'/T_i$ 仍为奇数。最后用引理 15.3 将 $\nu_2(T_i)$ 换成 $\nu_2(\pi(p_i))$，得 (15.3)。这要求一个共同半周期指数，不是分别存在局部指数。
+
+例如 $M^4\equiv-I\pmod3$ 给 $\pi(3)=8$；$M^5\equiv3I\pmod5$、$M^{10}\equiv-I\pmod5$，而 $M^4\not\equiv I\pmod5$，给 $\pi(5)=20$。模 $15$ 的两项半周期要求为 $k\equiv4\pmod8$、$k\equiv10\pmod{20}$，在模 $4$ 上冲突。所以 $T_{15}=40$、$h_{15}=80$，尽管两个局部循环群都含负单位。$\square$
+

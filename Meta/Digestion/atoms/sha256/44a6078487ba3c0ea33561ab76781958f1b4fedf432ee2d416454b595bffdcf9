@@ -1,0 +1,29 @@
+**定理 12.3（再允许一种连续几何就保留整个 $\Gamma$ 块）。** 在 $\Sigma_{\mathrm{mix}}$ 上，任选 $G=J$ 或 $G=C$，额外允许所有 $t\ge0$ 的 $W_G(t)$，记新字母表为 $\Sigma_{\mathrm{mix}+G}$。对定义 12.1 的标准无附加相位提升，有
+
+$$
+S_{\mathrm{mix}+G}=\mathcal A_\Gamma.
+$$
+
+相应的 $\Gamma$ 块 pinching 条件充分；全部实际历史统计相同，当且仅当全部 $\Gamma$ 轨道完整块相同。
+
+证明。对新合同再次使用实际效果的乘子代数 $\mathfrak D_G$。定理 12.2 中提取 $N$ 轨道矩阵单位的论证对它仍成立，故 $\mathcal A_N\subseteq\mathfrak D_G$，特别包含全部 $\Pi_p$。由于 $\operatorname{spec}L_G\subseteq[0,4]$，定理 11.3 在步长 $\pi/8$ 上的有限插值同样给出 $[L_G,X]\in\mathfrak D_G$；这里全部非负 $W_G(t)$ 均已明确许可。
+
+若 $q=\gamma_Gp\ne p$，在高层 Fourier 角上计算有
+
+$$
+\Pi_q[L_G,\Pi_p]\Pi_p
+=-\left(F_{G,p}
++\mathbf1_{\{\gamma_Gq=p\}}F_{G,q}^\dagger\right)
+\otimes|q\rangle\langle p|\in\mathfrak D_G.
+$$
+
+第一项来自 $U_G$，第二项只在有反向边时来自 $U_G^\dagger$。即使两项之和不是可逆矩阵，也可取低层零角：由 $F_{G,p}|0\rangle=|0\rangle$，括号中算子的 $00$ 矩阵元为 $1+\mathbf1_{\{\gamma_Gq=p\}}$，只能是 $1$ 或 $2$。左右乘 $E_{00}\otimes I_H$ 后，该非零系数可除去；再用 $E_{a0}$、$E_{0a}$ 左右夹乘并对 $a$ 求和，得到
+
+$$
+I_A\otimes|\gamma_Gp\rangle\langle p|\in\mathfrak D_G.
+$$
+
+固定点的对角矩阵单位本已存在。因此所有 $\gamma_G$ 邻边都取得了。$\gamma_J=j$ 与 $\gamma_C=gj$ 分别同 $N$ 生成 $\Gamma$，故与已有 $N$ 边组合，得到全部 $\Gamma$ 轨道内的矩阵单位。这证明 $\mathcal A_\Gamma\subseteq\mathfrak D_G\subseteq S_{\mathrm{mix}+G}$。
+
+反过来，所有离散几何及两种获准连续演化均保持每个 $\Gamma$ 轨道子空间，低层分支也逐块作用。因此实际效果都在 $\mathcal A_\Gamma$ 内，且 $\mathcal E_\Gamma$ 与每条分支交换。结合迹配对及逐分支归纳，得到等式、统计必要充分性和条件充分性。乘子中的高层投影仍不是额外获准的高层仪器；新增的是指定的连续 $W_G$ 族。$\square$
+
