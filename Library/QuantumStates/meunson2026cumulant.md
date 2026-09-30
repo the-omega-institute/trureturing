@@ -37,3 +37,10 @@ regularized density matrices are positive definite. The conjecture includes both
 monotonicity and nonnegativity. In the qubit counterexample, both output states are
 also positive definite and the first inequality fails: the input trace is exactly
 `50401283/7340144`, while the output trace is `1879639/266240`, which is strictly larger.
+
+## Verified locator
+
+DOI: `10.48550/arXiv.2606.31205`. Canonical source URL:
+`https://arxiv.org/abs/2606.31205v1`. The source is Conjecture 15,
+Section VIII.A, PDF p. 18. Regularization is Eq. `state_regularized`;
+the functional is Eq. `regularized_Cu-Q`, evaluated at alpha zero.
