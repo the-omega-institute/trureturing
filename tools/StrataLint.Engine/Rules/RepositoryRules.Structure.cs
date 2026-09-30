@@ -85,7 +85,73 @@ internal static partial class RepositoryRules
             }
         }
 
+        findings.AddRange(RegistrationSelfAssessment(context));
         return findings.ToImmutable();
+    }
+
+    private static readonly Regex RegistrationAssessmentToken = new(
+        @"(?<![\w'])(?:run_meta(?![\w'])|#eval(?![\w'])|TemplateBinding[\w']*|InformationRegistry[\w']*)",
+        RegexOptions.CultureInvariant);
+
+    internal static ImmutableArray<RuleFinding> RegistrationSelfAssessment(DeltaRuleContext context)
+    {
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        foreach (var (path, file) in context.Current.Files
+            .Where(item => item.Key.Value.StartsWith("Reg/", StringComparison.Ordinal)
+                && item.Key.Value.EndsWith(".lean", StringComparison.Ordinal))
+            .OrderBy(item => item.Key.Value, StringComparer.Ordinal))
+        {
+            // Blob ratchet: unchanged historical self-checks and deletions are exempt.
+            // Read candidate source directly; Reg may be absent from the Lean report.
+            if (context.Baseline.Files.TryGetValue(path, out var baseline)
+                && file.RawBytes.AsSpan().SequenceEqual(baseline.RawBytes.AsSpan())) continue;
+
+            foreach (var token in RegistrationAssessmentToken.Matches(WithoutRegistrationComments(file.Text))
+                .Select(match => match.Value).Distinct(StringComparer.Ordinal))
+                findings.Add(new RuleFinding(path.Value,
+                    $"REG-SELF-ASSESSMENT: Reg module may not read or assert registration assessment at compile time ({token}); move the check to LeanInformationAuditRegTests",
+                    AdmissionEffect.Block));
+        }
+
+        return findings.ToImmutable();
+    }
+
+    private static string WithoutRegistrationComments(string source)
+    {
+        var text = source.ToCharArray();
+        var depth = 0;
+        var lineComment = false;
+        for (var i = 0; i < source.Length; i++)
+        {
+            var pair = i + 1 < source.Length ? source.AsSpan(i, 2) : ReadOnlySpan<char>.Empty;
+            if (lineComment)
+            {
+                if (source[i] is '\r' or '\n') lineComment = false;
+                else text[i] = ' ';
+            }
+            else if (pair.SequenceEqual("/-"))
+            {
+                depth++;
+                text[i] = text[++i] = ' ';
+            }
+            else if (depth > 0 && pair.SequenceEqual("-/"))
+            {
+                depth--;
+                text[i] = text[++i] = ' ';
+            }
+            else if (depth > 0)
+            {
+                if (source[i] is not ('\r' or '\n')) text[i] = ' ';
+            }
+            else if (pair.SequenceEqual("--"))
+            {
+                lineComment = true;
+                text[i] = text[++i] = ' ';
+            }
+        }
+
+        // Spaces preserve identifier boundaries across removed comments.
+        return new string(text);
     }
 
     private static bool IsRegistrationImport(string module) =>
