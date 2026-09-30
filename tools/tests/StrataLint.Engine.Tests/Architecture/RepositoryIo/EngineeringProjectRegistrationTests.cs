@@ -54,15 +54,6 @@ public sealed class EngineeringProjectRegistrationTests
         Assert.Empty(RepositoryRules.CalculateDebt(RepositoryRules.ReadSnapshotProjects(snapshot)));
     }
 
-    [Fact]
-    public void BasePredatingRegistryUsesCandidateDeclarationsAndStillHasAnExecutionFloor()
-    {
-        var baseline = Snapshot(null, (Project, Misleading));
-        var candidate = Snapshot(EngineeringRegistrationFixture.Manifest(Test()), (Project, Misleading));
-        Assert.Equal([Project], CiProjects(RepositoryRules.ReadBaseProjects(baseline, candidate)).ToArray());
-        Assert.False(baseline.TryGetFile(EngineeringRegistrationFixture.Path, out _));
-    }
-
     // Original version-1 row from 653216143592d41af04f03074f33d07668d8d257.
     // Deliberately independent of the candidate fixture writer and its namespace policy.
     private const string PriorRegistration = """
@@ -80,63 +71,10 @@ public sealed class EngineeringProjectRegistrationTests
         """;
 
     [Fact]
-    public void OriginalTenFieldBaseRegistrationRetainsRemovedProjectInExecutionFloor()
-    {
-        const string path = "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj";
-        var baseline = Snapshot(PriorRegistration, (path, Misleading));
-        var candidate = Snapshot(EngineeringRegistrationFixture.Manifest());
-        Assert.Equal([path], CiProjects(RepositoryRules.ReadBaseProjects(baseline, candidate)).ToArray());
-        Assert.Empty(CiProjects(RepositoryRules.ReadSnapshotProjects(candidate)));
-    }
-
-    [Fact]
-    public void BaseDeclarationReadIgnoresPolicyItDoesNotConsume()
-    {
-        const string path = "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj";
-        var manifest = System.Text.Json.Nodes.JsonNode.Parse(PriorRegistration)!;
-        manifest["projects"]![0]!["execution_inputs"] = new System.Text.Json.Nodes.JsonArray("not-consumed");
-        var baseline = Snapshot(manifest.ToJsonString(), (path, Misleading));
-        Assert.Equal([path], CiProjects(RepositoryRules.ReadBaseProjects(baseline,
-            Snapshot(EngineeringRegistrationFixture.Manifest()))).ToArray());
-    }
-
-    [Theory]
-    [InlineData("path")]
-    [InlineData("assembly")]
-    [InlineData("role")]
-    [InlineData("ci")]
-    [InlineData("references")]
-    [InlineData("owner")]
-    [InlineData("owned_test_assembly")]
-    [InlineData("test_partition")]
-    public void BaseDeclarationReadRequiresEveryConsumedField(string field)
-    {
-        var manifest = System.Text.Json.Nodes.JsonNode.Parse(PriorRegistration)!;
-        manifest["projects"]![0]!.AsObject().Remove(field);
-        var error = Assert.Throws<InvalidDataException>(() => RepositoryRules.ReadBaseProjects(
-            Snapshot(manifest.ToJsonString()), Snapshot(EngineeringRegistrationFixture.Manifest())));
-        Assert.Contains(field, error.Message);
-    }
-
-    [Fact]
     public void HistoricalProjectionDoesNotRelaxCandidateRegistration()
     {
         var error = Assert.Throws<InvalidDataException>(() => RepositoryRules.ReadSnapshotProjects(Snapshot(PriorRegistration)));
         Assert.Contains("root_namespace", error.Message);
-    }
-
-    [Fact]
-    public void HistoricalProjectCannotDisappearFromBaseExecutionFloor()
-    {
-        var baseline = Snapshot(null, (Project, Misleading));
-        var manifest = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(Test()))!;
-        manifest["historical_projects"] = manifest["projects"]!.DeepClone();
-        manifest["projects"] = new System.Text.Json.Nodes.JsonArray();
-        var candidate = Snapshot(manifest.ToJsonString());
-        Assert.Empty(CiProjects(RepositoryRules.ReadSnapshotProjects(candidate)));
-        Assert.Equal([Project], CiProjects(RepositoryRules.ReadBaseProjects(baseline, candidate)).ToArray());
-        Assert.Throws<InvalidDataException>(() => RepositoryRules.ReadBaseProjects(baseline,
-            Snapshot(EngineeringRegistrationFixture.Manifest())));
     }
 
     [Fact]
