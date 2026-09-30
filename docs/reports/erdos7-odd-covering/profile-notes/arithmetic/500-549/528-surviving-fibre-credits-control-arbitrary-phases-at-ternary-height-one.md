@@ -16278,3 +16278,685 @@ Independent saved-record verification passed 5088 exact checks,
 including the physical-row root sums, all maxima and fee replacements,
 and the different signs for the two tables. It did not rerun the
 consumer, private products, full fees or continuation.
+
+## Exact two-head fees give a common positive reserve with all high shallow cofactors
+
+Replacing the single old support {5,7} by its exact unsupported-private
+mass bound makes both full-target limiting margins positive. Together
+with FC669–FC690, this removes the high shallow cofactor exclusion
+under the two established head-table source contracts. The common
+normalized reserve is 1065252710101/793262855385000. The proof and
+exact arithmetic below do not constitute a new Lean verification.
+
+### 1. The identifiable old support and its joint cell
+
+Keep the same full-target pre-remainder R_N, fixed actual phases,
+canonical head targets and benchmark factors of FC669–FC673. The
+single support being replaced is
+
+    m=3^t*5^a*7^b, a>=1, b>=1, t>=0.              (FC691)
+
+It occurs once in the old FC121–FC128 fee sum: both heads are supported,
+their lower exponents are one, and no private coordinate is supported.
+The special head-exponent-two rule applies only to supports {h,q}.
+The saved head_min score FC132 therefore contains these exact free
+and selected coefficients. Its aggregate bucket with both heads has
+512 supports and must not be substituted for this one coefficient.
+
+For Z=Pbar or Kbar define on an actual root/head cell
+
+    A^Z_(r,N)(i,j)=product_(q in Q)Z_(q,N)(r,i,j),
+    M_(h,r,N)(e,i)=min(c_h,infinity*h^-e,w_(h,r,N)(i)). (FC692)
+
+All nine private coordinates integrate to their exact masses
+s_(q,N)*Pbar_q on this source. Thus the sharper fee uses A^P;
+the old A^K is still an upper allowance. There is no supported-private
+factor b_q,infinity. Finite Pbar and Kbar retain b_(q,N).
+
+At fixed a,b the two allowable maxima are
+
+    F^Z_(a,b,N)=max_(i,j) sum_r [A^Z_(r,N)(i,j)/2
+                           *M_(5,r,N)(a,i)*M_(7,r,N)(b,j)],
+    S^Z_(a,b,N)=max_(r,i,j)[A^Z_(r,N)(i,j)/2
+                           *M_(5,r,N)(a,i)*M_(7,r,N)(b,j)]. (FC693)
+
+A free original uses the same physical pair (i,j) on both roots.
+The root sum is taken at that pair before its maximum. A selected
+original fixes one root and pair. These domains already occur in
+the old fee; the replacement does not change them.
+
+### 2. Exact summation of all head depths in four blocks
+
+For the finite canonical targets, a live row lies between 1/h and
+c_h,infinity/h. Consequently
+
+    M_(h,r,N)(1,i)=w_(h,r,N)(i),
+    M_(h,r,N)(e,i)=c_h,infinity*h^-e*z_(h,r,N)(i), e>=2,
+    z_(h,r,N)(i)=1_(w_(h,r,N)(i)>0).              (FC694)
+
+The same identities hold for the imposed exact targets and their
+lawful common transports. General perturbed row laws need not have
+this depth-two saturation threshold.
+
+Put L^0_h=w_h, L^1_h=z_h, and d_h=1/[h*(h-2)]. For each
+alpha,beta in {0,1}, define
+
+    X^Z_(alpha,beta,r,N)(i,j)
+       =A^Z_(r,N)(i,j)*L^alpha_(5,r,N)(i)*L^beta_(7,r,N)(j)/2,
+    U^Z_(alpha,beta,N)=max_(i,j) sum_r X^Z_(alpha,beta,r,N)(i,j),
+    V^Z_(alpha,beta,N)=max_(r,i,j) X^Z_(alpha,beta,r,N)(i,j).
+
+Then the complete support fees are exactly
+
+    F^Z_(57,N)=sum_(alpha,beta)d_5^alpha*d_7^beta*U^Z_(alpha,beta,N),
+    S^Z_(57,N)=sum_(alpha,beta)d_5^alpha*d_7^beta*V^Z_(alpha,beta,N).
+                                                               (FC695)
+
+The four blocks 00,10,01,11 have weights 1,1/15,1/35,1/525.
+This follows by summing c_h,infinity*h^-e over e>=2 separately
+on each saturated axis. Within a block, all remaining depth
+dependence is a common scalar before the root sum and maximum.
+Different blocks retain separate maxima. No maximum is moved
+across arbitrary depths, and a saturated head supplies its zero/live
+mask without a second row-mass factor.
+
+### 3. Replacement on the same actual source
+
+For an actual free original 5^a*7^b, integrate every unsupported
+private coordinate exactly, and bound the two head cylinders by
+their min caps. For a selected original, also retain its actual
+ternary prefix and the pre-remainder root-constant Haar factor.
+With the same Q_N of FC669 this yields
+
+    R_N(E_(5^a*7^b))<=Q_N*F^P_(a,b,N),
+    R_N(E_(3^t*5^a*7^b))<=Q_N*3^(1-t)*S^P_(a,b,N), t>=1. (FC696)
+
+The pointwise nonnegative comparison Pbar<=Kbar survives both
+head factors, root sums, maxima and depth sums. Define
+
+    DeltaF_(57,N)=F^K_(57,N)-F^P_(57,N)>=0,
+    DeltaS_(57,N)=S^K_(57,N)-S^P_(57,N)>=0.
+
+The free saving occurs once; the selected saving is multiplied by
+sum_(t>=1)3^(1-t)=3/2. Thus FC688 improves to
+
+    Mjoint_N=Mdeep_N+DeltaF_(57,N)+(3/2)*DeltaS_(57,N),
+    R_N(U_all)>=Q_N*Mjoint_N.                     (FC697)
+
+This support is disjoint from the eighteen deep head/private pairs
+already replaced and from the new shallow high-ternary labels.
+The old 2036-support inventory now has nineteen replaced coefficients
+and 2017 unchanged coefficients. The G^P shallow allowance and all
+earlier savings stay fixed. Both bounds concern one actual source;
+there is no mixing of favorable source masses or phases.
+
+The live/zero patterns stay fixed along the finite signature sequence.
+Products, sums and finite maxima therefore give
+
+    Mjoint_N -> Mjoint=Mdeep+DeltaF57+(3/2)*DeltaS57. (FC698)
+
+### 4. Exact limiting improvement and its attaining cells
+
+| Table | DeltaF57 | DeltaS57 | Mjoint |
+|---|---|---|---|
+| FC110 |108152926064/33052618974375|0|169355431243/45765164733750|
+| FC131 |8415400736/2542509151875|0|1065252710101/396631427692500|
+
+Both limiting margins are positive, approximately 0.003700531446314
+and 0.002685749629822. The free savings, with their depth weights
+already included, split as follows:
+
+| Block | FC110 free saving | FC131 free saving |
+|---|---|---|
+| 00 |609344896/216030189375|47629504/16617706875|
+| 10 |763184/2075517675|752096/2075517675|
+| 01 |9472/113045625|4736/58235625|
+| 11 |0|0|
+
+For both tables the free maximizing pairs change from (2,3) to
+(2,2) in block 00 and from (3,2) to (3,3) in block 10. Block 01
+has pair (2,5) on both sides, but its value strictly decreases.
+Block 11 retains (3,5) and its value. Every such pair is shared
+between the roots of that free candidate.
+
+The unchanged selected fees have explicit attaining witnesses.
+Blocks 00 and 01 share (r,i,j)=(1,2,0); blocks 10 and 11 share
+(1,3,0). At these cells the saved products agree:
+
+| Table | Cell | A^K=A^P |
+|---|---|---|
+| FC110 |(1,2,0)|196384/315315|
+| FC110 |(1,3,0)|3640/4437|
+| FC131 |(1,2,0)|5168/8085|
+| FC131 |(1,3,0)|10640/13311|
+
+These cells attain the old selected maxima. Since every P candidate
+is at most its K candidate and these witnesses retain that maximum,
+
+    V^P_(alpha,beta)=V^K_(alpha,beta) in all four blocks,
+    DeltaS57=0 for each of the two tables.         (FC699)
+
+This is a property of these fixed tables, not a general assertion
+that selected fees never improve. The free improvement comes from
+exact private masses under the pre-existing common-address rule.
+
+### 5. Common reserve, finite noncoverage, and exact remaining exclusions
+
+Half of the smaller limiting margin gives
+
+    mu_joint=1065252710101/793262855385000>0.       (FC700)
+
+By FC698 there is a common finite threshold N_joint>=2 such that
+both finite-table margins are at least mu_joint for N>=N_joint.
+The previous completion rules extend complete skeletons to such
+depths without changing original phases or overwriting high labels.
+Incomplete arbitrary-head rosters retain their gap-filling obligation.
+Since a_N>=1/C_V and C_V=1048576/403767,
+
+    R_N(U_all)>=Q_N*mu_joint>0,
+    h_joint=(2/3)*mu_joint/C_V>0.                  (FC701)
+
+Writing s=R_N(U_all), the measure
+
+    eta_joint=(h_joint/s)*(R_N restricted to U_all) (FC702)
+
+has total mass h_joint and satisfies eta_joint<=R_N<=Haar. The original
+finite survivor contains this completed survivor and hence contains
+an integer in its resolving CRT period. No numerical N_joint is
+asserted; the conclusion uses its proved finite existence.
+
+The source contract is the direct-Haar full-target construction of
+FC576–FC595, with the exact head-row target and common-transport
+extensions of FC604–FC618 and FC651–FC654. Private pure/star/group
+phases are arbitrary within those contracts. One transport must
+preserve the named gates on both roots. Arbitrary compensated sources
+with private mass L>Pbar remain outside the proof.
+
+Within that contract, every nonternary support of size at least two
+is now paid at every ternary height. The shallow h*q^e classes at
+heights zero and one are the original grouped skeleton; their higher
+ternary counterparts are paid by G^P. Baseline pure/star singleton
+classes at heights zero and one were already present. The unpaid
+additional numerical types are precisely
+
+    3^t, t>=2; and 3^t*p^e, t>=2, p in V, e>=1,   (FC703)
+
+before allowing primes outside V. Unrestricted head incidences,
+incomplete-roster realizability and unrestricted prime support also
+remain separate obligations. Thus the positive reserve does not
+resolve unrestricted Erdős #7.
+
+The raw Xi_can and Xi_star comparisons remain valid by domination
+by the same R_N. The source mass has changed, so the old Top_h84
+and old all-height continuation are not inherited. No new continuation
+or resolution of the middle-prime gap is claimed here.
+
+### 6. Exact arithmetic artifacts
+
+The consumer `frontier/cover-geometry/fibre-credit-partition/two_head_fee_replacement.py`
+has SHA256 58007857f6c16d99fb8b0e1f69f6303d4f86024883ca0369665eaa0c7667a6a1.
+The result `frontier/cover-geometry/fibre-credit-partition/two_head_fee_replacement.json`
+has SHA256 5fa2dd84a74f115d1e78bab45dbe2ea29f187470504303727028b17121233cad.
+The fixed evaluation exited zero with 3867 exact guards. Each table
+used 140 nine-factor products at 70 joint cells, four depth blocks,
+560 root/pair candidates, 280 common-pair free sums and 16 maxima.
+It did not evaluate another support or rerun the old full-fee producer.
+
+The JSON retains all joint products and scalar factors, unlike the
+earlier shallow-fee outputs which retained only weighted row sums.
+The shallow/shallow P candidates sum to the unchanged saved group
+residual, checking their common source. Old score and nineteen-support
+accounting are checked against the pinned earlier results.
+Independent verification passed 9694 exact saved-identity checks,
+including the product identities, physical-pair root sums, complete
+maximizer sets, fee differences, positive margins and common reserve.
+It did not execute the consumer, another support sum or continuation.
+
+## Pure ternary holes require a joint prefix-capacity boundary
+
+Restricting the existing full-target reference by actual pure ternary
+holes gives exact prefix capacities and a valid mixed-label fee on
+that same source. The resulting criterion requires the source loss
+and mixed-fee reduction to be compared jointly. The common positive
+reserve in FC700 does not by itself settle that comparison for arbitrary
+pure-hole registries. The results below are ordinary mathematical
+applications of the existing prefix and overlap interfaces, with no
+new Lean verification.
+
+The exact remaining issue is not the existence of some pure-3 survivor:
+distinct pure powers leave substantial Haar mass. It is retaining that
+survivor's ACTUAL prefix capacities in the mixed-label calculation.
+Root totals, the old mass certificate and the old raw query upper
+profile do not determine those capacities.
+
+### 1. Reused results and the inventory under discussion
+
+Report528 FC637–FC640 uses one pre-remainder reference R_N whose density
+depends on the ternary coordinate only through its first root. The
+factor 3^(1-t) follows from that property. FC649–FC650 distinguishes
+unchanged additive loss from a different source restriction; it does
+not establish retention after arbitrary higher-ternary remainder
+deletions.
+
+FC669–FC703 retains the same full-target direct-Haar reference and
+improves mixed-label fees using its exact private masses Pbar. The
+construction below applies to those certified per-label bounds and
+their pointwise same-source tightenings. It adds no positivity claim
+for arbitrary higher pure ternary holes to the fixed mixed-inventory
+result of FC700–FC703.
+
+The following existing interfaces provide the required machinery:
+
+- FC163–FC166: one actual ternary prefix and one physical head address
+  per original; same-source finite-family and complete-inventory fees.
+- FC167–FC168: pure-conditioned Haar prefix caps and an exact geometric
+  tail after a finite profile has been resolved.
+- FC61–FC65: prefix antichains, coherent event-address shells and exact
+  integration without enumerating the full ambient digit space.
+- FC172–FC175: literal-prefix and phase-maximized certificates are
+  different; source weighting cannot silently restore forgotten phases.
+- FC169–FC170: averaging leaf-dependent private product laws does not
+  preserve a private product law.
+- FC623 and Report433 CG4–CG7: forest/chordal corrections use actual
+  intersections on one pre-deletion measure, with the proper signs.
+
+The current mixed inventory has nonternary support of size at least
+two. Its shallow head/private labels at ternary heights 0 and 1 are
+already prescribed skeleton labels; the other mixed labels are paid
+by the stated complete allowances, including high shallow labels at
+heights at least 2 when their extension is certified. At every
+nonternary prime p, baseline p^e and 3*p^e pure/star labels already
+belong to the skeleton. The still-new singleton types are
+3^t*p^e with t>=2, not all singleton moduli. This note adds only pure
+3^t, t>=2. It does not pay those new singleton types.
+
+### 2. Keep the physical reference and restrict it once
+
+Fix one actual finite full-target skeleton, its globally fixed phases,
+and the same nonternary prime set V. The existing pure3 original is
+0 mod3. Let H_3 be Haar probability on the ternary coordinate; a finite
+CRT period resolving every listed prefix gives the identical formulas.
+
+Because R_N is root-constant, there are actual finite nonternary
+measures nu_(r,N), r=1,2, such that
+
+    R_N = sum_(r=1,2) (H_3 restricted to [r]_3) tensor nu_(r,N).
+                                                               (FC704)
+
+Each nu_r includes the fixed head restrictions and the conditional
+private thinnings. It need not be a product across all nonternary
+coordinates; product integration is used only after the actual head
+rows have been fixed. This is the SAME reference as before, not a
+new measure selected independently for each label.
+
+Retain the old numerical benchmark
+
+    a_N=product_(p in V)(1-A_(p,N)), Q_N=2*a_N/3,
+    nu_(r,N)(total)=a_N*A_(r,N).
+
+Now let E be a finite set of exponents t>=2. For each t in E, retain
+one globally fixed pure residue alpha_t modulo 3^t. Put
+
+    P_3=union_(t in E)[alpha_t]_(3^t), S_3=P_3^c,
+    R_N^P=1_(S_3) R_N.                              (FC705)
+
+Holes inside root0 are harmless for R_N. Overlapping holes are retained
+as their actual union, not charged twice. Neither a pure phase nor an
+old phase is modified. R_N^P is supported outside every added pure
+label and remains dominated by R_N and by full Haar.
+
+For a prefix w of depth t>=1 in root r define
+
+    beta(w)=H_3(S_3 intersect [w]),
+    kappa(w)=3*beta(w), theta_r=kappa([r]_3).
+                                                               (FC706)
+
+The factor 3 merely expresses capacities relative to the old mass
+1/3 of a full root; it is NOT normalization by the new root mass.
+Exact factorization gives, for every nonternary event B,
+
+    R_N^P([w] intersect B)=beta(w)*nu_(r,N)(B),
+    R_N^P(total)=Q_N*(theta_1*A_1+theta_2*A_2)/2.     (FC707)
+
+Here and below all A_r and nonternary quantities concern the fixed N.
+
+Numerical distinctness supplies at most one pure label per depth.
+Consequently
+
+    H_3(P_3 intersect [r]_3)<=sum_(t>=2)3^-t=1/6,
+    1/2<=theta_r<=1, theta_1+theta_2>=3/2,
+    0<=kappa(w)<=3^(1-t).                           (FC708)
+
+Thus pure ternary holes alone cannot empty either retained root.
+This does not prove that the mixed-label survivor meets those roots
+in the proportions needed for a later restriction.
+
+### 3. What survives and what is lost from root constancy
+
+The nonternary conditional profile remains nu_r after ONLY the pure
+restriction. But the ternary density inside that root is now the
+indicator of S_3. The old equality FC637 is replaced by the exact
+capacity beta(w); in general
+
+    kappa(w) != theta_r*3^(1-t).                    (FC709)
+
+If the restricted root is normalized, its prefix probability is
+kappa(w)/theta_r, which can exceed 3^(1-t). The safe universal bound
+from (FC708) is at most 2*3^(1-t), also bounded by 1. It is invalid
+to renormalize a root and retain its old relative geometric caps.
+
+The old ABSOLUTE caps remain valid, because R_N^P<=R_N. Likewise any
+old raw all-query comparison valid for all measures dominated by R_N
+continues to dominate the new final source. Neither statement keeps
+the old positive mass, its normalized moments, its Top initialization
+or a saved continuation.
+
+Root constancy gives a positive retention bound: if the chosen
+source eta_0 is itself root-constant, then
+
+    mass(1_(S_3)eta_0)
+      =sum_r theta_r*eta_0([r]_3)>=mass(eta_0)/2.   (FC710)
+
+For example, restricting R_N by a family whose ternary heights are
+only 0 or 1, then scaling by one constant, leaves a root-constant
+measure. Any such root-constant positive source certified for a
+height-one family can absorb arbitrary finite additional pure 3^t,
+t>=2, retaining at least half its mass. The assertion concerns this
+chosen source itself; the height-one syntax of a family does not
+force every dominated thinning of its survivor to be root-constant.
+A family noncoverage conclusion can use the canonical root-constant
+witness rather than an arbitrary source witness.
+
+This is reuse of the root-constant interface, not an extension to
+the current arbitrary-height mixed family. After higher mixed
+deletions, its final positive source can depend on higher ternary
+digits; (FC710) then has no basis unless root constancy is independently
+established. In particular the positive final source in FC702 does
+not acquire a half-retention guarantee merely from its total mass.
+
+### 4. Exact source data and coherent updates
+
+Reduce the higher pure union, for its SET representation only, to its
+maximal-cylinder antichain A. Preserve the original numerical registry
+separately, including labels hidden by containment. For any prefix w,
+
+    beta(w)=3^(-depth w)
+              -sum_(v in A) H_3([v] intersect [w]),       (FC711)
+
+where a summand is zero for incompatible prefixes and otherwise
+3^(-max(depth v,depth w)). Antichain members are disjoint, so this is
+an exact identity. It does not replace the original modulus inventory.
+
+Adding a new legitimate pure prefix v gives the exact update
+
+    beta_new(w)=beta(w)-H_3(S_3 intersect [w] intersect [v]).
+                                                               (FC712)
+
+The subtracted term is 0 when disjoint, beta(v) when v is contained
+in w, and beta(w) when w is contained in v. This proves why labelled
+prefix-incidence data is sufficient for these literal updates, and
+why scalar totals cannot reconstruct them.
+
+A sufficient boundary for the present fee consists of one actual
+pure-prefix antichain/registry, its indexed capacities beta(w), the
+fixed rootwise nonternary profiles, and every remaining label's depth
+and common nonternary address. For a phase-uniform allowance with
+root-constant nonternary data, the smaller statistics theta_r and
+
+    c_r(t)=max_(w of depth t in root r) kappa(w)           (FC713)
+
+suffice for the selected maxima below. They do not determine literal
+future updates: the location of a maximizer and its intersections with
+new prefixes can matter. No minimality theorem is claimed.
+
+Choose K>=2 at least the maximum pure-hole depth. The restricted Haar
+law is uniform inside each surviving depth-K cylinder. Therefore the
+same finite-tail argument as FC168 applies; for a fixed nonternary
+profile the depth-(K+j) maximum is 3^-j times its depth-K value.
+This is a finite exact representation plus a proved uniform tail,
+not a demand to enumerate 3^K leaves. FC65's event-address shells give
+a compact exact integration representation for supplied phases.
+
+### 5. Root totals alone fail even for actual finite pure families
+
+Consider the two legal pure families with the same numerical moduli:
+
+    Family A: 0 mod3, 1 mod9, 4 mod27, 7 mod81;
+    Family B: 0 mod3, 1 mod9, 4 mod27, 13 mod81.
+
+In each family the three high holes are disjoint and all lie in root1.
+The 1 mod9 hole is disjoint from either deeper hole because the
+4 mod27 hole lies in 4 mod9, while the last hole lies in 7 mod9 in
+A and 4 mod9 in B. In A the two deeper holes have different residues
+mod9. In B, 13 mod81 lies in 4 mod9 but has residue 13, not 4, mod27;
+thus it too is disjoint from 4 mod27. No pair of high holes is nested.
+Both surviving root masses are
+
+    root1: 1/3-1/9-1/27-1/81=14/81;
+    root2: 1/3.                                      (FC714)
+
+Their depth-two capacities in root1 nevertheless differ. In A the
+remaining masses on 1,4,7 mod9 are respectively 0,6/81,8/81; in B
+they are 0,5/81,9/81. Thus the largest depth-two surviving prefix has
+mass 8/81 in A and 9/81 in B. Even the phase-maximized selected fee
+cannot be recovered from the identical root totals.
+
+In the notation (FC706), both families have theta_1=14/27 and
+theta_2=1. Their kappa vectors on 1,4,7 mod9 are respectively
+(0,2/9,8/27) and (0,5/27,1/3), so c_1(2) is 8/27 versus 1/3.
+After normalizing by the NEW root1 mass, the corresponding prefix
+probabilities are (0,3/7,4/7) and (0,5/14,9/14). Thus the three
+different quantities are absolute Haar mass beta, old-root-relative
+capacity kappa=3*beta, and new-root probability kappa/theta_1.
+
+The literal same future mixed label 106 mod315 has ternary prefix
+7 mod9 and nonternary residue 1 mod35. With the same nonternary Haar
+law, its actual surviving mass is 8/(81*35) for A and 9/(81*35) for B.
+The modulus 315 is new and distinct from every listed pure label.
+These are actual finite phase configurations and a legal future test,
+not covering systems or counterexamples to Erdős #7.
+The simpler new mixed label 16 mod45 gives the same distinction with
+nonternary residue 1 mod5 and masses 8/(81*5) versus 9/(81*5).
+The 315 witness has nonternary support {5,7}; the 45 witness has
+singleton support {5}. Neither witness reuses the already listed
+modulus 9. The 45 observation does not assert a paid high-singleton
+extension of the current mixed-source contract.
+
+There is a still stronger boundary for an already certified final
+source. Fix a baseline family with no higher remainder and its R_N,
+and assume nu_1(total)>0. The two cylinders I=[1]_9 and J=[4]_9
+have equal R_N mass c=nu_1(total)/9>0. Choose any 0<h<=c and set
+
+    eta_I=(h/c)1_I R_N, eta_J=(h/c)1_J R_N.          (FC715)
+
+Both are lawful thinnings of the SAME baseline source. They have the
+same total mass h, the same root masses, and the same full nonternary
+marginal h*nu_1/nu_1(total). They obey the same old raw query upper
+profile because both are dominated by R_N. But adding 1 mod9 kills
+eta_I completely and leaves eta_J unchanged.
+
+This counterpair concerns indistinguishable source-certificate data,
+not two actual covering counterexamples. It uses an existential small
+h below the common cylinder capacity; it does not assert that h equals
+a current numerical source certificate. Exact ternary query responses
+do differ, as they must. It proves that mass, nonternary information and
+shared upper bounds alone cannot license any universal positive pure9
+retention ratio for a possibly non-root-constant final source.
+
+### 6. Free and selected fees after pure restriction
+
+Use a certified nonnegative rootwise bound L_r(d,a). For the complete
+infinite-inventory statements below, require that its corresponding
+pre-pure complete allowance Phi_0 is finite. The cited K/P geometric
+bounds and their pointwise same-source tightenings satisfy this
+condition. A per-label upper bound alone does not imply summability.
+With the old normalization, for the nonternary cylinder of a label
+with cofactor d and supported-head address a,
+
+    nu_r(C_d)<=2*a_N*L_r(d,a).                       (FC716)
+
+For example L_r is FC638's private cap times gamma_r=1/2, times the
+chosen K/P unsupported-coordinate contraction and supported-head
+minima. A per-support tightening may be used only where proved on
+this same reference. Every actual nonternary phase stays fixed across
+roots; a is an upper-bound coordinate, not a fresh phase selection.
+
+For a free label d, (FC707) gives the allowance
+
+    R_N^P(E_d)<=Q_N*f_P(d),
+    f_P(d)=max_a sum_(r=1,2) theta_r*L_r(d,a).       (FC717)
+
+The SAME a is inside the root sum. The sum of independently optimized
+root fees would be a different, generally larger allowance.
+
+For one actual selected label m=3^t*d with prefix w_m in root r and
+actual head address a_m,
+
+    R_N^P(E_m)<=Q_N*kappa(w_m)*L_r(d,a_m).          (FC718)
+
+The phase-uniform allowance at this numerical depth is
+
+    s_(P,t)(d)=max_(w of depth t, a)
+                   kappa(w)*L_(root w)(d,a)
+              =max_(r=1,2) c_r(t)*max_a L_r(d,a).   (FC719)
+
+The factorization in the second line is legitimate only because
+the nonternary profile depends on the first root, not on the deeper
+prefix. Each numerical 3^t*d pays its own term. No new factor two,
+rootwise resampling, or joint attainability of different maxima is
+assumed.
+
+Let C_old be FC634's old nongroup cofactor inventory: nonternary
+support at least two, with head exponent at least two for support
+{h,q}. Let C_sh={h*q^e:h in {5,7}, q in Q, e>=1}. Its heights 0/1
+are skeleton originals, already avoided; only heights t>=2 occur
+in the new mixed remainder. A complete safe allowance is
+
+    Phi_P = sum_(d in C_old)[f_P(d)+sum_(t>=1)s_(P,t)(d)]
+              +sum_(d in C_sh)sum_(t>=2)s_(P,t)(d). (FC720)
+
+The original family is finite. Enlarging its literal charges to this
+complete positive sum is an upper bound, not a realizability claim.
+The nonternary geometric cap sums are the already declared ones.
+By theta_r<=1 and kappa(w)<=3^(1-t), this complete allowance is
+dominated by the finite pre-pure allowance Phi_0. Thus Phi_P is
+finite under the stated summability condition. No new high-singleton
+label 3^t*p^e is included in (FC720); baseline p^e and 3*p^e
+remain in the already avoided source skeleton.
+
+The exact finite ternary tail is
+
+    s_(P,K+j)(d)=3^-j*s_(P,K)(d),
+    sum_(t>=1)s_(P,t)(d)
+       =sum_(t=1..K-1)s_(P,t)(d)+(3/2)*s_(P,K)(d). (FC721)
+
+For the shallow class, start the finite prefix sum at t=2. This is
+FC168 on the actual restricted source. In general it is NOT
+(3/2)*s_(P,1)(d). Absolute old geometric bounds survive, but the old
+relative one-step coefficient does not control all later depths.
+
+### 7. A concrete same-source sufficient inequality and forest refinement
+
+The exact root-weighted source term and the mixed allowance give
+
+    R_N^P(actual mixed survivor)>=Q_N*M_P,
+    M_P=(theta_1*A_1+theta_2*A_2)/2-Phi_P.          (FC722)
+
+Thus M_P>0 is a sufficient finite-family noncovering certificate for
+the stated pure extension and source contract. For known phases, the
+literal expressions in (FC717)–(FC718), with no phase maxima and only
+the actual inventory, give a stronger valid criterion. This is exactly
+the specialization of FC164/FC165 to rootwise constant nonternary
+profiles and a nonconstant ternary avoid-set.
+
+Let Phi_0<infinity and M_0=(A_1+A_2)/2-Phi_0 be the corresponding
+pre-pure complete allowance and margin on the SAME reference and
+inventory. Both allowances are finite, so the accounting identity is
+
+    M_P=M_0-(1/2)sum_r(1-theta_r)*A_r
+                    +(Phi_0-Phi_P), Phi_0-Phi_P>=0. (FC723)
+
+The new burden is source loss minus the simultaneous reduction of
+mixed fees. A positive old M_0 by itself does not compare these terms.
+Nor is Phi_0-Phi_P generally obtained by a single 3/2 multiplier on
+one selected saving: the new capacities depend on ternary depth.
+These identities alone do not imply positivity of (FC722). A bound on
+the joint source loss and fee reduction remains necessary.
+
+An existing forest certificate can improve this same comparison.
+Choose a forest F on the ACTUAL mixed remainder labels, retain their
+actual events E_i, and let
+
+    W_F=sum_({i,j} in F)R_N^P(E_i intersect E_j).
+
+FC623/Report433 gives
+
+    R_N^P(actual mixed survivor)>=Q_N*M_P+W_F.      (FC724)
+
+The exact intersection interface is simply
+
+    R_N^P(E_i intersect E_j)
+      =sum_r H_3(S_3 intersect I_i intersect I_j intersect [r]_3)
+                    *nu_r(C_i intersect C_j).     (FC725)
+
+A free label has I_i equal to the entire ternary carrier. Two active
+nonfree prefixes are nested or disjoint. The nonternary intersection
+must also preserve actual CRT compatibility and the reference holes;
+its Haar cap is not a positive lower bound for its nu_r mass. FC621–
+FC622 supplies the existing conditional-source/antichain calculation
+with the appropriate full-target private thinning substituted.
+
+Only certified actual intersection lower bounds may be credited in
+(FC724). They are computed on R_N^P BEFORE mixed deletion, not inferred
+by reversing domination of the final source. Unknown forest edges may
+be omitted. A chordal version needs its higher-intersection subtraction
+terms and their correct signs. This is reuse, not a new generic forest
+theorem or a claim that a suitable positive correction always exists.
+
+### 8. Existing pure-power/forest successes do not close this contract
+
+Chapter52 Branch A already conditions away ALL actual pure powers and
+proves noncoverage for an order starting with 3 having at most two exact
+nonempty predecessor supports in each assigned group. Forest pair graphs
+are an existing instance, even at arbitrary original heights. Its joint
+kernel construction keeps the entire earlier marginal, not independent
+post-deletion coordinates. Chapter52 Branch B and Report528 FC251 onward
+give other explicitly restricted graph/order regimes.
+
+Report386 PC9–PC11 is another reusable route on a resolved ternary fibre:
+positive full-prefix capacities rho_i imply a joint survivor by counting
+legal full-coordinate extensions. It requires its numerical projection
+multiplicity and pair-pattern/assignment hypotheses. Report528 FC181
+shows why arbitrary high ternary labels can violate those hypotheses
+on a single deep fibre: many distinct 3^k*d can project to the same d
+there. An arbitrary pure-avoiding fibre is not automatically good for
+all mixed constraints.
+
+These results show that pure powers are not an intrinsic obstacle.
+What remains in the present dense mixed-source class is a theorem that
+supplies enough good prefix mass or the joint savings in (FC723)/(FC724)
+for every allowed actual pure registry. Neither exact representation,
+root reweighting nor a finite positive numerical point supplies that
+uniform theorem. FC175–FC179 already warns that independent worst-prefix
+maxima can themselves destroy a usable literal common-prefix relation.
+
+### 9. The separate high-singleton and unrestricted obligations
+
+The already present p^e and 3*p^e skeleton remains avoided in nu_r.
+Adding new 3^t*p^e with t>=2 is a separate numerical inventory. One can
+either derive/pay new singleton per-label fees on R_N^P, or absorb their
+actual active private unions into a new prefix-dependent source. The
+latter makes nonternary profiles depend on deeper ternary leaves.
+
+Then the correct data is the joint leaf profile of FC161–FC168: actual
+leaf weights together with head rows, private survivor masses, active
+unions, and label-prefix incidence. Free fees must integrate one fixed
+address over all those leaves; selected fees maximize one whole prefix
+and one address. Averaging private masses first would recreate FC169–
+FC170's false product law. This note does not supply the required
+singleton source margin or a phase-uniform positive theorem.
+
+Arbitrary head incidence, arbitrary prime support and the all-prime,
+all-phase Erdős #7 target remain unresolved. The ternary bridge states
+the exact missing interface and a valid sufficient test; it is not an
+unrestricted noncoverage result and transfers no Robin constants.
