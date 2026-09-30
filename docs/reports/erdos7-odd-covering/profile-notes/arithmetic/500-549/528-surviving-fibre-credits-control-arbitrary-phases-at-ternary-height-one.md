@@ -23385,3 +23385,203 @@ strongly enough to beat the reserve, or obtain another whole-cover
 contradiction. Neither FC998 nor FC1003 alone proves that comparison.
 This increment is written mathematics with independent review, not
 new Lean verification or a resolution of unrestricted Erdős #7.
+
+## Whole-tail old-square payment and the exact blind set of ternary repair interfaces
+
+Keep ONE hypothetical distinct odd nonunit whole cover minimizing class
+count and then modulus sum, its literal original residues, period Q,
+and FULL ternary height H=v_3(Q)>=1. Fix a head B resolving every old
+prime to its full original exponent, with all ternary coordinates old.
+Let P_B be the processed nonternary support primes and k=|P_B|. The
+complete old part of a future original u is d_u=3^a n_u, where
+3 does not divide n_u and 0<=a<=H. All old nonternary powers are included
+in n_u. Write I_u(x) for its actual head activation. Future pure powers
+are already handled by the full-family pure laws; the paid and
+complementary tail inventories here consist of nonpure originals.
+Every such original omitted from the paid collection remains in the
+complementary family.
+These are ordinary symbolic deductions, not additional Lean results.
+
+### One old interface constrains all suffixes and higher layers together
+
+Report385 ML1--ML6 supplies an exact capacity for a wholly old nonunit
+h=3^b e dividing Q, with gcd(3,e)=1. Put r_b=3^(H-b+1), t_e=tau(e).
+The specified fresh repair labels are exactly 3^(H+1+j)f, j>=0,f|e.
+The qualification and actual original phase capacity are
+
+    t_e>2*3^(H-b),
+    q_h(x):=#{u original:h|u, a_u=x mod h}
+          <=B_h=N(r_b,t_e)-1.                         (FC1006)
+
+Here N=r_b when t_e>=r_b. Otherwise put delta=3t_e-2r_b>0,
+J=min{j>=0:3^j delta>=t_e}, s_last=(3t_e-3^J delta)/2 and
+N=t_e J+s_last. The original h-phase and other phases are covered by
+the comparable-disjointness and descendant caps explained in
+Report385 MX4. These capacities count ALL original h-multiples,
+without renewing the allowance for a new suffix or ternary layer.
+
+For nonnegative terminal weights w_u and nonnegative interface
+coefficients theta_h, suppose each paid original satisfies
+w_u<=sum_(qualified old h:h|d_u)theta_h. Then at every actual head x,
+
+    sum_(paid u)w_u I_u(x)<=sum_h theta_h B_h.           (FC1007)
+
+Indeed, I_u=1 makes u contribute to every corresponding q_h.
+Summation of this coefficient domination and the simultaneous phase
+caps proves the bound. No independently maximizing head phases are
+combined. This reuses the ordinary incidence mechanism in FC976--983;
+the new consumer below pays complete future originals by their unique
+terminal coordinates.
+
+### Full ternary height: any old square costs at most two per old prime
+
+Let S_square be ALL future originals with v_3(u)=H and q^2|u for at
+least one q in P_B. Assign each such original once, for example to its
+smallest squared old prime. For a nonempty assigned bin, 3^H q^2 divides
+Q and FC1006 applies with t_e=r_b=3, giving B_h=2. If q^2 does not
+divide Q, that bin is empty; no unavailable interface is invoked. Hence
+
+    sum_(u in S_square) I_u(x)<=2k.                    (FC1008)
+
+All future suffixes, terminal exponents and additional original factors
+share this one capacity. After removing these labels, the full-H part
+of the complement has squarefree OLD nonternary cofactor; its future
+exponents and support remain unrestricted. No lower ternary layer has
+been removed.
+
+Let eta be ONE supplied actual head-survivor measure of mass s, with
+its normalized full-family FC936 continuation mu. Let p(u)>B be the
+unique terminal prime of u and lambda_u its pure-reference terminal
+cylinder mass. At any later prefix, activation of u implies I_u(x)=1
+at the fixed head. The combined normalized kernel has density at most
+one on its full forbidden union. Consequently FC1001--1002 gives
+
+    mu(S_square tail union)
+      <=integral sum_(u in S_square)lambda_u I_u deta
+      <=2k f_* s,                                   (FC1009)
+
+where p_* is the first actual tail prime and
+f_*=c_(p_*)/p_*=(1/2)(1/p_*+1/(p_*-2)). Empty tail has debit zero.
+The last inequality uses lambda_u<=c_(p(u))/p(u)<=f_* and FC1008.
+It uses the terminal cylinder mass, not a product of future pure
+masses which intermediate normalized kernels could amplify.
+
+For the entire complementary tail union L, on this SAME law,
+
+    mu(full survivor)>=(1-2k f_*)s-mu(L),
+    total failure<=Q_L+4k f_*s,
+    Q_L=sum_p integral beta_(p,L)^2 dmu_<p.            (FC1010)
+
+The first bound is the actual union bound. For the second, the combined
+kernel is controlled by beta_total, so one must use
+
+    (2beta_total-1)_+
+      <=(2beta_L-1)_++2beta_square
+      <=beta_L^2+2beta_square.
+
+Thus a square-only charge for L needs TWICE the selected terminal
+allowance. It cannot inherit the factor-one selected bound while
+pretending the old process was normalized from L alone. If the square
+collection overlaps FC1001's heavy library, partition original labels
+before adding separate allowances, or use one weighted incidence
+certificate for their union. The full complement remains payable.
+
+### Graded powers and subsets give cumulative, not renewable, budgets
+
+Fix 0<=a<=H and Delta=H-a. For an old q take
+E_Delta=3^(Delta+1)-1. A nonempty bin of originals with height at least
+a and q^E_Delta|u uses h=3^a q^E_Delta|Q, with t_e=r_b=3^(Delta+1).
+Assign labels once among their qualifying old q. Then
+
+    sum_(height>=a, some old q^E_Delta|u) I_u
+      <=k E_Delta.                                  (FC1011)
+
+Empty bins again contribute zero. Its complete terminal debit is at
+most k E_Delta f_*s on the same combined law. All heights ABOVE a use
+these same slots; this is not a new budget for each exact height.
+
+The smallest qualifying single-prime exponent is instead
+emin=2*3^Delta, where t_e=2*3^Delta+1. For Delta>=1, delta=3,
+J=Delta and s_last=(3^(Delta+1)+3)/2. Thus its phase capacity is
+
+    B_min=[(4Delta+3)3^Delta+2Delta+1]/2.               (FC1012)
+
+At Delta=0 the single-layer branch gives the same value two. For
+Delta=1, q^6 qualifies with cap12 while q^8 has cap8. These are
+different valid choices: a smaller qualifying exponent need not have
+a smaller capacity. Intermediate exponents use the exact FC1006 N.
+
+More generally, take j-subsets T of the k old primes and
+h_T=3^a product_(q in T)q, assuming 2^j>2*3^Delta. Put
+B_(Delta,j)=N(3^(Delta+1),2^j)-1. Originals of height at least a using
+at least v>=j of these primes consume at least binom(v,j) interfaces
+at the SAME head point. Therefore
+
+    sum_(selected originals) I_u
+      <=floor[B_(Delta,j) binom(k,j)/binom(v,j)].     (FC1013)
+
+Every such h_T divides Q. At k=4,a=H-1,j=v=3, t_e=8,r_b=9,
+N=11 and the bound is40. For v=j=4 the single interface has cap8.
+These are cumulative bounds including the full-H originals already
+subject to FC976--983; one cannot award40 anew to the lower layer and
+then add another four slots for the top. The cap grows as the chosen
+threshold moves below H. Observing a ternary phase does not earn an
+extra factor 3^(a-H) on that fixed head fibre.
+
+### The complete old part identifies an exact blind set of this method
+
+For any actual future original with d_u=3^a n_u, there exists a
+qualified wholly old FC1006 interface h=3^b e dividing d_u if and only if
+
+    tau(n_u)>2*3^(H-a).                              (FC1014)
+
+Necessity follows from tau(n_u)>=tau(e)>2*3^(H-b)>=2*3^(H-a).
+Conversely, if the displayed strict inequality holds, h=d_u itself
+is a qualifying nonunit old divisor of Q. This tests every old divisor
+and every old prime-power exponent, not just selected squarefree
+interfaces.
+
+When FC1014 fails, the original has coefficient zero in every
+qualified old-interface row. Thus no nonnegative recombination of
+these rows, of the exact FC1007 form, can dominate a positive
+terminal weight on that label. Extra weights or more such interfaces
+do not change this zero coefficient. A trivial per-original bound is
+still available; no arithmetic phase cap has been obtained for it.
+
+The missing weight can be real: for a future NONPURE original, on the
+w=1 UNGUARDED raw head law or its FULL head-survivor restriction, a
+complete private integer yields a surviving fully resolving head cell of positive
+mass by FC935. Its terminal cylinder also has positive pure mass,
+since that private integer avoids every original pure class. This
+positive-mass statement is not transferred to arbitrary eta, a guarded
+law, or a selected subset of the surviving cells.
+
+For example, a squarefree old n_u with k' primes is blind to this
+particular interface family whenever 2^k'<=2*3^(H-a). Unseen future
+support cannot make an interface wholly old. Also every fresh-ternary
+repair class occupies at most relative mass 1/r_b in the ENTIRE target
+h-phase, so its repair count satisfies N>=r_b. A decaying invented
+layer allowance would not pay that complete replacement obligation.
+
+Report385 RP1--RP4 is a broader scheme retaining actual higher pure3
+classes. Where RP applies, it requires e>1, a nonempty original parent
+group in the SAME actual phase c mod h, and the actual retained pure
+phases. Its residual root count satisfies
+R>=(3^(H-b+1)+3)/2 and qualification requires tau(e)>2R/3. Hence
+
+    tau(n_u)<=3^(H-a)+1                              (FC1015)
+
+is a SUFFICIENT blind condition even for the best root count allowed
+by that RP bound, for every applicable old divisor of d_u. Do not
+invoke RP for e=1 or import a cheaper R from another phase. Between
+this threshold and the fresh-only threshold in FC1014, the retained
+pure phases matter. FC1014 is not a classification of the RP method.
+
+Other repair primes, retained mixed originals, replacements of a
+smaller joint liability and actual future-coordinate relations are
+outside these blindness statements. They can supply missing
+constraints. What remains is to control the entire complementary
+same-source light charge, including the lower-layer labels missed by
+FC1014, against a useful actual head reserve. Neither the whole-tail
+square payment nor the exact blind-set classification proves that
+comparison or settles unrestricted Erdős#7.
