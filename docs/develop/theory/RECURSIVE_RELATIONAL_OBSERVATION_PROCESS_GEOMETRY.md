@@ -8109,7 +8109,7 @@ $$
 A_{\mathrm F}:=\operatorname{im}(\operatorname{Eval})\subseteq\mathcal A.
 $$
 
-设 $A_{\mathrm{decl}}$ 是声明任务的实际过程载体，且生成像有一个类型保持嵌入 $\iota:A_{\mathrm F}\to A_{\mathrm{decl}}^{\mathcal C}$。记 $A_{\mathrm{decl}}^{\mathcal C}$ 为只保留该任务可调用部分的载体；下文定义的 $\sim_{\mathcal C}$ 同时用于这两个实际像，分别取行为商
+设 $A_{\mathrm{decl}}$ 是声明任务的实际过程载体，且生成像有一个类型保持嵌入 $\iota:A_{\mathrm F}\to A_{\mathrm{decl}}^{\mathcal C}$。这里还要求嵌入保持声明响应：若 $x,y\in A_{\mathrm F}$ 且 $x\sim_{\mathcal C}y$，则 $\iota(x)\sim_{\mathcal C}\iota(y)$；等价地，$\iota$ 必须把完整合法性、输出、失败、记录、权限、时钟和后继合同运输到声明载体。记 $A_{\mathrm{decl}}^{\mathcal C}$ 为只保留该任务可调用部分的载体；下文定义的 $\sim_{\mathcal C}$ 同时用于这两个实际像，分别取行为商
 
 $$
 Q_{\mathrm F}=A_{\mathrm F}/\!\sim_{\mathcal C},
@@ -8208,11 +8208,11 @@ $$
 
 证明。若 $x\sim_{\mathcal C}y$，对任意外部测试把前后合法接续吸收到一个新的测试词中，封闭性保证两者的响应仍相同，故操作、读出和失败标签对等价类代表元无关。若 $m(x)=m(y)$ 而 $x\not\sim_{\mathcal C}y$，则存在一个声明续接 $w$ 分离两者，任何只从同一记忆值 $m(x)=m(y)$ 解码的响应都会对同一输入给出两个结果，矛盾。于是 $d(m(x))=[x]$ 良定义且满射；由 $d\circ m=q_{\mathcal C}$ 的定义唯一。$\square$
 
-### 定理 52.4（四种表达的共同商判据）
+### 定理 52.4（四种表达的源对齐互恢复与完整下降）
 
-设 $\eta_X,\eta_T,\eta_B,\eta_M$ 分别是空间切面、时间动作、边界摘要和记忆表示，并都定义在同一个实际过程像 $S_0$ 上；若生成覆盖商层满射，则可把 $S_0/\!\equiv_{\mathcal C}$ 识别为声明过程商。它们在声明任务上互相恢复，当且仅当满足：
+设 $\eta_X,\eta_T,\eta_B,\eta_M$ 分别是空间切面、时间动作、边界摘要和记忆表示，并都定义在同一个实际过程像 $S_0$ 上；若生成覆盖商层满射，则可把 $S_0/\!\equiv_{\mathcal C}$ 识别为声明过程商。若把“互相恢复”理解为同一实际来源上的精确坐标运输，并把“过程相容”理解为全部声明请求的完整响应下降，则二者同时成立，当且仅当满足：
 
-1. 四个核在 $S_0$ 上相同，且等于 $\equiv_{\mathcal C}$；
+1. 四个核在 $S_0$ 上相同，记为 $K$；
 2. 每个声明操作 $a$ 都有下降更新
    $$
    \eta_i\circ T_a=\overline T_{i,a}\circ\eta_i
@@ -8220,7 +8220,15 @@ $$
    $$
 3. 任意两种表示的配对映射在实际联合像上有逆，而不是把分别可达的坐标任意拼成笛卡尔积。
 
-证明。第一项给出每个表示到共同商 $Q_{\mathcal C}$ 的双射；第二项保证这些双射与操作运输相容；第三项把四个商上的坐标运输提升为实际联合像上的双射。反向地，若四种表示互相恢复，则互相可恢复的表示必须有相同的不可区分纤维，且其后继、合法性和记录必须在该纤维上常值，否则恢复器对同一表示值会要求两种响应。$\square$
+证明。第一项给出四个实际像之间唯一的源对齐恢复器；第二项保证这些恢复器与完整请求合同相容；第三项把四个坐标上的运输提升为实际联合像上的双射。反向地，若四种表示在同一来源上互相恢复，则互相可恢复的表示必须有相同的不可区分纤维，且其后继、合法性和记录必须在该纤维上常值，否则恢复器对同一表示值会要求两种响应。$\square$
+
+若还要求每个表示都是该任务的**最小行为边界**，则需另加反向包含 $\equiv_{\mathcal C}\subseteq K$。完整响应下降已经给出 $K\subseteq\equiv_{\mathcal C}$，所以最小性等价于
+
+$$
+K=\equiv_{\mathcal C}.
+$$
+
+因此，“四核相同”是源对齐互恢复的条件；“四核还等于未来行为核”是把这些表示识别为最小行为商的附加条件，不能把后者误写成前者的必要条件。
 
 这里还要把三类缺口分开。若某个表示的核严格大于 $\equiv_{\mathcal C}$，它丢掉了声明任务仍能区分的行为；若其核严格小于 $\equiv_{\mathcal C}$，它保留了额外的、对当前任务无效的区别，但仍可通过商映射得到一个非最小表示。若 $A_{\mathrm{decl}}$ 中存在不与 $A_{\mathrm F}$ 中任何项行为等价的过程，则这是生成覆盖缺口；若动作在行为类上不能下降，则这是动态闭合缺口。四个表示的联合核只有
 
@@ -8475,3 +8483,131 @@ $$
 新增一个名为左右次序、来源或事件的观察接口，不会仅凭名称迫使细化组成纤维。只有某个允许的新增响应实际分开 $c(s)=c(t)$ 的两项，才由此否定组成的响应充分性；若当前观测及全部允许续接响应仍在每条组成纤维上常值，它们仍可通过组成解码。新增操作的合法域和更新能否下降，则继续按53.2的独立条件检查。
 
 ## 53.99 追加锚
+
+## 54. 类型化二叶解释的替换自然性
+
+前面的二叶语法给出生成项，但要把它解释成部分过程，还必须验证替换与实际接续器相容。本节给出这条桥的抽象形式；它只讨论有限项和声明的代数操作，不把解释映射当作实际取得接口。
+
+### 定义 54.1（严格部分过程代数）
+
+令 $A_\bot=A\sqcup\{\bot\}$，并令
+
+$$
+\mu_\bot:A_\bot\times A_\bot\longrightarrow A_\bot
+$$
+
+是严格的部分组合：任一输入为 $\bot$ 时输出为 $\bot$，其余输入按接口类型、共同来源、权限及记录合同决定成功值或 $\bot$。给定 $p_\alpha,p_\beta\in A$，唯一结构递归解释
+
+$$
+\operatorname{Eval}:\mathcal T\longrightarrow A_\bot
+$$
+
+满足
+
+$$
+\operatorname{Eval}(\alpha)=p_\alpha,
+\quad
+\operatorname{Eval}(\beta)=p_\beta,
+\quad
+\operatorname{Eval}(\langle s,t\rangle)=
+\mu_\bot(\operatorname{Eval}(s),\operatorname{Eval}(t)).
+\tag{54.1}
+$$
+
+### 命题 54.2（替换的解释自然性）
+
+令 $\bar\rho:A_\bot\to A_\bot$ 满足
+
+$$
+\bar\rho(p_\alpha)=p_\beta,
+\qquad
+\bar\rho(p_\beta)=\mu_\bot(p_\beta,p_\alpha),
+\tag{54.2}
+$$
+
+并且满足复合器上的自然性条件
+
+$$
+\bar\rho(\mu_\bot(x,y))
+=
+\mu_\bot(\bar\rho(x),\bar\rho(y))
+\qquad(\forall x,y\in A_\bot).
+\tag{54.3}
+$$
+
+则
+
+$$
+\boxed{
+\operatorname{Eval}\circ\rho
+=
+\bar\rho\circ\operatorname{Eval}.}
+\tag{54.4}
+$$
+
+证明。对 $t\in\mathcal T$ 作结构归纳。$t=\alpha,\beta$ 时由(54.2)及(54.1)成立；若 $t=\langle s,u\rangle$，则
+
+$$
+\begin{aligned}
+\operatorname{Eval}(\rho\langle s,u\rangle)
+&=\mu_\bot(\operatorname{Eval}(\rho s),\operatorname{Eval}(\rho u))\\
+&=\mu_\bot(\bar\rho\operatorname{Eval}(s),\bar\rho\operatorname{Eval}(u))\\
+&=\bar\rho(\mu_\bot(\operatorname{Eval}(s),\operatorname{Eval}(u)))\\
+&=\bar\rho(\operatorname{Eval}(\langle s,u\rangle)).
+\end{aligned}
+$$
+
+第二行使用归纳假设，第三行使用(54.3)。证毕。这里的存在性和唯一性来自初始代数递归；(54.2)—(54.3)才是具体过程解释需要额外验证的条件。
+
+### 命题 54.3（边界下降同时运输替换与接续）
+
+设 $\eta:A_\bot\to B_\bot$、$\bar\mu:B_\bot^2\to B_\bot$ 和 $\bar\rho_B:B_\bot\to B_\bot$ 满足
+
+$$
+\eta(\mu_\bot(x,y))
+=
+\bar\mu(\eta x,\eta y),
+\qquad
+\eta(\bar\rho x)=\bar\rho_B(\eta x).
+\tag{54.5}
+$$
+
+则 $\eta\circ\operatorname{Eval}$ 是同一二叶语法到 $B_\bot$ 的解释，并满足
+
+$$
+(\eta\circ\operatorname{Eval})\circ\rho
+=
+\bar\rho_B\circ(\eta\circ\operatorname{Eval}).
+\tag{54.6}
+$$
+
+证明。第一项由(54.1)与(54.5)给出配对递归；第二项由(54.4)和(54.5)复合得到。若 $\eta$ 还要保留失败、记录、权限或时钟响应，这些字段必须已经包含在 $A_\bot,B_\bot$ 与 $\mu_\bot,\bar\mu$ 的合同中；只保留后继工作态不足以推出(54.5)。证毕。
+
+### 反例 54.4（只核对两片叶规则不够）
+
+取 $A=\mathbb Z/3\mathbb Z$，$\mu(x,y)=x+y$，$p_\alpha=0$、$p_\beta=1$，并定义
+
+$$
+\bar\rho(0)=1,
+\qquad
+\bar\rho(1)=1,
+\qquad
+\bar\rho(2)=0.
+$$
+
+叶规则(54.2)成立，但复合自然性失败，因为
+
+$$
+\bar\rho(\mu(1,1))=\bar\rho(2)=0
+\ne 2=\mu(\bar\rho(1),\bar\rho(1)).
+$$
+
+相应地，$\operatorname{Eval}(\rho\langle\beta,\beta\rangle)=2$，而
+
+$$
+\bar\rho(\operatorname{Eval}(\langle\beta,\beta\rangle))=0.
+$$
+
+所以仅验证 $\alpha,\beta$ 两个叶子的替换方程，不能推出整个过程上的替换交织；必须另证复合器的自然性。这个反例也说明，Fibonacci 两原子层是生成语法的基础，但过程层的动态闭合还承担一项独立的相容性义务。
+
+## 54.99 追加锚

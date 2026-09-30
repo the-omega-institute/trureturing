@@ -24519,6 +24519,16 @@ $$
 
 这里的 $z$ 是组成边界，不是把所有未读地址位都免费放入观察者记忆。
 
+本节中组成坐标的两个单位方向记为
+
+$$
+\mathbf a=(1,0)^{\mathsf T},
+\qquad
+\mathbf b=M\mathbf a=(0,1)^{\mathsf T}.
+$$
+
+粗体记号用于避免与生成语法中的叶子 $\alpha,\beta$ 混淆；这里只是由叶子计数得到的坐标解释。
+
 ### 命题 112.2（有限观察的联合满像与真实来源的稠密性）
 
 设 $W_L$ 是长度 $L$ 的合法二进制词集合。则
@@ -24531,7 +24541,7 @@ $$
 
 因而 $\Gamma_{\mathrm{fin}}$ 在 $K$ 中稠密，但它是 $K$ 的真子集。特别地，任何给定的有限前缀和有限多个模读数，都同时由一个实际有限来源以及一个在任意远处还含非零位的实际有限来源实现。
 
-**证明。** 把所有模数并入一个模 $m$。给定合法前缀 $p$ 和目标余数 $r\in(\mathbb Z/m\mathbb Z)^2$，取 $M$ 在模 $m$ 下的有限阶，并在前缀之后足够远的位置按该阶的倍数放置彼此不相邻的 $1$。分别用位置 $N+iT$ 和 $N+(A+j)T+1$ 贡献 $A\alpha$ 与 $B\beta$，即可补出任意 $r-t_p\equiv A\alpha+B\beta\pmod m$。若还要求在任意远处保留非零尾而 $A=B=0$，就在更高位置加入 $m$ 个相隔 $T$ 的 $\alpha$ 位；其总贡献为 $m\alpha\equiv0\pmod m$。所有新增位都可推到任意远处，且不改变给定前缀。于是每个有限基本开集都命中 $\Gamma_{\mathrm{fin}}$，得到稠密性。另一方面，$\Gamma_{\mathrm{fin}}$ 只含最终为零的地址，而 $K$ 还含无限支持地址，故为真子集。$\square$
+**证明。** 把所有模数并入一个模 $m$。给定合法前缀 $p$ 和目标余数 $r\in(\mathbb Z/m\mathbb Z)^2$，取 $M$ 在模 $m$ 下的有限阶，并在前缀之后足够远的位置按该阶的倍数放置彼此不相邻的 $1$。分别用位置 $N+iT$ 和 $N+(A+j)T+1$ 贡献 $A\mathbf a$ 与 $B\mathbf b$，即可补出任意 $r-t_p\equiv A\mathbf a+B\mathbf b\pmod m$。若还要求在任意远处保留非零尾而 $A=B=0$，就在更高位置加入 $m$ 个相隔 $T$ 的 $\mathbf a$ 位；其总贡献为 $m\mathbf a\equiv0\pmod m$。所有新增位都可推到任意远处，且不改变给定前缀。于是每个有限基本开集都命中 $\Gamma_{\mathrm{fin}}$，得到稠密性。另一方面，$\Gamma_{\mathrm{fin}}$ 只含最终为零的地址，而 $K$ 还含无限支持地址，故为真子集。$\square$
 
 这个结论区分了两个常被合并的对象：
 
@@ -24545,11 +24555,11 @@ $$
 
 ### 定义 112.3（剥离过程与粗边界）
 
-令 $\sigma$ 为地址左移，$\alpha=(1,0)^{\mathsf T}$，并定义完整剥离
+令 $\sigma$ 为地址左移，并定义完整剥离
 
 $$
 \delta(\omega,z)
-=\bigl(\sigma\omega, M^{-1}(z-\omega_0\alpha)\bigr).
+=\bigl(\sigma\omega, M^{-1}(z-\omega_0\mathbf a)\bigr).
 \tag{112.3}
 $$
 
@@ -24615,7 +24625,7 @@ $$
 $$
 \delta^j(\omega,z)
 =\left(\sigma^j\omega,
-M^{-j}\left(z-\sum_{i<j}\omega_iM^i\alpha\right)\right).
+M^{-j}\left(z-\sum_{i<j}\omega_iM^i\mathbf a\right)\right).
 \tag{112.7}
 $$
 
@@ -24661,7 +24671,7 @@ $$
 等价地，$\mathcal T$ 是多项式函子
 
 $$
-X\longmapsto \{\alpha,\beta\}\;+;(X\times X)
+X\longmapsto \{\alpha,\beta\}\sqcup(X\times X)
 $$
 
 的初始代数。这里有两个零元生成元 $\alpha,\beta$，以及一个有序二元构造器 $\langle-,-\rangle$。因此严格说，最小语法基的生成型是
