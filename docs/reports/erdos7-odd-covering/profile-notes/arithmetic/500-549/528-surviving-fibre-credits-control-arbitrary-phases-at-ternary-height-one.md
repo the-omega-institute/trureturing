@@ -1,10 +1,12 @@
 # Surviving-fibre credits give common query laws at ternary height one
 
+A [common-source two-axis estimate](#a-common-source-two-axis-union-makes-the-191-vector-palette-positive) gives head survivor density greater than 1/20000 for the specified 191-vector palette, with arbitrary finite nonternary heights and private-prime substitutions fixing 3,5,7. Head-only originals still have v3<=1, and only 5-stars may meet the chosen pure3-avoiding root. Any finite tail with primes outside that designated head greater than 10^7 retains supported mass greater than 1/24000 under the existing analytic tail premise.
+
 A [six-layer prefix condition](#six-ternary-layers-suffice-for-the-palette-with-unrestricted-deeper-head-originals) extends the specified twelve-prime palette to arbitrary ternary heights: only layers 1 through 6 on one declared root obey the palette and same-cofactor prefix-disjointness conditions; all deeper head originals are unrestricted and paid by a complete geometric budget. With the existing large-prime-tail premise, final supported mass exceeds 7/10000. This still requires a particular low-layer condition.
 
 A [large-prime continuation](#eleven-small-support-primes-allow-an-unrestricted-large-prime-tail) permits arbitrarily many additional primes greater than100000: if at most eleven support primes are at most100000, only originals entirely on those small primes need v3(m)<=1. Every tail-touching original may have arbitrary finite exponents, including deeper powers of3. The complete family remains finite and noncovering.
 
-A [shared-interface palette estimate](#the-exponent-palette-allows-arbitrary-nonternary-heights-and-larger-primes) also gives survivor density greater than1/250 for a twelve-prime head under a specified187-vector one-root exponent condition, with arbitrary finite nonternary heights and componentwise larger actual primes. This restricted head can receive any finite tail whose primes outside the head exceed100000, with arbitrary finite heights in the tail-touching originals. [Four root changes](#four-root-changes-leave-both-shared-prime-comparisons-negative) show why the palette condition cannot yet be replaced by the existing numerical capacity constraints.
+A [shared-interface palette estimate](#the-exponent-palette-allows-arbitrary-nonternary-heights-and-larger-primes) also gives survivor density greater than1/250 for a twelve-prime head under a specified187-vector one-root exponent condition, with arbitrary finite nonternary heights and componentwise larger actual primes. This restricted head can receive any finite tail whose primes outside the head exceed100000, with arbitrary finite heights in the tail-touching originals. [Four root changes](#four-root-changes-leave-both-shared-prime-comparisons-negative) exhibit a failure of separate group comparisons. The later [common-source two-axis bound](#a-common-source-two-axis-union-makes-the-191-vector-palette-positive) certifies that enlarged 191-vector palette; arbitrary numerical inventories remain unresolved.
 
 Every finite family of pairwise distinct odd numerical moduli greater than1, with at most eleven actual support primes and v3(m)<=1 for every original, leaves integer survivor density greater than1/700. The [eleven-prime construction](#actual-pure-outside-conditioning-closes-the-eleven-prime-branch) below permits arbitrary original residues and arbitrary finite nonternary heights. It is an ordinary proof with exact rational checks, not new Lean verification.
 
@@ -3623,3 +3625,392 @@ The formula is exact, not itself a new phase-uniform optimized bound. A next uni
 
 
 The [cross-interface control](../../../frontier/cover-geometry/fibre-credit-partition/cross_interface_overlap.py) and [exact results](../../../frontier/cover-geometry/fibre-credit-partition/cross_interface_overlap.json) bind the inherited FC56 endpoints to their original input and check 8870 predicates: rational positivity, the density conversion, actual pure/star union normalizers, literal CRT compatibility and all 4361 distinct odd nonunit numerical originals. The phase families are reconstructed by the stated rule rather than stored as duplicate inventories. This is ordinary mathematics with exact finite controls, not new Lean verification.
+
+
+## Exact raw-budget row-union optimization is a finite partition problem
+
+The separate scalar row-union relaxations used by FC56 can be solved exactly. Their old radical upper bounds are not generally sharp. For the four-flip numerical inventory, exact partition optimization improves the two-group root1 comparison to
+
+$$
+-\frac{4091649350058969624708191882673932317991949503}
+{4667699064271985012355433645074960811694844092544}
+=-0.0008765880777057205\ldots < -7/8000.
+$$
+
+The unchanged root2 endpoint is also below -7/8000. Thus exact optimization of these TWO SEPARATE scalar models does not close this inventory. Actual common-source constraints or additional phase relations may still improve the joint bound. No actual phase realization of the scalar optimizers, no cover, and no Lean verification is claimed.
+
+### Scope: the raw budget must be strictly below one
+
+Let the finite coordinate set be Q and let n rows be available. Fix an integer k>=1, 0<=rho<1, n>=k+1, and numbers 0<=T_q<1. The scalar relaxation is
+
+$$
+0\le R_i\le1,\qquad \sum_iR_i=k+\rho,
+\qquad x_{q,i}\ge0,\qquad \sum_i x_{q,i}\le T_q,
+$$
+
+with objective
+
+$$
+\Phi(R,x)=\sum_iR_i\left(1-\prod_q(1-x_{q,i})\right).
+$$
+
+Set $P=\prod_q(1-T_q)>0$, and assume $P\ge\rho^k$. A dummy zero-weight row handles the harmless case rho=0,n=k without changing the answer.
+
+The constraints use the RAW sum budget. If FC53 instead has a raw V_q>=1 and clips it to T_q=min(1,V_q), it does NOT follow that sum_i x_(q,i)<=T_q. The theorem below cannot be applied through that clipping. Both concrete FC56 groups satisfy the strictly-subunit raw-budget hypothesis.
+
+### A maximum exists at one-row allocations
+
+The feasible product of finite polytopes is compact and Phi is continuous, so a maximum exists. At a maximizer, fix x and maximize over R. The objective is linear in R. A capped-simplex vertex has k entries1, one entryrho when rho>0, and all remaining entries0. Replacing R by a maximizing such vertex preserves the global maximum.
+
+Now keep that R fixed. Holding every column other than q fixed, the dependence on the vector x_q is linear:
+
+$$
+\Phi=\text{constant}+
+\sum_i\left[R_i\prod_{r\ne q}(1-x_{r,i})\right]x_{q,i}.
+$$
+
+The simplex sum_i x_(q,i)<=T_q has vertices0 and T_q e_i. Successively replace every x_q by a maximizing vertex. Each replacement cannot decrease the objective, and the original value was already globally maximal. Hence a global maximizer exists with every q assigned to at most one row.
+
+If T_q>0, every positive-weight row has strictly positive coefficient: all other x_(r,i)<=T_r<1. Therefore the maximizing vertex uses the entire T_q on a positive-weight row. A zero budget is immaterial. Coordinates allocated to zero-weight rows can likewise be moved to a positive-weight row without decreasing the objective. Thus each nonzero budget is assigned wholly to one full row or the fractional row.
+
+This argument is separately linear optimization on one common tuple of variables. It does not interchange independent phase realizations or infer joint convexity.
+
+### The fractional row can be emptied
+
+Write u_1,...,u_k for the residual products on full rows and v for the residual on the fractional row. Each coordinate is allocated once, so
+
+$$
+\left(\prod_{j=1}^k u_j\right)v=P.
+$$
+
+All factors lie in(0,1]. Hence
+
+$$
+\prod_j u_j=P/v\ge P\ge\rho^k,
+$$
+
+so at least one full row has residual u>=rho. Suppose a coordinate q is on the fractional row, and write a=1-T_q>0. Its fractional-row residual v contains a, so v/a<=1.
+
+Move the ENTIRE q budget to a full row with residual u>=rho. The two affected residuals become
+
+$$
+u'=a u,\qquad v'=v/a.
+$$
+
+The product uv, and therefore P, is preserved. The change in their weighted residual contribution is exactly
+
+$$
+(a u+\rho v/a)-(u+\rho v)
+=(1-a)(\rho v/a-u)\le0.
+$$
+
+Since Phi is the fixed sum k+rho minus the weighted residual sum, Phi does not decrease. After this move, the invariant P and v'<=1 again imply that some full row has residual at least rho. Repeat until no coordinate remains on the fractional row. This is a finite procedure; it never divides by zero because T_q<1. When rho=0 the fractional row has zero weight and can be omitted from the start.
+
+The threshold P>=rho^k is used at every step through this invariant, not merely checked for the initial assignment.
+
+### Exact partition formula and its attainment in the scalar model
+
+For a partition of Q into k possibly empty blocks B_1,...,B_k, put
+
+$$
+U_j=\prod_{q\in B_j}(1-T_q),
+\qquad\text{empty product}=1.
+$$
+
+The preceding reductions show that some global maximizer assigns each q wholly to one full row and leaves the fractional row empty. Conversely every such partition is feasible in the scalar relaxation. Therefore
+
+$$
+\boxed{\max_{R,x}\Phi(R,x)
+=k-\min_{Q=B_1\sqcup\cdots\sqcup B_k}
+\sum_{j=1}^k\prod_{q\in B_j}(1-T_q).} \tag{FC69}
+$$
+
+This is exact attainment in the scalar feasible set. It does not assert that its R-vector and grouped x-values arise from one actual original AP family. In particular, independently maximizing the5 and7 groups does not prove that both optimizers can coexist on their shared actual source. Applying their separate upper bounds to one actual family is nevertheless valid.
+
+AM--GM recovers the old upper bound k(1-P^(1/k)). The difference comes from discrete allocation: the residual products may be unable to equalize exactly. The previous `joint_star_union.py` enumerated some two-row partitions as LOWER witnesses for its scalar relaxation and explicitly did not prove their global optimality. The proof above supplies the missing reduction; it is not a rerun or relabeling of those old witness checks.
+
+### Exact exhaustive partitions of the two FC56 groups
+
+The new control consumes the existing four-flip endpoint artifact, binds its recorded input hash to the inventory bytes, and reads the declared raw budgets and source prefactors. It enumerates unlabeled set partitions in restricted-growth order, including fewer than k nonempty blocks and charging every empty block residual1. A separate Stirling-number recurrence verifies the number of partitions at every block count. Every objective comparison uses exact fractions.
+
+For the5 group, k=2 and there are10 private-prime coordinates. The exhaustive counts are1 partition with one nonempty block and511 with two, total512. The unique optimizer up to row permutation is
+
+$$
+\{7,17,19,23,29\}\mid\{11,13,31,37,41\}.
+$$
+
+Its two residual products are
+
+$$
+\frac{1460286054914576983600}{2753151739425565324701},
+\qquad
+\frac{2178383348805946048000}{4109627181438393204051}.
+$$
+
+After multiplying by prefactor625/2344, the exact actual-group upper bound is
+
+$$
+U5^*=\frac{65136049485797972756259660934405885508063125}
+{260009974614081161561688594311216622754837572}
+=0.25051365657212155\ldots.
+$$
+
+Relative to the existing exact radical upper expression, the new saving lies between the certified rational endpoints displayed as
+
+$$
+1.4265497362183228\cdot10^{-8}
+\quad\text{and}\quad
+1.4265497895459679\cdot10^{-8}.
+$$
+
+For the7 group, k=5 and there are9 private-prime coordinates. The counts for1,...,5 nonempty blocks are1,255,3025,7770,6951, total18002. The unique optimizer up to row permutation is
+
+$$
+\{11\}\mid\{13\}\mid\{17\}\mid\{19,41\}
+\mid\{23,29,31,37\}.
+$$
+
+Multiplying its exact scalar optimum by the SAME outside5 prefactor3752763/32830064 gives
+
+$$
+U7^*=\frac{610868250359556921743105046850519081398563597}
+{6735496485240959613788504538347706798982459008}
+=0.09069387114938170\ldots.
+$$
+
+Its saving relative to the previous radical expression lies between
+
+$$
+0.00033176441395662133
+\quad\text{and}\quad
+0.00033176441395719287.
+$$
+
+Those interval statements use the already-certified radical enclosures. The new partition bounds themselves are rational and need no radical approximation.
+
+### The remaining gap is now exact for these separate scalar interfaces
+
+Using the same original-group debits D5,D7 and old endpoint L1, the revised comparison is exactly
+
+$$
+L1+D5-U5^*+D7-U7^*
+=-\frac{4091649350058969624708191882673932317991949503}
+{4667699064271985012355433645074960811694844092544}
+<-7/8000.
+$$
+
+The old root2 endpoint is unchanged and also below-7/8000. Consequently every convex root weight still gives a negative comparison below-7/8000. No original charge is counted in both groups.
+
+There is no remaining numerical optimizer gap inside either declared raw-budget scalar relaxation. A stronger actual-family bound must therefore use more than the two separate scalar interfaces. The next section provides such a common-source cross-group bound and makes this specified palette positive. The negative scalar comparison remains valid and never implied negative actual survivor mass.
+
+
+The [exact partition producer](../../../frontier/cover-geometry/fibre-credit-partition/scalar_partition_union.py) and [result](../../../frontier/cover-geometry/fibre-credit-partition/scalar_partition_union.json) check 17 input and result predicates and exhaust all 512 plus 18002 partitions using exact fractions. No actual phase realization of either scalar optimizer is assumed.
+
+
+## A common-source two-axis union makes the 191-vector palette positive
+
+Let I_plus=I union{77,91,119,133}, where I is the specified 187-vector palette of FC55. For the fixed FC36 finite profile, this larger palette leaves same-source survivor mass greater than 1/1500 and integer survivor density greater than 1/12000. The result holds for arbitrary actual phases under the chosen-root and star conditions; no 35/77 alignment is required. The complete-height extension below permits every finite nonternary height with the weaker density constant 1/20000. The 191 exponent vectors and the head-only restriction v3<=1 remain material.
+
+### One carrier and three disjoint inventories
+
+Use a root avoiding the actual pure3 class, with only 5-stars active there. On the actual pure-conditioned product source, enlarge their union once to a 5-set B_5 of mass b_5. Let
+
+    W=1-b_5=1563/2344,
+    a_5=c_5/5=625/2344,
+    a_7=c_7/7=2401/14006.
+
+Restrict every event below to this SAME carrier x_5 outside B_5. Split the old shallow 5-group into A_7, containing support-{5,7} originals, and A, containing support-{5,q} originals with q>7. Let B be the old shallow 7-group, with support-{7,q}, q>7. These three numerical inventories are pairwise disjoint. They contain all free and allowed selected originals of their respective forms, with absent originals permitted; no new actual phases are introduced.
+
+Keep A_7 at its safe independent upper charge
+
+    D_57=a_5 T_(5,7).
+
+This pays the full actual 7-prefix dependence of A_7, including its higher 7 powers. Removing those events from the joint calculation makes A independent of the 7 head coordinate. It is not legitimate to drop A_7 or treat its deeper prefix as an independent factor; the separate charge is deliberate.
+
+Resolve the first 5 root i and first 7 root j. Their actual weights satisfy
+
+    0<=w_i<=a_5, sum_i w_i=W,
+    0<=v_j<=a_7, sum_j v_j=1.
+
+They are weights from the same product source, with the one shared 5 restriction. For each private prime q>7, let X_(q,i) and Y_(q,j) be the actual q-prefix unions of A and B, and set
+
+    x_(q,i)=lambda_q(X_(q,i)),
+    y_(q,j)=lambda_q(Y_(q,j)),
+    z_(q,i,j)=lambda_q(X_(q,i) intersect Y_(q,j)).
+
+The RAW label budgets give
+
+    sum_i x_(q,i)<=T_(5,q),
+    sum_j y_(q,j)<=T_(7,q).
+
+All private-prime budget sums T_(5,q)+T_(7,q) are below 1 in this profile. Thus dropping z produces nonnegative factors 1-x-y here. In a general profile, use max(0,1-x-y); the argument below also handles that case directly through actual z.
+
+### A product defect inequality
+
+For numbers 0<=f_q,g_q<=1, telescoping their products shows
+
+    product_q g_q >= product_q f_q - sum_q (f_q-g_q)_+.
+
+Apply this on one head cell with
+
+    f_q=(1-x_q)(1-y_q),
+    g_q=1-x_q-y_q+z_q.
+
+These are in [0,1] for actual measurable sets, and f_q-g_q=x_q y_q-z_q<=x_q y_q. Consequently
+
+    product_q(1-x_q-y_q+z_q)
+       >= product_q(1-x_q) product_q(1-y_q) - sum_q x_q y_q.
+
+This keeps the unavoidable interaction between distinct private coordinates while permitting complete disjointness between same-q projections. It never assumes a positive same-q intersection.
+
+Let u_i=1-product_q(1-x_(q,i)) and t_j=1-product_q(1-y_(q,j)). The actual private-group union on this head cell is at most
+
+    u_i+t_j-u_i*t_j+sum_q x_(q,i)y_(q,j).
+
+Integrate using the actual product weights w_i v_j. If u=lambda(A) and v=lambda(B), then u=sum_i w_i u_i and v=W sum_j v_j t_j. Therefore
+
+    lambda(A union B)
+       <= u+v-u*v/W
+          +sum_q [sum_i w_i x_(q,i)] [sum_j v_j y_(q,j)]
+       <= u+v-u*v/W
+          +a_5*a_7*sum_(q>7) T_(5,q)T_(7,q).             (FC70)
+
+The product in the correction follows from the independent head coordinates, not from independently chosen phases. Each X and Y remains a projection of the same actual original family.
+
+### Why upper parameters may be substituted
+
+The present carrier has W>0. If a more general source has W=0, all these restricted group masses are zero and no division is needed. For W>0 define f(u,v)=u+v-u*v/W. On the square [0,W]^2,
+
+    f(u',v)-f(u,v)=(u'-u)(1-v/W)>=0,
+    f(u,v')-f(u,v)=(v'-v)(1-u/W)>=0.
+
+Thus if U_A,U_B are certified separate upper bounds in [0,W], then FC70 implies
+
+    lambda(A union B)
+       <= U_A+U_B-U_A*U_B/W+C_same,
+    C_same=a_5*a_7*sum_(q>7)T_(5,q)T_(7,q).              (FC71)
+
+This does NOT assert lambda(A intersect B)>=U_A*U_B/W-C_same. Upper bounds cannot provide that intersection lower bound. The valid inference is monotonic substitution into the entire union upper expression. It automatically trades missing actual mass against diminished intersection.
+
+The entire two-group union, including A_7, consequently obeys
+
+    U_new = D_57+U_A+U_B-U_A*U_B/W+C_same.                (FC72)
+
+No shallow or cross-group credit is charged twice: replace the two old groups once by this single upper bound and leave all other original allowances in place.
+
+### Certified finite-profile values
+
+The existing FC53 one-axis bound gives
+
+    P_A=product_(q>7)(1-T_(5,q)),
+    U_A=2*a_5*(1-sqrt(P_A)),
+    P_B=product_(q>7)(1-T_(7,q)),
+    U_B=5*W*a_7*(1-P_B^(1/5)).
+
+The two-full-row and five-full-row branch conditions hold. Exact integer-power bisection provides lower endpoints for the radicals, hence rational U_A and U_B above the exact one-axis formulas. Their explicit rational values and root brackets are in the result JSON. They remain below W, as checked before monotonic substitution.
+
+| Quantity | Certified rational value, shown as a decimal |
+|---|---:|
+| U_A | 0.2114615106520626 |
+| U_B | 0.09102563556333887 |
+| C_same | 0.005215668835230667 |
+| D_57 | 0.0607865095846295 |
+| U_new | 0.3396228545523119 |
+| Previous sum of certified group upper bounds | 0.34153930640095836 |
+
+The improvement is approximately 0.001916451848646477, greater than the previous negative gap of 0.0012083667571608089. These decimals are displays, not the inequalities' evidence.
+
+For a direct same-source certificate, write L1 for the old FC56 independent-deletion endpoint and D5,D7 for the two independent group allowances. The unchanged remaining charge is
+
+    C_rem = W-L1-D5-D7 >=0.
+
+This is the sum of all original allowances not in the two replaced groups. Therefore
+
+    survivor mass >= W-C_rem-U_new
+                  = L1+D5+D7-U_new
+                  >1/1500.                              (FC73)
+
+The exact rational lower bound is approximately 0.0007080850914856683. This direct derivation avoids cancellation of independently rounded radical comparisons. As a secondary check, adding the old lower endpoint to a LOWER bound on the old group-upper formulas and subtracting U_new gives 0.0007080850914845634, also greater than 1/1500. The endpoint directions are essential.
+
+The chosen-root law has joint density cap 3 product_q c_q<8. Restricting to B_5^c does not increase it. Thus actual integer survivor density is strictly greater than 1/12000. Every actual original event is periodic on one finite CRT period; the artificial carrier is only a subset used for the lower comparison.
+
+The theorem applies uniformly over actual phases satisfying the unchanged profile, root, star and 191-vector palette restrictions. No alignment or cleanliness of 35 and 77 is imposed. Both may be absent. The theorem does not make the 191-vector palette universal, permit arbitrary ternary heights, or resolve arbitrary finite odd covering systems.
+
+### Arbitrary finite nonternary heights
+
+Keep the actual prime support and the SAME 191 exponent vectors for mixed originals on the chosen root. All 3-free mixed originals, pure powers, 5-stars and other-root mixed originals may now have arbitrary finite nonternary heights. The family is finite and head-only ternary exponents remain at most one. Only 5-stars are allowed on the chosen root, which must avoid pure3.
+
+Use the complete-geometric caps
+
+    c_p=(p-1)/(p-2), b_p=1/(p-2),
+    W=2/3, a_5=4/15, a_7=6/35.
+
+These bound normalized Haar on each actual pure survivor regardless of the finite height. Enlarge the one actual 5-star union to b_5=1/3. The raw budgets are
+
+    T_(5,q)=b_q+c_q*sum_(5q^e in the191 palette)q^-e,
+    T_(7,q)=b_q+c_q*sum_(7q^e in the191 palette)q^-e.
+
+The selected sums keep the declared finite exponent vectors; only the free geometric terms exhaust all heights. The same radical branches and FC70–FC72 apply. They give a rational joint upper of approximately 0.3396394739374755.
+
+The remaining charges can be paid directly with a nonnegative polynomial. For the private primes q>7 put B=sum_q b_q and E=product_q(1+b_q)-1-B. Let beta=b_5. The free charge outside the two complete shallow groups is exactly
+
+    F_rem=(1+b_7)E+(b_7-W*a_7)B
+                        +(beta-a_5)(b_7+B).              (FC74)
+
+All coefficients are positive: b_7-W*a_7=3/35 and beta-a_5=1/15. To verify FC74, sum every free support of size at least two, with outside5 factor W where appropriate; remove precisely the free 5q^e and 7q^e allowances. No separately optimized result is subtracted.
+
+Of the 191 chosen-root mixed labels, the 5-group uses 28 and the 7-group uses four, leaving the same 159 other exponent vectors. Pay their nonnegative sum
+
+    M_rem=sum_(remaining d)
+        [W if 5 does not divide d, else 1]
+        *product_(p divides d) c_p*p^(-v_p(d)).
+
+The complete remaining charge F_rem+M_rem is approximately 0.326602110491887. Exact rational arithmetic gives
+
+    W-F_rem-M_rem-U_new
+       =0.0004250822373041803... >1/2500.                 (FC75)
+
+The product source still has full-Haar density cap
+
+    3*product_p c_p=1048576/134589<8.
+
+Consequently the actual head survivor has integer density greater than 1/20000. Missing allowed labels only remove actual events; their unused allowances remain in the upper comparison. The 191-vector condition, rather than merely a count of 191 labels, is retained.
+
+### Transport of private primes with 3,5,7 fixed
+
+Replace each indexed private prime q=11,13,...,41 by a distinct actual prime Q_q>=q, distinct from 3,5,7. Carry every palette exponent vector to these actual primes. Unique factorization preserves numerical label identity. For each transported actual family, construct its coordinate laws from that family's globally fixed phases. No bijection between old and new residue laws is claimed.
+
+Here W,a_5,a_7,b_5,b_7 and D_57 stay fixed. Each b_(Q_q), c_(Q_q)*Q_q^-e and raw private budget decreases. The products P_A,P_B increase, so their one-axis upper bounds decrease and remain within [0,W]. FC71 is monotone in these upper arguments. Its nonnegative correction C_same also decreases. FC74 and the 159-term mixed sum are polynomials with nonnegative coefficients in the decreasing private weights, so the remaining charge decreases. The source density cap decreases as well. Thus the same strict margin and density bounds survive this transport.
+
+This proof keeps the 7 axis fixed. Replacing 7 changes both its head weight cap and the coupled correction, and is not claimed here. Increasing the number of private axes or replacing the 191 vectors by arbitrary numerical labels is also outside this theorem.
+
+### A large-prime tail from the certified head
+
+Let R be this designated twelve-prime head with 3,5,7 fixed and the permitted private-prime substitutions. Suppose every actual support prime outside R exceeds B=10000000. Tail-touching originals may have arbitrary finite exponents, including arbitrary powers of 3 and higher head powers. Only the head-only originals satisfy the head theorem's palette and ternary restrictions.
+
+The actual head survivor U has full-Haar mass greater than 1/20000. Take the unnormalized seed eta=H_R restricted to U. It has density at most D=1 and mass between 1/20000 and one. Uniformly lift its finite-period representation if later originals require greater head precision.
+
+Reuse Chapter33 SH11–SH13 with ell=14, c_ell=393/391 and 3^14=4782969<=B. The complete head moment decreases under the permitted prime substitutions and is at most
+
+    M2=17517439415203/525533184000.
+
+Its explicit loss bound is
+
+    tau7=(c_ell^7/B)*(B/(B-3))^2
+                  *sum_(j=0..7) 7!/((7-j)!*ell^j),
+    sum=1711167/941192,
+    M2*tau7
+      =13595292776794505068415137041568125
+        /2164677006270473807773014703916417449984
+      <1/120000.
+
+Therefore the final supported measure has mass greater than
+
+    1/20000-1/120000=1/24000.                            (FC76)
+
+This implies an uncovered integer for the finite full family. FC76 is mass in the supported distorted law of the tail construction, not a full-family natural-density lower bound. Designated head primes need not be below the tail threshold or below every tail prime: the inherited exposure order is head first, then increasing tail primes. The tail is disjoint from R by definition.
+
+The analytic prime-product premise is the existing Chapter33 SH11 with its pinned source attribution. The new exact calculation checks its numerical consumer and parameter guards; it does not reprove that analytic theorem.
+
+
+The [two-axis union producer](../../../frontier/cover-geometry/fibre-credit-partition/two_axis_union.py) and [exact results](../../../frontier/cover-geometry/fibre-credit-partition/two_axis_union.json) bind the inherited endpoint to its original input, reconstruct the raw budgets and the complete free and 191-label charges, and check 585 predicates. These include 48 independently enumerated finite product-space cases with arbitrary private-coordinate overlaps, including x+y>1; exact radical brackets; the 28/4/159 payment split; the all-height margin; and the inherited tail consumer. The proofs above supply the all-phase inequalities. No scalar optimizer is presented as an actual p-adic realization, and no new Lean verification is claimed.
