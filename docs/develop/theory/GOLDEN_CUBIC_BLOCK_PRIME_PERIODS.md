@@ -238,8 +238,26 @@ $$
 \sum_{p\mid B_j}h_pc_{j,p}\equiv1\pmod3.
 $$
 
-The supplementary laws applied to Theorem 8.1 give
-$(\omega/\eta_j)_3=1$ and $(\lambda/\eta_j)_3=\omega^2$.
+For the ramified supplementary value, put $b=x_j-1$,
+$\delta=-\eta_j=2-b\omega$, and $c=2-b=3-x_j$. The associated ideals
+of $\delta$ and $\eta_j$ agree. The congruence $x_j\equiv4\pmod{72}$
+makes $b$ odd, $3\mid b$, and $c\equiv-1\pmod9$. In the primary
+convention $a+b\omega$ with $a=3m-1$ and $3\mid b$, the denominator
+$\delta$ has $m=1$. Lemvig's ramified supplementary law, Theorem
+3.9(2) in *Cubic and quartic reciprocity*, then gives
+$(1-\omega/\delta)_3=\omega^2$. Equivalently, its primitive-case
+calculation uses $\delta=2(1-\omega)+c\omega$: the character at the
+denominator $2$ evaluates $\delta$ as $\omega$, while the character
+at $c$ evaluates $\delta$ as $1$. At $j=1$ one has $c=-1$, so the
+latter value follows directly because $-1$ is a cube; no reciprocity
+law is applied to a unit denominator. For $j\geq2$, the primary
+elements $\delta$, $2$, and $c$ are pairwise coprime where required,
+their norms avoid $3$ and are unequal, and cubic reciprocity applies.
+The congruence $\delta\equiv2(1-\omega)\pmod c$ and the rational
+supplementary laws $ (2/c)_3=(1-\omega/c)_3=1$ give the latter value.
+Since $N(\delta)=B_j\equiv1\pmod9$, the other supplementary law gives
+$(\omega/\delta)_3=1$. As $\lambda=\omega(1-\omega)$, this proves
+$(\lambda/\eta_j)_3=\omega^2$ and $(\omega/\eta_j)_3=1$.
 Since $3=-\lambda^2$ and $-1$ is a cube, their product gives
 $(3/\eta_j)_3=\omega$. Multiplicativity and the oriented factorization
 give the displayed product and sum.
