@@ -395,8 +395,11 @@ def restore_execution(root, layer, keys, staged):
 def validate_judge_registration(root, layers):
     if "judge" in layers:
         sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "report"))
-        from dotnet_producer import project_registry
-        return project_registry(root)
+        from dotnet_producer import ProjectRegistrationError, project_registry
+        try:
+            return project_registry(root)
+        except ProjectRegistrationError as error:
+            raise CachePathRegistrationError(str(error)) from error
 
 
 def replace_restored_directory(staged, target, rollback_root):
