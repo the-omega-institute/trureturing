@@ -57,8 +57,8 @@ are `repo-derived` ordinary mathematics. Their Latinness premise is the
 source assertion accompanying equation (7). The construction supplies
 three transversals for every k >= 9; the source's finite search result
 is not used as a premise of that uniform construction. The two current D5
-consumers are `D5/S3/Combinatorics/LatinHTransversals.transversal_obstruction`
-and `D5/S3/Combinatorics/LatinHFamilyTheorem.result`; the latter keeps
+consumers are `D5/S3/Combinatorics/Latin/LatinHTransversals.transversal_obstruction`
+and `D5/S3/Combinatorics/Latin/LatinHFamilyTheorem.result`; the latter keeps
 Latinness of the actual square as the explicit source premise. Full
 Conjecture 3 remains unresolved by this H-family result; neither a result
 for G nor an order-30 square with the conjectured properties follows from

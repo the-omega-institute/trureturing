@@ -8,7 +8,7 @@ Every transversal of the literal H-family square contains at least two of its th
 
 $$\forall k \in \mathrm{Nat},\; 9 \le k \Rightarrow \left(\forall S \in \operatorname{Set}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(\operatorname{order}\left(k\right)\right), \operatorname{Prod}\left(\operatorname{Fin}\left(\operatorname{order}\left(k\right)\right), \operatorname{Fin}\left(\operatorname{order}\left(k\right)\right)\right)\right)\right),\; \operatorname{IsTransversal}\left(k, S\right) \Rightarrow 2 \le \operatorname{ncard}\left(\operatorname{inter}\left(\operatorname{D}\left(k\right), S\right)\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/LatinHTransversals.transversal_obstruction` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Latin/LatinHTransversals.transversal_obstruction` (`✓ std3`). ∎
 
 *Citation.* Afsane Ghafari, Ian M. Wanless (2026). *Latin Squares whose transversals intersect in unusual ways*. DOI: [10.48550/arXiv.2607.17547](https://doi.org/10.48550/arXiv.2607.17547). URL: <https://arxiv.org/abs/2607.17547v1>.
 
@@ -18,5 +18,5 @@ The square adds its priority increment to the row and column representatives mod
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/LatinHTransversals.transversal_obstruction`
-- Dependency: [D5/S3/Combinatorics/LatinEulerianDefs](LatinEulerianDefs.md)
+- Truth anchor: `D5/S3/Combinatorics/Latin/LatinHTransversals.transversal_obstruction`
+- Dependency: [D5/S3/Combinatorics/LatinEulerianDefs](../LatinEulerianDefs.md)

@@ -1,12 +1,12 @@
-/- GID: D5/S3/Combinatorics/LatinHFamilyTheorem
+/- GID: D5/S3/Combinatorics/Latin/LatinHFamilyTheorem
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/LatinHFamilyTheorem
+   mirror-B: D5/B/S3/Combinatorics/Latin/LatinHFamilyTheorem
    mirror-E: none(waiver:explicit-H-family)
-   anchors: [lit/ghafari2026transversals]
+   anchors: [mathlib/module/Mathlib.Tactic]
    utility: none
    digest: The complete integer-parameter H-family transversal theorem. -/
 
-import D5.S3.Combinatorics.LatinHTransversals
+import D5.S3.Combinatorics.Latin.LatinHTransversals
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

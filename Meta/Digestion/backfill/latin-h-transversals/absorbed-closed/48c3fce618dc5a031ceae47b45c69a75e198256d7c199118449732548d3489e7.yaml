@@ -3,7 +3,7 @@ fingerprints:
   normalized_sha256: sha256:48c3fce618dc5a031ceae47b45c69a75e198256d7c199118449732548d3489e7
 cas_ref: sha256:48c3fce618dc5a031ceae47b45c69a75e198256d7c199118449732548d3489e7
 coverage_gids:
-  - gid: D5/S3/Combinatorics/LatinHFamilyTheorem.result
-    target_statement_id: sha256:7f46bbd6f6aeb23c86c77af3f57eaf58ce7c9e383a233d2da07264e5ca653f78
+  - gid: D5/S3/Combinatorics/Latin/LatinHFamilyTheorem.result
+    target_statement_id: sha256:6d423db9655caeea955b1d773aa9a626bef5390b8914b21a81e14c21e2015867
 receipts:
   unresolved_subitems: []

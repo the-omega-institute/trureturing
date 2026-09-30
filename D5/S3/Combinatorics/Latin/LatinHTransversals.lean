@@ -1,6 +1,6 @@
-/- GID: D5/S3/Combinatorics/LatinHTransversals
+/- GID: D5/S3/Combinatorics/Latin/LatinHTransversals
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/LatinHTransversals
+   mirror-B: D5/B/S3/Combinatorics/Latin/LatinHTransversals
    mirror-E: none(waiver:explicit-source-family-and-coordinate-certificates)
    anchors: [mathlib/module/Mathlib.Tactic]
    utility: none

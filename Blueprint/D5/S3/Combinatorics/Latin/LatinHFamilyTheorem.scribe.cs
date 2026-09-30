@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics;
 
 internal sealed class LatinHFamilyTheoremDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/LatinHFamilyTheorem.";
+    private const string Prefix = "D5/S3/Combinatorics/Latin/LatinHFamilyTheorem.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Combinatorics/ghafari2026transversals");
 

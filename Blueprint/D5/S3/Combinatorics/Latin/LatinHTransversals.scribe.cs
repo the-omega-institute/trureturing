@@ -6,7 +6,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics;
 
 internal sealed class LatinHTransversalsDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/LatinHTransversals.";
+    private const string Prefix = "D5/S3/Combinatorics/Latin/LatinHTransversals.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Combinatorics/ghafari2026transversals");
 
