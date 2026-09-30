@@ -2,6 +2,8 @@
 
 A [large-prime continuation](#eleven-small-support-primes-allow-an-unrestricted-large-prime-tail) permits arbitrarily many additional primes greater than100000: if at most eleven support primes are at most100000, only originals entirely on those small primes need v3(m)<=1. Every tail-touching original may have arbitrary finite exponents, including deeper powers of3. The complete family remains finite and noncovering.
 
+A [shared-interface union estimate](#a-same-source-union-turns-the-fixed-root-1-comparison-positive) also gives survivor density greater than1/250 for the twelve-prime profile through41 under an explicit187-label one-root palette condition. This restricted head can likewise receive an arbitrary finite tail of primes greater than100000; the tail originals have unrestricted finite heights. The palette restriction is not removed by this extension.
+
 Every finite family of pairwise distinct odd numerical moduli greater than1, with at most eleven actual support primes and v3(m)<=1 for every original, leaves integer survivor density greater than1/700. The [eleven-prime construction](#actual-pure-outside-conditioning-closes-the-eleven-prime-branch) below permits arbitrary original residues and arbitrary finite nonternary heights. It is an ordinary proof with exact rational checks, not new Lean verification.
 
 Let P={3,5,7,11,13,17,19}. For every finite family of pairwise distinct odd numerical moduli greater than1 supported on P, with arbitrary original residues and v3(m)<=1, there is one probability mu on its actual survivor set such that
@@ -1900,6 +1902,374 @@ and disjointness from every target. Its default remains the original
 2516-check FC44 construction and reproduces the earlier result byte for
 byte for the same input argument. Both variants use the same finite
 source and preserve all of its original heights.
+
+## A same-source union turns the fixed root-1 comparison positive
+
+The negative FC36 endpoint is a failure of separate deletion charges.
+For its fixed numerical profile, the joint product structure of a group
+of shallow-5 events gives a larger improvement than FC42 or FC48 alone.
+The estimate below replaces the WHOLE group charge; none of those
+possibly overlapping credits is added to it. It holds uniformly over
+actual phases and pure-source losses in the declared profile, without
+assuming that the complete2138-label inventory has an AP realization.
+
+### A finite row-union bound
+
+Let R_i belong to[0,1], with sum_i R_i=2+rho and0<=rho<1.
+For each coordinate q let0<=x_(q,i)<=1 and
+sum_i x_(q,i)<=T_q<1. Put
+
+    P=product_q(1-T_q),
+    Phi(R,x)=sum_i R_i[1-product_q(1-x_(q,i))].
+
+If P>=rho^2, then
+
+    Phi(R,x)<=2-2 sqrt(P).                           (FC50)
+
+Proof. For fixed x the objective is linear in R. Its maximum over
+this capped simplex occurs at two entries1, one entryrho and zeros
+elsewhere. If rho=0, any unused row may be included as the third row
+with weight zero; when there is no unused row, take its product to be1.
+Write u,v,w for the products product_q(1-x_(q,i)) on these three
+rows. For each q the elementary union inequality gives
+
+    product_(i in the three rows)(1-x_(q,i))
+       >=1-sum_(i in the three rows)x_(q,i)>=1-T_q.
+
+Hence uvw>=P>0. Now u+v>=2 sqrt(P/w). With a=sqrt(w)<=1,
+
+    2(1/a-1)>=1-a^2,
+
+because the difference is(1-a)^2(a+2)/a. Since sqrt(P)>=rho,
+
+    2 sqrt(P/w)+rho*w>=2 sqrt(P)+rho.
+
+Subtracting from2+rho proves FC50. The x vectors need not be
+concentrated, separately optimized or jointly realized by a different
+source. If P=0 is admitted as a limiting case, the only case here is
+rho=0 and the bound Phi<=2 is immediate.
+
+### Which actual union this bounds
+
+Consider a finite family of pairwise distinct odd nonunit moduli,
+each dividing3*product_(q in Q)q^h_q, with the finite FC36 profile
+
+    Q=(5,7,11,13,17,19,23,29,31,37,41),
+    h=(5,5,4,4,4,4,4,3,3,3,3).
+
+For each q use normalized Haar on its ACTUAL pure-q survivor, and the
+same finite-height cylinder cap
+
+    c_q=(q-1)q^h_q/[(q-2)q^h_q+1],
+    b_q=c_q sum_(e=1..h_q)q^-e=c_q-1.
+
+No pure-chain completeness or extremal-cover premise is needed for
+this cap: the actual pure union has mass at most the displayed
+geometric sum. Choose an actual ternary root r not removed by pure3,
+and suppose every star3q^e on r has q=5. Enlarge the actual5-star
+blocked set on this SAME nonatomic source to mass b_5. The other
+q-coordinates have no star deletion on r. Then
+
+    R_i=lambda_5([i]_5 minus B_5)/(c_5/5),
+    sum_i R_i=5(1-b_5)/c_5=2+313/625.
+
+Let I be the187-label root-1 cofactor palette in the FC36 input. On
+r allow any subset of the original mixed labels{3d:d in I}, with
+their arbitrary but globally fixed phases. Other retained ternary
+roots may carry arbitrary mixed originals within the same profile.
+Every3-free mixed label within the profile remains allowed and paid.
+
+Group the actual3-free originals5q^e together with the allowed
+originals3*5q^e on r, for q!=5. Each actual original in this group
+has exactly one5-root i. Let x_(q,i) be the lambda_q mass of the
+UNION of its q-cylinders in row i. Each numerical label is charged
+once in
+
+    sum_i x_(q,i)<=T_q,
+    T_q=b_q+c_q sum_(e:5q^e in I)q^-e.              (FC51a)
+
+The first term budgets EVERY profile-allowed3-free5q^e, even when
+absent from the actual family. There are37 such allowances and28
+selected3-divisible allowances. The second term can likewise budget
+absent members of the allowed palette. These are upper allowances,
+not invented events or mutually optimized phases.
+
+Conditional on the5-root, the q-unions for DIFFERENT q depend on
+independent coordinates of this ONE product law. Therefore the
+actual grouped union mass in the smaller comparison carrier is
+EXACTLY
+
+    (c_5/5) sum_i R_i[1-product_(q!=5)(1-x_(q,i))].  (FC51b)
+
+This is the use of product independence. No independence between
+events using the same q, nor between different5-rows, is assumed.
+The gain can include slack in absent or unsaturated allowances; it
+does not assert strictly positive actual intersections in every family.
+The independent debit previously assigned to the same group is
+
+    D_group=(c_5/5)sum_(q!=5)T_q.                  (FC51c)
+
+### An exact positive palette certificate
+
+The complete inputs for FC51a are:
+
+| q | Allowed3*5q^e depths on r | T_q |
+| ---: | --- | ---: |
+|7|2,3|3193/14006|
+|11|1,2,3|2927/13177|
+|13|1,2,3|4759/26181|
+|17|2,3|5526/78301|
+|19|1,2,3|14479/123081|
+|23|1,2,3|25439/267121|
+|29|1,2,3|871/11759|
+|31|1,2,3|993/14399|
+|37|1,2,3|1407/24623|
+|41|1,2,3|1723/33599|
+
+All T_q are less than1, and
+
+    P=3181062826519439838446223390324180812800000
+       /11314427222967695596967677738798675563563751,
+    rho=313/625<53/100,
+    (53/100)^2<P.
+
+Thus FC50 gives the fully rational group upper bound
+
+    U_group=(c_5/5)(2-2*53/100)=1175/4688.
+
+Let L_1 be the unchanged FC36 root-1 endpoint, including the FULL
+profile3-free debit and all187 allowed mixed3-divisible charges.
+Replace only the37 plus28 grouped allowances by U_group. The new
+actual survivor lower bound is
+
+    lambda(U)>=L_1+D_group-U_group
+       =10815759664343846497416905566104186603965410151
+        /333407076019427500882530974648211486549631720896
+       >4/125.                                    (FC52)
+
+The exact value is approximately0.03244010233218211. Every other
+3-free allowance remains paid, including higher5 powers and supports
+with three or more nonternary primes. Every other allowed mixed
+original on r remains paid. Consequently absent actual classes cause
+no invalid subtraction: derive FC52 directly by union-bounding the
+actual ungrouped events by their still-retained allowances, and then
+bounding the actual grouped UNION by U_group. It is not obtained by
+subtracting a fictitious intersection from an actual event sum.
+
+Take the ternary law to be normalized Haar on r. Its full product
+source is dominated by[3 product_q c_q] times full Haar, and the
+exact finite profile gives3 product_q c_q<8. Hence under this
+187-label palette contract the actual integer survivor density is
+strictly greater than1/250. All original events are periodic on one
+finite CRT period, so this supplies an uncovered integer. Pure3,
+pureq powers,5-stars and palette entries may be absent. The only
+ternary restriction here is v3(m)<=1; the chosen root must avoid
+pure3, its stars may only involve5, and its mixed3-divisible
+cofactors must belong to I.
+
+In particular this excludes a whole-cover realization of the fixed
+FC36 selected inventory and star-root data. Its old negative
+single-class comparison remains valid for the old functional;
+the new positive lower bound uses more information, namely the
+joint union across a shared5 interface. It does not prove positivity
+of the maximum over ALL Omega_sigma inventories, nor eliminate the
+finite-profile or ternary-height restriction.
+
+For the exact original FC36 root metadata, keep root2's old L_2
+unchanged. The same argument gives the valid affine bound
+w_1*(L_1+D_group-U_group)+(1-w_1)*L_2 for every real w_1 in[0,1].
+Only suitable weights give positivity; choosing w_1=1 is permitted
+by FC4. No assertion of positivity for every weight is made.
+
+These are ordinary mathematical deductions and exact finite
+controls, not new Lean verification.
+
+### A pointwise row-union interface at arbitrary ternary height
+
+The shared-interface estimate has a pointwise form that does not use
+H3=1 or the JP phase constraints. Its positive numerical margin above
+still depends on the stated finite palette; the following interface
+does not assert a positive unrestricted comparison.
+
+At one actual ternary point t, retain FC4's SAME pure-conditioned
+product source. Fix a nonternary prime p. Group the actual originals
+
+    m=3^i*p*q^e,  i>=0, e>=1, q!=p, q!=3,
+
+whose actual ternary prefix contains t. Here i=0 denotes a3-free
+original, and every grouped original has v_p(m)=1. Include every
+numerical original once. All index sets are finite, although there
+is no uniform bound on their finite ternary or q heights.
+
+Let B_q(t) be the actual coordinate blockers, or their declared
+same-source enlargements chosen ONCE on each cell of a common finite
+ternary prefix partition resolving the actual family and declared
+enlargement budgets. The enlarged sets and their budgets are constant
+on each such cell. Put beta_q(t)=lambda_q(B_q(t)). If any
+q!=p has beta_q(t)=1, the comparison carrier and this group's mass
+inside it are zero. Otherwise put
+
+    nu_q=lambda_q(. intersect B_q(t)^c)/(1-beta_q(t)), q!=p,
+    G_except_p=product_(q!=p)(1-beta_q(t)),
+    R_j=lambda_p([j]_p minus B_p(t))/(c_p/p),
+    S=sum_j R_j=p*(1-beta_p(t))/c_p.
+
+The coordinate laws nu_q are restrictions of this ONE product source,
+not separately optimized replacement laws. They remain independent
+at the fixed t. The existing cylinder caps give0<=R_j<=1 and S<=p.
+
+For each q and p first root j, let x_(q,j) be the nu_q mass of the
+union of the group's actual q-cylinders on row j. Define its RAW budget
+
+    V_q=c_q/(1-beta_q(t))
+          *sum_(active grouped originals m=3^i*p*q^e at q) q^(-e).
+
+Each original has one actual row and one actual q-cylinder, so
+sum_j x_(q,j)<=V_q. Set
+
+    T_q=min(1,V_q),  P=product_(q!=p)(1-T_q).
+
+The clipping only bounds the product residual; it does NOT imply
+sum_j x_(q,j)<=T_q. Different p rows can reuse the same q-projection,
+so the raw sum can exceed1. For any selected set of rows the valid
+inequality is
+
+    product_j(1-x_(q,j))
+      >=max(0,1-sum_j x_(q,j))
+      >=max(0,1-V_q)=1-T_q.
+
+Conditioning on the actual p row now gives the exact group mass
+
+    G_except_p*(c_p/p)
+       *sum_j R_j[1-product_(q!=p)(1-x_(q,j))].
+
+A complete safe scalar upper bound is
+
+    group mass <= G_except_p*(c_p/p)*Psi(S,P),         (FC53)
+
+where the following cases cover0<=S<=p and0<=P<=1:
+
+    if0<=S<1:
+        Psi(S,P)=S*(1-P);
+
+    if S=k+rho, integer k>=1,0<=rho<1, and P>=rho^k:
+        Psi(S,P)=k*(1-P^(1/k));
+
+    if S=k+rho, integer k>=1,0<rho<1, and P<rho^k:
+        Psi(S,P)=k+rho-(k+1)*(rho*P)^(1/(k+1)).
+
+At the threshold P=rho^k the last two expressions agree. When
+rho=0 the middle case applies for all P. When P=0 the applicable
+formula gives the carrier bound Psi=S. When S=0 it gives zero.
+No negative powers or divisions at zero are required in the formulas.
+
+Proof. For fixed x the normalized group mass is linear in R. A
+capped-simplex vertex has k full rows and, if rho>0, one fractional
+row. Let u_1,...,u_k be the residual products on the full rows and w
+the residual on the fractional row; when rho=0 use w=1. Multiplying
+the preceding row-product inequalities over q gives
+
+    (product_(j=1..k)u_j)*w>=P.
+
+For k>=1, rho>0 and P>=rho^k, P>0 and AM--GM gives
+sum_j u_j>=k*(P/w)^(1/k). Write a=P^(1/k)>=rho and s=w^(1/k)<=1.
+The difference from the needed lower bound k*a+rho is at least
+
+    (1-s)*(k*a/s-rho*sum_(j=0..k-1)s^j)>=0.
+
+Subtracting from k+rho proves the middle case. For rho=0, direct
+AM--GM on the k residuals proves that case, including P=0 without
+division. For the last case, AM--GM on
+u_1,...,u_k,rho*w gives
+
+    sum_j u_j+rho*w >= (k+1)*(rho*P)^(1/(k+1)),
+
+which proves the stated fallback even when P=0. Finally, if S<1,
+there is only one positive row at a vertex; its residual product is
+at least P, giving S*(1-P). Linearity extends every case to every
+actual R. These are upper relaxations, with no claim that arbitrary
+scalar optimizers correspond to actual simultaneous phases.
+
+The estimate is pointwise on the same actual ternary coordinate t.
+The stipulated finite prefix partition, with enlarged sets chosen
+once per cell, makes all the data measurable and permits integration
+against the SAME lambda_3 as a finite weighted sum. The raw active
+budgets, beta, k and rho may vary across cells; no separately optimized
+source or independent choice of original phases is inserted. Arbitrary
+t-dependent enlargements without such a choice do not automatically
+supply either measurability or a finite-partition integral.
+
+Using this interface for several p values does not authorize adding
+their separate improvements when the original-label groups overlap.
+To combine improvements, use disjoint original-label inventories or a
+proved allocation of the common charges and losses. Neither the
+threshold case nor its fallback asserts that the resulting whole-family
+survivor comparison is positive for unrestricted#7.
+
+### The palette head also permits an unrestricted large-prime tail
+
+Let all support primes of a finite distinct odd covering candidate lie
+in R={3,5,7,11,13,17,19,23,29,31,37,41} or above100000. Suppose only its
+R-only originals satisfy the preceding finite-height, one-root187-label
+palette and star-root conditions. All originals touching a prime above
+100000 may have arbitrary finite exponents, including arbitrary powers
+of3 in their head parts. The number of such large primes and the number
+occurring in one modulus may be any finite numbers.
+
+The preceding theorem gives the actual head-only survivor U Haar mass
+H_R(U)>1/250. Lift U to the head heights required by the full family and
+set eta=H_R restricted to U. This is one unnormalized supported measure
+with mass>1/250 and joint density cap D=1. [Chapter33 SH6 and SH11--SH13](../../../problem-details/33-seven-small-primes-with-an-unrestricted-large-prime-tail.md#4-uniform-continuation-over-every-large-prime)
+apply to it; they do not require a product survivor law or an all-depth
+head query norm.
+
+For this head,
+
+    M2=17517439415203/525533184000.
+
+Using B=100000, ell=10 and c_ell=201/199 gives the same inherited tau7
+allowance as FC25. The final supported measure has mass strictly greater
+than
+
+    1/250-M2*tau7
+      =964282896927551623215869645389 /
+       308475661132619977601166622720000 >1/320.       (FC54)
+
+Every tail original is charged at its last large-prime coordinate, with
+all original earlier exponents and residues retained. Normalized kernels
+preserve the entire preceding measure, so all bad-set charges are paid
+once from the same final law. Its positive supported mass supplies an
+actual finite CRT survivor and an uncovered integer. The number1/320 is
+mass in this final distorted law, not a natural-density lower bound of
+that size for the complete family.
+
+The head-only restrictions remain essential; no arbitrary twelve-small-
+prime cover or head-only ternary height above one is covered by this
+application. The tail loss uses the existing Chapter33 analytic
+prime-product premise, with its unchanged source-verification boundary.
+This is an ordinary mathematical consumer with exact rational constants,
+not new Lean verification.
+
+
+### Exact finite controls and remaining scope
+
+The [shared-interface union checker](../../../frontier/cover-geometry/fibre-credit-partition/joint_star_union.py)
+reconstructs the original FC36 source caps, full3-free debit and all187
+root-1 charges from the retained inventory. Its
+[exact result](../../../frontier/cover-geometry/fibre-credit-partition/joint_star_union.json)
+contains the allowable palette, all65 grouped allowances, rational
+threshold and positive margin, the Haar-density bridge and the existing
+large-prime-tail consumer. Small exhaustive vertex assignments include
+nonvertex source vectors; a negative control demonstrates why FC50's
+threshold cannot be omitted. A two-full-row search in the fixture is
+reported only as a lower witness for the relaxation, not its optimum.
+
+The general FC53 statement follows from its proof, not from finite
+checks of the FC50 instance. FC54 retains Chapter33's existing analytic
+prime-product premise. No separate parent or row-slot credits are added
+to the new group saving. Other allowed head palettes, additional small
+support primes and arbitrary head-only ternary prefixes still require
+new positive estimates. Unrestricted Erdős#7 remains unresolved.
 
 ## Whole-family height one permits a smaller common query interface
 
