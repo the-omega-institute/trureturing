@@ -8920,3 +8920,152 @@ computed initialization and reproduces the fixed continuation.
 Only stored results are used for their binding and short rational
 endpoint checks. These are ordinary mathematical and exact-arithmetic
 certificates, with no new Lean verification or external novelty claim.
+
+## Several comparison laws can follow one physical source
+
+The one-pair and all-group comparisons preserve different relations.
+They can be retained simultaneously on the SAME actual source. At
+each fixed clipping step, take the smallest of their loss upper
+bounds, construct one actual survivor law, and update every comparison
+to that law's common certified mass. This reuses the full-query
+append and upper-mass arguments of Reports771 and773; it is not a new
+abstract stochastic-order theorem or a claim of a numerical gain.
+
+### 1. The simultaneous premise
+
+Fix one original finite family, its numerical labels and phases, and
+one positive survivor source eta of mass m>0. Its finite CRT carrier
+resolves all old cofactors needed by subsequent queries. For a finite
+nonempty set I, suppose every positive comparison measure Pi_i on
+[1,infinity) has mass m and finite first moment W_i, and
+
+    for all i, complete Phi and nonnegative increasing convex f,
+       integral f(L_Phi)deta<=integral f(z)dPi_i(z).  (FC402)
+
+There is one eta before the quantifiers over i, Phi and f. Equal
+masses or a common list of originals cannot replace that condition.
+The comparison laws need not be coupled or ordered relative to one
+another. Their atoms are auxiliary loads, not physical locations.
+
+Choose one fresh prime q and one legal constant delta with
+0<delta<1 and C=1/(1-delta)<=q. Define
+
+    T=delta(q-1), H_i(t)=integral(z-t)_+dPi_i,
+    d_i=H_i(T)/((1-delta)(q-1)),
+    d=min_i d_i, m'=m-d>0.                           (FC403)
+
+All comparisons use this same actual clipping parameter and operation.
+
+### 2. Why one actual update preserves all the comparisons
+
+Let alpha(x) be the actual fraction of the new q-fibre forbidden by
+originals assigned to q. Distinct numerical moduli give
+
+    alpha(x)<=sum_(e>=1)q^(-e)L_e(x),
+
+where the complete old layouts L_e can have different phases.
+Report771's geometric Jensen argument, applied to (FC402) for each i,
+bounds the same integral of (alpha-delta)_+. Its normalized actual
+clipping kernel depends only on alpha, the bad fibres and delta.
+It is independent of which comparison attains the minimum. Thus its
+actual deleted mass ell satisfies simultaneously
+
+    ell=integral(alpha-delta)_+deta/(1-delta)
+       <=d_i for every i, hence ell<=d.              (FC404)
+
+The same actual appended law nu satisfies every product comparison
+Append_q(Pi_i), where Append is the pushforward of
+Pi_i tensor pi_cap(q,C) under (z,j)->z(1+j). Indeed at each auxiliary
+run j, the different old layouts obey
+
+    f(sum_(e=0..j)L_e)
+       <=sum_(e=0..j)f((j+1)L_e)/(j+1).
+
+Each summand is covered by (FC402) for every i. Averaging over j
+gives the claimed full-query comparison with the same actual nu.
+The auxiliary product does not assert independence of actual
+coordinates, and all finite original heights remain admitted.
+
+Restrict nu to the actual new survivors to obtain rho of mass
+v=m-ell>=m'>0. Use the single source
+
+    eta'=(m'/v)rho,
+    Pi'_i=Top_(m')(Append_q(Pi_i)) for every i.        (FC405)
+
+Restriction and scaling by a number at most one preserve all
+nonnegative comparisons. Report773's upper-mass principle then
+applies separately to each appended law, with this SAME eta' and
+target m'. Consequently (FC402) holds again for eta' and every Pi'_i.
+Different auxiliary cutoffs do not select different physical subsets.
+The case d=0 and ties between minimizing comparisons cause no change
+in the argument. A previous actual Haar-density cap D becomes at
+most D*C; this follows from the actual kernel, not comparison atoms.
+
+The scalar m'/v is a source existence construction independent of
+future queries. It does not provide a free executable measurement of
+the actual survivor mass. No old-marginal preservation is assumed.
+
+### 3. What may be selected, and what cannot be spliced
+
+The output has the same simultaneous-source contract as the input,
+so (FC403)--(FC405) iterate. Every comparison must be appended with
+the chosen common cap and trimmed to the chosen common mass. Letting
+each comparison use its own loss target would describe different
+physical source sequences and would not prove this contract.
+
+Any single nonnegative increasing convex cost on the common source
+can use the smallest of its proved upper bounds. In particular, when
+all complete fourth moments exist,
+
+    integral L_Phi^4 deta<=min_i integral z^4 dPi_i.  (FC406)
+
+This gives a valid fourth-moment premise for the same-source quartic
+tail. It does not assemble a new comparison measure out of different
+atoms or cross-source moment choices.
+
+Two elementary abstract examples show the distinction. On a mass-one
+source with constant load2, both delta_2 and (delta_1+delta_3)/2 bound
+all increasing convex costs. Their pointwise minimum as atom measures
+is zero, failing already for the constant cost1. On a constant-load1
+source, delta_3 and (9/10)delta_1+(1/10)delta_10 are both valid bounds.
+The minimum of their hinge functions at t=2,5/2,3 is 4/5,1/2,0. This
+violates convexity at the middle point since1/2>2/5, so that minimum
+curve is not itself a hinge transform of a positive measure. These
+are counterexamples at the scalar interface, not asserted #7 inputs.
+Selecting the minimum at one requested threshold remains valid.
+
+For the fixed family of equal-mass comparisons, the existing one-step
+mean criterion becomes
+
+    some legal constant delta has m'>0
+       iff min_i W_i<(q-1)m.                        (FC407)
+
+If every W_i>=(q-1)m, then H_i(T)>=W_i-Tm makes every d_i>=m.
+Conversely choose a comparison attaining the minimum first moment
+and a sufficiently small positive delta, so T<1 and C<=q. Its hinge
+equals W_i-Tm, hence its d_i<m; the minimum charge is no larger.
+This is a criterion for the declared comparison bounds, not actual
+nonexistence of survivors.
+
+### 4. Application boundary and reuse
+
+For a fixed FC110 source, its pure/star, one-pair and all-group laws
+can all satisfy (FC402) on the same eta0_FC110. The same statement
+holds separately for FC131. The one-pair numerical profile is common
+because both actual sources contain the same2 mod55 original. The
+all-group coefficients instead use each source's own role table.
+No result here transfers an FC110-only bound to the FC131 source or
+removes the FC159 restrictions. Subsequent numeric improvement
+requires a separate calculation; none is asserted by this closure
+argument.
+
+[Report771](../750-799/771-stop-loss-profiles-preserve-the-ordinary-source-through-thirteen-primes.md)
+supplies the actual bad-mass identity and full-query append theorem.
+[Report773](../750-799/773-repeated-upper-mass-comparison-lowers-the-fourteen-prime-tail-cutoff.md)
+supplies the common physical scaling, Top_m principle and mean
+criterion. Report779 checks the corresponding source/kernel contract;
+Report827 Section5 already distinguishes valid minima at a fixed
+source from unsupported switching in a source-parameter proof. The
+present argument applies those statements simultaneously to a finite
+comparison family. No new Lean declaration, external novelty claim,
+or solution of unrestricted Erdős #7 is claimed.
