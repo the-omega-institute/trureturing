@@ -688,11 +688,13 @@ class EntryPointTests(unittest.TestCase):
             self.assertEqual(prepared.read_bytes(), previous)
 
     def test_failed_phase_preserves_public_bundle_and_propagates_exit(self):
-        cases = [('inputs', 2, [], False), ('utility-input-build', 37, ['build'], False),
-                 ('ensure', 38, ['build', 'ensure'], False),
-                 ('report', 39, ['build', 'ensure', 'report'], False),
-                 ('publish', 40, ['build', 'ensure', 'report', 'publish'], False),
-                 ('report', 39, ['ensure', 'report'], True)]
+        # A built producer serves every later step, exactly as a prebuilt one does.
+        ensure = 'ensure candidate producer.dll'
+        cases = [('inputs', 2, [], False), ('producer-build', 37, ['build'], False),
+                 ('ensure', 38, ['build', ensure], False),
+                 ('report', 39, ['build', ensure, 'report'], False),
+                 ('publish', 40, ['build', ensure, 'report', 'publish'], False),
+                 ('report', 39, [ensure, 'report'], True)]
         for phase, status, calls, prebuilt in cases:
             with self.subTest(phase=phase, prebuilt=prebuilt), tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
@@ -714,9 +716,13 @@ class EntryPointTests(unittest.TestCase):
                         'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
                 def shell_phase(name, label, exit_code):
                     write(name, '#!/bin/sh\nprintf "%s\\n" ' + label + ' >> "$CALLS"\nexit ' + str(exit_code) + '\n')
-                shell_phase('bin/dotnet', 'build', 37 if phase == 'utility-input-build' else 0)
+                write('bin/dotnet', '#!/bin/sh\nprintf "%s\\n" build >> "$CALLS"\n'
+                    + 'printf "%s\\n" "$PWD/candidate producer.dll"\nexit '
+                    + str(37 if phase == 'producer-build' else 0) + '\n')
                 write('candidate producer.dll', 'fixture candidate producer')
-                shell_phase('tools/scripts/worktree/lean-cache-ensure.sh', 'ensure', 38 if phase == 'ensure' else 0)
+                write('tools/scripts/worktree/lean-cache-ensure.sh', '#!/bin/sh\n'
+                    + 'printf "ensure %s\\n" "${STRATALINT_LEAN_PRODUCER_DLL##*/}" >> "$CALLS"\nexit '
+                    + str(38 if phase == 'ensure' else 0) + '\n')
                 shell_phase('bin/lake', 'report', 39 if phase == 'report' else 0)
                 write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\nexec "$@"\n')
                 write('tools/scripts/lib/resource-observation-lib.sh', 'resource_observe() { :; }\n')
