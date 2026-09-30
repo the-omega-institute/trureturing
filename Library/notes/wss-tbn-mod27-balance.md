@@ -1,5 +1,5 @@
 ---
-bibkey: wss-tbn-mod27-balance
+bibkey: tbn2026mod27balance
 authors: trureturing research continuation
 year: 2026
 title: A mod-27 depth balance in the split Lucas tower
