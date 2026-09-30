@@ -36,8 +36,46 @@ The load-bearing comparisons to inspect before any reuse are:
 
 These are propositions that the source claims to prove. They are not merely extra conjectural hypotheses declared by its author; they also have not become independently verified project premises by being listed here. Checking scalar certificates alone would leave the actual-operator and function-space correspondence obligations untouched.
 
+## Debit multiplicity and physical-pivot inputs
+
+The displayed local formulas require a specific reconciliation before they can supply an all-scale estimate. In Lemma 8.4, equations (207)–(212) give two endpoint arms with the same positive target block $P$ and coupling $b$. Completing both squares deducts
+
+$$
+2D=2\|P^{-1/2}bx\|^2.
+$$
+
+Equation (212) explicitly calls $D=|\widehat h_0|^2/\Pi^{\rm phys}$ the **one-arm** debit. In contrast, (205) and MASTER-P3b use the once-deducted remainder $Q-D=E(1-u)$. At these displayed coefficients, that remainder alone does not bound the two-arm remainder. A reuse must identify the additional payment, or an explicit normalization or allocation that reconciles the same $Q$, $D$ and direct target diagonal. An overall change of units must transport all three together.
+
+A scalar check isolates this issue without claiming to realize an arithmetic endpoint. In the one-defect model of Lemma 6.28, take both pieces to have measure one, $a_-=a_+=1$, $\beta=1/4$, $x_-=1/3$, $x_+=1$. Then the left pivot is $3/4>0$, $\gamma^c=1/3$, $g_-=0$, $h=\Pi^{\rm phys}=2/3>0$, and
+
+$$
+Q=D=\frac23,\qquad Q-D=0,\qquad Q-2D=-\frac23.
+$$
+
+Equivalently, the two displayed positive arm blocks $P=2/3$ and couplings $b=2/3$, minimized at $t_+=t_-=-1$, give $-2/3$ after subtracting the separately retained target diagonal. These are exact rational values. The example shows that the once-deducted estimate is insufficient for those local displayed formulas; it is **not** a counterexample to the actual Weil operator, nor does it show that all the other reserves in the complete argument fail.
+
+The sign needed for the physical pivot is a separate input. With the notation of (124)–(135), positive $|R|,J$ and $1-\beta I>0$ give
+
+$$
+\Pi^{\rm phys}
+=\frac{|R|}{J}\frac{1-\beta(I+J)}{1-\beta I}.
+$$
+
+Thus the old left-block condition alone does not supply the numerator's positivity. The algebra in Lemma 6.28 is valid under its stated positive-pivot condition; the relation $g=A^{\rm pre}x$ transports the forcing but does not establish that sign. The actual compression/shorting map must identify this pivot as one whose positivity follows from the permitted induction inputs. The review has not completed that identification. This is an unclosed proof input, not a claim that an old-block induction hypothesis is inherently circular.
+
+## Full-form transport input
+
+Proposition 5.3 must be read as an obligation about the whole form, including its diagonal. For a change of variables $x=\phi(u)$ with $J=\phi'>0$ and $g(u)=\sqrt{J(u)}f(\phi(u))$, substitution in the singular difference expression produces
+
+$$
+K(\phi(u),\phi(v))
+\left|\sqrt{J(v)}g(u)-\sqrt{J(u)}g(v)\right|^2.
+$$
+
+Using only the transported off-diagonal kernel $\sqrt{J(u)J(v)}K(\phi(u),\phi(v))$ in an ordinary $|g(u)-g(v)|^2$ form leaves a multiplication term to account for, together with the transported endpoint potential. The exponential kernel identities in Lemma 5.1 do not by themselves perform this diagonal comparison. Before applying the later one-cell lower form, its full transported potential must be identified or bounded in the same coordinates. The bounded review has not completed the identification of the source's $c_A$ with all the later collar and fixed-target forms. No failure of the entire RH claim follows merely from this outstanding correspondence.
+
 ## Relation to the FIB research gap
 
 The retained-old-block, mixed-coupling and Schur-induction architecture is standard and is explicitly attempted at all scales in this source. Naming the support schedule after Fibonacci therefore supplies no architectural novelty. The project's [exact block reduction](../../D5/S3/Weil/ZetaLinear/ExactStickyReduction.lean) and [golden positivity induction](../../D5/S3/Weil/TestFunctions/GoldenPositivityInduction.lean) remain reusable under their own assumptions; this review did not rebuild them.
 
-For an actual finite positive old block $H$, the additional estimate is $B^*H^{-1}B\preceq D$ for the matching new block and coupling; a semidefinite old block also needs the appropriate range condition. This source's claimed budget bridges are relevant candidates for detailed comparison with that obligation. They are not adopted as a supplier that has already closed it. No certificates, zero samples, integer samples or Lean declarations were produced for this source review.
+For an actual finite positive old block $H$, the additional estimate is $B^*H^{-1}B\preceq D$ for the matching new block and coupling; a semidefinite old block also needs the appropriate range condition. This source's claimed budget bridges are relevant candidates for detailed comparison with that obligation. They are not adopted as a supplier that has already closed it. The local scalar audit does not settle the full comparison. No external certificates, prime or zero samples, or Lean declarations were produced for this review.
