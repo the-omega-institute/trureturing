@@ -51,7 +51,7 @@ def arena : Arena where
       Algebra.discr ℚ b1 = -27 * ((m * n : ℤ) : ℚ) ^ 2 ∧
       Algebra.discr ℚ b2 = R.readout () m n
 
-private theorem ten_irreducible :
+theorem ten_irreducible :
     Irreducible ((X : Polynomial ℚ) ^ 3 - C 10) := by
   have hnocubeInt (z : ℤ) : z ^ 3 ≠ 10 := by
     intro hz
@@ -75,7 +75,7 @@ private theorem ten_irreducible :
       Int.cast_pow, Int.cast_ofNat] using hr
   exact X_pow_sub_C_irreducible_of_prime (by norm_num : Nat.Prime 3) hnocubeRat
 
-private noncomputable def tenPowerBasis
+noncomputable def tenPowerBasis
     [Fact (Irreducible ((X : Polynomial ℚ) ^ 3 - C 10))] :
     PowerBasis ℚ (AdjoinRoot ((X : Polynomial ℚ) ^ 3 - C 10)) :=
   AdjoinRoot.powerBasis (monic_X_pow_sub_C 10 (by norm_num : 3 ≠ 0)).ne_zero
