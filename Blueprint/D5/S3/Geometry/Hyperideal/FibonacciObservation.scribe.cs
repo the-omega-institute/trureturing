@@ -52,7 +52,10 @@ internal sealed class FibonacciObservationDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "The exact congruence kernel is characterized by "
                             + "FibonacciObservation.kernel_phase_characterization: every "
-                            + "input in the 5k-kernel has the form (k*t,2*k*t+5*k*s).")),
+                            + "input in the 5k-kernel has the form (k*t,2*k*t+5*k*s). "
+                            + "The dual image condition is "
+                            + "FibonacciObservation.image_condition: 2*r+s must vanish "
+                            + "modulo five.")),
                     Paragraph(Text(
                         "At the concrete modulus 5040=5*1008, the same theorem gives the "
                             + "five-part phase ambiguity is exhibited. The factor seven in 5040 does "
