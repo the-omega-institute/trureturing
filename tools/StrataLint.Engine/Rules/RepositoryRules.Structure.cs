@@ -106,7 +106,7 @@ internal static partial class RepositoryRules
             if (context.Baseline.Files.TryGetValue(path, out var baseline)
                 && file.RawBytes.AsSpan().SequenceEqual(baseline.RawBytes.AsSpan())) continue;
 
-            foreach (var token in RegistrationAssessmentToken.Matches(WithoutRegistrationComments(file.Text))
+            foreach (var token in RegistrationAssessmentToken.Matches(RegistrationCode(file.Text))
                 .Select(match => match.Value).Distinct(StringComparer.Ordinal))
                 findings.Add(new RuleFinding(path.Value,
                     $"REG-SELF-ASSESSMENT: Reg module may not read or assert registration assessment at compile time ({token}); move the check to LeanInformationAuditRegTests",
@@ -116,42 +116,29 @@ internal static partial class RepositoryRules
         return findings.ToImmutable();
     }
 
-    private static string WithoutRegistrationComments(string source)
+    private static string RegistrationCode(string source)
     {
-        var text = source.ToCharArray();
-        var depth = 0;
-        var lineComment = false;
-        for (var i = 0; i < source.Length; i++)
+        var code = new StringBuilder();
+        var line = 1;
+        var column = 0;
+        foreach (var token in LeanSourceTokenizer.ReadTokens(source))
         {
-            var pair = i + 1 < source.Length ? source.AsSpan(i, 2) : ReadOnlySpan<char>.Empty;
-            if (lineComment)
+            // The shared tokenizer owns comments, strings and escapes. Literal
+            // contents are data; keep only code at its original token boundaries.
+            if (token.Text.StartsWith('"')) continue;
+            while (line < token.Line)
             {
-                if (source[i] is '\r' or '\n') lineComment = false;
-                else text[i] = ' ';
+                code.Append('\n');
+                line++;
+                column = 0;
             }
-            else if (pair.SequenceEqual("/-"))
-            {
-                depth++;
-                text[i] = text[++i] = ' ';
-            }
-            else if (depth > 0 && pair.SequenceEqual("-/"))
-            {
-                depth--;
-                text[i] = text[++i] = ' ';
-            }
-            else if (depth > 0)
-            {
-                if (source[i] is not ('\r' or '\n')) text[i] = ' ';
-            }
-            else if (pair.SequenceEqual("--"))
-            {
-                lineComment = true;
-                text[i] = text[++i] = ' ';
-            }
+
+            code.Append(' ', token.Column - column);
+            code.Append(token.Text);
+            column = token.Column + token.Text.Length;
         }
 
-        // Spaces preserve identifier boundaries across removed comments.
-        return new string(text);
+        return code.ToString();
     }
 
     private static bool IsRegistrationImport(string module) =>

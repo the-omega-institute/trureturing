@@ -61,6 +61,22 @@ public sealed class RegistrationSelfAssessmentTests
         "/- outer /- run_meta -/ -- still block\n-/\n#eval 1\n", "#eval");
 
     [Fact]
+    public void BlockCommentMarkerInStringDoesNotHideFollowingRunMeta() => AssertBlocked(
+        "def label := \"/-\"\nrun_meta do\n  pure ()\n", "run_meta");
+
+    [Fact]
+    public void LineCommentMarkerInStringDoesNotExposeFollowingBlockComment() =>
+        AssertNoBlock(Evaluate(Files(), Files((Registration,
+            "def label := \"--\" /- real block comment\nrun_meta do\n  pure ()\n-/\n"))));
+
+    [Fact]
+    public void TemplateBindingTextInStringPasses()
+    {
+        // String literal contents are data, not code tokens for this guard.
+        AssertNoBlock(Evaluate(Files(), Files((Registration, "def label := \"TemplateBinding\"\n"))));
+    }
+
+    [Fact]
     public void CommentsDoNotJoinIdentifierFragments() => AssertNoBlock(Evaluate(Files(), Files((Registration,
         "run_/- gap -/meta Template/- gap -/Binding Information/- gap -/Registry\n"))));
 
