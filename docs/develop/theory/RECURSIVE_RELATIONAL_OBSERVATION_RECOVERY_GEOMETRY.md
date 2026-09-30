@@ -7689,29 +7689,3 @@ $$
 积分后使用上述四个 $9M^2$ 界，并用可积性假设合法地拆分和重组积分，得到 $4\cdot9M^2=36M^2$ 的结论。证毕。
 
 ## 35.99 追加锚
-
-## 36. 全频投影热散度乘子
-
-本节给出定理 25.3 的时间积分构造所需的固定正时间线性算子。它没有完成时间积分、零点连续性或温和解不动点。
-
-**定理 36.1（全频投影热散度界）。** 令 $\nu>0$、$r>0$，频率集 $K=\mathbb Z^2$，$\rho(k)=k_1^2+k_2^2$。令 $V=\mathbb C^2$ 取 Hermitian Euclidean 范数，$T=\mathbb C^{2\times2}$ 取 Frobenius 范数，$H=\ell^2(K;V)$，$G=\ell^2(K;T)$。记 $\kappa_k=(k_1,k_2)$，$P_k$ 是到 $(\mathbb C\kappa_k)^\perp$ 的正交投影。存在连续复线性算子 $L_{\nu,r}:G\to H$，对每个 $Z\in G$、$k\in K$、$i\in\{1,2\}$，
-
-$$
-(L_{\nu,r}Z)_i(k)
-=e^{-\nu r\rho(k)}\,\mathrm{i}\,
-\left[P_k\left(\sum_{j=1}^2 k_j Z_{ji}(k)\right)_{i=1,2}\right]_i,
-\qquad
-\|L_{\nu,r}Z\|_H\le(\nu r)^{-1/2}\|Z\|_G.
-$$
-
-这里的 $i$ 在指数因子后的独立出现表示虚数单位；零频率的散度收缩为零。若 $Z(k)=(1+\rho(k))\widehat Q(k)$，该式就是从张量 $H^2$ 系数到向量 $H^2$ 系数的 $E(r)\mathbb P\operatorname{div}Q$，但本定理不假设 $Q$ 已由实际温和路径生成。
-
-**证明。** 每个频率上的张量收缩 $D_kZ=(\sum_jk_jZ_{ji})_i$ 是复线性的。Cauchy--Schwarz 和 Frobenius 范数给 $\|D_kZ\|_V\le\sqrt{\rho(k)}\|Z\|_T$，正交投影与虚数单位不增范数。令 $x=\nu r\rho(k)\ge0$。由 $x\le e^x$，取平方根再乘 $e^{-x}$ 得 $\sqrt{x}e^{-x}\le e^{-x/2}\le1$，故
-
-$$
-\sqrt{\rho(k)}e^{-\nu r\rho(k)}\le(\nu r)^{-1/2}.
-$$
-
-这个对所有 $k$ 一致的界使逐频算子定义有界的 $\ell^2$ 映射，并给出所述算子范数界。证毕。
-
-## 36.99 追加锚
