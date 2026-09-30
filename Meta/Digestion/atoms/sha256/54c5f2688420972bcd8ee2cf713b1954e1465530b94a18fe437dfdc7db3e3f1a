@@ -1,0 +1,11 @@
+**推论 222.2（删除少量例外字符仍不足）。** 固定 $0<\varepsilon<1/4$。
+若例外字符集合 $\mathcal E_r$ 满足
+$|\mathcal E_r|\le\exp((1/4-\varepsilon)y)$，则充分大时仍有
+非主字符 $\chi\notin\mathcal E_r$ 满足式（222.8）。
+因此删除固定个数、或至多 $(\log V)^K$ 个字符（$K$ 固定），
+也不能恢复上述全体剩余字符的 $e^{-cR}$ 上界。
+
+证明。式（222.7）给 $|\mathcal C_r|>|\mathcal E_r|+1$ 最终成立。
+删去 $\mathcal E_r$ 与主字符后应用定理 222.1。
+又 $\log((\log V)^K)=O(\ell)=o(y)$，得到最后一项。$\square$
+

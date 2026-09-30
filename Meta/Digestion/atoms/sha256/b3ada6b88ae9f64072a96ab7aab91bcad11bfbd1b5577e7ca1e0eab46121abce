@@ -1,0 +1,49 @@
+**定理 219.1（核加权的大幂上界）。** 设 $s\ge4$、$B\ge C_s$。则
+
+$$
+\boxed{
+\mathcal B_D^{\mathrm{pow}}(B)
+\le\frac{C_s}{B}\left(1+\log\frac{B}{C_s}\right).
+}
+\tag{219.2}
+$$
+
+证明。对左侧某一项，取 $p^v\parallel n(d)$ 使 $p^v=B(n(d))>B$。
+同一分解 $n(d)=dh$ 给
+
+$$
+p^v=p^{v_p(d)}p^{v_p(h)}\le B(d)h.
+$$
+
+这个式子在 $p\nmid d$ 时也成立，因为 $p^{v_p(d)}=1\le B(d)$。
+因此 $h>B/B(d)$，而 $n(d)\le X$，故
+
+$$
+\frac dX=\frac{n(d)}{hX}\le\frac1h<\frac{B(d)}B,
+\qquad \frac dX\le1.
+$$
+
+各个 $d$ 没有重复计数；扩大到全域概率空间可得
+
+$$
+\mathcal B_D^{\mathrm{pow}}(B)
+\le\mathbb E_{\mu_s}\min\left\{1,\frac{B(d)}B\right\}
+=\frac1B\int_0^B\mu_s\{d:B(d)>u\}\,du.
+\tag{219.3}
+$$
+
+最后的等式是非负函数的层集积分，由 Tonelli 定理得到。
+$C_s>2$，所以在 $[0,C_s]$ 上用概率上界 $1$，在 $[C_s,B]$ 上用
+§216 的上界 $C_s/u$，得到
+
+$$
+\frac1B\int_0^B\mu_s\{B(d)>u\}\,du
+\le\frac{C_s}{B}+\frac{C_s}{B}\log\frac B{C_s}.
+$$
+
+这证明式（219.2）。此处无需 $B/H\ge2$，也没有粗互补因子的假设。$\square$
+
+式（216.20）估计的是不带核的命中质量，其 $H$ 因子来自仅知道 $h<H$。
+式（219.2）估计不同的、直接进入真实矩的量：同一 $h$ 越大，
+对应 $d/X$ 越小。它保留这份逐项关联，而未将两边分别取极值。
+

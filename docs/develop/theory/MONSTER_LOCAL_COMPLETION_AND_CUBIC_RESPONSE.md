@@ -358,6 +358,8 @@ $$
 
 式（MC.12）给 $\operatorname{Tr}T_uT_v=(4620-2/3)\langle u,v\rangle$。对 $W$ 的 196883 个单位基向量求和得式（MC.21）。证毕。
 
+本批把这一步的有限维求和接口写入 `D5/S3/VertexAlgebra/MonsterTensorNorm.lean`。`symmetric_trace_gram_square_sum` 对任意有限指标集证明：对称矩阵族若每个对角迹满足 $\operatorname{Tr}(T_i^2)=c$，则坐标 Frobenius 平方和为 $|I|c$；`moonshine_tensor_square_sum` 在输入 $|I|=196883$ 与 $c=4620-2/3$ 后逐项化简为 $2728404614/3$。这里的对称性和迹恒等式仍是 [M01, Corollary 4.1] 提供的实际 Norton 输入；Lean 声明没有把它们误报成 VOA 构造，也没有给出尚未计算的 $\kappa_{T^\natural}$ 或 $\eta_{T^\natural}$。
+
 本文没有计算实际 $\kappa_{T^\natural}$ 或 $\eta_{T^\natural}$；它们的存在不能被报道成数值认证。若只掌握每个张量系数误差至多 $a$，保守 Frobenius 界为 $d_W^{3/2}a$，维数成本不能删除。定理 5.2 是单个三元组的实际脉冲预算，与本节全张量预算分开结算。
 
 ## 8. 数学物理解释还必须通过反常检查
@@ -1098,6 +1100,8 @@ $$
 **命题 32.1（左乘矩阵给出的乘法范数）。** 对所有实向量 $x,y$，$\|xy\|^2=\|x\|^2\|y\|^2$。因而这个八维正定有单位实代数是实八元数代数。
 
 证明。令 $L_g$ 为左乘 $e_g$，它是带符号置换矩阵。对 $g\ne0$，第二变量线性和 $f(g,g)=1$ 给 $L_g^2=-I$，故 $L_g^T=-L_g$。对不同非零 $g,h$，在任意 $e_k$ 上比较两次左乘，其符号比是 $(-1)^{f(g,h)+f(h,g)}=-1$，所以 $L_gL_h+L_hL_g=0$。对 $L_x=x_0I+\sum_{g\ne0}x_gL_g$ 展开，混合项全部相消，得到 $L_x^TL_x=(\sum_gx_g^2)I$。取 $y$ 的二次型即得乘法范数，单位由 $f(0,h)=f(g,0)=0$ 给出。最后的正定八维合成代数识别使用经典 Hurwitz 定理 [B02]。证毕。
+
+本命题的全体实向量版本已在仓内形式化为 [`D5/S3/VertexAlgebra/MonsterTwistedOctonionNorm.norm_mul`](https://github.com/the-omega-institute/trureturing/blob/dev/D5/S3/VertexAlgebra/MonsterTwistedOctonionNorm.lean)。Lean 定义展开同一个带符号 Cayley–Dickson 表，直接对八个坐标完成 $\mathbb R$ 上的多项式恒等式，并另证单位元左右律。该形式化只覆盖辅助八元代数的范数与单位；它不把这个表提升为实际 VOA 的基态 OPE，也不替代 [Ba17, Theorem 1、§§5–6] 的扭曲群代数背景或 [B02] 的 Hurwitz 识别。
 
 **命题 32.2（任意两个语义生成元的结合范围）。** 将 Fibonacci 原子卷的两个原子解释成任意两个固定八元数，每个二叉节点解释为同一个乘法，则全部树评估落在一个结合子代数中。
 

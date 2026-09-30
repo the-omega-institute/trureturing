@@ -1,0 +1,36 @@
+**引理 201.1（允许集的密度至多为增长指数）。** 记
+
+$$
+\delta_k=\prod_{\ell\mid k}\left(1-\frac1\ell\right),
+\qquad P(Y)=\prod_{p\le Y}(1-1/p)^{-1}.
+$$
+
+则一致于满足式（201.1）的全部种子及上述赋值选择，
+
+$$
+\delta_k=P(Y)^{-1}\frac d{\varphi(d)}
+\le\omega+o(1)
+\qquad(U\to\infty).
+\tag{201.4}
+$$
+
+证明。式（201.3）把 $Y$ 以下的全部素数分成进入 $k$ 与进入 $d$ 两类，故乘积恒等式精确成立。若 $p_0>Y$，它不会进入 $d$；若 $p_0\le Y$，它的额外对数成本至多 $\log Y$。因此由式（201.1）—（201.2），
+
+$$
+\log d\le\log2+\log|e|+\log Y
+\le t^\omega+\log Y+O(1).
+\tag{201.5}
+$$
+
+对 $d\ge2$ 使用引理164.1的全范围包络，得到
+
+$$
+\frac d{\varphi(d)}
+<e^\gamma\max\{32,\log\log d+a_0\}
+\le e^\gamma\max\{32,\omega\log t+O(1)\}.
+$$
+
+通常 Mertens 乘积定理给 $P(Y)=e^\gamma\log Y(1+o(1))$。而 $\log Y=\log t-\log20$，故得到式（201.4）。误差只依赖 $\omega$ 和 $U$，不依赖种子、$p_0$ 或 $e$。由于 $\omega<1/2$，最终有 $\delta_k<1/2$；若 $k=1$ 则空乘积等于一，所以最终必有 $k>1$。$\square$
+
+这一步没有假设被排除的素数很少。即使 $e$ 含有全部较小素数，式（201.5）仍将它们的共同 Euler 权重计入同一份预算。
+
