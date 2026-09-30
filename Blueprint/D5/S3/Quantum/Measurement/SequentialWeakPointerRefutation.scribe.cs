@@ -26,7 +26,10 @@ internal sealed class SequentialWeakPointerRefutationDocument : IScribeDocumentD
             Node("result", "A sequence of three projections below minus one eighth",
                 Disp(new Formula.Not(F.Id("claim"))),
                 "Take d = 3, the state e_3, and the rational projections P_1 = (1/3)[[1, 1, -1], [1, 1, -1], [-1, -1, 1]] onto (1, 1, -1), P_2 = [[1, 0, 0], [0, 1/2, 1/2], [0, 1/2, 1/2]] = I - v v^* with v = (0, 1, -1)/sqrt(2), and P_3 = [[1/2, 0, 1/2], [0, 1, 0], [1/2, 0, 1/2]] = I - w w^* with w = (1, 0, -1)/sqrt(2). Each satisfies P^2 = P = P^*, checked entrywise, and e_3 is a unit vector. Evaluating the nested anticommutator gives (1/4) <e_3, {P_1, {P_2, P_3}} e_3> = -1/6 < -1/8, so the conjectured bound fails for three observables.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("abbott-2019-sequential-weak-pointer-bound"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(
