@@ -22657,7 +22657,7 @@ $$
 
 并要求 $(C-x)(W+e/x)\ne0$。忘记相位的 $\mathcal F$ 在全域至多三对一，此界可达。
 
-证明。$a\in Q$ 和 $-1$ 非平方使零方程唯一选择 $e$，奇阶 $Q$ 的平方双射再唯一选择 $x$。在该零方程下，另一候选读数为 $Ae/x-Bx\delta$，等价于 $w-c\delta\ne0$ 时非零；所以(106.20)是同一符号约束所迫的后继。代入目标逆像形式并乘 $x/e$ 即得(106.21)；反向代入加上非零坐标条件恢复定义中的唯一零分支，因此没有多算未知相位。
+证明。$a\in Q$ 和 $-1$ 非平方使零方程唯一选择 $e$，奇阶 $Q$ 的平方双射再唯一选择 $x$。在该零方程下，另一候选读数为 $-Ae/x-Bx\delta=(Bx/c)(w-c\delta)$，等价于 $w-c\delta\ne0$ 时非零；所以(106.20)是同一符号约束所迫的后继。代入目标逆像形式并乘 $x/e$ 即得(106.21)；反向代入加上非零坐标条件恢复定义中的唯一零分支，因此没有多算未知相位。
 
 若 $CW\ne0$，二次式判别式和根积分别是
 
@@ -22714,7 +22714,7 @@ $$
 
 ### 106.9 可复用的有界关联与原始整数核验
 
-以下程序有两个独立用途：核验显式混合关联的例外数与输出重数，并从固定正整数来源重放局部证书和特定失败字。它只用已经考察过的11、19、31，不作素数分类、全341候选乘积、安全集幂集或全局获胜秩枚举。关联计数逐个检查相同符号的测试与后继；五个11证书及其符号对称像的付费执行覆盖全部后续二元报告分支，首批固定零。负对照拒绝符号拆分、伪称十点全相位安全、错误种子符号及超预算；所有关键检查使用显式异常，优化运行也不能删去。每次运行限120秒、100000记录、1500000边，并限制原始整数位数；超限和核验失败均非零退出。数值核验支持这里的证书，通用下界由106.4的证明和文献条件承担。
+以下程序有两个独立用途：核验显式混合关联的例外数与输出重数，并从固定正整数来源重放局部证书和特定失败字。它只用已经考察过的11、19、31，不作素数分类、全341候选乘积、安全集幂集或全局获胜秩枚举。关联计数逐个检查相同符号的测试与后继；五个11证书及其符号对称像的付费执行覆盖全部后续二元报告分支，首批固定零。负对照拒绝符号拆分、伪称十点全相位安全、错误种子符号及超预算；所有关键检查使用显式异常，优化运行也不能删去。另以一个非静默点和一个静默点核验106.8的负号及未改动的逆像式(106.21)。时限异常独立于负对照预期的核验异常，不能被 `rejected` 捕获；真实 `SIGALRM` 在其回调内触发时也以非零退出结束。每次运行限120秒、100000记录、1500000边，并限制原始整数位数；超限和核验失败均非零退出。数值核验支持这里的证书，通用下界由106.4的证明和文献条件承担。
 
 ```python
 import json
@@ -22724,6 +22724,10 @@ from collections import Counter
 
 
 class CheckFailure(RuntimeError):
+    pass
+
+
+class DeadlineExceeded(RuntimeError):
     pass
 
 
@@ -22748,7 +22752,7 @@ budget = Budget()
 
 
 def timeout(signum, frame):
-    raise CheckFailure("120 second cap")
+    raise DeadlineExceeded("120 second cap")
 
 
 def rejected(function):
@@ -22789,6 +22793,26 @@ def seed(c, w, d, x, e, A, B, p):
     require(not equal(c, w, d, x, -e, A, B, p), "opposite split")
     require(jvalue(c + x, w + e * pow(x, -1, p), d, p) == 0,
             "same sign terminal successor")
+
+
+def forced_reading_audit():
+    for d, c, w, x, e, expected, wrong_expected in (
+            (1, 1, 10, 9, 1, 6, 0), (4, 3, 1, 1, -1, 0, 10)):
+        budget.charge(records=1)
+        inv = pow(x, -1, 11)
+        first, second = readings(c, w, d, x, e, 6, 7, 11)
+        require(first == 0, "forced reading premise")
+        require(second == (-6 * e * inv - 7 * x * d) % 11 == expected,
+                "forced second reading sign")
+        require(second == 7 * x * pow(c, -1, 11) * (w - c * d) % 11,
+                "forced reading factorization")
+        wrong = (6 * e * inv - 7 * x * d) % 11
+        require(wrong == wrong_expected and wrong != second, "old sign regression")
+        require((second == 0) == ((w - c * d) % 11 == 0), "silent line")
+        C, W = (c + x) % 11, (w - e * inv) % 11
+        require((7 * e * W * x * x + (7 - 6) * x + 6 * C) % 11 == 0,
+                "unchanged forced inverse")
+    return 2
 
 
 def incidence_audit():
@@ -22974,6 +22998,7 @@ def main():
     signal.signal(signal.SIGALRM, timeout)
     signal.alarm(120)
     try:
+        formula_regressions = forced_reading_audit()
         incidences = incidence_audit()
         certificates = ((1, 9, 3, 1, 1), (2, 1, 4, 1, 1), (3, 9, 0, 9, 1),
                         (4, 2, 1, 5, -1), (5, 2, 6, 9, 1))
@@ -23001,6 +23026,7 @@ def main():
         rejected(lambda: require(any(z and h for z, h in branches),
                                  "independent sign relaxation"))
         print(json.dumps({"incidences": incidences, "paid_seed_histories": histories,
+                          "formula_regressions": formula_regressions,
                           "max_paid_seed_primitives": max_paid,
                           "cycle_paid_primitives": 50, "cycle_gcd": values,
                           "negative_controls": 4, "records": budget.records,
