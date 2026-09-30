@@ -19,7 +19,7 @@ jobs:
   tests-cache-release:
     uses: ./.github/workflows/ci-unit.yml
     with:
-      run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.Cache.Release.Tests/StrataLint.Cache.Release.Tests.csproj
+      command: make -C tools test TEST_PROJECT=tools/tests/StrataLint.Cache.Release.Tests/StrataLint.Cache.Release.Tests.csproj
       paths: |
         .editorconfig
         .github/*
@@ -31,14 +31,10 @@ jobs:
         Meta/Digestion/atomizers.toml
         Meta/FILEMAP.*.toml
         Meta/FILEMAP.toml
-        Meta/ReportConsumers/*
         Meta/ReportProducers/*
         Meta/ci-cache-paths.json
         Meta/ci-checks.json
-        Meta/ci-resources.json
         Meta/engineering-projects.json
-        Meta/judge-seed.json
-        Meta/package-materials.json
         Reg/lake-manifest.json
         Reg/lakefile.toml
         docs/CONTRIBUTING.md
@@ -51,8 +47,8 @@ jobs:
         tools/ARCHITECTURE.md
         tools/Architecture/*
         tools/Makefile
-        tools/StrataLint.ExecutionEvidence/TestEvidenceCommands.cs
-        tools/StrataLint.ExecutionEvidence/TestResultEvidence.cs
+        tools/StrataLint.Cli/Commands/TestEvidenceCommands.cs
+        tools/StrataLint.Cli/Commands/TestResultEvidence.cs
         tools/StrataLint.sln
         tools/TOWER.yaml
         tools/TestSupport/StrataLint.ScriptProcessTestSupport/*
@@ -79,8 +75,6 @@ jobs:
         tools/scripts/agent/openproblem/TARGET-GATES.md
         tools/scripts/dotnet-test.sh
         tools/scripts/workflow/ci-entry.sh
-        tools/scripts/workflow/source_reference.py
-        tools/scripts/worktree/cache_deadline.py
         tools/scripts/worktree/cache_material.py
         tools/scripts/worktree/lean-cache-input.sh
         tools/scripts/worktree/lean-cache-publish.sh
@@ -92,14 +86,9 @@ jobs:
         tools/tests/StrataLint.ScriptTests/*.csproj
         tools/tests/StrataLint.ScriptTests/*.json
         tools/tests/StrataLint.ScriptTests/Fixtures/analysis_cache_contract.py
-        tools/tests/StrataLint.ScriptTests/Fixtures/cache_deadline_cases.py
-        tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py
         tools/tests/StrataLint.ScriptTests/Fixtures/contribution_queue_contract.py
         tools/tests/StrataLint.ScriptTests/Fixtures/lean_input_contract.py
         tools/tests/StrataLint.ScriptTests/Fixtures/lean_release_legacy.py
         tools/tests/StrataLint.ScriptTests/Fixtures/lean_release_verification.py
-        tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py
         tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_support.py
         tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_transport.py
-        tools/tests/StrataLint.ScriptTests/Fixtures/report_snapshot_contract.py
-        tools/tests/StrataLint.ScriptTests/Fixtures/truth_release_contract.py

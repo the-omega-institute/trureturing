@@ -33,13 +33,9 @@ jobs:
         Meta/Digestion/atomizers.toml
         Meta/FILEMAP.*.toml
         Meta/FILEMAP.toml
-        Meta/ReportConsumers/*
         Meta/ReportProducers/*
         Meta/ci-checks.json
-        Meta/ci-resources.json
         Meta/engineering-projects.json
-        Meta/judge-seed.json
-        Meta/package-materials.json
         Reg/lake-manifest.json
         Reg/lakefile.toml
         docs/CONTRIBUTING.md
@@ -55,9 +51,7 @@ jobs:
         tools/StrataLint.Cli/*
         tools/StrataLint.Configuration/*
         tools/StrataLint.Engine/*
-        tools/StrataLint.ExecutionEvidence/*
         tools/StrataLint.FileMap/*
-        tools/StrataLint.InspectionScope/*
         tools/StrataLint.Lean/*
         tools/StrataLint.Scribe.Documents/*
         tools/StrataLint.Scribe/*.cs
@@ -106,10 +100,7 @@ jobs:
         tools/scripts/agent/openproblem/TARGET-GATES.md
         tools/scripts/dotnet-test.sh
         tools/scripts/local-harness-gate.sh
-        tools/scripts/preflight.sh
         tools/scripts/workflow/ci-entry.sh
-        tools/scripts/workflow/ci.py
-        tools/scripts/workflow/ci_plan.py
         tools/scripts/workflow/playbook-workflows.sh
         tools/scripts/worktree-init.sh
         tools/scripts/worktree/cache_material.py
@@ -123,9 +114,6 @@ jobs:
         tools/tests/StrataLint.ScriptTests/*.csproj
         tools/tests/StrataLint.ScriptTests/*.json
         tools/tests/StrataLint.ScriptTests/Fixtures/analysis_cache_contract.py
-        tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py
         tools/tests/StrataLint.ScriptTests/Fixtures/contribution_queue_contract.py
         tools/tests/StrataLint.ScriptTests/Fixtures/lean_input_contract.py
-        tools/tests/StrataLint.ScriptTests/Fixtures/report_snapshot_contract.py
-        tools/tests/StrataLint.ScriptTests/Fixtures/truth_release_contract.py
         tools/tests/StrataLint.Tests/*

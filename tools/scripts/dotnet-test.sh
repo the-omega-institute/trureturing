@@ -33,6 +33,11 @@ for argument in "$@"; do
   fi
 done
 
+# The TRX evidence commands live in the CLI; a single test project need not
+# reference it, so build it here (incremental when already built).
+dotnet build "$ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj" --configuration Release \
+  -p:RestoreLockedMode=true -nr:false -nologo --verbosity quiet
+
 owner_assemblies="$(dotnet run \
   --project "$ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj" \
   --configuration Release --no-build --no-launch-profile -- \

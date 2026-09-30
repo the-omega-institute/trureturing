@@ -31,13 +31,9 @@ jobs:
         Meta/Digestion/atomizers.toml
         Meta/FILEMAP.*.toml
         Meta/FILEMAP.toml
-        Meta/ReportConsumers/*
         Meta/ReportProducers/*
         Meta/ci-checks.json
-        Meta/ci-resources.json
         Meta/engineering-projects.json
-        Meta/judge-seed.json
-        Meta/package-materials.json
         Reg/lake-manifest.json
         Reg/lakefile.toml
         docs/CONTRIBUTING.md
@@ -50,18 +46,11 @@ jobs:
         tools/ARCHITECTURE.md
         tools/Architecture/*
         tools/Makefile
-        tools/StrataLint.BuildRuntime/*
-        tools/StrataLint.CiArtifacts/*
         tools/StrataLint.Cli/*
         tools/StrataLint.Configuration/*
         tools/StrataLint.Engine/*
-        tools/StrataLint.EngineeringScope/*
-        tools/StrataLint.ExecutionEvidence/*
         tools/StrataLint.FileMap/*
-        tools/StrataLint.InspectionScope/*
         tools/StrataLint.Lean/*
-        tools/StrataLint.ReleaseSelection/*
-        tools/StrataLint.ResourcePlanning/*
         tools/StrataLint.Scribe.Documents/*
         tools/StrataLint.Scribe/*
         tools/StrataLint.sln
@@ -152,9 +141,6 @@ jobs:
         tools/scripts/agent/test_prime_slab_search.py
         tools/scripts/agent/test_xi_quantization.py
         tools/scripts/agent/xi_quantization.py
-        tools/scripts/ci-build-outputs.targets
-        tools/scripts/ci-stage.sh
-        tools/scripts/ci_output.py
         tools/scripts/clean-lanes.sh
         tools/scripts/dotnet-build.sh
         tools/scripts/dotnet-test.sh
@@ -162,17 +148,12 @@ jobs:
         tools/scripts/lean-report-pair.sh
         tools/scripts/lib/*
         tools/scripts/local-harness-gate.sh
-        tools/scripts/preflight.sh
         tools/scripts/report/*
         tools/scripts/scribe.sh
         tools/scripts/stratalint-selftest.sh
         tools/scripts/update-renderer-contract.sh
         tools/scripts/workflow/ci-entry.sh
-        tools/scripts/workflow/ci.py
-        tools/scripts/workflow/ci_plan.py
-        tools/scripts/workflow/engineering-test-execution-harness.sh
         tools/scripts/workflow/install-lean-toolchain.sh
-        tools/scripts/workflow/judge-content-address.sh
         tools/scripts/workflow/math-gate.sh
         tools/scripts/workflow/playbook-workflows.sh
         tools/scripts/workflow/scribe-content-checks.sh
@@ -181,18 +162,13 @@ jobs:
         tools/tests/BannedApiCompileFailProof/*
         tools/tests/CompileFailProof/*
         tools/tests/Directory.Build.props
-        tools/tests/JudgeSeedTask.Tests/*
         tools/tests/StrataLint.ArchitectureTests/*
-        tools/tests/StrataLint.BuildIntegration.Tests/*
-        tools/tests/StrataLint.BuildRuntime.Tests/*
         tools/tests/StrataLint.Cache.Native.Tests/*.cs
         tools/tests/StrataLint.Cache.Native.Tests/*.csproj
         tools/tests/StrataLint.Cache.Release.Tests/*.cs
         tools/tests/StrataLint.Cache.Release.Tests/*.csproj
         tools/tests/StrataLint.Cache.Tests/*.cs
         tools/tests/StrataLint.Cache.Tests/*.csproj
-        tools/tests/StrataLint.CheckIntegration.Tests/*
-        tools/tests/StrataLint.CiArtifacts.Tests/*
         tools/tests/StrataLint.CliIntegration.Tests/*
         tools/tests/StrataLint.Configuration.Tests/*
         tools/tests/StrataLint.CoverBatch.Tests/*.cs
@@ -203,15 +179,9 @@ jobs:
         tools/tests/StrataLint.Digestion.Tests/*.csproj
         tools/tests/StrataLint.Engine.Tests/*.cs
         tools/tests/StrataLint.Engine.Tests/*.csproj
-        tools/tests/StrataLint.EngineeringScope.Tests/*.cs
-        tools/tests/StrataLint.EngineeringScope.Tests/*.csproj
-        tools/tests/StrataLint.ExecutionEvidence.Tests/*.cs
-        tools/tests/StrataLint.ExecutionEvidence.Tests/*.csproj
         tools/tests/StrataLint.FileMap.Tests/*
         tools/tests/StrataLint.HeaderScript.Tests/*.cs
         tools/tests/StrataLint.HeaderScript.Tests/*.csproj
-        tools/tests/StrataLint.InspectionIntegration.Tests/*
-        tools/tests/StrataLint.InspectionScope.Tests/*
         tools/tests/StrataLint.InstructionContract.Tests/*.cs
         tools/tests/StrataLint.InstructionContract.Tests/*.csproj
         tools/tests/StrataLint.Lean.Tests/*.cs
@@ -220,14 +190,10 @@ jobs:
         tools/tests/StrataLint.LeanCacheScript.Tests/*.csproj
         tools/tests/StrataLint.LeanReportScript.Tests/*.cs
         tools/tests/StrataLint.LeanReportScript.Tests/*.csproj
-        tools/tests/StrataLint.NativeTransportIntegration.Tests/*
-        tools/tests/StrataLint.PlanningIntegration.Tests/*
         tools/tests/StrataLint.PlaybookScript.Tests/*.cs
         tools/tests/StrataLint.PlaybookScript.Tests/*.csproj
         tools/tests/StrataLint.PrScript.Tests/*.cs
         tools/tests/StrataLint.PrScript.Tests/*.csproj
-        tools/tests/StrataLint.ReleaseIntegration.Tests/*
-        tools/tests/StrataLint.ReleaseSelection.Tests/*
         tools/tests/StrataLint.ReportSupervisor.Tests/*.cs
         tools/tests/StrataLint.ReportSupervisor.Tests/*.csproj
         tools/tests/StrataLint.RepositoryConfiguration.Tests/*
@@ -241,7 +207,6 @@ jobs:
         tools/tests/StrataLint.RepositoryTopology.Tests/*.csproj
         tools/tests/StrataLint.ResourceObservation.Tests/*.cs
         tools/tests/StrataLint.ResourceObservation.Tests/*.csproj
-        tools/tests/StrataLint.ResourcePlanning.Tests/*
         tools/tests/StrataLint.Rules.Tests/*.cs
         tools/tests/StrataLint.Rules.Tests/*.csproj
         tools/tests/StrataLint.Scribe.Documents.Tests/*.cs
@@ -252,17 +217,12 @@ jobs:
         tools/tests/StrataLint.ScriptTests/*.csproj
         tools/tests/StrataLint.ScriptTests/*.json
         tools/tests/StrataLint.ScriptTests/Fixtures/analysis_cache_contract.py
-        tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py
         tools/tests/StrataLint.ScriptTests/Fixtures/contribution_queue_contract.py
         tools/tests/StrataLint.ScriptTests/Fixtures/lean_input_contract.py
-        tools/tests/StrataLint.ScriptTests/Fixtures/report_snapshot_contract.py
-        tools/tests/StrataLint.ScriptTests/Fixtures/truth_release_contract.py
         tools/tests/StrataLint.SourceAtomizer.Tests/*.cs
         tools/tests/StrataLint.SourceAtomizer.Tests/*.csproj
-        tools/tests/StrataLint.StageIntegration.Tests/*
         tools/tests/StrataLint.Tests/*.cs
         tools/tests/StrataLint.Tests/*.csproj
-        tools/tests/StrataLint.TransportIntegration.Tests/*
         tools/tests/StrataLint.TruthRelease.Tests/*.cs
         tools/tests/StrataLint.TruthRelease.Tests/*.csproj
         tools/tests/StrataLint.WorkflowScript.Tests/*.cs

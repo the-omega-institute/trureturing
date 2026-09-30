@@ -31,13 +31,9 @@ jobs:
         Meta/Digestion/atomizers.toml
         Meta/FILEMAP.*.toml
         Meta/FILEMAP.toml
-        Meta/ReportConsumers/*
         Meta/ReportProducers/*
         Meta/ci-checks.json
-        Meta/ci-resources.json
         Meta/engineering-projects.json
-        Meta/judge-seed.json
-        Meta/package-materials.json
         Reg/lake-manifest.json
         Reg/lakefile.toml
         docs/CONTRIBUTING.md
@@ -53,11 +49,8 @@ jobs:
         tools/StrataLint.Cli/*
         tools/StrataLint.Configuration/*
         tools/StrataLint.Engine/*
-        tools/StrataLint.ExecutionEvidence/*
         tools/StrataLint.FileMap/*
-        tools/StrataLint.InspectionScope/*
         tools/StrataLint.Lean/*
-        tools/StrataLint.ResourcePlanning/*
         tools/StrataLint.Scribe.Documents/*
         tools/StrataLint.Scribe/*.cs
         tools/StrataLint.Scribe/StrataLint.Scribe.csproj
@@ -136,8 +129,6 @@ jobs:
         tools/scripts/agent/settle-context-check.sh
         tools/scripts/agent/sl010_check.sh
         tools/scripts/agent/sl030-real-surface.sh
-        tools/scripts/ci-stage.sh
-        tools/scripts/ci_output.py
         tools/scripts/clean-lanes.sh
         tools/scripts/dotnet-build.sh
         tools/scripts/dotnet-test.sh
@@ -146,7 +137,6 @@ jobs:
         tools/scripts/lib/*
         tools/scripts/local-harness-gate.sh
         tools/scripts/pr.sh
-        tools/scripts/preflight.sh
         tools/scripts/report/echo-residual-summary.sh
         tools/scripts/report/lean-report-input.sh
         tools/scripts/report/lean-report.sh
@@ -156,9 +146,7 @@ jobs:
         tools/scripts/stratalint-selftest.sh
         tools/scripts/update-renderer-contract.sh
         tools/scripts/workflow/ci-entry.sh
-        tools/scripts/workflow/engineering-test-execution-harness.sh
         tools/scripts/workflow/install-lean-toolchain.sh
-        tools/scripts/workflow/judge-content-address.sh
         tools/scripts/workflow/math-gate.sh
         tools/scripts/workflow/playbook-workflows.sh
         tools/scripts/workflow/scribe-content-checks.sh
@@ -174,8 +162,5 @@ jobs:
         tools/tests/StrataLint.ScriptTests/*.csproj
         tools/tests/StrataLint.ScriptTests/*.json
         tools/tests/StrataLint.ScriptTests/Fixtures/analysis_cache_contract.py
-        tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py
         tools/tests/StrataLint.ScriptTests/Fixtures/contribution_queue_contract.py
         tools/tests/StrataLint.ScriptTests/Fixtures/lean_input_contract.py
-        tools/tests/StrataLint.ScriptTests/Fixtures/report_snapshot_contract.py
-        tools/tests/StrataLint.ScriptTests/Fixtures/truth_release_contract.py
