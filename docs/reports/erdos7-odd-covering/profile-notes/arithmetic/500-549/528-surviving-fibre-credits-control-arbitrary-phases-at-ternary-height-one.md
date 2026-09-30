@@ -10204,3 +10204,444 @@ comparison; it does not enumerate the atlas or infer universality
 from sampled matchings. No source, retained depth, prime ordering or
 clipping parameter was searched. Arbitrary old source families and
 unrestricted Erdős#7 remain unresolved.
+
+## Within-head collisions admit one stronger auxiliary family and all-query continuation
+
+Every one of the15 named set-partition types of the four
+private first digits is admitted. For either fixed FC110 or FC131
+head/root assignment, all their combinations inherit the FC159 positive
+bound at its original finite-depth threshold, by a same-carrier actual
+survivor inclusion. A fixed auxiliary survivor source also satisfies
+the one-pair and uniform grouped all-query interfaces (FC432), (FC441). Any original finiteN>=1 can be completed
+in unused old-layer slots, giving noncovering and the same Haar-dominated
+source mass and continuation; the original pure-conditioned scalar
+requires the normalization factor stated in section7.
+
+The argument does NOT assert that the original raw objective J is
+coordinatewise monotone when same-head projection masses decrease.
+Instead it constructs one auxiliary actual family whose raw signature
+is the old certified one and whose survivor is contained in the
+original family's survivor. This supplies a sufficient comparison that
+keeps the same source, all numerical labels and all future phases.
+
+These are ordinary mathematical deductions using the existing source
+and positive-comparison results. No new Lean verification or
+unrestricted Erdős#7 conclusion is asserted.
+
+### 1. Exact input and comparison target
+
+Fix i in{first,bounded}, meaning the actual head-row/root assignment
+FC110 or FC131, and Q={11,13,17,19,23,29,31,37,41}. Write
+V={5,7} union Q and R={3} union V. At every privateq, choose
+
+    (F5,S5,F7,S7)=(alpha,beta,gamma,delta) in R_q^4,
+    R_q={0,...,q-1} minus{0,1,6}.                    (FC453)
+
+There are NO within-head inequalities in (FC453). Keep the numerical
+labels, physical head rows, selected ternary roots, all pure/star
+phases, and all higher grouped words fixed exactly as in FC147–FC152.
+The four possibly coincident digits modify only the shallow numerical
+labels5q,15q,7q,21q. Every phase is globally fixed, once per label.
+
+Initially the skeleton contains its layers through one finiteN>=1.
+The old nongroup remainder is any finite M in the EXACT FC159 inventory:
+
+    m=3^epsilon product_(p in V)p^e_p, epsilon in{0,1};
+    nonternary support D has size at least2;
+    D={head h,privateq} implies e_h>=2.
+
+Consequently no extra pure, star or shallow head/private grouped label
+is admitted, including labels beyondN. Support{5,7} and all supports
+of size at least3 retain their full allowed exponent ranges. Remainder
+heights may exceedN; all their phases remain arbitrary and globally
+fixed. No later step overwrites them.
+
+For a fixed actual family theta, denote its complete old survivor by
+U_theta on one resolving finite CRT space, including the avoidance of
+all pure originals. Its normalized reference lambda_N is uniform on
+the two ternary roots1,2 and the nonternary pure-conditioned carrier.
+An actual event inclusion supplies the certified auxiliary survivor.
+All comparison fees retain the same numerical inventory and source.
+
+### 2. Why the original raw-objective monotonicity is insufficient
+
+Let t_q,N=c_q,N/q, where
+
+    A_q,N=sum_(e=1..N)q^-e,
+    c_q,N=1/(1-A_q,N), b_q,N=c_q,N*A_q,N.
+
+Two higher role words remain disjoint, and every allowed first digit
+avoids all higher words and pure/star holes. For one headh, its two
+roles overlap only when their private first digits are equal. This
+actually reduces the union in a resolved head/root row only if their
+physical head rows also agree and the selected root is active.
+
+Let chi_(h,q)(r,j) indicate those conditions. Relative to the canonical
+raw arrays on this same head/root assignment,
+
+    X_theta=X_old-t_q,N*chi_(5,q),
+    Y_theta=Y_old-t_q,N*chi_(7,q).                    (FC454)
+
+The lower factors P=(g-X-Y)_+ increase, but the upper factors
+K=g-max(X,Y) can also increase. These upper factors enter the SAME
+remainder fee through FC120–FC122 and FC163–FC164. Therefore
+X_theta<=X_old and Y_theta<=Y_old alone do not prove
+J_raw(theta)>=J_raw(old). No such coordinatewise theorem is claimed.
+
+The following construction avoids having to infer that sign. Its
+validity is an actual set inclusion and is independent of whether the
+native J_raw happens to improve or worsen for a particular theta.
+
+### 3. Rephase only a selected class already contained in an unchanged free class
+
+For each headh and privateq independently, let f,s be their actual
+free/selected first digits, i_F,i_S their physical head rows, and r_S
+the selected ternary root. A repair is required exactly when
+
+    f=s and i_F=i_S.                                (FC455)
+
+The shallow free original has numerical modulushq and actual cylinder
+
+    F={x_h=i_F modh, x_q=f modq}.
+
+The shallow selected original has numerical modulus3hq and cylinder
+
+    S={x_3=r_S mod3, x_h=i_S modh, x_q=s modq}.
+
+Under (FC455), S is literally a subset of F on the same CRT space. It is
+a redundant deleted set even before conditioning on pure/star holes.
+Choose once a digit t in R_q different from f, and replace ONLY the
+private digit of this selected shallow original by t. For example use
+t=2 unless f=2, in which case use t=3. Both digits are always allowed.
+Leave its numerical label, ternary root and head row unchanged.
+All free originals, all other layers and every remainder phase stay
+unchanged. Call the replaced selected cylinder S_plus.
+
+The combined deletion now satisfies
+
+    F union S = F subset F union S_plus.            (FC456)
+
+Thus moving this redundant selected class enlarges the whole covered
+set; it does not require S subset S_plus. This distinction is essential.
+
+Perform (FC455)–FC456 for all affected head/private pairs. Never move a
+free class. Each removed old selected cylinder remains covered by its
+own unchanged free class, regardless of overlaps with other heads or
+primes. All replacements therefore hold simultaneously. Let theta_plus
+be the one resulting auxiliary phase assignment and use exactly the
+same arbitrary remainder as theta. Then
+
+    Covered(theta) subset Covered(theta_plus),
+    U_(theta_plus) subset U_theta.                  (FC457)
+
+This is an actual pointwise containment on one finite resolving period,
+not merely a comparison of coordinate masses, a tree transport or a
+set of separately optimal marginal choices. Cross-head equalities of
+new digits are harmless. All numerical labels remain distinct.
+The rule is independent ofN and of every later query or cost.
+
+If f=s but i_F differs from i_S, no repair is needed: the two roles
+are never simultaneously active at a fixed physical head row. Their
+coincidence changes no actual same-head row-union mass. In particular,
+theta_plus need not satisfy the stronger global pair inequalities (FC417).
+Its precise replacement condition is the weaker sufficient one:
+
+    At each fixed root and head row, simultaneously active roles
+    within that head have distinct private first digits.            (FC458)
+
+A selected role on a zero surviving head row is still handled with
+its actual original address. No phase is moved merely because that
+row has zero weight.
+
+### 4. The repaired source has exactly the old raw signature and certificate
+
+Condition (FC458) suffices for the same-head union proof in (FC419)--(FC420).
+Every complete role still has massb_q,N. At a resolved root/head row,
+active roles within one head are disjoint at the first layer; their
+higher layers are unchanged, pairwise disjoint and disjoint from
+all first-layer cylinders. Therefore
+
+    X_plus(q,r,j)=b_q,N*
+       [1_(j=i_F5)+1_(r=r_S5)1_(j=i_S5)],
+    Y_plus(q,r,j)=b_q,N*
+       [1_(j=i_F7)+1_(r=r_S7)1_(j=i_S7)].             (FC459)
+
+The pure/star laws and all head weights are unchanged. Hence for every
+finiteN>=1,
+
+    (w,g,X_plus,Y_plus)=(w,g,X_old,Y_old)=z_(i,N).   (FC460)
+
+Equality of inactive or differently addressed private roles is allowed.
+Actual cross-head intersections can differ from the canonicalZ=0,
+so the applicable interface is FC137 / FC161:
+
+    (g-X-Y)_+ <= g-X-Y+Z <= g-max(X,Y).
+
+The FC120–FC122 per-original supported-head minima, per-depth maxima,
+common free addresses and selected-root fees apply to this ONE actual
+auxiliary family. They use the same fixed pure caps and numerical
+inventory. Because their raw inputs in (FC460) are identical, its lower
+certificate is exactly J_infinity(z_(i,N)); no independent maximizing
+phases are asserted to be jointly realized.
+
+For the same original common thresholdN_+ and everyN>=N_+,
+
+    lambda_N(U_theta)
+      >=lambda_N(U_(theta_plus))
+      >=J_infinity(z_(i,N))>=mu_i>0,                (FC461)
+
+where
+
+    mu_first=12288140637404551/155479519655460000,
+    mu_bounded=36518862868606981/466438558966380000.
+
+This is a complete comparison through a single
+stronger actual family with the old certified signature. It proves
+the original survivor lower bound without asserting monotonicity of
+the original raw subtractionA_theta-Fee_theta. The numerical FC159
+constants and threshold are reused, not recomputed.
+
+### 5. One auxiliary physical measure, fixed before every query
+
+Assume firstN>=max(2,N_+). Use the SAME theta_plus and entire remainder
+from section3. Put
+
+    s_plus=lambda_N(U_(theta_plus))>=mu_i>=m_star,
+    m_star=36518862868606981/466438558966380000,
+    C_V=1048576/403767,
+    D0=(3/2)C_V/m_star
+      =1816999451688960000/36518862868606981,
+    eta_plus=lambda_N restricted to U_(theta_plus)/(D0*s_plus).
+
+Since lambda_N<=(3/2)C_V H_R, this one physical measure has
+
+    eta_plus<=H_R,
+    eta_plus(total)=h=1/D0,
+    support(eta_plus) subset U_(theta_plus) subset U_theta. (FC462)
+
+It is NOT asserted to be the normalized law of the original family's
+full survivor. Keeping this distinction permits the group comparison
+without pretending original within-head collisions have disappeared.
+Neither the auxiliary family nor eta_plus depends on the subsequent
+query layout, convex cost, clipping hinge or future original phase.
+The construction establishes a proof source, not a free acquisition
+algorithm for an internal observer.
+
+#### The actual55 pair remains available
+
+The repair never moves any free original. In particular the actual
+free55 cylinder remains
+
+    {x_5=2 mod5} cross {x_11=alpha_11 mod11}.
+
+Its private digit can be arbitrary in R_11; it need not be canonical2.
+The phase-independent rectangle premise (FC431)--(FC432) holds with
+masses1/5 and1/11, and eta_plus avoids this very original. The same
+Xi_pair and Top_h profile therefore bound all finite complete queries
+against eta_plus. The established continuation (FC373)--(FC378) transfers:
+
+    after73: m>1/1000, M4<11301000,
+    eta73<=256 H_head,
+    Haar(original head survivor)>1/256000,
+    conditional above10000 distorted reserve>7/8000.       (FC463)
+
+The last statement retains the Report734/779 analytic prime-product
+premise, its original fixed tail parameters and the excluded additional
+primes in(73,10000]. Its distorted reserve is not a final Haar density.
+No new initialization or numerical continuation is asserted.
+
+#### The common grouped profile is exactly the same uniform comparison
+
+At each root and head pair define the original counts n5,n7 from the
+unchanged head rows and selected roots. They are counts of active named
+roles, irrespective of any root-zero weight. Under (FC458) each head's
+active first-digit set has respectivelyn5 or n7 distinct digits, each
+of unnormalized restricted-Haar mass1/q. Their union thus has mass
+
+    w_plus(q,r,i5,i7)>=max(n5,n7)/q=:w_star,
+    w_plus<= (n5+n7)/q=:w_zero.                      (FC464)
+
+This proof needs only the pointwise distinctness (FC458), not (FC417)'s stronger
+global pair inequalities. It is exactly the hypothesis used in (FC434).
+The unchanged restricted-Haar factors obey (FC380), z_q>4/q, and the
+old FC382 head positivity certificate remains valid through
+h_zero<=h_plus<=h_star. Thus (FC436)--(FC443) applies with all of its
+positive-measure and source conditions satisfied.
+
+For this fixed head assignmenti, the resulting positive uniform profile
+is the EXACT SAME Xi_star,i defined in (FC440)--(FC441), becausew_star, head weights,
+root allocations, retained pure/star factors and source massh are the
+same. For every finite complete layoutPhi and every nonnegative
+increasing convexf,
+
+    integral f(L_Phi) d eta_plus <= integral f d Xi_star,i. (FC465)
+
+The actual numerical labels, their globally fixed phases and their true
+ternary indicators are retained throughout the induction. Root colour
+counts do not rely on choosing new phases or splitting one label into
+two source-dependent queries. This is one all-query comparison on one
+source. It does not compare Xi_star to the normalized full U_theta law.
+
+The comparison law, initial mass and continuation contract are
+exactly those of (FC441) and (FC448). Therefore the verified
+continuation (FC449)--(FC451) applies directly to this auxiliary
+source and hence to the original family's survivors. After the
+fixed eight stages through73, both head assignments satisfy
+
+    m>243/200000, M4<11296000,
+    eta73<=256 H_head,
+    Haar(original head survivor)>243/51200000.
+
+Under the same Report734/779 analytic prime-product premise and
+tail parameters, the conditional above10000 distorted reserve
+exceeds109/100000. Additional support primes in(73,10000] remain
+excluded, and this reserve is not a final Haar-density bound.
+The two assignments retain separate profiles. The smaller
+canonical full-group values (FC396)--(FC401) are not substituted.
+
+### 6. Actual future phases preserve the same containment
+
+Fix any admitted finite collection of subsequent originals and all its
+phases once. Append exactly those originals to both theta and theta_plus.
+At every stage their common new deletion union is the same. From (FC457),
+
+    U_(theta_plus,stage) subset U_(theta,stage).      (FC466)
+
+Thus the auxiliary source can be restricted to actual later survivors
+and scaled by the inherited one family/stage scalar. At every step it
+remains supported on the ORIGINAL family's actual survivors. No source
+is reselected for each query. The same complete numerical inventory,
+phase and label constraints justify the inherited clipping comparison.
+
+This covers the previously admitted new heads43,47,53,59,61,67,71,73
+and the conditional outside tailp>10000. It does not admit middle
+primes, forbidden old-only labels or an unrestricted covering family.
+A future noncovering theorem proved for the auxiliary family immediately
+implies the corresponding one for the original family by (FC466).
+
+### 7. Remove the originalN threshold by filling only empty old-layer slots
+
+The existing FC147–FC152 construction is nested in depth and assigns
+phases independent ofN. FC159 explicitly excludes extra pure, star and
+shallow grouped labels from the arbitrary remainder, including aboveN.
+Those facts, together with the existing finite-depth cap and threshold,
+give the following direct completion corollary for arbitrary originalN.
+
+For any original finiteN>=1 choose one finite
+
+    N_prime>=max(N,2,N_+).
+
+Begin with the single repaired familytheta_plus. Append its prescribed
+pure, star and grouped originals in depthsN+1 throughN_prime, with
+FC147–FC149 words and the same fixed head rows/roots. Every such label
+was absent: remainderI forbids exactly these forms at ALL depths.
+No appended label duplicates an existing old label. Every admitted
+future original contains a newly processed prime outside the old setR,
+whereas these added layers use only old primes; future labels therefore
+cannot collide with the completion either. Completion overwrites no
+already attached phase, and fixes each newly attached phase once. Denote the
+complete auxiliary family bytheta_doubleplus and its actual survivor
+byU_doubleplus. Then, on a common resolving CRT period,
+
+    U_doubleplus subset U_(theta_plus) subset U_theta.    (FC467)
+
+Apply sections4–6 atN_prime. They give a positive auxiliary survivor
+and one fixed eta_doubleplus of EXACT massh=1/D0, Haar domination,
+support contained inU_theta, the same all-query pair and uniform group
+profiles, and their admitted continuation. Therefore those source
+existence and noncovering conclusions hold for every originalN>=1.
+An explicit computable value ofN_+ is not produced or needed: its
+existing finite existence suffices to choose one finite completion.
+
+There is a scalar normalization boundary. Write
+
+    a_N=product_(p in V)(1-A_(p,N)),
+    t_(N,N_prime)=a_(N_prime)/a_N in(0,1].
+
+The two-root ternary normalization is unchanged, and on events inside
+the completed pure carrier,
+
+    lambda_N(E)=t_(N,N_prime)*lambda_(N_prime)(E).
+
+Consequently the completed proof yields
+
+    lambda_N(U_theta)>=t_(N,N_prime)*mu_i
+       >=mu_i/(C_V*a_N)>0,
+    H_R(U_theta)>=(2/3)*mu_i/C_V>=h.                (FC468)
+
+For the second lower bound use
+
+    a_infinity=product_(p in V)(p-2)/(p-1)=1/C_V,
+    a_(N_prime)>=a_infinity.
+
+Also H_R(U_theta)=(2/3)*a_N*lambda_N(U_theta), because
+U_theta avoids the original pure3 and nonternary pure cylinders.
+The displayed explicit bounds are independent of the chosenN_prime
+and need no numerical value ofN_+. Non-strict inequalities suffice;
+no limit is substituted for a finite actual source.
+
+It does NOT automatically yield the same mu_i under the original
+lambda_N. By contrast, whenN>=N_+ and section4 is applied without
+adding layers,FC461 supplies the original exact mu_i directly.
+The fixed Haar-cap normalization D0 and massh in (FC462) remain valid
+for the completed source because every finite-depth pure density is
+bounded by the same limitingC_V. No original full-survivor normalized
+law is silently identified with that auxiliary source.
+
+If any supposedly vacant old layer already has an arbitrary phase,
+completion may not overwrite it. That situation is outside this
+remainder contract; the removal of the originalN threshold cannot be
+exported to it. New outside-support originals remain separately
+subject to the inherited continuation inventory.
+
+### 8. Exactly what the15 types and assignment counts mean
+
+For one private prime the four named digits may now obey any set
+partition of{F5,S5,F7,S7}. Every partition is realizable because
+|R_q|=q-3>=8 supplies at least four distinct digits. There are
+Bell(4)=15 types:1 partition into one block,7 into two blocks,
+6 into three blocks and1 into four blocks. A specific partition withk
+blocks has(n)_k assignments whenn=q-3; summing gives
+
+    (n)_1+7(n)_2+6(n)_3+(n)_4=n^4.
+
+Across the nine private coordinates CRT realizes every choice jointly.
+For each fixed head/root assignment and each finite originalN>=1,
+
+    named private-prefix types:15^9=38443359375,
+    literal36-component assignments:product_(q in Q)(q-3)^4
+      =12913607311276331009418133735183325593600000000.                   (FC469)
+
+The latter integer is the exact nine-factor product. Counts do not
+include arbitrary remainder choices. They are not minimal
+behavioural-state counts, distinct full-event intersection patterns,
+or an enumeration of every source with the same coarse certificate.
+Root/head gating can hide named private equalities. The auxiliary
+repair is a one-way strengthening of covered sets, not an assertion
+that different partitions are equivalent under a common bijection.
+
+### 9. Established conclusion and remaining boundary
+
+For every input (FC453), either fixed FC110/FC131 assignment, every finite
+originalN>=1 and every allowed finite globally phased remainder, one
+finite stronger auxiliary family has an actual positive survivor and
+one Haar-dominated physical source of exact massh. It supports all
+queries and the inherited pair/uniform group comparison on the same
+source, hence the admitted continuation and noncovering conclusion.
+At the original thresholdN>=N_+, the original pure-conditioned scalar
+retains exactlymu_i. Completion below that threshold retains the
+adjusted scalar (FC468) and the unadjusted Haar-source massh.
+
+The native J_raw monotonicity has not been settled by this argument;
+it is unnecessary for the proved conclusion. Arbitrary pre-existing
+high-layer phases, extra old-only labels, arbitrary head/root schemes,
+changed higher-prefix words, the middle-prime gap and unrestricted
+Erdős#7 remain outside the theorem. This source-existence result does
+not claim an efficient internal-observer acquisition algorithm.
+
+The source inclusion and completion use the actual numerical families
+in (FC147)--(FC159); the fees retain (FC120)--(FC122) and the general
+intersection bounds (FC137), (FC161)--(FC164). The all-query extension
+uses the explicit local-disjointness and common-source hypotheses of
+(FC431)--(FC441). These are ordinary mathematical deductions, without
+new Lean verification or an external novelty claim.
