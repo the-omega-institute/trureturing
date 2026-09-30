@@ -109,6 +109,8 @@ theorem goldenHelixStep_scaleLift_strict
 end D5.S3.CompletionDynamics.GoldenMobius.GoldenScaleHelix
 
 
+namespace D5.S3.CompletionDynamics.GoldenMobius.GoldenScaleHelix
+
 /-- Iterating an orientation-flipping deck step around any even cycle has
 trivial monodromy on the orientation sheet. -/
 theorem orientationCover_monodromy
@@ -134,3 +136,6 @@ theorem goldenHelixStep_16_orientation
     (state : GoldenHelixState) :
     (goldenHelixStep^[16] state).orientation = state.orientation := by
   convert orientationCover_monodromy state 8 using 1 <;> norm_num
+
+
+end D5.S3.CompletionDynamics.GoldenMobius.GoldenScaleHelix
