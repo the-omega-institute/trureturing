@@ -10645,3 +10645,297 @@ intersection bounds (FC137), (FC161)--(FC164). The all-query extension
 uses the explicit local-disjointness and common-source hypotheses of
 (FC431)--(FC441). These are ordinary mathematical deductions, without
 new Lean verification or an external novelty claim.
+
+## Exact fixed-background redundancy enlarges the first-digit atlas
+
+The private first-digit exclusion0 can be removed for every
+shallow role. Exclusion1 can be removed for selected roles active at
+ternary root2, and in the additional head-background cases specified
+below. For the ACTUAL fixed FC110 and FC131 row/root tables, none of the
+roles with first digit6 is redundant under the fixed pure/star background.
+Thus this route retains exclusion6, with an explicit uncovered prefix
+witness explaining why.
+
+All conclusions concern the fixed nested words (FC147)--(FC149) at any
+finite N>=1 and the exact FC159 remainder inventory. They do not permit
+arbitrary new higher-layer phases. The conclusions are ordinary
+mathematical deductions, without new Lean verification or an
+unrestricted Erdős#7 result.
+
+### 1. Exact background and a shallow role cylinder
+
+Let B_N be the union of the fixed pure3 class, all fixed nonternary pure
+classes, and all fixed star classes throughN. Exclude the variable four
+shallow group roles fromB_N. The heads areh=5,7, their star roots are
+rho_5=1 andrho_7=2, and every privateq star has ternary root2.
+All deeper words are exactly FC147–FC149, independent ofN.
+
+A shallow free role with headh, head rowi and private digitd is
+
+    C_F(i,d)={x_h=i modh, x_q=d modq}.
+
+A shallow selected role also fixes its declared rootr_S in{1,2}:
+
+    C_S(r_S,i,d)={x_3=r_S mod3, x_h=i modh, x_q=d modq}.
+
+On root0 every free role is already covered by the fixed pure3 original.
+Let T_F={1,2}, T_S={r_S}. Define the rootwise background condition
+
+    K_h(i,d,r):
+       d=0 OR i=h-1 OR (d=1 AND r=2)
+                     OR (i=0 AND r=rho_h).        (FC470)
+
+Then the EXACT containment test is
+
+    C_role subset B_N
+       iff K_h(i,d,r) holds for EVERY r in T_role. (FC471)
+
+It holds at every finiteN>=1. The quantifier over every active root is
+essential for free originals; coverage on root2 alone is insufficient.
+The theorem classifies redundancy under THIS fixed pure/star background,
+not redundancy supplied by an arbitrary other group or remainder union.
+
+### 2. Proof of sufficiency and necessity
+
+Each disjunct in (FC470) is a literal actual original:
+
+- d=0: the pureq original0 modq;
+- i=h-1: the pureh original(h-1) modh;
+- d=1,r=2: the private star3q with components(x3,xq)=(2,1);
+- i=0,r=rho_h: the head star3h with components(x3,xh)=(rho_h,0).
+
+Together with the pure3 class, these cover the whole role whenever (FC471) holds.
+This is a union of actual cylinders, not a probability-zero or
+marginal-mass argument.
+
+For necessity suppose some active retained rootr fails every disjunct.
+Choose the following actual CRT coordinate prefixes in the role:
+
+- On its headh, the prescribed first rowi is neither the pure first
+  row nor an active shallow star row. Ifi=h-2, set the second digit2;
+  this avoids the depth2 pure word(h-2,0) and every deeper pure word,
+  whose second digit is h-1. Ifi=1 on an active star root, the same
+  second digit2 avoids(1,0) and all deeper star words. These row cases
+  are distinct for heads5 and7.
+- On its privateq, first digitd is not0 and is not an active star1.
+  Ifd=6, choose second digit7. This avoids the depth2 pure/star words
+  (6,0),(6,1), and every deeper pure/star word beginning(6,6).
+  Ifd differs from6, no deeper private pure/star word meets it.
+- On the other head choose first row2, outside its pure/star first
+  rows and all their deeper supporting rows.
+- On every other private prime choose first digit7, outside0,1,6.
+
+These coordinates and x3=r are compatible by CRT. They avoid every
+fixed pure/star original throughN, while meeting the target role.
+Hence the target is not contained in B_N. The witness remains valid for
+all larger finite truncations of the SAME fixed word scheme; it does
+not prove avoidance of arbitrary higher phases. It can meet another
+shallow group or a nongroup remainder, so this background witness is
+not asserted to survive the original complete family.
+
+The construction also coversN=1 by passing to a harmless resolving
+period with two digits. No finite or infinite family is being replaced
+by a limiting probability model.
+
+### 3. Expanded cases of the exact test
+
+For a selected role:
+
+    d=0 is always redundant;
+    d=1 is redundant whenr_S=2, or the whole head row is background-deleted;
+    d=6 is redundant ONLY when that whole head row is background-deleted.
+
+A whole selected head row is background-deleted exactly when
+
+    i=h-1 OR (i=0 AND r_S=rho_h).                    (FC472)
+
+In that case every private digit is redundant, not just0,1,6.
+
+For a free role, both retained roots must be covered. Thus
+
+    C_F subset B_N
+       iff d=0 OR i=h-1 OR (h=5 AND i=0 AND d=1).   (FC473)
+
+The last case is a true two-root union: head5's shallow star covers
+root1, privateq's shallow star coversroot2, and pure3 coversroot0.
+A head7 row0 star and private digit1 both coverroot2, leavingroot1
+uncovered. A free private digit6 gains no automatic redundancy from
+its higher-cylinder descendants.
+
+In particular, saying merely “the role is on a star root” is too weak:
+one must retain the role's actual ternary scope, head row and private
+digit. The test is a complete Boolean condition for the declaredB_N.
+
+### 4. One fixed normalization of every background-redundant bad digit
+
+Call a first-digit assignment background-admissible if every role either
+hasd inR_q={0,...,q-1} minus{0,1,6}, or its cylinder satisfies (FC471).
+No within-head or cross-head digit inequalities are imposed.
+
+Keep the original registry Orig(m), giving one actual phase for every
+original numerical modulus m, unchanged. Construct a separate auxiliary
+registry Aux(m) on the same numerical labels. For each role outside R_q,
+choose once a new digit in R_q, preserving its numerical modulus, head
+row and selected root; for example use2. CRT defines its one auxiliary
+phase. Every other registry entry, including the complete nongroup
+remainder, is copied unchanged. The input Orig is never overwritten,
+and the auxiliary family never carries two phases at one modulus.
+
+Since each changed original cylinder lies in B_N and every background
+entry is preserved in Aux, the two complete families satisfy
+
+    old covered union subset new covered union.    (FC474)
+
+All these replacements work simultaneously: their old coverage relies
+on unchanged fixed background originals, not on a cycle of other roles
+that are also being moved. All new phases are global and query-independent.
+After this first normalization, all four digits lie in R_q. Apply the
+redundant-selected repair (FC455)--(FC460) to obtain simultaneous-active
+within-head distinctness. That second step modifies the auxiliary
+registry and again enlarges its covered union. Fix that final Aux once
+before any query. Let U_aux be its actual complete auxiliary survivor,
+with the SAME arbitrary remainder. Then
+
+    U_aux subset U_original.                       (FC475)
+
+The old raw certificate now applies to the auxiliary source. For original
+N>=N_+, the original lambda_N therefore still has survivor probability
+at least mu_i by (FC461). For arbitrary original N>=1, the vacant-layer
+completion (FC467)--(FC468) applies because the same old-only numerical
+label inventory is preserved.
+It provides one fixed eta_aux<=H_R with massh=1/D0, supported on the
+original survivor, and the explicit original-source lower bounds
+
+    lambda_N(U_original)>=mu_i/(C_V*a_N)>0,
+    H_R(U_original)>=(2/3)*mu_i/C_V>=h.              (FC476)
+
+Here a_N is the original nonternary pure-carrier Haar mass, while C_V,
+D0 and h are the same constants as (FC462), (FC468). Completion attaches
+only absent labels to Aux; the original registry stays intact. Its
+finite existence uses the existing threshold N_+, without computing it.
+No original lambda_N is identified with the auxiliary completed
+normalization, and no efficient source-acquisition algorithm is asserted.
+
+The pair and uniform group all-query comparisons (FC431)--(FC441) and
+(FC462)--(FC465) likewise transfer on THIS one eta_aux. An original free55
+class with private digit0 now receives a different phase in Aux. Unlike
+the selected-only repair (FC455), this first step need not copy free55's
+original phase into the auxiliary registry. What is preserved is its numerical label and head5
+row2. Its auxiliary private digit is inR_11, so the phase-independent
+actual55 rectangle lemma applies to the AUXILIARY source. All later
+query phases remain arbitrary but globally fixed. No phase is chosen
+anew for a query, and no claim is made about a group bound for the
+normalized full original survivor law.
+
+Every subsequent original keeps the SAME numerical label and actual
+phase in both registries. Thus (FC475) persists at every stage. The
+verified one-pair bounds (FC433) and uniform grouped continuation
+(FC449)--(FC451) apply to this auxiliary source and hence to the original
+input. After the fixed eight stages through73, both head assignments
+retain m>243/200000 and M4<11296000, with original head-survivor Haar mass
+>243/51200000. The above10000 distorted reserve is >109/100000 under
+the same Report734/779 analytic prime-product premise and fixed tail
+parameters. That reserve is not a final Haar-density bound. Additional
+primes in (73,10000] and forbidden old-only labels remain excluded.
+
+### 5. Specialization to the two actual stored head/root tables
+
+The [FC110 rows](../../../frontier/cover-geometry/fibre-credit-partition/first_layer_witness.json)
+and [FC131 rows](../../../frontier/cover-geometry/fibre-credit-partition/bounded_joint_search.json)
+both use masks (510,0): S5 atq=11 is onroot2, S5 at every other private
+prime is on root1, and every S7 is on root2. A set mask bit means root1;
+an unset bit means root2, with primes in their declared order.
+
+In both tables no free role has a pure-deleted head row or head5 row0.
+No selected role has a pure-deleted head row or an active shallow-star
+head row. The single S5 row0 atq=11 is active onroot2, whereas head5's
+star is onroot1, so this does not create a head-background exception.
+
+Consequently the exact background-admissible digit sets for BOTH
+actual tables are:
+
+| Named role | Private prime | Permitted original first digits |
+| --- | --- | --- |
+|F5,F7|everyq|all digits except1,6|
+|S5|q=11|all digits except6|
+|S5|q>11|all digits except1,6|
+|S7|everyq|all digits except6|
+
+All pairwise coincidences in these sets are allowed. Thus0 has been
+removed from every exclusion, and1 from exactly the listed root2
+selected exclusions. No actual role gains permission for6 from this
+fixed-background criterion.
+
+For one fixed head/root table, the exact literal assignment count is
+
+    (11-2)^2*(11-1)^2
+       *product_(q in Q minus{11})(q-2)^3*(q-1).    (FC477)
+
+This is the exact product of the per-role digit-set sizes. CRT realizes
+every choice jointly, with one phase at each labelled original. It is
+not a count of minimal behaviours or distinct full-event intersections.
+
+### 6. The unresolved digits have actual prefix witnesses, not just a failed estimate
+
+A concrete free example is head5 row2 atprivate13 with first digit1.
+Onroot1, choose x5=2, x13=1 and the other coordinates outside their
+fixed pure/star holes. This point is in that old free65 original but
+is not in the fixed background. Root2 star coverage cannot justify
+moving the whole free original. The head/private components correspond
+to the actual old class27 mod65, with an ordinary CRT extension to the
+rest of the finite source.
+
+For first digit6, keep the same head/root choice but take private13
+prefix(6,7), that is97 mod169. It avoids every fixed deeper private
+role word as well as every deeper pure/star word:
+
+    depth2 words end in a role digit0,...,5,
+    depth>=3 words begin(6,6),
+    the witness begins(6,7).                       (FC478)
+
+The same construction applies to any unprotected role in either table,
+using its actual root/head row and the head second-digit choices in
+section2. It is a genuine common-source point inside that role's
+cylinder and outsideB_N, for every finite truncation of the fixed scheme.
+It refutes the proposed background redundancy, not the noncovering
+conclusion for such a phase assignment.
+
+There is a stronger boundary for the direct all-digits-toR_q strategy.
+Take the nongroup remainder empty, which is allowed. If an old bad
+role fails (FC471), then for ANY proposed auxiliary family whose shallow
+digits all lie in R_q and whose pure/star and higher group words retain
+this prescribed scheme, one can find a point covered by Orig and
+uncovered by Aux. The target is restricted to this direct rephasing
+route and its allowed fixed-word completion; it does not gain an
+arbitrary new nongroup deletion inventory. At the bad coordinate keep the uncovered digit1 onroot1 or the
+prefix(6,7). All new shallow private digits lie inR_q and miss it;
+all unchanged higher role words miss it as above. At every other
+private prime choose a first digit inR_q absent from the proposed
+four shallow digits. This is possible because|R_q|>=8 and at most4
+digits are occupied. Keep the other head onrow2 and resolve the target
+head's deeper digit as in section2. CRT then gives the claimed point.
+
+Therefore the background criterion is also NECESSARY for this direct
+covered-set-inclusion normalization into the old R_q atlas with its
+fixed background and higher-word scheme, already for empty remainder. It is not a necessary condition for positivity,
+for another comparison measure, or for every conceivable auxiliary
+construction. Arbitrary fixed remainder phases can create extra
+redundancy, but that cannot be assumed uniformly over all remainders.
+
+### 7. Exact scope and next gap
+
+The sufficient extension is complete for fixed-background redundancy,
+with an explicit finite-source certificate and inherited query support.
+The obstruction witnesses show precisely why the remaining unprotected
+first digit1 or6 cannot be removed by this direct covered-union
+normalization. They do not construct a covering system or settle other
+methods for those phases.
+
+The next actual gap is a comparison supporting a live private1 role
+onroot1 or a live private6 cylinder with its higher-prefix relations
+retained. One must either pay its genuine additional deletion on a
+common source, find a different lawful containment, or prove another
+all-query profile. Moving it merely because some descendant cylinders
+are already deleted is invalid. Broader old phases, changed higher
+words, extra old labels and the middle-prime gap remain outside the
+present theorem.
