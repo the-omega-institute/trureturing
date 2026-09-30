@@ -35,6 +35,7 @@ theorem high_upper_sq : (53 : ℝ)^2 / 59^2 < 1 := by norm_num
 #print axioms star_upper_sq
 #print axioms triangle_upper_sq
 #print axioms four_cycle_upper_sq
+#print axioms high_upper_taylor
 #print axioms high_upper_sq
 
 end D5.S3.Geometry.Hyperideal.EightTriangleEnvelope
