@@ -833,3 +833,80 @@ Optimized execution and missing `--out` were rejected with exit 2. These
 portability checks were performed on macOS/Python 3.9. All earlier result
 fields were preserved, apart from the intentionally updated source hash.
 No new Lean proof of §176 or RH is claimed.
+
+## Quadratic characters of actual FIB sources (§§177–181)
+
+[`character_slice.py`](character_slice.py) checks the source identities and
+finite character algebra used by the new Euler-weight estimate:
+
+```sh
+python3 -B docs/reports/fib-robin-boundary/character_slice.py \
+  --out /tmp/fib-character-slice.json
+```
+
+It is a standalone Python 3.9+ standard-library program. The required
+`--out` names the sole output file, which is overwritten; optimized Python
+is rejected because assertions verify the diagnostics. The retained default
+result is [`character_slice.json`](character_slice.json), including the
+script hash and explicit finite ranges.
+
+For a legal opposite-parity sum `V = F_a + F_b`, two square identities force
+every actual odd prime divisor, including 5, into quadratic-residue classes
+for `D = (-1)^b L_(a-b)` and `E = -L_(a+b)`. The first may be a square and
+must then be excluded from the nonprincipal-character argument; the second
+is always negative. The estimates use the actual prime support of the same
+integer. They can use the smaller available fundamental discriminant,
+rather than the full size of either Lucas value.
+
+The paper estimate for a nonprincipal real character modulo `m` is
+`P_chi(x) <= exp(8)*sqrt((1+log(x))*(2+log(m)))`, for `x >= 2`.
+It uses only absolute Euler products to the right of 1, a Chebyshev bound,
+and cancellation over a full character period. Neither finite character
+checks nor exact Euler-factor identities certify this infinite estimate.
+No PNT, GRH or ineffective zero-free-region constant is assumed.
+
+For each fixed positive multiplier `c`, the paper deduction gives a uniform
+vanishing Robin ratio for opposite-parity sums with gap `k = o(log(a))`.
+The cited published classification of Lucas squares handles the exceptional
+square branch through its Fibonacci factorization. This is an eventual
+bound on a specified family, not an all-index theorem for arbitrary gaps.
+The more general sufficient condition controls the fundamental discriminant
+relative to `log(log(c*V))`.
+
+For a general nonzero nonnegative ATOM composition, first remove its
+coordinate gcd `g`. The same argument applies to the primitive quantity
+`u = 2*a + 3*b` and its golden norm when the resulting `D` is nonsquare,
+but the multiplier is now `C = c*g`. Its cost `C/phi(C)` cannot be omitted.
+A fixed primitive seed `(1,0)` and arbitrary `g` already encode every even
+integer. The primitive example `(16,29)` instead has square `D = 121`,
+so the nonprincipal-character premise also cannot be dropped in that
+broader family.
+
+These additions are paper derivations and finite diagnostics. Their analytic
+composition has not been proved in Lean; no RH proof or literature-priority
+claim is made. The reusable formal gap is the uniform weighted tail estimate
+for a zero-mean periodic function, followed by the character Euler-product
+comparison. The formalization can reuse existing Chebyshev and character-sum results;
+no new bind-only declarations are retained.
+
+Default diagnostics check 6,162 opposite-parity pairs through index 160,
+with 9,678 actual odd prime-divisor checks through prime 500, including
+1,232 at prime 5. A separate complete-factorization window through index
+44 checks all odd prime factors of 420 sums, including 348 checks beyond
+that prime cutoff. The character/algebra checks cover 22 full induced
+character periods and 23 quadratic residue algebras. The primitive-ATOM
+window `[0,40]^2` checks 1,680 nonzero seeds and 2,048 actual odd-prime
+incidences. These ranges and the explicit principal-character boundary are
+recorded in the JSON; no finite window classifies all Lucas squares.
+
+The final script was independently rerun from a different directory, with
+its filename containing spaces and an environment containing only system
+PATH. Output matched the retained JSON byte for byte. Optimized execution,
+missing `--out`, and attempting to overwrite the program were rejected with
+exit 2. These execution checks were performed on macOS with system Python.
+The square classification is cited in the
+[primary-source note](../../../Library/Scale/bugeaud2006fibonaccipowers.md).
+
+The [Mertens progression note](../../../Library/Scale/languasco2008mertensprogressions.md)
+records the classical fixed-modulus background and why that asymptotic
+alone cannot replace the explicit estimate with a moving discriminant.
