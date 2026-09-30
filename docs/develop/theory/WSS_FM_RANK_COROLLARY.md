@@ -25,90 +25,25 @@ least one prime in every sufficiently large even-rank channel \(2\ell\) with
  \gg_{K,v} \frac{\log X}{\log\log X}.
 \]
 
-The Legendre sign determines the residue class: a split witness has
-\(p\equiv1\pmod\ell\), while an inert witness has
-\(p\equiv-1\pmod\ell\).  The theorem does not assert which sign occurs for a
-specified \(\ell\), and is conditional on abc.
+All such witnesses are split and satisfy \(p\equiv1\pmod{2\ell}\), as proved below; the theorem is conditional on abc.
 
 #### FMR.2 Input from Fellini--Murty
 
-Fellini and Murty, *Wieferich primes in number fields and the conjectures of
-Ankeny--Artin--Chowla and Mordell*, arXiv:2508.08472v2, Theorems 1.2 and 1.4,
-Lemmas 5.4--5.6, prove the following under the same abc hypothesis.  For an
-admissible base \(\alpha\in\mathcal O_K\), write
-\(A_n=(\alpha^n-1)=U_nV_n\), with \(U_n\) square-free and \(V_n\)
-powerful.  Then \(N(U_n)\to\infty\).  Their proof of Theorem 1.4 is stronger
-than the final counting statement: after removing finitely many bad rational
-indices, every prime index \(\ell\) has a prime ideal \(\mathfrak p\mid U_\ell\),
-and distinct prime indices yield distinct prime ideals.  This is the passage
-from their lines 543--548: the range of large rational primes \(\ell\) is
-mapped to divisors of \(U_\ell\); Lemma 5.5 prevents reuse at coprime indices.
-Lemma 5.6 says each such \(\mathfrak p\) is non-Wieferich for \(\alpha\), i.e.
-\[
- \alpha^{N(\mathfrak p)-1}\not\equiv1\pmod{\mathfrak p^2}.
-\]
+Under number-field abc, define U_n as the product of prime ideals occurring in alpha^n-1 with valuation exactly one, and let the remaining factor be powerful. Fellini--Murty's abc argument implies N(U_n) -> infinity: an infinite bounded-norm subsequence would bound the remaining factor and contradict norm growth of alpha^n-1. Their extraction proof supplies a non-Wieferich ideal for every sufficiently large prime index ell; distinct prime indices give distinct ideals.
 
-Apply this with \(\alpha=v\).  Since \(v-1=\phi\) is a unit of norm \(-1\),
-no prime ideal divides \(A_1\).  The only remaining exclusions are the finite
-set of primes above 2 and 5 and the finitely many indices before
-\(N(U_n)\) exceeds their square-free norm product.  Thus every sufficiently
-large prime \(\ell\) has a divisor \(\mathfrak p\mid U_\ell\) above an odd
-\(p\ne5\), and \(p\ne\ell\).  The last inequality also follows directly:
-if \(p=\ell\), then \(v\equiv1\pmod{\mathfrak p}\) would force
-\(\mathfrak p\mid(v-1)\), impossible.
+Apply this with alpha=v. Since v-1=phi is a unit, the A_1 exception is empty. Remove primes above 2 and 5 and finitely many initial indices. Lemma 5.4 gives ord_pfrak(v)=ell; p=ell is impossible because it would force pfrak|(v-1).
 
-For this \(\mathfrak p\), Lemma 5.4 gives
-\[
- \operatorname{ord}_{\mathfrak p}(v\bmod\mathfrak p)=\ell.
-\]
-Indeed the only alternatives for a divisor of \(C_\ell(v)\) are
-\(\ell=p^i f_v(\mathfrak p)\); \(p\ne\ell\) forces \(i=0\).
+#### FMR.3 Split contraction
 
-#### FMR.3 Split and inert contraction
-
-For \(p>5\), the quadratic field is unramified.  If \(p\) splits, the
-residue degree is one and \(N(\mathfrak p)=p\); the order \(\ell\) therefore
-divides \(p-1\).  If \(p\) is inert, the residue degree is two,
-\(N(\mathfrak p)=p^2\), and the norm-one subgroup of
-\((\mathcal O_K/p\mathcal O_K)^\times\) has order \(p+1\).  Because
-\(N_{K/\mathbb Q}(v)=1\), the order \(\ell\) divides \(p+1\).  In both
-cases \(\ell\mid p-\chi_p\), and \(\operatorname{ord}(-v)=2\ell\), since
-\(\ell\) is odd and \(-1\notin\langle v\rangle\).  The standard golden
-identity \(\phi/\bar\phi=-v\) identifies this order with \(\rho(p)\).  Thus
-\(\rho(p)=2\ell\), and the split/inert residue classes are as stated.
-
-A rational prime cannot be selected for two different indices: conjugation
-sends \(v\) to \(v^{-1}\), preserving its residue order, and an inert prime
-has only one prime above it.  Hence two prime ideals of the construction
-lying over the same rational \(p\) would have the same order \(\ell\).
+For p>5, an inert p is impossible: Frobenius gives v^((p+1)/2)=phi^(p+1)=-1, so v cannot have odd order ell. Hence every extracted ideal lies over a split p, ell divides p-1, and p is congruent to 1 modulo 2ell. Since -v has order 2ell and phi/bar(phi)=-v, the Fibonacci rank is rho(p)=2ell. Distinct ell give distinct rational p.
 
 #### FMR.4 The non-Wall translation
 
-The fixed-golden lift gives (CG.1/SJC.6)
-\[
- v^{N_p}-1\equiv p\,\chi_p q_p\sqrt5\pmod {p^2\mathcal O_K}.
-\]
-For a split prime, \(N(\mathfrak p)-1=p-1=N_p\), so Fellini--Murty's
-non-Wieferich condition is equivalent to \(q_p\ne0\).  For an inert prime,
-write \(v^{p+1}=1+pt\pmod{\mathfrak p^2}\).  Then
-\[
- v^{p^2-1}=(1+pt)^{p-1}
- \equiv1+p(p-1)t\pmod{\mathfrak p^2},
-\]
-and \(p-1\) is a unit modulo \(p\).  Therefore
-\(v^{p^2-1}\equiv1\pmod{\mathfrak p^2}\) if and only if
-\(v^{p+1}\equiv1\pmod{\mathfrak p^2}\), again if and only if \(q_p=0\).
-Thus every extracted \(\mathfrak p\) contracts to a rational non-WSS prime
-with the asserted exact rank.
+The fixed-golden lift gives v^(N_p)-1 = p chi_p q_p sqrt(5) modulo p^2 O_K. All extracted ideals are split, so N(pfrak)-1=p-1=N_p. Therefore Fellini--Murty's non-Wieferich condition is exactly q_p != 0, and each extracted ideal gives the asserted rational non-Wall witness.
 
 #### FMR.5 Counting and scope
 
-For each prime \(\ell\) in the interval used by Fellini--Murty's proof, the
-ideal \(U_\ell\) has norm at most \(N(v^\ell-1)\).  Their height estimate
-bounds this norm by \(X\) whenever \(\ell\le c_v\log X\), for a fixed
-\(c_v>0\).  Prime indices in this interval are
-\(\gg\log X/\log\log X\), and the preceding distinctness argument makes
-the contracted rational primes distinct.  This proves the stated count.
+The exact absolute norm is |N(v^ell-1)|=v^ell+v^(-ell)-2 < v^ell. Thus ell <= (log X)/(log v)+O(1) ensures the selected p <= X. The prime number theorem then gives the stated lower bound. This is a fixed-golden specialization, conditional on abc, and does not solve WSS unconditionally.
 
 This is a fixed-golden specialization of the published number-field theorem,
 not a claim that Fellini--Murty proved a rank-by-rank Fibonacci statement.  The
