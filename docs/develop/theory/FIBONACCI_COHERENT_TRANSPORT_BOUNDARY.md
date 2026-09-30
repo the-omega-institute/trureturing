@@ -2173,3 +2173,939 @@ $$
 行列式在模线性共轭下不变，而且标量矩阵被所有此类共轭固定，故两者在 $\operatorname{GL}_2(\mathbb F_5)$ 中不共轭。此断言仅限二元模坐标的线性换基，不扩展为相应二十五维置换酉在任意 Hilbert 酉换基下不共轭。共同阶数也不授权在操作合同中交换二者。完整 $g$ 边界在推论 15.5 的资源合同下仍需 $20d^2$ 维公共量子端口，不能将射影长度 $5$ 直接代入该完整统计任务。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 20. 复合模数的最大相干块
+
+沿用第 16 节的记号
+
+$$
+R_e=(\mathbb Z/e\mathbb Z)[z]/(z^2+z-1),\qquad
+\bar z=-1-z,\qquad H_e=\langle z,-1\rangle\le R_e^\times,
+$$
+
+并令 $h(e)=|H_e|$、$b(e)=\max_{f\in R_e}|\Gamma_e f|$。定义单位比值群
+
+$$
+\mathcal B_e=\{\bar u/u:u\in R_e^\times\},\qquad C_e=|\mathcal B_e|,
+$$
+
+以及
+
+$$
+\iota_e=\begin{cases}1,&e=2,\\4,&5\mid e,\\2,&\text{otherwise}.\end{cases}
+$$
+
+对互素素数幂作乘法定义 $C_e$；局部因子为
+
+$$
+C_{2^a}=3\cdot2^{a-1},\qquad C_{5^a}=5^a,
+$$
+
+$$
+C_{p^a}=p^{a-1}(p-1)\quad\text{若 }p\ne2,5\text{ 且 }(5/p)=1,
+$$
+
+$$
+C_{p^a}=p^{a-1}(p+1)\quad\text{若 }p\ne2,5\text{ 且 }(5/p)=-1.
+$$
+
+**定理 20.1（全部模数的最大轨道）。** 令 $E(e)$ 表示下列条件：$e$ 没有奇分裂素因子，或 $e=p$、$e=2p$，其中 $p$ 是一个奇分裂素数。则对每个 $e\ge2$ 有
+
+$$
+\boxed{
+ b(e)=h(e)\iff h(e)=\iota_eC_e\text{ 且 }E(e),
+}\qquad
+\boxed{
+ b(e)=2h(e)\text{ 在其余情形}.}
+\tag{20.1}
+$$
+
+**证明。** 用 $\Psi(x,y)=y+xz$ 识别 $(\mathbb Z/e\mathbb Z)^2$ 与 $R_e$。直接计算得
+
+$$
+\Psi(g(x,y))=z\Psi(x,y),\qquad \Psi(j(x,y))=-\overline{\Psi(x,y)}.
+\tag{20.2}
+$$
+
+因此 $N_e$ 是 $H_e$ 的乘法作用。共轭正规化 $H_e$，而共轭不是乘法作用：它固定 $1$ 却不固定 $z$；即使 $e$ 为偶数，$2z+1$ 的常数项仍为 $1$，所以这一步不需要除以 $2$。于是 $\Gamma_e$ 在 $f$ 上的轨道是 $H_ef$ 与 $H_e\bar f$ 的并。令
+
+$$
+S(f)=\{a\in H_e:(a-1)f=0\}.
+$$
+
+若 $S(f)$ 的阶为 $s$，则 $|H_ef|=h(e)/s$；两个 $H_e$ 轨道或者相等或者不交。故每条轨道大小为 $h(e)/s$ 或 $2h(e)/s$，并且
+
+$$
+ b(e)=2h(e)\quad\Longleftrightarrow\quad
+\exists f\;[S(f)=\{1\},\ \bar f\notin H_ef].
+\tag{20.3}
+$$
+
+单位环元的稳定子总是平凡；非单位不作此假设。单位 $1$ 的轨道恰有 $h(e)$ 个元素，而 $s\ge2$ 的标签轨道至多有 $h(e)$ 个元素，所以最大值只可能是 $h(e)$ 或 $2h(e)$。
+
+考虑同态 $u\mapsto\bar u/u$。若 $u=a+bz$ 且 $\bar u=u$，比较常数系数即得 $b=0$，故其核恰为标量单位群 $(\mathbb Z/e\mathbb Z)^\times$，包括 $2$ 的幂。CRT 同时分解单位群与共轭，因此 $\mathcal B_e$ 是局部比值群的直积。局部单位数为
+
+$$
+|R_{2^a}^\times|=3\cdot2^{2a-2},\quad
+|R_{5^a}^\times|=4\cdot5^{2a-1},
+$$
+
+$$
+|R_{p^a}^\times|=
+\begin{cases}
+p^{2a-2}(p-1)^2,&(5/p)=1,\\
+p^{2a-2}(p^2-1),&(5/p)=-1,
+\end{cases}
+$$
+
+这些计数来自模 $p$ 的环分别为 $\mathbb F_p\times\mathbb F_p$、$\mathbb F_{p^2}$、$\mathbb F_4$ 和 $\mathbb F_5[w]/(w^2)$。模 $p$ 的每个单位有 $p^{2a-2}$ 个提升且全部可逆，因为 $pR_{p^a}$ 是幂零理想；模 $p$ 非单位的提升仍非单位。分别除以标量单位数 $\varphi(p^a)$ 即得所列 $C_e$。
+
+在商群 $R_e^\times/\mathcal B_e$ 中，
+
+$$
+\bar z/z=-z^{-2}\in\mathcal B_e,
+$$
+
+所以 $[z]^2=[-1]$，商中 $[z]$ 的阶至多为 $4$。若 $5\mid e$，令 $w=2z+1$，则 $w^2=5$，模 $5$ 共轭在 $R_5/(w)=\mathbb F_5$ 上为恒等，而任意单位比值约化为 $1$；$-1$ 约化为 $4$，故 $[-1]\ne1$，从而 $[z]$ 的阶恰为 $4$。若 $5\nmid e$，则 $w=2z+1$ 的范数为 $-5$，故 $w$ 可逆，且 $\bar w/w=-1$，所以 $[-1]=1$。若另有 $e>2$，$\operatorname N(z)=-1\ne1$，而 $\operatorname N(\mathcal B_e)=1$，故 $[z]\ne1$，其阶恰为 $2$。当 $e=2$ 时 $R_2=\mathbb F_4$，标量单位群 $\mathbb F_2^\times$ 是平凡群，故比值同态像有三个元素，$\mathcal B_2=R_2^\times$，商中 $[z]$ 的阶为 $1$。于是
+
+$$
+|H_e\cap\mathcal B_e|=h(e)/\iota_e,\qquad h(e)\le\iota_eC_e,\qquad
+\mathcal B_e\subseteq H_e\iff h(e)=\iota_eC_e.
+\tag{20.4}
+$$
+
+若 $h(e)<\iota_eC_e$，取 $c=\bar u/u\in\mathcal B_e\setminus H_e$。单位 $u$ 的 $H_e$ 稳定子平凡，且 $\bar u\notin H_eu$，所以 $|\Gamma_eu|=2h(e)$。以下设饱和条件 $\mathcal B_e\subseteq H_e$ 成立。
+
+设 $p^a\parallel e$ 是奇分裂素因子。在局部坐标 $R_{p^a}\simeq(\mathbb Z/p^a)^2$ 中，$z=(\lambda,\mu)$、$\lambda\mu=-1$，共轭交换两坐标。这是实际环同构：模 $p$ 的两根简单，若 $\lambda$ 已是模 $p^k$ 的根，$\lambda+p^kt$ 是模 $p^{k+1}$ 的根等价于一个系数 $2\lambda+1\ne0\pmod p$ 的线性方程，故两根逐层唯一提升且根差为单位。每个所选局部有序对遂对应唯一的原二坐标标签。
+
+若 $a\ge2$，取该分量为 $(1,p)$，其余 CRT 分量为单位 $1$。若同一个 $\varepsilon z^k$ 固定该标签，第一坐标给出乘子为 $1$；两坐标乘积为 $\operatorname N(\varepsilon z^k)=(-1)^k$，第二坐标条件为 $p((-1)^k-1)=0\pmod {p^a}$，故 $k$ 为偶数，随后两坐标乘子均为 $1$。其余分量为 $1$ 又迫使全局元素为恒等。共轭把 $(1,p)$ 变成 $(p,1)$，单位乘法不能交换一个单位坐标与一个非单位坐标，因此 $\bar f\notin H_ef$。
+
+若 $a=1$ 且 $m=e/p>2$，取 $p$ 分量 $(1,0)$，其余 $m$ 分量为单位 $1$。固定条件先在 $R_m$ 中给出 $\operatorname N(\varepsilon z^k)=1$；由于 $m>2$，$k$ 为偶数，且 $p$ 分量两坐标乘子均为 $1$。同样得到平凡稳定子和共轭后的另一坐标轴。这里的符号 $\varepsilon$ 与指数 $k$ 是全局共同的。
+
+这些构造穷尽“有奇分裂因子而非 $p,2p$”的情形。剩下没有奇分裂因子的情形。惰性局部（包括 $2$）约化为域，所以非单位恰为 $pR_{p^a}$。对惰性 $p^a$，若 $a\ge2$，令 $u=1+p^{a-1}z$，则
+
+$$
+\frac{\bar u}{u}=1-p^{a-1}(2z+1)\ne1,
+\tag{20.5}
+$$
+
+因为 $p^{2a-2}=0\pmod {p^a}$，而右端与 $1$ 的差的常数系数非零。它固定全部被 $p$ 除的非单位。若 $a=1$，唯一非单位为零，取任意非平凡的局部比值元即可。对 $5^a$，令 $w=2z+1$，则 $R_{5^a}=(\mathbb Z/5^a)[w]/(w^2-5)$。元素 $a+bw$ 可逆恰当 $5\nmid a$；若 $5\mid a$，写成 $w(b+(a/5)w)$，故非单位均被 $w$ 除。取 $n=w^{2a-1}=5^{a-1}w$；则 $n\ne0$、$n^2=0$、$\bar n=-n$，并且
+
+$$
+\frac{\overline{1-n/2}}{1-n/2}=1+n\ne1,
+\tag{20.6}
+$$
+
+它固定全部被 $w$ 除的非单位，因为 $nw=w^{2a}=5^a=0$。先在对应局部分量构造 (20.5) 或 (20.6) 的比值元，再在其他分量放置 $1$，得到 $\mathcal B_e$ 中的全局支撑元；只有在此之后才用 $\mathcal B_e\subseteq H_e$ 把它视为同一个全局 $H_e$ 元素。因此任何非单位标签都有非平凡稳定子，而单位标签的共轭比值属于 $H_e$，故其轨道不翻倍。
+
+最后处理 $e=p$ 与 $e=2p$。分裂局部的 $\mathcal B_p$ 是整个范数一群 $(t,t^{-1})$：取单位 $(1,t)$ 即得比值 $(t,t^{-1})$。饱和条件经投影给 $\mathcal B_p\subseteq H_p$，而 $z\mathcal B_p$ 是所有范数 $-1$ 的乘子对；因此轴稳定子 $(1,-1)$、$(-1,1)$ 都来自 $H_p$。当 $e=p$ 时，这两个乘子分别固定两条坐标轴，零标签也有非平凡稳定子。当 $e=2p$ 时，若 $2$ 分量为零，用非平凡的 $\mathcal B_2=\mathbb F_4^\times$ 元支撑即可；若 $2$ 分量非零而 $p$ 分量在坐标轴上（包括零），先取 $p$ 分量的非恒等轴稳定子。约化 $H_e\to H_p$ 满射，因为两群均由 $z,-1$ 生成；取其全局提升 $t$，再利用 $\mathcal B_e\subseteq H_e$ 中支持于 $2$ 分量的元素校正其 $\mathbb F_4^\times$ 分量为 $1$。若两分量均为非单位，任一支撑元同样适用。故这两个例外中所有非单位都有非平凡稳定子，单位仍不翻倍。
+
+于是，饱和且满足 $E(e)$ 时 $b(e)=h(e)$；饱和而不满足 $E(e)$ 时分裂构造给 $b(e)=2h(e)$；不饱和时单位比值构造给 $b(e)=2h(e)$。这完成 (20.1)。在推论 15.5 的实际效果张成与共同 CPTP 精确解码合同下，最大相干块及最小免费 flag 量子端口因而为
+
+$$
+q_\Gamma(d,e)=
+\begin{cases}
+d^2h(e),&h(e)=\iota_eC_e\ \text{且 }E(e),\\
+2d^2h(e),&\text{其余情形}.
+\end{cases}
+$$
+
+这一步只把全部标签的最大轨道代入已有资源定理，不扩大许可仪器。$\square$
+
+在因子分解和各局部精确周期已给定时，由第 15 节的负单位同步条件计算 $h(e)$，再以 (20.1) 决定最大轨道；不需要枚举向量或求离散对数。这不把因子分解或周期取得称为免费，也不给出按位复杂度的效率保证；奇素数的周期提升允许任意初始平台。周期的 CRT 与平台提升背景见 Baake--Neumärker--Roberts, [arXiv:1205.1003v1, Eq. (7), p. 4; Proposition 1, p. 5; Appendix A.2, pp. 26–27](https://arxiv.org/abs/1205.1003v1)。文中的 Fibonacci 矩阵与本卷 $M$ 置换共轭，其普通 reversing 结果不证明这里的带符号关系 $jgj=-g^{-1}$ 所产生的 $\Gamma_e$ 结论。局部单位计数亦见 Lombardo--Perucca, [arXiv:1612.02845v2, Lemma 13, p. 6](https://arxiv.org/abs/1612.02845v2)；计数不把特定有限子群 $H_e$ 识别为全部 Cartan 单位群。
+
+## 21. 全局容量上界与可实现下界
+
+沿用第 15 节，$T(e)=\operatorname{ord}_e(g)=\pi(e)$ 是同一 Fibonacci 矩阵的 Pisano 周期。另令
+
+$$
+\eta=-z^2,\qquad L(e)=\operatorname{ord}_{R_e^\times}(\eta).
+$$
+
+在 $H_e/\langle\eta\rangle$ 中 $[-1]=[z]^{-2}$，所以此商由 $[z]$ 生成且 $[z]^4=1$，有
+
+$$
+ h(e)\le4L(e),\qquad b(e)\le8L(e),
+\tag{21.1}
+$$
+
+而显然 $h(e)\le2T(e)$、$b(e)\le4T(e)$。CRT 对同一全局元素给出
+
+$$
+T(e)=\operatorname{lcm}_{p^a\parallel e}T(p^a),\qquad
+L(e)=\operatorname{lcm}_{p^a\parallel e}L(p^a).
+\tag{21.2}
+$$
+
+对奇素数 $p\ne5$，局部周期满足
+
+$$
+T(p^a)\mid
+\begin{cases}
+p^{a-1}(p-1),&(5/p)=1,\\
+2p^{a-1}(p+1),&(5/p)=-1.
+\end{cases}
+\tag{21.3}
+$$
+
+证明这些界时，分裂域中 $z$ 的两个坐标属于 $\mathbb F_p^\times$；惰性域中 Frobenius 为共轭，故 $z^{p+1}=-1$。于是 $T(p)\mid2(p+1)$ 却不整除 $p+1$，所以 $v_2(T(p))=v_2(p+1)+1$。约化使 $T(p)\mid T(p^a)$，二项式展开使 $T(p^a)\mid p^{a-1}T(p)$；因此商是 $p$ 的幂且可能小于 $p^{a-1}$，特别允许所有奇素数的提升平台。惰性情形的 $2$-进赋值在提升中不变。
+
+惰性局部令 $T=T(p^a)$。模 $p$ 有 $z^{T/2}=-1$，因为有限域乘法群中唯一非平凡二阶元为 $-1$，而 $T/T(p)$ 为奇数。令 $A=z^{T/2}$，则 $A^2=1$ 且 $A-1$ 为单位，故 $(A-1)(A+1)=0$ 强制 $A=-1$。所以
+
+$$
+L(p^a)=\frac{T}{\gcd(T,T/2+2)}.
+$$
+
+写 $T=4t$、$t$ 奇时，分母为 $4$；写 $T=2^st$、$s\ge3$、$t$ 奇时，分母为 $2$。结合 $T$ 的 $2$-进赋值，得
+
+$$
+\begin{array}{c|c}
+p\equiv1\pmod4,\ (5/p)=-1&
+L(p^a)=T(p^a)/4\mid p^{a-1}(p+1)/2\\
+p\equiv3\pmod4,\ (5/p)=-1&
+L(p^a)=T(p^a)/2\mid p^{a-1}(p+1),\quad4\mid L(p^a).
+\end{array}
+\tag{21.3a}
+$$
+
+在 $5$ 处，
+
+$$
+T(5^a)=4\cdot5^a,\qquad L(5^a)=5^a.
+\tag{21.4}
+$$
+
+确实模 $5$ 有 $g=2(I+B)$、$B^2=0$、$B\ne0$。$g^k=2^k(I+kB)$ 等于恒等时，非标量项迫使 $5\mid k$，标量项迫使 $4\mid k$，所以 $T(5)=20$。又
+
+$$
+M^5=3I+5M,\qquad M^{20}-I\equiv5(I+3M)\not\equiv0\pmod{25}.
+$$
+
+若 $X=I+5^sB$ 且 $B\not\equiv0\pmod5$，则 $X^5\equiv I+5^{s+1}B\pmod{5^{s+2}}$。约化核为 $5$ 群，故周期逐层恰乘 $5$。$z^{T/2}\equiv-1\pmod5$ 且平方为 $1$，前述单位因子论证给 $z^{T/2}=-1$；$T/4=5^a$ 为奇数，故同一最大公因子计算给 $L=T/4$。
+
+在 $2$ 处，
+
+$$
+T(2^a)=3\cdot2^{a-1},\qquad
+L(2)=3,\quad L(4)=6,\quad
+L(2^a)=3\cdot2^{a-2}\quad(a\ge3).
+\tag{21.5}
+$$
+
+模 $2$ 的 $M$ 阶为 $3$，$M^3=I+2M$ 给 $T(4)=6$，并且 $M^6=I+4(I+2M)$。当 $s\ge2$ 时，对 $I+2^sB$ 逐次平方使矩阵差的最小 $2$-进赋值恰增一，故得到 $T(2^a)$。模 $4$ 的六阶循环群唯一二阶元 $g^3$ 非标量，故 $-1\notin\langle z\rangle$ 模 $4$ 及其所有提升。当 $a\ge2$，$\eta^k=1$ 因而等价于 $k$ 偶且 $T(2^a)\mid2k$；否则奇 $k$ 会给出 $z^{2k}=-1$。最小这样的 $k$ 就是 (21.5) 所列值；$a=1$ 则 $\eta=z^2$ 阶为 $3$。
+
+**命题 21.1。** 对所有 $e\ge2$，$T(e)\le6e$。
+
+**证明。** 把因子分为 $2$、$5$、奇分裂素数和奇惰性素数。添加一个分裂素数幂 $q^b$ 时，(21.3) 使 $T/e$ 至多乘以 $(q-1)/q<1$。若含 $5^c$，先取 $2^s5^c$；由 (21.2)、(21.4)、(21.5) 取最小公倍数，其 $T/e$ 依 $s=0,1,2,\ge3$ 分别为 $4,6,3,3/2$。已有周期被 $4$ 整除时，加入奇惰性 $p^a$ 的倍率至多
+
+$$
+\frac{2p^{a-1}(p+1)}{4p^a}=\frac{p+1}{2p}\le\frac23.
+$$
+
+若不含 $5$ 且含奇惰性因子，先加入一个 $p^a$；其周期被 $4$ 整除，与 $2^s$ 周期的公因子依 $s=0,1,2,\ge3$ 至少为 $1,1,2,4$（空基底周期记为 $1$）。由 $2(p+1)/p\le8/3$，合并后的 $T/e$ 上界依次为 $8/3,4,2,1$，之后每个惰性因子仍按上式加入，最后加入分裂因子只会降低比值。若没有奇惰性因子，只有 $2^s$，比值为 $1$ 或 $3/2$。因此全部情形中最大值为 $6$。证毕。
+
+含分裂因子时，写 $e=p^am$。若 $m>2$，$T(p^a)$ 与 $T(m)$ 都为偶数，因为 $\det g=-1$，在模数大于 $2$ 时恒等幂的指数不能为奇数。故同一个 CRT 阶满足
+
+$$
+T(e)\le\frac{T(p^a)T(m)}2
+\le3e\left(1-\frac1p\right),\qquad b(e)<12e.
+$$
+
+$m=1$ 时 $b(e)\le4p^{a-1}(p-1)<4e$；$m=2$ 时 $T(2)=3$ 给 $b(e)<6e$。
+
+无奇分裂因子时，用 (21.1) 及 (21.3)--(21.5) 分组。写 $e=2^s5^c\prod_{i=1}^u p_i^{a_i}\prod_{j=1}^v q_j^{b_j}$，其中 $p_i\equiv1\pmod4$、$q_j\equiv3\pmod4$ 都是奇惰性素数，$s,c\ge0$；缺失的因子取 $1$。由 (21.3a) 把惰性素数分成这两类。若 $u$ 个第一类因子、$v$ 个第二类因子，则加入第一类的 $L/e$ 倍率至多 $(p+1)/(2p)\le3/5$，因为此类 $p\ge5$；第一个第二类因子的倍率至多 $(q+1)/q\le4/3$，其后因子与已有周期共享 $4$，故各至多 $(q+1)/(4q)\le1/3$。于是
+
+$$
+\frac{L(e)}e\le
+\begin{cases}
+ r_s(3/5)^u,&v=0,\\
+ (3/2)(3/5)(4/3)(1/3)^{v-1},&u,v\ge1,\\
+ (3/2)(4/3)(1/3)^{v-1},&u=0, v\ge2,
+\end{cases}
+$$
+
+其中 $r_s=1,3/2,3/2,3/4$ 对应 $s=0,1,2,\ge3$，是 $2^s5^c$ 基底的 $L/e$ 上界，包括 $c=0$。上表三行依次至多为 $3/2,6/5,2/3$。剩余 $u=0,v=1$ 时逐项为
+
+$$
+\begin{array}{c|cccc}
+s&0&1&2&\ge3\\ \hline
+L(e)/e&\le4/3&\le2&\le1&\le1 .
+\end{array}
+$$
+
+$s=2$ 使用 $L(4)=6$ 与 $4\mid L(q^b)$ 的公因子至少为 $2$，所以未经约分的 $(3/2)(4/3)=2$ 再除以 $2$；$s\ge3$ 则 $(3/4)(4/3)\le1$ 已足够。因此只有 $s=1$ 一格可能使 $L(e)>3e/2$，即
+
+$$
+ e=2\cdot5^c p^a,\qquad p\equiv3\pmod4,\quad (5/p)=-1.
+\tag{21.6}
+$$
+
+在 (21.6) 且 $L(e)>3e/2$ 的情形，局部界给
+
+$$
+L(e)\mid U:=3\cdot5^c p^{a-1}(p+1)=C_e,\qquad U/e=\frac32(1+1/p)\le2.
+$$
+
+若 $L(e)$ 是 $U$ 的真因子，则 $L(e)\le U/2\le e$，和 $L(e)>3e/2$ 矛盾；故 $L(e)=U=C_e$。又 $\eta=\overline{z^{-1}}/z^{-1}\in\mathcal B_e$，两者同阶，故 $\langle\eta\rangle=\mathcal B_e\subseteq H_e$。由定理 20.1 的无分裂稳定子构造，$b(e)=h(e)\le4L(e)\le8e$。其余情形由 $b(e)\le8L(e)\le12e$ 得到结论。
+
+综上
+
+$$
+\boxed{b(e)\le12e\quad(e\ge2).}
+\tag{21.7}
+$$
+
+在已有精确解码合同 $q_\Gamma(d,e)=d^2b(e)$ 下，立即有
+
+$$
+q_\Gamma(d,e)\le12d^2e.
+\tag{21.8}
+$$
+
+这只是普通算术上界，不是 $12$ 的最优性结论。
+
+**命题 21.2（同一标签达到的下界族）。** 对任意 $a\ge1$，取 $e=118\cdot5^a=2\cdot59\cdot5^a$。其周期、群阶和最大轨道满足
+
+$$
+T_e=348\cdot5^a,\qquad h_e=696\cdot5^a,\qquad b_e=1392\cdot5^a=\frac{696}{59}e.
+\tag{21.9}
+$$
+
+证明。取实际标签 $v_a=(1,y)$，其中
+
+$$
+ y\equiv0\pmod{2\cdot5^a},\qquad y\equiv26\pmod{59}.
+$$
+
+模 $59$ 的两个根为 $25,33$，其和、积均为 $-1$。由 Fermat 定理，$25^{29}=5^{58}=1$；$29$ 是素数且 $25\ne1$，故其阶恰为 $29$。$33=-25^{-1}$ 的两个因子阶互素，故阶为 $58$。特征向量 $(1,26),(1,34)$ 的行列式为 $8\ne0\pmod{59}$，给出特征基，故 $T(59)=58$；$25$ 的奇阶同时排除 $-I\in\langle g\rangle$ 模 $59$，也排除全局包含。因此 $h_e=2T_e$，而 (21.2) 给 $T_e=\operatorname{lcm}(3,4\cdot5^a,58)=348\cdot5^a$。特征轴由 $(1,26)$、$(1,34)$ 给出，且 $j$ 交换两轴。若同一个 $\varepsilon g^k$ 固定 $v_a$，模 $59$ 先强制 $\varepsilon=1$、$29\mid k$；模 $2$ 与模 $5^a$ 的标签均为 $(1,0)$，而 $\det[(1,0),g(1,0)]=1$，两者是基；$g^k$ 固定第一向量且与 $g$ 交换，便同时固定第二向量，故分别强制 $3\mid k$、$4\cdot5^a\mid k$。于是 $N_e$ 稳定子平凡，且 $jv_a\notin N_ev_a$，从而 $|\Gamma_ev_a|=2h_e$。同一符号、同一指数完成 CRT 共同实现。$\square$
+
+$a=1$ 时可取 $e=590$、$v=(1,380)$；此时 $b(590)=6960$，而 $8e=4720$。标签虽本原，
+
+$$
+\det[v,gv]=1+380-380^2\equiv-59\pmod{590}
+$$
+
+不是单位，故它不是 cyclic 标签；这说明非循环标签也能达到全局最大轨道。由此
+
+$$
+\boxed{\frac{696}{59}\le\sup_{e\ge2}\frac{b(e)}e\le12.}
+\tag{21.10}
+$$
+
+对受限族 $e=6\cdot5^a$，$M^4=-I\pmod3$ 给 $T(3)=8$，所以 $T(e)=24\cdot5^a$。若全局 $g^k=-I$，模 $3$ 要求 $k\equiv4\pmod8$，模 $5^a$ 要求 $k\equiv2\cdot5^a\pmod{4\cdot5^a}$，两者的模 $4$ 条件冲突。于是 $h(e)=2T(e)=48\cdot5^a$，而 $C_e=3\cdot4\cdot5^a$、$\iota_e=4$ 且无分裂因子；(20.1) 给 $b(e)=h(e)=8e$。这只是受限族，(21.9) 已排除统一 $8e$ 上界。(21.10) 不证明上确界为 $12$，也不使用无界的最大周期素数供应假设。
+
+## 22. 有限调用的实际效果张成
+
+固定 $d=e=2$。令 $S_N$ 为每条分支至多调用 $N$ 次固定 $W=W(\Delta)$、允许任意有限低层仪器、有限经典记录和自适应控制所得实际事件效果的复线性张成，令 $S_\infty=\bigcup_{N\ge0}S_N$。把低层端的免费操作写成 $K$，并令
+
+$$
+T_N=\{X\in\mathcal B(H):I_A\otimes X\in S_N\},\qquad T_\infty=\bigcup_{N\ge0}T_N.
+$$
+
+**命题 22.1（实际效果的有限饱和）。** 对实际事件效果 $E$ 及任意低层矩阵 $K$，选 $\varepsilon>0$ 使 $\varepsilon K$ 为收缩；前置 Kraus 分支 $\varepsilon K$、$\sqrt{I-\varepsilon^2K^\dagger K}$ 并记录第一分支，得到实际联合事件效果 $\varepsilon^2K^\dagger EK$，调用预算不变。对 $E$ 的有限复线性组合延拓，故 $K^\dagger EK\in S_N$。极化恒等式
+
+$$
+A^\dagger EB=\frac14\sum_{r=0}^3i^{-r}(A+i^rB)^\dagger E(A+i^rB)
+$$
+
+给出任意左右低层矩阵作用。若 $E_{ab}$ 是 $E\in S_N$ 的高层矩阵角，用低层矩阵单位夹取并复制到所有低层对角，
+
+$$
+\sum_r(|r\rangle\langle a|\otimes I)E(|b\rangle\langle r|\otimes I)
+=I_A\otimes E_{ab}\in S_N.
+$$
+
+反之，对 $I_A\otimes X$ 左乘矩阵单位得每个 $|a\rangle\langle b|\otimes X$。零调用协议仅作用于 $A$，任意低层终端效果又张成全矩阵空间。因此
+
+$$
+S_N=\mathcal B(\mathbb C^4)\otimes T_N,\qquad T_0=\operatorname{span}\{I_H\},\qquad\dim T_0=1.
+\tag{22.1}
+$$
+
+将一个至多 $N+1$ 次调用的有限协议树在第一次 $W$ 调用处切开。每个经典前缀的低层完全正映射有有限 Kraus 和 $\sum_rK_r(\cdot)K_r^\dagger$；第一次调用后的尾协议效果属于 $S_N$。因而精确递推为
+
+$$
+\boxed{
+S_{N+1}=\operatorname{span}\left(S_N\cup
+\{K^\dagger W^\dagger EWK:E\in S_N,\ K\in\mathcal B(A)\}\right).}
+\tag{22.2}
+$$
+
+反向包含由“先执行一个缩放的 $K$ 分支、调用一次 $W$、再执行尾协议”实现；正向包含由第一次调用前的所有有限前缀 Kraus 和得到。停止分支已包含在 $S_0$ 中；整个证明只使用经典 continue/stopped 记录，不引入相干控制。
+
+尚未调用就停止的前缀只贡献低层效果；未被记录的 Kraus 指标只用于计算有限完全正和，不被当作可访问记录。若 $S_N=S_{N+1}$，递推立即给出 $S_{N+2}=S_{N+1}$，所以平台永久保持。每个有限协议有有限最坏调用数，而 $S_N$ 递增，故其并为最终线性空间 $S_\infty$。若 $r=\dim_\mathbb C T_\infty<\infty$，每次尚未达到 $T_\infty$ 的递推都至少增加一维；从一维出发，$r-1$ 次增长必已达到最终维数，故
+
+$$
+\boxed{S_{r-1}=S_\infty.}
+\tag{22.3}
+$$
+
+定理 14.1 的实际效果分类给出
+
+$$
+\dim T_\infty=\begin{cases}
+1,&\Delta\equiv0\pmod{2\pi},\\
+4,&\Delta\equiv\pm2\pi/3\pmod{2\pi},\\
+10,&\text{其余 }\Delta.
+\end{cases}
+$$
+
+因此 $0,3,9$ 分别是达到最终实际效果空间的充分调用上界，而非最优性断言。其相应的高层上界必须分别由三件不同事实给出：$W=I$ 时整个高层保持恒等；在 $\pm2\pi/3$ 共振时每个 Fourier 单点子空间不变，故效果为 Fourier 对角；非共振时完整的零轨道与三维非零轨道投影保持，故上界为
+
+$$
+\mathcal B(\mathbb C^4)\otimes(\mathbb C\oplus\mathcal B(\mathbb C^3)).
+$$
+
+不能仅以“轨道投影不变”替代中间共振的逐单点不变性。
+
+若 $S_\infty$ 中两态效果不同，(22.3) 把相应效果写成有限个真实事件效果的复线性组合；若每个这些事件概率相同便矛盾，所以存在一个真实有限事件给出非零概率差。这个差没有正的统一下界，也不推出完美区分。调用数只计 $W$；仪器数、记录数、展开系数精度和控制参数精度不由此界控制。协议中的仪器和线性展开系数可以依赖已知的 $\Delta$；不要求统一一套控制序列和有界系数同时覆盖所有时钟。
+
+对任意有限可访问辅助 $B$，允许仪器作用于 $AB$、时钟作用于 $AH\otimes I_B$。相同的缩放、极化和第一次调用切分给 $S_N^{AB}=\mathcal B(AB)\otimes T_N^{AB}$，且 $\dim T_0^{AB}=1$。三种上界分别由 $W=I$、Fourier 单点不变、轨道投影不变给出；原 $A$ 协议张量 $I_B$ 后，再用免费的 $AB$ 双模作用填满 $\mathcal B(AB)$，给最终空间的反向包含。因此 $\dim T_\infty^{AB}$ 仍分别为 $1,4,10$，同一递推证明 $0,3,9$ 的充分界与 $\dim B$ 无关。此处并不把 $S_N$ 假设成对一般乘法封闭的代数。
+
+## 23. 有界调用的共振稳定性与四维端口
+
+本节固定标准 $d=e=2$ 模型，$A,H$ 均为四维，$W_t=e^{-itL}$、$\operatorname{spec}L\subseteq\{0,1,3,4\}$。实际时钟始终为 $\Delta>0$；共振用模 $2\pi$ 的代表 $\Delta_*\in\{0,2\pi/3,-2\pi/3\}$ 表示，并写 $\Delta\equiv\Delta_*+\delta\pmod{2\pi}$。负代表不表示负时间原语。定义
+
+$$
+\eta(\delta)=
+\begin{cases}
+\sin(2|\delta|),&|\delta|\le\pi/4,\\
+1,&|\delta|>\pi/4.
+\end{cases}
+$$
+
+**定理 23.1（同一输入与共振不可分输入的界）。** 对任意参考扩张，单调用酉通道满足
+
+$$
+\frac12\|\mathsf W_\Delta-\mathsf W_{\Delta_*}\|_\diamond
+\le\eta(\delta)\le\min\{1,2|\delta|\}.
+\tag{23.1}
+$$
+
+固定任一有限自适应协议的全部控制规则，且每条分支的调用次数至多 $N$，则同一输入的实际与共振可访问输出之差至多 $\min\{1,N\eta(\delta)\}$。若两输入在共振版本下的可访问输出相同，则任一实际事件满足
+
+$$
+|p_+(E)-p_-(E)|\le\min\{1,2N\eta(\delta)\}
+\le\min\{1,4N|\delta|\}.
+\tag{23.2}
+$$
+
+证明。中心化 $K=L-2I$ 后 $\operatorname{spec}K\subseteq[-2,2]$。对任意纯态输入及参考，两个纯态输出重叠的模等于 $|\langle\xi|e^{-i\delta K}\otimes I|\xi\rangle|$；若 $|\delta|\le\pi/4$，其实部至少为 $\cos(2|\delta|)\ge0$，故纯态迹距离至多 $\sin(2|\delta|)$。纯化和偏迹收缩给任意混合态及参考的界，即 (23.1)；大角度用通用界 $1$，线性界用 $\sin u\le u$（或 $\|e^{-i\delta K}-I\|\le2|\delta|$）。
+
+把经典记录全部保留，使仪器与控制规则成为 CPTP 中间映射。按调用槽逐个替换 $W_\Delta$ 为 $W_{\Delta_*}$，每个混合项的半 diamond 距离至多 $\eta$，合计至多 $N\eta$。早停用实际经典 continue/stopped 标志填满 $N$ 槽：继续的直和块调用时钟，停止的块作相同演化。对经典块对角输入，每槽仍至多 $\eta$；亦可先对标志退相干后定义整个 CPTP 槽。这不允许相干控制查询。最后丢弃 $H$、保留允许输出不会增距。两输入的共振输出相同，三角不等式的两条混合边给 (23.2)。控制规则可依赖已知 $\delta$，但在每次混合比较中固定。$\square$
+
+例如采用标准 Fourier 基，取任意不同非零标签 $p,q$，令
+
+$$
+|\psi_\pm\rangle=\frac{|p\rangle\pm|q\rangle}{\sqrt2},\qquad
+\rho_\pm=\tau_{ABR}\otimes|\psi_\pm\rangle\langle\psi_\pm|_H,
+\tag{23.3}
+$$
+
+其中 $\tau_{ABR}$ 是任意共同态。$B$ 是有限可访问辅助，低层仪器可作用于 $AB$；$R$ 是从不触碰的外部参考。零共振只能读取共同的 $ABR$ 边缘，非零共振时所有分支按 Fourier 单点块对角，(23.3) 的对角条件矩阵相同，故所有共振输出相同。这里未允许给两输入另配能直接显示正负标签的不同参考扩张。
+
+**定理 23.2（完全输出合同与四维重构）。** 对每个有限 $B$ 及每个上述至多 $N$ 调用协议 $P$，令 $\Phi_{\Delta,B}^P$ 是从 $AHB$ 到最终低层、保留的 $B$ 和全部经典记录的 CPTP 通道，输出丢弃 $H$。重构只作用于 $AH$，不接触受保护的 $B,R$。存在一个共同输入无关重构 $\mathcal R_*$，经 $q=4$ 量子端口和有限免费经典 flags 实现，使
+
+$$
+\frac12\left\|\Phi_{\Delta,B}^P-
+\Phi_{\Delta,B}^P\circ(\mathcal R_*\otimes\operatorname{id}_B)\right\|_\diamond
+\le\epsilon_N:=\min\{1,2N\eta(\delta)\}.
+\tag{23.4}
+$$
+
+该式对所有 $AHBR$ 纠缠输入成立，且对全部 $\le N$ 历史使用同一个编解码器；$N=0$ 包含在内。
+
+证明。非零共振取
+
+$$
+\mathcal R_*(\rho)=
+\sum_{p\in\mathbb F_2^2}(I_A\otimes|p\rangle\langle p|)\rho
+(I_A\otimes|p\rangle\langle p|);
+$$
+
+零共振取 $\mathcal R_*(\rho)=\operatorname{Tr}_H\rho\otimes|h_0\rangle\langle h_0|$，其中 $h_0$ 固定。在非零共振，每条完全正分支均按 $H$ 的 Fourier 单点块对角；演化后对 $H$ 取迹删除所有块间项，因此任意输入包括与 $BR$ 纠缠的输入只通过初始对角条件算子影响可访问输出。零共振没有 $AH$ 耦合，故只通过初始 $ABR$ 边缘影响输出。于是完整通道恒等式为
+
+$$
+\Phi_{\Delta_*,B}^P
+=\Phi_{\Delta_*,B}^P\circ(\mathcal R_*\otimes\operatorname{id}_B).
+\tag{23.5}
+$$
+
+用 (23.5) 插入 (23.4) 的两通道之间，两条混合边分别至多 $N\eta$；第二条还使用预合成 CPTP 重构的 diamond 收缩。这证明 (23.4)。它是丢弃 $H$ 的输出恒等式及近似，一般不是保留全 $AHBR$ 输出的等式。
+
+非零共振的编码测出 Fourier 标签，把对应低层条件态存入四维量子端口，标签存入四值经典 flag；解码把低层态和该 Fourier 基态重新组合。其定义在全部带 flag 的量子记忆态上 CPTP。零共振仅存低层态并附回固定 $H$，不需要 flag。编解码器可为任意 CPTP 状态编码，不要求属于低层实验仪器；特别未将其 Fourier 测量增加为实验原语。所有量子信息只通过该端口，$B,R$ 不得由编解码器用作存储旁路。$\square$
+
+**推论 23.3（事件参考态、条件精度与四维必要性）。** 对 (23.4) 比较中的事件，令 $\omega,\omega'$ 为保留下来的次归一化参考态，$p=\operatorname{Tr}\omega$、$p'=\operatorname{Tr}\omega'$。将失败输出替换为同一正交标志，迹距离收缩给
+
+$$
+\frac12\|\omega-\omega'\|_1+\frac12|p-p'|\le\epsilon_N.
+\tag{23.6}
+$$
+
+若两成功概率均至少为 $s>0$，则
+
+$$
+\frac12\|\omega/p-\omega'/p'\|_1
+\le\min\{1,\epsilon_N/s\}.
+\tag{23.7}
+$$
+
+证明。成功与失败的输出态为 $\omega\oplus(1-p)|\mathrm f\rangle\langle\mathrm f|$ 及其带撇版本，迹范数在直和上相加即得 (23.6)。若 $p\ge p'>0$，三角不等式给归一化距离至多
+$[\|\omega-\omega'\|_1/2+(p-p')/2]/p$；对换两者给分母 $\max(p,p')$。故 (23.7) 没有额外因子 $2$，且缺少成功概率下界时不保证条件态的统一精度。
+
+进一步，采用同一个共同 CPTP 编解码器、有限免费 flags、无额外量子通信或预共享纠缠的参考保持合同。令受保护可访问 $B$ 为四维，取 $AB$ 的归一化 Bell 态及固定纯 $H$；零调用后联合测量 $AB$ 的 Bell 投影是允许的低层加辅助测试。先固定 $H$，再编解码并丢弃输出 $H$，得到 $A$ 上的通道。把带 flag 的编码 Kraus 与对应解码 Kraus 合成，所有 $K:\mathbb C^4\to\mathbb C^4$ 都满足 $\operatorname{rank}K\le q$，且 $\sum_K\operatorname{Tr}(K^\dagger K)=4$。于是重构后 Bell 投影概率
+
+$$
+F=\frac1{16}\sum_K|\operatorname{Tr}K|^2
+\le\frac q{16}\sum_K\operatorname{Tr}(K^\dagger K)=\frac q4,
+$$
+
+其中 $|\operatorname{Tr}K|\le\|K\|_1\le\sqrt{\operatorname{rank}K}\|K\|_2$。原概率为 $1$，故对 $q\le4$，
+
+$$
+\epsilon\ge1-q/4.
+\tag{23.8}
+$$
+
+任何包括零调用的统一误差合同若要求 $\epsilon<1/4$，必有整数 $q\ge4$。在 $\epsilon_N<1/4$ 的区域，定理 23.2 的四维方案因此达到量子端口维数最优；没有断言其误差本身最优。该下界要求受保护参考与允许的联合终端测试，不是未扩展输入统计的下界，也不是物理存储定律。$\square$
+
+## 24. 一次调用的相干信号与已知失谐的固定信号
+
+固定第 23 节的标准模四模型，令 $U=U_{M,4}$、$V=U_{M,2}$。本节 $V$ 只指高层置换。使用 canonical Fourier 基
+
+$$
+|p\rangle=\frac12\sum_{h\in\mathbb F_2^2}(-1)^{p\cdot h}|h\rangle,
+\qquad V|p\rangle=|gp\rangle .
+\tag{24.1}
+$$
+
+三个非零 Fourier 标签记作 $\alpha=10,\beta=11,\gamma=01$，$g$ 按 $\alpha\to\beta\to\gamma\to\alpha$ 循环。低层基用二进制串表示，不混用这些字母。输入为
+
+$$
+\rho_\pm=|10\rangle\langle10|_A\otimes
+|\psi_\pm\rangle\langle\psi_\pm|,\qquad
+|\psi_\pm\rangle=\frac{|p\rangle\pm|q\rangle}{\sqrt2}
+$$
+
+（任选不同非零 $p,q$）。定义标量函数，与子系统名称分开理解，
+
+$$
+x=e^{-it},\qquad A(t)=\frac{1+2x^3}{3},\quad
+B(t)=\frac{x(2+x^3)}3,\quad C(t)=\frac{1-x^3}{3}.
+\tag{24.2}
+$$
+
+下面公式省略这些标量的自变量。准备低层 $|10\rangle$，作一次 $W_t$，再测两结果低层投影，其中指定成功向量为
+
+$$
+|r_\phi\rangle=\frac{|10\rangle+e^{i\phi}|11\rangle}{\sqrt2}.
+$$
+
+**命题 24.1（两个固定相位的实际分布）。** 将无序对唯一定向为 $p=g^2q$，置 $d_\alpha=A$、$d_\beta=d_\gamma=B$，$f_\alpha=1$、$f_\beta=f_\gamma=-x$ 和 $Z=C\overline{d_p}f_q$。则
+
+$$
+p_{\pm,\phi}(t)=\frac{7+2\cos3t}{18}
+\pm\frac12\operatorname{Re}(e^{-i\phi}Z),\qquad
+D_\phi:=p_{+,\phi}-p_{-,\phi}=\operatorname{Re}(e^{-i\phi}Z).
+\tag{24.3}
+$$
+
+证明。由 $M^3=I+2M$，$U^6=I$ 且 $U^3=\sum_a|a\rangle\langle a|\otimes T_{Ma}$。令全空间投影 $P_\pm=(I\pm U^3)/2$，在六次单位根上分别求值，或直接用 (14.2)，得
+
+$$
+W_t=(AP_++BP_-)+CU(P_++xP_-)+CU^2(P_+-xP_-).
+\tag{24.4}
+$$
+
+$P_+$ 上的谱为 $L=0,3$，$P_-$ 上为 $L=1,4$，故此式是精确谱恒等式。低层从 $10$ 的前两次步进均无 carry，$M10=01$、$M^2 10=11$。令 $\Pi_\pm=(I\pm T_{01})/2$，则两个所需低层角为
+
+$$
+(W_t)_{10,10}=D_H:=A\Pi_++B\Pi_-,
+\qquad
+(W_t)_{11,10}=CV^2F_H,\quad F_H=\Pi_+-x\Pi_- .
+$$
+
+实际事件的高层 Kraus 为 $K_\phi=(D_H+e^{-i\phi}CV^2F_H)/\sqrt2$。在非零标签 $\alpha,\beta,\gamma$ 上，$T_{01}$ 的字符依次为 $+1,-1,-1$，即给所列 $d,f$；$V^2$ 无固定非零标签，且 $|A|^2=|B|^2=(5+4\cos3t)/9$、$|f_p|=1$。于是效果 $K_\phi^\dagger K_\phi$ 的三个对角元均为 $(|A|^2+|C|^2)/2=(7+2\cos3t)/18$，$(p,q)$ 非对角元为 $e^{-i\phi}C\overline{d_p}f_q/2$，给出 (24.3)。零 Fourier 标签不在这项对角元断言中。$\square$
+
+三对的具体式为
+
+$$
+\begin{array}{c|c|c}
+\{p,q\}&(p,q)&Z\\ \hline
+\{\alpha,\gamma\}&(\gamma,\alpha)&
+C\overline B=(x^{-1}+x^{-4}-2x^2)/9\\
+\{\alpha,\beta\}&(\alpha,\beta)&
+-xC\overline A=(x-2x^{-2}+x^4)/9\\
+\{\beta,\gamma\}&(\beta,\gamma)&
+-xC\overline B=(-1-x^{-3}+2x^3)/9 .
+\end{array}
+\tag{24.5}
+$$
+
+对实读出 $\phi=0$，前两对的差为 $(\cos t+\cos4t-2\cos2t)/9$，后一对为 $(\cos3t-1)/9$。前式令 $u=\cos t$ 后其九倍等于 $(u-1)(2u+1)(4u^2+2u-3)$，故另有非共振零点 $u=(\sqrt{13}-1)/4$；实读出单设置不足以普遍见证所有对和所有非共振时钟。
+
+公平随机选 $\phi=0,\pi/2$ 并同时保留设置与二结果记录。每设置的两个联合概率差为 $D_\phi/2,-D_\phi/2$，所以联合分布的总变差精确为
+
+$$
+\operatorname{TV}(P_+,P_-)
+=\frac{|\operatorname{Re}Z|+|\operatorname{Im}Z|}{2},\qquad
+\frac{|Z|}{2}\le\operatorname{TV}\le\frac{|Z|}{\sqrt2}.
+\tag{24.6}
+$$
+
+由 $|f_q|=1$、$|A|=|B|$，
+
+$$
+|Z|^2=\frac{(2-2\cos3t)(5+4\cos3t)}{81}.
+\tag{24.7}
+$$
+
+第二因子至少为 $1$，故非共振时 $|Z|>0$。写 $t=\Delta_*+\delta$，则
+$|Z|=(2/3)|\sin(3\delta/2)|\,|A|$，且 $1/3\le|A|\le1$。对 $|\delta|\le\pi/3$，用正弦弦界及 $|\sin y|\le|y|$ 得
+$2|\delta|/(3\pi)\le|Z|\le|\delta|$，因而
+
+$$
+\frac{|\delta|}{3\pi}\le\operatorname{TV}\le\frac{|\delta|}{\sqrt2}.
+\tag{24.8}
+$$
+
+这是本输入对的一次调用见证和一致的 $\Theta(|\delta|)$ 信号，不替代面对任意输入差的 $S_9$ 张成定理。TV 为非负分布距离；选出实现 TV 的单一联合事件需要依差值符号选择记录集合，不能把保留记录的 TV 当成丢弃设置后的无条件有符号差。重定 Fourier 基相位时必须同时运输物理输入系数；若重新用等实系数定义 $\psi_\pm$ 则一般改变了物理态。
+
+**命题 24.2（$\pi$ 读出与固定差 $1/9$）。** 对同一输入对，已知失谐 $0<|\delta|\le1/54$ 时，达到事件差至少 $1/9$ 的最少最坏分支调用数 $Q_{\min}(\delta;p,q)$ 满足
+
+$$
+\frac1{36|\delta|}\le Q_{\min}(\delta;p,q)
+\le n_\delta
+:=3\left\lfloor\frac{\pi}{3|\delta|}+\frac12\right\rfloor
+\le\frac\pi{|\delta|}+\frac32.
+\tag{24.9}
+$$
+
+证明。在 $U$ 的六次单位根谱上逐点求值，得
+
+$$
+W_\pi=-I/3+2(U^2+U^4)/3.
+$$
+
+$U^2$ 的 $10\to11$ 路径无 carry，而 $U^4$ 的低层终点为 $01$，所以所需两个角恰为
+
+$$
+(W_\pi)_{10,10}=-I_H/3,\qquad
+(W_\pi)_{11,10}=2V^2/3.
+$$
+
+取实读出 $r_0$，实际高层 Kraus 及效果为
+
+$$
+K_0=\frac{-I+2V^2}{3\sqrt2},\qquad
+K_0^\dagger K_0=\frac{5I-2(V+V^2)}{18}.
+$$
+
+$V+V^2$ 在非零标签基上对角为零、全部非对角为 $1$，在 $\psi_\pm$ 上期望为 $\pm1$。因此实际未条件化概率为
+
+$$
+p_+(\pi)=1/6,\qquad p_-(\pi)=7/18,\qquad
+p_-(\pi)-p_+(\pi)=2/9,
+\tag{24.10}
+$$
+
+即约定 $D=p_+-p_-$ 下 $D(\pi)=-2/9$。
+
+$n_\delta$ 为正的三倍整数，最近整数界给
+$\bigl|n_\delta|\delta|-\pi\bigr|\le3|\delta|/2$。置
+$h=\operatorname{sgn}(\delta)(n_\delta|\delta|-\pi)$，
+则 $n_\delta\Delta_*\in2\pi\mathbb Z$ 且
+
+$$
+W_\Delta^{n_\delta}=W_{\pi+h},\qquad |h|\le3|\delta|/2.
+$$
+
+$\delta<0$ 时使用 $-\pi\equiv\pi\pmod{2\pi}$，仍只作正向原始调用。实际连续调用 $n_\delta$ 次，中间作恒等控制，再测 $r_0$。由中心化谱给每个输入的事件变化至多 $2|h|$，两输入的有符号差故至少
+$2/9-4|h|\ge2/9-6|\delta|\ge1/9$。下界对任意允许自适应协议由 (23.2) 给 $1/9\le4N|\delta|$。$\square$
+
+若初始低层为任意共同 $\tau$，可先用低层 CPTP 重置为 $|10\rangle$，不增加时钟调用；对 (23.3) 的共同辅助扩张同样适用。已知 $\delta$ 的固定差任务因此具有 $\Theta(1/|\delta|)$ 调用复杂度，一致于三个共振与全部不同非零标签对。这不计最优常数、重复 shot 数、参数取得及控制精度，也不表示完美区分。九次张成给每个非共振的非零见证，但 (23.2) 把其幅度压在 $36|\delta|$ 内；代数存在性与统一正信号是不同量词的结论。
+
+## 25. 未知失谐的随机正调用读出
+
+继续使用第 24 节的输入与 Fourier 约定，已知区间
+
+$$
+0<\delta_{\min}\le|\delta|\le\delta_{\max}\le1/54,\qquad
+\Delta>0,\quad\Delta\equiv\Delta_*+\delta\pmod{2\pi}.
+$$
+
+实际 $\delta$、符号及共振代表均可未知。每次实验只使用一份输入，随机选择整数个正向 $W_\Delta$ 调用，并使用免费低层操作与有限经典记录。
+
+**命题 25.1（对所有时间同号的匹配设置）。** 令 $f(a)=Ma\bmod2$，标准两步 carry 由 $M^2a=f^2(a)+2c_2(a)$ 定义。对已知的无序非零标签对，从下表取一行：用低层置换把初始 $10$ 送到 $a$，最终测量向量 $r_a=(|a\rangle+s|f^2(a)\rangle)/\sqrt2$。
+
+$$
+\begin{array}{c|c|c|c|c|c}
+\{p,q\}&a&Ma\bmod2&f^2(a)&c_2(a)&s\\ \hline
+\{01,11\}&10&01&11&00&+1\\
+\{10,01\}&01&11&10&01&-1\\
+\{10,11\}&11&10&01&11&-1
+\end{array}
+\tag{25.1}
+$$
+
+匹配事件对全部实数 $t$ 满足
+
+$$
+p_-(r_a;t)-p_+(r_a;t)=d(t):=\frac{1-\cos3t}{9}\ge0.
+\tag{25.2}
+$$
+
+证明。由 (24.4)，记 $\Pi_{a,\pm}=(I\pm T_{Ma})/2$，实际矩阵角为
+
+$$
+D_a=(W_t)_{a,a}=A\Pi_{a,+}+B\Pi_{a,-},\qquad
+(W_t)_{f^2(a),a}
+=C\,T_{c_2(a)}V^2(\Pi_{a,+}-x\Pi_{a,-}).
+\tag{25.3}
+$$
+
+每行所选两个标签均满足 $p\cdot Ma=q\cdot Ma=1$，所以对角值都为 $B$，最后括号的值都为 $-x$。把边定向为 $u\to v=g^2u$，其 carry 相位为 $\chi_v(c_2(a))=(-1)^{v\cdot c_2(a)}$；逐行正是 $s=+1,-1,-1$。实际 Kraus 为两角的 $(1,s)/\sqrt2$ 组合，其效果 $(v,u)$ 非对角元为 $-s\chi_v(c_2(a))xC\overline B/2$。$\rho_--\rho_+$ 的高层部分为 $-|u\rangle\langle v|-|v\rangle\langle u|$，故差为
+$\operatorname{Re}(xC\overline B)=(1-\cos3t)/9$，其中
+$xC\overline B=(1+x^{-3}-2x^3)/9$。$\square$
+
+**定理 25.2（已知标签对、未知失谐）。** 以匹配设置取
+
+$$
+Q_0=\left\lceil\frac{2\pi}{3\delta_{\min}}\right\rceil,
+$$
+
+独立均匀抽取 $n\in\{1,\ldots,Q_0\}$，连续调用 $n$ 次 $W_\Delta$ 后作该低层测量。最终事件是对所有 $n$ 的成功读出取并，记录可以全部保留。则
+
+$$
+p_-(E)-p_+(E)\ge1/18,\qquad
+N_{\max}=Q_0\le\frac{2\pi}{3\delta_{\min}}+1.
+\tag{25.4}
+$$
+
+证明。$3\Delta_*\in2\pi\mathbb Z$，所以未条件化差为
+$[1-Q_0^{-1}\sum_{n=1}^{Q_0}\cos(3n\delta)]/9$，每分支的差均非负。对 $J\ge1$、$\theta\notin2\pi\mathbb Z$，有限几何级数给
+
+$$
+\left|\frac1J\sum_{n=1}^Je^{in\theta}\right|
+=\frac{|\sin(J\theta/2)|}{J|\sin(\theta/2)|}
+\le\frac1{J|\sin(\theta/2)|}.
+\tag{25.5}
+$$
+
+在此区间 $|\sin(3\delta/2)|\ge3|\delta|/\pi\ge3\delta_{\min}/\pi$，故平均余弦的绝对值至多 $\pi/(3Q_0\delta_{\min})\le1/2$，给 (25.4)。调度只用 $\delta_{\min}$，设置只用已知标签对。$\square$
+
+**定理 25.3（标签对也未知）。** 独立均匀选 (25.1) 的一行，并均匀抽取 $m\in\{1,\ldots,Q\}$，其中
+
+$$
+Q=\left\lceil\frac{29\pi}{9\delta_{\min}}\right\rceil .
+$$
+
+连续调用 $n=3m$ 次，最后按该行读出，指定事件仍是各抽样分支的成功读出之并。则对全部不同非零标签对和全部允许失谐，
+
+$$
+p_-(E)-p_+(E)\ge1/54,\qquad
+N_{\max}=3Q\le\frac{29\pi}{3\delta_{\min}}+3.
+\tag{25.6}
+$$
+
+证明。令 $f_0(t)=(2\cos2t-\cos t-\cos4t)/9$，避免与低层置换 $f$ 混用。由 (25.3) 计算全部有符号差得
+
+$$
+\begin{array}{c|ccc}
+\text{设置 }(a,s)&\{01,11\}&\{10,01\}&\{10,11\}\\ \hline
+(10,+1)&d(t)&f_0(t)&f_0(t)\\
+(01,-1)&f_0(t)&d(t)&-f_0(t)\\
+(11,-1)&-f_0(t)&f_0(t)&d(t)
+\end{array}
+\tag{25.7}
+$$
+
+确实，对有向边 $u\to v=g^2u$，一般事件差为
+$-s\chi_v(c_2(a))\operatorname{Re}(C\overline{d_v}f_u)$，其中 $d_v$ 是 $D_a$ 的值，$f_u$ 是 $\Pi_{a,+}-x\Pi_{a,-}$ 的值。若两字符均为负就得匹配项 (25.2)；若字符不同，则
+$-\operatorname{Re}(C\overline B)=\operatorname{Re}(xC\overline A)=f_0(t)$，再乘该行的 $s\chi_v$ 即得全部六个不匹配项。这样每个负项的来源由实际 carry 与测量符号确定。
+
+均匀混合设置后，第一和第三列为 $d(t)/3$；中间列为
+
+$$
+\frac{d(t)+2f_0(t)}3
+=\frac{1-\cos3t+4\cos2t-2\cos t-2\cos4t}{27}.
+\tag{25.8}
+$$
+
+$n=3m$ 使 $t=n\Delta\equiv3m\delta\pmod{2\pi}$，消去全部共振相位。对 $k=1,2,3,4$，$3k|\delta|/2\le1/9<\pi/2$；(25.5) 和正弦弦界给
+
+$$
+\left|\frac1Q\sum_{m=1}^Q\cos(3km\delta)\right|
+\le\frac{\pi}{3Qk\delta_{\min}}.
+$$
+
+所以 (25.8) 的平均至少为
+
+$$
+\frac1{27}\left[
+1-\frac{\pi}{3Q\delta_{\min}}
+\left(\frac13+\frac42+\frac21+\frac24\right)\right]
+=\frac1{27}\left(1-\frac{29\pi}{18Q\delta_{\min}}\right)
+\ge\frac1{54}.
+$$
+
+另外两列的平均为 $[1-\operatorname{avg}\cos(9m\delta)]/27$，其余弦绝对值至多 $\pi/(9Q\delta_{\min})\le1/29<1/2$，也满足同一下界。这控制了不匹配分支的总抵消，而不是从某一好分支的存在推出混合结论。$\square$
+
+两协议均不估计实际失谐，不调用逆时钟或测量高层；没有对抽样或成功分支作归一化后选择。对整个区间的统一固定差任务，(23.2) 在允许端点 $|\delta|=\delta_{\min}$ 分别给
+
+$$
+N\ge\frac1{72\delta_{\min}}\quad\text{及}\quad
+N\ge\frac1{216\delta_{\min}}.
+$$
+
+结合 (25.4)、(25.6)，两个任务的最坏调用复杂度均为 $\Theta(1/\delta_{\min})$。达到的固定差分别为 $1/18$、$1/54$，不宣称未知失谐时的差 $1/9$、最佳常数、shot 或精度成本。若允许 $|\delta|$ 任意趋于零而没有正的 $\delta_{\min}$，(23.2) 使每个固定最坏调用预算的所有事件差趋于零，故不能保证统一正信号。
+
+## 26. 逆失谐预算下的十二维端口下界
+
+令 $X=A\otimes H$，$\dim A=\dim H=4$。本节改用 $V:\mathbb C^{12}\to X$ 表示非零 Fourier 轨道块的固定等距嵌入，不再指第 24 节的高层置换。令 $B\simeq\mathbb C^{12}$ 为受保护的可访问 Bell 伙伴：编解码器不接触它，低层协议期间它保持静止，最后允许测量它。若另取外部 diamond 参考 $R$，则 $R$ 始终不触碰。共同 CPTP 编码器、解码器经记忆代数 $\bigoplus_f\mathcal B(\mathbb C^q)$ 分解，$f$ 为任意有限免费经典 flag；没有额外量子通信、预共享纠缠或借 $B,R$ 绕过端口的存储。所有随机实验分支使用同一个编解码器，输出仅保留低层、$B$ 与记录并丢弃 $H$。
+
+**定理 26.1（实际效果 frame 的统一端口约束）。** 存在有精确有限 frame 定义的常数 $c_0,\delta_0>0$，使对任一共振 $\Delta_*$、已知 $0<|\delta|\le\delta_0$ 和正物理时钟 $\Delta\equiv\Delta_*+\delta\pmod{2\pi}$，若上述共同编解码器对所有每分支至多
+
+$$
+N_\delta=9k,\qquad
+k=3\operatorname{round}\!\left(\frac{\pi}{3|\delta|}\right),
+\qquad
+N_\delta\le9\left(\frac{\pi}{|\delta|}+\frac32\right)
+\tag{26.1}
+$$
+
+次调用的允许实验具有统一误差 $\epsilon$，则
+
+$$
+\epsilon\ge c_0(1-q/12),\qquad1\le q\le12.
+\tag{26.2}
+$$
+
+误差可为第 23 节的可访问输出半 diamond 距离，也可为包括全部 $XB$ 纠缠输入与终端 $B$ 测试的实际事件概率误差；后者已经足够。该断言不适用于未扩展输入的较弱统计。
+
+证明。在 $t=\pi$，第 22 节给真实至多九次调用事件效果的复张成为
+
+$$
+S_9(\pi)=\mathcal A_{\mathrm{orb}}
+=\mathcal B(\mathbb C^4)\oplus\mathcal B(\mathbb C^{12}).
+$$
+
+其 Hermitian 部分实维数为 $4^2+12^2=160$。因全部真实事件效果均为 Hermitian，从生成集中选出 $160$ 个复线性无关的正效果 $0\le F_j(\pi)\le I_X$；它们也是 Hermitian 部分的实基（对任意复展开取伴随，唯一性强制 Hermitian 元素的系数为实数）。每个 $F_j$ 配有一个实际有限协议，每分支至多九次正调用。固定这些协议的所有低层仪器、控制树和事件，只让时钟变化为 $W(t)$，得到 $F_j(t)$。
+
+每条分支效果是有限 Kraus 与 $W(t)$ 的有限乘积之和，故 $F_j(t)$ 连续；每个轨道投影与所有低层分支及 $W(t)$ 交换，故对任意 $t$ 均有 $F_j(t)\in\mathcal A_{\mathrm{orb}}$。这正是 $\pi$ 邻域所需的上界，不用它推断较小共振代数。定义
+
+$$
+G_{j\ell}(t)=\operatorname{Tr}_X(F_j(t)F_\ell(t)),\qquad
+\lambda_0=\lambda_{\min}G(\pi)>0.
+$$
+
+选择固定 $0<r<\pi/3$，使在闭区间 $|t-\pi|\le r$ 上
+$\|G(t)-G(\pi)\|_{\mathrm{op}}\le\lambda_0/2$；连续性允许这样的正 $r$。于是 $\lambda_{\min}G(t)\ge\lambda_*:=\lambda_0/2>0$。令
+
+$$
+D_j(t)=\sum_\ell(G(t)^{-1})_{j\ell}F_\ell(t),
+\qquad
+\operatorname{Tr}_X(D_j(t)F_\ell(t))=\delta_{j\ell}.
+$$
+
+这些 Hermitian 对偶满足
+
+$$
+\|D_j(t)\|_{\mathrm{HS}}^2=(G(t)^{-1})_{jj}\le1/\lambda_*,
+\qquad
+\|V^\dagger D_j(t)V\|_{\mathrm{op}}\le1/\sqrt{\lambda_*}.
+\tag{26.3}
+$$
+
+令 $|\Omega_V\rangle=12^{-1/2}\sum_{a=1}^{12}V|a\rangle\otimes|a\rangle_B$，$P_\Omega=|\Omega_V\rangle\langle\Omega_V|$。以固定 Bell 基取转置，定义
+
+$$
+C_j(t)=\frac{(V^\dagger D_j(t)V)^T}{12}.
+$$
+
+在整个 $X\otimes B$ 上，而不只在压缩后的轨道块上，有
+
+$$
+P_\Omega=\sum_{j=1}^{160}F_j(t)\otimes C_j(t).
+\tag{26.4}
+$$
+
+确实每个 $V|a\rangle\langle b|V^\dagger$ 属于完整的 $\mathcal A_{\mathrm{orb}}$，其在 $F_j$ 基中的系数为
+$\operatorname{Tr}(D_jV|a\rangle\langle b|V^\dagger)=\langle b|V^\dagger D_jV|a\rangle$。把这些展开代入
+$P_\Omega=12^{-1}\sum_{a,b}V|a\rangle\langle b|V^\dagger\otimes|a\rangle\langle b|$
+即得 (26.4)。完整 $160$ 维基保证另一四维块上的项正确相消为零；因此无需假设解码输出留在十二维输入块。
+
+写 $C_j=C_j^+-C_j^-$，令
+$a_j=\|C_j^+\|_{\mathrm{op}}$、$b_j=\|C_j^-\|_{\mathrm{op}}$。
+对非零系数，$Q_j^+=C_j^+/a_j$、$Q_j^-=C_j^-/b_j$ 为 $B$ 上的实际二结果测量效果。先运行 $F_j$ 的低层协议，保持 $B$ 静止，再测试对应 $Q_j^\pm$，接受两事件的交，得到真实效果
+
+$$
+E_j^\pm=F_j(t)\otimes Q_j^\pm,\qquad
+P_\Omega=\sum_j a_jE_j^+-\sum_j b_jE_j^- .
+$$
+
+这是真实正事件的有限带符号展开，总系数变差为
+
+$$
+0<\Gamma(t):=\sum_j(a_j+b_j)
+\le\frac2{12}\sum_{j=1}^{160}\|V^\dagger D_j(t)V\|_{\mathrm{op}}
+\le\frac{320}{12\sqrt{\lambda_0/2}}.
+\tag{26.5}
+$$
+
+取 $\beta(t)=\sum_jb_j$。以概率 $a_j/\Gamma$ 运行 $E_j^+$ 并保留成功，以概率 $b_j/\Gamma$ 运行 $E_j^-$ 并保留其补事件，得到真正二元事件
+
+$$
+Z(t)=\frac{P_\Omega+\beta(t)I_{XB}}{\Gamma(t)}.
+\tag{26.6}
+$$
+
+这些选择概率和为 $1$，故 $0\le Z(t)\le I$ 由实际凸混合直接保证。每个分支至多九次 $W(t)$ 调用，只测低层与终端 $B$，未授权任意 $AH$ Bell 测量。对任意两个归一化输入 $\rho,\sigma$，标量项严格消去，
+
+$$
+\Pr(Z(t)\mid\rho)-\Pr(Z(t)\mid\sigma)
+=\operatorname{Tr}(P_\Omega(\rho-\sigma))/\Gamma(t).
+\tag{26.7}
+$$
+
+设共同重构为 $\mathcal T=\mathrm{Dec}\circ\mathrm{Enc}$。编码的带 flag Kraus 为 $E_{f,\ell}:X\to\mathbb C^q$，解码为 $D_{f,j}:\mathbb C^q\to X$。作用于 Bell 输入块的复合算子
+$K_{f,j,\ell}=D_{f,j}E_{f,\ell}V:\mathbb C^{12}\to X$
+均秩至多 $q$，迹保持给 $\sum_K\operatorname{Tr}(K^\dagger K)=12$。重构 Bell 重叠为
+
+$$
+\begin{aligned}
+F&=\operatorname{Tr}\!\left[
+P_\Omega(\mathcal T\otimes\operatorname{id}_B)(P_\Omega)\right]\\
+&=\frac1{12^2}\sum_K|\operatorname{Tr}(V^\dagger K)|^2
+\le\frac q{12^2}\sum_K\|K\|_{\mathrm{HS}}^2
+=\frac q{12}.
+\end{aligned}
+\tag{26.8}
+$$
+
+这里 $\operatorname{rank}(V^\dagger K)\le q$、$\|V^\dagger K\|_{\mathrm{HS}}\le\|K\|_{\mathrm{HS}}$，再用迹的核范数界。输出泄漏到另一块和任意有限 flags 都已经包含在这个计算中。原 Bell 输入重叠为 $1$，实际事件 (26.6) 的差为 $(1-F)/\Gamma(t)$，故在该 $\pi$ 邻域
+
+$$
+\epsilon\ge\frac{1-q/12}{\Gamma(t)}
+\ge c_0(1-q/12),\qquad
+c_0:=\frac{12\sqrt{\lambda_0/2}}{320}>0.
+\tag{26.9}
+$$
+
+frame、随机分支及终端 $B$ 效果都与被检验的编解码器无关；编解码器必须对所有这些分支共同适用。
+
+最后置 $\delta_0=\min\{\pi/3,2r/3\}$，取 (26.1) 的最近整数，平局任择一个。对 $0<|\delta|\le\delta_0$，所取整数为正，且
+
+$$
+\bigl|k|\delta|-\pi\bigr|\le3|\delta|/2,\qquad
+h=\operatorname{sgn}(\delta)(k|\delta|-\pi).
+$$
+
+由于 $k$ 是 $3$ 的倍数，$k\Delta_*\in2\pi\mathbb Z$；$\delta<0$ 时 $-\pi\equiv\pi$，所以完全精确地有
+$W_\Delta^k=W_{\pi+h}$，$|h|\le3|\delta|/2\le r$。把 (26.6) 协议中每一次有效时钟调用替换为 $k$ 次连续正向原始调用，即以最坏 $9k$ 次预算实现同一个实际事件。没有 inverse clock 或近似门合成。这证明 (26.1)、(26.2)；允许更大的预算当然仍含该事件。$\square$
+
+$c_0,\delta_0$ 的定义取自固定有限实际 frame 的 $\lambda_0,r$，对三个共振一致，不含任何数值条件数或数值阈值断言。若容许误差 $\epsilon<c_0/12$，则每个整数 $q<12$ 均被排除。已有精确 $q=12$ 方案在相同扩张合同中仍充分：测出零/非零轨道的有限经典 flag，在最多十二维端口内保留该轨道的完整量子块，解码作对应嵌入；共同重构就是轨道 pinching。全部允许分支逐轨道作用，最终丢弃 $H$，所以该 pinching 保持可访问输出，包括与受保护 $B,R$ 的关联。编解码的这项状态任务不把轨道测量变成实验原语。
+
+此处构造的是有非零统一对比度的实际随机 Bell 事件，没有构造从十二维块到可访问系统的完整量子态转移。第 23 节在小 $N|\delta|$ 时以 $q=4$ 给 $\epsilon_N\le4N|\delta|$；本节在逆失谐预算且精度 $\epsilon<c_0/12$ 时要求 $q\ge12$。调用与精度的量词决定这两个资源结论的适用区域，不给完整转变曲线、最优常数或 $q=5,\ldots,11$ 的中间分类。这些端口结论均限于所述共同 CPTP、参考保持及无额外量子通道合同，不是无条件的物理定律。
+
+## 追加锚（本行以下为增补区）
