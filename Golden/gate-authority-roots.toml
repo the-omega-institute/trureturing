@@ -56,6 +56,11 @@ entrypoint = ".github/workflows/ci-tests-cache.yml"
 
 
 [[roots]]
+root_id = "ci-tests-ci-entry.yml/tests-ci-entry"
+entrypoint = ".github/workflows/ci-tests-ci-entry.yml"
+
+
+[[roots]]
 root_id = "ci-tests-cli-integration.yml/tests-cli-integration"
 entrypoint = ".github/workflows/ci-tests-cli-integration.yml"
 

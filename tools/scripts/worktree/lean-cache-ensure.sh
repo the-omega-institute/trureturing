@@ -16,8 +16,8 @@ else
   export MSBUILDDISABLENODEREUSE=1
   cli=(dotnet run --project "$ROOT/tools/StrataLint.Lean/StrataLint.Lean.csproj" --configuration Release --)
 fi
-# Optional read-only source inventory supplied by PR gate. The native
-# producer accepts it explicitly; it never consumes this environment itself.
+# An optional donor repository seeds a fresh .lake by clonefile; the native
+# producer receives it only as an explicit argument, never from the environment.
 donor=()
 [[ -z "${STRATALINT_LEAN_CACHE_DONOR_REPOSITORY:-}" ]] || donor=(--donor-repository "$STRATALINT_LEAN_CACHE_DONOR_REPOSITORY")
 exec "${cli[@]}" ensure-cache ${donor[@]+"${donor[@]}"}

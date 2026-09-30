@@ -170,6 +170,7 @@ components:
       - tests-cache
       - tests-cache-native
       - tests-cache-release
+      - tests-ci-entry
       - tests-cli
       - tests-cli-integration
       - tests-configuration

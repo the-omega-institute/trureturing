@@ -1,17 +1,9 @@
 #!/usr/bin/env bash
 # header-check.sh <lean-file>... — deposit **之前**必跑。
 #
-# 立条依据 issue #3518(2026-08-27 实测):F-plane 头部若因 `digest:` 折行而成为 **7 行**,
-# `make deposit` **退出 0 并把模块 Freeze 掉**,缺陷只由 SL-012 在 gate/CI 阶段报出。
-# 而 Freeze 是 append-only、不可逆的 —— 事后只能靠新增勘误,改不了已冻的那条。
-# 故这道检查必须在 deposit 之前跑,不能等 gate。
-#
-# 2026-08-28 扩条(OB3 / PR #3654 血案):同一道门必须一并查 **SL-003 容量**。
-# 我的 deposit 模板当时查了头部形状与目录文件数,**唯独不查行数**;
-# 而实施 brief 里我自己写下了「455 → 855 行」这个数,却没拿它当判据。
-# 结果:`make deposit` 退出 0、**不可逆冻结**,随后 CI 才由
-# CapacityPolicyTests.RepositoryHasNoOversizeArtifactOrOverfullDirectory 判红(855 > 800)。
-# 教训与 #3518 同形:凡「deposit 会照做、只有事后 CI 报」的检查,一律前移到这道门。
+# F-plane 头部形状不合规(SL-012)或模块超出 SL-003 行数/目录容量时,`make deposit`
+# 仍退出 0 并把模块冻结,缺陷只在 gate/CI 阶段报出;冻结不可逆,事后只能新增勘误。
+# 故凡「deposit 会照做、只有事后 CI 报」的检查,都在这道门里于 deposit 之前执行。
 #
 # 合规形状(既有 6 行,或带 utility 的 7 行;末行以 ` -/` 收尾):
 #   /- GID: <path>
