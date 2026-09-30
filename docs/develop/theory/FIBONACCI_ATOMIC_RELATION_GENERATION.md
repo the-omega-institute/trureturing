@@ -26312,3 +26312,363 @@ $b_s$ 加权偏差的上界；这些计数与恒等式尚未证明整个 FIB 家
 也未回接任意自然数的完整 Robin 判据。
 
 ## 追加锚（本行以下为增补区）
+
+## 218. 最大增量原子、有限近极值配置与临界权重
+
+沿用 §210 的实际除数增量：对 $s>0$，
+
+$$
+b_s(1)=1,\qquad
+b_s(p^a)=Z(p^a)^s-Z(p^{a-1})^s\quad(a\ge1),
+\qquad Z(n)=\frac{\sigma(n)}n,
+$$
+
+并按乘法性延拓。由 $U(s)=\sum_{d\ge1}b_s(d)/d$ 定义的概率为
+
+$$
+\mu_s(d)=\frac{b_s(d)}{dU(s)}.
+$$
+
+本节研究这份具体增量权重的最大原子。它不是自然数的均匀分布。
+
+令 $y\to\infty$，并记
+
+$$
+\ell=\log y,\qquad s=y\ell,\qquad t=e^\gamma\ell,
+\qquad R=\frac y{\ell^2},\qquad
+\delta=\frac y{\ell^3},\qquad A=e^y.
+$$
+
+假设 $X/A\in[c_1,c_2]$，其中 $1<c_1\le c_2<\infty$ 固定。
+实际 FIB 区间满足这一条件。下文证明最大值存在，并使用记号
+
+$$
+M_s=\max_{d\ge1}\frac{b_s(d)}d,
+\qquad m_s=\max_{d\ge1}\mu_s(d)=\frac{M_s}{U(s)}.
+$$
+
+经典极大丰数（colossally abundant）优化考察
+$\sigma(n)/n^{1+\varepsilon}$，参见
+[Alaoglu–Erdős 的经典工作](../../../Library/Arith/alaoglu1944highly.md)。
+取 $\varepsilon=1/s$ 后，其 $s$ 次幂为 $Z(n)^s/n$。
+本节的目标含有局部差分 $b_s$，所以该经典优化只是相邻的比较对象，
+不能代替以下实际增量的估计。
+
+### 218.1 最大值存在及其素支撑范围
+
+**命题 218.1（增量最大值的有限素支撑）。** 置
+$P_p=(1-p^{-1})^{-s}$。最大值 $M_s$ 存在，且
+
+$$
+M_s=\prod_{p<y+2}\max_{a\ge0}\frac{b_s(p^a)}{p^a}.
+\tag{218.1}
+$$
+
+当 $y\to\infty$ 时，
+
+$$
+\log M_s\le
+s\sum_{p\le y}-\log(1-p^{-1})-\vartheta(y)+O(\ell/y),
+\qquad \vartheta(y)=\sum_{p\le y}\log p.
+\tag{218.2}
+$$
+
+证明。对每个固定素数 $p$，$0<b_s(p^a)\le P_p$，故
+$b_s(p^a)/p^a\to0$。指数零给局部值 $1$，所以局部最大值在有限指数处取得。
+若 $p\ge y+2$，则
+
+$$
+\log(P_p/p)
+\le\frac{s}{p-1}-\log p
+\le\frac{y\ell}{y+1}-\log(y+2)<0.
+$$
+
+这些素数的每个正指数局部值都小于 $1$，最佳指数只能是零。
+剩余素数只有有限个；逐素数选择局部最佳指数得到同一个有限整数，
+乘法性给式（218.1）。
+
+对 $p\le y$，
+
+$$
+\log(P_p/p)\ge s/p-\log p\ge0.
+$$
+
+因此正指数局部值和指数零的值均不超过 $P_p/p$。
+对 $y<p<y+2$，$\log(P_p/p)$ 的正部为 $O(\ell/y)$，
+而这样的整数至多两个。对这些有限局部上界取对数求和，得到式（218.2）。$\square$
+
+### 218.2 同一个有限配置中的实际差分下界
+
+对 $\sqrt s<z\le y$，定义
+
+$$
+a_p=
+\begin{cases}
+\lceil\log s/\log p\rceil,&p\le\sqrt s,\\
+1,&\sqrt s<p\le z,
+\end{cases}
+\qquad n_z=\prod_{p\le z}p^{a_p}.
+\tag{218.3}
+$$
+
+这里小素数的指数比 §211 截断配置中的指数多一层；$n_z$ 是另一个明确的
+有限整数，后面的全部局部选择均共同实现在该整数上。
+
+对 $p\le\sqrt s$，有 $s\le p^{a_p}<ps$。均值定理以及
+$\log(1-u)\ge-u/(1-u)$ 给
+
+$$
+\begin{aligned}
+b_s(p^{a_p})
+&=P_p\bigl[(1-p^{-a_p-1})^s-(1-p^{-a_p})^s\bigr]\\
+&\ge P_p\,\frac{s}{2p^{a_p}}(1-1/s)^{s-1}
+\ge\frac{P_ps}{2e p^{a_p}}.
+\end{aligned}
+$$
+
+因而
+
+$$
+\frac{P_p}{2e p^2s}
+\le\frac{b_s(p^{a_p})}{p^{a_p}}
+\le\frac{P_p}{p}.
+\tag{218.4}
+$$
+
+每个局部对数与 $\log(P_p/p)$ 的差介于零与
+$\log(2e p s)=O(\log s)$ 之间。这些差的总量为
+$O(\sqrt s\log s)$。
+
+对 $\sqrt s<p\le z$，令
+
+$$
+\xi_p=-s\log(1-p^{-2})\le\frac{s}{p^2-1}<2.
+$$
+
+由 $p\le y$ 得 $P_p\ge p$，且
+
+$$
+b_s(p)=P_pe^{-\xi_p}-1
+=P_pe^{-\xi_p}(1-e^{\xi_p}/P_p).
+$$
+
+充分大时 $e^{\xi_p}/P_p\le e^2/\sqrt s<1/2$，所以
+
+$$
+0\le\log(P_p/p)-\log(b_s(p)/p)
+\le\frac{s}{p^2-1}+\frac{2e^2}{p}.
+\tag{218.5}
+$$
+
+整数平方倒数尾和与调和和分别控制两项，给总损失
+$O(\sqrt s+\log y)$。结合式（218.4），在 $\sqrt s<z\le y$ 上一致得到
+
+$$
+\log\frac{b_s(n_z)}{n_z}
+=s\sum_{p\le z}-\log(1-p^{-1})-\vartheta(z)
++O(\sqrt s\log s).
+\tag{218.6}
+$$
+
+**定理 218.2（最大实际增量的任意固定对数精度）。** 对每个固定 $K>0$，
+
+$$
+\boxed{\log M_s=s\log t-y+o(y/\ell^K).}
+\tag{218.7}
+$$
+
+证明。强素数定理和相应的 Mertens 乘积估计给：对每个固定 $K>0$，
+当 $z=y+o(y)$ 时，
+
+$$
+\vartheta(z)=z+o(y/\ell^K),
+\qquad
+\sum_{p\le z}-\log(1-p^{-1})
+=\gamma+\log\log z+o(\ell^{-K-2}).
+$$
+
+这些是 §211 引用的 Weingartner 原文式（9）所用的经典解析前置。
+第二个误差乘以 $s=y\ell$ 后仍是 $o(y/\ell^K)$，并且
+$\sqrt s\log s=o(y/\ell^K)$。
+取 $z=y$，式（218.6）给来自同一个 $n_y$ 的下界，
+式（218.2）给上界；两者的主项均为
+$s(\gamma+\log\log y)-y=s\log t-y$，得到式（218.7）。$\square$
+
+量词是每个固定 $K$ 各自成立，未要求对增长的 $K$ 一致。
+这一精度使用无条件强素数定理，不假设 RH，也未指定可执行的数值起点。
+
+### 218.3 最大概率原子的前两阶
+
+**推论 218.3（最大增量原子的负对数）。** 令 $b_2=\pi^2/6$，则
+
+$$
+\boxed{-\log m_s=b_2R-b_2\delta+O(y/\ell^4).}
+\tag{218.8}
+$$
+
+证明。§210.2 的实际赋值比较与 Weingartner 展开给
+
+$$
+\log U(s)=s\log t-y+b_2R-b_2\delta+O(y/\ell^4).
+$$
+
+在式（218.7）取 $K=4$，再用
+$-\log m_s=\log U(s)-\log M_s$ 即得。$\square$
+
+式（218.8）是具体概率分布 $\mu_s$ 的最大原子负对数，也称最小熵。
+它来自实际局部增量与归一化常数的比较，不依赖均匀分布假设。
+
+### 218.4 大除数区间内与 FIB 模数互素的近极大原子
+
+**命题 218.4（同一个有限近极大原子的算术约束）。** 在式（218.3）中取
+$z=y-\delta$。则
+
+$$
+\log n_z=\vartheta(z)+O(\sqrt s\log s)
+=y-\delta+o(\delta).
+\tag{218.9}
+$$
+
+固定 $a>b_2$，令 $H=e^{aR}$、$D=X/H$。充分大时，
+
+$$
+D<n_z<Ae^{-\delta/2}<X,
+\tag{218.10}
+$$
+
+且
+
+$$
+\log\mu_s(n_z)=-b_2R+b_2\delta+O(y/\ell^4).
+\tag{218.11}
+$$
+
+对实际 FIB 模数 $V=F_r$、素数指标 $r\ge7$，还满足
+$(n_z,V)=1$ 和
+
+$$
+\max_{p^v\parallel n_z}p^v\le s^{3/2}.
+\tag{218.12}
+$$
+
+证明。式（218.3）中超出一次幂的对数总量为
+
+$$
+\sum_{p\le\sqrt s}(a_p-1)\log p=O(\sqrt s\log s).
+$$
+
+它是 $o(\delta)$，强素数定理在 $z=y-\delta$ 处的误差也是
+$o(\delta)$，从而得到式（218.9）。又
+$\delta=o(R)$、$\log(X/A)=O(1)$，所以
+
+$$
+\log(n_z/D)=aR-\delta+o(\delta)-\log(X/A)>0
+$$
+
+最终成立；式（218.9）同时给 $n_z<Ae^{-\delta/2}$，证明式（218.10）。
+
+为估计该整数的增量质量，令
+
+$$
+L_s(u)=s(\gamma+\log\log u)-u.
+$$
+
+其导数满足 $L_s'(y)=0$，并且在 $[y-\delta,y]$ 上一致有
+
+$$
+L_s''(u)=-\frac{s(\log u+1)}{u^2(\log u)^2}
+=-\frac{1+o(1)}y.
+$$
+
+因此
+
+$$
+L_s(y-\delta)-L_s(y)
+=-(1+o(1))\frac{\delta^2}{2y}
+=O(y/\ell^6).
+$$
+
+将该式、强素数定理及 Mertens 估计代入式（218.6），再减去
+§210.2 的 $\log U(s)$ 展开，得到式（218.11）。
+
+在实际 FIB 参数下，$y=2r\log\phi+O(1)$，其中
+$\phi=(1+\sqrt5)/2$，故 $z<2r-1$ 最终成立。
+$n_z$ 的素因子均不超过 $z$，而 $F_r$ 的每个素因子均至少为 $2r-1$，
+因此 $(n_z,V)=1$。对小素数，$p^{a_p}<ps\le s^{3/2}$；
+其余素数的指数为一且 $p\le y<s^{3/2}$，证明式（218.12）。$\square$
+
+该原子与全局最大原子有相同的前两阶。若它实际命中某个
+$N_g=n_zh$，则由 $n_z>D$ 有 $h<H$；同一个 $N_g$ 的每个完整素数幂都不超过
+$s^{3/2}H$。因此它不会触发 §216 的大素数幂过滤阈值
+
+$$
+B_*=16e^2s^2H^2.
+$$
+
+这只是实际命中成立时的条件结论，没有给出满足 $N_g=n_zh$ 的 $g,h$。
+
+### 218.5 单点质量、真实增量项与保留价格亏损的账本
+
+对每个固定 $a>b_2$，式（218.11）给
+
+$$
+\frac{\mu_s(n_z)}{e^{-aR}}\longrightarrow\infty.
+\tag{218.13}
+$$
+
+确实，该比值的对数为
+$(a-b_2)R+b_2\delta+O(y/\ell^4)\to+\infty$。
+所以仅凭大小范围、与 $V$ 互素及完整素数幂的温和上限，不能把每个单点质量
+压到 $e^{-aR}$ 以下。若要成立 §210.6 的充分条件
+$\mu_s(\mathcal H_D)\le e^{-aR}$，必须证明本构造的 $n_z$ 最终不命中实际乘子区间。
+这个排除要求属于指定的充分证书，不是 Robin 不等式本身的必要条件。
+
+另一方面，若该 $n_z$ 命中，充分大时 $n_z>D>V$，所以它只命中一个实际乘子。
+**该除数的增量项贡献**在真实归一矩中为 $b_s(n_z)/t^s$，并满足
+
+$$
+\log\frac{b_s(n_z)}{t^s}=-\delta+o(\delta).
+\tag{218.14}
+$$
+
+证明该式只需将式（218.6）的估计写为
+
+$$
+\log\frac{b_s(n_z)}{n_z}
+=s\log t-y+o(\delta),
+$$
+
+再加上式（218.9）。因此，即使命中，该除数的这一增量项也趋于零。
+它不等于整个命中整数的 $Z(N_g)^s/t^s$ 响应；其余除数项仍须求和。
+式（218.13）与式（218.14）共同说明：纯命中质量证书可以要求排除一个
+实际增量贡献趋零的除数，而没有由此获得完整 FIB 矩的上界或下界。
+
+为保留实际尺度权重，定义价格亏损
+
+$$
+J_s(d)=\log M_s-\log\bigl(b_s(d)/d\bigr)\ge0,
+\qquad A_I(d)=\#\{g\in I_r:d\mid N_g\}.
+$$
+
+由 $b_s(d)=dM_se^{-J_s(d)}$ 和 §210 的同一有限正项展开，精确得到
+
+$$
+\boxed{
+\mathcal Q_r
+=\frac{M_s}{t^s}\sum_{d\le X}dA_I(d)e^{-J_s(d)}.
+}
+\tag{218.15}
+$$
+
+式（218.7）还给，对每个固定 $K>0$，
+
+$$
+\log\frac{AM_s}{t^s}=o(y/\ell^K).
+$$
+
+该误差的符号未被确定，也不能由这个尺度估计断言其趋于零。
+式（218.15）保留了真实的 $d/X$ 核权重；仅有 $J_s\ge0$、最大原子的渐近
+或几何归一化，都不足以控制该和。仍需把实际命中集合与价格亏损联合估计，
+而不能以候选原子的大小、互素性或低于大幂门槛代替命中关系。
+
+## 追加锚（本行以下为增补区）
