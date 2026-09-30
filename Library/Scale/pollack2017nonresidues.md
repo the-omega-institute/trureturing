@@ -80,6 +80,9 @@ $N$. If instead one uses the primitive character of conductor $q$, all
 primes dividing $2D$ remain exceptions: primes in the square part of $D$
 may disappear from $q$ without disappearing from the original certificate.
 Square $D$ gives a principal character and is outside Theorem 1.1's scope.
+For odd affine offsets, the [actual mod-eight certificate](banksgaraevheathbrownshparlinski2008density.md)
+recovers the prime-two contribution when the primitive character is
+negative there; the actual square-part intersection still has to be retained.
 
 One standard way to retain a finite exceptional set is to induce the
 primitive character to a modulus $M$ divisible by $q$ and by every prime

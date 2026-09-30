@@ -5,7 +5,7 @@ year: 2008
 title: Density of non-residues in Burgess-type intervals and applications
 doi: 10.1112/blms/bdm111
 url: https://arxiv.org/pdf/math/0607692v3
-claim: The proof of Theorem 2.1 gives fixed positive reciprocal-prime weight at a Burgess-type cutoff for prime moduli, but that weight includes the prime two and does not automatically survive the actual FIB exceptions.
+claim: The proof of Theorem 2.1 gives fixed reciprocal-prime weight at a Burgess-type cutoff for prime moduli; odd affine offsets retain the prime-two contribution, while actual square-part and multiplier exceptions still require their own budget.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -19,7 +19,10 @@ The inspected source is [arXiv:math/0607692v3](https://arxiv.org/abs/math/060769
 dated 25 September 2007. The following bound is an explicit intermediate
 conclusion in §3.1, printed pp.4–5, in the proof of Theorem 2.1; the main
 theorem concerns the density of integer nonresidues. No independent full
-proof audit, numerical threshold or Lean verification is claimed here.
+proof audit or numerical threshold is claimed here. The local mod-eight
+implication below was checked by a transient Lean application of existing
+integer facts; the analytic estimate and Robin application were not
+compiled. No new Lean declaration is delivered.
 
 ## The weighted statement actually available
 
@@ -77,6 +80,82 @@ than the guaranteed $\varepsilon$. A fixed exceptional set does not lose
 its reciprocal weight merely because $P\to\infty$. Proving that an
 exceptional prime actually misses $n$ can restore its contribution, but
 that is an additional arithmetic certificate.
+
+## Odd affine offsets certify the prime-two contribution
+
+For the same actual affine source, assume additionally that $h$ is odd.
+Then $D$ is odd and $D\equiv1\pmod4$. If $n$ is even,
+$8\mid n(n-2h)$: writing $n=2k$, the product is $4k(k-h)$, and one of
+$k,k-h$ is even. The existing identity gives $(gc)^2\equiv D\pmod8$.
+Since $D$ is odd, $gc$ is odd, so its square is one modulo eight. Hence
+
+$$
+2\mid n\quad\Longrightarrow\quad D\equiv1\pmod8.
+$$
+
+This is a local application of the existing identity and ordinary parity
+and odd-square facts, not a new character estimate. The standard
+supplementary law at two implies that a negative quadratic character value
+at two forces $2\nmid n$ here. This concerns the **primitive** character;
+the character induced to $4|D|$ in §202 still has value zero at two.
+
+With odd prime conductor $P$, write $D=dt^2$ with $t\ge1$ odd and
+
+$$
+d=\begin{cases}P,&P\equiv1\pmod4,\\-P,&P\equiv3\pmod4.\end{cases}
+$$
+
+The odd square $t^2$ preserves the mod-eight class. Thus
+$\chi_P(2)=(D/2)$, and a supplied negative prime two is actually missing
+from $n$. Every odd supplied prime not dividing $t$ is also missing by
+§202. The only possible absorbed negative primes belong to the same
+integer's square-part intersection. Define
+
+$$
+E_{\rm sq}(P;n,t)=
+\sum_{\substack{\ell\le R(P)\\\chi_P(\ell)=-1\\
+\ell\mid\gcd(t,n)}}\frac1\ell.
+$$
+
+Under the original Banks threshold and $R(P)\le Y=\log n$, the refined
+paper-level interface is
+
+$$
+J_{\rm miss}(n;Y)\ge\varepsilon-E_{\rm sq}(P;n,t).
+$$
+
+In particular $\gcd(t,n)=1$ retains the entire guaranteed weight, without
+requiring $t=1$. When the **actual signed $D=\pm P$**, the square part is
+one and the cost vanishes. Along such actual sources with odd $h$,
+$n\to\infty$, $P\to\infty$ and
+$P\le(\log n)^{4\sqrt e-\delta}$ for a fixed
+$0<\delta<4\sqrt e$, choose fixed $0<\varepsilon\le0.01$ satisfying
+the cutoff condition above. The existing Euler budget then gives the
+paper-level consequence
+
+$$
+\limsup\frac{Z(n)}{e^\gamma\log\log n}\le e^{-\varepsilon}<1.
+$$
+
+This is a conditional source-family application, including negative signed
+$D=-P$ with $P\equiv3\pmod4$. It neither proves that all candidates meet
+the hypotheses nor proves that such growing-prime canonical families
+exist. Banks supplies no numerical onset threshold here.
+
+The square-part condition has a real canonical obstruction. The legal
+unit-bit-one representation
+
+$$
+n=6921=6765+144+8+3+1
+$$
+
+has composition $(a,b)=(1009,1634)$, $g=h=1$, and
+$Q=-3169$, $D=12681=1409\cdot3^2$. The prime conductor is $1409$,
+$\chi_{1409}(3)=-1$, and $3\mid n$. Thus negative primitive-character
+primes in the original square part cannot all be declared missing, even
+on this canonical slice. Removing oddness of $h$ also fails in the general
+affine model: $h=0$, $g=1$, $(a,b)=(3,2)$ give $n=12$ and
+$D=-44=-11\cdot2^2$, but $\chi_{11}(2)=-1$ and $2\mid n$.
 
 The [Bourgain–Lindenstrauss window](bourgainlindenstrauss2003entropy.md)
 has a different advantage: its lower cutoff eventually exceeds two and
