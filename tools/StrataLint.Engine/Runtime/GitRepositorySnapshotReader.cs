@@ -12,10 +12,13 @@ internal static class GitRepositorySnapshotReader
 
     // readContents only projects regular bodies, never entries or link bytes.
     // FILEMAP policy bytes are retained for the same structural validation and
-    // effective inventory as the full reader.
+    // effective inventory as the full reader. pathspecs bound enumeration itself:
+    // a scoped reader never probes paths outside them, so its cost follows its
+    // inputs rather than the repository size. Include the policy documents in
+    // the scope when links inside it must be validated.
     internal static RawRepositorySnapshot ReadCurrent(string repositoryRoot, Func<string, bool>? include = null,
-        Func<string, bool>? readContents = null)
-        => ReadCurrentCore(repositoryRoot, include, null, readContents);
+        Func<string, bool>? readContents = null, IReadOnlyList<string>? pathspecs = null)
+        => ReadCurrentCore(repositoryRoot, include, null, readContents, pathspecs);
 
     // Visit every file while retaining only the bytes needed for the same link
     // validation as a full snapshot. Identity consumers need the complete path
@@ -27,18 +30,15 @@ internal static class GitRepositorySnapshotReader
     }
 
     private static RawRepositorySnapshot ReadCurrentCore(string repositoryRoot, Func<string, bool>? include,
-        Action<RawRepositoryEntry>? visit, Func<string, bool>? readContents = null)
+        Action<RawRepositoryEntry>? visit, Func<string, bool>? readContents = null,
+        IReadOnlyList<string>? pathspecs = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         var root = Path.GetFullPath(repositoryRoot);
-        var tracked = ParseIndex(Git(root, "ls-files", "--stage", "-z"));
+        string[] scope = pathspecs is null ? [] : ["--", .. pathspecs];
+        var tracked = ParseIndex(Git(root, ["ls-files", "--stage", "-z", .. scope]));
         var paths = tracked.Keys
-            .Concat(ParseNulStrings(Git(
-                root,
-                "ls-files",
-                "--others",
-                "--exclude-standard",
-                "-z")))
+            .Concat(ParseNulStrings(Git(root, ["ls-files", "--others", "--exclude-standard", "-z", .. scope])))
             .Distinct(StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
             .ToArray();
