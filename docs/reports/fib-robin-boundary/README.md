@@ -713,3 +713,38 @@ sums themselves. Opposite-parity
 sums and arbitrary multi-term histories remain outside that conclusion.
 These paper deductions and the finite program are not a Lean proof of
 the full family or of RH; no literature-priority claim is made.
+
+## Opposite-parity sources and joint modular phases
+
+`opposite_phase.py` supports FIB theory §§170–171. Run:
+
+```sh
+python3 -B docs/reports/fib-robin-boundary/opposite_phase.py --out /tmp/fib-opposite-phase
+```
+
+The retained [opposite_phase.json](opposite_phase.json) exhausts all 14,400
+opposite-parity residue pairs modulo the Fibonacci period 240 at modulus
+9240. It finds exactly four ordered `(even index, odd index)` pairs, without
+assuming which index is larger, and realizes both index orders. It also
+checks 100 odd-gap norms and gcds, 9,900 response identities, and 1,980
+missing-eleven cases. Twelve lifted periods and two huge actual two-term
+sources are checked by independent doubling and matrix-power algorithms.
+
+At period `2D`, all five individual stops fail but the global joint stop
+passes. At period `2^26*3^18*5^12*7^9*11^8`, the actual exponents of
+`5040(F_(2P-1)+F_(P-2))` at `(2,3,5,7,11)` are `(31,21,13,11,9)`;
+the fixed five-factor joint condition also fails. Neither statement is a
+Robin counterexample. The universal fixed-prime obstruction uses the paper
+period-lifting and growth argument, not extrapolation from these finite runs.
+Keep `index_stopping.py` beside this script; both source hashes are recorded.
+
+For the earlier `source_scale.json`, the reported tail constant `63/2560`
+is a conservative bound: for `u>10`, use `8/u<4/5` and
+`log(u)/u<3/10` in `(6/512)(1+(8+log(u))/u)`. The sharper paper
+choice `log(u)/u<1/4` gives `123/5120`; both are below `1/40`.
+
+Theory §172 additionally derives a uniform vanishing Robin ratio for each
+fixed multiplier and bounded number of Fibonacci/Lucas factors. Its proof
+uses the full rank carrier and the standard subpolynomial divisor bound;
+it is a paper consequence of §167, not a conclusion of the finite script.
+Zero Fibonacci factors are excluded; Lucas index zero contributes two.
