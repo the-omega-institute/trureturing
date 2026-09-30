@@ -20050,3 +20050,271 @@ nor update that law after adding originals. The remaining obligation
 is a positive head margin under the original universal quantifiers,
 or another valid contradiction. No numerical experiment or new Lean
 compilation is used in these deductions.
+
+## The exact fixed-query input is the available surviving mass per residue
+
+Keep the actual core, mu=mu_<, S=S_< and query modulus Q=Q_e fixed.
+The entire original inventory and every forbidden depth stay in S.
+For z in Z/QZ define the actual capacities
+
+    u_z=mu(S intersect {x=z mod Q}), T={z:u_z>0}.
+    {query marginals of h mu:0<=h<=1_S}
+         ={x:0<=x_z<=u_z for every z}.              (FC841)
+
+The forward inclusion follows by integrating h on each actual cell.
+For the converse use h=x_z/u_z on S intersect{source=z mod Q} when
+u_z>0, and zero otherwise. This is ONE selector on the same source.
+It may depend on the full forbidden depth through S, even when Q is
+shallower. Its mass and every fixed-box response equal those of x.
+Thus FC838 may use exactly Q query cells once the joint u_z are known.
+This does not compute u_z from separate marginal capacities or discard
+deeper forbidden originals. Updating it after a new original requires
+that original's actual intersections with the cells.
+
+If T is nonempty, take a probability rho on T and put
+
+    D_u(rho)=max_(z in T)rho_z/u_z>0,
+    lambda_e(T)=min_(rho probability on T)C_e(rho),
+    P_e^*=max_rho [1-tau C_e(rho)]_+/D_u(rho),
+    P_e^*>0 iff tau lambda_e(T)<1.                  (FC842)
+
+Indeed x=m rho is feasible precisely when0<=m<=1/D_u(rho), and its
+score is m[1-tau C_e(rho)]. Maximizing m, with zero allowed, proves
+the formula. The finite simplex is compact; C_e and D_u are continuous
+and D_u is strictly positive, so these extrema are attained. If T is
+empty the only retained measure is zero and P_e^*=0; no normalized
+probability is introduced. This is the support-rescaling mechanism of
+[Report752 JC6--JC7](../750-799/752-joint-deletion-credit-distinguishes-equal-marginal-sources.md)
+applied to the complete squared-load cost, not a new generic theorem.
+
+Paying FC835's fixed raw-source remainder has the stricter exact form
+
+    P_e^*>tau epsilon_e
+      iff exists rho on T,
+          1>tau[C_e(rho)+epsilon_e D_u(rho)].       (FC843)
+
+This follows by multiplying the positive expression in FC842 by its
+own D_u. Good normalized query performance alone does not ensure
+enough admissible retained mass to pay the remainder. Nor can rho
+be normalized from a small retained measure while its error bound
+is left unamplified. The realizing probability on the full actual
+source has density rho_z/u_z on S intersect{source=z mod Q}, so its
+density relative to mu is exactly bounded by D_u. Applying FC835 to
+that probability divided by D_u and rescaling gives the same bound.
+Only this specified lift is used; another lift with the same query
+marginal need not have the same deeper responses or density bound.
+
+## Anchored tests give exact energy lower bounds, not the complete maximum
+
+For every r|Q let
+
+    A_r=#{ordered(d,f):d,f|Q, lcm(d,f)=r}
+       =product_(p|Q)(2v_p(r)+1),
+    H_e=sum_(r|Q)A_r/r.
+
+The factor count is(j+1)^2-j^2=2j+1. In particular A_1=1.
+For a common anchor z, set
+
+    K(x,z)=[sum_(d|Q)1_(x=z mod d)]^2
+           =sum_(r|Q)A_r1_(x=z mod r).
+
+The average over a uniform anchor is H_e at every x. For any
+probability rho on the actual query carrier, let rho_r be its
+modulo-r marginal. Averaging instead over z drawn from that SAME rho
+gives the identity and lower bound
+
+    C_e(rho)>=sum_(x,z)rho_x rho_z K(x,z)
+       =sum_(r|Q)A_r sum_(a mod r)rho_r(a)^2
+       =H_e+sum_(r|Q)A_r sum_(a mod r)(rho_r(a)-1/r)^2.
+                                                        (FC844)
+
+Every anchored layout is an allowed complete layout, so the maximum
+dominates this average. The last equality uses sum_a rho_r(a)=1.
+No independence between actual coordinates is assumed.
+
+For Haar probability U_Q, every ordered query-pair intersection is
+empty or one residue class modulo its lcm. Therefore C_e(U_Q)<=H_e;
+one coherent anchor attains all these caps, giving equality. Conversely
+equality C_e(rho)=H_e forces the r=Q square term in FC844 to vanish.
+Thus Haar is the unique minimizing QUERY marginal on the full carrier.
+This does not identify the deeper source. Q=1 is included, and a
+zero nonnegative measure has cost zero without normalization.
+
+For nonempty T, let t_r be the number of residues in the projection of
+the actual positive-capacity set T modulo r. Cauchy--Schwarz on these t_r cells
+gives the necessary cost
+
+    lambda_e(T)>=H_T:=sum_(r|Q)A_r/t_r,
+    tau H_T>=1 implies P_e^*=0.                    (FC845)
+
+For proper nonempty T, the r=Q term makes H_T>H_e. Different marginal
+lower bounds need not be jointly attained; their sum remains a lower
+bound for each same actual probability. These are certificate-method
+obstructions, not upper bounds on query cost or proofs of coverage.
+
+There is a safe upper comparison. For a nonnegative measure nu let
+m_r(nu)=max_a nu(a mod r), and let A_e(nu) be the largest ANCHORED
+query cost. Ordered-pair CRT intersections give
+
+    A_e(nu)<=C_e(nu)<=sum_(r|Q)A_r m_r(nu),
+    A_e(nu)=max_(z mod Q)sum_(r|Q)A_r nu(z mod r).   (FC846)
+
+The right upper bound may optimize different residues at different r;
+it is not an attainment assertion. Haar attains both inequalities,
+but an arbitrary selected source need not do so.
+
+An explicit positive construction retains the actual capacities:
+choose a>=0 and x_z=min(u_z,a). Since x<=a Q U_Q, every complete query
+obeys C_e(x)<=a Q H_e. Hence
+
+    sum_z min(u_z,a)-tau a Q H_e>tau epsilon_e       (FC847)
+
+is a sufficient certificate under FC836's unchanged hypotheses. The
+left side is piecewise affine in a; its best value occurs at0 or
+one of the actual u_z, since it is nonincreasing above max_z u_z.
+If all u_z>0, choosing a=min_z u_z makes the query marginal exactly
+uniform. The construction still avoids every actual core original.
+This is a direct Haar-domination witness, not an assertion that it
+optimizes FC838 or that arbitrary cores have suitable capacities.
+
+## A modulus-nine source rules out replacing all queries by common anchors
+
+For Q=9 give residues0,3,6 weight4 each and residue1 weight7; all
+others have weight zero. Write nu for this measure of total mass19.
+The complete divisor inventory is1,3,9. If R is the chosen mod3 row
+and z is the chosen mod9 point, direct expansion gives
+
+    integral(1+1_R+1_{z})^2 dnu
+      =19+3nu(R)+3nu(z)+2nu(z)1_(z in R).
+
+The root masses are12,7,0. All cases are covered by
+
+| Chosen mod3 root | Best mod9 point inside it | Best point outside it |
+| --- | ---: | ---: |
+| 0 | 75 | 76 |
+| 1 | 75 | 52 |
+| 2 | 19 | 40 |
+
+A coherent anchor requires z in R. The independent choices R=0 mod3,
+z=1 give load2 on every supported point. Consequently
+
+    A_e(nu)=75<76=C_e(nu).                          (FC848)
+
+This is the smallest possible positive odd PERIOD for a strict gap:
+below9 the periods are1,3,5,7, with at most one nonunit divisor phase,
+so every complete layout is anchored. No support-size minimality is
+claimed. Report15 JL1--JL3 concerns repeating one entire old layout
+across current depths; its old-layout oracle already permits
+incompatible phases. FC848 concerns a different, narrower restriction.
+
+It is an actual instance of the present core source. Fix the distinct
+odd original classes2 mod3 and4 mod9. Their survivor set is
+S={0,1,3,6,7}. The normalized pure ternary law mu is uniform on S;
+there are no nonternary rows or nonvacuous guards. Set h=4/7 at0,3,6,
+h=1 at1, and h=0 at7. Then h mu=nu/35, with all original phases fixed.
+At the illustrative algebraic coefficient tau=1/4,
+
+    L(h)-tau C_e(h mu)=0,
+    L(h)-tau A_e(h mu)=1/140>0.                     (FC849)
+
+Thus checking only anchors can falsely certify a positive fixed-box
+score for an admitted selector. This coefficient is not being
+substituted for the inherited tail factor without a bound, and the
+query remainder has not been paid by FC849.
+
+On precisely T={0,1,3,6}, the incompatible layout above has square4
+pointwise. The probability nu/19 has complete cost4, so the
+complete normalized minimum is4. To compute the anchored minimum,
+put b=rho(1); some root0 point has mass at least(1-b)/3. Hence
+
+    A_e(rho)>=max((17-14b)/3,1+8b)>=75/19.
+
+The two affine terms meet at b=7/19; nu/19 attains their value. Thus
+lambda_full(T)=4 while lambda_anchor(T)=75/19. This is a support
+restriction imposed by h, NOT the whole actual S. It does not exclude
+better selectors on S. In fact mu itself has complete cost19/5 and
+positive fixed-box score1/20 at tau=1/4.
+
+## The same actual five-point core has an exact full-query optimal selector
+
+The complete selector optimum on all of S at tau=1/4 can be computed
+with an explicit common-query dual. Take
+
+    h(0)=h(3)=h(6)=11/14, h(1)=h(7)=1.
+
+Then the retained masses are x=11/70 on each root0 point and y=1/5
+on each root1 point. For such a law all complete layouts have maximum
+
+    max(17x+2y,12x+5y,3x+13y,6x+8y).
+
+These are the inside/outside choices for the two occupied roots;
+empty-root choices are smaller. Substitution gives mass61/70 and
+complete cost215/70, with both inside-root choices attaining it.
+
+For an upper witness use one mixture of anchored queries: z=0,3,6
+have weights3/14 each, and z=1,7 have weights5/28 each. Its average
+square is4 on every root0 point and83/28 on every root1 point. FC839's
+positive-part upper value is therefore
+
+    2*(1/5)*(1-(1/4)*(83/28))=29/280.
+
+This is valid for EVERY selector on S, including nonuniform ones.
+The displayed h has that exact score, proving
+
+    P_e^*=29/280>1/20.                              (FC850)
+
+Thus the full source can improve after a lawful common reweighting,
+even though the selected four-point source in FC849 is obstructed.
+The dual may use a subset of complete queries for an upper bound;
+this does not make that subset sufficient for a primal lower witness.
+Both directions here are explicit and checkable by the displayed
+case classification and one common mixture, without numerical search.
+The positive finite-box score still has to pay its query remainder
+and the valid arithmetic continuation cost before it is a full-family
+noncoverage certificate. No new unrestricted result follows from this
+particular pure-power example.
+
+## Incompatible query phases also matter in a squarefree actual core
+
+For distinct primes5<=p<q, fix the sole original class0 mod pq. The
+p-row is Haar. At the mixed q-stage, x_p=0 has forbidden fraction1/q;
+the half-threshold kernel is uniform on x_q!=0 there, and other rows
+stay Haar. The raw row masses are one. This is the actual restarted
+mixed source of FC832, not a substituted product-Haar source.
+
+Take h=(q-1)/q on {(0,c):c!=0}, h=1 on {(r,0):r!=0}, and zero
+elsewhere. Each retained point has mass1/(pq). The normalized law
+rho is uniform on these n=p+q-2 cross-arm points. Use query exponents
+one at p,q and zero elsewhere, including the ternary coordinate.
+
+Choose the modp row r and modq column c first; the modpq point remains
+free. Before dividing by n, the four cases give these exact maxima:
+
+| Row and column | Complete-layout maximum | Anchored-layout value |
+| --- | ---: | ---: |
+| r=0,c=0 | 4n+5 | 4n |
+| r=0,c!=0 | 4n+3(5-p) | 4n+3(5-p) |
+| r!=0,c=0 | 4n+3(5-q) | 4n+3(5-q) |
+| r!=0,c!=0 | n+11 | n+6 |
+
+To check the complete column, the selected row and column give base
+load1+1_row+1_column. Adding a supported singleton increases its
+square by7,5 or3 according as that point lies on both, one or neither
+chosen line. The table exhausts these possibilities. Since p,q>=5,
+
+    A_e(rho)=4,
+    C_e(rho)=4+5/(p+q-2)>4.                         (FC851)
+
+For p=5,q=7 the actual selected mass is2/7; its unnormalized anchored
+and complete costs are8/7 and9/7. These are direct substitutions in
+the symbolic proof. The example uses one noncovering core, one legal
+selector and one fixed original phase; it is not a covering example.
+
+The capacities u_z, complete query cost and density term in FC843 are
+now explicit targets for the head argument. Anchored energy can certify
+unavoidable cost; it cannot be used as an upper bound. The examples
+also show why discarding one actual surviving cell or omitting one
+layout inequality can change the certificate's sign. No parameter scan,
+new numerical producer or Lean build is used here. The all-family
+existence of some valid cutoff, same-source selector and strict full
+margin remains unresolved.
