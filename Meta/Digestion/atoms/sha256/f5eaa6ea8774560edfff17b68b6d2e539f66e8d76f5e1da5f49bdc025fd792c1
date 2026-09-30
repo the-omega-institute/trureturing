@@ -1,0 +1,16 @@
+**推论 35.2（记录、参考与全部正概率条件续接）。** 固定允许的有限 instruments，所有动作在声明状态域上合法，选择器只读已保留记录与控制数据。若每支满足 (35.1)，则任意有限 adaptive history $h$ 有 $EJ_h=J'_hE$。对任意有限旁观参考 $B$、可纠缠输入 $\rho$，完整 history register $C$ 有
+
+$$
+\begin{aligned}
+&\sum_h|h\rangle\langle h|_C\otimes
+((EJ_h)\otimes\mathrm{id}_B)(\rho)\\
+&\quad=\sum_h|h\rangle\langle h|_C\otimes
+(J'_h\otimes\mathrm{id}_B)((E\otimes\mathrm{id}_B)(\rho)).
+\end{aligned}
+\tag{35.3}
+$$
+
+两边每支迹均为 $p_h=\operatorname{Tr}[(J_h\otimes\mathrm{id}_B)(\rho)]$；$p_h>0$ 时以同一概率除得到相同 boundary–reference 条件态。
+
+证明。逐步代入 intertwining 给复合恒等；同一记录使下一选择同一动作。等式张量恒等仍成立，CP 保证任意参考输入的正性。$E$ TP 给每支原概率，正概率归一化给条件态；零概率支没有条件态义务。求 history 正交直和得到 (35.3)。若选择器还读被删 memory 或隐藏权限，则超出假设，须先把该数据并入边界。$\square$
+
