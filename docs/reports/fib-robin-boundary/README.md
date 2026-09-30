@@ -134,6 +134,42 @@ profile is rejected: at `M=150,B=1200`, the canonical restriction loses
 For all `n` in `[A,B]`, a valid sufficient comparison uses
 `U_M(B) < exp(gamma)*log(log(A))`, or a joint `(n,Z(n))` frontier.
 
+The joint frontier tools make that last distinction executable on finite rough
+fibers:
+
+```sh
+python3 -B docs/reports/fib-robin-boundary/robin_frontier.py \
+  --y 7 --bound 100000 --out /tmp/fib_atomic_delivery/validation/robin-frontier.json
+python3 -B docs/reports/fib-robin-boundary/robin_frontier_check.py \
+  /tmp/fib_atomic_delivery/validation/robin-frontier.json \
+  --out /tmp/fib_atomic_delivery/validation/robin-frontier-check.json
+python3 -B docs/reports/fib-robin-boundary/robin_frontier_regression.py \
+  --out /tmp/fib_atomic_delivery/validation/robin-frontier-regression.json
+python3 -B docs/reports/fib-robin-boundary/robin_frontier_margin.py \
+  /tmp/fib_atomic_delivery/validation/robin-frontier.json --core 10080 \
+  --out /tmp/fib_atomic_delivery/validation/robin-frontier-margin.json
+```
+
+The producer and checker retain exact `(suffix integer, sigma/suffix)` pairs
+and remove only points dominated by a smaller suffix with at least as large a
+weight. The producer, independent checker and normalization part of the
+regression evaluate no logarithm and make no Robin sign claim. The transfer
+to a fixed common core is the mathematical content of §§156 and 159.
+The margin tool first checks the entire certificate, then applies the existing
+rational logarithm and Euler-constant lower bounds to the finite frontier.
+It requires a core at least 5040 whose prime factors are at most the rough
+cutoff, and binds its result to the checked certificate bytes by SHA-256.
+A positive result is scoped to that core, rough cutoff and finite suffix bound.
+The bound 100000 above gives eight frontier points; §157 uses bound 1000 and
+four points. Both scans with core 10080 have positive lower bounds.
+
+The scan includes suffix 1. With core 5040 this retains the boundary integer
+5040 and reports `OPEN`, even though Robin's target excludes that integer.
+`OPEN` means a lower bound did not certify positivity, not that a counterexample
+was found. §159 explains the separate target-domain argument. The regression
+also exercises the margin CLI on both core values and rejects altered weights,
+missing recurrence states, empty frontiers and invalid cores.
+
 ## Recursive reserve, index stopping and gluing
 
 ```sh
