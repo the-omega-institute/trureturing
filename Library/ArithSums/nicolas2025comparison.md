@@ -304,3 +304,75 @@ At a common primorial cutoff, the signed integral and endpoint terms coincide. F
 On the full CA test set this self-cutoff deficit is identically zero, including after restriction to each integer's actual residue; see the [classical CA scope note](../Arith/alaoglu1944highly.md). A positive-deficit estimate is therefore only an option for other candidates. The signed comparison remains applicable to CA integers with $d_C=0$, without providing the missing prime-error estimate.
 
 The [Guth–Maynard short-interval application](../Analytic/guthmaynard2024largevalues.md) makes one limitation precise. On the cutoffs at the lower endpoints of **all** prime-index FIB windows, a uniform eventual square-root-scale lower bound for $I_\psi$ already implies RH: monotonicity controls interpolation between samples, and the cited short-interval theorem bounds their gaps. The same implication has not been established for the cutoffs of actually existing low-loss candidates, whose gaps are unknown. These two sets of cutoffs must remain distinct when using the sufficient condition above.
+
+## The exponent-excess bound at an actual tied CA candidate
+
+The following connects the existing CA estimate to the actual exception
+budget in the [Pollack application](../Scale/pollack2017nonresidues.md).
+It is an application of the cited estimates, not a new analytic theorem
+or a Lean-verified result.
+
+Fix a threshold parameter $\epsilon_i$ from (3.3), and let
+$N=N_{\epsilon_i}>N^{(0)}$ be the representative defined by (3.8),
+including every prime-power layer whose activation price equals
+$\epsilon_i$. Let $n$ be any actual CA maximizer at this same parameter.
+Remark 3.1, printed p.11, describes both ordinary and extraordinary
+ties: every such $n$ divides $N$. This comparison transports no
+canonical composition or discriminant from $N$ to $n$.
+
+The exponent excess is monotone under divisibility, so
+
+$$
+B_{\rm exp}(n)=\log\frac n{\operatorname{rad}(n)}
+\le\log\frac N{\operatorname{rad}(N)}
+=E=\sum_{k\ge2}\vartheta(\xi_k).
+\tag{C1}
+$$
+
+Here $\operatorname{rad}(N)=\prod_{p\le\xi}p$ follows from (3.8);
+the final equality is (4.3)–(4.4), printed p.23. To apply Lemma 4.1,
+printed p.24, take $X=N'=N_{\epsilon_{i-1}}$. Since $N>N^{(0)}$,
+the adjacent representative satisfies $X=N'\ge N^{(0)}$ and $X<N$.
+Thus, with $t=\log\xi$,
+
+$$
+E\le U(\xi):=\sqrt{2\xi}
+\left(1-\frac{\log2}{2t}+\frac{19.512}{t^2}\right).
+\tag{C2}
+$$
+
+The boundary $N=N^{(0)}$ is not covered by this particular
+instantiation of the lemma. For the same actual $n$ with canonical
+unit bit one and nonsquare signed discriminant, reuse the Pollack
+application's $H_1,T_1,R_1,m_1$. Combining its exponent inequality
+with (C1)–(C2) gives the explicit comparison
+
+$$
+\log H_1(n)\le\log5+U(\xi).
+\tag{C3}
+$$
+
+This includes intermediate tied maximizers. It changes neither their
+actual $c\bmod H_1$, their primitive conductor $q$, nor the signed
+Euler budget.
+
+For clarity, the upper bound already recorded in the Pollack
+application is $m_1\le\mathcal U_n:=|D|R_1/T_1^2$. Its numerical
+value itself satisfies
+
+$$
+\mathcal U_n\ge\frac{|D|}{H_1^2}
+\ge\frac{|D|}{25}\exp[-2U(\xi)],
+\tag{C4}
+$$
+
+because $T_1\mid H_1$ and $R_1\ge1$. Under the **additional**
+same-candidate assumptions $|D|\asymp n$ and $\xi\sim\log n$,
+this lower bound on $\mathcal U_n$ is $n^{1-o(1)}$. Consequently
+this upper-bound certificate cannot establish $m_1^b\le\log n$
+for fixed $b>0$ in that regime, even after maximizing the allowed
+supported square-factor removal. This is not a lower bound on $m_1$.
+Independent conductor information or square factors outside this
+supported exception budget could still give a smaller modulus.
+The assumption $|D|\asymp n$ has not been established for the actual
+remaining extremal candidates; (C4) is conditional in that comparison.
