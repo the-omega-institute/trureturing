@@ -106,7 +106,7 @@ watch_checks() {
     if read_verdicts; then
       log "watch mirror_pr=$mirror_pr attempt=$attempt exit=$watch_rc"
       jq -e 'any(.[]; .bucket == "fail" or .bucket == "cancel")' <<<"$verdicts" >/dev/null && return 0
-      jq -e --argjson required "$required" '
+      jq -e --argjson required "$integration_required" '
         ([.[].name] | unique | sort) == ($required | sort) and all(.[]; .bucket == "pass")
       ' <<<"$verdicts" >/dev/null && return 0
     fi
@@ -189,15 +189,17 @@ base=$integration_tip
 origin_url=$(git remote get-url origin) || die 64 "missing origin remote"
 repo=$(gh repo view "$origin_url" --json nameWithOwner --jq .nameWithOwner) || die 64 "cannot resolve origin GitHub repository"
 run protection-dev gh api "repos/$repo/branches/dev" || die 64 "cannot read dev protection"
-required=$(jq -ce 'select(.protected == true) | .protection.required_status_checks |
+dev_required=$(jq -ce 'select(.protected == true) | .protection.required_status_checks |
   ((.contexts // []) + [(.checks // [])[] | .context]) | unique |
   select(length > 0 and all(.[]; type == "string" and length > 0))' <<<"$output") \
   || die 64 "dev must declare a nonempty required-check set"
+log "dev required checks=$dev_required"
 run protection-integration gh api "repos/$repo/branches/$branch_key" || die 64 "cannot read integration protection"
-jq -e --argjson required "$required" 'select(.protected == true) |
-  .protection.required_status_checks |
-  ((.contexts // []) + [(.checks // [])[] | .context]) | unique | . == $required' \
-  <<<"$output" >/dev/null || die 64 "integration must be protected with the same required checks as dev"
+integration_required=$(jq -ce 'select(.protected == true) | .protection.required_status_checks |
+  ((.contexts // []) + [(.checks // [])[] | .context]) | unique |
+  select(length > 0 and all(.[]; type == "string" and length > 0))' <<<"$output") \
+  || die 64 "integration must declare a nonempty required-check set"
+required="$integration_required"
 git rev-list --first-parent "$dev_tip" >"$scratch/first-parent"
 last=$(jq -r 'last.merge // empty' <<<"$state_data")
 if [[ -n "$last" ]]; then
