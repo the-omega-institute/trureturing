@@ -30912,3 +30912,538 @@ $dh=1+Vg$、$g\in I$、$D<d\le X$；仅有定理 229.1 的大小边缘率不能�
 没有结算全部实际核，也未给出从任意 Robin 反例到当前 FIB 家族的运输定理。
 
 ## 追加锚（本行以下为增补区）
+
+## 230. 低亏损比值与实际截断源的 Fourier 端点增益
+
+### 230.1 对象与高价格亏损尾
+
+沿素数指标 $r\to\infty$，使用同一个实际 FIB 家族
+
+$$
+V=F_r,\quad I=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\quad N_g=1+Vg,\quad A=\min_{g\in I}N_g,\quad X=\max_{g\in I}N_g.
+$$
+
+记
+
+$$
+y=\log A,\quad \ell=\log y,\quad s=y\ell,\quad
+R=y/\ell^2,\quad \delta=y/\ell^3,\quad T=y/\ell^4,
+\quad b_2=\pi^2/6,
+$$
+
+$$
+\Delta_y=\log(X/A)=O(1),\qquad H=e^{aR},\qquad D=X/H,
+$$
+
+其中 $a>0$ 固定。模数 $V=F_r$ 满足 $\log V=y/2+O(1)$，单位群阶 $Q=\varphi(V)$ 满足 $\log Q=y/2+O(1)$，而 $p\mid V\Rightarrow p>2y$ 最终成立。
+
+使用实际乘法增量
+
+$$
+b_s(1)=1,\qquad b_s(p^j)=Z(p^j)^s-Z(p^{j-1})^s\quad(j\ge1),\qquad
+Z(n)=\sigma(n)/n,
+$$
+
+$$
+w_{p,j}=b_s(p^j)/p^j,\quad w_{p,0}=1,\quad
+U(s)=\sum_{d\ge1}b_s(d)/d,\quad
+\mu_s(d)=b_s(d)/(dU(s)).
+$$
+
+令 $m_{p,s}=\max_{j\ge0}w_{p,j}$、$M_s=\prod_p m_{p,s}$、$m_s=M_s/U(s)$，以及
+
+$$
+J_s(d)=\log m_s-\log\mu_s(d)
+=\sum_p J_{p,s}(v_p(d)),\qquad
+J_{p,s}(j)=\log(m_{p,s}/w_{p,j})\ge0.
+\tag{230.1}
+$$
+
+最大值与有限乘积由 §218 成立。定义真实截断变换
+
+$$
+F_D(\chi,\tau)=
+\sum_{\substack{D<d\le X\\(d,V)=1}}
+\mu_s(d)\chi(d)d^{i\tau},
+\qquad
+\|F\|_{1,*}=Q^{-1}\sum_{\chi\ne1}|F(\chi)|.
+\tag{230.2}
+$$
+
+所有字符范数均使用 $Q$ 点平均测度；非主范数把主字符坐标置零。
+
+**引理 230.1（固定阶幂和给出的高亏损总质量尾）。** 记 $S_q(\mu_s)=\sum_{d\ge1}\mu_s(d)^q$。对每个预先固定的 $K>0$，有式（230.3）的估计。
+
+证明。§218 与 §223 给
+
+$$
+\log m_s=-b_2(R-\delta)+O(T),\qquad
+\log S_{3/4}(\mu_s)=\frac{7b_2}{12}(R-\delta)+O(T).
+$$
+
+由式（230.1），精确地
+
+$$
+\mathbb E_{\mu_s}e^{J_s(d)/4}
+=m_s^{1/4}S_{3/4}(\mu_s).
+$$
+
+因此对任意预先固定的 $K>0$，Markov 给
+
+$$
+\mu_s\{J_s(d)>KR\}
+\le\exp\left[-\left(\frac K4-\frac{b_2}{3}\right)R+o(R)\right].
+\tag{230.3}
+$$
+
+以下固定 $K=8b_2$，于是尾质量至多
+$\exp[-(5b_2/3)R+o(R)]$。对每个固定 $c>0$，这比 $m_s e^{cR}$ 小一个指数因子，且控制的是总质量；乘以任意模长不超过 $1$ 的完整测试函数后，误差仍由同一尾质量控制。$\square$
+
+### 230.2 相对于同一基底的统一低亏损编辑界
+
+采用 §218 的明确整数
+
+$$
+n_y=\prod_{p\le y}p^{a_p},\qquad
+a_p=\begin{cases}
+\lceil\log s/\log p\rceil,&p\le\sqrt s,\\
+1,&\sqrt s<p\le y,
+\end{cases}
+\tag{230.4}
+$$
+
+并在 $p>y$ 时置 $a_p=0$。§218 的实际差分估计与强 PNT 给
+
+$$
+\log n_y=y+o(R),\qquad J_s(n_y)=o(R).
+\tag{230.5}
+$$
+
+对任意正整数 $d$，定义乘法编辑量
+
+$$
+\mathcal L(d,n_y)=\sum_p|v_p(d)-a_p|\log p.
+$$
+
+若 $d/n_y=u/v$ 已约分，则 $\mathcal L(d,n_y)=\log u+\log v$。
+
+**引理 230.2（相对于同一近极值基底的统一编辑界）。** 取 $h=\sqrt\ell$。存在绝对常数 $C$ 及起效阈值，使充分大时对所有正整数 $d$ 同时有
+
+$$
+\mathcal L(d,n_y)
+\le C\left(\sqrt s\log s+\frac{yh}{\ell}
++\left(1+\frac\ell h\right)J_s(d)\right).
+\tag{230.6}
+$$
+
+所以对每个预先固定的 $K>0$，在 $J_s(d)\le KR$ 的同一集合上一致有
+
+$$
+\mathcal L(d,n_y)=O_K(y/\sqrt\ell)=o(y).
+\tag{230.7}
+$$
+
+证明。分三段，全部使用同一实际局部权重。
+
+小素数 $p\le\sqrt{2s}$。均值定理给
+$w_{p,j}\le sP_pp^{-2j}$，其中 $P_p=(1-p^{-1})^{-s}$。§218 的构造对 $p\le\sqrt s$ 给 $m_{p,s}\ge P_p/(2e p^2s)$；对 $\sqrt s<p\le\sqrt{2s}$，其一次幂估计给 $m_{p,s}\ge w_{p,1}\ge P_p/(2e^2p)$。于是这个小素数段可统一写成
+
+$$
+m_{p,s}\ge P_p/(C_0p^2s),\qquad
+J_{p,s}(j)\ge2j\log p-2\log p-2\log s-\log C_0
+\quad(j\ge1).
+$$
+
+故 $j\log p\le J_{p,s}(j)/2+O(\log s)$；$j=0$ 时同样的上界显然成立。参考指数也满足 $a_p\log p=O(\log s)$。求和给这一段的编辑量至多 $C J_s(d)+O(\sqrt s\log s)$。
+
+中段 $\sqrt{2s}<p\le2y$。记
+$z(x)=\log x-s/x$。真实赔率估计给
+
+$$
+-\log w_{p,1}=z(p)+\varepsilon_p,\qquad
+0\le\varepsilon_p\le\frac{s}{2p^2}+2(1+1/p)^{-s}<1
+\tag{230.8}
+$$
+
+最终一致成立。对 $j\ge2$，由真实均值定理尾有
+
+$$
+\frac{w_{p,j}}{w_{p,1}}\le2es\,p^{1-2j}.
+$$
+
+因 $\log(2es)<2\log p+1$，可得
+
+$$
+J_{p,s}(j)\ge(2j-3)\log p-1
+\ge\tfrac12(j-1)\log p,
+\tag{230.9}
+$$
+
+最终成立。所以一次幂以上的编辑量总共至多 $2J_s(d)$。
+
+对剩下的首次开关，在 $|z(p)|>h$ 的区间，若 $p\le y$ 却取 $j=0$，则式（230.8）给 $J_{p,s}(0)\ge h-1$；若 $p>y$ 却取 $j\ge1$，则 $w_{p,j}\le w_{p,1}\le e^{-h}$，所以 $J_{p,s}(j)\ge h$。每次开关的 $\log p\le\ell+\log2$，故这部分至多 $O((\ell/h)J_s(d))$。区间 $|z(p)|\le h$ 的端点都在 $y(1+O(h/\ell))$；强 PNT 给该区间的 $\sum\log p=O(yh/\ell)$。这控制其所有首次开关。
+
+大素数 $p>2y$。§218 给 $m_{p,s}=1$、$a_p=0$。最终
+
+$$
+\log(sP_p)\le\log s+\frac{s}{p-1}
+\le\frac53\log p.
+$$
+
+故对 $j\ge1$，
+
+$$
+J_{p,s}(j)=-\log w_{p,j}
+\ge(2j-5/3)\log p\ge\tfrac j3\log p.
+$$
+
+这一段的编辑量至多 $3J_s(d)$。合并三段即得式（230.6）；代入 $h=\sqrt\ell$ 与 $J_s(d)\le Ky/\ell^2$，得到式（230.7）。$\square$
+
+式（230.7）是模相位依赖的关键约束：低亏损整数本身约为 $e^y$，但相对于同一个 $n_y$ 约分后的分子、分母都只有 $e^{o(y)}$。
+
+### 230.3 有界测试多项式与临界素数块
+
+**引理 230.3（八阶 Fejér 测试多项式）。** 在单位圆上定义
+
+$$
+\phi(z)=\frac{1/2+z}{1+z/2}
+=\frac12+\frac34\sum_{j\ge1}(-1/2)^{j-1}z^j.
+$$
+
+$|\phi(z)|=1$。取它的八阶 Fejér 均值
+
+$$
+\psi(z)=\sum_{j=0}^{8}c_jz^j,\qquad
+c_0=\frac12,\qquad
+c_j=\left(1-\frac j9\right)\frac34(-1/2)^{j-1}\quad(1\le j\le8).
+\tag{230.10}
+$$
+
+特别地 $c_1=2/3$。对所有 $|z|=1$，
+
+$$
+|\psi(z)|\le1.
+\tag{230.11}
+$$
+
+证明。采用归一化角测度 $dt/(2\pi)$。有限 Fejér 核有直接的平方恒等式
+
+$$
+\mathscr F_8(t)=\frac19\left|\sum_{j=0}^{8}e^{ijt}\right|^2
+=\sum_{j=-8}^{8}\left(1-\frac{|j|}{9}\right)e^{ijt}\ge0,
+\qquad \frac1{2\pi}\int_{-\pi}^{\pi}\mathscr F_8(t)\,dt=1.
+$$
+
+逐项积分给
+
+$$
+\psi(e^{i\theta})=\frac1{2\pi}\int_{-\pi}^{\pi}
+\mathscr F_8(t)\phi(e^{i(\theta-t)})\,dt.
+$$
+
+由于 $|\phi|=1$，非负性与归一化立即给式（230.11）。$\square$
+
+这个有限正核公式是经典 Fejér 构造，文献归属见
+[Fejér 的原始论文条目](../../../Library/Zeros/fejer1903untersuchungen.md)，此引用仅作历史出处。这里所需的非负性、平均值与收缩界均由上面的有限恒等式直接证明；不使用相位分布或独立性。高次系数确有负项，后文保留并估计它们。
+
+**引理 230.4（真实临界素数块的正系数增益）。** 取固定 $\kappa=1/10$，定义临界素数块
+
+$$
+\mathcal P_- =\{p:-\kappa\le z(p)<0\},\qquad
+\mathcal P_+ =\{p:0<z(p)\le\kappa\},\qquad
+k=|\mathcal P_-|+|\mathcal P_+|.
+\tag{230.12}
+$$
+
+$z(p)=0$ 的素数至多一个，省略它没有 $R$ 阶影响。以下成立：
+
+$$
+k=(2\kappa+o(1))R,\qquad
+\sum_{p\in\mathcal P_-\cup\mathcal P_+}\log p=O_\kappa(y/\ell).
+\tag{230.13}
+$$
+
+对下块定义移除比 $r_p=w_{p,1}^{-1}$，对上块定义加入比 $r_p=w_{p,1}$。由式（230.8）在临界块的更精细误差 $\varepsilon_p=O(\ell/y)$，
+
+$$
+r_p=e^{-|z(p)|}(1+O_\kappa(\ell/y)),\qquad
+ g_p=c_0+c_1r_p\ge g_\kappa-o(1),\qquad
+ g_\kappa=\frac12+\frac23e^{-\kappa}>1.
+\tag{230.14}
+$$
+
+所以
+
+$$
+G_y:=\prod_{p\in\mathcal P_-\cup\mathcal P_+}g_p,
+\qquad
+\log G_y\ge(c_\kappa+o(1))R,
+\quad c_\kappa=2\kappa\log g_\kappa>0.
+\tag{230.15}
+$$
+
+证明。这些临界素数最终都在 $(\sqrt{2s},2y)$，且与 $V$ 互素。对 $z=\log x-s/x$ 换元，强 PNT 使用密度 $dx/\log x$ 给式（230.13）。式（230.8）在固定临界块上有 $\varepsilon_p=O_\kappa(\ell/y)$，所以移除比与加入比分别是 $e^{z(p)+\varepsilon_p}$、$e^{-z(p)-\varepsilon_p}$，得到式（230.14）。再对 $k$ 个 $g_p$ 取对数求和，即得式（230.15）。$\square$
+
+### 230.4 同一基底的缓冲调整与真实大小窗口
+
+**引理 230.5（窗口内的共同整数立方体）。** 对每个预先固定的 $a>0$，存在与 $V$ 互素的整数 $n_0$，满足式（230.19）、（230.20），使下面定义的正系数整数立方体满足式（230.22）、（230.23）。
+
+证明。考虑辅助的独立开关 $B_p\in\{0,1\}$，概率为
+
+$$
+\Pr(B_p=1)=\theta_p:=\frac{c_1r_p}{g_p}.
+\tag{230.16}
+$$
+
+这份概率只把随后正系数立方体的有限求和归一化；它不是实际命中后的 Euler 分布。
+
+相对于 $n_y$，开关的平均对数大小移动为
+
+$$
+M_y=\sum_{p\in\mathcal P_+}\theta_p\log p
+-\sum_{p\in\mathcal P_-}\theta_p\log p.
+\tag{230.17}
+$$
+
+为证明 $M_y=O_\kappa(R)$，令
+$\theta(t)=c_1e^{-t}/(c_0+c_1e^{-t})$，则
+$\theta_p=\theta(|z(p)|)+O_\kappa(\ell/y)$；这个误差乘 $\log p$ 求和为 $O(1)$。强 PNT 将主和换成
+
+$$
+\int_0^\kappa\theta(t)\bigl(v_y(t)-v_y(-t)\bigr)\,dt+o(R),
+\qquad v_y(t)=\frac{x(t)^2}{x(t)+s}.
+$$
+
+在固定区间内 $v_y'(t)=O(y/\ell^2)=O(R)$，所以积分为 $O_\kappa(R)$。这里使用的是同一个真实素数密度；正负两块的主项抵消，不是假设两块素数恰好成对。
+
+选择缓冲素数只在两个不交区间
+
+$$
+-3\kappa\le z(p)\le-2\kappa,
+\qquad 2\kappa\le z(p)\le3\kappa
+\tag{230.18}
+$$
+
+内进行。这两段各有 $(\kappa+o(1))R$ 个素数，且每个 $\log p=\ell+O_\kappa(1/\ell)$。若需要降低基底，就从下段移除素数；若需要提高基底，就从上段加入素数。按任意固定顺序逐个操作，直到总对数改变量逼近
+
+$$
+\log X-aR/2-\log n_y-M_y.
+$$
+
+目标为 $O_{a,\kappa}(R)$，所以只用 $O_{a,\kappa}(R/\ell)$ 个缓冲素数，资源充足；单步误差为 $O(\ell)$。得到同一个整数 $n_0$，满足
+
+$$
+\log n_0+M_y=\log X-aR/2+O(\ell),
+\qquad \mathcal L(n_0,n_y)=O_{a,\kappa}(R).
+\tag{230.19}
+$$
+
+缓冲素数与临界块不交；$n_0$ 在下临界块的指数仍为一，在上临界块仍为零，且 $(n_0,V)=1$。每次缓冲变动的对数权重损失为 $O_\kappa(1)$，因此式（230.5）给
+
+$$
+J_s(n_0)=o(R),\qquad \mu_s(n_0)=m_s e^{-o(R)}.
+\tag{230.20}
+$$
+
+定义真正的整数立方体
+
+$$
+d_{\mathbf B}=n_0
+\prod_{p\in\mathcal P_-}p^{-B_p}
+\prod_{p\in\mathcal P_+}p^{B_p}.
+\tag{230.21}
+$$
+
+它始终为正整数且与 $V$ 互素。其辅助均值由式（230.19）位于窗口中央，方差至多
+
+$$
+\sum_{p\in\mathcal P_-\cup\mathcal P_+}(\log p)^2\theta_p(1-\theta_p)
+=O_\kappa(y).
+$$
+
+由于 $R/\ell\to\infty$ 且 $R^2/y=y/\ell^4\to\infty$，Chebyshev 给
+
+$$
+\Pr\{D<d_{\mathbf B}\le X\}=1-O_{a,\kappa}(\ell^4/y)=1-o(1).
+\tag{230.22}
+$$
+
+此外对每个开关配置都成立
+
+$$
+J_s(d_{\mathbf B})
+=J_s(n_0)-\sum_p B_p\log r_p
+\le(2\kappa^2+o(1))R<KR.
+\tag{230.23}
+$$
+
+因此所有这些正系数立方体原子都在同一个低价格集合中；式（230.22）保留了实际严格下端点和非严格上端点。
+
+$\square$
+
+### 230.5 模同余提升与保留负系数的有限配对
+
+**引理 230.6（有界测试的模提升与统一配对）。** 固定 $K=8b_2$，使用引理 230.5 的同一个 $n_0$。下述测试函数对所有单位字符 $\chi$ 和实数 $\tau$ 同时满足模长不超过一；其与实际低亏损截断源的配对由式（230.27）给出，而全部高次带符号项的绝对总量满足式（230.30）。
+
+证明。对每个实数 $\tau$ 与单位字符 $\chi$，定义
+
+$$
+\mathcal G_\tau(\chi)=
+\chi(n_0)n_0^{i\tau}
+\prod_{p\in\mathcal P_-}\psi\bigl(\chi(p)^{-1}p^{-i\tau}\bigr)
+\prod_{p\in\mathcal P_+}\psi\bigl(\chi(p)p^{i\tau}\bigr).
+\tag{230.24}
+$$
+
+由式（230.11），$|\mathcal G_\tau(\chi)|\le1$ 对全部 $\chi,\tau$ 成立。把每个多项式展开，频率都是
+
+$$
+r_{\mathbf j}=
+\prod_{p\in\mathcal P_-}p^{-j_p}
+\prod_{p\in\mathcal P_+}p^{j_p},
+\qquad0\le j_p\le8,
+\quad C_{\mathbf j}=\prod_p c_{j_p}.
+\tag{230.25}
+$$
+
+每个 $r_{\mathbf j}$ 约分后的分子、分母对数之和为 $O_\kappa(y/\ell)$。对任意 $J_s(d)\le KR$，式（230.7）与式（230.19）给 $d/n_0=u/v$ 的约分分子、分母均为 $e^{o(y)}$，并且这个误差对整个低价格集合和所有测试单项式一致。
+
+这里 $v\mid n_0$，故 $v$ 与 $V$ 互素；$r_{\mathbf j}=b/c$ 的分母 $c$ 只含临界素数，也与 $V$ 互素。因而有理数同余可以合法清除分母：若 $d\equiv n_0r_{\mathbf j}\pmod V$，则 $uc\equiv vb\pmod V$。两边正整数均小于 $e^{o(y)}<V$，因此
+
+$$
+d\equiv n_0r_{\mathbf j}\pmod V, J_s(d)\le KR
+\quad\Longrightarrow\quad d=n_0r_{\mathbf j}\quad\text{作为有理数相等}.
+\tag{230.26}
+$$
+
+这一步处理实际模相位依赖；没有采用相位独立假设或无界阶数的无碰撞假设。次数八固定，但素数块大小随 $y$ 增长；其全部单项式的分子、分母规模已由式（230.13）一致控制。
+
+令 $F_D^{\le K}$ 是式（230.2）中另加 $J_s(d)\le KR$ 的部分。字符正交性与式（230.26）给精确配对
+
+$$
+\frac1Q\sum_\chi F_D^{\le K}(\chi,\tau)
+\overline{\mathcal G_\tau(\chi)}
+=
+\sum_{\substack{\mathbf j:\ d=n_0r_{\mathbf j}\in\mathbb N\\
+D<d\le X,\ J_s(d)\le KR}}
+C_{\mathbf j}\mu_s(d).
+\tag{230.27}
+$$
+
+当频率实际相等时，$d^{i\tau}(n_0r_{\mathbf j})^{-i\tau}=1$；所以式（230.27）右侧与 $\tau$ 无关。所有有效整数都自动与 $V$ 互素。
+
+如果下临界块有 $j_p\ge2$，则 $n_0r_{\mathbf j}$ 不是整数，无法贡献。余下正立方体 $j_p\in\{0,1\}$ 的总贡献，按式（230.16）、（230.22）、（230.23）恰为
+
+$$
+\mu_s(n_0)G_y\,[1-o(1)].
+\tag{230.28}
+$$
+
+现在保留并估计上临界块 $j_p\ge2$ 的全部高次项。因为 $p\asymp y$、$P_p=O_\kappa(y)$，真实均值定理给
+
+$$
+t_p:=\sum_{j=2}^{8}|c_j|w_{p,j}
+\ll_\kappa sP_pp^{-4}\ll_\kappa\ell/y^2.
+\tag{230.29}
+$$
+
+乘法性表明，不论窗口与低价格限制怎样选取这些带符号项，其绝对值总和至多
+
+$$
+\begin{aligned}
+&\mu_s(n_0)G_y
+\left[\prod_{p\in\mathcal P_+}\left(1+\frac{t_p}{g_p}\right)-1\right]\\
+&\hspace{15mm}\ll_\kappa
+\mu_s(n_0)G_y\,\frac1{y\ell}
+=o\bigl(\mu_s(n_0)G_y\bigr).
+\end{aligned}
+\tag{230.30}
+$$
+
+因此负系数没有被丢弃；式（230.27）的实部至少是式（230.28）减去式（230.30）。
+
+$\square$
+
+### 230.6 对全部实频率统一的端点增益
+
+**定理 230.7（实际截断源的统一 Fourier 端点增益）。** 对每个预先固定的 $a>0$，沿本节指定家族令 $y\to\infty$。置 $\kappa=1/10$，
+
+$$
+g_\kappa=\frac12+\frac23e^{-\kappa}>1,\qquad
+c_\kappa=2\kappa\log g_\kappa>0.
+$$
+
+则对于这个实际截断源，
+
+$$
+\boxed{
+\liminf_{y\to\infty}\ \inf_{\tau\in\mathbb R}
+\frac1R\log\frac{\|F_D(\cdot,\tau)\|_{1,*}}{m_s}
+\ge c_\kappa.
+}
+\tag{230.31}
+$$
+
+因而任取固定 $0<c<c_\kappa$，最终对所有实数 $\tau$ 都有
+$\|F_D(\cdot,\tau)\|_{1,*}\ge m_s e^{cR}$。这个起效阈值可依赖固定的 $a$ 和 $c$，不依赖 $\tau$。特别地，结论涵盖任意固定 $c'>0$ 的共享小频率 $|\tau|\le c'/R$。
+
+证明。由 $|\mathcal G_\tau|\le1$，
+
+$$
+\|F_D(\cdot,\tau)\|_{1,\mathrm{av}}
+\ge\operatorname{Re}\frac1Q\sum_\chi F_D(\chi,\tau)
+\overline{\mathcal G_\tau(\chi)}.
+$$
+
+高价格部分在完整测试函数下的误差不超过式（230.3）。结合式（230.20）、（230.27）–（230.30），一致地
+
+$$
+\|F_D(\cdot,\tau)\|_{1,\mathrm{av}}
+\ge m_s\exp[(c_\kappa+o(1))R]
+-\exp[-(5b_2/3)R+o(R)].
+\tag{230.32}
+$$
+
+因为 $\log m_s=-b_2R+o(R)$，第二项相对第一项指数趋零。再删除主字符，最多损失
+
+$$
+Q^{-1}|F_D(1,\tau)|\le Q^{-1}=\exp[-y/2+O(1)],
+\tag{230.33}
+$$
+
+这也相对第一项趋零。所有误差和起效阈值均与 $\tau$ 无关，式（230.31）随之成立。$\square$
+
+### 230.7 所有 Hölder 指数的正范数证书与联合核边界
+
+**推论 230.8（包括端点与移动指数的正范数障碍）。** 使用倒数补因子
+
+$$
+C_H(\chi,\tau)=\sum_{\substack{1\le h<H\\(h,V)=1}}
+h^{-1+i\tau}\chi(h),
+$$
+
+对每个固定 $0<c<c_\kappa$，存在不依赖 $p$ 或 $\tau$ 的起效阈值，使其后对所有 $\tau\in\mathbb R$、$p\in[1,\infty]$ 及共轭 $p'$ 同时有
+
+$$
+\|F_D(\cdot,\tau)\|_{p,*}
+\|C_H(\cdot,\tau)\|_{p',*}
+\ge\tfrac12m_s e^{cR}
+\tag{230.34}
+$$
+
+证明。由 $H<V$ 及余类一的 Fourier 反演，
+
+$$
+\|C_H(\cdot,\tau)\|_{1,*}
+\ge1-(1+\log H)/Q\ge1/2
+$$
+
+对所有实数 $\tau$ 一致成立；其中唯一的短因子 $h\equiv1\pmod V$ 是 $h=1$，主字符损失至多 $(1+\log H)/Q$。在同一个 $Q$ 点概率空间上将主字符坐标置零，范数单调性给
+$\|F_D\|_{p,*}\ge\|F_D\|_{1,*}$ 及 $\|C_H\|_{p',*}\ge\|C_H\|_{1,*}$。应用定理 230.7 即得式（230.34）。这个推导的阈值与指数无关，故同时允许 $p$ 依赖 $y$ 或 $\tau$。$\square$
+
+令 $t=e^\gamma\ell$、$\Lambda=XU(s)/t^s$。结合既有的 $\log(\Lambda m_s)=o(R)$，式（230.34）排除同一实际截断后的独立正范数乘积在端点或移动指数上支付 Robin 预算。对非负共享频率权重 $w_y(\tau)$，若某区间 $I_y$ 的长度 $|I_y|\asymp1/R$，且 $\int_{I_y}w_y(\tau)\,d\tau\ge e^{-o(R)}$，则相同下界排除对应正范数积分证书；§226 的算术间隙平滑核在共享小频率区间满足此类条件。
+
+式（230.34）下界的是取绝对值与 Hölder 后的上界表达式，不能据此下界实际带符号字符相关或识别指定逆余数的命中。保留同一乘积过滤的带符号联合核仍须另行估计；本节没有完成整个 FIB 家族的 Robin 不等式或所有整数的 RH 判据。
+
+## 追加锚（本行以下为增补区）
