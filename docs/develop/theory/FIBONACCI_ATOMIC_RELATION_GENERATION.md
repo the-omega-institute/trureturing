@@ -22758,3 +22758,258 @@ $$
 本节的文献输入及门槛沿用 [Axler 作者稿与本库笔记](../../../Library/notes/axler2023robin.md)；Rankin 的正项法、素数定理及 Legendre 判据均为经典工具。这里的贡献是将它们接到 §205 的同一实际 FIB 来源和完整赋值核心上，不作原创性或已形式化主张。§206 的均匀计数矩与本节的逐点候选注入承担不同估计任务，均未排除全部潜在反例。
 
 ## 追加锚（本行以下为增补区）
+
+## 208. 有限正项高阶矩与单位位一来源的稀疏异常上界
+
+本节继续研究同一份实际来源族
+
+$$
+V=F_r,\qquad r\ge7\text{ 为素数},\qquad
+I_r=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\qquad N_g=1+gV.
+$$
+
+令实际区间端点为
+
+$$
+N_-=1+V\lceil V/10\rceil,\qquad
+N_+=1+V\lfloor V/5\rfloor.
+$$
+
+本节计数的集合是
+
+$$
+\mathcal E_r=
+\{g\in I_r:Z(N_g)\ge e^\gamma\log\log N_g\},
+\qquad Z(n)=\sigma(n)/n.
+$$
+
+这里的 $\ge$ 包括临界等号；没有假设该集合非空。只在 $N_g>5040$ 时，集合成员才是 Robin 严格不等式的反例。本节的渐近结论均取 $r\to\infty$，故最终自动处于该范围。
+
+解析输入为 [Weingartner 2010 作者稿](../../../Library/ArithSums/weingartner2010distribution.md) 的式（5）与 Lemma 5。以下先证明对每个有限 $X$、每个实数矩阶 $s>0$ 都成立的上界，再选择随 $X$ 增长的矩阶。这不使用把固定阈值的极限密度代入移动阈值的交换论证。新增连接为纸面推导，未新增 Lean 声明或编译。
+
+### 208.1 每个有限区间都成立的正项桥
+
+对实数 $s>0$ 定义非负乘法函数 $a_s$：
+
+$$
+a_s(1)=1,\qquad
+a_s(p)=(1-p^{-1})^{-s}-1,\qquad
+a_s(p^k)=0\quad(k\ge2).
+$$
+
+因此 $a_s$ 仅在平方自由整数上可能非零。由有限乘积展开，对每个正整数 $n$，
+
+$$
+\left(\frac n{\varphi(n)}\right)^s
+=\prod_{p\mid n}\bigl(1+a_s(p)\bigr)
+=\sum_{d\mid n}a_s(d).
+\tag{208.1}
+$$
+
+当 $n=1$ 时，取 $\varphi(1)=1$，该式仍成立。
+
+令
+
+$$
+W(s)=\prod_p\left(1+\frac{(1-p^{-1})^{-s}-1}{p}\right).
+\tag{208.2}
+$$
+
+对每个固定 $s>0$，有 $a_s(p)=s/p+O_s(p^{-2})$，所以
+
+$$
+\sum_p\frac{a_s(p)}p<\infty.
+$$
+
+由非负项的 Euler 乘积展开，
+
+$$
+W(s)=\sum_{d\ge1}\frac{a_s(d)}d<\infty.
+\tag{208.3}
+$$
+
+式（208.2）正是所引论文式（5）的 $W(s)$。本节直接使用它的 Euler 乘积，不从论文所述极限平均交换出有限结论。
+
+**引理 208.1（有限正项矩上界）。** 对每个实数 $X\ge1$、$s>0$，
+
+$$
+\sum_{1\le n\le X}\left(\frac n{\varphi(n)}\right)^s
+\le XW(s).
+\tag{208.4}
+$$
+
+证明。先只交换有限和，再利用 $a_s(d)\ge0$：
+
+$$
+\begin{aligned}
+\sum_{n\le X}\left(\frac n{\varphi(n)}\right)^s
+&=\sum_{d\le X}a_s(d)\left\lfloor\frac Xd\right\rfloor\\
+&\le X\sum_{d\le X}\frac{a_s(d)}d
+\le XW(s).
+\end{aligned}
+$$
+
+整个不等式对各个 $X,s$ 分别成立；因此之后可以选择 $s=s(X)$，无需对固定矩的平均极限提出额外一致性假设。$\square$
+
+由于
+
+$$
+Z(n)=\prod_{p^a\parallel n}
+\frac{1-p^{-(a+1)}}{1-p^{-1}}
+\le\frac n{\varphi(n)},
+$$
+
+式（208.4）立即给出有限 Markov 上界：对每个 $t>0$，
+
+$$
+\#\{1\le n\le X:Z(n)\ge t\}
+\le XW(s)t^{-s}\qquad(s>0).
+\tag{208.5}
+$$
+
+取等号的整数也贡献至少 $t^s$，因此式（208.5）没有丢失 Robin 的临界等号情形。
+
+### 208.2 显式矩阶使主要指数恰好抵消
+
+Weingartner 的 Lemma 5 以 $s\ge e$、$s=z\log z$ 为条件，给每个固定整数 $m\ge2$ 的展开。取 $m=2$，当 $z\to\infty$ 时，
+
+$$
+\log W(s)
+=s\log(e^\gamma\log z)-z
++\frac{\pi^2}{6}\frac z{(\log z)^2}
++O\left(\frac z{(\log z)^3}\right).
+\tag{208.6}
+$$
+
+其中 $\pi^2/6$ 是原文的 $b_2$，不是本节拟合的常数。所引 $O$ 项的常数在固定 $m=2$ 后与 $z$ 无关。
+
+**定理 208.2（整个有限区间的潜在 Robin 反例计数）。** 设 $1<A\le X$，令 $A\to\infty$。则存在绝对常数 $C_0$ 和阈值 $A_0$，使每个 $X\ge A\ge A_0$ 都有
+
+$$
+\begin{aligned}
+&\#\{n\in\mathbb N:A\le n\le X,
+\ Z(n)\ge e^\gamma\log\log n\}\\
+&\quad\le
+\exp\left(
+\log\frac XA
++\frac{\pi^2}{6}\frac{\log A}{(\log\log A)^2}
++C_0\frac{\log A}{(\log\log A)^3}
+\right).
+\end{aligned}
+\tag{208.7}
+$$
+
+证明。令
+
+$$
+t=e^\gamma\log\log A,\qquad
+y=\log A,\qquad s=y\log y.
+$$
+
+增大固定阈值 $A_0$ 后，$t\ge1$ 且 $s\ge e$。若 $n\ge A$ 且
+$Z(n)\ge e^\gamma\log\log n$，则 $Z(n)\ge t$。式（208.5）给计数至多为 $XW(s)t^{-s}$。
+
+现在式（208.6）中的 $z$ 恰好等于 $y$，且
+
+$$
+t=e^\gamma\log y.
+$$
+
+因此式（208.6）的第一项与 $s\log t$ 精确相消：
+
+$$
+\log\bigl(XW(s)t^{-s}\bigr)
+=\log X-y
++\frac{\pi^2}{6}\frac y{(\log y)^2}
++O\left(\frac y{(\log y)^3}\right).
+$$
+
+代入 $y=\log A$，并取所引余项的一侧绝对上界，得到式（208.7）。$\square$
+
+原文 Lemma 6 还对 $t\ge1$、$y=e^{t e^{-\gamma}}$ 给出
+
+$$
+\min_{s\ge e}W(s)t^{-s}
+=\exp\left(
+-y+\frac{\pi^2}{6}\frac y{(\log y)^2}
++O\left(\frac y{(\log y)^3}\right)
+\right)
+\quad(t\to\infty).
+$$
+
+这是与式（208.7）一致的最优化背景；本节证明已由 Lemma 5 的显式矩阶完成，不依赖最小值存在或另行求解鞍点。
+
+### 208.3 实际 FIB 单位位一来源上的加强
+
+**推论 208.3（实际异常的次多项式计数）。** 对上述素指标单位位一来源族，
+
+$$
+|\mathcal E_r|
+\le
+\exp\left(
+\left(\frac{\pi^2}{6}+o(1)\right)
+\frac{\log N_+}{(\log\log N_+)^2}
+\right)
+\quad(r\to\infty).
+\tag{208.8}
+$$
+
+等价地，
+
+$$
+|\mathcal E_r|
+\le
+\exp\left(
+\left(\frac{\pi^2}{3}+o(1)\right)
+\frac{\log V}{(\log\log V)^2}
+\right)
+=V^{o(1)}.
+\tag{208.9}
+$$
+
+证明。映射 $g\mapsto N_g$ 为单射，且所有 $N_g$ 都属于实际区间 $[N_-,N_+]$。有
+
+$$
+N_-=V^2/10+O(V),\qquad
+N_+=V^2/5+O(V),
+$$
+
+从而
+
+$$
+\frac{N_+}{N_-}\longrightarrow2,\qquad
+\log N_+-\log N_-=\log2+o(1),\qquad
+\log N_+=2\log V+O(1).
+$$
+
+取整在 $N_\pm$ 上造成 $O(V)$ 的加性误差，但对数端点之差保持有界。将 $A=N_-$、$X=N_+$ 代入式（208.7），其 $\log(X/A)$ 项有界，而
+
+$$
+\frac{\log N_-}{(\log\log N_-)^2}
+=(1+o(1))\frac{\log N_+}{(\log\log N_+)^2}.
+$$
+
+于是得到式（208.8），再用 $\log N_+=2\log V+O(1)$ 得式（208.9）。$\square$
+
+因为 $|I_r|=V/10+O(1)$，实际潜在反例在这个来源族中所占比例至多为 $V^{-1+o(1)}$。这是一条确定性的计数上界，不需要给乘子或自然数指定随机分布。
+
+该界其实控制整个区间 $[N_-,N_+]$ 中的潜在 Robin 反例，因此不是 FIB 来源独有的分布定理。FIB 回接在这里保证研究对象确实落在这个区间；高阶矩负责全区间的稀疏性。
+
+与 §206 的等差数列矩估计相比，把求和扩大到全部 $n\le X$ 后，整除计数成为 $\lfloor X/d\rfloor\le X/d$，不再出现单个剩余类计数的 $+1$ 边界误差。因此这个更大的观察域反而允许使用 $s\asymp\log X\,\log\log X$ 的高阶矩，并给出更强的数量上界。这一步扩大了计数集合，没有恢复任何单个候选的逐点合法性或安全性。
+
+### 208.4 计数加强与核心候选构造分别承担什么
+
+§207 的实际小素数核心将潜在反例送入可枚举的必要候选：完整核心 $C$、唯一同余乘子 $g_C$、实际粗余因子 $H$ 及其对数预算必须同时相容。那条构造仍然保留定位候选的价值。
+
+式（208.8）把实际潜在反例数量的指数尺度，从 §207 光滑数枚举所给的 $O(\log N_+/\log\log N_+)$ 加强到
+
+$$
+O\left(\frac{\log N_+}{(\log\log N_+)^2}\right).
+$$
+
+但两种集合不能混同：§207 的核心筛选只给必要条件，其可枚举候选集合中可以包含满足 Robin 的安全整数。式（208.8）只计数确实满足 $Z(N_g)\ge e^\gamma\log\log N_g$ 的整数，**没有证明全部核心候选的数量也服从这一更强界**，也没有由此给出相同规模的枚举算法。
+
+此外，式（208.8）的右边仍趋于无穷；它不能排除一个、有限多个或无穷多个越来越稀疏的异常。它不证明本族每个整数安全，更不证明 RH。继续推进逐点 Robin 仍需将核心、余因子和同余约束联合起来，排除实际达到预算的候选；仅用极限密度或平均意义的稀疏性不能完成这一步。
+
+## 追加锚（本行以下为增补区）
