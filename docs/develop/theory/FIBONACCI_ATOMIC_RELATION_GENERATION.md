@@ -24450,3 +24450,484 @@ $$
 固定 FIB 剩余类的加权命中界及所有整数的 Robin 不等式仍未解决。
 
 ## 追加锚（本行以下为增补区）
+
+## 214. 完整缺陷筛选后的存活矩与全部惩罚参数
+
+本节固定使用 Axler 的随规模变化的完整实际缺陷停止条件、Hertlein 的固定乘积停止条件，以及任意预先固定的有限低赋值停止目录。该目录不定义为全部 Robin 安全判据。研究对象始终是同一个整数的完整赋值、因子缺陷与同余命中。
+
+### 214.1 完整缺陷的实际定义及安全方向
+
+对正整数 $n$ 定义
+
+$$
+\eta(n)=\prod_{p\mid n}\left(1-p^{-v_p(n)-1}\right),
+\qquad c(n)=-\log\eta(n),
+$$
+
+乘积只遍历实际素因子，$\eta(1)=1$、$c(1)=0$。有限 Euler 因子化给精确等式
+
+$$
+Z(n)=\frac n{\varphi(n)}\eta(n).
+\tag{214.1}
+$$
+
+令 $a_0=0.0094243$、$\Lambda_n=\log\log n$。在已有 Axler 固定门槛 $n\ge N_K$ 上，
+
+$$
+\frac n{\varphi(n)}
+<e^\gamma\Lambda_n\left(1+\frac{a_0}{\Lambda_n^3}\right).
+$$
+
+因此定义
+
+$$
+h_A(n)=\log\left(1+\frac{a_0}{\Lambda_n^3}\right)
+$$
+
+以后，有以下两个方向：
+
+$$
+c(n)\ge h_A(n)\quad\Longrightarrow\quad
+Z(n)<e^\gamma\Lambda_n,
+\tag{214.2}
+$$
+
+$$
+Z(n)\ge e^\gamma\Lambda_n\quad\Longrightarrow\quad
+c(n)<h_A(n).
+\tag{214.3}
+$$
+
+式（214.2）允许等号，式（214.3）必须严格，因为所用 totient 上包络严格。式（214.3）的右边只是必要候选条件，不能反向推出 Robin 失败。
+
+Hertlein 的固定 totient 包络同样给
+
+$$
+c(n)\ge h_H:=\log(1771561/1771560)
+\quad\Longrightarrow\quad n\text{ 满足严格 Robin},
+\tag{214.4}
+$$
+
+其解析区间与已引用有限验证区间按原文重叠。本节只处理充分大的整数，因此无需对这两个区间重新拼接。
+
+为使筛选集合完全明确，预先固定有限目录 $\mathscr B=\{(p,b_p)\}$，其中每一项都有已引用的文献保证：$n>5040$ 且 $v_p(n)<b_p$ 时严格 Robin 成立。可直接取仓内已核的
+
+$$
+\mathscr B=\{(2,21),(3,13),(5,9),(7,7),(11,6)\},
+\qquad M_{\mathscr B}=\prod_{(p,b_p)\in\mathscr B}p^{b_p}.
+$$
+
+本节实际使用的存活集合与指示是
+
+$$
+\mathcal C_{\mathscr B}
+=\{n\ge N_K:c(n)<h_A(n),\ c(n)<h_H,\ M_{\mathscr B}\mid n\},
+\qquad \chi(n)=\mathbf1_{\mathcal C_{\mathscr B}}(n).
+\tag{214.4a}
+$$
+
+每个充分大的 Robin 等号或超界整数都属于该集合；集合成员可以安全。允许预先增加有限个具有同样已核文献保证的指数下限，后文阈值可依赖这份固定目录。任何已引用的固定部分乘积停止条件，在本节构造中也会最终失效，因为部分缺陷不大于趋零的完整缺陷；这不是对全部其他安全判据的概括。
+
+
+若只观测实际素因子集合 $P\subseteq\{p:p\mid n\}$，则
+
+$$
+c_P(n)=\sum_{p\in P}-\log(1-p^{-v_p(n)-1})\le c(n).
+$$
+
+所以 $c_P\ge h_A$ 或 $c_P\ge h_H$ 都可安全停止；但 $c_P<h_A$ 不保证完整 $c<h_A$。增加实际因子的观测可以继续触发停止。
+
+缺失素数必须单独处理：$p\nmid n$ 时，它在上述 $\eta$ 中的因子为1、在 $c$ 中的贡献为0。不能将 $v_p(n)=0$ 直接代入实际存在素因子的公式，加入虚假的 $1-p^{-1}$ 因子。文献中包含缺失情形的独立低赋值定理可以使用，但其来源是那个定理，而不是式（214.1）的不存在因子。
+
+### 214.2 与有限前缀正核的准确回接
+
+对实际 $p^a\parallel n$、$a\ge1$，§209 的
+
+$$
+D_a(1/p)=\sum_{k=1}^a\frac{p^{-k}}k-\log Z(p^a)
+$$
+
+满足
+
+$$
+-\log(1-p^{-a-1})
+=D_a(1/p)+\sum_{k>a}\frac{p^{-k}}k.
+\tag{214.5}
+$$
+
+证明只需在有限前缀后补全
+$-\log(1-1/p)=\sum_{k\ge1}p^{-k}/k$，再使用局部 Euler 因子化。
+
+因此对同一个 $n$，完整缺陷是已有正核与其正尾部的和。正核的下界可以提供充分停止证书，但正核本身不是整个缺陷。式（214.5）仍只在实际存在的 $p^a$ 上使用；对缺失素数，参考的 totient 因子本来就不存在，不能补出这一正尾部。
+
+### 214.3 用高赋值强制一整个真实子集通过完整缺陷筛选
+
+取正整数 $A,X$，满足
+
+$$
+\frac32A\le X\le\frac52A,
+\qquad y=\log A,\quad\ell=\log y,
+\quad s=y\ell,\quad t=e^\gamma\ell,
+\quad R_y=y/\ell^2,
+\quad\delta=y/\ell^3.
+$$
+
+以下均取 $A$ 充分大。定义整数
+
+$$
+w=\left\lceil\frac{16\ell^3}{a_0}\right\rceil,
+\qquad
+h=\left\lceil\log_2\left(\frac{16w\ell^3}{a_0}\right)\right\rceil,
+\qquad
+K=\left(\prod_{p\le w}p\right)^h.
+\tag{214.6}
+$$
+
+考察同一个实际集合
+
+$$
+\mathcal J_K=\{n\in\mathbb N:A\le n\le X,\ K\mid n\}.
+$$
+
+**引理 214.1（强制高赋值后的统一存活）。** 充分大时，每个 $n\in\mathcal J_K$ 都满足 $c(n)<h_A(n)$，故不会被完整 Axler 缺陷停止条件排除。
+
+证明。对 $p\le w$，$v_p(n)\ge h$；对 $p>w$ 的实际素因子，$v_p(n)\ge1$。记
+
+$$
+S(n)=\sum_{p\mid n}p^{-v_p(n)-1}.
+$$
+
+由式（214.6）与整数平方倒数尾和，
+
+$$
+\begin{aligned}
+S(n)
+&\le w\,2^{-h-1}+\sum_{j>w}j^{-2}\\
+&\le\frac{a_0}{32\ell^3}+\frac1w
+\le\frac{3a_0}{32\ell^3}.
+\end{aligned}
+\tag{214.7}
+$$
+
+每个实际因子中的 $p^{-v_p(n)-1}\le1/4$，所以
+$-\log(1-u)\le2u$ 给
+
+$$
+c(n)\le2S(n)\le\frac{3a_0}{16\ell^3}.
+\tag{214.8}
+$$
+
+另一方面，若 $\ell\ge2$，则 $y=e^\ell>4$，且 $\log(X/A)\le\log(5/2)<1$，所以
+
+$$
+\Lambda_n\le\ell+\log(1+1/y)\le\ell+1/4\le(9/8)\ell.
+$$
+
+因 $(9/8)^3<2$，有 $\Lambda_n^3\le2\ell^3$；同时 $a_0/\Lambda_n^3\le1$。于是
+
+$$
+h_A(n)\ge\frac{a_0}{2\Lambda_n^3}
+\ge\frac{a_0}{4\ell^3}
+>c(n).
+\tag{214.9}
+$$
+
+这证明统一存活。$\square$
+
+这些数值比较只需 $\ell\ge2$ 和 $A\ge N_K$。再要求
+$3a_0/(16\ell^3)<h_H$、$w\ge\max_{(p,b_p)\in\mathscr B}p$、
+$h\ge\max_{(p,b_p)\in\mathscr B}b_p$，就明确保证整个
+$\mathcal J_K\subseteq\mathcal C_{\mathscr B}$。后文另外使用
+$w\le\sqrt s$、$w^h<s$、$\delta\ge2\log4$ 及 §211.2 的解析门槛；
+这些条件全都最终成立，但本稿不将未计算的解析门槛冒充数值门槛。
+
+
+式（214.8）还给 $c(n)\to0$，所以这些整数最终不触发 Hertlein 的固定乘积阈值，或任何固定正阈值的部分实际因子停止条件。因 $w,h\to\infty$，任意预先固定的有限素数集合及有限指数上界也最终被强制超过；故仓内已引用的固定有限低赋值停止目录同样不会排除这些整数。这里的目录固定在 $A\to\infty$ 之前，不能据此声称避开了所有可能随规模新增的独立安全判据。
+
+特别地，低赋值定理若要求假想反例必须被
+$2^{21}3^{13}5^97^711^6$ 整除，$K$ 最终含有这个核心；其他预先固定的有限素数幂方向同理。联合实际因子条件也不能触发，因为每个部分缺陷 $c_P$ 都不超过式（214.8）的完整缺陷。
+
+### 214.4 筛选后的全区间矩仍保留完整的半积分下界
+
+§211.2 构造了只依赖 $A$ 的实际有限整数
+
+$$
+m=\prod_{p\le y-\delta}p^{e_p},
+\qquad
+e_p=\lceil\log s/\log p\rceil-1\quad(p\le\sqrt s),
+$$
+
+较大素数的指数为一，并证明
+
+$$
+m\le A e^{-\delta/2},\qquad
+\log P_s(m)\ge s\log t-y+\frac{\pi^2}{12}R_y-C\delta,
+$$
+
+$$
+P_s(m)=\sum_{d\mid m}\frac{b_s(d)}d,
+\qquad
+b_s(p^a)=Z(p^a)^s-Z(p^{a-1})^s\ge0.
+\tag{214.10}
+$$
+
+本节的 $K$ 最终整除同一个 $m$。确实，$w=O(\ell^3)$、$h=O(\log\ell)$，所以
+
+$$
+\log(w^h)=O((\log\ell)^2)=o(\log s),
+\qquad w<\sqrt s.
+$$
+
+故对每个 $p\le w$ 有 $p^h<s$，从而 $e_p\ge h$。此外，甚至不用素数定理，仅用素数数量不超过 $w$ 即有
+
+$$
+\log K\le hw\log w
+=O(\ell^3(\log\ell)^2)=o(\delta).
+\tag{214.11}
+$$
+
+令 $Q=X-A+1\ge A/2$。充分大时 $m\le Q/2$。对于每个 $d\mid m$，
+
+$$
+\operatorname{lcm}(K,d)\mid m,
+\qquad \operatorname{lcm}(K,d)\le Kd.
+$$
+
+所以在同一集合 $\mathcal J_K$ 中，
+
+$$
+\#\{n\in\mathcal J_K:d\mid n\}
+\ge\frac{Q}{2\operatorname{lcm}(K,d)}
+\ge\frac{Q}{2Kd}.
+\tag{214.12}
+$$
+
+这里先用倍数计数 $Q/\operatorname{lcm}(K,d)-1$，再用
+$\operatorname{lcm}(K,d)\le m\le Q/2$ 吸收取整误差，没有假设各整除事件独立。
+
+**定理 214.2（上述安全筛选不足以修复全区间指定矩）。** 对上述范围的全部充分大 $A$，
+
+$$
+\log\sum_{n\in\mathcal J_K}(Z(n)/t)^s
+\ge\frac{\pi^2}{12}R_y-C'\delta
+\longrightarrow+\infty,
+\tag{214.13}
+$$
+
+并且个体阈值归一的相同和也满足此下界（增大常数 $C'$）。
+
+证明。由同一整数的非负卷积与式（214.12），
+
+$$
+\sum_{n\in\mathcal J_K}Z(n)^s
+\ge\frac Q{2K}P_s(m).
+$$
+
+代入式（214.10）、式（214.11），$\log(Q/(2A))$ 有下界常数，得到式（214.13）。§211.5 的精确比较只再损失因子 $A/X\ge2/5$，故个体阈值下亦成立。$\square$
+
+因此，任何先排除本节这份安全目录、再对剩余全整数区间求同一个指定矩的方案，仍有一个已明确构造的存活子集迫使矩发散。本结论不保证 $\mathcal J_K$ 的每个整数实际安全，也不保证存在任何 Robin 反例；它只证明这份**必要条件筛选后的全区间矩**最终无法小于一，不能用这个指定证书完成排除。若加入另外的安全规则并删掉 $\mathcal J_K$ 的部分成员，需重新估计，不能沿用本定理的子集包含关系。
+
+### 214.5 固定 FIB 同余上的存活者确实很多，但加权矩仍未判定
+
+回到实际来源族
+
+$$
+V=F_r,\quad r\ge7\text{ 素},\quad
+I_r=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\quad N_g=1+gV,
+$$
+
+取其实际端点 $A,X$，它们最终满足本节的区间范围。此时
+$y=2r\log\phi+O(1)$、$\ell=\log r+O(1)$。因此
+
+$$
+w=O((\log r)^3)<2r-1,
+\qquad \log K=O((\log r)^3(\log\log r)^2)=o(r).
+$$
+
+素指标秩界 $p\mid F_r\Rightarrow p\ge2r-1$ 保证 $\gcd(K,V)=1$。
+真实同余 $K\mid1+gV$ 在实际连续乘子区间中恰有
+
+$$
+\frac{|I_r|}{K}+O(1)=V^{1-o(1)}
+\tag{214.14}
+$$
+
+个解。它们全部是 §205 已回接的合法单位位一来源，且全部通过本节的完整缺陷筛选和固定有限停止目录。
+
+这说明该筛选并没有把**候选个数**压成真实异常计数所具有的 $V^{o(1)}$。它没有证明这些存活者的高阶矩很大：其响应仍可能很小；式（214.12）的全区间倍数下界不能换成 FIB 余类计数。
+
+更直接地，§212.2 的固定 $0<\beta<1/2$ 的实际 CRT 安全子族也最终全部通过该筛选。该子族的同一个整数为 $N=DH$，其中
+
+$$
+D=\operatorname{lcm}(1,\ldots,\lfloor\beta y\rfloor),
+\qquad
+p\mid H\Rightarrow p>r(\log r)^{1/4}.
+$$
+
+§205 的有限幂截断估计给 $c(D)=O(r^{-1/2})$；粗余因子的实际大小给
+
+$$
+c(H)\le2\sum_{p\mid H}p^{-2}
+\ll\frac{\log H}{z_r^2\log z_r}
+=O\left(\frac1{r(\log r)^{3/2}}\right).
+$$
+
+因此 $c(N)=O(r^{-1/2})=o(h_A(N))$，一致于该子族。每个固定素数在 $D$ 中的指数又趋于无穷，故固定有限低赋值停止条件也不触发。但这些同一个整数已知满足
+
+$$
+\Delta(N)=-e^\gamma\log\beta+o(1)>0.
+$$
+
+所以这里不是抽象地说“候选可能安全”，而是已有真实、已知安全的 FIB 子族通过筛选。其矩贡献仍按 §212.2 的负指数率趋零，不能当作 FIB 矩发散的例子。
+
+### 214.6 滤后矩的精确联合权重，以及一个受限软权重障碍
+
+使用式（214.4a）中明确的存活指示 $\chi(n)$。对固定 FIB 模数，真正要估计的是
+
+$$
+\mathcal M_{\chi}(s;I_r,V)
+=\sum_{g\in I_r}\chi(N_g)Z(N_g)^s.
+$$
+
+仍有精确的同源分解
+
+$$
+\mathcal M_{\chi}
+=\sum_{d\le X}b_s(d)
+\#\{g\in I_r:d\mid1+gV,\ \chi(1+gV)=1\}.
+\tag{214.15}
+$$
+
+$d$ 的整除、实际赋值和安全筛选都在同一个 $g$ 上判断。因为失败整数必存活，
+$\mathcal M_{\chi}/t^s<1$ 是合法的充分排除证书；但这里没有证明这个不等式。
+
+一种可计算的软放松是：只用 $c(n)<h_A(n)\le h_A(A)$，对任意 $k\ge0$ 有
+
+$$
+\chi(n)Z(n)^s
+\le e^{kh_A(A)}Z(n)^s\eta(n)^k
+\qquad(A\le n\le X).
+\tag{214.16}
+$$
+
+记 $F_{s,k}(n)=Z(n)^s\eta(n)^k$。它是乘法函数，且局部值必须写成
+
+$$
+F_{s,k}(1)=1,\qquad
+F_{s,k}(p^a)
+=(1-p^{-1})^{-s}(1-p^{-a-1})^{s+k}\quad(a\ge1).
+\tag{214.17}
+$$
+
+不能把右边的 $a\ge1$ 公式代入 $a=0$，否则会给缺失素数施加虚假惩罚。
+
+当 $0\le k\le s$ 时，这个函数仍有非负的除数卷积系数。实际 $a\ge1$ 的局部值随 $a$ 增加；首步也满足
+
+$$
+F_{s,k}(p)
+=(1+p^{-1})^s(1-p^{-2})^k
+\ge\bigl((1+p^{-1})(1-p^{-2})\bigr)^s>1.
+$$
+
+所以令 $b_{s,k}=\mu*F_{s,k}$ 后，可照 §210 的有限正项桥得到
+
+$$
+\sum_{n\le X}F_{s,k}(n)\le X L(s,k),
+$$
+
+$$
+L(s,k)=\prod_p\left((1-p^{-1})
+\sum_{a\ge0}\frac{F_{s,k}(p^a)}{p^a}\right).
+\tag{214.18}
+$$
+
+这里 $\mu$ 是 Möbius 函数，不是前面由 $b_s(d)/(dU(s))$ 定义的概率权重。
+
+### 214.7 全部非负惩罚参数的 Euler 凸性障碍
+
+保持同一个整数上的实际因子
+$\eta(n)=\prod_{p\mid n}(1-p^{-v_p(n)-1})$，缺失素数的因子为1。
+对固定实数 $s>0$ 及 $k\ge0$，令
+$F_{s,k}(n)=Z(n)^s\eta(n)^k$，并定义
+
+$$
+L(s,k)=\prod_p L_p(s,k),\quad
+L_p(s,k)=(1-p^{-1})\left(1+\sum_{a\ge1}\frac{(1-p^{-1})^{-s}(1-p^{-a-1})^{s+k}}{p^a}\right).
+$$
+
+令 $U(s)=L(s,0)$，$W(s)=\prod_p[1-p^{-1}+p^{-1}(1-p^{-1})^{-s}]$，$E_s=\log W(s)-\log U(s)$。
+这些无限乘积对每个固定有限 $s,k$ 正且收敛：$L_p(s,k)=1+O_{s,k}(p^{-2})$。确实 $F_{s,k}(p)=1+O_{s,k}(p^{-1})$，所有 $a\ge2$ 的 $F_{s,k}(p^a)$ 一致有界；在概率权重 $(1-p^{-1})p^{-a}$ 下与恒等函数1相减，$a=1$ 的项为 $O_{s,k}(p^{-2})$，其余尾为 $O_{s,k}(p^{-2})$。有限个较小素数的局部因子均正。这里没有声称该 $O$ 对无界 $k$ 一致；下述精确不等式逐个覆盖每个 $k$。
+
+**命题 214.3（Euler 惩罚的全参数下界）。** 对每个 $s>0$、$k\ge0$，
+
+$$
+\log L(s,k)\ge\log U(s)-\frac{k}{s}E_s.
+\tag{214.19}
+$$
+
+因此对任意 $h\ge E_s/s$，有
+
+$$
+e^{kh}L(s,k)\ge U(s)\qquad(k\ge0).
+\tag{214.20}
+$$
+
+证明。$k=0$ 时为等式。$k>0$ 时在局部指数 $a\in\mathbb N_0$ 上使用概率权重 $\nu_p(a)=(1-p^{-1})p^{-a}$。
+令 $A_p(0)=B_p(0)=1$，对 $a\ge1$ 置
+$A_p(a)=(1-p^{-1})^{-s}$、$B_p(a)=F_{s,k}(p^a)$。
+逐项恒等式为
+
+$$
+Z(p^a)^s=A_p(a)^{k/(s+k)}B_p(a)^{s/(s+k)}.
+$$
+
+$a=0$ 同样成立，但不能把正赋值公式误代入缺失素数。
+Hölder 不等式的指数取 $(s+k)/k$ 和 $(s+k)/s$，得到
+
+$$
+U_p(s)\le W_p(s)^{k/(s+k)}L_p(s,k)^{s/(s+k)}.
+$$
+
+先在有限素数集合上相乘，再取收敛乘积的极限，取对数并整理即（214.19）。（214.20）随之成立。$\square$
+
+在当前 Robin 尺度，$y=\log A$、$\ell=\log y$、$s=y\ell$，安全停止阈值为
+
+$$
+h=h_A(A)=\log(1+a_0/\ell^3),\qquad a_0=0.0094243.
+$$
+
+§210 的实际赋值比较给 $0\le E_s\le\sqrt{s}(\log s+5)$。由于
+
+$$
+\frac{\log s+5}{\sqrt{s}}=o(\ell^{-3}),\qquad
+h_A(A)\sim a_0\ell^{-3},
+$$
+
+存在与 $k$ 无关的 $A_0$，使所有 $A\ge A_0$ 同时满足（214.20）的前提。因此
+
+$$
+\inf_{k\ge0}\frac{e^{k h_A(A)}X L(s,k)}{t^s}
+=\frac{XU(s)}{t^s},\qquad t=e^\gamma\ell.
+\tag{214.21}
+$$
+
+等号由 $k=0$ 取得。结合 §210 的增长矩展开，右边仍保留 $(\pi^2/6)y/\ell^2$ 的正主项。
+
+这是对整个 Euler 软表达式族的精确最优化结论。对 $0\le k\le s$，非负除数卷积曾给出将实际前缀和压到 $X L(s,k)$ 的合法上界。对较大 $k$，该正项桥未获证明且可能出现负系数；（214.21）既不补造那条上界，也不把 Euler 乘积替换成实际 FIB 求和。它说明：即使另有方法能合法使用这一 Euler 表达式，仅优化其非负惩罚参数也不会比 $k=0$ 改善预算。
+
+若直接保留固定 FIB 模数的实际命中或带符号边界，所得表达式不再是（214.21），本命题不排除它产生新的节省。这里的 Hölder 不等式是经典工具；所用实际赋值比较来自 §210。此组合没有证明实际 FIB 余类上的节省，也不推出 RH。
+
+更大的 $k$ 不能无条件沿用这条正项桥。例如 $k=2s$ 时，
+
+$$
+F_{s,2s}(2)=(27/32)^s<1,
+\qquad b_{s,2s}(2)=F_{s,2s}(2)-1<0.
+$$
+
+负系数使逐项替换 $\lfloor X/d\rfloor\le X/d$ 不再保持原方向。若研究这一范围，需新的带符号估计或直接控制实际有限和；本节没有排除这种其他方法。
+
+
+本节所用文献前置是 [Axler](../../../Library/notes/axler2023robin.md) 原文式（3.4）—（3.5）与 [Hertlein](../../../Library/notes/hertlein2018robin.md) 原文 Lemmas 1–3；有限高矩配置来自 §211，已知安全的实际 CRT 子族来自 §212。全区间矩下界、实际 FIB 存活者计数、Euler 惩罚表达式最优化是不同量词的结论，均不能替代固定 FIB 余类的逐点排除。
+
+## 追加锚（本行以下为增补区）
