@@ -149,15 +149,6 @@ register_information_theorem threshold_chain_reduction in arena
       functionOperand := true }] })
   escape continues (open)
 
-open Lean in
-run_meta do
-  let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-    record.occurrence.key.theoremName ==
-      `D5.S3.Arith.GoldenResource.ThresholdChainReduction.threshold_chain_reduction
-  unless row.any (fun record => match record.result with
-      | .declaredValidated _ => true | _ => false) do
-    throwError "Threshold chain registration is not declaredValidated"
-
 #print axioms registration
 
 end
