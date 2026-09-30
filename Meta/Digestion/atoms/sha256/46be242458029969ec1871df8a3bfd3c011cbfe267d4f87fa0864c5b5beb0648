@@ -1,0 +1,14 @@
+**推论 194.5（半密度的严格范围与临界角）。** 若式（194.1）中 $\delta=1/2$，则同一证明在 $g\le CU$ 时只给式（194.10）的非负下界零，不能据此确定严格 Robin 符号。对任意固定 $0<\eta<1$，在较小范围 $\log g\le(1-\eta)\log U$ 上则有
+
+$$
+\liminf_{\substack{U\to\infty\\p\mid U\Rightarrow p\in S}}
+\ \inf_{1\le g\le U^{1-\eta}}
+\left(e^\gamma\log\log(gU)-Z(gU)\right)
+\ge e^\gamma\log\frac{2-\eta}{2\sqrt{1-\eta}}>0.
+\tag{194.11}
+$$
+
+证明。$H(1/2)=\log2$，而 $f_{1/2}$ 在 $(0,1]$ 上递减，故 $t\le1-\eta$ 时下界为 $f_{1/2}(1-\eta)$。对小 $h$，预先选择固定 $0<\varepsilon<1-\eta$，使 $-\log2-(1/2)\log\varepsilon\ge f_{1/2}(1-\eta)$，再用定理 194.4 的独立分支估计。最后 $(2-\eta)^2-4(1-\eta)=\eta^2>0$，故显示的常数严格为正。$\square$
+
+这也说明四次素切面的作用：二次字符的半密度条件留下 $h/L\to1$ 的临界角；把允许素数的固定密度降到至多 $3/8$，才使这个角也获得严格余量。该论证没有声称真实来源能达到半密度估计中的全部极值。
+

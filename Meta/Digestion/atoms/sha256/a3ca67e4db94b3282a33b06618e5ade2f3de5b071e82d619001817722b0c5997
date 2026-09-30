@@ -1,0 +1,31 @@
+**命题 195.4（主奇偶类逐点尾界的充分接口）。** 固定一个非单位平方范数种子，令 $\mathcal J_v$ 为其主字符奇偶类。假设在该类上能证明
+
+$$
+(\log j)
+\sum_{\substack{p>j^{5/6}\\p\mid V_j}}\frac1{p-1}
+\longrightarrow0
+\quad(j\to\infty,\ j\in\mathcal J_v).
+\tag{195.4}
+$$
+
+则对每个固定 $C>0$，该类中所有充分大指标的全部 $1\le g\le C\phi^j$ 都满足严格 Robin；更准确地，相应余量的下极限至少为 $e^\gamma\log2$。
+
+证明。置 $y=\lceil j^{5/6}\rceil$、$A_j=\prod_{p\mid V_j,\ p\le y}p$、$B=gA_j$。对同一整数 $N=gV_j$，全部未被 $B$ 包含的素因子必为 $V_j$ 的大素因子，故
+
+$$
+Z(N)<\frac B{\varphi(B)}
+\exp\left(\sum_{\substack{p>y\\p\mid V_j}}\frac1{p-1}\right).
+$$
+
+Chebyshev 上界给 $\log A_j=O(j^{5/6})$。若 $h=\log g\ge j^{11/12}$，则 $\log\log B=\log h+O(j^{-1/12})$，式（194.2）与假设（195.4）共同给 $Z(N)/e^\gamma\le\log h+o(1)$，误差对乘子一致。另一方面 $\log V_j=j\log\phi+O_v(1)$、$h\le j\log\phi+O_C(1)$，所以
+
+$$
+\log\log N-\log h
+=\log\left(1+\frac{\log V_j}{h}\right)
+\ge\log2-o(1).
+$$
+
+若 $h<j^{11/12}$，§164.1 的通用 Euler 包络及 $B=1$ 的直接处理给 $Z(N)/e^\gamma\le(11/12)\log j+O_v(1)$；假设（195.4）使尾乘积带来的加性变化为 $o(1)$。实际预算为 $\log\log N\ge\log j+O_v(1)$，所以该分支的余量一致趋于无穷。两分支合并即得结论。$\square$
+
+式（195.4）在此只是一个足够的待证条件，并未由 §§191–192 的均值估计推出，也不宣称它是 Robin 的必要条件。均值估计允许无限多个稀疏坏指标；不能以密度一替代这里的逐点极限，也不能对一般 $V_j$ 擅自使用 Fibonacci 的强整除性质。
+

@@ -103,7 +103,7 @@ Together with the local replacement in equation (8) and the strong
 Mertens/PNT estimate in equation (9), this identifies the leading
 correction for the product restricted to $p\le z$, with $s=z\log z$.
 The other half comes from the upper integral in equation (19).
-Sections 210 and 212 use the explicitly located lower contribution in
+Sections 211 and 213 use the explicitly located lower contribution in
 a finite divisor construction; they do not infer an equal split merely
 from the full coefficient $b_2=\pi^2/6$.
 
@@ -121,7 +121,7 @@ statement. They do not by themselves give a finite progression bound.
 Theorem 1 gives the two tails the same expansion to every fixed order;
 neither theorem says that their finite samples agree.
 
-Section 209 of the FIB theory volume instead keeps actual valuations via
+Section 210 of the FIB theory volume instead keeps actual valuations via
 the nonnegative multiplicative coefficients
 $b_s(p^a)=Z(p^a)^s-Z(p^{a-1})^s$ and the Euler product
 $U(s)=\sum_d b_s(d)/d$. Its elementary comparison with $W(s)$ is a
