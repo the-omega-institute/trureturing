@@ -234,10 +234,11 @@ public sealed class RegManifestAgreementTests
 
     [Theory]
     [InlineData("inherited", true)]
-    [InlineData("absent", false)]
+    [InlineData("absent", true)]
     [InlineData("direct", false)]
     [InlineData("wrong-dir", false)]
     [InlineData("own-name", true)]
+    [InlineData("duplicate", false)]
     public void RootPathPackagesAreInheritedRegEntries(string mutation, bool accepted)
     {
         var files = Files();
@@ -256,6 +257,11 @@ public sealed class RegManifestAgreementTests
                  "dir":"{{(mutation == "wrong-dir" ? "tools/root-tool" : "../tools/root-tool")}}",
                  "configFile":"lakefile.toml","manifestFile":"lake-manifest.json",
                  "inherited":{{(mutation == "direct" ? "false" : "true")}}}
+                """));
+        if (mutation == "duplicate")
+            reg["packages"]!.AsArray().Add(JsonNode.Parse("""
+                {"type":"path","scope":"","name":"rootTool","dir":"../tools/root-tool",
+                 "configFile":"lakefile.toml","manifestFile":"lake-manifest.json","inherited":true}
                 """));
         files[RegManifestAgreement.ManifestPath] = reg.ToJsonString();
         var reason = RegManifestAgreement.Validate(files["lake-manifest.json"],
