@@ -1,0 +1,21 @@
+**Theorem 47.1 (dyadic Catalan formula).** For every $j\geq1$,
+
+$$
+\binom{1/2}{j}
+  =(-1)^{j-1}\frac{C_{j-1}}{2^{2j-1}},
+$$
+
+where $C_i$ is the integer Catalan number. Thus
+$2^{2j-1}\binom{1/2}{j}$ is an integer, independently of the
+valuation formula in Theorem 42.1.
+
+Let $C(X)=\sum_{i\geq0}C_iX^i$. Its formal recurrence is
+$C(X)=1+XC(X)^2$. Put $T(X)=C(-X/4)$ and
+$S(X)=1+(X/2)T(X)$. The recurrence gives $S(X)^2=1+X$ and
+$S(0)=1$. The formal binomial series
+$B(X)=\sum_{j\geq0}\binom{1/2}{j}X^j$ also satisfies
+$B(X)^2=1+X$ and $B(0)=1$. Since $S+B$ has invertible constant
+coefficient $2$, the factorization $(S-B)(S+B)=0$ implies $S=B$.
+Comparing the coefficient of $X^j$ gives the formula. This supplies
+the dyadic-integrality input needed in (33.2); identifying the
+specific substitution $A-1$ remains a separate step.

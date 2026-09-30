@@ -1,0 +1,15 @@
+**Theorem 43.1 (last-term valuation).** Let $j\geq1$ and let
+$c_0,\ldots,c_j$ be integers with $c_j$ odd. Then
+
+$$
+v_2\left(\sum_{m=0}^{j}\binom{1/2}{m}c_m\right)
+=-j-v_2(j!).
+$$
+
+The exponent $e_m=m+v_2(m!)$ strictly increases with $m$. By Theorem
+42.1, the last summand has valuation $-e_j$ because $c_j$ is odd.
+Every earlier nonzero summand has valuation at least $-e_m>-e_j$;
+zero summands do not affect the sum. The ultrametric valuation law
+therefore gives the displayed equality. To obtain the particular
+coefficient $s_j$ in (33.2), one must still identify its finite
+binomial expansion and prove that its last integer coefficient is odd.
