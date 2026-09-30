@@ -22145,3 +22145,306 @@ $$
 当前推进包括一个覆盖全部合法乘子的共同支撑方法障碍，以及一个完整控制响应、最终严格满足 Robin 的单位位一无穷子族。任意合法乘子的统一上界、一般大本原范数来源及所有整数的 Robin 不等式仍未解决；本节没有证明 RH。
 
 ## 追加锚（本行以下为增补区）
+
+## 206. 同一仿射整数的高阶矩、稀疏异常与实际核心
+
+本节继续素数指标的实际规范单位位一族。令 $r\ge7$ 为素数，
+
+$$
+V=F_r,\qquad I_r=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\qquad N_g=gV+1.
+$$
+
+§205 已经核对这些乘子给出实际规范来源，并证明每个素因子 $p\mid V$ 满足 $p\ge2r-1$。本节使用的是 **同一个整数 $N_g$ 内的联合整除事件**。平均所用概率律是有限集合 $I_r$ 上的均匀计数；它不是黄金收缩区间上的归一化长度律。本节不将密度一结论改写成全部乘子的结论。
+
+以下论证综合有限同余计数、Euler 乘积、Markov 不等式与本卷已有的解析包络；不作原创性判断。这些是纸面推导，未作新的 Lean 核验。
+
+### 206.1 实际区间上的联合矩公式
+
+先令 $V\ge1$ 为任意整数，$I=[G_0,G_1]\cap\mathbb Z$ 为非空正整数区间，并置
+
+$$
+T=G_1-G_0+1,\qquad X=VG_1+1,\qquad
+H_X=\sum_{d=1}^{X}\frac1d,\qquad Z(n)=\sum_{d\mid n}\frac1d.
+$$
+
+对每个正整数 $k$，定义
+
+$$
+S_k(V,X)=
+\sum_{\substack{1\le d_1,\ldots,d_k\le X\\
+\gcd(d_1\cdots d_k,V)=1}}
+\frac1{d_1\cdots d_k\operatorname{lcm}(d_1,\ldots,d_k)}.
+$$
+
+**命题 206.1（同源联合矩的有限误差）。** 则有有限、显式的误差界
+
+$$
+\left|\frac1T\sum_{g\in I}Z(gV+1)^k-S_k(V,X)\right|
+\le\frac{H_X^k}{T}.
+$$
+
+**证明。** 展开同一个 $Z(gV+1)^k$，再交换有限求和，得到
+
+$$
+\frac1T\sum_{g\in I}Z(gV+1)^k
+=\sum_{1\le d_1,\ldots,d_k\le X}
+\frac{\#\{g\in I:\operatorname{lcm}(d_1,\ldots,d_k)\mid gV+1\}}
+{T d_1\cdots d_k}.
+$$
+
+记 $\ell=\operatorname{lcm}(d_1,\ldots,d_k)$。若 $\gcd(\ell,V)>1$，计数为零；否则 $gV\equiv-1\pmod\ell$ 恰有一个剩余类，该类在连续整数区间中的计数与 $T/\ell$ 相差至多一。对误差取绝对值后求和，至多为 $H_X^k/T$。这里没有将边缘整除概率当作独立概率相乘；全部事件通过同一个最小公倍数联立。$\square$
+
+### 206.2 收敛 Euler 常数与前两阶矩
+
+令
+
+$$
+C_k=\sum_{d_1,\ldots,d_k\ge1}
+\frac1{d_1\cdots d_k\operatorname{lcm}(d_1,\ldots,d_k)}.
+$$
+
+**命题 206.2（共同最小公倍数的收敛常数）。** 该正项级数收敛，且
+
+$$
+C_k=\prod_p A_k(p),\qquad
+A_k(p)=\sum_{a_1,\ldots,a_k\ge0}p^{-\sum_i a_i-\max_i a_i}.
+$$
+
+一种直接的收敛证明同时给出全 $k$ 显式界：因为 $\ell\ge(d_1\cdots d_k)^{1/k}$，
+
+$$
+C_k\le\zeta(1+1/k)^k\le(k+1)^k.
+$$
+
+第二步用 $\zeta(s)\le1+\int_1^\infty t^{-s}\,dt$，其中 $s>1$。Euler 乘积也可逐素数直接核对：最大赋值为 $m\ge1$ 的项之和至多为 $(m+1)^kp^{-2m}$，所以 $A_k(p)=1+O_k(p^{-2})$。
+
+前两阶为
+
+$$
+C_1=\zeta(2),\qquad
+C_2=\frac{\zeta(2)^2\zeta(3)}{\zeta(4)}.
+$$
+
+第二式的局部因子准确为
+
+$$
+A_2(p)=\frac{1+p^{-2}}{(1-p^{-2})(1-p^{-3})}
+=\frac{1-p^{-4}}{(1-p^{-2})^2(1-p^{-3})}.
+$$
+
+回到 $V=F_r$ 与 $I_r$。固定正整数 $k$ 后，$T\asymp V$、$X\asymp V^2$ 给出 $H_X^k/T\to0$。对每个固定元组 $(d_1,\ldots,d_k)$，当 $r$ 足够大时，元组进入截断盒且与 $V$ 互素，因为 $V$ 的全部素因子至少为 $2r-1$。由上述可求和正项级数作支配收敛，得到
+
+$$
+\frac1{|I_r|}\sum_{g\in I_r} Z(gF_r+1)^k\longrightarrow C_k
+\qquad(r\to\infty,\ r\text{ 为素数}).
+$$
+
+这不需要 Fibonacci 素数无穷，也不需要这些 $N_g$ 的因子分布独立。
+
+还可保留一个定量版本。固定 $0<\varepsilon<1$，令
+
+$$
+C_{k,\varepsilon}=
+\sum_{d_1,\ldots,d_k\ge1}
+\frac{\operatorname{lcm}(d_1,\ldots,d_k)^{\varepsilon}}
+{d_1\cdots d_k\operatorname{lcm}(d_1,\ldots,d_k)}<\infty.
+$$
+
+局部非平凡项为 $O_{k,\varepsilon}(p^{-2+\varepsilon})$，故收敛。 还可直接用 $\ell\ge(d_1\cdots d_k)^{1/k}$ 得到显式界
+
+$$
+C_{k,\varepsilon}\le\zeta(1+(1-\varepsilon)/k)^k
+\le(1+k/(1-\varepsilon))^k.
+$$
+
+盒外元组的最小公倍数大于 $X$，因此截断误差至多 $C_{k,\varepsilon}X^{-\varepsilon}$。又设
+
+$$
+b_k=\sum_{m\ge1}(m+1)^k2^{-2(m-1)},
+$$
+
+则 $A_k(p)-1\le b_kp^{-2}$。删除全部 $p\mid V$ 的局部因子所损失的常数至多
+
+$$
+C_k b_k\sum_{p\mid V}\frac1{p^2}
+\le C_k b_k\frac{\log V}{(2r-1)^2\log(2r-1)}.
+$$
+
+于是固定 $k,\varepsilon$ 时，平均矩与 $C_k$ 的差的绝对值至多
+
+$$
+\frac{H_X^k}{T}+C_{k,\varepsilon}X^{-\varepsilon}
++C_kb_k\frac{\log V}{(2r-1)^2\log(2r-1)}.
+$$
+
+最后一项为 $O_k(1/(r\log r))$。这里的常数随固定的 $k,\varepsilon$ 变化；下节让 $k$ 变化时使用的是另一个全 $k$ 有限界。
+
+### 206.3 Robin 异常比例的全阶有限界
+
+**推论 206.3（全阶有限上尾）。** 对任意上述实际区间、任意实数 $B>0$ 及任意正整数 $k$，非负性和有限矩公式给出
+
+$$
+\frac{\#\{g\in I:Z(gV+1)\ge B\}}T
+\le\frac{C_k+H_X^k/T}{B^k}
+\le\left(\frac{k+1}{B}\right)^k
++\frac1T\left(\frac{1+\log X}{B}\right)^k.
+$$
+
+这是每个 $k$ 均成立的有限不等式，因而允许在控制右边全部项的前提下选择随 $V$ 变化的 $k$。
+
+对 $I_r$ 令
+
+$$
+B_r=e^\gamma\log\log\bigl(V\lceil V/10\rceil+1\bigr).
+$$
+
+只在充分大的 $r$ 使用这个正阈值。每个实际整数的 Robin 预算至少为 $B_r$，因此令
+
+$$
+\mathcal E_r=\{g\in I_r:Z(N_g)\ge e^\gamma\log\log N_g\},
+$$
+
+就可在上式中取 $B=B_r$ 来控制 $|\mathcal E_r|/|I_r|$。特别地，固定任意正整数 $k$，
+
+$$
+\frac{|\mathcal E_r|}{|I_r|}=O_k((\log\log V)^{-k}).
+$$
+
+也可直接在全阶有限界中取 $k=\lfloor B_r/e\rfloor\ge1$。因 $k\le B_r/e<k+1$，
+
+$$
+k\log\frac{k+1}{B_r}
+\le k\left(-1+\frac e{B_r}\right)
+\le 2-\frac{B_r}{e}.
+$$
+
+同时 $T\asymp V$、$\log X=2\log V+O(1)$、$k=O(\log\log V)$，故第二项为
+
+$$
+\exp\left(-\log V+O((\log\log V)^2)\right).
+$$
+
+最后
+
+$$
+B_r=e^\gamma(\log\log V+\log2+o(1))
+$$
+
+给出
+
+$$
+\boxed{\displaystyle
+\frac{|\mathcal E_r|}{|I_r|}
+=O\bigl((\log V)^{-e^{\gamma-1}}\bigr).}
+$$
+
+这个异常集把等号也计入，符合目标严格不等式的要求。比例趋零仍允许每个区间存在例外，甚至允许无限多个例外。它既不证明全部合法 $g$ 满足 Robin，也不与§205 存在接近加性余量 $e^\gamma\log2$ 的稀疏子族冲突。
+
+### 206.4 全体乘子的实际小素数核心归约
+
+对同一个实际整数 $N=gV+1$ 和实数 $y>1$，定义完整赋值核心与其平方自由支撑
+
+$$
+C_y(N)=\prod_{p\le y}p^{v_p(N)},\qquad
+R_y(N)=\prod_{\substack{p\le y\\p\mid N}}p,\qquad
+H_y(N)=N/C_y(N).
+$$
+
+这里 $\gcd(C_y,H_y)=1$，且 $H_y$ 的全部素因子大于 $y$。由实际尾部的大小，
+
+$$
+0\le\log Z(H_y)
+\le\sum_{p\mid H_y}\frac1{p-1}
+\le\frac{\log H_y}{(y-1)\log y}.
+$$
+
+因而有对同一个 $N$ 成立的显式联合上界
+
+$$
+Z(C_y)\le Z(N)
+\le Z(C_y)\exp\left(\frac{\log(N/C_y)}{(y-1)\log y}\right).
+$$
+
+**命题 206.4（实际核心的统一加性归约）。** 取固定 $a>0$ 与 $y_r=r(\log r)^a$。在全部 $g\in I_r$ 上，$\log N=O(r)$，而 Mertens 乘积给
+
+$$
+Z(C_{y_r})\le\prod_{p\le y_r}(1-1/p)^{-1}=O(\log r).
+$$
+
+因此下面的 **加性** 估计对全部这些实际 $g$ 一致成立：
+
+$$
+0\le Z(N_g)-Z(C_{y_r}(N_g))=O((\log r)^{-a}).
+$$
+
+结合大小关系，Robin 差额便化为
+
+$$
+e^\gamma\log\log N_g-Z(N_g)
+=e^\gamma(\log\log V+\log2)-Z(C_{y_r}(N_g))+o(1),
+$$
+
+其中误差一致于 $g$。这是真正的加性核心归约；相对误差 $1+o(1)$ 本身不足以给出该式。
+
+由本卷已有的 Axler 包络还可得到一个受限充分条件。若某实际子族满足，对于固定 $0<\theta<2$，
+
+$$
+\log R_{y_r}(N_g)\le(\theta+o(1))\log V
+$$
+
+且误差在该子族上一致，则
+
+$$
+\liminf_{r\to\infty}\inf_g
+\bigl(e^\gamma\log\log N_g-Z(N_g)\bigr)
+\ge e^\gamma\log(2/\theta)>0.
+$$
+
+确实，$Z(C_y)\le R_y/\varphi(R_y)$；对趋大的 $R_y$ 使用已有包络，再用上面的加性尾界。有限范围的 $R_y$ 对应有界响应，另行直接处理；用任意固定的大阈值切分即可保持统一性。取 $\theta=1$ 得到 $e^\gamma\log2$ 的下界。用更强的 $C_y\le V^{\theta+o(1)}$ 代替上述平方自由支撑条件也足够，但不是必要条件。本节没有证明全部合法 $g$ 满足这些核心条件。
+
+### 206.5 实际反例：核心大于乘子尺度并不被同余禁止
+
+**命题 206.5（实际核心超过乘子尺度）。** 有一个完全位于所研究族内的精确实例：
+
+$$
+r=29,\qquad V=F_{29}=514229,\qquad g=75085,
+$$
+
+$$
+51423=\lceil V/10\rceil\le g\le\lfloor V/5\rfloor=102845,
+$$
+
+且
+
+$$
+N=1+gV=38610884466
+=2\cdot3^4\cdot7^2\cdot11\cdot17\cdot19\cdot37^2.
+$$
+
+该来源的精确规范组成是 $(A,B)=(5633252125,9114793405)$，单位位为一，满足 $2A+3B+1=N$；整数贪心规范地址与上述乘子区间亦已核对。这里直接取整数切面 $y=39$，不把浮点截断公式作为证据。全部素因子都不超过 $y$，所以
+
+$$
+C_{39}(N)=N>V,
+\qquad
+R_{39}(N)=5521362>V.
+$$
+
+这是对逐点断言 $C_y\le V$ 及 $R_y\le V$ 的真实反例；不靠松弛配置或分别可达的局部极值。这个有限实例不反驳带 $o(1)$ 的无限族断言，也不承担任何 Robin 反例主张。
+
+更一般地，给定 $D\ge1$ 与 $\gcd(D,V)=1$，令 $b_D\in\{0,\ldots,D-1\}$ 为 $Vb_D\equiv-1\pmod D$ 的解，则真实区间中 $D\mid gV+1$ 的解数准确为
+
+$$
+\left\lfloor\frac{G_1-b_D}{D}\right\rfloor
+-\left\lfloor\frac{G_0-1-b_D}{D}\right\rfloor.
+$$
+
+当 $D>T$ 时，该数至多一，并不必为零。因此不能用“核心模数超过可用乘子区间长度”直接排除该核心；还须证明它的唯一候选剩余类没有命中真实区间。
+
+### 206.6 结论范围
+
+高阶矩对同一个实际整数内的全部联合整除关系作平均，给出了显式的稀疏异常上界。实际核心归约则保留逐点问题，并把任何未控制部分限定到有明确赋值公式的小素数核心。当前仍缺的是对全部合法 $g$ 的核心响应、赋值损失或剩余类区间命中的统一估计。平均结论、稀疏近界构造及有限核心反例都不能补上这项逐点义务。
+
+必要实验材料为 [精确程序](../../reports/fib-robin-boundary/affine_moments.py)、[使用说明](../../reports/fib-robin-boundary/affine_moments.md) 与 [结果数据](../../reports/fib-robin-boundary/affine_moments.json)。程序对素数指标 $7,11,13,17,19,23,29,31$ 的完整实际乘子区间枚举 $189527$ 个整数；三阶矩均给出宽度至多 $10^{-12}$ 的严格有理包围。另在 $96$ 个小区间上穷举 $779360$ 个有序约数元组，核对共同最小公倍数计数、直接矩与有限误差界。区间、筛、因子分解与包围全部使用整数或有理数，不计算 Robin 预算或差额；代表来源另作规范解码。有限实验不验证无限族的极限或 RH。
+
+## 追加锚（本行以下为增补区）
