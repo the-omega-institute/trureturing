@@ -4,7 +4,7 @@
 
 Let (N,T) be a finite, connected, orientable ideal triangulation of a compact
 3-manifold whose boundary components have genus at least two. Assume every
-global edge has degree exactly 8 or at least 16. Write L for the degree-eight
+global edge has degree exactly 8 or at least 14. Write L for the degree-eight
 edges and H for the remaining edges.
 
 For a tetrahedron sigma, let S_sigma be the set of its six local edges whose
@@ -15,10 +15,10 @@ three-star or a three-cycle), and a four-edge packet is a four-cycle. This is
 an incidence condition on actual local edge occurrences; it does not identify
 distinct global edges or impose equal lengths.
 
-The theorem below is a new valence-eight subcase. The four-cycle-only case with
-a different high cap is treated separately in the repository. The new content
-here is the three-star/three-cycle packet, where the two degree-eight neighbors
-of a low edge are adjacent.
+The theorem below is a new valence-eight subcase at high-edge threshold 14. The
+three-star/three-cycle packet is the genuinely new local geometry; the four-cycle
+packet is retained so that one theorem covers mixed packets. The degree-fourteen
+constant is below the existing degree-sixteen mixed-edge budget.
 
 ## Six-variable cosine
 
@@ -48,7 +48,7 @@ boundary in the strict hyper-ideal sense.
 ## Proof
 
 Let D be the maximum global edge degree. Set
-a = 5/4 and c = 4/3. Let q_D = cos(2*pi/D), and choose
+a = 5/4 and c = 10/7. Let q_D = cos(2*pi/D), and choose
 
   0 < delta < min(1/3, 2*(1-q_D)/(2+q_D)),  h = 1 + delta.
 
@@ -102,12 +102,13 @@ the choice of delta above.
 
 For x1=c, monotonicity gives the conservative endpoint bound
 
-  phi_1 <= phi_1(c,2,2,1,2,2) = 23/25.
+  phi_1 <= phi_1(c,2,2,1,2,2) = 53/59.
 
-Moreover 23/25 < cos(pi/8). Indeed, after squaring this is
-529/625 < (2+sqrt(2))/4, and sqrt(2) > 866/625 because
-2 - (866/625)^2 = 31294/390625 > 0. Therefore every high-edge occurrence
-has alpha_1 > pi/8. Since d(e) >= 16, its cone angle is strictly greater
+Moreover 53/59 < cos(pi/7). Indeed, after squaring this is
+Use pi<22/7, so pi/7<22/49. The alternating Taylor lower bound
+T6(u)=1-u^2/2+u^4/24-u^6/720 gives T6(22/49)-53/59
+=95008047934/36748617518655 > 0, hence 53/59 < cos(pi/7). Therefore every high-edge occurrence
+has alpha_1 > pi/8. Since d(e) >= 14, its cone angle is strictly greater
 than 2*pi and K_e < 0.
 
 ### Co-volume minimum
@@ -153,3 +154,59 @@ minimum valence nine does not cover the degree-eight edges here.
 - F. Luo and T. Yang, *Volume and rigidity of hyperbolic polyhedral
   3-manifolds*, arXiv:1404.5365:
   https://arxiv.org/abs/1404.5365
+
+
+## Explicit nonempty packet
+
+The hypotheses occur in a genuine orientable ideal triangulation. Take 16 tetrahedra
+indexed by 0,...,15, with face (t,f) opposite vertex f. Pair the following
+unordered faces; the displayed permutation sends source vertices to target
+vertices (the reverse pairing uses its inverse):
+
+| source | target | permutation |
+|---|---|---|
+| (0,1) | (8,1) | 0123 |
+| (0,2) | (4,2) | 0123 |
+| (0,3) | (2,3) | 0123 |
+| (1,1) | (9,1) | 0123 |
+| (1,2) | (5,2) | 0123 |
+| (1,3) | (3,3) | 0123 |
+| (2,1) | (10,1) | 0123 |
+| (2,2) | (6,2) | 0123 |
+| (3,1) | (11,1) | 0123 |
+| (3,2) | (7,2) | 0123 |
+| (4,1) | (12,1) | 0123 |
+| (4,3) | (7,3) | 0123 |
+| (5,1) | (13,1) | 0123 |
+| (5,3) | (6,3) | 0123 |
+| (6,1) | (14,1) | 0123 |
+| (7,1) | (15,1) | 0123 |
+| (8,2) | (13,2) | 0123 |
+| (8,3) | (11,3) | 0123 |
+| (9,2) | (12,2) | 0123 |
+| (9,3) | (10,3) | 0123 |
+| (10,2) | (15,2) | 0123 |
+| (11,2) | (14,2) | 0123 |
+| (12,3) | (14,3) | 0123 |
+| (13,3) | (15,3) | 0123 |
+| (4,0) | (8,0) | 0321 |
+| (3,0) | (11,0) | 0312 |
+| (6,0) | (10,0) | 0132 |
+| (2,0) | (14,0) | 0321 |
+| (0,0) | (12,0) | 0321 |
+| (1,0) | (15,0) | 0231 |
+
+The 96 local edges fall into eight global classes. Six classes have size 8,
+one has size 14 and one has size 34. A direct transitive-closure check gives
+the six degree-eight classes
+{0,6,12,18,24,30,36,42}, {1,7,13,19,49,55,61,67},
+{2,8,26,32,50,56,74,80}, {14,20,38,44,62,68,86,92},
+{25,31,37,43,73,79,85,91}, {48,54,60,66,72,78,84,90},
+where local edge number is 6t+j in order (01,02,03,12,13,23).
+The remaining classes have sizes 14 and 34. Every tetrahedron has local
+degree-eight edges (01,02,03), a three-star. The two vertex links are connected
+orientable surfaces with (F,V,chi)=(16,6,-2) and (48,10,-14), hence genera 2
+and 8. Each edge link is a single circle and no edge is identified with its
+reverse. Therefore this is a genuine compact orientable manifold after ideal
+vertices are truncated, with one degree-eight packet type and high degrees 14
+and 34.
