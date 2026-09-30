@@ -24,9 +24,9 @@ three-star and three-cycle endpoint substitutions are
 
 The four-cycle values are 293/400 and 473/700. All lower squares exceed 1/2
 and all upper squares are below 1/2. For high edges, the conservative endpoint
-is 5965/6972 < cos(pi/6), so degree at least 14 supplies the strict upper budget.
+is 5965/6972 < cos(pi/6), so degree at least 12 supplies the strict upper budget.
 
-The proof uses an explicit 16-tetrahedron orientable packet with degrees 8,8,8,8,8,8,14,34 and then minimizes the actual shared-edge co-volume on one compact global
+The proof uses an explicit 16-tetrahedron orientable packet with degrees 8,8,8,8,8,8,12,36 and then minimizes the actual shared-edge co-volume on one compact global
 length box. It does not assume a zero-curvature metric or use Ricci-flow
 convergence as an existence premise. Zhao's six-variable formula,
 monotonicity and genuine length-domain criterion, and Luo--Yang's co-volume
