@@ -79,12 +79,12 @@ occurrences, so its cone angle is strictly less than 2*pi and K_e > 0.
 
 Put x1=2. The largest possible cosine is
 
-  three-star:   (2,2,1,c,c)       phi_1 = 121/175
-  three-cycle:  (2,c,1,c,2)       phi_1 = 13*sqrt(41)/123
+  three-star:   (2,2,1,c,c)       phi_1 = 709/1003
+  three-cycle:  (2,c,1,c,2)       phi_1 = 11*sqrt(249)/249
   four-cycle:  (2,c,a,2,c)         phi_1 = 473/700.
 
 Each square is strictly smaller than 1/2:
-2*121^2 < 175^2, 2*(13^2*41) < 123^2, and 2*473^2 < 700^2.
+2*709^2 < 1003^2, 2*(11^2*249) < 249^2, and 2*2753^2 < 4012^2.
 Thus alpha_1 > pi/4 at every occurrence, the cone angle is strictly larger
 than 2*pi, and K_e < 0.
 
@@ -104,8 +104,7 @@ For x1=c, monotonicity gives the conservative endpoint bound
 
   phi_1 <= phi_1(c,2,2,1,2,2) = 53/59.
 
-Moreover 53/59 < cos(pi/7). Indeed, after squaring this is
-Use pi<22/7, so pi/7<22/49. The alternating Taylor lower bound
+Moreover 53/59 < cos(pi/7). Since pi<22/7, we have pi/7<22/49. The alternating Taylor lower bound
 T6(u)=1-u^2/2+u^4/24-u^6/720 gives T6(22/49)-53/59
 =95008047934/36748617518655 > 0, hence 53/59 < cos(pi/7). Therefore every high-edge occurrence
 has alpha_1 > pi/8. Since d(e) >= 14, its cone angle is strictly greater
