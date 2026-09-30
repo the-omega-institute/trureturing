@@ -20,7 +20,7 @@ internal sealed class FibonacciObservationDocument : IScribeDocumentDefinition
                 DescribeId.Create("fibonacci-observation-identities"),
                 DeclarationHandle.Create(IdentityDeclaration),
                 H("Discriminant square and Fibonacci conjugacy"),
-                StatementSource.FromAuthor(IdentityFormula()),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -37,7 +37,7 @@ internal sealed class FibonacciObservationDocument : IScribeDocumentDefinition
                 DescribeId.Create("fibonacci-observation-phase-indistinguishability"),
                 DeclarationHandle.Create(PhaseDeclaration),
                 H("Persistent phase indistinguishability"),
-                StatementSource.FromAuthor(PhaseFormula()),
+                StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
