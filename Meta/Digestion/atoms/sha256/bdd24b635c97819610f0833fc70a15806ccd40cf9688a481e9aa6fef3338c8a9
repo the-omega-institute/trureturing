@@ -1,0 +1,13 @@
+**定义 9.1（区域字空间及其切口）。** 对整数 $L\ge0$，令
+
+$$
+\mathcal W_L=\{w\in\{0,1\}^L:w_iw_{i+1}=0\text{ 对所有相邻位置成立}\},
+\qquad
+\mathcal R_L=\operatorname{span}\{|w\rangle:w\in\mathcal W_L\}
+\subseteq(\mathbb C^2)^{\otimes L}.
+$$
+
+$\mathcal W_0$ 含唯一空字。给定 $L=\ell+r$ 的位置切口，张量分解是前 $\ell$ 位与后 $r$ 位；拼接 $uv$ 合法恰当且仅当两侧内部均合法且接缝不为 $11$。这是区域位字的合法关系，不是 $A\times H$ 的低高模数组成标签分解，也不预设两者之间有任何同构。
+
+纯态的 Schmidt 秩等于其在左右正交基中的系数矩阵秩；熵取 $S=-\operatorname{Tr}(\rho_L\log\rho_L)$，本节 $\log$ 为自然对数。所用 Schmidt 分解和精确矩阵乘积态的键维数工具，见 Schollwöck, [*The density-matrix renormalization group in the age of matrix product states*，第 4.1.1 节](https://arxiv.org/abs/1008.3477)。以下计算针对此指定合法字支撑。
+

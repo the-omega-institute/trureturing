@@ -1,0 +1,6 @@
+**命题 10.5（持续性与正概率续接的共同条件）。** 在假设 10.4 下，任意有限自适应允许序列的每个正概率后继态仍支撑于 $\mathcal H_{\mathrm{exc}}$。若使用其中某一已声明的充分边界，则相应的记录概率及条件边界结论同时适用。仅指定点击效果和概率，不能替代假设 10.4 的逐分支支撑要求。
+
+证明。每个酉保持 $\mathcal H_{\mathrm{exc}}$；每个 Kraus 算子把该子空间映入自身，所以对支撑于 $\mathcal H_{\mathrm{exc}}$ 的正算子，各分支和仍为支撑于 $\mathcal H_{\mathrm{exc}}$ 的正算子。对正迹分支除以迹不会改变支撑。沿有限协议树归纳即得持续性；同一路径上的记录和条件边界则分别由命题 6.3、定理 7.4、定理 8.5 或定理 10.2 的逐分支归纳给出。
+
+若去掉仪器支撑条件，同一效果可能来自保留模式分支，也可能来自把模式送到 $|\mathrm{vac}\rangle$ 的吸收分支；具体的相同点击概率、不同后继构造见[波粒事件卷命题 4.3](https://github.com/the-omega-institute/trureturing/blob/64b78db1ad18a8a90b42e13a412dfc281d5c0922/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md#L132)。因此概率记录不单独确定吸收或存活，只有指定实际操作才确定下一合法动作。这也符合[动态边界卷第 19 节](https://github.com/the-omega-institute/trureturing/blob/64b78db1ad18a8a90b42e13a412dfc281d5c0922/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md#L1562)将未来响应和选择器纳入边界的要求。$\square$
+
