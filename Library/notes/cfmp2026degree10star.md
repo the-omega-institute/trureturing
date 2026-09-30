@@ -22,9 +22,9 @@ squares are checked by `verify_degree10_star.py` and
 `audit_degree10_bounds.py`. Degree-eight cosine bounds are 143/200 below and
 35941/50941 above. Degree-ten upper endpoint is
 19195*sqrt(880915135)/704732108, whose square is
-1842240125/2818928432 < cos(pi/5)^2. For degree 38, the generalized
-all-placement upper endpoint is 4742513/4833160, with square
-22491429555169/23359435585600 < cos(pi/19)^2; the lower endpoint uses
+1842240125/2818928432 < cos(pi/5)^2. For degree 38, the two actual high/low coordinate patterns have the same
+relaxed upper endpoint 4489*sqrt(8216635)/13146616, with square
+100755605/105172928 < cos(pi/19)^2; the lower endpoint uses
 1982/2009 > cos(pi/19) via rational Taylor bounds.
 
 The generalized incidence condition is: every degree-ten occurrence has at
