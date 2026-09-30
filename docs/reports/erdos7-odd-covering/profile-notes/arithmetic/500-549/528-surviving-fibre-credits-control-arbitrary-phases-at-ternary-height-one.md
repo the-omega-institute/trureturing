@@ -7522,3 +7522,369 @@ All values are rational; the table displays decimals. The exact witness is W71>8
 The last comparison is exactly the successful71 output; no multiplier, trim or successor is constructed at73. The state retains all complete moments0/1/2/4, exact atoms1..256, and exact residual moments above256. All actual exponents and all auxiliary tails remain untruncated. The consumer derives geometric raw moments through factorial moments and Stirling transforms and performs divisor-based convolution. The [finite-cap consumer](../../../frontier/cover-geometry/pure-support-profiles/finite_cap_endpoint.py) and its [exact result](../../../frontier/cover-geometry/pure-support-profiles/finite_cap_endpoint.json) supply132 exact checks. The saved fractions also verify the fixed stopping stage, unchanged last-positive state, strict mean bound, negative candidate bound and finite-mass identity. The consumer accepts a required explicit output path and uses only the Python standard library.
 
 Physical validity still requires the FC159 actual finite source. The uniform conclusion uses the common m_star, not a larger assignment-specific mu_i or the unknown actual survival probability. Different earlier parameters/order, stronger phase-dependent or joint query information, improved survivor lower bounds, and other continuation interfaces remain outside this result. No new tail continuation or resolution of the missing73..10000 range is asserted.
+
+## Ternary-root allocation gives a stricter complete-query comparison
+
+One fixed FC159 source admits a complete-query convex profile preserving both actual star-supported ternary roots and the fact that each selected numerical label chooses only one root. Its same-mass trimmed hinge is strictly smaller than the pure-only profile at the same retained depth. The proof keeps every complete label's colour through the coordinate induction; it does not assume simultaneous actual rootwise maximizers.
+
+For the single retained-depth-one instance, unchanged initial mass and fixed half-clipping sequence43,47,53,59,61,67,71,73, the positive construction reaches71 with mass>1/500, second moment<157/10, fourth moment<8040000 and full-Haar density<=128. Its actual nineteen-prime head Haar survivor therefore has mass>1/64000. Under the existing Report734 analytic premise, the same source admits every finite outside-prime tail strictly above10000 with final distorted mass>19/10000.
+
+The73 ledger remains nonpositive, and its current mean excludes every legal constant final clipping parameter. Thus this improves the common comparison and reserve but does not enlarge the admitted support range beyond71. Additional support primes from73 through10000 remain outside the result. This is ordinary mathematics and exact arithmetic, not Lean certification or a resolution of unrestricted Erdős #7.
+
+### 1. Fixed source, finite depth and actual support
+
+Let
+
+    V = {5,7,11,13,17,19,23,29,31,37,41},
+    R = {3} union V,
+    D0 = 1816999451688960000 / 36518862868606981,
+    h = 1/D0.
+
+Fix either FC110 or FC131 assignment, a finite N >= max(1,N_+), and one admitted finite nongroup remainder with one globally fixed phase for every original. The old-only ternary height is at most one. Its remainder has nonternary support at least two and excludes all additional pure/star numerical labels and all shallow head/private grouped labels. These restrictions stay unchanged. Let mu be the probability on its actual complete core survivor constructed in FC230, and eta0 = mu/D0. Thus eta0 has exact mass h, is supported on that survivor, and eta0 <= H_R, where H_R is full product Haar at a finite period resolving the entire planned query inventory. Uniform higher digits are included as needed. The source is fixed before any query layout or cost is chosen.
+
+For every nonternary p set
+
+    u_p = sum_(e=1..N) p^(-e),
+    a_p = 1-u_p.
+
+FC147--FC149 give pairwise disjoint actual pure and star cylinders, including across depths. Pure ternary 0 mod 3 is forbidden. The stars at 5 target root 1; the stars at every p in V\{5} target root 2. Let B_(p,r) be the actual set avoiding all pure p-cylinders and those p-star cylinders active at root r. Then
+
+    a_(p,1) = 1-2u_p if p=5, and a_p otherwise,
+    a_(p,2) = a_p if p=5, and 1-2u_p otherwise,
+    H_p(B_(p,r)) = a_(p,r).
+
+All a_(p,r)>1/p. Indeed u_p<1/(p-1), and p>=5 gives 1-2/(p-1)>1/p. Denote H_p restricted to B_(p,r) by beta_(p,r). Every depth-e cylinder has beta_(p,r)-mass at most p^(-e) for e>=1, regardless of its phase.
+
+Let H_(3,r) be full ternary Haar restricted to root r, with mass 1/3 and uniform conditional higher digits. Define
+
+    Lambda_r = H_(3,r) tensor product_(p in V) beta_(p,r),
+    Lambda = Lambda_1 + Lambda_2.
+
+Because eta0 <= H_R and its support avoids every actual pure and star cylinder,
+
+    eta0 <= Lambda.                                      (FC330)
+
+Group and nongroup deletions only restrict eta0 further. No altered phase, new star, infinite completion, or independent conditioned root law enters (FC330).
+
+One may instead retain any declared finite 1<=n<=N of the actual cylinders above and use u_p(n) in this upper support. All subsequent assertions hold at that retained depth with the SAME eta0 and h. No source rescaling is justified merely by retaining fewer observations.
+
+### 2. Weighted ordered increments, with labels and depth zero retained
+
+The following elementary form makes explicit the labelled comparison invoked by Reports461 and771 and by Schroeder's Section4 ordered-increment lemma.
+
+Let beta be a finite positive measure of mass a. Let I be a finite labelled list; its labels need not have different depths or phases. Attach to label i a nonnegative coefficient w_i, an integer depth d_i>=1, and an event A_i with beta(A_i)<=p^(-d_i). Suppose a>=1/p. A depth-zero label is constant on the coordinate and is included in a fixed nonnegative baseline c. Let f:[0,infinity)->[0,infinity) be increasing and convex.
+
+Sort the positive-depth labels by nondecreasing d_i, preserving all repeated labels at a common depth. Put
+
+    W_i = sum_(k<=i) w_k,
+    W_0 = 0,
+    Delta_i = f(c+W_i)-f(c+W_(i-1)) >= 0.
+
+For every active subset A of labels, telescope its sum in that same order. The increment due to its active label i is at most Delta_i: its accumulated preceding weight is at most W_(i-1), and convexity makes the increment f(t+w_i)-f(t) nondecreasing in t. Hence the pointwise inequality
+
+    f(c+sum_i w_i 1_(A_i))
+      <= f(c)+sum_i Delta_i 1_(A_i)
+
+holds, with no assumption on the intersections of the actual A_i. Integration gives
+
+    integral f(c+sum_i w_i 1_(A_i)) dbeta
+      <= a f(c)+sum_i p^(-d_i) Delta_i.                  (FC331)
+
+Define the subprobability run measure
+
+    nu_(p,a)(0)=a-1/p,
+    nu_(p,a)(j)=(p-1)/p^(j+1), j>=1.
+
+Its mass is a and nu_(p,a){j>=d}=p^(-d) for d>=1. At a fixed j, the set of active run labels d_i<=j is an initial segment of the sorted list (including all members of each active equal-depth group). Therefore the corresponding telescope is exact:
+
+    sum_(j>=0) nu_(p,a)(j) f(c+sum_i w_i 1_(d_i<=j))
+      = a f(c)+sum_i p^(-d_i) Delta_i.                  (FC332)
+
+Equations (FC331)--(FC332) prove the weighted comparison. Depth-zero weights remain in c; no cap p^0 is charged against each such label, and the constant contribution is multiplied by the true total mass a. Coefficients may be zero and may depend on other coordinates held fixed during this calculation. Distinct phases at equal depth require no identification. The proof chooses no actual maximizing arrangement.
+
+The identical proof allows a normalized coordinate whose positive-depth tail bounds are p^(-d) and mass 1. In particular it applies to the ternary coordinate conditional on a specified root, with shifted depth d=e-1; its shifted depth-zero labels are constant on that root.
+
+### 3. A simultaneous coloured induction for every complete layout
+
+Fix once and for all a complete query layout Phi at an arbitrary finite full head period. It contains exactly one cylinder per numerical divisor, including the unit. More generally the proof permits any finite subset of that inventory. Write a numerical label as gamma=(alpha,e), with nonternary exponent vector alpha=(alpha_p)_(p in V) and ternary exponent e.
+
+The actual query phase at each coordinate is fixed once per gamma. If e>=1, its ternary first digit defines a fixed colour sigma(gamma) in {0,1,2}. If e=0, its ternary indicator is identically one, with one common actual nonternary phase across both roots. Let chi_(3,gamma) be the full actual ternary query indicator, and chi_(p,gamma) its nonternary p-indicator; depth-zero indicators equal one. Thus
+
+    L_Phi(x) = sum_(gamma in Gamma)
+                    chi_(3,gamma)(x3) product_(p in V) chi_(p,gamma)(x_p).
+
+Define
+
+    nu_(p,r) = nu_(p,a_(p,r)),
+    pi_r(j) = product_(p in V) nu_(p,r)(j_p),
+    B(j) = product_(p in V)(1+j_p).
+
+Here j belongs to the one common symbolic index set N_0^V for both roots.
+
+The induction invariant after processing coordinates S subset V is the upper integral of
+
+    f(sum_(gamma in Gamma) chi_(3,gamma)(x3)
+          product_(p notin S) chi_(p,gamma)(x_p)
+          product_(p in S) 1_(alpha_p<=j_p)),           (FC333)
+
+integrated against H_(3,r), the unprocessed beta_(p,r) and the processed nu_(p,r). At S empty this is exactly the Lambda_r integral. For the next p, fix every other actual coordinate and all prior j. Each gamma has a fixed nonnegative coefficient, the product of those other indicators. Apply (FC331)--(FC332) to its actual p-cylinder. Every alpha_p=0 term contributes to the baseline c. The result is precisely (FC333) for S union {p}, with every original label still present and its full actual ternary indicator unchanged.
+
+This proves the invariant by induction separately under each root's actual product measure, while using the SAME prescribed Gamma and sigma at every step. The expression (FC333), apart from its integration measure, is the same in both inductions. No optimizer, averaged layout, or separately relabelled ternary-depth group is introduced.
+
+After S=V, the free-label count is
+
+    F(j)=#{(alpha,0) in Gamma: alpha_p<=j_p for all p} <= B(j).
+
+For a complete finite rectangular inventory with nonternary exponent limits E_p, this free count is exactly B_E(j)=product_p(1+min(j_p,E_p))<=B(j). If the ternary limit is E_3, the refined combined positive-depth count below is at most B_E(j) min(K,E_3), and hence at most B(j)K. For incomplete inventories these remain upper bounds.
+
+Under conditional ternary Haar in root r, a label with e>=1 and sigma(gamma)!=r vanishes. A label with sigma(gamma)=r has conditional cylinder mass 3^(1-e); if e=1 it is the entire root. Apply the same weighted lemma to shifted depths e-1, treating e=1 labels as constants alongside F(j). Its comparison variable K>=1 has
+
+    Pr(K=k)=2/3^k, k>=1,
+    Pr(K>=e)=3^(1-e), e>=1.
+
+The result, followed only by F(j)<=B(j), is
+
+    integral f(L_Phi) dLambda_r
+      <= (1/3) sum_j pi_r(j) E_K f(B(j)+C_r(j,K)),     (FC334)
+
+where the actual unchanged colours define
+
+    C_r(j,K)=#{(alpha,e) in Gamma:
+                 alpha_p<=j_p for all p,
+                 1<=e<=K,
+                 sigma(alpha,e)=r}.
+
+At the SAME symbolic pair (j,K), the numerical inventory has at most B(j)K distinct labels with those exponent bounds, and each has one colour. Consequently
+
+    C_1(j,K)+C_2(j,K) <= B(j)K.                       (FC335)
+
+This is a deterministic counting inequality on the one original label set. It is not an assertion that physical rootwise extremizers can be jointly attained. Different ternary exponents may and generally do have different nonternary layouts; the induction never identifies them. Finite query inventories are enough for the proof: the possibly infinite comparison tails are retained in nu and K, while (FC335) only enlarges the count. Missing query labels need no newly chosen phases or colours.
+
+### 4. Combining the two inequalities without charging a label twice
+
+For fixed j let
+
+    l(j)=min(pi_1(j),pi_2(j)),
+    w(j)=max(pi_1(j),pi_2(j)).
+
+For b,x,y>=0, convexity and monotonicity give
+
+    f(b+x)+f(b+y) <= f(b)+f(b+x+y).
+
+For example, if x+y>0, apply convexity to b+x and b+y as the complementary convex combinations of b and b+x+y. If x+y=0 there is equality. Equation (FC335) then gives
+
+    f(B+C_1)+f(B+C_2) <= f(B)+f(B(1+K)).
+
+Pair the common coefficient l(j) of the two terms in (FC334), and bound the unmatched nonnegative coefficient w(j)-l(j) by f(B(1+K)). This yields the pointwise algebraic inequality
+
+    pi_1(j) f(B+C_1)+pi_2(j) f(B+C_2)
+      <= l(j) f(B)+w(j) f(B(1+K)).                  (FC336)
+
+The choice of larger coefficient may depend on j, but the proof does not move any actual label's colour. It is an upper inequality after both prescribed labelled integrals have already been bounded.
+
+Define one scalar positive comparison measure Xi on positive integer loads by the pushforward contributions
+
+    load B(j):       mass l(j)/3,
+    load v B(j):     mass 2 w(j)/3^v, for v>=2.       (FC337)
+
+Contributions with the same load are added. Equations (FC330),(FC334),(FC336) imply
+
+    integral f(L_Phi) deta0 <= integral f(z) dXi(z)   (FC338)
+
+for EVERY finite complete query layout Phi and EVERY nonnegative increasing convex f (with extended nonnegative integrals when necessary). Xi depends only on the actual declared finite support depth and root assignment, never on Phi or f. Polynomial costs have finite comparison moments because all coordinate tails are geometric.
+
+The total mass is exact:
+
+    Xi(total) = (1/3) sum_j [l(j)+w(j)]
+              = (1/3)[product_p a_(p,1)+product_p a_(p,2)]
+              = Lambda(total) >= h.                (FC339)
+
+Thus the construction retains the full mass of the reference support while charging the high ternary run only once. It is not the independent saturation of both roots. Taking f=1 confirms the same mass identity directly; (FC338) also applies to the usual f(0)=0 costs.
+
+### 5. Submeasure improvement over pure-only support
+
+For comparison at the SAME finite retained depth define
+
+    nu_(p,0)=nu_(p,a_p),
+    pi_0(j)=product_p nu_(p,0)(j_p).
+
+Pure-only support has ternary mass 2/3 and its standard scalar product comparator Pi_pure has contributions
+
+    load B(j):       pi_0(j)/3,
+    load v B(j):     2 pi_0(j)/3^v, v>=2.
+
+Each root factor differs from its pure-only counterpart only by a nonnegative reduction at j_p=0. Hence pi_r(j)<=pi_0(j), so l(j),w(j)<=pi_0(j), and termwise domination followed by the scalar pushforward proves
+
+    Xi <= Pi_pure as positive measures.              (FC340)
+
+The removed measure has mass at arbitrarily large loads. Indeed fix j_5=j_7=0, fix every other coordinate except j_11 to zero, and let j_11 grow. All relevant factors are positive. Since u_5,u_7>0, the root1 reduction at 5 and the root2 reduction at 7 give
+
+    pi_1(j)<pi_0(j),  pi_2(j)<pi_0(j),
+    B(j)=1+j_11 -> infinity.
+
+Already the load-B(j) coefficient in (FC337) is strictly smaller. Consequently
+
+    (Pi_pure-Xi)((t,infinity))>0
+
+for every finite t. The raw stop-loss integral under Xi is strictly smaller than the pure-only one at every finite threshold. This is a strict improvement of a universal upper comparison, not evidence of a physical optimizer or a new noncoverage threshold.
+
+### 6. Same source mass and upper-mass trimming
+
+Use the existing upper-mass principle of Reports773/779 with the unchanged actual eta0 mass h. For a positive scalar comparison nu with nu(total)>=h, let Top_h(nu) retain the highest h mass, splitting an atom if needed. Its tail function is
+
+    Top_h(nu)((t,infinity))=min(h,nu((t,infinity))).
+
+For any nonnegative increasing convex f and cutoff c,
+
+    integral f(L_Phi) deta0
+      <= h f(c)+integral (f(z)-f(c))_+ dXi(z).
+
+Indeed f(L)<=f(c)+(f(L)-f(c))_+, and the latter positive-part function is again nonnegative increasing convex, so (FC338) applies. Choosing a load cutoff c that retains the highest h mass gives the full comparison with Top_h(Xi). This trims only an outer bound; it never selects physical survivors according to Phi.
+
+Equation (FC340) and the tail formula give
+
+    Top_h(Xi) <=st Top_h(Pi_pure),                    (FC341)
+
+where both measures have mass h. The strict hinge improvement also survives trimming. Both raw measures have finite first moments and their tails tend to zero. For all sufficiently large t their tails are below h, and the difference of their Top_h tails is exactly the strictly positive removed raw tail. For every finite s, integration of tail functions over t>=s therefore gives
+
+    integral (z-s)_+ dTop_h(Xi)
+      < integral (z-s)_+ dTop_h(Pi_pure).             (FC342)
+
+All integrals are finite. This is stronger than comparing raw total masses or one isolated moment. The fixed clipping/append/trim monotonicity established in FC311–FC318 can propagate the stochastic improvement through any common admissible fixed sequence, while both comparisons retain positive certified mass. It does not by itself assert how many additional primes become admissible.
+
+### 7. Exact finite decomposition of complete moments, without truncating runs
+
+This is a symbolic consumer interface, not a numerical run or a parameter search. Put
+
+    z_(p,r)=a_(p,r)-1/p,
+    t_p(j)=(p-1)/p^(j+1), j>=1.
+
+Partition the common j-space by S={p:j_p=0}. On that part define
+
+    Z_r(S)=product_(p in S) z_(p,r).
+
+Then
+
+    pi_r(j)=Z_r(S) product_(p notin S)t_p(j_p).
+
+The shared positive factor implies that the minimum and maximum in (FC337) act only on Z_1(S),Z_2(S). They must be taken AFTER the products over S; replacing them by products of coordinatewise minima/maxima would change the law.
+
+For any nonnegative integer k let
+
+    M_(p,k)^+ = sum_(j>=1)(1+j)^k (p-1)/p^(j+1),
+    T_k = sum_(v>=2) 2v^k/3^v.
+
+These complete geometric moments are finite rational functions of p (and rational at each integer p). The exact full kth moment of Xi is
+
+    sum_(S subset V)
+      [min(Z_1(S),Z_2(S))/3 + T_k max(Z_1(S),Z_2(S))]
+      product_(p notin S) M_(p,k)^+.                 (FC343)
+
+There are 2^11 subsets, regardless of the finite source depth N or the arbitrary query heights. Equation (FC343) includes the ENTIRE infinite auxiliary tail and yields mass and first, second and fourth moments directly. Exact low-load atoms can separately be enumerated below a declared load cutoff; their finite subtraction from these complete moments supports the existing upper-mass algorithm. No query-height cutoff is being substituted for an infinite tail bound.
+
+### 8. One fixed first-root instance and its actual continuation
+
+Retain exactly the first pure and first star cylinder at each nonternary prime:
+
+    u_p=1/p,
+    a_(p,r)=1-1/p-1_(star p active at r)/p.           (FC344)
+
+These cylinders are present throughout the declared N>=max(1,N_+) domain. The source mass stays exactly h=1/D0. All future original and query heights remain unrestricted; one is the retained support depth, not an exponent bound.
+
+The producer evaluates(FC343) through all2048 zero-coordinate sets for complete moment orders0,1,2,4. Exact low atoms are stored through the predeclared limit256 with the zero pattern retained until the joint minimum and maximum are taken. There are70291 pattern/load entries before the final scalar pushforward. Complete high-tail moments are retained. No high load can contribute to a lower product-load atom. The initial Top_h cutoff is10.
+
+Assign every added head-only original to its greatest newly added prime, keeping its numerical identity, global phase and complete earlier cofactor. These originals may have arbitrary finite exponents, including ternary exponents, and arbitrary supports touching a new prime. Old-only labels outside FC159 are not added. Projected parts of outside-prime originals are not made into forbidden head-only classes.
+
+Use the existing actual live kernel with delta=1/2:
+
+    K_live(x,dy)=1_(y outside B_x)H_q(dy)/[1-min(beta(x),1/2)].
+
+Here beta is the actual forbidden union mass. For a simultaneous comparator Pi of mass m, put
+
+    T=(q-1)/2,
+    d_q=H_Pi(T)/T,
+    H_Pi(T)=W-T*m+sum_(z<T)(T-z)*pi_z,
+    m'=m-d_q.                                       (FC345)
+
+The existing all-layout Jensen argument bounds actual loss by d_q even when different current exponents induce different old layouts. If m'>0, restrict to actual survivors and scale that one measure by the single family-dependent number m'/v<=1, where v is its actual surviving mass. The next comparator is Top_(m')(Pi times pi_cap(q,2)). The scalar is chosen before any later query. These cap-two kernels are legal because1/(1-delta)=2<=q.
+
+The initial physical eta0 is unchanged. Later target masses and scalar thinnings define a consistent new source sequence. They do not retroactively assign larger masses to an earlier comparator's already fixed source. At a nonpositive target the schedule stops before appending that coordinate.
+
+The exact rational outputs have these decimal displays:
+
+| Stage | Candidate mass | Mean after a positive stage | Top cutoff |
+|---|---:|---:|---:|
+| 43 | .016828161403727980 | 21.5674996518 | 12 |
+| 47 | .013754771205594162 | 24.8525211424 | 12 |
+| 53 | .011077048701323217 | 28.8104179531 | 16 |
+| 59 | .008707475705340395 | 33.5603427794 | 16 |
+| 61 | .006258558121987480 | 40.9727477574 | 24 |
+| 67 | .004093480889261624 | 51.7829180559 | 28 |
+| 71 | .002002318877553795 | 73.6111742091 | 48 |
+| 73 | **-.00008961345927430622** | no new source | none |
+
+At71 the complete moments and mass satisfy
+
+    G2=15.685923509614291...<157/10,
+    G4=8039659.016465437...<8040000,
+    m71>1/500.                                      (FC346)
+
+Seven physical cap-two updates and only downward restrictions/scalings give eta71<=128 H_head, so actual head Haar survival is greater than1/64000. The same-source single-query fourth-moment bound supplies every mixed quadruple by Hölder.
+
+No constant final parameter repairs this73 comparator:
+
+    W71/m71=73.61117420908316...>73>72,
+    72*m71-W71=-.003226084533875024...<0.             (FC347)
+
+For any legal constant delta, the inequality (Z-72delta)_+>=Z-72delta bounds candidate mass above by m71*(72-E[Z])/[72(1-delta)]<0. This is a comparison obstruction, not an upper bound on actual survival. No operation beyond73, depth search, clipping-parameter search or order search is performed.
+
+### 9. The inherited quartic tail remains positive
+
+Pass(FC346) directly to [Report734](../700-749/734-seven-and-eight-full-height-heads-admit-quartic-prime-tails.md) and [Report779](../750-799/779-the-original-capped-source-lowers-the-general-eight-prime-tail-cutoff.md)'s existing quartic continuation, with delta=2/5, growth exponent25, B=10000 and ell=8. Under its analytic prime-product premise the full loss is at most G4*tau4, where
+
+    tau4=(5625/6144)*((2ell^2+1)/(2ell^2-1))^25
+       *B/(B-1)^4*sum_(j=0..25)25!/[(25-j)!(3ell)^j]
+       =1.097943312946189...*10^(-11).
+
+The conditions B>=286,ell>=4,3^ell<=B and4ell>=25 hold. Exact arithmetic gives
+
+    1/500-8040000*tau4>19/10000>0.                  (FC348)
+
+The exact comparison reserve is0.0019140479789988376... . This is final distorted-source mass, not final Haar density. Outside-prime originals are assigned once to their last outside coordinate with all actual phases, exponent heights and mixed supports retained. No further actual support prime from73 through10000 is admitted.
+
+### 10. Finite controls and verification boundary
+
+The [coloured-star consumer](../../../frontier/cover-geometry/pure-support-profiles/coloured_star_profile.py) and its [exact result](../../../frontier/cover-geometry/pure-support-profiles/coloured_star_profile.json) use explicit [arithmetic-library](../../../frontier/cover-geometry/pure-support-profiles/depth_two_profile.py) and output paths. Dependency provenance is recorded. The existing moment/append/trim routines are loaded without invoking the earlier main or its controls. The coloured initialization is a callable function separated from the producer's main, so later consumers can reuse it without replaying this instance. Only standard-library exact fractions are used.
+
+Its3387 checks include a new exhaustive225-layout control on the literal3*5 first-digit carrier. Pure0 mod3 and4 mod5 are excluded, with the actual star0 mod5 active at root1. Every complete layout with labels1,3,5,15 is checked at all discrete hinges. The finite coloured comparison has total mass7/15 and atoms
+
+    load1:2/15,  load2:4/15,  load4:1/15.
+
+The literal query phases2 mod3,1 mod5 and11 mod15 attain that whole finite profile. This controls the colour constraint and normalization; arbitrary-height validity follows from the labelled induction(FC331)--(FC338), not the finite enumeration. Remaining checks cover the2048 joint zero patterns, complete tail moments, exact atoms, split cutoffs, positive-prefix updates, first failure, density, short bounds and inherited tail allowance.
+
+Two independent structural derivations agree on the joint profile, source domination and unchanged-label constraint. Neither substitutes for the exact numerical arithmetic. No Lean verification is claimed. The preserved support range is through71 with the stated outside tail; no new prime-range result is claimed.
+
+### 11. Scope and the separate actual-source-cap refinement
+
+The present result uses exactly eta0=mu/D0 and h=1/D0 throughout. Its new input is the simultaneous actual pure-plus-star support; its bridge is the unchanged-label induction and the colour exclusion (FC335). Existing query-allocation budgets in Report528 FC5--FC10 and FC90 supply the same one-label/one-root structural constraint for linear fees; the argument above carries that constraint through a full convex profile.
+
+A separate source-mass refinement is available from the actual finite pure-conditioned carrier: its unnormalized Haar mass is
+
+    A_N=(2/3) product_p(1-u_p(N)).
+
+FC159 supplies survivor probability at least m_* under the normalized actual carrier, so the SAME normalized survivor mu satisfies mu<=H_R/(m_* A_N). Consequently (m_* A_N) mu is another Haar-dominated measure on the same support, of the larger exact certified mass m_* A_N. This rescaling is not used in (FC338)--(FC348) or in the fixed numerical instance. It uses actual N, not a smaller retained mask depth n<N. Report779 already demonstrates the general method of retaining an actual source cap and its query comparison jointly; the finite-N value here is a source-specific application, not a newly claimed general principle.
+
+The retained-first-root instance improves the comparison but still has a73 mean barrier. This does not exclude deeper actual pure-plus-star support, a stronger source mass justified by the actual full carrier, phase-dependent cylinder caps or a different earlier strategy. Those are distinct inputs to assess under their own source and continuation conditions.
+
+### Source mapping
+
+- Report528 FC147--FC149: actual disjoint pure/star prefixes and fixed root allocation.
+- Report528 FC150--FC159: finite normalization, unchanged physical phases, admitted old-only syntax and uniform positive survivor source.
+- Report528 FC230: one full-head probability mu and exact D0, uniform in all later query heights.
+- Report528 FC5--FC10 and FC90: an actual selected original can target at most one retained root; its free counterpart retains a common physical phase.
+- Report461, “Why the retained source geometry bounds arbitrary query hinges”: arbitrary separately labelled cylinders, positive weights and weighted convex aggregation; no joint-maximizer assumption.
+- Report771, “The full comparison on one physical source”: subprobability anchor factors, ordered increments, complete numerical labels and unrestricted query heights.
+- Report771, “The exact clipping loss requires different exponent layouts”: different new-depth layouts remain different; later continuation uses weighted Jensen rather than identifying phases.
+- Reports773/779: full comparison followed by upper-mass trimming and same-source capped continuation.
+
+The new deduction in this document is (FC336)--(FC338) with the labelled induction that licenses it, together with its strict same-mass profile consequence. The surrounding source and ordered-increment interfaces are reused.
