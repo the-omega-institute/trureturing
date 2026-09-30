@@ -58,7 +58,7 @@ public sealed class TowerManifestTests
             Component("baseline", "ci-jobs", ["current"], "bootstrap-pr-1"));
         var snapshot = Snapshot(
             (RuleFixture.WorkflowPath, """
-                on: {pull_request: {branches: [dev]}}
+                on: {pull_request: {branches: [dev]}, push: {branches: [dev]}}
                 jobs: {current: {runs-on: fixture, steps: [{run: 'dotnet judge.dll check-delta'}]}}
                 """),
             LedgerAnchorFile());
@@ -79,8 +79,8 @@ public sealed class TowerManifestTests
     {
         var syntax = Syntax(Component("checks", "ci-jobs", ["tests-fixture", "current"], "bootstrap-pr-1"));
         var snapshot = Snapshot(
-            (".github/workflows/ci-tests-fixture.yml", "on: {pull_request: {branches: [dev]}}\njobs: {tests-fixture: {uses: ./unit.yml}}"),
-            (".github/workflows/ci-current.yml", "on: {pull_request: {branches: [dev]}}\njobs: {current: {runs-on: fixture}}"),
+            (".github/workflows/ci-tests-fixture.yml", "on: {pull_request: {branches: [dev]}, push: {branches: [dev]}}\njobs: {tests-fixture: {uses: ./unit.yml}}"),
+            (".github/workflows/ci-current.yml", "on: {pull_request: {branches: [dev]}, push: {branches: [dev]}}\njobs: {current: {runs-on: fixture, steps: [{run: 'dotnet judge.dll check-delta'}]}}"),
             LedgerAnchorFile());
         var accepted = Assert.IsType<TowerValidationOutcome.Accepted>(
             TowerManifestValidator.Validate(syntax, snapshot, Catalog()));

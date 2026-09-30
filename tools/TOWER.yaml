@@ -162,12 +162,33 @@ components:
   - id: engineering-ci
     kind: ci-jobs
     members:
-      - tests-architecture
-      - tests-engine
-      - tests-rules
-      - selftest
-      - capability-proof
       - banned-api-proof
+      - capability-proof
+      - filemap
+      - selftest
+      - tests-architecture
+      - tests-cache-native
+      - tests-cli
+      - tests-cli-integration
+      - tests-configuration
+      - tests-cover-batch
+      - tests-declared-template
+      - tests-digestion
+      - tests-engine
+      - tests-filemap
+      - tests-instruction-contract
+      - tests-lean
+      - tests-repository-configuration
+      - tests-repository-contract
+      - tests-repository-digestion
+      - tests-repository-filemap
+      - tests-repository-topology
+      - tests-rules
+      - tests-scribe
+      - tests-scribe-documents
+      - tests-source-atomizer
+      - tests-truth
+      - tests-truth-release
     judged_by:
       - dev-baseline
     verification: verified

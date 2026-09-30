@@ -124,16 +124,21 @@ internal static class TowerActualValidator
                      && item.Path.Value.EndsWith(".yml", StringComparison.Ordinal)))
         {
             var workflow = CiWorkflowDocument.Parse(file.Text);
-            if (workflow is null) continue;
+            if (workflow?.RunsOnBranch("pull_request", "dev") != true
+                || !workflow.RunsOnBranch("push", "dev")) continue;
             foreach (var job in workflow.Jobs.Values)
+            {
+                if (job.Name == CiWorkflowDocument.DeltaJobName
+                    && (file.Path.Value != AdmissionWorkflowPath
+                        || !workflow.HasDeltaGate("dev"))) continue;
                 jobs[job.Name] = file.Path.Value;
-            if (file.Path.Value == ".github/workflows/ci-current.yml"
-                && workflow.HasDeltaGate("dev"))
-                jobs[CiWorkflowDocument.DeltaJobName] = file.Path.Value;
+            }
         }
 
         return jobs.ToImmutable();
     }
+
+    private const string AdmissionWorkflowPath = ".github/workflows/ci-current.yml";
 
     private static void ValidateFiles(
         TowerComponentSyntax component,

@@ -96,7 +96,7 @@ gh_create() {
   gh_authenticated create pr-create "$PR_OPEN_TIMEOUT_SECONDS" "$@"
 }
 parse_snapshot() {
-  local required="$1" head="$2" number="$3" runs="$4"
+  local required="$1" head="$2" number="$3"
   jq -Rsec --argjson required "$required" --arg head "$head" --argjson number "$number" --arg repo "$PR_REPO" '
     fromjson | select(type == "object" and (.errors == null or .errors == [])) |
     .data.repository |
@@ -130,8 +130,8 @@ parse_snapshot() {
 }
 
 read_snapshot() {
-  local required="$1" head_sha="$2" number="$3" deadline="$4" snapshot="$BOUNDED_OUTPUT"
-  printf '%s' "$snapshot" | parse_snapshot "$required" "$head_sha" "$number" null 2>/dev/null
+  local required="$1" head_sha="$2" number="$3" snapshot="$BOUNDED_OUTPUT"
+  printf '%s' "$snapshot" | parse_snapshot "$required" "$head_sha" "$number" 2>/dev/null
 }
 
 pr_watch_main() {
@@ -190,7 +190,7 @@ pr_watch_main() {
     if gh_local snapshot "$call_timeout" api graphql -f query="$PR_SNAPSHOT_QUERY" \
         -f owner="${PR_REPO%%/*}" -f repo="${PR_REPO#*/}" -F pr="$number" -f head="$head_sha" \
         && [[ -n "$BOUNDED_OUTPUT" ]] \
-        && parsed="$(read_snapshot "$required" "$head_sha" "$number" "$deadline")" \
+        && parsed="$(read_snapshot "$required" "$head_sha" "$number")" \
         && [[ -n "$parsed" ]]; then
       failures=0; seen_snapshot=1
       if [[ "$(jq -r '.stale' <<<"$parsed")" == true ]]; then
