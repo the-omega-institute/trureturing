@@ -34,8 +34,12 @@ phi_1 = P / sqrt(A B).
 For a genuine hyper-ideal tetrahedron the dihedral angle at edge 1 is
 alpha_1 = arccos(phi_1). The length-domain criterion and the formula are
 Zhao, Lemma 2.2 and Proposition 2.4. On [1,2]^6, phi_1 is nondecreasing in
-x2,x3,x5,x6 and nonincreasing in x4 (Zhao, Lemma 3.4; the explicit derivative
-sign is formalized in the repository's mixed-coordinate comparison).
+x2,x3,x5,x6 by Zhao, Lemma 3.4. It is nonincreasing in x4 directly from
+
+  partial phi_1 / partial x4 = -(x1^2 - 1) / sqrt(A B) <= 0.
+
+The explicit derivative sign is also formalized in the repository's
+mixed-coordinate comparison.
 
 ## Theorem
 
