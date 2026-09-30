@@ -1,8 +1,8 @@
 /- GID: D5/S0/Computability/ClauseMalformedCleanup
    generality: G
-   mirror-B: D5/S0/Computability/ClauseMalformedCleanup
+   mirror-B: D5/B/S0/Computability/ClauseMalformedCleanup
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: ["D5/S0/Computability/ClauseQueryPreprocessor"]
+   anchors: []
    utility: none
    digest: Every error-entry configuration cleans all private stacks and emits the zero-count query. -/
 

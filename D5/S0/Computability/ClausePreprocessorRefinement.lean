@@ -1,8 +1,8 @@
 /- GID: D5/S0/Computability/ClausePreprocessorRefinement
    generality: G
-   mirror-B: D5/S0/Computability/ClausePreprocessorRefinement
+   mirror-B: D5/B/S0/Computability/ClausePreprocessorRefinement
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: ["D5/S0/Computability/ClauseWordCodec", "D5/S0/Computability/ClauseMalformedCleanup"]
+   anchors: []
    utility: none
    digest: All raw clause words refine to actual clean physical-query machine runs. -/
 

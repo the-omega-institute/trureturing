@@ -1,8 +1,8 @@
 /- GID: D5/S0/Computability/ClausePreprocessorClock
    generality: G
-   mirror-B: D5/S0/Computability/ClausePreprocessorClock
+   mirror-B: D5/B/S0/Computability/ClausePreprocessorClock
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: ["D5/S0/Computability/ClauseQueryPreprocessor"]
+   anchors: []
    utility: none
    digest: A decreasing actual-step clock for all raw inputs of the fixed clause machine. -/
 

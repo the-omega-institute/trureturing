@@ -1,8 +1,8 @@
 /- GID: D5/S0/Computability/ClauseQueryPreprocessor
    generality: G
-   mirror-B: D5/S0/Computability/ClauseQueryPreprocessor
+   mirror-B: D5/B/S0/Computability/ClauseQueryPreprocessor
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: ["mathlib/module/Mathlib.Computability.TuringMachine.Computable"]
+   anchors: [mathlib/module/Mathlib.Computability.TuringMachine.Computable]
    utility: kind=checker; basis=consumer=D5/S0/Computability/ClausePreprocessorRefinement.pre_word_run; instance=D5/S0/Computability/ClauseQueryPreprocessor.dummySource
    digest: A fixed finite stack program validates unary clauses and emits physical queries. -/
 

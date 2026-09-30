@@ -1,8 +1,8 @@
 /- GID: D5/S0/Computability/ClauseWordCodec
    generality: G
-   mirror-B: D5/S0/Computability/ClauseWordCodec
+   mirror-B: D5/B/S0/Computability/ClauseWordCodec
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: ["D5/S0/Computability/ClauseQueryPreprocessor"]
+   anchors: []
    utility: kind=checker; basis=consumer=D5/S0/Computability/ClausePreprocessorRefinement.pre_word_run; instance=D5/S0/Computability/ClauseQueryPreprocessor.dummyQuery
    digest: Total raw-word decoding of explicit-universe clauses and succinct physical queries. -/
 
