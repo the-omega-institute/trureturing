@@ -10,6 +10,7 @@ public sealed class DotnetTestScriptTests
     [Theory]
     [InlineData("project", "selected", false, 0)]
     [InlineData("relative-project", "selected", false, 0)]
+    [InlineData("repository-relative-project", "selected", false, 0)]
     [InlineData("project", "other", false, 2)]
     [InlineData("project", "hang-guard", false, 2)]
     [InlineData("project", "selected", true, 0)]
@@ -26,7 +27,7 @@ public sealed class DotnetTestScriptTests
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
-        const string selectedProject = "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj";
+        const string selectedProject = "tools/tests/StrataLint.RepositoryTopology.Tests/StrataLint.RepositoryTopology.Tests.csproj";
         using var registration = JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "Meta/engineering-projects.json")));
         var projects = registration.RootElement.GetProperty("projects").EnumerateArray().ToArray();
         var selectedAssembly = projects.Single(project => project.GetProperty("path").GetString() == selectedProject)
@@ -90,9 +91,10 @@ public sealed class DotnetTestScriptTests
             "solution" => Path.Combine(root, "tools/StrataLint.sln"),
             "project" => Path.Combine(root, selectedProject),
             "relative-project" => selectedProject["tools/".Length..],
+            "repository-relative-project" => selectedProject,
             "unknown" => Path.Combine(root, "tools/tests/Unregistered/Unregistered.csproj"),
             "outside" => Path.Combine(fixture.Path, "Outside.csproj"),
-            "production" => Path.Combine(root, "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj"),
+            "production" => Path.Combine(root, "tools/StrataLint.Engine/StrataLint.Engine.csproj"),
             _ => throw new ArgumentException("unknown fixture scope", nameof(scope)),
         };
         var result = TestProcessRunner.Run("env",

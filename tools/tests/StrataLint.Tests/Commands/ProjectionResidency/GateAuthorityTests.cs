@@ -18,13 +18,13 @@ public sealed class GateAuthorityTests
     // and would let a root be dropped silently. Retiring one is a deliberate act: change the
     // number here in the same commit.
     [Fact]
-    public void RepositoryCatalogHasTenUniqueUtf8SortedRoots()
+    public void RepositoryCatalogHasFiveUniqueUtf8SortedRoots()
     {
         var repositoryRoot = TestRepositoryLayout.FindRoot();
         var catalog = File.ReadAllBytes(Path.Combine(repositoryRoot, GateAuthorityRootCatalogLoader.RelativePath));
         var roots = GateAuthorityRootCatalogLoader.Parse(catalog);
 
-        Assert.Equal(10, roots.Length);
+        Assert.Equal(5, roots.Length);
         Assert.Equal(
             roots.Length,
             roots.Select(root => root.RootId).Distinct().Count());

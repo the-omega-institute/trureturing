@@ -11,7 +11,7 @@ public sealed class EngineeringProjectRegistrationTests
     public void ExplicitClassificationWinsOverNameLocationAndMetadata()
     {
         var snapshot = Snapshot(EngineeringRegistrationFixture.Manifest(Test()), (Project, Misleading));
-        Assert.Equal([Project], EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(snapshot)).ToArray());
+        Assert.Equal([Project], CiProjects(RepositoryRules.ReadSnapshotProjects(snapshot)).ToArray());
     }
 
     [Fact]
@@ -50,7 +50,7 @@ public sealed class EngineeringProjectRegistrationTests
             Test() with { Path = "proof/p.csproj", Assembly = "Proof", Role = "compile-fail-proof", Ci = false } };
         var snapshot = Snapshot(EngineeringRegistrationFixture.Manifest(entries),
             entries.Select(entry => (entry.Path, "<Project><ItemGroup><PackageReference Include=\"xunit\" /></ItemGroup></Project>")).ToArray());
-        Assert.Empty(EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(snapshot)).ToArray());
+        Assert.Empty(CiProjects(RepositoryRules.ReadSnapshotProjects(snapshot)).ToArray());
         Assert.Empty(RepositoryRules.CalculateDebt(RepositoryRules.ReadSnapshotProjects(snapshot)));
     }
 
@@ -59,7 +59,7 @@ public sealed class EngineeringProjectRegistrationTests
     {
         var baseline = Snapshot(null, (Project, Misleading));
         var candidate = Snapshot(EngineeringRegistrationFixture.Manifest(Test()), (Project, Misleading));
-        Assert.Equal([Project], EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadBaseProjects(baseline, candidate)).ToArray());
+        Assert.Equal([Project], CiProjects(RepositoryRules.ReadBaseProjects(baseline, candidate)).ToArray());
         Assert.False(baseline.TryGetFile(EngineeringRegistrationFixture.Path, out _));
     }
 
@@ -85,8 +85,8 @@ public sealed class EngineeringProjectRegistrationTests
         const string path = "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj";
         var baseline = Snapshot(PriorRegistration, (path, Misleading));
         var candidate = Snapshot(EngineeringRegistrationFixture.Manifest());
-        Assert.Equal([path], EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadBaseProjects(baseline, candidate)).ToArray());
-        Assert.Empty(EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(candidate)));
+        Assert.Equal([path], CiProjects(RepositoryRules.ReadBaseProjects(baseline, candidate)).ToArray());
+        Assert.Empty(CiProjects(RepositoryRules.ReadSnapshotProjects(candidate)));
     }
 
     [Fact]
@@ -96,7 +96,7 @@ public sealed class EngineeringProjectRegistrationTests
         var manifest = System.Text.Json.Nodes.JsonNode.Parse(PriorRegistration)!;
         manifest["projects"]![0]!["execution_inputs"] = new System.Text.Json.Nodes.JsonArray("not-consumed");
         var baseline = Snapshot(manifest.ToJsonString(), (path, Misleading));
-        Assert.Equal([path], EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadBaseProjects(baseline,
+        Assert.Equal([path], CiProjects(RepositoryRules.ReadBaseProjects(baseline,
             Snapshot(EngineeringRegistrationFixture.Manifest()))).ToArray());
     }
 
@@ -133,8 +133,8 @@ public sealed class EngineeringProjectRegistrationTests
         manifest["historical_projects"] = manifest["projects"]!.DeepClone();
         manifest["projects"] = new System.Text.Json.Nodes.JsonArray();
         var candidate = Snapshot(manifest.ToJsonString());
-        Assert.Empty(EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadSnapshotProjects(candidate)));
-        Assert.Equal([Project], EngineeringTestPlanPolicy.Evaluate(RepositoryRules.ReadBaseProjects(baseline, candidate)).ToArray());
+        Assert.Empty(CiProjects(RepositoryRules.ReadSnapshotProjects(candidate)));
+        Assert.Equal([Project], CiProjects(RepositoryRules.ReadBaseProjects(baseline, candidate)).ToArray());
         Assert.Throws<InvalidDataException>(() => RepositoryRules.ReadBaseProjects(baseline,
             Snapshot(EngineeringRegistrationFixture.Manifest())));
     }
@@ -164,7 +164,7 @@ public sealed class EngineeringProjectRegistrationTests
         var topology = RepositoryRules.ReadTrackedProjects(repository.Path);
         Assert.Equal(Project, Assert.Single(topology.Projects).Path);
         Assert.Equal(Misleading, topology.Projects[0].Content);
-        Assert.Equal([Project], EngineeringTestPlanPolicy.Evaluate(topology).ToArray());
+        Assert.Equal([Project], CiProjects(topology).ToArray());
 
         // An existing but untracked source cannot discharge a declared Compile input.
         Git("rm", "--cached", source);
@@ -289,4 +289,7 @@ public sealed class EngineeringProjectRegistrationTests
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(RawRepositorySnapshot.Create(
             files.Select(file => RawRepositoryEntry.FromText(file.Path, file.Text)).Concat(manifest is null ? [] :
                 new[] { RawRepositoryEntry.FromText(EngineeringRegistrationFixture.Path, manifest) })))).Snapshot;
+    private static IEnumerable<string> CiProjects(TestProjectTopologySnapshot topology) =>
+        topology.Projects.Where(project => project.Registration.Ci).Select(project => project.Path).Order(StringComparer.Ordinal);
+
 }

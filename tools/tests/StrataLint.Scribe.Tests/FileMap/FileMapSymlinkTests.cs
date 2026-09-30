@@ -14,7 +14,7 @@ public sealed class FileMapSymlinkTests
             schema_version = 6
             evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
             files = [
-              { pattern = "{{path}}", require = [], kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source", symlink = { target = "{{target}}", kind = "{{kind}}" } },
+              { pattern = "{{path}}", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source", symlink = { target = "{{target}}", kind = "{{kind}}" } },
             ]
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -46,9 +46,7 @@ public sealed class FileMapSymlinkTests
 
     [Theory]
     [InlineData("schema_version = 6", "schema_version = 2")]
-    [InlineData("resources = []\n", "")]
-    [InlineData("require = []\n", "")]
-    public void CurrentLoaderStillRequiresSchema5AndResourceFields(string original, string replacement)
+    public void CurrentLoaderStillRequiresSchema6(string original, string replacement)
     {
         var source = Manifest("AGENTS.md", "CLAUDE.md", "file")
             .Replace(original, replacement, StringComparison.Ordinal);
@@ -58,7 +56,7 @@ public sealed class FileMapSymlinkTests
 
     [Theory]
     [InlineData("1")]
-    [InlineData("6")]
+    [InlineData("7")]
     [InlineData("\"3\"")]
     [InlineData("3.0")]
     public void UnsupportedLinkManifestVersionsAreRejected(string version)
@@ -116,7 +114,7 @@ public sealed class FileMapSymlinkTests
         var inlineBytes = Encoding.UTF8.GetBytes("""
             schema_version = 6
             evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
-            files = [{ pattern = ".codex/skills", require = [], kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source", symlink = { target = "../skills", kind = "directory" } }]
+            files = [{ pattern = ".codex/skills", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source", symlink = { target = "../skills", kind = "directory" } }]
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
             desired = "data-must-live-outside-tools"

@@ -1,4 +1,4 @@
-"""Read-only, perishable review eligibility for the upstream ci-pr workflow.
+"""Read-only, perishable review eligibility for the protected required checks.
 
 Only GitHub GET requests are made. This is deliberately not a generic CI engine,
 merge gate, workflow executor, or assertion of mathematical correctness.
@@ -17,7 +17,6 @@ import uuid
 
 SCHEMA = "contribution-queue.v1"
 DEFAULT_REPO = "the-omega-institute/trureturing"
-WORKFLOW = ".github/workflows/ci-pr.yml"
 ACTIONS_APP = 15368  # GitHub.com's platform app, not an author identity.
 
 
@@ -183,249 +182,37 @@ def pr_reasons(p, repo_id):
     return reasons
 
 
-def ci_run_identity(run):
-    return {key: run.get(key) for key in (
-        "id", "workflow_id", "path", "event", "head_sha", "check_suite_id", "run_attempt",
-        "status", "conclusion", "repository", "pull_requests", "referenced_workflows")}
-
-
-def content_path(path, directory=False):
-    """Narrow session-tool support, not FILEMAP classification or CI selection.
-
-    These content roots are registered in Meta/FILEMAP.toml. Everything else,
-    including new paths, must keep its base object identity and mode.
-    """
-    if not all(re.fullmatch(r"[A-Za-z0-9_][A-Za-z0-9_.-]*", part) for part in path.split("/")):
-        return False
-    if directory:
-        return (path == "D5" or path.startswith("D5/")
-                or path in ("docs", "docs/develop", "docs/develop/theory")
-                or path.startswith("docs/develop/theory/"))
-    return ((path.startswith("D5/") and path.endswith((".lean", ".md")))
-            or (path.startswith("docs/develop/theory/") and path.endswith(".md")))
-
-
-def trusted_definition(api, root, repo, p, run, association):
-    """Bind the executed merge and head to base automation without fetching code.
-
-    Same-repository reusable workflows execute at the caller's commit. Require
-    the canonical ci-pr -> ci-push call's immutable API evidence; no timestamp
-    or present-day merge ref establishes what an older run actually executed.
-    """
-    def unproven():
-        raise QueueError("ci_definition_unproven", "Trusted base/candidate tree evidence is incomplete or ambiguous")
-
-    base = association.get("base", {}).get("sha")
-    references = run.get("referenced_workflows")
-    if not sha(base) or not isinstance(references, list) or len(references) != 1:
-        unproven()
-    reference = references[0]
-    candidate = reference.get("sha")
-    if (not sha(candidate) or reference.get("ref") != f"refs/pull/{p['number']}/merge"
-            or reference.get("path") != f"{repo}/.github/workflows/ci-push.yml@{candidate}"):
-        unproven()
-    branch = p["base"]["ref"]
-    if branch != "dev" and not branch.startswith("integration-"):
-        unproven()
-    tip = api.get(f"{root}/branches/{quote(branch, safe='')}")
-    tip_sha = tip.get("commit", {}).get("sha")
-    if tip.get("name") != branch or tip.get("protected") is not True or not sha(tip_sha):
-        unproven()
-    ancestry = api.get(f"{root}/compare/{base}...{tip_sha}")
-    if (ancestry.get("status") not in ("identical", "ahead")
-            or ancestry.get("base_commit", {}).get("sha") != base
-            or ancestry.get("merge_base_commit", {}).get("sha") != base):
-        unproven()
-    commits = {}
-    for oid in (base, p["head"]["sha"], candidate):
-        commit = api.get(f"{root}/git/commits/{oid}")
-        if commit.get("sha") != oid or not sha(commit.get("tree", {}).get("sha")):
-            unproven()
-        commits[oid] = commit
-    if commits[candidate].get("parents") is None or [
-            parent.get("sha") for parent in commits[candidate]["parents"]] != [base, p["head"]["sha"]]:
-        unproven()
-
-    trees = {}
-
-    def tree(oid):
-        if oid is None:
-            return {}
-        if oid in trees:
-            return trees[oid]
-        data = api.get(f"{root}/git/trees/{oid}")  # Non-recursive; skip identical subtrees.
-        entries = data.get("tree")
-        if data.get("sha") != oid or data.get("truncated") is not False or not isinstance(entries, list):
-            unproven()
-        parsed = {}
-        kinds = {"040000": "tree", "100644": "blob", "100755": "blob", "120000": "blob", "160000": "commit"}
-        for entry in entries:
-            name, mode = entry.get("path"), entry.get("mode")
-            if (not isinstance(name, str) or not name or name in (".", "..")
-                    or any(c in name for c in ("/", "\\", "\0")) or name in parsed
-                    or mode not in kinds or entry.get("type") != kinds[mode] or not sha(entry.get("sha"))):
-                unproven()
-            parsed[name] = (mode, entry["sha"])
-        # Verify completeness even if a response omits rows but says truncated=false.
-        ordered = sorted(parsed, key=lambda name: (name + ("/" if parsed[name][0] == "040000" else "")).encode())
-        raw = b"".join(parsed[name][0].lstrip("0").encode() + b" " + name.encode() + b"\0"
-                       + bytes.fromhex(parsed[name][1]) for name in ordered)
-        if hashlib.sha1(f"tree {len(raw)}\0".encode() + raw).hexdigest() != oid:
-            unproven()
-        trees[oid] = parsed
-        return parsed
-
-    base_tree = commits[base]["tree"]["sha"]
-    for revision in (p["head"]["sha"], candidate):
-        pending = [("", base_tree, commits[revision]["tree"]["sha"])]
-        while pending:
-            prefix, before_oid, after_oid = pending.pop()
-            if before_oid == after_oid:
-                continue
-            before, after = tree(before_oid), tree(after_oid)
-            for name in sorted(before.keys() | after.keys()):
-                old, new = before.get(name), after.get(name)
-                if old == new:
-                    continue
-                path = prefix + name
-                present = [entry for entry in (old, new) if entry is not None]
-                if content_path(path, directory=True) and all(entry[0] == "040000" for entry in present):
-                    pending.append((path + "/", old[1] if old else None, new[1] if new else None))
-                elif not (content_path(path) and all(entry[0] == "100644" for entry in present)):
-                    raise QueueError("ci_automation_changed_manual_review",
-                                     f"Outside supported regular content: {path}; manual review required")
-    return {"base_sha": base, "candidate_sha": candidate, "base_tree": base_tree,
-            "head_tree": commits[p["head"]["sha"]]["tree"]["sha"],
-            "candidate_tree": commits[candidate]["tree"]["sha"], "trusted_branch": branch}
-
-
 def ci(api, root, repo, repo_id, p, rules):
-    """Require every protected context in the latest observed applicable execution.
-
-    Jobs from the exact attempt are joined to head check runs via their fixed API
-    check_run_url. Only Git object metadata is read to bind automation to base;
-    no details_url, PR URL, blob contents or workflow code is fetched/executed.
-    """
-    evidence = {"workflow_path": WORKFLOW, "check_attachment_sha": p["head"]["sha"], "checks": []}
-    workflow = api.get(f"{root}/actions/workflows/ci-pr.yml")
-    if workflow.get("path") != WORKFLOW or not positive(workflow.get("id")) or workflow.get("state") != "active":
-        return evidence, [reason("ci_workflow_unavailable")]
-    workflow_id = workflow["id"]
-    runs_path = f"{root}/actions/workflows/{workflow_id}/runs"
-    runs = api.pages(runs_path, "workflow_runs", head_sha=p["head"]["sha"], event="pull_request")
-    if not runs:
-        return evidence, [reason("ci_run_missing")]
-    if any(not positive(r.get("id")) for r in runs):
-        return evidence, [reason("ci_source_mismatch")]
-    # IDs order workflow executions; do not use updated_at (old runs can be rerun).
-    latest = max(runs, key=lambda r: r["id"])
-    run_id = latest["id"]
-    run = api.get(f"{root}/actions/runs/{run_id}")
-    evidence.update(run_id=run_id, workflow_id=workflow_id, run_attempt=run.get("run_attempt"),
-                    check_suite_id=run.get("check_suite_id"), status=run.get("status"), conclusion=run.get("conclusion"))
-    associations = [a for a in run.get("pull_requests", []) if a.get("number") == p["number"]]
-    associated = len(associations) == 1 and all(a.get("head", {}).get("sha") == p["head"]["sha"]
-                     and (a.get("head", {}).get("repo") or {}).get("id") == p["head"]["repo"]["id"]
-                     and a.get("base", {}).get("ref") == p["base"]["ref"]
-                     and (a.get("base", {}).get("repo") or {}).get("id") == repo_id for a in associations)
-    if (run.get("id") != run_id or run.get("workflow_id") != workflow_id or run.get("path") != WORKFLOW
-            or run.get("event") != "pull_request" or run.get("head_sha") != p["head"]["sha"]
-            or run.get("repository", {}).get("id") != repo_id
-            or run.get("repository", {}).get("full_name", "").casefold() != repo.casefold()
-            or not positive(run.get("check_suite_id")) or not positive(run.get("run_attempt")) or not associated):
-        return evidence, [reason("ci_source_mismatch")]
-    evidence["associated_base_sha"] = associations[0].get("base", {}).get("sha")
-    if run.get("status") != "completed" or run.get("conclusion") != "success":
-        return evidence, [reason("ci_run_not_successful")]
-    # Reexecuting an older run must not be hidden by a newer green run. This
-    # conservative ambiguity rule deliberately asks for a fresh full execution.
-    if any(r["id"] != run_id and (r.get("run_attempt", 1) > 1 or r.get("status") != "completed") for r in runs):
-        return evidence, [reason("ci_execution_ambiguous")]
-    try:
-        evidence["trusted_definition"] = trusted_definition(api, root, repo, p, run, associations[0])
-    except QueueError as exc:
-        if exc.code not in ("ci_definition_unproven", "ci_automation_changed_manual_review"):
-            raise
-        return evidence, [reason(exc.code, message=str(exc))]
-    attempt = run["run_attempt"]
-    jobs = api.pages(f"{root}/actions/runs/{run_id}/attempts/{attempt}/jobs", "jobs")
-    checks = api.pages(f"{root}/commits/{p['head']['sha']}/check-runs", "check_runs", filter="all")
-    by_id = {c["id"]: c for c in checks}
+    """Aggregate the protected contexts at the fixed PR head, independently of workflow topology."""
+    checks_path = f"{root}/commits/{p['head']['sha']}/check-runs"
+    checks = api.pages(checks_path, "check_runs", filter="all")
+    evidence = {"check_attachment_sha": p["head"]["sha"], "checks": []}
     reasons = []
-    selected_checks = set()
     for required in rules["required_checks"]:
         context, app_id = required["context"], required["app_id"]
-        matching = [j for j in jobs if j.get("name") == context]
+        matching = [c for c in checks if c.get("name") == context and c.get("app", {}).get("id") == app_id]
         if not matching:
-            reasons.append(reason("required_job_missing", context=context))
-        for job in matching:
-            if job.get("status") != "completed" or job.get("conclusion") != "success":
-                reasons.append(reason("required_job_not_successful", context=context))
-            if (job.get("run_id") != run_id or job.get("run_attempt") != attempt
-                    or job.get("head_sha") != p["head"]["sha"]):
-                reasons.append(reason("required_check_source_mismatch", context=context))
-                continue
-            url = job.get("check_run_url", "")
-            match = re.fullmatch(re.escape(f"https://api.github.com{root}/check-runs/") + r"([0-9]+)", url)
-            if not match:
-                reasons.append(reason("required_check_source_mismatch", context=context))
-                continue
-            check = by_id.get(int(match[1]))
-            if check is None:
-                reasons.append(reason("required_check_missing", context=context))
-                continue
-            selected_checks.add(check["id"])
-            evidence["checks"].append({"context": context, "app_id": check.get("app", {}).get("id"),
-                                       "check_run_id": check["id"], "job_id": job["id"],
-                                       "status": check.get("status"), "conclusion": check.get("conclusion")})
-            if (check.get("name") != context or check.get("head_sha") != p["head"]["sha"]
-                    or check.get("app", {}).get("id") != app_id
-                    or check.get("app", {}).get("slug") != "github-actions"
-                    or check.get("check_suite", {}).get("id") != run["check_suite_id"]):
-                reasons.append(reason("required_check_source_mismatch", context=context))
-            if check.get("status") != "completed" or check.get("conclusion") != "success":
-                reasons.append(reason("required_check_not_successful", context=context))
-    # Protection binds context/app, not workflow. A competing non-success cannot
-    # be discarded just because the chosen attempt's jobs do not reference it.
-    required_apps = {r["context"]: r["app_id"] for r in rules["required_checks"]}
-    competing = {c["id"]: c for c in checks
-                 if c["id"] not in selected_checks and c.get("head_sha") == p["head"]["sha"]
-                 and c.get("name") in required_apps
-                 and c.get("app", {}).get("id") == required_apps[c["name"]]
-                 and (c.get("status") != "completed" or c.get("conclusion") != "success")}
-    # Only an earlier attempt of the selected execution can prove that its
-    # matching failed check was superseded. Attempts are ordered by GitHub and
-    # necessarily finished before the selected rerun. A competing check from a
-    # different execution remains ambiguous: run_number and timestamps do not
-    # establish completion ordering across executions.
-    histories = [(run, a) for a in range(1, attempt)]
-    for previous, previous_attempt in histories:
-        suite = previous["check_suite_id"]
-        if not any(c.get("check_suite", {}).get("id") == suite for c in competing.values()):
+            reasons.append(reason("required_check_missing", context=context))
             continue
-        old_jobs = api.pages(f"{root}/actions/runs/{previous['id']}/attempts/{previous_attempt}/jobs", "jobs")
-        for job in old_jobs:
-            if (job.get("run_id") != previous["id"] or job.get("run_attempt") != previous_attempt
-                    or job.get("head_sha") != p["head"]["sha"]):
-                continue
-            for check_id, check in list(competing.items()):
-                if (check.get("check_suite", {}).get("id") == suite
-                        and job.get("name") == check["name"]
-                        and job.get("check_run_url") == f"https://api.github.com{root}/check-runs/{check_id}"):
-                    del competing[check_id]
-    for check in competing.values():
-        reasons.append(reason("required_check_ambiguous", context=check["name"],
-                              check_run_id=check["id"], check_suite_id=check.get("check_suite", {}).get("id")))
-    # GitHub requires both a check and a same-name legacy status to pass. The
-    # combined endpoint returns the latest status per context, not its history.
+        if any(not positive(c.get("id")) or c.get("head_sha") != p["head"]["sha"] for c in matching):
+            reasons.append(reason("required_check_source_mismatch", context=context))
+            continue
+        check = max(matching, key=lambda c: c["id"])
+        evidence["checks"].append({"context": context, "app_id": app_id, "check_run_id": check["id"],
+                                   "status": check.get("status"), "conclusion": check.get("conclusion")})
+        if check.get("status") != "completed" or check.get("conclusion") != "success":
+            reasons.append(reason("required_check_not_successful", context=context))
+    required_names = {r["context"] for r in rules["required_checks"]}
     statuses = api.pages(f"{root}/commits/{p['head']['sha']}/status", "statuses")
-    for status in statuses:
-        if status.get("context") in required_apps and status.get("state") != "success":
-            reasons.append(reason("required_status_not_successful", context=status["context"],
-                                  status_id=status.get("id"), state=status.get("state")))
-    # Observe a rerun that started during check retrieval before returning green.
-    fresh_run = api.get(f"{root}/actions/runs/{run_id}")
-    if ci_run_identity(fresh_run) != ci_run_identity(run):
+    for context in required_names:
+        matching = [s for s in statuses if s.get("context") == context]
+        if matching:
+            latest = max(matching, key=lambda s: s.get("id", 0))
+            if latest.get("state") != "success":
+                reasons.append(reason("required_status_not_successful", context=context,
+                                      status_id=latest.get("id"), state=latest.get("state")))
+    fresh = api.pages(checks_path, "check_runs", filter="all")
+    if fingerprint(fresh) != fingerprint(checks):
         reasons.append(reason("ci_changed"))
     return evidence, reasons
 
@@ -532,7 +319,7 @@ class Parser(argparse.ArgumentParser):
 
 def main(argv=None):
     parser = Parser(description=__doc__)
-    parser.add_argument("--repo", default=DEFAULT_REPO, help="GitHub organization/repo (ci-pr policy adapter only)")
+    parser.add_argument("--repo", default=DEFAULT_REPO, help="GitHub organization/repo (required-check policy adapter)")
     parser.add_argument("--pr", type=int, help="Fresh focused selection; skips Issue and other PR lists")
     repo, number = DEFAULT_REPO, None
     try:

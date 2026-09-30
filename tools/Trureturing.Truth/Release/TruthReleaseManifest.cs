@@ -8,7 +8,7 @@ namespace Trureturing.Truth;
 /// <summary>One bundle artifact: its bundle-relative filename and its "sha256:&lt;64hex&gt;" digest.</summary>
 public sealed record TruthReleaseArtifact(string File, string Sha256);
 
-/// <summary>One of the two required dev push jobs a valid release must witness green.</summary>
+/// <summary>One producer-declared required check; provenance is verified externally.</summary>
 public sealed record TruthReleaseRequiredCheck(string Name, string Conclusion);
 
 /// <summary>The exact protected-dev commit the release derives from (read-only).</summary>
@@ -16,7 +16,7 @@ public sealed record TruthReleaseSource(string SourceRepo, string SourceCommit, 
 
 /// <summary>
 /// The producer's SELF-ASSERTED trust record — NOT independently authoritative. A consumer must
-/// re-verify <see cref="CommitOnProtectedDev"/> and use <see cref="TruthReleasePushRunSelector"/> for
+/// re-verify <see cref="CommitOnProtectedDev"/> and independently verify
 /// <see cref="RequiredChecks"/> at the exact commit, then establish provenance by reproducing the bundle.
 /// <c>BlessedBy</c> is audit-only.
 /// </summary>
@@ -54,7 +54,7 @@ public sealed record TruthReleaseManifest(
 /// <summary>
 /// Fail-closed reader for <c>release-manifest.v1.json</c>. It enforces the truth-release.v1 schema shape
 /// exactly: the schema tag, the required fields and their patterns, <c>additionalProperties:false</c> on
-/// every object, <c>producer.read_only == true</c>, and exactly the two named dev push checks each with
+/// every object, <c>producer.read_only == true</c>, and a nonempty set of uniquely named checks each with
 /// conclusion "success". It never repairs or defaults a malformed manifest. Shape only — it does NOT judge
 /// provenance (that a commit is really on protected dev, that the checks are really green); that is
 /// re-established independently against GitHub.
@@ -83,8 +83,6 @@ public static class TruthReleaseManifestReader
         "source_snapshot", "truth_graph", "raw_lean_report", "truth_export",
         "blueprint_index", "frozen_ledger_head", "residual_frontier");
 
-    /// <summary>The direct dev push job names, shared by selection, packaging and topology consumers.</summary>
-    public static ImmutableArray<string> RequiredCheckNames { get; } = ["engineering", "current"];
 
     public static TruthReleaseManifest Read(string json)
     {
@@ -182,9 +180,9 @@ public static class TruthReleaseManifestReader
             checks.Add(new TruthReleaseRequiredCheck(name, conclusion));
         }
 
-        if (!names.SetEquals(RequiredCheckNames))
+        if (names.Count == 0)
         {
-            throw new FormatException("required_checks is not exactly the two named dev push checks.");
+            throw new FormatException("required_checks must contain at least one successful named check.");
         }
 
         return checks.ToImmutable();

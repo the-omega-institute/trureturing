@@ -14,7 +14,7 @@ public sealed class FileMapManifestTests
         var inlineTableArray = FileMapLoader.Parse(Encoding.UTF8.GetBytes("""
             schema_version = 6
             evidence = { artifact_kinds = { json = { profile = "structured-json", selectors = ["result"], path_selectors = ["formal"] } } }
-            files = [{ pattern = "Generated/partitions/*.md", require = [], kind = "generated", admission_plane = "content", produced_by = "PartitionEmitter", consumed_by = ["reader"], verified_by = ["PartitionEmitter"], artifact_id = "none", runtime_disposition = "run-local" }]
+            files = [{ pattern = "Generated/partitions/*.md", kind = "generated", admission_plane = "content", produced_by = "PartitionEmitter", consumed_by = ["reader"], verified_by = ["PartitionEmitter"], artifact_id = "none", runtime_disposition = "run-local" }]
 
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
@@ -34,7 +34,7 @@ public sealed class FileMapManifestTests
     [InlineData("files = [{ pattern = \"Generated/output.md\" }, 42]\n", "only tables")]
     public void FilesArrayRejectsEmptyWrongOrMixedElements(string files, string expected)
     {
-        var source = "schema_version = 6\nresources = []\n"
+        var source = "schema_version = 6\n"
             + "evidence = { artifact_kinds = { json = { profile = \"structured-json\", selectors = [\"result\"], path_selectors = [\"formal\"] } } }\n"
             + files + """
             [residence_policy]

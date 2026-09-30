@@ -505,7 +505,7 @@ public sealed partial class ProductionEnvironmentTests
             var outcome = EvaluateAdmissionPlane(manifest, "docs/change.md");
 
             var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
-            Assert.Contains("root schema_version must be 2, 3, 4 or 5", failure.Message, StringComparison.Ordinal);
+            Assert.Contains("root schema_version must be 2, 3, 4, 5 or 6", failure.Message, StringComparison.Ordinal);
         }
     }
 
@@ -522,7 +522,7 @@ public sealed partial class ProductionEnvironmentTests
             var outcome = EvaluateAdmissionPlane(manifest, "docs/change.md");
 
             var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
-            Assert.Contains("root schema_version must be 2, 3, 4 or 5", failure.Message, StringComparison.Ordinal);
+            Assert.Contains("root schema_version must be 2, 3, 4, 5 or 6", failure.Message, StringComparison.Ordinal);
         }
 
         Assert.Null(EvaluateAdmissionPlane("schema_version = 2\n" + files, "docs/change.md"));

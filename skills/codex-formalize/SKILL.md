@@ -182,7 +182,7 @@ make lean LEAN_TARGETS="D5.<dotted.module> Reg.D5.<mirrored.dotted.module>"
 
 When no valid Reg source can be delivered, omit that Reg target and use the linked-issue exception; do not invent a mirror or placeholder target. Retain successful audit sources, compiled proofs and current binding evidence. Remove this attempt's failed audit source additions and imports if they would break the normal build; do not remove pre-existing or successful sources to hide failures. Compile every retained Reg source, including support/enrollment sources, with its existing kernel, `sorry` and axiom checks. A successful D5 build establishes no registration completion.
 
-Judge completion only by exit code, never elapsed time or quiet output. Full doors cost minutes each; a landed lane died by burning its entire three-hour budget on seventy-two full preflight runs chasing a flaky unrelated test. Iterate scoped, verify canonically once.
+Judge completion only by exit code, never elapsed time or quiet output. Full doors cost minutes each; a landed lane died by burning its entire three-hour budget on seventy-two full local validation runs chasing a flaky unrelated test. Iterate scoped, verify canonically once.
 
 Complete any pending canonical report production through `make lean-report`, then run `make emit` to
 generate the canonical committed projections, including this document's Blueprint `.md`. Never
@@ -260,7 +260,7 @@ git commit -F <commit-message-file>
 ```
 
 This focused publication-completeness boundary reuses `filemap-conform`; it adds no required CI
-status and does not require a full local preflight before publication. Full local preflight remains
+status and does not require a full local local validation before publication. Full local local validation remains
 post-push, parallel with CI under `CLAUDE.md` §8.2. The native check validates inventory; following this
 handoff procedure remains an agent/review obligation. Source fidelity, the no-wrapper rule, the
 explicit registration exception above, and independent review before freeze/merge still apply.
@@ -287,7 +287,7 @@ incomplete unit.
 ### 8. Push and open the pull request, or report `open`
 
 After Step 7's publication boundary completes, push the committed current branch promptly; do not
-wait for full local preflight. Use the repository door:
+wait for full local local validation. Use the repository door:
 
 ```sh
 git push -u origin <branch>
@@ -299,7 +299,7 @@ If running full local early feedback, start it after `git push` in a separate jo
 the PR door rather than waiting for either to finish:
 
 ```sh
-make preflight MODE=push BASE=<explicit-existing-40-hex-commit-sha>
+make gate BASE=<explicit-existing-40-hex-commit-sha>
 ```
 
 Report its raw exit and rejected rules; it does not replace the three remote required checks or gate

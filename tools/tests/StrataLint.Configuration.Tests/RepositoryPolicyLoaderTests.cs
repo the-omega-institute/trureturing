@@ -48,7 +48,7 @@ public sealed class RepositoryPolicyLoaderTests
         var fileMap = mutateFileMap
             ? CanonicalFileMap.Replace(
                 "schema_version = 6",
-                "schema_version = 0x5",
+                "schema_version = 0x6",
                 StringComparison.Ordinal)
             : CanonicalFileMap;
         var domains = mutateFileMap

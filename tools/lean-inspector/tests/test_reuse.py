@@ -445,10 +445,6 @@ class ReuseTests(unittest.TestCase):
             environment.pop('STRATALINT_LEAN_REPORT_REUSE')
         if targets is None:
             environment.pop('STRATALINT_LEAN_BUILD_TARGETS')
-            self.write('Meta/ci-resources.json', json.dumps(dict(
-                schema='ci-resource-execution-v1', resources=[dict(
-                    id='fixture-program-build', projects=[], checks=[], steps=[],
-                    lean_targets=list(registered_targets))])))
         result = subprocess.run(['bash', str(self.root / 'tools/lean-inspector/inspect.sh'),
             '--repository', str(self.root), '--output', str(self.output),
             '--log-dir', str(self.root / 'logs')], env=environment, text=True, capture_output=True)

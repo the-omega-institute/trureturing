@@ -11,7 +11,7 @@ public sealed class EngineeringProjectRegistrationTests
         var topology = RepositoryRules.ReadTrackedProjects(RepositoryLayout.FindRoot());
         const string scripts = "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj";
         Assert.Equal("cross-cutting-test", Assert.Single(topology.Projects, project => project.Path == scripts).Registration.Role);
-        Assert.DoesNotContain(scripts, EngineeringTestPlanPolicy.Evaluate(topology));
+        Assert.DoesNotContain(scripts, topology.Projects.Where(project => project.Registration.Ci).Select(project => project.Path));
         Assert.Equal(new[]
         {
             "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",

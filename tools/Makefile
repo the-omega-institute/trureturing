@@ -28,6 +28,7 @@ CPU_SLAB_PHASE ?= pilot
 CPU_SLAB_BOXES ?= 64
 CPU_SLAB_DEADLINE ?=
 TEST_PROJECT ?= $(HERE)/StrataLint.sln
+SELECTED_TEST_PROJECT = $(if $(filter tools/%,$(TEST_PROJECT)),$(abspath $(HERE)/../$(TEST_PROJECT)),$(TEST_PROJECT))
 TEST_FILTER ?=
 SEED_EXPORT ?= automatic
 INHERITED_DOTNET_ROOT := $(DOTNET_ROOT)
@@ -81,7 +82,7 @@ check-fast:
 	@/bin/bash $(HERE)/scripts/dotnet-test.sh $(HERE)/StrataLint.sln --filter "$(CHECK_FAST_FILTER)"
 
 test:
-	@/bin/bash $(HERE)/scripts/dotnet-test.sh "$(TEST_PROJECT)" $(if $(TEST_FILTER),--filter "$(TEST_FILTER)",)
+	@/bin/bash $(HERE)/scripts/dotnet-test.sh "$(SELECTED_TEST_PROJECT)" $(if $(TEST_FILTER),--filter "$(TEST_FILTER)",)
 test: export DOTNET_ROOT := $(RESOLVED_DOTNET_ROOT)
 
 census-test:
