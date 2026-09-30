@@ -11546,3 +11546,157 @@ FC455–FC468 auxiliary inclusion/completion, the fixed-background normalization
 comparisons. This is ordinary mathematics and exact reuse; no new Lean
 verification, efficient-acquisition guarantee or unrestricted Erdős#7
 conclusion is claimed.
+
+## The stronger source certifies the fixed head through 79
+
+For both fixed assignments FC110 and FC131 in the normalized phase
+class FC417–FC478, use the source from FC487–FC497 with exact mass
+
+    h84=2826369/131072000=(2/3)*(21/250)/C_V,
+    C_V=1048576/403767.
+
+All nine fixed half-clipping steps at43,47,53,59,61,67,71,73,79 have
+strictly positive necessary mean gates AND strictly positive complete
+hinge targets. The final physical source density cap is512. The83
+necessary mean gate is strictly negative in both cases. No83 hinge,
+append or trim was evaluated. The arithmetic is exact rational
+arithmetic. These are ordinary conditional proofs and exact evaluations;
+no new Lean verification or unrestricted covering result is claimed.
+
+### 1. Mathematical contract and unchanged inputs
+
+The mathematical premise is the finite auxiliary source of FC487–FC497,
+including its uniform finite existence thresholdN84 and source inclusion
+for every original finiteN after the allowed finite completion. This
+does not identifyN84 numerically, alter the original registry, use the
+original full-survivor law in place of the auxiliary source, or enlarge
+the admitted old-only inventory.
+
+Only the two saved `cases.FC110.raw_uniform` and
+`cases.FC131.raw_uniform` profiles enter the calculation. The old
+source_mass, initial trim, cutoff and continuation are not consumed.
+Each case is independently initialized by a fresh Top_h84. The actual
+fresh cutoff is8 for both cases; this is a computed atom bracket, not
+an inherited assumption.
+
+The low atoms through256 are exact and the complete moments of
+orders0,1,2,4 retain the entire infinite comparison tail. All trim
+splits resolve within the retained atom range. Arithmetic definitions
+from depth_two_profile.py are loaded without its guarded main or
+finite_controls. Their transitive local-function definitions do not
+depend on the oldD0.
+
+At a stepq the consumer first checks G_q=(q-1)m-M1. A nonpositive
+gate would stop before a hinge. For a positive gate it uses only
+delta=1/2, T=(q-1)/2 and
+
+    H(T)=M1-Tm+sum_(z<T)(T-z)a_z,
+    t=m-H(T)/T.                                    (FC498)
+
+Only when t>0 does it append the normalized cap-twoq factor and then
+trim the APPENDED profile to mass t. No changed schedule, clipping
+parameter, phase, threshold, source or alternative policy was tried.
+
+### 2. Exact endpoint certificates shared by both cases
+
+The following are strict inequalities, checked by exact fraction
+subtraction on the saved result:
+
+    m79 > 793/1000000,
+    M4_79 < 15826000,
+    G79(before79) > 4/125,
+    G83(after79) < -247/10000.                              (FC499)
+
+Consequently the corresponding actual head survivor satisfies
+
+    Haar(U_head)>793/512000000.                    (FC500)
+
+The mass m79 is a distorted source/comparison mass; dividing by512 is
+the explicitly justified conversion to the head Haar bound. It is not
+legitimate to treat m79 itself as a Haar probability lower bound.
+
+For orientation only, the exact stored fractions have these decimal
+values (all certification uses the fractions, not these displays):
+
+| Case | m79 | M4_79 | M1_79/m79 | G83 | Haar lower m79/512 |
+|---|---:|---:|---:|---:|---:|
+| FC110 | 0.0007961345385892084 | 15825688.863326238 | 113.10329823678872 | -0.024762409990348323 | 0.0000015549502706820476 |
+| FC131 | 0.0007934413050284769 | 15825909.319503289 | 113.27470714306205 | -0.02481464444997458 | 0.0000015496900488837438 |
+
+The negative83 mean gate excludes a positive constant-clipping target
+for THIS final comparison, through
+
+    t_delta=m79-H_Pi(82*delta)/[82*(1-delta)]
+           <=G83/[82*(1-delta)]<0.                 (FC501)
+
+This holds for every legal constant 0<delta<1 with
+1/(1-delta)<=83, by (Z-82*delta)_+>=Z-82*delta. It is not an upper
+bound on actual survival and does not refute another comparison, a different policy,
+or the original covering conjecture.
+
+### 3. Fixed continuation states
+
+The fresh initial cutoffs are both8. After each successful append and
+trim the common cutoff sequence is
+
+    8,12,12,16,16,20,24,36,64
+
+at the fixed primes
+
+    43,47,53,59,61,67,71,73,79.                    (FC502)
+
+| Prime | FC110 new mass, decimal display | FC131 new mass, decimal display | Cutoff |
+|---|---:|---:|---:|
+|43|0.0185119333066076|0.018511542065870305|8|
+|47|0.015650742590033084|0.01564997236877064|12|
+|53|0.013156619684392717|0.013155518754708172|12|
+|59|0.010946896329938378|0.010945501903518095|16|
+|61|0.008659844672384818|0.008658141963159978|16|
+|67|0.00663395100356521|0.006631980402227007|20|
+|71|0.004666889441170947|0.004664661404690681|24|
+|73|0.002643994114992495|0.0026415131997582545|36|
+|79|0.0007961345385892084|0.0007934413050284769|64|
+
+Complete before/append/after moments, exact hinges, charges, removed
+moments, atom snapshots and support-tail checks are in the result JSON.
+The two cases remain separate; no moments or favorable pieces are mixed.
+
+### 4. Inherited conditional tail, with the actual new endpoint
+
+Use only the unchanged analytic premise from Report734/779 with
+B=10000, ell=8, delta=2/5 and growth exponent25. Its coefficient is
+
+    tau4=(5625/6144)*(129/127)^25*10000/9999^4
+         *sum_(j=0..25) 25!/((25-j)!*24^j).         (FC503)
+
+Exact rational comparison gives
+
+    tau4 < 549/50000000000000.
+
+Combining the strict moment bounds gives the short certificate
+
+    m79-M4_79*tau4
+      >793/1000000-15826000*(549/50000000000000)
+      =15480763/25000000000
+      >619/1000000.                               (FC504)
+
+The last positive gap is exactly5763/25000000000. Exact reserves are
+approximately0.0006223774459866481 forFC110 and
+0.0006196817919420628 forFC131.
+
+These reserves are distorted-source mass reserves under the stated
+analytic tail premise, NOT final Haar-density bounds. Additional
+support primes in(79,10000] remain excluded. Allowed tail primes are
+strictly greater than10000, with the unchanged finite-label/global-
+phase inventory and common-source conditions. The improved fixed head
+range ends at79; it does not include83 or unrestricted middle primes.
+
+The [stronger-source consumer](../../../frontier/cover-geometry/pure-support-profiles/stronger_source_continuation.py)
+reads the previously saved raw uniform profiles and arithmetic definitions.
+Its [complete exact result](../../../frontier/cover-geometry/pure-support-profiles/stronger_source_continuation.json)
+contains the new initial states, all moment and atom updates, the positive
+hinge targets, final density conversion and the evaluated 83 mean gate with no 83 hinge or update.
+The raw comparison coefficients and each case remain separate throughout.
+The comparison at 83 limits this fixed endpoint certificate; it does not
+settle arbitrary first-digit phases, higher old ternary heights or the
+excluded middle primes.
