@@ -9145,3 +9145,170 @@ values, complete moments, charges, cutoffs and endpoint conditions.
 Only saved outputs are used for binding. This is ordinary exact
 arithmetic under the proved same-source interface, with no new Lean
 verification or unrestricted noncovering conclusion.
+
+## Exact source transport and sufficient-signature transfer differ
+
+The fixed-source certificates extend along a common prime-prefix
+transport when all named shared-prefix relations agree. They can
+also extend outside that exact orbit when the comparison's sufficient
+signature is preserved. A one-original change at55 separates these
+two mechanisms: it prevents exact transport and makes the covered
+unions incomparable, yet preserves the old scalar head lower bound.
+It does not by itself preserve the newer grouped query profiles.
+
+### 1. The complete named-prefix orbit extension
+
+[Report823 Section2](../800-849/823-common-prefix-transport-reduces-the-free45-phase-to-three-cases.md)
+reuses the common rooted prime-tree transports of Reports433,636,794.
+For the same finite selected numerical labels m_i, a single product
+tree permutation carries phases a_i to b_i exactly when
+
+    a_i=a_j mod p^r iff b_i=b_j mod p^r,
+    1<=r<=min(v_p(m_i),v_p(m_j)), for every i,j,p.    (FC411)
+
+Necessity follows from preserving common ancestors. For sufficiency,
+map all selected nodes and ancestors to their designated targets.
+The equality partitions make each partial sibling map well-defined
+and injective; extend it to a permutation of all p children. At a
+period resolving the WHOLE actual finite family, CRT combines these
+maps into a single permutation. Every numerical cylinder partition,
+intersection, query layout and Haar measure is transported together.
+The source weights and normalizer must follow that same map.
+
+Consequently an actual family inherits FC159 whenever its full
+skeleton labels through one N>=N_+ satisfy (FC411) against either
+FC110 or FC131, and every other numerical label belongs to the same
+FC159 nongroup inventory. Explicitly, those remainder labels have
+ternary exponent0 or1 and nonternary support at least two; on support
+{h,q} with h in{5,7} and q private, the h exponent is at least two.
+No additional pure, star or shallow group slot, including slots
+beyond N, is introduced. Normalize the entire family, apply FC159
+to its arbitrary remainder phases, and pull back the source.
+
+Its pure-conditioned two-root survivor lower bounds are respectively
+
+    mu_first=12288140637404551/155479519655460000,
+    mu_bounded=36518862868606981/466438558966380000.  (FC412)
+
+They are not unconditional Haar-density bounds. The orbit condition
+is necessary and sufficient for this exact named-prefix transport;
+it is only a sufficient condition for successful noncoverage proofs.
+The operation of filling unused numerical slots after FC154 leaves
+occupied phases unchanged and supplies no universal normalization.
+An arbitrary original9 also lies outside FC159's whole-family
+ternary-height-one inventory, independently of any phase issue.
+
+### 2. One changed phase obstructs exact transport
+
+Both actual skeletons have the private11 head rows(2,0,3,3).
+Their free5 and free7 roles therefore contain
+
+    2 mod55 and3 mod77.                              (FC413)
+
+For either skeleton at any N>=1, change only the55 original to
+47 mod55. Its head5 row stays2, while its private11 root becomes3.
+Originally the55 and77 cylinders are disjoint; after the change they
+meet at157 mod385. Thus their named shared-depth-one equality at11
+changes, violating (FC411). No common bijection can send those two
+labelled events exactly to the old two, since it preserves whether
+their intersection is empty. Adding another55 is prohibited by
+numerical distinctness.
+
+This refutes universal exact normalization to the two templates.
+It does not refute a weaker domination argument or another source.
+
+### 3. Directly resetting the phase gives neither union inclusion
+
+Let P=3*5*7*product_(q private)q=152125131763605. Use first digits
+x mod3=1, x mod5=x mod7=2, and x modq=7 at every private q except11.
+Three prescribed choices at11 yield the following controls for BOTH
+source assignments:
+
+|11 digit|Residue mod P|Canonical skeleton hits|Changed skeleton hits|
+|---:|---:|---|---|
+|3|53342578670362|none|only55|
+|2|39513021237307|only55|none|
+|7|108660808402582|none|none|
+
+At depth one, these points avoid private pure/star roots0,1, all
+other-private group roots2--5, the head pure roots4,6 and head star
+root0. At11 the free7 root3 still requires head7 row3, while the
+points have row2. Selected private roots4,5 are avoided. At deeper
+levels every private role starts at6; head pure tails start at p-2
+and head star tails at1. The prescribed points avoid all these roots.
+Hence the table holds for every finite N, and remains true with the
+same numerical completion in pure first-row holes.
+
+For the two covered unions C,C' the first two rows prove
+
+    C' is not a subset of C, and C is not a subset of C'. (FC414)
+
+Thus overwriting47 by2 does not provide the union inclusion required
+by a direct reduction to the canonical survivor. The third row
+shows both displayed families are themselves noncovers. This is a
+counterexample to that rephasing operation, not to Erdős#7.
+
+### 4. The same example preserves the coarse head certificate
+
+The actual raw signature(w,g,X,Y) is unchanged at every N. Both11
+roots2 and3 avoid the private pure/star holes and have the same
+pure-conditioned mass c_(11,N)/11. Higher role cylinders still start
+at6, and the head address is unchanged. Thus each separate head-row
+free/selected union retains its mass.
+
+The exact private joint complement H changes at head pair(2,3): the
+free5 and free7 cylinders now overlap, so on either retained root
+
+    H'=H+c_(11,N)/11 at(2,3).                        (FC415)
+
+At other head pairs the complement mass is unchanged. The same
+marginal envelopes P=max(0,g-X-Y) and K=g-max(X,Y) remain valid.
+Fix either skeleton, N>=N_+, and the changed55 phase, and add any
+finite set of FC159 nongroup labels with arbitrary globally fixed
+phases. On the same nonternary pure-conditioned carrier and uniform
+two-root law, the actual group-survivor lower bound and every
+per-label min-cap upper fee are the unchanged functions of(w,g,X,Y).
+The original FC120--FC122 deduction therefore still gives
+
+    Surv>=J_infinity(z_(i,N))>=mu_i.                 (FC416)
+
+This is sufficient-signature transfer of a conservative bound. It
+does not identify actual survivor sets or their precise query laws.
+The changed55 example must not be reported as failure of the scalar
+method. Conversely, (FC416) alone does not inherit the one-pair2 mod55
+comparison, the disjoint-role full-group profile, or their stronger
+continuation constants (FC396)--(FC401).
+
+### 5. Verification and the remaining general bridge
+
+The [control](../../../frontier/cover-geometry/pure-support-profiles/source_bridge_control.py)
+reads the two named source arrays, reconstructs their59 depth-one
+originals, and checks the three prescribed CRT witnesses. Its
+[result](../../../frontier/cover-geometry/pure-support-profiles/source_bridge_control.json)
+contains288 explicit checks with source hashes and actual row data.
+An independent reconstruction gives1350 exact checks without
+enumerating CRT states. The all-N conclusion uses the first-root
+argument above; depth-one finite checks are not substituted for it.
+
+FC161--FC171 already give a faithful interface at arbitrary finite
+ternary height: retain one actual prefix partition and its leaf
+weights, physical head addresses, numerical ternary depths and
+source-dependent joint profiles. Their per-original fees and group
+lower bound refer to the same leaf and source. The missing general
+step is positivity for every actual source, or another valid
+certificate for the sources where that bound fails. In particular
+the available all-height bound on the total selected allowance is1,
+whereas the height-one coefficient is1/2; arbitrary prime support remains a
+separate gap.
+
+[Report822](../800-849/822-a-structural-source-atlas-covers-arbitrary-old-pure-families.md)
+is a precedent for removing a real source restriction through an
+atlas with a whole certificate and normalizer for every cell. Its
+different fixed mixed phases and support are not automatically those
+of FC110/FC131. A universal extension here requires a lawful source
+or domination for every actual family and positivity on the whole
+resulting class. Uniformly positive constants would suffice, but
+are stronger than necessary for general noncoverage. No universal
+bridge or unrestricted solution is supplied by these controls.
+These results are ordinary mathematical reuse and exact arithmetic,
+without new Lean verification or an external novelty claim.
