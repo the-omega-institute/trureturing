@@ -29,11 +29,12 @@ run_cmd do
   for theoremName in [`first, `second, `third] do
     modifyEnv fun env => RegistrationInputs.add env {
       entry := { theoremName, arenaName := `arena, unitName := `unit,
-        realizationName := `realization, registrationModuleName := `assertedOwner }
-      sourceText := "original source", options := {}.set `maxRecDepth (731 : Nat)
+                 realizationName := `realization, registrationModuleName := `assertedOwner }
+      sourceText := "original source", options := maxRecDepth.set {} 731
       suppliedPrimitives := some (mkConst ``Bool.true)
       declaration := some { theoremName, arena := `arena,
-        descriptor := some (mkConst ``Nat), escapeInput := { openContinuation := true } } }
+                            descriptor := some (mkConst ``Nat),
+                            escapeInput := { openContinuation := true } } }
   modifyEnv fun env => TemplateEnrollmentInputs.add env {
     owner := `assertedOwner, name := `template, version := 1, constructors := #[`AST],
     sourceText := "original enrollment", options := {} }
@@ -42,7 +43,7 @@ run_cmd do
         (package / 'Overlay.lean').write_text('''import Writer
 open Lean LeanInformationAudit
 run_cmd do
-  let input := (RegistrationInputs.owned (← getEnv))[0]!.2
+  let some (_, input) := (RegistrationInputs.owned (← getEnv))[0]? | throwError "missing input"
   for theoremName in [`fourth, `fifth] do
     modifyEnv fun env => RegistrationInputs.add env {
       input with entry := { input.entry with theoremName } }
@@ -71,12 +72,14 @@ unsafe def main : IO Unit := do
     input.declaration.any (fun declaration => declaration.arena == `arena &&
       declaration.descriptor.any (·.isConstOf ``Nat) && declaration.escapeInput.openContinuation))
   let enrollments := TemplateEnrollmentInputs.owned env
-  check "enrollment_inputs" (enrollments.size == 1 && enrollments[0]!.1 == `Writer &&
-    enrollments[0]!.2.owner == `assertedOwner && enrollments[0]!.2.name == `template &&
-    enrollments[0]!.2.constructors == #[`AST] && enrollments[0]!.2.version == 1)
+  check "enrollment_inputs" (match enrollments with
+    | #[(owner, enrollment)] => owner == `Writer && enrollment.owner == `assertedOwner &&
+        enrollment.name == `template && enrollment.constructors == #[`AST] && enrollment.version == 1
+    | _ => false)
   let seals := SealInputs.owned env
-  check "seal_inputs" (seals.size == 1 && seals[0]!.1 == `Writer &&
-    seals[0]!.2.rootId == `assertedOwner)
+  check "seal_inputs" (match seals with
+    | #[(owner, sealInput)] => owner == `Writer && sealInput.rootId == `assertedOwner
+    | _ => false)
   for name in #[``RegistrationInputs.owned, ``RegistrationInputs.add,
       ``TemplateEnrollmentInputs.owned, ``SealInputs.owned] do
     check s!"store_owner:{name}" ((env.getModuleIdxFor? name).map
@@ -86,9 +89,10 @@ unsafe def main : IO Unit := do
       `LeanInformationAudit.TemplateBinding.bindingClaims] do
     check s!"no_persisted_verdict:{name}" (!env.constants.toList.any
       (fun (actual, _) => privateToUserName actual == name))
+  let some (_, first) := rows[0]? | throw <| IO.userError "[FAIL] imported_input_absent"
   let mut localEnv := env
   for theoremName in [`sixth, `seventh] do
-    let input := rows[0]!.2
+    let input := first
     localEnv := RegistrationInputs.add localEnv {
       input with entry := { input.entry with theoremName } }
   let locals := RegistrationInputs.owned localEnv
@@ -112,11 +116,13 @@ class NativeInterfaceConsumerTests:
     def test_interface_edit_rebuilds_implementation_consumer(self):
         self.reg_package()
         self.run_lake('build', 'Fixture')
-        # The implementation consumes the real Interface dependency identity.
-        # Its encoder must re-elaborate when that field type changes.
-        implementation = 'LeanInformationAudit/RegistryTypes.lean'
-        self.write(implementation, (ROOT / 'tools/lean-inspector' / implementation).read_text())
-        self.make_lean('LeanInformationAudit.RegistryTypes')
+        # A module reading the real Interface dependency identity must re-elaborate
+        # when that field type changes; D5 content does not rebuild. Reg is the
+        # fixture's Interface consumer (Impl consumers depend on it the same way).
+        self.write('Reg/Support/Entry.lean', 'import D5.A\nimport LeanInformationAuditInterface.Records\n'
+                   'def dependencyType (d : LeanInformationAudit.TemplateAudit.DependencyIdentity) : String :=\n'
+                   '  d.typeIdentity\n')
+        self.make_lean('Reg.Support.Entry')
         content = self.root / '.lake/build/lib/lean/D5/A.olean'
         before = (content.stat().st_mtime_ns, content.read_bytes())
         interface = self.root / 'tools/lean-inspector-interface/LeanInformationAuditInterface/Records.lean'
@@ -127,10 +133,10 @@ class NativeInterfaceConsumerTests:
         interface.write_text(prefix + 'structure DependencyIdentity where\n' +
                              fields.replace('  typeIdentity : String\n', '  typeIdentity : Nat\n') +
                              '  deriving Inhabited' + rest)
-        failed = self.make_lean('LeanInformationAudit.RegistryTypes', success=False)
-        self.assertIn('RegistryTypes.lean', failed.stdout + failed.stderr)
+        failed = self.make_lean('Reg.Support.Entry', success=False)
+        self.assertIn('Reg/Support/Entry.lean', failed.stdout + failed.stderr)
         self.assertIn('typeIdentity', failed.stdout + failed.stderr)
         self.assertEqual((content.stat().st_mtime_ns, content.read_bytes()), before)
         interface.write_text(original)
-        self.make_lean('LeanInformationAudit.RegistryTypes')
+        self.make_lean('Reg.Support.Entry')
         self.assertEqual((content.stat().st_mtime_ns, content.read_bytes()), before)

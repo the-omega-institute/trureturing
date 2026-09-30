@@ -232,6 +232,38 @@ public sealed class RegManifestAgreementTests
         Assert.Contains("REG-MANIFEST-", reason, StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData("inherited", true)]
+    [InlineData("absent", false)]
+    [InlineData("direct", false)]
+    [InlineData("wrong-dir", false)]
+    [InlineData("own-name", true)]
+    public void RootPathPackagesAreInheritedRegEntries(string mutation, bool accepted)
+    {
+        var files = Files();
+        var root = JsonNode.Parse(files["lake-manifest.json"])!;
+        // A root path package that Reg requires itself keeps Reg's own entry.
+        var rootName = mutation == "own-name" ? "leanInspectorInterface" : "rootTool";
+        root["packages"]!.AsArray().Add(JsonNode.Parse($$"""
+            {"type":"path","scope":"","name":"{{rootName}}","dir":"tools/root-tool",
+             "configFile":"lakefile.toml","manifestFile":"lake-manifest.json","inherited":false}
+            """));
+        files["lake-manifest.json"] = root.ToJsonString();
+        var reg = JsonNode.Parse(files[RegManifestAgreement.ManifestPath])!;
+        if (mutation is not ("absent" or "own-name"))
+            reg["packages"]!.AsArray().Add(JsonNode.Parse($$"""
+                {"type":"path","scope":"","name":"rootTool",
+                 "dir":"{{(mutation == "wrong-dir" ? "tools/root-tool" : "../tools/root-tool")}}",
+                 "configFile":"lakefile.toml","manifestFile":"lake-manifest.json",
+                 "inherited":{{(mutation == "direct" ? "false" : "true")}}}
+                """));
+        files[RegManifestAgreement.ManifestPath] = reg.ToJsonString();
+        var reason = RegManifestAgreement.Validate(files["lake-manifest.json"],
+            files[RegManifestAgreement.ManifestPath], hasLakefile: true);
+        if (accepted) Assert.Null(reason);
+        else Assert.Equal("REG-MANIFEST-PATH-AGREEMENT: path requires differ from package ownership", reason);
+    }
+
     private static Dictionary<string, string> Files()
     {
         var git = JsonNode.Parse("""

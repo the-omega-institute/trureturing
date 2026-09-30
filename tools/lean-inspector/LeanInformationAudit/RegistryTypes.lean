@@ -287,11 +287,6 @@ structure TemplatePlanData where
   serializedBytes : Nat
   deriving Inhabited
 
-/- Bounded decoder for the canonical token-interned plan payload. The
-persistent extension stores bytes, so none of these nodes exist before its
-framing and aggregate-budget checks. Allocation debit is conservative and
-includes token copies, collection slots and expression/plan constructors. -/
-
 end TemplateAudit
 
 def CatalogKind.artifactName : CatalogKind -> String

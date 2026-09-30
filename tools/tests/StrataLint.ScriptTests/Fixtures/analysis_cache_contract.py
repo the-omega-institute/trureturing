@@ -41,8 +41,7 @@ class AnalysisCacheTests(unittest.TestCase):
                          "configFile": config, "manifestFile": "lake-manifest.json", "inherited": False}
                         for name, directory, config in (
                             ("trureturing", "..", "lakefile.toml"),
-                            ("leanInspectorInterface", "../tools/lean-inspector-interface", "lakefile.toml"),
-                            ("leanInspector", "../tools/lean-inspector", "lakefile.lean")))
+                            ("leanInspectorInterface", "../tools/lean-inspector-interface", "lakefile.toml")))
         write(self.root / "Reg/lake-manifest.json",
               json.dumps({"packagesDir": "../.lake/packages", "packages": packages}))
         host = json.loads((ROOT / "tools/lean-inspector-reg/lake-manifest.json").read_text())
