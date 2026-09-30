@@ -36,15 +36,19 @@ internal sealed class StructuredNegativityCoincidenceRefutationDocument : IScrib
             Node("claim", "The Kumari–Adhikari coincidence conjecture", ClaimFormula(),
                 "Abstract, p. 1: '" + Conjecture + "' Conclusion, p. 7: 'Thus, we conjecture that the negativity and structured negativity coincides when q=d(d−1)/2.' Encoding: d is a natural number at least two, rho is an arbitrary density matrix on C^d ⊗ C^d, and q is negCount(partialTransposeB(rho)). natDiv denotes natural-number division, equal to the floor of the nonnegative quotient; subtraction in d−1 here is natural subtraction. The conclusion equates the two real quantities with the normalizations in equations (6) and (9).", true),
             Node("result", "Refutation by a pure 3⊗3 state", Disp(new Formula.Not(F.Id("claim"))),
-                "Take ψ=(|00⟩+2|11⟩+2|22⟩)/3 and ρ=|ψ⟩⟨ψ|. The partial transpose is Hermitian with eigenvalue multiset {1/9,2/9,2/9,−2/9,4/9,4/9,−2/9,−4/9,4/9}. Thus q=3=3(3−1)/2 and N=8/9. Its SPA has eigenvalues {7/63,29/252,29/252,25/252,31/252,31/252,25/252,23/252,31/252}, with minimum 23/252, giving N_S=84 max{3/28−23/252,0}=4/3. The eigenvalues follow from an explicit rational change of basis: diagonal coordinates use |ii⟩, and each off-diagonal pair uses |ij⟩+|ji⟩ and |ij⟩−|ji⟩. Similarity preserves the characteristic polynomial; Mathlib's spectral theorem relates its roots to the Hermitian eigenvalue multiset. Since 8/9 differs from 4/3, the conjecture fails.", false, DescribeRole.Theorem)),
+                "Take ψ=(|00⟩+2|11⟩+2|22⟩)/3 and ρ=|ψ⟩⟨ψ|. The partial transpose is Hermitian with eigenvalue multiset {1/9,2/9,2/9,−2/9,4/9,4/9,−2/9,−4/9,4/9}. Thus q=3=3(3−1)/2 and N=8/9. Its SPA has eigenvalues {7/63,29/252,29/252,25/252,31/252,31/252,25/252,23/252,31/252}, with minimum 23/252, giving N_S=84 max{3/28−23/252,0}=4/3. The eigenvalues follow from an explicit rational change of basis: diagonal coordinates use |ii⟩, and each off-diagonal pair uses |ij⟩+|ji⟩ and |ij⟩−|ji⟩. Similarity preserves the characteristic polynomial; Mathlib's spectral theorem relates its roots to the Hermitian eigenvalue multiset. Since 8/9 differs from 4/3, the conjecture fails.", false, DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kumari-adhikari-2022-structured-negativity-coincidence-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        bool literature, DescribeRole role = DescribeRole.Definition) => Describe.Lean(
+        bool literature, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("sneg-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Rho => F.Id("rho");
     private static Formula A => F.Id("A");

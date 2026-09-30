@@ -120,6 +120,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kumari-adhikari-2022-structured-negativity-coincidence-refutation` (refuted) by `D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kumari-adhikari-2022-structured-negativity-coincidence-refutation","declaration_gid":"D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. Kumari; S. Adhikari (2022). *Structured negativity: A physically realizable measure of entanglement based on structural physical approximation*. DOI: [10.48550/arXiv.2209.03909](https://doi.org/10.48550/arXiv.2209.03909). URL: <https://arxiv.org/abs/2209.03909v1>.
