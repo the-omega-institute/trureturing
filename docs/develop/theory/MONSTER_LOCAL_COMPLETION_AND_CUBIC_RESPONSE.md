@@ -170,12 +170,6 @@ $$
 
 证明。不变性给 $\langle u\cdot v,e\rangle=\langle u,v\rangle$，所以 $e$ 方向系数为右式；正定形式的非退化性唯一确定剩下的 $W$ 分量。单位律和双线性给全部乘法。任意保持 $T$ 的 $U\in O(W)$ 延拓为 $e\mapsto e$，由式（MC.10）保持乘法。反向，代数自同构固定唯一单位，保度量时保持 $W$，并保持 $T$。证毕。
 
-**机器形式化边界。** 上述有限代数步骤已在
-`D5/S3/VertexAlgebra/FiniteCubicRecovery.lean` 形式化。其
-`mul_recovery_formula` 在 `Fin n → ℝ` 坐标中证明式（MC.10），
-`extend_preserves_mul_iff` 证明固定单位的正交延拓保持乘法当且仅当保持三次 sharp
-张量，`preserves_cubicTensor` 再给出标量三点张量的对应读法。该模块的前件是有限实双线性乘法、单位律和不变欧氏形式；它不构造 VOA、实际 Griess 乘法或 Monster 作用。后两者仍分别使用 [DGL05, Theorem 1] 的 Griess 乘法前件及 [G81、GL11] 的外部识别输入。
-
 将已构造的实际 Griess 代数代入，使用其全自同构群识别 [G81、M01、GL11]，得到
 
 $$
@@ -1161,3 +1155,27 @@ $$
 $$
 
 证明。引理 35.1 把左边化为 $\det(x,y,z)$。三个向量都位于 $\langle g,h\rangle$，故行列式为零。任意二元标签组成仍留在该平面；此结论不包含辅助八元数的乘法系数、三周期或实际 OPE。
+
+## 36. 三次恢复的有限坐标形式
+
+取 $W=\mathbb R^n$、$B=\mathbb R\times W$、$e=(1,0)$，并定义
+$\langle(a,u),(b,v)\rangle_B=3ab+\langle u,v\rangle_W$。设 $B$ 上有实双线性、交换的乘法，满足 $e\cdot x=x$ 及
+$\langle x\cdot y,z\rangle_B=\langle x,y\cdot z\rangle_B$。令
+$Q(u,v)=\operatorname{pr}_W((0,u)\cdot(0,v))$。这一归一化与式（MC.10）一致；Griess 代数的相应不变形式参见 [M01, §3.1]。
+
+**命题 36.1（有限坐标的乘法恢复）。** 对上述任意 $B$ 及所有 $a,b\in\mathbb R$、$u,v\in W$，
+
+$$
+(a,u)\cdot(b,v)=\left(ab+\frac{\langle u,v\rangle_W}{3},\;av+bu+Q(u,v)\right).
+$$
+
+证明。不变性及单位律给
+$3\operatorname{pr}_{\mathbb R}((0,u)\cdot(0,v))
+=\langle(0,u)\cdot(0,v),e\rangle_B
+=\langle(0,u),(0,v)\rangle_B=\langle u,v\rangle_W$。
+乘积的 $W$ 分量按 $Q$ 的定义确定；再由双线性及单位律展开两个加数。证毕。
+
+**命题 36.2（固定单位的正交延拓判据）。** 设 $U\in O(W)$，且 $\widehat U(a,u)=(a,Uu)$。则 $\widehat U$ 保持上述 $B$ 的乘法，当且仅当
+$UQ(u,v)=Q(Uu,Uv)$ 对所有 $u,v\in W$ 成立。
+
+证明。若 $\widehat U$ 保持乘法，将其等式限制到 $(0,u),(0,v)$ 并取 $W$ 分量，得到所需条件。反向代入命题 36.1 的乘法式；标量分量由 $U$ 的正交性保持，$W$ 分量由 $U$ 的线性及所给条件保持。证毕。

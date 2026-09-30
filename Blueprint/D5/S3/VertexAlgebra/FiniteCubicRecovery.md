@@ -8,9 +8,9 @@ This document formalizes the finite algebra step behind the cubic response inter
 
 **Theorem 1.1 (Full multiplication recovery).**
 
-Lean statement: `D5/S3/VertexAlgebra/FiniteCubicRecovery.mul_recovery_formula`
+Lean statement: `D5/S3/VertexAlgebra/FiniteCubicRecovery.mul_eq_recoveredMul`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/FiniteCubicRecovery.mul_recovery_formula` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/FiniteCubicRecovery.mul_eq_recoveredMul` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -33,4 +33,4 @@ An orthogonal map on the unit complement, extended by fixing the unit, preserves
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/FiniteCubicRecovery.extend_preserves_mul_iff`
-- Truth anchor: `D5/S3/VertexAlgebra/FiniteCubicRecovery.mul_recovery_formula`
+- Truth anchor: `D5/S3/VertexAlgebra/FiniteCubicRecovery.mul_eq_recoveredMul`

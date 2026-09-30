@@ -89,13 +89,6 @@ theorem mul_eq_recoveredMul {n : ℕ} (A : FiniteCubicAlgebra n) (x y : Space n)
   simp [recoveredMul, unit, traceless, vecInner, smul_eq_mul]
   abel
 
-/-- Coordinate form of the recovery identity, corresponding to the `ae + u` formula. -/
-theorem mul_recovery_formula {n : ℕ} (A : FiniteCubicAlgebra n)
-    (a b : ℝ) (u v : Vec n) :
-    A.mul (a, u) (b, v) =
-      (a * b + vecInner u v / 3, a • v + b • u + cubicSharp A u v) := by
-  simpa [recoveredMul] using mul_eq_recoveredMul A (a, u) (b, v)
-
 /-- Extending an orthogonal map on the unit complement while fixing the unit. -/
 def extend {n : ℕ} (U : Vec n ≃ₗ[ℝ] Vec n) : Space n ≃ₗ[ℝ] Space n :=
   (LinearEquiv.refl ℝ ℝ).prodCongr U
@@ -134,13 +127,5 @@ theorem extend_preserves_mul_iff {n : ℕ} (A : FiniteCubicAlgebra n)
       rw [hU]
     · simp only [extend_apply, recoveredMul, map_add, map_smul]
       rw [hT x.2 y.2]
-
-/-- Sharp-form cubic preservation implies preservation of the scalar three-point tensor. -/
-theorem preserves_cubicTensor {n : ℕ} (A : FiniteCubicAlgebra n)
-    (U : Vec n ≃ₗ[ℝ] Vec n) (hU : IsOrthogonal U) (hT : PreservesCubic A U) :
-    ∀ u v w, cubicTensor A (U u) (U v) (U w) = cubicTensor A u v w := by
-  intro u v w
-  simp only [cubicTensor]
-  rw [← hT, hU]
 
 end D5.S3.VertexAlgebra.FiniteCubicRecovery

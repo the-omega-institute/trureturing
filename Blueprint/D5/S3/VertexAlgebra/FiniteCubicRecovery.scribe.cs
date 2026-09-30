@@ -15,7 +15,7 @@ internal sealed class FiniteCubicRecoveryDocument : IScribeDocumentDefinition
                 + "does not construct a VOA, a Monster action, or the Griess tensor.")),
             Describe.Lean(
                 DescribeId.Create("finite-cubic-full-multiplication-recovery"),
-                DeclarationHandle.Create(Prefix + "mul_recovery_formula"),
+                DeclarationHandle.Create(Prefix + "mul_eq_recoveredMul"),
                 H("Full multiplication recovery"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
