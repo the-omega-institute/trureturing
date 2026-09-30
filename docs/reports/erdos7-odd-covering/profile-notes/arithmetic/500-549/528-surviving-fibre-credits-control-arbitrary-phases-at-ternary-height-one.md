@@ -5670,3 +5670,198 @@ Useful additional structure must constrain the **joint** remaining-label choices
 For the current finite head approach, the precise sufficient obligation is: for every actual source in the stated prime/support/height class, produce a lawful common-source refinement or an additional joint constraint for which FC172 or FC173 has positive value, and handle the remaining classes by another verified bound. The whole family must supply those constraints simultaneously. Separate locally favorable phases or an optimizer's mixture are not substitutes for that actual relation.
 
 Relative to literal future congruence deletions, prefix-incidence data separates families that share the same star/group profile. The `z=(w,g,X,Y)` min-cap certificate profile is sufficient for certain conservative bounds; it is not proved to be a minimal exact update-closed state. Fixed5040 arithmetic closure and finite observation minimality do not settle this arbitrary-support positivity obligation.
+
+## Joint pair geometry and a height-independent prime-tail continuation
+
+Every finite core family admitted by FC159 can be extended by arbitrary finite outside support whose primes are at least `3^256*369^3`, with arbitrary finite tail ternary heights, outside heights, and old-coordinate query heights. The same cutoff works for both fixed skeleton assignments once N meets FC159's threshold. Core-only originals retain their existing skeleton/source contract and ternary height at most one. The tail law preserves the actual surviving core support; it need not preserve its exact marginal.
+
+This is an ordinary mathematical consumer of the existing bounded-density prime-tail estimate, not new Lean verification or an unrestricted Erdős #7 conclusion. A separate existing pair-conflict construction repairs the phase-maximized pair-family obstruction for arbitrary edge phases. The arguments, source conditions, and the remaining excluded-prime gap are given below.
+
+### Existing joint and tail estimates
+
+1. **[Report386, PC1–PC11](../350-399/386-pair-root-conflicts-and-original-survivor-capacity.md)** already gives a joint survivor construction for arbitrary pair-root patterns. It processes full prime-power coordinates in one finite Haar carrier, keeps original labels, permits numerical multiplicity at most two after projection, and charges pure powers and uncaptured assigned prefixes separately. It does not assume independence after sequential restrictions. PC12--PC13 give an optional unweighted Hall sufficient condition, not an equivalence for the weighted assignment.
+2. **[Report452, EA1–EA11](../450-499/452-exponent-assignment-controls-arbitrary-two-prime-tail-graphs.md)** already handles arbitrary one- and two-outside-prime interaction graphs, arbitrary original phases, and arbitrary finite exponents. Original exponent pairs assign early labels to one actual endpoint; a single budget per coordinate controls all incident edges. Its law is a product conditional on a prescribed core point and preserves the entire core marginal. The stated cutoff is `3^(2560*tau(Q)^2)`; this is an inherited sufficient bound, not a new estimate here.
+3. **[Report453, UT1–UT12](../450-499/453-prime-tail-conditioning-preserves-core-laws-at-unrestricted-support.md)** handles arbitrary outside support, original ternary depths, outside heights, and finite prime counts. One full-history capped process followed by fibrewise conditioning preserves the supplied core marginal. It gives an original weighted tail load at most `324*tau(Q)/B` when every outside prime is at least `B>=3^256*tau(Q)^4`. The final law is not generally a product conditional on the core; only its stated joint-cylinder bounds survive.
+4. **[Report455, BC1–BC9](../450-499/455-positive-mass-core-margins-give-height-independent-tail-cutoffs.md)** replaces the raw head-label count by full-Haar density and LCM intersection moments. It preserves a declared good core support, with controlled marginal change. A core completion-load margin is optional for that report's downstream consumer; it is not an assumption of its tail-law construction. This distinction gives the height-independent FC159 continuation below.
+5. **Report528, FC61--FC65** supplies exact fixed-phase integration on an event-address tree. It combines unions sharing a single private coordinate, retains prefix antichains and numerical labels, and avoids ambient-period enumeration. Its own stated scope is support-{5,q}; treating a general multicoordinate original as a fictitious single-coordinate event would lose its correlations.
+6. **[Report804, FP1–FP9](../800-849/804-the-same23-label-source-admits-every-finite-prime-tail-above1600.md)** is a later, much smaller tail cutoff for a *different specific source*. It requires its 23-label phase-null contract, the fixed core primes through29, the same complete fourth-query bound, and the inherited analytic prime-product premise. It excludes primes31 through1600. Its cutoff cannot be transplanted to the FC159 source without establishing those source contracts.
+7. **[Report842, AP1–AP3 and its constructions](../800-849/842-cross-pair-haar-rectangle-charges-have-no-uniform-excess-bound.md)** already rules out one tempting generic repair: summing arbitrary pair-rectangle credits under Haar with a universal multiple of actual covering excess. The obstruction remains for irredundant squarefree families with holes; it does not rule out a theorem using whole coverage as an additional premise.
+
+These results supply structural tools beyond a generic weight linear program. They also show why “retain all intersections” is not itself a quantitative estimate.
+
+### Pair conflicts repair the phase-maximized pair family for arbitrary edge phases
+
+Let `q_1<...<q_n` be any finite distinct primes at least11. Take one pure original `0 mod3`, and for each selected unordered pair `{q_i,q_j}` at most one original with numerical modulus `3*q_i*q_j`. Give each original an arbitrary globally fixed residue. There is no requirement that its private phases agree with those of another edge or that all edges use the same ternary root.
+
+Fix either retained ternary root. Only the pair originals whose actual ternary phase is this root are active. Process the nonternary coordinates increasingly. Once the first `i-1` coordinates have been chosen, each earlier neighbor can forbid at most one value of coordinate `q_i`: its unique original either fails at its earlier endpoint or excludes its one actual current residue. Hence at least `q_i-(i-1)` values remain at every legal history.
+
+This is precisely the no-pure-cost, one-pattern-per-edge case of Report386's PC10--PC11. It gives the uniform Haar lower bound
+
+    H_Q(actual survivor on this ternary root)
+       >= product_(i=1..n)[1-(i-1)/q_i] >0.           (FC180)
+
+The empty support has the empty product one. For nonempty support, `q_i>=11+2(i-1)>i-1`, so every factor is positive. The construction counts successive legal extensions in the SAME finite product carrier; it is not multiplication of independently optimized survivor probabilities. Both retained roots satisfy FC180. Thus the unconditional integer survivor density for this family is at least `(2/3)` times the displayed product.
+
+FC180 repairs the phase-maximized pair-family obstruction even when every edge has unrelated private phases and an unrelated allowed first-root phase. It uses numerical distinctness to bound the number of conflicts with each earlier neighbor. The divergent scalar sum `sum_(i<j)1/(q_i*q_j)` is irrelevant to this count.
+
+Report386 already has a broader reusable contract. First choose one actual resolved ternary fibre avoiding every actual pure3 original, so no active original projects to modulus1. Suppose all projected nonunit moduli are coprime to6 and have numerical multiplicity at most two. Choose tables with at most two first-root patterns on each prime pair, and call a mixed class captured when one of its pair projections occurs in the corresponding table. Let `u_i` be the first-root pure exclusions, `s_i` the residue-sensitive earlier-neighbor conflicts, `lambda_i` the higher pure-power load, and `w_i` the full-prefix load assigned to prime `i` from uncaptured originals, all as PC5--PC9. Then
+
+    rho_i=1-(u_i+s_i+lambda_i+w_i)/p_i>0 for all i
+
+implies a set avoiding all pure classes, captured classes, and assigned classes, of nonternary Haar mass at least `product_i rho_i` within that resolved ternary fibre. To avoid the entire projected family, every uncaptured mixed label must be assigned. A partial assignment does not remove the unassigned labels. Pure prime powers and arbitrary finite mixed heights remain present. If every mixed class is captured, no assigned leftover load is needed. For height-one original ternary labels, each full projected nonternary modulus can occur from only `d` and `3*d`, so the required multiplicity bound is valid; the two-pattern condition on all mixed heights remains a separate hypothesis. A full original Haar contribution additionally includes the mass of the ternary fibre.
+
+If a pre-existing pure-conditioned product law is used, the constructed set is a subset of its actual pure-survivor support. Its probability is the same original Haar mass divided by that fixed pure normalization. This changes no phases and introduces no separate optimized law for different edges.
+
+#### Why this is not yet an arbitrary-height pair theorem
+
+Different numerical labels `3^k*d` can project to the same nonternary modulus with many distinct phases at one deep ternary point. The multiplicity-two and two-pattern hypotheses cannot be inherited merely from global numerical distinctness.
+
+For an explicit local obstruction, fix distinct odd primes `q,r>=5`. For each of the `q*r` possible private pairs `(a,b)`, choose a different `k` in `{1,...,q*r}` and the actual CRT class
+
+    t=1 mod3^k, x_q=a modq, x_r=b modr,
+    numerical modulus 3^k*q*r.                       (FC181)
+
+All labels are distinct odd nonunit integers and all phases are fixed once. On the single actual ternary cylinder `1 mod3^(q*r)`, all `q*r` originals are active and their private pairs cover the entire q-by-r grid. No pointwise positive fibre bound can hold there, and a table capturing all these patterns cannot have size two. Other ternary roots are untouched, so this is not a covering family. It identifies the missing global task: locate and exploit good ternary mass while paying bad fibres under the one common prefix tree, rather than demanding that every fibre survive.
+
+### A direct consumer of Report453 needs a literal core survivor, not a completion-load margin
+
+The following first-root bridge is the concrete new consumer relevant to FC159. It is a direct application of the existing unrestricted-support tail law, with an elementary ternary integration step.
+
+Fix a finite actual core family whose moduli divide `3*K0`, with `K0` odd and coprime to3. Thus its ternary height is at most one. Suppose some first ternary root `r` has a nonempty literal nonternary survivor `S_r subset Z/K0`: every `(t,x)` with `t=r mod3` and `x in S_r` avoids **all** core originals. This includes pure3 originals if present, all 3-free core originals, and every selected core class active at root `r`.
+
+Let the additional originals have distinct full numerical labels
+
+    m=3^e*a*product_(p in T)p^(f_p),
+    e>=0, nonempty T subset P, f_p>=1, a divides Q.    (FC182)
+
+Here `Q` is a positive integer supported on prime divisors of `K0`, so it is odd and coprime to3. `P` is an arbitrary finite set of outside primes disjoint from the prime support of `3*K0*Q`, and `e=v3(m)` is the actual ternary exponent. All exponents, heights, outside support sizes, and original phases are finite but otherwise unrestricted. Pure outside powers (`a=1,e=0,|T|=1`) are included. Because every added label has an outside prime factor, it does not collide numerically with a core-only label.
+
+Set `K=lcm(K0,Q)`, which is odd and coprime to3 and to the outside primes. Lift `S_r` to `Z/K` and choose one probability `mu` supported there, for example uniform on the lifted literal survivor. Set
+
+    D=tau(Q), B>=3^256*D^4,
+    every p in P is at least B.                       (FC183)
+
+The lift is necessary if added tail cofactors use core-prime powers beyond the old core period. Those actual cofactors must still divide `Q`; enlarging their inventory can increase `D` and therefore the required cutoff. No height-independent cutoff follows from FC183.
+
+Report453 applies with this `K,Q,mu` and a finite height large enough to resolve the whole family. Its one law `nu` on head and outside coordinates satisfies
+
+    head marginal(nu)=mu,
+    nu avoids every 3-free core and tail original,
+    sum_(tail originals m with e>=1)3^(1-e)*nu(C_m)
+       <=324D/B<3^-250,                               (FC184)
+
+where `C_m` is the literal cofactor cylinder for the fixed original residue modulo `m/3^e`. No assumption of independence among head or outside coordinates is made.
+
+Now let `lambda_r` be Haar on the actual first ternary root `r` with uniform higher digits, independent of this ONE `nu`, and put
+
+    eta=lambda_r tensor nu.
+
+Every core original has eta mass zero because the head marginal is exactly `mu`, and incompatible root phases are inactive. Every 3-free tail original has zero mass by FC184. For an actual tail original at depth `e>=1`,
+
+    eta(C_original_m)=
+      0                                  if its ternary root differs from r,
+      3^(1-e)*nu(C_m)                    otherwise.  (FC185)
+
+The equality uses the original's one fixed ternary prefix and one fixed nonternary cofactor, not fresh choices per query. Union bounding the actual tail under eta gives
+
+    eta(actual full survivor)>=1-324D/B>0.            (FC186)
+
+This is probability under the explicitly constructed supported law, not an unconditional Haar-density lower bound. Since the family has a finite CRT period, positive probability supplies an actual uncovered integer residue. No bound on the scalar core completion load `L_core` is needed: core avoidance follows from the literal fibre and exact preservation of its law.
+
+#### Applying the bridge to the FC159 finite families
+
+Fix either admitted skeleton assignment, `N>=N_+`, and any permitted finite nongroup inventory with arbitrary phases in FC159. Its average survivor probability on the two retained roots is at least the positive constant `mu_i`. Therefore some retained root has positive literal survivor probability and hence a nonempty finite survivor `S_r`. Use that whole actual core family and that root in FC182--FC186.
+
+For every fixed finite tail head-divisor inventory `Q`, this extends the FC159 family to **arbitrary finite outside support and arbitrary finite tail ternary/outside heights**, provided its outside primes meet FC183 and every actual old cofactor divides Q. Core skeleton phases, its original head prime set, the allowed core inventory, and its core ternary-height-one condition remain unchanged. The selected root and the preserved law may depend on the actual core phases; the tail cutoff depends on Q, not on those phase choices.
+
+The FC159 threshold `N_+` remains its existing eventual threshold; no explicit value is added. The prior comparison theorem was used only to produce a literal survivor on a root. Conditioning on that survivor for the tail construction is a subsequent, explicitly declared source change, not a reinterpretation of FC159's original raw arrays.
+
+### The stronger FC159 continuation has a height-independent cutoff
+
+For FC159, Report455 removes the dependence on the exponent inventory Q. Its support-preserving conclusion is sufficient: every core point on the selected literal root survivor avoids the active core originals, even if its probability changes during the tail construction.
+
+Keep FC159's fixed nonternary prime set
+
+    V={5,7,11,13,17,19,23,29,31,37,41}.
+
+Every finite pure-conditioned carrier `lambda_N` has density relative to full nonternary Haar at most
+
+    C_V=product_(p in V)(p-1)/(p-2)=1048576/403767.    (FC187)
+
+This follows directly from FC158 and remains valid after uniformly lifting to any larger finite head-query period. Put
+
+    m_* = min(mu_first,mu_bounded)
+        =36518862868606981/466438558966380000,
+    Lambda=C_V/m_*
+        =1211332967792640000/36518862868606981.        (FC188)
+
+For either assignment, every `N>=N_+`, and every permitted finite remainder with arbitrary phases, FC159 supplies a root r with `lambda_N(E_r)>=mu_i>=m_*`. Condition `lambda_N` on that literal event and call the resulting law `mu`. Its full-Haar density is bounded by
+
+    dmu/dHaar <= C_V/lambda_N(E_r) <= Lambda.          (FC189)
+
+Its support A avoids every core original active at r and all 3-free core originals. If tail head cofactors use deeper powers, uniformly lift mu to `K=lcm(K0,Q)`. A point of mass at most `Lambda/K0` is split equally among `K/K0` extensions, so each lifted point has mass at most `Lambda/K`; the same density cap holds without any exponent-dependent factor.
+
+For every positive Q supported on V, Report455 BC9 gives
+
+    J1(Q)=sum_(a|Q)1/a <= M1(V)
+       =product_(p in V)p/(p-1)
+       =131710070791/57330892800,
+
+    J2(Q)=sum_(a,b|Q)1/lcm(a,b) <= M2(V)
+       =product_(p in V)p(p+1)/(p-1)^2
+       =17517439415203/1576599552000.                 (FC190)
+
+In particular exact rational multiplication gives
+
+    368 < Lambda*M2(V) < 369,
+    ceil(Lambda*J2(Q)) <=369.                         (FC191)
+
+Indeed `Lambda*M2(V)=13458999051488768960/36518862868606981`. Subtracting 368 times the denominator from the numerator gives `20057515841399952>0`; subtracting the numerator from 369 times the denominator gives `16461347027207029>0`. These two integer comparisons verify the ceiling directly.
+
+Choose the one fixed cutoff
+
+    B_* =3^256*369^3.                                (FC192)
+
+For **every finite set of outside primes at least B_***, and every finite distinct tail inventory of form FC182 with arbitrary actual old-cofactor heights, outside heights, support sizes, and ternary heights, apply Report455 using FC189 and the actual Q. Conditions BC1--BC2 hold uniformly. Its globally conditioned law `nu` avoids all 3-free core and tail originals, has its core marginal supported on A, and obeys
+
+    L_tail(nu)<=324*Lambda*J1(Q)/B
+                <=324*Lambda*M1(V)/B<3^-250          (FC193)
+
+for every `B>=B_*` below all the actual outside primes. The final core marginal need not equal mu. Its support remains in A, which is exactly what literal fixed-root avoidance needs; no pointwise core completion-load condition is imposed.
+
+Combine this one nu with Haar on the selected first ternary root. As in FC185, all core originals and all e=0 tail originals have zero mass, and an e>=1 tail original costs zero or `3^(1-e)*nu(C_m)`. Consequently
+
+    eta(actual full survivor)
+       >=1-324*Lambda*M1(V)/B >1-3^-250>0.            (FC194)
+
+For the last strict bound, `Lambda*M1(V)<=Lambda*M2(V)<369` and `B>=3^256*369^3`, so the loss is smaller than `324/(3^256*369^2)<3^-250`. These are probabilities under the constructed supported law eta, not unconditional Haar densities.
+
+This extends the FC159 finite skeleton/remainder families by arbitrary finite outside support at a cutoff independent of N, the core remainder exponents, and all tail old-coordinate query heights. The old core remains at ternary height one with its fixed skeleton/source contract; only the tail ternary heights are unrestricted. Every actual tail cofactor has finite support in V, so its finite Q exists; FC190 removes Q's heights from the cutoff. This is stronger than FC183 for this density-controlled core, while FC183 retains the different feature of exact prescribed-core-marginal preservation.
+
+No cutoff optimization was performed. The rational constants in FC187--FC191 are direct products of the eleven fixed prime factors and the existing FC146 bound. The large prime gap below B_* remains untreated by this consumer. In particular, this does not import Report804's cutoff1600 or prove a good-core theorem after inserting those missing primes.
+
+### Optional deeper literal core prefix
+
+The same argument also makes the core-ternary-height cost explicit. Suppose a known actual core survivor contains
+
+    I(J,alpha) times S,
+
+where `J>=1`, `I(J,alpha)` is one literal ternary cylinder, and `S` is a nonempty head-coordinate set on which every core original is avoided for **all** points of that cylinder. Choose Haar inside this cylinder and a head law supported on S, and apply Report453 with the same head-inventory conditions.
+
+For every ternary depth `e>=1`, the actual cylinder intersection probability is zero when incompatible; when compatible it is
+
+    min(1,3^(J-e)) <= 3^(J-1)*3^(1-e).              (FC195)
+
+Consequently the same common-source union bound gives
+
+    eta(actual full survivor)>=1-3^(J-1)*324D/B>0     (FC196)
+
+provided both `B>=3^256*D^4` and `B>324D*3^(J-1)`. Any known nonempty finite core has such a product cylinder after resolving its full finite period, but this does not prove arbitrary cores nonempty. It also does not keep the cutoff uniform when J or Q grows. J=1 recovers FC186.
+
+### Remaining scope
+
+The pair-conflict construction supplies a genuine all-phase repair of the squarefree private-pair example. At arbitrary ternary height, active projected multiplicity and pattern count can be large, and some individual fibres really are fully covered. The missing estimate must combine ternary incidence, mixed private intersections, and the existence of a suitable common source; a uniform pointwise positive claim would be false.
+
+The literal-core tail consumer supplies an unrestricted outside-support continuation once a literal core survivor is available. For the density-controlled FC159 core, FC187--FC194 make the cutoff independent of all nonternary heights; the exact-marginal FC182--FC186 variant still depends on the head-divisor inventory. Neither creates an arbitrary core survivor, admits primes below its cutoff, or guarantees that enlarging the prime set preserves a useful source theorem. Adding a previously excluded core prime changes V and the actual core contract. Report804's smaller cutoff has separate source prerequisites and cannot repair this gap by numerical substitution.
+
+Thus the two useful next interfaces are concrete: prove enough joint pair/prefix geometry on a finite core to obtain a literal surviving cylinder, then attach an existing tail law retaining its required good core support; the Report453 route additionally retains the exact prescribed marginal. The unresolved part is supplying the core cylinder and a usable cutoff for every unrestricted actual family, not representing a finite tree or solving a phase-forgetting weight optimization.
