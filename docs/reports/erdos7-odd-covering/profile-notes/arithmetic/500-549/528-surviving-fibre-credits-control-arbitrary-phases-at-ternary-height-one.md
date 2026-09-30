@@ -8778,3 +8778,145 @@ although they stay forbidden in the physical source. The old-source
 restrictions and the general Erdős #7 gap remain. These are ordinary
 mathematical and exact-arithmetic results, with no new Lean check or
 external novelty claim.
+
+## Full-group continuation improves the reserve through73
+
+Each full-group initialization (FC391)--(FC394), kept on its own
+FC110 or FC131 actual source, survives the fixed half-clipped sequence
+43,47,53,59,61,67,71,73. Both resulting comparison laws still fail
+the necessary mean condition at79. The retained mass and the fixed
+above10000 tail reserve improve, but the admitted prime-support range
+does not increase.
+
+The FC159 actual source assumptions remain unchanged: a prescribed
+FC110 or FC131 skeleton, finite N>=max(2,N_+), and the permitted
+nongroup remainder with its old-only ternary-height, support and
+shallow-group exclusions. Those exclusions do not remove originals
+already in the skeleton. The comparison retains two pure/star layers
+and all thirty-six depth-one grouped originals; the physical source
+continues to avoid its complete original finite family. Numerical
+labels and globally fixed phases are preserved throughout.
+
+### 1. One physical continuation for each source
+
+The [continuation consumer](../../../frontier/cover-geometry/pure-support-profiles/full_group_continuation.py)
+reads the two saved initializations from
+[full_group_profile.json](../../../frontier/cover-geometry/pure-support-profiles/full_group_profile.json).
+It does not reconstruct either source or rerun initialization. At
+each declared reference prime q it computes exactly
+
+    T=(q-1)/2,
+    H_Pi(T)=W-Tm+sum_(z<T)(T-z)pi_z,
+    m'=m-H_Pi(T)/T,
+    Pi'=Top_(m')(Pi times pi_cap(q,2)).               (FC395)
+
+Every target in the fixed sequence is positive. The same actual
+clipping kernel, deletion and one family/stage scalar construct the
+new physical source with mass m'. Each source sequence serves all
+later queries simultaneously. Choosing a different certified target
+mass defines a new consistent source sequence from eta0; it does not
+retroactively increase a previously constructed endpoint measure.
+
+The [exact result](../../../frontier/cover-geometry/pure-support-profiles/full_group_continuation.json)
+retains complete moments 0,1,2,4 and atoms through load256 before
+append, after append and after trimming at every stage. All hinges
+and split cutoffs are resolved within those atoms; complete moments
+include the entire auxiliary tail. No original height is truncated.
+
+| Prime | FC110 mass | FC131 mass | Top cutoff, both |
+|---:|---:|---:|---:|
+|43|0.017051163259748423|0.017051063230601760|10|
+|47|0.014194376465353683|0.014194179473053255|12|
+|53|0.011704930777499099|0.011704649351121875|12|
+|59|0.009500374714041966|0.009500018815137570|16|
+|61|0.007220570493262649|0.007220136751376967|18|
+|67|0.005202512002393833|0.005202011052253167|24|
+|71|0.003245413389993183|0.003244848412837914|32|
+|73|0.001245703844828582|0.001245079860029951|48|
+
+All displayed decimals stand for exact saved fractions. No parameter,
+depth or order search is part of this continuation.
+
+### 2. Endpoints, physical density and the79 obstruction
+
+| Quantity after73 | FC110 | FC131 |
+|---|---:|---:|
+|Mass m|0.0012457038448285821263|0.0012450798600299507317|
+|First moment W|0.11256792617309327910|0.11253925225807506358|
+|Second moment M2|14.669066707036203038|14.667893185011198139|
+|Fourth moment M4|11294497.172755215142|11294540.305797876935|
+|Mean W/m|90.364918307355341956|90.387175851810743712|
+
+Both complete endpoints separately satisfy
+
+    m>249/200000, M2<1467/100, M4<11295000.           (FC396)
+
+The initial eta0 is dominated by full old-coordinate Haar. Eight
+cap-two extensions, followed only by restrictions and downward
+scalings, give density at most256 relative to the full head Haar.
+Thus, on each actual source separately,
+
+    Haar(actual head survivor)>=m/256
+                                >249/51200000.      (FC397)
+
+This common inequality does not combine coordinates from the two
+different source laws.
+
+At79 their saved values give, respectively,
+
+    78m-W=-0.0154030262764638732509566012607080401...,
+    78m-W=-0.0154230231757389065084550996282298444...,
+    78m-W<-3/200 in both cases.                      (FC398)
+
+For any legal constant delta, 0<delta<1 and1/(1-delta)<=79,
+the inequality (z-t)_+>=z-t implies
+
+    m-H_Pi(78delta)/(78(1-delta))
+       <=(78m-W)/(78(1-delta))<0.                   (FC399)
+
+Thus no constant clipping choice gives a positive next ledger from
+either of these endpoint comparators. No79 hinge or update is needed
+or performed. This conclusion concerns the comparison bound; it does
+not assert that the actual79 survivors are empty.
+
+### 3. The fixed larger-prime tail
+
+Keep the inherited Report734/779 analytic prime-product premise and
+the same quartic continuation with B=10000, ell=8, delta=2/5 and
+growth exponent25. Its exact coefficient is
+
+    tau4=(5625/6144)(129/127)^25 *10000/(9999^4)
+                      *sum_(j=0..25)25!/((25-j)!24^j).
+
+The exact endpoint reserves are
+
+    FC110: m-M4*tau4=0.0011216966683894198675924196198...,
+    FC131: m-M4*tau4=0.0011210722100144308976427188448... . (FC400)
+
+The common rational certificate is
+
+    m-M4*tau4>249/200000-11295000*tau4
+              =0.0011209873028027279544136815343...
+              >7/6250.                             (FC401)
+
+Under that inherited analytic premise, each admitted finite
+continuation using only additional support primes above10000 has
+positive distorted survivor mass. The reserve is not a final Haar
+density estimate. Extra support primes in(73,10000] remain excluded;
+all admitted new-prime heights and mixed supports are finite but
+otherwise unrestricted as before.
+
+The earlier one-pair continuation retained mass about0.00100760019
+and tail reserve about0.00088352215. Both full-group continuations
+improve these readings. Their raw second moments increase from the
+one-pair value about14.04733, so this is not improvement in every
+moment or a proof of full stochastic dominance. Both still stop at
+the79 mean obstruction, and the general odd distinct covering problem
+remains unresolved.
+
+The canonical run performs335 exact checks with zero79 hinge or
+update. A separate implementation starts from its independently
+computed initialization and reproduces the fixed continuation.
+Only stored results are used for their binding and short rational
+endpoint checks. These are ordinary mathematical and exact-arithmetic
+certificates, with no new Lean verification or external novelty claim.
