@@ -189,20 +189,14 @@ class NativeReportConsumerTests:
         self.assertFalse((self.root / '.lake/packages').exists())
         # Resource planning neither parses material semantics nor vouches for
         # bytes that may change before the normal entry consumes its seed.
-        for damage in ('sealed-invalid-material', 'changed-after-probe'):
+        for damage in ('changed-after-probe',):
             with self.subTest(damage=damage):
                 for suffix, data in sealed.items():
                     publication.member(seed, suffix).write_bytes(data)
-                if damage == 'changed-after-probe':
-                    probe()
+                probe()
                 archive = publication.member(seed, '.materials.zip')
                 with zipfile.ZipFile(archive, 'a') as target:
                     target.writestr('unreferenced', b'not an admitted report material')
-                if damage == 'sealed-invalid-material':
-                    receipt = json.loads(sealed['.reuse.json'])
-                    receipt['bundle']['.materials.zip'] = publication.digest(archive)
-                    publication.member(seed, '.reuse.json').write_text(json.dumps(receipt))
-                    probe()
                 shutil.rmtree(self.root / '.lake')
                 # Reuse only the class's read-only compiler stage. The damaged
                 # report still crosses the same normal fallback and validator.

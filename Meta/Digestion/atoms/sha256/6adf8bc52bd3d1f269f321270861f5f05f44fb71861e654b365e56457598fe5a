@@ -1,0 +1,38 @@
+**引理 196.2（十一处赋值与每层完整 Kummer 次数）。** 取一个本原 $k$ 次单位根 $\zeta_k$，并令
+
+$$
+F=K(\zeta_k),\qquad u^n=a_r,\qquad L=F(u).
+$$
+
+则
+
+$$
+[F:\mathbb Q]=2n,\qquad
+[L:F]=n,\qquad [L:\mathbb Q]=2n^2.
+\tag{196.4}
+$$
+
+扩张 $L/\mathbb Q$ 是 Galois 扩张。它的全部自同构可由
+
+$$
+\varepsilon\in\{1,-1\},\quad
+A\in(\mathbb Z/k\mathbb Z)^\times,\quad
+b\in\mathbb Z/n\mathbb Z
+$$
+
+准确参数化，其中在 $K$ 上分别取恒等或黄金共轭，并满足
+
+$$
+\zeta_k\longmapsto\zeta_k^A,
+\qquad
+u\longmapsto\zeta_n^b u^\varepsilon,
+\qquad \zeta_n=\zeta_k^2.
+\tag{196.5}
+$$
+
+证明。因 $w$ 是范数十一的代数整数，主理想 $(w)$ 是 $K$ 中十一上方的素理想。它与 $(w')$ 不同：若相同，则同时整除 $w-w'=2\sqrt5$，这会迫使十一整除 $\operatorname N(2\sqrt5)=-20$。因此 $w'/w$ 在这两个素理想处的赋值分别为负一与正一。$\tau$ 是单位，故对所有偶数 $r$，$a_r$ 仍有这两个赋值。尤其 $a_r$ 不是单位根，$t_r\ne0$。
+
+二次域 $K$ 在五处分歧，而 $\mathbb Q(\zeta_k)$ 只在二处分歧，故二者交为 $\mathbb Q$。于是 $[F:\mathbb Q]=2\varphi(k)=2n$。$F/K$ 在十一处不分歧，所以在某个延伸素理想上，$a_r$ 的赋值仍为一。多项式 $X^n-a_r$ 对该局部离散赋值环满足 Eisenstein 条件，故在 $F$ 上不可约。这也可由分歧指数直接看出：$u$ 的扩张赋值为 $1/n$，迫使扩张次数至少为 $n$，而它至多为 $n$。由此得到式（196.4）。
+
+$F$ 包含全部 $n$ 次单位根。每个 $F/\mathbb Q$ 自同构独立选择 $K$ 上的作用与奇数 $A\pmod k$；它把 $a_r$ 送到 $a_r^\varepsilon$。相应的全部 $n$ 个根为 $\zeta_n^b u^\varepsilon$，均已在 $L$ 内，所以每个基域自同构有这些延伸，且 $L/\mathbb Q$ 正规。特征为零保证可分。全部参数的个数为 $2n^2$，与扩张次数相同，得到完整参数化。这里未把三个参数的群乘法断言为直积。$\square$
+

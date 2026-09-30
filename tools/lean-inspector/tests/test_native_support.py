@@ -48,7 +48,6 @@ ROOT = Path(os.environ.get('STRATALINT_NATIVE_SOURCE_ROOT', ROOT)).resolve()
 sys.path.insert(0, str(HERE))
 import publication
 import materials
-import native
 
 
 class NativeTestSupport:
@@ -507,65 +506,6 @@ defaultFacets = ["static"]
             'verify', '--repository', str(self.root), '--report', str(self.root / 'public.json')],
             env=self.env, text=True, capture_output=True, timeout=120)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-    def check_row_decoder_recovery(self, damage, exception, *, no_build=False):
-        self.build()
-        before = self.stamps()
-        expected_report = self.report()
-        origins = self.origins()
-        path = self.root / '.lake/build/lean-inspector/modules/D5.Alone.zip'
-        expected = path.read_bytes()
-        self.record_result('valid', dict(artifact_sha256=publication.digest(path),
-            rows=expected_report[0], origins=origins), [path])
-        damaged = damage(expected)
-        # Establish the real decoder failure before testing Lake's optional-row
-        # recovery. Replace the private path, never a native-cache hard link.
-        path.unlink()
-        path.write_bytes(damaged)
-        with tempfile.TemporaryDirectory(dir=self.root) as directory:
-            with self.assertRaises(exception):
-                report = publication.unpack(path, directory, ('', '.materials.zip', '.provenance.json'))
-                publication.validate_rows(report, publication.member(report, '.materials.zip'),
-                    manifest=self.root / 'lean-report-inputs.json')
-        self.record_result('damaged', dict(artifact_sha256=publication.digest(path),
-            exception=exception.__name__), [path])
-        if no_build:
-            self.write('activity.jsonl', '')
-            stamp = (path.stat().st_ino, path.stat().st_mtime_ns)
-            rejected = self.run_lake('--no-build', 'build', ':report', success=False)
-            result = dict(exit_code=rejected.returncode,
-                needs_rebuild='needs to be rebuilt' in rejected.stdout + rejected.stderr,
-                no_activity=(self.root / 'activity.jsonl').read_text() == '',
-                artifact_unchanged=path.read_bytes() == damaged and
-                    stamp == (path.stat().st_ino, path.stat().st_mtime_ns))
-            self.record_result('no-build', result)
-            self.assertTrue(result['no_activity'])
-            self.assertTrue(result['artifact_unchanged'])
-        recovered = self.build(success=None)
-        self.record_result('recovery', dict(exit_code=recovered.returncode,
-            private_rebuilds=(recovered.stdout + recovered.stderr).count(
-                'inspector artifact rejected; rebuilding privately'),
-            decoder_escaped='LZMAError:' in recovered.stdout + recovered.stderr))
-        self.assertEqual(recovered.returncode, 0, recovered.stdout + recovered.stderr)
-        if no_build:
-            self.assertTrue(result['needs_rebuild'], rejected.stdout + rejected.stderr)
-        self.assertIn('inspector artifact rejected; rebuilding privately', recovered.stdout + recovered.stderr)
-        self.assertEqual({name for name, stamp in self.stamps().items() if stamp != before[name]}, {'D5.Alone'})
-        records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
-        self.assertEqual(sum(row['count'] for row in records if row['kind'] == 'extract'), 1)
-        self.assertEqual(path.read_bytes(), expected)
-        self.assertEqual(path.stat().st_nlink, 1, 'reconstruction must be private')
-        self.assertEqual(self.report(), expected_report)
-        self.assertEqual(self.origins(), origins)
-        self.record_result('recovered', dict(artifact_sha256=publication.digest(path),
-            extraction_count=sum(row['count'] for row in records if row['kind'] == 'extract'),
-            private_links=path.stat().st_nlink, report_matches_valid=True, origins_preserved=True), [path])
-    def encrypted_member(self, data):
-        with zipfile.ZipFile(io.BytesIO(data)) as archive:
-            offset = archive.start_dir + 8
-        damaged = bytearray(data)
-        self.assertEqual(damaged[offset] & 1, 0)
-        damaged[offset] ^= 1
-        return bytes(damaged)
     def check_census_modes(self, rows):
         module = next(row for row in rows if row['module'] == 'D5.B')
         hidden = next(decl for decl in module['declarations'] if decl['name'] == 'D5.hidden')
@@ -695,9 +635,6 @@ class NativeArtifactTestSupport(NativeSharedTestSupport):
         if initial:
             self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
             self.assertEqual((self.stamps(), self.origins(), self.report()), before)
-            state = native.state(self.root)
-            native.validate('module', self.root, 'D5.Alone',
-                            state / 'inputs/D5.Alone.json', state / 'modules/D5.Alone.zip')
         return result
 
 

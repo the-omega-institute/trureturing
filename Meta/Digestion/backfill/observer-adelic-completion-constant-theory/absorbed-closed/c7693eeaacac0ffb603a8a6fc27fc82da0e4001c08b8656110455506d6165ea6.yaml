@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:c7693eeaacac0ffb603a8a6fc27fc82da0e4001c08b8656110455506d6165ea6
   normalized_sha256: sha256:c7693eeaacac0ffb603a8a6fc27fc82da0e4001c08b8656110455506d6165ea6
 cas_ref: sha256:c7693eeaacac0ffb603a8a6fc27fc82da0e4001c08b8656110455506d6165ea6
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/Dilation/ActualRegularLedgerCollision.actual_ledger_collision
+    target_statement_id: sha256:6cd2e2d2a59dc5ddf93563728b0f5acff250fbbe8536295d4bfcafbf02f71c7d
 receipts:
   unresolved_subitems: []
