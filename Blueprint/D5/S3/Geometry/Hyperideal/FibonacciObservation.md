@@ -35,6 +35,18 @@ For every integer pair (z), both coordinates of (C(z+s_{k,t})) are congruent mod
 `D5.S3.Geometry.Hyperideal.FibonacciObservation.observe_phase_indistinguishable`
 (`✓ std3`). The first coordinate is unchanged exactly; the second changes by (5kt). ∎
 
+**Corollary 1.3 (The 5040 specialization).**
+
+Since (5040=5\cdot1008), the same phase shift gives
+[
+\operatorname{modEq}_{5040}(C(z+s_{1008,t}),C(z))
+]
+coordinatewise for every (t). The factor (7) in (5040=2^4\cdot3^2\cdot5\cdot7) contributes no additional kernel state to this observation: the ambiguity is exactly the five-part phase already exposed by Theorem 1.2.
+
+*Proof.* Machine-checked in Lean as
+`D5.S3.Geometry.Hyperideal.FibonacciObservation.observe_phase_indistinguishable_5040`
+(`✓ std3`). ∎
+
 ## Commentary
 
 The written Sections 133–139 of `CFMP_GEOMETRIC_REALIZATION_OBSERVATION_DYNAMICS.md` identify (C) with multiplication by the golden discriminant after a coordinate swap and exhibit five actual framed gluing phases when the modulus is divisible by five. The theorem above formalizes the algebraic core that every such geometric family must satisfy. Repeating the conjugated Fibonacci readout cannot remove this phase ambiguity because of Theorem 1.1.
