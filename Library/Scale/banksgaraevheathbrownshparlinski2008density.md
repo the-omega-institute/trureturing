@@ -161,6 +161,7 @@ The [Bourgain–Lindenstrauss window](bourgainlindenstrauss2003entropy.md)
 has a different advantage: its lower cutoff eventually exceeds two and
 its original $D$ retains square-part zeros. The
 [Pollack input](pollack2017nonresidues.md) covers arbitrary nonprincipal
-characters but gives a prime count rather than this stated fixed harmonic
-weight. Reuse these distinct existing statements according to their actual
+characters. Its Theorem 1.1 states a prime count; the linked note also
+records a weighted induced-character consequence of its published inputs,
+with the enlarged modulus and its zeros retained. Reuse these distinct existing statements according to their actual
 hypotheses; none of these interfaces settles all Robin candidates or RH.
