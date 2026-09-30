@@ -30,7 +30,7 @@ def pairAdd (x y : ℤ × ℤ) : ℤ × ℤ := (x.1 + y.1, x.2 + y.2)
 
 /-- The phase shift which spans the kernel at modulus 5k. -/
 def phaseShift (k t : ℕ) : ℤ × ℤ :=
-  ((k * t : ℕ) : ℤ, (2 * (k * t) : ℕ) : ℤ)
+  (((k * t : ℕ) : ℤ), ((2 * (k * t) : ℕ) : ℤ))
 
 /-- Modular equality written as divisibility of the difference. -/
 def modEq (m : ℕ) (a b : ℤ) : Prop := (m : ℤ) ∣ b - a
@@ -101,8 +101,7 @@ theorem kernel_phase_characterization (k : ℕ) (hk : 0 < k) (x y : ℤ) :
   · intro h
     have h1 := h.1
     have h2 := h.2
-    change ((5 * k : ℕ) : ℤ) ∣ -(2 * x - y) at h1
-    change ((5 * k : ℕ) : ℤ) ∣ -(x + 2 * y) at h2
+    simp [modEq, observe] at h1 h2
     rcases h1 with ⟨a, ha⟩
     rcases h2 with ⟨b, hb⟩
     refine ⟨-(2 * a + b), a, ?_, ?_⟩
@@ -112,14 +111,10 @@ theorem kernel_phase_characterization (k : ℕ) (hk : 0 < k) (x y : ℤ) :
       nlinarith
   · rintro ⟨t, s, rfl, rfl⟩
     constructor
-    · unfold modEq
-      refine ⟨s, ?_⟩
-      push_cast
-      ring
-    · unfold modEq
-      refine ⟨-(t + 2 * s), ?_⟩
-      push_cast
-      ring
+    · simp [modEq, observe]
+      refine ⟨s, by ring⟩
+    · simp [modEq, observe]
+      refine ⟨-(t + 2 * s), by ring⟩
 
 /-- Image characterization. An observed residue pair modulo 5k is realizable
 exactly when its linear obstruction 2r+s vanishes modulo five. -/
@@ -130,8 +125,7 @@ theorem image_condition (k : ℕ) (hk : 0 < k) (r s : ℤ) :
       modEq 5 (2 * r + s) 0 := by
   constructor
   · rintro ⟨x, y, h1, h2⟩
-    change ((5 * k : ℕ) : ℤ) ∣ r - (2 * x - y) at h1
-    change ((5 * k : ℕ) : ℤ) ∣ s - (x + 2 * y) at h2
+    simp [modEq, observe] at h1 h2
     rcases h1 with ⟨a, ha⟩
     rcases h2 with ⟨b, hb⟩
     unfold modEq
@@ -139,7 +133,7 @@ theorem image_condition (k : ℕ) (hk : 0 < k) (r s : ℤ) :
     push_cast at ha hb ⊢
     nlinarith
   · intro h
-    change (5 : ℤ) ∣ -(2 * r + s) at h
+    simp [modEq] at h
     rcases h with ⟨q, hq⟩
     refine ⟨-(q), 2 * (-(q)) - r, ?_, ?_⟩
     · unfold modEq
