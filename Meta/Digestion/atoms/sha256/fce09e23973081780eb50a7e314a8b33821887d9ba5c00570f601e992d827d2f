@@ -1,0 +1,29 @@
+**定理 37.3（全部 cylinder probabilities 不决定合法-tail 相干）。** 取同为终态零的一窗前缀 $u=[2],v=[3]$，令
+
+$$
+X=E_{uv}+E_{vu}\in A_1,\qquad 0<\eta<1,
+\qquad\varphi_\pm(a)=\tau((I\pm\eta X)a).
+\tag{37.3}
+$$
+
+两态都是 $\tau$-GNS 表示中的正规态，具有相同的全部长度、全部 cylinder probabilities，却有
+
+$$
+\varphi_\pm(X)=\pm2\eta/\lambda,
+\qquad\tau(X^2)=2/\lambda.
+\tag{37.4}
+$$
+
+证明。$X=X^*$、$\|X\|=1$、$\tau(X)=0$，$X^2=E_{uu}+E_{vv}$。$I\pm\eta X\ge(1-\eta)I$，迹性将 $\tau((I\pm\eta X)a)$ 写成 $\tau((I\pm\eta X)^{1/2}a(I\pm\eta X)^{1/2})$，故 positive normalized。它们由有界正 density 给 $\tau$-GNS 的向量态，因而正规。
+
+$X_L=i_{L-1}\cdots i_1(X)$ 在每层仍 diagonal entries 全零。$L\ge1$ 的具体 densities 为
+
+$$
+\rho_{L,s}^{\pm}=c_{L,s}(I_{p_{L,s}}\pm\eta X_{L,s}),\qquad\rho_0^\pm=1.
+\tag{37.5}
+$$
+
+copy 求和与 (37.2) 给相容性，星嵌入保范数保证正性。任意 $z\in W_{L,s}$ 的 cylinder probability 都是 $c_{L,s}$；但 $\tau(X^2)=2c_{1,0}=2/\lambda$，给 (37.4)。$\square$
+
+具体地，各层 diagonal algebras $D_L$ 通过 cylinder refinement 嵌入，范数完成 $D\cong C(\Omega_0)$：局部常值 cylinder functions 分离路径并稠密。所有 cylinder probabilities 只决定 AF 态在 $D$ 上的限制，即一个路径 probability measure。各层 diagonal pinching 与 $i_L$ 交换，延拓为 UCP projection $\Delta:A\to D$；任意路径测度 $\mu$ 可选 diagonal extension $a\mapsto\int\Delta(a)d\mu$。定理 37.3 证明这个 extension 不是同一 measure 的唯一 AF 态。选择 measure、选择 coherent state、选择统一 section 是不同数据。
+
