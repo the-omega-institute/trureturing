@@ -119,7 +119,18 @@ def dependency_inputs(root: pathlib.Path):
         if path.is_symlink() or not path.is_file():
             raise ValueError("dependency save input is unavailable: " + relative)
         inputs[relative] = sha(path)
-    return hashlib.sha256(json.dumps(inputs, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+    optional = root / "lakefile.lean"
+    if optional.exists():
+        if optional.is_symlink() or not optional.is_file():
+            raise ValueError("dependency save input is unavailable: lakefile.lean")
+        inputs["lakefile.lean"] = sha(optional)
+    declaration = json.loads((root / "lean-report-inputs.json").read_text())
+    names = declaration["report_execution"]["environment"]
+    if (not isinstance(names, list) or any(not isinstance(name, str) or not name for name in names)
+            or len(set(names)) != len(names)):
+        raise ValueError("dependency save environment registration is invalid")
+    value = {"files": inputs, "environment": {name: os.environ.get(name) for name in names}}
+    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
 
 def dependency_restored_record(root):
@@ -204,7 +215,19 @@ def snapshot(root, keys, layers=LAYERS):
             if target.is_symlink() or not target.is_dir():
                 raise ValueError("native cache directory is unavailable: " + keys[layer]["path"])
             if layer == "dependency":
-                write_small_record(target / ".stratalint-actions-inputs.json", {"inputs_sha256": dependency_inputs(root)})
+                fingerprint = dependency_inputs(root)
+                try:
+                    restored = json.loads(dependency_restored_record(root).read_text())
+                    spec = keys[layer]
+                    if (restored.get("snapshot_key") == spec["key"]
+                            and re.fullmatch(re.escape(spec["restore_prefix"]) + r"[0-9]+-[0-9]+", restored.get("matched_key", ""))
+                            and restored.get("inputs_sha256") == fingerprint):
+                        receipt(layer, "save-disabled", reason="retained-restored-dependency")
+                        output({layer + "_ready": False})
+                        continue
+                except (OSError, ValueError, TypeError, AttributeError):
+                    pass
+                write_small_record(target / ".stratalint-actions-inputs.json", {"inputs_sha256": fingerprint})
             ready = True
             receipt(layer, "snapshot", key=keys[layer]["key"])
         except (OSError, ValueError, TypeError) as error:
@@ -226,13 +249,14 @@ def main():
         root = args.repository.resolve()
         keys = actions_keys(root)
         if args.command == "keys":
+            archive_paths = native_archive_paths(root, args.layers)
             values = {key: keys[key] for key in ("mathlib_revision", "os", "arch", "partition", "save_allowed", "release_prefix")}
             system, arch = binary_platform()
             values["elan_key"] = f"elan-v1-{system}-{arch}-{hashlib.sha256((root / 'lean-toolchain').read_bytes()).hexdigest()}"
             for layer in args.layers:
                 values.update({layer + "_" + key: value for key, value in keys[layer].items()})
             output(values)
-            for layer, paths in native_archive_paths(root, args.layers).items():
+            for layer, paths in archive_paths.items():
                 output_archive_paths(layer, paths)
         elif args.command == "restore":
             restore(root, keys, {layer: getattr(args, layer + "_key") for layer in args.layers}, args.layers,
