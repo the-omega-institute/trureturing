@@ -21059,3 +21059,492 @@ print(examined, valid, checks)
 产地：codex-cli 的 THEORY-ONLY 实施，恢复标识 `6abcb8e78ffcf3fbe6a5e83d`；交付为本算术实例的正文证明与有限复核代码。
 
 ## 102.99 追加锚
+
+## 103. 先报告相位再承诺原语的初始商取得
+
+第102节即使把首批固定为零、把每批准确次数在所选动作后交给控制器，仍有固定双源的共同转录。本节改变的是报告与动作承诺的先后关系：在每次原语选择前报告已经完成的批奇偶，并保护此报告到该原语完成的区间。下面在同一连续实际来源上给出初始 $c_0\bmod341$ 的确定性取得协议。有限证书只用模11、模31的两张规范对表；从双候选到全部初始标签的桥由显式候选删除不变量承担。
+
+### 103.1 先报告的准确合同与控制记忆
+
+固定一次未知 $s_0=(a_0,b_0)\in\mathbb N^2$，含零，此后来源始终是它的实际整数后继。取
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad
+E=M^{15}=\begin{pmatrix}377&610\\610&987\end{pmatrix},\quad
+\alpha=(1,0),\quad q=(2,3),\quad H=341=11\cdot31.
+\tag{103.1}
+$$
+
+第一轮先宣布 $k_1=0$，然后控制器选择首个原语。每个后续轮次 $i$，调度器先选择有限整数 $k_i\ge0$，在当前实际来源上执行 $E^{k_i}$，再宣布 $\epsilon_i=k_i\bmod2$；控制器收到报告后才选择恰一个 $R,G,T$。从宣布到该原语完成没有新的 $E$。其中 $R(s)=Ms$，$G(s)=s+\alpha$，$T$ 返回精确的 $\gcd(qs,341)$ 且不扰动来源。每份已给出的 offer 必须由一个原语消耗；不允许拒绝、免费重新要一次报告或在同一 offer 下执行两个原语。完成一个原语后可决定停止；若继续，就进入下一轮。
+
+每个请求均完成，每批有限；不加统一批数界、完成时限、公平性或额外时钟。控制器初始资料与来源无关，只有完成信号、已宣布的奇偶、自己的命令和实际付费 gcd 响应可作外部输入。允许任意确定性本地计算和任意内部记忆：形式上，可取任意内部配置集 $Z$、固定初始配置 $z_0$，由配置与新报告计算动作，由配置、动作及完成响应计算下一配置，并在完成切口计算是否停止及答案。所有内部工作带和程序位置都包含在 $Z$ 中；内部计算永不返回的执行不算有限取得。这里的存在性构造将给出有限、可执行的这种配置表示，并不把一般控制器预限为小自动机。
+
+保护区间涵盖控制器处理该报告和所选原语完成；计算不附送观察，不按计算耗时偷取来源信息。没有 reset、复制、坐标或整数大小传感器，也没有另加可选择的等待动作。实际状态从不被剩余代表替换。第102节的负结论还覆盖首轮全为零及动作后准确批数，故这里的正负对照不靠未明说的启动优势。
+
+### 103.2 带初始标签的可逆候选运输
+
+复用97.1的坐标，并把等式理解为模341等式：
+
+$$
+\begin{aligned}
+c&=a+81b,&w&=a+261b,\\
+b&=36(w-c),&a&=c-81b,\\
+E(c,w)&=(c,-w),&R(c,w)&=(81c,261w),\\
+G(c,w)&=(c+1,w+1),&qs&=270c+73w.
+\end{aligned}
+\tag{103.2}
+$$
+
+坐标矩阵行列式为180，$180\cdot36\equiv1\pmod{341}$。$E^2\equiv I$ 只在剩余环成立，整数矩阵 $E^2\ne I$。因此任意允许的有限批 $E^k$ 投影为已报告的共同符号 $(-1)^\epsilon$，无需知道 $k$ 本身。
+
+对于 $p=11,31$，置 $\lambda=81\bmod p$、$\mu=261\bmod p$、$A=270\bmod p$、$B=73\bmod p$、$n=(p-1)/2$：
+
+| 103.2 局部模数 | $\lambda$ | $\mu$ | $A$ | $B$ | $n$ |
+| --- | --- | --- | --- | --- | --- |
+| 103.2a：11 | 4 | 8 | 6 | 7 | 5 |
+| 103.2b：31 | 19 | 13 | 22 | 11 | 15 |
+
+**引理 103.1（初始标签不会被运输合并）。** 给定同一已宣布历史，对每个尚存初始候选保留不可变标签 $c_0$ 和当前候选 $(c,w)$。存在由记录计算的共同 $u\in\mathbb F_p^\times,t\in\mathbb F_p$，使全部候选满足
+
+$$
+c=u c_0+t.
+\tag{103.3}
+$$
+
+报告符号和 $T$ 不改 $u,t$；$R$ 更新为 $(\lambda u,\lambda t)$；$G$ 更新为 $(u,t+1)$。初始 $(u,t)=(1,0)$。所以不同初始 $c_0$ 的候选始终有不同的当前 $c$。对已知符号和所选原语，整个局部状态更新也是置换。
+
+证明。逐动作代入(103.2)；$\lambda,\mu$ 及 $\pm1$ 均为单位，平移可逆，读取的状态作用为恒等。筛选可删除候选，但不会改变余下候选所带的标签或等式。这里的 $u,t$ 是假定来源到当前态的运输关系，不是任何未知端点的读数。证毕。
+
+### 103.3 不同标签对的规范轨道与六层秩
+
+考虑不同当前 $c$ 的候选对 $x=(c,w),y=(d,z)$。两素数中 $\lambda$ 的阶均为 $n$，$n$ 为奇数，$\mu^n=-1$。所以 $-1$ 不在阶为 $n$ 的 $\langle\lambda\rangle$ 中，且
+
+$$
+\mathbb F_p^\times=\langle\lambda\rangle\ \sqcup\ -\langle\lambda\rangle.
+\tag{103.4}
+$$
+
+每个非零差 $\delta=c-d$ 恰有一个 $(\mathrm{swap},h)$，$0\le h<n$，满足 $(-1)^{\mathrm{swap}}\lambda^h\delta=1$。对调候选并同时作 $R^h$ 后，差成为1；再从共同反射的两个 $(w,z)$ 中选字典序较小者。记所得规范化为 $C_p(x,y)=(c,w,z)$，代表对 $((c,w),(c-1,z))$。它是共同旋转、共同反射及对调的轨道代表；$R^n=E$ 是模 $p$ 的恒等式，包括 $p=11,n=5$，不是原始整数动作的相等。
+
+共同反射仅固定 $(w,z)=(0,0)$，故规范域
+
+$$
+\mathcal C_p=\{(c,w,z):(w,z)\le_{\rm lex}(-w,-z)\},\qquad
+|\mathcal C_p|=p(p^2+1)/2
+\tag{103.5}
+$$
+
+分别有671和14911条记录。规范化没有给两个候选分别选择符号，也没有给两个素数分别控制实际相位。
+
+对 $v\in\mathcal C_p$ 的代表对作 $j$ 次共同 $R$，$0\le j<n$，得到 $(x_j,y_j)$。令 $E_\sigma(c,w)=(c,\sigma w)$，$\sigma\in\{1,-1\}$，定义
+
+$$
+\begin{aligned}
+D(v,j,\sigma)&\Longleftrightarrow
+ [A(x_j)_c+B\sigma(x_j)_w=0]\ \ne
+ [A(y_j)_c+B\sigma(y_j)_w=0],\\
+H(v,j,\sigma)&=C_p(GE_\sigma x_j,GE_\sigma y_j),\\
+W_0&=\varnothing,\\
+W_{r+1}&=W_r\cup\{v:\exists j<n\ \forall\sigma\in\{1,-1\},
+ D(v,j,\sigma)\ \lor\ H(v,j,\sigma)\in W_r\}.
+\end{aligned}
+\tag{103.6}
+$$
+
+方括号表示真假位，不是额外观察。$G$ 保持 $c$ 差非零，故 $H$ 总有定义。首次进入 $W_r$ 的指标记作 $\rho(v)$；按上一层选最小可用 $j(v)$。本有限实例的完整层数为：
+
+| 103.3 证书域 | 秩1 | 秩2 | 秩3 | 秩4 | 秩5 | 秩6 | 未获秩 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 103.3a：$\mathcal C_{11}$ | 57 | 83 | 148 | 192 | 168 | 23 | 0 |
+| 103.3b：$\mathcal C_{31}$ | 467 | 977 | 2380 | 6412 | 4664 | 11 | 0 |
+
+**命题 103.2（两张表的严格门条件）。** 两域均有 $W_6=\mathcal C_p$。对每条存储记录及两个符号，各自或者满足 $D(v,j(v),\sigma)$，或者满足
+
+$$
+0<\rho(H(v,j(v),\sigma))<\rho(v)\le6.
+\tag{103.7}
+$$
+
+证明。103.8的有界程序完整生成(103.5)及(103.6)，逐层同步更新，不使用同层刚加入的值。103.9从原始 $M,E,G,q$ 独立检查全部记录、唯一规范化及存储门的两个符号。它检查1342与29822个选定符号义务，其中917与23984个必须使用严格 $G$ 下降，合计31164与24901。每个等式、域覆盖、层计数与严格不等式均为程序内的断言；没有以稳定次数代替全域获胜检查。此为显式有限算术证书与正文证明，未作 Lean/kernel 核验。证毕。
+
+### 103.4 把规范门实现为逐 offer 的双候选协议
+
+**引理 103.3（每次比较恰以一读结束）。** 任意两个不同初始 $c_0$ 的当前候选，在任意后续共同相位日程下，有一个使用已报告符号的确定性比较过程，至多 $6n$ 个实际原语后执行一次 $T$，使两个预测的模 $p$ 整除位不同。过程中至多 $6(n-1)$ 次 $R$、5次 $G$，恰一次末尾 $T$。
+
+证明。在已完成原语的切口，或第一轮开始前，规范化当前选定对，记其归一化旋转数 $h$、规范记录 $v$ 和门 $j(v)$。计划执行
+
+$$
+t_*=(h+j(v))\bmod n,\qquad 0\le t_*<n
+\tag{103.8}
+$$
+
+次实际 $R$，每次单独消耗一个 offer。旋转期间不因报告而改选 $R$；所有候选仍按每次真实报告更新。共同 $E$ 与 $R$ 交换，规范反射、对调以及把 $h+j$ 减去 $n$ 所差的 $R^n=E$，都只留下一个共同符号及可忽略的候选对调。因此，在旋转完成后的下一份 offer，实际跟踪对恰处在(103.6)所检查的某一个符号分支。若 $t_*=0$，就直接使用本阶段第一份 offer 作这一判断，没有空耗轮次。
+
+先应用这份已宣布的符号，计算两个候选的预测零位：不同就选 $T$；相同就选 $G$。保护区间保证选择后不再改变该分支。前者给一次真实读取，后者由(103.7)使重新规范化的秩严格下降。所有预测只读控制器中的假设记录，没有读取实际坐标。
+
+从最大秩6起，最多经历六个阶段，每阶段至多 $n-1$ 次 $R$ 加一个 $G$ 或 $T$。秩1时不能作 $G$ 下降到正的更小秩，故一定读出并结束；此前至多5次 $G$。无 offer 被拒绝、重发或免费等待。即使对手在观察到既往动作后选择下一符号，也只能选择已全称检查的两个分支之一。证毕。
+
+此证明的量词是先选旋转门，再覆盖旋转期间的全部符号，最后收到门前报告后选择 $G/T$。它没有把 $\exists j\,\forall\sigma$ 偷换成未获许可的符号选择，也没有把整个旋转块当成一个受保护原语。
+
+### 103.5 全标签消除、实际槽不变量与同源 CRT
+
+**定理 103.4（初始商的保证有限取得）。** 在103.1的合同下，存在对每个固定 $s_0\in\mathbb N^2$ 及每份合法日程都有限停止、准确输出 $c_0=a_0+81b_0\pmod{341}$ 的确定性协议。一个充分成本向量为
+
+$$
+N_T\le1080,\qquad N_R\le83520,\qquad N_G\le5400,\qquad
+N_{\rm offer}=N_R+N_G+N_T\le90000.
+\tag{103.9}
+$$
+
+证明。初始化两个数组。模 $p$ 数组有 $p^2$ 个槽，依固定字典序以所有初始 $(c_0,w_0)\in\mathbb F_p^2$ 编号；每槽保存这个初始身份、初始目标 $c_0$、当前候选 $(c,w)$ 和存活位。初始当前候选就是初始坐标。每轮对两个数组的全部存活槽都先应用同一个已宣布的 $E^\epsilon$，再应用同一个实际选择的 $R/G/T$。若为 $T$ 且真实返回 $y$，恰保留满足
+
+$$
+[A c+B w=0]=[p\mid y]
+\tag{103.10}
+$$
+
+的槽。读取不改变当前候选。
+
+归纳得到实际槽不变量：真实 $s_0$ 在模 $p$ 的初始槽从未被删，且其当前候选恰是同一实际整数来源的当前投影。初始成立；报告与动作步由(103.2)保持；读取时实际槽满足(103.10)，所以仍存活。这同时保证两个数组永不为空。
+
+更强地，完整相容剩余关系由这两个带标签数组的笛卡尔积经 CRT 准确表示。初始全部模341剩余对与两个局部域的积双射，并各有非负整数提升。给定同一可见历史，每步状态作用逐分量确定；平方自由的341使完整 gcd 恰由两根素数的整除位确定，筛选也逐分量分解。每个共同奇偶历史都可用实际 $k=\epsilon$ 实现，首项取零，不另含来源限制。因此归纳既不遗漏真实来源，也不把不相容的局部响应拼在一起。实际运行仍只有一个来源、一个全局批数及一个原语；笛卡尔表示不授予独立调度两根素数的能力。
+
+先以模11为活动数组，再以模31为活动数组。若活动数组的所有存活槽已有相同初始 $c_0$，就保存此标签并转入下一阶段；否则按固定槽序选两个不同初始标签的槽，运行引理103.3。引理103.1保证它们的当前 $c$ 不同，故规范表适用。比较的末尾读数使这两个预测位不同，真实位至少删去其中一个槽；即使两个所选槽都不是真实来源，也仍至少删去一个。实际槽则由不变量保留。比较间严格减少存活槽数，因而每根轴最多 $p^2-1$ 次比较就达到标签纯。
+
+两个数组在每个旋转、接枝、报告和读取上都更新，包括另一根轴活动期间；已经取得的初始标签不会因为当前态继续移动而改名。模11阶段至多120次比较，模31阶段至多960次，全部读取至多1080次。取得 $x=c_0\bmod11$、$y=c_0\bmod31$ 后输出
+
+$$
+x+11\bigl(17(y-x)\bmod31\bigr)\pmod{341},
+\tag{103.11}
+$$
+
+因为 $11\cdot17\equiv1\pmod{31}$。实际槽保证这是原来固定来源的初始标签。
+
+每次模11比较至多30个原语，模31比较至多90个。分别累计 $R,G,T$ 给
+
+$$
+\begin{aligned}
+N_R&\le120\cdot6\cdot4+960\cdot6\cdot14=83520,\\
+N_G&\le5(120+960)=5400,\\
+N_T&\le120+960=1080,\\
+120\cdot30+960\cdot90&=90000.
+\end{aligned}
+\tag{103.12}
+$$
+
+控制器具体保留两张共15582条的只读秩／门表、两数组共 $121+961=1082$ 个候选槽，以及活动素数、所选槽编号、旋转剩余计数、已取得标签、当前报告、程序位置和有限模算术工作区。也可显式保留(103.3)的字段。每次选槽、规范化、更新及读后筛选都是有限域上的有界确定计算；不需要保存实际整数坐标。此处的记录数和槽数不是完整比特存储最优值，控制字段及工作区也不被省略为零成本。
+
+有界轮次、有限本地计算与合同中的每次请求完成一起给逐日程的有限终止；没有由此推出统一物理时间界。协议在使两个标签都纯的已完成读取后停止，不领取一份用不上的 offer。证毕。
+
+这一步是带初始标签的全候选取得证明，复用92.2的关系记账和94.1的运输思想。双候选可区分本身没有被冒充为取得；关键补项是异标签不合并、实际槽不丢失和每次真实读取严格删除候选。
+
+### 103.6 第102节固定双源的六轮分离
+
+对第102节的 $s_A=(186,124)$、$s_B=(310,217)$，初始标签为0与155，使用如下短协议。第一份报告为0，选 $G$；第二轮选 $R$；第三轮若 $\epsilon_3\ne\epsilon_2$ 就选 $T$ 并结束，否则选 $G$，随后第四、第五轮都选 $R$，第六轮选 $T$。
+
+模11的启动后候选为 $(1,2),(2,1)$。若第二、第三轮奇偶不同，第三轮报告后为 $(4,6),(8,3)$，两个 $6c+7w$ 分别为0、3。若奇偶相同，第三轮接枝后为 $(5,6),(9,9)$。此后两次旋转以及全部后续共同符号，使最后报告后的候选为
+
+$$
+(3,\pm10),\qquad(1,\pm4)
+\tag{103.13}
+$$
+
+且两个符号必须相同。两个标量在正号下为0、1，在负号下为3、0，总会分离。原来源模31相等，所以所有共同动作及报告历史下其模31当前态仍相等；局部11位不同因而迫使完整 gcd 不同。
+
+103.9另从未约化的整数来源执行 $k=\epsilon$ 的所有分支，检查18个终端分支、固定首轮之后的34条 offer 边，末端响应均为 $(11,1)$ 或 $(1,11)$。固定的首轮 $0/G$ 另有一条边；若连它一起计，整棵执行树为35条边。两个叶在第3轮、十六个叶在第6轮，每条路径恰有一次 $T$。任意更大但同奇偶的有限批由(103.2)投影到同一模读数，因此覆盖全部允许批数。这只是展示旧双源不变量不能原样跨越新的动作承诺切口；一般取得仍由定理103.4证明。
+
+### 103.7 证书的范围、运行与失败判据
+
+以下两个 Python 3.9+ 标准库程序可在一个新建空目录中分别保存为 `generate103.py`、`validate103.py`，依次运行 `python3 generate103.py`、`python3 validate103.py`。第一个生成两份完整 JSON 证书；第二个只读它们，并从原始整数矩阵独立规范化和复核，不导入生成器。证书的固定 SHA256 同时拒绝缺失、重复、截断、换序或改动的文件；数学断言还独立核对其内容。
+
+生成器的有限域记录数为15582，生成的 $G$ 后继、$T$ 谓词和旋转边合计1135100，另有749828次已存门扫描；扫描不会生成新状态或新边。校验器对全部 $p^2$ 原坐标核对坐标逆、三个原语、读数和局部 $R^n=E$，再检查全部31164个选定符号义务，原矩阵应用数为1357610。两程序各有120秒硬期限、10万记录和150万生成边／原矩阵应用上限；生成器另限一千万次门扫描及恰六次严格增层。没有全模341成对博弈或信念幂集枚举。
+
+正常运行必须完成全部断言并以退出码0结束；`python -O`、耗尽期限或计数上限都必须失败，不能把部分证书当成功结果。可用 `python3 generate103.py --edge-cap 1`、`python3 validate103.py --edge-cap 1` 检查耗尽路径。一个独立的数学负控是仅在校验器副本中把 `source` 的返回值 `(c-81*y)%p,y` 改成 `(c-81*y+1)%p,y`，保留证书原样；原坐标逆断言必须拒绝它。另把证书任一秩改成0，完整文件校验必须拒绝；不以这一字节检查替代上述数学负控。
+
+### 103.8 有界规范证书生成器
+
+```python
+# Save as generate103.py; run with standard Python 3.9+ in an empty directory.
+import argparse, hashlib, json, math, signal, time
+from collections import Counter
+if not __debug__:
+    raise SystemExit('assertions required: do not use python -O')
+ap = argparse.ArgumentParser()
+ap.add_argument('--seconds', type=float, default=120)
+ap.add_argument('--record-cap', type=int, default=100000)
+ap.add_argument('--edge-cap', type=int, default=1500000)
+a = ap.parse_args()
+assert 0 < a.seconds <= 120 and math.isfinite(a.seconds)
+assert 0 < a.record_cap <= 100000 and 0 < a.edge_cap <= 1500000
+start = time.monotonic()
+def timeout(*_):
+    raise TimeoutError('time bound exhausted')
+signal.signal(signal.SIGALRM, timeout)
+signal.alarm(math.ceil(a.seconds))
+records = edges = scans = 0
+def guard():
+    assert time.monotonic()-start < a.seconds, 'time bound exhausted'
+    assert records <= a.record_cap, 'record bound exhausted'
+    assert edges <= a.edge_cap, 'edge bound exhausted'
+    assert scans <= 10000000, 'rank scan bound exhausted'
+expected = {11: [57,83,148,192,168,23],
+            31: [467,977,2380,6412,4664,11]}
+outputs = []; summaries = []
+for p in (11,31):
+    n = (p-1)//2; lam, mu = 81%p, 261%p; A, B = 270%p, 73%p
+    assert min(j for j in range(1,p) if pow(lam,j,p)==1) == n
+    assert pow(mu,n,p)==p-1 and n%2==1
+    norm = {}
+    for delta in range(1,p):
+        choices = [(sw,j,pow(lam,j,p),pow(mu,j,p))
+                   for sw in (0,1) for j in range(n)
+                   if (-1 if sw else 1)*delta*pow(lam,j,p)%p==1]
+        assert len(choices)==1
+        norm[delta] = choices[0]
+    def canon(c,w,d,z):
+        sw,j,l,m = norm[(c-d)%p]
+        if sw: c,w,d,z = d,z,c,w
+        c,w,d,z = l*c%p,m*w%p,l*d%p,m*z%p
+        assert (c-d)%p==1
+        w,z = min((w,z),(-w%p,-z%p))
+        return c,w,z
+    states = [(c,w,z) for c in range(p) for w in range(p)
+              for z in range(p) if (w,z)<=(-w%p,-z%p)]
+    records += len(states); guard()
+    assert len(states)=={11:671,31:14911}[p]
+    idx = {s:i for i,s in enumerate(states)}
+    assert len(idx)==len(states)
+    successors = []; separates = []
+    for c,w,z in states:
+        guard(); d = (c-1)%p; row = []; bits = []
+        for j in range(n):
+            rowj = []; bitj = []
+            for sig in (1,-1):
+                w1,z1 = sig*w%p,sig*z%p
+                bitj.append(((A*c+B*w1)%p==0)!=((A*d+B*z1)%p==0))
+                rowj.append(idx[canon((c+1)%p,(w1+1)%p,
+                                      (d+1)%p,(z1+1)%p)])
+                edges += 2  # one T predicate and one G pair transition
+            row.append(rowj); bits.append(bitj)
+            c,w,d,z = lam*c%p,mu*w%p,lam*d%p,mu*z%p
+            edges += 1  # one common R orientation transition
+            guard()
+        successors.append(row); separates.append(bits)
+    rank = [0]*len(states); policy = [-1]*len(states); layers = []
+    for depth in range(1,7):
+        additions = []
+        for i in range(len(states)):
+            if rank[i]: continue
+            for j in range(n):
+                scans += 1
+                if all(separates[i][j][e] or rank[successors[i][j][e]]>0
+                       for e in (0,1)):
+                    additions.append((i,j)); break
+        guard()
+        assert additions, 'no strict progress'
+        assert len(additions)==expected[p][depth-1]
+        for i,j in additions:
+            assert rank[i]==0
+            rank[i],policy[i] = depth,j
+        layers.append(len(additions))
+    assert all(1<=r<=6 for r in rank) and max(rank)==6
+    assert layers==expected[p] and sum(layers)==len(states)
+    checks = descents = 0
+    for i,r in enumerate(rank):
+        j = policy[i]
+        for e in (0,1):
+            checks += 1
+            if not separates[i][j][e]:
+                assert 0<rank[successors[i][j][e]]<r
+                descents += 1
+    assert (checks,descents)=={11:(1342,917),31:(29822,23984)}[p]
+    data = {'p':p,'states':states,'rank':rank,'policy':policy}
+    raw = (json.dumps(data,separators=(',',':'))+'\n').encode('ascii')
+    assert len(raw)<=1000000
+    outputs.append((p,raw))
+    summaries.append({'p':p,'records':len(states),'layers':layers,
+                      'selected_signs':checks,'strict_G_descents':descents,
+                      'sha256':hashlib.sha256(raw).hexdigest()})
+assert records==15582 and edges==1135100
+assert sum(x['selected_signs'] for x in summaries)==31164
+assert sum(x['strict_G_descents'] for x in summaries)==24901
+guard()
+for p,raw in outputs:
+    with open('orbit%d.certificate.json'%p,'wb') as f: f.write(raw)
+print(json.dumps({'tables':summaries,'records':records,'generated_edges':edges,
+                  'rank_gate_scans':scans,'seconds':time.monotonic()-start}))
+```
+
+### 103.9 独立原坐标校验器及六轮整数重放
+
+```python
+# Save as validate103.py beside the two generated certificates.
+import argparse, hashlib, json, math, signal, time
+from collections import Counter
+if not __debug__:
+    raise SystemExit('assertions required: do not use python -O')
+ap = argparse.ArgumentParser()
+ap.add_argument('--seconds', type=float, default=120)
+ap.add_argument('--edge-cap', type=int, default=1500000)
+a = ap.parse_args()
+assert 0<a.seconds<=120 and math.isfinite(a.seconds)
+assert 0<a.edge_cap<=1500000
+start = time.monotonic(); edges = records = 0
+def timeout(*_): raise TimeoutError('time bound exhausted')
+signal.signal(signal.SIGALRM, timeout); signal.alarm(math.ceil(a.seconds))
+def guard():
+    assert time.monotonic()-start<a.seconds, 'time bound exhausted'
+    assert edges<=a.edge_cap, 'edge bound exhausted'
+    assert records<=100000, 'record bound exhausted'
+def mul(A,B):
+    return tuple(tuple(sum(A[i][k]*B[k][j] for k in (0,1))
+                       for j in (0,1)) for i in (0,1))
+def raw(A,s):
+    return tuple(sum(A[i][j]*s[j] for j in (0,1)) for i in (0,1))
+def app(A,s,p):
+    global edges
+    edges += 1; guard()
+    return tuple(v%p for v in raw(A,s))
+M = ((0,1),(1,1)); I = ((1,0),(0,1)); E = I
+for _ in range(15): E = mul(E,M)
+assert E==((377,610),(610,987)) and mul(E,E)!=I
+assert tuple(tuple(v%341 for v in row) for row in mul(E,E))==I
+assert 180*36%341==1
+expected = {
+    11:(671,[57,83,148,192,168,23],917,
+        'dae82f4d5541e7f9efd8b6608108ade5e0d9c14e1543a6297c03eb2d106e41b9'),
+    31:(14911,[467,977,2380,6412,4664,11],23984,
+        '6bdc4b9798bc5575460a365dcf4ef2d429ffcbf7d7649baf92bcfbc3310fbba1')}
+def unique_object(pairs):
+    d = {}
+    for k,v in pairs:
+        assert k not in d, 'duplicate JSON key'
+        d[k] = v
+    return d
+results = []
+for p in (11,31):
+    count,layers,want_g,digest = expected[p]; n = (p-1)//2
+    with open('orbit%d.certificate.json'%p,'rb') as f: blob=f.read(1000001)
+    assert len(blob)<=1000000, 'certificate byte bound'
+    assert hashlib.sha256(blob).hexdigest()==digest, 'certificate bytes changed'
+    data = json.loads(blob,object_pairs_hook=unique_object)
+    assert set(data)=={'p','states','rank','policy'} and type(data['p']) is int
+    assert data['p']==p
+    states,rs,js = data['states'],data['rank'],data['policy']
+    assert all(type(x) is list for x in (states,rs,js))
+    assert len(states)==len(rs)==len(js)==count
+    assert all(type(s) is list and len(s)==3 and
+               all(type(v) is int and 0<=v<p for v in s) for s in states)
+    assert all(type(r) is int and 1<=r<=6 for r in rs)
+    assert all(type(j) is int and 0<=j<n for j in js)
+    keys = [tuple(s) for s in states]
+    domain = [(c,w,z) for c in range(p) for w in range(p) for z in range(p)
+              if (w,z)<=((-w)%p,(-z)%p)]
+    assert keys==domain and len(set(keys))==count
+    assert [Counter(rs)[r] for r in range(1,7)]==layers
+    records += count; guard(); ranks = dict(zip(keys,rs))
+    def coords(s):
+        x,y = s
+        return (x+81*y)%p,(x+261*y)%p
+    def source(c,w):
+        y = (w-c)*pow(180,-1,p)%p
+        return (c-81*y)%p,y
+    # Check the inverse and all raw single-state transitions, independently
+    # of the generator's diagonal transition and successor arrays.
+    Mn = I
+    for _ in range(n): Mn = mul(Mn,M)
+    assert tuple(tuple(v%p for v in row) for row in Mn)==tuple(
+        tuple(v%p for v in row) for row in E)  # local R^n=E only
+    for x in range(p):
+        for y in range(p):
+            s = (x,y); c,w = coords(s)
+            assert source(c,w)==s and coords(source(x,y))==(x,y)
+            assert coords(app(M,s,p))==(81*c%p,261*w%p)
+            assert coords(app(E,s,p))==(c,-w%p)
+            assert coords(((x+1)%p,y))==((c+1)%p,(w+1)%p)
+            assert (2*x+3*y)%p==(270*c+73*w)%p
+    # Scan raw rotations; do not use the generator's delta lookup.
+    def canonical(x,y):
+        hits = []
+        for h in range(n):
+            cx,wx = coords(x); cy,wy = coords(y)
+            for sw in (0,1):
+                c,w,d,z = (cy,wy,cx,wx) if sw else (cx,wx,cy,wy)
+                if (c-d)%p==1:
+                    w,z = min((w,z),(-w%p,-z%p))
+                    hits.append((c,w,z))
+            x,y = app(M,x,p),app(M,y,p)
+        assert len(hits)==1, 'normalization not unique'
+        return hits[0]
+    for delta in range(1,p):
+        x,y = source(delta,0),source(0,0)
+        canonical(x,y)  # all nonzero differences admit exactly one rotation/swap
+    checks = descents = 0
+    for (c,w,z),r,j in zip(keys,rs,js):
+        x,y = source(c,w),source((c-1)%p,z)
+        assert canonical(x,y)==(c,w,z)
+        for _ in range(j): x,y = app(M,x,p),app(M,y,p)
+        for eps in (0,1):
+            u,v = (app(E,x,p),app(E,y,p)) if eps else (x,y)
+            bx = (2*u[0]+3*u[1])%p==0
+            by = (2*v[0]+3*v[1])%p==0
+            if bx==by:
+                u = ((u[0]+1)%p,u[1]); v = ((v[0]+1)%p,v[1])
+                assert 0<ranks[canonical(u,v)]<r, 'gate lacks strict descent'
+                descents += 1
+            checks += 1
+    assert checks==2*count and descents==want_g
+    results.append({'p':p,'records':count,'selected_signs':checks,
+                    'strict_G_descents':descents,'layers':layers})
+assert records==15582
+assert sum(x['selected_signs'] for x in results)==31164
+assert sum(x['strict_G_descents'] for x in results)==24901
+# Raw integer replay of the short separator; k=epsilon, without reducing states.
+sources = ((186,124),(310,217))
+assert tuple((x+81*y)%341 for x,y in sources)==(0,155)
+assert all((sources[0][i]-sources[1][i])%31==0 for i in (0,1))
+def step(s,act):
+    return raw(M,s) if act=='R' else (s[0]+1,s[1]) if act=='G' else s
+initial = tuple(step(s,'G') for s in sources)  # fixed first offer epsilon_1=0
+assert tuple(((x+81*y)%11,(x+261*y)%11) for x,y in initial)==((1,2),(2,1))
+leaves = offered = 0; lengths = Counter(); reads = Counter()
+def walk(pair,offers,actions):
+    global leaves,offered
+    guard(); r = len(actions)+1
+    assert 2<=r<=6 and offered<=34 and leaves<=18
+    for eps in (0,1):
+        offered += 1; assert offered<=34
+        now = tuple(raw(E,s) for s in pair) if eps else pair
+        assert all((now[0][i]-now[1][i])%31==0 for i in (0,1))
+        act = ('R' if r in (2,4,5) else
+               'T' if r==6 or eps!=offers[1] else 'G')
+        new = tuple(step(s,act) for s in now)
+        if act=='T':
+            ys = tuple(math.gcd(2*x+3*y,341) for x,y in new)
+            assert ys in ((11,1),(1,11))
+            assert actions.count('T')==0
+            leaves += 1; lengths[r] += 1; reads[ys] += 1
+        else:
+            walk(new,offers+[eps],actions+act)
+walk(initial,[0],'G')
+assert leaves==18 and offered==34 and lengths=={3:2,6:16}
+guard()
+print(json.dumps({'validation':results,'raw_matrix_applications':edges,
+                  'separator_leaves':leaves,'poststartup_offered_edges':offered,
+                  'fixed_startup_edges':1,'separator_lengths':dict(lengths),
+                  'seconds':time.monotonic()-start}))
+```
+
+### 103.10 供应结果、文献边界与所得关系
+
+本文所据仓库快照为 `1c37fc8b581a44332dda71e54a2071867a67beea`。第92节供应初始标签—当前态关系及异标签合并的风险，第94节供应不读取坐标的运输记录；第95—100节分别保留其隐藏事件、素数反射、共同相位、含量取得、受限字母表及固定源语言的原合同。[Fibonacci Atomic Relation Generation](FIBONACCI_ATOMIC_RELATION_GENERATION.md)第130节供应实际正词的仿射下降，第133节供应在其既有接口中保持共同实际词及目标的 CRT 取得。这里只沿用同源、共同操作和目标标签的证明纪律，没有把第133节的 reset 或收费查询最优值移到本节。
+
+仓内 [FiniteHorizonReachability.finite_horizon_reachability](../../../D5/S3/ConceptDynamics/Control/FiniteHorizonReachability.lean) 已给有限获胜层与有界到达策略的抽象对应，其每个动作的后继须非空。这里每个门有两个已列出的符号分支，局部秩只实例化这种成熟的有限到达结构；初始标签的永久保存、原始整数来源的实现及全候选删除由103.2—103.5直接证明。没有新增、编译或声称已核验该实例的 Lean 声明。
+
+Petra van den Bos、Frits Vaandrager，[*State Identification for Labeled Transition Systems with Inputs and Outputs*, arXiv:1907.11034v2](https://arxiv.org/html/1907.11034v2)，2019年10月22日版本，第2节、第3节及第6节，提供 observable nondeterminism、相容性与自适应区别测试的背景。该文讨论对抗系统中无法区分的相容态；第6节定义16的 injective 条件要求有关转移保持不相容性，或由不共享的输出直接区分。定理6.1还假定所有不同状态对都不相容，并将自适应区别图的存在与构造中只作 injective splits 联系起来。这些条件不能用两两存在测试代替，更不能直接补出一个全候选测试。本节并未把相位置于选择前的保护合同识别为该文全部博弈假设，也未未经证明就移用不相容性保持或测试存在性结论。所需的、针对初始任务标签的保持与删除桥已在上文逐项给出；该文只支持方法背景。
+
+得到的关系是：一份被报告的共同相位，使候选运输可计算；保护到单个动作完成的切口，使该运输可用于选择真正有区别的下一步；保留初始标签的候选关系，把逐对进展接为同一实际来源的有限取得。这给一个具体的记忆、时序和观察边界之间的充分桥。90000原语／offer及1080读是本构造的充分界，不是最小值、最佳已知界或不存在更小构造的断言。
+
+所得只有初始 $c_0\bmod341$。它没有恢复初始整数、完整语法树、全部记忆、绝对时钟或物理几何；没有给隐藏 $k$、实际整数宽度、gcd 位成本或物理历时的统一界。一般 $H$ 的分类、最小成功接口、最优计算或存储、物理统一和持续的最小关系结构目标均不由此完成。本节是现有供应结果下的具体综合推导及可复现有限证书，不作原创优先权或新增 Lean/kernel 认证主张。
+
+## 103.99 追加锚
