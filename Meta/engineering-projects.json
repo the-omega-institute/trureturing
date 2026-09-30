@@ -537,9 +537,7 @@
       ],
       "exclude": [],
       "references": [
-        "tools/StrataLint.Lean/StrataLint.Lean.csproj",
-        "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
-        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+        "tools/StrataLint.Lean/StrataLint.Lean.csproj"
       ],
       "owner": {
         "path": "tools/StrataLint.Lean/StrataLint.Lean.csproj",
@@ -2393,7 +2391,6 @@
       ],
       "execution_inputs": [
         ".editorconfig",
-        ".github/scripts/harness-gate.sh",
         "Directory.Build.props",
         "Directory.Packages.props",
         "Meta/Digestion/atomizers.toml",

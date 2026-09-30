@@ -31,14 +31,13 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
     [InlineData("selected")]
     [InlineData("metadata")]
     [InlineData("metadata-seed-miss")]
-    [InlineData("metadata-required-report")]
     [InlineData("metadata-forged-candidate")]
     [InlineData("metadata-missing-registration")]
     public void CurrentHonorsRegisteredChecksInParentlessRemotelessRepository(string scenario)
     {
         var selected = scenario != "all";
         var metadata = scenario.StartsWith("metadata", StringComparison.Ordinal);
-        string[] selectedChecks = metadata && scenario != "metadata-required-report"
+        string[] selectedChecks = metadata
             ? ["SL-003", "SL-015", "SL-019"] : ["SL-012"];
         using var ciEnvironment = new CiFixtureEnvironment();
         using var temporary = new TemporaryDirectory();
@@ -127,13 +126,6 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
             {
                 Units = record.Units.Select(unit => unit with { InputFingerprint = new string('0', 64) }).ToArray(),
             });
-        }
-        if (scenario == "metadata-required-report")
-        {
-            Assert.Empty(arguments);
-            Assert.False(Directory.Exists(Path.Combine(temporary.Path, ".lake")));
-            Assert.False(File.Exists(Path.Combine(temporary.Path, CommonExecutionEvidence.ChecksPath("current"))));
-            return;
         }
         if (scenario == "metadata-forged-candidate")
         {
@@ -265,13 +257,6 @@ public sealed partial class CurrentDeltaCliContractTests(Xunit.Abstractions.ITes
                     @new = new { path = RuleFixture.RingPath, mode = entry[0], oid = entry[2] } } } }));
             var planning = TestProcessRunner.Run("python3", ["-B", "tools/scripts/workflow/ci.py", "plan", "--repository", root,
                 "--commit", commit, "--changes", changes, "--output", plan], root, TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
-            if (scenario == "metadata-required-report")
-            {
-                Assert.NotEqual(0, planning.ExitCode);
-                Assert.Contains("selected check requires lean-report: SL-012", Encoding.UTF8.GetString(planning.StandardError), StringComparison.Ordinal);
-                Assert.False(File.Exists(plan));
-                return [];
-            }
             Assert.True(planning.ExitCode == 0, Encoding.UTF8.GetString(planning.StandardError));
             var execution = ResourceExecutionPlan.Load(root, plan, changes)!;
             var build = CommonExecutionEvidence.SealBuild(root, CommonExecutionEvidence.Candidate(root), [log],

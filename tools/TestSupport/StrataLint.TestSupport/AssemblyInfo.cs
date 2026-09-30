@@ -12,7 +12,6 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.ExecutionTestSupport")]
 [assembly: InternalsVisibleTo("StrataLint.InspectionIntegration.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.InspectionScope.Tests")]
-[assembly: InternalsVisibleTo("StrataLint.Lean.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.LeanTestSupport")]
 [assembly: InternalsVisibleTo("StrataLint.NativeReportTestSupport")]
 [assembly: InternalsVisibleTo("StrataLint.NativeTransportIntegration.Tests")]
