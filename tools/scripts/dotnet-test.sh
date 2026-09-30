@@ -34,7 +34,7 @@ for argument in "$@"; do
 done
 
 owner_assemblies="$(dotnet run \
-  --project "$ROOT/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" \
+  --project "$ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj" \
   --configuration Release --no-build --no-launch-profile -- \
   list-test-owner-assemblies --repository "$ROOT" --target "$test_target" --filtered "$filtered")"
 while IFS= read -r owner_assembly; do
@@ -43,7 +43,7 @@ while IFS= read -r owner_assembly; do
 done <<< "$owner_assemblies"
 
 dotnet run \
-  --project "$ROOT/tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" \
+  --project "$ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj" \
   --configuration Release --no-build --no-launch-profile -- \
   verify-trx --results-directory "$RESULTS_DIRECTORY" \
   ${OWNER_ASSEMBLY_ARGS[@]+"${OWNER_ASSEMBLY_ARGS[@]}"}
