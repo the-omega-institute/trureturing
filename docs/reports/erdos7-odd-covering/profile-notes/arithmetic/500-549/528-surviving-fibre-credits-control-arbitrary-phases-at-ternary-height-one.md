@@ -16960,3 +16960,1016 @@ Arbitrary head incidence, arbitrary prime support and the all-prime,
 all-phase Erdős #7 target remain unresolved. The ternary bridge states
 the exact missing interface and a valid sufficient test; it is not an
 unrestricted noncoverage result and transfers no Robin constants.
+
+## Exact unsupported private masses for the complete mixed inventory
+
+The full-target reference permits exact integration of every
+unsupported private coordinate. Keeping those masses throughout
+the old mixed-support inventory gives a sharper upper-fee functional
+on the same actual source. Supported-cylinder caps, numerical depth
+domains and physical-address maxima remain unchanged. The resulting
+margin is at least the margin in FC697 at every finite skeleton depth.
+This is an ordinary mathematical consequence of FC549–FC552 and
+the direct-Haar normalization in FC669–FC673, with no new Lean
+verification.
+
+The complete old inventory splits into 2017 remaining support fees
+and nineteen previously evaluated exact-private support fees. The
+eighteen head/private pairs retain their depth-two head lower bounds;
+the heads-only pair retains both depth-one lower bounds. The separate
+high shallow allowance also remains attached to its own numerical
+class. Exact unsupported masses do not make the total deletion union
+equal to its upper allowance.
+
+### 1. One source and an exact same-cell quotient
+
+Fix either certified head table, its actual full-target R_N and one
+cell c=(r,i,j), with r in {1,2}, head-five row i and head-seven row j.
+The source is the direct-Haar construction of FC576–FC595 or its
+exact head-row target and common-transport extensions in FC604–FC618
+and FC651–FC654. Retain the benchmarks
+
+    A_(q,N)=sum_(e=1..N)q^-e,
+    s_(q,N)=1-A_(q,N), b_(q,N)=A_(q,N)/s_(q,N),
+    P_(q,N)(c)=1-(epsilon_r+n5_q(c)+n7_q(c))*b_(q,N),
+    K_(q,N)(c)=1-(epsilon_r+max(n5_q(c),n7_q(c)))*b_(q,N).
+
+The actual private factor rho_q has prescribed mass s_(q,N)*P_(q,N).
+Every supported private cylinder retains its absolute bound
+q^-e<=s_(q,N)*c_q,infinity*q^-e. Thus the same benchmark s_q factors
+out whether the coordinate is supported or unsupported. The actual
+head row targets are s_(h,N)*w_(h,r,N), and a supported head has cap
+
+    M_(h,r,N)(a,i)=min(c_h,infinity*h^-a,w_(h,r,N)(i)).
+
+Let I subset Q be the supported private primes and put
+
+    A^P_N(c)=product_(q in Q)P_(q,N)(c),
+    O_(I,N)(c)=product_(q in Q minus I)P_(q,N)(c).
+
+Since q>=11, epsilon+n5+n7<=5 and b_q,N<=1/(q-2), every factor obeys
+P_(q,N)(c)>=1-5/(q-2)>=4/9>0. Therefore
+
+    O_(I,N)(c)=A^P_N(c)/product_(q in I)P_(q,N)(c). (FC726)
+
+This division recovers a product of unsupported-coordinate constants
+at the same physical cell. It does not condition a measure by P,
+change rho_q or normalize after a deletion or query. In the measure
+proof, supported q still receives its absolute cylinder cap while
+unsupported q integrates exactly to s_q*P_q. All actual private
+sets, pure/star/group phases and root/head relations stay fixed.
+Compensated references with private mass L>P remain outside this
+full-target argument.
+
+### 2. Per-original bounds and supported-depth factors
+
+Write H subset {5,7} for the supported heads and D=H union I for
+the nonternary support, with |D|>=2. For a supported-head first
+address a define
+
+    T^P_(H,I,r,N)(a)
+      =sum_(i,j agreeing with a)
+          product_(h in {5,7} minus H)w_(h,r,N)(row_h)
+          *O_(I,N)(r,i,j).                        (FC727)
+
+Unsupported heads are integrated with their actual row masses.
+Supported heads receive no row weight in this table: their min caps
+occur once in the following bound. The quotient in FC726 is formed
+before the head sums, at the same root/head cell.
+
+For one actual free original with head depths e, supported-private
+depths f and actual head address a_m, conditional product integration
+and Q_N=(2/3)*product_(p in V)s_(p,N) give
+
+    R_N(E_m)<=Q_N*product_(q in I)c_q,infinity*q^-f_q
+       *sum_r gamma_r*T^P_(H,I,r,N)(a_m)
+                       *product_(h in H)M_(h,r,N)(e_h,a_m,h),
+    gamma_1=gamma_2=1/2.                           (FC728)
+
+Its physical head address is the same on both roots. A selected
+label with ternary exponent t>=1 fixes one root and has the same
+one-root expression multiplied by 3^(1-t); root zero has no mass.
+These are the FC551/FC671–FC673 bounds with the exact unsupported
+private factors retained. They concern the root-constant reference
+before remainder deletion, not a product law for the final survivor.
+
+Define the per-head-depth allowances
+
+    F^P_(D,N)(e)=max_a sum_r gamma_r*T^P_(H,I,r,N)(a)
+                               *product_(h in H)M_(h,r,N)(e_h,a_h),
+    S^P_(D,N)(e)=max_(r,a) gamma_r*T^P_(H,I,r,N)(a)
+                               *product_(h in H)M_(h,r,N)(e_h,a_h).
+                                                        (FC729)
+
+For H empty there is one empty address: the free value is its
+two-root sum and the selected value is the maximum over the roots.
+For one or two heads the free maximum follows the root sum at one
+common address. The roots cannot optimize their addresses separately.
+
+Supported private depth factors are independent of these maxima.
+Their complete sums are
+
+    B(I)=product_(q in I)b_q,infinity,
+    b_q,infinity=sum_(f>=1)c_q,infinity*q^-f=1/(q-2).
+                                                        (FC730)
+
+Finite b_(q,N) remains inside P and O. The limiting b_q,infinity in
+B(I) is the complete supported-cylinder allowance, including original
+depths beyond N. It is not substituted for the finite source's
+private mass normalization.
+
+### 3. The complete old inventory and its nineteen existing terms
+
+The old cofactor inventory retains its exact head lower bounds
+
+    l_h(D)=2 if D={h,q}, q in Q;
+           1 otherwise.
+
+Its fully sharpened free and selected totals are
+
+    F_fullP,N=sum_(D subset V, |D|>=2)
+                 B(D intersect Q)*sum_(e_h>=l_h(D))F^P_(D,N)(e),
+    S_fullP,N=sum_(D subset V, |D|>=2)
+                 B(D intersect Q)*sum_(e_h>=l_h(D))S^P_(D,N)(e).
+                                                        (FC731)
+
+The sums for an empty head set contain one empty exponent vector.
+Head/private supports {h,q} still start at head depth two in this
+old inventory. Their head-depth-one labels at ternary heights at
+least two are paid separately by G^P in FC676; their height-zero
+and height-one copies are skeleton labels. Support {5,7} starts at
+depth one on both axes, as do all heads in larger old supports.
+
+There are 2036 old supports. Nineteen exact-private coefficients
+are already given by FC685 and FC695: eighteen supports {h,q}, with
+head depth at least two, and one support {5,7}, with both head depths
+at least one. Each is a complete depth-summed coefficient and is
+included once, without multiplying its depth factors a second time.
+The remaining supports are precisely
+
+| Supported heads H | Supported private set I | Supports |
+| --- | --- | ---: |
+| empty | size(I)>=2 | 502 |
+| {5} | size(I)>=2 | 502 |
+| {7} | size(I)>=2 | 502 |
+| {5,7} | size(I)>=1 | 511 |
+| total | all four disjoint classes | 2017 |
+
+Here 502=2^9-1-9 and 511=2^9-1. The four classes exhaust the old
+inventory after removing exactly the nineteen existing terms.
+Every supported head in these remaining classes starts at depth
+one. Reusing one same-cell quotient across several head classes
+does not duplicate numerical labels: those classes have different
+prime supports.
+
+### 4. Exact head-depth blocks preserve the original maxima
+
+The canonical targets and their admitted exact-row transports obey
+1/h<=w_(h,r,N)(i)<=c_h,infinity/h on each live row. Therefore
+
+    M_(h,r,N)(1,i)=w_(h,r,N)(i),
+    M_(h,r,N)(a,i)=c_h,infinity*h^-a*z_(h,r,N)(i), a>=2,
+    z_(h,r,N)(i)=1_(w_(h,r,N)(i)>0).
+
+Set d_h=1/[h(h-2)], the complete sum of c_h,infinity*h^-a for a>=2,
+and L^0_h=w_h, L^1_h=z_h. For a remaining support and block
+alpha in {0,1}^H put
+
+    W_alpha=product_(h in H)d_h^alpha_h,
+    X_(D,alpha,r,N)(a)=gamma_r*T^P_(H,I,r,N)(a)
+                                 *product_(h in H)L^alpha_h_(h,r,N)(a_h).
+
+Its exact complete fees are
+
+    f^P_(D,N)=B(I)*sum_alpha W_alpha*max_a sum_r X_(D,alpha,r,N)(a),
+    s^P_(D,N)=B(I)*sum_alpha W_alpha*max_(r,a)X_(D,alpha,r,N)(a).
+                                                        (FC732)
+
+There are respectively one, two, two and four blocks for H empty,
+{5}, {7} and {5,7}. The tail weights are d_5=1/15, d_7=1/35 and
+their product for a double tail. Within a saturated block, all
+remaining depth dependence is a common nonnegative scalar before
+the root sum and maximum, so its geometric sum factors out.
+Different blocks retain separate maxima as in FC126–FC128. This
+does not exchange a general sum over depths with an address maximum.
+
+The nineteen existing coefficients keep their own lower limits.
+In particular, the eighteen head/private pairs contain only a deep
+head tail and must not acquire a shallow block from FC732. The
+heads-only pair retains its four blocks. Supported head masses
+are never multiplied by a second row weight, and every zero mask
+remains inside its root's expression.
+
+### 5. All-height allowance and monotonic improvement
+
+The unchanged reference has total mass Q_N*Abar_N. Free old cofactor
+labels cost at most Q_N*F_fullP,N. Positive ternary heights contribute
+their complete factor sum_(t>=1)3^(1-t)=3/2 to S_fullP,N. The separate
+high shallow class retains the disjoint allowance Q_N*G^P_N/2. Thus
+
+    R_N(U_all)>=Q_N*M_fullP,N,
+    M_fullP,N=Abar_N-F_fullP,N-(3/2)*S_fullP,N-G^P_N/2.
+                                                        (FC733)
+
+The exactness concerns unsupported-private masses and the evaluation
+of this specified fee. Supported-cylinder bounds, per-label address
+maxima and the union bound still allow slack. Neither an exact actual
+deletion union nor joint attainment of the maxima is asserted.
+
+Let F_restK,N,S_restK,N be the K totals on the 2017 supports unchanged
+in FC697, and let F_restP,N,S_restP,N be their P totals. Pointwise
+nonnegative P<=K passes through the same head weights, caps, root
+sums, address maxima and depth sums. Hence
+
+    F_restP,N<=F_restK,N, S_restP,N<=S_restK,N,
+    M_fullP,N-Mjoint_N
+      =(F_restK,N-F_restP,N)
+         +(3/2)*(S_restK,N-S_restP,N)>=0.          (FC734)
+
+The nineteen existing P fees, Abar_N and G^P_N cancel exactly.
+All terms refer to the same table, actual reference and original
+phase roster. The common positive reserve from FC700 therefore
+remains available for this sharper functional. Strict improvement
+does not follow from P<=K alone; its additional size depends on the
+specified full fee values.
+
+### 6. Same-cell subset recursion
+
+Fix the private order Q=(11,13,17,19,23,29,31,37,41) and represent
+I by a nine-bit mask m. At one cell c initialize O_N[0](c)=A^P_N(c).
+For nonzero m, let q be the prime at its least set bit and m0 the
+mask obtained by removing that bit. Define
+
+    O_N[m](c)=O_N[m0](c)/P_(q,N)(c).              (FC735)
+
+Induction on the number of supported primes proves FC726 for every
+mask. Each denominator is positive and belongs to the same cell.
+The full mask gives one, the empty unsupported product. This is
+an exact algebraic interface for reusing a joint product and its
+individual factors; a directional row contraction cannot replace
+that joint cell before division. In a limiting-signature evaluation,
+the stored full products and factors must belong to that same
+limiting cell. This does not replace finite factors by limiting ones
+in a finite-source proof.
+
+The supported-depth coefficient has the separate scalar recursion
+B[0]=1 and B[m]=B[m0]/(q-2). It represents complete cylinder-cap sums,
+not source normalization. The same subset quotient can feed each
+eligible head class after the prescribed unsupported-head integration.
+Existing complete support fees retain their original lower-depth
+domains when combined with these remaining terms.
+
+### 7. Finite convergence and the remaining obligations
+
+The uniformly positive P factors make FC726 continuous along the
+canonical finite signatures. Head zero/live patterns are stable,
+and FC732 expresses the depth sums by finite exact blocks. There
+are finitely many supports, cells, sums and maxima. Consequently
+
+    F_fullP,N -> F_fullP, S_fullP,N -> S_fullP,
+    M_fullP,N -> Abar-F_fullP-(3/2)*S_fullP-G^P/2.
+
+This passage involves no growing-support limit or uncontrolled
+exchange of infinite sums and maxima. The existing finite completion
+and common-transport conditions remain necessary. Private phases
+may vary only within the established full-target source contracts;
+incomplete arbitrary-head rosters retain their gap-filling obligation.
+
+A common positive limiting margin gives a common sufficiently large
+finite threshold and a surviving source by the same benchmark
+comparison and downward scaling as FC701–FC702. Its quantitative
+reserve is determined by the two complete limiting fee values.
+The reference's total mass has not increased: the improvement reduces
+an upper deletion allowance. Raw Xi comparisons remain valid through
+domination by the same R_N. A changed retained mass requires its own
+Top initialization before any continuation claim; an old continuation
+is not inherited from that domination.
+
+Within this fixed old inventory, FC731 removes every replacement of
+an unsupported exact private mass P by its larger K allowance. It
+does not remove supported-cylinder, address-maximum or overlap slack.
+Additional pure 3^t for t>=2, high singleton labels 3^t*p^e for t>=2,
+arbitrary head incidences, primes outside V and the earlier middle-prime
+continuation gap remain separate obligations. Baseline p^e and 3*p^e
+labels are already handled by the source skeleton. Unrestricted
+Erdős #7 remains unresolved; no Robin/FIB constants or independent
+source assumptions enter this deduction.
+
+### Exact complete private-mass allowances and their strict savings
+
+The nineteen previously replaced support fees are reused exactly as
+saved. Only the other 2017 coefficients in the same 2036-support
+inventory receive a new evaluation. These are newly tightened
+allowances, not newly admitted original labels. The source total
+Abar and the separate high-shallow allowance G^P are unchanged.
+
+Write F_rest^K,S_rest^K for the saved allowances of those 2017
+supports, F_rest^P,S_rest^P for their replacements, and F_19^P,S_19^P
+for the nineteen cached fees. The exact limiting values are:
+
+| Quantity | FC110 | FC131 |
+|---|---|---|
+| F_19^P |17465339745949/297473570769375|1937140857221/33052618974375|
+| S_19^P |1653932608847/42496224395625|11586637651601/297473570769375|
+| F_rest^K |2161251738959/18028701258750|487207153607/4047259466250|
+| S_rest^K |756469034786/11017539658125|13673287802869/198315713846250|
+| F_rest^P |5337483371863/45765164733750|69621650981033/594947141538750|
+| S_rest^P |190699452959/2833081626375|40224375916247/594947141538750|
+| F_fullP=F_19^P+F_rest^P |11590884814013/66105237948750|104490186411011/594947141538750|
+| S_fullP=S_19^P+S_rest^P |155669807008/1465387048125|21132550406483/198315713846250|
+
+The savings retain their separate free and selected roles:
+
+| Quantity | FC110 | FC131 |
+|---|---|---|
+| DeltaF_rest=F_rest^K-F_rest^P |967011775714/297473570769375|998900299598/297473570769375|
+| DeltaS_rest=S_rest^K-S_rest^P |133740459509/99157856923125|7231704476/5408610377625|
+| DeltaF_rest+(3/2)*DeltaS_rest |3137687687009/594947141538750|1595515918868/297473570769375|
+
+Both components are strictly positive in both tables. Consequently
+the old Mjoint limits from FC698 improve to
+
+    MfullP=Abar-F_fullP-(3/2)*S_fullP-G^P/2
+          =Mjoint+DeltaF_rest+(3/2)*DeltaS_rest,
+    FC110:MfullP=889884715528/99157856923125>0,
+    FC131:MfullP=383112872231/47595771323100>0.    (FC736)
+
+These are exact values of the complete private-mass upper allowance.
+They are not the exact mass of the deletion union: supported-cylinder
+caps, address maxima and overlap in the union bound still leave slack.
+All terms concern one actual source and its fixed phases. In
+particular, the free maxima combine the roots at the same physical
+supported-head address before taking a maximum in each depth block.
+
+### A larger common reserve at finite completed depth
+
+Half of the smaller positive limiting margin gives
+
+    mu_fullP=383112872231/95191542646200>0.        (FC737)
+
+This strictly improves the old common reserve
+1065252710101/793262855385000. The finite margins MfullP_N converge
+to their respective limits by the finite-product, finite-maximum and
+exact depth-summation argument above. Hence there is a common finite
+N_fullP>=2 such that both margins are at least mu_fullP whenever
+N>=N_fullP. This is an existence conclusion; no numerical threshold
+N_fullP is evaluated here.
+
+Keep the same Q_N, C_V=1048576/403767 and completed survivor U_all.
+The previous source-mass lower bound a_N>=1/C_V then gives
+
+    R_N(U_all)>=Q_N*mu_fullP>0,
+    h_fullP=(2/3)*mu_fullP/C_V>0.                 (FC738)
+
+Writing s=R_N(U_all), define
+
+    eta_fullP=(h_fullP/s)*(R_N restricted to U_all),
+    eta_fullP(whole space)=h_fullP,
+    eta_fullP<=R_N<=Haar.                        (FC739)
+
+No numerical value of h_fullP is needed or evaluated. Complete finite
+skeletons may be extended to a sufficiently large such depth without
+altering original phases or overwriting high labels. Their original
+survivor contains the completed survivor; positivity supplies an
+uncovered integer in a resolving CRT period. Incomplete arbitrary-head
+rosters still require the established gap-filling condition.
+
+The contract remains the direct-Haar full-target source and its exact
+head-row target/common-transport extensions. The same transport must
+respect the named gates on both roots. Arbitrary private pure, star
+and grouped phases remain allowed within that contract. Arbitrary
+compensated sources whose private mass exceeds Pbar are not covered
+by this replacement.
+
+The raw Xi_can and Xi_star bounds persist by domination by the same
+R_N. This statement does not assert bounds for profiles normalized
+by the new source mass. A new Top initialization and a corresponding
+continuation would be needed to use that mass; neither the saved
+Top_h84 result nor another saved continuation transfers automatically.
+
+No inventory exclusion is removed by tightening these coefficients.
+The additional unpaid types remain 3^t with t>=2, and 3^t*p^e with
+t>=2, p in V and e>=1. Arbitrary head incidences, incomplete-roster
+realizability, unrestricted prime support and the middle-prime
+continuation gap remain separate obligations. The stronger reserve
+therefore does not settle unrestricted Erdős #7.
+
+### Exact arithmetic artifacts and verification boundary
+
+The fixed consumer
+`frontier/cover-geometry/fibre-credit-partition/full_exact_private_fee.py`
+has SHA256
+77f9cd2ee2bb8a9182226cbe24f9aa9269e047ea4eb0a634bc98ca26a2a79913.
+Its saved result
+`frontier/cover-geometry/fibre-credit-partition/full_exact_private_fee.json`
+has SHA256
+5f04960e119182d927214b4da9ed542455fda088cef940c2bc1ad655911b9d21
+and size 5467887 bytes. The result records 408753 exact guards;
+the single fixed execution exited zero.
+
+The only saved numeric inputs were the prior two-head, deep-pair and
+full-target-shallow results, respectively:
+
+| Saved input | SHA256 |
+|---|---|
+| two_head_fee_replacement.json |5fa2dd84a74f115d1e78bab45dbe2ea29f187470504303727028b17121233cad|
+| deep_pair_fee_replacement.json |4ae73a9a4e17120630602fbef88ffccdc74f34a33ad3f7ac878c633c656aaa04|
+| full_target_shallow_fee.json |bad5b8c850742e0bb7277ea316bf5e96dc06f963317a28033cc6ed8e1ebb06bb|
+
+Hashes identify saved artifacts; they are not mathematical premises.
+Each table used 35770 same-cell quotient updates, 75300 head-weighted
+summands, 2017 support evaluations, 4554 depth blocks, 168180 root/address
+candidates, 84090 common-address free sums and 9108 prescribed maxima.
+The supported-private cap cache used 511 updates shared by both tables.
+The support/block counts split as follows:
+
+| Supported heads | New evaluations per table | Depth blocks per table |
+|---|---:|---:|
+| none |502|502|
+| 5 |502|1004|
+| 7 |502|1004|
+| 5 and 7 |511|2044|
+
+The JSON retains the 512-mask same-cell quotient cache, the shared
+head contractions for the 502 private masks of size at least two,
+and each depth block's exact maxima and complete attaining-address
+sets. It does not duplicate candidate arrays. Division reconstructs
+scalar products from saved cell factors; it does not condition or
+renormalize the source measure.
+
+No primitive private products were formed, no nineteen cached support
+fees were reevaluated, and no old K support sum was rerun. The original
+producer, control experiments, parameter searches and continuation
+were not executed. The arithmetic guards include the identity recovering
+the old margin from nineteen P fees plus 2017 K fees, the nonnegative
+replacement inequalities, the exact gain identity, positivity and the
+improved common reserve.
+
+Independent saved-identity verification passed 752212 exact checks.
+It checked same-cell quotient cross-multiplications, head contractions
+through an alternate summation route, every block maximum and complete
+attaining set, depth domains, the 2017+19 inventory, fee and gain
+identities, both positive margins and the common reserve. It did not
+rerun the consumer, primitive products, K fees or cached support
+optimizations. This is ordinary proof and exact arithmetic, not a
+new Lean verification.
+
+## Joint prefix capacities for the remaining pure and singleton originals
+
+Pure 3-powers and higher-ternary singleton originals can be absorbed
+into one restriction of the existing full-target source. The exact
+joint prefix response then supplies both a literal sufficient test
+and a complete phase-maximized mixed allowance. Restriction can
+improve a union-bound certificate by removing repeatedly charged
+overlap, although actual surviving mass cannot increase. These are
+ordinary mathematical deductions, without a new Lean verification.
+
+The finite prime set, head/source capacity gates and completion rules
+of FC669--FC703 remain assumptions. The positive two-head and full-P
+reserves do not establish positivity of the new joint functional.
+Unrestricted Erdős #7 remains unresolved.
+
+### 1. Actual inventory and the fixed reference
+
+Fix one finite actual family with distinct odd nonunit numerical
+moduli, one phase for every original, a finite completed baseline
+skeleton through N, and one of the admitted full-target direct-Haar
+sources. The baseline pure ternary label is 0 mod3. Its nonternary
+prime set is
+
+    V={5,7} union Q, Q={11,13,17,19,23,29,31,37,41}.
+
+The source is the SAME R_N as in FC669--FC703. Exact head-target and lawful
+common-transport extensions are allowed only with their existing
+capacity and gap-filling hypotheses. No compensated L>P source is
+silently substituted.
+
+Separate the still-unpaid actual labels into two finite inventories:
+
+    P3: one possible alpha_t mod3^t for each t>=2;
+    J1: one possible class mod3^t*p^e for each
+        (t,p,e), t>=2, p in V, e>=1.
+
+Every J1 label j has one actual ternary cylinder I_j and one actual
+p-cylinder C_j. Both are projections of that same original phase.
+The baseline p^e and 3*p^e labels are already skeleton labels and
+are not charged again. The remaining mixed inventory M consists
+of actual labels with at least two nonternary prime factors, already
+admitted under that source contract. It includes the separate
+high-shallow class only at its declared unused numerical slots.
+
+All sets below belong to one common finite CRT probability space,
+or to its uniform refinements. Phases are never selected separately
+for different fees, roots or coordinate marginals.
+
+### 2. Actual ternary partition and retained beta/kappa capacities
+
+Let S3 be the complement of the union of the actual P3 cylinders.
+Choose K>=2 at least the maximum ternary depth among P3 and J1;
+take K=2 if they are empty. This resolves their active sets exactly.
+Use depth-K leaves ell inside roots r=1,2 for the mathematical
+definition. More compact event-address shells may be used for an
+implementation, as in FC61--FC65, provided intersection masses with
+queried prefixes are retained.
+
+For every ternary prefix w define
+
+    beta_ell(w)=Haar3(S3 intersect ell intersect w),
+    kappa_ell(w)=3*beta_ell(w),
+    beta(w)=sum_ell beta_ell(w), kappa(w)=3*beta(w),
+    theta_r=kappa([r]_3).
+
+The factor 3 is the old-root normalization, not normalization by
+the new root mass. At depth K, each beta_ell(total) is 0 or3^-K.
+For coarser event-address shells the exact beta is used instead.
+In particular kappa(w) is NOT replaced by theta_r*3^(1-depth(w)).
+
+For each p and leaf ell, form the actual active singleton union
+
+    U_p(ell)=union_(j in J1: prime(j)=p, ell subset I_j) C_j.
+
+The active set is constant on ell because K resolves every I_j.
+Its complement is A_p(ell). Prefix containment may compress this
+union to an antichain, but the original numerical labels are retained
+in the inventory. Two labels at different ternary or p depths do not
+become one numerical label merely because their projected cylinders
+coincide or are nested.
+
+### 3. Exact conditional source, including head cylinder intersections
+
+Write the baseline R_N in its established conditional form:
+
+    R_N=sum_(r=1,2) Haar3|[r]_3 tensor mu_(5,r) tensor mu_(7,r)
+                        tensor_(q in Q) rho_(q,r,i,j),
+    i=x5 mod5, j=x7 mod7.
+
+Here mu_h is the actual baseline head submeasure. In the exact-target
+extension it is the FC605 proportional row thinning of the actual
+head pure/star survivor. Each rho_q is the FC581 direct-Haar private
+thinning, depending on the same root and both actual first head rows.
+It contains the actual pure/star/group avoid-set, including the
+fixed original head gates. Its scalar target mass alone does not
+specify its cylinder intersections.
+
+Define restricted coordinate measures on one actual leaf:
+
+    mu_(h,ell)=1_(A_h(ell))*mu_(h,r(ell)), h=5,7;
+    rho_(q,ell,i,j)=1_(A_q(ell))*rho_(q,r(ell),i,j).
+
+Then set
+
+    R_PS=1_(S3)*product_(j in J1)1_(E_j complement)*R_N.
+                                                               (FC740)
+
+This is a restriction of one fixed source. It already avoids every
+new pure and singleton original. It is not rescaled or re-thinned
+to restore its former mass. On leaf ell it has the exact conditional
+product of the displayed restricted coordinate measures.
+
+For any nonternary cylinder C=product_p C_p, let
+
+    G_ell(C)=sum_(i,j)
+       mu_(5,ell)([i]_5 intersect C5)
+       *mu_(7,ell)([j]_7 intersect C7)
+       *product_(q in Q)rho_(q,ell,i,j)(Cq),
+    G_ell=G_ell(total).
+
+Coordinates absent from C use the whole coordinate. The exact
+joint-prefix response is
+
+    R_PS([w] intersect C)=sum_ell beta_ell(w)*G_ell(C),
+    J_PS(w):=R_PS([w])=sum_ell beta_ell(w)*G_ell.    (FC741)
+
+Thus actual beta/kappa values remain tied to a JOINT nonternary
+profile; root totals or averaged private masses do not replace it.
+
+In particular, a supported head cylinder is evaluated by
+
+    mu_(h,r)(C_h intersect [i]_h intersect A_h(ell)),
+
+not by multiplying its old cylinder mass by an independent row
+retention proportion. Head high-singleton holes can distinguish
+different deeper cylinders within the same first row. Those exact
+intersections are indispensable for an exact response. If only an
+upper bound is needed, its new row mass and Haar cap give a valid
+minimum, but not an equality.
+
+Proof of (FC741). Fix ell, r and both first head rows. Every new
+singleton restriction then depends on only its own p coordinate.
+The baseline private laws factor conditionally on these SAME gates,
+and their densities are constant as the remaining head digits vary
+inside a first row. Integrate each coordinate, then sum the joint
+head cells and the common ternary leaves. This is FC583/FC621's
+conditional integration with additional actual coordinate avoid-sets.
+No independence after summing leaves or head rows is asserted.
+
+The first-row constancy premise is part of the current source gates.
+If a proposed extension lets a private law depend on deeper head
+digits, one must refine to head atoms on which every such dependence
+is constant before using this factorization. The old first-row
+formula does not automatically extend to that case.
+
+### 4. A literal sufficient functional with exact joint inputs
+
+For the finite actual mixed inventory M, retain every original phase
+and put E_m=I_m times C_m, with I_m the whole ternary carrier for a
+free label. Define
+
+    L_PS=R_PS(total)-sum_(m in M)R_PS(E_m)
+        =sum_ell beta_ell(total)*G_ell
+          -sum_(m in M)sum_ell beta_ell(I_m)*G_ell(C_m). (FC742)
+
+Every term in this prescribed functional is an exact integral on
+the same restricted source. The union bound gives
+
+    R_PS(outside all mixed E_m)>=L_PS.
+
+Hence L_PS>0 proves noncoverage of this actual finite family under
+the stated source gates. No pure or singleton fee is charged again;
+those constraints have already been absorbed into R_PS.
+
+Existing same-source forest corrections may be added:
+
+    L_PS,F=L_PS+sum_({m,n} in a forest F)R_PS(E_m intersect E_n).
+                                                               (FC743)
+
+Each intersection is given by (FC741) after merging compatible
+coordinate cylinders. Incompatibility gives zero. Its Haar CRT cap
+is an upper bound, not a positive overlap credit. Unknown edges can
+be omitted. This reuses FC623/Report433; no new forest theorem or
+assumed positive forest gain is claimed.
+
+### 5. Exact gain identity: source loss versus removal of overcharged overlap
+
+This subsection concerns only the finite ACTUAL mixed inventory and
+its exact marginals. Let D be the union of the new pure and singleton
+events, so R_PS=1_(D complement)*R_N. Put
+
+    N_M(x)=sum_(m in M)1_(E_m)(x),
+    L_0=R_N(total)-sum_(m in M)R_N(E_m).
+
+Finite linearity gives the exact identity
+
+    L_PS-L_0=integral_D (N_M-1) dR_N.              (FC744)
+
+Indeed each mixed marginal decreases by R_N(D intersect E_m),
+whereas the source mass decreases by R_N(D). The same D appears
+in every term; independently optimized intersections cannot be
+substituted into this equality.
+
+Equivalently the certificate change is
+
+    -R_N(D intersect {N_M=0})
+       +sum_(k>=2)(k-1)*R_N(D intersect {N_M=k}).
+
+Removing a region already charged to two or more mixed labels can
+improve this union-bound certificate. Removing a region charged once
+has zero effect on the certificate. Removing mixed-uncovered mass
+decreases it. This gives a concrete joint quantity to seek.
+
+The actual surviving measure has a different, monotone change:
+
+    R_PS({N_M=0})-R_N({N_M=0})
+       =-R_N(D intersect {N_M=0})<=0.             (FC745)
+
+Thus a better lower certificate does NOT mean restriction creates
+new surviving mass. It can remove overlap that the old union bound
+counted repeatedly while removing little or no actual survivor.
+Equation (FC744) describes certificate accounting, not information
+creation or a reversal of measure domination.
+
+### 6. A complete phase-max allowance on the same joint profile
+
+When mixed phases are not to be retained literally, one may compute
+a conservative complete allowance using the SAME R_PS profile.
+Keep the finite baseline normalizers s_(p,N) and Q_N=(2/3)product_p s_p.
+Set
+
+    w_(h,ell,i)=mu_(h,ell)([i]_h)/s_h,
+    P_(q,ell,i,j)=rho_(q,ell,i,j)(total)/s_q,
+    A_ell=sum_(i,j)w5*w7*product_q P_q.
+
+These new P entries can be zero. They are not recovered by dividing
+the old joint P products; those products describe the old source.
+All new entries satisfy P_new<=P_old at the same original cell, and
+w_new<=w_old. There is no division by a possibly zero new factor.
+The exact normalized source mass is
+
+    A_PS=R_PS(total)/Q_N
+        =(1/2)*sum_ell kappa_ell(total)*A_ell.      (FC746)
+
+For support D with H=D intersect {5,7}, head depths e, and one
+physical supported-head address a, define
+
+    T_(D,ell)(a)=sum_(i,j agreeing with a)
+         product_(h notin H)w_(h,ell,row_h)
+         *product_(q notin D)P_(q,ell,i,j),
+    M_(h,ell)(e,a)=min(c_h,infinity*h^-e,w_(h,ell,a)),
+    Psi_(D,e,ell)(a)=T_(D,ell)(a)*product_(h in H)M_(h,ell)(e_h,a_h).
+
+The supported private cap is the same valid bound
+s_q*c_q,infinity*q^-f. It may be sharpened with actual restricted
+cylinder masses from (FC741), but cannot be interpreted as equality.
+Consequently define
+
+    F_D(e)=(1/2)*max_a sum_ell kappa_ell(total)*Psi_ell(a),
+    S_(D,t)(e)=(1/2)*max_(w of depth t,a)
+                         sum_ell kappa_ell(w)*Psi_ell(a). (FC747)
+
+A free label uses one common address over ALL leaves and roots.
+A selected label uses one whole prefix and one common address.
+Independent leafwise maximizing addresses are not allowed inside
+these expressions. Root0 contributes zero.
+
+Let C_old be the original cofactor inventory: support size at least
+two, with head exponent >=2 only for a support {h,q}, and >=1 for
+other supported heads. Let C_sh={h*q^f:h in {5,7},q in Q,f>=1}.
+Their supported private depth coefficients are the unchanged
+B(I)=product_(q in I)1/(q-2). Using this notation, the full allowance is
+
+    Phi_PS = sum_(D old) B(D intersect Q)
+                 *sum_(head e in old domain)[F_D(e)+sum_(t>=1)S_(D,t)(e)]
+             +sum_(h,q) 1/(q-2)*sum_(t>=2)S_({h,q},t)(e_h=1).
+                                                               (FC748)
+
+The second line defines the prefix-aware high-shallow allowance;
+it is not the old G_P/2 after an arbitrary restriction.
+The old G_P/2 remains an upper bound by domination, but replacing
+it requires this actual leaf profile. Its height-zero/one labels
+are skeleton constraints and remain excluded from this inventory.
+
+The sufficient complete-profile condition is
+
+    M_PS=A_PS-Phi_PS>0.                            (FC749)
+
+Every pure and singleton event is handled by R_PS; every mixed label
+is paid once in (FC748). The proof repeats FC163--FC168's per-original
+integration and nonnegative depth sums, with exact unsupported masses
+on this source. This is uniform over the mixed phases for the fixed
+pure/singleton profile. Uniformity over ALL pure/singleton registries
+still requires proving (FC749), or another sufficient criterion,
+for every such actual registry in the declared gate class.
+
+The cap-based functional can charge an actually empty joint cell if
+a zero private factor is supported and its mass was discarded for
+a cap. That is conservative. The literal formula (FC741) has the
+exact zero. No unjustified division or source renormalization is
+used to conceal this possible slack.
+
+### 7. Finite tails are valid, but the old fixed head blocks need not survive
+
+Since K resolves all actual pure/singleton restrictions, the joint
+profile is constant on each surviving depth-K ternary cylinder.
+For any fixed support and head depths,
+
+    S_(D,K+j)(e)=3^-j*S_(D,K)(e),
+    sum_(t>=1)S_(D,t)(e)
+       =sum_(t=1..K-1)S_(D,t)(e)+(3/2)*S_(D,K)(e). (FC750)
+
+For the high-shallow class start the finite sum at t=2. This is an
+exact uniform-tail consequence, not the invalid replacement of all
+depths by (3/2)*S_(D,1). Arbitrary ternary reweighting after this
+construction would require its own tail proof.
+
+High-singleton deletions can make a positive head row arbitrarily
+small within the present unrestricted-depth input contract. Therefore
+the old depth-two saturation and fixed 1/2/2/4 full-P depth blocks
+must NOT be reused automatically.
+
+Here is a finite construction proving that assertion. Fix one
+positive head row and root of a canonical finite source, or its
+explicit FC605 proportional row thinning. Its density is constant
+and positive, say a>0, on some deeper head cylinder B in that row.
+For any sufficiently large L choose a depth-L subcylinder C_L of B.
+The first row minus C_L is a finite disjoint union of p-cylinders:
+at each step down the path to C_L take the p-1 sibling cylinders.
+Give each such cylinder its own distinct ternary exponent t>=2,
+and let all its ternary prefixes follow one fixed branch inside the
+chosen root. CRT supplies the corresponding numerical original
+3^t*p^e with exactly that p-cylinder and ternary prefix. Distinct t
+ensure distinct numerical moduli, and none is a baseline height-zero
+or height-one singleton. On the common ternary leaf at the largest
+assigned t, these labels remove precisely the first row minus C_L.
+The surviving head row has mass a*p^-L>0, tending to zero as L
+increases. Each constructed registry is finite. This proves loss of
+a uniform positive live-row lower bound; it does not construct a
+covering or assert a loss of all surviving ternary mass.
+
+For one supplied finite profile, the positive w_(h,ell,i) entries
+form a finite set. For a head with a positive entry, choose E_h with
+c_h,infinity*h^-E_h no greater than its positive minimum. If a head
+has no positive entry, its cap factor is identically zero and one
+may choose E_h=1. Then e>=E_h gives
+
+    M_(h,ell)(e,i)=c_h,infinity*h^-e*1_(w_(h,ell,i)>0).
+
+All preceding depths are explicit exceptional depths and the tail
+sum is c_h,infinity*h^-E_h/(1-1/h). This is an exact finite reduction
+for the supplied profile, with the maximum kept inside each depth
+block. If all head masses vanish, the source vanishes. No uniform
+bound on E_h, leaf count or rational bit complexity follows from
+the old fixed head table alone.
+
+### 8. General accounting versus the literal identity
+
+Let Phi_0 be the corresponding old complete mixed allowance on R_N,
+including its old high-shallow fee, and M_0=Abar_N-Phi_0. It can be
+the two-head functional of FC697 or the sharper full-P functional.
+The new cap profile is pointwise dominated by its old counterpart;
+the prefix maxima and depth sums preserve domination. Therefore
+
+    Phi_PS<=Phi_0,
+    M_PS=M_0-Loss_PS+(Phi_0-Phi_PS),
+    Loss_PS=(R_N(total)-R_PS(total))/Q_N>=0.       (FC751)
+
+Both terms on the right are coupled through the actual removed
+region and the same source. The required additional estimate is
+
+    Phi_0-Phi_PS > Loss_PS-M_0.                   (FC752)
+
+For these phase-maximized complete allowances, the savings are NOT
+identified with integral_D N_M. They include changes in maximum
+attainers, supported-cylinder relaxation and charges for additional
+numerical labels. If exact actual-label marginals B0 and BPS are
+separated from allowances, the difference of their slack terms must
+be retained. Only (FC744)'s exact finite actual-inventory functional
+has the stated multiplicity-integral identity without slack terms.
+
+### 9. Scalar obstructions and sufficient evaluation conditions
+
+#### 9.1 A direct-loss certificate with unchanged mixed fees
+
+If a certified same-source upper bound epsilon satisfies
+
+    R_N(D)/Q_N<=epsilon<M_0,
+
+then unchanged old mixed fees already prove positivity. The pure
+part of the exact loss is
+
+    Loss_pure=(1/2)*sum_r(1-theta_r)*A_r.
+
+After pure restriction, an additional singleton j with prime p and
+ternary prefix w costs exactly beta(w)*nu_r(C_j)/Q_N on the still
+root-constant-in-nonternary reference R_N^P; overlaps between such
+events make their sum an upper bound on the combined loss. Here
+nu_r is the actual joint nonternary law and nu_r(C_j) is its actual
+p-cylinder marginal. If it is unknown, a cap is only an upper bound.
+This screen requires no new all-support optimization when it passes.
+Failure of epsilon<M_0 is failure of this certificate, not coverage.
+
+#### 9.2 Neither established scalar margin alone pays worst-phase pure9
+
+Write Mjoint for the two-head margin and MfullP for the complete
+full-P margin. Their exact values satisfy for both tables
+
+    Abar>1/3, 0<Mjoint<=MfullP<1/100.
+
+These inequalities follow directly from the recorded fractions:
+Abar is 37306636648024/99157856923125 or
+44800856956/119037043125, and Mjoint is respectively
+169355431243/45765164733750 or
+1065252710101/396631427692500.
+The full-P margins are respectively
+889884715528/99157856923125 and
+383112872231/47595771323100. Each is strictly less than 1/100 by
+cross-multiplication.
+
+For a new pure9 cylinder inside root r, baseline root constancy gives
+
+    R_N([alpha]_9)/Q_N=A_r/6.
+
+Since max(A1,A2)>=Abar, any phase-uniform direct-loss allowance for
+even this single label is at least Abar/6>1/18. Therefore subtracting
+that allowance from either established margin, with all old mixed
+fees unchanged, cannot certify positivity in the limiting comparison.
+The strict separation also persists eventually along the established
+finite canonical signature sequence.
+
+This is an obstruction to THAT scalar transfer of the two-head or
+full-P certificate. It does not prove the actual pure9 extension
+fails and does not refute coupled fee savings in (FC751), literal
+incidence or forest refinements. The full-P improvement leaves the
+need for these joint relations intact.
+
+#### 9.3 Existing P products cannot identify the new profile
+
+The old joint-cell data contain exact coordinate totals but not
+the intersections with new high-singleton cylinders. This is a
+structural insufficiency even on one fixed source.
+
+For example choose q=11 and a positive baseline root. Its actual
+pure q label forbids one first q-row, so every baseline rho_q gives
+that row zero mass. Because the total source on the root is positive,
+some other q-row has positive joint marginal. Choose any depth-two
+ternary prefix in that root. A new modulus 9*q is a distinct legal
+high-singleton numerical label. Its q phase can equal the already
+forbidden pure q row, giving zero source intersection, or the positive
+row, giving positive intersection. Both CRT choices are actual
+phases with the same ternary prefix and the same numerical modulus.
+The baseline table, P products and total masses are unchanged.
+
+Thus the old scalar data and the new label's exponents do not
+determine its deletion response. This is an actual finite-phase
+source-interface counterpair, not a pair of covering systems. The
+pure-prefix counterpair from 147 separately shows that equal root
+totals need not determine beta(w) or the maximum prefix capacity.
+
+#### 9.4 Sufficient finite data for an exact evaluation
+
+A sufficient basis for evaluating this joint functional is either:
+
+1. One actual finite registry and source construction are supplied,
+   with the joint intersection data below and a declared literal or
+   complete-profile functional; or
+2. A proved phase-uniform envelope/finite profile reduction supplies
+   corresponding lower source masses and upper fees for EVERY actual
+   registry in the claimed class.
+
+If neither is available, independently assigning losses to the old
+table's leaves is not an exact instance of this bridge. A
+positive point under selected new phases would only settle that
+specified instance. It does not discharge the arbitrary-phase goal.
+
+For any proposed envelope, compare its certified source-loss lower
+bound L with an upper bound U on simultaneous fee savings. If
+U<=L-M_0, that envelope cannot make (FC752) strictly positive.
+Conversely a source-loss upper bound and savings lower bound crossing
+(FC752) prove the sufficient condition. Directions cannot be reversed.
+An envelope satisfying either decisive inequality is not supplied here.
+
+### 10. Exact finite-input requirements and integration depth
+
+The following are sufficient finite inputs; no minimality or uniform
+small-state claim is made.
+
+- The fixed source/table identity, finite N, actual baseline phase
+  registry, allowed head transport and capacity/completion evidence.
+- All actual P3 and J1 numerical labels and global phases. Their
+  maximum ternary depth K determines the new profile partition.
+- The actual baseline head submeasures and private avoid-sets with
+  their fixed thinning scalars. For the canonical source these are
+  finite Haar restrictions. For the FC605 extension use its explicit
+  proportional thinning within each first row, not only target totals.
+- In each ternary leaf and actual head cell, the prime-coordinate
+  antichains for old holes together with the active new singleton
+  holes; retain their original label provenance separately.
+- Exact masses mu_(h,ell)([i] intersect C_h) and
+  rho_(q,ell,i,j)(C_q) for the queried cylinders, or sufficient finite
+  atom data to derive them. These give every term of (FC741).
+- For a literal test, the finite actual mixed registry and one fixed
+  phase per original; for a complete-profile test, the precise old
+  and high-shallow depth domains in (FC748), the actual prefix maxima
+  and valid new head saturation thresholds.
+
+For each p in V choose L_p at least every p-depth in the baseline
+pure/star/group holes and the new high-singleton labels. If exact
+literal mixed intersections are required, include their p-depths
+as well, or use uniform refinement for those queries. Taking the
+ternary exponent to include queried mixed prefixes too yields one
+finite resolving period
+
+    3^L3 * product_(p in V)p^L_p.
+
+The canonical head and private densities are constant on these atoms:
+they are fixed scalar multiples of complements of finitely many
+prime-power cylinders. FC605's rowwise proportional thinning retains
+this property. The declared common transport must carry all source
+gates and query cylinders together. Consequently all required
+intersections can be evaluated exactly from nested/disjoint prime
+prefixes and their rational Haar masses, as in FC622, without
+enumerating the full CRT period.
+
+An arbitrary submeasure known only by first-row totals would need
+additional density/intersection data; finite row totals alone do
+not grant this atom-constant representation. The available source
+construction, not its scalar target, supplies the representation.
+
+The depth-K partition can be replaced by an event-address tree whose
+shells retain all active sets. This saves representation, not the
+uniform arbitrary-phase proof. Uniform tails after K and after each
+valid E_h reduce the artificial complete allowance to finite sums.
+No bound on the size of these inputs for arbitrary actual families
+has been established here.
+
+### 11. Precise remaining research obligation
+
+There is now one faithful same-source interface for both unpaid
+inventories. The central unresolved inequality is sufficient good
+joint-prefix mass after the new restrictions, together with enough
+simultaneous reduction in mixed fees, or enough actual overlap
+credit. Equation (FC744) identifies what the literal restriction
+can recover: overcounted mixed incidence on the removed region.
+
+The old scalar inputs do not determine that incidence or the new
+cylinder intersections. A sufficient extension must
+either bound them uniformly over the allowed actual registries,
+or provide a justified finite reduction of those registries. Merely
+charging each new label by an independent worst cap discards the
+relations needed to test the coupled inequality.
+
+Even a positive resolution for this fixed gated prime set would
+leave arbitrary head incidence, incomplete-roster realizability,
+unrestricted prime support and the separate middle-prime continuation
+gap. R_PS<=R_N preserves old raw query upper comparisons, but changes
+the source mass and normalized law. No old Top initialization or
+continuation follows from this restriction alone.
