@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6984e809cf5bdcd0fcaf9f956dcf80d17cce1bbb14fef724c3e0f882b081f4e0
+  normalized_sha256: sha256:6984e809cf5bdcd0fcaf9f956dcf80d17cce1bbb14fef724c3e0f882b081f4e0
+cas_ref: sha256:6984e809cf5bdcd0fcaf9f956dcf80d17cce1bbb14fef724c3e0f882b081f4e0
+coverage_gids:
+  - gid: D5/S3/Factorization/HomFilteredTripleFixedPoints.card_fixedBy_nonzero
+    target_statement_id: sha256:d6a2b712ce15fcd8808ded0bc9cdf01ccdb6a43cfad5db6f54e360b53c7c0bd0
+receipts:
+  unresolved_subitems: []

@@ -196,3 +196,35 @@ This census concerns a fixed slope and its admissible abscissa sets. Over
 a composite modulus, a collinear triple need not have a unique affine
 graph presentation, so counts across slopes cannot be added without an
 additional overlap analysis.
+
+**Theorem 11 (homomorphism-filtered fixed-point census).** Let $G$ be a
+finite abelian group, $A$ an abelian group, and $f:G\to A$ an additive
+homomorphism. Write $\mathcal V_f$ for the three-element subsets of $G$
+on which $f$ is injective. Translation by $G$ preserves $\mathcal V_f$.
+For every nonzero $t\in G$,
+
+\[
+  |\operatorname{Fix}_t(\mathcal V_f)|=
+  \begin{cases}
+    |G|/3,&3t=0\text{ and }f(t)\ne0,\\
+    0,&\text{otherwise}.
+  \end{cases}
+\]
+
+**Proof.** A translation fixing a three-element set has $3t=0$ by
+summing its elements. If $f(t)=0$, any point and its distinct translate
+have the same image, contradicting injectivity. If $3t=0$ and
+$f(t)\ne0$, both $t$ and $f(t)$ have order three. Hence
+$C_t=\{0,t,2t\}$ and its image each have three elements, so
+$C_t\in\mathcal V_f$. Every $t$-fixed member of $\mathcal V_f$ is a
+translate of $C_t$ by the three-point translation-cycle theorem. The
+stabilizer of $C_t$ has order dividing three and contains $t$, hence
+has order three. Orbit-stabilizer gives $|G|/3$ translates. $\square$
+
+Theorem 10 is the cyclic case $G=A=\mathbb Z/n\mathbb Z$ and
+$f(x)=ax$. The general form exposes the role of the kernel: in
+$G=(\mathbb Z/3\mathbb Z)^2$ with $f$ the first-coordinate projection,
+six nonzero translations survive $f$ and each fixes three triples.
+They pair into three distinct order-three direction subgroups, each
+with its own short translation orbit; the two nonzero elements in
+$\ker f$ fix no admissible triple.

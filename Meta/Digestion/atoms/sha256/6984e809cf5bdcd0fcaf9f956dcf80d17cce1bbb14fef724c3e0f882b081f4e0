@@ -1,0 +1,14 @@
+**Theorem 11 (homomorphism-filtered fixed-point census).** Let $G$ be a
+finite abelian group, $A$ an abelian group, and $f:G\to A$ an additive
+homomorphism. Write $\mathcal V_f$ for the three-element subsets of $G$
+on which $f$ is injective. Translation by $G$ preserves $\mathcal V_f$.
+For every nonzero $t\in G$,
+
+\[
+  |\operatorname{Fix}_t(\mathcal V_f)|=
+  \begin{cases}
+    |G|/3,&3t=0\text{ and }f(t)\ne0,\\
+    0,&\text{otherwise}.
+  \end{cases}
+\]
+
