@@ -56,6 +56,7 @@ does not supply that existence or uniqueness theorem.
 | `Geometry/Riemannian/Covering/Completeness.lean` | `PoincareMT.RiemannianMetric.metricComplete_of_isCoveringMap` | A smooth covering preserving tangent inner products pulls completeness from the base to the covering space, with arbitrary sheet count; it does not prove completeness downstairs from completeness upstairs. |
 | `Geometry/Riemannian/Covering/Completeness.lean` | `PoincareMT.RiemannianMetric.metricComplete_pullbackOfLocalDiffeomorph` | The same upward completeness transfer for the actual local-diffeomorphism pullback metric. |
 | `Geometry/RicciFlow/Local/Connection/Existence.lean` | `PoincareMT.exists_leviCivitaData` | Constructs Levi-Civita data for a supplied smooth metric on a Hausdorff, second-countable manifold. |
+| `Geometry/RicciFlow/Curvature/Calculus/Fields/CurvaturePointwise.lean` | `PoincareMT.RicciFlowAnalysis.curvatureOnFields_eq_curvature` | Identifies the connection commutator on smooth vector fields with retained pointwise curvature on an open neighborhood; it supplies extension independence, not the value of curvature. |
 | `Geometry/Riemannian/Curvature/LocalIsometrySectional.lean` | `PoincareMT.LeviCivitaData.sectionalCurvature_eq_of_local_isometry` | Transports sectional curvature on an open set for a smooth map preserving tangent inner products, given both Levi-Civita data; no separate invertible-differential premise is required, and it does not compute the source curvature. |
 | `Geometry/Riemannian/Curvature/LocalIsometry.lean` | `PoincareMT.LeviCivitaData.curvatureTensor_eq_of_local_isometry` | A smooth map preserving tangent inner products on an open set transports the four-covariant curvature tensor; it needs the two metrics and Levi-Civita data. |
 | `Geometry/Riemannian/Curvature/LocalIsometry.lean` | `PoincareMT.LeviCivitaData.curvatureTensorNorm_eq_of_local_isometry` | Transports the retained Hilbert-Schmidt curvature norm under the same hypotheses. |
@@ -90,7 +91,12 @@ also checked separately. Five additional external modules compiled unchanged:
 `RicciFlow/Local/Connection/{Koszul,Coordinates,Construction,Existence}` and
 `Riemannian/Curvature/LocalIsometrySectional`. Both cited declarations have
 recursive axiom closures consisting only of the same three standard axioms.
-These modules are outside the 47-module count. This establishes source
+These modules are outside the 47-module count. The extension-independence
+closure was checked separately: 13 external modules, 76,771 bytes excluding
+Mathlib, with unchanged sources; ten required new compilation and three reused
+source-identical cached modules. Its cited declaration has the same three
+standard axioms. This separate closure count is not added to the union above.
+This establishes source
 compatibility for the checked closures, not installation of an external
 dependency or independent verification of the complete Poincare proof.
 
@@ -209,16 +215,36 @@ have zero Lie bracket. Differentiating the metric pairing
 `h^(-2) inner(v,w)` and applying Koszul gives this formula for the actual
 connection; the formula is derived, rather than supplied as a premise.
 The check retains all earlier source and quotient distance and completeness
-clauses in the same construction. It does not compute curvature.
+clauses in the same construction.
+
+For every Levi-Civita datum of that same source metric, the retained pointwise
+curvature has now been computed as
+`R(u,v)w = g(u,w) v - g(v,w) u`.
+The calculation differentiates inverse height, applies the scalar Leibniz
+rule to the connection formula, and uses the zero brackets of the constant
+fields. The extension-independence theorem above identifies this field
+calculation with the retained pointwise curvature. In the upstream tensor
+convention, the sectional numerator is the negative Gram determinant, so
+sectional curvature is minus one whenever that determinant is nonzero.
+At zero Gram determinant the totalized sectional curvature is zero.
+
+Every Levi-Civita datum of each same descended quotient metric also has
+sectional curvature minus one on nondegenerate planes. Surjectivity of the
+actual orbit covering selects a source point, and the invertible projection
+differential lifts any two target tangent vectors. Preservation of tangent
+inner products preserves their Gram determinant; sectional-curvature
+transport then gives the quotient value. The combined check constructs the
+source and quotient metrics and Levi-Civita data while retaining all earlier
+distance, completeness, local-diffeomorphism and metric-uniqueness clauses.
+It assumes neither source curvature nor a supplied quotient metric, and
+metric uniqueness remains within the chosen smooth quotient structure.
 
 These checks compiled under the project pins using the unchanged cited
 external sources and only `propext`, `Classical.choice` and `Quot.sound`.
 They are temporary applications of existing results; no new named project
 declaration or external dependency is installed by this note.
 
-The model's curvature of minus one remains to be computed before applying
-curvature transport. Sectional curvature is totalized as zero for pairs with
-zero Gram determinant; minus one must be stated for nondegenerate planes. Finite covolume,
+Finite covolume,
 noncompact cusp analysis, and the global Mostow-Prasad existence and
 uniqueness argument remain separate obligations. Compact positive-curvature
 sphere covering results cannot replace them.

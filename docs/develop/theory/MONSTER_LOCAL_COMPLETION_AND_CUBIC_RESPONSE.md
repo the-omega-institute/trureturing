@@ -925,6 +925,12 @@ $$
 
 将 §22.2 已证的七截面张成与唯一全一关系代入 $k=3$，得到 §23.2 所用的唯一短子集代表。这里的结论只涉及六十四个有限标签；从四种有限谱类到表中四个实际 $q$ 级数字符仍需 §23.2 的实际字符接口。七截面所依赖的符号表背景见 T. Basak, *The octonions as a twisted group algebra* (2017), arXiv:1702.05705, Theorem 1；二元重复码的术语和补集视角可参见 F. J. MacWilliams and N. J. A. Sloane, *The Theory of Error-Correcting Codes* (North-Holland, 1977), Chapter 1。本引理的量词与证明独立于 VOA 实现。
 
+**本节的 Lean 交付。** 有限七截面模型中的上述结论已形式化为
+`D5/S3/VertexAlgebra/MonsterShortSupport.unique_short_support`，其证明使用
+`MonsterFusionSpan.fusion_span_and_capacity` 的唯一重复关系，并对七点补集作奇数基数论证。
+这只证明辅助标签空间中大小至多三的唯一代表；它没有把有限标签提升为 VOA 融合、实际 OPE 或 Monster 作用。
+MacWilliams--Sloane 的重复码术语是参考输入，Lean 真值仍以 kernel 证明为准。
+
 ## 24. 未标记的融合谱对称与来源标记的差别
 
 **定理 24.1（七点谱融合稳定子）。** 对上述有限数据，定义 $G_{\rm spec}$ 为保持加法、二次型 $Q$ 和每个类型完整字符的线性自同构群，则

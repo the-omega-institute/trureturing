@@ -1707,3 +1707,299 @@ $$
 若实际 $C$ 满足假设 18.1，$G\leq C\leq n$ 正好履行式 (20.3) 的前提，定理 15.3 则把这里的 $E_C$ 确认为同一实际拆分树总标量进位，得到式 (20.6)。树对每个输入有限，并不保证跨全部输入的进位读出具有有限状态的同步词图；相反，本定理要求检验的恰是这个全局缺陷读出。比较映射未履行实际自指方程，故其短周期及非正则性均不能转移给 $C$。实际 $C$ 的两种五窗词图正则性、以及实际周期是否存在无界长度族，仍分别需要满足递归约束的证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 21. 实际 Cloitre 的任意固定右宽度与五窗正则性约束
+
+**假设 21.1（实际递归的全局来源前提）。** 沿用 $F_0=0$、$F_1=1$、$F_{j+1}=F_j+F_{j-1}$、$\varphi=(1+\sqrt5)/2$、$\alpha=\varphi^{-1}$ 与 $G(n)=\lfloor\alpha(n+1)\rfloor$。本节的 $C$ 始终是定义 15.1 的实际 Cloitre 序列：
+
+$$
+\begin{aligned}
+C(1)&=C(2)=1,\\
+D_N&=\{1,\ldots,N-1\},\qquad T_N(x)=N-C(x),\\
+x_0&=N-1,\qquad x_{i+1}=T_N(x_i),\qquad d_N=C(N-1),\\
+g_N&=x_{d_N},\qquad C(N)=C(g_N)+C(N-g_N)\quad(N\ge3).
+\end{aligned}
+$$
+
+取 [Cloitre 黄金结构，§§5–6](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/golden-proof.md) 的下列全局关系作为显式前提。对每个正整数 $n$，
+
+$$
+G(n)\le C(n)\le U(n)\le n,
+$$
+
+其中 $U(1)=1$，对 $F_j\le n<F_{j+1}$、$j\ge3$，
+
+$$
+U(n)=\min\{n-F_{j-2},F_j\}.
+$$
+
+此外，$U$ 非减且满足 $0\le U(n+1)-U(n)\le1$，并有
+
+$$
+\begin{aligned}
+U(F_j)&=C(F_j)=G(F_j)=F_{j-1}&&(j\ge2),\\
+G(F_j+1)&=C(F_j+1)=F_{j-1}+1&&(j\ge3).
+\end{aligned}
+$$
+
+这里不假设 $C$ 单调。使用 [Fibonacci collars，§1](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/fibonacci-collars.md) 的全轨道捕获结论：对 $q\ge6$、整数 $t\ge0$、$N=F_q+t$，每条 $T_N$ 轨道最终进入不变区间
+
+$$
+I_{q,t}=[F_{q-1},F_{q-1}+t]\cap\mathbb Z\subseteq D_N,
+$$
+
+且全部周期都在其中。还使用 [Cloitre foundations，§4](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/proof.md) 的规定深度入周期结论：对每个 $N\ge3$，起点 $N-1$ 的最短前周期 $\mu_N$ 满足 $d_N\ge\mu_N$，所以 $g_N$ 是同一实际轨道的周期点。
+
+这些全局前提承继来源的计算辅助基础：黄金结构使用区间 $[16384,131071]$ 上的有限比值前提及 $[1,65535]$ 上的有限归纳基，规定深度入周期使用 $3\le N\le52$ 的有限初值前提。以下结论条件于这些来源前提，不给它们另一个独立证明。[Fibonacci collars，§6](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/fibonacci-collars.md) 的额外双种子只给出固定带 $-12\le t\le32$；本节不把该固定带当作任意宽度的种子。
+
+**定义 21.2（右侧轮廓缺陷）。** 对整数 $j\ge2$、$t\ge0$，定义
+
+$$
+H_j(t)=F_{j-1}+t-C(F_j+t).
+$$
+
+这是右侧线性轮廓的亏量，与规范黄金缺陷 $E_C(n)=C(n)-G(n)$ 分开。对 $t\ge0$，它是所引 Fibonacci collars §7 的轮廓缺陷 $D_j(t)=C(F_j+t)-F_{j-1}-\max(0,t)$ 的相反数。特别地，$H_j(t)=0$ 不意味着 $E_C(F_j+t)=0$。
+
+**定理 21.3（任意固定右宽度的实际轮廓）。** 在假设 21.1 下，对每个整数 $t\ge0$ 及每个整数 $k\ge6t+6$，
+
+$$
+C(F_k+t)=F_{k-1}+t.
+\tag{21.1}
+$$
+
+证明。先列出用于归纳的界与实际拆分恒等式。对 $j\ge6$，锚值给 $H_j(0)=0$。若 $t\ge1$，$U$ 的 1-Lipschitz 性及 $G$ 的单调性分别给
+
+$$
+C(F_j+t)\le U(F_j)+t=F_{j-1}+t,
+\qquad
+C(F_j+t)\ge G(F_j+1)=F_{j-1}+1.
+$$
+
+因此
+
+$$
+0\le H_j(t)\le t-1\qquad(j\ge6,\ t\ge1).
+$$
+
+对 $q\ge6$、$N=F_q+t$，捕获及规定深度入周期使实际所选拆分具有唯一整数偏移 $s$：
+
+$$
+g_N=F_{q-1}+s,\qquad N-g_N=F_{q-2}+t-s,
+\qquad 0\le s\le t.
+$$
+
+两项均在 $D_N$ 中。将它们代入实际加法递归并使用 Fibonacci 递推，得到
+
+$$
+H_q(t)=H_{q-1}(s)+H_{q-2}(t-s).
+\tag{21.2}
+$$
+
+这个 $s$ 是同一实际轨道在深度 $d_N$ 处选出的偏移，不能自由选择。
+
+对偏移 $t$ 作强归纳。$t=0$ 由锚值成立。固定 $t\ge1$，假设式 (21.1) 对全部 $0\le u<t$ 成立，令 $K=6t$。因为 $6u+6\le K$，归纳假设统一给出
+
+$$
+H_j(u)=0\qquad(0\le u<t,\ j\ge K).
+$$
+
+下面先考察任意 $q\ge K+2$，写
+
+$$
+A=F_{q-1},\qquad B=F_{q-2},\qquad N=A+B+t,
+\qquad I=[A,A+t]\cap\mathbb Z.
+$$
+
+所有阶数及指标均合法。事实上，$F_r\ge r-1$ 对 $r\ge2$ 由 Fibonacci 递推归纳成立，所以
+
+$$
+F_{q-2}\ge q-3\ge6t-1>t.
+$$
+
+于是 $F_q+t<F_{q+1}$、$A+t<F_q<N$，区间 $I$ 及所选拆分的两个指标均属于已定义前缀。所用低阶 $q-1,q-2$ 均至少为 $K$，可以使用全部较小偏移的归纳结论；这里没有附加新的宽度种子。
+
+对 $0\le u<t$，归纳假设给 $C(A+u)=B+u$。令 $h=H_{q-1}(t)$，则 $0\le h\le t-1$，且
+
+$$
+\begin{aligned}
+T_N(A+u)&=A+t-u&&(0\le u<t),\\
+T_N(A+t)&=A+h.
+\end{aligned}
+$$
+
+若 $h>0$，则 $1\le h<t$。内部偏移 $1,\ldots,t-1$ 在反射 $u\mapsto t-u$ 下封闭，而端点依次映为 $0\mapsto t\mapsto h$。两个端点都是暂态点，不能属于周期。捕获及规定深度入周期遂迫使所选 $s$ 满足 $0<s<t$。式 (21.2) 的两项都是较小偏移，故 $H_q(t)=0$。
+
+若 $h=0$，整个 $I$ 上都有反射 $T_N(A+u)=A+t-u$。若 $0<s<t$，式 (21.2) 仍给零；若 $s=t$，它给 $H_{q-1}(t)+H_{q-2}(0)=0$。所以唯一可能产生正值的所选偏移是 $s=0$。得到端点亏量二分的关键蕴含：
+
+$$
+H_q(t)>0
+\quad\Longrightarrow\quad
+H_{q-1}(t)=0,\qquad g_N=A,\qquad
+H_q(t)=H_{q-2}(t)>0.
+\tag{21.3}
+$$
+
+还须确定这一端点选择的实际时间相位。在式 (21.3) 的情形，所选周期是端点二周期 $A\leftrightarrow A+t$。起点满足 $x_0=N-1>A+t$，因为 $B>1$。对区间外的实际域内指标，来源上界及黄金下界给
+
+$$
+\begin{aligned}
+x<A&\quad\Longrightarrow\quad
+C(x)\le U(x)\le U(A)=B,
+\quad T_N(x)\ge A+t,\\
+x>A+t&\quad\Longrightarrow\quad
+C(x)\ge G(x)\ge G(A+1)=B+1,
+\quad T_N(x)\le A+t-1.
+\end{aligned}
+$$
+
+整个 $I$ 是反射，内部偏移的反射周期与端点周期互不相交。因此，一条最终处于端点周期的轨道不可能先进入内部。它在进入 $I$ 前，只能由右外侧移到左外侧或下端点，由左外侧移到右外侧或上端点。从右外侧的时刻零开始，仍在外侧的偶数时刻在右边，仍在外侧的奇数时刻在左边。若首次进入是从右外侧进入区间，则进入下端点 $A$，时间为奇数；若首次进入是从左外侧进入区间，则进入上端点 $A+t$，时间为偶数。此后反射保持同样的相位。
+
+所以每次访问下端点都发生在入区间后的奇数时刻，上端点都发生在入区间后的偶数时刻；这不把入区间之前的奇数外侧时刻说成端点访问。由于 $g_N=x_{d_N}=A$，实际深度必须为奇数。较小偏移 $t-1$ 的归纳结论又给出精确深度
+
+$$
+d_N=C(F_q+t-1)=F_{q-1}+t-1.
+$$
+
+现在取 $k\ge K+6$。若 $H_k(t)>0$，式 (21.3) 在阶数 $k$、$k-2$、$k-4$ 处依次适用，因为最小的 $k-4\ge K+2$。正亏量依次传到 $H_{k-2}(t)$、$H_{k-4}(t)$，上述相位论证迫使三个数
+
+$$
+F_{k-1}+t-1,\qquad F_{k-3}+t-1,\qquad F_{k-5}+t-1
+\tag{21.4}
+$$
+
+同时为奇数。但 Fibonacci 递推模二从 $(F_0,F_1)=(0,1)$ 给周期位串 $0,1,1$，即 $F_j$ 为偶数当且仅当 $j\equiv0\pmod3$。三个指标 $k-1,k-3,k-5$ 覆盖全部模三余数，其 Fibonacci 值不能同奇偶；加上同一个 $t-1$ 也不能使它们全为奇数。矛盾。
+
+由 $H_k(t)\ge0$ 得 $H_k(t)=0$，完成偏移强归纳并证明式 (21.1)。特别地，对每个固定整数右宽度 $R\ge0$，都有统一结论
+
+$$
+C(F_k+t)=F_{k-1}+t
+\qquad(k\ge6R+6,\ 0\le t\le R).
+\tag{21.5}
+$$
+
+量词中的 $R$ 任意；它没有从固定带种子外推，也不包含负偏移轮廓。
+
+**定理 21.4（全部实际周期与无界规范振幅）。** 在假设 21.1 下，对整数 $t\ge1$、$k\ge6t+7$，令 $N=F_k+t$、$A=F_{k-1}$。$T_N$ 在 $D_N$ 上的全部周期恰为
+
+$$
+\{A+s,A+t-s\}\qquad
+\left(s\in\mathbb Z,\ 0\le s<\frac t2\right),
+$$
+
+以及在 $t$ 为偶数时的唯一中点固定周期 $\{A+t/2\}$。每条轨道最终进入其中一个周期。特别地，端点对 $\{A,A+t\}$ 是实际二周期，且其规范黄金缺陷振幅为
+
+$$
+E_C(A)=0,\qquad E_C(A+t)=t-G(t),\qquad
+\Delta_{\{A,A+t\}}=t-G(t).
+\tag{21.6}
+$$
+
+当 $t\to\infty$ 且每次取任意 $k\ge6t+7$ 时，这个振幅趋于无穷；因此实际 $E_C$ 在正整数域上无界。
+
+证明。因为 $k-1\ge6t+6$，定理 21.3 在阶数 $k-1$ 处对全部 $0\le u\le t$ 给出
+
+$$
+C(A+u)=F_{k-2}+u,\qquad
+T_N(A+u)=A+t-u.
+$$
+
+捕获区间的全部点都在 $D_N$ 中，每条轨道进入该区间，且所有周期都在其中。反射的非中点轨道是上述互不相交的二周期，偶数宽度的中点是固定点，故分类完整。
+
+锚值直接给 $E_C(A)=0$。还须按同一规范表示计算另一个端点，不能把 $G$ 当作任意加法上的线性函数。由 $k\ge6t+7$ 得 $t<F_{k-2}$。所以 $t$ 的 Zeckendorf 占位索引都至多为 $k-3$，与 $A=F_{k-1}$ 的单占位没有相邻接缝。将两套占位合并是合法的规范 Zeckendorf 加法，低位保持不变。定理 14.2 的逐位降阶读出因而给
+
+$$
+G(A+t)=F_{k-2}+G(t).
+$$
+
+与刚得的 $C(A+t)=F_{k-2}+t$ 相减，得到式 (21.6)。由于
+
+$$
+t-G(t)=(1-\alpha)t-\alpha+\{\alpha(t+1)\},
+\qquad 1-\alpha=\alpha^2>0,
+$$
+
+振幅趋于无穷。例如取 $k=6t+7$，上端点构成实际索引的一列无界缺陷值。由定理 15.3，这些缺陷值也分别是各自实际拆分树的总标量进位。
+
+这里分类的是全部实际周期，未指定起点 $N-1$ 及深度 $C(N-1)$ 一定选中端点对。上述端点对的周期长度始终为二；无界振幅不会把定理 19.2 的“无界周期长度必有无界振幅”反向变成无界周期长度的证明。
+
+**定理 21.5（实际五窗正则性与黄金收敛的互斥条件）。** 在假设 21.1 下，严格使用定义 17.2、20.1 的高到低规范五窗、独立单位末字母及全部共同高端补零合同，有
+
+$$
+\begin{aligned}
+\operatorname{Reg}(\mathcal G_C)
+&\quad\Longrightarrow\quad
+\limsup_{n\to\infty}\frac{C(n)}n>\alpha,\\
+\frac{C(n)}n\longrightarrow\alpha
+&\quad\Longrightarrow\quad
+\neg\operatorname{Reg}(\mathcal G_C).
+\end{aligned}
+\tag{21.7}
+$$
+
+证明。来源界履行定理 20.2 的实际前提，故
+
+$$
+\operatorname{Reg}(\mathcal G_C)
+\quad\Longleftrightarrow\quad
+\operatorname{Reg}(\mathcal G_{E_C}),\qquad
+0\le E_C(n)\le n.
+$$
+
+定理 21.4 又给出实际 $E_C$ 无界。接下来只在这条实际缺陷词图的推导中使用有限自动机泵送。整数进制同步函数的相关方法先例见 Goč、Schaeffer、Shallit，[*Subword Complexity and k-Synchronization*, arXiv:1206.5352v4，§5，Theorem 16 的证明](https://arxiv.org/abs/1206.5352v4)。该整数进制论证不直接承担这里的 Fibonacci 权重；下面给出当前五窗合同中的具体估计。
+
+记 $f=E_C$，假设其词图正则。与“输入没有额外高端零窗口”的正则语言相交，得到正则语言 $\mathcal L$。它对每个 $n\ge1$ 恰有一个词，窗口数为 $H=L(n)$；当 $H>0$ 时首个输入窗口非 $\mathrm{null}$。定理 20.2 中的共同长度资源等式
+
+$$
+L(x)\le H\quad\Longleftrightarrow\quad 0\le x<F_{3H+3}
+$$
+
+及 $0\le f(n)\le n$ 保证输出在同样的 $H$ 个窗口内，故这个限制保留每个实际输入，未另加输出窗口。
+
+取识别 $\mathcal L$ 的确定有限自动机，其状态数为 $Q\ge1$。$f$ 无界，所以存在实际输入 $n$ 使 $L(f(n))\ge Q+1$。选取它在 $\mathcal L$ 中的唯一词，设从高端起第一个非零输出窗口为第 $b$ 个窗口，则
+
+$$
+b=H-L(f(n))+1,\qquad H-b\ge Q.
+$$
+
+输入的第一个窗口已非零。读完第 $b$ 个窗口之后，两轨前缀都已经非零。在读完窗口 $b,b+1,\ldots,H$ 后的 $H-b+1\ge Q+1$ 个状态中，有两个相同。取其位置 $b\le i<j\le H$，令 $\ell=j-i\ge1$，将配对词写成 $uvw$，其中 $u$ 含前 $i$ 个窗口，$v$ 含随后 $\ell$ 个配对窗口，$w$ 含剩余窗口和唯一的单位末字母。
+
+泵块 $v$ 非空且不含单位末字母；它在两轨均已有非零前缀之后。对每个整数 $m\ge0$，词 $uv^mw$ 被同一自动机接受，因而仍属于准确的实际语言 $\mathcal L$。特别地，两轨都满足原接缝合法性、单位末字母条件及实际函数关系，而不只是满足某个放松的数值约束。记解码值为 $(n_m,f(n_m))$，窗口数为
+
+$$
+H_m=H+(m-1)\ell.
+$$
+
+首个输入非零窗口仍在第一位，首个输出非零窗口仍在第 $b$ 位。该泵送没有重复任何先于首次输出非零的填充块，故不可能只产生同一个整数的更长高端补零表示。
+
+为确定增长及比值，按本卷窗口索引直接计算：从低端数第 $a$ 个窗口、$a\ge0$，占用 Fibonacci 索引 $3a+3,3a+4,3a+5$。非零窗口的最小权重为 $F_{3a+3}$。因此，对所有 $m\ge0$，
+
+$$
+\begin{aligned}
+n_m&\ge F_{3H_m},&n_m&<F_{3H_m+3},\\
+f(n_m)&\ge F_{3(H_m-b+1)}.
+\end{aligned}
+\tag{21.8}
+$$
+
+因为 $H_m\to\infty$，输入 $n_m\to\infty$。Binet 公式 $F_r=(\varphi^r-(-\varphi^{-1})^r)/\sqrt5$ 在固定 $b$ 下给
+
+$$
+\liminf_{m\to\infty}\frac{f(n_m)}{n_m}
+\ge\lim_{m\to\infty}
+\frac{F_{3(H_m-b+1)}}{F_{3H_m+3}}
+=\varphi^{-3b}>0.
+$$
+
+这个估计只用合法窗口的准确 Fibonacci 权重及自动机在首次输出非零之后的循环；其常数可以依赖所选实际词和自动机。由 $G(n)/n\to\alpha$，同一列实际输入遂满足
+
+$$
+\limsup_{n\to\infty}\frac{C(n)}n
+\ge\liminf_{m\to\infty}\frac{C(n_m)}{n_m}
+\ge\alpha+\varphi^{-3b}>\alpha.
+$$
+
+这证明第一条蕴含，第二条是其逆否命题。
+
+式 (21.7) 将定理 21.4 的无界实际进位缺陷接到定理 20.2 的准确词图闭合条件，并未分别决定 $\mathcal G_C$ 的正则性或 $C(n)/n$ 的全局收敛。任意固定右宽度的反射也没有覆盖 Fibonacci 块中心、负宽度轮廓或全部外部索引。实际周期是否存在无界长度族，以及从输出词图正则性到按可变深度选取 $T_N^{C(N-1)}(N-1)$ 的全局同步图所需的额外条件，仍未由这些结论解决。Campbell 的实际三尺度结果仍保持定理 17.3 的适用范围。
+
+## 追加锚（本行以下为增补区）
