@@ -5361,3 +5361,312 @@ The pure-hole completion above remains a valid special choice witnessing finite 
 The closure construction covers the fixed-head, six-role, single-address-per-token subdomain, including both FC110 and FC131 assignments. It does not realize every abstract common-source array. Neither a limiting signature nor a countable family replaces the finite actual families in FC159–FC160. Arbitrary source profiles, enlarged prime support, higher ternary heights and unrestricted Erdős #7 remain unresolved.
 
 The [actual-family controls](../../../frontier/cover-geometry/fibre-credit-partition/ap_closure_controls.py) and [results](../../../frontier/cover-geometry/fibre-credit-partition/ap_closure_controls.json) retain 17,958 exact checks: 10,392 prefix pairs, 22 literal coordinate models, both assignments at heights 1, 2, 4 and 8, 1,982 constructed CRT originals including completion-source checks, 818 preserved phases, 32 additional mixed completion originals, and finite nongroup cap sums. They check the common uncovered integer against every original in the eight displayed skeletons. The result includes exact convergence errors and finite phase-registry hashes. These controls do not enumerate a full large CRT period or replace the universal closure and comparison proofs. The displayed bounds and this bridge are ordinary mathematics; no new Lean verification is claimed.
+
+## Arbitrary ternary heights: one prefix and one head address per numerical label
+
+The following conditional bounds extend the common-source joint min-cap interface to arbitrary finite ternary heights. Two exact finite counterexamples identify the information lost by first-root averaging and by a single selected charge per cofactor. These are ordinary mathematical results, without new Lean verification or an unrestricted positive Erdős #7 bound.
+
+### Existing bridges and the precise extension
+
+- FC3--FC4, “An actual-family inequality retaining arbitrary ternary prefixes,” already give a scalar arbitrary-height deletion bound under one pure-conditioned product law. Every numerical original has its own actual ternary prefix.
+- FC40, in “Arbitrary ternary height requires actual prefix unions,” already permits one finite common ternary prefix partition and once-declared coordinate enlargements on that source.
+- FC53, “A pointwise row-union interface at arbitrary ternary height,” already groups every active numerical label `3^i*p*q^e` at an actual ternary point. Nonternary independence there is conditional on that point; the raw budgets sum all active labels, retaining `i`.
+- FC114--FC116 introduce joint remainder fees; FC120--FC122 add supported-head min-caps. Their selected allowance `S_D` uses the special height-one fact that there is only one selected numerical label `3*d` for each full cofactor `d`.
+- FC59, “Six ternary layers suffice for the palette with unrestricted deeper head originals,” is a restricted positive all-height result: it requires its low-layer palette, star, and same-cofactor prefix-disjointness contracts. Those contracts are not assumptions of the interface below and its positivity cannot be transferred.
+- FC61--FC65, “Adaptive same-source prefix bounds converge on an event-address tree,” already give a fixed-phase jump-tree interface on the 5-coordinate, preserving literal event labels and source-dependent weights. Its integration representation can be reused on the ternary prefix tree; its unknown-phase optimization remains a separate problem.
+
+The extension below reuses these pointwise coordinate arguments. Its added content is the faithful accounting interface: resolve the common ternary coordinate, retain one fixed physical head address across every leaf of a numerical original, and pay separately for each `3^k*d`. The finite pure-Haar ternary tail is given explicitly as an optional evaluation consequence.
+
+### One common resolved source
+
+Fix a finite actual family of congruence classes with distinct odd numerical moduli greater than one, and all residues fixed globally. Its nonternary support lies in the fixed finite prime set `V=P union Q`, where `P={5,7}` and `Q` is a finite set of odd primes disjoint from `{3,5,7}`. Unused odd prime coordinates may be included.
+
+Use FC3--FC4's one law
+
+    lambda = lambda3 tensor product_(v in V) lambda_v,
+    lambda_v = Haar_v conditioned outside actual pure v-power originals,
+    lambda_v(a mod v^e) <= c_v*v^-e,
+    c_v=(v-1)/(v-2).
+
+The ternary probability `lambda3` is supported outside every actual pure3-power original. It is fixed throughout. The interface does not require it to be Haar. Later geometric ternary bounds impose normalized pure3-avoiding Haar explicitly.
+
+Choose a finite ternary prefix partition resolving every actual original and every once-declared comparison enlargement. It can be refined to a common depth `K>=1`. Write its leaves as `ell`, their weights as `gamma_ell=lambda3(ell)`, and retain the actual prefix tree. Zero-weight leaves contribute zero. A prefix `I(k,alpha)={t:t=alpha mod3^k}` is represented by its incidence with the leaves; `I(0,0)` is the whole ternary carrier. For the finite actual family, all its `k` satisfy `k<=K`.
+
+On each leaf remove the actual active stars `3^i*v^j`, or the declared same-source star enlargements. Let `S_(v,ell)` be the surviving coordinate set. Put
+
+    w_(p,ell,a)=lambda_p(S_(p,ell) intersect [a]_p), p in P,
+    g_(q,ell)=lambda_q(S_(q,ell)), q in Q.
+
+Group **all actual** originals `3^i*p*q^j` with `i>=0`, `p in P`, `q in Q`, and `v_p=1`. Every numerical original appears once; distinct ternary depths are distinct labels even when their cofactor agrees. For a fixed head row `i` at 5, let `E_(5,q,ell,i)` be the union of the active grouped q-cylinders assigned to that row. Define `E_(7,q,ell,j)` similarly. Their raw masses, using the same `lambda_q`, are
+
+    X_(q,ell,i)=lambda_q(S_(q,ell) intersect E_(5,q,ell,i)),
+    Y_(q,ell,j)=lambda_q(S_(q,ell) intersect E_(7,q,ell,j)),
+    H_(q,ell,i,j)=lambda_q(S_(q,ell) minus
+                         (E_(5,q,ell,i) union E_(7,q,ell,j))).
+
+Consequently
+
+    P_(q,ell,i,j)=max(0,g_(q,ell)-X_(q,ell,i)-Y_(q,ell,j)),
+    K_(q,ell,i,j)=g_(q,ell)-max(X_(q,ell,i),Y_(q,ell,j)),
+    0 <= P <= H <= K <= g.                             (FC161)
+
+These are raw source quantities; no division by `g` occurs. They remain defined at `g=0`. A possibly nonzero remainder upper allowance on an actually empty leaf is conservative, as in FC137--FC139's raw boundary convention; it must not be silently replaced by the older discarded-root convention in a continuity claim.
+
+At a fixed leaf and fixed pair of head rows, the surviving private restrictions use separate coordinates. Thus the exact grouped survivor and its lower bound are
+
+    Group_ell = sum_(i,j) w_(5,ell,i)*w_(7,ell,j)
+                         *product_(q in Q) H_(q,ell,i,j),
+    L_ell     = sum_(i,j) w_(5,ell,i)*w_(7,ell,j)
+                         *product_(q in Q) P_(q,ell,i,j),
+    Group_ell >= L_ell.                                 (FC162)
+
+There is no assumption `X+Y<=g`; the positive part is necessary without that guard. Retaining actual `H` allows the exact `Group` in place of `L`.
+
+### A per-original joint min-cap fee
+
+Let `m=3^k*d` be an actual remaining original. Set `D={v in V:v divides d}`, so `|D|>=2`, and let `a_m` be its actual first-row address on the supported heads `H_D=P intersect D`. This address and its deeper head cylinders are fixed across every ternary leaf. Write `e_v=v_v(d)` and
+
+    C_private(d)=product_(q in D intersect Q)c_q*q^-e_q,
+    M_(p,ell)(e,a)=min(c_p*p^-e,w_(p,ell,a)).
+
+For an address `a` on `H_D`, define the raw joint profile
+
+    T_(D,ell)(a)=
+      sum_(head rows i,j agreeing with a)
+        product_(p in P minus D) w_(p,ell,row_p)
+        *product_(q in Q minus D) K_(q,ell,i,j),
+
+    Psi_(D,e,ell)(a)=T_(D,ell)(a)
+                     *product_(p in H_D)M_(p,ell)(e_p,a_p).
+
+Empty products and the empty address have their usual value one. Supported heads are fixed, not summed. Their row weight occurs only inside the minimum, never as an additional factor.
+
+Let `U_group` be the carrier left after the stars and grouped originals. Then
+
+    lambda(C_m intersect U_group)
+      <= C_private(d)
+         *sum_(ell subset I_m) gamma_ell*Psi_(D,e,ell)(a_m). (FC163)
+
+Proof. Fix one active leaf. On each supported private coordinate discard group and star avoidance and use its original-depth cap. On each supported head, its fixed original cylinder intersected with the star survivor is bounded by both its depth cap and its surviving first-row mass, hence by `M`. On unsupported heads keep the exact row weights. On unsupported private coordinates keep the actual group survivor `H`, then bound it above by `K`. The restrictions factor across nonternary coordinates at this fixed leaf. Sum head rows, then sum the active leaves. This is FC120's coordinate argument applied on FC53's common resolved source. The same actual `a_m` remains inside every term. Replacing `K` by actual `H` gives a sharper valid fee.
+
+Union bound inside this one carrier yields
+
+    lambda(U_actual)
+      >= sum_ell gamma_ell*L_ell
+         -sum_(actual remaining m) C_private(d_m)
+             *sum_(ell subset I_m)
+                gamma_ell*Psi_(D_m,e_m,ell)(a_m).         (FC164)
+
+Thus positivity of this **same-source** expression is a sufficient finite-family noncovering certificate at arbitrary finite ternary height. It is not asserted that all actual families have positive right-hand side. The comparison carrier can be a declared enlargement's complement: it is then a subset of the actual star/group survivor, and the same lower comparison remains valid.
+
+The common-depth leaves are a mathematical representation, not a requirement to enumerate `3^K` states. For supplied phases, reuse FC65's event-address tree with ternary prefixes: root plus all distinct actual/enlargement prefixes; each node's shell is its cylinder minus its event-address children. The active original set is constant on a shell, and its weight is the node mass minus child masses. This gives at most one shell per recorded address (at most `N+1` nodes for `N` original prefixes without extra enlargement addresses), on which to integrate FC164. It does not by itself solve FC165's unknown-phase maxima, and it does not bound rational bit complexity.
+
+### One maximum per numerical ternary depth
+
+If the remaining original's phase is not retained explicitly, define
+
+    F_D(e)=max_a sum_ell gamma_ell*Psi_(D,e,ell)(a),
+    S_(D,k)(e)=max_(alpha mod3^k, a)
+                   sum_ell lambda3(ell intersect I(k,alpha))
+                       *Psi_(D,e,ell)(a), k>=1.          (FC165)
+
+Equivalently, this is the maximum of `integral_(I(k,alpha)) Psi_(D,e,t)(a) d lambda3`, where `Psi` is constant on each profile leaf. For `k<=K`, the intersection mass is either `gamma_ell` or zero, so FC165 reduces to the sum over leaves contained in the candidate prefix. For `k>K`, the same integral definition applies, but an arbitrary `lambda3` requires its finer cylinder masses; depth-K leaf weights alone do not determine them.
+
+A free original pays `C_private(d)*F_D(e)`. The particular numerical original `3^k*d` pays `C_private(d)*S_(D,k)(e)`. Each maximum uses one prefix and one physical head address simultaneously. It is not a separate maximum on every leaf. Distinct numerical originals may use different maximizing pairs; the upper bound does not assert simultaneous attainability.
+
+For the actual finite inventory, sum these allowances once per remaining numerical label. If a complete geometric inventory is used, the safe upper fee is
+
+    Fee_all = sum_(D subset V, |D|>=2) B_private(D)
+                *sum_(e_p>=l_p(D), p in H_D)
+                   [F_D(e)+sum_(k>=1)S_(D,k)(e)],
+    B_private(D)=product_(q in D intersect Q)1/(q-2),
+    l_p(D)=2 if D={p,q}, p in P, q in Q; 1 otherwise. (FC166)
+
+The lower limit 2 is justified only because **all actual** shallow-head labels `3^k*p*q^j` at every `k>=0` were grouped. If the grouping is partial, every ungrouped shallow label must still be paid. Arbitrary restricted palettes use their literal per-label sums; rectangular factoring is optional and needs the corresponding inventory condition.
+
+The sums in FC166 are over nonnegative allowances. For an arbitrary reweighted ternary law they may diverge; FC164 and the finite actual-label sum remain valid. One cannot replace the whole `sum_(k>=1) S_(D,k)` by the height-one `S_D`. Nor can one move `max_(alpha,a)` outside the sum over `k` or over head depths: different numerical labels may have different phases.
+
+Under the original height-one contract, every original has `v3<=1`, modulus3 is present or is appended at its unused numerical label, and `lambda3` has the declared weights `gamma_1,gamma_2` on the two retained first roots with uniform tails. The star/group profile is constant on each root. Then `F_D` and `S_(D,1)` reduce to FC121's `F_D` and `S_D`; there are no actual `k>=2` selected labels. This recovers FC122 with its original conditions. The original uniform choice additionally has `gamma_1=gamma_2=1/2`; height one alone does not force either that source choice or a modulus3 original.
+
+### Normalized pure3 Haar: a bound and an exact finite tail
+
+Now specifically let `lambda3` be Haar conditioned on `S3`, the actual pure3 avoid-set. Set `s3=Haar3(S3)` and `c3=1/s3`. Distinct pure3 numerical labels give `s3>=1/2`, hence `c3<=2`, and
+
+    lambda3(I(k,alpha)) <= c3*3^-k,
+    S_(D,k)(e) <= c3*3^-k*max_(ell,a) Psi_(D,e,ell)(a),
+    sum_(k>=1)S_(D,k)(e)
+       <= (c3/2)*max_(ell,a)Psi_(D,e,ell)(a)
+       <= max_(ell,a)Psi_(D,e,ell)(a).                 (FC167)
+
+For the uniform height-one two-root source, the only selected depth has mass at most `1/2`. FC167 only bounds the total distinct-depth coefficient by `1`, so that old positive margin cannot be carried over solely by this estimate. The final `1` is an upper allowance, not a construction attaining it.
+
+There is also an exact finite evaluation of the artificial complete ternary-depth allowance. Choose `K>=1` resolving `S3` and all star/group profile data. Every positive-weight depth-K leaf is a full ternary cylinder contained in `S3`, and its conditional Haar tails are uniform. Use FC165's integral definition also for `k>K`. For every `j>=0`,
+
+    S_(D,K+j)(e)=3^-j*S_(D,K)(e),
+    sum_(k>=1)S_(D,k)(e)
+       =sum_(k=1)^(K-1)S_(D,k)(e)+(3/2)*S_(D,K)(e). (FC168)
+
+Indeed each depth-(K+j) cylinder has one depth-K parent, its mass is `3^-j` times that parent's mass, and `Psi(a)` is constant on it for every fixed address. Every surviving parent has descendants. Taking the same prefix/address maximum therefore factors out exactly `3^-j`.
+
+FC168 requires this specific finite pure-conditioned Haar source, or an independently verified uniform-tail substitute. It is not valid for an arbitrary reweighted `lambda3`. It computes an upper allowance for nonexistent additional labels and does not alter the finite actual family. The head-depth finite-tail reduction FC126--FC128 likewise applies to each finite prefix maximum, because the relevant common cap factor can be pulled through its nonnegative sums and maxima; its row-positivity thresholds must use the entire common leaf profile.
+
+### Why first-root averages lose private independence
+
+Use the actual classes
+
+    0 mod3, 55 mod99, 247 mod351.
+
+Here `99=3^2*11`, `351=3^3*13`; their ternary phases are respectively `1 mod9` and `4 mod27`, and their private phases are both zero. Take pure3-conditioned Haar, then inspect the retained first root `t=1 mod3`. In this root the first star is active on three of the nine depth-3 leaves, the second on one different leaf. They are disjoint ternary events.
+
+With `g11(t),g13(t)` denoting the private star-survival masses,
+
+    E[g11]=32/33, E[g13]=116/117,
+    E[g11*g13]=1237/1287,
+    E[g11]*E[g13]-E[g11*g13]=1/3861.                (FC169)
+
+The exact conditional grid has `9*11*13=1287` points and 1237 survivors. Of those survivors 77 have private11 coordinate zero, 85 have private13 coordinate zero, and five have both zero. Hence after erasing the shared ternary leaf and conditioning on star survival,
+
+    P(x11=0,x13=0)-P(x11=0)*P(x13=0)
+       =5/1237-(77*85)/1237^2
+       =-360/1237^2 !=0.                            (FC170)
+
+The fixed-leaf product law is intact; averaging those leaf-dependent restricted product laws produces a mixture with dependence. Even the product of averaged star-survival masses gives the wrong carrier mass. Thus retaining separate first-root marginal arrays and reapplying a private-product formula is not justified.
+
+This identifies the information needed by FC164: the **joint** leaf profile `(gamma_ell,w_ell,g_ell,X_ell,Y_ell)` and the actual prefix-incidence tree, or the corresponding same-source integrated `L` and per-prefix/per-address `Psi` values. Each nonternary original's fixed address and each numerical label's depth must remain tied to those values. Exact evaluation of `Group` further retains `H` (the two group unions' intersections). Separate per-coordinate averages or separately optimized extrema do not supply these joint quantities. No minimality claim is made: this is a sufficient representation for this bound.
+
+### Two depths with one cofactor require two fees
+
+Use the five actual classes
+
+    0 mod3, 0 mod5, 0 mod7, 1 mod105, 281 mod315.
+
+They have distinct odd moduli. The two nonpure originals have the same cofactor `d=35`: one is `3*d`, the other `3^2*d`. Both have nonternary address `1 mod35`, but their ternary prefixes are `1 mod3` and `2 mod9`, in different first roots. There are no groups or stars in this example.
+
+The pure-conditioned source has 144 points modulo315. The105 class occupies three source points, the315 class one disjoint source point. Therefore
+
+    mass(C105)=1/48, mass(C315)=1/144,
+    mass(C105 union C315)=1/36.                       (FC171)
+
+The supported head min-caps are `min(4/15,1/4)=1/4` and `min(6/35,1/6)=1/6`, so their product is `1/24`. An erroneous single selected charge for cofactor35 is `(1/2)*(1/24)=1/48`. It undercharges the actual union by `1/144`. The correct depth sum is `(1/2+1/6)*(1/24)=1/36`. Even one fee with the looser universal caps is only `4/175`, below `1/36` by `31/6300`.
+
+These are counterexamples to the two proposed compressions, not covering systems and not counterexamples to Erdős #7. The [all-height controls](../../../frontier/cover-geometry/fibre-credit-partition/all_height_joint_controls.py) and [results](../../../frontier/cover-geometry/fibre-credit-partition/all_height_joint_controls.json) retain 32 exact checks for FC169--FC171, including every fixed ternary fibre in the mixture example.
+
+### Remaining mathematical obligation
+
+FC164--FC166 are faithful sufficient conditional tests. To advance to unrestricted noncovering one still needs a source/structural theorem making a suitable same-source comparison positive for every actual family, or another argument covering the families for which this comparison is nonpositive. The unresolved issues include arbitrary prime support and unrestricted ternary-prefix collisions. A uniform positive constant is one sufficient route; it is not a necessary reformulation of the original noncovering assertion. Additional budget or observed finite positive points do not discharge this obligation.
+
+## Ternary weights, retained prefixes, and a fixed-profile obstruction
+
+The bounds in FC164--FC166 distinguish literal prefix information from separately maximized per-original fees. Optimizing ternary weights gives a finite minimax formulation on a fixed profile, but an actual family defeats the separately maximized comparison at every weighting. This obstruction concerns that relaxation, not stronger joint estimates or noncovering itself. The following are ordinary mathematical deductions, without current Lean verification.
+
+### The sufficient tree inequality depends on which phases were retained
+
+Fix one actual finite family, one common pure-conditioned nonternary product law, and one finite depth-K ternary partition resolving the actual pure3 exclusions, stars, groups, and remaining originals. Retain only allowed pure3-avoiding leaves. All leafwise group lower bounds `L_ell` and min-cap functions `Psi_(D,e,ell)(a)` are therefore fixed; they do not depend on ternary weights.
+
+Let `gamma` be any probability vector on these leaves, and set `lambda3^gamma` to the mixture with weight `gamma_ell` of uniform Haar inside leaf `ell`. This is one common source. Zero weights are allowed. The uniform tails preserve the exact high-ternary-depth relation of FC168; arbitrary measures with nonuniform tails require their additional cylinder data instead.
+
+If every remaining original's actual ternary prefix and physical head address are retained, define
+
+    f_m(ell)=C_private(d_m)*Psi_(D_m,e_m,ell)(a_m)
+              *1_(ell subset I_m),
+    R_ell=L_ell-sum_(actual remaining m) f_m(ell).
+
+FC164 gives the sufficient tree inequality
+
+    lambda^gamma(U_actual) >= J_literal(gamma)
+       =sum_ell gamma_ell*R_ell.                       (FC172)
+
+Thus this particular literal-phase certificate can be made positive by choosing the ternary source if and only if `max_ell R_ell>0`. The natural pure3-conditioned Haar law instead tests its prescribed weighted average of the `R_ell`. No implication from the average to every leaf, or from a negative average to absence of a positive leaf, is valid. A positive leaf can be represented by its event-address shell rather than all ambient depth-K leaves, using the existing FC65 source-preserving tree representation.
+
+FC172 is a sufficient bound, not an exact survivor equation. Its failure on every leaf would not imply actual coverage; overlapping remaining events can make its union-bound subtraction too large.
+
+### Phase-maximized fees give a different optimization problem
+
+For a finite remaining inventory, let `C_m` be a nonempty finite set of allowed prefix/head-address choices for original `m`. Each choice `c` defines the nonnegative leaf vector
+
+    f_(m,c)(ell)=C_private(d_m)*Psi_(D_m,e_m,ell)(a_c)
+                  *1_(ell subset I_c).
+
+The actual choice must belong to `C_m`. Replacing it by the worst allowance yields
+
+    J_max(gamma)=gamma dot L
+                   -sum_m max_(c in C_m) gamma dot f_(m,c). (FC173)
+
+This is a concave, continuous, piecewise linear function of `gamma`. Its best value is a finite linear program: maximize `gamma dot L-sum_m z_m` subject to `gamma>=0`, `sum gamma=1`, and `z_m>=gamma dot f_(m,c)` for every permitted choice.
+
+For the complete geometric inventory, first use the fixed-profile head-depth reduction FC126--FC128 and the uniform-tail ternary reduction FC168. Each resulting block is again a finite maximum of linear forms with a fixed nonnegative multiplicity (including the ternary terminal multiplier `3/2`). Absorbing each multiplicity into its vectors gives exactly the same finite problem. This reduction depends on the fixed profile and a uniform-tail source; it is not a uniform complexity bound over all profiles.
+
+The finite minimax identity is
+
+    max_(gamma in probability simplex) J_max(gamma)
+      = min_(pi_m in probability simplex on C_m)
+          max_ell [L_ell-sum_m sum_c pi_m(c)*f_(m,c)(ell)]. (FC174)
+
+Indeed each finite maximum is a maximum over probability mixtures of its choices; changing its sign gives the corresponding minimum. The resulting expression is bilinear in `gamma` and the tuple of choice mixtures, and both domains are compact convex finite-dimensional simplices. Finite minimax exchanges maximum and minimum; maximizing a linear function over `gamma` selects the largest leaf coordinate.
+
+Consequently the following is an exact obstruction **to this relaxed certificate**: a tuple of choice mixtures such that
+
+    sum_m sum_c pi_m(c)*f_(m,c)(ell) >= L_ell
+    for every allowed leaf ell.                       (FC175)
+
+Such mixtures need not describe actual joint phases or a covering family. They certify `J_max(gamma)<=0` for every ternary weighting. If no such mixture exists, compactness and FC174 give a strictly positive optimal relaxed score. This does not provide a structural proof excluding such mixtures for all actual sources and arbitrary support.
+
+### An actual family separates Haar failure from loss of shared-prefix information
+
+The distinction is already present at ternary height one and requires no deep ternary search.
+
+By Euler's classical divergence of reciprocal primes, choose a finite set `Q` of primes at least11 satisfying
+
+    A=sum_(q in Q)1/q >3.
+
+The pinned library source `Mathlib/NumberTheory/SumPrimeReciprocals.lean` provides `not_summable_one_div_on_primes` and `Nat.Primes.not_summable_one_div`; removing finitely many initial primes preserves divergence. That source is a reuse reference here, not a current compiled formal proof of this application.
+
+Take the actual finite congruence family
+
+    0 mod3,
+    1 mod(3*q*r), for every unordered pair q<r in Q.    (FC176)
+
+All numerical moduli are odd, greater than one, and pairwise distinct. Every mixed original has the same actual ternary prefix `1 mod3`. There are no pure nonternary originals, no stars, and no grouped 5/7 originals. The unused head coordinates5 and7 can be included in the product law; their weights sum to one. Thus every root has `L=1` and every supported-private fee has `T=1`.
+
+The actual nonternary law is Haar, so `1/(q*r)` is already an exact original-cylinder cap. Its total is
+
+    B0=sum_(q<r)1/(q*r)
+       =(A^2-sum_q 1/q^2)/2 >4.                     (FC177)
+
+For the final inequality, `sum_q1/q^2<1` follows by comparison with `sum_(n>=2)1/(n*(n-1))=1`; no numerical prime cutoff is asserted. If the universal FC3 caps are used instead, put `B=sum_(q<r)c_q*c_r/(q*r)>=B0`; every conclusion below remains true with that larger `B`. Use either cap convention consistently.
+
+Natural pure3-conditioned Haar has weights `(1/2,1/2)` on roots1 and2. Its literal-prefix union comparison is
+
+    J_literal(1/2,1/2)=1-B/2<0.
+
+Nevertheless **the entire root2 is actually uncovered**. Choosing the common ternary source to be Haar on root2 gives
+
+    J_literal(0,1)=1.                                (FC178)
+
+This is not a counterexample to noncovering or to the underlying source inequality. It is an actual family for which the natural-Haar union comparison is negative while a lawful adaptive source gives a positive comparison. It demonstrates failure of this prescribed Haar comparison, not necessity of adaptive weighting for every possible sharper proof.
+
+Now discard the known common prefix and independently maximize each original over either retained root, as in FC165. The same source profile then yields
+
+    J_max(gamma)=1-B*max(gamma_1,gamma_2)
+       <=1-B/2<0                                    (FC179)
+
+for every root weighting. A witness to FC175 is obtained by mixing the two candidate prefixes with weight1/2 for **every** remaining label: the fee at each root is `B/2>1=L`. This mixture is an upper-allowance obstruction, not the actual phase placement in FC176.
+
+The negative result persists if a larger complete-depth inventory is charged, since all extra charges are nonnegative. It also persists under deeper refinements of the same constant root profile: the summed weights of the two first roots enter FC179. Thus increasing ternary resolution or optimizing its weights cannot repair the information already discarded by these separate worst-prefix maxima for this fixed profile.
+
+For clarity, the actual overlap is explicit. On root1 at least one mixed original hits precisely when at least two of the independent private coordinates equal1. Its actual survivor fraction is
+
+    P0+P1 = product_q(1-1/q)
+              *[1+sum_q 1/(q-1)] >0.
+
+The survivor fraction under pure3-conditioned Haar is therefore `(1+P0+P1)/2>1/2`. The unconditional integer density is `(1+P0+P1)/3`. The union-bound fee `B` counts extensive intersections repeatedly. Both the actual common prefix and the private pair-event intersections are genuine information that the chosen scalar sum loses.
+
+### Scope of the relaxed comparison
+
+A universal positive theorem cannot follow from this fixed-profile per-label worst-prefix sum alone, even with the best ternary weights: FC176 is an actual input on which that sufficient test is nonpositive for all weights.
+
+Useful additional structure must constrain the **joint** remaining-label choices or count their overlaps. Options include literal shared-prefix incidence, a joint union estimate for private multi-coordinate events, or a separate prime-tail argument that removes this unbounded private-pair inventory from the finite head comparison. None is supplied merely by representing leaves exactly or solving the weight linear program. Changing the declared carrier or the nonternary source could also change the comparison; FC179 does not exclude those different methods.
+
+For the current finite head approach, the precise sufficient obligation is: for every actual source in the stated prime/support/height class, produce a lawful common-source refinement or an additional joint constraint for which FC172 or FC173 has positive value, and handle the remaining classes by another verified bound. The whole family must supply those constraints simultaneously. Separate locally favorable phases or an optimizer's mixture are not substitutes for that actual relation.
+
+Relative to literal future congruence deletions, prefix-incidence data separates families that share the same star/group profile. The `z=(w,g,X,Y)` min-cap certificate profile is sufficient for certain conservative bounds; it is not proved to be a minimal exact update-closed state. Fixed5040 arithmetic closure and finite observation minimality do not settle this arbitrary-support positivity obligation.
