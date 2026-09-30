@@ -45,6 +45,19 @@ example (x y : Bool) :
       .anchor certificateObserver ()
       certificateObserver_is_constant) x y
 
+local instance : DecidableEq LeanInformationAudit.Tests.SealSuccess.arena.State :=
+  LeanInformationAudit.Tests.SealSuccess.arena.toArena.stateDecidableEq
+
+/-- A valid bridge for the certificate's own statement, so that the reserved
+judge-output name is the registration's only defect. The recorder records it;
+the report rejects it. -/
+theorem certificateBridge :
+    D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization
+      LeanInformationAudit.Tests.SealSuccess.arena
+      (type_of% LeanInformationAudit.Tests.SealSuccess.fstTheorem.__lowers_escape)
+      LeanInformationAudit.Tests.SealSuccess.fstRealization where
+  equivalence := iff_of_true LeanInformationAudit.Tests.SealSuccess.fstTheorem.__lowers_escape trivial
+
 /-- error: IE-C011 GeneratedCertificateRegistered:
 LeanInformationAudit.Tests.SealSuccess.fstTheorem.__lowers_escape -/
 #guard_msgs (error) in
@@ -52,6 +65,6 @@ test_assess in register_information_theorem
   LeanInformationAudit.Tests.SealSuccess.fstTheorem.__lowers_escape
   in LeanInformationAudit.Tests.SealSuccess.arena
   primitives LeanInformationAudit.Tests.SealSuccess.fstRealization.toPrimitiveBundle
-  realization LeanInformationAudit.Tests.SealSuccess.fstTheorem
+  realization certificateBridge
 
 end LeanInformationAudit.Tests.CirptCertificateErasure

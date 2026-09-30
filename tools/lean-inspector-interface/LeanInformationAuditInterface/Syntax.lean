@@ -193,16 +193,14 @@ private def theoremUnitMkId : Ident :=
 private def legacyToUnitId : Ident :=
   mkIdent `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
 
+/-- Name resolution only. Whether the resolved constant may be registered
+(its kind, or a reserved judge-output name) is decided by the report. -/
 private def resolveTheorem (id : TSyntax `ident) : CommandElabM Name := do
-  let theoremName <- try
+  try
     liftCoreM <| realizeGlobalConstNoOverloadWithInfo id
   catch _ =>
     throwErrorAt id
       "IE-C001 UnregisteredTheoremUnit: {← declarationName id}"
-  -- A generated companion is judge output, never a registrable theorem.
-  if isCompanionName theoremName then
-    throwError "IE-C011 GeneratedCertificateRegistered: {theoremName}"
-  pure theoremName
 
 private def witnessName (id : Option (TSyntax `ident)) : CommandElabM Name := do
   match id with
@@ -516,18 +514,9 @@ private def elabInformationTheorem : CommandElab := fun stx => registrationTrans
 
 @[command_elab registerInformationTheoremViaCmd]
 private def elabRegisterInformationTheoremVia : CommandElab := fun stx => registrationTransaction do
+  -- The descriptor does not depend on the arena. Which arenas a derived
+  -- bridge admits (law arena, rigid zero universes) is the report's P1 gate.
   let arenaName ← resolveArena ⟨stx[5]⟩
-  -- The descriptor is elaborated against a rigid zero-universe law arena only;
-  -- any other arena is rejected before the descriptor term is elaborated.
-  liftTermElabM do
-    let arenaType ← inferType (← mkConstWithFreshMVarLevels arenaName)
-    unless arenaType.isAppOf `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena do
-      throwError "P1.ArenaMismatch: not a PrimitiveLawArena"
-    unless (← getConstInfo arenaName).levelParams.isEmpty do
-      throwError "P1.RigidUniverseMismatch: arena"
-    unless arenaType.equal (mkConst `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena
-        [.zero, .zero, .zero]) do
-      throwError "P1.RigidUniverseMismatch: arena must have three zero universe levels"
   let theoremName ← resolveTheorem ⟨stx[1]⟩
   let descriptor ← liftTermElabM do
     let value ← elabTerm stx[3] none

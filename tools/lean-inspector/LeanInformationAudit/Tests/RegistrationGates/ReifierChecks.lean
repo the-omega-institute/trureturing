@@ -420,10 +420,11 @@ run_meta do
   expectFailure "arena_universe1" "P1.RigidUniverseMismatch" do
     discard <| freezeArena ``highArena
 
--- A descriptor that would fail if arena resolution did not reject first.
-elab "arena_order_tripwire" : term => throwError "arena_order_tripwire executed"
-reject_via "arena_universe1_early" expects "P1.RigidUniverseMismatch" in
-register_information_theorem wrongArena via arena_order_tripwire in highArena
+-- The recorder elaborates the descriptor without consulting the arena; the
+-- report's P1 gate rejects the universe-1 arena before any derivation.
+reject_via "arena_universe1_report" expects "P1.RigidUniverseMismatch: arena must have three zero universe levels" in
+register_information_theorem wrongArena
+  via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise (fun x : Bool => x.not.not) (fun x => x)) in highArena
 
 -- Full Name identity survives name resolution, but never unfolds a wrapper.
 theorem aliasPointwise {X Y : Type} [Fintype X] [DecidableEq X] [DecidableEq Y]

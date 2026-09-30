@@ -162,3 +162,20 @@ run_cmd do
         output_audit = implementation.parent / 'Projection/OutputOnlyAudit.lean'
         self.assertFalse(re.search(grammar, output_audit.read_text()),
                          'output-only audit still declares command grammar')
+
+    def test_interface_recorder_holds_no_admission_policy(self):
+        # Reg compiles against the interface only; an admission rule held there
+        # would make a judge-policy change rebuild every Reg module. The two
+        # rules once duplicated in the recorder are owned by the report.
+        interface = ROOT / 'tools/lean-inspector-interface/LeanInformationAuditInterface'
+        recorder = '\n'.join(path.read_text() for path in sorted(interface.rglob('*.lean')))
+        for policy in ('IE-C011', 'isCompanionName', 'generatedCompanionSuffixes',
+                       '__lowers_escape', '__catalog_irredundant', 'RigidUniverseMismatch',
+                       'P1.ArenaMismatch'):
+            self.assertNotIn(policy, recorder, f'[FAIL] recorder_holds_policy:{policy}')
+        judge = ROOT / 'tools/lean-inspector/LeanInformationAudit'
+        entries = (judge / 'Registry/Entries.lean').read_text()
+        self.assertIn('def generatedCompanionSuffixes', entries)
+        self.assertIn('IE-C011 GeneratedCertificateRegistered', entries)
+        self.assertIn('P1.RigidUniverseMismatch: arena must have three zero universe levels',
+                      (judge / 'Registry/Reifier.lean').read_text())
