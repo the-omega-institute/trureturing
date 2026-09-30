@@ -21676,3 +21676,431 @@ on other supported laws. Neither is a counterexample to FC890's
 comparison on this specified source. The remaining #7 obligation is
 still a strict same-source aggregate budget for every actual family.
 The present argument is a written proof, not a new Lean verification.
+
+## Missing crossed moduli give joint capacities beyond numerical chains
+
+Assume ONE hypothetical whole cover globally minimizing first class
+count and then modulus sum, as in Report350 EB1--EB3. Its numerical
+palette D is divisor-closed and its full original classes are
+irredundant. Normalize the prime classes to zero by the same CRT
+translation. Report385 PH7 then supplies the following additional
+disjointness rule: if3 does not divide d, 1<g divides d, 3g and d
+are original labels, and some h|d with h>3 has3d/h absent from D,
+the full original classes A_(3g) and A_d are disjoint.
+
+Form a graph on original labels with edges for numerical comparability
+and for this missing-output rule. Every edge is a proved full-class
+disjointness. Fix one complete ternary y, a current stage p and active
+original e. Retain precisely FC859's reference product measure,
+earlier event E_e, full nonternary cylinders D_b and quantities
+V_e,lambda_e,K_eb,r_b,z_b. Restrict the graph to any chosen set Bset
+of other active stage-p originals. Every clique C has disjoint D_b
+on this same y, hence
+
+    sum_(b in Bset)Psi_eb=lambda_e sum_(b in Bset)K_eb z_b,
+    0<=z_b<=r_b,
+    sum_(b in C)z_b<=V_e for every clique C.         (FC899)
+
+Indeed integrate sum_(b in C)1_(D_b)<=1 over E_e in
+tau_p product_(ell<p, ell nonternary)tau_ell. The unrestricted current
+coordinate contributes a_p, exactly as in FC859. The condition from
+e's current coordinate is NOT inserted. Numerical chains are cliques,
+so these constraints strengthen the old full-chain relaxation.
+
+For nonnegative clique and individual weights satisfying
+eta_b+sum_(C containing b)theta_C>=K_eb, the unchanged dual argument
+therefore gives the valid row certificate
+
+    sum_b Psi_eb<=lambda_e[V_e sum_C theta_C
+                                      +sum_b eta_b r_b].        (FC900)
+
+This reuses the existing disjointness and finite dual arguments.
+The new input is which incomparable original labels PH7 makes share
+one capacity. It does not delete an additive Gram pair merely because
+the full classes are disjoint: their conflict can lie only in the
+current coordinate, while their two current masses and joint earlier
+activation still have positive product.
+
+A strict selected-packet comparison is explicit. Let P>5 be prime,
+let L>=1, and suppose D contains
+
+    A_l=3*5^l*P, 1<=l<=L,
+    B_k=5^k*P, k in Kset, k>=L+2,
+
+but no3*5^j*P with j>L. The two displayed branches are numerical
+chains with no comparability between branches. Yet for each pair,
+PH7 with d=B_k,g=5^l P,h=5 would require the absent label
+3*5^(k-1)*P if the originals intersected. Consequently their union
+is a clique. On every y where the selected A_l are active, FC899 gives
+
+    sum_l z_(A_l)+sum_k z_(B_k)<=V_e.                (FC901)
+
+All selected labels have earlier nonternary support{5}, so their
+K_eb equal one K_e. If V_e>0 and each branch's sum of individual
+caps is at least V_e, the old chain-only relaxation on this packet
+has optimum2K_e V_e, while the strengthened one has optimum K_e V_e.
+To prove both equalities, allocate total V_e within each branch
+subject to its caps; for the strengthened relaxation one branch
+alone attains its upper bound. If lambda_e K_e V_e>0, the row
+certificate improves by lambda_e K_e V_e.
+
+These are optima of UPPER RELAXATIONS, not jointly realizable phases
+or an actual whole cover. The cap conditions have an explicit finite
+instance: if e's5-depth is at least every selected5-depth, FC824 gives
+v_e5(j_b5)=M_e5 and therefore r_b/V_e=beta_P(1)/a_P. At P=7,a_P=1,
+this ratio is12/35. Taking L=3,Kset={5,6,7} and e of5-depth at least7
+makes z_b=V_e/3 feasible for each separate chain and its individual
+caps, but the combined2V_e violates FC901. This is conditional on
+the displayed actual row data; no global extremal realization is
+asserted.
+
+Integrate these row bounds using the SAME selector, guard and later
+factors. All complementary labels, diagonals and other ordered cross
+terms must still enter the complete head allowance. Any factor2 in
+FC820's extra/baseline cross term remains. The improvement is an
+upper-bound reduction of the additive square, separate from FC886's
+lower bound on its actual duplicate loss.
+
+There is also a limited blocker consumer: if PH7 makes a current
+original d disjoint from an earlier-stage original b, then b has no
+current p-coordinate. Their conflict must occur in the earlier
+activation, so every J_djb in FC880 is zero. The exact CRT integral
+already detects this at fixed phases; the occupancy rule prevents a
+uniform phase relaxation from treating that term independently.
+It supplies no positive credit merely by removing a blocker term.
+
+At a terminal live row whole coverage still forces ell_P=a_P.
+A clique of active current labels has disjoint current cylinders;
+if it comprises the entire active set, f_P=ell_P=a_P and the square
+overlap credit is zero. Thus a stronger capacity bound and a positive
+duplicate credit are different mechanisms. The missing global step
+is to force enough capacity saving or other paid gain on one lawful
+source for every whole-cover candidate. Occupancy-closed palettes
+need not supply any new PH7 edge. No unrestricted contradiction or
+new Lean verification follows from FC899--901 alone.
+
+## A finite actual head supplies a quantitative continuation allowance
+
+Fix the ENTIRE actual original family, FC814's raw process, increasing
+nonternary prime order, its full-family guard G_J and ONE ternary
+selector 0<=w<=1. Fix an integer B>4. Choose a finite head period N_B
+containing every original exponent at primes at most B, including the
+old-coordinate exponents of originals assigned AFTER B, and every
+ternary depth used by the originals, guard and declared finite-input w.
+All quantities below use this same weighted raw source. Supply finite
+certified bounds
+
+    G_r>=C_r(N_B,w mu_B), r=2,3,
+    C_r(N,eta)=max_Phi integral L_Phi^r deta,
+    L_Phi=sum_(d|N)1_(x=a_d mod d).                 (FC902)
+
+Every divisor, including the unit, occurs once in a complete layout.
+These are shared-layout moments, not sums of separately optimized
+cylinder masses. After B let Gamma_r(<p) allow arbitrary finite query
+heights ONLY in already processed tail-prime coordinates, while the
+head slots continue to divide N_B. Coherent Haar suffixes extend
+coordinates beyond the actual finite original heights. The seed
+Gamma_r(<=B)<=G_r is consequently finite and actual; no all-height
+supremum over omitted old head digits is required.
+
+Every later actual cofactor fits this head part. Enlarge only a finite
+old TAIL query window to contain its remaining exponents before the
+FC895 Holder comparison, then take the tail-height supremum. Omitting
+future old exponents from N_B would invalidate this step. Changing
+the original tail can change the head source, G_J and both seeds;
+the theorem does not transport them automatically. No new selector
+depending on each stage's unknown history is introduced.
+
+Put, for p>B,
+
+    c_p=(p-1)/(p-2), h_p=h_2(p,infinity)=p(p+1)/(p-1)^2,
+    b_p=1+c_p(h_p-1), d_p=6c_p^2(h_p-1)/(p-1),
+    a3_p=1+4c_p(h_3(p,infinity)-1).
+
+FC896 and the cap4c third-moment expansion on this same source give
+
+    Gamma_2(new)<=b_p Gamma_2(old)+d_p Gamma_3(old),
+    Gamma_3(new)<=a3_p Gamma_3(old).                (FC903)
+
+The fixed w is carried in the initial ternary measure, so positivity,
+Holder and a_p<=1 apply unchanged. First establish FC903 for finite
+tail windows and only then take the suprema. The all-height h_p used
+below majorizes those windows; it does not replace a finite query's
+own Haar denominator in an asserted exact comparison.
+
+Write Pi_k(B,x)=product_(B<q<x, q prime)(q/(q-1))^k. Then
+
+    b_p/h_p=1+(3p-1)/(p(p+1)(p-2))<=1+4/p^2,
+    product_(p>B)b_p/h_p<=exp(4/B)<=D_B:=B/(B-4),
+    d_p/h_p<=32/p^2,
+    a3_p/h_p<=(p/(p-1))^25.                       (FC904)
+
+The second line bounds any tail subproduct by the positive infinite
+one. The third line uses FC897. For the last inequality put
+t=1/(p-1)<=1/4. The ratio is
+
+    a3_p/h_p=(1+27t+48t^2+24t^3)/(1+2t-t^2-2t^3).
+
+Its denominator is (1-t)(1+t)(1+2t)>0. Multiplying that denominator
+by 1+25t+300t^2 and subtracting the numerator gives
+t^2(301+549t-350t^2-600t^3)>=0; its bracket is at least
+301-350/16-600/64>0. Finally 1+25t+300t^2<=(1+t)^25.
+Thus the third moment relative to the second-moment Haar factor
+requires exponent25, not the standalone exponent28.
+
+Divide the first recurrence in FC903 by the product of h_q over
+already processed tail primes. Divide Gamma_3 by the SAME product,
+use FC904, and unroll. Since h_q<=(q/(q-1))^3, this proves
+
+    Gamma_2(<p)<=D_B Pi_3(B,p)
+      [G_2+32G_3 sum_(B<r<p, r prime)Pi_25(B,r)/r^2]. (FC905)
+
+At an assigned current stage, FC810 supplies
+tau_p(C)tau_p(D)/a_p<=6nu_p(C)nu_p(D). Expand the actual mixed union
+square, keeping each original numerical label, and complete its old
+partial queries in the fixed-head windows just described. The two
+current-depth sums and Holder yield
+
+    F_p(w)<=6Gamma_2(<p)/(p-2)^2.                  (FC906)
+
+Later raw masses a_q<=1 are dropped only for this upper bound; the
+remaining measure is precisely w times the actual prefix. Define
+
+    S_25(B)=sum_(p>B, p prime)Pi_25(B,p)/p^2,
+    T_3(B)=sum_(p>B, p prime)Pi_3(B,p)/(p-2)^2.
+
+Consequently every finite actual tail obeys
+
+    sum_(p>B)F_p(w)
+      <=6D_B T_3(B)[G_2+32G_3 S_25(B)].             (FC907)
+
+This does not insert FC890's enormous universal K_raw, construct
+an infinite original family or replace the actual source at B.
+
+The two prime tails have explicit rational upper allowances. Reuse
+exactly FC812's Rosser--Schoenfeld ratio, with integers B>=286 and
+ell>=7 satisfying3^ell<=B. Put
+
+    c_ell=(2ell^2+1)/(2ell^2-1),
+    P_k(z)=sum_(j=0..k) k!/(k-j)! z^j,
+    u_B=((B+1)/B)^2, v_B=((B+1)/(B-2))^2.
+
+Then
+
+    S_25(B)<=u_B c_ell^25 P_25(1/log B)/B,
+    T_3(B)<=v_B c_ell^3 P_3(1/log B)/B.             (FC908)
+
+Replacing 1/log B by 1/ell gives wholly rational upper bounds.
+For n>B and x in[n,n+1],
+(log n)^k/n^2<=u_B(log x)^k/x^2. Integrate and sum this comparison;
+for T_3 also use(p-2)^(-2)<=(B/(B-2))^2 p^(-2). The prime-product
+ratio and integration by parts give
+integral_B^infinity(log x/log B)^k/x^2 dx=P_k(1/log B)/B.
+There is no additional requirement log B>25/2. When ell grows with
+log B, the COEFFICIENT of G_2 in FC907 is O(1/B), and that of G_3 is
+O(1/B^2). This does not bound how the actual seeds vary with B or with
+the family. It also differs from Report733's changed good-part source:
+FC907 transports the unchanged FC814 raw process and its squared fees.
+
+Combining the same head allowances and forest credits as FC881--889
+gives the sufficient whole-family test
+
+    R(w)-sum_(p<=B)[Hchain_p(w)-Lforest_p(w)]
+      -6D_B T_3(B)[G_2(w)+32G_3(w)S_25(B)]>0.       (FC909)
+
+The reserve is the FULL R(w), not the mass of w mu_B. Every term
+refers to the same full original family, order, guard, rows and w.
+FC899--901 may improve an applicable head allowance; they do not
+alter the tail source. What remains unproved is a positive same-source
+head/total margin for every original family, not a tail estimate
+conditional on supplied finite G_2 and G_3.
+
+## Query distortion cannot always pay itself from squared mixed fees
+
+For a normalized half-threshold kernel K on a reference probability
+lambda, write D for its actual forbidden union and alpha=lambda(D).
+For any nonnegative payoff f and alpha>0, direct substitution gives
+
+    Kf-lambda(f)=s(alpha)[lambda(f)-lambda(f|D)],
+    s(alpha)=alpha/(1-alpha) if alpha<=1/2,
+             1 otherwise.                         (FC910)
+
+At alpha=0 the difference is zero. For a raw row relative to
+tau=a lambda multiply by a; a=0 gives zero. The subtracted term is
+a genuine joint query/forbidden-set correlation. Its sign and size
+cannot be chosen independently of the same actual source.
+
+For an exact height-uniform obstruction use, for E>=1, the actual
+family{0 mod5,0 mod7,1 mod(5*7^E)}. These are distinct odd nonunit
+moduli, irredundant and noncovering; divisor closure is not assumed.
+There are no stars, a_p=1, G_J is the whole ternary carrier and w=1.
+The pure law is uniform on nonzero roots, with Haar higher digits.
+At stage7 the mixed event is active exactly at x_5=1 and has fraction
+
+    a_E=1/(6*7^(E-1)),
+    actual retained mixed bad mass=0,
+    F_7=a_E^2/4.                                  (FC911)
+
+The kernel removes this event completely. A mod7 query at any root
+2,...,6 gains a_E/[24(1-a_E)] in its cylinder mass. Since the complete
+load is1+1_C, its exact second-moment maximum changes from3/2 to
+
+    C_7=3/2+a_E/[8(1-a_E)],
+    (C_7-3/2)/F_7=1/[2a_E(1-a_E)] -> infinity.     (FC912)
+
+The obstruction persists for the full original window Q_E=5*7^E.
+Put M_E=1+sum_(k=1..E)(2k+1)/(6*7^(k-1)). Under the pure source the
+complete-query maximum is(7/4)M_E, attained by coherent nonzero
+anchors. Choose anchor1 at5 and anchor2 at7. On the forbidden deep
+7-cylinder its7-load is1, while its mean square is M_E; the active
+5-row has squared5-load4 and probability1/4. Hence that same query
+increases by
+
+    (M_E-1)a_E/(1-a_E),
+    increase/F_7>=4(M_E-1)/[a_E(1-a_E)] -> infinity. (FC913)
+
+The new maximum is at least this query's value, so FC913 proves no
+height-independent constant pays complete-query increase from F_7
+alone. Actual retained bad mass cannot pay it even at E=1. These
+noncovers do not refute FC907 or a stronger statement using whole-cover
+constraints. A successful use of FC910 needs additional information
+about the queried load on the region actually removed.
+
+## Fixed-head transport and its support-uniform boundary
+
+On a FIXED finite prime head an all-height third-moment bound
+G_3^infinity implies for every finite query layout
+
+    integral L^2 1_(L^2>M) dmu<=G_3^infinity/sqrt M. (FC914)
+
+The existing ordered-tuple remainder construction in Reports722/818
+can obtain such bounds from finite prefixes, with the actual raw
+cylinder caps C_3=2 and C_p=4c_p. If
+K_r(E)=product_p[1+C_p(h_r(p,E_p)-1)], its all-height counterpart
+K_r(infinity) is finite on this fixed support, and a finite moment
+certificate B_r(E) gives
+G_r^infinity<=B_r(E)+K_r(infinity)-K_r(E). Every ordered cross term
+leaving the prefix remains in the difference. FC907 itself needs
+only the weaker finite seeds FC902.
+
+For two actual finite-head sources mu,nu on one common refinement,
+let delta=|mu-nu|(whole), the full mass of the variation measure.
+For the same query layouts Holder against |mu-nu|<=mu+nu gives
+
+    |C_Q(mu)-C_Q(nu)|
+      <=[G_3(mu)+G_3(nu)]^(2/3)delta^(1/3).         (FC915)
+
+Take the layout maximum after the bound for each load. This also
+handles all-height suprema and coherent-anchor subfamilies. Delta
+is not half the variation mass. It must include the actual joint
+source change, including changes to the full-family guard; marginal
+closeness or a small edit of an original label does not establish it.
+
+Support-uniform integrability is different and fails even without
+mixed kernels. For a finite initial set P of primes at least5 use
+the actual originals0 modp. This is a divisor-closed irredundant
+noncover. Its source is the product of uniform nonzero residues.
+For Q_P=product_p p and coherent anchor1, set
+
+    L_P=product_p(1+1_(x_p=1)),
+    H_P=product_p(1+3/p), Y_P=L_P^2/H_P.
+
+Exact independence gives
+
+    E Y_P=product_p[1+3/(p^2+2p-3)]>=1,
+    E sqrt(Y_P)=product_p[(1+1/(p-1))/sqrt(1+3/p)] ->0. (FC916)
+
+For p>=17 the logarithm of the last factor is at most
+-1/(2p)+7/(2p^2)<=-1/(4p); reciprocal-prime divergence proves the
+limit. The first products remain bounded, consistently with FC890.
+But for any fixed M,
+
+    E[Y_P 1_(Y_P<=M)]<=sqrt M E sqrt(Y_P) ->0.       (FC917)
+
+Since E Y_P>=1, the expectations above M do not vanish uniformly.
+Thus the universal mean comparison supplies no support-uniform
+integrability of Haar-normalized squared loads. FC914--915 concern
+a fixed head and are unaffected.
+
+## A guard can discard every mixed private witness and still succeed
+
+Consider the full CRT carrier(y mod3^8,x_5 mod5,x_7 mod7). In
+least-significant-first ternary notation put, for1<=i<=8,
+
+    A_i=2^(i-1)0=(3^(i-1)-1) mod3^i,
+    T_i=2^(i-1)1=(2*3^(i-1)-1) mod3^i,
+    Z_i=2^i=(-1) mod3^i.
+
+Here the digit words2^j mean j repetitions, not numerical powers.
+Use the27 distinct labels{3^i,3^i*5,3^i*7:1<=i<=8} union{5,7,35},
+which are divisor-closed above one, with one literal phase each:
+
+| Original | Ternary cylinder | Other coordinate |
+|---|---|---|
+|3^i|A_i|none|
+|5,7|all|the corresponding root0|
+|3^i*5, i<=3|Z_i|x_5=i|
+|3^i*5, i>=4|T_i|x_5=4|
+|3^i*7, i<=3|T_i|x_7=6|
+|3^i*7, i>=4|Z_i|x_7=i-3|
+|35|all|x_5=4,x_7=6|
+
+The family is irredundant. Private choices are, respectively: for
+3^i,(A_i,4,5); for5,(Z_8,0,6); for7,(Z_8,4,0); for the four star
+rows,(Z_8,i,6),(T_i,4,5),(T_i,i,6),(Z_8,4,i-3); and for35,
+(Z_8,4,6). Every indicated CRT cylinder is nonempty and meets no
+other original. Its period is Q=3^8*35=229635; it is not the complete
+divisor palette of Q. The only mixed original is35.
+
+Every A_i fibre of35 is covered by the ternary original; every T_i
+fibre by the corresponding side star. Consequently its ENTIRE
+private region and the actual star fractions there are
+
+    Priv(A_35)=Z_8 times{4}times{6},
+    alpha_5=3/4, alpha_7=5/6.                     (FC918)
+
+The assigned-stage guard removes Z_8 in BOTH orders5,7 and7,5:
+the assigned mixed stage is respectively7 and5. The unguarded rows
+there still have positive masses1/2 and1/3. Thus lost private support
+comes from the guard, not an earlier mixed deletion or empty row.
+Neither changing the terminal prime nor choosing another mixed
+original supplies positive guarded private mass here.
+
+Nevertheless on T_1 both raw row masses equal1, both guards pass,
+and the normalized pure ternary law gives
+
+    nu_3(T_1)=2187/3281>0.                         (FC919)
+
+After all pure and star deletions, membership in35 is precisely
+FC918, so the guarded source gives its only mixed class zero mass.
+It consists entirely of genuine survivors; (T_1,1,1) is an explicit
+surviving CRT cylinder. This is a NONCOVER and a successful guarded
+budget, not a counterexample to the budget method.
+
+Both terminal private prime fibres are fully covered: at(Z_8,4),
+the7 roots are covered by pure7, the five7-stars and35; at(Z_8,6),
+the5 roots are covered by pure5, the three5-stars and35. Thus even
+these literal full-height sibling demands do not repair private
+support. Global extremality supplies an additional condition absent
+from this example. The star d=3^8*5=32805 has complete private region
+
+    Priv(A_d)=T_8 times{4}times{5},
+    Gamma_d=Q.                                   (FC920)
+
+Report385 PH5 would force every absent divisor e of Q with1<e<d
+into a lex-minimal whole-cover palette. Here it forces precisely the
+missing crossed labels
+
+    105,315,945,2835,8505,25515 (=3^j*35,1<=j<=6).  (FC921)
+
+The next label76545 is larger than d and is not forced by this
+comparison. In a whole extension preserving these phases and this
+star's essentiality, its private set can only shrink within the same
+residue, so the same replacement argument still forces FC921. Their
+phases and effects on the guard remain unspecified. The private hull
+of35 alone forces no missing smaller divisor; all of those are already
+present. A new supplier must use such whole-cover joint obligations,
+or change the source with new caps and budget. Private points and
+terminal sibling coverage alone are insufficient. These are written
+finite arguments and independently reviewed continuation estimates;
+no numerical scan or new Lean verification is asserted.
