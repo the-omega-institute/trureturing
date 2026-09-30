@@ -59,6 +59,7 @@ does not supply that existence or uniqueness theorem.
 | `Geometry/Riemannian/Curvature/LocalIsometry.lean` | `PoincareMT.LeviCivitaData.curvatureTensorNorm_eq_of_local_isometry` | Transports the retained Hilbert-Schmidt curvature norm under the same hypotheses. |
 | `Geometry/Riemannian/Metric/Induced/Immersion.lean` | `PoincareMT.RiemannianMetric.Induced.pullbackMetric` | Constructs a smooth positive-definite metric by pulling back through a smooth immersion; injectivity of each differential is required. |
 | `Geometry/RicciFlow/Surgery/Metric/Construction/MetricCombination.lean` | `PoincareMT.MetricSurgery.positiveScaling` | Multiplies a smooth metric by a supplied smooth, strictly positive function. |
+| `Geometry/Riemannian/Metric/Induced/Complete.lean` | `PoincareMT.RiemannianMetric.pathELength_map_of_metric_pullback` | Preserves the length of a continuously differentiable curve under a smooth map preserving tangent inner products. |
 | `Geometry/Riemannian/Metric/Induced/Complete.lean` | `PoincareMT.RiemannianMetric.edist_map_le_of_metric_pullback` | A smooth map preserving tangent inner products contracts the induced path distance; an inverse with the same properties gives distance equality. |
 | `Geometry/Riemannian/Metric/Gluing/Descent.lean` | `Poincare.Gluing.exists_unique_metric_of_covering_local_diffeomorphisms` | Descends metrics through a family of local diffeomorphisms covering the target, provided equal projected tangent vectors have equal source inner products; the target smooth structure is input. |
 
@@ -164,14 +165,31 @@ metric-descent constructions above, using the verified arbitrary-isometry
 smoothness and invariance rather than assuming them. No finite group,
 cocompactness or finite-volume premise is used for this construction.
 
+For that same descended metric, its Riemannian extended distance equals
+`ENNReal.ofReal` of the actual orbit distance for every pair of quotient
+points. Metric contraction bounds it above by the source distance to every
+translate of an endpoint, hence by their infimum. For the reverse bound,
+Mathlib supplies a globally continuously differentiable curve of length
+arbitrarily close to the quotient path distance. The orbit covering lifts
+it continuously from the real line; smooth local inverse germs make that
+lift continuously differentiable. Preservation of tangent inner products
+preserves its length, and the source distance identity bounds the orbit
+infimum by that lifted length.
+
+The canonical orbit metric retains the existing quotient topology and is
+proper because the hyperbolic source is proper. The distance identity makes
+its uniform structure equal to the one induced by this same descended
+Riemannian metric, giving `MetricComplete` downstairs. These conclusions
+hold under the same freeness and compact-set proper-discontinuity
+hypotheses, without compactness or finite-volume assumptions on the quotient.
+
 These checks compiled under the project pins using the unchanged cited
 external sources and only `propext`, `Classical.choice` and `Quot.sound`.
 They are temporary applications of existing results; no new named project
 declaration or external dependency is installed by this note.
 
-The remaining bridge needs equality of the descended Riemannian path
-distance with the actual orbit metric and completeness downstairs. The model's curvature of minus one and its Levi-Civita data must
-also be supplied before applying curvature transport. Finite covolume,
+The model's curvature of minus one and its Levi-Civita data remain to be
+supplied before applying curvature transport. Finite covolume,
 noncompact cusp analysis, and the global Mostow-Prasad existence and
 uniqueness argument remain separate obligations. Compact positive-curvature
 sphere covering results cannot replace them.
