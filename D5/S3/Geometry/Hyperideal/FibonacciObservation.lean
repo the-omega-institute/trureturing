@@ -112,7 +112,7 @@ theorem kernel_phase_characterization (k : ℕ) (x y : ℤ) :
   · rintro ⟨t, s, rfl, rfl⟩
     constructor
     · unfold modEq
-      refine ⟨-(s), ?_⟩
+      refine ⟨s, ?_⟩
       push_cast
       ring
     · unfold modEq
