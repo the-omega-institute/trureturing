@@ -1,0 +1,27 @@
+**定理 34.1（等深相对平移 cocycle）。** 对任意 $L\ge0$、$s,t\in\{0,1\}$，取初态零的合法根前缀 $u,v\in W_{L,s}$ 及实际边 $e:s\to t$，故 $|u|=|v|=L$、$\operatorname{end}(u)=\operatorname{end}(v)=\operatorname{src}(e)=s$。在 signed 格点上的可逆仿射函数有
+
+$$
+\Phi_u\Phi_v^{-1}=T_{D_u-D_v},\qquad
+D_{ue}-D_{ve}=D_u-D_v.
+\tag{34.1}
+$$
+
+对任意从接缝 $s$ 出发的无限合法尾 $\omega\in\Omega_s$，令 $x=u\omega,y=v\omega$，则 $x,y\in\Omega_0$ 且 $(x,y)\in R_{\mathrm{tail}}$。反之，每个 $(x,y)\in R_{\mathrm{tail}}$ 都有某个共同深度 $L$ 下的上述呈示。以此定义 $c:R_{\mathrm{tail}}\to\mathbb Z^2$、$c(x,y)=D_u-D_v$，得到良定义的连续 additive cocycle。
+
+对完整地址 $x,y,r\in\Omega_0$，若 $(x,y),(y,r)\in R_{\mathrm{tail}}$，则 $(x,r)\in R_{\mathrm{tail}}$，并有
+
+$$
+c(x,r)=c(x,y)+c(y,r).
+$$
+
+对任意 $(x,y)\in R_{\mathrm{tail}}$，其零核满足
+
+$$
+c(x,y)=0\ \Longleftrightarrow\ x=y.
+\tag{34.2}
+$$
+
+证明。由 $u,v\in W_{L,s}$，直接消去 $S^L,S^{-L}$ 给第一式；共同追加实际边 $e:s\to t$ 给两偏移都增加 $S^Ld_e$，得第二式。任意尾等价对在共同实际边尾部开始处切开，就得 $x=u\omega,y=v\omega$；共同尾的首边源保证两前缀的终态都是 $s$，故 $u,v\in W_{L,s}$、$\omega\in\Omega_s$。两个共同尾呈示可细化到同一更深切口，逐次用延伸恒等式使偏移差不变，所以 $c$ 与呈示无关。对上述完整地址 $x,y,r$，在两项尾等价关系成立的切口之后取同一切口，写 $x=u'\omega',y=v'\omega',r=w'\omega'$，其中 $u',v',w'$ 等长且同终态，$\omega'$ 从该终态出发；这也给 $(x,r)\in R_{\mathrm{tail}}$，且 $D_{u'}-D_{w'}=(D_{u'}-D_{v'})+(D_{v'}-D_{w'})$ 给 additivity。每个前缀替换 cylinder 双截面上 $c$ 常值，故对标准 AF 拓扑连续。对 $(x,y)\in R_{\mathrm{tail}}$，若 $c(x,y)=0$，则上述等长前缀满足 $D_u=D_v$，命题 27.3 的证明给 $u=v$，继而 $x=y$。反向取相同前缀即得。$\square$
+
+这里逆函数用于计算相对操作，不声称它保持旧非负域。cocycle 的零核只有 units，也不使其在全群胚上单射：例如固定 $u=[2],v=[3]$，取两个不同合法共同尾，两条不同 arrows 都给 $(1,-1)$。被偏移忽略的 instruction parameters 也会破坏零核结论，所以本节只用裸窗图。
+
