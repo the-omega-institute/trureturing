@@ -22104,3 +22104,452 @@ or change the source with new caps and budget. Private points and
 terminal sibling coverage alone are insufficient. These are written
 finite arguments and independently reviewed continuation estimates;
 no numerical scan or new Lean verification is asserted.
+
+## Actual future sections form a closed finite query family
+
+Fix the ENTIRE finite original family, with every numerical modulus
+and literal phase retained. Let M contain its non-prime-power labels,
+including stars and mixed originals. Pure powers are excluded only
+because they already define the actual pure laws. Keep all ternary
+coordinates processed from the outset. At cutoff t write
+
+    m_<=t=3^v_3(m) product_(5<=q<=t)q^v_q(m),
+    m_>t=product_(q>t)q^v_q(m),
+    M_(t,v)={m in M:m_>t=v},
+    L_(t,v)=sum_(m in M_(t,v))1_(x=a_m mod m_<=t), v>1. (FC922)
+
+All products run over primes. Absent sections have load zero. Within
+one section, distinct numerical originals give at most one slot per
+lower cofactor, since m_<=t*v determines m. All phases are the actual
+original phases, without a coherent-anchor substitution.
+
+Fix an integer B>4. Choose the finite head window N_B to resolve ALL head exponents of
+the full family, including future old cofactors, plus the ternary
+source, guard and selector. For the one head law eta_B of the chosen
+process, use
+
+    G_r^sec >= max_(v>1) integral L_(B,v)^r deta_B,
+    max_(v>1) integral L_(B,v)^r deta_B<=C_r(N_B,eta_B), r=2,3. (FC923)
+
+The empty maximum is zero. The second inequality follows by completing
+each section to a full divisor query with nonnegative unused slots.
+At most |M| sections occur at one cutoff. This counts queries, not the
+cost of constructing the source or computing its moments.
+
+Let p be the next prime and v>1 a future suffix supported above p.
+Put J_(p,v)={j>=0:M_(<p,v*p^j) is nonempty}. Exactly
+
+    L_(p,v)(x,z)
+      =sum_(j in J_(p,v)) sum_(m in M_(<p,v*p^j))
+         1_(x=a_m mod m_<p)1_(z=a_m mod p^j).       (FC924)
+
+The j=0 current condition is identically true; an absent j=0 group
+is zero, not a unit query. Removing only the current indicator in a
+j-group leaves L_(<p,v*p^j). Meanwhile the actual nonpure forbidden
+union at p, with pure-law fraction beta_p, satisfies
+
+    beta_p<=c_p sum_(e in E_p)p^-e L_(<p,p^e),
+    c_p=(p-1)/(p-2),                              (FC925)
+
+where E_p is the set of actual assigned nonpure depths. Thus every
+layout needed by the fee and by the additional cubic error is again
+an actual section. Consumed p^e sections must remain in the OLD
+query family before that stage; they disappear only after consumption.
+This is a backward closure for the fixed original library, not a
+claim about undeclared future labels or freely rephased queries.
+
+Here is a finite vector supplier that retains the occupied depths.
+Write M_r(v)=integral L_(<p,v)^r deta_<p for one finite positive
+prefix law. Suppose A,C>=0 and its actual row k_p has mass at most one
+and k_p<=min(A,1+C beta_p)nu_p. For tuples of indices in J_(p,v), let
+Z_r(v)=M_r(v) if 0 belongs to J_(p,v), and zero otherwise. Then
+
+    M_2^new(v)<=Z_2(v)
+      +c_p sum_(j,k:max>0)p^-max(j,k)
+           [M_2(vp^j)M_2(vp^k)]^(1/2)
+      +C c_p^2 sum_(e in E_p)p^-e
+         sum_(j,k:max>0)p^-max(j,k)
+           [M_3(p^e)M_3(vp^j)M_3(vp^k)]^(1/3),
+    M_3^new(v)<=Z_3(v)
+      +A c_p sum_(j,k,l:max>0)p^-max(j,k,l)
+           [M_3(vp^j)M_3(vp^k)M_3(vp^l)]^(1/3).    (FC926)
+
+Expand ordered tuples of ACTUAL indicators first. Their current
+intersection is empty or a cylinder at the largest current depth.
+Apply the row bound and pure-cylinder cap to that intersection;
+beta depends only on old history. Collect lower indicators and use
+Holder on that SAME old measure. The all-zero tuple uses row mass
+at most one. This proves FC926 even when different originals have
+inconsistent current phases; no common current phase is presumed.
+
+For the unchanged raw process, A=4,C=6 by FC891. Taking the maximum
+over current sections and the all-height tuple majorants gives
+
+    Gamma_2'<=b_p Gamma_2+d_p Gamma_3,
+    Gamma_3'<=a3_p Gamma_3,                       (FC927)
+
+with exactly FC903's coefficients. FC904--908 consequently give
+
+    sum_(p>B)F_p(w)
+      <=6D_B T_3(B)[G_2^sec+32G_3^sec S_25(B)].    (FC928)
+
+The sharper individual consumer is
+6c_p^2[sum_(e in E_p^mix)p^-e sqrt(M_2(p^e))]^2; it does not
+charge unoccupied depths. All source and guard choices remain those
+of the original raw process. FC923 never worsens the complete-query
+seed bound, and can strictly improve it on the SAME source.
+
+For example take 7<=p<q prime and the actual noncover
+{0 modp,0 modq,1 mod(p*q^E)}, E>=1. At B=p there is one actual
+future section 1_(x_p=1), while a complete head query is
+1+1_(x_p=a). There are no stars or guards, and w=1, so
+
+    G_2^sec=G_3^sec=1/(p-1),
+    C_2(p,eta_B)=1+3/(p-1),
+    C_3(p,eta_B)=1+7/(p-1).                       (FC929)
+
+Both coefficients in FC928 are positive. Hence this is a strict
+improvement of that allowance, for arbitrary E, not merely a smaller
+query count. It is not a whole-cover example or a uniform margin.
+
+## Joint star loss and mixed fees remove the raw denominator guard
+
+Keep the exact raw star rows tau_p and mixed rows Khat_p of FC814,
+including every actual phase, but remove ONLY the initial 1_(G_J).
+For a fixed ternary selector 0<=w<=1 define
+
+    mu^o_<p=w nu_3 product_(q<p)Khat_q,
+    mu^o_B=w nu_3 product_(q<=B)Khat_q,
+    R_B^o=mass(mu^o_B)=integral w product_(q<=B)a_q dnu_3. (FC930)
+
+Zero star rows give Khat_p=0. Each row has mass a_p(y)<=1,
+independently of earlier nonternary coordinates. For w=1 the head
+reserve is at least the full Z_star>1081/1800 of FC782. Mixed loss
+has not yet been paid, and no positive reserve is asserted for an
+arbitrary selector.
+
+At one actual history put u=nu_p(F_star),
+b=nu_p(B_mixed outside F_star), beta=u+b<=1,
+a=min(1,2(1-u)), and ell=tau_p(B_mixed). With ell^2/a defined as
+zero at a=0, the useful combined charge is
+
+    (1-a)+ell^2/a<=beta^2.                         (FC931)
+
+If u<=1/2, then a=1, ell=b/(1-u)<=u+b because
+u(1-u-b)>=0. If 1/2<u<1, write v=1-u, so a=2v and ell=2b;
+the exact difference is (v-b)[v+(2-v)b/v]>=0. At u=1,
+b=a=ell=0 and both sides are one. Equality holds whenever beta=1.
+The first term pays actual star mass loss; the second pays the raw
+retained mixed bad mass (2ell-a)_+. It is not an unearned reduction
+of the old mixed fee while retaining a larger reserve.
+
+Let S_B be the set of points avoiding every original assigned at or before B, and set
+eta_B=1_(S_B)mu^o_B, s_B=mass(eta_B). Extend this head restriction
+using the unchanged future raw rows. Its prefixes are dominated by
+mu^o_<p. Telescope actual star mass losses and union-bound the
+mixed forbidden events; later raw masses are at most one. FC931 gives
+
+    full actual survivor mass
+      >=s_B-sum_(p>B)integral beta_p^2 dmu^o_<p.    (FC932)
+
+The exact finite-head supplier can use
+
+    s_B>=R_B^o-sum_(p<=B)F^o_(p,B),
+    F^o_(p,B)=integral w(ell_p^2/a_p)dnu_3
+                    product_(q<p)Khat_q product_(p<q<=B)a_q. (FC933)
+
+These are UNGUARDED head fees with later factors stopping at B.
+Pointwise capacity and forest arguments can be reused on this source,
+but old scalar caps requiring the guard cannot. Neither old guarded
+seeds nor the full guarded reserve are silently transferred.
+
+FC925 and Cauchy give integral beta_p^2 dmu^o_<p
+<=Gamma_2(<p)/(p-2)^2. FC891's row bound does not need the guard;
+FC927 therefore holds with new seeds on mu^o_B. Either complete
+queries or the actual sections may be used. Thus
+
+    sum_(p>B)integral beta_p^2 dmu^o_<p
+      <=D_B T_3(B)[G_2+32G_3S_25(B)].             (FC934)
+
+For w=1 the unguarded raw density at a point avoiding the actual
+old star and mixed unions is at least one relative to the pure
+product. Every private point of a future mixed original therefore
+has positive PRE-STAGE head support. In the finite head carrier,
+
+    nonempty head-survivor cell ==> s_B>=1/N_B.    (FC935)
+
+N_B resolves all required head and ternary heights, so this bound
+need not beat FC934. At the private region in FC918 the unguarded
+rows have positive masses 1/2 and 1/3, but the terminal total beta
+is one and FC931 is saturated. Restoring support does not create
+a free positive credit. Positivity of FC932's surplus would yield
+an actual surviving integer; no such uniform surplus is proved.
+
+## A normalized combined continuation sharpens the seeded tail
+
+Supply an ACTUAL finite head-survivor measure eta supported on S_B,
+with the full old-coordinate window just specified. For each p>B,
+use the actual pure-conditioned nu_p and ONE normalized half-threshold
+kernel K_p on the union D_p of all active nonpure originals, stars
+and mixed together. With beta_p=nu_p(D_p), this NEW process has
+
+    mass(K_p)=1,
+    K_p<=min(2,1+2beta_p)nu_p,
+    K_p(D_p)=(2beta_p-1)_+<=beta_p^2.             (FC936)
+
+For beta<=1/2 the kernel conditions off D and
+1/(1-beta)<=1+2beta; for beta>=1/2 use the cap two. Endpoints
+are included by the half-threshold definition. Old joint marginals
+and the mass eta(1) are preserved by every future row. Every pure
+tail original is already excluded by nu_p.
+
+FC926 now uses A=2,C=2. Let h_p=h_2(p,infinity); the moment
+recursion has
+
+    Gamma_2'<=b_p Gamma_2+d0_p Gamma_3,
+    Gamma_3'<=a0_p Gamma_3,
+    d0_p=2c_p^2(h_p-1)/(p-1)=d_p/3,
+    a0_p=1+2c_p(h_3(p,infinity)-1).                (FC937)
+
+FC904 gives d0_p/h_p<=32/(3p^2), while the improved third ratio is
+
+    a0_p/h_p<=(p/(p-1))^11.                       (FC938)
+
+Indeed with t=1/(p-1)<=1/4 this ratio is
+(1+13t+24t^2+12t^3)/(1+2t-t^2-2t^3). Multiplying its positive
+denominator by 1+11t+55t^2 and subtracting the numerator gives
+t^2(52+85t-77t^2-110t^3)>0. The binomial bound proves FC938.
+
+Define S_11(B)=sum_(p>B, p prime)Pi_11(B,p)/p^2, with the
+prime products Pi_k from FC904. Unrolling as in FC905 yields
+
+    Gamma_2(<p)<=D_B Pi_3(B,p)[G_2+(32/3)G_3S_11(B)],
+    tail bad mass<=D_B T_3(B)[G_2+(32/3)G_3S_11(B)]. (FC939)
+
+Here G_2,G_3 are supplied on eta, for complete queries or the closed
+actual sections. FC925 pays each tail stage by Gamma_2/(p-2)^2,
+and future normalized rows preserve that stage's marginal, so the
+union bound is on ONE final law. Every nonpure original is charged
+once at its assigned prime. Consequently
+
+    eta(1)>D_B T_3(B)[G_2+(32/3)G_3S_11(B)]
+      ==> an integer avoids the entire original family.   (FC940)
+
+FC908 supplies S_11<=u_B c_ell^11 P_11(1/ell)/B under its same
+conditions B>=286, ell>=7, 3^ell<=B; its T_3 allowance is unchanged.
+The two coefficients are O(1/B) and O(1/B^2), not uniform controls
+on how the seeds vary with the original family or cutoff. This
+continuation has different future rows from FC934 and FC928: raw
+head fees and forest credits require explicit transport before reuse.
+Compared with the normalized cap-only FC836, the leading prime-product
+exponent drops from seven to three, with an added summable cubic
+error. It need not be better when the supplied third moment is large.
+
+## Private-hull descendants reserve entire parent phases
+
+For this subsection only, fix ONE hypothetical whole cover globally
+minimizing first class count and then modulus sum, as in Report385.
+Use its complete private hulls Gamma_d, full period Q and original
+palette D. Put
+
+    H_d={m in D:d|m, m>d, m|Gamma_d},
+    R_m={x:x=a_m mod d}, m in H_d.
+
+Every other original n divisible by d has a different phase modulo d:
+
+    n!=m, d|n ==> A_n intersect R_m=empty.         (FC941)
+
+For n=d this follows from comparable disjointness; otherwise a common
+descendant phase would contradict Report385 DR5 since m|Gamma_d.
+Equivalently move the d-class to that common phase, remove both
+descendants and repair the COMPLETE old private region with the
+freed label m. The moved class absorbs both removed originals,
+including joint ownership, and the repair reduces class count.
+Distinct reservations R_m for this parent are disjoint. For any
+ONE finite nonnegative measure mu on the actual common period, whole coverage
+therefore requires
+
+    Z_d=union_(m in H_d)(R_m minus A_m),
+    sum_(m in H_d)[mu(R_m)-mu(A_m)]
+       =mu(Z_d)<=sum_(n in D:d does not divide n)mu(Z_d intersect A_n). (FC942)
+
+This demands payment by the complementary ORIGINAL labels on the
+same source. If that source gives Z_d zero mass it supplies no
+positive demand.
+
+Suppose 3 does not divide d, 1<g|d, and the actual originals
+A_(3g),A_d intersect. If d has any proper original multiple, then
+
+    3d in H_d.                                   (FC943)
+
+PH7's proof gives 3d|Gamma_d. Every proper odd multiple of d is
+at least 3d. If the largest is 3d it is already present; if it is
+larger, DR3 forces 3d into D. Hence its entire mod-d phase excludes
+every other d-multiple, even when all previously forced crossed
+labels are present. On the other nonzero ternary root, its original
+3d-class is inactive but the phase reservation persists.
+
+For an exact consumer retain FC859's fixed y, current p, row e,
+reference product m_y, earlier event E_e, cylinders D_b and
+V_e,lambda_e,K_eb,r_b,z_b. If C is a nonempty disjointness clique, choose
+any reservation pairs (d,m) with d|b for every b in C, m in H_d,
+and m not in C. Let R_C be the UNION of their actual parent
+cylinders on this same y, and set S_eC=integral 1_(E_e)1_(R_C)dm_y.
+These cylinders use no nonternary coordinate above p. FC941 gives
+
+    0<=S_eC<=V_e,
+    sum_(b in C)z_b<=V_e-S_eC.                    (FC944)
+
+Use the union: different parents' reservations can overlap. The
+unchanged weighted certificate argument then gives, whenever
+eta_b+sum_(C containing b)theta_C>=K_eb with nonnegative coefficients,
+
+    sum_b Psi_eb<=lambda_e[
+       sum_C theta_C(V_e-S_eC)+sum_b eta_b r_b].   (FC945)
+
+The reduction from the same FC900 coefficients is exactly
+lambda_e sum_C theta_C S_eC. It does not assert jointly attained
+extremizers. Diagonals, complementary labels, and the factor two
+for extra/baseline cross terms remain payable. A clique containing
+the reserving original itself uses the new disjointness edge rather
+than excluding its own parent cylinder.
+
+There is a strict occupied-palette example at the level of these
+selected upper relaxations. Suppose D contains all nonunit divisors
+of 3*5^4*7 and actual A_15 intersects A_35. FC943 makes 105
+phase-isolating among 35-multiples. Select the stage-seven packet
+{105,175,875,4375}. The last three form a numerical chain; every
+PH7 crossed output for its pairs with 105 is already present. At a
+y where 105 is active, take an outside row e of 5-depth at least
+four, a_7=1 and lambda_e K_e V_e>0. FC824 gives the common caps
+r_b=(12/35)V_e and K_eb=K_e. The old selected relaxation and the
+new four-label clique have respective optima
+
+    (47/35)K_e V_e,
+    K_e V_e.                                     (FC946)
+
+The former allocates 12V_e/35 to the singleton and V_e to the
+chain; the latter is attained by assigning V_e/3 to each chain
+label and zero to 105, since 1/3<12/35. The row saving is
+(12/35)lambda_e K_e V_e. These are RELAXATION optima under stated
+row conditions, not jointly realizable phases of a whole cover.
+On y where 105 is inactive, its parent phase can instead supply
+FC944, but positivity of S_eC must be proved on the actual source.
+
+There is a stronger Gram consumer when p does not divide the parent
+d and a hull descendant m is assigned at p. Its phase conflict with
+every other stage-p d-multiple lies in ternary or earlier coordinates,
+so the actual earlier activations cannot coincide. For a selected
+same-stage d-cone S, let H={m in S:m|Gamma_d}, R=S minus H, and
+use its literal current row masses t_b and earlier activations A_b:
+
+    A_m A_b=0 (m in H,b in S,b!=m),
+    (sum_(b in S)t_b A_b)^2
+      =sum_(m in H)t_m^2 A_m+(sum_(b in R)t_b A_b)^2. (FC947)
+
+This is pointwise on every actual source. Unlike full-class
+disjointness alone, the premise p not dividing d places the conflict
+strictly before the current coordinate. Cross terms with labels
+outside the cone remain. No argument here forces a useful hull
+descendant or positive total reserved mass in every whole cover.
+
+## Actual future consumers still require signed deleted-query data
+
+The restriction to actual sections does not make distortion pay
+for itself from the old squared fee. For E>=1 use the five-label
+actual noncover
+{0 mod5,0 mod7,0 mod11,1 mod(5*7^E),23 mod77}.
+It is irredundant: the two mixed private points have respective
+coordinates (1,1,2) and (2,2,1), resolving the full 7-depth for the
+first; pure private points avoid the other listed roots. The all-three
+point survives. There are no stars or guards and w=1.
+
+At seven the deep cylinder is active only on x_5=1, of probability
+1/4. Put alpha=1/(6*7^(E-1)). The actual future eleven-section is
+L_(7,11)=1_(x_7=2). The deleted cylinder is disjoint from that
+query; on the active row its mass is multiplied by 1/(1-alpha).
+Consequently
+
+    F_7=alpha^2/4,
+    Delta M_2=Delta M_3=alpha/[24(1-alpha)],
+    Delta M_2/F_7=1/[6alpha(1-alpha)] -> infinity.  (FC948)
+
+The comparison in FC948 is with the pure product eta_5 times nu_7
+before applying the stage-seven kernel. It is not a claim that the
+maximum over all suffix sections increases: the old suffix77 is
+a unit query, so that old envelope already includes one.
+
+The stage-eleven squared fee is M_2/100, so its increase divided
+by F_7 is also unbounded. This refutes a universal self-payment
+constant even for a genuinely consumed future query. It assumes
+neither divisor closure nor whole coverage, and does not refute a
+credit theorem using additional minimal-whole-cover constraints.
+
+Replace 23 mod77 by 1 mod77 while leaving the old source unchanged.
+The future query is now 1_(x_7=1); on the active row its mass
+changes from 1/6 to (1/6-alpha)/(1-alpha). Thus
+
+    Delta M_2=-5alpha/[24(1-alpha)].               (FC949)
+
+The same numerical palette and old fee can give either sign. FC910
+identifies the needed actual deleted-query correlation. For a finite
+NONEMPTY family of actual layouts, if A_v is each old moment and
+D_v=A_v-A_v' its signed decrement, the exact envelope identity is
+
+    M-max_v A_v'=min_v[(M-A_v)+D_v], M=max_v A_v.   (FC950)
+
+A positive improvement needs every near-max layout to pay its
+required decrement after accounting for its old slack. Separate
+phase optima or the old fee alone do not supply that condition.
+
+## A declared projected-load bound can eliminate the cubic seed
+
+For each actual assigned p-depth e, form the graph of compatibility
+of its EARLIER cofactor cylinders. Simultaneously active originals
+form a clique. Suppose ONE K>=0 bounds these clique numbers for
+every tail p>B and every occupied e on the entire old state domain.
+It therefore supplies
+
+    L_(<p,p^e)<=K,
+    beta_p<=c_p K/(p-1)=K/(p-2).                 (FC951)
+
+This concerns projected cylinders, not the full-class disjointness
+graph. In FC926 use this pointwise bound instead of the cubic
+Holder supplier. With G_2 a head seed on this same source, raw rows give
+
+    Gamma_2'<= (b_p+K d_p)Gamma_2,
+    sum_(p>B)F_p<=6G_2 exp((4+32K)/B)T_3(B).     (FC952)
+
+Indeed b_p/h_p<=1+4/p^2 and d_p/h_p<=32/p^2, while
+sum_(n>B)n^-2<=1/B. For FC936's normalized combined continuation,
+replace 32K by (32/3)K and omit the outer six. Even more directly,
+
+    B>2K+2 ==> every tail beta_p<1/2.             (FC953)
+
+Every normalized row then deletes its entire forbidden union while
+preserving mass. Any supplied positive actual head survivor measure
+extends to a positive full survivor. This is a restricted-class
+criterion; a uniform K is not asserted for arbitrary original families.
+
+Distinctness and even two-prime support do not supply it. Fix odd
+primes 5<=p<q and take pure roots zero and q-1 mixed originals
+
+    m_i=p^i q,
+    a_i=1 mod p^i, a_i=i modq, 1<=i<=q-1.        (FC954)
+
+These full mixed classes are pairwise disjoint, each is private,
+and (2,1) survives. At the positive-mass old cylinder
+x_p=1 mod p^(q-1), however, all q-1 projections are active and
+their current phases exhaust the q-1 live q-roots. Thus the old
+projected load is q-1 and beta_q=1. A full-class clique supplies
+no uniform bound of the needed kind on the projected load.
+
+The new consumers isolate the remaining obligation: supply an
+actual head survivor and joint moment/capacity estimates whose
+total reserve exceeds the declared continuation allowance for EVERY
+finite distinct odd family, or derive a contradiction from the
+additional minimal-whole-cover phase obligations. Finite query
+closure, restored private support and summable coefficients do not
+establish that comparison. These are written mathematical arguments
+with independent review, not new Lean results or a resolution of
+unrestricted Erdős #7.
