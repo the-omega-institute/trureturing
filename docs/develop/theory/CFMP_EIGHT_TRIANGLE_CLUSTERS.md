@@ -8,17 +8,13 @@ global edge has degree exactly 8 or at least 14. Write L for the degree-eight
 edges and H for the remaining edges.
 
 For a tetrahedron sigma, let S_sigma be the set of its six local edges whose
-global edge lies in L. Assume that |S_sigma| is 3 or 4 and that every member of
-S_sigma is adjacent (in the tetrahedron) to exactly two other members of
-S_sigma. Thus a three-edge packet is one of the two incidence types (a
-three-star or a three-cycle), and a four-edge packet is a four-cycle. This is
+global edge lies in L. Assume that |S_sigma|=3 and every member of S_sigma is adjacent (in the tetrahedron) to exactly two other members of S_sigma, so each packet is a three-star or three-cycle. In addition, every high local edge is opposite a low local edge and has at least two high neighbours. The separate four-cycle packet remains covered by the earlier degree-14 theorem. This is
 an incidence condition on actual local edge occurrences; it does not identify
 distinct global edges or impose equal lengths.
 
-The theorem below is a new valence-eight subcase at high-edge threshold 14. The
+The theorem below is a new valence-eight subcase at high-edge threshold 12. The
 three-star/three-cycle packet is the genuinely new local geometry; the four-cycle
-packet is retained so that one theorem covers mixed packets. The degree-fourteen
-constant is below the existing degree-sixteen mixed-edge budget.
+packet is retained so that one theorem covers mixed packets. The degree-twelve constant is below the existing degree-sixteen mixed-edge budget.
 
 ## Six-variable cosine
 
@@ -100,11 +96,9 @@ the choice of delta above.
 
 ### High-edge upper faces
 
-For x1=c, monotonicity gives the conservative endpoint bound
+For x1=c, monotonicity and the high-occurrence condition give the endpoint bound
 
-  phi_1 <= phi_1(c,2,2,1,2,2) = 53/59.
-
-Moreover 53/59 < cos(pi/7). Since pi<22/7, we have pi/7<22/49. The alternating Taylor lower bound
+  phi_1 <= 5965/6972 < cos(pi/6). Since pi<22/7, we have pi/7<22/49. The alternating Taylor lower bound
 T6(u)=1-u^2/2+u^4/24-u^6/720 gives T6(22/49)-53/59
 =95008047934/36748617518655 > 0, hence 53/59 < cos(pi/7). Therefore every high-edge occurrence
 has alpha_1 > pi/8. Since d(e) >= 14, its cone angle is strictly greater
@@ -188,23 +182,23 @@ vertices (the reverse pairing uses its inverse):
 | (11,2) | (14,2) | 0123 |
 | (12,3) | (14,3) | 0123 |
 | (13,3) | (15,3) | 0123 |
-| (4,0) | (8,0) | 0321 |
-| (3,0) | (11,0) | 0312 |
-| (6,0) | (10,0) | 0132 |
-| (2,0) | (14,0) | 0321 |
-| (0,0) | (12,0) | 0321 |
-| (1,0) | (15,0) | 0231 |
-| (13,0) | (7,0) | 0321 |
-| (9,0) | (5,0) | 0132 |
+| (7,0) | (11,0) | 0132 |
+| (2,0) | (6,0) | 0312 |
+| (8,0) | (13,0) | 0231 |
+| (9,0) | (1,0) | 0312 |
+| (10,0) | (0,0) | 0132 |
+| (15,0) | (4,0) | 0213 |
+| (12,0) | (5,0) | 0312 |
+| (14,0) | (3,0) | 0321 |
 
 The 96 local edges fall into eight global classes. Six classes have size 8,
-one has size 14 and one has size 34. A direct transitive-closure check gives
+one has size 12 and one has size 36. A direct transitive-closure check gives
 the six degree-eight classes
 {0,6,12,18,24,30,36,42}, {1,7,13,19,49,55,61,67},
 {2,8,26,32,50,56,74,80}, {14,20,38,44,62,68,86,92},
 {25,31,37,43,73,79,85,91}, {48,54,60,66,72,78,84,90},
 where local edge number is 6t+j in order (01,02,03,12,13,23).
-The remaining classes have sizes 14 and 34. Every tetrahedron has local
+The remaining classes have sizes 12 and 36. Every tetrahedron has local
 degree-eight edges (01,02,03), a three-star. The two vertex links are connected
 orientable surfaces with (F,V,chi)=(16,6,-2) and (48,10,-14), hence genera 2
 and 8. Each edge link is a single circle and no edge is identified with its
