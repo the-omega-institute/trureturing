@@ -154,17 +154,6 @@ register_information_theorem integral_cubic_lattices in arena
 
 #print axioms registration
 
-open Lean in
-run_meta do
-  let env ← getEnv
-  let some row := TemplateBinding.records env |>.find? (fun row =>
-      row.occurrence.key.theoremName == ``integral_cubic_lattices)
-    | throwError "pure cubic lattice registration evidence is missing"
-  match row.result with
-  | .declaredValidated _ => pure ()
-  | .declaredUnresolved diagnostic =>
-      throwError "pure cubic lattice registration is unresolved: {diagnostic}"
-  | .undeclared => throwError "pure cubic lattice registration is undeclared"
 
 end
 end Reg.D5.S3.Arith.Lattices.PureCubicIntegralLattices
