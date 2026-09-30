@@ -18569,3 +18569,201 @@ $$
 这不仅是不同来源拥有相近的几何点：除单位初始化外，整份有限窗口数据都相同，而两者的 Robin 比值极限不同。单位位一把每个 $p\le m$ 从 $C_m+1$ 的素支撑中排除，因为 $C_m+1\equiv1\pmod{m!}$。因此对 Robin 的联合观察必须保留单位初始化；公因子、范数与收缩坐标不足以替代它。上述结果都只作用于明列的共同模关系、规模窗口及实际来源族，没有闭合任意整数的 Robin 猜想。
 
 ## 追加锚（本行以下为增补区）
+
+## 191. 一般固定种子的零余类与全素数加权首秩尾
+
+本文为纸面推导，未新增 Lean 声明，不主张文献原创。对象固定为本原非负整数组成 $v=(a,b)\ne(0,0)$，$\gcd(a,b)=1$，并定义
+
+$$
+V_j=q(M^jv)=aF_{j+3}+bF_{j+4},\qquad j\ge0.
+$$
+
+它覆盖非单位范数来源，也包括已处理的单位范数；本节实质范围是此前无法对全部指标控制大素数尾的一般固定种子。最终结论只在密度一指标集合上成立，不能删除例外集。
+
+**引理 191.1（固定种子的模素数零余类）。**
+
+记 $z(p)$ 为 Fibonacci 首次整除秩。对每个素数 $p$，集合
+
+$$
+\{j\ge0:p\mid V_j\}
+$$
+
+或者为空，或者恰为一个余数类模 $z(p)$ 在非负整数中的截取。
+
+证明。Fibonacci 更新可逆，且相邻响应的 gcd 恒为 $\gcd(a,b)=1$。若 $p\mid V_t$，则 $p\nmid V_{t+1}$，递推给
+
+$$
+V_{t+k}\equiv V_{t+1}F_k\pmod p\qquad(k\ge0).
+$$
+
+因此未来的零点恰为 $z(p)\mid k$。更早零点如存在，与 $t$ 的差也必须被 $z(p)$ 整除；若最早非负零点为 $t\ge z(p)$，由 $M^{z(p)}\equiv F_{z(p)-1}I\pmod p$ 且 $F_{z(p)-1}\not\equiv0\pmod p$，可逆地倒推得到 $t-z(p)$ 也是零点，矛盾。故最早零点小于 $z(p)$，得到完整非负余类。素数二、五不需要例外处理。$\square$
+
+于是任意整数 $X\ge1$ 的区间 $X\le j\le2X$ 中，该素数出现的指标数不超过
+
+$$
+(X+1)/z(p)+1.
+$$
+
+这保留的是一个可能非零的余类，不把它替换为 $z(p)\mid j$。
+
+**引理 191.2（全素数的加权首秩尾）。**
+
+对全部实数 $y\ge2$，有绝对常数界
+
+$$
+\sum_{p>y}\frac1{p\,z(p)}\le\frac{16}{\sqrt y}.
+\tag{191.1}
+$$
+
+证明。先取一个二倍区间 $Y<p\le2Y$，$Y\ge2$，按 $z(p)\le\sqrt Y$ 与大于 $\sqrt Y$ 分开。固定 $d\le\sqrt Y$ 的桶内所有不同素数乘积整除 $F_d<e^d$，因此桶内素数个数小于 $d/\log Y$，其 $1/(pd)$ 贡献至多为 $1/(Y\log Y)$。对至多 $\sqrt Y$ 个秩求和，得到 $1/(\sqrt Y\log Y)$。
+
+大秩部分中每个 $1/(pz(p))<1/(Y\sqrt Y)$，而区间内整数个数不超过 $2Y$，所以贡献至多 $2/\sqrt Y$。由于 $\log2>1/2$，合计严格小于 $4/\sqrt Y$。令 $Y=2^ky$ 并累加，得到
+
+$$
+\sum_{p>y}\frac1{p\,z(p)}
+<\frac4{1-2^{-1/2}}\frac1{\sqrt y}
+<\frac{16}{\sqrt y}.
+$$
+
+这里 $4/(1-2^{-1/2})<16$ 等价于 $\sqrt2>4/3$。$\square$
+
+此界只使用 $p\mid F_{z(p)}$、增长上界与素数桶基数，不需要一般种子具有强整除性。
+
+## 192. 一般种子的密度一估计与共同公因子
+
+对 $X\ge2$、$y\ge2$，设
+
+$$
+T_j(y)=\sum_{\substack{p\mid V_j\\p>y}}\log\frac p{p-1}.
+$$
+
+**定理 192.1（平均尾界与稀疏例外计数）。** 有
+
+$$
+\sum_{j=X}^{2X}T_j(y)
+\ll_v Xy^{-1/2}+\log X.
+\tag{192.1}
+$$
+
+证明。由于种子固定且非负非零，有 $1\le V_j\le\exp(C_v X)$（$X\le j\le2X$），其中 $C_v>0$ 只依赖种子。用有限求和交换、第一节的零点计数与 $\log(p/(p-1))\le2/p$，得到
+
+$$
+\begin{aligned}
+\sum_{j=X}^{2X}T_j(y)
+&\le2\sum_{y<p\le e^{C_vX}}\frac1p
+\left(\frac{X+1}{z(p)}+1\right)\\
+&\le32(X+1)y^{-1/2}
++2\sum_{p\le e^{C_vX}}\frac1p.
+\end{aligned}
+$$
+
+经典 Mertens 素数倒数和上界 $\sum_{p\le t}1/p=\log\log t+O(1)$ 给最后一项为 $O_v(\log X)$。该输入可见 Lichtman, *Mertens' prime product formula, dissected*, https://arxiv.org/html/2002.03361v3 ，Theorem 1.1、式 (1.1)。$\square$
+
+定义坏指标集合
+
+$$
+\mathcal E_v=
+\left\{j\ge3:
+T_j(j^{5/6})>\frac1{(\log j)^2}\right\}.
+$$
+
+在 $[X,2X]$ 中若 $j$ 是坏指标，则 $T_j(X^{5/6})>1/(\log(2X))^2$。由非负性、式（192.1）与 Markov 计数，
+
+$$
+\#(\mathcal E_v\cap[X,2X])
+\ll_v X^{7/12}(\log X)^2+(\log X)^3.
+\tag{192.2}
+$$
+
+二倍区间累加得到
+
+$$
+\#(\mathcal E_v\cap[1,X])
+\ll_v X^{7/12}(\log X)^2+(\log X)^4=o(X).
+\tag{192.3}
+$$
+
+也可把第二项吸收到第一项，写成 $O_v(X^{7/12}(\log X)^2)$。这不是声称坏指标不存在，而是给出明确的稀疏上界。
+
+**定理 192.2（好指标上共同公因子的统一 Robin 余量）。**
+
+令 $\mathcal G_v=\{j\ge3:j\notin\mathcal E_v\}$。固定任意实数 $C>0$，考虑同一个好指标 $j\in\mathcal G_v$ 下的全部整数
+
+$$
+1\le g\le C\phi^j,\qquad N_{g,j}=gV_j.
+$$
+
+则
+
+$$
+\liminf_{\substack{j\to\infty\\j\in\mathcal G_v}}
+\inf_{1\le g\le C\phi^j}
+\left(e^\gamma\log\log N_{g,j}-Z(N_{g,j})\right)
+\ge e^\gamma\log2.
+\tag{192.4}
+$$
+
+这里每个好指标上的乘子可以指数级大，且不要求其素支撑固定；阈值依赖固定的种子与 $C$，但不依赖这个范围内的单独 $g$。
+
+证明。取 $y=\lceil j^{5/6}\rceil$，
+
+$$
+A_j=\prod_{\substack{p\mid V_j\\p\le y}}p,\qquad B=gA_j.
+$$
+
+则 $A_j\mid V_j$、$B\mid N_{g,j}$，并且
+
+$$
+Z(N_{g,j})<\frac B{\varphi(B)}e^{T_j(y)},\qquad
+T_j(y)\le T_j(j^{5/6})\le\frac1{(\log j)^2}.
+$$
+
+Chebyshev 初等上界给 $\log A_j=O(j^{5/6})$。设 $h=\log g\le j\log\phi+\log C$，而 Binet 公式给 $\log V_j=j\log\phi+O_v(1)$。
+
+当 $h\ge j^{11/12}$ 时，$\log\log B=\log h+O(j^{-1/12})$。因 $B\ge e^{j^{11/12}}\to\infty$，Axler 精确上界一致适用，得到
+
+$$
+\frac{Z(N_{g,j})}{e^\gamma}
+<\left(\log\log B+\frac{a_0}{(\log\log B)^2}\right)e^{T_j(y)}
+=\log h+o(1).
+$$
+
+所有误差一致于 $g$。由 $h\le j\log\phi+O_C(1)$，
+
+$$
+\log\log N_{g,j}-\log h
+=\log\left(1+\frac{\log V_j}{h}\right)
+\ge\log2-o_{v,C}(1).
+$$
+
+当 $h<j^{11/12}$ 时，用 §164.1 的通用包络（$B=1$ 单独以 $B/\varphi(B)=1$ 处理），得到
+
+$$
+Z(N_{g,j})/e^\gamma\le(11/12)\log j+O_v(1),
+$$
+
+因为 $\log B\le j^{11/12}+O(j^{5/6})$，且尾部乘积增加的加性误差为 $O(1/\log j)$。实际预算至少为 $\log\log V_j=\log j+O_v(1)$，两者之差一致趋于无穷。合并即得式（192.4）。$\square$
+
+**推论 192.3（全部规范五窗口公因子的回接）。**
+
+令 $v_-=a+b\psi\ne0$；非零性来自黄金嵌入在 $\mathbb Z^2$ 上单射。对来源 $x_{g,j}=gM^jv$，单位位为零的实际规范性由 §182 等价于
+
+$$
+-1<g\psi^jv_-<\phi.
+$$
+
+因此对每个实际规范来源都有
+
+$$
+g<\frac{\phi}{|v_-|}\phi^j.
+$$
+
+取上节的固定 $C=\phi/|v_-|$，式（192.4）覆盖每个好指标下的全部合法公因子。若 $v$ 本身是单位位为零的合法有限五窗口种子，$j$ 为三的倍数时还可解释成真实 null 前缀推进，再选择满足窗口条件的公因子；一般 $g$ 的乘法后规范地址由 §182 识别，不能把乘法本身当成逐窗不变的字符串操作。
+
+结论超出固定乘子与单位范数的已有全指标估计，但只在密度一的递归指标上成立。仍缺的是把 $\mathcal E_v$ 的稀疏上界升级成逐点尾界，或用别的判据逐个覆盖其全部大指标；式（192.3）不排除无限多个例外，也不推出一般 Robin 或 RH。
+
+### 192.4 文献中的较弱尾界也足够
+
+Leonetti–Sanna, https://arxiv.org/pdf/1704.00151v2 ，Lemma 2.4 与 Lemma 2.2(v) 已给 $\sum_{p>y}1/(pz(p))\ll y^{-1/4}$（$y\ge5$）。若不采用引理 191.2 的更强初等估计，可直接将该较弱已发表界代入定理 192.1；则式（192.2）—（192.3）的 $7/12$ 换成 $19/24$，定理 192.2 与推论 192.3 的密度一且共同公因子结论完全保留。两条路线的量词都只覆盖密度一指标，不能由指数改进删除剩余例外。
+
+## 追加锚（本行以下为增补区）
