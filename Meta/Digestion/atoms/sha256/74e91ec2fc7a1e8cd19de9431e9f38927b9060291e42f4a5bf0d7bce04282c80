@@ -1,0 +1,59 @@
+**推论 206.3（全阶有限上尾）。** 对任意上述实际区间、任意实数 $B>0$ 及任意正整数 $k$，非负性和有限矩公式给出
+
+$$
+\frac{\#\{g\in I:Z(gV+1)\ge B\}}T
+\le\frac{C_k+H_X^k/T}{B^k}
+\le\left(\frac{k+1}{B}\right)^k
++\frac1T\left(\frac{1+\log X}{B}\right)^k.
+$$
+
+这是每个 $k$ 均成立的有限不等式，因而允许在控制右边全部项的前提下选择随 $V$ 变化的 $k$。
+
+对 $I_r$ 令
+
+$$
+B_r=e^\gamma\log\log\bigl(V\lceil V/10\rceil+1\bigr).
+$$
+
+只在充分大的 $r$ 使用这个正阈值。每个实际整数的 Robin 预算至少为 $B_r$，因此令
+
+$$
+\mathcal E_r=\{g\in I_r:Z(N_g)\ge e^\gamma\log\log N_g\},
+$$
+
+就可在上式中取 $B=B_r$ 来控制 $|\mathcal E_r|/|I_r|$。特别地，固定任意正整数 $k$，
+
+$$
+\frac{|\mathcal E_r|}{|I_r|}=O_k((\log\log V)^{-k}).
+$$
+
+也可直接在全阶有限界中取 $k=\lfloor B_r/e\rfloor\ge1$。因 $k\le B_r/e<k+1$，
+
+$$
+k\log\frac{k+1}{B_r}
+\le k\left(-1+\frac e{B_r}\right)
+\le 2-\frac{B_r}{e}.
+$$
+
+同时 $T\asymp V$、$\log X=2\log V+O(1)$、$k=O(\log\log V)$，故第二项为
+
+$$
+\exp\left(-\log V+O((\log\log V)^2)\right).
+$$
+
+最后
+
+$$
+B_r=e^\gamma(\log\log V+\log2+o(1))
+$$
+
+给出
+
+$$
+\boxed{\displaystyle
+\frac{|\mathcal E_r|}{|I_r|}
+=O\bigl((\log V)^{-e^{\gamma-1}}\bigr).}
+$$
+
+这个异常集把等号也计入，符合目标严格不等式的要求。比例趋零仍允许每个区间存在例外，甚至允许无限多个例外。它既不证明全部合法 $g$ 满足 Robin，也不与§205 存在接近加性余量 $e^\gamma\log2$ 的稀疏子族冲突。
+

@@ -1,0 +1,26 @@
+**推论 227.3（统一小实倾斜）。** 固定 $q\ge1$、$C>0$。在 $|c|\le C$ 上一致有
+
+$$
+\boxed{
+K_{q,V}(c/\ell^2)
+=\left(\frac{2b_2c}{q^2}+\frac{c^2}{2q}\right)T
++O_{q,C}(T/\ell).
+}
+\tag{227.20}
+$$
+
+相应倾斜分布的均值和方差满足
+
+$$
+\mathbb E_{q,V,c/\ell^2}L
+=y+\left(\frac{2b_2}{q^2}+\frac cq\right)R+O_{q,C}(\delta),
+\qquad
+\operatorname{Var}_{q,V,c/\ell^2}L
+=\frac yq+O_{q,C}(y/\ell).
+\tag{227.21}
+$$
+
+证明。对 $K$ 作三阶 Taylor 控制，使用
+$K'(0)=2b_2R/q^2+O(\delta)$、$K''(0)=y/q+O(y/\ell)$ 及式（227.15）。三项余量分别为
+$O(\ell^{-2}\delta)$、$O(\ell^{-4}y/\ell)$、$O(\ell^{-6}y\ell)$，均是 $O_{q,C}(y/\ell^5)=O_{q,C}(T/\ell)$。对前两阶导数作同样控制即得式（227.21）。$\square$
+
