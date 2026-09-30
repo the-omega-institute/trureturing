@@ -38,7 +38,10 @@ internal sealed class FredkinEntanglingPowerRefutationDocument : IScribeDocument
             Node("result", "An input that generates more than two ebits",
                 Disp(new Formula.Not(F.Id("claim"))),
                 "Take psi_A = (3|0> + 20|1>)/sqrt(409) and psi_B = sqrt(2/75)|0> + sqrt(73/75)|1> with one-dimensional auxiliary systems, and psi_C = psi_D = (|00> + |01> + |10> - |11>)/2 on a qubit and an auxiliary qubit. The output amplitude matrix M across the cut factors as D_A N D_B with D_A, D_B diagonal and N rational, so M M^* has the characteristic polynomial of the rational matrix N (D_B D_B^*) N^T (D_A^* D_A). A kernel-checked computation writes this matrix as P diag(mu) P^(-1) with rational P, so the reduced state has eigenvalues mu = (1752, 1460, 1460, 1460, 3, 0, 0, 0)/6135 and trace 1. The existing spectral lemmas turn the von Neumann entropy into the sum of -mu log mu over these eigenvalues. Writing each term through log(6135/(4k)) and bounding log(6135/5840) and log(6135/7008) by their Taylor polynomials with remainder, and log(6135/12) > 6 by e < 2.7182818286, gives an entropy above 2 log 2, that is 2.00034... > 2 ebits. The generated entanglement then contains a value above 2: if it is bounded above, its supremum exceeds 2; otherwise the supremum is 0. In either case K_AD:BC(F_4) is not 2.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("qiu-2025-fredkin-entangling-power"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(
