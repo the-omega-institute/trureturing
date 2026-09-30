@@ -965,7 +965,7 @@ $$
 \eta(x,y)=e(x)+e(y)-e(x+y).
 $$
 
-Fibonacci 分解降一阶的经典读出见 Letouzey，[*Hofstadter's problem for curious readers*](https://arxiv.org/abs/1509.02479)，§5.3，Theorem 14；该文的 Fibonacci 索引比本卷低一。标量进位公式亦见 [Cloitre 支撑算术，§1](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/landing.md)。下面把这些读出接到本卷的组成与单位位，确定其两个进位方向。
+Fibonacci 分解降一阶的经典读出见 Letouzey，[*Hofstadter's problem for curious readers*, v1](https://arxiv.org/abs/1509.02479v1)，§5.3，Theorem 14；该版本的 Fibonacci 索引比本卷低一。标量进位公式亦见 [Cloitre 支撑算术，§1](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/landing.md)。下面把这些读出接到本卷的组成与单位位，确定其两个进位方向。
 
 **定理 14.2（规范五窗的双读出与双进位）。** 写 $c_Z(n)=(a(n),b(n))^{\mathsf T}$，则
 
@@ -1195,7 +1195,7 @@ $$
 
 末字母 $\underline0,\underline1$ 与五个窗口字母不相同。对两个自然数 $x,y$，在高端各补 $\mathrm{null}$，使窗口个数相同，再把对应字母配对；单位位配对为末字母。包含所有这类共同长度补零的 $(n,b(n))$ 配对词的语言记为 $\mathcal G_b$。称其为正则同步词图，是指这个配对字母表上的语言正则。
 
-**定理 17.3（Campbell 的三进制与五窗同步关系分离）。** 在假设 17.1 下，Campbell 的 $(n,b(n))$ 关系具有正则三进制同步词图，而 $\mathcal G_b$ 不是正则语言。三进制词图同样使用高到低规范位和共同高端补零。五窗的否定结论允许任意有限数量的识别状态，因而强于五状态障碍；其对象是定义 17.2 的同步词图。
+**定理 17.3（Campbell 的三进制与五窗同步关系分离）。** 在假设 17.1 下，Campbell 的 $(n,b(n))$ 关系具有正则三进制同步词图，而 $\mathcal G_b$ 不是正则语言。三进制词图同样使用高到低规范位和共同高端补零。五窗的否定结论排除任意有限数量状态的同步词图识别者；这个合同区别于命题 16.3 中自主推进并读出当前内索引的合同。
 
 证明。先从给定尺度公式提取一个实际水平集。偶数线性分支的比值至少 $1/2$，偶数平台分支的比值大于 $1/2$，所以 $5b(n)=2n$ 不出现在偶数索引。奇数平台 $b(n)=2s$ 上，此等式恰在 $n=5s$ 成立；奇数线性分支 $b(n)=n-3s$ 上同样仅在交界 $n=5s$ 成立。$n=1$ 不满足，故
 
