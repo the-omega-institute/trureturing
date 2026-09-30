@@ -2564,6 +2564,6 @@ operatorname{Re}(overline{x_i}x_j)le Q_A(r).
 
 仓库有限 Fibonacci 证书给出模 (5040=16cdot9cdot5cdot7) 的共同权重相位周期 (80)，而模 (7) 的局部周期为 (16)。GoldenScaleHelix 的每一步翻转一个 Boolean 取向。新增声明
 `D5/S3/CompletionDynamics/GoldenMobius/GoldenScaleHelix.orientationCover_monodromy`
-证明任意偶数长度周期的取向单值性，并给出 (80) 步与 (16) 步实例。因此这些有限相位数据上的两层覆盖是平凡的；若要得到 Möbius 取向翻转，必须另外提供奇数闭环或独立的参数胶合。这个结果是对 Möbius 解释的有限反例/障碍，不把 Klein 四群轨道误写成 Klein 瓶拓扑。
+证明任意偶数长度周期的取向单值性，并给出 (80) 步与 (16) 步实例。因此，在这个明确的 Boolean 翻转模型中，这些有限相位数据上的两层覆盖是平凡的；若要在同一模型中得到 Möbius 取向翻转，必须另外提供奇数闭环或独立的参数胶合。这个结果只约束所选有限模型，不排除无关的几何实现，也不把 Klein 四群轨道误写成 Klein 瓶拓扑。
 
 
