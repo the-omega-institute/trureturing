@@ -1,0 +1,84 @@
+### 214.1 完整缺陷的实际定义及安全方向
+
+对正整数 $n$ 定义
+
+$$
+\eta(n)=\prod_{p\mid n}\left(1-p^{-v_p(n)-1}\right),
+\qquad c(n)=-\log\eta(n),
+$$
+
+乘积只遍历实际素因子，$\eta(1)=1$、$c(1)=0$。有限 Euler 因子化给精确等式
+
+$$
+Z(n)=\frac n{\varphi(n)}\eta(n).
+\tag{214.1}
+$$
+
+令 $a_0=0.0094243$、$\Lambda_n=\log\log n$。在已有 Axler 固定门槛 $n\ge N_K$ 上，
+
+$$
+\frac n{\varphi(n)}
+<e^\gamma\Lambda_n\left(1+\frac{a_0}{\Lambda_n^3}\right).
+$$
+
+因此定义
+
+$$
+h_A(n)=\log\left(1+\frac{a_0}{\Lambda_n^3}\right)
+$$
+
+以后，有以下两个方向：
+
+$$
+c(n)\ge h_A(n)\quad\Longrightarrow\quad
+Z(n)<e^\gamma\Lambda_n,
+\tag{214.2}
+$$
+
+$$
+Z(n)\ge e^\gamma\Lambda_n\quad\Longrightarrow\quad
+c(n)<h_A(n).
+\tag{214.3}
+$$
+
+式（214.2）允许等号，式（214.3）必须严格，因为所用 totient 上包络严格。式（214.3）的右边只是必要候选条件，不能反向推出 Robin 失败。
+
+Hertlein 的固定 totient 包络同样给
+
+$$
+c(n)\ge h_H:=\log(1771561/1771560)
+\quad\Longrightarrow\quad n\text{ 满足严格 Robin},
+\tag{214.4}
+$$
+
+其解析区间与已引用有限验证区间按原文重叠。本节只处理充分大的整数，因此无需对这两个区间重新拼接。
+
+为使筛选集合完全明确，预先固定有限目录 $\mathscr B=\{(p,b_p)\}$，其中每一项都有已引用的文献保证：$n>5040$ 且 $v_p(n)<b_p$ 时严格 Robin 成立。可直接取仓内已核的
+
+$$
+\mathscr B=\{(2,21),(3,13),(5,9),(7,7),(11,6)\},
+\qquad M_{\mathscr B}=\prod_{(p,b_p)\in\mathscr B}p^{b_p}.
+$$
+
+本节实际使用的存活集合与指示是
+
+$$
+\mathcal C_{\mathscr B}
+=\{n\ge N_K:c(n)<h_A(n),\ c(n)<h_H,\ M_{\mathscr B}\mid n\},
+\qquad \chi(n)=\mathbf1_{\mathcal C_{\mathscr B}}(n).
+\tag{214.4a}
+$$
+
+每个充分大的 Robin 等号或超界整数都属于该集合；集合成员可以安全。允许预先增加有限个具有同样已核文献保证的指数下限，后文阈值可依赖这份固定目录。任何已引用的固定部分乘积停止条件，在本节构造中也会最终失效，因为部分缺陷不大于趋零的完整缺陷；这不是对全部其他安全判据的概括。
+
+
+若只观测实际素因子集合 $P\subseteq\{p:p\mid n\}$，则
+
+$$
+c_P(n)=\sum_{p\in P}-\log(1-p^{-v_p(n)-1})\le c(n).
+$$
+
+所以 $c_P\ge h_A$ 或 $c_P\ge h_H$ 都可安全停止；但 $c_P<h_A$ 不保证完整 $c<h_A$。增加实际因子的观测可以继续触发停止。
+
+缺失素数必须单独处理：$p\nmid n$ 时，它在上述 $\eta$ 中的因子为1、在 $c$ 中的贡献为0。不能将 $v_p(n)=0$ 直接代入实际存在素因子的公式，加入虚假的 $1-p^{-1}$ 因子。文献中包含缺失情形的独立低赋值定理可以使用，但其来源是那个定理，而不是式（214.1）的不存在因子。
+

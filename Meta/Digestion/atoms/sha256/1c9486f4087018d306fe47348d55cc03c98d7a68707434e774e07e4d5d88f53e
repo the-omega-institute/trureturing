@@ -1,0 +1,44 @@
+### 232.3 FIB 窗口的加强版单候选界
+
+回到 §231 的 FIB 窗口，令 $y=\log A$、$\ell=\log y$、$s=y\ell$、$R=y/\ell^2$、$t=e^\gamma\ell$、$b_2=\pi^2/6$，并固定 $J_0=8b_2R$。继续使用式（231.9）的参考整数 $n_y$。
+
+§230 的统一低亏损编辑界和参考规模给
+
+$$
+J_s(d)\le8b_2R
+\ \Longrightarrow\
+\log v_d\le\mathcal L(d,n_y)=O(y/\sqrt\ell)=o(y),
+\qquad \log n_y=y+o(R).
+\tag{232.12}
+$$
+
+另一方面，$\log\operatorname{diam}(I)=y/2+O(1)$。所以式（232.2）最终成立，引理 232.1 给全部除数集合 $|E^*|\le1$。此步不再使用 $n_y$ 与 $V$ 的互素性。
+
+引理 231.1 及 §210.2 分别给
+
+$$
+\mu_s\{J_s>8b_2R\}\le e^{-5b_2R/3+o(R)},
+\qquad\log\Lambda=b_2R+o(R).
+$$
+
+代入式（232.6），并用 $T_I/X=e^{-y/2+O(1)}$，得到
+
+$$
+\boxed{
+|E^*|\le1,\qquad
+\sum_{g\in I\setminus E^*}\left(\frac{Z(N_g)}t\right)^s
+\le e^{-2b_2R/3+o(R)}\longrightarrow0.
+}
+\tag{232.13}
+$$
+
+这是整个候选补集矩的衰减率，不再含 §231 中由 $H=e^{aR}$ 产生的 $a-b_2$ 项，也不再选择 $a,H,D$。因补集矩最终小于一，其中每个整数都满足
+
+$$
+Z(N_g)<t=e^\gamma\log\log A
+\le e^\gamma\log\log N_g.
+\tag{232.14}
+$$
+
+所有可能的 Robin 非严格违例仍至多一个，且现在被集中到“含任意低亏损除数”的实际整数上。唯一整数是否存在及其完整权重是否低于 Robin 预算，仍是另一项问题。
+

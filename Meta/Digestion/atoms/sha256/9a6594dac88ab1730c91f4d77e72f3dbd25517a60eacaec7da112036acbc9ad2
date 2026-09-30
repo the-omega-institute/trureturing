@@ -1,0 +1,46 @@
+**命题 221.6（实际剩余整数的次幂级个数上界）。** 有
+
+$$
+\boxed{
+\log\#\{n\in[A,X]:F_{q,w}(n)\le B_{\mathrm{joint}}\}
+\le(3+o(1))\frac{y\log\ell}{\ell},
+}
+\tag{221.29}
+$$
+
+若集合为空则直接理解为对应的计数上界。特别地，满足这些条件的实际
+FIB 整数至多有 $V^{o(1)}$ 个。
+
+证明。取 $\alpha=3\log\ell/\ell$，充分大时 $0<\alpha\le1/2$。
+Rankin 的有限正项上界给
+
+$$
+\Psi(X,w)\le X^\alpha\prod_{p\le w}(1-p^{-\alpha})^{-1}.
+$$
+
+由 $1-2^{-\alpha}\ge\alpha\log2/2$，
+
+$$
+\begin{aligned}
+\log\prod_{p\le w}(1-p^{-\alpha})^{-1}
+&\le\frac2{\alpha\log2}\sum_{p\le w}p^{-\alpha}\\
+&\le\frac4{\alpha\log2}w^{1-\alpha}
+=O\left(\frac{y}{\ell\log\ell}\right).
+\end{aligned}
+$$
+
+最后一步使用 $w=s+1\sim y\ell$ 及
+$w^{-\alpha}=\ell^{-3}(1+o(1))$。因此
+
+$$
+\log\Psi(X,w)\le(3+o(1))\frac{y\log\ell}{\ell}.
+$$
+
+式（221.27）给 $\log B=O(y/\ell)=o(y\log\ell/\ell)$，代入式（221.28）即得。
+这只是实际区间中一个明确受限集合的上界，所以对它与 FIB 余数类的交集仍成立，
+不需要假设光滑数在该余数类中均匀分布。$\square$
+
+此结论缩小的是剩余核可依附的整数集合；它不是该集合的加权矩上界。
+特别地，$(y\log\ell)/\ell$ 大于 $R=y/\ell^2$，仅以候选个数乘最大增量原子
+仍不能跨过需要的核预算。
+

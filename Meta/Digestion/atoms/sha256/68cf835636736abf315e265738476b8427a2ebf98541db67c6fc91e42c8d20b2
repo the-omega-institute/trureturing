@@ -1,0 +1,31 @@
+**命题 216.1（指数的独立性与精确尾）。** 写 $n=\prod_p p^{v_p}$。在 $\mathbb P_n$ 下，随机指数 $A_p=v_p(D)$ 独立，且对 $0\le k\le v_p$，
+
+$$
+\mathbb P_n(A_p\le k)=\left(\frac{Z(p^k)}{Z(p^{v_p})}\right)^s.
+\tag{216.3}
+$$
+
+令 $J_p=v_p(H_n)=v_p-A_p$。对 $0\le j\le v_p$，
+
+$$
+q_{p,j}:=\mathbb P_n(J_p\ge j)
+=\left(\frac{Z(p^{v_p-j})}{Z(p^{v_p})}\right)^s
+=\left(1-\frac{p^j-1}{p^{v_p+1}-1}\right)^s.
+\tag{216.4}
+$$
+
+另约定 $q_{p,v_p+1}=0$。
+
+证明。乘法性使式（216.2）的分子与分母均逐素数分解，给有限乘积分布。对 $A_p\le k$ 的局部和望远镜消去，得到式（216.3）；代入 $k=v_p-j$，并使用 $Z(p^k)=(1-p^{-k-1})/(1-p^{-1})$，得到式（216.4）。$\square$
+
+更一般地，对每个实际 $h\mid n$，
+
+$$
+\boxed{\mathbb P_n(h\mid H_n)=\left(\frac{Z(n/h)}{Z(n)}\right)^s.}
+\tag{216.5}
+$$
+
+这是 $D\mid n/h$ 的同一个有限卷积，没有关于 $h$ 的粗糙性假设。
+
+若 $s$ 是正整数，还有一种精确实现：独立抽取 $s$ 个约数 $E_i\mid n$，各自服从 $\mathbb P(E_i=e)=1/(eZ(n))$。则 $\operatorname{lcm}(E_1,\ldots,E_s)$ 的局部分布函数正是式（216.3），故它与 $D$ 同分布。对非整数 $s>0$，式（216.2）—（216.4）直接定义分布，不需要这个抽样解释。
+
