@@ -79,6 +79,8 @@ class NativeReportConsumerTests:
         self.assertTrue(untouched)
         self.assertTrue(any('interface' in path.parts for path in untouched))
         stamps = {path: (path.stat().st_mtime_ns, publication.digest(path)) for path in untouched}
+        production = self.root / '.lake/build/reg/lib/lean/Reg/ProductionOnly.olean'
+        self.assertIn(production, stamps)
         import reuse
         logs = Path(str(output) + '.logs')
         for name in implementations:
