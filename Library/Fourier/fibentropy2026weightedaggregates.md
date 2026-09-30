@@ -333,3 +333,106 @@ $$
 The normalized logarithmic lower limit of the separated certificate is at least $b_2/q_\varepsilon^2$. This includes every fixed $p>1$ and choices varying with scale while staying that fixed distance from one. It does not cover $p=1$ or $p(y)\downarrow1$, because the source estimates are not uniform for unbounded $q$. The $4/3$–$4$ instance gives $b_2/16$.
 
 This obstruction retains the exact arithmetic product window and reciprocal cofactor; it does not simply transfer the full-law result from §225. It still lower-bounds an upper-bound expression formed after absolute values and norm separation, not the signed source/cofactor correlation or the actual Robin kernel. The signed representation, the one-norm endpoint, and joint loss counts remain unresolved routes. None of the new estimates settles the complete FIB family or RH. These are paper deductions, with no new Lean verification or claim of exhaustive prior-art coverage.
+
+## 6. Small rational ratios, the Fourier endpoint and one possible exception
+
+Theory §§230–231 use a uniform constraint on integers with small loss to extend the preceding analysis. Keep the actual prime-index FIB family and source of §1, and put
+
+$$
+m_s=\max_{d\ge1}\mu_s(d),\qquad
+J_s(d)=\log\frac{m_s}{\mu_s(d)}\ge0.
+$$
+
+The maximum exists by theory §218. Its reference integer is
+
+$$
+n_y=\prod_{p\le y}p^{a_p},\qquad
+ a_p=\begin{cases}
+\lceil\log s/\log p\rceil,&p\le\sqrt s,\\
+1,&\sqrt s<p\le y.
+\end{cases}
+$$
+
+For every fixed $K>0$, theory §230 proves the uniform implication
+
+$$
+J_s(d)\le KR,\qquad \frac d{n_y}=\frac uv\text{ in lowest positive terms}
+\quad\Longrightarrow\quad
+\log u+\log v=O_K(y/\sqrt\ell)=o(y).
+$$
+
+This holds for every integer in the specified loss set. The proof treats all small-prime valuations, changes of occupancy in the central prime range, and the entire large-prime tail. It retains the same reference $n_y$ for all integers. Since every prime factor of $n_y$ is at most $y$ and every prime factor of $V$ is eventually greater than $2y$, this reference is a unit modulo $V$.
+
+For the actual truncated transform
+
+$$
+F_D(\chi,\tau)=\sum_{\substack{D<d\le X\\(d,V)=1}}
+\mu_s(d)\chi(d)d^{i\tau},
+$$
+
+let $\|\cdot\|_{p,*}$ use the $Q$-point character probability measure with the principal coordinate set to zero. Fix $a>0$, $H=e^{aR}$ and $D=X/H$. With
+
+$$
+\kappa=\frac1{10},\qquad
+g_\kappa=\frac12+\frac23e^{-\kappa}>1,\qquad
+c_\kappa=2\kappa\log g_\kappa>0,
+$$
+
+theory §230 obtains, for every fixed $0<c<c_\kappa$, a threshold independent of $\tau$ such that
+
+$$
+\|F_D(\cdot,\tau)\|_{1,*}\ge m_s e^{cR}
+\qquad(\tau\in\mathbb R).
+$$
+
+The new argument constructs a bounded degree-eight test on the actual character group. Its constant and linear coefficients create a positive gain on a finite integer cube. Disjoint buffer primes place that cube's mean inside the actual size window, and a variance bound retains asymptotically all of its auxiliary positive weight. The small rational ratios turn the relevant modular matches into integer equalities, cancelling the continuous phases exactly. Higher coefficients have signs; their complete absolute contribution is bounded before deriving the norm lower bound. This supplies uniformity for all real frequencies without assuming that prime character phases are independent.
+
+The [existing Fejér card](../Zeros/fejer1903untersuchungen.md) records the historical attribution of the classical positive kernel. Section 230 proves the needed normalized-square and convolution identities directly. This citation does not assert that the original article was inspected or that it contains the new arithmetic application.
+
+For the reciprocal cofactor $C_H$ defined in §5, the same character probability measure gives $\|C_H(\cdot,\tau)\|_{1,*}\ge1/2$ eventually, uniformly in $\tau$. Norm monotonicity therefore yields
+
+$$
+\|F_D(\cdot,\tau)\|_{p,*}\,
+\|C_H(\cdot,\tau)\|_{p',*}
+\ge\frac12m_s e^{cR}
+\qquad(1\le p\le\infty),
+$$
+
+where $p'$ is conjugate to $p$. One threshold covers all $p$ and $\tau$, including choices of $p$ depending on scale or frequency. This separate construction covers the endpoint left outside the fixed-$\varepsilon$ argument in §5; it does not take an uncontrolled $q\to\infty$ limit. Since $\log(\Lambda m_s)=o(R)$, the normalized positive norm product grows exponentially. The same conclusion applies to a nonnegative shared weight $w_y$ when an interval $I_y$ has length $\asymp1/R$ and $\int_{I_y}w_y(\tau)\,d\tau\ge e^{-o(R)}$, as for the specified arithmetic-gap kernel. These are lower bounds on separated positive upper-bound certificates. They do not lower-bound the signed arithmetic correlation or an additional joint product filter.
+
+Theory §231 uses the same uniform rational-ratio bound to compare actual hits. Fix $a>b_2$, $K=8b_2$ and define
+
+$$
+E_y=\{g\in I:\exists d\mid N_g,\ d>D,\ J_s(d)\le KR\}.
+$$
+
+If $d_i h_i=N_{g_i}$ are two such hits and $d_i/n_y=u_i/v_i$, their strict cofactor bounds are $1\le h_i<H$. Cancelling the same unit $n_y$ in the two actual congruences gives
+
+$$
+u_1h_1v_2\equiv u_2h_2v_1\pmod V.
+$$
+
+Both positive sides have uniformly $o(y)$ logarithm and hence are strictly below $V$, whose logarithm is $y/2+O(1)$. They are equal as integers, so $N_{g_1}=N_{g_2}$. Consequently $|E_y|\le1$ eventually. The possible single integer may carry many small-loss large divisors; this conclusion counts actual integers, not divisors. It uses the uniform ratio bound and unit reference, without depending on the Fourier endpoint theorem.
+
+The complement is controlled by its full positive moment. Write $T_I=|I|$ and $t=e^\gamma\ell$, so $\Lambda=XU(s)/t^s$. The exact divisor-increment expansion and the unique-hit property for $d>D$ give
+
+$$
+\sum_{g\in I\setminus E_y}\left(\frac{Z(N_g)}t\right)^s
+\le\Lambda\left(\frac{T_I}X+\frac DX+\mu_s\{J_s>KR\}\right).
+$$
+
+The fixed $q=3/4$ complete-source power sum, through the exact identity $\mathbb E_{\mu_s}e^{J_s/4}=m_s^{1/4}S_{3/4}(\mu_s)$, gives
+
+$$
+\mu_s\{J_s>8b_2R\}\le e^{-(5b_2/3)R+o(R)}.
+$$
+
+Thus the complement moment is at most $e^{-c_aR+o(R)}\to0$, where $c_a=\min(a-b_2,2b_2/3)>0$. For each integer in that complement, this yields $Z(N_g)<t\le e^\gamma\log\log N_g$. The resulting statement includes equality among the possible violations:
+
+$$
+\#\{g\in I:Z(N_g)\ge e^\gamma\log\log N_g\}\le1
+$$
+
+for every sufficiently large prime-index window specified in §1.
+
+These are repository paper deductions, with no new Lean or kernel verification and no verdict of literature originality. No effective numerical starting index is supplied. The possible exceptional integer has not been excluded or proved safe; there can be a different candidate in each window. The result does not establish Robin for the complete FIB family, and no bridge capturing every arbitrary-integer Robin counterexample has been proved. RH remains unresolved.
