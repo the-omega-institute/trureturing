@@ -14,8 +14,7 @@ internal sealed class NonnestingRoyalLowDocument : IScribeDocumentDefinition
         H("Enumeration for 1132 and 2213"),
         Blocks(
             Node("nonnesting-nonnestingroyallow-result", "The 1132 and 2213 generating function", "result",
-                "Let R be the ordinary generating function counting doubled nonnesting permutations avoiding 1132 and 2213 by the number of distinct letters. Then xR squared - (1 - x) squared times R + (1 - x) squared equals zero.", DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(ProblemSlugRef.Create("elizalde-luo-nonnesting-1132-2213"), ResolutionKind.Proved))),
+                "Let R be the ordinary generating function counting doubled nonnesting permutations avoiding 1132 and 2213 by the number of distinct letters. Then xR squared - (1 - x) squared times R + (1 - x) squared equals zero.", DescribeRole.Theorem)),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,
