@@ -19169,3 +19169,392 @@ other coordinates or on stage histories can change conditional rows;
 a change of order or kernels also changes g. In any such change,
 FC807 must be rederived from the new same-source interface rather
 than carrying over its old fees.
+
+## Only assigned current stages need a denominator guard
+
+Keep one arbitrary finite actual family, its pure/star rows FC777--781,
+and numerical prime order. Let V be its nonternary prime carrier and
+J={p in V:M_p is nonempty} its assigned mixed stages. Every remaining
+original has at least two distinct nonternary prime factors, so 5 is
+not in J and kappa_5=1 whenever that coordinate is present. Define
+
+    G_J={y:alpha_p(y)<=2/3 for every p in J},
+    R_J=integral_(G_J) A(y)dnu_3(y)>2729/7200.           (FC808)
+
+This enlarges the all-prime trimmed set of FC798. To prove the bound,
+put b_p=1-a_p 1_(alpha_p<=2/3) for p in J and b_p=1-a_p otherwise.
+Pointwise 1_(G_J)A=product_p(1-b_p), and
+
+    b_p<=(9/4)alpha_p^2 for p in J,
+    b_p<=alpha_p^2       for p outside J.               (FC809)
+
+The second inequality is (2alpha-1)_+<=alpha^2; for the first, above
+2/3 use 1<=(9/4)alpha^2, and below it use the second inequality.
+The product bound and FC779 at T=1 now give
+
+    R_J>=1-2/9-(9/2)sum_(p>=7 prime)(p-2)^(-2)
+       >1-2/9-(9/2)(719/3600-1/9)=2729/7200.
+
+Absent primes only remove nonnegative charges. If J is empty,
+FC782 already gives the stronger untrimmed reserve. The prime-square
+input is the same one used there; no new numerical summation is used.
+
+On G_J, a_p>=2/3 and lambda_p<=3nu_p only for p in J. In particular
+there is NO asserted cap3 at5. The full normalized ternary marginal
+is 1_(G_J)A nu_3/R_J, not nu_3. The finite-carrier domination remains
+zeta_J<=D_star H_P. FC795 therefore applies with G_J and the same
+actual kernels whenever sum_p gamma_p(G_J)<R_J.
+
+Earlier row denominators cancel in FC792 before any upper bound is
+taken. At an assigned current p and an earlier selected q, the needed
+raw inequalities are just
+
+    tau_p(C)tau_p(D)/a_p<=6nu_p(C)nu_p(D),
+    kappa_q tau_q(E)<=2kappa_q nu_q(E).                 (FC810)
+
+Omitted a_r factors are at most one. At A=0 every raw pair is zero:
+a zero mass occurs as the current zero-row convention, a queried tau
+factor or an omitted a_r factor. Thus this cancellation creates no
+mass on a zero-source row.
+
+## Raw exponent completion has a uniform vanishing prime tail
+
+Distinct numerical moduli supply at most one original per complete
+exponent tuple. Only after retaining that injectivity, complete the
+nonnegative ordered pair sum over all current and predecessor depths.
+For numerical primes q<p put
+
+    t_q=2kappa_q/(q-2),
+    d_q=2kappa_q(q+1)/((q-1)(q-2)),
+    B_q=1+2t_q+d_q,
+    E_p=product_(5<=q<p)B_q
+           -2product_(5<=q<p)(1+t_q)+1.
+    gamma_p(G_J)<=30E_p/(p-2)^2.                      (FC811)
+
+For a uniform upper allowance take kappa_5=1 and kappa_q=2 for q>=7.
+An actual inactive stage has kappa_q=1 and may be retained more sharply.
+Here t_q is the one-present predecessor sum, and d_q is the both-present
+sum: compatible cylinders of depths e,f have mass at most
+c_q q^(-max(e,f)). Both predecessor supports must be nonempty, giving
+the displayed inclusion--exclusion in a nonnegative pattern sum.
+The current exponents sum to 6/(p-2)^2. The ternary exponents give
+
+    1+2sum_(j>=1)(2j+1)3^(-j)=5.
+
+The zero/zero ternary pair has mass1 and must not be charged cap2.
+All incompatible actual prefixes still have zero contribution before
+completion. The completed allowance does not claim simultaneously
+realizable maximizing phases.
+
+In particular B_5=10/3 and E_7=d_5=1. The stage7 allowance is6/5,
+larger than every source mass<=1. Thus this scalar head bound alone
+cannot establish the positive budget. This is a failure of the
+upper allowance, not a lower bound on the actual stage fee.
+
+Nevertheless its far tail is uniformly controllable. For q>=7 and
+z=1/(q-1),
+
+    B_q=1+12z+20z^2/(1-z)<=(1+z)^12.
+
+Indeed z<=1/2 gives 20/(1-z)<=40<66. Reuse the explicit reciprocal
+prime-product ratio from
+[Rosser--Schoenfeld Theorem8](../../../../../../Library/Arith/rosser1962approximate.md)
+and Chapter33 SH11. For integers B>=286, ell>=7, 3^ell<=B and x>=B,
+
+    product_(B<q<=x)q/(q-1)<=c_ell log(x)/log(B),
+    c_ell=(2ell^2+1)/(2ell^2-1).
+
+For an integer Q>=B define the explicit positive remainder
+
+    T_B(Q)=c_ell^12/Q * (Q/(Q-2))^2
+             *(log(Q)/log(B))^12
+             *sum_(j=0..12)12!/((12-j)!log(Q)^j).
+    sum_(p>Q)(p-2)^(-2)product_(B<q<p)B_q<=T_B(Q).     (FC812)
+
+After the product bound, enlarge the prime sum to all integers above Q.
+The function (log x)^12/x^2 decreases for log x>6, which holds here
+because log B>ell>=7. Its integral from Q to infinity is
+(log Q)^12/Q times the displayed degree12 polynomial, by integration
+by parts. This proves FC812 for every finite actual prime subset.
+For fixed B it is O_B((log Q)^12/Q) and tends to zero.
+
+Writing P_B=product_(5<=q<=B)B_q, FC811 gives
+
+    sum_(p>Q)gamma_p(G_J)<=30P_B T_B(Q).               (FC813)
+
+At Q=B one may replace log B in the positive polynomial by ell to
+obtain a rational expression. With any fixed admissible ell, this
+also tends to zero as B grows: the same product ratio from a fixed
+anchor gives P_B=O((log B)^12). No cutoff, product or sign is evaluated
+here. This is a consumer of the existing prime-product argument,
+not a new generic analytic theorem or a whole-cover certificate.
+
+## Three joint head responses retain the actual mixed-load geometry
+
+The scalar completion is optional in the finite head. The following
+alternative bounds the ACTUAL squared-load fees, not the already
+coarsened FC792 gamma values. Keep the entire original family fixed.
+For a common selector 0<=w(y)<=1 let R(w)=integral_(G_J)wA dnu_3.
+
+At each assigned stage use its existing half-threshold normalized
+mixed kernel relative to lambda_p=tau_p/a_p and multiply it by a_p.
+The resulting raw row Khat_p satisfies Khat_p<=kappa_p tau_p and
+Khat_p(total)=a_p(y). At inactive stages Khat_p=tau_p. The final raw
+law 1_(G_J)nu_3 product_p Khat_p has mass R_J. Its later rows integrate
+to their y-dependent masses; it does not preserve unweighted raw
+earlier marginals.
+
+Fix B>=7 and retain every actual nonternary coordinate at most B,
+to all required original depths. Also retain y to ALL ternary depths
+needed by the complete family, including remote stars and G_J. The
+actual raw prefix law is
+
+    mu_B=1_(G_J)nu_3 product_(q in V,q<=B)Khat_q.      (FC814)
+
+It deliberately omits product_(q>B)a_q, so it is not the head marginal
+of the full law and its mass may exceed R_J. Its role is a positive
+upper bound; the reserve always remains the full R(w).
+
+Let N_B be this finite head modulus. Among its divisors let D_all
+contain all divisors, including1, and D_+ those having a nonternary
+prime. For a complete layout b=(b_d), put
+
+    L_b=sum_(d in D_all)1_(x=b_d mod d),
+    L_b^+=sum_(d in D_+)1_(x=b_d mod d).
+
+These indicators include their ternary conditions on the same y.
+Retain three responses on the SAME weighted law w mu_B:
+
+    C_EE(w)=max_(b,b')integral L_b^+ L_b'^+ d(w mu_B),
+    C_EN(w)=max_(b,b')integral L_b^+ L_b'   d(w mu_B),
+    C_NN(w)=max_(b,b')integral L_b   L_b'   d(w mu_B).
+    0<=C_EE(w)<=C_EN(w)<=C_NN(w).                     (FC815)
+
+The maxima are finite. Cauchy--Schwarz identifies the first and third
+with their respective same-layout second-moment maxima. Pointwise
+L_b^+<=L_b gives the inequalities. Separate maxima are upper bounds,
+not claimed jointly attainable witnesses. Finite exact computability
+requires a supplied rational finite source and w given as a finite
+rational table on the common ternary refinement. It does not assert
+efficient storage or computation. The inequalities also hold for
+other measurable selectors, without a claim of computable input.
+
+Let ell_p(y,x_<p) be the tau_p mass of the ACTUAL active mixed union.
+The current raw bad mass is (2ell_p-a_p)_+<=ell_p^2/a_p, so its fee
+in the one final law is bounded by
+
+    F_p(w)=integral w1_(G_J)ell_p^2/a_p
+                 dnu_3 product_(q<p)Khat_q product_(r>p)a_r.
+                                                               (FC816)
+
+Use zero on zero-source rows. This uncoarsened squared-union fee is
+at most integral_(G_J)w g_p dnu_3, but need not equal it.
+For p>B set P_(B,p)=product_(B<q<p)B_q and
+U_(B,p)=product_(B<q<p)(1+t_q). Then
+
+    F_p(w)<=6/(p-2)^2 [C_EE(w)
+              +2(U_(B,p)-1)C_EN(w)
+              +(P_(B,p)-2U_(B,p)+1)C_NN(w)].         (FC817)
+
+To prove this, expand the original-label square, bound its current
+factor by FC810, and integrate outside-head earlier coordinates in
+reverse order. A selected intersection pays one cap at that row;
+an unselected row integrates to a_q<=1. Later masses may be dropped
+for an upper bound. What remains is the actual head integral FC814,
+not a product of separately maximized head marginals.
+
+For each fixed current depth and outside-head predecessor tuple,
+distinct numerical moduli leave at most one original per complete
+head cofactor. Its partial head layout extends to a full one. If
+the outside-head tuple is empty, the nonempty predecessor support
+must occur in the head, so use D_+. Otherwise D_all is allowed.
+Completing the two tuples gives coefficients1, U-1 in each mixed
+case, and P-2U+1 in the both-nonempty case. All are nonnegative.
+The current depth sum is6/(p-2)^2; ternary depths remain inside the
+head, so there is no further factor5.
+
+The bracket in FC817 is at most P_(B,p)C_NN(w). Under FC812's anchor
+hypotheses,
+
+    sum_(p>Q)F_p(w)<=6C_NN(w)T_B(Q),
+    C_NN(w)<=C_NN(1)<=5P_B.                           (FC818)
+
+The last bound follows by the same raw backwards cylinder expansion
+and zero/zero ternary treatment as FC811. It is independent of head
+depths and recovers FC813's scalar right-hand side for the actual F_p
+tail. It does not infer a sharper gamma bound. The three actual
+responses can be sharper; no improvement for every family is claimed.
+
+In particular, valid head upper allowances H_p(w)>=F_p(w), p<=Q,
+provide the sufficient whole-family criterion
+
+    R(w)-sum_(p<=Q)H_p(w)-6C_NN(w)T_B(Q)>0.           (FC819)
+
+Divide this positive difference by D_star product_p kappa_p to obtain
+a positive Haar survivor bound. Every quantity must use the SAME
+actual family, rows, order and common selector. Although mu_B omits
+later a factors, its G_J and y resolution still depend on the whole
+family. Changing the tail does not preserve mu_B or these responses
+without a separate transport proof. Tail summability therefore does
+not reduce unrestricted #7 to an already certified finite search.
+The unresolved obligation is a positive head margin, uniformly over
+the original quantifiers, or a stronger alternative certificate.
+
+## Top-height matching restricts entire extra-label increments
+
+Now impose the additional premise of FC804: ONE hypothetical whole
+cover globally minimal first in cardinality, then in modulus sum.
+Let H be its global ternary height. At stage p choose q<p and the
+packet of originals divisible by h=3^Hqp and lying in the same full
+ternary prefix r. Its p/q cells inherit FC805. Leave one baseline
+original in each occupied packet cell and let E be its second
+occupants. Put Bset=M_p minus E, including ALL other stage-p originals.
+Distinct extras have distinct earlier q-roots, so Psi_ee'=0 for
+e!=e'. The exact old-fee decomposition is
+
+    g_p=g_Bset+sum_(e in E)Delta_e,
+    g_Bset=sum_(b,b' in Bset)Psi_bb',
+    Delta_e=Psi_ee+2sum_(b in Bset)Psi_eb.             (FC820)
+
+The current p factor is a PRODUCT; different current roots alone
+would not imply a zero cross term. No original, row or kernel has
+been removed: g_Bset is a subsum, not a rebuilt process. In particular
+every cross-packet and lower-layer interaction remains in Delta_e.
+
+Here is an explicit full-increment envelope. In cell(u,v) keep the
+same-y raw root masses t_u=tau_p([u]_p), s_v=tau_q([v]_q). Write
+L_ell=2kappa_ell c_ell and
+
+    T_q(s)=kappa_q[2s+sum_(j>=2)min(s,2c_q q^(-j))],
+    A_>p=product_(ell>p)a_ell,
+    d_ell=max(a_ell,L_ell/ell),
+    f_ell=max(a_ell+L_ell/(ell-1),
+                (L_ell/ell)(2+1/(ell-1))).
+
+For a_p>0, a valid bound for the entire Delta_e in cell(u,v) is
+
+    W_uv=(t_u/a_p)A_>p[
+       kappa_q s_v t_u product_(ell<p,ell!=q)d_ell
+       +4(H+1)/(p-2) T_q(s_v)
+                       product_(ell<p,ell!=q)f_ell].  (FC821)
+
+Use the zero-row convention at a_p=0. Since kappa_5=1 and kappa<=2
+at later primes, L_ell<ell. Thus d_ell<=1 and
+f_ell<=1+2kappa_ell/(ell-2). On the diagonal these d factors bound
+the optional coordinates. For a cross term, complete the distinct
+baseline exponent slots, paying H+1 ternary slots and the current
+depth sum2/(p-2). At an optional earlier coordinate, absent extra
+depth gives a_ell+L_ell/(ell-1); positive extra depth k gives at most
+L_ell ell^(-k)(k+1+1/(ell-1)), maximized at k=1. At mandatory q the
+depth sum is T_q(s_v). The factor2 in FC820 gives4 in FC821.
+This proves the bound while retaining the exact omitted future masses.
+It requires no cap3 on earlier normalized rows, including at5.
+
+For any valid cell envelope W, the actual extras form a matching, so
+
+    g_p<=g_Bset+max_(M matching in S_r)sum_(u,v in M)W_uv.
+                                                               (FC822)
+
+The owner's h-cell may be omitted from the matching domain; there is
+no automatic subtraction of one. Nonnegative potentials z_u,z'_v
+with z_u+z'_v>=W_uv give the elementary upper certificate
+sum_u z_u+sum_v z'_v. Neither integrality nor an optimized matching
+value is needed for that inequality. Its weights still have to bound
+all the actual increments, including cross terms.
+
+## One nonternary cofactor has a common cross-term capacity
+
+The same minimal cover is irredundant. Fix an active extra e, the
+same y, and U={ell in V:ell<p}. Put u_e=tau_p(C_ep) and
+M_eell=tau_ell(C_eell), using the whole coordinate when absent, so
+then M_eell=a_ell. For a numerical 3-free cofactor
+
+    d=p^j_p product_(ell in U)ell^j_ell,
+    R_d={ell in U:j_ell>0},
+    B_d(y)={b in Bset:b/3^v_3(b)=d and y in I_b},
+    N_d(y)=|B_d(y)|<=H+1,
+    K_ed=product_(ell in R_e union R_d)kappa_ell,
+
+the moduli in the bucket are comparable. Irredundancy makes their
+full APs disjoint. Since their ternary prefixes contain the SAME y,
+their complete nonternary cylinders D_b are pairwise disjoint.
+
+Let mu_<=p^y=tau_p product_(ell in U)tau_ell be the product reference
+subprobability at this y; it is not the later sequential joint law.
+Let E_e^<p impose only the earlier cylinders of e. FC792 gives
+
+    sum_(b in B_d(y))Psi_eb
+      =(u_e/a_p)K_ed A_>p
+          integral 1_(E_e^<p)sum_(b in B_d(y))1_(D_b)dmu_<=p^y
+      <=Q_ed:=u_e K_ed A_>p product_(ell in U)M_eell.  (FC823)
+
+The disjoint indicator sum is at most1. The current coordinate in
+the integral is unrestricted by e, supplying a_p and canceling the
+sole current denominator. Imposing C_ep there would be incorrect:
+the current pair factor is still a product, not an intersection.
+
+Also retain the convergent individual depth allowance
+
+    beta_p(j)=min(a_p,2c_p p^(-j)),
+    v_eell(0)=M_eell,
+    v_eell(j)=min(M_eell,2c_ell ell^(-j)) for j>=1,
+    Z_ed=(u_e/a_p)K_ed A_>p beta_p(j_p)
+                              product_(ell in U)v_eell(j_ell).
+    sum_(b in B_d(y))Psi_eb<=min(N_d(y)Z_ed,Q_ed).     (FC824)
+
+Complete only after preserving the cofactor identity. The phase-free
+baseline envelope C_e=sum_d min((H+1)Z_ed,Q_ed), with j_p>=1 and
+R_d nonempty, converges because
+
+    sum_d Z_ed<=(u_e/a_p)A_>p product_(ell in U)kappa_ell
+                   *[2/(p-2)]
+                   *product_(ell in U)[M_eell+2/(ell-2)]<infinity.
+                                                               (FC825)
+
+One can instead use the actual finite buckets and their N_d. Then
+Psi_ee+2C_e bounds Delta_e. For a cell envelope, take the maximum of
+this expression over the finite packet labels in that cell, and the
+minimum with FC821. The actual extra is among these labels, so this
+remains a valid matching weight. Empty cells have weight zero.
+
+When Q_ed,Z_ed are positive,
+
+    Q_ed/Z_ed=(a_p/beta_p(j_p))
+                    product_(ell in U)(M_eell/v_eell(j_ell))>=1.
+
+Thus disjointness caps repeated-height costs; it need not improve a
+single-label bucket. Summing Q_ed alone over completed cofactors is
+invalid as a finite budget, because it lacks depth decay. The minimum
+in FC824 preserves the convergent geometric tail. Neither this cap
+nor matching controls g_Bset or yields a uniform all-height positive
+margin. Multiple packets still require disjoint label allocation and
+payment of their remaining cross terms before their savings combine.
+
+## Actual-window progress changes which estimates are worth pursuing
+
+At the inspected dev revision
+[5086d2d503](https://github.com/the-omega-institute/trureturing/blob/5086d2d5035d0b2cce1bf71fde1bc9822483b0e7/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#L29419),
+FIB sections226--229 retain the same actual product relation, its
+weight and its window. Section228 proves an obstruction even for the
+truncated, correctly weighted absolute-norm certificate at every
+fixed Holder exponent p>1, uniformly away from1. It does not bound
+the signed correlation below, nor cover exponents tending to1.
+Section229 then bounds an actual large-cofactor tail after retaining
+the common product's size loss. The remaining short-cofactor joint
+mass is explicitly unresolved. These are ordinary written proofs
+for that specified FIB divisor source, not new Lean evidence here.
+
+The transferable design is to retain actual joint responses where
+the scalar completion is too expensive, and remove only a tail whose
+error is paid on that same source. Its concrete #7 realization is
+FC819 together with the head interfaces FC820--825. No FIB entropy
+constant, residue law or Robin conclusion is imported. A certified
+tail does not license forgetting the surviving head correlations;
+changing a source, filter or interface requires a new comparison.
+
+The deductions FC808--825 have ordinary analytic proofs and independent
+mathematical review, with no new numerical evaluation or Lean build.
+They strengthen the available reserve, give an explicit all-prime
+remainder and retain actual matching/cofactor capacities. The missing
+uniform positive mixed-head margin in FC819 remains open; unrestricted
+Erdos #7 is neither proved nor refuted by these results.
