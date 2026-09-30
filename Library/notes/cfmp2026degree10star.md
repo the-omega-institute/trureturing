@@ -22,9 +22,16 @@ squares are checked by `verify_degree10_star.py` and
 `audit_degree10_bounds.py`. Degree-eight cosine bounds are 143/200 below and
 35941/50941 above. Degree-ten upper endpoint is
 19195*sqrt(880915135)/704732108, whose square is
-1842240125/2818928432 < cos(pi/5)^2. Degree-38 upper endpoint square is
-100755605/105172928 < cos(pi/19)^2; the lower endpoint uses
+1842240125/2818928432 < cos(pi/5)^2. For degree 38, the generalized
+all-placement upper endpoint is 4742513/4833160, with square
+22491429555169/23359435585600 < cos(pi/19)^2; the lower endpoint uses
 1982/2009 > cos(pi/19) via rational Taylor bounds.
+
+The generalized incidence condition is: every degree-ten occurrence has at
+least one high neighbour of degree at least 38; its other high neighbour may
+have degree 10 or at least 38. The explicit example has six degree-ten
+occurrences with two degree-38 neighbours and four with one degree-10 and one
+degree-38 neighbour.
 
 The finite topology verifier checks coherent orientation, one circular edge
 link per edge class, no reversed edge, six degree-eight classes, the degree
