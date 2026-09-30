@@ -1,69 +1,22 @@
-# Coordinates of the H-family transversals
+# The distinguished-entry obstruction
 
 ## Abstract
 
-The cap and bulk columns and symbols of the H-family profiles have no repetitions within either region.
+Every transversal of the literal H-family square contains at least two of its three distinguished entries.
 
-**Theorem 1.1 (Bulk column injectivity).**
+**Theorem 1.1 (The distinguished-entry obstruction).**
 
-$$\forall k \in \mathrm{Nat},\; 9 \le k \Rightarrow \left(\forall j \in \operatorname{Fin}\left(3\right),\; \forall p \in \operatorname{Prod}\left(\operatorname{Fin}\left(k - 9\right), \operatorname{Fin}\left(4\right)\right),\; \forall q \in \operatorname{Prod}\left(\operatorname{Fin}\left(k - 9\right), \operatorname{Fin}\left(4\right)\right),\; \operatorname{column}\left(k, j, \operatorname{bulkRow}\left(k, \operatorname{fst}\left(p\right), \operatorname{snd}\left(p\right)\right)\right) = \operatorname{column}\left(k, j, \operatorname{bulkRow}\left(k, \operatorname{fst}\left(q\right), \operatorname{snd}\left(q\right)\right)\right) \Rightarrow p = q\right)$$
+$$\forall k \in \mathrm{Nat},\; 9 \le k \Rightarrow \left(\forall S \in \operatorname{Set}\left(\operatorname{Prod}\left(\operatorname{Fin}\left(\operatorname{order}\left(k\right)\right), \operatorname{Prod}\left(\operatorname{Fin}\left(\operatorname{order}\left(k\right)\right), \operatorname{Fin}\left(\operatorname{order}\left(k\right)\right)\right)\right)\right),\; \operatorname{IsTransversal}\left(k, S\right) \Rightarrow 2 \le \operatorname{ncard}\left(\operatorname{inter}\left(\operatorname{D}\left(k\right), S\right)\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/LatinHTransversals.bulk_column_injective` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/LatinHTransversals.transversal_obstruction` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* Afsane Ghafari, Ian M. Wanless (2026). *Latin Squares whose transversals intersect in unusual ways*. DOI: [10.48550/arXiv.2607.17547](https://doi.org/10.48550/arXiv.2607.17547). URL: <https://arxiv.org/abs/2607.17547v1>.
+*Citation.* Afsane Ghafari, Ian M. Wanless (2026). *Latin Squares whose transversals intersect in unusual ways*. DOI: [10.48550/arXiv.2607.17547](https://doi.org/10.48550/arXiv.2607.17547). URL: <https://arxiv.org/abs/2607.17547v1>.
 
 *Commentary.*
 
-For every permitted order and profile, the four unbounded bulk classes use different column residues on distinct bulk rows, including the empty bulk at order thirty-six.
-
-**Theorem 1.2 (Bulk symbol injectivity).**
-
-$$\forall k \in \mathrm{Nat},\; 9 \le k \Rightarrow \left(\forall j \in \operatorname{Fin}\left(3\right),\; \forall p \in \operatorname{Prod}\left(\operatorname{Fin}\left(k - 9\right), \operatorname{Fin}\left(4\right)\right),\; \forall q \in \operatorname{Prod}\left(\operatorname{Fin}\left(k - 9\right), \operatorname{Fin}\left(4\right)\right),\; \operatorname{symbol}\left(k, j, \operatorname{bulkRow}\left(k, \operatorname{fst}\left(p\right), \operatorname{snd}\left(p\right)\right)\right) = \operatorname{symbol}\left(k, j, \operatorname{bulkRow}\left(k, \operatorname{fst}\left(q\right), \operatorname{snd}\left(q\right)\right)\right) \Rightarrow p = q\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/LatinHTransversals.bulk_symbol_injective` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Afsane Ghafari, Ian M. Wanless (2026). *Latin Squares whose transversals intersect in unusual ways*. DOI: [10.48550/arXiv.2607.17547](https://doi.org/10.48550/arXiv.2607.17547). URL: <https://arxiv.org/abs/2607.17547v1>.
-
-*Commentary.*
-
-The four bulk symbol progressions likewise have no repeated residue, after the possible wrap at the order is resolved uniformly.
-
-**Theorem 1.3 (Cap column injectivity).**
-
-$$\forall k \in \mathrm{Nat},\; 9 \le k \Rightarrow \left(\forall j \in \operatorname{Fin}\left(3\right),\; \forall i \in \operatorname{Fin}\left(36\right),\; \forall l \in \operatorname{Fin}\left(36\right),\; \operatorname{column}\left(k, j, \operatorname{capRow}\left(k, i\right)\right) = \operatorname{column}\left(k, j, \operatorname{capRow}\left(k, l\right)\right) \Rightarrow i = l\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/LatinHTransversals.cap_column_injective` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Afsane Ghafari, Ian M. Wanless (2026). *Latin Squares whose transversals intersect in unusual ways*. DOI: [10.48550/arXiv.2607.17547](https://doi.org/10.48550/arXiv.2607.17547). URL: <https://arxiv.org/abs/2607.17547v1>.
-
-*Commentary.*
-
-The thirty-six cap column pairs are distinct after modular reduction for every permitted order. The four affine complement blocks remain disjoint even near the smallest order.
-
-**Theorem 1.4 (Cap symbol injectivity).**
-
-$$\forall k \in \mathrm{Nat},\; 9 \le k \Rightarrow \left(\forall j \in \operatorname{Fin}\left(3\right),\; \forall i \in \operatorname{Fin}\left(36\right),\; \forall l \in \operatorname{Fin}\left(36\right),\; \operatorname{symbol}\left(k, j, \operatorname{capRow}\left(k, i\right)\right) = \operatorname{symbol}\left(k, j, \operatorname{capRow}\left(k, l\right)\right) \Rightarrow i = l\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/LatinHTransversals.cap_symbol_injective` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Afsane Ghafari, Ian M. Wanless (2026). *Latin Squares whose transversals intersect in unusual ways*. DOI: [10.48550/arXiv.2607.17547](https://doi.org/10.48550/arXiv.2607.17547). URL: <https://arxiv.org/abs/2607.17547v1>.
-
-*Commentary.*
-
-The thirty-six cap symbol pairs are likewise distinct after modular reduction, using their exact four-block affine complement certificate.
+The square adds its priority increment to the row and column representatives modulo four k. The three literal profiles use affine cap columns and four bulk progressions, with the cap choice depending on the parity of k. Choosing the unique entry in each row of an arbitrary transversal gives column and symbol permutations. Their sums force the total priority increment to be congruent to two k modulo four k. The row lower bounds sum to minus two k plus three. If at most one distinguished entry is selected, the upper bound is two k minus three, which contradicts that congruence.
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/LatinHTransversals.bulk_column_injective`
-- Truth anchor: `D5/S3/Combinatorics/LatinHTransversals.bulk_symbol_injective`
-- Truth anchor: `D5/S3/Combinatorics/LatinHTransversals.cap_column_injective`
-- Truth anchor: `D5/S3/Combinatorics/LatinHTransversals.cap_symbol_injective`
+- Truth anchor: `D5/S3/Combinatorics/LatinHTransversals.transversal_obstruction`
 - Dependency: [D5/S3/Combinatorics/LatinEulerianDefs](LatinEulerianDefs.md)

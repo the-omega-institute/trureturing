@@ -4,10 +4,12 @@
    mirror-E: none(waiver:explicit-source-family-and-coordinate-certificates)
    anchors: [mathlib/module/Mathlib.Tactic]
    utility: none
-   digest: Literal H-family increments and affine cap certificates for three transversals. -/
+   digest: Literal H-family data and the distinguished-entry charge obstruction. -/
 
 import D5.S3.Combinatorics.LatinEulerianDefs
 import Mathlib.Tactic
+import Mathlib.Algebra.BigOperators.ModEq
+import Mathlib.Data.Set.Card
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -209,135 +211,6 @@ def headRow (k : ℕ) (hk : 9 ≤ k) (i : Fin 15) : Fin (order k) :=
 def tailRow (k : ℕ) (hk : 9 ≤ k) (i : Fin 21) : Fin (order k) :=
   ⟨order k - 21 + i.val, by dsimp [order]; omega⟩
 
-
-
-/-- Distinct bulk rows of one profile use distinct columns for every admissible order. -/
-theorem bulk_column_injective (k : ℕ) (hk : 9 ≤ k) (j : Fin 3) :
-    Function.Injective (fun p : Fin (k - 9) × Fin 4 =>
-      column k hk j (bulkRow k hk p.1 p.2)) := by
-  intro ⟨t, r⟩ ⟨u, v⟩ heq
-  have ht : t.val + 9 < k := by have := t.isLt; omega
-  have hu : u.val + 9 < k := by have := u.isLt; omega
-  have hraw (w : Fin (k - 9)) (s : Fin 4) :
-      column k hk j (bulkRow k hk w s) =
-        residue k hk (bulkColumnRaw k j w.val s.val) := by
-    have hw : w.val + 9 < k := by have := w.isLt; omega
-    have hs : s.val < 4 := s.isLt
-    have hlo : 15 ≤ (bulkRow k hk w s).val := by dsimp [bulkRow]; omega
-    have hhi : (bulkRow k hk w s).val < order k - 21 := by
-      dsimp [bulkRow, order]
-      omega
-    have hquot : ((bulkRow k hk w s).val - 15) / 4 = w.val := by
-      dsimp [bulkRow]
-      omega
-    have hrem : ((bulkRow k hk w s).val - 15) % 4 = s.val := by
-      dsimp [bulkRow]
-      omega
-    simp [column, columnRaw, not_lt.mpr hlo, Nat.not_le.mpr hhi,
-      hquot, hrem]
-  change column k hk j (bulkRow k hk t r) =
-    column k hk j (bulkRow k hk u v) at heq
-  rw [hraw t r, hraw u v] at heq
-  let x := bulkColumnRaw k j t.val r.val
-  let y := bulkColumnRaw k j u.val v.val
-  have hx : -(order k : ℤ) < x ∧ x < order k := by
-    fin_cases r <;> fin_cases j <;>
-      simp [x, bulkColumnRaw, shift, order] <;> omega
-  have hy : -(order k : ℤ) < y ∧ y < order k := by
-    fin_cases v <;> fin_cases j <;>
-      simp [y, bulkColumnRaw, shift, order] <;> omega
-  have hvalue (z : ℤ) (hz : -(order k : ℤ) < z ∧ z < order k) :
-      ((residue k hk z).val : ℤ) =
-        if z < 0 then z + order k else z := by
-    have hn : 0 ≤ z % (order k : ℤ) :=
-      Int.emod_nonneg _ (by dsimp [order]; omega)
-    have hv : ((residue k hk z).val : ℤ) = z % (order k : ℤ) := by
-      simp [residue, Int.toNat_of_nonneg hn]
-    rw [hv]
-    by_cases hneg : z < 0
-    · have hstep : 0 ≤ z + order k ∧ z + order k < order k := by omega
-      rw [if_pos hneg, show z % (order k : ℤ) =
-        (z + order k) % (order k : ℤ) by simp,
-        Int.emod_eq_of_lt hstep.1 hstep.2]
-    · have hnonneg : 0 ≤ z := by omega
-      rw [if_neg hneg, Int.emod_eq_of_lt hnonneg hz.2]
-  have heq' : (if x < 0 then x + order k else x) =
-      (if y < 0 then y + order k else y) := by
-    have hv := congrArg (fun z : Fin (order k) => (z.val : ℤ)) heq
-    simpa [x, y, hvalue x hx, hvalue y hy] using hv
-  have htv : t.val = u.val ∧ r.val = v.val := by
-    fin_cases r <;> fin_cases v <;> fin_cases j
-    all_goals simp [x, y, bulkColumnRaw, shift, order] at heq' ⊢
-    all_goals split_ifs at heq' <;> omega
-  cases t
-  cases u
-  cases r
-  cases v
-  simp_all
-
-/-- Distinct bulk rows of one profile use distinct symbols for every admissible order. -/
-theorem bulk_symbol_injective (k : ℕ) (hk : 9 ≤ k) (j : Fin 3) :
-    Function.Injective (fun p : Fin (k - 9) × Fin 4 =>
-      symbol k hk j (bulkRow k hk p.1 p.2)) := by
-  intro ⟨t, r⟩ ⟨u, v⟩ heq
-  have ht : t.val + 9 < k := by have := t.isLt; omega
-  have hu : u.val + 9 < k := by have := u.isLt; omega
-  have hraw (w : Fin (k - 9)) (s : Fin 4) :
-      symbol k hk j (bulkRow k hk w s) =
-        residue k hk (bulkSymbolRaw k j w.val s.val) := by
-    have hw : w.val + 9 < k := by have := w.isLt; omega
-    have hs : s.val < 4 := s.isLt
-    have hlo : 15 ≤ (bulkRow k hk w s).val := by dsimp [bulkRow]; omega
-    have hhi : (bulkRow k hk w s).val < order k - 21 := by
-      dsimp [bulkRow, order]
-      omega
-    have hquot : ((bulkRow k hk w s).val - 15) / 4 = w.val := by
-      dsimp [bulkRow]
-      omega
-    have hrem : ((bulkRow k hk w s).val - 15) % 4 = s.val := by
-      dsimp [bulkRow]
-      omega
-    simp [symbol, symbolRaw, not_lt.mpr hlo, Nat.not_le.mpr hhi,
-      hquot, hrem]
-  change symbol k hk j (bulkRow k hk t r) =
-    symbol k hk j (bulkRow k hk u v) at heq
-  rw [hraw t r, hraw u v] at heq
-  let x := bulkSymbolRaw k j t.val r.val
-  let y := bulkSymbolRaw k j u.val v.val
-  have hx : 0 ≤ x ∧ x < 2 * (order k : ℤ) := by
-    fin_cases r <;> fin_cases j <;>
-      simp [x, bulkSymbolRaw, shift, order] <;> omega
-  have hy : 0 ≤ y ∧ y < 2 * (order k : ℤ) := by
-    fin_cases v <;> fin_cases j <;>
-      simp [y, bulkSymbolRaw, shift, order] <;> omega
-  have hvalue (z : ℤ) (hz : 0 ≤ z ∧ z < 2 * (order k : ℤ)) :
-      ((residue k hk z).val : ℤ) =
-        if z < order k then z else z - order k := by
-    have hn : 0 ≤ z % (order k : ℤ) :=
-      Int.emod_nonneg _ (by dsimp [order]; omega)
-    have hv : ((residue k hk z).val : ℤ) = z % (order k : ℤ) := by
-      simp [residue, Int.toNat_of_nonneg hn]
-    rw [hv]
-    by_cases hsmall : z < order k
-    · rw [if_pos hsmall, Int.emod_eq_of_lt hz.1 hsmall]
-    · have hstep : 0 ≤ z - order k ∧ z - order k < order k := by omega
-      rw [if_neg hsmall, show z % (order k : ℤ) =
-        (z - order k) % (order k : ℤ) by simp,
-        Int.emod_eq_of_lt hstep.1 hstep.2]
-  have heq' : (if x < order k then x else x - order k) =
-      (if y < order k then y else y - order k) := by
-    have hv := congrArg (fun z : Fin (order k) => (z.val : ℤ)) heq
-    simpa [x, y, hvalue x hx, hvalue y hy] using hv
-  have htv : t.val = u.val ∧ r.val = v.val := by
-    fin_cases r <;> fin_cases v <;> fin_cases j
-    all_goals simp [x, y, bulkSymbolRaw, shift, order] at heq' ⊢
-    all_goals split_ifs at heq' <;> omega
-  cases t
-  cases u
-  cases r
-  cases v
-  simp_all
-
 def capRow (k : ℕ) (hk : 9 ≤ k) (i : Fin 36) : Fin (order k) :=
   ⟨if i.val < 15 then i.val else order k - 36 + i.val, by
     have := i.isLt
@@ -345,213 +218,224 @@ def capRow (k : ℕ) (hk : 9 ≤ k) (i : Fin 36) : Fin (order k) :=
     split_ifs <;> omega⟩
 
 set_option maxHeartbeats 3000000 in
--- The finite affine cap table and symbolic modulus are checked together.
-/-- The literal cap columns have no repetitions, uniformly in the order. -/
-theorem cap_column_injective (k : ℕ) (hk : 9 ≤ k) (j : Fin 3) :
-    Function.Injective (fun i : Fin 36 => column k hk j (capRow k hk i)) := by
-  have hcap (i : Fin 36) :
-      column k hk j (capRow k hk i) =
-        let p := capAffine j (k % 2 = 1) i
-        residue k hk (p.1 * (k : ℤ) + p.2) := by
-    by_cases hi : i.val < 15
-    · simp [column, columnRaw, capRow, hi]
-    · have htail : order k - 21 ≤ (capRow k hk i).val := by
-        dsimp [capRow, order]
-        simp [hi]
-        omega
-      have hhead : 15 ≤ (capRow k hk i).val := by
-        dsimp [capRow, order]
-        simp [hi]
-        omega
-      have hind : (capRow k hk i).val - (order k - 21) + 15 = i.val := by
-        dsimp [capRow, order]
-        simp [hi]
-        omega
-      simp [column, columnRaw, not_lt.mpr hhead, htail, hind]
-  have hpair : Function.Injective (capAffine j (k % 2 = 1)) := by
-    fin_cases j <;> by_cases hp : k % 2 = 1 <;>
-      simp only [hp, decide_true, decide_false] <;> decide
-  have hlisted (i : Fin 36) :
-      capAffine j (k % 2 = 1) i ∈ capColumnComplement (shift j) := by
-    have hp : List.Perm (List.ofFn (capAffine j (k % 2 = 1)))
-        (capColumnComplement (shift j)) := by
-      fin_cases j <;> by_cases hodd : k % 2 = 1 <;>
-        simp only [hodd, decide_true, decide_false] <;> decide
-    exact hp.mem_iff.mp (List.mem_ofFn.mpr ⟨i, rfl⟩)
-  have hmodinj (p q : ℤ × ℤ)
-      (hp : p ∈ capColumnComplement (shift j))
-      (hq : q ∈ capColumnComplement (shift j))
-      (heq : residue k hk (p.1 * (k : ℤ) + p.2) =
-        residue k hk (q.1 * (k : ℤ) + q.2)) : p = q := by
-    let x := p.1 * (k : ℤ) + p.2
-    let y := q.1 * (k : ℤ) + q.2
-    have hs : shift j = 0 ∨ shift j = -4 := by fin_cases j <;> simp [shift]
-    simp only [capColumnComplement, List.mem_append, List.mem_map,
-      List.mem_range] at hp hq
-    have hx : -(order k : ℤ) < x ∧ x < 2 * (order k : ℤ) := by
-      rcases hp with (((⟨u, hu, rfl⟩ | ⟨u, hu, rfl⟩) |
-        ⟨u, hu, rfl⟩) | ⟨u, hu, rfl⟩)
-      all_goals dsimp [x, order] <;> rcases hs with hs | hs <;>
-        omega
-    have hy : -(order k : ℤ) < y ∧ y < 2 * (order k : ℤ) := by
-      rcases hq with (((⟨u, hu, rfl⟩ | ⟨u, hu, rfl⟩) |
-        ⟨u, hu, rfl⟩) | ⟨u, hu, rfl⟩)
-      all_goals dsimp [y, order] <;> rcases hs with hs | hs <;>
-        omega
-    have hvalue (z : ℤ) (hz : -(order k : ℤ) < z ∧
-        z < 2 * (order k : ℤ)) :
-        ((residue k hk z).val : ℤ) =
-          if z < 0 then z + order k
-          else if z < order k then z else z - order k := by
-      have hn : 0 ≤ z % (order k : ℤ) :=
+/-- Summing the actual priority increments forces at least two distinguished entries in every transversal. -/
+theorem transversal_obstruction (k : ℕ) (hk : 9 ≤ k)
+    (S : Set (Fin (order k) × Fin (order k) × Fin (order k)))
+    (hS : IsTransversal k hk S) :
+    2 ≤ {f | f ∈ D k hk ∧ f ∈ S}.ncard := by
+  classical
+  have hncard : {f | f ∈ D k hk ∧ f ∈ S}.ncard =
+      ((D k hk).filter (fun f => f ∈ S)).card := by
+    rw [show {f | f ∈ D k hk ∧ f ∈ S} =
+      (↑((D k hk).filter (fun f => f ∈ S)) : Set _) by ext; simp]
+    exact Set.ncard_coe_finset _
+  rw [hncard]
+  let e (a : Fin (order k)) := Classical.choose (hS.2.1 a)
+  have he (a : Fin (order k)) : e a ∈ S ∧ (e a).1 = a :=
+    (Classical.choose_spec (hS.2.1 a)).1
+  have hunique (a : Fin (order k)) (f : Fin (order k) × Fin (order k) × Fin (order k))
+      (hf : f ∈ S) (hr : f.1 = a) : f = e a :=
+    (Classical.choose_spec (hS.2.1 a)).2 f ⟨hf,hr⟩
+  have hei : Function.Injective e := by
+    intro a b hab
+    have h := congrArg Prod.fst hab
+    simpa only [(he a).2, (he b).2] using h
+  have hcoord (g : (Fin (order k) × Fin (order k) × Fin (order k)) → Fin (order k))
+      (hg : ∀ x, ∃! f, f ∈ S ∧ g f = x) : Function.Bijective (fun a => g (e a)) := by
+    constructor
+    · intro a b hab
+      obtain ⟨f,hf,hfuniq⟩ := hg (g (e a))
+      have ha : e a = f := hfuniq _ ⟨(he a).1,rfl⟩
+      have hb : e b = f := hfuniq _ ⟨(he b).1,hab.symm⟩
+      exact hei (ha.trans hb.symm)
+    · intro x
+      obtain ⟨f,hf,_⟩ := hg x
+      refine ⟨f.1, ?_⟩
+      change g (e f.1) = x
+      rw [← hunique f.1 f hf.1 rfl]
+      exact hf.2
+  have hc := hcoord (fun f => f.2.1) hS.2.2.1
+  have hz := hcoord (fun f => f.2.2) hS.2.2.2
+  let R : ℤ := ∑ a : Fin (order k), (a.val : ℤ)
+  let charge : ℤ := ∑ a : Fin (order k), delta k a (e a).2.1
+  have hR : R = 2 * (k : ℤ) * (4 * (k : ℤ) - 1) := by
+    have hgauss := Finset.sum_range_id_mul_two (order k)
+    have hgaussInt := congrArg (fun z : ℕ => (z : ℤ)) hgauss
+    have horder : 1 ≤ order k := by dsimp [order]; omega
+    simp only [Nat.cast_mul, Nat.cast_ofNat, Nat.cast_sum,
+      Nat.cast_sub horder] at hgaussInt
+    have hrange : R = ∑ a ∈ Finset.range (order k), (a : ℤ) :=
+      Fin.sum_univ_eq_sum_range (fun a => (a : ℤ)) (order k)
+    rw [← hrange] at hgaussInt
+    dsimp [order] at hgaussInt
+    push_cast at hgaussInt
+    nlinarith
+  have hmod : charge ≡ 2 * (k : ℤ) [ZMOD (order k : ℤ)] := by
+    have hrow (a : Fin (order k)) :
+        delta k a (e a).2.1 ≡
+          ((e a).2.2.val : ℤ) - (a.val : ℤ) - ((e a).2.1.val : ℤ)
+            [ZMOD (order k : ℤ)] := by
+      have hsource := hS.1 (e a) (he a).1
+      rw [(he a).2] at hsource
+      have hval := congrArg (fun z : Fin (order k) => (z.val : ℤ)) hsource
+      have hnonneg : 0 ≤ ((a.val : ℤ) + ((e a).2.1.val : ℤ) +
+          delta k a (e a).2.1) % (order k : ℤ) :=
         Int.emod_nonneg _ (by dsimp [order]; omega)
-      have hv : ((residue k hk z).val : ℤ) = z % (order k : ℤ) := by
-        simp [residue, Int.toNat_of_nonneg hn]
-      rw [hv]
-      by_cases hneg : z < 0
-      · have hstep : 0 ≤ z + order k ∧ z + order k < order k := by omega
-        rw [if_pos hneg, show z % (order k : ℤ) =
-          (z + order k) % (order k : ℤ) by simp,
-          Int.emod_eq_of_lt hstep.1 hstep.2]
-      · have hnonneg : 0 ≤ z := by omega
-        rw [if_neg hneg]
-        by_cases hsmall : z < order k
-        · rw [if_pos hsmall, Int.emod_eq_of_lt hnonneg hsmall]
-        · have hstep : 0 ≤ z - order k ∧ z - order k < order k := by omega
-          rw [if_neg hsmall, show z % (order k : ℤ) =
-            (z - order k) % (order k : ℤ) by simp,
-            Int.emod_eq_of_lt hstep.1 hstep.2]
-    have heq' :
-        (if x < 0 then x + order k else if x < order k then x else x - order k) =
-        (if y < 0 then y + order k else if y < order k then y else y - order k) := by
-      have hv := congrArg (fun z : Fin (order k) => (z.val : ℤ)) heq
-      simpa [x, y, hvalue x hx, hvalue y hy] using hv
-    rcases hp with (((⟨u, hu, rfl⟩ | ⟨u, hu, rfl⟩) |
-      ⟨u, hu, rfl⟩) | ⟨u, hu, rfl⟩)
-    all_goals rcases hq with (((⟨v, hv, rfl⟩ | ⟨v, hv, rfl⟩) |
-      ⟨v, hv, rfl⟩) | ⟨v, hv, rfl⟩)
-    all_goals rcases hs with hs | hs
-    all_goals simp [x, y, hs, order] at heq' ⊢
-    all_goals split_ifs at heq' <;> omega
-  intro i l heq
-  change column k hk j (capRow k hk i) =
-    column k hk j (capRow k hk l) at heq
-  rw [hcap i, hcap l] at heq
-  exact hpair (hmodinj _ _ (hlisted i) (hlisted l) heq)
+      have hb : ((e a).2.2.val : ℤ) < order k := by exact_mod_cast (e a).2.2.isLt
+      have ht : (a.val : ℤ) + ((e a).2.1.val : ℤ) + delta k a (e a).2.1 ≡
+          ((e a).2.2.val : ℤ) [ZMOD (order k : ℤ)] := by
+        change _ % _ = _ % _
+        rw [Int.emod_eq_of_lt (by omega) hb]
+        simpa [square, residue, Int.toNat_of_nonneg hnonneg] using hval.symm
+      have ht' := (ht.sub (Int.ModEq.refl (a.val : ℤ))).sub
+        (Int.ModEq.refl ((e a).2.1.val : ℤ))
+      convert ht' using 1 <;> ring
+    have hsum := Int.ModEq.sum (s := Finset.univ) (fun a _ => hrow a)
+    have hcsum : (∑ a : Fin (order k), ((e a).2.1.val : ℤ)) = R := hc.sum_comp (fun b => (b.val : ℤ))
+    have hzsum : (∑ a : Fin (order k), ((e a).2.2.val : ℤ)) = R := hz.sum_comp (fun b => (b.val : ℤ))
+    have hsum' : charge ≡ -R [ZMOD (order k : ℤ)] := by
+      simpa [charge, Finset.sum_sub_distrib, hcsum, hzsum, R] using hsum
+    apply hsum'.trans
+    rw [hR]
+    have hexpr : -(2 * (k : ℤ) * (4 * (k : ℤ) - 1)) =
+        2 * (k : ℤ) + (order k : ℤ) * (-2 * (k : ℤ)) := by dsimp [order]; push_cast; ring
+    rw [hexpr]
+    exact Int.modEq_add_fac_self
+  let A0 : Finset (Fin (order k)) := {headRow k hk 0, headRow k hk 5, headRow k hk 10}
+  let A1 : Finset (Fin (order k)) := {headRow k hk 1, headRow k hk 6, headRow k hk 11}
+  let A4 : Finset (Fin (order k)) := {headRow k hk 4, headRow k hk 9, headRow k hk 14}
+  let B (r : Fin 4) := Finset.univ.image (fun t : Fin (k - 9) => bulkRow k hk t r)
+  have hA0 (a : Fin (order k)) : a ∈ A0 ↔ a.val = 0 ∨ a.val = 5 ∨ a.val = 10 := by
+    simp [A0, Fin.ext_iff, headRow]
+  have hA1 (a : Fin (order k)) : a ∈ A1 ↔ a.val = 1 ∨ a.val = 6 ∨ a.val = 11 := by
+    simp [A1, Fin.ext_iff, headRow]
+  have hA4 (a : Fin (order k)) : a ∈ A4 ↔ a.val = 4 ∨ a.val = 9 ∨ a.val = 14 := by
+    simp [A4, Fin.ext_iff, headRow]
+  have hB (r : Fin 4) (a : Fin (order k)) :
+      a ∈ B r ↔ 15 ≤ a.val ∧ a.val < order k - 21 ∧ a.val % 4 = (3+r.val)%4 := by
+    simp only [B, Finset.mem_image, Finset.mem_univ, true_and]
+    constructor
+    · rintro ⟨t,rfl⟩
+      have := t.isLt
+      have := r.isLt
+      dsimp [bulkRow,order]
+      omega
+    · intro ha
+      let t : Fin (k - 9) := ⟨(a.val-15)/4, by dsimp [order] at *; omega⟩
+      refine ⟨t, ?_⟩
+      apply Fin.ext
+      have := r.isLt
+      dsimp [bulkRow,t]
+      omega
+  have hBcard (r : Fin 4) : (B r).card = k - 9 := by
+    have hi : Function.Injective (fun t : Fin (k - 9) => bulkRow k hk t r) := by
+      intro t u h
+      apply Fin.ext
+      have hv := congrArg Fin.val h
+      dsimp [bulkRow] at hv
+      omega
+    simp [B, Finset.card_image_of_injective _ hi]
+  have hsumIndicator (A : Finset (Fin (order k))) :
+      (∑ a : Fin (order k), if a ∈ A then (1 : ℤ) else 0) = A.card := by
+    simp
+  let lo (a : Fin (order k)) : ℤ :=
+    -(if a ∈ A1 then 1 else 0) - 4*(if a ∈ A4 then 1 else 0) - 2*(if a ∈ B 2 then 1 else 0)
+  let hi (a : Fin (order k)) : ℤ :=
+    4*(if a ∈ A0 then 1 else 0) + 2*(if a ∈ B 0 then 1 else 0)
+  have hlo (a : Fin (order k)) : lo a ≤ delta k a (e a).2.1 := by
+    simp only [lo,hA1,hA4,hB]
+    norm_num
+    dsimp only [delta]
+    split_ifs <;> omega
+  have hres (z : ℤ) (h0 : 0 ≤ z) (hlt : z < order k) :
+      ((residue k hk z).val : ℤ) = z := by
+    simp [residue,Int.emod_eq_of_lt h0 hlt,Int.toNat_of_nonneg h0]
+  have hdist (a : Fin (order k))
+      (h : (a.val = 1 ∧ (e a).2.1.val = 1) ∨
+        (a.val = 6 ∧ (e a).2.1.val = 5) ∨
+        (a.val = 11 ∧ (e a).2.1.val = 9)) : e a ∈ D k hk := by
+    have hsource := hS.1 (e a) (he a).1
+    rw [(he a).2] at hsource
+    have hrow := congrArg Fin.val (he a).2
+    rcases h with h | h | h
+    all_goals have hdelta : delta k a (e a).2.1 = 3 := by simp [delta,h.1,h.2]
+    all_goals simp only [square,hdelta] at hsource
+    all_goals simp only [h.1,h.2, Nat.cast_ofNat] at hsource
+    all_goals norm_num only at hsource
+    all_goals have hsymbol := congrArg (fun z : Fin (order k) => (z.val : ℤ)) hsource
+    all_goals simp only [D,Finset.mem_insert,Finset.mem_singleton]
+    · left
+      simp only [d0,Prod.ext_iff,Fin.ext_iff]
+      have hv1 := hres 1 (by omega) (by dsimp [order]; omega)
+      have hv5 := hres 5 (by omega) (by dsimp [order]; omega)
+      have hz5 : ((e a).2.2.val : ℤ) = 5 := by simpa [hv5] using hsymbol
+      omega
+    · right; left
+      simp only [d1,Prod.ext_iff,Fin.ext_iff]
+      have hv6 := hres 6 (by omega) (by dsimp [order]; omega)
+      have hv5 := hres 5 (by omega) (by dsimp [order]; omega)
+      have hv14 := hres 14 (by omega) (by dsimp [order]; omega)
+      have hz14 : ((e a).2.2.val : ℤ) = 14 := by simpa [hv14] using hsymbol
+      omega
+    · right; right
+      simp only [d2,Prod.ext_iff,Fin.ext_iff]
+      have hv11 := hres 11 (by omega) (by dsimp [order]; omega)
+      have hv9 := hres 9 (by omega) (by dsimp [order]; omega)
+      have hv23 := hres 23 (by omega) (by dsimp [order]; omega)
+      have hz23 : ((e a).2.2.val : ℤ) = 23 := by simpa [hv23] using hsymbol
+      omega
+  have hhi (a : Fin (order k)) :
+      delta k a (e a).2.1 ≤ hi a + 3*(if e a ∈ D k hk then 1 else 0) := by
+    have hd := hdist a
+    simp only [hi,hA0,hB]
+    norm_num
+    dsimp only [delta]
+    split_ifs <;> simp_all <;> omega
+  have hAs : A0.card = 3 ∧ A1.card = 3 ∧ A4.card = 3 := by
+    simp [A0,A1,A4,Fin.ext_iff,headRow]
+  have hlosum : (∑ a : Fin (order k), lo a) = -2*(k : ℤ)+3 := by
+    simp only [lo, Finset.sum_sub_distrib, Finset.sum_neg_distrib,
+      ← Finset.mul_sum, hsumIndicator, hAs, hBcard]
+    have hsub : ((k-9 : ℕ) : ℤ) = (k : ℤ)-9 := by omega
+    rw [hsub]
+    ring
+  have hhisum : (∑ a : Fin (order k), hi a) = 2*(k : ℤ)-6 := by
+    simp only [hi, Finset.sum_add_distrib, ← Finset.mul_sum, hsumIndicator, hAs, hBcard]
+    have hsub : ((k-9 : ℕ) : ℤ) = (k : ℤ)-9 := by omega
+    rw [hsub]
+    ring
+  let chosen := Finset.univ.filter (fun a => e a ∈ D k hk)
+  have hchosen : chosen.card ≤ ((D k hk).filter (fun f => f ∈ S)).card := by
+    have himage : chosen.image e ⊆ (D k hk).filter (fun f => f ∈ S) := by
+      intro f hf
+      rcases Finset.mem_image.mp hf with ⟨a,ha,rfl⟩
+      exact Finset.mem_filter.mpr ⟨(Finset.mem_filter.mp ha).2,(he a).1⟩
+    have hh := Finset.card_le_card himage
+    rwa [Finset.card_image_of_injective _ hei] at hh
+  have hchosenSum : (∑ a : Fin (order k), if e a ∈ D k hk then (1 : ℤ) else 0) =
+      chosen.card := by simp [chosen]
+  have hlobound : -2*(k : ℤ)+3 ≤ charge := by
+    rw [← hlosum]
+    exact Finset.sum_le_sum (fun a _ => hlo a)
+  have hhibound : charge ≤ 2*(k : ℤ)-6+3*(chosen.card : ℤ) := by
+    have hh := Finset.sum_le_sum (s := Finset.univ) (fun a _ => hhi a)
+    simpa only [charge, Finset.sum_add_distrib, ← Finset.mul_sum, hhisum, hchosenSum] using hh
+  by_contra hbad
+  have hone : chosen.card ≤ 1 := by omega
+  have hub : charge ≤ 2*(k : ℤ)-3 := by omega
+  have hmodEq : charge % (order k : ℤ) = 2*(k : ℤ) := by
+    exact (show charge % (order k : ℤ) = (2*(k : ℤ)) % (order k : ℤ) from hmod).trans
+      (Int.emod_eq_of_lt (by omega) (by dsimp [order]; omega))
+  by_cases hnonneg : 0 ≤ charge
+  · rw [Int.emod_eq_of_lt hnonneg (by dsimp [order]; omega)] at hmodEq
+    omega
+  · have hshift : (charge+(order k : ℤ)) % (order k : ℤ) = charge % (order k : ℤ) := by simp
+    rw [Int.emod_eq_of_lt (by dsimp [order]; omega)
+      (by dsimp [order]; omega)] at hshift
+    have ho : (order k : ℤ) = 4*(k : ℤ) := by simp [order]
+    rw [ho] at hshift hmodEq
+    omega
 
-set_option maxHeartbeats 3000000 in
--- The cap certificate reduces this unbounded claim to four affine symbol blocks.
-/-- The literal cap symbols have no repetitions, uniformly in the order. -/
-theorem cap_symbol_injective (k : ℕ) (hk : 9 ≤ k) (j : Fin 3) :
-    Function.Injective (fun i : Fin 36 => symbol k hk j (capRow k hk i)) := by
-  have hcap (i : Fin 36) :
-      symbol k hk j (capRow k hk i) =
-        let p := capSymbolAffine j (k % 2 = 1) i
-        residue k hk (p.1 * (k : ℤ) + p.2) := by
-    by_cases hi : i.val < 15
-    · simp [symbol, symbolRaw, columnRaw, capSymbolAffine, capRow, hi]
-      ring
-    · have htail : order k - 21 ≤ (capRow k hk i).val := by
-        dsimp [capRow, order]
-        simp [hi]
-        omega
-      have hhead : 15 ≤ (capRow k hk i).val := by
-        dsimp [capRow, order]
-        simp [hi]
-        omega
-      have hind : (capRow k hk i).val - (order k - 21) + 15 = i.val := by
-        dsimp [capRow, order]
-        simp [hi]
-        omega
-      simp [symbol, symbolRaw, not_lt.mpr hhead, htail,
-        columnRaw, hind, capSymbolAffine, hi]
-      have hrow : ((capRow k hk i).val : ℤ) =
-          (order k : ℤ) + (i.val : ℤ) - 36 := by
-        dsimp [capRow, order]
-        simp [hi]
-        omega
-      rw [hrow]
-      have harg :
-          (order k : ℤ) + (i.val : ℤ) - 36 +
-              ((capAffine j (k % 2 = 1) i).1 * (k : ℤ) +
-                (capAffine j (k % 2 = 1) i).2) =
-          (order k : ℤ) +
-              ((capAffine j (k % 2 = 1) i).1 * (k : ℤ) +
-                ((capAffine j (k % 2 = 1) i).2 + ((i.val : ℤ) - 36))) := by
-        ring
-      rw [harg]
-      have hperiod (z : ℤ) : residue k hk ((order k : ℤ) + z) =
-          residue k hk z := by
-        apply Fin.ext
-        simp [residue]
-      exact hperiod _
-  have hpair : Function.Injective (capSymbolAffine j (k % 2 = 1)) := by
-    fin_cases j <;> by_cases hp : k % 2 = 1 <;>
-      simp only [hp, decide_true, decide_false] <;> decide
-  have hlisted (i : Fin 36) :
-      capSymbolAffine j (k % 2 = 1) i ∈ capSymbolComplement (shift j) := by
-    have hp : List.Perm (List.ofFn (capSymbolAffine j (k % 2 = 1)))
-        (capSymbolComplement (shift j)) := by
-      fin_cases j <;> by_cases hodd : k % 2 = 1 <;>
-        simp only [hodd, decide_true, decide_false] <;> decide
-    exact hp.mem_iff.mp (List.mem_ofFn.mpr ⟨i, rfl⟩)
-  have hmodinj (p q : ℤ × ℤ)
-      (hp : p ∈ capSymbolComplement (shift j))
-      (hq : q ∈ capSymbolComplement (shift j))
-      (heq : residue k hk (p.1 * (k : ℤ) + p.2) =
-        residue k hk (q.1 * (k : ℤ) + q.2)) : p = q := by
-    let x := p.1 * (k : ℤ) + p.2
-    let y := q.1 * (k : ℤ) + q.2
-    have hs : shift j = 0 ∨ shift j = -4 := by fin_cases j <;> simp [shift]
-    simp only [capSymbolComplement, List.mem_append, List.mem_map,
-      List.mem_range] at hp hq
-    have hx : -(order k : ℤ) < x ∧ x < 2 * (order k : ℤ) := by
-      rcases hp with (((⟨u, hu, rfl⟩ | ⟨u, hu, rfl⟩) |
-        ⟨u, hu, rfl⟩) | ⟨u, hu, rfl⟩)
-      all_goals dsimp [x, order] <;> rcases hs with hs | hs <;> omega
-    have hy : -(order k : ℤ) < y ∧ y < 2 * (order k : ℤ) := by
-      rcases hq with (((⟨u, hu, rfl⟩ | ⟨u, hu, rfl⟩) |
-        ⟨u, hu, rfl⟩) | ⟨u, hu, rfl⟩)
-      all_goals dsimp [y, order] <;> rcases hs with hs | hs <;> omega
-    have hvalue (z : ℤ) (hz : -(order k : ℤ) < z ∧
-        z < 2 * (order k : ℤ)) :
-        ((residue k hk z).val : ℤ) =
-          if z < 0 then z + order k
-          else if z < order k then z else z - order k := by
-      have hn : 0 ≤ z % (order k : ℤ) :=
-        Int.emod_nonneg _ (by dsimp [order]; omega)
-      have hv : ((residue k hk z).val : ℤ) = z % (order k : ℤ) := by
-        simp [residue, Int.toNat_of_nonneg hn]
-      rw [hv]
-      by_cases hneg : z < 0
-      · have hstep : 0 ≤ z + order k ∧ z + order k < order k := by omega
-        rw [if_pos hneg, show z % (order k : ℤ) =
-          (z + order k) % (order k : ℤ) by simp,
-          Int.emod_eq_of_lt hstep.1 hstep.2]
-      · have hnonneg : 0 ≤ z := by omega
-        rw [if_neg hneg]
-        by_cases hsmall : z < order k
-        · rw [if_pos hsmall, Int.emod_eq_of_lt hnonneg hsmall]
-        · have hstep : 0 ≤ z - order k ∧ z - order k < order k := by omega
-          rw [if_neg hsmall, show z % (order k : ℤ) =
-            (z - order k) % (order k : ℤ) by simp,
-            Int.emod_eq_of_lt hstep.1 hstep.2]
-    have heq' :
-        (if x < 0 then x + order k else if x < order k then x else x - order k) =
-        (if y < 0 then y + order k else if y < order k then y else y - order k) := by
-      have hv := congrArg (fun z : Fin (order k) => (z.val : ℤ)) heq
-      simpa [x, y, hvalue x hx, hvalue y hy] using hv
-    rcases hp with (((⟨u, hu, rfl⟩ | ⟨u, hu, rfl⟩) |
-      ⟨u, hu, rfl⟩) | ⟨u, hu, rfl⟩)
-    all_goals rcases hq with (((⟨v, hv, rfl⟩ | ⟨v, hv, rfl⟩) |
-      ⟨v, hv, rfl⟩) | ⟨v, hv, rfl⟩)
-    all_goals rcases hs with hs | hs
-    all_goals simp [x, y, hs, order] at heq' ⊢
-    all_goals split_ifs at heq' <;> omega
-  intro i l heq
-  change symbol k hk j (capRow k hk i) =
-    symbol k hk j (capRow k hk l) at heq
-  rw [hcap i, hcap l] at heq
-  exact hpair (hmodinj _ _ (hlisted i) (hlisted l) heq)
+#print axioms transversal_obstruction
 
 end D5.S3.Combinatorics.LatinHTransversals
