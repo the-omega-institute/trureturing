@@ -25,14 +25,18 @@ internal sealed class QutritRankOneMicOrthogonalPairsDocument : IScribeDocumentD
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Nine pairs refute the seven-pair bound", Disp(new Formula.Not(F.Id("claim"))),
                 "Let v = [(1,i,-1), (1,-1,1+i), (1-i,0,-1), (1,-1+i,1+i), (0,1,i), (-1-i,i,1), (1,1,1), (1,i,-1-i), (1,-i,0)] and k = [3,2,2,4,3,3,9,7,11], with indices 0 through 8. The effects E(a) = (k(a)/46) v(a) v(a)^* are positive semidefinite; each outer product has rank at most one and a nonzero diagonal entry establishes rank at least one. Their sum is I. For x = [Re H00, Re H11, Re H22, Re H01, Im H01, Re H02, Im H02, Re H12, Im H12], define c(a) = (Jx)(a)/k(a), where J is the integer matrix 46 times the inverse of the coordinate matrix of the outer products. Expanding gives H = ∑_a c(a) E(a) for every Hermitian H. The nine pairs (0,1), (0,8), (1,2), (2,3), (3,4), (4,5), (5,6), (6,7), (7,8) have zero trace product. Their cardinality is nine, so the total number is at least nine and cannot be at most seven. The traces are 9/46, 4/23, 3/23, 10/23, 3/23, 6/23, 27/46, 14/23, 11/23; this example is biased.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("debrota-2020-rank-one-mic-seven-orthogonal-pairs-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        string declaration, DescribeRole role, AssessedProvenance provenance) =>
+        string declaration, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("qutritmic-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. arguments]);

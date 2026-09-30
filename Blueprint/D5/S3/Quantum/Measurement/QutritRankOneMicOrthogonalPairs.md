@@ -46,6 +46,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/QutritRankOneMicOrthogonalPairs.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/debrota-2020-rank-one-mic-seven-orthogonal-pairs-refutation` (refuted) by `D5/S3/Quantum/Measurement/QutritRankOneMicOrthogonalPairs.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"debrota-2020-rank-one-mic-seven-orthogonal-pairs-refutation","declaration_gid":"D5/S3/Quantum/Measurement/QutritRankOneMicOrthogonalPairs.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* John B. DeBrota; Christopher A. Fuchs; Blake C. Stacey (2020). *The Varieties of Minimal Tomographically Complete Measurements*. DOI: [10.1142/S0219749920400055](https://doi.org/10.1142/S0219749920400055). URL: <https://arxiv.org/abs/1812.08762v5>.
