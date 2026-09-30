@@ -173,7 +173,7 @@ theorem prepared_mild_solution (ν A B α β : ℝ)
   let QB : H →L[ℝ] H →L[ℝ] G := QL.mkContinuous₂ 16 hQn
   have hQdiff (x y z w : H) : QB x y - QB z w = QB (x-z) y + QB z (y-w) := by
     simp only [map_sub, ContinuousLinearMap.sub_apply]
-    abel
+    rw [sub_add_sub_cancel]
   let rc (k : K) : TV →L[ℂ] V :=
     (((WithLp.linearEquiv 2 ℂ (Fin 2 → ℂ)).symm.toLinearMap.comp
       (LinearMap.pi fun i => ∑ j : Fin 2, κ k j •
@@ -643,7 +643,7 @@ theorem prepared_mild_solution (ν A B α β : ℝ)
     (norm_sub_le _ _).trans (by linarith [hen, hDR x hx])
   have hΦlip (x y : Path) (hx : ‖x‖ ≤ R) (hy : ‖y‖ ≤ R) :
       ‖Φ x - Φ y‖ ≤ (1/2:ℝ)*‖x-y‖ := by
-    have heq : Φ x - Φ y = -(D x x - D y y) := by dsimp [Φ]; abel
+    have heq : Φ x - Φ y = -(D x x - D y y) := by dsimp [Φ]; rw [sub_sub_sub_cancel_left, neg_sub]
     rw [heq, norm_neg]
     exact hDhalf x y hx hy
   let ball : Set Path := {x | ‖x‖ ≤ R}
@@ -696,7 +696,7 @@ theorem prepared_mild_solution (ν A B α β : ℝ)
         apply intervalIntegral.integral_congr; intro s hs
         dsimp [kernel, rowKernel]
         rw [he s (by rw [uIcc_of_le ht.1] at hs; exact ⟨hs.1,hs.2.trans ht.2⟩)]
-      rw [hi]; abel)
+      rw [hi]; exact sub_sub_sub_cancel_left _ _ _)
     exact fun t ht => he t ht ▸ (hh t ht).symm
   · intro β₂ v hv hvb b₂ X₂ hm
     let bd : V := WithLp.toLp 2 ![((3*(β-β₂)/2:ℝ):ℂ),((3*(β-β₂)/2:ℝ):ℂ)]
@@ -750,7 +750,7 @@ theorem prepared_mild_solution (ν A B α β : ℝ)
       change _ = Real.exp (-ν*t*ρ k) • (X0 k-X₂ k)-_
       rw [smul_sub]
       change _ = _ - ((∫ s in (0:ℝ)..t, kernel u t k s) - ∫ s in (0:ℝ)..t, kernel v t k s)
-      abel
+      exact sub_sub_sub_comm _ _ _ _
     have hdn : ‖diff‖ ≤ 3*|β-β₂|+(1/2:ℝ)*‖diff‖ := by
       apply (ContinuousMap.norm_le _ (by positivity)).mpr
       intro t
