@@ -25498,3 +25498,199 @@ consumer is a further ordinary application of existing section
 closure, moment transfer and minimal-cover structure, independently
 reviewed without new Lean or numerical enumeration. The original
 unrestricted noncoverage question remains unresolved.
+
+## Divisor closure does not supply nonnegative aggregate pair credit
+
+The signed aggregate in FC968 is a substantive source condition.
+It does not follow merely from distinct odd moduli, divisor closure,
+comparable disjointness and irredundancy, even with the initial odd
+prime support{3,5,7,11}. The following exact NONCOVER shows this for
+an actual positive head-survivor source. It refutes the aggregate
+condition, not just the stronger pointwise condition C_q>=0.
+
+The source remains material: the chosen seed is one surviving
+five-adic head cell, retaining the full pure ternary factor. It is
+not the full Haar head-survivor restriction and not a
+literal Haar-started BBMST prefix. No conclusion about those more
+specific sources, or about a globally minimum WHOLE cover, follows
+from this example.
+
+### A complete divisor palette with private points
+
+Put H=50 and take one original for EVERY nonunit divisor of5^H*7*11,
+plus the original0 mod3. There are4(H+1)-1+1=204 distinct odd
+nonunit numerical labels. Define the finite comb prefixes
+
+    c_i(t)=t+sum_(j=1..i-2)5^j, i>=2,
+    u_H(t)=t+sum_(j=1..H-1)5^j.                 (FC1114)
+
+All rows below give CRT phases of these ORIGINAL labels. A missing
+coordinate is unrestricted. The pure7 and11 phases are zero.
+
+| Original labels | Actual phase conditions |
+| --- | --- |
+| 5 | x_5=0 mod5 |
+| 5^i,2<=i<=H | x_5=c_i(2) mod5^i |
+| 35 | x_5=1 mod5, x_7=1 |
+| 5^i*7,2<=i<=H | x_5=c_i(3) mod5^i, x_7=2 |
+| 55 | x_5=4 mod5, x_11=1 |
+| 5^i*11,2<=i<=H | x_5=c_i(4) mod5^i, x_11=2 |
+| 77 | x_7=1, x_11=1 |
+| 5^i*77,1<=i<=H | x_5=1 mod5^i, x_7=r_i, x_11=t_i |
+
+The terminal phases use each pair exactly once:
+
+    r_i=2+floor((i-1)/10), t_i=1+((i-1) mod10),
+    {(r_i,t_i):1<=i<=50}={2,...,6} times{1,...,10}. (FC1115)
+
+Together with the three pure primes3,7,11, this lists the full
+palette. Divisor closure is numerical and immediate from its
+definition; no projected moduli have been declared distinct.
+
+For fixed t the c_i(t) prefixes are pairwise disjoint: when i<j,
+their digit at5^(i-1) is respectively0 and1. The root t also
+separates the three comb families. Every terminal class has five-root1;
+it misses all pure-five classes, the higher5^i*7 combs and all
+5^i*11 classes. It misses35 and77 by its seven-root r_i!=1.
+Two terminal originals have different(r_i,t_i), hence are disjoint.
+The first55 class and its higher comparable originals use different
+eleven-roots1 and2. These observations, with the nonzero seven and
+eleven roots of mixed labels, verify disjointness of every comparable
+pair.
+
+Every original is private somewhere on the SAME full carrier.
+In the following witnesses the ternary root is1 except for the
+pure3 class, where it is0:
+
+| Original | One private(5,7,11)-coordinate tuple |
+| --- | --- |
+| 3 | (3,3,3) |
+| 5 or5^i | (its listed five-phase,3,3) |
+| 7 | (3,0,3) |
+| 11 | (3,3,0) |
+| 35 | (1,1,2) |
+| 5^i*7,i>=2 | (c_i(3),2,3) |
+| 55 | (4,2,1) |
+| 5^i*11,i>=2 | (c_i(4),2,2) |
+| 77 | (u_H(3),1,1) |
+| 5^i*77 | (1,r_i,t_i) |
+
+Five-coordinates are taken modulo5^H; the other coordinates are
+modulo7 and11. For77, u_H(3) avoids every higher seven-comb prefix,
+since its would-be last digit is1 rather than0. All other exclusions
+follow from the displayed roots, comb disjointness or distinct
+terminal pairs. Thus the entire family is irredundant. The point
+(x_3,x_5,x_7,x_11)=(1,3,3,3) avoids EVERY original, so this is
+explicitly not a whole covering system.
+
+### Exact negative aggregate on one supported source
+
+Use FC936's pure-first half-threshold continuation, with B=5.
+The head consists of the actual pure3 and pure-five classes. Let
+nu_3,nu_5 be their normalized pure-survivor laws, and choose
+
+    eta=nu_3 tensor(nu_5 restricted to{x_5=1 mod5^H}),
+    s=eta(1)=4/(3*5^H+1)>0.                     (FC1116)
+
+The denominator follows from the disjoint pure-five classes:
+their removed Haar mass is sum_(i=1..H)5^-i. The selected cell
+avoids all of them. There is no mixed head deletion, no omitted
+old height and no change of source between the following quantities.
+Both future pure laws are uniform on their nonzero roots.
+
+On this seed the only active seven-stage mixed original is35.
+Thus beta_7=1/6, its row conditions off root1, and g(beta_7)=0.
+All50 terminal five-prefix conditions are active. On the independent
+pure reference used to DEFINE Phi in FC963, the full eleven-stage
+additive load is
+
+    A_11(x_7)=1/10 if x_7=1,
+    A_11(x_7)=1 if x_7 in{2,...,6},
+    A_7=1/6.                                    (FC1117)
+
+At root1 the only contributor is77. At any other nonzero root,
+the ten terminal originals occupy the ten different allowed
+eleven-roots. All5^i*11 originals are inactive on the seed. Therefore
+these additive loads equal their actual union fractions; the
+terminal coefficient in their squares is the product of masses,
+as required by FC963.
+
+It follows on the initial pure reference that
+
+    eta(Phi_5)/s
+       =1/36+(1/6)(1/100)+5/6=1553/1800.        (FC1118)
+
+Under the ACTUAL seven-row all mass instead lies on roots2,...,6.
+The eleven-stage union then fills the entire pure-allowed fibre:
+beta_11=1 and g(beta_11)=1. All seed mass is killed at eleven,
+while every kernel was normalized. Hence
+
+    sum_q mu_<q(g(beta_q))=s,
+    sum_q mu_<q(C_q/d_q+delta_q)
+       =eta(Phi_5)-s=-(247/1800)s<0.             (FC1119)
+
+This is exactly FC967's SAME-source identity. It can also be seen
+at the seven-row: Phi_7 takes values1/100 and1, so
+C_7=-11/80, d_7=5/6 and delta_7=1/36. Their compensated sum is
+-247/1800. At the actual eleven histories Phi_11=0 and
+delta_11=A_11^2-g(beta_11)=0. No negative term has been inferred
+from a failed upper bound or from a different probability law.
+
+This also retains the positive private-projection premise of FC988.
+The35 private point(1,1,2) and every terminal private point
+(1,r_i,t_i) share the complete pre-seven five-word1; either allowed
+ternary root may be used. Their common old projection therefore
+has ALL the seed mass s. The actual positive local slack is s/36.
+It is nevertheless outweighed by the covariance contribution
+-33s/200. In FC990 the early private point lay outside the seed;
+that missing-support explanation is unavailable here. A positive
+same-source private overlap and local slack still do not supply
+a sufficient quantitative total credit.
+
+The comb and label-retention devices reuse FC989--990; the
+aggregate calculation directly consumes FC963--968. The new
+point is the correlated arrangement of the terminal original
+phases: avoiding the first bad seven-root removes precisely the
+low-cost future rows. This causes a negative TOTAL correction,
+which the earlier below-half and terminal-constant examples did
+not supply. The result is an ordinary symbolic counterexample to
+a proposed source-uniform bridge, independently checked without
+enumeration or new Lean verification. It gives no counterexample
+to Erdős#7.
+
+## Existing chain capacity must retain its terminal coordinate
+
+The preceding obstruction does not remove the valid chain and
+private-hull savings already available. FC859--860 bounds each
+one-sided pair row by integrating disjoint FULL numerical-chain
+events, including the other original's terminal coordinate. FC899--900
+adds whole-minimality disjointness cliques; FC944--947 retains actual
+parent reservations and identifies when a conflict occurs strictly
+before the terminal prime. These are the interfaces to reuse.
+
+They cannot be applied after forgetting all future coordinates in
+FC1106. The existing fourteen-label family FC861 already shows
+why: at cutoff5 and the old point x_5=1 mod625, the five originals
+7,35,175,875,4375 give
+
+    old cofactors1|5|25|125|625,
+    L_(5,7)=5, future seven-roots0,1,2,3,4.      (FC1120)
+
+At any single complete(5,7)-point those comparable originals are
+disjoint, but their OLD projections all meet. Thus a full-point
+antichain bound does not bound this projected section by one. In
+the pure-first query family the pure7 label is excluded and the
+four mixed projections still all meet. This is reuse of the same
+original example, not a new finite experiment.
+
+In FC963 a terminal conflict likewise does not delete the product
+lambda_i lambda_j; an earlier-coordinate conflict DOES make its
+actual intermediate intersection factor zero. Chain capacities can
+bound the correctly retained one-sided pair integrals, but neither
+their existence nor divisor closure supplies FC968's missing
+nonnegative aggregate. FC1119 now rules out that inference for
+arbitrary supplied supported head measures, even in the additional
+structural class stated above. A proof using the full original
+head source, a justified new source selection, or global minimum-
+WHOLE-cover replacement constraints remains open. The complete
+future library and all signed transport costs remain payable.
