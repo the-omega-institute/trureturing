@@ -12,17 +12,18 @@ open Lean Elab Command
 
 private def producer : Name := `LeanInformationAudit.Tests.RecorderPolicyInputs
 
-/-- info: [PASS] recorder_records_policy_violating_inputs count=4 -/
+/-- info: [PASS] recorder_records_policy_violating_inputs count=5 -/
 #guard_msgs in
 run_cmd do
   let recorded := (RegistrationInputs.owned (← getEnv)).filter (·.1 == producer)
     |>.map (·.2.entry.theoremName)
   unless recorded == #[``RecorderPolicyInputs.reserved.__catalog_irredundant,
       ``RecorderPolicyInputs.lifted, ``RecorderPolicyInputs.definitionBackedTarget,
-      ``RecorderPolicyInputs.definitionBackedOccurrence] do
+      ``RecorderPolicyInputs.definitionBackedOccurrence, ``RecorderPolicyInputs.witnessTarget] do
     throwError "[FAIL] recorder_records_policy_violating_inputs {recorded}"
   unless (InformationRegistry.entries (← getEnv)).isEmpty do
     throwError "[FAIL] recorder_assessed_at_compile_time"
+  discard <| getConstInfo ``RecorderPolicyInputs.directWitnessUnit
   let .defnInfo _ ← getConstInfo ``RecorderPolicyInputs.definitionBackedRealization
     | throwError "[FAIL] recorder_changed_definition_bridge_kind"
   for (_, input) in RegistrationInputs.owned (← getEnv) do
@@ -45,6 +46,8 @@ info: LeanInformationAudit.Tests.RecorderPolicyInputs.lifted: P1.RigidUniverseMi
 info: LeanInformationAudit.Tests.RecorderPolicyInputs.definitionBackedTarget: IE-C006 StatementProofMismatch: LeanInformationAudit.Tests.RecorderPolicyInputs.definitionBackedTarget
 ---
 info: LeanInformationAudit.Tests.RecorderPolicyInputs.definitionBackedOccurrence: IE-C006 StatementProofMismatch: LeanInformationAudit.Tests.RecorderPolicyInputs.definitionBackedOccurrence
+---
+info: LeanInformationAudit.Tests.RecorderPolicyInputs.witnessTarget: IE-C006 StatementProofMismatch: LeanInformationAudit.Tests.RecorderPolicyInputs.witnessTarget
 -/
 #guard_msgs in
 run_cmd do

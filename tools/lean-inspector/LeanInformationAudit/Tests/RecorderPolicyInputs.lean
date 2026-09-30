@@ -1,11 +1,12 @@
 import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates
+import D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord
 
 /-! Recorder-only fixture, compiled as a `Reg` module is: it imports the
 Interface package and D5, never the implementation. The registrations below
 are syntactically valid and violate an admission rule owned by the report
-(IE-C011 reserved names, P1 rigid universes, and the bridge theorem-kind gate).
+(IE-C011 reserved names, P1 rigid universes, bridge kind, and full witness arena identity).
 Compiling this module is the evidence that the recorder records them without
 error; `RecorderPolicyBoundary` shows that the report rejects them. -/
 
@@ -76,5 +77,29 @@ def objectArena := arena.toArena
 register_information_theorem definitionBackedOccurrence in arena
   object_arena objectArena catalog definitionBridge
   primitives realization.toPrimitiveBundle realization definitionBackedRealization
+
+open CounterexampleRecord
+
+-- Embedding identity is report policy; both arenas have the same unit inputs.
+def witnessArena := WitnessArena.ofCarrier Bool Bool (fun _ => False)
+  (fun x => x) (fun _ => .isFalse id)
+
+def differentEmbeddingArena := WitnessArena.ofCarrier Bool Bool (fun _ => False)
+  Bool.not (fun _ => .isFalse id)
+
+def witnessReads := counterexampleRealization (fun _ : Bool => false)
+theorem witnessTarget : True := trivial
+theorem witnessLaw : witnessArena.Law witnessReads := ⟨false, rfl⟩
+theorem witnessBridge : WitnessPrimitiveRealization witnessArena True witnessReads :=
+  ⟨fun _ => trivial⟩
+theorem witnessVariation : witnessArena.Law witnessReads ∧
+    ¬ witnessArena.Law witnessArena.constantTrue := witnessArena.variation witnessLaw
+
+def directWitnessUnit : TheoremUnit differentEmbeddingArena.toArena :=
+  witnessBridge.toTheoremUnit witnessLaw
+
+register_information_theorem witnessTarget in differentEmbeddingArena
+  primitives witnessReads.toPrimitiveBundle realization witnessBridge
+  variation witnessVariation
 
 end LeanInformationAudit.Tests.RecorderPolicyInputs
