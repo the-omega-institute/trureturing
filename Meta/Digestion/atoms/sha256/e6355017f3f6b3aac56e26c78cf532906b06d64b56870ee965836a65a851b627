@@ -1,0 +1,11 @@
+## 122. 非交换面运输：返回群字和边界子群
+
+本节给出总卷第 39 节循环构造的非交换版本。令有限群 $\Gamma=\langle u,v\rangle$ 在有限集合 $\Omega$ 上传递右作用，写 $\omega g$。群乘法约定 $(\omega g)h=\omega(gh)$。四面体顶点用 $0,1,2,3$，低边为 $01,12,23$，高边为 $02,03,13$。
+
+对每个 $\omega$，规定全部面配对
+
+$$f_0(\omega)\longleftrightarrow f_3(\omega u),\quad p=(3,0,1,2),$$
+$$f_1(\omega)\longleftrightarrow f_2(\omega v),\quad q=(3,2,0,1), \tag{122.1}$$
+
+其中 $f_j$ 是遗漏顶点 $j$ 的面，排列列出顶点的像，逆向用逆排列。作用无需忠实；$u,v$ 无需交换。
+

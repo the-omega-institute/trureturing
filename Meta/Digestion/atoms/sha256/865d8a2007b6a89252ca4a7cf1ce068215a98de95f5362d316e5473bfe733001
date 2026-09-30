@@ -1,0 +1,7 @@
+**推论 38.4。** $d$ 增大时 $x_d$ 严格减小，且
+
+$$x_d\longrightarrow x_0,\qquad y_d\longrightarrow1,\qquad l_H\longrightarrow0
+\quad(d\to\infty).$$
+
+因而这个显式族不存在对所有 $d$ 都统一的高边正长度下界，不能由每个 $d$ 的存在性推断覆盖全部 $d$ 的同一非退化紧集。$d=6$ 不在构造中；全部低、高边度六时 $e=t$，引理 36.1 已排除严格超理想角结构。
+

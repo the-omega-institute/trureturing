@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f3b8424b2eb6ee8633ee0e012ba448b4049ad79643c10509fc80a1a76d2f1668
+  normalized_sha256: sha256:f3b8424b2eb6ee8633ee0e012ba448b4049ad79643c10509fc80a1a76d2f1668
+cas_ref: sha256:f3b8424b2eb6ee8633ee0e012ba448b4049ad79643c10509fc80a1a76d2f1668
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/TwoLayerNineteenThreshold.exact_uniform_two_layer_threshold
+    target_statement_id: sha256:06193615fb02b7d815d36cff4eaea809316e2b689ce764118f21cd87f6e9d9f5
+receipts:
+  unresolved_subitems: []

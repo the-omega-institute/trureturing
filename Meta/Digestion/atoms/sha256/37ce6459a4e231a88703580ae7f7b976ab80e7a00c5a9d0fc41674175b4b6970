@@ -1,0 +1,23 @@
+## 125. 来源、执行证据与剩余的全局约束
+
+**输入归属。** 本篇使用总卷第 37–39 节的 P4 角色实现与显式黄金解，第 95 节的配对因式，并读取当前已推送的半和、半差、角需求和平坦横向差界 Lean 陈述。读取陈述不等于本轮重新编译，本篇没有继承一个超出原量词的形式认证。第 40 节已经有稳定子保持对边对和轨道容量规则，本轮不把 $S_4\to S_3$ 的解释重新包装为那条规则的首次证明。
+
+Luo–Yang, *Volume and rigidity of hyperbolic polyhedral 3-manifolds*, arXiv:1404.5365，Lemma 4.3 与 Proposition 4.4 提供原始六变量余弦及正长度真正域刻画。Theorem 6.3 提供旧全局存在性输入；本轮成功查看印刷页 21 的图像，印刷页 16 的图像请求失败，相关公式和刻画按解析文本核对，未报告为成功图像读取。
+
+Michael Joswig, *Projectivities in Simplicial Complexes and Colorings of Simple Polytopes*, arXiv:math/0102186，是沿面组合运输的成熟背景；本轮读取其定义及奇余维二面相关结果，成功查看印刷页 8。这里的理想自面配对并未未经检验地套用其单纯复形假设，第 122 节给出独立的完整运输证明。
+
+Doyle–Leibon, *23040 symmetries of hyperbolic tetrahedra*, arXiv:math/0309187，讨论 Regge 与更大的体积／剪切对称。它提示寻找其他群，但本篇未把保体积变换当作保持每条实际边长、全部面拼合和真正域的全局操作；该文不作为本篇新定理输入。
+
+Mecchia–Zimmermann, *On finite simple and nonsolvable groups acting on homology 4-spheres*, arXiv:math/0507173，及 Bristol GroupNames 的 SL(2,5) 条目核对了 $A_5\cong\mathrm{PSL}_2(\mathbb F_5)$、二元二十面体群及中心二重扩张的经典名称。只使用这些识别，没有导入其四维流形群作用分类结论。
+
+- https://arxiv.org/pdf/1404.5365
+- https://arxiv.org/pdf/math/0102186
+- https://arxiv.org/pdf/math/0309187
+- https://arxiv.org/abs/math/0507173
+- https://people.maths.bris.ac.uk/~matyd/GroupNames/97/SL(2,5).html
+
+**辅助复核。** 配套 `cfmp_group_character_check.py` 为独立标准库程序。它检查全部二十四个 $S_4$ 置换对三组对边的作用和四元素核；对六百个有理六变量向量核对字符矩阵、精确余项、三千六百个原始余弦恒等式及 Cauchy 的平方版本；另检查一千个非零偏差且位于充分半径内的真正向量。两条承重多项式恒等式另经本地 Sympy 展开，残差均精确为零；其一般证明已在正文给出。
+
+固定 $A_5$ 十二陪集、六十正则和 $\mathrm{SL}_2(\mathbb F_5)$ 一百二十正则实例的完整面槽、奇偶、连通、实际边类、首次有序端点返回、独立链接角扇及有理角均重算。另对三十五个有限 $S_4$ 子群的陪集作用，比较四个边界词的预测与独立面配对商的链接计数。检查器还核对二元群的唯一二阶元和三十个射影二阶元提升。复现固定实例不需要重跑发现生成元时的搜索。有限检查不替代一般群作用、连续不等式或几何输入的证明。
+
+**实质范围。** 第 120 节在局部确实允许六个独立长度；它尚未证明一般 CFMP 极大点都位于给出的稳定范围。第 122 节真正处理非交换群和非正规陪集，但其 P4 几何实现消费已有角色平衡定理。第 124 节证明中心提升的局部度数障碍，没有宣称物理自旋等价于三维几何拼合。全部新增内容属于待独立审阅的书面研究；不改动并行 Lean、Scribe、审计与状态，不运行项目 CI，不宣称完整 CFMP 或世界范围优先权。

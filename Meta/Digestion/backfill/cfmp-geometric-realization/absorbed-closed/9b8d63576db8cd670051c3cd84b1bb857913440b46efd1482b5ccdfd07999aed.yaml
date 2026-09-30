@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9b8d63576db8cd670051c3cd84b1bb857913440b46efd1482b5ccdfd07999aed
+  normalized_sha256: sha256:9b8d63576db8cd670051c3cd84b1bb857913440b46efd1482b5ccdfd07999aed
+cas_ref: sha256:9b8d63576db8cd670051c3cd84b1bb857913440b46efd1482b5ccdfd07999aed
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/CriticalBudgetInterval.exact_budget_interval
+    target_statement_id: sha256:bc372798b024c7cf99d57dbdfb331c034dd3f45a6ec63e836b0474290b60fe28
+receipts:
+  unresolved_subitems: []

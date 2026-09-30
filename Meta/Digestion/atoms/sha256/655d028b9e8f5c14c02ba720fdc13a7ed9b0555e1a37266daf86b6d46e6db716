@@ -1,0 +1,8 @@
+**证明。** 顶点三角形的原始余弦为
+
+$$\varphi_{ij}
+=\frac{\cosh t^i_{jk}\cosh t^i_{jh}-\cosh t^i_{kh}}
+{\sinh t^i_{jk}\sinh t^i_{jh}}.$$
+
+所选角为 $\pi$ 等价于 $\varphi_{ij}\le-1$。分母正，双曲余弦加法公式把它化为 $\cosh t^i_{kh}\ge\cosh(t^i_{jk}+t^i_{jh})$。各长度为正且 $\cosh$ 在非负轴递增，得到 (TL)。右侧两项正，最长性严格。
+

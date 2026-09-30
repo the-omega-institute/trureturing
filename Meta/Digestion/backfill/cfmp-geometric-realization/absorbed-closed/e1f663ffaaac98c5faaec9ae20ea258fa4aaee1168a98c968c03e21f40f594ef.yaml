@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e1f663ffaaac98c5faaec9ae20ea258fa4aaee1168a98c968c03e21f40f594ef
+  normalized_sha256: sha256:e1f663ffaaac98c5faaec9ae20ea258fa4aaee1168a98c968c03e21f40f594ef
+cas_ref: sha256:e1f663ffaaac98c5faaec9ae20ea258fa4aaee1168a98c968c03e21f40f594ef
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/CriticalIncidenceStar.critical_incidence_face_bounds
+    target_statement_id: sha256:1331aa127edfd0cc7b43caee17dd69ace186b0f4459825b0dd938a1be3dc766a
+receipts:
+  unresolved_subitems: []

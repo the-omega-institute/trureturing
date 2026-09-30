@@ -1,0 +1,7 @@
+**定义。** 保留第 1 节的真实有限理想剖分，令 $t=|T|$、$e=|E|$、$b$ 为理想顶点数，亦即截断边界分量数。记 $\mathcal C=T\times\{1,2,3,4\}$ 为四面体顶点出现集合，$\mathcal C_\nu$ 为属于同一理想顶点 $\nu$ 的出现集合。以下使用归一化角 $a_o=\alpha_o/\pi$，所以零接缝曲率条件为每条全局边角和二。定义两个实际出现求和映射
+
+$$M:\mathbb R^{\widehat E}\to\mathbb R^E,\quad (Ma)_e=\sum_{P(o)=e}a_o,$$
+$$Q:\mathbb R^{\widehat E}\to\mathbb R^{\mathcal C},\quad (Qa)_{\sigma,i}=\sum_{j\ne i}a_{\sigma,ij}.$$
+
+角度亏量为 $d_c=1-(Qa)_c$。这里亏量是线性角数据；在真正几何中，$\pi d_c$ 才同时是相应截断三角形的双曲面积。
+
