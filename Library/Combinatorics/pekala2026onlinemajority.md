@@ -28,5 +28,6 @@ the finite-game probe. That search does not establish global priority.
 
 ## Verified locator
 
-- URL: https://arxiv.org/html/2609.37973 (v1, submitted 2026-09-29;
-  Section 6, Problem 11, retrieved 2026-09-30).
+- URL: https://arxiv.org/abs/2609.37973 (v1, submitted 2026-09-29).
+- Checked text: https://arxiv.org/html/2609.37973 (Section 6, Problem 11,
+  retrieved 2026-09-30).
