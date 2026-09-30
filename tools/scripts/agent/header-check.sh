@@ -2,9 +2,9 @@
 # header-check.sh <lean-file>... — deposit **之前**必跑。
 #
 # 立条依据 issue #3518(2026-08-27 实测):F-plane 头部若因 `digest:` 折行而成为 **7 行**,
-# `make deposit` **退出 0 并把模块 Freeze 掉**,缺陷只由 SL-012 在 preflight/CI 阶段报出。
+# `make deposit` **退出 0 并把模块 Freeze 掉**,缺陷只由 SL-012 在 gate/CI 阶段报出。
 # 而 Freeze 是 append-only、不可逆的 —— 事后只能靠新增勘误,改不了已冻的那条。
-# 故这道检查必须在 deposit 之前跑,不能等 preflight。
+# 故这道检查必须在 deposit 之前跑,不能等 gate。
 #
 # 2026-08-28 扩条(OB3 / PR #3654 血案):同一道门必须一并查 **SL-003 容量**。
 # 我的 deposit 模板当时查了头部形状与目录文件数,**唯独不查行数**;
