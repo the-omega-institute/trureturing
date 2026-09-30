@@ -25412,3 +25412,1439 @@ $$
 满足 Robin 不等式，仍须另行覆盖任意自然数，才能回接完整 Robin 判据。
 
 ## 215 追加锚（本行以下为增补区）
+
+## 216. 同一整数的互补因子概率与大素数幂命中上界
+
+沿用 §210 的非负除数卷积、Euler 矩及有限全区间上界，§212 的实际大核心必要条件，§214 的完整缺陷筛选，以及 §215 的函数类适用边界。
+
+主要可用结果是：令 $H=X/D$。实际大除数命中中，来自某个完整素数幂大于 $B$ 的整数的总 $\mu_s$ 权重不超过
+
+$$
+\boxed{\frac{4e^2s^2H}{B}\qquad(B/H\ge2, s\ge4).}
+\tag{216.1}
+$$
+
+取 $B=16e^2s^2H^2$，该部分不超过 $1/(4H)$。在当前 $H=e^{a y/\ell^2}$ 下，这允许把剩余加权命中目标严格限制到每个完整素数幂都不超过 $\exp((2a+o(1))y/\ell^2)$ 的同一实际整数。这是正向权重过滤，不需要把互补因子认作粗余因子。
+
+### 216.1 固定整数上的真实条件概率
+
+对固定正整数 $n$ 和实数 $s>0$，令
+
+$$
+b_s(1)=1,\qquad b_s(p^a)=Z(p^a)^s-Z(p^{a-1})^s\quad(a\ge1),
+\qquad Z(n)=\sigma(n)/n,
+$$
+
+并按乘法性延拓。§210 的有限望远镜恒等式给
+
+$$
+Z(n)^s=\sum_{d\mid n}b_s(d).
+$$
+
+因此
+
+$$
+\mathbb P_n(D=d)=\frac{b_s(d)}{Z(n)^s}\quad(d\mid n),
+\qquad H_n=\frac nD
+\tag{216.2}
+$$
+
+定义了一份概率分布。这里 $n$ 始终固定；$D$ 和 $H_n$ 的乘积逐样本等于同一个 $n$。
+
+**命题 216.1（指数的独立性与精确尾）。** 写 $n=\prod_p p^{v_p}$。在 $\mathbb P_n$ 下，随机指数 $A_p=v_p(D)$ 独立，且对 $0\le k\le v_p$，
+
+$$
+\mathbb P_n(A_p\le k)=\left(\frac{Z(p^k)}{Z(p^{v_p})}\right)^s.
+\tag{216.3}
+$$
+
+令 $J_p=v_p(H_n)=v_p-A_p$。对 $0\le j\le v_p$，
+
+$$
+q_{p,j}:=\mathbb P_n(J_p\ge j)
+=\left(\frac{Z(p^{v_p-j})}{Z(p^{v_p})}\right)^s
+=\left(1-\frac{p^j-1}{p^{v_p+1}-1}\right)^s.
+\tag{216.4}
+$$
+
+另约定 $q_{p,v_p+1}=0$。
+
+证明。乘法性使式（216.2）的分子与分母均逐素数分解，给有限乘积分布。对 $A_p\le k$ 的局部和望远镜消去，得到式（216.3）；代入 $k=v_p-j$，并使用 $Z(p^k)=(1-p^{-k-1})/(1-p^{-1})$，得到式（216.4）。$\square$
+
+更一般地，对每个实际 $h\mid n$，
+
+$$
+\boxed{\mathbb P_n(h\mid H_n)=\left(\frac{Z(n/h)}{Z(n)}\right)^s.}
+\tag{216.5}
+$$
+
+这是 $D\mid n/h$ 的同一个有限卷积，没有关于 $h$ 的粗糙性假设。
+
+若 $s$ 是正整数，还有一种精确实现：独立抽取 $s$ 个约数 $E_i\mid n$，各自服从 $\mathbb P(E_i=e)=1/(eZ(n))$。则 $\operatorname{lcm}(E_1,\ldots,E_s)$ 的局部分布函数正是式（216.3），故它与 $D$ 同分布。对非整数 $s>0$，式（216.2）—（216.4）直接定义分布，不需要这个抽样解释。
+
+### 216.2 可计算的互补因子尾与实际赋值约束
+
+由独立性和有限尾和公式，对每个实数 $\tau$ 有
+
+$$
+M_n(\tau):=\mathbb E_n H_n^\tau
+=\prod_{p\mid n}\left[
+1+(p^\tau-1)\sum_{j=1}^{v_p}p^{\tau(j-1)}q_{p,j}
+\right],
+\tag{216.6}
+$$
+
+以及
+
+$$
+\mathbb E_n\log H_n
+=\sum_{p\mid n}\log p\sum_{j=1}^{v_p}q_{p,j}.
+\tag{216.7}
+$$
+
+因此对 $H\ge1$、$\tau>0$，
+
+$$
+\mathbb P_n(H_n\le H)\le H^\tau M_n(-\tau),\qquad
+\mathbb P_n(H_n>H)\le H^{-\tau}M_n(\tau).
+\tag{216.8}
+$$
+
+也可直接作有限盒估计。若各 $j_p\in\{0,\ldots,v_p\}$ 满足 $\sum_pj_p\log p\le\log H$，则
+
+$$
+\prod_{p\mid n}(1-q_{p,j_p+1})
+\le\mathbb P_n(H_n\le H)
+\le\prod_{p\mid n}\left(1-q_{p,\min(v_p,\lfloor\log H/\log p\rfloor)+1}\right).
+\tag{216.9}
+$$
+
+左侧事件是所有局部互补指数同时不超过指定预算；右侧使用总乘积不超过 $H$ 的每个必要局部条件。两边都来自同一 $n$ 的联合分布。
+
+特别地，
+
+$$
+\mathbb P_n(H_n=1)=\prod_{p\mid n}(1-q_{p,1})
+\ge1-\sum_{p\mid n}\exp\left(-\frac{s(p-1)}{p^{v_p+1}-1}\right).
+\tag{216.10}
+$$
+
+所以小互补因子权重并不必然小；是否集中在 $1$ 附近取决于实际最高指数的局部增益。
+
+#### 216.2.1 完整缺陷与局部尾的关系
+
+§214 的完整实际缺陷为
+
+$$
+c(n)=\sum_{p\mid n}c_{p,v_p},\qquad
+c_{p,k}=-\log(1-p^{-k-1}).
+$$
+
+式（216.4）可以精确写为
+
+$$
+q_{p,j}=\exp[-s(c_{p,v_p-j}-c_{p,v_p})],
+\qquad
+\frac{s(p-1)}{p^{v_p+1}-1}
+=s(p-1)(e^{c_{p,v_p}}-1).
+\tag{216.11}
+$$
+
+这里 $c_{p,0}$ 只是固定原素支撑下比较两个局部 $Z$ 因子的辅助值；若 $p\nmid m$，它不属于 $c(m)$。特别地，当 $h$ 删除某个素因子的全部赋值时，不能把式（216.5）错误改写成 $\exp[-s(c(n/h)-c(n))]$，因为 totient 的素支撑因子也发生了变化。
+
+完整缺陷的一个标量上界只控制 $\sum_pc_{p,v_p}$，没有给每个最高素数幂的上界，也没有给式（216.10）中每个局部增益的下界。下面的构造会在同样通过缺陷筛选的整数上给出相反的小余因子行为。
+
+#### 216.2.2 一个大完整素数幂就能抑制小互补因子
+
+对 $n>1$ 定义
+
+$$
+B(n)=\max_{p^v\parallel n}p^v,
+\qquad B(1)=1.
+$$
+
+**命题 216.2（固定整数的大素数幂尾界）。** 对 $s\ge1$、$H\ge1$，
+
+$$
+\mathbb P_n(H_n\le H)\le\min\left\{1,\frac{2sH}{B(n)}\right\},
+\tag{216.12}
+$$
+
+$$
+G_n(H):=\mathbb E_n[H_n\mathbf1_{H_n\le H}]
+\le\min\left\{H,\frac{2sH^2}{B(n)}\right\}.
+\tag{216.13}
+$$
+
+证明。$n=1$ 时两式直接成立。以下取 $p^v=B(n)$。若 $p^v\le H$，式（216.12）右侧为 $1$，没有需证的额外限制。否则令 $J=\lfloor\log H/\log p\rfloor<v$。事件 $H_n\le H$ 蕴含 $J_p\le J$，故由式（216.4）
+
+$$
+\mathbb P_n(H_n\le H)
+\le1-\left(\frac{Z(p^{v-J-1})}{Z(p^v)}\right)^s
+=1-(1-u)^s,
+$$
+
+其中
+
+$$
+u=\frac{p^{J+1}-1}{p^{v+1}-1}
+\le\frac{p}{p-1}\frac{p^J}{p^v}
+\le\frac{2H}{p^v}.
+$$
+
+$s\ge1$ 时 $1-(1-u)^s\le su$，得到式（216.12）。事件内 $H_n\le H$ 再给式（216.13）。$\square$
+
+这里的 $p^v$ 可以是小素数的深赋值，也可以是一个很大的素因子；推导没有把 $H_n$ 看作粗整数。
+
+### 216.3 从条件概率回到真正的命中权重
+
+回到实际 FIB 整数族
+
+$$
+V=F_r,\quad r\ge7\text{ 为素数},\quad
+I_r=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\quad N_g=1+Vg.
+$$
+
+令 $A,X,T,y,\ell,s$ 与 §210–215 相同。固定 $a>\pi^2/6$，置
+
+$$
+R_y=\frac y{\ell^2},\qquad H=e^{aR_y},\qquad D=\frac XH,
+\qquad \mu_s(d)=\frac{b_s(d)}{dU(s)},
+$$
+
+$$
+\mathcal H_D=\{d:D<d\le X,\ \exists g\in I_r, d\mid N_g\}.
+$$
+
+充分大时 $D>V$，每个 $d\in\mathcal H_D$ 命中至多一个实际 $N_g$，记为 $n(d)$。令 $G_n^{<}(u)=\mathbb E_n[H_n\mathbf1_{H_n<u}]$。
+
+**命题 216.3（命中权重是截断一阶矩）。** 有精确等式
+
+$$
+\boxed{
+\mu_s(\mathcal H_D)
+=\frac1{U(s)}\sum_{g\in I_r}\frac{Z(N_g)^s}{N_g}
+G_{N_g}^{<}(N_g/D).
+}
+\tag{216.14}
+$$
+
+证明。每个被命中的除数只计一次。对固定 $n=N_g$，用 $h=n/d$ 换元，
+
+$$
+\sum_{\substack{d\mid n\\d>D}}\frac{b_s(d)}{dU(s)}
+=\frac{Z(n)^s}{nU(s)}
+\sum_{\substack{h\mid n\\h<n/D}}h\,\mathbb P_n(H_n=h).
+$$
+
+对 $g$ 求和即得。$\square$
+
+因而只知道 $\mathbb P_n(H_n\le H)$ 还不等于知道所需权重；必须保留式（216.14）中的 $h$ 因子。例如 $n=12,s=2$ 时，
+
+$$
+\mathbb P_{12}(H_n=1)=\frac{13}{112},\qquad
+\mathbb P_{12}(H_n=2)=\frac{20}{112},
+$$
+
+所以 $\mathbb P_{12}(H_n\le2)=33/112$，而 $G_{12}(2)=53/112$。
+
+对 $B\ge1$，定义同整数的大幂命中子集
+
+$$
+\mathcal H_D^{\mathrm{pow}}(B)
+=\{d\in\mathcal H_D:B(n(d))>B\}.
+$$
+
+由式（216.13）、式（216.14）和 §210 的有限上界
+$\sum_{n\le X}Z(n)^s\le XU(s)$，得到
+
+$$
+\mu_s(\mathcal H_D^{\mathrm{pow}}(B))
+\le\frac{2sH^2}{BU(s)}
+\sum_{g\in I_r}\frac{Z(N_g)^s}{N_g}
+\le 2\frac XA\frac{sH^2}{B}.
+\tag{216.15}
+$$
+
+这是条件分布带来的有效过滤。下节从同一个 Euler 增量分布直接得到更强的式（216.1）。
+
+### 216.4 Euler 增量概率给出更强的大幂过滤
+
+这里的 $e$ 恒指自然对数的底；截断指数另记为 $k_p$。
+
+**引理 216.4（全域权重下的局部指数尾）。** 设 $s\ge4$。在概率分布 $\mu_s$ 下，对每个素数 $p$、整数 $a\ge1$，
+
+$$
+\mu_s\{d:v_p(d)=a\}
+=\frac{b_s(p^a)}{p^aU_p(s)}
+\le2e^2s^2p^{-2a}.
+\tag{216.16}
+$$
+
+因此对实数 $L\ge2$，
+
+$$
+\boxed{\mu_s\{d:B(d)>L\}\le\frac{4e^2s^2}{L}.}
+\tag{216.17}
+$$
+
+证明。记 $P_p=(1-p^{-1})^{-s}$，取
+
+$$
+k_p=\left\lceil\frac{\log s}{\log p}\right\rceil-1\ge0,
+\qquad p^{k_p}<s\le p^{k_p+1}.
+$$
+
+§210 的几何级数表达式为
+
+$$
+U_p(s)=(1-p^{-1})\sum_{j\ge0}\frac{Z(p^j)^s}{p^j}.
+$$
+
+保留 $j=k_p$ 项。由于 $p^{-k_p-1}\le1/s$，
+
+$$
+(1-p^{-k_p-1})^s\ge(1-1/s)^s
+\ge\exp\left(-\frac{s}{s-1}\right)\ge e^{-2},
+$$
+
+从而
+
+$$
+U_p(s)\ge\frac{1-p^{-1}}{p^{k_p}}P_p(1-p^{-k_p-1})^s
+\ge\frac{P_p}{2e^2s}.
+\tag{216.18}
+$$
+
+对 $a\ge1$，均值定理和 $Z(p^a)-Z(p^{a-1})=p^{-a}$ 给
+
+$$
+b_s(p^a)\le s p^{-a}Z(p^a)^{s-1}\le s p^{-a}P_p.
+\tag{216.19}
+$$
+
+非负乘法级数的 Tonelli 分解给局部边缘概率
+
+$$
+\sum_{\substack{d\ge1\\v_p(d)=a}}\frac{b_s(d)}{dU(s)}
+=\frac{b_s(p^a)}{p^aU_p(s)}.
+$$
+
+代入式（216.18）—（216.19），得到式（216.16）。事件 $B(d)>L$ 是可数个事件
+$v_p(d)=a,\ p^a>L$ 的并，联合上界给
+
+$$
+\mu_s\{B(d)>L\}
+\le2e^2s^2\sum_{\substack{p\text{ 素},\ a\ge1\\p^a>L}}p^{-2a}.
+$$
+
+每个素数幂 $p^a$ 唯一对应一个整数，故
+
+$$
+\sum_{\substack{p\text{ 素},\ a\ge1\\p^a>L}}p^{-2a}
+\le\sum_{m>L}m^{-2}
+\le\frac1{\lfloor L\rfloor}\le\frac2L.
+$$
+
+这证明式（216.17）。无限联合上界只作用于一份已经由绝对收敛 Euler 级数归一化的概率测度，没有假设实际 FIB 剩余类独立。$\square$
+
+**定理 216.5（实际大素数幂命中的总权重）。** 对 $s\ge4$、$B/H\ge2$，
+
+$$
+\boxed{\mu_s(\mathcal H_D^{\mathrm{pow}}(B))
+\le\frac{4e^2s^2H}{B}.}
+\tag{216.20}
+$$
+
+特别地，取
+
+$$
+B_*:=16e^2s^2H^2,
+\tag{216.21}
+$$
+
+则
+
+$$
+\mu_s(\mathcal H_D^{\mathrm{pow}}(B_*))\le\frac1{4H}.
+\tag{216.22}
+$$
+
+证明。设 $d$ 属于左侧事件，令同一个实际整数 $n=n(d)=dh$。由 $d>D=X/H$ 和 $n\le X$，有 $h<H$。选取 $p^v\parallel n$，使 $p^v=B(n)>B$。因
+
+$$
+p^{v_p(d)}=\frac{p^v}{p^{v_p(h)}}\ge\frac{p^v}{h}>\frac BH,
+$$
+
+且 $B/H\ge2$，可知 $v_p(d)\ge1$，这是 $d$ 的一个实际完整素数幂。
+所以
+
+$$
+\mathcal H_D^{\mathrm{pow}}(B)\subseteq\{d:B(d)>B/H\}.
+$$
+
+式（216.17）直接给式（216.20），再代入式（216.21）得到式（216.22）。$\square$
+
+令
+
+$$
+\mathcal H_D^{\mathrm{cap}}
+=\{d\in\mathcal H_D:B(n(d))\le B_*\}.
+$$
+
+于是有一个严格缩小的充分目标：
+
+$$
+\mu_s(\mathcal H_D^{\mathrm{cap}})\le\frac3{4H}
+\quad\Longrightarrow\quad
+\mu_s(\mathcal H_D)\le\frac1H.
+\tag{216.23}
+$$
+
+在指定增长矩下 $\log s=o(R_y)$，故
+
+$$
+\log B_*=2aR_y+2\log s+\log(16e^2)
+=(2a+o(1))R_y.
+\tag{216.24}
+$$
+
+式（216.20）比式（216.15）少一个指数尺度的 $H$ 因子，只保留一个额外的 $s$；当前 $H/s\to\infty$，因此应以式（216.20）作主过滤。它没有将所有候选整数逐点证明安全，也没有为剩余集合提供未证的同余节省。
+
+### 216.5 完整缺陷筛选不能决定条件尾的方向
+
+#### 216.5.1 实际 FIB 存活者中，小互补因子权重可以趋零
+
+**命题 216.6（实际存活者的互补尾可趋零）。** 固定 $0<\kappa<1$，以下构造给出 $V^{1-\kappa+o(1)}$ 个通过 §214 指定筛选的实际来源，并使其条件小互补因子概率一致趋零。
+
+证明。取 §214.3 的整数 $K$，它在实际区间 $[A,X]$ 上满足：所有倍数均通过该节的完整缺陷筛选及固定有限低赋值目录，$\log K=o(\log V)$，且 $(K,V)=1$。
+
+令
+
+$$
+m_r=\left\lfloor\frac{\kappa\log V}{\log2}\right\rfloor,
+\qquad L_r=\operatorname{lcm}(K,2^{m_r}).
+$$
+
+因 $2\nmid V$，有 $(L_r,V)=1$，并且
+
+$$
+\log L_r=\kappa\log V+o(\log V).
+$$
+
+实际同余 $L_r\mid1+Vg$ 在 $I_r$ 中有
+
+$$
+T/L_r+O(1)=V^{1-\kappa+o(1)}
+\tag{216.25}
+$$
+
+个解。每个解仍是原实际合法来源，并通过 §214 的指定筛选。
+对同一个 $N_g$，有 $B(N_g)\ge2^{m_r}=V^{\kappa+o(1)}$，故命题 216.2 给一致的
+
+$$
+\mathbb P_{N_g}(H_{N_g}\le e^{aR_y})
+\le\exp(-\kappa\log V+o(\log V))\longrightarrow0.
+\tag{216.26}
+$$
+
+这里没有断言这些存活者违反 Robin；式（216.26）只显示通过完整缺陷筛选并不能迫使条件小余因子权重大。$\square$
+
+#### 216.5.2 一般整数中，相同筛选可与条件质量趋一共存
+
+**命题 216.7（一般近界整数的互补质量可趋一）。** 存在通过 §214 指定筛选的一般整数列，其响应以加性 $o(1)$ 接近 Robin 界，而条件互补因子等于一的概率趋于一。这里不要求该整数列属于 FIB 余数类。
+
+证明。令
+
+$$
+n_j=\operatorname{lcm}(1,\ldots,j),\qquad
+Y_j=\log n_j,\quad L_j=\log Y_j,\quad s_j=Y_jL_j.
+$$
+
+强素数定理给 $s_j/j=\log j+o(1)$。对 $p\le\sqrt j$，若
+$v_p=\lfloor\log j/\log p\rfloor$，则
+
+$$
+\frac{p-1}{p^{v_p+1}-1}\ge\frac1{2j},
+\qquad q_{p,1}\le\exp(-s_j/(2j))=j^{-1/2}e^{o(1)}.
+$$
+
+这样的素数共有 $O(\sqrt j/\log j)$ 个。对 $\sqrt j<p\le j$，有 $v_p=1$，
+
+$$
+q_{p,1}=\left(\frac p{p+1}\right)^{s_j}
+\le\exp(-s_j/(j+1))=j^{-1}e^{o(1)},
+$$
+
+对应素数至多 $O(j/\log j)$ 个。因此式（216.10）给
+
+$$
+\boxed{\mathbb P_{n_j}(H_{n_j}=1)\ge1-O(1/\log j)\longrightarrow1.}
+\tag{216.27}
+$$
+
+完整实际缺陷满足 $c(n_j)=O(j^{-1/2})=o(L_j^{-3})$：对 $p\le\sqrt j$，
+$p^{-v_p-1}<1/j$；对其余素数求 $p^{-2}$ 尾和，再用 $-\log(1-u)\le2u$。
+故这些整数最终也通过 §214 的 Axler 完整缺陷阈值、Hertlein 固定阈值及任意预先固定的有限低赋值目录。§215 的估计还给
+
+$$
+Z(n_j)=e^\gamma\log\log n_j+o(1).
+$$
+
+因此，即使完整缺陷很小并且响应任意接近 Robin 界，条件小互补因子权重也不必小。这个例子只排除不使用特定 FIB 同余关系的一般抑制论证，不给出当前 FIB 家族中条件质量趋一的构造。
+
+并且 $B(n_j)\le j$，远小于式（216.21）在这一尺度上的 $B_*$。所以新的大幂过滤没有排除这类算术上接近边界的构型；它限制的是剩余路线的实际对象范围，没有凭自身完成全局矩估计。$\square$
+
+### 216.6 已推进的接口与仍缺的联合估计
+
+固定 $n$ 的局部概率、缺陷差与矩母函数均已写成完整实际赋值的精确公式。将它们用于命中时，正确对象是截断的一阶互补矩（216.14），必须保留 $h$ 的权重。
+
+式（216.20）—（216.24）给出无条件的总权重过滤：完整素数幂超过 $B_*=16e^2s^2e^{2aR_y}$ 的实际整数只占至多四分之一的目标预算。余下的充分任务是式（216.23）左侧，而非所有大除数命中的原始集合。
+
+§212.3 要求的实际平方自由核心大小下界与这个过滤相容：其素因子截止 $z=r\sqrt{\log r}$ 远低于 $B_*$，而大核心的乘积可以远大于 $V$，同时所有单个完整素数幂都低于 $B_*$。当前没有由该核心条件证明式（216.23），也没有构造实际 FIB 反例使它失败。一般整数中的式（216.27）说明，若继续声称条件小余因子权重统一极小，必须新增特定同余或联合赋值信息。
+
+## 追加锚（本行以下为增补区）
+
+## 217. 实际互补除数切换、核权重计数与二阶预算
+
+沿用 §210、§215 的实际整数族与解析参数：
+
+$$
+V=F_r,\qquad r\ge7\text{ 为素数},\qquad
+I=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\qquad N_g=1+Vg,
+$$
+
+$$
+A=\min_{g\in I}N_g,\quad X=\max_{g\in I}N_g,\quad T=|I|,
+\quad y=\log A,\quad\ell=\log y,\quad s=y\ell,
+\quad t=e^\gamma\ell,
+\quad R=\frac y{\ell^2},\quad\delta=\frac y{\ell^3},
+\quad b_2=\frac{\pi^2}{6}.
+$$
+
+固定 $a>b_2$，令 $H=e^{aR}$、$D=X/H$。这里 $H$ 仅为互补因子大小上限，
+没有附带粗糙性条件。继续使用
+
+$$
+b_s(1)=1,\qquad b_s(p^j)=Z(p^j)^s-Z(p^{j-1})^s,
+\qquad U(s)=\sum_{d\ge1}\frac{b_s(d)}d,
+\qquad\mu_s(d)=\frac{b_s(d)}{dU(s)},
+$$
+
+$$
+A_I(d)=\#\{g\in I:d\mid N_g\},\qquad
+\mathcal H_D=\{d\in\mathbb N:D<d\le X,\ A_I(d)>0\}.
+$$
+
+以下渐近均沿素数指标 $r\to\infty$，其中 $a$ 固定。已有大小关系给
+$X/A\to2$、$T\asymp V$、$y=2\log V+O(1)$、$H=V^{o(1)}$ 和 $D/T\to\infty$。
+$V$ 为奇数，且 $p\mid V$ 蕴含 $p\ge2r-1$。因此
+
+$$
+\sum_{p\mid V}\frac1p=O(1/\ell),\qquad
+\frac V{\varphi(V)}=1+O(1/\ell),\qquad
+\sum_{p\mid V}\frac1{p^2}=o(1).
+\tag{217.1}
+$$
+
+第一式来自 $\omega(V)\le\log V/\log(2r-1)$；后两式由该界和素因子的下界推出。
+
+### 217.1 无粗糙性假设的精确除数切换
+
+对每个正整数 $h$，定义有限整数区间
+
+$$
+J_h=\{d\in\mathbb N:d>D,\ A\le hd\le X\}.
+$$
+
+**命题 217.1（实际大除数与互补因子对的双射）。** 充分大时，
+每个 $d\in\mathcal H_D$ 恰好命中一个实际 $N_g$。取 $h=N_g/d$，则
+$d\mapsto(h,d)$ 是 $\mathcal H_D$ 到下列整数对集合的双射：
+
+$$
+1\le h<H,\qquad(h,V)=1,\qquad
+ d\in J_h,\qquad d\equiv h^{-1}\pmod V.
+\tag{217.2}
+$$
+
+因此
+
+$$
+\boxed{
+\mu_s(\mathcal H_D)=\frac1{U(s)}
+\sum_{\substack{1\le h<H\\(h,V)=1}}
+\sum_{\substack{d\in J_h\\d\equiv h^{-1}\pmod V}}
+\frac{b_s(d)}d.
+}
+\tag{217.3}
+$$
+
+证明。实际除数 $d\mid N_g$ 与 $V$ 互素。若 $d$ 命中两个乘子，
+则 $d\mid g_1-g_2$；但 $|g_1-g_2|<T<d$，故 $g_1=g_2$。
+于是 $h$ 唯一，并由 $d>D$ 得 $h=N_g/d<X/D=H$。
+这个严格不等式也适用于 $H$ 为整数的情形。
+
+反过来，式（217.2）给整数 $g=(hd-1)/V$，而精确端点条件
+$A\le hd\le X$ 保证 $g\in I$。所以 $d$ 是该实际整数的大除数。
+双射使每个不同 $d$ 只计一次，按其权重求和得到式（217.3）。$\square$
+
+另一种等价参数化是：取 $g_h\in\{0,\ldots,h-1\}$ 满足
+$1+Vg_h\equiv0\pmod h$，令 $c_h=(1+Vg_h)/h$。则
+
+$$
+g=g_h+hk,\qquad d=c_h+Vk,
+\qquad 1\le c_h\le V+1,\qquad(c_h,V)=1.
+\tag{217.4}
+$$
+
+由完整乘子区间得到的 $k$ 区间长度为 $\asymp V/h$；条件 $d>D$ 可以进一步
+缩短它。权重非负，故上界估计允许扩大回完整区间。
+这给出了切换后一次多项式的系数与区间几何，却没有使 $b_s$ 或 $b_s(d)/d$
+自动属于固定参数的函数类：仅 $b_s(2)=(3/2)^s-1$ 就随 $s$ 指数增长。
+因此 §215 中修正 Henriot 定理的函数类一致性义务仍然存在。
+
+### 217.2 实际命中个数与保留核后的计数
+
+**命题 217.2（实际大除数的无权个数）。** 有
+
+$$
+\boxed{
+\#\mathcal H_D=aTR+O(TR/\ell+T+H)=(a+o(1))TR.
+}
+\tag{217.5}
+$$
+
+证明。对实数 $B\ge2$，记
+
+$$
+S(B)=\sum_{\substack{h\le B\\(h,V)=1}}A_I(h).
+$$
+
+互素余数类的一致计数给 $A_I(h)=T/h+O(1)$。又
+
+$$
+\sum_{\substack{h\le B\\(h,V)=1}}\frac1h
+=\log B+O\bigl(1+(\log B)/\ell\bigr).
+\tag{217.6}
+$$
+
+确实，普通调和和为 $\log B+O(1)$；被删去的非互素项用联合上界控制为
+
+$$
+\sum_{p\mid V}\frac1p(1+\log B),
+$$
+
+再用式（217.1）。因此
+$S(B)=T\log B+O(T+T\log B/\ell+B)$。
+
+取 $B_-=A/(2D)$。每个被 $S(B_-)$ 计入的实际对都有
+$N_g/h\ge2D>D$，而每个实际大除数的互补因子均小于 $H$。
+命题 217.1 的唯一性于是给
+
+$$
+S(B_-)\le\#\mathcal H_D\le S(H).
+$$
+
+由 $\log B_-=aR+O(1)$、$\log H=aR$ 和 $H=o(T)$ 得到式（217.5）。$\square$
+
+**命题 217.3（保留 $d/X$ 核的实际计数）。** 有
+
+$$
+\boxed{
+\begin{aligned}
+\sum_{d\in\mathcal H_D}\frac dX
+&=\frac{T(A+X)}{2X}\,\zeta(2)
+\prod_{p\mid V}(1-p^{-2})+O(T/H+\log H)\\
+&=\left(\frac{\pi^2}{8}+o(1)\right)T.
+\end{aligned}
+}
+\tag{217.7}
+$$
+
+证明。令 $q_g=N_g/X$，则 $q_g$ 是位于 $[A/X,1]$ 的递增仿射序列，且
+
+$$
+Q=\sum_{g\in I}q_g=\frac{T(A+X)}{2X}.
+$$
+
+模 $h$ 的单个余数类在每个初始子区间中的计数偏差至多为一。
+对 $q_g$ 分部求和，其端点大小与总变差均有绝对上界，故当 $(h,V)=1$ 时，
+一致有
+
+$$
+\sum_{\substack{g\in I\\h\mid N_g}}q_g=Q/h+O(1).
+\tag{217.8}
+$$
+
+先不施加 $N_g/h>D$ 的截断，切换后的核和为
+
+$$
+\sum_{\substack{h<H\\(h,V)=1}}\frac1h
+\sum_{\substack{g\in I\\h\mid N_g}}q_g
+=Q\sum_{\substack{h<H\\(h,V)=1}}h^{-2}+O(\log H).
+$$
+
+被截断删去的项必有 $h\ge A/D=(A/X)H$；它们的总量至多为
+
+$$
+\sum_{(A/X)H\le h<H}\frac1h(T/h+1)=O(T/H+1).
+$$
+
+把平方倒数和延伸到无穷只损失 $O(T/H)$，而
+
+$$
+\sum_{\substack{h\ge1\\(h,V)=1}}h^{-2}
+=\zeta(2)\prod_{p\mid V}(1-p^{-2}).
+$$
+
+这得到式（217.7）的第一行。再由 $(A+X)/(2X)\to3/4$、式（217.1）与
+$\zeta(2)=\pi^2/6$，得到常数 $(3/4)(\pi^2/6)=\pi^2/8$。$\square$
+
+这两份计数来自同一实际整数族，没有随机均匀模型的假设。它们不控制
+$b_s(d)$：保留 $d/X$ 虽去掉了无权个数中的 $\log H$ 因子，仍留下
+$T$ 量级的核总和。用全局最大原子乘这个核总和，依然要支付 $T$ 量级的因子。
+
+### 217.3 切换后的实际剩余类偏差
+
+对有限整数区间 $J$ 和 $(c,V)=1$，定义有符号偏差
+
+$$
+\Delta_{V,c}(J)=
+\sum_{\substack{d\in J\\d\equiv c\pmod V}}\mu_s(d)
+-\frac1{\varphi(V)}
+\sum_{\substack{d\in J\\(d,V)=1}}\mu_s(d).
+$$
+
+式（217.3）逐个加减互素余数类的平均值，精确给出
+
+$$
+\mu_s(\mathcal H_D)=M_0+
+\sum_{\substack{h<H\\(h,V)=1}}\Delta_{V,h^{-1}}(J_h),
+\qquad 0\le M_0\le\frac H{\varphi(V)}.
+\tag{217.9}
+$$
+
+每个平均项至多为 $1/\varphi(V)$，所以得到所述上界。
+由 $H^2/\varphi(V)\to0$，该平均主项为 $o(H^{-1})$。
+这只估计全部互素余数类的平均值，没有得到被选中的逆元余数类的等分布，
+也没有控制式（217.9）的偏差和。
+
+保留核时，定义
+
+$$
+\Delta^K_{V,c}(J)=
+\sum_{\substack{d\in J\\d\equiv c\pmod V}}\frac dX\mu_s(d)
+-\frac1{\varphi(V)}
+\sum_{\substack{d\in J\\(d,V)=1}}\frac dX\mu_s(d),
+\qquad
+B_D=\sum_{d\in\mathcal H_D}\frac dX\mu_s(d).
+$$
+
+同样有
+
+$$
+B_D=M_0^K+
+\sum_{\substack{h<H\\(h,V)=1}}\Delta^K_{V,h^{-1}}(J_h),
+\qquad 0\le M_0^K\le\frac{1+\log H}{\varphi(V)}.
+\tag{217.10}
+$$
+
+这里 $d/X\le1/h$ 在 $J_h$ 上逐点成立，平均项可逐个以
+$1/(h\varphi(V))$ 控制，再求调和和。式（217.9）和式（217.10）都保留了
+待控制的实际相关项；小的平均主项不能替代实际总质量的上界。
+
+### 217.4 实际短互补因子可以含有素数二并保留可比权重
+
+**命题 217.4（同一实际整数上的 $h=1$ 与 $h=2$ 比较）。** 设 $s\ge4$，
+令
+
+$$
+k_2=\lceil\log_2s\rceil,\qquad q=2^{k_2}\in[s,2s).
+$$
+
+实际条件 $v_2(N_g)=k_2$ 在 $I$ 内出现
+
+$$
+T/(2q)+O(1)\asymp T/s
+\tag{217.11}
+$$
+
+次。对每个这样的 $n=N_g$，充分大时 $d_0=n$、$d_1=n/2$ 均大于 $D$，
+互补因子分别为 $1$、$2$，并满足
+
+$$
+\boxed{
+2e^{-9/4}\le\frac{b_s(n/2)}{b_s(n)}\le2,
+\qquad
+4e^{-9/4}\le\frac{\mu_s(n/2)}{\mu_s(n)}\le4.
+}
+\tag{217.12}
+$$
+
+证明。$V$ 为奇数，所以 $v_2(N_g)=k_2$ 等价于
+$N_g\equiv q\pmod{2q}$，从而限定了模 $2q$ 的一个实际乘子余数类。
+一致余数计数给式（217.11）。因 $H\to\infty$ 而 $X/A$ 有界，最终
+$A/2>D$，所以两个除数均属于大除数范围。
+
+记 $B_j=b_s(2^j)$。函数 $u\mapsto su^{s-1}$ 单调递增，
+$B_{k_2-1}$ 与 $B_{k_2}$ 分别是其在
+$[2-4/q,2-2/q]$、$[2-2/q,2-1/q]$ 上的积分。
+这两个相邻区间的长度比为二，因此
+
+$$
+2\left(\frac{2q-4}{2q-1}\right)^{s-1}
+\le\frac{B_{k_2-1}}{B_{k_2}}\le2.
+$$
+
+又由 $q\ge s\ge4$，
+
+$$
+-(s-1)\log\left(1-\frac3{2q-1}\right)
+\le\frac{3(s-1)}{2q-4}\le\frac94.
+$$
+
+在同一个 $n=2^{k_2}m$、$(m,2)=1$ 上使用乘法性，
+其余奇素数因子完全相同，故 $b_s(n/2)/b_s(n)=B_{k_2-1}/B_{k_2}$。
+这给式（217.12）的第一组界；$\mu_s$ 中的 $1/d$ 因子再使比值乘二，
+得到第二组界。$\square$
+
+对保留 $d/X$ 的核，两项之比则为
+
+$$
+\frac{(n/(2X))\mu_s(n/2)}{(n/X)\mu_s(n)}
+=\frac{b_s(n/2)}{b_s(n)},
+$$
+
+即式（217.12）的第一组比值。因此，若无证明便把互补因子限制为不含小素数，
+会丢弃这一实际赋值类上与 $h=1$ 项可比的正项。
+式（217.11）没有证明该赋值类占全部加权质量的固定比例；这个额外断言仍需估计。
+
+### 217.5 保留核后的互补因子权重与二阶预算
+
+记
+
+$$
+\mu_h=\sum_{\substack{d\in J_h\\d\equiv h^{-1}\pmod V}}\mu_s(d),
+\qquad
+B_h=\sum_{\substack{d\in J_h\\d\equiv h^{-1}\pmod V}}\frac dX\mu_s(d),
+\qquad (h,V)=1.
+$$
+
+同一实际对中的 $d/X=N_g/(Xh)$ 给
+
+$$
+\frac{A}{Xh}\mu_h\le B_h\le\frac1h\mu_h,
+\qquad B_D=\sum_{\substack{h<H\\(h,V)=1}}B_h,
+\qquad
+B_D=\frac1{XU(s)}\sum_{g\in I}
+\sum_{\substack{h\mid N_g\\N_g/h>D}}b_s(N_g/h).
+\tag{217.13}
+$$
+
+若 $L\ge1$，其中 $h\ge L$ 的部分至多为 $1/L$：对应的实际大除数各不相同，
+而 $\mu_s$ 的总质量为一。这种估计不能为固定的小互补因子（包括 $1$ 和 $2$）
+提供指数尺度的节省。
+
+定义完整实际矩 $\mathcal M_Z(s;I,V)=\sum_{g\in I}Z(N_g)^s$。
+对 $d\le D$，用 $A_I(d)\le T/d+1$；对 $d>D$，保留其实际核权重。
+有限非负展开便给
+
+$$
+\frac{\mathcal M_Z(s;I,V)}{XU(s)}
+\le\frac TX+\frac DX+B_D.
+\tag{217.14}
+$$
+
+令 $\Lambda=XU(s)/t^s$。§210.2 的展开为
+
+$$
+\log\Lambda
+=\log(X/A)+b_2R-b_2\delta+O(y/\ell^4).
+$$
+
+所以临界倒数预算具有二阶表达式
+
+$$
+\boxed{
+\log\Lambda^{-1}
+=-\log(X/A)-b_2R+b_2\delta+O(y/\ell^4).
+}
+\tag{217.15}
+$$
+
+对指定的 $a>b_2$，$\Lambda T/X$ 与 $\Lambda D/X$ 均趋于零。
+因此若能证明一致条件 $\limsup\Lambda B_D<1$，式（217.14）就使
+指定归一矩最终严格小于一。原来的更强目标
+$\mu_s(\mathcal H_D)\le H^{-1}$ 仍然足够，但本节没有证明它。
+
+一阶陈述 $\log B_D\le-b_2R+o(R)$ 本身不能决定式（217.15），
+因为误差可能大于 $\delta$。更强的界 $B_D\le e^{-b_2R}$ 则足够：它给
+
+$$
+\Lambda B_D
+\le(X/A)\exp\bigl(-b_2\delta+O(y/\ell^4)\bigr)\longrightarrow0.
+$$
+
+这些是尚待实现的充分估计，不是由实际计数或平均余数类主项已经得到的界。
+
+为明确预算分配，也可以单独考虑另一个截断
+
+$$
+D=\frac{t^s}{cU(s)}=\frac X{c\Lambda},\qquad c>1\text{ 固定}.
+$$
+
+它仍满足 $D/T\to\infty$，所以式（217.14）继续适用。
+归一化以后，其 $D/X$ 项精确占用 $1/c$。剩余的精确充分条件是
+
+$$
+\Lambda B_D<1-\frac1c-\Lambda\frac TX.
+$$
+
+由于 $\Lambda T/X\to0$，一致条件
+$\limsup\Lambda B_D<1-1/c$ 足以保证该式最终成立。
+这一替代预算既不改变，也不解决先前固定 $a>b_2$ 时的 $H^{-1}$ 命中质量目标。
+
+本节得到实际除数切换、两份无权计数、同一整数上短互补因子的权重比较，
+以及保留偏差与二阶项的精确预算接口。未解决的部分仍是实际逆元余数类中
+$b_s$ 加权偏差的上界；这些计数与恒等式尚未证明整个 FIB 家族满足 Robin，
+也未回接任意自然数的完整 Robin 判据。
+
+## 追加锚（本行以下为增补区）
+
+## 218. 最大增量原子、有限近极值配置与临界权重
+
+沿用 §210 的实际除数增量：对 $s>0$，
+
+$$
+b_s(1)=1,\qquad
+b_s(p^a)=Z(p^a)^s-Z(p^{a-1})^s\quad(a\ge1),
+\qquad Z(n)=\frac{\sigma(n)}n,
+$$
+
+并按乘法性延拓。由 $U(s)=\sum_{d\ge1}b_s(d)/d$ 定义的概率为
+
+$$
+\mu_s(d)=\frac{b_s(d)}{dU(s)}.
+$$
+
+本节研究这份具体增量权重的最大原子。它不是自然数的均匀分布。
+
+令 $y\to\infty$，并记
+
+$$
+\ell=\log y,\qquad s=y\ell,\qquad t=e^\gamma\ell,
+\qquad R=\frac y{\ell^2},\qquad
+\delta=\frac y{\ell^3},\qquad A=e^y.
+$$
+
+假设 $X/A\in[c_1,c_2]$，其中 $1<c_1\le c_2<\infty$ 固定。
+实际 FIB 区间满足这一条件。下文证明最大值存在，并使用记号
+
+$$
+M_s=\max_{d\ge1}\frac{b_s(d)}d,
+\qquad m_s=\max_{d\ge1}\mu_s(d)=\frac{M_s}{U(s)}.
+$$
+
+经典极大丰数（colossally abundant）优化考察
+$\sigma(n)/n^{1+\varepsilon}$，参见
+[Alaoglu–Erdős 的经典工作](../../../Library/Arith/alaoglu1944highly.md)。
+取 $\varepsilon=1/s$ 后，其 $s$ 次幂为 $Z(n)^s/n$。
+本节的目标含有局部差分 $b_s$，所以该经典优化只是相邻的比较对象，
+不能代替以下实际增量的估计。
+
+### 218.1 最大值存在及其素支撑范围
+
+**命题 218.1（增量最大值的有限素支撑）。** 置
+$P_p=(1-p^{-1})^{-s}$。最大值 $M_s$ 存在，且
+
+$$
+M_s=\prod_{p<y+2}\max_{a\ge0}\frac{b_s(p^a)}{p^a}.
+\tag{218.1}
+$$
+
+当 $y\to\infty$ 时，
+
+$$
+\log M_s\le
+s\sum_{p\le y}-\log(1-p^{-1})-\vartheta(y)+O(\ell/y),
+\qquad \vartheta(y)=\sum_{p\le y}\log p.
+\tag{218.2}
+$$
+
+证明。对每个固定素数 $p$，$0<b_s(p^a)\le P_p$，故
+$b_s(p^a)/p^a\to0$。指数零给局部值 $1$，所以局部最大值在有限指数处取得。
+若 $p\ge y+2$，则
+
+$$
+\log(P_p/p)
+\le\frac{s}{p-1}-\log p
+\le\frac{y\ell}{y+1}-\log(y+2)<0.
+$$
+
+这些素数的每个正指数局部值都小于 $1$，最佳指数只能是零。
+剩余素数只有有限个；逐素数选择局部最佳指数得到同一个有限整数，
+乘法性给式（218.1）。
+
+对 $p\le y$，
+
+$$
+\log(P_p/p)\ge s/p-\log p\ge0.
+$$
+
+因此正指数局部值和指数零的值均不超过 $P_p/p$。
+对 $y<p<y+2$，$\log(P_p/p)$ 的正部为 $O(\ell/y)$，
+而这样的整数至多两个。对这些有限局部上界取对数求和，得到式（218.2）。$\square$
+
+### 218.2 同一个有限配置中的实际差分下界
+
+对 $\sqrt s<z\le y$，定义
+
+$$
+a_p=
+\begin{cases}
+\lceil\log s/\log p\rceil,&p\le\sqrt s,\\
+1,&\sqrt s<p\le z,
+\end{cases}
+\qquad n_z=\prod_{p\le z}p^{a_p}.
+\tag{218.3}
+$$
+
+这里小素数的指数比 §211 截断配置中的指数多一层；$n_z$ 是另一个明确的
+有限整数，后面的全部局部选择均共同实现在该整数上。
+
+对 $p\le\sqrt s$，有 $s\le p^{a_p}<ps$。均值定理以及
+$\log(1-u)\ge-u/(1-u)$ 给
+
+$$
+\begin{aligned}
+b_s(p^{a_p})
+&=P_p\bigl[(1-p^{-a_p-1})^s-(1-p^{-a_p})^s\bigr]\\
+&\ge P_p\,\frac{s}{2p^{a_p}}(1-1/s)^{s-1}
+\ge\frac{P_ps}{2e p^{a_p}}.
+\end{aligned}
+$$
+
+因而
+
+$$
+\frac{P_p}{2e p^2s}
+\le\frac{b_s(p^{a_p})}{p^{a_p}}
+\le\frac{P_p}{p}.
+\tag{218.4}
+$$
+
+每个局部对数与 $\log(P_p/p)$ 的差介于零与
+$\log(2e p s)=O(\log s)$ 之间。这些差的总量为
+$O(\sqrt s\log s)$。
+
+对 $\sqrt s<p\le z$，令
+
+$$
+\xi_p=-s\log(1-p^{-2})\le\frac{s}{p^2-1}<2.
+$$
+
+由 $p\le y$ 得 $P_p\ge p$，且
+
+$$
+b_s(p)=P_pe^{-\xi_p}-1
+=P_pe^{-\xi_p}(1-e^{\xi_p}/P_p).
+$$
+
+充分大时 $e^{\xi_p}/P_p\le e^2/\sqrt s<1/2$，所以
+
+$$
+0\le\log(P_p/p)-\log(b_s(p)/p)
+\le\frac{s}{p^2-1}+\frac{2e^2}{p}.
+\tag{218.5}
+$$
+
+整数平方倒数尾和与调和和分别控制两项，给总损失
+$O(\sqrt s+\log y)$。结合式（218.4），在 $\sqrt s<z\le y$ 上一致得到
+
+$$
+\log\frac{b_s(n_z)}{n_z}
+=s\sum_{p\le z}-\log(1-p^{-1})-\vartheta(z)
++O(\sqrt s\log s).
+\tag{218.6}
+$$
+
+**定理 218.2（最大实际增量的任意固定对数精度）。** 对每个固定 $K>0$，
+
+$$
+\boxed{\log M_s=s\log t-y+o(y/\ell^K).}
+\tag{218.7}
+$$
+
+证明。强素数定理和相应的 Mertens 乘积估计给：对每个固定 $K>0$，
+当 $z=y+o(y)$ 时，
+
+$$
+\vartheta(z)=z+o(y/\ell^K),
+\qquad
+\sum_{p\le z}-\log(1-p^{-1})
+=\gamma+\log\log z+o(\ell^{-K-2}).
+$$
+
+这些是 §211 引用的 Weingartner 原文式（9）所用的经典解析前置。
+第二个误差乘以 $s=y\ell$ 后仍是 $o(y/\ell^K)$，并且
+$\sqrt s\log s=o(y/\ell^K)$。
+取 $z=y$，式（218.6）给来自同一个 $n_y$ 的下界，
+式（218.2）给上界；两者的主项均为
+$s(\gamma+\log\log y)-y=s\log t-y$，得到式（218.7）。$\square$
+
+量词是每个固定 $K$ 各自成立，未要求对增长的 $K$ 一致。
+这一精度使用无条件强素数定理，不假设 RH，也未指定可执行的数值起点。
+
+### 218.3 最大概率原子的前两阶
+
+**推论 218.3（最大增量原子的负对数）。** 令 $b_2=\pi^2/6$，则
+
+$$
+\boxed{-\log m_s=b_2R-b_2\delta+O(y/\ell^4).}
+\tag{218.8}
+$$
+
+证明。§210.2 的实际赋值比较与 Weingartner 展开给
+
+$$
+\log U(s)=s\log t-y+b_2R-b_2\delta+O(y/\ell^4).
+$$
+
+在式（218.7）取 $K=4$，再用
+$-\log m_s=\log U(s)-\log M_s$ 即得。$\square$
+
+式（218.8）是具体概率分布 $\mu_s$ 的最大原子负对数，也称最小熵。
+它来自实际局部增量与归一化常数的比较，不依赖均匀分布假设。
+
+### 218.4 大除数区间内与 FIB 模数互素的近极大原子
+
+**命题 218.4（同一个有限近极大原子的算术约束）。** 在式（218.3）中取
+$z=y-\delta$。则
+
+$$
+\log n_z=\vartheta(z)+O(\sqrt s\log s)
+=y-\delta+o(\delta).
+\tag{218.9}
+$$
+
+固定 $a>b_2$，令 $H=e^{aR}$、$D=X/H$。充分大时，
+
+$$
+D<n_z<Ae^{-\delta/2}<X,
+\tag{218.10}
+$$
+
+且
+
+$$
+\log\mu_s(n_z)=-b_2R+b_2\delta+O(y/\ell^4).
+\tag{218.11}
+$$
+
+对实际 FIB 模数 $V=F_r$、素数指标 $r\ge7$，还满足
+$(n_z,V)=1$ 和
+
+$$
+\max_{p^v\parallel n_z}p^v\le s^{3/2}.
+\tag{218.12}
+$$
+
+证明。式（218.3）中超出一次幂的对数总量为
+
+$$
+\sum_{p\le\sqrt s}(a_p-1)\log p=O(\sqrt s\log s).
+$$
+
+它是 $o(\delta)$，强素数定理在 $z=y-\delta$ 处的误差也是
+$o(\delta)$，从而得到式（218.9）。又
+$\delta=o(R)$、$\log(X/A)=O(1)$，所以
+
+$$
+\log(n_z/D)=aR-\delta+o(\delta)-\log(X/A)>0
+$$
+
+最终成立；式（218.9）同时给 $n_z<Ae^{-\delta/2}$，证明式（218.10）。
+
+为估计该整数的增量质量，令
+
+$$
+L_s(u)=s(\gamma+\log\log u)-u.
+$$
+
+其导数满足 $L_s'(y)=0$，并且在 $[y-\delta,y]$ 上一致有
+
+$$
+L_s''(u)=-\frac{s(\log u+1)}{u^2(\log u)^2}
+=-\frac{1+o(1)}y.
+$$
+
+因此
+
+$$
+L_s(y-\delta)-L_s(y)
+=-(1+o(1))\frac{\delta^2}{2y}
+=O(y/\ell^6).
+$$
+
+将该式、强素数定理及 Mertens 估计代入式（218.6），再减去
+§210.2 的 $\log U(s)$ 展开，得到式（218.11）。
+
+在实际 FIB 参数下，$y=2r\log\phi+O(1)$，其中
+$\phi=(1+\sqrt5)/2$，故 $z<2r-1$ 最终成立。
+$n_z$ 的素因子均不超过 $z$，而 $F_r$ 的每个素因子均至少为 $2r-1$，
+因此 $(n_z,V)=1$。对小素数，$p^{a_p}<ps\le s^{3/2}$；
+其余素数的指数为一且 $p\le y<s^{3/2}$，证明式（218.12）。$\square$
+
+该原子与全局最大原子有相同的前两阶。若它实际命中某个
+$N_g=n_zh$，则由 $n_z>D$ 有 $h<H$；同一个 $N_g$ 的每个完整素数幂都不超过
+$s^{3/2}H$。因此它不会触发 §216 的大素数幂过滤阈值
+
+$$
+B_*=16e^2s^2H^2.
+$$
+
+这只是实际命中成立时的条件结论，没有给出满足 $N_g=n_zh$ 的 $g,h$。
+
+### 218.5 单点质量、真实增量项与保留价格亏损的账本
+
+对每个固定 $a>b_2$，式（218.11）给
+
+$$
+\frac{\mu_s(n_z)}{e^{-aR}}\longrightarrow\infty.
+\tag{218.13}
+$$
+
+确实，该比值的对数为
+$(a-b_2)R+b_2\delta+O(y/\ell^4)\to+\infty$。
+所以仅凭大小范围、与 $V$ 互素及完整素数幂的温和上限，不能把每个单点质量
+压到 $e^{-aR}$ 以下。若要成立 §210.6 的充分条件
+$\mu_s(\mathcal H_D)\le e^{-aR}$，必须证明本构造的 $n_z$ 最终不命中实际乘子区间。
+这个排除要求属于指定的充分证书，不是 Robin 不等式本身的必要条件。
+
+另一方面，若该 $n_z$ 命中，充分大时 $n_z>D>V$，所以它只命中一个实际乘子。
+**该除数的增量项贡献**在真实归一矩中为 $b_s(n_z)/t^s$，并满足
+
+$$
+\log\frac{b_s(n_z)}{t^s}=-\delta+o(\delta).
+\tag{218.14}
+$$
+
+证明该式只需将式（218.6）的估计写为
+
+$$
+\log\frac{b_s(n_z)}{n_z}
+=s\log t-y+o(\delta),
+$$
+
+再加上式（218.9）。因此，即使命中，该除数的这一增量项也趋于零。
+它不等于整个命中整数的 $Z(N_g)^s/t^s$ 响应；其余除数项仍须求和。
+式（218.13）与式（218.14）共同说明：纯命中质量证书可以要求排除一个
+实际增量贡献趋零的除数，而没有由此获得完整 FIB 矩的上界或下界。
+
+为保留实际尺度权重，定义价格亏损
+
+$$
+J_s(d)=\log M_s-\log\bigl(b_s(d)/d\bigr)\ge0,
+\qquad A_I(d)=\#\{g\in I_r:d\mid N_g\}.
+$$
+
+由 $b_s(d)=dM_se^{-J_s(d)}$ 和 §210 的同一有限正项展开，精确得到
+
+$$
+\boxed{
+\mathcal Q_r
+=\frac{M_s}{t^s}\sum_{d\le X}dA_I(d)e^{-J_s(d)}.
+}
+\tag{218.15}
+$$
+
+式（218.7）还给，对每个固定 $K>0$，
+
+$$
+\log\frac{AM_s}{t^s}=o(y/\ell^K).
+$$
+
+该误差的符号未被确定，也不能由这个尺度估计断言其趋于零。
+式（218.15）保留了真实的 $d/X$ 核权重；仅有 $J_s\ge0$、最大原子的渐近
+或几何归一化，都不足以控制该和。仍需把实际命中集合与价格亏损联合估计，
+而不能以候选原子的大小、互素性或低于大幂门槛代替命中关系。
+
+## 追加锚（本行以下为增补区）
+
+## 219. 保留尺度核的大素数幂过滤与临界预算
+
+沿用 §216–218 的实际整数族、$s=y\ell$、$R=y/\ell^2$、$\delta=y/\ell^3$、
+$t=e^\gamma\ell$，以及固定 $a>b_2=\pi^2/6$ 时的
+$H=e^{aR}$、$D=X/H$。充分大时每个 $d\in\mathcal H_D$ 只命中一个
+实际整数 $n(d)=dh$。令
+
+$$
+\Lambda=\frac{XU(s)}{t^s},\qquad C_s=4e^2s^2,
+\qquad B(n)=\max_{p^v\parallel n}p^v\ (n>1),\quad B(1)=1.
+$$
+
+§216 给概率尾 $\mu_s\{d:B(d)>u\}\le C_s/u$，适用于 $u\ge2$。
+这里保留 §217 的实际尺度核，定义
+
+$$
+\mathcal B_D^{\mathrm{pow}}(B)
+=\sum_{\substack{d\in\mathcal H_D\\B(n(d))>B}}
+\frac dX\mu_s(d).
+\tag{219.1}
+$$
+
+### 219.1 同一整数的尺度核抵消互补因子损失
+
+**定理 219.1（核加权的大幂上界）。** 设 $s\ge4$、$B\ge C_s$。则
+
+$$
+\boxed{
+\mathcal B_D^{\mathrm{pow}}(B)
+\le\frac{C_s}{B}\left(1+\log\frac{B}{C_s}\right).
+}
+\tag{219.2}
+$$
+
+证明。对左侧某一项，取 $p^v\parallel n(d)$ 使 $p^v=B(n(d))>B$。
+同一分解 $n(d)=dh$ 给
+
+$$
+p^v=p^{v_p(d)}p^{v_p(h)}\le B(d)h.
+$$
+
+这个式子在 $p\nmid d$ 时也成立，因为 $p^{v_p(d)}=1\le B(d)$。
+因此 $h>B/B(d)$，而 $n(d)\le X$，故
+
+$$
+\frac dX=\frac{n(d)}{hX}\le\frac1h<\frac{B(d)}B,
+\qquad \frac dX\le1.
+$$
+
+各个 $d$ 没有重复计数；扩大到全域概率空间可得
+
+$$
+\mathcal B_D^{\mathrm{pow}}(B)
+\le\mathbb E_{\mu_s}\min\left\{1,\frac{B(d)}B\right\}
+=\frac1B\int_0^B\mu_s\{d:B(d)>u\}\,du.
+\tag{219.3}
+$$
+
+最后的等式是非负函数的层集积分，由 Tonelli 定理得到。
+$C_s>2$，所以在 $[0,C_s]$ 上用概率上界 $1$，在 $[C_s,B]$ 上用
+§216 的上界 $C_s/u$，得到
+
+$$
+\frac1B\int_0^B\mu_s\{B(d)>u\}\,du
+\le\frac{C_s}{B}+\frac{C_s}{B}\log\frac B{C_s}.
+$$
+
+这证明式（219.2）。此处无需 $B/H\ge2$，也没有粗互补因子的假设。$\square$
+
+式（216.20）估计的是不带核的命中质量，其 $H$ 因子来自仅知道 $h<H$。
+式（219.2）估计不同的、直接进入真实矩的量：同一 $h$ 越大，
+对应 $d/X$ 越小。它保留这份逐项关联，而未将两边分别取极值。
+
+### 219.2 按真实矩的临界预算选择阈值
+
+**推论 219.2（四分之一真实矩预算的截断）。** 在 $\Lambda\ge1$ 时，取
+
+$$
+\boxed{
+B_\dagger=8C_s\Lambda\bigl(1+\log(8\Lambda)\bigr).
+}
+\tag{219.4}
+$$
+
+则
+
+$$
+\boxed{\Lambda\mathcal B_D^{\mathrm{pow}}(B_\dagger)\le\frac14.}
+\tag{219.5}
+$$
+
+在当前渐近尺度上还有
+
+$$
+\log B_\dagger
+=b_2R-b_2\delta+O(y/\ell^4).
+\tag{219.6}
+$$
+
+证明。置 $L=1+\log(8\Lambda)>1$，则 $B_\dagger/C_s=8\Lambda L$，
+并且 $1+\log(B_\dagger/C_s)=L+\log L\le2L$。
+代入式（219.2），得到
+
+$$
+\Lambda\mathcal B_D^{\mathrm{pow}}(B_\dagger)
+\le\frac{L+\log L}{8L}\le\frac14.
+$$
+
+§217 的展开给
+
+$$
+\log\Lambda=\log(X/A)+b_2R-b_2\delta+O(y/\ell^4),
+$$
+
+所以 $\Lambda\to\infty$。另一方面，
+$\log C_s=O(\ell)$、$\log L=O(\ell)$，而
+$\ell=o(y/\ell^4)$、$\log(X/A)=O(1)$。
+对式（219.4）取对数即得式（219.6）。$\square$
+
+与式（216.24）的不带核门槛 $\log B_*=(2a+o(1))R$ 相比，
+式（219.6）将真实矩中的剩余完整素数幂门槛降至主项 $b_2R$。
+两个门槛使用不同预算：前者是 $\mu_s(\mathcal H_D)$ 的目标预算，
+后者是 $\mathcal Q_r$ 的实际增量预算，不能将式（219.5）改称
+不带核质量的上界。
+
+令剩余核为
+
+$$
+\mathcal B_D^{\mathrm{cap}}
+=\sum_{\substack{d\in\mathcal H_D\\B(n(d))\le B_\dagger}}
+\frac dX\mu_s(d).
+$$
+
+§217 的小除数分解与式（219.5）给充分大的实际参数下
+
+$$
+\mathcal Q_r
+\le\Lambda\frac TX+\Lambda\frac DX+\frac14
++\Lambda\mathcal B_D^{\mathrm{cap}},
+\qquad
+\Lambda T/X+\Lambda D/X=o(1).
+\tag{219.7}
+$$
+
+所以 $\limsup_{r\to\infty}\Lambda\mathcal B_D^{\mathrm{cap}}<3/4$
+是该实际 FIB 族最终满足指定矩证书的充分条件。
+当前没有建立这个剩余核上界；仅有每个完整素数幂低于 $B_\dagger$ 并不能推出它。
+
+### 219.3 近极大原子仍与新的截断相容
+
+**命题 219.3（条件命中的近极大原子未被过滤）。** 取 §218 的
+$z=y-\delta$ 及有限整数 $n_z$。若 $n_z$ 实际命中某个
+$N_g=n_zh$，则充分大时
+
+$$
+B(N_g)\le\exp(\delta+o(\delta))<B_\dagger.
+\tag{219.8}
+$$
+
+证明。§218 给 $\log n_z=y-\delta+o(\delta)$，而
+$\log X=y+O(1)$。所以实际互补因子满足
+
+$$
+h\le X/n_z=\exp(\delta+o(\delta)).
+$$
+
+该构造中 $B(n_z)\le s^{3/2}$，且每个完整素数幂在乘积中至多乘以 $h$，
+故 $B(N_g)\le s^{3/2}h\le\exp(\delta+o(\delta))$。
+再由 $\delta=o(R)$ 和式（219.6），得到严格的不等式。$\square$
+
+这没有证明该近极大原子实际命中，也没有证明它不命中。
+它说明更强的大幂截断仍须与实际同余及价格亏损联合使用；
+§218 已给出的单个除数增量趋零结论，不替代剩余全部除数的加权求和。
+
+## 追加锚（本行以下为增补区）
