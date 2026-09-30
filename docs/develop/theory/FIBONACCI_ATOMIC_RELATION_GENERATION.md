@@ -26848,3 +26848,331 @@ $$
 §218 已给出的单个除数增量趋零结论，不替代剩余全部除数的加权求和。
 
 ## 追加锚（本行以下为增补区）
+
+## 220. 累计深赋值过滤与实际 FIB 子族的完整矩
+
+沿用 §210、§216—219 的实际整数族与非负约数增量：
+
+$$
+V=F_r,\quad r\ge7\text{ 为素数},\quad
+I=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,\quad N_g=1+Vg,
+$$
+
+$$
+A=\min_{g\in I}N_g,\quad X=\max_{g\in I}N_g,\quad T=|I|,
+\quad y=\log A,\quad\ell=\log y,\quad s=y\ell,\quad t=e^\gamma\ell,
+$$
+
+$$
+R=y/\ell^2,\quad\delta=y/\ell^3,\quad b_2=\pi^2/6,\quad
+\mu_s(d)=\frac{b_s(d)}{dU(s)},\quad\Lambda=\frac{XU(s)}{t^s}.
+$$
+
+固定 $a>b_2$，令 $H=e^{aR}$、$D=X/H$，并记
+
+$$
+\mathcal H_D=\{d>D:\exists g\in I,\ d\mid N_g\}.
+$$
+
+以下渐近均沿素数指标 $r\to\infty$。充分大时，每个 $d\in\mathcal H_D$
+只命中一个实际整数 $n(d)=dh$，其中 $1\le h<H$ 且 $d/X\le1/h$。
+继续使用已有展开
+
+$$
+\log\Lambda=\log(X/A)+b_2R-b_2\delta+O(y/\ell^4).
+\tag{220.1}
+$$
+
+### 220.1 所有过深素赋值的联合一阶矩
+
+对实数 $q\ge4$ 定义
+
+$$
+k_p(q)=\lceil\log q/\log p\rceil,\qquad
+E_q(n)=\prod_{p\mid n}p^{(v_p(n)-k_p(q))_+},\qquad E_q(1)=1.
+\tag{220.2}
+$$
+
+每个素数先保留 $k_p(q)$ 层，再把其余深度相乘。
+这个量不同于 §219 的最大完整素数幂 $B(n)$；指数为一的大素数不增加 $E_q$。
+
+**定理 220.1（累计过深赋值的有限一阶矩）。** 对所有 $s\ge4$、$q\ge4$，
+
+$$
+1\le W_{s,q}:=\mathbb E_{\mu_s}E_q(d)
+\le\mathfrak A_{s,q}:=
+\exp\!\left(\frac{2e^2s^2(2+\log q)}{q^2}\right).
+\tag{220.3}
+$$
+
+证明。有限组素赋值在同一个 Euler 概率 $\mu_s$ 下独立。
+由 §216 的局部界 $\mu_s\{v_p(d)=j\}\le2e^2s^2p^{-2j}$，记 $k=k_p(q)$，得
+
+$$
+\begin{aligned}
+\mathbb E_{\mu_s}p^{(v_p(d)-k)_+}
+&=1+\sum_{j>k}(p^{j-k}-1)\mu_s\{v_p(d)=j\}\\
+&\le1+2e^2s^2\sum_{j>k}p^{j-k}p^{-2j}
+=1+\frac{2e^2s^2p^{-2k}}{p-1}.
+\end{aligned}
+\tag{220.4}
+$$
+
+令 $N=\lfloor q\rfloor$。对 $p\le q$，有 $p^{k_p(q)}\ge q$，所以
+
+$$
+\sum_{p\le q}\frac{p^{-2k_p(q)}}{p-1}
+\le q^{-2}\sum_{m=1}^{N-1}\frac1m
+\le\frac{1+\log q}{q^2}.
+$$
+
+对 $p>q$，有 $k_p(q)=1$。利用
+
+$$
+\frac1{m^2(m-1)}
+\le\frac12\left(\frac1{(m-1)^2}-\frac1{m^2}\right)
+$$
+
+与 $N\ge3q/4$，得到
+
+$$
+\sum_{p>q}\frac{p^{-2k_p(q)}}{p-1}
+\le\sum_{m>N}\frac1{m^2(m-1)}
+\le\frac1{2N^2}\le\frac1{q^2}.
+$$
+
+先对有限素数集合相乘，再用 $\log(1+u)\le u$，得到式（220.3）的统一上界。
+有限乘积逐点递增至 $E_q(d)$，单调收敛给出完整一阶矩及其有限性。$\square$
+
+尤其有
+
+$$
+W_{s,s}\le e^{4e^2}s^{2e^2},\qquad
+W_{s,s^2}\le\exp\!\left(\frac{4e^2(1+\log s)}{s^2}\right)
+=1+O(\log s/s^2).
+\tag{220.5}
+$$
+
+### 220.2 从同一整数的深度关系回到实际尺度核
+
+**定理 220.2（累计深度的实际命中过滤）。** 在上述唯一命中范围内，对任意
+$s\ge4$、$q\ge4$、$B>0$，有
+
+$$
+\mathcal B_D^{\mathrm{exc}}(B;q):=
+\sum_{\substack{d\in\mathcal H_D\\E_q(n(d))>B}}
+\frac dX\mu_s(d)
+\le\frac{W_{s,q}}B\le\frac{\mathfrak A_{s,q}}B.
+\tag{220.6}
+$$
+
+将筛选条件改成 $E_q(n(d))\ge B$，同一个上界仍成立。
+
+证明。逐素数使用
+
+$$
+(v_p(d)+v_p(h)-k_p(q))_+
+\le(v_p(d)-k_p(q))_++v_p(h)
+$$
+
+得 $E_q(dh)\le E_q(d)h$。在同一个实际分解 $n(d)=dh$ 上，
+
+$$
+\frac dX\le\frac1h\le\frac{E_q(d)}{E_q(n(d))}.
+\tag{220.7}
+$$
+
+所选每项因此至多为 $E_q(d)\mu_s(d)/B$。每个 $d$ 只出现一次，
+扩大到全部正整数后应用定理 220.1 即得。$\square$
+
+对任意固定 $0<\varepsilon<1$，取
+
+$$
+B_{\mathrm{exc}}(\varepsilon)
+=\frac{\Lambda}{\varepsilon}\mathfrak A_{s,s^2}.
+\tag{220.8}
+$$
+
+则
+
+$$
+\Lambda\mathcal B_D^{\mathrm{exc}}(B_{\mathrm{exc}}(\varepsilon);s^2)
+\le\varepsilon,
+\qquad
+\log B_{\mathrm{exc}}(\varepsilon)
+=b_2R-b_2\delta+O(y/\ell^4).
+\tag{220.9}
+$$
+
+与 §219 的大幂过滤各分配 $1/4$ 预算，由并集上界得到充分目标
+
+$$
+\limsup_{r\to\infty}\Lambda
+\sum_{\substack{d\in\mathcal H_D\\
+B(n(d))\le B_\dagger\\
+E_{s^2}(n(d))\le4\Lambda\mathfrak A_{s,s^2}}}
+\frac dX\mu_s(d)<\frac12.
+\tag{220.10}
+$$
+
+小除数部分的归一贡献仍为 $o(1)$。式（220.10）是待证的充分条件；
+累计深度过滤本身没有给出其中剩余和的上界。
+
+### 220.3 两个实际深赋值给出的完整矩衰减
+
+取 §214 的整数 $K$，并预先固定该节允许的有限低赋值目录。
+在当前参数下，$\log K=o(R)$、$(K,V)=1$；$K\mid n$、$A\le n\le X$
+保证 $n$ 存活于该节指定的完整缺陷与有限目录筛选。
+其在 2、3 处的赋值为 $O(\log\ell)$。
+
+固定 $b_2<c<2b_2$，定义
+
+$$
+m_2=\left\lceil\frac{cR}{2\log2}\right\rceil,\quad
+m_3=\left\lceil\frac{cR}{2\log3}\right\rceil,\quad
+P=2^{m_2}3^{m_3},\quad L=\operatorname{lcm}(K,P),
+$$
+
+$$
+\mathcal F_r=\{g\in I:K\mid N_g,\ v_2(N_g)=m_2,\ v_3(N_g)=m_3\}.
+\tag{220.11}
+$$
+
+**定理 220.3（实际存活子族的完整指定矩趋零）。** 对全部充分大的素数指标，
+上述子族满足
+
+$$
+\#\mathcal F_r=\frac{T}{3L}+O(1)
+=T\exp(-cR+o(R))=V^{1-o(1)},
+\tag{220.12}
+$$
+
+且每个成员均通过指定的 §214 筛选。同时
+
+$$
+\boxed{
+\sum_{g\in\mathcal F_r}\left(\frac{Z(N_g)}t\right)^s
+\le\Lambda T/X+\Lambda/H+
+\exp\!\left(-(c-b_2)R-b_2\delta+O(y/\ell^4)\right)
+\longrightarrow0.
+}
+\tag{220.13}
+$$
+
+因此该实际子族的所有成员最终均满足严格 Robin 不等式。
+
+证明。充分大时，$m_2,m_3$ 超过 $K$ 在这两个素数处的赋值。
+记 $K_0=K/(2^{v_2(K)}3^{v_3(K)})$，则 $L=PK_0$、$\log L=cR+o(R)$。
+$K$ 的素因子最终均小于 $2r-1$，且 $F_r$ 与 6 互素，故 $(6L,V)=1$。
+
+式（220.11）的条件等价于 $L\mid N_g$ 且 $(N_g/L,6)=1$，
+即 $N_g$ 模 $6L$ 位于 $L$、$5L$ 两类。因 $V$ 可逆，
+它们分别对应 $g$ 的一个余数类；在同一个区间 $I$ 内计数得
+$2T/(6L)+O(1)$。由 $\log L=o(\log V)$，主项趋于无穷，得到式（220.12）。
+整除 $K$ 则保证该节明确指定的筛选存活。
+
+每个成员都被 $P$ 整除，所以 $E_{s^2}(N_g)\ge E_{s^2}(P)$，且
+
+$$
+\log E_{s^2}(P)
+=\log P-k_2(s^2)\log2-k_3(s^2)\log3
+=cR-4\log s+O(1).
+\tag{220.14}
+$$
+
+对这个实际子族的大除数贡献，式（220.7）给
+
+$$
+\Lambda\sum_{\substack{d\in\mathcal H_D\\n(d)=N_g,\ g\in\mathcal F_r}}
+\frac dX\mu_s(d)
+\le\frac{\Lambda W_{s,s^2}}{E_{s^2}(P)}.
+\tag{220.15}
+$$
+
+由式（220.1）、（220.5）、（220.14），右端至多为式（220.13）的最后一项；
+这里 $\log s=O(\ell)=o(y/\ell^4)$。对 $d\le D$，
+受限子族的命中数至多为完整族的 $T/d+1$；若 $(d,V)>1$ 则命中数为零。
+这部分归一和至多为 $\Lambda T/X+\Lambda D/X$，从而得式（220.13）。
+$a>b_2$、$c>b_2$ 保证三项都趋零。
+
+最终非负和小于一，故每一项都小于一，即 $Z(N_g)<t$。
+又 $N_g\ge A$ 给 $t=e^\gamma\log\log A\le e^\gamma\log\log N_g$，
+得到严格 Robin。这个结论的充分大指标门槛尚未量化。$\square$
+
+该族中的两个实际完整素数幂分别为
+
+$$
+2^{v_2(N_g)},\ 3^{v_3(N_g)}=\exp(cR/2+O(1))<B_\dagger
+\tag{220.16}
+$$
+
+最终成立，因为 $c/2<b_2$。因此所强制的这两个素数幂本身不触发 §219 的过滤。
+其余完整素数幂没有上界，式（220.16）不证明 $\mathcal F_r$ 与旧大幂上限集合的交集非空。
+式（220.13）对完整 $\mathcal F_r$ 成立，所以也控制其任意交集。
+该族在实际乘子中的比例为 $\exp(-cR+o(R))\to0$，没有覆盖整个 FIB 区间。
+
+### 220.4 同一安全子族内，互补因子增大可以使核单项增大
+
+**命题 220.4（真实互补除数的增量比较及增长实例）。** 对任意实数 $s\ge1$、
+正整数 $n$ 和 $h\mid n$，有
+
+$$
+b_s(n/h)\le h\,b_s(n).
+\tag{220.17}
+$$
+
+以下恢复 $s=y\ell$。固定 $0<\rho<c/2$，令 $J=\lfloor\rho R/\log2\rfloor$。
+对定理 220.3 的全部实际成员 $n=N_g$，一致地对 $0\le j\le J$ 有
+
+$$
+n/2^j\in\mathcal H_D,\qquad
+\frac{((n/2^j)/X)\mu_s(n/2^j)}{(n/X)\mu_s(n)}
+=\frac{b_s(n/2^j)}{b_s(n)}=2^j(1+o(1)).
+\tag{220.18}
+$$
+
+证明。对 $v\ge2$，相邻增量 $b_s(p^{v-1})$、$b_s(p^v)$
+是递增函数 $su^{s-1}$ 在相邻区间上的积分，区间长度分别为 $p^{-(v-1)}$、$p^{-v}$。
+所以前者不超过后者的 $p$ 倍。对 $v=1$，Bernoulli 不等式给
+$p((1+1/p)^s-1)\ge s\ge1=b_s(1)$。
+沿每个实际素赋值逐层下降再相乘，得到式（220.17）。
+
+对构造中精确的 2-赋值 $m_2$，记 $B_v=b_s(2^v)$。
+均值定理给 $B_v=s2^{-v}\xi_v^{s-1}$，其中
+$2-2^{1-v}\le\xi_v\le2-2^{-v}$。
+在 $m_2-J\le v\le m_2$ 上，
+
+$$
+s2^{-v}\le\exp(-(c/2-\rho)R+O(\ell))\to0.
+$$
+
+因此该范围内一致有
+
+$$
+B_v=s2^{s-1}2^{-v}
+\left(1+O\left(s2^{-(m_2-J)}\right)\right).
+$$
+
+同一个 $n$ 的奇数部分约去后，增量比为 $2^j(1+o(1))$。
+又 $\rho<c/2<b_2<a$ 给
+
+$$
+\log\frac{n/2^j}{D}\ge(a-\rho)R-\log(X/A)\to+\infty.
+$$
+
+所以这些除数仍处于实际大除数核中，且尺度核中的 $d$ 与概率分母中的 $d$ 抵消，
+得到式（220.18）。$\square$
+
+取 $j=J$，核单项相对 $h=1$ 的比值增至 $\exp(\rho R+O(1))$。
+故不存在固定 $C>0$、$\beta\ge0$，使所有这些实际成员及大除数互补因子都满足
+
+$$
+((n/h)/X)\mu_s(n/h)\le Ch^{-\beta}(n/X)\mu_s(n).
+\tag{220.19}
+$$
+
+这不否定总核估计：同一子族的完整归一矩仍由式（220.13）趋零。
+它说明比较互补项时必须保留深赋值造成的基准损失。
+由于与旧最大幂上限的实际交集尚未证明非空，这也不是该交集内的反例。
+
+## 追加锚（本行以下为增补区）
