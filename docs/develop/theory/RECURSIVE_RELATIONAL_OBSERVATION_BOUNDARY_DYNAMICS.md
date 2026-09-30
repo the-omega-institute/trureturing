@@ -21942,3 +21942,448 @@ Petra van den Bos、Frits Vaandrager，[*State Identification for Labeled Transi
 所得结构将缺口集中到(104.18)：被宣布的相位同时约束“这一读能否分离”和“这一接枝去往何处”。终端斜率分划与无线支撑引理减少了需要解释的障碍，但未排除一般安全子集；空间坐标的生成、运输记忆和先报告时序本身仍不等于未知初始关系的普遍取得。
 
 ## 104.99 追加锚
+## 105. 共同符号下的零差层分离与非线性安全集的必要条件
+
+最小关系恢复要求把可生成的坐标、保留的运输关系与真正取得的初始信息分开。本节在104.7的 Fibonacci 子族内排除零差层安全集，并给出至多六个付费阶段的双候选分离；对一般差层，只得到每条竖直纤维和消失多项式的必要条件。任意非零差层的安全集排除仍未解决，以下部分结果不构成全族取得定理。所有证明均为普通数学论证，没有新增 Lean 声明或核验主张。
+
+先澄清104.3的差向量记号：对那里依次显示的来源 $(0,0),(1,2)$，沿104.2的“第一减第二”约定，差为 $(-1,1)=(2,1)\pmod3$；那里写出的 $(1,-1)$ 取的是第二减第一。共同取负不改变差锥 $(Au)^2=(Bv)^2$，也不改变抵消比 $-Au/(Bv)$，故相应反例与定理不变。
+
+### 105.1 参数、同源合同与唯一的分支符号
+
+本节固定素数 $p>3$，并要求全部下列条件：
+
+$$
+\begin{gathered}
+n=(p-1)/2\text{ 为奇数},\qquad
+\lambda^2-\lambda-1=0,\qquad \operatorname{ord}(\lambda)=n,\\
+\mu=1-\lambda=-\lambda^{-1},\qquad s=\lambda-\mu\ne0,\\
+A=(3-2\mu)/s,\qquad B=(2\lambda-3)/s,\qquad AB\ne0,\qquad
+Q=\langle\lambda\rangle\subset\mathbb F_p^\times.
+\end{gathered}
+\tag{105.1}
+$$
+
+$Q$ 是非零平方子群，阶为奇数 $n$；$-1$ 非平方，平方和四次方映射均置换 $Q$。还有
+
+$$
+\begin{aligned}
+s^2&=5,& A+B&=2,& A-B&=4/s,&AB&=1/5,\\
+A&=\lambda^3/s,& B&=\lambda^{-3}/s,&A/B&=\lambda^6.
+\end{aligned}
+\tag{105.2}
+$$
+
+这些是直接代入 $\lambda^2=\lambda+1$ 的恒等式；例如 $\lambda^3=2\lambda+1$、$\lambda^{-3}=2\lambda-3$。$n=1$ 会给 $p=3$；若 $n=3$，则 $\lambda^3=1=2\lambda+1$，与 $\lambda\ne0$ 矛盾。因此 $n\ge5,p\ge11$。这里不主张满足(105.1)的素数有无穷多个。
+
+采用104.1的准确接口：执行前固定一个未知来源；首份 offer 为正号，以后每份 offer 先在同一实际来源上施加共同反射并宣布其符号，控制器再选择恰一个 $R,G,T$。反射到该原语完成之间受保护。$R(c,w)=(\lambda c,\mu w)$，$G(c,w)=(c+1,w+1)$，$T$ 付费、精确、不扰动，只提供 $[Ac+Bw=0]$。每个请求完成、每份 offer 必须消耗。没有免费旋转、逆动作、额外读数、复位、自由等待、时钟或公平性假设。候选是控制器中的假设；实际来源只沿实际执行连续演化。
+
+将一对不同第一坐标的候选记成
+
+$$
+P_\delta(c,w)=((c,w),(c-1,w-\delta)).
+$$
+
+共同旋转与逻辑交换名字可选择这一代表，实际执行仍保留代表到当前候选的框架。对 $x\in Q$、$\epsilon\in\{1,-1\}$，定义
+
+$$
+\begin{aligned}
+L_\epsilon&=A\epsilon c/x+Bxw,&
+L'_\epsilon&=A\epsilon(c-1)/x+Bx(w-\delta),\\
+v_\epsilon&=(c+x,w+\epsilon/x),&
+D_\delta(c,w;x,\epsilon)&=([L_\epsilon=0]\ne[L'_\epsilon=0]).
+\end{aligned}
+\tag{105.3}
+$$
+
+**定义 105.1（相关安全条件）。** 非空 $K\subseteq\mathbb F_p^2$ 在差层 $\delta$ 安全，是指
+
+$$
+\forall(c,w)\in K\ \forall x\in Q\ \exists\epsilon\in\{1,-1\}:\quad
+\bigl([L_\epsilon=0]=[L'_\epsilon=0]\bigr)
+\ \land\ v_\epsilon\in K.
+\tag{105.4}
+$$
+
+一个符号同时承担两个合取项，不能分别选取。其物理记账来自104.5：框架 $E_\sigma R^j$ 对角元为 $(1/x,\epsilon x)$，其中 $x=\lambda^{-j}$、$\epsilon=\sigma(-1)^j$。实际标量 $Ac/x+B\epsilon xw$ 乘单位 $\epsilon$ 后为 $L_\epsilon$；实际接枝 $(1,1)$ 的框架逆像为 $(x,\epsilon/x)$。逆像只用来更新记忆，没有实施逆操作。
+
+### 105.2 每条竖直纤维至少两点
+
+**引理 105.2（无单点竖直纤维）。** 在(105.1)下，对任意 $\delta$，满足(105.4)的非空 $K$ 投影到全部第一坐标，且每条纤维 $K_c=\{w:(c,w)\in K\}$ 至少有两点。因此 $|K|\ge2p$。
+
+证明。固定 $x=1$ 连续选择安全后继，每步第一坐标加1。前 $p$ 个状态的第一坐标遍历 $\mathbb F_p$，故每条纤维非空。
+
+反设 $K_{c_0}=\{w_0\}$。任取 $x\in Q$，从 $(c_0,w_0)$ 连续走 $p$ 次该 $x$ 的安全后继，符号为 $\epsilon_0,\ldots,\epsilon_{p-1}$。末态第一坐标返回 $c_0$，单点纤维迫使第二坐标也返回，因而 $\sum_i\epsilon_i=0\pmod p$。把符号视作整数，$p$ 个符号之和是 $[-p,p]$ 内的奇数，其可能的 $p$ 倍数只有 $-p,p$。所以全部符号相同，记为 $\epsilon$。
+
+这条路径的状态为 $(c_0+kx,w_0+k\epsilon/x)$。第 $k$ 步的两个测试标量为
+
+$$
+L_k=A\epsilon c_0/x+Bxw_0+k\epsilon(A+B),\qquad
+L_k-D,\qquad D=A\epsilon/x+Bx\delta.
+\tag{105.5}
+$$
+
+因 $A+B=2\ne0$，$0\le k<p$ 时 $L_k$ 遍历整个域。在 $L_k=0$ 的一步，读出相等要求 $D=0$。所以每个 $x\in Q$ 都必须容许某个符号使
+
+$$
+A\epsilon+B\delta x^2=0.
+\tag{105.6}
+$$
+
+若 $\delta=0$，这与 $A\ne0$ 矛盾。若 $\delta\ne0$，平方得到 $x^4=A^2/(B^2\delta^2)$；四次方映射置换 $Q$，故至多一个 $x\in Q$ 满足，不能覆盖 $n>1$ 个 $x$。单点纤维不可能存在。证毕。
+
+**定理 105.3（零差层无安全集）。** 在(105.1)下，$\delta=0$ 时不存在满足(105.4)的非空 $K$。
+
+证明。记 $h=1/2$。若 $w\ne0$，则 $A^2/(4B^2w^2)\in Q$，故有 $x\in Q$ 使
+
+$$
+x^4=A^2/(4B^2w^2).
+\tag{105.7}
+$$
+
+令 $t_0=A/(2x)$、$u=Bxw$，则 $u=\pm t_0\ne0$。在 $(h,w)$，两标量是 $u+\epsilon t_0$ 与 $u-\epsilon t_0$；每个符号都恰使一个为零，另一个为非零。因此 $(h,w)$ 不能属于安全集。安全集的 $h$ 纤维只能包含0，这与引理105.2同时要求该纤维非空且至少两点矛盾。证毕。
+
+### 105.3 零差候选的六阶段构造
+
+定理105.3本身不给短动作词。以下另用完整 Fibonacci 条件构造一个不依赖未来符号的三接枝回路，随后将它编译成付费协议。
+
+**引理 105.4（三接枝回路）。** 在(105.1)下存在 $t\in\mathbb F_p$，使
+
+$$
+t\in Q,\quad 1+t\notin Q\cup\{0\},\quad t^2+t+1\ne0,
+\tag{105.8}
+$$
+
+并且 $x_1=1,x_2=t,x_3=-(1+t)$ 都在 $Q$、和为0，而对全部八个符号三元组都有
+
+$$
+\epsilon_1+\epsilon_2/t-\epsilon_3/(1+t)\ne0.
+\tag{105.9}
+$$
+
+证明。令 $\chi$ 为二次特征，$\chi(0)=0$，并令 $\mathcal T=\{t:\chi(t)=1,\chi(1+t)=-1\}$。先计算
+
+$$
+\sum_t\chi(t(t+1))=-1,\qquad |\mathcal T|=(p+1)/4\ge3.
+\tag{105.10}
+$$
+
+第一式可直接计数 $u^2=t(t+1)$：它等价于 $(2t+1-2u)(2t+1+2u)=1$。每个非零第一因子唯一决定第二因子，再唯一确定 $t,u$，所以共有 $p-1$ 对；另一方面对每个 $t$ 有 $1+\chi(t(t+1))$ 个 $u$。第二式把 $4|\mathcal T|$ 写成 $\sum_t(1+\chi(t))(1-\chi(1+t))$；在 $t=0,-1$ 的项均为0，其余项准确检测 $\mathcal T$，展开即得 $p+1$。
+
+从 $\mathcal T$ 删去 $t^2+t+1$ 的至多两个根，仍有一个 $t$。因 $-1$ 与 $1+t$ 都非平方，$-(1+t)\in Q$。将(105.9)左侧乘非零的 $t(1+t)/\epsilon_1$，所得四种可能是
+
+$$
+t^2+t+1,\quad t^2+3t+1,\quad t^2-t-1,\quad t^2+t-1.
+\tag{105.11}
+$$
+
+第一种已排除。后三种的根分别为
+
+$$
+\{-\lambda^2,-\lambda^{-2}\},\quad
+\{\lambda,-\lambda^{-1}\},\quad
+\{\lambda^{-1},-\lambda\}.
+\tag{105.12}
+$$
+
+第一对及每个带负号的根都非平方。剩下的 $\lambda$ 与 $\lambda^{-1}$ 虽在 $Q$，却分别满足 $1+\lambda=\lambda^2\in Q$、$1+\lambda^{-1}=\lambda\in Q$，也不在 $\mathcal T$。所以四种值都非零，证明(105.9)。此处的根分解使用 Fibonacci 恒等式；本节不将这条回路推广到仅有奇数半阶的任意参数。证毕。
+
+**定理 105.5（至多 $6n$ 个付费原语的零差双候选分离）。** 在(105.1)及105.1的先报告合同下，已知两个当前候选的第一坐标不同、第二坐标相同。仅以候选预测和已宣布历史选择实际动作，可在所有合法符号日程下，用至多 $6n$ 个原语分离这两个候选的零位预测；其中至多五个 $G$、恰一个 $T$，且至多 $6(n-1)$ 个 $R$。这是一对候选的分离，未要求其中某个就是实际来源。
+
+证明。先在控制器中选规范代表，使第一坐标差为1，第二坐标差仍为0。若原第一坐标差不在 $Q$，交换两个候选名字使其在 $Q$，再选 $k$ 使 $\lambda^k$ 乘这个差为1。这里只将代表定义为共同 $R^k$ 的坐标像，实际框架反向记为 $R^{-k}$，不执行任何额外原语；初始框架偏移将在下面的第一阶段支付。
+
+选引理105.4的 $t$。在规范态 $(c,w)$ 置 $a=h-c$：若 $a=0$，不接枝；若 $a\in Q$，做目标 $x=a$ 的一次接枝；若 $a$ 非平方，依次做
+
+$$
+x=a/(1+t),\qquad x'=at/(1+t).
+\tag{105.13}
+$$
+
+这两数均为平方且和为 $a$。每次接枝在代表中加 $(x,\epsilon/x)$，因此无论符号怎样，至多两次接枝后第一坐标到达 $h$。
+
+此时若 $w\ne0$，跳过回路；若 $w=0$，依次做 $x=1,t,-(1+t)$ 的三次接枝。第一坐标返回 $h$，第二坐标由(105.9)保证非零。最后选择(105.7)的 $x$，旋转到相应框架后做一次 $T$，两个可能符号都给不同零位。
+
+具体付费实现如下。控制器保留 $E_\eta R^h$ 框架，把指数模 $n$ 约化，利用 $R^n=E_{-1}$ 将商的奇偶吸收入 $\eta$。阶段目标 $x=\lambda^{-j}$ 唯一确定 $j\bmod n$。执行 $(j-h)\bmod n$ 个实际 $R$，每个消耗当轮 offer，并累计已经报告的共同符号；到目标后，下一份 offer 用于规定的 $G$ 或最终 $T$。末份报告连同累计框架确定(105.3)的同一个 $\epsilon$。每阶段至多 $n-1$ 个 $R$ 加一个 $G/T$，最多五个接枝阶段加一个测试阶段，所以原语总数至多 $6n$。初始虚拟规范化偏移已包含在第一阶段的旋转差中，不能再当作免费物理操作，也不需另加一段实际规范化。
+
+所有中间 offer 由所规定的 $R/G$ 消耗。即使某个中间测试已经能够分离，协议也可继续规定的接枝，不额外执行 $T$。论证允许每阶段两个有效符号，因而包括首份 offer 固定正号的实际限制。若首阶段无需旋转，首份正号直接被相应 $G/T$ 消耗。没有预选未来相位或丢弃不利报告。证毕。
+
+### 105.4 安全集不能藏在低次数零点集中
+
+**定理 105.6（消失多项式的次数下界）。** 设 $X\subseteq\mathbb F_p^\times$ 含1，$m=|X|$。若非空 $K\subseteq\mathbb F_p^2$ 满足
+
+$$
+\forall v\in K\ \forall x\in X\ \exists\epsilon\in\{1,-1\}:\quad
+v+(x,\epsilon/x)\in K,
+\tag{105.14}
+$$
+
+则每个在 $K$ 上消失的非零多项式 $F\in\mathbb F_p[C,W]$，其总次数 $d$ 都满足 $4d\ge m$。特别地，(105.4)的安全集要求
+
+$$
+d\ge\lceil n/4\rceil=\lceil(p-1)/8\rceil.
+\tag{105.15}
+$$
+
+证明。$x=1$ 的后继闭合使 $K$ 投影到全部第一坐标，所以 $|K|\ge p$。反设 $4d<m$；非零常数不能在非空集上消失，故 $d>0$。对 $v=(c,w)\in K$，考虑 Laurent 多项式的乘积
+
+$$
+P_v(Z)=Z^{2d}F(c+Z,w+Z^{-1})F(c+Z,w-Z^{-1}).
+\tag{105.16}
+$$
+
+每个限制的指数介于 $-d$ 与 $d$，所以 $P_v$ 是次数至多 $4d$ 的普通多项式。对每个 $x\in X$，后继条件使至少一个因子为零。故 $P_v$ 有 $m>4d$ 个不同根，必为零多项式。Laurent 多项式环是整环，所以有一个符号 $e(v)$ 使 $F(c+Z,w+e(v)/Z)$ 恒等于0。
+
+代入同态的核恰是
+
+$$
+(H_{v,e}),\qquad H_{v,e}(C,W)=(C-c)(W-w)-e:
+\quad \mathbb F_p[C,W]/(H_{v,e})\cong\mathbb F_p[Z,Z^{-1}].
+\tag{105.17}
+$$
+
+该同构把 $C-c$ 送到 $Z$、$W-w$ 送到 $e/Z$，反向用 $(C-c)^{-1}=e(W-w)$，所以核的描述与素性都成立。于是不可约二次式 $H_{v,e(v)}$ 整除 $F$。不同中心 $v$ 给不同的首项系数为1的不可约因子：$C,W$ 的系数分别恢复 $-w,-c$。唯一分解性因而给 $2|K|\le d$，与 $|K|\ge p$ 及 $d<m/4\le(p-1)/4$ 矛盾。
+
+这里从乘积恒等为零推出一个因子恒等为零，并未把原来的 $\forall x\exists\epsilon$ 改成策略上的 $\exists\epsilon\forall x$；也没有断言整条双曲线包含于 $K$。所得到的是 $F$ 的因子。证毕。
+
+**推论 105.7（低次评价单射与点数界）。** 在(105.1)、(105.4)下，令 $r=\lfloor(n-1)/4\rfloor$。总次数至多 $r$ 的多项式到 $K$ 上函数的评价映射是单射，所以
+
+$$
+|K|\ge\binom{r+2}{2},\qquad
+|K|\ge\max\{2p,\binom{r+2}{2}\}.
+\tag{105.18}
+$$
+
+证明。评价核中的非零多项式会违反 $4r<n$ 和定理105.6；定义域维数为 $(r+1)(r+2)/2$，函数空间维数为 $|K|$。再用引理105.2。证毕。
+
+这些是必要条件，能排除总定义次数 $d$ 满足 $4d<n$ 的曲线或曲线之并，却不排除高次数、稠密或不规则的 $K$。低次评价单射也不提供取得策略，不能将代数复杂度下界解释为非零差层的全域排除。
+
+### 105.5 分开选择两个符号会丢失问题
+
+**命题 105.8（终端补集满足放松条件但不满足原条件）。** 在(105.1)下，对 $\delta\ne0$ 置
+
+$$
+J_\delta(c,w)=(2c-1)w-c\delta,\qquad
+\mathcal L_\delta=\{(c,w):J_\delta(c,w)\ne0\}.
+\tag{105.19}
+$$
+
+其大小是 $p^2-p+1$。对每个 $v\in\mathcal L_\delta$、每个 $x\in Q$，分别存在一个测试相等的符号和一个使后继仍在 $\mathcal L_\delta$ 的符号。这个分开存在的条件不足以推出(105.4)；$\mathcal L_1$ 中有明确的同符号失败点。
+
+证明。104.4的终端充要条件用于 $((c,w),(c-1,w-\delta))$，恰为 $J_\delta=0$。因 $\delta\ne0$，其横轴例外不存在。在 $c\ne1/2$ 时方程唯一解为 $w=c\delta/(2c-1)$；在 $c=1/2$ 时无解，故终端集恰有 $p-1$ 点，补集是 $p^2-p+1$ 点。
+
+终端门的要点亦可从(105.3)看出：乘单位后两测试为 $c+\rho w$、$c-1+\rho(w-\delta)$，其中 $\rho=\epsilon(B/A)x^2$。随 $x$ 变化，$\{\rho,-\rho\}$ 划分全部非零斜率。两非轴零点斜率互为相反数等价于 $J_\delta=0$；若一候选为原点，只需避开另一候选至多一个零斜率对，$n>1$ 保证可选。坐标轴情形由104.3的排除项覆盖。因此非终端点对每个 $x$ 都至少有一个测试相等的符号。
+
+再令 $u=2c-1,v=2w-\delta$，则 $J_\delta=(uv-\delta)/2$。如果两个后继都终端，便有
+
+$$
+(u+2x)(v+2/x)=\delta=(u+2x)(v-2/x).
+\tag{105.20}
+$$
+
+相减迫使 $u+2x=0$，代回又迫使 $\delta=0$，矛盾。因此至少一个后继仍在补集。
+
+为看清这两个符号不能拼接，取 $\delta=x=1$、$v_*=(-A^{-1},-B^{-1})$。由(105.2)直接得到
+
+$$
+\begin{array}{c|c|c|c}
+\epsilon&L_\epsilon&L'_\epsilon&J_1(v_*+(1,\epsilon))\\ \hline
++1&-2&-4&0\\
+-1&0&A-B&2B/A
+\end{array}
+\qquad J_1(v_*)=4/(AB)\ne0.
+\tag{105.21}
+$$
+
+所有标为非零的量在(105.1)下确实非零。正号使测试相等，却只能走入终端集；负号使后继在补集，却立即分离测试。因此 $v_*\in\mathcal L_1$ 而 $\mathcal L_1$ 在此点不满足(105.4)。这不是原问题的安全集反例，而是丢弃共同符号相关性的反例。证毕。
+
+### 105.6 从双候选到初始标签的桥及剩余量词
+
+定理105.5使用的是当前候选关系。若控制器保留所有初始剩余候选，每个槽都携带不可变标签 $c_0$ 及当前预测态，并按同一实际动作和已宣布共同符号更新，则第一坐标始终满足 $c=u c_0+b$、$u\ne0$：$R$ 乘 $u,b$，$G$ 给 $b$ 加1，反射与 $T$ 不改变此关系。真实来源的槽不被其真实响应删除；一次选定双候选的不同预测测试至少删去两者之一，即使两者都不是真实槽也成立。这是103.2—103.5已有的标签运输桥。
+
+但定理105.5只保证不同 $c$、相同 $w$ 的对；候选库中尚有不同第二坐标的对。不得假定每次都能找到零差对，也不得将可自由生成坐标等同于普遍识别初始标签。一般待证命题仍是：对每个满足(105.1)的参数组及每个 $\delta\in\mathbb F_p^\times$，不存在满足(105.4)的非空 $K$。本节既未证明这条命题，也未构造其反例。反例若要否定实际取得，还必须给同一固定来源的因果实现、正确首份正号及不同初始标签。
+
+只有在全部差层排除另获证明后，104.7的有限到达递推才给每对至多 $p^2$ 个阶段、每阶段至多 $n$ 个原语；候选槽至多 $p^2$ 个，逐对删除才给
+
+$$
+N_{\rm primitive}\le np^2(p^2-1),\qquad N_T\le p^2-1.
+\tag{105.22}
+$$
+
+这是保留原条件的条件性界，不是由本节部分引理取得的新全族界。所需记忆包括初始标签、当前候选库、相位／符号、共同仿射运输及控制位置；没有最小记忆、实际历时、隐藏工作量或整数位长界。
+
+实际 Fibonacci 桥须逐对象声明。对 $M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$、$\alpha=(1,0)$、$q=(2,3)$，坐标 $c=a+\lambda b,w=a+\mu b$ 可逆，$M$ 作用为 $R$、接枝为 $(1,1)$、$qs=Ac+Bw$。若实际隐藏事件声明为 $E=M^d$ 且 $d$ 是 $n$ 的奇倍数，则其模 $p$ 作用是共同反射。仍需声明先报告与保护完成合同，以及实际读数对零位的投影；模代表从不替换实际非负整数来源。现有 $H=341,E=M^{15}$ 的物理装置只供应第103节的11、31两个因子。一般(105.1)参数的物理应用需要各自声明相容仪器，不能把这个固定装置自动扩展到所有素数。
+
+若多个素数共享一个实际装置，所有候选必须随同一个实际 $R$ 次数和同一个全局符号演化；可顺序运行局部策略，并保留先前取得的初始标签，但不能独立指定各素数相位。第92节的初始／当前区分、第94节运输、第96节共同事件边界、第99节受限接口和第102节报告时序均保留。仓内 [finite_horizon_reachability](../../../D5/S3/ConceptDynamics/Control/FiniteHorizonReachability.lean) 供应有界策略与有限获胜层的既有抽象对应，不供应(105.4)的全域排除；这里没有编译其新实例。空间、时间、边界、记忆互相恢复还需要共同核心及更新／读出桥，局部双候选分离没有完成这一更广目标。
+
+### 105.7 一个有界实例对回路、成本和共同符号的核对
+
+以下 Python 3.9+ 标准库程序仅取新增参数 $p=19,\lambda=5$，先核对(105.1)。它遍历此实例的规范零差态、初始框架指数及阶段符号，检查(105.13)的到达、三接枝回路和最终测试，按真正需要的旋转数累计成本；另由原始 Fibonacci 矩阵重复作用核对(105.3)的读出及接枝逆像。宏内任意多个报告的作用由其累计符号表示，矩阵核对同时覆盖两个累计符号。程序不枚举候选集合，不运行第103节秩表，不做341模数的双候选乘积，也不以此实例裁定一般 $\delta$。
+
+将本小节唯一的 Python 围栏原样保存为 `validate105.py`，在新建空目录运行 `python3 validate105.py`。`--mutate-epsilon` 将接枝逆像中的负号改成正号，应被 `joint epsilon` 断言拒绝；`--degenerate-loop` 改选 $t=7$，它满足平方／非平方条件但违反(105.8)的三次单位根排除，应被 `loop nonzero` 断言拒绝。两项是有意破坏公式或假设的负控。`--edge-cap 1` 应拒绝检查超限；`python3 -O validate105.py` 应拒绝关闭断言。每次运行设置120秒上限、至多150万次计数操作及至多10万条同时保留记录；断言承担验证，必须启用。有限核对不替代105.2—105.5的参数化证明。本例正常输出给 $A=16,B=5,t=1$，6,498组原坐标映射、12,870条终端历史，最大原语数33、最大接枝数5、每条终端历史一次测试；计数操作162,620次。这里的实例最大值33不是一般参数的最优界。
+
+```python
+import argparse
+import json
+import signal
+import time
+from itertools import product
+
+if not __debug__:
+    raise SystemExit('assertions must be enabled')
+parser = argparse.ArgumentParser()
+parser.add_argument('--mutate-epsilon', action='store_true')
+parser.add_argument('--degenerate-loop', action='store_true')
+parser.add_argument('--edge-cap', type=int, default=1500000)
+opt = parser.parse_args()
+if not 1 <= opt.edge_cap <= 1500000:
+    raise SystemExit('invalid edge cap')
+
+def expired(*_):
+    raise RuntimeError('120-second cap')
+
+signal.signal(signal.SIGALRM, expired)
+signal.alarm(120)
+start = time.monotonic()
+edges = 0
+
+def tick():
+    global edges
+    edges += 1
+    assert edges <= opt.edge_cap, 'edge cap'
+
+p, lam = 19, 5
+n = (p - 1) // 2
+inv = lambda a: pow(a % p, -1, p)
+mu = (1 - lam) % p
+Q = {pow(lam, j, p) for j in range(n)}
+assert p > 3 and all(p % k for k in range(2, 5))
+assert n % 2 == 1 and len(Q) == n and pow(lam, n, p) == 1
+assert (lam * lam - lam - 1) % p == 0
+assert Q == {a * a % p for a in range(1, p)}
+s = (lam - mu) % p
+A, B = (3 - 2 * mu) * inv(s) % p, (2 * lam - 3) * inv(s) % p
+assert A and B and (A + B) % p == 2
+assert A * B % p == inv(5) and (A - B) % p != 0
+Tset = [t for t in sorted(Q) if (1 + t) % p not in Q | {0}]
+assert len(Tset) == (p + 1) // 4
+chosen = next(t for t in Tset if (t*t + t + 1) % p)
+t = 7 if opt.degenerate_loop else chosen
+assert t in Tset
+loop = (1, t, -(1 + t) % p)
+assert all(x in Q for x in loop) and sum(loop) % p == 0
+for signs in product((1, -1), repeat=3):
+    tick()
+    assert sum(e * inv(x) for x, e in zip(loop, signs)) % p, 'loop nonzero'
+
+# Check the pulled-back translation against raw integer-matrix actions.
+def raw(c, w):
+    return ((lam*w - mu*c) * inv(s) % p, (c-w) * inv(s) % p)
+
+def Mpower(a, b, k):
+    for _ in range(k):
+        a, b = b, (a+b) % p
+    return a, b
+
+mapping_checks = 0
+for j in range(n):
+    x = pow(lam, -j, p)
+    for sigma in (1, -1):
+        epsilon = sigma * (-1)**j
+        y = epsilon * inv(x) % p
+        for c, w in product(range(p), repeat=2):
+            tick()
+            a, b = Mpower(*raw(c, w), j + (n if sigma == -1 else 0))
+            assert (2*a + 3*b) % p == epsilon * (A*y*c + B*x*w) % p
+            cg, wg = (a+1+lam*b) % p, (a+1+mu*b) % p
+            pulled = (cg * inv(pow(lam, j, p)) % p,
+                      wg * inv(sigma * pow(mu, j, p)) % p)
+            trial_y = inv(x) if opt.mutate_epsilon else y
+            assert pulled == ((c+x) % p, (w+trial_y) % p), 'joint epsilon'
+            mapping_checks += 1
+
+# Stack entries are live protocol histories, not an attractor table.
+j_of = {pow(lam, -j, p): j for j in range(n)}
+half = inv(2)
+leaves = 0
+peak = 0
+max_cost = max_g = 0
+for c0, w0, h0 in product(range(p), range(p), range(n)):
+    a = (half-c0) % p
+    if not a:
+        plan = ()
+    elif a in Q:
+        plan = (a,)
+    else:
+        plan = (a * inv(1+t) % p, a*t * inv(1+t) % p)
+    assert all(x in Q for x in plan) and sum(plan) % p == a
+    stack = [(c0, w0, h0, plan, False, 0, 0)]
+    while stack:
+        peak = max(peak, len(stack))
+        assert len(stack) + len(Q) + len(Tset) + len(j_of) + 32 <= 100000
+        c, w, h, todo, loop_used, cost, gs = stack.pop()
+        if todo:
+            x, rest = todo[0], todo[1:]
+            j = j_of[x]
+            paid = (j-h) % n + 1
+            for epsilon in (1, -1):
+                tick()
+                stack.append(((c+x) % p, (w+epsilon*inv(x)) % p,
+                              j, rest, loop_used, cost+paid, gs+1))
+            continue
+        assert c == half
+        if not w:
+            assert not loop_used, 'loop nonzero'
+            stack.append((c, w, h, loop, True, cost, gs))
+            continue
+        x = next(x for x in sorted(Q)
+                 if (4*B*B*w*w*pow(x, 4, p)-A*A) % p == 0)
+        total = cost + (j_of[x]-h) % n + 1
+        for epsilon in (1, -1):
+            tick()
+            left = (A*epsilon*c*inv(x)+B*x*w) % p
+            right = (A*epsilon*(c-1)*inv(x)+B*x*w) % p
+            assert (left == 0) != (right == 0), 'terminal test'
+        assert gs <= 5 and total <= 6*n
+        assert total-gs-1 <= 6*(n-1)
+        max_cost, max_g = max(max_cost, total), max(max_g, gs)
+        leaves += 1
+
+# Test the two separate existentials and their same-sign obstruction.
+def J(c, w, delta):
+    return ((2*c-1)*w-c*delta) % p
+
+for delta in range(1, p):
+    nonterminal = 0
+    for c, w in product(range(p), repeat=2):
+        if not J(c, w, delta):
+            continue
+        nonterminal += 1
+        for x in Q:
+            tests, successors = [], []
+            for epsilon in (1, -1):
+                tick()
+                z = (A*epsilon*c*inv(x)+B*x*w) % p
+                zp = (A*epsilon*(c-1)*inv(x)+B*x*(w-delta)) % p
+                tests.append((z == 0) == (zp == 0))
+                successors.append(J(c+x, w+epsilon*inv(x), delta) != 0)
+            assert any(tests) and any(successors)
+    assert nonterminal == p*p-p+1
+c, w = -inv(A) % p, -inv(B) % p
+assert J(c, w, 1) == 4*inv(A*B) % p
+assert ((A*c+B*w) % p, (A*(c-1)+B*(w-1)) % p) == ((-2) % p, (-4) % p)
+assert ((-A*c+B*w) % p, (-A*(c-1)+B*(w-1)) % p) == (0, (A-B) % p)
+assert J(c+1, w+1, 1) == 0 and J(c+1, w-1, 1) == 2*B*inv(A) % p
+signal.alarm(0)
+print(json.dumps({'p': p, 'lambda': lam, 'n': n, 'A': A, 'B': B,
+                  't': t, 'mapping_checks': mapping_checks,
+                  'protocol_leaves': leaves, 'max_paid_primitives': max_cost,
+                  'max_G': max_g, 'T_per_leaf': 1,
+                  'peak_live_stack': peak, 'counted_operations': edges,
+                  'retained_records_upper_bound': peak+len(Q)+len(Tset)+len(j_of)+32,
+                  'elapsed_seconds': round(time.monotonic()-start, 6)}, sort_keys=True))
+```
+
+### 105.8 证明的承重范围
+
+新进展是零差层的结构排除及有界分离协议，以及一般安全集的纤维与代数复杂度约束。第103节11／31的有限取得仍用其原证据；第104节终端门和一般有限到达桥在此直接复用。没有由论文标题、平均关联估计或一次有限计算移入新的全族定理，也没有原创优先权主张。非零差层需要同时控制测试可用性与同一分支的后继；终端补集的放松反例说明，这一联合关系不能省略。一般取得与更广的最小关系恢复目标继续保留其未证义务。
+
+## 105.99 追加锚
