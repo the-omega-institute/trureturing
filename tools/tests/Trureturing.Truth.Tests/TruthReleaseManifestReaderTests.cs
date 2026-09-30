@@ -198,11 +198,13 @@ public sealed class TruthReleaseManifestReaderTests
     }
 
     [Fact]
-    public void RejectsMissingOrDuplicatedPushEvidence()
+    public void RejectsEmptyOrDuplicatedCheckNames()
     {
-        var bad = ValidManifest.Replace("\"current\"", "\"engineering\"", StringComparison.Ordinal);
-
-        Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(bad));
+        foreach (var name in new[] { "engineering", "", "   " })
+        {
+            var bad = ValidManifest.Replace("\"current\"", "\"" + name + "\"", StringComparison.Ordinal);
+            Assert.Throws<FormatException>(() => TruthReleaseManifestReader.Read(bad));
+        }
     }
 
     [Fact]

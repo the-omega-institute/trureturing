@@ -167,6 +167,10 @@ public static class TruthReleaseManifestReader
             RequireKeys(checkObject, CheckKeys, ImmutableArray<string>.Empty, "required_checks[]");
             var name = RequireString(checkObject, "name");
             var conclusion = RequireString(checkObject, "conclusion");
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new FormatException("required check name must be nonempty.");
+            }
             if (conclusion != "success")
             {
                 throw new FormatException($"required check '{name}' does not record conclusion 'success'.");
@@ -185,6 +189,8 @@ public static class TruthReleaseManifestReader
             throw new FormatException("required_checks must contain at least one successful named check.");
         }
 
+        // Completeness against the installed protection policy is a provenance obligation,
+        // not a property of this producer-declared manifest.
         return checks.ToImmutable();
     }
 
