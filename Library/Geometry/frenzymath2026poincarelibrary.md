@@ -55,6 +55,8 @@ does not supply that existence or uniqueness theorem.
 | `Geometry/Riemannian/Metric/LocalDiffeomorph.lean` | `PoincareMT.RiemannianMetric.pullbackOfLocalDiffeomorph` | Pulls a smooth positive-definite metric from the target to the source, using the invertible differential; no spatial bijectivity or compactness is required. |
 | `Geometry/Riemannian/Covering/Completeness.lean` | `PoincareMT.RiemannianMetric.metricComplete_of_isCoveringMap` | A smooth covering preserving tangent inner products pulls completeness from the base to the covering space, with arbitrary sheet count; it does not prove completeness downstairs from completeness upstairs. |
 | `Geometry/Riemannian/Covering/Completeness.lean` | `PoincareMT.RiemannianMetric.metricComplete_pullbackOfLocalDiffeomorph` | The same upward completeness transfer for the actual local-diffeomorphism pullback metric. |
+| `Geometry/RicciFlow/Local/Connection/Existence.lean` | `PoincareMT.exists_leviCivitaData` | Constructs Levi-Civita data for a supplied smooth metric on a Hausdorff, second-countable manifold. |
+| `Geometry/Riemannian/Curvature/LocalIsometrySectional.lean` | `PoincareMT.LeviCivitaData.sectionalCurvature_eq_of_local_isometry` | Transports sectional curvature on an open set for a smooth map preserving tangent inner products, given both Levi-Civita data; no separate invertible-differential premise is required, and it does not compute the source curvature. |
 | `Geometry/Riemannian/Curvature/LocalIsometry.lean` | `PoincareMT.LeviCivitaData.curvatureTensor_eq_of_local_isometry` | A smooth map preserving tangent inner products on an open set transports the four-covariant curvature tensor; it needs the two metrics and Levi-Civita data. |
 | `Geometry/Riemannian/Curvature/LocalIsometry.lean` | `PoincareMT.LeviCivitaData.curvatureTensorNorm_eq_of_local_isometry` | Transports the retained Hilbert-Schmidt curvature norm under the same hypotheses. |
 | `Geometry/Riemannian/Metric/Induced/Immersion.lean` | `PoincareMT.RiemannianMetric.Induced.pullbackMetric` | Constructs a smooth positive-definite metric by pulling back through a smooth immersion; injectivity of each differential is required. |
@@ -83,7 +85,12 @@ declarations in the table have recursive axiom closures consisting only of
 `propext`, `Classical.choice` and `Quot.sound`.
 The additional immersion, positive-scaling, metric-contraction and metric-descent
 APIs were checked in separate unchanged-source compatibility closures. Their
-modules are not included in the 47-module count above. This establishes source
+modules are not included in the 47-module count above. The Levi-Civita existence and sectional-curvature transport closures were
+also checked separately. Five additional external modules compiled unchanged:
+`RicciFlow/Local/Connection/{Koszul,Coordinates,Construction,Existence}` and
+`Riemannian/Curvature/LocalIsometrySectional`. Both cited declarations have
+recursive axiom closures consisting only of the same three standard axioms.
+These modules are outside the 47-module count. This establishes source
 compatibility for the checked closures, not installation of an external
 dependency or independent verification of the complete Poincare proof.
 
@@ -183,13 +190,35 @@ Riemannian metric, giving `MetricComplete` downstairs. These conclusions
 hold under the same freeness and compact-set proper-discontinuity
 hypotheses, without compactness or finite-volume assumptions on the quotient.
 
+Levi-Civita data exist for this same constructed source metric and each
+same descended quotient metric. The source is second-countable in its
+original topology through the coordinate homeomorphism. The quotient is
+second-countable because its actual orbit covering is open and surjective;
+the canonical orbit metric supplies the Hausdorff property while retaining
+the existing quotient topology. The existence theorem above therefore
+applies without a countability assumption on the acting group.
+
+For every Levi-Civita datum of this source metric, the connection on constant
+coordinate vector fields has also been checked explicitly. Write h for
+positive height and e for the image under the same orthonormal coordinate
+map of the vertical unit vector. With Euclidean inner products in these
+coordinates, the formula is
+`nabla_u v = h^(-1) (inner(u,v) e - inner(e,u) v - inner(e,v) u)`.
+The constant fields are smooth pullbacks of Euclidean constant fields and
+have zero Lie bracket. Differentiating the metric pairing
+`h^(-2) inner(v,w)` and applying Koszul gives this formula for the actual
+connection; the formula is derived, rather than supplied as a premise.
+The check retains all earlier source and quotient distance and completeness
+clauses in the same construction. It does not compute curvature.
+
 These checks compiled under the project pins using the unchanged cited
 external sources and only `propext`, `Classical.choice` and `Quot.sound`.
 They are temporary applications of existing results; no new named project
 declaration or external dependency is installed by this note.
 
-The model's curvature of minus one and its Levi-Civita data remain to be
-supplied before applying curvature transport. Finite covolume,
+The model's curvature of minus one remains to be computed before applying
+curvature transport. Sectional curvature is totalized as zero for pairs with
+zero Gram determinant; minus one must be stated for nondegenerate planes. Finite covolume,
 noncompact cusp analysis, and the global Mostow-Prasad existence and
 uniqueness argument remain separate obligations. Compact positive-curvature
 sphere covering results cannot replace them.
