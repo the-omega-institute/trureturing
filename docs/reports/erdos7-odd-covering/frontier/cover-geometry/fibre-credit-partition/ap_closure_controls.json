@@ -1,0 +1,105 @@
+{
+  "checks": 17958,
+  "contract": "Exact finite controls for a nested globally phased AP-family approximation to the fixed head and four-token signature domain. Closure only; no covering system or simultaneous remainder-max realization.",
+  "limits": [
+    "Each tested approximant is finite; the all-height object is only used to define a limiting signature.",
+    "Actual finite token mass c_N sum_(e<=N)p^-e differs from full allowance c_N/(p-1).",
+    "The complete finite remainder roster and old-certificate uniform convergence are ordinary proved constructions, not a new breakpoint search.",
+    "Only small completion samples are instantiated; the full 2*(N+1)^11-1 roster is not enumerated.",
+    "No rerun of the old breakpoint checker, new array search or Lean build."
+  ],
+  "results": [
+    {
+      "common_uncovered_integer": "108660808402582",
+      "heights": [
+        {
+          "height": 1,
+          "max_head_weight_error": "1/20",
+          "max_normalized_array_error": "1/36",
+          "max_normalized_array_error_decimal": 0.027777777777777776,
+          "original_count": 59,
+          "phase_registry_sha256": "58e8ac1777ce0ac95478f7be62dc9d4e58f12bd245e45bcd8f81ae9be8dd7cdb"
+        },
+        {
+          "height": 2,
+          "max_head_weight_error": "1/95",
+          "max_normalized_array_error": "1/388",
+          "max_normalized_array_error_decimal": 0.002577319587628866,
+          "original_count": 117,
+          "phase_registry_sha256": "13ae8349f1f84d6f842bec84f0decf484b6e6398da9d237f046c9175fed99091"
+        },
+        {
+          "height": 4,
+          "max_head_weight_error": "1/2345",
+          "max_normalized_array_error": "1/46852",
+          "max_normalized_array_error_decimal": 2.134380602749082e-05,
+          "original_count": 233,
+          "phase_registry_sha256": "d87840a7f25069d9bf2def4e292f12551d020d080d3a5e49b79300132e9adf6a"
+        },
+        {
+          "height": 8,
+          "max_head_weight_error": "1/1464845",
+          "max_normalized_array_error": "1/685948420",
+          "max_normalized_array_error_decimal": 1.4578355614551892e-09,
+          "original_count": 465,
+          "phase_registry_sha256": "e1871a1b12d8285136014eb4ec85000ee10c02a4527751cdfa19c9f3a4c2a14a"
+        }
+      ],
+      "schema": "first_layer_witness",
+      "uncovered_first_digit_period": "152125131763605",
+      "witness_path": "/Users/auric/trureturing-erdos7-odd-covering-0916/docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/first_layer_witness.json",
+      "witness_sha256": "5540ef30fbf02147b4c4687e80e4e617b96cdd58f41a706b8a3f460793ce0a70"
+    },
+    {
+      "common_uncovered_integer": "108660808402582",
+      "heights": [
+        {
+          "height": 1,
+          "max_head_weight_error": "1/20",
+          "max_normalized_array_error": "1/36",
+          "max_normalized_array_error_decimal": 0.027777777777777776,
+          "original_count": 59,
+          "phase_registry_sha256": "894c9d6c17cba9fb7f3046635bfd76b4133b433750b740d9f5c43275974559aa"
+        },
+        {
+          "height": 2,
+          "max_head_weight_error": "1/95",
+          "max_normalized_array_error": "1/388",
+          "max_normalized_array_error_decimal": 0.002577319587628866,
+          "original_count": 117,
+          "phase_registry_sha256": "f7dc16d7cfb3788caf841b083d2b5c7cd3ae5bc7466f92d7843419aa41875a57"
+        },
+        {
+          "height": 4,
+          "max_head_weight_error": "1/2345",
+          "max_normalized_array_error": "1/46852",
+          "max_normalized_array_error_decimal": 2.134380602749082e-05,
+          "original_count": 233,
+          "phase_registry_sha256": "b6b84fe268a69f2016ce3fc7c9f96d0da231658be69618f45a27bafbde190aff"
+        },
+        {
+          "height": 8,
+          "max_head_weight_error": "1/1464845",
+          "max_normalized_array_error": "1/685948420",
+          "max_normalized_array_error_decimal": 1.4578355614551892e-09,
+          "original_count": 465,
+          "phase_registry_sha256": "04c1c4a767702c777b4b633fb7094f2a44f002cdd9bfe0322249706948400028"
+        }
+      ],
+      "schema": "bounded_joint_result",
+      "uncovered_first_digit_period": "152125131763605",
+      "witness_path": "/Users/auric/trureturing-erdos7-odd-covering-0916/docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/bounded_joint_search.json",
+      "witness_sha256": "7ff231d7a8c95f0a7bc9e5181fd4c7099e816f985403325fdd608dd176ce37c6"
+    }
+  ],
+  "statistics": {
+    "completion_originals": 32,
+    "crt_originals": 1982,
+    "finite_families": 8,
+    "literal_coordinate_models": 22,
+    "nested_old_phases": 818,
+    "prefix_pairs": 10392,
+    "uncovered_original_tests": 1748,
+    "witnesses": 2
+  }
+}

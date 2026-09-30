@@ -5040,3 +5040,324 @@ Subtracting this bound from the two FC132 center values proves, for EVERY guarde
 Thus the positive point evaluations extend to two continuous raw-state neighborhoods. For an actual family mapping into either neighborhood under the stated source/cap/inventory assumptions, the weighted surviving probability is positive, hence that family does not cover. No assertion is made that every actual family enters these neighborhoods, that the centers themselves are finite arithmetic realizations, or that the remaining source domain has positive comparison.
 
 The [neighborhood certificate](../../../frontier/cover-geometry/fibre-credit-partition/raw_neighborhood_certificate.py) reads the fixed FC132 result and independently calculates the geometric cutoffs, inventory coefficient, error and two rational subtractions. Its [result](../../../frontier/cover-geometry/fibre-credit-partition/raw_neighborhood_certificate.json) supplies18 exact checks, including the two residual-minus-fees identities. Only the declared radius is evaluated: there is no radius optimization or source search. The universal neighborhood conclusion follows from FC133--FC144, not from sampling points in the box. These are ordinary mathematical results, not new Lean verification or an unrestricted Erdős#7 settlement.
+
+## Actual finite congruence families approximate the token boundary
+
+This construction proves an ordinary mathematical closure statement. The FC110 head laws and any fixed four-token address/root assignment of the FC110/FC131 type are limits of signatures of finite families of distinct odd nonunit congruence moduli with globally fixed phases. No finite family is claimed to attain all limiting geometric allowances exactly. Neither the constructed countable union nor its limiting probability law is substituted for a finite covering system.
+
+### Explicit disjoint private prefixes
+
+Let Q=(11,13,17,19,23,29,31,37,41), with heads 5 and 7. Read p-adic digits from low to high: a word (d0,...,d_(e-1)) denotes the residue sum d_k*p^k modulo p^e.
+
+For a private q and role j in {0,1,2,3,4,5}, use the depth-e word
+
+    (6,...,6,j), with e-1 copies of 6.                 (FC147)
+
+Its residue is
+
+    A_(q,j,e)=6*(q^(e-1)-1)/(q-1)+j*q^(e-1).
+
+The roles are pure, star, free5, free7, selected5, selected7, respectively. These six families of cylinders are pairwise disjoint, including across depths. At equal depths, different terminal j distinguish them. If e<f, the shorter word has terminal digit j<=5 where the longer word still has digit6. They cannot intersect. All digits exist because q>=11. No unproved capacity placement is needed.
+
+For each fixed role the depth-e cylinder has Haar mass q^-e. Thus its first N cylinders have mass
+
+    A_(q,N)=sum_(e=1..N)q^-e=(1-q^-N)/(q-1),
+
+and its full limiting union has mass 1/(q-1). Six roles use total mass 6/(q-1)<=3/5. Depth one uses rows0 through5; every deeper cylinder lies in row6, with its own recursive continuation. Row7 is untouched at every depth.
+
+### Explicit head pure and star prefixes
+
+For p=5 or7, choose pure cylinders
+
+    depth1: (p-1),
+    depth e>=2: (p-2, p-1,...,p-1, 0),                 (FC148)
+
+with e-2 copies of p-1 between the first and last digits. For the star cylinders choose
+
+    depth1: (0),
+    depth e>=2: (1, p-1,...,p-1, 0).                  (FC149)
+
+Pure depth one, pure deeper tails, star depth one and star deeper tails occupy distinct first rows p-1,p-2,0,1. Within either deeper family, a shorter word ends in0 where a longer word continues with p-1. Therefore all pure and star cylinders on this head are mutually disjoint. Their per-family truncated and limiting masses are A_(p,N) and 1/(p-1), as above.
+
+Assign all 5-stars to ternary root1 and all 7-stars to root2. Every private star is assigned to root2. The one pure ternary original is 0 mod3; its two surviving roots are1 and2. No other pure ternary powers are needed.
+
+### The actual numerical originals and their fixed phases
+
+Fix once and for all, at every q, four physical head rows
+
+    i_F5(q), i_S5(q) in {0,...,4},
+    i_F7(q), i_S7(q) in {0,...,6},
+
+and one active ternary root for each selected role S5,S7. This includes both stored arrays and every assignment in their four-token subdomain.
+
+For every depth e>=1 define the following original once:
+
+* Pure p^e on every nonternary p, using FC148 on heads and private role0 on q.
+* Star 3*p^e, using FC149 on heads or private role1 on q, together with its declared ternary root.
+* Free 5*q^e, using head row i_F5(q) and private role2.
+* Free 7*q^e, using head row i_F7(q) and private role3.
+* Selected 3*5*q^e, using its declared root, head row i_S5(q) and private role4.
+* Selected 3*7*q^e, using its declared root, head row i_S7(q) and private role5.
+
+Each collection of coordinate congruences has a unique joint class by CRT, since its coordinate moduli are coprime prime powers. The phase of an original depends only on its role, numerical depth and the fixed row/root assignment; it never depends on the truncation N.
+
+All numerical moduli are odd and greater than one. They are distinct: pure powers, stars with a factor3, free two-prime head/private moduli, and selected three-prime moduli have different prime-factor supports; inside each category the head, private prime and exponent distinguish them. In particular q is never3,5 or7. Selected head stars 3*5^e and3*7^e cannot collide with any private group original.
+
+Let Gamma_N contain the pure original3 and all these originals through depth N. It is a finite actual family of 58*N+1 distinct numerical moduli, with period dividing
+
+    L_N=3*product_(p in {5,7} union Q)p^N.
+
+The families are nested and phases of old originals are unchanged. Their coordinate distributions can equally be calculated on this finite CRT period or through its cylinder representation. No mutually incompatible phases from separate sources are combined.
+
+### Finite normalization and the limiting head table
+
+Delete the actual N pure cylinders on each nonternary p and normalize the remaining Haar law. Put t=p^-N. Its true density cap and each disjoint present role's mass are
+
+    c_(p,N)=1/(1-A_(p,N))=(p-1)/(p-2+t),
+    b_(p,N)=c_(p,N)*A_(p,N)=(1-t)/(p-2+t).             (FC150)
+
+Both increase to c_p=(p-1)/(p-2) and b_p=1/(p-2). A cylinder of any depth e has conditional mass at most c_(p,N)*p^-e. A present role cylinder disjoint from all pure cylinders attains this cap.
+
+The distinction between a present token and a full geometric allowance is essential:
+
+    present token b_(p,N)=c_(p,N)*sum_(e<=N)p^-e,
+    full allowance c_(p,N)/(p-1)=1/(p-2+p^-N).
+
+Their difference is p^-N/(p-2+p^-N). They are not equal at finite N, although both approach b_p. The limiting constant c_p is also a valid, possibly loose, cap for every finite member.
+
+For the head p, write a_N=c_(p,N)/p and
+
+    d_N=c_(p,N)*(A_(p,N)-1/p),
+    t_N=a_N-d_N=c_(p,N)*(2/p-A_(p,N)).
+
+The actual common first-row law has value0 at row p-1, value t_N at row p-2, and value a_N at every other row. The active star deletes a_N from row0 and d_N from row1; it deletes nothing elsewhere. Consequently the active-root weights are0 at rows0 and p-1, t_N at rows1 and p-2, and a_N at the remaining rows. The inactive root retains the original row law.
+
+As N grows, a_N tends to (p-1)/[p(p-2)], t_N tends to1/p, and d_N tends to1/[p(p-2)]. For p=5 and7 these are exactly
+
+    ell5=(4/15,4/15,4/15,1/5,0),
+    ell7=(6/35,6/35,6/35,6/35,6/35,1/7,0),
+
+    mu_(1,5)=(4/15,1/15,0,0,0),
+    mu_(2,7)=(6/35,1/35,0,0,0,0,0),                  (FC151)
+
+with the other head deletions zero. Their surviving rows are exactly FC110. No artificial star padding is used in this construction. All indicated zero rows are already zero for every N>=1, and every other indicated row stays strictly positive.
+
+The active star survivor factor is g_(p,N)=1-b_(p,N), so it decreases to1-b_p while staying at least that positive limit. The inactive factor is1. Private root1 is unblocked and private root2 has g_(q,2,N)=1-b_(q,N).
+
+### Actual shared free projections and disjoint grouped unions
+
+Each private rolej=1,...,5 is disjoint from the pure role and from every other role. Under the finite pure-conditioned law it has mass b_(q,N). The four grouped roles all avoid the root2 private star. Their physical head addresses are fixed as declared above. Therefore their unnormalized free and selected vectors are exactly b_(q,N) times the corresponding address indicators.
+
+If f_N and s_(r,N) are those vectors, the actual conditional row probabilities are
+
+    x_(1,N)=f_N+s_(1,N),
+    g_(q,2,N)*x_(2,N)=f_N+s_(2,N),                    (FC152)
+
+and likewise for the7 group. The5 and7 private projection sets are disjoint, so their conditioned intersection z is zero for every pair of head rows. The paired grouped-survival factors 1-x-y are therefore exact and nonnegative in every finite family. These are genuine raw original projections before head-star restriction, including labels whose head row has zero surviving weight; a zero head row does not authorize moving its original's physical address.
+
+Taking N to infinity in FC152 gives precisely the stored four-token arrays, including their shared-free constraints and selected-root masks. Private denominators have a uniform positive lower bound g_(q,2,N)>=1-b_q. Thus both raw and normalized arrays converge. For example
+
+    b_q-b_(q,N)=(q-1)q^-N/[(q-2)(q-2+q^-N)],
+
+    1/(q-3)-b_(q,N)/(1-b_(q,N))
+      =(q-1)q^-N/[(q-3)(q-3+2q^-N)].                (FC153)
+
+A row has at most two tokens, so twice these errors bounds its raw or root2-normalized error. Head laws and star masses converge by the explicit rational formulas in FC150-FC151. On the common p-adic probability space, the total variation distance between the finite pure-conditioned law and its limiting law is exactly
+
+    p^-N/(p-2+p^-N),                                 (FC154)
+
+because the limiting survivor is a subset of the finite survivor and conditioning removes that relative tail mass.
+
+The limiting full rows cannot themselves be attained by any finite actual pure-prime-power source with these complete caps. A finite union of distinct pure p-power originals has Haar mass strictly below sum_(e>=1)p^-e=1/(p-1). Its normalized density cap is strictly below c_p, and hence its first-row masses are strictly below c_p/p. The claim is therefore a closure statement, not a hidden assertion of finite exact saturation.
+
+### Completing a finite numerical inventory without changing the source
+
+If a comparison requires the complete finite exponent box, enlarge Gamma_N to include, for every nonunit
+
+    d=product_(p in {5,7} union Q)p^(e_p), 0<=e_p<=N,
+
+both d and3*d, together with3 when d=1. Pure, star and grouped labels already have their fixed phases above. Every other mixed numerical label is assigned, on each supported coordinate, a residue lying in that coordinate's pure depth-one row: p-1 on heads and0 on private primes. Choose a fixed root, for example1, for these additional selected originals. CRT gives one global phase per label, independent of N.
+
+These extra mixed originals have zero mass under every corresponding pure-conditioned source: each lies inside a present pure first-row hole. They change no pure or star source law and no grouped projection. There are exactly
+
+    2*(N+1)^11-1
+
+distinct odd nonunit moduli in the completed finite roster. Numerical factorization distinguishes free and selected labels, and the already registered categories are not overwritten. This construction supplies the full finite inventory, not a claim that its marginal cap fees are attained as actual deletion masses.
+
+There is even a common uncovered integer progression for this constructed sequence: choose ternary digit1, head digits2 at5 and7, and digit7 at every private q. CRT supplies an integer with these first digits. It avoids every source/group prefix above and every added mixed original placed in pure first-row holes. This confirms directly that the construction is not presenting a covering system, finite or infinite.
+
+### Qualitative transfer of the old separate-fee obstruction
+
+This consequence concerns only the old prescribed marginal-cap comparison, not the true probability removed by the completed remainder. Use the FC110 row/root assignment and the completed finite roster. Define
+
+    a_(p,N)=c_(p,N)/p,
+    R_(D,N)=(b_(p,N)-a_(p,N))*b_(q,N) for D={p,q}, p a head, q private;
+             product_(v in D)b_(v,N) otherwise, |D|>=2.
+
+These are the exact cap sums for the finite nongroup inventory: the shallow grouped head power is removed only in the stated pair case. Put A_(D,r,N)=product_(v outside D)g_(v,r,N), and let U_(r,N) be the exact grouped-survivor mass of Gamma_N. The old comparison at root weight gamma is
+
+    L_N(gamma)=gamma*U_(1,N)+(1-gamma)*U_(2,N)
+       -sum_D R_(D,N)*[gamma*A_(D,1,N)+(1-gamma)*A_(D,2,N)
+                      +max(gamma*A_(D,1,N),(1-gamma)*A_(D,2,N))].   (FC155)
+
+This uses finite b_(v,N), not the limiting infinite allowance inserted into a finite inventory. The cap sums, star factors and grouped masses converge to their FC110/FC111 values. There are only2,036 supports. Let B_(D,r,N)=R_(D,N)A_(D,r,N). The elementary max inequality gives, uniformly for gamma in[0,1],
+
+    |L_N(gamma)-L_infinity(gamma)|
+       <= max_r|U_(r,N)-U_(r,infinity)|
+           +2*sum_D max_r|B_(D,r,N)-B_(D,r,infinity)| -> 0.         (FC156)
+
+The existing FC112 exact result is
+
+    max_gamma L_infinity(gamma)
+      =-527873726880671944/338719967040116536875 = -delta <0.
+
+By FC156, some finite N has sup_gamma L_N(gamma)<-delta/2<0. No explicit N or new root-weight enumeration is needed for this existence conclusion. Thus a finite actual globally phased source and a complete finite numerical roster already defeat that declared separate-fee certificate at every root weight.
+
+This does not assert that its selected support maxima, actual deletions, or separately optimized remaining phases are jointly attained. In the explicit completion above the added originals lie in pure holes and delete no source mass at all. The failing quantity is the specified conservative certificate. Better use of those actual phases, the joint remainder fee, supported-head masses, or another method is not excluded. The FC131 assignment has the same source/group closure construction; FC155's strict all-weight negative margin is invoked only for FC110, where FC112 supplies it.
+
+
+## Uniform positivity for arbitrary nongroup phases
+
+### Fixed domain and the remaining-original quantifier
+
+Put
+
+$$
+V=\{5,7,11,13,17,19,23,29,31,37,41\},\qquad
+\mathcal P=\{3\}\cup V.
+$$
+
+Let $i$ denote either the first-layer FC110 assignment or the final FC131 bounded-search assignment. Write $\Gamma_{i,N}$ for the corresponding FC147–FC152 finite pure/star/group skeleton: the pure original $0\bmod3$, the eleven nonternary pure and star families, and the four grouped head/private originals per private prime, all through depth $N$. Its $58N+1$ numerical moduli and their global phases stay fixed.
+
+The complete nongroup numerical inventory $\mathscr I$ consists of
+
+$$
+m=3^\epsilon\prod_{p\in V}p^{e_p},\qquad
+\epsilon\in\{0,1\},\quad e_p\ge0,
+$$
+
+with nonternary support $D=\{p:e_p>0\}$ of size at least two, except that $D=\{h,q\}$, $h\in\{5,7\}$, $q\in V\setminus\{5,7\}$, requires $e_h\ge2$. This is exactly the FC122 inventory used in FC143–FC146. In particular:
+
+- No additional pure or star numerical label is in $\mathscr I$.
+- Every shallow grouped label $h q^e$ or $3h q^e$, including depths $e>N$, is excluded from $\mathscr I$.
+- The support $\{5,7\}$ and supports of size at least three have no shallow-head exclusion.
+
+For any finite set $M\subset\mathscr I$, attach one arbitrary residue class $a_m\bmod m$ for each $m\in M$. The numerical moduli remain globally distinct. Phases are chosen once per original, on the same CRT source as the skeleton; no independence or simultaneous maximizing assumption is made. Let $\Gamma_{i,N}(M,a)$ be the resulting finite actual family. Depths in $M$ need not be bounded by $N$.
+
+The word “nongroup” here means membership in $\mathscr I$, not merely a label absent from the finite skeleton. Adding further pure, star or shallow grouped originals would change the source or group data and is not included in this statement.
+
+### A common eventual threshold gives a positive bound for every remainder
+
+Let $z_{i,N}=(w,g,X,Y)$ be the raw signature of $\Gamma_{i,N}$, calculated under its product pure-conditioned carrier and its two surviving ternary roots. Let $z_i$ be its FC151–FC153 limiting signature. There is an integer $N_+$ such that, for both assignments and every $N\ge N_+$,
+
+$$
+z_{i,N}\in\mathcal N_{10^{-4}}(z_i).
+\tag{FC157}
+$$
+
+Indeed, FC150–FC153 give convergence of every head mass, private surviving mass and actual raw projection mass. There are finitely many coordinates and two assignments, so one common eventual threshold suffices. Physical head rows are unchanged. All FC143 guards hold because these tuples come from the actual common-source construction.
+
+The bounds in FC146 use the fixed caps
+
+$$
+c_p^\infty=\frac{p-1}{p-2}.
+$$
+
+They apply to every finite carrier here: its actual pure-conditioned density cap is
+
+$$
+c_{p,N}=\frac{p-1}{p-2+p^{-N}}\le c_p^\infty.
+\tag{FC158}
+$$
+
+Thus no varying-cap continuity theorem is needed. Use these same fixed caps and the complete geometric inventory $\mathscr I$ in the continuous raw comparison $J_\infty(z)=\mathcal A(z)-\mathcal F_{\min,\infty}(z)$. Define the two constants
+
+$$
+\begin{aligned}
+\mu_{\rm first}&=\frac{12288140637404551}{155479519655460000}>0,\\
+\mu_{\rm bounded}&=\frac{36518862868606981}{466438558966380000}>0.
+\end{aligned}
+$$
+
+For each $p\in V$, let $\lambda_{p,N}$ be uniform measure conditioned on avoiding the $N$ fixed pure $p$-power originals, and let $\lambda_N=\bigotimes_{p\in V}\lambda_{p,N}$. On root $r\in\{1,2\}$, let $E_{i,N,r}(M,a)$ be the event of avoiding all star, group and added nongroup originals active at that root. Define
+
+$$
+\operatorname{Surv}_{i,N}(M,a)
+=\frac12\lambda_N(E_{i,N,1}(M,a))
+ +\frac12\lambda_N(E_{i,N,2}(M,a)).
+$$
+
+Thus this quantity is the average of the two surviving probabilities under the pure-conditioned product laws. It is not an unconditional density or a probability renormalized after star, group or remainder deletion.
+
+For every $N\ge N_+$, every finite $M\subset\mathscr I$, and every choice of the phases $a_m$, it satisfies
+
+$$
+\boxed{
+\operatorname{Surv}_{i,N}(M,a)
+\ge J_\infty(z_{i,N})\ge\mu_i>0.
+}
+\tag{FC159}
+$$
+
+To prove the first inequality, the group-survivor lower expression $\mathcal A(z_{i,N})$ and the FC120–FC121 per-original upper fees are all computed on the same fixed carrier. Each free original has one common physical head address across roots; each original with a factor $3$ is active at at most one surviving root. The full per-depth maxima therefore bound every actual phase choice, without requiring the maxima to be jointly attainable. Sum the upper fees for $M$, then enlarge this finite nonnegative sum to the complete inventory $\mathscr I$ as allowed by FC122. FC146 proves the second inequality using FC157–FC158.
+
+The added originals change the true survivor; they do **not** redefine the pure-conditioned carrier, the declared star deletions, or the grouped raw projections used to compute $z_{i,N}$. There is no conditioning on the extra remainder deletions before evaluating this comparison. If their depths exceed $N$, pass to a larger finite CRT period: the skeleton probabilities and raw signature are unchanged, and FC158 still bounds every supported cylinder.
+
+Since each resulting family is finite, its carrier is a finite CRT probability space with positive pure-survivor normalization. Positive mass in FC159 therefore supplies an uncovered integer residue. The statement is uniform over the allowed remainder phases, not merely over the pure-hole phases used in the displayed completion.
+
+### The complete finite box simultaneously defeats the old comparison
+
+Let
+
+$$
+\mathscr I_N=\{m\in\mathscr I: e_p\le N\text{ for every }p\in V\}.
+$$
+
+The skeleton together with $\mathscr I_N$ has exactly $2(N+1)^{11}-1$ odd nonunit numerical moduli. Every phase on $\mathscr I_N$ may still be chosen arbitrarily. All pure, star and shallow grouped labels in this finite box are already fixed by $\Gamma_{i,N}$.
+
+For the first-layer assignment, form the **old prescribed separate-fee comparison** $L_N(\gamma)$ using FC155: its exact finite source/group mass, the actual finite caps $c_{p,N}$, and the finite token sums
+
+$$
+b_{p,N}=c_{p,N}\sum_{e=1}^N p^{-e}
+       =\frac{1-p^{-N}}{p-2+p^{-N}}.
+$$
+
+Its finite-box coefficients are
+
+$$
+R_{D,N}=
+\begin{cases}
+(b_{h,N}-c_{h,N}/h)b_{q,N},&D=\{h,q\},\ h\text{ a head},\ q\text{ private},\\
+\prod_{v\in D}b_{v,N},&\text{otherwise}.
+\end{cases}
+$$
+
+FC156 gives uniform convergence in $\gamma\in[0,1]$, while FC112 gives
+
+$$
+\max_\gamma L_\infty(\gamma)=-\delta_{\rm old},\qquad
+\delta_{\rm old}=
+\frac{527873726880671944}{338719967040116536875}>0.
+$$
+
+Consequently there is $N_-$ such that every $N\ge N_-$ satisfies
+
+$$
+\boxed{L_N(\gamma)<-\delta_{\rm old}/2<0
+\quad\text{for every }\gamma\in[0,1].}
+\tag{FC160}
+$$
+
+This prescribed comparison depends on the fixed source/group data and the complete finite numerical inventory, not on the actual phases of the nongroup originals. Thus FC160 is unchanged by arbitrary choices of those phases. An improved phase-sensitive fee is a different comparison and is not asserted to fail.
+
+Taking $N_0=\max(N_+,N_-)$, every $N\ge N_0$ has both properties: FC159 gives the new positive bound for either assignment and every allowed finite remainder; for the first-layer assignment with the complete finite box, FC160 gives failure of the old comparison for every root weight. The positive comparison uses fixed $c^\infty$ and a complete geometric allowance; the negative comparison uses finite $c_N,b_N,R_N$. These are two explicitly different certificates applied to the same actual finite family.
+
+### Scope of the bridge
+
+This inference supplies an eventual threshold, not an explicit value or a search for one. The arbitrary-phase assertion does not enlarge the prime set, permit ternary height above one, change skeleton phases or add excluded source/group labels. The old all-weight negative conclusion is restricted to the first-layer assignment and its complete finite box; it is not asserted for the bounded-search assignment or for arbitrary restricted inventories.
+
+The pure-hole completion above remains a valid special choice witnessing finite realizability. It is not a restriction imposed on FC159, and its particular common uncovered progression need not survive arbitrary remainder phases. FC159 instead proves that some uncovered residue survives every permitted finite phase choice.
+
+The closure construction covers the fixed-head, six-role, single-address-per-token subdomain, including both FC110 and FC131 assignments. It does not realize every abstract common-source array. Neither a limiting signature nor a countable family replaces the finite actual families in FC159–FC160. Arbitrary source profiles, enlarged prime support, higher ternary heights and unrestricted Erdős #7 remain unresolved.
+
+The [actual-family controls](../../../frontier/cover-geometry/fibre-credit-partition/ap_closure_controls.py) and [results](../../../frontier/cover-geometry/fibre-credit-partition/ap_closure_controls.json) retain 17,958 exact checks: 10,392 prefix pairs, 22 literal coordinate models, both assignments at heights 1, 2, 4 and 8, 1,982 constructed CRT originals including completion-source checks, 818 preserved phases, 32 additional mixed completion originals, and finite nongroup cap sums. They check the common uncovered integer against every original in the eight displayed skeletons. The result includes exact convergence errors and finite phase-registry hashes. These controls do not enumerate a full large CRT period or replace the universal closure and comparison proofs. The displayed bounds and this bridge are ordinary mathematics; no new Lean verification is claimed.
