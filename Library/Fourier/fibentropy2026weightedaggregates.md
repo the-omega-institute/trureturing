@@ -272,3 +272,64 @@ $$
 Equation (9) is a sufficient route only if its specific weighted spectral integral and these costs are bounded at that scale. The references above do not supply that bound under the current simultaneous parameter conditions. The signed identity (8), a direct weighted intersection estimate, or an additional valid representation of product-dependent filters remains an open interface.
 
 The source locators above refer to the specified arXiv versions. They support the displayed theorem scopes; they do not establish exhaustive prior-art coverage or originality of the arithmetic application. The Mellin and energy formulas are standard mathematical operations applied to the stated finite sums. No full-FIB Robin estimate or unrestricted RH criterion is settled here.
+
+## 5. Exact arithmetic smoothing, size tilts and the remaining endpoint
+
+Theory §§226–228 develop the same weighted kernel further. The arithmetic endpoints satisfy $A\equiv X\equiv1\pmod V$. A logarithmic cutoff can put its two smooth transitions entirely in the adjacent gaps of that residue class. With $\eta=V/(8X)$, the specified nonnegative cutoff $W_\eta$ equals the hard indicator on every actual product $dh\equiv1\pmod V$. This exact equality is specific to these arithmetic gaps; it is not a general assertion that smoothing arbitrary windows is free. Its Fourier one-norm is $O(y)$, and the associated frequency scale is $\eta^{-1}\asymp V$.
+
+Keeping the existing weight $d/X$ also changes the complementary transform: the identity
+
+$$
+\frac dX W_\eta(\log(dh/X))
+=\frac1h k_\eta(\log(dh/X)),\qquad k_\eta(u)=e^uW_\eta(u),
+$$
+
+places the reciprocal weight $1/h$ on the short factor. The resulting transform
+
+$$
+C_H(\chi,\tau)=\sum_{1\le h<H,(h,V)=1}h^{-1+i\tau}\chi(h)
+$$
+
+has fourth character moment at most $\zeta(2)^4/\zeta(4)$ for every real $\tau$ when $H^2<V$. This is the classical equal-product energy calculation with reciprocal coefficients and the convergent divisor-square Dirichlet series. Neither operation is a new general Fourier or zeta-function theorem. Their combined application to the actual weighted kernel is proved in §226. The hard principal term is at most $c_D/Q$, and the smoothed principal term is at most $e^{2\eta}c_D/Q$, where $c_D=\mu_s(D<d\le X,(d,V)=1)$. The two principal terms need not equal each other even though the full actual sums do.
+
+The source estimate in §227 concerns a different object from a uniform random integer or an ordinary smooth-number count. For each fixed $q\ge1$, it explicitly uses
+
+$$
+P_q(d)=\frac{\mu_s(d)^q}{\sum_n\mu_s(n)^q}
+$$
+
+and, when specified, conditions that source on $(d,V)=1$. Under small real size tilts, the local exponent weights are proportional to $(b_s(p^j)/p^j)^q p^{vj}$. The manuscript estimates all actual integer prime-power exponents before reducing the principal prime range to a logistic kernel. At zero tilt, the mean and variance of $P_q$ and its unit-conditioned version are
+
+$$
+\mathbb E\log d=y+\frac{2b_2}{q^2}\frac y{\ell^2}+O_q(y/\ell^3),
+\qquad
+\operatorname{Var}(\log d)=\frac yq+O_q(y/\ell).
+$$
+
+Here $\ell=\log y$. The strong prime-density input is the one already located in [Weingartner's versioned author manuscript](../ArithSums/weingartner2010distribution.md), equation (9), and used in theory §223. Weingartner's stated moment expansion is not itself a theorem about this power-tilted increment source. The source cumulants and moving-window rates are separate repository paper deductions; differentiating a prior asymptotic remainder would not justify them.
+
+For fixed $q\ge1$, $\beta\ge0$, and $a>0$, §227 obtains
+
+$$
+\log\mathbb E_{P_q}\left[
+(d/X)^\beta\mathbf1_{D<d\le X}\mathbf1_{(d,V)=1}\right]
+=-\frac{2b_2^2}{q^3}\frac y{\ell^4}+O_{q,\beta,a}(y/\ell^5).
+$$
+
+The negative exponential tilt supplies the upper estimate. The lower estimate uses a second, explicitly chosen tilt whose mean lies inside the actual integer window, followed by Chebyshev concentration and the exact change-of-measure factor. No central or local limit theorem is assumed. Removing the unit restriction, or working under the explicitly unit-conditioned source, gives the same displayed rate. This is a source-size statement; an additional actual-hit condition or a cap on the product $dh$ needs its own analysis.
+
+Thus the size-window cost is $o(R)$, where $R=y/\ell^2$. It preserves the first two logarithmic terms of each fixed $q$-power sum. The $y/\ell^4$ coefficient of the size loss does not determine a full third coefficient for that sum, since the prior complete-source expansion still has an error of that order.
+
+Section 228 applies the standard finite inverse Hausdorff–Young inequality with normalized counting on the characters and unnormalized counting on $G$. An author-hosted source is Terence Tao, [*The Fourier transform* (6 April 2009), equation (6)](https://terrytao.wordpress.com/2009/04/06/the-fourier-transform/): on a compact abelian group with probability Haar measure, the transform maps $L^p$ to counting-measure $\ell^{p'}$ with norm at most one for $1\le p\le2$. The preceding paragraph explicitly derives this by Riesz–Thorin interpolation from the $L^1\to\ell^\infty$ bound and Parseval. Apply it to the finite character group, whose dual identifies with $G$; reversing the Fourier sign only permutes the dual coordinates. This supplies the required normalization and exponent range, not an arithmetic estimate.
+
+In the common frequency interval $|\tau|\le1/(2aR)$, each residue's positive divisor masses lie in one short phase arc. The actual truncated source power sum then lower-bounds its Fourier norm, with a separately controlled principal-coordinate removal. The arithmetic smoothing kernel has positive mass at frequency zero uniformly in the shrinking transition width.
+
+For every fixed $\varepsilon>0$, these deductions yield a positive-norm certificate obstruction uniformly over $p\ge1+\varepsilon$: put
+
+$$
+q_\varepsilon=\max\{2,(1+\varepsilon)/\varepsilon\}.
+$$
+
+The normalized logarithmic lower limit of the separated certificate is at least $b_2/q_\varepsilon^2$. This includes every fixed $p>1$ and choices varying with scale while staying that fixed distance from one. It does not cover $p=1$ or $p(y)\downarrow1$, because the source estimates are not uniform for unbounded $q$. The $4/3$–$4$ instance gives $b_2/16$.
+
+This obstruction retains the exact arithmetic product window and reciprocal cofactor; it does not simply transfer the full-law result from §225. It still lower-bounds an upper-bound expression formed after absolute values and norm separation, not the signed source/cofactor correlation or the actual Robin kernel. The signed representation, the one-norm endpoint, and joint loss counts remain unresolved routes. None of the new estimates settles the complete FIB family or RH. These are paper deductions, with no new Lean verification or claim of exhaustive prior-art coverage.
