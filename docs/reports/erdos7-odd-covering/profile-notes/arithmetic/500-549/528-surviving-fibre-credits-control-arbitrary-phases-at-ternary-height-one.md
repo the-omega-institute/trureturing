@@ -18906,3 +18906,266 @@ conditional survivor rows. This removes arbitrarily small a_p from
 that chosen source at a stated mass cost. It does not restore the
 old fixed head/private tables, control the entire mixed-support sum,
 or settle unrestricted Erdős #7.
+## Exact dual certificates obstruct every admitted ternary weighting of the two full-P tables
+
+Retain FC760--FC767's precise contract: one of the fixed FC110 or FC131
+full-P nonternary sources, the complete mixed inventory already charged
+there, one pure9 hole in root h, stable positive-row masks and the
+original common-source gates. No further pure or high-singleton label
+is added. The nonternary law is the same on every surviving leaf of
+one root. Its exact two-root score is
+
+    J_h(u)=L.u-F(u)-S(u)-S(D_h u)/2-G(D_h u)/2,
+    u=(x,1-x), 0<=x<=1, L=A/2,
+    (D_h u)_j=u_j/theta_j, theta_h=2/3, theta_(3-h)=1.   (FC799)
+
+After the common effective-mass normalization u_1+u_2=1,
+FC760--FC767's symmetrization identifies this with the optimum over
+the admitted finite-depth ternary weightings, not merely over constant
+prescribed root weights. Every nonzero unnormalized weighting has the
+same score sign as its normalized version; the zero source has score
+zero and certifies no survivor. The hypotheses do not include changes to the
+nonternary source or actual common-phase overlap credits.
+
+The [compact exact certificate](../../../frontier/cover-geometry/fibre-credit-partition/pure9_weighted_optimum.json)
+attains the following global optima:
+
+| Table | Hole root | Maximizing x | Exact maximum K |
+|---|---:|---|---|
+| FC110 | 1 | 20800/56143 | -5677198461214183/2672169389392803300 |
+| FC110 | 2 | 3153945898/6585438973 | -17154960992254229261813/15671952371056925758815000 |
+| FC131 | 1 | 4706199116/12734242415 | -32081048840904484889371/15152402248931517232162500 |
+| FC131 | 2 | 13948613515/29192728571 | -13959321341815004226923/11578753611355365352417500 |
+
+Each K is strictly negative. For decimal orientation the four values
+are respectively -0.002124565338, -0.001094628199, -0.002117225263 and
+-0.001205597926; the fractions, rather than those rounded displays,
+carry the certificate.
+
+### Candidate-indexed primal and dual witnesses
+
+Write FC799 in the existing FC173--FC175 form
+
+    J_h(u)=L.u-sum_k max_c v_(k,c).u.                    (FC800)
+
+The complete menu has 4,576 base depth blocks and18 high-shallow
+head/private pairs, giving 3*4,576+18=13,746 terms per case. The base
+blocks contain all2,036 full mixed supports: 2,017 supplied by the
+complete unsupported-private data and19 earlier cached replacements.
+The18 cached head/private supports retain head exponent at least2
+and private exponent at least1; the remaining cached{5,7} support
+retains all four shallow/deep head blocks. The separate18 high-shallow
+pairs have head exponent1 and ternary heights at least2.
+The free candidate is one physical address shared between the two
+root coordinates. A selected candidate chooses one root and an actual
+row there; supported deep rows use their saved positive-row mask.
+The factors1/2, the complete depth tails and D_h are each applied at
+the place specified by FC799, without treating the two roots' free
+addresses as independent choices.
+
+For each case the certificate gives a feasible primal point u*, one
+left candidate l_k in every term, sparse right changes r_k, and a
+rational probability t in[0,1]. Every selected left and right candidate
+is maximal at the displayed u*. The exact checked identities are
+
+    L.u*-sum_k max_c v_(k,c).u*=K,
+    sum_k[(1-t)v_(k,l_k)+t v_(k,r_k)]-L=(-K,-K).         (FC801)
+
+For any u on the simplex, each maximum dominates its displayed
+convex mixture. Thus FC801 gives J_h(u)<=K, with equality at u*.
+This proves global optimality using only candidate comparisons and
+rational arithmetic; an optimization algorithm or an envelope grid
+is not needed to consume the certificate. The four right selections
+change only6,1,1,1 terms respectively. These dual mixtures are choices
+in the fee relaxation, not asserted simultaneous original phases.
+
+The [portable verifier](../../../frontier/cover-geometry/fibre-credit-partition/pure9_weighted_optimum.py)
+checks the physical candidates against four existing saved datasets:
+
+| CLI input | Saved dataset | SHA-256 |
+|---|---|---|
+| input148 | [full_exact_private_fee.json](../../../frontier/cover-geometry/fibre-credit-partition/full_exact_private_fee.json) | 5f04960e119182d927214b4da9ed542455fda088cef940c2bc1ad655911b9d21 |
+| input146 | [two_head_fee_replacement.json](../../../frontier/cover-geometry/fibre-credit-partition/two_head_fee_replacement.json) | 5fa2dd84a74f115d1e78bab45dbe2ea29f187470504303727028b17121233cad |
+| input145 | [deep_pair_fee_replacement.json](../../../frontier/cover-geometry/fibre-credit-partition/deep_pair_fee_replacement.json) | 4ae73a9a4e17120630602fbef88ffccdc74f34a33ad3f7ac878c633c656aaa04 |
+| input144 | [full_target_shallow_fee.json](../../../frontier/cover-geometry/fibre-credit-partition/full_target_shallow_fee.json) | bad5b8c850742e0bb7277ea316bf5e96dc06f963317a28033cc6ed8e1ebb06bb |
+
+From the containing frontier directory, with an explicit output path,
+certificate verification is:
+
+```sh
+python3 -I -S -B pure9_weighted_optimum.py check \
+  --certificate pure9_weighted_optimum.json \
+  --input148 full_exact_private_fee.json \
+  --input146 two_head_fee_replacement.json \
+  --input145 deep_pair_fee_replacement.json \
+  --input144 full_target_shallow_fee.json \
+  --output /tmp/e7_pure9_weighted_certificate_check.json
+```
+
+This consumer reconstructs the saved candidate vectors, including the
+same-address free candidates, and checks primal activity and both dual
+coordinates. It does not rebuild private-factor products or subset
+quotients, run the old producers, or reconstruct the optimum envelope.
+The compact certificate and program suffice; the complete envelope
+and repeated candidate arrays are not required mathematical inputs.
+
+### Finite-source robustness and the scope of the obstruction
+
+Keep the FULL original physical candidate menus at finite N, including
+rows that do not maximize at the limit. Put
+
+    E_N=||L_N-L||_infinity
+          +sum_k max_c ||v_(k,c,N)-v_(k,c)||_infinity.    (FC802)
+
+The maximum of linear forms is Lipschitz on the simplex, so
+|K_N-K|<=E_N. In particular,
+
+    E_N<=(-K)/2 implies 3K/2<=K_N<=K/2<0.               (FC803)
+
+It suffices that every source and candidate coordinate error is at
+most (-K)/(2*13,747). Existing finite-signature convergence supplies
+an eventual common depth for these four finite menus under the
+unchanged source gates and stable masks. No numerical N is claimed.
+The fixed dual choices remain legal even if maximizing rows change.
+
+FC801 decides the signs that FC759 left open: each of the two hole
+roots of each table fails throughout the admitted ternary reweighting
+class. It does not exclude other nonternary laws, common-source joint
+phase constraints, literal intersection credits, different kernels or
+other certificates. A negative upper-allowance score is not a covering
+counterexample and does not prove absence of actual survivors. These
+are exact rational certificate consequences and ordinary proofs, not
+new Lean verification or a resolution of unrestricted Erdős #7.
+
+## Actual top-height double cells form a matching
+
+Assume one finite distinct odd nonunit whole cover exists, and fix ONE
+such family globally minimizing class count and then modulus sum over
+all covers, as in
+[Report350 EB1--EB3](../../321-384/350-extremal-paired-branch-and-source-support.md).
+Let Q be its period and H=v_3(Q)>=1. Fix distinct primes p,q>=5 and put
+h=3^H*p*q. All actual phases and replacements below refer to this
+same family; global minimality is not restricted to a fixed height or
+prime palette.
+
+If an original multiple of h is present, divisor closure supplies h.
+[Report385 DR8 and its old-phase cap](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md)
+already give at most two original occupants in each actual h-phase;
+the owner's own phase is single by comparable-original disjointness.
+This single-phase bound is reused, rather than a new result.
+
+Fix two h-phases in ONE full depth-H ternary slice r, with the same
+p-root u and different q-roots v,w. Let r_0,r_1,r_2 be the three lifts
+of r modulo3^(H+1). The four new labels and residues are
+
+    3^(H+1):       r_0;
+    3^(H+1)*p:     r_1, p-root u;
+    3^(H+1)*q:     r_2, q-root v;
+    3^(H+1)*p*q:   r_2, p-root u, q-root w.             (FC804)
+
+Their classes cover BOTH ENTIRE old h-phases: the three lifts are
+handled by the first, second, and last two labels respectively.
+All higher nonternary digits and other prime coordinates are free.
+Every new label has ternary exponent H+1, so all are absent from the
+whole original palette; they are distinct odd nonunits.
+
+If at least four original h-multiples occupy these two phases, remove
+four and insert FC804. Their distinct positive odd quotients by h
+sum to at least1+3+5+7=16, whereas the new modulus sum is
+
+    3h(1+1/p)(1+1/q)<=3h(6/5)^2<16h.
+
+The replacement preserves whole coverage and cardinality and strictly
+lowers modulus sum, contradicting the fixed global minimum. Swapping
+p,q gives the column case. Hence the total occupancy of any two cells
+in the same row or column of the same full ternary slice is at most
+three. This is Report385's height-one two-phase repair applied with
+the genuinely fresh global level H+1; it is not a repair of arbitrary
+lower layers by labels that might already be present.
+
+For each actual full ternary prefix r let S_r be the bipartite p/q
+cell graph whose h-phases avoid all ACTUAL proper nonunit original
+divisors of h. Every original h-multiple occupies this graph by
+comparable disjointness. Double-occupied cells cannot share a row or
+column, so they form a matching. Writing nu(S_r) for its maximum
+matching size yields
+
+    #{m original:h divides m}<=sum_r[|S_r|+nu(S_r)].     (FC805)
+
+This is an upper restriction; it does not assert simultaneous
+attainability of the separate matching maxima. The owner's h-cell is
+not eligible for double occupancy. A refined matching domain can omit
+that edge, but an unconditional subtraction of one from FC805 is not
+justified. If there is no original h-multiple, the counted inventory
+is empty and no divisor supply is claimed.
+
+For any actual m divisible by h, divisor closure forces
+
+    v_p(m)*v_q(m)
+      *product_(ell|m, ell notin{3,p,q})(v_ell(m)+1)
+       <=sum_r[|S_r|+nu(S_r)].                         (FC806)
+
+The counted divisors have ternary exponent fixed at H, so no factor H
+occurs on the left. The actual pure3^j chain leaves exactly(3^H+1)/2
+full ternary prefixes; lower mixed divisors can remove further cells.
+Thus FC805 retains an actual height-dependent interface. It does not
+import the height-one constants44/27 or cross-root guards into higher
+heights or into a family containing pure9.
+
+A contradiction still requires a lower demand exceeding the capacity
+of this SAME top-height packet, or another improving joint repair.
+The existing private-point suppliers do not place that demand into
+this p,q support and full ternary slice. Positive mixed load under a
+survivor source does not by itself supply such a packet. This is an
+ordinary conditional restriction, not a whole-cover contradiction.
+
+## Common-prefix filters preserve the actual joint mixed budget
+
+The latest FIB source analysis provides a useful methodological
+comparison, not a transfer of its arithmetic constants:
+[fixed-source entropy and bounded filters, sections223--224](https://github.com/the-omega-institute/trureturing/blob/c59229ab436f852ea02c43d3735de8d93c88a827/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#L28009)
+and the
+[all-exponent separated-budget obstruction, section225](https://github.com/the-omega-institute/trureturing/blob/c59229ab436f852ea02c43d3735de8d93c88a827/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#L29134).
+Those paper arguments concern their specified divisor-increment
+probability and actual FIB windows. They neither give a mixed-load
+estimate for the star survivor law here nor rule out #7 methods.
+Their common issue is loss of the target's joint relation when an
+estimate replaces it by separated summaries that discard the joint
+window or relative phases.
+
+For the present source, FC792 and FC795 already give the exact
+consumer. Fix one actual original family, prime order, reference rows
+lambda_p^y and sequential half-threshold kernels. Let g_p(y) be the
+nonnegative density of FC792, with the actual prefix indicators and
+zero-row convention included; set g=sum_p g_p and A=product_p a_p.
+A common filter0<=w(y)<=1, depending ONLY on y, retains raw mass
+R_w=integral wA dnu_3. It changes neither the reference rows nor the
+conditional kernels at fixed y. Its same-source survivor bound is
+
+    H_P(full survivor)>=
+      [integral w(y)(A(y)-g(y))dnu_3(y)]/
+         [D_star product_p kappa_p],                   (FC807)
+
+whenever its numerator is positive. This is a direct consumer of
+FC795, not a new general selection theorem. The positive numerator
+also ensures R_w>0, so the conditional construction is well-defined.
+
+Inside the already retained G_(2/3), the best numerator among such
+filters is
+
+    integral_(G_(2/3)) (A-g)_+ dnu_3,
+
+attained by w=1_(G_(2/3) intersect {A>g}). FC798 already supplies
+R_(2/3)>81/800 and conditional row caps3nu_p. It does NOT supply
+positive mass for{A>g}. Proving that positive-part integral is positive
+for every actual family, or exhibiting an obstruction for this fixed
+kernel criterion, is the remaining joint-estimate task. A failure
+would refute only this Gram certificate, not actual noncoverage.
+
+The filter may depend on the actual family: the prospective quantifier
+is 'for every actual family there exists a common filter'. It is not
+one filter uniformly valid for all phase assignments. A filter on
+other coordinates or on stage histories can change conditional rows;
+a change of order or kernels also changes g. In any such change,
+FC807 must be rederived from the new same-source interface rather
+than carrying over its old fees.
