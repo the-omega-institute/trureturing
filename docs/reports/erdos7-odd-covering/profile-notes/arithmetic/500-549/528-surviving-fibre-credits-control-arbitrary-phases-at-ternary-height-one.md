@@ -4895,3 +4895,148 @@ The exact last-column values are
 For these head weights, both positive-row thresholds in FC126 are2. The head depth sums therefore need only their first-depth prefix, when not grouped away, and their exact geometric tails. The [fixed-array evaluator](../../../frontier/cover-geometry/fibre-credit-partition/head_mass_evaluate.py) and [results](../../../frontier/cover-geometry/fibre-credit-partition/head_mass_evaluation.json) verify110785 exact checks, including all2036 support fees per array, free and selected ordering separately, shallow-head group removal, reproduction of both FC116 values, and subtotals by supported heads. It reads the two documented witness schemas and does not perform any new source or root-weight search.
 
 This improvement uses genuine row-mass restrictions omitted by FC114: a supported original cannot hit more than its surviving physical row. The two larger values still concern only the displayed arrays. They do not prove a minimum for FC122; the FC131 test optimized its original FC116 objective, and its outcomes are not relabeled as a search of the refined objective. All-depth fee evaluation on fixed sources also leaves arbitrary-source, arbitrary-prime-support and higher-ternary-height control unresolved.
+
+## Uniform error bounds for the complete depth sum
+
+Finite exact evaluation at one source does not control nearby sources by itself. The min-cap fee of FC122 has a modulus that remains valid when row masses approach zero. Fix the prime support, physical row labels, pure-coordinate caps c_p and root weights throughout this section. No uniform statement over growing prime support is intended.
+
+For p>1, c_p>0 and l>=1, define
+
+    C_p(e)=c_p*p^-e,
+    B_(p,l)=sum_(e>=l)C_p(e)=c_p*p^-l/(1-p^-1),
+    Phi_(p,l)(delta)=sum_(e>=l)min(C_p(e),delta).
+
+If u,v>=0 and |u-v|<=delta, then
+
+    |min(C_p(e),u)-min(C_p(e),v)|<=min(C_p(e),delta). (FC133)
+
+The scalar minimum is1-Lipschitz and takes values in[0,C_p(e)]. For delta>0 let k be the least nonnegative integer with C_p(l+k)<=delta. Splitting at that threshold gives
+
+    Phi_(p,l)(delta)=k*delta+B_(p,l)*p^-k,
+    Phi_(p,l)(0)=0.                                 (FC134)
+
+The first k terms equal delta and the remainder is geometric; equality at the threshold belongs to the tail. In particular Phi<=B and, as delta decreases to zero,
+
+    Phi_(p,l)(delta)=delta*log_p(1/delta)+O(delta)->0.
+
+The constant in this asymptotic may depend on the fixed p,c_p,l. This controls the entire infinite sum; no uniform positive lower bound on row masses is required.
+
+### Keep changes of the unsupported-head integral separate
+
+Write F(w,T) for the FC122 total fee and P_D=product_(q in D intersect Q)b_q. For two sets of head weights on the same physical rows, assume max_(r,i)|w_(p,r,i)-w'_(p,r,i)|<=delta_p and0<=T_(D,r)(a)<=M_(D,r). Define
+
+    Psi_D=sum_(p in H_D)Phi_(p,l_p)(delta_p)
+                    *product_(h in H_D minus{p})B_(h,l_h),
+    A_D=sum_r gamma_r*M_(D,r)+max_r gamma_r*M_(D,r).
+
+With T fixed, product telescoping and FC133 give
+
+    |F(w,T)-F(w',T)|<=sum_D P_D*A_D*Psi_D.            (FC135)
+
+Indeed, at each root/address/depth the product difference is bounded by the sum of min(C_p(e_p),delta_p) times the other depth caps. The inequality |max f-max f'|<=max|f-f'| supplies the displayed free and selected coefficients. Sum this nonnegative majorant over all depths to obtain Psi_D. The maximum never leaves its depth summand. An empty supported-head set gives Psi_D=0.
+
+If the kernels also change with sup_a|T_(D,r)(a)-T'_(D,r)(a)|<=epsilon_(D,r), set
+
+    E_D=sum_r gamma_r*epsilon_(D,r)+max_r gamma_r*epsilon_(D,r),
+    B_D=product_(p in H_D)B_(p,l_p).
+
+Then the triangle inequality and the original cap product give
+
+    |F(w,T)-F(w',T')|
+       <=sum_D P_D*(A_D*Psi_D+E_D*B_D).              (FC136)
+
+The first term only needs a bound for T; the second changes T at w'. Changing an UNSUPPORTED head's weights changes the integral inside T, and must be included in epsilon. It cannot be treated as a fixed-T perturbation merely because that head contributes no min-cap factor to the given support.
+
+### Raw private masses avoid division by a small carrier
+
+Let X_(q,r,i)=g_(q,r)*x_(q,r,i) and Y_(q,r,j)=g_(q,r)*y_(q,r,j) be the actual unnormalized masses of the group projections in the same private carrier. With actual intersection Z and0<=X,Y<=g<=1, the actual private residual obeys
+
+    (g-X-Y)_+ <= g-X-Y+Z <= g-max(X,Y).              (FC137)
+
+Both outer factors lie in[0,1]. The upper uses Z<=min(X,Y); the lower also uses nonnegativity of the actual complement. For g>0 they reproduce the corresponding conditioned formulas, with the lower factor clipped when X+Y>g. For g=0 the raw masses and both factors vanish, and no division is needed. Actual common subset masses are essential; separate numerical upper budgets cannot replace X and Y in the upper factor.
+
+Let d_g=|g-g'|, d_X=||X-X'||_infinity and d_Y=||Y-Y'||_infinity. The private upper-factor error is at most d_g+max(d_X,d_Y), and its lower-factor error is at most d_g+d_X+d_Y. Both follow from the Lipschitz properties of maximum and positive part.
+
+In T integrate the product of raw upper factors over unsupported heads, fixing supported addresses. If each head's total mass is at most one in both sources, product telescoping yields
+
+    sup_a|T_(D,r)(a)-T'_(D,r)(a)|
+       <=sum_(h in P minus D)||w_(h,r)-w'_(h,r)||_1
+          +sum_(q in Q minus D)(d_(g,q,r)+max(d_(X,q,r),d_(Y,q,r))). (FC138)
+
+Each changed head integral is bounded by its L1 error because the other head's total mass and all kernel factors are at most one. Each changed private factor is bounded uniformly on the head rows, and the remaining product is at most one. The weighted grouped-survivor lower term A_raw, using products of(g-X-Y)_+, likewise satisfies
+
+    |A_raw-A'_raw|
+       <=sum_r gamma_r*[sum_h||w_(h,r)-w'_(h,r)||_1
+             +sum_q(d_(g,q,r)+d_(X,q,r)+d_(Y,q,r))]. (FC139)
+
+Equations FC136, FC138 and FC139 give a continuous bound for J_raw=A_raw-F without inverse powers of any private g. Pure caps and support stay fixed.
+
+There is a boundary convention to retain. If g_(q,r)=0 and q is SUPPORTED by D, the raw fee may still be positive because the original cap replaced that coordinate. This is a conservative valid upper bound on an empty intersection. The earlier convention that discards an entire zero-carrier root can be sharper, but is not necessarily equal to this continuous raw extension. A rule that discards only at zero can change the boundary value abruptly. Continuity here belongs to the explicitly stated raw formula; it does not silently identify those two estimates. The unclipped old lower product also agrees only on its declared raw-budget guard.
+
+### Explicit finite-support constants
+
+For the current nine private primes and c_p=(p-1)/(p-2), set
+
+    C=product_(q in Q)(1+b_q), C1=sum_(q in Q)b_q,
+    C2=C-1-C1, b_p=B_(p,1), d_p=B_(p,2),
+    c_gamma=1+max_r gamma_r.
+
+For a common head-row error delta and kernels bounded by one, the fixed-T fee error in FC135 is at most
+
+    Omega_fixed(delta)=c_gamma*[
+       C1*(Phi_(5,2)+Phi_(7,2))
+       +C2*(Phi_(5,1)+Phi_(7,1))
+       +C*(b_7*Phi_(5,1)+b_5*Phi_(7,1))].           (FC140)
+
+All Phi terms use delta. The three terms correspond to one supported head and one private prime, one supported head and at least two private primes, and both supported heads. Thus shallow grouped labels remain excluded exactly where required. For a uniform kernel error epsilon the additional fee error is at most c_gamma*S*epsilon, where
+
+    S=C2*(1+b_5+b_7)+C1*(d_5+d_7)+C*b_5*b_7.        (FC141)
+
+If only the head weights vary and all private raw factors stay fixed, the unsupported-head integrations instead add at most
+
+    Omega_outside(delta)=c_gamma*delta*[
+       12*C2+C1*(7*d_5+5*d_7)+C2*(7*b_5+5*b_7)].    (FC142)
+
+Here5,7 and12 count the changed rows of the unsupported heads. The corresponding group residual error is at most12*delta. At gamma=1/2 and delta=1/10000, Omega_fixed is0.0015561322322292016..., and Omega_fixed+Omega_outside is0.0018831063397191017.... These are error bounds, not minimum scores.
+
+The zero-row-only estimate FC124 lacks this continuity in general. Take one root, weights(0,1/5,4/15,1/5-delta,delta) and kernel values(1/2,1/2,1/2,1/2,1), for0<=delta<1/5. Its head total stays2/3 and all row masses stay below4/15. The zero-mask maximum jumps from1/2 to1 as soon as delta>0, giving a depth-summed fee jump B_(5,1)/2=1/6. The full min-cap fee instead obeys FC135. This is a row/kernel-domain counterexample, not a full arithmetic realization. A numerical interval containing zero does not certify the exact zero-row mask.
+
+The [modulus controls](../../../frontier/cover-geometry/fibre-credit-partition/head_mass_modulus_controls.py) and [results](../../../frontier/cover-geometry/fibre-credit-partition/head_mass_modulus_controls.json) give96 exact checks, including threshold equalities, zero endpoints, two-head depthwise maxima, a separate kernel perturbation, the zero-mask jump and raw residuals at zero carriers. Independent support summation checks the finite-inventory coefficients. These remain ordinary proofs with finite arithmetic controls, without new Lean verification.
+
+### Two continuous neighborhoods with a positive comparison
+
+Fix gamma_1=gamma_2=1/2, heads{5,7}, private primes{11,13,17,19,23,29,31,37,41}, the physical row addresses, pure caps c_p=(p-1)/(p-2) and the complete nongroup inventory of FC122. Use the continuous raw J from FC137--FC139, with positive-part group lower factors and supported-private cap charges retained at zero carriers. At the two FC132 centers it equals the evaluated min-cap score, since their older positive-factor guard holds.
+
+For either center z0, consider every raw tuple z with nonnegative head weights of total mass at most one,0<=X,Y<=g<=1, and, at each root/head/private coordinate,
+
+    |w_(h,r,i)-w0_(h,r,i)|<=delta,
+    |g_(q,r)-g0_(q,r)|<=delta,
+    ||X_(q,r)-X0_(q,r)||_infinity<=delta,
+    ||Y_(q,r)-Y0_(q,r)||_infinity<=delta.              (FC143)
+
+These are raw masses X=g*x and Y=g*y, not errors in the conditional arrays x,y. There is no relabeling of rows. Applying the result to a covering family additionally requires the common-source interpretation, actual projection masses, legal distinct numerical labels, valid pure caps, the declared free/selected inventory and ternary height one from FC114--FC122. The numerical box is not itself a claim of arithmetic realizability.
+
+There are12 head rows and nine private coordinates. Thus FC138 gives epsilon_(D,r)<=30*delta for every support and root, and FC139 gives group error at most39*delta. Using the complete coefficient S of FC141 and c_gamma=3/2,
+
+    |J(z)-J(z0)|<=E(delta),
+    E(delta)=39*delta+Omega_fixed(delta)+45*S*delta.   (FC144)
+
+This deliberately overcounts possible changed coordinates uniformly across supports. It includes unsupported-head integration errors and all three private inputs g,X,Y. Averaging the two roots adds no extra factor because their weights sum to one.
+
+At the single declared radius delta=1/10000, exact arithmetic gives
+
+    S=480382582/1399052655,
+    Omega_fixed=91555439/58835256480,
+    E=1493214356113/213277804740000
+       =0.007001264655425954....                      (FC145)
+
+Subtracting this bound from the two FC132 center values proves, for EVERY guarded tuple satisfying FC143 around the respective center,
+
+    J(z)>=12288140637404551/155479519655460000
+          =0.07903382171899466...>0       (FC110 center),
+    J(z)>=36518862868606981/466438558966380000
+          =0.07829297592705922...>0       (FC131 center). (FC146)
+
+Thus the positive point evaluations extend to two continuous raw-state neighborhoods. For an actual family mapping into either neighborhood under the stated source/cap/inventory assumptions, the weighted surviving probability is positive, hence that family does not cover. No assertion is made that every actual family enters these neighborhoods, that the centers themselves are finite arithmetic realizations, or that the remaining source domain has positive comparison.
+
+The [neighborhood certificate](../../../frontier/cover-geometry/fibre-credit-partition/raw_neighborhood_certificate.py) reads the fixed FC132 result and independently calculates the geometric cutoffs, inventory coefficient, error and two rational subtractions. Its [result](../../../frontier/cover-geometry/fibre-credit-partition/raw_neighborhood_certificate.json) supplies18 exact checks, including the two residual-minus-fees identities. Only the declared radius is evaluated: there is no radius optimization or source search. The universal neighborhood conclusion follows from FC133--FC144, not from sampling points in the box. These are ordinary mathematical results, not new Lean verification or an unrestricted Erdős#7 settlement.
