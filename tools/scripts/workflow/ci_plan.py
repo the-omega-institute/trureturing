@@ -831,6 +831,12 @@ def make_plan(root, commit, changes_file):
         path_input_require = sorted(rid for rid, patterns in endpoint_patterns["path_inputs"].items()
                                     if record is not None and any(pattern.fullmatch(p) for pattern in patterns))
         endpoint_require = sorted(set(endpoint_require) | set(inventory_require) | set(path_input_require))
+        if removed:
+            # A removed endpoint is classified by the base FILEMAP. Resources the
+            # candidate removed together with it have nothing left to execute.
+            endpoint_require = [rid for rid in endpoint_require if rid in resources]
+            inventory_require = [rid for rid in inventory_require if rid in resources]
+            path_input_require = [rid for rid in path_input_require if rid in resources]
         required.update(endpoint_require)
         scope.append({"path": p, "pattern": entry["pattern"], "require": endpoint_require,
                       **({"inventory_require": inventory_require} if inventory_require else {}),
