@@ -4076,7 +4076,7 @@ J_{a,z}^\dagger(i_L(A_L))\subseteq i_L(A_L).
 \tag{36.5}
 $$
 
-满足时唯一 $J'_{a,z}=E_LJ_{a,z}R_L$，且不依赖 section 权重。对每个 coarse observable $a$，写 $F=J_{a_0,z}^\dagger(i_L(a))$，(36.5) 恰等价于：同一细终态内不同 actual incoming copies 的交叉块为零，同一旧源块的全部对角 copies 相等。具体为
+满足时唯一 $J'_{a,z}=E_LJ_{a,z}R_L$，且不依赖 section 权重。固定动作 $a_0$ 与结果 $z$ 后，对每个 coarse observable $a$，写 $F=J_{a_0,z}^\dagger(i_L(a))$，(36.5) 恰等价于：同一细终态内不同 actual incoming copies 的交叉块为零，同一旧源块的全部对角 copies 相等。具体为
 
 $$
 V_e^*F_tV_f=0\quad(e\ne f,\ \operatorname{tgt}(e)=\operatorname{tgt}(f)=t),
