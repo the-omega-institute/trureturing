@@ -928,7 +928,8 @@ seam and End, and compares the complete reconstructed composition with
 four and `g^2 < N <= 5g^2`. Its fixed ranges are:
 
 - every `g` from 1 through 10,000;
-- factorial contents `m!` for `2 <= m <= 120`;
+- factorial contents `m!` for `2 <= m <= 120`, plus the same 119
+  sources prefixed by `2*m` low null windows;
 - 26 primorial contents with largest prime at most 101;
 - 28 sources with 2, 4, 10 or 20 leading low null windows;
 - 11,207 positive-quantity lattice points in `[-40,80]^2`, of which 211
@@ -946,7 +947,7 @@ Fibonacci primes, retaining overlapping large primes as an upper bound.
 The paper estimate combines prime size and first divisibility rank:
 
 $$
-T(r,y)\le	au(r)\sqrt{rac{6(1+\log r)}{y\log y}},
+T(r,y)\le\tau(r)\sqrt{\frac{6(1+\log r)}{y\log y}},
 \qquad y\in\mathbb Z,\quad y\ge5.
 $$
 
@@ -960,4 +961,12 @@ and does not certify this whole argument.
 
 The report records the program hash and a digest of all source rows.
 Optimization mode, a missing output argument and overwriting the source
-file are rejected. The program has no third-party runtime dependencies.
+file, including a hardlink to it, are rejected. The program has no third-party runtime dependencies.
+
+Section 187 also compares two actual sources with the same growing null
+prefix: a single Fibonacci term has Robin ratio tending to zero, while
+an appropriate factorial-content source has ratio tending to one from
+below. Both contraction coordinates tend to zero. The paper argument
+therefore rules out a continuous Robin-ratio decoder at zero for this
+single contraction observation; the script checks finite source identity,
+not the limiting responses or continuity theorem.

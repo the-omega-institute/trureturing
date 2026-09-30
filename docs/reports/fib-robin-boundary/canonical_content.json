@@ -1,9 +1,10 @@
 {
-  "all_source_rows_sha256": "b015a0b45623efa465c48a7acd7c72cd458ba5fa6dcd703273a391a5ea605a94",
+  "all_source_rows_sha256": "c18b13f31bfc4d466fab7613d99d18b0a1b9d1194bd5ce22286a5f439a71cdd4",
   "counts": {
     "consecutive_contents": 10000,
     "even_null_prefixes": 28,
     "factorials": 119,
+    "growing_factorial_null_prefixes": 119,
     "primorials": 26
   },
   "finite_rank_and_euler": {
@@ -3129,6 +3130,7 @@
       1,
       10000
     ],
+    "growing_factorial_null_prefixes": "2*m",
     "inserted_even_null_windows": [
       2,
       4,
@@ -3354,7 +3356,7 @@
       "window_count": 3
     }
   },
-  "source_sha256": "c2d70c714dee0643af1f43847ff476164e95a892a36304447e0f9ea2590b60ab",
+  "source_sha256": "a79523dd6c3c59f1fcee9fc7ce094e5e06c636f6c09b52bd676569e81e28166b",
   "strip_converse": {
     "integer_composition_box": [
       -40,

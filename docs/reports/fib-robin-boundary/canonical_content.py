@@ -343,7 +343,7 @@ def main():
     if not __debug__:
         parser.error('assertions must be enabled; do not use -O or PYTHONOPTIMIZE')
     source = Path(__file__).resolve()
-    if args.out.resolve() == source:
+    if args.out.resolve() == source or (args.out.exists() and args.out.samefile(source)):
         parser.error('--out must not overwrite the program source')
     digest = hashlib.sha256()
     counts = Counter()
@@ -358,6 +358,11 @@ def main():
         row = check_source(factorial(m))
         digest.update(json.dumps(row, sort_keys=True).encode())
         counts['factorials'] += 1
+        shifted = check_source(factorial(m), 2*m)
+        assert shifted['low_to_high_windows'] == (
+            ['null']*(2*m)+row['low_to_high_windows'])
+        digest.update(json.dumps(shifted, sort_keys=True).encode())
+        counts['growing_factorial_null_prefixes'] += 1
     primorial = 1
     for p in primes_through(101):
         primorial *= p
@@ -379,7 +384,7 @@ def main():
         'scope': 'Finite exact canonical-source checks; no Lean or infinite Robin certification.',
         'selection': 'j is the least positive even integer with phi^j > g',
         'counts': dict(counts),
-        'ranges': {'g': [1, 10000], 'factorial_m': [2, 120],
+        'ranges': {'g': [1, 10000], 'factorial_m': [2, 120], 'growing_factorial_null_prefixes': '2*m',
                    'primorial_largest_prime': 101, 'inserted_even_null_windows': [2, 4, 10, 20]},
         'all_source_rows_sha256': digest.hexdigest(),
         'source_examples': samples,
