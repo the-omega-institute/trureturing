@@ -7,6 +7,7 @@ public sealed class InspectorNativeInterfaceTests(InspectorCompilerFixture compi
     [InlineData("test_native.NativeTests.test_interface_standalone_core_only")]
     [InlineData("test_native.NativeTests.test_interface_only_records_unassessed_inputs")]
     [InlineData("test_native.NativeTests.test_interface_grammar_has_single_owner")]
+    [InlineData("test_native.NativeTests.test_interface_recorder_holds_no_admission_policy")]
     [InlineData("test_native.NativeTests.test_interface_registered_build_inputs")]
     [InlineData("test_native.NativeTests.test_interface_records_have_single_owner")]
     [InlineData("test_native.NativeTests.test_interface_store_cross_module_persistence")]
