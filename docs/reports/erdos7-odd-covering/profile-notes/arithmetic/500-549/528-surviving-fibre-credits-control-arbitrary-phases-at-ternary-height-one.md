@@ -26228,3 +26228,209 @@ FC1135--1141 are ordinary finite symbolic deductions, independently
 reviewed without new Lean verification. They retain arbitrary
 global ternary height and all original labels, and do not settle
 unrestricted Erdős#7.
+
+## An old prime outside the core removes the core mass denominator
+
+Keep one globally minimum hypothetical whole cover, the full-height
+head at B and its component C containing3. Suppose ell is an ACTUAL
+old prime outside C. In particular ell>=5, its original pure class
+is0 mod ell, and its entire original exponent is resolved at the
+head. This hypothesis concerns the head graph, not the full graph:
+future primes may still connect its components.
+
+Let h>1 be an original supported on C with tau(h)>=ell, where tau
+counts positive divisors. Choose ell-1 distinct NONUNIT divisors
+f_i of h. Each numerical modulus ell*f_i is absent from the entire
+original family. If present, it would already be a head original
+connecting ell to a prime in C. Divisor closure also rules out a
+future original having ell*f_i as a divisor.
+
+Retaining0 mod ell, repair the entire old h-class with the ell-1
+CRT classes having distinct nonzero ell-roots and the old h-phase
+modulo f_i. These are distinct globally fresh labels. Moving h to
+any phase containing ell-1 proper descendants and deleting those
+descendants would preserve count, while
+
+    sum_(new labels)ell*f_i<=ell(ell-1)h
+           <(ell^2-1)h<=sum_(ell-1 removed labels)u.
+
+The last inequality uses the distinct proper odd quotients
+3,5,...,2ell-1 as a lower bound. The second extremal objective
+therefore gives, including h's original phase by comparable
+disjointness,
+
+    q_h(c):=#{u original:h|u,a_u=c mod h}<=ell-2.
+                                                     (FC1142)
+
+This is the existing full-liability replacement rule applied to
+vacant mixed labels at an already present repair prime. It does
+not use labels above the global ell-height. The unit divisor is
+excluded from the repair palette because label ell is occupied.
+
+### Divisor-threshold interfaces pay every high core cofactor once
+
+On the finite COMPLETE core carrier Q_C define
+
+    L_C={d|Q_C:tau(d)<ell}, a_C=|L_C|,
+    F_C=the divisibility-minimal elements of
+                              {h|Q_C:tau(h)>=ell},
+    b_C=(ell-2)|F_C|.                              (FC1143)
+
+Every high core divisor d with tau(d)>=ell contains at least one
+h in F_C. Assign it once to one such h, using a fixed numerical
+choice. When d is an actual old part, its assigned h is an
+original by divisor closure, so FC1142 applies. A frontier label
+which is not original cannot divide an actual old part and has
+zero use. All these interfaces have the SAME cap ell-2; passing
+to minimal interfaces loses no stronger variable-cap row.
+
+Fix the following partition of the ORIGINAL future labels once at
+B. Select every original whose complete old part is supported on
+C and has tau at least ell. Keep every other future original in
+the complementary family, called light below. Unit old parts,
+all future pure powers, and every O old part are light. No label
+is reassigned when the process advances.
+
+At every actual head point x, the selected originals across ALL
+future suffixes jointly satisfy
+
+    sum_(selected original u)I_(u,head)(x)<=b_C.
+
+For a FIXED actual light suffix, its core section has at most a_C
+slots, including the possible unit slot, by numerical distinctness.
+Consequently its pointwise load is at most a_C. Together these
+bounds also give A_v<=a_C+b_C for a full actual core section,
+uniformly over all original exponents. No probability or survivor
+mass enters these pointwise bounds.
+
+### One light-only path pays the entire selected family separately
+
+At a proper cut, take the core projection x_C of an actual private
+point of any future original. It avoids every core head class.
+Use the Dirac probability at x_C for the core and the SAME
+normalized no-2-or-3 companion source mu_O as FC1132. Their product
+is supported on all full head survivors. This is a legitimate
+arbitrary head source for FC1107; no quantitative Haar mass of its
+core support is required, because the core bounds are pointwise.
+
+Construct a NEW continuation with Haar-based BBMST rows applied
+only to the immutable LIGHT forbidden family. Take every threshold
+0<delta_t<=1/2. Each row is normalized and bounded by twice the
+uniform law of its new prime-power coordinate. It preserves the
+complete earlier marginal. The selected labels are still part of
+the original problem and will be paid on this same new path law.
+
+For a selected original u ending at prime t with exponent e, its
+conditional probability at t is at most2t^-e times its earlier
+activation. The earlier activation implies its head activation.
+Integrating and using marginal preservation at every later row gives
+
+    mu^L(A_u)<=2t^-e E_(mu_head)I_(u,head),
+    mu^L(union selected originals)<=epsilon_C,
+    epsilon_C=2b_C/p_*.                            (FC1144)
+
+Here p_* is the smallest terminal prime of a selected original;
+if the selected family is empty, set epsilon_C=0 and no p_* is
+needed. Otherwise p_*>B. The shared count FC1143 pays this entire
+union once, not once per suffix or per later stage. The factor two
+belongs to this light-only Haar law; the smaller factor from a
+different combined process cannot replace it.
+
+The light actual query library remains closed under FC1107's
+prime-depth regrouping, since membership was fixed at B. Its core
+load is at most a_C, whereas its O section is still bounded by
+FC1132. The initial product and the same moment/Cauchy estimates
+therefore supply
+
+    Psi_B^L<=C_L,
+    C_L=min{a_C^2+10a_C(K_1-1)+5Theta_O,
+                          [a_C+sqrt(5Theta_O)]^2}. (FC1145)
+
+After the head, this is one joint law, with no further independence
+assumption. All light labels, including pure powers, remain in its
+sections and terminal forbidden unions.
+
+Let k=pi(B)>=10 and T_B=k(log k+loglog k-3)^2. The existing
+BBMST scalar restart, used in FC1083--1084 and FC1107--1108, gives
+the sufficient COMPLETE noncoverage test
+
+    epsilon_C<1,
+    C_L/(1-epsilon_C)<=T_B.                        (FC1146)
+
+To check the reserve bookkeeping, initialize the scalar lower
+reserve at1-epsilon_C and subtract all actual light charges under
+the chosen light-only rows. The published schedule keeps the
+result positive under FC1146. On the physical path, full head
+survival starts at one, light losses have exactly those charges,
+and the full selected loss is at most epsilon_C by FC1144. Hence
+the final complete survivor mass is at least that positive scalar
+reserve. The selected bound holds for EVERY permitted threshold
+schedule, so choosing the schedule from the reduced reserve is
+not circular. This reuses the split-family mechanism of FC1004;
+its pure-first constants and source are not inserted into this
+Haar-based proof.
+
+### The outside-five case has a cubic shared debit and quadratic light load
+
+Suppose5 is outside C and put c=|C|. The complete all-height lists
+for tau(d)<5 are
+
+    1; q,q^2,q^3; qr with q!=r.
+
+The divisibility-minimal threshold labels tau(h)>=5 are exactly
+
+    q^4; q^2r with q!=r; qrs with q,r,s distinct.
+
+For a single prime the threshold exponent is four. With two
+primes, the minimal exponent pairs are(2,1) and(1,2). With three
+primes they are all one; four distinct primes cannot be minimal
+because a three-prime divisor already crosses the threshold.
+Thus the finite actual carrier, whatever its heights, satisfies
+
+    a_C<=A(c)=1+3c+binom(c,2)=(c^2+5c+2)/2,
+    b_C<=R(c)=3[c+2binom(c,2)+binom(c,3)]
+                          =c(c+1)(c+2)/2.         (FC1147)
+
+Absent prime powers only remove terms. In particular, since every
+selected terminal prime is greater than B, a fully explicit
+sufficient test using the SAME companion Theta_O is
+
+    B>c(c+1)(c+2),
+    [A(c)+sqrt(5Theta_O)]^2
+       /[1-c(c+1)(c+2)/B]<=T_B.                   (FC1148)
+
+This pays every original in the full family and has no inverse
+core mass, no global height cutoff, and no restriction on the
+number of companion components. The exact finite counts and the
+smaller alternative in FC1145 may improve it further.
+
+There is also a uniform asymptotic necessary head-growth condition.
+Fix0<gamma<sqrt2. For all sufficiently large proper cuts B, the
+combination
+
+    5 outside C, c<=gamma(B log B)^(1/4)          (FC1149)
+
+would satisfy FC1148 and is therefore impossible in a globally
+minimum whole cover. Indeed c(c+1)(c+2)/B tends to zero uniformly
+in this range, while
+
+    A(c)^2/(B log B)<=gamma^4/4+o(1)<1.
+
+FC1134 gives Theta_O=O((log B)^4 loglog B), so the companion term
+and its cross term in FC1148 are o(B log B). Reuse the prime
+counting comparison already used in FC1092, namely T_B asymptotic
+to B log B. The constants in the companion estimate are uniform
+in heights and prime subsets. These facts prove the claimed
+uniform implication; no explicit numerical value for its cutoff
+or asymptotic optimality is asserted.
+
+Thus at sufficiently large proper cuts, either5 has already joined
+the ternary component or that component must exceed the displayed
+size. This does not force such a cut to exist, and neither the
+5-connected case nor faster core growth is excluded here. The
+unrestricted question remains open. The progress is removal of the
+core survivor-mass denominator in a verifiable head geometry, with
+a complete same-source tail certificate and a necessary growth
+condition derived from it. The replacement principle, published
+no-2-or-3 source and tail theorem are reused; these are ordinary
+symbolic deductions, not new Lean verification.
