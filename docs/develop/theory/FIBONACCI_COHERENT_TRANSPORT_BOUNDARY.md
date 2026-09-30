@@ -3112,7 +3112,7 @@ $c_0,\delta_0$ 的定义取自固定有限实际 frame 的 $\lambda_0,r$，对�
 
 ## 27. 合法五窗字同时作为对象与单孔上下文
 
-本节至 §38 连接三种已分别声明的结构：规范五窗来源、离散仿射操作、正的量子续接边界。首先保留来源类型，使同一个字确实具有对象解释和上下文解释；随后指定程序解释器，再将同终态地址对的相干细化接到逐分支条件充分性。沿用本卷定义 1.3 的仪器与正概率条件态，以及母卷定义 104.2、命题 149.4 的单位位、窗口方向、接缝和读出。以下有限路径不预先假定已经取得 End。
+本节至 §38 连接三种已分别声明的结构：规范五窗来源、离散仿射操作、正的量子续接边界。首先保留来源类型，使同一个字确实具有对象解释和上下文解释；随后指定指令词的逐步求值，再将同终态地址对的相干细化接到逐分支条件充分性。沿用本卷定义 1.3 的仪器与正概率条件态，以及母卷定义 104.2、命题 149.4 的单位位、窗口方向、接缝和读出。以下有限路径不预先假定已经取得 End。
 
 **定义 27.1（两态路径与单孔仿射解释）。** 置
 
@@ -3244,7 +3244,7 @@ $$
 
 若数字表示子项数，签名改成 $1+X^2+X^3+X^4+X$；若表示参数维数，参数集通常无限。单一构造子 $\mathrm{Node}(\mathrm{Ref},2,3,4,G)$ 的全部字段是积 $\mathrm{Ref}\times2\times3\times4\times G$；没有叶子时有限良基初始类型为空，而无限对象是另一流类型。这些解释不能由集合基数相近而识别。比如把 Scale 原样编成 $[5]$、Mirror 编成 $[2]$，嵌套串 $[5][2]$ 已非法。
 
-**定理 28.3（十叶单链的合法程序数据编译）。** 选任意注入 $\beta:C\hookrightarrow\{[\mathrm{null}],[3]\}^4$，定义
+**定理 28.3（十叶单链的合法程序数据编码）。** 选任意注入 $\beta:C\hookrightarrow\{[\mathrm{null}],[3]\}^4$，定义
 
 $$
 \operatorname{code}(\mathrm{Scale}^k c)
@@ -3285,11 +3285,11 @@ $$
 
 原语义的正面修复是精确的 $F_\sigma=T_{d_\sigma}S$，两个 primitive 均保持 $\mathbb N^2$。另有 signed 分解 $F_\sigma=T_{d_\sigma}(CJ)^3$，$C=MJ$、$CJ=M$；chronological 次序为 $J,C,J,C,J,C,T_d$。$J(0,1)=(1,-1)$ 显示这个分解需要 signed 中间态；若只允许完整宏，读出也只能在声明的宏边界进行。
 
-另一正面合同为每条实际边 $e:s\to t$ 选参数集 $P_e$，以 $(e,p)$、$p\in P_e$ 为参数化图的边；同一输入语言仍用有限可串接路径。另给配置集 $Z_s$、实际部分动作 $G_{e,p}:D_{e,p}\to Z_t$，其中 $D_{e,p}\subseteq Z_s$，把 membership in $D_{e,p}$ 作为额外 guard。保留 $(\varepsilon,s,\chi,n,a,w,z)$，其中 $z\in Z_s$；合法窗按 (27.3) 更新 $n,a$、替换 $s,\chi$、追加参数历史 $w$，并执行 $G_{e,p}(z)$。沿路径复合的定义域是所有中间 guards 都成立的初态；头边分解与函数结合律给唯一 compositional interpreter。若指令动作总定义，便是自由路径范畴到相应配置范畴的 functor；一般 partial maps 也按同一串接规则解释，但不能把某个 source 图路径的 seam 合法性当作其所有配置上均可执行。
+另一正面合同为每条实际边 $e:s\to t$ 选参数集 $P_e$，以 $(e,p)$、$p\in P_e$ 为参数化图的边；同一输入语言仍用有限可串接路径。另给配置集 $Z_s$、实际部分动作 $G_{e,p}:D_{e,p}\to Z_t$，其中 $D_{e,p}\subseteq Z_s$，把 membership in $D_{e,p}$ 作为额外 guard。保留 $(\varepsilon,s,\chi,n,a,w,z)$，其中 $z\in Z_s$；合法窗按 (27.3) 更新 $n,a$、替换 $s,\chi$、追加参数历史 $w$，并执行 $G_{e,p}(z)$。沿路径复合的定义域是所有中间 guards 都成立的初态；头边分解与函数结合律给唯一的组合相容逐步求值。若指令动作总定义，便是自由路径范畴到相应配置范畴的 functor；一般 partial maps 也按同一串接规则解释，但不能把某个 source 图路径的 seam 合法性当作其所有配置上均可执行。
 
 独立的忠实历史模型取 $H_s$ 为所有结束于 $s$ 的有限参数化 histories，含空历史 $1_s$，边作用为追加 $(e,p)$。对平行路径作用在 $1_s$ 上即读回原路径，所以该历史解释忠实；具体几何投影可以识别 histories，例如两次镜像。轴、中心、平移量、角和比例是新增参数，五个裸名字不提供它们。
 
-将五个打印标签重命名为五个 constructor tags，并保留实际边的源靶与参数，是合法的自由路径语法双射。名为 Self 的非空 constructor 仍不是空 identity path；几何评价消去它或消去两次 Mirror 时，只是该投影识别不同语法，并未否定语法双射。
+将五个窗标签重命名为五个 constructor tags，并保留实际边的源靶与参数，是合法的自由路径语法双射。名为 Self 的非空 constructor 仍不是空 identity path；几何评价消去它或消去两次 Mirror 时，只是该投影识别不同语法，并未否定语法双射。
 
 ## 29. 有向离散几何的正规形、探针与可执行数据码
 
@@ -3375,14 +3375,86 @@ $$
 
 解码使用完整 canonical 来源数、完整码或另行完整 End 证书；未知来源的任意有限 observation prefix 不能认证最高可见一是 marker。零和一不在本码像中。位数是解析开销，不是几何动作数；本下界也不适用于可变长码、state-dependent 码或已受限的指令语言。
 
-**定义 29.5（有限程序的执行、组合与展开）。** 另行固定五个指令标签 $\Sigma=\{0,\ldots,4\}$、配置载体 $Z$、各指令的部分动作 $G_j$ 与 guard。所有所需有限参数须在合同中指定。按 chronological 顺序
+**定义 29.5（有限程序的执行、组合与展开）。** 固定五个指令标签 $\Sigma=\{0,\ldots,4\}$，按 (29.4) 的顺序记四位码字为 $c_j=(c_{j,0},c_{j,1},c_{j,2},c_{j,3})$，各位均按低位到高位排列。完整自然数来源使用从单位一开始的 Fibonacci 权重
 
 $$
-\operatorname{Eval}(j_1\cdots j_m,x)
-=G_{j_m}\cdots G_{j_1}(x)
+w_j=F_{j+2},\qquad w_0=1,\quad w_1=2,\quad
+w_{j+2}=w_{j+1}+w_j\quad(j\ge0).
 $$
 
-仅在每一步 guard 成立时定义，空程序为 identity。$\operatorname{Exec}(n,x)$ 先完成来源解码，再按同一 guards 执行该词；marker 与 padding 没有指令动作。在码像上定义
+对余量 $r\in\mathbb N$，以严格下降的余量递归定义占位集
+
+$$
+\begin{aligned}
+\mathcal A(0)&=\varnothing,\\
+k(r)&=\max\{j\ge0:w_j\le r\}\quad(r>0),\\
+\mathcal A(r)&=\{k(r)\}\cup\mathcal A(r-w_{k(r)})\quad(r>0),\\
+b_j(n)&=\mathbf1_{\{j\in\mathcal A(n)\}}\quad(j\ge0).
+\end{aligned}
+$$
+
+这里 $n$ 是完整来源数，$b_0(n)$ 是独立单位位，所有未占位高位为零；$n=0$ 使用全零序列。对 $n>0$ 记 $h(n)=\max\mathcal A(n)$，补零至三窗边界的来源分组为
+
+$$
+\varepsilon(n)=b_0(n),\qquad q(n)=\left\lceil\frac{h(n)}3\right\rceil,
+\qquad
+\omega_r(n)=(b_{3r+1}(n),b_{3r+2}(n),b_{3r+3}(n))
+\quad(0\le r<q(n)).
+$$
+
+零的单位位为零且无窗；一的单位位为一且无窗。三窗补齐只使用已知为零的高位，不改变来源数或最高占位位置。
+
+对有限词 $P=j_1\cdots j_m\in\Sigma^*$，记 $h=4m+1$，定义完整外包装位串
+
+$$
+d_0(P)=0,\qquad
+d_{4r+s+1}(P)=c_{j_{r+1},s}\quad(0\le r<m,\ 0\le s<4),
+\qquad d_h(P)=1,\qquad d_j(P)=0\quad(j>h).
+$$
+
+其整数编码由有限递推给出：
+
+$$
+e_0(P)=0,\qquad e_{r+1}(P)=e_r(P)+d_r(P)w_r\quad(0\le r\le h),
+\qquad\operatorname{Encode}(P)=e_{h+1}(P).
+$$
+
+因此单位位固定为零，最高标记恰在 $4m+1$，其下完整保留 $4m$ 个数据位；标记之上全零。单位位、标记及三窗 padding 都不属于指令标签。
+
+解码是完整自然数来源上的部分映射。先要求 $n>0$、$b_0(n)=0$、$h=h(n)\ge1$、$h\equiv1\pmod4$，置 $m=(h-1)/4$；再要求每个数据块
+
+$$
+\gamma_r(n)=(b_{4r+1}(n),b_{4r+2}(n),b_{4r+3}(n),b_{4r+4}(n))
+\quad(0\le r<m)
+$$
+
+属于四位表 $\mathcal C$。若 $\gamma_r(n)=c_{j_{r+1}}$，则标签 $j_{r+1}$ 唯一。用
+
+$$
+P_0(n)=\varepsilon,\qquad
+P_{r+1}(n)=P_r(n)j_{r+1}\quad(0\le r<m),\qquad
+\operatorname{Decode}(n)=P_m(n)
+$$
+
+恢复整个词。这里 $\varepsilon$ 表示空词，与单位位 $\varepsilon(n)$ 分属不同类型。块数由最高标记确定，故标记前的末尾全零数据块也必须保留，并恢复为标签零。零、一、框架条件失败或某块不在 $\mathcal C$ 的来源均不定义解码。若给定的只是有限观测前缀而非完整来源数，仍须完整码或 End 证书保证未读高位全零；缺少这个证书时不能认定某个可见一为最高标记。
+
+另行固定配置载体 $Z$、定义域 $D_j\subseteq Z$ 和部分动作 $G_j:D_j\to Z$；guard 恰为当前配置属于 $D_j$。所有动作参数与定义域须在合同中指定。词的合法初态域 $\mathcal D_P$ 与逐步求值递归为
+
+$$
+\begin{aligned}
+\mathcal D_\varepsilon&=Z,&\operatorname{Eval}(\varepsilon,x)&=x,\\
+\mathcal D_{jP}&=\{x\in D_j:G_j(x)\in\mathcal D_P\},&
+\operatorname{Eval}(jP,x)&=\operatorname{Eval}(P,G_j(x))\quad(x\in\mathcal D_{jP}).
+\end{aligned}
+$$
+
+故 $j_1\cdots j_m$ 按先 $j_1$、后 $j_2$ 直至 $j_m$ 的 chronological 顺序执行，求值为 $G_{j_m}\cdots G_{j_1}(x)$，仅在每一步 guard 成立时定义。记码像 $\mathscr N=\operatorname{Encode}(\Sigma^*)$，对 $n\in\mathscr N$、$x\in\mathcal D_{\operatorname{Decode}(n)}$ 定义
+
+$$
+\operatorname{Exec}(n,x)=\operatorname{Eval}(\operatorname{Decode}(n),x).
+$$
+
+来源的普通仿射求值与这里的指令执行分别定义。在码像上取 transported product
 
 $$
 n\star n'=\operatorname{Encode}
@@ -3390,103 +3462,30 @@ n\star n'=\operatorname{Encode}
 \tag{29.6}
 $$
 
-“展开”是解码后取空词或头标签与余词，然后将余词重新编码，和原有限指令词的头尾分解对应。
+其 identity 为空程序码二；它不是原三位窗的裸串接，也不宣称 $\operatorname{Encode}$ 对原 $\Phi$ 仿射乘法是同态。这个额外解释保留指令组合与逐步执行，原 FIB 来源算术仍按 §27 求值。
 
-这里 $\star$ 是解码、指令串接、重新编码的 transported product，identity 为空程序码二；它不是原三位窗的裸串接，也不宣称 Encode 对原 $\Phi$ 仿射乘法是同态。这个明确的额外解释保留指令组合与逐步执行，原 FIB source arithmetic 则仍按 §27 求值。
+以 $\mathsf{Empty}$ 为独立的空词标记，码的展开 $\mathcal U:\mathscr N\to\{\mathsf{Empty}\}\sqcup(\Sigma\times\mathscr N)$ 定义为
 
-以下 Python 3 程序在整数、有限列表、声明的 actions/guards 上实现这些定义；它是本节有限数学构造的代码表述。动作与权限由调用参数给出，来源的普通仿射求值不是 `execute` 的替代解释。
+$$
+\mathcal U(n)=
+\begin{cases}
+\mathsf{Empty},&\operatorname{Decode}(n)=\varepsilon,\\
+(j,\operatorname{Encode}(P)),&\operatorname{Decode}(n)=jP.
+\end{cases}
+$$
 
-```python
-CODES = ((0,0,0,0), (1,0,0,0), (0,1,0,0),
-         (1,0,1,0), (0,0,1,0))
-INVERSE = {c: j for j, c in enumerate(CODES)}
+即先区分空词与头标签、余词，再将余词重新编码；空程序码二也可作为非空程序的余词码。
 
-def encode(program):
-    data = []
-    for tag in program:
-        if type(tag) is not int or not 0 <= tag < 5:
-            raise ValueError("instruction tag")
-        data.extend(CODES[tag])
-    bits = [0] + data + [1]  # separate unit, data, highest marker
-    a, b, value = 1, 2, 0
-    for bit in bits:
-        value += bit * a
-        a, b = b, a + b
-    return value
+在完整 signed carrier $Z=\mathbb Z^2$ 上，可具体取 $(G_0,G_1,G_2,G_3,G_4)=(I,J,T_\alpha,C,M)$，其中对 $(a,b)\in\mathbb Z^2$，
 
-def canonical_bits(value):
-    if type(value) is not int or value < 0:
-        raise ValueError("natural source")
-    if value == 0:
-        return [0]
-    weights = [1, 2]
-    while weights[-1] <= value:
-        weights.append(weights[-2] + weights[-1])
-    bits = [0] * len(weights)
-    remaining = value
-    for j in range(len(weights)-1, -1, -1):
-        if weights[j] <= remaining:
-            bits[j] = 1
-            remaining -= weights[j]
-    while len(bits) > 1 and bits[-1] == 0:
-        bits.pop()
-    return bits
+$$
+\begin{aligned}
+I(a,b)&=(a,b),& J(a,b)&=(a+b,-b),& T_\alpha(a,b)&=(a+1,b),\\
+C(a,b)&=(-b,a),& M(a,b)&=(b,a+b).
+\end{aligned}
+$$
 
-def decode(value):
-    bits = canonical_bits(value)
-    h = len(bits) - 1
-    if bits[0] != 0 or h < 1 or h % 4 != 1:
-        raise ValueError("program framing")
-    program = []
-    for j in range(1, h, 4):
-        block = tuple(bits[j:j+4])
-        if block not in INVERSE:
-            raise ValueError("program data block")
-        program.append(INVERSE[block])
-    return program
-
-def source_windows(value):
-    bits = canonical_bits(value)
-    unit, data = bits[0], bits[1:]
-    data = data + [0] * ((-len(data)) % 3)
-    return unit, [tuple(data[j:j+3]) for j in range(0, len(data), 3)]
-
-def compose_codes(left, right):
-    return encode(decode(left) + decode(right))
-
-def unfold_code(value):
-    program = decode(value)
-    if not program:
-        return None
-    return program[0], encode(program[1:])
-
-def execute(value, x, actions, guards):
-    for tag in decode(value):
-        if not guards[tag](x):
-            raise ValueError("instruction domain")
-        x = actions[tag](x)
-    return x
-```
-
-例如在完整 signed carrier $Z=\mathbb Z^2$ 上，可具体取五个指令动作 $I,J,T_\alpha,C,M$，最后一个是黄金递归步而非 isotropic scale。对应调用参数可写为：
-
-```python
-SIGNED_ACTIONS = (
-    lambda x: x,
-    lambda x: (x[0] + x[1], -x[1]),
-    lambda x: (x[0] + 1, x[1]),
-    lambda x: (-x[1], x[0]),
-    lambda x: (x[1], x[0] + x[1]),
-)
-
-def signed_domain(x):
-    return (type(x) is tuple and len(x) == 2
-            and all(type(a) is int for a in x))
-
-SIGNED_GUARDS = (signed_domain,) * 5
-```
-
-每个动作保持此 signed domain，故 `execute` 以这组参数给明确的格点程序执行。改用正来源、受限支撑或其它五种几何动作时，必须换成相应 guards 与实际参数；不能把这组全格点权限沿用过去。
+每个动作保持 $\mathbb Z^2$，这里各 $D_j=\mathbb Z^2$，所以每个有限词在任意整数格点上均合法。最后一个动作是黄金递归步，不是各向同性缩放。改用正来源的配置域、受限支撑或其它五种几何动作时，须另行指定载体、各 $D_j$ 与 $G_j$；不能把这组全格点权限沿用过去。
 
 **定理 29.6（解析、执行、组合与展开交换）。** 对所有有限声明程序及逐步合法初态，
 
@@ -3501,9 +3500,24 @@ $$
 \tag{29.7}
 $$
 
-最后一式定义域恰为先执行 $n$、再执行 $n'$ 均合法的初态；`unfold_code` 同样与程序的空/头尾展开交换。
+最后一式对 $n,n'\in\mathscr N$ 的定义域恰为 $x\in\mathcal D_{\operatorname{Decode}(n)}$ 且 $\operatorname{Exec}(n,x)\in\mathcal D_{\operatorname{Decode}(n')}$，即先执行 $n$、再执行 $n'$ 均合法的初态。展开同样满足
 
-证明。定理 29.4 给解析逆与第二式。代码 `canonical_bits` 是规范贪心算法：选最大可用权重 $F_{j+2}$ 后，剩余量小于前一权重 $F_{j+1}$，故下一低位不能为一；向下继续使余量最终为零，得到无相邻一的表示，规范唯一性使其等于来源码。`encode` 的两个变量逐次为 $F_{j+2},F_{j+3}$，故返回定义的整数；`decode` 恢复 marker 以下全部块，包括最终零 data blocks。空词执行无动作；若前 $r$ 块已执行为 $\operatorname{Eval}(j_1\cdots j_r,x)$，第 $r+1$ 块解析为同一标签，并应用同一 guard 和动作，故归纳得第三式。指令词串接的逐步求值给第四式，其 guard 条件也逐步相同。解码逆同时使空/头尾两种展开逐项相同。$\square$
+$$
+\mathcal U(\operatorname{Encode}(\varepsilon))=\mathsf{Empty},\qquad
+\mathcal U(\operatorname{Encode}(jP))=(j,\operatorname{Encode}(P)).
+$$
+
+证明。权重严格递增且无界，所以正余量的最大可用指标存在；每次减去至少一，余量严格下降并有限终止于零。若选中 $k\ge1$，最大性给
+
+$$
+r<w_{k+1}=w_k+w_{k-1},\qquad r-w_k<w_{k-1}.
+$$
+
+所以非零余量的下一指标至多为 $k-2$；$k=1$ 时余量已经为零，$k=0$ 时 $r=1$ 且余量也为零。递推展开给 $n=\sum_jb_j(n)w_j$，相邻两位不同时为一；规范 Zeckendorf 唯一性使此贪心位串等于完整来源码。
+
+编码递推给 $e_{h+1}(P)=\sum_{r=0}^hd_r(P)w_r$。定理 29.4 已证外包装位串无相邻一，最高一恰在 $h=4m+1$，所以其完整规范位就是 $d_r(P)$，三窗补零及精确成本仍如 (29.5)。解码因此逐块恢复原标签，保留标记前全部 $4m$ 位，包括末尾零数据块，得到第一式；反向任何通过框架条件的完整来源也有同一位串，重新编码仍为该数。$m=0$ 时只有 $d_1=1$，故空程序码为 $w_1=2$。由 (29.6) 立即得到第二式。
+
+空词求值为恒等；对 $jP$，解码给同一头标签，guard 是同一 $D_j$，后续按同一余词递归，故得到第三式。对词长归纳，同一递推给 $\operatorname{Eval}(PQ,x)=\operatorname{Eval}(Q,\operatorname{Eval}(P,x))$，且定义域恰为 $x\in\mathcal D_P$、$\operatorname{Eval}(P,x)\in\mathcal D_Q$；代入 (29.6) 给第四式及其全部逐步 guard 条件。解析逆最后使空词和头尾两种展开逐项相同。$\square$
 
 **命题 29.7（正规形整数记录的有限序列化）。** 正规形数据具有独立记录类型。取 zigzag 双射
 
@@ -3533,7 +3547,7 @@ A'=BAB^{-1},\qquad t'=Bt+c-A'c.
 \tag{29.9}
 $$
 
-定义域 $D$ 变成 $h(D)$，初态变成 $h(x)$，观察变成 $o\circ h^{-1}$。代入直接给动作与观察交换，有限合法组合逐步保持。非整数格自同构的 $B$ 改变载体为 $B\mathbb Z^2+c$；即便 $J,C$ 都不保持旧正锥，因为 $J\beta=(1,-1)$、$C\beta=(-1,0)$。seam、End、参数和权限须在 parser 类型中独立运输，不能从数值终点重新推断。
+定义域 $D$ 变成 $h(D)$，初态变成 $h(x)$，观察变成 $o\circ h^{-1}$。代入直接给动作与观察交换，有限合法组合逐步保持。非整数格自同构的 $B$ 改变载体为 $B\mathbb Z^2+c$；即便 $J,C$ 都不保持旧正锥，因为 $J\beta=(1,-1)$、$C\beta=(-1,0)$。seam、End、参数和权限须在来源解析类型中独立运输，不能从数值终点重新推断。
 
 ## 30. 另行可用的四阶标签旋转与真实相位载体
 
@@ -3609,7 +3623,7 @@ $$
 
 证明。展开 $\langle r_\theta|\rho|r_\theta\rangle$ 得显示概率，代入三个角即得逆式。$\square$
 
-四相成对差可方便消去背景，但不是此指定参数读取任务的必要最小设置数；本命题也不是高维全态层析或一次未知态恢复。五个打印标签乘四个 character 名称没有独立性的证明，更不能叫“二十个状态”：有限前缀、程序参数和量子态载体各有自己的类型。
+四相成对差可方便消去背景，但不是此指定参数读取任务的必要最小设置数；本命题也不是高维全态层析或一次未知态恢复。五个窗标签乘四个 character 名称没有独立性的证明，更不能叫“二十个状态”：有限前缀、程序参数和量子态载体各有自己的类型。
 
 **命题 30.5（扩大动力学改变 sector 权重）。** 对 $n\ge3$，axis-uniform 向量
 
@@ -3929,7 +3943,7 @@ $$
 
 ## 35. 从闭合边界坐标到完全正的条件后继
 
-本卷定理 7.4、10.2 已证明具体 pinching/对角合同的逐分支充分性；波粒事件卷定义 20.5、定理 20.6 已给最小动态效果闭包及其可实现坐标，定理 20.3 给下一效果空间的对偶下降判据。这些既有结果不承诺整个较小量子代数上的 CP 后继。本节只补该实现层，再于 §36 应用于真正的 legal-prefix 系统。
+本卷定理 7.4、10.2 已证明具体 pinching/对角合同的逐分支充分性；波粒事件卷定义 20.5、定理 20.6 已给最小动态效果闭包及其可实现坐标，定理 20.3 给下一效果空间的对偶下降判据。这些既有结果不承诺整个较小量子代数上的 CP 后继。本节只补完全正后继的构造条件，再于 §36 应用于真正的 legal-prefix 系统。
 
 **定理 35.1（CP section 下的逐分支实现判据）。** $\mathcal X,\mathcal Y$ 是有限矩阵代数或有限直和矩阵代数，各用声明的普通矩阵迹之和。设 $E:\mathcal X\to\mathcal Y$ CPTP，存在 CP 线性 section $R:\mathcal Y\to\mathcal X$、$ER=\mathrm{id}_{\mathcal Y}$。则 $R$ 自动 TP。对有限 source instrument $\{J_e\}_e$，各分支 CP、总和 TP，下列逐分支条件等价：
 
@@ -4191,7 +4205,7 @@ copy 求和与 (37.2) 给相容性，星嵌入保范数保证正性。任意 $z\
 
 具体地，各层 diagonal algebras $D_L$ 通过 cylinder refinement 嵌入，范数完成 $D\cong C(\Omega_0)$：局部常值 cylinder functions 分离路径并稠密。所有 cylinder probabilities 只决定 AF 态在 $D$ 上的限制，即一个路径 probability measure。各层 diagonal pinching 与 $i_L$ 交换，延拓为 UCP projection $\Delta:A\to D$；任意路径测度 $\mu$ 可选 diagonal extension $a\mapsto\int\Delta(a)d\mu$。定理 37.3 证明这个 extension 不是同一 measure 的唯一 AF 态。选择 measure、选择 coherent state、选择统一 section 是不同数据。
 
-**命题 37.4（旧终态的部分同步与整个 cylinder 的不等价）。** 取同深 $L\ge1$ 的 $u,v$，旧终态分别零、一，记 $P_u=j_L(E_{uu})$、$P_v=j_L(E_{vv})$。共用下一打印标签 null、$[3]$、$[5]$，各用自己的实际 typed edges，则 $A_{L+1}$ 内有
+**命题 37.4（旧终态的部分同步与整个 cylinder 的不等价）。** 取同深 $L\ge1$ 的 $u,v$，旧终态分别零、一，记 $P_u=j_L(E_{uu})$、$P_v=j_L(E_{vv})$。共用下一窗标签 null、$[3]$、$[5]$，各用自己的实际 typed edges，则 $A_{L+1}$ 内有
 
 $$
 V=E_{u\mathrm{null},v\mathrm{null}}+E_{u3,v3}+E_{u5,v5},
@@ -4240,6 +4254,6 @@ $$
 6. Kavruk–Paulsen–Todorov–Tomforde, [*Quotients, Exactness and Nuclearity in the Operator System Category*](https://arxiv.org/abs/1008.2811v2), Proposition 3.1、Definition 3.2，页 5–6，kernel 为非零 CP map 的核，等价地 UCP map 的核，且 nonunital；Proposition 3.4、Definitions 3.5 和 Proposition 3.6，页 7，规定 quotient 的 Archimedean matrix cones 与 universal property。§32 因而不把含单位的 observational subspace 作非零 operator-system quotient kernel。
 7. Mawhinney–Todorov, [*Inductive limits in the operator system and related categories*](https://arxiv.org/abs/1705.04663v1), Theorem 4.11、Proposition 4.13，页 27–28，给 UCP connecting maps 的 operator-system inductive limits，以及各 map 为 complete order embedding 时的 limit embedding。若保留的只有实际 operator systems，这提供另一框架；它不授权 multiplication 或 physical realization，其所用类别允许 noncomplete systems，norm completion 仍须单独声明。本补充的 AF 模型则已直接具有星同态和指定 C* norm completion。
 
-对象码、typed 操作、几何评价与实际事件保持的是各自明确的信息。原字的单孔 affine action 可忠实保存合法裸路径，却不能认证已被抹去的非法历史；程序码须经过额外 interpreter 才执行其 declared operations；共同尾相干可携带相对格点操作，有限 positive boundary 只有在逐分支下降条件下保留全部 declared conditional continuations。无限相容态的存在不选择物理来源或全部 controls，也不提供未经声明的全 pair completion。以上均为普通数学陈述及证明，不具有编译形式化或物理可达性结论；有限/infinite、正常形/history、probability/conditional state 与 signed/natural permissions 的区别是各结论的假设组成部分。
+对象码、typed 操作、几何评价与实际事件保持的是各自明确的信息。原字的单孔 affine action 可忠实保存合法裸路径，却不能认证已被抹去的非法历史；程序码的指令执行须按另行声明的动作逐步求值；共同尾相干可携带相对格点操作，有限 positive boundary 只有在逐分支下降条件下保留全部 declared conditional continuations。无限相容态的存在不选择物理来源或全部 controls，也不提供未经声明的全 pair completion。以上结论不推出额外的物理制备或控制权限；有限/infinite、正常形/history、probability/conditional state 与 signed/natural permissions 的区别是各结论的假设组成部分。
 
 ## 追加锚（本行以下为增补区）
