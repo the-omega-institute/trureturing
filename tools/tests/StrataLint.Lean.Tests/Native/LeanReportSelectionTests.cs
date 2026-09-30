@@ -138,11 +138,12 @@ public sealed class LeanReportSelectionTests
                 first, calls = fixture.entry_with_program_build([], build_exit=37)
                 if first.returncode: raise RuntimeError(first.stdout + first.stderr)
                 probe = reuse.probe(fixture.root, fixture.report)
-                archive = publication.member(fixture.report, '.materials.zip')
-                with zipfile.ZipFile(archive, 'w') as output: output.writestr('unreferenced', b'bad material')
+                # The receipt matches, but the sealed envelope is invalid.
+                sidecar = publication.member(fixture.report, '.sha256')
+                sidecar.write_text('0' * 64 + '  ' + fixture.report.name + '\n')
                 receipt = publication.member(fixture.report, '.reuse.json')
                 record = json.loads(receipt.read_text())
-                record['bundle']['.materials.zip'] = publication.digest(archive)
+                record['bundle']['.sha256'] = publication.digest(sidecar)
                 receipt.write_text(json.dumps(record))
                 shutil.rmtree(fixture.root / '.lake')
                 installed = fixture.root / 'installed'

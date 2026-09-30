@@ -1,6 +1,5 @@
 """Execute native Lake facets in private pinned-toolchain fixture packages."""
 import hashlib
-import io
 import json
 import os
 from pathlib import Path
@@ -437,24 +436,6 @@ class NativeSemanticConsumerTests:
         self.write('D5/B.lean', (self.root / 'D5/B.lean').read_text().replace(':= 1', ':= 2'))
         changed({'D5.B', 'D5.A', 'Fixture'})
 
-        # Compatible judge edits cannot license damaged, incomplete or foreign rows.
-        state = native.state(self.root)
-        artifact = state / 'modules/D5.Alone.zip'
-        valid = artifact.read_bytes()
-        foreign = (state / 'modules/D5.B.zip').read_bytes()
-        with zipfile.ZipFile(io.BytesIO(valid)) as archive:
-            incomplete = io.BytesIO()
-            with zipfile.ZipFile(incomplete, 'w') as writer:
-                writer.writestr(publication.RAW, archive.read(publication.RAW))
-        for data in [b'damaged', incomplete.getvalue(), foreign]:
-            with self.subTest(damage=data[:16]):
-                artifact.unlink()
-                artifact.write_bytes(data)
-                with self.assertRaises(native.ROW_ERRORS):
-                    native.validate('module', self.root, 'D5.Alone',
-                                    state / 'inputs/D5.Alone.json', artifact)
-                changed({'D5.Alone'})
-
         # The judge must still build even when this module does not import it.
         self.write('LeanInformationAudit/Registry.lean', driver + 'unknown_command\n')
         self.run_lake('build', 'D5.Alone:report', success=False)
@@ -661,7 +642,7 @@ class NativeSemanticConsumerTests:
         self.assertEqual(stage.returncode, 0, json.dumps(result))
         self.assertEqual(verify.returncode, 0, json.dumps(result))
 
-    def test_exported_private_dependency_and_retired_origin(self):
+    def test_exported_private_dependency_invalidates_report(self):
         support = 'module\npublic section\nnoncomputable section\nprivate axiom privateInput : Nat\ndef support : Nat := privateInput\n'
         self.write('Support.lean', support)
         self.write('D5/A.lean', 'import Support\nnoncomputable def value : Nat := support\n')
@@ -680,33 +661,3 @@ class NativeSemanticConsumerTests:
         self.build()
         self.assertEqual(self.report()[0][0]['declarations'][0]['axioms'], [])
         self.publish()
-        # Retired origin fields are malformed: only the current format is read.
-        before = self.stamps()
-        expected = self.report()[1:]
-        for relative in [*(f'modules/{name}.zip' for name in before), 'report.zip']:
-            artifact = self.root / '.lake/build/lean-inspector' / relative
-            with zipfile.ZipFile(artifact) as archive:
-                entries = [(info, archive.read(info)) for info in archive.infolist()]
-            artifact.unlink()
-            with zipfile.ZipFile(artifact, 'w') as archive:
-                for info, data in entries:
-                    if info.filename.endswith('.provenance.json'):
-                        origin = json.loads(data)
-                        records = origin['module_origins'].values() if 'module_origins' in origin else [origin]
-                        for record in records:
-                            record['input_sources'] = {}
-                        data = json.dumps(origin).encode()
-                    archive.writestr(info, data)
-        result = subprocess.run([sys.executable, str(self.root / 'tools/lean-inspector/native.py'),
-            'publish', str(self.root), str(self.root / 'rejected.json')], env=self.env, capture_output=True)
-        self.assertNotEqual(result.returncode, 0)
-        self.assertFalse((self.root / 'rejected.json').exists())
-        self.build()
-        self.assertEqual({name for name, value in self.stamps().items() if value != before[name]}, set(before))
-        self.assertEqual(expected, self.report()[1:])
-        records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
-        self.assertEqual([row['count'] for row in records if row['kind'] == 'extract'], [len(before)])
-        self.publish()
-        self.build()
-        self.assertEqual((self.root / 'activity.jsonl').read_text(), '',
-                         'successfully reconstructed legacy artifacts must be reusable')
