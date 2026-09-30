@@ -44,6 +44,10 @@ assert phi_sq([F(2),F(2),F(2),F(1),F(71,50),F(71,50)]) == F(35941,50941)**2
 # Universal lower envelope uses neighbors ONE and opposite TWO.
 assert phi_sq([F(11,10),F(1),F(1),F(2),F(1),F(1)]) == F(6,7)**2
 assert phi_sq([F(1009,1000),F(1),F(1),F(2),F(1),F(1)]) == F(1982,2009)**2
+# The two genuine three-star high/low coordinate patterns have the same relaxed d>=38 upper endpoint.
+q38=F(100755605,105172928)
+assert phi_sq([F(21,20),F(2),F(71,50),F(11,8),F(71,50),F(2)]) == q38
+assert phi_sq([F(21,20),F(71,50),F(2),F(11,8),F(2),F(71,50)]) == q38
 # Degree-10 upper: q^2 < cos(pi/5)^2=(3+sqrt 5)/8, by sqrt(5)>r.
 r=F(785141963,352366054)
 assert 8*maxs[10]-3 == r and r > 0
