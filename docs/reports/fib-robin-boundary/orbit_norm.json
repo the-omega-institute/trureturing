@@ -180,8 +180,56 @@
       "criterion": "retained actual prime factor"
     }
   ],
+  "quarter_tail_bridge": {
+    "prime_peak_exponents": [
+      [
+        2,
+        5
+      ],
+      [
+        3,
+        3
+      ],
+      [
+        5,
+        2
+      ],
+      [
+        7,
+        1
+      ],
+      [
+        11,
+        1
+      ],
+      [
+        13,
+        1
+      ]
+    ],
+    "divisor_constant_fourth_power": [
+      127401984,
+      25025
+    ],
+    "carrier_coefficient": 19,
+    "analytic_log_high_index_threshold": 38,
+    "relative_linear_slack_at_threshold": [
+      62,
+      195
+    ],
+    "same_source_core_index_lower_bound": 17323418604800000000,
+    "multiplier_divisors_of": 5040,
+    "multiplier_count": 60,
+    "robin_domain_lower_exclusive": 5040,
+    "lucas_local_formula_indices": [
+      1,
+      150
+    ],
+    "lucas_local_formula_checks": 150,
+    "scope": "Rational constants and finite local identities; the all-index transfer is the paper proof in section 169."
+  },
   "sources_sha256": {
-    "orbit_norm.py": "2fac5d1bead6bdea08623b0d9643a9ded1e9d5b6851d5c0508125c381b03d658",
+    "orbit_norm.py": "5bb6ad0ce89fbd9b1574379b54f9181471094248d89c974d6fe0d08151096eb8",
     "kernel_tail.py": "e94521843b87d43a051ec9ee0fa409f14510516d674da2356bee6613dfc0300a"
   },
   "scope": "Exact finite diagnostics only. Universal orbit, carrier and Robin arguments are paper mathematics using published inputs; no new Lean or RH proof and no originality claim."

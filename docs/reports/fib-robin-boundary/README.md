@@ -643,7 +643,7 @@ not verify the new analytic composition. The source family is one Fibonacci
 term times 5040, not every integer encoded in Zeckendorf form. No RH or
 originality claim is made.
 
-## Golden norm and two-term sources (§§165–168)
+## Golden norm and two-term sources (§§165–169)
 
 [`orbit_norm.py`](orbit_norm.py) checks the arithmetic bridges from fixed
 nonnegative FIB compositions and legal same-parity two-term sums to prime
@@ -674,7 +674,13 @@ The retained [orbit_norm.json](orbit_norm.json) contains:
   `a <= 48`, and 48 pairs sharing an odd factor across the product;
 - rational certificates for the effective seed thresholds and the
   same-parity tail bound `a > exp(60)`, whose final linear slack at 60
-  is `77/195`.
+  is `77/195`;
+- the improved fourth-root divisor bound, the new `a > exp(38)` tail
+  with slack `62/195`, the exact forced index lower bound
+  `17323418604800000000 > 3^38`, and 150 direct checks of the local
+  Lucas formulas used to connect the remaining branch to that tail;
+- the exponent caps of all 60 positive divisors of 5040, supporting the
+  same proof for each multiplier `c | 5040`, including `c = 1`.
 
 The carrier keeps rank 3 separately: `F_32+F_8=F_20*L_12` contains every
 core prime but gets its factor 2 only from the Lucas term. Removing that
@@ -695,9 +701,15 @@ portability checks were performed on macOS with Python 3.9; no other
 platform run is claimed.
 
 These are finite arithmetic diagnostics. The general norm argument, unit
-classification, effective analytic thresholds and universal two-term tail
+classification, effective analytic thresholds and universal two-term bounds
 are paper deductions using the cited published inputs; the program does
 not formally prove them. The unit-norm classification is not separately
 enumerated here. The fixed-seed theorem has a seed-dependent threshold;
-the same-parity theorem leaves the lower unresolved range and arbitrary
-multi-term histories outside its conclusion. Neither is a proof of RH.
+section 169 connects the five-prime stopping rules to the improved tail
+and covers every `c*(F_a+F_b) > 5040` with positive `c | 5040` and legal
+same-parity indices, using the common Lucas index's incompatible
+divisibility phases at 3 and 7. The case `c = 1` includes the two-term
+sums themselves. Opposite-parity
+sums and arbitrary multi-term histories remain outside that conclusion.
+These paper deductions and the finite program are not a Lean proof of
+the full family or of RH; no literature-priority claim is made.

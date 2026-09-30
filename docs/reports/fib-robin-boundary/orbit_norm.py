@@ -231,6 +231,63 @@ def seed_certificates():
     return rows
 
 
+def quarter_tail_bridge():
+    peaks = ((2, 5), (3, 3), (5, 2), (7, 1), (11, 1), (13, 1))
+    constant_fourth = Q(1)
+    for p, exponent in peaks:
+        assert Q(exponent+1, exponent)**4 > p
+        assert Q(exponent+2, exponent+1)**4 < p
+        constant_fourth *= Q((exponent+1)**4, p**exponent)
+    assert constant_fourth == Q(576**4, 21621600) < 9**4
+    assert 57024**4 < 19**4*E_LO**38
+    assert 19 < E_LO**3
+    assert Q(344, 25) < 14
+    slack = 38-Q(7, 5)-Q(40, 39)*(Q(9, 16)*38+14)
+    assert slack == Q(62, 195)
+    core = 2**14*5**8*11**5*min(3**10, 7**5)
+    assert core == 17323418604800000000
+    assert core > 3**38 > E_HI**38
+    multiplier_count = 0
+    for c in divisors(5040):
+        exponents = factors(c)
+        assert all(exponents.get(p, 0) <= cap
+                   for p, cap in ((2, 4), (3, 2), (5, 1), (7, 1), (11, 0)))
+        multiplier_count += 1
+    assert multiplier_count == 60
+    assert E_HI**2 < 8  # e^2 < 8 gives log(2) > 2/3.
+
+    fs = fibs(302)
+    def valuation(value, p):
+        assert value > 0
+        exponent = 0
+        while value % p == 0:
+            value //= p
+            exponent += 1
+        return exponent
+
+    for s in range(1, 151):
+        ls = fs[s-1]+fs[s+1]
+        assert fs[2*s] == fs[s]*ls
+        expected_two = 0 if s % 3 else (2 if s % 2 else 1)
+        assert valuation(ls, 2) == expected_two
+        assert ls % 5 != 0
+        assert (ls % 11 == 0) == (s % 2 == 1 and s % 5 == 0)
+        assert (ls % 3 == 0) == (s % 4 == 2)
+        assert (ls % 7 == 0) == (s % 8 == 4)
+        assert not (ls % 3 == 0 and ls % 7 == 0)
+    return {'prime_peak_exponents': [list(pair) for pair in peaks],
+            'divisor_constant_fourth_power': [constant_fourth.numerator,
+                                              constant_fourth.denominator],
+            'carrier_coefficient': 19, 'analytic_log_high_index_threshold': 38,
+            'relative_linear_slack_at_threshold': [slack.numerator, slack.denominator],
+            'same_source_core_index_lower_bound': core,
+            'multiplier_divisors_of': 5040, 'multiplier_count': multiplier_count,
+            'robin_domain_lower_exclusive': 5040,
+            'lucas_local_formula_indices': [1, 150],
+            'lucas_local_formula_checks': 150,
+            'scope': 'Rational constants and finite local identities; the all-index transfer is the paper proof in section 169.'}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out', required=True, type=Path)
@@ -240,12 +297,14 @@ def main():
     report = {'schema': 'fib-orbit-norm-v1', 'norm_orbits': norm_orbits(),
               'quantity_fibers': fibers(), 'two_term_carriers': two_terms(),
               'effective_seed_examples': seed_certificates(),
+              'quarter_tail_bridge': quarter_tail_bridge(),
               'sources_sha256': {name: hashlib.sha256(Path(__file__).with_name(name).read_bytes()).hexdigest()
                                  for name in ('orbit_norm.py', 'kernel_tail.py')},
               'scope': 'Exact finite diagnostics only. Universal orbit, carrier and Robin arguments are paper mathematics using published inputs; no new Lean or RH proof and no originality claim.'}
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(report, indent=2)+'\n')
-    print(json.dumps({k: report[k] for k in ('norm_orbits', 'quantity_fibers', 'two_term_carriers')}))
+    print(json.dumps({k: report[k] for k in ('norm_orbits', 'quantity_fibers',
+                                           'two_term_carriers', 'quarter_tail_bridge')}))
 
 
 if __name__ == '__main__':
