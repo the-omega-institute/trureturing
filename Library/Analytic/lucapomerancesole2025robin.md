@@ -3,6 +3,7 @@ bibkey: lucapomerancesole2025robin
 authors: Florian Luca, Carl Pomerance, Patrick Solé
 year: 2025
 title: "Correction to: On Robin's inequality"
+doi: null
 url: https://math.dartmouth.edu/~carlp/robin4.pdf
 claim: Robin violations have global counting function at most exp(O(log x / log log x)); this does not supply a per-progression singleton theorem or exclude a remaining candidate.
 strata_touched: []
