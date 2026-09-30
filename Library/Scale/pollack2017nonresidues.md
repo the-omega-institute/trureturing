@@ -3,7 +3,7 @@ bibkey: pollack2017nonresidues
 authors: Paul Pollack
 year: 2017
 title: Bounds for the first several prime character nonresidues
-doi: null
+doi: 10.1090/proc/13432
 url: https://arxiv.org/pdf/1508.05035v2
 claim: Theorem 1.1 supplies many prime nonresidues for every nonprincipal character to an arbitrary sufficiently large modulus; its power-scale cutoff does not by itself reach the actual Robin prime prefix.
 strata_touched: []
@@ -15,7 +15,8 @@ triage: anchor
 
 The [author publication list](https://www.pollack-math.net/research.html)
 identifies the article as *Proceedings of the American Mathematical Society*
-145 (2017), 2815–2826. The inspected sources are
+145 (2017), 2815–2826, [DOI:10.1090/proc/13432](https://doi.org/10.1090/proc/13432).
+The inspected sources are
 [arXiv:1508.05035v2](https://arxiv.org/abs/1508.05035v2), dated 24 August
 2015 in its submission history, and the [author-hosted manuscript](https://www.pollack-math.net/hudson.pdf).
 Theorem 1.1 appears on p.1 of v2 and p.2 of the author manuscript;
@@ -41,6 +42,13 @@ restricted to prime moduli or primitive characters. Its threshold and count
 exponent are not supplied here as numerical constants, so it is not a
 finite numerical certificate. The theorem is unconditional; GRH and a
 zero-free-region assumption are absent from its hypotheses.
+
+For a reciprocal-prime weight supply, directly reuse
+[Bourgain–Lindenstrauss, Theorem 5.1](bourgainlindenstrauss2003entropy.md).
+Its cutoff is $Y\ge D^{1/4+\varepsilon}$ for sufficiently large positive
+nonsquare $D$. The linked note records its exact weighted Robin budget
+and actual-source exceptions; the prime-count theorem here does not
+automatically supply that weight at $Y=\log N$.
 
 Theorem 1.2 strengthens the cutoff for characters of higher order, using
 the Dickman-function parameter $u_k$. Quadratic characters have order two,
