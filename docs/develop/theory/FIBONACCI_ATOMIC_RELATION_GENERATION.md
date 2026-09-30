@@ -20545,3 +20545,634 @@ $$
 该结论的量词是“每个固定种子，各有自己的充分大阈值”，不是“存在一个对全部种子共同的阈值”。在不同种子间选取尚未超过各自阈值的配置，仍不受本定理控制。一般自然数也不能仅因具有有限五窗口地址就被视为同一个固定种子的长递归轨迹。因此本节没有证明一般 Robin 不等式或黎曼猜想；缺少的是跨种子的统一控制及剩余规模的覆盖。
 
 ## 追加锚（本行以下为增补区）
+
+## 200. 固定奇窗口下缓慢增长范数的统一 Robin 族
+
+§199 的固定种子阈值不能直接用于变化种子。本节把域判别式、异常零点及实际素因子同时控制，得到一条允许种子变化的定量结论。增长条件只约束黄金范数，不要求种子坐标有界；窗口仍固定。以下为无条件文献输入上的纸面推导，尚未新增 Lean 声明或核验。
+
+### 200.1 固定窗口与允许变化的种子
+
+固定奇平方自由整数 $k>1$。记
+
+$$
+K=\mathbb Q(\sqrt5),\qquad R=\mathbb Z[\phi],\qquad
+F=K(\zeta_k),\qquad
+m=[F:\mathbb Q]=
+\begin{cases}
+2\varphi(k),&5\nmid k,\\
+\varphi(k),&5\mid k.
+\end{cases}
+$$
+
+对非零本原非负种子 $v=a+b\phi$，沿用
+
+$$
+Q=a^2+ab-b^2,\qquad \rho=v'/v,\qquad
+V_j=aF_{j+3}+bF_{j+4}.
+$$
+
+本节称该种子满足固定窗口条件，是指存在位于有理素数 $p_0$ 上方的素理想 $\mathfrak p$，使
+
+$$
+e=v_{\mathfrak p}(\rho)\ne0,
+\qquad \gcd(k,p_0e)=1.
+\tag{200.1}
+$$
+
+这里 $p_0,e$ 可以随种子变化；$k$ 保持固定。该条件排除单位共轭比情形，其作用是保证 Kummer 次数与实际根群保持不变，而不是先假定任何素数分布结论。
+
+对 $0\le r<k$，令
+
+$$
+\rho_r=\tau^{-r-3}\rho,\qquad u^k=\rho_r,
+\qquad \mathcal L=F(u),\qquad n=[\mathcal L:\mathbb Q]=km.
+$$
+
+当 $5\nmid k$ 时，§199.3 已给 $\mathcal L/\mathbb Q$ 为 Galois 扩张，$\mathcal L/F$ 为 $k$ 阶循环扩张。允许 $5\mid k$ 时，结论仍成立，证明如下。此时 $F=\mathbb Q(\zeta_k)$ 已包含 $K$，而 $p_0\nmid k$ 仍保证 $F/K$ 在所选赋值处不分歧。§199.3 的赋值论证给 $[\mathcal L:F]=k$。
+
+$F/\mathbb Q$ 的自同构由 $A\in(\mathbb Z/k\mathbb Z)^\times$ 指定，其在 $K$ 上的符号是 $\varepsilon=\chi_5(A)$。它的全部 $k$ 个延伸为
+
+$$
+\zeta_k\longmapsto\zeta_k^A,\qquad
+u\longmapsto\zeta_k^b u^{\chi_5(A)},\qquad b\pmod k.
+$$
+
+故 $\mathcal L/\mathbb Q$ 正规且可分，$\mathcal L/F$ 为 $k$ 阶循环扩张。两种情形中，特征零迹根
+
+$$
+x_h=u\zeta_k^h+u^{-1}\zeta_k^{-h},\qquad h\in\mathbb Z/k\mathbb Z
+$$
+
+仍彼此不同，因为非零赋值排除 $\rho_r$ 为单位根。根作用为 $h\mapsto\varepsilon Ah+\varepsilon b$。$5\mid k$ 时，映射 $A\mapsto\chi_5(A)A$ 是单位群的自逆同构：$\chi_5(-1)=1$，故施行两次恰好回到 $A$。所以斜率与平移仍遍历完整仿射群 $\operatorname{AGL}_1(\mathbb Z/k\mathbb Z)$。这时根作用忠实；$5\nmid k$ 时核为 §199.3 的二元核。两者有固定根的比例均为
+
+$$
+\delta_k=\prod_{\ell\mid k}\left(1-\frac1\ell\right).
+\tag{200.2}
+$$
+
+### 200.2 判别式只消耗范数预算
+
+**引理 200.1（与种子高度无关的判别式上界）。** 设 $D_F,D_{\mathcal L}$ 为绝对域判别式，则
+
+$$
+D_{\mathcal L}
+\le D_F^k\,k^{km}\,|Q|^{k(k-1)m}.
+\tag{200.3}
+$$
+
+特别地，$\mathcal L/\mathbb Q$ 只可能在整除 $5kQ$ 的有理素数处分歧。
+
+证明。令 $w=|Q|u$，则
+
+$$
+w^k=B,
+\qquad
+B=|Q|^k\rho_r
+=\frac{|Q|^k}{Q}(v')^2\tau^{-r-3}\in R\subseteq\mathcal O_F.
+$$
+
+这里 $|Q|^k/Q$ 是整数，$\tau$ 为整数环单位。$X^k-B$ 因 $[\mathcal L:F]=k$ 为 $w$ 的最小多项式。相对域判别式整除幂基判别式理想，而后者由 $k^kB^{k-1}$ 生成。因此塔式判别式公式给
+
+$$
+D_{\mathcal L}\le D_F^k
+\left|\operatorname N_{F/\mathbb Q}(k^kB^{k-1})\right|.
+$$
+
+$\operatorname N_{K/\mathbb Q}(\rho_r)=1$，所以
+
+$$
+\left|\operatorname N_{F/\mathbb Q}(B)\right|=|Q|^{km}.
+$$
+
+代入即得式（200.3）。$F$ 只在 $5k$ 的素因子处分歧，$B$ 的理想支撑只在 $Q$ 的素因子上方，故得到最后断言。$\square$
+
+该界允许 $a+b$ 很大而 $|Q|$ 很小。它实际利用了双嵌入乘积 $Q=vv'$；不能用单一收缩读数小替代这份联合条件。
+
+### 200.3 从实际周期根直接进入 Frobenius 固定事件
+
+变化种子时，不能把全部迹多项式判别式素数无条件加入例外集：这些素数的总对数质量未由式（200.3）控制。下面直接在 Kummer 根上使用实际来源，避免这一额外预算。
+
+**引理 200.2（只有 $5kQ$ 例外的实际素支撑）。** 设 $j=r+k\ell$、$\ell\ge0$。若 $p\nmid5kQ$ 且 $p\mid V_j$，则 $p$ 在 $\mathcal L/\mathbb Q$ 的 Frobenius 共轭类对上述特征零迹根有固定点。
+
+证明。$p\ne5$ 时 $\phi-\psi$ 在 $R/pR$ 中可逆，故 §199.2 的实际系数计算在 $p=2$ 时也成立：
+
+$$
+\tau^{j+3}=\rho,\qquad
+ y=\tau^\ell\in(R/pR)^\times,\qquad y^k=\rho_r.
+$$
+
+令 $\varepsilon\in\{1,-1\}$ 为 $p$ 在 $K$ 上的 Frobenius 符号；对奇 $p$ 它是 $(5/p)$，对 $p=2$ 它为 $-1$。由于 $\operatorname N(\tau)=1$，有 $y^p=y^\varepsilon$。
+
+取 $\mathcal L$ 中的素理想 $\mathfrak P\mid p$。由引理200.1，该处不分歧；$u$ 为局部单位，$\zeta_k$ 的约化仍有精确阶 $k$。$X^k-\rho_r$ 的 $k$ 个根在剩余域中彼此不同。于是存在唯一 $h\pmod k$，使
+
+$$
+\overline{u\zeta_k^h}=\overline y.
+$$
+
+将 $\mathfrak P$ 处的 Frobenius 写成 §199.3 的参数
+
+$$
+\sigma(\zeta_k)=\zeta_k^A,\qquad
+\sigma(u)=\zeta_k^b u^\varepsilon.
+$$
+
+其约化满足
+
+$$
+\overline{u^\varepsilon\zeta_k^{Ah+b}}
+=\overline{\sigma(u\zeta_k^h)}
+=\overline y^{\,p}
+=\overline{(u\zeta_k^h)^\varepsilon}.
+$$
+
+消去局部单位，并使用单位根约化的精确阶，得到
+
+$$
+Ah+b\equiv\varepsilon h\pmod k.
+$$
+
+而特征零迹根上的作用是 $h\mapsto\varepsilon Ah+\varepsilon b$，所以它固定 $h$。本证明不要求不同迹根在模 $p$ 后仍不同。$\square$
+
+以后令 $S_{v,r,k}$ 为上述 Frobenius 固定事件的素数集合，再加入所有 $p\mid5kQ$。引理200.2给
+
+$$
+p\mid V_j\ \Longrightarrow\ p\in S_{v,r,k},
+\qquad j\equiv r\pmod k.
+\tag{200.4}
+$$
+
+这份例外集的总对数质量至多 $\log\operatorname{rad}(5k|Q|)\le\log(5k)+\log|Q|$，确实由范数控制。
+
+### 200.4 奇循环层不会产生移动的异常实单零
+
+**引理 200.3（异常零点留在固定基域）。** $\zeta_{\mathcal L}$ 的任何位于 $(0,1)$ 内的实单零都是 $\zeta_F$ 的零。因此存在只依赖 $k$ 的有效常数 $b_k>0$，使本族所有 Chebotarev 异常零点均满足
+
+$$
+\beta_1\le1-b_k.
+\tag{200.5}
+$$
+
+证明。$\mathcal L/F$ 为奇阶循环扩张，阿贝尔 Artin–Hecke 分解给
+
+$$
+\zeta_{\mathcal L}(s)
+=\zeta_F(s)\prod_{\chi\ne1}L_F(s,\chi).
+$$
+
+所有非平凡字符均非实，并成 $\chi,\overline\chi$ 配对。在实点处，它们的 $L$ 函数值互为复共轭，零点重数相同。非平凡 Hecke $L$ 函数整，因此每对只能贡献偶数重数，不会有极点抵消。若总乘积在实点有单零，该零必来自 $\zeta_F$。
+
+$F$ 固定，$\zeta_F$ 在一处有单极点，故一的左邻域没有零。该邻域可有效选择：对固定 $F$ 使用下述文献 Theorem3.1 的有效零点排除区；若存在唯一可能的异常零点，再用 Theorem3.3 对平凡字符给其与一的有效距离下界。二者取较小值，得到 $b_k$。$\square$
+
+这一步不使用随种子变化的 Siegel 常数。也可由奇数阶核把全部二次子域限制在固定 $F$，再使用异常零点下降定理；本节采用上述直接的字符配对证明。
+
+### 200.5 有效文献输入与统一素数窗口
+
+采用 Jesse Thorner 与 Asif Zaman，*A unified and improved Chebotarev density theorem*，[作者稿 arXiv:1803.02823v3](https://arxiv.org/pdf/1803.02823v3) 的以下输入：
+
+- 第2页 Theorem1.1：对 Galois 扩张 $E/\mathbb Q$、次数 $n_E$、绝对判别式 $D_E$，存在绝对有效常数 $c_2,c_3>0$，当 $x\ge(D_En_E^{n_E})^{c_2}$ 时，每个共轭类 $\mathcal C$ 满足
+
+$$
+\pi_{\mathcal C}(x)
+=\frac{|\mathcal C|}{|G|}
+\bigl(\operatorname{Li}(x)-\theta_{\mathcal C}\operatorname{Li}(x^{\beta_1})\bigr)
+\left(1+O\!\left(
+ e^{-c_3\log x/\log(D_En_E^{n_E})}
+ +e^{-\sqrt{c_3\log x/n_E}}
+\right)\right),
+\tag{200.6}
+$$
+
+其中 $\theta_{\mathcal C}\in\{-1,0,1\}$，没有异常零点时相应项为零。
+
+- 第10页式（2.14）给阿贝尔 Artin–Hecke 分解；第11页 Theorem3.1 说明可能的异常零点为实单零；第12页 Theorem3.3 给实 Hecke 零点的有效距离界。对固定 $F$ 的平凡扩张，其参数为 $D_Fm^m$，因此这些输入确实只产生依赖 $k$ 的常数。
+
+上述定理为无条件结果，不假设 GRH。下面还使用通常的有效素数定理及 §194 式（194.2）的 Axler 包络。
+
+**引理 200.4（缓慢增长范数下的统一分布）。** 固定 $0<\eta<1$ 与 $0<c_0<c_1<\infty$。令 $U=V_j$、$L=\log U$，假设
+
+$$
+\log(2+|Q|)\le(\log L)^\eta.
+\tag{200.7}
+$$
+
+设 $\nu=\min\{1-\eta,1/2\}>0$。存在有效 $c>0$，使当 $U$ 充分大时，一致于满足式（200.1）、（200.7）的全部种子、指标及 $c_0L\le x\le c_1L$，有
+
+$$
+\vartheta_{S_{v,r,k}}(x)
+=\delta_kx+
+O_{k,\eta,c_0,c_1}\!\left(xe^{-c(\log x)^\nu}+\log(2+|Q|)\right).
+\tag{200.8}
+$$
+
+证明。引理200.1给
+
+$$
+\log(D_{\mathcal L}n^n)
+\le A_k+B_k\log(2+|Q|)
+\ll_k1+(\log L)^\eta.
+$$
+
+由于 $n=km$ 固定且 $\eta<1$，式（200.6）的适用门槛最终一致成立。它的两个误差分别不超过固定常数乘 $\exp[-c(\log x)^{1-\eta}]$ 与 $\exp[-c(\log x)^{1/2}]$。引理200.3使异常零点项与主项的比值一致趋零，并可吸收到同样的误差中。
+
+对实际根置换有固定点的全部共轭类求和，其比例由式（200.2）给出。共轭类数至多固定的 $n$，故得到统一的素数计数估计。为转成对数加权计数，先在 $[\sqrt x,x]$ 上使用该估计并分部求和；该区间的下端仍满足同一有效门槛。低于 $\sqrt x$ 的总对数质量为 $O(\sqrt x\log x)$，可吸收到式（200.8）的误差。最后加入 $5kQ$ 的例外素数，只增加至多 $\log(5k)+\log|Q|$。$\square$
+
+### 200.6 变化种子的统一严格余量
+
+**定理 200.5（固定窗口、缓慢增长范数的 Robin 族）。** 固定满足 $\delta_k<1/2$ 的上述 $k$、$0<\eta<1$ 与 $C>0$。对全部满足式（200.1）、（200.7）的实际 $U=V_j$，一致于整数 $1\le g\le CU$，有
+
+$$
+e^\gamma\log\log(gU)-Z(gU)
+\ge e^\gamma\bigl(\log2-H(\delta_k)\bigr)
+-O_{k,\eta,C}\!\left(\frac1{\log\log U}\right).
+\tag{200.9}
+$$
+
+其中 $U$ 超过一个只依赖 $k,\eta,C$ 的有效阈值；特别是所有这些整数最终严格满足 Robin 不等式。该阈值不是对无限多个固定种子阈值取最大值。
+
+证明。引理200.2给实际素支撑包含关系；引理200.4在 §194 的全部固定倍数窗口内同时给
+
+$$
+\vartheta_S(x)=\delta_kx+O(x\mathcal E(L)),\qquad
+\vartheta_T(x)=(1-\delta_k)x+O(x\mathcal E(L)),
+$$
+
+其中 $\mathcal E(L)\ll\exp[-c(\log L)^\nu]+(\log L)^\eta/L$。通常有效素数定理的误差也可并入此式。
+
+因而引理194.2的分部求和现在一致给
+
+$$
+\log\frac{P_S(aL)}{P_S(L)}
+=\frac{\delta_k\log a}{\log L}
++O\!\left(\frac1{(\log L)^2}+
+\frac{\mathcal E(L)}{\log L}\right)
+$$
+
+对所有所需固定倍数 $a$ 成立。Axler 包络与有效素数定理同时给 $P(L)/e^\gamma\le\log L+O(1/(\log L)^2)$。
+
+将这些带速率的界代入引理194.3的两个共同预算，指数展开后的加性误差为
+
+$$
+O\!\left(\frac1{\log L}+\mathcal E(L)\right)
+=O\!\left(\frac1{\log L}\right).
+$$
+
+对于 $\varepsilon\le\log g/L\le1$，同一函数 $f_{\delta_k}$ 在一处取最小值 $\log2-H(\delta_k)$。对于 $0\le\log g\le\varepsilon L$，预先固定 $\varepsilon$，采用定理194.4的独立放宽预算分支，取得相同下界。$g\le CU$ 的额外常数仍只使预算相差 $O(1/L)$。所有误差均由固定参数及式（200.7）控制，故一致得到式（200.9）。$\square$
+
+例如可明确固定
+
+$$
+k=105=3\cdot5\cdot7,
+\qquad \delta_k=\frac{48}{105}=\frac{16}{35}<\frac12.
+\tag{200.10}
+$$
+
+此时 $m=48$、$[\mathcal L:\mathbb Q]=5040$。这个域次数来自 $105\varphi(105)$，不与 Robin 的整数阈值建立额外关系。三与七在 $K$ 中惰性，五是唯一分歧素数；本原性使这三处不可能承载非零 $e$，故式（200.1）中的 $p_0\nmid105$ 自动成立，只需另核 $\gcd(e,105)=1$。例如原种子 $(16,29)$ 的十一上方赋值 $e=\pm2$ 满足此条件。
+
+本节给出增长规则和有效误差率，但没有计算其数值阈值，不把渐近结论当成当前数值范围的快速测试。
+
+### 200.7 一族确实变化的新种子
+
+取
+
+$$
+v_t=(4+361t)+\phi,\qquad t\ge0.
+$$
+
+它始终本原非负，且
+
+$$
+Q_t=19+3249t+130321t^2
+=19(1+171t+6859t^2),
+\qquad v_{19}(Q_t)=1.
+\tag{200.11}
+$$
+
+十九在 $K$ 中分裂；本原性保证恰有一个十九上方的素理想整除 $v_t$，且赋值为一。因此共轭比在该处赋值为 $-1$，式（200.1）对 $k=105$ 始终成立。
+
+固定 $0<\eta<1$。例如在 $j$ 充分大时，同时允许
+
+$$
+0\le t\le\exp\!\left(\tfrac14(\log j)^\eta\right).
+\tag{200.12}
+$$
+
+式（200.11）给 $\log(2+|Q_t|)\le\tfrac12(\log j)^\eta+O(1)$，而 $U=V_j\ge F_{j+3}$ 给 $\log\log U\ge\log j+O(1)$。所以式（200.7）最终对整个增长区间一致成立。定理200.5由此同时覆盖数量随 $j$ 无界增长的种子和每个种子的全部 $g\le CV_j$。
+
+$Q_t$ 随 $t$ 严格增长，而 $M$ 只改变范数符号，故这些种子不只是同一个固定种子的尺度平移重标。这是一份实际扩大的来源族。
+
+### 200.8 不依赖种子常数的规范来源回接
+
+定理200.5的极限参数是 $U\to\infty$，同时允许 $v,j$ 变化，不要求 $j\to\infty$。也可以直接把 $x=M^jv$ 当成本原非负组成，以 $j=0$ 重新读入：$M$ 只改变范数符号，共轭比只乘以单位，因而绝对范数和式（200.1）的有限赋值条件都不变。这说明本节没有隐藏使用固定种子的 Binet 常数。
+
+**推论 200.6（单位位零来源的统一乘子预算）。** 设 $x=M^jv=(A,B)$ 为上述本原非负组成，$U=q(x)$，并且单位位为零的实际规范来源组成恰为 $gx$。则
+
+$$
+g<\frac{\phi^2}{3|Q|}U<U.
+\tag{200.13}
+$$
+
+所以只要 $x$ 满足定理200.5的固定窗口条件及慢范数条件，所有这些规范来源最终同时满足其取 $C=1$ 的严格 Robin 余量。
+
+证明。非负性给
+
+$$
+x_+=A+B\phi\le\frac\phi3(2A+3B)=\frac\phi3U.
+$$
+
+$|x_+x_-|=|Q|$，而 §182.1 的严格规范条带给 $-1<gx_-<\phi$，因此 $g|x_-|<\phi$。于是
+
+$$
+g<\frac{\phi x_+}{|Q|}\le\frac{\phi^2}{3|Q|}U.
+$$
+
+$|Q|\ge1$、$\phi^2<3$ 给最后的严格小于关系。$\square$
+
+范围仍有两条限制：窗口条件（200.1）必须成立，范数增长必须满足式（200.7）。它们没有覆盖全部变化种子，也没有给出所有整数的 Robin 不等式或 RH。五模式几何在这里的具体作用，是保留来源及其双嵌入范数，让素切面、域判别式和同一整数的支撑预算能够共同受控。
+
+## 追加锚（本行以下为增补区）
+
+## 201. 自适应奇窗口与全部缓慢增长范数种子的统一族
+
+§200 使用一个固定窗口，并要求种子的非零赋值与该窗口互素。本节允许窗口以明确速度增长，因而去掉预先固定窗口的赋值限制；代价是采用更慢的范数增长条件。全部论证继续使用 §200 已列的无条件有效 Chebotarev、Hecke 因子分解、通常有效素数定理及 Axler 输入，为纸面推导，未新增 Lean 核验。
+
+固定增长参数
+
+$$
+0<\omega<\frac12.
+$$
+
+令 $x=a+b\phi$ 为任意非零本原非负组成，记
+
+$$
+U=q(x)=2a+3b,\qquad Q=a^2+ab-b^2,\qquad
+s=\log\log U,\qquad t=\log s.
+$$
+
+所有以下陈述均用于 $U$ 充分大。要求
+
+$$
+\log\log(2+|Q|)\le t^\omega.
+\tag{201.1}
+$$
+
+不另限制 $a+b$，不要求把 $x$ 表成某个固定种子的长轨迹。将 $x$ 视作 §200 中指标 $j=0$ 的种子即可；如原有 $x=M^jv$，有限赋值和绝对范数的条件与该表示一致。
+
+### 201.1 用有限赋值选择可控窗口
+
+先设 $|Q|\notin\{1,5\}$。由引理199.1，可取 $\rho=x'/x$ 的一处非零有限赋值
+
+$$
+e=v_{\mathfrak p}(\rho)\ne0,
+$$
+
+其下方有理素数为 $p_0$。本原性使该素数分裂，且只能有一个共轭素理想整除 $(x)$。因此
+
+$$
+1\le |e|\le\frac{\log|Q|}{\log p_0}.
+\tag{201.2}
+$$
+
+定义
+
+$$
+Y=\frac{t}{20},\qquad
+k=\prod_{\substack{p\le Y\text{ 为奇素数}\\p\nmid p_0e}}p,
+\qquad
+d=\prod_{\substack{p\le Y\text{ 为素数}\\p\mid2p_0e}}p.
+\tag{201.3}
+$$
+
+下面会证明 $k>1$ 最终一致成立。此时 $k$ 为奇平方自由数，自动满足 $\gcd(k,p_0e)=1$，可使用 §200 的全部代数结论，包括允许 $5\mid k$ 的实际根群证明。
+
+**引理 201.1（允许集的密度至多为增长指数）。** 记
+
+$$
+\delta_k=\prod_{\ell\mid k}\left(1-\frac1\ell\right),
+\qquad P(Y)=\prod_{p\le Y}(1-1/p)^{-1}.
+$$
+
+则一致于满足式（201.1）的全部种子及上述赋值选择，
+
+$$
+\delta_k=P(Y)^{-1}\frac d{\varphi(d)}
+\le\omega+o(1)
+\qquad(U\to\infty).
+\tag{201.4}
+$$
+
+证明。式（201.3）把 $Y$ 以下的全部素数分成进入 $k$ 与进入 $d$ 两类，故乘积恒等式精确成立。若 $p_0>Y$，它不会进入 $d$；若 $p_0\le Y$，它的额外对数成本至多 $\log Y$。因此由式（201.1）—（201.2），
+
+$$
+\log d\le\log2+\log|e|+\log Y
+\le t^\omega+\log Y+O(1).
+\tag{201.5}
+$$
+
+对 $d\ge2$ 使用引理164.1的全范围包络，得到
+
+$$
+\frac d{\varphi(d)}
+<e^\gamma\max\{32,\log\log d+a_0\}
+\le e^\gamma\max\{32,\omega\log t+O(1)\}.
+$$
+
+通常 Mertens 乘积定理给 $P(Y)=e^\gamma\log Y(1+o(1))$。而 $\log Y=\log t-\log20$，故得到式（201.4）。误差只依赖 $\omega$ 和 $U$，不依赖种子、$p_0$ 或 $e$。由于 $\omega<1/2$，最终有 $\delta_k<1/2$；若 $k=1$ 则空乘积等于一，所以最终必有 $k>1$。$\square$
+
+这一步没有假设被排除的素数很少。即使 $e$ 含有全部较小素数，式（201.5）仍将它们的共同 Euler 权重计入同一份预算。
+
+### 201.2 同时控制增长的域次数与判别式
+
+对式（201.3）的 $k$，取 §200 中的 $F=K(\zeta_k)$、$\mathcal L=F(u)$；对当前 $x$ 可以固定 $r=0$，即 $u^k=\tau^{-3}x'/x$。若保留原递推表示，也可取 $r=j\pmod k$；下述界均与该余类无关。
+
+**引理 201.2（增长窗口仍处于有效 Chebotarev 范围）。** 对充分大的 $U$，一致有
+
+$$
+k\le s^{1/10},\qquad
+n=[\mathcal L:\mathbb Q]\le2s^{1/5},
+\qquad
+\log(D_{\mathcal L}n^n)\ll s^{2/5}.
+\tag{201.6}
+$$
+
+证明。通常有效素数定理给 $\vartheta(Y)\le2Y$，故
+
+$$
+\log k\le\vartheta(Y)\le t/10,
+\qquad k\le s^{1/10}.
+$$
+
+由 $[F:\mathbb Q]\le2k$，得到次数上界。式（201.1）还给
+
+$$
+\log(2+|Q|)\le\exp(t^\omega)\le s^{1/10}
+$$
+
+对所有充分大的 $t$ 成立，因为 $\omega<1$。
+
+$F$ 是 $\mathbb Q(\zeta_{5k})$ 的子域。利用域塔判别式公式及圆分域判别式公式，根判别式满足 $D_F^{1/[F:\mathbb Q]}\le5k$。将此界代入式（200.3），得到
+
+$$
+\log(D_{\mathcal L}n^n)
+\ll k^2\log(5k)+k^3\log(2+|Q|)
+\ll s^{2/5}.
+$$
+
+这里常数和充分大门槛均可有效选取，门槛只依赖固定的 $\omega$。$\square$
+
+### 201.3 移动基域的异常零点仍可有效排除
+
+§200.4 先把 $\zeta_{\mathcal L}$ 的实单零降到 $\zeta_F$。现在 $F$ 随 $U$ 变化，不能再仅凭“固定域”删去异常项。
+
+**引理 201.3（异常零点由短导子控制）。** 若本族 $\zeta_{\mathcal L}$ 有 Chebotarev 异常零点 $\beta_1$，则存在非主实二次 Dirichlet 字符，其导子 $q_\chi$ 整除 $5k$，且该字符的 $L$ 函数在 $\beta_1$ 为零。进而有绝对有效下界
+
+$$
+1-\beta_1\gg\frac1{(5k)^2\log(5k)}.
+\tag{201.7}
+$$
+
+证明。$\mathcal L/F$ 为奇阶循环扩张，所以引理200.3的非实 Hecke 字符成对论证仍逐域适用，得到 $\zeta_F(\beta_1)=0$。该零仍为单零，因为全部因子在 $(0,1)$ 内无极点。
+
+$F/\mathbb Q$ 为阿贝尔扩张，并包含于 $\mathbb Q(\zeta_{5k})$。它的 Dedekind zeta 函数分解成导子整除 $5k$ 的原始 Dirichlet $L$ 函数。非实字符再度成共轭对，不能单独产生实单零。平凡字符对应的 Riemann zeta 函数在 $(0,1)$ 上没有实零。因此该零来自非主实字符，即二次字符。
+
+对相应二次扩张及基域 $\mathbb Q$，使用 §200 所引 Thorner–Zaman 第12页 Theorem3.3。该定理的参数为 $q_\chi$，它给
+
+$$
+(1-\beta_1)\log q_\chi\gg q_\chi^{-2}.
+$$
+
+由 $q_\chi\le5k$，得到式（201.7）。这里使用的是该已发表有效界的较弱版本，已足够本节所需；没有使用无效的 Siegel 常数。$\square$
+
+结合式（201.6），得到
+
+$$
+(1-\beta_1)s\gg\frac{s^{4/5}}{1+\log s}.
+\tag{201.8}
+$$
+
+所以异常零点对 $x\asymp\log U=e^s$ 的贡献一致为低阶项。
+
+### 201.4 素支撑的统一误差不因窗口增长而失效
+
+**引理 201.4（移动窗口的实际素数包络）。** 对任意固定 $0<c_0<c_1<\infty$，令 $L=\log U$。定义 $S$ 为 §200.3 的实际 Frobenius 固定事件集合，并加入 $p\mid5kQ$。则 $U$ 的全部素因子属于 $S$；并且一致于 $c_0L\le z\le c_1L$，
+
+$$
+\vartheta_S(z)=\delta_kz+O\!\left(ze^{-c s^{2/5}}\right),
+\qquad
+\vartheta_{S^c}(z)=(1-\delta_k)z+O\!\left(ze^{-c s^{2/5}}\right)
+\tag{201.9}
+$$
+
+对某个有效 $c>0$ 成立。常数可依赖 $\omega,c_0,c_1$，不依赖种子或所选赋值。
+
+证明。实际包含关系直接用引理200.2，因此没有加入无法控制的迹多项式判别式素数。对每个域使用式（200.6）的原始有效定理，而不套用只对固定域成立的定性密度结论。
+
+式（201.6）使该定理的门槛最终一致成立。两个常规误差分别至多为
+
+$$
+\exp[-c s^{3/5}],\qquad \exp[-c s^{2/5}].
+$$
+
+式（201.8）使异常项也被第二个误差吸收。对有固定根事件的共轭类求和时，各项权重为 $|\mathcal C|/|G|$，总和是 $\delta_k\le1$；有效定理中的绝对误差常数不随共轭类数放大。由 §200 的实际根群与 CRT，事件比例恰为 $\delta_k$。
+
+像引理200.4一样，先在 $[\sqrt z,z]$ 上分部求和，低区间用 $O(\sqrt z\log z)$ 控制。例外素数的总对数质量至多
+
+$$
+\log\operatorname{rad}(5k|Q|)
+\le\log(5k)+\log|Q|\ll s^{1/10}+t,
+$$
+
+也可吸收到式（201.9）。补集式再用通常有效素数定理。$\square$
+
+### 201.5 固定截断消除移动密度的非紧问题
+
+虽然 $\delta_k\le\omega+o(1)$，它没有统一正下界。不能直接把 $L/\delta_k$ 当成与 $L$ 相差固定倍数的截断。本节采用固定密度参数的截断，只在估计中保留真实的 $\delta_k$。
+
+固定
+
+$$
+\omega<\delta_0<1/2.
+$$
+
+对充分大的 $U$，有 $0<\delta_k\le\delta_0$。令 $h=\log g$、$z_0=h/L$，先处理固定 $\varepsilon\le z_0\le1$。取
+
+$$
+x_S=L/\delta_0,\qquad x_T=h/(1-\delta_0).
+\tag{201.10}
+$$
+
+这两个截断都位于与 $L$ 相差固定倍数的窗口中，且 $x_S\ge x_T$。
+
+**引理 201.5（密度只需统一上界）。** 在上述范围内，一致于全部实际种子与乘子，
+
+$$
+\frac{Z(gU)}{e^\gamma}
+\le\log L+H(\delta_0)+(1-\delta_0)\log z_0+o(1).
+\tag{201.11}
+$$
+
+证明。对同一整数 $gU$，引理194.1仍给两个共同预算及其截断界。写真实密度为 $\delta=\delta_k$。两个截断修正的主项之和是
+
+$$
+(\delta_0-\delta)
+\bigl(x_S\kappa(x_S)-x_T\kappa(x_T)\bigr).
+$$
+
+因为
+
+$$
+x\kappa(x)=\frac1{\log x}+O\!\left(\frac1{x\log x}\right),
+$$
+
+该差在固定倍数窗口上为 $O(1/(\log L)^2)$，一致于 $\delta\in[0,\delta_0]$。因此即使实际密度与截断参数不同，也不会留下 $1/\log L$ 级别的惩罚；两个预算的该级主项已经精确抵消。
+
+由式（201.9）分部求和，乘积比值的 $1/\log L$ 系数为
+
+$$
+W(\delta)
+=\delta\log(1/\delta_0)
+ +(1-\delta)\log(z_0/(1-\delta_0)).
+$$
+
+其关于 $\delta$ 的斜率为
+
+$$
+\log\frac{1-\delta_0}{\delta_0z_0}>0.
+$$
+
+所以 $\delta\le\delta_0$ 给
+
+$$
+W(\delta)\le W(\delta_0)
+=H(\delta_0)+(1-\delta_0)\log z_0.
+$$
+
+最后使用 §200.6 的完整素数乘积精度并取指数，得到式（201.11）。$\square$
+
+### 201.6 去掉固定窗口赋值限制后的统一 Robin 定理
+
+**定理 201.6（全部慢范数本原组成的统一余量）。** 对每个固定 $0<\omega<1/2$ 与 $C>0$，一致于满足式（201.1）的全部非零本原非负组成 $x$，有
+
+$$
+\liminf_{\substack{U=q(x)\to\infty\\
+\log\log(2+|Q(x)|)\le(\log\log\log U)^\omega}}
+\ \inf_{\substack{g\in\mathbb Z_{\ge1}\\g\le CU}}
+\left(e^\gamma\log\log(gU)-Z(gU)\right)
+\ge e^\gamma\bigl(\log2-H(\omega)\bigr)>0.
+\tag{201.12}
+$$
+
+证明。先处理 $|Q|\notin\{1,5\}$。固定 $\omega<\delta_0<1/2$。引理201.5在中间乘子范围给与定理194.4相同的 $f_{\delta_0}$ 下界。小乘子范围仍用预先固定的 $\varepsilon$ 放宽共同预算；$g\le CU$ 的常数扩展同样只产生 $o(1)$。由此得到同一个左端下极限至少为
+
+$$
+e^\gamma(\log2-H(\delta_0)).
+$$
+
+这里所有种子共用由式（201.1）导出的有效误差界。最后令固定参数 $\delta_0$ 从上方趋近 $\omega$，比较已经成立的常数下界，即得到式（201.12）。这一步不宣称当 $\delta_0\downarrow\omega$ 时误差或阈值仍一致。
+
+对于 $|Q|\in\{1,5\}$，引理199.1及单位分类把 $x$ 分别写成 $\phi^h$ 或 $\sqrt5\phi^h$，并将 $U$ 写成 $F_{h+3}$ 或 $L_{h+3}$。非负组成给 $|x_-|\le x_+$；代入这两种表示并消去共同正因子，得到 $\phi^{-h}\le\phi^h$，故 $h\ge0$。于是 $U\to\infty$ 迫使实际序列指标 $n=h+3\to\infty$。直接以这个实际指标使用命题199.6的秩尾界与共同素支撑证明：$F_{2n}=F_nL_n$、$y=\lceil n^{5/6}\rceil$ 给统一尾界 $O(n^{-1/12})$，并以 $\log g=n^{11/12}$ 分开两个乘子范围。由于 $\log U=n\log\phi+O(1)$ 的常数对 Fibonacci 与 Lucas 两个标准序列固定，该证明对全部当前组成给统一下界 $e^\gamma\log2$，足以满足式（201.12）。这里没有沿用随原种子漂移的指标平移阈值。$\square$
+
+对单位位为零、组成为 $gx$ 的实际规范来源，推论200.6直接给 $g<U$，因此它们也进入定理201.6取 $C=1$ 的范围。
+
+这份结论扩大的是“来源范数缓慢增长”的统一族。它不覆盖一般大小的黄金范数，没有移除单位位为一的全部来源问题，也没有证明所有整数上的 Robin 不等式或 RH。窗口选择、增长的域以及异常零点均已计入估计，不能省略式（201.1）再把这一族提升为全局结论。
+
+## 追加锚（本行以下为增补区）
