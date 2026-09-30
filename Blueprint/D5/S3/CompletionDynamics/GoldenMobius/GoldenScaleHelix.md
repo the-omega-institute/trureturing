@@ -133,7 +133,7 @@ The declaration keeps its parameters and hypotheses explicit; the result makes n
 
 Lean statement: \`D5/S3/CompletionDynamics/GoldenMobius/GoldenScaleHelix.orientationCover_monodromy\`
 
-*Proof.* Machine-checked in Lean as \`D5/S3/CompletionDynamics/GoldenMobius/GoldenScaleHelix.orientationCover_monodromy\` (\`✓ std3\`). ∎
+*Formalization status.* Lean declaration added on branch `lane/theory/rt-variational-20260930`; focused kernel and CI checks are pending. ∎
 
 *Source.* Repository-derived.
 
@@ -145,7 +145,7 @@ Because each deck step flips the Boolean orientation, every even-length phase cy
 
 Lean statement: \`D5/S3/CompletionDynamics/GoldenMobius/GoldenScaleHelix.goldenHelixStep_80_orientation\`
 
-*Proof.* Machine-checked in Lean as \`D5/S3/CompletionDynamics/GoldenMobius/GoldenScaleHelix.goldenHelixStep_80_orientation\` (\`✓ std3\`). ∎
+*Formalization status.* Lean declaration added on branch `lane/theory/rt-variational-20260930`; focused kernel and CI checks are pending. ∎
 
 *Source.* Repository-derived.
 
@@ -157,7 +157,7 @@ The exact 80-step common phase orbit used by the 5040 Fibonacci certificate has 
 
 Lean statement: \`D5/S3/CompletionDynamics/GoldenMobius/GoldenScaleHelix.goldenHelixStep_16_orientation\`
 
-*Proof.* Machine-checked in Lean as \`D5/S3/CompletionDynamics/GoldenMobius/GoldenScaleHelix.goldenHelixStep_16_orientation\` (\`✓ std3\`). ∎
+*Formalization status.* Lean declaration added on branch `lane/theory/rt-variational-20260930`; focused kernel and CI checks are pending. ∎
 
 *Source.* Repository-derived.
 
