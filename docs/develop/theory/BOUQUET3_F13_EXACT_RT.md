@@ -12,7 +12,7 @@ The center is AME(6,13): every triple of rows of C is independent (all 20 triple
 
 For a region R let rj be its selected-leg count in loop j. A loop is partial exactly when rj in {1,2,3}. Let h be the number of partial loops and define e(0)=e(1)=0, e(2)=1, e(3)=e(4)=2 and E=sum e(rj). Exact row reduction yields rank(F_R)=h+min(3,E), rank(G_R)=h+min(3,6-E).
 
-The graph cut optimized over the central vertex has exactly this same value: each partial loop contributes 2, and complete loops contribute 0 or 2 according to the central side. Therefore the uniform linear-support entropy lemma gives S(R)=m(R) log 13 for all regions.
+The graph cut optimized over the central vertex has exactly this same value after the Schmidt correction: the entropy exponent is 2h + min(3,E) + min(3,6-E) - 6, and this equals the optimized graph cut. Each partial loop contributes 2, while complete loops contribute 0 or 2 according to the central side. Therefore the uniform linear-support entropy lemma gives S(R)=m(R) log 13 for all regions.
 
 ## Reproducible certificate and scope
 
