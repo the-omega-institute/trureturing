@@ -143,3 +143,160 @@ K_s(n)=\frac{\log \mathcal Q_s+\log n}{s}-\log\Sigma(n)\ge0.
 $$
 
 A benefit lower bound must therefore be accompanied by a bound for this support-line gap before it supplies $d_n$. The [FIB theory volume, §234](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md) gives the separate finite comparison between the actual increment loss and this classical price objective. Neither comparison establishes the missing fixed-residue candidate exclusion.
+
+## Signed prime error at the actual primorial cutoff
+
+The following application combines the envelope comparison above with classical partial summation. It introduces no new prime-distribution estimate. Its sufficient condition remains unproved at the FIB candidates; it is not a proof of Robin's inequality or a claim of originality.
+
+For the same actual integer $N$, put $Y=\log N$ and let $x$ be the prime satisfying $P_x\le N<P_{x^+}$, where $x^+$ is the next prime. Write
+
+$$
+\mathcal P(x)=\prod_{p\le x}(1-1/p)^{-1}=\Phi(N),\qquad
+f(x)=\frac{e^\gamma\log\vartheta(x)}{\mathcal P(x)},\qquad
+b_N=\log\frac{\log Y}{\log\vartheta(x)}\ge0.
+$$
+
+Here $\vartheta(u)=\sum_{p\le u}\log p$ and $\psi(u)=\sum_{p^j\le u}\log p$. For any proved positive $\mathscr L(N)\le\Phi(N)/\Sigma(N)$, the exact normalization gives
+
+$$
+\log\frac{Z(N)}{e^\gamma\log Y}
+\le-\log f(x)-\log\mathscr L(N)-b_N.
+$$
+
+This retains the correlation between the Euler product and the primorial logarithm. Also $0\le Y-\vartheta(x)<\log x^+$, so the prime number theorem gives $x\sim Y$ and $b_N=O(1/x)=o(1/(\sqrt x\log x))$ as $N\to\infty$.
+
+### The unconditional Nicolas input and its endpoint term
+
+Jean-Louis Nicolas, *Small values of the Euler function and the Riemann hypothesis*, [arXiv:1202.0729v2](https://arxiv.org/abs/1202.0729v2), Lemma 2.1, printed p.4, states for $x\ge121$ that
+
+$$
+I_\vartheta(x)-\frac{(\vartheta(x)-x)^2}{x^2\log x}
+\le\log f(x)\le I_\vartheta(x)+\frac1{2(x-1)},
+$$
+
+where
+
+$$
+k(u)=\frac{1+\log u}{u^2\log^2u},\qquad
+I_\vartheta(x)=\int_x^\infty(\vartheta(u)-u)k(u)\,du,\qquad
+I_\psi(x)=\int_x^\infty(\psi(u)-u)k(u)\,du.
+$$
+
+The paper calls these integrals $K(x)$ and $J(x)$ in (1.15)–(1.16), and attributes Lemma 2.1 to Proposition 1 of its 1983 reference [6]. This lemma has no RH hypothesis. The later RH-dependent bounds in Lemma 2.4 and Proposition 2.1 are not used here.
+
+Consequently, for $x\ge121$, the independently defined margin
+
+$$
+\mathfrak m_N=I_\vartheta(x)-\frac{(\vartheta(x)-x)^2}{x^2\log x}
++\log\mathscr L(N)+b_N
+$$
+
+gives $Z(N)\le e^\gamma\log\log N\,e^{-\mathfrak m_N}$. Positivity of this margin is sufficient, but has not been established for all actual candidates.
+
+Partial summation also gives an exact version of the endpoint accounting. Put $a=(\vartheta(x)-x)/x$, $v=\log x$ and
+
+$$
+Q(x)=\frac a v-\log\left(1+\frac{\log(1+a)}v\right),\qquad
+T_2(x)=\sum_{p>x}\sum_{j\ge2}\frac1{jp^j}>0.
+$$
+
+For $x\ge121$, all logarithms are defined, and
+
+$$
+\log f(x)=I_\vartheta(x)-Q(x)+T_2(x).
+$$
+
+Indeed, writing $B_1$ for the Meissel–Mertens constant, partial summation yields $\sum_{p\le x}1/p=\log\log x+B_1+a/v-I_\vartheta(x)$. Add the higher-power terms in $\log\mathcal P(x)$ and use $B_1+\sum_p\sum_{j\ge2}1/(jp^j)=\gamma$. This proves the identity and the positive sign of $T_2$. Thus $I_\vartheta-Q+\log\mathscr L+b_N$ is another valid lower margin. It comes from the same classical identity, not a new analytic estimate.
+
+### What remains after the prime-square contribution
+
+For this paragraph choose the specific $\mathscr L(N)=R_-(N)$ above, which has Nicolas's leading correction $2\sqrt2/(\sqrt Y\log Y)$. An arbitrary positive envelope-ratio lower bound need not have that correction. The unconditional prime number theorem gives
+
+$$
+\psi(u)-\vartheta(u)=\vartheta(\sqrt u)+O(u^{1/3}\log u)
+=(1+o(1))\sqrt u.
+$$
+
+Integrating against the positive kernel gives
+
+$$
+I_\psi(x)-I_\vartheta(x)=\frac{2+o(1)}{\sqrt x\log x}.
+$$
+
+It follows that
+
+$$
+\sqrt x\log x\,\mathfrak m_N
+=2\sqrt2-2+\sqrt x\log x\,I_\psi(x)
+-\frac{(\vartheta(x)-x)^2}{x^{3/2}}+o(1).
+$$
+
+Thus a sufficient candidate-specific input is: there are fixed $\eta>0$ and $N_1$ such that at the associated prime cutoff of **every actual candidate** $N\ge N_1$,
+
+$$
+\frac{(\vartheta(x)-x)^2}{x^{3/2}}
+-\sqrt x\log x\,I_\psi(x)\le2\sqrt2-2-\eta.
+$$
+
+This would give strict Robin with a positive margin of order $1/(\sqrt{\log N}\log\log N)$ for sufficiently large candidates. It permits compensation between the signed tail and endpoint error. The endpoint penalty cannot be discarded from the prime number theorem alone: its being negligible at this scale requires $\vartheta(x)-x=o(x^{3/4})$. The exact $Q$ version has
+
+$$
+\sqrt x\log x\,Q(x)=\frac{(\vartheta(x)-x)^2}{2x^{3/2}}
+\left(1+\frac1{\log x}+O(|a|)\right).
+$$
+
+For example, bounds $I_\psi(x)\ge-\kappa/(\sqrt x\log x)$ and $|\vartheta(x)-x|\le Kx^{3/4}$ with fixed nonnegative constants satisfying $\kappa+K^2/2<2\sqrt2-2$ would suffice. These are additional prime-distribution hypotheses, not consequences of a large divisor core or of a FIB address. No equivalence between this restricted sufficient condition and RH is asserted.
+
+### The 2026 signed formula and the available absolute-error scale
+
+Broadbent–Fiori–Kadiri–Ng–Wilk, *Bounds for Mertens sums*, [arXiv:2608.01498v1](https://arxiv.org/abs/2608.01498v1), Proposition 13(i), equation (55), gives an unconditional explicit formula for $I_\psi(x)$ for $x\ge2$. Its proof, equations (82)–(83), also gives the form
+
+$$
+\begin{aligned}
+I_\psi(x)={}&\frac{\log x+1}{\log^2x}
+\sum_\rho\frac{x^{\rho-1}}{\rho(\rho-1)}\\
+&-\sum_\rho\frac1{\rho(\rho-1)}
+\int_x^\infty t^{\rho-2}\left(\frac1{\log^2t}+\frac2{\log^3t}\right)dt
+-\frac{\log(2\pi)}{x\log x}-\frac12\kappa_0(x),
+\end{aligned}
+$$
+
+where the sums run over the nontrivial zeta zeros with multiplicity and $\kappa_0(x)=\int_x^\infty\log(1-t^{-2})k(t)\,dt$. The proof uses absolute convergence after integration by parts to pass to the infinite endpoint. This is a signed formula; Proposition 13(ii) is a separate absolute-value estimate. Merely expressing the integral through zeros gives no needed one-sided bound at FIB-selected cutoffs. Equation (54) is also the partial-summation identity used above. The relevant statements and these proof steps were inspected; no complete proof audit or Lean verification of the preprint is claimed.
+
+Fiori–Jaskari, *Explicit bounds for the prime number theorem*, [arXiv:2609.23222v1](https://arxiv.org/abs/2609.23222v1), Theorem 1.1 and Table 1, state for $u\ge e^3$ that
+
+$$
+\frac{|\psi(u)-u|}{u}
+<0.2390\exp\left[-D\left(1+\frac{\log\log\log u}{15\log\log u}\right)
+\frac{(\log u)^{3/5}}{(\log\log u)^{1/5}}\right],\qquad
+D=\frac52\left(\frac53\right)^{1/5}\left(\frac{2000}{161967}\right)^{3/5}.
+$$
+
+This is a September 2026 unconditional preprint statement. Its theorem and table were read in the primary text; its full analytic proof and computations have not been independently audited. Even this error shape, with any fixed constant $c>0$ in its leading exponential, is asymptotically larger than the required scale:
+
+$$
+\frac{\exp[-c(\log x)^{3/5}/(\log\log x)^{1/5}]}{1/(\sqrt x\log x)}
+\longrightarrow\infty.
+$$
+
+Integration introduces no improvement to a power of $x$: with a slightly smaller fixed $c$, the same exponential shape bounds $|I_\psi(x)|$. This compares the **guaranteed upper bounds**, not the unknown actual signed error, and does not prove that the candidate condition fails.
+
+There is a stronger obstruction to a different proposed shortcut. Diamond–Pintz, *Oscillation of Mertens' product formula*, [JTNB 21 (2009), Theorem 1.1, printed p.524](https://doi.org/10.5802/jtnb.687), prove that $\sqrt x(\mathcal P(x)-e^\gamma\log x)$ has arbitrarily large positive and negative values. Hence no fixed $K$ gives $\mathcal P(x)\le e^\gamma\log x+K/\sqrt x$ for all sufficiently large $x$. This refutes that raw-product certificate; it does not refute Robin or the comparison normalized by $\log\vartheta(x)$.
+
+### Return to the actual source budget
+
+Use the notation of the FIB volume's §233.5: $t=e^\gamma\log\log A$, $s=\log A\log\log A$, and $C_*+H_*=(Z(N)/t)^s$ at the possible actual candidate. Put $B_N=(\log\log N/\log\log A)^s$. Either valid margin above gives
+
+$$
+C_*+H_*\le B_Ne^{-s\mathfrak m_N}.
+$$
+
+Therefore $B_Ne^{-s\mathfrak m_N}+\varepsilon_A<B_N$ suffices for the already stated target $C_*+\varepsilon_A<B_N$. For $0<\varepsilon_A<B_N$, the needed margin for this certificate is exactly
+
+$$
+\mathfrak m_N>-\frac1s\log(1-\varepsilon_A/B_N).
+$$
+
+The fixed-slack prime condition above is stronger. In a fixed-ratio window $N\in[A,C_0A]$, with $C_0>1$ fixed and $y=\log A$, it supplies $s\mathfrak m_N\gg\sqrt y$ and $B_N=(N/A)(1+o(1))$. Conditional on the previously stated high-loss estimate $\varepsilon_A=\exp[-(\pi^2/9)y/(\log y)^2+o(y/(\log y)^2)]$, the budget then holds eventually. This application stays at the same integer throughout. It does not supply the missing signed-error hypothesis, certify an effective starting threshold, or extend a candidate-only result to the full RH criterion.
+
+At a common primorial cutoff, the signed integral and endpoint terms coincide. FIB information must independently restrict the attained cutoffs or supply an actual-candidate lower bound for $D_N=\log(\Sigma(N)/Z(N))$; an address change alone supplies neither.
