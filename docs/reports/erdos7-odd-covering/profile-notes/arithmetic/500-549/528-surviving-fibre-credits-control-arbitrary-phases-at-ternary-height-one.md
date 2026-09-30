@@ -26846,3 +26846,107 @@ remain outside this sufficient condition. The composite palette
 and three-class inventory are ordinary symbolic deductions; the
 replacement rule and complete tail theorem are reused, and no
 Lean verification or unrestricted resolution is claimed.
+
+## Missing105 supplies a height-free inventory on every core direction
+
+Suppose the SAME minimum whole cover has3,5,7 in the component C
+at a full-height proper cut B, but105 is absent from D. This does
+not require any of15,21,35 to be absent. Apply the concrete
+composite repair construction above with the following parameters:
+
+| Direction q | Retained prime guards | Repair factor M | Unit roots R | Sum bound divided by h | Removed-sum floor divided by h |
+| --- | --- | ---: | ---: | ---: | ---: |
+| 3 | 5,7 | 35 | 24 | 105/2 | 624 |
+| 5 | 3,7 | 21 | 12 | 105/4 | 168 |
+| 7 | 3,5 | 15 | 8 | 35/2 | 80 |
+| q>=11 in C | 3,5,7 | 105 | 48 | 231/2 | 2400 |
+
+In each row gcd(M,q)=1 and R=phi(M). When R<=H_q, h=q^R is
+original, and EVERY label Mq^i,1<=i<=R, is a multiple of105.
+Divisor closure therefore makes all of them globally absent.
+The actual normalized prime guards cover the nonunit roots of M;
+assign the R fresh labels to its R unit roots with the old
+q-prefixes. These cover the entire old h-class with the retained
+guards, exactly as in FC1160. Each guard stays outside the moved
+and deleted q^R-cone.
+
+The finite geometric sum is strictly below Mq/(q-1)*h, bounded
+by the fifth table column; each entry is less than R(R+2), the
+last column. The same strict replacement comparison gives
+
+    q_(q^R)(c)<=R-1 at EVERY phase,
+                            whenever R<=H_q.     (FC1165)
+
+The table is an explicit application of the established repair
+principle. No new general exchange or continuation theorem is
+needed. The useful new consumer is that all directions, including
+the3 and5 directions, now have thresholds independent of their
+original heights.
+
+Select a future original when its C-supported complete old part
+has3-depth at least24,5-depth at least12,7-depth at least8, or
+depth at least48 at any other core prime. Fix one qualifying
+direction per selected label once at B. Inactive interfaces with
+R>H_q have no assigned originals. With c=|C|>=3, FC1165 gives a
+single pointwise selected allowance across ALL future suffixes:
+
+    b<=23+11+7+47(c-3)=47c-100.
+
+The light core inventory has exponents below24,12,8 on3,5,7 and
+below48 on the other c-3 directions. No actual old cofactor can
+contain3,5,7 simultaneously, since it would force105 into D.
+All pair-only combinations must still be retained. Subtracting
+only the all-three-positive box gives
+
+    a<=[24*12*8-23*11*7]*48^(c-3)
+      =533*48^(c-3).                            (FC1166)
+
+This counts the unit once and bounds each FIXED actual light
+suffix by numerical distinctness. Smaller actual heights only
+remove slots; none of them has been artificially truncated in
+the original family. Pure future labels and O-supported old
+parts remain light.
+
+For k=pi(B)>=10, FC1144--1146 on ONE new light-only Haar law now
+give the complete sufficient noncoverage test
+
+    B>2(47c-100),
+    [533*48^(c-3)+sqrt(5Theta_O)]^2
+                       /[1-2(47c-100)/B]<=T_B.   (FC1167)
+
+Use the core projection of one actual future private point and
+the same companion source from FC1132. Every selected label is
+paid on this very continuation; every remaining actual label is
+in its light queries. The bound has neither a core-mass inverse
+nor an exponent-height dependence.
+
+In particular, fix0<alpha<1/log2304. At all sufficiently large
+proper cuts, the conjunction
+
+    3,5,7 in C,105 notin D,c<=alpha log B         (FC1168)
+
+is impossible in a globally minimum whole cover. The selected
+debit tends to zero uniformly in this range, and
+
+    [533*48^(c-3)]^2/(B log B)
+       <=[533^2/2304^3]*B^(alpha log2304-1)/log B
+       =o(1).
+
+FC1134 supplies the unchanged uniform companion bound; the same
+T_B asymptotic used in FC1155 then proves FC1167. This is a
+sufficient-cut argument and gives no explicit numerical cutoff.
+
+Unlike the missing15 case, this construction permits all three
+pair labels15,21,35 to be original. In particular, future
+originals with old cofactor3^a*5 and a>=24 are assigned to the
+ternary interface whenever present. Their number no longer costs
+one allowance per ternary layer: the entire selected cone has
+capacity23. If H_3<24, that deep part is empty. Thus the joint
+105 condition pays a previously unbounded3-bearing column without
+assuming an empty3--5 interaction.
+
+These bounds do not handle a present105 label, force a small
+core, or guarantee a passing proper cut. They are ordinary
+symbolic deductions using the existing full-liability exchange,
+actual-query closure and complete tail estimate, not new Lean
+verification or a resolution of unrestricted Erdős#7.
