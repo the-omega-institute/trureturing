@@ -505,7 +505,7 @@ public sealed partial class ProductionEnvironmentTests
             var outcome = EvaluateAdmissionPlane(manifest, "docs/change.md");
 
             var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
-            Assert.Contains("root schema_version must be 2, 3, 4 or 5", failure.Message, StringComparison.Ordinal);
+            Assert.Contains("root schema_version must be 2, 3, 4, 5 or 6", failure.Message, StringComparison.Ordinal);
         }
     }
 
@@ -522,13 +522,13 @@ public sealed partial class ProductionEnvironmentTests
             var outcome = EvaluateAdmissionPlane(manifest, "docs/change.md");
 
             var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
-            Assert.Contains("root schema_version must be 2, 3, 4 or 5", failure.Message, StringComparison.Ordinal);
+            Assert.Contains("root schema_version must be 2, 3, 4, 5 or 6", failure.Message, StringComparison.Ordinal);
         }
 
         Assert.Null(EvaluateAdmissionPlane("schema_version = 2\n" + files, "docs/change.md"));
         Assert.Null(EvaluateAdmissionPlane("schema_version = 3\n" + files, "docs/change.md"));
         Assert.Null(EvaluateAdmissionPlane("schema_version = 4\n" + files, "docs/change.md"));
-        Assert.Null(EvaluateAdmissionPlane("schema_version = 5\n" + files, "docs/change.md"));
+        Assert.Null(EvaluateAdmissionPlane("schema_version = 6\n" + files, "docs/change.md"));
     }
 
 
@@ -613,14 +613,12 @@ public sealed partial class ProductionEnvironmentTests
             entry.Mode,
             entry.RuntimeDisposition,
             entry.HistoryRequirement,
-            entry.Require,
             entry.Symlink,
             entry.DigestionSource)).ToImmutableArray();
         return Encoding.UTF8.GetString(FileMapCanonicalWriter.Write(new FileMapManifest(
             policy.Manifest.ResidencePolicy,
             entries,
-            policy.ArtifactKinds,
-            policy.Manifest.Resources)).AsSpan());
+            policy.ArtifactKinds)).AsSpan());
     }
 
     private static string CurrentManifest(params (string Pattern, string? Plane)[] entries)
@@ -631,10 +629,9 @@ public sealed partial class ProductionEnvironmentTests
             entries.OrderBy(item => item.Pattern, StringComparer.Ordinal).Select(item => new FileMapEntry(
                 item.Pattern, FileMapKind.Program,
                 item.Plane == "judge" ? FileMapAdmissionPlane.Judge : FileMapAdmissionPlane.Content,
-                "none", ["StrataLint"], ["StrataLint"], false, "none", null, "committed-source", null, [], null,
+                "none", ["StrataLint"], ["StrataLint"], false, "none", null, "committed-source", null, null,
                 policy.IsDigestionSource(RepoPath.CreateKnown(item.Pattern)))).ToImmutableArray(),
-            policy.ArtifactKinds,
-            policy.Manifest.Resources);
+            policy.ArtifactKinds);
         return Encoding.UTF8.GetString(FileMapCanonicalWriter.Write(manifest).AsSpan());
     }
 

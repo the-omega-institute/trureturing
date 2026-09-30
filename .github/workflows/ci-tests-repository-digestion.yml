@@ -19,7 +19,7 @@ jobs:
   tests-repository-digestion:
     uses: ./.github/workflows/ci-unit.yml
     with:
-      run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.RepositoryDigestion.Tests/StrataLint.RepositoryDigestion.Tests.csproj
+      command: make -C tools test TEST_PROJECT=tools/tests/StrataLint.RepositoryDigestion.Tests/StrataLint.RepositoryDigestion.Tests.csproj
       paths: |
         .editorconfig
         .github/*

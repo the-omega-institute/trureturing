@@ -191,13 +191,13 @@ repo=$(gh repo view "$origin_url" --json nameWithOwner --jq .nameWithOwner) || d
 run protection-dev gh api "repos/$repo/branches/dev" || die 64 "cannot read dev protection"
 required=$(jq -ce 'select(.protected == true) | .protection.required_status_checks |
   ((.contexts // []) + [(.checks // [])[] | .context]) | unique |
-  select(length == 3 and all(.[]; type == "string" and length > 0))' <<<"$output") \
-  || die 64 "dev must require three checks"
+  select(length > 0 and all(.[]; type == "string" and length > 0))' <<<"$output") \
+  || die 64 "dev must declare a nonempty required-check set"
 run protection-integration gh api "repos/$repo/branches/$branch_key" || die 64 "cannot read integration protection"
 jq -e --argjson required "$required" 'select(.protected == true) |
   .protection.required_status_checks |
   ((.contexts // []) + [(.checks // [])[] | .context]) | unique | . == $required' \
-  <<<"$output" >/dev/null || die 64 "integration must be protected with the same three required checks as dev"
+  <<<"$output" >/dev/null || die 64 "integration must be protected with the same required checks as dev"
 git rev-list --first-parent "$dev_tip" >"$scratch/first-parent"
 last=$(jq -r 'last.merge // empty' <<<"$state_data")
 if [[ -n "$last" ]]; then

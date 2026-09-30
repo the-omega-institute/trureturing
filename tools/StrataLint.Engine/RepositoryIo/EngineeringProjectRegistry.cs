@@ -35,13 +35,7 @@ internal sealed record EngineeringProjectRegistration(
     string? TestPartition,
     string RootNamespace,
     string[] NamespaceExclude,
-    string[] GlobalNamespaceExceptions,
-    [property: JsonRequired] string[]? BuildInputs = null,
-    [property: JsonRequired] string[]? ExecutionInputs = null,
-    [property: JsonRequired] string[]? ExecutionExcludes = null,
-    [property: JsonRequired] string[]? ExecutionEnvironment = null,
-    [property: JsonRequired, JsonPropertyName("execution_filemap_paths")] string[]? ExecutionFileMapPaths = null,
-    string[]? ExecutionPathInventory = null)
+    string[] GlobalNamespaceExceptions)
     : EngineeringProjectDeclaration(Path, Assembly, Role, Ci, References, Owner, OwnedTestAssembly, TestPartition);
 
 internal sealed record EngineeringProjectManifest(
@@ -157,28 +151,6 @@ internal sealed class EngineeringProjectRegistry
             {
                 ValidatePatterns(project.Include, project.Path);
                 ValidatePatterns(project.Exclude, project.Path);
-                ValidateMaterials(project.BuildInputs, [], project.Path);
-                if (project.IsTest)
-                {
-                    ValidateMaterials(project.ExecutionInputs, project.ExecutionExcludes, project.Path);
-                    ValidateMaterials(project.ExecutionPathInventory ?? [], [], project.Path + ": execution_path_inventory");
-                    if (project.ExecutionPathInventory is { } inventory
-                        && !inventory.SequenceEqual(inventory.Order(StringComparer.Ordinal)))
-                        throw new InvalidDataException($"execution_path_inventory must be ordinally sorted: {project.Path}");
-                    // Policy query addresses may be virtual; only the FILEMAP itself is a byte input.
-                    ValidateInputPaths(project.ExecutionFileMapPaths!, project.Path + ": execution_filemap_paths");
-                    if (project.ExecutionFileMapPaths!.Length != 0
-                        && (!project.ExecutionInputs!.Any(pattern => FileMapGlob.Create(pattern).IsMatch("Meta/FILEMAP.toml"))
-                            || project.ExecutionExcludes!.Any(pattern => FileMapGlob.Create(pattern).IsMatch("Meta/FILEMAP.toml"))))
-                        throw new InvalidDataException($"execution_filemap_paths require FILEMAP runtime input: {project.Path}");
-                    if (project.ExecutionEnvironment is null || project.ExecutionEnvironment.Any(name =>
-                            string.IsNullOrWhiteSpace(name) || !name.All(character => char.IsAsciiLetterOrDigit(character) || character == '_'))
-                        || project.ExecutionEnvironment.Distinct(StringComparer.Ordinal).Count() != project.ExecutionEnvironment.Length)
-                        throw new InvalidDataException($"missing or invalid registered execution environment: {project.Path}");
-                }
-                else if (project.ExecutionPathInventory is not null || project.ExecutionInputs is not null || project.ExecutionExcludes is not null
-                    || project.ExecutionEnvironment is not null || project.ExecutionFileMapPaths is not null)
-                    throw new InvalidDataException($"execution inputs require a test role: {project.Path}");
                 if (project.References is null || project.References.Any(path => !IsProjectPath(path))
                     || project.References.Distinct(StringComparer.Ordinal).Count() != project.References.Length)
                     throw new InvalidDataException($"invalid or duplicate registered project reference: {project.Path}");

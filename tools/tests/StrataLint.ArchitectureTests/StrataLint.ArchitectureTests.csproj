@@ -22,9 +22,6 @@
   <ItemGroup>
     <ProjectReference Include="../../StrataLint.Cli/StrataLint.Cli.csproj" />
     <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />
-    <ProjectReference Include="../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" />
-    <ProjectReference Include="../../StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj" />
-    <ProjectReference Include="../../StrataLint.InspectionScope/StrataLint.InspectionScope.csproj" />
     <ProjectReference Include="../../StrataLint.Scribe/StrataLint.Scribe.csproj" />
     <ProjectReference Include="../../TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj" />
     <ProjectReference Include="../../TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj" />

@@ -5,37 +5,125 @@ root_id = "Makefile/gate"
 entrypoint = "Makefile"
 
 [[roots]]
-root_id = "Makefile/preflight"
+root_id = "Makefile/test"
 entrypoint = "Makefile"
 
 [[roots]]
-root_id = "ci-pr.yml/delta"
-entrypoint = ".github/workflows/ci-pr.yml"
+root_id = "ci-banned-api-proof.yml/banned-api-proof"
+entrypoint = ".github/workflows/ci-banned-api-proof.yml"
 
 [[roots]]
-root_id = "ci-push.yml/current"
-entrypoint = ".github/workflows/ci-push.yml"
+root_id = "ci-capability-proof.yml/capability-proof"
+entrypoint = ".github/workflows/ci-capability-proof.yml"
 
 [[roots]]
-root_id = "ci-push.yml/engineering"
-entrypoint = ".github/workflows/ci-push.yml"
+root_id = "ci-current.yml/current"
+entrypoint = ".github/workflows/ci-current.yml"
 
 [[roots]]
-root_id = "harness-gate.sh/check"
-entrypoint = ".github/scripts/harness-gate.sh"
+root_id = "ci-filemap.yml/filemap"
+entrypoint = ".github/workflows/ci-filemap.yml"
 
 [[roots]]
-root_id = "harness-gate.sh/dotnet"
-entrypoint = ".github/scripts/harness-gate.sh"
+root_id = "ci-selftest.yml/selftest"
+entrypoint = ".github/workflows/ci-selftest.yml"
 
 [[roots]]
-root_id = "local-harness-gate.sh/current"
-entrypoint = "tools/scripts/local-harness-gate.sh"
+root_id = "ci-tests-architecture.yml/tests-architecture"
+entrypoint = ".github/workflows/ci-tests-architecture.yml"
 
 [[roots]]
-root_id = "local-harness-gate.sh/delta"
-entrypoint = "tools/scripts/local-harness-gate.sh"
+root_id = "ci-tests-cache-native.yml/tests-cache-native"
+entrypoint = ".github/workflows/ci-tests-cache-native.yml"
 
 [[roots]]
-root_id = "local-harness-gate.sh/engineering"
+root_id = "ci-tests-cli-integration.yml/tests-cli-integration"
+entrypoint = ".github/workflows/ci-tests-cli-integration.yml"
+
+[[roots]]
+root_id = "ci-tests-cli.yml/tests-cli"
+entrypoint = ".github/workflows/ci-tests-cli.yml"
+
+[[roots]]
+root_id = "ci-tests-configuration.yml/tests-configuration"
+entrypoint = ".github/workflows/ci-tests-configuration.yml"
+
+[[roots]]
+root_id = "ci-tests-cover-batch.yml/tests-cover-batch"
+entrypoint = ".github/workflows/ci-tests-cover-batch.yml"
+
+[[roots]]
+root_id = "ci-tests-declared-template.yml/tests-declared-template"
+entrypoint = ".github/workflows/ci-tests-declared-template.yml"
+
+[[roots]]
+root_id = "ci-tests-digestion.yml/tests-digestion"
+entrypoint = ".github/workflows/ci-tests-digestion.yml"
+
+[[roots]]
+root_id = "ci-tests-engine.yml/tests-engine"
+entrypoint = ".github/workflows/ci-tests-engine.yml"
+
+[[roots]]
+root_id = "ci-tests-filemap.yml/tests-filemap"
+entrypoint = ".github/workflows/ci-tests-filemap.yml"
+
+[[roots]]
+root_id = "ci-tests-instruction-contract.yml/tests-instruction-contract"
+entrypoint = ".github/workflows/ci-tests-instruction-contract.yml"
+
+[[roots]]
+root_id = "ci-tests-lean.yml/tests-lean"
+entrypoint = ".github/workflows/ci-tests-lean.yml"
+
+[[roots]]
+root_id = "ci-tests-repository-configuration.yml/tests-repository-configuration"
+entrypoint = ".github/workflows/ci-tests-repository-configuration.yml"
+
+[[roots]]
+root_id = "ci-tests-repository-contract.yml/tests-repository-contract"
+entrypoint = ".github/workflows/ci-tests-repository-contract.yml"
+
+[[roots]]
+root_id = "ci-tests-repository-digestion.yml/tests-repository-digestion"
+entrypoint = ".github/workflows/ci-tests-repository-digestion.yml"
+
+[[roots]]
+root_id = "ci-tests-repository-filemap.yml/tests-repository-filemap"
+entrypoint = ".github/workflows/ci-tests-repository-filemap.yml"
+
+[[roots]]
+root_id = "ci-tests-repository-topology.yml/tests-repository-topology"
+entrypoint = ".github/workflows/ci-tests-repository-topology.yml"
+
+[[roots]]
+root_id = "ci-tests-rules.yml/tests-rules"
+entrypoint = ".github/workflows/ci-tests-rules.yml"
+
+[[roots]]
+root_id = "ci-tests-scribe-documents.yml/tests-scribe-documents"
+entrypoint = ".github/workflows/ci-tests-scribe-documents.yml"
+
+[[roots]]
+root_id = "ci-tests-scribe.yml/tests-scribe"
+entrypoint = ".github/workflows/ci-tests-scribe.yml"
+
+[[roots]]
+root_id = "ci-tests-source-atomizer.yml/tests-source-atomizer"
+entrypoint = ".github/workflows/ci-tests-source-atomizer.yml"
+
+[[roots]]
+root_id = "ci-tests-truth-release.yml/tests-truth-release"
+entrypoint = ".github/workflows/ci-tests-truth-release.yml"
+
+[[roots]]
+root_id = "ci-tests-truth.yml/tests-truth"
+entrypoint = ".github/workflows/ci-tests-truth.yml"
+
+[[roots]]
+root_id = "ci-unit.yml/run"
+entrypoint = ".github/workflows/ci-unit.yml"
+
+[[roots]]
+root_id = "local-harness-gate.sh/gate"
 entrypoint = "tools/scripts/local-harness-gate.sh"

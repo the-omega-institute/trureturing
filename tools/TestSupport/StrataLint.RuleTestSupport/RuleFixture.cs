@@ -76,8 +76,8 @@ internal sealed partial class RuleFixture
     internal const string ThreeDistancePath = "D5/S1/Phase/ThreeDistance.lean";
     internal const string TowerManifestPath = RepositoryRules.TowerManifestPath;
     internal const string ValuesProjectionPath = RepositoryPathPolicy.ValuesProjectionPath;
-    internal const string WorkflowPath = RepositoryPathPolicy.PrWorkflowPath;
-    internal const string StageScriptPath = "tools/scripts/ci-stage.sh";
+    internal const string WorkflowPath = ".github/workflows/ci-current.yml";
+    internal const string StageScriptPath = "tools/scripts/workflow/ci-entry.sh";
     internal const string SyntheticProtectedPath =
         "tools/StrataLint.Engine/SyntheticProtected.cs";
     internal const string BannedApiCompileFailProofProjectPath =

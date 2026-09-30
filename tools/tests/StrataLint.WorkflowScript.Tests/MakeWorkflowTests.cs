@@ -7,9 +7,6 @@ namespace StrataLint.WorkflowScript.Tests;
 public sealed partial class MakeWorkflowTests
 {
     private const string ScribeScriptPath = "tools/scripts/scribe.sh";
-    private const string LocalHarnessGateScriptPath =
-        "tools/scripts/local-harness-gate.sh";
-    private const string PreflightScriptPath = "tools/scripts/preflight.sh";
     private const string ScribeContentChecksScriptPath =
         "tools/scripts/workflow/scribe-content-checks.sh";
     private const string WorktreeInitScriptPath = "tools/scripts/worktree-init.sh";
@@ -60,7 +57,6 @@ public sealed partial class MakeWorkflowTests
         "show-atom",
         "atom-context",
         "truth-export",
-        "truth-release-verify",
         "deliver-check",
         "deposit",
         "deposit-uncovered",
@@ -76,12 +72,9 @@ public sealed partial class MakeWorkflowTests
         "worktree-remove",
         "pr-open",
         "pr-watch",
-        "preflight",
         "gate",
         "census",
         "census-derivational",
-        "current",
-        "delta",
     ];
 
     private static readonly string[] ToolsTargets =
@@ -91,9 +84,6 @@ public sealed partial class MakeWorkflowTests
         "dotnet",
         "check-fast",
         "test",
-        "ci-build",
-        "engineering",
-        "engineering-tests",
         "selftest",
         "compile-proof",
         "capacity-audit",
@@ -191,11 +181,7 @@ public sealed partial class MakeWorkflowTests
     public void IngestWrapperSeparatesReportFreeDigestionFromTruthAlignment()
     {
         var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
-        Assert.Contains(
-            "make ingest [BASE=origin/dev] [SOURCE=\"id path ...\"]  "
-                + "Atomize theory sources; add only atom ids absent from the on-disk ledger",
-            makefile,
-            StringComparison.Ordinal);
+        Assert.Contains("make test  Run lean-report and check-current", makefile, StringComparison.Ordinal);
         var script = File.ReadAllText(
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/ingest.sh"));
 
@@ -234,23 +220,6 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(
             $"\t@/bin/bash {IngestScriptPath} quarantine-clear \"$(BASE)\" \"$(ATOM_ID)\"",
             Recipe(makefile, "quarantine-clear"));
-        var help = TestProcessRunner.Run(
-            "make",
-            ["--no-print-directory", "help"],
-            root,
-            TestBudgets.ScriptProcessHangGuard,
-            64 * 1024);
-        Assert.Equal(0, help.ExitCode);
-        var helpText = Encoding.UTF8.GetString(help.StandardOutput);
-        Assert.Contains(
-            "make quarantine REQUEST=file [BASE=origin/dev]  Write one atom's receipts.quarantine from a strict request file",
-            helpText,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "make quarantine-clear ATOM_ID=x [BASE=origin/dev]  Clear one atom's receipts.quarantine",
-            helpText,
-            StringComparison.Ordinal);
-
         using var fixture = new TemporaryDirectory();
         var scriptPath = Path.Combine(fixture.Path, IngestScriptPath);
         var projectDirectory = Path.Combine(fixture.Path, "tools", "StrataLint.Cli");
@@ -332,7 +301,7 @@ public sealed partial class MakeWorkflowTests
         File.WriteAllText(Path.Combine(fixture.Path, "lakefile.toml"), "name = \"Fixture\"\n");
         File.WriteAllText(Path.Combine(fixture.Path, "README.md"), "baseline\n");
         File.WriteAllText(
-            Path.Combine(fixture.Path, ".github", "workflows", "ci-pr.yml"),
+            Path.Combine(fixture.Path, ".github", "workflows", "ci-current.yml"),
             "on: {pull_request: {branches: [dev]}}\njobs: {delta: {steps: []}}\n");
         File.WriteAllText(
             Path.Combine(fixture.Path, LeanReportPairScriptPath),

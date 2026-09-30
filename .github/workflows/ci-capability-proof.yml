@@ -19,7 +19,7 @@ jobs:
   capability-proof:
     uses: ./.github/workflows/ci-unit.yml
     with:
-      run: make -C tools compile-proof PROOF=capability-proof
+      command: make -C tools compile-proof PROOF=capability-proof
       paths: |
         .editorconfig
         .github/*

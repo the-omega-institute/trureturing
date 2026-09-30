@@ -55,12 +55,6 @@ public static class EngineeringRegistrationFixture
             namespace_exclude = project.NamespaceExclude ?? [],
             global_namespace_exceptions = project.GlobalNamespaceExceptions ?? [],
             references = project.References ?? [],
-            build_inputs = project.BuildInputs ?? [],
-            execution_inputs = project.Role is "owned-test" or "cross-cutting-test" ? project.ExecutionInputs ?? [] : (string[]?)null,
-            execution_excludes = project.Role is "owned-test" or "cross-cutting-test" ? project.ExecutionExcludes ?? [] : (string[]?)null,
-            execution_environment = project.Role is "owned-test" or "cross-cutting-test" ? project.ExecutionEnvironment ?? [] : (string[]?)null,
-            execution_filemap_paths = project.Role is "owned-test" or "cross-cutting-test" ? project.ExecutionFileMapPaths ?? [] : (string[]?)null,
-            execution_path_inventory = project.Role is "owned-test" or "cross-cutting-test" ? project.ExecutionPathInventory ?? [] : (string[]?)null,
             owner = project.Owner is null ? null : new { path = project.Owner.Path, assembly = project.Owner.Assembly },
             owned_test_assembly = project.OwnedTestAssembly,
             test_partition = project.Role is "owned-test" or "cross-cutting-test"

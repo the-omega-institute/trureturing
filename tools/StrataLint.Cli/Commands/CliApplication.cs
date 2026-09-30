@@ -94,7 +94,7 @@ internal static class CliApplication
     {
         using var output = new StringWriter();
         using var error = new StringWriter();
-        var exit = StrataLint.EngineeringScope.TestEvidenceCommands.Run([command, .. tail], output, error);
+        var exit = TestEvidenceCommands.Run([command, .. tail], output, error);
         return RenderExplicit(new(exit, output.ToString(), error.ToString()), console);
     }
 

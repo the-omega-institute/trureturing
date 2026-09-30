@@ -19,7 +19,7 @@ jobs:
   banned-api-proof:
     uses: ./.github/workflows/ci-unit.yml
     with:
-      run: make -C tools compile-proof PROOF=banned-api-proof
+      command: make -C tools compile-proof PROOF=banned-api-proof
       paths: |
         .editorconfig
         .github/*

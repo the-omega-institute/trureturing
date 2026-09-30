@@ -19,7 +19,7 @@ jobs:
   tests-source-atomizer:
     uses: ./.github/workflows/ci-unit.yml
     with:
-      run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.SourceAtomizer.Tests/StrataLint.SourceAtomizer.Tests.csproj
+      command: make -C tools test TEST_PROJECT=tools/tests/StrataLint.SourceAtomizer.Tests/StrataLint.SourceAtomizer.Tests.csproj
       paths: |
         .editorconfig
         .github/*

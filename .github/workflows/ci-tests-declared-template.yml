@@ -20,7 +20,7 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       lean: build
-      run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj
+      command: make -C tools test TEST_PROJECT=tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj
       paths: |
         .editorconfig
         .github/*

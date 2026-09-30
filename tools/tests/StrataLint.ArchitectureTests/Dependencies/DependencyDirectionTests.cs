@@ -32,11 +32,8 @@ public sealed class DependencyDirectionTests
             [
                 "StrataLint.Configuration",
                 "StrataLint.Engine",
-                "StrataLint.ExecutionEvidence",
                 "StrataLint.FileMap",
-                "StrataLint.InspectionScope",
                 "StrataLint.Lean",
-                "StrataLint.ResourcePlanning",
                 "StrataLint.Scribe",
                 "StrataLint.Scribe.Documents",
                 "Tomlyn",
@@ -96,24 +93,6 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
-    public void EngineeringScopeTestsReferenceOnlyEngineeringScope()
-    {
-        // 此处曾有一条产物层(IL)断言,钉 `["StrataLint.EngineeringScope", "StrataLint.TestSupport"]`
-        // —— 它守的是「`Engine` 传递可达却未被使用」。**已由更强的东西取代,不是删除**:
-        // EngineeringScope.Tests 现在声明 <DisableTransitiveProjectReferences>true</…>,
-        // `Engine` 在**编译期**即不可达,用了就编译不过(事前不可能 > 事后检测,第 20 条)。
-        // 这也去掉了该断言唯一需要的那条 test→test ProjectReference。
-        Assert.Equal(
-            ["../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj"],
-            ProjectReferences(XDocument.Load(Path.Combine(
-                RepositoryLayout.FindRoot(),
-                "tools",
-                "tests",
-                "StrataLint.EngineeringScope.Tests",
-                "StrataLint.EngineeringScope.Tests.csproj"))));
-    }
-
-    [Fact]
     public void ScribeTestsReferenceOnlyEngineAndScribe()
     {
         // 原为产物层(IL)断言,钉 `["StrataLint.Engine", "StrataLint.Scribe",
@@ -146,10 +125,7 @@ public sealed class DependencyDirectionTests
                 "../../StrataLint.Cli/StrataLint.Cli.csproj",
                 "../../StrataLint.Configuration/StrataLint.Configuration.csproj",
                 "../../StrataLint.Engine/StrataLint.Engine.csproj",
-                "../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
-                "../../StrataLint.ExecutionEvidence/StrataLint.ExecutionEvidence.csproj",
                 "../../StrataLint.FileMap/StrataLint.FileMap.csproj",
-                "../../StrataLint.InspectionScope/StrataLint.InspectionScope.csproj",
                 "../../StrataLint.Scribe/StrataLint.Scribe.csproj",
                 "../../TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
                 "../../TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj",

@@ -154,7 +154,7 @@ defaultFacets = ["static"]
             '  let args := "--statements-only" :: args\n' + entry))
         for name in ['tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
                      'tools/scripts/worktree/lean-cache-input.sh', 'tools/scripts/worktree/lean_cache.py',
-                     'tools/scripts/worktree/cache_material.py', 'tools/scripts/worktree/cache_deadline.py',
+                     'tools/scripts/worktree/cache_material.py',
                      'lean-toolchain', 'Makefile',
                      'tools/scripts/worktree/lean-cache-ensure.sh', 'tools/scripts/worktree/lean-cache-run.sh',
                      'tools/scripts/report/lean-report.sh', 'tools/scripts/report/report-supervisor.sh',

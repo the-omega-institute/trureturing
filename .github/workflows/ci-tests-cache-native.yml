@@ -20,7 +20,7 @@ jobs:
     uses: ./.github/workflows/ci-unit.yml
     with:
       lean: toolchain
-      run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.Cache.Native.Tests/StrataLint.Cache.Native.Tests.csproj
+      command: make -C tools test TEST_PROJECT=tools/tests/StrataLint.Cache.Native.Tests/StrataLint.Cache.Native.Tests.csproj
       paths: |
         .editorconfig
         .github/*

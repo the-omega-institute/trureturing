@@ -19,7 +19,7 @@ jobs:
   tests-instruction-contract:
     uses: ./.github/workflows/ci-unit.yml
     with:
-      run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj
+      command: make -C tools test TEST_PROJECT=tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj
       paths: |
         .editorconfig
         .github/*

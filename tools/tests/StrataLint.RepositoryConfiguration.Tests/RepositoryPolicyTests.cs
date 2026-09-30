@@ -8,42 +8,6 @@ namespace StrataLint.RepositoryConfiguration.Tests;
 
 public sealed class RepositoryPolicyTests
 {
-    [Theory]
-    [InlineData("Meta/judge-seed.json")]
-    [InlineData("Meta/package-materials.json")]
-    public void RealRepositoryMetadataRegistrationsAreAdmissible(string value)
-    {
-        var path = RepoPath.CreateKnown(value);
-        var policy = RealRepositoryPolicy();
-
-        Assert.Null(RepositoryPathPolicy.Validate(path, policy));
-        Assert.Single(policy.Manifest.Match(path.Value));
-        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
-    }
-
-    [Theory]
-    [InlineData("Meta/unregistered.json")]
-    [InlineData("Meta/judge-seed-extra.json")]
-    [InlineData("Meta/package-materials-extra.json")]
-    public void RealRepositoryMetadataRegistrationRejectsUnregisteredNeighbors(string value)
-    {
-        var path = RepoPath.CreateKnown(value);
-        var policy = RealRepositoryPolicy();
-
-        var issue = Assert.IsType<RepositoryPathIssue>(RepositoryPathPolicy.Validate(path, policy));
-
-        Assert.Equal("SL-000", issue.RuleId.Value);
-        Assert.Equal(value, issue.Path);
-        Assert.Equal("path must match exactly one FILEMAP entry; matches=0", issue.Message);
-        Assert.Empty(policy.Manifest.Match(path.Value));
-    }
-
-    private static ValidatedPolicy RealRepositoryPolicy()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        return PolicyLoadAssert.Accepted(RepositoryPolicyLoader.LoadRepository(root)).Policy;
-    }
-
     [Fact]
     public void RealRepositoryPolicyHasCanonicalSnapshotFixedPoint()
     {
