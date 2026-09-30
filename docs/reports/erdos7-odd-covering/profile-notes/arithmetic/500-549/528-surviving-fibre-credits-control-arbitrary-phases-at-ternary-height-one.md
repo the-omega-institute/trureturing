@@ -1,5 +1,9 @@
 # Surviving-fibre credits give common query laws at ternary height one
 
+A [joint remainder fee](#remaining-originals-are-charged-only-on-the-grouped-survivor) charges every remaining original only where the two groups have left possible survivors, using the same row arrays and common free addresses. It dominates the old separate fee pointwise. On the explicit first-layer witness, the comparison changes from -0.00155843699 to +0.03821690136 at its old peak weight, and is +0.02729998136 at weight1/2. These are exact fixed-array evaluations; a positive bound over every admissible source has not been proved.
+
+A [common-source model](#a-common-source-boundary-retains-free-projections-and-star-intersections) retains shared head addresses, free projections, selected increments and both star restrictions. Even adding the necessary complete-first-row/deep-tail constraints leaves an explicit [negative comparison witness](#a-common-source-first-layer-witness-still-defeats-separate-remainder-payment): every root weight has certificate at most -527873726880671944/338719967040116536875 when the old separate remainder fee is retained. The witness realizes an abstract common probability source, not an arithmetic covering system. Joint payment with the remaining originals and further arithmetic cylinder constraints remain open.
+
 A [shared-budget obstruction](#shared-selected-budgets-and-the-exact-two-group-method-boundary) removes the mixed-palette restriction from one fixed twelve-prime, two-root scalar comparison. Even its exact two-group maxima, with the stated separate remainder charge, cannot certify positivity for any root weight: the best comparison is at most -298825388328897992/26987232024244366875. The feasible scalar witness violates a [necessary common-free-address relation](#common-free-addresses-exclude-the-scalar-witness), identifying a relation that a stronger comparison must retain. This is a method boundary, not a covering example or an unrestricted noncovering theorem.
 
 A [star-conditioned second-root estimate](#conditioning-every-star-complement-makes-the-other-root-positive) gives head Haar density greater than1/550 for the specified complementary1947-vector palette when the chosen root has no5-star. Both matching191/1947 root contracts together give density greater than1/500 and supported mass greater than9/8000 after the inherited outside-prime tail above100000. Arbitrary finite nonternary heights and fixed3,5,7 private-prime transport are retained; the mixed-palette and low-ternary conditions remain.
@@ -4493,3 +4497,249 @@ On the window Z/9Z, let H1 avoid1 mod3 and H2 avoid2 mod3. They have the same si
 FC103 separates exact survivor counts, not the final empty/nonempty output: both displayed sets remain nonempty. The transferable construction is to fix the readout and legal continuations, then prove that each update descends to the proposed boundary. The numerical gcd-task state count supplies no such theorem for a survivor-set deletion process. For the two-root problem, FC102 identifies one piece of joint information that the current separate scalar summaries have discarded.
 
 The shared-budget run checks11289 exact predicates and the witness run checks5657, including all120 address permutations. Independent checks reconstruct the literal arrays, complete support charges and all1783 witness weight candidates without repeating the witness search. These are ordinary proofs and exact finite computations, not new Lean verification. Unrestricted prime support, unrestricted ternary heights and arbitrary star patterns of Erdős#7 remain unresolved.
+
+## A common-source boundary retains free projections and star intersections
+
+Fix the actual finite globally phased family, two retained ternary cells resolving every original ternary condition, heads5,7 and a finite set of private primes. The height-one case has selected labels3*p*q^e active on at most one root. The construction of the boundary works for any resolved cells with their actual label budgets; the height-one geometric budget must not be imported to higher ternary levels without its separate accounting.
+
+Delete actual pure-prime originals and retain the same product laws lambda_v on all roots, with valid cylinder caps lambda_v(a mod v^e)<=c_v*v^-e. Let B_(v,r) be the actual star sets or explicitly declared enlargements on this probability space. A zero restricted carrier has zero group mass; below divide only by positive private survival masses g_(q,r).
+
+For each head p and private q, let F_(p,q,i) be the q-projection union of free p*q^e originals whose physical first-p address is i. This is the SAME set at both roots. Let S_(r,p,q,i) collect selected originals active on root r, and define their increment
+
+    E_(r,p,q,i)=S_(r,p,q,i) minus F_(p,q,i).
+
+Then F union S_r is the disjoint union of F and E_r. A numerical label has one physical head address. Consequently, with B_(p,q) and T_(r,p,q) the respective sums of its actual original cylinder caps,
+
+    sum_i lambda_q(F_(p,q,i))<=B_(p,q),
+    sum_i lambda_q(E_(r,p,q,i))<=T_(r,p,q).            (FC104)
+
+At height one B_(p,q)<=b_q and T_(1,p,q)+T_(2,p,q)<=b_q. Selected events may overlap free events; summing their masses without first taking the increment would not give an exact union representation.
+
+### Four star-membership cells preserve both restrictions
+
+For each coordinate v use the partition
+
+    A_(v,ab)={1_(B_(v,1))=a, 1_(B_(v,2))=b},
+    a,b in{0,1}.
+
+For a head p define
+
+    h_(p,i,ab)=lambda_p((i mod p) intersect A_(p,ab)),
+    ell_(p,i)=sum_ab h_(p,i,ab),
+    w_(p,1,i)=h_(p,i,00)+h_(p,i,01),
+    w_(p,2,i)=h_(p,i,00)+h_(p,i,10).                 (FC105)
+
+All h are nonnegative, sum_(i,ab) h=1, and ell_i<=c_p/p. The deleted row masses mu_(p,r,i)=ell_i-w_(p,r,i) can overlap across roots. Their common intersection satisfies
+
+    max(0,mu_1+mu_2-ell)<=h_11<=min(mu_1,mu_2).
+
+It is generally false that mu_1+mu_2<=ell. For actual height-one stars, the single numerical inventory gives sum_r beta_(p,r)<=b_p despite possible projected overlaps. Arbitrary independent enlargements need not preserve that pooled bound.
+
+For a private q put rho_(q,ab)=lambda_q(A_(q,ab)), so
+
+    sum_ab rho=1, g_(q,1)=rho_00+rho_01,
+    g_(q,2)=rho_00+rho_10.
+
+Retain free and selected-increment masses on each cell:
+
+    f_(p,q,i,ab)=lambda_q(F_(p,q,i) intersect A_(q,ab)),
+    s_(r,p,q,i,ab)=lambda_q(E_(r,p,q,i) intersect A_(q,ab)).
+
+They obey
+
+    0<=f, 0<=s_r, f+s_r<=rho_ab,
+    sum_(i,ab) f<=B_(p,q),
+    sum_(i,ab) s_r<=T_(r,p,q),
+    x_(r,p,q,i)=sum_(ab with r-bit=0)(f+s_r)/g_(q,r). (FC106)
+
+The selected increments for two different ternary roots can overlap on q; no inequality f+s_1+s_2<=rho is justified. Free sets from different head rows can also overlap on q. Equations FC104--FC106 map every actual family in the declared inventory to one shared scalar boundary without changing any original phase.
+
+Conversely these scalar constraints have an abstract common probability realization. In an interval of length rho_ab take each row's free set as its first f units and its selected increment for root r as the next s_r units. The two increments may overlap each other but both avoid F. Different rows need not be disjoint, so all are realized on the same interval. Realize h in disjoint physical head rows and take the coordinate product. This constructs the scalar marginals and shared restrictions, not q-adic cylinder nesting, pure-prime geometry, or one original per exponent. A finite list of real-valued coordinates is not a finite set of boundary states.
+
+For general private blockers, the necessary rowwise inequality is
+
+    [g_2*x_(2,i)-g_1*x_(1,i)]_+
+       <=lambda_q(E_(2,i) minus B_2)+f_(i,10).       (FC107)
+
+Indeed the free difference is f_(i,10)-f_(i,01), and the root1 increment can only decrease the displayed excess. Summing recovers FC102 when root1 has no private star. Without that condition the free mass in B_1 minus B_2 cannot be omitted.
+
+Two literal overlap controls prevent false extra constraints. On Z/121Z conditioned outside0 mod11, take the blocker1 mod11 and free rows with projections1 mod11 and1 mod121. Their deleted masses sum to6/55, greater than the blocker's1/10. Distinct free labels p*11 and p*121 realize them, so there is no global disjoint row-loss budget. On Z/25Z conditioned outside0 mod5, stars1 mod5 and1 mod25, assigned to different ternary roots via labels15 and75, delete masses summing to3/10 in a row of mass1/4. These controls preserve numerical distinctness and actual global phases.
+
+The actual grouped union on a root has residual factors1-x_(5,q,i)-x_(7,q,j)+z_(q,i,j), with z the actual same-q intersection. Under the guard
+
+    [B_(5,q)+T_(r,5,q)+B_(7,q)+T_(r,7,q)]/g_(q,r)<=1,
+
+dropping z gives the FC91 scalar upper on this smaller common-source domain. Independence is used only across different private coordinates. If the guard fails, replacing each residual by max(0,1-x-y) remains a valid lower bound on the complement; an untruncated product of possibly negative factors is invalid. The old independent-root vertex or fractional-row arguments do not automatically apply to the new coupled domain.
+
+### Actual first-depth stars impose a pooled tail constraint
+
+At ternary height one the numerical original3*p is absent from both retained roots or acts at one(root r0, physical row j0). Set
+
+    a_p=c_p/p, D_p=c_p*sum_(e>=2)p^-e=b_p-a_p.
+
+If absent, actual stars satisfy sum_(r,i)mu_(p,r,i)<=D_p. If present, they satisfy
+
+    mu_(p,r0,j0)=ell_(p,j0),
+    sum_((r,i)!=(r0,j0)) mu_(p,r,i)<=D_p.            (FC108)
+
+The depth-one cylinder deletes the whole first row. Every other deleted row-point is charged to a deeper original3*p^e, which has a unique root and row and cap c_p*p^-e. Summing these original caps proves FC108. The deep budget is pooled across BOTH roots, not granted separately to each. For complete caps D_p=1/[p(p-2)]. These are necessary conditions, not a complete arithmetic realization criterion.
+
+For example, the FC99 head5 law ell=(4/15,4/15,4/15,1/5,0) and deletion mu=(0,0,2/15,1/5,0) cannot be an actual full star union of mass1/3. Its only positive fully deleted row has mass1/5, while all deeper originals together cost at most1/15; compatible actual stars have mass at most4/15. Arbitrary measurable enlargement can still attain the padded1/3. One cannot impose FC108 on that arbitrary padding while keeping its fixed g=2/3 without a new domination argument.
+
+A valid strengthened method can instead keep the actual beta and g=1-beta, updating every carrier, private normalization and remainder fee. Alternatively it must prove that every actual source admits a suitable comparison enlargement with the required additional structure. This existential choice of enlargement differs from taking the worst arbitrary padded set.
+
+For each declared absent/(r0,j0) choice, FC105 and FC108 define a bounded polytope of common head parameters theta=(ell,mu_1,mu_2). There is a conditional vertex reduction. Fix all private laws and g factors, the other head, gamma, numerical cap coefficients, and a nonempty bounded raw-array domain X INDEPENDENT of theta. For the same separate-fee method,
+
+    C(theta)=sum_r gamma_r M_r(theta)-F_free(theta)
+             -S_selected(theta)
+             -sup_(xi in X)sum_r gamma_r Phi_r(theta,xi)
+
+is concave: carrier and direct free fees are affine in theta, each selected support fee is a nonnegative maximum of affine functions, and Phi for fixed xi is affine in the common row weights. The supremum of those affine functions is convex. Thus
+
+    min_theta C(theta)=min_(v a polytope vertex) C(v). (FC109)
+
+This fixes gamma before minimization and requires a head-independent X. It does not prove a vertex rule with varying private normalizers, a theta-dependent arithmetic realization domain, or after optimizing gamma. It is a conditional reduction, not a completed worst-source enumeration.
+
+### A common-source first-layer witness still defeats separate remainder payment
+
+Even retaining FC108 is insufficient to repair the current separate remainder method. Keep the same twelve-prime complete-budget parameters and the shared selected corner(510,0). Use common original head laws
+
+    ell5=(4/15,4/15,4/15,1/5,0),
+    ell7=(6/35,6/35,6/35,6/35,6/35,1/7,0).
+
+Root1's only head deletion is mu5=(4/15,1/15,0,0,0). Root2's only head deletion is mu7=(6/35,1/35,0,0,0,0,0). Each removes a complete first row and exactly its pooled deep-tail cap from a second row. The resulting weights are
+
+    w_(1,5)=(0,1/5,4/15,1/5,0), w_(2,5)=ell5,
+    w_(1,7)=ell7,
+    w_(2,7)=(0,1/7,6/35,6/35,6/35,1/7,0).           (FC110)
+
+At each private q choose five pairwise disjoint measurable sets of mass b_q: its root2 star, free5, selected5, free7, selected7. They fit since5*b_q<=1. Free sets appear on both roots; each selected set acts on its assigned root. All four group sets avoid the private star. Assign their physical head rows as follows:
+
+| q | Common free5 | Selected5 | Common free7 | Selected7 |
+| ---: | ---: | ---: | ---: | ---: |
+|11|2|0|3|3|
+|13|2|2|4|4|
+|17|1|1|2|2|
+|19|3|3|2|2|
+|23|2|2|1|5|
+|29|1|3|1|1|
+|31|1|3|1|5|
+|37|1|2|4|4|
+|41|1|2|4|5|
+
+All rows are zero-indexed. Each free vector f has total b_q; the selected increments s_1,s_2 together have total b_q. Set x_1=f+s_1 and g_(q,2)*x_2=f+s_2. This satisfies FC106 and FC102 on the same physical rows. The disjoint5/7 private sets make their intersection zero, so the paired factors are exact in this abstract product source. The common head spaces realize FC110 by measurable subsets. Neither this construction nor FC108 supplies full arithmetic cylinder realizability, and no finite actual family is claimed to saturate all complete geometric budgets.
+
+Literal evaluation gives feasible common-source group objectives
+
+    P1=355675779938/1573934236875,
+    P2=16278731892608/99157856923125.                 (FC111)
+
+Let L_common be the certificate optimizing the grouped fee over a domain containing this witness, with exactly the old separate free and selected remainders F_r and S from FC95--FC97. Then
+
+    L_common(gamma)<=gamma*(M1-F1-P1)
+                    +(1-gamma)*(M2-F2-P2)-S(gamma).
+
+The maximum of this upper comparison over every real gamma in[0,1] is
+
+    -527873726880671944/338719967040116536875
+       =-0.0015584369929339088...<0,                  (FC112)
+
+attained uniquely for this upper comparison at gamma=1323008/3415967. The calculation uses all1781 support breakpoints and the two endpoints. Feasibility of the displayed arrays suffices; their optimality is not assumed.
+
+Thus common free addresses, shared head laws and the necessary first-layer/tail structure still leave a negative witness for THIS separately paid remainder comparison. It remains possible to use further arithmetic restrictions or to pay the remainder jointly with the surviving grouped source. A positive value at one source would not be a uniform certificate over all actual families.
+
+The [common-source checker](../../../frontier/cover-geometry/fibre-credit-partition/common_source.py) and [results](../../../frontier/cover-geometry/fibre-credit-partition/common_source.json) give22213 exact checks, including48 actual finite globally phased families,96 grouped-union bounds,96 first-layer/deep-tail checks,24 independent whole-product enumerations, literal overlap controls and the120 FC99 row permutations. The [first-layer witness producer](../../../frontier/cover-geometry/fibre-credit-partition/first_layer_witness.py) takes the explicit [head profile](../../../frontier/cover-geometry/fibre-credit-partition/first_layer_heads.json), binds the common source and shared remainder inputs, and retains its complete [arrays and exact result](../../../frontier/cover-geometry/fibre-credit-partition/first_layer_witness.json). Its513 checks validate exact integer head scaling, source capacities, shared increments, first-layer deletions, full objectives and the all-weight comparison.
+
+The task-dependent boundary distinction is also literal:1 and5041 agree modulo5040, hence in every fixed-5040 affine-gcd observation. Their residues modulo11 are1 and3. The legal test1 mod11 separates them, so that fixed-window quotient cannot preserve every covering readout. This complements the survivor-count counterexample FC103 without claiming a classification of the empty/nonempty covering task.
+
+All results in this section are ordinary mathematical deductions with exact finite controls; they introduce no Lean verification. Neither the shared scalar boundary nor the first-layer witness settles arbitrary prime support, arbitrary ternary heights or unrestricted Erdős#7.
+
+## Remaining originals are charged only on the grouped survivor
+
+The separate remainder estimate ignores which points the grouped originals have already removed. A joint estimate can retain that information without assuming independence of the two heads' projection sets. It must use the SAME source, star restrictions, row probabilities and numerical inventory in the grouped-survivor term and in the remainder fee.
+
+Fix heads P={5,7}, private primes Q disjoint from P, and nonternary support V=P union Q. Work at ternary height one on two pure3-avoiding roots, with actual common pure-conditioned product laws lambda_v and valid depth caps c_v*v^-e. Group free p*q^e and selected3*p*q^e for p in P and q in Q. As before, keep physical head addresses, exact star-surviving head weights w_(p,r,i), and positive private survival masses g_(q,r). A zero carrier contributes zero and is handled before conditioning.
+
+Write x_(r,q,i),y_(r,q,j) for the actual conditional projection-union probabilities, and z_(r,q,i,j) for their intersection. The true private grouped-survival factor and its upper bound satisfy
+
+    h_(r,q,i,j)=1-x_(r,q,i)-y_(r,q,j)+z_(r,q,i,j),
+    k_(r,q,i,j)=1-max(x_(r,q,i),y_(r,q,j)),
+    0<=h<=k<=1.                                      (FC113)
+
+The upper inequality follows from z<=min(x,y). An upper estimate for x is not interchangeable with actual x here: increasing x can decrease both the group-survivor term and the remainder fee, with opposite effects on their difference. Any optimization must retain their joint feasible relation.
+
+### A remaining original retains its actual supported-head address
+
+For a nonternary support D subset V, |D|>=2, and an assignment a to the supported heads P intersect D, define
+
+    G_(D,r)=product_(q in Q minus D)g_(q,r),
+    K_(D,r)(a)=sum_(head rows i,j agreeing with a)
+         [product_(p in P minus D)w_(p,r,row_p)]
+         [product_(q in Q minus D)k_(r,q,i,j)].
+
+An empty fixed-head set has one empty assignment. A supported head is fixed, not summed, and contributes NO head row weight: its original-depth cap is already paid below.
+
+Let A_m be a remaining original's nonternary cylinder, let i_m be its actual first-row addresses on P intersect D, and let U_r be the carrier surviving both groups. Then
+
+    lambda_V(A_m intersect U_r)
+       <=cap(m)*G_(D,r)*K_(D,r)(i_m),
+    cap(m)=product_(v in D)c_v*v^(-e_v(m)).            (FC114)
+
+To prove this, resolve the head coordinates into physical first rows. On supported coordinates, discard their group-avoidance condition and bound the original cylinder intersected with its star complement by its depth cap. On unsupported heads keep the exact w weights. On unsupported private coordinates, the original imposes no restriction, and its remaining mass is g*h<=g*k by FC113. Independence across coordinates of the original, carrier and fixed-row group conditions then gives FC114 after summation. No independence within a private coordinate is assumed. If actual intersections are retained, h can replace k for a sharper fee.
+
+Multiplying a supported-head cap by its row weight again is false even without groups or stars. Condition the5 and11 coordinates outside their zero first rows. The original1 mod275, with275=5^2*11, has mass(1/20)*(1/10)=1/200, exactly its depth cap. Its first5 row has mass1/4. Multiplying that cap by the row weight would incorrectly claim an upper bound of1/800.
+
+### Free originals share an address; selected originals pay once
+
+For gamma_r>=0 with sum one, define
+
+    A_D(gamma)=max_a sum_r gamma_r*G_(D,r)*K_(D,r)(a),
+    B_D(gamma)=max_(r,a) gamma_r*G_(D,r)*K_(D,r)(a).   (FC115)
+
+A free original has one actual address a=i_m on both roots, so its weighted fee is at most cap(m)*A_D. A selected original3*d is active at at most one retained root, so its fee is at most cap(m)*B_D. Maximizing each free address independently on the two roots would discard a known relation. Neither maximum claims actual simultaneous attainment by all remaining originals.
+
+Let R_D^free and R_D^selected be nonnegative upper bounds for the total cap(m) of the respective ungrouped inventories. Union bounding only inside U_r gives the complete lower comparison
+
+    sum_r gamma_r*lambda(actual full survivor on root r)
+      >= J_joint(gamma),
+    J_joint(gamma)=sum_r gamma_r*L_group(r)
+                   -sum_D[R_D^free*A_D+R_D^selected*B_D],
+    L_group(r)=G_r*sum_(i,j)w_(5,r,i)*w_(7,r,j)
+                      *product_q(1-x_(r,q,i)-y_(r,q,j)). (FC116)
+
+Here every x+y<=1; the correct raw-budget guard is sufficient. If that guard fails, replace each factor in L_group by max(0,1-x-y). Comparison enlargements only shrink the carrier, so the full actual survivor still contains the carrier survivor used in the proof. All appearances of the arrays in FC116 refer to the same actual source.
+
+For complete geometric free and selected inventories, both coefficients equal FC95:
+
+    R_D=(b_p-a_p)*b_q if D={p,q}, p in P, q in Q;
+    R_D=product_(v in D)b_v otherwise.
+
+This retains all support-{5,7} originals, deeper head powers and every larger support. It removes exactly the grouped first-head-power labels. Finite windows and restricted selected inventories can instead use their actual nonnegative cap sums.
+
+### The new fee is dominated support by support
+
+Every k lies in[0,1], hence
+
+    G_(D,r)*K_(D,r)(a)<=product_(v outside D)g_(v,r),
+    A_D<=sum_r gamma_r*product_(v outside D)g_(v,r),
+    B_D<=max_r gamma_r*product_(v outside D)g_(v,r).   (FC117)
+
+Thus FC116 is never smaller than the old separate-fee comparison at the SAME source and row array. If D contains every private coordinate, this particular improvement disappears: all private group restrictions were discarded. The theorem does not grant a positive uniform minimum, and the old corner reduction for a separately maximized group term does not automatically apply to the new joint expression.
+
+On the stored FC110--FC111 first-layer witness, exact evaluation gives
+
+| Fixed gamma | Old separate-fee comparison | Joint comparison |
+| --- | ---: | ---: |
+|1323008/3415967|-0.0015584369929339088|0.0382169013560704|
+|1/2|-0.013779862326050071|0.027299981360675428|
+
+The positive joint values are exactly
+
+    38834482703110653584/1016159901120349610625,
+    3248409174919/118989428307750, respectively.        (FC118)
+
+The [joint evaluator](../../../frontier/cover-geometry/fibre-credit-partition/joint_remainder_evaluate.py) reads the literal stored arrays, verifies their group residuals against the original objective, and checks every support/address fee against FC117. Its [exact results](../../../frontier/cover-geometry/fibre-credit-partition/joint_remainder_evaluation.json) retain both predeclared weights, group residuals, free and selected fees, and subtotals by supported heads. It performs53191 checks and no array search or root-weight optimization. The old peak comparison is independently reconstructed from the same arrays.
+
+The separate [actual-family checker](../../../frontier/cover-geometry/fibre-credit-partition/joint_remainder_controls.py) and [results](../../../frontier/cover-geometry/fibre-credit-partition/joint_remainder_controls.json) supply14209 exact checks:24 globally phased squarefree families,138240 full-product points,504 individual remaining-original bounds,96 weighted comparisons and192 supported deep-head controls. They include the275 cap/row counterexample and a finite deep-private family with strict improvement. Some squarefree fixtures have unchanged worst-address fees; improvement is not asserted for every source. These controls support the ordinary proofs, not a new Lean result.
+
+These positive values show that the known first-layer witness no longer obstructs the joint fee method. They do not establish positivity for other arrays, arithmetic realization of the witness, or unrestricted Erdős#7. A sufficient next target is a positive bound for the whole expression over a proved outer domain containing all relevant actual arrays, with fixed gamma or a justified choice depending on the source. Such a uniform constant is a sufficient route, not a necessary reformulation of the original noncovering claim.
