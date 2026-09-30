@@ -35,7 +35,10 @@ internal sealed class CycleSixStrongTwoResistanceRefutationDocument : IScribeDoc
                 StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
                 AssessedProvenance.FromRepo(Han),
                 Blocks(Paragraph(Text("For J = {0,2}, write the traced bits as t,u and the retained bits as r,x,y,z on qubits 1,3,4,5. The six-cycle phase splits as (t+u)r + xy + yz + ux + tz. Set a_tu(r) = (-1)^((t+u)r) and b_tu(x,y,z) = (-1)^(xy+yz+ux+tz). The marginal is (1/4) times the sum over the four t,u of (a_tu a_tu* / 2) tensor (b_tu b_tu* / 8). Each factor is positive semidefinite with trace one, and the four nonnegative weights sum to one. This is a product mixture across the nontrivial cut {1} | {3,4,5}; it is biseparable and violates the requirement that every two-qubit-loss marginal be GME."))),
-                DescribeRole.Theorem)), []));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("han-zhang-zhang-2026-cycle-six-strong-two-resistance-refutation"),
+                    ResolutionKind.Refuted))), []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose, LibraryNoteRef? source) =>
         Describe.Lean(DescribeId.Create("cycle-six-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),

@@ -106,6 +106,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/CycleSixStrongTwoResistanceRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/han-zhang-zhang-2026-cycle-six-strong-two-resistance-refutation` (refuted) by `D5/S3/Quantum/Entanglement/CycleSixStrongTwoResistanceRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"han-zhang-zhang-2026-cycle-six-strong-two-resistance-refutation","declaration_gid":"D5/S3/Quantum/Entanglement/CycleSixStrongTwoResistanceRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Zicheng Han; Wanchen Zhang; Xiande Zhang (2026). *A five-qubit 1-resistant graph state and stabilizer marginal certificates*. URL: <https://arxiv.org/abs/2606.08561v1>.
