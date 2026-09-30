@@ -23869,3 +23869,244 @@ Weingartner, *The distribution functions of σ(n)/n and n/φ(n), II*, arXiv:1011
 有限配置 $m$ 只证明所述大小截断与全整数区间矩的下界。固定 FIB 剩余类的额外加权节省、精确截断损失及原始逐点 Robin 目标均不由这些下界推出。
 
 ## 追加锚（本行以下为增补区）
+
+## 211. 实际 FIB 矩障碍的余量门槛、CRT 子族与大核心
+
+沿用 §209 的实际来源族
+
+$$
+V=F_r,\quad r\ge7\text{ 为素数},\quad
+I_r=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\quad N_g=1+gV,
+$$
+
+并令 $A=\min_gN_g$、$X=\max_gN_g$、$T=|I_r|$、
+$y=\log A$、$\ell=\log y$、$s=y\ell$、$t=e^\gamma\ell$。
+所有渐近均沿素数 $r\to\infty$。实际端点给
+
+$$
+\log T=y/2+O(1),\qquad y=2\log V+O(1),\qquad X/A\to2.
+$$
+
+对同一份实际整数定义
+
+$$
+\mathcal Q_r=\sum_{g\in I_r}(Z(N_g)/t)^s,\qquad
+\mathcal P_r=\sum_{g\in I_r}(Z(N_g)/t_g)^s,\qquad
+t_g=e^\gamma\log\log N_g,
+$$
+
+以及加性余量 $\Delta(N)=e^\gamma\log\log N-Z(N)$。
+§210.5 的精确比较给
+$\mathcal P_r\le\mathcal Q_r\le(X/A)\mathcal P_r$。
+本节仅将 $\mathcal Q_r<1$ 作为充分证书，不假定它是必要条件；
+本族全部安全是否蕴含这个指定证书，尚未判定。
+
+### 211.1 证书失败要求同一个实际整数具有更小余量
+
+**命题 211.1（指定矩的必要余量门槛）。** 若 $\mathcal Q_r\ge1$，
+则存在同一个实际 $g\in I_r$，使
+
+$$
+Z(N_g)\ge tT^{-1/s},
+\qquad
+\Delta(N_g)\le t_g-tT^{-1/s}.
+\tag{211.1}
+$$
+
+因而沿任意这样的充分大指标，
+
+$$
+\frac{\Delta(N_g)}{e^\gamma}
+\le\frac12-\frac1{8\ell}+O(\ell^{-2}),
+\tag{211.2}
+$$
+
+其中余项对实际区间一致。
+
+证明。若所有 $T$ 项都小于 $1/T$，其和小于一，故某项至少为
+$1/T$，得到式（211.1）。实际端点给
+
+$$
+\frac{\log T}{s}=\frac1{2\ell}+O((y\ell)^{-1}),
+\qquad
+\frac{t_g}{e^\gamma}=\ell+O(1/y).
+$$
+
+展开 $\exp(-\log T/s)$，得
+
+$$
+\ell\exp(-\log T/s)
+=\ell-\frac12+\frac1{8\ell}+O(\ell^{-2}),
+$$
+
+即式（211.2）。这里选取的响应、规模、余量全部属于该同一个
+$N_g$。$\square$
+
+反向有一个统一充分界：若某个实际子族中的所有整数满足
+$\Delta(N_g)\ge e^\gamma c$，其中 $c>1/2$ 固定，则即便子族包含全部
+$T$ 项，也有
+
+$$
+\sum_{g\text{ 属于该子族}}(Z(N_g)/t)^s
+\le\exp((1/2-c+o(1))y)\longrightarrow0.
+\tag{211.3}
+$$
+
+这是因为 $Z(N_g)/t\le1-c/\ell+O((y\ell)^{-1})$，而
+$\log T=y/2+O(1)$。若最终精确满足
+$\Delta(N_g)\ge e^\gamma/2$，同样利用
+$\log(1-u)\le-u-u^2/2$ 得总和的对数至多
+$-y/(8\ell)+o(y/\ell)$，仍趋于负无穷。
+仅有余量下极限不小于 $e^\gamma/2$，不能替代这个精确最终下界。
+
+特别地，§205.5 已构造的整数满足
+$\Delta(N_r)\to e^\gamma\log2$，故
+
+$$
+(Z(N_r)/t)^s=\exp(-(\log2+o(1))y).
+\tag{211.4}
+$$
+
+它们虽在相对意义下接近 Robin 界，却不构成当前矩证书的障碍。
+任何具有这一一致余量的至多 $T$ 项，其总贡献仍按
+$\exp((1/2-\log2+o(1))y)$ 趋零。
+这不声称 §205.5 的单个构造已覆盖全部乘子。
+
+### 211.2 大量真实 CRT 安全整数的总矩贡献仍趋零
+
+**命题 211.2（饱和核心子族的计数与矩率）。** 固定
+$0<\beta<1/2$，令
+
+$$
+u_r=\lfloor\beta y\rfloor,\quad
+D_r=\operatorname{lcm}(1,\ldots,u_r),\quad
+z_r=r(\log r)^{1/4}.
+$$
+
+定义 $\mathcal S_r(\beta)$ 为恰好满足以下两项的实际 $g\in I_r$：
+$D_r\mid N_g$，且实际余因子 $H_g=N_g/D_r$ 没有不超过 $z_r$ 的素因子。
+则
+
+$$
+\log|\mathcal S_r(\beta)|=(1/2-\beta)y+o(y),
+\tag{211.5}
+$$
+
+并且对该子族一致有
+
+$$
+Z(N_g)=e^\gamma\log(\beta y)+o(1),\qquad
+\Delta(N_g)=-e^\gamma\log\beta+o(1)>0.
+\tag{211.6}
+$$
+
+在指定矩阶下，
+
+$$
+\frac1y\log\!\left(
+\sum_{g\in\mathcal S_r(\beta)}(Z(N_g)/t)^s
+\right)
+\longrightarrow\frac12-\beta+\log\beta<0.
+\tag{211.7}
+$$
+
+证明。引理205.4 给
+$\log D_r=\beta y+o(y)$ 及
+$Z(D_r)=e^\gamma\log(\beta y)+o(1)$。
+因 $\beta y<2r-1$ 最终成立，$D_r$ 与 $V$ 互素。实际同余
+$gV\equiv-1\pmod{D_r}$ 在 $I_r$ 中有
+
+$$
+T/D_r+O(1)=\exp((1/2-\beta)y+o(y))
+$$
+
+个解。以连续整数参数写这些解为 $g=g_0+D_r j$，则同一余因子为
+$H_j=H_0+Vj$。对每个 $p\le z_r$、$p\nmid V$，排除
+$p\mid H_j$ 只禁止一个剩余类；$p\mid V$ 时该整除事件自动不发生。
+§205.4 的有限容斥给计数主项
+
+$$
+(T/D_r+O(1))
+\prod_{\substack{p\le z_r\\p\nmid V}}(1-1/p)
+$$
+
+与绝对误差至多 $2^{\pi(z_r)}=\exp(o(y))$。主项至少为
+前面解数的常数倍除以 $\log z_r$；因为 $1/2-\beta>0$，
+主项压过误差，得到式（211.5）。
+
+$D_r$ 的素因子都小于 $z_r$，所以 $\gcd(D_r,H_g)=1$。
+由实际乘子区间知 $\log H_g=O(r)$，从而一致有
+
+$$
+0\le\log Z(H_g)
+\le\frac{\log H_g}{(z_r-1)\log z_r}
+=O((\log r)^{-5/4}).
+$$
+
+由于 $Z(D_r)=O(\log r)$，其乘法影响是加性 $o(1)$。
+这证明式（211.6）。每个归一矩项的对数因而为
+$(\log\beta+o(1))y$，且误差一致；与式（211.5）合并得式（211.7）。
+函数 $1/2-\beta+\log\beta$ 在 $(0,1/2)$ 上递增，其右端极限为
+$-\log2<0$。$\square$
+
+这些整数全属于 §205.2 已回接的规范单位位一来源，没有用不相容的局部最优值
+代替实际整数。个体阈值归一也具有式（211.7）的相同指数率，因为两种归一矩
+相差至多 $X/A\to2$ 倍。结论只排除了这一指定 CRT 构造作为矩障碍的可能，
+不排除其他乘子与余因子构造。
+
+### 211.3 指定矩障碍还要求一个超过模数的实际平方自由核心
+
+**命题 211.3（矩障碍的大平方自由核心）。** 固定 $a>0$，令
+
+$$
+z=r(\log r)^a,\qquad
+C_z(N)=\prod_{p\le z}p^{v_p(N)},\qquad
+R_z(N)=\prod_{\substack{p\le z\\p\mid N}}p.
+$$
+
+若 $\mathcal Q_r\ge1$，则对式（211.1）选出的同一个实际整数，
+充分大时有
+
+$$
+\log R_z(N_g)\ge(2e^{-1/2}-o(1))\log V.
+\tag{211.8}
+$$
+
+精确量词为：每个固定 $\varepsilon>0$ 对应一个指标阈值，此后每个满足
+$\mathcal Q_r\ge1$ 的素数指标均有这样的 $g$，使右边可取
+$(2e^{-1/2}-\varepsilon)\log V$。
+
+证明。§206 的实际核心尾估计一致给
+
+$$
+Z(N)=Z(C_z(N))+O((\log r)^{-a}).
+$$
+
+而式（211.1）给
+$Z(N_g)\ge e^\gamma(\log y-1/2+o(1))$。
+因为 $Z(C_z)\le R_z/\varphi(R_z)$，所选整数的 $R_z$ 必趋于无穷。
+因此最终可以对这些实际平方自由核心使用 §207 引用的 Axler 上包络；
+其固定小规模阈值不再构成障碍，且加性误差趋零。得到
+
+$$
+\log\log R_z(N_g)\ge\log y-1/2+o(1).
+$$
+
+指数化并使用 $y=2\log V+O(1)$，即式（211.8）。$\square$
+
+$2e^{-1/2}>1$，所以这种平方自由核心最终大于 $V$，
+也大于整个乘子区间的长度。它与 $V$ 互素，且
+$R_z(N_g)\mid1+gV$；因而给定这个实际核心，区间中至多有一个合法乘子。
+这只是矩证书失败的必要共同实现条件，并不证明该核心实际存在或足以造成失败。
+
+### 211.4 原判据与更强证书的未决边界
+
+全整数区间的矩障碍不推出 FIB 剩余类的矩障碍。
+这些已构造子族对 $\mathcal Q_r$ 的贡献趋零，未由它们得到
+$\mathcal Q_r\ge1$；全体乘子的 $\mathcal Q_r$ 仍未判定。
+仍未构造满足 $\mathcal Q_r\ge1$ 的实际无限指标族，也未证明它不可能存在。
+继续排除当前充分证书的障碍，需要控制实际大核心与唯一同余乘子的联合命中。
+即使最终证明该来源族全部安全，任意自然数的 Robin 不等式仍需另行覆盖。
+
+## 追加锚（本行以下为增补区）
