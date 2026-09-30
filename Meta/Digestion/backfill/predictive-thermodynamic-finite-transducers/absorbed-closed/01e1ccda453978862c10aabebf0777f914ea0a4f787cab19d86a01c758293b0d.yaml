@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:01e1ccda453978862c10aabebf0777f914ea0a4f787cab19d86a01c758293b0d
+  normalized_sha256: sha256:01e1ccda453978862c10aabebf0777f914ea0a4f787cab19d86a01c758293b0d
+cas_ref: sha256:01e1ccda453978862c10aabebf0777f914ea0a4f787cab19d86a01c758293b0d
+coverage_gids:
+  - gid: D5/S0/Computability/ClauseOracleProtocol.one_query_run
+    target_statement_id: sha256:455d5e5525bb6654fc9516eb4d03e2405e81fbe3ec127d5632bd157be16314e1
+receipts:
+  unresolved_subitems: []
