@@ -642,3 +642,74 @@ scoped build of the existing `D5.S3.Arith.FibonacciRank` succeeded; this does
 not verify the new analytic composition. The source family is one Fibonacci
 term times 5040, not every integer encoded in Zeckendorf form. No RH or
 originality claim is made.
+
+## Golden norm and two-term sources (§§165–169)
+
+[`orbit_norm.py`](orbit_norm.py) checks the arithmetic bridges from fixed
+nonnegative FIB compositions and legal same-parity two-term sums to prime
+exclusions and finite rank carriers. Run with Python 3.9 or newer:
+
+```sh
+python3 -B docs/reports/fib-robin-boundary/orbit_norm.py \
+  --out /tmp/fib-robin-orbit-norm.json
+```
+
+Keep the program beside `kernel_tail.py`, which supplies exact primality and
+outward rational logarithm bounds. Only the standard library is required.
+The required `--out` names the result file; that selected file is overwritten.
+Optimized Python is rejected because assertions verify the diagnostics.
+The program writes no bytecode or implicit output beside its sources.
+
+The retained [orbit_norm.json](orbit_norm.json) contains:
+
+- 88,128 exact adjacent-gcd and norm-invariant checks for coefficients
+  `0 <= a,b <= 32`, not both zero, and indices `0 <= j <= 80`;
+- 97,929 exclusions of primitive-norm prime factors, with valuations
+  independently divided out of the actual integer `5040*U_j`;
+- 135,680 quantity-fiber residue checks for `1 <= n <= 128` and primes at
+  most 97, including 2,593 locally primitive norm roots;
+- 5,476 two-term product identities for `4 <= a <= 150`,
+  `2 <= b <= a-2`, and `a == b modulo 2`;
+- 1,973 actual prime-rank checks from complete sum factorizations with
+  `a <= 48`, and 48 pairs sharing an odd factor across the product;
+- rational certificates for the effective seed thresholds and the
+  same-parity tail bound `a > exp(60)`, whose final linear slack at 60
+  is `77/195`;
+- the improved fourth-root divisor bound, the new `a > exp(38)` tail
+  with slack `62/195`, the exact forced index lower bound
+  `17323418604800000000 > 3^38`, and 150 direct checks of the local
+  Lucas formulas used to connect the remaining branch to that tail;
+- the exponent caps of all 60 positive divisors of 5040, supporting the
+  same proof for each multiplier `c | 5040`, including `c = 1`.
+
+The carrier keeps rank 3 separately: `F_32+F_8=F_20*L_12` contains every
+core prime but gets its factor 2 only from the Lucas term. Removing that
+exception loses an actual prime despite retaining the whole core. The
+different-parity example `F_8+F_3=23` also records the limits of the
+two-divisor-set argument.
+
+The legal branch example starts at `23=2+21`, whose composition has norm
+11, and applies `S*x + d_2` to obtain `99=2+8+89`, of norm 41. Thus an
+excluded prime along a fixed seed's linear orbit can reappear after a
+legal translation branch. The program retains this obstruction explicitly.
+
+The final program was copied to a path containing spaces and run from an
+unrelated working directory with only the system `PATH` in its environment;
+its output matched the retained JSON byte for byte. Optimized execution and
+an omitted `--out` both returned exit 2 without producing a result. These
+portability checks were performed on macOS with Python 3.9; no other
+platform run is claimed.
+
+These are finite arithmetic diagnostics. The general norm argument, unit
+classification, effective analytic thresholds and universal two-term bounds
+are paper deductions using the cited published inputs; the program does
+not formally prove them. The unit-norm classification is not separately
+enumerated here. The fixed-seed theorem has a seed-dependent threshold;
+section 169 connects the five-prime stopping rules to the improved tail
+and covers every `c*(F_a+F_b) > 5040` with positive `c | 5040` and legal
+same-parity indices, using the common Lucas index's incompatible
+divisibility phases at 3 and 7. The case `c = 1` includes the two-term
+sums themselves. Opposite-parity
+sums and arbitrary multi-term histories remain outside that conclusion.
+These paper deductions and the finite program are not a Lean proof of
+the full family or of RH; no literature-priority claim is made.
