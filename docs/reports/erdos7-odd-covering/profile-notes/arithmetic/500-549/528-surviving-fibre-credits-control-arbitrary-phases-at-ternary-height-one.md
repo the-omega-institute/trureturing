@@ -26063,3 +26063,168 @@ actual-pair consumer. The replacement rule, no-2-or-3 source,
 ordered-pair expansion and full tail theorem are reused. These
 are ordinary symbolic deductions with independent review, not
 new Lean verification or a settlement of unrestricted Erdős#7.
+
+## The vacant-label constraint also filters pairs inside the ternary core
+
+Keep the SAME globally minimum whole cover, full-height head and
+actual suffix library. Let Q_0 be the complete old carrier on
+C without3. Define the finite numerical down-set and its minimal
+excluded boundary by
+
+    J={h|Q_0:3h is an original modulus},
+    partial J={h|Q_0:h notin J, every proper divisor of h lies in J},
+    K=J union partial J.                         (FC1135)
+
+Here1 belongs to J because the original3 is present, so partial J
+contains no unit. No residue is selected in forming these numerical
+sets. Every height in Q_0 is the FULL original height, including
+heights needed only by future classes.
+
+For two DISTINCT originals simultaneously active at the head whose
+old parts are supported on C, allowing the unit, let h be the gcd
+of their3-free old parts. Then
+
+    h belongs to K;
+    if either old part is divisible by3, h belongs to J. (FC1136)
+
+For the first assertion, an h outside K has a proper nonunit
+f|h outside J. Both3f and3h are globally absent, so FC1128 rules
+out these two originals in the same h-phase. The original h needed
+there exists by divisor closure. For the second assertion, an old
+part3^a n with a>=1 makes3h a divisor of an original, hence3h
+itself is original. These arguments use the actual OLD projections;
+they do not require complete future congruence classes to intersect.
+
+Thus the companion restriction is not confined to disconnected
+head components. Even for a prime q INSIDE C, absence of3q forbids
+two simultaneously active distinct originals from sharing q^2 or
+qr for any other core prime r. More generally every proper nonunit
+divisor f of a composite shared3-free gcd must have3f present.
+This is a necessary condition, not a claim that every remaining
+numerical pair admits compatible original phases.
+
+### A finite same-source core moment from this numerical boundary
+
+Let P_C be ONE probability on the full core carrier with joint
+cylinder caps
+
+    P_C([a]_d)<=product_(q in C)w_q(v_q(d)),
+    w_q(0)=1, w_q(i)=M_q/q^i for1<=i<=H_q.       (FC1137)
+
+The constants are nonnegative and these caps are a premise;
+coordinate independence is NOT required. One available choice is
+full Haar with all M_q=1. A different law must supply its own caps.
+In particular a conditioned law does not inherit the same caps
+merely because its unconditioned source had them.
+
+For q in C without3, put
+
+    t_q(i)=w_q(i)+2 sum_(j=i+1..H_q)w_q(j),
+    G(h)=product_(q in C without3)t_q(v_q(h)),
+    W(h)=product_(q in C without3)w_q(v_q(h)),
+    kappa_3=1+sum_(i=1..H_3)(2i+1)w_3(i),
+    Xi_C=kappa_3 sum_(h in J)G(h)
+                  +sum_(h in partial J)G(h)
+                  +sum_(h|Q_0,h notin K)W(h).
+    E_(P_C) A_v^2<=Xi_C                         (FC1138)
+
+for EVERY actual core section A_v from FC1109. The unit old slot,
+when present, remains in A_v. Numerical distinctness gives at most
+one original at each complete old divisor for this fixed suffix.
+
+For the proof, expand that actual square into ordered pairs. Each
+compatible pair is one cylinder modulo the LCM of its old parts;
+an incompatible pair contributes zero. For a nonternary prime q,
+the exponent pairs with minimum i have total LCM-cap weight
+t_q(i): the diagonal(i,i) contributes w_q(i), and the two ordered
+pairs(i,j),(j,i) contribute2w_q(j) for each j>i. Thus G(h) is
+exactly the FINITE numerical pair sum with3-free gcd h.
+
+There are three disjoint permitted inventories. If h lies in J,
+all ternary exponent pairs may be retained; their total factor is
+kappa_3. If h lies in partial J, both ternary exponents must be
+zero, even on a diagonal, because a3-bearing old slot would force
+3h to be original. Finally, outside K, FC1136 removes every
+off-diagonal; only a3-free same-slot diagonal can remain, with
+weight W(h). This proves FC1138 and also
+
+    0<=Xi_C<=product_(q in C)
+                   [1+sum_(i=1..H_q)(2i+1)w_q(i)]. (FC1139)
+
+The last comparison is inclusion of numerical pair inventories.
+It subtracts nothing from an actual expectation, and overcounting
+numerical slots absent from the original family is harmless. In
+particular all composite diagonals are still paid exactly once.
+The finite formula uses neither an independent choice of phases
+nor a replacement of the actual family by a completed family.
+
+Let R_C remain the ACTUAL full core-head survivor set. Restrict
+this same source and normalize once, assuming
+
+    r_C=P_C(R_C)>0, mu_C=P_C restricted to R_C / r_C.
+
+Domination gives max_v E_(mu_C)A_v^2<=Xi_C/r_C. Form the same
+supported product with FC1132's mu_O. Cauchy on each actual core
+section and the initial product-square expansion now give
+
+    Psi_B(mu_C tensor mu_O)
+       <=Xi_C/r_C+10sqrt(Xi_C/r_C)(K_1-1)+5Theta_O,
+    Psi_B(mu_C tensor mu_O)
+       <=[sqrt(Xi_C/r_C)+sqrt(5Theta_O)]^2.       (FC1140)
+
+Each right side is a complete head supplier for FC1107--1108,
+including EVERY future original. This uses an ACTUAL-query core
+maximum; FC1138 is not a new bound for Gamma or for arbitrary
+independent core layouts. The full-layout R_1,R_2 in FC1110 remain
+valid alternative suppliers. Later kernels use the one resulting
+joint law and require no renewed head independence.
+
+For a proper cut, irredundancy supplies a head survivor and Haar
+therefore supplies some positive r_C. It does NOT supply a uniform
+positive lower bound: the available1/Q_C floor may be too small.
+No claim here forces either comparison in FC1140 below the endpoint.
+The core's actual label incidence is now available to that estimate;
+its source reserve and a passing proper cutoff remain obligations.
+
+### Vacancies one layer above a parent give a triple constraint
+
+The same palette correction also extends Report385 DR7--DR8/AQ3
+below the global ternary height. Suppose
+
+    h=3^a n is original, a>=1, gcd(3,n)=1,
+    f_1,f_2,f_3 are distinct divisors of n,
+    3^(a+1)f_i is absent from the ENTIRE original family.
+
+Then every actual h-phase satisfies
+
+    #{u original:h|u,a_u=c mod h}<=2.            (FC1141)
+
+Otherwise move h to the common phase of three proper descendants
+and delete them. Repair the whole old h-class by its three lifts
+of the old3^a prefix, giving the ith lift the old cofactor phase
+modulo f_i. These three globally fresh moduli are distinct, and
+their classes cover every old h-point with all higher digits
+unrestricted. Count ties, while their sum is at most9h and the
+three removed distinct proper odd multiples have sum at least
+(3+5+7)h=15h. This contradicts the fixed second minimum. At h's
+original phase comparable disjointness already gives capacity one.
+
+Thus a simultaneous OLD activation of three distinct originals
+sharing a WHOLLY OLD divisor3^a n forces at most two missing labels among
+{3^(a+1)f:f|n}. This capacity two is joint across all future suffixes;
+it is not a separate capacity for each operation or stage.
+For example3^a q^3 original and3^(a+1)q absent imply FC1141 using
+f=q,q^2,q^3. If a<H_3, the pure label corresponding to f=1 is
+occupied, so the same argument cannot silently replace q^3 by q^2.
+At a=H_3 the established fresh-above-height repair is recovered.
+
+FC1141 is a third-order exclusion, not a reason to delete additional
+pairs from FC1138. Its role is to expose an extra actual joint
+constraint for future higher-moment or incidence estimates. The new
+step is verified numerical vacancy at the local next layer; the
+global replacement rule and its modulus-sum comparison are reused.
+
+FC1135--1141 are ordinary finite symbolic deductions, independently
+reviewed without new Lean verification. They retain arbitrary
+global ternary height and all original labels, and do not settle
+unrestricted Erdős#7.
