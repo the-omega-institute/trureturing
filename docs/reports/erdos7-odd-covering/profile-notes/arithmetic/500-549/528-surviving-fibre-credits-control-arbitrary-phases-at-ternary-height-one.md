@@ -23585,3 +23585,194 @@ same-source light charge, including the lower-layer labels missed by
 FC1014, against a useful actual head reserve. Neither the whole-tail
 square payment nor the exact blind-set classification proves that
 comparison or settles unrestricted Erdős#7.
+
+## Complete light seeds retain all old heights and every cross tuple
+
+Keep one actual finite original family, its literal phases and complete
+head exponents E_q, including the old parts of future originals. Let
+H=v_3(Q)>=1 and let P_B be the old nonternary support. First suppose
+S={5,7,11,13} is contained in P_B. An absent member may equivalently
+be included with E_q=0: its polynomial below is one and no new actual
+coordinate or forbidden label is created. Pure originals are handled
+by the full-family pure laws. The selected nonpure inventory is fixed
+at B: ternary height H and at least three S factors. Its ENTIRE light
+complement includes every lower ternary height, as well as the top
+originals using at most two S factors.
+
+### A source contract and its exact finite tuple polynomial
+
+For one finite subprobability eta suppose every old joint cylinder
+satisfies
+
+    eta(cylinder of depths e_3 and (e_q))
+      <=t_3(e_3) product_(q:e_q>0)a_q q^-e_q,
+    t_3(0)=1, t_3(e)=2*3^-e for e>=1.                 (FC1016)
+
+For the pure-product head nu_B or any UNNORMALIZED restriction, take
+a_q=c_q=(q-1)/(q-2). For the w=1 unguarded raw head mu_B^o or its FULL
+head-survivor restriction, take a_q=4c_q. The latter follows from
+FC891 by eliminating coordinates backwards: a queried coordinate
+pays its uniform cylinder cap, an unqueried coordinate only its row
+mass at most one, and the initial ternary cap is twice Haar.
+Independence of the raw coordinates is not assumed. Restriction
+preserves the bound. If instead eta<=D nu_B, use the pure-product
+formula multiplied ONCE by D. Normalizing a restriction of mass s
+therefore costs its factor1/s; no normalized source receives the
+unnormalized seed for free.
+
+For ell=2 or3 define
+
+    h_ell(q,E)=sum_(e_1,...,e_ell=0..E)q^-max(e_1,...,e_ell),
+    b_(ell,q)=1+a_q[h_ell(q,E_q)-1],
+    u_(q,j)=a_q sum_(m=1)^E_q[m^j-(m-1)^j]q^-m,
+
+    F_(ell,q)(z_1,...,z_ell)
+      =1+sum_(empty!=J subset {1,...,ell})
+                  u_(q,|J|) product_(i in J)z_i.       (FC1017)
+
+For a specified set J of positive-depth entries, there are exactly
+m^|J|-(m-1)^|J| such exponent tuples with maximum m. Thus
+F_(ell,q)(1,...,1)=b_(ell,q). Put P_S=product_(q in S)F_(ell,q),
+and let T_(ell,j) be the sum of its coefficients whose exponent in
+EACH of z_1,...,z_j is at most two; the other variables are unrestricted.
+Symmetry makes the choice of the j positions immaterial. In particular
+T_(ell,0)=product_(q in S)b_(ell,q) and
+0<=T_(ell,ell)<=...<=T_(ell,0). A power of z_i counts the S-primes
+in original i, not the union of primes in the whole tuple.
+
+The positive all-height upper coefficients are
+
+    u_(q,1)^infinity=a_q/(q-1),
+    u_(q,2)^infinity=a_q(q+1)/(q-1)^2,
+    u_(q,3)^infinity=a_q(q^2+4q+1)/(q-1)^3.           (FC1018)
+
+They follow by summing the displayed finite differences. They enlarge
+only exponent ranges on a FIXED old prime support; the actual original
+family remains finite. Either these values or the exact finite sums
+may be used. An absent S direction keeps E_q=0 and F_(ell,q)=1 even
+when actual old directions use the all-height coefficients.
+
+### Full light moments, with no separation of their mixed terms
+
+At an actual future suffix v, let U_v count its top-height originals
+using at most two S-primes. Original numerical distinctness gives at
+most one original per complete old cofactor inside this suffix.
+Expanding U_v^ell as ordered tuples therefore injects into the allowed
+old exponent tuples, including repetitions. Compatible phases give
+one cylinder at coordinatewise maximum depths; incompatible tuples
+contribute zero. All ternary depths in this top-only tuple equal H,
+so FC1016 gives
+
+    integral U_v^ell deta
+      <=(2/3^H)T_(ell,ell)P_out,
+    P_out=product_(q in P_B minus S)b_(ell,q).         (FC1019)
+
+The ternary factor is paid ONCE. The sparse rule is imposed on each
+original before summing. No actual phase or source was changed to
+make the enlarged arithmetic envelope achievable.
+
+For the entire light load R_v, put
+ t_ell(H-1)=1+2[h_ell(3,H-1)-1]. In an ordered ell-tuple, classify
+its entries by those at ternary depth H. If none are top, the ternary
+cap sum is t_ell(H-1). If j entries are top, each other entry has H
+choices0,...,H-1, the common ternary maximum is H, and precisely those
+j entries obey the sparse support restriction. Consequently
+
+    integral R_v^ell deta<=E_ell^L,
+    E_ell^L=P_out[t_ell(H-1)T_(ell,0)
+      +(2/3^H)sum_(j=1)^ell binom(ell,j)
+                             H^(ell-j)T_(ell,j)].    (FC1020)
+
+Every lower/top cross tuple and every old nonternary exponent is
+retained. Without selected-label removal the corresponding envelope is
+
+    E_ell^all=P_out T_(ell,0)
+      [t_ell(H-1)+(2/3^H)((H+1)^ell-H^ell)].           (FC1021)
+
+Coefficientwise E_ell^L<=E_ell^all. If three S directions have positive
+available depth and positive cap constants, the excluded degree-three
+pattern of a top entry has positive weight, so this PARTICULAR
+arithmetic upper envelope decreases strictly. This is not a proved
+subtraction from a different phase-aware bound or from the true moment.
+Independently valid bounds for the same source can be minimized.
+
+For0<epsilon<1, Holder on the SAME finite measure yields
+
+    G_2^L=E_2^L,
+    G_(2+epsilon)^L=(E_2^L)^(1-epsilon)(E_3^L)^epsilon, (FC1022)
+
+as valid simultaneous actual-section seeds; at epsilon1 take E_3^L.
+These may be substituted into FC1004 with the same eta and original
+pure laws. A full survivor certificate still requires eta supported
+on the head survivors, or separate payment of every head failure.
+No positive head-minus-tail margin follows just from these upper bounds.
+
+### Phase capacities bound fixed-support top loads but not their width
+
+In a lexicographically minimum whole cover, any full-H old cofactor
+is1, one old prime to the first power, or divisible by some q^2 or qr.
+Within a suffix there are at most k+1 cofactors of the first two types,
+where k=|P_B|. Assign each remaining active original to one degree-two
+old divisor. Each nonempty bin has phase capacity two by FC1006;
+a square not dividing Q has an empty bin. There are k(k+1)/2 bins, so
+
+    U_v<=(k+1)^2.                                   (FC1023)
+
+This height-independent bound on FIXED support is valid even without
+the S sparsity. It may be combined with a same-source first moment.
+Removing squares only in the initial B-head does not remove factors
+B<q<p that become old before a later terminal p. A count of cofactors
+with at most one prime at that later stage must use its COMPLETE
+pre-p support, not the unchanged initial k.
+
+An actual squarefree family shows why k cannot be discarded on the
+basis of distinctness, divisor closure and the qualified phase caps.
+For N>=1 take consecutive primes q_1,...,q_N above13, B=max q_i,
+and a prime P>max(B,N+2). Include pure labels3,P,all q_i and S, all
+with zero phase. Include3P and, for every i,3q_i,q_iP,3q_iP, with
+literal CRT phases
+
+    3q_i:   x_3=2, x_(q_i)=1;
+    q_iP:   x_(q_i)=2, x_P=1;
+    3q_iP:  x_3=1, x_(q_i)=1, x_P=i+1;
+    3P:     x_3=2, x_P=1.                           (FC1024)
+
+All moduli are distinct odd nonunits, all heights are one, and every
+nonunit divisor is included. Comparable classes are disjoint by the
+displayed differing ternary, q_i or pure-zero coordinates. Private
+points for3q_iP use its displayed roots and all other q-coordinates3;
+for q_iP use x_3=1,x_P=1,its q_i=2 and other q's3. For3q_i use
+x_3=2,x_P=N+2,its q_i=1 and other q's3. For3P use x_3=2,x_P=1,
+all q's3. Set S-coordinates2. Pure private points are obtained from
+the survivor x_3=1,x_P=N+2,all q's3,all S=2 by replacing just the
+chosen pure coordinate with zero. These checks also exhibit a full
+survivor: the construction is an irredundant NONCOVER.
+
+The exact top light load in suffix P is
+
+    U_P=1_(x_3=1)sum_i1_(x_(q_i)=1)+1_(x_3=2).
+
+It is N on a genuine surviving head point. Under the UNNORMALIZED
+pure-product head-survivor restriction, or the specified w=1 raw/full
+survivor head, root1 has mass1/2 with independent uniform nonzero q_i
+coordinates. On it all head stars3q_i are inactive. Thus, for r>=1,
+
+    integral U_P^r deta
+      >=(1/2)[sum_(i=1)^N1/(q_i-1)]^r.               (FC1025)
+
+On raw root2 the stars have fractions1/(q_i-1)<1/2 and full row mass;
+there is no change to the stated root1 law. Prime reciprocal divergence
+makes FC1025 unbounded as the old support grows. There are no old
+squares or pairs of q_i in these active top labels. Among nonvacuous
+ternary-qualified interfaces only3q_iP can qualify, with one occupant
+and no descendants; for other original repair primes the at-most-four
+cofactor divisors are below their required threshold. The corresponding
+phase-cap and MX2 consequences therefore do not exclude this family.
+It is not asserted to satisfy whole coverage or global cover minimality.
+
+This width obstruction is distinct from FC954's fixed-prime depth
+example. The terminal P grows as well, so it does not show failure of
+a complete seed-times-tail-decay certificate. FC1020 remains finite
+on every fixed support. The unresolved supplier must control the
+actual full light charge relative to terminal decay and head reserve,
+or use stronger whole-cover constraints to exclude the obstruction.
