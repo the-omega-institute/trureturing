@@ -120,9 +120,6 @@ class NativeReportConsumerTests:
     def test_report_entry_reuses_complete_receipt_and_rechecks_current_inputs(self):
         self.reg_package()
         targets = ['leanInspector/reportInspector', 'trureturing/Audit']
-        self.copy('tools/scripts/workflow/ci_plan.py')
-        self.write('Meta/ci-resources.json', json.dumps(dict(schema='ci-resource-execution-v1',
-            resources=[dict(id='fixture-program-build', projects=[], checks=[], steps=[], lean_targets=targets)])))
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         policy['report_execution'] = EXECUTION
         policy['dependency_sources']['include'].append(dict(pattern='Audit.lean', optional=False))
@@ -212,9 +209,9 @@ class NativeReportConsumerTests:
                 publication.validate_bundle(output, publication.coordinates(self.root), self.root)
         for suffix, data in sealed.items():
             publication.member(seed, suffix).write_bytes(data)
-        # This fixture now requests its explicitly registered program work.
+        # This fixture requests its program work through the public override.
         # Neither a valid nor invalid Audit edit changes report data.
-        self.env.pop('STRATALINT_LEAN_BUILD_TARGETS')
+        self.env['STRATALINT_LEAN_BUILD_TARGETS'] = json.dumps(targets)
         self.write('Audit.lean', 'def audit : Nat := 2\n')
         probe(phase='valid-audit-probe')
         clear_calls()
