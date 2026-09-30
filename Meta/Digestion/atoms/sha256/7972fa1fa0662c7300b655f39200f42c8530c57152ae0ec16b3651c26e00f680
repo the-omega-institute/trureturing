@@ -1,0 +1,78 @@
+**定理 8.5（轨道块的条件充分性与包含意义下的最小性）。** 对任意 $d,e\ge2$，允许字母表 $\mathscr A_{\mathrm{orb}}$ 由 $U$、所有实参数 $t\in\mathbb R$ 的 $W(t)$，以及任意低层有限结果仪器组成。所有选择器只依赖已保留记录与控制数据。则对任意初始联合态，$q_{\mathrm{orb}}$ 保留全部有限自适应协议的概率和每条正概率路径的条件边界。结论在任意有限维旁观参考扩张下仍成立。其保留算子代数及复维数为
+
+$$
+\mathcal A_{\mathrm{orb}}
+=\mathcal B(\mathcal H_A)\otimes
+\bigoplus_{O\in\mathfrak O}\mathcal B(\mathbb C^O),
+\qquad
+\dim_{\mathbb C}\mathcal A_{\mathrm{orb}}
+=d^4\sum_{O\in\mathfrak O}|O|^2.
+$$
+
+当 $e=2$ 时，轨道为 $\{00\}$ 和 $\{10,11,01\}$，所以维数为 $10d^4$。进一步，在所有满足
+
+$$
+\mathcal B(\mathcal H_A)\otimes I_H\subseteq\mathcal N
+\subseteq\mathcal B(\mathcal H_A\otimes\mathcal H_H),\qquad
+U^\dagger\mathcal N U\subseteq\mathcal N,\qquad
+W(t)^\dagger\mathcal N W(t)\subseteq\mathcal N
+\quad\text{对每个 }t\in\mathbb R
+$$
+
+的 $C^*$ 子代数中，$\mathcal A_{\mathrm{orb}}$ 是唯一按包含关系最小者。有限维性使这些共轭包含均为相等，因而也等价于正向共轭不变。任意低层仪器的每个完全正分支及其伴随映射也保持该代数。此最小性限于所声明操作下的联合 $C^*$ 子代数，不是任意编码、存储量或计算资源的最优性。
+
+证明。定理 7.3 表明 $U$ 在每个轨道对应的 $\mathcal H_A\otimes\mathbb C^O$ 内作用，所以 $I_A\otimes Q_O$ 与 $U,U^\dagger$ 交换，进而与 $L$ 和 $W(t)$ 交换。它也与每个低层 Kraus 算子交换。因此 $\mathcal E_{\mathrm{orb}}$ 与每项允许酉通道和每个允许仪器分支交换，并保持低层偏迹。
+
+具体地，若 $V=U$ 或 $V=W(t)$，则 $\tau'_O=V\tau_OV^\dagger$；低层仪器分支给出
+
+$$
+\widetilde\tau_{O,y}=\sum_\mu(K_{y\mu}\otimes I_H)\tau_O
+(K_{y\mu}^\dagger\otimes I_H),\qquad
+p_y=\sum_O\operatorname{Tr}\widetilde\tau_{O,y}.
+$$
+
+仅在 $p_y>0$ 时以 $p_y$ 除各块。沿有限自适应协议树逐层归纳，已有记录相同使下一操作及其 $t$ 参数相同；上述逐分支恒等式使新记录概率和保留块相同。共同正概率归一化后，条件边界继续相同。旁观参考上张量恒等即可。块矩阵代数的维数为各全矩阵块维数之和，得到公式；模 $2$ 的两个轨道由直接施加 $g$ 得到。
+
+再证最小性。任取上述 $\mathcal N$。由定理 7.1 及定理 7.3 的 Fourier 投影公式，$\mathcal B(\mathcal H_A)\otimes\mathcal T_H\subseteq\mathcal N$，特别地
+
+$$
+\Pi_p=I_A\otimes|p\rangle\langle p|\in\mathcal N
+\qquad(p\in\widehat H).
+$$
+
+因 $M^{\mathsf T}=M$ 且 $M^2=M+I$，有 $g=M^{-1}=M-I$、$g^2+g=I$，以及
+
+$$
+g-I=\begin{pmatrix}-2&1\\1&-1\end{pmatrix},\qquad
+\det(g-I)=1.
+$$
+
+故在任意模 $e$ 上，$gp=p$ 迫使 $p=0$；若 $g^2p=p$，则由 $g^2+g=I$ 得 $gp=0$，再由 $g$ 可逆得 $p=0$。因此每个非零 $p$ 都满足 $gp\ne p$ 和 $g^2p\ne p$。
+
+沿用定理 7.3 的 $W_p=U_d(P_0+\omega^{p_0}P_1)$，有
+
+$$
+U=\sum_{p\in\widehat H}W_p\otimes|gp\rangle\langle p|.
+$$
+
+对每个 $X\in\mathcal N$，所有 $t$ 的共轭不变性与有限维范数闭性给出
+
+$$
+i[L,X]=\left.\frac{d}{dt}\bigl(W(t)^\dagger XW(t)\bigr)\right|_{t=0}
+\in\mathcal N.
+$$
+
+于是 $[L,X]\in\mathcal N$。取非零 $p$ 并令 $q=gp$，用 $q\ne p$ 及 $gq\ne p$ 得
+
+$$
+\Pi_q[L,\Pi_p]\Pi_p
+=\Pi_q L\Pi_p
+=-W_p\otimes|q\rangle\langle p|\in\mathcal N.
+$$
+
+这里 $2I$ 项因 $q\ne p$ 消失，$U^\dagger$ 项只有在 $gq=p$ 时才可能贡献，故也消失。左乘 $W_p^\dagger\otimes I_H\in\mathcal N$ 并取负，得到 $I_A\otimes|gp\rangle\langle p|\in\mathcal N$。沿轨道取乘积及伴随，得到同一非零轨道内的全部矩阵单位；零轨道是单点，所需投影 $\Pi_0$ 已在 $\mathcal N$ 中。再乘低层矩阵单位，便有 $\mathcal A_{\mathrm{orb}}\subseteq\mathcal N$。反方向由前面 $I_A\otimes Q_O$ 与 $U,W(t)$ 及全部低层算子交换可知：每个轨道块在这些共轭下稳定，低层仪器分支及其伴随也逐块作用。因此 $\mathcal A_{\mathrm{orb}}$ 本身满足全部条件，完成最小性证明。
+
+上述导数步骤使用全部实时间的 $W(t)$。若只允许某些离散采样时刻，则不能直接沿用此最小性结论，除非另证足以恢复该导数的稠密性或闭包性质；此前逐块更新的充分性仍适用于这个更小的操作集合。
+
+本合同仍排除任意高层操作。例如，取高层向量 $(|p_{00}\rangle\pm|p_{10}\rangle)/\sqrt2$ 并与同一低层态相乘，两者有相同轨道块，但高层位置结果 $h=(0,0)$ 的概率分别为 $1/2$ 与 $0$。因为 $e=2$ 时两个 Fourier 向量在此位置振幅均为 $1/2$，相加和相减给出所述概率。故跨轨道相干也不能在扩大的高层位置测量合同中任意舍弃。$\square$
+
