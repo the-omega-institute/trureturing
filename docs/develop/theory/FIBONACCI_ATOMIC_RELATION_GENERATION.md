@@ -25905,3 +25905,410 @@ $$
 §212.3 要求的实际平方自由核心大小下界与这个过滤相容：其素因子截止 $z=r\sqrt{\log r}$ 远低于 $B_*$，而大核心的乘积可以远大于 $V$，同时所有单个完整素数幂都低于 $B_*$。当前没有由该核心条件证明式（216.23），也没有构造实际 FIB 反例使它失败。一般整数中的式（216.27）说明，若继续声称条件小余因子权重统一极小，必须新增特定同余或联合赋值信息。
 
 ## 追加锚（本行以下为增补区）
+
+## 217. 实际互补除数切换、核权重计数与二阶预算
+
+沿用 §210、§215 的实际整数族与解析参数：
+
+$$
+V=F_r,\qquad r\ge7\text{ 为素数},\qquad
+I=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\qquad N_g=1+Vg,
+$$
+
+$$
+A=\min_{g\in I}N_g,\quad X=\max_{g\in I}N_g,\quad T=|I|,
+\quad y=\log A,\quad\ell=\log y,\quad s=y\ell,
+\quad t=e^\gamma\ell,
+\quad R=\frac y{\ell^2},\quad\delta=\frac y{\ell^3},
+\quad b_2=\frac{\pi^2}{6}.
+$$
+
+固定 $a>b_2$，令 $H=e^{aR}$、$D=X/H$。这里 $H$ 仅为互补因子大小上限，
+没有附带粗糙性条件。继续使用
+
+$$
+b_s(1)=1,\qquad b_s(p^j)=Z(p^j)^s-Z(p^{j-1})^s,
+\qquad U(s)=\sum_{d\ge1}\frac{b_s(d)}d,
+\qquad\mu_s(d)=\frac{b_s(d)}{dU(s)},
+$$
+
+$$
+A_I(d)=\#\{g\in I:d\mid N_g\},\qquad
+\mathcal H_D=\{d\in\mathbb N:D<d\le X,\ A_I(d)>0\}.
+$$
+
+以下渐近均沿素数指标 $r\to\infty$，其中 $a$ 固定。已有大小关系给
+$X/A\to2$、$T\asymp V$、$y=2\log V+O(1)$、$H=V^{o(1)}$ 和 $D/T\to\infty$。
+$V$ 为奇数，且 $p\mid V$ 蕴含 $p\ge2r-1$。因此
+
+$$
+\sum_{p\mid V}\frac1p=O(1/\ell),\qquad
+\frac V{\varphi(V)}=1+O(1/\ell),\qquad
+\sum_{p\mid V}\frac1{p^2}=o(1).
+\tag{217.1}
+$$
+
+第一式来自 $\omega(V)\le\log V/\log(2r-1)$；后两式由该界和素因子的下界推出。
+
+### 217.1 无粗糙性假设的精确除数切换
+
+对每个正整数 $h$，定义有限整数区间
+
+$$
+J_h=\{d\in\mathbb N:d>D,\ A\le hd\le X\}.
+$$
+
+**命题 217.1（实际大除数与互补因子对的双射）。** 充分大时，
+每个 $d\in\mathcal H_D$ 恰好命中一个实际 $N_g$。取 $h=N_g/d$，则
+$d\mapsto(h,d)$ 是 $\mathcal H_D$ 到下列整数对集合的双射：
+
+$$
+1\le h<H,\qquad(h,V)=1,\qquad
+ d\in J_h,\qquad d\equiv h^{-1}\pmod V.
+\tag{217.2}
+$$
+
+因此
+
+$$
+\boxed{
+\mu_s(\mathcal H_D)=\frac1{U(s)}
+\sum_{\substack{1\le h<H\\(h,V)=1}}
+\sum_{\substack{d\in J_h\\d\equiv h^{-1}\pmod V}}
+\frac{b_s(d)}d.
+}
+\tag{217.3}
+$$
+
+证明。实际除数 $d\mid N_g$ 与 $V$ 互素。若 $d$ 命中两个乘子，
+则 $d\mid g_1-g_2$；但 $|g_1-g_2|<T<d$，故 $g_1=g_2$。
+于是 $h$ 唯一，并由 $d>D$ 得 $h=N_g/d<X/D=H$。
+这个严格不等式也适用于 $H$ 为整数的情形。
+
+反过来，式（217.2）给整数 $g=(hd-1)/V$，而精确端点条件
+$A\le hd\le X$ 保证 $g\in I$。所以 $d$ 是该实际整数的大除数。
+双射使每个不同 $d$ 只计一次，按其权重求和得到式（217.3）。$\square$
+
+另一种等价参数化是：取 $g_h\in\{0,\ldots,h-1\}$ 满足
+$1+Vg_h\equiv0\pmod h$，令 $c_h=(1+Vg_h)/h$。则
+
+$$
+g=g_h+hk,\qquad d=c_h+Vk,
+\qquad 1\le c_h\le V+1,\qquad(c_h,V)=1.
+\tag{217.4}
+$$
+
+由完整乘子区间得到的 $k$ 区间长度为 $\asymp V/h$；条件 $d>D$ 可以进一步
+缩短它。权重非负，故上界估计允许扩大回完整区间。
+这给出了切换后一次多项式的系数与区间几何，却没有使 $b_s$ 或 $b_s(d)/d$
+自动属于固定参数的函数类：仅 $b_s(2)=(3/2)^s-1$ 就随 $s$ 指数增长。
+因此 §215 中修正 Henriot 定理的函数类一致性义务仍然存在。
+
+### 217.2 实际命中个数与保留核后的计数
+
+**命题 217.2（实际大除数的无权个数）。** 有
+
+$$
+\boxed{
+\#\mathcal H_D=aTR+O(TR/\ell+T+H)=(a+o(1))TR.
+}
+\tag{217.5}
+$$
+
+证明。对实数 $B\ge2$，记
+
+$$
+S(B)=\sum_{\substack{h\le B\\(h,V)=1}}A_I(h).
+$$
+
+互素余数类的一致计数给 $A_I(h)=T/h+O(1)$。又
+
+$$
+\sum_{\substack{h\le B\\(h,V)=1}}\frac1h
+=\log B+O\bigl(1+(\log B)/\ell\bigr).
+\tag{217.6}
+$$
+
+确实，普通调和和为 $\log B+O(1)$；被删去的非互素项用联合上界控制为
+
+$$
+\sum_{p\mid V}\frac1p(1+\log B),
+$$
+
+再用式（217.1）。因此
+$S(B)=T\log B+O(T+T\log B/\ell+B)$。
+
+取 $B_-=A/(2D)$。每个被 $S(B_-)$ 计入的实际对都有
+$N_g/h\ge2D>D$，而每个实际大除数的互补因子均小于 $H$。
+命题 217.1 的唯一性于是给
+
+$$
+S(B_-)\le\#\mathcal H_D\le S(H).
+$$
+
+由 $\log B_-=aR+O(1)$、$\log H=aR$ 和 $H=o(T)$ 得到式（217.5）。$\square$
+
+**命题 217.3（保留 $d/X$ 核的实际计数）。** 有
+
+$$
+\boxed{
+\begin{aligned}
+\sum_{d\in\mathcal H_D}\frac dX
+&=\frac{T(A+X)}{2X}\,\zeta(2)
+\prod_{p\mid V}(1-p^{-2})+O(T/H+\log H)\\
+&=\left(\frac{\pi^2}{8}+o(1)\right)T.
+\end{aligned}
+}
+\tag{217.7}
+$$
+
+证明。令 $q_g=N_g/X$，则 $q_g$ 是位于 $[A/X,1]$ 的递增仿射序列，且
+
+$$
+Q=\sum_{g\in I}q_g=\frac{T(A+X)}{2X}.
+$$
+
+模 $h$ 的单个余数类在每个初始子区间中的计数偏差至多为一。
+对 $q_g$ 分部求和，其端点大小与总变差均有绝对上界，故当 $(h,V)=1$ 时，
+一致有
+
+$$
+\sum_{\substack{g\in I\\h\mid N_g}}q_g=Q/h+O(1).
+\tag{217.8}
+$$
+
+先不施加 $N_g/h>D$ 的截断，切换后的核和为
+
+$$
+\sum_{\substack{h<H\\(h,V)=1}}\frac1h
+\sum_{\substack{g\in I\\h\mid N_g}}q_g
+=Q\sum_{\substack{h<H\\(h,V)=1}}h^{-2}+O(\log H).
+$$
+
+被截断删去的项必有 $h\ge A/D=(A/X)H$；它们的总量至多为
+
+$$
+\sum_{(A/X)H\le h<H}\frac1h(T/h+1)=O(T/H+1).
+$$
+
+把平方倒数和延伸到无穷只损失 $O(T/H)$，而
+
+$$
+\sum_{\substack{h\ge1\\(h,V)=1}}h^{-2}
+=\zeta(2)\prod_{p\mid V}(1-p^{-2}).
+$$
+
+这得到式（217.7）的第一行。再由 $(A+X)/(2X)\to3/4$、式（217.1）与
+$\zeta(2)=\pi^2/6$，得到常数 $(3/4)(\pi^2/6)=\pi^2/8$。$\square$
+
+这两份计数来自同一实际整数族，没有随机均匀模型的假设。它们不控制
+$b_s(d)$：保留 $d/X$ 虽去掉了无权个数中的 $\log H$ 因子，仍留下
+$T$ 量级的核总和。用全局最大原子乘这个核总和，依然要支付 $T$ 量级的因子。
+
+### 217.3 切换后的实际剩余类偏差
+
+对有限整数区间 $J$ 和 $(c,V)=1$，定义有符号偏差
+
+$$
+\Delta_{V,c}(J)=
+\sum_{\substack{d\in J\\d\equiv c\pmod V}}\mu_s(d)
+-\frac1{\varphi(V)}
+\sum_{\substack{d\in J\\(d,V)=1}}\mu_s(d).
+$$
+
+式（217.3）逐个加减互素余数类的平均值，精确给出
+
+$$
+\mu_s(\mathcal H_D)=M_0+
+\sum_{\substack{h<H\\(h,V)=1}}\Delta_{V,h^{-1}}(J_h),
+\qquad 0\le M_0\le\frac H{\varphi(V)}.
+\tag{217.9}
+$$
+
+每个平均项至多为 $1/\varphi(V)$，所以得到所述上界。
+由 $H^2/\varphi(V)\to0$，该平均主项为 $o(H^{-1})$。
+这只估计全部互素余数类的平均值，没有得到被选中的逆元余数类的等分布，
+也没有控制式（217.9）的偏差和。
+
+保留核时，定义
+
+$$
+\Delta^K_{V,c}(J)=
+\sum_{\substack{d\in J\\d\equiv c\pmod V}}\frac dX\mu_s(d)
+-\frac1{\varphi(V)}
+\sum_{\substack{d\in J\\(d,V)=1}}\frac dX\mu_s(d),
+\qquad
+B_D=\sum_{d\in\mathcal H_D}\frac dX\mu_s(d).
+$$
+
+同样有
+
+$$
+B_D=M_0^K+
+\sum_{\substack{h<H\\(h,V)=1}}\Delta^K_{V,h^{-1}}(J_h),
+\qquad 0\le M_0^K\le\frac{1+\log H}{\varphi(V)}.
+\tag{217.10}
+$$
+
+这里 $d/X\le1/h$ 在 $J_h$ 上逐点成立，平均项可逐个以
+$1/(h\varphi(V))$ 控制，再求调和和。式（217.9）和式（217.10）都保留了
+待控制的实际相关项；小的平均主项不能替代实际总质量的上界。
+
+### 217.4 实际短互补因子可以含有素数二并保留可比权重
+
+**命题 217.4（同一实际整数上的 $h=1$ 与 $h=2$ 比较）。** 设 $s\ge4$，
+令
+
+$$
+k_2=\lceil\log_2s\rceil,\qquad q=2^{k_2}\in[s,2s).
+$$
+
+实际条件 $v_2(N_g)=k_2$ 在 $I$ 内出现
+
+$$
+T/(2q)+O(1)\asymp T/s
+\tag{217.11}
+$$
+
+次。对每个这样的 $n=N_g$，充分大时 $d_0=n$、$d_1=n/2$ 均大于 $D$，
+互补因子分别为 $1$、$2$，并满足
+
+$$
+\boxed{
+2e^{-9/4}\le\frac{b_s(n/2)}{b_s(n)}\le2,
+\qquad
+4e^{-9/4}\le\frac{\mu_s(n/2)}{\mu_s(n)}\le4.
+}
+\tag{217.12}
+$$
+
+证明。$V$ 为奇数，所以 $v_2(N_g)=k_2$ 等价于
+$N_g\equiv q\pmod{2q}$，从而限定了模 $2q$ 的一个实际乘子余数类。
+一致余数计数给式（217.11）。因 $H\to\infty$ 而 $X/A$ 有界，最终
+$A/2>D$，所以两个除数均属于大除数范围。
+
+记 $B_j=b_s(2^j)$。函数 $u\mapsto su^{s-1}$ 单调递增，
+$B_{k_2-1}$ 与 $B_{k_2}$ 分别是其在
+$[2-4/q,2-2/q]$、$[2-2/q,2-1/q]$ 上的积分。
+这两个相邻区间的长度比为二，因此
+
+$$
+2\left(\frac{2q-4}{2q-1}\right)^{s-1}
+\le\frac{B_{k_2-1}}{B_{k_2}}\le2.
+$$
+
+又由 $q\ge s\ge4$，
+
+$$
+-(s-1)\log\left(1-\frac3{2q-1}\right)
+\le\frac{3(s-1)}{2q-4}\le\frac94.
+$$
+
+在同一个 $n=2^{k_2}m$、$(m,2)=1$ 上使用乘法性，
+其余奇素数因子完全相同，故 $b_s(n/2)/b_s(n)=B_{k_2-1}/B_{k_2}$。
+这给式（217.12）的第一组界；$\mu_s$ 中的 $1/d$ 因子再使比值乘二，
+得到第二组界。$\square$
+
+对保留 $d/X$ 的核，两项之比则为
+
+$$
+\frac{(n/(2X))\mu_s(n/2)}{(n/X)\mu_s(n)}
+=\frac{b_s(n/2)}{b_s(n)},
+$$
+
+即式（217.12）的第一组比值。因此，若无证明便把互补因子限制为不含小素数，
+会丢弃这一实际赋值类上与 $h=1$ 项可比的正项。
+式（217.11）没有证明该赋值类占全部加权质量的固定比例；这个额外断言仍需估计。
+
+### 217.5 保留核后的互补因子权重与二阶预算
+
+记
+
+$$
+\mu_h=\sum_{\substack{d\in J_h\\d\equiv h^{-1}\pmod V}}\mu_s(d),
+\qquad
+B_h=\sum_{\substack{d\in J_h\\d\equiv h^{-1}\pmod V}}\frac dX\mu_s(d),
+\qquad (h,V)=1.
+$$
+
+同一实际对中的 $d/X=N_g/(Xh)$ 给
+
+$$
+\frac{A}{Xh}\mu_h\le B_h\le\frac1h\mu_h,
+\qquad B_D=\sum_{\substack{h<H\\(h,V)=1}}B_h,
+\qquad
+B_D=\frac1{XU(s)}\sum_{g\in I}
+\sum_{\substack{h\mid N_g\\N_g/h>D}}b_s(N_g/h).
+\tag{217.13}
+$$
+
+若 $L\ge1$，其中 $h\ge L$ 的部分至多为 $1/L$：对应的实际大除数各不相同，
+而 $\mu_s$ 的总质量为一。这种估计不能为固定的小互补因子（包括 $1$ 和 $2$）
+提供指数尺度的节省。
+
+定义完整实际矩 $\mathcal M_Z(s;I,V)=\sum_{g\in I}Z(N_g)^s$。
+对 $d\le D$，用 $A_I(d)\le T/d+1$；对 $d>D$，保留其实际核权重。
+有限非负展开便给
+
+$$
+\frac{\mathcal M_Z(s;I,V)}{XU(s)}
+\le\frac TX+\frac DX+B_D.
+\tag{217.14}
+$$
+
+令 $\Lambda=XU(s)/t^s$。§210.2 的展开为
+
+$$
+\log\Lambda
+=\log(X/A)+b_2R-b_2\delta+O(y/\ell^4).
+$$
+
+所以临界倒数预算具有二阶表达式
+
+$$
+\boxed{
+\log\Lambda^{-1}
+=-\log(X/A)-b_2R+b_2\delta+O(y/\ell^4).
+}
+\tag{217.15}
+$$
+
+对指定的 $a>b_2$，$\Lambda T/X$ 与 $\Lambda D/X$ 均趋于零。
+因此若能证明一致条件 $\limsup\Lambda B_D<1$，式（217.14）就使
+指定归一矩最终严格小于一。原来的更强目标
+$\mu_s(\mathcal H_D)\le H^{-1}$ 仍然足够，但本节没有证明它。
+
+一阶陈述 $\log B_D\le-b_2R+o(R)$ 本身不能决定式（217.15），
+因为误差可能大于 $\delta$。更强的界 $B_D\le e^{-b_2R}$ 则足够：它给
+
+$$
+\Lambda B_D
+\le(X/A)\exp\bigl(-b_2\delta+O(y/\ell^4)\bigr)\longrightarrow0.
+$$
+
+这些是尚待实现的充分估计，不是由实际计数或平均余数类主项已经得到的界。
+
+为明确预算分配，也可以单独考虑另一个截断
+
+$$
+D=\frac{t^s}{cU(s)}=\frac X{c\Lambda},\qquad c>1\text{ 固定}.
+$$
+
+它仍满足 $D/T\to\infty$，所以式（217.14）继续适用。
+归一化以后，其 $D/X$ 项精确占用 $1/c$。剩余的精确充分条件是
+
+$$
+\Lambda B_D<1-\frac1c-\Lambda\frac TX.
+$$
+
+由于 $\Lambda T/X\to0$，一致条件
+$\limsup\Lambda B_D<1-1/c$ 足以保证该式最终成立。
+这一替代预算既不改变，也不解决先前固定 $a>b_2$ 时的 $H^{-1}$ 命中质量目标。
+
+本节得到实际除数切换、两份无权计数、同一整数上短互补因子的权重比较，
+以及保留偏差与二阶项的精确预算接口。未解决的部分仍是实际逆元余数类中
+$b_s$ 加权偏差的上界；这些计数与恒等式尚未证明整个 FIB 家族满足 Robin，
+也未回接任意自然数的完整 Robin 判据。
+
+## 追加锚（本行以下为增补区）
