@@ -1,0 +1,41 @@
+### 222.2 由有限素分辨率产生的字符相位盒
+
+实际参数满足 $y=2\log V+O(1)=2r\log\phi+O(1)$，其中
+$\phi=(1+\sqrt5)/2$。由 $p\mid F_r\Rightarrow p\ge2r-1$ 和
+$4\log\phi<2$，充分大时所有 $p\le2y$ 都是模 $V$ 的单位。
+此外
+
+$$
+\log\varphi(V)=y/2+O(1),\qquad
+m:=\pi(2y)=(2+o(1))y/\ell.
+\tag{222.5}
+$$
+
+第一式使用 §217 的 $V/\varphi(V)=1+O(1/\ell)$，第二式是素数定理。
+
+取 $L=\lfloor y^{1/8}\rfloor$，把单位圆划分为 $L$ 个等长半开弧。
+$\varphi(V)$ 个字符在 $p\le2y$ 的 $m$ 个相位坐标上，至多落入 $L^m$ 个盒。
+在一个最大的盒中固定字符 $\chi_0$，将该盒内所有字符除以 $\chi_0$。
+得到互不相同的字符集合 $\mathcal C_r$，其中包含主字符，并且
+
+$$
+\chi(p)=e^{i\theta_{\chi,p}},\qquad
+|\theta_{\chi,p}|\le2\pi/L
+\quad(p\le2y,\ \chi\in\mathcal C_r).
+\tag{222.6}
+$$
+
+其基数至少为 $\varphi(V)/L^m$；由于 $\log L=\ell/8+o(1)$，
+
+$$
+\log|\mathcal C_r|\ge\log\varphi(V)-m\log L
+=y/4+o(y).
+\tag{222.7}
+$$
+
+这是有限相位分盒的抽屉原理，也是对偶群上的标准 Bohr 集容量机制；
+相关原始定位及距离约定见 [Bohr 字符文献条目](../../../Library/Fourier/fibcharacter2026bohrbarrier.md)。
+没有假设这些小素数生成整个单位群，
+也没有假设各个相位独立或均匀。$\mathcal C_r$ 不要求是子群，
+其中的字符也不要求本原。
+
