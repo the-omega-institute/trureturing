@@ -977,5 +977,6 @@ comparison in FIB §§188–190, see [modular resolution](modular_resolution.md)
 For general primitive seeds and the finite zero-class checks behind FIB
 §§191–192, see [seed zero classes](seed_zero_cosets.md).
 
-For the mixed and odd squarefree prime sections in FIB §§196–199, see
+For the mixed and odd squarefree prime sections, the window-105 character
+twist and the changing norm family in FIB §§196–200, see
 [prime sections](prime_sections.md).
