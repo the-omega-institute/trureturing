@@ -170,13 +170,13 @@ jobs:
           STRATALINT_CACHE_WRITES: ${{ env.CACHE_WRITES }}
           STRATALINT_CHECK_SUCCEEDED: 'true'
         run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE"
-      - if: ${{ success() && steps.snapshot.outputs.project_ready == 'true' }}
+      - if: ${{ success() && steps.snapshot.outcome == 'success' && steps.snapshot.outputs.project_ready == 'true' }}
         continue-on-error: true
         uses: actions/cache/save@v5
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
-      - if: ${{ success() && steps.snapshot.outputs.dependency_ready == 'true' }}
+      - if: ${{ success() && steps.snapshot.outcome == 'success' && steps.snapshot.outputs.dependency_ready == 'true' }}
         continue-on-error: true
         uses: actions/cache/save@v5
         with:
