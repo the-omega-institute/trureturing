@@ -29,7 +29,7 @@ For every actual channel whose action on all logical matrices is the target enco
 
 **Theorem 1.2 (Simplex variational domination).**
 
-Lean statement: \`D5/S3/Quantum/Entanglement/FiniteSectorSchurUpper.simplex_quadratic_dominates_weighted_complex_form\`
+Lean statement: `D5/S3/Quantum/Entanglement/FiniteSectorSchurUpper.simplex_quadratic_dominates_weighted_complex_form`
 
 *Formalization status.* Lean declaration added on branch `lane/theory/rt-variational-20260930`; focused kernel and CI checks are pending. ∎
 
