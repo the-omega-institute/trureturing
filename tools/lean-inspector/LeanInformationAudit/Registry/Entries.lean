@@ -19,6 +19,28 @@ private def primitiveRealizationName : Name :=
 private def legacyPrimitiveRealizationName : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization
 
+/-- Judge-owned output names. The recorder admits any resolvable theorem; the
+report rejects a registration of one of these companions (IE-C011). -/
+def generatedCompanionSuffixes : Array String := #[
+  theoremUnitSuffix,
+  primitiveRealizationSuffix,
+  "__lowers_escape",
+  "__trivial_in_catalog",
+  "__escape_enriched",
+  "__information_catalog",
+  "__catalog_irredundant",
+  "__catalog_redundant",
+  "__system_catalog_irredundant",
+  "__system_catalog_not_irredundant",
+  "__information_registration_diagnostic"
+]
+
+def isCompanionName : Name -> Bool
+  | .str _ suffix =>
+      -- Every reserved suffix starts with "__". Ordinary names avoid the
+      -- interpreted array scan; the registry remains the suffix authority.
+      suffix.startsWith "__" && generatedCompanionSuffixes.contains suffix
+  | _ => false
 
 def InformationRegistryEntry.lawArenaName (entry : InformationRegistryEntry) : Name :=
   entry.arenaName
@@ -180,9 +202,27 @@ def moduleReachable (env : Environment) (root owner : Name) : Bool := Id.run do
     pending := imports.toList.map (·.module) ++ pending
   return false
 
+/-- Every module reachable from `root`, including `root`: the same relation as
+`moduleReachable`, computed once so that a caller filtering many owners
+traverses the import graph once rather than once per owner. -/
+def reachableModules (env : Environment) (root : Name) : NameSet := Id.run do
+  let mut seen : NameSet := {}
+  let mut pending := [root]
+  while let name :: rest := pending do
+    pending := rest
+    if seen.contains name then continue
+    seen := seen.insert name
+    let imports := if name == env.header.mainModule then env.header.imports else
+      match env.getModuleIdx? name with
+      | some index => env.header.moduleData[index.toNat]!.imports
+      | none => #[]
+    pending := imports.toList.map (·.module) ++ pending
+  return seen
+
 def InformationRegistry.forRoot (env : Environment) (root : Name) :
     Array InformationRegistryEntry :=
-  entries env |>.filter (fun entry => moduleReachable env root entry.registrationModuleName)
+  let reachable := reachableModules env root
+  entries env |>.filter (fun entry => reachable.contains entry.registrationModuleName)
 
 /-- A deterministic identity for the theorem type stored in the elaborated environment. -/
 def theoremStatementIdentity (env : Environment) (theoremName : Name) : String :=
