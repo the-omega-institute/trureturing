@@ -5,7 +5,7 @@ year: 2006
 title: Hardy-Lieb-Thirring inequalities for fractional Schrodinger operators
 doi: null
 url: https://arxiv.org/abs/math/0610593v2
-claim: Nonlocal IMS retains a joint pole-prime correction. Ordinary non-even windows require the full two-pole form, and the known small-window spectral floor is already stronger than the elementary exterior-potential bound. No all-support positivity estimate is supplied.
+claim: Nonlocal IMS retains a joint pole-prime correction. Ordinary narrow windows require the full two-pole form; the known optimal small-window floor still cannot pay the independent capped Gamma envelope on fine cofinal partitions whose actual smooth support widths have ratio at most the golden ratio. A joint arithmetic and localization estimate remains missing.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -146,6 +146,65 @@ $$
 
 This upper comparison uses the source's domain argument, rather than assuming that an arbitrary boundary value is admissible. A direct exterior-potential lower bound with asymptotic $\log(1/d)-\gamma-\log\pi+O(d)$ discards $\mu_1$ and is weaker than (3). Reproving that weaker local positivity would not close the present gap. The source theorem and this application have not been independently formalized here.
 
+## The cost of a fine square partition
+
+Suppose now that the smooth cutoffs are nonnegative and their vector has Lipschitz constant $B>0$ on the common ambient interval. The two unit cutoff vectors give
+
+$$
+0\le D_\chi(x,t)\le\min(B^2t^2,2),
+\qquad |K_f(t)|\le\min(B^2t^2,2)\|f\|_2^2
+$$
+
+on pairs relevant to the correlation. Let $k_*(t)=e^{-5t/2}/(1-e^{-2t})$. A sharper scalar Gamma envelope than the earlier $C_*B^2$ is
+
+$$
+I_2(B)=\int_0^\infty k_*(t)\min(B^2t^2,2)\,dt
+=\log B+c_{\rm IMS}+R(B),
+\quad c_{\rm IMS}=\tfrac32\log2+\tfrac\pi2-\tfrac72, \tag{5}
+$$
+
+where, writing $a=\sqrt2/B$,
+
+$$
+R(B)=\int_0^a(2-B^2t^2)\left(\frac1{2t}-k_*(t)\right)dt>0,
+\qquad R(B)=O(B^{-1}).
+$$
+
+To obtain (5), split at $a$ and use
+$\int_s^\infty k_*(t)dt=\operatorname{atanh}(e^{-s/2})+\arctan(e^{-s/2})-2e^{-s/2}$.
+The subtracted kernel tends to $3/4$ at zero and is positive for $t>0$; this also proves the stated remainder properties. For the actual finite support cutoff, when $2L>a$,
+
+$$
+I_2(B,2L)=I_2(B)-2\int_{2L}^\infty k_*(t)\,dt. \tag{6}
+$$
+
+The discarded tail tends to zero as $L\to\infty$. These formulas concern a uniform upper envelope, not the value or a lower bound of the signed Gamma correction for a particular $f$.
+
+There is also a geometric cost. If every cutoff support has diameter at most $d$ and the ambient interval contains a segment longer than $d$, cutoff vectors at distance greater than $d$ are orthogonal. The square partition traces the unit sphere, so that segment's image has length at least $\pi/2$. Its length is at most $B$ times the segment length. Taking distances down to $d$ gives
+
+$$
+Bd\ge\pi/2. \tag{7}
+$$
+
+Consider cofinal supports $L_j\to\infty$ and fine partitions with $d_j\downarrow0$, whose **actual smooth cutoff support intervals** have lengths $d_{j,i}\in[d_j/r,d_j]$ for a fixed $r\ge1$. For nonzero tests $f_j$ supported in the corresponding ambient intervals, set
+
+$$
+\mathcal B_j=
+\frac{\sum_i\lambda^W_{d_{j,i}/2}\|\chi_{j,i}f_j\|_2^2}{\|f_j\|_2^2}
+-I_2(B_j,2L_j).
+$$
+
+Equations (3)–(7) give the uniform paper-level comparison
+
+$$
+\limsup_j\mathcal B_j
+\le\log r+\frac92-\gamma-2\log\pi-\frac32\log2-\frac\pi2. \tag{8}
+$$
+
+The right side is approximately $-0.977193$ for $r=1$ and $-0.495981$ for $r=\varphi$. The latter is a conditional width-ratio example: the ratio of bare FIB cylinder lengths does not construct a smooth square partition or prove this ratio for its support intervals. Smooth cutoffs must overlap at the seams, and their actual widths and Lipschitz constants must be checked.
+
+For $1\le r\le\varphi$, this rejects a particular sufficient budget even when the **optimal** local spectral constants are used: subtracting this independent Gamma envelope and merely using a zero lower bound for the signed arithmetic term in (2) cannot give positive fine-scale margins under these conditions. Equation (8) does not give this rejection for every fixed width ratio. It does not give a negative value of the actual Weil form, a lower bound on its actual Gamma cost, or an obstruction to stronger joint estimates. The local surpluses, localization defect and arithmetic term depend on the same $f$ and cutoffs; retaining those relations is the remaining route. The analytic asymptotics and comparison (8) are not a new compiled general theorem.
+
 ## A prime edge crossing an intermediate FIB window
 
 The five first-level internal-coordinate intervals have geometric order $[3],[null],[5],[2],[2\ 5]$. Put $\varphi=(1+\sqrt5)/2$. In particular
@@ -176,4 +235,4 @@ The standard IMS identity is reusable mathematics, not a new FIB positivity theo
 
 A sufficient next input would combine genuine lower margins for the localized tests with a lower bound for the **same** $W_f$ against $\Psi-u$, paying the displayed Gamma remainder uniformly over all allowed coefficients and growing supports. The family $W_f$ is constrained by a common $f$ and square partition; it cannot be replaced by arbitrary independently optimized weights. The corresponding Robin research also retains a joint signed prime fluctuation, but identifying those two test families requires another explicit map.
 
-The analytic localization and Stieltjes calculations above are paper-level applications with their hypotheses displayed, not a new Lean closure. Transient exact Lean checks cover only the stated rational interval placement, first-prime support threshold, pointwise four-bump pairing, and scalar Gamma cancellation; no named wrapper is retained. The nonlocal source, these checks, and the missing all-scale arithmetic estimate have different evidentiary roles.
+The analytic localization, Stieltjes calculations and fine-window comparison above are paper-level applications with their hypotheses displayed, not a new Lean closure. Transient exact Lean checks cover only the stated rational interval placement, first-prime support threshold, pointwise four-bump pairing, scalar Gamma cancellation, and negativity of the scalar expression in (8) at $r=\varphi$; no named wrapper is retained. The last check does not prove the spectral-domain, asymptotic or cutoff premises of (8). The nonlocal source, these checks, and the missing all-scale arithmetic estimate have different evidentiary roles.
