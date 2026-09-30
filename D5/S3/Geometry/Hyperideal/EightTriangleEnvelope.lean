@@ -17,9 +17,9 @@ theorem triangle_lower_sq : (8 : ℝ)^2 * 6 / 27^2 > 1 / 2 := by norm_num
 theorem four_cycle_lower_sq : (293 : ℝ)^2 / 400^2 > 1 / 2 := by norm_num
 
 /-- Upper-face squared margins for the three local packets. -/
-theorem star_upper_sq : (121 : ℝ)^2 / 175^2 < 1 / 2 := by norm_num
-theorem triangle_upper_sq : (13 : ℝ)^2 * 41 / 123^2 < 1 / 2 := by norm_num
-theorem four_cycle_upper_sq : (473 : ℝ)^2 / 700^2 < 1 / 2 := by norm_num
+theorem star_upper_sq : (709 : ℝ)^2 / 1003^2 < 1 / 2 := by norm_num
+theorem triangle_upper_sq : (11 : ℝ)^2 * 249 / 249^2 < 1 / 2 := by norm_num
+theorem four_cycle_upper_sq : (2753 : ℝ)^2 / 4012^2 < 1 / 2 := by norm_num
 
 /- The high-edge Taylor certificate used at the degree-fourteen threshold. -/
 def t6 (u : ℝ) : ℝ := 1 - u^2 / 2 + u^4 / 24 - u^6 / 720
