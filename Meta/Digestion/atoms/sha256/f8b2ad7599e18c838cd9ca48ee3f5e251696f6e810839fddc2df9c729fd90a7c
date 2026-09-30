@@ -1,0 +1,9 @@
+**定理344.5（公共中心系数桥）。** 对上述固定 \(b,m_0\)，存在
+\(C_{\beta,b,m_0}<\infty\)，使全部实函数 \(f\in C^\beta([0,1])\) 与 \(m\in\Lambda\) 满足
+\[
+\boxed{
+\|S_mf-Q_{m,r}f\|_{\mathrm{coef},m+r}
+\le C_{\beta,b,m_0}\|f\|_{C^\beta}m^{-a}.}
+\tag{344.34}
+\]
+

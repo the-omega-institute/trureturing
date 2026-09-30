@@ -106,7 +106,7 @@ private theorem visible_state_readout_eq_ambient (d : Nat) (system : MatrixOpera
   ext effect
   rfl
 
-private theorem traceless_density_perturbations (d : Nat) [NeZero d]
+theorem traceless_density_perturbations (d : Nat) [NeZero d]
     (difference : traceZeroHermitian d) :
     ∃ eps : ℝ, 0 < eps ∧
       ∃ plus minus : DensityState (Fin d), CStarMatrix.ofMatrix.symm plus.1 -

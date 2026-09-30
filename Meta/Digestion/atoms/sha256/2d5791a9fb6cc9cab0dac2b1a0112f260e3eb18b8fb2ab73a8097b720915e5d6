@@ -1,0 +1,20 @@
+**定理326.6（临界费用的对数增长指数）。** 在相同完整输出、实际身份与真实总调用合同下，存在常数 $c,C,L_0>0$，使令 $L=\log(1/\delta)\ge L_0$ 时，
+
+$$
+\boxed{
+ cL\exp\!\bigl(-C\sqrt{\log L}\bigr)
+ \le\mathcal C_a^{\mathrm{pol}}(\delta)
+ =\mathcal C_a^{\mathrm{alg}}(\delta)
+ \le CL.}
+\tag{326.35}
+$$
+
+因此两类费用都有
+
+$$
+\boxed{
+\lim_{\delta\downarrow0}
+\frac{\log\mathcal C_a(\delta)}{\log\log(1/\delta)}=1.}
+\tag{326.36}
+$$
+

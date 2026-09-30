@@ -52,3 +52,97 @@ hyperbolic metric or smooth quotient structure, finite volume, or rigidity of
 the acting lattice.
 
 ## 追加锚（本行以下为增补区）
+
+## 3. Upper half-space metric and horizontal isometries
+
+**Definition 3.1.** Let (E) be a real inner product space. Put
+(U_E=\{(x,t)\in E\times\mathbb R:t>0\}), with the Euclidean product distance
+(d_2), and write (h(x,t)=t). For (p,q\in U_E), define
+
+\[
+ d_H(p,q)=2\operatorname{arsinh}
+ \frac{d_2(p,q)}{2\sqrt{h(p)h(q)}}.
+\]
+
+For (q=(y,s)), write (q^*=(y,-s)) for reflection in the boundary plane.
+
+**Theorem 3.2 (Ptolemy construction of the metric).** The function (d_H) is a
+metric on (U_E), for every real inner product space (E).
+
+**Proof.** The Euclidean product distance gives
+(d_2(p,q^*)^2=d_2(p,q)^2+4h(p)h(q)). Thus
+
+\[
+ \sinh\frac{d_H(p,q)}2
+ =\frac{d_2(p,q)}{2\sqrt{h(p)h(q)}},\qquad
+ \cosh\frac{d_H(p,q)}2
+ =\frac{d_2(p,q^*)}{2\sqrt{h(p)h(q)}}.
+\]
+
+Ptolemy's inequality for the four Euclidean points (p,q,r,q^*) states
+
+\[
+ 2h(q)d_2(p,r)\leq
+ d_2(p,q)d_2(r,q^*)+d_2(q,r)d_2(p,q^*).
+\]
+
+Divide by (4h(q)\sqrt{h(p)h(r)}), which is positive. The hyperbolic sine
+addition formula turns the right side into
+(\sinh((d_H(p,q)+d_H(q,r))/2)); the left side is
+(\sinh(d_H(p,r)/2)). Strict monotonicity of hyperbolic sine proves the
+triangle inequality. Symmetry follows from symmetry of (d_2) and the height
+product. Since (\operatorname{arsinh}(z)=0) exactly when (z=0), positivity of
+the heights makes (d_H(p,q)=0) equivalent to (p=q).
+
+**Theorem 3.3 (horizontal translation action).** For (u\in E), let
+(T_u(x,t)=(x+u,t)). Each (T_u) preserves (d_H). The assignment
+(u\mapsto T_u) is a homomorphism from the additive group of (E) to the
+isometry group of (U_E,d_H), and (T_u(p)=p) for one point (p) if and only if
+(u=0).
+
+**Proof.** Translation preserves height and Euclidean product distance,
+hence the formula in Definition 3.1. Direct substitution gives
+(T_0=\operatorname{id}) and (T_{u+v}=T_u\circ T_v). If (T_u(x,t)=(x,t)),
+then (x+u=x), so (u=0); the converse follows from (T_0=\operatorname{id}).
+
+## 4. Positive dilations
+
+**Theorem 4.1 (positive dilation isometry).** For every positive real (a),
+the map (D_a(x,t)=(ax,at)) preserves the upper half-space distance of
+Definition 3.1 and is an isometric bijection with inverse (D_{a^{-1}}).
+
+**Proof.** Positivity gives (at>0). Euclidean product distances satisfy
+(d_2(D_a p,D_a q)=a d_2(p,q)), while the geometric mean of the heights
+satisfies (\sqrt{h(D_a p)h(D_a q)}=a\sqrt{h(p)h(q)}). The two factors cancel
+inside the inverse hyperbolic sine defining (d_H), proving distance
+preservation. Since (a^{-1}>0), both composites of (D_a) and (D_{a^{-1}})
+are the identity on coordinates.
+
+## 5. Inversion centered on the boundary
+
+**Theorem 5.1 (boundary-centered inversion isometry).** Let (E) be a real
+inner product space and (U_E) the upper half-space of Definition 3.1. For
+(p=(x,t)\in U_E), put (r(p)=d_2(p,0)>0) and
+
+\[
+ J(p)=r(p)^{-2}p.
+\]
+
+Then (J(p)\in U_E), (J(J(p))=p), and
+(d_H(J(p),J(q))=d_H(p,q)) for every (p,q\in U_E). Thus (J) is an
+involutive isometric equivalence.
+
+**Proof.** Since (t>0), the ambient point (p) is nonzero, so (r(p)>0) and
+(h(J(p))=h(p)/r(p)^2>0). Euclidean sphere inversion about the origin of
+radius one is involutive and gives
+
+\[
+ d_2(J(p),J(q))=\frac{d_2(p,q)}{r(p)r(q)}.
+\]
+
+The positive square root of the product of the new heights is
+(\sqrt{h(J(p))h(J(q))}=\sqrt{h(p)h(q)}/(r(p)r(q))). Substituting both
+identities into Definition 3.1 cancels the same factor in the numerator
+and denominator. The involution and distance identity give the stated
+isometric equivalence. The cancellation for arbitrary (E) is the new
+geometric content; Mathlib supplies the Euclidean inversion identities.

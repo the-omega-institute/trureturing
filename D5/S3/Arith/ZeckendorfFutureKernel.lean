@@ -41,7 +41,7 @@ private def zeros (n : ℕ) : List Bool := List.replicate n false
 private def flag (previous : Bool) (w : List Bool) : Bool :=
   w.foldl (fun _ b => b) previous
 
-private lemma value_append {R : Type*} [AddMonoid R]
+theorem value_append {R : Type*} [AddMonoid R]
     (w w' : List Bool) (u v : R) :
     value u v (w ++ w') = value u v w +
       value (advance w.length (u,v)).1 (advance w.length (u,v)).2 w' := by

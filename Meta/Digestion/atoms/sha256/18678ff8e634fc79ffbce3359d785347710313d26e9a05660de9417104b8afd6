@@ -1,0 +1,15 @@
+**引理324.3（局部截断高矩）。** 假设式（324.12）成立。对整数 $m>a$，置
+
+$$
+T_n^{\mathrm{loc}}(H)=
+\sup_{0\le h\le\min\{\eta,H/\sqrt n\}}
+\mathbb E_h(M\wedge n)^m.
+$$
+
+则
+
+$$
+\boxed{n^{a-m}T_n^{\mathrm{loc}}(H)\longrightarrow0.}
+\tag{324.19}
+$$
+

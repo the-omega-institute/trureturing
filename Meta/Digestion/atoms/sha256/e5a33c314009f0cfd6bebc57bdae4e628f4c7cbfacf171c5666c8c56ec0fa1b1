@@ -1,0 +1,17 @@
+**引理333.1（同一策略的截断传递）。** 设 $0<s<a$、$u=a-s$，准确策略 $A$ 满足 $Q_s(A)=Q<\infty$。对每个整数 $n\ge1$，存在同一实现类中的截断策略，使
+
+$$
+\sup_{w,S}\operatorname{TV}(P_{A^{[n]}},P_{\mathrm{target}})
+\le Qn^{-s},
+\qquad
+\sup_{w,S}\mathbb E^{A^{[n]}}M^a\le n^uQ.
+\tag{333.2}
+$$
+
+因而
+
+$$
+\boxed{\mathcal C_a^{\mathcal C}(Qn^{-s})\le n^uQ.}
+\tag{333.3}
+$$
+

@@ -1,0 +1,6 @@
+**Theorem 3.3 (horizontal translation action).** For (u\in E), let
+(T_u(x,t)=(x+u,t)). Each (T_u) preserves (d_H). The assignment
+(u\mapsto T_u) is a homomorphism from the additive group of (E) to the
+isometry group of (U_E,d_H), and (T_u(p)=p) for one point (p) if and only if
+(u=0).
+
