@@ -1,0 +1,48 @@
+**命题 199.6（两种单位比例外具有同样余量）。** 若 $|Q|\in\{1,5\}$，则在引理184.1的 Fibonacci 秩输入与式（194.2）的 Axler 输入下，式（199.10）仍成立。
+
+证明。对同一个 $N=gV_j$，取
+
+$$
+A_j=\prod_{\substack{p\mid V_j\\p\le y}}p,
+\qquad B=gA_j,
+\qquad h=\log g,
+\qquad L=\log V_j=j\log\phi+O_v(1).
+$$
+
+因 $A_j\mid V_j$，$B$ 的素数都来自同一个 $N$；未被 $B$ 包含的素因子必来自 $V_j$ 且大于 $y$。因此
+
+$$
+Z(N)<\frac{B}{\varphi(B)}e^{T_j(y)},
+\qquad \log A_j\le\vartheta(y)=O(j^{5/6}).
+\tag{199.14}
+$$
+
+若 $h\ge j^{11/12}$，则 $B\to\infty$，并且
+
+$$
+\log\log B=\log h+O(j^{-1/12}).
+$$
+
+Axler 包络及式（199.13）给
+
+$$
+Z(N)/e^\gamma\le\log h+o(1),
+$$
+
+一致于 $g\le CV_j$。这里尾乘积的加性误差为 $O((\log j)j^{-1/12})=o(1)$。另一方面 $h\le L+\log C$，故
+
+$$
+\log\log N-\log h
+=\log(1+L/h)\ge\log2+o(1)
+$$
+
+一致成立。
+
+若 $0\le h<j^{11/12}$，则 $\log B\le j^{11/12}+O(j^{5/6})$。§164.1的通用 Euler 包络与式（199.13）给
+
+$$
+Z(N)/e^\gamma\le(11/12)\log j+O_v(1),
+$$
+
+$B=1$ 时用 $B/\varphi(B)=1$ 直接处理。而真实 Robin 预算至少为 $\log\log V_j=\log j+O_v(1)$，故该分支的余量一致趋于无穷。合并两范围得到式（199.10）。$\square$
+
