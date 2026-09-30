@@ -5,7 +5,7 @@ year: 2020
 title: "A new phenomenological definition of entropy and application to black holes"
 doi: null
 url: https://arxiv.org/abs/2004.07168v1
-claim: "For every integer k' and every integer n in [0, k'], (n^2/k') (1/k')^n k'!/(k'-n)! <= 1; stated as a conjecture after eq. (003.21), checked numerically, with the note 'We have not found a proof for this conjecture'."
+claim: "For every integer k' >= 1 and every integer n in [0, k'], (n^2/k') (1/k')^n k'!/(k'-n)! <= 1; stated as a conjecture after eq. (003.21), checked numerically, with the note 'We have not found a proof for this conjecture'."
 strata_touched:
   - D5/S3/StatisticalMechanics/FallingFactorialMomentBound
 license: citation-only
