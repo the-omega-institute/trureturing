@@ -1,4 +1,4 @@
-name: CI tests-lean-inspector
+name: CI tests-workflow-script
 
 on:
   pull_request:
@@ -12,16 +12,14 @@ permissions:
   actions: read
 
 concurrency:
-  group: ci-tests-lean-inspector-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
+  group: ci-tests-workflow-script-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  tests-lean-inspector:
+  tests-workflow-script:
     uses: ./.github/workflows/ci-unit.yml
     with:
-      lean: toolchain
-      timeout-minutes: 60
-      run: make -C tools dotnet && bash tools/lean-inspector/tests/run-ci-suites.sh
+      run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj
       paths: |
         .editorconfig
         .github/*
@@ -53,29 +51,57 @@ jobs:
         tools/Architecture/*
         tools/Makefile
         tools/StrataLint.Engine/*
-        tools/StrataLint.Lean/*
+        tools/StrataLint.ExecutionEvidence/TestEvidenceCommands.cs
+        tools/StrataLint.ExecutionEvidence/TestResultEvidence.cs
         tools/StrataLint.sln
         tools/TOWER.yaml
         tools/TestSupport/StrataLint.ProcessTestSupport/*
         tools/TestSupport/StrataLint.TestSupport/*
         tools/Trureturing.Truth/*
         tools/lean-inspector-interface/*
-        tools/lean-inspector/*
+        tools/lean-inspector/*.json
+        tools/lean-inspector/*.mjs
+        tools/lean-inspector/*/*.sh
+        tools/lean-inspector/Census/*
+        tools/lean-inspector/LeanInformationAudit/*.py
+        tools/lean-inspector/LeanInformationAuditAnalysis/*
+        tools/lean-inspector/inspect.sh
+        tools/lean-inspector/lakefile.lean
+        tools/lean-inspector/materials.py
+        tools/lean-inspector/native.py
+        tools/lean-inspector/native_image.c
+        tools/lean-inspector/publication.py
+        tools/lean-inspector/reuse.py
         tools/scripts/*.c
         tools/scripts/*.lean
         tools/scripts/*.metal
         tools/scripts/*.txt
         tools/scripts/agent/gpu5040/*
         tools/scripts/agent/openproblem/TARGET-GATES.md
-        tools/scripts/lib/resource-observation-lib.sh
-        tools/scripts/report/lean-report-input.sh
-        tools/scripts/report/lean-report-selection.py
+        tools/scripts/agent/test_xi_quantization.py
+        tools/scripts/agent/xi_quantization.py
+        tools/scripts/ci-stage.sh
+        tools/scripts/ci_output.py
+        tools/scripts/clean-lanes.sh
+        tools/scripts/dotnet-test.sh
+        tools/scripts/ingest.sh
+        tools/scripts/local-harness-gate.sh
+        tools/scripts/preflight.sh
+        tools/scripts/report/echo-residual-summary.sh
         tools/scripts/report/lean-report.sh
-        tools/scripts/report/report-supervisor.sh
+        tools/scripts/report/report-consumer.sh
+        tools/scripts/scribe.sh
+        tools/scripts/update-renderer-contract.sh
         tools/scripts/workflow/ci-entry.sh
-        tools/scripts/worktree/*
+        tools/scripts/workflow/ci.py
+        tools/scripts/workflow/math-gate.sh
+        tools/scripts/workflow/playbook-workflows.sh
+        tools/scripts/workflow/scribe-content-checks.sh
+        tools/scripts/worktree-init.sh
+        tools/scripts/worktree/cache_material.py
+        tools/scripts/worktree/lean-cache-ensure.sh
+        tools/scripts/worktree/warm-donor.sh
         tools/tests/Directory.Build.props
-        tools/tests/StrataLint.Lean.Tests/*
         tools/tests/StrataLint.ScriptTests/*.cs
         tools/tests/StrataLint.ScriptTests/*.csproj
         tools/tests/StrataLint.ScriptTests/*.json
@@ -85,3 +111,4 @@ jobs:
         tools/tests/StrataLint.ScriptTests/Fixtures/lean_input_contract.py
         tools/tests/StrataLint.ScriptTests/Fixtures/report_snapshot_contract.py
         tools/tests/StrataLint.ScriptTests/Fixtures/truth_release_contract.py
+        tools/tests/StrataLint.WorkflowScript.Tests/*

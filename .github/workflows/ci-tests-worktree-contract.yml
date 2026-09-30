@@ -1,0 +1,57 @@
+name: CI tests-worktree-contract
+
+on:
+  pull_request:
+    branches: [dev, 'integration-**']
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [dev, 'integration-**']
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: ci-tests-worktree-contract-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  tests-worktree-contract:
+    uses: ./.github/workflows/ci-unit.yml
+    with:
+      run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.WorktreeContract.Tests/StrataLint.WorktreeContract.Tests.csproj
+      paths: |
+        *.lean
+        .editorconfig
+        .github/*
+        .gitignore
+        Blueprint/*.scribe.cs
+        Directory.Build.props
+        Directory.Packages.props
+        Golden/gate-authority-roots.toml
+        Makefile
+        Meta/Digestion/atomizers.toml
+        Meta/FILEMAP.*.toml
+        Meta/FILEMAP.toml
+        Meta/ReportConsumers/*
+        Meta/ReportProducers/*
+        Meta/ci-checks.json
+        Meta/ci-resources.json
+        Meta/engineering-projects.json
+        Meta/judge-seed.json
+        Meta/package-materials.json
+        Reg/lake-manifest.json
+        Reg/lakefile.toml
+        docs/CONTRIBUTING.md
+        docs/GOVERNANCE.md
+        docs/reports/*.c
+        docs/reports/*.cpp
+        docs/reports/*.h
+        docs/reports/*.mjs
+        docs/reports/*.py
+        global.json
+        lake-manifest.json
+        lakefile.toml
+        lean-report-inputs.json
+        lean-toolchain
+        tools/*

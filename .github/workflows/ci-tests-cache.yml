@@ -1,0 +1,105 @@
+name: CI tests-cache
+
+on:
+  pull_request:
+    branches: [dev, 'integration-**']
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [dev, 'integration-**']
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: ci-tests-cache-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  tests-cache:
+    uses: ./.github/workflows/ci-unit.yml
+    with:
+      run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj
+      paths: |
+        .editorconfig
+        .github/*
+        .gitignore
+        Directory.Build.props
+        Directory.Packages.props
+        Golden/gate-authority-roots.toml
+        Makefile
+        Meta/Digestion/atomizers.toml
+        Meta/FILEMAP.*.toml
+        Meta/FILEMAP.toml
+        Meta/ReportConsumers/*
+        Meta/ReportProducers/*
+        Meta/ci-cache-paths.json
+        Meta/ci-checks.json
+        Meta/ci-resources.json
+        Meta/engineering-projects.json
+        Meta/judge-seed.json
+        Meta/package-materials.json
+        Reg/lake-manifest.json
+        Reg/lakefile.toml
+        docs/CONTRIBUTING.md
+        docs/GOVERNANCE.md
+        global.json
+        lake-manifest.json
+        lakefile.toml
+        lean-report-inputs.json
+        lean-toolchain
+        tools/ARCHITECTURE.md
+        tools/Architecture/*
+        tools/Makefile
+        tools/StrataLint.ExecutionEvidence/TestEvidenceCommands.cs
+        tools/StrataLint.ExecutionEvidence/TestResultEvidence.cs
+        tools/StrataLint.sln
+        tools/TOWER.yaml
+        tools/TestSupport/StrataLint.ScriptProcessTestSupport/*
+        tools/TestSupport/StrataLint.TestSupport/*
+        tools/lean-inspector-interface/*
+        tools/lean-inspector/*.json
+        tools/lean-inspector/*.mjs
+        tools/lean-inspector/*/*.sh
+        tools/lean-inspector/Census/*
+        tools/lean-inspector/LeanInformationAudit/*.py
+        tools/lean-inspector/LeanInformationAuditAnalysis/*
+        tools/lean-inspector/LeanInformationAuditRegAnalysis/*
+        tools/lean-inspector/LeanInformationAuditRegTests/*
+        tools/lean-inspector/inspect.sh
+        tools/lean-inspector/lakefile.lean
+        tools/lean-inspector/materials.py
+        tools/lean-inspector/native.py
+        tools/lean-inspector/native_image.c
+        tools/lean-inspector/publication.py
+        tools/lean-inspector/reuse.py
+        tools/lean-inspector/tests/packages/*
+        tools/lean-inspector/tests/test_native_records.py
+        tools/scripts/*.c
+        tools/scripts/*.lean
+        tools/scripts/*.metal
+        tools/scripts/*.txt
+        tools/scripts/agent/gpu5040/*
+        tools/scripts/agent/openproblem/TARGET-GATES.md
+        tools/scripts/dotnet-test.sh
+        tools/scripts/report/dotnet_producer.py
+        tools/scripts/workflow/ci-entry.sh
+        tools/scripts/workflow/ci_plan.py
+        tools/scripts/worktree/cache_deadline.py
+        tools/scripts/worktree/cache_material.py
+        tools/scripts/worktree/lean_actions.py
+        tools/scripts/worktree/lean_cache.py
+        tools/scripts/worktree/lean_cache_release.py
+        tools/tests/Directory.Build.props
+        tools/tests/StrataLint.Cache.Tests/*
+        tools/tests/StrataLint.ScriptTests/*.cs
+        tools/tests/StrataLint.ScriptTests/*.csproj
+        tools/tests/StrataLint.ScriptTests/*.json
+        tools/tests/StrataLint.ScriptTests/Fixtures/analysis_cache_contract.py
+        tools/tests/StrataLint.ScriptTests/Fixtures/cache_fixture.py
+        tools/tests/StrataLint.ScriptTests/Fixtures/cache_snapshot_contract.py
+        tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py
+        tools/tests/StrataLint.ScriptTests/Fixtures/contribution_queue_contract.py
+        tools/tests/StrataLint.ScriptTests/Fixtures/lean_input_contract.py
+        tools/tests/StrataLint.ScriptTests/Fixtures/report_snapshot_contract.py
+        tools/tests/StrataLint.ScriptTests/Fixtures/truth_release_contract.py
