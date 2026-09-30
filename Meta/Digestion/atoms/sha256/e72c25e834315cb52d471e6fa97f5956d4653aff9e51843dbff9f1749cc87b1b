@@ -1,0 +1,10 @@
+## 183. 固定本原范数且公因子任意增长的合法五窗口来源
+
+对任意整数 $g\ge1$，取满足 $g<\phi^j$ 的最小正偶数 $j=j(g)$，定义
+
+$$
+x_g=gM^j\alpha,\qquad
+N_g=q(x_g)=gF_{j+3},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad\alpha=(1,0).
+$$
+

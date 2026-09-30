@@ -910,3 +910,63 @@ The square classification is cited in the
 The [Mertens progression note](../../../Library/Scale/languasco2008mertensprogressions.md)
 records the classical fixed-modulus background and why that asymptotic
 alone cannot replace the explicit estimate with a moving discriminant.
+
+## Canonical content and actual large-prime tails (§§182–187)
+
+Run the standalone Python 3.9+ standard-library diagnostic from any working
+folder, supplying an output path:
+
+```sh
+python3 canonical_content.py --out canonical_content.json
+```
+
+The program chooses the least positive even `j` with `phi^j > g` by exact
+quadratic-integer comparisons. It independently reconstructs the ordinary
+Zeckendorf address of `N = g F_(j+3)`, checks the unit bit, every five-window
+seam and End, and compares the complete reconstructed composition with
+`g M^j alpha`. It checks content `g`, primitive golden norm one, conductor
+four and `g^2 < N <= 5g^2`. Its fixed ranges are:
+
+- every `g` from 1 through 10,000;
+- factorial contents `m!` for `2 <= m <= 120`, plus the same 119
+  sources prefixed by `2*m` low null windows;
+- 26 primorial contents with largest prime at most 101;
+- 28 sources with 2, 4, 10 or 20 leading low null windows;
+- 11,207 positive-quantity lattice points in `[-40,80]^2`, of which 211
+  lie in the strict canonical strip and reconstruct the same source.
+
+For factorial parameters through 14, complete Fibonacci factorizations
+supply 32 actual prime-rank checks and exact divisor/totient products.
+For odd indices from 7 through 63, four cutoff choices supply 164 nonempty
+rank buckets. The program bounds each logarithmic Euler contribution by
+its exact larger reciprocal mass and compares it with both analytic
+bounds using outward rational logarithm intervals. It also checks the
+same-source inclusion `B = g A | N`, where `A` contains the small
+Fibonacci primes, retaining overlapping large primes as an upper bound.
+
+The paper estimate combines prime size and first divisibility rank:
+
+$$
+T(r,y)\le\tau(r)\sqrt{\frac{6(1+\log r)}{y\log y}},
+\qquad y\in\mathbb Z,\quad y\ge5.
+$$
+
+This supports the §§185–187 Robin estimates using the cited unconditional
+Axler input. The finite JSON certifies only its enumerated arithmetic,
+not these infinite estimates, RH, a useful numerical cutoff or a Lean
+proof. The new Robin bridges remain paper mathematics. The character
+series bound from the earlier slice was checked separately as a temporary
+exact Lean application of pinned Mathlib; it creates no new library theorem
+and does not certify this whole argument.
+
+The report records the program hash and a digest of all source rows.
+Optimization mode, a missing output argument and overwriting the source
+file, including a hardlink to it, are rejected. The program has no third-party runtime dependencies.
+
+Section 187 also compares two actual sources with the same growing null
+prefix: a single Fibonacci term has Robin ratio tending to zero, while
+an appropriate factorial-content source has ratio tending to one from
+below. Both contraction coordinates tend to zero. The paper argument
+therefore rules out a continuous Robin-ratio decoder at zero for this
+single contraction observation; the script checks finite source identity,
+not the limiting responses or continuity theorem.
