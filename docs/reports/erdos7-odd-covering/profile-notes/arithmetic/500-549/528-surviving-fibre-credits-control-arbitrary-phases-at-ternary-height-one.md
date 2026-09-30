@@ -1,5 +1,7 @@
 # Surviving-fibre credits give common query laws at ternary height one
 
+A [shared-budget obstruction](#shared-selected-budgets-and-the-exact-two-group-method-boundary) removes the mixed-palette restriction from one fixed twelve-prime, two-root scalar comparison. Even its exact two-group maxima, with the stated separate remainder charge, cannot certify positivity for any root weight: the best comparison is at most -298825388328897992/26987232024244366875. The feasible scalar witness violates a [necessary common-free-address relation](#common-free-addresses-exclude-the-scalar-witness), identifying a relation that a stronger comparison must retain. This is a method boundary, not a covering example or an unrestricted noncovering theorem.
+
 A [star-conditioned second-root estimate](#conditioning-every-star-complement-makes-the-other-root-positive) gives head Haar density greater than1/550 for the specified complementary1947-vector palette when the chosen root has no5-star. Both matching191/1947 root contracts together give density greater than1/500 and supported mass greater than9/8000 after the inherited outside-prime tail above100000. Arbitrary finite nonternary heights and fixed3,5,7 private-prime transport are retained; the mixed-palette and low-ternary conditions remain.
 
 An [exact paired-allocation refinement](#exact-paired-partitions-sharpen-the-common-source-certificate) improves the specified 191-vector head certificate to Haar density greater than1/4000 at arbitrary finite nonternary heights. Under the same head-only ternary and chosen-root restrictions, the inherited analytic tail now permits all outside primes greater than400000, with final supported mass greater than1/20000. The joint optimizer retains both head interfaces and every fractional row not discharged by its explicit condition.
@@ -4324,3 +4326,170 @@ One reusable shared-allocation inequality avoids charging the complete selected 
 Every actual selected numerical label3d is active on at most one retained root. Its weighted fee is consequently bounded by the displayed maximum once; sum its exponents to obtain b_D. Free originals still have one actual phase across the two roots. No simultaneous attainability of the support maxima is assumed. FC90 is a valid interface, not yet a uniform positive bound over arbitrary star and mixed allocations.
 
 The [star-conditioned producer](../../../frontier/cover-geometry/fibre-credit-partition/star_conditioned_union.py) and [exact results](../../../frontier/cover-geometry/fibre-credit-partition/star_conditioned_union.json) enumerate72 finite product models, including7 zero-carrier cases, and12 independent exponent checks of FC85. They retain the explicit wrong-normalization counterexample, reconstruct both finite independent endpoints from the actual labels, verify the1947-palette and shared-root consumers, and record the full-inventory method boundary. These results are ordinary proofs and exact finite controls; no new Lean verification or unrestricted Erdős#7 conclusion is claimed.
+
+## Shared selected budgets and the exact two-group method boundary
+
+The selected numerical label3d is active on at most one retained ternary root. Its depth allowance can therefore be shared across the two roots, including the shallow grouped labels. This gives a corner reduction for the exact scalar group problem. It also permits a precise obstruction: even solving that scalar problem exactly cannot make the present separate-remainder certificate positive in the complete-height comparison below.
+
+### Fixing the source before optimizing a shared budget
+
+Fix the two actual pure-conditioned source laws and the chosen star-complement parameters. For root r write
+
+    W5r=g_(5,r), W7r=g_(7,r), G_r=product_(q>7)g_(q,r),
+    M_r=G_r*W5r*W7r.
+
+The parameters remain fixed as selected-label allocations vary. In this subsection require positive private masses and the whole-domain raw-budget guard V5_q+V7_q<=1. Define the exact scalar relaxation
+
+    Phi_r(V5,V7)=max G_r sum_(i,j)w_i*v_j
+                    *[1-product_q(1-x_(q,i)-y_(q,j))],
+    0<=w_i<=a5, sum_i w_i=W5r,
+    0<=v_j<=a7, sum_j v_j=W7r,
+    x_(q,i),y_(q,j)>=0,
+    sum_i x_(q,i)<=V5_q, sum_j y_(q,j)<=V7_q.          (FC91)
+
+Use all five and seven physical head rows, including fractional and zero-weight rows. Dropping the nonnegative same-q intersection from actual projection unions upper-bounds the actual two-group union by FC91. Arbitrary scalar arrays need not have a simultaneous realization by arithmetic phases.
+
+A maximum exists by compactness. Holding all other variables fixed, the objective is jointly affine in the two allocation columns belonging to one q, with nonnegative coefficients. Each full raw budget can consequently be placed in one receiving row. Holding all allocations fixed, each head weight vector can be replaced by a vertex of its capped simplex. Starting at a global maximum and making these replacements preserves the maximum. Fractional head rows remain unless an additional evacuation hypothesis is separately proved.
+
+For any fixed choice of these vertices the objective is affine in the pair(V5_q,V7_q), holding the other private budgets fixed. The maximum of this fixed finite family is convex in that pair. This proves separate convexity in each raw budget, not joint convexity across all q.
+
+For p in{5,7}, the selected inventories3*p*q^e are disjoint because q>7. Let t_(p,q) in[0,b_q] be the unnormalized selected depth allowance allocated to root1. Root2 receives at most the remaining b_q-t_(p,q). Completing absent allowance is safe by monotonicity, giving
+
+    V_(p,q,1)=(b_q+t_(p,q))/g_(q,1),
+    V_(p,q,2)=(2*b_q-t_(p,q))/g_(q,2).                (FC92)
+
+The first b_q is the free p*q^e inventory, present on both roots with its actual common phase. Independently optimizing its two projections is an upper relaxation. Completing geometric allowances does not assert that one finite family exhausts them.
+
+For every gamma in[0,1], composition of FC91 with FC92 preserves convexity in each shared allocation coordinate, despite the opposite signs on root2. Successive endpoint replacement therefore proves
+
+    max_(0<=t<=b) [gamma*Phi_1(V1(t))
+                   +(1-gamma)*Phi_2(V2(t))]
+      =max_(t_(p,q) in{0,b_q})
+                  [gamma*Phi_1(V1(t))
+                   +(1-gamma)*Phi_2(V2(t))].           (FC93)
+
+There are2^18 corners with nine private primes and two heads. The guard holds throughout this entire cube whenever g_(q,r)>=1-b_q, since for q>=11
+
+    V_(5,q,r)+V_(7,q,r)<=4*b_q/g_(q,r)
+        <=4/(q-3)<=1/2.                              (FC94)
+
+Finite-height allowances only improve this bound. A different setting with raw sum greater than1 needs a different argument; clipping negative complement factors does not preserve the affine proof automatically.
+
+The general-head product-defect bound of FC83--FC84 also bounds Phi itself. For a scalar array put z_q=0. Both1-x_q-y_q and(1-x_q)(1-y_q) lie in[0,1], and their difference is x_q*y_q. Product telescoping, integration over the head weights, and the one-axis capped-simplex estimate give the same correction bound. Thus a valid cheap upper R_r for Phi_r can be evaluated only at the FC93 corners. Convexity of R_r is neither needed nor asserted. The full piecewise one-axis formula and fractional rows are retained.
+
+### Paying each remaining selected numerical label once
+
+Let D range over nonternary supports of size at least two, and put H_(D,r)=product_(p outside D)g_(p,r). After removing exactly the shallow grouped originals, the complete-height remaining exponent coefficient is
+
+    R_D=product_(p in D)b_p, except
+    R_{5,q}=(b5-a5)*b_q, q>7,
+    R_{7,q}=(b7-a7)*b_q, q>7.                        (FC95)
+
+All coefficients are nonnegative. In particular R_{5,7}=b5*b7; no support-{5,7} label is removed. Every support of size at least three remains fully paid. Summing finite permitted exponent ranges gives the corresponding finite-height version when its first head powers are included.
+
+The free remainder on root r is F_r=sum_D R_D*H_(D,r), equivalently FC85. An actual remaining selected3d pays its weighted fee on at most one retained root. Summing these numerical labels once gives
+
+    S(gamma)=sum_D R_D
+                   *max(gamma*H_(D,1),(1-gamma)*H_(D,2)). (FC96)
+
+The maximum is taken once for each label before summing its exponents; it does not combine separately optimized actual phases. Using any cornerwise upper certificates R_r gives
+
+    L_R(gamma)=gamma*(M1-F1)+(1-gamma)*(M2-F2)
+       -S(gamma)
+       -max_corner[gamma*R1+(1-gamma)*R2].            (FC97)
+
+A positive L_R would certify surviving mass under the declared source/star conditions. A negative lower comparison alone is not an actual cover or an impossibility result for other methods.
+
+For the numerical comparison fix nonternary primes5,7,11,13,17,19,23,29,31,37,41, with c_p=(p-1)/(p-2), b_p=1/(p-2) and a_p=c_p/p. Root1 has g5=1-b5 and every other g=1. Root2 has g5=1 and g_p=1-b_p for p>=7. This is the padded only5-star/no5-star pattern, with no mixed palette and arbitrary finite nonternary heights dominated by the complete geometric allowances. Head ternary height is still at most one. No extremal principle over all star masses is asserted.
+
+The [shared-budget producer](../../../frontier/cover-geometry/fibre-credit-partition/shared_root_budget.py) evaluates all262144 corners using exact rational enclosures of the one-axis radicals. It then optimizes every real gamma, using the upper hull of the corner lines and the support breakpoints of FC96. Each bracket hull has19 vertices, which are serialized with their masks. There are2036 mixed supports,1781 distinct support breakpoints and1801 combined candidates for each bracket model.
+
+The maximum value of the unrounded cheap comparison lies between
+
+    -0.011678886195193118 and -0.011678886195192386.    (FC98)
+
+These decimals abbreviate exact rational enclosing endpoints in the [results](../../../frontier/cover-geometry/fibre-credit-partition/shared_root_budget.json). Both rational bracket models attain their unique maximum at gamma*=311296/816493, with active corner masks(510,0). This does not by itself identify a unique optimizer of the unrounded formula. Its maximum value is enclosed and is strictly less than -7/600. A lower radical bracket is only a lower bound on that cheap formula; it is not a lower bound on Phi.
+
+### A feasible-array obstruction also excludes the exact scalar comparison
+
+The preceding negative cheap comparison can be strengthened without solving Phi. At the single shared corner(510,0), take all selected5q^e budget except q=11 on root1, and all selected7q^e budget on root2. In increasing private-prime order(11,13,17,19,23,29,31,37,41), the raw budgets are
+
+    X1=(1/9,2/11,2/15,2/17,2/21,2/27,2/29,2/35,2/39),
+    Y1=(1/9,1/11,1/15,1/17,1/21,1/27,1/29,1/35,1/39),
+    X2=(1/4,1/10,1/14,1/16,1/20,1/26,1/28,1/34,1/38),
+    Y2=(1/4,1/5,1/7,1/8,1/10,1/13,1/14,1/17,1/19).
+
+The head weights are
+
+    w1=(4/15,4/15,2/15,0,0),
+    v1=(6/35,6/35,6/35,6/35,6/35,1/7,0),
+    w2=(4/15,4/15,4/15,1/5,0),
+    v2=(6/35,6/35,6/35,6/35,4/35,0,0).
+
+Place each complete raw budget at the following row, indexed from zero:
+
+| q | Root1 X | Root1 Y | Root2 X | Root2 Y |
+| ---: | ---: | ---: | ---: | ---: |
+|11|1|3|1|1|
+|13|1|1|0|3|
+|17|0|0|2|2|
+|19|0|4|2|0|
+|23|0|2|0|0|
+|29|1|2|2|2|
+|31|1|4|0|3|
+|37|0|0|2|2|
+|41|0|2|0|0|
+
+These arrays satisfy every FC91 constraint at that same FC92 corner. With G1=1 and G2=1245184/2092959, literal evaluation of FC91 gives the feasible values
+
+    P1=177964140232/734502643875,
+    P2=800122400768/4721802710625.                    (FC99)
+
+They are lower witnesses for the two exact scalar maxima, not upper estimates or claims of arithmetic realizability. Replacing the cornerwise R in FC97 by the exact Phi defines L_Phi. Since the worst shared group charge is at least gamma*P1+(1-gamma)*P2,
+
+    L_Phi(gamma)<=Q(gamma),
+    Q(gamma)=gamma*(M1-F1-P1)
+          +(1-gamma)*(M2-F2-P2)-S(gamma).             (FC100)
+
+This direction is essential: a feasible lower witness for a subtracted maximum bounds the certificate from above. All remaining fees are unchanged. Exact evaluation at the1781 support breakpoints and endpoints gives
+
+    max_(gamma in[0,1]) Q(gamma)
+      =-298825388328897992/26987232024244366875
+      =-0.011072843189714451... < -11/1000.           (FC101)
+
+The unique maximizer of Q is gamma*=311296/816493. Its exact left and right slopes are respectively1020654947309/297473570769375>0 and -7688217256/27043051888125<0; concavity independently certifies the global maximum. This does not assert that L_Phi has the same maximizer.
+
+Therefore optimizing the two separate scalar groups more accurately, while keeping this separate remainder payment and fixed source/star parameters, cannot make the comparison positive for any real root weight. Tighter joint-source domains, joint payment of grouped and remaining labels, additional groups and other methods are not excluded. In particular these arrays do not construct an odd covering system.
+
+The [witness producer](../../../frontier/cover-geometry/fibre-credit-partition/two_interface_witness.py) retains complete literal arrays in its [result](../../../frontier/cover-geometry/fibre-credit-partition/two_interface_witness.json). Its bounded coordinate search only constructs feasible witnesses; the cap, raw-budget and objective checks use exact arithmetic independently of the integer search objective. Optimality of the search is unnecessary for FC100--FC101.
+
+### Common free addresses exclude the scalar witness
+
+Actual free p*q^e originals have one head address on both retained ternary roots. Define their q-projection unions BEFORE head-star restriction, and retain one common physical head index, including zero-weight rows. Suppose root1 has no private-q star, so its law is lambda_q, whereas root2 uses nu_(2,q)=lambda_q restricted to B_(q,2)^c divided by g_(q,2).
+
+For the common free union F_(q,i),
+
+    g_(q,2)*nu_(2,q)(F_(q,i))<=lambda_q(F_(q,i)).
+
+Let x_(r,q,i) include the union of free projections and selected projections active on root r. Write t_(2,pq) for root2's unnormalized selected cap allowance. Removing its selected projections leaves only the common free union, so each positive excess is bounded by its selected mass in that row. Summing the original-label cap allowances proves the necessary relation
+
+    sum_i [g_(q,2)*x_(2,q,i)-x_(1,q,i)]_+
+          <=t_(2,pq).                                (FC102)
+
+This uses one actual lambda_q and common addresses. Independently relabeling or deleting zero-weight rows need not preserve it.
+
+At q=11 the FC99 witness has g_(11,2)=8/9, root2 raw X=1/4 and selected allowance t_(2,5*11)=1/9. If its occupied root2 row does not match root1's occupied row, the excess is2/9>1/9. The q=11 rows must therefore match. At q=13, g_(13,2)=10/11, root2 raw X=1/10 and selected allowance is zero; the q=13 rows must also match.
+
+Root1 puts both q=11 and q=13 on row1. Root2 puts them on distinct rows1 and0. No single bijection between the physical five-row labels can satisfy both equalities. The witness producer checks all120 permutations. Its positive-weight entries already exhaust each raw column budget, so retaining those entries and adding hidden free projections on zero-weight rows cannot repair the defect within the same raw budget.
+
+Thus the displayed scalar witness is excluded by a concrete necessary relation of the original arithmetic system. This does not invalidate FC101: that result concerns a larger declared scalar domain. Nor does excluding this one witness prove positivity of the stronger domain. Determining the best comparison with shared free addresses, shared head weights and the same actual private law remains a mathematical gap.
+
+### A boundary for one readout is not a boundary for another
+
+The gcd task under multiplication and declared translations can admit a small exact behavior quotient. Applying it to a covering process additionally requires preservation of that process's allowed deletions and output. Even a full gcd histogram of the survivor set does not suffice.
+
+On the window Z/9Z, let H1 avoid1 mod3 and H2 avoid2 mod3. They have the same six-point size and the same gcd-with9 histogram: three units, two points of gcd3 and the zero point of gcd9. Both histories have used exactly the numerical modulus3. Now append the SAME fresh legal original1 mod9. It deletes no H1 point and one H2 point, leaving six and five survivors respectively. Every modulus in either history is odd, greater than1 and numerically distinct. The same example in Z/5040Z leaves3360 and2800 survivors after1 mod9; negation identifies the original gcd histograms.                      (FC103)
+
+FC103 separates exact survivor counts, not the final empty/nonempty output: both displayed sets remain nonempty. The transferable construction is to fix the readout and legal continuations, then prove that each update descends to the proposed boundary. The numerical gcd-task state count supplies no such theorem for a survivor-set deletion process. For the two-root problem, FC102 identifies one piece of joint information that the current separate scalar summaries have discarded.
+
+The shared-budget run checks11289 exact predicates and the witness run checks5657, including all120 address permutations. Independent checks reconstruct the literal arrays, complete support charges and all1783 witness weight candidates without repeating the witness search. These are ordinary proofs and exact finite computations, not new Lean verification. Unrestricted prime support, unrestricted ternary heights and arbitrary star patterns of Erdős#7 remain unresolved.
