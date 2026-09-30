@@ -24,7 +24,7 @@ internal sealed class EightTriangleEnvelopeDocument : IScribeDocumentDefinition
                 + "709/1003, 11 sqrt(249)/249, and 2753/4012. Their squared margins "
                 + "are respectively on the correct sides of 1/2, so eight occurrences "
                 + "give strict pi/4 angle budgets. A high edge has upper cosine at most "
-                + "53/59, which is below cos(pi/7) by the exact Taylor certificate "
+                + "5965/6972, which is below cos(pi/6) by the exact Taylor certificate "
                 + "at 22/49, hence degree at least twelve gives strict budget.")),
             Paragraph(Text(
                 "The formal Lean file checks these exact arithmetic margins and the "
