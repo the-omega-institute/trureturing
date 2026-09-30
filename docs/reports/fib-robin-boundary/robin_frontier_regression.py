@@ -4,9 +4,13 @@ import sys
 sys.dont_write_bytecode = True
 
 import argparse
+from copy import deepcopy
 from fractions import Fraction
+import hashlib
 import json
 from pathlib import Path
+import subprocess
+import tempfile
 
 from robin_frontier import build
 
@@ -89,6 +93,81 @@ def run(y, bound):
             "frontier": len(frontier), "status": "PASS"}
 
 
+def margin_contract():
+    """Exercise the actual CLI, including untrusted certificate rejection."""
+    program = Path(__file__).with_name("robin_frontier_margin.py").resolve()
+    certificate = build(7, 1000)
+    valid = []
+    rejected = []
+    with tempfile.TemporaryDirectory(prefix="robin margin ") as directory:
+        root = Path(directory)
+
+        def invoke(data, core, name):
+            source = root / (name + ".json")
+            output = root / (name + "-result.json")
+            source.write_text(json.dumps(data))
+            completed = subprocess.run(
+                [sys.executable, "-B", str(program), str(source),
+                 "--core", str(core), "--out", str(output)],
+                cwd=root, capture_output=True, text=True, check=False,
+            )
+            return completed, source, output
+
+        for bound in (1, 1000):
+            data = build(7, bound)
+            for core, expected in ((10080, "PASS"), (5040, "OPEN")):
+                name = "valid-{}-{}".format(bound, core)
+                completed, source, output = invoke(data, core, name)
+                if completed.returncode != 0:
+                    raise AssertionError((name, completed.stderr))
+                result = json.loads(output.read_text())
+                if not (
+                    result["status"] == expected
+                    and result["frontier_check"]["status"] == "PASS"
+                    and result["certificate_sha256"] ==
+                    hashlib.sha256(source.read_bytes()).hexdigest()
+                    and result["minimum"]["suffix"] == 1
+                ):
+                    raise AssertionError((name, "incorrect margin result"))
+                if core == 5040 and any(not row["positive"] for row in
+                                        result["rows"] if row["suffix"] > 1):
+                    raise AssertionError((name, "nonempty suffix not certified"))
+                valid.append({"core": core, "bound": bound, "status": expected})
+
+        mutations = []
+        data = deepcopy(certificate)
+        data["frontier"][0]["weight"] = [1, 2]
+        mutations.append(("altered-root-weight", data, 10080))
+        data = deepcopy(certificate)
+        data["frontier"] = []
+        mutations.append(("empty-frontier", data, 10080))
+        data = deepcopy(certificate)
+        root_state = next(state for state in data["states"]
+                          if state["key"] == data["root"])
+        root_state["frontier"] = [{"number": 1, "weight": [1, 2]}]
+        data["frontier"] = deepcopy(root_state["frontier"])
+        mutations.append(("altered-state-and-root", data, 10080))
+        data = deepcopy(certificate)
+        child = next(i for i, state in enumerate(data["states"])
+                     if state["key"] != data["root"])
+        del data["states"][child]
+        mutations.append(("missing-child-state", data, 10080))
+        data = deepcopy(certificate)
+        del data["primes"][1]
+        mutations.append(("missing-prime", data, 10080))
+        data = deepcopy(certificate)
+        data["frontier"][0]["weight"] = [1, 0]
+        mutations.append(("zero-denominator", data, 10080))
+        mutations.append(("small-core", certificate, 11))
+        mutations.append(("core-outside-cutoff", certificate, 5040 * 11))
+        for name, data, core in mutations:
+            completed, _, output = invoke(data, core, name)
+            if completed.returncode == 0 or output.exists():
+                raise AssertionError((name, "invalid input produced a result"))
+            rejected.append(name)
+    return {"status": "PASS", "valid_scans": valid, "rejected": rejected}
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, required=True)
@@ -96,7 +175,8 @@ def main():
     results = [run(y, bound) for y, bound in
                ((1, 256), (2, 512), (7, 1000), (11, 2000))]
     report = {"status": "PASS", "cases": results,
-              "scope": "Finite rough enumeration only; no logarithm sign."}
+              "margin_contract": margin_contract(),
+              "scope": "Finite normalization and margin CLI regression only."}
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(report, indent=2) + "\n")
     print(json.dumps(report, indent=2))

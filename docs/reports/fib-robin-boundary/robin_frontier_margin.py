@@ -11,11 +11,13 @@ sys.dont_write_bytecode = True
 
 import argparse
 from fractions import Fraction
+import hashlib
 import json
 from math import gcd
 from pathlib import Path
 
 from kernel_tail import exp_gamma_lower, log_interval
+from robin_frontier_check import check as check_frontier
 
 
 def factor(n):
@@ -57,9 +59,11 @@ def main():
     parser.add_argument("--core", type=int, required=True)
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
-    certificate = json.loads(args.certificate.read_text())
+    certificate_bytes = args.certificate.read_bytes()
+    certificate = json.loads(certificate_bytes)
     if certificate.get("schema") != "robin-rough-frontier-v1":
         raise ValueError("wrong frontier schema")
+    frontier_check = check_frontier(certificate)
     if args.core < 5040:
         raise ValueError("core must be at least 5040")
     y = certificate.get("y")
@@ -67,6 +71,8 @@ def main():
         raise ValueError("frontier certificate has invalid rough cutoff")
     if any(p > y for p, _ in factor(args.core)):
         raise ValueError("core has a prime factor outside the rough cutoff")
+    if not certificate.get("frontier"):
+        raise ValueError("frontier certificate is empty")
     gamma_exp = exp_gamma_lower()[2]
     rows = []
     for entry in certificate["frontier"]:
@@ -87,13 +93,18 @@ def main():
         "status": "PASS" if all(row["positive"] for row in rows) else "OPEN",
         "core": args.core,
         "frontier_certificate": str(args.certificate),
+        "certificate_sha256": hashlib.sha256(certificate_bytes).hexdigest(),
+        "frontier_check": frontier_check,
+        "y": y,
+        "suffix_bound": certificate["bound"],
         "frontier_size": len(rows),
         "all_lower_bounds_positive": all(row["positive"] for row in rows),
         "minimum": minimum,
         "rows": rows,
         "scope": (
-            "Finite frontier scan with rational log and exp(gamma) lower "
-            "bounds; no claim beyond the supplied frontier."
+            "Verified finite frontier for this core, rough cutoff and suffix "
+            "bound, including suffix 1. Rational log and exp(gamma) lower "
+            "bounds certify positive signs only; OPEN is not a counterexample."
         ),
     }
     args.out.parent.mkdir(parents=True, exist_ok=True)

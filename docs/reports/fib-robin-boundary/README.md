@@ -152,12 +152,23 @@ python3 -B docs/reports/fib-robin-boundary/robin_frontier_margin.py \
 
 The producer and checker retain exact `(suffix integer, sigma/suffix)` pairs
 and remove only points dominated by a smaller suffix with at least as large a
-weight. The regression enumerates finite rough inputs and checks the ordered
-prime-exponent normalization and frontier domination. These programs evaluate
-no logarithm and make no Robin sign claim; the transfer to a fixed common core
-is the mathematical content of §156. The margin tool applies the existing
-rational logarithm and Euler-constant lower bounds to the finite frontier; a
-positive result is scoped to that core and certificate.
+weight. The producer, independent checker and normalization part of the
+regression evaluate no logarithm and make no Robin sign claim. The transfer
+to a fixed common core is the mathematical content of §§156 and 159.
+The margin tool first checks the entire certificate, then applies the existing
+rational logarithm and Euler-constant lower bounds to the finite frontier.
+It requires a core at least 5040 whose prime factors are at most the rough
+cutoff, and binds its result to the checked certificate bytes by SHA-256.
+A positive result is scoped to that core, rough cutoff and finite suffix bound.
+The bound 100000 above gives eight frontier points; §157 uses bound 1000 and
+four points. Both scans with core 10080 have positive lower bounds.
+
+The scan includes suffix 1. With core 5040 this retains the boundary integer
+5040 and reports `OPEN`, even though Robin's target excludes that integer.
+`OPEN` means a lower bound did not certify positivity, not that a counterexample
+was found. §159 explains the separate target-domain argument. The regression
+also exercises the margin CLI on both core values and rejects altered weights,
+missing recurrence states, empty frontiers and invalid cores.
 
 ## Recursive reserve, index stopping and gluing
 
