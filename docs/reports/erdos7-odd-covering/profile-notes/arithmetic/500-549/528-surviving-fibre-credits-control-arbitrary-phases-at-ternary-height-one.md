@@ -6259,3 +6259,136 @@ The [joint ternary controls](../../../frontier/cover-geometry/fibre-credit-parti
 For unrestricted Erdős #7, the principal omitted cases are nonternary unary/pure-power originals, higher nonternary exponents, mixed supports of size at least three, and large dense pair graphs not meeting a positive FC222 budget. The present eleven-prime certificate does not extend the FC159 skeleton itself: that skeleton has pure, star and other originals excluded from FC214. Nor does the present construction assert positivity for arbitrary prime support.
 
 The useful new interface is explicit: preserve the common ternary prefix tree, bound the union of fibres whose actual incoming label counts exhaust a prime domain, and perform the private extension count on the remaining positive mass. Increasing depth can create dead fibres without exhausting that common mass. Additional pure/mixed syntax needs an added budget or a different construction on this same source, not reuse of a bound that omitted those classes.
+
+## A joint second moment pays for absorbing the prime 43
+
+Every FC159 core, with exactly its declared skeleton and admitted finite nongroup remainder, can be enlarged by arbitrary finite original labels divisible by 43 and supported on its old primes together with 43. These added labels may have arbitrary finite exponents, including ternary exponents, arbitrary old supports and arbitrary fixed phases. The resulting actual thirteen-prime head has one supported probability with a uniform full-Haar density bound. No new head-only label avoiding 43 is admitted by this claim.
+
+This is an ordinary application of the existing full-head moment, the Jensen argument already used in Report458 DP6, and [Report463 PE2–PE6](../450-499/463-two-actual-prime-extensions-preserve-a-common-core-law.md). It needs no SH11 analytic prime-product premise for the absorption itself. It is not new Lean verification, does not establish the corresponding absorption of 47, and does not resolve unrestricted Erdős #7.
+
+### 1. One full-head source for all old cofactor queries
+
+Keep
+
+    V={5,7,11,13,17,19,23,29,31,37,41},
+    R={3} union V,
+    m_*=36518862868606981/466438558966380000,
+    C_V=1048576/403767.
+
+For either FC159 skeleton, every N>=N_+, and every admitted finite nongroup inventory with its arbitrary original phases, FC159 supplies one actual two-root joint reference law lambda with complete core-survivor mass at least m_*. It is the product of the uniform law on the two surviving first ternary roots and the nonternary pure-conditioned source. Uniform higher ternary digits are included whenever required.
+
+Let U be this full actual core survivor and put mu=lambda(.|U). Then
+
+    mu <= D0 H_R,
+    D0=(3/2) C_V/m_*
+       =1816999451688960000/36518862868606981.       (FC230)
+
+Resolve the entire planned old-cofactor inventory in one finite head period K, including all ternary depths of labels using 43 and all later full-head queries. Uniform lifting of mu to K preserves (FC230), its total mass, and its actual old-core support. Choosing such a period adds no old-only forbidden class.
+
+For each complete layout b=(b_d) indexed by every divisor d|K, including d=1, set
+
+    L_b(x)=sum_(d|K) 1_(x=b_d mod d),
+    Gamma_K(mu)=max_b integral L_b^2 dmu.
+
+The full joint Haar intersection estimate of Chapter33 SH6 gives, simultaneously for every layout,
+
+    Gamma_K(mu)<=D0 M2(R)=G0,
+    M2(R)=product_(p in R) p(p+1)/(p-1)^2,
+    G0=60565495731699460320/36518862868606981
+      <3321/2<(163/4)^2.                            (FC231)
+
+This bound includes arbitrary correlations introduced by conditioning. It is uniform in all finite old query heights and has no missing ternary-depth factor.
+
+### 2. Jensen converts that same moment into a simultaneous query bound
+
+For each nonunit d|K, choose a residue b_d attaining max_a mu(a mod d). Such residues exist on the finite carrier; they need not be mutually CRT-compatible because complete query layouts have no compatibility requirement. Their indicator events all live under the same mu. The d=1 indicator is identically one. Therefore
+
+    integral L_b dmu
+      =1+sum_(1<d|K) max_a mu(a mod d)
+      =1+R_K(mu).
+
+Jensen, with mu a probability, yields
+
+    (1+R_K(mu))^2 <= integral L_b^2 dmu
+                       <=Gamma_K(mu)<=G0.
+
+Using (FC231),
+
+    R_K(mu)<159/4=:A.                               (FC232)
+
+The maximizing residues are auxiliary query tests; they do not replace any actual original phase or claim simultaneous realization of separate extremal sources. This is precisely why the joint query moment is the relevant input.
+
+Summing the cylinder bounds of the FC159 reference product law before conditioning gives the coarser A0=((7/4)C_V-1)/m_*>41: its ternary factor is 1+sum_(e>=1)(1/2)*3^(1-e)=7/4, and its nonternary factor is C_V. The inequality follows from C_V>5/2 and m_*<2/25, which give A0>675/16>41. That was an insufficient upper certificate, not a lower bound on R_K(mu). The sharper (FC232) is fully consistent with it and repairs the prime43 gate for this same source.
+
+### 3. Absorb every actual 43-divisible label on the enlarged support
+
+Let the new originals form any finite globally distinct numerical set
+
+    m=d*43^e, d|K, e>=1,                            (FC233)
+
+with one arbitrary fixed residue modulo each m. All cofactor powers and their phases are actual projections of those original residues. There is no restriction on the finite exponents, on d's support in R, or on its ternary depth. Labels with d=1 are the actual pure43 powers.
+
+Take the 43-coordinate at a finite height resolving the complete new family and all intended queries. Its actual pure-power forbidden union has Haar mass at most
+
+    sum_(e>=1)43^-e=1/42.
+
+Thus its actual pure survivor has Haar mass at least 41/42. Its conditional probability rho43 has density at most 42/41. Form the single product probability mu tensor rho43. This already avoids every old original and every actual pure43 original.
+
+At each fixed e, the remaining actual labels have nonunit old cofactors d and form a partial query layout. Their total deleted probability is bounded by
+
+    (42/41)*43^-e * R_K(mu).
+
+The sum over all e>=1, still under the same product law, gives
+
+    deletion_fee <= R_K(mu)/41
+                 < A/41=159/164,
+    live_mass > 5/164.                              (FC234)
+
+Using the weak bound live_mass>=5/164 is sufficient. Delete the one actual remaining forbidden union and normalize once. The resulting mu43 is supported on the full enlarged actual core survivor and has joint full-Haar density at most
+
+    D43=D0*(42/41)/(5/164)
+       =(168/5)D0
+       =61051181576749056000/36518862868606981.      (FC235)
+
+All thirteen head coordinates may now be correlated. Its old marginal can change; only its old good support is required. This is exactly the permitted source change in Report463, not an assertion of exact prescribed-marginal preservation.
+
+The new actual full-Haar survivor density is at least 1/D43, since it supports a probability dominated by D43 Haar. This particular finite-core density lower bound is justified; it is distinct from any distorted tail-survivor mass statement.
+
+Report463 also gives a simultaneous post-absorption query estimate at the same fully resolved period:
+
+    R_new(mu43) <= ((43-1)A+1)/(43-2-A)
+                =6682/5.                           (FC236)
+
+Its extra 1 is essential: a new query supported only on the43 coordinate is not forbidden merely because all actual pure43 originals were removed. This upper estimate is not small enough for another immediate PE6 application at47; no conclusion about the true new R or the actual feasibility at47 follows from that failure.
+
+### 4. A symbolic unrestricted far tail after the absorbed core
+
+The cap D43 is independent of N and every finite core/new exponent, provided the old FC159 source restrictions are retained and all newly absorbed head originals are divisible by43. Uniform lifting of mu43 to larger complete head query heights preserves this cap. Thus the enlarged source meets the generic full-head continuation premise on
+
+    R43=R union {43},
+    M2(R43)=M2(R)*43*44/(42^2)=M2(R)*(473/441).
+
+Two existing consumers are available without any new cutoff search:
+
+1. Under Chapter33 SH11, choose B>=286 and integer ell>=4 with 3^ell<=B and
+
+       D43*M2(R43)*tau7(B,ell)<1.                    (FC237)
+
+   Every finite outside-prime tail strictly greater than B, with arbitrary finite heights, supports and phases, leaves positive mass under one constructed law.
+
+2. The unused-distinguished-prime specialization of [Report458](../450-499/458-distinguished-prime-completion-removes-the-early-phase-restriction.md), as in FC197--FC204, gives the elementary sufficient cutoff
+
+       B>=3^256*ceil(D43*M2(R43))^3.                 (FC238)
+
+   Every finite outside-prime tail at least B then admits a complete survivor, retaining the enlarged good core support.
+
+No numerical optimization of (FC237) or (FC238) is included. In particular, the old cutoff10000 for the unabsorbed twelve-prime source is not asserted for this enlarged source. Additional head-only originals not divisible by43 require a new proof; merely increasing the query height does not authorize them.
+
+### Exact arithmetic and evidence boundary
+
+The fixed rational substitutions have eight exact arithmetic checks, covering the two squared-moment inequalities, the absorption gate, deletion fee, remaining mass, density ratio and post-absorption query expression. The exact squared Jensen slack is
+
+    (163/4)^2-G0
+      =1221735848827513069/584301805897711696>0.
+
+The mathematical sources are Report528 FC158–FC159 plus the full-head density construction, Chapter33 SH5–SH6, Report458 DP6's Jensen argument, and Report463 PE2–PE6. The arithmetic substitutions do not prove those source theorems; no new Lean verification is claimed.
