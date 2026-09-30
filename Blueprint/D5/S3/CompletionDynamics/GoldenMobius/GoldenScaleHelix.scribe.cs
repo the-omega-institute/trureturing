@@ -75,7 +75,25 @@ internal sealed class GoldenScaleHelixDocument : IScribeDocumentDefinition
                 "Golden Helix Step Scale Lift Strict",
                 "Every completion turn strictly increases the lifted scale coordinate.",
                 "The declaration keeps its parameters and hypotheses explicit; the result "
-                    + "makes no converse or broader existence claim beyond that scope."))));
+                    + "makes no converse or broader existence claim beyond that scope."),
+            TheoremWithoutFormula(
+                "orientation-cover-monodromy",
+                "orientationCover_monodromy",
+                "Even-cycle Orientation Monodromy",
+                "Every even-length phase cycle has trivial orientation sheet monodromy because each deck step flips the Boolean orientation.",
+                "The proof inducts on two-step blocks and uses the existing two-step orientation theorem."),
+            TheoremWithoutFormula(
+                "golden-helix-step-80-orientation",
+                "goldenHelixStep_80_orientation",
+                "80-Step Orientation Monodromy",
+                "The exact 80-step common phase orbit used by the 5040 Fibonacci certificate has identity orientation monodromy.",
+                "This rules out a Möbius sheet flip on that finite cycle without adding an independent odd gluing."),
+            TheoremWithoutFormula(
+                "golden-helix-step-16-orientation",
+                "goldenHelixStep_16_orientation",
+                "16-Step Orientation Monodromy",
+                "The exact 16-step local orbit for the modulus-7 factor has identity orientation monodromy.",
+                "The 5040/7 finite phase data therefore provide a rigorous trivial-cover obstruction to a Möbius interpretation."))));
 
     private static DocumentBlock.Describe Theorem(
         string id,
@@ -142,6 +160,23 @@ private static Formula GoldenhelixstepScaleliftStrictFormula() => Statement(
         [],
         [],
         Seq(F.Id("state"), Dot, F.Id("scaleLift"), Sp, Lt, Sp, Open, F.Id("goldenHelixStep"), Sp, F.Id("state"), Close, Dot, F.Id("scaleLift")));
+
+private static DocumentBlock.Describe TheoremWithoutFormula(
+        string id,
+        string declaration,
+        string title,
+        string firstParagraph,
+        string secondParagraph) =>
+        Describe.Lean(
+            DescribeId.Create(id),
+            DeclarationHandle.Create(Prefix + declaration),
+            H(title),
+            StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(),
+            Blocks(
+                Paragraph(Text(firstParagraph)),
+                Paragraph(Text(secondParagraph))),
+            DescribeRole.Theorem);
 
 private static Formula Typed(Formula name, Formula type) =>
     Seq(name, Colon, Sp, type);
