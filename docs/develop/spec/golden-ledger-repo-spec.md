@@ -436,7 +436,7 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 
 | 阶段入口 | 登记义务与执行边界 |
 |---|---|
-| `make -C tools engineering` | 对登记需要的候选工程进入 locked restore 与 warnings-as-errors 增量 build;登记为 CI 执行成员的当前测试项目（保留 ScriptTests 排除）与 selftest、CompileFailProof、BannedApi 反证义务按登记输入和有效证据逐项结算。需要执行的测试不作用例级删减,反证须命中预期诊断,任意编译失败不能顶替。 |
+| `make -C tools engineering` | 对登记需要的候选工程进入 locked restore 与 warnings-as-errors 增量 build;登记为 CI 执行成员的当前测试项目与 selftest、CompileFailProof、BannedApi 反证义务按登记输入和有效证据逐项结算。需要执行的测试不作用例级删减,反证须命中预期诊断,任意编译失败不能顶替。 |
 | `make current` | 按登记资源执行 Lean 增量 build/report、Scribe、filemap 与当前树不变量;复用本轮接受的候选 DLL、工程产物与有效检查证据,不重复 engineering。 |
 | `make delta BASE=<sha>` | 候选判官检查 base→candidate 的分区、保护面、首次冻结、棘轮及其余跨树约束;消费本轮 current 报告与 engineering 证据,不重跑共同工作。 |
 
@@ -450,7 +450,7 @@ filemap 的检查范围由本轮 build 绑定的完整变更路径与 `Meta/ci-c
 
 引擎须有独立 `check-current` / `check-delta` 入口与不同的类型化 context。current context 只含当前树及本轮接受的产物,类型中不得有 baseline 或 changes;delta context 明确携带候选、base 数据、差异与绑定候选的证据。不得以空 changes 或 `base=candidate` 模拟 current。划分落在**谓词级**:同一规则的当前有效性与跨树约束分别归属。已有 delta-only 定义域及债务收缩作用域保持不变,包括 SL-029 混面警告及 SL-030/031/032 等现有门;不得扩大为 current 全树门、重判存量或漏掉跨树约束。
 
-工程分类、程序集身份、CI 执行成员、生产属主、测试债务分区、项目引用和 Compile 源 include/exclude（含共享链接）的唯一数据真源为 FILEMAP 登记的 `Meta/engineering-projects.json`。engineering、拓扑与候选工程证据消费同一严格 reader；禁止从项目/目录名称、`IsTestProject`、xUnit 引用、SDK、MSBuild 求值或源语义自行发现这些事实。登记 glob 可在已跟踪源上展开；缺失、重复、未覆盖输入明确失败并补登记，不作全仓兜底。拓扑债务身份、集合包含/严格收缩棘轮、ScriptTests CI 排除与两项反证编译保持。
+工程分类、程序集身份、CI 执行成员、生产属主、测试债务分区、项目引用和 Compile 源 include/exclude（含共享链接）的唯一数据真源为 FILEMAP 登记的 `Meta/engineering-projects.json`。engineering、拓扑与候选工程证据消费同一严格 reader；禁止从项目/目录名称、`IsTestProject`、xUnit 引用、SDK、MSBuild 求值或源语义自行发现这些事实。登记 glob 可在已跟踪源上展开；缺失、重复、未覆盖输入明确失败并补登记，不作全仓兜底。拓扑债务身份、集合包含/严格收缩棘轮、两项反证编译保持。
 
 候选 version-1 工程行的 13 个字段均必填：原十字段加 `root_namespace`、`namespace_exclude`、`global_namespace_exceptions`；顶层 `rule_build_inputs` 必填并逐路径登记规则引擎配置输入，缺失、重复或指向不存在的文件均拒绝，不按 basename 或祖先目录推断配置成员。规则源码的现有窄域与 current/delta 谓词定义域保持。statement projection 的非空 changes 分支消费 `Meta/ReportProducers/scribe-content.json` 登记的项目及 scope 指针；脚本/材料范围由其指向的 `lean-report-inputs.json` 唯一声明，并结合显式项目引用闭包及 Compile include/exclude；空 changes（null）分支仍无条件验证，不宣称增量。工程登记文件和 producer 登记文件本身的修改会唤醒对应检查。producer/compiler 身份只取相关已登记项目及其引用闭包的 `path/assembly/include/exclude/references` 投影和所需材料字节，不纳入 namespace、CI/owner/partition 策略或无关项目行。base reader 由候选拥有，version-1 仅必读 `path/assembly/role/ci/references/owner/owned_test_assembly/test_partition`，忽略它不消费的 Compile/namespace/execution 策略字段；原十字段历史登记无需补候选字段，当前候选仍严格验证。base 实际项目覆盖与项目拓扑棘轮保持;执行证据只覆盖本次显式资源选中的 CI 项目,不以补齐旧种子为由扩大执行范围。
 
