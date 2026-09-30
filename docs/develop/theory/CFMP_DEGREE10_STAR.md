@@ -76,14 +76,17 @@ upper endpoint 71/50; the four stabilizer placements give the same value.
 |---:|---:|---:|
 | 8 | `143/200` | `35941/50941` |
 | 10 | `6/7` | `19195*sqrt(880915135)/704732108` |
-| 38 | `1982/2009` | `4742513/4833160` |
+| 38 | `1982/2009` | `4489*sqrt(8216635)/13146616` |
 
 The degree-eight lower row is `phi(11/8,11/8,11/8,71/50,1,1)`; the
 upper row is `phi(2,2,2,1,71/50,71/50)`. The degree-ten upper row is
-`phi(71/50,2,71/50,11/8,21/20,2)`. The degree-38 upper row uses the all-placement conservative endpoint
-`phi(21/20,71/50,2,11/8,71/50,2)`; the explicit table has a smaller
-maximum, but this relaxed row also proves the generalized incidence theorem. Lower faces of degrees 10 and 38 use
-the universal envelope at `u=11/10` and `u=1009/1000`, respectively.
+`phi(71/50,2,71/50,11/8,21/20,2)`. For a degree-38 target in a three-star, the two actual formula-coordinate
+patterns put the high neighbours in positions `{3,5}` or `{2,6}`. In either
+case monotonicity relaxes to one of
+`phi(21/20,2,71/50,11/8,71/50,2)` and
+`phi(21/20,71/50,2,11/8,2,71/50)`; both equal
+`4489*sqrt(8216635)/13146616`. Lower faces of degrees 10 and 38 use the
+universal envelope at `u=11/10` and `u=1009/1000`, respectively.
 
 The strict comparisons are exact:
 
@@ -116,15 +119,15 @@ cos(pi/19) < 1-(157/950)^2/2+(157/950)^4/24
 
 with exact final difference
 `7279213469191/39272233350000000`. For the degree-38 upper row,
-`q=4742513/4833160` and
-`q^2=22491429555169/23359435585600`. Since `pi<22/7`,
+`q=4489*sqrt(8216635)/13146616` and
+`q^2=100755605/105172928`. Since `pi<22/7`,
 
 ```
 cos(pi/19) > 1-(22/133)^2/2 = 17447/17689,
 ```
 
 and the squared comparison has positive difference
-`72976487600182573551/7309184236887297217600`.
+`69701057146221/4701240714411584`.
 
 Therefore every degree-eight lower/upper occurrence has angle respectively
 less/greater than `pi/4`; every degree-ten occurrence has angle respectively
