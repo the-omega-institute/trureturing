@@ -1,0 +1,25 @@
+**定理 34.2（任意格点酉表示给忠实兼容的相干解释）。** 选非零 Hilbert 空间 $K$ 和任意 unitary representation $U:\mathbb Z^2\to\mathcal U(K)$，令 $B_U=C^*(U(\mathbb Z^2))$。则
+
+$$
+\Theta_L(E_{uv})=E_{uv}\otimes U(D_u-D_v)
+\tag{34.3}
+$$
+
+给 $A_L\to A_L\otimes B_U$ 的忠实含幺星同态，与 $i_L$ 相容，并延拓为 $\Theta:A\hookrightarrow A\otimes_{\min}B_U$。此忠实性不要求 $U$ 忠实。
+
+证明。矩阵单位中间指标匹配时偏移差相消、$U$ 的乘法律给正确乘积；不匹配时两边都零。伴随改变差号，对角像为 $E_{uu}\otimes I$。更直接地
+
+$$
+V_L=\sum_{w\in W_L}E_{ww}\otimes U(D_w)
+$$
+
+是 finite diagonal unitary，$\Theta_L(a)=V_L(a\otimes I)V_L^*$。$K\ne0$ 使 $a\mapsto a\otimes I$ 等距单射，故忠实。由 (34.1) 逐矩阵单位得到
+
+$$
+(i_L\otimes\mathrm{id})\Theta_L=\Theta_{L+1}i_L.
+$$
+
+在有限层的稠密并上这些等距映射一致，故延拓为含幺等距星同态。没有要求 $V_L$ 在极限中收敛。即使 $U$ trivial，矩阵单位标签仍保留所有 $A$ 信息；是否几何动作也区分格点平移是 $U$ 自己的另一忠实性问题。$\square$
+
+因此同终态相干 $E_{uv}$ 可以附带明确相对 lattice action，且共同尾细化、乘法、伴随和 positivity commute。若再选 faithful lattice translations，每个 nonunit tail arrow 附带非恒等平移。这个构造仍没有选择 density、preparation 或 measurement；也没有把任意具体响应块 $P_u\rho P_v$ 自动认作满足矩阵单位乘法的 abstract $E_{uv}$。
+

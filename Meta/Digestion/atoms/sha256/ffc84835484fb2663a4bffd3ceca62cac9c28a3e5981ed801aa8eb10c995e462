@@ -1,0 +1,14 @@
+**命题 37.5（finite densities 不保证固定 trace 表示中的正规性）。** 最终 null 的地址 $\omega=[2][\mathrm{null}][\mathrm{null}]\cdots$ 给相容 atomic state，但它不是固定 $\tau$-GNS closure 上正规态的限制。
+
+证明。$u_L=[2][\mathrm{null}]^{L-1}$，取 $\sigma_{L,0}=|u_L\rangle\langle u_L|$、$\sigma_{L,1}=0$，$\sigma_0=1$。每次只有同 null extension 的一份 compression 非零，所以 $E_L\sigma_{L+1}=\sigma_L$，定理 37.1 给态 $\omega_*$。nested cylinders $P_L=j_L(E_{u_Lu_L})$ 满足 $P_{L+1}\le P_L$、$\omega_*(P_L)=1$，却有 $\tau(P_L)=\lambda^{-L}\to0$。在 $\tau$-GNS 的 dense vectors $a\Omega_\tau$ 上，迹性给
+
+$$
+\|P_La\Omega_\tau\|^2
+=\tau(a^*P_La)=\tau(P_Laa^*)
+\le\|a\|^2\tau(P_L)\to0.
+$$
+
+投影 uniformly bounded，故 $P_L$ strongly 趋零；正规态在这组递减投影上趋零，与 $\omega_*(P_L)=1$ 矛盾。$\square$
+
+相容性定义的是抽象含幺 AF 态，每态可有自己的 GNS 向量表示；它没有指定所有态共同使用的无限 trace-class density，也没有给全 $\Omega_0^2$ kernel、rank-one wavefunction 或 canonical physical measure。§34 的相干几何桥、§36 的 finite-level conditional instrument bridge 和本节的 state completion 分别保持不同信息，必须在选定 representation、state 与 allowed controls 后一起使用。
+
