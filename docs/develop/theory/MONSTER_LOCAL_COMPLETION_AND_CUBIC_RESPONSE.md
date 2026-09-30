@@ -358,6 +358,8 @@ $$
 
 式（MC.12）给 $\operatorname{Tr}T_uT_v=(4620-2/3)\langle u,v\rangle$。对 $W$ 的 196883 个单位基向量求和得式（MC.21）。证毕。
 
+本批把这一步的有限维求和接口写入 `D5/S3/VertexAlgebra/MonsterTensorNorm.lean`。`symmetric_trace_gram_square_sum` 对任意有限指标集证明：对称矩阵族若每个对角迹满足 $\operatorname{Tr}(T_i^2)=c$，则坐标 Frobenius 平方和为 $|I|c$；`moonshine_tensor_square_sum` 在输入 $|I|=196883$ 与 $c=4620-2/3$ 后逐项化简为 $2728404614/3$。这里的对称性和迹恒等式仍是 [M01, Corollary 4.1] 提供的实际 Norton 输入；Lean 声明没有把它们误报成 VOA 构造，也没有给出尚未计算的 $\kappa_{T^\natural}$ 或 $\eta_{T^\natural}$。
+
 本文没有计算实际 $\kappa_{T^\natural}$ 或 $\eta_{T^\natural}$；它们的存在不能被报道成数值认证。若只掌握每个张量系数误差至多 $a$，保守 Frobenius 界为 $d_W^{3/2}a$，维数成本不能删除。定理 5.2 是单个三元组的实际脉冲预算，与本节全张量预算分开结算。
 
 ## 8. 数学物理解释还必须通过反常检查
@@ -915,6 +917,14 @@ $$
 
 因此，任何仅把这些整数权简单模作直接和的候选扩张都没有权重一态。改变这套 rank-three 数据中的整数扩张选择，本身无法制造 §12.3 所需的二十四个权重一流。此结论不证明这些所有扩张都存在。
 
+### 23.3 奇数二元关系的唯一短支撑代表
+
+**引理 23.3（奇数二元回路）。** 设 $I$ 有 $2k+1$ 个元素，$V$ 是 $\mathbb F_2$ 向量空间，$s:I\to V$ 的线性合成映射 $L(c)=\sum_{i\in I}c_i s(i)$ 满射，且 $\ker L$ 恰由常数系数函数组成。则每个 $x\in V$ 有且仅有一个子集 $S\subseteq I$ 满足 $|S|\le k$ 与 $x=\sum_{i\in S}s(i)$。
+
+证明。任取 $L(c)=x$，令 $S$ 为 $c$ 的支撑。全一函数在核中，所以 $S$ 与补集给出同一个 $x$。因 $|I|=2k+1$，两者恰有一个大小不超过 $k$。若两个短支撑 $S,T$ 给出同一个 $x$，则它们的指示函数之和在核中；该和为零时 $S=T$，为全一函数时 $T=I\setminus S$，与 $|S|+|T|\le2k<|I|$ 矛盾。证毕。
+
+将 §22.2 已证的七截面张成与唯一全一关系代入 $k=3$，得到 §23.2 所用的唯一短子集代表。这里的结论只涉及六十四个有限标签；从四种有限谱类到表中四个实际 $q$ 级数字符仍需 §23.2 的实际字符接口。七截面所依赖的符号表背景见 T. Basak, *The octonions as a twisted group algebra* (2017), arXiv:1702.05705, Theorem 1；二元重复码的术语和补集视角可参见 F. J. MacWilliams and N. J. A. Sloane, *The Theory of Error-Correcting Codes* (North-Holland, 1977), Chapter 1。本引理的量词与证明独立于 VOA 实现。
+
 ## 24. 未标记的融合谱对称与来源标记的差别
 
 **定理 24.1（七点谱融合稳定子）。** 对上述有限数据，定义 $G_{\rm spec}$ 为保持加法、二次型 $Q$ 和每个类型完整字符的线性自同构群，则
@@ -1090,6 +1100,8 @@ $$
 **命题 32.1（左乘矩阵给出的乘法范数）。** 对所有实向量 $x,y$，$\|xy\|^2=\|x\|^2\|y\|^2$。因而这个八维正定有单位实代数是实八元数代数。
 
 证明。令 $L_g$ 为左乘 $e_g$，它是带符号置换矩阵。对 $g\ne0$，第二变量线性和 $f(g,g)=1$ 给 $L_g^2=-I$，故 $L_g^T=-L_g$。对不同非零 $g,h$，在任意 $e_k$ 上比较两次左乘，其符号比是 $(-1)^{f(g,h)+f(h,g)}=-1$，所以 $L_gL_h+L_hL_g=0$。对 $L_x=x_0I+\sum_{g\ne0}x_gL_g$ 展开，混合项全部相消，得到 $L_x^TL_x=(\sum_gx_g^2)I$。取 $y$ 的二次型即得乘法范数，单位由 $f(0,h)=f(g,0)=0$ 给出。最后的正定八维合成代数识别使用经典 Hurwitz 定理 [B02]。证毕。
+
+本命题的全体实向量版本已在仓内形式化为 [`D5/S3/VertexAlgebra/MonsterTwistedOctonionNorm.norm_mul`](https://github.com/the-omega-institute/trureturing/blob/dev/D5/S3/VertexAlgebra/MonsterTwistedOctonionNorm.lean)。Lean 定义展开同一个带符号 Cayley–Dickson 表，直接对八个坐标完成 $\mathbb R$ 上的多项式恒等式，并另证单位元左右律。该形式化只覆盖辅助八元代数的范数与单位；它不把这个表提升为实际 VOA 的基态 OPE，也不替代 [Ba17, Theorem 1、§§5–6] 的扭曲群代数背景或 [B02] 的 Hurwitz 识别。
 
 **命题 32.2（任意两个语义生成元的结合范围）。** 将 Fibonacci 原子卷的两个原子解释成任意两个固定八元数，每个二叉节点解释为同一个乘法，则全部树评估落在一个结合子代数中。
 

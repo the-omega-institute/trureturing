@@ -1,0 +1,7 @@
+**命题 206.1（同源联合矩的有限误差）。** 则有有限、显式的误差界
+
+$$
+\left|\frac1T\sum_{g\in I}Z(gV+1)^k-S_k(V,X)\right|
+\le\frac{H_X^k}{T}.
+$$
+

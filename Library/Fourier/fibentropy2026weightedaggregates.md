@@ -272,3 +272,167 @@ $$
 Equation (9) is a sufficient route only if its specific weighted spectral integral and these costs are bounded at that scale. The references above do not supply that bound under the current simultaneous parameter conditions. The signed identity (8), a direct weighted intersection estimate, or an additional valid representation of product-dependent filters remains an open interface.
 
 The source locators above refer to the specified arXiv versions. They support the displayed theorem scopes; they do not establish exhaustive prior-art coverage or originality of the arithmetic application. The Mellin and energy formulas are standard mathematical operations applied to the stated finite sums. No full-FIB Robin estimate or unrestricted RH criterion is settled here.
+
+## 5. Exact arithmetic smoothing, size tilts and the remaining endpoint
+
+Theory §§226–228 develop the same weighted kernel further. The arithmetic endpoints satisfy $A\equiv X\equiv1\pmod V$. A logarithmic cutoff can put its two smooth transitions entirely in the adjacent gaps of that residue class. With $\eta=V/(8X)$, the specified nonnegative cutoff $W_\eta$ equals the hard indicator on every actual product $dh\equiv1\pmod V$. This exact equality is specific to these arithmetic gaps; it is not a general assertion that smoothing arbitrary windows is free. Its Fourier one-norm is $O(y)$, and the associated frequency scale is $\eta^{-1}\asymp V$.
+
+Keeping the existing weight $d/X$ also changes the complementary transform: the identity
+
+$$
+\frac dX W_\eta(\log(dh/X))
+=\frac1h k_\eta(\log(dh/X)),\qquad k_\eta(u)=e^uW_\eta(u),
+$$
+
+places the reciprocal weight $1/h$ on the short factor. The resulting transform
+
+$$
+C_H(\chi,\tau)=\sum_{1\le h<H,(h,V)=1}h^{-1+i\tau}\chi(h)
+$$
+
+has fourth character moment at most $\zeta(2)^4/\zeta(4)$ for every real $\tau$ when $H^2<V$. This is the classical equal-product energy calculation with reciprocal coefficients and the convergent divisor-square Dirichlet series. Neither operation is a new general Fourier or zeta-function theorem. Their combined application to the actual weighted kernel is proved in §226. The hard principal term is at most $c_D/Q$, and the smoothed principal term is at most $e^{2\eta}c_D/Q$, where $c_D=\mu_s(D<d\le X,(d,V)=1)$. The two principal terms need not equal each other even though the full actual sums do.
+
+The source estimate in §227 concerns a different object from a uniform random integer or an ordinary smooth-number count. For each fixed $q\ge1$, it explicitly uses
+
+$$
+P_q(d)=\frac{\mu_s(d)^q}{\sum_n\mu_s(n)^q}
+$$
+
+and, when specified, conditions that source on $(d,V)=1$. Under small real size tilts, the local exponent weights are proportional to $(b_s(p^j)/p^j)^q p^{vj}$. The manuscript estimates all actual integer prime-power exponents before reducing the principal prime range to a logistic kernel. At zero tilt, the mean and variance of $P_q$ and its unit-conditioned version are
+
+$$
+\mathbb E\log d=y+\frac{2b_2}{q^2}\frac y{\ell^2}+O_q(y/\ell^3),
+\qquad
+\operatorname{Var}(\log d)=\frac yq+O_q(y/\ell).
+$$
+
+Here $\ell=\log y$. The strong prime-density input is the one already located in [Weingartner's versioned author manuscript](../ArithSums/weingartner2010distribution.md), equation (9), and used in theory §223. Weingartner's stated moment expansion is not itself a theorem about this power-tilted increment source. The source cumulants and moving-window rates are separate repository paper deductions; differentiating a prior asymptotic remainder would not justify them.
+
+For fixed $q\ge1$, $\beta\ge0$, and $a>0$, §227 obtains
+
+$$
+\log\mathbb E_{P_q}\left[
+(d/X)^\beta\mathbf1_{D<d\le X}\mathbf1_{(d,V)=1}\right]
+=-\frac{2b_2^2}{q^3}\frac y{\ell^4}+O_{q,\beta,a}(y/\ell^5).
+$$
+
+The negative exponential tilt supplies the upper estimate. The lower estimate uses a second, explicitly chosen tilt whose mean lies inside the actual integer window, followed by Chebyshev concentration and the exact change-of-measure factor. No central or local limit theorem is assumed. Removing the unit restriction, or working under the explicitly unit-conditioned source, gives the same displayed rate. This is a source-size statement; an additional actual-hit condition or a cap on the product $dh$ needs its own analysis.
+
+Thus the size-window cost is $o(R)$, where $R=y/\ell^2$. It preserves the first two logarithmic terms of each fixed $q$-power sum. The $y/\ell^4$ coefficient of the size loss does not determine a full third coefficient for that sum, since the prior complete-source expansion still has an error of that order.
+
+Section 228 applies the standard finite inverse Hausdorff–Young inequality with normalized counting on the characters and unnormalized counting on $G$. An author-hosted source is Terence Tao, [*The Fourier transform* (6 April 2009), equation (6)](https://terrytao.wordpress.com/2009/04/06/the-fourier-transform/): on a compact abelian group with probability Haar measure, the transform maps $L^p$ to counting-measure $\ell^{p'}$ with norm at most one for $1\le p\le2$. The preceding paragraph explicitly derives this by Riesz–Thorin interpolation from the $L^1\to\ell^\infty$ bound and Parseval. Apply it to the finite character group, whose dual identifies with $G$; reversing the Fourier sign only permutes the dual coordinates. This supplies the required normalization and exponent range, not an arithmetic estimate.
+
+In the common frequency interval $|\tau|\le1/(2aR)$, each residue's positive divisor masses lie in one short phase arc. The actual truncated source power sum then lower-bounds its Fourier norm, with a separately controlled principal-coordinate removal. The arithmetic smoothing kernel has positive mass at frequency zero uniformly in the shrinking transition width.
+
+For every fixed $\varepsilon>0$, these deductions yield a positive-norm certificate obstruction uniformly over $p\ge1+\varepsilon$: put
+
+$$
+q_\varepsilon=\max\{2,(1+\varepsilon)/\varepsilon\}.
+$$
+
+The normalized logarithmic lower limit of the separated certificate is at least $b_2/q_\varepsilon^2$. This includes every fixed $p>1$ and choices varying with scale while staying that fixed distance from one. It does not cover $p=1$ or $p(y)\downarrow1$, because the source estimates are not uniform for unbounded $q$. The $4/3$–$4$ instance gives $b_2/16$.
+
+This obstruction retains the exact arithmetic product window and reciprocal cofactor; it does not simply transfer the full-law result from §225. It still lower-bounds an upper-bound expression formed after absolute values and norm separation, not the signed source/cofactor correlation or the actual Robin kernel. The signed representation, the one-norm endpoint, and joint loss counts remain unresolved routes. None of the new estimates settles the complete FIB family or RH. These are paper deductions, with no new Lean verification or claim of exhaustive prior-art coverage.
+
+## 6. Small rational ratios, the Fourier endpoint and one possible exception
+
+Theory §§230–231 use a uniform constraint on integers with small loss to extend the preceding analysis. Keep the actual prime-index FIB family and source of §1, and put
+
+$$
+m_s=\max_{d\ge1}\mu_s(d),\qquad
+J_s(d)=\log\frac{m_s}{\mu_s(d)}\ge0.
+$$
+
+The maximum exists by theory §218. Its reference integer is
+
+$$
+n_y=\prod_{p\le y}p^{a_p},\qquad
+ a_p=\begin{cases}
+\lceil\log s/\log p\rceil,&p\le\sqrt s,\\
+1,&\sqrt s<p\le y.
+\end{cases}
+$$
+
+For every fixed $K>0$, theory §230 proves the uniform implication
+
+$$
+J_s(d)\le KR,\qquad \frac d{n_y}=\frac uv\text{ in lowest positive terms}
+\quad\Longrightarrow\quad
+\log u+\log v=O_K(y/\sqrt\ell)=o(y).
+$$
+
+This holds for every integer in the specified loss set. The proof treats all small-prime valuations, changes of occupancy in the central prime range, and the entire large-prime tail. It retains the same reference $n_y$ for all integers. Since every prime factor of $n_y$ is at most $y$ and every prime factor of $V$ is eventually greater than $2y$, this reference is a unit modulo $V$.
+
+For the actual truncated transform
+
+$$
+F_D(\chi,\tau)=\sum_{\substack{D<d\le X\\(d,V)=1}}
+\mu_s(d)\chi(d)d^{i\tau},
+$$
+
+let $\|\cdot\|_{p,*}$ use the $Q$-point character probability measure with the principal coordinate set to zero. Fix $a>0$, $H=e^{aR}$ and $D=X/H$. With
+
+$$
+\kappa=\frac1{10},\qquad
+g_\kappa=\frac12+\frac23e^{-\kappa}>1,\qquad
+c_\kappa=2\kappa\log g_\kappa>0,
+$$
+
+theory §230 obtains, for every fixed $0<c<c_\kappa$, a threshold independent of $\tau$ such that
+
+$$
+\|F_D(\cdot,\tau)\|_{1,*}\ge m_s e^{cR}
+\qquad(\tau\in\mathbb R).
+$$
+
+The new argument constructs a bounded test on the actual character group, prime by prime from degree-eight polynomials. Its constant and linear coefficients create a positive gain on a finite integer cube. Disjoint buffer primes place that cube's mean inside the actual size window, and a variance bound retains asymptotically all of its auxiliary positive weight. The small rational ratios turn the relevant modular matches into integer equalities, cancelling the continuous phases exactly. Higher coefficients have signs; their complete absolute contribution is bounded before deriving the norm lower bound. This supplies uniformity for all real frequencies without assuming that prime character phases are independent.
+
+The [existing Fejér card](../Zeros/fejer1903untersuchungen.md) records the historical attribution of the classical positive kernel. Section 230 proves the needed normalized-square and convolution identities directly. This citation does not assert that the original article was inspected or that it contains the new arithmetic application.
+
+For the reciprocal cofactor $C_H$ defined in §5, the same character probability measure gives $\|C_H(\cdot,\tau)\|_{1,*}\ge1/2$ eventually, uniformly in $\tau$. Norm monotonicity therefore yields
+
+$$
+\|F_D(\cdot,\tau)\|_{p,*}\,
+\|C_H(\cdot,\tau)\|_{p',*}
+\ge\frac12m_s e^{cR}
+\qquad(1\le p\le\infty),
+$$
+
+where $p'$ is conjugate to $p$. One threshold covers all $p$ and $\tau$, including choices of $p$ depending on scale or frequency. This separate construction covers the endpoint left outside the fixed-$\varepsilon$ argument in §5; it does not take an uncontrolled $q\to\infty$ limit. Since $\log(\Lambda m_s)=o(R)$, the normalized positive norm product grows exponentially. The same conclusion applies to a nonnegative shared weight $w_y$ when an interval $I_y$ has length $\asymp1/R$ and $\int_{I_y}w_y(\tau)\,d\tau\ge e^{-o(R)}$, as for the specified arithmetic-gap kernel. These are lower bounds on separated positive upper-bound certificates. They do not lower-bound the signed arithmetic correlation or an additional joint product filter.
+
+Theory §231 uses the same uniform rational-ratio bound to compare actual hits. Fix $a>b_2$, $K=8b_2$ and define
+
+$$
+E_y=\{g\in I:\exists d\mid N_g,\ d>D,\ J_s(d)\le KR\}.
+$$
+
+If $d_i h_i=N_{g_i}$ are two such hits and $d_i/n_y=u_i/v_i$, their strict cofactor bounds are $1\le h_i<H$. Cancelling the same unit $n_y$ in the two actual congruences gives
+
+$$
+u_1h_1v_2\equiv u_2h_2v_1\pmod V.
+$$
+
+Both positive sides have uniformly $o(y)$ logarithm and hence are strictly below $V$, whose logarithm is $y/2+O(1)$. They are equal as integers, so $N_{g_1}=N_{g_2}$. Consequently $|E_y|\le1$ eventually. The possible single integer may carry many small-loss large divisors; this conclusion counts actual integers, not divisors. It uses the uniform ratio bound and unit reference, without depending on the Fourier endpoint theorem.
+
+The complement is controlled by its full positive moment. Write $T_I=|I|$ and $t=e^\gamma\ell$, so $\Lambda=XU(s)/t^s$. The exact divisor-increment expansion and the unique-hit property for $d>D$ give
+
+$$
+\sum_{g\in I\setminus E_y}\left(\frac{Z(N_g)}t\right)^s
+\le\Lambda\left(\frac{T_I}X+\frac DX+\mu_s\{J_s>KR\}\right).
+$$
+
+The fixed $q=3/4$ complete-source power sum, through the exact identity $\mathbb E_{\mu_s}e^{J_s/4}=m_s^{1/4}S_{3/4}(\mu_s)$, gives
+
+$$
+\mu_s\{J_s>8b_2R\}\le e^{-(5b_2/3)R+o(R)}.
+$$
+
+Thus the complement moment is at most $e^{-c_aR+o(R)}\to0$, where $c_a=\min(a-b_2,2b_2/3)>0$. For each integer in that complement, this yields $Z(N_g)<t\le e^\gamma\log\log N_g$. The resulting statement includes equality among the possible violations:
+
+$$
+\#\{g\in I:Z(N_g)\ge e^\gamma\log\log N_g\}\le1
+$$
+
+for every sufficiently large prime-index window specified in §1.
+
+These are repository paper deductions, with no new Lean or kernel verification and no verdict of literature originality. No effective numerical starting index is supplied. The possible exceptional integer has not been excluded or proved safe; there can be a different candidate in each window. The result does not establish Robin for the complete FIB family, and no bridge capturing every arbitrary-integer Robin counterexample has been proved. RH remains unresolved.

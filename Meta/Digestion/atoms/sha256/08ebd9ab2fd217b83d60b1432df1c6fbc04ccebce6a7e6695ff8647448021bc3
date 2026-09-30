@@ -1,0 +1,46 @@
+**引理 201.5（密度只需统一上界）。** 在上述范围内，一致于全部实际种子与乘子，
+
+$$
+\frac{Z(gU)}{e^\gamma}
+\le\log L+H(\delta_0)+(1-\delta_0)\log z_0+o(1).
+\tag{201.11}
+$$
+
+证明。对同一整数 $gU$，引理194.1仍给两个共同预算及其截断界。写真实密度为 $\delta=\delta_k$。两个截断修正的主项之和是
+
+$$
+(\delta_0-\delta)
+\bigl(x_S\kappa(x_S)-x_T\kappa(x_T)\bigr).
+$$
+
+因为
+
+$$
+x\kappa(x)=\frac1{\log x}+O\!\left(\frac1{x\log x}\right),
+$$
+
+该差在固定倍数窗口上为 $O(1/(\log L)^2)$，一致于 $\delta\in[0,\delta_0]$。因此即使实际密度与截断参数不同，也不会留下 $1/\log L$ 级别的惩罚；两个预算的该级主项已经精确抵消。
+
+由式（201.9）分部求和，乘积比值的 $1/\log L$ 系数为
+
+$$
+W(\delta)
+=\delta\log(1/\delta_0)
+ +(1-\delta)\log(z_0/(1-\delta_0)).
+$$
+
+其关于 $\delta$ 的斜率为
+
+$$
+\log\frac{1-\delta_0}{\delta_0z_0}>0.
+$$
+
+所以 $\delta\le\delta_0$ 给
+
+$$
+W(\delta)\le W(\delta_0)
+=H(\delta_0)+(1-\delta_0)\log z_0.
+$$
+
+最后使用 §200.6 的完整素数乘积精度并取指数，得到式（201.11）。$\square$
+
