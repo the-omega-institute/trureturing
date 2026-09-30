@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:c93185a55618579106ddc17d451b4208d8dbf5bce622e735cb4e46d05a1bcee3
   normalized_sha256: sha256:c93185a55618579106ddc17d451b4208d8dbf5bce622e735cb4e46d05a1bcee3
 cas_ref: sha256:c93185a55618579106ddc17d451b4208d8dbf5bce622e735cb4e46d05a1bcee3
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurement/AdaptiveLowInstrumentSpan.actual_adaptive_span
+    target_statement_id: sha256:f54d7ac8dc430df749beb87a08a23a1dcf9cfdb732806a2a53dca556e6e86857
 receipts:
   unresolved_subitems: []
