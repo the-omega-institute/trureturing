@@ -121,6 +121,21 @@ $$
 
 Primewise geometric summation shows $B+C_{\ge3}=\kappa$, proving (1). No pointwise positivity of $R_g$ is used; for complex or sign-changing tests it can be negative.
 
+The higher-power remainder has a definite sign. Write $\tau_tg(x)=g(x-t)$. The identity $2(R_g(0)-R_g(t))=\|g-\tau_tg\|_2^2$ gives
+
+$$
+T_{\ge3}(g)-2C_{\ge3}\|g\|_2^2=-\mathcal D_{\ge3}(g),\qquad
+\mathcal D_{\ge3}(g)=\sum_p\sum_{k\ge3}\log p\,p^{-k/2}\|g-\tau_{k\log p}g\|_2^2\ge0.
+$$
+
+This energy sum generally has infinitely many nonzero terms but converges absolutely, even though the correlation sum $T(g)$ is finite; its convergent constant part supplies the tail. It satisfies $\mathcal D_{\ge3}(g)\le D_3\|g'\|_2^2$. Hence the error $\epsilon(g)=T(g)-\tfrac12|\int g|^2-2\kappa\|g\|_2^2$ has the sharper asymmetric bound
+
+$$
+-(8M_1+D_3)\|g'\|_2^2\le\epsilon(g)\le8M_1\|g'\|_2^2. \tag{2}
+$$
+
+In the full form, $-\epsilon(g)=4\int_0^\infty E(v)R_g'(2v)dv+\mathcal D_{\ge3}(g)$. The energy is an independently nonnegative contribution; the remaining integral keeps its unknown sign.
+
 For a simple explicit constant, $r=p^{-1/2}<3/4$ gives $\sum_{k\ge3}k^2r^k\le192r^3$. Comparison on each $[n-1,n]$ gives
 
 $$
