@@ -10939,3 +10939,282 @@ all-query profile. Moving it merely because some descendant cylinders
 are already deleted is invalid. Broader old phases, changed higher
 words, extra old labels and the middle-prime gap remain outside the
 present theorem.
+
+## A private first digit outside the atlas retains a positive min-cap certificate
+
+For each fixed FC110 and FC131 head/root assignment, replace only the
+q=11 free5 original's depth-one private digit2 by either1 or6. Every
+other original, physical address, selected root, higher prefix and
+globally fixed remainder phase is unchanged. All four predeclared
+limiting raw min-cap scores are strictly greater than21/250. The actual
+finite sources converge to these signatures. The same-carrier raw
+comparison, followed where necessary by completion into vacant old
+slots, proves a positive source for every original finite N>=1 and
+every remainder in the exact FC159 inventory.
+
+This is ordinary mathematics and exact rational computation. It does
+not establish arbitrary bad-digit control, any new continuation
+profile, or unrestricted Erdős#7. In particular a failure of a
+covered-set rephasing method is not a failure of this min-cap method.
+
+### 1. Exact source contract and unchanged coordinates
+
+Write V={5,7,11,13,17,19,23,29,31,37,41}, Q=V minus{5,7}, R={3} union V.
+The pure/star/group skeleton uses the FC147–FC149 words through finite
+N>=1, with one of the two fixed stored head/root assignments. At q=11
+both assignments have the same physical data:
+
+    F5 row2; S5 row0, root2;
+    F7 row3; S7 row3, root2.
+
+Only the private depth-one digit of F5 changes. Its numerical original
+remains55, and its head5 row stays2. At e>=2 its private word remains
+6^(e-1)2. The selected and other free role words remain respectively
+6^(e-1)4, 6^(e-1)3, and6^(e-1)5. Pure and star words remain
+6^(e-1)0 and6^(e-1)1; the private stars are active only on root2.
+
+For each p in V put
+
+    A_p,N=sum_(e=1..N)p^-e,
+    c_p,N=1/(1-A_p,N), b_p,N=c_p,N A_p,N,
+    a_p,N=c_p,N/p,
+    t_p,N=c_p,N(A_p,N-1/p).
+
+The common pure-conditioned head law is zero at rowp-1,
+a_p,N-t_p,N at rowp-2, and a_p,N elsewhere. On its active star root
+(root1 for5, root2 for7), row0 becomes zero and row1 loses t_p,N.
+This defines the unchanged actual w_(p,r,i,N) for all N.
+
+For every private q the unchanged star carrier masses are
+
+    g_(q,1,N)=1,  g_(q,2,N)=1-b_q,N.
+
+For q different from11 the unchanged raw arrays are
+
+    X_(q,r,i,N)=b_q,N [1_(i=F5row)+1_(r=S5root)1_(i=S5row)],
+    Y_(q,r,j,N)=b_q,N [1_(j=F7row)+1_(r=S7root)1_(j=S7row)].
+
+Their two head projections are disjoint in the private coordinate,
+so their exact private survivor factor is g-X-Y. The changed q11
+factor must instead be computed from its actual cylinders below.
+
+### 2. Full-N private calculation at11
+
+In this section set q=11, A=A_q,N, c=c_q,N, b=cA,
+T=A-1/q and t=cT. All masses are under the same pure-conditioned
+private law; they are not renormalized after removing stars. Let
+epsilon=1_(r=2), alpha=1_(i=2), beta=epsilon 1_(i=0), and
+nu=(1+epsilon)1_(j=3). Thus alpha and beta cannot both be one.
+
+#### Digit1: a first piece removed on only one root
+
+The actual free projection is [1]_q union the free5 higher-role tail.
+Both pieces avoid the pure cylinders and are disjoint. On root1
+their total mass is b. On root2, the star's depth-one cylinder is
+exactly [1]_q, so it deletes the entire new first piece. The free5
+higher tail remains disjoint from the star higher tail. Therefore
+
+    f_1=b, f_2=t,
+    X=alpha f_r+beta b, Y=nu b,
+    Z=0, H=g-X-Y.                                    (FC479)
+
+The free projection has the same physical original on both roots,
+but its surviving mass is root dependent. This is allowed by the
+general actual raw interface FC137/FC161. Reusing the star-disjoint
+specialization FC152 for this changed free vector would be incorrect.
+
+#### Digit6: one first piece contains the higher role tails
+
+The new first cylinder [6]_q already contains every higher free5
+cylinder. Thus their union is [6]_q; adding a separate free tail
+mass would count it twice. Inside this first cylinder, the higher
+pure tail has unconditioned mass T. On root2 the higher star tail
+of the same mass T is removed as well. The tails are disjoint, and
+neither depth-one pure nor depth-one star cylinder meets [6]_q.
+Consequently
+
+    f_r=c[1/q-(1+epsilon)T].                         (FC480)
+
+Each other grouped role intersects [6]_q precisely in its own higher
+tail, of pure-conditioned mass t; the different role tails are
+disjoint and survive the private star deletion. Since free5 and
+selected5 have different physical head rows, their raw union has
+no within-head overlap at a fixed row. The two active head7 roles
+have disjoint private tails, even though both use head7 row3.
+Hence the full actual formula is
+
+    X=alpha f_r+beta b, Y=nu b,
+    Z=alpha nu t,
+    H=g-X-Y+alpha nu t.                              (FC481)
+
+Z appears only when the actual head-row and ternary-root gates make
+those originals active simultaneously. It is not a global debit
+that can be inserted on every row. For both digit cases,
+
+    P=(g-X-Y)_+ <= H <= K=g-max(X,Y).                 (FC482)
+
+The exact grouped survivor at each root is the head-row integral
+of the product of H over all private coordinates. The native raw
+lower uses the product of P instead. The computation below retains
+that native lower, including for digit6; it does not rely on adding
+its positive intersection term to the lower comparison.
+
+#### Limiting values
+
+For q=11, A tends to1/10 and c tends to10/9. Thus
+
+    b=1/9, t=1/99, g_1=1, g_2=8/9,
+    digit1: f_1=1/9, f_2=1/99,
+    digit6: f_1=1/11, f_2=8/99.                     (FC483)
+
+Every full-N formula is rational in p^-N and converges to its stated
+limit. The head weights and all unchanged private arrays converge
+by the original finite-source formulas.
+
+### 3. Same-source min-cap interface
+
+Use gamma_1=gamma_2=1/2 and fixed limiting pure caps
+c_p^infinity=(p-1)/(p-2), valid for every finite source. On each actual
+raw signature z=(w,g,X,Y), the native functional is
+
+    J_infinity(z)=A_raw(z)-Fee_min,infinity(z).
+
+Here A_raw integrates the product of P fromFC482. Each unsupported
+private coordinate in the remainder kernel contributes K fromFC482,
+and each unsupported head retains its actual w. Supported heads use
+min(c_p^infinity p^-e,w_(p,r,i)). A free remainder original keeps ONE
+physical head address across both roots before averaging and taking
+the maximum; a selected original pays on at most one root. The head
+depth sum keeps the maximum inside each depth term, with exact
+geometric tail summation.
+
+The remainder is precisely FC159: nonternary support size at least
+two; support{head h,private q} requires head exponent at least two;
+ternary exponent is0 or1. In particular no extra pure, star or
+shallow grouped original is present at any depth. This is the same
+2036-support inventory used by the original min-cap formula. The
+proof bounds each arbitrary globally fixed remainder phase on the
+same product carrier as A_raw. It does not use common free *mass*
+across roots, star-disjoint role assumptions, or simultaneous
+attainment of the separate fee maxima.
+
+### 4. Four predeclared exact limiting evaluations
+
+| Source | New F5 first digit at11 | Native J_infinity |
+| --- | ---: | ---: |
+| FC110 |1|582092126352157/6544418556926250|
+| FC110 |6|19095249313951/218147285230875|
+| FC131 |1|575612448957233/6544418556926250|
+| FC131 |6|283179613950322/3272209278463125|
+
+Their decimal values are respectively0.08894481935849029,
+0.08753374718251317, 0.08795471193510945 and0.08654080159668895.
+All four are strictly greater than2/25. To check that common rational
+floor, after putting2/25 over each displayed denominator the four
+numerator differences are
+
+    58538641798057,
+    1643466495481,
+    52058964403133,
+    21402871673272,
+
+all positive. More precisely, on the common denominator6544418556926250
+the four numerators are582092126352157,572857479418530,
+575612448957233 and566359227900644. Their exact minimum is
+
+    J_min=283179613950322/3272209278463125,
+    J_min-21/250=16628069118839/6544418556926250>0.
+
+Every fixed0<mu<J_min can therefore be used in the finite-source
+consequence below;21/250 is one concrete common choice. Positivity
+at these four points does not establish a uniform minimum over other
+private phase choices.
+
+The [fixed-digit evaluator](../../../frontier/cover-geometry/pure-support-profiles/bad_private_first_digit.py)
+and its [exact results](../../../frontier/cover-geometry/pure-support-profiles/bad_private_first_digit.json)
+retain the raw tuples, complete 2036-support fee sums and the true-intersection
+control. The evaluator uses only the existing fixed-schema reader and exact
+all-depth min-cap definitions. It evaluates these four specified cases.
+A literal q=11, N=2 control checks all 140 root/head/digit cells on 121
+residues, with a pure carrier of 109 residues; it detects the star restriction
+and the duplicate tail count that would result from treating [6] and its
+higher free tail as disjoint. The numerical results do not supply the
+all-N proof or any arbitrary-phase minimum. There is no continuation here.
+
+### 5. Actual finite-source consequence and all-N normalization
+
+Let z_(i,digit,N) be the actual full-N tuple above and z_(i,digit)
+its limit. Fix any0<mu<J_min, independently of N and the remainder.
+The existing fixed-cap raw continuity theorem applies to all these
+actual common-source tuples. Since each of the four limiting scores
+is strictly above mu, there is one finite new threshold N_dagger(mu)
+such that for every one of these four sources and all N>=N_dagger(mu),
+
+    J_infinity(z_(i,digit,N)) >= mu.                (FC484)
+
+No assertion equates N_dagger(mu) to the former canonical threshold N+.
+No explicit numeric threshold is computed. The actual-source fee
+proof then gives the same lower bound for every finite remainder
+with arbitrary globally fixed phases in FC159, irrespective of its
+maximum depth.
+
+For an arbitrary original N>=1 and fixed allowed remainder, choose
+one finite N'>=max(N,N_dagger(mu)) and append only the prescribed missing
+pure/star/group old layers up through N'. Their phases were defined
+independently of N, including the changed depth-one digit and the
+unchanged higher words. The exact FC159 inventory excludes all these
+labels at every depth; no existing original phase is overwritten.
+Distinct added labels follow from prime factorization. On one common
+resolving finite CRT space the completed survivor U_N' lies in the
+original U_N.
+
+Write
+
+    a_N=product_(p in V)(1-A_p,N),
+    a_infinity=product_(p in V)(p-2)/(p-1)
+              =403767/1048576=1/C_V.
+
+For events inside the completed pure carrier, the uniform two-root
+laws satisfy lambda_N(E)=(a_N'/a_N)lambda_N'(E). Therefore
+
+    lambda_N(U_N) >= (a_N'/a_N)mu
+                  >= (a_infinity/a_N)mu,
+    H_R(U_N) >= (2/3)a_infinity mu >0.              (FC485)
+
+This is a positive lower bound for the full original finite survivor,
+including its arbitrary permitted remainder. The unscaled mu bound
+under lambda_N is only asserted for N>=N_dagger(mu). Completion gives
+the ratio inFC485 at smaller N.
+
+A single actual dominated source can also be fixed. Set
+
+    D_bad(mu)=(3/2)C_V/mu,
+    eta=lambda_N' restricted to U_N'
+           /[D_bad(mu) lambda_N'(U_N')].
+
+Then eta<=H_R, its mass is exactly(2/3)mu/C_V, and its support lies
+in U_N. For the concrete choice mu=21/250 this gives
+
+    mass(eta)=7/(125 C_V)=2826369/131072000,
+    D_bad=131072000/2826369.                         (FC486)
+
+This uses the completed finite family, not an infinite limit
+as an actual covering source. It establishes existence, without
+claiming a cheap internal-observer acquisition algorithm.
+
+### 6. Boundary of this result
+
+Only the single q11 free5 depth-one change is covered, with the other
+fixed prefixes and one of the two declared head/root schemes. Both
+cases lie outside the allowed-digit atlas, yet retain positive native
+raw min-cap scores. Arbitrary combinations of bad digits, occupied
+high-layer slots, extra old-only labels, different supports or head
+schemes, middle primes, and unrestricted Erdős#7 remain unresolved.
+
+No prior one-pair or uniform grouped query profile is inherited here:
+changing the actual free55 cylinder changes those interfaces. The
+new positive measure alone does not prove their hypotheses. No
+clipping, initialization, continuation, tail calculation or new Lean
+verification has been performed. The conclusion is an actual
+finite-family noncovering result under the exact stated inventory,
+with same-source mass and normalization accounted for.
