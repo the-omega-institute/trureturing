@@ -2537,3 +2537,33 @@ arXiv:2603.13475v2，讨论不同的物理构造与恢复条件；本节没有�
 条件或结论替换为本模型的全操作最优值。
 
 ## 追加锚（本行以下为增补区）
+
+
+### 36.5 形式化增补：有限单纯形变分支配（待 CI）
+
+当前分支新增公开 Lean 声明：
+
+`D5/S3/Quantum/Entanglement/FiniteSectorSchurUpper.simplex_quadratic_dominates_weighted_complex_form`。
+
+对非空有限扇区型和逐项非负实矩阵 (A)，该声明给出同一个单纯形点 (r)，使
+[
+Q_A(w)=sum_{i,j}A_{ij}w_iw_jle Q_A(r)
+]
+对每个单纯形点 (w) 成立，并且对任意单纯形点 (p) 与满足
+(sum_ilVert x_iVert^2=1) 的复向量 (x)，有
+[
+sum_{i,j}sqrt{p_i}sqrt{p_j}A_{ij}
+operatorname{Re}(overline{x_i}x_j)le Q_A(r).
+]
+证明把 (y_i=sqrt{p_i}lVert x_iVert) 放入单纯形：有限 Cauchy--Schwarz 给出
+(sum_i y_ile1)，在一个固定坐标填补质量亏缺得到 (wge y)，再使用相位不等式和 (A_{ij}ge0)。这正是被动参考上界所需的变分步骤，不是连续引力 RT 结论。
+
+声明、Blueprint 和 Scribe 已在 `lane/theory/rt-variational-20260930`；本节的 focused Lean/kernel/CI 状态仍待 pull-request harness 核验。
+
+### 36.6 形式化增补：5040/7 相位的平凡取向覆盖
+
+仓库有限 Fibonacci 证书给出模 (5040=16cdot9cdot5cdot7) 的共同权重相位周期 (80)，而模 (7) 的局部周期为 (16)。GoldenScaleHelix 的每一步翻转一个 Boolean 取向。新增声明
+`D5/S3/CompletionDynamics/GoldenMobius/GoldenScaleHelix.orientationCover_monodromy`
+证明任意偶数长度周期的取向单值性，并给出 (80) 步与 (16) 步实例。因此这些有限相位数据上的两层覆盖是平凡的；若要得到 Möbius 取向翻转，必须另外提供奇数闭环或独立的参数胶合。这个结果是对 Möbius 解释的有限反例/障碍，不把 Klein 四群轨道误写成 Klein 瓶拓扑。
+
+
