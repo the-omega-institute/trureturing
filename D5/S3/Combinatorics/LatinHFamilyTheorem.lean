@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/LatinHFamilyTheorem
    mirror-E: none(waiver:explicit-H-family)
-   anchors: [D5/S3/Combinatorics/LatinHTransversals]
+   anchors: [lit/ghafari2026transversals]
    utility: none
    digest: The complete integer-parameter H-family transversal theorem. -/
 
