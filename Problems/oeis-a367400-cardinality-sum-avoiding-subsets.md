@@ -114,6 +114,36 @@ the theorem establishes an unbounded symbolic count and formal-series
 identity. Its new content is neither a bounded sweep, a checker, a
 numerical reduction, nor a certified finite instance.
 
+### What the settlement shows
+
+**Proved:** `D5/S3/Combinatorics/CardinalitySumAvoidingSubsets.result`
+establishes the literal original-count law above for every n>=0.
+**Inspection of the exact checked proof, not a separate theorem:** the
+decisive mechanism is the reversible, cardinality-preserving encoding
+into disjoint forbidden-pair choices, the permitted even midpoint and
+the free tail. It handles the dependence of the forbidden sum on the
+subset's own size. Parity factorization then supplies a common formal
+geometric series, justified by finite coefficient support and its
+ratio's zero constant term, without a recurrence premise.
+
+**Open extent:** for each fixed integer c, does the count of subsets
+S of {1,...,n} with no distinct x,y in S satisfying x+y=|S|+c
+(equality in the integers) also have a rational generating function?
+Only c=0 is settled here. Extending the method requires verifying the
+shifted lower/tail cut and boundary cases when |S|+c<=0 or exceeds n;
+analogy does not settle this candidate or admit it as a new target.
+
+**Bounded source consequences:** inspection of
+`Library/Combinatorics/wu2023a367400.md`, the A367400/A367396 entries in
+`Library/Words/oeis2026triage0910.md`, and this dossier identifies the
+quoted generating-function conjecture as the statement settled above.
+**Open (unchecked transfers):** extracting the source's fourth-order
+recurrence by coefficients and transferring the count to A367396 after
+checking the complement identity. The A112575/Huang counting-object
+bridge remains **open**. No further result asserted to depend on this
+conjecture was identified in those materials; implications beyond that
+bounded scope remain **open**.
+
 ## ASSUMED-UNVERIFIED
 
 The bounded source and library searches do not establish exhaustive worldwide
