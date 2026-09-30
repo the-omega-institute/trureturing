@@ -57,4 +57,5 @@ the integral reconstruction needed here. These files are not vendored.
 
 ## Verified locator
 
+- https://arxiv.org/abs/1807.03074v1.
 - https://arxiv.org/pdf/1807.03074v1, printed page 2, Theorem 5.
