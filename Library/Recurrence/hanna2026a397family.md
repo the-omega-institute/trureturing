@@ -323,11 +323,9 @@ of this branch, not a verdict from the newly changed dev CI.
 PR https://github.com/the-omega-institute/trureturing/pull/6635 is OPEN with
 auto-merge enabled; no MERGED claim is made. While this attempt ran, dev
 adopted the replacement CI in ad503954f8. Remote runs 34350714946 and
-34351188667 fail before checking this mathematical content: the public test
-class LeanReportInputScriptTests lacks partial, while the already-present
-LeanReportInputScriptTests.BatchFixture.cs declares the same class partial
-(CS0260). Both files were read at immutable dev revision
-634771a3bd24c19f8e5cbec67d5346717b916e0f; neither is changed by this PR.
+34351188667 fail before checking this mathematical content with C# compiler
+error CS0260 at immutable dev revision
+634771a3bd24c19f8e5cbec67d5346717b916e0f.
 
 The observed dev protection still requires Candidate harness engineering checks,
 Canonical Lean report production and Content-addressed dev baseline admission.
