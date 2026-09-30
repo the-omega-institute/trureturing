@@ -151,16 +151,16 @@ def definitionBackedRealization :
     LegacyPrimitiveRealization fixtureLawArena True fixtureRealization where
   equivalence := Iff.rfl
 
--- Recording is a separate successful command; the report owns the rejection.
-register_information_theorem definitionBackedTarget
-  in fixtureLawArena
-  primitives fixtureBundle
-  realization definitionBackedRealization
-
 /-- error: IE-C006 StatementProofMismatch:
 LeanInformationAudit.Tests.RegistrationErrors.definitionBackedTarget -/
 #guard_msgs (error) in
-run_cmd do
+run_cmd registrationTransaction do
+  -- Assert the recording phase before asking the report to reject the input.
+  -- Rollback also keeps this local negative probe out of imported fixtures.
+  elabCommand (← `(command| register_information_theorem definitionBackedTarget
+    in fixtureLawArena primitives fixtureBundle realization definitionBackedRealization))
+  if (← get).messages.hasErrors then
+    throwError "[FAIL] definition_bridge_rejected_during_recording"
   let owner := (← getEnv).header.mainModule
   let some (_, input) := (RegistrationInputs.owned (← getEnv)).find? fun (_, input) =>
       input.entry.theoremName == ``definitionBackedTarget
