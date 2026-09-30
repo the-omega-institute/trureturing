@@ -12568,3 +12568,675 @@ The information used here is the actual identity
 
 on one globally phased source, not coordinate monotonicity of a
 native residual on a larger raw box.
+
+## A fixed submeasure for every shallow private phase
+
+For either fixed FC110 or FC131 head/root table, arbitrary shallow
+private phases admit the same canonical survivor lower bound. This
+is an ordinary mathematical derivation, not new Lean verification.
+The pure/star words, higher group words and FC159 inventory remain
+fixed throughout this statement.
+
+### 1. Actual source and the positive canonical cell target
+
+Fix a finite N>=1 and one of the two head/root tables. Let
+V={5,7} union Q, with the original nine private primes. At each q,
+choose the shallow digits of F5,S5,F7,S7 arbitrarily and ONCE. Keep
+their physical head rows and selected roots, all prescribed higher
+words, all pure/star originals and all numerical labels unchanged.
+
+Work on one finite CRT space resolving the skeleton and whatever
+finite remainder is subsequently considered. Let lambda_(p,N) be
+Haar conditioned outside the fixed pure p-power originals throughN.
+The unstar-normalized two-root pure-conditioned probability is
+
+    Lambda_N=(1/2)*sum_(r=1,2) delta_r tensor product_(p in V)lambda_(p,N).
+
+There is NO normalization after stars or groups. Let S_(h,r) be the
+head h star survivor and
+
+    w_(h,r,a)=lambda_(h,N)(S_(h,r) intersect[a]_h).
+
+At a private q let S_(q,r) be its star survivor, with mass
+g_(q,1)=1, g_(q,2)=1-b_(q,N), where
+
+    A_(q,N)=sum_(e=1..N)q^-e,
+    c_(q,N)=1/(1-A_(q,N)), b_(q,N)=c_(q,N)*A_(q,N).
+
+For a fixed root and head FIRST rows(r,i,j), let n5_(q,r,i) and
+n7_(q,r,j) be the numbers of active NAMED roles at those rows in
+the original fixed table. Each is0,1 or2. These are token counts,
+not OR indicators or counts of distinct new shallow digits.
+
+Let E5 and E7 be the actual two private projection unions for the
+chosen shallow phases, and define the actual allowed private set
+
+    A_q(r,i,j)=S_(q,r) minus(E5_(q,r,i) union E7_(q,r,j)),
+    H_q(r,i,j)=lambda_(q,N)(A_q(r,i,j)).
+
+Each named role has mass at most b_(q,N): the mass of its shallow
+cylinder plus prescribed higher cylinders is bounded by their
+pure-conditioned caps. Hence the union bound on this ONE private
+source gives
+
+    H_q >= g_q-(n5+n7)*b_(q,N)=:pbar_q.                    (FC542)
+
+This statement also follows from FC521–FC526, but does not need
+its type enumeration. Since b_(q,N)<=1/(q-2)<=1/9,
+
+    pbar_q>=1-5*b_(q,N)>=4/9>0.                            (FC543)
+
+Consequently every H_q is positive, and pbar_q/H_q is defined and
+lies in(0,1]. At a canonical signature the raw projections are
+Xbar=n5*b, Ybar=n7*b; its lower factor is precisely pbar and its
+upper factor is
+
+    Kbar_q=g_q-max(n5,n7)*b_(q,N)>=pbar_q.                 (FC544)
+
+All these quantities are calculated at the same N, root and fixed
+physical head rows. No limiting mass has been inserted at finite N.
+
+### 2. One globally defined submeasure
+
+For x on the full source, write i=x5 mod5 and j=x7 mod7. Define
+
+    D_N(r,x)=1_(S_(5,r))(x5)*1_(S_(7,r))(x7)
+             *product_(q in Q)
+                [pbar_q(r,i,j)/H_q(r,i,j)]*1_(A_q(r,i,j))(xq),
+    nu_N(E)=integral 1_E*D_N dLambda_N.                    (FC545)
+
+This is ONE measure on the entire source, fixed by the skeleton and
+its shallow assignment before any remainder class or future query
+is considered. It is not a separately chosen measure for each cell
+or numerical original. Every density factor is at most1, so
+
+    0<=nu_N<=Lambda_N,
+    support(nu_N) is contained in the actual skeleton survivor. (FC546)
+
+The global measure is generally NOT a product measure. What holds,
+and suffices, is a conditional product identity after the common
+root/head FIRST rows are fixed. The private factor at q depends on
+xq and(r,i,j), but not on another private coordinate or a deeper
+head digit. Its integral is exactly
+
+    integral [pbar_q/H_q]*1_(A_q) d lambda_(q,N)=pbar_q.   (FC547)
+
+Thus its root/head-cell mass is exactly
+
+    nu_N({r,i,j})=(1/2)*w_(5,r,i)*w_(7,r,j)*product_q pbar_q,
+
+and its total mass is the canonical lower group term
+
+    nu_N(all)=Abar_N
+      =(1/2)*sum_(r,i,j)w5*w7*product_q pbar_q.             (FC548)
+
+Neither an actual private law nor a ternary root weight is
+renormalized inFC547–FC548. The factor1/2 remains the base source
+weight, not the conditional root distribution after thinning.
+
+### 3. One arbitrary remainder label on this same measure
+
+Let m be a permitted numerical remainder label. Its nonternary
+support is D, |D|>=2; its ternary exponent is0 or1. Let e_p be each
+actual nonternary depth, and let a_m be the actual FIRST-row address
+on supported heads. An original head cylinder at depth e_h is a
+subset of that declared first row.
+
+Use the fixed cap c_p^infinity=(p-1)/(p-2), which bounds c_(p,N).
+At a fixed(r,i,j), every supported private q satisfies
+
+    integral [pbar_q/H_q]*1_(A_q)*1_(C_(m,q)) d lambda_(q,N)
+      <=lambda_(q,N)(C_(m,q))
+      <=c_q^infinity*q^-e_q.                            (FC549)
+
+The first inequality uses only pbar_q/H_q<=1; no conditional
+normalization by pbar, H or a query-dependent event is inserted.
+Every unsupported private q contributes EXACTLY pbar_q byFC547.
+
+For an unsupported head retain its actual row mass w. For a
+supported head, the only remaining dependence of all comparison
+coefficients on that head is its first row. Its deeper cylinder is
+integrated against the ORIGINAL head star survivor, giving
+
+    lambda_(h,N)(C_(m,h) intersect S_(h,r))
+       <=min(c_h^infinity*h^-e_h,w_(h,r,a_(m,h))).          (FC550)
+
+This includes arbitrary head depths, not just shallow originals.
+It is valid because all grouped head exponents are1 and their
+physical first rows are fixed through every private depth. It would
+require a different resolved head partition if the thinning sets
+depended on higher head digits. Unsupported heads are integrated
+only after their first rows have fixed the private factors.
+
+Put M_(h,r)(e,a)=min(c_h^infinity*h^-e,w_(h,r,a)). Define
+
+    Tthin_(D,r)(a)
+      =sum_(head rows agreeing with a)
+         product_(h in heads minus D)w_(h,r,row_h)
+         *product_(q in Q minus D)pbar_q(r,i,j).
+
+Factoring only at this fixed root/head cell and using FC549–FC550
+gives the actual per-original bound
+
+    nu_N(C_m)
+      <=product_(q in D intersect Q)c_q^infinity*q^-e_q
+        *sum_(active retained roots r)(1/2)*Tthin_(D,r)(a_m)
+        *product_(h in heads intersect D)M_(h,r)(e_h,a_(m,h)). (FC551)
+
+All factors are on the same nu_N. Supported head weights occur once
+inside M, never multiplied a second time. A free original has the
+SAME a_m on both roots; a selected original is active on one root
+(or has zero mass when assigned to deleted root0). No independent
+per-root choice of a free address has been introduced.
+
+### 4. Domination by the old canonical fee before any maxima
+
+The canonical Tbar_(D,r)(a) uses the same w but the private factors
+Kbar instead of pbar. ByFC544, nonnegative products and head sums give
+
+    Tthin_(D,r)(a)<=Tbar_(D,r)(a)                         (FC552)
+
+for EVERY D,r,a. Apply this inequality inside FC551, with the same
+depth caps. The free two-root maximum and the selected one-root
+maximum may now be taken exactly as in FC120–FC122. Since domination
+held for every fixed address and root first, each resulting allowance
+is at most its old canonical allowance at that depth.
+
+The sum over head depths still keeps its maximum inside each depth
+summand. Supported private depth sums still use the unchanged full
+inventory coefficient
+
+    B_private(D)=product_(q in D intersect Q)1/(q-2).
+
+No special actual projection mass is substituted for this coefficient.
+The numerical inventory has not changed: pure, star and all shallow
+grouped labels at every private depth are excluded from the remainder.
+For support{h,q}, head exponent starts at2; for support{5,7} or any
+larger support the original lower limit1 is retained. Additional
+higher group labels do not become free remainder slots. Distinct
+numerical originals are each charged once.
+
+For any permitted finite remainder M, with arbitrary globally fixed
+phases, the finite sum of nu_N(C_m) is therefore bounded by the
+complete old canonical K-based fee Fbar_N, using fixed c^infinity.
+This proof bounds every original separately on ONE measure. Its
+maxima are upper allowances, without an assumption of simultaneous
+attainment or phase-dependent changes to the measure.
+
+Let U_(theta,N)(M) be the actual full survivor. By support FC546 and
+the union bound INSIDE nu_N,
+
+    Lambda_N(U_(theta,N)(M))
+      >=nu_N(U_(theta,N)(M))
+      >=Abar_N-sum_(m in M)nu_N(C_m)
+      >=Abar_N-Fbar_N=Jcanonical(zcanonical_N).           (FC553)
+
+This is uniform over ALL shallow assignments theta. The right-hand
+side depends only on the fixed head/root table and N. Neither
+Jnative(actual theta)>=Jnative(canonical) nor actual-H monotonicity
+of an unmodified fee was needed. The changed source has a NEW
+comparison submeasure whose mass is held fixed by construction.
+
+### 5. Positive constants need only canonical continuity
+
+The existing fixed canonical limiting scores in FC132 are
+
+    J_first=17062109570167/198315713846250,
+    J_bounded=25372782312134/297473570769375.
+
+These are the exact values retained in
+`frontier/cover-geometry/fibre-credit-partition/head_mass_evaluation.json`.
+The result SHA256 is
+`4e824f35c5f921cdacee1cb462cf3387f5524978e859c65460e45cb3fcb5f8c4`.
+Exact rational subtraction gives
+
+    J_first-21/250=201794803541/99157856923125>0,
+    J_bounded-21/250=770004735013/594947141538750>0.        (FC554)
+
+More generally choose any fixed0<mu<min(J_first,J_bounded). The
+canonical finite signatures converge with fixed caps, support,
+root weights and row labels; FC133–FC139 continuity gives one finite
+new threshold N_dagger(mu) such that both canonical J values are at
+least mu for every N>=N_dagger(mu). Applying FC553 yields the SAME
+bound for every shallow assignment and permitted remainder.
+
+No minimum over the 372^9 type tuples or continuity of their actual
+H enters this argument: the comparison right-hand side is
+already phase-independent at EACH finite N. This is the same canonical sequence controlled in FC487–FC490;
+for mu=21/250 the existing N84>=2 is an admissible threshold.
+No numerical value of that threshold is asserted.
+
+### 6. Completion covers every original finite N and preserves all labels
+
+For an arbitrary original N>=1, keep its shallow phases and its
+entire permitted remainder fixed. Choose finite
+N'>=max(N,2,N_dagger(mu)), and append only missing prescribed pure,
+star and grouped layers throughN'. The shallow assignment remains
+unchanged; all higher phases were fixed independently of N.
+The FC159 remainder excludes every added numerical label at all
+depths, so no original phase is overwritten and no label is duplicated.
+On one resolving finite CRT space the completed survivor U_N' lies
+inside the original U_N.
+
+Let
+
+    a_N=product_(p in V)(1-A_(p,N)),
+    a_infinity=403767/1048576=1/C_V.
+
+On completed-pure-carrier events E, the ORIGINAL two-root laws obey
+
+    Lambda_N(E)=(a_N'/a_N)*Lambda_N'(E).
+
+Since FC553 gives Lambda_N'(U_N')>=mu, it follows that
+
+    Lambda_N(U_N)>=a_infinity*mu/a_N,
+    H_R(U_N)>=(2/3)*a_infinity*mu>0.                     (FC555)
+
+The unscaled mu bound under Lambda_N is claimed only when N is
+already at least the new threshold. Completion supplies the displayed
+normalization ratio at smaller depths.
+
+A single actual dominated source can be exhibited using the SAME
+completed thinning measure. Let
+
+    s=nu_N'(U_N')>=mu,
+    D_mu=3/(2*a_infinity*mu),
+    eta=nu_N' restricted to U_N' /(D_mu*s).                (FC556)
+
+Then eta has mass1/D_mu=(2/3)*a_infinity*mu and support in the
+original U_N. Because nu_N'<=Lambda_N', its density relative to H_R
+is at most
+
+    3/(2*a_N'*D_mu*s)=a_infinity*mu/(a_N'*s)<=1.
+
+Thus eta<=H_R. This eta is fixed after the actual completed family
+is fixed; it is not selected anew for later queries. With mu=21/250,
+
+    mass(eta)=2826369/131072000,
+    D_mu=131072000/2826369.                              (FC557)
+
+These constants now follow for ALL shallow phases in the two fixed
+tables, not merely the four isolated variants in FC479–FC486. All sources and completed families are finite. The construction
+establishes existence, not efficient source acquisition.
+
+### 7. Retain the specific thinned Haar reference
+
+Define R_N on the original Haar space using the SAME density factors,
+with pure avoidance included in each private allowed set, head
+pure/star avoidance retained, and ternary Haar restricted to roots
+1 and 2. Conditional on the root and head first rows, its private
+factor is (pbar_q/H_q)*Haar_q restricted to the actual allowed set.
+Its total private mass is pbar_q/c_q,N, and every depth-e cylinder
+has absolute mass at most q^-e. Converting the pure conditioning and
+the uniform two-root weights gives exactly
+
+    nu_N=(3/(2*a_N))*R_N,
+    eta=[mu/(s*C_V*a_N')]*R_N' restricted to U_completed
+       <=R_N'<=Haar.                                      (FC558)
+
+The coefficient is at most one because s>=mu and C_V*a_N'>=1.
+This stronger reference domination holds for the SPECIFIC source
+constructed in (FC556). It need not hold for another Haar-dominated
+source of the same total mass. The actual completion, all phases,
+all thinning factors and the final source are fixed before queries.
+
+### 8. Exact boundary and comparison with FC512
+
+The common-source construction has no uncovered head-depth,
+root-gating or numerical-inventory obligation within the stated
+scope: the private allowed set depends only on the first head rows;
+their deeper query cylinders retain the original min-cap; free
+addresses remain fixed across roots; and every original is charged
+once on the same measure. Refining the finite CRT period to resolve
+a deeper remainder leaves all skeleton masses unchanged.
+
+The scope remains the fixed two head/root tables, fixed pure/star
+source and prescribed higher group words, fixed prime support,
+ternary height one and exact FC159 inventory. The mechanism itself
+uses only the proved floorFC542, head-first-row dependence and the
+original cylinder caps; a broader application must verify those
+hypotheses rather than inherit it by terminology.
+
+This does not contradict the FC512 native raw-box monotonicity failure:
+FC553 uses a different, explicitly constructed submeasure and never
+claims the actual native functional increased. It also does not
+inherit the old free55 rectangle or grouped all-query profiles.
+The query comparison requires the stronger reference domination
+FC558 and is established in the following section. This source proof
+alone does not supply a continuation or unrestricted Erdős #7.
+Its ordinary proof was independently reconstructed with the same
+complete depth inventory and supported-head bounds; no new Lean
+verification or numerical phase enumeration is part of this result.
+
+## The thinned source preserves the canonical grouped query profile
+
+The preceding fixed-submeasure construction satisfies the stronger
+reference domination needed below. Under the same shallow-phase
+contract, it yields the canonical grouped all-query comparison and
+therefore the larger uniform atlas comparison. This is an ordinary
+mathematical proof; it adds no Lean verification or new numerical run.
+
+### 1. Exact conditional statement
+
+Fix ONE of the two FC110/FC131 physical head-row and selected-root
+assignments, uniform ternary roots gamma_1=gamma_2=1/2, the original
+fixed pure/star/higher role words, and one finite common N >= 2.
+The four shallow private digits may be arbitrary at every q in Q.
+All phases are fixed globally. The source may subsequently avoid
+one arbitrary admitted finite FC159 remainder, but that deletion
+will only restrict the measure under consideration.
+
+At root r and actual head first rows (i5,i7), let n5,n7 be the named
+active-role COUNTS from FC434, and put n=n5+n7 <=4. These counts
+refer to numerical roles, not to the number of distinct shallow
+cylinders. In particular they do not decrease when digits coincide.
+
+At a private q define
+
+    A_(q,N)=sum_(e=1..N)q^-e,
+    c_(q,N)=1/(1-A_(q,N)),
+    b_(q,N)=c_(q,N)*A_(q,N),
+    epsilon=1_(r=2),
+    g_(q,r,N)=1-epsilon*b_(q,N),
+    pbar_(q,r,N)=g_(q,r,N)-n*b_(q,N).             (FC559)
+
+Let S_(q,r,N)(i5,i7) be the ACTUAL private survivor of its fixed pure
+and active star originals and all group roles active at that head
+cell. Its mass under the pure-conditioned private probability is
+
+    H_actual=c_(q,N)*Haar_q(S_actual).
+
+The union bound (FC542–FC543) gives
+
+    0 < pbar <= H_actual.
+
+Set alpha=pbar/H_actual in (0,1]. The required private Haar
+submeasure is
+
+    kappa_(q,r,N)(i5,i7;dx_q)
+      =alpha(i5,i7)*1_(S_actual)(x_q)*Haar_q(dx_q). (FC560)
+
+For each head p=5,7, let beta_(p,r,N) be unnormalized Haar restricted
+to its actual pure and active star survivors through N. On the
+ternary coordinate retain Haar restricted to root r. Define
+
+    Lambda_N^thin
+      =sum_(r=1,2) Haar_3|[r]
+          tensor beta_(5,r,N) tensor beta_(7,r,N)
+          tensor_(q in Q) kappa_(q,r,N)(i5,i7).     (FC561)
+
+This is a conditional product over private primes after fixing
+the actual root and heads. It is not a product assertion about
+the full actual survivor after arbitrary nongroup deletions.
+
+The measure hypothesis used by the query bridge is
+
+    eta >=0, eta <= Lambda_N^thin, mass(eta)=h>0,   (FC562)
+
+with eta fixed before every later complete query and convex cost.
+FC558 supplies (FC562) for the preceding construction with its
+completed N>=2. The rest of this section proves the grouped
+all-query comparison. A mere assertion eta<=Haar with the same
+mass h is not a substitute for (FC562).
+
+### 2. Conversion from the pure-conditioned source to Haar
+
+Let lambda_N be the standard uniform-two-root pure-conditioned
+probability, and let theta be its product-thinned submeasure with
+private density product_q(alpha_q*1_(S_actual,q)); retain the
+actual head star restrictions as well. Put
+
+    a_N=product_(p in V)(1-A_(p,N)),
+    C_V=1048576/403767.
+
+By direct conversion from conditional probabilities to Haar,
+
+    theta=(3/(2*a_N))*Lambda_N^thin.               (FC563)
+
+Here the indicators in (FC560) also include the pure restrictions;
+multiplying them again under lambda_N is harmless. The head
+pure/star restrictions in (FC561) match those in theta. The factor
+3/2 comes from replacing the uniform-two-root probability by Haar
+restricted to its two ternary roots, not from an independent root
+law chosen after a query.
+
+Suppose the source-positivity proof establishes, for ONE actual
+remainder survivor U, a thinned surviving mass
+
+    s=theta(U) >= mu >0.
+
+Choose h=(2/3)*mu/C_V and define eta=(h/s)*theta|U. Since
+a_N>=1/C_V,
+
+    eta <= [h*3/(2*s*a_N)]*Lambda_N^thin
+         <=[mu/(s*C_V*a_N)]*Lambda_N^thin
+         <=Lambda_N^thin.                          (FC564)
+
+Thus this specified normalization gives precisely (FC562), not
+just generic Haar domination. Further restrictions and downward
+family/stage scalings also preserve it. Taking some OTHER
+Haar-dominated measure of the same mass on the same survivor does
+not establish (FC562); the retained density provenance is essential.
+
+FC553 supplies s>=mu after the canonical finite threshold.
+FC555–FC558 supply legal completion and precisely this normalization;
+the original depth need not itself reach the threshold.
+
+### 3. Exact private Haar mass and absolute cylinder caps
+
+The mass of (FC560) is completely phase independent at its fixed
+head cell:
+
+    m_(q,r,N)=pbar/c_(q,N)
+      =1-(1+epsilon+n)*A_(q,N).                   (FC565)
+
+The division by c_(q,N) is essential. The grouped query lemma uses
+unnormalized Haar masses and absolute q^-e cylinder caps, whereas
+pbar and H_actual in the preceding construction are pure-conditioned raw probabilities.
+
+Since alpha<=1, every actual depth-e private query cylinder obeys
+
+    kappa_(q,r,N)(cylinder)<=q^-e, e>=1.           (FC566)
+
+This holds for all phases, including0,1 and6, and for repeated
+depths bearing different numerical labels. It uses measure
+domination, not ordinary-digit hole disjointness.
+
+The actual conditional mass is safely above the positive-run
+threshold:
+
+    m_(q,r,N)>=1-6/(q-1)>=2/5>1/q, q>=11.         (FC567)
+
+The first bound uses epsilon<=1, n<=4 and
+A_(q,N)<=1/(q-1). In particular no small-mass or zero-denominator
+exception is hidden in the weighted coordinate comparison.
+
+### 4. The original canonical upper mass is already large enough
+
+Keep EXACTLY the old depth-two retained pure/star reference
+
+    beta_(q,r,2),
+    a_(q,r,2)=1-(1+epsilon)*(1/q+1/q^2),
+    z_(q,r,2)=a_(q,r,2)-1/q.
+
+Its canonical grouped deletion is wcan=n/q. Define its conditional
+upper mass
+
+    Acan=a_(q,r,2)-n/q.                            (FC568)
+
+For N>=2, the exact difference between this upper mass and the
+actual thinned conditional mass is
+
+    Acan-m_(q,r,N)
+      =(1+epsilon)*(A_(q,N)-A_(q,2))
+          +n*(A_(q,N)-1/q) >=0.                   (FC569)
+
+This is the decisive bridge. It retains the full named count n,
+even when the actual shallow union is much smaller because of
+collisions or pure/star overlap. The product thinning itself pays
+that missing mass; it need not arise from a physical shallow hole.
+
+By FC380, z_(q,r,2)>4/q>=n/q. Hence
+
+    Acan>=m_(q,r,N)>1/q,
+    z_(q,r,2)-n/q>=0.                              (FC570)
+
+Apply the actual weighted ordered-increment lemma FC331-FC332 to
+kappa with its true mass m and caps (FC566), then use FC435 to
+increase only the zero-run mass to Acan. This is valid because
+the cost is nonnegative increasing convex and its baseline value
+is nonnegative. The resulting coefficients are EXACTLY
+
+    run j_q=0:  z_(q,r,2)-n/q,
+    run j_q>=1: (q-1)/q^(j_q+1).                   (FC571)
+
+No positive-run coefficient was reduced without proof. No query
+upper bound was subtracted from another. The extra zero mass is
+the nonnegative quantity (FC569), used pointwise at the actual
+root/head cell before integrating over heads.
+
+Thus the CANONICAL wcan works; the atlas wstar=max(n5,n7)/q would
+also be safe but gives a larger comparison. Ordinary shallow
+digits and within-head distinctness were one way to obtain enough
+conditional mass deficit in FC434. They are not hypotheses of the
+weighted lemma once (FC565)-(FC570) have supplied that deficit.
+
+### 5. Private factorization and the positive head conditions
+
+For (FC561), the private measures factor after holding the ACTUAL
+root and both heads fixed. Their scalars alpha depend only on those
+head first rows, not on other private coordinates or the query.
+Process private coordinates with all numerical query labels,
+remaining indicators and inherited nonnegative coefficients kept
+unchanged. Equations (FC566)-(FC571) apply at each step.
+
+For zero-run set Z, after these comparisons the remaining head
+measure is
+
+    K_Z*h_Z^can(i5,i7)*beta_(5,r,N) tensor beta_(7,r,N),
+    K_Z=product_(q in Z)z_(q,r,2),
+    h_Z^can=product_(q in Z)(1-n_(q,r)/(q*z_(q,r,2))), (FC572)
+
+times the usual positive-run coefficients outside Z. All factors
+are nonnegative. Since the fixed pure/star words are nested,
+
+    beta_(p,r,N)<=beta_(p,r,2), p=5,7.
+
+Enlarging these remaining head measures is therefore safe for the
+nonnegative integrand. The result is exactly the old canonical
+head reference with the actual depth-two row masses, not the
+normalized limiting head table.
+
+The old FC382 conditions are now invoked on THEIR original inputs:
+
+    integral h_Z^can(.,i7) d beta_(5,r,2)>=1/5
+      on every live beta_(7,r,2) row;
+
+    integral h_Z^can d(beta_(5,r,2) tensor beta_(7,r,2))
+      >=a5*a7-z5*z7.                              (FC573)
+
+FC384 reduces these to Z=Q. The existing canonical certificates
+establish them for both specified head/root assignments and both
+roots. They do not depend on the arbitrary shallow phases after
+the replacement (FC571). No new head-order or new retained-depth
+condition is being inferred from the old certificate.
+
+Thus the original5-then7 proof has positive intermediate measures:
+the5 zero branch has density H_Z-1/5>=0 against beta7, is bounded
+by z5*beta7, and has total mass at least z5/7. Applying the weighted
+7 lemma supplies the same nonnegative double-zero coefficient as
+FC383. This checks the actual reason those head positivity
+conditions were needed, rather than treating a matching total
+mass as sufficient on its own.
+
+### 6. Exact profile identity, labels and conditional quantitative reuse
+
+The private coefficients (FC571), depth-two head reference and
+head correction are exactly those of FC385. The labelled induction
+preserves every complete numerical query, its fixed phases,
+depth-zero terms and ternary indicators. The same deterministic
+one-label colour count applies before the two root coefficients
+are combined. Therefore, conditional on (FC562),
+
+    integral f(L_Phi) d eta <= integral f d Xi_can,i (FC574)
+
+for every finite complete query layout Phi and every nonnegative
+increasing convex cost f, with one source eta for all such choices.
+The equality of comparison formulas is independent of h; taking
+f=1 proves mass(Xi_can,i)>=h for any eta satisfying the premises.
+
+FC442 gives the already proved positive-measure ordering
+
+    Xi_can,i <= Xi_star,i <= Xi_purestar.
+
+Thus the same physical eta also satisfies the uniform atlas
+comparison Xi_star,i and, as a fallback, the pure/star comparison.
+The profile can be shared while the actual thinned source changes
+with the original family; no phase-by-phase optimizing source is
+selected for a query.
+
+The preceding source proof supplies h84=2826369/131072000 through
+its specific thinning and finite completion. Thus the source and
+profile inputs are exactly those used in FC498–FC504: one physical
+source of mass h84 dominated for every complete query by Xi_star,i.
+The saved raw_uniform profile, fresh Top_h84 initialization and
+fixed half-clipping arithmetic therefore apply unchanged to ALL
+shallow phase assignments in the present contract. A change in source
+mass would instead require a new initialization; mere agreement of
+raw profiles would not suffice.
+
+The saved schedule is 43,47,53,59,61,67,71,73,79. Its existing exact
+bounds, separately for each original head table, are
+
+    m_79>793/10^6, M_4<15826000,
+    Haar(U_head)>793/512000000,
+    m_79-M_4*tau_4>15480763/25000000000>619/10^6.   (FC575)
+
+The first and last masses are masses under the constructed distorted
+source, not Haar densities. The Haar statement uses the saved density
+cap 512. The tail bound keeps the Report734/779 analytic prime-product
+premise and the exclusion of additional support primes in (79,10000].
+The saved mean gate at 83 remains negative, with no 83 update claimed.
+This reuses the previously checked arithmetic under a larger proved
+source class; it is not a new numerical verification or a closure of
+the middle-prime gap.
+
+### 7. Boundary of the proved interface
+
+The necessary premises actually consumed by this proof are:
+
+- A query-independent physical eta dominated by the specific
+  product-thinned Haar reference (FC561), as in (FC562)-(FC564).
+- Conditional private factorization at fixed actual root and heads;
+  global surviving-source independence is neither used nor claimed.
+- The exact unnormalized private masses (FC565), with the full
+  named active counts, and absolute caps (FC566).
+- N>=2, the proved private upper-mass identity (FC569), and
+  the unchanged head pure/star words for enlargement to beta2.
+- The same two physical head/root tables for which the original
+  canonical FC382 certificates hold.
+- The original complete-query label and ternary-colour contract,
+  and nonnegative increasing convex costs used by FC435.
+
+The proof does not need the actual shallow union to have beta mass
+at least max(n5,n7)/q. This literal-hole floor can fail at digit6;
+the thinning supplies a different, quantitatively adequate mass
+deficit. It also does not equate normalized pure-coordinate
+probabilities with restricted Haar masses.
+
+If only a generic Haar cap, a global source mass or some separate
+private marginals is supplied, (FC562) and conditional product
+structure remain missing and this grouped-profile conclusion is
+not established. If the actual source is at least supported on
+the unchanged two-layer pure/star carrier, the old pure/star
+profile remains available under generic Haar domination; that
+weaker fallback alone does not recover the grouped debit.
+
+The fixed source from FC556 satisfies all these premises, so the
+query bound and FC575 are consequences for the stated arbitrary
+shallow phases. They do not apply to every Haar-dominated measure
+of the same mass, arbitrary head tables, a changed label inventory,
+or unrestricted Erdős #7. The independent review verified the
+reference normalization, mass/caps, order of positive head enlargement,
+and preservation of complete query labels; no producer rerun enters
+this extension.
