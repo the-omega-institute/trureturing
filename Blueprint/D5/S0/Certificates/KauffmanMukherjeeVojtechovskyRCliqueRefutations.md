@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Finite conjugation racks answer Problems 5.22 and 5.23 negatively and Problem 5.24 positively.
+Finite conjugation racks answer Problem 5.22 negatively and Problem 5.24 positively.
 
 **Definition 1.1 (Right racks).**
 
@@ -76,19 +76,7 @@ $$(claim22) \Leftrightarrow (\forall Q \in Type,\; (\operatorname{Fintype}\left(
 
 Printed page 21: "Problem 5.22. Do all maximal R-cliques in a finite connected rack have the same size?" claim22 is the universal affirmative answer, with two inclusion-maximal finsets C and D and their Finset.card values.
 
-**Definition 1.7 (Problem 5.23).**
-
-$$(claim23) \Leftrightarrow (\forall Q \in Type,\; (\operatorname{Fintype}\left(Q\right)) \Rightarrow ((\operatorname{DecidableEq}\left(Q\right)) \Rightarrow (\forall mul \in Q \to \left(Q \to Q\right),\; (\operatorname{IsRack}\left(mul\right)) \Rightarrow ((\operatorname{Connected}\left(mul\right)) \Rightarrow ((\forall x \in Q,\; \exists C \in \operatorname{Finset}\left(Q\right),\; (\operatorname{IsMaximalRClique}\left(mul, C\right)) \land (x \in C)) \land (\forall C \in \operatorname{Finset}\left(Q\right),\; \forall D \in \operatorname{Finset}\left(Q\right),\; (\operatorname{IsMaximalRClique}\left(mul, C\right)) \Rightarrow ((\operatorname{IsMaximalRClique}\left(mul, D\right)) \Rightarrow ((\operatorname{Nonempty}\left(\operatorname{FinsetInter}\left(C, D\right)\right)) \Rightarrow (C = D)))))))))$$
-
-*Formalization.* `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.claim23` (`✓ std3`).
-
-*Citation.* Louis H. Kauffman, Sujoy Mukherjee, Petr Vojtěchovský (2026). *Algebraic invariants of multi-virtual links*. DOI: [10.1016/j.jalgebra.2026.03.018](https://doi.org/10.1016/j.jalgebra.2026.03.018). URL: <https://arxiv.org/abs/2504.09368v1>.
-
-*Commentary.*
-
-Printed page 21: "Problem 5.23. Do maximal R-cliques in a finite connected rack Q partition Q?" claim23 is the universal affirmative answer. It requires every x to belong to a maximal R-clique, and any two maximal R-cliques with nonempty intersection to be equal. Both conjuncts are included.
-
-**Definition 1.8 (Problem 5.24).**
+**Definition 1.7 (Problem 5.24).**
 
 $$(claim24) \Leftrightarrow (\forall Q \in Type,\; (\operatorname{Fintype}\left(Q\right)) \Rightarrow ((\operatorname{DecidableEq}\left(Q\right)) \Rightarrow (\forall mul \in Q \to \left(Q \to Q\right),\; (\operatorname{IsRack}\left(mul\right)) \Rightarrow ((\operatorname{Connected}\left(mul\right)) \Rightarrow (\forall C \in \operatorname{Finset}\left(Q\right),\; (\operatorname{IsMaximalRClique}\left(mul, C\right)) \Rightarrow (\operatorname{FinsetCard}\left(C\right) \mid \operatorname{FintypeCard}\left(Q\right)))))))$$
 
@@ -98,17 +86,13 @@ $$(claim24) \Leftrightarrow (\forall Q \in Type,\; (\operatorname{Fintype}\left(
 
 *Commentary.*
 
-Printed page 21: "Problem 5.24. Does there exist a finite connected rack Q and a maximal R-clique C of Q such that |C| does not divide |Q|?" claim24 is the negation of this existence assertion: every maximal R-clique in every finite connected rack has cardinality dividing the carrier cardinality. Refuting claim24 answers the printed existence question Yes. FinsetCard(C) means C.card, FintypeCard(Q) means Fintype.card Q, and FinsetInter(C,D) means C ∩ D. All three claims quantify over Q : Type with Fintype Q and DecidableEq Q and over every binary operation mul; these structures impose no additional finite-rack restriction.
+Printed page 21: "Problem 5.24. Does there exist a finite connected rack Q and a maximal R-clique C of Q such that |C| does not divide |Q|?" claim24 is the negation of this existence assertion: every maximal R-clique in every finite connected rack has cardinality dividing the carrier cardinality. Refuting claim24 answers the printed existence question Yes. FinsetCard(C) means C.card and FintypeCard(Q) means Fintype.card Q. Both claims quantify over Q : Type with Fintype Q and DecidableEq Q and over every binary operation mul; these structures impose no additional finite-rack restriction.
 
-**Theorem 1.9 (Unequal maximal R-cliques).**
+**Theorem 1.8 (Unequal maximal R-cliques).**
 
 $$\neg claim22$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result22` (`✓ std3`). ∎
-
-*Resolves.* `Problems/kauffman-mukherjee-vojtechovsky-2025-maximal-r-clique-equal-size-refutation` (refuted) by `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result22`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kauffman-mukherjee-vojtechovsky-2025-maximal-r-clique-equal-size-refutation","declaration_gid":"D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result22","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
@@ -116,31 +100,11 @@ $$\neg claim22$$
 
 Use the conjugation rack of the 105 fixed-point-free involutions in S₈, x ∗ y = y⁻¹xy. On points 0 through 7, the seven translations tₐ(x) = x XOR a for a = 1 through 7 form a maximal R-clique. The nine permutations pₐᵦ for a,b = 1,2,3, acting by x XOR a on the lower block and by 4 + ((x−4) XOR b) on the upper block, form another maximal R-clique. Their cardinalities 7 and 9 differ. Fin 105 indexes the literal permutation vectors and conjugation table; positive right-translation words certify connectedness.
 
-**Theorem 1.10 (Overlapping maximal R-cliques).**
-
-$$\neg claim23$$
-
-*Proof.* Machine-checked in Lean as `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result23` (`✓ std3`). ∎
-
-*Resolves.* `Problems/kauffman-mukherjee-vojtechovsky-2025-maximal-r-clique-partition-refutation` (refuted) by `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result23`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kauffman-mukherjee-vojtechovsky-2025-maximal-r-clique-partition-refutation","declaration_gid":"D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result23","resolution_kind":"refuted"} -->
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Use the conjugation rack of the ten transpositions in S₅. The two maximal R-cliques {(1 2),(3 4)} and {(1 2),(3 5)} are distinct and intersect in (1 2). Fin 10 indexes the literal permutation vectors and conjugation table. The rack is connected, so these two subsets refute the partition assertion.
-
-**Theorem 1.11 (A size that does not divide the carrier size).**
+**Theorem 1.9 (A size that does not divide the carrier size).**
 
 $$\neg claim24$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result24` (`✓ std3`). ∎
-
-*Resolves.* `Problems/kauffman-mukherjee-vojtechovsky-2025-maximal-r-clique-divisibility-refutation` (refuted) by `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result24`.
-
-<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kauffman-mukherjee-vojtechovsky-2025-maximal-r-clique-divisibility-refutation","declaration_gid":"D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result24","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 
@@ -156,8 +120,6 @@ Use the conjugation rack of the 70 three-cycles in S₇. The subset {(1 2 3),(1 
 - Truth anchor: `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.IsRack`
 - Truth anchor: `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.RCommute`
 - Truth anchor: `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.claim22`
-- Truth anchor: `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.claim23`
 - Truth anchor: `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.claim24`
 - Truth anchor: `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result22`
-- Truth anchor: `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result23`
 - Truth anchor: `D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result24`

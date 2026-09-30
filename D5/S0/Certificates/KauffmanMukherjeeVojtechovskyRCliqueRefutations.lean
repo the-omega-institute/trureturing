@@ -4,20 +4,20 @@
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.claim24; result=D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.result24; claim=D5/S0/Certificates/KauffmanMukherjeeVojtechovskyRCliqueRefutations.claim24
-   digest: Refutes the universal readings of Problems 5.22-5.24 on maximal R-cliques. -/
+   digest: Refutes the universal readings of Problems 5.22 and 5.24 on maximal R-cliques. -/
 
-/- proof_shape: result22: bind-only; result23: bind-only; result24: bind-only
-   escape_witness: result22: none; result23: none; result24: none
-   admission_basis: open-problem-resolution (#9420; Refuted ×3)
-   Direct frozen dependencies: result22: none; result23: none; result24: none
+/- proof_shape: result22: bind-only; result24: bind-only
+   escape_witness: result22: none; result24: none
+   admission_basis: open-problem-resolution (#9420; Refuted ×2)
+   Direct frozen dependencies: result22: none; result24: none
      (pinned Mathlib only).
    Public definitions: IsRack, RCommute, IsRClique, IsMaximalRClique, Connected,
-     claim22, claim23, claim24 are source encodings, not auxiliary proof declarations.
+     claim22, claim24 are source encodings, not auxiliary proof declarations.
    Private theorems/lemmas and proposition-valued private defs: none.
-   Utility per result: certified-instance, refutes claim22/result22,
-     claim23/result23 and claim24/result24, respectively.
+   Utility per result: certified-instance, refutes claim22/result22 and
+     claim24/result24, respectively.
    Finite conjugation, injection, connectivity and maximality checks are local
-     haves inside the three settling results; no companion theorem is added. -/
+     haves inside the two settling results; no companion theorem is added. -/
 
 import Mathlib.GroupTheory.Perm.Cycle.Type
 
@@ -57,127 +57,12 @@ def claim22 : Prop :=
     IsRack mul → Connected mul → ∀ C D : Finset Q,
       IsMaximalRClique mul C → IsMaximalRClique mul D → C.card = D.card
 
-/-- The universal partition reading of Problem 5.23, with both coverage and uniqueness. -/
-def claim23 : Prop :=
-  ∀ (Q : Type) [Fintype Q] [DecidableEq Q] (mul : Q → Q → Q),
-    IsRack mul → Connected mul →
-      (∀ x, ∃ C, IsMaximalRClique mul C ∧ x ∈ C) ∧
-        ∀ C D, IsMaximalRClique mul C → IsMaximalRClique mul D →
-          (C ∩ D).Nonempty → C = D
-
 /-- The negation of the existential assertion asked about in Problem 5.24.
 Refuting this universal divisibility assertion answers that question Yes. -/
 def claim24 : Prop :=
   ∀ (Q : Type) [Fintype Q] [DecidableEq Q] (mul : Q → Q → Q),
     IsRack mul → Connected mul → ∀ C : Finset Q,
       IsMaximalRClique mul C → C.card ∣ Fintype.card Q
-
-/-- Literal permutations on 5 points, in lexicographic order of their forward vectors. -/
-private def elt23 : Fin 10 → Equiv.Perm (Fin 5) :=
-  ![
-    Equiv.mk ![0, 1, 2, 4, 3] ![0, 1, 2, 4, 3] (by decide) (by decide),
-    Equiv.mk ![0, 1, 3, 2, 4] ![0, 1, 3, 2, 4] (by decide) (by decide),
-    Equiv.mk ![0, 1, 4, 3, 2] ![0, 1, 4, 3, 2] (by decide) (by decide),
-    Equiv.mk ![0, 2, 1, 3, 4] ![0, 2, 1, 3, 4] (by decide) (by decide),
-    Equiv.mk ![0, 3, 2, 1, 4] ![0, 3, 2, 1, 4] (by decide) (by decide),
-    Equiv.mk ![0, 4, 2, 3, 1] ![0, 4, 2, 3, 1] (by decide) (by decide),
-    Equiv.mk ![1, 0, 2, 3, 4] ![1, 0, 2, 3, 4] (by decide) (by decide),
-    Equiv.mk ![2, 1, 0, 3, 4] ![2, 1, 0, 3, 4] (by decide) (by decide),
-    Equiv.mk ![3, 1, 2, 0, 4] ![3, 1, 2, 0, 4] (by decide) (by decide),
-    Equiv.mk ![4, 1, 2, 3, 0] ![4, 1, 2, 3, 0] (by decide) (by decide)
-  ]
-
-/-- Row x, column y represents the conjugate y⁻¹xy. -/
-private def table23 : Fin 10 → Fin 10 → Fin 10 :=
-  ![
-    ![0, 2, 1, 0, 5, 4, 0, 0, 9, 8],
-    ![2, 1, 0, 4, 3, 1, 1, 8, 7, 1],
-    ![1, 0, 2, 5, 2, 3, 2, 9, 2, 7],
-    ![3, 4, 5, 3, 1, 2, 7, 6, 3, 3],
-    ![5, 3, 4, 1, 4, 0, 8, 4, 6, 4],
-    ![4, 5, 3, 2, 0, 5, 9, 5, 5, 6],
-    ![6, 6, 6, 7, 8, 9, 6, 3, 4, 5],
-    ![7, 8, 9, 6, 7, 7, 3, 7, 1, 2],
-    ![9, 7, 8, 8, 6, 8, 4, 1, 8, 0],
-    ![8, 9, 7, 9, 9, 6, 5, 2, 0, 9]
-  ]
-
-/-- Positive right-translation words from index 0 to each target index. -/
-private def words23 : Fin 10 → List (Fin 10) :=
-  ![[], [2], [1], [1, 5], [5], [4], [4, 9], [1, 9], [9], [8]]
-
-private def back23 (i : Fin 10) : List (Fin 10) :=
-  (words23 i).reverse
-
-private def clique23A : Finset (Fin 10) := {6, 1}
-
-private def clique23B : Finset (Fin 10) := {6, 2}
-
-/-- Refutation of the universal reading of Problem 5.23. -/
-theorem result23 : ¬ claim23 := by
-  have hpoint : ∀ i j : Fin 10, ∀ x : Fin 5,
-      elt23 (table23 i j) x = ((elt23 j)⁻¹ * elt23 i * elt23 j) x := by
-    intro i
-    fin_cases i <;> decide +kernel
-  have htable : ∀ i j, elt23 (table23 i j) = (elt23 j)⁻¹ * elt23 i * elt23 j := by
-    intro i j
-    exact Equiv.ext (hpoint i j)
-  have hinj : Function.Injective elt23 := by
-    have h : ∀ i j : Fin 10, (∀ x : Fin 5, elt23 i x = elt23 j x) → i = j := by
-      intro i
-      fin_cases i <;> decide +kernel
-    intro i j hij
-    exact h i j (fun x => congrArg (fun p : Equiv.Perm (Fin 5) => p x) hij)
-  have hrack : IsRack table23 := by
-    refine ⟨?_, ?_⟩
-    · intro y
-      have hi : Function.Injective (fun x => table23 x y) := by
-        intro a b hab
-        apply hinj
-        have he := congrArg elt23 hab
-        rw [htable, htable] at he
-        exact mul_left_cancel (mul_right_cancel he)
-      exact ⟨hi, (Finite.injective_iff_surjective).mp hi⟩
-    · intro x y z
-      apply hinj
-      simp only [htable]
-      group
-  have hforward : ∀ i : Fin 10, (words23 i).foldl table23 0 = i := by
-    decide +kernel
-  have hback : ∀ i : Fin 10, (back23 i).foldl table23 i = 0 := by
-    decide +kernel
-  have hconnected : Connected table23 := by
-    intro x y
-    refine ⟨back23 x ++ words23 y, ?_⟩
-    rw [List.foldl_append, hback, hforward]
-  have hmax : ∀ C : Finset (Fin 10), IsRClique table23 C →
-      (∀ b, b ∉ C → ∃ a ∈ C, ¬ RCommute table23 a b) →
-      IsMaximalRClique table23 C := by
-    intro C hc hb
-    refine ⟨hc, ?_⟩
-    intro D hd hCD
-    apply Finset.Subset.antisymm
-    · intro b hbD
-      by_contra hbC
-      obtain ⟨a, haC, hab⟩ := hb b hbC
-      exact hab (hd a (hCD haC) b hbD)
-    · exact hCD
-  have hA : IsMaximalRClique table23 clique23A := by
-    apply hmax
-    · unfold IsRClique RCommute
-      decide +kernel
-    · unfold RCommute
-      decide +kernel
-  have hB : IsMaximalRClique table23 clique23B := by
-    apply hmax
-    · unfold IsRClique RCommute
-      decide +kernel
-    · unfold RCommute
-      decide +kernel
-  intro hclaim
-  have heq := (hclaim (Fin 10) table23 hrack hconnected).2
-    clique23A clique23B hA hB (by decide +kernel)
-  exact (by decide +kernel : clique23A ≠ clique23B) heq
 
 /-- Literal permutations on 7 points, in lexicographic order of their forward vectors. -/
 private def elt24 : Fin 70 → Equiv.Perm (Fin 7) :=

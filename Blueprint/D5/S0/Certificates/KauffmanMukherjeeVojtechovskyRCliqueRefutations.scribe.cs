@@ -13,7 +13,7 @@ internal sealed class KauffmanMukherjeeVojtechovskyRCliqueRefutationsDocument
         LibraryNoteRef.Create("D5/L/Certificates/kauffman2026multivirtual");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Finite conjugation racks answer Problems 5.22 and 5.23 negatively and Problem 5.24 positively.",
+        "Finite conjugation racks answer Problem 5.22 negatively and Problem 5.24 positively.",
         H("Maximal R-Cliques in Finite Connected Racks"),
         Blocks(
             LiteratureDefinition("kmv-rack", "Right racks", "IsRack", RackFormula(),
@@ -55,17 +55,12 @@ internal sealed class KauffmanMukherjeeVojtechovskyRCliqueRefutationsDocument
                 "Printed page 21: \"Problem 5.22. Do all maximal R-cliques in a finite "
                 + "connected rack have the same size?\" claim22 is the universal affirmative "
                 + "answer, with two inclusion-maximal finsets C and D and their Finset.card values."),
-            LiteratureDefinition("kmv-problem-partition", "Problem 5.23", "claim23", ClaimFormula(23),
-                "Printed page 21: \"Problem 5.23. Do maximal R-cliques in a finite connected "
-                + "rack Q partition Q?\" claim23 is the universal affirmative answer. It "
-                + "requires every x to belong to a maximal R-clique, and any two maximal "
-                + "R-cliques with nonempty intersection to be equal. Both conjuncts are included."),
             LiteratureDefinition("kmv-problem-divisibility", "Problem 5.24", "claim24", ClaimFormula(24),
                 "Printed page 21: \"Problem 5.24. Does there exist a finite connected rack Q "
                 + "and a maximal R-clique C of Q such that |C| does not divide |Q|?\" "
                 + "claim24 is the negation of this existence assertion: every maximal R-clique "
                 + "in every finite connected rack has cardinality dividing the carrier cardinality. "
-                + "Refuting claim24 answers the printed existence question Yes. FinsetCard(C) means C.card, FintypeCard(Q) means Fintype.card Q, and FinsetInter(C,D) means C ∩ D. All three claims "
+                + "Refuting claim24 answers the printed existence question Yes. FinsetCard(C) means C.card and FintypeCard(Q) means Fintype.card Q. Both claims "
                 + "quantify over Q : Type with Fintype Q and DecidableEq Q and over every binary "
                 + "operation mul; these structures impose no additional finite-rack restriction."),
             RepositoryTheorem("kmv-equal-size-refutation", "Unequal maximal R-cliques", "result22",
@@ -78,13 +73,6 @@ internal sealed class KauffmanMukherjeeVojtechovskyRCliqueRefutationsDocument
                 + "Their cardinalities 7 and 9 differ. Fin 105 indexes the literal permutation "
                 + "vectors and conjugation table; positive right-translation words certify connectedness.",
                 "kauffman-mukherjee-vojtechovsky-2025-maximal-r-clique-equal-size-refutation"),
-            RepositoryTheorem("kmv-partition-refutation", "Overlapping maximal R-cliques", "result23",
-                ResultFormula(23),
-                "Use the conjugation rack of the ten transpositions in S₅. The two maximal "
-                + "R-cliques {(1 2),(3 4)} and {(1 2),(3 5)} are distinct and intersect in "
-                + "(1 2). Fin 10 indexes the literal permutation vectors and conjugation table. "
-                + "The rack is connected, so these two subsets refute the partition assertion.",
-                "kauffman-mukherjee-vojtechovsky-2025-maximal-r-clique-partition-refutation"),
             RepositoryTheorem("kmv-divisibility-refutation", "A size that does not divide the carrier size",
                 "result24", ResultFormula(24),
                 "Use the conjugation rack of the 70 three-cycles in S₇. The subset "
@@ -105,9 +93,7 @@ internal sealed class KauffmanMukherjeeVojtechovskyRCliqueRefutationsDocument
         string problemSlug) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
-            new OpenProblemResolutionClaim(ProblemSlugRef.Create(problemSlug),
-                ResolutionKind.Refuted));
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
     private static Formula Q() => F.Id("Q");
     private static Formula Mul() => F.Id("mul");
@@ -155,11 +141,6 @@ internal sealed class KauffmanMukherjeeVojtechovskyRCliqueRefutationsDocument
         if (number == 22)
             conclusion = All("C", Finsets(), All("D", Finsets(),
                 Implies(Maximal(c), Implies(Maximal(d), Equal(Card(c), Card(d))))));
-        else if (number == 23)
-            conclusion = And(All("x", Q(), ExistsOne("C", Finsets(),
-                    And(Maximal(c), Member(F.Id("x"), c)))),
-                All("C", Finsets(), All("D", Finsets(), Implies(Maximal(c),
-                    Implies(Maximal(d), Implies(Call("Nonempty", Call("FinsetInter", c, d)), Equal(c, d)))))));
         else
             conclusion = All("C", Finsets(), Implies(Maximal(c),
                 Rel(Card(c), FormulaRelationOperator.Divides, Call("FintypeCard", Q()))));
@@ -170,7 +151,7 @@ internal sealed class KauffmanMukherjeeVojtechovskyRCliqueRefutationsDocument
     }
     private static Formula Claim(int number) => Seq(F.Id("claim"), number switch
     {
-        22 => D(2, 2), 23 => D(2, 3), _ => D(2, 4)
+        22 => D(2, 2), _ => D(2, 4)
     });
     private static Formula ResultFormula(int number) => Disp(new Formula.Not(Claim(number)));
     private static Formula Maximal(Formula c) => Call("IsMaximalRClique", Mul(), c);
