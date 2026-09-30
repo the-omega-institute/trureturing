@@ -87,4 +87,12 @@ theorem observe_phase_indistinguishable (k t : ℕ) (z : ℤ × ℤ) :
     push_cast
     ring
 
+/-- Specialization at the Robin cutoff modulus 5040 = 5 * 1008. The
+phase ambiguity uses only the factor five; the factor seven contributes no
+additional state in this observation. -/
+theorem observe_phase_indistinguishable_5040 (t : ℕ) (z : ℤ × ℤ) :
+    modEq 5040 (observe (pairAdd z (phaseShift 1008 t))).1 (observe z).1 ∧
+      modEq 5040 (observe (pairAdd z (phaseShift 1008 t))).2 (observe z).2 := by
+  simpa using observe_phase_indistinguishable 1008 t z
+
 end D5.S3.Geometry.Hyperideal.FibonacciObservation
