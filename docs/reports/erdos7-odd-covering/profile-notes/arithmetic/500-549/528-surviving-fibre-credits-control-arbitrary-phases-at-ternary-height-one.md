@@ -17973,3 +17973,241 @@ unrestricted prime support and the separate middle-prime continuation
 gap. R_PS<=R_N preserves old raw query upper comparisons, but changes
 the source mass and normalized law. No old Top initialization or
 continuation follows from this restriction alone.
+
+## One pure9 label obstructs uniform positivity of the full-P phase-max margin
+
+For each fixed head table, the full-P margin cannot remain positive
+for every phase of one additional pure9 original. The obstruction
+follows from the old maximum witnesses and the established full-P
+coefficients; it does not require evaluating a new pure9 fee. It
+concerns this sufficient allowance, not actual coverage or the
+impossibility of stronger noncoverage certificates. The deductions
+below are ordinary mathematics, without a new Lean verification.
+
+### 1. Three exhaustive phase classes on the same source
+
+Keep one fixed FC110 or FC131 full-target source contract, all mixed
+labels already admitted by the full-P result, and the baseline
+original 0 mod3. Add exactly one actual class alpha mod9. Add no
+further pure 3^t with t>=3 and no new singleton 3^t*p^e with t>=2.
+All other original phases remain globally fixed.
+
+The nine phases have three structurally distinct cases:
+
+- alpha in {0,3,6} lies in deleted root0 and has no effect on R_N;
+- alpha in {1,4,7} removes one depth-two child of retained root1;
+- alpha in {2,5,8} removes one depth-two child of retained root2.
+
+Within a retained root, the three choices have the same prescribed
+phase-max allowance. The source depends on the ternary coordinate
+only through its first root, and the allowance retains the root
+mass and maximum prefix capacities. The actual survivor of one
+fixed mixed-phase registry need not have the same mass under those
+three different deletions.
+
+For a hole in root r, restrict the SAME reference by its complement.
+Write A_(r,N) for its old normalized nonternary root mass:
+
+    R_N(root r)=Q_N*A_(r,N)/2,
+    Abar_N=(A_(1,N)+A_(2,N))/2.
+
+The exact normalized deleted mass is A_(r,N)/6. With beta/kappa
+defined by the actual pure avoid-set, the retained capacities satisfy
+
+    theta_r=2/3, theta_bar(r)=1,
+    c_s(1)=theta_s for s=1,2,
+    c_s(t)=3^(1-t) for s=1,2 and every t>=2.       (FC753)
+
+The last equality is exact. The affected root still contains two
+full depth-two children and the other root contains three; either
+root therefore has a full descendant at every larger depth. Its
+Haar mass attains the universal prefix cap. The maximum capacity
+must not be replaced by theta_s*3^(1-t).
+
+No head or private restriction changes inside a surviving ternary
+prefix. Conditional head weights, exact unsupported-private masses
+and the old shallow/deep head blocks remain valid. This restricted
+case does not inherit the small-head-row obstruction caused by
+high-singleton deletions in the preceding joint-prefix interface.
+
+### 2. The exact decomposition of the prescribed allowance
+
+At finite N let F_N,S_N be the complete full-P free and selected
+height-one coefficients, and let G_N denote its high-shallow G_P.
+The old margin is
+
+    M_N=Abar_N-F_N-(3/2)*S_N-G_N/2.
+
+Index the existing finite support/depth blocks by b. Let omega_b>=0
+be the block's complete-depth weight, and let X_(b,s,N)(a)>=0 be its
+root candidate at supported-head address a. This candidate includes
+gamma_s=1/2 and excludes omega_b. Then
+
+    F_N=sum_b omega_b*max_a[X_(b,1,N)(a)+X_(b,2,N)(a)],
+    S_N=sum_b omega_b*max_(s,a)X_(b,s,N)(a).
+
+For nonnegative root weights theta define
+
+    F_N(theta)=sum_b omega_b*max_a sum_s theta_s*X_(b,s,N)(a),
+    S_N(theta)=sum_b omega_b*max_(s,a)theta_s*X_(b,s,N)(a),
+    theta^(1)=(2/3,1), theta^(2)=(1,2/3).         (FC754)
+
+Every free maximum uses one physical address across both roots;
+different head-depth blocks retain their own maxima. Formula FC753
+shows that the complete mixed allowance after a pure9 hole in root r is
+
+    F_N(theta^(r))+S_N(theta^(r))+S_N/2+G_N/2.
+
+Only the free and height-one terms change. The old mixed labels at
+ternary heights at least two retain their maximum-capacity total
+S_N/2. The high-shallow class starts at height two, so its allowance
+remains G_N/2. A literal label inside the removed child can cost zero,
+but its independent phase maximum can select an untouched child.
+
+The normalized sufficient margin is consequently
+
+    M_(9,r,N)
+      =Abar_N-A_(r,N)/6
+         -F_N(theta^(r))-S_N(theta^(r))-S_N/2-G_N/2
+      =M_N-A_(r,N)/6
+         +(F_N-F_N(theta^(r)))+(S_N-S_N(theta^(r))). (FC755)
+
+This is the exact decomposition of the prescribed allowance, not
+of the actual deletion union. Root0 has M_(9,0,N)=M_N. Strict
+positivity for both retained roots would suffice for this uniform
+single-pure9 extension within the fixed source contract.
+
+### 3. Old attaining witnesses constrain both root cases together
+
+For one block let a* attain its old free maximum. Each new maximum
+is at least its value at that same address. Hence
+
+    max_a[(2/3)X1(a)+X2(a)]
+      +max_a[X1(a)+(2/3)X2(a)]
+      >=(5/3)[X1(a*)+X2(a*)]
+      =(5/3)*max_a[X1(a)+X2(a)].
+
+For the selected term, let (s*,a*) attain the old maximum. The two
+new root-weight vectors sum to 5/3 on that same root, so
+
+    max_(s,a)theta_s^(1)*X_s(a)
+      +max_(s,a)theta_s^(2)*X_s(a)
+      >=(5/3)*max_(s,a)X_s(a).
+
+Multiplying by nonnegative omega_b and summing proves
+
+    F_N(theta^(1))+F_N(theta^(2)) >= (5/3)*F_N,
+    S_N(theta^(1))+S_N(theta^(2)) >= (5/3)*S_N.     (FC756)
+
+The new maxima need not retain an old attainer. The old witnesses
+only supply lower bounds on the new maxima. The argument applies
+to any finite nonnegative weighted family of these root-candidate
+maxima, preserving the same address domains.
+
+Sum FC755 and use A1+A2=2*Abar. Formula FC756 gives
+
+    M_(9,1,N)+M_(9,2,N)
+      <=2*M_N-Abar_N/3+(F_N+S_N)/3
+       =(5/3)*M_N-(S_N+G_N)/6
+       =[10*M_N-S_N-G_N]/6.                     (FC757)
+
+Therefore
+
+    both retained-root margins >0 implies 10*M_N>S_N+G_N;
+    10*M_N<S_N+G_N implies some M_(9,r,N)<0.      (FC758)
+
+Every coefficient here belongs to the SAME fixed table and source.
+
+### 4. Exact established coefficients give a strict obstruction
+
+The limiting full-P margins and selected coefficients are
+
+| Fixed table | M | S |
+|---|---|---|
+| FC110 | 889884715528/99157856923125 | 155669807008/1465387048125 |
+| FC131 | 383112872231/47595771323100 | 21132550406483/198315713846250 |
+
+The following integer comparisons establish the required separation:
+
+    100*889884715528 = 88988471552800 < 99157856923125;
+    100*383112872231 = 38311287223100 < 47595771323100;
+    10*155669807008 = 1556698070080 > 1465387048125;
+    10*21132550406483 = 211325504064830 > 198315713846250.
+
+Thus in each table
+
+    M<1/100, S>1/10,
+    10*M<1/10<S<=S+G_P,
+    M_(9,1)+M_(9,2)<0.                            (FC759)
+
+Nonnegativity of G_P follows from its definition. This establishes
+at least one strictly negative limiting root case in EACH FIXED
+TABLE without computing the two individual pure9 margins. The
+failing root is not identified and can differ between tables.
+
+### 5. Finite passage and preserved source gates
+
+FC753--FC758 hold at every finite N satisfying the existing source
+and completion hypotheses. Finite b_(q,N) remains inside the exact
+P factors; supported private complete-depth coefficients retain
+b_q,infinity. No limiting mass is inserted into a finite source.
+
+The exact head-target extensions and lawful common transports remain
+valid because pure9 deletion changes only a ternary child. Their
+named gates and first-root dependence stay fixed. One free head
+address is still common to both roots. The arbitrary private phases
+permitted by the original contract retain the same target masses
+and supported-cylinder caps.
+
+The finite signatures converge with stable head masks. The fixed
+depth blocks and finite maxima therefore give convergence of
+F_N(theta), S_N(theta), A_(r,N) and M_(9,r,N) for these two fixed
+weight vectors. This requires no convergence assumption on actual
+phase choices.
+
+For each table choose a root with negative limiting margin, whose
+existence follows from FC759. That SAME root has M_(9,r,N)<0 for
+every sufficiently large N. No numerical threshold or claim about
+all small depths is supplied. Completion preserves the pure9 phase
+and all earlier original phases; the head capacity and gap-filling
+conditions remain necessary for this source argument.
+
+A negative sufficient margin is not a covering construction.
+It does not say an actual completed or original survivor is empty.
+
+### 6. Information needed to improve the certificate
+
+The full-P rootwise contraction caches and the earlier cached pair
+candidates retain enough data to reconstruct the two weighted
+allowances. Maxima alone would not suffice. FC759 already decides
+their inability to provide uniform positivity for a fixed table;
+their individual values are unnecessary for that conclusion.
+
+The obstruction isolates the missing relation. Pure9 removes source
+mass, while higher mixed labels can independently place their worst
+prefix in an untouched child and obtain no prescribed saving. At
+heights zero and one, the attaining-witness inequalities force the
+two root cases together to retain at least five thirds of the old
+free and selected coefficients.
+
+Stronger routes include literal common-prefix incidence, same-source
+forest or other overlap credits, joint bounds replacing independent
+per-label maxima, or a different justified source. The finite actual-
+inventory identity FC744 retains the exact change
+
+    integral_removed (N_mixed-1) dR_N,
+
+which this complete phase-max allowance does not determine. Turning
+that identity into a positive result requires actual joint data or
+a uniform theorem controlling the incidence.
+
+The conclusion is PER FIXED TABLE. It does not rule out adaptive
+choice between the two tables when both source gates really apply,
+because their bad roots can differ. It does not rule out literal
+bounds, forest corrections, source redesign or actual noncoverage
+for every pure9 phase. The unrestricted all-prime, all-phase Erdős #7
+target remains unresolved.
+
+Root0 is harmless. Further pure powers and high-singleton originals
+remain outside this single-label class. No Top initialization or
+saved continuation transfers automatically to the restricted source.
