@@ -3,9 +3,9 @@ import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates
 
 /-! Recorder-only fixture, compiled as a `Reg` module is: it imports the
-Interface package and D5, never the implementation. Both registrations below
+Interface package and D5, never the implementation. The registrations below
 are syntactically valid and violate an admission rule owned by the report
-(IE-C011 reserved judge-output names; the P1 rigid zero-universe arena gate).
+(IE-C011 reserved names, P1 rigid universes, and the bridge theorem-kind gate).
 Compiling this module is the evidence that the recorder records them without
 error; `RecorderPolicyBoundary` shows that the report rejects them. -/
 
@@ -59,5 +59,22 @@ theorem lifted (x : Bool) : x.not.not = x := Bool.not_not _
 register_information_theorem lifted
   via (D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise
     (fun x : Bool => x.not.not) (fun x => x)) in highArena
+
+/-- Declaration kind is report policy, even when the bridge has the exact type. -/
+theorem definitionBackedTarget : True := trivial
+theorem definitionBackedOccurrence : True := trivial
+
+set_option linter.defProp false in
+def definitionBackedRealization : LegacyPrimitiveRealization arena True realization where
+  equivalence := iff_of_true trivial trivial
+
+register_information_theorem definitionBackedTarget in arena
+  primitives realization.toPrimitiveBundle realization definitionBackedRealization
+
+def objectArena := arena.toArena
+
+register_information_theorem definitionBackedOccurrence in arena
+  object_arena objectArena catalog definitionBridge
+  primitives realization.toPrimitiveBundle realization definitionBackedRealization
 
 end LeanInformationAudit.Tests.RecorderPolicyInputs

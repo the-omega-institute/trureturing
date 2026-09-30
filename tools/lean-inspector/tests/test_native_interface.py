@@ -179,3 +179,80 @@ run_cmd do
         self.assertIn('IE-C011 GeneratedCertificateRegistered', entries)
         self.assertIn('P1.RigidUniverseMismatch: arena must have three zero universe levels',
                       (judge / 'Registry/Reifier.lean').read_text())
+
+    def test_interface_records_definition_bridge_before_assessment(self):
+        # Exercise the production recorder, without importing any judge module.
+        # These core-only types supply its companion ABI; the full D5/report
+        # service pair is exercised by RecorderPolicyInputs/Boundary in Lean.
+        package, env = self.interface_package()
+        with (package / 'lakefile.toml').open('a') as config:
+            config.write('\n[[lean_lib]]\nname = "RecorderInputs"\n'
+                         '\n[[lean_lib]]\nname = "RecorderConsumer"\n')
+        (package / 'RecorderInputs.lean').write_text('''import LeanInformationAuditInterface.Syntax
+namespace D5.S3.ConceptDynamics.InformationEscape
+structure Arena where
+  State : Type
+  stateDecidableEq : DecidableEq State
+structure PrimitiveSignature where
+  marker : Bool
+structure PrimitiveBundle (State : Type) where
+  marker : Bool
+structure PrimitiveRealization (State : Type) (signature : PrimitiveSignature) where
+  marker : Bool
+def PrimitiveRealization.toPrimitiveBundle {State : Type} {signature : PrimitiveSignature}
+    [DecidableEq State] (r : PrimitiveRealization State signature) : PrimitiveBundle State :=
+  ⟨r.marker⟩
+structure PrimitiveLawArena where
+  toArena : Arena
+  signature : PrimitiveSignature
+structure LegacyPrimitiveRealization (arena : PrimitiveLawArena) (Statement : Prop)
+    (r : PrimitiveRealization arena.toArena.State arena.signature) : Prop where
+  proof : Statement
+structure TheoremUnit (arena : Arena) where
+  primitives : PrimitiveBundle arena.State
+  Statement : Prop
+  proof : Statement
+def LegacyPrimitiveRealization.toTheoremUnit {arena : PrimitiveLawArena} {Statement : Prop}
+    {r : PrimitiveRealization arena.toArena.State arena.signature}
+    (_bridge : LegacyPrimitiveRealization arena Statement r) (proof : Statement) :
+    TheoremUnit arena.toArena := ⟨⟨r.marker⟩, Statement, proof⟩
+end D5.S3.ConceptDynamics.InformationEscape
+open D5.S3.ConceptDynamics.InformationEscape
+def arena : PrimitiveLawArena := ⟨⟨Bool, inferInstance⟩, ⟨false⟩⟩
+def reads : PrimitiveRealization Bool arena.signature := ⟨false⟩
+theorem target : True := trivial
+theorem occurrenceTarget : True := trivial
+set_option linter.defProp false in
+def bridge : LegacyPrimitiveRealization arena True reads := ⟨trivial⟩
+register_information_theorem target in arena
+  primitives reads.toPrimitiveBundle realization bridge
+def objectArena := arena.toArena
+register_information_theorem occurrenceTarget in arena
+  object_arena objectArena catalog definitionBridge
+  primitives reads.toPrimitiveBundle realization bridge
+''')
+        recorded = self.guarded_command([self.lake, 'build', 'RecorderInputs'],
+                                        cwd=package, env=env)
+        self.assertEqual(recorded.returncode, 0,
+                         '[FAIL] recorder_rejected_typed_definition_bridge\n' +
+                         recorded.stdout + recorded.stderr)
+        # A fresh consumer reads the persisted inputs, after recording completed.
+        # No test_assess wrapper can turn a recording error into a passing guard.
+        (package / 'RecorderConsumer.lean').write_text('''import RecorderInputs
+open Lean Elab Command LeanInformationAudit
+run_cmd do
+  let env ← getEnv
+  let inputs := (RegistrationInputs.owned env).filter (·.1 == `RecorderInputs)
+  unless inputs.size == 2 do throwError "[FAIL] definition_bridge_inputs_not_persisted"
+  let .defnInfo _ ← getConstInfo ``bridge | throwError "[FAIL] bridge_kind_changed"
+  for (_, input) in inputs do
+    let unit ← getConstInfo input.entry.unitName
+    unless !unit.type.hasMVar && !unit.type.hasFVar do
+      throwError "[FAIL] definition_bridge_companion_not_closed"
+    discard <| getConstInfo input.entry.realizationName
+  logInfo "[PASS] typed_definition_bridge_recorded_and_imported count=2"
+''')
+        consumed = self.guarded_command([self.lake, 'build', 'RecorderConsumer'],
+                                        cwd=package, env=env)
+        self.assertEqual(consumed.returncode, 0, consumed.stdout + consumed.stderr)
+        self.assertIn('[PASS] typed_definition_bridge_recorded_and_imported count=2', consumed.stdout)

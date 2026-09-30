@@ -282,6 +282,12 @@ def prepareRegistrationEntry (rootId : Name) (env : Environment)
 private def statementMismatchError (name : Name) : String :=
   s!"IE-C006 StatementProofMismatch: {name}"
 
+/-- The report checks the supplied bridge, including before a recorder alias. -/
+def isTheoremBridge (env : Environment) (name : Name) : Bool :=
+  match env.find? name with
+  | some (.thmInfo _) => true
+  | _ => false
+
 /-- Perform the environment-only checks shared by admission and sealing. -/
 private def validateEntryDeclarations (env : Environment)
     (entry : InformationRegistryEntry) :
@@ -413,8 +419,7 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
     else if realizationHead == some legacyPrimitiveRealizationName ||
         realizationHead == some `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization ||
         realizationHead == some RegistrationElaboration.witnessBridgeName then
-      match env.find? entry.realizationName with
-      | some (.thmInfo _) =>
+      if isTheoremBridge env entry.realizationName then
         let legacyArgs := realizationType.getAppArgs
         unless legacyArgs.size == 3 do
           return .error (statementMismatchError entry.theoremName)
@@ -432,7 +437,7 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
         let compiledBundle <- compilePrimitiveBundle arenaExpr legacyArgs[2]!
         unless ← isDefEq primitivesExpr compiledBundle do
           return .error (statementMismatchError entry.theoremName)
-      | _ => return .error (statementMismatchError entry.theoremName)
+      else return .error (statementMismatchError entry.theoremName)
     else
       return .error (statementMismatchError entry.theoremName)
     return .ok ()) fun e => do

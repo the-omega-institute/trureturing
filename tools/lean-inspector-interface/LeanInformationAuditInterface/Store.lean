@@ -25,6 +25,8 @@ structure RegistrationInput where
   suppliedPrimitives : Option Expr := none
   viaDescriptor : Option Expr := none
   outputEvidence : Option Expr := none
+  /-- Author-supplied bridge before an occurrence companion aliases it. -/
+  realizationSource : Option Name := none
   declaration : Option TemplateBinding.ResolvedDeclaration := none
 
 structure TemplateEnrollmentInput where

@@ -319,6 +319,9 @@ def validateRecordedBinding (input : RegistrationInput) : MetaM Unit := do
   if input.declaration.any (fun d => d.sourceRecord.isSome && !d.escapeInput.openContinuation) then
     throwError "unclassified_form:source.residual_requires_open"
   if entry.sourceBound then return
+  if let some source := input.realizationSource then
+    unless isTheoremBridge (← getEnv) source do
+      throwError "IE-C006 StatementProofMismatch: {entry.theoremName}"
   let theoremInfo ← getConstInfo entry.theoremName
   let statement := theoremInfo.type
   let bridgeInfo ← getConstInfo entry.realizationName

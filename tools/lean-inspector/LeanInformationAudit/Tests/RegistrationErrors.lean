@@ -151,13 +151,23 @@ def definitionBackedRealization :
     LegacyPrimitiveRealization fixtureLawArena True fixtureRealization where
   equivalence := Iff.rfl
 
-/-- error: IE-C006 StatementProofMismatch:
-LeanInformationAudit.Tests.RegistrationErrors.definitionBackedTarget -/
-#guard_msgs (error) in
-test_assess in register_information_theorem definitionBackedTarget
+-- Recording is a separate successful command; the report owns the rejection.
+register_information_theorem definitionBackedTarget
   in fixtureLawArena
   primitives fixtureBundle
   realization definitionBackedRealization
+
+/-- error: IE-C006 StatementProofMismatch:
+LeanInformationAudit.Tests.RegistrationErrors.definitionBackedTarget -/
+#guard_msgs (error) in
+run_cmd do
+  let owner := (← getEnv).header.mainModule
+  let some (_, input) := (RegistrationInputs.owned (← getEnv)).find? fun (_, input) =>
+      input.entry.theoremName == ``definitionBackedTarget
+    | throwError "[FAIL] definition_bridge_not_recorded"
+  unless (← getEnv).contains input.entry.unitName do
+    throwError "[FAIL] definition_bridge_companion_missing"
+  GeneratedDeclarations.withOwner owner <| assessRecordedEntry owner input
 
 /-- error: IE-C002 DuplicateRegistration object_arena=LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena theorem_name=LeanInformationAudit.Tests.RegistrationErrors.legacyExample registration_modules=["LeanInformationAudit.Tests.RegistrationErrors"] count=2 -/
 #guard_msgs (error) in
