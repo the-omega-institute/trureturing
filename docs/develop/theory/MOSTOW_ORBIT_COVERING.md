@@ -117,3 +117,69 @@ satisfies (\sqrt{h(D_a p)h(D_a q)}=a\sqrt{h(p)h(q)}). The two factors cancel
 inside the inverse hyperbolic sine defining (d_H), proving distance
 preservation. Since (a^{-1}>0), both composites of (D_a) and (D_{a^{-1}})
 are the identity on coordinates.
+
+## 5. Inversion centered on the boundary
+
+**Theorem 5.1 (boundary-centered inversion isometry).** Let (E) be a real
+inner product space and (U_E) the upper half-space of Definition 3.1. For
+(p=(x,t)\in U_E), put (r(p)=d_2(p,0)>0) and
+
+\[
+ J(p)=r(p)^{-2}p.
+\]
+
+Then (J(p)\in U_E), (J(J(p))=p), and
+(d_H(J(p),J(q))=d_H(p,q)) for every (p,q\in U_E). Thus (J) is an
+involutive isometric equivalence.
+
+**Proof.** Since (t>0), the ambient point (p) is nonzero, so (r(p)>0) and
+(h(J(p))=h(p)/r(p)^2>0). Euclidean sphere inversion about the origin of
+radius one is involutive and gives
+
+\[
+ d_2(J(p),J(q))=\frac{d_2(p,q)}{r(p)r(q)}.
+\]
+
+The positive square root of the product of the new heights is
+(\sqrt{h(J(p))h(J(q))}=\sqrt{h(p)h(q)}/(r(p)r(q))). Substituting both
+identities into Definition 3.1 cancels the same factor in the numerator
+and denominator. The involution and distance identity give the stated
+isometric equivalence. The cancellation for arbitrary (E) is the new
+geometric content; Mathlib supplies the Euclidean inversion identities.
+
+## 6. Completeness of upper half-space
+
+**Theorem 6.1 (complete horizontal space gives complete hyperbolic space).**
+Let (E) be a complete real inner product space. Then the upper half-space
+(U_E,d_H) of Definition 3.1 is a complete metric space. For all (p,q),
+
+\[
+ |\log h(p)-\log h(q)|\leq d_H(p,q).
+\]
+
+In particular, a hyperbolic Cauchy sequence cannot approach the height-zero
+boundary.
+
+**Proof.** The Euclidean separation is at least the separation of the two
+heights. Compare the distance formula with the vertical-line formula in
+the ordinary upper half-plane, where the distance is the absolute
+difference of the logarithms of the heights. Thus log-height is
+1-Lipschitz. Exponentiating gives
+(h(p)\leq h(q)\exp d_H(p,q)). For a hyperbolic Cauchy sequence (p_n), its
+hyperbolic distances are bounded, so its heights admit a common positive
+upper bound (B). The defining distance identity then gives
+
+\[
+ d_2(p_n,p_m)
+ =2\sqrt{h(p_n)h(p_m)}\sinh\frac{d_H(p_n,p_m)}2
+ \leq 2B\sinh\frac{d_H(p_n,p_m)}2.
+\]
+
+Consequently the Euclidean coordinates form a Cauchy sequence, and
+completeness of (E\times\mathbb R) supplies a limit. The logarithms of the
+heights also converge, say to (a), so the limit height is (\exp a>0).
+Finally the distance formula, continuity of square root and inverse
+hyperbolic sine, and positivity of the limiting height show convergence
+in (d_H). This establishes metric completeness of the model; it does not
+establish manifold curvature, quotient completeness, finite volume or
+Mostow--Prasad rigidity.

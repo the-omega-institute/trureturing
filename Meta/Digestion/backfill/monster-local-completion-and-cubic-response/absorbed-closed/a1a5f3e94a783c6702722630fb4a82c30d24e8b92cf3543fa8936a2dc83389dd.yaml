@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a1a5f3e94a783c6702722630fb4a82c30d24e8b92cf3543fa8936a2dc83389dd
+  normalized_sha256: sha256:a1a5f3e94a783c6702722630fb4a82c30d24e8b92cf3543fa8936a2dc83389dd
+cas_ref: sha256:a1a5f3e94a783c6702722630fb4a82c30d24e8b92cf3543fa8936a2dc83389dd
+coverage_gids:
+  - gid: D5/S3/VertexAlgebra/MonsterCharacterCarry.classification_and_carry
+    target_statement_id: sha256:dc1e241bc6aaf6e19ca7a375a73ea96fda26a107648f8700722f3d2783d90a40
+receipts:
+  unresolved_subitems: []
