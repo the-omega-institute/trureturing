@@ -129,6 +129,7 @@ class ReuseTests(unittest.TestCase):
 
     def test_standalone_program_entry_builds_the_producer_once_before_ensure(self):
         process, calls = self.entry_with_program_build(['leanInspector/LeanInformationAudit'], prebuilt=False)
+        self.assertNotIn('bad-producer-build-args', calls, '[FAIL] producer_build_uses_target_path_contract')
         self.assertEqual(process.returncode, 0, process.stdout + process.stderr)
         self.assertEqual(calls[:2], ['producer-build', 'ensure'], '[FAIL] standalone_entry_builds_producer_before_ensure')
         self.assertEqual(len(calls), 3)
@@ -471,10 +472,18 @@ class ReuseTests(unittest.TestCase):
             STRATALINT_LEAN_BUILD_TARGETS=targets if isinstance(targets, str) else json.dumps(targets))
         if not prebuilt:
             # A standalone entry builds the producer and reports its DLL, unless the
-            # test substitutes the build's whole standard output.
+            # test substitutes the build's whole standard output. The stub answers
+            # only the entry's contract: the csproj's own TargetPath.
             dotnet = self.root / 'dotnet-bin/dotnet'
             dotnet.parent.mkdir()
-            dotnet.write_text('#!/bin/sh\nprintf "producer-build\\n" >> build-calls\n'
+            dotnet.write_text('#!/bin/sh\n'
+                              'bad() { printf "bad-producer-build-args\\n" >> build-calls; exit 64; }\n'
+                              '[ "$1" = build ] || bad\n'
+                              'for required in " --configuration Release " " -t:Build " " -getProperty:TargetPath " '
+                              '"/StrataLint.Lean/StrataLint.Lean.csproj "; do\n'
+                              '  case " $* " in *"$required"*) ;; *) bad ;; esac\n'
+                              'done\n'
+                              'printf "producer-build\\n" >> build-calls\n'
                               + ('printf "%s\\n" "$PWD/producer.dll"\n' if producer_stdout is None
                                  else 'printf %s ' + shlex.quote(producer_stdout) + '\n'))
             dotnet.chmod(0o755)
