@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f13fd2545c0dc6483bfa8bc5a5609b2ff5ba75280dd9efc399110b00e8035df9
+  normalized_sha256: sha256:f13fd2545c0dc6483bfa8bc5a5609b2ff5ba75280dd9efc399110b00e8035df9
+cas_ref: sha256:f13fd2545c0dc6483bfa8bc5a5609b2ff5ba75280dd9efc399110b00e8035df9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Upstream-discharge under CLAUDE.md 3.2; this is a propositional reuse receipt, not a Lean truth declaration. For arbitrary positive A,B the multiplication equivalence on Coprime(v,A/u) has inverse (gcd(d,A),d/gcd(d,A)). Nat.dvd_gcd_mul_iff_dvd_mul, Nat.dvd_of_mul_dvd_mul_left and Nat.mul_div_cancel' establish quotient divisibility; Nat.coprime_div_gcd_div_gcd establishes the seam; Nat.gcd_mul_left and the given coprimality establish the inverse identities. Equiv.sum_comp and Real.mul_rpow reindex the existing partition and weight definitions at exponent 1. Every clause is a direct upstream application or normalization. There is no existing frozen project theorem carrying the arbitrary noncoprime seam, so no project coverage GID and no new bind-only declaration.
+    previous_atom_id: 1821aac4d6ceb73a4fed736db174bb35500b7653712609daa5e49dbf8d41e2ea
+    next_atom_id: 8c56cb3d8260f931a3d884d7c5cac60a27e3c129d945e288c13b650f3a6f695c
