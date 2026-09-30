@@ -4091,17 +4091,17 @@ $$
 
 证明。定理 36.1 给 $E_L^\dagger=i_L$ 与 CP section，故定理 35.1 直接给 (36.5)。由正交铺满分解 (36.1)，一个细 observable 在 $i_L(A_L)$ 内，恰是交叉角全零且各旧 $a_s$ 的副本相同，证明 (36.6) 必要且充分；尤其不能漏掉不同细终态中同源副本的相等。只需在 coarse matrix-unit basis 上检查。若已经下降，对任一 section $R$，$E_LJ_{a,z}R=J'_{a,z}E_LR=J'_{a,z}$，所以权重无关；未下降时这个 CP 复合虽可定义，却一般依赖 $R$，不能重现所有细输入。$\square$
 
-**命题 36.3（正面提升仪器与 edge-conditioned 失败）。** 对 coarse Kraus $K_{a,z,\mu}\in A_L$、$\sum_{z,\mu}K_{a,z,\mu}^*K_{a,z,\mu}=I_L$，提升 Kraus 为 $i_L(K_{a,z,\mu})$ 得一族下降的 fine instruments，coarse successor 就是原 Kraus instrument。
+**命题 36.3（正面提升仪器与 edge-conditioned 失败）。** 对 coarse Kraus $K_{a,z,\mu}\in A_L$，并对每个固定动作 $a$ 有 $\sum_{z,\mu}K_{a,z,\mu}^*K_{a,z,\mu}=I_L$，提升 Kraus 为 $i_L(K_{a,z,\mu})$ 得一族下降的 fine instruments，coarse successor 就是原 Kraus instrument。
 
-证明。含幺星同态保持 Kraus 总归一化，且
+证明。固定动作 $a_0$ 与结果 $z$。含幺星同态保持每个动作的 Kraus 总归一化，且对任意 coarse observable $b\in A_L$ 有
 
 $$
-J_{a,z}^\dagger(i_L(a))
-=\sum_\mu i_L(K_{a,z,\mu})^*i_L(a)i_L(K_{a,z,\mu})
-=i_L\!\left(\sum_\mu K_{a,z,\mu}^*aK_{a,z,\mu}\right).
+J_{a_0,z}^\dagger(i_L(b))
+=\sum_\mu i_L(K_{a_0,z,\mu})^*i_L(b)i_L(K_{a_0,z,\mu})
+=i_L\!\left(\sum_\mu K_{a_0,z,\mu}^*bK_{a_0,z,\mu}\right).
 $$
 
-故满足 (36.5)，唯一性给原 coarse successor。这个子类可在同终态块内部执行真正 coherent matrices；它不是所有直和代数 CP instruments 的穷尽分类，特别没有穷尽跨 coarse central blocks 的经典转移。$\square$
+故 $J_{a_0,z}^\dagger(i_L(A_L))\subseteq i_L(A_L)$，满足 (36.5)，唯一性给原 coarse successor。这个子类可在同终态块内部执行真正 coherent matrices；它不是所有直和代数 CP instruments 的穷尽分类，特别没有穷尽跨 coarse central blocks 的经典转移。$\square$
 
 Fine 合法不自动下降。取 $L=1$、旧前缀 $u=[\mathrm{null}],v=[2]$，两条 $0\to0$ 边 $e_1=\mathrm{null},e_2=2$。fine block unitary 只交换 $|ue_2\rangle,|ve_2\rangle$，其它基向量不动。$|ue_1\rangle\langle ue_1|$ 与 $|ue_2\rangle\langle ue_2|$ 原来都粗化为 $|u\rangle\langle u|$，作用后却分别粗化为 $|u\rangle\langle u|$ 和 $|v\rangle\langle v|$，所以这个 edge-conditioned swap 不满足 (36.5)。这是有限矩阵合同中的反例，不新增设备权限。
 
