@@ -174,7 +174,7 @@ defaultFacets = ["static"]
             + f'dotnet, cli = {self.dotnet!r}, {str(self.cli)!r}\n'
             + 'operation = next((word for word in sys.argv if word in ("ensure-cache", "with-cache-writer", "with-cache-reader")), None)\n'
             + 'if operation: os.execv(dotnet, [dotnet, cli, *sys.argv[sys.argv.index(operation):]])\n'
-            + 'if sys.argv[1] == "build": raise SystemExit(0)  # utility input is fixture data\n'
+            + 'if sys.argv[1] == "build": print(cli); raise SystemExit(0)  # later calls route by operation\n'
             + 'if sys.argv[-1] != "lean-utility-input": raise SystemExit("unexpected fixture dotnet command")\n'
             + 'with Path("utility-calls").open("a") as out: out.write("call\\n")\n'
             + 'print(Path("utility.json").read_text())\n')
