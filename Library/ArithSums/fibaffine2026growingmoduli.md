@@ -1,0 +1,242 @@
+---
+bibkey: fibaffine2026growingmoduli
+authors: trureturing research synthesis
+year: 2026
+title: Growing-modulus interfaces for affine Fibonacci Robin candidates
+doi: null
+url: https://github.com/the-omega-institute/trureturing
+claim: "A parameter comparison for six cited primary sources: positive moment bounds transfer to finite intervals, while the quoted smooth-number, inverse-distribution and fixed-modulus theorems do not supply the required fixed Fibonacci modulus estimate at logarithmic smoothness and a subpower cofactor."
+strata_touched: []
+license: citation-only
+triage: anchor
+---
+
+# FIB 单位位一来源：增长模数的文献适用范围
+
+本笔记保留可以用于后续逐点研究的数学接口和原始文献条件。它不宣称 RH、FIB 本族的逐点 Robin 不等式、完整文献搜索或原创性。所列推导均为纸面数学；不提供 Lean 核验。
+
+## 目标与实际参数
+
+研究
+
+$$
+V=F_r,\quad r\text{ 为充分大素数},\quad
+\lceil V/10\rceil\le g\le\lfloor V/5\rfloor,\quad N=1+gV.
+$$
+
+令 $X=1+V\lfloor V/5\rfloor$、$Y=2r-2$，并取完整赋值核心
+
+$$
+C=\prod_{p\le Y}p^{v_p(N)},\qquad H=N/C.
+$$
+
+前一份核心推导给：固定 $\kappa>0.0094243/(1-\log\phi)$，每个充分大的潜在 Robin 反例都满足
+
+$$
+\log H<\frac{\kappa\log N}{(\log\log N)^2}.
+$$
+
+这里可取 $\kappa=1/50$。所以当前的真实文献接口不是常数余因子，而是
+
+$$
+V\asymp X^{1/2},\quad
+Y\sim\frac{\log X}{\log\phi},\quad
+H\le\exp\left((\kappa+o(1))\frac{\log X}{(\log\log X)^2}\right)=X^{o(1)}.
+$$
+
+因 $F_r$ 的素因子均不小于 $2r-1$，$C$ 与 $V$ 互素，且
+
+$$
+CH-gV=1,\qquad C\equiv H^{-1}\pmod V.
+$$
+
+对固定实际 $H$，核心的大小区间为
+
+$$
+\frac{1+V\lceil V/10\rceil}{H}
+\le C\le\frac{1+V\lfloor V/5\rfloor}{H}.
+$$
+
+还必须检查 $C$ 的全部素因子不大于 $Y$、$H$ 的全部素因子大于 $Y$，以及真正的 $Z(CH)$。解出同余只是必要筛选。即使把文献的计数尺度改为 $x=X/H$，仍有
+
+$$
+\frac{\log x}{\log V}\longrightarrow2,\qquad
+Y\asymp\log x,
+$$
+
+一致于上述允许的 $H$ 范围；小余因子不会消除模数与光滑度的尺度障碍。
+
+## 可直接使用：Weingartner 的高正矩
+
+Andreas Weingartner, *The distribution functions of σ(n)/n and n/φ(n), II*,
+arXiv:1011.4262v1 (2010).
+
+- 原文：https://arxiv.org/html/1011.4262v1
+- PDF：https://arxiv.org/pdf/1011.4262v1
+- 对应位置：式（5），Lemma 5，Lemma 6。
+
+其式（5）给 Euler 乘积
+
+$$
+W(s)=\prod_p\left(1+\frac{(1-p^{-1})^{-s}-1}{p}\right).
+$$
+
+对 $s>0$，令非负乘法函数 $a_s$ 满足
+$a_s(p)=(1-p^{-1})^{-s}-1$、$a_s(p^k)=0$（$k\ge2$）。有限展开给
+
+$$
+\sum_{n\le X}(n/\varphi(n))^s
+=\sum_{d\le X}a_s(d)\lfloor X/d\rfloor\le XW(s).
+$$
+
+因此，无需任何变化参数与极限平均的交换，即有
+
+$$
+\#\{n\le X:Z(n)\ge t\}\le XW(s)t^{-s}.
+$$
+
+Lemma 5 的精确条件为 $s\ge e$、$s=z\log z$、固定整数 $m\ge2$。其 $m=2$ 展开为
+
+$$
+\log W(s)=s\log(e^\gamma\log z)-z
++\frac{\pi^2}{6}\frac z{(\log z)^2}
++O\left(\frac z{(\log z)^3}\right).
+$$
+
+在 $A\to\infty$、$X/A$ 有界时，显式取
+$t=e^\gamma\log\log A$、$z=\log A$、$s=z\log z$，得到
+
+$$
+\#\{A\le n\le X:Z(n)\ge e^\gamma\log\log n\}
+\le\exp\left(\left(\frac{\pi^2}{6}+o(1)\right)
+\frac{\log X}{(\log\log X)^2}\right).
+$$
+
+这给实际潜在反例的确定性数量上界，包括等号；它不把完整核心候选集也压到这个数量，更不推出不存在反例。它对整个区间成立，并非 FIB 专有。有限桥梁见 FIB 理论卷 §208 与同目录 `weingartner2010distribution.md`。
+
+Lemma 6 的条件为 $t\ge1$、$y=e^{t e^{-\gamma}}$；它展开
+$\min_{s\ge e}W(s)t^{-s}$，前两主项同为 $-y+(\pi^2/6)y/\log^2y$。此处不需要最优化步骤。
+
+该文 Theorem 1 的 $A(t)$、$B(t)$ 是先固定 $t$ 后定义的极限分布尾。单独把其中的 $t$ 置为 $e^\gamma\log\log X$，不能证明本段的有限上界；真正桥梁是上面的非负有限展开。
+
+## Harper：单个剩余类的光滑数均匀分布
+
+Adam J. Harper, *On a paper of K. Soundararajan on smooth numbers in arithmetic progressions*, arXiv:1103.2106v1 (2011).
+
+- 原文：https://arxiv.org/html/1103.2106v1
+- 精确位置：Theorem 1、Theorem 2。
+
+Theorem 1：固定 $\delta>0$，$y\le x$，
+
+$$
+2\le q\le y^{4\sqrt e-\delta},\quad (a,q)=1,
+$$
+
+且 $y$ 充分大（依赖 $\delta$），则在
+
+$$
+\log x/\log q\longrightarrow\infty
+$$
+
+的极限下，$\Psi(x,y;q,a)\sim\Psi_q(x,y)/\varphi(q)$。
+
+当前取 $q=V$、$y=Y$ 时有两个独立不满足的前提：$q\asymp X^{1/2}$ 超过每个固定 $Y^A$，而 $\log(X/H)/\log q\to2$，不趋于无穷。Theorem 2 的陪集版本仍要求 $q\le y^A$（固定 $A$）及相同对数比极限，因此也不能直接接入。论文讨论的 Soundararajan 猜想原表述仍有这两个前提；仅假设该猜想为真也不足以覆盖当前参数。
+
+## Pascadi：大模数平均不能指定当前模数
+
+Alexandru Pascadi, *Smooth numbers in arithmetic progressions to large moduli*, arXiv:2304.11696v3 (2025版)。
+
+- 原文：https://arxiv.org/html/2304.11696v3
+- 精确位置：Theorem 1.1。
+
+对固定非零整数 $a$、$A,\varepsilon>0$，存在 $C=C(A,\varepsilon)>0$，当
+
+$$
+x>2,\quad(\log x)^C\le y\le x^{1/C},
+$$
+
+有
+
+$$
+\sum_{\substack{q\le x^{66/107-\varepsilon}\\(q,a)=1}}
+\left|\Psi(x,y;a,q)-\Psi_q(x,y)/\varphi(q)\right|
+\ll_{a,A,\varepsilon}\Psi(x,y)/(\log x)^A.
+$$
+
+模数指数 $1/2$ 确实低于 $66/107$，但这一条指数比较不满足整个定理：
+
+- 当前 $y\asymp\log x$，原文给出的存在性常数 $C$ 不保证允许指数1；不能自行取 $C=1$。
+- 结论平均于模数，不能据此断言指定模数 $F_r$ 具有足够小的误差，更不能断言该剩余类无解。
+- 当前剩余类为 $H^{-1}\bmod V$，随实际 $H$ 改变；所引 Theorem 1.1 的 $a$ 固定。
+
+即使另行弥补光滑度和剩余类的一致性，平均误差界本身仍需足够强到能控制这一个模数的实际命中数。不能把平均主项小于1与逐点没有整数命中等同。
+
+## Jennings–Pollack–Thompson：丰数分布的量词
+
+Emily Jennings, Paul Pollack, Lola Thompson, *Variations on a theorem of Davenport concerning abundant numbers*, arXiv:1306.0537v1 (2013)。
+
+- 原文：https://arxiv.org/html/1306.0537v1
+- 精确位置：Corollary 1.3 后的 Dirichlet 字符应用。
+
+原文明确先固定 $q\in\mathbb N$ 和 $0<u\le1$，然后断言满足 $n/\sigma(n)\le u$ 且与 $q$ 互素的整数，在模 $q$ 的可逆剩余类中渐近均匀分布。
+
+当前 $q=V\asymp X^{1/2}$，同时 $u=(e^\gamma\log\log X)^{-1}\to0$。这两个参数均未固定；所引结果没有给所需的一致性。因此它提供分布问题的正确固定参数基线，不提供本族的移动阈值逐点 Robin 估计。
+
+## Shparlinski：逆元集合的平均与稀疏输入
+
+Igor E. Shparlinski, *Distribution of modular inverses and multiples of small integers and the Sato–Tate conjecture on average*, arXiv:math/0608596v3 (2006)。
+
+- 原文：https://arxiv.org/html/math/0608596v3
+- 精确位置：$M_{a,m}$ 定义与 Theorem 1。
+
+令 $M_{a,m}(\mathcal X;Y,Z)$ 计数 $x\in\mathcal X$、$(x,m)=1$，且 $ax^{-1}\bmod m$ 落入 $[Z+1,Z+Y]$ 的项。Theorem 1 对正整数 $m,X,Y$、整数 $Z$、任意 $\mathcal X\subseteq[-X,X]$ 给
+
+$$
+\sum_{a=1}^m\left|M_{a,m}(\mathcal X;Y,Z)
+-|\mathcal X_m|Y/m\right|^2
+\le |\mathcal X|(X+Y)m^{o(1)}.
+$$
+
+原文描述的一个非平凡使用范围是足够稠密的 $\mathcal X$，及 $X,Y\ge m^{1/2+\varepsilon}$。
+
+当前 $C H\equiv1\pmod V$ 需要固定 $a=1$，核心集合稀疏，而余因子区间长为 $V^{o(1)}$，远小于 $V^{1/2}$。该均方定理没有因此给出指定 $a=1$ 的无命中结论。也可对每个核心写 $g_C=-V^{-1}\bmod C$，但这样模数 $C$ 随核心改变；不能直接当成一个固定模数逆元分布。逆元映射是单位群置换，只保持整个单位群的计数，并不自动使光滑稀疏子集在短区间均匀分布。
+
+## Munsch–Shparlinski–Yau：另一个光滑度范围的存在下界
+
+Marc Munsch, Igor E. Shparlinski, Kam Hung Yau,
+*Smooth squarefree and square-full integers in arithmetic progressions*, arXiv:1810.02573v2 (2019版)。
+
+- 原文：https://arxiv.org/html/1810.02573v2
+- 精确位置：Theorem 1.1。
+
+该定理固定
+
+$$
+\beta\in(23/24,1],\quad
+\alpha\in(9/2-3\beta,3\beta],
+$$
+
+并对素数模数 $p\to\infty$、$x=p^{\alpha+o(1)}$、$y=p^{\beta+o(1)}$ 给平方自由光滑数的下界
+
+$$
+\psi^\sharp(x,y;p,a)\ge x^{1+o(1)}/p.
+$$
+
+当前 $V=F_r$ 不假设为素数，且 $Y=V^{o(1)}$，相当于光滑度指数趋于0，超出该固定 $\beta$ 范围。它给存在性下界，本来也不是排除 Robin 反例的上界。不能因目标中出现逆元、素指标、光滑核心等相同术语就转移其结论。
+
+## 仍缺的联合关系
+
+在这里列明的原文范围内，未找到可以直接用于当前参数、当前指定模数和当前剩余类的逐点排除定理。这个陈述只针对上述已读原文范围，不能推出不存在适用文献或当前路线原创。
+
+一个可继续检验的精确接口是等差数列的矩分解。对有限整数区间 $I$，$T=|I|$、$X=\max_{g\in I}(1+gV)$，
+
+$$
+\sum_{g\in I}\left(\frac{1+gV}{\varphi(1+gV)}\right)^s
+=
+\sum_{\substack{d\le X\\(d,V)=1}}a_s(d)
+\#\{g\in I:g\equiv-V^{-1}\pmod d\}.
+$$
+
+每个内层计数为 $T/d+\varepsilon_d$，$|\varepsilon_d|\le1$。因此逐项用上界 $T/d+1$ 会留下加权边界项；不能在增长的 $s$ 下把它无条件丢弃。全区间矩法规避了这个边界项并给稀疏性，但没有识别哪个实际核心可以与其逆元小余因子共同实现。
+
+最终需要的排除必须指向同一个 $N=CH=1+gV$：光滑核心的约数和增益、完整赋值截断损失、粗余因子的大小与素数下界、固定 Fibonacci 模数上的逆元同余，以及乘子区间。分别估计这些边缘数量或分别达到各自最优值，仍不足以排除它们共同组成一次 Robin 超界。
