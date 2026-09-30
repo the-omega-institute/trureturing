@@ -98,10 +98,12 @@ theorem kernel_phase_characterization (k : ℕ) (x y : ℤ) :
           y = 2 * (k : ℤ) * t + 5 * (k : ℤ) * s := by
   constructor
   · intro h
-    change ((5 * k : ℕ) : ℤ) ∣ -(2 * x - y) at h
-    change ((5 * k : ℕ) : ℤ) ∣ -(x + 2 * y) at h
-    rcases h with ⟨a, ha⟩
-    rcases h.2 with ⟨b, hb⟩
+    have h1 := h.1
+    have h2 := h.2
+    change ((5 * k : ℕ) : ℤ) ∣ -(2 * x - y) at h1
+    change ((5 * k : ℕ) : ℤ) ∣ -(x + 2 * y) at h2
+    rcases h1 with ⟨a, ha⟩
+    rcases h2 with ⟨b, hb⟩
     refine ⟨-(2 * a + b), a, ?_, ?_⟩
     · push_cast at ha hb ⊢
       nlinarith
