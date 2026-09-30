@@ -14376,3 +14376,767 @@ or new certificates for the changed rows, rather than identifying
 equal total masses or invoking symmetry without preserving labels.
 Depth-dependent group gates, changed old-label inventories, the excluded
 middle-prime range and unrestricted Erdős #7 remain outside this result.
+
+## Actual intersections can pay a clipped source capacity deficit
+
+The clipped conditional-product capacity in FC599 is exact within its
+specified class, but reaching the old canonical group mass is stronger
+than necessary for positive survival. Actual remainder intersections
+reduce the fee on the same source. The following application strictly
+extends the capacity criterion while preserving the Xi_star interface.
+It is an ordinary mathematical result, not new Lean verification.
+
+### 1. Existing work and the exact transfer from latest dev
+
+The inspected dev snapshot is
+6d19d88a75289c0b8fdeef4407dde5b3691bf1ae. Section210.4–210.5 of
+FIBONACCI_ATOMIC_RELATION_GENERATION keeps the actual common integer
+N_g=1+gV through its weighted divisor-hit sum and its boundary term.
+That is the methodological input here. Its affine FIB assumptions
+are not assumptions of an arbitrary odd covering system, and none
+of its analytic estimates is imported as a #7 bound.
+
+The applicable intersection theorems are already in the project:
+
+- Report334, JC1–JC3: same-law Hunter–Worsley forest credits and
+  combination with certified marginal slack.
+- Report433, CG1–CG7: exact original-label CRT compatibility,
+  chordal overlap bounds and the correct treatment of signed terms.
+- D5/S3/Factorization/PrimePowers/FiniteCompatibleCrt.lean supplies
+  the finite compatibility topic already used by those arguments;
+  no fresh build or exact Lean application is claimed in this note.
+
+The forest inequality below is reused, not proposed as a new generic
+theorem. The additional content is its concrete application to the actual clipped reference in FC599, preservation of the saved all-query
+interface, and a family that fails B>=Abar yet passes the combined
+capacity-and-fee bound.
+
+### 2. One fixed source and labelled ordered moments
+
+Let M be a finite common period resolving every original and query
+under discussion. Let eta be one fixed positive measure on Z/M.
+For every original numerical label ell keep its actual event
+
+    E_ell={x:x=a_ell mod m_ell}, m_ell|M.
+
+If this is a cofactor-query inventory, retain the ORIGINAL labels
+even when two cofactor moduli or local depths coincide. Weights
+w_ell>=0 and the phases are fixed. For every integer k>=1,
+
+    L(x)=sum_ell w_ell 1_(E_ell)(x),
+    integral L^k d eta
+      =sum_(ell1,...,ellk) w_ell1...w_ellk
+                    *eta(E_ell1 intersect ... intersect E_ellk). (FC619)
+
+The sum is over ordered tuples WITH repetitions. Expanding a finite
+product proves the identity, with no limit interchange or independent
+marginal interpretation. Repeated-label and diagonal contributions
+are not removed. Multiple occurrence of the same label leaves its
+event intersection unchanged but retains its tuple multiplicity and
+weight in the expansion.
+
+For a tuple, put d=lcm(m_ell1,...,m_ellk). Its full arithmetic
+intersection is empty unless every pair satisfies
+
+    a_elli=a_ellj mod gcd(m_elli,m_ellj).
+
+When compatible it is one class a mod d. Under uniform Haar H_M
+its mass is1/d. Under eta<=H_M one has only
+
+    eta(intersection)<=1/d,
+
+not equality and not a positive lower bound. Incompatible tuples
+contribute exactly zero under every source. These statements include
+repeated moduli and distinct labels at identical local depths.
+
+For example, the compatible nested pair9 mod35 and9 mod175 is
+entirely inside head5's forbidden first row4 in our fixed source.
+Its source intersection mass is zero although Haar gives1/175.
+The same moduli with phases2 have the positive intersection below.
+CRT compatibility is therefore a zero test and an upper-cap input;
+actual source geometry is needed for an overlap credit.
+
+### 3. An exact conditional-source intersection interface
+
+Use the fixed pure/star setting of FC596–FC603. On each actual head/root cell
+c=(r,i,j), let A_q(c) be the actual allowed private set, H_q(c) its
+mass under the fixed pure-conditioned lambda_q,N, and
+
+    L_q(c)=min(H_q(c),Kbar_q(c)),
+    nu^L=the pure-conditioned measure with factors
+                      (L_q(c)/H_q(c))*1_(A_q(c)),
+    B=mass(nu^L).
+
+Head star indicators and the common root weights1/2 are included.
+The unnormalized Haar reference R^L satisfies
+
+    nu^L=(3/2) C_N R^L,
+    C_N=product_(v in V)c_v,N<=C_V,
+    R^L<=Haar.                                      (FC620)
+
+For a compatible tuple, denote its merged p-cylinder by C_p, with
+C_p the whole coordinate if no tuple label uses p. Its exact mass is
+
+    R^L(intersection)
+     =sum_(r=1,2;i,j) tau_3(r,C_3)
+          *beta_5,r,N([i] intersect C_5)
+          *beta_7,r,N([j] intersect C_7)
+          *product_q[(L_q(c)/H_q(c))
+                              *Haar_q(A_q(c) intersect C_q)]. (FC621)
+
+Here tau_3 is1/3 for an unconstrained ternary coordinate, is zero
+for an inconsistent first root, and is3^-e for a matching ternary
+cylinder of depth e>=1. The heads beta are their actual fixed
+unnormalized pure/star restrictions. All factors refer to the SAME
+actual registry; no factor is selected separately to maximize a tuple.
+
+Equation FC621 follows by conditional product integration after fixing
+the actual root and first head rows. For nu^L multiply by(3/2)C_N.
+It is an exact formula even though the unrestricted post-remainder
+survivor is not a product.
+
+Every private term can be computed from a prefix antichain without
+enumerating residues or searching phase choices. In a single prime
+coordinate, any two cylinders are nested or disjoint. Collect the
+actual forbidden pure, active-star and active-group cylinders in this
+cell, discard repeated sets and contained cylinders for THIS union,
+and retain its pairwise-disjoint maximal cylinders D_t. Then
+
+    Haar_q(A_q(c) intersect C_q)
+       =Haar_q(C_q)-sum_t Haar_q(D_t intersect C_q). (FC622)
+
+Each summand is zero when its prefixes disagree; otherwise it is
+q^-max(depth D_t,depth C_q). The same elementary calculation applies
+to each fixed head restriction. Removing redundant cylinders from
+this local UNION representation does not merge original label nodes
+in FC619 or in the remainder inventory.
+
+For a final source eta<=R^L,FC619 stays exact with its actual eta
+intersections, while FC621 supplies upper bounds, not lower ones.
+Positive remainder credits below are computed on the explicit
+pre-deletion nu^L itself. They are not inferred by reversing
+eta<=R^L after eta already avoids those events.
+
+### 4. The reusable capacity-and-fee inequality
+
+Fix any finite actual FC159 remainder J, with one phase per numerical
+label. The complete canonical remainder fee is F_can,N, and its
+canonical total mass is Abar_N, so J_can,N=Abar_N-F_can,N.
+As in FC599–FC600, every actual label obeys its old canonical fee bound on
+nu^L, since unsupported private masses are L<=Kbar, supported
+cylinders keep their caps, and factors depend only on first head rows.
+
+Choose any forest T on these ORIGINAL remainder labels. Let
+
+    W_T=sum_({u,v} in T) nu^L(E_u intersect E_v).
+
+Unknown edges can simply be omitted. Report334's pointwise forest
+inequality, valid also for this finite unnormalized measure, gives
+
+    nu^L(U_remainder)
+       >=B-sum_(ell in J)nu^L(E_ell)+W_T
+       >=B-F_can,N+W_T
+       =J_can,N+(B-Abar_N)+W_T.                    (FC623)
+
+Indeed an active induced forest on a nonempty label set has at most
+one fewer edge than vertices. Integrating its indicator inequality
+proves the bound. No phase or source changes when evaluating the different terms;
+separate marginal maxima are not claimed jointly attainable.
+The last enlargement to the complete infinite fee is a nonnegative
+allowance sum, exactly as before; the actual family remains finite.
+
+Certified nonnegative marginal slack can be added as in334 JC3.
+It is not necessary for the strict example below. A chordal version
+is also already available from433; it must keep its higher-intersection
+subtractions with their correct signs.
+
+The target mu84 follows whenever the explicit lower bound in FC623
+is at least mu84. In particular, for N>=N84 the sufficient condition
+
+    W_T>=Abar_N-B                                  (FC624)
+
+replaces B>=Abar_N. The old positive margin J_can,N-mu84 can also
+pay part of the deficit;FC624 is convenient, not necessary.
+This is an actual fee improvement on a fixed source, not an increase
+of the exact capped product capacity B and not a restatement of
+the unknown actual survivor mass.
+
+### 5. The all-query interface survives the weaker gate
+
+No global scalar is applied to nu^L before paying the remainder in
+FC623. If its retained mass s is at least mu84, define once
+
+    eta84=(h84/s)*nu^L restricted to U_remainder,
+    h84=(2/3)*mu84/C_V=2826369/131072000.
+
+By FC620,
+
+    eta84=[mu84 C_N/(s C_V)]*R^L|U_remainder
+         <=R^L<=Haar.                              (FC625)
+
+Thus the SAME physical source has exact mass h84. The FC601–FC603 query proof
+only used this domination and the conditional private mass bounds
+
+    2/5<=L_q/c_q,N
+       <=a_(q,r,2)-max(nbar5,nbar7)/q,
+
+the fixed true head laws and N>=2. These facts are independent of
+B>=Abar_N. Applying the weighted cap lemma and increasing only the
+zero-run mass, followed by positive head enlargement, consequently
+gives exactly the same Xi_star upper profile for all finite complete
+query layouts and nonnegative increasing convex costs on this one
+eta84. It does not give Xi_can or the one-pair law.
+
+The phases used to obtain W_T are the actual old remainder phases,
+fixed before any later query. Later complete query layouts have their
+own permitted arbitrary phases, but eta84 is not replaced for them.
+The saved FC498–FC504 raw Xi_star and exact h84 inputs are unchanged. FC575
+can therefore be reused under its original continuation inventory,
+middle-prime exclusions and analytic-tail premise, with no arithmetic
+rerun and no new 83 update.
+
+### 6. A strict arithmetic extension beyond B>=Abar
+
+Fix either FC110 or FC131, N>=2, and all canonical private words.
+Make precisely the FC598 head-row change:
+
+    free605 original:512 mod605 ->28 mod605,
+
+moving the free5 q11 depth2 head row from2 to3 and leaving its private
+word(6,2) unchanged. Every other skeleton phase remains canonical.
+Let P_q(c) denote the original canonical private factors. All the
+private role cylinders remain disjoint. Put
+
+    t=c_11,N/121>0.
+
+At q11 the actual normalized private mass changes by+t on head5
+row2 and by-t on head5 row3. At all other head5 rows it is unchanged.
+All other private H_q are exactly P_q. These statements hold on
+both roots because the moved original is free and has one common
+physical head address.
+
+The reference q11 table has F5=2,S5=0,F7=S7=3, with both selected
+roles on root2. Consequently:
+
+- On head5 row2, Kbar_11-P_11=b_11,N precisely when head7 row3
+  is active, and is zero on other head7 rows. Since t<b_11,N,
+  clipping retains the full+t gain only at head7 row3.
+- On head5 row3, nbar5=0 and Kbar_11=P_11, so the clipped mass
+  loses exactly t on EVERY head7 row.
+- Elsewhere the clipped mass remains P_11.
+
+Thus, with G the retained gain and D_loss the actual clipped loss,
+
+    B-Abar_N=G-D_loss.                             (FC626)
+
+The following bounds prove this difference is strictly negative
+for BOTH tables and EVERY N>=2; no phase or N search is needed.
+
+#### 6.1 Upper bound on the retained gain
+
+At head5 row2 and head7 row3 the head weights on either root are
+c_5,N/5 and c_7,N/7. Products of all other P_q are at most1. Hence
+
+    G<=t*(c_5,N/5)*(c_7,N/7)<=8t/175.              (FC627)
+
+#### 6.2 Lower bound on the loss
+
+Consider root1 only. Its head7 law has mass1. At head5 row3, the
+reference5-side private debits outside q11 are exactly
+
+    2*b_19,N+b_29,N+b_31,N                    for FC110,
+    2*b_19,N+b_29,N+b_31,N+b_41,N             for FC131.
+
+The latter is an upper bound for both and is at most
+
+    2/17+1/27+1/29+1/39=37171/173043<2/9.
+
+All selected7 roles are on root2, so on root1 each of the eight
+other private primes contributes only its one free7 row. Each such
+row has weight at most6/35. Thus the integrated7-side debit is at most
+
+    (6/35)*sum_(q in Q minus{11})b_q,N
+       <=(6/35)*(5193158/13324311)<3/35.
+
+The sum of both upper debit bounds is less than
+2/9+3/35=97/315<1/3.
+
+For nonnegative factors1-d_q, the product is at least1-sum d_q.
+Therefore the root1 head7 integral of product_(q!=11)P_q at head5
+row3 is strictly greater than2/3. Head5 row3 has weight at least1/5,
+and the root weight is1/2. Consequently
+
+    D_loss>t/15,
+    Abar_N-B=D_loss-G>11t/525>0.                   (FC628)
+
+This family fails the integrated criterion FC599, not only FC596.
+
+#### 6.3 A uniform upper bound on the deficit
+
+For N>=2 the head5 row3 weight is at most4/19 on either root;
+all remaining products and total head7 weights are at most1.
+Also c_11,N<=10/9. Hence
+
+    0<Abar_N-B<=D_loss
+       <=(4/19)*t<=40/20691.                      (FC629)
+
+The head5 row3 range1/5<=w<=4/19 follows directly from FC150:
+with u=5^-N,
+
+    w=(3+5u)/(5*(3+u)), 0<u<=1/25.
+
+Thus every bound above covers all required finite N, including an
+unknown canonical threshold N84.
+
+### 7. A fixed nested remainder pair pays the entire deficit
+
+Require the actual remainder to contain
+
+    E_35={x:x=2 mod35},
+    E_175={x:x=2 mod175}.
+
+These are distinct allowed FC159 labels: support{5,7} is a two-HEAD
+support, so the head/private exponent exclusion does not remove35.
+The phase of each original is fixed once and is free across roots.
+Their actual intersection is E_175, since35 divides175.
+
+Use the forest consisting of this one edge, with all other actual
+remainder labels isolated. All other FC159 original phases and
+finite heights may be arbitrary. The overlap credit is EXACTLY
+
+    W_T=nu^L(E_175).
+
+This is a positive actual source integral, not the Haar value1/175.
+Its lower bound can be obtained from root1 alone. E_175 fixes head5
+to2 mod25 and head7 to2 mod7. Those head cylinders avoid every fixed
+head pure/star hole. At the cell(root1,2,2), the modified q11 has
+H_11=P_11+t but Kbar_11=P_11, so clipping leaves L_11=P_11.
+Every other private L_q=P_q. Hence the product in this cell is the
+canonical root1 product T_1,N.
+
+The fixed row data give the following COMMON lower bound:
+
+    T_1,N>=T_lower
+       =(8/9)*(9/11)*(14/15)*(16/17)*(19/21)
+                     *(34/35)*(38/39)
+       =369664/675675>1/2.                        (FC630)
+
+The factors at q29 and q31 equal1 on this cell. At q41 the factor is
+1-b_41,N for FC110 and1 for FC131. All other factors are identical
+on this cell. Replacing b_q,N by its larger limit and, for FC131,
+lowering its q41 factor from1 to38/39 gives the displayed common
+bound. FC131's actual limiting product is9728/17325. The common
+lower bound has strict gap T_lower-1/2=63653/1351350.
+
+The pure-conditioned head5 cylinder2 mod25 has mass c_5,N/25>=1/19,
+and head7 row2 has mass c_7,N/7>=7/41 for N>=2. Thus
+
+    W_T> (1/2)*(1/19)*(7/41)*(1/2)=7/3116.         (FC631)
+
+Combining FC629 and FC631 gives the fixed strict margin
+
+    W_T-(Abar_N-B)
+       >7/3116-40/20691
+       =1063/3393324>0.                           (FC632)
+
+No other original's overlap is needed or presumed. Report334's
+one-edge inequality gives, on the SAME nu^L,
+
+    nu^L(U_remainder)
+       >J_can,N+1063/3393324.                     (FC633)
+
+For every N>=N84, this is strictly greater than mu84. Equations
+FC625 and the FC601–FC603 mass/cap proof supply exact h84 and the
+old Xi_star all-query bound. This is a strict extension beyond
+FC599's B>=Abar condition, whose failure was proved in FC628.
+
+The fixed rational checks were
+
+    2/9-37171/173043=1283/173043>0,
+    1/2-5193158/13324311=2937995/26648622>0,
+    1/3-97/315=8/315>0,
+    1/15-8/175=11/525,
+    7/3116-40/20691=1063/3393324.
+
+They involve no optimization, candidate enumeration or producer.
+
+### 8. Finite completion and limits
+
+For a starting finite skeleton of this form, choose one
+N'>=max(N,2,N84). Retain the unique depth2 q11 row move and all
+existing phases. Add only missing canonical higher skeleton layers.
+The proof FC626–FC633 holds at every resulting N', so it does not
+assume monotonicity of B-Abar or transfer an unproved capacity
+condition across pure conditioning changes.
+
+The two nested remainder phases remain fixed. They may also be
+added at these phases if their numerical slots are genuinely absent;
+an existing incompatible phase cannot be overwritten. All other
+original old-only labels must remain in FC159. Skeleton completion
+cannot collide with35 or175, whose two-head support is not a pure,
+star or shallow head/private group form. The final completed
+survivor is a subset of the original one.
+
+The general moment interface is finite and exact, and the finite
+prefix antichain formula evaluates actual intersections without
+searching phases. Neither provides a uniform positive overlap for
+arbitrary families. In particular, the zero-credit compatible pair
+in Section2 prevents such an inference from CRT alone.
+
+The concrete extension still fixes the pure/star background, selected
+roots, both reference tables separately, all but the specified605
+head-row change, and the nested35/175 remainder phases. It leaves
+arbitrary further FC159 phases and finite heights. The saved future
+continuation retains all its original prime and analytic restrictions.
+This is not a universal solution of arbitrary head-row assignments,
+arbitrary old ternary heights or unrestricted Erdős #7.
+
+The useful added distinction is between an exact SOURCE capacity
+ceiling and a sufficient TOTAL-survival payment. B cannot be raised
+inside the fixed capped-product class, but an actual same-source
+intersection can reduce its required payment. The explicit family
+above proves that this distinction changes which original arithmetic
+families the current source/query method can certify.
+
+## Arbitrary ternary heights on the same nongroup cofactor inventory
+
+Keep the nonternary cofactor exclusions of FC159 and the direct-Haar
+source hypotheses FC579–FC595, or the head row-capacity extension
+FC604–FC618. Arbitrary finite ternary heights then cost three halves
+of the old selected-label allowance, and the saved canonical scores
+still give a positive source. The source mass is smaller, so the
+previous Top_h84 initialization and continuation are not inherited.
+This is ordinary mathematics with exact arithmetic on saved totals,
+not new Lean verification or a new numerical producer run.
+
+The existing ingredients are the actual-prefix deletion formula
+FC3–FC6, common-source conditioning FC37–FC40, supported-head
+min-caps FC119–FC122, full-depth continuity FC133–FC139 and shifted
+ternary cylinder comparison FC331–FC335. The new result is their
+source/inventory application with the exact saved free/selected fees.
+
+### 1. State the extended numerical inventory explicitly
+
+Let V={5,7} union Q, with Q={11,13,17,19,23,29,31,37,41}. Define the
+nonternary cofactor set C by
+
+    d=product_(p in V)p^e_p,
+    D={p:e_p>0}, |D|>=2,
+    e_h>=2 if D={h,q}, h in{5,7}, q in Q.             (FC634)
+
+At all other supported heads the exponent starts at1; every
+supported private exponent starts at1. The original FC159 remainder
+consists exactly of d and3d for d in C. The present extension is
+
+    I_infinity={3^t*d: d in C, t>=0}.                (FC635)
+
+The actual family is always finite: choose any finite subset of
+I_infinity, one globally fixed residue per numerical label, with
+no repetitions. Neither t nor the nonternary exponents have a
+uniform bound in this assertion.
+
+Keep the finite pure/star/group skeleton and its gates as in FC579–FC595 or
+FC604–FC618. In particular the only pure ternary skeleton label is3 on
+root0. The exclusions in(FC634) mean that(FC635) contains none of
+the following at ANY t:
+
+    d=1;
+    d=p^e, p in V;
+    d=h*q^e with h in{5,7}, q in Q.                 (FC636)
+
+The last exclusion is stronger than merely avoiding the two literal
+old group labels h*q^e and3*h*q^e. The higher labels9*h*q^e,
+27*h*q^e,... are numerically different and are deliberately outside
+(FC635). Section 7 states their additional allowance separately.
+The heads-only pair support{5,7} remains fully admitted from depth1.
+
+No new label collides with a skeleton completion slot: all such slots
+are pure/star/group forms excluded by(FC636). Thus finite completion
+remains legal without changing any existing phase or label.
+
+### 2. The pre-remainder reference has an exact conditional Haar factor
+
+Fix a complete finite skeleton depth N and its actual phases.
+Use the direct Haar reference R_N from FC583, or replace its heads by
+the FC605 row-thinned head measures. It is chosen BEFORE any remainder
+originals are removed. All its density factors on the ternary
+coordinate depend only on the first root. In particular neither the
+private density factors nor the head row thinning uses higher
+ternary digits.
+
+Let I be one actual depth-t ternary cylinder on retained root r,
+t>=1, and B any event on all nonternary coordinates. Uniform lifting
+to a finite resolving CRT period gives the exact identity
+
+    R_N(I intersect B)
+       =3^(1-t)*R_N([r]_3 intersect B).              (FC637)
+
+No independence between the nonternary coordinates is claimed here.
+Their conditional-product structure is used only for the old fee
+proof. A cylinder in root0 has zero mass. After higher-ternary
+remainder deletion, the final surviving source need not satisfy
+(FC637); the proof applies it to R_N, then restricts once to the
+full actual survivor.
+
+Write
+
+    Q_N=(2/3)*a_N,
+    a_N=product_(p in V)(1-A_(p,N)),
+    A_(p,N)=sum_(e=1..N)p^-e,
+    gamma_1=gamma_2=1/2.
+
+These a_N factors are canonical numerical benchmarks; arbitrary
+actual pure-phase unions need not have those masses.
+
+### 3. One label has one root at every positive ternary height
+
+Use the existing finite canonical T_(D,r,N)(a), supported-head
+min-caps M_(h,r,N)(e_h,a_h), and fixed pure caps c_p,infinity.
+For a fixed complete nonternary cofactor d in C define
+
+    L_r(d,a)=product_(q in D intersect Q)c_q,infinity*q^-e_q
+             *gamma_r*T_(D,r,N)(a)
+             *product_(h in D intersect{5,7})M_(h,r,N)(e_h,a_h),
+
+    f_N(d)=max_a sum_(r=1,2)L_r(d,a),
+    s_N(d)=max_(r,a)L_r(d,a).                       (FC638)
+
+The free label d uses one head address a on both roots. The label
+3^t*d for ANY t>=1 has one actual ternary root and one actual
+nonternary address. Combining the rootwise bound FC588–FC591 with(FC637) gives
+
+    R_N(E_d)<=Q_N*f_N(d),
+    R_N(E_(3^t*d))<=Q_N*3^(1-t)*s_N(d), t>=1.       (FC639)
+
+The root maximum is taken ONCE per complete numerical label. There
+is no additional factor2 for the two retained roots. Different full
+labels may have different actual roots and addresses; independently
+bounding each one is valid without assuming joint attainment of its
+allowance. Actual overlaps between ternary prefixes can only lower
+the union relative to the sum of these nonnegative bounds.
+
+Let F_N=sum_(d in C)f_N(d) and S_N=sum_(d in C)s_N(d), with the
+complete geometric depths. These are exactly the separately saved
+free and selected min-cap fees in FC122/FC132. The notation S_N here
+is a fee, not a survivor set.
+
+For a finite original roster, summing(FC639) over its actual labels
+is valid on ONE measure R_N. Enlarge to the full positive inventory:
+
+    sum_(t>=1)3^(1-t)=3/2,
+    sum_(t>=2)3^(1-t)=1/2,
+
+    Fee_infinity,N=F_N+(3/2)*S_N.                  (FC640)
+
+The equality in(FC640) is the exact value of the enlarged allowance,
+not a claim of equality with an actual deleted union. The newly
+admitted layers add S_N/2. With only positive heights through T>=1,
+the multiplier is (3/2)*(1-3^-T), and the extra over height one is
+(1/2)*(1-3^(1-T)). For an irregular finite label palette the direct
+sum in(FC639) applies; product factorization is not asserted.
+
+This is a finite geometric multiplier, so arbitrary finite heights
+cause no divergence under the present reference and inventory.
+
+### 4. The existing exact outputs already give a positive new margin
+
+Let Abar_N be the canonical lower group mass and
+
+    J_N=Abar_N-F_N-S_N,
+    J_infinity,N=Abar_N-F_N-(3/2)*S_N=J_N-S_N/2.     (FC641)
+
+The saved file is
+
+`frontier/cover-geometry/fibre-credit-partition/head_mass_evaluation.json`
+
+under the canonical Erdős7 report directory. Its SHA256 is
+`4e824f35c5f921cdacee1cb462cf3387f5524978e859c65460e45cb3fcb5f8c4`.
+The two `results[].modes.head_min` entries contain these exact
+limiting scores and selected totals:
+
+| Table | J | S |
+|---|---|---|
+| FC110 | 17062109570167/198315713846250 | 1106517130288/10257709336875 |
+| FC131 | 25372782312134/297473570769375 | 64392844043743/594947141538750 |
+
+Subtracting half the saved selected total gives
+
+    FC110: J-S/2=1123372466597/34996890678750,
+    FC131: J-S/2=37098285204793/1189894283077500.    (FC642)
+
+The exact positive gaps over3/100 are respectively
+
+    146931492469/69993781357500,
+    350364178117/297473570769375.                  (FC643)
+
+These checks are scalar fraction operations on saved values, not
+a new summation over supports, array evaluation or numerical
+producer run. Both tables are treated separately; no coefficients
+from different sources are combined.
+
+FC133–FC139 applies to each free or selected fee separately: in the
+max perturbation proof retain only its free or its selected term,
+then sum the same nonnegative geometric majorant. Thus S_N converges
+along the original canonical finite signature sequence. Multiplying
+its continuous fee by3/2 preserves the complete-depth continuity.
+Equations(FC642)–(FC643) yield one finite common threshold N_all such
+that
+
+    J_infinity,N>=3/100 for both tables and N>=N_all. (FC644)
+
+No numerical value of N_all is asserted. It is not silently equated
+with the old N84 threshold, which controlled a different score.
+
+### 5. Actual survivor source, arbitrary original depths, and query interface
+
+The same-measure union bound now gives, for any finite admitted
+remainder M subset I_infinity,
+
+    R_N(U_M)>=Q_N*J_infinity,N
+       >=(2/3)*a_N*(3/100), N>=N_all.
+
+Use a_N>=1/C_V=403767/1048576. The common Haar-source mass is
+
+    h_all=(2/3)*(3/100)/C_V=403767/52428800>0.      (FC645)
+
+If s=R_N(U_M), define once for the actual full family
+
+    eta_all=(h_all/s)*R_N restricted to U_M.        (FC646)
+
+Then mass(eta_all)=h_all and eta_all<=R_N<=Haar. The actual full
+survivor has Haar mass at least h_all and hence contains an integer
+on its finite resolving CRT period. This proves noncovering for
+this restricted inventory and source contract.
+
+For an original complete skeleton at any N>=1, complete to some
+N'>=max(N,2,N_all). Under FC579–FC595 extend fixed heads and arbitrary private
+phases as prescribed. In the complete row-capacity domain FC604–FC618, append
+canonical head tails: on each affected row the loss is at most
+Delta=sum_(e=N+1..N')h^-e, exactly the decrease in its canonical
+target; capacity therefore persists. All remainder labels in
+(FC635) are disjoint from completion slots. Original high ternary
+prefixes are retained, never recoloured or overwritten. Completion
+only shrinks the survivor, so(FC646) also serves the original input.
+An incomplete arbitrary-head roster still needs the gap-filling
+condition specified after FC618.
+
+Although eta_all can have arbitrary higher-ternary correlations
+after restriction, the grouped query comparison remains valid:
+eta_all is dominated by the SAME pre-remainder R_N. The conditional
+private elimination, head enlargement and FC331–FC335 query
+induction apply to that reference, then domination bounds eta_all.
+Consequently Xi_can,i and Xi_star,i are unchanged as raw all-query
+upper measures for each chosen table.
+
+The source mass has changed: h_all=(5/14)*h84. The previous Top_h84
+initialization and continuation cannot be reused at this new mass.
+A new continuation calculation would be a separate task. None is
+performed or claimed here. The excluded middle primes and analytic
+tail premises of prior continuations are unaffected.
+
+### 6. Why root colours and actual prefix geometry are still necessary
+
+The decay3^(1-t) is licensed by(FC637), not by the formal size of a
+modulus alone. For a source with density depending on higher ternary
+digits, a depth-t cylinder can contain all its mass on a root.
+Likewise, normalizing after each actual prefix deletion would alter
+the caps and destroy the direct geometric sum unless its density
+was tracked. The present proof neither reweights after each label
+nor substitutes the final survivor law into(FC637).
+
+This is why the arbitrary-prefix interfaces FC4/FC40 retain actual
+prefix integrals and why FC335 keeps every complete numerical
+label's root colour. Their existing scope already warns against
+reusing a height-one budget separately at every level. Here the
+declared root-constant reference supplies the missing cap, and
+the finite geometric sum pays every newly allowed label once.
+
+### 7. What if only the literal low-height group labels stay excluded?
+
+Suppose one permits all high labels3^t*h*q^e, t>=2, e>=1, h=5 or7,
+while still excluding the literal old grouped labels at t=0,1.
+These are NEW nongroup numerical originals, but their nonternary
+cofactors were excluded from C. Formula(FC640) does not pay them.
+
+The rootwise cylinder proof(FC639) still applies. Define their full
+height-one comparison allowance
+
+    G_N=sum_(h in{5,7},q in Q) b_q*S_({h,q},N)(e_h=1),
+    b_q=1/(q-2),                                  (FC647)
+
+where S_(D,N)(e) is exactly FC121's selected maximum at the specified
+head exponent. The head lower limit is1 for these additional labels,
+not2. All private exponents have been summed into b_q. Their entire
+high-ternary allowance is Q_N*G_N/2. The sufficient canonical margin
+becomes
+
+    J_N-(S_N+G_N)/2>0.                             (FC648)
+
+G_N is finite: use each head's depth-one cap, finitely many h,q,
+and the convergent private geometric sum. It is an explicit new
+quantity, not present in the saved S_N. Its sign test in(FC648)
+has not been evaluated here. Reusing(FC642) while silently adding
+these labels would omit their entire fee.
+
+Higher singleton supports3^t*p^e and pure ternary powers3^t require
+further separate terms. The same per-label proof bounds a declared
+finite selection, but none of these labels belongs to(FC635).
+
+### 8. A concrete obstruction to the unchanged additive certificate
+
+Even two added pure ternary labels show that unrestricted admission
+cannot be claimed from the existing positive score alone. In root1
+take the disjoint actual prefixes
+
+    1 mod9  (least-significant digits1,0),
+    4 mod27 (least-significant digits1,1,0).        (FC649)
+
+Both avoid deleted root0. Their conditional Haar masses inside
+root1 are1/3 and1/9. Since R_N is constant in higher ternary digits,
+their union removes exactly4/9 of R_N's root1 mass before any other
+remainder deletion. Write A_(1,N) for its canonical normalized
+root1 group mass; R_N(root1)=Q_N*A_(1,N)/2. Their additive charge in
+units Q_N is therefore exactly(2/9)*A_(1,N).
+
+The saved `root_group_residuals.1` limits are
+
+    FC110: A1=693613711312/1573934236875,
+    FC131: A1=4856557471672/11017539658125.
+
+Both exceed2/5, while each original saved J is less than4/45.
+Hence J-(2/9)*A1<0. Exact subtraction gives
+
+    FC110: -334762927/28141863750,
+    FC131: -3766562517898/297473570769375.           (FC650)
+
+By the same finite-sequence continuity, the unchanged additive
+certificate is negative at all sufficiently large finite skeleton
+depths if it pays its COMPLETE old remainder fee and these two
+pure-label charges. This is a finite two-label obstruction to that
+particular accounting method; it does not construct a covering
+family or assert simultaneous attainment of all old remainder fees.
+
+There is no intrinsic pure-power impossibility here. For example,
+if only these two pure labels are added after a height-one family,
+restrict its pre-remainder root-constant reference to that family's
+survivor. This inherited measure is still constant in higher ternary
+digits. Restricting it by the two extra labels therefore retains at
+least 5/9 of its mass. A different source
+construction or overlap accounting can therefore repair this coarse
+additive loss. What(FC650) rules out is treating the unmodified
+J margin as having already paid arbitrary omitted label classes.
+
+### 9. Scope settled by this derivation
+
+Arbitrary finite ternary heights are now paid for the SAME admitted
+nongroup cofactor inventory, with an exact multiplier, a strict
+positive canonical margin and a common actual source. This uses
+the existing all-height query machinery and saved free/selected fee
+totals; it is not an unrestricted-height theorem for every old label.
+
+The remaining old-label extensions are explicit: high shallow
+head/private group cofactors need(FC647)–(FC648), singleton
+supports and pure ternary powers need their own source/fee argument,
+and arbitrary head first-row arrangements still require the FC604–FC618
+row-capacity or transport conditions. No new producer, continuation or Lean verification accompanies
+this result.
