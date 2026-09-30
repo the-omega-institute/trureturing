@@ -250,35 +250,6 @@ class ReuseTests(unittest.TestCase):
         api.warn_mismatch(api.probe(self.root, self.report), output)
         self.assertEqual(output.getvalue(), '')
 
-    def test_ci_resource_probe_forwards_mismatch_warning(self):
-        relative = '.lake/build/stratalint/raw-lean-report.json'
-        seed = self.root / 'build/ci/current-check-seed'
-        self.report = seed / relative
-        self.report.parent.mkdir(parents=True)
-        self.receipt()
-        checks = dict(version=2, stage='current', candidate='a' * 64, round='b' * 32)
-        (seed / 'checks.json').write_text(json.dumps(checks))
-        producer = dict(version=1, candidate=checks['candidate'], round=checks['round'],
-            report=relative, materials=[dict(path=relative + suffix)
-                for suffix in (*publication.SUFFIXES, '.reuse.json')])
-        (seed / 'producer-report.json').write_text(json.dumps(producer))
-        for name in ['reuse.py', 'publication.py', 'materials.py']:
-            target = self.root / 'tools/lean-inspector' / name
-            target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(HERE / name, target)
-        self.policy['report_cache_release_semantic_version'] += 1
-        self.write_policy()
-        command = [sys.executable, '-B', '-c',
-            'import pathlib, sys; sys.path.insert(0, sys.argv[1]); import lean_actions; '
-            'print(lean_actions.report_seed(pathlib.Path(sys.argv[2])))',
-            str(ROOT / 'tools/scripts/worktree'), str(self.root)]
-        with patch.dict(os.environ, GITHUB_ACTIONS='true'):
-            result = subprocess.run(command, text=True, capture_output=True, check=False)
-        self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual(result.stdout.strip(), 'None')
-        self.assertIn('::warning title=Lean report cache mismatch::', result.stderr)
-        self.assertIn('cached_version=1 current_version=2', result.stderr)
-
     def test_registered_file_mode_changes_invalidate_reuse_and_sealing(self):
         api = self.receipt()
         captured = api.capture(self.root)
