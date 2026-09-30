@@ -28,7 +28,7 @@ public sealed class WorktreeCacheStrategyTests
         Assert.DoesNotContain("export PATH=", clean, StringComparison.Ordinal);
 
         // Guard executable tooling; prose and truth data are not copy implementations.
-        string[] inputs = [".github/scripts/**", "Blueprint/**/*.scribe.cs",
+        string[] inputs = ["**/*.lean", ".github/scripts/**", "Blueprint/**/*.scribe.cs",
             "Directory.Build.props", "Directory.Packages.props", "Makefile",
             "docs/reports/**/*.c", "docs/reports/**/*.cpp", "docs/reports/**/*.h",
             "docs/reports/**/*.mjs", "docs/reports/**/*.py", "tools/**"];
