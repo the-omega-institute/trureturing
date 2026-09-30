@@ -167,7 +167,9 @@ components:
       - filemap
       - selftest
       - tests-architecture
+      - tests-cache
       - tests-cache-native
+      - tests-cache-release
       - tests-cli
       - tests-cli-integration
       - tests-configuration
@@ -176,19 +178,28 @@ components:
       - tests-digestion
       - tests-engine
       - tests-filemap
+      - tests-header-script
       - tests-instruction-contract
       - tests-lean
+      - tests-lean-cache-script
+      - tests-lean-report-script
+      - tests-playbook-script
+      - tests-pr-script
+      - tests-report-supervisor
       - tests-repository-configuration
       - tests-repository-contract
       - tests-repository-digestion
       - tests-repository-filemap
       - tests-repository-topology
+      - tests-resource-observation
       - tests-rules
       - tests-scribe
       - tests-scribe-documents
       - tests-source-atomizer
       - tests-truth
       - tests-truth-release
+      - tests-workflow-script
+      - tests-worktree-contract
     judged_by:
       - dev-baseline
     verification: verified
