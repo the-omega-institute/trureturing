@@ -15140,3 +15140,587 @@ supports and pure ternary powers need their own source/fee argument,
 and arbitrary head first-row arrangements still require the FC604–FC618
 row-capacity or transport conditions. No new producer, continuation or Lean verification accompanies
 this result.
+
+## Exact head-row transport and a larger background-allocation class
+
+For the two certified head tables, lawful common first-row transport
+reduces to a small explicit test. Named group gates fix four of the
+five head5 row images and five of the seven head7 row images. Their
+equality partitions determine at most ONE of the two tables when the
+whole group roster is present. The remaining capacity requirements
+are the two-root inequalities listed below, plus one untouched
+head7 row. Thus choosing the other certified table cannot repair
+the pure5 obstruction (FC616) while its named group gates stay as given.
+
+Conversely, arbitrary common permutations of the head rows, together
+with a larger allocation of deep pure/star cylinders into harmless
+rows, give an explicit completion-stable extension. This class need
+not lie in either exact full-prefix orbit. It preserves the numerical
+labels, one actual source, exact h84 and both Xi_can/Xi_star interfaces.
+
+These are ordinary mathematical results, with no new Lean verification
+or numerical continuation.
+
+### 1. Reused transport and the precise matching problem
+
+The common rooted prime-prefix transport criterion is already proved
+in Report823 §2 and FC411: the equality partitions at every
+shared prefix depth are preserved iff the complete named finite
+prefix family can be carried by one common rooted-tree automorphism.
+Report433 §7 gives the corresponding cylinder-preserving automorphisms.
+No generic permutation or Hall theorem is offered as new mathematics.
+
+The redundancy constructions (FC455)–(FC475) use a different mechanism. They rephase an original
+already covered by an unchanged free or pure/star background, enlarging
+the covered union and pulling back a surviving source by containment.
+They do not permit arbitrary relabeling of nonredundant gates or
+independent maps on the two ternary roots. Those background-containment
+ideas reappear in the explicit class in Section7, with actual phases
+held fixed in the final source construction.
+
+Here keep pure3=0 mod3, head5 stars on root1, head7 stars on root2,
+and every selected group role's declared root. The primes, numerical
+labels and complete FC159 remainder inventory stay fixed. Private
+pure/star/group residues may have the full freedom established in FC579–FC595.
+Head pure/star residues may be arbitrary. Every group head exponent
+is1, but its actual first row is recorded separately for every present
+numerical label before deciding whether a common map exists.
+
+For head h, let a_h(ell) be that actual row of labelled group original
+ell, and b_h,i(ell) its target row in reference table i. The table's
+role row is the same at all depths. Let
+
+    u_(h,r,N)(a)=Haar_h(actual head survivor on root r in row a),
+    t_(h,r,N)(b)=the canonical row target in FC604–FC614.
+
+We seek ONE permutation pi_h of the h first rows, the SAME on both
+ternary roots, such that
+
+    pi_h(a_h(ell))=b_h,i(ell) for every named group label,
+    u_(h,r,N)(a)>=t_(h,r,N)(pi_h(a)) for both roots. (FC651)
+
+Both heads must use the SAME choice i of the certified table. Mixing
+the FC110 head5 pattern with the FC131 head7 pattern is not an input
+to either saved source/profile certificate.
+
+This matches a sufficient row/capacity template, not every exact
+pure/star prefix. Actual higher head digits and their overlaps are
+retained in u. Their exact full-prefix transport would require the
+stronger FC411 test, which is unnecessary here.
+
+### 2. Labelled equality partitions, not unlabelled row counts
+
+For a fixed h and target i, the group requirements define an injective
+partial row map if and only if
+
+    a_h(ell)=a_h(ell') iff b_h,i(ell)=b_h,i(ell')
+    for every pair of PRESENT named labels ell,ell'. (FC652)
+
+If two labels have the same actual row, they cannot map to different
+target rows. If they have different actual rows, a permutation cannot
+merge them. These two implications prove necessity. Conversely,
+mapping each actual label block to its target block is well-defined
+and injective. This is exactly FC411 at depth1, applied to the actual
+labels, including repeated depths of the same role.
+
+In particular, a role whose head row changes across its present
+private depths cannot map to a depth-independent target gate by a
+single permutation. Different allowed private residues do not repair
+that obstruction. The capacity/count method (FC596)–(FC603) can admit some such
+families, but exact template matching is a different sufficient route.
+
+The blocks are a labelled incidence structure: each row is incident
+to the named roles situated there. One may equally regard them as
+hyperedges of a hypergraph on role labels. Preserving only row sizes,
+numbers of roles or head capacities discards the incidences needed
+for FC652. No prime label, free/selected role or depth is permuted.
+
+### 3. The general incomplete-roster matching criterion
+
+Once FC652 holds, let f be the forced injective map on used actual
+rows. Check u_r(a)>=t_r(f(a)) for every forced pair and both roots.
+On unused actual rows A and unused target rows B, form the allowed
+pair relation
+
+    a~b iff u_1(a)>=t_1(b) and u_2(a)>=t_2(b).
+
+A completion of pi_h exists exactly when this bipartite relation has
+a perfect matching, equivalently when for every S subset A its
+neighbor set has size at least |S|. Necessity is immediate; ordinary
+finite Hall matching proves sufficiency. This is a reuse criterion,
+not a new abstract matching theorem or a requested combinatorial
+search. The conjunction of the forced checks and this test is EXACT
+for FC651 at the given finite N.
+
+This formulation covers missing group slots without pretending they
+are occupied. For a complete group roster it collapses to the explicit
+checks in Sections4–5; no matching optimization or permutation sweep
+is needed. If a matching is used before finite completion, the map
+must be fixed and every subsequently added label must use its
+preimage target row. Existing incompatible phases cannot be overwritten.
+
+### 4. Complete head5 gates force the permutation
+
+Write F(q),S(q) for the free5 and selected5 named roles, keeping their
+original selected roots attached. In both references use the anchors
+
+    A0=a(S(11)), A1=a(F(17)),
+    A2=a(F(11)), A3=a(F(19)).
+
+These four actual rows must be distinct and the map is forced by
+pi_5(Aj)=j for j=0,1,2,3. The one unused actual row A4 maps to4.
+Every other group label must lie at the anchor dictated by its table:
+
+| Target row | FC110 head5 labels | FC131 head5 labels |
+| --- | --- | --- |
+|0| S11 | S11 |
+|1| F17,S17,F29,F31,F37,F41 | F17,S17,F29,F31,F37,F41 |
+|2| F11,F13,S13,F23,S23,S37,S41 | F11,F13,S13,F23,S23,S37 |
+|3| F19,S19,S29,S31 | F19,S19,S29,S31,S41 |
+
+Here and below each named role represents ALL its present depths;
+the selected roots are those of the unchanged original table.
+These entries were read directly from the two saved private_sources
+objects, not inferred from a search result or from numerical scores.
+
+Let D_h,N=sum_(e=2..N)h^-e, and tau_h,N=1/h-D_h,N>0.
+The exact head5 target capacity pairs(root1,root2) are
+
+| Forced actual row | Target | Required capacity pair |
+| --- | ---: | --- |
+| A0 |0| (0,1/5) |
+| A1 |1| (tau_5,N,1/5) |
+| A2 |2| (1/5,1/5) |
+| A3 |3| (tau_5,N,tau_5,N) |
+| A4 |4| (0,0) |
+
+Actual capacity in each coordinate must be at least the displayed
+value. Since u<=1/5, every1/5 condition requires a truly untouched
+row at that root. These checks are necessary and sufficient for the
+head5 part of FC651: its first-row permutation is already unique.
+
+The two full head5 label partitions are different. In FC110,
+S(41) and F(13) have the same row; in FC131 they do not. Thus a
+complete actual label partition cannot match both references. The
+choice of certified table is fixed by actual incidences before any
+capacity test; it is not a spare optimization parameter.
+
+### 5. Complete head7 gates leave only two unused rows
+
+Write F(q),S(q) now for the corresponding7 roles. Use anchors
+
+    B1=a(F(23)), B2=a(F(17)), B3=a(F(11)),
+    B4=a(F(13)), B5=a(S(23)).
+
+They must be distinct and pi_7(Bj)=j for1<=j<=5. The full partitions
+are:
+
+| Target row | FC110 head7 labels | FC131 head7 labels |
+| --- | --- | --- |
+|1| F23,F29,S29,F31 | F23,F29,F31,F41 |
+|2| F17,S17,F19,S19 | F17,S17,F19,S19 |
+|3| F11,S11 | F11,S11 |
+|4| F13,S13,F37,S37,F41 | F13,S13,S29,F37 |
+|5| S23,S31,S41 | S23,S31,S37,S41 |
+
+All selected7 roles remain on root2. The forced capacity checks are
+
+| Forced actual row | Target | Required pair(root1,root2) |
+| --- | ---: | --- |
+| B1 |1| (1/7,tau_7,N) |
+| B2 |2| (1/7,1/7) |
+| B3 |3| (1/7,1/7) |
+| B4 |4| (1/7,1/7) |
+| B5 |5| (tau_7,N,tau_7,N) |
+
+There are exactly two unused actual rows C,D. The remaining target
+rows are0 with target pair(1/7,0), and6 with target pair(0,0).
+Therefore the entire residual matching test is exactly
+
+    u_(7,root1,N)(C)=1/7 OR u_(7,root1,N)(D)=1/7.   (FC653)
+
+Map a row meeting this condition to0 and the other to6. All its
+root2 requirements are zero. This completes the necessary-and-
+sufficient finite test without a7! permutation search.
+
+With the original pure7 depth-one label present, its row has zero
+capacity on root1 and must be the unused row mapped to6. Thus at
+most the other unused row can satisfy FC653. The pure5 depth-one
+row similarly must be A4. A pure first row coinciding with any
+required positive named gate cannot be repaired by a row permutation
+that preserves that label incidence structure.
+
+### 6. A matching gives one lawful transport and one source
+
+Given the accepted pi_h, define at every finite h-power depth E
+
+    F_h(x)=pi_h(x mod h)+h*floor(x/h) mod h^E.
+
+It changes only the first digit and is a rooted-prefix automorphism
+at every depth, with a compatible extension to all later digits.
+It is Haar-preserving and sends every actual depth-e cylinder to
+one depth-e cylinder. The SAME F_h acts on both roots, on every
+original label and on every future query; a free address cannot split
+into two independently chosen root addresses. CRT combines the head
+maps with identity maps on3 and the private coordinates.
+
+The transformed actual head row capacities are exactly u_r(pi_h^-1(b))
+and dominate t_r(b) by FC651. Apply the row thinning (FC605) in these rows.
+When enlarging to the depth-two query reference, use (FC611)–(FC612)
+inside Haar, not an asserted domination by the literal canonical mask.
+All named gate incidences now equal the chosen table. The private
+mass thinning (FC579)–(FC594), complete FC159 fee and canonical finite-N sequence
+apply. Hence for N>=N84 the transported family has one source with
+exact h84 and the old Xi_can, then Xi_star, all-query bounds.
+
+Pull that measure back by the single inverse CRT map. Haar domination,
+actual survivor support, every numerical modulus and every query
+integral are preserved. The original family therefore has the same
+source/profile interface. The map was fixed before the source's
+later queries and is not selected separately for a load or cost.
+
+For a COMPLETE skeleton through any finite N>=1, this matching also
+gives a lawful completion. Fix the accepted maps. In transported
+coordinates append canonical head cylinders at depths N+1 through
+N'>=max(N,2,N84), and pull those added cylinders back by the SAME
+maps. At head h put Delta_h=sum_(e=N+1..N')h^-e. Only canonical
+row h-2 loses added pure mass, at most Delta_h; on its active star
+root, row1 also loses at most Delta_h. The canonical targets in
+exactly those rows decrease by those same amounts. Hence the
+inequality u_N>=t_N persists as u_N'>=t_N', by FC618. Overlap with
+old cylinders reduces the actual loss and causes no problem.
+
+Add the missing grouped labels with inverse-map target gates and
+any once-fixed private phases allowed by FC579–FC595. The complete FC159
+remainder leaves all these new numerical slots vacant. No existing
+phase is changed. This proves the source/query conclusion for every
+complete matching finite prefix, without calculating N84.
+
+An arbitrary INCOMPLETE roster still needs gap filling: adding a
+missing head layer below N does not decrease the already specified
+t_N. It must admit a complete skeleton satisfying the same fixed-map
+capacities. The next class supplies that stronger structural rule,
+including missing low layers. It also shows that matching plus
+thinning is broader than exact transport of all pure/star labels.
+
+### 7. An explicit completion-stable orbit and background extension
+
+Choose one certified table and any fixed permutations sigma_5,sigma_7,
+where sigma maps canonical row names to actual row names. At every
+depth place every named group gate at sigma_h(its reference row), with
+the original selected root. For each head h impose only:
+
+    pure depth1: actual row sigma_h(h-1);
+    pure depth e>=2: either sigma_h(h-1) or sigma_h(h-2);
+    star depth1: either sigma_h(h-1) or sigma_h(0);
+    star depth e>=2: any of sigma_h(h-1),sigma_h(0),sigma_h(1).
+                                                            (FC654)
+
+Every choice is fixed once for that numerical original. All deeper
+digits of those head cylinders are arbitrary. Their choices may vary
+with depth, coincide, overlap or nest. Private phases have the full FC579–FC595
+freedom. Take pi_h=sigma_h^-1.
+
+After transport, the pure depth-one row h-1 is entirely removed on
+both roots. Any deeper pure cylinders in that row are redundant;
+the others lie in row h-2 and have total union mass at most D_h,N.
+No pure cylinder touches any other row. On the active star root,
+star cylinders in row h-1 are redundant and those in row0 cost no
+positive target, since its canonical active-root target is zero.
+Only the deep stars in row1 require payment; their union mass is
+at most D_h,N. There is no overlap of those budgets with the pure
+deep row h-2 because h>=5. Thus every capacity pair in Sections4–5
+is met for every finite N. On the inactive star root the stars impose
+no restrictions, as required by the full row targets.
+
+This is strictly broader than the fixed first-row allocation (FC613) even
+after removing a common row permutation: deep pure originals may
+move between the pure first row and the pure tail row, and stars may
+occupy the pure first row instead of their named canonical star rows.
+No disjointness or higher-prefix orbit test is required.
+
+For an incomplete finite roster obeying FC654 with the SAME fixed
+sigma, choose N'>=max(all existing skeleton depths,2,N84). Fill only
+genuinely absent slots with any choices from FC654 and any permitted
+private phases. Existing phases remain unchanged; every slot is
+excluded from the old FC159 remainder at all depths. The capacity
+proof holds at N' without computing N84 or assuming monotonicity of
+an observed small-N capacity vector. The completed survivor is a
+subset of the original survivor, so the exact h84 and query interface
+transfer to the original family.
+
+For a concrete member outside the exact full-prefix orbit, set
+sigma_5 to the transposition(2,4), leaving every other row fixed,
+and keep sigma_7 the identity. Place all group gates according to
+these permutations and leave the head7 background canonical. Set
+EVERY head5 pure original5^e to2 mod5^e, and give its star original
+3*5^e the SAME5-adic cylinder, retaining ternary root1. Every deeper
+pure or star cylinder then has first row sigma_5(4)=2, so this
+satisfies FC654: all are redundant under the unchanged actual pure5
+first-row cylinder. The pure5 and15 labels share first5-row2.
+In either canonical exact prefix family their first rows4 and0
+are distinct, so FC411 forbids an exact named-prefix transport to
+either canonical family. Nevertheless the proved row/capacity method
+certifies this actual family, including arbitrary permitted higher
+suffixes and arbitrary FC159 remainder phases.
+
+The ordinary orbit under sigma is an existing transport application;
+the additional freedom comes from only needing row capacity and from
+background-redundant allocated cylinders. This is a concrete source
+extension, not a new generic matching theorem.
+
+### 8. Why alternative table choice cannot repair the fixed-gate example (FC616)
+
+Start with either complete reference table, with every group gate at
+its literal physical row. Change ONLY the actual pure5 depth-one
+phase from4 to2, retaining the higher head words and all group gates.
+
+For the same table the four named anchors force pi_5 to fix0,1,2,3,
+and therefore also4. The actual row2 has zero capacity on both roots,
+whereas its forced target requires(1/5,1/5). No deeper prefix-tree
+automorphism can change that row mass or split a whole deleted first
+row. Thus the same-table test fails.
+
+The OTHER table cannot help: the actual S5(41)/F5(13) equality agrees
+with exactly the starting table and disagrees with the other. FC652
+already fails before any capacity check. This rules out both certified
+references, even allowing arbitrary common row permutations rather
+than demanding in advance that physical gates be fixed.
+
+If all cylinders and gates had instead been transported together by
+the transposition(2,4), the exact orbit method would work. The difference
+is that one moved pure cylinder changes its incidence with the fixed
+labelled group gates, whereas a common family map preserves those
+incidences. More source templates or a different source construction
+are not ruled out by this two-table obstruction.
+
+### 9. Paired actual families with identical head capacities
+
+Let family A be either complete canonical skeleton. Let family B
+change ONLY the shallow free65 original from2 mod65 to41 mod65.
+Both have private13 digit2, but the head5 row changes from2 to1:
+
+    41=2 mod13, 41=1 mod5.
+
+Keep every pure/star original, all other group originals and all
+remainder phases unchanged. The actual head pure/star measures,
+both full row-capacity vectors, their rootwise totals and all their
+absolute cylinder caps are IDENTICAL in A and B.
+
+Family A matches its reference. Family B matches neither: in both
+target tables free55 and free65 occupy the SAME head5 row2, whereas
+their actual rows in B are2 and1. No permutation can map two distinct
+rows to that one target. For N>=2 the unchanged higher65 role rows
+also disagree with the moved shallow row, giving another named-pair
+obstruction. The N=1 pair already suffices, so no depth argument is
+needed for the example.
+
+These are actual finite congruence families with distinct odd moduli,
+not two arbitrary scalar matrices. They show that even FULL head
+capacity vectors do not decide whether the required label-preserving
+transport exists. The missing information is the labelled gate
+incidence/equality partition. Conversely the example (FC616) keeps that
+partition but changes its relation to the capacity profile. Both
+parts of FC651–FC652 are necessary for this transport method.
+
+### 10. Scope of the resulting progress
+
+The result gives an exact finite test for common head FIRST-row
+transport plus row thinning to either of the two certified tables,
+an explicit test requiring no permutation sweep for the full roster,
+and a larger actual all-depth family with a stable completion rule.
+The last family retains exact h84, Xi_can and Xi_star; FC498–FC504/
+FC575 can be reused with its unchanged continuation inventory,
+middle-prime exclusions, density interpretation and analytic tail
+premise. No new arithmetic or83 update is asserted.
+
+A full-label equality obstruction is only a failure of this exact
+transport route, not a covering example or a failure of every source
+method. Arbitrary changed selected roots, grouped head exponents
+above1, arbitrary depth-varying gates beyond other established
+criteria, changed FC159 inventory and unrestricted Erdős #7 remain
+outside the conclusion.
+
+## The all-ternary-height source passes43 and47, then stops at53
+
+For both fixed head assignments FC110 and FC131, start from the actual
+source of FC634--FC646 with mass
+
+    h_all=403767/52428800
+
+and its unchanged canonical full-group all-query upper measure Xi_can.
+The one predeclared half-clipping schedule has positive exact targets
+at43 and47. The necessary53 mean gate is strictly negative, so no53
+hinge, append or trim was evaluated. The successful head range ends at47.
+This is an ordinary conditional mathematical result with exact rational
+saved-data arithmetic, not new Lean verification or unrestricted Erdős #7.
+
+### 1. Source and numerical-label contract
+
+The old-only remainder is any finite subset of
+
+    {3^t*d:t>=0,d in C},
+
+where d has nonternary prime support in
+V={5,7,11,13,17,19,23,29,31,37,41} of size at least2; for a support
+exactly{h,q}, h=5 or7 and q private, its head exponent is at least2.
+Thus pure ternary powers, singleton nonternary supports, and h*q^e at
+any ternary height remain excluded from that nongroup remainder.
+
+The actual source satisfies the direct full-target source hypotheses,
+or FC604--FC618's head row-capacity/transport extension. Private phase
+freedom is q-adic with the fixed named group gates and selected roots.
+Complete finite capacity sources can be completed to
+N'>=max(N,2,N_all); arbitrary incomplete head rosters retain their
+capacity/gap-filling obligation. The source is fixed for the actual
+family before all query layouts and continuation costs.
+
+Every subsequently added original is assigned once to its greatest
+new support prime. It retains its complete earlier cofactor, arbitrary
+finite exponents and globally fixed residue. Added support primes43
+and47 are included by the positive steps below. The conditional tail
+only admits added support primes strictly above10000. No prime in
+(47,10000], including53, is admitted by this certificate.
+
+This result uses Xi_can, whose private zero deficit is the full
+(n5+n7)/q, not merely the larger uniform Xi_star. It therefore does
+not automatically transfer toFC599–FC603's weaker compensated L<=K source.
+
+### 2. Fresh initialization and fixed transition rule
+
+Only the saved raw objects
+
+    full_group_profile.json: cases.FC110.raw_grouped,
+    full_group_profile.json: cases.FC131.raw_grouped
+
+are consumed. They contain exact load atoms1 through256 and COMPLETE
+moments of orders0,1,2,4, including the entire infinite tail. Each case
+is independently initialized by
+
+    Pi_0=Top_(h_all)(Xi_can).
+
+Neither old source mass, old initial trim nor any old continuation
+state is used. The exact fresh cutoff is16 in both cases. The fixed
+prime schedule is43,47,53,59,61,67,71,73,79, with delta=1/2 and cap2;
+it terminates at its first failing gate or target.
+
+For the current comparison of mass m and first moment M1, at prime q
+first test
+
+    G_q=(q-1)*m-M1.                                (FC655)
+
+Only if G_q>0 calculate the full hinge, with T=(q-1)/2,
+
+    H(T)=M1-T*m+sum_(z<T)(T-z)*a_z,
+    t=m-H(T)/T.                                   (FC656)
+
+Only if t>0 append the normalized cap-two q factor, then trim the
+APPENDED comparison to mass t. Its factor masses are1-2/q at load1
+and2*(q-1)/q^v at each load v>=2. All complete tail moments are
+retained. Every executed trim is resolved in the saved low atoms.
+
+The same actual live-kernel restriction and stage scalar give a
+physical source with the calculated positive mass and inherited
+all-query comparison. Two successful cap-two steps give density
+cap4 relative to full Haar. Profiles, moments and phases from the two
+head tables are never combined.
+
+### 3. Exact common certificate
+
+Exact fraction comparisons on the saved result establish, separately
+for BOTH cases,
+
+    G43>11/100,
+    G47>427/10000,
+    m43>4653/1000000,
+    m47>929/500000,
+    M4_47<960000,
+    G53<-441/50000.                                (FC657)
+
+The fresh cutoff is16; after43 and47 the cutoffs are21 and32. Thus
+
+    Haar(U_head)>929/2000000.                      (FC658)
+
+Here m47 is the distorted-source/comparison mass; the Haar lower
+bound is m47/4. Treating m47 itself as a Haar probability would omit
+the two source density-cap factors.
+
+The following decimals are displays only; certification uses the
+exact rational values retained in the JSON and the strict bounds above.
+
+| Case | m43 | m47 | M4_47 | M1_47/m47 | G53 |
+|---|---:|---:|---:|---:|---:|
+| FC110 |0.004653962986145035|0.0018585676250377297|959263.9828403476|56.7460811560631|-0.00882091278246052|
+| FC131 |0.004653862956998372|0.0018583839397496766|959267.5607270508|56.74915498730133|-0.00882575335578287|
+
+For this final comparison the negative53 gate excludes every positive
+legal constant-clipping target, since
+
+    t_delta=m47-H_Pi(52*delta)/(52*(1-delta))
+       <=G53/(52*(1-delta))<0.                     (FC659)
+
+This uses (Z-52*delta)_+>=Z-52*delta. It is a method obstruction for
+this comparison at this stage. It is not an upper bound on actual
+survival, an assertion that the actual family covers, or a refutation
+of another source or policy. No53 hinge was needed, and no later prime
+or83 diagnostic was evaluated.
+
+### 4. Positive inherited far-tail reserve with the new endpoint
+
+Under the unchanged analytic premise from Reports734/779, retain
+B=10000, ell=8, delta=2/5 and growth exponent25. Its exact coefficient is
+
+    tau4=(5625/6144)*(129/127)^25*10000/9999^4
+         *sum_(j=0..25)25!/((25-j)!*24^j)
+       <549/50000000000000.                       (FC660)
+
+Combining the new endpoint bounds, not the FC498–FC504 endpoint, gives
+
+    m47-M4_47*tau4
+       >929/500000-960000*(549/50000000000000)
+       =577331/312500000
+       >1847/1000000.                             (FC661)
+
+The last positive gap is287/625000000. The exact reserves are
+approximately0.001848035450284633 forFC110 and
+0.0018478517257134119 forFC131.
+
+These are distorted-source mass reserves under the stated analytic
+premise, not final Haar-density bounds. They concern only additional
+support primes STRICTLY greater than10000. The entire interval
+(47,10000] remains excluded. No change of B, moment order, clipping,
+source mass, retained depth, profile, prime order or tail bound was tried.
+
+### 5. Inputs and verification limits
+
+The saved canonical profile has SHA256
+c40c5cb289b3d370bddb0c0c85c29a0904bf8f656c67352543c95dc8d82ca34d.
+The six arithmetic functions were extracted from depth_two_profile.py,
+SHA25683712618f2c1cc2754c955b6a87aaa9d6294cfc79b216d8c09ce195da077b666.
+Only their definitions and checked constants were loaded: no dependency
+top-level code, producer, finite control, historical D0, or old initial
+state was executed or consumed.
+
+The reproducible consumer and exact result are retained under
+`frontier/cover-geometry/pure-support-profiles/`:
+
+- `all_height_continuation.py`;
+- `all_height_continuation.json`.
+
+The result records complete before/append/after snapshots, exact gates
+and hinges, trim certificates, final density conversion, exclusions and
+the tail reserve. The consumer made132 exact checks. An independent
+saved-record audit verified7500 rational identities and20 short scalar
+bounds without importing the consumer, executing its library or rerunning
+the continuation. The source/fee conclusions remain ordinary mathematics;
+these arithmetic checks are not Lean verification.
+
+From the repository root, a fresh result can be reproduced at an explicit
+unused output path with:
+
+```sh
+python3 -I -S -B docs/reports/erdos7-odd-covering/frontier/cover-geometry/pure-support-profiles/all_height_continuation.py \
+  --profile docs/reports/erdos7-odd-covering/frontier/cover-geometry/pure-support-profiles/full_group_profile.json \
+  --arithmetic-library docs/reports/erdos7-odd-covering/frontier/cover-geometry/pure-support-profiles/depth_two_profile.py \
+  --output /tmp/erdos7-all-height-continuation.json
+```
