@@ -25694,3 +25694,196 @@ structural class stated above. A proof using the full original
 head source, a justified new source selection, or global minimum-
 WHOLE-cover replacement constraints remains open. The complete
 future library and all signed transport costs remain payable.
+
+## The complete head source and full support have different consequences
+
+Keep EXACTLY the original family and phases FC1114--1117. No new
+enumeration or covering example is needed. Put t=5^-50 and
+c=4/(3+t). Its pure-five survivor proportion is (3+t)/4, so the
+complete pure-conditioned head probability is
+
+    eta_bar=nu_3 tensor nu_5,
+    nu_5=c Haar_5 restricted to its full pure survivor set. (FC1121)
+
+All head originals at cutoff5 are pure. Thus the full Haar head
+survivor restriction equals ((3+t)/6)eta_bar. This statement uses
+the full original heights. Let N=min(v_5(x_5-1),50), with N=50
+at the zero difference. No pure-five exclusion meets root1, hence
+Pr_(eta_bar)(N>=i)=c5^-i for1<=i<=50. For a=3,4 let E_a be the
+union of the disjoint comb cylinders c_i(a),2<=i<=50 from FC1114.
+Their probabilities are c(1-5t)/20; each lies inside root a.
+
+The only future suffixes in the ALL-original library FC1106 are
+7,11,77. Their complete loads, including the original pure7 and11
+and the original77, are
+
+    L_7=1+1_(x_5=1 mod5)+1_(E_3),
+    L_11=1+1_(x_5=4 mod5)+1_(E_4), L_77=1+N.
+    E L_7^2=(6-2t)/(3+t),
+    E L_11^2=(32-20t)/(15+5t),
+    Psi_5(eta_bar)=E L_77^2=(13-205t)/(6+2t)<13/6. (FC1122)
+
+For the last equality use E(1+N)^2=1+c sum_(i=1..50)(2i+1)5^-i.
+The finite sum is (7-207t)/8. The last moment exceeds the other
+two since1-201t>0 and1-985t>0. These are exact geometric sums on
+the actual full source, not a second finite-state experiment.
+
+For the signed correction return to the DISTINCT pure-first rows
+FC936 and the actual pair potential FC963. Write A_p for their
+additive terminal load. At seven it is1/6 on root1 and E_3, and
+zero elsewhere. At eleven put D=1_(x_5=4 mod5)+1_(E_4) and
+let n_j(N)=min(10,max(0,N-10j)),0<=j<=4. Then
+
+    A_11=[1_(x_7=1)+D+sum_(j=0..4)n_j(N)1_(x_7=2+j)]/10.
+
+In particular, at root4 the77 and55 terms still count separately
+in the ADDITIVE square when x_7=1, although their terminal
+cylinders coincide. The reference seven-law is uniform on six
+nonzero roots. Direct square expansion gives, with
+T=sum_(j=0..4)sum_(r=1..10)(2r-1)5^-(10j+r),
+
+    eta_bar(Phi_5)=c(1-t)/144+1/600+c/375
+                      +c(1-5t)/600+(c/600)T,
+    c/180<=eta_bar(Phi_5)<947/54000<1/50.          (FC1123)
+
+Here T<=sum_(i>=1)(2i-1)5^-i=3/8 and c<4/3 give the upper
+bound. The lower bound is already the35 contribution on root1.
+
+Every seven-row has beta_7<=1/6, hence g(beta_7)=0. On root1
+the ACTUAL seven-row is uniform on roots2,...,6. At root2 the
+only later class is77; at root3 its presence is likewise the only
+eleven constraint; at root4 the union contains at most two of the
+ten nonzero eleven-roots. These rows have g(beta_11)=0. On root1
+the terminal roots within each group are distinct, giving exactly
+
+    G(eta_bar):=sum_p mu_<p(g(beta_p))
+       =(c/25)sum_(j=0..4)sum_(r=6..10)5^-(10j+r)
+       <c/312500.
+    Delta(eta_bar):=eta_bar(Phi_5)-G(eta_bar)>0.    (FC1124)
+
+Indeed (n_j-5)_+ is the sum of the five threshold indicators
+N>=10j+r,r=6,...,10. This proves the finite sum without enumerating
+head states. FC967 identifies Delta with its signed aggregate.
+Consequently that aggregate is positive on the specified complete
+pure head law, and also on its full Haar restriction. It was negative
+on FC1119's further cell restriction. Neither sign transfers merely
+from having the same set of allowed original labels.
+
+Full support alone does not restore the sign. Normalize FC1119's
+cell source to sigma, so Delta(sigma)=-247/1800. The original
+half-threshold rows depend on the actual history and original
+phases, not on the initial seed measure. Both reference potential
+and propagated marginal charges are therefore linear in that seed.
+For the SAME rows take
+
+    eta_mix=(sigma+eta_bar)/2 >=eta_bar/2,
+    Delta(eta_mix)<[-247/1800+1/50]/2=-211/3600<0. (FC1125)
+
+This law assigns positive mass to every actual head survivor cell,
+with the displayed uniform lower-density bound, yet fails FC968.
+Positivity on all private projections is therefore insufficient.
+The construction does not establish failure under a suitable UPPER
+density or moment restriction, or under the specified full law;
+FC1124 proves the opposite sign for that full law. No independently
+chosen kernel or phase is combined with the mixture.
+
+## Whole-cover replacement bounds an entire nested packet
+
+The negative example also fails a stronger, already available
+whole-cover requirement. In a hypothetical cover minimizing class
+count and then modulus sum, apply Report385 RP1--RP4 and FC1034--1036,
+retaining all original labels. Let H=v_3(Q)>=1 be the GLOBAL ternary
+height and suppose5 is old. Since all original pure ternary powers
+are present and disjoint, repair at3 for a3-free old interface has
+
+    R=(3^(H+1)+3)/2
+
+uncovered first-fresh roots. Put e_0=R-1. If the actual five-height
+is at least e_0, the original h=5^e_0 exists by divisor closure.
+It has tau(h)=R, so the existing repair uses R fresh classes and
+gives phase capacity R-1. At its own original phase, comparable
+disjointness gives no proper descendants; at every other phase the
+capacity bounds ALL original h-multiples in that phase jointly.
+
+For one fixed future suffix v>1, consider its actual originals
+5^i v,i>=1. At a fixed old point, at most e_0-1 have i<e_0 by
+numerical distinctness. Every active original with i>=e_0 shares
+the same phase modulo h, so their TOTAL number is at most R-1.
+If the actual five-height is below e_0, only the first group exists.
+Thus, without bounding the five-height or the future suffix,
+
+    #active originals of the form5^i v,i>=1
+         <=2R-3=3^(H+1);
+    H=1 ==> #active originals<=9.                (FC1126)
+
+This is a consumer of the existing joint phase capacity, not a new
+replacement theorem. It bounds old activations, not intersections
+at complete future points, and does not assert a bound on all other
+old cofactors. The original v, if present, occupies a separate unit
+old-cofactor slot.
+
+For FC1119 specifically, H=1 and h=625 already suffices to detect
+failure: its retained-pure repair has R=6,tau(h)=5,N=8, hence
+capacity7, while the47 terminal originals i=4,...,50 share phase1.
+The original h-class has phase32. Move it to1 and delete those47
+classes. The RP repair uses fresh moduli
+9,45,225,1125,5625,27,135,675 to restore the ENTIRE old32 mod625
+class together with retained0 mod3. At depth9 use roots1,2,4,5,7
+with cofactors1,5,25,125,625; on remaining root8 use its depth27
+children8,17,26 with cofactors1,5,25. Each cofactor phase is32.
+All new moduli are distinct and have ternary height above the
+original global height. This exchange removes47 labels and adds8.
+Under whole coverage it contradicts minimum cardinality; the
+actual204-label family remains the previously stated noncover.
+
+### The same capacity prevents negative credit in the two-stage pattern
+
+At H=1, use FC1126 on a head cell with the following COMPLETE active
+nonpure buckets at seven and eleven. At seven there is just35 with
+seven-root1. At eleven
+there are77 with seven-root1 and eleven-root1, and a packet of
+originals5^i*77 with seven-roots2,...,6 and nonzero eleven-roots.
+The pure seven and eleven heights are one, with their pure classes
+normalized to zero as in EB3. Every other nonpure original assigned
+at seven or eleven must have zero old activation on this cell.
+Later buckets may be arbitrary and remain separately payable; pure
+originals remain paid by their pure laws. The estimate below does
+not need to use distinctness of eleven-roots within a packet group.
+
+Let n_j be the active packet count at seven-root2+j. FC1126 gives
+sum_j n_j<=9. Write Phi_5^(7,11) for the terms of FC963 whose ending
+prime is7 or11, and G_(7,11) for these two actual marginal charges.
+Put Delta_(7,11)=Phi_5^(7,11)-G_(7,11) on the cell. Then
+
+    Phi_5^(7,11)=1/36+1/600+sum_j n_j^2/600,
+    G_(7,11)<=sum_j(n_j-5)_+/25.
+    Delta_(7,11)>=53/1800+sum_j[n_j^2/600-(n_j-5)_+/25]
+          >=1/225>0.                             (FC1127)
+
+For the last step, for every integer0<=n<=9,
+n^2/600-(n-5)_+/25>=-n/360. It is immediate for n<=5; for6<=n<=9,
+the difference multiplied by1800 is(n-9)(3n-40)>=0. Sum and use
+sum n_j<=9. Repeated eleven-roots only lower the union charge G_(7,11);
+the additive pair square retains their multiplicities.
+
+Thus the entire nested-packet mechanism behind FC1119 cannot give
+negative packet credit at ternary height one when the EXISTING
+whole-minimality capacity holds. This conclusion applies on each
+specified cell, hence Delta_(7,11)(eta)>=eta(1)/225 for any one
+nonnegative source supported on those cells. Later normalized rows
+preserve these earlier marginal charges. For an additional tail,
+the exact remaining account is eta(Phi_5^(>11))-sum_(p>11)mu_<p(g(beta_p));
+it includes the later pairs' transport through seven and eleven and
+has no asserted sign. When this remaining inventory is empty
+does FC1127 give the whole aggregate. The bound3^(H+1) remains valid
+at arbitrary H, but
+for H>=2 it no longer implies the nine-label inequality used here.
+Other old cofactors, extra active stages and their signed transport
+remain outside FC1127 and must be paid in the unrestricted problem.
+
+FC1121--1127 are ordinary symbolic applications and source-sensitive
+calculations, independently reviewed without new Lean verification.
+They distinguish the specified full source from mere full support
+and connect an existing global replacement rule to one actual
+transport obstruction. They neither force FC1108/1113 at an
+arbitrary proper cut nor settle unrestricted Erdős#7.
