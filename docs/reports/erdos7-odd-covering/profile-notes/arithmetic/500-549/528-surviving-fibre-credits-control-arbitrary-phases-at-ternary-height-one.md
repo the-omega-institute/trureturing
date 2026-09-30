@@ -24293,3 +24293,588 @@ s_B is zero. The remaining quantified requirement is a same-family
 choice of head and a source-correct survivor lower bound beating
 FC1048, or sharper joint constraints replacing this allowance. None
 of the present conditional certificates supplies that last inequality.
+
+## The same head mass sharpens complete query moments before normalization
+
+Keep one actual finite original family, all literal phases and original
+heights, and either FC1016's pure-product FULL head-survivor restriction
+or its specified w=1 unguarded raw FULL head-survivor restriction.
+Further actual restrictions are allowed for the moment estimate, but
+not for the private-cell mass floor below. Let eta have mass0<s<=1.
+For s=0 all moments vanish; no logarithm or positive survivor is inferred.
+
+Write P={3} union P_B for the actual old prime directions, n=|P|,
+a_3=2, and a_q=c_q for the pure choice or a_q=4c_q for the raw choice.
+These are separate sources. Put
+
+    c(m)=product_(p:m_p>0)a_p p^-m_p,
+    A0=product_(p in P)a_p, Lambda=sum_(p in P)log p.
+    eta(joint cylinder at depths m)<=min(s,c(m)),
+    c(m)<=A0 exp[-sum_p m_p log p].               (FC1054)
+
+Zero-depth factors remain one. This uses both FC1016 and the mass of
+that SAME eta; normalized restrictions do not inherit these unnormalized
+caps. No coordinate independence is assumed.
+
+For an integer ell>=1 expand a complete actual suffix load L_v^ell
+into ordered original tuples, including repeated labels. A compatible
+intersection has the coordinatewise maximum depth m; an incompatible
+intersection contributes zero. Numerical distinctness gives at most
+one original per old-cofactor slot in a fixed suffix. Hence, for any
+numerical tuple inventory D_ell containing every retained actual tuple,
+
+    integral L_v^ell deta<=Phi_(ell,D)(s),
+    Phi_(ell,D)(s)=sum_(tuple in D_ell)min(s,c(max depths)). (FC1055)
+
+This simultaneously bounds all suffixes dominated by that inventory.
+Head-dependent immutable tags only remove terms. The inventory may
+be the full finite box, FC1020's sparse top, or FC1046's squarefree
+sparse top, retaining ALL lower layers and mixed tuples. An adaptive
+selection which puts previously paid labels back must enlarge its
+complementary inventory accordingly.
+
+Termwise Phi<=E_ell for the corresponding old arithmetic envelope.
+Phi is increasing and concave in s; Phi/s is nonincreasing, since its
+individual ratios are min(1,c/s). Merely decreasing a source's mass
+therefore does not certify an improved relative load. Favorable
+selection must use its actual joint load, not this mass-only monotonicity.
+
+### A complete all-height bound is logarithmic in the inverse mass
+
+Enlarge depths at the FIXED old directions to all nonnegative integers.
+Exactly w_ell(m)=(m+1)^ell-m^ell ordered depth tuples have maximum m.
+With lambda_p=log p and R=log(A0/s)>=0, FC1055 is at most
+
+    Phi_ell^infinity(s)
+      =sum_(m in N^P)product_p w_ell(m_p)min(s,c(m))
+      <=s sum_m product_p w_ell(m_p)
+                    exp[-(sum_p lambda_p m_p-R)_+]. (FC1056)
+
+All finite original ternary and nonternary heights are included. This
+completion is a convergent numerical majorant, not an infinite family
+of original congruences.
+
+For t>=0 define the cumulative weighted count N_ell(t) by summing
+product w_ell(m_p) over sum lambda_p m_p<=t. Since
+w_ell(m)=integral_(m to m+1)ell*x^(ell-1)dx, its unit boxes lie in
+the weighted simplex sum lambda_p x_p<=t+Lambda. With d=ell*n,
+
+    N_ell(t)<=(ell!)^n (t+Lambda)^d
+                        /[d! product_p lambda_p^ell]. (FC1057)
+
+Indeed substitution y_p=lambda_p x_p reduces this to the integral
+of product ell*y_p^(ell-1) over sum y_p<=t+Lambda. The integer beta
+integral, iterated over coordinates, gives (ell!)^n/d!. This includes
+the zero-depth boxes; there is no omitted endpoint mass.
+
+The identity exp[-(t-R)_+]=integral_(u>=0)e^-u 1_(t<=R+u)du permits
+nonnegative summation followed by FC1057. Expanding the resulting
+integer polynomial and integrating e^-u u^j gives
+
+    integral L_v^ell deta<=s F_ell(log(A0/s)+Lambda),
+    F_ell(Z)=(ell!)^n/[product_p(log p)^ell]
+                                  *sum_(j=0..ell*n)Z^j/j!. (FC1058)
+
+This proves the full tuple estimate for all literal phases and finite
+heights on one source. For FIXED P it gives normalized growth at most
+O_P((1+log(1/s))^(ell*n)); the absolute bound tends to zero with s.
+Neither the logarithmic degree nor its constants are support-uniform.
+The ingredients mass/cylinder clipping, layer-cake and simplex
+integration are standard; the asserted use here is their complete
+same-source suffix estimate and its continuation consumer.
+
+### A small surviving source can pay a correspondingly small full tail
+
+Use FC1043's fixed paid union and its complete light continuation.
+Let R_ell(s) be the minimum of E_ell^sq/s and the FC1058 polynomial
+for ell=2,3, or additionally FC1055's exact inventory ratio when given.
+Same-source Holder supplies the fractional moment. FC1047 then gives
+
+    survivor>=s{1-rho_B-D_B Tbar_3[
+      R_2+C_epsilon R_2^(1-epsilon)R_3^epsilon Sbar_epsilon]},
+                       0<epsilon<=1.              (FC1059)
+
+Every head original, pure future original, paid label and complementary
+light label remains charged. Positivity of the braces is sufficient.
+This improves actual valid joint seeds; it does not normalize a small
+source while leaving its old unconditional fees unchanged.
+
+For fixed P and cap choice, and fixed positive epsilon, the relative
+light allowance is
+O_P((1+log(1/s))^(2n)/B
+ +(1+log(1/s))^((2+epsilon)n)/B^(1+epsilon)).
+Also rho_B=O_P(1/B). Thus some c>0 and B0, depending on P and the
+source choice, make s>=exp[-c B^(1/(2n))] sufficient at B>=B0,
+whenever this prescribed source and full continuation exist. Choose c
+small to control the leading term; the fractional term then decays
+as O_P(B^(-epsilon/2)). This is not a statement that any original
+family supplies such a cut or mass. Growing P changes the estimate.
+
+### Private support supplies an explicit carrier-based consumer
+
+Suppose an irredundant actual family has an original still beyond the
+cut. A private integer of that original avoids every head original.
+Its complete head cell, resolving all old exponents of FUTURE originals
+as well, has Haar mass1/N_B, where
+N_B=3^H product_(q in P_B)q^E_q. On the FULL pure-product head-survivor
+restriction pure conditioning only increases this cell's mass.
+FC935 gives the corresponding floor for the stated w=1 raw source.
+Therefore, separately on either of these two laws,
+
+    s>=1/N_B,
+    G_ell/s<=F_ell(Z_B),
+    Z_B=log(A0 N_B)+Lambda, ell=2,3.               (FC1060)
+
+No arbitrary extra selector or guarded source inherits this floor.
+It gives an existence argument; constructing an actual head cell
+still requires a verified witness. The floor itself was not improved:
+its logarithm now enters a proved relative-moment estimate.
+
+Under the minimum-whole-cover hypotheses giving the paid capacities,
+a full survivor follows if
+
+    rho_B+D_B Tbar_3[F_2(Z_B)+C_epsilon
+         F_2(Z_B)^(1-epsilon)F_3(Z_B)^epsilon Sbar_epsilon]<1. (FC1061)
+
+This condition uses the original registry and a cut, without a separate
+numerical input for s. For an explicit sufficient version take epsilon1,
+ell0=7, B>=5000, c7=99/97 and the P_j polynomials of FC1047. Put
+C_T=D_5000 v_5000 c7^3 P_3(1/7),
+C_S=u_5000 c7^11 P_11(1/7). Monotonicity of D_B,v_B,u_B gives
+D_B Tbar_3<=C_T/B and Sbar_1<=C_S/B. Consequently
+
+    B>=5000,
+    B>50 C_T F_2(Z_B),
+    B^2>(1600/3)C_T C_S F_3(Z_B)                   (FC1062)
+
+makes each light term less than1/50, while rho_B<=24/25 by FC1049.
+For fixed P this is implied by B>C_P(1+log N_B)^(2n). The displayed
+formula, including its changing support, is the unrestricted input
+condition; suppressing that dependence is not legitimate.
+
+The remaining whole-cover obligation is existence of a cut satisfying
+FC1061 or a stronger actual joint comparison. Both N_B and n can
+change with B. After the last original enters the head, the private
+FUTURE premise is absent. No universal positive head reserve has been
+inferred by sending B to infinity.
+
+### Two actual families delimit the relative estimate
+
+The degree ell*n in FC1058 cannot be reduced for the general
+cylinder-plus-mass contract. Fix k>=1 old primes q_1,...,q_k>=5, n=k+1,
+and E>=1. Include pure0 mod3^E, pure0 modq_i and pure0 modp.
+For every a=0,...,E-1 and e_i=1,...,E include modulus
+3^a product_i q_i^e_i p, with old roots1 and a DISTINCT terminal
+root among1,...,E^n. Choose p>max(B,E^n+2). Each mixed original
+has a private point at its own terminal root; an unused nonzero
+terminal root supplies pure private points and a full survivor.
+This is an actual irredundant NONCOVER; divisor closure is not claimed.
+
+Restrict the pure head to its single all-one complete old cell.
+All E^n future labels are active and are below the full ternary heightH=E,
+so the top-only paid rule removes none. Exactly
+
+    s_E=(3^E-1)^-1 product_i q_i^(1-E)/(q_i-1),
+    integral L_p^ell deta/s_E=E^(ell*n),
+    log(1/s_E)=E Lambda+O_P(1).                    (FC1063)
+
+Its FULL pure surviving head has mass one; this sharpness example
+uses a further restriction. Nor does the growing terminal prime allow
+it to refute the complete seed-times-tail estimate.
+
+A second family uses FULL pure head survivors. Take disjoint finite
+sets P_1,P_2 of primes>13, B=max(P_1 union P_2), and p>B. Include
+pure0 at3, all q and p. For q in P_t include head original3q with
+roots(t,1), and future originalqp with roots(1,1). All numerical
+moduli are distinct and divisor-closed above one. A head star has a
+private point with its q root1, ternaryt, other roots2 and terminal2;
+a future qp uses ternary3-t, its q root1, other old roots2 and terminal1.
+Pure private points and the all-two survivor are immediate from these
+literal phases. Thus the family is an irredundant NONCOVER.
+
+On the FULL pure head-survivor source put w_q=1/(q-1),
+T_t=sum_(q in P_t)w_q and h_t=product_(q in P_t)(1-w_q).
+The sole future suffix load is L=sum_q1_(x_q=1). At surviving ternary
+root1 the P_1 indicators vanish and the P_2 mean remains T_2;
+at root2 the roles reverse. Thus
+
+    s=(h_1+h_2)/2,
+    integral L deta/s=(h_1 T_2+h_2 T_1)/(h_1+h_2),
+    integral L^ell deta/s>=min(T_1,T_2)^ell, ell>=1. (FC1064)
+
+All future labels have ternary depth zero, so remain light. Assigning
+successive primes to the smaller T keeps their difference<=1/4 while
+both diverge. The bounds
+0<=-log(1-w)-w<=(2/3)w^2 and sum_(q>=5)(q-1)^-2<=1/3 imply
+
+    integral L^ell deta/s
+       >=[log(1/s)-17/36]_+^ell, while s tends to zero. (FC1065)
+
+Hence small full pure surviving mass does not alone bound normalized
+query moments by a constant. The growing support, NONCOVER scope
+and source choice are essential. All future cylinders here share one
+terminal root, so exact union payment can be far sharper than this
+query bound. On the different w=1 star/raw head law the mass is one;
+no small-mass conclusion transfers to that law.
+
+For the complete mass-only envelope itself, growing support is already
+visible: if s<=product_(q in P_B)min(1,a_q/q), the nonempty squarefree
+old-cofactor tuples at ternary depth zero contribute at least
+s(2^k-1)^ell. This is a bound on the completed envelope, not a claim
+that arbitrary completed phases share an actual realization. Reordering
+coordinates of a FIXED head leaves this symmetric bound unchanged.
+Changing the head set changes the source, suffixes and tail constants.
+
+## A positive head cell admits an explicit relative-load certificate
+
+There is also a simpler useful application of FC939, with no paid
+split and no cylinder-cap completion. Restrict a supplied head-survivor
+law to one fully resolving cell x of positive mass m and define
+K=max_(v>1)L_(B,v)(x). Then its EXACT actual-section seeds are
+G_2=mK^2 and G_3=mK^3. FC936--939's combined continuation gives
+
+    survivor>=m{1-D_B T_3(B)[K^2+(32/3)K^3 S_11(B)]}. (FC1066)
+
+For B>=2187 use ell0=7 in FC908. The rational bounds
+D_B,v_B,u_B<=101/100, c7^3<=107/100 and
+P_3(1/7)=538/343<8/5 give D_B T_3<=2/B.
+Also c7^11<=97/75<4/3 and
+P_11(1/7)<=sum_(j=0..11)2^j=4095, so S_11<=6000/B.
+For K>=1 this yields
+
+    survivor/m>=1-2K^2/B-128000K^3/B^2,
+    B>=max(2187,512K^2) ==> survivor>=(65/128)m>0. (FC1067)
+
+At the threshold the two costs are at most1/256 and125/256.
+If K=0 there is no head-active future nonpure original, so all m
+survives with no threshold requirement.
+
+Since each suffix has at most one original per old cofactor,
+K<=tau(N_B). If N_B=product_(i=1..n)p_i^E_i, weighted AM--GM gives
+
+    tau(N_B)<=[(log N_B+sum_i log p_i)/n]^n
+                                      /product_i log p_i. (FC1068)
+
+In a hypothetical irredundant whole cover any remaining future
+original supplies a positive private head cell. Therefore any cut
+with a nonempty tail and B>=max(2187,512tau(N_B)^2) would contradict
+whole coverage. This is an explicit profile restriction. It does not
+prove that such a cut must exist; old heights and support may grow.
+FC1066--1068 are consumers of existing continuation and counting,
+not new abstract Lean targets or an assertion of literature novelty.
+
+## Published density estimates retain their projection hypotheses
+
+[Hough--Nielsen, arXiv1703.02133v2](https://arxiv.org/abs/1703.02133v2),
+Theorems1--2 and Section2, supply unrestricted-height noncoverage when
+both2 and3 are absent and conditional survivor ratios under Theorem2's
+event/dependency hypotheses and positive nonincreasing prefix Shearer
+values. Their residue-bias argument uses those
+ratios; it does not give them for arbitrary conditioned sources.
+Its application starts with prime5. Its depth-tuple count
+ell_k(p^j)=(j+1)^k-j^k and Lemma5's bias-moment method, together with
+BBMST Lemma3.6's ordered-tuples/LCM moment bound below, are existing
+inputs to reuse; FC1054--1058 do not claim these ingredients as new.
+FC1054 uses the weaker universally
+available same-source min(s,c) information; a stronger conditional
+ratio could improve it only after its own hypotheses are supplied.
+
+[BBMST, arXiv1811.03547v1](https://arxiv.org/abs/1811.03547v1),
+Theorem1.1, gives original Haar uncovered density at least exp(-4C)/2
+for DISTINCT moduli d_i>=M(epsilon), where
+mu(p^j)=1+(log p)^(3+epsilon)/p and C=sum_i mu(d_i)/d_i.
+The large-minimum and distinctness premises are material. The same
+paper's Section6 explicitly identifies an initial sieve bound too weak
+to resolve the full odd-cover problem.
+
+For a concrete projection obstruction choose p>3 and two original
+classes3p,9p with respective CRT conditions(x_3=1,x_p=0) and
+(x_9=1,x_p=1). The original moduli are distinct and their classes are
+disjoint. On the one head cylinder x_9=1 they become TWO classes of
+modulus p with different residues. Thus conditioning away the small
+head does not preserve the distinct-modulus premise. FC922's literal
+suffix registry retains exactly this projected multiplicity.
+
+[BBMST, arXiv1901.11465v1](https://arxiv.org/abs/1901.11465v1),
+Theorems1.1--1.2, excludes all odd squarefree distinct families by
+identifying moduli with nonparallel fixed-coordinate sets. Its final
+paragraph proves more: only primes at most73 need exponent at mostone;
+larger primes may have arbitrary heights. This stronger published
+conclusion is directly reusable whenever that small-prime hypothesis
+holds. Erasing unrestricted small-prime depths loses the correspondence
+and does not extend the result to all finite odd families.
+
+[Harrington--Klein--Lowrance--Trifonov, arXiv2605.18644v1](https://arxiv.org/abs/2605.18644v1),
+Theorem1.9, bounds covered density for LCM2^a3^b5^c by the first
+reciprocal sum minus coprime-pair products plus pairwise-coprime-triple
+products. Its proof exploits the three-prime support and legal
+coverage-increasing rearrangements of pure chains. The remark following
+Problem4 explicitly extends it to ANY three distinct primes, so that
+version should be reused on a three-prime subproblem, including the
+extracted{3,5,7} core on its Haar source. That does not bound the
+entire arbitrary-prime tail or transfer to the pure-product source.
+General support
+is left as Problem4; the theorem also gives no bound for an arbitrary
+raw source. These published results locate usable inputs and missing
+hypotheses; the estimates above make no claim of literature originality.
+
+## Terminal conditional bounds give a product reserve on the same law
+
+Keep FC1026--1030's one actual head-survivor eta and immutable
+head-computable original selection J(x). All original identities,
+literal phases, full pure laws and complementary suffixes remain.
+For each terminal prime define from its head-known unions
+
+    r_p(x)=alpha_p^J/[1-min(b_p^J,1/2)],
+    R_J(x)=product_(actual terminal p>B)(1-r_p(x)). (FC1069)
+
+Since alpha_p+b_p<=1, every r_p is in[0,1]. An empty selected group
+has r_p=0. At EVERY later history, FC1027 bounds conditional selected
+failure by r_p(x): its selected union is contained in A_p(x) and the
+kernel's complementary union is contained in B_p(x).
+
+Fixing x and iterating conditional expectations, avoidance of selected
+failures through the i-th prime has probability at least
+(1-r_i(x)) times the previous avoidance probability. This uses a
+history-wise bound, not independent prime-coordinate laws. Hence on
+the SAME normalized complementary continuation mu^J,
+
+    mu^J(avoid selected tail)>=integral R_J deta,
+    mu^J(full survivor)>=integral R_J deta-A G_2^J-D G_r^J. (FC1070)
+
+The second line subtracts the complete complementary failure bound
+on its original law; it does not condition that theorem onto a new
+selected-survivor law. Head and pure originals remain paid through
+source support. Since product(1-r_p)>=1-sum r_p, FC1070 improves
+FC1029's allowance without requiring sum r_p<1.
+
+For FC1030's at-most-four candidate library minimize, among the same
+at-most16 actual choices,
+
+    Phi_P(x,J)=1-R_J(x)+A d_2(x,J)+D d_r(x,J).
+    survivor>=s-A G_2^R-D G_r^R-integral min_J Phi_P deta. (FC1071)
+
+Every option satisfies1-R_J<=Psi_J, so this complete bound improves
+the corresponding union-fee selector bound. The rational/algebraic
+comparison rule is unchanged. Different selectors still define
+different laws; there is no asserted ordering of attained probabilities.
+
+An exact consumer uses pure0 mod3 and0 modp for distinct primes p>=5,
+plus selected1 mod3p for each p. At B=4 use the unit conditional
+head law eta=delta_(x_3=1). The complementary inventory is empty,
+so the continuation is pure and
+
+    actual survivor=product_p(1-1/(p-1)).          (FC1072)
+
+For p=5,7 it is5/8, compared with the additive allowance7/12.
+Each mixed original has a private point with ternary root1, its own
+p-root1 and every other terminal prime root2; pure private points use
+their own root0 and other roots2. The all-two point survives. This is an actual divisor-closed
+irredundant squarefree NONCOVER, not a new unknown squarefree case.
+For finite sets with sum1/(p-1)>=1, the additive allowance is
+nonpositive but the product remains positive. Such finite sets exist
+by the classical divergence of prime reciprocals.
+
+For each fixed head, r_p=1 precisely when alpha_p+b_p=1 and b_p<=1/2.
+Thus finite R_J is positive exactly when at every terminal either
+A_p union B_p leaves a POSITIVE pure-law-mass hole, or b_p>1/2.
+The latter alternative still has complementary failure to pay.
+Selecting all head-active originals makes B_p empty. In that case
+positive R_J means every terminal envelope leaves such a hole.
+Later cofactor filtering can still produce actual survivors when this
+head envelope has R_J=0; FC1032's full labelled registry is necessary.
+
+## Missing mixed guards need not create a compensating light saving
+
+The following two actual NONCOVERS differ only in the phase of an old
+parent35. They rule out an automatic favourable compensation from
+guard failure under the listed local properties. They do not impose
+or refute GLOBAL WHOLE-COVER MINIMALITY.
+
+Use coordinates t mod3, x mod5, y mod7, z mod17 and cutoff B=16.
+Include pure0 at3,5,7,11,13,17. The old mixed originals are
+15:(t,x)=(1,1), 21:(t,y)=(1,1), 105:(t,x,y)=(2,3,3), and
+
+    G: 35 has(x,y)=(1,2);
+    U: 35 has(x,y)=(2,2).                          (FC1073)
+
+For d=3,5,7,15,21,35,105 include17d with old phase the restriction
+of w=(2,4,4) and respective terminal root1,2,3,4,5,6,7.
+The full numerical inventory is all nonunit divisors of3*5*7*17,
+plus11,13: seventeen distinct odd moduli with divisor closure and
+initial support. All heights are one. Every tail old part is squarefree
+and uses at most two of{5,7,11,13}, so every nonpure future original
+is light under FC1043; none is silently discarded.
+
+At w, terminal8 and nonzero11/13 give a survivor. Each future17d
+has a private point at w and its own terminal root. Mixed head
+private points, with terminal8, are(1,1,4) for15,(1,4,1) for21,
+(2,3,3) for105, and(2,1,2) or(2,2,2) for the respective35.
+Pure private points are obtained from w,terminal8 by making only
+the corresponding pure coordinate zero. Comparable mixed head
+originals differ from105 on a specified coordinate; future originals
+have different terminal roots and old phases avoiding all head classes.
+Thus both complete actual families are irredundant and comparable
+originals are disjoint.
+
+On G's ENTIRE old35 class, pure3 covers t=0 and retained15 covers
+t=1, leaving exactly one depth-one ternary leaf. On U's35 class both
+15 and21 miss, leaving t=1,2. For this h=35 palette, r0 uncovered
+depth-H leaves give first-fresh residual3r0 and tau(h)=4. The existing
+RP forest condition becomes4>2r0, so one remaining leaf is feasible
+and two are not repaired by merely adding further fresh heights.
+
+### The pure sources lose mass without reducing any positive light moment
+
+The common pure-product head has48 equally weighted(t,x,y) cells;
+its nonzero11/13 coordinates integrate to one. Restrict it to each
+family's FULL head survivor set. At t=1 G retains15 cells and U14;
+at t=2 both retain22. The sole actual nonpure suffix is17, with load
+L=(1+1_(t=2))(1+1_(x=4))(1+1_(y=4))-1. Exactly
+
+    s_G=37/48, s_U=3/4,
+    integral L^a deta_G=integral L^a deta_U
+                =[19+9*3^a+7^a]/48, a>0,
+    G_2=149/48, G_3=605/48.                       (FC1074)
+
+The extra t=1 point removed by U has L=0. At t=2 the two exchanged
+parent cells have identical mass and L=1. Equivalently the nonzero
+t=1 loads are six1's and one3; at t=2 they are thirteen1's, eight3's
+and one7. This proves ALL positive moment equalities on the two
+unnormalized restrictions of the same pure base, without a source swap.
+
+### Reconstructing each actual raw source makes the light cost increase
+
+For each family separately use FC930's w=1 raw law. At t=1 its
+5-star excludes x=1 and its7-star excludes y=1. At t=2 neither
+star acts. Every star and mixed row has fraction below1/2 and mass
+one. At t=1 G's35 is already inactive; in U, at x=2 it additionally
+excludes y=2. At t=2 the changed35 rows are interchanged by x=1,2,
+while105 excludes y=3 when x=3. L is unchanged by that interchange.
+All head forbidden events are avoided, so both full raw survivor
+restrictions have mass one. The only moment difference is at
+(t,x)=(1,2), of history mass1/6, where Pr(y=4) changes from1/5 to1/4.
+Thus, for a>0,
+
+    s_G^raw=s_U^raw=1,
+    integral L^a deta_G^raw=[121+50*3^a+5*7^a]/240,
+    integral L^a deta_U^raw-integral L^a deta_G^raw=1/120. (FC1075)
+
+In particular G_2 rises from17/5 to409/120; G_3 rises from531/40
+to797/60. These values were derived from each family's own rows,
+not transported from the pure source.
+
+At terminal17 all seven forbidden roots are different, each of pure
+mass1/16. There are no other tail labels or stages, so beta=L/16
+and the complete normalized square-fee certificate is
+
+    full survivor>=s-G_2/256.                     (FC1076)
+
+Losing the guard lowers this full allowance by1/48 in the pure
+comparison and by1/30720 in the raw comparison. In fact beta<=7/16,
+so the continuation eliminates every terminal failure; attained raw
+survival equals one in both families. The assertion concerns the
+stated valid certificate, not optimality or equality with actual loss.
+The OLD parent's unguarded region is itself removed by that head
+original; it is not new surviving mass. Additional whole-cover
+constraints would be needed to turn guard failure into a useful gain.
+
+## A fixed mixed core supplies a real reserve with arbitrarily many pure old directions
+
+There is a positive branch in which the required head reserve and
+full tail comparison can BOTH be supplied. Assume a finite actual
+family has distinct odd nonunit moduli and divisor closure. For an
+integer B>=3^16 suppose
+
+    every nonpure original assigned at or before B
+    is supported on{3,5,7}.                       (FC1077)
+
+All other old primes may have arbitrary pure chains, with arbitrarily
+many such directions and arbitrary finite heights. Future originals
+retain arbitrary finite support and every height. This is an explicit
+head restriction, not a property inferred for every minimum cover.
+
+On the actual pure core law nu_3 tensor nu_5 tensor nu_7, the mixed
+head labels have disjoint numerical shapes3^i5^e,3^i7^f(i,e,f>=1),
+and3^i5^e7^f(i>=0,e,f>=1). The complete cylinder union bound is
+
+    head mixed loss<=1/3+1/5+2/(3*5)=2/3,
+    s=nu_core(S_core)>=1/3.                       (FC1078)
+
+This sums every old exponent, including ternary depth zero in the
+third shape. The FULL pure head-survivor law is exactly
+(nu_core restricted to S_core) tensor product_(outside old q)nu_q.
+After normalization by s, the outside coordinates remain independent
+of each other and of the conditioned core. Absent core primes may be
+omitted; enlarging positive bounds by their factors is harmless and
+adds no original label.
+
+For a future original u, its complete old part d_u is an original
+head divisor if d_u>1. Divisor closure and FC1077 force d_u either
+to be supported on{3,5,7} or to be a SINGLE outside prime power q^e.
+Hence every actual future section has the disjoint decomposition
+
+    L_v=C_v+sum_(old q>=11)A_(q,v).                (FC1079)
+
+C_v depends only on the core and includes the possible unit old
+cofactor. Each A_(q,v) has only positive q-depths, with at most one
+original at each depth. All lower layers, top layers and cross tuples
+remain in the section; no labels have been paid separately or deleted.
+
+The full core tuple products give, before its survivor restriction,
+C_1=16/5,C_2=325/18,C_3=56389/288, namely
+[1+2(h_j(3,infinity)-1)] product_(q=5,7)[1+c_q(h_j(q,infinity)-1)].
+On the conditional core the j-th moment is at most3C_j. Meanwhile
+shifting each positive outside exponent down by one gives
+
+    E A_(q,v)^j<=c_q q^-1 h_j(q,infinity)<=4/q,
+                          j=1,2,3 and q>=11.      (FC1080)
+
+Here c_q<2 and h_j(q,infinity)<=h_3(11,infinity)=913/500<2.
+Let a=4sum_(old q>=11)1/q<=4(1+log B) and Y=sum A_(q,v).
+Independence gives EY<=a, EY^2<=a^2+a, EY^3<=a^3+3a^2+a.
+Expanding with the independent core supplies
+
+    E L_v^2<=55+21a+a^2<=(a+12)^2,
+    E L_v^3<=588+193a+32a^2+a^3<=(a+12)^3,
+    G_2/s<=K_B^2, G_3/s<=K_B^3,
+    K_B=4log B+16.                                (FC1081)
+
+These are complete actual-section bounds, uniform over the number
+of pure old directions and their heights. The additive inventory was
+supplied by divisor closure; an unrestricted product of old cofactor
+choices would not justify this estimate.
+
+Use FC936--939's combined continuation against the ENTIRE nonpure
+future union. For ell0=floor(log B/log3)>=16, FC908 has
+D_B,u_B,v_B<2, c_ell0^11<2, P_3(1/ell0)<2 and P_11(1/ell0)<4.
+The last two follow by geometric sums of ratios3/16 and11/16;
+log(c_16^11)<=22/511 proves the third. Thus T_3<8/B,S_11<16/B and
+
+    full tail cost/s
+       <16K_B^2/B+(8192/3)K_B^3/B^2<1/16,
+    full survivor>(15/16)s>=5/16.                 (FC1082)
+
+For the last comparison both K_B^2/B and K_B^3/B^2 decrease on this
+range. At B0=3^16, log3<2 gives K_B0<144 and3^16>2^24. The first
+term is less than16*144^2/2^24<1/32. Since144^3<2^22, the second
+is less than1/24576<1/4096. Their sum is less than129/4096<1/16.
+Empty tail follows immediately from FC1078. This is mass under the
+constructed continuation from eta, not a Haar density bound. Positive
+mass on the finite actual CRT carrier supplies an uncovered integer.
+
+Thus a hypothetical globally minimum whole cover, whose divisor
+closure is already available, must have a NONPURE head original
+involving a prime outside{3,5,7} by B=3^16. This is a necessary
+head-geometry condition, not a bound on total support or a proof for
+all odd families. The cutoff is a conservative analytic certificate;
+no numerical optimality or literature priority is claimed. The value
+of this branch is that its head premise supplies a genuine s bound
+and closes EVERY tail fee. Additional mixed head originals destroy
+the proved additive old-part split and remain an unresolved case.
+
+The additions FC1054--1082 are ordinary mathematical derivations and
+applications with independent symbolic review, not new Lean results.
+Unrestricted Erdős #7 remains unresolved: a same-family argument
+must still force a usable general head or control its extra mixed
+incidence without losing the complete source and suffix obligations.
