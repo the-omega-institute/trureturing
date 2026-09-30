@@ -43,7 +43,7 @@
 | 已核对路径 | 当前行为 | 结论 |
 |---|---|---|
 | `lakefile.toml` | 默认目标包含 `Trureturing`、`LeanInformationAudit`，管理 `D5.+` | 优化不能简单删默认覆盖；先保持全覆盖、做增量复用 |
-| `Makefile` | 已有 `make lean`、`lean-report`、`preflight`、`gate`、发布与取回缓存入口 | 扩展现有入口，不叠加第二套命令体系 |
+| `Makefile` | 已有 `make lean`、`lean-report`、`gate`、发布与取回缓存入口 | 扩展现有入口，不叠加第二套命令体系 |
 | `tools/lean-inspector/Inspector.lean` | 一次 `importModules` 导入输入模块；积累 `reports` 后拼接 JSON | 需要批处理与流式编码，当前选择可能仍有很大的导入闭包 |
 | 同上 | 公理闭包已有 Tarjan SCC 与运行级共享缓存 | 保留；不能将“新增 memoization”当作本轮主要收益 |
 | `inspect.sh` / `delta.py` | 已有内容寻址、增量选择与未变记录复用 | 补全依赖证明和失败回退，不重写一个替代系统 |
@@ -53,7 +53,7 @@
 | `ExactRate.lean` | 已证明 `escapeNumerator_without_eq` 等式及正增益刻画 | 可直接复用，避免重新枚举每个留一族 |
 | `SealCommand.lean` | 先在局部环境 kernel-check，再一次发布环境；JSON 为输出 | 保留原子性，增强文件发布与编译产物绑定 |
 | `README.md`、缓存归属文档 | 私有工作树、禁止 symlink 共享 `.lake`、已有 clonefile/donor | 不以移除互斥锁或共享可写目录换性能 |
-| `.github/workflows/ci.yml` | 缓存 restore 步骤中有失败会阻断 required job 的路径 | 单独处理可选缓存传输失败；真正检查失败仍阻断 |
+| `.github/workflows/ci-current.yml` 与拆分的 `ci-*.yml` | 每个 workflow 由自身路径白名单决定是否命中；current 构建一次报告并随项目 buildDir 缓存运输 | 单独处理可选缓存传输失败；真正检查失败仍阻断 |
 
 上述为源码审查，不是耗时排行。必须先测量各阶段 wall time、CPU、RSS、读写与锁等待，再决定并行度和批量大小。源码显示重复工作，不自动证明它是部署环境的最大耗时。
 

@@ -632,9 +632,6 @@ def main():
     parser.add_argument("--mode", choices=("production", "verification"), default="production")
     parser.add_argument("--source-ref", default="")
     parser.add_argument("--source-commit", default="")
-    # Transition for the default dev ci.yml fetch caller; selection stays partitioned.
-    # Remove after ci-push/ci-pr success and required-set migration, with its caller.
-    parser.add_argument("--allow-seed", action="store_true", help=argparse.SUPPRESS)
     # Internal handoff from LeanArchiveFetch after its typed guard assertion.
     parser.add_argument("--writer-owned", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--refresh-stale", action="store_true",

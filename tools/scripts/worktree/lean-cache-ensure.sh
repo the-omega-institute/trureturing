@@ -16,7 +16,7 @@ else
   export MSBUILDDISABLENODEREUSE=1
   cli=(dotnet run --project "$ROOT/tools/StrataLint.Lean/StrataLint.Lean.csproj" --configuration Release --)
 fi
-# Optional read-only source inventory supplied by PR preflight. The native
+# Optional read-only source inventory supplied by PR gate. The native
 # producer accepts it explicitly; it never consumes this environment itself.
 donor=()
 [[ -z "${STRATALINT_LEAN_CACHE_DONOR_REPOSITORY:-}" ]] || donor=(--donor-repository "$STRATALINT_LEAN_CACHE_DONOR_REPOSITORY")
