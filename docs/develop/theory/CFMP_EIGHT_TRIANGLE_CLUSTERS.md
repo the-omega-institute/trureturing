@@ -194,6 +194,8 @@ vertices (the reverse pairing uses its inverse):
 | (2,0) | (14,0) | 0321 |
 | (0,0) | (12,0) | 0321 |
 | (1,0) | (15,0) | 0231 |
+| (13,0) | (7,0) | 0321 |
+| (9,0) | (5,0) | 0132 |
 
 The 96 local edges fall into eight global classes. Six classes have size 8,
 one has size 14 and one has size 34. A direct transitive-closure check gives
