@@ -861,7 +861,11 @@ def main():
     if args.snapshot_directory and (args.command != "snapshot" or args.bounded_cache
             or not (args.stage == "current" and args.layer or not args.stage and len(args.layers or LAYERS) == 1)):
         parser.error("snapshot worker requires exactly one explicit layer")
+    registration_errors = (CachePathRegistrationError,)
     if args.stage:
+        sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "report"))
+        from dotnet_producer import ProjectRegistrationError
+        registration_errors += (ProjectRegistrationError,)
         # Routing is required input validation, outside optional-cache failure handling.
         sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "workflow"))
         import ci_plan
@@ -896,8 +900,6 @@ def main():
     current = (plan, commit) if args.command == "snapshot" and args.stage == "current" else None
     elan = "elan" in args.layers or args.stage is None
     args.layers = [layer for layer in args.layers if layer != "elan"]
-    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "report"))
-    from dotnet_producer import ProjectRegistrationError
     if args.command == "prepare-report":
         # Registration/producer errors are required failures, not optional cache
         # failures. A missing or rejected seed simply keeps the normal resources.
@@ -945,7 +947,7 @@ def main():
             snapshot(args.repository, keys, args.layers, registry, deadline=deadline,
                      current=current, seed_manifest=args.seed_manifest)
         return 0
-    except (ProjectRegistrationError, CachePathRegistrationError) as error:
+    except registration_errors as error:
         print(str(error), file=sys.stderr)
         return 2
     except (OSError, ValueError, TypeError, KeyError, subprocess.CalledProcessError) as error:

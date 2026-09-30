@@ -18,6 +18,20 @@ from cache_fixture import CACHE, REPO, REV, CacheFixture
 
 
 class SnapshotContracts(CacheFixture, unittest.TestCase):
+    def test_unstaged_commands_do_not_import_retired_modules(self):
+        owner = self.restore_owner()
+        original = builtins.__import__
+        def without_retired(name, *args, **kwargs):
+            if name in ("ci_plan", "dotnet_producer"):
+                raise ModuleNotFoundError("retired module: " + name)
+            return original(name, *args, **kwargs)
+        for command in ("keys", "restore", "snapshot"):
+            with self.subTest(command=command), mock.patch.dict(os.environ, self.env), \
+                    mock.patch.object(sys, "argv", [str(CACHE), command, "--repository", str(self.root)]), \
+                    mock.patch.object(builtins, "__import__", side_effect=without_retired), \
+                    contextlib.redirect_stdout(io.StringIO()) as result:
+                self.assertEqual(0, owner.main())
+
     def native_seed(self, layer):
         owner = self.restore_owner()
         owner.dependency_restored_record(self.root).unlink(missing_ok=True)
