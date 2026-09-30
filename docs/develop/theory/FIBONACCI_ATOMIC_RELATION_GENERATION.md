@@ -29130,3 +29130,288 @@ $$
 本节的源结论承接 §223 使用无条件强素数定理的固定阶估计；单位条件、模投影和筛选均在同一个实际增量概率中处理。所得结果包括源 Shannon 熵的主常数 $2b_2$、单位群总变差趋一、受保留质量控制的有界筛选迁移，以及全谱 Fourier 总量的必要下界。实际指定逆余类质量、§221 的剩余核上界、整个 FIB 家族的 Robin 不等式及全部整数上的 RH 判据，仍未由这些结果确定。
 
 ## 追加锚（本行以下为增补区）
+
+## 225. 短补因子能量排除所有自适应 Hölder 分离预算
+
+§222 排除了完整 Euler 分布的逐字符一致快速衰减；§223—224 给出了同一分布的
+幂和、源熵与碰撞量。本节使用最大源原子与短补因子的乘法能量，检验一种更宽的
+Robin 预算估计：先去掉移动大小窗口和 $d/X$ 权重，再将完整源的 Fourier 系数
+与短补因子字符和分离，最后任意选择 Hölder 指数。
+以下是纸面推导，尚未作 Lean 核验。
+
+### 225.1 同一实际整数给出的完整分布上包络
+
+沿用 §220 的 $V=F_r$、素数指标 $r\to\infty$、实际整数 $N_g=1+Vg$
+及 $A,X,y,\ell,s,R,\delta,b_2,\mu_s,\Lambda$。固定 $a>b_2$，令
+
+$$
+H=e^{aR},\qquad D=X/H,\qquad
+\mathcal H=\{h\in\mathbb N:1\le h<H,\ (h,V)=1\},\qquad k=|\mathcal H|,
+$$
+
+$$
+G=(\mathbb Z/V\mathbb Z)^\times,\qquad Q=|G|,
+\qquad B_\chi=\sum_{h\in\mathcal H}\chi(h).
+\tag{225.1}
+$$
+
+充分大时 $H<V$，所以各 $h$ 给出不同的群元素。由素数指标 Fibonacci 数的
+素因子下界 $p\mid V\Rightarrow p\ge2r-1$，
+
+$$
+\sum_{p\mid V}\frac1p
+\le\frac{\log V}{(2r-1)\log(2r-1)}=O(1/\ell).
+$$
+
+以 $H\sum_{p\mid V}p^{-1}$ 控制被排除整数的个数，并保留端点的 $O(1)$，得
+
+$$
+k=H(1+O(1/\ell)),\qquad
+\log k=aR+O(1/\ell),\qquad k/Q\to0.
+\tag{225.2}
+$$
+
+记实际大约数唯一命中集为 $\mathcal H_D$。每个 $d\in\mathcal H_D$
+来自同一个整数 $n(d)=dh$，其中 $h\in\mathcal H$ 且 $d/X\le1$。
+因此
+
+$$
+\mathcal B_D:=\sum_{d\in\mathcal H_D}\frac dX\mu_s(d)
+\le S_{\rm full}:=\sum_{h\in\mathcal H}
+\sum_{d\equiv h^{-1}\pmod V}\mu_s(d).
+\tag{225.3}
+$$
+
+右侧各逆余类不同。这一步是非负上界，已丢弃 $d>D$、$A\le dh\le X$
+以及 $d/X$，不能把 $S_{\rm full}$ 与实际核认成同一个量。
+若还有施加在同一个 $dh$ 上的过滤条件，丢弃后也只得到上界。
+
+设 $c_V=\mu_s((d,V)=1)$，$\nu_s$ 为单位条件源的模像；字符在非单位上延零，
+取约定 $\widehat\mu_s(\chi)=\sum_d\mu_s(d)\chi(d)$。
+正交性给精确等式
+
+$$
+S_{\rm full}=\frac{c_Vk}{Q}
++\frac1Q\sum_{\chi\ne1}\widehat\mu_s(\chi)B_\chi.
+\tag{225.4}
+$$
+
+由 $\log Q=y/2+O(1)$、$\log\Lambda=b_2R+o(R)$ 和式（225.2），
+主字符项满足 $\Lambda c_Vk/Q=o(1)$。
+
+### 225.2 分离估计所需的两组准确范数
+
+在全部 $Q$ 个字符上使用归一计数测度，并把主字符坐标置零，定义
+
+$$
+\|F\|_{p,*}=
+\left(\frac1Q\sum_{\chi\ne1}|F_\chi|^p\right)^{1/p}
+\quad(1\le p<\infty),\qquad
+\|F\|_{\infty,*}=\max_{\chi\ne1}|F_\chi|.
+\tag{225.5}
+$$
+
+这是同一个概率空间上的范数，所以关于 $p$ 单调。
+若 $1/p+1/p'=1$，完整分布的分离预算为
+
+$$
+\mathscr C_p=\Lambda\|\widehat\mu_s\|_{p,*}\|B\|_{p',*},
+\qquad
+\Lambda\left|S_{\rm full}-\frac{c_Vk}{Q}\right|\le\mathscr C_p.
+\tag{225.6}
+$$
+
+下面证明的是这个上界表达式本身的下界，不是左侧相关和的下界。
+
+**引理 225.1（最大原子与短补因子的范数下界）。** 令
+$m_s=\max_d\mu_s(d)$。充分大时，对所有 $1\le p\le\infty$，
+
+$$
+\|\widehat\mu_s\|_{p,*}\ge m_s/2.
+\tag{225.7}
+$$
+
+对 $1\le q\le2$ 与 $2\le q\le\infty$ 分别有
+
+$$
+\|B\|_{q,*}\ge\tfrac12 k^{1-1/q},\qquad
+\|B\|_{q,*}\ge\sqrt{k/2}.
+\tag{225.8}
+$$
+
+证明。§218 的最大原子可取为仅含 $p<y+2$ 的整数，因而最终与 $V$ 互素。
+其余类的原始质量至少为 $m_s$。Fourier 反演及三角不等式给
+
+$$
+\|\widehat\mu_s\|_{1,*}\ge m_s-c_V/Q\ge m_s/2,
+$$
+
+其中最后一步用 $Qm_s\to\infty$。范数单调性给式（225.7）。
+短补因子是不同群元素，故
+
+$$
+\|B\|_{2,*}^2=k-k^2/Q\ge k/2,\qquad
+\|B\|_{\infty,*}\le k.
+\tag{225.9}
+$$
+
+若 $1\le q\le2$，逐项用 $|B_\chi|^q\ge k^{q-2}|B_\chi|^2$，得
+
+$$
+\|B\|_{q,*}^q\ge\tfrac12 k^{q-1}.
+$$
+
+取 $q$ 次根且 $2^{-1/q}\ge1/2$，得到第一项；$q\ge2$ 时直接用范数单调性。
+$\square$
+
+**引理 225.2（短补因子的一范数能量下界）。** 充分大时 $H^2<V$，且
+
+$$
+\|B\|_{4,*}^4\le2H^2(1+\log H),\qquad
+\|B\|_{1,*}\ge\frac{k^{3/2}}{4H\sqrt{1+\log H}}.
+\tag{225.10}
+$$
+
+证明。先在全部字符上使用正交性。每个 $h\in\mathcal H$ 都是单位，故
+
+$$
+\frac1Q\sum_\chi|B_\chi|^4
+=\#\{(h_1,h_2,h_3,h_4)\in\mathcal H^4:
+ h_1h_2\equiv h_3h_4\pmod V\}.
+$$
+
+由 $H^2<V$，两个正乘积均小于 $V$，其模相等就是整数相等。
+扩大到所有 $1\le h_i<H$，以
+
+$$
+h_1=gu,\quad h_3=gv,\quad h_2=jv,\quad h_4=ju,
+\qquad (u,v)=1
+$$
+
+参数化整数乘积相等。若 $m=\max(u,v)$，则 $g,j<H/m$。
+每个 $m$ 至多有 $2m$ 对 $(u,v)$，故
+
+$$
+\frac1Q\sum_\chi|B_\chi|^4
+\le\sum_{1\le m<H}2m(H/m)^2
+\le2H^2(1+\log H).
+\tag{225.11}
+$$
+
+删除主字符项不会增大四次幂和，得到式（225.10）的第一项。
+
+在主字符坐标置零后的同一个归一测度上，Hölder 给
+
+$$
+\mathbb E|B|^2
+=\mathbb E\bigl(|B|^{2/3}|B|^{4/3}\bigr)
+\le(\mathbb E|B|)^{2/3}(\mathbb E|B|^4)^{1/3}.
+$$
+
+因此
+
+$$
+\|B\|_{1,*}\ge\frac{\|B\|_{2,*}^3}{\|B\|_{4,*}^2}
+\ge\frac{(k/2)^{3/2}}{\sqrt2H\sqrt{1+\log H}}
+=\frac{k^{3/2}}{4H\sqrt{1+\log H}},
+\tag{225.12}
+$$
+
+其中使用了式（225.9），分母非零。$\square$
+
+### 225.3 所有指数的一致预算障碍
+
+**定理 225.3（完整分布的全部 Hölder 分离预算都发散）。** 对每个固定 $a>b_2$，
+所有充分大的素数指标都满足
+
+$$
+\boxed{
+\inf_{1\le p\le\infty}\mathscr C_p
+\ge\frac{\Lambda m_s k^{3/2}}{8H\sqrt{1+\log H}}.
+}
+\tag{225.13}
+$$
+
+因而
+
+$$
+\boxed{
+\liminf_{r\to\infty,\ r\text{ 素数}}
+\frac1R\log\inf_{1\le p\le\infty}\mathscr C_p
+\ge\frac a2.
+}
+\tag{225.14}
+$$
+
+特别地，对每个固定 $0<c<a/2$，最终有
+$\inf_p\mathscr C_p\ge e^{cR}\to\infty$。
+这里的下确界允许在每个规模重新选择 $p$，包括 $p=p(y)$ 趋向无穷。
+
+证明。引理 225.1 给所有 $p\ge1$ 的
+$\|\widehat\mu_s\|_{p,*}\ge m_s/2$。
+对于每个共轭指数 $p'\ge1$，同一概率空间上的范数单调性及引理 225.2 给
+
+$$
+\|B\|_{p',*}\ge\|B\|_{1,*}
+\ge\frac{k^{3/2}}{4H\sqrt{1+\log H}}.
+$$
+
+两式相乘就得到式（225.13），常数不依赖 $p$。
+§218 的最大原子估计给
+$\log(\Lambda m_s)=\log(X/A)+o(R)$，而式（225.2）给
+$\log k=aR+O(1/\ell)$。因此式（225.13）右侧的对数等于
+
+$$
+\begin{aligned}
+\log(\Lambda m_s)+\tfrac32\log k-\log H
+ -\tfrac12\log(1+\log H)-\log8
+=\tfrac a2R+o(R).
+\end{aligned}
+$$
+
+得到式（225.14）。证明同时覆盖全部指数及两个端点；
+它没有使用关于增长阶数的 Rényi 渐近，也不需要在各指数之间更换分布。$\square$
+
+这一障碍由短补因子的乘法能量和最大源原子共同承担。
+§224 的源熵与碰撞估计仍描述完整分布的集中程度，
+但不必把它们作为式（225.13）额外的前提。
+
+如果改用单位条件 Fourier 系数，针对原始目标的正确预算是
+
+$$
+c_V\Lambda\|\widehat\nu_s\|_{p,*}\|B\|_{p',*}
+=\mathscr C_p,
+\tag{225.15}
+$$
+
+因为 $\widehat\mu_s=c_V\widehat\nu_s$。所以重新归一化不能消去这个障碍。
+
+### 225.4 这个结论保留的研究出口
+
+定理 225.3 说明：即便能准确算出两个独立范数，并在所有指数中选择最好的，
+式（225.6）仍不足以把完整分布包络压入临界预算。它没有说明
+$S_{\rm full}$ 或 $\mathcal B_D$ 本身大，也没有产生违反 Robin 的整数。
+上界表达式很大，仍允许被它控制的相关和因相位抵消而很小。
+
+对于保留实际条件的核，仍有
+
+$$
+J_h=(D,X]\cap[A/h,X/h]\cap\mathbb N,
+\qquad
+\mathcal B_D=
+\sum_{h\in\mathcal H}
+\sum_{\substack{d\in J_h\\dh\equiv1\pmod V}}\frac dX\mu_s(d).
+\tag{225.16}
+$$
+
+此时源系数依赖 $h$ 的窗口；若再保留 $dh$ 的联合过滤，也依赖同一个乘积。
+它们不再是式（225.4）中的单一完整变换乘上原来的 $B_\chi$。
+保留这些关系的直接加权交集估计、带窗口的字符相关和或合法的联合表示，
+均不被本定理排除，但各自仍须给出实际预算上的上界。
+固定模数平滑数文献的量词与窗口接口见
+[相关文献说明](../../../Library/Fourier/fibentropy2026weightedaggregates.md)。
+
+这把当前缺口限定为同一实际整数的联合关系估计；
+它没有解决整个 FIB 家族的 Robin 不等式，也没有解决所有整数的 RH 判据。
+
+## 追加锚（本行以下为增补区）
