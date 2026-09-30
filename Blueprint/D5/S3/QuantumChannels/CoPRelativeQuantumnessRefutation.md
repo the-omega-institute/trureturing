@@ -94,6 +94,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/meunson-deesuwan-2026-cop-relative-quantumness-refutation` (refuted) by `D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"meunson-deesuwan-2026-cop-relative-quantumness-refutation","declaration_gid":"D5/S3/QuantumChannels/CoPRelativeQuantumnessRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. Meunson; T. Deesuwan (2026). *Cumulant-based quantum relative Rényi functional*. DOI: [10.48550/arXiv.2606.31205](https://doi.org/10.48550/arXiv.2606.31205). URL: <https://arxiv.org/abs/2606.31205v1>.

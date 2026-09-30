@@ -37,7 +37,10 @@ internal sealed class CoPRelativeQuantumnessRefutationDocument : IScribeDocument
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "A qubit refutation", Disp(new Formula.Not(F.Id("claim"))),
                 "Put t_n = (4^n-1)/(4^n+1), R = (I+t_7 Z)/2, S = (I+t_8 H)/2, R' = (I+t_6 Z)/2 and S' = (I+t_3 J)/2, where X and Z are Pauli matrices, H = (11 Z+5 sqrt(3) X)/14 and J = (29 Z+sqrt(455) X)/36. Set epsilon = 1/65537 and recover rho and sigma from R and S by undoing regularization. The unital channel has N(X) = u X+v Z, N(Y) = u w Y and N(Z) = w Z, with u = (3211313/127793250) sqrt(1365), v = -(727356123473/168188824118250) sqrt(3), w = 22365525/22373717. Four explicit Kraus operators realize the channel: reshape the vectors bp(v/a), ep, bm(v/b), em in output-input index order and scale them by sqrt(a/4), sqrt(delta/(4a)), sqrt(b/4), sqrt(delta/(4b)), where a=(1+u)(1+w), b=(1-u)(1+w) and delta=(1-u^2)(1-w^2)-v^2. Entrywise equality to the Kraus sum proves complete positivity using the frozen Kraus-channel theorem; its trace is preserved on every input. Entrywise commutator identities show preservation of every commuting pair. The inputs are noncommuting density matrices, and both outputs are positive definite, so the support inclusion holds. Two-point functional calculus for self-adjoint involutions gives Tr[R exp(log S-log R)] = 50401283/7340144 < 1879639/266240 = Tr[R' exp(log S'-log R')]. Strict monotonicity of the real logarithm contradicts the first inequality of Conjecture 15.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("meunson-deesuwan-2026-cop-relative-quantumness-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private const string RegularizationQuote = """
@@ -54,12 +57,13 @@ internal sealed class CoPRelativeQuantumnessRefutationDocument : IScribeDocument
         """;
 
     private static DocumentBlock Node(string id, string title, Formula formula,
-        string prose, string declaration, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, string declaration, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("copquantumness-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(declaration == "claim"
                 ? [.. SourceInline(prose), Text(@" Verbatim malformed source fragment: \rho,\sigma)\in \mathcal D(\mathcal H)\times\mathcal D(\mathcal H).")]
-                : SourceInline(prose))), role);
+                : SourceInline(prose))), role, resolution);
 
     private static Inline[] SourceInline(string prose)
     {
