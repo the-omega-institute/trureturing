@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:c7ec0878282b4f98be7be8e020a12bf4d9f59c261ffda9b100a598a4fe8c9d7d
   normalized_sha256: sha256:c7ec0878282b4f98be7be8e020a12bf4d9f59c261ffda9b100a598a4fe8c9d7d
 cas_ref: sha256:c7ec0878282b4f98be7be8e020a12bf4d9f59c261ffda9b100a598a4fe8c9d7d
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/SparsePrimePowerCollision.sparse_prime_power_gcd_collision
+    target_statement_id: sha256:03d3a4286fca2d87ba05bf59c5bffbd42583e074496bc4e967b4701f7adc017c
 receipts:
   unresolved_subitems: []
