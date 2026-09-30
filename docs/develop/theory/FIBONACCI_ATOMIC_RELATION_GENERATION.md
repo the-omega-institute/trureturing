@@ -30408,3 +30408,275 @@ $$
 式（227.33）确定了纯大小截断损失的 $T$ 项；§223 的完整幂和自身仍有 $O(T)$ 余项，因此式（227.34）没有确定完整截断幂和的第三系数。
 
 ## 追加锚（本行以下为增补区）
+
+## 228. 实际截断源的短频质量与远离一阶端点的分离障碍
+
+沿用 §§226–227 的实际素数指标族、$y,\ell,s,R,\delta,T,\Lambda$，
+固定 $a>b_2=\pi^2/6$，并取 $H=e^{aR}$、$D=X/H$。
+使用 §226 的精确算术窗口 $W_\eta$、$k_\eta(u)=e^uW_\eta(u)$，
+其中 $\eta=V/(8X)$。记 $G=(\mathbb Z/V\mathbb Z)^\times$、$Q=|G|$。
+
+**定义 228.1（截断幂和与正范数证书）。** 对每个固定 $q\ge2$，置
+
+$$
+S_{q,D,V}=\sum_{\substack{D<d\le X\\(d,V)=1}}\mu_s(d)^q.
+\tag{228.1}
+$$
+
+保留同一大小窗口的变换为
+
+$$
+F_D(\chi,\tau)=\sum_{\substack{D<d\le X\\(d,V)=1}}
+\mu_s(d)\chi(d)d^{i\tau},\qquad
+C_H(\chi,\tau)=\sum_{\substack{1\le h<H\\(h,V)=1}}
+h^{-1+i\tau}\chi(h).
+\tag{228.2}
+$$
+
+字符侧范数均以全部 $Q$ 个字符上的平均测度计算，将主字符坐标置零；
+记为 $\|\cdot\|_{p,*}$，无穷范数取剩余坐标的最大值。
+对 $1<p\le\infty$，令 $p'$ 为共轭指数，定义
+
+$$
+\mathscr P_{p,\eta}
+=\frac\Lambda{2\pi}\int_{\mathbb R}|\widehat k_\eta(\tau)|
+\|F_D(\cdot,\tau)\|_{p,*}
+\|C_H(\cdot,\tau)\|_{p',*}\,d\tau.
+\tag{228.3}
+$$
+
+这份积分有限：有限源变换的模至多为 $1$，补因子变换的模至多为
+$1+\log H$，而 §226 给 $\widehat k_\eta\in L^1$。
+设 $M_\eta$ 为该节精确表示的主字符项，则 Hölder 不等式和积分三角不等式给
+
+$$
+\Lambda|B_D-M_\eta|\le\mathscr P_{p,\eta}.
+\tag{228.4}
+$$
+
+本节研究式（228.3）的大小，不将其下界替代为式（228.4）左侧的下界。
+
+### 228.1 大小截断保留的固定幂和
+
+**命题 228.2（截断后的前两阶）。** 对每个固定 $q\ge2$，
+
+$$
+\log S_{q,D,V}
+=-b_2(q-q^{-1})(R-\delta)+O_q(T).
+\tag{228.5}
+$$
+
+证明。§227 对固定幂权源 $P_q(d)=\mu_s(d)^q/\sum_n\mu_s(n)^q$
+给出单位条件和移动窗口的实际质量损失
+
+$$
+\log S_{q,D,V}-\log\sum_{d\ge1}\mu_s(d)^q
+=-\frac{2b_2^2}{q^3}T+O_q(T/\ell).
+$$
+
+§223 的完整幂和为
+$-b_2(q-q^{-1})(R-\delta)+O_q(T)$，两式相加得到式（228.5）。
+原完整幂和的余项仍是 $O_q(T)$，所以此处没有确定完整第三系数。
+两份源律通过 $P_q$ 的精确定义连接，没有把大小筛选后的源重新假设为 Euler 乘积。$\square$
+
+### 228.2 同一短频段中的余类质量
+
+**命题 228.3（截断源的统一短频下界）。** 对每个固定 $q\ge2$，
+令 $p_0=q/(q-1)$。充分大时，在整个区间
+
+$$
+|\tau|\le\frac1{2aR}
+\tag{228.6}
+$$
+
+上一致成立
+
+$$
+\|F_D(\cdot,\tau)\|_{p_0,*}
+\ge\frac14 S_{q,D,V}^{1/q}.
+\tag{228.7}
+$$
+
+证明。对 $u\in G$ 定义实际余类质量
+
+$$
+r_\tau(u)=\sum_{\substack{D<d\le X\\d\equiv u\pmod V}}
+\mu_s(d)(d/X)^{i\tau},\qquad
+c_\tau=\sum_{u\in G}r_\tau(u).
+$$
+
+因为 $-aR<\log(d/X)\le0$，式（228.6）使每个求和项的相位
+距正实轴至多 $1/2$ 弧度。因此
+
+$$
+\operatorname{Re}r_\tau(u)\ge\frac12 r_0(u),\qquad
+\left(\sum_u|r_\tau(u)|^q\right)^{1/q}
+\ge\frac12\left(\sum_u r_0(u)^q\right)^{1/q}
+\ge\frac12 S_{q,D,V}^{1/q}.
+\tag{228.8}
+$$
+
+最后一步用 $q\ge1$ 时非负质量合并只会增加 $q$ 次幂和，
+不要求不同整数模 $V$ 后仍不同。
+
+标准有限逆 Hausdorff–Young 不等式在字符侧采用平均测度、群侧采用计数测度：
+若 $f$ 是字符侧函数、$g$ 是其逆变换，则
+
+$$
+\left(\sum_{u\in G}|g(u)|^q\right)^{1/q}
+\le\left(\frac1Q\sum_\chi|f(\chi)|^{p_0}\right)^{1/p_0}.
+\tag{228.9}
+$$
+
+这是逆变换的 $L^1\to\ell^\infty$ 界与 Parseval 等距的标准插值；
+条件 $1\le p_0\le2$ 正由 $q\ge2$ 保证。
+可参见 Tao, *The Fourier transform*（2009 年 4 月 6 日）
+[式（6）](https://terrytao.wordpress.com/2009/04/06/the-fourier-transform/)，
+把其中的紧交换群取为当前有限字符群；该文的概率 Haar 测度和对偶群计数测度
+正是式（228.9）的两端归一化。
+将主字符置零，对应在群侧把 $r_\tau(u)$ 换为
+$r_\tau(u)-c_\tau/Q$。由于 $|c_\tau|\le1$，这次修改的
+$\ell^q$ 范数至多为 $Q^{1/q-1}$。对置零后的变换使用式（228.9）和反三角不等式，得
+
+$$
+\|F_D(\cdot,\tau)\|_{p_0,*}
+\ge\frac12 S_{q,D,V}^{1/q}-Q^{1/q-1}.
+\tag{228.10}
+$$
+
+式（228.5）和 $\log Q=y/2+O(1)$ 给
+
+$$
+\log\frac{Q^{1/q-1}}{S_{q,D,V}^{1/q}}
+=-\left(1-\frac1q\right)\frac y2+O_q(R)\longrightarrow-\infty.
+$$
+
+故误差最终至多为 $S_{q,D,V}^{1/q}/4$，证明式（228.7）。
+所有阈值只依赖固定的 $q,a$ 及原参数族，与区间内的 $\tau$ 无关。$\square$
+
+### 228.3 精确窗口与倒数补因子在短频段的下界
+
+**命题 228.4（短频窗口不能删除源下界）。** 对 §226 的指定窗口，
+充分大时在式（228.6）上有
+
+$$
+|\widehat k_\eta(\tau)|\ge\frac14.
+\tag{228.11}
+$$
+
+而对每个 $1\le v\le\infty$ 和全部实 $\tau$，有
+
+$$
+\|C_H(\cdot,\tau)\|_{v,*}
+\ge1-\frac{1+\log H}{Q}\ge\frac12
+\tag{228.12}
+$$
+
+最终成立。
+
+证明。由 $W_\eta=1$ 于 $[\log(A/X),0]$、$W_\eta\ge0$，
+
+$$
+\widehat k_\eta(0)=\int e^uW_\eta(u)\,du
+\ge1-A/X\ge\frac13
+$$
+
+最终成立。所有 $W_\eta$ 的支撑都在同一个固定紧区间内，且
+$0\le W_\eta\le1$，所以 $\int |u|k_\eta(u)\,du\le C$
+对所有充分大参数一致成立。利用 $|e^{-it}-1|\le|t|$，得到
+
+$$
+|\widehat k_\eta(\tau)-\widehat k_\eta(0)|\le C|\tau|.
+$$
+
+由于 $R\to\infty$，这在式（228.6）上给式（228.11）。
+这里没有把 §226 的总体 $O(y)$ Fourier 范数误称为一致有界；
+所需的仅是零点附近的一阶绝对矩界。
+
+另一方面，$H<V$ 最终成立，短补因子中唯一满足 $h\equiv1\pmod V$ 的项是 $h=1$。
+字符正交性给
+
+$$
+\frac1Q\sum_\chi C_H(\chi,\tau)=1.
+$$
+
+主字符项的模至多为 $1+\log H$，故
+$\|C_H(\cdot,\tau)\|_{1,*}\ge1-(1+\log H)/Q$。
+同一概率空间上的范数单调性以及 $(1+\log H)/Q\to0$ 给式（228.12）。$\square$
+
+### 228.4 所有与一阶端点保持固定距离的 Hölder 分离
+
+**定理 228.5（精确窗口的统一正范数障碍）。** 任取固定 $\varepsilon>0$，置
+
+$$
+q_\varepsilon=\max\left\{2,\frac{1+\varepsilon}{\varepsilon}\right\}.
+$$
+
+充分大时，
+
+$$
+\boxed{
+\inf_{1+\varepsilon\le p\le\infty}\mathscr P_{p,\eta}
+\ge\frac{\Lambda S_{q_\varepsilon,D,V}^{1/q_\varepsilon}}
+{64\pi aR}.
+}
+\tag{228.13}
+$$
+
+因此
+
+$$
+\log\inf_{1+\varepsilon\le p\le\infty}\mathscr P_{p,\eta}
+\ge\frac{b_2}{q_\varepsilon^2}(R-\delta)-O_{\varepsilon,a}(T),
+\tag{228.14}
+$$
+
+$$
+\boxed{
+\liminf_{\substack{r\to\infty\\r\ \mathrm{prime}}}
+\frac1R\log\inf_{1+\varepsilon\le p\le\infty}\mathscr P_{p,\eta}
+\ge\frac{b_2}{q_\varepsilon^2}>0.
+}
+\tag{228.15}
+$$
+
+证明。令 $q=q_\varepsilon$、$p_0=q/(q-1)$，则
+$p_0\le1+\varepsilon$。对每个 $p\ge1+\varepsilon$，范数单调性与命题 228.3 给
+
+$$
+\|F_D(\cdot,\tau)\|_{p,*}
+\ge\|F_D(\cdot,\tau)\|_{p_0,*}
+\ge\frac14S_{q,D,V}^{1/q}
+$$
+
+在式（228.6）上一致成立。命题 228.4 对同一区间给
+$|\widehat k_\eta|\ge1/4$ 及 $\|C_H\|_{p',*}\ge1/2$。
+仅在长度为 $1/(aR)$ 的该区间上积分，就得式（228.13），
+其常数和起点与所选 $p$ 无关。
+
+再代入式（228.5）及
+$\log\Lambda=b_2(R-\delta)+O(T)$，得到
+
+$$
+\log\Lambda+\frac1q\log S_{q,D,V}
+=\frac{b_2}{q^2}(R-\delta)+O_q(T).
+$$
+
+由于 $\log R=o(T)$，式（228.13）的常数和 $R$ 因子可并入
+$O_{\varepsilon,a}(T)$，得到式（228.14）。最后 $\delta,T=o(R)$，
+便得式（228.15）。$\square$
+
+该定理覆盖每个固定 $p>1$，也覆盖随规模改变但始终满足
+$p\ge1+\varepsilon$ 的选择。取 $\varepsilon=1/3$，即有 $q_\varepsilon=4$，
+得到 $4/3$–$4$ 分离证书的 $b_2/16$ 下极限。
+其前提和估计没有提供对增长 $q$ 的一致性，因此不覆盖 $p=1$
+或 $p=p(y)\downarrow1$。每个固定 $q$ 可用，与可令 $q$ 随规模无界增长，是不同量词。
+
+§226 保留了真实 $d/X$ 权重，并用算术空隙使光滑表示在全部实际命中上精确；
+本节的障碍因此已包含这两项改进。式（228.15）下界的是在字符和频率上取绝对值、
+再作 Hölder 分离的正表达式，仍不下界其原带符号相关和。
+额外的同乘积过滤可能改变截断幂和；若要将本节搬到该过滤后，
+需要重新建立保留质量及其变换对应。
+精确的实际核预算、整个 FIB 家族以及任意整数的 Robin 判据均未由这些下界解决。
+
+## 追加锚（本行以下为增补区）
