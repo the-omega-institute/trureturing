@@ -29415,3 +29415,460 @@ $$
 它没有解决整个 FIB 家族的 Robin 不等式，也没有解决所有整数的 RH 判据。
 
 ## 追加锚（本行以下为增补区）
+
+## 226. 实际乘积窗口的精确 Mellin 接口与倒数补因子
+
+本节沿用 §§210、217 的同一实际整数族，并保留 §217.5 已有的倒数补因子关系。
+所有渐近均沿素数指标 $r\to\infty$。
+
+### 226.1 共同参数、唯一命中与硬窗口主项
+
+取
+
+$$
+V=F_r,\qquad g_-=\lceil V/10\rceil,\qquad g_+=\lfloor V/5\rfloor,
+\qquad I=[g_-,g_+]\cap\mathbb Z,
+$$
+
+$$
+N_g=1+Vg,\qquad A=1+Vg_-,\qquad X=1+Vg_+,
+\qquad y=\log A,\quad \ell=\log y,\quad s=y\ell,\quad R=y/\ell^2.
+$$
+
+固定 $a>b_2=\pi^2/6$，定义
+
+$$
+H=e^{aR},\qquad D=X/H,\qquad
+\mathcal H=\{h\in\mathbb N:1\le h<H,\ (h,V)=1\},
+\qquad G=(\mathbb Z/V\mathbb Z)^\times,\quad Q=|G|.
+\tag{226.1}
+$$
+
+充分大时 $D>V$，对每个固定正整数 $k$ 有 $H^k<V$，并且
+$A/X\to1/2$、$\log Q=y/2+O(1)$。
+继续使用真实约数增量及其完整概率
+
+$$
+Z(n)=\sigma(n)/n,\qquad b_s(1)=1,\qquad
+b_s(p^j)=Z(p^j)^s-Z(p^{j-1})^s\quad(j\ge1),
+$$
+
+$$
+U(s)=\sum_{d\ge1}\frac{b_s(d)}d,\qquad
+\mu_s(d)=\frac{b_s(d)}{dU(s)},\qquad
+\Lambda=\frac{XU(s)}{(e^\gamma\ell)^s},
+\tag{226.2}
+$$
+
+其中 $b_s$ 按乘法性延拓。已有估计给 $\log\Lambda=O(R)$。
+定义实际大约数命中集、其权重和截断单位质量为
+
+$$
+\mathcal H_D=\{d>D:\exists g\in I,\ d\mid N_g\},\qquad
+B_D=\sum_{d\in\mathcal H_D}\frac dX\mu_s(d),
+$$
+
+$$
+J_h=(D,X]\cap[A/h,X/h]\cap\mathbb N,\qquad
+c_D=\sum_{\substack{D<d\le X\\(d,V)=1}}\mu_s(d)\le1.
+\tag{226.3}
+$$
+
+每个实际命中约数都是单位。若它同时整除 $N_{g_1}$ 与 $N_{g_2}$，则
+$d\mid g_1-g_2$；但 $|g_1-g_2|<V<d$，故 $g_1=g_2$。
+因此 §217 的唯一互补除数切换给
+
+$$
+B_D=\sum_{h\in\mathcal H}
+\sum_{\substack{d\in J_h\\dh\equiv1\pmod V}}\frac dX\mu_s(d).
+\tag{226.4}
+$$
+
+这里 $d>D$ 和 $dh\le X$ 强制 $h<H$；以下所有补因子和均保留这个严格上端点。
+令 $\widehat G$ 为全部 $Q$ 个单位群字符，$\chi_0$ 为主字符，字符在非单位上延零。
+对式（226.4）使用正交性后，硬窗口的主字符项是
+
+$$
+M_0=\frac1Q\sum_{h\in\mathcal H}
+\sum_{\substack{d\in J_h\\(d,V)=1}}\frac dX\mu_s(d).
+\tag{226.5}
+$$
+
+**命题 226.1（硬窗口的截断质量主项界）。** 在上述实际参数下，
+
+$$
+\boxed{0\le M_0\le\frac{c_D}{Q}\le\frac1Q,\qquad
+\Lambda M_0=o(1).}
+\tag{226.6}
+$$
+
+证明。交换两个有限非负求和。固定 $D<d\le X$、$(d,V)=1$，令 $n_d$ 为移除
+乘积同余后仍符合 $h\in\mathcal H$ 和 $d\in J_h$ 的补因子个数。
+每个这样的 $h$ 都是至多 $X/d$ 的正整数，所以
+
+$$
+\frac dX n_d\le\frac dX\left\lfloor\frac Xd\right\rfloor\le1.
+$$
+
+乘以 $\mu_s(d)$ 再对 $d$ 求和，即得 $M_0\le c_D/Q$。
+由 $R=o(y)$、$\log\Lambda=O(R)$ 和 $\log Q=y/2+O(1)$，有 $\Lambda/Q\to0$。
+此估计只控制主字符平均；式（226.4）的其余部分仍是带符号的非主字符相关和。$\square$
+
+### 226.2 保留实际约数权重的精确变换
+
+对 $W\in C_c^\infty(\mathbb R)$，置
+
+$$
+k(u)=e^uW(u),\qquad
+\widehat k(\tau)=\int_{\mathbb R}k(u)e^{-i\tau u}\,du,
+\qquad
+k(u)=\frac1{2\pi}\int_{\mathbb R}\widehat k(\tau)e^{i\tau u}\,d\tau.
+\tag{226.7}
+$$
+
+定义同一字符与实频率上的截断源变换和倒数补因子变换
+
+$$
+F_D(\chi,\tau)=\sum_{\substack{D<d\le X\\(d,V)=1}}
+\mu_s(d)\chi(d)d^{i\tau},\qquad
+C_H(\chi,\tau)=\sum_{h\in\mathcal H}h^{-1+i\tau}\chi(h),
+\tag{226.8}
+$$
+
+并定义实际同余对上的光滑窗口和
+
+$$
+B_W=\sum_{\substack{D<d\le X,\ h\in\mathcal H\\dh\equiv1\pmod V}}
+\frac dX\mu_s(d)W(\log(dh/X)).
+\tag{226.9}
+$$
+
+**命题 226.2（同一乘积窗口的 Mellin 表示）。** 有精确等式
+
+$$
+\boxed{
+B_W=\frac1{2\pi Q}\int_{\mathbb R}\widehat k(\tau)X^{-i\tau}
+\sum_{\chi\in\widehat G}F_D(\chi,\tau)C_H(\chi,\tau)\,d\tau.
+}
+\tag{226.10}
+$$
+
+证明。在 §217.5 的 $d/X=dh/(Xh)$ 关系中保留同一个乘积，有
+
+$$
+\frac dXW(\log(dh/X))=\frac1h k(\log(dh/X)).
+$$
+
+式（226.7）的反演在 $u=\log(dh/X)$ 处给因子
+$X^{-i\tau}d^{i\tau}h^{i\tau}$；再用
+
+$$
+\mathbf1_{\{dh\equiv1\pmod V\}}
+=\frac1Q\sum_{\chi\in\widehat G}\chi(d)\chi(h)
+\quad((dh,V)=1)
+$$
+
+得到式（226.10）。全部算术求和有限，$\widehat k$ 快速下降，所以交换求和与积分合法。
+
+若 $W\ge0$ 且在 $[\log(A/X),0]$ 上 $W\ge1$，则非负性给 $B_D\le B_W$。
+式（226.10）保留的是同一对 $(\chi,\tau)$ 上的两个变换；不能用分别可达的边缘最优值
+替换其相关和。$F_D$ 始终含有 $D<d\le X$，并非 §225 的完整 Euler 变换。
+若再施加依赖同一个 $dh$ 的过滤，其指标仍须留在联合求和中，除非另给精确表示。$\square$
+
+### 226.3 倒数补因子的统一字符矩
+
+定义
+
+$$
+r_{H,V}(n)=\#\{(h_1,h_2)\in\mathcal H^2:h_1h_2=n\},
+\qquad K_4=\frac{\zeta(2)^4}{\zeta(4)}.
+$$
+
+在全部 $Q$ 个字符的归一计数测度上，把主字符坐标置零，记
+
+$$
+\|T\|_{p,*}=\left(\frac1Q\sum_{\chi\ne\chi_0}|T(\chi)|^p\right)^{1/p}
+\quad(1\le p<\infty).
+\tag{226.11}
+$$
+
+**定理 226.3（倒数补因子的二阶、四阶矩）。** 若 $H^2<V$，则对每个实数 $\tau$，
+
+$$
+\boxed{
+\frac1Q\sum_{\chi\in\widehat G}|C_H(\chi,\tau)|^4
+=\sum_{n\ge1}\frac{r_{H,V}(n)^2}{n^2}
+\le K_4,
+}
+\tag{226.12}
+$$
+
+以及
+
+$$
+\frac1Q\sum_{\chi\in\widehat G}|C_H(\chi,\tau)|^2
+=\sum_{h\in\mathcal H}h^{-2}\le\zeta(2).
+\tag{226.13}
+$$
+
+沿当前素数指标 FIB 族，两份完整矩分别趋于 $K_4$ 与 $\zeta(2)$，且收敛对 $\tau$ 一致。
+非主字符范数还满足
+
+$$
+1-\frac{1+\log H}{Q}
+\le\|C_H(\cdot,\tau)\|_{1,*}
+\le\|C_H(\cdot,\tau)\|_{2,*}\le\sqrt{\zeta(2)}.
+\tag{226.14}
+$$
+
+证明。展开四次幂并用字符正交性，得到约束
+$h_1h_2\equiv h_3h_4\pmod V$。每个正乘积都小于 $H^2<V$，故该同余等价于整数相等。
+在相等乘积上，实频率因子
+$(h_1h_2/(h_3h_4))^{i\tau}$ 恰为一，倒数权重为 $(h_1h_2)^{-2}$。
+按乘积 $n$ 分组就得到式（226.12）的等号。
+
+令 $d_j(n)$ 为有序 $j$ 因子分解数。由 $r_{H,V}(n)\le d_2(n)$，以及
+
+$$
+\sum_{j\ge0}(j+1)^2z^j
+=\frac{1+z}{(1-z)^3}=\frac{1-z^2}{(1-z)^4},
+$$
+
+可得
+
+$$
+\sum_{n\ge1}\frac{d_2(n)^2}{n^2}
+=\prod_p\frac{1-p^{-4}}{(1-p^{-2})^4}
+=\frac{\zeta(2)^4}{\zeta(4)}.
+\tag{226.15}
+$$
+
+收敛可先独立核对：每个素数幂上
+$(j+1)^2\le\binom{j+3}{3}$，因此 $d_2(n)^2\le d_4(n)$，而
+$\sum_n d_4(n)n^{-2}=\zeta(2)^4<\infty$。
+有限素数集上的非负展开与单调收敛遂使式（226.15）的 Euler 分解合法。
+这给统一四阶上界，不要求 $V$ 为素数。
+
+二次幂展开只要求 $H<V$；不同 $h$ 的剩余类不同，所以仅保留对角项，得到式（226.13）。
+沿当前 FIB 族，$H\to\infty$，且 $V$ 的最小素因子趋于无穷。
+于是对每个固定 $n$，最终全部正因子均小于 $H$ 且为单位，故
+$r_{H,V}(n)\to d_2(n)$。式（226.15）的可求和上界给四阶矩收敛；二阶矩同理。
+两份精确矩本来就与 $\tau$ 无关，所以该收敛对 $\tau$ 一致。
+
+又因为 $h=1$ 是 $\mathcal H$ 中唯一模 $V$ 等于一的整数，Fourier 反演给
+
+$$
+\frac1Q\sum_{\chi\in\widehat G}C_H(\chi,\tau)=1.
+$$
+
+而主字符项模长不超过 $\sum_{h<H}h^{-1}\le1+\log H$。
+移去它再用三角不等式，得到式（226.14）的下界；上界来自同一概率空间上的
+范数单调性和式（226.13）。$\square$
+
+删除主字符对上述二阶、四阶矩的改变量分别至多为
+$(1+\log H)^2/Q$、$(1+\log H)^4/Q$，对 $\tau$ 一致。
+若保留有限模数素因子，还可将式（226.12）的上界加强为
+
+$$
+K_4\prod_{p\mid V}\frac{(1-p^{-2})^4}{1-p^{-4}},
+$$
+
+因为实际乘积 $n$ 都与 $V$ 互素。
+这里得到的是倒数补因子的范数界；尚未估计截断源 $F_D$。
+
+### 226.4 利用算术空隙精确恢复硬窗口
+
+置
+
+$$
+a_0=A/X,\qquad \eta=\frac{V}{8X},\qquad u_-=\log a_0.
+$$
+
+固定非负函数 $\rho\in C_c^\infty((-1,1))$，满足 $\int_{\mathbb R}\rho=1$，令
+
+$$
+\rho_\eta(u)=\eta^{-1}\rho(u/\eta),\qquad
+W_\eta=\mathbf1_{[u_--\eta,\eta]}*\rho_\eta,
+\qquad k_\eta(u)=e^uW_\eta(u).
+\tag{226.16}
+$$
+
+**定理 226.4（算术空隙中的精确光滑窗口）。** 对充分大的实际参数，
+$W_\eta\in C_c^\infty(\mathbb R)$、$0\le W_\eta\le1$，在 $[u_-,0]$ 上恒为一，
+且支撑包含于 $[u_--2\eta,2\eta]$。对每个正整数 $n\equiv1\pmod V$，
+
+$$
+\boxed{
+W_\eta(\log(n/X))=\mathbf1_{[A,X]}(n).
+}
+\tag{226.17}
+$$
+
+因此式（226.10）取 $W=W_\eta$ 时精确给出 $B_D$，没有额外的实际边缘命中。
+
+证明。卷积的非负性、单位积分与支撑给出前三个性质；在 $u\in[u_-,0]$ 上，
+对每个 $v\in\operatorname{supp}\rho_\eta\subset(-\eta,\eta)$，
+都有 $u-v\in[u_--\eta,\eta]$，所以卷积值为一，包括两个端点。
+
+充分大时 $0<\eta<1/4$。由 $e^{-t}\ge1-t$ 及 $2\eta A\le V/4$，
+
+$$
+Ae^{-2\eta}\ge A-2\eta A\ge A-V/4>A-V.
+$$
+
+由 $e^t\le1+2t$ 在 $0\le t\le1/2$ 上成立，
+
+$$
+Xe^{2\eta}\le X+4\eta X=X+V/2<X+V.
+\tag{226.18}
+$$
+
+实际端点 $A,X$ 都模 $V$ 等于一；区间 $(A-V,A)$ 和 $(X,X+V)$ 中没有同类整数。
+因此在所有正同余点上，光滑窗口的两段过渡区域没有新增点，式（226.17）成立。
+再对式（226.9）中的同一有限算术对逐项应用该式，得到 $B_{W_\eta}=B_D$。$\square$
+
+光滑表示的主字符项定义为
+
+$$
+M_\eta=\frac1Q\sum_{\substack{D<d\le X\\(d,V)=1}}
+\sum_{h\in\mathcal H}\frac dX\mu_s(d)W_\eta(\log(dh/X)).
+\tag{226.19}
+$$
+
+**命题 226.5（光滑主项仍由截断质量控制）。** 有
+
+$$
+\boxed{0\le M_\eta\le e^{2\eta}\frac{c_D}{Q},\qquad
+\Lambda M_\eta=o(1).}
+\tag{226.20}
+$$
+
+证明。固定 $d$，窗口支撑及 $W_\eta\le1$ 使有贡献的正整数 $h$ 个数至多为
+$\lfloor e^{2\eta}X/d\rfloor$，不计其余限制只增大上界。因此
+
+$$
+\frac dX\sum_{h\in\mathcal H}W_\eta(\log(dh/X))\le e^{2\eta}.
+$$
+
+乘以 $\mu_s(d)/Q$ 并求和，得到第一个界。第二个结论由 $\eta\to0$ 和
+命题 226.1 中的 $\Lambda/Q\to0$ 得到。
+
+这里不能把 $M_\eta$ 等同于 $M_0$：主字符平均包含没有满足 $dh\equiv1\pmod V$ 的
+算术对，光滑窗口和硬窗口在这些对上可以不同。式（226.17）识别的是完整实际同余和，
+没有逐个识别其字符分量。$\square$
+
+### 226.5 精确光滑化的频谱成本
+
+**命题 226.6（窗口 Fourier 一范数及频率尾）。** 对式（226.16）的固定平滑核，
+存在与 $r$ 无关的常数，使
+
+$$
+\|k_\eta\|_1+\|k_\eta'\|_1=O(1),\qquad
+\|k_\eta''\|_1=O(\eta^{-1}),
+\tag{226.21}
+$$
+
+$$
+|\widehat k_\eta(\tau)|
+\le C\min\{1,|\tau|^{-1},(\eta\tau^2)^{-1}\},
+\tag{226.22}
+$$
+
+其中 $\tau=0$ 处使用第一项。因而
+
+$$
+\boxed{
+\|\widehat k_\eta\|_1\ll1+\log(1/\eta)=O(y).
+}
+\tag{226.23}
+$$
+
+更一般地，对每个固定整数 $j\ge2$ 和 $T>0$，
+
+$$
+\int_{|\tau|>T}|\widehat k_\eta(\tau)|\,d\tau
+\ll_j(\eta T)^{1-j}.
+\tag{226.24}
+$$
+
+证明。因 $A/X\to1/2$，$u_-$ 留在一个固定有界区间；$e^u$ 在全部窗口支撑上
+一致有界。区间指标与平滑核卷积的导数为
+
+$$
+W_\eta'(u)=\rho_\eta(u-u_-+\eta)-\rho_\eta(u-\eta).
+$$
+
+于是 $\|W_\eta'\|_1=O(1)$、
+$\|W_\eta''\|_1=O(\eta^{-1})$，而 $\|W_\eta\|_1=O(1)$。
+对 $k_\eta=e^uW_\eta$ 用乘积求导即得式（226.21）。
+不分部积分、一次分部积分和两次分部积分依次给式（226.22）的三项。
+在 $|\tau|\le1$、$1<|\tau|\le\eta^{-1}$ 和 $|\tau|>\eta^{-1}$ 上分别积分，
+得到 $O(1)$、$O(\log(1/\eta))$ 和 $O(1)$。
+又 $X\asymp V^2$，故 $\eta^{-1}=8X/V\asymp V$，
+$\log(1/\eta)=y/2+O(1)$，得到式（226.23）。
+
+对固定 $j\ge2$，同一卷积导数计算给
+$\|k_\eta^{(j)}\|_1=O_j(\eta^{1-j})$。
+作 $j$ 次分部积分，再在 $|\tau|>T$ 上积分，得到式（226.24）。$\square$
+
+式（226.23）不提供随 $\eta\to0$ 一致的 $O(1)$ 频谱一范数。
+特征频率尺度 $\eta^{-1}\asymp V$ 必须计入后续源变换估计。
+若截去 $|\tau|>T$，还须将式（226.24）乘以实际的 $\Lambda$ 及源、补因子范数，
+才能判定所丢弃的预算；仅有 $T\to\infty$ 不承担该结论。
+
+### 226.6 实际加权核的 $4/3$ 阶源谱接口
+
+定义非负谱积分
+
+$$
+\mathcal I_D=\int_{\mathbb R}|\widehat k_\eta(\tau)|
+\left(\frac1Q\sum_{\chi\ne\chi_0}|F_D(\chi,\tau)|^{4/3}\right)^{3/4}
+\,d\tau.
+\tag{226.25}
+$$
+
+**定理 226.7（实际窗口的 $4/3$–$4$ 充分预算接口）。** 对充分大的实际参数，
+
+$$
+\boxed{
+0\le B_D\le M_\eta+\frac{K_4^{1/4}}{2\pi}\mathcal I_D.
+}
+\tag{226.26}
+$$
+
+因此，若 $\mathcal I_D=o(\Lambda^{-1})$，则 $\Lambda B_D\to0$。
+更一般地，若
+
+$$
+\limsup_{r\to\infty,\ r\text{ 素数}}\Lambda\mathcal I_D
+<\frac{2\pi}{K_4^{1/4}},
+\tag{226.27}
+$$
+
+则 $\limsup\Lambda B_D<1$。
+
+证明。定理 226.4 使式（226.10）的左边精确等于 $B_D$。
+移出主字符项后，对同一实频率下的非主字符和使用归一测度上的 Hölder 不等式，
+
+$$
+\left|\frac1Q\sum_{\chi\ne\chi_0}
+F_D(\chi,\tau)C_H(\chi,\tau)\right|
+\le\|F_D(\cdot,\tau)\|_{4/3,*}\|C_H(\cdot,\tau)\|_{4,*}
+\le K_4^{1/4}\|F_D(\cdot,\tau)\|_{4/3,*}.
+$$
+
+再对 $\tau$ 积分并用三角不等式，得到式（226.26）。该积分确实有限，因为
+$|F_D(\chi,\tau)|\le c_D\le1$，且命题 226.6 给
+$\widehat k_\eta\in L^1(\mathbb R)$。两个条件结论分别由
+$\Lambda M_\eta=o(1)$ 和式（226.26）直接推出。$\square$
+
+以上仅给充分接口。现有平凡界只能推出
+$\mathcal I_D\le c_D\|\widehat k_\eta\|_1=O(y)$，
+尚未得到式（226.27），更没有支付实际 Robin 预算。
+倒数补因子的统一四阶界移除了 §225 无权补因子的增长损失，却没有估计同一
+固定模数、截断 $d$ 范围和实频率上的 $F_D$。
+也可以保留式（226.10）的带符号联合相关和；式（226.27）不是实际核较小的必要条件。
+同一个 $dh$ 上的附加过滤仍须以联合表示或直接估计保留。
+本节没有推出完整 FIB 家族的 Robin 不等式或任意整数的 RH 判据。
+
+## 追加锚（本行以下为增补区）
