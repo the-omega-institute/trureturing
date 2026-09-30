@@ -1870,3 +1870,26 @@ $(1,\alpha,\gamma)$ is a rational basis of $K$. Addition and negation
 act coordinatewise. The next step toward Theorem 11.1 is to transport
 the order lattice through this equivalence and identify its quotient
 with the two cyclic coordinate factors.
+
+## 49. Trace pairing of a Lucas cubic block
+
+**Theorem 49.1 (Lucas-block trace matrix).** Let $j\geq1$, put
+$B_j=L_{3^j}^2+3$, and let $K/\mathbb Q$ have a cubic power basis
+$(1,\theta,\theta^2)$ with $\theta^3=B_j$. Set
+$\beta=(1+\theta+\theta^2)/3$. Then the trace pairing on
+$(1,\theta,\beta)$ has matrix
+
+$$
+\begin{pmatrix}
+3&0&1\\0&0&B_j\\1&B_j&(2B_j+1)/3
+\end{pmatrix}.
+$$
+
+Indeed, the minimal polynomial of $\theta$ is $T^3-B_j$, so the
+traces of $1,\theta,\theta^2$ are $3,0,0$. Reducing products by
+$\theta^3=B_j$ gives
+$\operatorname{Tr}(\beta)=1$,
+$\operatorname{Tr}(\theta\beta)=B_j$, and
+$\operatorname{Tr}(\beta^2)=(2B_j+1)/3$. This computes the trace
+matrix in Theorem 11.1 under its cubic power-basis hypothesis; it does
+not identify the field discriminant or the normalization index.
