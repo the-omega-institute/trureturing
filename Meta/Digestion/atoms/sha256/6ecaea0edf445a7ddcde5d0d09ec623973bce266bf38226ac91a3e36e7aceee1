@@ -1,0 +1,16 @@
+## theorem 1.1: Parity complete mapping
+
+For every $m>0$, the group
+$H_m$ admits a complete mapping. More explicitly, represent
+$\varepsilon\in\mathbb Z/2\mathbb Z$ by $\bar\varepsilon\in\{0,1\}$,
+put $k=j+\bar\varepsilon$ in $\mathbb Z/(2m)\mathbb Z$, and define
+
+\[
+ h(k)=\begin{cases}0,&0\le\bar k<m,\\1,&m\le\bar k<2m,
+ \end{cases}
+ \qquad
+ \theta_m(\varepsilon,j)=(\varepsilon+h(k),k).
+\]
+
+Both $\theta_m$ and $x\mapsto x+\theta_m(x)$ are bijections of $H_m$.
+
