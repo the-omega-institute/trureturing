@@ -17870,3 +17870,271 @@ $$
 即使固定本原导子四，并且保留真正的五窗口接缝，公因子仍可含任意预先指定的有限素数幂核心。几何窗口没有消除其 Euler 权重。该构造比 §181 的一般有向整数组成 $(g,0)$ 更强：这里完整来源本身已落在规范五窗口截面上。
 
 ## 追加锚（本行以下为增补区）
+
+## 184. 大小素数与首次秩的共同尾界
+
+继续命题 183.1 的同一实际来源
+
+$$
+N_g=gF_r,\qquad r=j(g)+3,
+$$
+
+其中 $j(g)$ 是满足 $g<\phi^j$ 的最小正偶数。这里 $g$ 可以任意变化，不要求固定素支撑或阶乘形状。
+
+**引理 184.1（大小素数与首次秩的共同尾界）。** 对任意整数 $r\ge6$、整数 $y\ge5$，令
+
+$$
+T(r,y)=\sum_{\substack{p\mid F_r\\p>y}}\log\frac p{p-1}.
+$$
+
+则
+
+$$
+0\le T(r,y)\le\tau(r)\sqrt{\frac{6(1+\log r)}{y\log y}}
+<4r^{1/3}\sqrt{\frac{6(1+\log r)}{y\log y}}.
+\tag{184.1}
+$$
+
+证明。按同一个实际 Fibonacci 指标的首次秩 $d=z(p)\mid r$ 分桶，写
+
+$$
+B_{d,>y}=\sum_{\substack{p>y\\z(p)=d}}\log\frac p{p-1}.
+$$
+
+$d\le5$ 时没有这样的素数，因为 $F_1,\ldots,F_5$ 的素因子至多为五。对 $d>5$，引理 163.1 给
+
+$$
+B_{d,>y}\le\frac{6(1+\log d)}d.
+$$
+
+另一方面，桶内所有不同素数的乘积整除 $F_d<e^d$，每个素数大于 $y$，所以个数小于 $d/\log y$。$y$ 为整数且 $p>y$ 给 $p-1\ge y$，因此
+
+$$
+B_{d,>y}\le\frac d{y\log y}.
+$$
+
+对同一个桶取两界的较小者，并用 $\min(u,v)\le\sqrt{uv}$，得到
+
+$$
+B_{d,>y}\le
+\sqrt{\frac{6(1+\log d)}{y\log y}}
+\le\sqrt{\frac{6(1+\log r)}{y\log y}}.
+$$
+
+桶数至多 $\tau(r)$，引理 164.2 已给 $\tau(r)<4r^{1/3}$。$\square$
+
+## 185. 补齐小素支撑后，全公因子规范族的严格 Robin 尾界
+
+**定理 185.1（任意公因子规范族的最终严格 Robin 与加性余量）。** 在 §163 的已发表 Fibonacci 秩性质与 §160.1 的 Axler 解析输入下，
+
+$$
+\liminf_{g\to\infty}
+\left(e^\gamma\log\log N_g-Z(N_g)\right)
+\ge e^\gamma\log2>0.
+\tag{185.1}
+$$
+
+一个保守的显式充分条件是
+
+$$
+\log\log g\ge200.
+$$
+
+在该范围有更具体的严格余量
+
+$$
+e^\gamma\log\log N_g-Z(N_g)>\frac{19}{50}e^\gamma>0.
+\tag{185.2}
+$$
+
+这给出该族的尾区间，未声称如此巨大的阈值具有计算实用性，也没有覆盖阈值以下的全部公因子。
+
+证明。令 $\ell=\log g$、$v=\log\ell$。由命题 183.1，
+
+$$
+r=\frac{\ell}{\log\phi}+O(1),\qquad
+\log N_g=2\ell+O(1),\qquad
+\log\log N_g=v+\log2+o(1).
+\tag{185.3}
+$$
+
+取整数切面
+
+$$
+y=\lceil r^{5/6}\rceil,\qquad
+A=\prod_{\substack{p\mid F_r\\p\le y}}p,\qquad
+B=gA.
+$$
+
+$A\mid F_r$，所以 $B\mid N_g$，并且同一个 $N_g$ 的所有 $p\le y$ 的 Fibonacci 素因子已经包含在 $B$ 中。对剩余素因子按引理 184.1 付款，得到
+
+$$
+Z(N_g)<\frac{N_g}{\varphi(N_g)}
+\le\frac B{\varphi(B)}e^{T(r,y)}.
+\tag{185.4}
+$$
+
+这里后一个比较可为真不等式：若某个 $p>y$ 同时整除 $g$ 与 $F_r$，尾部再次计入它，只会扩大上界，不会漏计。
+
+由 §178 证明中的初等 Chebyshev 界，
+
+$$
+\log A\le\vartheta(y)\le4(\log2)y=O(r^{5/6}),
+$$
+
+故
+
+$$
+L_B:=\log\log B=v+O(r^{-1/6}).
+$$
+
+引理 184.1 给
+
+$$
+T(r,y)=O(r^{-1/12}),\qquad vT(r,y)\to0.
+$$
+
+$B\ge g\to\infty$，因此可使用 §160.1 所引 Axler 的原始精确 totient 包络
+
+$$
+\frac B{\varphi(B)}
+<e^\gamma\left(L_B+\frac{a_0}{L_B^2}\right),
+\qquad a_0=0.0094243.
+\tag{185.5}
+$$
+
+这里保留 $a_0/L_B^2\to0$，不把它改成 §164.1 中固定的加性误差。式（185.4）—（185.5）于是给
+
+$$
+Z(N_g)<e^\gamma\bigl(v+o(1)\bigr).
+\tag{185.6}
+$$
+
+与式（185.3）的实际预算比较，即得式（185.1）。
+
+下面核对显式阈值。若 $v\ge200$，由 $2/5<\log\phi<1$、$\ell/\log\phi<j\le\ell/\log\phi+2$，得到
+
+$$
+\ell<r<6\ell,\qquad
+y\le2r^{5/6},\qquad
+\frac{\log A}{\ell}<48\ell^{-1/6}.
+$$
+
+因而
+
+$$
+v\le L_B<v+48e^{-v/6}.
+$$
+
+又 $r>e$，且 $\log y\ge(5/6)\log r$，所以
+
+$$
+\frac{1+\log r}{\log y}\le\frac{12}{5},
+\qquad
+T(r,y)<16r^{-1/12}<16e^{-v/12}=:t.
+$$
+
+§164.1 已核对 $\log\log N_K<63/2$，故 $B\ge g$ 与 $v\ge200$ 保证 $B>N_K$，式（185.5）的解析阈值确实通过。因此
+
+$$
+Z(N_g)
+<e^\gamma\left(v+48e^{-v/6}+\frac{a_0}{v^2}\right)
+\exp(16e^{-v/12}).
+$$
+
+对 $v\ge200$，直接有
+
+$$
+48e^{-v/6}+a_0/v^2<1/50,\qquad 0<t<1/2.
+$$
+
+例如前一式的两项分别小于 $48\cdot2^{-33}$ 与 $1/4000000$，其和小于 $1/50$。由 $e^t\le1+2t$（$0\le t\le1/2$），以及 $(v+1)e^{-v/12}$ 在 $v\ge200$ 递减，得到
+
+$$
+\begin{aligned}
+(v+1/50)e^t
+&\le v+1/50+2(v+1/50)t\\
+&<v+1/50+32(v+1)e^{-v/12}\\
+&\le v+1/50+6432e^{-200/12}\\
+&<v+1/50+6432\cdot2^{-16}\\
+&<v+3/25.
+\end{aligned}
+$$
+
+最后一个有理比较为 $64320<65536$。命题 183.1 的下界给
+
+$$
+N_g>\frac{\phi^3}{\sqrt5}g^2>g^2,
+$$
+
+所以 $\log\log N_g>v+\log2>v+1/2$。两端比较得到式（185.2）。$\square$
+
+证明的作用是把实际公因子的全部素数先放在同一个 $B$ 中，再控制真实 Fibonacci 因子带来的新增素数；不要求 $g/\varphi(g)$ 小，也没有把互不相容来源的极值拼接。这里的基本判别式虽恒为四，最终安全性来自大小素支撑与共同秩尾界的组合，而非仅凭字符筛选。
+
+## 186. 阶乘子族的 Robin 比值趋于一与固定小导子的边界
+
+取 $g_m=m!$、$j_m=j(g_m)$、$r_m=j_m+3$，记
+
+$$
+N_m=m!F_{r_m}.
+$$
+
+**定理 186.1（严格低于边界且相对比值趋于一）。** 在定理 185.1 的无条件文献输入及经典 Mertens 乘积公式下，存在 $m_0$，使全部 $m\ge m_0$ 满足
+
+$$
+0<\frac{Z(N_m)}{e^\gamma\log\log N_m}<1,
+\qquad
+\lim_{m\to\infty}\frac{Z(N_m)}{e^\gamma\log\log N_m}=1.
+$$
+
+每个 $N_m$ 都采用命题 183.1 的真实单位位为零的规范组成，本原范数与导子恒为一和四。
+
+证明。最终严格上界由定理 185.1 给出。由阶乘的积分估计
+
+$$
+\log(m!)=m\log m-m+O(\log m)
+$$
+
+及命题 183.1，得到
+
+$$
+\Lambda_m:=\log\log N_m
+=\log m+\log\log m+\log2+o(1)
+\sim\log m.
+$$
+
+同一个整数满足 $m!\mid N_m$，而约数权重随每个素数指数单调，故
+
+$$
+Z(N_m)\ge Z(m!)
+=P(m)\prod_{p\le m}(1-p^{-v_p(m!)-1}),
+\qquad
+P(m)=\prod_{p\le m}(1-p^{-1})^{-1}.
+$$
+
+最后的截断乘积趋于一。固定 $K$ 时，$p\le K$ 的有限多个因子因 $v_p(m!)\to\infty$ 而趋于一；对 $K<p\le m$，有
+
+$$
+0\le-\log(1-p^{-v_p(m!)-1})\le2p^{-2},
+$$
+
+其和由 $2\sum_{n>K}n^{-2}$ 控制，随 $K\to\infty$ 趋于零。经典 Mertens 公式 $P(m)\sim e^\gamma\log m$ 因而给
+
+$$
+Z(m!)\sim e^\gamma\log m.
+$$
+
+再由 $\Lambda_m\sim\log m$ 得该 Robin 比值的下极限至少为一；已经证明的最终严格上界给上极限至多为一，故极限恰为一。这个步骤不需要 Grönwall 定理。$\square$
+
+Mertens 输入沿用 §§87、92、97 的文献范围，可参见 J. D. Lichtman, *Mertens' prime product formula, dissected*, [Theorem 1.1](https://arxiv.org/html/2002.03361v3)。本节为现有文献输入与实际 FIB 来源的综合，不宣称新的原创最大阶定理，也没有 Lean 核验身份。
+
+**推论 186.2（固定小导子仍不足以得到统一消失比值）。** 这族来源的 $q_D=4$，但
+
+$$
+\frac{(g_m/\varphi(g_m))^2(2+\log4)}{\Lambda_m}
+\sim e^{2\gamma}(2+\log4)\log m\longrightarrow\infty.
+$$
+
+所以 §181.3 的充分联合条件在这个真实规范族上不成立，其实际 Robin 比值也确实趋于一而非零。它没有反驳 §181.3：该充分条件未满足。这说明几何范数界与固定本原平方类仍需结合公因子素支撑；五窗口合法性本身不能提供固定百分比的全局安全余量。另一方面，定理 185.1 给该族最终严格 Robin，故“字符充分条件失败”也不是 Robin 失败。
+
+## 追加锚（本行以下为增补区）

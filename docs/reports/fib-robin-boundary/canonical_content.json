@@ -1,0 +1,3366 @@
+{
+  "all_source_rows_sha256": "b015a0b45623efa465c48a7acd7c72cd458ba5fa6dcd703273a391a5ea605a94",
+  "counts": {
+    "consecutive_contents": 10000,
+    "even_null_prefixes": 28,
+    "factorials": 119,
+    "primorials": 26
+  },
+  "finite_rank_and_euler": {
+    "actual_prime_rank_checks": 32,
+    "factorial_m_range": [
+      2,
+      14
+    ],
+    "rows": [
+      {
+        "B_over_totient": [
+          2,
+          1
+        ],
+        "N_over_totient": [
+          5,
+          2
+        ],
+        "Z_N": [
+          9,
+          5
+        ],
+        "Z_factorial": [
+          3,
+          2
+        ],
+        "complete_fibonacci_factorization": [
+          [
+            5,
+            1
+          ]
+        ],
+        "fibonacci_index": 5,
+        "large_fibonacci_euler_product": [
+          5,
+          4
+        ],
+        "large_prime_rank_buckets": [
+          {
+            "primes": [
+              5
+            ],
+            "rank": 5,
+            "sum_reciprocal_p_minus_one": [
+              1,
+              4
+            ]
+          }
+        ],
+        "m": 2,
+        "small_support_augmented_B": "2",
+        "support_split_y": 4
+      },
+      {
+        "B_over_totient": [
+          3,
+          1
+        ],
+        "N_over_totient": [
+          13,
+          4
+        ],
+        "Z_N": [
+          28,
+          13
+        ],
+        "Z_factorial": [
+          2,
+          1
+        ],
+        "complete_fibonacci_factorization": [
+          [
+            13,
+            1
+          ]
+        ],
+        "fibonacci_index": 7,
+        "large_fibonacci_euler_product": [
+          13,
+          12
+        ],
+        "large_prime_rank_buckets": [
+          {
+            "primes": [
+              13
+            ],
+            "rank": 7,
+            "sum_reciprocal_p_minus_one": [
+              1,
+              12
+            ]
+          }
+        ],
+        "m": 3,
+        "small_support_augmented_B": "6",
+        "support_split_y": 6
+      },
+      {
+        "B_over_totient": [
+          3,
+          1
+        ],
+        "N_over_totient": [
+          267,
+          88
+        ],
+        "Z_N": [
+          225,
+          89
+        ],
+        "Z_factorial": [
+          5,
+          2
+        ],
+        "complete_fibonacci_factorization": [
+          [
+            89,
+            1
+          ]
+        ],
+        "fibonacci_index": 11,
+        "large_fibonacci_euler_product": [
+          89,
+          88
+        ],
+        "large_prime_rank_buckets": [
+          {
+            "primes": [
+              89
+            ],
+            "rank": 11,
+            "sum_reciprocal_p_minus_one": [
+              1,
+              88
+            ]
+          }
+        ],
+        "m": 4,
+        "small_support_augmented_B": "24",
+        "support_split_y": 8
+      },
+      {
+        "B_over_totient": [
+          15,
+          4
+        ],
+        "N_over_totient": [
+          3495,
+          928
+        ],
+        "Z_N": [
+          702,
+          233
+        ],
+        "Z_factorial": [
+          3,
+          1
+        ],
+        "complete_fibonacci_factorization": [
+          [
+            233,
+            1
+          ]
+        ],
+        "fibonacci_index": 13,
+        "large_fibonacci_euler_product": [
+          233,
+          232
+        ],
+        "large_prime_rank_buckets": [
+          {
+            "primes": [
+              233
+            ],
+            "rank": 13,
+            "sum_reciprocal_p_minus_one": [
+              1,
+              232
+            ]
+          }
+        ],
+        "m": 5,
+        "small_support_augmented_B": "120",
+        "support_split_y": 9
+      },
+      {
+        "B_over_totient": [
+          15,
+          4
+        ],
+        "N_over_totient": [
+          7985,
+          2128
+        ],
+        "Z_N": [
+          321997,
+          95820
+        ],
+        "Z_factorial": [
+          403,
+          120
+        ],
+        "complete_fibonacci_factorization": [
+          [
+            1597,
+            1
+          ]
+        ],
+        "fibonacci_index": 17,
+        "large_fibonacci_euler_product": [
+          1597,
+          1596
+        ],
+        "large_prime_rank_buckets": [
+          {
+            "primes": [
+              1597
+            ],
+            "rank": 17,
+            "sum_reciprocal_p_minus_one": [
+              1,
+              1596
+            ]
+          }
+        ],
+        "m": 6,
+        "small_support_augmented_B": "720",
+        "support_split_y": 11
+      },
+      {
+        "B_over_totient": [
+          455,
+          96
+        ],
+        "N_over_totient": [
+          5473,
+          1152
+        ],
+        "Z_N": [
+          8862,
+          2105
+        ],
+        "Z_factorial": [
+          403,
+          105
+        ],
+        "complete_fibonacci_factorization": [
+          [
+            2,
+            1
+          ],
+          [
+            13,
+            1
+          ],
+          [
+            421,
+            1
+          ]
+        ],
+        "fibonacci_index": 21,
+        "large_fibonacci_euler_product": [
+          421,
+          420
+        ],
+        "large_prime_rank_buckets": [
+          {
+            "primes": [
+              13
+            ],
+            "rank": 7,
+            "sum_reciprocal_p_minus_one": [
+              1,
+              12
+            ]
+          },
+          {
+            "primes": [
+              421
+            ],
+            "rank": 21,
+            "sum_reciprocal_p_minus_one": [
+              1,
+              420
+            ]
+          }
+        ],
+        "m": 7,
+        "small_support_augmented_B": "131040",
+        "support_split_y": 13
+      },
+      {
+        "B_over_totient": [
+          35,
+          8
+        ],
+        "N_over_totient": [
+          3437315,
+          718848
+        ],
+        "Z_N": [
+          845559,
+          196418
+        ],
+        "Z_factorial": [
+          221,
+          56
+        ],
+        "complete_fibonacci_factorization": [
+          [
+            2,
+            1
+          ],
+          [
+            17,
+            1
+          ],
+          [
+            53,
+            1
+          ],
+          [
+            109,
+            1
+          ]
+        ],
+        "fibonacci_index": 27,
+        "large_fibonacci_euler_product": [
+          98209,
+          89856
+        ],
+        "large_prime_rank_buckets": [
+          {
+            "primes": [
+              17
+            ],
+            "rank": 9,
+            "sum_reciprocal_p_minus_one": [
+              1,
+              16
+            ]
+          },
+          {
+            "primes": [
+              53,
+              109
+            ],
+            "rank": 27,
+            "sum_reciprocal_p_minus_one": [
+              10,
+              351
+            ]
+          }
+        ],
+        "m": 8,
+        "small_support_augmented_B": "80640",
+        "support_split_y": 16
+      },
+      {
+        "B_over_totient": [
+          35,
+          8
+        ],
+        "N_over_totient": [
+          47119415,
+          10746368
+        ],
+        "Z_N": [
+          77094303,
+          18847766
+        ],
+        "Z_factorial": [
+          2057,
+          504
+        ],
+        "complete_fibonacci_factorization": [
+          [
+            557,
+            1
+          ],
+          [
+            2417,
+            1
+          ]
+        ],
+        "fibonacci_index": 31,
+        "large_fibonacci_euler_product": [
+          1346269,
+          1343296
+        ],
+        "large_prime_rank_buckets": [
+          {
+            "primes": [
+              557,
+              2417
+            ],
+            "rank": 31,
+            "sum_reciprocal_p_minus_one": [
+              743,
+              335824
+            ]
+          }
+        ],
+        "m": 9,
+        "small_support_augmented_B": "362880",
+        "support_split_y": 18
+      },
+      {
+        "B_over_totient": [
+          455,
+          96
+        ],
+        "N_over_totient": [
+          141961,
+          29952
+        ],
+        "Z_N": [
+          4388826211,
+          958236750
+        ],
+        "Z_factorial": [
+          273823,
+          64800
+        ],
+        "complete_fibonacci_factorization": [
+          [
+            5,
+            1
+          ],
+          [
+            13,
+            1
+          ],
+          [
+            141961,
+            1
+          ]
+        ],
+        "fibonacci_index": 35,
+        "large_fibonacci_euler_product": [
+          141961,
+          141960
+        ],
+        "large_prime_rank_buckets": [
+          {
+            "primes": [
+              13
+            ],
+            "rank": 7,
+            "sum_reciprocal_p_minus_one": [
+              1,
+              12
+            ]
+          },
+          {
+            "primes": [
+              141961
+            ],
+            "rank": 35,
+            "sum_reciprocal_p_minus_one": [
+              1,
+              141960
+            ]
+          }
+        ],
+        "m": 10,
+        "small_support_augmented_B": "235872000",
+        "support_split_y": 20
+      },
+      {
+        "B_over_totient": [
+          77,
+          16
+        ],
+        "N_over_totient": [
+          12749670857,
+          2648287744
+        ],
+        "Z_N": [
+          1527160657,
+          331160282
+        ],
+        "Z_factorial": [
+          24893,
+          5400
+        ],
+        "complete_fibonacci_factorization": [
+          [
+            2789,
+            1
+          ],
+          [
+            59369,
+            1
+          ]
+        ],
+        "fibonacci_index": 41,
+        "large_fibonacci_euler_product": [
+          165580141,
+          165517984
+        ],
+        "large_prime_rank_buckets": [
+          {
+            "primes": [
+              2789,
+              59369
+            ],
+            "rank": 41,
+            "sum_reciprocal_p_minus_one": [
+              379,
+              1009256
+            ]
+          }
+        ],
+        "m": 11,
+        "small_support_augmented_B": "39916800",
+        "support_split_y": 23
+      },
+      {
+        "B_over_totient": [
+          1309,
+          256
+        ],
+        "N_over_totient": [
+          8738754409,
+          1680998400
+        ],
+        "Z_N": [
+          156529092174,
+          31209837175
+        ],
+        "Z_factorial": [
+          824941,
+          178200
+        ],
+        "complete_fibonacci_factorization": [
+          [
+            2,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            17,
+            1
+          ],
+          [
+            61,
+            1
+          ],
+          [
+            109441,
+            1
+          ]
+        ],
+        "fibonacci_index": 45,
+        "large_fibonacci_euler_product": [
+          6675901,
+          6566400
+        ],
+        "large_prime_rank_buckets": [
+          {
+            "primes": [
+              17
+            ],
+            "rank": 9,
+            "sum_reciprocal_p_minus_one": [
+              1,
+              16
+            ]
+          },
+          {
+            "primes": [
+              61
+            ],
+            "rank": 15,
+            "sum_reciprocal_p_minus_one": [
+              1,
+              60
+            ]
+          },
+          {
+            "primes": [
+              109441
+            ],
+            "rank": 45,
+            "sum_reciprocal_p_minus_one": [
+              1,
+              109440
+            ]
+          }
+        ],
+        "m": 12,
+        "small_support_augmented_B": "81430272000",
+        "support_split_y": 24
+      },
+      {
+        "B_over_totient": [
+          1001,
+          192
+        ],
+        "N_over_totient": [
+          1456098291791,
+          279116651520
+        ],
+        "Z_N": [
+          50299968920383,
+          10080680481630
+        ],
+        "Z_factorial": [
+          444199,
+          89100
+        ],
+        "complete_fibonacci_factorization": [
+          [
+            2,
+            1
+          ],
+          [
+            1597,
+            1
+          ],
+          [
+            6376021,
+            1
+          ]
+        ],
+        "fibonacci_index": 51,
+        "large_fibonacci_euler_product": [
+          10182505537,
+          10176127920
+        ],
+        "large_prime_rank_buckets": [
+          {
+            "primes": [
+              1597
+            ],
+            "rank": 17,
+            "sum_reciprocal_p_minus_one": [
+              1,
+              1596
+            ]
+          },
+          {
+            "primes": [
+              6376021
+            ],
+            "rank": 51,
+            "sum_reciprocal_p_minus_one": [
+              1,
+              6376020
+            ]
+          }
+        ],
+        "m": 13,
+        "small_support_augmented_B": "12454041600",
+        "support_split_y": 27
+      },
+      {
+        "B_over_totient": [
+          1001,
+          192
+        ],
+        "N_over_totient": [
+          26128623675583,
+          4826928513024
+        ],
+        "Z_N": [
+          57214751610289,
+          10864292588600
+        ],
+        "Z_factorial": [
+          53599,
+          10560
+        ],
+        "complete_fibonacci_factorization": [
+          [
+            2,
+            1
+          ],
+          [
+            37,
+            1
+          ],
+          [
+            113,
+            1
+          ],
+          [
+            797,
+            1
+          ],
+          [
+            54833,
+            1
+          ]
+        ],
+        "fibonacci_index": 57,
+        "large_fibonacci_euler_product": [
+          182717648081,
+          175981768704
+        ],
+        "large_prime_rank_buckets": [
+          {
+            "primes": [
+              37,
+              113
+            ],
+            "rank": 19,
+            "sum_reciprocal_p_minus_one": [
+              37,
+              1008
+            ]
+          },
+          {
+            "primes": [
+              797,
+              54833
+            ],
+            "rank": 57,
+            "sum_reciprocal_p_minus_one": [
+              13907,
+              10911568
+            ]
+          }
+        ],
+        "m": 14,
+        "small_support_augmented_B": "174356582400",
+        "support_split_y": 30
+      }
+    ],
+    "scope": "Finite rank packing and exact Euler factors; no infinite tail claim.",
+    "tail_bound": "sum log(p/(p-1)) <= min(d/(y log y), 6(1+log d)/d)",
+    "tail_bound_rows": [
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              13
+            ],
+            "rank": 7,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              12
+            ]
+          }
+        ],
+        "r": 7,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              13
+            ],
+            "rank": 7,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              12
+            ]
+          }
+        ],
+        "r": 7,
+        "y": 6
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              13
+            ],
+            "rank": 7,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              12
+            ]
+          }
+        ],
+        "r": 7,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              13
+            ],
+            "rank": 7,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              12
+            ]
+          }
+        ],
+        "r": 7,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              17
+            ],
+            "rank": 9,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              16
+            ]
+          }
+        ],
+        "r": 9,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              17
+            ],
+            "rank": 9,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              16
+            ]
+          }
+        ],
+        "r": 9,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              17
+            ],
+            "rank": 9,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              16
+            ]
+          }
+        ],
+        "r": 9,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              89
+            ],
+            "rank": 11,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              88
+            ]
+          }
+        ],
+        "r": 11,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              89
+            ],
+            "rank": 11,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              88
+            ]
+          }
+        ],
+        "r": 11,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              89
+            ],
+            "rank": 11,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              88
+            ]
+          }
+        ],
+        "r": 11,
+        "y": 8
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              89
+            ],
+            "rank": 11,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              88
+            ]
+          }
+        ],
+        "r": 11,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              233
+            ],
+            "rank": 13,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              232
+            ]
+          }
+        ],
+        "r": 13,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              233
+            ],
+            "rank": 13,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              232
+            ]
+          }
+        ],
+        "r": 13,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              233
+            ],
+            "rank": 13,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              232
+            ]
+          }
+        ],
+        "r": 13,
+        "y": 9
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              233
+            ],
+            "rank": 13,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              232
+            ]
+          }
+        ],
+        "r": 13,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              61
+            ],
+            "rank": 15,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              60
+            ]
+          }
+        ],
+        "r": 15,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              61
+            ],
+            "rank": 15,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              60
+            ]
+          }
+        ],
+        "r": 15,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              61
+            ],
+            "rank": 15,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              60
+            ]
+          }
+        ],
+        "r": 15,
+        "y": 10
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              61
+            ],
+            "rank": 15,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              60
+            ]
+          }
+        ],
+        "r": 15,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              1597
+            ],
+            "rank": 17,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              1596
+            ]
+          }
+        ],
+        "r": 17,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              1597
+            ],
+            "rank": 17,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              1596
+            ]
+          }
+        ],
+        "r": 17,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              1597
+            ],
+            "rank": 17,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              1596
+            ]
+          }
+        ],
+        "r": 17,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              37,
+              113
+            ],
+            "rank": 19,
+            "reciprocal_mass_upper_for_log_sum": [
+              37,
+              1008
+            ]
+          }
+        ],
+        "r": 19,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              37,
+              113
+            ],
+            "rank": 19,
+            "reciprocal_mass_upper_for_log_sum": [
+              37,
+              1008
+            ]
+          }
+        ],
+        "r": 19,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              37,
+              113
+            ],
+            "rank": 19,
+            "reciprocal_mass_upper_for_log_sum": [
+              37,
+              1008
+            ]
+          }
+        ],
+        "r": 19,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              37,
+              113
+            ],
+            "rank": 19,
+            "reciprocal_mass_upper_for_log_sum": [
+              37,
+              1008
+            ]
+          }
+        ],
+        "r": 19,
+        "y": 12
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              13
+            ],
+            "rank": 7,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              12
+            ]
+          },
+          {
+            "primes": [
+              421
+            ],
+            "rank": 21,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              420
+            ]
+          }
+        ],
+        "r": 21,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              13
+            ],
+            "rank": 7,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              12
+            ]
+          },
+          {
+            "primes": [
+              421
+            ],
+            "rank": 21,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              420
+            ]
+          }
+        ],
+        "r": 21,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              13
+            ],
+            "rank": 7,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              12
+            ]
+          },
+          {
+            "primes": [
+              421
+            ],
+            "rank": 21,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              420
+            ]
+          }
+        ],
+        "r": 21,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              421
+            ],
+            "rank": 21,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              420
+            ]
+          }
+        ],
+        "r": 21,
+        "y": 13
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              28657
+            ],
+            "rank": 23,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              28656
+            ]
+          }
+        ],
+        "r": 23,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              28657
+            ],
+            "rank": 23,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              28656
+            ]
+          }
+        ],
+        "r": 23,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              28657
+            ],
+            "rank": 23,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              28656
+            ]
+          }
+        ],
+        "r": 23,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              28657
+            ],
+            "rank": 23,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              28656
+            ]
+          }
+        ],
+        "r": 23,
+        "y": 14
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              3001
+            ],
+            "rank": 25,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              3000
+            ]
+          }
+        ],
+        "r": 25,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              3001
+            ],
+            "rank": 25,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              3000
+            ]
+          }
+        ],
+        "r": 25,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              3001
+            ],
+            "rank": 25,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              3000
+            ]
+          }
+        ],
+        "r": 25,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              3001
+            ],
+            "rank": 25,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              3000
+            ]
+          }
+        ],
+        "r": 25,
+        "y": 15
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              17
+            ],
+            "rank": 9,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              16
+            ]
+          },
+          {
+            "primes": [
+              53,
+              109
+            ],
+            "rank": 27,
+            "reciprocal_mass_upper_for_log_sum": [
+              10,
+              351
+            ]
+          }
+        ],
+        "r": 27,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              17
+            ],
+            "rank": 9,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              16
+            ]
+          },
+          {
+            "primes": [
+              53,
+              109
+            ],
+            "rank": 27,
+            "reciprocal_mass_upper_for_log_sum": [
+              10,
+              351
+            ]
+          }
+        ],
+        "r": 27,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              17
+            ],
+            "rank": 9,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              16
+            ]
+          },
+          {
+            "primes": [
+              53,
+              109
+            ],
+            "rank": 27,
+            "reciprocal_mass_upper_for_log_sum": [
+              10,
+              351
+            ]
+          }
+        ],
+        "r": 27,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              17
+            ],
+            "rank": 9,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              16
+            ]
+          },
+          {
+            "primes": [
+              53,
+              109
+            ],
+            "rank": 27,
+            "reciprocal_mass_upper_for_log_sum": [
+              10,
+              351
+            ]
+          }
+        ],
+        "r": 27,
+        "y": 16
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              514229
+            ],
+            "rank": 29,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              514228
+            ]
+          }
+        ],
+        "r": 29,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              514229
+            ],
+            "rank": 29,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              514228
+            ]
+          }
+        ],
+        "r": 29,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              514229
+            ],
+            "rank": 29,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              514228
+            ]
+          }
+        ],
+        "r": 29,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              514229
+            ],
+            "rank": 29,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              514228
+            ]
+          }
+        ],
+        "r": 29,
+        "y": 17
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              557,
+              2417
+            ],
+            "rank": 31,
+            "reciprocal_mass_upper_for_log_sum": [
+              743,
+              335824
+            ]
+          }
+        ],
+        "r": 31,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              557,
+              2417
+            ],
+            "rank": 31,
+            "reciprocal_mass_upper_for_log_sum": [
+              743,
+              335824
+            ]
+          }
+        ],
+        "r": 31,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              557,
+              2417
+            ],
+            "rank": 31,
+            "reciprocal_mass_upper_for_log_sum": [
+              743,
+              335824
+            ]
+          }
+        ],
+        "r": 31,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              557,
+              2417
+            ],
+            "rank": 31,
+            "reciprocal_mass_upper_for_log_sum": [
+              743,
+              335824
+            ]
+          }
+        ],
+        "r": 31,
+        "y": 18
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              89
+            ],
+            "rank": 11,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              88
+            ]
+          },
+          {
+            "primes": [
+              19801
+            ],
+            "rank": 33,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              19800
+            ]
+          }
+        ],
+        "r": 33,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              89
+            ],
+            "rank": 11,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              88
+            ]
+          },
+          {
+            "primes": [
+              19801
+            ],
+            "rank": 33,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              19800
+            ]
+          }
+        ],
+        "r": 33,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              89
+            ],
+            "rank": 11,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              88
+            ]
+          },
+          {
+            "primes": [
+              19801
+            ],
+            "rank": 33,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              19800
+            ]
+          }
+        ],
+        "r": 33,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              89
+            ],
+            "rank": 11,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              88
+            ]
+          },
+          {
+            "primes": [
+              19801
+            ],
+            "rank": 33,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              19800
+            ]
+          }
+        ],
+        "r": 33,
+        "y": 19
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              13
+            ],
+            "rank": 7,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              12
+            ]
+          },
+          {
+            "primes": [
+              141961
+            ],
+            "rank": 35,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              141960
+            ]
+          }
+        ],
+        "r": 35,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              13
+            ],
+            "rank": 7,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              12
+            ]
+          },
+          {
+            "primes": [
+              141961
+            ],
+            "rank": 35,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              141960
+            ]
+          }
+        ],
+        "r": 35,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              13
+            ],
+            "rank": 7,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              12
+            ]
+          },
+          {
+            "primes": [
+              141961
+            ],
+            "rank": 35,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              141960
+            ]
+          }
+        ],
+        "r": 35,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              141961
+            ],
+            "rank": 35,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              141960
+            ]
+          }
+        ],
+        "r": 35,
+        "y": 20
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              73,
+              149,
+              2221
+            ],
+            "rank": 37,
+            "reciprocal_mass_upper_for_log_sum": [
+              281,
+              13320
+            ]
+          }
+        ],
+        "r": 37,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              73,
+              149,
+              2221
+            ],
+            "rank": 37,
+            "reciprocal_mass_upper_for_log_sum": [
+              281,
+              13320
+            ]
+          }
+        ],
+        "r": 37,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              73,
+              149,
+              2221
+            ],
+            "rank": 37,
+            "reciprocal_mass_upper_for_log_sum": [
+              281,
+              13320
+            ]
+          }
+        ],
+        "r": 37,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              73,
+              149,
+              2221
+            ],
+            "rank": 37,
+            "reciprocal_mass_upper_for_log_sum": [
+              281,
+              13320
+            ]
+          }
+        ],
+        "r": 37,
+        "y": 21
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              233
+            ],
+            "rank": 13,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              232
+            ]
+          },
+          {
+            "primes": [
+              135721
+            ],
+            "rank": 39,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              135720
+            ]
+          }
+        ],
+        "r": 39,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              233
+            ],
+            "rank": 13,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              232
+            ]
+          },
+          {
+            "primes": [
+              135721
+            ],
+            "rank": 39,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              135720
+            ]
+          }
+        ],
+        "r": 39,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              233
+            ],
+            "rank": 13,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              232
+            ]
+          },
+          {
+            "primes": [
+              135721
+            ],
+            "rank": 39,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              135720
+            ]
+          }
+        ],
+        "r": 39,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              233
+            ],
+            "rank": 13,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              232
+            ]
+          },
+          {
+            "primes": [
+              135721
+            ],
+            "rank": 39,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              135720
+            ]
+          }
+        ],
+        "r": 39,
+        "y": 22
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              2789,
+              59369
+            ],
+            "rank": 41,
+            "reciprocal_mass_upper_for_log_sum": [
+              379,
+              1009256
+            ]
+          }
+        ],
+        "r": 41,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              2789,
+              59369
+            ],
+            "rank": 41,
+            "reciprocal_mass_upper_for_log_sum": [
+              379,
+              1009256
+            ]
+          }
+        ],
+        "r": 41,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              2789,
+              59369
+            ],
+            "rank": 41,
+            "reciprocal_mass_upper_for_log_sum": [
+              379,
+              1009256
+            ]
+          }
+        ],
+        "r": 41,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              2789,
+              59369
+            ],
+            "rank": 41,
+            "reciprocal_mass_upper_for_log_sum": [
+              379,
+              1009256
+            ]
+          }
+        ],
+        "r": 41,
+        "y": 23
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              433494437
+            ],
+            "rank": 43,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              433494436
+            ]
+          }
+        ],
+        "r": 43,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              433494437
+            ],
+            "rank": 43,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              433494436
+            ]
+          }
+        ],
+        "r": 43,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              433494437
+            ],
+            "rank": 43,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              433494436
+            ]
+          }
+        ],
+        "r": 43,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              433494437
+            ],
+            "rank": 43,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              433494436
+            ]
+          }
+        ],
+        "r": 43,
+        "y": 23
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              17
+            ],
+            "rank": 9,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              16
+            ]
+          },
+          {
+            "primes": [
+              61
+            ],
+            "rank": 15,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              60
+            ]
+          },
+          {
+            "primes": [
+              109441
+            ],
+            "rank": 45,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              109440
+            ]
+          }
+        ],
+        "r": 45,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              17
+            ],
+            "rank": 9,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              16
+            ]
+          },
+          {
+            "primes": [
+              61
+            ],
+            "rank": 15,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              60
+            ]
+          },
+          {
+            "primes": [
+              109441
+            ],
+            "rank": 45,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              109440
+            ]
+          }
+        ],
+        "r": 45,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              17
+            ],
+            "rank": 9,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              16
+            ]
+          },
+          {
+            "primes": [
+              61
+            ],
+            "rank": 15,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              60
+            ]
+          },
+          {
+            "primes": [
+              109441
+            ],
+            "rank": 45,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              109440
+            ]
+          }
+        ],
+        "r": 45,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              61
+            ],
+            "rank": 15,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              60
+            ]
+          },
+          {
+            "primes": [
+              109441
+            ],
+            "rank": 45,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              109440
+            ]
+          }
+        ],
+        "r": 45,
+        "y": 24
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              2971215073
+            ],
+            "rank": 47,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              2971215072
+            ]
+          }
+        ],
+        "r": 47,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              2971215073
+            ],
+            "rank": 47,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              2971215072
+            ]
+          }
+        ],
+        "r": 47,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              2971215073
+            ],
+            "rank": 47,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              2971215072
+            ]
+          }
+        ],
+        "r": 47,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              2971215073
+            ],
+            "rank": 47,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              2971215072
+            ]
+          }
+        ],
+        "r": 47,
+        "y": 25
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              13
+            ],
+            "rank": 7,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              12
+            ]
+          },
+          {
+            "primes": [
+              97,
+              6168709
+            ],
+            "rank": 49,
+            "reciprocal_mass_upper_for_log_sum": [
+              514067,
+              49349664
+            ]
+          }
+        ],
+        "r": 49,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              13
+            ],
+            "rank": 7,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              12
+            ]
+          },
+          {
+            "primes": [
+              97,
+              6168709
+            ],
+            "rank": 49,
+            "reciprocal_mass_upper_for_log_sum": [
+              514067,
+              49349664
+            ]
+          }
+        ],
+        "r": 49,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              13
+            ],
+            "rank": 7,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              12
+            ]
+          },
+          {
+            "primes": [
+              97,
+              6168709
+            ],
+            "rank": 49,
+            "reciprocal_mass_upper_for_log_sum": [
+              514067,
+              49349664
+            ]
+          }
+        ],
+        "r": 49,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              97,
+              6168709
+            ],
+            "rank": 49,
+            "reciprocal_mass_upper_for_log_sum": [
+              514067,
+              49349664
+            ]
+          }
+        ],
+        "r": 49,
+        "y": 26
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              1597
+            ],
+            "rank": 17,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              1596
+            ]
+          },
+          {
+            "primes": [
+              6376021
+            ],
+            "rank": 51,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              6376020
+            ]
+          }
+        ],
+        "r": 51,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              1597
+            ],
+            "rank": 17,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              1596
+            ]
+          },
+          {
+            "primes": [
+              6376021
+            ],
+            "rank": 51,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              6376020
+            ]
+          }
+        ],
+        "r": 51,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              1597
+            ],
+            "rank": 17,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              1596
+            ]
+          },
+          {
+            "primes": [
+              6376021
+            ],
+            "rank": 51,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              6376020
+            ]
+          }
+        ],
+        "r": 51,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              1597
+            ],
+            "rank": 17,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              1596
+            ]
+          },
+          {
+            "primes": [
+              6376021
+            ],
+            "rank": 51,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              6376020
+            ]
+          }
+        ],
+        "r": 51,
+        "y": 27
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              953,
+              55945741
+            ],
+            "rank": 53,
+            "reciprocal_mass_upper_for_log_sum": [
+              13986673,
+              13315086120
+            ]
+          }
+        ],
+        "r": 53,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              953,
+              55945741
+            ],
+            "rank": 53,
+            "reciprocal_mass_upper_for_log_sum": [
+              13986673,
+              13315086120
+            ]
+          }
+        ],
+        "r": 53,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              953,
+              55945741
+            ],
+            "rank": 53,
+            "reciprocal_mass_upper_for_log_sum": [
+              13986673,
+              13315086120
+            ]
+          }
+        ],
+        "r": 53,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              953,
+              55945741
+            ],
+            "rank": 53,
+            "reciprocal_mass_upper_for_log_sum": [
+              13986673,
+              13315086120
+            ]
+          }
+        ],
+        "r": 53,
+        "y": 28
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              89
+            ],
+            "rank": 11,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              88
+            ]
+          },
+          {
+            "primes": [
+              661,
+              474541
+            ],
+            "rank": 55,
+            "reciprocal_mass_upper_for_log_sum": [
+              12,
+              7909
+            ]
+          }
+        ],
+        "r": 55,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              89
+            ],
+            "rank": 11,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              88
+            ]
+          },
+          {
+            "primes": [
+              661,
+              474541
+            ],
+            "rank": 55,
+            "reciprocal_mass_upper_for_log_sum": [
+              12,
+              7909
+            ]
+          }
+        ],
+        "r": 55,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              89
+            ],
+            "rank": 11,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              88
+            ]
+          },
+          {
+            "primes": [
+              661,
+              474541
+            ],
+            "rank": 55,
+            "reciprocal_mass_upper_for_log_sum": [
+              12,
+              7909
+            ]
+          }
+        ],
+        "r": 55,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              89
+            ],
+            "rank": 11,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              88
+            ]
+          },
+          {
+            "primes": [
+              661,
+              474541
+            ],
+            "rank": 55,
+            "reciprocal_mass_upper_for_log_sum": [
+              12,
+              7909
+            ]
+          }
+        ],
+        "r": 55,
+        "y": 29
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              37,
+              113
+            ],
+            "rank": 19,
+            "reciprocal_mass_upper_for_log_sum": [
+              37,
+              1008
+            ]
+          },
+          {
+            "primes": [
+              797,
+              54833
+            ],
+            "rank": 57,
+            "reciprocal_mass_upper_for_log_sum": [
+              13907,
+              10911568
+            ]
+          }
+        ],
+        "r": 57,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              37,
+              113
+            ],
+            "rank": 19,
+            "reciprocal_mass_upper_for_log_sum": [
+              37,
+              1008
+            ]
+          },
+          {
+            "primes": [
+              797,
+              54833
+            ],
+            "rank": 57,
+            "reciprocal_mass_upper_for_log_sum": [
+              13907,
+              10911568
+            ]
+          }
+        ],
+        "r": 57,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              37,
+              113
+            ],
+            "rank": 19,
+            "reciprocal_mass_upper_for_log_sum": [
+              37,
+              1008
+            ]
+          },
+          {
+            "primes": [
+              797,
+              54833
+            ],
+            "rank": 57,
+            "reciprocal_mass_upper_for_log_sum": [
+              13907,
+              10911568
+            ]
+          }
+        ],
+        "r": 57,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              37,
+              113
+            ],
+            "rank": 19,
+            "reciprocal_mass_upper_for_log_sum": [
+              37,
+              1008
+            ]
+          },
+          {
+            "primes": [
+              797,
+              54833
+            ],
+            "rank": 57,
+            "reciprocal_mass_upper_for_log_sum": [
+              13907,
+              10911568
+            ]
+          }
+        ],
+        "r": 57,
+        "y": 30
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              353,
+              2710260697
+            ],
+            "rank": 59,
+            "reciprocal_mass_upper_for_log_sum": [
+              30798421,
+              10841042784
+            ]
+          }
+        ],
+        "r": 59,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              353,
+              2710260697
+            ],
+            "rank": 59,
+            "reciprocal_mass_upper_for_log_sum": [
+              30798421,
+              10841042784
+            ]
+          }
+        ],
+        "r": 59,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              353,
+              2710260697
+            ],
+            "rank": 59,
+            "reciprocal_mass_upper_for_log_sum": [
+              30798421,
+              10841042784
+            ]
+          }
+        ],
+        "r": 59,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              353,
+              2710260697
+            ],
+            "rank": 59,
+            "reciprocal_mass_upper_for_log_sum": [
+              30798421,
+              10841042784
+            ]
+          }
+        ],
+        "r": 59,
+        "y": 30
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              4513,
+              555003497
+            ],
+            "rank": 61,
+            "reciprocal_mass_upper_for_log_sum": [
+              69376001,
+              313021971744
+            ]
+          }
+        ],
+        "r": 61,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              4513,
+              555003497
+            ],
+            "rank": 61,
+            "reciprocal_mass_upper_for_log_sum": [
+              69376001,
+              313021971744
+            ]
+          }
+        ],
+        "r": 61,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              4513,
+              555003497
+            ],
+            "rank": 61,
+            "reciprocal_mass_upper_for_log_sum": [
+              69376001,
+              313021971744
+            ]
+          }
+        ],
+        "r": 61,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              4513,
+              555003497
+            ],
+            "rank": 61,
+            "reciprocal_mass_upper_for_log_sum": [
+              69376001,
+              313021971744
+            ]
+          }
+        ],
+        "r": 61,
+        "y": 31
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              13
+            ],
+            "rank": 7,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              12
+            ]
+          },
+          {
+            "primes": [
+              17
+            ],
+            "rank": 9,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              16
+            ]
+          },
+          {
+            "primes": [
+              421
+            ],
+            "rank": 21,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              420
+            ]
+          },
+          {
+            "primes": [
+              35239681
+            ],
+            "rank": 63,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              35239680
+            ]
+          }
+        ],
+        "r": 63,
+        "y": 5
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              13
+            ],
+            "rank": 7,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              12
+            ]
+          },
+          {
+            "primes": [
+              17
+            ],
+            "rank": 9,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              16
+            ]
+          },
+          {
+            "primes": [
+              421
+            ],
+            "rank": 21,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              420
+            ]
+          },
+          {
+            "primes": [
+              35239681
+            ],
+            "rank": 63,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              35239680
+            ]
+          }
+        ],
+        "r": 63,
+        "y": 7
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              13
+            ],
+            "rank": 7,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              12
+            ]
+          },
+          {
+            "primes": [
+              17
+            ],
+            "rank": 9,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              16
+            ]
+          },
+          {
+            "primes": [
+              421
+            ],
+            "rank": 21,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              420
+            ]
+          },
+          {
+            "primes": [
+              35239681
+            ],
+            "rank": 63,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              35239680
+            ]
+          }
+        ],
+        "r": 63,
+        "y": 11
+      },
+      {
+        "nonempty_buckets": [
+          {
+            "primes": [
+              421
+            ],
+            "rank": 21,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              420
+            ]
+          },
+          {
+            "primes": [
+              35239681
+            ],
+            "rank": 63,
+            "reciprocal_mass_upper_for_log_sum": [
+              1,
+              35239680
+            ]
+          }
+        ],
+        "r": 63,
+        "y": 32
+      }
+    ],
+    "tail_bound_verification": "Exact reciprocal upper mass compared with outward log intervals.",
+    "tail_nonempty_bucket_checks": 164
+  },
+  "ranges": {
+    "factorial_m": [
+      2,
+      120
+    ],
+    "g": [
+      1,
+      10000
+    ],
+    "inserted_even_null_windows": [
+      2,
+      4,
+      10,
+      20
+    ],
+    "primorial_largest_prime": 101
+  },
+  "schema": "canonical-content-finite-v1",
+  "scope": "Finite exact canonical-source checks; no Lean or infinite Robin certification.",
+  "selection": "j is the least positive even integer with phi^j > g",
+  "source": "canonical_content.py",
+  "source_examples": {
+    "1": {
+      "N": "5",
+      "composition": [
+        "1",
+        "1"
+      ],
+      "fundamental_discriminant_absolute": 4,
+      "g": "1",
+      "indices": [
+        5
+      ],
+      "j": 2,
+      "low_null_windows_inserted": 0,
+      "low_to_high_windows": [
+        "5",
+        "End"
+      ],
+      "primitive_norm": 1,
+      "unit_bit": 0,
+      "window_count": 1
+    },
+    "10": {
+      "N": "340",
+      "composition": [
+        "50",
+        "80"
+      ],
+      "fundamental_discriminant_absolute": 4,
+      "g": "10",
+      "indices": [
+        5,
+        7,
+        11,
+        13
+      ],
+      "j": 6,
+      "low_null_windows_inserted": 0,
+      "low_to_high_windows": [
+        "5",
+        "3",
+        "5",
+        "3",
+        "End"
+      ],
+      "primitive_norm": 1,
+      "unit_bit": 0,
+      "window_count": 4
+    },
+    "2": {
+      "N": "10",
+      "composition": [
+        "2",
+        "2"
+      ],
+      "fundamental_discriminant_absolute": 4,
+      "g": "2",
+      "indices": [
+        3,
+        6
+      ],
+      "j": 2,
+      "low_null_windows_inserted": 0,
+      "low_to_high_windows": [
+        "2",
+        "2",
+        "End"
+      ],
+      "primitive_norm": 1,
+      "unit_bit": 0,
+      "window_count": 2
+    },
+    "210": {
+      "N": "128100",
+      "composition": [
+        "18690",
+        "30240"
+      ],
+      "fundamental_discriminant_absolute": 4,
+      "g": "210",
+      "indices": [
+        3,
+        6,
+        8,
+        10,
+        13,
+        15,
+        17,
+        19,
+        26
+      ],
+      "j": 12,
+      "low_null_windows_inserted": 0,
+      "low_to_high_windows": [
+        "2",
+        "25",
+        "3",
+        "3",
+        "25",
+        "3",
+        "null",
+        "5",
+        "End"
+      ],
+      "primitive_norm": 1,
+      "unit_bit": 0,
+      "window_count": 8
+    },
+    "3": {
+      "N": "39",
+      "composition": [
+        "6",
+        "9"
+      ],
+      "fundamental_discriminant_absolute": 4,
+      "g": "3",
+      "indices": [
+        5,
+        9
+      ],
+      "j": 4,
+      "low_null_windows_inserted": 0,
+      "low_to_high_windows": [
+        "5",
+        "null",
+        "2",
+        "End"
+      ],
+      "primitive_norm": 1,
+      "unit_bit": 0,
+      "window_count": 3
+    },
+    "30": {
+      "N": "2670",
+      "composition": [
+        "390",
+        "630"
+      ],
+      "fundamental_discriminant_absolute": 4,
+      "g": "30",
+      "indices": [
+        3,
+        6,
+        8,
+        10,
+        18
+      ],
+      "j": 8,
+      "low_null_windows_inserted": 0,
+      "low_to_high_windows": [
+        "2",
+        "25",
+        "3",
+        "null",
+        "null",
+        "2",
+        "End"
+      ],
+      "primitive_norm": 1,
+      "unit_bit": 0,
+      "window_count": 6
+    },
+    "5": {
+      "N": "65",
+      "composition": [
+        "10",
+        "15"
+      ],
+      "fundamental_discriminant_absolute": 4,
+      "g": "5",
+      "indices": [
+        3,
+        6,
+        10
+      ],
+      "j": 4,
+      "low_null_windows_inserted": 0,
+      "low_to_high_windows": [
+        "2",
+        "2",
+        "3",
+        "End"
+      ],
+      "primitive_norm": 1,
+      "unit_bit": 0,
+      "window_count": 3
+    },
+    "6": {
+      "N": "78",
+      "composition": [
+        "12",
+        "18"
+      ],
+      "fundamental_discriminant_absolute": 4,
+      "g": "6",
+      "indices": [
+        3,
+        8,
+        10
+      ],
+      "j": 4,
+      "low_null_windows_inserted": 0,
+      "low_to_high_windows": [
+        "2",
+        "5",
+        "3",
+        "End"
+      ],
+      "primitive_norm": 1,
+      "unit_bit": 0,
+      "window_count": 3
+    }
+  },
+  "source_sha256": "c2d70c714dee0643af1f43847ff476164e95a892a36304447e0f9ea2590b60ab",
+  "strip_converse": {
+    "integer_composition_box": [
+      -40,
+      80
+    ],
+    "positive_quantity_points": 11207,
+    "strict_strip_points_reconstructed": 211
+  }
+}
