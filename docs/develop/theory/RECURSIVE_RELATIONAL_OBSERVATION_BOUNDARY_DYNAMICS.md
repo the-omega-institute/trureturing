@@ -20385,3 +20385,478 @@ print(json.dumps({"roots_rejected": rejected, "unit_roots": len(units),
 对于关系、边界和记忆的原问题，这里确定的是：自主商的语义存在与原接口的实际取得之间，不能再用式(97.12)所设想的全类全一族充当障碍。已取得端点加保留运输所给的恢复关系仍按95.7、96.7、98.4解释；本证书不额外取得任一端点，不恢复隐藏时间，也不主张物理统一、最小词、最少读取或长期目标已经完成。
 
 ## 100.99 追加锚
+## 101. 整纤维全词接受与逐协议固定源的取得障碍
+
+本节接续100.6留下的共同词问题。在完全相同的 $H=341,d=15$ 原接口中，每个初始商类的整个剩余纤维都接受每个有限 $R/G/T$ 词，其中每个 $T$ 要求响应1。因此不存在一个有限共同词，能对零类的所有来源及全部合法日程迫使非单位响应。进一步，对每份固定的确定性协议，每个商类都有一个固定实际来源及一份相容日程实现该协议的全一分支；这足以排除对任何非恒定初始商任务的保证有限精确取得。本节不改判第100节的逐根拒绝结论：这里的根允许依赖整份词或协议。证据是下述普通数学论证及可从正文独立生成、检查的有限证书，未作 Lean/kernel 核验。
+
+### 101.1 相同来源合同与饱和信念
+
+完全沿用97.1及97.9—97.10。一次执行先固定未知 $s_0=(a,b)\in\mathbb N^2$，自然数包含零；实际操作是 $R(s)=Ms$、$G(s)=s+(1,0)$，$T$ 为付费、精确、不扰动的 $\gcd((2,3)s,341)$ 读取。$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$，隐藏批为 $E^k$，$E=M^{15}=\left(\begin{smallmatrix}377&610\\610&987\end{smallmatrix}\right)$；每个 $k\ge0$ 有限，只在已声明切口发生。首原语为 $R/G$ 时其前没有隐藏事件，首原语为 $T$ 时其前允许隐藏批。原语内部没有隐藏事件，每个请求完成；完成信号不报告历时。控制器可作任意确定性本地计算、保存任意记忆，但初始可见资料与来源无关，没有复位、坐标、大小、时钟、相位、可指定等待或免费观察。实际后继连续来自同一份 $s_0$，不换成模代表。
+
+复用97.3—97.4，在 $Z=\mathbb Z/341\mathbb Z$ 上写
+
+$$
+\begin{aligned}
+c&=a+81b,& w&=a+261b,\\
+E(c,w)&=(c,-w),& R(c,w)&=(81c,261w),\\
+G(c,w)&=(c+1,w+1),& qs&=270c+73w.
+\end{aligned}
+\tag{101.1}
+$$
+
+$c$ 标记完整自主商，$w$ 只是证明坐标。$E^2=I$ 仅在模341上成立，整数 $E^2\ne I$。令 $u(s)$ 表示本次 gcd 为1，定义 $\operatorname{Sat}(B)=B\cup EB$。对纤维内集合用 $(c,S)$ 表示 $\{(c,w):w\in S\}$；饱和恰好是 $S=-S$。在已完成原语后的合法切口，饱和包含实际允许的零或一次隐藏事件，不是增加一次读取。若只关心终端接受，$\operatorname{Sat}(B)\ne\varnothing$ 当且仅当 $B\ne\varnothing$，所以末尾饱和既不增加通过条件，也不补读一个 $T$。
+
+**定义 101.1（共同相位安全集与整纤维）。** 置
+
+$$
+\begin{aligned}
+A_c&=\{w\in Z:\exists\epsilon\in\{0,1\},\
+ \gcd(270c+(-1)^\epsilon73w,341)=1\},\\
+I_x&=\{(c,w):c=x,\ w\in Z\}.
+\end{aligned}
+\tag{101.2}
+$$
+
+$A_c=-A_c$。其中一个 $\epsilon$ 必须同时使模11与模31分量成为单位；不能让两个素因子各选自己的符号。例如原坐标 $(a,b)=(1,212)$ 的两个相位 gcd 分别为11、31，故它不安全，即使每个素因子分别都能选出不被自己整除的相位。
+
+**引理 101.2（饱和集合的原语像与启动）。** 对 $S=-S$，启动完成后的全一信念转移恰为
+
+$$
+\begin{aligned}
+\Phi_R(c,S)&=(81c,261S),\\
+\Phi_G(c,S)&=(c+1,(S+1)\cup(S-1)),\\
+\Phi_T(c,S)&=(c,S\cap A_c).
+\end{aligned}
+\tag{101.3}
+$$
+
+三种转移均对集合包含单调。首个 $R/G$ 也可对整个 $I_x$ 及其中任何 $E$ 闭子集使用这三个式子中相应的一式，但实现时首动作前只取相位零；首个 $T$ 使用合同允许的两相位。
+
+证明。后续原语前的相位把输入变为 $\operatorname{Sat}(B)$，已饱和时不改变输入集合。$R$ 与 $E$ 交换，故其像已经饱和。$G$ 的直接像为 $S+1$，饱和再给 $-(S+1)=S-1$。$T$ 先留下实际满足 $u$ 的相位，再饱和；一对 $\{w,-w\}$ 留下，当且仅当至少一个共同符号使完整 gcd 为1。这得到(101.3)。像、并集和与固定集合求交均单调。启动的 $R/G$ 不需要偷偷插入相位：输入子集本身 $E$ 闭，其中每个点已是一个允许的初始根，直接相位零的像再作动作后饱和即可。首读允许相位，正好给第三式。证毕。
+
+### 101.2 有限族证书及包含方向
+
+**定义 101.3（信念下界证书）。** 对每个 $c\in Z$ 给有限非空族 $\mathcal F_c$，每个成员 $S\subseteq Z$ 非空且 $S=-S$，并要求
+
+$$
+\begin{aligned}
+S\in\mathcal F_c&\Longrightarrow 261S\in\mathcal F_{81c},\\
+S\in\mathcal F_c&\Longrightarrow\exists S'\in\mathcal F_{c+1},\quad
+ S'\subseteq(S+1)\cup(S-1),\\
+S\in\mathcal F_c&\Longrightarrow S\subseteq A_c.
+\end{aligned}
+\tag{101.4}
+$$
+
+族成员是当前可达信念的下界，不是要保留的全部初始根。第三项使 $T$ 原样保留该成员。程序用补集 $h=Z\setminus S$ 的341位整数编码；对 $G$，像的补集是
+
+$$
+F=(h+1)\cap(h-1).
+\tag{101.5}
+$$
+
+候选成员 $S'=Z\setminus h'$ 可作下界的正确条件是 $F\subseteq h'$，即 $S'\subseteq Z\setminus F$；反向包含不够。验证器既检查补集方向，也检查幸存集合方向。
+
+**命题 101.4（本实例的有限证书）。** 下列两段程序生成并验证一个满足(101.4)的族：25个规范 $c$ 纤维中共有19,844个基础补集掩码，经15个 $R$ 旋转展开后恰有297,660个不同成员，覆盖全部341个当前 $c$ 类；成员最小大小为294。基础 JSON 的 SHA-256 为 `8870a41115f6ce30c34f9414eb64774c314a7e0410c7204ff443744a16c6c03f`。
+
+证明。构造只负责提供候选；结论依赖独立验证器逐项检查(101.4)，不依赖搜索过程被信任。为说明候选怎样从小程序重建，令 $\rho(c,S)=(81c,261S)$。由于 $81^{15}=1$、$261^{15}=-1$，$\rho^{15}$ 在对称集合上为恒等。算术预处理先计算
+
+$$
+D_c=\{w:\exists j\in\{0,\ldots,14\},\
+261^jw\notin A_{81^jc}\}.
+\tag{101.6}
+$$
+
+它是15个旋转读取位置的共同失败域；这是从(101.2)计算出的域，不是另一个外部输入表。构造从 $(0,Z\setminus D_0)$ 开始，按 $R$ 旋转归一化，并对每个保留成员的15个旋转生成 $G$ 像，再删去目标 $D_c$。对应补集为 $D_c\cup F$。每个规范纤维保留按包含极大的补集：若新补集包含于旧补集，旧成员已给出更小的可用下界；若旧补集包含于新补集，则用新成员替换旧成员。队列必须真正耗尽；空幸存集、记录上限、边上限或闹钟触发都以失败退出，不得把失败记为闭合。
+
+验证器不读构造器种子、归一化表或扫描域。它从原整数矩阵计算 $E$，对全部 $341^2=116281$ 个原坐标状态独立核对坐标逆、共同相位、$R/G/T$ 饱和像，并从原 gcd 计算 $A_c$。随后展开给定的补集，检查对称、非空、安全、覆盖及所有成员的三种闭包义务。最后还逐类核对整纤维的首次动作。运行得到每种义务297,660项，总计892,980项，且所有精确计数与摘要断言通过。于是(101.4)成立。这里的294是一个成员所含的**当前剩余**数量；多条历史可汇合到同一剩余，本证书不声称每个词保留294个不同的初始根。证毕。
+
+### 101.3 从当前信念下界到所有有限词
+
+**定理 101.5（每个整初始纤维接受所有有限词）。** 在97.9—97.10的精确启动语义下，令 $L_{\rm init}(r)$ 如第97节，则
+
+$$
+\forall x\in Z,\qquad
+\bigcup_{r\in I_x}L_{\rm init}(r)=\{R,G,T\}^*.
+\tag{101.7}
+$$
+
+因此特别不存在 $W$，使零类每个初始来源在每份合法隐藏日程下执行 $W$ 都产生一次非1响应。
+
+证明。固定 $x$ 及有限词 $W$。空词从任一根接受。非空时先在 $\mathcal F_x$ 中取一成员 $S_0\subseteq Z$；它包含于整个初始纤维。若首字母是 $R/G$，使用引理101.2的相位零启动论证；若为 $T$，使用允许的首读相位。由(101.4)，其饱和实际可达信念中仍含一个非空族成员。此后归纳：若成员 $S$ 包含于当前饱和可达信念 $B$，单调性给 $\Phi_X(S)\subseteq\Phi_X(B)$；$R$ 的像本身是成员，$G$ 的像包含一个成员，$T$ 原样保留成员。故每个前缀都有非空饱和可达信念。终端饱和不改变非空性，所以 $W$ 有一条真实启动 NFA 接受路径，每次 $T$ 均沿单位边。整个路径从 $I_x$ 中的某一个根开始，并没有在中途换根。证毕。
+
+式(101.7)是完整语言证书的结论，不是有限搜索未找到拒绝词的推断；搜索仅用来给出可独立穷尽核验的有限不变量。零类首读留下300个单位根这一事实仍成立，但单独这一筛选并不足以推出(101.7)。
+
+### 101.4 一个预选实际提升与固定协议的相容路径
+
+**引理 101.6（有限模路径的单源提升）。** 固定一个根 $r$，一次选定任意非负整数提升 $s_r\equiv r\pmod{341}$。从 $(r,0)$ 出发的任意有限接受路径，均可从同一份 $s_r$ 连续实现，实际每个读取等于1。
+
+证明。复用97.2的模路径提升：在路径使用的允许切口按相位位实际施加 $E^0$ 或 $E^1$，随后执行整数原语。首 $R/G$ 的位必须是零。每一步均保持非负性，其模约化与给定路径相同，故 gcd 与模读取一致。绝不约化实际后继、实际消去两次 $E$ 或重置来源。所有根都可预选严格正提升，例如先取两个坐标的标准代表，再各加341；所有正提升在这些操作下也保持正性。末尾饱和可省去，不补一个读取。证毕。
+
+**定理 101.7（逐协议、逐类的固定实际来源）。** 对97.1合同中的任意固定确定性协议 $P$ 及任意 $x\in Z$，存在一个实际来源 $s_0$ 和一份合法隐藏日程 $\sigma$，使
+
+$$
+\forall P\ \forall x\ \exists s_0\ \exists\sigma,\qquad
+ c(s_0)=x\quad\text{且 }P(s_0,\sigma)\text{ 的全部 }T\text{ 响应为1}.
+\tag{101.8}
+$$
+
+结论对来源域 $\mathbb N^2$ 或 $\mathbb N_{>0}^2$ 均成立；来源和日程可以依赖整份 $P$，但执行中来源固定。
+
+证明。先为 $I_x$ 的341个剩余根各固定一个实际提升。沿 $P$ 的全一响应分支运行其确定性本地计算。共同初始资料、无时钟或其他侧信道保证原语词与内部计算分支由 $P$ 唯一确定。
+
+若该分支只请求有限多个原语，得到有限词 $W$，包括空词。定理101.5给某个根的一条完整接受路径；引理101.6从这个根的预选提升实现它。此后若 $P$ 停止，则实际执行也停止；若 $P$ 在有限原语后永远作本地计算，则实际执行也停留在相同内部计算分支。这两种情况都不需要额外观察或新来源。
+
+若全一分支请求无限多个原语，把这些字母固定为一个无限词。用一个虚根接341个已选剩余根，再接每个根的所有合法接受相位前缀，构成前缀封闭的树。虚根有341个孩子；根选定以后，每个节点至多两个孩子，启动 $R/G$ 处至多一个。定理101.5使每个有限深度非空，故由 König 引理存在一条无限分支。这条分支一次选出一个根和一整条相容相位路径，而非对每个长度重新选择来源。逐步沿其固定提升执行，引理101.6的归纳给出无限实际轨迹：每个被用切口至多一次 $E$，每个原语按合同完成。无限路径不存在有限时刻内的无限批要求；也不引入新公平性。证毕。
+
+不能只说“每个前缀有一个来源”就直接宣告存在无限执行；上面的有限根集、固定提升与有限分支树正是所需桥梁。它也没有给观察者提供选根或取得标签的算法。
+
+### 101.5 初始商任务的取得不可能性及量词边界
+
+**推论 101.8（任意非恒定初始商函数均不能保证有限取得）。** 设 $Y$ 为任意输出集合，$f:Z\to Y$ 非恒定。在上述原接口中，不存在确定性协议对每个实际来源、每份合法隐藏日程都在有限执行后停止并准确输出 $f(c(s_0))$；不要求保证中预设统一时间或统一原语数上界。
+
+证明。假设有这样的 $P$。定理101.7为每个类实现同一全一可见分支。若该分支停止，输出某个固定 $y$；因 $f$ 非恒定，存在类 $x$ 满足 $f(x)\ne y$，其见证执行便输出错误。若该分支不停止，则无论它无限请求原语，还是仅请求有限多个原语后无限内部计算，定理101.7都提供一个合法的不停止执行，违反保证有限终止。证毕。
+
+第100节与本节分别给出
+
+$$
+\begin{aligned}
+&\forall r\in I_0\ \exists W_r\ \forall\sigma:
+ \text{从 }r\text{ 执行 }W_r\text{ 时有一次非1读取},\\
+&\forall W\ \forall x\ \exists r\in I_x\ \exists\sigma:
+ \text{从 }r\text{ 执行 }W\text{ 的全部读取为1}.
+\end{aligned}
+\tag{101.9}
+$$
+
+两者没有矛盾：对每个根有自己的拒绝词，不推出一个词拒绝整个纤维；对每个词有可接受的根，不推出一个根接受所有词。事实上第100节已排除 $I_0\cap U_{\rm init}$ 的成员，所以仍不能声称 $c(U_{\rm init})=Z$，也不能声称 $\exists r\ \forall P$。本节取得障碍所需的是(101.8)的 $\forall P\ \forall x\ \exists s_0\ \exists\sigma$。它不要求不同类共用一个日程，不把见证变成对所有未来统一的在线相位选择器，与97.1的空因果不变量相容。协议可以保存任意记忆；这里没有推出记忆大小下界、最优操作数或随机协议结论。
+
+### 101.6 自足的生成与独立验证程序
+
+以下恰有两个 Python 程序块，依次保存为同一**全新临时目录**中的 `construct.py` 与 `check.py`，依次执行 `python3 construct.py`、`python3 check.py`。只需 Python 3.9或更新版本的标准库和支持 `SIGALRM` 的 POSIX 环境；必须开启断言，两个程序都会拒绝 `python -O`。构造器只写该目录中的 `closure-family.json`，验证器唯一的数据输入就是这个生成文件。不需仓库、外部两兆字节表、隐藏扫描域、其他构造程序或类锚点文件。摘要是输出封印及复现核对，不代替闭包证明。
+
+每个程序从开始起各受硬120秒闹钟约束。构造器最多记录100,000个已入队搜索记录（包括已被支配删除的记录），最多生成1,500,000条闭包边；本实例实际为28,838个记录、410,475条边，队列余项为零。每条生成边是一个保留成员的某个 $R^j$ 后接 $G$ 再作安全筛选的候选。算术与扫描预处理、补集比较、位排列及索引位运算不计入这个**闭包边计数**，但全都受总闹钟约束。验证器另计原坐标算术预处理、索引构建及892,980项闭包验证，不能把搜索边预算说成全部计算成本。达到任一上限而未完成时只能报告失败；不得提高上限来复现本结论。
+
+```python
+"""Bounded certificate construction without tables or third-party packages."""
+from collections import deque
+from math import gcd
+from pathlib import Path
+import hashlib, json, signal, time
+
+if not __debug__:
+    raise RuntimeError("assertions required: do not use python -O")
+
+def expired(signum, frame):
+    raise TimeoutError("120 second constructor bound")
+
+signal.signal(signal.SIGALRM, expired)
+signal.alarm(120)
+t0 = time.monotonic()
+H = 341
+ALL = (1 << H)-1
+cp = [pow(81,j,H) for j in range(15)]
+wp = [pow(261,j,H) for j in range(15)]
+tables = [[1 << (k*w % H) for w in range(H)] for k in wp]
+bad = [sum(1 << w for w in range(H)
+           if any(gcd(270*(cp[j]*c % H)+73*(wp[j]*w % H),H) != 1
+                  and gcd(270*(cp[j]*c % H)-73*(wp[j]*w % H),H) != 1
+                  for j in range(15)))
+       for c in range(H)]
+
+def perm(h,j):
+    if j == 0:
+        return h
+    out = 0
+    while h:
+        b = h & -h
+        out |= tables[j][b.bit_length()-1]
+        h ^= b
+    return out
+
+canonical = []
+for c in range(H):
+    orbit = [c*k % H for k in cp]
+    m = min(orbit)
+    canonical.append((m,[j for j,d in enumerate(orbit) if d == m]))
+
+def normalize(c,h):
+    m, js = canonical[c]
+    return m,max(perm(h,j) for j in js)
+
+families = {m:{} for m,_ in canonical}
+first = normalize(0,bad[0])
+assert first[1] != ALL, "empty initial survivor"
+families[first[0]][first[1]] = None
+todo = deque([first])
+records, transitions = 1,0
+preprocessing_seconds = time.monotonic()-t0
+search_start = time.monotonic()
+while todo:
+    c,h = todo.popleft()
+    if h not in families[c]:
+        continue
+    for j in range(15):
+        if transitions >= 1500000:
+            raise RuntimeError("closure edge cap exhausted")
+        rh = perm(h,j)
+        target = (cp[j]*c+1) % H
+        plus = ((rh << 1) & ALL) | (rh >> (H-1))
+        minus = (rh >> 1) | ((rh & 1) << (H-1))
+        nc,nh = normalize(target,bad[target] | (plus & minus))
+        transitions += 1
+        assert nh != ALL, 'empty survivor encountered'
+        family = families[nc]
+        if any(nh & old == nh for old in family):
+            continue
+        if records >= 100000:
+            raise RuntimeError("search record cap exhausted")
+        dominated = [old for old in family if old & nh == old]
+        for old in dominated:
+            del family[old]
+        family[nh] = None
+        todo.append((nc,nh))
+        records += 1
+# Reaching this point requires genuine queue exhaustion; no break path.
+assert not todo
+assert records <= 100000 and transitions <= 1500000
+assert (records, transitions) == (28838, 410475)
+assert len(families) == 25
+assert sum(map(len, families.values())) == 19844
+assert all(families.values())
+payload = {str(c):[str(h) for h in family] for c,family in families.items()}
+data = json.dumps(payload).encode("utf-8")
+seal = hashlib.sha256(data).hexdigest()
+assert seal == "8870a41115f6ce30c34f9414eb64774c314a7e0410c7204ff443744a16c6c03f"
+# No external table, seed file, scan-domain file, or imported constructor.
+out = Path(__file__).parent / "closure-family.json"
+assert not out.exists(), "use a fresh directory"
+tmp = out.with_suffix(".json.tmp")
+tmp.write_bytes(data)
+tmp.replace(out)
+report = {"status":"closed", "records":records, "closure_edges":transitions,
+          "base_members":19844, "base_fibers":25, "pending":len(todo),
+          "certificate_bytes":len(data), "certificate_sha256":seal,
+          "preprocessing_seconds":preprocessing_seconds,
+          "closure_seconds":time.monotonic()-search_start,
+          "seconds":time.monotonic()-t0, "external_data_inputs":[]}
+print(json.dumps(report, sort_keys=True))
+signal.alarm(0)
+```
+
+第二段独立从原坐标建立安全集与原语作用；其包含查询用目标纤维的位索引完成，不调用构造器的扫描或剪枝程序。
+
+```python
+"""Independent finite-certificate validator; Python standard library only."""
+from pathlib import Path
+from math import gcd
+import hashlib, json, signal, time
+
+if not __debug__:
+    raise RuntimeError("assertions required: do not use python -O")
+
+def expired(signum, frame):
+    raise TimeoutError("120 second validator bound")
+
+signal.signal(signal.SIGALRM, expired)
+signal.alarm(120)
+start = time.monotonic()
+root = Path(__file__).parent
+H = 341
+U = (1 << H) - 1
+
+def mm(A, B):
+    return tuple(tuple(sum(A[i][k]*B[k][j] for k in range(2))
+                       for j in range(2)) for i in range(2))
+
+M = ((0, 1), (1, 1))
+E = ((1, 0), (0, 1))
+for _ in range(15):
+    E = mm(M, E)
+assert E == ((377, 610), (610, 987))
+assert mm(E, E) != ((1, 0), (0, 1))
+
+def act(A, s):
+    return tuple(sum(A[i][j]*s[j] for j in range(2)) % H for i in range(2))
+
+def coord(s):
+    a, b = s
+    return (a + 81*b) % H, (a + 261*b) % H
+
+def inverse(c, w):
+    b = 36*(w-c) % H
+    return (c-81*b) % H, b
+
+def unit(s):
+    return gcd(2*s[0] + 3*s[1], H) == 1
+
+def saturate(states):
+    return states | {act(E, s) for s in states}
+
+safe = [0]*H
+raw_checks = 0
+for a in range(H):
+    for b in range(H):
+        s = a, b
+        c, w = coord(s)
+        assert inverse(c, w) == s
+        e = act(E, s)
+        assert act(E, e) == s
+        assert coord(e) == (c, -w % H)
+        assert coord(act(M, s)) == (81*c % H, 261*w % H)
+        assert (2*a+3*b) % H == (270*c+73*w) % H
+        orbit = {s, e}
+        # First R/G use no pre-phase: every member of this initial orbit
+        # is an independently permitted root. Post-saturation is only
+        # a representation at the next legal cut.
+        rnext = saturate({act(M, x) for x in orbit})
+        gnext = saturate({((x[0]+1) % H, x[1]) for x in orbit})
+        tnext = saturate({x for x in orbit if unit(x)})
+        assert {coord(x) for x in rnext} == {(81*c % H, 261*v % H) for v in (w, -w)}
+        assert {coord(x) for x in gnext} == {((c+1) % H, (v+d) % H) for v in (w, -w) for d in (-1, 1)}
+        passes = unit(s) or unit(e)
+        assert {coord(x) for x in tnext} == ({(c, w), (c, -w % H)} if passes else set())
+        if passes:
+            safe[c] |= 1 << w
+        raw_checks += 1
+
+assert raw_checks == H*H == 116281
+arithmetic_seconds = time.monotonic()-start
+bad = (1, 212)
+assert (gcd(2*bad[0]+3*bad[1], H), gcd(2*act(E,bad)[0]+3*act(E,bad)[1], H)) == (11, 31)
+bc, bw = coord(bad)
+assert not (safe[bc] >> bw) & 1
+
+cp = [pow(81, j, H) for j in range(15)]
+wp = [pow(261, j, H) for j in range(15)]
+assert pow(81,15,H) == 1 and pow(261,15,H) == H-1
+tables = [[1 << (w*k % H) for w in range(H)] for k in wp]
+
+def push(mask, table):
+    out = 0
+    while mask:
+        bit = mask & -mask
+        out |= table[bit.bit_length()-1]
+        mask ^= bit
+    return out
+
+negative = [1 << (-w % H) for w in range(H)]
+data = (root/'closure-family.json').read_bytes()
+certificate = json.loads(data)
+assert isinstance(certificate, dict) and len(certificate) == 25
+assert {int(c) for c in certificate} == {min(c*k % H for k in cp) for c in range(H)}
+assert all(isinstance(v, list) and v for v in certificate.values())
+base = [(int(c), int(h)) for c, holes in certificate.items() for h in holes]
+assert len(base) == len(set(base)) == 19844
+families = [dict() for _ in range(H)]
+minimum = H
+for i, (c, holes) in enumerate(base):
+    assert 0 <= c < H and 0 <= holes <= U
+    assert holes != U, "empty survivor encountered"
+    assert push(holes, negative) == holes
+    for j in range(15):
+        d, out = c*cp[j] % H, push(holes, tables[j])
+        survivors = U ^ out
+        assert survivors and not (survivors & (U ^ safe[d]))
+        families[d].setdefault(out, (i, j))
+        minimum = min(minimum, bin(survivors).count('1'))
+assert all(families)
+expanded = sum(map(len, families))
+assert expanded == 15*len(base) == 297660
+assert minimum == 294
+
+# For every output fiber, a bitset index identifies all beliefs that
+# exclude each residue. Intersecting these indices finds a covering
+# complement containing every forbidden residue.
+indexes = []
+for family in families:
+    masks = list(family)
+    posting = [0]*H
+    for i, mask in enumerate(masks):
+        while mask:
+            bit = mask & -mask
+            posting[bit.bit_length()-1] |= 1 << i
+            mask ^= bit
+    indexes.append((masks, posting, (1 << len(masks))-1))
+
+indexing_seconds = time.monotonic()-start-arithmetic_seconds
+validation_start = time.monotonic()
+rchecks = gchecks = tchecks = 0
+witness_digest = hashlib.sha256()
+for c, family in enumerate(families):
+    dest, posting, initial = indexes[(c+1) % H]
+    for holes in family:
+        rholes = push(holes, tables[1])
+        assert rholes in families[81*c % H]
+        rchecks += 1
+        # Complement of the saturated image (S+1) union (S-1).
+        plus = ((holes << 1) & U) | (holes >> (H-1))
+        minus = (holes >> 1) | ((holes & 1) << (H-1))
+        forbidden = plus & minus
+        choices = initial
+        pending = forbidden
+        while pending and choices:
+            bit = pending & -pending
+            choices &= posting[bit.bit_length()-1]
+            pending ^= bit
+        assert choices, ('G closure', c, holes)
+        idx = (choices & -choices).bit_length()-1
+        witness = dest[idx]
+        assert forbidden & ~witness == 0
+        # Check the survivor-set direction explicitly.
+        assert (U ^ witness) & forbidden == 0
+        witness_digest.update(f'{c}:{holes}:{witness}\n'.encode())
+        gchecks += 1
+        survivors = U ^ holes
+        assert survivors & safe[c] == survivors
+        tchecks += 1
+assert rchecks == gchecks == tchecks == expanded
+assert rchecks+gchecks+tchecks == 892980 <= 1500000
+
+# Entire-fiber first-letter calculation: all 341 roots in every class.
+startup = 0
+for c in range(H):
+    full = {inverse(c, w) for w in range(H)}
+    assert saturate(full) == full
+    assert {coord(x)[0] for x in full} == {c}
+    assert len(saturate({act(M, x) for x in full})) == H
+    assert len(saturate({((x[0]+1) % H,x[1]) for x in full})) == H
+    assert len(saturate({x for x in full if unit(x)})) == bin(safe[c]).count('1')
+    startup += 1
+
+assert startup == 341
+assert sum(bool(f) for f in families) == 341
+assert bin(safe[0]).count("1") == 300
+seal = hashlib.sha256(data).hexdigest()
+assert seal == "8870a41115f6ce30c34f9414eb64774c314a7e0410c7204ff443744a16c6c03f"
+report = {"independent_check":"passed", "integer_E":E,
+          "raw_states":raw_checks, "base_members":len(base),
+          "base_fibers":len(certificate), "expanded_members":expanded,
+          "R_checks":rchecks, "G_checks":gchecks, "T_checks":tchecks,
+          "coverage_classes":sum(bool(f) for f in families),
+          "startup_full_fibers":startup,
+          "minimum_current_survivors":minimum, "zero_class_safe_roots":300,
+          "certificate_sha256":seal,
+          "independent_witness_sha256":witness_digest.hexdigest(),
+          "arithmetic_seconds":arithmetic_seconds,
+          "indexing_seconds":indexing_seconds,
+          "validation_seconds":time.monotonic()-validation_start,
+          "seconds":time.monotonic()-start,
+          "external_data_inputs":["closure-family.json"]}
+print(json.dumps(report, sort_keys=True))
+signal.alarm(0)
+```
+
+### 101.7 方法来源、供应关系与研究范围
+
+本实例用补集包含来压缩集合搜索，采用成熟的反链方法；一般自动机的集合单调性、有限闭包及 König 引理不作为本节新算法或新定理主张。关于反链方法的背景文献，参见 Martin De Wulf、Laurent Doyen、Thomas A. Henzinger、Jean-François Raskin，*Antichains: A New Algorithm for Checking Universality of Finite Automata*，[CAV 2006，17–30页，DOI:10.1007/11817963_5](https://doi.org/10.1007/11817963_5)。此处仅作方法背景书目引用：作者、题名、年份与页码已由出版元数据核对，未核对该文正文的具体定理。本节的闭包正确性由101.2—101.5及独立程序直接给出，不依赖把文献的某个算法或定理直接套入本实例。
+
+Udi Boker 与 Karoliina Lehtinen，[*Good for Games Automata: From Nondeterminism to Alternation*，arXiv:1906.11624v2](https://arxiv.org/abs/1906.11624v2)，第3节 history-determinism 的说明与定义5，要求选择只依已经读到的词并对不同未来一致。本节只复用这个在线选择与逐词存在接受路径的区别，不从该文推导本实例的闭包或取得障碍。式(101.8)允许日程依赖整份协议，不声称得到 history-deterministic 的选择器。
+
+本卷97.1供应准确坐标与接口，97.2供应同一实际整数提升的执行桥；第100节供应零类逐根拒绝这一量词对照。[Fibonacci 卷](FIBONACCI_ATOMIC_RELATION_GENERATION.md)第38节的闭合缺陷、第130节的实际正向接枝词是既有代数背景；第133节的终端查询允许同源重置，不能迁入这里作为免费重试。第98节两读数取得的是共同含量，第99节研究一般 $H,d$ 的无接枝 $R/T$ 含量判据，两者都不等于本节的初始商标签 $c_0$，也未被本节推翻。已取得端点加保留运输的条件恢复仍按95.7、96.7、98.4；本节没有另行取得端点或隐藏时间。
+
+仓内 [ControlledBehaviorUniversality](../../../D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean) 的 `controlled_behavior_universal_property` 以确定更新及读出交织为前提，不能直接替代这里共同相位下的非确定语言证书；这里只读其声明，没有编译或宣称新的 Lean 应用。新增成果是这个准确 $341,15$ 实例的整纤维有限闭包证书，以及在固定协议、固定实际来源和任意记忆条件下的取得桥。它说明自主商作为关系结构可以存在而原传感器仍无法保证取得其非恒定初始函数；不主张一般 $H$ 分类、最小证书、算法原创优先权、物理统一、随机协议结论或长期研究目标已经完成。
+
+产地：本节为 codex-cli 的 THEORY-ONLY 实施，复用已完成的候选构造代码并在本文公开自足生成器及独立原坐标验证器；恢复标识为 `6abca92e2b72653bc33a2dd2`。正文只承载数学结果、程序和范围，不把既往评审意见当作证明。
+
+## 101.99 追加锚
