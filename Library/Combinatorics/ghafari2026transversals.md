@@ -18,6 +18,15 @@ The version-specific TeX source is available from
 https://arxiv.org/src/2607.17547v1. Its `TransAlgo.tex` has SHA-256
 `fbc03bc2e8a4ebf0c0aac4e76c27fc1ead40c81f0dbee379720cfe2fc80d3a3e`.
 
+## Verified locator
+
+DOI: 10.48550/arXiv.2607.17547
+
+URL: https://arxiv.org/abs/2607.17547v1
+
+- Locator: Section 3, equation (7), source label `Structuretwo`, defines H of order n = 4k and gives the source's Latinness assertion; Lemma 5, source label `l:Delta`, gives the transversal Delta-sum congruence; Lemma 8, source label `zeromodfour`, proves no pair of disjoint transversals for k >= 9.
+- Locator: The paragraph immediately before Section 4 reports three transversals with empty total intersection for the finite range 9 <= k <= 2500. The uniform construction recorded below is separate from that finite report.
+
 The following assertions are `literature-attested`:
 
 - Section 3, equation (7), source label `Structuretwo`, defines H of
@@ -47,10 +56,13 @@ The explicit uniform formulas and proofs in
 are `repo-derived` ordinary mathematics. Their Latinness premise is the
 source assertion accompanying equation (7). The construction supplies
 three transversals for every k >= 9; the source's finite search result
-is not used as a premise of that uniform construction. There is no Lean
-consumer associated with this note. Full Conjecture 3 remains unresolved
-by this H-family result; neither a result for G nor an order-30 square
-with the conjectured properties follows from it.
+is not used as a premise of that uniform construction. The two current D5
+consumers are `D5/S3/Combinatorics/LatinHTransversals.transversal_obstruction`
+and `D5/S3/Combinatorics/LatinHFamilyTheorem.result`; the latter keeps
+Latinness of the actual square as the explicit source premise. Full
+Conjecture 3 remains unresolved by this H-family result; neither a result
+for G nor an order-30 square with the conjectured properties follows from
+it.
 
 As of 21 September 2026, the arXiv version record lists only v1. The
 bounded arXiv query `all:"transversals" AND (au:Ghafari OR au:Wanless)`
