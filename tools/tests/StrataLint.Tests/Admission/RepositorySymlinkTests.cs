@@ -251,6 +251,48 @@ public sealed class RepositorySymlinkTests
             path => path != "alias").Entries, entry => entry.Path == "alias");
     }
 
+    [Theory]
+    [InlineData("file")]
+    [InlineData("directory")]
+    public void ScopedReadKeepsTheReferentOfADeclaredLinkOutsideItsScope(string kind)
+    {
+        using var repository = new TemporaryDirectory();
+        Initialize(repository.Path);
+        var (target, member) = kind == "file"
+            ? ("../docs/reference.md", "docs/reference.md")
+            : ("../docs/reference", "docs/reference/page.md");
+        Write(repository.Path, member, "reference\n");
+        Write(repository.Path, "docs/unrelated.md", "unrelated\n");
+        Declare(repository.Path, ("Meta/reference", target, kind));
+        Link(repository.Path, "Meta/reference", target);
+        string[] scope = [":(glob)Meta/*"];
+
+        var scoped = GitRepositorySnapshotReader.ReadCurrent(repository.Path, pathspecs: scope);
+        Assert.Equal(["Meta/FILEMAP.toml", "Meta/reference", member], scoped.Entries.Select(entry => entry.Path));
+        File.Delete(Path.Combine(repository.Path, member));
+        Assert.Throws<InvalidOperationException>(() =>
+            GitRepositorySnapshotReader.ReadCurrent(repository.Path, pathspecs: scope));
+    }
+
+    [Fact]
+    public void ScopedReadValidatesTheWholeReferentDirectoryWhenItsScopeCoversPart()
+    {
+        using var repository = new TemporaryDirectory();
+        Initialize(repository.Path);
+        Write(repository.Path, "docs/page.md", "page\n");
+        Write(repository.Path, "docs/deep/page.md", "deep\n");
+        Declare(repository.Path, ("Meta/reference", "../docs", "directory"));
+        Link(repository.Path, "Meta/reference", "../docs");
+        string[] scope = [":(glob)Meta/*", ":(glob)docs/*"];
+
+        Assert.Contains(GitRepositorySnapshotReader.ReadCurrent(repository.Path, pathspecs: scope).Entries,
+            entry => entry.Path == "docs/deep/page.md");
+        Link(repository.Path, "docs/deep/alias", "page.md");
+        Assert.Throws<InvalidOperationException>(() => GitRepositorySnapshotReader.ReadCurrent(repository.Path));
+        Assert.Throws<InvalidOperationException>(() =>
+            GitRepositorySnapshotReader.ReadCurrent(repository.Path, pathspecs: scope));
+    }
+
     [Fact]
     public void DirectoryAliasRequiresAllDiscoveredTargetFilesAfterFiltering()
     {
