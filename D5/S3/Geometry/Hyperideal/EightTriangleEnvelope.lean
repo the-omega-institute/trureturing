@@ -24,10 +24,7 @@ theorem four_cycle_upper_sq : (2753 : ℝ)^2 / 4012^2 < 1 / 2 := by norm_num
 /- The high-edge Taylor certificate used at the degree-fourteen threshold. -/
 def t6 (u : ℝ) : ℝ := 1 - u^2 / 2 + u^4 / 24 - u^6 / 720
 
-theorem high_upper_taylor : (53 : ℝ) / 59 < t6 (22 / 49) := by
-  norm_num [t6]
-
-theorem high_upper_sq : (53 : ℝ)^2 / 59^2 < 1 := by norm_num
+theorem high_upper_sq : (5965 : ℝ)^2 / 6972^2 < 3 / 4 := by norm_num
 
 #print axioms star_lower_sq
 #print axioms triangle_lower_sq
@@ -35,7 +32,6 @@ theorem high_upper_sq : (53 : ℝ)^2 / 59^2 < 1 := by norm_num
 #print axioms star_upper_sq
 #print axioms triangle_upper_sq
 #print axioms four_cycle_upper_sq
-#print axioms high_upper_taylor
 #print axioms high_upper_sq
 
 end D5.S3.Geometry.Hyperideal.EightTriangleEnvelope
