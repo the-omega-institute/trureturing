@@ -3,6 +3,7 @@
    mirror-B: none(waiver:finite-observation-obstruction)
    mirror-E: none(waiver:finite-observation-obstruction)
    anchors: []
+   utility: none
    digest: The CFMP/Fibonacci return observation has a persistent five-phase modular ambiguity. -/
 
 import Mathlib
