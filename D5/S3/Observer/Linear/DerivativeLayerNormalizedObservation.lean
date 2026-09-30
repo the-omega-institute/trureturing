@@ -9,6 +9,7 @@
 import Mathlib.Analysis.Normed.Algebra.Exponential
 import Mathlib.Analysis.Analytic.Basic
 import Mathlib.Algebra.Module.Submodule.Lattice
+import Mathlib.Analysis.InnerProductSpace.Projection.Basic
 import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
 import Mathlib.Tactic
 
