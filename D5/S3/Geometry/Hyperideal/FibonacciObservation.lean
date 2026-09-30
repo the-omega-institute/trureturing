@@ -87,6 +87,37 @@ theorem observe_phase_indistinguishable (k t : ℕ) (z : ℤ × ℤ) :
     push_cast
     ring
 
+/-- Exact integer-kernel normal form. If both observed coordinates vanish
+modulo 5k, then the input has the form k*(t, 2t+5s). This is the
+congruence-level Smith normal form needed for the five-phase obstruction. -/
+theorem kernel_phase_characterization (k : ℕ) (x y : ℤ) :
+    (modEq (5 * k) (observe (x, y)).1 0 ∧
+      modEq (5 * k) (observe (x, y)).2 0) ↔
+      ∃ t s : ℤ,
+        x = (k : ℤ) * t ∧
+          y = 2 * (k : ℤ) * t + 5 * (k : ℤ) * s := by
+  constructor
+  · intro h
+    change ((5 * k : ℕ) : ℤ) ∣ -(2 * x - y) at h
+    change ((5 * k : ℕ) : ℤ) ∣ -(x + 2 * y) at h
+    rcases h with ⟨a, ha⟩
+    rcases h.2 with ⟨b, hb⟩
+    refine ⟨-(2 * a + b), a, ?_, ?_⟩
+    · push_cast at ha hb ⊢
+      nlinarith
+    · push_cast at ha hb ⊢
+      nlinarith
+  · rintro ⟨t, s, rfl, rfl⟩
+    constructor
+    · unfold modEq
+      refine ⟨-(s), ?_⟩
+      push_cast
+      ring
+    · unfold modEq
+      refine ⟨-(t + 2 * s), ?_⟩
+      push_cast
+      ring
+
 /-- Specialization at the Robin cutoff modulus 5040 = 5 * 1008. The
 phase ambiguity uses only the factor five; the factor seven contributes no
 additional state in this observation. -/
