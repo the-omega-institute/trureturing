@@ -1,0 +1,20 @@
+## 11. 文献输入与适用范围
+
+[G81] R. L. Griess Jr., *A construction of F1 as automorphisms of a 196,883-dimensional algebra*, PNAS 78 (1981), 689–691. https://doi.org/10.1073/pnas.78.2.689 。立方形式实现保留原有归属；完整 1982 构造 DOI 为 https://doi.org/10.1007/BF01389186 。
+
+[GL11] R. L. Griess Jr. and C. H. Lam, *A new existence proof of the Monster by VOA theory*, arXiv:1103.1414v2. https://arxiv.org/pdf/1103.1414 。Monster 型群的唯一性仍为该文引用的群论输入。
+
+[KL05] Y. Kawahigashi and R. Longo, *Local conformal nets arising from framed vertex operator algebras*, arXiv:math/0407263v2. https://arxiv.org/pdf/math/0407263 。使用 Theorem 3.6、Example 3.8、Lemma 5.1、Theorem 5.4 的具体 Moonshine 网，不以一般 VOA/net 关系代替此处的对象。
+
+[M01] A. Matsuo, *Norton's Trace Formulae for the Griess Algebra of a Vertex Operator Algebra with Larger Symmetry*, Commun. Math. Phys. 224 (2001), 565–591. https://doi.org/10.1007/s00220-001-0565-3 ，https://arxiv.org/pdf/math/0007169v1 。使用 §§1、3.1、Corollary 4.1；显示多项式和负候选列表的差异见第 3.2 节。
+
+[DGL05] C. Dong, R. L. Griess Jr. and C. H. Lam, *On the uniqueness of the moonshine vertex operator algebra*, arXiv:math/0506321v1. https://arxiv.org/pdf/math/0506321 。Theorem 1 保留 Griess 乘法前件。
+
+[ALY] T. Abe, C. H. Lam and H. Yamada, *A remark on Z_p-orbifold constructions of the Moonshine vertex operator algebra*, arXiv:1705.09022v4. https://arxiv.org/html/1705.09022v4 。使用 §1 的反射构造及其他 prime orbifold 构造范围，不认领其新颖性。
+
+[JF19] T. Johnson-Freyd, *The Moonshine Anomaly*, Commun. Math. Phys. 365 (2019), 943–970. https://arxiv.org/html/1707.08388v3 。使用 Theorem 1 及 §2 的缺陷解释；勘误见 https://link.springer.com/content/pdf/10.1007/s00220-019-03636-9.pdf 。
+
+[Z96] Y. Zhu, *Modular invariance of characters of vertex operator algebras*, J. Amer. Math. Soc. 9 (1996), 237–302. https://doi.org/10.1090/S0894-0347-96-00182-8 。模变换定理作为外部输入。
+
+[L22] Ying-Hsuan Lin, *Topological modularity of Monstrous Moonshine*, arXiv:2207.14076v3. https://arxiv.org/html/2207.14076v3 。使用 §3 对月光反常和有限子群 gauging 限制的陈述。
+
