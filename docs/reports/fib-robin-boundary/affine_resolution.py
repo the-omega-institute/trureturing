@@ -10,7 +10,7 @@ from functools import lru_cache
 from fractions import Fraction
 import hashlib
 import json
-from math import gcd
+from math import factorial, gcd, prod
 from pathlib import Path
 import sys
 
@@ -346,6 +346,74 @@ def complete_local_phases():
             'counts': counts}
 
 
+def valuation(n, p):
+    assert n > 0
+    exponent = 0
+    while n % p == 0:
+        n //= p
+        exponent += 1
+    return exponent
+
+
+def two_factor_stops():
+    primes = (2, 3, 5, 7, 11, 13, 17, 19, 23)
+    stops = (20, 12, 8, 6, 5, 4, 4, 4, 3)
+    losses = (2, 1, 0, 1, 1, 1, 1, 1, 1)
+    lower_v = tuple(e+1-valuation(5040, p) for p, e in zip(primes, stops))
+    forced = tuple(e-2*loss for e, loss in zip(lower_v, losses))
+    assert lower_v == (17, 11, 8, 6, 6, 5, 5, 5, 4)
+    assert forced == (13, 9, 8, 4, 4, 3, 3, 3, 2)
+    first = []
+    for p, z in zip((3, 7, 11, 13, 17, 19, 23), (4, 8, 10, 7, 9, 18, 24)):
+        assert all(fib(j) % p for j in range(1, z))
+        assert valuation(fib(z), p) == 1 and z % p != 0
+        first.append({'p': p, 'rank': z, 'fib_at_rank': fib(z)})
+    checks = 0
+    for t in range(1, 2001):
+        for value in (fib(t), lucas(t)):
+            for p, loss in zip(primes, losses):
+                assert valuation(value, p) <= valuation(t, p)+loss
+                checks += 1
+    force_product = prod(p**e for p, e in zip(primes, forced))
+    assert force_product == 86715646730220994462337961600000000
+    assert force_product*18**80 > 49**80
+    # Outward bounds for e from its factorial series.
+    e_lower = sum((Fraction(1, factorial(j)) for j in range(9)), Fraction(0))
+    e_upper = e_lower+Fraction(1, factorial(9))*Fraction(10, 9)
+    assert Fraction(65, 24) < e_lower < e_upper < Fraction(49, 18)
+    k = 2**7*3**5*5**5*7**3*11**3
+    r = 5*k-2
+    observed = []
+    for p, exponent in zip(primes, (23, 15, 11, 9, 8, 2, 2, 2, 2)):
+        modulus = p**(exponent+1)
+        f3, f2 = fib_mod(3*k, modulus), fib_mod(2*k, modulus)
+        # Golden-ring binary powering is independent of fast doubling.
+        assert f3 == power((0, 1), 3*k, modulus)[1]
+        assert f2 == power((0, 1), 2*k, modulus)[1]
+        residue = 5040*f3*f2 % modulus
+        assert residue and valuation(residue, p) == exponent
+        observed.append({'p': p, 'modulus': modulus, 'residue': residue,
+                         'exact_n_valuation': exponent})
+    eta = prod(1-Fraction(1, p**(e+1)) for p, e in zip(primes[:5], (23, 15, 11, 9, 8)))
+    assert 1-eta == Fraction(2842521061260042618529, 31272425262685292301000000000)
+    assert 1-eta < A0/(35**3+A0)
+    assert 5*k < Fraction(65, 24)**35 and Fraction(r, 4) > 32*10**12
+    assert 5040 < 2**13 and Fraction(3, 4)*(5*k+13) < 5*k
+    assert sum((Fraction(3, 4)**j/factorial(j) for j in range(5)), Fraction(0)) > 2
+    return {'published_stops_are_external_inputs': True,
+            'primes': primes, 'safe_n_valuation_caps': stops,
+            'forced_V_valuations': lower_v, 'forced_rs_valuations': forced,
+            'first_rank_data': first, 't_range': [1, 2000],
+            'uniform_F_and_L_valuation_checks': checks,
+            'forced_index_product': force_product,
+            'integer_comparison_slack': force_product*18**80-49**80,
+            'five_direction_obstruction': {
+                'K': k, 'a': k+2, 'd': 2, 'h': k, 'largest_occupied_index': r,
+                'factor_indices': [3*k, 2*k], 'observations': observed,
+                'eta_five': [eta.numerator, eta.denominator],
+                'log_log_n_upper_bound': 35, 'passes_new_prime_17_stop': True}}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out', type=Path, required=True, help='output JSON file (overwritten)')
@@ -358,7 +426,8 @@ def main():
               'norm_threshold': norm_threshold_checks(),
               'progressions': progression_checks(),
               'odd_phases': odd_phase_checks(),
-              'complete_local_phases': complete_local_phases()}
+              'complete_local_phases': complete_local_phases(),
+              'two_factor_stops': two_factor_stops()}
     args.out.write_text(json.dumps(result, indent=2, sort_keys=True)+'\n', encoding='utf-8')
 
 

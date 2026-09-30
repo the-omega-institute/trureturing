@@ -72,7 +72,171 @@
     "identities": 10080
   },
   "scope": "finite exact diagnostics; not a proof of Robin or RH",
-  "source_sha256": "3ffed2228dd5e93fb18275ce60da12b8121cf8e9ec4a40f7174febaf543ebffd",
+  "source_sha256": "1d0c7e921639ad2e211c07bf6f20d41c93c08543a635c30be600a2d1ac7a05ab",
+  "two_factor_stops": {
+    "first_rank_data": [
+      {
+        "fib_at_rank": 3,
+        "p": 3,
+        "rank": 4
+      },
+      {
+        "fib_at_rank": 21,
+        "p": 7,
+        "rank": 8
+      },
+      {
+        "fib_at_rank": 55,
+        "p": 11,
+        "rank": 10
+      },
+      {
+        "fib_at_rank": 13,
+        "p": 13,
+        "rank": 7
+      },
+      {
+        "fib_at_rank": 34,
+        "p": 17,
+        "rank": 9
+      },
+      {
+        "fib_at_rank": 2584,
+        "p": 19,
+        "rank": 18
+      },
+      {
+        "fib_at_rank": 46368,
+        "p": 23,
+        "rank": 24
+      }
+    ],
+    "five_direction_obstruction": {
+      "K": 44375007600000,
+      "a": 44375007600002,
+      "d": 2,
+      "eta_five": [
+        31272422420164231040957381471,
+        31272425262685292301000000000
+      ],
+      "factor_indices": [
+        133125022800000,
+        88750015200000
+      ],
+      "h": 44375007600000,
+      "largest_occupied_index": 221875037999998,
+      "log_log_n_upper_bound": 35,
+      "observations": [
+        {
+          "exact_n_valuation": 23,
+          "modulus": 16777216,
+          "p": 2,
+          "residue": 8388608
+        },
+        {
+          "exact_n_valuation": 15,
+          "modulus": 43046721,
+          "p": 3,
+          "residue": 14348907
+        },
+        {
+          "exact_n_valuation": 11,
+          "modulus": 244140625,
+          "p": 5,
+          "residue": 146484375
+        },
+        {
+          "exact_n_valuation": 9,
+          "modulus": 282475249,
+          "p": 7,
+          "residue": 40353607
+        },
+        {
+          "exact_n_valuation": 8,
+          "modulus": 2357947691,
+          "p": 11,
+          "residue": 1071794405
+        },
+        {
+          "exact_n_valuation": 2,
+          "modulus": 2197,
+          "p": 13,
+          "residue": 845
+        },
+        {
+          "exact_n_valuation": 2,
+          "modulus": 4913,
+          "p": 17,
+          "residue": 1445
+        },
+        {
+          "exact_n_valuation": 2,
+          "modulus": 6859,
+          "p": 19,
+          "residue": 361
+        },
+        {
+          "exact_n_valuation": 2,
+          "modulus": 12167,
+          "p": 23,
+          "residue": 1587
+        }
+      ],
+      "passes_new_prime_17_stop": true
+    },
+    "forced_V_valuations": [
+      17,
+      11,
+      8,
+      6,
+      6,
+      5,
+      5,
+      5,
+      4
+    ],
+    "forced_index_product": 86715646730220994462337961600000000,
+    "forced_rs_valuations": [
+      13,
+      9,
+      8,
+      4,
+      4,
+      3,
+      3,
+      3,
+      2
+    ],
+    "integer_comparison_slack": 647144243885032655152163372140890177286293123155849858318890324214848106738874150803159582725881808666095714761321145766859791987103999,
+    "primes": [
+      2,
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23
+    ],
+    "published_stops_are_external_inputs": true,
+    "safe_n_valuation_caps": [
+      20,
+      12,
+      8,
+      6,
+      5,
+      4,
+      4,
+      4,
+      3
+    ],
+    "t_range": [
+      1,
+      2000
+    ],
+    "uniform_F_and_L_valuation_checks": 36000
+  },
   "window_geometry": {
     "null_windows_low_end": [
       0,

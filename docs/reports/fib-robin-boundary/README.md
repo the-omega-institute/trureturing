@@ -784,8 +784,9 @@ The default ranges check:
   so the sum's divisibility does not follow.
 
 Ranks are computed using the classical `z(p) | p-(5/p)` bound for odd
-`p != 5`, modular fast doubling, and prime-factor reduction with minimality
-checks; ranks at 2 and 5 are handled separately. This rank computation is
+`p != 5` and the zero-index divisibility criterion, modular fast doubling,
+and prime-factor reduction with minimality checks; ranks at 2 and 5 are
+handled separately. This rank computation is
 an arithmetic diagnostic using the known bound, not an independent proof
 of that bound. The example `F_11+F_6=97`, of rank 49, remains outside every
 power-of-two enlargement of the four indices 11, 6, 17, 5. The example
@@ -798,3 +799,37 @@ the multiplier while allowing unboundedly many regularly spaced terms.
 Neither applies to arbitrary five-window histories or proves RH. The
 Möbius relation uses the complete quadratic residue algebra and explicitly
 requires its denominator to be a unit.
+
+## Two-factor sources and all-index progression bounds (§176)
+
+The same script now also checks 36,000 valuation bounds for `F_t` and
+`L_t`, `1 <= t <= 2000`, at the nine primes through 23. First-rank data
+are exhaustively checked up to each stated rank. The individual Robin
+stops remain published external inputs; enumerating valuations does not
+prove those stopping theorems.
+
+If all nine stops fail for `c*V`, with positive `c | 5040` and
+`V | A_r*B_s` for two positive-index Fibonacci/Lucas factors, the general
+valuation bounds force the same index product `r*s` to be divisible by
+`2^13*3^9*5^8*7^4*11^4*13^3*17^3*19^3*23^2`. Its exact comparison with
+`(49/18)^80` forces `max(r,s) > exp(40)`. The existing rank tail then
+applies when the actual `V >= F_max(r,s)`. Thus §176 gives a paper
+all-index conclusion for those two-factor divisors and, as a corollary,
+every `c*sum(F_(a+2*d*j), j=0..h-1) > 5040` with `a >= 3`, `d,h >= 1`
+and positive `c | 5040`. The explicit growth hypothesis cannot be dropped.
+Arbitrary multipliers retain only the earlier eventual bound.
+
+The large legal progression with `K=44375007600000`, `a=K+2`, `d=2`,
+`h=K` has sum `F_(3K)*F_(2K)`. Fast doubling and separate golden-ring
+binary powering confirm its exact valuations without constructing the
+integer. Its first five valuations are `(23,15,11,9,8)` after multiplication
+by 5040, and even the true-size five-factor test fails. Its valuation at
+17 is exactly two, so the new direction certifies Robin. The script retains
+both the failed sufficient condition and the successful new stop.
+
+The final script was rerun from an unrelated directory, with a filename
+containing spaces and only the system PATH; output matched byte for byte.
+Optimized execution and missing `--out` were rejected with exit 2. These
+portability checks were performed on macOS/Python 3.9. All earlier result
+fields were preserved, apart from the intentionally updated source hash.
+No new Lean proof of §176 or RH is claimed.
