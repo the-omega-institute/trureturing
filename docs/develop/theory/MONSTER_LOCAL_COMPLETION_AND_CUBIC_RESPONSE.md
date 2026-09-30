@@ -1155,7 +1155,6 @@ $$
 $$
 
 证明。引理 35.1 把左边化为 $\det(x,y,z)$。三个向量都位于 $\langle g,h\rangle$，故行列式为零。任意二元标签组成仍留在该平面；此结论不包含辅助八元数的乘法系数、三周期或实际 OPE。
-
 ## 36. 实对称矩阵有序三脉冲的无维数二阶偏差
 
 **定理 36.1（Frobenius 控制下的有序三脉冲实部偏差）。** 令 $I$ 为任意有限指标集，$A,B,C\in\operatorname{Mat}_I(\mathbb R)$ 均为对称矩阵，$L\in\mathbb R_{\ge0}$，且三者的真实 Frobenius 范数分别满足 $\|A\|_F,\|B\|_F,\|C\|_F\le L$。将这些矩阵逐项复化，对 $X\in\{A,B,C\}$ 和所有实数 $s$ 定义
@@ -1219,27 +1218,3 @@ $$
 这正是所述结论。证毕。
 
 ## 追加锚（本行以下为增补区）
-
-## 37. 三次恢复的有限坐标形式
-
-取 $W=\mathbb R^n$、$B=\mathbb R\times W$、$e=(1,0)$，并定义
-$\langle(a,u),(b,v)\rangle_B=3ab+\langle u,v\rangle_W$。设 $B$ 上有实双线性、交换的乘法，满足 $e\cdot x=x$ 及
-$\langle x\cdot y,z\rangle_B=\langle x,y\cdot z\rangle_B$。令
-$Q(u,v)=\operatorname{pr}_W((0,u)\cdot(0,v))$。这一归一化与式（MC.10）一致；Griess 代数的相应不变形式参见 [M01, §3.1]。
-
-**命题 37.1（有限坐标的乘法恢复）。** 对上述任意 $B$ 及所有 $a,b\in\mathbb R$、$u,v\in W$，
-
-$$
-(a,u)\cdot(b,v)=\left(ab+\frac{\langle u,v\rangle_W}{3},\;av+bu+Q(u,v)\right).
-$$
-
-证明。不变性及单位律给
-$3\operatorname{pr}_{\mathbb R}((0,u)\cdot(0,v))
-=\langle(0,u)\cdot(0,v),e\rangle_B
-=\langle(0,u),(0,v)\rangle_B=\langle u,v\rangle_W$。
-乘积的 $W$ 分量按 $Q$ 的定义确定；再由双线性及单位律展开两个加数。证毕。
-
-**命题 37.2（固定单位的正交延拓判据）。** 设 $U\in O(W)$，且 $\widehat U(a,u)=(a,Uu)$。则 $\widehat U$ 保持上述 $B$ 的乘法，当且仅当
-$UQ(u,v)=Q(Uu,Uv)$ 对所有 $u,v\in W$ 成立。
-
-证明。若 $\widehat U$ 保持乘法，将其等式限制到 $(0,u),(0,v)$ 并取 $W$ 分量，得到所需条件。反向代入命题 37.1 的乘法式；标量分量由 $U$ 的正交性保持，$W$ 分量由 $U$ 的线性及所给条件保持。证毕。
