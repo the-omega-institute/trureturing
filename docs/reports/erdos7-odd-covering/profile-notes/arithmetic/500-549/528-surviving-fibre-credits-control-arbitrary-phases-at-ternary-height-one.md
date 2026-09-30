@@ -4743,3 +4743,155 @@ The [joint evaluator](../../../frontier/cover-geometry/fibre-credit-partition/jo
 The separate [actual-family checker](../../../frontier/cover-geometry/fibre-credit-partition/joint_remainder_controls.py) and [results](../../../frontier/cover-geometry/fibre-credit-partition/joint_remainder_controls.json) supply14209 exact checks:24 globally phased squarefree families,138240 full-product points,504 individual remaining-original bounds,96 weighted comparisons and192 supported deep-head controls. They include the275 cap/row counterexample and a finite deep-private family with strict improvement. Some squarefree fixtures have unchanged worst-address fees; improvement is not asserted for every source. These controls support the ordinary proofs, not a new Lean result.
 
 These positive values show that the known first-layer witness no longer obstructs the joint fee method. They do not establish positivity for other arrays, arithmetic realization of the witness, or unrestricted Erdős#7. A sufficient next target is a positive bound for the whole expression over a proved outer domain containing all relevant actual arrays, with fixed gamma or a justified choice depending on the source. Such a uniform constant is a sufficient route, not a necessary reformulation of the original noncovering claim.
+
+## Supported-head row mass and exact depth tails
+
+The depth cap in FC114 is valid but can charge an original whose supported head lies in a deleted row. More generally that original's head intersection is bounded by both its depth cap and the actual surviving mass of its first row. Retain the SAME source, original inventory, grouped arrays and root weights as FC113--FC116. Put
+
+    C_p(e)=c_p*p^-e,
+    M_(p,r)(e,i)=min(C_p(e),w_(p,r,i)),
+    T_(D,r)(a)=G_(D,r)*K_(D,r)(a).
+
+For a remaining numerical original m, write H_D=D intersect{5,7}, e_p for its actual head depths, and a_p for its actual head first rows. Since its head cylinder is a subset of that first row,
+
+    lambda_p(head cylinder of m minus head star on r)
+       <=min(C_p(e_p),w_(p,r,a_p)).                    (FC119)
+
+The two bounds are alternatives, not independent factors. The 275 example still has min(1/20,1/4)=1/20; multiplying them would give the false bound already excluded after FC114. Applying FC119 in the coordinate proof of FC114 gives
+
+    lambda_V(A_m intersect U_r)
+       <=[product_(q in D intersect Q)c_q*q^-e_q]
+          *T_(D,r)(a_m)
+          *product_(p in H_D)M_(p,r)(e_p,a_p).         (FC120)
+
+Unsupported heads are integrated inside T with their actual row weights. Supported heads contribute M exactly once. Supported private coordinates retain their original depth caps, and the private coordinates outside D contribute g*k. A zero carrier is handled before conditional probabilities are formed.
+
+### Maximize each original's allowance before summing numerical depths
+
+For a supported-head exponent vector e, define
+
+    F_D(e)=max_a sum_r gamma_r*T_(D,r)(a)
+                       *product_(p in H_D)M_(p,r)(e_p,a_p),
+    S_D(e)=max_(r,a) gamma_r*T_(D,r)(a)
+                       *product_(p in H_D)M_(p,r)(e_p,a_p). (FC121)
+
+A free original has the SAME address on both roots, so FC120 is bounded by its private cap times F_D(e). A selected original at ternary height one is active on at most one retained root, and uses S_D(e) instead. Different numerical originals can have different addresses and selected roots. These maxima need not be jointly realizable: each is an upper allowance, not a construction of phases.
+
+For complete geometric inventories, let
+
+    B_private(D)=product_(q in D intersect Q)b_q,
+    l_p(D)=2 if D={p,q}, p in{5,7}, q in Q;
+           1 otherwise.
+
+The remaining free-plus-selected fee is bounded by
+
+    Fee_min=sum_(D subset V, |D|>=2) B_private(D)
+                *sum_(e_p>=l_p(D), p in H_D)[F_D(e)+S_D(e)]. (FC122)
+
+The lower limit 2 removes exactly the grouped shallow-head labels p*q^j and 3*p*q^j. Support{5,7} and every larger support start at head depth 1 and are fully paid. For no supported head there is one empty exponent vector and one empty address. Private geometric sums factor out because T and M are independent of the remaining original's private depths, with the grouped array kept fixed. An arbitrary restricted palette uses its direct sum over allowed numerical exponent vectors; only rectangular finite palettes admit the corresponding product factorization. Enlarging a finite palette to FC122 is valid because all terms are nonnegative.
+
+The order is sum_depth max_address, not max_address sum_depth. A literal scalar counterexample uses p=5, c=5/4, candidate row masses (1/4,1/20), residual coefficients (1/2,1), and depths e>=1. Its candidate allowances are
+
+    f_A(e)=(1/2)*min((5/4)*5^-e,1/4),
+    f_B(e)=min((5/4)*5^-e,1/20).
+
+Address A wins at depth 1 and B at every deeper depth. Thus
+
+    sum_e max(f_A(e),f_B(e))=3/16,
+    max(sum_e f_A(e),sum_e f_B(e))=max(5/32,9/80)=5/32. (FC123)
+
+Moving the maximum outside undercharges by1/32. This refutes that algebraic interchange; it is not an actual complete covering family.
+
+### A cheaper zero-row bound
+
+Define Z_(D,r)(a)=product_(p in H_D)1_{w_(p,r,a_p)>0}. Replace M in FC121 by C_p(e)*1_{w>0}. The head depth sums now factor, giving
+
+    A_D^0=max_a sum_r gamma_r*T_(D,r)(a)*Z_(D,r)(a),
+    B_D^0=max_(r,a) gamma_r*T_(D,r)(a)*Z_(D,r)(a),
+    Fee_zero=sum_D R_D*(A_D^0+B_D^0).                 (FC124)
+
+Here R_D is the complete nongroup coefficient of FC116. The mask stays INSIDE the root sum: a free address absent on one root may survive on the other. A certified zero is required; rounding a small positive row mass to zero is invalid. Pointwise comparison, then maxima and nonnegative summation, gives on the same array
+
+    Fee_min<=Fee_zero<=Fee_joint,
+    J_min>=J_zero>=J_joint,                           (FC125)
+
+where J_min and J_zero subtract the respective fees from the unchanged weighted L_group. The guard for its factors remains FC116. These comparisons also hold on a declared enlarged carrier using its actual row masses; they do not assert positivity or justify changing the source between the two terms.
+
+### Finite evaluation of all supported-head depths
+
+For exact rational row masses, let w_p^+ be the smallest positive w_(p,r,i), ignoring zeros. Choose N_p>=l_p(D) such that C_p(N_p)<=w_p^+. If all rows of that head vanish, set N_p=l_p(D); the relevant fees vanish. Exact repeated division finds N_p without floating logarithms. For every e>=N_p,
+
+    M_(p,r)(e,i)=C_p(e)*1_{w_(p,r,i)>0}.              (FC126)
+
+Consequently U=F_D or S_D obeys
+
+    U(...,N_p+t,...)=p^-t*U(...,N_p,...), t>=0.       (FC127)
+
+The common nonnegative factor leaves each product, root sum and finite maximum, including when all values are zero. This property holds simultaneously in several tail coordinates. Partition each head-depth axis into its individual prefix depths l_p,...,N_p-1 and one tail label represented by N_p. Assign weight1 to each prefix label and p/(p-1) to the tail. Then
+
+    sum_(e_p>=l_p) U(e)
+       =sum_(finite label tuples)
+          [product_(tail labels p)p/(p-1)]
+           *U(representative depths).                (FC128)
+
+There are at most product_p(N_p-l_p+1) evaluations per F_D or S_D. The proof partitions the exponent lattice, applies FC127 in each tail coordinate, and sums geometric factors; the maximum remains inside each prefix evaluation. Increasing a valid threshold does not change the result. For a finite upper depth E_p>=N_p, replace its tail weight by sum_(t=0..E_p-N_p)p^-t; if E_p<N_p, omit the tail. Empty head sets and all-zero rows follow the same formula.
+
+This is exact tail summation, not truncation, and it preserves changes of maximizing address with depth. Its evaluation count depends on the smallest positive row mass; no uniform threshold over all continuously varying sources is asserted. In particular, min(sum of tail caps,w) does not replace the sum of the individual minima.
+
+The [head-mass controls](../../../frontier/cover-geometry/fibre-credit-partition/head_mass_controls.py) and [results](../../../frontier/cover-geometry/fibre-credit-partition/head_mass_controls.json) give455 exact checks over12 actual finite sources:96 original/root bounds,48 free same-address bounds,48 selected-once bounds and48 geometric-inventory controls. They compare finite depth sums directly, vary valid infinite-tail thresholds, bound omitted tails independently, and retain the275 and sum/maximum counterexamples. The argument and controls are ordinary mathematics, not a new Lean result. Arbitrary source positivity, arbitrary prime support, higher ternary heights and unrestricted Erdős#7 remain unresolved.
+
+## Exact integer evaluation on the fixed token source
+
+For the FC110 head profile and nine private coordinates, the four common/selected projection tokens at each q have mass b_q. Assign each token to one physical head row, and each selected token to one retained root. For any such assignments, write
+
+    x_(r,q,i)=n_x/d_(r,q), y_(r,q,j)=n_y/d_(r,q),
+    d_(1,q)=q-2, d_(2,q)=q-3.
+
+The integers n_x,n_y count the active tokens on those rows. With the fixed private star masses,
+
+    g_(q,r)*(1-max(x,y))=(d_(r,q)-max(n_x,n_y))/(q-2),
+    g_(q,r)*(1-x-y)=(d_(r,q)-n_x-n_y)/(q-2).          (FC129)
+
+A supported private coordinate contributes b_q=1/(q-2) instead. Scale head5 weights by15 and head7 weights by35. Every unweighted group residual and every support/address fee in FC116 then has the common denominator
+
+    D0=525*product_(q>7)(q-2)=297473570769375.         (FC130)
+
+For each of the35 physical head pairs, two roots and512 private-outside-support subsets O, compute the integer product of d-max(n_x,n_y) over O. Removing the least set bit computes each subset from an earlier one. If k is the number of private coordinates INSIDE the support, the four head-support cases are:
+
+| Supported heads | Allowed k | Head contribution to the numerator |
+| --- | --- | --- |
+|none|k>=2|Sum the product of both integer head row weights times the subset product|
+|5|k>=1|Integrate only head7; multiply by5, or by1 when k=1|
+|7|k>=1|Integrate only head5; multiply by7, or by1 when k=1|
+|5 and7|k>=0|Multiply the fixed-address subset product by35|
+
+The exceptional factor1 is precisely the deeper-head inventory after removing grouped shallow-head originals. These cases cover2036 supports:502,511,511 and512 respectively. Free fees take the maximum after adding both root numerators at the SAME address; selected fees take one root/address maximum. For rational gamma=A/C, root numerator weights are A and C-A and the common denominator is C*D0. Thus integer arithmetic evaluates the SAME functional as FC116 without rounding or a change of optimization domain. This section evaluates FC116, not the refined FC122 fee.
+
+At gamma=1/2 a bounded test uses six initial arrays. Initial array s=0,...,5 adds s modulo5 to both head5 token rows and s modulo7 to both head7 token rows of the stored FC110 witness, always starting with selected masks(510,0). From each array perform at most four full rounds, each containing180 single-token changes to a different row and18 selected-root bit flips. Accept only the best strict decrease; ties do not move. Stop that start if no improvement exists, or the whole test on a nonpositive starting or accepted value. These rules fix the tested finite set adaptively from its explicit starts; they are not a full enumeration of the token domain.
+
+The resulting test completes24 rounds and4752 neighbor evaluations, accepting24 decreases. Its smallest encountered score is
+
+    5402534297581/198315713846250
+       =0.027242088853178175...>0,                    (FC131)
+
+at selected masks(510,0). Over the common denominator594947141538750, its residual, free fee and selected fee numerators are223914683066088,129530342168186 and78176738005159. Their difference is16207602892743. The [standalone producer](../../../frontier/cover-geometry/fibre-credit-partition/bounded_joint_search.py) and [result](../../../frontier/cover-geometry/fibre-credit-partition/bounded_joint_search.json) retain the actual final token rows, common head laws, shared private source masses, literal arrays, input hash and finite test summary. The final four components are also recomputed by direct Fraction products over all2036 supports and physical addresses, independently of the subset recurrence.
+
+The fourth round still decreases the score in every start, so FC131 is not even a certified local minimum. The positive finite test establishes no uniform positivity, arithmetic realization of the scalar domain or new range of the original noncovering theorem. It supplies an exact reusable evaluator and a bounded falsification check of the coupled fee. Further work must control the whole feasible source domain and its actual arithmetic restrictions, rather than infer a universal bound from these sampled arrays.
+
+### Row-mass refinement on the same two arrays
+
+At fixed gamma=1/2, apply FC122 and FC124 to the stored FC110 array and the final FC131 array. Their grouped-survivor terms and original inventories stay fixed. Exact evaluation gives:
+
+| Fixed array | FC116 joint comparison | FC124 zero-row comparison | FC122 full row-mass comparison |
+| --- | ---: | ---: | ---: |
+|FC110|0.027299981360675428|0.06021895525706886|0.08603508637442062|
+|FC131|0.027242088853178175|0.06356384570950813|0.08529424058248518|
+
+The exact last-column values are
+
+    17062109570167/198315713846250,
+    25372782312134/297473570769375, respectively.      (FC132)
+
+For these head weights, both positive-row thresholds in FC126 are2. The head depth sums therefore need only their first-depth prefix, when not grouped away, and their exact geometric tails. The [fixed-array evaluator](../../../frontier/cover-geometry/fibre-credit-partition/head_mass_evaluate.py) and [results](../../../frontier/cover-geometry/fibre-credit-partition/head_mass_evaluation.json) verify110785 exact checks, including all2036 support fees per array, free and selected ordering separately, shallow-head group removal, reproduction of both FC116 values, and subtotals by supported heads. It reads the two documented witness schemas and does not perform any new source or root-weight search.
+
+This improvement uses genuine row-mass restrictions omitted by FC114: a supported original cannot hit more than its surviving physical row. The two larger values still concern only the displayed arrays. They do not prove a minimum for FC122; the FC131 test optimized its original FC116 objective, and its outcomes are not relabeled as a search of the refined objective. All-depth fee evaluation on fixed sources also leaves arbitrary-source, arbitrary-prime-support and higher-ternary-height control unresolved.
