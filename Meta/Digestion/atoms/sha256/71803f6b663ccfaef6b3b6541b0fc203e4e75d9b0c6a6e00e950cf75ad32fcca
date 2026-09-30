@@ -1,0 +1,32 @@
+**定理 199.5（固定非单位比种子的加性余量）。** 若 $|Q|\notin\{1,5\}$，则对每个固定 $C>0$，在上述固定域 Chebotarev 输入与式（194.2）的 Axler 输入下，
+
+$$
+\liminf_{j\to\infty}
+\ \inf_{\substack{g\in\mathbb Z_{\ge1}\\g\le CV_j}}
+\left(e^\gamma\log\log(gV_j)-Z(gV_j)\right)
+\ge e^\gamma\log2>0.
+\tag{199.10}
+$$
+
+证明。任取满足式（199.3）且 $\delta_k<1/2$ 的固定 $k$。对其有限个余类，推论199.4与定理194.4给共同的充分大阈值，并给同一个左端下界
+
+$$
+e^\gamma\bigl(\log2-H(\delta_k)\bigr).
+$$
+
+由推论199.4，可使 $\delta_k$ 任意趋近零，而 $H(\delta_k)\to0$。所以该固定种子的同一个下极限不小于这些已经成立的常数的上确界 $e^\gamma\log2$。
+
+这一量词顺序是：对每个预先给定的误差容许量，先固定一个有限 $k$，再让 $j\to\infty$；最后比较所得常数。没有令数域随 $j$ 增长，也不需要对增长数域的 Chebotarev 误差一致性。$\square$
+
+同样地，对任意固定 $A>0$，先选 $\delta_k<1/(A+1)$，再应用定理197.3及相同的常数上确界论证，可得
+
+$$
+\liminf_{j\to\infty}
+\ \inf_{1\le g\le V_j^A}
+\left(e^\gamma\log\log(gV_j)-Z(gV_j)\right)
+\ge e^\gamma\log(1+1/A)>0.
+\tag{199.11}
+$$
+
+这使用 $f_\delta(A)\to\log(1+1/A)$，且每次都保持 $A,k$ 固定。阈值仍依赖种子与所选精度；该论证没有给对变化种子一致的显式阈值。
+
