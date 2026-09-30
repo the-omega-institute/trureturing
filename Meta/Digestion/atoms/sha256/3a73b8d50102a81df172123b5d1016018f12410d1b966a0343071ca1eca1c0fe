@@ -1,0 +1,71 @@
+**引理 204.2（任意范数一非单位目标的实际迹根筛）。** 设 $\alpha\in K^\times$、$\operatorname N(\alpha)=1$ 且 $\alpha\notin R^\times$。选一个有限素理想赋值
+
+$$
+e=v_{\mathfrak p}(\alpha)\ne0,\qquad \mathfrak p\mid p_0.
+$$
+
+固定奇平方自由整数 $k>1$，使 $\gcd(k,5p_0e)=1$。对 $0\le r<k$ 定义
+
+$$
+\beta_{\alpha,r}=\alpha\phi^{-2r},\qquad
+u^k=\beta_{\alpha,r},\qquad F=K(\zeta_k),\qquad L=F(u).
+\tag{204.8}
+$$
+
+清除分母后的有理多项式
+
+$$
+\mathcal D_k(X)-\left(\beta_{\alpha,r}+\beta_{\alpha,r}^{-1}\right)
+\tag{204.9}
+$$
+
+具有完整的 $\operatorname{AGL}_1(\mathbb Z/k\mathbb Z)$ 迹根作用。加入有限异常素数后，其有根素数集 $S_{\alpha,r}$ 满足固定域的 Mertens 渐近
+
+$$
+P_{\alpha,r}(x):=
+\prod_{\substack{p\le x\\p\in S_{\alpha,r}}}\frac p{p-1}
+=C_{\alpha,r}(\log x)^{\delta_k}(1+o(1)),
+\qquad
+\delta_k=\prod_{\ell\mid k}\left(1-\frac1\ell\right),
+\tag{204.10}
+$$
+
+其中 $C_{\alpha,r}>0$。若 $m=r+k\ell$，且某个实际素因子在式（204.7）中对应 $\alpha$，则该素因子属于 $S_{\alpha,r}$。
+
+证明。$\phi$ 是单位，故 $v_{\mathfrak p}(\beta_{\alpha,r})=e$；而 $\operatorname N(\beta_{\alpha,r})=1$ 使式（204.9）的常数项为有理数。§199.3 的赋值证明只使用这两个性质，因此原样给出 $[L:F]=k$。因 $5\nmid k$，$F$ 的自同构可独立选择黄金共轭符号 $\varepsilon$ 和单位根指数 $c$，其延伸为
+
+$$
+\zeta_k\longmapsto\zeta_k^c,\qquad
+u\longmapsto\zeta_k^d u^\varepsilon.
+$$
+
+迹根 $u\zeta_k^h+u^{-1}\zeta_k^{-h}$ 在特征零中互异；否则 $\beta_{\alpha,r}$ 成为单位根，与非零赋值矛盾。上述作用在根指标上是 $h\mapsto\varepsilon ch+\varepsilon d$，遍历完整仿射群。§199.4 的同群 CRT 计数给固定根比例 $\delta_k$。
+
+加入多项式分母、判别式等有限异常素数后，固定域有效 Chebotarev 与分部求和给式（204.10）。固定的可能异常实零点只贡献可积误差。这一步使用固定域的误差估计，不能只凭自然密度就宣称存在该 Mertens 常数。
+
+最后，实际关系 $\phi^{2m}=\alpha$ 模选定素理想给
+
+$$
+(\phi^{2\ell})^k=\beta_{\alpha,r}.
+$$
+
+整数 $\phi^{2\ell}+\psi^{2\ell}$ 经 Dickson 恒等式便成为式（204.9）的模 $p$ 根。分裂与惰性素数都由这份实际剩余关系处理。$\square$
+
+两个奇偶类共至多四个目标根。对每个非单位根任选一个非零有限赋值，只排除有限多个 $p_0,e$ 的素因子和五，因此可以选同一个固定 $k$，使上述条件全部成立且 $\delta_k<1/3$。某个奇偶类若有 $b\in\{0,1,2\}$ 个非单位根，记
+
+$$
+\eta=b\delta_k<1.
+\tag{204.11}
+$$
+
+不同目标根的分裂域不需要独立。对相同截断 $y<X$，只使用
+
+$$
+\prod_{\substack{y<p\le X\\p\in\bigcup_\alpha S_{\alpha,r}}}\frac p{p-1}
+\le
+\prod_\alpha\frac{P_{\alpha,r}(X)}{P_{\alpha,r}(y)}.
+\tag{204.12}
+$$
+
+所以指数上界为各分支指数之和 $\eta$。重叠素数只会增大右边的上界，没有被宣称为同一整数的多份独立贡献。
+
