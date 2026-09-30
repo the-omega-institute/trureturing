@@ -3,6 +3,7 @@ bibkey: luca2009eulerfibonacci
 authors: Florian Luca; V. Janitzio Mejía Huguet; Florin Nicolae
 year: 2009
 title: On the Euler Function of Fibonacci Numbers
+doi: null
 url: https://cs.uwaterloo.ca/journals/JIS/VOL12/Mejia/luca31.pdf
 claim: Lemma 3 bounds the sum of reciprocal primes with Fibonacci rank m by O(log(m)/m); it does not state a Robin bound for arbitrary two-term sums.
 strata_touched: []
