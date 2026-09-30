@@ -8667,3 +8667,114 @@ The minimum live-row H_Q and the total-mass slack are as follows. All entries ar
 Each displayed H_Q is greater than 1/5. The total threshold is 261/1225 on root 1 and 263/1225 on root 2. The consumer verifies source identities and each factor's range, and records every live-row inequality and total inequality. It computes only the full-Q condition; (FC384) proves all 512 zero-set conditions. The all-query comparison is the conditional proof above, not an inference from enumerated phase layouts.
 
 An independent reconstruction also checks stored metadata and arrays against the actual free and selected roles and verifies all seven head7 rows on each root, including zero-mass rows. Those stronger finite conditions agree with this certificate wherever its live-row domain applies. No profile initialization, prime continuation, alternative depth or head order is evaluated by the condition consumer. No new Lean verification is claimed.
+
+## Two actual full-group profiles admit the unchanged source mass
+
+For each fixed FC110 or FC131 source separately, the conditional
+comparison (FC379)--(FC390) gives an exact initialization retaining
+the first two pure/star layers and all thirty-six depth-one grouped
+originals. Both admit the unchanged source mass h and have Top_h
+cutoff 8. The complete first, second and fourth moments improve over
+the corresponding one-pair initialization. This does not assert
+increasing-convex dominance over that different comparison.
+
+The physical assumptions remain FC159: one of the two specified
+actual skeletons, finite N>=max(2,N_+), its permitted nongroup
+remainder, and the same eta0=mu/D0 of mass h. In particular the
+old-only nongroup ternary-height and support restrictions remain;
+they do not remove originals already in the skeleton. Every original
+numerical modulus and phase stays fixed. This computation initializes
+two different laws and never combines their favourable coefficients.
+
+### 1. Exact source reconstruction and all-height profile
+
+The [full-group consumer](../../../frontier/cover-geometry/pure-support-profiles/full_group_profile.py)
+reads the actual [FC110 source](../../../frontier/cover-geometry/fibre-credit-partition/first_layer_witness.json)
+and [FC131 source](../../../frontier/cover-geometry/fibre-credit-partition/bounded_joint_search.json).
+Their private-source arrays identify the free/selected head addresses
+and ternary roots. Their limiting token amplitudes are used only for
+this address reconstruction. Actual depth-one private role masses are
+1/q; the finite head rows are the literal depth-two Haar restrictions.
+
+For each source and root the consumer retains all 512 private zero
+sets and their exact K_Z, H_Z, M_Z, delta_Z and positive capacity.
+It checks the full-Q conditions, all subset row and mass inequalities,
+and the pointwise monotonicity used in (FC384). For each full zero set
+S in the eleven nonternary axes, the coefficient is
+
+    Z'_r(S)=product_(p in S)z_(p,r)
+                -1_({5,7} subset S)delta_(S intersect Q,r). (FC391)
+
+All 2048 patterns are retained for each source. The delta already
+contains K_Z and is subtracted once. The root minimum and maximum
+are taken only after this correction, within the same source.
+Complete moments of orders 0,1,2,4 use (FC389), including the full
+infinite auxiliary run tails. Stored atoms through load 256 support
+exact hinge and quantile evaluation; they do not truncate original
+prime-power heights or replace the complete moments.
+
+The raw mass is checked independently against the actual reference:
+
+    mass(Xi'_i)=(1/3)sum_r sum_(i5,i7)beta5_r[i5]beta7_r[i7]
+                       product_q(a_(q,r)-w_(q,r)(i5,i7)). (FC392)
+
+This identity preserves overlaps between grouped originals at
+different private primes through their conditional products.
+
+### 2. Exact upper-mass initialization
+
+For each i in {FC110,FC131}, independently,
+
+    Xi'_i(M>8)<=h<=Xi'_i(M>=8),
+    Pi_i=Top_h(Xi'_i), mass(Pi_i)=h.                  (FC393)
+
+The upper-mass argument therefore bounds all specified nonnegative
+increasing convex query costs on that same physical eta0_i by Pi_i.
+It trims the comparison law, not physical points selected by a query.
+
+The following decimals display the exact fractions in the
+[saved result](../../../frontier/cover-geometry/pure-support-profiles/full_group_profile.json).
+Every initial mass is the exact unchanged
+h=36518862868606981/1816999451688960000.
+
+| Quantity | FC110 | FC131 |
+|---|---:|---:|
+|Raw comparison mass|0.10342974314670311|0.10344192121551968|
+|Top_h cutoff|8|8|
+|Top_h first moment|0.35958737933747226|0.35959834605481816|
+|Top_h second moment|10.43990801445756|10.440273214893109|
+|Top_h fourth moment|319153.009434288|319154.3573536263|
+|Top_h mean|17.89130382950996|17.891849479561444|
+
+In particular both profiles satisfy the simple rational bounds
+
+    integral M dPi_i < 9/25,
+    integral M^2 dPi_i < 209/20,
+    integral M^4 dPi_i < 319155.                     (FC394)
+
+These three complete moments are smaller than the corresponding
+[one-pair initialization](../../../frontier/cover-geometry/pure-support-profiles/grouped_pair_profile.json).
+They do not imply an order for all
+convex costs. The two relaxations preserve different run relations:
+the all-group correction uses both head runs zero, whereas the
+one-pair correction can act when the head7 run is positive.
+
+### 3. Verification and remaining mathematical obligations
+
+The canonical consumer performs 15876 exact checks and zero prime
+updates. It loads only definitions from the established arithmetic
+and coloured-profile libraries. An independent implementation uses
+generating functions for the complete moments and a separate
+convolution for low atoms; it checks both literal reference mass
+identities, every root coefficient and the upper-mass bracket.
+Neither implementation searches phase assignments, changes depths
+or selects another head order.
+
+No downstream survivor mass or prime-range conclusion follows from
+this initialization alone. Its continuation must preserve each
+source separately and pay the actual comparison loss at every new
+prime. Deeper grouped originals remain relaxed in the comparison,
+although they stay forbidden in the physical source. The old-source
+restrictions and the general Erdős #7 gap remain. These are ordinary
+mathematical and exact-arithmetic results, with no new Lean check or
+external novelty claim.
