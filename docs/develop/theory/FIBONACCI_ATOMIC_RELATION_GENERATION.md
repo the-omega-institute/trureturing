@@ -17284,3 +17284,316 @@ $$
 新增方向在此处补上了特定五方向观察缺失的信息；本例没有否定一般有限判据，更不是 Robin 反例。程序 `affine_resolution.py` 的新增字段保存九方向初值、统一赋值有限检查、$\Pi_9$ 的精确比较和上述大指标来源的两种模算法核对。文献的停止定理与一般赋值提升仍为外部输入，数值检查不承担全称证明，也没有新增 RH 结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 177. 从同源范数到异奇偶双项的二次特征切面
+
+本节令 $\phi=(1+\sqrt5)/2$，$\varphi(n)$ 为 Euler 函数，$Z(n)=\sigma(n)/n$。沿用 §175 的同源分式关系，取
+
+$$
+a>b\ge2,\qquad k=a-b\ge3\text{ 为奇数},\qquad
+V=F_a+F_b,\qquad t=a+b.
+$$
+
+先把两个层次区分。对奇素数 $p\ne5$，在 $R_p=(\mathbb Z/p\mathbb Z)[\theta]/(\theta^2-\theta-1)$ 中，若 $x\bar x=-1$ 且 $x+1$ 是单位，则
+
+$$
+f(x)=\frac{x-1}{x+1},\qquad
+f(x)\overline{f(x)}=-1,\qquad f^2(x)=\bar x=-x^{-1}.
+$$
+
+这直接来自 $\bar x=-x^{-1}$。不分裂时 $\bar x=x^p$，所以 $f^2$ 在该层上就是 Frobenius；分裂时共轭交换两个域分量。此处的范数与 Frobenius 相容性自动成立，不额外推出 $z(p)\mid4k$ 一类秩约束。分裂情形仍须保留分母单位条件，不能把整个范数 $-1$ 仿射集合中的每一点都当成可除。
+
+**命题 177.1（共同来源的二次剩余条件）。** 定义
+
+$$
+D=(-1)^bL_k.
+$$
+
+则
+
+$$
+(L_a+L_b)^2-5(F_a+F_b)^2=4D. \tag{177.1}
+$$
+
+每个奇素因子 $p\mid V$ 均满足
+
+$$
+p\nmid D,\qquad \left(\frac Dp\right)=1. \tag{177.2}
+$$
+
+这里包括 $p=5$。
+
+证明。标准 Lucas/Fibonacci 恒等式给
+
+$$
+L_j^2-5F_j^2=4(-1)^j,\qquad
+L_aL_b-5F_aF_b=2(-1)^bL_{a-b}.
+$$
+
+由于 $a,b$ 异奇偶，展开并相加即得式（177.1）。§175.1 的
+
+$$
+L_tL_k=5V(F_a-F_b)+4(-1)^a
+$$
+
+说明 $\gcd(V,L_k)\mid4$，故奇 $p\mid V$ 时 $D$ 非零模 $p$。将式（177.1）模 $p$ 约化，得到
+
+$$
+D\equiv\left(\frac{L_a+L_b}{2}\right)^2\not\equiv0\pmod p,
+$$
+
+即式（177.2）。$\square$
+
+这不是只检验 $(5/p)$ 的黄金分裂性质；限制的是随共同来源改变的 $D=(-1)^bL_k$。另一方面，§170.3 的同源构造可以使任何预先固定有限素数集都满足这些局部平方条件，所以 式（177.2）不给一个统一固定的缺素数。
+
+## 178. 随来源移动的字符模数与完整 Euler 权重
+
+**定义 178.0（二次字符观察）。** 以下假设 $D$ 不是整数平方。写
+
+$$
+D=d u^2,
+$$
+
+其中 $d$ 为带符号的平方自由整数，$u\ge1$。于是 $d\ne1$。令
+
+$$
+\Delta=\begin{cases}d,&d\equiv1\pmod4,\\4d,&d\not\equiv1\pmod4,\end{cases}
+\qquad Q=4|D|.
+$$
+
+由二次互反律的标准字符构造，基本判别式 $\Delta\ne1$ 给出模 $|\Delta|$ 的非主实二次字符 $\chi_\Delta$，且 $|\Delta|\mid Q$。把它诱导到模 $Q$：
+
+$$
+\chi(n)=
+\begin{cases}
+\chi_\Delta(n),&\gcd(n,Q)=1,\\
+0,&\gcd(n,Q)>1.
+\end{cases}
+$$
+
+这是非主实 Dirichlet 字符。非主性不会在诱导时丢失：单位群约化
+$(\mathbb Z/Q\mathbb Z)^\times\to(\mathbb Z/|\Delta|\mathbb Z)^\times$
+是满射，因此原字符取 $-1$ 的单位仍有提升。
+
+对任意奇素数 $p\nmid D$，有
+
+$$
+\chi(p)=\left(\frac Dp\right).
+$$
+
+因为 $\Delta/d$ 为一或四，而 $D/d=u^2$，两者在这些素数处只相差非零平方。于是命题 177.1 保证同一个 $V$ 的每个奇素因子都满足 $\chi(p)=1$。没有把分歧素数或诱导模数新增的零字符素数藏进这个断言：奇 $p\mid Q$ 等价于 $p\mid D$，已经由 $\gcd(V,L_k)\mid4$ 排除；素数二另行给出一个最多为二的 Euler 因子。
+
+若 $D$ 为正平方，此构造会变成主字符，下面的零周期均值和 $L$ 函数一致上界便不能套用。若 $b$ 奇，则 $D<0$，非平方条件自动成立；若 $b$ 偶，则必须保留 $L_k$ 非平方的条件。例子 $k=3$、$b$ 偶给 $D=4$，这时可另用 $V=2F_{b+2}$，不能将它塞入本字符证明。
+
+**定理 178.1（异奇偶双项的字符预算）。** 保留命题 177.1 的实际双项来源，假设 $D=(-1)^bL_k$ 非平方，令 $Q=4|D|$。对任意正整数 $c$，取
+
+$$
+n=cV\ge8,\qquad \Lambda=\log\log n.
+$$
+
+则
+
+$$
+Z(n)<\frac{2c}{\varphi(c)}e^{8+2/\Lambda}
+\sqrt{(1+\Lambda)(2+\log Q)},
+\tag{178.1}
+$$
+
+从而
+
+$$
+\frac{Z(n)}{e^\gamma\log\log n}
+<\frac{2c}{\varphi(c)}e^{8-\gamma+2/\Lambda}
+\frac{\sqrt{(1+\Lambda)(2+\log Q)}}{\Lambda}.
+\tag{178.2}
+$$
+
+证明。对任意模 $m\ge2$ 的非主实字符 $\chi$ 和 $x\ge2$，先证明下面的统一乘积估计。所有级数与无限乘积只在绝对收敛半平面使用。
+
+$$
+P_\chi(x):=\prod_{\substack{p\le x\\\chi(p)=1}}(1-p^{-1})^{-1}
+\le e^8\sqrt{(1+\log x)(2+\log m)}.
+\tag{178.3}
+$$
+
+首先，以 $\vartheta(x)=\sum_{p\le x}\log p$ 表示 Chebyshev 函数。对每个 $j\ge1$，区间 $(2^{j-1},2^j]$ 中的每个素数都整除中央二项式系数，故
+
+$$
+\vartheta(2^j)-\vartheta(2^{j-1})
+\le\log\binom{2^j}{2^{j-1}}
+\le2^j\log2.
+$$
+
+累加得
+
+$$
+\vartheta(2^j)\le(2^{j+1}-2)\log2.
+$$
+
+对 $x\ge2$，选 $2^{j-1}<x\le2^j$，从而
+
+$$
+\vartheta(x)\le4(\log2)x.
+$$
+
+分部求和以及 $(p-1)^{-1}\le2/p$ 给
+
+$$
+\begin{aligned}
+\sum_{p\le x}\frac{\log p}{p-1}
+&\le2\sum_{p\le x}\frac{\log p}{p}\\
+&=2\left(\frac{\vartheta(x)}x+
+\int_2^x\frac{\vartheta(v)}{v^2}\,dv\right)\\
+&\le8\log2\,[1+\log(x/2)]\\
+&\le8\log x. \tag{178.4}
+\end{aligned}
+$$
+
+最后一步在端点 $x=2$ 也成立；两边差恰为
+
+$$
+8(1-\log2)(\log x-\log2)\ge0.
+$$
+
+其次，令 $s=1+1/\log x>1$，定义绝对收敛乘积
+
+$$
+\mathcal P_\chi(s)=\prod_{\chi(p)=1}(1-p^{-s})^{-1}.
+$$
+
+逐个 Euler 因子有
+
+$$
+\log\frac{1-p^{-s}}{1-p^{-1}}
+=\int_1^s\frac{\log p}{p^v-1}\,dv
+\le(s-1)\frac{\log p}{p-1}.
+$$
+
+由式（178.4），并在 $s$ 处补入 $p>x$ 的正因子，得到
+
+$$
+P_\chi(x)\le e^8\mathcal P_\chi(s). \tag{178.5}
+$$
+
+最后，实字符的 Euler 因子直接给
+
+$$
+\mathcal P_\chi(s)^2
+=\zeta(s)L(s,\chi)
+\prod_{\chi(p)=-1}(1-p^{-2s})
+\prod_{\chi(p)=0}(1-p^{-s})
+\le\zeta(s)L(s,\chi). \tag{178.6}
+$$
+
+这里 $L(s,\chi)>0$，由其正的实 Euler 因子可见。积分比较给
+
+$$
+\zeta(s)\le1+\frac1{s-1}=1+\log x.
+$$
+
+又因非主字符具有周期 $m$ 且一个完整周期和为零，若
+$A(t)=\sum_{m<n\le t}\chi(n)$，则 $|A(t)|\le m$。因此
+
+$$
+\left|\sum_{n>m}\frac{\chi(n)}{n^s}\right|
+=\left|s\int_m^\infty A(t)t^{-s-1}\,dt\right|
+\le m^{1-s}\le1.
+$$
+
+从而
+
+$$
+0<L(s,\chi)\le H_m+1\le\log m+2. \tag{178.7}
+$$
+
+将式（178.5）—式（178.7）合并即得式（178.3）。
+
+该证明只用二项式系数、分部求和、字符周期消去，以及 $s>1$ 时的 Euler 乘积；没有使用素数定理、GRH、零点无零区、Siegel 常数，或某个正密度渐近在变化模数下的一致性。
+
+再令 $x=\log n\ge2$，所以 $\log x=\Lambda>0$。来自乘子 $c$ 的素数先用 $c/\varphi(c)$ 支付；素数二再用至多二支付。其余 $p\mid V$、$p\le x$ 全在式（178.3）的 $\chi(p)=1$ 集合中。相交素支撑只会使这个上界多算，不影响方向。
+
+对同一个实际 $V$ 的大素因子集合
+
+$$
+\mathcal T=\{p:p\mid V,\ p>x\},
+$$
+
+有
+
+$$
+|\mathcal T|\log x
+\le\sum_{p\in\mathcal T}\log p
+\le\log V\le\log n=x.
+$$
+
+所以
+
+$$
+\begin{aligned}
+\log\prod_{p\in\mathcal T}(1-p^{-1})^{-1}
+&\le\sum_{p\in\mathcal T}\frac1{p-1}\\
+&\le\frac{x}{(x-1)\log x}
+\le\frac2\Lambda.
+\end{aligned}
+$$
+
+由 $n>1$ 及有限素数幂的真截断，
+
+$$
+Z(n)<\frac n{\varphi(n)}
+\le\frac{2c}{\varphi(c)}P_\chi(x)e^{2/\Lambda}.
+$$
+
+应用式（178.3）得到式（178.1），再除以正的 $e^\gamma\Lambda$ 得式（178.2）。$\square$
+
+式（178.2）的右端小于一就是一个明确、有效但常数保守的 Robin 充分条件。它按全部素数的 Euler 权重给上界，没有把单个缺素数证书冒充整体估计，也没有将不同来源的最优值拼接。
+
+**推论 178.2（基本判别式给出的更细切面）。** 在定理 178.1 中，令 $q=|\Delta|$，则式（178.1）—（178.2）中的 $Q$ 可以全部替换为 $q$。
+
+证明。直接使用模 $q$ 的本原实二次字符 $\chi_\Delta$。由于命题 177.1 已证明每个实际奇素因子 $p\mid V$ 都满足 $p\nmid D$，故 $p\nmid\Delta$ 且 $\chi_\Delta(p)=(D/p)=1$。因而同一乘积估计以 $m=q$ 适用；素数二与乘子仍分别支付至多二和 $c/\varphi(c)$。$\Delta\ne1$ 保证字符非主。$\square$
+
+这条细化不要求控制 $D$ 的全部大小，而只要求控制其平方类的基本判别式。$q\mid Q$，所以直接使用 $Q$ 仍是一条不需要先分解 $L_k$ 的显式上界；没有由此得到一般 Lucas 数平方自由核的统一小上界。
+
+## 179. 缓慢增长间隔的一致 Robin 比值与未覆盖方向
+
+**推论 179.1（允许间距缓慢增长的统一消失比值）。** 固定正整数 $c$。对满足定理 178.1 条件的任何一族实际来源，只要
+
+$$
+\Lambda\longrightarrow\infty,
+\qquad \log Q=o(\Lambda),
+$$
+
+则 Robin 比值趋于零。
+
+证明。式（178.2）右端平方中依赖来源的部分为
+
+$$
+e^{4/\Lambda}\frac{(1+\Lambda)(2+\log Q)}{\Lambda^2},
+$$
+
+在给定条件下趋于零；其余因子仅依赖固定的 $c$。由于奇 $k$ 时
+
+$$
+L_k=\phi^k-\phi^{-k}<\phi^k,
+\qquad \log Q<\log4+k\log\phi,
+$$
+
+条件
+
+$$
+k=o(\log\log(cV))
+$$
+
+已经足够；此时 $k$ 无须固定。对这里的双项，$\log(cV)=a\log\phi+O_c(1)$，故该条件也可写作 $k=o(\log a)$。
+
+更明确地，对任何预先给定 $w(T)\ge0$、$w(T)/T\to0$，式（178.2）对所有同时满足 $\Lambda\ge T$、$\log Q\le w(\Lambda)$ 的来源一致趋零。这没有交换固定种子与全部种子的量词。
+
+当 $b$ 奇时，非平方前提自动成立；当 $b$ 偶时仍保留 $L_k$ 非平方前提。此推论不使用 Lucas 平方数的完整分类。固定非平方 $D$ 的情形给出 $Z(cV)=O_{c,D}(\sqrt{\log\log(cV)})$，比固定种子最终安全性多出比值消失的定量结论。$\square$
+
+**推论 179.2（按平方类分辨率的统一条件）。** 固定正整数 $c$，对满足定理 178.1 条件的任意实际来源族，若 $\Lambda\to\infty$ 且 $\log|\Delta|=o(\Lambda)$，则其 Robin 比值趋于零。
+
+证明。以推论 178.2 的界代入推论 179.1 的同一极限估计即可。这里不再要求 $k=o(\log a)$；条件转移到了实际来源的基本判别式，但仍须逐族证明，不能由单个收缩坐标或五模式数量推出。$\square$
+
+一般异奇偶双项可以有 $k$ 与 $a$ 同阶；此时本界的 $\log Q$ 至多为 $O(k)$，而 Robin 预算只有 $\log a$ 量级，式（178.2） 不自动小于一。§170.3 的共同局部高整除来源正属于没有被上述缓慢间距条件覆盖的方向。四相恒等式、范数相容与字符筛选仍没有给全部来源的一致 Robin 证明。
+
+## 追加锚（本行以下为增补区）
