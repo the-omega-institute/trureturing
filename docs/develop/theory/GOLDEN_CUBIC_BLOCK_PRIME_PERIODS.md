@@ -1673,3 +1673,19 @@ Consequently, if $z$ is a complex root of $P_{2r+1}$, then $-z$ is also
 a root. This is the algebraic form of the
 opposite pairing used before the trigonometric root formula; it does not
 assert the locations or simplicity of the roots.
+## 41. The transported root multiset
+
+**Theorem 41.1 (exact complex roots of the odd recurrence polynomial).** For every
+$r\geq0$, after mapping the integer recurrence polynomial $P_{2r+1}$ to
+$\mathbb C[X]$, its root multiset is
+
+$$
+\left\{-2i\cos\frac{(k+1)\pi}{2r+1}:0\leq k<2r\right\},
+$$
+
+with each index occurring once. This follows by transporting the real root
+multiset of the Chebyshev polynomial of the second kind through the linear
+substitution $X\mapsto iX/2$ and then using the complex Chebyshev bridge.
+The result identifies the root locations and multiplicities; it does not
+yet establish the analytic square-root estimates or the dyadic valuation
+argument in Theorem 33.1.
