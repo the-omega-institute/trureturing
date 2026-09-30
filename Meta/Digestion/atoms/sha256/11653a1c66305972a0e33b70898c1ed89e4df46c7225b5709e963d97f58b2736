@@ -1,0 +1,37 @@
+**命题 206.4（实际核心的统一加性归约）。** 取固定 $a>0$ 与 $y_r=r(\log r)^a$。在全部 $g\in I_r$ 上，$\log N=O(r)$，而 Mertens 乘积给
+
+$$
+Z(C_{y_r})\le\prod_{p\le y_r}(1-1/p)^{-1}=O(\log r).
+$$
+
+因此下面的 **加性** 估计对全部这些实际 $g$ 一致成立：
+
+$$
+0\le Z(N_g)-Z(C_{y_r}(N_g))=O((\log r)^{-a}).
+$$
+
+结合大小关系，Robin 差额便化为
+
+$$
+e^\gamma\log\log N_g-Z(N_g)
+=e^\gamma(\log\log V+\log2)-Z(C_{y_r}(N_g))+o(1),
+$$
+
+其中误差一致于 $g$。这是真正的加性核心归约；相对误差 $1+o(1)$ 本身不足以给出该式。
+
+由本卷已有的 Axler 包络还可得到一个受限充分条件。若某实际子族满足，对于固定 $0<\theta<2$，
+
+$$
+\log R_{y_r}(N_g)\le(\theta+o(1))\log V
+$$
+
+且误差在该子族上一致，则
+
+$$
+\liminf_{r\to\infty}\inf_g
+\bigl(e^\gamma\log\log N_g-Z(N_g)\bigr)
+\ge e^\gamma\log(2/\theta)>0.
+$$
+
+确实，$Z(C_y)\le R_y/\varphi(R_y)$；对趋大的 $R_y$ 使用已有包络，再用上面的加性尾界。有限范围的 $R_y$ 对应有界响应，另行直接处理；用任意固定的大阈值切分即可保持统一性。取 $\theta=1$ 得到 $e^\gamma\log2$ 的下界。用更强的 $C_y\le V^{\theta+o(1)}$ 代替上述平方自由支撑条件也足够，但不是必要条件。本节没有证明全部合法 $g$ 满足这些核心条件。
+
