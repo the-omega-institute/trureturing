@@ -1,0 +1,41 @@
+**引理 211.1（素数幂补足没有越过大小截断）。** 充分大时，
+
+$$
+\log m\le y-\delta/2,
+\qquad m\le A e^{-\delta/2}<X.
+\tag{211.7}
+$$
+
+证明。由式（211.5），
+
+$$
+\begin{aligned}
+\log m
+&=\vartheta(z)+\sum_{p\le B}(e_p-1)\log p\\
+&\le\vartheta(z)+B\log s.
+\end{aligned}
+$$
+
+式（211.4）取 $K=4$ 给 $\vartheta(z)=z+O(y/\ell^4)$。又
+
+$$
+B\log s=O(\sqrt y\,\ell^{3/2})=o(y/\ell^3)=o(\delta).
+$$
+
+所以 $\log m\le y-\delta+o(\delta)$，得到式（211.7）。所有素数幂都属于同一个整数 $m$，而非分别可达的局部最优项。$\square$
+
+定义有限局部因子
+
+$$
+V_p(s,e)=\sum_{a=0}^e\frac{b_s(p^a)}{p^a}.
+$$
+
+由于 $b_s$ 乘法且非负，
+
+$$
+P_s(m):=\sum_{d\mid m}\frac{b_s(d)}d
+=\prod_{p\le z}V_p(s,e_p)
+\le C_s(X).
+\tag{211.8}
+$$
+
