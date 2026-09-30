@@ -1,0 +1,41 @@
+## 218. 最大增量原子、有限近极值配置与临界权重
+
+沿用 §210 的实际除数增量：对 $s>0$，
+
+$$
+b_s(1)=1,\qquad
+b_s(p^a)=Z(p^a)^s-Z(p^{a-1})^s\quad(a\ge1),
+\qquad Z(n)=\frac{\sigma(n)}n,
+$$
+
+并按乘法性延拓。由 $U(s)=\sum_{d\ge1}b_s(d)/d$ 定义的概率为
+
+$$
+\mu_s(d)=\frac{b_s(d)}{dU(s)}.
+$$
+
+本节研究这份具体增量权重的最大原子。它不是自然数的均匀分布。
+
+令 $y\to\infty$，并记
+
+$$
+\ell=\log y,\qquad s=y\ell,\qquad t=e^\gamma\ell,
+\qquad R=\frac y{\ell^2},\qquad
+\delta=\frac y{\ell^3},\qquad A=e^y.
+$$
+
+假设 $X/A\in[c_1,c_2]$，其中 $1<c_1\le c_2<\infty$ 固定。
+实际 FIB 区间满足这一条件。下文证明最大值存在，并使用记号
+
+$$
+M_s=\max_{d\ge1}\frac{b_s(d)}d,
+\qquad m_s=\max_{d\ge1}\mu_s(d)=\frac{M_s}{U(s)}.
+$$
+
+经典极大丰数（colossally abundant）优化考察
+$\sigma(n)/n^{1+\varepsilon}$，参见
+[Alaoglu–Erdős 的经典工作](../../../Library/Arith/alaoglu1944highly.md)。
+取 $\varepsilon=1/s$ 后，其 $s$ 次幂为 $Z(n)^s/n$。
+本节的目标含有局部差分 $b_s$，所以该经典优化只是相邻的比较对象，
+不能代替以下实际增量的估计。
+

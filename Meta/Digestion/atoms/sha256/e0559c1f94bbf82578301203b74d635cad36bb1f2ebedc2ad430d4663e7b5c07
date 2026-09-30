@@ -1,0 +1,45 @@
+### 211.5 逐点阈值与共同阈值的精确比较
+
+令
+
+$$
+t_n=e^\gamma\log\log n,\qquad
+\mathcal P_J(s)=\sum_{n\in J}\left(\frac{Z(n)}{t_n}\right)^s,
+\qquad J\subseteq[A,X]\cap\mathbb N.
+$$
+
+对任意这样的 $J$（包括 FIB 剩余类），记
+
+$$
+\mathcal Q_J(s)=\frac{\sum_{n\in J}Z(n)^s}{t^s}.
+$$
+
+有精确比较
+
+$$
+\frac AX\mathcal Q_J(s)
+\le\mathcal P_J(s)\le\mathcal Q_J(s).
+\tag{211.20}
+$$
+
+事实上，对任意实数 $e<A\le n\le X$，令 $v=\log(n/A)\ge0$。两次使用 $\log(1+w)\le w$，得到
+
+$$
+\begin{aligned}
+s\log(t_n/t)
+&=y\ell\log\left(1+\frac{\log(1+v/y)}\ell\right)\\
+&\le y\log(1+v/y)\le v.
+\end{aligned}
+$$
+
+再用单调性即有
+
+$$
+1\le(t_n/t)^s\le n/A\le X/A.
+\tag{211.21}
+$$
+
+逐项比较给式（211.20）。若 $X/A$ 有界，对同一表达式作一致 Taylor 展开还有 $(t_n/t)^s=(n/A)(1+O(1/y))$；在当前 $X/A\to2$ 下，最大归一因子趋于二。
+
+因此，个体阈值虽能改变一个接近一的有限证书，却不能消去 $R_y\to\infty$ 尺度的正指数缺口。特别地，对整个区间，式（211.19）也推出 $\mathcal P_{[A,X]}(s)\to\infty$。对 FIB 剩余类，式（211.20）仅作比较，不提供尚未得到的矩下界；$\mathcal P_J<1$ 与 $\mathcal Q_J<1$ 并不等价。
+

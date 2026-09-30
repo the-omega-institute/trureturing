@@ -1,0 +1,29 @@
+### 214.3 用高赋值强制一整个真实子集通过完整缺陷筛选
+
+取正整数 $A,X$，满足
+
+$$
+\frac32A\le X\le\frac52A,
+\qquad y=\log A,\quad\ell=\log y,
+\quad s=y\ell,\quad t=e^\gamma\ell,
+\quad R_y=y/\ell^2,
+\quad\delta=y/\ell^3.
+$$
+
+以下均取 $A$ 充分大。定义整数
+
+$$
+w=\left\lceil\frac{16\ell^3}{a_0}\right\rceil,
+\qquad
+h=\left\lceil\log_2\left(\frac{16w\ell^3}{a_0}\right)\right\rceil,
+\qquad
+K=\left(\prod_{p\le w}p\right)^h.
+\tag{214.6}
+$$
+
+考察同一个实际集合
+
+$$
+\mathcal J_K=\{n\in\mathbb N:A\le n\le X,\ K\mid n\}.
+$$
+

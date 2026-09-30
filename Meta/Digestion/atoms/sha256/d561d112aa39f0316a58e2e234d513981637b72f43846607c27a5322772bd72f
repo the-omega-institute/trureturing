@@ -1,0 +1,23 @@
+### 216.3 从条件概率回到真正的命中权重
+
+回到实际 FIB 整数族
+
+$$
+V=F_r,\quad r\ge7\text{ 为素数},\quad
+I_r=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\quad N_g=1+Vg.
+$$
+
+令 $A,X,T,y,\ell,s$ 与 §210–215 相同。固定 $a>\pi^2/6$，置
+
+$$
+R_y=\frac y{\ell^2},\qquad H=e^{aR_y},\qquad D=\frac XH,
+\qquad \mu_s(d)=\frac{b_s(d)}{dU(s)},
+$$
+
+$$
+\mathcal H_D=\{d:D<d\le X,\ \exists g\in I_r, d\mid N_g\}.
+$$
+
+充分大时 $D>V$，每个 $d\in\mathcal H_D$ 命中至多一个实际 $N_g$，记为 $n(d)$。令 $G_n^{<}(u)=\mathbb E_n[H_n\mathbf1_{H_n<u}]$。
+
