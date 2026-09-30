@@ -26601,3 +26601,108 @@ this argument does not eliminate those residuals. It proves no
 uniform core survivor-mass lower bound and does not settle
 unrestricted Erdős#7. FC1150--1155 are ordinary symbolic deductions;
 no new Lean verification or claim of literature priority is made.
+
+## A retained next-layer class pays a square at the last mixed depth
+
+The remaining3-bearing slots admit an additional phase-sensitive
+vacancy test. Reuse Report385 PH2/DR2 and the target-phase repair
+principle of FC1034--1036, with a local palette rather than labels
+above the global height. Let h=3^a n be original, a>=1, gcd(3,n)=1.
+Suppose two distinct divisors e_1,e_2 of n give globally absent
+labels3^(a+1)e_1 and3^(a+1)e_2. Retain an ACTUAL original class
+
+    G=b mod3^(a+1)f, f|n, f<n.
+
+For any h-phase c with c=b mod3^a f, the entire cylinder c modh
+automatically satisfies G's f-condition, and G covers exactly one
+of its three next ternary children. Give the other two children
+to the two fresh labels, with their cofactor phases inherited from
+c. These classes and the retained G cover the ENTIRE cylinder,
+including arbitrary higher digits and outside coordinates.
+
+At c=a_h, comparable disjointness already gives q_h(c)=1. At
+any other c, two original h-multiples in that phase would both
+be proper. Delete those two and add the two repairs. The guard
+cannot be deleted because f<n makes its modulus a nonmultiple
+of h. The original class count is unchanged, while the new
+modulus sum is at most6h and the removed sum is at least8h.
+Thus the existing replacement rule gives
+
+    c=b mod3^a f ==> q_h(c)<=1.                   (FC1156)
+
+This counts ALL original h-multiples, including terminal labels,
+jointly across all future suffixes. It is not just a restriction
+on descendants that have further descendants.
+
+If the OLD phase a_h is itself compatible with G, the same palette
+repairs the old A_h. Move h to any target phase and delete two
+proper descendants there, as in DR2. The same sum comparison then
+gives q_h(c)<=1 for EVERY c. Without this old-phase hypothesis,
+only the displayed compatible-phase conclusion is available.
+
+### One square interface per nonternary prime
+
+Take q in C other than3 and suppose
+
+    h=3^a q^2 in D, 1<=a<H_3,
+    3^(a+1)q not in D.
+
+Divisor closure also excludes3^(a+1)q^2. The actual pure class
+at3^(a+1) is a retained guard, so FC1156 applies with f=1 and
+e_1=q,e_2=q^2. Denote its literal residue by beta. Then
+
+    c=beta mod3^a ==> q_(3^a q^2)(c)<=1.          (FC1157)
+
+If a_(3^a q^2)=beta mod3^a, the bound instead holds for all c.
+The compatibility condition concerns only a prefix: it does NOT
+assert that a surviving full head point belongs to the forbidden
+guard class at the next depth.
+
+Crucially, there cannot be arbitrarily many such interfaces for
+one q. The displayed hypotheses imply
+
+    a=max{j>=1:3^j q in D}.
+
+The lower inclusion follows from h; any larger mixed depth would
+force3^(a+1)q into D. Thus there is at most ONE qualified square
+interface per q, independently of all original heights. A prime
+without such an interface contributes nothing.
+
+Let J be this set of qualified q. Select a future original u at
+q when h_q|u and either the OLD h_q-phase is compatible with its
+guard, or u's literal h_q-phase is compatible with that guard.
+Fix these predicates from the actual original family at B, and
+assign a label satisfying several predicates to one q only.
+FC1156--1157 imply at every head point x
+
+    sum_(square-selected u)I_(u,head)(x)<=|J|<=c-1.
+                                                     (FC1158)
+
+Indeed an active selected label makes x's h_q-phase a phase to
+which the relevant cap applies. The allowance is joint over all
+terminal primes and suffixes. It uses actual residues, not a new
+choice of phase for each suffix.
+
+When5 is in C, augment the THREE--FIVE selection of FC1152--1153:
+keep that original selection first and assign only previously
+light labels to these square interfaces. Its b<=c+2 and the
+disjoint union then give total shared allowance at most
+
+    b+|J|<=2c+1,
+    total selected debit<=2(2c+1)/B               (FC1159)
+
+on ONE newly constructed light-only Haar continuation. All pure,
+unit-old-part and O-supported labels stay in its complement.
+Apply the already proved FC1145--1146 to that actual complement;
+do not add this debit to an analysis using different rows.
+
+The new interfaces can pay3-bearing square slots which the
+q-direction selection repaired by3 in FC1151 cannot select.
+They do not automatically improve the uniform A_sharp bound:
+their benefit is removal of actual phase-qualified original
+labels, and every unqualified residual stays in the light query.
+Both the mixed-depth test and this extension require a passing
+complete light estimate. Actual next-layer vacancy and phase
+compatibility are not forced here. FC1156--1159 are ordinary
+symbolic deductions reusing the established exchange and tail
+theorems, with no new Lean verification or unrestricted resolution.
