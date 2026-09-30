@@ -213,7 +213,8 @@ If any checklist item cannot be evidenced, end the task as `open` with no deposi
 
 Only after Step 6 and an independent pre-freeze review pass, freeze through deposit and cover. The
 pre-freeze review is a read-only seat that did not produce the module; it checks the mirror, source
-fidelity and the per-declaration judgement form against the unfrozen tree. In the two-stage pipeline of
+fidelity and the per-declaration judgement form against the unfrozen tree; it passes when every blocking
+finding it lists is resolved in the tree that goes through the doors. In the two-stage pipeline of
 `CLAUDE.md` §3.6 (探针 → Stage A → 镜像核对 → Stage B → 三席评审) it is the mirror-check and
 judgement-form seat between Stage A and the Stage-B doors. The sshx review triplet (tests / quality /
 architecture) follows the doors in that order and must pass before merge. If a review needs an early
