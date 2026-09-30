@@ -1,6 +1,8 @@
 ---
 bibkey: repo-finite-sector-variational-rt
+authors: the-omega-institute/trureturing
 title: "Finite-sector variational domination and orientation-cover obstruction"
+year: 2026
 doi: null
 url: https://github.com/the-omega-institute/trureturing/tree/dev/D5/S3/Quantum/Entanglement
 claim: "Repository-derived finite-sector variational lemma and finite-phase orientation monodromy obstruction."
