@@ -1,0 +1,21 @@
+**推论349.6（混合持续容量的必要界）。** 对固定非整数 \(\beta>0\)，任意满足以上块结构、误差至多 \(\epsilon\) 的控制器族，在充分小误差段有
+
+\[
+b+2q_{\rm mem}
+\ge
+2\log_2\left(
+\log\frac{|\sin(\pi\beta)|}{4\epsilon}
+\right)
+-\log_2(4\pi^2\beta),
+\tag{349.53}
+\]
+
+从而
+
+\[
+\boxed{\displaystyle
+b(\epsilon)+2q_{\rm mem}(\epsilon)
+\ge2\log_2\log(1/\epsilon)-O_\beta(1).}
+\tag{349.54}
+\]
+

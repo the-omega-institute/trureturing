@@ -1,0 +1,15 @@
+**定理345.2（固定参考预算中的高阶有限精度上界）。** 存在固定 \(K_1,C_1,\delta_0>0\)，使每个 \(0<\delta<\delta_0\) 和 \(\epsilon>0\) 都有一份有限代码、有限来源深度的有效共同程序，保留实际首枚 \(X\)，且
+
+\[
+\boxed{
+\begin{aligned}
+\sup_{w,S}\operatorname{TV}(\text{输出},\text{原目标})&<\delta,\\
+\sup_{w,S}\mathbb EN_H^a&\le K_1+\epsilon,\\
+\sup_{w,S}\mathbb EN_T^a
+&\le C_1[\log(1/\delta)]^a+\epsilon .
+\end{aligned}}
+\tag{345.4}
+\]
+
+第二个定理对每个固定合法实参数实例成立，不要求参数具有可计算名字。它是逐精度存在有限代码的结论，不是从任意实参数描述统一生成代码的算法，也不推出准确有效程序的存在。
+

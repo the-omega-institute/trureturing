@@ -1,0 +1,37 @@
+**推论324.5（零误差极限的临界发散）。** 对非整数 $\beta$、$a=\beta/2$，
+
+$$
+\boxed{
+\mathcal C_a^{\mathrm{pol}}(0)
+=\mathcal C_a^{\mathrm{alg}}(0)
+=\infty,}
+\tag{324.34}
+$$
+
+且在扩展实数意义下，
+
+$$
+\boxed{
+\lim_{\delta\downarrow0}\mathcal C_a^{\mathrm{pol}}(\delta)
+=\lim_{\delta\downarrow0}\mathcal C_a^{\mathrm{alg}}(\delta)
+=\infty.}
+\tag{324.35}
+$$
+
+每个固定 $\delta>0$ 的两类费用仍有限，并按第321.6节相等。
+
+**证明。** 定理324.4使每个准确抽象策略的统一临界总调用矩都为无穷，所以其下确界也为无穷。有效程序具有保持费用的抽象代表，故有效准确费用同为无穷。这是费用无穷，不是声称准确工厂不存在。
+
+定理318.4在相同抽象费用合同中给
+
+$$
+\lim_{\delta\downarrow0}\mathcal C_a^{\mathrm{pol}}(\delta)
+=\mathcal C_a^{\mathrm{pol}}(0).
+\tag{324.36}
+$$
+
+代入式（324.34）得抽象侧发散；有效类包含于抽象类，故
+$\mathcal C_a^{\mathrm{alg}}(\delta)\ge\mathcal C_a^{\mathrm{pol}}(\delta)$，也必发散。每个正误差的有限性及同值复用第316、321节。证毕。
+
+因此第316节临界窗口现在具有更强的定性下界：费用随准确度提高必趋于无穷。原 $O(\log(1/\delta))$ 上界仍有效，但本节没有给出对数下界或其他具体发散速率，不能将该上界改写为匹配的 $\Theta$ 阶。共同策略完成解决的是是否能保持同一个有限预算；自然参数插值解决的是准确共同策略在临界预算下不可能存在。二者相接才得到式（324.35）。
+

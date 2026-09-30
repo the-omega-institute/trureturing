@@ -1,0 +1,44 @@
+### 309.6 平滑工厂的原始前提
+
+充分性使用 Olga Holtz、Fedor Nazarov、Yuval Peres 的 *New Coins from Old, Smoothly*，DOI 10.1007/s00365-010-9108-5；采用 [arXiv 0808.1936v3](https://arxiv.org/pdf/0808.1936v3)，2010-01-25 版本的 Definition 5、Result 3 和 Theorem 8。
+
+对非整数 \(\alpha>0\)，令 \(r=\lfloor\alpha\rfloor\)。该文的 \(C^\alpha[0,1]\) 要求 \(r\) 阶导数满足阶 \(\alpha-r\) 的 Hölder 连续条件。Theorem 8 的充分方向是：若
+$$
+f:[0,1]\longrightarrow(0,1),\qquad
+f\in C^\alpha[0,1],\qquad
+\alpha>0,\quad \alpha\notin\mathbb N,
+$$
+则存在同一个准确模拟器与常数 \(A_f<\infty\)，满足
+$$
+\Pr_p(N>n)\le A_f\Delta_n(p)^\alpha
+\quad\text{对所有 }p\in[0,1],\ n\ge1,
+$$
+$$
+\Delta_n(p)=
+\max\left\{\sqrt{\frac{p(1-p)}n},\frac1n\right\}.
+\tag{309.22}
+$$
+每轮取一枚未知参数 \(p\) 币和一枚独立公平币。在本题免费私随机性的合同下，公平币免费，而所计旧调用数准确为 \(N\)。
+
+这是实际工厂定理，不只是多项式误差估计。其 Result 3 采用
+$$
+g_n(p)=\sum_{k=0}^n\binom nk a(n,k)p^k(1-p)^{n-k},
+\qquad
+h_n(p)=\sum_{k=0}^n\binom nk b(n,k)p^k(1-p)^{n-k}.
+$$
+所需条件包括 \(0\le a(n,k)\le b(n,k)\le1\)，使用每轮公平币时的离散条件
+\(\binom nk a(n,k),\binom nk b(n,k)\in2^{-n}\mathbb Z\)，以及 \(g_n\le f\le h_n\)。还须把不同次数提升到共同 Bernstein 次数后，下包络按系数序递增、上包络按系数序递减。这个嵌套相容性使尚未终止的质量准确为
+$$
+\Pr_p(N>n)=h_n(p)-g_n(p).
+\tag{309.23}
+$$
+Theorem 8 同时供应这些条件及一致的 \(\Delta_n^\alpha\) 误差。只有不带嵌套相容性的近似多项式不能代替它。
+
+由于 \(\Delta_n(p)\le n^{-1/2}\)，非整数 \(\alpha>2\) 时尾概率可求和：
+$$
+\sup_{p\in[0,1]}\mathbb E_pN
+\le1+A_f\sum_{n\ge1}n^{-\alpha/2}<\infty.
+\tag{309.24}
+$$
+本节将给出定义于全 \([0,1]\)、严格离开零一的具体 \(C^{2+\gamma}\) 函数。不会把仅在合法区间的正则性直接当作全域前提，也不会在定理未涵盖的整数 \(\alpha=2\) 上套用该版本。
+

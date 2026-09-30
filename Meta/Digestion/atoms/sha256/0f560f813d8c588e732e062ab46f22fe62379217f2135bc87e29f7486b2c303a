@@ -1,0 +1,55 @@
+### 338.2 原合同与未归一化参考系数
+
+固定原模型
+
+$$
+p=(1-hc/C)/B,\qquad q=(1-h/C)/B,\qquad
+c=k_0^jr,\quad j\in\{0,1\},\ r\in[l,1],\quad 0<h\le1/4.
+\tag{338.2}
+$$
+
+其余固定参数仍为 $B\in\{2,4\}$、$1\le C\le1024/225$、$c_*=k_0l>1/2$。置 $x=C(1-Bp)=hc$，实际域有 $0<x\le1/4$。两来源新鲜尾相互独立；未知实际 $p,q,c,h$ 不以数值输入控制器。
+
+第330节的光滑参考包络基于 HNP 构造，供应固定的 $1/4<x^\dagger<c_*/2$、非整数 $\rho>\max(\beta,2)$、二幂整数 $b>1$ 及固定整数 $N$，令
+
+$$
+n_k=Nb^k,\qquad d_k=n_k+\lfloor\rho\rfloor.
+\tag{338.3}
+$$
+
+其参考 Bernstein 下、上系数分别为 $\ell_{k,t}(x),u_{k,t}(x)$，$0\le t\le d_k$，具备四个直接输入：
+
+1. 固定余量 $c_0\le\ell_{k,t}\le u_{k,t}\le1-c_0$，其中可取 $c_0=1/32$。
+
+2. 对所有 $x\in[0,x^\dagger]$，参考次数提升满足
+
+   $$
+   \mathsf E^H_k\ell_{k-1}(x)\le\ell_k(x),\qquad
+   u_k(x)\le\mathsf E^H_ku_{k-1}(x)
+   $$
+
+   （逐系数）。在 $x=0$ 全部上下系数等于 $1/2$。
+
+3. 单个系数的任务参数正则性统一有界：
+
+   $$
+   \sup_{k,t}\bigl(\|\ell_{k,t}\|_{C^\beta}
+                  +\|u_{k,t}\|_{C^\beta}\bigr)\le C_*.
+   \tag{338.4}
+   $$
+
+   这是式（330.16）的单系数界。
+
+4. 参考多项式 $L_k(x,q),U_k(x,q)$ 的差
+
+   $$
+   \Gamma_k(x,q)=U_k(x,q)-L_k(x,q)
+   \le Cx^\beta\min\{1,(n_kx^2)^{-\rho/2}\},
+   \tag{338.5}
+   $$
+
+   且两者趋于 $F_x(q)$。在实际楔域，
+   $F_x(q)=1/2+6\varepsilon h^\beta$，$\varepsilon=1/16$。
+
+第327.8节已有实际首币和倒数门控包装，将这枚偏置币接回两种请求的四格目标；包装的全部来源费用有统一指数尾。第329.6节已有参考网格的超几何归纳实现。本节在两条实际来源上证明其乘积扩展。其原始一维兼容包络与超几何升阶接口见 Nacu–Peres 的 Proposition 3、式（7）—（11）及 Lemma 4。[^tensor_linear_np]
+

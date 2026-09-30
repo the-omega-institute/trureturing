@@ -1,0 +1,18 @@
+**引理344.2（适配导数阶的复半径）。** 对 \(p\in[0,1]\)、\(1\le\ell\le d\)，令
+\[
+R_{d,\ell}(p)
+=\max\left\{\sqrt{\frac{\ell v}{d}},\,\frac{\ell}{d}\right\}.
+\]
+则
+\[
+\boxed{
+\frac{|P^{(\ell)}(p)|}{\ell!}
+ \le B\left(\frac{e^6}{R_{d,\ell}(p)}\right)^\ell.}
+\tag{344.9}
+\]
+此外，在 \(|z-p|\le\Delta_d(p)\) 上有 \(|P(z)|\le e^6B\)，从而每个固定阶 \(j\ge0\) 满足
+\[
+|P^{(j)}(p)|\le e^6j!B\,\Delta_d(p)^{-j}.
+\tag{344.10}
+\]
+

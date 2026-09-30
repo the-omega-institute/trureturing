@@ -1,0 +1,48 @@
+**定理346.5（固定地板的近临界严格损失）。** 对每份固定
+\(A\in\mathfrak G_\infty\)，若 \(H_a(A)<\infty\)，则
+
+\[
+\boxed{\lim_{u\downarrow0}u^aT_{a-u}(A)=+\infty.}
+\tag{346.40}
+\]
+
+同一结论对每个固定世界、每种请求的
+\(u^a\mathbb E^{A,w,S}N_T^{a-u}\) 成立。矩允许取扩展实数值。
+
+**证明。** 参考判据给 \(\sum_k\eta_k<\infty\)。对固定整数 \(L\)，置
+
+\[
+\epsilon_L=\sum_{k\ge L}\eta_k>0,\qquad \epsilon_L\downarrow0.
+\]
+
+将式（346.35）只用于这个固定尾段，再用式（346.34），得到逐世界的下界
+
+\[
+\mathbb EN_T^{a-u}
+\ge c\,\epsilon_L^{1-s}
+n_L^{-u}(1-b^{-u/s})^{-s}.
+\tag{346.41}
+\]
+
+先固定 \(L\)，再令 \(u\downarrow0\)。有
+\(n_L^{-u}\to1\)、\(\epsilon_L^{1-s}\to\epsilon_L^{1-a}\)，并且
+
+\[
+u^a(1-b^{-u/s})^{-s}
+\longrightarrow(a/\log b)^a.
+\tag{346.42}
+\]
+
+最后一个极限使用
+\(1-b^{-u/s}\sim u\log b/s\) 和 \(u^{a-s}=u^u\to1\)。因此
+
+\[
+\liminf_{u\downarrow0}
+u^a\mathbb EN_T^{a-u}
+\ge c(a/\log b)^a\epsilon_L^{1-a}.
+\]
+
+这个不等式对每个固定 \(L\) 成立。再令 \(L\to\infty\)，因 \(a>1\)，右侧趋于无穷，得到结论。证明没有交换这两个极限，也没有把随 \(u\) 改变的地板放入固定程序。证毕。
+
+定理346.4与346.5的量词不同：共同参考预算下，逐阶选择的策略族达到 \(u^{-a}\) 阶；任何一份固定可求和地板都损失一个无界因子。本节不进一步分类该因子能够多慢增长。
+

@@ -1,0 +1,30 @@
+**证明。** 取一条共同逐坐标收敛子列，仍记为 $\pi_j\to\pi$。固定 $\theta,S,n$，式（318.8）给
+
+$$
+\mathbb E_\theta^\pi(M\wedge n)^s
+=\lim_j\mathbb E_\theta^{\pi_j}(M\wedge n)^s\le K.
+$$
+
+令 $n\to\infty$，单调收敛得到每个世界的 $\mathbb E M^s\le K$。因为 $s>0$，正概率无限调用会使这个矩无穷，所以极限策略几乎必有限回答。原序列与极限共同满足
+
+$$
+\sup_{\theta,S}\Pr(M>n)\le K/n^s\qquad(n\ge1).
+\tag{318.12}
+$$
+
+对任意输出事件 $A$，分离两个调用尾与有限叶，
+
+$$
+\begin{aligned}
+|Q^\pi(A)-P(A)|
+&\le \Pr_\pi(M>n)
++|F_n^\pi(A)-F_n^{\pi_j}(A)|\\
+&\quad+\Pr_{\pi_j}(M>n)+\delta_j.
+\end{aligned}
+\tag{318.13}
+$$
+
+先固定 $n$ 令 $j\to\infty$，式（318.7）消去有限叶差；再令 $n\to\infty$，式（318.12）消去两尾。估计对全部 $\theta,S,A$ 一致，故得到式（318.11）。证毕。
+
+证明不要求 $\{M^s\}$ 一致可积。这里只将有限截断矩传到极限，再用非负单调收敛保留上界；并未声称未截断期望等于其序列极限。总矩有界足以保证调用数的共同尾趋零，正是阻止回答质量流入无限路径的条件。
+

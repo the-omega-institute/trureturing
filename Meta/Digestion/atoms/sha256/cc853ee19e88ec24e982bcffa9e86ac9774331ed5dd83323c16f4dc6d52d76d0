@@ -1,0 +1,79 @@
+**证明。** 对一个有限币词的对数似然 $\ell$，其第一导数是得分和。单枚币对第 $j\ge2$ 阶对数似然的贡献为
+
+$$
+\lambda_{j,i}=(j-1)!\left[
+\frac{(-1)^{j-1}X_i}{u^j}
+-\frac{1-X_i}{(1-u)^j}\right].
+\tag{311.20}
+$$
+
+令
+
+$$
+L_{1,n}=S_n,\qquad
+L_{j,n}=\sum_{i=1}^nR_i\lambda_{j,i}.
+\tag{311.21}
+$$
+
+因为 $u\in I$，有 $|L_{j,n}|\le c_{I,j}M_n$。在 $\{M\le n,A\}$ 上，这些和恰好对应实际停止词的对数似然导数。
+
+重复求导 $e^\ell$ 给有限 Bell 展开
+
+$$
+\frac{(e^\ell)^{(r)}}{e^\ell}
+=\sum_{\substack{a_1,\ldots,a_r\ge0\\\sum_{j=1}^rja_j=r}}
+\frac{r!}{\prod_{j=1}^r a_j!(j!)^{a_j}}
+\prod_{j=1}^rL_j^{a_j}.
+\tag{311.22}
+$$
+
+它由 $B_0=1$ 及递推
+
+$$
+B_{r+1}=L_1B_r+\sum_{j=1}^rL_{j+1}\frac{\partial B_r}{\partial L_j}
+\tag{311.23}
+$$
+
+归纳得到；每次递推将加权次数增加一。这里没有使用无限级数。
+
+取 $r=2m$。一个单项令 $a=a_1$、$b=\sum_{j\ge2}a_j$，则 $a+2b\le2m$，其绝对值被常数乘 $|S_n|^aM_n^b$ 控制。设
+
+$$
+\theta=\frac a{2m},\qquad\phi=\frac bm,
+\qquad\psi=1-\theta-\phi\ge0.
+\tag{311.24}
+$$
+
+正阶 Bell 多项式没有常数单项，故在 $M_n=0$ 时该项为零。插入 $\mathbf1_{\{M_n>0\}}$ 后，广义 Hölder 给
+
+$$
+\mathbb E_u[|S_n|^aM_n^b]
+\le (\mathbb E_u|S_n|^{2m})^\theta
+     (\mathbb E_uM_n^m)^\phi
+     \Pr_u(M_n>0)^\psi.
+\tag{311.25}
+$$
+
+零权重因子省略。由 $M_n$ 的整数性，$\Pr_u(M_n>0)\le\mathcal B_n$。引理311.2因此将右端界为
+
+$$
+C_{I,m}^{\theta}\mathcal B_n^{\theta+\phi+\psi}
+=C_{I,m}^{\theta}\mathcal B_n.
+\tag{311.26}
+$$
+
+$\mathcal B_n=0$ 时单独直接处理。剩余概率因子不能无条件丢掉：若 $0<\mathcal B_n<1$，仅得 $\mathcal B_n^{\theta+\phi}$ 不足以推出线性矩预算。
+
+最后对式（311.8）的有限词逐项求导，得到
+
+$$
+f_n^{(2m)}(u)=
+\mathbb E_u\left[
+\mathbf1_{\{M\le n,A\}}
+B_{2m}(S_n,L_{2,n},\ldots,L_{2m,n})
+\right].
+\tag{311.27}
+$$
+
+取绝对值，放宽事件限制，并对有限个 Bell 单项分别应用式（311.26），即得结论。证毕。
+

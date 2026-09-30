@@ -1,0 +1,22 @@
+**推论341.4（共同参考预算下的类内对数阶）。** 存在固定 $K_0,c,C,\delta_*>0$，使对全部 $K\ge K_0$、$0<\delta<\delta_*$，
+
+$$
+\boxed{
+c\log(1/\delta)
+ \le\mathcal T_a^{\mathfrak G}(\delta,K)
+ \le C\log(1/\delta).}
+\tag{341.44}
+$$
+
+因此每个固定 $K\ge K_0$ 都有
+
+$$
+\mathcal T_a^{\mathfrak G}(\delta,K)
+ \asymp\log(1/\delta)\qquad(\delta\downarrow0),
+\tag{341.45}
+$$
+
+且比较常数和小精度阈值可对全部 $K\ge K_0$ 共同选择。
+
+下界由定理341.2对每个可行程序成立，上界由式（341.42）的同一平地板构造给出。参考预算在这里限制可行集合，下界本身不要求参考预算有限。若 $K<K_0$，本节仍对可行程序给出同样的任务下界，但不据此断言可行或匹配。
+

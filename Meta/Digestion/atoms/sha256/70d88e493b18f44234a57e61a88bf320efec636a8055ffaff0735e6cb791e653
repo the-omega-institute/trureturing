@@ -1,0 +1,38 @@
+### 320.3 有限输出、尾质量与实数阶矩
+
+令 \(M\in\mathbb N\cup\{\infty\}\) 为返回前实际总调用数，永不输出时为无穷。对 \(n\ge0\)，置
+$$
+F_n(\theta,S,z)=
+\sum_{\substack{h\text{ 起于 }S\\|h|\le n}}
+L_\theta(h)f_h(z).
+\tag{320.7}
+$$
+有限字母表使该和有限；不同停止叶互斥，所以它是至多 \(n\) 次调用后已返回 \(z\) 的子概率。对事件 \(D\subseteq\mathcal Z\)，写
+\(F_n(D)=\sum_{z\in D}F_n(z)\)。
+
+下一树事件只有输出或调用，因此
+$$
+\Pr_\theta(M>k)=1-\sum_zF_k(\theta,S,z).
+\tag{320.8}
+$$
+实际层质量也给同一结论：深度 \(k\) 的总到达质量是 \(\Pr(M\ge k)\)，该层查询质量是
+\(\sum_{|h|=k,a}L_\theta(h)f_h(a)\)；对来源回答求和时，核归一化使它等于下一层到达质量。
+
+固定任意实数 \(s>0\)，定义
+$$
+\begin{aligned}
+m_n(\theta,S)
+&=\sum_{k=0}^{n-1}
+\big((k+1)^s-k^s\big)
+\left(1-\sum_zF_k(\theta,S,z)\right)\\
+&=\mathbb E_\theta(M\wedge n)^s.
+\end{aligned}
+\tag{320.9}
+$$
+第二行由逐路径望远镜求和再取期望得到，也适用于 \(M=\infty\)。单调收敛给
+$$
+\mathbb E_\theta M^s=\sup_{n\ge1}m_n(\theta,S).
+\tag{320.10}
+$$
+所以有限输出线性，尾及截断矩仿射，均为有限坐标连续函数。非整数矩阶在这里没有障碍；后面的有理证书另需整数阶以保证系数有理。
+

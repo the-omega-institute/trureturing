@@ -1,0 +1,16 @@
+### 330.3 HNP 中心递推的逐系数参数导数
+
+以下 $\|\cdot\|_{\mathrm{coef}}$ 表示当前公共 Bernstein 次数下的最大绝对系数。次数提升 $E_k$ 的权重非负且和为一，故是这一范数的压缩映射，并且不依赖 $x$。
+
+令 $P_k^j(x,q)$ 为第327节第 $j$ 环从 $k=j$ 开始的 HNP 中心递推。仿射缩放与 $\phi$ 的光滑紧支集给
+
+$$
+\|\partial_x^mG_x\|_{C_q^\rho}
+ \le C_mx^{-\rho-m},
+\qquad
+\|\partial_q^\ell\partial_x^mG_x\|_\infty
+ \le C_{m,\ell}x^{-m-\ell}
+\quad(x\in I_j).
+\tag{330.8}
+$$
+
