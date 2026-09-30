@@ -20,7 +20,7 @@ The exponent is arbitrary and at least one; the real ratio is strictly between z
 
 The inequality a S_a(t) <= (1+t)P_a(t) follows by induction: the increment is t S_a(t) - (a+1)t^(a+1), a sum of nonnegative power differences for 0 <= t <= 1. Termwise comparison also gives P_a(t) <= a S_a(t). Using the constant lower denominator 1+z on the interval and integrating t^a gives the bounds. The lower bound implies a z^(a+1)/(2(a+1)) <= D_a(z).
 
-At a prime ratio z = 1/p, the factor P_a(t)/S_a(t) is the mean remaining exponent in the truncated geometric weights t^k/S_a(t). Only a finite local deficit is estimated. No signed-tail cancellation, Taylor coefficient positivity, Weil quadratic-form positivity, Robin inequality, or Riemann hypothesis follows from this statement.
+For 0 <= t <= 1, the factor P_a(t)/S_a(t) is the mean remaining exponent in the truncated geometric weights t^k/S_a(t). At a prime ratio z = 1/p, D_a(z) is the finite prefix deficit, distinct from the optimizer reserve R_p(x). Its upper bound does not bound R_p(x) unless the additional optimizer gap is separately controlled. Only a finite local deficit is estimated. No signed-tail cancellation, Taylor coefficient positivity, Weil quadratic-form positivity, Robin inequality, or Riemann hypothesis follows from this statement.
 
 ## References
 

@@ -179,9 +179,6 @@ theorem result (a : ℕ) (z : ℝ) (ha : 1 ≤ a) (hz : 0 < z) (hz1 : z < 1) :
   exact ⟨hint, hidentity, by simpa only [hminorEval, ← hidentity] using hlower,
     by simpa only [hmajorEval, ← hidentity] using hupper⟩
 
-example : (1 : ℕ) ≥ 1 ∧ (0 : ℝ) < 1 / 2 ∧ (1 / 2 : ℝ) < 1 := by norm_num
-example : ℕ × ℝ := (1, 1 / 2)
-
 #print axioms result
 
 end D5.S3.Arith.GoldenResource.PrefixDeficitKernel

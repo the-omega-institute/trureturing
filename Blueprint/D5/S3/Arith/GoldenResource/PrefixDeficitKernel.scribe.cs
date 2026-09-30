@@ -33,8 +33,11 @@ internal sealed class PrefixDeficitKernelDocument : IScribeDocumentDefinition
                         + "differences for 0 <= t <= 1. Termwise comparison also gives P_a(t) <= a S_a(t). "
                         + "Using the constant lower denominator 1+z on the interval and integrating t^a gives the bounds. "
                         + "The lower bound implies a z^(a+1)/(2(a+1)) <= D_a(z).")),
-                    Paragraph(Text("At a prime ratio z = 1/p, the factor P_a(t)/S_a(t) is the "
+                    Paragraph(Text("For 0 <= t <= 1, the factor P_a(t)/S_a(t) is the "
                         + "mean remaining exponent in the truncated geometric weights t^k/S_a(t). "
+                        + "At a prime ratio z = 1/p, D_a(z) is the finite prefix deficit, "
+                        + "distinct from the optimizer reserve R_p(x). Its upper bound does not bound "
+                        + "R_p(x) unless the additional optimizer gap is separately controlled. "
                         + "Only a finite local deficit is estimated. No signed-tail cancellation, "
                         + "Taylor coefficient positivity, Weil quadratic-form positivity, Robin "
                         + "inequality, or Riemann hypothesis follows from this statement."))),
