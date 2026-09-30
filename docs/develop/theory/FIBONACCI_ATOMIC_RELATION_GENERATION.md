@@ -18345,3 +18345,425 @@ $$
 该结论只否定固定收缩观察中的连续 Robin 读出。它不否定有限整数组成到精确黄金收缩坐标的单射性，也不否定保留实际来源、模余数及素数赋值的联合观察模型；从精确有限编码可定义一个算术读出，与它能在收缩完成上连续延拓，是两份不同的性质。
 
 ## 追加锚（本行以下为增补区）
+
+## 188. 同一模边界上的局部 Euler 因子稳定性
+
+本节从 §187 的近界来源继续，但先证明一个可独立复用的算术关系。以下为经典 Mertens、§160 的 Axler 包络及初等估计上的纸面推导，未新增 Lean 声明。记
+
+$$
+z_p(a)=\sum_{i=0}^{a}p^{-i},\qquad
+Z(n)=\prod_{p\mid n}z_p(v_p(n)),\qquad
+Z_{\le m}(n)=\prod_{p\le m}z_p(v_p(n)).
+$$
+
+**引理 188.1（共同模边界的局部乘积误差）。** 对整数 $m\ge2$、正整数 $a,b$，若 $a\equiv b\pmod{m!}$，则
+
+$$
+\delta_m\le\frac{Z_{\le m}(a)}{Z_{\le m}(b)}\le\delta_m^{-1},
+\qquad
+\delta_m=\prod_{p\le m}(1-p^{-v_p(m!)-1}).
+\tag{188.1}
+$$
+
+并且 $\delta_m=1+O(m^{-1/2})$。
+
+证明。对同一个素数 $p\le m$，记 $t=v_p(m!)$。若 $v_p(a)<t$，同余条件迫使 $v_p(b)=v_p(a)$；反向也成立。否则两个赋值都至少为 $t$。由
+
+$$
+z_p(v)=\frac{1-p^{-v-1}}{1-p^{-1}},
+$$
+
+局部比值落在 $[1-p^{-t-1},(1-p^{-t-1})^{-1}]$。乘法得到式（188.1），没有独立选择不同整数的赋值极值。
+
+由于 $v_p(m!)\ge\lfloor\log m/\log p\rfloor$，在 $p\le\sqrt m$ 上有 $p^{-v_p(m!)-1}<1/m$；在 $p>\sqrt m$ 上使用 $v_p(m!)\ge1$。所以
+
+$$
+\sum_{p\le m}p^{-v_p(m!)-1}
+\le\frac1{\sqrt m}+\frac1{\sqrt m-1}.
+$$
+
+有限乘积不等式 $\prod(1-u_i)\ge1-\sum u_i$ 给所需误差，有限个小 $m$ 不影响渐近。$\square$
+
+## 189. 规模受控的模观察与可达到的分辨误差
+
+**定理 189.1（有界规模同余的统一约数权重转移）。** 固定 $C>0$。当 $m\to\infty$ 时，
+
+$$
+\sup_{\substack{1\le a,b\le\exp(Cm\log m)\\a\equiv b\pmod{m!}}}
+\left|\frac{Z(a)}{Z(b)}-1\right|\longrightarrow0.
+\tag{189.1}
+$$
+
+证明。引理 188.1 处理全部 $p\le m$。对任一实际 $n\le\exp(Cm\log m)$，取 $X=m(\log m)^2$，并记
+
+$$
+P(t)=\prod_{p\le t}(1-p^{-1})^{-1}.
+$$
+
+将高素数分为 $m<p\le X$ 和 $p>X$：前者扩大到完整区间，后者的不同素数个数至多 $\log n/\log X$，每项 $\log(p/(p-1))\le1/(p-1)\le1/(X-1)$。于是
+
+$$
+1\le Z_{>m}(n)
+\le\frac{P(X)}{P(m)}
+\exp\!\left(\frac{\log n}{(X-1)\log X}\right)=1+o(1),
+\tag{189.2}
+$$
+
+且误差只依赖 $m,C$。最后等式使用经典 Mertens 乘积公式以及 $\log X/\log m\to1$；指数为 $O_C((\log m)^{-2})$。将同一上界用于 $a,b$，再结合式（188.1），即得统一结论。$\square$
+
+仅给模边界与这样的规模控制，其误差不能任意加速。下面还求出一个精确主项。
+
+**定理 189.2（幂次高度内的尖锐模分辨率）。** 固定 $C>1$，定义
+
+$$
+E_m(C)=\max_{\substack{1\le a,b\le(m!)^C\\a\equiv b\pmod{m!}}}\frac{Z(a)}{Z(b)}.
+$$
+
+则
+
+$$
+\lim_{m\to\infty}(E_m(C)-1)\frac{\log m}{\log\log m}=1.
+\tag{189.3}
+$$
+
+证明。这里使用经典 Mertens 倒数素数公式的标准误差形式
+
+$$
+\sum_{p\le x}\frac1p=\log\log x+B_1+O(1/\log x).
+\tag{189.4}
+$$
+
+它与本卷已有 Mertens 文献输入同源；可见 Lichtman 文献 Theorem 1.1 所列公式 (1.1)。所有以下小量均在固定 $C$ 下取极限。
+
+上界取 $X=m\log m\log\log m$。对 $n\le(m!)^C$，其高素数 Euler 对数至多
+
+$$
+\sum_{m<p\le X}\frac1p+O(1/m)
++\frac{C\log(m!)}{(X-1)\log X}.
+$$
+
+式（189.4）的首项为
+
+$$
+\log\log X-\log\log m+O(1/\log m)
+=(1+o(1))\frac{\log\log m}{\log m}.
+$$
+
+最后的尾项是 $O_C(1/(\log m\log\log m))$。低素数乘积误差由引理 188.1 给出 $\log\delta_m^{-1}=O(m^{-1/2})$，而分母的高素数因子至少为一。因此
+
+$$
+\log E_m(C)\le(1+o(1))\frac{\log\log m}{\log m}.
+$$
+
+为了同时实现下界，取
+
+$$
+X_0=\frac{C-1}{8}m\log m,\qquad
+P_m=\prod_{m<p\le X_0}p,
+\qquad b_m=m!,\quad a_m=m!P_m.
+$$
+
+充分大 $m$ 时 $X_0>m$。两者确在同一模 $m!$ 的零纤维中，且 $\gcd(m!,P_m)=1$。§178 的初等 Chebyshev 界给
+
+$$
+\log a_m\le\log(m!)+4X_0
+=\log(m!)+\frac{C-1}{2}m\log m<C\log(m!)
+$$
+
+对充分大 $m$ 成立，最后使用 $\log(m!)\sim m\log m$。故是同一高度域中的实际见证，并且
+
+$$
+\frac{Z(a_m)}{Z(b_m)}=Z(P_m),\qquad
+\log Z(P_m)=\sum_{m<p\le X_0}\log(1+1/p)
+=(1+o(1))\frac{\log\log m}{\log m}.
+$$
+
+这给匹配下界。因为所得对数趋于零，$E_m-1\sim\log E_m$，得到式（189.3）。$\square$
+
+同一见证还给
+
+$$
+Z(a_m)-Z(b_m)\sim e^\gamma\log\log m\longrightarrow\infty,
+$$
+
+因为 §186 的阶乘公式给 $Z(m!)\sim e^\gamma\log m$。因此，“相对响应趋于相同”不能直接升级为“加性差额趋于零”。这个结论精确限制模观察所给估计的强度，并不是 Robin 反例。
+
+## 追加锚（本行以下为增补区）
+
+## 190. 近界来源周围的统一响应、窗口极值与单位翻转
+
+沿用定理 187.2 的同一个实际来源，记
+
+$$
+g_m=m!,\quad j'_m=j(m!)+6m,\quad x_m=m!M^{j'_m}\alpha,
+\quad C_m=q(x_m)=m!F_{j'_m+3}.
+$$
+
+已有 $m!\mid C_m$、$\log C_m=2m\log m+O(m)$，且中心的 Robin 比值最终严格小于一并趋于一。
+
+**定理 190.1（附近整数恢复偏移自身的约数权重）。** 一致地对全部整数 $0<|h|\le e^m$，有
+
+$$
+\frac{Z(C_m+h)}{Z(|h|)}\longrightarrow1.
+\tag{190.1}
+$$
+
+证明。充分大 $m$ 时 $C_m>e^m$，故这些整数均为正，且 $C_m+h$ 与 $|h|$ 的对数均为 $O(m\log m)$。当 $h>0$，它们模 $m!$ 相同，直接应用定理 189.1。当 $h<0$，有 $C_m+h\equiv-|h|\pmod{m!}$；引理 188.1 的局部证明对相反剩余也原样成立，因为模 $p^t$ 的正负不改变赋值。高素数估计与剩余的符号无关，所以同一个统一误差界仍成立。$\square$
+
+这里是同一个中心的普通整数平移。一般 $h$ 不保持原来的规范组成、范数或窗口记录；下面单独指出确能保持窗口记录的 $h=1$。
+
+写 $\mathcal R(n)=Z(n)/(e^\gamma\log\log n)$，只在充分大、分母为正的数量上使用。
+
+**推论 190.2（去掉中心后的窗口极值）。** 对每个固定 $A>0$，
+
+$$
+\max_{0<|h|\le m^A}\mathcal R(C_m+h)
+\sim\frac{\log\log m}{\log m}.
+\tag{190.2}
+$$
+
+对每个固定 $0<\eta\le1$，
+
+$$
+\max_{0<|h|\le\exp(m^\eta)}\mathcal R(C_m+h)\longrightarrow\eta.
+\tag{190.3}
+$$
+
+证明。统一有 $\log\log(C_m+h)\sim\log m$，而定理 190.1 将分子转移至 $Z(|h|)$。§164.1 的通用 Axler 包络给多项式窗口内
+
+$$
+Z(|h|)\le e^\gamma(\log\log m+O_A(1)),
+$$
+
+并给指数窗口内 $Z(|h|)\le e^\gamma(\eta\log m+O(1))$，有限小值可统一吸收入常数。
+
+多项式窗口的下界取 $h=k_m!$，其中
+
+$$
+k_m=\left\lfloor\frac{A\log m}{2\log\log m}\right\rfloor.
+$$
+
+最终 $k_m\le m$、$k_m!\le m^A$、$\log k_m\sim\log\log m$。§186 的阶乘渐近给 $Z(k_m!)\sim e^\gamma\log\log m$。指数窗口改取
+
+$$
+k_m=\left\lfloor\frac{m^\eta}{2\eta\log m}\right\rfloor,
+$$
+
+最终仍有 $k_m\le m$、$k_m!\le e^{m^\eta}$，且 $\log k_m\sim\eta\log m$。同一阶乘渐近给匹配下界，故两个窗口主项均被真实偏移取得。$\square$
+
+对于 $\eta<1$，式（190.3）给整个去心窗口最终一致严格 Robin，再加上 §187 已证的中心安全性，整个窗口均被覆盖。$\eta=1$ 只确定最大比值趋于一，不决定该窗口每个整数处于边界哪一侧。
+
+**命题 190.3（同一窗口组成的单位位成对实例）。** 将 $x_m$ 的外部单位位从零改成一，保留全部五窗口与 End，则仍是合法规范来源，数量变为 $C_m+1$，并且
+
+$$
+Z(C_m+1)\longrightarrow1,\qquad
+\mathcal R(C_m+1)\longrightarrow0,
+\qquad\mathcal R(C_m)\longrightarrow1.
+\tag{190.4}
+$$
+
+两者的窗口组成及其坐标公因子 $m!$、原始范数 $(m!)^2$ 及收缩读数完全相同。
+
+证明。原地址以 $2m$ 个低位 `null` 开头，故 $F_3$ 位为零。将 $F_2$ 的单位位改成一，不触犯非相邻占位或首窗接缝，最高非零窗及 End 也不变。Zeckendorf 唯一性保证它就是 $C_m+1$ 的规范地址。取定理 190.1 的 $h=1$，并用 $Z(1)=1$，得到式（190.4）；中心极限引用 §187。$\square$
+
+这不仅是不同来源拥有相近的几何点：除单位初始化外，整份有限窗口数据都相同，而两者的 Robin 比值极限不同。单位位一把每个 $p\le m$ 从 $C_m+1$ 的素支撑中排除，因为 $C_m+1\equiv1\pmod{m!}$。因此对 Robin 的联合观察必须保留单位初始化；公因子、范数与收缩坐标不足以替代它。上述结果都只作用于明列的共同模关系、规模窗口及实际来源族，没有闭合任意整数的 Robin 猜想。
+
+## 追加锚（本行以下为增补区）
+
+## 191. 一般固定种子的零余类与全素数加权首秩尾
+
+本文为纸面推导，未新增 Lean 声明，不主张文献原创。对象固定为本原非负整数组成 $v=(a,b)\ne(0,0)$，$\gcd(a,b)=1$，并定义
+
+$$
+V_j=q(M^jv)=aF_{j+3}+bF_{j+4},\qquad j\ge0.
+$$
+
+它覆盖非单位范数来源，也包括已处理的单位范数；本节实质范围是此前无法对全部指标控制大素数尾的一般固定种子。最终结论只在密度一指标集合上成立，不能删除例外集。
+
+**引理 191.1（固定种子的模素数零余类）。**
+
+记 $z(p)$ 为 Fibonacci 首次整除秩。对每个素数 $p$，集合
+
+$$
+\{j\ge0:p\mid V_j\}
+$$
+
+或者为空，或者恰为一个余数类模 $z(p)$ 在非负整数中的截取。
+
+证明。Fibonacci 更新可逆，且相邻响应的 gcd 恒为 $\gcd(a,b)=1$。若 $p\mid V_t$，则 $p\nmid V_{t+1}$，递推给
+
+$$
+V_{t+k}\equiv V_{t+1}F_k\pmod p\qquad(k\ge0).
+$$
+
+因此未来的零点恰为 $z(p)\mid k$。更早零点如存在，与 $t$ 的差也必须被 $z(p)$ 整除；若最早非负零点为 $t\ge z(p)$，由 $M^{z(p)}\equiv F_{z(p)-1}I\pmod p$ 且 $F_{z(p)-1}\not\equiv0\pmod p$，可逆地倒推得到 $t-z(p)$ 也是零点，矛盾。故最早零点小于 $z(p)$，得到完整非负余类。素数二、五不需要例外处理。$\square$
+
+于是任意整数 $X\ge1$ 的区间 $X\le j\le2X$ 中，该素数出现的指标数不超过
+
+$$
+(X+1)/z(p)+1.
+$$
+
+这保留的是一个可能非零的余类，不把它替换为 $z(p)\mid j$。
+
+**引理 191.2（全素数的加权首秩尾）。**
+
+对全部实数 $y\ge2$，有绝对常数界
+
+$$
+\sum_{p>y}\frac1{p\,z(p)}\le\frac{16}{\sqrt y}.
+\tag{191.1}
+$$
+
+证明。先取一个二倍区间 $Y<p\le2Y$，$Y\ge2$，按 $z(p)\le\sqrt Y$ 与大于 $\sqrt Y$ 分开。固定 $d\le\sqrt Y$ 的桶内所有不同素数乘积整除 $F_d<e^d$，因此桶内素数个数小于 $d/\log Y$，其 $1/(pd)$ 贡献至多为 $1/(Y\log Y)$。对至多 $\sqrt Y$ 个秩求和，得到 $1/(\sqrt Y\log Y)$。
+
+大秩部分中每个 $1/(pz(p))<1/(Y\sqrt Y)$，而区间内整数个数不超过 $2Y$，所以贡献至多 $2/\sqrt Y$。由于 $\log2>1/2$，合计严格小于 $4/\sqrt Y$。令 $Y=2^ky$ 并累加，得到
+
+$$
+\sum_{p>y}\frac1{p\,z(p)}
+<\frac4{1-2^{-1/2}}\frac1{\sqrt y}
+<\frac{16}{\sqrt y}.
+$$
+
+这里 $4/(1-2^{-1/2})<16$ 等价于 $\sqrt2>4/3$。$\square$
+
+此界只使用 $p\mid F_{z(p)}$、增长上界与素数桶基数，不需要一般种子具有强整除性。
+
+## 192. 一般种子的密度一估计与共同公因子
+
+对 $X\ge2$、$y\ge2$，设
+
+$$
+T_j(y)=\sum_{\substack{p\mid V_j\\p>y}}\log\frac p{p-1}.
+$$
+
+**定理 192.1（平均尾界与稀疏例外计数）。** 有
+
+$$
+\sum_{j=X}^{2X}T_j(y)
+\ll_v Xy^{-1/2}+\log X.
+\tag{192.1}
+$$
+
+证明。由于种子固定且非负非零，有 $1\le V_j\le\exp(C_v X)$（$X\le j\le2X$），其中 $C_v>0$ 只依赖种子。用有限求和交换、第一节的零点计数与 $\log(p/(p-1))\le2/p$，得到
+
+$$
+\begin{aligned}
+\sum_{j=X}^{2X}T_j(y)
+&\le2\sum_{y<p\le e^{C_vX}}\frac1p
+\left(\frac{X+1}{z(p)}+1\right)\\
+&\le32(X+1)y^{-1/2}
++2\sum_{p\le e^{C_vX}}\frac1p.
+\end{aligned}
+$$
+
+经典 Mertens 素数倒数和上界 $\sum_{p\le t}1/p=\log\log t+O(1)$ 给最后一项为 $O_v(\log X)$。该输入可见 Lichtman, *Mertens' prime product formula, dissected*, https://arxiv.org/html/2002.03361v3 ，Theorem 1.1、式 (1.1)。$\square$
+
+定义坏指标集合
+
+$$
+\mathcal E_v=
+\left\{j\ge3:
+T_j(j^{5/6})>\frac1{(\log j)^2}\right\}.
+$$
+
+在 $[X,2X]$ 中若 $j$ 是坏指标，则 $T_j(X^{5/6})>1/(\log(2X))^2$。由非负性、式（192.1）与 Markov 计数，
+
+$$
+\#(\mathcal E_v\cap[X,2X])
+\ll_v X^{7/12}(\log X)^2+(\log X)^3.
+\tag{192.2}
+$$
+
+二倍区间累加得到
+
+$$
+\#(\mathcal E_v\cap[1,X])
+\ll_v X^{7/12}(\log X)^2+(\log X)^4=o(X).
+\tag{192.3}
+$$
+
+也可把第二项吸收到第一项，写成 $O_v(X^{7/12}(\log X)^2)$。这不是声称坏指标不存在，而是给出明确的稀疏上界。
+
+**定理 192.2（好指标上共同公因子的统一 Robin 余量）。**
+
+令 $\mathcal G_v=\{j\ge3:j\notin\mathcal E_v\}$。固定任意实数 $C>0$，考虑同一个好指标 $j\in\mathcal G_v$ 下的全部整数
+
+$$
+1\le g\le C\phi^j,\qquad N_{g,j}=gV_j.
+$$
+
+则
+
+$$
+\liminf_{\substack{j\to\infty\\j\in\mathcal G_v}}
+\inf_{1\le g\le C\phi^j}
+\left(e^\gamma\log\log N_{g,j}-Z(N_{g,j})\right)
+\ge e^\gamma\log2.
+\tag{192.4}
+$$
+
+这里每个好指标上的乘子可以指数级大，且不要求其素支撑固定；阈值依赖固定的种子与 $C$，但不依赖这个范围内的单独 $g$。
+
+证明。取 $y=\lceil j^{5/6}\rceil$，
+
+$$
+A_j=\prod_{\substack{p\mid V_j\\p\le y}}p,\qquad B=gA_j.
+$$
+
+则 $A_j\mid V_j$、$B\mid N_{g,j}$，并且
+
+$$
+Z(N_{g,j})<\frac B{\varphi(B)}e^{T_j(y)},\qquad
+T_j(y)\le T_j(j^{5/6})\le\frac1{(\log j)^2}.
+$$
+
+Chebyshev 初等上界给 $\log A_j=O(j^{5/6})$。设 $h=\log g\le j\log\phi+\log C$，而 Binet 公式给 $\log V_j=j\log\phi+O_v(1)$。
+
+当 $h\ge j^{11/12}$ 时，$\log\log B=\log h+O(j^{-1/12})$。因 $B\ge e^{j^{11/12}}\to\infty$，Axler 精确上界一致适用，得到
+
+$$
+\frac{Z(N_{g,j})}{e^\gamma}
+<\left(\log\log B+\frac{a_0}{(\log\log B)^2}\right)e^{T_j(y)}
+=\log h+o(1).
+$$
+
+所有误差一致于 $g$。由 $h\le j\log\phi+O_C(1)$，
+
+$$
+\log\log N_{g,j}-\log h
+=\log\left(1+\frac{\log V_j}{h}\right)
+\ge\log2-o_{v,C}(1).
+$$
+
+当 $h<j^{11/12}$ 时，用 §164.1 的通用包络（$B=1$ 单独以 $B/\varphi(B)=1$ 处理），得到
+
+$$
+Z(N_{g,j})/e^\gamma\le(11/12)\log j+O_v(1),
+$$
+
+因为 $\log B\le j^{11/12}+O(j^{5/6})$，且尾部乘积增加的加性误差为 $O(1/\log j)$。实际预算至少为 $\log\log V_j=\log j+O_v(1)$，两者之差一致趋于无穷。合并即得式（192.4）。$\square$
+
+**推论 192.3（全部规范五窗口公因子的回接）。**
+
+令 $v_-=a+b\psi\ne0$；非零性来自黄金嵌入在 $\mathbb Z^2$ 上单射。对来源 $x_{g,j}=gM^jv$，单位位为零的实际规范性由 §182 等价于
+
+$$
+-1<g\psi^jv_-<\phi.
+$$
+
+因此对每个实际规范来源都有
+
+$$
+g<\frac{\phi}{|v_-|}\phi^j.
+$$
+
+取上节的固定 $C=\phi/|v_-|$，式（192.4）覆盖每个好指标下的全部合法公因子。若 $v$ 本身是单位位为零的合法有限五窗口种子，$j$ 为三的倍数时还可解释成真实 null 前缀推进，再选择满足窗口条件的公因子；一般 $g$ 的乘法后规范地址由 §182 识别，不能把乘法本身当成逐窗不变的字符串操作。
+
+结论超出固定乘子与单位范数的已有全指标估计，但只在密度一的递归指标上成立。仍缺的是把 $\mathcal E_v$ 的稀疏上界升级成逐点尾界，或用别的判据逐个覆盖其全部大指标；式（192.3）不排除无限多个例外，也不推出一般 Robin 或 RH。
+
+### 192.4 文献中的较弱尾界也足够
+
+Leonetti–Sanna, https://arxiv.org/pdf/1704.00151v2 ，Lemma 2.4 与 Lemma 2.2(v) 已给 $\sum_{p>y}1/(pz(p))\ll y^{-1/4}$（$y\ge5$）。若不采用引理 191.2 的更强初等估计，可直接将该较弱已发表界代入定理 192.1；则式（192.2）—（192.3）的 $7/12$ 换成 $19/24$，定理 192.2 与推论 192.3 的密度一且共同公因子结论完全保留。两条路线的量词都只覆盖密度一指标，不能由指数改进删除剩余例外。
+
+## 追加锚（本行以下为增补区）
