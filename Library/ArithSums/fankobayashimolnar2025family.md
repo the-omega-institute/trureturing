@@ -193,3 +193,14 @@ The erroneous introductory formula is not used as a premise here.
   `LCMPaperArXiv.tex`.
 - [Lagarias original author version](https://arxiv.org/pdf/math/0008177):
   Problem E, equation (1.1), and Theorem 1.1.
+
+## Comparison with the classical price objective
+
+The existing increment factorization can be combined with the ordinary CA
+prime-deletion optimality condition. The resulting finite comparison and
+benefit correction are recorded in the [FIB theory volume, §234](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md).
+That derivation compares the maxima of the two objectives and shows why
+the current low-loss source filter retains every optimizer at the same
+classical price. It does not identify the two objectives, supply a bound
+for the growing total moment, or place a CA optimizer in a prescribed
+Fibonacci residue class. No such theorem is attributed to this paper.
