@@ -23776,3 +23776,520 @@ a complete seed-times-tail-decay certificate. FC1020 remains finite
 on every fixed support. The unresolved supplier must control the
 actual full light charge relative to terminal decay and head reserve,
 or use stronger whole-cover constraints to exclude the obstruction.
+
+## Head-known terminal overlap refines a complete adaptive certificate
+
+Fix one actual finite original family, its literal phases and full
+exponents, and an actual head-survivor submeasure eta at B>4 of mass s.
+Keep the full-family pure laws nu_p. Let J(x) be a deterministic
+selection of head-active NONPURE future originals, computed from the
+complete head x and the declared finite original registry. Retain its
+membership tag unchanged throughout the continuation. No future
+activation, private point or unknown survivor answer is supplied.
+
+For a later suffix v>1 the exact complementary section is
+
+    L^J_(t,v)=sum_(u in M_B: u_>t=v)1_(u notin J(x))I_(u,<=t),
+    M_B={all nonpure originals assigned above B}.   (FC1026)
+
+At a new prime p, its depth-j group strips to the old actual section
+L^J_(<p,vp^j). Consumed p^e sections stay in the old library until
+consumed. At every fixed old history the tag is a constant0/1
+coefficient, so FC955--959's comparison and moment recursion apply
+after deleting zero coefficients, on this SAME tagged source. There
+is still at most one original per numerical old-cofactor slot. No
+maximum over hypothetical selections or separately optimized head
+atoms is inserted.
+
+Build the new normalized continuation mu^J by applying the
+half-threshold kernel ONLY to the complementary actual nonpure union
+D_(p,L). The pure laws still avoid every original pure power. Each row
+has mass one and density at most two relative to nu_p; it preserves
+the initial head and tag marginal. For r=2+epsilon,0<epsilon<=1, use
+FC959's complete coefficients
+A=D_B T_3(B), D=A C_epsilon S_(3+8epsilon,epsilon)(B), or certified
+upper replacements, and same-source complementary seeds G_2^J,G_r^J.
+
+### An exact set-relaxation fee uses exclusive complementary mass
+
+For an arbitrary probability nu and measurable sets A_set,B_set, put
+alpha=nu(A_set), b=nu(B_set minus A_set). For every measurable
+D_set subset B_set let K_D be the normalized half-threshold law based
+on beta=nu(D_set). Then
+
+    sup_(D_set subset B_set)K_D(A_set)
+      =alpha/[1-min(b,1/2)]<=2alpha.                (FC1027)
+
+To prove it, write a=nu(A_set intersection D_set),
+e=nu(D_set minus A_set)<=b. Direct substitution gives
+
+    K_D(A_set)=(alpha-a)/(1-a-e),       a+e<=1/2,
+    K_D(A_set)=2alpha-a/(a+e),         a+e>=1/2.
+
+The formulas agree at1/2. At fixed e, their derivatives in a are
+(alpha+e-1)/(1-a-e)^2 and -e/(a+e)^2, both nonpositive.
+Thus the maximum occurs at a=0 and is alpha/(1-e) below the threshold,
+2alpha above it. This is nondecreasing in e. The set
+D_set=B_set minus A_set realizes e=b,a=0, including all endpoints.
+The displayed upper-bound denominator is at least1/2. Sharpness is
+for this measurable-set relaxation; its optimizer need not be a union
+of originals attainable in the arithmetic process.
+
+For each actual terminal prime p>B form head-known literal unions
+
+    A_p^J(x)=union_(u in J(x), p(u)=p)C_(u,p),
+    B_p^J(x)=union_(u notin J(x), p(u)=p, I_(u,B)(x)=1)C_(u,p),
+    alpha_p^J=nu_p(A_p^J), b_p^J=nu_p(B_p^J minus A_p^J),
+    Psi_J(x)=sum_p alpha_p^J/[1-min(b_p^J,1/2)].       (FC1028)
+
+B_p includes the ENTIRE complementary head-active inventory.
+These unions and pure-hole masses are finite rational head data.
+Later selected and complementary actual unions are subsets of A_p
+and B_p respectively, because later activation adds conditions.
+FC1027, unique-terminal accounting and preserved head marginals give
+
+    mu^J(selected tail failure)<=integral Psi_J deta,
+    Psi_J<=2sum_p nu_p(A_p^J)<=2sum_(u in J(x))lambda_u,
+    mu^J(full survivor)>=s-integral Psi_J deta
+                            -A G_2^J-D G_r^J.       (FC1029)
+
+This pays every original: head labels through eta's support, pure
+future labels through nu_p, selected labels through Psi, and ALL
+other future nonpure labels through the closed complementary library.
+It sharpens the labelwise selected charge on the SAME mu^J, without
+importing FC1002's factor-one bound from the combined law.
+
+If J contains ALL head-active nonpure future labels, every B_p is
+empty and Psi=sum_p alpha_p; the rows are pure. Selecting all members
+of the four-prime heavy candidate library alone need not empty B_p.
+Cross-prime overlaps and later incompatibility of head-active labels
+can make FC1029 loose; neither is discarded as an assumed saving.
+
+### At most sixteen head choices improve the entire stated allowance
+
+Use the fixed heavy candidate library Hcal of FC992, or any fixed
+library with at most four active members at every head. For suffix v
+write C_v for its head load and R_v for the ENTIRE fixed complement.
+For J subset Hcal(x), let C_v^J be its selected load. Its complementary
+load is R_v+C_v-C_v^J. If G_a^R bounds the old fixed-complement seed,
+then
+
+    d_a(x,J)=max_v[(R_v+C_v-C_v^J)^a-R_v^a], a=2,r,
+    G_a^J<=G_a^R+integral d_a(x,J(x))deta,
+    Phi_U(x,J)=Psi_J(x)+A d_2(x,J)+D d_r(x,J).        (FC1030)
+
+The first inequality bounds each suffix's nonnegative increment
+pointwise before taking its maximum. It does not add separately
+maximizing suffixes. Empty maxima are zero.
+
+Choose a first minimizer J_U(x) among the at-most16 subsets, using a
+fixed numerical-label tie order. For r=3 and rational certified
+coefficients all comparisons are rational; rational r permits
+algebraic comparisons. There is no unprovided exact-real oracle.
+Put Psi_H for selection of every active heavy candidate, with its
+actual complementary B_H still retained. Then
+
+    delta_U=Psi_H-min_J Phi_U>=0,
+    mu^(J_U)(full survivor)>=s-integral Psi_H deta
+                   -A G_2^R-D G_r^R+integral delta_U deta. (FC1031)
+
+The nonnegative gain follows because selecting all candidates is an
+option with zero moment increment. For every option Psi_J is at most
+the earlier charge2W_J. Hence the new minimum score is no larger than
+the corresponding labelwise minimum score; it also improves that
+entire certified allowance. These are comparisons of complete bounds.
+Different selectors define different continuation laws, so no ordering
+of their actual survivor probabilities or global optimality is inferred.
+
+The adaptive selected set does not inherit compulsory private-cell
+credit from the fixed extremal library. For example, choose a saturated
+quartet only on head points where all four activate and choose nothing
+elsewhere. Its selected count is always0 or4, so both defect quantities
+C(4-C) and C(16-C^2) vanish, including on the original private cells.
+One may instead keep FC1005 on the FIXED labelwise baseline and add
+the explicitly proved score improvement. The complete complementary
+seeds still include the retained labels on every other cell.
+
+### Union evaluation and future filtering require different data
+
+The finite update retains each original's head tag, numerical identity,
+literal terminal cylinder and unprocessed cofactor conditions. After
+an observed coordinate q<p, update the terminal-p registry by
+
+    M_(q,p)={u in M_(<q,p):u's literal q-condition holds}. (FC1032)
+
+The cached terminal antichain computes its union mass but cannot by
+itself support this deletion update. With B<q<p, take u=qp with roots
+1 at q,p, and v=q^2p^2 with residue2 modq^2 and1 modp^2. Their head
+terminal union is1 modp, also obtained from the registry containing
+u alone. At the q^2 residue2, u disappears and v remains, leaving
+1 modp^2 in the first registry and the empty set in the second.
+Both registries were actual finite original families; pure zero
+classes may be included. Original-labelled incidence preserves the
+hidden nested cylinder needed by the correct successor. No earlier
+terminal bound is charged again merely because the cut advanced.
+
+For a strict same-law consumer, let p>13 be prime, B=p-1,
+S={5,7,11,13}. Include pure zero classes for3,S,p, and four originals
+u_i=3 product_(q in S minus {q_i})q p with all their roots1.
+They are distinct and incomparable. The private point of u_i uses
+its own roots1 and omitted q_i=2; every other u_j fails there.
+Pure private points use their own coordinate0 and other coordinates2.
+The all2 point survives. This is an actual irredundant NONCOVER,
+without any claimed divisor closure or whole-cover minimality.
+
+Give eta unit mass at all old roots1 and select all four nonpure
+labels. Their terminal cylinders coincide and the complementary
+inventory is empty. On the SAME pure continuation, with lambda=1/(p-1),
+
+    W_labels=4lambda, W_union=Psi=actual selected failure=lambda,
+    old survivor allowance=1-8lambda,
+    union-refined allowance=1-lambda.               (FC1033)
+
+The gain7lambda is strict; all complementary seeds are zero. A
+different combined kernel could remove that root entirely, so this
+example proves improvement of the stated fixed-J certificate, not
+optimality of the selected process. The all-family light-versus-head
+comparison remains unproved.
+
+## All repair primes have a finite old-part test, while mixed guards cross its blind set
+
+Keep one hypothetical distinct odd nonunit whole cover globally
+minimal in class count and then modulus sum, its actual phases and
+period Q. Write H_p=v_p(Q), including zero for absent primes. A finite
+head resolves all old original exponents and all ternary coordinates.
+Let u be a future NONPURE original with complete old part d=d_u.
+
+### The actual retained-pure forest for every repair prime
+
+For any odd repair prime p put K=H_p, a=v_p(d), e=d/p^a and
+c_p=a_u modp^a. When e=1 the mixed-parent RP interface is inapplicable
+and divisor count one could not qualify. For e>1, let L_p(a,c_p)
+be the depth-(K+1) residues in this actual prefix avoiding EVERY
+original pure p-power class. A private integer of u proves nonemptiness.
+Pure powers of height at most a cannot meet that prefix, by comparable
+original disjointness. Higher pure classes are disjoint. Consequently
+
+    R_p(a,c_p)=|L_p(a,c_p)|
+      =p^(K-a+1)-sum_(a<i<=K, a_(p^i)=c_p modp^a)p^(K+1-i),
+    R_p(a,c_p)>=p,  p divides R_p(a,c_p).           (FC1034)
+
+Divisor closure of the minimum family supplies EVERY pure p^i for
+i<=K. Thus, when a=0, R_p(0)=p*((p-2)p^K+1)/(p-1); for absent p,
+K=0 and this is p. These identities retain the full original pure
+chain and phases.
+
+Report385 RP2--RP4 applies to exactly the palette
+p^(K+1+j)f,j>=0,f|e, together with the actual retained pure classes.
+It repairs the ENTIRE target phase of d if and only if
+
+    e>1 and tau(e)>(p-1)R_p(a,c_p)/p.              (FC1035)
+
+Use its exact count N_p(R,t): N=R for t>=R, otherwise
+ delta=pt-(p-1)R, J=min{j:p^j delta>=t},
+ s_last=(pt-p^J delta)/(p-1), N=tJ+s_last.
+The actual phase-group capacity is N-1. This remains a whole-interface
+repair; no smaller private liability or mixed guard was assumed.
+
+For any smaller wholly old divisor h=p^b f|d, use u's ACTUAL phase
+modh. On the same depth-(K+1) space,
+L_p(a,c_p) is contained in L_p(b,c_p modp^b), so the residual count
+only increases, while tau(f)<=tau(e). Therefore a qualified old
+interface h|d exists for this p if and only if d itself qualifies.
+Moreover FC1034--1035 forces tau(e)>=p, giving the exact finite test
+
+    some retained-pure single-prime old interface reaches u
+      iff some odd p<=tau(d) satisfies FC1035 for d.  (FC1036)
+
+This includes old, future and absent repair primes. Among absent
+primes, the smallest absent odd prime ell suffices: one qualifies
+exactly when d>1 and tau(d)>=ell. The finite test classifies whether
+an original occurs in any such capacity row; it does not replace
+smaller interfaces' useful SHARED capacities by independent per-label
+allowances or claim an optimal weighted allocation.
+
+Assume3 divides Q, as in the present minimum-cover branch. Then
+
+    tau(d)<=4 ==> every FC1035 interface fails.      (FC1037)
+
+Indeed FC1036 leaves only p=3. If3 does not divide d, then
+R_3(0)=(3^(H_3+1)+3)/2>=6, requiring tau(d)>4. If3 divides d,
+tau(d)=(a+1)tau(e)<=4 implies tau(e)<=2, whereas R_3>=3 requires
+tau(e)>2. The e=1 case is already excluded. This covers1,q,q^2,q^3
+and qr for distinct odd primes. It is blindness of the ENTIRE stated
+single-prime retained-pure family, not of mixed repairs or all proofs.
+If a future nonpure label in this class occurs, its positive private
+head/terminal weight on FC935's specified raw/full-survivor source
+cannot be supplied by a nonnegative combination of these absent rows.
+No such positive-mass claim is transferred to arbitrary eta.
+
+### Another repair prime reaches part of the ternary blind inventory
+
+Process5 at the head and let K=H_5. Select all future originals with
+v_5(u)=K and v_3(u)>=4. A nonempty selected collection ensures that
+h=3^4 5^K divides Q and is wholly old. Repair at5 has full global
+5-height and cofactor3^4 with five divisors, so its first-layer count
+is five and its actual phase capacity four. Thus
+
+    sum_(selected u)I_(u,B)(x)<=4,
+    mu(selected entire tail union)<=4f_*s           (FC1038)
+
+on the SAME full-family normalized FC936 continuation from an actual
+head-survivor eta of mass s. Here f_*=(p_*-1)/[p_*(p_*-2)] for the first actual
+tail prime; empty tail costs zero. All suffixes, extra factors and
+ternary heights4,...,H_3 share this capacity. It has no factor depending
+on H_3-4. An old part3^4 5^K can be fresh-ternary blind when
+K+1<=2*3^(H_3-4), yet this other-prime interface qualifies; this is a
+conditional parameter comparison, not an asserted realization of a
+whole cover. All existing height restrictions apply simultaneously.
+
+The full complement L stays on the same law:
+survivor>=(1-4f_*)s-mu(L). If supplied through a square charge Q_L,
+the safe total bound is Q_L+8f_*s, with the necessary factor two.
+Different qualified repair primes can also supply simultaneous actual
+phase rows in FC1007, using their individual N_p-1 and literal phase
+indicators. No independent phase maximization or duplicated savings
+is authorized.
+
+### A retained mixed guard can pay the complete old two-prime cone
+
+Let q,r be distinct old nonternary primes, h=qr and H=H_3>=1.
+A nonempty h-future cone ensures h is original by divisor closure.
+Write c_h for its OLD literal phase. Retain actual originals
+
+    g=3^i e, 1<=i<=H, e|h, e<h, a_g=c_h mod e.      (FC1039)
+
+On the ENTIRE old A_h, each cofactor condition is automatic. Their
+actual ternary-prefix UNION therefore determines which depth-H
+leaves they cover. Suppose that union covers every such leaf except
+one, rho. Nonemptiness of the remaining leaf follows from h's private
+point. This is an explicit guard hypothesis; a first-root guard at
+large H does not by itself imply it.
+
+The three distinct lifts rho_0,rho_1,rho_2 of rho yield globally
+fresh repairs
+
+    3^(H+1):   lift rho_0;
+    3^(H+1)q:  lift rho_1, old q-phase c_h;
+    3^(H+1)r:  lift rho_2, old r-phase c_h.           (FC1040)
+
+Their ternary height exceeds the FULL original H. Together with the
+retained guards they cover the ENTIRE old h-class, including every
+higher lift and unrestricted outside coordinate. They do not only
+cover a selected private region.
+
+Move original h to any c modh and delete ALL proper h-multiples with
+actual residue c modh. Each deleted class is contained in the moved
+parent. The guards are not h-multiples and remain unchanged; the old
+parent is fully repaired. Thus four deletions would lower class count
+when only three repairs were added. At c=c_h there are no proper
+h-multiples by comparable disjointness. Consequently
+
+    |{u original:h|u,u>h,a_u=c modh}|<=3,
+    sum_(future u:h|u)I_(u,B)(x)<=3.                (FC1041)
+
+This includes EVERY ternary layer, including3-free labels with d=qr
+in FC1037's blind class. The argument extends the restricted
+3h-descendant consumer of Report385 CR1--CR3 by paying the same whole
+old-parent liability and allowing all proper h-descendants to be deleted.
+
+Three deleted originals, if present, are distinct proper odd multiples
+of h and have modulus sum at least(3+5+7)h=15h. If
+3^(H+1)(1+q+r)<15h, a three-for-three exchange would strictly reduce
+modulus sum. The caps in FC1041 then improve to two. Without that
+inequality the stated cap is three; no retained-pure tie estimate is
+silently transferred to these mixed guards.
+
+On the same FC936 actual normalized law the entire selected cone costs
+
+    mu(h-cone tail union)<=3f_*s,
+    or <=2f_*s under the displayed strict tie condition. (FC1042)
+
+Other paid cones require a fixed label allocation or a joint incidence
+certificate before allowances are added. All complementary labels
+keep their original fees. The missing premise is enough ACTUAL mixed
+guard coverage, or a compensating same-source light saving when that
+coverage fails. Neither FC1036's exact method boundary nor this
+conditional escape supplies a uniform positive #7 survivor margin.
+
+## Paying old squares as well gives an explicit full-head threshold
+
+Keep the same minimum-cover assumptions and complete head B>=13.
+Select once at B every future NONPURE original of ternary height H
+which either contains an old nonternary square or uses at least three
+of S={5,7,11,13}. Assign square labels first to their least squared old
+prime and put only the remaining selected labels in the heavy bin.
+The bins are disjoint and their simultaneous capacity is
+
+    C_paid(x)<=2k+4, k=|P_B|,
+    W(x)=sum_(paid u)lambda_u I_(u,B)(x)<=(2k+4)f_*. (FC1043)
+
+This uses FC1008 and FC992 once across the ENTIRE tail. Select no
+lower ternary layer by this rule. Build the normalized continuation
+against its complete light complement, with the same full-family pure
+laws and a head-survivor eta of mass s. Then
+
+    survivor>=s-2eta(W)-U_B
+            >=[1-rho_B]s-U_B,
+    rho_B=2(2k+4)f_*.                               (FC1044)
+
+Here U_B pays every complementary actual section on this new law.
+The sharper union charge FC1028 may replace2eta(W) when supplied;
+FC1044 uses its valid labelwise upper bound. Overlap of the two paid
+libraries was removed by assignment, not by adding separate savings.
+
+### Each top entry has squarefree old part; lower entries keep every height
+
+Use either FC1016 source: the UNNORMALIZED pure-product full-survivor
+restriction with a_q=c_q, or the w=1 raw full-survivor restriction with
+a_q=4c_q. These are separate certificates. For ell=2 or3 and m>=0 put
+h_m(q,E)=sum_(e_1,...,e_m=0..E)q^-max(e_1,...,e_m), h_0=1,
+and b_(m,q)=1+a_q[h_m(q,E_q)-1].
+
+For an ordered ell-tuple with exactly j>=1 top-H entries, m=ell-j
+lower entries have unrestricted old exponents. Each top exponent is
+zero or one at every actual old nonternary prime. Mark the top entries
+by z_1,...,z_j. For E_q>=1 define
+
+    V_(q,m)=a_q[q^-1+h_m(q,E_q)-1],
+    F_(ell,j,q)(z)=b_(m,q)
+             +V_(q,m)[product_(i=1)^j(1+z_i)-1].    (FC1045)
+
+If no top entry uses q, the complete lower tuple gives b_(m,q).
+If a nonempty top subset uses q, all its exponents are one. Lower
+exponents all zero contribute q^-1, and positive lower maxima give
+h_m-1. The weight is independent of which nonempty top subset was
+chosen, proving the formula. An absent direction has E_q=0 and
+F_(ell,j,q)=1 throughout; it does not receive V=a_q/q or an infinite
+height replacement.
+
+Let T_(ell,j)^sq be the coefficient sum of product_(q in S)F_(ell,j,q)
+with each z_i degree at most two. Put
+O_(ell,j)^sq=product_(q in P_B minus S)F_(ell,j,q)(1,...,1),
+P_ell=product_(q in P_B)b_(ell,q) and
+ t_ell(H-1)=1+2[h_ell(3,H-1)-1]. The full light seed is
+
+    integral (L_v^light)^ell deta<=E_ell^sq,
+    E_ell^sq=t_ell(H-1)P_ell
+      +(2/3^H)sum_(j=1)^ell binom(ell,j)H^(ell-j)
+                          O_(ell,j)^sq T_(ell,j)^sq. (FC1046)
+
+The first term retains ALL lower-layer tuples. For j top positions,
+each remaining ternary exponent has H choices and their common
+maximum is H. Numerical distinctness and the joint-cylinder expansion
+used in FC1020 prove the bound, including every mixed cross tuple.
+All original phases and old exponents stay present.
+
+Coefficientwise E_ell^sq<=E_ell^L from FC1020. If an actual old
+E_q>=2, omitting a top q-square pattern with at most two S factors
+strictly reduces this arithmetic envelope. It is not a subtraction
+from an unrelated sharper bound or from an actual moment. Infinite
+height sums enlarge only actual old directions. Same-source Holder
+gives G_2=E_2^sq and G_(2+epsilon)=(E_2^sq)^(1-epsilon)(E_3^sq)^epsilon
+for0<epsilon<1; at epsilon1 use E_3^sq.
+
+### The remaining head-mass condition has finite explicit upper inputs
+
+For integers B>=286 and ell0>=7 with3^ell0<=B, choose an integer
+j>=3+8epsilon. Define c_ell0=(2ell0^2+1)/(2ell0^2-1),
+P_j(z)=sum_(i=0..j)j!/(j-i)! z^i,
+u_B=((B+1)/B)^2, v_B=((B+1)/(B-2))^2 and D_B=B/(B-4).
+FC908 and FC960 give the upper allowances
+
+    Tbar_3=v_B c_ell0^3 P_3(1/ell0)/B,
+    Sbar_epsilon=u_B c_ell0^j B^-epsilon
+                               P_j(1/(epsilon ell0))/epsilon,
+    Ubar_B=D_B Tbar_3[E_2^sq+C_epsilon(E_2^sq)^(1-epsilon)
+                                 (E_3^sq)^epsilon Sbar_epsilon]. (FC1047)
+
+At epsilon1 these are rational; rational epsilon permits the algebraic
+upper certificates and lower certificate for B^epsilon of FC960.
+No independently optimized source is inserted. A sufficient condition
+for a full survivor is, with its denominator condition explicit,
+
+    rho_B<1 and s>Ubar_B/(1-rho_B).                  (FC1048)
+
+Normalizing eta by s divides both its moments and selected charge by s;
+it gives exactly this same condition, not a free normalized reserve.
+
+There is an elementary uniform upper bound for rho_B. Apart from5,7,
+every nonternary support prime is coprime to210. Its48 reduced residue
+classes imply
+k<=48(floor(B/210)+1)+2<=(8/35)B+50. For nonempty tail p_*>B,
+f_*<=B/(B^2-1). Hence
+
+    rho_B<=[(32/35)B+208]B/(B^2-1)<1  for B>=2500,
+    rho_B<=24/25                         for B>=5000. (FC1049)
+
+The second inequality reduces to
+(8/175)B^2-208B-24/25>=0, positive at5000 and increasing thereafter.
+The first reduces to(3/35)B^2-208B-1>0, positive at2500 and
+increasing thereafter. Thus s>25Ubar_B is a coarser sufficient condition
+for B>=5000. Exact k,p_* and eta(W) can give a much smaller allowance.
+Empty tail has no selected or light debit and requires no p_*.
+
+### Vanishing upper thresholds do not supply a surviving head reserve
+
+For the pure restriction put dcap=1 and for the raw restriction put
+dcap=4, so a_q=dcap c_q. The complete all-height envelopes give
+
+    E_2^sq<=5 product_(q in P_B)b_(2,q)^infinity,
+    E_3^sq<=(31/2)product_(q in P_B)b_(3,q)^infinity. (FC1050)
+
+These constants include the entire ternary height sum. With
+t=1/(q-1)<=1/4, direct expansion gives
+
+    b_2=1+3dcap t+5dcap t^2/(1-t),
+    b_3=1+7dcap t+19dcap t^2+25dcap t^3/(1-t).
+
+Since(1+t)^m>=1+mt and t^2<=25/(16q^2),
+
+    b_2<=(q/(q-1))^(3dcap)exp((125dcap/12)/q^2),
+    b_3<=(q/(q-1))^(7dcap)exp((1025dcap/24)/q^2). (FC1051)
+
+The q^-2 factors have bounded product. FC812's prime-product ratio,
+applied from the fixed anchor3^7=2187, therefore gives constants
+independent of H, all old exponents and omitted support primes with
+product b_2=O((log B)^(3dcap)) and product b_3=O((log B)^(7dcap)).
+For an explicit constant take the finite rational anchor product F,
+K=125dcap/12 or1025dcap/24 respectively, and multiply it by
+[2187/(2187-K)](c_7/7)^m, where m=3dcap or7dcap.
+Here K<2187, sum_(q>2187)q^-2<=1/2187 and exp(x)<=1/(1-x);
+log2187>7 and FC812 prove the claimed constant.
+
+For each FIXED0<epsilon<=1, choosing ell0 growing with log B in
+FC1047 now yields, uniformly over finite original heights,
+
+    Ubar_B=O((log B)^3/B
+                  +(log B)^(3+4epsilon)/B^(1+epsilon))   pure source,
+    Ubar_B=O((log B)^12/B
+                  +(log B)^(12+16epsilon)/B^(1+epsilon)) raw source. (FC1052)
+
+These are upper envelopes, not actual head-mass lower bounds. Removing
+only top-H square or fixed-S patterns does not change the leading
+outside-prime power: FC1045 at all ones has leading factor
+1+dcap(2^ell-1)/q+O(q^-2). More directly, FC1046 retains the full
+lower-layer term t_ell(H-1)P_ell. Its entire possible top-envelope
+saving is at most
+
+    (2/3^H)[(H+1)^ell-H^ell]P_ell
+      =O_ell(H^(ell-1)3^-H)P_ell.                  (FC1053)
+
+A supplier controlling only the top layer therefore leaves the stated
+lower-layer arithmetic term. This is a limitation of this envelope,
+not a theorem that other whole-cover constraints cannot help.
+
+The s in FC1048 is the FULL head-survivor mass. FC930's raw reserve
+above1081/1800 has not paid its mixed head failures. FC933 pays those
+failures but supplies no uniform positive difference for every family.
+FC935's positive private-cell mass1/N_B depends on all old heights
+and is not shown to exceed FC1048. Pure and raw sources cannot
+exchange these reserves without a proved transport.
+
+In particular Ubar_B tending to zero does not finish the argument:
+the original family, actual source, head period and s_B may change
+with the cutoff. Once the head contains an entire hypothetical cover,
+s_B is zero. The remaining quantified requirement is a same-family
+choice of head and a source-correct survivor lower bound beating
+FC1048, or sharper joint constraints replacing this allowance. None
+of the present conditional certificates supplies that last inequality.
