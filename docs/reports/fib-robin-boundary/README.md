@@ -134,6 +134,26 @@ profile is rejected: at `M=150,B=1200`, the canonical restriction loses
 For all `n` in `[A,B]`, a valid sufficient comparison uses
 `U_M(B) < exp(gamma)*log(log(A))`, or a joint `(n,Z(n))` frontier.
 
+The joint frontier tools make that last distinction executable on finite rough
+fibers:
+
+```sh
+python3 -B docs/reports/fib-robin-boundary/robin_frontier.py \
+  --y 7 --bound 100000 --out /tmp/fib_atomic_delivery/validation/robin-frontier.json
+python3 -B docs/reports/fib-robin-boundary/robin_frontier_check.py \
+  /tmp/fib_atomic_delivery/validation/robin-frontier.json \
+  --out /tmp/fib_atomic_delivery/validation/robin-frontier-check.json
+python3 -B docs/reports/fib-robin-boundary/robin_frontier_regression.py \
+  --out /tmp/fib_atomic_delivery/validation/robin-frontier-regression.json
+```
+
+The producer and checker retain exact `(suffix integer, sigma/suffix)` pairs
+and remove only points dominated by a smaller suffix with at least as large a
+weight. The regression enumerates finite rough inputs and checks the ordered
+prime-exponent normalization and frontier domination. These programs evaluate
+no logarithm and make no Robin sign claim; the transfer to a fixed common core
+is the mathematical content of §156.
+
 ## Recursive reserve, index stopping and gluing
 
 ```sh
