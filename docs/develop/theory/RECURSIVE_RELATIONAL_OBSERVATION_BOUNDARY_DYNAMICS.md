@@ -16339,7 +16339,7 @@ $$
 
 ## 81. 二叶生成层与动作词边界的桥接
 
-第 80 节给出了一个带重叠端口的有限拼接实例；Fibonacci 卷第 158—160 节则给出了二叶自由生成语法及其任务相对行为核。本节把它们接到第 20—22 节的动作词未来边界：在只观察原子组成及其 Fibonacci 未来响应的固定任务中，组成投影本身就是完整动作词行为核；一旦增加合法性、失败、记录或内部控制，行为核按声明的新增响应细化。以下仍是有限树、确定性替换和固定测试族的普通数学推导。
+第 80 节给出了一个带重叠端口的有限拼接实例；Fibonacci 卷第 159—161 节则给出了二叶自由生成语法及其任务相对行为核。本节把它们接到第 20—22 节的动作词未来边界：在只观察原子组成及其 Fibonacci 未来响应的固定任务中，组成投影本身就是完整动作词行为核；一旦增加合法性、失败、记录或内部控制，行为核按声明的新增响应细化。以下仍是有限树、确定性替换和固定测试族的普通数学推导。
 
 ### 81.1 二叶载体与声明的动作族
 
@@ -17350,7 +17350,7 @@ $$
 
 ### 86.6 来源、后续切面与适用边界
 
-本节是仓内结果的具体综合及第85节必要条件的修正，不主张新的通用商定理或经文献检索确认的原创结果。[Process Geometry 第29节、命题31.20及第52节](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)分别提供联合标签核、不可读标签先求和与细标签额外条件、生成解释像和共同商的背景；[Fibonacci 第158—162节](FIBONACCI_ATOMIC_RELATION_GENERATION.md)限定生成叶子、组成摘要、允许操作和行为类的区别；[Joint Clocks 第31—32节](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_RELATIONS_CLOCKS.md)限定时钟载体、实际纯轨道与四表达互恢复。式(86.10)保留有序配对差别，不能据两个生成叶子推出所有任务只有两个行为类。
+本节是仓内结果的具体综合及第85节必要条件的修正，不主张新的通用商定理或经文献检索确认的原创结果。[Process Geometry 第29节、命题31.20及第52节](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md)分别提供联合标签核、不可读标签先求和与细标签额外条件、生成解释像和共同商的背景；[Fibonacci 第159—163节](FIBONACCI_ATOMIC_RELATION_GENERATION.md)限定生成叶子、组成摘要、允许操作和行为类的区别；[Joint Clocks 第31—32节](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_RELATIONS_CLOCKS.md)限定时钟载体、实际纯轨道与四表达互恢复。式(86.10)保留有序配对差别，不能据两个生成叶子推出所有任务只有两个行为类。
 
 既有形式化锚仅作范围明确的引用：[EffectiveImageKernelCriterion.refinement_iff_kernel_inclusion_on_effective_images](../../../D5/S3/ObserverMemory/Refinement/EffectiveImageKernelCriterion.lean)对应命题86.3的实际像因子化；[DynamicsDescent.dynamics_descends_iff](../../../D5/S0/Rewriting/Quotients/DynamicsDescent.lean)处理满射摘要下的确定性自映射下降；[DynamicClosureMinimality.dynamic_closure_is_least](../../../D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.lean)要求候选细化对声明干预闭合；[ControlledBehaviorUniversality.controlled_behavior_universal_property](../../../D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean)要求有限实现、满射及更新和读出交换。这些引用不表示本节的半环加权实例、反例或全部解释已被 Lean 核验。
 
@@ -17362,7 +17362,7 @@ $$
 
 ## 87. 递归三阶共同核心：关系、关系的关系与四种表示
 
-本节取第86节同源联合核的有限确定性特例，把事件的关系及后继也纳入共同商。[Fibonacci §§160—162](FIBONACCI_ATOMIC_RELATION_GENERATION.md)提供生成层与行为边界的区分：二叶自由语法及有序配对给出生成方式；加入替换后的种子数、固定加性读出的维数和完整行为类数是不同问题。这里的“三阶”指状态、事件间关系及保存二者接续的共同结构，不指物理维数，也不由两个生成叶推出两个行为类。
+本节取第86节同源联合核的有限确定性特例，把事件的关系及后继也纳入共同商。[Fibonacci §§161—163](FIBONACCI_ATOMIC_RELATION_GENERATION.md)提供生成层与行为边界的区分：二叶自由语法及有序配对给出生成方式；加入替换后的种子数、固定加性读出的维数和完整行为类数是不同问题。这里的“三阶”指状态、事件间关系及保存二者接续的共同结构，不指物理维数，也不由两个生成叶推出两个行为类。
 
 ### 定义 87.1（有类型的同源事件模型与总化响应）
 
@@ -19388,7 +19388,7 @@ $$
 \tag{96.8}
 $$
 
-给出，其中 $L_d$ 是第38节使用的 Lucas 数（$d$ 奇）。复用第95.3节的 Smith 约化，得到
+给出，其中 $L_d$ 是 [Fibonacci 卷第38节](FIBONACCI_ATOMIC_RELATION_GENERATION.md) 使用的 Lucas 数（$d$ 奇）。复用第95.3节的 Smith 约化，得到
 
 $$
 Q_H\cong\mathbb Z/p^{\min(e,v_p(L_d))}\mathbb Z.
@@ -19486,7 +19486,7 @@ $$
 
 本节把空间表达写成 $Q_H$ 的余不变量，把时间／命令路径写成 (96.12) 的仿射运输，把记忆写成实际保留的 $(A,t)$，并明确：只有当一个端点真正取得时，(96.13) 才给出条件相互恢复。全一转录说明原始 gcd 接口不能保证取得非恒定初始商任务；它不否定另加商读数、共同坐标读数或外部端点记录后的充分构造。
 
-对抗式状态识别的兼容性与区分测试可参照 Petra van den Bos 与 Frits Vaandrager 的 *State Identification for Labeled Transition Systems with Inputs and Outputs*（arXiv:1907.11034v2）；该文的模型假设没有被等同为本节隐藏事件合同。Lucas 数的整除与赋值背景可参照 T. Lengyel, *The Order of the Fibonacci and Lucas Numbers*, Fibonacci Quarterly 33(3) (1995)，本节只使用第38节已有的迹恒等式和 (96.2) 假设。关于不完全自适应区分序列，可参照 Turker、Hierons、Barlas 与 El-Fakih, *Incomplete Adaptive Distinguishing Sequences for Non-Deterministic FSMs*, IEEE TSE 49(9) (2023), DOI 10.1109/TSE.2023.3291137；这些工作不供应本节的端点取得 oracle，也不授予复位或隐藏事件读数。
+对抗式状态识别的兼容性与区分测试可参照 Petra van den Bos 与 Frits Vaandrager 的 *State Identification for Labeled Transition Systems with Inputs and Outputs*（arXiv:1907.11034v2）；该文的模型假设没有被等同为本节隐藏事件合同。Lucas 数的整除与赋值背景可参照 T. Lengyel, *The Order of the Fibonacci and Lucas Numbers*, Fibonacci Quarterly 33(3) (1995)，本节只使用 [Fibonacci 卷第38节](FIBONACCI_ATOMIC_RELATION_GENERATION.md) 已有的迹恒等式和 (96.2) 假设。关于不完全自适应区分序列，可参照 Turker、Hierons、Barlas 与 El-Fakih, *Incomplete Adaptive Distinguishing Sequences for Non-Deterministic FSMs*, IEEE TSE 49(9) (2023), DOI 10.1109/TSE.2023.3291137；这些工作不供应本节的端点取得 oracle，也不授予复位或隐藏事件读数。
 
 以上结论是第95节合同上的理论补充。它不新增 Lean、物理统一或消化结算声明；第95节的模五结果仍按其原始读前调度范围解释，本节只给出奇素数幂反射合同下的全类固定源障碍。
 
