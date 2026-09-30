@@ -100,8 +100,7 @@ engineering-tests:
 	@cd "$(REPOSITORY)" && dotnet "$(HERE)/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll" --repository "$(REPOSITORY)"
 
 compile-proof:
-	@test "$(PROOF)" = capability-proof -o "$(PROOF)" = banned-api-proof || { echo "PROOF must be capability-proof or banned-api-proof" >&2; exit 2; }
-	@cd "$(REPOSITORY)" && dotnet "$(HERE)/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll" compile-proof "$(PROOF)"
+	@test "$(PROOF)" = capability-proof -o "$(PROOF)" = banned-api-proof || { echo "PROOF must be capability-proof or banned-api-proof" >&2; exit 2; }; cd "$(REPOSITORY)" && dotnet "$(HERE)/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll" compile-proof "$(PROOF)"
 
 selftest:
 	@/bin/bash $(HERE)/scripts/stratalint-selftest.sh
