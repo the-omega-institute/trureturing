@@ -20763,3 +20763,133 @@ would require additional hypotheses and its own paid bound.
 This is an ordinary symbolic derivation from the complete query
 definitions, with no numerical scan or new Lean claim. It does not
 provide the all-family positive head margin needed for unrestricted #7.
+
+## Complete queries on a pure product retain an absolute anchor comparison
+
+The absolute comparison below applies to the unselected pure product law; arbitrary selectors require a retained-mass penalty. Its fixed-query pair proof retains arbitrary complete layouts, including incompatible phases.
+
+### Existing input and exact source scope
+
+Report528 FC296–298 already gives the masked-Haar auxiliary moments, including the unnormalized second moment H_(p,infinity)-delta_p. Reports771 and779 retain the same conditional/convex comparison and explicitly permit different earlier phases at different current depths. FC844 supplies uniform-anchor averaging. The comparison below is a finite-query consumer of those existing moment bounds and averaging, not a new generic comparison theorem. The explicit pair expansion makes its dependence assumptions checkable without importing a full convex-order result.
+
+Let P be a finite set of odd primes. On each full p-coordinate, let Haar_p be normalized Haar, including coherent uniform suffixes beyond the finite original period. Let S_p avoid the actual pure-p original classes. There is at most one original at each numerical depth p^j, j>=1. Put
+
+    delta_p = Haar_p(S_p^c), s_p=1-delta_p,
+    mu_p = Haar_p restricted to S_p, divided by s_p,
+    mu = tensor_(p in P) mu_p.
+
+The classes at different depths need not be disjoint. The union bound gives
+
+    0<=delta_p<=sum_(j>=1)p^(-j)=1/(p-1),
+    s_p>0, delta_p/s_p<=1/(p-2).
+
+For an actual finite family delta_p<1/(p-1); only the non-strict bound is used. No mixed deletion, nonconstant selector, or conditional kernel is included in the definition of mu. The source is fixed before choosing any query.
+
+Choose finite query depths e_p>=0 and Q=product_p p^(e_p). Coordinates with e_p=0 are harmless. A complete layout Phi selects one arbitrary literal residue a_d modulo each numerical divisor d|Q, including 1. Different a_d may be incompatible. Define
+
+    L_Phi(x)=sum_(d|Q)1_(x=a_d mod d),
+    C_Q(nu)=max_Phi integral L_Phi^2 dnu,
+    A_Q(nu)=max_(z mod Q) integral[sum_(d|Q)1_(x=z mod d)]^2 dnu.
+
+Write
+
+    H_(p,e)=sum_(j,k=0..e)p^(-max(j,k))
+           =sum_(r=0..e)(2r+1)p^(-r),
+    H=product_p H_(p,e_p),
+    U=product_p[1+(H_(p,e_p)-1)/s_p].
+
+### The finite complete-pair bound
+
+Fix one complete Phi and expand its squared load over all ordered pairs (d,f). At a prime p, let j=v_p(d), k=v_p(f). If j=k=0, the local event is the entire coordinate and has mu_p mass exactly 1. Otherwise the two local congruences are either incompatible or have one intersection cylinder of depth max(j,k), whose mass is at most p^(-max(j,k))/s_p.
+
+The actual product law mu makes this fixed pair's intersection mass the product of its local intersection masses. This remains true when the choice of the p-part of a_d depends on the entire exponent vector of d. We do not require one local phase per p-depth shared by all divisors.
+
+Bounding each pair and only then summing the resulting nonnegative numerical products gives
+
+    integral L_Phi^2 dmu
+      <= product_p[1+(H_(p,e_p)-1)/s_p]=U.
+
+Therefore C_Q(mu)<=U. This is a factorized upper bound, not a factorization of the complete maximum or of an actual complete layout.
+
+For a uniformly random anchor z modulo Q, a fixed x belongs to both anchored divisor cylinders exactly with probability 1/lcm(d,f). Thus the anchored squared load averages to H at every x, and
+
+    A_Q(mu)>=H.
+
+In fact product mu also gives exact factorization of the ANCHORED maximum; that stronger fact is unnecessary here.
+
+Consequently
+
+    1<=C_Q(mu)/A_Q(mu)<=U/H
+      =product_p[1+delta_p(H_(p,e_p)-1)/(s_p H_(p,e_p))].       (FC865)
+
+The unit/zero-depth term remains 1 rather than paying 1/s_p. This is the cancellation responsible for a summable excess.
+
+### Uniform O(p^-2) factors and an absolute constant
+
+The complete local infinite sum is
+
+    H_(p,infinity)=p(p+1)/(p-1)^2,
+    (H_(p,infinity)-1)/H_(p,infinity)=(3p-1)/(p(p+1)).
+
+Let P_+={p in P:e_p>0}. For p outside P_+ the corresponding FC865
+factor is exactly1. Since H_(p,e)<=H_(p,infinity), FC865 gives
+
+    C_Q(mu)/A_Q(mu)
+      <=product_(p in P_+) R_p,
+    R_p=1+(3p-1)/(p(p+1)(p-2)).
+
+These factors have excess O(p^-2), uniformly over actual pure phases, original depths and query depths.
+
+An absolute rational bound K=8/3 follows from a finite telescoping comparison. Algebra gives
+
+    R_n=n(n-1)/[(n-2)(n+1)] * (1+1/n^2), n>=3.
+
+Include every odd integer n=3,5,...,2M+1 up to the largest queried prime. Since R_n>1,
+
+    product_(p in P_+)R_p
+      <=[(2M+1)/(M+1)] product_(k=1..M)(1+1/(2k+1)^2).
+
+The first factor is less than 2. For the second, set t=sum_(k=1..M)1/(2k+1)^2. Then
+
+    t < sum_(k=1..M)1/[4k(k+1)] < 1/4.
+
+For nonnegative a_k with total t<1, expansion into elementary symmetric sums gives product_k(1+a_k)<=sum_(j>=0)t^j=1/(1-t). Thus the second factor is less than 4/3. We obtain
+
+    C_Q(mu) <= (8/3) A_Q(mu).                                (FC866)
+
+No sharpness is claimed for this constant. The bound also covers Q=1, when both responses are exactly 1. For empty prime support the same conclusion is immediate.
+
+### Arbitrary selection from this reference pays for retained mass
+
+Now allow any one actual selector 0<=h<=1, including one depending jointly on all coordinates. Put nu=h mu and m=nu(1). If m=0 both responses vanish and no ratio is used. Suppose m>0.
+
+Every complete layout contains the unit query, so L_Phi^2>=1 pointwise. Consequently, for every Phi,
+
+    integral L_Phi^2 dnu
+      <=integral L_Phi^2 dmu-(1-m).
+
+Taking maxima gives C_Q(nu)<=C_Q(mu)-1+m<=U-1+m. Uniform-anchor averaging does not require independence of nu and gives A_Q(nu)>=mH. Hence
+
+    C_Q(nu)/A_Q(nu)
+      <=(U-1+m)/(mH)
+      <=8/(3m).                                               (FC867)
+
+The sharper first expression should be retained when s_p and m are supplied. In particular, a certified retained fraction m>=gamma>0 gives the support-independent upper comparison C_Q(nu)<=(8/(3gamma))A_Q(nu). This covers arbitrary selectors only WITH their same-reference mass penalty. It does not reinstate an absolute constant for FC863's entire unrestricted selector domain.
+
+For a fixed tau>=0, the same absolute complete-query bound gives the direct score lower bound
+
+    m-tau C_Q(nu) >= (1-tau)m-tau(U-1).
+
+Under separately verified, unchanged full-tail and remainder hypotheses, a right-hand side exceeding tau epsilon_e supplies the corresponding FC840 sufficient inequality. These inequalities supply neither those continuation hypotheses nor a positive retained-mass bound for all mixed families.
+
+### What this improves and what remains missing
+
+The naive product Haar density bound is C_Q(mu)<=D H with D=product_(p:e_p>0) 1/s_p. The new bound satisfies
+
+    U = D H product_(p:e_p>0)(1-delta_p/H_(p,e_p)) <= D H,
+
+with strict improvement whenever some queried coordinate has a positive pure deletion mass. More importantly, U/H has the absolute bound FC866, obtained by preserving the compulsory unit term at each coordinate. The finite-query constant remains valid when query depths lie below or above the original pure depths, provided the same coherent source is used.
+
+The product hypothesis belongs to the reference mu, not necessarily to the selected nu. Stars or mixed kernels cannot be inserted into mu without a new comparison. For a supplied selected law, identifying it as h mu with 0<=h<=1 and proving its retained fraction are actual obligations; arbitrary normalization or substitution of a better pure reference is not allowed. The source may avoid mixed originals through h, but then all resulting concentration is paid by m and the sharper bound in FC867.
+
+Thus the usable conclusion is an absolute complete-query comparison for the unselected pure product, and a retained-mass-dependent comparison for its actual submeasures. It is a consumer of existing masked-Haar moments and anchor averaging. It supplies neither an all-family selector with positive FC840/843 margin nor a resolution of unrestricted Erdős #7.
