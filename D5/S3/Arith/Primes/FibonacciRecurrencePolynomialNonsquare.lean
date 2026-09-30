@@ -499,22 +499,22 @@ theorem fibonacci_recurrence_polynomial_nonsquare : (∀ (r : ℕ), 119 ≤ r �
           let qQ : ℚ⟦X⟧ := Q.map phi
           let B : ℚ⟦X⟧ := (PowerSeries.binomialSeries ℚ (1 / 2 : ℚ)).subst qQ
           let c (j m : ℕ) : ℤ := PowerSeries.coeff j (Q ^ m)
-        
+
           have hqQ0 : PowerSeries.constantCoeff qQ = 0 := by
             change PowerSeries.constantCoeff (Q.map phi) = 0
             rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, PowerSeries.coeff_map, PowerSeries.coeff_zero_eq_constantCoeff_apply, hQ0,
               map_zero]
           have hhas : PowerSeries.HasSubst qQ := PowerSeries.HasSubst.of_constantCoeff_zero' hqQ0
-        
+
           have hcmap (j m : ℕ) : PowerSeries.coeff j (qQ ^ m) = (c j m : ℚ) := by
             change PowerSeries.coeff j ((PowerSeries.map phi Q) ^ m) = phi (PowerSeries.coeff j (Q ^ m))
             rw [← map_pow, PowerSeries.coeff_map]
-        
+
           have hzero (j m : ℕ) (hjm : j < m) : c j m = 0 := by
             have horder : (m : ℕ∞) ≤ (Q ^ m).order := PowerSeries.le_order_pow_of_constantCoeff_eq_zero m hQ0
             have hcast : (j : ℕ∞) < (m : ℕ∞) := by exact_mod_cast hjm
             exact PowerSeries.coeff_of_lt_order j (hcast.trans_le horder)
-        
+
           have hcoeff (j : ℕ) : PowerSeries.coeff j B = ∑ m ∈ Finset.range (j + 1), Ring.choose (1 / 2 : ℚ) m * (c j m : ℚ) := by
             let term : ℕ → ℚ := fun m => Ring.choose (1 / 2 : ℚ) m * (c j m : ℚ)
             have hterm (m : ℕ) : PowerSeries.coeff m (PowerSeries.binomialSeries ℚ (1 / 2 : ℚ)) •
@@ -539,7 +539,7 @@ theorem fibonacci_recurrence_polynomial_nonsquare : (∀ (r : ℕ), 119 ≤ r �
                 exact hterm m
               _ = ∑ m ∈ Finset.range (j + 1), term m := finsum_eq_sum_of_support_subset term hsupport
               _ = ∑ m ∈ Finset.range (j + 1), Ring.choose (1 / 2 : ℚ) m * (c j m : ℚ) := rfl
-        
+
           let T : ℤ⟦X⟧ := PowerSeries.mk (fun k => PowerSeries.coeff (k + 1) Q)
           have hshift : Q = PowerSeries.X * T := by
             simpa [T, hQ0] using PowerSeries.eq_X_mul_shift_add_const Q
@@ -579,29 +579,29 @@ theorem fibonacci_recurrence_polynomial_nonsquare : (∀ (r : ℕ), 119 ≤ r �
           rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, PowerSeries.coeff_map, PowerSeries.coeff_zero_eq_constantCoeff_apply,
             hQ0, map_zero]
         have hqSubst : PowerSeries.HasSubst qQ := PowerSeries.HasSubst.of_constantCoeff_zero' hqQ0
-      
+
         have hAseries : ((Polynomial.map (algebraMap ℤ ℂ) A : ℂ[X]) : ℂ⟦X⟧) = formalA lam := by
           have h := congrArg
             (Polynomial.coeToPowerSeries.ringHom : ℂ[X] →+* ℂ⟦X⟧) hAmap
           rw [map_prod] at h
           simpa [formalA] using h
-      
+
         have hQcomplex : Q.map (algebraMap ℤ ℂ) = formalA lam - 1 := by
           calc
             Q.map (algebraMap ℤ ℂ) = (A : ℤ⟦X⟧).map (algebraMap ℤ ℂ) - 1 := by simp [Q]
             _ = ((Polynomial.map (algebraMap ℤ ℂ) A : ℂ[X]) : ℂ⟦X⟧) - 1 := by
               rw [Polynomial.polynomial_map_coe]
             _ = formalA lam - 1 := by rw [hAseries]
-      
+
         have hqQcomplex : qQ.map (algebraMap ℚ ℂ) = Q.map (algebraMap ℤ ℂ) := by
           ext n
           simp [qQ]
-      
+
         have hbinomial : (PowerSeries.binomialSeries ℚ (1 / 2 : ℚ)).map (algebraMap ℚ ℂ) = PowerSeries.binomialSeries ℂ (1 / 2 : ℂ) := by
           ext n
           simp only [PowerSeries.coeff_map, PowerSeries.binomialSeries_coeff, smul_eq_mul, mul_one]
           simp [Ring.map_choose]
-      
+
         change ((PowerSeries.binomialSeries ℚ (1 / 2 : ℚ)).subst qQ).map
           (algebraMap ℚ ℂ) = formalS lam
         calc
