@@ -21,7 +21,7 @@ Corollary 1.3, printed pp.2–3, states that for fixed $\epsilon>0$ and $h\in[x^
 
 $$
 \pi(x+h)-\pi(x)=\frac h{\log x}
-+O_\epsilon\left(h\exp[-(\log x)^{1/4}]ight).
++O_\epsilon\left(h\exp[-(\log x)^{1/4}]\right).
 $$
 
 This is a uniform short-interval statement, distinct from Corollary 1.4's almost-all statement. Fixing $\epsilon=1/20$ permits $h=Cx^{2/3}$ for every fixed $C>0$ and sufficiently large $x$. Since the primes in that interval have $\log p=(1+o(1))\log x$, it follows that
