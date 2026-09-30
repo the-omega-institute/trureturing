@@ -20,8 +20,8 @@ internal static class RegManifestAgreement
              ("trureturing", "../..", "lakefile.toml", true),
              ("leanInspectorInterface", "../lean-inspector-interface", "lakefile.toml", true)]);
 
-    // A path package required by the root package reaches Reg through `trureturing`
-    // and is therefore an inherited Reg entry relative to the Reg directory.
+    // A path package listed by the root manifest may reach Reg through `trureturing`;
+    // Lake then records it once as an inherited Reg entry relative to the Reg directory.
     internal static string? Validate(string? rootManifest, string? regManifest, bool hasLakefile) =>
         ValidatePackage(rootManifest, regManifest, hasLakefile, "../.lake/packages",
             [("trureturing", "..", "lakefile.toml", false),
@@ -53,14 +53,15 @@ internal static class RegManifestAgreement
                 .Any(item => !item.TryGetProperty("inherited", out var inherited)
                     || inherited.ValueKind != JsonValueKind.True))
                 return "REG-MANIFEST-INHERITED: every Reg git package must be inherited";
-            if (inheritedRootPathPrefix is not null)
-                expectedPaths = [.. expectedPaths, .. rootPackages
-                    .Where(item => String(item, "type") == "path"
-                        && !expectedPaths.Any(own => own.Name == String(item, "name")))
-                    .Select(item => (String(item, "name"), inheritedRootPathPrefix + String(item, "dir"),
-                        String(item, "configFile"), true))];
             var paths = regPackages.Where(item => String(item, "type") == "path").ToArray();
-            if (paths.Length != expectedPaths.Length || expectedPaths.Any(expected =>
+            var inheritedRootPaths = inheritedRootPathPrefix is null ? [] : rootPackages
+                .Where(item => String(item, "type") == "path"
+                    && !expectedPaths.Any(own => own.Name == String(item, "name")))
+                .Select(item => (Name: String(item, "name"), Directory: inheritedRootPathPrefix + String(item, "dir"),
+                    Config: String(item, "configFile"), Inherited: true))
+                .Where(inherited => PathEntry(paths, inherited.Name, inherited.Directory, inherited.Config, true))
+                .ToArray();
+            if (paths.Length != expectedPaths.Length + inheritedRootPaths.Length || expectedPaths.Any(expected =>
                     !PathEntry(paths, expected.Name, expected.Directory, expected.Config, expected.Inherited)))
                 return "REG-MANIFEST-PATH-AGREEMENT: path requires differ from package ownership";
             return null;
