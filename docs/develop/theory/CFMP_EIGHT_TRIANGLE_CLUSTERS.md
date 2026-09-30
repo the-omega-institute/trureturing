@@ -125,8 +125,8 @@ length-domain criterion, and the co-volume gradient/convexity theorem.
 
 Costantino--Frigerio--Martelli--Petronio, Conjecture 0.8
 (arXiv:math/0402339), asks for a geometric realization of an ideal
-triangulation of a compact 3-manifold by hyperbolic truncated (partially
-truncated) tetrahedra. The theorem above is a strict hyper-ideal subcase:
+triangulation of a compact 3-manifold whose edge valences are at least six by
+hyperbolic truncated (partially truncated) tetrahedra. The theorem above is a strict hyper-ideal subcase:
 it does not claim the full minimum-six conjecture, arbitrary degree-eight
 packets, or the partially truncated boundary cases. Zhao's 2026 theorem for
 minimum valence nine does not cover the degree-eight edges here.
