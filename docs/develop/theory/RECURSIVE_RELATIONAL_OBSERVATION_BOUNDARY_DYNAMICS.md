@@ -20017,3 +20017,371 @@ $$
 定理99.2将固定参数下的两读取得与固定源障碍合成一般 $H,d$ 的充要条件；承重的秩、行列式、Smith 与理想事实均沿用上述来源。它只分类无 $G$ 合同中的初始含量取得，不分类完整整数来源、完整自主商 $Q_H$ 或最小记忆，也不对允许接枝的全部 $R/G/T$ 协议作不可能性推断。$d=0$ 不在合同内。
 
 ## 99.99 追加锚
+
+## 100. 零商类固定源全一语言的十模板有限证书
+
+第97.6节留下的式(97.12)是待判定断言。本节在其原有完整 $R/G/T$ 合同下证明零类中没有全词接受的初始剩余，因而判定该断言为假。这是否定此前开放的全类覆盖条件，不是反驳命题97.1、97.2或一条已经成立的定理；也不由此宣布完整自主商已经可以取得。
+
+### 100.1 固定来源、原语合同与结论
+
+完全采用97.1、97.4：$H=341$，$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$，$E=M^{15}$，$\alpha=(1,0)^{\mathsf T}$，$q=(2,3)$。一次执行在协议之前固定未知 $s_0=(a_0,b_0)^{\mathsf T}\in\mathbb N^2$，包含零来源；所有实际整数后继连续由这一份来源生成。控制器的全部外部原语恰为 $R(s)=Ms$、$G(s)=s+\alpha$ 和付费、精确、不扰动的当前读取 $T(s)=\gcd(qs,341)$。隐藏有限批 $E^k$ 只能发生在已声明切口：首原语为 $R/G$ 时其前无事件，首原语为 $T$ 时其前可有事件；已完成原语之间及读取前可有有限批，原语内部没有事件。每个请求按合同完成，不改变公平性，也不增加复位、免费时钟、来源或相位 oracle。初始可见资料与来源无关。
+
+仍用97.3的可逆模坐标
+
+$$
+c=a+81b,\qquad w=a+261b,\qquad
+b=36(w-c),\quad a=c-81b\pmod{341}.
+\tag{100.1}
+$$
+
+$c$ 是完整自主商的标签，$w$ 只用于数学论证。词从左到右执行；作为97.4的字母，$T$ 只保留实际响应为1的边，实际读取原语本身仍返回完整 gcd。
+
+**定理 100.1（零类无全词接受根）。** 对97.11定义的集合，有
+
+$$
+U_{\rm init}\cap\{z\in V:c(z)=0\}=\varnothing.
+\tag{100.2}
+$$
+
+更具体地，对每个预先固定、满足 $c(s_0)=0$ 的非负整数来源，存在一个有限词 $W_{w(s_0)}$，使从该来源执行此词的每份合法隐藏日程都至少产生一次非单位读取。量词为
+
+$$
+\forall s_0\in\mathbb N^2\ (c(s_0)=0\ \Longrightarrow
+\exists W\ \forall h\in\mathcal H(s_0,W)
+\exists i\ [W_i=T\ \land\ \gcd(qs_i(h),341)>1]),
+\tag{100.3}
+$$
+
+其中 $s_i(h)$ 是第 $i$ 个原语真正读取时的实际状态，$\mathcal H(s_0,W)$ 是原合同允许的日程集。下面给出的151个词组成一个充分见证族，每词至多209个原语、76次付费读取、5次接枝。界只针对这个词族，不主张最优。
+
+### 100.2 共同符号轨道与十五轮扫描
+
+由97.4逐项代入，有
+
+$$
+E(c,w)=(c,-w),\quad R(c,w)=(81c,261w),\quad
+G(c,w)=(c+1,w+1),\quad qs=270c+73w.
+\tag{100.4}
+$$
+
+这里及本节有限证书的所有坐标运算均模341。记 $[w]=\{w,-w\}$，以 $(c,[w])$ 表示一个共同 $E$ 轨道，记其规范代表 $\nu(w)=\min(w\bmod341,-w\bmod341)$。符号是模341上的一个全局选择；不允许在模11、模31两个分量各选一个符号。
+
+在已经完成至少一个原语的切口，下一原语前两个相位均合法。因而在轨道层面，$R$ 的唯一后继是 $(81c,[261w])$，$G$ 的后继是 $(c+1,[w+1])$ 与 $(c+1,[1-w])$，重合时只记一次。$T$ 恰在
+
+$$
+u_+(c,w)\ \lor\ u_-(c,w),\qquad
+u_\pm(c,w):\Longleftrightarrow\gcd(270c\pm73w,341)=1
+\tag{100.5}
+$$
+
+时留下同一轨道。此处的次序必须是先选读前相位、再检验该相位是否为单位、最后才投影到轨道。读取后原始 NFA 只留下通过检验的具体状态；另一个非单位状态不能被加回本次读取的成功后继。轨道记法之所以能用于下一步，是因为下一合法切口又允许施加 $E^0/E^1$，从任一已留下的相位均可到达该轨道的任一相位。它不把这种未来选择解释为当前免费读取。
+
+这些轨道转移只用于启动之后。启动标志为0且首字母为 $R/G$ 时只能使用零相位，不能先作轨道闭包。下面所有初始见证词以 $T$ 开始，严格使用97.9对首读开放相位的例外，然后才进入上述轨道语义。
+
+**引理 100.2（扫描是轨道上的部分恒等）。** 置 $C=(RT)^{15}$。对于启动后的轨道 $(c,[w])$，定义
+
+$$
+D(c,w)=\{t\in\{1,\ldots,15\}:
+\gcd(270\cdot81^tc+73\cdot261^tw,341)>1\ \land
+\gcd(270\cdot81^tc-73\cdot261^tw,341)>1\}.
+\tag{100.6}
+$$
+
+$C$ 在此轨道上有全一接受路径，当且仅当 $D(c,w)=\varnothing$；有路径时终态轨道恰为 $(c,[w])$，否则没有终态。
+
+证明。每次 $R$ 后的轨道由(100.4)唯一确定；第 $t$ 次读取之前恰为 $(81^tc,[261^tw])$，与过去相位无关。第 $t$ 次 $T$ 能继续，当且仅当两个共同相位至少一个为单位。若所有十五个位置都能继续，在每个合法读前切口选择一个通过的相位便给出同一根上的一条相容路径；不需要跨素数分量选择相位。若某个位置两相位均失败，则此前的所有分支在这里被删除。最后，直接算得
+
+$$
+81^{15}=1,\qquad261^{15}=-1\pmod{341},
+\tag{100.7}
+$$
+
+所以幸存路径回到同一共同符号轨道。这里恒等的对象是模轨道，既不是原始 NFA 中的每一个具体状态，也不是实际整数来源。证毕。
+
+### 100.3 十个模板及全部分支证书
+
+对有限指数列 $J=(j_1,\ldots,j_m)$ 定义
+
+$$
+B(J)=R^{j_1}GC\,R^{j_2}GC\cdots R^{j_m}GC.
+\tag{100.8}
+$$
+
+用下列十个代表和共36个指数即可；每个模板从启动后的 $(0,[r])$ 开始。
+
+| 模板 | 代表 $r$ | 指数列 $J_r$ |
+| --- | --- | --- |
+| 100.A1 | 1 | $(4,3,6,13)$ |
+| 100.A2 | 2 | $(4,1,12,10)$ |
+| 100.A3 | 3 | $(10,13,9)$ |
+| 100.A4 | 4 | $(0,9,5,13)$ |
+| 100.A5 | 5 | $(2,0,9)$ |
+| 100.A6 | 7 | $(14,13)$ |
+| 100.A7 | 8 | $(4,8,0,12)$ |
+| 100.A8 | 14 | $(1,9,12,8,9)$ |
+| 100.A9 | 16 | $(13,7,8,10)$ |
+| 100.A10 | 19 | $(2,10,6)$ |
+
+下表给出每次 $R^jG$ 后、$C$ 前的完整两分支。第一列按模板及块序号编号；$c$ 是这两分支共同的当前商坐标。分支项 $v:t$ 表示规范 $w$ 代表为 $v$，且 $t=\min D(c,v)$ 是首次两相位同时失败的位置；$v:\mathrm{pass}$ 表示 $D(c,v)$ 为空，即全部十五个位置均存在单位相位。末列是执行整个 $C$ 后留下的规范 $w$ 集合，$c$ 不变。于是该表既列出被删分支的具体算术见证，也列出需逐位置通过的全部幸存分支。
+
+| 块 | $j$ | $c$ | $C$ 前的分支及判据 | $C$ 后的代表集 |
+| --- | --- | --- | --- | --- |
+| 100.A1.1 | 4 | 1 | $102:\mathrm{pass},\quad 104:13$ | $\{102\}$ |
+| 100.A1.2 | 3 | 164 | $149:\mathrm{pass},\quad 151:14$ | $\{149\}$ |
+| 100.A1.3 | 6 | 19 | $157:7,\quad 159:\mathrm{pass}$ | $\{159\}$ |
+| 100.A1.4 | 13 | 205 | $79:3,\quad 81:12$ | $\varnothing$ |
+| 100.A2.1 | 4 | 1 | $134:\mathrm{pass},\quad 136:5$ | $\{134\}$ |
+| 100.A2.2 | 1 | 82 | $148:7,\quad 150:\mathrm{pass}$ | $\{150\}$ |
+| 100.A2.3 | 12 | 81 | $101:13,\quad 103:\mathrm{pass}$ | $\{103\}$ |
+| 100.A2.4 | 10 | 104 | $80:3,\quad 82:12$ | $\varnothing$ |
+| 100.A3.1 | 10 | 1 | $139:\mathrm{pass},\quad 141:11$ | $\{139\}$ |
+| 100.A3.2 | 13 | 263 | $144:\mathrm{pass},\quad 146:4$ | $\{144\}$ |
+| 100.A3.3 | 9 | 86 | $83:14,\quad 85:10$ | $\varnothing$ |
+| 100.A4.1 | 0 | 1 | $3:14,\quad 5:\mathrm{pass}$ | $\{5\}$ |
+| 100.A4.2 | 9 | 48 | $144:14,\quad 146:\mathrm{pass}$ | $\{146\}$ |
+| 100.A4.3 | 5 | 148 | $7:\mathrm{pass},\quad 9:5$ | $\{7\}$ |
+| 100.A4.4 | 13 | 244 | $107:5,\quad 109:3$ | $\varnothing$ |
+| 100.A5.1 | 2 | 1 | $53:1,\quad 55:\mathrm{pass}$ | $\{55\}$ |
+| 100.A5.2 | 0 | 2 | $54:3,\quad 56:\mathrm{pass}$ | $\{56\}$ |
+| 100.A5.3 | 9 | 95 | $80:1,\quad 82:10$ | $\varnothing$ |
+| 100.A6.1 | 14 | 1 | $114:10,\quad 116:\mathrm{pass}$ | $\{116\}$ |
+| 100.A6.2 | 13 | 263 | $35:6,\quad 37:5$ | $\varnothing$ |
+| 100.A7.1 | 4 | 1 | $141:11,\quad 143:\mathrm{pass}$ | $\{143\}$ |
+| 100.A7.2 | 8 | 10 | $21:12,\quad 23:\mathrm{pass}$ | $\{23\}$ |
+| 100.A7.3 | 0 | 11 | $22:1,\quad 24:\mathrm{pass}$ | $\{24\}$ |
+| 100.A7.4 | 12 | 45 | $160:8,\quad 162:9$ | $\varnothing$ |
+| 100.A8.1 | 1 | 1 | $96:\mathrm{pass},\quad 98:7$ | $\{96\}$ |
+| 100.A8.2 | 9 | 48 | $55:\mathrm{pass},\quad 57:8$ | $\{55\}$ |
+| 100.A8.3 | 12 | 131 | $98:\mathrm{pass},\quad 100:12$ | $\{98\}$ |
+| 100.A8.4 | 8 | 157 | $26:\mathrm{pass},\quad 28:11$ | $\{26\}$ |
+| 100.A8.5 | 9 | 219 | $71:13,\quad 73:10$ | $\varnothing$ |
+| 100.A9.1 | 13 | 1 | $51:\mathrm{pass},\quad 53:1$ | $\{51\}$ |
+| 100.A9.2 | 7 | 39 | $117:14,\quad 119:\mathrm{pass}$ | $\{119\}$ |
+| 100.A9.3 | 8 | 11 | $88:1,\quad 90:\mathrm{pass}$ | $\{90\}$ |
+| 100.A9.4 | 10 | 276 | $107:9,\quad 109:7$ | $\varnothing$ |
+| 100.A10.1 | 2 | 1 | $136:5,\quad 138:\mathrm{pass}$ | $\{138\}$ |
+| 100.A10.2 | 10 | 57 | $38:\mathrm{pass},\quad 40:6$ | $\{38\}$ |
+| 100.A10.3 | 6 | 53 | $80:15,\quad 82:9$ | $\varnothing$ |
+
+表中每一行都由(100.4)、(100.6)直接计算。特别地，没有在某个非最终块悄悄舍去第二条幸存支路：26个非最终块各留下恰一轨道，十个最终块均留下空集，共检查72个扫描输入分支。例如模板 $r=1$ 的首块在 $c=1$ 给 $[102]$、$[104]$，后者在第13读被删除，前者通过全部十五读；最后一块在 $c=205$ 给 $[79]$、$[81]$，分别在第3读和第12读删除。因此每个 $B(J_r)$ 都拒绝其代表轨道。100.5的程序从原始 $(a,b,\mathrm{startup})$ 转移重新生成整表，另以(100.6)核对每个分支的十五个位置；表内数值不作为程序的输入。
+
+### 100.4 覆盖全部零类根并提升到实际来源
+
+先核对覆盖。模341有
+
+$$
+261^{30}=1,\qquad261^6=47,\qquad261^{10}=67,\qquad261^{15}=340.
+\tag{100.9}
+$$
+
+30的任一真因子都整除6、10或15，后三个幂均不为1，故261的乘法阶恰为30。记 $\mathcal R=\{1,2,3,4,5,7,8,14,16,19\}$。对上表十个代表直接枚举各30次幂，得到
+
+$$
+(\mathbb Z/341\mathbb Z)^\times
+=\bigsqcup_{r\in\mathcal R}r\langle261\rangle,
+\qquad \varphi(341)=(11-1)(31-1)=300.
+\tag{100.10}
+$$
+
+每个陪集有30元，十个陪集两两不交；程序独立核对不交性及其并恰为全部单位。又因 $261^{15}=-1$，对每个单位 $w$，恰有唯一一对
+
+$$
+(r,k)\in\mathcal R\times\{0,\ldots,14\},\qquad
+261^kw\in\{r,-r\}\pmod{341}.
+\tag{100.11}
+$$
+
+同一陪集保证存在；若两个指数相差小于15却给相同符号轨道，则相应幂为 $1$ 或 $-1=261^{15}$，由阶30知两指数相同。因此这是300个单位按全局正负号配成的150种选择。
+
+现在给出定理100.1的见证。初始 $c=0$ 时，首个 $T$ 前线性量 $qs$ 的两相位剩余为 $\pm73w$。73为单位，故全部41个非单位 $w$ 都被词 $T$ 拒绝，包括 $w=0$；这里 $41=31+11-1$。若 $w$ 为单位，首读的两个相位均通过，启动标志变为1。取(100.11)中的 $(r,k)$，置
+
+$$
+W_w=T\,R^kB(J_r).
+\tag{100.12}
+$$
+
+$R^k$ 将其轨道送至 $(0,[r])$，每个相位仍按341共同选择；随后100.3的完整分支表使终态集合为空。即使 $k=0$ 或模板首指数为0，先前的 $T$ 已使后续 $G$ 前的相位选择合法。故所有341个初始根各有一个拒绝词。不同单位符号对给150个不同的词，加非单位的 $T$ 共151个。
+
+还须将拒绝剩余路径接回实际合同。对任意已经固定的非负整数提升 $s_0$，任意合法日程在相邻原语之间的有限批可合并到下一原语之前；用总指数模2得到97.9—97.10的一个相位。首个 $R/G$ 前必须为零，首个 $T$ 前允许两种奇偶，正是同一个启动约定。每份实际日程由此给出一个合法相位串。逐原语归纳，其全部已读响应为1的前缀投影为相应 NFA 路径，实际 gcd 与投影的 gcd 相等；一旦实际响应非单位，该 $T$ 边就被过滤。若整词的实际读取全为1，投影便是一条完整接受路径。证书终态为空排除了这种可能，所以对这个词的每份实际日程都有非单位读取。
+
+反向，任何有限接受相位串都能通过在对应允许切口实际施加 $E^0$ 或 $E^1$ 提升到这同一份 $s_0$ 上：$M,E,G$ 保持非负性，且每一步继续操作此前的实际整数后继。这也说明轨道转移没有凭空添加物理能力。约化只合并了有限模语义，实际 $E^2\ne I$；偶数批隐藏事件仍然是实际历史的一部分，其次数、整数增长及经过时间没有被删除或恢复。证明的否定方向覆盖任意有限批数，不是仅覆盖批数0、1的特殊日程。
+
+若初始剩余属于 $U_{\rm init}$，按定义就应接受其所有有限词，尤其应接受(100.12)或 $T$，矛盾。故(100.2)成立，且 $0\notin c(U_{\rm init})$，从而式(97.12)为假。命题97.2的固定来源桥仍然成立；这里补上的正是其零类语言判定。证毕。
+
+对 $J_r$ 长度 $m$，完整词的计数为
+
+$$
+|W_w|=1+k+31m+\sum_{i=1}^m j_i,\qquad
+N_T=1+15m,\qquad N_G=m.
+\tag{100.13}
+$$
+
+十个模板及 $0\le k\le14$ 给最大值 $(209,76,5)$，由 $r=14,k=14$ 的词同时达到。提前遇到空集可以停止验证，但这些上界计算整个已指定词。它们不限制隐藏事件总数、整数宽度或实际历时。
+
+### 100.5 从原始转移直接重放的有限核验
+
+下面是可独立运行的 Python 3.9 标准库程序；必须启用断言，即不用 `-O`。唯一给定的模板数据是上面的指数表。程序由整数矩阵重新计算 $E=M^{15}$，逐原语枚举97.9允许的相位，以原始坐标和启动标志保存候选状态。`step` 在读前施加相位，随后才过滤 $T$，从不在读取过滤后补作 $E$ 闭包。轨道函数只用于核对表格及扫描恒等式，341个初始根的整词重放直接调用原始转移。它不是使用预先计算的宏转移表或搜索结果替代证书。
+
+每步候选集恰为该前缀所有全一模路径的终态集：初始单根成立，归纳步枚举所有合法相位和原语后继，且仅删除非单位读取。合并相同的 $(a,b,\mathrm{startup})$ 不丢失未来可能性，因为97.10的下一步只依赖这个状态及下一字母。由100.4的实际投影桥，空集便证明给定词下所有有限隐藏历史均不能全一。反之，有限长度搜索没有找到拒绝词，不能证明某根接受所有长度的词；本程序验证已给定的完整拒绝证书，不作这样的未发现推论。
+
+```python
+from math import gcd
+from time import monotonic
+import json
+
+if not __debug__:
+    raise RuntimeError("Run without -O: assertions are the certificate checks")
+deadline = monotonic() + 120
+H = 341
+J = {1: (4, 3, 6, 13), 2: (4, 1, 12, 10),
+     3: (10, 13, 9), 4: (0, 9, 5, 13), 5: (2, 0, 9),
+     7: (14, 13), 8: (4, 8, 0, 12),
+     14: (1, 9, 12, 8, 9), 16: (13, 7, 8, 10),
+     19: (2, 10, 6)}
+M, I = ((0, 1), (1, 1)), ((1, 0), (0, 1))
+def mul(A, B):
+    return tuple(tuple(sum(A[i][k]*B[k][j] for k in range(2))
+                       for j in range(2)) for i in range(2))
+E = I
+for _ in range(15):
+    E = mul(E, M)
+assert E == ((377, 610), (610, 987))
+assert mul(E, E) != I
+assert tuple(tuple(x % H for x in row) for row in mul(E, E)) == I
+def apply(A, a, b):
+    return ((A[0][0]*a + A[0][1]*b) % H,
+            (A[1][0]*a + A[1][1]*b) % H)
+def coord(a, b):
+    return ((a + 81*b) % H, (a + 261*b) % H)
+def source(c, w, startup):
+    b = 36*(w-c) % H
+    return ((c-81*b) % H, b, startup)
+def canon(w):
+    return min(w % H, -w % H)
+def orbits(S):
+    return {(coord(a, b)[0], canon(coord(a, b)[1]))
+            for a, b, startup in S}
+
+# Literal (97.9)-(97.10): phase BEFORE action; T filters BEFORE returning.
+edges = 0
+def step(S, letter):
+    global edges
+    if monotonic() > deadline:
+        raise TimeoutError("120 second replay bound")
+    out = set()
+    for a, b, startup in S:
+        phases = (0,) if startup == 0 and letter in "RG" else (0, 1)
+        for epsilon in phases:
+            edges += 1
+            x, y = (a, b) if epsilon == 0 else apply(E, a, b)
+            if letter == "R":
+                out.add((y, (x+y) % H, 1))
+            elif letter == "G":
+                out.add(((x+1) % H, y, 1))
+            elif letter == "T":
+                if gcd(2*x + 3*y, H) == 1:
+                    out.add((x, y, 1))
+            else:
+                raise ValueError(letter)
+    return out
+def run(S, word):
+    for letter in word:
+        S = step(S, letter)
+        if not S:
+            break
+    return S
+
+# Linear identities are checked on an integer basis; G adds alpha=(1,0).
+assert 180*36 % H == 1 and gcd(73, H) == 1
+for a, b in ((1, 0), (0, 1)):
+    c, w = coord(a, b)
+    assert coord(*apply(E, a, b)) == (c, -w % H)
+    assert coord(*apply(M, a, b)) == (81*c % H, 261*w % H)
+    assert (2*a+3*b) % H == (270*c+73*w) % H
+assert coord(1, 0) == (1, 1)
+assert pow(81, 15, H) == 1 and pow(261, 15, H) == H-1
+assert min(n for n in range(1, 31) if pow(261, n, H) == 1) == 30
+units = {w for w in range(H) if gcd(w, H) == 1}
+cosets = [{r*pow(261, k, H) % H for k in range(30)} for r in J]
+assert all(len(A) == 30 for A in cosets)
+assert all(not A & B for i, A in enumerate(cosets) for B in cosets[i+1:])
+assert set().union(*cosets) == units and len(units) == 300
+
+C = "RT"*15
+blocks = {r: "".join("R"*j + "G" + C for j in exps)
+          for r, exps in J.items()}
+trace_rows, tested_branches = [], 0
+for r, exps in J.items():
+    S = {source(0, r, 1)}
+    for i, j in enumerate(exps, 1):
+        before = run(S, "R"*j + "G")
+        O = sorted(orbits(before))
+        assert len(O) == 2 and len({c for c, w in O}) == 1
+        entries, expected = [], set()
+        for c, w in O:
+            tested_branches += 1
+            bad = [t for t in range(1, 16)
+                   if all(gcd(270*pow(81, t, H)*c +
+                              sign*73*pow(261, t, H)*w, H) > 1
+                          for sign in (-1, 1))]
+            actual = orbits(run({source(c, w, 1)}, C))
+            assert actual == (set() if bad else {(c, w)})
+            expected |= actual
+            entries.append(str(w) + ":" + (str(bad[0]) if bad else "pass"))
+        S = run(before, C)
+        assert orbits(S) == expected
+        assert len(expected) == (0 if i == len(exps) else 1)
+        row = (r, i, j, O[0][0], entries,
+               sorted(w for c, w in expected))
+        trace_rows.append(row)
+        print("trace", row)
+    assert not S
+
+# Replay every complete assigned word from its own initial (a,b,0) root.
+words, lengths, reads, grafts = set(), [], [], []
+root_edges = edges
+rejected = 0
+for w in range(H):
+    if w in units:
+        choices = [(r, k) for r in J for k in range(15)
+                   if pow(261, k, H)*w % H in (r, -r % H)]
+        assert len(choices) == 1
+        r, k = choices[0]
+        word = "T" + "R"*k + blocks[r]
+    else:
+        word = "T"
+    # Costs are computed from the WHOLE word, even if run exits early.
+    words.add(word)
+    lengths.append(len(word))
+    reads.append(word.count("T"))
+    grafts.append(word.count("G"))
+    root = source(0, w, 0)
+    assert coord(*root[:2]) == (0, w)
+    assert not run({root}, word), (w, word)
+    rejected += 1
+assert len(J) == 10 and sum(map(len, J.values())) == 36
+assert len(trace_rows) == 36 and tested_branches == 72
+assert rejected == 341 and len(words) == 151
+assert (max(lengths), max(reads), max(grafts)) == (209, 76, 5)
+print(json.dumps({"roots_rejected": rejected, "unit_roots": len(units),
+                  "nonunit_roots": H-len(units), "distinct_words": len(words),
+                  "templates": len(J), "exponents": len(trace_rows),
+                  "scan_branches": tested_branches,
+                  "max_word": max(lengths), "max_reads": max(reads),
+                  "max_grafts": max(grafts), "root_phase_edges": edges-root_edges,
+                  "total_phase_edges": edges,
+                  "powers_261_6_10_15": [pow(261, n, H) for n in (6, 10, 15)]},
+                 sort_keys=True))
+```
+
+重放结果为：十个模板的36行、72个扫描输入分支全部通过上述核对；341个初始根全部被各自指定词拒绝，其中单位根300个、非单位根41个；不同词151个，整词最大计数为209个原语、76读、5次接枝。程序还独立验证(100.7)、阶30和十陪集覆盖，设有120秒核验期限。本节的证明状态是正文推导加显式有限算术证书，未作 Lean/kernel 核验。
+
+### 100.6 来源依赖的量词与保留边界
+
+(100.3)中的词依赖未知来源的模 $w$，这种数学选择没有成为观察者可用的查询或决策。它没有把 $\forall s_0\ \exists W\ \forall h$ 交换成 $\exists W\ \forall s_0\ \forall h$，也没有将这151个词当作可在同一初始来源上逐个重试的实验：执行一个词后来源已经改变，而合同没有复位。本文既不声称存在统一拒绝词，也不声称不存在；同样未给出自适应识别协议、完整 $Q_{341}$ 取得或其不可能性，另340个初始商类的 $U_{\rm init}$ 成员资格仍未判定。式(97.12)失败只排除那一种覆盖全类的固定源全一障碍。
+
+承重的实际来源、启动 NFA 及模路径提升复用第97节；第98节的含量取得、条件端点恢复与第99节无接枝接口的秩判据各保留原合同，不代替此处含 $G$ 的分支证书。[Fibonacci 卷](FIBONACCI_ATOMIC_RELATION_GENERATION.md)第33、38节的缺陷与 Smith 结构、第130节的固定实际接枝及整数词语义是既有供应项，模周期没有在这里被升级为实际复位。既有 [ControlledBehaviorUniversality](../../../D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean) 处理确定更新并要求读出交织，不直接裁定本节带隐藏相位的 NFA 语言；本节没有编译或宣称获得其新 Lean 应用。新增内容是共同符号扫描、十模板覆盖及它们对零类固定源量词的有限证书证明，不主张新的通用自动机定理或未经文献核查的原创优先权。
+
+对于关系、边界和记忆的原问题，这里确定的是：自主商的语义存在与原接口的实际取得之间，不能再用式(97.12)所设想的全类全一族充当障碍。已取得端点加保留运输所给的恢复关系仍按95.7、96.7、98.4解释；本证书不额外取得任一端点，不恢复隐藏时间，也不主张物理统一、最小词、最少读取或长期目标已经完成。
+
+## 100.99 追加锚
