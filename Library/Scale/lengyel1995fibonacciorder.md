@@ -41,3 +41,17 @@ These formulas supply the classical square-divisibility threshold
 attributed inline in FPD.1 of `Problems/wall-sun-sun-golden-unit-lift.md`.
 The dossier provides a recurrence proof of that corollary. It does not
 claim the valuation theory as new or infer the existence of a WSS prime.
+
+## Rank support used in a Robin tail estimate
+
+Page 236, Section 3 opens with the classical statement that for a prime
+`p` outside `{2,5}`, either `F_(p-1)` or `F_(p+1)` is divisible by `p`.
+Theorem A immediately below says that `p | F_n` exactly when `alpha(p) | n`.
+Together these give `alpha(p) | p-1` or `alpha(p) | p+1`. This implication
+does not require the first valuation `e(p)` to be one.
+
+FIB theory §§163–164 use these facts to group the prime factors of a
+single `F_j` by their common first zero index, and bound the Euler product
+of high-index groups. That Robin synthesis is not a theorem claimed in
+Lengyel's paper. The existing Lean module `D5.S3.Arith.FibonacciRank`
+provides the corresponding entry-point and prime-bound interfaces.
