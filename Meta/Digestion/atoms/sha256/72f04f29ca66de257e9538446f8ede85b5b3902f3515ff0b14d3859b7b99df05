@@ -1,0 +1,29 @@
+**命题 36.4（全域正右逆不能创造跨旧中心块相干）。** 令 $Z_s$ 为 $A_L$ 的中心块单位，$Q_s=i_L(Z_s)$。任何线性正映射 $R:A_L\to A_{L+1}$，只要在整个 coarse algebra 上满足 $E_LR=I$，则对所有正输入有
+
+$$
+R(\rho)=\sum_sQ_sR(\rho)Q_s.
+\tag{36.7}
+$$
+
+证明。输入 $\rho_s\ge0$ 只在旧块 $s$，$B_s=R(\rho_s)\ge0$。对 $r\ne s$，迹对偶给 $\operatorname{Tr}(Q_rB_s)=\operatorname{Tr}(Z_rE_LB_s)=0$。正性使 $\|B_s^{1/2}Q_r\|_{\mathrm{HS}}^2=0$，故 $B_sQ_r=Q_rB_s=0$，即 $B_s=Q_sB_sQ_s$。把一般正输入按旧中心块相加，线性性给 (36.7)。证明只需正性，无须 CP，但全域右逆与线性性不可删除。$\square$
+
+这不是所有 fine states 的相干禁令。例如 diagonal extraction $M_2\to\mathbb C\oplus\mathbb C$ 的任何全域正右逆在 $(1/2,1/2)$ 输出 $I/2$，因为两个极端输入的正 lifts 只能支撑于各自坐标；但该特定 coarse state 也有 coherent lift $|+\rangle\langle+|$。准备 map $(a,b)\mapsto(a+b)|+\rangle\langle+|$ 是 CPTP，却只在此特定输入正确，并非全域右逆。
+
+允许的旧块内部 multiplicity coherence 是另一回事。按
+
+$$
+\mathcal H_{L+1,t}\cong\bigoplus_s
+(\mathcal H_{L,s}\otimes\mathbb C^{B_{s,t}}),
+$$
+
+为每源选 $\zeta_{s,t}\ge0$、$\sum_t\operatorname{Tr}\zeta_{s,t}=1$，则
+
+$$
+(R_L^\zeta\rho)_t=\bigoplus_s\rho_s\otimes\zeta_{s,t}
+\tag{36.8}
+$$
+
+仍是 CPTP section：tensoring 固定 positive matrices 完全正，总 trace 因归一化不变，$E_L$ 对 multiplicity 作 partial trace 得 $\rho_s$。非对角 $\zeta_{s,t}$ 保留同一旧源、同一细终态的 copy coherence，符合 (36.7)；相同 diagonal weights 不规定这些 coherent entries。
+
+若所有实际细分支满足 (36.5)，推论 35.2 直接给完整 records、任意有限 reference 和正概率 conditional boundary。section 权重、量子 preparation、fine Kraus 的实际可用性及成本仍是另行合同。这是有限层 legal coherent recursion 的正面实现，不声称无限 AF 的每个元素或 §29 的每个 geometric operation 都物理可用。
+

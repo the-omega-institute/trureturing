@@ -1,0 +1,15 @@
+**命题 35.3（pinching 的下降比交换弱）。** 令 $Q(X)=\sum_yP_yXP_y$，输出代数 $\mathcal N=\bigoplus_yB(P_y\mathcal H)$，$E$ 为 block extraction、$R$ 为自然 block inclusion。则 $ER=I_{\mathcal N}$、$RE=Q$，判据为
+
+$$
+QJ_e=QJ_eQ
+\quad\Longleftrightarrow\quad
+J_e^\dagger(\mathcal N)\subseteq\mathcal N.
+\tag{35.4}
+$$
+
+$QJ_e=J_eQ$ 充分，但更强。
+
+证明。将定理 35.1 的第二、第四条件嵌回原空间即得 (35.4)。固定准备 $J(X)=\operatorname{Tr}(X)\sigma$ 总有 $QJ(X)=\operatorname{Tr}(X)Q\sigma=QJQ(X)$；若 $\sigma$ 有块间相干，$JQ(X)=\operatorname{Tr}(X)\sigma$ 不等于 $QJ(X)$。$\square$
+
+这也保留 §31 的高秩块，而不将其压成单模式。既有定理 7.4 的交换条件在其具体合同下更便于证明，但不是一般下降的必要形式。
+

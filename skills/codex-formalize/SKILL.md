@@ -211,9 +211,15 @@ If any checklist item cannot be evidenced, end the task as `open` with no deposi
 
 ### 7. Deposit and cover, then commit the complete publication unit
 
-Only after Step 6 and independent review pass, freeze through deposit and cover. If review needs an
-early draft, first complete the publication boundary below and use Step 8 to publish the draft with
-freeze and cover still pending; return here after review. Review must precede freeze and merge.
+Only after Step 6 and an independent pre-freeze review pass, freeze through deposit and cover. The
+pre-freeze review is a read-only seat that did not produce the module; it checks the mirror, source
+fidelity and the per-declaration judgement form against the unfrozen tree; it passes when every blocking
+finding it lists is resolved in the tree that goes through the doors. In the two-stage pipeline of
+`CLAUDE.md` §3.6 (探针 → Stage A → 镜像核对 → Stage B → 三席评审) it is the mirror-check and
+judgement-form seat between Stage A and the Stage-B doors. The sshx review triplet (tests / quality /
+architecture) follows the doors in that order and must pass before merge. If a review needs an early
+draft, first complete the publication boundary below and use Step 8 to publish the draft with freeze
+and cover still pending; return here after that review.
 
 ```sh
 make deposit ATOM_ID=<id> GID=<D5/Path/Module.theorem_name>
@@ -263,7 +269,8 @@ This focused publication-completeness boundary reuses `filemap-conform`; it adds
 status and does not require a full local preflight before publication. Full local preflight remains
 post-push, parallel with CI under `CLAUDE.md` §8.2. The native check validates inventory; following this
 handoff procedure remains an agent/review obligation. Source fidelity, the no-wrapper rule, the
-explicit registration exception above, and independent review before freeze/merge still apply.
+explicit registration exception above, the independent pre-freeze review and the review triplet
+before merge still apply.
 
 **The theorem you cover with must own the clause unconditionally.** Before `make cover`, list the
 atom's clauses and the chosen theorem's explicit hypotheses side by side, and for each hypothesis name
@@ -305,7 +312,7 @@ make preflight MODE=push BASE=<explicit-existing-40-hex-commit-sha>
 Report its raw exit and rejected rules; it does not replace the three remote required checks or gate
 the push. Fix actual failures under their existing owners without weakening required checks.
 
-`AUTO_MERGE=1` explicitly opts an invocation into auto-merge; without that option, the door does not arm auto-merge. Do not arm auto-merge before independent review passes: the sshx review triplet (tests / quality / architecture) must finish and pass before freeze or merge, and may run before or after PR publication as reviewer access permits (memory `review-must-precede-automerge`, #2337 precedent). Before any later push, query the actual PR state and head. If the PR is still `OPEN`, update the same branch with a complete publication unit under Step 7, including the return to freeze after review, then rerun the required checks on the new exact head and watch them with `make pr-watch PR=<number> HEAD_SHA=<new-40-hex-head-sha>`. If the PR is `MERGED` or `CLOSED`, route later work to a new branch and a new pull request. Never infer that a successful later push reached `dev`; verify the actual merge and `dev` state.
+`AUTO_MERGE=1` explicitly opts an invocation into auto-merge; without that option, the door does not arm auto-merge. Do not arm auto-merge before review passes: the independent pre-freeze review (Step 7) passes before the doors, and the sshx review triplet (tests / quality / architecture) must finish and pass before merge; the triplet may run before or after PR publication as reviewer access permits (memory `review-must-precede-automerge`, #2337 precedent). Before any later push, query the actual PR state and head. If the PR is still `OPEN`, update the same branch with a complete publication unit under Step 7, then rerun the required checks on the new exact head and watch them with `make pr-watch PR=<number> HEAD_SHA=<new-40-hex-head-sha>`. If the PR is `MERGED` or `CLOSED`, route later work to a new branch and a new pull request. Never infer that a successful later push reached `dev`; verify the actual merge and `dev` state.
 
 If the dispatched sandbox forbids git writes, state that constraint explicitly and hand the exact `git push` and `make pr-open` invocations above, with substituted arguments, to the caller; do not report `success` as though the work landed. Otherwise report `success` only with the opened pull request, touched paths, door-produced commit subjects, every relevant exit code and completed fidelity-gate evidence. For each new public D5 theorem/lemma in scope, report either its retained Reg path, compiled target exit code, validated four-slot/binding-evidence result and continuation kind, or the linked issue and explicit unfinished-audit disclosure under the exception above. Report actual attempted compilation failures without inventing missing Reg targets or successful evidence. Delivery success with an issue does not mean registration completion. `proof_shape` (`content` | `bind-only`), direct frozen public dependencies (GID + `statement_id`), `escape_witness` (or `bind-only`) and the module's `admission_basis` remain required for the mathematical declaration. Or report `open`, naming the stopping step and carrying every evidence class reached; mark each unreached class not run and explain why. There is no third outcome.
 
@@ -371,6 +378,7 @@ Every entry below names a failure class that actually occurred in landed rounds 
   **Landed precedent for ignoring this (2026-09-06, #4971 closed under 第 12 条).** A deposit branch written 2026-09-03 carried two first-freeze modules with `utility:` line count **0**. It had three other blockers as well — its freeze output wrote only `Golden/Frozen/accepted/**` and no `Golden/Frozen/state/**` slice (so it does not even match the current deposit contract, and note SL-031 keys on the state path, so it would NOT have fired on that branch as it stood), a named engineering red (`FormulaCorpusInventoryTests.InventoryAllLegacyLatexStatementsAndSyntaxFamilies`), and a base 1118 commits behind. The single lesson worth carrying: **redo the deposit on current dev, and the `utility:` line is then required before the state slice can land.** Rebasing an old deposit branch is not enough.
 - **Generality tag follows the weakest import and the module's nature (two landed blockers).** A concrete-instance module (fixed modulus, fixed witness set) is `generality: I`; a general theorem module is `G`; a `G` tag on a file importing `I`-level facts is a violation. Compare your nearest landed neighbors before writing the tag.
 - **Every displayed formula is closed.** A Describe formula for a public definition binds all of that definition's parameters with their types — `∀ (V : Type) (G : SimpleGraph V) (C : Finset V), condense G C = …`, not a body with `V`, `G`, `C` free. Lean instance arguments (`[Fintype V]`, `[DecidableEq V]`, `[Group G]`) are rendered as anonymous bracket items, `Seq(…, OpenBracket, Call("Fintype", v), CloseBracket, …)`, never as named binders: `All("FV", Call("Fintype", v), …)` introduces `FV` and never uses it. Every named binder occurs in its body. Check all three by reading the emitted `.md` formula by formula before any door.
+- **Import only frozen D5 modules.** A deposit needs an active Freeze for every imported `D5.*` module and fails `dependency-not-ready` otherwise. Before writing the module, check `Golden/Frozen/state/<path>.lean.json` on `origin/dev` for each D5 import; when a needed lemma lives only in an unfrozen module, prove what the module needs from frozen modules or Mathlib instead.
 - **Scribe formula rejection taxonomy (dozens of mechanical rejections; owner `FormulaDsl.cs`/`LatexWriter.cs` wins on current tokens):** `F.Id` arguments are strictly alphabetic; `D()` takes one digit per argument (`D(2,3)` never `D(23)`); `Sp` is required after macro and relation tokens (`Neg`, `Neq`, `Vert`, `Lvert`, `Rvert`, `Forall`, `InMacro`, `Exists` after `Neg`, …) before `F.Id`/`Operatorname`; `Star` not `Ast`; `Neg` not `Not`; the `FormulaDsl` usings are required; private structural helpers in `.scribe.cs` (`Call`/`Bound`/`Seq` wrappers over `FormulaDsl` tokens) are the landed convention (600+ Blueprint sources on dev use them) — keep them minimal, typed, and never hand-assemble LaTeX strings; the displayed formula must mirror every conjunct of the Lean statement — mirror-value swaps (two constants exchanged between clauses) are a landed reviewer catch, so read your emitted `.md` value by value.
 
 ### Deposit substance (thin-deposit taxonomy)
