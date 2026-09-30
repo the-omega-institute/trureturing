@@ -222,11 +222,15 @@ class NativePublicationConsumerTests:
         destination = self.root / 'public.json'
         with patch.dict(os.environ, self.env), patch.object(materials, 'material_identities',
                 wraps=materials.material_identities) as identities, \
-                patch.object(publication, 'validate_rows', wraps=publication.validate_rows) as validations:
+                patch.object(publication, 'validate_rows', wraps=publication.validate_rows) as validations, \
+                patch.object(publication, 'coordinates', wraps=publication.coordinates) as coordinates:
             native.publish(self.root, destination)
             # Lake recorded acceptance of these bundle bytes; publication checks only the envelope.
             self.assertEqual(identities.call_count, 0, '[FAIL] post_lake_publish_skips_identity_replay')
             self.assertEqual(validations.call_count, 0, '[FAIL] post_lake_publish_skips_row_replay')
+            # The same invocation's Lake inputs recorded the coordinates.
+            self.assertEqual(coordinates.call_count, 0, '[FAIL] post_lake_publish_reuses_recorded_coordinates')
+        publication.validate_bundle(destination, publication.coordinates(self.root), self.root)
         self.assertEqual(destination.read_bytes(), raw)
         self.assertEqual(publication.member(destination, '.materials.zip').read_bytes(), material_bytes)
         staged = self.root / 'stage' / publication.RAW

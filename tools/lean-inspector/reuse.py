@@ -175,11 +175,11 @@ def reuse(repository, report, output):
         return miss(captured['reason'])
     try:
         # The receipt binds bundle bytes that were validated when produced; like
-        # a restored olean they are reused as is. Publication still stages a
-        # private snapshot that must match the receipt and current inputs.
+        # a restored olean they are reused as is. It was sealed after a
+        # publication checked the coordinates of these same inputs, so they are
+        # not recomputed; publication still stages a snapshot matching the receipt.
         receipt = read_receipt(report, captured)
-        coordinates = publication.coordinates(repository)
-        publication.publish(report, output, coordinates, repository, mode='cached',
+        publication.publish(report, output, None, repository, mode='cached',
                             expected_hashes=receipt['bundle'], validate=False)
         # Rebind source evidence after publication; a same-path republish may
         # only change publication mode, not the report or its material bytes.

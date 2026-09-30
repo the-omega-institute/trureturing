@@ -120,11 +120,24 @@ class ReuseTests(unittest.TestCase):
             self.assertFalse((self.root / '.lake').exists())
             self.assertFalse(api.reuse(self.root, self.report, self.output)['needs_lake'])
             self.assertEqual(validation.call_count, 1, '[FAIL] normal_entry_must_validate_publication')
+            # Equal sealed inputs imply equal coordinates; a hit never recomputes them.
+            self.assertEqual(coordinates.call_count, 0, '[FAIL] receipt_hit_computes_no_coordinates')
         publication.validate_bundle(self.output, publication.coordinates(self.root), self.root)
         self.assertEqual(json.loads(publication.member(self.output, '.provenance.json').read_text())['mode'], 'cached')
         self.assertFalse(api.probe(self.root, self.output)['needs_lake'])
         self.assertFalse(api.reuse(self.root, self.output, self.output)['needs_lake'])
         self.assertFalse((self.root / '.lake').exists())
+
+    def test_seal_rejects_inputs_changed_during_the_entry(self):
+        import reuse
+        self.bundle()
+        captured = reuse.capture(self.root)
+        self.write('D5/A.lean', 'def a := 2\n')
+        with self.assertRaisesRegex(ValueError, 'registered inputs changed during report entry',
+                                    msg='[FAIL] seal_rejects_changed_inputs'):
+            reuse.seal(self.root, self.report, captured)
+        self.assertFalse(publication.member(self.report, reuse.SUFFIX).exists(),
+                         '[FAIL] seal_leaves_no_receipt_for_changed_inputs')
 
     def test_probe_cli_reports_misses_but_rejects_invalid_registration(self):
         self.receipt()

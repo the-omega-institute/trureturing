@@ -433,7 +433,9 @@ def validate_module(report, root, name, utility, *, verified_materials=None, tem
 
 
 def publish(root, destination):
-    inputs = public.coordinates(root)
+    # This invocation's Lake inputs recorded the current coordinates; the entry's
+    # seal rejects any input change after its own entry snapshot.
+    inputs = public.read_json((state(root) / 'inputs.json').read_bytes())['coordinates']
     with tempfile.TemporaryDirectory(prefix='.publish.', dir=state(root)) as directory:
         report = public.unpack(state(root) / 'report.zip', directory)
         activity_file = os.environ.get('STRATALINT_INSPECTOR_ACTIVITY')
