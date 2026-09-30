@@ -42,7 +42,7 @@ One time step maps the cell values x_0, ..., x_(N-1) and the boundary value b to
 
 **Definition 1.4 (The conjecture).**
 
-$$claim \Leftrightarrow (\forall F \in \operatorname{FiniteField},\; (\operatorname{char}\left(F\right) = 2) \Rightarrow \left((\operatorname{Bijective}\left(f\right)) \Rightarrow \left((\forall x \in F,\; \forall y \in F,\; f\left(x\right) + f\left(x + f\left(y\right)\right) = f\left(x + f\left(y + f\left(x\right)\right)\right)) \Rightarrow \left(\forall N \in \mathbb{N},\; \operatorname{step}\left(f\right)^{\left|F\right|} = \operatorname{id}\right)\right)\right))$$
+$$claim \Leftrightarrow (\forall F \in \operatorname{FiniteField},\; (\operatorname{char}\left(F\right) = 2) \Rightarrow \left(\forall f \in F \to F,\; (\operatorname{Bijective}\left(f\right)) \Rightarrow \left((\forall x \in F,\; \forall y \in F,\; f\left(x\right) + f\left(x + f\left(y\right)\right) = f\left(x + f\left(y + f\left(x\right)\right)\right)) \Rightarrow \left(\forall N \in \mathbb{N},\; \operatorname{step}\left(f\right)^{\left|F\right|} = \operatorname{id}_{F^{N} \times F}\right)\right)\right))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/CellularAutomata/YangBaxterAutomatonPeriod.claim` (`✓ std3`).
 

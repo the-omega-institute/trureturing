@@ -101,10 +101,13 @@ internal sealed class YangBaxterAutomatonPeriodDocument : IScribeDocumentDefinit
             Apply1(f, Add(x, Apply1(f, Add(y, Apply1(f, x))))))));
         Formula charTwo = Equal(Call(F.Id("char"), field), D(2));
         Formula bij = Call(F.Id("Bijective"), f);
+        Formula stateSpace = Seq(new Formula.Power(field, F.Id("N")), Sp, F.Times, Sp, field);
         Formula period = Equal(
-            Seq(Call(F.Id("step"), f), Caret, Grp(new Formula.Absolute(field))), Named(F.Id("id")));
+            Seq(Call(F.Id("step"), f), Caret, Grp(new Formula.Absolute(field))),
+            new Formula.Subscript(Named(F.Id("id")), stateSpace));
         Formula body = All("F", Named(F.Id("FiniteField")),
-            Implies(charTwo, Implies(bij, Implies(fyb, All("N", Nats(), period)))));
+            Implies(charTwo, All("f", Seq(field, Sp, To, Sp, field),
+                Implies(bij, Implies(fyb, All("N", Nats(), period))))));
         return Disp(Iff(F.Id("claim"), body));
     }
 }
