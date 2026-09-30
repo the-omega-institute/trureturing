@@ -1,0 +1,29 @@
+**theorem 1.1 (Full original partition reduction).** For every explicit universe
+of n Boolean variables and every list F of m clauses of length at most three,
+the raw violation projectors give the same Hamiltonians
+$$
+H_F=(n+1)\sum_{j=1}^m\Pi_j,\qquad
+H=|1\rangle\langle1|\otimes I+I\otimes H_F,\qquad
+\beta=\log2.
+$$
+The projectors are Hermitian, diagonal, pairwise commuting and supported on at
+most three variables, including empty, repeated and tautological clauses.
+The full complex matrix exponential and trace satisfy
+$$
+\#\mathrm{SAT}(F)=\left\lfloor\frac23\operatorname{Tr}e^{-\beta H}\right\rfloor.
+$$
+A single exact query with a succinct local-term descriptor and ordinary reduced
+positive binary rational response suffices, using fixed finite pre- and
+post-machines with polynomial running time. The independent standard count is
+over the appearing binary variable names. Dense renaming gives the explicit
+universe; in the reverse correspondence a tautology for each declared variable
+preserves unused variables. Those tautologies do not enter the physical clauses.
+Malformed source words use the zero-variable one-empty-clause Hamiltonian,
+whose partition is 3/4 and whose recovered count is zero. The visible algebra
+has zero leakage and exact prediction for every joint state and time. The same
+centered local Hamiltonians give product Gibbs normalization and zero
+support-aware recovery defect for every visible state, including singular
+states. The zero-variable hidden singleton is treated directly. No efficient
+Gibbs preparation, fixed geometry, bounded interaction strength or approximate
+hardness is asserted.
+
