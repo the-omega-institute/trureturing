@@ -21548,3 +21548,397 @@ Petra van den Bos、Frits Vaandrager，[*State Identification for Labeled Transi
 所得只有初始 $c_0\bmod341$。它没有恢复初始整数、完整语法树、全部记忆、绝对时钟或物理几何；没有给隐藏 $k$、实际整数宽度、gcd 位成本或物理历时的统一界。一般 $H$ 的分类、最小成功接口、最优计算或存储、物理统一和持续的最小关系结构目标均不由此完成。本节是现有供应结果下的具体综合推导及可复现有限证书，不作原创优先权或新增 Lean/kernel 认证主张。
 
 ## 103.99 追加锚
+
+## 104. 先报告相位的差锥障碍、精确终端门与非线性陷阱缺口
+
+第103节的模11、31构造已有各自的有限进展证书。本节纠正一种更宽的推广候选：仅由“奇数半阶旋转、非零传感器系数”不能推出初始坐标的保证取得。先在一般奇素域给固定双源障碍，再在排除该障碍的半阶族中证明终端门和无线性陷阱引理；进入终端门所需的非线性陷阱排除仍是未证命题。这些结论不改判第103节的具体实例。
+
+### 104.1 抽象奇素域与准确的先报告合同
+
+先独立定义模模型。令 $p$ 为奇素数，$\lambda,\mu,A,B\in\mathbb F_p^\times$，状态域为 $\mathbb F_p^2$，操作及读数为
+
+$$
+E_\sigma(c,w)=(c,\sigma w),\qquad
+R(c,w)=(\lambda c,\mu w),\qquad
+G(c,w)=(c+1,w+1),\qquad
+T(c,w)=[Ac+Bw=0],\quad \sigma\in\{1,-1\}.
+\tag{104.1}
+$$
+
+方括号只取真假位。初始未知来源 $(c_0,w_0)$ 在执行前固定；第一份 offer 的符号固定为 $+1$。以后每轮，对手依共同既往历史选择并施加一个共同 $E_\sigma$，**先宣布符号，再由控制器选择恰一个 $R,G,T$**。报告到该原语完成之间没有新反射；每个请求完成，每份 offer 必须消耗。$R,G$ 仅给无信息的完成信号，$T$ 付费、不扰动。控制器初始记忆与来源无关，允许任意确定性内部记忆和有限本地计算；无限内部计算不算取得。没有免费 offer、等待、逆动作、复位、相位选择或坐标读数。
+
+给定非恒定 $f:\mathbb F_p\to Y$，取得任务是对所有固定初始来源及所有合法日程都有限停止，正确输出 $f(c_0)$。比较双源时始终使用同一个已宣布符号、同一个动作和两条从预先固定来源连续生成的历史。候选坐标只在控制器内部预测，不是实际传感器输入。
+
+一般模模型不预设 Fibonacci 实现。要接到实际整数及原子接枝，还须另有坐标共轭、每步共同操作的提升及读数投影。第103节已经为其 $M,E,G,q,H=341$ 给出这些桥；下文的模3反例没有这些桥。
+
+### 104.2 差锥上的共同标量消除
+
+**定理 104.1（平方相等的旋转阻断每个非恒定初始任务）。** 在104.1的模型中，若 $\lambda^2=\mu^2$，则对每个非恒定 $f:\mathbb F_p\to Y$，不存在保证取得 $f(c_0)$ 的确定性协议。把 $G$ 替换或扩充为任意族静默共同平移 $s\mapsto s+t$，结论仍成立。
+
+证明。选 $c_1,c_2$ 使 $f(c_1)\ne f(c_2)$，并在协议运行前固定两个来源
+
+$$
+s_1=(c_1,0),\qquad s_2=(c_2,A(c_1-c_2)/B).
+\tag{104.2}
+$$
+
+对当前对 $(c,w),(d,z)$ 记 $u=c-d,v=w-z$，使用差锥
+
+$$
+\mathcal D:\qquad u\ne0,\qquad (Au)^2=(Bv)^2.
+\tag{104.3}
+$$
+
+$A,B$ 非零保证 $v\ne0$。共同反射不改两个平方；$R$ 将它们分别乘 $\lambda^2,\mu^2$，故保持相等及非零；任意共同平移不改差，$T$ 不改状态。于是差锥对所有这些操作封闭。
+
+在每份 offer 前选
+
+$$
+\sigma=-\frac{Au}{Bv}.
+\tag{104.4}
+$$
+
+差锥给 $\sigma^2=1$；奇特征中它恰是允许的两个符号之一。此选择使
+
+$$
+Ac+B\sigma w=Ad+B\sigma z.
+\tag{104.5}
+$$
+
+(104.2)处 $v=-Au/B$，所以第一份符号恰为 $+1$，无论首个动作是什么。以后对手只需用两个固定来源及既往共同动作、符号更新当前对，再按(104.4)出 offer；不依赖尚未选择的当前动作，也不更换来源。
+
+收到同一符号后，两执行有相同控制记忆，因而选择相同动作。若选 $T$，(104.5)给相同零位；若选静默命令，完成响应相同。差锥保持，归纳给完整可见历史、停止决定及输出相同。共同有限答案不能同时等于两个不同任务值；不终止也违反保证有限取得。初始直接停止同样失败。证毕。
+
+等式(104.5)比零位相等更强：即使把 $T$ 扩大成返回完整标量的传感器，这个负例仍成立。后续正向引理仍只使用(104.1)的零位；这里没有授予完整标量访问。
+
+### 104.3 模3反例与代数满秩的不足
+
+**推论 104.2（原半阶条件不足）。** 考虑推广候选
+
+$$
+p=2n+1\text{ 为素数},\qquad n\text{ 为奇数},\qquad
+\operatorname{ord}(\lambda)=n,\qquad
+\mu=-\lambda^{-1},\qquad A B\ne0.
+\tag{104.6}
+$$
+
+这些条件不足以保证任何给定非恒定初始 $c_0$ 任务的取得。取
+
+$$
+p=3,\quad n=1,\quad \lambda=1,\quad\mu=-1=2,\quad A=B=1.
+\tag{104.7}
+$$
+
+全部条件成立，而 $\lambda^2=\mu^2$。例如固定来源 $(0,0),(1,2)$ 的初始零位均为真，初始标签不同。这里还可把共同日程写成：首轮给正号；以后恰在前一个已完成动作是 $R$ 时给负号，在前一个动作是 $G$ 或 $T$ 时给正号。因为 $R=E_{-1}$，每个选择切口的两来源差始终为 $(1,-1)$，故两个完整标量相等。这是先出 offer 的合法规则。
+
+该系统在合作调度下有普通代数可控性。平移向量 $t=(1,1)$ 与 $Rt=(1,-1)$ 的列式行列式为 $-2\ne0$；取全部 offer 为正，$G$ 与时间顺序的 $R,G,R$ 分别实现这两个平移，重复非负次数即生成整个平面。线性传感器的两行 $q=(1,1)$、$qR=(1,-1)$ 也有非零行列式。前者允许合作日程，后者只断言形式线性行满秩；它们没有消除敌对先报告日程中的共同抵消，更没有把两次零位变成完整标量观测。
+
+在(104.6)内，
+
+$$
+\lambda^2=\mu^2\ \Longleftrightarrow\ \lambda^4=1
+\ \Longleftrightarrow\ n=1\ \Longleftrightarrow\ p=3.
+\tag{104.8}
+$$
+
+中间等价使用 $n$ 为奇数且为 $\lambda$ 的准确阶。因此必须至少排除 $n=1$ 才能提出全族的正向保证；$n>1$ 只排除此障碍，不是已证充分条件。模3的 $\lambda=1$ 不满足 $\lambda^2-\lambda-1=0$，故(104.7)不能提升为这里所讨论的 Fibonacci 矩阵 $M$ 反例。第103节的11、31参数分别有 $(\lambda/\mu)^2=3,28$，均不为1，不受定理104.1反驳。
+
+### 104.4 奇数半阶中的精确旋转终端门
+
+本小节以后，除另有说明外，在(104.6)上增加 $n>1$。令 $Q=\langle\lambda\rangle$。有限域乘法群循环，故 $Q$ 是全部非零平方组成的阶 $n$ 子群；$n$ 奇使 $-1\notin Q$。置
+
+$$
+\kappa=\mu/\lambda=-\lambda^{-2}.
+\tag{104.9}
+$$
+
+$\lambda^{-2}$ 的阶为 $n$，$\kappa^n=-1$，$\kappa$ 的阶为 $2n$。因此 $0\le j<n$ 的 $n$ 个对跖集合 $\{\kappa^j,-\kappa^j\}$ 两两不交，合起来恰为 $\mathbb F_p^\times$。
+
+**定理 104.3（含原点和坐标轴的终端充要条件）。** 对当前候选 $(c,w),(d,z)$，假设 $c\ne d$。存在某个 $0\le j<n$，使 $j$ 次实际 $R$ 后的一次 $T$ 对两个可能的累计共同符号都分离该对，当且仅当
+
+$$
+J:=cz+dw=0,\qquad
+\neg\bigl(w=z=0\ \text{且}\ cd\ne0\bigr).
+\tag{104.10}
+$$
+
+该协议恰有一次 $T$，原语及 offer 总数为 $j+1\le n$。
+
+证明。$R$ 与反射交换。约去传感器中的非零因子 $\lambda^j$，两个零位来自
+
+$$
+Ac+\sigma B\kappa^j w,\qquad Ad+\sigma B\kappa^j z,
+\quad \sigma\in\{1,-1\}.
+\tag{104.11}
+$$
+
+必要性：如果同一个候选在两个符号下都为零，相加、相减及 $2AB\kappa^j\ne0$ 使该候选为原点，因而 $J=0$。否则两个符号分别使两个不同候选为零；将相应方程交叉相乘相加即得 $J=0$。当 $w=z=0,cd\ne0$ 时两个读数永远非零，故必须排除此情形。
+
+充分性先处理原点。若 $(c,w)=(0,0)$，则 $d\ne0$。当 $z=0$，任意 $j$ 都分离；当 $z\ne0$，恰有一个对跖类含 $-Ad/(Bz)$，选另一个类即可让第二候选在两个符号下均非零。另一个类存在正是用到 $n>1$。第二候选为原点时对称。
+
+若两者均非原点，$J=0$ 和排除条件迫使 $c,d,w,z$ 全部非零：例如 $c=0$ 迫使 $w=0$ 而成为原点；$w=0$ 迫使 $z=0$ 而落入排除情形，其余对称。两个斜率根
+
+$$
+r_1=-Ac/(Bw),\qquad r_2=-Ad/(Bz)
+$$
+
+由 $J=0$ 满足 $r_2=-r_1$，且非零、不同。对跖分划给唯一 $j$ 使 $\{\kappa^j,-\kappa^j\}=\{r_1,r_2\}$；每个共同符号恰使一个候选为零。以上覆盖所有轴退化。
+
+实现时预选该 $j$，逐 offer 执行 $j$ 个 $R$，再在下一份 offer 下执行 $T$。中间符号任意，全部累计为(104.11)的一个共同符号，故都成功；若 $j=0$，首份 offer 就被 $T$ 消耗。没有免费旋转或跳过 offer。证毕。
+
+**推论 104.4（规范终端层的闭式计数）。** 按103.3的共同旋转及逻辑交换，把 $c-d$ 规范为1，再模共同反射 $(w,z)\sim(-w,-z)$。全部规范对数为 $p(p^2+1)/2$，其中满足定理104.3的数目为
+
+$$
+N_{\rm term}(p)=\frac{p^2-p+4}{2}.
+\tag{104.12}
+$$
+
+证明。固定 $c$ 后，$d=c-1$，方程 $cz+(c-1)w=0$ 是非零齐次线性方程，恰有 $p$ 个解。共同取负只固定零向量，其解轨道数为 $(p+1)/2$。对全部 $c$ 求和，再删去 $c\notin\{0,1\}$ 的 $p-2$ 个禁用零向量类，即得(104.12)。全部 $(w,z)$ 的取负轨道数则为 $(p^2+1)/2$。证毕。
+
+式(104.12)在11、31分别给57、467；这里只闭式解释第103节的终端层，不重证其余秩层，也不证明任意初始对能被迫进入此层。
+
+### 104.5 固定差层中的联合读出与接枝
+
+对任意 $c-d\ne0$，因 $\mathbb F_p^\times=Q\sqcup(-Q)$，可用共同 $R$ 的幂及逻辑交换两个名字，将第一坐标差写成1。选择一次第二坐标符号方向，把代表写成
+
+$$
+P_\delta(c,w)=\bigl((c,w),(c-1,w-\delta)\bigr),\qquad
+\delta\in\mathbb F_p.
+\tag{104.13}
+$$
+
+这是坐标记账，不执行逆旋转或交换实际来源。控制器保留代表到实际候选对的共同线性框架及名字对应；反射在此框架中记录，不能在两个候选之间分别选择。每一层有 $p^2$ 个 $(c,w)$。
+
+给 $0\le j<n$，令 $x=\lambda^{-j}\in Q$。把实际旋转期间以及末份 offer 的反射合成 $\sigma$，并置
+
+$$
+\epsilon=\sigma(-1)^j,\qquad y=\epsilon/x,\qquad
+\ell_{x,\epsilon}(c,w)=Ay c+Bx w.
+\tag{104.14}
+$$
+
+**引理 104.5（读出与后继使用同一符号）。** 在框架 $E_\sigma R^j$ 中，候选对的两个实际零位恰为
+
+$$
+[\ell_{x,\epsilon}(c,w)=0],\qquad
+[\ell_{x,\epsilon}(c,w)-(Ay+Bx\delta)=0].
+\tag{104.15}
+$$
+
+若这一份 offer 下选 $G$，只在记账中逆用同一个已知框架，代表后继恰为
+
+$$
+P_\delta(c+x,w+\epsilon/x).
+\tag{104.16}
+$$
+
+证明。$R^j$ 的对角元为 $1/x,(-1)^j x$，故实际标量是 $Ac/x+B\epsilon xw$。乘单位 $\epsilon$ 后恰为 $\ell_{x,\epsilon}$，不改变零位；对第二候选作同样计算得到(104.15)。实际接枝增加 $(1,1)$，框架逆像为
+
+$$
+(E_\sigma R^j)^{-1}(1,1)=(x,\epsilon/x).
+\tag{104.17}
+$$
+
+两候选加同一向量，故差 $(1,\delta)$ 不变；并且同一个协向量在此步向量上的值为 $(A+B)\epsilon$。证毕。
+
+若阶段开始时实际框架为 $E_\eta R^h$，把 $h$ 约到 $0,\ldots,n-1$，余下符号用 $R^n=E_{-1}$ 吸收入 $\eta$。为到目标 $j$，只需执行 $(j-h)\bmod n$ 次真实 $R$，至多 $n-1$ 次，每次消耗自己的 offer。末份报告决定(104.14)的 $\epsilon$；预测零位不同就选 $T$，否则选 $G$ 并按(104.16)更新代表及框架。每阶段至多 $n$ 个实际原语，无物理逆操作。特别不能以某个符号让零位相同，再以另一个符号让后继安全：这是同一份 offer 上的两个联合义务。
+
+安全域的旋转对称也不需要免费旋转。令 $L$ 为后续每份 offer 都可取任意符号时，有限双候选分离博弈的最大安全域，定义在全部异第一坐标候选对上。其条件是存在一个 offer 符号，使当前 $T$ 不分离、且每个可选动作的后继仍在 $L$。下一 offer 可补偿一次共同反射，所以 $EL=L$。对 $v\in L$，某个符号使 $RE_\sigma v\in L$；由交换性与反射不变性得 $Rv\in L$。$R$ 可逆且域有限，故 $RL=L$，也就有 $R^{-1}L=L$。交换候选名字同样保持安全。因而若有非空 $L$，先规范第一坐标差，再取其一个非空 $\delta$ 截面，得到下面(104.18)的 $K$。这里的 $L$ 用于任意后续相位，不能把其存在自动当成满足首份正号的固定初始反例；定理104.1已经单独核对启动条件。
+
+### 104.6 线支撑不可能承载安全平移
+
+称非空 $K\subseteq\mathbb F_p^2$ 满足固定差层的安全条件，若
+
+$$
+\begin{gathered}
+\forall(c,w)\in K\ \forall x\in Q\ \exists\epsilon\in\{1,-1\}:\\
+\bigl[ A\epsilon c/x+Bxw=0\bigr]
+ =\bigl[A\epsilon(c-1)/x+Bx(w-\delta)=0\bigr]
+\quad\text{且}\quad
+(c+x,w+\epsilon/x)\in K.
+\end{gathered}
+\tag{104.18}
+$$
+
+这是104.5所给阶段博弈的准确安全条件：控制器先选相对旋转门，对手给其实际累计符号，零位不同就结束，相同则接枝续行。每次的同一 $\epsilon$ 必须同时满足读出相等和安全后继。
+
+**引理 104.6（无仿射线支撑的安全集）。** 当 $n>1$ 时，非空 $K$ 即使只满足(104.18)中的后继条件，也不可能包含于一条仿射直线。
+
+证明。反设 $K\subseteq v_0+D$，其中 $D$ 是一维方向空间；取 $v\in K$。对每个 $x\in Q$，某个 $\epsilon$ 使 $v+(x,\epsilon/x)\in K$，所以 $(x,\epsilon/x)\in D$。$x\ne0$ 排除竖直方向，写 $D$ 的斜率为 $m$，便有
+
+$$
+m=\epsilon/x^2,\qquad m^2x^4=1\qquad(x\in Q).
+\tag{104.19}
+$$
+
+取 $x=1$ 得 $m^2=1$，再取 $x=\lambda^{-1}$ 得 $\lambda^4=1$。$\lambda$ 的准确阶 $n$ 为奇数，故 $n\mid4$ 迫使 $n=1$，矛盾。证毕。
+
+此引理排除单条仿射线上的陷阱，包括单点；它没有排除曲线、若干直线的并、二维子集或其他非线性 $K$，也没有使用读出等式来完成全域排除。
+
+### 104.7 Fibonacci 子族的一个明确未证引理
+
+为接近第103节的两个因子，进一步限制参数为
+
+$$
+\begin{gathered}
+p=2n+1\text{ 为奇素数},\quad n>1\text{ 为奇数},\quad
+\operatorname{ord}(\lambda)=n,\quad \lambda^2-\lambda-1=0,\\
+\mu=1-\lambda=-\lambda^{-1},\quad \lambda\ne\mu,\\
+A=\frac{3-2\mu}{\lambda-\mu},\qquad
+B=\frac{2\lambda-3}{\lambda-\mu},\qquad AB\ne0.
+\end{gathered}
+\tag{104.20}
+$$
+
+这些公式来自 $c=a+\lambda b,w=a+\mu b$ 下的 $2a+3b=Ac+Bw$，并给 $A+B=2$；不是独立任选的传感器。第103节的 $(p,\lambda,\mu,A,B,n)=(11,4,8,6,7,5)$ 和 $(31,19,13,22,11,15)$ 均满足(104.20)。对该子族的单根素数，$M$ 在这组坐标下为 $R$，$M^n$ 投影为反射；多个素数要共用实际隐藏事件，仍须另核对共同指数，不能从逐素数共轭自动取得。
+
+待证的**非线性陷阱排除命题**为：对每个满足(104.20)的参数组、每个 $\delta\in\mathbb F_p$，都不存在满足(104.18)的非空 $K$。这条命题尚未证明；本节没有声称它为真，也没有用 $n>1$ 替代其证明。其量词保持“对每点、每个 $x$，存在一个同时履行两个义务的符号”，而非两个分别存在的符号。
+
+只有条件性后果已经明确：**如果**上述排除对某参数组的全部 $\delta$ 成立，在每个差层从 $W_0=\varnothing$ 递推
+
+$$
+W_{r+1}=W_r\cup\{v:\exists x\in Q\ \forall\epsilon\in\{1,-1\},
+ D_\delta(v,x,\epsilon)\ \lor\ v+(x,\epsilon/x)\in W_r\},
+\tag{104.21}
+$$
+
+其中 $D_\delta$ 表示(104.15)的两零位不同。若稳定时补集非空，否定加入条件恰给(104.18)；所以排除成立才推出 $W_{p^2}=\mathbb F_p^2$。每次未稳定至少新增一点，故至多 $p^2$ 层。选使秩下降的 $x$，由104.5得到至多 $np^2$ 个原语、恰一次末尾 $T$ 的双候选分离。这只是成熟有限到达博弈的条件实例，不能由形式递推本身宣布全域获胜。
+
+再保留每个初始槽的不可变 $c_0$ 及当前态，复用103.2—103.5的关系桥：共同运输满足 $c=u c_0+t,u\ne0$，异标签不合并，实际槽永不被真实读数删除；每次选两个异标签槽的分离测试至少删去其中一个。仅在上述排除成立的条件下，至多 $p^2-1$ 次比较给每根素数的充分界
+
+$$
+N_{\rm primitive}\le np^2(p^2-1),\qquad N_T\le p^2-1.
+\tag{104.22}
+$$
+
+(104.22)不是已取得的全族正向界，也不是第103节的改进界。对实际整数、原子来源或共同复合模数的结论仍须满足同源提升和完整响应桥；不能按不同素数自由拼接各自日程或重新选取实际来源。
+
+### 104.8 小规模算术核对与可辨别的负控
+
+以下 Python 3.9+ 标准库程序只检查模3差锥的全标量相等及一步封闭、11和31的终端充要条件与计数、同一符号的读出／接枝恒等式。它逐个扫描规范对，不保存大证书，不计算第103节其他秩层，也不搜索(104.18)的全部集合。保存为 `validate104.py`，在新建空目录运行 `python3 validate104.py`，正常退出码为0；应得到36个差锥对、规范对数671和14911、终端数57和467、484476次有界检查。程序同时限制120秒及150万次检查；保留的候选／旋转记录少于100条。
+
+`--mutate-terminal` 故意漏去横轴排除项，必须在模11的 $(c,w,z)=(2,0,0)$ 被终端充要断言拒绝；`--mutate-epsilon` 故意把后继第二分量的符号强制为正，必须被联合符号断言拒绝；`--edge-cap 1` 必须因检查上限失败。三者的预期退出码均为1，不能把它们的失败当成正向验证。`python -O` 被显式拒绝。有限检查只交叉核对上述实例及恒等式，参数化证明由104.2—104.6承担，非线性陷阱命题保持未证。
+
+```python
+import argparse
+import json
+import signal
+import time
+from itertools import product
+
+if not __debug__:
+    raise SystemExit('assertions must be enabled')
+args = argparse.ArgumentParser()
+args.add_argument('--mutate-terminal', action='store_true')
+args.add_argument('--mutate-epsilon', action='store_true')
+args.add_argument('--edge-cap', type=int, default=1500000)
+opt = args.parse_args()
+start = time.monotonic()
+signal.signal(signal.SIGALRM, lambda *_: (_ for _ in ()).throw(TimeoutError()))
+signal.alarm(120)
+edges = 0
+
+def tick():
+    global edges
+    edges += 1
+    assert edges <= opt.edge_cap, 'edge cap'
+    assert time.monotonic() - start < 120, 'deadline'
+
+def inv(a, p):
+    return pow(a % p, -1, p)
+
+# Exhaust all invariant pairs, not a finite sample of histories.
+p = 3
+states = list(product(range(p), repeat=2))
+cone_pairs = 0
+for (c, w), (d, z) in product(states, repeat=2):
+    u, v = (c-d) % p, (w-z) % p
+    if not (u and (u*u-v*v) % p == 0):
+        continue
+    cone_pairs += 1
+    sigma = -u * inv(v, p) % p
+    assert sigma in (1, p-1)
+    a, b = (c, sigma*w % p), (d, sigma*z % p)
+    assert (a[0]+a[1]-b[0]-b[1]) % p == 0
+    # Identity (T), R, and every common translation.
+    successors = [(a, b), ((a[0], -a[1] % p), (b[0], -b[1] % p))]
+    successors += [(((a[0]+h) % p, (a[1]+k) % p),
+                    ((b[0]+h) % p, (b[1]+k) % p)) for h, k in states]
+    for aa, bb in successors:
+        tick()
+        uu, vv = (aa[0]-bb[0]) % p, (aa[1]-bb[1]) % p
+        assert uu and (uu*uu-vv*vv) % p == 0, 'cone closure'
+assert cone_pairs == 36
+assert -((0-1) % 3) * inv(0-2, 3) % 3 == 1
+assert (1+2) % 3 == 0
+assert (1*2-1*1) % 3 != 0  # translation columns and sensor rows
+
+counts = {}
+for p, lam, mu, A, B in [(11, 4, 8, 6, 7), (31, 19, 13, 22, 11)]:
+    n = (p-1)//2
+    assert n > 1 and n % 2 == 1
+    assert next(k for k in range(1, p) if pow(lam, k, p) == 1) == n
+    assert (lam*lam-lam-1) % p == 0 and (mu*lam+1) % p == 0
+    assert mu == (1-lam) % p
+    assert A == (3-2*mu)*inv(lam-mu, p) % p
+    assert B == (2*lam-3)*inv(lam-mu, p) % p and (A+B) % p == 2
+    rotations = [(pow(lam, j, p), pow(mu, j, p)) for j in range(n)]
+    antipodes = [{mm*inv(ll, p) % p, -mm*inv(ll, p) % p}
+                 for ll, mm in rotations]
+    assert len(set.union(*antipodes)) == p-1
+    total = terminal = 0
+    for c, w, z in product(range(p), repeat=3):
+        if (w, z) > (-w % p, -z % p):
+            continue
+        total += 1
+        d = (c-1) % p
+        gate = False
+        for ll, mm in rotations:
+            signs = []
+            for sigma in (1, -1):
+                tick()
+                r = (A*ll*c+B*sigma*mm*w) % p
+                s = (A*ll*d+B*sigma*mm*z) % p
+                signs.append((r == 0) != (s == 0))
+            gate |= all(signs)
+        excluded = w == z == 0 and c*d % p != 0
+        formula = (c*z+d*w) % p == 0 and (opt.mutate_terminal or not excluded)
+        assert gate == formula, ('terminal iff', p, c, w, z, gate, formula)
+        terminal += gate
+    assert total == p*(p*p+1)//2
+    assert terminal == (p*p-p+4)//2
+    assert terminal == {11: 57, 31: 467}[p]
+    counts[p] = {'canonical_pairs': total, 'terminal_pairs': terminal}
+    # Check the joint covector and G increment on every state/orientation/sign.
+    # The two inputs of each pair are independently covered as states.
+    for c, w in product(range(p), repeat=2):
+        for j, (ll, mm) in enumerate(rotations):
+            x = inv(ll, p)
+            for sigma in (1, -1):
+                tick()
+                epsilon = sigma * (-1)**j
+                y = epsilon * inv(x, p) % p
+                scalar = (A*ll*c+B*sigma*mm*w) % p
+                assert (epsilon*scalar) % p == (A*y*c+B*x*w) % p
+                actual = ((ll*c+1)*inv(ll, p) % p,
+                          (sigma*mm*w+1)*inv(sigma*mm, p) % p)
+                trial_y = inv(x, p) if opt.mutate_epsilon else y
+                assert actual == ((c+x) % p, (w+trial_y) % p), 'joint epsilon'
+                assert (A*y*x+B*x*y) % p == (A+B)*epsilon % p
+signal.alarm(0)
+print(json.dumps({'cone_pairs': cone_pairs, 'counts': counts,
+                  'edge_checks': edges, 'retained_records_upper_bound': 100,
+                  'elapsed_seconds': round(time.monotonic()-start, 6)}, sort_keys=True))
+```
+
+### 104.9 复用范围与保留的取得缺口
+
+第92节的初始标签—当前态关系、第94节的运输记录、第96节的反射障碍、第99节受限 $R/T$ 含量判据和第102节的动作后报告反例，各保留其原始接口。这里的相位必须先于动作选择；因此不能把那些负结论直接搬来。Fibonacci 卷第130节提供实际正词及接枝的整数语义，第133节提供其同源重置合同下的取得；它们不供应本节未声明的重置。第103节的11／31有限进展、同源全标签消除及整数提升仍是其自身的结果。
+
+仓内 [FiniteHorizonReachability.finite_horizon_reachability](../../../D5/S3/ConceptDynamics/Control/FiniteHorizonReachability.lean) 给有限获胜层与有界到达策略的抽象对应，前提是每个动作的后继非空。在(104.21)中可加一个成功汇点，把两个符号各自送往成功点或相应接枝后继，满足这个前提；该通用对应不替代非线性陷阱排除，也没有在此新增或编译 Lean 实例。
+
+Petra van den Bos、Frits Vaandrager，[*State Identification for Labeled Transition Systems with Inputs and Outputs*, arXiv:1907.11034v2](https://arxiv.org/html/1907.11034v2)，第6节的 injective 条件及相容性讨论只作背景。其状态不相容和保持条件须按具体系统核对；没有凭该文标题或通用自适应测试结论移入全族取得。这里给的是普通有限域推导、明确反例及小规模算术交叉核对，无原创优先权、物理统一或新增 Lean/kernel 认证主张。
+
+所得结构将缺口集中到(104.18)：被宣布的相位同时约束“这一读能否分离”和“这一接枝去往何处”。终端斜率分划与无线支撑引理减少了需要解释的障碍，但未排除一般安全子集；空间坐标的生成、运输记忆和先报告时序本身仍不等于未知初始关系的普遍取得。
+
+## 104.99 追加锚
