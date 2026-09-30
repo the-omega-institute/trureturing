@@ -90,5 +90,6 @@ jobs:
         tools/tests/StrataLint.ScriptTests/Fixtures/lean_input_contract.py
         tools/tests/StrataLint.ScriptTests/Fixtures/lean_release_legacy.py
         tools/tests/StrataLint.ScriptTests/Fixtures/lean_release_verification.py
+        tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_contract.py
         tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_support.py
         tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_transport.py

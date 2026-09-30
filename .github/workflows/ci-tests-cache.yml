@@ -89,5 +89,7 @@ jobs:
         tools/tests/StrataLint.ScriptTests/*.csproj
         tools/tests/StrataLint.ScriptTests/*.json
         tools/tests/StrataLint.ScriptTests/Fixtures/analysis_cache_contract.py
+        tools/tests/StrataLint.ScriptTests/Fixtures/cache_fixture.py
+        tools/tests/StrataLint.ScriptTests/Fixtures/cache_snapshot_contract.py
         tools/tests/StrataLint.ScriptTests/Fixtures/contribution_queue_contract.py
         tools/tests/StrataLint.ScriptTests/Fixtures/lean_input_contract.py
