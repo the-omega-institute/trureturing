@@ -22448,3 +22448,313 @@ $$
 必要实验材料为 [精确程序](../../reports/fib-robin-boundary/affine_moments.py)、[使用说明](../../reports/fib-robin-boundary/affine_moments.md) 与 [结果数据](../../reports/fib-robin-boundary/affine_moments.json)。程序对素数指标 $7,11,13,17,19,23,29,31$ 的完整实际乘子区间枚举 $189527$ 个整数；三阶矩均给出宽度至多 $10^{-12}$ 的严格有理包围。另在 $96$ 个小区间上穷举 $779360$ 个有序约数元组，核对共同最小公倍数计数、直接矩与有限误差界。区间、筛、因子分解与包围全部使用整数或有理数，不计算 Robin 预算或差额；代表来源另作规范解码。有限实验不验证无限族的极限或 RH。
 
 ## 追加锚（本行以下为增补区）
+
+## 207. 素指标单位位一来源的逐点核心浓集与唯一同余候选
+
+本节只处理已经有真实规范来源回接的整数
+
+$$
+V=F_r,\qquad r\ge7\text{ 为素数},\qquad
+I_r=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\qquad N=gV+1,\quad g\in I_r.
+$$
+
+§205 的单位初始化证明同时覆盖这些乘子。本节研究每个实际整数的完整小素数核心，不用平均值替代全称判断。解析输入仅为 §160.1、式（194.2）的 Axler 包络，以及素数定理。新增内容为纸面推导，未新增 Lean 声明或编译。
+
+令
+
+$$
+a_0=0.0094243,\qquad \rho=\log\phi,\qquad
+Y_r=2r-2,
+$$
+
+$$
+C=C_r(N)=\prod_{p\le Y_r}p^{v_p(N)},\qquad
+H=N/C,\qquad L=\log N,\quad\Lambda=\log L.
+$$
+
+这里 $C$ 包含每个小素数的**完整实际赋值**；它不是只记录素支撑的 radical，也不是预先选取的最小公倍数。于是 $\gcd(C,H)=1$，且 $H$ 的素因子都大于 $Y_r$。§205.2 给 $F_r$ 的每个素因子至少为 $2r-1$，所以每个 $Y_r$-光滑整数都与 $V$ 互素。
+
+### 207.1 同一个整数上的粗素数尾与核心预算
+
+定义
+
+$$
+\vartheta_{r,N}=\frac{L\Lambda}{(Y_r-1)\log Y_r},
+\qquad u=\frac{\log H}{L}\in[0,1].
+$$
+
+因为 $g\in I_r$，Binet 公式给
+
+$$
+L=2r\rho+O(1),\qquad
+\Lambda=\log r+O(1),\qquad
+\vartheta_{r,N}=\rho+o(1),
+$$
+
+且误差对同一 $r$ 下的全部 $g$ 一致。每个 $p\mid H$ 均大于 $Y_r$，所以
+
+$$
+0\le\log Z(H)
+\le\log\frac H{\varphi(H)}
+\le\frac{\log H}{(Y_r-1)\log Y_r}
+=\frac{\vartheta_{r,N}u}{\Lambda}.
+\tag{207.1}
+$$
+
+$H=1$ 时按空乘积理解。这个上界把同一个整数的余因子大小和素数下界同时使用。
+
+记 $N_K$ 为 §160.1 的 Axler 输入门槛。该输入给每个整数 $m\ge N_K$ 上的
+
+$$
+\frac m{\varphi(m)}
+<e^\gamma\left(\log\log m+
+\frac{a_0}{(\log\log m)^2}\right).
+\tag{207.2}
+$$
+
+不能因 $N$ 大就把式（207.2）直接用于可能很小的核心 $C$；下面分开处理这个边界。
+
+**引理 207.1（小核心最终逐点安全）。** 对全部充分大的素数 $r$，如果 $C\le N^{1/4}$，则 $\Delta(N)>0$，一致于 $g\in I_r$。
+
+证明。若 $C<N_K$，§164.1 的有限门槛包络给 $C/\varphi(C)<32e^\gamma$；$C=1$ 时直接用 $Z(C)=1$。若 $N_K\le C\le N^{1/4}$，函数 $t+a_0/t^2$ 在该门槛之上严格递增，故式（207.2）给
+
+$$
+Z(C)<e^\gamma\left(
+\Lambda-\log4+
+\frac{a_0}{(\Lambda-\log4)^2}\right).
+$$
+
+两种情形合起来，$Z(C)/e^\gamma$ 被上式括号与常数32的最大值控制。随 $r\to\infty$，括号最终大于32。式（207.1）及 $u\le1$ 遂给
+
+$$
+\frac{Z(N)}{e^\gamma}
+\le\left(\Lambda-\log4+o(1)\right)
+\exp\left(\frac{\vartheta_{r,N}}\Lambda\right)
+=\Lambda-\log4+\rho+o(1).
+$$
+
+因为 $\log4>\rho$，差额最终统一严格为正。$\square$
+
+**引理 207.2（大核心的精确同源不等式）。** 假设 $N\ge N_K^4$、$C\ge N^{1/4}$、$\Lambda>\log4$，则
+
+$$
+\log\frac{Z(N)}{e^\gamma\Lambda}
+<\frac{\log(1-u)+\vartheta_{r,N}u}{\Lambda}
++\frac{a_0}{(\Lambda-\log4)^3}.
+\tag{207.3}
+$$
+
+证明。$C\ge N^{1/4}\ge N_K$ 保证式（207.2）现在确实适用。设
+
+$$
+t=\log\log C=\Lambda+\log(1-u)
+\ge\Lambda-\log4>0.
+$$
+
+$\gcd(C,H)=1$ 给 $Z(N)=Z(C)Z(H)$。依次使用式（207.2）、式（207.1）与 $\log(1+x)\le x$，得到
+
+$$
+\begin{aligned}
+\log\frac{Z(N)}{e^\gamma\Lambda}
+&<\log(t/\Lambda)+\log(1+a_0/t^3)
+ +\frac{\vartheta_{r,N}u}{\Lambda}\\
+&\le\frac{\log(1-u)+\vartheta_{r,N}u}{\Lambda}
+ +\frac{a_0}{(\Lambda-\log4)^3}.
+\end{aligned}
+$$
+
+这里 $0\le u\le3/4$，所有对数都在其定义域内。$\square$
+
+### 207.2 任何逐点潜在反例必须具有几乎完整的光滑核心
+
+**定理 207.3（逐点粗余因子的对数预算）。** 固定
+
+$$
+\kappa>\frac{a_0}{1-\log\phi}.
+\tag{207.4}
+$$
+
+则存在只依赖 $\kappa$ 和所引解析输入的阈值，使每个超过它的素数指标 $r$ 及每个 $g\in I_r$ 都满足
+
+$$
+\Delta(N)\le0
+\quad\Longrightarrow\quad
+\log H<\kappa\frac{\log N}{(\log\log N)^2}.
+\tag{207.5}
+$$
+
+等价地，若同一个实际整数的粗余因子满足反向不等式，则它严格满足 Robin。可明确选用 $\kappa=1/50=0.02$：$\phi^2<8/3<e$ 给 $\log\phi<1/2$，所以式（207.4）的临界常数小于 $2a_0=0.0188486<1/50$。
+
+证明。引理 207.1 排除 $C\le N^{1/4}$。对剩余情形，取 $r$ 充分大使 $N\ge N_K^4$，再用引理 207.2。若 $u\ge\kappa/\Lambda^2$，由 $\log(1-u)\le-u$ 得
+
+$$
+\log\frac{Z(N)}{e^\gamma\Lambda}
+< -\frac{(1-\vartheta_{r,N})\kappa}{\Lambda^3}
+ +\frac{a_0}{(\Lambda-\log4)^3}.
+\tag{207.6}
+$$
+
+右边乘以 $\Lambda^3$ 后，一致趋于
+
+$$
+-(1-\rho)\kappa+a_0<0.
+$$
+
+因此这个范围内 $Z(N)<e^\gamma\Lambda$，与 $\Delta(N)\le0$ 矛盾。式（207.5）随之成立。严格条件（207.4）用于使最后的极限常数为负；本证明不把等号常数纳入结论。$\square$
+
+这个阈值可由已给输入与显示的不等式有效确定，但本节没有计算其数值。实际使用某个有限 $r$ 时，不能用“渐近充分大”代替阈值核验。该结果也不声称 $H$ 必为一；它给的是
+
+$$
+C=N^{1-O((\log\log N)^{-2})},\qquad
+H=N^{O((\log\log N)^{-2})}
+$$
+
+这一份针对每个潜在反例的同源预算。
+
+### 207.3 每个核心至多有一个合法乘子
+
+令
+
+$$
+N_-=\lceil V/10\rceil V+1,\qquad
+N_+=\lfloor V/5\rfloor V+1,
+$$
+
+并取
+
+$$
+H_*=\left\lceil\exp\left(
+\kappa\frac{\log N_+}{(\log\log N_+)^2}
+\right)\right\rceil,
+\qquad C_*=N_-/H_*.
+\tag{207.7}
+$$
+
+函数 $x/(\log x)^2$ 在 $x>e^2$ 上递增。故对定理 207.3 范围内的每个潜在反例，有 $H\le H_*$、$C\ge C_*$。又
+
+$$
+\log H_*=O(r/(\log r)^2)=o(\log V),
+\qquad C_*/V\longrightarrow\infty.
+\tag{207.8}
+$$
+
+特别地，最终 $C_*>\max I_r$，也大于乘子区间的长度。
+
+以下各命题均取充分大的素数 $r$，并把定理 207.3 的阈值一次扩大，使 $\log\log N_->2$、$C_*>\max I_r$ 及 $H_*<V/2$ 同时成立。
+
+**命题 207.4（唯一同余候选与实际赋值核）。** 对每个 $Y_r$-光滑整数 $C\in[C_*,N_+]$，定义 $g_C$ 为
+
+$$
+g_C\equiv-V^{-1}\pmod C,\qquad0\le g_C<C
+\tag{207.9}
+$$
+
+的唯一代表；逆元存在，因为 $Y_r<2r-1$。若某个潜在反例的完整小素数核心为 $C$，则其乘子只能是 $g_C$。还必须同时满足
+
+$$
+g_C\in I_r,\qquad
+H_C=\frac{g_CV+1}{C}\in\mathbb Z_{\ge1},\qquad
+H_C\le H_*,\qquad
+p\mid H_C\Longrightarrow p>Y_r.
+\tag{207.10}
+$$
+
+反过来，满足这些条件的 $C$ 确实给出一个合法来源，并且 $C$ 恰为该来源的完整小素数核心；但这不保证它违反 Robin。
+
+证明。$C\mid gV+1$ 等价于式（207.9）。因合法 $g<C$，只能取该唯一代表。式（207.10）的最后一项保证没有遗漏小素数赋值，并保证 $\gcd(C,H_C)=1$；其余条件分别保留实际乘子区间与定理 207.3 的余因子预算。反向直接重构 $N=g_CV+1=CH_C$，规范性用 §205 的全区间结论。$\square$
+
+例如 $r=11,V=89,g=10,N=891=3^4\cdot11$ 的完整 $Y_r=20$ 核就是 $C=891$，余因子为一；其逆元候选也确为十。该有限例子说明同余、光滑性和几何合法性可以同时实现。它不是渐近阈值的核验，也不是 Robin 反例。
+
+式（207.10）给一份确定性的候选合同。可先枚举完整核心，再计算唯一逆元候选、检查区间和粗余因子，最后对保留的同一个整数评价实际 $Z(C)Z(H_C)$。把核心替换成使 $Z$ 增大的另一种指数排列可能破坏式（207.9），因此 §156 的无同余压缩不能不加证明地用于这里。
+
+还有一个精确的有向近似接口。每个保留候选满足
+
+$$
+CH_C-g_CV=1,\qquad\gcd(g_C,H_C)=1,
+\qquad
+0<\frac CV-\frac{g_C}{H_C}=\frac1{VH_C}.
+\tag{207.11}
+$$
+
+由于 $H_C\le H_*=V^{o(1)}<V/2$，最后一个误差小于 $1/(2H_C^2)$。经典 Legendre 连分数判据因而把 $g_C/H_C$ 识别为 $C/V$ 的一个收敛分数。这个接口与实际 Bezout 等式相容，不额外制造排除候选的估计；本节的核心浓集和候选计数不依赖它。
+
+### 207.4 确定性候选计数不需要平均或独立性
+
+记 $\Psi(X,Y)$ 为不超过 $X$、全部素因子不超过 $Y$ 的正整数个数，记
+
+$$
+c=\frac1{\log\phi},\qquad
+K(c)=(1+c)\log(1+c)-c\log c.
+$$
+
+**定理 207.5（全部潜在反例的确定性覆盖）。** 令
+
+$$
+\mathcal E_r=\{g\in I_r:\Delta(gF_r+1)\le0\}.
+$$
+
+则沿素数 $r\to\infty$，
+
+$$
+|\mathcal E_r|
+\le\Psi(N_+,Y_r)
+\le\exp\left((K(c)+o(1))
+\frac{\log N_+}{\log\log N_+}\right)
+=V^{o(1)}.
+\tag{207.12}
+$$
+
+第一步对全部超过定理 207.3 阈值的 $r$ 成立。它没有额外乘以余因子数量。
+
+证明。给每个潜在反例取其完整核心。命题 207.4 使该映射在 $\mathcal E_r$ 上单射，因为同一个 $C$ 不能对应两个合法 $g$。核心必是 $Y_r$-光滑且不超过 $N_+$，所以第一步成立。这是确定性的包含与注入，不是随机模型。
+
+对任意固定 $a>0$，置
+
+$$
+s=\frac a{\log Y},\qquad X=N_+,\quad Y=Y_r.
+$$
+
+Rankin 的直接正项估计给
+
+$$
+\Psi(X,Y)
+\le X^s\prod_{p\le Y}(1-p^{-s})^{-1}.
+\tag{207.13}
+$$
+
+这里有限素数 Euler 乘积在每个 $s>0$ 都收敛，不需要 $s>1$。令 $f_a(t)=-\log(1-e^{-at})$。对 $p\le Y/\log Y$，有
+
+$$
+f_a(\log p/\log Y)=O_a(\log\log Y),
+$$
+
+而这一范围素数的个数为 $O(Y/(\log Y)^2)$，所以它们的总贡献为 $o(Y/\log Y)$。其余素数满足
+
+$$
+\frac{\log p}{\log Y}=1+O\left(\frac{\log\log Y}{\log Y}\right),
+$$
+
+故 $f_a(\log p/\log Y)=f_a(1)+o(1)$ 一致成立。素数定理给这一范围素数的个数为 $(1+o(1))Y/\log Y$，于是
+
+$$
+\log\prod_{p\le Y}(1-p^{-s})^{-1}
+=\left(-\log(1-e^{-a})+o(1)\right)\frac Y{\log Y}.
+\tag{207.14}
+$$
+
+由 $Y/\log X\to c$，将式（207.14）代入式（207.13）得
+
+$$
+\log\Psi(X,Y)
+\le\left(a-c\log(1-e^{-a})+o(1)\right)
+\frac{\log X}{\log\log X}.
+$$
+
+取固定 $a=\log(1+c)$，正好最小化括号主项，值为 $K(c)$。最后 $\log N_+=2\log V+O(1)$，所以该上界是 $V^{o(1)}$。$\square$
+
+式（207.12）比逐个检查 $|I_r|\asymp V$ 个乘子提供了更小的确定性候选集合，但 $V^{o(1)}$ 仍可能大于零，甚至随 $r$ 增长。它既不证明候选集合为空，也不证明所有剩余候选安全。实际未解义务仍是：对式（207.9）–（207.10）中每个命中的同一个整数，控制其完整约数响应，或证明足够强的统一区间不命中结论。
+
+本节的文献输入及门槛沿用 [Axler 作者稿与本库笔记](../../../Library/notes/axler2023robin.md)；Rankin 的正项法、素数定理及 Legendre 判据均为经典工具。这里的贡献是将它们接到 §205 的同一实际 FIB 来源和完整赋值核心上，不作原创性或已形式化主张。§206 的均匀计数矩与本节的逐点候选注入承担不同估计任务，均未排除全部潜在反例。
+
+## 追加锚（本行以下为增补区）
