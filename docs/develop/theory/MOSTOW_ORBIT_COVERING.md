@@ -52,3 +52,55 @@ hyperbolic metric or smooth quotient structure, finite volume, or rigidity of
 the acting lattice.
 
 ## 追加锚（本行以下为增补区）
+
+## 3. Upper half-space metric and horizontal isometries
+
+**Definition 3.1.** Let (E) be a real inner product space. Put
+(U_E=\{(x,t)\in E\times\mathbb R:t>0\}), with the Euclidean product distance
+(d_2), and write (h(x,t)=t). For (p,q\in U_E), define
+
+\[
+ d_H(p,q)=2\operatorname{arsinh}
+ \frac{d_2(p,q)}{2\sqrt{h(p)h(q)}}.
+\]
+
+For (q=(y,s)), write (q^*=(y,-s)) for reflection in the boundary plane.
+
+**Theorem 3.2 (Ptolemy construction of the metric).** The function (d_H) is a
+metric on (U_E), for every real inner product space (E).
+
+**Proof.** The Euclidean product distance gives
+(d_2(p,q^*)^2=d_2(p,q)^2+4h(p)h(q)). Thus
+
+\[
+ \sinh\frac{d_H(p,q)}2
+ =\frac{d_2(p,q)}{2\sqrt{h(p)h(q)}},\qquad
+ \cosh\frac{d_H(p,q)}2
+ =\frac{d_2(p,q^*)}{2\sqrt{h(p)h(q)}}.
+\]
+
+Ptolemy's inequality for the four Euclidean points (p,q,r,q^*) states
+
+\[
+ 2h(q)d_2(p,r)\leq
+ d_2(p,q)d_2(r,q^*)+d_2(q,r)d_2(p,q^*).
+\]
+
+Divide by (4h(q)\sqrt{h(p)h(r)}), which is positive. The hyperbolic sine
+addition formula turns the right side into
+(\sinh((d_H(p,q)+d_H(q,r))/2)); the left side is
+(\sinh(d_H(p,r)/2)). Strict monotonicity of hyperbolic sine proves the
+triangle inequality. Symmetry follows from symmetry of (d_2) and the height
+product. Since (\operatorname{arsinh}(z)=0) exactly when (z=0), positivity of
+the heights makes (d_H(p,q)=0) equivalent to (p=q).
+
+**Theorem 3.3 (horizontal translation action).** For (u\in E), let
+(T_u(x,t)=(x+u,t)). Each (T_u) preserves (d_H). The assignment
+(u\mapsto T_u) is a homomorphism from the additive group of (E) to the
+isometry group of (U_E,d_H), and (T_u(p)=p) for one point (p) if and only if
+(u=0).
+
+**Proof.** Translation preserves height and Euclidean product distance,
+hence the formula in Definition 3.1. Direct substitution gives
+(T_0=\operatorname{id}) and (T_{u+v}=T_u\circ T_v). If (T_u(x,t)=(x,t)),
+then (x+u=x), so (u=0); the converse follows from (T_0=\operatorname{id}).
