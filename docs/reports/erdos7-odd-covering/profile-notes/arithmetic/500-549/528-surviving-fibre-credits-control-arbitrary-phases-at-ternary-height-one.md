@@ -1,5 +1,7 @@
 # Surviving-fibre credits give common query laws at ternary height one
 
+A [six-layer prefix condition](#six-ternary-layers-suffice-for-the-palette-with-unrestricted-deeper-head-originals) extends the specified twelve-prime palette to arbitrary ternary heights: only layers 1 through 6 on one declared root obey the palette and same-cofactor prefix-disjointness conditions; all deeper head originals are unrestricted and paid by a complete geometric budget. With the existing large-prime-tail premise, final supported mass exceeds 7/10000. This still requires a particular low-layer condition.
+
 A [large-prime continuation](#eleven-small-support-primes-allow-an-unrestricted-large-prime-tail) permits arbitrarily many additional primes greater than100000: if at most eleven support primes are at most100000, only originals entirely on those small primes need v3(m)<=1. Every tail-touching original may have arbitrary finite exponents, including deeper powers of3. The complete family remains finite and noncovering.
 
 A [shared-interface palette estimate](#the-exponent-palette-allows-arbitrary-nonternary-heights-and-larger-primes) also gives survivor density greater than1/250 for a twelve-prime head under a specified187-vector one-root exponent condition, with arbitrary finite nonternary heights and componentwise larger actual primes. This restricted head can receive any finite tail whose primes outside the head exceed100000, with arbitrary finite heights in the tail-touching originals. [Four root changes](#four-root-changes-leave-both-shared-prime-comparisons-negative) show why the palette condition cannot yet be replaced by the existing numerical capacity constraints.
@@ -3159,3 +3161,465 @@ This excludes changing only leaf weights and the real threshold within
 this fixed comparison. Additional actual incidence, mixed-overlap credit
 or another source remain possible. It is an ordinary proof with exact
 finite certificates, not new Lean verification or a covering example.
+
+
+## Six ternary layers suffice for the palette with unrestricted deeper head originals
+
+The pointwise FC55 estimate combines with the existing actual-prefix collision method. Only the first six ternary layers need the specified palette and disjoint-prefix condition below; every deeper head cofactor is permitted. This is an additional sufficient condition, not a universal property of arbitrary covering candidates.
+
+### Reused results and one fixed source
+
+Reuse:
+
+- Report528 FC55: its specified 187 cofactor exponent vectors I(Q), the 28/159 split, and the pointwise same-source 5-row union proof.
+- Report528 FC4, FC37--FC40 and FC53: actual ternary-prefix conditioning on one finite partition; no source or original phase is reset at a cell.
+- [Report563 PF13--PF18](../550-599/563-prefix-free-rooted-labels-admit-all-later-four-mixed-towers.md#5-an-actual-collision-budget-permits-overlapping-root-prefixes): at each ternary point keep one active event per complete nonternary cofactor, charge omitted events under the SAME original nonternary product law, and integrate actual prefix overlaps. Do not reprove or rename that general mechanism.
+- Chapter33 SH12--SH13: a head submeasure bounded by Haar, followed by the all-height large-prime tail.
+
+Let R={3,5} union {Q_q:q=7,11,13,17,19,23,29,31,37,41}, with the same ordered distinct actual primes Q_q>=q as FC55. Every original modulus is a distinct odd nonunit integer and every residue is fixed globally. The family is finite; all prime heights are arbitrary finite values.
+
+Use the actual pure-p avoid-set S_p and its normalized Haar law lambda_p for each p!=3. Define
+
+    c_p=(p-1)/(p-2), b_p=1/(p-2),
+    C(Q)=product_(p in R minus{3})c_p,
+    C(Q)<=C0=1048576/403767<8/3.
+
+The same actual product law lambda_Q=product lambda_p has density at most C(Q) relative to nonternary Haar, and each complete cofactor d has event cap
+
+    w_d=product_(p|d)c_p*p^(-v_p(d)).
+
+The source uses ALL actual pure-p originals, including those unrelated to a selected low-depth subfamily. Dropping an original from a comparison does not reconstruct its source.
+
+Choose a first ternary root r not hit by the modulus-3 original, if that numerical label is present. Higher pure powers of 3 may meet this root. Let
+
+    T=[r]_3 minus union_(all pure3^i originals) I_(3^i),
+    theta=H_3(T).
+
+The pure3 class does not hit r, and at most one original occurs at each depth i>=2. Therefore
+
+    theta >=1/3-sum_(i>=2)3^(-i)=1/6.
+
+All subsequent integration uses the one submeasure H_3 restricted to T, or its normalization when explicitly stated. Finite prefix refinement resolves T and every original. A free choice of ternary roots at different levels is never used.
+
+### Main consumer: only the first six ternary layers need the palette
+
+Assume the following conditions ONLY for head-only originals with 1<=i=v3(m)<=6 whose actual ternary prefix meets T:
+
+1. A star 3^i*p^e has p=5.
+2. An original 3^i*d with at least two nonternary support primes has d in the specified I(Q).
+3. For every fixed complete cofactor d>1, the actual prefixes of these low-depth originals 3^i*d are pairwise disjoint on T.
+
+There is no restriction on head-only originals at i>6 beyond numerical distinctness and the globally fixed original phases. In particular they may be stars at any head prime, mixed cofactors outside I(Q), or overlapping prefixes at arbitrary finite heights. All 3-free originals, all pure powers, and all nonternary heights are unrestricted.
+
+Fix t in T. At most one low-depth original is active per complete cofactor. Its conditional nonternary event is an actual fixed cylinder. Consequently the active low-depth stars and mixed originals satisfy exactly the event inventories needed by FC55. The proof of FC55 uses the ternary coordinate only to determine which events are active; its 5-row union proof therefore applies to this conditional finite family. Use the same actual lambda_Q and retain every 3-free original.
+
+Let
+
+    delta0=292527371565907424953871442589053611843 /
+           9096975436175030140708833970611382254375
+           >4/125.
+
+At every t the low-depth conditional survivor has lambda_Q mass at least delta0. The comparison may enlarge its selected 5-star union to mass 1/3 separately on finite prefix cells, precisely as FC53 permits; these are comparison sets on the same source, not new original phases.
+
+High-depth originals are now paid directly, without applying the low palette to them. Pure3 powers have already been removed in T, so each remaining high original is 3^i*d with d>1. The COMPLETE nonternary cofactor cap inventory is
+
+    sum_(d>1,R minus{3}-smooth)w_d
+      =product_p(1+sum_(e>=1)c_p*p^(-e))-1
+      =product_p(1+b_p)-1=C(Q)-1.
+
+This is a convergent allowance for finite actual originals. It neither creates infinitely many originals nor identifies labels at distinct ternary exponents. Since each numerical 3^i*d occurs at most once,
+
+    integral_T sum_(active originals i>J)w_d dH_3
+       <=(C(Q)-1)*sum_(i>J)3^(-i)
+       =(C(Q)-1)/(2*3^J).
+
+Thus the actual head survivor U obeys
+
+    H_head(U)
+      >=[theta*delta0-(C(Q)-1)/(2*3^J)]/C(Q)
+      >1/500-(C(Q)-1)/(2*C(Q)*3^J)
+      >=1/500-(C0-1)/(2*C0*3^J).
+
+For J=6 this gives
+
+    loss=644809/1528823808,
+    H_head(U)>301604827/191102976000
+               =0.001578231973739645... .                         (FC59)
+
+The positivity concerns the ACTUAL survivor with every high original retained. This is not a height truncation. A single high original may remove the entire fibre of some ternary points; only its total same-source charge is bounded.
+
+For J=5 the same coarse allowance gives head lower bound approximately 0.0007346959212. It remains positive, but does not beat the particular large-prime tail allowance below. This is a limitation of this calculation, not a proof that J=5 is intrinsically impossible.
+
+### The unrestricted large-prime tail still survives
+
+Allow any finite additional distinct originals touching primes outside R, all such primes greater than100000. Their head exponents, including the ternary exponent, and tail exponents are arbitrary. Use the ACTUAL head Haar submeasure eta=H_head restricted to U; its density is at most one. Uniform lifting exposes any larger head period required by the tail without changing eta.
+
+FC55's existing SH12 substitution gives the same complete head moment bound, and its prior inequality implies the conservative strict tail-loss bound
+
+    loss_tail <1/250-1/320=7/8000.
+
+Componentwise larger head primes preserve this bound, with the same analytic prime-product premise and source-verification boundary as Chapter33. Therefore the J=6 consumer leaves final supported mass greater than
+
+    301604827/191102976000-7/8000
+      =134389723/191102976000
+      =0.0007032319737396449... >7/10000.                 (FC60)
+
+This is mass in the final supported tail construction, not a claim that the entire original family has natural density greater than7/10000. Positivity gives an actual uncovered integer because the full original family is finite.
+
+### Measured collisions and the smaller depth-five palette variant
+
+If all active 3-divisible nonpure originals on T retain FC55's cofactor restrictions at EVERY depth, the low-prefix requirement can instead be relaxed by the existing PF13 collision quantity. For each actual label 3^i*d write
+
+    v_(i,d)=lambda_Q(its actual nonternary cylinder),
+    A_d(t)={i:t belongs to its original ternary prefix},
+    Omega=E_(H_3(.|T)) sum_d [sum_(i in A_d(t))v_(i,d)
+                              -max_(i in A_d(t))v_(i,d)].
+
+Use empty maximum zero and a fixed tie-break. Selecting a largest active event for each d depends only on t and fixed event probabilities. FC55 handles these selected events; union-bounding the omitted actual events under lambda_Q gives
+
+    H_head(U)>=theta*(delta0-Omega)/C(Q).
+
+This is PF13--PF14 with a different existing conditional consumer. No dependence or phase is optimized separately. The finite prefix formula PF17 computes Omega exactly without scanning the full CRT period.
+
+If every fixed d has disjoint prefixes among i<=5, while higher labels may overlap arbitrarily but still obey the palette/star restrictions, the omitted charge is bounded by the high-label charge. Here lambda_3=H_3(.|T); numerical distinctness, theta>=1/6, and lambda_3(I_i)<=6*3^(-i) give
+
+    Omega <=Lambda(Q)/81 <=Lambda0/81,
+    Lambda(Q)=b5+sum_(d in I(Q))w_d,
+    Lambda0=168769304242196707293415566822404691426002591 /
+            308068383579416257083082334631421410785113125
+            =0.5478306546140268... .
+
+Here Omega<1/100 and delta0>4/125, so delta0-Omega is positive. Since theta/C(Q)>=1/16, this positive factor can be multiplied by that lower bound. Hence
+
+    H_head(U)>1/500-Lambda0/1296
+              =0.001577291161563251... >63/40000,
+
+and the same tail leaves mass greater than7/10000. This variant uses cutoff five rather than six, at the cost of retaining the cofactor palette at all higher layers. The main J=6 result removes that high-layer restriction completely.
+
+If same-cofactor prefixes are disjoint at every depth, Omega=0 and the simpler bounds are head density>1/500 and final supported mass>9/8000. These antichain conclusions are reuse of PF13--PF18, not a new generic principle.
+
+### Exact obstacle: each layer can satisfy the palette while a fibre is empty
+
+The following one actual family has distinct numerical labels, is divisor-closed and irredundant, and has fixed CRT phases:
+
+| Modulus | Residue |
+|---:|---:|
+|3|0|
+|5|0|
+|9|2|
+|15|1|
+|27|5|
+|45|37|
+|81|8|
+|135|28|
+|405|244|
+
+All stars are at5, and there are no mixed cofactors with two nonternary primes, so every separate positive ternary layer satisfies the FC55 palette restriction. The stars 15,45,135,405 have ternary prefixes
+
+    1 mod3, 1 mod9, 1 mod27, 1 mod81,
+
+and respective5 projections1,2,3,4. At the SAME actual point t=1 mod81, all four stars are active. The pure5 survivor law is uniform on the four nonzero5 roots. Each single layer blocks mass1/4, but their common active union blocks mass1. Thus that actual fibre has NO survivor. Resetting the 5-star budget to1/3 independently at each depth is invalid.
+
+The actual period is405. Exact enumeration finds124 surviving residues, with68 in first ternary root1. Every original has an explicitly checked private integer, retained in the JSON. On T=[1]_3 the PF13 collision charge is13/108. The example is a counterexample to naive per-layer reuse of a pointwise reserve; it is not an actual cover or a counterexample to the global lower bounds under their missing antichain/collision hypotheses.
+
+What remains unresolved is whether unrestricted actual families can always supply a suitable low-layer root/palette condition, a sufficiently small integrated collision charge, or a stronger conditional estimate replacing them. The finite ternary-height obstruction has been moved into a concrete first-six-layer hypothesis, not eliminated.
+
+The [ternary-prefix consumer](../../../frontier/cover-geometry/fibre-credit-partition/ternary_prefix_palette.py) and [exact results](../../../frontier/cover-geometry/fibre-credit-partition/ternary_prefix_palette.json) bind the FC55 reserve to its original input, verify the rational constants, and enumerate the nine-original period-405 counterexample and its private points. The canonical program checks 418 predicates. These are ordinary deductions and exact finite controls, not new Lean verification.
+
+
+## Adaptive same-source prefix bounds converge on an event-address tree
+
+FC37 supplies actual q-prefix antichains and FC57 supplies the exact same-leaf product formula. The following computable intervals preserve that common source under refinement and admit an explicit depth-tail error budget. All actual phases are supplied; unknown-phase optimization is a separate problem.
+
+### Source and original registry
+
+Fix a finite set Q of primes other than 3 and 5; the ternary root is already fixed. For each q in Q union{5} let P_q be the union of its actual pure holes, with Haar mass less than 1, and let
+
+    lambda_q(E) = H_q(E minus P_q)/(1-H_q(P_q)).
+
+Reduce P_q and other unions to prefix antichains before calculating their mass. Do not sum intersections with overlapping pure holes. Fix also the actual 5-star deletion set, or one previously certified enlarged one-coordinate deletion set B_5. Write
+
+    w(v) = lambda_5([v] minus B_5).
+
+The source is the product of the q laws, with only coordinate 5 further restricted by B_5. Thus w is a possibly subprobability measure on the same 5-tree; it satisfies exact finite additivity. Nothing below assumes w is uniform, and zero-mass prefixes require no division. A finite union description gives rational exact weights; a general measurable enlargement requires a certified weight oracle instead.
+
+Retain an original registry with distinct numerical labels and actual phases. Each group event j, conditional on the fixed ternary root, is
+
+    D_j = [t_j]_5 times C_j on coordinate q_j,
+
+where t_j is its literal 5-prefix and C_j its literal q_j-cylinder. Free originals and selected ternary originals retain their separate numerical identities even if their projections coincide. q-antichain reduction summarizes an observed union only; it is never a replacement list of usable original moduli. This section studies support-{5,q} events; a general multicoordinate original cannot be inserted with a fictitious single q_j.
+
+### Two local upper bounds and a lower bound
+
+At a 5-prefix v, define the inherited coordinate unions
+
+    A_q(v) = union of C_j with q_j=q and t_j an ancestor of v,
+    a_q = lambda_q(A_q(v)).
+
+Let J(v) contain originals whose address t_j is a strict descendant of v. Let the coordinate envelope contain the inherited and all pending cylinders:
+
+    E_q(v) = A_q(v) union union_(j in J(v),q_j=q) C_j,
+    e_q = lambda_q(E_q(v)).
+
+All these are actual unions in one fixed source. Put F(a)=1-product_q(1-a_q). The inherited event gives the lower bound
+
+    L_v = w(v) F(a).
+
+The first upper bound enlarges every pending address to the whole prefix v:
+
+    V_v = w(v) F(e).                                      (FC61)
+
+For each pending original, its mass not already covered by the inherited union is exactly
+
+    r_j(v) = w(t_j) * lambda_(q_j)(C_j minus A_(q_j)(v))
+                    * product_(q != q_j)(1-a_q).
+
+Consequently a second upper bound is
+
+    R_v = L_v + sum_(j in J(v)) r_j(v).                    (FC62)
+
+Use
+
+    L_v <= actual group mass inside v <= U_v=min(V_v,R_v). (FC63)
+
+Proof: FC61 is set inclusion. For FC62, subtract the inherited union from each pending event and apply the union bound. The product in r_j is valid because the inherited complement is a product of coordinate complements and all factors use the same fixed source. This is not multiplication of averages over an unresolved 5 digit. Same-q intersections remain in the antichains and the difference C_j minus A_q.
+
+The local interval width is explicitly
+
+    U_v-L_v = min{
+        w(v) * [product_q(1-a_q)-product_q(1-e_q)],
+        sum_(j in J(v)) r_j(v)}.                          (FC64)
+
+This measures unresolved future effect, rather than only current inherited mass.
+
+### Coherent refinement is monotone
+
+Use the immediate children c of v in the event-address tree defined below. They partition v into disjoint descendant prefixes and a remainder on which no further original becomes active. Each original strictly below v is either still pending in exactly one child or has that child's address and becomes inherited there. The inherited unions can only grow.
+
+For FC61, every child's envelope is contained coordinatewise in E_q(v), and the remainder's inherited union is also contained in it. Additivity of w therefore gives
+
+    sum_child V_c + exact remainder mass <= V_v.
+
+For FC62, fix the old inherited event A. In a child, let B be the union of the originals newly made inherited there. Its increase over A is at most the sum of the old residual charges for those newly active originals. Every remaining pending charge can only decrease after replacing A by A union B. Summing over children and the exact remainder therefore gives
+
+    sum_child R_c + exact remainder mass <= R_v.
+
+Equivalently this is the elementary set inequality obtained from
+
+    mu(A) + sum_j mu(D_j minus A)
+
+when a subcollection is absorbed into A. It needs no independence beyond that already used to calculate the individual residual charges. Both bounds are monotone separately, so
+
+    exact remainder + sum_child min(V_c,R_c)
+      <= min(V_v,R_v).
+
+The lower bound increases because newly inherited events are additional actual coverage. Hence an adaptive frontier yields global bounds L<=M<=U whose lower endpoint is nondecreasing and upper endpoint nonincreasing under every coherent refinement. If every frontier node has no pending events, L=U=M.
+
+### Jump tree: at most N+1 address nodes
+
+There is no need to construct all 5^h leaves, or even all intermediate digits. Take root plus the distinct original addresses t_j. Parent each nonroot address by its deepest strict ancestor among this finite set. Distinct children of one node are disjoint cylinders. With N originals there are at most N+1 nodes, regardless of maximum exponent.
+
+At node v with event-address children c, the shell
+
+    [v] minus union_child [c]
+
+has weight w(v)-sum_child w(c). No descendant original is active on that shell. The exact recurrence is therefore
+
+    T(v) = [w(v)-sum_child w(c)] F(a(v))
+              + sum_child T(c).                         (FC65)
+
+Stop at a coarse node using FC63; refine it by adding its exact shell contribution and its children. This is precisely the refinement proved above. It terminates after processing at most N+1 nodes. Node count is not a constant-bit complexity claim: prefix containment and rational arithmetic still depend on exponent encoding, integer size and antichain sizes. A straightforward implementation may use quadratic prefix comparisons; no exponential ambient-state enumeration is needed.
+
+For adding an original, retain its numerical label and supplied actual phase, insert its address, and reparent any prior children that it contains. Newly inherited coordinate unions propagate to the affected descendants; envelope and pending-charge data propagate to ancestors. The conservative reference implementation rebuilds this finite tree from the retained registry and recertifies its intervals. Rebuilding is already a safe updating algorithm. Cached incremental implementations must invalidate all changed unions, weights and dependencies; previously certified scalar masses alone cannot reconstruct them. A new pure or star hole changes the source law and invalidates source-dependent weights and certificates, rather than merely adding a group event.
+
+### Explicit height-1000 example
+
+Take pure holes 0 mod 5, 0 mod 7 and 0 mod 11, and a 5-star hole 2 mod 5, all on one fixed ternary root. Use the three actual numerical labels
+
+    55, 3*5^1000*7, 3*5^1000*11.
+
+Their coordinate phases are respectively
+
+    (4 mod 5, 4 mod 11),
+    (4 mod 5^1000, 4 mod 7),
+    (9 mod 5^1000, 5 mod 11).
+
+The selected originals have the fixed ternary root; CRT supplies their phases. These are three distinct odd labels, not a claim of a full divisor-closed inventory. The jump tree has exactly four nodes: root, 4 mod 5, and the two depth-1000 addresses. Pure-hole unions have three one-cylinder descriptions, and no ambient leaf is enumerated.
+
+The shallow event mass is 1/40. Each deep 5-address has mass (5/4)*5^-1000. The q=7 cylinder mass is 1/6. The two displayed q=11 cylinders are disjoint, each of mass 1/10. The two deep 5-addresses are disjoint, and the first overlaps the shallow event by its 1/10 factor. Thus
+
+    exact union = 1/40 + 1/(16*5^999).
+
+The FC62 upper bound at 4 mod 5 already equals this answer before either depth-1000 child is expanded. The independent label sum exceeds it by 1/(48*5^1000). This is exact rational arithmetic on four address nodes, compared with 5^1000 ambient leaves.
+
+### Quantitative error and survivor certificates
+
+At any adaptive frontier, the sum of FC64 widths is an explicit upper error bound. Refining a node with largest width is a safe heuristic; monotonicity does not imply it minimizes total work. Stop when the summed width is below a chosen tolerance, or earlier when the upper endpoint itself certifies positivity.
+
+For example, suppose the remaining independent charges outside this group total C and the carrier mass is W. Replacing the entire group charge by its certified U proves
+
+    survivor mass >= W-C-U.
+
+A positive rational right-hand side is a nonzero certificate on that declared source and inventory. If another proof already gives a group upper bound U_old, use min(U_old,U); do not subtract the same shallow saving again. Relative to an independent group charge S, the certified replacement credit is S-U when positive. It includes only savings actually established by this common-source computation.
+
+A depth-tail bound is also available. After all relevant addresses of depth at most D have been resolved, unresolved originals have 5-depth a>D, and FC64 is at most
+
+    sum_(pending j) w(t_j)*lambda_(q_j)(C_j).
+
+If w(t)<=c_5*5^-a and lambda_q(C)<=c_q*q^-e, this is bounded by the same sum of c_5*c_q*5^-a*q^-e using the retained actual labels. For the ternary-height-one support-{5,q} group, at most two distinct labels occur per (a,q,e): the free label and its selected factor-3 label. Allowing arbitrary finite a,e and a fixed finite Q then gives
+
+    error <= (c_5/(2*5^D))*sum_(q in Q) c_q/(q-1).
+
+With c_5<=4/3 and c_q<=(q-1)/(q-2),
+
+    error <= [2/(3*5^D)]*sum_(q in Q) 1/(q-2).             (FC66)
+
+This provides a uniform truncation error across nonternary heights under that multiplicity contract. It does not extend unchanged to arbitrary ternary multiplicities or infinitely many support primes: retain the actual multiplicities in the former case, and the displayed prime sum supplies no finite unrestricted all-prime bound in the latter. No inference from a finite positive source margin to unrestricted #7 is made.
+
+
+The [adaptive prefix program](../../../frontier/cover-geometry/fibre-credit-partition/adaptive_prefix_union.py) and [exact results](../../../frontier/cover-geometry/fibre-credit-partition/adaptive_prefix_union.json) check 2150 predicates, including 32 finite instances and 32 insertions compared with independent coordinate enumeration, separate monotonicity of both upper bounds, terminal exactness, and the height-1000 four-node example. The 55/525 control extracts the overlap credit 399466375/432601753328 before expanding its deeper address. Numerical original identities and source-hole unions are retained. No new Lean verification or phase-uniform covering conclusion is claimed.
+
+
+## A clean shared coordinate makes the four-root comparison positive
+
+The FC56 negative comparison becomes positive under one additional actual-phase relation between the two group unions. This condition is not supplied by numerical capacities. Actual families with the same separate group masses demonstrate the missing joint datum. The finite FC36 profile and FC56 root assignment remain in force.
+
+### A conditional uniform theorem
+
+Use the FC36 support and heights, the complete star-root pattern, and the FC56 selected-root assignment obtained by moving cofactors 77,91,119,133 to root1. Actual root1 mixed labels must belong to this specified 191-label palette; allowed labels may be absent. The usual pure3-avoiding-root and ternary-height-one hypotheses remain. All allowed 3-free mixed originals and the other-root mixed originals are paid by the existing comparison. Let A and B be the entire actual shallow 5-group and the disjoint-inventory 7-group of FC56, on their same actual pure-conditioned product source.
+
+Write K for the common comparison carrier obtained by avoiding the enlarged 5-star set B5. Throughout, A and B are their group unions intersected with K. Require that the free originals 35 and 77 are present, and define E=K intersect {35's actual residue class} and F=K intersect {77's actual residue class}. The clean 35 cylinder below already lies in K; the raw 77 cylinder need not, so its mass includes the 5-carrier factor. Impose these additional actual-phase conditions:
+
+1. Their mod-7 addresses agree, say at the first cylinder C7.
+2. The mod-5 cylinder C5 of E is disjoint from every actual pure5 cylinder and every actual root1 5-star cylinder.
+3. C7 is disjoint from every actual pure7 cylinder, and the mod-11 cylinder C11 of F is disjoint from every actual pure11 cylinder.
+
+All these are finite, exact cylinder compatibility tests on the actual originals. They are sufficient, not necessary, conditions.
+
+Let lambda_p be normalized Haar on avoidance of the actual pure-p originals. For a clean first cylinder, normalization only increases its Haar mass, so
+
+$$
+\lambda_5(C5)\ge1/5,\qquad
+\lambda_7(C7)\ge1/7,\qquad
+\lambda_{11}(C11)\ge1/11.
+$$
+
+The usual root1 enlargement of the actual 5-star union to mass b5 can be chosen outside C5. Indeed the actual star union is outside it and has mass at most b5, while
+
+$$
+\lambda_5(C5^c)\ge1-c5/5\ge b5.
+$$
+
+Nonatomicity fills the difference without touching C5. Make this choice once, and use that same comparison source and carrier for both FC56 group bounds. Nothing changes an original phase or uses a second optimizing source.
+
+Since E has support {5,7}, F has support {7,11}, and their common 7-cylinder agrees, product independence across the three actual coordinates now gives
+
+$$
+\lambda(E\cap F)
+=\lambda_5(C5)\lambda_7(C7)\lambda_{11}(C11)
+\ge\frac1{385}.
+$$
+
+Both events lie in the common comparison carrier, E is in A, and F is in B. Therefore
+
+$$
+\lambda(A\cup B)
+\le U5+U7-\frac1{385}.
+$$
+
+This is a cross-group intersection deduction, not another separately added scalar group improvement. Each group is replaced once by its existing union upper bound, their intersection is subtracted once, and every other original retains its existing charge. Overlap with further charged originals does not invalidate this union upper bound.
+
+Write E56 for the exact FC56b root1 lower-comparison expression. The existing lower endpoint of its certified rational enclosure is
+
+$$
+E_-=-\frac{20143901363203143744800586446475240701080793556842324476859}
+{16670353800971375044126548732410574327481586044800000000000000}.
+$$
+
+The strengthened actual survivor comparison is at least
+
+$$
+E_-+\frac1{385}
+=\frac{162090032293421176406878599100320121046645100462103728661987}
+{116692476606799625308885841126874020292371102313600000000000000}
+>\frac1{750}. \tag{FC67}
+$$
+
+Its decimal value is 0.0013890358402417885. The same full-Haar density cap $3\prod c_p<8$ gives actual integer survivor density $>1/6000$. Thus this actual-phase condition closes the otherwise negative four-flip comparison, uniformly over the other actual phases. It does not assert the condition for every admissible assignment.
+
+More generally, measured masses on any clean compatible triple can replace 1/385. The exact threshold needed is that their product exceed -E56. Neither each group nor every original needs its own positive gain.
+
+### Exact actual phase models separate the missing joint datum
+
+Fix the same original FC36 85-class pure/star source. At every nonternary prime p, its pure cylinders are 0 mod p and 1+p^(e-1) mod p^e at e>=2. Its star cylinders have p-address 2 mod p and 3+p^(e-1) mod p^e at e>=2, with ternary root1 for p=5 and root2 otherwise. The pure3 original has root0. These source originals remain identical in both models.
+
+Keep every one of the 2138 mixed cofactors d and its selected original 3d at the four-flip prescribed root t(d). Also keep every corresponding free original d. Together with the source there are 4361 distinct odd nonunit moduli. Except for free35 and free77, place every free d at 0 mod d; place each selected 3d at the unique CRT class which is 0 mod d and t(d) mod3. These mixed classes lie inside actual pure first-prime holes, so their deletion mass in the pure-conditioned source is zero. This completion retains the whole specified numerical roster and every assigned ternary root; no claim of irredundancy, global minimality, or covering is made.
+
+Use the following two remaining phase assignments:
+
+| Original | Model I | Model II |
+| --- | --- | --- |
+| free35 | 4 mod35 | 4 mod35 |
+| free77 | 4 mod77 | 26 mod77 |
+
+The second assignment changes the 7-address from4 to5 and keeps the 11-address4. Both 7 first cylinders are full in this same source. The first5 cylinder4 is full and avoids the actual star union. Thus in both models
+
+$$
+\lambda(A)=\frac{1500625}{32830064},\qquad
+\lambda(B)=\frac{4994927553}{432601753328}.
+$$
+
+The separate entire-group masses agree, not merely the individual upper allowances. The numerical inventory, source caps, T5 and T7 budgets, star pattern, and all corresponding capacity metadata also agree. But
+
+$$
+\lambda(A\cap B)=
+\begin{cases}
+\dfrac{1997331875}{432601753328},&\text{Model I},\\[1mm]
+0,&\text{Model II}.
+\end{cases}
+$$
+
+Consequently the joint group union changes from
+
+$$
+\frac{22771331303}{432601753328}
+\quad\text{to}\quad
+\frac{12384331589}{216300876664}.
+$$
+
+This gives actual same-reading/different-joint-output instances. Relative 7-address compatibility is new information which cannot be recovered from those separate scalar group observations. The second model has substantial unused allowance, so it does NOT refute a future phase-uniform inequality coupling intersection credit with allowance slack. That tradeoff remains the relevant unrestricted direction; a blanket positive intersection lower bound is already false.
+
+### An exact joint interface retaining the needed relation
+
+The preceding example fits a more complete interface, obtained by applying the existing prefix-antichain representation on one common head partition.
+
+Resolve the 5 first root i and the full finite 7-prefix s used by the actual 5-group's support-{5,7} events. Let j(s) be the first7 root. Put
+
+$$
+w_i=\lambda_5([i]_5\setminus B5),\qquad
+v_s=\lambda_7([s]),
+$$
+
+and let a_i(s) be the indicator that a support-{5,7} event in A covers this head cell. For q>7, let X_(q,i) be the actual q-prefix union of A's support-{5,q} events in row i, and Y_(q,j) the actual q-prefix union of B's support-{7,q} events in row j. Set
+
+$$
+x_{q,i}=\lambda_q(X_{q,i}),\quad
+y_{q,j}=\lambda_q(Y_{q,j}),\quad
+z_{q,i,j}=\lambda_q(X_{q,i}\cap Y_{q,j}).
+$$
+
+Then the exact joint mass is
+
+$$
+\lambda(A\cup B)
+=\sum_{i,s}w_i v_s
+\left[1-(1-a_i(s))
+\prod_{q>7}\bigl(1-x_{q,i}-y_{q,j(s)}+z_{q,i,j(s)}\bigr)\right]. \tag{FC68}
+$$
+
+This conditions only within the ONE actual product source. For each private prime q it unions the two groups' projections before multiplying across independent q coordinates. The 7-prefix s must resolve the full depth of A's {5,7} originals; conditioning only on the first7 root would lose their unresolved incidence with the 7 source. Prefix antichains retain the intersections z exactly. First-root marginals and separate radical bounds discard a_i(s), the relative head addresses, and z.
+
+The formula is exact, not itself a new phase-uniform optimized bound. A next uniform improvement must either constrain these shared incidences, or quantitatively trade their failure against slack in the two existing group bounds. Treating z or different rows as independently realizable optimization variables would again lose the common original phases.
+
+
+The [cross-interface control](../../../frontier/cover-geometry/fibre-credit-partition/cross_interface_overlap.py) and [exact results](../../../frontier/cover-geometry/fibre-credit-partition/cross_interface_overlap.json) bind the inherited FC56 endpoints to their original input and check 8870 predicates: rational positivity, the density conversion, actual pure/star union normalizers, literal CRT compatibility and all 4361 distinct odd nonunit numerical originals. The phase families are reconstructed by the stated rule rather than stored as duplicate inventories. This is ordinary mathematics with exact finite controls, not new Lean verification.
