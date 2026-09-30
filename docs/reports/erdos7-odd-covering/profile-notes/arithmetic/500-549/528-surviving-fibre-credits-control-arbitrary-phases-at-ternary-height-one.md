@@ -9069,3 +9069,79 @@ source from unsupported switching in a source-parameter proof. The
 present argument applies those statements simultaneously to a finite
 comparison family. No new Lean declaration, external novelty claim,
 or solution of unrestricted Erdős #7 is claimed.
+
+## The fixed two-comparison continuation gives no further gain
+
+Applying (FC402)--(FC407) to the one-pair and all-group profiles is
+valid, but gives no improvement on the fixed half-clipping sequence
+43,47,53,59,61,67,71,73. For each of the two physical sources, the
+all-group law supplies the strictly smaller charge at every stage.
+Its entire trajectory remains exactly (FC395), and its first and
+fourth moments also give the smaller endpoint bounds. The final
+mass,79 obstruction and quartic-tail reserve are unchanged.
+
+### 1. Same-source state and exact update
+
+The [consumer](../../../frontier/cover-geometry/pure-support-profiles/comparator_family.py)
+reads the saved [one-pair initialization](../../../frontier/cover-geometry/pure-support-profiles/grouped_pair_profile.json),
+the [two all-group initializations](../../../frontier/cover-geometry/pure-support-profiles/full_group_profile.json)
+and their [separate reference continuations](../../../frontier/cover-geometry/pure-support-profiles/full_group_continuation.json).
+It reconstructs these states without rerunning initialization.
+
+For a FIXED FC110 source, both initial laws bound that same eta0 of
+mass h. Independently, the same one-pair law and FC131's own all-group
+law bound eta0_FC131. The actual2 mod55 original present in both
+skeletons justifies using the same numerical one-pair profile in
+these separate source statements. Source-specific all-group
+coefficients are never exchanged between the two cases.
+
+At each q in the fixed sequence, set T=(q-1)/2 and
+
+    d=min(H_pair(T),H_group(T))/T, m'=m-d,
+    Pi'_pair=Top_(m')(Pi_pair times pi_cap(q,2)),
+    Pi'_group=Top_(m')(Pi_group times pi_cap(q,2)).    (FC408)
+
+Both comparisons continue after every step with the same new mass.
+They are not each advanced along their earlier individual mass
+sequence. The [saved result](../../../frontier/cover-geometry/pure-support-profiles/comparator_family.json)
+retains complete moments0,1,2,4, exact atoms through256, every charge,
+and every split certificate for both members on both sources.
+
+### 2. What the exact result rules out
+
+For both sources and all eight steps, exact fraction comparison gives
+
+    H_group(T)<H_pair(T),
+    m'_family=m'_single_group,
+    Pi'_group,family=Pi'_group,single_group.          (FC409)
+
+The equality of the stored laws means equality of all stored low
+atoms and complete moments and tails; their shared update constructs
+the same full comparison measure from the same initial law. At the
+endpoint the minimum first and fourth moments are both supplied by
+the all-group member. Consequently
+
+    final mass gain=0,
+    fixed quartic reserve gain=0,
+    min(W_pair,W_group)=W_group>78m.                 (FC410)
+
+These are exact equalities and inequalities, not equality of rounded
+displays. No79 hinge or update is performed. The all-constant79
+obstruction of (FC407) remains, and the inherited analytic tail
+certificate is exactly (FC400)--(FC401).
+
+This rejects an improvement from this specified pair of comparisons
+on this fixed schedule. It does not prove increasing-convex dominance
+of the all-group law over the one-pair law at every threshold, rule
+out other valid comparisons, or assert anything about actual79
+survivor emptiness. The FC159 source restrictions and excluded
+support primes in(73,10000] remain unchanged. No parameter, depth,
+phase or ordering search is added after this zero-gain result.
+
+The canonical consumer passes771 exact checks. The independent
+calculation uses its own saved initializations and arithmetic, then
+agrees on all104 stored comparison snapshots and26624 low-atom
+values, complete moments, charges, cutoffs and endpoint conditions.
+Only saved outputs are used for binding. This is ordinary exact
+arithmetic under the proved same-source interface, with no new Lean
+verification or unrestricted noncovering conclusion.
