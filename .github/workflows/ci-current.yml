@@ -1,0 +1,170 @@
+name: CI current
+
+# Lean report, current-tree rules and Scribe checks; on pull requests also the
+# delta rules against B = first parent of the event merge commit. The report is
+# built once and consumed by both rule sets inside this one job.
+
+on:
+  pull_request:
+    branches: [dev, 'integration-**']
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [dev, 'integration-**']
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: ci-current-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  # This workflow is the only writer of the Lean dependency, project and elan
+  # caches: dev/integration pushes and the PR's own merge-ref scope.
+  CACHE_WRITES: ${{ (github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-'))) || github.event_name == 'pull_request' }}
+  REPORT: .lake/build/stratalint/raw-lean-report.json
+  CLI: tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll
+
+jobs:
+  current:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - id: entry
+        name: Check path whitelist
+        env:
+          CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_HIT_PATHS: |
+            *
+            !README.md
+            !docs/VISION.md
+            !docs/assets/inquiry-cycle.svg
+            !docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md
+            !docs/develop/spec/trureturing_engineering_optimization_v1.md
+            !docs/develop/theory/*
+            !docs/reports/*
+            !tools/TestSupport/StrataLint.RuleTestSupport/*
+            !tools/lean-inspector/README.md
+            !tools/scripts/agent/openproblem/README.md
+            !tools/scripts/agent/openproblem/SCREENED-OUT*.md
+            !tools/scripts/agent/prime_slabs/CPU.md
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - id: delta_entry
+        name: Check delta path whitelist
+        if: github.event_name == 'pull_request' && steps.entry.outputs.hit == 'true'
+        env:
+          CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          # The current whitelist plus paths whose change never needed delta.
+          CI_HIT_PATHS: |
+            *
+            !README.md
+            !docs/VISION.md
+            !docs/assets/inquiry-cycle.svg
+            !docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md
+            !docs/develop/spec/trureturing_engineering_optimization_v1.md
+            !docs/develop/theory/*
+            !docs/reports/*
+            !tools/TestSupport/StrataLint.RuleTestSupport/*
+            !tools/lean-inspector/README.md
+            !tools/scripts/agent/openproblem/README.md
+            !tools/scripts/agent/openproblem/SCREENED-OUT*.md
+            !tools/scripts/agent/prime_slabs/CPU.md
+            !.lake/*
+            !Blueprint/*
+            !Evidence/*
+            !Generated/*
+            !Golden/Projection/*.json
+            !Library/*/*.md
+            !Problems/*
+            !build/*
+            !tools/Generated/scribe-emissions.v1.json
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - if: steps.entry.outputs.hit == 'true'
+        uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+          cache: true
+          cache-dependency-path: '**/packages.lock.json'
+      - id: keys
+        if: steps.entry.outputs.hit == 'true'
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+      - id: elan
+        if: steps.entry.outputs.hit == 'true' && steps.keys.outputs.elan_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - if: steps.entry.outputs.hit == 'true'
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - id: dependency
+        if: steps.entry.outputs.hit == 'true' && steps.keys.outputs.dependency_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+      - id: project
+        if: steps.entry.outputs.hit == 'true' && steps.keys.outputs.project_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.project_archive_path }}
+          key: ${{ steps.keys.outputs.project_key }}
+          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+      - name: Restore optional Lean build seeds
+        if: steps.entry.outputs.hit == 'true'
+        env:
+          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+          PROJECT_OUTCOME: ${{ steps.project.outcome }}
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - name: Build the Lean report
+        if: steps.entry.outputs.hit == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRATALINT_ACCEPT_COLD_BUILD: '1'
+        run: make lean-report
+      - name: Build the judge
+        if: steps.entry.outputs.hit == 'true'
+        run: dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -p:RestoreLockedMode=true -nologo
+      - name: Current-tree rules
+        if: steps.entry.outputs.hit == 'true'
+        run: dotnet "$CLI" check-current --candidate-lean-report "$REPORT"
+      - name: Scribe content
+        if: ${{ !cancelled() && steps.entry.outputs.hit == 'true' }}
+        run: tools/scripts/workflow/scribe-content-checks.sh "$REPORT"
+      - name: Delta rules
+        if: ${{ !cancelled() && steps.delta_entry.outputs.hit == 'true' }}
+        run: dotnet "$CLI" check-delta --protected-base "$(git rev-parse HEAD^1)" --candidate-lean-report "$REPORT"
+      - id: snapshot
+        if: ${{ !cancelled() && steps.entry.outputs.hit == 'true' && env.CACHE_WRITES == 'true' }}
+        continue-on-error: true
+        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE"
+      - if: ${{ !cancelled() && steps.snapshot.outcome == 'success' && steps.project.outputs.cache-hit != 'true' }}
+        continue-on-error: true
+        uses: actions/cache/save@v5
+        with:
+          path: ${{ steps.keys.outputs.project_archive_path }}
+          key: ${{ steps.keys.outputs.project_key }}
+      - if: ${{ !cancelled() && steps.snapshot.outcome == 'success' && steps.dependency.outputs.cache-hit != 'true' }}
+        continue-on-error: true
+        uses: actions/cache/save@v5
+        with:
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+      - if: ${{ !cancelled() && steps.entry.outputs.hit == 'true' && env.CACHE_WRITES == 'true' && steps.elan.outputs.cache-hit != 'true' }}
+        continue-on-error: true
+        uses: actions/cache/save@v5
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}

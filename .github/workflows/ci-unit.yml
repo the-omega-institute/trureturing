@@ -1,0 +1,94 @@
+name: CI unit
+
+# One independent CI unit. Each caller workflow file owns its path whitelist
+# and command; this file only runs them. When no whitelisted path changed, the
+# remaining steps are skipped and the job succeeds.
+
+on:
+  workflow_call:
+    inputs:
+      paths:
+        description: Path whitelist, one bash pattern per line (`*` also matches `/`)
+        required: true
+        type: string
+      run:
+        description: Command executed from the repository root when the whitelist is hit
+        required: true
+        type: string
+      lean:
+        description: none | toolchain | build (toolchain plus the dependency and project build layers)
+        type: string
+        default: none
+      timeout-minutes:
+        type: number
+        default: 30
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: ${{ inputs.timeout-minutes }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+      - id: entry
+        name: Check path whitelist
+        env:
+          CI_HIT_PATHS: ${{ inputs.paths }}
+          CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - if: steps.entry.outputs.hit == 'true'
+        uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+          cache: true
+          cache-dependency-path: '**/packages.lock.json'
+      - id: keys
+        if: steps.entry.outputs.hit == 'true' && inputs.lean != 'none'
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
+      - id: elan
+        if: steps.entry.outputs.hit == 'true' && inputs.lean != 'none' && steps.keys.outputs.elan_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
+      - if: steps.entry.outputs.hit == 'true' && inputs.lean != 'none'
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - id: dependency
+        if: steps.entry.outputs.hit == 'true' && inputs.lean == 'build' && steps.keys.outputs.dependency_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.dependency_archive_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+          restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
+      - id: project
+        if: steps.entry.outputs.hit == 'true' && inputs.lean == 'build' && steps.keys.outputs.project_key != ''
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: ${{ steps.keys.outputs.project_archive_path }}
+          key: ${{ steps.keys.outputs.project_key }}
+          restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
+      - name: Restore optional Lean build seeds
+        if: steps.entry.outputs.hit == 'true' && inputs.lean == 'build'
+        env:
+          DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
+          PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
+          PROJECT_OUTCOME: ${{ steps.project.outcome }}
+        run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
+      - name: Run
+        if: steps.entry.outputs.hit == 'true'
+        env:
+          CI: 'true'
+          DOTNET_CLI_UI_LANGUAGE: en-US
+        run: ${{ inputs.run }}
