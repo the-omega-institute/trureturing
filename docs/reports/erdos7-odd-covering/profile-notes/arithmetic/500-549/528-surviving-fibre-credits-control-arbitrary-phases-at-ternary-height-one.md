@@ -21006,3 +21006,165 @@ continuation and remainder. Private-point constraints, chain savings
 and deletion credit still need a joint arithmetic estimate fulfilling
 that obligation. The present identities and noncovering example do
 not supply it. These are written derivations, not new Lean results.
+
+## The actual all-star source has a summable weighted row distortion
+
+Keep the actual pure-and-star source of FC777--782, before any restarted
+mixed kernels. Its literal phases and arbitrary finite heights remain
+fixed. Thus nu_3 is the normalized pure ternary law, nu_p is the
+normalized pure-p law, alpha_p(y) is the actual active star-union
+probability, and
+
+    zeta_star=nu_3 product_(p in V)tau_p(y,.),
+    Z_star=mass(zeta_star)>1081/1800.
+
+The allowed row from the existing half-threshold kernel is exactly
+tau_p=g_p(y)1_(F_p(y)^c)nu_p, where
+
+    g_p=1/[1-min(alpha_p,1/2)], 1<=g_p<=2,
+    nu_p<=c_p Haar_p, c_p=(p-1)/(p-2).
+
+At alpha_p=1 the allowed row is zero. This density formula still
+gives a valid upper bound. The product structure is conditional on
+the SAME complete ternary word y; no independence after integration
+over y is imposed. Unqueried rows have mass a_p(y)<=1 and may be
+dropped only for an upper bound.
+
+For a finite query Q=3^e3 product_p p^ep, let V_+={p in V:ep>0}.
+Reuse FC865's H_p=sum_(j,k=0..ep)p^-max(j,k), and put
+
+    b_p=1+c_p(H_p-1),
+    theta_p=c_p(H_p-1)/b_p <= (3p-1)/(p^2+1),
+    T(y)=2 sum_(p in V_+)theta_p alpha_p(y).
+
+For each p and actual star p-depth e, let N_pe(y) count its active
+ternary prefixes. Numerical distinctness gives at most one such
+prefix at each t>=1. The union bound on the ACTUAL star cylinders
+gives alpha_p<=c_p sum_(e>=1)p^-e N_pe. Therefore
+
+    T<=sum_(p,e)w_pe N_pe, w_pe=2theta_p c_p p^-e,
+    W:=sum_(p,e)w_pe <= sum_(p in V_+)2theta_p/(p-2)
+       <6/7.                                           (FC871)
+
+Only actual finite p,e inventories are needed on the first line;
+the infinite sum supplies an upper allowance. To verify the last
+bound without a prime scan, each prime term is at most
+2(3p-1)/[(p-2)(p^2+1)]<6/[p(p-2)]. The latter sum over ALL odd
+integers p>=5 is1. Remove the nonprime9 term2/21, and at5,7 use
+the sharper terms14/39 and4/25. This subtracts another8/195 and2/175,
+leaving1939/2275<6/7. Missing queried primes only lower the sum.
+
+The relevant exponential moment is supplied by the same one-prefix-
+per-depth structure underlying FC778--779. For any such finite
+prefix count N, every product of r indicators has Haar mass at most
+3^-max(t_1,...,t_r). Its r-th moment is therefore bounded by that
+of G with Pr(G>=t)=3^-t. Since nu_3<=2 Haar_3, for0<=c<log3,
+
+    integral exp(cN)dnu_3 <= 4/[3-exp(c)].
+
+This uses all ordered indicator products and hence does not assume
+the actual prefixes are nested. If W>0, weighted Jensen applied to
+the coefficients w_pe/W gives the same bound for exp(lambda T),
+with c=lambda W. If W=0, T=0 and the exponential moment is exactly1.
+
+Set q=7/6. The elementary inequality2^q-1<5/4 follows from
+(9/4)^6>2^7. Hence (2^q-1)W<15/14. Also
+exp(15/14)<(11/4)(14/13)=77/26<3, using exp(1)<11/4 and
+exp(1/14)<14/13. Consequently
+
+    integral exp((2^q-1)T)dnu_3 <104.                 (FC872)
+
+This retains the small actual alpha_p in each row. Paying the cap2
+at every queried prime would discard the summability in FC871.
+
+## Pair-index Holder preserves all the complete query phases
+
+Let C_Q be the complete squared-query maximum and A_Q its coherent
+anchored subfamily, as in FC865. Fix ONE complete layout, and expand
+its square over ordered divisor pairs. For fixed ternary depths t,u,
+index the pairs of nonternary exponent vectors by i. Put
+
+    a_i=product_(p:j_p+k_p>0)c_p p^-max(j_p,k_p),
+    F_i(y)=product_(p:j_p+k_p>0)g_p(y).
+
+The actual ternary intersection I_i is empty or a prefix of depth
+max(t,u). It may depend on the ENTIRE nonternary pair i. The local
+nonternary intersection may also be empty; otherwise its tau_p mass
+is at most g_p c_p p^-max(j_p,k_p). Thus the contribution for these
+t,u is at most sum_i a_i integral1_(I_i) F_i dnu_3.
+
+Apply Holder on the joint space of i and y, with finite measure
+a_i nu_3 and exponents q=7/6 and q'=7. Its first moment factor uses
+
+    sum_i a_i F_i^q
+       =product_(p in V_+)[1+c_p g_p^q(H_p-1)]
+       <=product_p b_p * exp((2^q-1)T).
+
+For alpha<=1/2, convexity bounds (1-alpha)^-q-1 by its endpoint
+secant2(2^q-1)alpha; for alpha>=1/2 the same inequality holds since
+g_p^q=2^q. This proves the displayed exponential bound. The other
+Holder factor uses sum_i a_i=product_p b_p and
+nu_3(I_i)<=2*3^-max(t,u). Combining with FC872 gives
+
+    sum_i a_i integral1_(I_i) F_i dnu_3
+       <=104^(6/7)2^(1/7)3^(-max(t,u)/7) product_p b_p.
+
+The depth-zero cap2 is loose but valid. Crucially, no common ternary
+phase is imposed on different i, and no complete layout or complete
+maximum has been factorized. Summing the remaining t,u gives
+
+    C_Q(zeta_star)<=U_star,
+    U_star=104^(6/7)2^(1/7) H3(e3;1/7) product_p b_p,
+    H3(h;1/7)=sum_(t,u=0..h)3^(-max(t,u)/7).           (FC873)
+
+The existing masked-Haar bounds FC296--298 and FC865 motivate the
+positive-depth factors. The additional step here is the joint-index
+Holder estimate coupled to FC871--872; it retains the star-induced
+dependence through y instead of replacing it by independent maxima.
+
+## A full-star comparison with an explicit retained-mass cost
+
+Let H_non=product_(p in V_+)H_p. The finite odd-integer telescoping
+argument in FC866, omitting the ternary factor R_3=5/3, gives
+product_p b_p/H_non<8/5. If V_+ is empty its product is1.
+Put r=3^(-1/7) and
+
+    K_star=(8/5)104^(6/7)2^(1/7)(1+r)/(1-r)^2.
+
+Since H3(e3;1/7)<=(1+r)/(1-r)^2, FC873 yields
+
+    C_Q(zeta_star)<=K_star H_non,
+    C_Q(zeta_star)/A_Q(zeta_star)
+       <=K_star/Z_star <(1800/1081)K_star.             (FC874)
+
+Uniform-anchor averaging gives the denominator bound
+A_Q(zeta_star)>=Z_star H_non H_(3,e3), with H_(3,e3)>=1. Thus the
+comparison constant is independent of prime support, original heights
+and query heights. The query cost itself still contains H_non; no
+support-independent absolute cost or sharp constant is asserted.
+
+Any ONE selector0<=h<=1, possibly depending on all coordinates,
+defines nu=h zeta_star and retained raw mass m>0. The compulsory
+unit query and the same averaging argument give
+
+    C_Q(nu)<=U_star-Z_star+m,
+    A_Q(nu)>=m H_non H_(3,e3),
+    C_Q(nu)/A_Q(nu)
+       <=[U_star-Z_star+m]/[m H_non H_(3,e3)]
+       <=K_star/m.                                    (FC875)
+
+At m=0 both costs vanish and no ratio is taken. For a selector retaining
+fraction gamma of the NORMALIZED star source, m=gamma Z_star; its
+comparison constant is at most1800 K_star/(1081 gamma). This is a
+mass-dependent bound on that actual source, consistent with FC863's
+unbounded comparisons when arbitrary selections retain vanishing mass.
+
+All pure and star originals are avoided by the fixed zeta_star, and
+its positive mass is supplied by FC782. General mixed originals may
+be excluded by h only if their resulting mass m is separately paid.
+The restarted mixed kernels change surviving-path weights and are
+not covered by FC871--875 without an additional comparison. In
+particular these bounds do not substitute zeta_star for FC814's
+actual mixed prefix law, assert a positive mixed-survivor mass, or
+pay a whole-family tail/remainder. The all-family strict margin
+remains unresolved. These are written derivations, not Lean results.
