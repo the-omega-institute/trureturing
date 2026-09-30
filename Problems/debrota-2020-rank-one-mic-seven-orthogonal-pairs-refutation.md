@@ -91,6 +91,81 @@ Mathlib positivity and rank bounds, with no independent escape witness.
 Admission uses `open-problem-resolution`; utility is `certified-instance`
 with basis `refutes` the formal `claim`.
 
+### What the settlement shows
+
+- The literal seven-pair bound fails while every MIC requirement is retained:
+  the witness is positive semidefinite, rank one, normalized and informationally
+  complete, with nine distinct orthogonal cycle pairs. The proposed upper bound
+  fails because these pairwise zeros coexist with exact reconstruction of every
+  Hermitian operator; the real Hermitian span is not lost.
+  [proved: D5/S3/Quantum/Measurement/QutritRankOneMicOrthogonalPairs.result]
+
+- The failure mechanism is a sparse zero pattern compatible with an invertible
+  reconstruction map. For the Route data, all 36 unordered trace products have
+  exactly the nine listed zeros: the zero graph is the cycle C9, every degree
+  is two, its maximum clique has size two, and the other 27 products are
+  strictly positive. Thus there is no mutually orthogonal triple. The coordinate
+  matrix B of the unscaled outer products has determinant -46 and rank nine,
+  while the positive weights k/46 give the identity sum.
+  [computed: `python3`/SymPy exact outer products, all `a < b` trace products,
+  clique enumeration and `B.det(), B.rank(), sum(E)`; outputs: zeros=9,
+  positive=27, degrees=(2,2,2,2,2,2,2,2,2), clique=2, det(B)=-46, rank(B)=9,
+  sum(E)=I3]
+
+- Bias cannot be removed by rescaling these same nine rays while retaining
+  the POVM condition. Solving B times the scaling vector equals the coordinates
+  of I3 gives the unique solution k/46. Its effect traces are
+  `(9/46,4/23,3/23,10/23,3/23,6/23,27/46,14/23,11/23)`.
+  Equal-trace normalization `U_a = v_a v_a†/(3 ||v_a||²)` instead has sum with
+  diagonal `(91/90,169/180,21/20)` and entry `(0,1)=(-11-i)/90`, rather than I3.
+  The nonzero unique scaling coefficients also retain, for this witness, the
+  paper's obstruction to rescaling a proper subset into a POVM.
+  [computed: `python3`/SymPy `B.inv()*coords(I3)`, effect traces and
+  `sum(P/(3*trace(P)))`; outputs: scaling=(3,2,2,4,3,3,9,7,11)/46,
+  traces=(9/46,4/23,3/23,10/23,3/23,6/23,27/46,14/23,11/23),
+  normalized-sum diagonal=(91/90,169/180,21/20), entry(0,1)=(-11-i)/90]
+
+- Whether every rank-one qutrit MIC with the added equal-trace hypothesis
+  `tr(E_a)=1/3` has at most seven orthogonal pairs remains open here. The biased
+  witness and the uncertified unbiased numerical candidates do not settle this
+  restricted statement. [open]
+
+- Whether nine is the sharp maximum over all rank-one qutrit MICs remains
+  open here; a sharpness argument must exclude ten or more unordered orthogonal
+  pairs. The certified lower bound alone does not supply that upper bound. [open]
+
+- The witness satisfies the paper's neighbouring tight-frame criterion rather
+  than breaking it. With `W` having columns `sqrt(k_a/46) v_a`, its vector Gram
+  matrix `g=W†W` is an idempotent of rank three and trace three, and
+  `g` Hadamard-multiplied by its complex conjugate is the effect Gram matrix G,
+  of rank nine. These checks preserve the criterion for this instance; the
+  nine-cycle zeros also preserve the paper's no-orthogonal-basis conclusion
+  for this instance.
+  [computed: `python3`/SymPy exact `g*g-g`, `g.rank()`, `trace(g)` and
+  `g.multiply_elementwise(conjugate(g))`; outputs: g²-g=0, rank(g)=3,
+  trace(g)=3, Hadamard product=G, rank(G)=9]
+
+- The paper's seven-pair example remains a valid special case, without being
+  a maximum certificate. Its nine printed projector matrices, divided by
+  three, sum to I3, each is rank one with trace 1/3, and their Hermitian
+  coordinate matrix has rank nine. Their seven zero pairs, using zero-based
+  indices, are `(0,1),(0,3),(0,5),(1,2),(1,4),(3,6),(4,6)`.
+  [computed: `python3`/SymPy exact printed Example 1 matrices divided by three,
+  projector identities, ranks, traces, coordinate rank and all unordered trace
+  products; outputs: (3E_a)²=3E_a=(3E_a)† for all nine, sum=I3,
+  ranks=(1,1,1,1,1,1,1,1,1), traces=(1/3,1/3,1/3,1/3,1/3,1/3,1/3,1/3,1/3),
+  coordinate-rank=9, zero-pairs=((0,1),(0,3),(0,5),(1,2),(1,4),(3,6),(4,6))]
+
+- Further conclusions for the paper's orthocross no-zero question
+  (Conjecture 2), its Weyl--Heisenberg spectral plateau question (Conjecture 4),
+  and its SIC distance-optimality theorems remain open in this module.
+  An orthocross implication needs the orthocross construction hypothesis;
+  a plateau implication needs the Weyl--Heisenberg ensemble and spectral
+  relation; a distance-optimality comparison needs equal traces and the stated
+  matrix norm. The pair-count refutation supplies none of those additional
+  results. Conjecture 3's separate inverse-Gram settlement is the result cited
+  in Gap, not a consequence of this counterexample. [open]
+
 ## ASSUMED-UNVERIFIED
 
 The Preston thesis and Gaussian-noise citing paper recorded as inaccessible
