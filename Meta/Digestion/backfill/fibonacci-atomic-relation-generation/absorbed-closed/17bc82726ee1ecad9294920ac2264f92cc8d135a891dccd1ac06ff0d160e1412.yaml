@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:17bc82726ee1ecad9294920ac2264f92cc8d135a891dccd1ac06ff0d160e1412
   normalized_sha256: sha256:17bc82726ee1ecad9294920ac2264f92cc8d135a891dccd1ac06ff0d160e1412
 cas_ref: sha256:17bc82726ee1ecad9294920ac2264f92cc8d135a891dccd1ac06ff0d160e1412
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/TauCubeRootBound.result
+    target_statement_id: sha256:40a369068c95a928cff7bf67f73b0b823b4893502d35a1aa779e99df74abbe4c
 receipts:
   unresolved_subitems: []
