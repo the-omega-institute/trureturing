@@ -157,7 +157,7 @@ LeanInformationAudit.Tests.RegistrationErrors.definitionBackedTarget -/
 run_cmd registrationTransaction do
   -- Assert the recording phase before asking the report to reject the input.
   -- Rollback also keeps this local negative probe out of imported fixtures.
-  elabCommand (← `(command| register_information_theorem definitionBackedTarget
+  Lean.Elab.Command.elabCommand (← `(command| register_information_theorem definitionBackedTarget
     in fixtureLawArena primitives fixtureBundle realization definitionBackedRealization))
   if (← get).messages.hasErrors then
     throwError "[FAIL] definition_bridge_rejected_during_recording"
