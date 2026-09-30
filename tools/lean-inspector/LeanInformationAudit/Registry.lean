@@ -186,7 +186,7 @@ private def certificateJson (certificate : TemplateBindingCertificate) : Json :=
   (certificate.sourceBinding.toList.map fun source => ("source_binding", source))
 
 private def isRepositoryModule (name : Name) : Bool :=
-  #[`D5, `Reg, `LeanInformationAudit, `LeanInformationAuditInterface].any (·.isPrefixOf name) ||
+  #[`Reg, `D5, `LeanInformationAuditInterface, `LeanInformationAudit].any (·.isPrefixOf name) ||
     name == `Trureturing
 
 private def isRecordedModule (name : Name) : Bool :=
