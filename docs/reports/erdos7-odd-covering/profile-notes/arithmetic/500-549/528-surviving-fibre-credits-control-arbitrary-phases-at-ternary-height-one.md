@@ -6392,3 +6392,173 @@ The fixed rational substitutions have eight exact arithmetic checks, covering th
       =1221735848827513069/584301805897711696>0.
 
 The mathematical sources are Report528 FC158–FC159 plus the full-head density construction, Chapter33 SH5–SH6, Report458 DP6's Jensen argument, and Report463 PE2–PE6. The arithmetic substitutions do not prove those source theorems; no new Lean verification is claimed.
+
+## A common upper-mass profile absorbs 43 and 47
+
+Every FC159 core, with its original skeleton and admitted finite nongroup remainder, admits arbitrary finite extensions whose new head-only moduli touch 43 or 47 and have support contained in the old head together with those two primes. All added phases, support combinations and finite exponents are unrestricted. One actual supported submeasure has mass greater than `1/125`, simultaneous complete-query second moment less than `96/5`, and full-Haar density at most four. Thus the enlarged actual fourteen-prime head has Haar survivor mass greater than `1/500`.
+
+Under the existing Chapter33 SH11 analytic prime-product premise, the SAME new source still admits every finite outside-prime tail strictly above 10000, with arbitrary finite support sizes and exponent heights. Its final distorted survivor mass is greater than `1/1000`. This is not a final Haar-density assertion of `1/1000`.
+
+The proof reuses the full Haar increasing-convex comparison in Report778, the capped-coordinate comparison and exact stop-loss deletion in Report771, and the repeated upper-mass comparison in Report773. It improves the information passed between the two actual prime operations. It is ordinary mathematics and exact arithmetic, not a new abstract comparison theorem, Lean verification, or a solution of unrestricted Erdős #7. The earlier one-prime Jensen/Report463 result remains valid independently.
+
+### 1. One physical source, normalized once at the start
+
+Keep the old head support and the reviewed whole-core density cap:
+
+    R={3,5,7,11,13,17,19,23,29,31,37,41},
+    D0=1816999451688960000/36518862868606981 <50.
+
+FC159 with its declared skeleton, admitted nongroup inventory, arbitrary admitted phases and `N>=N_+` supplies one probability `mu` supported on its actual full survivor U, satisfying `mu<=D0*H_R`. The old core-only originals retain FC159's ternary-height-at-most-one condition. Both first ternary roots remain in the source. No new old-only original is silently included.
+
+Resolve every old exponent appearing in the complete planned family, including cofactors of 43/47 originals and later tail queries. Uniform lifting of mu to this complete old period preserves its density cap and support. Set
+
+    eta0=mu/D0,
+    h=mass(eta0)=1/D0
+      =36518862868606981/1816999451688960000>1/50,
+    eta0<=H_R.                                         (FC239)
+
+This is one fixed physical submeasure for the actual family. It is not chosen separately for different future test layouts. Its absolute mass is retained throughout the next operations.
+
+### 2. Full Haar gives more than a second moment
+
+A complete numerical query layout Phi chooses one residue modulo every divisor of the full finite period, including divisor one. Let `L_Phi` be the sum of its cylinder indicators. The query residues need not be compatible. They do not alter the original forbidden phases.
+
+For each p in R let J_p be an independent AUXILIARY variable with
+
+    Pr(J_p=j)=(p-1)/p^(j+1), j>=0,
+    Pr(J_p>=e)=p^-e, e>=1.
+
+Let Pi_H be the law of `M=product_(p in R)(1+J_p)`. Report778 section 2, using Report771's conditional ordered-increment comparison, gives
+
+    integral f(L_Phi) dH_R <= integral f(z) dPi_H(z)   (FC240)
+
+for every nonnegative increasing convex f and every complete layout. This general comparison does not have an eight-prime restriction; eight primes are the particular source application in Report778. Here it is applied to the twelve listed coordinates with their Haar cap one.
+
+The proof deals with different old layouts at different current exponent depths: at auxiliary run j, use Jensen on `f(L_0+...+L_j)`, then the earlier-coordinate comparison separately on each right-hand layout. Actual coordinates are never declared independent after deletion. The independent runs belong only to the outer comparison. Completing the nonnegative finite exponent sums uses their geometric tails, so (FC240) is uniform in all finite query heights.
+
+By (FC239), the SAME eta0 satisfies the right-hand bound (FC240) with mass h. Report773's upper-mass comparison therefore sharpens Pi_H to
+
+    Pi0=Top_h(Pi_H),
+    integral f(L_Phi) deta0 <= integral f(z) dPi0(z). (FC241)
+
+`Top_h` means the largest h units of comparison mass, splitting one cutoff atom. Its cutoff is 16 in the exact computation below. It is independent of Phi and f. This operation does not restrict the physical source to a query-dependent high-load set.
+
+For completeness, equal-mass strengthening follows from stop-losses. If the source has exact mass m, comparison Pi has mass at least m, and c is its upper-m cutoff, then for any `s>=t`
+
+    integral(L_Phi-t)_+ deta
+      <=integral(z-s)_+dPi + m(s-t).
+
+Minimizing over s yields exactly the stop-loss of `Top_m(Pi)`. Equal mass then gives increasing-convex comparison. This is Report773's existing argument, reused on the particular source (FC239).
+
+### 3. One actual operation and one auxiliary update at each prime
+
+Process q=43 and then q=47. At the first stage process every original of the form `d*43^e` with old d, `e>=1`, and no 47 factor. At the second process every original of the form `d*43^a*47^e`, `a>=0,e>=1`. This assigns every added head-only original exactly once and includes all pure powers and mixed 43/47 originals. All heights are chosen to resolve the full family and all later queries before constructing the measures.
+
+At a stage, suppose ONE physical measure eta and its outer comparator Pi have the same exact mass m, and (FC241) holds for all layouts and costs. Let beta(x) be the Haar fraction of the actual full q-fibre excluded by the originals assigned to this stage. Keep the fixed clipping parameter `delta=1/2`, so the conditional cap is two. Report771's normalized kernel, followed by actual restriction, has the live kernel
+
+    K_live(x,dy)=1_(y notin B_x)*H_q(dy)
+                 /[1-min(beta(x),1/2)].              (FC242)
+
+It is well-defined on empty and completely forbidden fibres. Its mass is at most one and its pointwise density is at most two. The normalized predeletion kernel exists on every fibre and has the same cap, allowing the all-query comparison before restriction.
+
+Write `T=(q-1)/2` and `H_Pi(T)=integral(z-T)_+dPi`. The exact inherited loss bound is
+
+    deletion_charge <= H_Pi(T)/T =: d_q,
+    v:=actual remaining mass >= m-d_q =: m'>0.       (FC243)
+
+It is essential that this bound preserves every actual exponent group. For the original groups indexed by q-depth e, distinct numerical labels give partial old layouts L_e; their phases can differ with e. Pointwise,
+
+    beta(x)<=sum_(e>=1)q^-e L_e(x).
+
+Jensen with weights `(q-1)q^-e`, followed by the SAME old all-layout comparison, proves (FC243). Pure q-powers use the unit old cofactor and are included. No factor is removed on grounds that its radical occurred earlier.
+
+The predeletion comparison appends a capped run J with
+
+    Pr(J=0)=1-2/q,
+    Pr(J=j)=2(q-1)/q^(j+1), j>=1.
+
+Thus its load is z times `(1+J)` under `Pi times pi_cap(q,2)`, exactly as in Report771. Restriction decreases every nonnegative cost. Scale the one actual remaining measure by the SINGLE number `m'/v<=1` to give eta' exact mass m'. This scalar can depend on the actual original family, but not on any query or cost. Apply the equal-mass strengthening to obtain
+
+    Pi'=Top_(m')(Pi times pi_cap(q,2)).              (FC244)
+
+Equations (FC242)--(FC244) preserve one actual supported source and one simultaneous comparison. Trimming is an auxiliary calculation, not an assertion about which physical points the actual deletion removed. The old marginal may change through restriction and scaling; no exact marginal-preserving interface is invoked.
+
+### 4. Exact fixed-schedule calculation, with the entire auxiliary tail
+
+For any current comparison on positive integers retain its complete mass m, first moment W, second moment G, and the exact atoms pi_z for `1<=z<=96`. The complete initial Haar moments are
+
+    W_H=product_(p in R)p/(p-1),
+    G_H=product_(p in R)p(p+1)/(p-1)^2
+       =17517439415203/525533184000.                 (FC245)
+
+For a resolved threshold T, the full stop-loss is exactly
+
+    H_Pi(T)=W-Tm+sum_(z<T)(T-z)pi_z.                (FC246)
+
+Appending the capped q-coordinate changes the complete moments by
+
+    m -> m,
+    W -> W*(1+2/(q-1)),
+    G -> G*(1+2(3q-1)/(q-1)^2).                     (FC247)
+
+The low atoms undergo exact multiplicative convolution. To trim to m', remove the smallest atoms until exactly m-m' mass has been removed, split the last atom, and subtract those exact first and second moments from W and G. The cutoff must be found inside the retained atom inventory; otherwise the calculation fails. The first cutoffs are exactly 16, 18 and 24, all below 96. The stop-loss thresholds are exactly 21 and 23.
+
+The first two columns below are decimal displays of exact rational calculations, not numerical assumptions:
+
+| Stage | Exact-charge decimal display | Remaining-mass decimal display | Comparison trim cutoff |
+| --- | ---: | ---: | ---: |
+| initial same-mass selection | — | 0.020098444627851434 | 16 |
+| add 43, half clipping | 0.006161283777765280 | 0.013937160850086154 | 18 |
+| add 47, half clipping | 0.005679240699915313 | 0.008257920150170843 | 24 |
+
+The retained exact fractions certify the short rational statements
+
+    h>1/50,
+    d_43<617/100000,
+    d_47<569/100000,
+    m14=h-d_43-d_47>407/50000>1/125,
+    G14<96/5.                                      (FC248)
+
+The exact final second moment is displayed as `19.160613148262843...`. It is the comparison bound for every complete layout on the SAME physical eta14. In particular it is not obtained by assigning different favorable source laws to different layouts. Its first moment also satisfies `W14<41*m14`, which records a common-query boundary for later use; no third-prime continuation is needed for this result.
+
+The low-atom cutoff 96 is not a prime-power height bound. Both W and G contain the complete infinite geometric tail at every stage. The certificate separately records the mass, first moment and second moment above 96 as the difference between the complete moment and the exact low atoms. Convolution computes an atom at z using only factors at most z, so the tail cannot feed back into a smaller omitted atom. No auxiliary high-load mass or original high exponent was discarded.
+
+### 5. The resulting actual source and Haar bound
+
+The starting eta0 has full-Haar density at most one. Each actual normalized coordinate kernel has density at most two, while restriction and the one mass-adjusting scalar only decrease density. Therefore
+
+    eta14<=4*H_(R union {43,47}),
+    mass(eta14)=m14>1/125,
+    Gamma(eta14)<=G14<96/5.                         (FC249)
+
+All three inequalities hold for the same actual measure. The enlarged full survivor U14 contains its support, so
+
+    H(U14)>=m14/4>1/500.
+
+Normalizing this source gives full-Haar density less than 500 and complete-query second moment less than 2400. These conclusions are uniform in the added actual exponent heights and in lifted head-query heights. They retain the original FC159 source restrictions; newly inserted old-only classes would invalidate the initial support premise.
+
+### 6. The same fixed cutoff 10000 still works
+
+Chapter33 SH5, SH8--SH13 accepts any one finite positive head measure of mass at most one, supported on actual head avoidance, with a simultaneous complete-query second-moment bound. The full-Haar density is one way of supplying that moment; it is not required once (FC249) supplies Gamma directly. Consequently (FC248)--(FC249) can be inserted directly into its homogeneous transfer.
+
+Under its stated Rosser--Schoenfeld prime-product premise SH11, keep the already used values `B=10000`, `ell=8`. They satisfy `B>=286`, `ell>=4` and `3^ell<=B`. The previously fixed allowance is
+
+    tau7=158028357647377093111875
+          /436270024792662927847645184.
+
+Every finite added outside-prime family with all outside primes STRICTLY greater than B leaves mass at least `m14-G14*tau7`. All old head powers, new outside exponents, support interactions and fixed phases are retained. In particular the conservative exact reserve is
+
+    1/125-(96/5)*tau7
+      =1781311451217434511848287
+        /1704179784346339561904864000
+      >1/1000>0.                                   (FC250)
+
+This application does not use independence of final coordinates and does not claim exact preservation of the original core marginal. Its mass is in the one constructed distorted law. No new cutoff or clipping schedule was searched. For an elementary continuation without SH11, (FC249)'s probability normalization also supplies the existing full-Haar-density consumer with cap below 500 and head support `R union {43,47}`.
+
+### 7. Evidence and remaining gap
+
+The [exact joint-prime consumer](../../../frontier/cover-geometry/fibre-credit-partition/joint43_47.py) uses standard-library rational arithmetic, fixed primes, cap two, thresholds 21/23 and atom limit 96. Its [result certificate](../../../frontier/cover-geometry/fibre-credit-partition/joint43_47.json) records 86 exact checks, complete moments, exact low atoms, split-cutoff data, stage charges, above-96 residual moments, density consequences and the fixed-tail reserve. Checks remain active under Python optimization. The consumer accepts an explicit output path through `--output`; it reads no prior result and does not enumerate phase choices. These finite checks evaluate the ordinary source/comparison argument; they do not supply Lean verification or repeat the original FC159 source construction.
+
+The reusable sources checked for this deduction are [Report463 PE2–PE6](../450-499/463-two-actual-prime-extensions-preserve-a-common-core-law.md), [Report465](../450-499/465-two-query-scalars-do-not-determine-a-surviving-extension.md), [Report771](../750-799/771-stop-loss-profiles-preserve-the-ordinary-source-through-thirteen-primes.md), [Report773](../750-799/773-repeated-upper-mass-comparison-lowers-the-fourteen-prime-tail-cutoff.md), [Report778](../750-799/778-upper-mass-haar-comparison-lowers-the-general-eight-prime-tail-cutoff.md), and [Chapter33 SH5–SH13](../../../problem-details/33-seven-small-primes-with-an-unrestricted-large-prime-tail.md). Report465 explains why separate axis averages do not determine a common overlap, but does not obstruct this stronger same-source full-profile comparison. Report773's missing-small-prime source is not imported: only its general equal-mass comparison/update theorem is reused. Our physical source is (FC239), in which all of 3,5,7,11 may occur under FC159's stated syntax.
+
+The original general core-source obligation remains open. This result adds arbitrary 43/47-touching originals to the restricted twelve-prime source and retains its far-tail continuation. Primes 53 through 10000 are not thereby absorbed, and unrestricted new old-only originals are not allowed. No mathematical-priority claim follows from this reuse and synthesis.
