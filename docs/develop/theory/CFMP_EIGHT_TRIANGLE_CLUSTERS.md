@@ -199,5 +199,5 @@ degree-eight edges (01,02,03), a three-star. The two vertex links are connected
 orientable surfaces with (F,V,chi)=(16,6,-2) and (48,10,-14), hence genera 2
 and 8. Each edge link is a single circle and no edge is identified with its
 reverse. Therefore this is a genuine compact orientable manifold after ideal
-vertices are truncated, with one degree-eight packet type and high degrees 14
-and 34.
+vertices are truncated, with one degree-eight packet type and high degrees 12
+and 36.
