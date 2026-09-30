@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:e66cd49ea569bc5d04ac657c538147048725188eaf41872673310200e13c8746
+  normalized_sha256: sha256:e66cd49ea569bc5d04ac657c538147048725188eaf41872673310200e13c8746
+cas_ref: sha256:e66cd49ea569bc5d04ac657c538147048725188eaf41872673310200e13c8746
+coverage_gids:
+  - gid: D5/S3/Arith/Erdos699/SharedExponentCaps.first_return_mod_121
+    target_statement_id: sha256:40eb17008813e233cc418508fe2864c21145a448906ec4f64cd9d6fb2a955925
+  - gid: D5/S3/Arith/Erdos699/SharedExponentCaps.prime_and_lift_residues
+    target_statement_id: sha256:8f61d8f659742ab44ec445735c7d79918394991b19cb5646685e32f6dd2fd728
+  - gid: D5/S3/Arith/Erdos699/SharedExponentCaps.shared_lift_caps
+    target_statement_id: sha256:43c1b1eba204101d7607cd9645ed45f421c13b5cec7cac6354d87cd9a8a20761
+receipts:
+  unresolved_subitems: []
