@@ -4,36 +4,62 @@ authors: trureturing contributors
 year: 2026
 title: Adjacent degree-eight packets for CFMP geometric realization
 doi: null
-url: https://github.com/the-omega-institute/trureturing/pull/new
-claim: A strict hyper-ideal realization theorem for valence-eight or valence-at-least-sixteen triangulations whose local degree-eight edge packets are three-stars, three-cycles, or four-cycles.
+url: https://github.com/the-omega-institute/trureturing/pull/11483
+claim: Paper proof of a strict hyper-ideal realization subcase with degree-eight three-star or three-cycle packets and all other global edges of degree at least twelve.
 license: citation-only
 triage: anchor
 strata_touched: []
 ---
 
-This note records the scoped theorem in
-docs/develop/theory/CFMP_EIGHT_TRIANGLE_CLUSTERS.md.
+The paper theorem and reproducible topology certificate are in
+`docs/develop/theory/CFMP_EIGHT_TRIANGLE_CLUSTERS.md`. This note does not
+assert Lean/kernel verification of the geometric theorem. Isolated
+closed numerical inequalities are not retained as a substitute for it.
 
-The genuinely new incidence class is a tetrahedron with exactly three
-degree-eight local edges, each adjacent to the other two. Relative to a chosen
-degree-eight target edge, the two low neighbours are adjacent; the possible
-three-star and three-cycle endpoint substitutions are
+Use common global cosh-length intervals [5/4,2] on degree-eight edges
+and [1+delta,10/7] on all remaining edges. For a low edge in a three-star
+or three-cycle, the conservative lower cosine bounds are 73/100 and
+8*sqrt(6)/27; upper bounds are 709/1003 and 11*sqrt(249)/249.
+Their positive squared values lie strictly above and below 1/2,
+respectively. A high edge has a low opposite edge and two high neighbours;
+the relaxed six-placement bound is 5965/6972, whose square is less than
+3/4 by 875363/48608784. Thus high degree at least 12 gives the strict
+upper cone-angle budget. The high lower length face is chosen using the
+maximum degree of the finite triangulation.
 
-- lower: 73/100 and 8*sqrt(6)/27;
-- upper: 121/175 and 13*sqrt(41)/123.
+The proof minimizes the actual shared-edge co-volume on a compact global
+length box contained in the nondegenerate domain. Inward derivative signs
+exclude a boundary minimum and give zero cone curvature at the interior
+minimum. It does not assume a zero-curvature solution. Zhao's exact
+six-variable formula, monotonicity and length-domain criterion, and
+Luo--Yang's co-volume gradient identity are external inputs. Convexity
+is not needed for this existence argument.
 
-The four-cycle values are 293/400 and 473/700. All lower squares exceed 1/2
-and all upper squares are below 1/2. For high edges, the conservative endpoint
-is 5965/6972 < cos(pi/6), so degree at least 12 supplies the strict upper budget.
+A 16-tetrahedron orientable example has degrees 8,8,8,8,8,8,12,36,
+all low packets three-stars, circular edge links, and vertex-link genera
+2 and 8. The full pairing table and a standalone Python checker are in
+the theory document. Face signatures prohibit mixing three-stars and
+three-cycles in one connected triangulation. In the all-three-star case,
+high degrees are necessarily even; an apparent numerical improvement to
+11 alone therefore yields no new combinatorial cases.
 
-The proof uses an explicit 16-tetrahedron orientable packet with degrees 8,8,8,8,8,8,12,36 and then minimizes the actual shared-edge co-volume on one compact global
-length box. It does not assume a zero-curvature metric or use Ricci-flow
-convergence as an existence premise. Zhao's six-variable formula,
-monotonicity and genuine length-domain criterion, and Luo--Yang's co-volume
-gradient are external inputs. Costantino--Frigerio--Martelli--Petronio
-Conjecture 0.8 is the original geometric-realization problem:
-https://arxiv.org/abs/math/0402339
+The repository's existing four-cycle theorem already has high threshold
+12 but has four low local edges, unlike these three-edge packets.
+Its broader transition budget in Section 26 has high thresholds 16 or 17.
+The compact-box method itself is reused, not claimed as new. Zhao's
+minimum-nine theorem does not apply to the original triangulation with
+its degree-eight edges; a different subdivision would not by itself
+settle realization of the prescribed triangulation.
 
-Scope is intentionally narrow: no arbitrary minimum-eight triangulation, no
-minimum-six theorem, no partially truncated boundary case, and no claim that
-the cited endpoint theorem alone formalizes manifold links or co-volume.
+Primary references:
+- Costantino--Frigerio--Martelli--Petronio, Conjecture 0.8 in
+  https://arxiv.org/abs/math/0402339; Conjecture 1.8 in the published source
+  https://ems.press/content/serial-article-files/43143. The conjecture
+  assumes all edge valences at least six and concerns the given triangulation.
+- Xinrong Zhao, https://arxiv.org/html/2601.15174v2, Lemma 2.2,
+  Proposition 2.4, Lemma 3.4, and Theorem 1.1.
+- Feng Luo and Tian Yang, https://arxiv.org/abs/1404.5365.
+
+This is a paper-first scoped result, not a resolution of the full CFMP
+conjecture, arbitrary minimum-eight triangulations, or partially truncated
+boundary cases. Formalization of the geometric chain remains open.
