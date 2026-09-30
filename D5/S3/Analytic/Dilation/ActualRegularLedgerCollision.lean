@@ -129,23 +129,9 @@ theorem single_cycle_det (r : ℕ) (hr : 0 < r) :
         have hv := congrArg Fin.val h
         simp at hv
         omega
-      have hkval : ((k : Fin (n + 1)) : ℕ) = n - 1 := by
-        simp [k, finRotate_symm_apply, Fin.val_sub_one_of_ne_zero hlast0]
-      have hk_last : k ≠ Fin.last n := by
-        intro hk
-        have := congrArg Fin.val hk
-        have hlt : n - 1 < n := Nat.sub_lt (Nat.zero_lt_of_ne_zero hn) Nat.zero_lt_one
-        rw [hkval] at this
-        exact (Nat.ne_of_lt hlt) this
-      have hkexp : (k : ℕ) + 1 = n := by
-        rw [hkval]
-        exact Nat.sub_add_cancel (Nat.one_le_iff_ne_zero.mpr hn)
-      simp [k, c, finRotate_symm_apply, hn, hk_last, hkval]
-      have hpredval : ((Fin.last n - 1 : Fin (n + 1)) : ℕ) = n - 1 := by
-        rw [Fin.val_sub_one_of_ne_zero hlast0]
-        rfl
+      simp [k, c, finRotate_symm_apply, hn]
       have hpredexp : ((Fin.last n - 1 : Fin (n + 1)) : ℕ) + 1 = n := by
-        rw [hpredval]
+        rw [Fin.val_sub_one_of_ne_zero hlast0]
         exact Nat.sub_add_cancel (Nat.one_le_iff_ne_zero.mpr hn)
       rw [hpredexp]
       rw [pow_succ]
@@ -153,14 +139,13 @@ theorem single_cycle_det (r : ℕ) (hr : 0 < r) :
   · rw [hlast]
   · intro b hb hbl
     simp only [B, Matrix.updateRow_ne hbl]
-    have hbn : b ≠ Fin.last n := hbl
     by_cases hn : n = 0
     · subst n
       have hb0 : b = 0 := Fin.eq_zero b
-      exact (hbn (by simpa using hb0)).elim
+      exact (hbl (by simpa using hb0)).elim
     simp [A, P, Matrix.one_apply, Matrix.smul_apply, smul_eq_mul,
       Equiv.Perm.permMatrix, PEquiv.toMatrix_toPEquiv_apply, finRotate_apply,
-      hbn, hn]
+      hbl, hn]
   · intro h
     exact (h (Finset.mem_univ _)).elim
 
@@ -238,6 +223,7 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
           logarithmicHistory (actualHB (G := G) r c) h ∧
         actualHA (G := G) h (exponent r r) = 0 ∧
         actualHB (G := G) r c h (exponent r r) = (c : ℚ)) := by
+
   let det_reindex_cycle
       {α ι : Type} [Fintype α] [DecidableEq α] [Fintype ι] [DecidableEq ι]
       (r : ℕ) (hr : 0 < r) (p : Equiv.Perm α) (E : α ≃ Fin r × ι)
@@ -299,6 +285,7 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
     simp_rw [single_cycle_det r hr]
     rw [Finset.prod_const]
     simp
+
   let quotient_bot_period
       {G : Type} [Group G] [Fintype G] (h : G) (q : G ⧸ (⊥ : Subgroup G)) :
       MulAction.period h q = orderOf h := by
@@ -317,11 +304,13 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
           (QuotientGroup.quotientBot q : G) = QuotientGroup.quotientBot q := by
         simpa only [hsmul] using hmap
       exact mul_right_cancel (hm.trans (one_mul _).symm)
+
   let regularOrbitEquiv {G : Type} [Group G] [Fintype G] (h : G) :
       G ≃ Σ q : MulAction.orbitRel.Quotient (Subgroup.zpowers h) (G ⧸ (⊥ : Subgroup G)),
         ZMod (Function.minimalPeriod (fun x : G ⧸ (⊥ : Subgroup G) => h • x) (Quotient.out q)) :=
     (QuotientGroup.quotientBot.toEquiv.symm.trans
       (Subgroup.quotientEquivSigmaZMod (⊥ : Subgroup G) h))
+
   let regularOrbitEquiv_apply_smul
       {G : Type} [Group G] [Fintype G] (h : G)
       (q : MulAction.orbitRel.Quotient (Subgroup.zpowers h) (G ⧸ (⊥ : Subgroup G)))
@@ -350,16 +339,19 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
     rw [hact, Subgroup.quotientEquivSigmaZMod_apply]
     congr 1
     simp [ZMod.intCast_zmod_cast, add_comm]
+
   let regularOrbitEquiv_period {G : Type} [Group G] [Fintype G]
       (h : G) (q : MulAction.orbitRel.Quotient (Subgroup.zpowers h) (G ⧸ (⊥ : Subgroup G))) :
       Function.minimalPeriod (fun x : G ⧸ (⊥ : Subgroup G) => h • x) (Quotient.out q) = orderOf h := by
     change MulAction.period h (Quotient.out q) = orderOf h
     exact quotient_bot_period h (Quotient.out q)
+
   let zmod_cast_add {m n : ℕ} (h : m = n) (x : ZMod m) :
       Equiv.cast (congrArg ZMod h) (x + 1) =
         Equiv.cast (congrArg ZMod h) x + 1 := by
     cases h
     rfl
+
   let regular_perm_det
       {G : Type} [Group G] [Fintype G] [DecidableEq G] (h : G) (r : ℕ)
       (hr : 0 < r) (hrord : orderOf h = r) :
@@ -369,7 +361,6 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
     let a : G := h⁻¹
     have haord : orderOf a = n + 1 := by
       simp [a, hrord]
-    have hapos : 0 < orderOf a := by simp [haord]
     let Q := MulAction.orbitRel.Quotient (Subgroup.zpowers a) (G ⧸ (⊥ : Subgroup G))
     letI : Fintype Q := Fintype.ofFinite Q
     letI : DecidableEq Q := Classical.decEq Q
@@ -406,13 +397,8 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
         simp
       rw [hcoord, hcoord]
       apply Prod.ext
-      · have hcast (j : ZMod (Function.minimalPeriod
-            (fun x : G ⧸ (⊥ : Subgroup G) => a • x) (Quotient.out q))) :
-              Equiv.cast (congrArg ZMod (hperiod q)) (j + 1) =
-              finRotate (n + 1) (Equiv.cast (congrArg ZMod (hperiod q)) j) := by
-          rw [zmod_cast_add (hperiod q) j]
-          exact (finRotate_apply _).symm
-        exact hcast j
+      · rw [zmod_cast_add (hperiod q) j]
+        exact (finRotate_apply _).symm
       · rfl
     have hdet := det_reindex_cycle (n + 1) (Nat.succ_pos n)
       (Equiv.mulLeft a) E hE
@@ -420,10 +406,9 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
       have hsum := Subgroup.index_eq_sum_minimalPeriod (⊥ : Subgroup G) a
       rw [Subgroup.index_bot] at hsum
       simpa [Q, hperiod, Nat.mul_comm] using hsum
-    have hquot : Nat.card G / (n + 1) = Fintype.card Q :=
-      Nat.div_eq_of_eq_mul_right (Nat.succ_pos n) hcard
-    rw [hquot]
+    rw [Nat.div_eq_of_eq_mul_right (Nat.succ_pos n) hcard]
     simpa [a] using hdet
+
   let left_regular_matrix {G : Type} [Group G] [Fintype G] [DecidableEq G]
       (h : G) : LinearMap.toMatrix (MonoidAlgebra.basis G ℚ) (MonoidAlgebra.basis G ℚ)
         (Representation.leftRegular ℚ G h) = (Equiv.mulLeft h⁻¹).permMatrix ℚ := by
@@ -443,6 +428,7 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
           i = h * (h⁻¹ * i) := by group
           _ = h * j := by rw [hj]
       simp [hij, hnot]
+
   let trivial_det {G : Type} [Group G] (h : G) (c r : ℕ) : Matrix.det
       (1 - (Polynomial.X ^ r : ℚ[X]) •
         (LinearMap.toMatrix (Pi.basisFun ℚ (Fin c)) (Pi.basisFun ℚ (Fin c))
@@ -461,6 +447,7 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
           Matrix.sub_apply, hij]
     rw [hdiag, Matrix.det_diagonal]
     simp
+
   let regular_action_det {G : Type} [Group G] [Fintype G] [DecidableEq G]
       (h : G) (r : ℕ) (hr : 0 < r) (hrord : orderOf h = r) :
       Matrix.det (1 - (Polynomial.X : ℚ[X]) •
@@ -474,6 +461,7 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
       simp [Equiv.Perm.permMatrix, PEquiv.toMatrix_apply]
     rw [hmap]
     exact regular_perm_det h r hr hrord
+
   let left_regular_trace {G : Type} [Group G] [Fintype G] [DecidableEq G]
       (h : G) : Matrix.trace (LinearMap.toMatrix (MonoidAlgebra.basis G ℚ) (MonoidAlgebra.basis G ℚ)
         (Representation.leftRegular ℚ G h)) = if h = 1 then (Fintype.card G : ℚ) else 0 := by
@@ -492,6 +480,7 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
             simpa using hmul.symm
           _ = 1 * i := by simp
       simp [hh, hdiag]
+
   let left_regular_trace_pow {G : Type} [Group G] [Fintype G] [DecidableEq G]
       (h : G) (r k : ℕ) (hrord : orderOf h = r) : Matrix.trace
       (LinearMap.toMatrix (MonoidAlgebra.basis G ℚ) (MonoidAlgebra.basis G ℚ)
@@ -507,12 +496,14 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
         apply hdiv
         simpa [hrord] using (orderOf_dvd_iff_pow_eq_one).2 hp
       simp [hp, hdiv]
+
   let log_derivative_mul : derivative ℚ (log ℚ) * (1 + X) = 1 := by
     have h := congrArg (rescale (-1 : ℚ)) (mk_one_mul_one_sub_eq_one ℚ)
     have he : rescale (-1 : ℚ) (mk 1) = derivative ℚ (log ℚ) := by
       ext n
       simp [deriv_log]
     simpa [he] using h
+
   let logOf_derivative_mul (f : PowerSeries ℚ)
       (hf : constantCoeff f = 1) : derivative ℚ (logOf f) * f = derivative ℚ f := by
     have hs : HasSubst (f - 1) := .of_constantCoeff_zero (by
@@ -532,6 +523,7 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
       (derivative ℚ (log ℚ)).subst (f - 1) * derivative ℚ f * f =
           ((derivative ℚ (log ℚ)).subst (f - 1) * f) * derivative ℚ f := by ring
       _ = derivative ℚ f := by rw [hmul, one_mul]
+
   let logOf_mul (f g : PowerSeries ℚ)
       (hf : constantCoeff f = 1) (hg : constantCoeff g = 1) : logOf (f * g) = logOf f + logOf g := by
     have hfg : constantCoeff (f * g) = 1 := by simp [hf, hg]
@@ -551,6 +543,7 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
           rw [← h2, ← h3]
           ring
     · simp [constantCoeff_logOf, hf, hg, hfg]
+
   let logOf_pow (f : PowerSeries ℚ)
       (hf : constantCoeff f = 1) (c : ℕ) : logOf (f ^ c) = c * logOf f := by
     induction c with
@@ -563,6 +556,7 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
         rw [pow_succ, logOf_mul _ _ (by simp [hf]) hf, ih]
         push_cast
         ring
+
   let factor_log_coeff (r c n : ℕ) (hr : 0 < r) : coeff n (-logOf ((1 - X ^ r : PowerSeries ℚ) ^ c)) =
         if r ∣ n ∧ n ≠ 0 then (c : ℚ) / ((n / r : ℕ) : ℚ) else 0 := by
     have hf : constantCoeff (1 - X ^ r : PowerSeries ℚ) = 1 := by
@@ -608,8 +602,10 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
       · rw [if_pos ⟨hd, hn⟩]
         ring
     · simp [hd]
+
   let z : MvPowerSeries (Fin 2) ℚ :=
     MvPowerSeries.monomial (exponent 1 1) 1
+
   let z_eq_pq : z = MvPowerSeries.X 0 * MvPowerSeries.X 1 := by
     change MvPowerSeries.monomial (exponent 1 1) (1 : ℚ) =
       MvPowerSeries.X 0 * MvPowerSeries.X 1
@@ -620,11 +616,13 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
       fin_cases i <;> simp [exponent]
     rw [he]
     simp
+
   let z_pow (k : ℕ) : z ^ k = MvPowerSeries.monomial (exponent k k) (1 : ℚ) := by
     have he : k • exponent 1 1 = exponent k k := by
       ext i
       fin_cases i <;> simp [exponent]
     simp [z, MvPowerSeries.monomial_pow, he]
+
   let z_constantCoeff : MvPowerSeries.constantCoeff z = 0 := by
     have he : (0 : Fin 2 →₀ ℕ) ≠ exponent 1 1 := by
       intro h
@@ -632,8 +630,10 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
       simp [exponent] at hh
     simp [z, ← MvPowerSeries.coeff_zero_eq_constantCoeff_apply,
       MvPowerSeries.coeff_monomial, he]
+
   let z_hasSubst : PowerSeries.HasSubst z :=
     .of_constantCoeff_zero z_constantCoeff
+
   let coeff_subst_z (f : PowerSeries ℚ) (d : Fin 2 →₀ ℕ) : MvPowerSeries.coeff d (PowerSeries.subst z f) =
         if d 0 = d 1 then PowerSeries.coeff (d 0) f else 0 := by
     rw [PowerSeries.coeff_subst z_hasSubst]
@@ -664,6 +664,7 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
         have h1 := congrArg (fun x : Fin 2 →₀ ℕ => x 1) he
         simpa [exponent] using h0.trans h1.symm
       simp [he]
+
   let oneVarFactor (r c : ℕ) : PowerSeries ℚ := (1 - X ^ r) ^ c
 
   let factor_constantCoeff (r c : ℕ) (hr : 0 < r) :
@@ -671,10 +672,12 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
     have h : constantCoeff (1 - X ^ r : PowerSeries ℚ) = 1 := by
       simp [← coeff_zero_eq_constantCoeff, coeff_X_pow, Ne.symm hr.ne']
     simp [oneVarFactor, h]
+
   let factorDenominator (r c : ℕ) (hr : 0 < r) : MonsterPrimitiveMobiusRecovery.MonsterDenominator :=
     ⟨PowerSeries.subst z (oneVarFactor r c), by
       rw [← MvPowerSeries.coeff_zero_eq_constantCoeff_apply, coeff_subst_z]
       simpa [← coeff_zero_eq_constantCoeff] using factor_constantCoeff r c hr⟩
+
   let factor_negativeFormalLog (r c : ℕ) (hr : 0 < r) : MonsterPrimitiveMobiusRecovery.negativeFormalLog (factorDenominator r c hr) =
         PowerSeries.subst z (-logOf (oneVarFactor r c)) := by
     have hf : constantCoeff (oneVarFactor r c) = 1 := factor_constantCoeff r c hr
@@ -695,6 +698,7 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
         exact map_one _
       simp [factorDenominator, hone]
     rw [hsub]
+
   let singletonA (t : G → ℚ) : Series G ℚ :=
     fun h d => if d = exponent 1 1 then t h else 0
 
@@ -768,15 +772,10 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
             ∑ x ∈ n.divisors,
               (if n / x = r then (c : ℚ) else 0) / (x : ℚ) := by
           simp [logarithmicHistory, singletonB, exponent, hn]
+        rw [hsum, divisor_const_sum r c n hn hr]
         by_cases hdiv : r ∣ n
-        · let q := n / r
-          rw [hsum, divisor_const_sum r c n hn hr]
-          simp [exponent, hdiv, hn.ne', q]
-        · have hBzero : (∑ x ∈ n.divisors,
-              (if n / x = r then (c : ℚ) else 0) / (x : ℚ)) = 0 := by
-            simpa [hdiv] using divisor_const_sum r c n hn hr
-          rw [hsum, hBzero]
-          simp [exponent, hdiv]
+        · simp [exponent, hdiv, hn.ne']
+        · simp [exponent, hdiv]
       · have hzero : logarithmicHistory (singletonB r (fun _ : G => c)) h d = 0 := by
           simp only [logarithmicHistory, if_pos hpos]
           apply Finset.sum_eq_zero
@@ -896,26 +895,24 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
       actualTraceA (G := G) m n h ∧
       (m ≠ 1 ∨ n ≠ 1 → actualTraceA (G := G) m n h = 0) := by
     intro h m n
-    have hzero := trivial_character_zero h
     by_cases hmn : m = 1 ∧ n = 1
     · rcases hmn with ⟨rfl, rfl⟩
       refine ⟨?_, by simp⟩
       simpa [actualHA, actualTraceA, Representation.character] using
         (LinearMap.trace_eq_matrix_trace ℚ (MonoidAlgebra.basis G ℚ)
           (Representation.leftRegular ℚ G h)).symm
-    · simp [actualHA, exponent, hmn, actualTraceA, hzero]
+    · simp [actualHA, exponent, hmn, actualTraceA, trivial_character_zero h]
   have hBridgeB : ∀ h : G, ∀ m n, actualHB (G := G) r c h (exponent m n) =
       actualTraceB (G := G) r c m n h ∧
       (m ≠ r ∨ n ≠ r → actualTraceB (G := G) r c m n h = 0) := by
     intro h m n
-    have hzero := trivial_character_zero h
     by_cases hmn : m = r ∧ n = r
     · rcases hmn with ⟨rfl, rfl⟩
       refine ⟨?_, by simp⟩
       simpa [actualHB, actualTraceB, Representation.character] using
         (LinearMap.trace_eq_matrix_trace ℚ (Pi.basisFun ℚ (Fin c))
           (Representation.trivial ℚ G (Fin c → ℚ) h)).symm
-    · simp [actualHB, exponent, hmn, actualTraceB, hzero]
+    · simp [actualHB, exponent, hmn, actualTraceB, trivial_character_zero h]
   refine ⟨factorDenominator r c hr0, hc, ?_, ?_, ?_, ?_, hBridgeA, hBridgeB, ?_⟩
   · simp [actualA]
   · intro m n hmn
