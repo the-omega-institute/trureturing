@@ -1,0 +1,29 @@
+**命题 11.5（采样端点与一个确切失效时钟）。** 对所有 $d,e\ge2$，$\Delta=\pi/4$ 都不满足 (11.1)。当 $d=e=2$、$\Delta=2\pi$ 时，则有真正严格的效果空间包含
+
+$$
+S_{2\pi}=\mathcal B(\mathbb C^4)\otimes I_4
+\subsetneq\mathcal A_{\mathrm{orb}},\qquad
+\dim_{\mathbb C}S_{2\pi}=16,\quad
+\dim_{\mathbb C}\mathcal A_{\mathrm{orb}}=160.
+$$
+
+证明。令 $n=de\ge4$。$U$ 与 $M$ 在 $(\mathbb Z/n\mathbb Z)^2$ 上的置换仅相差 digits 重标记。若 $M$ 的模 $n$ 阶为奇数，取行列式会得到 $-1=1\pmod n$，矛盾。这个线性作用忠实，故其置换阶也为偶数；置换阶是各循环长度的最小公倍数，所以至少有一个偶长循环，其循环移位具有特征值 $-1$。又零标签固定，$U$ 有特征值 $1$。于是 $0,4\in\Lambda$，$-4,4\in\Omega$。在 $\Delta=\pi/4$ 处，两者相位均为 $-1$，判据失效。
+
+对于 $d=e=2$，全局模数为 $4$，且
+
+$$
+M^3=\begin{pmatrix}1&2\\2&3\end{pmatrix},\qquad
+M^6=\begin{pmatrix}5&8\\8&13\end{pmatrix}\equiv I\pmod4.
+$$
+
+全局置换包含六循环
+
+$$
+(1,0)\to(0,1)\to(1,1)\to(1,2)
+\to(2,3)\to(3,1)\to(1,0).
+$$
+
+因 $U^6=I$ 且这条六循环给出全部六次单位根，得到 $\operatorname{spec}L=\{0,1,3,4\}$，故 $W(2\pi)=I$。此固定采样合同中的全部操作都只作用低层，效果张成恰为 $\mathcal B(\mathbb C^4)\otimes I_4$。高层模 $2$ 的 $g$ 轨道大小为 $1,3$，定理 8.5 给出轨道代数维数 $16(1+9)=160$。
+
+命题 8.2 的三循环限制谱不能代替这里的全局谱。$\Delta=\pi/4$ 的结论仅是充分判据失效，未判定该端点是否仍有 $S_\Delta=\mathcal A_{\mathrm{orb}}$；$\Delta=2\pi$ 的严格失败由上面的恒等门计算单独证明。所有可行采样时钟的必要充分分类仍未给出。$\square$
+

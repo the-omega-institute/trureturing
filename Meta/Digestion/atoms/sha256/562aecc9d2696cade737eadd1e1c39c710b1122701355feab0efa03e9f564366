@@ -1,0 +1,16 @@
+**定义 1.2（进位与平移）。** 对 $a=(a_0,a_1)\in A$ 定义
+
+$$
+f(a)=[Ma]_d,\qquad
+k(a)=\left\lfloor\frac{a_0+a_1}{d}\right\rfloor\in\{0,1\},\qquad
+c(a)=(0,k(a))\in H.
+$$
+
+对 $v\in H$ 令 $T_v|h\rangle=|h+v\rangle$，并记 $R=T_{(1,0)}$。本卷的层间运输由
+
+$$
+U|a,h\rangle=|f(a),Mh+c(a)\rangle
+$$
+
+给定。这里高层运算模 $e$，低层运算模 $d$。这是 [FIB 第 26 节](https://github.com/the-omega-institute/trureturing/blob/64b78db1ad18a8a90b42e13a412dfc281d5c0922/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#L1836)操作进位律的 Fibonacci 实例。
+
