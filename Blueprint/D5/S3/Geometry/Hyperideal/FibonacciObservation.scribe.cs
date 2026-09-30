@@ -50,6 +50,10 @@ internal sealed class FibonacciObservationDocument : IScribeDocumentDefinition
                             + "to recovering framed gluing parameters from the Fibonacci "
                             + "return readout alone.")),
                     Paragraph(Text(
+                        "At the concrete modulus 5040=5*1008, the same theorem gives the "
+                            + "five-part phase ambiguity. The factor seven in 5040 contributes "
+                            + "no additional kernel state to this observation.")),
+                    Paragraph(Text(
                         "The obstruction is scoped to the framed return-parameter observation. "
                             + "It does not claim five distinct unmarked manifolds, a general "
                             + "hyperbolic realization, or a solution of the minimum-six CFMP "
