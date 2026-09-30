@@ -1,0 +1,36 @@
+**证明。** 上界由式（346.20）、（346.27）得到；在实际世界 \(w_J\) 上使用式（346.25）、（346.27）得到下界。证毕。
+
+所以若 \(e(A^{[J]})\le\epsilon\)，必有
+
+\[
+J\ge
+\frac{\log(1/\epsilon)+\log c_e-a\log N}{a\log b}.
+\tag{346.29}
+\]
+
+这是由真实输出误差得到的必要层数，不是从一个充分截止选择倒推。
+
+定义类内固定预算费用
+
+\[
+\mathcal F_{\mathfrak G}(\epsilon,K)
+=\inf\left\{
+T_a(A^{[J]}):
+J\ge1,\ A^{[J]}\in\mathfrak G_J,\
+e(A^{[J]})\le\epsilon,\ H_a(A^{[J]})\le K
+\right\},
+\tag{346.30}
+\]
+
+空集的下确界取 \(+\infty\)。式（346.18）、（346.29）给共同必要界
+
+\[
+\mathcal F_{\mathfrak G}(\epsilon,K)
+\ge
+\frac{c}{K^{a-1}}
+[\log(1/\epsilon)-C]_+^a,
+\tag{346.31}
+\]
+
+并另有不依 \(K\) 的线性对数下界。
+

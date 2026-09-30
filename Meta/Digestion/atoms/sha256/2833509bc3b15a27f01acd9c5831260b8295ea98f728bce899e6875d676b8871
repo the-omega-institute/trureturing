@@ -1,0 +1,20 @@
+**定义 21.1（本批共同数据）。** 取酉融合范畴 $\mathcal C$，有限简单对象集合 $S$，单位对象编号为 $0$。固定非零、自对偶、强张量生成对象 $X$。强生成指存在同一个 $p>0$，使全部简单对象均出现于 $X^{\otimes p}$。令
+
+$$
+N_{ab}=\dim\operatorname{Hom}(a,X\otimes b),\quad
+ d_a=\operatorname{FPdim}(a),\quad \delta=\operatorname{FPdim}(X),\quad
+\mathfrak d=\sum_{a\in S}d_a^2.
+\tag{SC.1}
+$$
+
+采用列向量，$e_0$ 是单位对象的标准基向量。所有 $d_a>0$，$d_0=1$。定义实际窗口维数
+
+$$
+D(n)=\dim_{\mathbb C}\operatorname{End}_{\mathcal C}(X^{\otimes n})
+\quad(n\ge0),\qquad
+\chi_X=D(1)D(3)-D(2)^2.
+\tag{SC.2}
+$$
+
+这里的 $D$ 是有限代数的普通复维数；$\delta$ 是量子维数，不将二者混用。
+

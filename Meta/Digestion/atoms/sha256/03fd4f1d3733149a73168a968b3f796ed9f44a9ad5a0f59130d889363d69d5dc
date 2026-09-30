@@ -1,0 +1,20 @@
+### 7.4 一个可校准的带电振子
+
+固定 $U=m\omega_0^2(x^2+y^2)/2$，$c=eB_0/m$ 为带符号回旋频率，取 $\xi=(\omega_0x,\omega_0y,v_x,v_y)$，则
+$$
+\dot\xi=\Omega_c\xi,
+\quad\Omega_c=\begin{pmatrix}0&0&\omega_0&0\\0&0&0&\omega_0\\-\omega_0&0&0&c\\0&-\omega_0&-c&0\end{pmatrix}.
+$$
+$\Omega_c$ 反对称，能量 $m|\xi|^2/2$ 守恒，Gibbs 协方差 $(\beta m)^{-1}I$ 与 $c$ 无关。正则 Lebesgue 配分函数 $Z_{\rm cl}=(2\pi)^2/(\beta^2\omega_0^2)$，未除相空间量子归一因子。
+
+特征多项式为 $\lambda^4+(2\omega_0^2+c^2)\lambda^2+\omega_0^4$，正频率
+$$
+\omega_\pm=\sqrt{\omega_0^2+c^2/4}\pm c/2,
+\quad\omega_+\omega_-=\omega_0^2.
+$$
+对称规范的二次量子 Hamiltonian 是频率 $\sqrt{\omega_0^2+c^2/4}$ 的各向同性振子减 $cL_z/2$。圆偏振算子对角化给 Fock–Darwin 谱 $E_{n_+,n_-}=\hbar\omega_+(n_++1/2)+\hbar\omega_-(n_-+1/2)$，因而
+$$
+Z_q=[4\sinh(\beta\hbar\omega_+/2)\sinh(\beta\hbar\omega_-/2)]^{-1}.
+$$
+高温首项与 $Z_{\rm cl}/(2\pi\hbar)^2$ 一致。$c=\omega_0$ 时频率比为 $\varphi,\varphi^{-1}$，这是参数实例，不是普遍黄金常数 [LFO90]。
+

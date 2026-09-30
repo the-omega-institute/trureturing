@@ -1,0 +1,11 @@
+**定理341.2（地板层数费用与精度费用）。** 存在只依固定类常数的 $c_{\rm lev}>0$、$C_{\rm lev}\ge0$，使每份 $A^{[J]}\in\mathfrak G$、每个合法世界及每一种请求都满足
+
+$$
+\boxed{\mathbb E^{A^{[J]},w,S}N_T^a
+ \ge c_{\rm lev}J-C_{\rm lev}.}
+\tag{341.31}
+$$
+
+因此存在共同 $c_T,\delta_0>0$，使任何 $0<\delta<\delta_0$ 及 $e(A^{[J]})\le\delta$ 的程序都在每个世界、每种请求满足
+$\mathbb E N_T^a\ge c_T\log(1/\delta)$。两项下界均不要求给定参考预算。
+

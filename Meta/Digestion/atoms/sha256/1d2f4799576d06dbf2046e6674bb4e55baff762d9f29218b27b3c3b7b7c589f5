@@ -1,0 +1,12 @@
+**定理 10.2（条件隐藏方差的有限时间保证）。** 设
+\[
+\mathcal R_*(t)=\inf_f\mathbb E\|\mathsf U_tu-f(u)\|^2.
+\]
+则对 $t\ge0$，
+\[
+\boxed{\left|\sqrt{\mathcal R_*(t)}-t\sqrt{n_u}\right|\le\tfrac12t^2c_2,}
+\quad
+\mathcal R_*(t)=t^2n_u+O(t^3).
+\]
+最佳线性风险的首项为 $t^2\operatorname{tr}M$，线性与非线性最佳风险之差为 $t^2\operatorname{tr}E_{\rm expr}+O(t^3)$。
+

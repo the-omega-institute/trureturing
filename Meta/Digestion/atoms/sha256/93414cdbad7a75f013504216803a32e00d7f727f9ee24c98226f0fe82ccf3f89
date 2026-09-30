@@ -1,0 +1,19 @@
+**定理325.4（同一工厂的矩族非一致可积）。** 对每个有限H>0，
+
+$$
+\boxed{
+\sup_{p\in I}\mathbb E_p\!\left[
+M^{1/4}\mathbf1_{\{M^{1/4}>H\}}\right]\ge1.}
+\tag{325.17}
+$$
+
+并且
+
+$$
+\mathbb E_{p_0}M^{1/4}\le\frac{25}{192},
+\qquad
+\mathbb E_{p_k}M^{1/4}\ge1-2^{-k},
+\qquad p_k\uparrow p_0.
+\tag{325.18}
+$$
+

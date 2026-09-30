@@ -1,0 +1,20 @@
+**引理324.2（正系数的端点插值）。** 若某个 $a>0$ 满足
+
+$$
+q_n(p(h))\le K n^{-a}\quad(0<h\le\eta,\ n\ge1),
+\qquad
+\epsilon_n=n^aq_n(p_0)\longrightarrow0,
+\tag{324.11}
+$$
+
+则对任意固定 $H>0$，
+
+$$
+\boxed{
+\eta_n(H):=
+\sup_{0\le h\le\min\{\eta,H/\sqrt n\}}
+n^a q_n(p(h))
+\longrightarrow0.}
+\tag{324.12}
+$$
+

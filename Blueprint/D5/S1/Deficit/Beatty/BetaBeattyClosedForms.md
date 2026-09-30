@@ -38,3 +38,4 @@ The two beta faces differ by sqrt(5) times v, while the golden ratio and its con
 - Truth anchor: `D5/S1/Deficit/Beatty/BetaBeattyClosedForms.betaReal_eq_displacement_sub_goldenConj`
 - Dependency: [D5/S1/Deficit/DoubleFaceLength](../DoubleFaceLength.md)
 - Dependency: [D5/S1/Deficit/ZeckendorfDisplacementReading](../ZeckendorfDisplacementReading.md)
+- Dependency: [D5/S1/Scale/Fibonacci](../../Scale/Fibonacci.md)

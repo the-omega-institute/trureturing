@@ -1,0 +1,11 @@
+**定理 14.2（单侧四阶信息余项）。** 在上述双部条件下，
+\[
+ \Delta(S)=\Delta_0(S)+\tfrac14\log\det(I-E_{SS}^2)
+            =\Delta_2(S)-r_4(S),
+\]
+\[
+ \boxed{0\le r_4(S)\le
+ \frac{\eta^2e_S}{8(1-\eta^2)}
+ \le\frac{m\eta^4}{4(1-\eta^2)}.}                       \tag{14.5}
+\]
+

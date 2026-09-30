@@ -1,0 +1,20 @@
+**命题 88.3（障碍函数的精确局部最小点）。** 在无事件区间上令 $V(x)=\Phi(x)+1/(2\sqrt x\log x)$，仍以 $C=\Psi$、$P_0=P$ 表示该区间的常数。置
+
+$$
+T(x)=x-\frac{\sqrt x(\log x+2)}{4(\log x+1)}.
+$$
+
+则
+
+$$
+V'(x)=\frac{\log x+1}{x^2\log^2x}(T(x)-C),\qquad
+T'(x)=1-\frac{\log x(\log x+3)}{8\sqrt x(\log x+1)^2}>0.
+$$
+
+若 $C>1/2$，唯一 $r>1$ 满足 $T(r)=C$，在区间上的最小点为截断后的 $r$。若 $r$ 在区间内，则
+
+$$
+V(r)=\gamma+\log\log r-P_0+
+\frac1{4\sqrt r(\log r+1)}.
+$$
+

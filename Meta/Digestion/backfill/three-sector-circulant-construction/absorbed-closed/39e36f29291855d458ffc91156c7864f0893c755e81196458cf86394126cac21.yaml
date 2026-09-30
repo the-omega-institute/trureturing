@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:39e36f29291855d458ffc91156c7864f0893c755e81196458cf86394126cac21
+  normalized_sha256: sha256:39e36f29291855d458ffc91156c7864f0893c755e81196458cf86394126cac21
+cas_ref: sha256:39e36f29291855d458ffc91156c7864f0893c755e81196458cf86394126cac21
+coverage_gids:
+  - gid: D5/S3/Arith/Covering/ThreeQuarterCirculantConjecture.sector_radius_lower
+    target_statement_id: sha256:4932a9a4f06d498ab9e33f42d7f87dd768525a37580ff3bef9cb4840eaa02dc2
+receipts:
+  unresolved_subitems: []

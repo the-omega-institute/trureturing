@@ -1,0 +1,15 @@
+### 344.2 由原系数控制复半径
+
+以下置
+\[
+B=\|P\|_{\mathrm{coef},d},\qquad
+v=p(1-p),\qquad
+\Delta_N(p)=\max\left\{\sqrt{\frac{p(1-p)}N},\,\frac1N\right\}.
+\tag{344.7}
+\]
+对任意复数 \(z\)，原 Bernstein 展开直接给
+\[
+|P(z)|\le B(|z|+|1-z|)^d.
+\tag{344.8}
+\]
+

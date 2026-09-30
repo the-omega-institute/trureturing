@@ -1,0 +1,13 @@
+**证明。** 对正算子 \(X\)，有限 Kraus 展开给
+
+\[
+\operatorname{supp}\Phi_j(X)
+=\operatorname{span}_a
+K_{j,a}(\operatorname{supp}X).
+\tag{349.11}
+\]
+
+这是因为每个 \(K_{j,a}XK_{j,a}^*\) 的支撑是 \(K_{j,a}(\operatorname{supp}X)\)，而正算子和的核是各核的交。正权不会在这些支撑之间产生抵消。
+
+\(T_0\) 的 Kraus 算子为 \(\sqrt{w_j(\theta_0)}K_{j,a}\)，全部权严格为正。因此
+

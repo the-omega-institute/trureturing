@@ -1,0 +1,12 @@
+**定义 149.1（组成坐标、共轭与四相）。** 取 $x=(a,b)^{\mathsf T}\in\mathbb Z^2$，基向量为 $\alpha=(1,0)^{\mathsf T}$、$\beta=(0,1)^{\mathsf T}$，约定
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}1&1\\0&-1\end{pmatrix},\qquad
+C=MJ=\begin{pmatrix}0&-1\\1&0\end{pmatrix}.
+$$
+
+$M$ 是替换 $\rho$ 的组成作用；在黄金坐标 $a+b\varphi$、$\varphi^2=\varphi+1$ 中，$J(a,b)=(a+b,-b)$ 表示 $\varphi\mapsto1-\varphi$ 的黄金共轭。
+另用复坐标 $z=a+ib$ 表示同一有向平面，则 $Cx=(-b,a)$ 对应 $z\mapsto iz$。这个复坐标表示不把黄金乘法认作复数乘法。
+本节的 $C$ 专指此旋转，区别于 §145.1 记为 $C=T^3$ 的接缝计数矩阵。
+

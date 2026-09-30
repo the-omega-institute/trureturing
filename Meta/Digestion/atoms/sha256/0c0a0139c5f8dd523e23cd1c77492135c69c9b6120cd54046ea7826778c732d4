@@ -1,0 +1,16 @@
+**定理 98.3（同时激活与严格自匹配谷底）。** 实际激活点不能是 $\mathfrak D$ 的局部极小点。其余内部局部极小点恰与以下严格自匹配配置一一对应：有限 $T=\prod_pP_p^{a_p}$，$A=\log N(T)>1$，在价格 $\lambda_T=1/(A\log A)$ 下满足
+
+$$
+r_{p,a_p+1}<\lambda_T\quad(\text{全部素数 }p),\qquad
+\lambda_T<r_{p,a_p}\quad(a_p>0).
+$$
+
+对应的极小点是 $x=A$，且
+
+$$
+\mathfrak D''(A)=w(A)>0,\qquad
+\mathfrak D(A)=\gamma+\log\log A-W(N(T)).
+$$
+
+这是 $N(T)$ 的 Robin 对数裕度。
+

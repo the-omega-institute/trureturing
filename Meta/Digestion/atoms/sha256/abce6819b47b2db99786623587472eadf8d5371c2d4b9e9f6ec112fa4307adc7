@@ -1,0 +1,30 @@
+### 7.5 磁激活、短窗常数和有限最优场
+
+读数 $y=C\xi$、$C=(1,0,0,0)$，参数已知。导数观测矩阵为
+$$
+\mathcal O=\begin{pmatrix}1&0&0&0\\0&0&\omega_0&0\\-\omega_0^2&0&0&c\omega_0\\0&-c\omega_0^2&-\omega_0(c^2+\omega_0^2)&0\end{pmatrix},
+\quad\det\mathcal O=-c^2\omega_0^4.
+$$
+$c=0$ 时闭包二维，$c\ne0$ 时四维且每个正窗稳定；恢复为
+$$
+\xi_1=y,\quad\xi_3=y'/\omega_0,\quad
+\xi_4=(y''+\omega_0^2y)/(c\omega_0),
+\quad\xi_2=-[y'''+(c^2+\omega_0^2)y']/(c\omega_0^2).
+$$
+矩阵可逆与解析性排除非零不可见初态，有限维紧性给正 Gram 下界。对固定 $c\ne0$，由第 3.3 节 $V^{-1}e_3=(0,-6/(c\omega_0^2),0,0)^T$ 得
+$$
+a_c(T)\sim\omega_0^4c^2T^7/100800.
+$$
+它是固定参数短窗极限，不能把 $c\to\infty$ 一并代入。
+
+对每个固定 $T>0$，$a_c(T)$ 连续且
+$$
+a_0(T)=0,\qquad0\le a_c(T)\le
+\frac{\omega_0^2T}{\omega_0^2+c^2/4}.
+$$
+证明上界时取单位初态 $e_3$，复位置 $X=\xi_1+i\xi_2$ 满足
+$$
+X(t)=\frac{\omega_0}{i(\omega_++\omega_-)}(e^{i\omega_-t}-e^{-i\omega_+t}).
+$$
+其模长平方的上界积分即得。两端 $c\to0,\infty$ 都趋零，而非零处为正，因此 $c>0$ 上取得有限非零全局最大值；不主张唯一性。这个设计目标是最弱方向恢复，不等于第 8 节的总互信息。
+

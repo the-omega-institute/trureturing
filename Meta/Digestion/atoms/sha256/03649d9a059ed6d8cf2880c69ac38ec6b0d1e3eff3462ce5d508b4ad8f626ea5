@@ -1,0 +1,14 @@
+**命题 98.2（紧区间局部有限与精确导数）。** 每个 $[a,b]\subset(1,\infty)$ 上仅有有限个可能活跃的层及激活事件。$\mathfrak D$ 连续，稳定胞腔内光滑；令
+
+$$
+w(x)=-\lambda'(x)=\frac{\log x+1}{x^2(\log x)^2}>0,
+$$
+
+则稳定胞腔内有
+
+$$
+\mathfrak D(x)=\gamma+\log\log x-\mathcal F+
+\frac{\mathcal A-x}{x\log x},\qquad
+\mathfrak D'(x)=(x-\mathcal A)w(x).
+$$
+

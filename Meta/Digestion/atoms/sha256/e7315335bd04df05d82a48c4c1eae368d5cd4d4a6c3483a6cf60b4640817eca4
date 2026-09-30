@@ -1,0 +1,6 @@
+### 4.1 精确陈述与解析族
+
+令 $A$ 为非零复 Hilbert 空间上的有界正规算子，$g_j$ 为可数族。按 $\ell(\lambda)=\log|\lambda|+i\operatorname{Arg}\lambda$、$\operatorname{Arg}\lambda\in[-\pi,\pi)$ 定义谱幂，零谱点在 $t>0$ 取零。记
+$$
+\mathcal E_T(x)=\sum_j\int_0^T|\langle x,A^tg_j\rangle|^2dt.
+$$

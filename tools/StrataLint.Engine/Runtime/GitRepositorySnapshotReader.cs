@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -51,62 +52,80 @@ internal static class GitRepositorySnapshotReader
             entries.Add(visit is null || link || FileMapDocuments.IsPolicyPath(entry.Path)
                 ? entry : entry with { Bytes = [] });
         }
-        foreach (var path in paths)
+        for (var offset = 0; offset < paths.Length; offset += ProbeWindowPaths)
         {
-            if (!RepoPath.TryCreate(path, out _))
+            var probes = new PathProbe[Math.Min(ProbeWindowPaths, paths.Length - offset)];
+            // Path validation and ancestor inspection keep path order; each failure is
+            // raised when its own path is reached, exactly as a sequential read would.
+            for (var index = 0; index < probes.Length; index++)
             {
-                throw new InvalidOperationException($"git emitted an invalid repository path: {path}");
+                var path = paths[offset + index];
+                var probe = probes[index] = new PathProbe(path, Path.Combine(root, path));
+                try
+                {
+                    if (!RepoPath.TryCreate(path, out _))
+                    {
+                        throw new InvalidOperationException($"git emitted an invalid repository path: {path}");
+                    }
+
+                    if (tracked.TryGetValue(path, out var mode) && !IsSupportedMode(mode))
+                    {
+                        throw new InvalidOperationException(
+                            $"non-regular repository entry {path} has git mode {mode}");
+                    }
+
+                    FileMapSymlinkPolicy.RequirePlainAncestors(root, path, inspectedDirectories);
+                    probe.Included = include is null || include(path);
+                    probe.WantsContents = readContents is null || readContents(path) || FileMapDocuments.IsPolicyPath(path);
+                }
+                catch (Exception exception)
+                {
+                    probe.Failure = ExceptionDispatchInfo.Capture(exception);
+                }
             }
 
-            if (tracked.TryGetValue(path, out var mode) && !IsSupportedMode(mode))
-            {
-                throw new InvalidOperationException(
-                    $"non-regular repository entry {path} has git mode {mode}");
-            }
+            // Independent lstat and body reads run concurrently; results stay indexed.
+            if (probes.Length >= ParallelProbeThreshold)
+                Parallel.ForEach(probes, static probe => probe.Load());
+            else
+                foreach (var probe in probes) probe.Load();
 
-            FileMapSymlinkPolicy.RequirePlainAncestors(root, path, inspectedDirectories);
-            var fullPath = Path.Combine(root, path);
-            var info = new FileInfo(fullPath);
-            // FileInfo caches lstat data. Do not re-read it through static File/Directory
-            // APIs or issue readlink for every regular repository entry.
-            var attributes = info.Attributes;
-            var present = attributes != (FileAttributes)(-1);
-            var indexMode = tracked.TryGetValue(path, out var indexedMode) ? indexedMode : null;
-            if (present && (attributes & FileAttributes.ReparsePoint) != 0
-                && info.LinkTarget is { } target)
+            foreach (var probe in probes)
             {
-                var linkBytes = ReadLinkBytes(root, fullPath, target);
-                inventory.Add(new(path, indexMode, "symlink", "120000", StrictUtf8.GetString(linkBytes)));
-                if (include is not null && !include(path)) continue;
-                links.Add(path);
-                Retain(new RawRepositoryEntry(path, ImmutableArray.CreateRange(linkBytes)), link: true);
-                continue;
-            }
+                probe.Failure?.Throw();
+                var path = probe.Path;
+                var indexMode = tracked.TryGetValue(path, out var indexedMode) ? indexedMode : null;
+                if (probe.LinkTarget is { } target)
+                {
+                    var linkBytes = ReadLinkBytes(root, probe.FullPath, target);
+                    inventory.Add(new(path, indexMode, "symlink", "120000", StrictUtf8.GetString(linkBytes)));
+                    if (!probe.Included) continue;
+                    links.Add(path);
+                    Retain(new RawRepositoryEntry(path, ImmutableArray.CreateRange(linkBytes)), link: true);
+                    continue;
+                }
 
-            if (present && (attributes & FileAttributes.Directory) != 0)
-                throw new InvalidOperationException($"non-regular repository entry {path} is a directory");
-            if (!info.Exists)
-            {
-                inventory.Add(new(path, indexMode, "absent", null, null));
-                continue;
-            }
+                if (probe.Directory)
+                    throw new InvalidOperationException($"non-regular repository entry {path} is a directory");
+                if (!probe.Exists)
+                {
+                    inventory.Add(new(path, indexMode, "absent", null, null));
+                    continue;
+                }
 
-            if ((attributes & (FileAttributes.ReparsePoint | FileAttributes.Device)) != 0)
-            {
-                throw new InvalidOperationException(
-                    $"non-regular repository entry {path} is not a plain file");
-            }
+                if (probe.Irregular)
+                {
+                    throw new InvalidOperationException(
+                        $"non-regular repository entry {path} is not a plain file");
+                }
 
-            var executable = !OperatingSystem.IsWindows() && (info.UnixFileMode
-                & (UnixFileMode.UserExecute | UnixFileMode.GroupExecute | UnixFileMode.OtherExecute)) != 0;
-            inventory.Add(new(path, indexMode, "regular", executable ? "100755" : "100644", null));
-            if (include is not null && !include(path)) continue;
-            Retain(new RawRepositoryEntry(
-                path,
+                inventory.Add(new(path, indexMode, "regular", probe.Executable ? "100755" : "100644", null));
+                if (!probe.Included) continue;
+                probe.BodyFailure?.Throw();
                 // The fresh read buffer has no mutable alias; the snapshot owns it.
-                readContents is null || readContents(path) || FileMapDocuments.IsPolicyPath(path)
-                    ? ImmutableCollectionsMarshal.AsImmutableArray(File.ReadAllBytes(fullPath))
-                    : []));
+                Retain(new RawRepositoryEntry(path, probe.Body is { } body
+                    ? ImmutableCollectionsMarshal.AsImmutableArray(body) : []));
+            }
         }
 
         FileMapSymlinkPolicy.ValidateSnapshot(entries, links, paths, path =>
@@ -179,6 +198,71 @@ internal static class GitRepositorySnapshotReader
             tree.Where(static entry => entry.Mode == "120000").Select(entry => entry.Path).ToHashSet(StringComparer.Ordinal),
             tree.Select(entry => entry.Path).ToArray());
         return RawRepositorySnapshot.Create(entries);
+    }
+
+    // policy-override (#11124): bounds how many file bodies a visiting reader holds at
+    // once; not derived from host capacity. Exit: a measured memory/throughput receipt.
+    internal const int ProbeWindowPaths = 4096;
+
+    // Below this a window is read inline; tiny repositories gain nothing from workers.
+    internal const int ParallelProbeThreshold = 64;
+
+    private sealed class PathProbe(string path, string fullPath)
+    {
+        internal string Path { get; } = path;
+        internal string FullPath { get; } = fullPath;
+        internal bool Included { get; set; }
+        internal bool WantsContents { get; set; }
+        internal ExceptionDispatchInfo? Failure { get; set; }
+        internal ExceptionDispatchInfo? BodyFailure { get; private set; }
+        internal string? LinkTarget { get; private set; }
+        internal bool Directory { get; private set; }
+        internal bool Exists { get; private set; }
+        internal bool Irregular { get; private set; }
+        internal bool Executable { get; private set; }
+        internal byte[]? Body { get; private set; }
+
+        // Same lstat-cached FileInfo sequence as the sequential reader; the body read
+        // follows its own lstat so each file is observed once, in one place.
+        internal void Load()
+        {
+            if (Failure is not null) return;
+            try
+            {
+                var info = new FileInfo(FullPath);
+                var attributes = info.Attributes;
+                var present = attributes != (FileAttributes)(-1);
+                if (present && (attributes & FileAttributes.ReparsePoint) != 0 && info.LinkTarget is { } target)
+                {
+                    LinkTarget = target;
+                    return;
+                }
+
+                if (present && (attributes & FileAttributes.Directory) != 0)
+                {
+                    Directory = true;
+                    return;
+                }
+
+                Exists = info.Exists;
+                if (!Exists) return;
+                if ((attributes & (FileAttributes.ReparsePoint | FileAttributes.Device)) != 0)
+                {
+                    Irregular = true;
+                    return;
+                }
+
+                Executable = !OperatingSystem.IsWindows() && (info.UnixFileMode
+                    & (UnixFileMode.UserExecute | UnixFileMode.GroupExecute | UnixFileMode.OtherExecute)) != 0;
+                if (!Included || !WantsContents) return;
+                try { Body = File.ReadAllBytes(FullPath); }
+                catch (Exception exception) { BodyFailure = ExceptionDispatchInfo.Capture(exception); }
+            }
+            catch (Exception exception)
+            {
+                Failure = ExceptionDispatchInfo.Capture(exception);
+            }
+        }
     }
 
     private static bool IsSupportedMode(string mode) => mode is "100644" or "100755" or "120000";

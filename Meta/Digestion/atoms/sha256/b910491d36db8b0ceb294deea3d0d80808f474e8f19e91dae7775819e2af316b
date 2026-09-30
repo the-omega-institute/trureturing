@@ -1,0 +1,11 @@
+## 8. 合编后的新推论：同一耦合的热信息、总信息和磁设计
+
+本章由第 3 节 Gaussian 实验、第 5 节相关缺陷和 #8899 的条件 KL 恢复身份共同推导。固定有限维 $\xi_0\sim N(0,I_n)$、$\dot\xi=\Omega\xi$、$\Omega^T=-\Omega$，$Q\in\mathbb R^{r\times n}$ 满行正交。取 $V$ 使 $\binom QV$ 正交，$u=Q\xi_0,v=V\xi_0$ 独立标准 Gaussian。这里温度已吸收进坐标；物理自由能缺陷需再乘 $\beta^{-1}$。
+
+固定 $T>0$，$\mathcal O_T\xi(t)=Qe^{t\Omega}\xi$。在其有限维轨迹像上取正交积分坐标，用同一 $s>0$ 表示每个积分坐标的噪声方差：
+$$
+Y=L_T\xi_0+\sqrt s\,\varepsilon,
+\quad L_T^TL_T=G_T:=\int_0^Te^{-t\Omega}Q^TQe^{t\Omega}dt.
+$$
+令 $L_u=L_TQ^T,L_v=L_TV^T$。这个实验可以用有限充分积分坐标表述；比较不同已校准设计时可用它们轨迹像的共同有限维和空间，额外纯噪声坐标不改变信息。
+

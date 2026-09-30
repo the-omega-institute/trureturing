@@ -1,0 +1,26 @@
+**命题 174.1（同奇偶等差地址和）。** 设 $a\ge3$、$d,h\ge1$ 为整数，记
+
+$$
+V=\sum_{j=0}^{h-1}F_{a+2dj},\qquad
+m=a+(h-1)d,\qquad R=a+2d(h-1).
+$$
+
+则
+
+$$
+V=\begin{cases}
+F_mF_{hd}/F_d,&d\text{ 为偶数},\\
+F_mL_{hd}/L_d,&d,h\text{ 均为奇数},\\
+L_mF_{hd}/L_d,&d\text{ 为奇数且 }h\text{ 为偶数}.
+\end{cases}
+$$
+
+证明。取 $t=\varphi^d>1$，有限几何和给
+
+$$
+D=\sum_{j=0}^{h-1}t^{2j-h+1}
+=\frac{t^h-t^{-h}}{t-t^{-1}}.
+$$
+
+两个嵌入的和分别为 $\varphi^mD$ 与 $\psi^m(-1)^{d(h-1)}D$。代入 Binet 公式得 $V=F_mD$（$d(h-1)$ 偶数）或 $V=L_mD/\sqrt5$（$d(h-1)$ 奇数）。若 $d$ 偶，则 $D=F_{hd}/F_d$；若 $d,h$ 均奇，则 $D=L_{hd}/L_d$；若 $d$ 奇而 $h$ 偶，则 $D=\sqrt5F_{hd}/L_d$。三式随即成立。所有分母都为正；原式是整数和，所以分母整除对应的整个分子，后续只需使用这一整除关系。$\square$
+

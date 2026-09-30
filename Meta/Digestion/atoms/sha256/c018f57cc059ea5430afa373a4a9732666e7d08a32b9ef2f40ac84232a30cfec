@@ -1,0 +1,28 @@
+**引理 188.1（共同模边界的局部乘积误差）。** 对整数 $m\ge2$、正整数 $a,b$，若 $a\equiv b\pmod{m!}$，则
+
+$$
+\delta_m\le\frac{Z_{\le m}(a)}{Z_{\le m}(b)}\le\delta_m^{-1},
+\qquad
+\delta_m=\prod_{p\le m}(1-p^{-v_p(m!)-1}).
+\tag{188.1}
+$$
+
+并且 $\delta_m=1+O(m^{-1/2})$。
+
+证明。对同一个素数 $p\le m$，记 $t=v_p(m!)$。若 $v_p(a)<t$，同余条件迫使 $v_p(b)=v_p(a)$；反向也成立。否则两个赋值都至少为 $t$。由
+
+$$
+z_p(v)=\frac{1-p^{-v-1}}{1-p^{-1}},
+$$
+
+局部比值落在 $[1-p^{-t-1},(1-p^{-t-1})^{-1}]$。乘法得到式（188.1），没有独立选择不同整数的赋值极值。
+
+由于 $v_p(m!)\ge\lfloor\log m/\log p\rfloor$，在 $p\le\sqrt m$ 上有 $p^{-v_p(m!)-1}<1/m$；在 $p>\sqrt m$ 上使用 $v_p(m!)\ge1$。所以
+
+$$
+\sum_{p\le m}p^{-v_p(m!)-1}
+\le\frac1{\sqrt m}+\frac1{\sqrt m-1}.
+$$
+
+有限乘积不等式 $\prod(1-u_i)\ge1-\sum u_i$ 给所需误差，有限个小 $m$ 不影响渐近。$\square$
+

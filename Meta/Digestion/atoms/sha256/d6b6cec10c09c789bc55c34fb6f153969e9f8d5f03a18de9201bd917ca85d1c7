@@ -1,0 +1,8 @@
+**命题323.4（概率非爆炸的紧族判据）。** 额外假设实际世界空间 $\Theta$ 是非空紧 Hausdorff 空间，并且对每个固定有限历史、来源及回答，$\theta\mapsto\kappa_\theta(y\mid h,a)$ 连续。标定 $c$ 仍为不依赖世界的固定历史函数。则式（323.2）等价于
+
+$$
+\forall\theta,S,\alpha\in\mathfrak A,
+\qquad \Pr_{\theta,S}^{\alpha}(T_\infty=\infty)=1.
+\tag{323.9}
+$$
+

@@ -1,0 +1,2 @@
+**证明。** 令 $\mathcal R(|0\rangle\langle1|)=|0\rangle\langle1|\otimes X$。对协变式求零时导数，得 $H_0X-XH_1=\omega X$；因此只有满足该能隙的对角元能进入 $c_{01}=\operatorname{Tr}X$。正块 $\left(\begin{smallmatrix}\tau_0&X\\X^\dagger&\tau_1\end{smallmatrix}\right)$ 的二阶主子式给 $|X_{jj}|\le\sqrt{p_{0j}p_{1j}}$，从而得到上界。选 $X$ 为对角矩阵，在该能隙类取 $\sqrt{p_{0j}p_{1j}}$，其余取零；对应块逐 $j$ 半正定且对角态迹为一，所以定义 CPTP 通道。它逐矩阵元满足协变并达到上界。证毕。
+

@@ -1,0 +1,17 @@
+**命题 4.1（有限融合空间）。** 对 $n\ge1$，
+
+$$
+\tau^{\otimes n}\cong F_{n-1}\mathbf1\oplus F_n\tau,
+\qquad
+\operatorname{End}(\tau^{\otimes n})
+\cong M_{F_{n-1}}(\mathbb C)\oplus M_{F_n}(\mathbb C),
+$$
+
+其中零大小的块省略。因此
+
+$$
+D(n):=\dim_{\mathbb C}\operatorname{End}(\tau^{\otimes n})
+=F_{n-1}^2+F_n^2=F_{2n-1}.
+\tag{QCA.12}
+$$
+

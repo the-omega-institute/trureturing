@@ -51,8 +51,9 @@ internal static partial class DigestionStatusEvaluator
             alignment,
             isBaseFactAffected: null);
         var work = entries
-            .Where(static entry => entry.CoverageGids.Length == 0)
-            .Select(entry => Inspect(
+            .Select(entry => entry.CoverageGids.Length > 0
+                ? CoveredMigrationContext(entry, alignment.AlignmentFor(entry.AtomId), alignment.AtomFor(entry.AtomId), findings)
+                : Inspect(
                 entry,
                 alignment.AlignmentFor(entry.AtomId),
                 alignment.AtomFor(entry.AtomId),
@@ -68,11 +69,32 @@ internal static partial class DigestionStatusEvaluator
                 findings))
             .ToArray();
         DeriveMigration(work);
-        return CompleteEvaluation(
+        var evaluation = CompleteEvaluation(
             work,
             snapshot,
             findings,
             validateProjectedStatus: true,
             changes);
+        return evaluation with
+        {
+            Entries = evaluation.Entries.Where(static item => item.Entry.CoverageGids.Length == 0).ToImmutableArray(),
+        };
+    }
+
+    // The report-free selection query carries recorded covered migration as dependency
+    // context, never as fresh Lean truth. Recheck structure and nested chain closure, but
+    // exclude these entries from the returned evaluation. Admission still uses Evaluate
+    // with a validated current report to resolve every coverage edge and truth state.
+    private static EntryWork CoveredMigrationContext(DigestionLedgerEntry entry,
+        DigestionReceiptAlignment alignment, DigestionAtom? atom, ImmutableArray<string>.Builder findings)
+    {
+        var gaps = new List<DigestionGap>();
+        var structured = VerifyStructuredAlignment(entry, alignment, gaps, findings);
+        return new EntryWork(entry, alignment, atom, gaps, [],
+            localComplete: structured && entry.ProjectedStatus.Migration == DigestionMigrationState.Absorbed
+                && entry.Coverage.All(static edge => edge.TargetStatementId is not null)
+                && entry.Receipts.UnresolvedSubitems.IsEmpty
+                && entry.Receipts.Quarantine is null && entry.Receipts.CoverDisposition is null,
+            hasProgress: true, hasUnresolvedCoverageTarget: true, statusAuthorityChanged: false);
     }
 }

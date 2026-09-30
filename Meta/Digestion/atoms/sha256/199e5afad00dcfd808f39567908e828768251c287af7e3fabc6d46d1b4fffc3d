@@ -1,0 +1,12 @@
+**定理 2147.1（实际零模的 Euler 分拆乘积）。** 在定理 2146.1 的同一个复多项式 Fock 表示中，令 `lZeroEigenspace N` 为具体的 Sugawara $L_0$ 的 $N$ 本征核。则在复系数形式幂级数环中有精确恒等式
+
+$$
+\operatorname{PowerSeries.mk}\!\left(N\mapsto
+  \bigl(\operatorname{finrank}_{\mathbb C}(\operatorname{lZeroEigenspace}N):\mathbb C\bigr)\right)
+ =\prod_{j\geq1}\left(1-X^j\right)^{-1}.
+\tag{2147.1}
+$$
+
+Lean 真值锚为 [`D5/S3/VertexAlgebra/PolynomialFockCharacter.lZero_character_euler_product`](../../../D5/S3/VertexAlgebra/PolynomialFockCharacter.lean)。该模块还给出 `energyFiberEquivPartition N`：把指数向量 $d$ 送到将 $i+1$ 重复 $d_i$ 次得到的正整数多重集；其和正好是 $\sum_i(i+1)d_i$，且逆映射由分拆各部分减一后的计数给出。因而定理 2146.1 的具体本征空间维数逐系数等于 `Nat.Partition.genFun (fun _ _ => 1)`。Mathlib 的 `Nat.Partition.hasProd_genFun` 将该生成函数写成按正整数部分的乘积；`PowerSeries.WithPiTopology.tsum_pow_mul_one_sub_of_constantCoeff_eq_zero` 将每个因子 $1+X^j+X^{2j}+\cdots$ 识别为 $(1-X^j)^{-1}$。$N=0$ 时指数向量和分拆都唯一，故真空系数为 $1$。
+
+该定理只结算问题 2146.2 的形式幂级数系数恒等式。它没有构造全态态场、证明 Virasoro 中心项、Monster 作用、融合结构或带真空能移位的共形角色；这些仍是问题 2146.2 的开放条款。形式角色与 Heisenberg 真空表示的背景可参见 [Chu–Lin 2018, §§3.1–3.2](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)，共形代数约定参见 [Kac 1998](https://doi.org/10.1090/ulect/010) [文献注](../../../Library/VertexAlgebra/kac1998vertexalgebras.md)。

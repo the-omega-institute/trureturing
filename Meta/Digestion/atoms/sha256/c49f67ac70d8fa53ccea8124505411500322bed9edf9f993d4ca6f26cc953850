@@ -1,0 +1,44 @@
+### 15.2 保留经典标签与条件热态的全部通道
+
+可见系统 $A$ 有基 $|a\rangle$，$a=1,\ldots,q$；隐藏系统 $B$ 的维数为 $d$。固定
+\[
+ H=\sum_a|a\rangle\langle a|\otimes H_a,\quad
+ \tau_a=e^{-\beta H_a}/Z_a,\quad
+ p_a=Z_a/\sum_bZ_b,
+\]
+\[
+ \gamma_{AB}=\sum_a p_a|a\rangle\langle a|\otimes\tau_a,
+ \qquad\gamma_A=\sum_a p_a|a\rangle\langle a|.
+\]
+每个 $\tau_a$ 忠实。考虑所有满足
+\[
+ \operatorname{Tr}_B\mathcal R(|a\rangle\langle a|)=|a\rangle\langle a|,
+ \qquad\mathcal R(\gamma_A)=\gamma_{AB}
+\]
+的 CPTP 通道 $\mathcal R:A\to AB$。纯的 $A$ 边缘与正性迫使其对角输出为 $|a\rangle\langle a|\otimes\tau_a$；第二式逐块固定这些 $\tau_a$。
+
+Stinespring 等距可以且必须写成
+\[
+ V|a\rangle=|a\rangle|\psi_a\rangle_{BE},\qquad
+ \operatorname{Tr}_E|\psi_a\rangle\langle\psi_a|=\tau_a.
+\]
+把净化表示成矩形振幅 $A_a=\sqrt{\tau_a}W_a$，其中 $W_aW_a^\dagger=I_d$，所有 $W_a$ 使用同一个环境维数。于是
+\[
+ \mathcal R(|a\rangle\langle b|)
+ =|a\rangle\langle b|\otimes A_aA_b^\dagger,
+ \quad c_{ab}=\operatorname{Tr}(A_aA_b^\dagger),
+\]
+\[
+ \boxed{[\operatorname{Tr}_B\mathcal R(\rho)]_{ab}=c_{ab}\rho_{ab}.} \tag{15.1}
+\]
+反向任何这样的共同振幅族给合法通道，$C=(c_{ab})$ 是半正定、对角为一的 Gram 矩阵。共同环境不能对不同状态对分别重选。
+
+对任意经典分布 $s_a$，其标签概率与相对 Gibbs 的 KL 被精确保留：
+\[
+ D\!\left(\mathcal R\!\left(\sum_as_a|a\rangle\langle a|\right)\middle\|\gamma_{AB}\right)
+ =\sum_as_a\log(s_a/p_a).
+\]
+它由正交对角块上的相同条件态消去得到。一般量子输入的局部相干则受到 $c_{ab}$ 限制。本文度量的是恢复后再读取可见边缘的效果；$\mathcal R$ 的联合输出仍可能把相干编码在 $AB$ 相关中，不能由 $|c_{ab}|<1$ 断言所有联合信息都已消失。
+
+这个通道类保证 Gibbs 校准和 CPTP 可实现性，不自动保证与无功热浴的能量守恒实现。Gibbs-preserving 与 thermal operations 的区别已有明确反例 [FOR15]。若要求时间协变，还要加入 §15.7 的新前件 [LJR15]。
+

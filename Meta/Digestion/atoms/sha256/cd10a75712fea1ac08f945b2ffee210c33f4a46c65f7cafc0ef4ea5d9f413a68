@@ -1,0 +1,16 @@
+### 350.13 成熟来源、当前连接与未解范围
+
+量子有限自动机中的二维旋转、固定线性维数与正实现阶数的分离，以及多面锥与完全正实现的关系，均有成熟研究。[^periodic_qfa][^periodic_positive_realization][^periodic_cp_realization] 本节给的是固定制备 advance/test 接口下的完整连接：以同一个三频响应证明秩 3、单 qubit 可达、经典精确 \(n\) 态，继而给全时域误差界；再通过显式三态程序展示几何平均如何改变正实现容量与档案要求。没有据文献检索范围宣称这些现象或综合推导首次出现。
+
+素数周期的少状态最优误差与无理角的有限经典最优误差均有上下两方向证明。一般合数周期在全部误差水平上的最小状态数函数、有限观察窗口的精细容量，以及含噪更新对无限续接合同的影响，未由本节解决。固定实门与私概率的描述和实现成本，也不由状态数自动控制。
+
+尤其不能把式（350.15）的可达量子优势搬回第349节的未知来源幂目标：那里没有按未知世界免费施加相位旋转的权限，且必须满足真实来源身份、完整四格输出与吸收条件。本节只证明当前已知相位接口的优势，以及粗化该接口之后优势可以如何消失。这些是纸面数学结果及其范围，不新增 Lean 核验或机器状态声明。
+
+[^periodic_context_geometry]: 本项目《递归关系观察：上下文几何》[定理15.6](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)给预测多面体的正实现与全制备域下界；其比较要求竞争仪器整个概率单纯形的预测像恰等于指定预测域，并明确保留仅指定一个初始制备时的范围限制。本节另给固定初态的谱证明。
+
+[^periodic_qfa]: Andris Ambainis and Rūsiņš Freivalds, *1-way quantum finite automata: strengths, weaknesses and generalizations*, [arXiv:quant-ph/9802062v3](https://arxiv.org/pdf/quant-ph/9802062v3)。该固定版本 §4.1（PDF 第16—19页）的 Theorem 8、Lemma 7 与 Theorem 9 分别给素数整除语言的 \(O(\log p)\) 量子状态识别、二维旋转构件与有界错误经典识别至少 \(p\) 态。其语言识别合同不等同于本节精确保留整个正弦平方响应；本节上下界由正文另证。
+
+[^periodic_positive_realization]: Wojciech Czaja, Philippe Jaming and Máté Matolcsi, *An efficient algorithm for positive realizations*, [arXiv:math/0612551v2](https://arxiv.org/pdf/math/0612551v2)，后刊于 *Systems & Control Letters* 57(5) (2008), 436–441，[DOI](https://doi.org/10.1016/j.sysconle.2007.11.001)。引言区分普通与正实现维数；§3 Example 2（PDF 第5页）讨论三个不同极点、McMillan 次数 3 的族，并证明其最小正实现维数为任意给定 \(N\ge4\)。它是另一传递函数族，提供成熟分离背景，不替代本节固定初态、归一化随机转移与合法终端概率的证明。
+
+[^periodic_cp_realization]: Alex Monras and Andreas Winter, *Quantum learning of classical stochastic processes: The Completely-Positive Realization Problem*, [arXiv:1412.3634v1](https://arxiv.org/pdf/1412.3634v1)。Definition 5、Theorem 6（PDF 第5—6页）给该文平稳过程的正实现与多面锥条件，Example 2给其无理旋转障碍；Example 3（第8页）在 \(\gamma=1\) 时是单 qubit CP 实现，在 \(\gamma<1\) 时则包含非 CP 转置分支。Examples 5、6（第10—12页）给四维 Hilbert 空间中的实际 CP 扩展。它们的多字母平稳过程与本节受控终端接口不同；本节不借非 CP 分支实施量子操作，也不由该文例子的范围推出此处全部准备或任意中间测量的模拟。
+
