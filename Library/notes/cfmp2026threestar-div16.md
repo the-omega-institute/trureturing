@@ -4,7 +4,7 @@ authors: trureturing contributors
 year: 2026
 title: Pure three-star role-homogeneous 16-divisibility obstruction
 doi: null
-url: https://github.com/the-omega-institute/trureturing/pull/11603
+url: https://github.com/the-omega-institute/trureturing/pull/11620
 claim: In a role-homogeneous orientable pure three-star packet with all low quotient edges degree 8, every center-link component contains a multiple of 16 tetrahedra.
 license: citation-only
 triage: anchor
