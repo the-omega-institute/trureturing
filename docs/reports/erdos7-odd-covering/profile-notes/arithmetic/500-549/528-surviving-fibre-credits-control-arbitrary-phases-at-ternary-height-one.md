@@ -25114,3 +25114,387 @@ FC1083--1092 and their source applications are ordinary mathematical
 interface derivations with independent symbolic review. They add no
 Lean declaration, repeat no published tail proof, and make no claim
 of literature priority. Unrestricted Erdős #7 remains unresolved.
+
+## A surviving core query source replaces the inverse-density cost
+
+First clarify the source contract of FC1086. Its J_k bounds complete
+queries under eta_k=P_k restricted to R_k. It cannot replace the
+full-P_k supplier in BBMST equation(20) while retaining FC1083's
+unrestricted future charges P_j(B_j). If one keeps the original
+kernels but starts from eta_k, the resulting unnormalized measure is
+eta_i=P_i restricted to R_k; its charges are P_j(B_j intersect R_k).
+Alternatively, normalize eta_k once and use the already established
+[arbitrary surviving head interface, Chapter08 T1--T6](../../../problem-details/08-arbitrary-head-transfer-by-the-joint-load-invariant.md).
+The following construction uses that latter interface. FC1083--1084
+remain valid with their original full-law supplier and fees; no
+unproved replacement by J_k is part of their conclusion.
+
+Let C and O be the actual disjoint HEAD blocks from FC1090, with C
+the component containing3 and O all remaining old coordinates. Their
+coprime carriers Q_C,Q_O resolve every original height, including
+those needed only by future originals. Write R_C,R_O for the complete
+survivors of their actual head subfamilies. Every original modulus
+and its phase is retained. Choose any finite nonnegative measure
+xi_C supported on R_C, and put
+
+    m_C=xi_C(1)>0, G_C=Gamma_(Q_C)(xi_C),
+    eta_O=P_O restricted to R_O, r_O=eta_O(1)>1/5,
+    J_O=sum_(d|Q_O)ell_2(d)max_a eta_O([a]_d)
+         <=kappa_O, ell_2(p^e)=2e+1.             (FC1093)
+
+Gamma is the homogeneous complete-layout second moment defined in
+Chapter08: a layout has one arbitrary residue at EVERY divisor,
+including1. P_O is the actual no-2-or-3 law of FC1089. Its earlier
+joint marginal caps, followed by the ordered-pair/LCM count, give
+kappa_O=product_(p in O)[1+(3p-1)/((1-delta_p)(p-1)^2)].
+This is a bound before restriction; domination gives the displayed
+J_O bound without asserting that conditional caps survive conditioning.
+
+For these measures the valid product estimate is
+
+    Gamma_(Q_C Q_O)(xi_C tensor eta_O)<=G_C J_O.  (FC1094)
+
+To see the precise interface, fix one full layout and group divisor
+slots by their O-divisor e. Each group gives a complete C-layout L_e.
+For an ordered pair of O-divisors e,f, the O-condition of each term
+is empty or a cylinder modulo lcm(e,f). Bound it by that cylinder's
+maximum eta_O mass. Chapter08 T3, under the SAME xi_C, then bounds
+integral L_e L_f dxi_C by G_C. Summing e,f gives J_O, since the
+number of ordered divisor pairs with LCM d is ell_2(d). Residues
+may depend on the entire numerical divisor label. This argument
+asserts Gamma times J, not general multiplicativity of Gamma.
+
+Every head original belongs to one block, so xi_C tensor eta_O is
+supported on the full head survivor set. Normalize this ONE product:
+
+    mu_head=(xi_C tensor eta_O)/(m_C r_O),
+    Gamma(mu_head)<=G_C J_O/(m_C r_O)
+                   <5(G_C/m_C)kappa_O.           (FC1095)
+
+The strict inequality uses r_O>1/5 and G_C>=m_C>0. This head law is
+not claimed to be the literal Haar-started BBMST prefix. Chapter08
+T1--T6 allows exactly this arbitrary correlated surviving head law.
+It retains all future labels, even when future originals join the
+head blocks. Reuse its recurrence and the published BBMST endpoint:
+for k=pi(B)>=10 a sufficient noncoverage condition is
+
+    5(G_C/m_C)kappa_O
+          <=k(log k+loglog k-3)^2.               (FC1096)
+
+No further tail induction or finite comparison table is required.
+An empty future follows already from the positive head source.
+
+### Reuse the clipped moment to make the core mass cost logarithmic
+
+One concrete choice is xi_C=Haar_C restricted to the FULL actual R_C,
+with mass h>0. Every core cylinder has mass at most min(h,1/d).
+Apply FC1054--1058 with a_p=1,A0=1,ell=2 and c=|C|. Its complete
+tuple inventory bounds every full layout, hence also their maximum:
+
+    G_C/h<=F_C(log(1/h)+Lambda_C),
+    Lambda_C=sum_(p in C)log p,
+    F_C(Z)=2^c/[product_(p in C)(log p)^2]
+                        *sum_(j=0..2c)Z^j/j!.   (FC1097)
+
+Thus only the core dimension enters this polynomial degree. The
+arbitrary companion is still paid by kappa_O, which FC1091 bounds
+by its Euler product. This is a reuse of the existing all-height
+clipping estimate, not a second derivation of it.
+
+At a proper cut of an irredundant hypothetical whole cover, a private
+point of one FUTURE original avoids every head original. Its full
+core cell is contained in R_C, so h>=1/Q_C. This floor applies to
+the full actual R_C, not an additional chosen subset. Consequently
+
+    5 kappa_O F_C(log Q_C+Lambda_C)
+          <=pi(B)(log pi(B)+loglog pi(B)-3)^2     (FC1098)
+
+is an explicit sufficient test. The same private point supplies all
+its coordinates; no independent private points have been combined.
+This replaces the previous inverse mass cost by a logarithmic
+polynomial for the chosen core. It does not prove that an arbitrary
+whole cover has a cut passing the test: C and its complete period
+Q_C can both grow with B, and the future-private premise ceases
+after the final original enters the head.
+
+## A published three-factors source permits an unbounded ternary core
+
+There is another usable supplier for FC1096 which places no bound
+on |C|. Suppose that, at the chosen B, EVERY head original whose
+support lies in C has at most three distinct prime factors. This
+includes head originals in C which are not divisible by3. Neither
+the companion head nor any future original has this restriction.
+
+Use the actual full law P_C constructed in
+[Schroeder, Noncoverage for Distinct Odd Moduli with at Most Three Prime Divisors, version1.0](../../../../../../Library/Arith/schroeder2026noncoverage.md).
+The original source's Lemma `lem:kernel`, equation
+`eq:conditional-cap`, and proof of its main theorem give, on ONE law,
+
+    P_C(R_C)>1/16,
+    P_C(X_p in a depth-e prefix | complete earlier coordinates)
+           <=min(1,C_p/p^e),
+    C_p=(p-1)/[(p-2)(1-delta_p)].                (FC1099)
+
+These conclusions use the paper's fixed threshold schedule and all
+actual pure and mixed head originals. Its main theorem permits
+arbitrary total prime support and arbitrary finite heights. If the
+head LCM has smaller heights than the full original carrier, lift
+by independent uniform upper digits. A deeper prefix receives its
+old singleton mass times the uniform upper-digit probability, so
+the same C_p/p^e cap holds. Conditioning on complete earlier lifted
+coordinates adds only independent digits and preserves this cap.
+Head events and the survivor mass are unchanged. Unused coordinates
+can likewise be added uniformly.
+
+Take xi_C=P_C restricted to R_C. Iterated conditioning under P_C
+bounds every joint cylinder; the same ordered-pair/LCM expansion
+then gives, with a_p=(3p-1)/(p-1)^2,
+
+    m_C>1/16,
+    G_C<=product_(p in C)(1+C_p a_p).            (FC1100)
+
+Restriction is used only by nonnegative domination. The normalized
+survivor law need not preserve the original conditional caps. Also,
+some of this source's small-prime thresholds exceed1/2; the bound
+delta_p<=1/2 used for the companion must not be asserted for C.
+This is why the arbitrary-head interface FC1095, rather than a
+claim of equality with FC1090's literal BBMST prefix, is used.
+
+The paper already proves in `eq:V` that, for p>=67,
+
+    1+C_p a_p=p(p+3)/[(p-1)(p-2)]
+                 <=(p/(p-1))^6.                 (FC1101)
+
+Its finite certificate supplies S(1000)<28851, where S is the
+product of all factors1+C_p a_p through1000. All factors are at
+least one, so any subset of the small-prime core factors is bounded
+by this same constant. The companion factors are at most1+2a_p
+and obey FC1091's Euler-sixth bound. Since C and O are disjoint,
+for B>=1000 these EXISTING estimates supply
+
+    G_C kappa_O
+         <28851 product_(3<=p<=B)(p/(p-1))^6,
+    Gamma(mu_head)
+         <2308080 product_(3<=p<=B)(p/(p-1))^6.  (FC1102)
+
+Here2308080=80*28851 and80=16*5. No new table, certificate replay
+or optimized constant is being claimed. Including absent prime
+factors enlarges the upper bound without adding an original class.
+
+Compare FC1102 with the same endpoint in FC1096. The prime-product
+bound already cited at FC1092 is O((log B)^6), whereas the endpoint
+is asymptotic to B log B. Therefore there is an absolute B0>=1000
+such that a finite distinct odd family is NONCOVERING whenever
+
+    for some B>=B0, every original in the HEAD component
+    containing3 has at most three distinct prime factors. (FC1103)
+
+There is no bound on the number of vertices of that component, on
+its exponents, on any companion original, or on any future original.
+An empty future is included by positive head survival. No numerical
+B0 is asserted, and this conclusion does not infer a good cutoff
+for an arbitrary family. In particular, it does not suffice to
+restrict only the originals divisible by3: other originals inside
+the same component enter the source's cofactor count as well.
+
+This application changes the geometry of the known restricted
+branch: the earlier eight-vertex input is replaced here by a
+three-factors-PER-ORIGINAL input on just one head component. The
+source's own largest-prime extension restricts all head originals;
+its separate numerical cutoff is not imported. The existing library
+entry records a kernel replay of the original three-factor theorem,
+but FC1093--1103 and this combined continuation are ordinary
+mathematics, not a newly compiled Lean consequence or a claim of
+literature priority.
+
+## Divisor closure prevents a free future-only reset argument
+
+The new source consumers leave the genuinely unrestricted C case
+open. One tempting way to supply it would be to transport private
+overlap while preserving every head query unchanged. Existing
+results specify why that transport is not free.
+
+Under a hypothetical whole cover, choose a family minimizing first
+class count and then modulus sum. Report350 EB2 supplies divisor
+closure above1. Let m be a divisibility-maximal COMPOSITE original.
+For every p|m, the original n=m/p>1 has deficit set exactly{p}
+relative to m. Report838 WI5's hitting criterion therefore forces
+
+    admissible target cut T=supp(m).              (FC1104)
+
+Conversely this cut is admissible: maximality makes every competing
+original's deficit set nonempty. This is a direct application of
+the existing criterion, not a new hitting-set theorem. Consequently
+the two-cut and three-cut interfaces of Reports839/841 apply here
+only when omega(m)=2 or3, respectively. No general support bound
+for m has been supplied.
+
+More directly, let m cross a cutoff B and choose an old prime p|m.
+Write Q_B for the full-height old carrier and n=m/p. Then
+m divides lcm(Q_B,n). For the ACTUAL phase a_n, take the nonnegative
+head weight w=1_[a_n]_(Q_B). If chi is primitive of order m,
+Report838 WI4 specializes to the literal obstruction
+
+    Haar(w 1_(A_n) chi)
+         =chi(a_n)/lcm(Q_B,n)!=0.                (FC1105)
+
+The intersection is the nonempty class of a_n modulo that LCM.
+Every query period retaining Q_B has the same obstruction. This
+refutes a uniform termwise cancellation claim over all head weights;
+it does not rule out cancellation for a special actual source or
+for the complete signed sum. The competing n still contains the
+future part, so head deletion does not automatically remove it.
+
+The forced cut includes old as well as future coordinates. Some
+even reset corners can use only future axes, but Report841 EC10
+guarantees an eligible corner, not one with that extra restriction.
+For an actual source xi=f Haar and query h, its bound must evaluate
+the full payoff f(y^J)h(y^J) at every relevant reset corner and pay
+the same private law's complementary projection-density costs.
+An old reset can enter a deleted head class and make f(y^J)=0.
+Report841 EC15 also charges the actual original-owner buckets;
+residual support alone does not determine the owner's ending prime.
+Neither divisor closure nor private-point existence supplies the
+missing positive corner payoff or joint multiplicity account.
+
+Thus FC1103 excludes an additional head geometry using existing
+source results, while FC1104--1105 identify an exact obstruction
+to one proposed unrestricted supplier. The remaining task is to
+control the complete query-to-mass ratio of an unrestricted
+ternary-connected core, or force a cut satisfying FC1096/FC1098,
+under the SAME actual family and all original labels. None of these
+applications proves or refutes unrestricted Erdős #7.
+
+## Divisor closure makes the actual head supplier additive
+
+There is an additional consumer for a family with divisor closure,
+such as Report350's globally minimum hypothetical whole cover. It
+uses actual future sections in place of all possible divisor layouts.
+The complete-layout estimates FC1094--1102 remain valid; the smaller
+query family below does not assert a smaller bound on that Gamma.
+
+First fix the ENTIRE original family and include ALL its labels,
+pure powers as well as mixed moduli. For t>=B define
+
+    L_(t,v)(x)=sum_(m original:m_>t=v)
+                         1_(x=a_m mod m_<=t), v>1,
+    Psi_t(mu)=max_(v>1) integral L_(t,v)^2 dmu.   (FC1106)
+
+An absent section and the empty maximum are zero. The actual
+original phases are never replaced by independently chosen phases.
+This is FC922's section construction with the pure labels RESTORED,
+because the following continuation uses Haar-based BBMST kernels,
+not FC936's pure-first kernels. At each stage the old query family
+still includes every p^e section about to be consumed.
+
+Apply FC924's exact grouping by the new p-depth j. Each resulting
+old group is L_(<p,vp^j); a missing zero group remains zero. For a
+Haar-based BBMST row with parameter0<delta<=1/2, each nonempty
+intersection at depths j,l has conditional mass at most
+p^-max(j,l)/(1-delta). Chapter08 T3's Cauchy bound needs only the
+second moments of those two old sections. Its ordered-pair count
+and the current-union argument T2 therefore give
+
+    Psi_new<=Psi_old[1+a_p/(1-delta)],
+    E alpha_p^2<=Psi_old/(p-1)^2,
+    a_p=(3p-1)/(p-1)^2.                          (FC1107)
+
+Here alpha_p includes ALL actual originals ending at p. These are
+the same numerical envelopes as Chapter08 T1--T2, with a closed
+actual query family supplying the Cauchy input. T4--T6 thus apply
+unchanged, including their survivor budget and positive-denominator
+condition. No independence after the head is required. Starting
+with a probability on full head survivors, the existing BBMST
+endpoint supplies noncoverage if, for k=pi(B)>=10,
+
+    Psi_B(mu_head)<=k(log k+loglog k-3)^2.        (FC1108)
+
+When Psi_B=0 all future original indicators already vanish almost
+surely on the head source, so noncoverage is immediate. Otherwise
+use any positive upper bound as the scalar seed. This reuse changes
+the initial query supplier, not the published prime estimate or
+tail induction; no undeclared future operation is in its domain.
+
+Now use divisor closure for the actual family. The nonunit old
+part d=m_<=B of each future original is itself a head original.
+Hence its prime support lies in ONE head component, either C or O.
+In fact the head graph then equals the full interaction graph
+induced on old vertices: an original containing old p,q forces
+the head divisor pq. This equality requires divisor closure and
+does not alter FC1090's graph distinction for arbitrary families.
+
+Consequently every actual section has the exact head decomposition
+
+    L_(B,v)=A_v(x_C)+B_v(x_O).                   (FC1109)
+
+Assign the possible unit old cofactor to A_v exactly once. For a
+fixed v, distinctness of FULL moduli means at most one original
+at each old cofactor, so A_v completes to one C-layout and B_v
+to one O-layout. Although O may contain many components, all are
+treated together by the one no-2-or-3 source of FC1089.
+
+Use the SAME supported product mu_head=mu_C tensor mu_O from
+FC1095, where mu_C=xi_C/m_C and mu_O=eta_O/r_O. Put
+
+    R_j=max_(complete C-layout L) integral L^j dmu_C, j=1,2,
+    K_(O,1)=product_(p in O)[1+1/((1-delta_p)(p-1))],
+    K_(O,2)=kappa_O.                             (FC1110)
+
+In particular R_2=G_C/m_C and R_1<=sqrt(R_2). The original full
+companion cylinder caps give its layout first moment at most
+K_(O,1) and second moment at most K_(O,2). Restriction and one
+normalization cost less than5 for either moment. Independence of
+the two BLOCKS at this initial head, followed by the ordinary
+square expansion, now yields
+
+    Psi_B(mu_head)
+       <=R_2+10R_1 K_(O,1)+5kappa_O,
+    Psi_B(mu_head)
+       <=[sqrt(R_2)+sqrt(5kappa_O)]^2.           (FC1111)
+
+Both are valid bounds; one may use the smaller. This independence
+belongs to the constructed head law only. After future kernels
+couple the blocks, FC1107 continues the actual sections on their
+one joint law. Reapplying the block factorization later would be
+unjustified and is unnecessary.
+
+Thus either right side of FC1111 can replace the multiplicative
+5R_2 kappa_O in FC1096 for a divisor-closed family. These bounds
+need not be smaller for every parameter choice; retaining the
+minimum with the earlier bound gives an improved or equal supplier.
+The additive alternatives use the specific original query inventory
+forced by divisor closure;
+arbitrary complete divisor layouts still include cross-block slots
+and need not satisfy this additive estimate.
+
+For example, take the full Haar core restriction used in FC1097.
+At a proper cut of an irredundant hypothetical whole cover, put
+Z=log Q_C+Lambda_C and reuse FC1058 for j=1,2:
+
+    F_(j,C)(Z)=(j!)^c/[product_(p in C)(log p)^j]
+                             *sum_(a=0..jc)Z^a/a!,
+    R_j<=F_(j,C)(Z).                             (FC1112)
+
+The same private point supplies the mass floor1/Q_C. Combining
+FC1108, FC1111 and FC1112 gives the additional sufficient test
+
+    F_(2,C)(Z)+10F_(1,C)(Z)K_(O,1)+5kappa_O
+          <=pi(B)(log pi(B)+loglog pi(B)-3)^2.    (FC1113)
+
+The companion no longer multiplies the leading core second moment.
+Its first and second envelopes obey, respectively,
+K_(O,1)<=product_(p in O)(p/(p-1))^2 and FC1091's sixth-power
+bound. These follow from delta_p<=1/2 and the already used
+prime-product comparisons. No constant is paid separately for
+each companion component.
+
+This makes the remaining unrestricted question more precise: a
+globally minimum whole cover must fail FC1113 at every proper cut
+in its stated range. The current results do not force a cut passing
+it. Nor does FC1103 generate fresh high-support labels at successive
+cuts: a single original with at least four prime factors can remain
+in the expanding ternary head component thereafter. The additive
+consumer is a further ordinary application of existing section
+closure, moment transfer and minimal-cover structure, independently
+reviewed without new Lean or numerical enumeration. The original
+unrestricted noncoverage question remains unresolved.
