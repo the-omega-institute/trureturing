@@ -91,6 +91,21 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
     '│ paused-pool         ┆ Paused      ┆ org        ┆ 3       ┆ no     ┆ yes    │' \
     '│ heca-1              ┆ Private     ┆ private    ┆ 1       ┆ yes    ┆ yes    │')
   chke 'company-chatgpt-pro old-pool heca-1' pools-active-parse "$(printf '%s\n' "$plist" | __pools_active_parse | tr '\n' ' ' | sed 's/ $//')"
+  plist=$(printf '%s\n' \
+    '│ Slug                    ┆ Name          ┆ Visibility ┆ Online ┆ Max tasks ┆ Active ┆ Manage ┆ Join │' \
+    '╞═════════════════════════╪═══════════════╪════════════╪════════╪═══════════╪════════╪════════╪══════╡' \
+    '│ company-chatgpt-pro     ┆ Company       ┆ org        ┆ 6      ┆ 6         ┆ yes    ┆ no     ┆ yes  │' \
+    '│ chrono-chatgpt-pro-pool ┆ Chrono        ┆ org        ┆ 24     ┆ 20        ┆ yes    ┆ yes    ┆ yes  │' \
+    '│ paused-private          ┆ Paused        ┆ private    ┆ 0      ┆ 1         ┆ no     ┆ yes    ┆ no   │')
+  chke 'company-chatgpt-pro chrono-chatgpt-pro-pool' pools-active-parse-by-header "$(printf '%s\n' "$plist" | __pools_active_parse | tr '\n' ' ' | sed 's/ $//')"
+  chke '' pools-active-parse-no-header "$(printf '%s\n' '│ company-chatgpt-pro ┆ Company ┆ org ┆ 6 ┆ 6 ┆ yes │' | __pools_active_parse)"
+  plist=$(printf '%s\n' \
+    '│ Slug                ┆ Name        ┆ Visibility ┆ Workers ┆ Active ┆ Manage │' \
+    '╞═════════════════════╪═════════════╪════════════╪═════════╪════════╪════════╡' \
+    '│ company-chatgpt-pro ┆ Company     ┆ org        ┆ 10      ┆ yes    ┆ no     │' \
+    '│ old-pool            ┆ Old         ┆ org        ┆ 20      ┆ yes    ┆ yes    │' \
+    '│ paused-pool         ┆ Paused      ┆ org        ┆ 3       ┆ no     ┆ yes    │' \
+    '│ heca-1              ┆ Private     ┆ private    ┆ 1       ┆ yes    ┆ yes    │')
   st_company=$(printf '%s\n' "Pool 'company-chatgpt-pro':" '  Queued:     2' '  Dispatched: 4 / 10' '  Diagnosis:  running' \
     '│ Worker ┆ Seen (s ago) ┆ Task ┆ Script                    │' \
     '│ w1     ┆ 2            ┆ t1   ┆ cdp-2.8.0-astra-resilient │' \
@@ -109,6 +124,12 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
   chke 'heca-1||0|0|1|1|0' pool-stats-parse-no-workers "$(printf '%s\n' "$st_idle" | __pool_stats_parse heca-1)"
   chke 'chrono||0|?|?|0|1' pool-stats-parse-expired "$(printf '%s\n' "$st_expired" | __pool_stats_parse chrono)"
   chke 'x||0|?|?|0|0' pool-stats-missing-capacity "$(printf '%s\n' 'Queued: 0' | __pool_stats_parse x)"
+  st_wide=$(printf '%s\n' "Pool 'chrono-chatgpt-pro-pool':" '  Queued:     0' '  Dispatched: 2 / 20' '  Diagnosis:  running' \
+    '│ Worker ┆ Seen (s ago) ┆ Task ┆ Script           ┆ Last error ┆ Cooldown until │' \
+    '╞════════╪══════════════╪══════╪══════════════════╪════════════╪════════════════╡' \
+    '│ h1     ┆ 0            ┆ -    ┆ cdp+f07594021f71 ┆ -          ┆ -              │' \
+    '│ h2     ┆ 0            ┆ t9   ┆ cdp+f07594021f71 ┆ -          ┆ -              │')
+  chke 'chrono-chatgpt-pro-pool|cdp+f07594021f71|2|2|20|0|0' pool-stats-parse-script-by-header "$(printf '%s\n' "$st_wide" | __pool_stats_parse chrono-chatgpt-pro-pool)"
   chke 'x||0|?|?|0|0' pool-stats-invalid-capacity "$(printf '%s\n' 'Dispatched: 0 / 6oops' | __pool_stats_parse x)"
   chke 'x||0|0|0|0|0' pool-stats-zero-capacity "$(printf '%s\n' 'Dispatched: 0 / 0' | __pool_stats_parse x)"
   rows=$(printf '%s\n' \
@@ -149,6 +170,7 @@ __selftest() {  # 分类器的阳性/阴性对照。**立条依据(2026-09-06)**
       echo 'Error: pool discovery unavailable'; return 7
     fi
     [ "$2" != result ] || printf '%s\n' "$3" >> "$NYX_TEST_DIR/polls"
+    [ "$2 $3" != 'pool list' ] || printf '│ Slug ┆ Name ┆ Visibility ┆ Online ┆ Active ┆ Manage │\n'
     while IFS='|' read -r slug script online dispatched capacity queued response id; do
       if [ "$2 $3" = 'pool list' ]; then
         printf '│ %s ┆ Fixture ┆ org ┆ %s ┆ yes ┆ no │\n' "$slug" "$online"; continue
