@@ -23,3 +23,8 @@ name = "Reg"
 srcDir = ".."
 roots = ["Reg"]
 globs = ["Reg.+"]
+
+[[lean_lib]]
+name = "TriggerImplLib"
+srcDir = "../tools/lean-inspector"
+roots = ["LeanInformationAudit.Registry"]
