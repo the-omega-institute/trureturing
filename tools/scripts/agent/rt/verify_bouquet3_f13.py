@@ -41,8 +41,9 @@ for sides in product((0,1),repeat=2*K+1):
 for mask in range(1<<(4*K)):
  f=[rows[i] for i in range(4*K) if mask>>i&1]; g=[rows[i] for i in range(4*K) if not mask>>i&1]
  r=[sum((mask>>(4*j+i))&1 for i in range(4)) for j in range(K)]
- h=sum(x>0 for x in r); e=sum([0,0,1,2,2][x] for x in r)
- assert rank(f)==h+min(K,e),(mask,'rankF')
+ active=sum(x>0 for x in r); complement=sum(x<4 for x in r); partial=sum(0<x<4 for x in r); e=sum([0,0,1,2,2][x] for x in r)
+ assert rank(f)==active+min(K,e),(mask,'rankF')
+ assert rank(g)==complement+min(K,6-e),(mask,'rankG')
  mc=min(hh+sum(sides[1+i//2]!=((mask>>i)&1) for i in range(4*K)) for sides,hh in assignments)
  assert rank(f)+rank(g)-2*K==mc,(mask,rank(f)+rank(g)-2*K,mc)
 print('PASS bouquet3 F13: all 4096 regions; 88 virtual patterns; full support rank6')
