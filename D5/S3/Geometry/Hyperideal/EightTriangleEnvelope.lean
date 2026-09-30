@@ -21,7 +21,7 @@ theorem star_upper_sq : (709 : ℝ)^2 / 1003^2 < 1 / 2 := by norm_num
 theorem triangle_upper_sq : (11 : ℝ)^2 * 249 / 249^2 < 1 / 2 := by norm_num
 theorem four_cycle_upper_sq : (2753 : ℝ)^2 / 4012^2 < 1 / 2 := by norm_num
 
-/- The high-edge Taylor certificate used at the degree-fourteen threshold. -/
+/- The high-edge Taylor certificate used at the degree-twelve threshold. -/
 def t6 (u : ℝ) : ℝ := 1 - u^2 / 2 + u^4 / 24 - u^6 / 720
 
 theorem high_upper_sq : (5965 : ℝ)^2 / 6972^2 < 3 / 4 := by norm_num
