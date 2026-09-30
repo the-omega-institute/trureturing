@@ -23103,3 +23103,285 @@ arithmetic argument supplying sufficient same-source head mass and
 joint savings, with all complementary loads and near-max sections paid.
 All additions here are ordinary mathematical derivations with independent
 review, not new Lean results or a resolution of unrestricted Erdős #7.
+
+## Shared pair capacity forces strict section slack without descendant saturation
+
+Fix ONE hypothetical whole cover globally minimizing class count and
+then modulus sum. Keep its original numerical moduli D, literal classes
+A_u, full period Q and full ternary height H=v_3(Q)>=1. Fix B>=13,
+S={5,7,11,13}, and the complete head carrier N_B, resolving ALL old
+exponents used by the original family. Call a FUTURE original selected
+if v_3(u)=H and at least three primes from S divide u. Other heights,
+support and exponents remain unrestricted. Every unselected original
+will remain in the complementary load, not be deleted from the task.
+
+The six old interfaces h_qr=3^H q r have phase capacity two by
+Report385 ML2, ML6 and MX2--MX4. These capacities apply to ALL
+original labels, including labels in different future suffix sections.
+If I_u is the literal full old activation of a selected original,
+double-counting pair incidences at one actual head point gives
+
+    C_all=sum_(all selected future u)I_u
+         =sum_(actual suffixes v>1)C_v<=4.         (FC992)
+
+Each active label uses at least three pairs; the total capacity is
+twelve. This is one SHARED resource across suffixes and depths.
+It strengthens the separate section caps without assuming that their
+maxima can be attained independently.
+
+Suppose four selected labels u_1,...,u_4 are active at a head point.
+All six pair capacities are then equalities, and each label contains
+exactly three primes of S. Let a_i count labels omitting q_i in S.
+For every pair i,j, a_i+a_j=2, and sum_i a_i=4. Hence all a_i=1:
+the four labels have the four DIFFERENT three-prime S-supports.
+Relabel so u_i omits q_i. These numerical labels and phases are fixed.
+Let c be their common full ternary and first S-prime residues, and set
+
+    G=3^H product_(q in S)q, W={x:x=c mod G},
+    A_(u_i) intersection A_(u_j) subset W (i!=j). (FC993)
+
+The two S-supports together contain all four primes. Extra factors
+can further restrict their intersection but do not invalidate FC993.
+
+This quartet is isolated among the old activations of ALL selected
+future labels. If an external selected z coactivated u_i at another
+old point, their S-supports would share a pair q,r. The FIXED old
+h_qr-phase of u_i already contains u_i and one quartet partner.
+Capacity two leaves no place for a third numerical label z. Thus
+
+    I_(u_i)=1 ==> C_all=1+sum_(j!=i)I_(u_j).      (FC994)
+
+Partner identity is fixed by the literal old phase, not chosen again
+at each point. All three partners contain the missing prime q_i and
+its residue c. A complete private point of u_i outside W must differ
+at that missing prime, so FC994 gives C_all=1 on its head projection.
+This projected exclusion uses old-phase capacity, not merely complete
+class disjointness.
+
+Global whole-cover minimality now forces at least three such private
+points. Write P_i for the COMPLETE original private region of u_i,
+J={u_1,...,u_4}, and E_J=Z minus union_(d in D minus J)A_d for the
+entire joint liability of deleting the quartet. Let T be the indices
+i for which P_i is not contained in W. Suppose |T|<=2, and choose
+two primes q,r outside {q_i:i in T}. Put h=3^H q r. Then
+
+    |T|<=2 ==> E_J subset {x:x=c mod h},
+    #{i:P_i is not contained in W}>=3.           (FC995)
+
+Here the first line is the consequence of the supposition that leads
+to its contradiction. Whole coverage gives every point of E_J at
+least one quartet owner. With two owners it belongs to W by FC993.
+With a unique owner it is private: if i is not in T it is in W;
+if i is in T, u_i contains both chosen q,r and fixes their residues
+at c. This proves the claimed joint-liability containment, including
+points not accounted for by a union of individual private regions.
+
+The original h is present by divisor closure of a quartet member
+containing q,r. It is not in J, since h has only two S-primes and
+is wholly old. Move its original class to c mod h, delete all four
+quartet classes, and repair the ENTIRE former h-class with three
+classes of distinct moduli
+
+    3^(H+1), 3^(H+1)*q, 3^(H+1)*r.
+
+Use the three different ternary lifts of the old h-phase, together
+with its old q- or r-residue where required. Every old h-point
+belongs to one of these three lifts and satisfies that lift's cofactor
+condition. All repair labels are globally fresh because their ternary
+height is H+1; they are distinct odd nonunits. The moved h covers
+E_J, the repair covers every old h-loss, and every other original is
+retained. Removing four and adding three lowers class count, a
+contradiction. No separate modulus-sum comparison is needed here.
+The comparison is global across heights and periods; minimality only
+within a fixed palette or height would not authorize this repair.
+
+Choose one core-external private point from each of three different
+members supplied by FC995. Their head cells have C_all=1 and are
+disjoint, since a cell cannot activate two different such members.
+No descendant saturation or private-hull enlargement has been assumed.
+
+For ANY nonempty selected subcollection A, put C_A=sum_(u in A)I_u.
+If C_A never reaches four, a private point of any u in A supplies
+1<=C_A<=3. If it reaches four, that quartet lies inside A, so the
+three private cells just constructed have C_A=C_all=1. Thus
+
+    A nonempty ==> a private head cell with 1<=C_A<=3;
+    C_A attains4 ==> three disjoint private cells with C_A=1. (FC996)
+
+This is an alternative inside the SAME globally minimal whole cover.
+It does not infer the first branch's C_all from C_A: other sections
+may contribute there. The first branch only needs its asserted C_A.
+
+Apply this to the selected part of an actual suffix v. Keep its FULL
+load L=R+C, with all other originals in R, and define
+
+    delta_2=C(4-C), delta_3=C(16-C^2)=(4+C)delta_2,
+    L^2=R^2+(2R+4)C-delta_2,
+    L^3=R^3+(3R^2+12R+16)C-(3R delta_2+delta_3). (FC997)
+
+These are exact same-point identities. On integer C=1,2,3 the two
+defects are respectively (3,4,3) and (15,24,21); both vanish at0
+and4, and delta_3>=5delta_2 everywhere. Use w=1 and either the
+unguarded raw head law mu_B^o or its FULL survivor restriction
+1_(S_B)mu_B^o. Every private point of a future original avoids all
+head originals. Its resolving cell has mass at least1/N_B by FC935
+on each of these specified laws. With all integrals on the chosen
+same eta, FC996 gives, for a nonempty selected section,
+
+    D_2(v):=integral delta_2 deta>=3/N_B,
+    D_3(v):=integral(3R delta_2+delta_3)deta
+                >=15/N_B+3 integral R delta_2 deta. (FC998)
+
+If C_v attains four anywhere, the constants improve to9/N_B and
+45/N_B, using the three disjoint cells. This strengthening is not
+asserted for the branch in which C_v never attains four. In either
+case D_3>=5D_2+3 integral R delta_2. These are improvements of the
+particular cap-four baseline integrals in FC997, not deductions from
+an unrelated sharper allowance or from an already exact seed.
+Arbitrary selectors and freely supplied normalized heads do not
+automatically inherit the private-cell mass floor.
+
+There is now a precise scalar consumer. Let B_r(v) be the integral
+of FC997's positive baseline, before subtracting D_r(v). For a
+finite nonempty actual suffix list put A_r=max_v B_r(v). Then
+M_r(v)=B_r(v)-D_r(v). If EVERY actual suffix has nonempty selected
+part, the common source and N_B give
+
+    Gamma_2<=A_2-3/N_B, Gamma_3<=A_3-15/N_B.      (FC999)
+
+Different suffixes need not use disjoint witness cells: these bounds
+take a maximum, not a sum of credits. With selected-empty competitors,
+use FC950's exact reduction min_v[(A_r-B_r(v))+D_r(v)], or lower
+certificates for D_r in that formula. A maximizing uncredited suffix
+can prevent any strict envelope gain. All lower ternary layers and
+remaining old supports stay in R throughout.
+
+## The shared selected-label cap pays an entire normalized tail once
+
+Keep the selection fixed at B and use FC936's actual normalized
+continuation of any finite supplied head-survivor eta, of mass s.
+At a later prime p>B, selected originals assigned there split into
+current depths e>=1. Their activations only add conditions to the
+head activations; FC992 therefore implies sum_e C_e<=4. For the
+actual selected forbidden union D_(p,H), write beta_(p,H)=nu_p(D_(p,H)).
+Then
+
+    beta_(p,H)<=c_p sum_e p^-e C_e<=4c_p/p.       (FC1000)
+
+Giving every depth its own cap four would instead yield4/(p-2).
+More importantly, these selected labels can be charged only once
+over the ENTIRE future path. For each head-selected u let p(u)>B
+be its unique terminal prime and lambda_u its literal cylinder mass
+under nu_(p(u)). At every complete path,
+
+    sum_(p>B)beta_(p,H)
+       <=sum_u lambda_u I_(u,<p(u))
+       <=W_B:=sum_u lambda_u I_(u,head)
+       <=4c_(p_*)/p_*,                           (FC1001)
+
+where p_* is the first actual tail support prime. If the tail is
+empty the sum is zero. The cylinder cap gives
+lambda_u<=c_(p(u))/p(u); the function c_p/p is
+(1/2)(1/p+1/(p-2)), decreasing in p. These are TERMINAL masses,
+not a product of future reference masses transported without proof.
+Every original appears once and later activation implies head
+activation, so there is no independent four-label allowance per stage.
+
+On the full forbidden union D_p, the normalized kernel has density
+zero if beta_p<=1/2 and (2beta_p-1)/beta_p<=1 otherwise. Since
+D_(p,H) subset D_p, K_p(D_(p,H))<=beta_(p,H). The complete
+normalized path measure mu preserves its old marginals. Integrating
+FC1001 and union-bounding actual selected-label failures yields
+
+    mu(H_tail)<=sum_p integral K_p(D_(p,H))dmu_<p
+       <=integral W_B deta<=[4c_(p_*)/p_*]s.       (FC1002)
+
+This is a same-ACTUAL-source complete-tail bound, for arbitrary
+selected-label heights and future support. No pure-product source
+replacement, seed transfer or infinite stage sum is used.
+
+Let L_tail be the failures of EVERY complementary future original
+on this same mu. Then mu(full survivor)>=s-integral W_B deta-mu(L_tail).
+The light debit is still governed by the COMBINED kernel: it cannot
+be replaced without proof by a light-only law, beta_(p,L)^2 or
+g(beta_(p,L)). The selected union may push the total fraction past
+the threshold even when the light fraction alone is small.
+
+A safe quadratic consumer retains that effect. The function
+g(beta)=(2beta-1)_+ is increasing and two-Lipschitz, and
+beta_p<=beta_(p,L)+beta_(p,H). Since g(beta_(p,L))<=beta_(p,L)^2,
+
+    total tail failure mass<=Q_L+2 integral W_B deta
+       <=Q_L+[8c_(p_*)/p_*]s,
+    Q_L=sum_p integral beta_(p,L)^2 dmu_<p.        (FC1003)
+
+The Lipschitz comparison may use g on all nonnegative reals;
+the squared comparison is applied only to beta_(p,L) in [0,1].
+Q_L is on the SAME combined actual process, not a different
+light-only evolution. Its full same-source moment bound remains
+a separate obligation. Conditioning on light survival likewise
+does not replace the head mass s by that smaller surviving mass
+in the established absolute selected-tail debit.
+
+A different normalized continuation gives a complete light-moment
+certificate with an explicitly larger selected-tail charge. Keep the
+SAME supplied head eta and the same full-family pure laws, but let
+K_p^L act only on the complementary nonpure forbidden union D_(p,L).
+This is a NEW path law mu^L, not a re-encoding of the combined one.
+Its light bad mass is g(beta_(p,L))<=beta_(p,L)^2, while K_p^L<=2nu_p
+gives selected bad mass at most2beta_(p,H). FC1001 is pathwise and
+therefore applies on this law as well: the complete selected charge
+is at most2 integral W_B deta.
+
+Restrict the actual suffix library to the complementary original
+labels, classified ONCE at B. It stays closed under FC924's sections;
+pure laws still remove all full-family pure originals. The head seeds
+G_2^L,G_(2+epsilon)^L are computed on eta from this restricted library.
+Apply FC959 to these light queries and K^L, for0<epsilon<=1, to get
+
+    mu^L(full survivor)>=s-2 integral W_B deta
+      -D_B T_3(B)[G_2^L+C_epsilon G_(2+epsilon)^L
+                            S_(3+8epsilon,epsilon)(B)]. (FC1004)
+
+This supplies the entire continuation allowance from declared head
+data. A positive right side would contradict whole coverage. The
+selected term is at most[8c_(p_*)/p_*]s; the remaining moment cost
+uses only complementary actual queries. The factor two is essential
+to this proof because K^L can inflate selected cylinders. One cannot
+combine FC1002's factor one from the old combined law with the new
+law's light-only moments. Complete certificates may be compared after
+each source and all of its costs have been certified separately.
+
+The compulsory private cells also reduce this GLOBAL selected-tail
+term directly, without a maximum over sections. For either specified
+w=1 raw/full-survivor head law, write f_*=c_(p_*)/p_*. If C_all never
+attains four, its integer value is at most three. Otherwise FC995--996,
+applied across all suffixes, supply three disjoint head cells with
+C_all=1 and mass at least1/N_B each. Consequently
+
+    integral W_B deta<=f_* integral C_all deta
+      <=3f_*s                         if C_all never attains4,
+      <=f_*(4s-9/N_B)                 if C_all attains4. (FC1005)
+
+The second line's improvement follows by integrating4-C_all; each
+of the three cells contributes at least3/N_B. The known private
+cells also ensure the displayed upper quantity is nonnegative.
+Use this bound with factor one in FC1002 or factor two in FC1004,
+according to the chosen actual continuation. The raw mu_B^o version
+supplies head counts and tail-event bounds only. To use FC1004's FULL
+survivor lower bound, take the full head-survivor restriction, or
+separately pay every head failure; raw mass is not surviving reserve.
+This global gain needs
+no competing-suffix slack condition, but pays only the selected
+inventory. The entire complementary light debit remains unchanged.
+
+The new exchange supplies compulsory strict cap-four defects wherever
+the selected component is nonempty; no saturation supplier is missing
+for that conclusion. Its mass scale1/N_B can still vanish with the
+family. Selected-empty sections, arbitrary lower ternary heights and
+the complete complementary inventory remain. The unrestricted gap is
+to bound these actual remaining debits and all near-max competitors
+strongly enough to beat the reserve, or obtain another whole-cover
+contradiction. Neither FC998 nor FC1003 alone proves that comparison.
+This increment is written mathematics with independent review, not
+new Lean verification or a resolution of unrestricted Erdős #7.
