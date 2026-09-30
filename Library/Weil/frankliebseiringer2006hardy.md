@@ -5,7 +5,7 @@ year: 2006
 title: Hardy-Lieb-Thirring inequalities for fractional Schrodinger operators
 doi: null
 url: https://arxiv.org/abs/math/0610593v2
-claim: Nonlocal IMS retains a joint pole-prime correction. Ordinary narrow windows require the full two-pole form; the known optimal small-window floor still cannot pay the independent capped Gamma envelope on fine cofinal partitions whose actual smooth support widths have ratio at most the golden ratio. A joint arithmetic and localization estimate remains missing.
+claim: Nonlocal IMS retains a joint pole-prime correction. Below the first prime shift, refinement leaves the prime atoms unchanged; actual local contributions minus the actual Gamma defect approach the negative shifted-digamma baseline on slow dilations. Positivity requires a positive arithmetic reserve, which is not supplied by the mesh or the known optimal local floor.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -205,6 +205,117 @@ The right side is approximately $-0.977193$ for $r=1$ and $-0.495981$ for $r=\va
 
 For $1\le r\le\varphi$, this rejects a particular sufficient budget even when the **optimal** local spectral constants are used: subtracting this independent Gamma envelope and merely using a zero lower bound for the signed arithmetic term in (2) cannot give positive fine-scale margins under these conditions. Equation (8) does not give this rejection for every fixed width ratio. It does not give a negative value of the actual Weil form, a lower bound on its actual Gamma cost, or an obstruction to stronger joint estimates. The local surpluses, localization defect and arithmetic term depend on the same $f$ and cutoffs; retaining those relations is the remaining route. The analytic asymptotics and comparison (8) are not a new compiled general theorem.
 
+## A smooth realization of the physical windows
+
+The width-ratio hypothesis can be realized by standard mollification and normalization. This constructs windows in the chosen physical interval chart; it does not intertwine FIB ATOM operations with prime translation.
+
+Take adjacent tiles $I_i=[b_i,b_{i+1})$ of lengths in $[a,\varphi a]$, $a>0$, and a nonnegative smooth mollifier $\eta$ of integral one, positive on $(-1,1)$ with topological support $[-1,1]$. Put $\eta_\varepsilon(x)=\varepsilon^{-1}\eta(x/\varepsilon)$, $0<\varepsilon<a/2$, and
+
+$$
+\rho_i=\eta_\varepsilon*\mathbf1_{I_i},\qquad
+s=(\sum_i\rho_i^2)^{1/2}.
+$$
+
+Index the tiles by $0\le i<N$, include tiles $0,N-1$ as padding in this sum, and keep the source support compactly inside $(b_1+\varepsilon,b_{N-1}-\varepsilon)$. On $U=(b_0+\varepsilon,b_N-\varepsilon)$, the $\rho_i$ sum to one and at most two are nonzero, so $s\ge1/\sqrt2$. For interior tiles define $\chi_i=\rho_i/s$ on $U$ and zero outside. Each retained numerator's support is compactly contained in $U$, making this extension smooth. The retained family has square unity near the source support and global squared norm at most one.
+
+The complete cutoff support widths and a joint Lipschitz bound are
+
+$$
+d_i=b_{i+1}-b_i+2\varepsilon,\qquad
+\frac{\max d_i}{\min d_i}\le\frac{\varphi a+2\varepsilon}{a+2\varepsilon}<\varphi,
+\qquad B\le\frac{2\|\eta\|_\infty}{\varepsilon}.
+$$
+
+Indeed $\rho_i'=\eta_\varepsilon(x-b_i)-\eta_\varepsilon(x-b_{i+1})$. At most one seam contributes at a point, so $\|\rho'\|_{\ell^2}\le\sqrt2\|\eta\|_\infty/\varepsilon$. Differentiating $\rho/\|\rho\|$ is orthogonal projection followed by division by $s$, giving the bound. No additional endpoint cutoff is inserted. These widths belong to the complete $\chi_i$, not the possibly smaller supports of a particular $\chi_i f$. This uses standard smooth partition ingredients and supplies no new arithmetic positivity.
+
+## The actual residual requires a positive arithmetic contribution
+
+The same-function comparison avoids replacing the Gamma defect by a scalar envelope. Let $f\in C_c^\infty(\mathbb R;\mathbb C)$ have support in $[-L,L]$, and let a finite real smooth square partition hold there. Suppose each $g_i=\chi_i f$ has support in an interval of length at most $d<\log2$. Keep the full two-pole form and the same ambient prime cutoff for all terms. Define
+
+$$
+R_f(t)=\Re\int f(x)\overline{f(x-t)}\,dx,\qquad
+\mathcal C(g)=\iint e^{|x-y|/2}\Re\bigl(g(x)\overline{g(y)}\bigr)\,dx\,dy.
+$$
+
+Every local prime correlation vanishes. Since $K_f(t)=2(R_f(t)-\sum_iR_{g_i}(t))$, at every prime-power atom $K_f(\log n)=2R_f(\log n)$, independently of the partition. The signed arithmetic integral in (2), denoted $J_\chi(f)$, decomposes exactly as
+
+$$
+J_\chi(f)=J_{0,L}(f)-A_\chi(f),\qquad
+A_\chi(f)=\sum_i\mathcal C(g_i),
+$$
+
+$$
+J_{0,L}(f)=2\int_0^{2L}e^{t/2}R_f(t)\,dt
+-2\sum_{2\le n\le e^{2L}}\frac{\Lambda(n)}{\sqrt n}R_f(\log n).
+$$
+
+The interval kernel gives a uniform bound without cutoff derivatives:
+
+$$
+|A_\chi(f)|\le2(e^{d/2}-1)\|f\|_2^2. \tag{9}
+$$
+
+For $x\in[a,b]$, $b-a\le d$, its row integral is
+$2(e^{(x-a)/2}+e^{(b-x)/2}-2)\le2(e^{d/2}-1)$.
+Apply $2|uv|\le|u|^2+|v|^2$ and sum the local masses to obtain (9). Thus $J_\chi$ converges to $J_{0,L}$ as the maximum width tends to zero, uniformly on unit tests with an error bound independent of $L$. Refinement below the first prime shift changes only this controlled local continuum term.
+
+Write $E_*(f)=\int_0^\infty k_*(t)E_t(f)dt$ and $a_0=c_\Gamma+4$. The complete accounting is
+
+$$
+Q_{\rm full}(f)=a_0\|f\|_2^2+E_*(f)+J_{0,L}(f), \tag{10}
+$$
+
+$$
+S_\chi(f):=\sum_iQ_{\rm full}(g_i)-\int_0^\infty k_*(t)K_f(t)dt
+=a_0\|f\|_2^2+E_*(f)+A_\chi(f). \tag{11}
+$$
+
+To check the cancellation, the full pole has kernel $e^{|x-y|/2}+e^{-|x-y|/2}$, while
+
+$$
+\int_0^\infty e^{-t/2}E_t(g)dt
+=4\|g\|_2^2-\iint e^{-|x-y|/2}\Re(g(x)\overline{g(y)})dxdy.
+$$
+
+Using $k_\Gamma-k_*=e^{-t/2}$ cancels the decaying kernel and leaves $\mathcal C(g)$. The whole-line energy is essential: for shifts larger than the support width it is $2\|g\|_2^2$, not zero. The project's [pole-continuum and shifted-digamma identities](../../D5/S3/Weil/ZetaGamma/PoleContinuumCompletion.lean) and [renormalized Weil multiplier](../../D5/S3/Weil/ZetaGamma/RenormalizedWeilMultiplier.lean) already supply the completion for their even bundled tests. Equation (11) remains a paper application of the general explicit formula to the possibly non-even local pieces.
+
+The baseline is strictly negative. Its series, supplied by [GammaMu](../../D5/S3/Weil/ZetaGamma/GammaMu.lean), gives
+
+$$
+a_0=\operatorname{digamma}(5/4)-\log\pi
+=-\gamma-\log\pi+\sum_{m\ge1}\left(\frac1m-\frac1{m+1/4}\right)<-1.
+$$
+
+Indeed each summand is at most $\tfrac12(1/m-1/(m+1))$, whose sum is $1/2$, while $\gamma>1/2$ and $\log\pi>1$. Numerically $a_0\approx-1.372183419$; the strict sign uses the series bound rather than this decimal.
+
+For a fixed even $h\in C_c^\infty(\mathbb R;\mathbb C)$ with $\|h\|_2=1$, put $f_R(x)=R^{-1/2}h(x/R)$, $R>0$. The standard translation estimate $E_t(f_R)\le t^2\|h'\|_2^2/R^2$ gives
+
+$$
+|S_\chi(f_R)-a_0|
+\le2(e^{d/2}-1)+\frac{C_*\|h'\|_2^2}{R^2},\qquad
+0<C_*\le\frac{26}{125}. \tag{12}
+$$
+
+For completeness, the translation estimate follows by integrating $f_R'$ along a segment, applying Cauchy–Schwarz and then Fubini. The moment bound follows from
+$1/(1-e^{-2t})=1+1/(e^{2t}-1)\le1+1/(2t)$ for $t>0$ and
+$\int_0^\infty(t^2+t/2)e^{-5t/2}dt=26/125$.
+If $h$ and the cutoffs are nonnegative, then also $S_\chi(f_R)\ge a_0$.
+
+As $R\to\infty$ and $d\to0$, the **actual** residual therefore tends to $a_0$, uniformly over these partitions, without any width-ratio, window-count or cutoff-derivative bound. Even if the widths merely remain below $\log2$, (12) gives
+
+$$
+\limsup_{R\to\infty} S_\chi(f_R)
+\le a_0+2(\sqrt2-1)<2\sqrt2-3<0. \tag{13}
+$$
+
+The first bound is approximately $-0.543756294$. This uses actual local forms and the actual signed Gamma defect of the same test. It is not a negative-full-Weil example. Since $Q_{\rm full}(f_R)=S_\chi(f_R)+J_\chi(f_R)$, positivity for these tests requires
+
+$$
+J_\chi(f_R)\ge-a_0-2(e^{d/2}-1)-\frac{C_*\|h'\|_2^2}{R^2}. \tag{14}
+$$
+
+Equation (14) is a necessary condition under positivity, not a supplied prime-discrepancy estimate. In particular a zero lower bound for $J_\chi$ cannot alone certify these directions. The needed arithmetic estimate must provide this positive contribution and also control the other, oscillatory test directions. The identities and uniform estimates (9)–(14) are paper-level deductions; they do not settle RH or establish a new compiled localization theorem.
+
 ## A prime edge crossing an intermediate FIB window
 
 The five first-level internal-coordinate intervals have geometric order $[3],[null],[5],[2],[2\ 5]$. Put $\varphi=(1+\sqrt5)/2$. In particular
@@ -233,6 +344,6 @@ The original prime contribution to $Q$ is therefore $-2\sqrt2\log2\,\|\eta\|_2^2
 
 The standard IMS identity is reusable mathematics, not a new FIB positivity theorem. The project's [smooth rational approximation](../../D5/S3/Weil/TestFunctions/RationalCutoffApproximation.lean) controls the complete paired zero sum; its [golden cofinal interface](../../D5/S3/Weil/CofinalSupport/GoldenCofinalPositivity.lean) still requires positivity for every admitted test at every chosen scale. Neither supplies a lower bound for the signed integral in (2).
 
-A sufficient next input would combine genuine lower margins for the localized tests with a lower bound for the **same** $W_f$ against $\Psi-u$, paying the displayed Gamma remainder uniformly over all allowed coefficients and growing supports. The family $W_f$ is constrained by a common $f$ and square partition; it cannot be replaced by arbitrary independently optimized weights. The corresponding Robin research also retains a joint signed prime fluctuation, but identifying those two test families requires another explicit map.
+A sufficient next input would combine genuine lower margins for the localized tests with a lower bound for the **same** $W_f$ against $\Psi-u$, paying the displayed Gamma remainder uniformly over all allowed coefficients and growing supports. Equation (14) is a necessary benchmark on the slow dilations, not this all-test sufficient bound. The family $W_f$ is constrained by a common $f$ and square partition; it cannot be replaced by arbitrary independently optimized weights. The corresponding Robin research also retains a joint signed prime fluctuation, but identifying those two test families requires another explicit map.
 
-The analytic localization, Stieltjes calculations and fine-window comparison above are paper-level applications with their hypotheses displayed, not a new Lean closure. Transient exact Lean checks cover only the stated rational interval placement, first-prime support threshold, pointwise four-bump pairing, scalar Gamma cancellation, and negativity of the scalar expression in (8) at $r=\varphi$; no named wrapper is retained. The last check does not prove the spectral-domain, asymptotic or cutoff premises of (8). The nonlocal source, these checks, and the missing all-scale arithmetic estimate have different evidentiary roles.
+The analytic localization, Stieltjes calculations and uniform comparisons above are paper-level applications with their hypotheses displayed, not a new Lean closure. Transient exact Lean checks cover only the stated rational interval placement, first-prime support threshold, pointwise four-bump pairing, scalar Gamma cancellation, negativity of the scalar expression in (8) at $r=\varphi$, and the actual scalar inequalities $c_\Gamma+4<-1$ and $c_\Gamma+4+2(\sqrt2-1)<0$; no named wrapper is retained. The scalar checks do not prove the spectral-domain, asymptotic, integral or cutoff premises. The nonlocal source, these checks, and the missing all-scale arithmetic estimate have different evidentiary roles.
