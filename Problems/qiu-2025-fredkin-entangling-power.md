@@ -70,12 +70,13 @@ independent answer.
 
 ## Falsifier
 
-The answer would change if the auxiliary systems of `A` and `B` were required
-to be qubits: appending `|0⟩` auxiliary qubits to `ψ_A` and `ψ_B`, as in the
-paper's own input `|10⟩_{AR_A}`, leaves the reduced spectrum unchanged, but
-this remark is not formalized. It would also change if the entropy were taken
-without the auxiliary systems. The paper's definition attaches `R_i` to its
-party, and its own lower-bound input uses auxiliary qubits for `C` and `D`.
+The answer would change if the entropy were taken without the auxiliary
+systems: the paper's definition attaches `R_i` to its party, and its own
+lower-bound input uses auxiliary qubits for `C` and `D`. A reading that gives
+`A` and `B` qubit auxiliary systems does not change it. Appending `|0⟩`
+auxiliary qubits to `ψ_A` and `ψ_B`, as in the paper's own input
+`|10⟩_{AR_A}`, keeps the reduced spectrum and hence the counterexample; that
+padded witness is not formalized.
 
 ## Evidence
 
