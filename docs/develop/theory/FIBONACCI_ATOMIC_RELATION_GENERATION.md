@@ -24110,3 +24110,249 @@ $\mathcal Q_r\ge1$；全体乘子的 $\mathcal Q_r$ 仍未判定。
 即使最终证明该来源族全部安全，任意自然数的 Robin 不等式仍需另行覆盖。
 
 ## 追加锚（本行以下为增补区）
+
+## 212. 已知安全整数也能使全区间指定高矩发散
+
+§210 的全区间矩下界并不要求存在 Robin 反例。本节进一步给出同一个
+可明确识别的安全子集：每个成员都严格满足 Robin，但在指定矩阶下，
+即使用各整数自己的预算归一，其高次幂总和仍趋于无穷。
+结论只针对全整数区间，不提供 FIB 固定剩余类的矩下界。
+
+### 212.1 同一安全子集与一致区间范围
+
+记 $a_0=0.0094243$、$\vartheta_0=\pi^2/12$。
+沿用 §207 引用的 Axler 固定阈值 $N_K$：
+
+$$
+\frac n{\varphi(n)}
+<e^\gamma\left(\Lambda_n+\frac{a_0}{\Lambda_n^2}\right),
+\qquad \Lambda_n=\log\log n,\quad n\ge N_K.
+\tag{212.1}
+$$
+
+取正整数 $A,X$，令
+
+$$
+y=\log A,\quad \ell=\log y,\quad s=y\ell,\quad
+t=e^\gamma\ell,\quad R_y=y/\ell^2.
+$$
+
+设
+
+$$
+\frac32A\le X\le\frac52A,\qquad Q=X-A+1.
+\tag{212.2}
+$$
+
+当 $A$ 充分大时，置 $q=\sqrt{10}\,\ell^{3/2}$、$k=\lceil q\rceil$，
+令 $p$ 为严格大于 $k$ 的最小素数。Bertrand 定理给
+
+$$
+q<p<2k\le2(q+1)\le3q,\qquad
+10\ell^3<p^2<90\ell^3.
+\tag{212.3}
+$$
+
+定义同一个实际整数子集
+
+$$
+\mathcal J_{A,X}
+=\{n\in\mathbb N:A\le n\le X,\ v_p(n)=1\}.
+\tag{212.4}
+$$
+
+**定理 212.1（安全子集上的指定矩发散）。** 存在绝对常数
+$A_0,C>0$，使每个整数 $A\ge A_0$ 与满足式（212.2）的整数 $X$
+均有：$\mathcal J_{A,X}$ 非空，其中每个整数严格满足 Robin，且
+
+$$
+\log\sum_{n\in\mathcal J_{A,X}}(Z(n)/t)^s
+\ge\left(\frac{\pi^2}{12}-\frac1{10}\right)R_y
+-C\frac y{\ell^3},
+\tag{212.5}
+$$
+
+$$
+\log\sum_{n\in\mathcal J_{A,X}}
+\left(\frac{Z(n)}{e^\gamma\log\log n}\right)^s
+\ge\left(\frac{\pi^2}{12}-\frac1{10}\right)R_y
+-C\frac y{\ell^3}.
+\tag{212.6}
+$$
+
+同一个 $C$ 可由增大两式各自常数得到。由于
+$\pi^2/12>3/4>1/10$，两份和均随 $A\to\infty$ 一致趋于无穷，
+虽然式（212.6）的每个单项都严格小于一。以下各段完成证明。
+
+### 212.2 随规模变化的素数仍给逐点严格安全性
+
+增大 $A_0$，使 $A\ge\max(N_K,5041)$ 且 $\ell>0$。
+对同一个 $n\in\mathcal J_{A,X}$，由 $v_p(n)=1$，
+
+$$
+Z(n)
+=\frac n{\varphi(n)}
+\prod_{\substack{q'\mid n\\q'\text{ 素}}}(1-(q')^{-v_{q'}(n)-1})
+\le(1-p^{-2})\frac n{\varphi(n)}.
+\tag{212.7}
+$$
+
+因 $\Lambda_n\ge\ell$，式（212.3）给
+
+$$
+a_0p^2<90a_0\ell^3
+=0.848187\ell^3<\ell^3\le\Lambda_n^3.
+\tag{212.8}
+$$
+
+于是 $(1-p^{-2})(1+a_0/\Lambda_n^3)<1$。
+对这个实际 $n$ 使用式（212.1），立即得到
+$Z(n)<e^\gamma\log\log n$。
+这里使用的是固定阈值以后对每个 $n$ 成立的 Axler 界；
+并未调用变化模数的均匀分布定理。
+
+### 212.3 在同一个有限配置中只降低一个素数的指数
+
+取 §210.2 的有限整数 $m$。它只依赖 $A$，满足
+
+$$
+\delta=y/\ell^3,\qquad
+m\le A e^{-\delta/2},\qquad
+P_s(m)=\sum_{d\mid m}\frac{b_s(d)}d,
+$$
+
+$$
+\log P_s(m)\ge s\log t-y+\vartheta_0R_y-C_1\delta.
+\tag{212.9}
+$$
+
+该构造及常数不依赖 $X$，所以在式（212.2）的整个范围中一致适用。
+因为 $p=O(\ell^{3/2})$，最终 $p\le\sqrt s<y-\delta$，故它在 $m$
+中的指数为
+$e_p=\lceil\log s/\log p\rceil-1\ge1$。
+令
+
+$$
+m'=m/p^{e_p-1}.
+\tag{212.10}
+$$
+
+这仍是同一个确定的有限整数，满足 $m'\le m$、$v_p(m')=1$。
+对有限局部因子
+$V_p(s,e)=\sum_{a=0}^e b_s(p^a)/p^a$，有精确比值
+
+$$
+\frac{P_s(m')}{P_s(m)}
+=\frac{V_p(s,1)}{V_p(s,e_p)}.
+$$
+
+又 $V_p(s,e_p)\le U_p(s)\le W_p(s)$，而
+$V_p(s,1)=1-p^{-1}+p^{-1}(1+p^{-1})^s$。
+§209 的正系数比值估计给
+
+$$
+0\le\log\frac{V_p(s,e_p)}{V_p(s,1)}
+\le\log\frac{W_p(s)}{V_p(s,1)}
+\le\frac s{p^2-1}
+\le\frac1{10}R_y+O(y/\ell^5).
+\tag{212.11}
+$$
+
+这里仅对降低指数所产生的额外有限因子损失作上界，
+没有把较大的 $W_p$ 当成 $V_p(s,e_p)$ 的下界。
+由式（212.9）可得
+
+$$
+\log P_s(m')
+\ge s\log t-y+
+\left(\vartheta_0-\frac1{10}\right)R_y-C_2\delta.
+\tag{212.12}
+$$
+
+### 212.4 两个赋值分支在同一安全子集中的有限计数
+
+式（212.2）给 $Q\ge A/2$，故
+$pm'/Q\le2p e^{-\delta/2}\to0$。
+增大 $A_0$ 后可一致要求
+
+$$
+m'\le Q/(8p).
+\tag{212.13}
+$$
+
+对每个 $d\mid m'$，记
+$J(d)=\#\{n\in\mathcal J_{A,X}:d\mid n\}$。
+区间 $[A,X]$ 中任意正整数 $h$ 的倍数数量与 $Q/h$ 相差至多一。
+
+当 $p\nmid d$ 时，需 $pd\mid n$ 且 $p^2d\nmid n$，从而
+
+$$
+J(d)\ge\frac Qd\left(\frac1p-\frac1{p^2}\right)-2
+\ge\frac Q{2pd}-2.
+$$
+
+当 $p\mid d$ 时，构造保证 $v_p(d)=1$，需 $d\mid n$ 且 $pd\nmid n$，
+从而
+
+$$
+J(d)\ge\frac Qd(1-1/p)-2
+\ge\frac Q{2d}-2\ge\frac Q{2pd}-2.
+$$
+
+由于 $d\le m'\le Q/(8p)$，两种情况共同给
+
+$$
+J(d)\ge Q/(4pd)\qquad(d\mid m').
+\tag{212.14}
+$$
+
+这些计数都发生在同一个 $\mathcal J_{A,X}$ 上。
+对同一个整数的非负卷积
+$Z(n)^s=\sum_{d\mid n}b_s(d)$，保留 $d\mid m'$ 的项并交换有限求和，得到
+
+$$
+\sum_{n\in\mathcal J_{A,X}}Z(n)^s
+\ge\sum_{d\mid m'}b_s(d)J(d)
+\ge\frac Q{4p}P_s(m').
+\tag{212.15}
+$$
+
+特别地，该子集非空。结合式（212.12），得
+
+$$
+\log\sum_{n\in\mathcal J_{A,X}}(Z(n)/t)^s
+\ge\log\frac Q{4pA}
++\left(\vartheta_0-\frac1{10}\right)R_y-C_2\delta.
+$$
+
+因 $Q/A\ge1/2$、$\log p=O(\log\ell)=o(\delta)$，
+得到式（212.5），且常数在式（212.2）的范围中一致。
+
+### 212.5 逐点预算与结论范围
+
+§210.5 的精确比较给
+$1\le(e^\gamma\log\log n\,/t)^s\le n/A\le X/A$。
+于是
+
+$$
+\sum_{n\in\mathcal J_{A,X}}
+\left(\frac{Z(n)}{e^\gamma\log\log n}\right)^s
+\ge\frac AX\sum_{n\in\mathcal J_{A,X}}(Z(n)/t)^s.
+$$
+
+式（212.2）保证 $A/X\ge2/5$，所以只损失固定对数常数，
+即得式（212.6），定理212.1 证毕。$\square$
+
+这说明指定矩阶下的全区间求和证书即便只面对已知安全整数，也可能远大于一。
+它不证明 FIB 来源的指定矩证书失败。
+若将求和集合再交上 $n=1+gF_r$，虽每个留下的整数仍安全，
+式（212.14）的计数下界却不能沿用：大除数所指定的剩余类可能根本不命中
+实际乘子区间。不能直接把其中的 $Q$ 换成 FIB 来源的个数。
+
+本节的解析前置为 §207 的 Axler 界与 §210 的有限配置估计。
+后者使用 Weingartner 作者稿 arXiv:1011.4262v1
+式（8）、（9）、（13）、（14）；选素数只用 Bertrand 定理。
+新组合在同一个赋值为一的安全子集上同时保留严格安全性和足够大的联合矩。
+固定 FIB 剩余类的加权命中界及所有整数的 Robin 不等式仍未解决。
+
+## 追加锚（本行以下为增补区）

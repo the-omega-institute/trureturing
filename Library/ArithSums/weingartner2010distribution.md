@@ -91,6 +91,22 @@ necessary-condition sieve. It does not establish that the set is empty.
 
 ## Actual valuation moments and the comparison of tails
 
+The proof of Lemma 5 also separates the lower and upper integrals.
+Equations (13) and (14) give $q_2(k)=1/k$ and the lower integral's own
+coefficient
+
+$$
+\theta_2=\sum_{k\ge1}\frac{(-1)^{k+1}}{k^2}=\frac{\pi^2}{12}.
+$$
+
+Together with the local replacement in equation (8) and the strong
+Mertens/PNT estimate in equation (9), this identifies the leading
+correction for the product restricted to $p\le z$, with $s=z\log z$.
+The other half comes from the upper integral in equation (19).
+Sections 210 and 212 use the explicitly located lower contribution in
+a finite divisor construction; they do not infer an equal split merely
+from the full coefficient $b_2=\pi^2/6$.
+
 For the abundancy tail $A(t)$ and the totient tail $B(t)$ defined in the
 original paper, Theorem 3 states, for sufficiently large $t$ and
 $y=e^{t e^{-\gamma}}$,
@@ -131,4 +147,6 @@ complete literature-search claim is made.
 - Pinned abstract: https://arxiv.org/abs/1011.4262v1
 - Pinned original PDF: https://arxiv.org/pdf/1011.4262v1
 - Pinned HTML: https://arxiv.org/html/1011.4262v1
-- Exact locations: equation (5), Lemma 5, Lemma 6, Theorems 1 and 3.
+- Exact locations: equation (5), Lemma 5, Lemma 6, Theorems 1 and 3;
+  the separate lower-integral contribution uses equations (8), (9),
+  (13), (14), contrasted with (19).
