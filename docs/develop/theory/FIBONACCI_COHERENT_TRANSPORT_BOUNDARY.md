@@ -1407,3 +1407,769 @@ $$
 因而在混合合同上只加入 $\widetilde W_J$ 不增加任何实际效果方向，仍为 $\mathcal A_N$；模十一的命题 12.4 则证明加入标准 $W_J$ 可以严格增加它。定理 12.3 的低层零角为 $1$ 或 $2$，用到了无附加相位的标准提升；将提升换成 $iU_J$ 时正反项相消。两种连续模型具有相同离散通道，并不构成矛盾，而是连续生成元的额外相位选择不能从该离散通道恢复。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 13. 闭半圆端点的实际效果空间
+
+**定理 13.1（所有低高模数的端点采样）。** 对每个整数 $d,e\ge2$，采用定义 1.1、1.2、8.1 的标准提升，令 $L=2I-U-U^\dagger$。唯一联合演化原语为 $W=W_M(\pi/4)$；其余许可恰为定义 11.1 的任意低层有限仪器、低层终端读出及有限自适应历史，初始输入遍历全部联合密度算子。则
+
+$$
+S_{\pi/4}=\mathcal A_{\mathrm{orb}}.
+$$
+
+两个输入的全部实际历史统计相同，当且仅当每个 $g=M^{-\mathsf T}$ 轨道完整块相同；相应 pinching 也保留每条正概率路径的条件边界。
+
+证明。对实际效果复线性空间 $S=S_{\pi/4}$，直接采用[定理 11.2 的低层 Kraus 缩放、极化与乘子构造](https://github.com/the-omega-institute/trureturing/blob/fecb0ec51a883ebb079d477888ecfdc4d27a97eb/docs/develop/theory/FIBONACCI_COHERENT_TRANSPORT_BOUNDARY.md#L935)：
+
+$$
+\mathfrak D=\{X:XS\subseteq S, SX\subseteq S\},\qquad
+\mathcal B(\mathcal H_A)\otimes I_H\subseteq\mathfrak D\subseteq S.
+$$
+
+$\mathfrak D$ 是有限维含幺 $*$ 代数。前置一次获准的 $W$ 给 $W^\dagger SW\subseteq S$，有限维单射性使之为等号，从而 $W^\dagger\mathfrak DW=\mathfrak D$。逆共轭在此只是线性空间等式，不是新增的物理逆门。
+
+由 $\operatorname{spec}L\subseteq[0,4]$，算子
+
+$$
+B=\frac{W^\dagger-W}{2i}=\sin(\pi L/4)
+$$
+
+半正定。谱定理给出全空间中的精确核等式
+
+$$
+\ker B=\ker(W^2-I)=\ker(U^2-I)
+=\ker L\oplus\ker(L-4I).
+\tag{13.1}
+$$
+
+前两个核在 $L$ 谱上都只取端点 $0,4$；这两个能量分别对应 $U$ 的特征值 $1,-1$。若 $P$ 是 $\mathfrak D$ 的任意非零中心投影，它与全部低层矩阵交换，故 $P=I_A\otimes Q$，其中 $Q\ne0$。取 $0\ne\eta\in\operatorname{ran}Q$。从低层 $(1,0)$ 出发的前两步均无进位，因而
+
+$$
+U^2(|1,0\rangle\otimes\eta)
+=|1,1\rangle\otimes V^2\eta,
+\qquad V=U_e.
+$$
+
+$d\ge2$ 保证两个低层标签不同，故此向量不等于原向量。因此任何非零中心块都不能包含于 (13.1) 的核。
+
+$W$ 正规化 $\mathfrak D$，所以置换其最小非零中心投影。若 $P'=WPW^\dagger\ne P$，则 $PP'=0$，从而 $PWP=PP'W=0$，亦有 $PW^\dagger P=0$。于是 $PBP=0$。正性给出
+
+$$
+0=PBP=(B^{1/2}P)^\dagger(B^{1/2}P),
+$$
+
+故 $BP=0$，与上一段矛盾。于是 $W$ 固定每个最小中心块。函数 $\lambda\mapsto e^{-i\pi\lambda/4}$ 在 $[0,4]$ 上单射，所以 $L$ 是 $W$ 的有限谱函数，也逐块保持。
+
+固定一个最小中心块。有限维矩阵代数的结构给出坐标
+
+$$
+P\mathcal H\simeq\mathcal K\otimes\mathcal R,
+\qquad P\mathfrak DP\simeq\mathcal B(\mathcal K)\otimes I_{\mathcal R}.
+$$
+
+矩阵代数的 $*$ 自同构为内自同构；从 $W|_P$ 消去实现该自同构的第一因子酉后，余下酉属于交换子代数。因此 $W|_P=A_0\otimes R_0$。这只是代数坐标分解。取两因子的酉特征值 $a_i,r_j$，其乘积都在闭下半圆，有唯一 $\theta_{ij}\in[0,\pi]$ 满足 $a_ir_j=e^{-i\theta_{ij}}$。每个相位矩形满足
+
+$$
+\theta_{ij}+\theta_{k\ell}-\theta_{i\ell}-\theta_{kj}
+\in2\pi\mathbb Z\cap[-2\pi,2\pi].
+$$
+
+若此差非零，交换指标后可令其为 $2\pi$；四角只能交错取 $\pi,0,0,\pi$。故 $a_k=-a_i$、$r_\ell=-r_j$。任意两个互为相反数且同在闭下半圆的单位复数只能为 $1,-1$。对任意行 $s$，$a_sr_j$ 与 $a_sr_\ell$ 因而都为 $\pm1$；对任意列 $t$，$a_ir_t$ 与 $a_kr_t$ 也都为 $\pm1$。于是整个乘积谱满足
+
+$$
+a_sr_t=\frac{(a_sr_j)(a_ir_t)}{a_ir_j}\in\{1,-1\}
+\quad\text{对所有 }s,t.
+$$
+
+这使 $W^2P=P$，并由 (13.1) 使整个非零中心块落入 $\ker(U^2-I)$，矛盾。故所有相位矩形都为零。固定 $i_0,j_0$ 后，
+
+$$
+\theta_{ij}=\theta_{ij_0}+\theta_{i_0j}-\theta_{i_0j_0}.
+$$
+
+在相应特征基中分别取 Hermitian 算子 $A',R'$，特征值为 $4\theta_{ij_0}/\pi$ 与 $4(\theta_{i_0j}-\theta_{i_0j_0})/\pi$，便有
+
+$$
+L|_P=A'\otimes I+I\otimes R',
+\qquad [L,P\mathfrak DP]\subseteq P\mathfrak DP.
+$$
+
+合并全部中心块得 $[L,\mathfrak D]\subseteq\mathfrak D$。
+
+现在接入[定理 11.3 的两个非零进位角](https://github.com/the-omega-institute/trureturing/blob/fecb0ec51a883ebb079d477888ecfdc4d27a97eb/docs/develop/theory/FIBONACCI_COHERENT_TRANSPORT_BOUNDARY.md#L981)。恒等式 $M-I=M^{-1}$、$M^2-I=M$ 排除模 $d$ 的非零不动点和二周期。对 $a\ne0$、$b=f(a)$、$P_a=E_{aa}\otimes I_H$，有
+
+$$
+P_b[L,P_a]P_a=-E_{ba}\otimes T_{c(a)}V\in\mathfrak D.
+$$
+
+$U^\dagger$ 不贡献此角，否则 $f^2(a)=a$。低层矩阵夹乘并求和给 $I_A\otimes T_{c(a)}V\in\mathfrak D$。分别取 $a=(1,0)$ 与 $(d-1,1)$，得到 $I_A\otimes V$ 与 $I_A\otimes T_{(0,1)}V$。乘积、伴随以及 $V^\dagger T_{(0,1)}V=T_{(1,0)}$ 给出全部高层平移。按定义 7.2 的 Fourier 约定，
+
+$$
+\Pi_p=I_A\otimes|p\rangle\langle p|
+=\frac1{e^2}\sum_{v\in H}\omega^{-p\cdot v}(I_A\otimes T_v)
+\in\mathfrak D,
+\qquad
+\Pi_{gp}(I_A\otimes V)\Pi_p
+=I_A\otimes|gp\rangle\langle p|\in\mathfrak D.
+$$
+
+沿每条有限 $g$ 轨道相乘并取伴随，得到全部轨道矩阵单位，故 $\mathcal A_{\mathrm{orb}}\subseteq\mathfrak D\subseteq S$。反向，每个轨道投影与 $U,L,W$ 及低层 Kraus 算子交换；从终端低层效果逐历史拉回，仍在 $\mathcal A_{\mathrm{orb}}$ 中。有限自适应分支与事件求和保持此性质，故 $S\subseteq\mathcal A_{\mathrm{orb}}$。迹配对给统计等价，pinching 与每个实际分支交换给正概率条件边界。$\square$
+
+**推论 13.2（统一充分区间及其资源合同）。** 对所有 $d,e\ge2$，每个固定 $0<\Delta\le\pi/4$ 都有 $S_\Delta=\mathcal A_{\mathrm{orb}}$。在定义 11.7 的共同 CPTP 状态编解码合同下，最小免费有限经典 flag 量子端口仍为 $d^2\max_O|O|$，全计费 Hilbert 记忆为 $d^2e^2$。
+
+证明。开区间由定理 11.4，端点由定理 13.1；对已确定的实际效果线性张成，直接应用命题 11.8。命题 11.5 所述 $\pm4$ 全局谱差在端点混叠仍然成立，故原充分判据仍然失效；本定理使用低层控制及 FIB 两步低层运动补足端点。这里没有增加逆门或其他等待时间，也没有断言所有更大时钟失败或该区间为最大区间。效果线性张成不表示每个高层投影本身是一项许可测量。$\square$
+
+## 14. 模四提升的全部固定时钟与精确记忆
+
+**定理 14.1（$d=e=2$ 的固定时钟三分）。** 固定 $d=e=2$，采用同一标准提升与定义 11.1 的 $\Sigma_\Delta$，其中任意 $\Delta>0$ 均只许可正向重复 $W=W(\Delta)$、任意低层有限仪器及低层读出。输入为全部联合态，历史有限且可自适应。置 $x=e^{-i\Delta}$、$V=U_{M,2}$，令 $\mathcal D_F$ 为四个完整高层 Fourier 标签的对角代数，则
+
+$$
+S_\Delta=
+\begin{cases}
+\mathcal B(\mathbb C^4)\otimes I_4,&x=1,\\
+\mathcal B(\mathbb C^4)\otimes\mathcal D_F,&x^3=1, x\ne1,\\
+\mathcal B(\mathbb C^4)\otimes
+\bigl(\mathbb C\oplus\mathcal B(\mathbb C^3)\bigr)
+=\mathcal A_{\mathrm{orb}},&x^3\ne1.
+\end{cases}
+\tag{14.1}
+$$
+
+三者复维数依次为 $16,64,160$。因此模 $2\pi$ 的时钟类 $0$、$\{2\pi/3,4\pi/3\}$ 和其余类恰对应这三种边界。两联合输入的全部实际事件概率相同，当且仅当按三行分别有相同的低层偏迹、相同的全部 Fourier 对角条件矩阵、相同的全部 $g$ 轨道完整块。
+
+证明。整数恒等式 $M^3=I+2M$ 与 $M^6\equiv I\pmod4$ 给 $U^6=I$。令
+
+$$
+P_\pm=\frac{I\pm U^3}{2},\qquad
+A=\frac{1+2x^3}{3},\quad
+B=\frac{x(2+x^3)}3,\quad C=\frac{1-x^3}{3}.
+$$
+
+在 $P_+$ 上，$U$ 的谱属于三次单位根，$L$ 取值 $0,3$；在 $P_-$ 上，$U=-1$ 对应 $L=4$，另两枚六次单位根对应 $L=1$。对这些谱点求值，得到精确恒等式
+
+$$
+W=(AP_++BP_-)
++C\,U(P_++xP_-)+C\,U^2(P_+-xP_-).
+\tag{14.2}
+$$
+
+例如 $P_+$ 上的表达为 $AI+C(U+U^2)$；$P_-$ 上为 $BI+xC(U-U^2)$，在 $U=-1$ 处等于 $x^4$，在另外两点等于 $x$。此外
+
+$$
+|A|^2=|B|^2=\frac{5+4\operatorname{Re}(x^3)}9\ge\frac19,
+\qquad A-B=-\frac{(x-1)^3(x+1)}3.
+\tag{14.3}
+$$
+
+因此 $|A|=|B|\ge1/3$，而 $A=B$ 恰在 $x=1,-1$。
+
+标准 digits $a+2h$ 中，$M^3(a+2h)\equiv a+2(h+Ma)\pmod4$，所以
+
+$$
+U^3=\sum_{a\in(\mathbb Z/2)^2}E_{aa}\otimes T_{Ma}.
+\tag{14.4}
+$$
+
+低层非零三点按 $10\to01\to11\to10$ 循环，故 (14.2) 的 $U,U^2$ 项不贡献其低层对角角。将 $W$ 写成低层分块 $W_{ba}$，对每个 $a\ne0$ 有
+
+$$
+D_a:=W_{aa}=A\frac{I+T_{Ma}}2+B\frac{I-T_{Ma}}2.
+\tag{14.5}
+$$
+
+仍以定理 11.2 从实际效果构造 $\mathfrak D=\mathfrak D(S_\Delta)$，于是低层全矩阵包含于 $\mathfrak D\subseteq S_\Delta$，且 $W^\dagger\mathfrak DW=\mathfrak D$。对任意低层指标 $a,b,c,d$，$W^\dagger(E_{cd}\otimes I)W$ 的 $a,b$ 角为 $W_{ca}^\dagger W_{db}$。用低层矩阵单位夹取并复制到全部低层对角，得
+
+$$
+I_A\otimes W_{ca}^\dagger W_{db}\in\mathfrak D.
+\tag{14.6}
+$$
+
+后续乘法都在此乘子代数中进行。
+
+先设 $A\ne B$。三个非零 $Ma$ 遍历高层的三个非零平移方向；适当排列三个 $D_a$ 后，四个 Fourier 标签上的数值轮廓为
+
+$$
+p_0:(A,A,A),\quad p_1:(A,B,B),\quad
+p_2:(B,A,B),\quad p_3:(B,B,A).
+$$
+
+置 $\kappa=|A|^2>0$、$z_0=B/A$，则 $|z_0|=1$、$z_0\ne1$。两个已由 (14.6) 取得的归一化乘子 $\kappa^{-1}D_{a_1}^\dagger D_{a_2}$、$\kappa^{-1}D_{a_1}^\dagger D_{a_3}$ 的联合特征值依次为
+
+$$
+(1,1),\quad(z_0,z_0),\quad(\overline z_0,1),\quad(1,\overline z_0).
+$$
+
+这四对两两不同，包括 $z_0=-1$。为取得目标标签 $p$ 的投影，对每个 $q\ne p$ 选一个在 $p,q$ 处数值不同的乘子 $R_q$，将三个因子
+
+$$
+\frac{R_q-R_q(q)I}{R_q(p)-R_q(q)}
+$$
+
+相乘，即在 $p$ 上取值 $1$，在其余三点取值 $0$。因此全部 $\Pi_p=I_A\otimes|p\rangle\langle p|$ 属于 $\mathfrak D$。
+
+若 $x^3\ne1$ 且 $x\ne-1$，则 $C\ne0$、$A\ne B$。低层 $10\to01$ 的 $U$ 步无进位，$U^2$ 则到 $11$，所以
+
+$$
+W_{01,10}=C\,V\left(\frac{I+T_{(0,1)}}2
++x\frac{I-T_{(0,1)}}2\right).
+\tag{14.7}
+$$
+
+在每个 Fourier 标签 $p$ 上，这个角都是振幅为 $C$ 或 $xC$ 的非零 $p\to gp$ 单项。任取 $a_*\ne0$，(14.6) 给 $I_A\otimes D_{a_*}^\dagger W_{01,10}\in\mathfrak D$；$D_{a_*}$ 在每个标签上的值是非零的 $A$ 或 $B$。用 $\Pi_{gp},\Pi_p$ 夹取便取得每条 $g$ 邻边的矩阵单位。沿轨道相乘并取伴随，得 $\mathcal A_{\mathrm{orb}}\subseteq\mathfrak D\subseteq S_\Delta$。轨道投影与 $W$ 及全部低层分支交换，给反向包含。
+
+剩余 $x=-1$ 时，(14.2) 化为
+
+$$
+W=-\frac13I+\frac23(U^2+U^4).
+$$
+
+每个非零低层对角角是 $-I_H/3$；在 (14.6) 中固定这个标量角，便将所有 $W_{db}$ 放入高层乘子部分。两步进位直接给
+
+$$
+W_{11,10}=\frac23V^2,\qquad
+W_{10,01}=\frac23T_{(0,1)}V^2.
+$$
+
+第一条的两步均无进位；第二条仅 $11\to10$ 有进位。$U^4$ 的低层位移是 $f$，不贡献这两个 $f^2$ 角。由 $V^3=I$，$(V^2)^2=V$；再以乘积取得 $T_{(0,1)}$，用 $V^\dagger T_{(0,1)}V=T_{(1,0)}$ 得全部平移。Fourier 反演及 $V$ 邻边遂给全部轨道矩阵单位，仍有 $S_\Delta=\mathcal A_{\mathrm{orb}}$。
+
+若 $x^3=1$、$x\ne1$，则 $C=0,A=1,B=x$，故
+
+$$
+W=P_++xP_-=\frac{1+x}{2}I+\frac{1-x}{2}U^3.
+$$
+
+由 (14.4)，这是按低层控制的 Fourier 对角门。每个高层单点投影均与它及所有低层分支交换，故 $S_\Delta\subseteq\mathcal B(\mathbb C^4)\otimes\mathcal D_F$；$A\ne B$ 时已证明的标签分离给反向包含。最后 $x=1$ 时 (14.2) 给 $W=I$，只有低层操作，张成恰为 $\mathcal B(\mathbb C^4)\otimes I_4$。$L$ 谱包含于 $\{0,1,3,4\}$，$W$ 以 $2\pi$ 为周期，上述互斥情形穷尽全部正时钟。模 $2$ 的 $g$ 轨道大小为 $1,3$，故三种维数分别为 $16$、$16\cdot4$、$16(1+9)$。在各已证明的实际效果线性空间上使用非退化迹配对，即得所列统计等价条件。$\square$
+
+**推论 14.2（共振时钟舍去同轨道相位）。** 对两个不同的非零高层 Fourier 标签 $p,q$ 及任意低层密度算子 $\tau$，置
+
+$$
+|\psi_\pm\rangle=\frac{|p\rangle\pm|q\rangle}{\sqrt2},\qquad
+\rho_\pm=\tau\otimes|\psi_\pm\rangle\langle\psi_\pm|.
+$$
+
+在 $\Delta\equiv2\pi/3,4\pi/3\pmod{2\pi}$ 的全部允许有限协议中，两输入的所有事件概率相同；在 (14.1) 第三种合同中则存在实际有限事件区分它们。
+
+证明。两态的每个 Fourier 对角低层条件矩阵相同，所以对第二种实际效果线性空间给出相同迹配对。两个标签属于同一非零三周期，而轨道内算子 $I_A\otimes(|p\rangle\langle q|+|q\rangle\langle p|)$ 的期望分别为 $1,-1$。第三种合同的实际效果张成包含该算子，若所有实际事件概率相同，就会与这两个期望矛盾。这只证明区分事件存在，不将该算子或某个高层投影宣告为一项可直接执行的测量，也不提供最少调用数。三分结论限于 $d=e=2$。$\square$
+
+**命题 14.3（固定时钟的共同状态解码成本）。** 在[定义 11.7 的单份、精确、共同 CPTP 编解码合同](https://github.com/the-omega-institute/trureturing/blob/fecb0ec51a883ebb079d477888ecfdc4d27a97eb/docs/develop/theory/FIBONACCI_COHERENT_TRANSPORT_BOUNDARY.md#L1114)下，要求保持定理 14.1 的全部实际历史统计。免费经典 flag 为任意有限集合，其概率可依赖输入，编码与同一个状态解码均固定，无隐藏量子旁路或预共享纠缠。则成本为
+
+| 固定时钟条件 | 最小公共量子端口 $q$，有限经典 flag 免费 | 最小全计费 Hilbert 维数 |
+| --- | ---: | ---: |
+| $x=1$ | $4$ | $4$ |
+| $x^3=1, x\ne1$ | $4$ | $16$ |
+| $x^3\ne1$ | $12$ | $16$ |
+
+证明。第一行的高层是不可读重数因子。令 $T=\mathrm{Dec}\circ\mathrm{Enc}$；效果线性张成给出的准确要求为
+
+$$
+\operatorname{Tr}_H\circ T=\operatorname{Tr}_H.
+$$
+
+取 $\mathrm{Enc}=\operatorname{Tr}_H$，$\mathrm{Dec}(\sigma)=\sigma\otimes\eta_H$，其中 $\eta_H$ 为固定密度算子，即用四维记忆达到上界。下界须单独处理：将输入高层固定为 $\eta_H$，解码后取低层偏迹，便得到通过同一存储资源实现的四维恒等通道。若量子端口为 $q$ 维，每个 flag 分支的复合 Kraus 算子秩至多为 $q$。恒等通道的 Choi 算子秩一，正算子之和等于此 Choi 算子迫使每个非零复合 Kraus 算子都是 $I_4$ 的标量倍数，故 $q\ge4$，即使 flag 的分布任意依赖输入仍成立。全计费时，四个低层正交基态必须仍可完美区分，编码支撑两两正交，故记忆维数至少为 $4$。此行不要求恢复原来的完整 $AH$ 态。
+
+第二行有四个可读的四维 Fourier 块，第三行有四维与十二维两个可读轨道块。实际效果张成的等号给 $\mathcal E_{\mathcal P}\circ T=\mathcal E_{\mathcal P}$；在解码后加同一 pinching 不增加资源，便转为精确块恢复。因此可直接应用[命题 11.8 的块编码及 Choi 下界](https://github.com/the-omega-institute/trureturing/blob/fecb0ec51a883ebb079d477888ecfdc4d27a97eb/docs/develop/theory/FIBONACCI_COHERENT_TRANSPORT_BOUNDARY.md#L1133)，得到最大块维数 $4,12$。块标签可作免费有限 flag，各块等距嵌入公共端口达到上界。全计费时，两者均有十六个块内正交基态；拉回这些基投影得到完美区分编码态的 POVM，故十六个非零编码支撑两两正交，下界为 $16$。直接保存 pinching 的十六维输出达到它。此处使用实际效果线性张成与共同状态解码，而不只使用生成的 $C^*$ 代数；压缩工具的文献合同同命题 11.8 所引 Bluhm–Rauber–Wolf 与 Nayak–Sen。$\square$
+
+## 15. 最长轨道、Pisano 周期与负单位同步
+
+**定义 15.1（完整向量轨道的算术量）。** 对每个整数 $e\ge2$，所有作用均在完整 Fourier 标签集 $(\mathbb Z/e\mathbb Z)^2$ 上，置
+
+$$
+g=\begin{pmatrix}-1&1\\1&0\end{pmatrix},\qquad
+j=\begin{pmatrix}1&0\\1&-1\end{pmatrix},\qquad
+N_e=\langle g,-I\rangle,\qquad\Gamma_e=\langle g,j\rangle,
+$$
+
+$$
+T_e=\operatorname{ord}_e(g),\qquad
+h_e=|N_e|,\qquad b_e=\max_v|\Gamma_ev|,
+\qquad
+\pi(e)=\min\{k\ge1:(F_k,F_{k+1})\equiv(0,1)\pmod e\}.
+$$
+
+$\pi(e)$ 是矩阵／Pisano 周期；最小正零指标另在第 19 节记为 $r(e)$，两者不混同。
+
+**定理 15.2（同一个标签达到循环群和正规群的阶）。** 对每个 $e\ge2$，包括合数，有
+
+$$
+\max_v|\langle g\rangle v|=T_e=\pi(e),\qquad
+\max_v|N_ev|=h_e=
+\begin{cases}
+T_e,&-I\in\langle g\rangle,\\
+2T_e,&-I\notin\langle g\rangle.
+\end{cases}
+\tag{15.1}
+$$
+
+两种最大值均由 $\alpha=(1,0)^{\mathsf T}$ 达到。若 $e=\prod_i p_i^{a_i}$，则 $T_e=\operatorname{lcm}_iT_{p_i^{a_i}}$。
+
+证明。$\alpha,g\alpha$ 的列矩阵为 $\left(\begin{smallmatrix}1&-1\\0&1\end{smallmatrix}\right)$，行列式为 $1$，所以在每个剩余环上均为一组基。任何与 $g$ 交换且固定 $\alpha$ 的矩阵也固定 $g\alpha$，因而为恒等。将此用于 $\langle g\rangle$ 与 $N_e$，两个稳定子均平凡，轨道大小分别达到相应群阶。$N_e$ 中元素形如 $\varepsilon g^k$，$\varepsilon\in\{1,-1\}$，故其阶为 $T_e$ 或 $2T_e$。
+
+对 $k\ge1$，Fibonacci 矩阵式
+
+$$
+M^k=\begin{pmatrix}F_{k-1}&F_k\\F_k&F_{k+1}\end{pmatrix}
+$$
+
+表明 $M^k=I$ 恰当 $F_k=0,F_{k+1}=1$ 模 $e$。转置与取逆保持矩阵阶，故 $T_e=\pi(e)$。CRT 下 $g_e^k=I$ 恰当同一个 $k$ 被每个局部矩阵阶整除，遂得最小公倍数。此处使用 Robinson, [*The Fibonacci Matrix Modulo m*，第 30–33 页，性质 (iii)、(iv) 及矩阵周期解释](https://www.fq.math.ca/Scanned/1-2/robinson.pdf)中的经典矩阵阶与最小公倍数工具；原文第 30、33 页的符号排印以[更正页](https://www.fq.math.ca/Scanned/2-1/corrections6.pdf)为准。上述基向量证明把这些周期工具具体接到本卷的完整 Fourier 轨道。$\square$
+
+**引理 15.3（奇素数幂的局部负单位条件）。** 对奇素数 $p$ 与每个 $a\ge1$，
+
+$$
+-I\in\langle g\rangle\pmod{p^a}
+\quad\Longleftrightarrow\quad4\mid T_{p^a},
+\qquad
+\nu_2(T_{p^a})=\nu_2(T_p).
+\tag{15.2}
+$$
+
+证明。$\det g=-1$ 使 $T=T_{p^a}$ 为偶数。若 $-I$ 属于该循环群，它必须是唯一的非平凡二阶元素 $g^{T/2}$；比较行列式得 $T/2$ 为偶数。反向设 $4\mid T$，令 $B=g^{T/2}$，则 $B^2=I$、$B\ne I$、$\det B=1$。约化到 $\mathbb F_p$，其最小多项式整除 $(X-1)(X+1)$，故可对角化；二维、行列式为 $1$ 的对合只能为 $I$ 或 $-I$。若 $B\equiv I\pmod p$，则 $B+I$ 在 $\mathbb Z/p^a\mathbb Z$ 上可逆，由 $(B-I)(B+I)=0$ 得 $B=I$，矛盾。于是 $B\equiv-I\pmod p$，$B-I$ 可逆，得 $B=-I$。
+
+约化 $\operatorname{GL}_2(\mathbb Z/p^a\mathbb Z)\to\operatorname{GL}_2(\mathbb F_p)$ 的核有过滤 $I+p^sX$，相邻商嵌入模 $p$ 的矩阵加法群，故为有限 $p$ 群。因此 $T_{p^a}/T_p$ 是 $p$ 的幂，$p$ 为奇数给第二式。这是 Robinson 上引性质 (iv) 所容许的周期平台与奇素数提升的直接群论后果，并未假设每一层都增长 $p$ 倍。$\square$
+
+**定理 15.4（负单位的全局半周期同步）。** $e=2$ 时 $-I\in\langle g\rangle$；$4\mid e$ 时不属于。其余模数写成
+
+$$
+e=2^\epsilon\prod_{i=1}^r p_i^{a_i},\qquad
+\epsilon\in\{0,1\},\quad r\ge1,
+$$
+
+其中 $p_i$ 为不同奇素数，则
+
+$$
+-I\in\langle g\rangle\pmod e
+\quad\Longleftrightarrow\quad
+\nu_2(\pi(p_1))=\cdots=\nu_2(\pi(p_r))=s\ge2.
+\tag{15.3}
+$$
+
+证明。模 $2$ 时 $-I=I$。模 $4$ 时 $M^3=I+2M\ne I,-I$，$M^2=\left(\begin{smallmatrix}1&1\\1&2\end{smallmatrix}\right)\ne I$，而 $M^6\equiv I$；其阶为 $6$，唯一非平凡二阶元素是 $M^3$，所以 $-I$ 不属于循环群。取逆转置保留此成员关系，约化即排除所有 $4\mid e$。
+
+令 $T_i=T_{p_i^{a_i}}$。引理 15.3 说明每个奇局部分量首先须有 $4\mid T_i$，然后实现 $-I$ 的指数恰为
+
+$$
+k\equiv T_i/2\pmod{T_i}.
+\tag{15.4}
+$$
+
+若 $\nu_2(T_i)<\nu_2(T_j)$，前一半周期模 $2^{\nu_2(T_i)}$ 非零，后一半周期则为零，故没有同一个 $k$。反之，若所有赋值为同一个 $s\ge2$，置 $L=\operatorname{lcm}_iT_i$；每个 $L/T_i$ 为奇数，故 $k=L/2$ 满足全部 (15.4)。若还有模 $2$ 分量，其周期为 $3$、所需指数类为 $0$；改取 $L'=\operatorname{lcm}(L,3)$、$k=L'/2$ 即同时满足它，而 $L'/T_i$ 仍为奇数。最后用引理 15.3 将 $\nu_2(T_i)$ 换成 $\nu_2(\pi(p_i))$，得 (15.3)。这要求一个共同半周期指数，不是分别存在局部指数。
+
+例如 $M^4\equiv-I\pmod3$ 给 $\pi(3)=8$；$M^5\equiv3I\pmod5$、$M^{10}\equiv-I\pmod5$，而 $M^4\not\equiv I\pmod5$，给 $\pi(5)=20$。模 $15$ 的两项半周期要求为 $k\equiv4\pmod8$、$k\equiv10\pmod{20}$，在模 $4$ 上冲突。所以 $T_{15}=40$、$h_{15}=80$，尽管两个局部循环群都含负单位。$\square$
+
+**推论 15.5（算术量代入已声明的相干端口）。** 对所有 $d,e\ge2$，沿用定义 11.7 的全部输入、单份精确、共同 CPTP 状态编解码、免费有限经典 flag 与公共量子端口合同，三个已确定实际效果空间的最优值为
+
+$$
+q_g(d,e)=d^2T_e,\qquad
+q_N(d,e)=d^2h_e,\qquad
+q_\Gamma(d,e)=d^2b_e.
+\tag{15.5}
+$$
+
+$g$ 项用于 $\Sigma_{\mathrm{orb}}$、$\Sigma_W$ 及已证明 $S_\Delta=\mathcal A_{\mathrm{orb}}$ 的固定时钟，特别是所有 $0<\Delta\le\pi/4$；$N$ 项用于定义 12.1 的混合合同；$\Gamma$ 项用于定理 12.3 加入标准 $W_J$ 或 $W_C$ 的合同。三者的最小全计费 Hilbert 记忆均为 $d^2e^2$。
+
+证明。实际效果线性张成分别由第 11、13、14 节及[定理 12.2](https://github.com/the-omega-institute/trureturing/blob/fecb0ec51a883ebb079d477888ecfdc4d27a97eb/docs/develop/theory/FIBONACCI_COHERENT_TRANSPORT_BOUNDARY.md#L1252)、[定理 12.3](https://github.com/the-omega-institute/trureturing/blob/fecb0ec51a883ebb079d477888ecfdc4d27a97eb/docs/develop/theory/FIBONACCI_COHERENT_TRANSPORT_BOUNDARY.md#L1309)给出。各轨道块维数为 $d^2|O|$，命题 11.8 的统计到 pinching 桥梁及最大块结论可直接应用；代入定理 15.2 与 $b_e$ 的定义即得 (15.5)。全计费值为全部块维数之和 $d^2e^2$。此推论不改变许可字母表，也不将无共同状态解码的逐测量访问归入同一资源问题。$\square$
+
+## 16. 对偶二次环、稳定子与同一全局作用
+
+**定义 16.1（物理标签的统一对偶环坐标）。** 记基环 $B_e=\mathbb Z/e\mathbb Z$，二次环及其共轭为
+
+$$
+R_e=B_e[z]/(z^2+z-1),\qquad
+\overline z=-1-z=-z^{-1},\qquad
+\Phi(x,y)=y+xz,\qquad\operatorname{Nm}(f)=f\bar f,
+\qquad H_e=\langle z,-1\rangle\le R_e^\times.
+$$
+
+$\Phi$ 是从完整物理 Fourier 标签到二次环元素的 $B_e$ 模同构，不是 Hilbert 态的整体相位识别。对标签 $v=(x,y)$，称其本原，指 $B_ex+B_ey=B_e$；称其循环，指 $v,gv$ 构成 $B_e^2$ 的基；称其 $N_e$ 自由，指稳定子只含恒等群元素。
+
+**命题 16.2（负共轭与三种向量条件）。** 对每个 $e\ge2$，
+
+$$
+\Phi(gv)=z\Phi(v),\qquad
+\Phi(jv)=-\overline{\Phi(v)},
+$$
+
+$$
+D(x,y):=\det[v,gv]=x^2+xy-y^2
+=-\operatorname{Nm}(\Phi(v)).
+\tag{16.1}
+$$
+
+$\Phi(v)$ 是环单位，当且仅当 $v$ 循环。循环向量必本原且 $N_e$ 自由；本原、循环与 $N_e$ 自由并非同一个条件。
+
+证明。由 $z^2=1-z$，$z(y+xz)=x+(y-x)z=\Phi(gv)$；而 $\overline{y+xz}=y-x-xz=-\Phi(jv)$。范数展开为 $y^2-xy-x^2$，给 (16.1)。乘以 $y+xz$ 在基 $(1,z)$ 中的矩阵是 $\left(\begin{smallmatrix}y&x\\x&y-x\end{smallmatrix}\right)$；它可逆恰当范数为基环单位，亦可由 $f^{-1}=\bar f/\operatorname{Nm}(f)$ 得充分性。因此环单位恰对应 $D(x,y)$ 为单位，亦即 $v,gv$ 成基。成基蕴含坐标生成单位理想；若 $af=f$ 且 $f$ 为单位，则 $a=1$，给 $N_e$ 自由。第 17 节的分裂素数幂向量 $(1,p)$（在特征基中）及第 18 节的实际标签给出本原且 $N_e$ 自由、但不循环的实例；模 $11$ 特征线上的非零向量本原但有非平凡 $N_{11}$ 稳定子。$\square$
+
+**定理 16.3（包括非单位与零标签的精确轨道判据）。** 对任意 $f\in R_e$，定义
+
+$$
+S(f)=\{a\in H_e:(a-1)f=0\},\qquad
+E(f)=\{a\in H_e:\bar f=af\}.
+$$
+
+在 $\Phi$ 坐标中有
+
+$$
+|\Gamma_e f|=
+\begin{cases}
+h_e/|S(f)|,&E(f)\ne\varnothing,\\
+2h_e/|S(f)|,&E(f)=\varnothing.
+\end{cases}
+\tag{16.2}
+$$
+
+此外 $|\Gamma_e|=2h_e$，且
+
+$$
+b_e\in\{h_e,2h_e\},\qquad
+b_e=2h_e\quad\Longleftrightarrow\quad
+\exists f\in R_e:\ S(f)=\{1\}, E(f)=\varnothing.
+\tag{16.3}
+$$
+
+证明。$N_e$ 忠实对应 $H_e$ 的乘法作用。$S(f)$ 是稳定子，$E(f)$ 非空时是它的一个陪集。共轭保持 $H_e$，因为 $\bar z=-z^{-1}$，故 $f$ 与 $\bar f$ 的稳定子阶相同。矩阵关系 $j^2=I$、$jgj=-g^{-1}$ 给 $N_e\triangleleft\Gamma_e$，且 $\Gamma_e=N_e\cup N_ej$。$N_e$ 的每个元素与 $g$ 交换，但
+
+$$
+jg-gj=\begin{pmatrix}-1&2\\-3&1\end{pmatrix}
+$$
+
+在任何模 $e\ge2$ 下非零，所以 $j\notin N_e$，群阶为 $2h_e$。两条 $N_e$ 轨道 $H_ef,H_e\bar f$ 大小相同，或者相等或者不交；$j$ 的负号由 $-1\in H_e$ 吸收，故轨道稳定子公式给 (16.2)。零标签有 $S(0)=E(0)=H_e$，也被该式包含。
+
+若 $|S(f)|\ge2$，其 $\Gamma_e$ 轨道至多有 $h_e$ 点；若 $S(f)=\{1\}$，轨道只能有 $h_e$ 或 $2h_e$ 点。定理 15.2 的 $\alpha$ 至少达到 $h_e$，所以最大值与达到条件恰为 (16.3)。对单位可将反射条件写成 $\bar f/f\in H_e$，但非单位必须保留 $S,E$ 原式。此为全部标签的精确判据，不是仅由合数的素因子清单给出的 $b_e$ 闭式。$\square$
+
+**命题 16.4（CRT 中的真实向量周期与共同指数）。** 写 $e=\prod_i e_i$ 为两两互素素数幂，固定一个实际全局标签 $v$，其分量为 $v_i$。令
+
+$$
+s_i=|\langle g_i\rangle v_i|,
+\qquad K_i(\varepsilon)=
+\{k\bmod s_i:j_iv_i=\varepsilon g_i^kv_i\},
+\quad\varepsilon\in\{1,-1\}.
+$$
+
+每个 $K_i(\varepsilon)$ 或为空，或为单个剩余类 $k_i(\varepsilon)$。于是 $jv\in N_ev$ 当且仅当存在同一个 $\varepsilon$，使全部 $K_i(\varepsilon)$ 非空且
+
+$$
+k_i(\varepsilon)\equiv k_j(\varepsilon)
+\pmod{\gcd(s_i,s_j)}\quad\text{对所有 }i,j.
+\tag{16.4}
+$$
+
+证明。两个指数作用在同一 $v_i$ 上结果相同，恰当其差为该向量返回周期 $s_i$ 的倍数，故局部解至多一个剩余类。先固定共同符号 $\varepsilon$，广义 CRT 说明这些指数同余有一个共同整数解 $k$ 恰当 (16.4)；其解给实际全局元素 $\varepsilon g^k$，反向亦然。零分量有 $s_i=1$，不添约束。
+
+系数 CRT 将 $R_e$ 识别为 $\prod_iR_{e_i}$，任意一组局部向量均给唯一全局向量；群元素却只能取同一 $\varepsilon,k$ 的 $(\varepsilon z_i^k)_i$。因此 $S(f)$ 也要求同一个全局元素同时满足全部局部固定式，不能分别优化局部轨道后拼接最大值。不同符号—指数参数可能表示同一个群元素；稳定子计数按群元素进行，尤其在 $-I\in\langle g\rangle$ 或 $e=2$ 时不能重复计数。矩阵周期仅在向量确有满周期时可代替这里的 $s_i$。$\square$
+
+## 17. 所有素数幂的最大几何轨道
+
+**定理 17.1（素数幂分类）。** 对任意素数 $p$、整数 $a\ge1$，令 $e=p^a$，沿用 $T=T_e,h=h_e,b=b_e$。奇素数 $p\ne5$ 时记 $\chi=(5/p)$。则完整标签集上的最大轨道由下表给出；表中非分裂情形的 $t=p^{a-1}(p+1)$。
+
+| 模数情形 | $h$ | $b$ |
+| --- | --- | --- |
+| $e=2$ | $3$ | $3$ |
+| $e=2^a, a\ge2$ | $3\cdot2^a$ | $h$ |
+| $e=5^a$ | $4\cdot5^a$ | $h$ |
+| 奇 $p\ne5, \chi=-1$ | $T$ | $h$ 若 $h=2t$，否则 $2h$ |
+| 奇 $p\ne5, \chi=1, a=1$ | $T$ 若 $4\mid T$，否则 $2T$ | $h$ 若 $h=2(p-1)$，否则 $2h$ |
+| 奇 $p\ne5, \chi=1, a\ge2$ | $T$ 若 $4\mid T$，否则 $2T$ | $2h$ |
+
+在 $2^a$、$5^a$ 以及奇非分裂且 $h=2t$ 的情形，每条 $\Gamma_e$ 轨道已经是一条 $N_e$ 轨道。分裂素数 $a=1,h=2(p-1)$ 时，两条特征轴仍会合并，最大值却不增长。分裂 $a\ge2$ 的 $2h$ 由本原、非循环且 $N_e$ 自由的向量达到。
+
+证明。先在本题矩阵上确定 $2,5$ 的周期提升。若 $p$ 奇、$X=I+p^sB$、$s\ge1$ 且 $B$ 至少一项非零模 $p$，二项展开给
+
+$$
+X^p\equiv I+p^{s+1}B\pmod{p^{s+2}},
+$$
+
+所以矩阵 $X^p-I$ 的最小项赋值恰为 $s+1$。$p=2$ 时此结论在 $s\ge2$ 成立，因为
+
+$$
+(I+2^sB)^2=I+2^{s+1}B+2^{2s}B^2.
+$$
+
+结合引理 15.3 证明中的约化核为 $p$ 群，这些赋值决定下列实际阶；这正是 Robinson [第 32–33 页的二项式周期提升方法](https://www.fq.math.ca/Scanned/1-2/robinson.pdf)，这里分别计算两个特殊素数的起始层。
+
+模 $2$ 的 $M$ 阶为 $3$，而整数恒等式
+
+$$
+M^3=I+2M,\qquad M^6=I+4M^3
+$$
+
+给模 $4$ 阶为 $6$，且 $\nu_2(M^6-I)=2$。逐层平方得到
+
+$$
+T_{2^a}=3\cdot2^{a-1}\quad(a\ge1).
+\tag{17.1}
+$$
+
+模 $2$ 负单位为恒等；更高次幂的负单位由模 $4$ 障碍排除。因此 $h_2=3$，$a\ge2$ 时 $h_{2^a}=3\cdot2^a$。
+
+模 $5$ 令 $B=(g-2I)/2$，则 $B\ne0,B^2=0$。由 $g^k=2^k(I+kB)$，$g^k=I$ 要求标量 $2^k=1$ 及 $k=0\pmod5$：非零幂零矩阵 $B$ 与 $I$ 线性无关。故 $T_5=20$。再由整数恒等式 $M^5=3I+5M$，
+
+$$
+M^{20}\equiv6I+15M\pmod{25},\qquad
+M^{20}-I\equiv5(I+3M)\pmod{25},
+$$
+
+其赋值恰为 $1$。上述奇素数提升给
+
+$$
+T_{5^a}=20\cdot5^{a-1}=4\cdot5^a.
+\tag{17.2}
+$$
+
+引理 15.3 给 $h_{5^a}=T_{5^a}$。其余奇素数的 $h$ 同样由该引理决定，未要求 $T_{p^a}=p^{a-1}T_p$。
+
+其次处理非分裂二次环，包括 $p=2$。当 $p$ 奇且 $\chi=-1$，或 $p=2$ 时，$X^2+X-1$ 模 $p$ 不可约且可分。令 $R=R_{p^a}$、$B_0=\mathbb Z/p^a\mathbb Z$。$R$ 的剩余域为 $\mathbb F_{p^2}$；元素是单位恰当两项系数不同时被 $p$ 整除。确实，剩余域中的非零像可逆，将逆提升后误差在幂零理想 $pR$ 内，可用有限几何级数消去。每个非零元素因此可写成 $p^r u$，$0\le r<a$，其中 $u$ 为单位。计数给
+
+$$
+|R^\times|=p^{2a-2}(p^2-1),\qquad
+|B_0^\times|=p^{a-1}(p-1).
+$$
+
+范数 $\operatorname{Nm}:R^\times\to B_0^\times$ 满射。剩余域单位群循环，范数为 $u\mapsto u^{p+1}$，其像有 $p-1$ 点，故第一层满射。若已匹配某目标范数至模 $p^k$，$1\le k<a$，乘以 $1+p^kv$ 会使下一位范数改变为
+
+$$
+\operatorname{Nm}(1+p^kv)
+\equiv1+p^k\operatorname{Tr}(v)\pmod{p^{k+1}}.
+$$
+
+剩余域中 $\operatorname{Tr}(z)=-1$，故迹满射；逐层修正即可达到目标。于是范数核 $K$ 有
+
+$$
+|K|=t=p^{a-1}(p+1).
+$$
+
+共轭比值 $u\mapsto\bar u/u$ 也满射到 $K$。其核是固定单位；若 $x+yz$ 被共轭固定，则 $y(2z+1)=0$。因 $(2z+1)^2=5$ 在此环可逆，必有 $y=0$，故核恰为 $B_0^\times$。其像已有 $|R^\times|/|B_0^\times|=t$ 点，且范数为 $1$，正好等于 $K$。
+
+对奇非分裂 $p$，剩余域中共轭是 Frobenius，$z^{p+1}=\operatorname{Nm}(z)=-1$。故 $T_p\mid2(p+1)$ 但 $T_p\nmid p+1$，从而 $\nu_2(T_p)=\nu_2(2(p+1))\ge2$。引理 15.3 给 $h=T$。$H=\langle z,-1\rangle$ 的范数像为 $\{1,-1\}$，所以 $|H\cap K|=h/2$，并且 $h\le2t$。若 $h<2t$，选 $k\in K\setminus H$，由比值满射选一个单位 $u$ 使 $\bar u/u=k$。同一个 $u$ 既有平凡稳定子，又满足 $E(u)=\varnothing$，故定理 16.3 给 $2h$。若 $h=2t$，$H$ 恰是范数为 $\pm1$ 的全部单位。对任意非零标签 $f=p^ru$，
+
+$$
+\bar f=(\bar u/u)f,\qquad \bar u/u\in K\subseteq H.
+$$
+
+因此连非单位标签的轨道也没有合并；零点固定，单位达到 $h$。这证明表中的奇非分裂行。
+
+$p=2,a\ge2$ 时，$1\ne-1$ 在基环成立，已知 $h=3\cdot2^a=2t$。同一范数计数说明 $H$ 为范数 $\pm1$ 的全部逆像，故对所有 $f=2^ru$ 使用上一式，得到 $b=h$ 及全部轨道不合并。$a=1$ 时 $R=\mathbb F_4$，$H=\mathbb F_4^\times$ 已包含所有三个非零元素，故 $b=h=3$。
+
+再处理奇分裂素数 $p\ne5$。两个模 $p$ 根不同，导数可逆；若 $\lambda_k$ 已是模 $p^k$ 的根，将其改为 $\lambda_k+p^ku$，下一位误差为原误差加 $p^ku(2\lambda_k+1)$，唯一选择 $u\pmod p$ 即消去误差。逐层得到 $B_0$ 中两个根 $\lambda,\mu$，满足
+
+$$
+\lambda+\mu=-1,\qquad\lambda\mu=-1,
+\qquad\lambda-\mu\in B_0^\times.
+$$
+
+特征向量 $e_\lambda=(1,\lambda+1)$、$e_\mu=(1,\mu+1)$ 成基。在这个特征基中
+
+$$
+g=\operatorname{diag}(\lambda,\mu),\qquad j(X,Y)=(Y,X).
+\tag{17.3}
+$$
+
+这些是物理向量的特征坐标，不能将其直接当作 $\Phi(x,y)=y+xz$ 的系数。
+
+当 $a\ge2$，在 (17.3) 中取同一个标签 $v=(1,p)$。若 $\varepsilon\operatorname{diag}(\lambda^k,\mu^k)$ 固定它，第一坐标给 $\varepsilon\lambda^k=1$，第二乘数因此为 $\varepsilon\mu^k=(-1)^k$。固定第二坐标要求
+
+$$
+p\bigl((-1)^k-1\bigr)=0\pmod{p^a}.
+$$
+
+$p$ 奇且 $a\ge2$ 排除奇 $k$；偶 $k$ 时两个乘数都为 $1$，所讨论的群元素即为恒等。这证明稳定子平凡，不要求其符号—指数表达唯一。另一方面 $jv=(p,1)$，而 $N_e$ 的两个对角乘数均为单位，分别保持两坐标的 $p$ 进赋值，不能把 $(0,1)$ 的赋值对变为 $(1,0)$。故 $jv\notin N_ev$，定理 16.3 给 $b=2h$。$v$ 本原，但 $v,gv$ 的行列式在该基中为 $p(\mu-\lambda)$，不是单位，故不循环。
+
+当 $a=1$，置 $K_0=\langle\lambda^2,-1\rangle\le\mathbb F_p^\times$。$N_p$ 的行列式像为 $\{1,-1\}$，核恰为
+
+$$
+\{\operatorname{diag}(u,u^{-1}):u\in K_0\},\qquad h=2|K_0|.
+$$
+
+对 $X,Y\ne0$，稳定子平凡；将 $(X,Y)$ 送至 $(Y,X)$ 的唯一对角矩阵为 $\operatorname{diag}(Y/X,X/Y)$，故 $jv\in N_pv$ 恰当 $Y/X\in K_0$。若 $h<2(p-1)$，取比值在 $K_0$ 外，便达到 $2h$。若 $h=2(p-1)$，所有两坐标非零的标签轨道不合并，大小为 $h$；还须检查非单位标签。此时 $\langle\lambda,-1\rangle$ 包含 $K_0=\mathbb F_p^\times$，每条非零特征轴是一条 $p-1$ 点 $N_p$ 轨道，$j$ 交换两轴，合并后恰为 $2(p-1)=h$ 点。零点固定，所以最大值仍为 $h$。
+
+最后处理分歧素数 $5$。在 $B_0=\mathbb Z/5^a\mathbb Z$ 中令 $w=2z+1$，则
+
+$$
+R_{5^a}\simeq B_0[w]/(w^2-5),\qquad \bar w=-w.
+$$
+
+单位 $x+yw$ 恰当 $x\not\equiv0\pmod5$，其范数是 $x^2-5y^2$。每个非零元素可写为 $w^ru$，$0\le r<2a$，$u$ 为单位：将零系数赋值记为 $a$，比较不同奇偶性的 $2\nu_5(x)$ 与 $2\nu_5(y)+1$。若 $\nu_5(x)\le\nu_5(y)$，提出 $w^{2\nu_5(x)}=5^{\nu_5(x)}$ 后常数项为单位；若 $\nu_5(x)>\nu_5(y)=s$，则
+
+$$
+x+yw=w^{2s+1}
+\left(\frac{y}{5^s}+\frac{x}{5^{s+1}}w\right),
+$$
+
+括号的常数项为单位。式中的商用系数的整数提升求出，所得等式在商环中成立，故覆盖全部非零非单位。
+
+单位数为 $4\cdot5^{2a-1}$。范数像恰为模 $5$ 是非零平方的基环单位：必要性由范数模 $5$ 等于 $x^2$；反向，对这种基环单位，其模 $5$ 平方根的导数 $2x$ 可逆，逐层提升出标量平方根，它的范数就是目标。范数像有 $2\cdot5^{a-1}$ 点，核有 $2\cdot5^a$ 点。已知 $h=4\cdot5^a$，而 $H$ 的范数像是 $\{1,-1\}$；两者确在上述像内，故 $H$ 恰为范数 $\pm1$ 的全部逆像，包含整个范数核。对任意 $f=w^ru$，
+
+$$
+\bar f=(-1)^r\frac{\bar u}{u}f.
+$$
+
+该乘数的范数为 $1$，所以属于 $H$。零点亦固定，故全部 $\Gamma_e$ 轨道已是 $N_e$ 轨道；单位达到 $h$。这完成所有素数幂及所有标签的证明。$\square$
+
+**推论 17.2（模十一与模四十七的端口对照）。** 对任意 $d\ge2$，模 $11$ 有 $T_{11}=10,h_{11}=b_{11}=20$；模 $47$ 有 $T_{47}=h_{47}=32,b_{47}=64$。在推论 15.5 的合同中，相应 $(q_N,q_\Gamma)$ 为 $(20d^2,20d^2)$ 与 $(32d^2,64d^2)$。
+
+证明。模 $11$ 的两根为 $3,7$。$3^5=1$ 且 $3\ne1$，故 $3$ 阶为 $5$；$7^2=5$、$7^5=-1$ 且 $7\ne-1$，故 $7$ 阶为 $10$。于是 $T_{11}=10$，负单位不在循环群内，$h_{11}=20=2(11-1)$。定理 17.1 给 $b_{11}=20$。[命题 12.4 的两条非零特征线](https://github.com/the-omega-institute/trureturing/blob/fecb0ec51a883ebb079d477888ecfdc4d27a97eb/docs/develop/theory/FIBONACCI_COHERENT_TRANSPORT_BOUNDARY.md#L1338)各有十点，确被 $j$ 合为二十点轨道；但两特征坐标均非零的标签原本已有二十点轨道。因此可观测代数严格增加，不必增加最大端口。
+
+模 $47$ 时二次互反给 $(5/47)=-1$。由 $F_{15}=610,F_{16}=987,F_{17}=1597$，Fibonacci 矩阵式给 $M^{16}\equiv-I\pmod{47}$。其阶整除 $32$ 且不整除 $16$，所以 $T_{47}=32$，负单位已在循环群内。由于 $h_{47}=32<2(47+1)=96$，非分裂行给 $b_{47}=64$。最后代入 (15.5)。$\square$
+
+## 18. 非循环标签共同达到合数与提升后的最大值
+
+**命题 18.1（模三十三：单位测试遗漏最大轨道）。** 模 $33$ 有
+
+$$
+T_{33}=40,\qquad h_{33}=80,\qquad b_{33}=160.
+$$
+
+同一个物理 Fourier 标签 $v=(12,4)\pmod{33}$ 本原且 $N_{33}$ 自由，但不循环，并满足 $|\Gamma_{33}v|=160$。相反，每个 $f\in R_{33}^\times$ 的 $\Gamma_{33}$ 轨道都恰有 $80$ 点。
+
+证明。已知 $T_3=8,T_{11}=10$，CRT 给 $T_{33}=40$。模 $11$ 的 $-I$ 不在循环群内，所以全局也不在，$h_{33}=80$。模 $11$ 取
+
+$$
+a=(1,4),\qquad b=(1,8),\qquad
+ga=3a,\quad gb=7b,\quad ja=b,\quad jb=a.
+$$
+
+实际全局标签 $v$ 的模 $11$ 分量为 $a$，模 $3$ 分量为 $\beta=(0,1)$。若一个全局群元素 $\varepsilon g^k$ 固定 $v$，模 $11$ 上要求 $\varepsilon3^k=1$。$3$ 阶为 $5$，其子群不含 $-1$，故强制 $\varepsilon=1$ 与 $5\mid k$。模 $3$ 上，$\beta,g\beta=(1,0)$ 成基，所以固定 $\beta$ 强制 $8\mid k$。两条件在同一个 $k$ 上给 $40\mid k$，即全局恒等元素，稳定子平凡。
+
+$j$ 把 $v$ 的模 $11$ 分量送到另一条特征线，而每个 $N_{11}$ 元素分别保持两线，故 $jv\notin N_{33}v$。由定理 16.3，$|\Gamma_{33}v|=2h_{33}=160$，也达到群阶上界。$4$ 在模 $33$ 是单位，故 $v$ 本原；但
+
+$$
+D(12,4)=144+48-16=176\equiv11\pmod{33}
+$$
+
+不是单位，所以它不循环。
+
+为完整排除单位标签达到 $160$，使用同一个环的完整范数核。$R_3\simeq\mathbb F_9$，单位范数核阶为 $4$；$R_{11}\simeq\mathbb F_{11}\times\mathbb F_{11}$，共轭交换两坐标，单位范数是乘积，其核阶为 $10$。故 $R_{33}^\times$ 的完整范数一群 $K_{33}$ 有 $40$ 个元素。$H_{33}$ 的范数像只有同一个全局 $\{1,-1\}$，因为 $\operatorname{Nm}(z)=-1$、$\operatorname{Nm}(-1)=1$，所以
+
+$$
+|H_{33}\cap K_{33}|=80/2=40=|K_{33}|.
+$$
+
+于是 $K_{33}\subseteq H_{33}$。任意单位 $f$ 的比值 $\bar f/f$ 都在 $K_{33}$，因而在 $H_{33}$；其稳定子又平凡，由 (16.2) 得轨道恰有 $80$ 点。这是对全体单位的排除，不只是某个单位候选失败。局部虽有 $b_3=h_3=8$、$b_{11}=h_{11}=20$，同一个全局非循环标签却使 $b_{33}=2h_{33}$。$\square$
+
+**命题 18.2（模一百二十一：同一整数标签的提升）。** 模 $121$ 有
+
+$$
+T_{121}=110,\qquad h_{121}=220,\qquad b_{121}=440.
+$$
+
+同一个整数标签 $v=(12,4)\pmod{121}$ 本原、非循环且 $N_{121}$ 自由，满足 $|\Gamma_{121}v|=440$；所有环单位标签的 $\Gamma_{121}$ 轨道恰为 $220$ 点。
+
+证明。整数矩阵恒等式为
+
+$$
+M^{10}=\begin{pmatrix}34&55\\55&89\end{pmatrix}
+=I+11A,
+\qquad A=\begin{pmatrix}3&5\\5&8\end{pmatrix}.
+$$
+
+若 $M^k=I\pmod{121}$，模 $11$ 强制 $k=10t$，而
+
+$$
+(I+11A)^t\equiv I+11tA\pmod{121}.
+$$
+
+$A$ 的非对角元 $5$ 为模 $11$ 单位，故此式等于 $I$ 恰当 $11\mid t$。于是 $T_{121}=110$；模 $11$ 的负单位障碍仍在，故 $h_{121}=220$。
+
+多项式 $X^2+X-1$ 模 $121$ 的两根为 $\lambda=36,\mu=84$：它们的和为 $-1$、积为 $-1$，差是单位。因此
+
+$$
+a=(1,37),\qquad b=(1,85)
+$$
+
+构成 $g$ 特征基，特征值为 $\lambda,\mu$，且 $ja=b,jb=a$。标签 $v$ 在此基中的坐标是 $(1,11)$，因为
+
+$$
+a+11b=(12,972)\equiv(12,4)\pmod{121}.
+$$
+
+若 $\varepsilon g^k$ 固定它，第一特征坐标给 $\varepsilon\lambda^k=1$，第二乘数由 $\mu=-\lambda^{-1}$ 变为 $(-1)^k$。固定第二坐标要求 $11((-1)^k-1)=0\pmod{121}$；奇 $k$ 给 $-22\ne0$，故 $k$ 偶。此时两个乘数都为 $1$，所以稳定子平凡。$j$ 将 $(1,11)$ 送到 $(11,1)$，而 $N_{121}$ 的单位对角乘数分别保持两坐标的 $11$ 进赋值，不能实现此交换。因此 (16.2) 给 $440$ 点，达到上界。$12$ 为模 $121$ 单位，故标签本原；$D(12,4)\equiv55\pmod{121}$ 非单位，故不循环。
+
+最后 $R_{121}\simeq(\mathbb Z/121\mathbb Z)\times(\mathbb Z/121\mathbb Z)$，单位范数一群有 $\varphi(121)=110$ 点；$H_{121}$ 的范数核也有 $220/2=110$ 点，故包含完整范数一群。单位的共轭比值全部属于 $H_{121}$，给所有单位轨道恰为 $220$。这里特征基中的 $j$ 交换两坐标与 $\Phi$ 中的负共轭相容：按两根求值，$\Phi(a)=(\lambda-\mu,0)$、$\Phi(b)=(0,\mu-\lambda)$，两种坐标的归一化因子符号相反。$\square$
+
+**推论 18.3（不可由局部最大值直接合成的端口）。** 对所有 $d\ge2$，在推论 15.5 的 $\Gamma$ 合同下，
+
+$$
+q_\Gamma(d,33)=160d^2=4d^2\pi(33),\qquad
+q_\Gamma(d,121)=440d^2=4d^2\pi(121).
+$$
+
+证明。将两项已由同一个实际标签达到的 $b_e$ 代入 (15.5)。它们排除普遍公式 $q_\Gamma=2d^2\pi(e)$。模 $11$ 到模 $121$ 的最大轨道增长，以及模 $3,11$ 到模 $33$ 的共同实现，分别表明单素数结论不能不检查标签稳定子就提升或合成；完整 CRT 条件仍由命题 16.4 给出。$\square$
+
+## 19. 射影聚合删除的可读标量索引
+
+**命题 19.1（零指标、标量返回与完整周期）。** 对每个 $e\ge2$，令
+
+$$
+r(e)=\min\{r\ge1:F_r\equiv0\pmod e\},\qquad
+c_e=F_{r(e)-1}\pmod e,\qquad
+\omega_e=\operatorname{ord}_{B_e^\times}(c_e).
+$$
+
+则
+
+$$
+M^{r(e)}=c_eI,\qquad c_e^2=(-1)^{r(e)},\qquad
+\pi(e)=r(e)\omega_e,\qquad\omega_e\in\{1,2,4\},
+\qquad g^{r(e)}=c_e^{-1}I.
+\tag{19.1}
+$$
+
+若 $r(e)$ 偶，则 $\omega_e\in\{1,2\}$；若 $r(e)$ 奇且 $e>2$，则 $\omega_e=4$。特征二例外为 $r(2)=3,c_2=1,\omega_2=1,\pi(2)=3$。对 $\alpha=(1,0)$，按共同单位倍数取商后的轨道长为 $r(e)$，完整向量轨道长为 $\pi(e)$，每个射影纤维有 $\omega_e$ 个实际轨道标签。
+
+证明。这里的 $r(e)$ 对应母卷[命题 105.2](https://github.com/the-omega-institute/trureturing/blob/fecb0ec51a883ebb079d477888ecfdc4d27a97eb/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#L7125)中的 $\rho(e)$；[推论 105.3](https://github.com/the-omega-institute/trureturing/blob/fecb0ec51a883ebb079d477888ecfdc4d27a97eb/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#L7177)给出标量返回子群和零指标整除性质。[定理 120.3](https://github.com/the-omega-institute/trureturing/blob/fecb0ec51a883ebb079d477888ecfdc4d27a97eb/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#L10571)在素数幂本原射影标签上明确区分此返回阶与矩阵／Pisano 周期。以下只把这些既有关系接到完整 Fourier 标签；经典标量乘数公式亦见 Robinson [第 31–32 页](https://www.fq.math.ca/Scanned/1-2/robinson.pdf)。
+
+$M$ 在有限环上可逆，故有正有限阶，$r(e)$ 存在。矩阵式
+
+$$
+M^n=F_{n-1}I+F_nM
+$$
+
+表明 $M^n$ 为标量恰当 $F_n=0$。标量幂在循环群中构成子群，其在整数指数中的原像为 $r(e)\mathbb Z$；因此全部零指标恰是 $r(e)$ 的倍数。在最小返回处得到 $M^{r(e)}=c_eI$；它可逆，$c_e$ 是单位。取行列式得 $c_e^2=(-1)^{r(e)}$，所以 $c_e^4=1$。完整返回 $M^n=I$ 必先有 $n=r(e)t$，此时恰要求 $c_e^t=1$，得到 $\pi(e)=r(e)\omega_e$ 及所列奇偶情形。$e=2$ 的数值由 $F_1=F_2=1,F_3=2$ 给出。一个周期内的零指标为 $0,r(e),\ldots,(\omega_e-1)r(e)$，故 $\omega_e$ 也等于每周期零点数。
+
+取逆转置给 $g^{r(e)}=c_e^{-1}I$。若 $g^k\alpha=u\alpha$，其中 $u\in B_e^\times$，交换性使 $g^k(g\alpha)=u(g\alpha)$；$\alpha,g\alpha$ 成基，故 $g^k=uI$。因此该标签的射影返回恰在标量返回指数发生，轨道长为 $r(e)$；完整轨道长为 $\pi(e)$，每个纤维就是 $\langle c_e\rangle$ 的 $\omega_e$ 个倍数。$\square$
+
+**定理 19.2（聚合射影条件矩阵不足以保留实际统计）。** 固定任意 $d,e\ge2$。高层本原向量的有限环射影等价关系是 $p\sim up$，$u\in B_e^\times$；一般合数上的本原意为两坐标生成单位理想，不要求其中某一个坐标本身为单位。取本原 $p$ 使 $c_ep\ne p$，并取任意低层密度算子 $\tau$。定义
+
+$$
+\rho^{(p)}=\tau\otimes|p\rangle\langle p|,\qquad
+\rho^{(c_ep)}=\tau\otimes|c_ep\rangle\langle c_ep|.
+$$
+
+若边界只保留射影聚合条件矩阵
+
+$$
+\overline\sigma_{[v]}(\rho)=\sum_{u\in[v]}\sigma_u(\rho),\qquad
+\sigma_u(\rho)=(I_A\otimes\langle u|)\rho(I_A\otimes|u\rangle),
+\tag{19.2}
+$$
+
+则两态的记录完全相同；这里对类中不同向量各求和一次。可将同样的单位倍数关系用于非本原标签，或另外保留其记录，两种做法对本例均无影响。但在任何已证明实际效果线性张成包含 $\mathcal A_{\mathrm{orb}}$ 的本卷合同中，存在实际有限低层事件区分它们，特别包括全部 $0<\Delta\le\pi/4$ 的固定采样合同。
+
+证明。两态的非零条件矩阵分别只在标签 $p$ 与 $c_ep$ 处等于 $\tau$，而二者属于同一射影类。因此 (19.2) 在该类上均为 $\tau$，其余为零。由 (19.1)，$c_ep=g^{-r(e)}p$，它们甚至属于同一个完整 $g$ 轨道。算子
+
+$$
+\Pi_p=I_A\otimes|p\rangle\langle p|
+\in\mathcal A_{\mathrm{orb}}
+$$
+
+对两态的期望分别为 $1,0$。由于它属于实际事件效果的复线性张成，若每个实际有限事件都给两态相同概率，则每个有限线性组合也给相同值，与这两个期望矛盾。故存在所述实际事件。这里不把 $\Pi_p$ 本身加入许可仪器，也不从线性张成推出完美单次区分。
+
+$|c_ep\rangle$ 是另一个完整 Fourier 标签的正交基态，不是给 $|p\rangle$ 乘一个复数整体相位。失败的边界明确删除了单位倍数索引；若某个块仅名为“射影块”，却仍保留全部向量索引与所需相干，就没有实施 (19.2) 的有损聚合，本反例不针对这种命名。$\square$
+
+**命题 19.3（模五的四个标签与两种四阶操作）。** 模 $5$ 有 $r(5)=5,c_5=3,\pi(5)=20$。同一射影点上的四个标签
+
+$$
+(1,0),\quad(3,0),\quad(4,0),\quad(2,0)
+$$
+
+对应四个两两正交的 Fourier 基态。配同一个任意低层态后，它们的射影聚合记录相同，但在定理 19.2 的合同下任意两者都可由某个实际有限低层事件区分。标量矩阵 $c_5I=3I$ 与定义 12.1 的 $C=MJ$ 都有阶 $4$，却是不同且在 $\operatorname{GL}_2(\mathbb F_5)$ 内不共轭的操作。
+
+证明。$F_1,F_2,F_3,F_4,F_5\equiv1,1,2,3,0\pmod5$，所以 $r(5)=5,c_5=3$；$3^2=-1$ 给乘数阶 $4$，由 (19.1) 得周期 $20$。四个倍数互异；$g^5=2I$，所以沿正向五步依次为 $p,2p,4p,3p$，再回到 $p$。同一完整轨道有二十个标签，射影轨道只有五个，聚合删除的每纤维四倍数索引正是 $\omega_5=4$。任意两态的单点 Fourier 投影期望不同，定理 19.2 的线性张成论证给所述区分。
+
+另一方面
+
+$$
+C=\begin{pmatrix}0&-1\\1&0\end{pmatrix},\quad C^2=-I,
+\qquad\det(3I)=4=-1,\quad\det C=1\pmod5.
+$$
+
+行列式在模线性共轭下不变，而且标量矩阵被所有此类共轭固定，故两者在 $\operatorname{GL}_2(\mathbb F_5)$ 中不共轭。此断言仅限二元模坐标的线性换基，不扩展为相应二十五维置换酉在任意 Hilbert 酉换基下不共轭。共同阶数也不授权在操作合同中交换二者。完整 $g$ 边界在推论 15.5 的资源合同下仍需 $20d^2$ 维公共量子端口，不能将射影长度 $5$ 直接代入该完整统计任务。$\square$
+
+## 追加锚（本行以下为增补区）
