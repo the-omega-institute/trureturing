@@ -37,7 +37,10 @@ internal sealed class OrthocrossGramHalfIntegerDocument : IScribeDocumentDefinit
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Half-integrality of the inverse Gram matrix", Disp(F.Id("claim")),
                 "Since the square of Omega^(-1/2) is Omega^(-1), G_alpha beta = tr(Pi_alpha Omega^(-1) Pi_beta Omega^(-1)), and a unitary change of basis does not change it, so U = 1 suffices. In the standard basis Omega has d on the diagonal, (1 - i)/2 above it and (1 + i)/2 below it. The matrices D_T = E_jk + E_kj, D_V = i(E_kj - E_jk) and D_X = E_jj - E_jj C - C E_jj, where C is the off-diagonal part of Omega, satisfy tr(D_alpha Pi_beta) = delta_alpha beta; there are d^2 of them and they are linearly independent, so every matrix Y equals the sum over beta of tr(Y Pi_beta) D_beta. It follows that G M = 1 for M_beta gamma = tr(D_beta Omega D_gamma Omega), so G is invertible and G^(-1) = M. The matrices (1 - i) Omega and (1 - i) D_alpha have Gaussian-integer entries, and 4 = (1 + i) i (1 - i)^3, so every entry of 4 Z with Z = Omega D_gamma Omega is (1 + i) times a Gaussian integer a + b i. Z is Hermitian, so M_T gamma = Z_kj + Z_jk, M_V gamma = i Z_jk - i Z_kj and M_X gamma = Z_jj minus the sum over q of C_jq Z_qj + C_qj Z_jq are read off from these entries, and in each case 2M is an integer: a - b, -(a + b), and a sum of the integers a or -b with 2 Z_jj.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("debrota-2020-orthocross-gram-inverse-half-integer"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(
