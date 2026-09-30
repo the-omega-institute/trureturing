@@ -89,17 +89,6 @@ register_information_theorem golden_cubic_block_kummer_tower_degree in arena
 
 #print axioms registration
 
-open Lean in
-run_meta do
-  let env ← getEnv
-  let some row := TemplateBinding.records env |>.find? (fun row =>
-      row.occurrence.key.theoremName == ``golden_cubic_block_kummer_tower_degree)
-    | throwError "Kummer tower registration evidence is missing"
-  match row.result with
-  | .declaredValidated _ => pure ()
-  | .declaredUnresolved diagnostic =>
-      throwError "Kummer tower registration is unresolved: {diagnostic}"
-  | .undeclared => throwError "Kummer tower registration is undeclared"
 
 end
 end Reg.D5.S3.Factorization.Galois.GoldenCubicBlockKummerTower

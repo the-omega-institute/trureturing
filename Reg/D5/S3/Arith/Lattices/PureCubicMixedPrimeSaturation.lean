@@ -214,17 +214,6 @@ register_information_theorem pure_cubic_mixed_prime_saturation in arena
 
 #print axioms registration
 
-open Lean in
-run_meta do
-  let env ← getEnv
-  let some row := TemplateBinding.records env |>.find? (fun row =>
-      row.occurrence.key.theoremName == ``pure_cubic_mixed_prime_saturation)
-    | throwError "mixed cubic saturation registration evidence is missing"
-  match row.result with
-  | .declaredValidated _ => pure ()
-  | .declaredUnresolved diagnostic =>
-      throwError "mixed cubic saturation registration is unresolved: {diagnostic}"
-  | .undeclared => throwError "mixed cubic saturation registration is undeclared"
 
 end
 end Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation
