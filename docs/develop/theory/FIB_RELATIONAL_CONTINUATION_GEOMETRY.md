@@ -935,3 +935,344 @@ $$
 若把区域组织、实际接续顺序、观察分辨率与记忆称作某种时空几何，那是本卷明确定义的关系模型。它本身没有给现实物理的来源识别、仪器实现、测量规律或物理常数；现实解释还须另外给出对象对应、允许操作与实测关系。对这些额外性质，条件模型中的证明不替代模型前提。
 
 ## 追加锚（本行以下为增补区）
+
+## 14. 规范五窗的黄金双读出与进位方向
+
+**定义 14.1（规范数量组成）。** 沿用定义 2.1 的 Fibonacci 索引、单位位及接缝，记自然数 $n$ 的规范有限词为
+
+$$
+Z(n)=(e(n);\sigma_0(n),\ldots,\sigma_{L-1}(n)),
+$$
+
+其中窗口从低到高排列，最高窗口非 $\mathrm{null}$；$n=0,1$ 时允许没有窗口，分别取单位位零、一。取
+
+$$
+\begin{aligned}
+S&=M^3=\begin{pmatrix}1&2\\2&3\end{pmatrix},\qquad r_G=(1,2),\\
+d_{\mathrm{null}}&=(0,0)^{\mathsf T},\quad
+d_{[2]}=(1,0)^{\mathsf T},\quad
+d_{[3]}=(0,1)^{\mathsf T},\\
+d_{[25]}&=(2,1)^{\mathsf T},\quad
+d_{[5]}=(1,1)^{\mathsf T},\\
+c_Z(n)&=\sum_{j=0}^{L-1}S^j d_{\sigma_j(n)}.
+\end{aligned}
+$$
+
+这一定义只取规范数量词的组成，区别于定义 1.3 中任意树的组成。令 $\varphi=(1+\sqrt5)/2$、$\alpha=\varphi^{-1}$、$G(n)=\lfloor\alpha(n+1)\rfloor$。对两个自然数 $x,y$，定义
+
+$$
+\delta(x,y)=G(x)+G(y)-G(x+y),\qquad
+\eta(x,y)=e(x)+e(y)-e(x+y).
+$$
+
+Fibonacci 分解降一阶的经典读出见 Letouzey，[*Hofstadter's problem for curious readers*](https://arxiv.org/abs/1509.02479)，§5.3，Theorem 14；该文的 Fibonacci 索引比本卷低一。标量进位公式亦见 [Cloitre 支撑算术，§1](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/landing.md)。下面把这些读出接到本卷的组成与单位位，确定其两个进位方向。
+
+**定理 14.2（规范五窗的双读出与双进位）。** 写 $c_Z(n)=(a(n),b(n))^{\mathsf T}$，则
+
+$$
+\begin{aligned}
+n&=e(n)+2a(n)+3b(n),\\
+G(n)&=e(n)+a(n)+2b(n),\\
+a(n)&=2n-3G(n)+e(n),\\
+b(n)&=2G(n)-n-e(n).
+\end{aligned}
+\tag{14.1}
+$$
+
+令 $v=(3,-2)^{\mathsf T}$、$t=(1,-1)^{\mathsf T}$，则所有 $x,y\geq0$ 都满足
+
+$$
+c_Z(x)+c_Z(y)-c_Z(x+y)
+=-\delta(x,y)v+\eta(x,y)t,
+\tag{14.2}
+$$
+
+其中 $\delta\in\{-1,0,1\}$、$\eta\in\{-1,0,1,2\}$。方向 $v$ 对数量观察不可见，却对黄金读出可见：$qv=0$、$r_Gv=-1$。方向 $t$ 同时补偿两个读出中的单位位：$qt=r_Gt=-1$。因此规范加法的组成误差由这两个整数进位唯一决定。
+
+证明。$qS^j d_\sigma$ 是第 $j$ 个窗口的实际数量。由于 $r_GM=q$，$r_GS^j d_\sigma$ 则将其中每个 Fibonacci 权重降一阶，单位位 $F_2$ 降为仍等于一的 $F_1$。为明确这个中间读出的取整约定，写规范位为 $\epsilon_k$，有
+
+$$
+F_{k-1}-\alpha F_k=(-1)^k\alpha^k,\qquad
+R=\sum_{k\geq2}\epsilon_k(-1)^k\alpha^k.
+$$
+
+有限位串给严格几何尾界
+
+$$
+-\frac{\alpha^3}{1-\alpha^2}=-\alpha^2<R
+<\frac{\alpha^2}{1-\alpha^2}=\alpha.
+$$
+
+故 $0<\alpha(n+1)-\sum_k\epsilon_kF_{k-1}=\alpha-R<1$，降阶和正是 $G(n)$。这重现所引经典中间读出并给出式 (14.1) 的前两行。两行的组成系数矩阵行列式为一，解出后两行。对于 $D=c_Z(x)+c_Z(y)-c_Z(x+y)$，有
+
+$$
+qD=-\eta,
+\qquad r_GD=\delta-\eta.
+$$
+
+右侧 $-\delta v+\eta t$ 有相同的两个读出，系数矩阵可逆，故式 (14.2) 成立。若 $\rho(z)=\{\alpha(z+1)\}$，则经典取整恒等式为
+
+$$
+\delta(x,y)=-\lfloor\rho(x)+\rho(y)-\alpha\rfloor.
+$$
+
+括号内在 $(-\alpha,2-\alpha)$ 中，得到三个标量进位值；单位位的取值直接给出四个 $\eta$ 值。两个方向的行列式为 $-1$，所以进位分解唯一。这里的唯一性来自规范词与双读出，不能推广成“任意同数量树的组成相同”。
+
+## 15. 变深度递归的五窗缺陷坐标
+
+**定义 15.1（两个递归及其实际内轨道）。** Campbell 递归与 Cloitre 递归分别为
+
+$$
+\begin{aligned}
+b(1)&=1,&T_{n,b}(x)&=n-b(x),&
+b(n)&=T_{n,b}^{\,b(n-1)}(n-1)\quad(n\geq2),\\
+C(1)&=C(2)=1,&T_{n,C}(x)&=n-C(x),&
+C(n)&=C(g_n)+C(n-g_n)\quad(n\geq3),\\
+&&g_n&=T_{n,C}^{\,C(n-1)}(n-1).
+\end{aligned}
+$$
+
+幂表示固定外部参数 $n$ 后的函数迭代。其原始定义及有效性论证分别见 [Campbell note，§1](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/campbell/note.tex) 与 [Cloitre foundations，§1](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/proof.md)。二者已有前缀都满足 $1\leq p(k)\leq k$，故 $T_{n,p}$ 保持 $D_n=\{1,\ldots,n-1\}$。在该前缀上定义缺陷 $E_p(k)=p(k)-G(k)$，不预设其符号。
+
+**定理 15.2（实际内轨道的双读出分解）。** 固定上述一种递归的合法外部索引 $n$，令 $p$ 为其已定前缀、$d=p(n-1)$、$x_0=n-1$、$x_{j+1}=T_{n,p}(x_j)$。在规范五窗中设
+
+$$
+e_j=e(x_j),\qquad c_j=c_Z(x_j),\qquad D_j=E_p(x_j).
+$$
+
+则全部内步有准确分解
+
+$$
+x_j=e_j+qc_j,\qquad
+G(x_j)=e_j+r_Gc_j,\qquad
+x_{j+1}=n-e_j-r_Gc_j-D_j.
+\tag{15.1}
+$$
+
+取每个右侧整数的规范词，恰得到原内轨道的五窗词；在深度 $d$ 处，Campbell 的新值为 $x_d$，Cloitre 的新值为 $p(x_d)+p(n-x_d)$。对后者还成立
+
+$$
+E_C(n)=E_C(x_d)+E_C(n-x_d)+\delta(x_d,n-x_d).
+\tag{15.2}
+$$
+
+若内轨道的最短前周期为 $\mu$、最短周期为 $\ell$，则规范词保留同一对 $(\mu,\ell)$，且 $d\geq\mu$ 时保留被深度选中的相位 $\mu+((d-\mu)\bmod\ell)$。
+
+证明。所引前缀界使 $1\leq n-p(x)\leq n-1$，因此每一内步及终点的互补索引都在已定前缀内。将 $p(x_j)=G(x_j)+E_p(x_j)$ 及式 (14.1) 代入，得到式 (15.1)。规范表示唯一，故逐步取规范词不会改换任何实际索引；依迭代次数归纳得到全部轨道和所选终点。对 Cloitre 的实际拆分，从定义的和式减去 $G(n)$，再加减两拆分项的 $G$，就得到文献中的标量缺陷式 (15.2)。在五窗组成中，这个拆分同时满足
+
+$$
+c_Z(x_d)+c_Z(n-x_d)-c_Z(n)
+=-\delta(x_d,n-x_d)v+\eta(x_d,n-x_d)t.
+\tag{15.3}
+$$
+
+有限集合上的轨道终将重复，规范词的单射性保留每一对索引是否相等，因而保留最短前周期、最短周期及相位公式。特别地，保持 $D_n$ 不要求 $x_{j+1}<x_j$。
+
+式 (15.1) 需要在实际索引上取得缺陷 $D_j$；五个局部标签本身并未给出这条函数。它也没有把规范化后的内步认作定义 7.1 的一次仿射窗口动作 $c\mapsto Sc+d_\sigma$。若改为起点 $n-L$、深度 $p(n-D)$，同一分解成立的条件是这两个初始索引在 $D_n$ 中、深度为正且全部内步仍受上述守卫；小索引初值须另行指定。
+
+**定理 15.3（实际拆分的缺陷校正与进位总量）。** 对 Cloitre 定义有符号的校正组成
+
+$$
+K_C(n)=c_Z(n)-e(n)t-E_C(n)v
+=\begin{pmatrix}2n-3C(n)\\2C(n)-n\end{pmatrix}.
+$$
+
+它具有读出 $qK_C(n)=n$、$r_GK_C(n)=C(n)$，并在每个实际所选拆分 $a=g_n,b=n-g_n$ 上严格可加：
+
+$$
+K_C(n)=K_C(a)+K_C(b)\qquad(n\geq3).
+$$
+
+对每个 $n\geq1$，在每个标签 $m\geq3$ 的节点使用它自己的实际所选拆分 $(g_m,m-g_m)$，标签一、二为叶，所得有限树记为 $\mathcal T_n$。令 $I_n$ 是内部节点集合，$L_1,L_2$ 是两种叶的个数，则
+
+$$
+E_C(n)=\sum_{u\in I_n}\delta(g_{m_u},m_u-g_{m_u}),
+\tag{15.4}
+$$
+
+$$
+\sum_{\text{叶 }u}c_Z(m_u)-c_Z(n)
+=-E_C(n)v+(L_1-e(n))t.
+\tag{15.5}
+$$
+
+因此黄金缺陷是实际递归拆分的总标量进位，且它在规范组成中沿数量不可见的方向 $v$ 积累；单位方向仍另有独立总量。
+
+证明。用式 (14.1) 及 $E_C=C-G$ 展开 $K_C$，得到所列两个坐标及其读出。对实际拆分，式 (15.2) 给 $E_C(a)+E_C(b)-E_C(n)=-\delta(a,b)$；将其与式 (15.3) 一起代入，便有
+
+$$
+K_C(a)+K_C(b)-K_C(n)
+=-\delta v+\eta t-\eta t+\delta v=0.
+$$
+
+每个子标签严格小于父标签，按标签强归纳得到树有限。叶上的 $C(1)=C(2)=G(1)=G(2)=1$，故叶缺陷为零。对式 (15.2) 沿此有限树相加，子缺陷与其父式中的对应项相消，得到式 (15.4)。对式 (15.3) 同样相加，组成的差变成叶组成和减根组成；单位位进位和为叶单位位和减根单位位，即 $L_1-e(n)$，由式 (15.4) 得式 (15.5)。同一树还给 $n=L_1+2L_2$、$C(n)=L_1+L_2$，而校正组成也等于
+
+$$
+K_C(n)=L_1(-1,1)^{\mathsf T}+L_2(1,0)^{\mathsf T}.
+$$
+
+这些恒等式中的所有拆分属于同一实际树，不能把不同候选拆分分别可达的进位总量合成一个实际值。校正组成位于 $\mathbb Z^2$，未必位于规范组成的非负锥：$C(4)=3$ 给 $K_C(4)=(-1,2)^{\mathsf T}$。它的定义还需要缺陷读出，故可加性没有单独给出从局部标签确定 $C$ 的递推。
+
+## 16. 局部标签与深度相位的实际区分
+
+**定义 16.1（最低窗口摘要）。** 对规范词定义 $h_0(n)=(e(n),\sigma_0(n))$，没有窗口时令 $\sigma_0(n)=\mathrm{null}$。这比单独一个五分类还保留了单位位；首窗口以上的全部窗口被遗忘。
+
+**命题 16.2（Cloitre 内步不能下降到最低窗口摘要）。** 对固定 $n=12$，不存在定义在 $h_0(D_{12})$ 上的函数 $U$ 满足
+
+$$
+h_0T_{12,C}=Uh_0.
+$$
+
+证明。按定义 15.1 直接展开，$n=3,\ldots,11$ 的所选内轨道为
+
+$$
+\begin{array}{c|l|c}
+n&x_0\to\cdots\to x_d&C(n)\\ \hline
+3&2\to2&2\\
+4&3\to2\to3&3\\
+5&4\to2\to4\to2&3\\
+6&5\to3\to4\to3&4\\
+7&6\to3\to5\to4\to4&5\\
+8&7\to3\to6\to4\to5\to5&5\\
+9&8\to4\to6\to5\to6\to5&6\\
+10&9\to4\to7\to5\to7\to5\to7&7\\
+11&10\to4\to8\to6\to7\to6\to7\to6&7
+\end{array}
+$$
+
+每行箭头次数等于上一项 $C(n-1)$，末列为终点两互补项之和。现在
+
+$$
+Z(3)=(0;[3]),\qquad Z(11)=(0;[3],[2]),
+$$
+
+所以 $h_0(3)=h_0(11)$。但 $C(3)=2$、$C(11)=7$，给
+
+$$
+T_{12,C}(3)=10,\quad Z(10)=(0;[2],[2]),\qquad
+T_{12,C}(11)=5,\quad Z(5)=(0;[5]).
+$$
+
+两个后继摘要不同，由定义 3.2 的纤维判据，所求下降不存在。这个见证只否定所声明的最低窗口摘要，未否定保留完整词的表示。
+
+**命题 16.3（Campbell 的五状态与相位障碍）。** 对 Campbell 递归固定 $n=24$，任何有固定后继映射并准确读出从 $23$ 开始的当前内索引的自主状态系统，至少需要六个可达状态。深度选中的终点为十五。
+
+证明。由定义逐项展开，或由 [Campbell 尺度公式](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/campbell/note.tex) 取这些项，得到
+
+$$
+\begin{array}{c|rrrrrr}
+x&23&10&17&16&15&18\\ \hline
+b(x)&14&7&8&9&6&9
+\end{array}
+$$
+
+故实际轨道为
+
+$$
+23\to10\to17\to16\to15\to18\to15\to18\to\cdots.
+$$
+
+六个不同当前索引必须有六个不同状态，否则同一状态的当前读出将取两个值。这里 $d=b(23)=14$，$x_4=15$、$x_5=18$，所以 $x_{14}=15$。只保留“最终周期二”不能区分十五与十八；所选相位由深度确定。这个状态数下界针对准确读出整个当前索引的系统，不针对把可变长词作为额外载体的五字母语法。
+
+## 17. Campbell 三尺度与五窗同步关系的障碍
+
+**假设 17.1（Campbell 的已给尺度公式）。** 使用 [Campbell note，Theorem 1](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/campbell/note.tex) 的公式作为本节前提：对 $n\geq2$，取相应半开区间中唯一的 $s=3^k$，有
+
+$$
+\begin{aligned}
+b(n)&=\min(n-s,3s)&&\text{若 }n\text{ 为偶数， }2s\leq n<6s,\\
+b(n)&=\max(2s,n-3s)&&\text{若 }n\text{ 为奇数， }3s\leq n<9s.
+\end{aligned}
+$$
+
+这是所引文献前提，本节的推导对象是它与本卷五窗同步关系的相容性。
+
+**定义 17.2（高到低同步词图）。** 将 $Z(n)$ 的窗口次序反转，以专用末字母 $\underline{e(n)}$ 保留单位位，得到
+
+$$
+W(n)=\sigma_{L-1}(n)\cdots\sigma_0(n)\underline{e(n)}.
+$$
+
+末字母 $\underline0,\underline1$ 与五个窗口字母不相同。对两个自然数 $x,y$，在高端各补 $\mathrm{null}$，使窗口个数相同，再把对应字母配对；单位位配对为末字母。包含所有这类共同长度补零的 $(n,b(n))$ 配对词的语言记为 $\mathcal G_b$。称其为正则同步词图，是指这个配对字母表上的语言正则。
+
+**定理 17.3（Campbell 的三进制与五窗同步关系分离）。** 在假设 17.1 下，Campbell 的 $(n,b(n))$ 关系具有正则三进制同步词图，而 $\mathcal G_b$ 不是正则语言。三进制词图同样使用高到低规范位和共同高端补零。五窗的否定结论允许任意有限数量的识别状态，因而强于五状态障碍；其对象是定义 17.2 的同步词图。
+
+证明。先从给定尺度公式提取一个实际水平集。偶数线性分支的比值至少 $1/2$，偶数平台分支的比值大于 $1/2$，所以 $5b(n)=2n$ 不出现在偶数索引。奇数平台 $b(n)=2s$ 上，此等式恰在 $n=5s$ 成立；奇数线性分支 $b(n)=n-3s$ 上同样仅在交界 $n=5s$ 成立。$n=1$ 不满足，故
+
+$$
+\{n\geq1:5b(n)=2n\}=\{5\cdot3^k:k\geq0\}.
+\tag{17.1}
+$$
+
+下一步使用固定整数线性关系在 Fibonacci 表示中的有限进位性质。其同步加法先例见 Du、Mousavi、Schaeffer、Shallit，[*Decision Algorithms for Fibonacci-Automatic Words, with Applications to Pattern Avoidance*](https://arxiv.org/abs/1406.0670)，§2 的高端补零三轨加法自动机。为给出本卷所需的精确五窗关系，直接构造 $2x-5y=0$ 的有限进位过滤。对配对窗口 $(\sigma,\tau)$，令
+
+$$
+D=\{2d_\sigma-5d_\tau:\sigma,\tau\in\Sigma\},\qquad
+h_{j+1}=Sh_j+\Delta_j,\quad h_0=0,\quad \Delta_j\in D.
+$$
+
+若共读 $H$ 个窗口，最后单位位差 $\zeta=2e_x-5e_y$ 满足 $|\zeta|\leq5$；由 Horner 展开，所需等式恰为 $qh_H+\zeta=0$。矩阵 $S$ 的两个特征值是
+
+$$
+\Lambda=\varphi^3=2+\sqrt5>1,\qquad
+\Theta=-\varphi^{-3}=2-\sqrt5,\qquad |\Theta|<1.
+$$
+
+定义两个行读出
+
+$$
+q_+=\frac{q(S-\Theta I)}{\Lambda-\Theta},\qquad
+q_-=\frac{q(\Lambda I-S)}{\Lambda-\Theta}.
+$$
+
+它们满足 $q=q_++q_-$、$q_+S=\Lambda q_+$、$q_-S=\Theta q_-$，且相互独立。记 $A_\pm=\max_{\Delta\in D}|q_\pm\Delta|$、$B_-=A_-/(1-|\Theta|)$。任一前缀状态均满足 $|q_-h_j|\leq B_-$。若整个词满足等式，在前缀之后还剩 $t=H-j$ 个窗口，则终态等式给
+
+$$
+\begin{aligned}
+\Lambda^t|q_+h_j|
+&\leq A_+\frac{\Lambda^t-1}{\Lambda-1}+B_-+5,\\
+|q_+h_j|&\leq \frac{A_+}{\Lambda-1}+B_-+5.
+\end{aligned}
+$$
+
+两个独立读出的有界区间只包含有限多个整数状态 $h_j\in\mathbb Z^2$。保留这些状态，用 $h\mapsto Sh+\Delta$ 转移，越界拒绝，末字母按 $qh+\zeta=0$ 接受，便识别所需线性关系。所有满足关系的词都留在界内，所有接受词都满足终态等式；再与两行的接缝语言相交即可。接缝、专用末字母及高端补零均是有限局部条件，因此过滤语言正则。
+
+若 $\mathcal G_b$ 正则，将它与此过滤语言相交并投影到第一行，就得到式 (17.1) 的高端补零词语言。正则语言对相交、字母投影及正则左商封闭；取 $\mathrm{null}^*$ 的左商，再与最高窗口非零的规范语言相交，便得到正则候选
+
+$$
+\mathcal P=\{W(5\cdot3^k):k\geq0\}.
+$$
+
+最后证明 $\mathcal P$ 不正则。若正则，由泵引理可取充分长的词及分解 $uvw$，使 $|v|=\ell>0$ 且所有 $uv^rw$，$r\geq0$，仍属于 $\mathcal P$。泵块 $v$ 不含单位末字母，否则删除或重复它都会破坏“恰有一个专用末字母”的规范条件。因此它由 $\ell$ 个窗口组成；$u$ 也只含窗口，$w$ 的单位位固定。记 $C_u,C_v,C_w$ 为三个窗口块的高到低 Horner 组成，$c$ 为 $w$ 的窗口个数，则解码值为
+
+$$
+N_r=e+q\left(S^{c+r\ell}C_u
++S^c\sum_{j=0}^{r-1}S^{j\ell}C_v+C_w\right).
+$$
+
+用两个特征读出展开有限几何和，得
+
+$$
+N_r=A\Lambda^{r\ell}+O(1),\qquad
+A=\Lambda^c\left(q_+C_u+\frac{q_+C_v}{\Lambda^\ell-1}\right)>0.
+$$
+
+这里 $q_+$ 的两个系数均为正，三个块的组成都非负。原词最高窗口非零；若 $u$ 非空，$C_u\ne0$，若 $u$ 为空，则 $C_v\ne0$。所以严格正性不受泵块是否包含其他零窗口影响。$q_-$ 项有界，因为 $|\Theta|<1$。因此
+
+$$
+\frac{N_{r+1}}{N_r}\longrightarrow\Lambda^\ell=\varphi^{3\ell}>1.
+$$
+
+另一方面，每个 $N_r=5\cdot3^{k_r}$，所以这些比值属于 $\{3^j:j\in\mathbb Z\}$。这个集合在任意正的有限点附近离散，收敛迫使比值最终等于某个 $3^j$，且 $j\geq1$。若 $\varphi^{3\ell}=3^j$，在 $\mathbb Q(\sqrt5)$ 中取范数得到
+
+$$
+(-1)^{3\ell}=3^{2j},
+$$
+
+矛盾。故 $\mathcal P$ 非正则，进而 $\mathcal G_b$ 非正则。
+
+三进制的正面结论来自同一尺度公式。$s=3^k$ 的规范三进制语言是 $10^*$。固定整数线性等式可用有限进位识别：从高位读入，整数进位按 $h\mapsto3h+\Delta$ 更新，$\Delta$ 只取有限值；若终态为固定常数，任何可接受前缀的 $h$ 都被剩余几何尾和界住，因此只有有限个所需进位状态。线性不等式 $h_H\leq c_0$ 也能有限识别：取整数 $B>\max\{|c_0|,\max|\Delta|/2\}$，累积量一旦超过 $B$ 或低于 $-B$，后续更新会保持在同一侧，故可将两侧各合并为一个状态。奇偶性通过模二读出得到。将尺度公式写为四个分支，各分支由 $s$ 的补零词属于 $0^*10^*$、$n$ 的奇偶、线性区间及 $y=n-s,3s,2s,n-3s$ 中对应的一条等式组成。每个分支都有 $s\leq n$，所以辅助尺度词能放在给定的共同词长内。正则语言对有限并、相交及投影封闭，消去 $s$ 并加入 $(1,1)$ 的全部共同补零词，得到恰好全部 $(n,b(n))$ 的三进制同步词图。
+
+这里的障碍来自实际三尺度水平集与五窗尺度 $\varphi^3$ 的不相容。它不改变定理 15.2 的完整词表示，也不排除使用无界词、无界组成或已定前缀的递归关系；Cloitre 的全局同步词图亦不由此命题判定。第七节的有限同余观察合同与本节准确读出 $b(n)$ 的合同不同，故其有限状态结论与本定理相容。
+
+## 追加锚（本行以下为增补区）
