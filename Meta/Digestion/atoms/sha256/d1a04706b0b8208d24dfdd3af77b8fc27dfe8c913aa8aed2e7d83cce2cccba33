@@ -1,0 +1,8 @@
+**引理 6.1（乘积相对交换子）。** 对空间张量积中的包含 $P_i\subset Q_i$，
+
+$$
+(P_1\overline\otimes P_2)'\cap(Q_1\overline\otimes Q_2)
+=(P_1'\cap Q_1)\overline\otimes(P_2'\cap Q_2).
+\tag{QCA.22}
+$$
+

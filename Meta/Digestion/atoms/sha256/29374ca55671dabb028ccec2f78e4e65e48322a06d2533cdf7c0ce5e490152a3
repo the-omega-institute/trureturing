@@ -1,0 +1,11 @@
+**定理318.4（费用极限与准确最优值）。** 对任意固定 $s>0$，在扩展实数意义下
+
+$$
+\boxed{
+\lim_{\delta\downarrow0}\mathcal C_s^{\mathrm{pol}}(\delta)
+=\mathcal C_s^{\mathrm{pol}}(0).}
+\tag{318.15}
+$$
+
+若共同值有限，存在准确策略达到这个最优值。
+

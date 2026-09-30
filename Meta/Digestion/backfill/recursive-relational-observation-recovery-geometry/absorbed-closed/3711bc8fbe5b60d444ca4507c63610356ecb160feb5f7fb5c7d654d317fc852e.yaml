@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3711bc8fbe5b60d444ca4507c63610356ecb160feb5f7fb5c7d654d317fc852e
+  normalized_sha256: sha256:3711bc8fbe5b60d444ca4507c63610356ecb160feb5f7fb5c7d654d317fc852e
+cas_ref: sha256:3711bc8fbe5b60d444ca4507c63610356ecb160feb5f7fb5c7d654d317fc852e
+coverage_gids:
+  - gid: D5/S3/FluidDynamics/Fourier/PeriodicGradientInterpolation.periodic_vector_gradient_fourth_moment
+    target_statement_id: sha256:4464d9102cc45665c3542c18e7e247c47df687cc026ef39fcfc57de0e9c145e3
+receipts:
+  unresolved_subitems: []

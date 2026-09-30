@@ -1,0 +1,18 @@
+### 11.5 四阶历史收益的可重建 Gaussian 实例
+
+取四维标准 Gaussian 初态，$\Omega=\operatorname{diag}(J_2,2J_2)$，观测 $u=(q_1+q_2)/\sqrt2$，则
+$f(t)=\mathbb E[u_tu_0]=(\cos t+\cos2t)/2$。当前风险为 $1-f(t)^2$。过去读数有独立 Gaussian 噪声方差 $\sigma^2$ 时，精确风险是
+\[
+ \mathcal R_{h,\sigma}(t)=1-
+ \begin{pmatrix}f(t)&f(t+h)\end{pmatrix}
+ \begin{pmatrix}1&f(h)\\f(h)&1+\sigma^2\end{pmatrix}^{-1}
+ \binom{f(t)}{f(t+h)}.
+\]
+这是 Gaussian 条件协方差的直接 Schur 补。当 $h=t\downarrow0$，
+\[
+ \mathcal R_0(t)\sim\tfrac52t^2,\qquad
+ \mathcal R_{t,0}(t)\sim\tfrac94t^4,\qquad
+ \mathcal R_{t,\sigma}(t)\sim\tfrac{13}4t^4\quad(\sigma^2=t^4).
+\]
+将余弦 Taylor 级数代入上述有限矩阵式即得常数。这表明定理 11.5 的四阶收益在允许模型中确实出现，但一个历史点尚未恢复四维完整状态。
+

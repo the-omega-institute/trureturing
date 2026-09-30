@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:5c76719e7feb21e0b4a1bd6b6daaf557416d69b27737575fa95ff294eedfd5ff
+  normalized_sha256: sha256:5c76719e7feb21e0b4a1bd6b6daaf557416d69b27737575fa95ff294eedfd5ff
+cas_ref: sha256:5c76719e7feb21e0b4a1bd6b6daaf557416d69b27737575fa95ff294eedfd5ff
+coverage_gids:
+  - gid: D5/S1/Recurrence/FiniteSamplingSmithDefect.finite_sampling_smith_defect
+    target_statement_id: sha256:9f6657ad26c6b975f7b0a054d13ec3f7eece2d9a61ae1c167afb2afdfb904bd2
+  - gid: D5/S3/Arith/FibonacciAtomic/SamplingQuotient.sampling_quotient
+    target_statement_id: sha256:a5a481e2dd107d9bac9c3016416367cc11d5c1201f275681152047e44cd2c5ee
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 2ebff04fb981019e4fbba7e5c35a34b06434e05cde3b1f4bea8d80fe49497d24
+    - a3a1a636d0d72a579e4a2f2f8c06f8fccd408b311efb5c21a70921f254807798

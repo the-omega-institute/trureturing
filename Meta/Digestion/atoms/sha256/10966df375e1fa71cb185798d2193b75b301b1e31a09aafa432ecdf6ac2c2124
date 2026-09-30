@@ -1,0 +1,96 @@
+**引理 311.2（有限时域得分矩预算）。** 对固定整数 $m\ge1$ 和紧区间 $I\Subset(0,1)$，定义
+
+$$
+\xi_i=\frac{X_i}{u}-\frac{1-X_i}{1-u},\qquad
+S_j=\sum_{i=1}^jR_i\xi_i.
+\tag{311.9}
+$$
+
+存在仅依赖 $I,m$ 的常数 $C_{I,m}<\infty$，使对任意 $n$、任意 $u\in I$ 和上述停止规则，
+
+$$
+\boxed{\mathbb E_u|S_n|^{2m}\le C_{I,m}\mathbb E_uM_n^m.}
+\tag{311.10}
+$$
+
+**证明。** 由于 $I$ 离开零和一，存在 $b_I<\infty$ 使 $|\xi_i|\le b_I$。条件均值与二阶矩为
+
+$$
+\mathbb E_u(\xi_i\mid\mathcal F_{i-1})=0,
+\qquad
+\mathbb E_u(\xi_i^2\mid\mathcal F_{i-1})=\frac1{u(1-u)}.
+\tag{311.11}
+$$
+
+可预测 $R_i$ 使 $S_j$ 成为鞅。在固定时域 $n$ 上，所有变量有界。$m=1$ 时交叉项期望为零，直接得到
+
+$$
+\mathbb E_uS_n^2=\frac{\mathbb E_uM_n}{u(1-u)},
+\tag{311.12}
+$$
+
+从而得到所需统一界。
+
+现设 $m>1$，并记 $S_n^*=\max_{0\le j\le n}|S_j|$。有限二项式展开给
+
+$$
+S_i^{2m}-S_{i-1}^{2m}
+=\sum_{r=1}^{2m}\binom{2m}{r}
+ S_{i-1}^{2m-r}(R_i\xi_i)^r.
+\tag{311.13}
+$$
+
+$r=1$ 项的期望为零。其余项利用 $R_i^r=R_i$、有界增量和 $|S_{i-1}|^{2m-r}\le1+(S_n^*)^{2m-2}$，求和得到
+
+$$
+\mathcal A_n:=\mathbb E_u|S_n|^{2m}
+\le C\mathbb E_u\{M_n[1+(S_n^*)^{2m-2}]\},
+\tag{311.14}
+$$
+
+其中 $C$ 只依赖 $I,m$。
+
+这里所需的有限时域最大不等式可以直接证明。对非负次鞅 $Y_j=|S_j|$，按首次超过 $\lambda$ 的有限时刻分层，有
+
+$$
+\lambda\Pr(Y_n^*>\lambda)
+\le\mathbb E[Y_n\mathbf1_{\{Y_n^*>\lambda\}}].
+\tag{311.15}
+$$
+
+对 $r>1$，乘以 $r\lambda^{r-2}$ 后积分，再用 Hölder 不等式，得到
+
+$$
+\begin{aligned}
+\mathbb E(Y_n^*)^r
+&\le\frac r{r-1}\mathbb E[Y_n(Y_n^*)^{r-1}]\\
+&\le\frac r{r-1}(\mathbb EY_n^r)^{1/r}
+              (\mathbb E(Y_n^*)^r)^{(r-1)/r}.
+\end{aligned}
+\tag{311.16}
+$$
+
+因此
+
+$$
+\mathbb E(S_n^*)^r\le
+\left(\frac r{r-1}\right)^r\mathbb E|S_n|^r.
+\tag{311.17}
+$$
+
+所有积分都在有限有界时域内；这一步不需要无界停止时的矩先验。
+
+记 $\mathcal B_n=\mathbb E_uM_n^m$。由于 $M_n$ 为非负整数，$\mathbb E_uM_n\le\mathcal B_n$。Hölder 与式（311.17）给
+
+$$
+\begin{aligned}
+\mathbb E_u[M_n(S_n^*)^{2m-2}]
+&\le\mathcal B_n^{1/m}
+ (\mathbb E_u(S_n^*)^{2m})^{(m-1)/m}\\
+&\le C'\mathcal B_n^{1/m}\mathcal A_n^{(m-1)/m}.
+\end{aligned}
+\tag{311.18}
+$$
+
+代回式（311.14），并用 Young 不等式将最后一项吸收到 $\mathcal A_n/2+C''\mathcal B_n$，得到式（311.10）。若 $\mathcal B_n=0$，则 $M_n=S_n=0$ 几乎必然，结论直接成立。该证明也适用于 $0<\mathcal B_n<1$。证毕。
+

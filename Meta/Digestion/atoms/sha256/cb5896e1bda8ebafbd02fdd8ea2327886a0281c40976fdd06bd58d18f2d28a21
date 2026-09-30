@@ -1,0 +1,76 @@
+### 341.4 未启动世界抵抗小地板平滑
+
+取
+
+$$
+x_J=\frac{x^\dagger}{2}b^{-(J+1)/2},\qquad
+c=1,\quad h=x_J,\quad
+p_J=q_J=\frac{1-x_J/C}{B}.
+\tag{341.21}
+$$
+
+公共扩域的 $x^\dagger=11/40$、$b\ge2$ 保证
+$x^\dagger b^{-(J+1)/2}<1/4$ 对全部 $J\ge0$ 成立，所以这是严格正的合法世界。该点位于第340.2节全部当前参考环未启动的区间。逐参考系数恒等式给
+
+$$
+L_J(x_J,q_J)=\frac{1-\Omega x_J^\beta}{2},\qquad
+F_{x_J}(q_J)=\frac12+\kappa x_J^\beta,
+\qquad
+\Omega=\frac{15}{16}
+       \left(\frac2{\underline c}\right)^\beta.
+\tag{341.22}
+$$
+
+故原参考残差精确为
+
+$$
+F_{x_J}(q_J)-L_J(x_J,q_J)
+ =\left(\kappa+\frac{\Omega}{2}\right)x_J^\beta
+ =D n_J^{-a},
+\tag{341.23}
+$$
+
+其中固定常数
+
+$$
+D=\left(\kappa+\frac{\Omega}{2}\right)
+   \left(\frac{N(x^\dagger)^2}{4b}\right)^a>0.
+\tag{341.24}
+$$
+
+任务平滑的偏差由式（341.13）控制。又因
+$\mathsf B_{m_J}[\bar L_J(\,\cdot\,,q_J)](p_J)\ge0$，
+乘上 $1-\delta_J$ 只降低核心成功概率。因此
+
+$$
+\begin{aligned}
+\Delta_J(w_J)
+&\ge D n_J^{-a}-C_{\rm sm}m_J^{-a}\\
+&\ge n_J^{-a}
+   \left(D-\frac{C_{\rm sm}}{c_m}\eta_J\right).
+\end{aligned}
+\tag{341.25}
+$$
+
+取固定阈值
+
+$$
+\theta=\min\left\{1,
+ \frac{Dc_m}{2(C_{\rm sm}+1)}\right\}>0.
+\tag{341.26}
+$$
+
+若 $\eta_J\le\theta$，式（341.25）给
+$\Delta_J(w_J)\ge(D/2)n_J^{-a}$。若 $\eta_J>\theta$，式（341.20）给
+$\sup_w|\Delta_J(w)|\ge(N^a\theta/8)n_J^{-a}$。两种情况合并得到
+
+$$
+\boxed{
+\sup_w|\Delta_J(w)|
+ \ge c_{\rm core}n_J^{-a},\qquad
+c_{\rm core}=\min\{D/2,N^a\theta/8\}>0.}
+\tag{341.27}
+$$
+
+此处没有要求末层地板足够小，也没有使用参考预算 $K$ 来取得集中条件。端点极限与未启动世界是分别适用的两支下界；它们只在同一个世界上确界中择一，不相加。
+

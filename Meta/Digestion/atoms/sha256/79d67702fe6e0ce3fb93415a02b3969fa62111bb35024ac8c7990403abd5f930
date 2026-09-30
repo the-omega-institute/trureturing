@@ -1,0 +1,17 @@
+**定理 12.3（未达到的上确界与最佳可能阶）。** 每个 $H_\varepsilon$ 是满足 A1–A3 的光滑嵌入，最优上弦增益及处处微分增益都为 1。其最优下弦增益 $l_\varepsilon$ 满足
+\[
+ \frac{\varepsilon}{Z_\varepsilon}\le l_\varepsilon^2
+ \le\frac{2(1+\sqrt3)\varepsilon}{Z_\varepsilon},\qquad
+ l_\varepsilon^2\sim\frac{2(1+\sqrt3)}9\varepsilon.
+\]
+稳定秩满足
+\[
+ \boxed{\frac2{1+2\sqrt3\varepsilon}\le R_{H_\varepsilon}
+ \le\frac2{1+18\sqrt3\varepsilon/Z_\varepsilon},}
+\]
+\[
+ \boxed{2-R_{H_\varepsilon}\sim4\sqrt3\varepsilon
+ =\Theta(l_\varepsilon^2).}
+\]
+因此，在固定圆周流、固定两个延迟、固定十维且单位微分增益的 A1–A3 测量族中，稳定秩上确界为 2，但没有测量族达到 2。定理 12.2 的平方阶障碍是阶匹配的，常数最优化仍未解决。
+

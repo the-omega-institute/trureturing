@@ -1,0 +1,11 @@
+**推论323.3（同钟计费的有限近似与费用极限）。** 在式（323.2）下，第322节的有限有理逼近及费用极限仍成立：
+
+$$
+\lim_{\delta\downarrow0}\mathcal D_s^{\mathrm{pol}}(\delta)
+=\mathcal D_s^{\mathrm{pol}}(0)
+=\lim_{\delta\downarrow0}\mathcal D_s^{\mathrm{alg}}(\delta).
+\tag{323.7}
+$$
+
+共同值有限时，准确抽象最优策略存在。这里有效接口仍为第319节的有限代码、可计算控制及私公平位，计费只读相同的完整来源历史。
+

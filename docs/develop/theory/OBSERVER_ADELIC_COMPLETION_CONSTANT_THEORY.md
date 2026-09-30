@@ -199105,3 +199105,32 @@ $$
 第一式的混合符号情形来自 $\partial_{X_i}(X_jv)=\delta_{ij}v+X_j\partial_{X_i}v$，同号模式分别由偏导数和乘法的交换性处理。第二式逐态交换有限正规序和后仅有 $k=-r$ 与 $k=m+r$ 两个可能贡献，各给出 $-r a_{m+r}$，外侧系数 $1/2$ 消去两份之和。一般的局部截断 Heisenberg 表示上的第二式见 [Kytölä 2025, `Sugawara.lean`, `commutator_sugawaraGen_heiOper`, 固定提交 `5ff4245`](https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean) [文献注](../../../Library/VertexAlgebra/kytola2025virasoro.md)；这里还须履行第一式与本节具体模式、有限和之间的对应。
 
 式 (2145.4) 不结算问题 2145.1 的 $[L_m,L_n]$ 全称断言。尚缺的是在同一具体正规序约定下对每个整数 $m,n$ 证明非中心部分恰为 $(m-n)L_{m+n}$，并在 $m+n=0$ 时对每个整数 $m$ 求出正规序边界有限和 $\frac{m^3-m}{12}\,\mathrm{id}$；仅由与所有 $a_r$ 对易，或仅计算 $m=2$，均不能给出这个系数。一般边界项计算见 [Kytölä 2025, `Sugawara.lean`, `commutator_sugawaraGen` 与 `sugawaraGen_cc_sum`](https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean) [文献注](../../../Library/VertexAlgebra/kytola2025virasoro.md)。
+
+## 2146. 具体多项式 Fock 零模的能级纤维
+
+**定理 2146.1（$L_0$ 的非负整数本征空间与有限维能级）。** 沿用问题 2145.1 的同一个复多项式空间 $F_{\mathbb C}=\mathbb C[X_0,X_1,\ldots]$、模式 $a_r$ 与逐态有限的正规序算子 $L_0$。对有限支撑指数向量 $d=(d_i)_{i\geq0}$ 定义 $E(d)=\sum_{i\geq0}(i+1)d_i$，并令 $P_N=\{d:E(d)=N\}$、$F_N=\ker(L_0-N\,\mathrm{id})$。则每个 $P_N$ 都是有限集，且对所有 $N\geq0$ 有
+
+$$
+F_N=\operatorname{span}_{\mathbb C}\{X^d:d\in P_N\},\qquad
+\dim_{\mathbb C}F_N=|P_N|.
+\tag{2146.1}
+$$
+
+**证明。** 若 $d_i\ne0$ 且 $E(d)=N$，则 $i+1\leq N$，并且每个 $d_i\leq N$；因此 $d$ 由指标 $i<N$ 上的有限个有界指数确定，$P_N$ 有限，$N=0$ 时只有零向量。正模式湮灭真空，故 $L_0\mathbf1=0$。将式 (2145.4) 的第二个对易式取 $m=0$、$r=-(i+1)$，得到 $L_0(X_i v)=X_iL_0v+(i+1)X_iv$；归纳得 $L_0X^d=E(d)X^d$。多项式的单项式坐标唯一，将 $L_0-N$ 逐系数作用后，特征零保证 $E(d)\ne N$ 的坐标必须为零，于是得到核的反向包含。不同 $d$ 的单项式线性无关，故维数恰为 $|P_N|$。复 Heisenberg 真空表示及其分次背景见 [Chu–Lin 2018, §3.1](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)；正规序约定见 [Kac 1998](https://doi.org/10.1090/ulect/010) [文献注](../../../Library/VertexAlgebra/kac1998vertexalgebras.md)。
+
+**问题 2146.2（从能级维数到实际角色）。** 能否在定理 2146.1 的同一空间上证明形式幂级数恒等式 $\sum_{N\geq0}\dim_{\mathbb C}F_Nq^N=\prod_{j\geq1}(1-q^j)^{-1}$，再于同一共形表示中构造全态态场和中心荷，给出带真空能移位的角色 $q^{-c/24}\sum_N\dim F_Nq^N$？式 (2146.1) 本身只证明能级有限与精确重数；它没有构造态场、证明 Virasoro 中心项、Monster 作用或融合结构。角色与共形分次的文献背景见 [Chu–Lin 2018, §§3.1–3.2](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)。
+
+## 2147. 具体多项式 Fock 的形式角色系数
+
+**定理 2147.1（实际零模的 Euler 分拆乘积）。** 在定理 2146.1 的同一个复多项式 Fock 表示中，令 `lZeroEigenspace N` 为具体的 Sugawara $L_0$ 的 $N$ 本征核。则在复系数形式幂级数环中有精确恒等式
+
+$$
+\operatorname{PowerSeries.mk}\!\left(N\mapsto
+  \bigl(\operatorname{finrank}_{\mathbb C}(\operatorname{lZeroEigenspace}N):\mathbb C\bigr)\right)
+ =\prod_{j\geq1}\left(1-X^j\right)^{-1}.
+\tag{2147.1}
+$$
+
+Lean 真值锚为 [`D5/S3/VertexAlgebra/PolynomialFockCharacter.lZero_character_euler_product`](../../../D5/S3/VertexAlgebra/PolynomialFockCharacter.lean)。该模块还给出 `energyFiberEquivPartition N`：把指数向量 $d$ 送到将 $i+1$ 重复 $d_i$ 次得到的正整数多重集；其和正好是 $\sum_i(i+1)d_i$，且逆映射由分拆各部分减一后的计数给出。因而定理 2146.1 的具体本征空间维数逐系数等于 `Nat.Partition.genFun (fun _ _ => 1)`。Mathlib 的 `Nat.Partition.hasProd_genFun` 将该生成函数写成按正整数部分的乘积；`PowerSeries.WithPiTopology.tsum_pow_mul_one_sub_of_constantCoeff_eq_zero` 将每个因子 $1+X^j+X^{2j}+\cdots$ 识别为 $(1-X^j)^{-1}$。$N=0$ 时指数向量和分拆都唯一，故真空系数为 $1$。
+
+该定理只结算问题 2146.2 的形式幂级数系数恒等式。它没有构造全态态场、证明 Virasoro 中心项、Monster 作用、融合结构或带真空能移位的共形角色；这些仍是问题 2146.2 的开放条款。形式角色与 Heisenberg 真空表示的背景可参见 [Chu–Lin 2018, §§3.1–3.2](https://arxiv.org/abs/1812.11378v1) [文献注](../../../Library/VertexAlgebra/chulin2018heisenberg.md)，共形代数约定参见 [Kac 1998](https://doi.org/10.1090/ulect/010) [文献注](../../../Library/VertexAlgebra/kac1998vertexalgebras.md)。

@@ -1,0 +1,12 @@
+**推论340.3（固定几何地板的闭端点阈值）。** 对每一份固定 $A_v$，
+
+$$
+\boxed{
+T_s(A_v)<\infty\quad\Longleftrightarrow\quad
+0<s\le s_v
+\qquad(s>0).}
+\tag{340.55}
+$$
+
+有限性包含端点 $s=s_v$；常数允许依赖这一份固定的 $v$。
+

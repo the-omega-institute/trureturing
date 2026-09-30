@@ -1,0 +1,50 @@
+### 定理 187.2（同一收缩零邻域内的真实近界来源）
+
+令 $g_m=m!$，仍记 $j_m$ 为满足 $g_m<\phi^{j_m}$ 的最小正偶数。定义
+
+$$
+j'_m=j_m+6m,\qquad
+x'_m=g_mM^{j'_m}\alpha=M^{6m}x_{g_m},
+\qquad N'_m=g_mF_{j'_m+3}.
+$$
+
+这些都是单位位为零的实际规范五窗口来源，其地址以 $2m$ 个连续 `[null]` 开头，而且
+
+$$
+\phi^{-6m-2}\le(x'_m)_-<\phi^{-6m}\longrightarrow0,
+$$
+
+$$
+0<\frac{Z(N'_m)}{e^\gamma\log\log N'_m}<1
+\quad\text{对充分大的 }m,
+\qquad
+\frac{Z(N'_m)}{e^\gamma\log\log N'_m}\longrightarrow1.
+\tag{187.4}
+$$
+
+证明。$M^{6m}=S^{2m}$，将有限低位优先地址乘以这个矩阵，就是在原规范窗口串之前加入 $2m$ 个 `null`。原来源单位位为零，新增零窗与原首窗的接缝合法，最高非零窗口和 End 不变，因此得到真正的规范来源。也可由 $0<g_m\phi^{-j'_m}<1$ 再应用命题 182.1 核对。命题 183.1 的 $\phi^{-2}\le g_m\phi^{-j_m}<1$ 给所列收缩范围。
+
+由 Binet 公式和 $j_m=\log(m!)/\log\phi+O(1)$，得到
+
+$$
+\log N'_m=2\log(m!)+6m\log\phi+O(1).
+$$
+
+阶乘积分估计因此给
+
+$$
+\log\log N'_m
+=\log m+\log\log m+\log2+o(1)
+\sim\log m.
+$$
+
+定理 187.1 对 $j'_m\to\infty$ 给最终严格 Robin 上界。另一方面，$m!\mid N'_m$，定理 186.1 证明中的 Mertens 与截断乘积论证给
+
+$$
+Z(N'_m)\ge Z(m!)\sim e^\gamma\log m.
+$$
+
+故 Robin 比值的下极限至少为一，与最终严格上界合并得到极限一。$\square$
+
+因此，即使把收缩观察限制在零的任意小邻域，并要求任意长的实际 `null` 前缀，Robin 比值仍能从下方任意接近一。小收缩坐标与长空窗不能独自提供固定百分比的安全余量。
+

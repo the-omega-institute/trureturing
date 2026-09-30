@@ -48,7 +48,7 @@ local instance (priority := 2000) : NormedAlgebra ℂ (Matrix n n ℂ) :=
 def hamiltonianEffectOrbit (H E : Matrix n n ℂ) (t : ℝ) : Matrix n n ℂ :=
   hamiltonianPropagator H (-t) * E * hamiltonianPropagator H t
 
-private theorem hasDerivAt_hamiltonianEffectOrbit
+theorem hasDerivAt_hamiltonianEffectOrbit
     (H E : Matrix n n ℂ) (t : ℝ) :
     HasDerivAt (hamiltonianEffectOrbit H E)
       (Complex.I •

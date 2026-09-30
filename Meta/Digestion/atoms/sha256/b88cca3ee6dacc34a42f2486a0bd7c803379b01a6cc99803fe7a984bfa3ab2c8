@@ -1,0 +1,12 @@
+### 344.5 Lorentz 系数的局部加权
+
+令 \(D=m+r\)、\(p=J/D\)。将 \(\tau_\nu/m^\nu\) 写成次数 \(r\) 的 Bernstein 系数 \(t_{\nu,\ell}^{(r)}\)，式（344.4）中第 \(\nu\) 阶项的第 \(J\) 个输出系数为
+\[
+\sum_{\ell=0}^r
+\frac{\binom r\ell\binom m{J-\ell}}{\binom D J}
+t_{\nu,\ell}^{(r)}
+f^{(\nu)}((J-\ell)/m).
+\tag{344.18}
+\]
+无效编号的二项系数取零。这也重现第343节的局部范围：只有 \(J-r\le i\le J\) 的格点参与。
+

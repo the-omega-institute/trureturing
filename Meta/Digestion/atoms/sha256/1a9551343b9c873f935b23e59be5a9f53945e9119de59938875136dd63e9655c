@@ -1,0 +1,15 @@
+**命题 15.1（投影脉冲的完整代数律）。** 对任意有限维正交投影 $P$ 和 $z\in\mathbb C$、$|z|=1$，定义
+
+$$
+U_P(z)=I+(z-1)P.
+\tag{FT.15}
+$$
+
+则 $U_P(z)^\dagger=U_P(\overline z)$、$U_P(z)U_P(w)=U_P(zw)$，故 $U_P(z)$ 酉。对固定读数 $O$，相应 Heisenberg 更新为
+
+$$
+U_P(z)^\dagger O U_P(z)
+=O+(z-1)OP+(\overline z-1)PO+|z-1|^2POP.
+\tag{FT.16}
+$$
+

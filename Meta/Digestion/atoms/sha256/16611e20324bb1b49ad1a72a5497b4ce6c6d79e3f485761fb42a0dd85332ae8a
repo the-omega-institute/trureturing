@@ -1,0 +1,38 @@
+### 命题 155.1（必要核的支撑充分条件）
+
+若
+
+$$
+U(P)\le\frac{2136}{1375}=1+\frac{761}{1375},
+\tag{155.4}
+$$
+
+则
+
+$$
+\boxed{
+e^\gamma\log\log N>Z(N).
+}
+\tag{155.5}
+$$
+
+**证明。** 约数和乘法性给出
+
+$$
+Z(N)
+=Z(M)\prod_i\frac{p_i}{p_i-1}\left(1-p_i^{-(a_i+1)}\right)
+<\frac{77}{16}U(P).
+$$
+
+又 $N\ge M$，故 $\log\log N\ge\log\log M$。结合式 (155.3)，
+
+$$
+\begin{aligned}
+\Delta(N)
+&\ge\Delta(M)-Z(M)(U(P)-1)\\
+&>\frac{5327}{2000}-\frac{77}{16}(U(P)-1)\ge0.
+\end{aligned}
+$$
+
+最后一个下界由式 (155.4) 给出，而前面的严格界保证最终严格为正。证毕。 $\square$
+

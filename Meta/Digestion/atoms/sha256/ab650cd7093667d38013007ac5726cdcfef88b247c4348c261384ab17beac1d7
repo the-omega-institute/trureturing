@@ -1,0 +1,43 @@
+**定理 10.7（条件热恢复的非线性延拓）。**
+\[
+\Delta_T:=\mathbb E D(\mu_{Y_T}\Vert\mathcal R\nu_{Y_T})
+=I(Z;Y_T\mid u),
+\qquad
+\boxed{\Delta_T=\frac{T^3}{6s}n_u+O(T^4).}
+\]
+一个显式余项为
+\[
+\left|\Delta_T-\frac{T^3}{6s}n_u\right|
+\le\frac{T^4\sqrt{n_u}K_2}{8s}
++\frac{3T^5K_2^2}{128s}
++\frac{8K_1^4T^6}{9s^2}
+ \exp\!\left(\frac{4K_1^2T^3}{3s}\right).
+\]
+
+**证明。** 对先验和后验作条件密度比分解，得到平均条件 KL 等于条件互信息；这不使用乘积先验。积分 Taylor 给
+\[
+S_T=\tfrac{\sqrt3}2T^{1/2}u+\tfrac1{\sqrt3}T^{3/2}v+R_T^S,
+\quad\|R_T^S\|_{L^2}\le\tfrac{\sqrt3}8T^{5/2}K_2.
+\]
+条件中心化后 $X_T=S_T-\mathbb E[S_T\mid u]$ 满足
+\[
+\left|\mathbb E\|X_T\|^2-\tfrac13T^3n_u\right|
+\le\tfrac14T^4\sqrt{n_u}K_2+\tfrac3{64}T^5K_2^2.
+\]
+同时逐点速度界给 $\|X_T\|\le 2K_1T^{3/2}/\sqrt3$。
+
+以给定 $u$ 的均值加噪声 Gaussian 为比较参考，KL 链式恒等式给
+\[
+I(Z;Y_T\mid u)
+=\frac{\mathbb E\|X_T\|^2}{2s}
+-\mathbb E_uD(P_{X_T+\sqrt s\varepsilon\mid u}\Vert N(0,sI)).
+\]
+对条件独立复制 $X_T'$，Gaussian 似然比积分给
+\[
+\chi^2(P_{X_T+\sqrt s\varepsilon\mid u}\Vert N(0,sI))
+=\mathbb E[e^{X_T\cdot X_T'/s}\mid u]-1.
+\]
+条件中心化令线性项为零。若 $a_T=4K_1^2T^3/(3s)$，则剩余至多 $a_T^2e^{a_T}/2$，因为 $|X_T\cdot X_T'/s|\le a_T$；再用 $D\le\log(1+\chi^2)\le\chi^2$。与方差余项合并即得结论。证毕。
+
+因此第 8 节的 Gaussian 三阶热信息系数在这里由真正条件隐藏方差 $N$ 接管，表达误差 $E_{\rm expr}$ 不进入该首项。物理自由能尺度仍需乘 $\beta^{-1}$；这是条件概率恢复量，没有指定真实测量与擦除的耗热协议。第 10.5 节的无界多项式例不直接满足本定理的有界余项前件，不能仅因存在全部矩就自动使用该显式常数。
+

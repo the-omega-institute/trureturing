@@ -1,0 +1,19 @@
+### 25.1 任意 QCA 的带标记尾部读数
+
+固定上述 $m$ 个有标签的相同层，记
+
+$$
+P_{\mathbf t}=\overline\bigotimes_{i=1}^mN_{t_i},\qquad
+L_{n,\mathbf s}=\overline\bigotimes_{i=1}^mN_{-n+s_i}.
+$$
+
+对 QCA $\alpha$，定义对每个固定 $\mathbf s,\mathbf t$、充分大 $n$ 有意义的整数
+
+$$
+K_\alpha(n;\mathbf s,\mathbf t)
+=\dim_{\mathbb C}\bigl(L_{n,\mathbf s}'\cap\alpha(P_{\mathbf t})\bigr).
+\tag{SC.14}
+$$
+
+各 $P_{\mathbf t}$ 都夹在两个标准总半链之间，$\alpha(P_{\mathbf t})$ 也如此。充分大的 $n$ 使 $L_{n,\mathbf s}$ 包含于该像；相对交换子被一个有限标准窗口代数包含，故维数有限。
+

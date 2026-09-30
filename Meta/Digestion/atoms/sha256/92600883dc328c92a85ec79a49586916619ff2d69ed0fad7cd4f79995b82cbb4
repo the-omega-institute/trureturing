@@ -1,0 +1,55 @@
+### 351.1 固定参数与完整终端概率合同
+
+固定已知
+
+\[
+0\le r\le1,\qquad \theta\in\mathbb R,\qquad
+\lambda=re^{i\theta}.
+\tag{351.1}
+\]
+
+目标为
+
+\[
+h_k^{r,\theta}
+=\frac{1-r^k\cos(k\theta)}2
+=\frac{1-\operatorname{Re}\lambda^k}{2},
+\qquad k\ge0,
+\tag{351.2}
+\]
+
+其中 \(\lambda^0=1\)，包括 \(\lambda=0\) 的情况。因此每个参数下都有 \(h_0^{r,\theta}=0\)。\(r=1\) 是无阻尼边界；\(0\le r<1\) 是本节的严格阻尼区间。
+
+沿用第350.1节的权限：每次从同一固定初态开始，外部发出 \(k\) 次同样的 advance，再发出一次结束试验的 test。装置未获赠可读取的整数 \(k\)，也不允许在 test 后继续本次试验。这里只保持这一固定制备的终端比特族，不要求任意量子制备、任意中间测量或任意多次测试的全部联合律。
+
+一个经典 \(d\) 态实现仍由
+
+\[
+\alpha\in\Delta_d,\qquad P\mathbf1=\mathbf1,\quad P_{ij}\ge0,
+\qquad b\in[0,1]^d
+\tag{351.3}
+\]
+
+给出，其响应为 \(g_k=\alpha P^kb\)。所有持续记录、模式、可再读私种子和影响后续动作的计数或钟值都须计入状态。初态、转移和效果可以依赖已知 \(r,\theta\)，但每次 advance 使用同一个 \(P\)，不能按未计入内部记忆的 \(k\) 改换操作。
+
+定义
+
+\[
+d_{\rm ex}(r,\theta)
+=\min\{d\ge1:\exists(\alpha,P,b)\ \forall k\ge0,\
+\alpha P^kb=h_k^{r,\theta}\},
+\tag{351.4}
+\]
+
+以及对 \(\varepsilon\ge0\)，
+
+\[
+d_\varepsilon(r,\theta)
+=\min\left\{d\ge1:\exists(\alpha,P,b)\
+\sup_{k\ge0}|\alpha P^kb-h_k^{r,\theta}|
+\le\varepsilon\right\}.
+\tag{351.5}
+\]
+
+集合为空时最小值记为 \(\infty\)，且 \(d_0=d_{\rm ex}\)。误差仍是终端 Bernoulli 律的总变差距离。固定实转移概率、私随机分支和精确量子门作为理想原语给定；系数描述与物理控制成本另行讨论。
+

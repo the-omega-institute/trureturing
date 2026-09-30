@@ -1,0 +1,28 @@
+**定理 11.7（四维记忆图的精确闭合与几何保持）。** 在 $\Delta\ne0$ 的开集上，$(x,p,r,s)$ 与完整状态光滑等价。将 $(z,w)^T=A^{-1}(r,s)^T$ 代入
+\[
+ \dot x=p,\quad \dot p=-x^3+r,\quad \dot r=s-\chi p,
+\]
+\[
+ \dot s=2\kappa a(-x^3+r-\kappa x)z
+       +\kappa(4ap-c)w-4\kappa a^2xp^2
+\]
+得到精确自治记忆模型。其推前 Poisson 矩阵 $J_{\rm mem}=D\Psi J_{\rm old}D\Psi^T$ 满足 Jacobi，且
+\[
+ \boxed{\det J_{\rm mem}=\Delta^2>0.}
+\]
+推前 Gibbs 密度为
+\[
+ \rho_{\rm mem}(x,p,r,s)\propto
+ \frac{\exp[-\beta H(x,p,z(x,p,r,s),w(x,p,r,s))]}{|\Delta(x,p)|}.
+\]
+
+**证明。** 记忆方程由原多项式向量场逐项求导。映射对 $(z,w)$ 的 Jacobian 是 $A$，完整 Jacobian 为块下三角，故行列式为 $\Delta$，显式逆给图上的光滑等价。原 $(x,p,z,w)$ 坐标中的 Poisson 矩阵为
+\[
+ J_{\rm old}=\begin{pmatrix}
+ 0&1&0&0\\-1&0&2ax&c\\0&-2ax&0&1\\0&-c&-1&0
+ \end{pmatrix},\quad \det J_{\rm old}=1.
+\]
+它来自合法磁 Poisson 矩阵的坐标变换。微分同胚推前保持括号与 Jacobi，行列式为 $\Delta^2$。Gibbs 公式保留逆 Jacobian 的绝对值。证毕。
+
+一个记忆量 $r$ 一般不够：在 $\Delta\ne0$ 的点，固定 $x,p,r$ 仍可改变 $s$，从而改变 $\dot r$。这个模型的瞬时隐藏力协方差只有一个非零方向，仍需要两个独立记忆坐标才能在上述图上恢复全部动力学。它具体说明协方差秩与隐藏坐标维数不同。
+

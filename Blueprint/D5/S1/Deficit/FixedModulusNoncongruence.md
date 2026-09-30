@@ -27,3 +27,4 @@ This is an honest partial closure of proposition 6.28(ii). It does not formalize
 - Dependency: [D5/S1/Deficit/DoubleFaceLength](DoubleFaceLength.md)
 - Dependency: [D5/S1/Deficit/GoldenPhaseDeficit](GoldenPhaseDeficit.md)
 - Dependency: [D5/S1/Deficit/ZeckendorfDisplacementReading](ZeckendorfDisplacementReading.md)
+- Dependency: [D5/S1/Scale/Fibonacci](../Scale/Fibonacci.md)

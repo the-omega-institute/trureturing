@@ -1,0 +1,17 @@
+**定义320.1（共同实现权重）。** 对每个历史设变量 \(r_h\)，对每个 \(b\in\mathcal A\sqcup\mathcal Z\) 设变量 \(f_h(b)\)。令 \(\mathcal R\) 为下列线性系统的解集：
+$$
+\begin{gathered}
+0\le r_h\le1,\qquad0\le f_h(b)\le1,\\
+r_{\operatorname{root}_S}=1,\qquad
+\sum_{b\in\mathcal A\sqcup\mathcal Z}f_h(b)=r_h,\\
+r_{h(a,y)}=f_h(a)
+\quad(a\in\mathcal A,\ y\in\mathcal Y_a).
+\end{gathered}
+\tag{320.3}
+$$
+所有世界共用同一组变量。
+
+最后一行复制的是控制权重，不是实际概率。例如根必选一个二元来源时，两个回答孩子的 \(r\) 都为一；若来源公平，乘入各自 \(L_\theta=1/2\) 后，实际孩子概率才分别为 \(1/2\)。不能先让 \(r\) 在回答分支间守恒，再重复乘入来源概率。
+
+历史及变量可数。每条结构关系只用有限坐标，所以 \(\mathcal R\) 是可数乘积立方体的闭凸子集，因而紧。固定一个来源并永远请求它给出可行点，故 \(\mathcal R\ne\varnothing\)。这里可数的是变量和结构等式；任意世界集上的目标约束尚未因此变成可数族。
+

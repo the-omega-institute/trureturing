@@ -1,0 +1,6 @@
+**证明。** 坐标变换 $y=z+a x^2$ 的 Jacobian 为一；积分掉 Gaussian $z,p_y$ 给边缘。残差为 $2\kappa axz+cp_y$，用条件 Gaussian 二阶矩得到协方差，代入定理 10.3 得 $k$。Gibbs 分部积分给 $\mathbb E x^4=1/\beta$、$\mathbb E x^6=3v_\beta/\beta$。因此白化线性投影的频率为 $1/\sqrt{\beta v_\beta}$，其表达残差平方均值为 $\beta\mathbb E x^6-1/(\beta v_\beta)$；与隐藏项分别组成上述两块。证毕。
+
+特别地，$a=c=0$ 时当前两个变量已经完全自治，所有未来可精确预测，然而 $M=E_{\rm expr}\ne0$。$\beta=1$ 时非零值约为 $0.5485971606075344$。它是非线性漂移的线性拟合误差，不是遗漏状态证据。这个反例阻止把第 5 节的 Gaussian 特例无条件外推。
+
+此外，非线性情形的 $\operatorname{rank}N$ 仅计量独立的残差函数方向，不能直接当作隐藏坐标数。一个隐藏标量 $w$ 的两个函数 $(w,w^2-\mathbb Ew^2)$ 就可以具有秩二协方差；这里不继承线性 Gramian 的状态维数下界。
+

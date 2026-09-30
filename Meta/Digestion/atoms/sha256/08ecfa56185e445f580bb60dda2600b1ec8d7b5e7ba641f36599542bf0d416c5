@@ -1,0 +1,4 @@
+### 23.1 任意层数的严格尾部障碍
+
+固定 $B=A(\mathcal C,X)$，半链记 $N_t$，并取 $A_m=B^{\otimes m}$，$m\ge2$，采用相同空间格点。总半链为 $M_t=\overline\otimes_{i=1}^m N_t$。各层的右平移记作 $T_i$，对 $\mathbf k\in\mathbb Z^m$ 置 $\alpha_{\mathbf k}=\prod_iT_i^{k_i}$。
+

@@ -141,6 +141,34 @@ internal sealed class MostowPrasadRigidityDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "A dense orbit and basepoint control imply a trivial centralizer."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("mostow-prasad-dense-attracting-poles-centralizer"),
+                DeclarationHandle.Create(Prefix + "rangeCentralizerTrivial_of_dense_attracting_poles"),
+                H("Dense attracting poles force a trivial centralizer"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Let G be any group, X any Hausdorff topological space in which every "
+                            + "pair of points has a third point distinct from both, and rho a group "
+                            + "homomorphism from G to the homeomorphisms of X. Suppose the set of "
+                            + "a for which there are g in G and b in X with a distinct from b, "
+                            + "such that the n-fold iterate of rho(g) at every x distinct from b "
+                            + "converges to a, is dense in X. Then every homeomorphism commuting "
+                            + "with every rho(g) is the identity.")),
+                    Paragraph(Text(
+                        "For each attracting pole a, choose x away from b and the inverse image "
+                            + "of b under a centralizing homeomorphism z. Commutation transports "
+                            + "the entire iterated orbit through z. Continuity makes its limit z(a), "
+                            + "while the attracting-pole condition makes the same orbit converge to "
+                            + "a. Hausdorff uniqueness fixes a; density and continuity fix all of X.")),
+                    Paragraph(Text(
+                        "This gives a conditional route to the centralizer premise of "
+                            + "groupConjugacy_conjugator_unique. It does not construct an ideal "
+                            + "boundary, establish north-south dynamics or lattice pole density, "
+                            + "prove faithfulness, construct a conjugator, or prove "
+                            + "MostowPrasadRigidityEndpoint."))),
                 DescribeRole.Theorem)),
         []));
 }

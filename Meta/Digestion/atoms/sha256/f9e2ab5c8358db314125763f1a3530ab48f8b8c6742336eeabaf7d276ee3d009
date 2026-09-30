@@ -1,0 +1,21 @@
+**定理317.2（确定预算的幂次与整数分界）。** 对固定已知参数，当 \(\beta>0\) 非整数时，
+$$
+\boxed{
+\lim_{\delta\downarrow0}
+\frac{\log n_*(\delta)}{\log(1/\delta)}
+=
+\lim_{\delta\downarrow0}
+\frac{\log n_{H,*}(\delta)}{\log(1/\delta)}
+=\frac2\beta.}
+\tag{317.7}
+$$
+当 \(\beta\in\mathbb N_{>0}\) 时，
+$$
+\boxed{
+n_*(\delta)=\Theta(\log(1/\delta)),\qquad
+n_{H,*}(\delta)=\Theta(\log(1/\delta)).}
+\tag{317.8}
+$$
+常数与充分小的误差阈值可依赖固定已知参数及所选合法区间，不依赖算法或 \(\delta\)。非整数结论只给对数指数，不声称
+\(\Theta(\delta^{-2/\beta})\)，也不排除子幂因子。
+

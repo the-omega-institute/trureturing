@@ -1,0 +1,13 @@
+**定理346.7（类内价格与实际精度）。** 存在固定
+\(c,C,\epsilon_*>0\)，使
+
+\[
+\boxed{
+c\bigl(1+\lambda\log(1/\epsilon)\bigr)
+\le\Pi_{\mathfrak G}(\lambda,\epsilon)
+\le C\bigl(1+\lambda\log(1/\epsilon)\bigr)}
+\tag{346.53}
+\]
+
+对全部 \(0<\lambda\le1\)、\(0<\epsilon<\epsilon_*\) 同时成立。
+
