@@ -1,5 +1,8 @@
 import Reg.D5.S3.Weil.Mertens.Gamma
 import Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 open MeasureTheory Set

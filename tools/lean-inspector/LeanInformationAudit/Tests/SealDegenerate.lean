@@ -1,4 +1,7 @@
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 /-! This negative fixture is isolated because registry entries persist through imports. -/
 
@@ -27,19 +30,19 @@ def unitRealization : PrimitiveRealization arena.signature where
   readout := fun _ _ => PUnit.unit
   anchor := Fin.elim0
 
-information_theorem degenerateTheorem
+test_assess in information_theorem degenerateTheorem
   in arena
   primitives unitRealization
   : arena.Law unitRealization := by trivial
 
-expect_information_occurrence degenerateTheorem
+test_assess in expect_information_occurrence degenerateTheorem
   in arena
   from "LeanInformationAudit.Tests.SealDegenerate"
 
 /-- error: IE-C004 DegenerateArena:
 LeanInformationAudit.Tests.SealDegenerate.arena -/
 #guard_msgs (error) in
-#seal_information_theory
+test_assess in #seal_information_theory
 
 /-- error: Invalid field `__information_catalog`: The environment does not contain
 `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.__information_catalog`, so it is

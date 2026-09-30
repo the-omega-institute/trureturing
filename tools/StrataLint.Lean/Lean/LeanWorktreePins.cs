@@ -40,6 +40,10 @@ internal sealed record LeanPinSet(byte[] LeanToolchain, byte[] LakeManifest, str
             reason = RegManifestAgreement.Validate(StrictUtf8.GetString(manifest),
                 File.Exists(regPath) ? File.ReadAllText(regPath, StrictUtf8) : null,
                 File.Exists(Path.Combine(root, RegManifestAgreement.LakefilePath)));
+            var hostPath = Path.Combine(root, RegManifestAgreement.HostManifestPath);
+            reason ??= RegManifestAgreement.ValidateHost(StrictUtf8.GetString(manifest),
+                File.Exists(hostPath) ? File.ReadAllText(hostPath, StrictUtf8) : null,
+                File.Exists(Path.Combine(root, RegManifestAgreement.HostLakefilePath)));
             return reason is null ? Create(File.ReadAllBytes(toolchainPath), manifest) : null;
         }
         catch (Exception exception) when (exception is IOException or UnauthorizedAccessException

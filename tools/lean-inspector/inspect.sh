@@ -82,7 +82,7 @@ if [[ -n "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
   [[ "$STRATALINT_LEAN_PRODUCER_DLL" == /* && -f "$STRATALINT_LEAN_PRODUCER_DLL" ]] \
     || { echo 'inspect.sh: candidate Lean producer must be an existing absolute path' >&2; exit 2; }
 fi
-workspace=(-d "$REPOSITORY/Reg")
+workspace=(-d "$REPOSITORY/tools/lean-inspector-reg")
 # A scoped caller passes the selected resource's registered targets. Direct
 # report calls consume all explicitly registered program targets.
 if [[ "${STRATALINT_LEAN_BUILD_TARGETS-}" != '[]' ]]; then
