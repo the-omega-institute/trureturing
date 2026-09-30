@@ -12085,3 +12085,323 @@ shortcut is refuted byFC512.
 This leaves the original arbitrary-shallow-phase noncovering target
 unchanged, and identifies the additional joint information needed
 instead of buying more phase enumeration.
+
+## Exact finite types for arbitrary shallow private phases
+
+For the fixed FC147 higher words, arbitrary first digits of the four
+named private roles admit an exact common-source union formula. It is
+valid for every private prime q >= 11 and every finite N >= 1. Together
+with the fixed head/root addresses it determines all raw X, Y, Z, H
+cells. There are 372 named first-prefix types per private prime; this
+is an exact finite description of the allowed phase image, not a count
+of minimal behavioral states or a proof of positivity of its fee score.
+
+This is an ordinary mathematical derivation from literal cylinders.
+It supplies a parameterized phase image, without a new
+positive fee bound, continuation result or Lean verification.
+
+### 1. Fixed objects and normalization
+
+Digits are read from low to high. Let [w] denote the cylinder with
+prefix w on Z/q^N Z. Empty depth sums below are zero when N = 1.
+For j in {0,1,2,3,4,5}, define the fixed higher tail
+
+    T_j = union_(e=2..N) [6^(e-1) j].                (FC516)
+
+The six T_j are pairwise disjoint, both across roles and across
+depths, and all lie in [6]. At unequal depths the shorter word ends
+in a digit j <= 5 where the longer one still has digit 6. Thus each
+T_j has Haar mass
+
+    a_tail = sum_(e=2..N) q^-e.
+
+The unchanged pure and star private events are
+
+    P = [0] union T_0,
+    S = [1] union T_1.
+
+They are disjoint. Write
+
+    A = 1/q + a_tail,
+    c = 1/(1-A),
+    u = c/q,  t = c*a_tail,  b = u+t.               (FC517)
+
+The base private probability is nu = c*Haar restricted to P^c. At
+retained ternary root r in {1,2}, put epsilon = 1_(r=2) and retain
+
+    E_r = P^c minus (S if epsilon=1 else empty),
+    mu_r(F) = c*Haar(F intersect E_r),
+    g_r = mu_r(all) = 1-epsilon*b.                  (FC518)
+
+These are unnormalized masses after star deletion, measured relative
+to the SAME pure-conditioned law nu. No further division by g_r is
+used. This is the normalization of the raw FC137 inputs.
+
+For role order (F5,S5,F7,S7), the fixed higher terminal labels are
+(2,4,3,5). Choose arbitrary shallow digits
+
+    d = (d_F5,d_S5,d_F7,d_S7) in {0,...,q-1}^4,
+
+once for the four distinct depth-one numerical originals. A complete
+named role j has private event
+
+    R_j(d_j) = [d_j] union T_j.                     (FC519)
+
+Changing its shallow digit does not change its higher words, head
+row, selected ternary root or numerical labels. In particular a
+shallow digit 0 deletes no surviving FIRST-LAYER mass but its higher
+role tail is still present. The same holds for digit 1 on root 2.
+
+### 2. Literal cylinder masses
+
+Under mu_r the first cylinders have the following exact masses:
+
+    mu_r([0]) = 0,
+    mu_r([1]) = (1-epsilon)*u,
+    mu_r([6]) = u-(1+epsilon)*t,
+    mu_r([d]) = u, d outside {0,1,6}.               (FC520)
+
+Indeed [6] contains exactly the higher pure tail T_0 and, on root
+2, the higher star tail T_1, each of normalized mass t. Its other
+points remain in the carrier. All ordinary first cylinders avoid
+the pure and star events. Moreover for each grouped role j in
+{2,3,4,5}, its T_j is disjoint from P and S and has mu_r mass t.
+
+The literal cylinder formulas (FC520) remain valid at every finite
+N. No limiting geometric allowance is substituted
+for the finite sum t. For instance, when N = 1, t = 0 and only the
+first-layer events remain; the same formulas still apply.
+
+### 3. Exact role-union formula
+
+Let A_roles be ANY subset of the four named roles. Define
+
+    s(A_roles) = 1 if some included role has d_j=6, otherwise 0,
+
+    n_r(A_roles) = number of DISTINCT values among its d_j
+                  after removing 0,6 and, if epsilon=1, also 1.
+
+Set U_r(A_roles) = mu_r(union_(j in A_roles) R_j(d_j)). Then
+
+    if s=0:
+      U_r(A_roles) = u*n_r(A_roles) + |A_roles|*t;
+
+    if s=1:
+      U_r(A_roles) = u*(n_r(A_roles)+1)-(1+epsilon)*t.  (FC521)
+
+Equivalently,
+
+    U_r(A_roles)
+      = u*(n_r+s) + t*((1-s)*|A_roles|-s*(1+epsilon)). (FC522)
+
+Proof when s=0: the surviving shallow cylinders are disjoint first
+rows, each of mass u. Counting distinct values, rather than roles,
+handles every shallow coincidence. The grouped higher tails all
+lie in [6], are mutually disjoint, and none meets a chosen shallow
+row. Every included role contributes its full tail t, even if its
+shallow cylinder is killed by pure/star deletion. Their sum gives
+the first line of (FC521).
+
+Proof when s=1: one included shallow cylinder is the entire [6].
+It already contains every included higher tail, including tails of
+other roles; they must not be added again. The surviving part of
+[6] has mass u-(1+epsilon)*t by (FC520). Every other surviving
+distinct shallow row is disjoint from it and contributes u. This
+gives the second line. Multiple shallow 6 roles still contribute
+one [6], and their named tails add no further mass.
+
+Thus the candidate formula is exact, with the finite-depth sum in
+t and with n_r counting DISTINCT surviving non-6 values. When an
+infinite-depth LIMIT is being studied, one may instead set
+
+    c_infty=(q-1)/(q-2),
+    u_infty=(q-1)/(q*(q-2)),
+    t_infty=1/(q*(q-2)),  b_infty=1/(q-2).          (FC523)
+
+These are limits of (FC517), not masses attained by a finite family.
+
+Two useful common-source constraints follow directly. The mandatory
+tails of the included roles are disjoint subsets of their union, so
+
+    |A_roles|*t <= U_r(A_roles) <= |A_roles|*b.       (FC524)
+
+The upper bound follows by summing the at-most-b mass of each role.
+For the SAME abstract subset A_roles used at both roots,
+
+    U_1(A_roles)-U_2(A_roles)
+      = u*1_(some d_j=1) + t*1_(some d_j=6).       (FC525)
+
+This records exactly which part of the star event the union contains.
+Actual active role subsets can differ by root, so (FC525) is applied
+only to the same subset, not to two different active sets.
+
+### 4. All raw cells from one four-role assignment
+
+Fix the physical head rows i_F5(q), i_S5(q), i_F7(q), i_S7(q) and
+selected roots rho_S5(q), rho_S7(q). At one root/head cell (r,i5,i7)
+define the actual active role sets
+
+    A5(r,i5) = {F5 : i5=i_F5}
+                 union {S5 : r=rho_S5 and i5=i_S5},
+    A7(r,i7) = {F7 : i7=i_F7}
+                 union {S7 : r=rho_S7 and i7=i_S7}.
+
+Using the SAME digit assignment d in every cell, the exact raw data are
+
+    X_(q,r,i5) = U_r(A5),
+    Y_(q,r,i7) = U_r(A7),
+    Z_(q,r,i5,i7) = U_r(A5)+U_r(A7)-U_r(A5 union A7),
+    H_(q,r,i5,i7) = g_r-U_r(A5 union A7).            (FC526)
+
+The Z identity is ordinary inclusion-exclusion on that one actual
+private carrier. It automatically counts all shallow coincidences
+and all absorption of one role's higher tail by another shallow 6.
+No assumption that cross-head overlaps occur only between equal
+shallow digits is valid once 6 is admitted.
+
+In particular
+
+    0 <= Z <= min(X,Y),
+    H = g-X-Y+Z,
+    max(0,g-X-Y) <= H <= g-max(X,Y).                (FC527)
+
+For a raw-signature consumer the head weights are unchanged and can
+also be given exactly. For head p in {5,7}, define c_p,u_p,t_p by
+(FC517) with p replacing q. Let rho_5=1 and rho_7=2 be its star root.
+Then the surviving first-row mass is
+
+    w_(p,r,i)
+      = u_p*1_(i != p-1) - t_p*1_(i=p-2)
+        -1_(r=rho_p)*(u_p*1_(i=0)+t_p*1_(i=1)).    (FC528)
+
+This is just FC148-151 with the finite pure and star holes separated.
+It remains valid on zero head rows. Those rows contribute zero to
+the global integral; they do not grant permission to redefine
+private digits differently in different cells.
+
+Before the arbitrary nongroup remainder is attached, the EXACT
+pure-conditioned probability of avoiding the fixed pure/star/group
+skeleton is consequently
+
+    A_actual = sum_(r=1,2) gamma_r sum_(i5,i7)
+       w_(5,r,i5)*w_(7,r,i7)*product_(q in Q) H_(q,r,i5,i7),
+    gamma_1=gamma_2=1/2.                            (FC529)
+
+This product uses the independence of CRT private coordinates under
+the original product pure-conditioned law AFTER the common head/root
+cell is fixed. It is not an independence assertion about separately
+optimized marginal summaries. The arbitrary remainder has not yet
+been deleted in (FC529); its fees or actual intersections remain a
+separate obligation.
+
+### 5. Exactly 372 named first-prefix types
+
+Put R_q={0,...,q-1} minus {0,1,6}. A type specifies, for each of the
+four named roles, either its fixed special value 0,1,6 or membership
+in an ordinary block. Ordinary roles are partitioned into blocks
+according to equality of their digits; different ordinary blocks
+have distinct digits in R_q. The actual ordinary digit names are
+not retained.
+
+If exactly k named roles use ordinary digits, there are
+
+    binomial(4,k) * 3^(4-k) * Bell(k)
+
+types. For k=0,1,2,3,4, the Bell numbers are 1,1,2,5,15, respectively.
+Hence the total is exactly
+
+    81+108+108+60+15 = 372.                         (FC530)
+
+Every type is realized for every q >= 11 because |R_q|=q-3 >= 8
+supplies all of the at-most-four distinct ordinary blocks. A type
+with l ordinary blocks has exactly the falling-factorial number
+(q-3)_l of literal assignments. Summing over types gives q^4, as
+required for all four arbitrary shallow digits.
+
+This is also an exact orbit description under permutations of the
+ordinary FIRST digit, fixing 0,1,6 and leaving all higher digits
+unchanged. Such a finite coordinate bijection preserves Haar measure,
+the pure/star prefixes and every fixed higher word, whose first digit
+is 6. It transports each assigned shallow role to the one with its
+renamed ordinary first digit. Thus all literal assignments of one
+type have identical values of every U_r(A_roles), and hence the
+same complete raw tuple in (FC526).
+
+The converse needed here is realizability, not injectivity of the
+raw-signature map: choose different ordinary digits for the ordinary
+blocks and obtain one globally fixed realization of the type. Some
+different types can produce the same raw tuple because head/root
+gating hides distinctions; (FC530) is NOT a minimal-state theorem.
+Nor does the first-digit permutation assert preservation of every
+possible arithmetic test outside this fixed cylinder interface.
+
+For one fixed head/root table and N, define Psi_(q,N) by (FC521) and
+(FC526). The exact reachable private raw-image set is
+
+    {Psi_(q,N)(T) : T is one of the 372 types}.      (FC531)
+
+Across the nine private primes, every combination of these types
+is realizable by a single finite family: fix all four digits at
+each q, then use CRT once for each distinct numerical original.
+No chosen phase depends on a query, cell, depth truncation or fee
+branch. Thus there are 372^9 named type combinations, with the
+global raw image equal to the image of their product under the
+fixed head/root/N map. Literal choices are product_(q in Q) q^4.
+
+The set of numerical signatures over ALL N is not asserted finite:
+N changes c,u,t,w. What is finite and uniform is the type description
+and the exact parameterized response formula. Choosing the digits
+once preserves the original nested finite-depth construction.
+
+### 6. What this resolves after the raw-box obstruction
+
+The FC512 raw-box counterexample fixes limiting head/star laws but
+sets all group projections except one to zero. It does not belong
+to (FC531): whenever an active role exists at a private coordinate,
+(FC524) retains its positive higher-tail mass t at N >= 2, and also
+at the limit. Its zero cells therefore erase required actual events.
+Even satisfying those tail floors alone is not enough: (FC521) and
+(FC526) couple all root/head cells through one four-role type.
+
+Every actual type lies in the canonical coordinatewise lower box
+used in FC505–FC515, since
+
+    |A5|*t <= X <= |A5|*b,
+    |A7|*t <= Y <= |A7|*b.                          (FC532)
+
+Also g-X-Y >= 1-5*b >= 4/9 for q >= 11, so the positive-part lower
+factor never changes branch in this actual domain or its canonical
+box. None of these inequalities establishes monotonicity of the
+native score A(P)-Fee(K), whose monotonicity FC512 refutes on the larger
+box. The exact common-source phase image is the missing restriction.
+
+This gives a finite-type input for the FC505–FC509 net-gain/slack identities or
+its separate ordering-cell concavity argument. A proof over a convex
+relaxation must still contain all images (FC531) and preserve the
+needed common root/head relations. A counterexample in a larger
+relaxation is not automatically an actual phase counterexample.
+
+The formulas also supply actual intersections and the exact group
+survivor (FC529), permitting a comparison that retains H instead
+of discarding Z. No universal positive fee margin on these 372^9
+combinations is established here, and no independent per-q minima
+or per-support maxima are declared simultaneously attainable.
+The future proof must use one consistent type assignment in every
+appearance of its cells before any valid supremum or uniform bound.
+
+Because the type list is finite and every c,u,t,w converges under
+the fixed nested words, the convergence of these raw signatures is
+uniform over the finite type list. Conditional on a strictly positive
+minimum of the continuous complete-depth score at ALL limiting
+type combinations, one common sufficiently large finite N would
+inherit positivity. That minimum has not been computed or proved;
+this conditional reduction neither supplies it nor weakens the
+arbitrary-shallow-phase target.
+
+Sources: literal FC147-FC152 private/head words and finite
+normalizations; FC137 raw common-source meanings; prior125/126
+restriction and redundancy proofs;130 exact projection-gain and
+raw-box obstruction note. All deductions above retain the fixed
+higher words and head/root assignment. Arbitrary higher phases,
+extra numerical labels and unrestricted Erdős #7 remain outside
+this result.
