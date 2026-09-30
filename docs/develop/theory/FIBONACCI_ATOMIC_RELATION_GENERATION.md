@@ -27774,3 +27774,234 @@ $C\le V^{1-\eta}$ 范围仍不能直接处理这些核心。因此式（221.30�
 也未从实际 FIB 族的充分矩证书推出任意自然数的完整 Robin 判据。
 
 ## 追加锚（本行以下为增补区）
+
+## 222. 增长 FIB 模数上的大量缓衰减字符
+
+沿用实际整数族 $V=F_r$、$N_g=1+Vg$、
+$I_r=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z$。
+以下令 $r\to\infty$ 经过素数，并记
+
+$$
+A=\min_{g\in I_r}N_g,\qquad y=\log A,\qquad\ell=\log y,
+\qquad s=y\ell,\qquad R=y/\ell^2.
+$$
+
+继续使用 §210、§216 的实际增量概率
+
+$$
+\mu_s(d)=\frac{b_s(d)}{dU(s)},\qquad
+b_s(p^a)=Z(p^a)^s-Z(p^{a-1})^s\quad(a\ge1),\quad b_s(1)=1.
+$$
+
+本节检验的是一项具体的谱估计：能否使这份完整权重在每个非主字符上的
+傅里叶系数都不超过 $e^{-cR}$，其中 $c>0$ 固定。
+以下结果排除这个统一估计，但不判定指定余数类的实际命中质量。
+
+### 222.1 单位条件、局部指数与绝对收敛
+
+定义
+
+$$
+U_p(s)=\sum_{a\ge0}\frac{b_s(p^a)}{p^a},\qquad
+\pi_p(a)=\frac{b_s(p^a)}{p^aU_p(s)},\qquad q_p=1-\pi_p(0).
+$$
+
+在 $\mu_s$ 下，各素数的赋值服从这些局部概率。取单位条件的质量
+
+$$
+c_V=\mu_s\{d:(d,V)=1\}=\prod_{p\mid V}U_p(s)^{-1}>0.
+$$
+
+令 $G=(\mathbb Z/V\mathbb Z)^\times$，把条件概率推到该有限群：
+
+$$
+\nu_s(a)=\frac1{c_V}\sum_{d\equiv a\pmod V}\mu_s(d),\qquad a\in G.
+$$
+
+对模 $V$ 的 Dirichlet 字符 $\chi$，在非单位上延拓为零，约定
+
+$$
+\widehat\nu_s(\chi)=\sum_{a\in G}\nu_s(a)\chi(a),\qquad
+\widehat\mu_s(\chi)=\sum_{d\ge1}\mu_s(d)\chi(d)
+=c_V\widehat\nu_s(\chi).
+\tag{222.1}
+$$
+
+单位条件只把 $p\mid V$ 处的赋值固定为零，其余局部分布仍为 $\pi_p$。
+
+§216 的局部界给 $\pi_p(a)\le2e^2s^2p^{-2a}$。
+令 $Q_s=2e^2s^2$、$k=\lceil\log Q_s/(2\log p)\rceil$，则
+
+$$
+\begin{aligned}
+\mathbb E_{\pi_p}a^2
+&\le k^2+\sum_{j\ge1}(k+j)^2Q_sp^{-2(k+j)}\\
+&\le k^2+\sum_{j\ge1}(k+j)^2 4^{-j}
+\ll k^2+1.
+\end{aligned}
+$$
+
+因此对素数 $p$ 和 $s\ge4$ 一致有
+
+$$
+\mathbb E_{\pi_p}a^2
+\ll(1+\log s/\log p)^2\ll\log^2s.
+\tag{222.2}
+$$
+
+再置 $P_p=(1-p^{-1})^{-s}$。局部非负增量望远镜求和为 $P_p-1$，故
+
+$$
+q_p\le U_p(s)-1
+\le\frac{P_p-1}{p}
+\le\frac{s}{p(p-1)}\exp\left(\frac{s}{p-1}\right).
+\tag{222.3}
+$$
+
+这里使用 $-\log(1-p^{-1})\le1/(p-1)$ 及 $e^u-1\le ue^u$。
+因为 $s/(2y-1)=\ell/2+O(\ell/y)$，式（222.3）中间的界给
+$\sup_{p>2y}q_p=O(y^{-1/2})$。把素数扩大为全部整数并求望远镜尾，另得
+
+$$
+\begin{aligned}
+\sum_{p>2y}(U_p(s)-1)
+&\le s\exp\left(\frac{s}{2y-1}\right)
+\sum_{m>2y}\frac1{m(m-1)}\\
+&=\frac{s}{\lfloor2y\rfloor}\exp\left(\frac{s}{2y-1}\right)
+=O(\sqrt y\,\ell).
+\end{aligned}
+\tag{222.4}
+$$
+
+先固定每个有限 $s$，这些界保证相关 Euler 乘积绝对收敛；随后才取指定渐近。
+
+### 222.2 由有限素分辨率产生的字符相位盒
+
+实际参数满足 $y=2\log V+O(1)=2r\log\phi+O(1)$，其中
+$\phi=(1+\sqrt5)/2$。由 $p\mid F_r\Rightarrow p\ge2r-1$ 和
+$4\log\phi<2$，充分大时所有 $p\le2y$ 都是模 $V$ 的单位。
+此外
+
+$$
+\log\varphi(V)=y/2+O(1),\qquad
+m:=\pi(2y)=(2+o(1))y/\ell.
+\tag{222.5}
+$$
+
+第一式使用 §217 的 $V/\varphi(V)=1+O(1/\ell)$，第二式是素数定理。
+
+取 $L=\lfloor y^{1/8}\rfloor$，把单位圆划分为 $L$ 个等长半开弧。
+$\varphi(V)$ 个字符在 $p\le2y$ 的 $m$ 个相位坐标上，至多落入 $L^m$ 个盒。
+在一个最大的盒中固定字符 $\chi_0$，将该盒内所有字符除以 $\chi_0$。
+得到互不相同的字符集合 $\mathcal C_r$，其中包含主字符，并且
+
+$$
+\chi(p)=e^{i\theta_{\chi,p}},\qquad
+|\theta_{\chi,p}|\le2\pi/L
+\quad(p\le2y,\ \chi\in\mathcal C_r).
+\tag{222.6}
+$$
+
+其基数至少为 $\varphi(V)/L^m$；由于 $\log L=\ell/8+o(1)$，
+
+$$
+\log|\mathcal C_r|\ge\log\varphi(V)-m\log L
+=y/4+o(y).
+\tag{222.7}
+$$
+
+这是有限相位分盒的抽屉原理，也是对偶群上的标准 Bohr 集容量机制；
+相关原始定位及距离约定见 [Bohr 字符文献条目](../../../Library/Fourier/fibcharacter2026bohrbarrier.md)。
+没有假设这些小素数生成整个单位群，
+也没有假设各个相位独立或均匀。$\mathcal C_r$ 不要求是子群，
+其中的字符也不要求本原。
+
+### 222.3 大量非主字符在临界尺度上衰减不足
+
+**定理 222.1（完整增量概率的大量缓衰减字符）。** 存在绝对常数 $C>0$，
+使所有充分大的素数指标 $r$ 及全部 $\chi\in\mathcal C_r$ 满足
+
+$$
+\boxed{
+|\widehat\nu_s(\chi)|\ge e^{-Cy^{3/4}\ell},\qquad
+|\widehat\mu_s(\chi)|\ge e^{-Cy^{3/4}\ell}.
+}
+\tag{222.8}
+$$
+
+其中至少 $\exp(y/4+o(y))-1$ 个字符是非主字符。
+因为 $y^{3/4}\ell=o(R)$，不存在固定 $c>0$，使任一变换在所有
+非主字符上最终一致满足模长上界 $e^{-cR}$。
+
+证明。乘法性与绝对收敛给
+
+$$
+\widehat\nu_s(\chi)=\prod_{p\nmid V}F_p(\chi),\qquad
+F_p(\chi)=\sum_{a\ge0}\pi_p(a)\chi(p)^a.
+\tag{222.9}
+$$
+
+对 $p\le2y$ 和 $\chi\in\mathcal C_r$，由 $\cos u\ge1-u^2/2$ 得
+
+$$
+\operatorname{Re}F_p(\chi)
+\ge1-\frac{\theta_{\chi,p}^2}{2}\mathbb E_{\pi_p}a^2
+\ge1-O(L^{-2}\log^2s).
+$$
+
+该损失一致趋零，最终至多为 $1/2$。用
+$-\log(1-u)\le2u$，可得
+
+$$
+-\log\prod_{p\le2y}|F_p(\chi)|
+\ll mL^{-2}\log^2s
+\ll y^{3/4}\ell.
+\tag{222.10}
+$$
+
+对 $p>2y$ 的单位素数，无论字符相位如何，将指数零项分离便有
+$|F_p(\chi)|\ge1-2q_p$。
+式（222.3）保证 $q_p\le1/4$ 最终一致成立，故
+$-\log|F_p(\chi)|\le4q_p$。
+由式（222.4），这些大素数的全部损失至多为 $O(\sqrt y\,\ell)$。
+结合式（222.10），得到 $\widehat\nu_s$ 的下界。
+
+最后所有 $p\mid V$ 均大于 $2y$，所以
+
+$$
+0\le-\log c_V=\sum_{p\mid V}\log U_p(s)
+\le\sum_{p>2y}(U_p(s)-1)=O(\sqrt y\,\ell).
+\tag{222.11}
+$$
+
+代入式（222.1）即可得到 $\widehat\mu_s$ 的下界，常数 $C$ 适当增大。
+非主字符个数由式（222.7）减去主字符得到。
+对每个固定 $c>0$，$y^{-1/4}\ell^3\to0$ 保证
+$Cy^{3/4}\ell<cR$ 最终成立，因而这些字符均违反所拟的统一上界。$\square$
+
+**推论 222.2（删除少量例外字符仍不足）。** 固定 $0<\varepsilon<1/4$。
+若例外字符集合 $\mathcal E_r$ 满足
+$|\mathcal E_r|\le\exp((1/4-\varepsilon)y)$，则充分大时仍有
+非主字符 $\chi\notin\mathcal E_r$ 满足式（222.8）。
+因此删除固定个数、或至多 $(\log V)^K$ 个字符（$K$ 固定），
+也不能恢复上述全体剩余字符的 $e^{-cR}$ 上界。
+
+证明。式（222.7）给 $|\mathcal C_r|>|\mathcal E_r|+1$ 最终成立。
+删去 $\mathcal E_r$ 与主字符后应用定理 222.1。
+又 $\log((\log V)^K)=O(\ell)=o(y)$，得到最后一项。$\square$
+
+### 222.4 与实际命中估计的准确关系
+
+定理 222.1 作用于完整的 $\mu_s$ 及其单位条件分布。
+它没有给余类 $1$、某个 $h^{-1}$ 或指定实际乘子区间的质量下界：
+傅里叶系数的模长不能决定它们在余类重构公式中的相位抵消。
+
+同样，加入大小截断、完整素数幂上限或 $d/X$ 权重后，不能继续把所得
+分布的傅里叶变换认作式（222.9）。这些限制需要另行保留，
+不能由完整 Euler 分布的结论直接搬运。
+
+本节排除的是一种逐字符一致衰减路线。仍可研究带移动区间的完整字符相关和，
+或直接估计实际命中与乘法亏损的联合关系；上述障碍没有证明或反驳
+该实际 FIB 子族的 Robin 不等式，也没有解决全部整数的 RH 判据。
+
+## 追加锚（本行以下为增补区）
