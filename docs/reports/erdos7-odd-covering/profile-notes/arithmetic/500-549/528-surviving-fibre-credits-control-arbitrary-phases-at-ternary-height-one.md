@@ -13240,3 +13240,434 @@ or unrestricted Erdős #7. The independent review verified the
 reference normalization, mass/caps, order of positive head enlargement,
 and preservation of complete query labels; no producer rerun enters
 this extension.
+
+## Arbitrary grouped private phases at all finite depths
+
+The preceding source and query proofs extend to arbitrary PRIVATE
+residues of every grouped numerical label 5*q^e, 7*q^e, 15*q^e and
+21*q^e at each present finite depth. Keep the pure/star words, one
+of the two head/root tables, and each named role's head first row
+and selected root FIXED ACROSS DEPTH. Keep the exact FC159 remainder
+inventory. This is a larger family than the arbitrary-shallow case:
+no grouped private nesting, disjointness or prescribed tail is needed.
+
+For each named role, a union bound under the fixed pure-conditioned
+private law gives
+
+    lambda_q,N(E_role)<=sum_(e=1..N)c_q,N*q^-e=b_q,N. (FC576)
+
+At a common actual root/head cell the same n5+n7 named roles are
+active at all depths. Therefore its actual private survivor still
+satisfies
+
+    H_q>=g_q-(n5+n7)*b_q,N=Pbar_q>=4/9.             (FC577)
+
+Use exactly the fixed density Pbar_q/H_q on this actual survivor.
+It depends only on the first head rows; private coordinates factor
+conditionally on those rows and the root. Unsupported private
+integrals are exactly Pbar_q, supported cylinder caps stay valid,
+and supported head cylinders retain min(cap,w). FC551–FC553 bound
+each actual remainder label on the same measure. The comparison
+score is the same CANONICAL finite-N sequence, independent of all
+these private phase choices; only its continuity is used.
+
+For original depth N<N84 complete the missing pure/star layers as
+prescribed. Fill absent grouped layers with any once-fixed private
+residues respecting their fixed head/root gates. No existing phase
+is changed and FC159 leaves these numerical slots unoccupied. The
+union bound FC576 applies to the completed finite role regardless
+of overlap between old and new cylinders. No convergence assumption
+on actual private phases is needed.
+
+The specific thinned source retains FC558 with the actual private
+allowed sets. At every root/head cell its unnormalized private Haar
+mass and caps remain
+
+    mass(kappa_q)=1-(1+epsilon+n5+n7)*A_q,N,
+    kappa_q(C mod q^e)<=q^-e.                       (FC578)
+
+All premises in FC565–FC574 are consequently unchanged, including
+positive enlargement of the FIXED head laws and complete numerical
+query labels. Thus this larger group-phase class has the same
+h84, Xi_can and Xi_star interfaces, and FC575 applies with its
+original continuation and analytic-tail restrictions. The ordinary
+source and query extension was independently checked; no new
+numerical run or Lean verification is claimed. Head pure/star
+phases, role head/root gates, old ternary heights and the numerical
+inventory remain restricted.
+
+## Arbitrary private pure, star and grouped phases via direct Haar thinning
+
+The private pure, star and grouped residues may all vary arbitrarily
+at every finite depth under the fixed head and numerical-label
+contract below. Direct Haar thinning gives one actual source of
+mass h84 and the same grouped query comparison. The geometric pure
+normalizers used for comparison are benchmarks, not the actual
+pure-carrier probabilities of this larger family. This is an
+ordinary mathematical proof, with no new Lean verification.
+
+### 1. Precise actual family and retained restrictions
+
+Keep one of the two fixed FC110/FC131 head-row and selected-root
+tables. Keep the pure ternary original0 mod3. Head5 and head7 retain
+their fixed FC148-FC149 pure/star words; the head star roots remain
+1 and2, respectively. Let
+
+    Q={11,13,17,19,23,29,31,37,41}, V={5,7} union Q.
+
+For each finite depth e<=N and private q, choose arbitrarily the
+private-coordinate residue for each of these numerical originals:
+
+    q^e, 3*q^e, 5*q^e, 7*q^e, 15*q^e, 21*q^e.
+
+The private star3*q^e always has ternary root2. The two free grouped
+roles retain their respective declared head first rows. Each of
+the two selected grouped roles retains its declared ternary root
+and head first row. These addresses are CONSTANT across depth for
+each named role. All private residues may otherwise vary with e,
+coincide, be nested or overlap between roles. They are fixed once
+per numerical original, on one common resolving CRT space.
+
+The complete finite skeleton through N has the same58N+1 distinct
+odd nonunit numerical moduli. Any additional old-only original
+belongs to the EXACT FC159 remainder inventory: ternary exponent
+0 or1, nonternary support size at least2, and a support {h,q} with
+one head and one private prime requires head exponent at least2.
+In particular this remainder excludes every extra pure, star or
+shallow grouped numerical label at ALL private depths. It may
+contain arbitrary larger finite exponents and arbitrary globally
+fixed phases in its admitted labels.
+
+The conclusion does not allow arbitrary head pure/star phases,
+depth-dependent group head/root addresses, arbitrary ternary
+heights in the old remainder or additional excluded old labels.
+
+### 2. A local lower mass from the actual union bound
+
+Work on one resolving finite period containing every skeleton and
+remainder exponent. Haar can equivalently be described by uniformly
+lifting to any larger such period; no infinite actual family is
+used. Fix retained ternary root r and actual head first rows i5,i7.
+Write epsilon=1_(r=2), n5,n7 for the numbers of active named grouped
+roles at those rows and root, and n=n5+n7<=4.
+
+At each private depth e there are exactly1+epsilon+n active
+private-coordinate cylinders in this conditional cell, each of
+Haar mass q^-e: one pure, an active star if epsilon=1, and one for
+each active group role. This count is valid precisely because its
+head/root gates stay fixed across depths.
+
+Let B_(q,r,N)(i5,i7) be the ACTUAL allowed private set after all
+those cylinders through N are removed. Set
+
+    A_(q,N)=sum_(e=1..N)q^-e,
+    s_(q,N)=1-A_(q,N),
+    kappabar_(q,r,N)=1-(1+epsilon+n)*A_(q,N).      (FC579)
+
+A union bound on these actual, possibly overlapping cylinders gives
+
+    Haar_q(B_q)>=kappabar_q
+       >=1-6/(q-1)>=2/5>0.                        (FC580)
+
+Overlap can only enlarge B_q relative to this lower bound. Neither
+disjointness nor independent phases is needed. Put
+
+    alpha_q=kappabar_q/Haar_q(B_q) in(0,1],
+    rho_q(dx_q)=alpha_q*1_(B_q)(x_q)*Haar_q(dx_q). (FC581)
+
+Then at each actual root/head cell
+
+    mass(rho_q)=kappabar_q,
+    rho_q<=Haar_q,
+    rho_q(any depth-e cylinder)<=q^-e.            (FC582)
+
+All query/remainder depths are covered by the last inequality,
+including depths exceeding N, after harmless uniform lifting.
+The ratio is fixed by the actual family and head cell before any
+later query. It is not chosen separately for different costs.
+
+### 3. One simultaneous product reference on the actual source
+
+For heads h=5,7, let beta_(h,r,N) be Haar restricted to the fixed
+head pure and active-star survivors through N. Define
+
+    R_N=sum_(r=1,2) Haar_3|[r]
+       tensor beta_(5,r,N) tensor beta_(7,r,N)
+       tensor_(q in Q) rho_(q,r,N)(i5,i7).         (FC583)
+
+Conditioned on the ACTUAL root and heads, these are a product of
+the actual allowed private-coordinate measures. The density of
+R_N relative to the common Haar law is the product of the root,
+head and actual B_q indicators and the alpha_q scalars. Every
+factor is in[0,1]; consequently
+
+    0<=R_N<=Haar,
+    support(R_N) subset actual skeleton survivor. (FC584)
+
+No independence of the survivor after arbitrary remainder deletions
+is asserted. Those deletions will restrict this ONE reference.
+
+### 4. The geometric normalizers are benchmarks, not unknown actual pure laws
+
+For every p in V define the fixed benchmark quantities
+
+    A_(p,N)=sum_(e=1..N)p^-e,
+    s_(p,N)=1-A_(p,N),
+    c_(p,N)=1/s_(p,N), b_(p,N)=c_(p,N)*A_(p,N),
+    a_N=product_(p in V)s_(p,N), Q_N=(2/3)*a_N.    (FC585)
+
+For heads these are their true fixed pure normalizers, since the
+head pure words are disjoint. For private coordinates they are
+ONLY numerical benchmarks. If all private pure phases are0, for
+example, the union of the q^e originals is just0 modq, of mass1/q;
+for N>=2 its true mass is strictly below A_(q,N). This concrete
+overlap shows why one must not call a_N the actual product-pure
+carrier probability of the new family.
+
+The present proof never does so. It uses the exact scalar identity
+
+    kappabar_q=s_(q,N)*Pbar_q,
+    Pbar_q=gbar_q-n*b_(q,N),
+    gbar_q=1-epsilon*b_(q,N).                     (FC586)
+
+Here Pbar,gbar are the canonical algebraic benchmark factors,
+not claims about the new family's normalized private probabilities.
+For head rows set
+
+    w_(h,r,N)(i)=beta_(h,r,N)([i])/s_(h,N).
+
+These ARE the true fixed finite head weights and match the old
+canonical raw-signature sequence. Therefore integrating (FC583)
+over the private coordinates and then head rows gives exactly
+
+    R_N(total)=Q_N*Abar_N,
+    Abar_N=(1/2)*sum_(r,i5,i7)
+              w5*w7*product_(q in Q)Pbar_q.       (FC587)
+
+The factor2/3 is the Haar mass of the two retained ternary roots;
+the remaining root average is1/2. No additional root normalization
+or private conditional probability enters this equality.
+
+### 5. Every actual remainder label has the same benchmark scaling
+
+Fix ONE actual remainder numerical original m, its single globally
+fixed phase, nonternary support D and exponent vector e_p. It is
+free if3 does not divide m and selected if v_3(m)=1. At a supported
+head h its cylinder determines one physical first row i_h. At an
+unsupported head the row is integrated with its actual weights.
+
+At every UNSUPPORTED private q, integrate (FC581) exactly and use
+
+    kappabar_q=s_q*Pbar_q<=s_q*Kbar_q,
+    Kbar_q=gbar_q-max(n5,n7)*b_(q,N).              (FC588)
+
+All factors are nonnegative. At every SUPPORTED private q, use its
+absolute cylinder cap, followed by the identity
+
+    rho_q(C_(q,e_q))<=q^-e_q
+       =s_q*c_(q,N)*q^-e_q
+       <=s_q*c_q*q^-e_q,
+    c_q=(q-1)/(q-2).                              (FC589)
+
+Thus s_q factors out at EVERY private coordinate, regardless of
+whether it is supported. The use of a benchmark c_(q,N) is purely
+algebraic; it is not the actual private pure-conditioned density.
+
+At an unsupported head h the row law is s_h*w_(h,r,N). At a
+supported head cylinder of depth e_h and first row i_h, the fixed
+actual head restriction gives
+
+    beta_(h,r,N)(C_(h,e_h))
+       <=min(h^-e_h,beta_(h,r,N)([i_h]))
+       =s_h*min(c_(h,N)*h^-e_h,w_(h,r,N)(i_h))
+       <=s_h*min(c_h*h^-e_h,w_(h,r,N)(i_h)).       (FC590)
+
+Because every group gate is a first-row condition, all private
+benchmark factors are constant as the higher digits within that
+supported head row are integrated. This is the exact premise
+allowing the supported-head min-cap factor in (FC590).
+
+Consequently ALL p in V contribute the same product a_N. On a
+retained root the Haar factor is1/3. Rewriting a_N/3=Q_N/2 yields
+the old gamma=1/2 head/root candidate with the global multiplier
+Q_N. A free original uses ONE supported-head address across both
+roots, so its bound takes max_a sum_r gamma_r*Psi_r(a). A selected
+original fixes ONE root/address, so its bound is at most
+max_(r,a) gamma_r*Psi_r(a). A selected phase on root0 has zero mass.
+
+Here Psi has exactly the old supported-head min-caps, the integrals
+over unsupported heads, and unsupported-private products Kbar;
+supported private factors are c_q*q^-e_q. It follows that
+
+    R_N(E_m) <= Q_N * old_canonical_label_bound_m. (FC591)
+
+The bound is valid for each actual original with its actual common
+phase. Taking the respective maxima does not claim that any two
+originals attain their maxima together. No mass from separately
+conditioned private worlds is assembled into R_N.
+
+### 6. Whole remainder fee, with all labels and all depths accounted for
+
+Apply the union bound to any finite admitted remainder M. Enlarge
+the resulting nonnegative sum to the complete FC159 label inventory.
+There are2036 nonternary supports; selected and free copies are
+charged according to their actual different numerical moduli.
+
+For a support {h,q}, the head exponent starts at2, because h*q^e
+and3*h*q^e are already the excluded grouped numerical forms at
+EVERY e. Other supported head exponents start at1. Every supported
+private exponent starts at1. Summing private cap powers gives the
+same c_q/(q-1)=1/(q-2) coefficient as before. Head maxima remain
+inside their head-depth summands; no interchange of a maximum
+with an unjustified infinite sum is used.
+
+Thus (FC591) yields
+
+    R_N(union_(m in M)E_m) <= Q_N*Fee_can,N,
+
+    R_N(U_remainder)
+       >=Q_N*(Abar_N-Fee_can,N)
+       =Q_N*J_can,N.                              (FC592)
+
+The score on the right is exactly the existing CANONICAL raw
+min-cap score at its finite normalized benchmark signature, with
+the fixed limiting pure caps. Actual deletion can be smaller;
+Fee_can,N is not claimed equal to it.
+
+The normalized benchmark sequence is the old canonical one for
+the selected head/root table: head weights w_N, private gbar_N,
+and Xbar=n5*b_N,Ybar=n7*b_N. All of these are independent of the
+new private phases. Its complete-depth continuity and strict
+limiting margin are already those in FC487–FC490. Hence the same
+common finite N84 gives
+
+    J_can,N >= mu84=21/250, N>=N84,
+
+for BOTH tables. This is reuse of the canonical mathematical
+benchmark, not an assertion that the arbitrary-phase source has
+those normalized raw observations.
+
+Since a_N>=product_(p in V)(p-2)/(p-1)=1/C_V,
+
+    C_V=1048576/403767,
+    s=R_N(U_remainder)
+      >=(2/3)*a_N*mu84
+      >=(2/3)*mu84/C_V
+      =h84=2826369/131072000.                     (FC593)
+
+Define, once for the complete actual remainder,
+
+    eta=(h84/s)*R_N restricted to U_remainder.     (FC594)
+
+Then eta has exact mass h84, is supported on the actual full
+survivor, and eta<=R_N<=Haar because h84/s<=1. Its existence is
+uniform over all private phases, all finite admitted remainder
+heights and all those globally fixed remainder phases. No private
+pure-conditioned law needs to be recovered or normalized.
+
+### 7. Finite completion without overwriting any actual phase
+
+For an original finite complete skeleton through N>=1, choose one
+finite N' >= max(N,2,N84). Add the missing prescribed head pure/star
+layers, using their original fixed words. At private primes extend
+each of the six named original families through N' with any phases
+fixed once and obeying the same head/root gates. If a full phase
+sequence has already been declared, use those declared next phases.
+The proof above is uniform in all such choices.
+
+Every added numerical label was absent: the FC159 remainder
+excludes these pure/star/group forms at every depth. The distinct
+prime supports and exponents separate all named families. No old
+phase is changed, and adjoining actual deleted cylinders only
+shrinks the survivor even if the new cylinders overlap old ones.
+
+More generally, if the starting finite roster omits some skeleton
+layers, first choose N' beyond its finitely many existing skeleton
+depths and fill only absent allowed labels through N', preserving
+every existing private phase. This also requires all existing
+head pure/star phases and grouped head/root gates to match the
+declared scheme, and every other old label to belong to FC159.
+An occupied incompatible label cannot be overwritten or reclassified
+as a missing slot. The pure ternary original0 mod3 stays fixed;
+if it is absent it may be added only when label3 is truly absent.
+
+The completed source (FC594) lies inside the original survivor.
+Thus the same Haar-source mass h84 and noncovering conclusion hold
+for every such finite original roster, without calculating N84.
+There is no claim that its unknown actual private pure-carrier
+normalization equals a_N or inherits21/250. The conclusion is the
+explicit Haar bound/source mass (FC593)-(FC594).
+
+New-prime originals used later cannot occupy any completion slot,
+because they have a prime outside V union{3}. Their separate
+continuation inventory still requires its own declared contract;
+this observation only establishes absence of numerical collision.
+
+### 8. The grouped all-query interface still holds directly
+
+This source has the actual product reference R_N in (FC583), with
+conditional private Haar masses kappabar and absolute caps q^-e.
+For N>=2 compare with the SAME numerical canonical depth-two
+coefficients as in FC565–FC574:
+
+    a_(q,r,2)=1-(1+epsilon)*(1/q+1/q^2),
+    z_(q,r,2)=a_(q,r,2)-1/q,
+    Acan=a_(q,r,2)-n/q.
+
+The exact excess over the real thinned mass is
+
+    Acan-kappabar_q
+      =(1+epsilon)*(A_(q,N)-A_(q,2))
+          +n*(A_(q,N)-1/q)>=0.                   (FC595)
+
+Both masses exceed1/q by (FC580) and the existing FC380 inequality.
+The weighted coordinate lemma FC331-FC332, followed by the legal
+zero-mass increase FC435, therefore supplies exactly the canonical
+zero-run weight z_q-n/q and unchanged positive-run weights.
+
+There is an important change of interpretation from the old literal
+hole proof: a_(q,r,2) and z_(q,r,2) here are COMPARISON COEFFICIENTS.
+The actual arbitrary-phase source need not be supported in the old
+fixed private depth-two pure/star mask, and no domination by that
+old private mask is asserted. Only its numeric upper mass and the
+absolute cylinder caps are needed by this coordinate lemma.
+
+Conditional private product structure is genuine for R_N. After
+private elimination, enlarge the remaining head beta_(h,r,N) to
+the fixed beta_(h,r,2), which IS valid because the head pure/star
+words remain fixed and nested. The old canonical FC382 conditions
+then apply on their original head-row tables and retain positive
+intermediate measures, exactly as in FC565–FC574. All query labels and
+ternary indicators stay unchanged in the induction.
+
+Consequently (FC594) has the same canonical grouped all-query
+upper profile for its chosen table, and hence the larger uniform
+atlas profile by the existing positive-measure ordering. The mass
+is exactly h84. These are exactly the source/profile/mass premises used by
+FC575, so that statement applies with its unchanged continuation
+inventory, middle-prime exclusion and analytic-tail premise.
+This is reuse of the saved arithmetic, not a new numerical run.
+
+### 9. Settled scope and actual remaining boundaries
+
+All private-coordinate residues of pure, star and four grouped
+families may vary arbitrarily at every finite depth. Their overlaps
+do not invalidate the lower mass or any cap used above. The proof
+uses a single positive Haar submeasure with conditional masses
+fixed by thinning; every remainder-label fee and every later query
+uses that same source.
+
+The surviving restrictions are substantial: the two fixed head
+tables, fixed head pure/star words, fixed root/head gates for each
+private role across depth, fixed retained ternary roots, the finite
+prime support and the exact FC159 old-remainder numerical inventory.
+If any of these is changed, the canonical score, head positivity
+conditions or per-depth label counts need a new proof. This result
+does not settle arbitrary head phases, variable role gates, extra
+old labels, the middle-prime gap or unrestricted Erdős #7.
+
+Two distinctions are essential to this direct-Haar proof: a_N is not called the actual private pure-carrier mass,
+and the arbitrary private source is not assumed supported on the
+old literal depth-two masks. The total/fee scaling and grouped all-query comparison use only
+the conditional mass/caps and the fixed true head measures.
+No proof of unrestricted Erdős #7 follows from these restrictions.
