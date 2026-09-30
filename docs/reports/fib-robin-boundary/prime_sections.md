@@ -64,7 +64,7 @@ The actual-source checks use seeds `(16,29)`, `(1,4)` and `(1,5)`, indices
 actual prime incidences among 377,637 divisibility checks, including 405
 incidences at which the actual trace-polynomial root has zero derivative.
 For example, seed `(16,29)`, index 107 and prime 13 give trace root 10,
-`D_105(10) = 2` and `D_105'(10) = 0` modulo 13. The untaken-trace orbit and
+`D_105(10) = 2` and `D_105'(10) = 0` modulo 13. The quadratic-algebra orbit and
 Frobenius relations still hold. Thus the diagnostic includes the repeated-root
 cases that a polynomial-discriminant exclusion would discard.
 
