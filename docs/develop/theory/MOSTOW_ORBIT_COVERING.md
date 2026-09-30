@@ -104,3 +104,16 @@ isometry group of (U_E,d_H), and (T_u(p)=p) for one point (p) if and only if
 hence the formula in Definition 3.1. Direct substitution gives
 (T_0=\operatorname{id}) and (T_{u+v}=T_u\circ T_v). If (T_u(x,t)=(x,t)),
 then (x+u=x), so (u=0); the converse follows from (T_0=\operatorname{id}).
+
+## 4. Positive dilations
+
+**Theorem 4.1 (positive dilation isometry).** For every positive real (a),
+the map (D_a(x,t)=(ax,at)) preserves the upper half-space distance of
+Definition 3.1 and is an isometric bijection with inverse (D_{a^{-1}}).
+
+**Proof.** Positivity gives (at>0). Euclidean product distances satisfy
+(d_2(D_a p,D_a q)=a d_2(p,q)), while the geometric mean of the heights
+satisfies (\sqrt{h(D_a p)h(D_a q)}=a\sqrt{h(p)h(q)}). The two factors cancel
+inside the inverse hyperbolic sine defining (d_H), proving distance
+preservation. Since (a^{-1}>0), both composites of (D_a) and (D_{a^{-1}})
+are the identity on coordinates.
