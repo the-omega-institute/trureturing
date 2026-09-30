@@ -1,0 +1,5 @@
+source_id = "erdos-699-shared-exponent-cap"
+path = "docs/develop/theory/ERDOS_699_SHARED_EXPONENT_CAP.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
