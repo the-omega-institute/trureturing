@@ -3,9 +3,8 @@
    mirror-B: D5/B/S3/FluidDynamics/Fourier/PeriodicGradientInterpolation
    mirror-E: none(waiver:universal-analytic-estimate)
    anchors: []
-   utility: periodic physical-amplitude control of derivative fourth moments
-   digest: Periodic integration by parts bounds a derivative fourth moment
-     by physical amplitude and second-derivative energy. -/
+   utility: none
+   digest: Periodic integration by parts bounds a derivative fourth moment by physical amplitude and second-derivative energy. -/
 
 import Mathlib.Analysis.Calculus.Deriv.Pow
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
