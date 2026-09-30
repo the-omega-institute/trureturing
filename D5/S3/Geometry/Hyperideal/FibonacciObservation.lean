@@ -22,7 +22,7 @@ def fibonacciStep (z : ℤ × ℤ) : ℤ × ℤ := (z.2, z.1 + z.2)
 /-- The discriminant operator 2θ - 1 in the basis (1, θ). -/
 def discriminant (z : ℤ × ℤ) : ℤ × ℤ := (-z.1 + 2 * z.2, 2 * z.1 + z.2)
 
-/-- The cyclic CFMP return observation C = [[2,-1],[1,2]]. -/
+/-- The cyclic CFMP return observation on integer pairs. -/
 def observe (z : ℤ × ℤ) : ℤ × ℤ := (2 * z.1 - z.2, z.1 + 2 * z.2)
 
 /-- Addition in the return-parameter lattice. -/
@@ -116,8 +116,8 @@ theorem kernel_phase_characterization (k : ℕ) (hk : 0 < k) (x y : ℤ) :
     · simp [modEq, observe]
       refine ⟨-(t + 2 * s), by ring⟩
 
-/-- Image characterization. An observed residue pair modulo 5k is realizable
-exactly when its linear obstruction 2r+s vanishes modulo five. -/
+/-- Image characterization: every realizable residue pair satisfies the
+modulo-five linear obstruction, and conversely. -/
 theorem image_condition (k : ℕ) (hk : 0 < k) (r s : ℤ) :
     (∃ x y : ℤ,
       modEq (5 * k) (observe (x, y)).1 r ∧
