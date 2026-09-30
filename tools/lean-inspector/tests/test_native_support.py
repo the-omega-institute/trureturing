@@ -113,7 +113,12 @@ defaultFacets = ["static"]
         # Even root-selected tests need the mandatory, valid empty Reg package.
         self.copy('Reg/lakefile.toml')
         reg = json.loads((ROOT / 'Reg/lake-manifest.json').read_text())
-        reg['packages'] = [p for p in reg['packages'] if p['type'] == 'path'] + [dict(git, inherited=True)]
+        # The fixture root requires the Impl package, so it reaches Reg through
+        # `trureturing` as an inherited path entry (the real root requires none).
+        reg['packages'] = [p for p in reg['packages'] if p['type'] == 'path'] + [
+            dict(type='path', scope='', name='leanInspector', manifestFile='lake-manifest.json',
+                 inherited=True, dir='../tools/lean-inspector', configFile='lakefile.lean'),
+            dict(git, inherited=True)]
         self.write('Reg/lake-manifest.json', json.dumps(reg))
         self.copy('tools/lean-inspector-reg/lakefile.toml')
         host = json.loads((ROOT / 'tools/lean-inspector-reg/lake-manifest.json').read_text())
