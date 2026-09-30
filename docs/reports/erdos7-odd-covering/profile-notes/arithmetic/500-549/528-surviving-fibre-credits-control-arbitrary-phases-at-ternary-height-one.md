@@ -19882,3 +19882,171 @@ step for the root envelope, bound complete top-label increments and
 make the finite input to a same-law tail certificate explicit. The
 unrestricted objective still requires a valid positive head margin
 under the original universal quantifiers, or a different contradiction.
+
+## A fixed-query boundary preserves the entire joint selector score
+
+Fix the actual core, its complete raw law mu_<, its actual survivor
+set S_<, and one query box e from FC835. Every core-only original,
+including deeper pure and mixed labels, remains among the constraints
+defining S_<. Let P_e be a finite residue partition resolving the full
+core/kernel period and
+the query box. It must not truncate any forbidden original. Write
+mu_i=mu_<(i)>=0 for its cells. The set S_< is a union of these cells.
+
+Let J_e be the finite nonempty set of ALL complete layouts in Q_e.
+It includes a choice for every divisor, including1. For j in J_e put
+c_ji=[sum_(d|Q_e)1_(x=b_(j,d) mod d)]^2 on cell i. All these functions
+are constant on P_e. The same mu_< is used for every layout.
+
+Any deeper finite selector0<=h<=1_(S_<), interpreted on the coherent
+extension of this law, can be replaced by
+
+    hbar_i=(integral_i h dmu_<)/mu_i if mu_i>0,
+    hbar_i=0 if mu_i=0.
+    integral h dmu_<=sum_i mu_i hbar_i,
+    integral h c_j dmu_<=sum_i mu_i hbar_i c_ji
+                   for every j in J_e.              (FC837)
+
+Indeed averaging a number in[0,1] stays in[0,1]; it is zero on cells
+outside S_<. Multiplying by a constant c_ji and summing cells proves
+both identities. Zero-mass cells contribute nothing before or after
+averaging. Thus the finite partition preserves the full vector of
+fixed-box responses, not just its largest entry. FC835's remainder
+epsilon_e is uniform in0<=h<=1_(S_<), so that remainder is unchanged.
+
+This averaging uses the declared fractional-selector domain. It need
+not preserve deterministic0/1 selection, individual deeper tests,
+C_infinity, or the cost of obtaining the selector. It does not prove
+that the partition supports the source update caused by adding a new
+forbidden class. It is sufficient for this fixed-query score only.
+
+## One common source selector has a finite primal and dual certificate
+
+Keep B,ell within FC836's hypotheses and set tau=tau_7(B,ell).
+A certified nonnegative upper bound for that tail factor can also
+be used. For the finite fractional selector box put
+
+    H_e={h:0<=h_i<=1_(S_<)(i)},
+    L(h)=sum_i mu_i h_i,
+    C_e(h mu_<)=max_(j in J_e)sum_i mu_i h_i c_ji,
+    P_e^*=max_(h in H_e)min_(j in J_e)
+                    sum_i mu_i h_i(1-tau c_ji)
+         =max_(h in H_e)[L(h)-tau C_e(h mu_<)].       (FC838)
+
+The equality uses tau>=0. Both mass and every load are evaluated on
+ONE selected actual law h mu_<. By FC837, allowing deeper finite
+fractional selectors cannot improve this fixed-box optimum.
+
+The same finite minimax mechanism as FC174 and
+[Report16 KR3](../../001-064/16-a-common-dual-test-law-for-redistributing-charged-bad-mass.md)
+gives the exact dual form
+
+    P_e^*=min_(w_j>=0,sum_j w_j=1)
+          sum_(i in S_<)mu_i[1-tau sum_j w_j c_ji]_+, (FC839)
+
+where[z]_+=max(z,0). For fixed h, its least pure-layout score is
+the minimum over mixtures w of those scores. The resulting function
+is bilinear on the nonempty compact convex selector box and layout
+simplex. Finite minimax exchanges maximum and minimum. For fixed w,
+each selector coordinate maximizes its linear coefficient over[0,1],
+giving its positive part. Both extrema are attained. This is an
+application of the existing finite minimax interface, not a new
+generic duality theorem or Lean declaration.
+
+The mixture w is common to EVERY source cell; choosing a different
+mixture for each i changes the problem. It also need not represent
+one actual assignment of original phases. It is an adversary for
+the complete-query bound, not a proposed covering family.
+
+The success condition is
+
+    P_e^*>tau epsilon_e.                             (FC840)
+
+An attaining h then obeys L(h)>tau[C_e(h mu_<)+epsilon_e]. FC835 and
+the existing normalized continuation FC836 give an actual survivor
+of the complete fixed family. This implication retains B>=286,
+integer ell>=4 with3^ell<=B, remote primes>B, avoidance of ALL actual
+core-only originals, and the coherent lifting of the same head law.
+The finite identity FC839 alone does not supply these hypotheses.
+
+Two finite witness forms can be checked independently of an optimizer.
+
+- A lower witness supplies h in H_e and a number a such that
+  sum_i mu_i h_i(1-tau c_ji)>=a for EVERY j in J_e.
+  Then P_e^*>=a, and a>tau epsilon_e gives FC840. Checking only sampled
+  layouts is insufficient; a smaller list needs an exhaustive
+  reduction proof.
+- An upper witness supplies one probability mixture w and numbers
+  z_i>=0 with z_i>=1-tau sum_j w_j c_ji for every i in S_<.
+  Then P_e^*<=sum_(i in S_<)mu_i z_i. Only nonzero mixture entries
+  need be listed, but each must name a legal complete query layout.
+  An upper value at most tau epsilon_e excludes FC840 for this model.
+
+Equal lower and upper values certify exact optimality by weak duality.
+When all input data are rational these are rational finite linear
+programs and admit rational optimal witnesses. No such witness has
+been evaluated here. Thresholding one dual optimum's coefficients
+does not automatically produce a primal maximin solution: choices on
+zero coefficients may fail another layout. A proposed h must still
+satisfy every lower-witness inequality.
+
+If S_< is empty, or mu_< assigns it zero mass, both values are zero.
+No division by the retained mass is used. A dual obstruction covers
+all deeper finite selectors for the SAME fixed-query score by FC837.
+An upper bound merely at most tau epsilon_e need not exclude better
+enclosures at another e. If the stronger upper value is zero, then
+P_e^*=0 since h=0 is allowed, and every such selector satisfies
+L(h)-tau C_infinity(h mu_<)<=L(h)-tau C_e(h mu_<)<=0.
+This excludes the exact strict joint-load criterion on the SAME law,
+support and tail factor, even after deeper queries. Neither kind of
+obstruction proves actual coverage or excludes another lawful source,
+a sharper continuation or a different certificate. No zero upper
+witness or uniform positive margin for arbitrary cores is supplied.
+
+The sufficient target for this route is: for EVERY admissible complete
+original family, find SOME valid cutoff, common actual core selector
+and query box satisfying FC840. It does not require every cutoff or
+every source choice to succeed. The finite LP supplies a certificate
+format and an exact method-obstruction test, not this existence theorem
+or an efficiency bound over unbounded families.
+
+## Joint FIB constraints identify a useful research direction
+
+The FIB results at
+[b43bf8fc39](https://github.com/the-omega-institute/trureturing/blob/b43bf8fc39417b0a6a31d2cfff8e8c10668b8d43/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#L31370)
+give two distinct lessons. Sections230.7--230.8 exclude the specified
+actual truncated-source positive-norm certificate at every Holder
+exponent, including1 and moving exponents, uniformly in real frequency.
+The endpoint restriction stated for the earlier sections226--229
+does not remain a restriction of this stronger result. Its lower
+bound is still on an absolute-norm upper-bound expression, not the
+actual signed correlation or an arithmetic hit.
+
+Section231 compares two actual low-loss large-divisor hits. A common
+unit base cancels, and the resulting small cross products are less
+than their modulus; their congruence therefore becomes an integer
+equality. This confines all possible Robin non-strict violations in
+each specified sufficiently large FIB window to at most one integer.
+It does not exclude that integer, bound its entire joint divisor
+weight, provide an effective threshold, or transport the result to
+all integers. These are ordinary written proofs, not Lean evidence
+for either the FIB conclusions or Erdos #7 in this report.
+
+For the odd-covering problem the corresponding research target is
+to compare expensive actual label configurations on their common
+source, then bound the TOTAL remaining joint load. FC820--831 already
+retain matching, shared-prefix and cofactor incompatibilities. There
+is no supplied analogue of the FIB common base and small cross-product
+bound for arbitrary odd covering families, so no single-candidate
+theorem transfers merely by analogy.
+
+The new
+[FIB continuation interfaces](https://github.com/the-omega-institute/trureturing/blob/b43bf8fc39417b0a6a31d2cfff8e8c10668b8d43/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md#L244)
+also distinguish response sufficiency from closure under new gluing.
+FC837--840 make that distinction operational here: they preserve the
+specified fixed-query score on one actual law and attach a certified
+query remainder. They neither reconstruct omitted source relations
+nor update that law after adding originals. The remaining obligation
+is a positive head margin under the original universal quantifiers,
+or another valid contradiction. No numerical experiment or new Lean
+compilation is used in these deductions.
