@@ -1,0 +1,18 @@
+**theorem 2.3 (All-input output refinement and actual rejection prefix).** Let
+$D_s(w)$ be the total source decoder. Define $F_w$ to be its decoded universe
+and raw formula when decoding succeeds, and to be the zero-variable formula
+with one empty clause when decoding fails. Let $Q_w=q(F_w)$ in the successful
+case and let $Q_w$ be the fixed dummy query in the failed case. For every raw
+Boolean word $w$, the fixed pre-machine reaches the exact clean terminal
+configuration with output $Q_w$ within $b(|w|)$ transitions. The physical decoder
+returns exactly $F_w$ on $Q_w$, the output is the complete physical encoding of
+$F_w$, all its clauses have length at most three, and
+$|Q_w|\le b(|w|)P$.
+
+If $D_s(w)$ fails, its actual run has a prefix of at most $b(|w|)$ transitions
+reaching `badInput` with empty output and some concrete input, header, scratch
+and partial-query stack contents. Theorem 1.4 then applies to that configuration.
+A valid source encoding for the zero-variable formula with one empty clause
+also emits the same dummy query: acceptance and rejection are distinguished by
+the source decoder and the actual error prefix, rather than by output equality.
+
