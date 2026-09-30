@@ -103,6 +103,7 @@ jobs:
         tools/scripts/agent/openproblem/TARGET-GATES.md
         tools/scripts/ci-stage.sh
         tools/scripts/ci_output.py
+        tools/scripts/dotnet-test.sh
         tools/scripts/lean-report-pair.sh
         tools/scripts/lib/resource-observation-lib.sh
         tools/scripts/report/lean-report-input.sh

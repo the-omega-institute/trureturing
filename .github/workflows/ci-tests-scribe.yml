@@ -54,6 +54,8 @@ jobs:
         tools/StrataLint.Cli/Commands/FileMap/*
         tools/StrataLint.Engine/*
         tools/StrataLint.EngineeringScope/CommonStages.cs
+        tools/StrataLint.ExecutionEvidence/TestEvidenceCommands.cs
+        tools/StrataLint.ExecutionEvidence/TestResultEvidence.cs
         tools/StrataLint.Scribe/*
         tools/StrataLint.sln
         tools/TOWER.yaml
@@ -82,6 +84,7 @@ jobs:
         tools/scripts/agent/openproblem/TARGET-GATES.md
         tools/scripts/ci-stage.sh
         tools/scripts/ci_output.py
+        tools/scripts/dotnet-test.sh
         tools/scripts/report/lean-report.sh
         tools/scripts/workflow/ci-entry.sh
         tools/scripts/workflow/scribe-content-checks.sh

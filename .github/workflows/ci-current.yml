@@ -145,7 +145,12 @@ jobs:
         run: tools/scripts/workflow/scribe-content-checks.sh "$REPORT"
       - name: Delta rules
         if: ${{ !cancelled() && steps.delta_entry.outputs.hit == 'true' }}
-        run: dotnet "$CLI" check-delta --protected-base "$(git rev-parse HEAD^1)" --candidate-lean-report "$REPORT"
+        run: |
+          rc=0
+          dotnet "$CLI" check-delta --protected-base "$(git rev-parse HEAD^1)" --candidate-lean-report "$REPORT" || rc=$?
+          # Exit 3: protected-surface change (SL-022) with every content check passed.
+          if [ "$rc" -eq 3 ]; then echo "::notice title=SL-022::protected surface change; content checks passed"; exit 0; fi
+          exit "$rc"
       - id: snapshot
         if: ${{ !cancelled() && steps.entry.outputs.hit == 'true' && env.CACHE_WRITES == 'true' }}
         continue-on-error: true

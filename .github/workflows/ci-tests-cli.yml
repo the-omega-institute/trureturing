@@ -104,6 +104,7 @@ jobs:
         tools/scripts/*.txt
         tools/scripts/agent/gpu5040/*
         tools/scripts/agent/openproblem/TARGET-GATES.md
+        tools/scripts/dotnet-test.sh
         tools/scripts/local-harness-gate.sh
         tools/scripts/preflight.sh
         tools/scripts/workflow/ci-entry.sh

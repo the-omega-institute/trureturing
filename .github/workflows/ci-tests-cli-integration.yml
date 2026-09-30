@@ -93,6 +93,7 @@ jobs:
         tools/scripts/*.txt
         tools/scripts/agent/gpu5040/*
         tools/scripts/agent/openproblem/TARGET-GATES.md
+        tools/scripts/dotnet-test.sh
         tools/scripts/workflow/ci-entry.sh
         tools/scripts/workflow/ci.py
         tools/scripts/workflow/ci_plan.py

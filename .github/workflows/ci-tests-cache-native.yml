@@ -51,6 +51,8 @@ jobs:
         tools/ARCHITECTURE.md
         tools/Architecture/*
         tools/Makefile
+        tools/StrataLint.ExecutionEvidence/TestEvidenceCommands.cs
+        tools/StrataLint.ExecutionEvidence/TestResultEvidence.cs
         tools/StrataLint.sln
         tools/TOWER.yaml
         tools/TestSupport/StrataLint.ScriptProcessTestSupport/*
@@ -75,6 +77,7 @@ jobs:
         tools/scripts/*.txt
         tools/scripts/agent/gpu5040/*
         tools/scripts/agent/openproblem/TARGET-GATES.md
+        tools/scripts/dotnet-test.sh
         tools/scripts/workflow/ci-entry.sh
         tools/tests/Directory.Build.props
         tools/tests/StrataLint.Cache.Native.Tests/*

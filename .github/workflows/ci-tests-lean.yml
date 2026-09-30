@@ -52,6 +52,8 @@ jobs:
         tools/Architecture/*
         tools/Makefile
         tools/StrataLint.Engine/*
+        tools/StrataLint.ExecutionEvidence/TestEvidenceCommands.cs
+        tools/StrataLint.ExecutionEvidence/TestResultEvidence.cs
         tools/StrataLint.Lean/*
         tools/StrataLint.sln
         tools/TOWER.yaml
@@ -84,6 +86,7 @@ jobs:
         tools/scripts/*.txt
         tools/scripts/agent/gpu5040/*
         tools/scripts/agent/openproblem/TARGET-GATES.md
+        tools/scripts/dotnet-test.sh
         tools/scripts/lib/resource-observation-lib.sh
         tools/scripts/report/lean-report-input.sh
         tools/scripts/report/lean-report-selection.py
