@@ -15947,3 +15947,334 @@ old-control, continuation or parameter-search run.
 Independent saved-record verification checked2766 rational identities,
 including all row candidates, maxima, same-source input mappings,
 fee totals and negative margins. No producer or continuation was rerun.
+
+## Exact full-target private masses reduce the high shallow fee
+
+On the full-target direct-Haar source of FC576–FC595, unsupported
+private coordinates have an exact prescribed mass. Keeping that mass,
+instead of its larger K allowance, improves the fee for every added
+label 3^t*h*q^e with t>=2, h in {5,7}, q in Q and e>=1. The improvement
+also holds for the exact head-row target and common-transport extensions
+of FC604–FC618 and FC651–FC654. The two resulting limiting margins
+remain negative; this is a limitation of the sufficient estimate, not
+a covering construction. The argument and arithmetic below are ordinary
+mathematics, without a new Lean verification.
+
+### 1. Exact normalization on one pre-remainder source
+
+For p in V={5,7} union Q, retain the benchmarks
+
+    A_(p,N)=sum_(e=1..N)p^-e, s_(p,N)=1-A_(p,N),
+    c_(p,N)=1/s_(p,N), b_(p,N)=A_(p,N)/s_(p,N),
+    a_N=product_(p in V)s_(p,N), Q_N=(2/3)*a_N.     (FC669)
+
+At an actual root/head cell c=(r,i,j), put epsilon_r=1_(r=2),
+and let n5_q,n7_q be the complete named-role counts of its fixed table.
+Then
+
+    Pbar_q=1-(epsilon_r+n5_q+n7_q)*b_(q,N),
+    Kbar_q=1-(epsilon_r+max(n5_q,n7_q))*b_(q,N).    (FC670)
+
+The direct-Haar construction thins the actual private allowed set,
+with its actual pure/star/group overlaps, to a measure rho_q of mass
+
+    ell_q=1-(1+epsilon_r+n5_q+n7_q)*A_(q,N)
+         =s_(q,N)*Pbar_q=Pbar_q/c_(q,N).           (FC671)
+
+In particular c_(q,N)*ell_q=Pbar_q. Here c_(q,N) is a numerical
+benchmark, not the reciprocal of the actual arbitrary-phase pure
+survivor mass. With overlapping pure cylinders, their actual survivor
+need not have mass s_(q,N).
+The normalized Pbar_q and actual Haar mass ell_q must not be exchanged.
+The fixed-pure construction of FC547–FC565 reaches the same identity
+with an actual pure-conditioning interpretation, which is unnecessary
+for the direct-Haar proof.
+
+For every supported private cylinder, including depths beyond N,
+
+    rho_q(C_(q,e))<=q^-e
+          <=s_(q,N)*c_q,infinity*q^-e.            (FC672)
+
+Conditionally on the actual first root and head rows, the private
+measures form a product. The heads have exact row targets
+s_(h,N)*w_(h,r,N)(i), and their cylinder bound is
+
+    mass_h(C_(h,a))<=s_(h,N)*M_(h,r,N)(a,i),
+    M_(h,r,N)(a,i)=min(c_h,infinity*h^-a,w_(h,r,N)(i)). (FC673)
+
+For the capacity extension these are targets imposed by downward
+thinning inside Haar. A lawful common transport moves all named gates
+and every actual label together, using one map on both roots.
+
+### 2. The sharper per-label fee and its complete depth sum
+
+Fix one actual label m=3^t*h*q^e with t>=2, e>=1, and its single
+actual phase. It fixes a root r and a head row i_h. Root zero has no
+mass. For r in {1,2}, integrate the supported q cylinder by FC672,
+every other private coordinate by its exact mass FC671, the other
+head k by its row mass, and the supported head by FC673. All private
+factors depend only on the first head rows. The root factor satisfies
+a_N*3^-t=Q_N*3^(1-t)/2. Thus, with gamma_r=1/2,
+
+    R_N(E_m)<=Q_N*3^(1-t)*c_q,infinity*q^-e
+       *gamma_r*M_(h,r,N)(1,i_h)
+       *sum_(i_k)w_(k,r,N)(i_k)
+                         *product_(s in Q minus {q})Pbar_s(r,i,j). (FC674)
+
+There is one supported-head factor and one actual root/address per
+label. All bounds concern the same pre-remainder R_N; they do not
+require simultaneous attainment of the labelwise maxima.
+
+Canonical row masses satisfy w_(h,r,N)(i)<=c_h,infinity/h, including
+the exact row targets in the extensions. Therefore M(1,i)=w(i). Set
+
+    B^P_(5,q,N)=max_(r,i)[w_(5,r,N)(i)/2
+            *sum_j w_(7,r,N)(j)*product_(s!=q)Pbar_s(r,i,j)],
+    B^P_(7,q,N)=max_(r,j)[w_(7,r,N)(j)/2
+            *sum_i w_(5,r,N)(i)*product_(s!=q)Pbar_s(r,i,j)]. (FC675)
+
+The supported-coordinate full-depth sum is
+
+    b_q,infinity=sum_(e>=1)c_q,infinity*q^-e=1/(q-2),
+    G^P_N=sum_(q in Q)b_q,infinity*(B^P_(5,q,N)+B^P_(7,q,N)). (FC676)
+
+Finite b_(q,N) remains inside Pbar; b_q,infinity is used only for
+the full supported-cylinder allowance. The exponent factor is common
+to all addresses, so this depth sum does not exchange a varying
+maximum with an infinite sum. Since sum_(t>=2)3^(1-t)=1/2,
+
+    total added shallow allowance<=Q_N*G^P_N/2,
+    0<=G^P_N<=G^K_N.                               (FC677)
+
+The comparison follows candidate by candidate from 0<Pbar<=Kbar.
+There is no extra factor two for the retained roots.
+
+### 3. Combining bounds without changing the old inventory
+
+Keep the old F_N,S_N and J_N=Abar_N-F_N-S_N. The old nongroup
+cofactor inventory at all ternary heights costs at most
+Q_N*(F_N+(3/2)*S_N). Its head/private pairs have head exponent at
+least two. The newly admitted shallow labels have head exponent one
+and ternary exponent at least two, disjoint from that inventory and
+the height-zero/one skeleton. On any finite combination,
+
+    R_N(U_all)>=Q_N*[Abar_N-F_N-(3/2)*S_N-G^P_N/2]
+              =Q_N*[J_N-(S_N+G^P_N)/2].           (FC678)
+
+The old K fees are still valid on R_N by FC671 and Pbar<=Kbar.
+This proof uses a tighter bound on some labels, without combining
+different reference worlds or recomputing the other support fees.
+
+The scope does not include arbitrary compensated sources with
+L_q=min(H_q,Kbar_q). For instance, at q=11, root two, head-five row
+zero and head-seven row three, the named counts are n5=1,n7=2.
+With fixed pure/star background, let the selected-five private role
+coincide with the free-seven role at every depth, while the selected-
+seven role remains disjoint. Then
+
+    L_q=Kbar_q=gbar_q-2*b_(q,N)
+                  >Pbar_q=gbar_q-3*b_(q,N).       (FC679)
+
+Replacing L_q by Pbar_q there would reverse the required bound.
+The fee is computed before remainder deletion; later normalized
+survivor marginals need not retain the private target masses.
+
+Complete skeletons can be extended to greater N using the existing
+completion rules without overwriting any high label. Incomplete
+head rosters still require gap filling. Finite sums, products and
+maxima, together with the old complete-depth convergence, give
+
+    M^P_N=J_N-(S_N+G^P_N)/2 -> M^P=J-(S+G^P)/2.   (FC680)
+
+### 4. Exact limiting values and remaining gap
+
+| Fixed table | G^P | M^P | Gain over J-(S+G^K)/2 |
+|---|---|---|---|
+| FC110 |83894527277/1287764375625| -141151934419/297473570769375|10449940679/13221047589750|
+| FC131 |6513036307672/99157856923125| -282847520177/169984897582500|5661068912/6610523794875|
+
+Both gains are positive, with the exact identity
+
+    M^P-[J-(S+G^K)/2]=(G^K-G^P)/2.                (FC681)
+
+Both new margins remain negative (approximately -0.00047450243749
+and -0.00166395676439). By FC680 this sufficient allowance is negative
+at every sufficiently large finite depth for each table. The bounds
+need not be attained, so this establishes neither a covering nor a
+failure of stronger estimates. A further same-source correction, with
+other terms fixed, must exceed respectively
+
+    FC110:141151934419/297473570769375,
+    FC131:282847520177/169984897582500              (FC682)
+
+to cross the criterion. No new positive source mass or continuation
+follows from these two values alone. Pure ternary powers, singleton
+nonternary supports, unrestricted head incidences and unrestricted
+prime support remain outside the result.
+
+The consumer `frontier/cover-geometry/fibre-credit-partition/full_target_shallow_fee.py`
+has SHA256 0d226a23f608d9e40ac75c80bdbdfec9eecb091e572332040d7fa91674069736.
+The result `frontier/cover-geometry/fibre-credit-partition/full_target_shallow_fee.json`
+has SHA256 bad5b8c850742e0bb7277ea316bf5e96dc06f963317a28033cc6ed8e1ebb06bb.
+Its fixed two-table evaluation exited zero with 5076 exact guards;
+each table used 630 shared eight-factor cells, 216 row candidates
+and 18 pair maxima. It retained the old J,S and saved K candidates.
+Independent saved-result verification checked 3435 exact identities
+without rerunning the consumer or private-coordinate products.
+
+## Replacing deep head/private pair allowances makes the FC110 all-height extension positive
+
+The exact unsupported private masses in FC671 also tighten eighteen
+already paid deep-head support fees. Replacing those particular fees,
+while retaining FC676's shallow fee and every other old support,
+gives a positive limiting margin for the FC110 source. The FC131
+margin remains negative. This proves a restricted noncoverage
+extension for FC110, not a common two-table result or unrestricted
+Erdős #7. No new Lean verification is claimed.
+
+### 1. Identifying the old summands and their exact replacements
+
+For h in {5,7} and q in Q, the replaced family is
+
+    D_(h,q)={h^a*q^e : a>=2, e>=1}.                (FC683)
+
+These are eighteen of the old 2036 nonternary supports. Their free
+labels have ternary height zero; their selected labels now run over
+all positive heights, as in FC637–FC639. The other 2018 support fees
+remain unchanged. The additional shallow labels of FC674 have head
+exponent one and height at least two, disjoint from FC683.
+
+The old fee formulas FC121–FC128 and saved head_min score FC132
+contain exactly these summands: integrate the unsupported head and
+private coordinates into T, multiply the supported-head minimum cap,
+and multiply the supported-private cap sum b_q,infinity. A free label
+has one physical head address on both roots. The free fee takes the
+sum of the two root terms at that address before maximizing over
+addresses; the selected fee maximizes one root/address term.
+
+For Z=Kbar or Pbar define
+
+    T^Z_(5,q,r,N)(i)=sum_j w_(7,r,N)(j)*product_(s!=q)Z_s(r,i,j),
+    T^Z_(7,q,r,N)(j)=sum_i w_(5,r,N)(i)*product_(s!=q)Z_s(r,i,j),
+    V^Z_(h,q,r,N)(i)=gamma_r*T^Z_(h,q,r,N)(i) if w_(h,r,N)(i)>0,
+                     0 otherwise.                (FC684)
+
+Every live canonical row has w>=1/h, including the exact imposed
+targets in the capacity extension. For a>=2 the cap
+c_h,infinity*h^-a<=1/h, so FC673 is that cap on live rows and zero
+on dead rows. The a-dependence is consequently a common scalar,
+before the root sum and the maximum. It follows that
+
+    d_h=sum_(a>=2)c_h,infinity*h^-a=1/[h*(h-2)],
+    f^Z_(h,q,N)=b_q,infinity*d_h
+                       *max_i(V^Z_(h,q,1,N)(i)+V^Z_(h,q,2,N)(i)),
+    s^Z_(h,q,N)=b_q,infinity*d_h*max_(r,i)V^Z_(h,q,r,N)(i). (FC685)
+
+For Kbar these are precisely the identified old free and selected
+fees, with the selected formula also given in FC663. For Pbar they
+are valid stronger bounds on the same full-target source: the proof
+of FC674 applies inside any supported head cylinder, because private
+factors depend only on its first row. Finite Pbar,Kbar use b_(q,N);
+the supported complete private-depth sum uses b_q,infinity.
+
+Nonnegative Pbar<=Kbar gives f^P<=f^K and s^P<=s^K. No second row
+mass is multiplied into FC685 after saturation. Zero head rows remain
+zero even if their unweighted unsupported T is positive. Replacing
+the free maximum by the sum of separately maximized roots would
+change the old fee and invalidate its exact subtraction.
+
+### 2. Recovery from saved rows and the same-source lower bound
+
+The saved shallow candidates have the form C^Z=w*gamma*T^Z. Thus
+all required limiting deep coefficients are recovered by
+
+    V^Z=C^Z/w if w>0, and V^Z=0 if w=0.            (FC686)
+
+No zero division or new private product is needed. The saved K
+selected-pair term supplies a separate check of the recovered s^K.
+Free and selected maxima, and K and P maxima, are taken independently
+on their prescribed domains; their attaining addresses need not agree.
+
+Sum over the eighteen supports and write
+
+    DeltaF_N=sum_(h,q)(f^K_(h,q,N)-f^P_(h,q,N)),
+    DeltaS_N=sum_(h,q)(s^K_(h,q,N)-s^P_(h,q,N)).    (FC687)
+
+Both are nonnegative. Since the subtracted terms are actual summands
+of the old upper allowances, the new allowance is
+Q_N*[F_N-DeltaF_N+(3/2)*(S_N-DeltaS_N)+G^P_N/2]. Therefore
+
+    R_N(U_all)>=Q_N*Mdeep_N,
+    Mdeep_N=J_N-(S_N+G^P_N)/2+DeltaF_N+(3/2)*DeltaS_N
+           =M^P_N+DeltaF_N+(3/2)*DeltaS_N.         (FC688)
+
+Only the selected saving is multiplied by 3/2, the sum of ternary
+weights over positive heights. The free saving occurs once at height
+zero. All fees concern one R_N with fixed phases and targets; these
+are replacements of upper allowances for the same numerical labels,
+not subtractions of deletions in independently optimized worlds.
+
+The canonical live/zero row pattern is fixed, with live masses at
+least 1/h. Products, sums and finite maxima then give
+
+    Mdeep_N -> Mdeep=M^P+DeltaF+(3/2)*DeltaS.       (FC689)
+
+All previous completion conditions remain in force. Complete finite
+skeletons can be extended without overwriting any high label;
+incomplete arbitrary-head rosters still need gap filling.
+
+### 3. Exact values and the separate conclusions for the two tables
+
+| Table | DeltaF | DeltaS | DeltaF+(3/2)*DeltaS |
+|---|---|---|---|
+| FC110 |394242271/847503050625|28934859067/99157856923125|11937151241/13221047589750|
+| FC131 |159541807823/297473570769375|11094740663/33052618974375|618641613547/594947141538750|
+
+Together with FC680's old margins this gives
+
+    FC110:Mdeep=254867937007/594947141538750>0,
+    FC131:Mdeep=-49509960943/79326285538500<0.       (FC690)
+
+The values are approximately 0.000428387530946 and -0.000624130584294.
+For FC110, convergence and finite completion prove noncoverage after
+adjoining any finite set of the newly paid labels 3^t*h*q^e, t>=2,
+to the previous all-height nongroup inventory. The source contract is
+the FC110 named-gate table, arbitrary private pure/star/group phases
+under full-target thinning, and its proved exact head-row/common-
+transport extensions. This is a statement at sufficiently large
+completed finite depths, not an asserted explicit numerical threshold.
+
+The distinct FC131 gate incidence cannot be replaced by FC110 for a
+family that matches only FC131 (FC651–FC654). Its negative limit
+leaves a normalized gap 49509960943/79326285538500 if other terms
+are fixed. It does not prove an actual covering or simultaneous
+attainment of the fee maxima. The two-table positive-margin criterion
+is not met; no common positive reserve follows from these values.
+
+The raw query profiles retain their existing domination bounds for
+any resulting restricted/scaled FC110 source. A changed source mass
+requires its own Top initialization and continuation. None is supplied
+here, and the saved h84 or all-height continuation is not inherited.
+Arbitrary compensated L sources, pure ternary powers, singleton
+nonternary supports, unrestricted head incidences and unrestricted
+prime support remain outside this extension.
+
+### 4. Reproducible exact arithmetic
+
+The consumer `frontier/cover-geometry/fibre-credit-partition/deep_pair_fee_replacement.py`
+has SHA256 001b547998253f8560e2cdb76568a6c5cde34d1a2fc54592b758df86fcd281e2.
+Its result `frontier/cover-geometry/fibre-credit-partition/deep_pair_fee_replacement.json`
+has SHA256 4ae73a9a4e17120630602fbef88ffccdc74f34a33ad3f7ac878c633c656aaa04.
+The evaluation exited zero with 2840 exact guards. Each table used
+216 paired root/row records and 72 prescribed maxima; it formed no
+new private products and did not recompute the complete old fee.
+Inputs were the saved high-shallow and full-target-shallow results
+and the original head_mass_evaluation.json. The latter has SHA256
+4e824f35c5f921cdacee1cb462cf3387f5524978e859c65460e45cb3fcb5f8c4.
+The JSON retains all pair costs, maximizing addresses, zero-row
+decisions and exact old-to-new margin identities.
+
+Independent saved-record verification passed 5088 exact checks,
+including the physical-row root sums, all maxima and fee replacements,
+and the different signs for the two tables. It did not rerun the
+consumer, private products, full fees or continuation.

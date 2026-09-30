@@ -1,0 +1,4205 @@
+{
+  "scope": "new labels3^t*h*q^e with t>=2, e>=1, h in{5,7}, on each fixed full-target reference; old F/S and numerical inventory remain fixed",
+  "source_contract": "136 direct-Haar full targets, or 138/141 exact head-row targets; not arbitrary 137/139 compensated sources",
+  "evidence": "ordinary proved fee bridge plus exact fixed-table limiting arithmetic; no Lean claim",
+  "bridge_design_sha256": "c336c389a0bf453dd8d4573e065915cf23bc83ec6cd0db15ee8028a743ad8493",
+  "consumer_sha256": "0d226a23f608d9e40ac75c80bdbdfec9eecb091e572332040d7fa91674069736",
+  "table_inputs": {
+    "FC110": {
+      "file": "/Users/auric/trureturing-erdos7-odd-covering-0916/docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/first_layer_witness.json",
+      "sha256": "5540ef30fbf02147b4c4687e80e4e617b96cdd58f41a706b8a3f460793ce0a70",
+      "hash_role": "saved input identity, not mathematical premise"
+    },
+    "FC131": {
+      "file": "/Users/auric/trureturing-erdos7-odd-covering-0916/docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/bounded_joint_search.json",
+      "sha256": "7ff231d7a8c95f0a7bc9e5181fd4c7099e816f985403325fdd608dd176ce37c6",
+      "hash_role": "saved input identity, not mathematical premise"
+    }
+  },
+  "saved_scores_input": {
+    "file": "/Users/auric/trureturing-erdos7-odd-covering-0916/docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/head_mass_evaluation.json",
+    "sha256": "4e824f35c5f921cdacee1cb462cf3387f5524978e859c65460e45cb3fcb5f8c4",
+    "hash_role": "saved input identity, not mathematical premise"
+  },
+  "saved_K_comparison_input": {
+    "file": "/tmp/e7_batch143_shallow_cofactor_fee.json",
+    "sha256": "f500e063cf43ffee76f9d749644c8eeed8d78a47b66904aad42f609a45b312b1",
+    "hash_role": "saved input identity, not mathematical premise"
+  },
+  "formula": "G_P=sum_q b_q,infinity*(B5q+B7q); B=max_(root,row)(w_head/2)*sum_other w_other*product_(private!=q)Pbar",
+  "normalization": "finite source Pbar uses b_q,N, supported cap sum uses b_q,infinity; this consumer evaluates only the prescribed limiting table",
+  "ternary_height_tail_factor": "1/2",
+  "old_full_fee_recomputed": false,
+  "old_K_fee_recomputed": false,
+  "producer_or_controls_executed": false,
+  "continuation_executed": false,
+  "no_parameter_search": true,
+  "cases": {
+    "FC110": {
+      "saved_score_J": "17062109570167/198315713846250",
+      "saved_selected_fee_S": "1106517130288/10257709336875",
+      "G_P": "83894527277/1287764375625",
+      "saved_G_K": "6616627710514/99157856923125",
+      "G_P_by_head": {
+        "5": "469055725043/11017539658125",
+        "7": "2238377074942/99157856923125"
+      },
+      "additional_high_ternary_fee_G_P_over_2": "83894527277/2575528751250",
+      "new_margin_J_minus_half_S_plus_G_P": "-141151934419/297473570769375",
+      "saved_old_margin": "-107507314199/84992448791250",
+      "margin_gain": "10449940679/13221047589750",
+      "margin_sign": "negative",
+      "pair_supports": [
+        {
+          "head": 5,
+          "private_prime": 11,
+          "supported_private_cap_sum": "1/9",
+          "B_P_max": "33149528/381005625",
+          "G_P_pair": "33149528/3429050625",
+          "saved_B_K_max": "2168723384/24003354375",
+          "saved_G_K_pair": "2168723384/216030189375",
+          "G_pair_saving": "16060624/43206037875",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "2181611059/2331754425",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "215072288/302140125",
+              "selected_candidate_P": "107536144/1510700625",
+              "saved_selected_candidate_K": "11662352/158263875"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "16574764/25400375",
+              "selected_candidate_P": "33149528/381005625",
+              "saved_selected_candidate_K": "2168723384/24003354375"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "137425952/179365725",
+              "selected_candidate_P": "68712976/896828625",
+              "saved_selected_candidate_K": "74468/949025"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "2181611059/2331754425",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "3155199232/6995263275",
+              "selected_candidate_P": "6310398464/104928949125",
+              "saved_selected_candidate_K": "6310398464/104928949125"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "1533917152/4197157965",
+              "selected_candidate_P": "3067834304/62957369475",
+              "saved_selected_candidate_K": "840149824/16322280975"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "40214515456/104928949125",
+              "selected_candidate_P": "80429030912/1573934236875",
+              "saved_selected_candidate_K": "84176816896/1573934236875"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "20362928/48243195",
+              "selected_candidate_P": "10181464/241215975",
+              "saved_selected_candidate_K": "299562232/6995263275"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "3155199232/6995263275",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 13,
+          "supported_private_cap_sum": "1/11",
+          "B_P_max": "1849541168/19639108125",
+          "G_P_pair": "1849541168/216030189375",
+          "saved_B_K_max": "17349787072/176751973125",
+          "saved_G_K_pair": "17349787072/1944271704375",
+          "G_pair_saving": "140783312/388854340875",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "197417483/211977675",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "642230608/906420375",
+              "selected_candidate_P": "321115304/4532101875",
+              "saved_selected_candidate_K": "47538608/647443125"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "924770584/1309273875",
+              "selected_candidate_P": "1849541168/19639108125",
+              "saved_selected_candidate_K": "17349787072/176751973125"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "4145264/5435325",
+              "selected_candidate_P": "2072632/27176625",
+              "saved_selected_candidate_K": "181964/2329425"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "197417483/211977675",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "43899776/116804025",
+              "selected_candidate_P": "87799552/1752060375",
+              "saved_selected_candidate_K": "1912587008/36793267875"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "42212411776/120191341725",
+              "selected_candidate_P": "84424823552/1802870125875",
+              "saved_selected_candidate_K": "368337664/7419218625"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "1458138368/4088140875",
+              "selected_candidate_P": "2916276736/61322113125",
+              "saved_selected_candidate_K": "1322730752/26280905625"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "2321937344/5723397225",
+              "selected_candidate_P": "1160968672/28616986125",
+              "saved_selected_candidate_K": "392722592/9538995375"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "7443958784/17170191675",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 17,
+          "supported_private_cap_sum": "1/15",
+          "B_P_max": "320314448/3927821625",
+          "G_P_pair": "320314448/58917324375",
+          "saved_B_K_max": "39573808/474791625",
+          "saved_G_K_pair": "39573808/7121874375",
+          "G_pair_saving": "1036768/8641207575",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 1
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "432455549/466350885",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "640628896/785564325",
+              "selected_candidate_P": "320314448/3927821625",
+              "saved_selected_candidate_K": "39573808/474791625"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "183510056/320044725",
+              "selected_candidate_P": "367020112/4800670875",
+              "saved_selected_candidate_K": "3508550336/43206037875"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "27238544/35873145",
+              "selected_candidate_P": "13619272/179365725",
+              "saved_selected_candidate_K": "13756/176715"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "432455549/466350885",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "19650688/54508545",
+              "selected_candidate_P": "39301376/817628175",
+              "saved_selected_candidate_K": "9422599936/188872108425"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "6412884224/17628063453",
+              "selected_candidate_P": "12825768448/264420951795",
+              "saved_selected_candidate_K": "494173184/9793368585"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "3856017664/12591473895",
+              "selected_candidate_P": "7712035328/188872108425",
+              "saved_selected_candidate_K": "855195776/19272664125"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "6858410816/17628063453",
+              "selected_candidate_P": "3429205408/88140317265",
+              "saved_selected_candidate_K": "3489402272/88140317265"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "36658453504/88140317265",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 19,
+          "supported_private_cap_sum": "1/17",
+          "B_P_max": "13619272/158263875",
+          "G_P_pair": "13619272/2690485875",
+          "saved_B_K_max": "1970596/22609125",
+          "saved_G_K_pair": "1970596/384355125",
+          "G_pair_saving": "212/3261195",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 3
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "127008389/137162025",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "638483872/906420375",
+              "selected_candidate_P": "319241936/4532101875",
+              "saved_selected_candidate_K": "519936976/7121874375"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "305403416/533407875",
+              "selected_candidate_P": "610806832/8001118125",
+              "saved_selected_candidate_K": "1347587008/16617706875"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "27238544/31652775",
+              "selected_candidate_P": "13619272/158263875",
+              "saved_selected_candidate_K": "1970596/22609125"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "127008389/137162025",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "564726256/1587160575",
+              "selected_candidate_P": "1129452512/23807408625",
+              "saved_selected_candidate_K": "167492896/3401058375"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "5170908032/15554173635",
+              "selected_candidate_P": "10341816064/233312604525",
+              "saved_selected_candidate_K": "406399712/8641207575"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "2398522576/7935802875",
+              "selected_candidate_P": "4797045152/119037043125",
+              "saved_selected_candidate_K": "208603888/4761481725"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "4560807808/11110124025",
+              "selected_candidate_P": "2280403904/55550620125",
+              "saved_selected_candidate_K": "2280403904/55550620125"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "4560807808/11110124025",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 23,
+          "supported_private_cap_sum": "1/21",
+          "B_P_max": "867022768/10287151875",
+          "G_P_pair": "867022768/216030189375",
+          "saved_B_K_max": "913146688/10287151875",
+          "saved_G_K_pair": "913146688/216030189375",
+          "G_pair_saving": "35344/165540375",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "718298123/777251475",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "3641608/5179545",
+              "selected_candidate_P": "1820804/25897725",
+              "saved_selected_candidate_K": "74127664/1017410625"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "433511384/685810125",
+              "selected_candidate_P": "867022768/10287151875",
+              "saved_selected_candidate_K": "913146688/10287151875"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "2154554/2847075",
+              "selected_candidate_P": "1077277/14235375",
+              "saved_selected_candidate_K": "1987756/25623675"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "718298123/777251475",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "2240283904/6424221375",
+              "selected_candidate_P": "4480567808/96363320625",
+              "saved_selected_candidate_K": "4652558848/96363320625"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "4104013376/12591473895",
+              "selected_candidate_P": "8208026752/188872108425",
+              "saved_selected_candidate_K": "21491968/466350885"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "2005222528/6424221375",
+              "selected_candidate_P": "4010445056/96363320625",
+              "saved_selected_candidate_K": "4275566848/96363320625"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "34204288/90847575",
+              "selected_candidate_P": "17102144/454237875",
+              "saved_selected_candidate_K": "572970304/14989849875"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "18094262272/44969549625",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 29,
+          "supported_private_cap_sum": "1/27",
+          "B_P_max": "33878538/431806375",
+          "G_P_pair": "3764282/1295419125",
+          "saved_B_K_max": "49742912/615470625",
+          "saved_G_K_pair": "49742912/16617706875",
+          "G_pair_saving": "321444082/3672513219375",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 3
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "238978921/259083825",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "63623488/87284925",
+              "selected_candidate_P": "31811744/436424625",
+              "saved_selected_candidate_K": "19786904/263773125"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "912618184/1600223625",
+              "selected_candidate_P": "1825236368/24003354375",
+              "saved_selected_candidate_K": "49742912/615470625"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "67757076/86361275",
+              "selected_candidate_P": "33878538/431806375",
+              "saved_selected_candidate_K": "985298/12337325"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "238978921/259083825",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "343039616/999323325",
+              "selected_candidate_P": "686079232/14989849875",
+              "saved_selected_candidate_K": "712539392/14989849875"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "16350378752/48966842925",
+              "selected_candidate_P": "32700757504/734502643875",
+              "saved_selected_candidate_K": "141473792/3022644625"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "1456779392/4996616625",
+              "selected_candidate_P": "2913558784/74949249375",
+              "saved_selected_candidate_K": "3173397632/74949249375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "57614272/155450295",
+              "selected_candidate_P": "28807136/777251475",
+              "saved_selected_candidate_K": "87744416/2331754425"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "2770777088/6995263275",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 31,
+          "supported_private_cap_sum": "1/29",
+          "B_P_max": "115177/1472625",
+          "G_P_pair": "115177/42706125",
+          "saved_B_K_max": "85969984/1064188125",
+          "saved_G_K_pair": "85969984/30861455625",
+          "G_pair_saving": "46540283/524644745625",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 3
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "74132341/80405325",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "908464/1250235",
+              "selected_candidate_P": "454232/6251175",
+              "saved_selected_candidate_K": "128614876/1719073125"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "953192/1672125",
+              "selected_candidate_P": "1906384/25081875",
+              "saved_selected_candidate_K": "85969984/1064188125"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "230354/294525",
+              "selected_candidate_P": "115177/1472625",
+              "saved_selected_candidate_K": "492649/6185025"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "74132341/80405325",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "6680073472/19538493975",
+              "selected_candidate_P": "13360146944/293077409625",
+              "saved_selected_candidate_K": "13876120064/293077409625"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "3023391232/9117963855",
+              "selected_candidate_P": "6046782464/136769457825",
+              "saved_selected_candidate_K": "6314849792/136769457825"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "9455993728/32564156625",
+              "selected_candidate_P": "18911987456/488462349375",
+              "saved_selected_candidate_K": "20599487488/488462349375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "3365835392/9117963855",
+              "selected_candidate_P": "1682917696/45589819275",
+              "saved_selected_candidate_K": "244102336/6512831325"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "1101154304/2791213425",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 37,
+          "supported_private_cap_sum": "1/35",
+          "B_P_max": "248503432/3179665125",
+          "G_P_pair": "248503432/111288279375",
+          "saved_B_K_max": "8674893536/104928949125",
+          "saved_G_K_pair": "8674893536/3672513219375",
+          "G_pair_saving": "5579768/43206037875",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "306759007/333107775",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "698647616/968574915",
+              "selected_candidate_P": "349323808/4842874575",
+              "saved_selected_candidate_K": "257229752/3459196125"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "124251716/211977675",
+              "selected_candidate_P": "248503432/3179665125",
+              "saved_selected_candidate_K": "8674893536/104928949125"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "45087184/59788575",
+              "selected_candidate_P": "22543592/298942875",
+              "saved_selected_candidate_K": "1979716/25623675"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "306759007/333107775",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "2640512/7786935",
+              "selected_candidate_P": "5281024/116804025",
+              "saved_selected_candidate_K": "31944448/680211675"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "7404435712/22664653011",
+              "selected_candidate_P": "14808871424/339969795165",
+              "saved_selected_candidate_K": "577659392/12591473895"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "38267776/132914925",
+              "selected_candidate_P": "76535552/1993723875",
+              "saved_selected_candidate_K": "2420114816/57817992375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "131717056/359756397",
+              "selected_candidate_P": "65858528/1798781985",
+              "saved_selected_candidate_K": "4458016/119918799"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "2111519744/5396345955",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 41,
+          "supported_private_cap_sum": "1/39",
+          "B_P_max": "5325784/68385625",
+          "G_P_pair": "5325784/2667039375",
+          "saved_B_K_max": "456573344/5539235625",
+          "saved_G_K_pair": "456573344/216030189375",
+          "G_pair_saving": "5036968/43206037875",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "165096013/179365725",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "43433728/60428025",
+              "selected_candidate_P": "21716864/302140125",
+              "saved_selected_candidate_K": "175999304/2373958125"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "7988676/13677125",
+              "selected_candidate_P": "5325784/68385625",
+              "saved_selected_candidate_K": "456573344/5539235625"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "45064784/59788575",
+              "selected_candidate_P": "22532392/298942875",
+              "saved_selected_candidate_K": "1978756/25623675"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "165096013/179365725",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "77839616/230613075",
+              "selected_candidate_P": "155679232/3459196125",
+              "saved_selected_candidate_K": "485142016/10377588375"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "104647936/322858305",
+              "selected_candidate_P": "209295872/4842874575",
+              "saved_selected_candidate_K": "170671616/3766680225"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "991525888/3459196125",
+              "selected_candidate_P": "1983051776/51887941875",
+              "saved_selected_candidate_K": "2161167616/51887941875"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "23532928/64571661",
+              "selected_candidate_P": "11766464/322858305",
+              "saved_selected_candidate_K": "6637504/179365725"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "1886255104/4842874575",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 11,
+          "supported_private_cap_sum": "1/9",
+          "B_P_max": "43716754432/847503050625",
+          "G_P_pair": "43716754432/7627527455625",
+          "saved_B_K_max": "43716754432/847503050625",
+          "saved_G_K_pair": "43716754432/7627527455625",
+          "G_pair_saving": "0",
+          "maximizing_addresses": [
+            {
+              "root": 2,
+              "row": 3
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "52827486472/104928949125",
+              "selected_candidate_P": "52827486472/1224171073125",
+              "saved_selected_candidate_K": "52827486472/1224171073125"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "79667516/179365725",
+              "selected_candidate_P": "79667516/2092600125",
+              "saved_selected_candidate_K": "328802272/8071457625"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "2196418528/4996616625",
+              "selected_candidate_P": "2196418528/58293860625",
+              "saved_selected_candidate_K": "1381565968/34976316375"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "52827486472/104928949125",
+              "selected_candidate_P": "52827486472/1224171073125",
+              "saved_selected_candidate_K": "52827486472/1224171073125"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "6089872/14189175",
+              "selected_candidate_P": "6089872/165540375",
+              "saved_selected_candidate_K": "10474928/261854775"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "52827486472/104928949125",
+              "selected_candidate_P": "26413743236/734502643875",
+              "saved_selected_candidate_K": "26413743236/734502643875"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "52827486472/104928949125",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "43716754432/72643118625",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "159896453504/314786847375",
+              "selected_candidate_P": "79948226752/2203507931625",
+              "saved_selected_candidate_K": "3062292928/81611404875"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "20193959872/44969549625",
+              "selected_candidate_P": "20193959872/524644745625",
+              "saved_selected_candidate_K": "20956003072/524644745625"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "43716754432/72643118625",
+              "selected_candidate_P": "43716754432/847503050625",
+              "saved_selected_candidate_K": "43716754432/847503050625"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "31803891712/72643118625",
+              "selected_candidate_P": "31803891712/847503050625",
+              "saved_selected_candidate_K": "11134222336/282501016875"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "1442467472/2690485875",
+              "selected_candidate_P": "721233736/18833401125",
+              "saved_selected_candidate_K": "743082248/18833401125"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "43716754432/72643118625",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 13,
+          "supported_private_cap_sum": "1/11",
+          "B_P_max": "4956526312/111288279375",
+          "G_P_pair": "4956526312/1224171073125",
+          "saved_B_K_max": "10361913344/231137195625",
+          "saved_G_K_pair": "10361913344/2542509151875",
+          "G_pair_saving": "878663048/33052618974375",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "4956526312/9538995375",
+              "selected_candidate_P": "4956526312/111288279375",
+              "saved_selected_candidate_K": "4956526312/111288279375"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "201809276/440261325",
+              "selected_candidate_P": "201809276/5136382125",
+              "saved_selected_candidate_K": "277518112/6603919875"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1855056544/4088140875",
+              "selected_candidate_P": "1855056544/47694976875",
+              "saved_selected_candidate_K": "1941940432/47694976875"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "5630023888/12264422625",
+              "selected_candidate_P": "5630023888/143084930625",
+              "saved_selected_candidate_K": "41588556736/1001594514375"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "3168664/6449625",
+              "selected_candidate_P": "3168664/75245625",
+              "saved_selected_candidate_K": "286636736/6546369375"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "4956526312/9538995375",
+              "selected_candidate_P": "2478263156/66772967625",
+              "saved_selected_candidate_K": "2478263156/66772967625"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "4956526312/9538995375",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "11143503872/19811759625",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "122266066432/257552875125",
+              "selected_candidate_P": "61133033216/1802870125875",
+              "saved_selected_candidate_K": "2344258304/66772967625"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1715425024/4088140875",
+              "selected_candidate_P": "1715425024/47694976875",
+              "saved_selected_candidate_K": "5349486592/143084930625"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1629387776/3962351925",
+              "selected_candidate_P": "1629387776/46227439125",
+              "saved_selected_candidate_K": "2996564992/77045731875"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "10205241344/19811759625",
+              "selected_candidate_P": "10205241344/231137195625",
+              "saved_selected_candidate_K": "10361913344/231137195625"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "367675328/733768875",
+              "selected_candidate_P": "183837664/5136382125",
+              "saved_selected_candidate_K": "568766368/15409146375"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "11143503872/19811759625",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 17,
+          "supported_private_cap_sum": "1/15",
+          "B_P_max": "3540768328/81611404875",
+          "G_P_pair": "3540768328/1224171073125",
+          "saved_B_K_max": "3540768328/81611404875",
+          "saved_G_K_pair": "3540768328/1224171073125",
+          "G_pair_saving": "0",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "3540768328/6995263275",
+              "selected_candidate_P": "3540768328/81611404875",
+              "saved_selected_candidate_K": "3540768328/81611404875"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "3124077188/6995263275",
+              "selected_candidate_P": "3124077188/81611404875",
+              "saved_selected_candidate_K": "330910816/8071457625"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "3323485904/6995263275",
+              "selected_candidate_P": "3323485904/81611404875",
+              "saved_selected_candidate_K": "3400002344/81611404875"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "4025845808/8993909925",
+              "selected_candidate_P": "4025845808/104928949125",
+              "saved_selected_candidate_K": "29487954368/734502643875"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "177726352/411486075",
+              "selected_candidate_P": "177726352/4800670875",
+              "saved_selected_candidate_K": "192276352/4800670875"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "3540768328/6995263275",
+              "selected_candidate_P": "1770384164/48966842925",
+              "saved_selected_candidate_K": "1770384164/48966842925"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "3540768328/6995263275",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "308448247808/566616325275",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "6674896384/14528623725",
+              "selected_candidate_P": "3337448192/101700366075",
+              "saved_selected_candidate_K": "1664417024/48966842925"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "5496487168/11563598475",
+              "selected_candidate_P": "5496487168/134908648875",
+              "saved_selected_candidate_K": "39120376576/944360542125"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1556916736/3907698795",
+              "selected_candidate_P": "1556916736/45589819275",
+              "saved_selected_candidate_K": "82695321088/2203507931625"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "224502038528/566616325275",
+              "selected_candidate_P": "224502038528/6610523794875",
+              "saved_selected_candidate_K": "78533033984/2203507931625"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "782873536/1614291525",
+              "selected_candidate_P": "391436768/11300040675",
+              "saved_selected_candidate_K": "5248249312/146900528775"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "308448247808/566616325275",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 19,
+          "supported_private_cap_sum": "1/17",
+          "B_P_max": "3114387656/72010063125",
+          "G_P_pair": "3114387656/1224171073125",
+          "saved_B_K_max": "3114387656/72010063125",
+          "saved_G_K_pair": "3114387656/1224171073125",
+          "G_pair_saving": "0",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "3114387656/6172291125",
+              "selected_candidate_P": "3114387656/72010063125",
+              "saved_selected_candidate_K": "3114387656/72010063125"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "14091628/31652775",
+              "selected_candidate_P": "14091628/369282375",
+              "saved_selected_candidate_K": "3880736/94958325"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "137957392/293918625",
+              "selected_candidate_P": "137957392/3429050625",
+              "saved_selected_candidate_K": "424218512/10287151875"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "3540994384/7935802875",
+              "selected_candidate_P": "3540994384/92584366875",
+              "saved_selected_candidate_K": "25940225728/648090568125"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "177175984/411486075",
+              "selected_candidate_P": "177175984/4800670875",
+              "saved_selected_candidate_K": "573730688/14402012625"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "3114387656/6172291125",
+              "selected_candidate_P": "1557193828/43206037875",
+              "saved_selected_candidate_K": "1557193828/43206037875"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "3114387656/6172291125",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "20659070464/38458121625",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "75560656768/166651860375",
+              "selected_candidate_P": "37780328384/1166563022625",
+              "saved_selected_candidate_K": "1447290496/43206037875"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "76482513152/166651860375",
+              "selected_candidate_P": "76482513152/1944271704375",
+              "saved_selected_candidate_K": "78240753152/1944271704375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "3023701312/7691624325",
+              "selected_candidate_P": "3023701312/89735617125",
+              "saved_selected_candidate_K": "5540563904/149559361875"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "15036811264/38458121625",
+              "selected_candidate_P": "15036811264/448678085625",
+              "saved_selected_candidate_K": "5255217152/149559361875"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "227225728/474791625",
+              "selected_candidate_P": "113612864/3323541375",
+              "saved_selected_candidate_K": "351128816/9970624125"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "20659070464/38458121625",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 23,
+          "supported_private_cap_sum": "1/21",
+          "B_P_max": "7497647176/174881581875",
+          "G_P_pair": "7497647176/3672513219375",
+          "saved_B_K_max": "7497647176/174881581875",
+          "saved_G_K_pair": "7497647176/3672513219375",
+          "G_pair_saving": "0",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "7497647176/14989849875",
+              "selected_candidate_P": "7497647176/174881581875",
+              "saved_selected_candidate_K": "7497647176/174881581875"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "107059153/230613075",
+              "selected_candidate_P": "107059153/2690485875",
+              "saved_selected_candidate_K": "26755912/640591875"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "311718688/713802375",
+              "selected_candidate_P": "311718688/8327694375",
+              "saved_selected_candidate_K": "980666672/24983083125"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "8519603024/19272664125",
+              "selected_candidate_P": "8519603024/224847748125",
+              "saved_selected_candidate_K": "62732827328/1573934236875"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "34576/81081",
+              "selected_candidate_P": "34576/945945",
+              "saved_selected_candidate_K": "81724928/2057430375"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "7497647176/14989849875",
+              "selected_candidate_P": "3748823588/104928949125",
+              "saved_selected_candidate_K": "3748823588/104928949125"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "7497647176/14989849875",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "16488359936/31132765125",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "63521453056/134908648875",
+              "selected_candidate_P": "31760726528/944360542125",
+              "saved_selected_candidate_K": "1201406464/34976316375"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "7614068096/19272664125",
+              "selected_candidate_P": "7614068096/224847748125",
+              "saved_selected_candidate_K": "7918885376/224847748125"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "2411667968/6226553025",
+              "selected_candidate_P": "2411667968/72643118625",
+              "saved_selected_candidate_K": "4430020096/121071864375"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "159956992/415103535",
+              "selected_candidate_P": "159956992/4842874575",
+              "saved_selected_candidate_K": "12600639488/363215593125"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "191021696/384355125",
+              "selected_candidate_P": "95510848/2690485875",
+              "saved_selected_candidate_K": "291460544/8071457625"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "16488359936/31132765125",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 29,
+          "supported_private_cap_sum": "1/27",
+          "B_P_max": "5769651716/136019008125",
+          "G_P_pair": "5769651716/3672513219375",
+          "saved_B_K_max": "5769651716/136019008125",
+          "saved_G_K_pair": "5769651716/3672513219375",
+          "G_pair_saving": "0",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "5769651716/11658772125",
+              "selected_candidate_P": "5769651716/136019008125",
+              "saved_selected_candidate_K": "5769651716/136019008125"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "117590212/259083825",
+              "selected_candidate_P": "117590212/3022644625",
+              "saved_selected_candidate_K": "31544816/777251475"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "2158231696/4996616625",
+              "selected_candidate_P": "2158231696/58293860625",
+              "saved_selected_candidate_K": "90740296/2331754425"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "2186436688/4996616625",
+              "selected_candidate_P": "2186436688/58293860625",
+              "saved_selected_candidate_K": "16031186656/408057024375"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "5990984/14189175",
+              "selected_candidate_P": "5990984/165540375",
+              "saved_selected_candidate_K": "12528448/320044725"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "5769651716/11658772125",
+              "selected_candidate_P": "2884825858/81611404875",
+              "saved_selected_candidate_K": "2884825858/81611404875"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "5769651716/11658772125",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "164529446912/314786847375",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "3860695424/8071457625",
+              "selected_candidate_P": "1930347712/56500203375",
+              "saved_selected_candidate_K": "2853340352/81611404875"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "834793472/2141407125",
+              "selected_candidate_P": "834793472/24983083125",
+              "saved_selected_candidate_K": "6083439104/174881581875"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "24078142976/62957369475",
+              "selected_candidate_P": "24078142976/734502643875",
+              "saved_selected_candidate_K": "44138732032/1224171073125"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "9211265024/24214372875",
+              "selected_candidate_P": "9211265024/282501016875",
+              "saved_selected_candidate_K": "41884123136/1224171073125"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "417596224/896828625",
+              "selected_candidate_P": "208798112/6277800375",
+              "saved_selected_candidate_K": "2798569888/81611404875"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "164529446912/314786847375",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 31,
+          "supported_private_cap_sum": "1/29",
+          "B_P_max": "1787434354/42212795625",
+          "G_P_pair": "1787434354/1224171073125",
+          "saved_B_K_max": "1787434354/42212795625",
+          "saved_G_K_pair": "1787434354/1224171073125",
+          "G_pair_saving": "0",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1787434354/3618239625",
+              "selected_candidate_P": "1787434354/42212795625",
+              "saved_selected_candidate_K": "1787434354/42212795625"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "75450428/166995675",
+              "selected_candidate_P": "75450428/1948282875",
+              "saved_selected_candidate_K": "15772408/389656575"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "330184/765765",
+              "selected_candidate_P": "330184/8933925",
+              "saved_selected_candidate_K": "234251852/6030399375"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "2032051136/4652022375",
+              "selected_candidate_P": "2032051136/54273594375",
+              "saved_selected_candidate_K": "14900409872/379915160625"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "5980372/14189175",
+              "selected_candidate_P": "5980372/165540375",
+              "saved_selected_candidate_K": "19407968/496621125"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "1787434354/3618239625",
+              "selected_candidate_P": "893717177/25327677375",
+              "saved_selected_candidate_K": "893717177/25327677375"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "1787434354/3618239625",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "11743172608/22544416125",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "3427330048/7514805375",
+              "selected_candidate_P": "1713665024/52603637625",
+              "saved_selected_candidate_K": "22826722816/683847289125"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "12651483392/32564156625",
+              "selected_candidate_P": "12651483392/379915160625",
+              "saved_selected_candidate_K": "5644442368/162820783125"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1718527744/4508883225",
+              "selected_candidate_P": "1718527744/52603637625",
+              "saved_selected_candidate_K": "3150533888/87672729375"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "8546787328/22544416125",
+              "selected_candidate_P": "8546787328/263018188125",
+              "saved_selected_candidate_K": "8968241152/263018188125"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "10853221504/22544416125",
+              "selected_candidate_P": "5426610752/157810912875",
+              "saved_selected_candidate_K": "5537750336/157810912875"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "11743172608/22544416125",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 37,
+          "supported_private_cap_sum": "1/35",
+          "B_P_max": "1475211928/34976316375",
+          "G_P_pair": "1475211928/1224171073125",
+          "saved_B_K_max": "1475211928/34976316375",
+          "saved_G_K_pair": "1475211928/1224171073125",
+          "G_pair_saving": "0",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1475211928/2997969975",
+              "selected_candidate_P": "1475211928/34976316375",
+              "saved_selected_candidate_K": "1475211928/34976316375"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "6674564/15374205",
+              "selected_candidate_P": "6674564/179365725",
+              "saved_selected_candidate_K": "1837408/46122615"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "61320352/142760475",
+              "selected_candidate_P": "61320352/1665538875",
+              "saved_selected_candidate_K": "193202288/4996616625"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1676803592/3854532825",
+              "selected_candidate_P": "1676803592/44969549625",
+              "saved_selected_candidate_K": "12314257664/314786847375"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "86401936/199864665",
+              "selected_candidate_P": "86401936/2331754425",
+              "saved_selected_candidate_K": "275246464/6995263275"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "1475211928/2997969975",
+              "selected_candidate_P": "737605964/20985789825",
+              "saved_selected_candidate_K": "737605964/20985789825"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "1475211928/2997969975",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "9654132736/18679659075",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "8148065792/18679659075",
+              "selected_candidate_P": "4074032896/130757613525",
+              "saved_selected_candidate_K": "20511488/635933025"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "4457568256/11563598475",
+              "selected_candidate_P": "4457568256/134908648875",
+              "saved_selected_candidate_K": "272941568/7935802875"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1412750848/3735931815",
+              "selected_candidate_P": "1412750848/43585871175",
+              "saved_selected_candidate_K": "2590378496/72643118625"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "7469222912/18679659075",
+              "selected_candidate_P": "7469222912/217929355875",
+              "saved_selected_candidate_K": "2590478336/72643118625"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "955634368/2075517675",
+              "selected_candidate_P": "477817184/14528623725",
+              "saved_selected_candidate_K": "18244256/538097175"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "9654132736/18679659075",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 41,
+          "supported_private_cap_sum": "1/39",
+          "B_P_max": "1321254104/31389001875",
+          "G_P_pair": "1321254104/1224171073125",
+          "saved_B_K_max": "1321254104/31389001875",
+          "saved_G_K_pair": "1321254104/1224171073125",
+          "G_pair_saving": "0",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1321254104/2690485875",
+              "selected_candidate_P": "1321254104/31389001875",
+              "saved_selected_candidate_K": "1321254104/31389001875"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "77713876/179365725",
+              "selected_candidate_P": "77713876/2092600125",
+              "saved_selected_candidate_K": "21393632/538097175"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "164761952/384355125",
+              "selected_candidate_P": "164761952/4484143125",
+              "saved_selected_candidate_K": "173042224/4484143125"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1501815256/3459196125",
+              "selected_candidate_P": "1501815256/40357288125",
+              "saved_selected_candidate_K": "11028641152/282501016875"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "504208/1172325",
+              "selected_candidate_P": "504208/13677125",
+              "saved_selected_candidate_K": "14486656/369282375"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "1321254104/2690485875",
+              "selected_candidate_P": "660627052/18833401125",
+              "saved_selected_candidate_K": "660627052/18833401125"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "1321254104/2690485875",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "112198221824/217929355875",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "31565088256/72643118625",
+              "selected_candidate_P": "15782544128/508501830375",
+              "saved_selected_candidate_K": "605096192/18833401125"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "3985015808/10377588375",
+              "selected_candidate_P": "3985015808/121071864375",
+              "saved_selected_candidate_K": "4147947008/121071864375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "16418335232/43585871175",
+              "selected_candidate_P": "16418335232/508501830375",
+              "saved_selected_candidate_K": "30106545664/847503050625"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "83881148416/217929355875",
+              "selected_candidate_P": "83881148416/2542509151875",
+              "saved_selected_candidate_K": "29125378048/847503050625"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "34225652864/72643118625",
+              "selected_candidate_P": "17112826432/508501830375",
+              "saved_selected_candidate_K": "1945696064/56500203375"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "112198221824/217929355875",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        }
+      ],
+      "evaluation_counts": {
+        "pair_supports": 18,
+        "row_candidates": 216,
+        "shared_eight_factor_cells": 630,
+        "scalar_P_factors_in_cell_products": 5040,
+        "scalar_P_table_entries": 630
+      },
+      "interpretation": "negative limit blocks this stronger additive allowance at sufficiently large finite depths; no actual covering is established"
+    },
+    "FC131": {
+      "saved_score_J": "25372782312134/297473570769375",
+      "saved_selected_fee_S": "64392844043743/594947141538750",
+      "G_P": "6513036307672/99157856923125",
+      "saved_G_K": "6682868375032/99157856923125",
+      "G_P_by_head": {
+        "5": "27912306508/648090568125",
+        "7": "2242453411948/99157856923125"
+      },
+      "additional_high_ternary_fee_G_P_over_2": "3256518153836/99157856923125",
+      "new_margin_J_minus_half_S_plus_G_P": "-282847520177/169984897582500",
+      "saved_old_margin": "-2998925045399/1189894283077500",
+      "margin_gain": "5661068912/6610523794875",
+      "margin_sign": "negative",
+      "pair_supports": [
+        {
+          "head": 5,
+          "private_prime": 11,
+          "supported_private_cap_sum": "1/9",
+          "B_P_max": "18319876/205156875",
+          "G_P_pair": "18319876/1846411875",
+          "saved_B_K_max": "170491484/1846411875",
+          "saved_G_K_pair": "170491484/16617706875",
+          "G_pair_saving": "32072/94958325",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "503443109/538097175",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "215071568/302140125",
+              "selected_candidate_P": "107535784/1510700625",
+              "saved_selected_candidate_K": "11662352/158263875"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "9159938/13677125",
+              "selected_candidate_P": "18319876/205156875",
+              "saved_selected_candidate_K": "170491484/1846411875"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "307153928/411486075",
+              "selected_candidate_P": "153576964/2057430375",
+              "saved_selected_candidate_K": "1967032/25623675"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "503443109/538097175",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "54112000/119918799",
+              "selected_candidate_P": "21644800/359756397",
+              "saved_selected_candidate_K": "21644800/359756397"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "1627613408/4451531175",
+              "selected_candidate_P": "3255226816/66772967625",
+              "saved_selected_candidate_K": "2211712/42395535"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "112683776/293918625",
+              "selected_candidate_P": "225367552/4408779375",
+              "saved_selected_candidate_K": "4010907904/74949249375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "590775056/1399052655",
+              "selected_candidate_P": "295387528/6995263275",
+              "saved_selected_candidate_K": "14270824/333107775"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "54112000/119918799",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 13,
+          "supported_private_cap_sum": "1/11",
+          "B_P_max": "146096168/1510700625",
+          "G_P_pair": "146096168/16617706875",
+          "saved_B_K_max": "1363931872/13596305625",
+          "saved_G_K_pair": "1363931872/149559361875",
+          "G_pair_saving": "1401896/4273124625",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "45576361/48917925",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "642503632/906420375",
+              "selected_candidate_P": "321251816/4532101875",
+              "saved_selected_candidate_K": "47538608/647443125"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "73048084/100713375",
+              "selected_candidate_P": "146096168/1510700625",
+              "saved_selected_candidate_K": "1363931872/13596305625"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "157568552/211977675",
+              "selected_candidate_P": "78784276/1059888375",
+              "saved_selected_candidate_K": "106856/1397655"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "45576361/48917925",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "923106944/2452884525",
+              "selected_candidate_P": "1846213888/36793267875",
+              "saved_selected_candidate_K": "638336768/12264422625"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "14089606016/40063780575",
+              "selected_candidate_P": "28179212032/600956708625",
+              "saved_selected_candidate_K": "7918592/157112865"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "4380207872/12264422625",
+              "selected_candidate_P": "8760415744/183966339375",
+              "saved_selected_candidate_K": "123589376/2452884525"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "2324966464/5723397225",
+              "selected_candidate_P": "1162483232/28616986125",
+              "saved_selected_candidate_K": "168526048/4088140875"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "39437312/90847575",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 17,
+          "supported_private_cap_sum": "1/15",
+          "B_P_max": "320313368/3927821625",
+          "G_P_pair": "320313368/58917324375",
+          "saved_B_K_max": "39573808/474791625",
+          "saved_G_K_pair": "39573808/7121874375",
+          "G_pair_saving": "5184632/43206037875",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 1
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "19959263/21523887",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "640626736/785564325",
+              "selected_candidate_P": "320313368/3927821625",
+              "saved_selected_candidate_K": "39573808/474791625"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "2069708/3516975",
+              "selected_candidate_P": "4139416/52754625",
+              "saved_selected_candidate_K": "25075744/302140125"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "1034950792/1399052655",
+              "selected_candidate_P": "517475396/6995263275",
+              "saved_selected_candidate_K": "1170856/15374205"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "19959263/21523887",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "908262016/2518294779",
+              "selected_candidate_P": "1816524032/37774421685",
+              "saved_selected_candidate_K": "171392768/3434038335"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "972099328/2670918705",
+              "selected_candidate_P": "1944198656/40063780575",
+              "saved_selected_candidate_K": "700928/13697019"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "378174208/1234458225",
+              "selected_candidate_P": "756348416/18516873375",
+              "saved_selected_candidate_K": "13976905856/314786847375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "980201792/2518294779",
+              "selected_candidate_P": "490100896/12591473895",
+              "saved_selected_candidate_K": "498700448/12591473895"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "1047841792/2518294779",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 19,
+          "supported_private_cap_sum": "1/17",
+          "B_P_max": "517475396/6172291125",
+          "G_P_pair": "517475396/104928949125",
+          "saved_B_K_max": "5784056/67827375",
+          "saved_G_K_pair": "5784056/1153065375",
+          "G_pair_saving": "10756/127186605",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 3
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "29309299/31652775",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "638481712/906420375",
+              "selected_candidate_P": "319240856/4532101875",
+              "saved_selected_candidate_K": "519936976/7121874375"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "72333988/123094125",
+              "selected_candidate_P": "144667976/1846411875",
+              "saved_selected_candidate_K": "1377261664/16617706875"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "1034950792/1234458225",
+              "selected_candidate_P": "517475396/6172291125",
+              "saved_selected_candidate_K": "5784056/67827375"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "29309299/31652775",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "22599056/63486423",
+              "selected_candidate_P": "45198112/952296345",
+              "saved_selected_candidate_K": "26065568/529053525"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "111976672/336670425",
+              "selected_candidate_P": "223953344/5050056375",
+              "saved_selected_candidate_K": "1070336/22444695"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "799790704/2645267625",
+              "selected_candidate_P": "1599581408/39679014375",
+              "saved_selected_candidate_K": "1739454256/39679014375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "10489216/25540515",
+              "selected_candidate_P": "5244608/127702575",
+              "saved_selected_candidate_K": "5244608/127702575"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "10489216/25540515",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 23,
+          "supported_private_cap_sum": "1/21",
+          "B_P_max": "68434648/791319375",
+          "G_P_pair": "68434648/16617706875",
+          "saved_B_K_max": "71785888/791319375",
+          "saved_G_K_pair": "71785888/16617706875",
+          "G_pair_saving": "856/4244625",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "165724333/179365725",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "18204044/25897725",
+              "selected_candidate_P": "9102022/129488625",
+              "saved_selected_candidate_K": "74127664/1017410625"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "34217324/52754625",
+              "selected_candidate_P": "68434648/791319375",
+              "saved_selected_candidate_K": "71785888/791319375"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "245539006/333107775",
+              "selected_candidate_P": "122769503/1665538875",
+              "saved_selected_candidate_K": "5834216/76871025"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "165724333/179365725",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "26363648/75579075",
+              "selected_candidate_P": "52727296/1133686125",
+              "saved_selected_candidate_K": "3650048/75579075"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "34210545856/104928949125",
+              "selected_candidate_P": "68421091712/1573934236875",
+              "saved_selected_candidate_K": "29732608/635933025"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "668527744/2141407125",
+              "selected_candidate_P": "1337055488/32121106875",
+              "saved_selected_candidate_K": "57044224/1284844275"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "66414976/176351175",
+              "selected_candidate_P": "33207488/881755875",
+              "saved_selected_candidate_K": "4816192/125965125"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "10139648/25193025",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 29,
+          "supported_private_cap_sum": "1/27",
+          "B_P_max": "624335288/8001118125",
+          "G_P_pair": "624335288/216030189375",
+          "saved_B_K_max": "60071008/727374375",
+          "saved_G_K_pair": "60071008/19639108125",
+          "G_pair_saving": "485944/2880402525",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "238937441/259083825",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "63612256/87284925",
+              "selected_candidate_P": "31806128/436424625",
+              "saved_selected_candidate_K": "19786904/263773125"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "312167644/533407875",
+              "selected_candidate_P": "624335288/8001118125",
+              "saved_selected_candidate_K": "60071008/727374375"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "66000992/86361275",
+              "selected_candidate_P": "33000496/431806375",
+              "saved_selected_candidate_K": "2892028/37011975"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "238937441/259083825",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "343168576/999323325",
+              "selected_candidate_P": "686337152/14989849875",
+              "saved_selected_candidate_K": "237599104/4996616625"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "5452280576/16322280975",
+              "selected_candidate_P": "10904561152/244834214625",
+              "saved_selected_candidate_K": "4016128/85278375"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "69376192/237934125",
+              "selected_candidate_P": "138752384/3569011875",
+              "saved_selected_candidate_K": "1058855104/24983083125"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "172907296/466350885",
+              "selected_candidate_P": "86453648/2331754425",
+              "saved_selected_candidate_K": "7979696/211977675"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "102659584/259083825",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 31,
+          "supported_private_cap_sum": "1/29",
+          "B_P_max": "4965992/63669375",
+          "G_P_pair": "4965992/1846411875",
+          "saved_B_K_max": "47303008/573024375",
+          "saved_G_K_pair": "47303008/16617706875",
+          "G_pair_saving": "521816/3323541375",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "17104691/18555075",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "4541576/6251175",
+              "selected_candidate_P": "2270788/31255875",
+              "saved_selected_candidate_K": "128614876/1719073125"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "2482996/4244625",
+              "selected_candidate_P": "4965992/63669375",
+              "saved_selected_candidate_K": "47303008/573024375"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "6806396/8933925",
+              "selected_candidate_P": "3403198/44669625",
+              "saved_selected_candidate_K": "1446014/18555075"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "17104691/18555075",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "267291392/781539759",
+              "selected_candidate_P": "534582784/11723096385",
+              "saved_selected_candidate_K": "252373504/5328680175"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "5040756992/15196606425",
+              "selected_candidate_P": "10081513984/227949096375",
+              "saved_selected_candidate_K": "116467712/2486717415"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "3152756224/10854718875",
+              "selected_candidate_P": "6305512448/162820783125",
+              "saved_selected_candidate_K": "458003968/10854718875"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "3366941056/9117963855",
+              "selected_candidate_P": "1683470528/45589819275",
+              "saved_selected_candidate_K": "244181312/6512831325"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "1542121472/3907698795",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 37,
+          "supported_private_cap_sum": "1/35",
+          "B_P_max": "3426004/42706125",
+          "G_P_pair": "3426004/1494714375",
+          "saved_B_K_max": "681965936/8071457625",
+          "saved_G_K_pair": "681965936/282501016875",
+          "G_pair_saving": "405308/3323541375",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "70798517/76871025",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "698736968/968574915",
+              "selected_candidate_P": "349368484/4842874575",
+              "saved_selected_candidate_K": "257229752/3459196125"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "1713002/2847075",
+              "selected_candidate_P": "3426004/42706125",
+              "saved_selected_candidate_K": "681965936/8071457625"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "1713335992/2331754425",
+              "selected_candidate_P": "856667996/11658772125",
+              "saved_selected_candidate_K": "341848/4521825"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "70798517/76871025",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "1584448/4672161",
+              "selected_candidate_P": "3168896/70082415",
+              "saved_selected_candidate_K": "108620416/2312719695"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "4113947392/12591473895",
+              "selected_candidate_P": "8227894784/188872108425",
+              "saved_selected_candidate_K": "4016128/86837751"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "38273728/132914925",
+              "selected_candidate_P": "76547456/1993723875",
+              "saved_selected_candidate_K": "483995968/11563598475"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "4542368/12405393",
+              "selected_candidate_P": "2271184/62026965",
+              "saved_selected_candidate_K": "7430672/199864665"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "422341120/1079269191",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 5,
+          "private_prime": 41,
+          "supported_private_cap_sum": "1/39",
+          "B_P_max": "5325784/68385625",
+          "G_P_pair": "5325784/2667039375",
+          "saved_B_K_max": "456573344/5539235625",
+          "saved_G_K_pair": "456573344/216030189375",
+          "G_pair_saving": "5036968/43206037875",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 2
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "165096013/179365725",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "43433728/60428025",
+              "selected_candidate_P": "21716864/302140125",
+              "saved_selected_candidate_K": "175999304/2373958125"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "7988676/13677125",
+              "selected_candidate_P": "5325784/68385625",
+              "saved_selected_candidate_K": "456573344/5539235625"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "45064784/59788575",
+              "selected_candidate_P": "22532392/298942875",
+              "saved_selected_candidate_K": "1978756/25623675"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "165096013/179365725",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "9342208/27673569",
+              "selected_candidate_P": "18684416/415103535",
+              "saved_selected_candidate_K": "32347648/691839225"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "32969477888/101700366075",
+              "selected_candidate_P": "65938955776/1525505491125",
+              "saved_selected_candidate_K": "108544/2361555"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "4/15",
+              "unsupported_sum_P": "330574592/1153065375",
+              "selected_candidate_P": "661149184/17295980625",
+              "saved_selected_candidate_K": "13098752/314472375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "1/5",
+              "unsupported_sum_P": "117682816/322858305",
+              "selected_candidate_P": "58841408/1614291525",
+              "saved_selected_candidate_K": "8535232/230613075"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "0",
+              "unsupported_sum_P": "17967104/46122615",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 11,
+          "supported_private_cap_sum": "1/9",
+          "B_P_max": "43716754432/847503050625",
+          "G_P_pair": "43716754432/7627527455625",
+          "saved_B_K_max": "43716754432/847503050625",
+          "saved_G_K_pair": "43716754432/7627527455625",
+          "G_pair_saving": "0",
+          "maximizing_addresses": [
+            {
+              "root": 2,
+              "row": 3
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "4069383064/8071457625",
+              "selected_candidate_P": "4069383064/94167005625",
+              "saved_selected_candidate_K": "4069383064/94167005625"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1010087308/2331754425",
+              "selected_candidate_P": "1010087308/27203801625",
+              "saved_selected_candidate_K": "326030272/8071457625"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "507620416/1153065375",
+              "selected_candidate_P": "507620416/13452429375",
+              "saved_selected_candidate_K": "531824288/13452429375"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "4069383064/8071457625",
+              "selected_candidate_P": "4069383064/94167005625",
+              "saved_selected_candidate_K": "4069383064/94167005625"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "2793152/6330555",
+              "selected_candidate_P": "2793152/73856475",
+              "saved_selected_candidate_K": "44783912/1107847125"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "4069383064/8071457625",
+              "selected_candidate_P": "2034691532/56500203375",
+              "saved_selected_candidate_K": "2034691532/56500203375"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "4069383064/8071457625",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "43716754432/72643118625",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "3604777576/6995263275",
+              "selected_candidate_P": "1802388788/48966842925",
+              "saved_selected_candidate_K": "375252964/9793368585"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "20193959872/44969549625",
+              "selected_candidate_P": "20193959872/524644745625",
+              "saved_selected_candidate_K": "20956003072/524644745625"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "43716754432/72643118625",
+              "selected_candidate_P": "43716754432/847503050625",
+              "saved_selected_candidate_K": "43716754432/847503050625"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "28070882816/62957369475",
+              "selected_candidate_P": "28070882816/734502643875",
+              "saved_selected_candidate_K": "179227136/4451531175"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "4199195992/8071457625",
+              "selected_candidate_P": "2099597996/56500203375",
+              "saved_selected_candidate_K": "22020772/570709125"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "43716754432/72643118625",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 13,
+          "supported_private_cap_sum": "1/11",
+          "B_P_max": "9007401472/200318902875",
+          "G_P_pair": "9007401472/2203507931625",
+          "saved_B_K_max": "1835170304/40063780575",
+          "saved_G_K_pair": "166833664/40063780575",
+          "G_pair_saving": "1439744/18833401125",
+          "maximizing_addresses": [
+            {
+              "root": 2,
+              "row": 4
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "382103984/733768875",
+              "selected_candidate_P": "382103984/8560636875",
+              "saved_selected_candidate_K": "382103984/8560636875"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "2560707788/5723397225",
+              "selected_candidate_P": "2560707788/66772967625",
+              "saved_selected_candidate_K": "275250112/6603919875"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "9534656/20964825",
+              "selected_candidate_P": "9534656/244589625",
+              "saved_selected_candidate_K": "16624544/407649375"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "433960456/943417125",
+              "selected_candidate_P": "433960456/11006533125",
+              "saved_selected_candidate_K": "3209701312/77045731875"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "7273808/14387625",
+              "selected_candidate_P": "7273808/167855625",
+              "saved_selected_candidate_K": "22279552/503566875"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "382103984/733768875",
+              "selected_candidate_P": "191051992/5136382125",
+              "saved_selected_candidate_K": "191051992/5136382125"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "382103984/733768875",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "11143503872/19811759625",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "13782260384/28616986125",
+              "selected_candidate_P": "6891130192/200318902875",
+              "saved_selected_candidate_K": "287352656/8012756115"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1715425024/4088140875",
+              "selected_candidate_P": "1715425024/47694976875",
+              "saved_selected_candidate_K": "5349486592/143084930625"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1629387776/3962351925",
+              "selected_candidate_P": "1629387776/46227439125",
+              "saved_selected_candidate_K": "2996564992/77045731875"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "9007401472/17170191675",
+              "selected_candidate_P": "9007401472/200318902875",
+              "saved_selected_candidate_K": "1835170304/40063780575"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "3211008224/6603919875",
+              "selected_candidate_P": "1605504112/46227439125",
+              "saved_selected_candidate_K": "185468272/5136382125"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "11143503872/19811759625",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 17,
+          "supported_private_cap_sum": "1/15",
+          "B_P_max": "272454832/6277800375",
+          "G_P_pair": "272454832/94167005625",
+          "saved_B_K_max": "272454832/6277800375",
+          "saved_G_K_pair": "272454832/94167005625",
+          "G_pair_saving": "0",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "272454832/538097175",
+              "selected_candidate_P": "272454832/6277800375",
+              "saved_selected_candidate_K": "272454832/6277800375"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "104947972/241215975",
+              "selected_candidate_P": "104947972/2814186375",
+              "saved_selected_candidate_K": "328138816/8071457625"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "255753376/538097175",
+              "selected_candidate_P": "255753376/6277800375",
+              "saved_selected_candidate_K": "261488336/6277800375"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "309739064/691839225",
+              "selected_candidate_P": "309739064/8071457625",
+              "saved_selected_candidate_K": "454272064/11300040675"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "4679776/10550925",
+              "selected_candidate_P": "4679776/123094125",
+              "saved_selected_candidate_K": "14928832/369282375"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "272454832/538097175",
+              "selected_candidate_P": "136227416/3766680225",
+              "saved_selected_candidate_K": "136227416/3766680225"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "272454832/538097175",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "308448247808/566616325275",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "150486752/322858305",
+              "selected_candidate_P": "75243376/2260008135",
+              "saved_selected_candidate_K": "204139952/5876021151"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "5496487168/11563598475",
+              "selected_candidate_P": "5496487168/134908648875",
+              "saved_selected_candidate_K": "39120376576/944360542125"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1556916736/3907698795",
+              "selected_candidate_P": "1556916736/45589819275",
+              "saved_selected_candidate_K": "82695321088/2203507931625"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "15242430976/37774421685",
+              "selected_candidate_P": "15242430976/440701586325",
+              "saved_selected_candidate_K": "97282048/2670918705"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "325567328/691839225",
+              "selected_candidate_P": "162783664/4842874575",
+              "saved_selected_candidate_K": "155683568/4451531175"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "308448247808/566616325275",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 19,
+          "supported_private_cap_sum": "1/17",
+          "B_P_max": "239379632/5539235625",
+          "G_P_pair": "239379632/94167005625",
+          "saved_B_K_max": "239379632/5539235625",
+          "saved_G_K_pair": "239379632/94167005625",
+          "G_pair_saving": "0",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "239379632/474791625",
+              "selected_candidate_P": "239379632/5539235625",
+              "saved_selected_candidate_K": "239379632/5539235625"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "178267564/411486075",
+              "selected_candidate_P": "178267564/4800670875",
+              "saved_selected_candidate_K": "132544/3274425"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "31811168/67827375",
+              "selected_candidate_P": "31811168/791319375",
+              "saved_selected_candidate_K": "6521408/158263875"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "272131528/610446375",
+              "selected_candidate_P": "272131528/7121874375",
+              "saved_selected_candidate_K": "1995967936/49853120625"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "13979744/31652775",
+              "selected_candidate_P": "13979744/369282375",
+              "saved_selected_candidate_K": "8909632/221569425"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "239379632/474791625",
+              "selected_candidate_P": "119689816/3323541375",
+              "saved_selected_candidate_K": "119689816/3323541375"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "239379632/474791625",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "20659070464/38458121625",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "1703497408/3703374675",
+              "selected_candidate_P": "851748704/25923622725",
+              "saved_selected_candidate_K": "177420328/5184724545"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "76482513152/166651860375",
+              "selected_candidate_P": "76482513152/1944271704375",
+              "saved_selected_candidate_K": "78240753152/1944271704375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "3023701312/7691624325",
+              "selected_candidate_P": "3023701312/89735617125",
+              "saved_selected_candidate_K": "5540563904/149559361875"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "13271872448/33330372075",
+              "selected_candidate_P": "13271872448/388854340875",
+              "saved_selected_candidate_K": "84608512/2356692975"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "1984418624/4273124625",
+              "selected_candidate_P": "992209312/29911872375",
+              "saved_selected_candidate_K": "3470008/100713375"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "20659070464/38458121625",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 23,
+          "supported_private_cap_sum": "1/21",
+          "B_P_max": "577461232/13452429375",
+          "G_P_pair": "577461232/282501016875",
+          "saved_B_K_max": "577461232/13452429375",
+          "saved_G_K_pair": "577461232/282501016875",
+          "G_pair_saving": "0",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "577461232/1153065375",
+              "selected_candidate_P": "577461232/13452429375",
+              "saved_selected_candidate_K": "577461232/13452429375"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1357221949/2997969975",
+              "selected_candidate_P": "1357221949/34976316375",
+              "saved_selected_candidate_K": "26524912/640591875"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "2881216/6588945",
+              "selected_candidate_P": "2881216/76871025",
+              "saved_selected_candidate_K": "75488096/1921775625"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "656076488/1482512625",
+              "selected_candidate_P": "656076488/17295980625",
+              "saved_selected_candidate_K": "4836925376/121071864375"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1981984/4521825",
+              "selected_candidate_P": "1981984/52754625",
+              "saved_selected_candidate_K": "6352064/158263875"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "577461232/1153065375",
+              "selected_candidate_P": "288730616/8071457625",
+              "saved_selected_candidate_K": "288730616/8071457625"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "577461232/1153065375",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "16488359936/31132765125",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "1432076992/2997969975",
+              "selected_candidate_P": "716038496/20985789825",
+              "saved_selected_candidate_K": "147293152/4197157965"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "7614068096/19272664125",
+              "selected_candidate_P": "7614068096/224847748125",
+              "saved_selected_candidate_K": "7918885376/224847748125"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "2411667968/6226553025",
+              "selected_candidate_P": "2411667968/72643118625",
+              "saved_selected_candidate_K": "4430020096/121071864375"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "17647765504/44969549625",
+              "selected_candidate_P": "17647765504/524644745625",
+              "saved_selected_candidate_K": "40573952/1144679445"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "1668239168/3459196125",
+              "selected_candidate_P": "834119584/24214372875",
+              "saved_selected_candidate_K": "960224/27176625"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "16488359936/31132765125",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 29,
+          "supported_private_cap_sum": "1/27",
+          "B_P_max": "641074744/15113223125",
+          "G_P_pair": "641074744/408057024375",
+          "saved_B_K_max": "641074744/15113223125",
+          "saved_G_K_pair": "641074744/408057024375",
+          "G_pair_saving": "0",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "641074744/1295419125",
+              "selected_candidate_P": "641074744/15113223125",
+              "saved_selected_candidate_K": "641074744/15113223125"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "114519364/259083825",
+              "selected_candidate_P": "114519364/3022644625",
+              "saved_selected_candidate_K": "31267616/777251475"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "719466464/1665538875",
+              "selected_candidate_P": "719466464/19431286875",
+              "saved_selected_candidate_K": "755772272/19431286875"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "2186141368/4996616625",
+              "selected_candidate_P": "2186141368/58293860625",
+              "saved_selected_candidate_K": "16048228096/408057024375"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "11890352/27432405",
+              "selected_candidate_P": "11890352/320044725",
+              "saved_selected_candidate_K": "1916416/48491625"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "641074744/1295419125",
+              "selected_candidate_P": "320537372/9067933875",
+              "saved_selected_candidate_K": "320537372/9067933875"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "641074744/1295419125",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "164529446912/314786847375",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "417596224/896828625",
+              "selected_candidate_P": "208798112/6277800375",
+              "saved_selected_candidate_K": "2798569888/81611404875"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "834793472/2141407125",
+              "selected_candidate_P": "834793472/24983083125",
+              "saved_selected_candidate_K": "6083439104/174881581875"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "24078142976/62957369475",
+              "selected_candidate_P": "24078142976/734502643875",
+              "saved_selected_candidate_K": "44138732032/1224171073125"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "3253439488/8071457625",
+              "selected_candidate_P": "3253439488/94167005625",
+              "saved_selected_candidate_K": "1334669312/37096093125"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "1215644384/2690485875",
+              "selected_candidate_P": "607822192/18833401125",
+              "saved_selected_candidate_K": "82998992/2473072875"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "164529446912/314786847375",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 31,
+          "supported_private_cap_sum": "1/29",
+          "B_P_max": "137498668/3247138125",
+          "G_P_pair": "137498668/94167005625",
+          "saved_B_K_max": "137498668/3247138125",
+          "saved_G_K_pair": "137498668/94167005625",
+          "G_pair_saving": "0",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "137498668/278326125",
+              "selected_candidate_P": "137498668/3247138125",
+              "saved_selected_candidate_K": "137498668/3247138125"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "136466452/310134825",
+              "selected_candidate_P": "136466452/3618239625",
+              "saved_selected_candidate_K": "15633808/389656575"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "17145904/39760875",
+              "selected_candidate_P": "17145904/463876875",
+              "saved_selected_candidate_K": "2572904/66268125"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "22327736/51121125",
+              "selected_candidate_P": "22327736/596413125",
+              "saved_selected_candidate_K": "1147431584/29224243125"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "472264/1091475",
+              "selected_candidate_P": "472264/12733875",
+              "saved_selected_candidate_K": "1507232/38201625"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "137498668/278326125",
+              "selected_candidate_P": "68749334/1948282875",
+              "saved_selected_candidate_K": "68749334/1948282875"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "137498668/278326125",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "11743172608/22544416125",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "2086268992/4508883225",
+              "selected_candidate_P": "1043134496/31562182575",
+              "saved_selected_candidate_K": "2798569888/82061674695"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "12651483392/32564156625",
+              "selected_candidate_P": "12651483392/379915160625",
+              "saved_selected_candidate_K": "5644442368/162820783125"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1718527744/4508883225",
+              "selected_candidate_P": "1718527744/52603637625",
+              "saved_selected_candidate_K": "3150533888/87672729375"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "64475392/166995675",
+              "selected_candidate_P": "64475392/1948282875",
+              "saved_selected_candidate_K": "144407552/4144529025"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "3510478016/7514805375",
+              "selected_candidate_P": "1755239008/52603637625",
+              "saved_selected_candidate_K": "18244256/531349875"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "11743172608/22544416125",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 37,
+          "supported_private_cap_sum": "1/35",
+          "B_P_max": "113545216/2690485875",
+          "G_P_pair": "113545216/94167005625",
+          "saved_B_K_max": "113545216/2690485875",
+          "saved_G_K_pair": "113545216/94167005625",
+          "G_pair_saving": "0",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "113545216/230613075",
+              "selected_candidate_P": "113545216/2690485875",
+              "saved_selected_candidate_K": "113545216/2690485875"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "84555032/199864665",
+              "selected_candidate_P": "84555032/2331754425",
+              "saved_selected_candidate_K": "260224/6588945"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "166592/387585",
+              "selected_candidate_P": "166592/4521825",
+              "saved_selected_candidate_K": "2972512/76871025"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "129043364/296502525",
+              "selected_candidate_P": "129043364/3459196125",
+              "saved_selected_candidate_K": "948827168/24214372875"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "20481088/46122615",
+              "selected_candidate_P": "20481088/538097175",
+              "saved_selected_candidate_K": "4276064/107619435"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "113545216/230613075",
+              "selected_candidate_P": "56772608/1614291525",
+              "saved_selected_candidate_K": "56772608/1614291525"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "113545216/230613075",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "9654132736/18679659075",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "61232672/138367845",
+              "selected_candidate_P": "30616336/968574915",
+              "saved_selected_candidate_K": "82998992/2518294779"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "4457568256/11563598475",
+              "selected_candidate_P": "4457568256/134908648875",
+              "saved_selected_candidate_K": "272941568/7935802875"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1412750848/3735931815",
+              "selected_candidate_P": "1412750848/43585871175",
+              "saved_selected_candidate_K": "2590378496/72643118625"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1474868224/3735931815",
+              "selected_candidate_P": "1474868224/43585871175",
+              "saved_selected_candidate_K": "1334669312/37774421685"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "955634368/2075517675",
+              "selected_candidate_P": "477817184/14528623725",
+              "saved_selected_candidate_K": "18244256/538097175"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "9654132736/18679659075",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        },
+        {
+          "head": 7,
+          "private_prime": 41,
+          "supported_private_cap_sum": "1/39",
+          "B_P_max": "1321254104/31389001875",
+          "G_P_pair": "1321254104/1224171073125",
+          "saved_B_K_max": "1321254104/31389001875",
+          "saved_G_K_pair": "1321254104/1224171073125",
+          "G_pair_saving": "0",
+          "maximizing_addresses": [
+            {
+              "root": 1,
+              "row": 0
+            }
+          ],
+          "candidates": [
+            {
+              "root": 1,
+              "row": 0,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1321254104/2690485875",
+              "selected_candidate_P": "1321254104/31389001875",
+              "saved_selected_candidate_K": "1321254104/31389001875"
+            },
+            {
+              "root": 1,
+              "row": 1,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "77713876/179365725",
+              "selected_candidate_P": "77713876/2092600125",
+              "saved_selected_candidate_K": "21393632/538097175"
+            },
+            {
+              "root": 1,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "164761952/384355125",
+              "selected_candidate_P": "164761952/4484143125",
+              "saved_selected_candidate_K": "173042224/4484143125"
+            },
+            {
+              "root": 1,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "1501815256/3459196125",
+              "selected_candidate_P": "1501815256/40357288125",
+              "saved_selected_candidate_K": "11028641152/282501016875"
+            },
+            {
+              "root": 1,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "504208/1172325",
+              "selected_candidate_P": "504208/13677125",
+              "saved_selected_candidate_K": "14486656/369282375"
+            },
+            {
+              "root": 1,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "1321254104/2690485875",
+              "selected_candidate_P": "660627052/18833401125",
+              "saved_selected_candidate_K": "660627052/18833401125"
+            },
+            {
+              "root": 1,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "1321254104/2690485875",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 0,
+              "row_mass": "0",
+              "unsupported_sum_P": "112198221824/217929355875",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            },
+            {
+              "root": 2,
+              "row": 1,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "2193024704/4842874575",
+              "selected_candidate_P": "1096512352/33900122025",
+              "saved_selected_candidate_K": "75637024/2260008135"
+            },
+            {
+              "root": 2,
+              "row": 2,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "3985015808/10377588375",
+              "selected_candidate_P": "3985015808/121071864375",
+              "saved_selected_candidate_K": "4147947008/121071864375"
+            },
+            {
+              "root": 2,
+              "row": 3,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "16418335232/43585871175",
+              "selected_candidate_P": "16418335232/508501830375",
+              "saved_selected_candidate_K": "30106545664/847503050625"
+            },
+            {
+              "root": 2,
+              "row": 4,
+              "row_mass": "6/35",
+              "unsupported_sum_P": "326124032/854624925",
+              "selected_candidate_P": "326124032/9970624125",
+              "saved_selected_candidate_K": "35375104/1027276425"
+            },
+            {
+              "root": 2,
+              "row": 5,
+              "row_mass": "1/7",
+              "unsupported_sum_P": "99632871104/217929355875",
+              "selected_candidate_P": "49816435552/1525505491125",
+              "saved_selected_candidate_K": "6410144/190236375"
+            },
+            {
+              "root": 2,
+              "row": 6,
+              "row_mass": "0",
+              "unsupported_sum_P": "112198221824/217929355875",
+              "selected_candidate_P": "0",
+              "saved_selected_candidate_K": "0"
+            }
+          ]
+        }
+      ],
+      "evaluation_counts": {
+        "pair_supports": 18,
+        "row_candidates": 216,
+        "shared_eight_factor_cells": 630,
+        "scalar_P_factors_in_cell_products": 5040,
+        "scalar_P_table_entries": 630
+      },
+      "interpretation": "negative limit blocks this stronger additive allowance at sufficiently large finite depths; no actual covering is established"
+    }
+  },
+  "both_margins_positive": false,
+  "common_reserve_if_both_positive": null,
+  "reserve_rule": "one half of the smaller limiting margin, only if both are positive; a new finite threshold is required",
+  "continuation_boundary": "raw Xi bounds persist by domination; saved Top_h84 initialization and continuation are not reused at changed mass",
+  "remaining_scope": "pure ternary powers, singleton nonternary supports, unrestricted head incidences and primes outside the declared inventory remain excluded",
+  "execution": {
+    "python": "3.14.3",
+    "isolated": true,
+    "site_disabled": true,
+    "bytecode_disabled": true
+  },
+  "checks": 5076
+}
