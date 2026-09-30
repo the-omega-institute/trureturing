@@ -1,0 +1,10 @@
+**推论328.2（固定正价格保持对数增长指数）。** 对每个固定 $\lambda>0$，两种实现类分别满足
+
+$$
+\boxed{
+\lim_{\delta\downarrow0}
+\frac{\log\mathcal V_a^{\mathcal C}(\delta,\lambda)}
+{\log\log(1/\delta)}=1.}
+\tag{328.6}
+$$
+

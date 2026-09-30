@@ -1,0 +1,11 @@
+### 331.6 慢降价路径仍然发散
+
+第326节与第328节的逐路径价格比较给，在 $0<\lambda\le1$、足够小 $\delta$ 时，
+
+$$
+\mathcal V_a^{\mathcal C}(\delta,\lambda)
+\ge c\lambda^a L\exp(-C\sqrt{\log L}),
+\qquad L=\log(1/\delta).
+\tag{331.23}
+$$
+

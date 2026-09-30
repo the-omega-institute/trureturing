@@ -12,7 +12,7 @@ namespace D5.S3.Quantum.GNSMatrix
 open scoped ComplexOrder MatrixOrder Matrix.Norms.Frobenius
 open Matrix
 
-private theorem frobenius_norm_sq_eq_trace {d : Type*} [Fintype d]
+theorem frobenius_norm_sq_eq_trace {d : Type*} [Fintype d]
     (A : Matrix d d ℂ) :
     ((‖A‖ ^ 2 : ℝ) : ℂ) = Matrix.trace (Aᴴ * A) := by
   have hNorm : ‖A‖ ^ 2 = ∑ i, ∑ j, ‖A i j‖ ^ 2 := by

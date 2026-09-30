@@ -1,0 +1,100 @@
+**定理323.6（有界增量和共同条件漂移）。** 不要求世界空间紧。假设存在常数 $0<\mu\le C<\infty$，使所有实际世界、形式历史及来源动作满足
+
+$$
+0\le c(h,a,y)\le C,
+\qquad
+\sum_y\kappa_\theta(y\mid h,a)c(h,a,y)\ge\mu.
+\tag{323.12}
+$$
+
+置
+
+$$
+r=1-\frac{\mu}{C}(1-e^{-1}),
+\qquad a=-\frac C2\log r>0,
+\qquad \rho=\sqrt r\in(0,1).
+\tag{323.13}
+$$
+
+则对任意 $s>0$，令
+
+$$
+A_s=\sum_{n=1}^{\infty}
+\bigl(n^s-(n-1)^s\bigr)\rho^n<\infty.
+\tag{323.14}
+$$
+
+每份停止策略在每个实际世界满足扩展实数不等式
+
+$$
+\boxed{
+\mathbb E T^s\le C^s\mathbb E M^s,
+\qquad
+\mathbb E M^s\le a^{-s}\mathbb E T^s+A_s.}
+\tag{323.15}
+$$
+
+特别地，统一钟矩有限与统一调用矩有限等价。
+
+**证明。** 对任意 $\lambda>0$，函数 $x\mapsto e^{-\lambda x}$ 凸，其在 $[0,C]$ 上的图像不高于端点连线。因此任意已知历史及所选来源都满足
+
+$$
+\mathbb E(e^{-\lambda c}\mid h,a)
+\le1-\frac{1-e^{-\lambda C}}{C}\mathbb E(c\mid h,a)
+\le1-\frac\mu C(1-e^{-\lambda C}).
+\tag{323.16}
+$$
+
+再对随机选择的来源取条件平均，界保持。对任意强制查询表沿历史迭代条件期望，在 $\lambda=1/C$ 时得到
+
+$$
+\mathbb E e^{-T_n/C}\le r^n.
+\tag{323.17}
+$$
+
+Markov 不等式给
+
+$$
+q_n(an)\le e^{an/C}r^n=\rho^n.
+\tag{323.18}
+$$
+
+这也证明式（323.2）：固定 $b$ 后，对足够大的 $n$ 有 $b\le an$，故 $q_n(b)\le\rho^n$。
+
+对停止策略，由引理323.1及钟增量非负性，
+
+$$
+\Pr(M\ge n)
+\le\Pr(T\ge an)+\rho^n.
+\tag{323.19}
+$$
+
+记 $w_n=n^s-(n-1)^s>0$。非负尾和公式及 Tonelli 给
+
+$$
+\begin{aligned}
+\mathbb E M^s
+&=\sum_{n\ge1}w_n\Pr(M\ge n)\\
+&\le\mathbb E\sum_{n\ge1}w_n\mathbf1_{\{T\ge an\}}+A_s\\
+&\le a^{-s}\mathbb E T^s+A_s.
+\end{aligned}
+\tag{323.20}
+$$
+
+对有限 $T$，中间随机和恰为 $\lfloor T/a\rfloor^s$；对 $T=\infty$，按扩展实数解释。级数 $A_s$ 收敛，因为 $w_n\le n^s$，而多项式乘几何尾可求和。另一方向逐路径有 $T\le CM$，取正幂与期望即可。所有常数不依赖实际世界，故取世界与请求上确界仍成立。证毕。
+
+若只需用钟矩控制调用矩，则上述假设还可减弱为共同的截断条件漂移：存在 $0<\mu\le C<\infty$，使全部 $\theta,h,a$ 满足
+
+$$
+\mathbb E\bigl(\min\{c,C\}\mid h,a\bigr)\ge\mu.
+\tag{323.20a}
+$$
+
+因为 $e^{-c/C}\le e^{-\min\{c,C\}/C}$，对截断增量应用端点连线估计，式（323.17）—（323.20）仍成立。因此相同常数给 $\mathbb E M^s\le a^{-s}\mathbb E T^s+A_s$ 及共同低钟条件，不要求真实单步增量有统一上界。但此时不再由该条件得到 $T\le CM$ 或反向矩界。
+
+式（323.20a）也等价于存在共同 $\epsilon,p>0$，使每个条件行都有 $\Pr(c\ge\epsilon\mid h,a)\ge p$。后一条件给 $\mathbb E\min\{c,\epsilon\}\ge\epsilon p$。前一条件则由
+$\mathbb E\min\{c,C\}\le\mu/2+C\Pr(c>\mu/2)$
+推出 $\Pr(c>\mu/2)\ge\mu/(2C)$，从而可取 $\epsilon=\mu/2$、$p=\mu/(2C)$。这里等价的是存在某些共同常数，不是同一组常数逐字相等。
+
+该证明没有假设停止时间与钟增量独立，也没有把一阶 Wald 恒等式直接升级到任意实阶矩。所用条件指数矩估计是标准 Chernoff 方法；其在这里承担从逐历史真实标定到统一费用比较的桥梁。
+

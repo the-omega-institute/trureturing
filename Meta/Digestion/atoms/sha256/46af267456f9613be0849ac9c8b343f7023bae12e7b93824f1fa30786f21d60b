@@ -1,0 +1,41 @@
+**定理346.1（地板和与有限层成本）。** 存在共同 \(c,C>0\)，使每份 \(A^{[J]}\in\mathfrak G_J\) 满足
+
+\[
+\boxed{
+c\left(1+\sum_{k<J}\eta_k\right)
+\le H_a(A^{[J]})
+\le C\left(1+\sum_{k<J}\eta_k\right).}
+\tag{346.15}
+\]
+
+同型上下界对每一个世界、每一种请求的参考矩都成立。无限类满足
+
+\[
+\boxed{
+H_a(A)<\infty
+\quad\Longleftrightarrow\quad
+\sum_{k\ge0}\eta_k<\infty.}
+\tag{346.16}
+\]
+
+若地板和发散，则参考临界矩在每个世界、每种请求中都为无穷。
+
+有限程序的任务矩逐世界满足
+
+\[
+\boxed{
+\mathbb E^{A^{[J]},w,S}N_T^a
+\ge c\left(\eta_0^{-a}+\sum_{k<J}\eta_k^{1-a}\right).}
+\tag{346.17}
+\]
+
+特别地，若 \(H_a(A^{[J]})\le K\)，则
+
+\[
+\mathbb E^{A^{[J]},w,S}N_T^a
+\ge cJ,\qquad
+\boxed{\mathbb E^{A^{[J]},w,S}N_T^a
+\ge c\,J^a/K^{a-1}.}
+\tag{346.18}
+\]
+

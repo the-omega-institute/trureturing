@@ -1,0 +1,22 @@
+**证明。** 链式法则给
+
+$$
+\partial_a\partial_bG
+=\sum_{j,k}(\partial_j\partial_kg)
+(\partial_ap_j)(\partial_bp_k)
++\sum_j(\partial_jg)\partial_a\partial_bp_j.
+\tag{312.28}
+$$
+
+又有 $\partial_cG=\sum_k(\partial_kg)J_{kc}$。代入式（312.25），Jacobian与其逆矩阵相消，联络项准确等于式（312.28）的最后一项。相减得到第一式，第一阶链式法则给第二式。Loewner序在矩阵合同变换下保持，遂得式（312.27）。证毕。
+
+这不是停止记录统计模型的Amari mixture connection声明。实际信息矩阵 $C(p)$ 含有 $\mathbb E_pN_j$ 的参数依赖，本文没有证明它的统计联络等于上述选定结构。这也不是Fisher度量的Levi-Civita Hessian：即使一源预算 $a>0$ 固定，其度量 $a/[p(1-p)]$ 的Levi-Civita系数为
+
+$$
+\frac12\partial_p\log\frac a{p(1-p)}
+=\frac{2p-1}{2p(1-p)},
+\tag{312.29}
+$$
+
+一般不为零。若一些 $a_j=0$，预算张量还可能退化，不能无条件称为正定Riemann度量。
+

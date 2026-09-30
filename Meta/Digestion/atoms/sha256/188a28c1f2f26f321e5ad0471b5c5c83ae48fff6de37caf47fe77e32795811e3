@@ -1,0 +1,109 @@
+### 330.5 可求和余量与归一化控制行
+
+把严格余量改为
+
+$$
+\delta_k=\frac14b^{-ak}(k+1)^{-2}.
+\tag{330.20}
+$$
+
+它满足
+
+$$
+\sum_kn_k^a\delta_k<\infty,\qquad
+\delta_{k-1}-\delta_k\ge(1-b^{-a})\delta_{k-1},
+\qquad
+\delta_{k-1}\asymp n_k^{-a}(k+1)^{-2}.
+\tag{330.21}
+$$
+
+仍令 $\widehat\ell_k=(1-\delta_k)\ell_k$、
+$\widehat u_k=(1-\delta_k)u_k+\delta_k$。对 $k\ge1$，三分类控制行的未归一化分子为
+
+$$
+\begin{aligned}
+P_{1,k}
+&=(1-\delta_k)\Lambda_k
+ +(\delta_{k-1}-\delta_k)E_k\ell_{k-1},\\
+P_{0,k}
+&=(1-\delta_k)\Upsilon_k
+ +(\delta_{k-1}-\delta_k)(1-E_ku_{k-1}),\\
+P_{c,k}
+&=(1-\delta_k)\Gamma_k+\delta_k,\\
+D_k
+&=P_{1,k}+P_{0,k}+P_{c,k}\\
+&=(1-\delta_{k-1})E_k\Gamma_{k-1}+\delta_{k-1}.
+\end{aligned}
+\tag{330.22}
+$$
+
+这些等式逐 Bernstein 系数成立。三个分支依次表示输出一、输出零与继续下一参考级。
+
+在缩放坐标 $z=\sqrt{n_k}x$ 中，引理330.3给
+
+$$
+\left\|n_k^aP_{i,k,t}(z/\sqrt{n_k})\right\|_{C^\beta_z}
++
+\left\|n_k^aD_{k,t}(z/\sqrt{n_k})\right\|_{C^\beta_z}
+\le C,
+\qquad i\in\{1,0,c\}.
+\tag{330.23}
+$$
+
+范数区间为 $[0,x^\dagger\sqrt{n_k}]$，常数与其长度无关。对于差与增量，这直接来自式（330.15）。单系数项乘了 $\delta_{k-1}$；例如其缩放 Hölder 半范数为
+
+$$
+n_k^a\delta_{k-1}n_k^{-\beta/2}
+[\ell_{k-1,t}^{(r_\beta)}]_\theta
+=
+\delta_{k-1}[\ell_{k-1,t}^{(r_\beta)}]_\theta,
+\tag{330.24}
+$$
+
+故式（330.16）也足够。低阶导数和振幅按同样缩放控制。
+
+由式（330.13）、（330.15）及（330.21），
+
+$$
+P_{1,k,t},P_{0,k,t},P_{c,k,t}
+\ge c n_k^{-a}(k+1)^{-2},
+\qquad
+D_{k,t}\le Cn_k^{-a}.
+\tag{330.25}
+$$
+
+按第327节的两次条件二分类，实际需要模拟的任务成功率为
+
+$$
+f_{1,k,t}=\frac{P_{1,k,t}}{D_{k,t}},\qquad
+f_{2,k,t}=
+\frac{P_{0,k,t}}{P_{0,k,t}+P_{c,k,t}}.
+\tag{330.26}
+$$
+
+两函数及其补概率均至少为 $e_k=c(k+1)^{-2}$；可减小固定 $c$，使 $e_k\le1/4$。
+
+缩放后的分子分母有式（330.23）的固定 $C^\beta$ 界，分母至少 $c(k+1)^{-2}$。有限阶商法则、乘积 Hölder 界以及
+
+$$
+\left|\frac1{d(x)}-\frac1{d(y)}\right|
+\le\frac{|d(x)-d(y)|}{(\inf d)^2}
+$$
+
+给某个固定有限指数 $J$，使
+
+$$
+\begin{aligned}
+\|f_{i,k,t}^{(m)}\|_\infty
+&\le C(k+1)^J n_k^{m/2}
+&& (0\le m\le r_\beta),\\
+[f_{i,k,t}^{(r_\beta)}]_\theta
+&\le C(k+1)^J n_k^{a}.
+\end{aligned}
+\tag{330.27}
+$$
+
+$J$ 不依赖 $k,t$。第二个函数直接使用式（330.26）的分子分母，仍满足同一型估计。初始级 $k=0$ 的概率为
+$\widehat\ell_{0,t}$、$1-\widehat u_{0,t}$、
+$\widehat u_{0,t}-\widehat\ell_{0,t}$；它们具有固定 $C^\beta$ 界和固定正余量，扩大常数后也纳入式（330.27）。
+

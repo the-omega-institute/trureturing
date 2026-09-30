@@ -1,0 +1,19 @@
+**证明。** 每步增量 $G_p(pH)=G_p(H)/p$。写 $L=\log H,h=\log p$，因 $p\mid H$ 有 $L\ge h>0$，而
+
+$$
+L(L+2h)^2-(L+h)^3=h(L^2+Lh-h^2)>0.
+$$
+
+所以 $((L+2h)/(L+h))^2>(L+h)/L$，取对数得 $b_p(pH)>b_p(H)/2\ge b_p(H)/p$。归纳保持预算覆盖与正余量。$\square$
+
+$H=10080,p=2$ 是有证书的例子：
+
+$$
+Z(10080)=\frac{39}{10},\quad G_2(10080)=\frac{13}{420},\quad
+\Delta(10080)>\frac2{125},\quad b_2(10080)>\frac{89}{750}>\frac{13}{420}.
+$$
+
+用 $e^\gamma>89/50$、$\log\log10080>11/5$ 得余量界；用 $\log2>2/3$、$\log20160<10$ 与式 (144.3) 得预算界。精确区间程序使用 atanh 对数展开的有理尾界，$N=1000$ 的调和数以及既有 `RobinRationalBasis.eulerMascheroni_remainder_bounds` 的两侧界；指数下界用 $\gamma>577/1000$ 后的六项 Taylor 下和。输出端点向外取整，不以浮点近似判正。
+
+这只给 $10080\cdot2^j$ 射线的一种预算解释；既有 `SevenSmooth.robin_seven_smooth` 已覆盖它及全部大于 5040 的七光滑整数，故不称为新增安全族。固定有限素支撑下的 Euler 乘积上界也不能控制不断加入新素数的路径。
+

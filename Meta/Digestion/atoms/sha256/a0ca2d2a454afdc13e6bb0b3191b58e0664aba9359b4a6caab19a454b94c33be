@@ -1,0 +1,22 @@
+**推论348.6（非整数精度的配置容量）。** 设 \(A_\epsilon\) 是任意逐精度选择的控制器族，其完整目标误差至多 \(\epsilon\)，可达非终端配置数为 \(d(\epsilon)\)。则对充分小的正 \(\epsilon\)，
+
+\[
+\boxed{\displaystyle
+d(\epsilon)\ge
+\frac1{4\pi^2\beta}
+\left[
+\log\frac{|\sin(\pi\beta)|}{4\epsilon}
+\right]^2,}
+\tag{348.39}
+\]
+
+并且
+
+\[
+\boxed{\displaystyle
+\liminf_{\epsilon\downarrow0}
+\frac{d(\epsilon)}{\log^2(1/\epsilon)}
+\ge\frac1{4\pi^2\beta}.}
+\tag{348.40}
+\]
+

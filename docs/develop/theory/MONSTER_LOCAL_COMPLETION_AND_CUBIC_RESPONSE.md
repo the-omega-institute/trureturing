@@ -1156,14 +1156,78 @@ $$
 
 证明。引理 35.1 把左边化为 $\det(x,y,z)$。三个向量都位于 $\langle g,h\rangle$，故行列式为零。任意二元标签组成仍留在该平面；此结论不包含辅助八元数的乘法系数、三周期或实际 OPE。
 
-## 36. 三次恢复的有限坐标形式
+## 36. 实对称矩阵有序三脉冲的无维数二阶偏差
+
+**定理 36.1（Frobenius 控制下的有序三脉冲实部偏差）。** 令 $I$ 为任意有限指标集，$A,B,C\in\operatorname{Mat}_I(\mathbb R)$ 均为对称矩阵，$L\in\mathbb R_{\ge0}$，且三者的真实 Frobenius 范数分别满足 $\|A\|_F,\|B\|_F,\|C\|_F\le L$。将这些矩阵逐项复化，对 $X\in\{A,B,C\}$ 和所有实数 $s$ 定义
+
+$$
+D_X(s)=\int_0^1\exp(irsX)X\,dr.
+$$
+
+于是 $D_X(0)=X$；当 $s\ne0$ 时，此定义等于 $D_X(s)=(\exp(isX)-I)/(is)$。对每个 $t\in\mathbb R_{>0}$，保持 $A,B,C$ 的所给乘法次序，有
+
+$$
+\left|\operatorname{Re}\operatorname{Tr}_{\mathbb C}
+  \bigl(D_A(t)D_B(t)D_C(t)\bigr)
+  -\operatorname{Tr}_{\mathbb R}(ABC)\right|
+\le\frac54L^5t^2.
+$$
+
+该上界对 $|I|$ 没有额外因子；不要求 $A,B,C$ 两两交换。
+
+证明。复化保持各矩阵的 Frobenius 范数。对任意复矩阵 $X,Y,Z$，Hilbert--Schmidt 配对的 Cauchy--Schwarz 不等式与矩阵乘法的欧氏算子范数估计给出
+
+$$
+|\operatorname{Tr}(XYZ)|
+=|\langle X^*,YZ\rangle_{\rm HS}|
+\le\|X\|_F\|Y\|_{\rm op}\|Z\|_F.
+$$
+
+迹的循环性使同一估计适用于任意指定一个因子取算子范数、另两个因子取 Frobenius 范数，而不颠倒三个因子的循环次序。逐列 Cauchy--Schwarz 还给 $\|X\|_{\rm op}\le\|X\|_F$；以上各式对空指标集也成立。
+
+对一个给定的实对称 $X$，$\exp(irsX)$ 是酉矩阵，且与 $X$ 交换。有限维谱分解或矩阵指数的逐项微分允许在上面的紧区间积分内对 $s$ 求导；对 $p=0,1,2$ 有
+
+$$
+D_X^{(p)}(s)=\int_0^1(ir)^p\exp(irsX)X^{p+1}\,dr.
+$$
+
+左乘酉矩阵保持 Frobenius 范数和欧氏算子范数。由 $\|X^{p+1}\|_F\le\|X\|_{\rm op}^{p}\|X\|_F$ 与 $\|X^{p+1}\|_{\rm op}\le\|X\|_{\rm op}^{p+1}$，积分三角不等式以及 $\int_0^1r^pdr=1/(p+1)$，得到对所有实数 $s$ 的共同界
+
+$$
+\max\!\left\{\|D_X^{(p)}(s)\|_F,\,
+\|D_X^{(p)}(s)\|_{\rm op}\right\}
+\le\frac{L^{p+1}}{p+1}\qquad(p=0,1,2).
+$$
+
+记 $F(s)=\operatorname{Tr}(D_A(s)D_B(s)D_C(s))$，乘积始终按 $A,B,C$ 的次序。两次求导产生三个单因子二阶项与六个双因子一阶项。每个单因子项对二阶因子及另一个零阶因子取 Frobenius 范数，对剩余零阶因子取算子范数；每个双因子项对两个一阶因子取 Frobenius 范数，对剩余零阶因子取算子范数。上述混合迹界于是逐项给
+
+$$
+|F''(s)|
+\le 3\left(\frac{L^3}{3}\right)L^2
+   +6\left(\frac{L^2}{2}\right)^2L
+=\frac52L^5.
+$$
+
+由于 $X$ 的所有系数为实数，逐项共轭保留乘法次序并满足 $\overline{D_X(s)}=D_X(-s)$，故 $F(-s)=\overline{F(s)}$。因此实函数 $g(s)=\operatorname{Re}F(s)$ 为偶函数，$g'(0)=0$，且 $g(0)=\operatorname{Tr}_{\mathbb R}(ABC)$。对 $t>0$ 用二阶积分余项，并以 $|g''(s)|\le|F''(s)|$ 估计，得到
+
+$$
+|g(t)-g(0)|
+\le\int_0^t(t-s)\frac52L^5\,ds
+=\frac54L^5t^2.
+$$
+
+这正是所述结论。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 37. 三次恢复的有限坐标形式
 
 取 $W=\mathbb R^n$、$B=\mathbb R\times W$、$e=(1,0)$，并定义
 $\langle(a,u),(b,v)\rangle_B=3ab+\langle u,v\rangle_W$。设 $B$ 上有实双线性、交换的乘法，满足 $e\cdot x=x$ 及
 $\langle x\cdot y,z\rangle_B=\langle x,y\cdot z\rangle_B$。令
 $Q(u,v)=\operatorname{pr}_W((0,u)\cdot(0,v))$。这一归一化与式（MC.10）一致；Griess 代数的相应不变形式参见 [M01, §3.1]。
 
-**命题 36.1（有限坐标的乘法恢复）。** 对上述任意 $B$ 及所有 $a,b\in\mathbb R$、$u,v\in W$，
+**命题 37.1（有限坐标的乘法恢复）。** 对上述任意 $B$ 及所有 $a,b\in\mathbb R$、$u,v\in W$，
 
 $$
 (a,u)\cdot(b,v)=\left(ab+\frac{\langle u,v\rangle_W}{3},\;av+bu+Q(u,v)\right).
@@ -1175,7 +1239,7 @@ $3\operatorname{pr}_{\mathbb R}((0,u)\cdot(0,v))
 =\langle(0,u),(0,v)\rangle_B=\langle u,v\rangle_W$。
 乘积的 $W$ 分量按 $Q$ 的定义确定；再由双线性及单位律展开两个加数。证毕。
 
-**命题 36.2（固定单位的正交延拓判据）。** 设 $U\in O(W)$，且 $\widehat U(a,u)=(a,Uu)$。则 $\widehat U$ 保持上述 $B$ 的乘法，当且仅当
+**命题 37.2（固定单位的正交延拓判据）。** 设 $U\in O(W)$，且 $\widehat U(a,u)=(a,Uu)$。则 $\widehat U$ 保持上述 $B$ 的乘法，当且仅当
 $UQ(u,v)=Q(Uu,Uv)$ 对所有 $u,v\in W$ 成立。
 
-证明。若 $\widehat U$ 保持乘法，将其等式限制到 $(0,u),(0,v)$ 并取 $W$ 分量，得到所需条件。反向代入命题 36.1 的乘法式；标量分量由 $U$ 的正交性保持，$W$ 分量由 $U$ 的线性及所给条件保持。证毕。
+证明。若 $\widehat U$ 保持乘法，将其等式限制到 $(0,u),(0,v)$ 并取 $W$ 分量，得到所需条件。反向代入命题 37.1 的乘法式；标量分量由 $U$ 的正交性保持，$W$ 分量由 $U$ 的线性及所给条件保持。证毕。

@@ -1,0 +1,34 @@
+### 326.3 带可调插值比例的局部预算
+
+令 $\vartheta(h)=\log(p(h)/(1-p(h)))$，$\vartheta_0=\vartheta(0)$，并选有限 $D>0$ 使
+
+$$
+0\le\vartheta_0-\vartheta(h)\le Dh
+\qquad(0\le h\le\eta).
+\tag{326.10}
+$$
+
+记 $\Delta=\vartheta_0-\vartheta(\eta)>0$。对每个实数 $r\ge2$，令
+
+$$
+L_r=rDH,\qquad
+c_*=(DH)^2/8.
+\tag{326.11}
+$$
+
+可取常数 $C_0\ge1$，只依赖固定模型及 $m$，使
+
+$$
+n\ge C_0r^2
+\tag{326.12}
+$$
+
+同时保证 $H/\sqrt n\le\eta$，以及外侧自然参数
+
+$$
+\vartheta_1(n,r)=\vartheta_0-L_r/\sqrt n
+\tag{326.13}
+$$
+
+对应的增益属于 $(0,\eta]$。例如选 $C_0$ 同时不小于 $(DH/\Delta)^2$ 与 $(H/\eta)^2$ 即可。
+

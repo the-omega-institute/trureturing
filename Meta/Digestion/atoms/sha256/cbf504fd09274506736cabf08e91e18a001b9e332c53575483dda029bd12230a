@@ -1,0 +1,28 @@
+**定义 126.1（一般模数的连续时域）。** 本节复用定义 120.1 的来源与定理 117.3 的实际支持，不另设来源机制。令 $\mathbb N$ 包含零，固定
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad q=(2,3),\qquad
+C=\begin{pmatrix}2&3\\3&5\end{pmatrix},\qquad
+C^{-1}=\begin{pmatrix}5&-3\\-3&2\end{pmatrix}.
+$$
+
+一个来源 $v=(a,b)\in\mathbb N^2$ 给出 $(n,z)=Cv$、$y_0=n$、$y_1=z$ 与 $y_{k+2}=y_{k+1}+y_k$；因而 $y_k=F_{k-1}n+F_kz=qM^kv$（$k\ge1$）。固定 $n$ 时，准确支持及逆式为
+
+$$
+A_n=\left\lceil\frac{3n}{2}\right\rceil,\quad
+B_n=\left\lfloor\frac{5n}{3}\right\rfloor,\quad
+I_n=[A_n,B_n]\cap\mathbb Z,\quad
+L_n=\max(0,B_n-A_n+1),\quad
+v=(5n-3z,2z-3n).
+$$
+
+每个 $z\in I_n$ 都有且只有这个非负整数来源。对 $H\ge1$，$T_H$ 是使任意两个实际来源的前 $T_H$ 项 $\gcd(y_k,H)$ 相同即可推出全部正时刻相同的最小非负整数。前 $T$ 项严格为 $k=1,\ldots,T$，$T=0$ 为空；全局没有免费供应 $n$、$g_0$ 或共同含量，两个来源的 $n$ 可以不同。局部量 $L_p(e)$ 对模 $p^e$、所有整数初始对作同样定义，负数的 gcd 取绝对值。本节将证明它也恰是实际非负来源上的局部最小值。
+
+对两个局部未来，首次分离为
+
+$$
+\Delta=\min\{k\ge1:\gcd(y_k,p^e)\ne\gcd(y'_k,p^e)\},
+$$
+
+永不分离时记为 $\infty$。长度 $T$ 充分，等价于每个有限的 $\Delta$ 都不超过 $T$。本节目标只是 gcd 全未来，不是完整数量、组成或树的恢复。
+

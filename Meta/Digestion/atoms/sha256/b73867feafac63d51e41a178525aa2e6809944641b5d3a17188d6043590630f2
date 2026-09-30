@@ -1,0 +1,85 @@
+### 315.6 实际合法曲线上的参考尾常数
+
+固定
+$$
+c_0\in(l,1),\qquad1<\lambda<c_0/l,\qquad
+\theta=\frac{\lambda-1}{R}>0.
+\tag{315.27}
+$$
+给定基点 \(h>0\)，保持
+$$
+p_h=\frac{1-c_0h/C}{B}
+$$
+不变，令增益 \(v\in[h,\lambda h]\)，同时取
+$$
+j=0,\qquad c(v)=r(v)=\frac{c_0h}{v},\qquad
+q(v)=\frac{1-v/C}{B}.
+\tag{315.28}
+$$
+若 \(\lambda h\le1/4\)，则
+\(r(v)\in[c_0/\lambda,c_0]\Subset(l,1)\)。每个点都由原合法来源实现，且任务流的观察律保持不变。
+
+对目标任务请求的事件 \(A=(1,0)\)，目标为
+$$
+G^{[h]}(v)=p_h/2-\varepsilon v^\beta.
+\tag{315.29}
+$$
+固定参考预算 \(n\) 和这条曲线，第315.5节先让总截断 \(k\to\infty\)，利用仿射 \(q(v)\) 得
+$$
+\left|
+\Delta_t^R\big[v\mapsto F_n^H(p_h,q(v))\big](h)
+\right|
+\le D_*t^RT_{H,m}(n),
+$$
+$$
+T_{H,m}(n)=
+\sup_{\mathrm{合法},S}\mathbb E(N_{H,S}\wedge n)^m,
+\tag{315.30}
+$$
+只要所有差分点合法。由式（315.24），误差差分不超过 \(2^RQ_H(n)\)。
+
+取 \(t=\theta h\)，则差分点从 \(h\) 延伸到
+\(h+R\theta h=\lambda h\)，恰在上述合法曲线上。任务概率常数项被消去，故
+$$
+|\Delta_{\theta h}^RG^{[h]}(h)|
+=\varepsilon d_{\beta,R,\theta}h^\beta,
+$$
+$$
+d_{\beta,R,\theta}
+=|(\beta)_R|
+\int_{[0,\theta]^R}
+(1+s_1+\cdots+s_R)^{\beta-R}\,ds_1\cdots ds_R>0.
+\tag{315.31}
+$$
+等价地，它为
+$$
+|(\beta)_R|\theta^R
+\int_{[0,1]^R}
+(1+\theta(s_1+\cdots+s_R))^{\beta-R}\,ds_1\cdots ds_R.
+$$
+
+现在对每个充分大整数 \(n\) 取 \(h_n=n^{-1/2}\)。当 \(n\ge(4\lambda)^2\)，所有差分点合法。虽然 \(p_{h_n}\) 随 \(n\) 改变，但有限参考预算的常数不含 \(p\)，尾包络与截断矩上确界也覆盖全实际域；并未把不相容来源拼成一个实现。
+
+对每个固定 \(n\) 先完成 \(k\to\infty\)，再结合式（315.24）、（315.30）、（315.31），得到
+$$
+\varepsilon d_{\beta,R,\theta}
+\le D_*\theta^R n^{a-m}T_{H,m}(n)
++2^Rn^aQ_H(n).
+\tag{315.32}
+$$
+设 \(L_H=\limsup n^aQ_H(n)\)。若无穷，所需下界平凡；若有限，将引理315.2用于参考截断尾和，便有
+$$
+\boxed{
+c_H=
+\frac{\varepsilon d_{\beta,R,\theta}}
+{2^R+D_*\theta^R m/(m-a)},\qquad
+\limsup_{n\to\infty}n^aQ_H(n)\ge c_H>0.}
+\tag{315.33}
+$$
+全程没有对任务调用矩作假设。这完成定理315.1 的参考部分。
+
+若单独请求目标参考来源，式（315.29）变为
+\(q(v)/2-\varepsilon v^\beta\)；第一项在 \(v\) 中仿射，仍被 \(R\ge2\) 阶差分消去。因此两种请求各自都具有同类型的参考尾障碍，完整接口的最大尾包络满足式（315.33）。
+
+常数 \(c_H\) 可依 \(l,c_0,\lambda\)，没有声称在合法内域退化时仍一致为正。已知固定 \(c=1\) 的合同不在这里：两种旧币同律时，可以把辅助工厂全部交给任务流，参考计数为零，或在要求来源首币身份时仅保留一次参考调用。那种合同没有式（315.28）的合法参考变化方向。
+

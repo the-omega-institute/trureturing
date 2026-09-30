@@ -1,0 +1,27 @@
+**定理 316.2（严格两侧的最优实阶费用）。** 固定非整数 $\beta>0$，令 $a=\beta/2$。当 $\delta\downarrow0$，有
+
+$$
+\boxed{
+\mathcal C_s(\delta)\asymp\mathcal C_s^H(\delta)\asymp
+\begin{cases}
+1,&0<s<a,\\
+\delta^{\,1-s/a},&s>a.
+\end{cases}}
+\tag{316.3}
+$$
+
+在临界 $s=a$，本节证明的是存在正常数 $b,B_0,\delta_0$，使
+
+$$
+\boxed{
+b\le\mathcal C_a(\delta)\le B_0(1+\log(1/\delta)),
+\qquad
+b\le\mathcal C_a^H(\delta)\le B_0(1+\log(1/\delta))
+}
+\tag{316.4}
+$$
+
+在 $0<\delta<\delta_0$ 成立；没有证明对数下界或最优临界阶。若 $\beta$ 为正整数，则对全部固定 $s>0$，两类费用均为 $\Theta(1)$。
+
+每个比较常数可依固定已知参数与 $s$，不依程序或 $\delta$。另加实际首枚来源身份要求时，严格两侧的渐近阶和临界窗口仍成立：上界满足该身份，下界在更大的纯核恢复类中证明。
+
