@@ -13,9 +13,10 @@ internal static class GitRepositorySnapshotReader
     // readContents only projects regular bodies, never entries or link bytes.
     // FILEMAP policy bytes are retained for the same structural validation and
     // effective inventory as the full reader. pathspecs bound enumeration itself:
-    // a scoped reader never probes paths outside them, so its cost follows its
-    // inputs rather than the repository size. Include the policy documents in
-    // the scope when links inside it must be validated.
+    // a scoped reader probes only paths inside them plus the referents of links it
+    // retains, so its cost follows its inputs rather than the repository size, and
+    // each retained link is validated as the full reader validates it. Include the
+    // policy documents in the scope when links inside it must be validated.
     internal static RawRepositorySnapshot ReadCurrent(string repositoryRoot, Func<string, bool>? include = null,
         Func<string, bool>? readContents = null, IReadOnlyList<string>? pathspecs = null)
         => ReadCurrentCore(repositoryRoot, include, null, readContents, pathspecs);
@@ -35,6 +36,39 @@ internal static class GitRepositorySnapshotReader
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         var root = Path.GetFullPath(repositoryRoot);
+        var read = Collect(root, include, visit, readContents, pathspecs);
+        if (pathspecs is not null)
+        {
+            // A referent that is not itself an enumerated path may lie wholly or partly
+            // outside the scope. Chains and links inside target directories are rejected,
+            // so one widening reaches every path the full reader checks for these links.
+            var discovered = read.Paths.ToHashSet(StringComparer.Ordinal);
+            var missing = read.Entries.Where(entry => read.Links.Contains(entry.Path))
+                .Select(static entry => FileMapSymlinkPolicy.Referent(entry.Path, entry.Bytes.AsSpan()))
+                .OfType<string>()
+                .Where(referent => !discovered.Contains(referent))
+                .Distinct(StringComparer.Ordinal)
+                .Order(StringComparer.Ordinal)
+                .ToArray();
+            if (missing.Length > 0)
+                read = Collect(root, include, visit, readContents,
+                    [.. pathspecs, .. missing.Select(static referent => ":(literal)" + referent)]);
+        }
+
+        FileMapSymlinkPolicy.ValidateSnapshot(read.Entries, read.Links, read.Paths, path =>
+        {
+            FileMapSymlinkPolicy.RequirePlainAncestors(root, path, read.InspectedDirectories);
+            var info = new FileInfo(Path.Combine(root, path));
+            return info.Exists || Directory.Exists(info.FullName) || info.LinkTarget is not null;
+        });
+        return RawRepositorySnapshot.Create(read.Entries, read.Inventory.ToImmutable());
+    }
+
+    private static (ImmutableArray<RawRepositoryEntry>.Builder Entries,
+        ImmutableArray<RepositoryPathInventoryEntry>.Builder Inventory, HashSet<string> Links, string[] Paths,
+        HashSet<string> InspectedDirectories) Collect(string root, Func<string, bool>? include,
+        Action<RawRepositoryEntry>? visit, Func<string, bool>? readContents, IReadOnlyList<string>? pathspecs)
+    {
         string[] scope = pathspecs is null ? [] : ["--", .. pathspecs];
         var tracked = ParseIndex(Git(root, ["ls-files", "--stage", "-z", .. scope]));
         var paths = tracked.Keys
@@ -128,13 +162,7 @@ internal static class GitRepositorySnapshotReader
             }
         }
 
-        FileMapSymlinkPolicy.ValidateSnapshot(entries, links, paths, path =>
-        {
-            FileMapSymlinkPolicy.RequirePlainAncestors(root, path, inspectedDirectories);
-            var info = new FileInfo(Path.Combine(root, path));
-            return info.Exists || Directory.Exists(info.FullName) || info.LinkTarget is not null;
-        });
-        return RawRepositorySnapshot.Create(entries, inventory.ToImmutable());
+        return (entries, inventory, links, paths, inspectedDirectories);
     }
 
     internal static RawRepositorySnapshot ReadRevision(string repositoryRoot, string revision)
