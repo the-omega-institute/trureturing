@@ -18,6 +18,11 @@ from the cyclic return observation alone. The Lean declarations are in
 D5.S3.Geometry.Hyperideal.FibonacciObservation, with the statement-level
 Blueprint at Blueprint/D5/S3/Geometry/Hyperideal/FibonacciObservation.md.
 
+At the concrete modulus 5040 = 5 * 1008, the same Lean theorem gives the
+phase ambiguity. The factor 7 in 5040 = 2^4 * 3^2 * 5 * 7 contributes no
+additional kernel state to this return observation, so this is not a bridge to
+Robin's criterion or RH.
+
 Scope: this is an algebraic obstruction for framed return parameters. It does not
 claim five distinct unmarked manifolds, a general hyperbolic realization, or a
 solution of the minimum-six CFMP problem. The written Sections 133–139 and
