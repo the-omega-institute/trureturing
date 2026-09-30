@@ -7888,3 +7888,115 @@ The retained-first-root instance improves the comparison but still has a73 mean 
 - Reports773/779: full comparison followed by upper-mass trimming and same-source capped continuation.
 
 The new deduction in this document is (FC336)--(FC338) with the labelled induction that licenses it, together with its strict same-mass profile consequence. The surrounding source and ordered-increment interfaces are reused.
+
+## Two actual pure/star layers admit the twenty-prime head through 73
+
+Retaining the first two actual pure and star cylinders in the joint-colour comparison (FC330)–(FC343), with the SAME initial source mass, admits the fixed eight half-clipping steps at 43,47,53,59,61,67,71,73. The resulting head source has mass greater than 93/100000 and fourth moment less than 11310000. Under the inherited analytic premise, the fixed quartic continuation for outside primes greater than 10000 leaves distorted mass greater than 1/1250. The intervening primes remain excluded; the unrestricted odd distinct covering problem remains unresolved.
+
+### Actual source and retained depth
+
+Use either actual FC110 or FC131 grouped assignment, finite N>=max(2,N_+), and the FC159 source contract. The admitted nongroup remainder has old-only ternary height at most one, nonternary support at least two, and excludes additional pure/star labels and shallow grouped labels. This support restriction applies to the nongroup remainder, not to the actual pure/star skeleton. Every original numerical modulus has one phase fixed globally.
+
+Let V={5,7,11,13,17,19,23,29,31,37,41} and R={3} union V. Keep the same actual eta0=mu/D0 from FC230, supported on the complete old survivor, with
+
+    eta0 <= H_R,
+    eta0(total)=h=36518862868606981/1816999451688960000.       (FC349)
+
+At heads p=5,7 the two pure cylinders are (p-1) mod p and (p-2) mod p^2, while the two star cylinders are 0 mod p and 1 mod p^2. Their four first digits are distinct. At each private p>=11 the pure cylinders are 0 mod p and 6 mod p^2, while the star cylinders are 1 mod p and (p+6) mod p^2. The depth-one digits are 0,1; both depth-two cylinders start with 6 and their second digits are 0,1. Thus the four cylinders are pairwise disjoint in every case, and
+
+    u_p=1/p+1/p^2,
+    pure union mass=u_p,
+    pure-plus-star union mass=2u_p.                         (FC350)
+
+The ternary restriction remains avoidance of 0 mod 3. No pure 9 hole is introduced. Stars at 5 are active on ternary root 1; all other nonternary stars are active on root 2. Therefore the actual support domination (FC330) holds with
+
+    a_(p,r)=1-u_p-1_(star p active on r)*u_p,
+    nu_(p,r)(0)=a_(p,r)-1/p>0,
+    nu_(p,r)(j)=(p-1)/p^(j+1), j>=1.                        (FC351)
+
+All actual cylinders through N are still avoided. Retaining two layers only changes the comparison carrier, not the source, its mass or the original phases. The source is fixed before the query layout and convex cost.
+
+### Complete joint-colour comparison
+
+Use the unchanged labelled induction (FC331)–(FC338) with (FC351). For one common symbolic run vector j define pi_r(j)=product_p nu_(p,r)(j_p), B(j)=product_p(1+j_p), l(j)=min(pi_1(j),pi_2(j)) and w(j)=max(pi_1(j),pi_2(j)). Its scalar comparison Xi has contributions
+
+    load B(j):       mass l(j)/3,
+    load v B(j):     mass 2*w(j)/3^v, v>=2,
+    Xi(total)=(product_p a_(p,1)+product_p a_(p,2))/3 >= h.   (FC352)
+
+For every finite complete query layout Phi and nonnegative increasing convex f, integral f(L_Phi) deta0 <= integral f dXi. This is one query-independent comparison for the same physical source. The shared original label inventory gives C_1(j,K)+C_2(j,K)<=B(j)K; no label is independently assigned to both roots and no physical maximizing arrangement is assumed.
+
+For each zero set S={p:j_p=0}, let Z_r(S)=product_(p in S)(a_(p,r)-1/p). Formula (FC343) computes every complete moment of order 0,1,2,4 using all 2048 zero sets, with min/max taken AFTER the whole Z_r products. Every infinite run height remains included. Exact atoms through load 256 use 70291 pattern/load cells before the scalar pushforward. All thresholds and trim cutoffs in the declared continuation are at most 256, so the retained complete moments and low atoms determine their hinges and trims exactly.
+
+Initially replace Xi by Top_h(Xi); its cutoff is 8. This trims only the comparison, leaving (FC349) unchanged.
+
+### Fixed eight-step continuation
+
+Added head originals may have arbitrary finite exponents, including ternary exponents, and arbitrary supports touching a newly processed head prime. Assign each original once to its greatest newly processed prime, retaining its numerical label, fixed phase and complete earlier cofactor. Old-only additions outside FC159 are excluded.
+
+At each q in 43,47,53,59,61,67,71,73 apply the same actual live kernel and all-layout comparison from (FC345), with
+
+    delta=1/2, T=(q-1)/2,
+    H_Pi(T)=W-T*m+sum_(z<T)(T-z)*pi_z,
+    m'=m-H_Pi(T)/T.                                        (FC353)
+
+For positive m', append the normalized cap-two factor of masses 1-2/q at load 1 and 2(q-1)/q^v at loads v>=2, then keep Top_(m') of the product. On the physical side, restrict to actual survivors and apply one family/stage scalar to reach exactly m'. That scalar never depends on the subsequent query or cost. Stop before appending if a candidate mass is nonpositive. These steps define one new consistent source sequence, with the SAME eta0; they do not enlarge any previously fixed later source.
+
+The exact rational results have the following decimal displays:
+
+| Prime | Retained mass | Normalized mean | Top cutoff |
+|---:|---:|---:|---:|
+|43|0.017003657022060640|20.8669919942|12|
+|47|0.014098399547831977|23.7884329253|12|
+|53|0.011566219682665286|27.4845081784|12|
+|59|0.009323807864881972|31.5541660043|16|
+|61|0.007003913212182657|37.9352416356|18|
+|67|0.004951331463408428|45.9777342059|24|
+|71|0.002961351512742737|60.2453929064|32|
+|73|0.000931279492106190|102.3557127058|64|
+
+All eight stages have positive target mass. The final complete moments and short outward bounds are
+
+    M2=13.7627924150819998600031983998422...,
+    M4=11306124.4774209458663597228135... < 11310000,
+    m73>93/100000.                                         (FC354)
+
+Eight cap-two physical updates, restrictions and downward scalings give eta73<=256 H_head. Hence the actual twenty-prime head survivor has Haar mass
+
+    >=m73/256 >93/25600000 >1/300000.                       (FC355)
+
+The head is the twenty odd primes from 3 through 73. Support beyond that head is not inferred merely from its positive endpoint.
+
+### Fixed large-prime tail and the next comparison obstruction
+
+Apply [Report734](../700-749/734-seven-and-eight-full-height-heads-admit-quartic-prime-tails.md) and [Report779](../750-799/779-the-original-capped-source-lowers-the-general-eight-prime-tail-cutoff.md) to the same eta73, with B=10000, ell=8, delta=2/5 and growth exponent 25. Under their analytic prime-product premise, the exact fourth-moment loss coefficient is
+
+    tau4=(5625/6144)*((2ell^2+1)/(2ell^2-1))^25
+       *B/(B-1)^4*sum_(j=0..25)25!/[(25-j)!(3ell)^j].       (FC356)
+
+The inequalities B>=286, ell>=4, 3^ell<=B and 4ell>=25 hold. The final distorted-source reserve satisfies
+
+    m73-M4*tau4=0.000807144654452974282536726060864...
+      >93/100000-11310000*tau4 >1/1250.                    (FC357)
+
+Every admitted finite outside-prime family, with all additional support primes strictly greater than 10000, therefore leaves a common survivor. Original labels, globally fixed phases, arbitrary finite heights and mixed supports are retained in that continuation. Additional support primes in (73,10000] are excluded. The reserve in (FC357) is distorted mass, not a final Haar-density lower bound.
+
+The saved endpoint also identifies a limitation without running another stage. Its complete first moment W satisfies
+
+    W/m73=102.3557127057818217...,
+    W-78*m73=0.02268197575852476896... >1/50.                (FC358)
+
+For any legal constant 0<delta<1 with 1/(1-delta)<=79, the same comparison's candidate at 79 obeys
+
+    m_candidate=m73-H_Pi(78*delta)/[78*(1-delta)]
+      <=[78*m73-W]/[78*(1-delta)] <0.                     (FC359)
+
+This follows directly from (z-78*delta)_+>=z-78*delta. It excludes every constant clipping choice at 79 for this fixed endpoint comparison; it does not bound the actual surviving mass from above. No 79 source, 79 update, clipping search, depth search or order search is used in (FC358)–(FC359). A different comparison or source estimate would need separate proof.
+
+### Reproduction and verification boundary
+
+The [depth-two joint-colour consumer](../../../frontier/cover-geometry/pure-support-profiles/depth_two_coloured_profile.py) and [exact result](../../../frontier/cover-geometry/pure-support-profiles/depth_two_coloured_profile.json) take explicit [arithmetic-library](../../../frontier/cover-geometry/pure-support-profiles/depth_two_profile.py), [coloured-library](../../../frontier/cover-geometry/pure-support-profiles/coloured_star_profile.py) and output paths. They load definitions without invoking either dependency's main or previous finite controls. The new literal controls check the four actual cylinders at 5,7,11; the digit argument above supplies all eleven nonternary axes.
+
+The consumer checks the full support-mass identity, all 2048 zero-pattern coefficients, complete moments, exact low atoms, every fixed stage and the quartic reserve with rational arithmetic. The JSON includes complete high-tail moments, trim certificates, charges and final density. Dependency hashes record provenance without imposing admission or cache gates. The inequalities (FC358) use only saved complete mass and first moment.
+
+These conclusions use ordinary mathematical proofs and exact computation; no new Lean verification is claimed. Their scope remains the FC159 source class, the stated twenty-prime head and the conditional tail above 10000. General old sources and the middle-prime gap remain open.
