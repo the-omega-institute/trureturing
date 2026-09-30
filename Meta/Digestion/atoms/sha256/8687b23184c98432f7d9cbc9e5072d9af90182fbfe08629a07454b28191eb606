@@ -1,0 +1,57 @@
+**定理 12.2（仅连续 $M$ 的混合合同保留正规闭包块）。** $N$ 恰是 $\langle g\rangle$ 在 $\Gamma$ 中的正规闭包。对全部 $d,e\ge2$，混合合同的实际事件效果张成、代数维数及条件充分边界为
+
+$$
+S_{\mathrm{mix}}=\mathcal A_N,\qquad
+\dim_{\mathbb C}\mathcal A_N=d^4\sum_{O\in\mathcal P_N}|O|^2,
+\qquad \rho\longmapsto\mathcal E_N(\rho).
+$$
+
+这里 pinching 保留每条正概率路径的后继块及整条记录分布。任意两联合输入的全部允许历史统计相同，当且仅当其全部 $N$ 轨道完整块相同。$\mathcal A_N$ 也恰为包含全部低层算子、在这些允许酉拉回下不变的最小含幺 $C^*$ 代数。
+
+进一步，每条 $\Gamma$ 轨道由一条或两条 $N$ 轨道组成，且
+
+$$
+\mathcal A_N=\mathcal A_\Gamma
+\quad\Longleftrightarrow\quad
+jp\in Np\quad\text{对所有 }p\in\widehat H.
+$$
+
+证明。直接乘矩阵得
+
+$$
+j^2=I,\qquad jgj=-g^{-1},\qquad C^{-\mathsf T}=gj.
+$$
+
+正规闭包包含 $g$ 及 $jgj=-g^{-1}$，因而包含它们的乘积 $-I$；反之，$N=\langle g,-I\rangle$ 被 $g$ 与 $j$ 的共轭保持。因此它正是所述正规闭包，且 $\Gamma=N\cup Nj$，其中两个陪集允许相同。由于正规性，$j(Np)=N(jp)$，故 $\Gamma p=Np\cup N(jp)$，两个轨道或者相等或者不交。各分割的块矩阵描述立即给出代数相等的判据。
+
+先证所有实际效果的上包含及逐分支充分性。定义 12.1 的展开表明离散 $U_G$ 对 $G=M,J,C$ 将 $\mathcal H_A\otimes\mathbb C^O$ 送到 $\mathcal H_A\otimes\mathbb C^{\gamma_GO}$。正规性保证 $\gamma_GO$ 仍是一条 $N$ 轨道。因此这些离散酉可以置换完整块，并规范化 $\mathcal A_N$。因为 $g\in N$，$U_M$ 保持每一条 $N$ 轨道，故 $L_M,W_M(t)$ 也逐块作用；低层 Kraus 算子与全部 $I_A\otimes Q_O$ 交换。
+
+于是 $\mathcal E_N$ 与每个允许离散酉通道、连续酉通道及低层仪器分支交换，且保持低层偏迹。固定分支的未归一化块可以先 pinching 再更新，或先更新再 pinching，结果相同；分支迹相同。沿有限自适应树归纳，得到全部记录概率相同，正概率时用共同的概率归一化后，后继块仍相同。这里 $U_J$ 可以置换块，充分性不要求每个块投影分别与 $U_J$ 交换。从终端效果反向归纳，同时得到 $S_{\mathrm{mix}}\subseteq\mathcal A_N$。
+
+为证明实际效果的下包含，把定理 11.2 的乘子构造用于此合同，记 $\mathfrak D_{\mathrm{mix}}=\mathfrak D(S_{\mathrm{mix}})$。它含全部低层矩阵，被每个允许酉共轭规范化，且包含于 $S_{\mathrm{mix}}$。将定理 11.3 的两低层 carry 角、非负时间有限插值及 Fourier 反演的论证直接用于 $\mathfrak D_{\mathrm{mix}}$，得到
+
+$$
+\Pi_p\in\mathfrak D_{\mathrm{mix}},\qquad
+I_A\otimes|gp\rangle\langle p|\in\mathfrak D_{\mathrm{mix}}
+\quad(p\in\widehat H).
+$$
+
+再作已允许的离散 $U_J$ 正向共轭，得到
+
+$$
+U_J(I_A\otimes|gp\rangle\langle p|)U_J^\dagger
+=F_{J,gp}F_{J,p}^\dagger\otimes|jgp\rangle\langle jp|
+\in\mathfrak D_{\mathrm{mix}}.
+$$
+
+低层系数是酉，可乘其伴随消去。令 $r=jp$，所得边为 $r\to jgjr=-g^{-1}r$。已有的 $g$ 边与这些 $-g^{-1}$ 边生成 $N=\langle g,-I\rangle$；沿有限轨道路径相乘并取伴随，就得到每条 $N$ 轨道内的全部矩阵单位。结合低层矩阵，有
+
+$$
+\mathcal A_N\subseteq\mathfrak D_{\mathrm{mix}}
+\subseteq S_{\mathrm{mix}}\subseteq\mathcal A_N.
+$$
+
+这证明实际张成等式。任何包含低层全矩阵且在允许拉回下不变的含幺 $C^*$ 代数，也在低层 Kraus 夹乘下保持，所以包含每个实际事件效果；因而包含 $S_{\mathrm{mix}}=\mathcal A_N$，得到所述最小性。有限维迹配对给出统计等价的必要性，块维数相加给出维数公式。
+
+有限等价关系的每个等价类产生全矩阵块，是 Sims, [*Étale groupoids and their C*-algebras*，例 3.3.7](https://arxiv.org/pdf/1710.10897v2)中离散等价关系紧算子块的有限情形。这里用的是 $N$ 轨道等价关系及其矩阵单位；所述代数不认同于另一个保留稳定子资料的变换群胚 crossed product。具体是哪一个等价关系，由上面的允许操作与正规闭包计算决定。$\square$
+

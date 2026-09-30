@@ -1,0 +1,32 @@
+**命题 25.1（对所有时间同号的匹配设置）。** 令 $f(a)=Ma\bmod2$，标准两步 carry 由 $M^2a=f^2(a)+2c_2(a)$ 定义。对已知的无序非零标签对，从下表取一行：用低层置换把初始 $10$ 送到 $a$，最终测量向量 $r_a=(|a\rangle+s|f^2(a)\rangle)/\sqrt2$。
+
+$$
+\begin{array}{c|c|c|c|c|c}
+\{p,q\}&a&Ma\bmod2&f^2(a)&c_2(a)&s\\ \hline
+\{01,11\}&10&01&11&00&+1\\
+\{10,01\}&01&11&10&01&-1\\
+\{10,11\}&11&10&01&11&-1
+\end{array}
+\tag{25.1}
+$$
+
+匹配事件对全部实数 $t$ 满足
+
+$$
+p_-(r_a;t)-p_+(r_a;t)=d(t):=\frac{1-\cos3t}{9}\ge0.
+\tag{25.2}
+$$
+
+证明。由 (24.4)，记 $\Pi_{a,\pm}=(I\pm T_{Ma})/2$，实际矩阵角为
+
+$$
+D_a=(W_t)_{a,a}=A\Pi_{a,+}+B\Pi_{a,-},\qquad
+(W_t)_{f^2(a),a}
+=C\,T_{c_2(a)}V^2(\Pi_{a,+}-x\Pi_{a,-}).
+\tag{25.3}
+$$
+
+每行所选两个标签均满足 $p\cdot Ma=q\cdot Ma=1$，所以对角值都为 $B$，最后括号的值都为 $-x$。把边定向为 $u\to v=g^2u$，其 carry 相位为 $\chi_v(c_2(a))=(-1)^{v\cdot c_2(a)}$；逐行正是 $s=+1,-1,-1$。实际 Kraus 为两角的 $(1,s)/\sqrt2$ 组合，其效果 $(v,u)$ 非对角元为 $-s\chi_v(c_2(a))xC\overline B/2$。$\rho_--\rho_+$ 的高层部分为 $-|u\rangle\langle v|-|v\rangle\langle u|$，故差为
+$\operatorname{Re}(xC\overline B)=(1-\cos3t)/9$，其中
+$xC\overline B=(1+x^{-3}-2x^3)/9$。$\square$
+
