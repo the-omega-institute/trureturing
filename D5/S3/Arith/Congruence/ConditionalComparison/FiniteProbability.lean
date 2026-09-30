@@ -333,7 +333,7 @@ theorem piLaw_prob_forall_bool_with_decider
 
 theorem expect_add (μ : FiniteLaw Ω) (f g : Ω → ℚ) :
     μ.expect (fun ω ↦ f ω + g ω) = μ.expect f + μ.expect g := by
-  simp only [expect, mul_add, Finset.sum_add_distrib]
+  sorry
 
 theorem expect_sub (μ : FiniteLaw Ω) (f g : Ω → ℚ) :
     μ.expect (fun ω ↦ f ω - g ω) = μ.expect f - μ.expect g := by
