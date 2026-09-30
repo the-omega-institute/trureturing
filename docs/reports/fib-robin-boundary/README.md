@@ -170,6 +170,76 @@ was found. §159 explains the separate target-domain argument. The regression
 also exercises the margin CLI on both core values and rejects altered weights,
 missing recurrence states, empty frontiers and invalid cores.
 
+## Sharper joint stopping and sufficient prime resolution
+
+[Axler's totient estimate](../../../Library/notes/axler2023robin.md), retained
+inside his proof, gives the stronger joint cutoff
+`1000000000000/1000000315367`. The rational overlap certificate and complete
+five-direction partition can be reproduced with:
+
+```sh
+python3 -B docs/reports/fib-robin-boundary/axler_cutoff.py \
+  --out /tmp/axler-cutoff.json
+python3 -B docs/reports/fib-robin-boundary/valuation_slices.py \
+  --primes 2 3 5 7 11 --lower 21 13 9 7 6 --caps 31 21 13 11 9 \
+  --threshold 1000000000000/1000000315367 --out /tmp/valuation-slices-axler.json
+```
+
+Keep `axler_cutoff.py` beside `kernel_tail.py`; it imports the rational log
+enclosures. The actual outputs are [`axler_cutoff.json`](axler_cutoff.json)
+and [`valuation_slices_axler.json`](valuation_slices_axler.json). The latter
+has 9,900 cells, including their unbounded tails: 1,144 certified, 8,756
+outside the condition, zero ambiguous, and 42 minimal outside profiles.
+The caps are coordinatewise minimal for deciding this sufficient condition
+by clipped valuations, not for deciding Robin itself. The cutoff certificate
+also checks the joint `(v13,v23) <= (5,4)` condition with both primes present.
+Together with the cited Fibonacci rank formulas, the note gives 84 necessary
+index-divisibility regions for authenticated sources `n=5040*F_j`.
+
+The published analytic inequalities and original large finite verification
+remain literature inputs. These programs do not prove them, establish RH,
+or add Lean results. The earlier Hertlein calculation below remains a valid,
+weaker partition. Comparing the two counts is not a natural-number density
+comparison because the caps and cell sizes differ.
+
+## Joint valuation stopping from the literature
+
+[Hertlein's totient bound and finite-range coverage](../../../Library/notes/hertlein2018robin.md)
+give a stronger stopping test than checking each small-prime direction alone.
+For primes actually dividing the same integer, the product of their local
+factors `1 - p^(-v_p(n)-1)` may already be at most `1771560/1771561`, even
+when none of the separate valuation rules applies.
+
+This literature application covers every `n=M*t` with the exact core
+`M=2^21*3^13*5^9*7^7*11^6` and all prime factors of `t` greater than 11,
+with no bound on the tail support or exponents. The earlier finite support
+certificates are weaker for that exact-core family. Multiplying `M` by small
+primes changes its valuations, so this does not cover all multiples of `M`.
+
+```sh
+python3 -B docs/reports/fib-robin-boundary/valuation_slices.py \
+  --primes 2 3 5 7 11 --lower 21 13 9 7 6 --caps 25 15 11 9 7 \
+  --threshold 1771560/1771561 --out /tmp/valuation-slices.json
+```
+
+[valuation_slices.json](valuation_slices.json) records 270 cells: 17 pass the
+product condition, 253 fail it, and none is ambiguous. A coordinate at its cap
+represents all larger exponents, with its factor bounded above by 1. Thus this
+is an exact classification of the unbounded exponent orthant for that
+condition. The report gives 12 minimal profiles that fail the condition and
+8 maximal regions that pass. General input caps may instead give `OPEN`
+with explicitly listed ambiguous cells.
+
+Together with the existing five separate stopping rules, a hypothetical
+Robin counterexample must be divisible by at least one of those 12 profiles'
+cores: `M*r` with `r` in `{6,14,15,16,20,21,35,44,50,99,110,539}`.
+For the authenticated family `5040*F_j`, the existing rank/lifting formulas
+transport this to `D*r | j`, with `D` as in the index stopping section below.
+Failing this sufficient test does not establish a counterexample.
+The Python program certifies rational factors and the finite partition; the
+analytic Robin implication relies on the cited literature. No new Lean
+theorem, global verification range or proof of RH is claimed.
+
 ## Recursive reserve, index stopping and gluing
 
 ```sh
@@ -533,3 +603,42 @@ FIB §§143–144 使用同一程序的 `projection` 与 `seed_10080` 数据。`
 可移植复现已检查：脚本拷贝到含空格的目录，从另一工作目录、空环境（仅系统 `PATH`）调用 Python 后，默认 JSON 与入库结果逐字节一致；`--H 0` 明确拒绝。平台范围为本次 macOS/Python 运行，未将其泛化为所有平台的实测。
 
 FIB §§147–148 使用新增的 `rank_shell_bounds` 与 `finite_prime_signs` 数据。前者以直接除数和对照时间可见能量的 Möbius 乘积，检查 5040 的单层 7 壳、`37^a*113`（`a=1,2,3,4`）的共同秩 19 壳与 4181 的 113 增量，共六项精确上界、等号及超额检查。后者对 `P={2,3,5,7}` 用整数筛与规范 Zeckendorf 贪心展开，保留 `X=100,1000,10000,100000` 的普通和及数字奇偶加权和，并逐项核对 64 个平方自由倍数计数与其 Möbius 展开。默认运行命令不变；全部旧结果字段保持原值。它们只验证有限实例；碰撞族的极限、固定有限素数集的正均值证明及外部数字正交定理由正文分别说明，不是对实际 Möbius 函数或 RH 的反例。
+
+## Source scale and rank tails (§§162–164)
+
+[`source_scale.py`](source_scale.py) provides exact rational diagnostics for
+Robin estimates on the authenticated source `n = 5040*F_j`. Run:
+
+```sh
+python3 -B docs/reports/fib-robin-boundary/source_scale.py \
+  --out /tmp/fib-robin-source-scale.json
+```
+
+The retained result is [`source_scale.json`](source_scale.json). It checks:
+
+- the source-size thresholds and the three five-prime bootstrap stages;
+- the explicit index `j = D*(223092870)^10`, where even the true-size
+  nine-factor criterion fails but the exact valuation at 29 certifies Robin;
+- budget exhaustion (`UNRESOLVED`), and a different certificate from the
+  genuinely absent prime 59 using the totient padding identity;
+- every arithmetic constant in the rank-tail paper argument, with rational
+  bounds for logarithms or powers bracketing `e`;
+- 77 high-rank buckets from complete factorizations of `F_j`, `1 <= j <= 48`.
+
+Large-index residues use fast doubling and independent matrix powering.
+The adaptive certificate constructs no huge Fibonacci integer. Its optional
+`--index` arguments must be positive multiples of `D`; `--prime-limit` and
+`--valuation-cap` bound the observations for those requested indices. A zero
+residue at the cap is recorded as a lower bound on the valuation, never as an
+exact valuation. Missing primes affect the totient padding factor only.
+The program rejects optimized Python because assertions verify the evidence.
+It uses only the standard library, writes only the requested output, and
+records hashes of itself and its two existing arithmetic dependencies.
+
+The universal conclusion in §164 is a paper synthesis of published Axler
+inputs, classical Fibonacci ranks and valuations, and a new in-repository
+rank-tail derivation. The finite report is not its Lean proof. A current
+scoped build of the existing `D5.S3.Arith.FibonacciRank` succeeded; this does
+not verify the new analytic composition. The source family is one Fibonacci
+term times 5040, not every integer encoded in Zeckendorf form. No RH or
+originality claim is made.
