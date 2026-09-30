@@ -1,4 +1,5 @@
 """Execute native Lake facets in private pinned-toolchain fixture packages."""
+from contextlib import contextmanager
 import hashlib
 import json
 import os
@@ -447,6 +448,43 @@ class NativeArtifactConsumerTests:
                         tempfile.TemporaryDirectory(dir=self.root) as directory:
                     report = publication.unpack(candidate, directory, native.ROW_SUFFIXES)
                     native.validate_module(report, self.root, 'D5.Alone', utility)
+
+    @contextmanager
+    def damaged_production(self):
+        """Real production of D5.Alone whose written origin misstates its report digest."""
+        self.build()
+        environment = dict(self.env)
+        for line in self.run_lake('env').stdout.splitlines():
+            name, _, value = line.partition('=')
+            if value: environment[name] = value
+            else: environment.pop(name, None)
+        state = native.state(self.root)
+        write_origin = publication.write_origin
+        def damaged(report, name, origin):
+            write_origin(report, name, origin)
+            provenance = publication.member(report, '.provenance.json')
+            provenance.write_bytes(materials.canonical_json(
+                dict(json.loads(provenance.read_bytes()), report_sha256='0' * 64)))
+        with patch.dict(os.environ, environment, clear=True), \
+                patch.object(publication, 'write_origin', side_effect=damaged):
+            yield [str(self.root), 'D5.Alone', str(self.root / 'D5/Alone.lean'),
+                   str(state / 'inputs/D5.Alone.json'), str(state / 'producer/bin/reportInspector')]
+
+    def test_production_rejects_an_invalid_module_before_writing_it(self):
+        output = self.root / 'produced/D5.Alone.zip'
+        # The subtest keeps the artifact pin observable when rejection is missing.
+        with self.damaged_production() as arguments, self.subTest(pin='rejection'), self.assertRaisesRegex(
+                ValueError, 'module production origin', msg='[FAIL] production_rejects_invalid_module'):
+            native.module(*arguments, str(output))
+        self.assertFalse(output.exists(), '[FAIL] production_writes_no_invalid_artifact')
+
+    def test_batch_production_rejects_an_invalid_module_before_writing_it(self):
+        output, request = self.root / 'produced/D5.Alone.zip', self.root / 'batch-request.json'
+        with self.damaged_production() as arguments, self.subTest(pin='rejection'), self.assertRaisesRegex(
+                ValueError, 'module production origin', msg='[FAIL] batch_production_rejects_invalid_module'):
+            request.write_text(json.dumps([['produce', [*arguments, str(output)]]]))
+            native.batch(request)
+        self.assertFalse(output.exists(), '[FAIL] batch_production_writes_no_invalid_artifact')
 
     def test_native_producer_inputs(self):
         self.build()
