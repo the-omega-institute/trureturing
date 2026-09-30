@@ -18767,3 +18767,537 @@ $$
 Leonetti–Sanna, https://arxiv.org/pdf/1704.00151v2 ，Lemma 2.4 与 Lemma 2.2(v) 已给 $\sum_{p>y}1/(pz(p))\ll y^{-1/4}$（$y\ge5$）。若不采用引理 191.2 的更强初等估计，可直接将该较弱已发表界代入定理 192.1；则式（192.2）—（192.3）的 $7/12$ 换成 $19/24$，定理 192.2 与推论 192.3 的密度一且共同公因子结论完全保留。两条路线的量词都只覆盖密度一指标，不能由指数改进删除剩余例外。
 
 ## 追加锚（本行以下为增补区）
+
+## 193. 固定 Fibonacci 种子的四次素切面
+
+本节保留 §§191–192 的固定种子与共同公因子合同，增加按递归指标模四选择的素数约束。§194 证明共同素支撑预算的解析界，§195 将两者接回实际规范五窗口来源。这些内容是明确文献输入上的纸面推导，未作新的 Lean 核验；§192 的密度一结论仍保留其原有范围。
+
+固定非零本原种子 $v=(a,b)\in\mathbb Z_{\ge0}^2$，其中 $\gcd(a,b)=1$。沿用
+
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+\psi=\frac{1-\sqrt5}{2},\qquad
+M(a,b)=(b,a+b),\qquad q(a,b)=2a+3b.
+$$
+
+将组成写作 $v=a+b\phi\in R=\mathbb Z[\phi]$，黄金共轭记为 $x\mapsto x'$，迹与范数分别为 $\operatorname{Tr}(x)=x+x'$、$\operatorname{N}(x)=xx'$。记
+
+$$
+Q=\operatorname N(v)=a^2+ab-b^2\ne0,\qquad
+V_j=q(M^jv)=aF_{j+3}+bF_{j+4}\quad(j\ge0),
+$$
+
+其中 $F_0=0,F_1=1$。范数非零来自 $\sqrt5$ 的无理性与 $v\ne0$。本节所有数域、多项式及渐近阈值均随这个固定种子确定，不要求对变化种子一致。
+
+令
+
+$$
+\tau=\frac\phi\psi=-\phi^2,
+\qquad \operatorname N(\tau)=1.
+$$
+
+对每个 $r\in\{0,1,2,3\}$ 定义
+
+$$
+A_r=\operatorname{Tr}(v^2\tau^{r+3}),\qquad
+P_r(X)=Q(X^4-4X^2+2)-A_r\in\mathbb Z[X],
+\qquad D_r=(-1)^{r+1}Q.
+\tag{193.1}
+$$
+
+这里指标余类是递归深度的算术分类，不替换 `[null,2,3,2 5,5]` 的包含模式。
+
+**引理 193.1（实际素因子给出四次根）。** 若 $j=r+4t$、$t\ge0$，且素数 $p\nmid10Q$ 满足 $p\mid V_j$，则整数
+
+$$
+z_t=\operatorname{Tr}(\tau^t)
+$$
+
+满足 $P_r(z_t)\equiv0\pmod p$。因此同一余类中每个实际 $V_j$ 的素因子，除有限异常外，均属于一个固定四次多项式的有根素数集合。
+
+证明。对任意组成 $x=A+B\phi$，$\phi^3x$ 的 $\phi$ 系数恰为 $2A+3B=q(x)$。所以 $p\mid V_j$ 给出
+
+$$
+\phi^{j+3}v=\psi^{j+3}v'
+\quad\text{于 }R/pR.
+$$
+
+因 $p\nmid Q$，元素 $v$ 在该二次代数中可逆；$\phi,\psi$ 也是单位。因此
+
+$$
+\tau^{j+3}=v'/v,\qquad
+v^2\tau^{j+3}=Q.
+$$
+
+置 $u=v^2\tau^{r+3}$，便有 $u\tau^{4t}=Q$ 及 $\operatorname N(u)=Q^2$。取共轭并相加，得到
+
+$$
+A_r=Q(\tau^{4t}+\tau^{-4t})\pmod p.
+$$
+
+对任意范数为一的单位 $y$，直接展开有
+
+$$
+y^4+y^{-4}=(y+y^{-1})^4-4(y+y^{-1})^2+2.
+$$
+
+代入 $y=\tau^t$，即得所需同余。计算在整个二次代数 $R/pR$ 内进行，分裂素数与不分裂素数同时适用；没有把 $R/pR$ 假设成域。$\square$
+
+**引理 193.2（黄金有理范数的二进障碍）。** 方程
+
+$$
+u^2-5w^2=8
+\tag{193.2}
+$$
+
+没有有理数解。
+
+证明。若存在有理数解，清分母得到整数 $A,B,H$，其中 $H\ne0$，满足 $A^2-5B^2=8H^2$。任何非零整数 $A^2-5B^2$ 的二进赋值均为偶数：先从 $A,B$ 提取共同的最大二的幂；剩余二者异奇偶时范数为奇数，二者均奇时由模八计算得范数同余于四，赋值恰为二。提取的共同二的幂只增加偶数赋值。另一方面，$8H^2$ 的二进赋值为 $3+2v_2(H)$，是奇数，矛盾。$\square$
+
+**定理 193.3（四次不可约性的准确判据）。** 对式（193.1）的实际非负种子与每个 $r\in\{0,1,2,3\}$，多项式 $P_r$ 在 $\mathbb Q$ 上不可约，当且仅当 $D_r$ 不是有理数平方。所有这些多项式均可分。
+
+证明。置
+
+$$
+s=(-1)^{r+3},\qquad w=\phi^{r+3}v,
+\qquad T=\operatorname{Tr}(w),\qquad B=[\phi]w=V_r.
+$$
+
+因 $r+3\ge3$ 且种子非负非零，$w$ 的两个整数组成坐标均为正，故 $T>0$、$B>0$。由 $\tau^{r+3}=s\phi^{2r+6}$、$\operatorname N(w)=sQ$，直接计算得到
+
+$$
+A_r+2Q=sT^2,\qquad
+2Q-A_r=-5sB^2.
+\tag{193.3}
+$$
+
+令 $c=(2Q-A_r)/Q$，则 $P_r/Q=X^4-4X^2+c$，且
+
+$$
+4-c=D_r(T/Q)^2,\qquad
+c=-5D_r(B/Q)^2.
+\tag{193.4}
+$$
+
+二者均非零。因此多项式没有重根：其导数为 $4X(X^2-2)$，共同根分别只能在 $c=0$ 或 $4-c=0$ 时出现。
+
+若 $D_r$ 为平方，则 $4-c$ 为平方，分解
+
+$$
+X^4-4X^2+c
+=(X^2-2-\sqrt{4-c})(X^2-2+\sqrt{4-c})
+$$
+
+在 $\mathbb Q[X]$ 中成立。
+
+反过来，设 $D_r$ 非平方。若有有理根 $u$，则 $4-c=(u^2-2)^2$，与式（193.4）矛盾。若可约而无一次因子，则必能写成
+
+$$
+(X^2+uX+b_0)(X^2-uX+d_0),
+\qquad u(d_0-b_0)=0.
+$$
+
+当 $u=0$ 时，$b_0+d_0=-4$、$b_0d_0=c$，再次迫使 $4-c$ 为平方。因此只能 $d_0=b_0$，从而
+
+$$
+c=b_0^2,\qquad u^2=4+2b_0.
+$$
+
+由 $c$ 的平方类为 $-5D_r$，此时 $D_r$ 的平方类只能为 $-5$。存在非零有理数 $k$ 使
+
+$$
+4-b_0^2=-5k^2.
+$$
+
+这里 $u\ne0$，否则 $b_0=-2$ 会给 $4-c=0$。消去 $b_0=(u^2-4)/2$，得到
+
+$$
+u^2(u^2-8)=20k^2,
+\qquad u^2-5(2k/u)^2=8,
+$$
+
+与引理 193.2 矛盾。因此不可约。特别地，$D_r$ 平方类为 $-5$ 的情形也被覆盖，不能把它遗漏为未经处理的例外。$\square$
+
+**推论 193.4（固定四次素支撑的密度上限）。** 若 $D_r$ 非平方，令 $S_r$ 为满足 $P_r$ 在 $\mathbb F_p$ 上有根的素数集合，再加入所有整除 $10Q\operatorname{disc}(P_r)$ 的素数。则
+
+$$
+p\mid V_{r+4t}\Longrightarrow p\in S_r,
+\qquad
+\vartheta_{S_r}(x):=\sum_{\substack{p\le x\\p\in S_r}}\log p
+=\delta_r x+o(x),
+\qquad \delta_r\in\{1/4,3/8\}.
+\tag{193.5}
+$$
+
+证明。第一项由引理 193.1 与有限异常的定义成立。不可约偶四次多项式的四根组成两对相反数；其分裂域 Galois 群保持这两对，故嵌入正方形的二面体群 $D_4$。不可约性使四根上的作用传递，可能的传递子群为 $C_4$、$V_4$、$D_4$。这三个群中至少固定一根的元素比例分别为 $1/4$、$1/4$、$3/8$：两个四阶传递群的作用是正则作用，只有单位元固定根；八阶正方形群中，单位元和两条对角线反射固定根。
+
+排除首项系数及判别式的素因子后，模 $p$ 有根当且仅当 Frobenius 置换固定某根。对这个固定有限 Galois 扩张应用无条件 Chebotarev 密度定理，得到相应素数计数的主项；分部求和给式（193.5）的对数权重形式。有限异常不改变主项。这里得到的是实际递推素因子集合的固定上包络，不断言递推本身的精确素因子密度等于 $\delta_r$。$\square$
+
+## 194. 同一整数的联合素支撑预算与严格余量
+
+本节与 Fibonacci 的具体表达无关。设 $S$ 是固定素数集合，$T$ 为其补集，且
+
+$$
+\vartheta_S(x)=\delta x+o(x),\qquad
+\vartheta_T(x)=(1-\delta)x+o(x),\qquad
+0<\delta\le\frac12.
+\tag{194.1}
+$$
+
+对 $n\ge1$ 沿用 $Z(n)=\sigma(n)/n$。记
+
+$$
+P_S(x)=\prod_{\substack{p\le x\\p\in S}}(1-1/p)^{-1},
+\qquad P(x)=\prod_{p\le x}(1-1/p)^{-1},
+$$
+
+并令
+
+$$
+H(\delta)=-\delta\log\delta-(1-\delta)\log(1-\delta).
+$$
+
+解析输入除式（194.1）外，只用通常素数定理及 §160.1 已引用的 Axler 包络：对所有充分大的整数 $n$，
+
+$$
+\frac{n}{\varphi(n)}
+<e^\gamma\left(\log\log n+
+\frac{a_0}{(\log\log n)^2}\right),
+\qquad a_0=0.0094243.
+\tag{194.2}
+$$
+
+所有对数均为自然对数。涉及 $\log\log$ 的渐近陈述只用于参数充分大时。
+
+**引理 194.1（共同实现的两个预算与截断不等式）。** 设整数 $U\ge2$ 的所有素因子属于 $S$，$g\ge1$ 为整数，并令
+
+$$
+N=gU,\qquad L=\log U,\qquad h=\log g,
+$$
+
+$$
+A=\sum_{\substack{p\mid N\\p\in S}}\log p,
+\qquad B=\sum_{\substack{p\mid N\\p\in T}}\log p.
+$$
+
+则同一个实际整数同时满足
+
+$$
+A+B\le L+h,\qquad B\le h.
+\tag{194.3}
+$$
+
+对 $x>1$ 定义
+
+$$
+\ell(x)=\log\frac{x}{x-1},\qquad
+\kappa(x)=\frac{\ell(x)}{\log x},\qquad
+E_S(N)=\prod_{\substack{p\mid N\\p\in S}}(1-1/p)^{-1}.
+$$
+
+函数 $\kappa$ 正且严格递减，并且
+
+$$
+\log E_S(N)
+\le\log P_S(x)+\kappa(x)(A-\vartheta_S(x)).
+\tag{194.4}
+$$
+
+同样的结论适用于 $T$ 与 $B$。
+
+证明。$A+B=\log\operatorname{rad}(N)\le\log N=L+h$。每个属于 $T$ 的实际素因子只能来自 $g$，故其无重复乘积整除 $g$，得到 $B\le h$。这两个约束同时使用同一个 $N$，没有分别优化两个不能共同实现的支撑。
+
+$\ell(x)$ 为正且严格递减，$\log x$ 为正且严格递增，故 $\kappa$ 严格递减。比较实际支撑和截断支撑：每个遗漏的 $p\le x$ 至少扣除 $\kappa(x)\log p$ 的 Euler 对数权重，每个新增的 $p>x$ 至多增加同样的权重。有限求和即得式（194.4）。$\square$
+
+**引理 194.2（固定倍数窗口的乘积精度）。** 在式（194.1）下，对任意固定 $0<c_0\le c_1<\infty$，一致于 $a\in[c_0,c_1]$ 有
+
+$$
+\log\frac{P_S(aL)}{P_S(L)}
+=\frac{\delta\log a}{\log L}
++o\!\left(\frac1{\log L}\right)
+\quad(L\to\infty).
+\tag{194.5}
+$$
+
+$T$ 的相应系数为 $1-\delta$。此外，在式（194.2）与通常素数定理下，
+
+$$
+\frac{P(L)}{e^\gamma}\le\log L+o(1).
+\tag{194.6}
+$$
+
+证明。把 $c_0,c_1$ 必要时扩展到包含一。对 $a\ge1$，有
+
+$$
+\begin{aligned}
+\log\frac{P_S(aL)}{P_S(L)}
+&=\sum_{\substack{L<p\le aL\\p\in S}}\frac1p+O(1/L)\\
+&=\int_{(L,aL]}\frac1{x\log x}\,d\vartheta_S(x)+O(1/L).
+\end{aligned}
+$$
+
+写 $\vartheta_S(x)=\delta x+R(x)$。在固定倍数区间 $[c_0L,c_1L]$ 上，$\sup |R(x)|/x\to0$。对含 $R$ 的积分分部求和，边界项和积分项均为 $o(1/\log L)$，且一致于 $a$。主项为
+
+$$
+\delta\int_L^{aL}\frac{dx}{x\log x}
+=\delta\log\frac{\log(aL)}{\log L}
+=\frac{\delta\log a}{\log L}+O\!\left(\frac1{(\log L)^2}\right).
+$$
+
+当 $a<1$ 时反向积分即可。因此式（194.5）成立；这一论证只比较固定倍数窗口，不需要整个 $P_S$ 的 Mertens 常数。
+
+令 $R_L=\prod_{p\le L}p$。因 $\log R_L=\vartheta(L)=L+o(L)$，$R_L$ 最终超过式（194.2）的固定门槛，故
+
+$$
+\frac{P(L)}{e^\gamma}
+=\frac{R_L}{e^\gamma\varphi(R_L)}
+\le\log\vartheta(L)+\frac{a_0}{(\log\vartheta(L))^2}
+=\log L+o(1).
+$$
+
+这里误差是加性的 $o(1)$；仅有未指定速度的相对 $o(1)$ 乘积渐近不能替代这一步。$\square$
+
+**引理 194.3（中间乘子范围的联合 Euler 界）。** 在引理 194.1 的共同实现中，固定 $0<\varepsilon<1$，令 $t=h/L\in[\varepsilon,1]$。在式（194.1）—（194.2）下，一致于该范围内的全部实际 $U,g$ 有
+
+$$
+\frac{Z(gU)}{e^\gamma}
+\le\log L+H(\delta)+(1-\delta)\log t+o(1).
+\tag{194.7}
+$$
+
+证明。取
+
+$$
+x_S=\frac{L}{\delta},\qquad
+x_T=\frac{h}{1-\delta}.
+$$
+
+因 $\delta\le1/2$、$h\le L$，有 $x_S\ge x_T$，从而 $\kappa(x_S)\le\kappa(x_T)$。由两个预算同时得到
+
+$$
+\begin{aligned}
+\kappa(x_S)A+\kappa(x_T)B
+&=\kappa(x_S)(A+B)
+ +(\kappa(x_T)-\kappa(x_S))B\\
+&\le\kappa(x_S)L+\kappa(x_T)h.
+\end{aligned}
+$$
+
+将引理 194.1 分别用于两个素数类，得
+
+$$
+\begin{aligned}
+\log\frac N{\varphi(N)}
+\le{}&\log P_S(x_S)+\log P_T(x_T)\\
+&+\kappa(x_S)(L-\vartheta_S(x_S))
+ +\kappa(x_T)(h-\vartheta_T(x_T)).
+\end{aligned}
+\tag{194.8}
+$$
+
+式（194.1）给最后两项一致为 $o(1/\log L)$，因为 $x_S,x_T$ 均与 $L$ 相差固定倍数，且 $\kappa(x)=O(1/(x\log x))$。
+
+完整乘积有精确重写
+
+$$
+P_S(x_S)P_T(x_T)
+=P(L)\,
+\frac{P_S(L/\delta)}{P_S(L)}\,
+\frac{P_T(tL/(1-\delta))}{P_T(L)}.
+\tag{194.9}
+$$
+
+引理 194.2 使后两个比值的对数之和等于
+
+$$
+\frac{H(\delta)+(1-\delta)\log t}{\log L}
++o\!\left(\frac1{\log L}\right).
+$$
+
+对式（194.8）取指数，再用 $P(L)/e^\gamma\le\log L+o(1)$，其乘积展开给加性主项 $H(\delta)+(1-\delta)\log t$，误差仍为 $o(1)$。最后由 $N>1$ 时 $Z(N)<N/\varphi(N)$ 得到结论。$\square$
+
+**定理 194.4（密度小于一半时的全乘子严格余量）。** 设式（194.1）—（194.2）成立且 $0<\delta<1/2$。对每个固定 $C>0$，有
+
+$$
+\liminf_{\substack{U\to\infty\\p\mid U\Rightarrow p\in S}}
+\ \inf_{\substack{g\in\mathbb Z_{\ge1}\\g\le CU}}
+\left(e^\gamma\log\log(gU)-Z(gU)\right)
+\ge e^\gamma\bigl(\log2-H(\delta)\bigr)>0.
+\tag{194.10}
+$$
+
+这里 $U$ 取正整数，误差对给定范围内的全部乘子 $g$ 一致。
+
+证明。先设 $0\le h\le L$。在固定 $\varepsilon\le t=h/L\le1$ 上，引理 194.3 与实际预算
+
+$$
+\log\log(gU)=\log L+\log(1+t)
+$$
+
+给归一化余量下界 $f_\delta(t)+o(1)$，其中
+
+$$
+f_\delta(t)=\log(1+t)-H(\delta)-(1-\delta)\log t,
+\qquad
+f_\delta'(t)=\frac{\delta t-(1-\delta)}{t(1+t)}<0.
+$$
+
+故该分支的最小值在 $t=1$，等于 $\log2-H(\delta)>0$。
+
+还须单独处理 $0\le h\le\varepsilon L$，不能直接把紧区间渐近用于 $t\to0$。将实际预算放宽为
+
+$$
+A+B\le(1+\varepsilon)L,\qquad B\le\varepsilon L,
+$$
+
+并在引理 194.3 的证明中以 $\varepsilon L$ 替换 $h$，得到
+
+$$
+\frac{Z(gU)}{e^\gamma}
+\le\log L+H(\delta)+(1-\delta)\log\varepsilon+o(1).
+$$
+
+实际预算至少为 $\log L$。预先选择固定 $\varepsilon\in(0,1)$ 满足 $-(1-\delta)\log\varepsilon\ge\log2$，便使此分支也有不小于 $\log2-H(\delta)+o(1)$ 的归一化余量。
+
+一般的 $g\le CU$ 给 $h\le L+\log C$。令 $L'=L+\max(\log C,0)$，则 $A+B\le L'+h$、$B\le h$、$0\le h\le L'$。上述证明只使用这两个支撑预算与参数 $L'\to\infty$，不要求 $L'$ 本身为某个辅助整数的对数。因
+
+$$
+0\le\log(L'+h)-\log(L+h)=O(1/L)
+$$
+
+一致于 $h\ge0$，把该放宽预算换回实际预算只损失 $o(1)$。合并各分支即得式（194.10）。$\square$
+
+**推论 194.5（半密度的严格范围与临界角）。** 若式（194.1）中 $\delta=1/2$，则同一证明在 $g\le CU$ 时只给式（194.10）的非负下界零，不能据此确定严格 Robin 符号。对任意固定 $0<\eta<1$，在较小范围 $\log g\le(1-\eta)\log U$ 上则有
+
+$$
+\liminf_{\substack{U\to\infty\\p\mid U\Rightarrow p\in S}}
+\ \inf_{1\le g\le U^{1-\eta}}
+\left(e^\gamma\log\log(gU)-Z(gU)\right)
+\ge e^\gamma\log\frac{2-\eta}{2\sqrt{1-\eta}}>0.
+\tag{194.11}
+$$
+
+证明。$H(1/2)=\log2$，而 $f_{1/2}$ 在 $(0,1]$ 上递减，故 $t\le1-\eta$ 时下界为 $f_{1/2}(1-\eta)$。对小 $h$，预先选择固定 $0<\varepsilon<1-\eta$，使 $-\log2-(1/2)\log\varepsilon\ge f_{1/2}(1-\eta)$，再用定理 194.4 的独立分支估计。最后 $(2-\eta)^2-4(1-\eta)=\eta^2>0$，故显示的常数严格为正。$\square$
+
+这也说明四次素切面的作用：二次字符的半密度条件留下 $h/L\to1$ 的临界角；把允许素数的固定密度降到至多 $3/8$，才使这个角也获得严格余量。该论证没有声称真实来源能达到半密度估计中的全部极值。
+
+## 195. 全指标固定种子定理、规范回接与平方范数余项
+
+**定理 195.1（非平方范数固定种子的全指标 Robin 余量）。** 固定 §193 的非零本原非负种子 $v$。若 $|Q(v)|$ 不是整数平方，则对每个固定 $C>0$，在推论 193.4 所用的固定域 Chebotarev 输入及式（194.2）的 Axler 输入下，有
+
+$$
+\liminf_{j\to\infty}
+\ \inf_{\substack{g\in\mathbb Z_{\ge1}\\g\le C\phi^j}}
+\left(e^\gamma\log\log(gV_j)-Z(gV_j)\right)
+\ge e^\gamma\bigl(\log2-H(3/8)\bigr)>0.
+\tag{195.1}
+$$
+
+若 $|Q(v)|$ 是整数平方，同一结论在满足 $(-1)^{j+1}Q(v)$ 非平方的那个奇偶类上成立。阈值依赖固定种子与 $C$，但对该范围内的乘子一致。
+
+证明。当 $|Q|$ 非平方时，四个 $D_r$ 均非平方。定理 193.3 与推论 193.4 因而给四个固定素数集合 $S_r$，每个实际 $V_{r+4t}$ 的全部素因子属于 $S_r$，且其密度 $\delta_r\in\{1/4,3/8\}$。分别应用定理 194.4，并在四个余类中取共同的充分大阈值。
+
+Binet 公式给
+
+$$
+V_j=c_v\phi^j+O_v(|\psi|^j),\qquad
+c_v=\frac{a\phi^3+b\phi^4}{\sqrt5}>0.
+$$
+
+因此 $g\le C\phi^j$ 可包含在某个固定的 $g\le C'V_j$ 范围中。$H$ 在 $(0,1/2]$ 上递增，所以所有四类的余量均不小于式（195.1）的常数。若 $|Q|$ 为平方，则只对 $D_r$ 非平方的两个模四余类执行上述论证，恰好得到所述非主字符奇偶类。$\square$
+
+**推论 195.2（全部合法五窗口公因子的回接）。** 设 $v_-=a+b\psi\ne0$。在定理 195.1 已覆盖的指标范围内，每个实际单位位为零的规范来源
+
+$$
+x_{g,j}=gM^jv
+$$
+
+都被式（195.1）包含。因而对该固定种子，所有充分大的已覆盖指标及其全部合法规范公因子均满足严格 Robin 不等式。
+
+证明。§182 的规范条带判据及 §192.3 给
+
+$$
+-1<g\psi^jv_-<\phi.
+$$
+
+两个端点的绝对值均不超过 $\phi$，故
+
+$$
+g<\frac{\phi}{|v_-|}\phi^j.
+\tag{195.2}
+$$
+
+在定理 195.1 中取固定 $C=\phi/|v_-|$ 即得结论。若 $v$ 本身是合法有限五窗口种子，且 $j$ 是三的倍数，则 $M^j$ 还具有真实 null 前缀推进的地址解释。乘以一般 $g$ 之后仍须通过规范条带识别其地址；乘法并不是保持原模式串逐窗不变的操作。$\square$
+
+### 195.3 平方范数主奇偶类的剩余条件
+
+当 $Q=-m^2$ 时，偶数 $j$ 给 $(-1)^{j+1}Q=m^2$，属于尚未被四次不可约论证覆盖的主字符奇偶类；奇数 $j$ 已由定理 195.1 覆盖。当 $Q=m^2$ 时两者交换。单位范数 $|Q|=1$ 另有 §187 的全指标结论；因此本方法剩余的是非单位平方范数的主奇偶类。
+
+定理 193.3 对主奇偶类确实给出四次可约，不能只删除不可约假设而保留密度 $3/8$。例如固定本原种子
+
+$$
+v=(16,29)=\phi(3+2\phi)^2,\qquad Q=-121.
+$$
+
+在 $j=2t$ 时，令 $z=\phi^{t+2}(3+2\phi)$，则 $\phi^{j+3}v=z^2$，所以
+
+$$
+V_{2t}=[\phi]z^2=([\phi]z)\operatorname{Tr}(z),
+\qquad \operatorname N(z)=(-1)^t11.
+\tag{195.3}
+$$
+
+若奇素数 $p\nmid55$ 整除 $[\phi]z$，范数模 $p$ 为平方；若其整除 $\operatorname{Tr}(z)$，则由 $\operatorname{Tr}(z)^2-5([\phi]z)^2=4\operatorname N(z)$ 得 $-5\operatorname N(z)$ 模 $p$ 为平方。因此固定 $t$ 的奇偶类后，实际素因子被两个二次字符允许集的并包住。对应的两个非平凡平方类独立，例如偶数 $t$ 时为 $11$ 与 $-55$，二者乘积平方类为 $-5$。这个并集的素数密度为 $3/4$，不满足定理 194.4 的 $\delta<1/2$ 前提。它只是当前上包络过宽，不是 Robin 反例。
+
+同一例子还有不能忽略的共同实现限制。模三递归状态的周期为八，数量零位是 $2,6$；模七递归状态的周期为十六，数量零位是 $0,8$。从初态分别为 $(1,2)$ 和 $(2,1)$ 出发逐步应用 $(A,B)\mapsto(B,A+B)$ 即可核对。因此
+
+$$
+3\mid V_j\iff j\equiv2\pmod4,
+\qquad
+7\mid V_j\iff j\equiv0\pmod8,
+$$
+
+两个素数从不共同整除一个 $V_j$。一般固定种子的共同素因子必须同时满足 §191 的零余类相容条件；有限的这种排斥尚未给出随规模增长的一致尾界。
+
+**命题 195.4（主奇偶类逐点尾界的充分接口）。** 固定一个非单位平方范数种子，令 $\mathcal J_v$ 为其主字符奇偶类。假设在该类上能证明
+
+$$
+(\log j)
+\sum_{\substack{p>j^{5/6}\\p\mid V_j}}\frac1{p-1}
+\longrightarrow0
+\quad(j\to\infty,\ j\in\mathcal J_v).
+\tag{195.4}
+$$
+
+则对每个固定 $C>0$，该类中所有充分大指标的全部 $1\le g\le C\phi^j$ 都满足严格 Robin；更准确地，相应余量的下极限至少为 $e^\gamma\log2$。
+
+证明。置 $y=\lceil j^{5/6}\rceil$、$A_j=\prod_{p\mid V_j,\ p\le y}p$、$B=gA_j$。对同一整数 $N=gV_j$，全部未被 $B$ 包含的素因子必为 $V_j$ 的大素因子，故
+
+$$
+Z(N)<\frac B{\varphi(B)}
+\exp\left(\sum_{\substack{p>y\\p\mid V_j}}\frac1{p-1}\right).
+$$
+
+Chebyshev 上界给 $\log A_j=O(j^{5/6})$。若 $h=\log g\ge j^{11/12}$，则 $\log\log B=\log h+O(j^{-1/12})$，式（194.2）与假设（195.4）共同给 $Z(N)/e^\gamma\le\log h+o(1)$，误差对乘子一致。另一方面 $\log V_j=j\log\phi+O_v(1)$、$h\le j\log\phi+O_C(1)$，所以
+
+$$
+\log\log N-\log h
+=\log\left(1+\frac{\log V_j}{h}\right)
+\ge\log2-o(1).
+$$
+
+若 $h<j^{11/12}$，§164.1 的通用 Euler 包络及 $B=1$ 的直接处理给 $Z(N)/e^\gamma\le(11/12)\log j+O_v(1)$；假设（195.4）使尾乘积带来的加性变化为 $o(1)$。实际预算为 $\log\log N\ge\log j+O_v(1)$，所以该分支的余量一致趋于无穷。两分支合并即得结论。$\square$
+
+式（195.4）在此只是一个足够的待证条件，并未由 §§191–192 的均值估计推出，也不宣称它是 Robin 的必要条件。均值估计允许无限多个稀疏坏指标；不能以密度一替代这里的逐点极限，也不能对一般 $V_j$ 擅自使用 Fibonacci 的强整除性质。
+
+### 195.5 文献输入与结论范围
+
+本批使用的外部输入及其范围如下。
+
+1. 固定有限 Galois 扩张的无条件 Chebotarev 密度定理，用于推论 193.4 的模素数有根上包络。定性计数形式见 Arango-Piñeros、Keliher、Keyes，*Mertens' theorem for Chebotarev sets*，[arXiv:2103.14747v2](https://arxiv.org/pdf/2103.14747v2)，引言第 2 页汇总表“Galois extension / Chebotarev’s theorem”一行。取基域为 $\mathbb Q$，对固定有限个共轭类求和，再分部求和得到式（193.5）。该文 Theorem A 的 Chebotarev–Mertens 相对误差本身不能替代本批需要的加性 $o(1)$；本批由引理 194.2 的固定倍数窗口取得相应精度，不增强该文的误差结论。
+2. Axler，*On Robin's inequality*，[作者稿 arXiv:2110.13478v3](https://arxiv.org/pdf/2110.13478v3)，式（3.4）—（3.5）及本卷 §160.1，提供式（194.2）的最终 Euler 包络。这里只在整数最终超过固定门槛后使用，不重新执行原文的大规模验证。其余完整素数乘积主项使用通常素数定理。
+3. Moree、Stevenhagen，*Prime divisors of the Lagarias sequence*，Journal de Théorie des Nombres de Bordeaux 13 (2001), 241–251，[原文](https://jtnb.centre-mersenne.org/item/JTNB_2001__13_1_241_0.pdf)，研究递推实际素因子集合的精确密度，主定理使用 GRH。本批不使用该条件性精确密度作为无条件输入，而只取固定四次分裂域的素数上包络。
+
+定理 195.1 的阈值依赖固定种子；固定域的渐近误差不提供变化种子的一致控制。因此这些结论既没有覆盖所有变化种子的共同尾段，也没有覆盖非单位平方范数的全部主指标，不能推出所有整数的 Robin 不等式或黎曼猜想。五窗口的收缩几何在这里提供合法公因子范围，素数切面与同一整数的联合预算负责约数响应上界；区间长度守恒没有被替代成约数权重守恒。
+
+## 追加锚（本行以下为增补区）
