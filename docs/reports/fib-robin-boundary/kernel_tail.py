@@ -17,6 +17,8 @@ Z_UPPER = Q(77, 16)
 DELTA_LOWER = Q(5327, 2000)
 SUPPORT_THRESHOLD = Q(2136, 1375)
 TERMS = 32
+GROWTH_TERMS = 20
+GROWTH_SCALE = 10**12
 
 
 def log_interval(x, terms=TERMS):
@@ -78,6 +80,46 @@ def support_product(primes):
     return value
 
 
+def first_primes_at_least_13(count):
+    result = []
+    candidate = 13
+    while len(result) < count:
+        if is_prime(candidate):
+            result.append(candidate)
+        candidate += 1
+    return result
+
+
+def growth_log_interval(x, terms=GROWTH_TERMS):
+    """A shorter exact interval used for the finite growing-support sweep."""
+    return log_interval(x, terms)
+
+
+def floor_to_scale(value, scale=GROWTH_SCALE):
+    return Q((value * scale).numerator // (value * scale).denominator, scale)
+
+
+def growth_lower_bounds(count):
+    """Lower bounds for the growth-aware budget through ``count`` primes.
+
+    The downward rounding keeps every cumulative log bound rational and below
+    the true log.  It avoids printing the very large unreduced endpoint
+    fractions while retaining exact sign comparisons.
+    """
+    primes = first_primes_at_least_13(count)
+    log_product_lower = growth_log_interval(Q(KERNEL), GROWTH_TERMS)[0]
+    support = Q(1)
+    bounds = []
+    for p in primes:
+        log_product_lower = floor_to_scale(
+            log_product_lower + growth_log_interval(Q(p), GROWTH_TERMS)[0]
+        )
+        support *= Q(p, p - 1)
+        loglog_lower = growth_log_interval(log_product_lower, GROWTH_TERMS)[0]
+        bounds.append(Q(89, 50) * loglog_lower - Z_UPPER * support)
+    return primes, bounds
+
+
 def main():
     assert KERNEL == 9527493263501079465984000000000
     assert Q(77, 16) == Q(2) * Q(3, 2) * Q(5, 4) * Q(7, 6) * Q(11, 10)
@@ -110,6 +152,13 @@ def main():
     # The support implication's rational endpoint is exact.
     assert DELTA_LOWER - Z_UPPER * (SUPPORT_THRESHOLD - 1) == 0
 
+    # Incorporating the mandatory factor p into N extends the finite family.
+    primes, growth_bounds = growth_lower_bounds(122)
+    assert primes[120] == 701 and primes[121] == 709
+    assert all(bound > Q(1, 3000) for bound in growth_bounds[:121])
+    assert growth_bounds[120] == min(growth_bounds[:121])
+    assert growth_bounds[121] < 0
+
     print({
         "status": "exact rational five-direction kernel certificate passed",
         "kernel": str(KERNEL),
@@ -120,6 +169,11 @@ def main():
         "worst_twelve_product": str(twelve),
         "worst_twelve_margin_lower": str(margin),
         "worst_thirteen_product": str(thirteen),
+        "growth_prime_count_certified": "121",
+        "growth_last_prime_certified": "701",
+        "growth_121_lower_exceeds": "1/3000",
+        "growth_next_prime": "709",
+        "growth_next_lower_is_negative": True,
         "scope": "fixed v2=21,v3=13,v5=9,v7=7,v11=6 kernel; distinct primes p>=13",
     })
 
