@@ -858,26 +858,21 @@ end LeanInformationAudit
 namespace LeanInformationAudit
 open Lean Meta
 
-/-- One authoritative imported join shared by all requested report modules. -/
+/-- Each requested report module is assessed from its own root, finite and
+structural registrations alike; loaded peers it does not import are inert. -/
 def informationTemplateReportDriver : InformationTemplateReportDriver := fun moduleNames => do
-    assessRecordedRegistrations (← getEnv).header.mainModule
-    (liftCommandElabM <| DispositionCensus.replayStructuralRegistrations
-      (← getEnv).header.mainModule : CoreM Unit)
-    let env ← getEnv
     TemplateAudit.NativeCoherence.validate #[`LeanInformationAudit.DispositionEvidence]
-    let modules := moduleNames.map fun moduleName => Id.run do
-      let finite := (InformationRegistry.entries env).filter
-        (·.registrationModuleName == moduleName) |>.map fun entry => {
-          root := moduleName, registrationModule := moduleName, theoremName := entry.theoremName,
-          objectArena := entry.canonicalObjectArenaName, «catalog» := entry.effectiveCatalogId :
-            TemplateOccurrenceKey }
-      let structural := (DispositionCensus.structuralProvenanceEntries env).filter
-        (·.registrationModule == moduleName) |>.map fun entry => {
-          root := moduleName, registrationModule := moduleName, theoremName := entry.theoremName,
+    let owners := recordedInputOwners (← getEnv) ++
+      (DispositionCensus.structuralProvenanceEntries (← getEnv)).map (·.registrationModule)
+    let reports ← assessReportTargets moduleNames owners fun target => do
+      assessRecordedRegistrations target
+      (liftCommandElabM <| DispositionCensus.replayStructuralRegistrations target : CoreM Unit)
+      let structural := (DispositionCensus.structuralProvenanceEntries (← getEnv)).filter
+        (·.registrationModule == target) |>.map fun entry => {
+          root := target, registrationModule := target, theoremName := entry.theoremName,
           objectArena := entry.canonicalArena, «catalog» := entry.canonicalArena : TemplateOccurrenceKey }
-      return (moduleName, finite ++ structural)
-    let rows ← TemplateBinding.reportJson modules
+      return registeredKeys (← getEnv) target ++ structural
     TemplateAudit.NativeCoherence.validate #[`LeanInformationAudit.DispositionEvidence]
-    return (rows, GeneratedDeclarations.entries (← getEnv))
+    return reports
 
 end LeanInformationAudit

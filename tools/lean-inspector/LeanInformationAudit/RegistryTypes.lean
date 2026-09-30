@@ -329,8 +329,11 @@ open Lean
 
 /-- Judge-owned semantic API for the lightweight standalone report driver.
 The inspector resolves one exact declaration/owner of this type. Content does
-not register producers, callbacks, policies or acceptance bits. -/
-abbrev InformationTemplateReportDriver := Array Name → MetaM (Array Json × Array (Name × Name))
+not register producers, callbacks, policies or acceptance bits. Each requested
+target yields, from its own assessment: its binding row, the generated
+declarations it owns, and the environment in which they were generated. The
+type uses core types only because the inspector does not import the judge. -/
+abbrev InformationTemplateReportDriver := Array Name → MetaM (Array (Json × Array Name × Environment))
 
 /-- Original registration root, immutable environment input and caller-selected
 options. Both command and report consumers pass the same explicit inputs. -/

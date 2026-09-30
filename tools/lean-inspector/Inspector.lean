@@ -591,7 +591,7 @@ private unsafe def dependencies (manifest destination mode : String) : IO Unit :
 source modules. Even an empty inventory requires its source/native verifier.
 The two producer identities are fixed judge APIs, never content callbacks. -/
 private unsafe def templateBindings (env : Environment) (inputs : Array ModuleInput) :
-    IO (Array Json × Array (Name × Name) × Environment) := do
+    IO (Array (Json × Array Name × Environment)) := do
   let selected := if env.header.moduleNames.contains `LeanInformationAudit.DispositionEvidence then
       some (`LeanInformationAudit.informationTemplateReportDriver,
         `LeanInformationAudit.DispositionEvidence)
@@ -609,11 +609,12 @@ private unsafe def templateBindings (env : Environment) (inputs : Array ModuleIn
       | throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer_type"
     unless env.header.moduleNames[typeOwner.toNat]! == `LeanInformationAudit.RegistryTypes do
       throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer_type"
-    let driver ← IO.ofExcept <| env.evalConstCheck (Array Name → MetaM (Array Json × Array (Name × Name))) {}
+    let driver ← IO.ofExcept <| env.evalConstCheck (Array Name → MetaM (Array (Json × Array Name × Environment))) {}
       typeName producerName
-    let ((bindings, generated), environment) ← runReportMeta env "information-template-join"
-      (driver (inputs.map (·.moduleName.toName)))
-    return (bindings, generated, environment)
+    -- Each target row, its generated declarations and their environment come
+    -- from that target's own assessment; peers in the batch are inert.
+    return (← runReportMeta env "information-template-join"
+      (driver (inputs.map (·.moduleName.toName)))).1
   throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
 
 unsafe def main (args : List String) : IO Unit := do
@@ -662,10 +663,10 @@ unsafe def main (args : List String) : IO Unit := do
       (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE import_ns={(← IO.monoNanosNow) - importStart} imported_modules={env.header.moduleNames.size}"
     let cache ← IO.mkRef ({} : AxiomClosureState)
     let materialCounter ← IO.mkRef 0
-    let (bindings, generated, env) ← if statementOnly then
-        pure (inputs.map (fun _ => Json.null), #[], env)
+    let targets ← if statementOnly then
+        pure (inputs.map fun _ => (Json.null, #[], env))
       else templateBindings env inputs
-    unless bindings.size == inputs.size do
+    unless targets.size == inputs.size do
       throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_partition"
     -- Compiled executables can move between private build trees. Prefer the
     -- current repository's writer; a standalone statement probe can instead
@@ -677,9 +678,8 @@ unsafe def main (args : List String) : IO Unit := do
       cmd := "python3", args := #["-I", writerProgram, "stream",
         materialSpool.toString], stdin := .piped, stdout := .piped, stderr := .inherit }
     try
-      let reports ← (inputs.zip bindings).mapM fun (input, binding) =>
-        inspectModule env cache writer materialCounter utilities
-          ((generated.filter (·.2 == input.moduleName.toName)).map Prod.fst) binding input
+      let reports ← (inputs.zip targets).mapM fun (input, binding, generated, environment) =>
+        inspectModule environment cache writer materialCounter utilities generated binding input
       writer.stdin.putStr "done\n"
       writer.stdin.flush
       unless (← writer.stdout.getLine) == "done\n" && (← writer.wait) == 0 do

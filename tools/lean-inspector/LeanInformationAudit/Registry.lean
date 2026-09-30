@@ -122,14 +122,11 @@ structure JoinedRecords where
   selected : Array BindingRecord
   originals : Array BindingRecord
 
-/-- Shared final assessment after the full imported claim set has been joined.
-Callers must establish complete governed registration inputs before claiming coverage. -/
-def assessJoined (input : RegistrationAssessmentInput) : MetaM (Array BindingRecord) :=
-    withOptions (fun _ => input.options) do
-  unless sameRegistrationEnvironment input.environment (← getEnv) do
-    throwError "incomplete_closure:dtr.assessment_environment"
-  let env := input.environment
-  let selected (owner : Name) := moduleReachable env input.rootId owner
+/-- Join and assess the registrations of the modules in `reachable`, reading
+the recorded occurrences of `env`. -/
+private def joinRecords (env : Environment) (reachable : NameSet) (options : Options) :
+    MetaM (Array BindingRecord) := withOptions (fun _ => options) do
+  let selected (owner : Name) := reachable.contains owner
   let joined ← match joinClaims ((ownedEvents env).filter (selected ∘ Prod.fst))
       ((ownedClaims env).filter (selected ∘ Prod.fst)) with
     | .ok joined => pure joined
@@ -140,6 +137,31 @@ def assessJoined (input : RegistrationAssessmentInput) : MetaM (Array BindingRec
   -- occurrence owns a fresh fixed budget rather than sharing one for the join.
   joined.mapM fun (event, claim) => withCurrHeartbeats (assess event claim)
 
+/-- Shared final assessment after the full imported claim set has been joined.
+Callers must establish complete governed registration inputs before claiming coverage. -/
+def assessJoined (input : RegistrationAssessmentInput) : MetaM (Array BindingRecord) := do
+  unless sameRegistrationEnvironment input.environment (← getEnv) do
+    throwError "incomplete_closure:dtr.assessment_environment"
+  joinRecords input.environment (reachableModules input.environment input.rootId) input.options
+
+private def snapshotRecords (env : Environment) (rootId : Name) (options : Options) :
+    MetaM JoinedRecords := do
+  let reachable := reachableModules env rootId
+  let selected ← joinRecords env reachable options
+  let originals ← ((inventory env).filter fun event =>
+      reachable.contains event.key.registrationModule).mapM fun event => do
+    let some original := (records (← getEnv)).find? (·.occurrence.key == event.key)
+      | throwError "incomplete_closure:dtr.original_inventory"
+    return original
+  return { selected, originals }
+
+/-- Join every registration reachable from the input root. The caller has
+validated native coherence of the judge and of that root's closure. -/
+def joinedSnapshot (input : RegistrationAssessmentInput) : MetaM JoinedRecords := do
+  unless sameRegistrationEnvironment input.environment (← getEnv) do
+    throwError "incomplete_closure:dtr.assessment_environment"
+  snapshotRecords input.environment input.rootId input.options
+
 /-- Export always starts by joining the entire loaded declaration universe. -/
 def exportSnapshot (input : RegistrationAssessmentInput) : MetaM JoinedRecords := do
   -- Empty inventories still execute this judge. Validate its compiled source
@@ -147,13 +169,7 @@ def exportSnapshot (input : RegistrationAssessmentInput) : MetaM JoinedRecords :
   unless sameRegistrationEnvironment input.environment (← getEnv) do
     throwError "incomplete_closure:dtr.assessment_environment"
   TemplateAudit.NativeCoherence.validate #[`LeanInformationAudit.Registry]
-  let selected ← assessJoined { input with environment := ← getEnv }
-  let originals ← ((inventory input.environment).filter fun event =>
-      moduleReachable input.environment input.rootId event.key.registrationModule).mapM fun event => do
-    let some original := (records (← getEnv)).find? (·.occurrence.key == event.key)
-      | throwError "incomplete_closure:dtr.original_inventory"
-    return original
-  return { selected, originals }
+  joinedSnapshot { input with environment := ← getEnv }
 
 def keyJson (key : TemplateOccurrenceKey) : Json := Json.mkObj [
   ("root", toJson key.root.toString), ("registration_module", toJson key.registrationModule.toString),
@@ -245,18 +261,30 @@ private def moduleJson (snapshot : JoinedRecords) (moduleName : Name)
       (·.key.registrationModule == moduleName) |>.map (keyJson ∘ TemplateOccurrenceEvent.key))),
     ("registered", Json.arr (registered.map keyJson)), ("records", Json.arr rows)]
 
+/-- Native coherence roots of one report batch: the judge and every requested module. -/
+def reportRoots (env : Environment) (modules : Array Name) : Array Name :=
+  #[`LeanInformationAudit.Registry] ++ modules ++
+    (if modules.contains env.header.mainModule then env.header.imports.map (·.module) else #[])
+
+/-- One target's row, joined from the target's own semantic root. Registrations
+of loaded modules the target does not import take no part in it. The caller
+validates native coherence of the batch around all of its targets. -/
+def targetJson (target : Name) (registered : Array TemplateOccurrenceKey) : MetaM Json := do
+  moduleJson (← snapshotRecords (← getEnv) target (← getOptions)) target registered
+
+/-- The row of a target that reaches no recorded input: the row `targetJson`
+produces for it after its (empty) assessment. -/
+def emptyTargetJson (target : Name) : MetaM Json :=
+  moduleJson { selected := #[], originals := #[] } target #[]
+
 /-- Validate the complete native union around a report transaction. Each native
 snapshot is still checked against the loaded image; shared imports are rehashed
 once per boundary, rather than once for every module that imports them. Neither
 source hashes nor a caller-supplied validation flag can authorize this API. -/
 def reportJson (modules : Array (Name × Array TemplateOccurrenceKey)) : MetaM (Array Json) := do
-  let env ← getEnv
-  let roots := #[`LeanInformationAudit.Registry] ++ modules.map Prod.fst ++
-    (if modules.any (fun row => row.1 == env.header.mainModule) then
-      env.header.imports.map (·.module) else #[])
+  let roots := reportRoots (← getEnv) (modules.map Prod.fst)
   TemplateAudit.NativeCoherence.validate roots
-  let snapshot ← exportSnapshot (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule)
-  let rows ← modules.mapM fun (moduleName, registered) => moduleJson snapshot moduleName registered
+  let rows ← modules.mapM fun (moduleName, registered) => targetJson moduleName registered
   -- Compare the original snapshots after all records have been read. A replacement during this transaction cannot renew them.
   TemplateAudit.NativeCoherence.validate roots
   return rows
@@ -379,7 +407,8 @@ actual owners and their retained source bytes are checked before assessment. -/
 def replayRegistrationInputs (input : RegistrationAssessmentInput) : CoreM Unit := do
   let saved ← getEnv
   tryCatchRuntimeEx (do
-    let selected (owner : Name) := moduleReachable saved input.rootId owner
+    let reachable := reachableModules saved input.rootId
+    let selected (owner : Name) := reachable.contains owner
     let enrollments := (TemplateEnrollmentInputs.owned saved).filter (selected ∘ Prod.fst)
     let registrations := (RegistrationInputs.owned saved).filter (selected ∘ Prod.fst)
     let contracts := (RootCatalogs.owned saved).filter (selected ∘ Prod.fst)

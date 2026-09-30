@@ -490,26 +490,73 @@ def assessRecordedRegistrations (rootId : Name) : MetaM Unit := do
   replayRegistrationInputs (← RegistrationAssessmentInput.capture rootId)
   let env ← getEnv
   let mut seen : NameSet := {}
+  let reachable := reachableModules env rootId
   for (owner, sealInput) in SealInputs.owned env do
-    unless moduleReachable env rootId owner do continue
+    unless reachable.contains owner do continue
     unless owner == sealInput.rootId do throwError "incomplete_closure:dtr.seal_owner"
     if seen.contains owner then throwError "incomplete_closure:dtr.duplicate_seal"
     seen := seen.insert owner
     withOptions (fun _ => sealInput.options) <| GeneratedDeclarations.withOwner owner do
       assessAndSealRegistration (← RegistrationAssessmentInput.capture owner)
 
+/-- The registered occurrence keys a target owns after its own assessment. -/
+def registeredKeys (env : Environment) (target : Name) : Array TemplateOccurrenceKey :=
+  (InformationRegistry.entries env).filter (·.registrationModuleName == target) |>.map fun entry => {
+    root := target, registrationModule := target, theoremName := entry.theoremName,
+    objectArena := entry.canonicalObjectArenaName, «catalog» := entry.effectiveCatalogId }
+
+private def sameGenerated (left right : ConstantInfo) : Bool :=
+  left.levelParams == right.levelParams && left.type == right.type &&
+    left.value? (allowOpaque := true) == right.value? (allowOpaque := true) &&
+    left.isTheorem == right.isTheorem
+
+/-- Modules owning a recorded registration input of any kind. -/
+def recordedInputOwners (env : Environment) : Array Name :=
+  (RegistrationInputs.owned env).map Prod.fst ++ (TemplateEnrollmentInputs.owned env).map Prod.fst ++
+    (SealInputs.owned env).map Prod.fst ++ (RootCatalogs.owned env).map Prod.fst ++
+    (ExpectedOccurrenceManifest.owned env).map Prod.fst
+
+/-- A report batch loads several requested modules into one environment. Each
+target is assessed from the batch's validated base environment with fresh
+assessment state and rooted at itself, so loaded peers it does not import take
+no part in its replay, join, seals or generated declarations. A target that
+reaches no module of `inputOwners` has nothing to assess and gets the row its
+empty assessment would produce. A declaration name generated for two targets
+must denote the same declaration; the inspector reads each target's generated
+declarations in that target's own environment. -/
+def assessReportTargets (moduleNames : Array Name) (inputOwners : Array Name)
+    (assessTarget : Name → MetaM (Array TemplateOccurrenceKey)) :
+    MetaM (Array (Json × Array Name × Environment)) := do
+  let roots := TemplateBinding.reportRoots (← getEnv) moduleNames
+  TemplateAudit.NativeCoherence.validate roots
+  let base ← getEnv
+  let mut reports := #[]
+  let mut generated : Std.HashMap Name ConstantInfo := {}
+  for target in moduleNames do
+    setEnv base
+    let reachable := if inputOwners.isEmpty then {} else reachableModules base target
+    unless inputOwners.any reachable.contains do
+      reports := reports.push (← TemplateBinding.emptyTargetJson target, #[], base)
+      continue
+    let binding ← TemplateBinding.targetJson target (← assessTarget target)
+    let env ← getEnv
+    for (name, _) in GeneratedDeclarations.entries env do
+      let some info := env.find? name | throwError "incomplete_closure:dtr.generated_missing:{name}"
+      match generated[name]? with
+      | some previous =>
+        unless sameGenerated previous info do throwError "incomplete_closure:dtr.generated_target:{name}"
+      | none => generated := generated.insert name info
+    reports := reports.push (binding,
+      (GeneratedDeclarations.entries env).filter (·.2 == target) |>.map Prod.fst, env)
+  setEnv base
+  -- Compare the original snapshots after all records have been read.
+  TemplateAudit.NativeCoherence.validate roots
+  return reports
+
 /-- Fixed finite producer, independently loaded by the standalone inspector. -/
 def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun moduleNames => do
-  assessRecordedRegistrations (← getEnv).header.mainModule
-  let env ← getEnv
-  let modules := moduleNames.map fun moduleName => Id.run do
-    let registered := (InformationRegistry.entries env).filter
-      (·.registrationModuleName == moduleName) |>.map fun entry => {
-        root := moduleName, registrationModule := moduleName, theoremName := entry.theoremName,
-        objectArena := entry.canonicalObjectArenaName, «catalog» := entry.effectiveCatalogId :
-          TemplateOccurrenceKey }
-    return (moduleName, registered)
-  let rows ← TemplateBinding.reportJson modules
-  return (rows, GeneratedDeclarations.entries (← getEnv))
+  assessReportTargets moduleNames (recordedInputOwners (← getEnv)) fun target => do
+    assessRecordedRegistrations target
+    return registeredKeys (← getEnv) target
 
 end LeanInformationAudit
