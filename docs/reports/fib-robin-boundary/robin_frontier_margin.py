@@ -12,6 +12,7 @@ sys.dont_write_bytecode = True
 import argparse
 from fractions import Fraction
 import json
+from math import gcd
 from pathlib import Path
 
 from kernel_tail import exp_gamma_lower, log_interval
@@ -59,13 +60,20 @@ def main():
     certificate = json.loads(args.certificate.read_text())
     if certificate.get("schema") != "robin-rough-frontier-v1":
         raise ValueError("wrong frontier schema")
-    if args.core < 1:
-        raise ValueError("core must be positive")
+    if args.core < 5040:
+        raise ValueError("core must be at least 5040")
+    y = certificate.get("y")
+    if type(y) is not int or y < 1:
+        raise ValueError("frontier certificate has invalid rough cutoff")
+    if any(p > y for p, _ in factor(args.core)):
+        raise ValueError("core has a prime factor outside the rough cutoff")
     gamma_exp = exp_gamma_lower()[2]
     rows = []
     for entry in certificate["frontier"]:
         suffix = entry["number"]
         weight = Fraction(*entry["weight"])
+        if gcd(args.core, suffix) != 1:
+            raise ValueError("frontier suffix is not coprime to the core")
         gap = lower_margin(args.core, suffix, weight, gamma_exp)
         rows.append({
             "suffix": suffix,
