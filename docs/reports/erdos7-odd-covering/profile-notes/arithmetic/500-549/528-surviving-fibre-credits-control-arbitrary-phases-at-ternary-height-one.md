@@ -20318,3 +20318,126 @@ layout inequality can change the certificate's sign. No parameter scan,
 new numerical producer or Lean build is used here. The all-family
 existence of some valid cutoff, same-source selector and strict full
 margin remains unresolved.
+
+## The newer FIB common-core argument does not cancel covering phases
+
+The FIB update at
+[211e717b11, Sections232--233](https://github.com/the-omega-institute/trureturing/blob/211e717b11967636747b883b167da777c69e645e/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#L31753)
+separates three obligations. A finite common-core inequality confines
+low-loss divisor hits to one integer; a complete nonnegative remainder
+bound handles the other contribution; the weight at that same integer
+still needs its own strict budget. The unweighted single-candidate
+conclusion is also obtained there from classical benefit and prime
+estimates. The text supplies no uniform effective starting point and
+does not exclude the remaining candidate.
+
+There is a specific obstruction to transferring the common-core step.
+If q divides d_1,d_2 and actual covering hits satisfy
+d_i | (x_i-a_i), subtraction gives only
+
+    q | (x_1-x_2)-(a_1-a_2).                      (FC852)
+
+The FIB divisor argument instead has d_i|x_i. In a reduced progression
+x_i=c+mg_i that also makes the actual common divisor a unit modulo m.
+For shifted covering hits, neither removal of the phase difference
+nor this automatic unit property follows. Even when the unit property
+is separately true, deleting the phase difference is invalid.
+
+For example take x_g=1+2g, g=0,1, and the distinct odd original classes
+1 mod9 and3 mod27. The two actual hits are1 and3. With reference9 the
+two reduced ratios are1 and3, both with denominator1, and common core9
+is larger than the multiplier diameter1. Still both points are hit:
+FC852 retains a phase difference of magnitude2. If an abstract loss
+function is required, set J(d)=0 for9|d and J(d)=1 otherwise, with
+J_0=L_0=0. Every low-loss denominator relative to9 is then1. This is
+not an assertion about the specific FIB loss J_s. It refutes that phase-blind
+transfer only; the two classes do not cover the integers. A useful
+E7 adaptation must retain the literal phase differences or establish
+a lawful joint transport before invoking a separation inequality.
+
+## Reuse the joint residue update for the actual query capacities
+
+[Report411 FH1--FH4](../400-449/411-exact-continuation-state-is-a-joint-residue-histogram.md)
+already identifies the joint future residue histogram and its exact
+CRT update. Its FH5 refutes closure of separate immediate histograms;
+FH6 recovers the whole old survivor set from unrestricted exact future
+counts. The following is its weighted application to FC841--843, not
+a replacement general state theorem.
+
+Fix a finite current measure nu=1_S mu with density f modulo N
+relative to normalized Haar. N resolves the ENTIRE density and S,
+not merely the query box. It can be enlarged to include Q, so Q|N.
+Use the coherent uniform lift of this same measure to lcm(N,m).
+Let a mod m be one new legal original, with its unused numerical
+label and literal phase retained, and put
+
+    g=gcd(N,m), k=m/g, R=lcm(Q,g),
+    u_z=nu(x=z mod Q),
+    v_z=(1/k)nu(x=z mod Q and x=a mod g),
+    u'_z=u_z-v_z.                                (FC853)
+
+These are the exact capacities after deleting the new original,
+WITHOUT renormalizing or rebuilding the old source kernels. To see
+this, every old residue modulo N has k uniform lifts; exactly one
+meets a mod m if that residue equals a mod g, and none otherwise.
+Sum these weighted counts in the actual Q cell. In particular, if
+w_r=nu(x=r mod R), then
+
+    v_z=(1/k)sum_(r mod R: r=z mod Q, r=a mod g)w_r.
+
+Thus the joint R histogram supplies this update. When g|Q it reduces
+to v_z=(u_z/k)1_(z=a mod g), so the old Q histogram alone suffices.
+Otherwise marginal masses need not determine the intersection.
+This is a one-step sufficient interface, not a claim of minimality
+over restricted actual sources or of closure under all future labels.
+It updates AVAILABLE capacities, not an arbitrary selected law from
+its query marginal alone. For such a law the actual selected overlap
+must be retained, or N must also resolve its selector density before
+the same lift argument is applied.
+
+There is a useful quantitative consequence for the selector margin.
+With Q and tau>=0 FIXED, define for any nonnegative capacity vector u
+
+    P(u)=max_(0<=x<=u)[sum_z x_z-tau C_e(x)].
+
+Let delta=sum_z v_z be the actual deleted mass. Then
+
+    0<=P(u)-P(u')<=delta,
+    P(u')>=(1-1/k)P(u).                            (FC854)
+
+For the first inequality, the feasible box shrinks. For the second
+side of the first line, choose an optimizer x for u and replace it
+by x'_z=min(x_z,u'_z). Its lost mass is at most delta and every
+complete squared-load expectation decreases, so its score falls
+by at most delta. For the second line, FC853 gives u'>=(1-1/k)u;
+scale a maximizing x by this factor and use homogeneity of every
+query cost. This also covers k=1, where the guarantee is only zero.
+
+Numerical distinctness does not force k>1: an old original modulo15
+followed by the previously unused modulus5 has k=1 at N=15. Nor
+does k>1 imply that the old coarse boundary determines the exact
+update. Consider the actual pure cores0 mod9 and3 mod9. Each source
+is normalized Haar on its eight allowed residues modulo9. With Q=3
+both capacity vectors are(1/4,3/8,3/8). Add the SAME unused class
+0 mod27. It deletes nothing in the first source and mass1/24 in
+the second. Their new unnormalized capacity vectors are respectively
+
+    (1/4,3/8,3/8), (5/24,3/8,3/8).                (FC855)
+
+Both old periods are9 and k=3; all originals in each family are
+distinct odd moduli. The difference is the retained relation to
+the mod9 phase, exactly the finer joint input in FC853. This is an
+actual weighted example of Report411's continuation obstruction.
+
+The full FC840 certificate still pays tau epsilon_e. In a setting
+where its source hypotheses and the same remainder bound remain
+valid after this deletion, either P(u)-delta>tau epsilon_e or
+(1-1/k)P(u)>tau epsilon_e is sufficient. Changing the cutoff, query
+box, raw source or tail factor requires its own transport and bounds;
+FC854 supplies none of them for free. In particular it does not
+construct the actual capacities, guarantee survival at k=1, or prove
+that every original family has some positive full margin. That
+arithmetic existence obligation remains the unrestricted target.
+
+These are written CRT derivations and finite exact examples, with
+independent review; no numerical scan or new Lean proof is used.
