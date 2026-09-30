@@ -4,7 +4,7 @@ authors: trureturing contributors
 year: 2026
 title: An explicit degree-ten high edge in a three-star packet
 doi: null
-url: pending PR from dev
+url: https://github.com/the-omega-institute/trureturing/pull/11568
 claim: Paper proof of one explicit orientable three-star degree-eight packet triangulation with high degrees 10 and 38, realized by a heterogeneous shared-edge co-volume box.
 license: citation-only
 triage: anchor
