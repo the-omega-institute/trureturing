@@ -139,6 +139,15 @@ class ReuseTests(unittest.TestCase):
         self.assertFalse(publication.member(self.report, reuse.SUFFIX).exists(),
                          '[FAIL] seal_leaves_no_receipt_for_changed_inputs')
 
+    def test_standalone_program_entry_builds_the_producer_once_before_ensure(self):
+        process, calls = self.entry_with_program_build(['leanInspector/LeanInformationAudit'], prebuilt=False)
+        self.assertEqual(process.returncode, 0, process.stdout + process.stderr)
+        self.assertEqual(calls[:2], ['producer-build', 'ensure'], '[FAIL] standalone_entry_builds_producer_before_ensure')
+        self.assertEqual(len(calls), 3)
+        self.assertTrue(calls[2].endswith(' build leanInspector/LeanInformationAudit'))
+        self.assertEqual((self.root / 'ensure-producer').read_text(), 'producer.dll\n',
+                         '[FAIL] ensure_runs_the_built_producer')
+
     def test_probe_cli_reports_misses_but_rejects_invalid_registration(self):
         self.receipt()
         command = [sys.executable, '-B', str(HERE / 'reuse.py'), 'probe', '--repository', str(self.root),
@@ -420,7 +429,7 @@ class ReuseTests(unittest.TestCase):
             api.reuse(self.root, self.report, self.output)
 
     def entry_with_program_build(self, targets, *, seed=True, build_exit=0,
-                                 existing_output=False, registered_targets=('FixtureAudit',)):
+                                 existing_output=False, registered_targets=('FixtureAudit',), prebuilt=True):
         # Exercise the actual shell entry and report receipt, replacing only the
         # external cache/build processes. No Lean compilation is needed here.
         for relative in ('tools/lean-inspector/inspect.sh', 'tools/lean-inspector/reuse.py',
@@ -433,7 +442,8 @@ class ReuseTests(unittest.TestCase):
         ensure = self.root / 'tools/scripts/worktree/lean-cache-ensure.sh'
         ensure.write_text('#!/bin/bash\nset -euo pipefail\n'
                           + ('' if existing_output else 'test ! -e .lake\n')
-                          + 'printf "ensure\\n" >> build-calls\nmkdir -p .lake\n')
+                          + 'printf "ensure\\n" >> build-calls\nmkdir -p .lake\n'
+                          + 'printf "%s\\n" "${STRATALINT_LEAN_PRODUCER_DLL##*/}" >> ensure-producer\n')
         runner = self.root / 'tools/scripts/worktree/lean-cache-run.sh'
         runner.write_text('#!/bin/bash\nset -euo pipefail\n'
                           'printf "%s\\n" "$*" >> build-calls\n'
@@ -455,6 +465,15 @@ class ReuseTests(unittest.TestCase):
             STRATALINT_INSPECTOR_SUPERVISED='1', STRATALINT_LEAN_PRODUCER_DLL=str(producer),
             STRATALINT_LEAN_REPORT_REUSE=str(self.report),
             STRATALINT_LEAN_BUILD_TARGETS=targets if isinstance(targets, str) else json.dumps(targets))
+        if not prebuilt:
+            # A standalone entry builds the producer and reports its DLL.
+            dotnet = self.root / 'dotnet-bin/dotnet'
+            dotnet.parent.mkdir()
+            dotnet.write_text('#!/bin/sh\nprintf "producer-build\\n" >> build-calls\n'
+                              'printf "%s\\n" "$PWD/producer.dll"\n')
+            dotnet.chmod(0o755)
+            environment.pop('STRATALINT_LEAN_PRODUCER_DLL')
+            environment['PATH'] = str(dotnet.parent) + os.pathsep + environment['PATH']
         if existing_output and seed == 'valid':
             environment.pop('STRATALINT_LEAN_REPORT_REUSE')
         if targets is None:
