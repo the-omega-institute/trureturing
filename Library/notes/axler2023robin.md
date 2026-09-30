@@ -3,10 +3,10 @@ bibkey: axler2023robin
 authors: Christian Axler
 year: 2023
 title: On Robin's inequality
-journal: The Ramanujan Journal 61, 909–919
 doi: 10.1007/s11139-022-00683-0
-arxiv: 2110.13478v3
+url: https://arxiv.org/pdf/2110.13478v3
 claim: The totient bound inside the proof gives a stronger joint prime-valuation stopping condition and an exact finite resolution for that condition.
+strata_touched: []
 license: citation-only
 triage: anchor
 ---

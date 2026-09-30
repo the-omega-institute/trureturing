@@ -3,9 +3,10 @@ bibkey: hertlein2018robin
 authors: Alexander Hertlein
 year: 2018
 title: Robin's inequality for new families of integers
-journal: Integers 18, A71
-arxiv: 1612.05186v2
+doi: null
+url: https://arxiv.org/pdf/1612.05186v2
 claim: An explicit totient-ratio upper bound and a verified finite interval give a joint sufficient condition on several prime valuations.
+strata_touched: []
 license: citation-only
 triage: anchor
 ---
