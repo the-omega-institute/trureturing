@@ -1,8 +1,16 @@
 ---
-title: CFMP Fibonacci observation obstruction
-date: 2026-09-30
-status: scoped-formal-bridge
+bibkey: cfmp2026fibonacciobstruction
+authors: trureturing contributors
+year: 2026
+title: CFMP Fibonacci return observation obstruction
+doi: null
+url: https://github.com/the-omega-institute/trureturing/pull/11418
+claim: A scoped framed-return congruence obstruction with exact positive-modulus kernel normal form and image condition.
+license: citation-only
+triage: anchor
+strata_touched: []
 ---
+
 
 The cyclic CFMP return observation on integer pairs is
 C(x,y) = (2x-y, x+2y). Write J(x,y)=(y,x), F(x,y)=(y,x+y), and
