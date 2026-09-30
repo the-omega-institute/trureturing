@@ -28,7 +28,10 @@ internal sealed class TorpedoGamePerfectClassicalDocument : IScribeDocumentDefin
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Proof of the conjecture", Disp(F.Id("claim")),
                 "Every classical winning probability is at most 1, since each term is a probability. For the lower bound it suffices to give a deterministic strategy that wins on every input and question. For d = 5 the colouring of the paper's Fig. 9 with a tabulated decoding is checked on all 150 cases. For d >= 6, rows 2i and 2i + 1 carry two classes, {(2i, 0), (2i, 1)} together with row 2i + 1 outside columns 0 and 2, and the rest of row 2i together with (2i + 1, 0) and (2i + 1, 2); for odd d the last three rows r, r + 1, r + 2 carry three classes, row r outside -1, -2, -3 with row r + 1 at 0, 1, 3, the rest of row r + 1 with row r + 2 at 0, 2, 3, and row r at -1, -2, -3 with the rest of row r + 2. For each class and question, Bob answers an explicit value that no point of the class has as its label: the labels q x - z of a row part missing columns F miss exactly q x - F, and the chosen value in that gap avoids the labels of the other row part once d >= 6 separates the small constants involved. The strategy with one-point shared randomness and 0/1 encoding and decoding then wins with probability 1.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("emeriau-2020-torpedo-perfect-classical"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(
