@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Geometry/HyperbolicUpperHalfSpace
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Analysis.Complex.UpperHalfPlane.Metric]
+   anchors: [mathlib/module/Mathlib.Geometry.Euclidean.Inversion.Basic]
    utility: none
    digest: Hyperbolic upper half-space metric in arbitrary horizontal dimension. -/
 
