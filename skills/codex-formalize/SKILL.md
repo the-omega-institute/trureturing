@@ -136,7 +136,7 @@ of the truth graph. So the prose describes objects, hypotheses and implications,
 must not name the process that produced the deposit: no atom, preregistration, witness, admission,
 coverage, bucket capacity, directory counts, implementation-base SHAs, placement rationale, or review
 vocabulary such as calling a lemma a live consumed step. Say what the lemma states and what consumes
-it mathematically. Two landed instances, each caught by review after all three required checks were
+it mathematically. Two landed instances, each caught by review after all required checks were
 green: one carried `preregistered witness`, `the atom states`, and `whole preregistered candidate
 theorem`; the other carried its bucket's 24-file count, its implementation base SHA, and why the module
 went where it did. That kind of sentence belongs in the pull request body, which is where the
@@ -260,7 +260,7 @@ git commit -F <commit-message-file>
 ```
 
 This focused publication-completeness boundary reuses `filemap-conform`; it adds no required CI
-status and does not require a full local local validation before publication. Full local local validation remains
+status and does not require a full local validation before publication. Full local local validation remains
 post-push, parallel with CI under `CLAUDE.md` §8.2. The native check validates inventory; following this
 handoff procedure remains an agent/review obligation. Source fidelity, the no-wrapper rule, the
 explicit registration exception above, and independent review before freeze/merge still apply.
@@ -287,7 +287,7 @@ incomplete unit.
 ### 8. Push and open the pull request, or report `open`
 
 After Step 7's publication boundary completes, push the committed current branch promptly; do not
-wait for full local local validation. Use the repository door:
+wait for full local validation. Use the repository door:
 
 ```sh
 git push -u origin <branch>
@@ -302,7 +302,7 @@ the PR door rather than waiting for either to finish:
 make gate BASE=<explicit-existing-40-hex-commit-sha>
 ```
 
-Report its raw exit and rejected rules; it does not replace the three remote required checks or gate
+Report its raw exit and rejected rules; it does not replace the configured independent workflow required checks or gate
 the push. Fix actual failures under their existing owners without weakening required checks.
 
 `AUTO_MERGE=1` explicitly opts an invocation into auto-merge; without that option, the door does not arm auto-merge. Do not arm auto-merge before independent review passes: the sshx review triplet (tests / quality / architecture) must finish and pass before freeze or merge, and may run before or after PR publication as reviewer access permits (memory `review-must-precede-automerge`, #2337 precedent). Before any later push, query the actual PR state and head. If the PR is still `OPEN`, update the same branch with a complete publication unit under Step 7, including the return to freeze after review, then rerun the required checks on the new exact head and watch them with `make pr-watch PR=<number> HEAD_SHA=<new-40-hex-head-sha>`. If the PR is `MERGED` or `CLOSED`, route later work to a new branch and a new pull request. Never infer that a successful later push reached `dev`; verify the actual merge and `dev` state.
@@ -385,7 +385,7 @@ A landed pull request consisting of one generic one-line `def` plus two `simp`-t
 ### Cover and quarantine (digestion-side precedents)
 
 Every entry below names a failure class that actually occurred on 2026-09-05/06, each caught by
-independent review after all three required checks were green. The machine gates judge admission
+independent review after all required checks were green. The machine gates judge admission
 compliance; they do not judge coverage faithfulness.
 
 - **A cover door has four preconditions, not three.** Beyond (1) the covering module is frozen,

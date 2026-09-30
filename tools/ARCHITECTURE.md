@@ -4,57 +4,27 @@ Production harness projects, scripts, manifests, and architecture material live 
 `tools/`; all harness test and compile-fail projects live under `tools/tests/`.
 `Meta/` is the data side of this boundary and contains no harness program directory.
 
-CI and preflight execute the candidate's programs. A PR uses the read-only
-`pull_request` entry in `ci-pr.yml`; the first checkout uses the event's immutable
-`github.sha` merge commit M. Before publishing a plan, `ci.py resolve` verifies
-that checked-out HEAD equals `GITHUB_SHA`, has two parents, and has the triggering
-PR head H as its second parent. It takes B from M's first parent. Every downstream
-job checks out that same M; a later update to `refs/pull/N/merge` cannot select a
-different candidate. Base commits supply data to the candidate judge, never code
-that is restored, compiled, or executed.
+Each `ci-*.yml` workflow is an independent required-check unit. Its `paths` input
+is a whitelist consumed by `tools/scripts/workflow/ci-entry.sh`; the entry verifies
+the checked-out `GITHUB_SHA`, the complete event range and the pull-request merge
+parents before deciding whether the unit is hit. A miss skips that unit and exits
+successfully. Workflows run in parallel; steps within one workflow may be serial.
+The entry removes remote state after the fixed candidate and any required base data
+are available, and no workflow executes protected-base code.
 
-The resolver publishes the complete plan and changed-path manifests together as
-one Actions artifact. Job outputs carry only immutable candidate/base identities
-and the artifact ID. Each consuming job downloads the files and validates their
-complete scope and declared resource selection against the fixed candidate before
-routing work. Missing, corrupt, or mismatched manifests fail even for no-resource
-changes; path lists never travel through process arguments or environment values.
+`ci-unit.yml` supplies the common checkout, path hit, .NET and optional Lean cache
+steps. Test projects, selftests, compile-fail proofs, FILEMAP and current each have
+their own workflow. `ci-current.yml` produces one Lean report and runs
+`check-current`, Scribe, and (for pull requests) `check-delta` against the first
+parent as data. `ci-filemap.yml` owns FILEMAP conformance. Every independent
+workflow has its own required check; the actual names and deployment state come
+from the installed ruleset and real Actions runs.
 
-Native CI push checks the final commit H. Its lightweight planner uses the push event's
-complete before-to-after path range; initial pushes cover the registered current
-tree. FILEMAP and explicit manifests select resources, build roots, tests, checks,
-and cache layers. The semantic `current` checks have no baseline or changes input;
-only PR `delta` checks compare B to M. Local PR preflight constructs an isolated
-merge-tree candidate from a clean checkout and an explicit base SHA.
-
-Local `make preflight` requires an explicit mode and prints choices with exit 2
-before planning or building when it is absent or invalid. `MODE=fast` delegates
-`make -C tools check-fast`, the quick .NET structure tests, with no Lean or
-admission claim. `MODE=push BASE=<40-hex-commit-sha>` uses the existing push planner
-with explicit BASE/HEAD endpoints to cover the complete baseline-to-worktree
-delta, including multi-commit, staged, unstaged, untracked and deleted inputs.
-BASE must be an existing nonzero commit; it need not be an ancestor.
-`MODE=full` uses that planner's complete current-input scope, including removed
-dirty endpoints for ownership checks. It retains caches
-and incremental production. fast/full reject BASE and push endpoints. Only push
-accepts matching complete CI_PUSH_BEFORE/AFTER copies. Shared local modes reject
-inherited native push events, reusable workflow candidate inputs and stale
-CANDIDATE_SHA, then bind child validation to the actual candidate. `MODE=pr`
-retains the clean private merge candidate and its explicit immutable BASE.
-Choose fast for harness iteration, targeted `make lean` for mathematical
-iteration, push for delta validation, pr for integration, and full for deliberate
-whole-tree diagnostics. CI equivalence covers matching shared check scopes;
-fast has its own limited test scope.
-
-The common build stage restores locked packages, builds the selected candidate
-projects, and seals their identity and outputs. Engineering accepts verified test
-evidence and runs required selftests and negative compilations. Current enters the
-incremental Lean/report producers when required, then checks Scribe, FILEMAP, and
-current invariants. Delta consumes this round's validated common results and test
-coverage. Reports, DLLs, TRX, and check materials are bound to the candidate and
-production round before downstream use. Cache seeds are optional inputs to those
-validators and producers; cache hits do not issue a passing verdict. PR runs do
-not publish cache snapshots.
+Local validation uses the same independent commands: `make test` runs
+`lean-report` and `check-current`, while `make gate BASE=<40-hex-commit-sha>` runs
+those plus Scribe, FILEMAP and explicit-base `check-delta`. A project-specific
+test is run with `make -C tools test TEST_PROJECT=...`; local success is early
+feedback and does not replace remote required checks.
 
 Report compatibility is the explicit `report_cache_release_semantic_version` in the registered
 `lean-report-inputs.json`. Native Lake facets own report reuse and always require
@@ -65,22 +35,19 @@ origins. Native report artifacts travel with `.lake/build` in the project snapsh
 there is no separate report cache or preparation shortcut. Remote seed compatibility
 remains the resolved mathlib revision, with OS/architecture binary isolation.
 
-PR required checks are `push / engineering`, `push / current`, and `delta`;
-push required checks are `engineering` and `current`. The shared build job is a
-prerequisite of its selected consumers. Truth release selects the two successful
-push checks and report artifact for one explicit dev commit. Workflow version,
-permissions, artifact handoff, and actual required-check names are verified in
-integration runs under CLAUDE.md §8.12; branch protection keeps `strict=false`.
+No release command selects a CI run or report artifact. Truth-release bundles are
+verified offline from their declared source and digest; eligibility and branch
+protection remain separate observations. Workflow version, permissions, artifact
+handoff and required-check names are verified in integration runs under
+CLAUDE.md §8.12; branch protection keeps `strict=false`.
 
 ## D5-T0017: deployment boundary
 
 `StrataLint topology` reads the workflow at the resolved remote default-branch
-commit and checks its declared `pull_request` trigger and `delta` job. Its
-`STEADY-STATE-ACTIVE` result describes reachable workflow topology; it does not
-prove that a run executed that version or that branch protection is configured.
-Deployment and protection state need their own observed evidence. The original
-trusted-bootstrap boundary does not authorize executing a baseline judge or
-bypassing the current integration and PR requirements.
+commit and checks the independent workflow family and current pull-request
+contract. Its `STEADY-STATE-ACTIVE` result describes reachable topology; it does
+not prove that a run executed that version or that branch protection is configured.
+Deployment and protection state need their own observed evidence.
 
 SL-022 evaluates raw changed paths before candidate-controlled inputs. Git rename and
 copy records contribute both endpoints, so removing or moving a protected old path is
@@ -105,7 +72,7 @@ discovering dependencies from code.
 
 Engine owns the pure current-schema model, parser and canonical policy writer. CLI
 acquires bytes and joins the domain vocabulary; Scribe projects the validated model.
-Current writes use schema 5 and a deterministic TOML encoding. Canonical snapshots use
+Current writes use schema 6 and a deterministic TOML encoding. Canonical snapshots use
 schema 2 with `filemap_sha256`, binding the validated FILEMAP policy. Changed policy
 bytes and structured Evidence are checked at the write boundary; unrelated deltas do
 not replay historical byte canonicality. Narrow historical admission-plane and symlink

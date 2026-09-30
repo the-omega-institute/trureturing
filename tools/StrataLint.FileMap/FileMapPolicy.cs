@@ -66,6 +66,7 @@ internal static partial class FileMapPolicy
             ["NativeArchivePaths"] = "tools/scripts/worktree/lean_actions.py",
             ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,
             ["DomainsLoader"] = DomainsLoaderPath,
+            ["ReportProducerScope"] = "tools/StrataLint.Engine/RepositoryIo/ReportProducerScope.cs",
             ["ScribeEmitter"] = ScribeEmitterPath,
             ["ScribeCompiler"] = ScribeProjectPath,
             ["SnapshotDecoder"] = SnapshotDecoderPath,

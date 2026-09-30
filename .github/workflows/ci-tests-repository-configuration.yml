@@ -19,7 +19,7 @@ jobs:
   tests-repository-configuration:
     uses: ./.github/workflows/ci-unit.yml
     with:
-      run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.RepositoryConfiguration.Tests/StrataLint.RepositoryConfiguration.Tests.csproj
+      command: make -C tools test TEST_PROJECT=tools/tests/StrataLint.RepositoryConfiguration.Tests/StrataLint.RepositoryConfiguration.Tests.csproj
       paths: |
         .editorconfig
         .github/*

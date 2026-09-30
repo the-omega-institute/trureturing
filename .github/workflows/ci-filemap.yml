@@ -19,7 +19,7 @@ jobs:
   filemap:
     uses: ./.github/workflows/ci-unit.yml
     with:
-      run: >-
+      command: >-
         dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -p:RestoreLockedMode=true -nologo &&
         dotnet tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll filemap-conform
       paths: |

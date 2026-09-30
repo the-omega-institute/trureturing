@@ -113,9 +113,9 @@ parse_snapshot() {
         or any(.checkSuite.checkRuns.nodes[]; .databaseId == $c.databaseId))] as $items |
     def name: if .__typename == "CheckRun" then .name else .context end;
     def state: if .__typename == "CheckRun" then (.conclusion // .status) else .state end;
-    def red: ["FAILURE","CANCELLED","TIMED_OUT","ERROR","ACTION_REQUIRED","STARTUP_FAILURE","STALE"] | index(state) != null;
-    def pending: ["QUEUED","IN_PROGRESS","WAITING","REQUESTED","PENDING","EXPECTED"] | index(state) != null;
-    def green: ["SUCCESS","NEUTRAL","SKIPPED"] | index(state) != null;
+    def red: state as $s | ["FAILURE","CANCELLED","TIMED_OUT","ERROR","ACTION_REQUIRED","STARTUP_FAILURE","STALE"] | index($s) != null;
+    def pending: state as $s | ["QUEUED","IN_PROGRESS","WAITING","REQUESTED","PENDING","EXPECTED"] | index($s) != null;
+    def green: state as $s | ["SUCCESS","NEUTRAL","SKIPPED"] | index($s) != null;
     [$required[] as $name | [$items[] | select(name == $name)] as $found |
       if ($found | length) == 0 then {kind:"missing",check:$name}
       else $found[] | if red then {kind:"red",check:name,state:state}

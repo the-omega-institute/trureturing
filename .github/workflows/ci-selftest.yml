@@ -19,7 +19,7 @@ jobs:
   selftest:
     uses: ./.github/workflows/ci-unit.yml
     with:
-      run: make -C tools selftest
+      command: make -C tools selftest
       paths: |
         .editorconfig
         .github/*

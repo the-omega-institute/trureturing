@@ -11,7 +11,7 @@ on:
         description: Path whitelist, one bash pattern per line (`*` also matches `/`)
         required: true
         type: string
-      run:
+      command:
         description: Command executed from the repository root when the whitelist is hit
         required: true
         type: string
@@ -28,7 +28,7 @@ permissions:
   actions: read
 
 jobs:
-  run:
+  unit:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: ${{ inputs.timeout-minutes }}
     steps:
@@ -91,4 +91,4 @@ jobs:
         env:
           CI: 'true'
           DOTNET_CLI_UI_LANGUAGE: en-US
-        run: ${{ inputs.run }}
+        run: ${{ inputs.command }}

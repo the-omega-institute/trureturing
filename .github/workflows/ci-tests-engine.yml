@@ -19,7 +19,7 @@ jobs:
   tests-engine:
     uses: ./.github/workflows/ci-unit.yml
     with:
-      run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj
+      command: make -C tools test TEST_PROJECT=tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj
       paths: |
         .editorconfig
         .github/*

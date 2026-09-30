@@ -540,7 +540,7 @@ owner 原话:「只要是独立的部分就跑独立的CI, 不要混在一起了
 
 - `dev` 是集成主分支;实施经 PR 合入。`main` 是发布分支,依 spec A14 的 release PR 与 tag 推进。
 - 实施分支由 `WorktreeCommand` 的 creation grammar 创建,会话复用独立 worktree;生命周期清理仍识别其 `LifecycleNamespaces`,不因创建词表变化缩小清理范围。
-- 每个独立 CI workflow 对应一个 required check;各文件内的路径白名单决定是否执行本程序,未命中仍报告成功。测试项目、selftest、两类编译反证、FILEMAP 和 current 分属独立 workflow。`ci-current.yml` 串行运行 Lean report、check-current、Scribe、FILEMAP,PR 事件再运行 check-delta。检查只执行候选代码,base 只作为固定数据。
+- 每个独立 CI workflow 对应一个 required check;各文件内的路径白名单决定是否执行本程序,未命中仍报告成功。测试项目、selftest、两类编译反证、FILEMAP 和 current 分属独立 workflow。`ci-current.yml` 串行运行 Lean report、check-current、Scribe,PR 事件按 delta 白名单运行 check-delta；FILEMAP 由独立 workflow 执行。检查只执行候选代码,base 只作为固定数据。
 - required 名称与部署状态按 §8.12 的真实运行核验,本地文件不证明远端 ruleset 已更新。绿且显式选择 auto-merge 才自动合;缺省不 arm。PR merge-ref 检查与 dev push 检测保留 M1→M2 的残余边界,`strict=false`。
 - PR 保留必要来源与 §5.2 产地信息;不留过程转录(§2.10)。
 

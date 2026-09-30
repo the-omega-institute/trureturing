@@ -19,7 +19,7 @@ jobs:
   tests-truth-release:
     uses: ./.github/workflows/ci-unit.yml
     with:
-      run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.TruthRelease.Tests/StrataLint.TruthRelease.Tests.csproj
+      command: make -C tools test TEST_PROJECT=tools/tests/StrataLint.TruthRelease.Tests/StrataLint.TruthRelease.Tests.csproj
       paths: |
         .editorconfig
         .github/*

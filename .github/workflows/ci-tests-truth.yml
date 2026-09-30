@@ -19,7 +19,7 @@ jobs:
   tests-truth:
     uses: ./.github/workflows/ci-unit.yml
     with:
-      run: make -C tools test TEST_PROJECT=tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj
+      command: make -C tools test TEST_PROJECT=tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj
       paths: |
         .editorconfig
         .github/*
