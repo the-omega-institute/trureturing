@@ -23432,3 +23432,440 @@ $$
 式（209.20）、式（209.23）是尚待实现的充分目标。Euler 乘积比较与模数素因子删除估计只限定这两种全域替代的改进尺度；它们不证明实际固定剩余类有正的边界偏差，也不排除有限截断、区间分解或更精确的共同实现关系带来额外节省。
 
 ## 追加锚（本行以下为增补区）
+
+## 210. 有限除数截断与实际全区间高矩的正指数障碍
+
+本节研究纯大小截断能否独自补足前一节的固定模数节省。结论是：在指定矩阶下，截去 $d>X$ 后仍留下至少 $\pi^2/12$ 的正指数主项；而且通过明确处理 $\lfloor X/d\rfloor$，这一障碍也存在于实际有限整数矩中。这不涉及对某个整数是否违反 Robin 的判断。
+
+取正整数 $A\le X$，满足 $A\to\infty$、$X/A\to2$。实际 FIB 来源族的两个端点符合此条件。记
+
+$$
+y=\log A,\qquad \ell=\log y,\qquad
+s=y\ell,\qquad t=e^\gamma\ell,\qquad
+R_y=\frac y{\ell^2}.
+$$
+
+令 $b_s$ 为上一节的非负乘法函数：
+
+$$
+b_s(1)=1,\qquad
+b_s(p^a)=Z(p^a)^s-Z(p^{a-1})^s,
+\qquad Z(n)=\sigma(n)/n.
+$$
+
+所以 $Z(n)^s=\sum_{d\mid n}b_s(d)$。定义
+
+$$
+U(s)=\sum_{d\ge1}\frac{b_s(d)}d,\qquad
+C_s(X)=\sum_{d\le X}\frac{b_s(d)}d,
+\qquad \mu_s(d)=\frac{b_s(d)}{dU(s)}.
+$$
+
+固定 FIB 模数上的同余节省仍是额外的待证条件。
+
+### 210.1 截止素数以下的半段贡献
+
+Weingartner 2010 作者稿定义
+
+$$
+W_p(s)=1+\frac{(1-p^{-1})^{-s}-1}{p},
+\qquad W(s)=\prod_pW_p(s).
+$$
+
+对有限素数乘积，有精确恒等式
+
+$$
+\begin{aligned}
+\log\prod_{p\le y}W_p(s)
+={}&-s\sum_{p\le y}\log(1-p^{-1})-\vartheta(y)\\
+&+\sum_{p\le y}\log\left(1+p(1-p^{-1})^{s+1}\right),
+\end{aligned}
+\tag{210.1}
+$$
+
+其中 $\vartheta(y)=\sum_{p\le y}\log p$。
+
+原文 Lemma 4 证明中的式（8）把式（210.1）的最后一项改为
+$\sum_{p\le y}\log(1+pe^{-s/p})$，误差为 $O(1/\log y)$。原文式（9）分别对这一项、Mertens 项及 $\vartheta$ 项使用强形式的素数定理和 Mertens 定理。取其中的下半段，得到
+
+$$
+\log\prod_{p\le y}W_p(s)
+=s\log t-y+I_-(y)+o(y/\ell^3),
+\tag{210.2}
+$$
+
+$$
+I_-(y)=\int_e^y\log(1+xe^{-s/x})\frac{dx}{\log x}.
+$$
+
+这里并未把原文两个积分的总量误分配给一个积分：原文式（13）给 $q_2(k)=1/k$，式（14）明确给下半段积分自己的系数
+
+$$
+\theta_2=\sum_{k\ge1}\frac{(-1)^{k+1}}{k^2}
+=\frac{\pi^2}{12}.
+$$
+
+因此，原文式（14）取 $m=2$ 后，式（210.2）成为
+
+$$
+\boxed{
+\log\prod_{p\le y}W_p(s)
+=s\log t-y+\frac{\pi^2}{12}R_y
++O(y/\ell^3).
+}
+\tag{210.3}
+$$
+
+另一个 $\pi^2/12$ 来自原文式（19）的上半段积分；合起来才是 Lemma 5 的 $b_2=\pi^2/6$。本节只使用式（210.3）的已定位半段。
+
+所需的素数定理精度可以明确写为：对每个固定 $K>0$，
+
+$$
+\vartheta(x)=x+O_K(x/(\log x)^K).
+\tag{210.4}
+$$
+
+这是经典强形式素数定理的后果，也是原文式（9）所用误差的较弱形式。后面的有限配置大小控制只需 $K=4$；没有假设 RH。
+
+### 210.2 同一个有限整数中的实际素数幂
+
+取
+
+$$
+\delta=\frac y{\ell^3},\qquad z=y-\delta,
+\qquad B=\sqrt s.
+$$
+
+充分大时 $2<B<z$。对每个 $p\le z$ 定义整数指数
+
+$$
+e_p=
+\begin{cases}
+\lceil\log s/\log p\rceil-1,&p\le B,\\
+1,&B<p\le z.
+\end{cases}
+$$
+
+当 $p\le B$ 时，$e_p\ge1$ 且
+
+$$
+p^{e_p}<s\le p^{e_p+1}.
+\tag{210.5}
+$$
+
+定义单一有限整数
+
+$$
+m=m(y)=\prod_{p\le z}p^{e_p}.
+\tag{210.6}
+$$
+
+**引理 210.1（素数幂补足没有越过大小截断）。** 充分大时，
+
+$$
+\log m\le y-\delta/2,
+\qquad m\le A e^{-\delta/2}<X.
+\tag{210.7}
+$$
+
+证明。由式（210.5），
+
+$$
+\begin{aligned}
+\log m
+&=\vartheta(z)+\sum_{p\le B}(e_p-1)\log p\\
+&\le\vartheta(z)+B\log s.
+\end{aligned}
+$$
+
+式（210.4）取 $K=4$ 给 $\vartheta(z)=z+O(y/\ell^4)$。又
+
+$$
+B\log s=O(\sqrt y\,\ell^{3/2})=o(y/\ell^3)=o(\delta).
+$$
+
+所以 $\log m\le y-\delta+o(\delta)$，得到式（210.7）。所有素数幂都属于同一个整数 $m$，而非分别可达的局部最优项。$\square$
+
+定义有限局部因子
+
+$$
+V_p(s,e)=\sum_{a=0}^e\frac{b_s(p^a)}{p^a}.
+$$
+
+由于 $b_s$ 乘法且非负，
+
+$$
+P_s(m):=\sum_{d\mid m}\frac{b_s(d)}d
+=\prod_{p\le z}V_p(s,e_p)
+\le C_s(X).
+\tag{210.8}
+$$
+
+**引理 210.2（有限实际赋值仍保留半段贡献）。** 存在常数 $C_0$，使充分大时
+
+$$
+\log P_s(m)
+\ge s\log t-y+\frac{\pi^2}{12}R_y-C_0y/\ell^3.
+\tag{210.9}
+$$
+
+证明。记 $P_p=(1-p^{-1})^{-s}$。有限望远镜求和给
+
+$$
+V_p(s,e)
+=(1-p^{-1})\sum_{a=0}^{e-1}\frac{Z(p^a)^s}{p^a}
++\frac{Z(p^e)^s}{p^e}.
+\tag{210.10}
+$$
+
+当 $p\le B$ 时，式（210.5）和 $\log(1-u)\ge-2u$（$0\le u\le1/2$）给
+
+$$
+(1-p^{-e_p-1})^s\ge e^{-2}.
+$$
+
+保留式（210.10）的最后一项，得到
+
+$$
+V_p(s,e_p)\ge\frac{e^{-2}}sP_p,
+\qquad W_p(s)\le P_p.
+$$
+
+所以这些素数的对数损失至多为
+
+$$
+\sum_{p\le B}\log\frac{W_p(s)}{V_p(s,e_p)}
+\le B(\log s+2).
+\tag{210.11}
+$$
+
+当 $B<p\le z$ 时，$e_p=1$，并且
+
+$$
+V_p(s,1)=1-p^{-1}+p^{-1}(1+p^{-1})^s.
+$$
+
+与上一节相同的正系数比值估计给
+
+$$
+\log\frac{W_p(s)}{V_p(s,1)}
+\le-s\log(1-p^{-2})\le\frac s{p^2-1}.
+$$
+
+由整数尾和的望远镜恒等式，这一段的总损失不超过 $2\sqrt s$。因此
+
+$$
+\log P_s(m)
+\ge\log\prod_{p\le z}W_p(s)-\sqrt s(\log s+4).
+\tag{210.12}
+$$
+
+最后比较 $z$ 与 $y$。当 $z<p\le y$ 时，
+
+$$
+(1-p^{-1})^{-s}\le\exp(s/(p-1)),\qquad
+\frac{s}{p-1}\le\ell+O(\ell^{-2}).
+$$
+
+所以该段的 $W_p(s)$ 有统一常数上界，例如充分大时 $W_p(s)\le4$。段内素数数量至多为整数数量 $\delta+1$，不需要短区间素数定理。因此
+
+$$
+\log\prod_{p\le z}W_p(s)
+\ge\log\prod_{p\le y}W_p(s)-O(\delta).
+\tag{210.13}
+$$
+
+合并式（210.3）、式（210.12）、式（210.13），并用
+$\sqrt s\log s=o(y/\ell^3)$，得到式（210.9）。$\square$
+
+### 210.3 大小截断节省的上限
+
+**定理 210.3（截断证书的正指数下界）。** 充分大时，
+
+$$
+\log\left(\frac X{t^s}C_s(X)\right)
+\ge\log(X/A)+\frac{\pi^2}{12}R_y-O(y/\ell^3).
+\tag{210.14}
+$$
+
+特别地，$XC_s(X)/t^s\to\infty$。
+
+证明。式（210.8）给 $C_s(X)\ge P_s(m)$，再代入式（210.9）。$\square$
+
+上一节的全域矩比较与 Weingartner Lemma 5 给
+
+$$
+\log\left(\frac X{t^s}U(s)\right)
+=\log(X/A)+\frac{\pi^2}{6}R_y+O(y/\ell^3).
+$$
+
+因此，截断诱导的概率满足
+
+$$
+\mu_s\{d\le X\}=C_s(X)/U(s),
+$$
+
+$$
+\boxed{
+0\le-\log\mu_s\{d\le X\}
+\le\frac{\pi^2}{12}R_y+O(y/\ell^3).
+}
+\tag{210.15}
+$$
+
+排除所需的固定矩节省主尺度为 $(\pi^2/6)R_y$；式（210.15）证明单靠 $d\le X$ 至多能省去其中一半的主系数。这里的“一半”是已证上界，不是断言真实截断损失恰好等于这一半。
+
+本节尚未证明真实损失是 $o(R_y)$，也未证明截断后的完整主系数仍为 $\pi^2/6$。这些更精细渐近保持未决；无需它们便已能排除“纯大小截断独自完成此矩路线”的方案。
+
+### 210.4 取整下界与实际有限区间矩
+
+仅对一个上界证明它大于1，不能推断实际和也大于1。此处可以补出两条独立下界，处理这一差别。
+
+首先，由非负卷积，
+
+$$
+M_{\le X}(s)=\sum_{n\le X}Z(n)^s
+=\sum_{d\le X}b_s(d)\lfloor X/d\rfloor.
+$$
+
+当 $d\le X$ 时，$\lfloor X/d\rfloor\ge X/(2d)$。故
+
+$$
+\frac X2 C_s(X)\le M_{\le X}(s)\le XC_s(X).
+\tag{210.16}
+$$
+
+式（210.14）因而给真实前缀矩的下界
+
+$$
+\log\frac{M_{\le X}(s)}{t^s}
+\ge\log(X/A)-\log2
++\frac{\pi^2}{12}R_y-O(y/\ell^3).
+\tag{210.17}
+$$
+
+其次，还可以只保留实际区间 $[A,X]$。记整数数量 $Q=X-A+1$；由于 $X/A\to2$，$Q/A\to1$。式（210.7）给 $m\le Q/2$ 最终成立。对每个 $d\mid m$，区间内被 $d$ 整除的整数至少有
+
+$$
+Q/d-1\ge Q/(2d)
+$$
+
+个。于是
+
+$$
+\begin{aligned}
+M_{[A,X]}(s)
+&:=\sum_{A\le n\le X}Z(n)^s\\
+&\ge\frac Q2\sum_{d\mid m}\frac{b_s(d)}d
+=\frac Q2P_s(m).
+\end{aligned}
+\tag{210.18}
+$$
+
+结合式（210.9），
+
+$$
+\boxed{
+\log\frac{M_{[A,X]}(s)}{t^s}
+\ge\log(Q/(2A))+\frac{\pi^2}{12}R_y-O(y/\ell^3)
+\longrightarrow+\infty.
+}
+\tag{210.19}
+$$
+
+这是实际全整数区间的矩下界，并非 FIB 剩余类的矩下界。若只保留 $n=1+gF_r$，式（210.18）的整除计数将重新成为固定同余命中计数，不能继续直接用 $Q/(2d)$。
+
+式（210.19）也不意味着存在 Robin 反例：许多各自小于1的归一化响应，其高次幂总和仍可大于1。它证明的是，这个预先指定矩阶下的**全区间求和证书**最终无法小于1；固定模数或更细共同实现信息仍然必需。
+
+### 210.5 逐点阈值与共同阈值的精确比较
+
+令
+
+$$
+t_n=e^\gamma\log\log n,\qquad
+\mathcal P_J(s)=\sum_{n\in J}\left(\frac{Z(n)}{t_n}\right)^s,
+\qquad J\subseteq[A,X]\cap\mathbb N.
+$$
+
+对任意这样的 $J$（包括 FIB 剩余类），记
+
+$$
+\mathcal Q_J(s)=\frac{\sum_{n\in J}Z(n)^s}{t^s}.
+$$
+
+有精确比较
+
+$$
+\frac AX\mathcal Q_J(s)
+\le\mathcal P_J(s)\le\mathcal Q_J(s).
+\tag{210.20}
+$$
+
+事实上，对任意实数 $e<A\le n\le X$，令 $v=\log(n/A)\ge0$。两次使用 $\log(1+w)\le w$，得到
+
+$$
+\begin{aligned}
+s\log(t_n/t)
+&=y\ell\log\left(1+\frac{\log(1+v/y)}\ell\right)\\
+&\le y\log(1+v/y)\le v.
+\end{aligned}
+$$
+
+再用单调性即有
+
+$$
+1\le(t_n/t)^s\le n/A\le X/A.
+\tag{210.21}
+$$
+
+逐项比较给式（210.20）。若 $X/A$ 有界，对同一表达式作一致 Taylor 展开还有 $(t_n/t)^s=(n/A)(1+O(1/y))$；在当前 $X/A\to2$ 下，最大归一因子趋于二。
+
+因此，个体阈值虽能改变一个接近一的有限证书，却不能消去 $R_y\to\infty$ 尺度的正指数缺口。特别地，对整个区间，式（210.19）也推出 $\mathcal P_{[A,X]}(s)\to\infty$。对 FIB 剩余类，式（210.20）仅作比较，不提供尚未得到的矩下界；$\mathcal P_J<1$ 与 $\mathcal Q_J<1$ 并不等价。
+
+### 210.6 二变量 Euler 乘积与未决精细估计
+
+若继续研究截断的精细损失，可以定义
+
+$$
+U(s,u)=\sum_{d\ge1}\frac{b_s(d)}{d^{1+u}}
+=\prod_p\left(1+\sum_{a\ge1}\frac{b_s(p^a)}{p^{a(1+u)}}\right),
+\qquad u>-1.
+\tag{210.22}
+$$
+
+对每个固定 $s>0$、$u>-1$，它收敛：由均值定理
+$b_s(p^a)\ll_s p^{-a}$，局部尾和为 $O_s(p^{-2-u})$；在 $u>-1$ 的紧子区间上，加上任意固定次幂 $\log d$ 后仍局部一致收敛。
+
+对 $u\ge0$，Rankin 上界为
+
+$$
+C_s(X)\le X^uU(s,u).
+\tag{210.23}
+$$
+
+在倾斜权重
+
+$$
+\mu_{s,u}(d)=\frac{b_s(d)}{d^{1+u}U(s,u)}
+$$
+
+下，逐项微分给精确公式
+
+$$
+-\partial_u\log U(s,u)=\mathbb E_{s,u}[\log d],
+\qquad
+\partial_u^2\log U(s,u)=\operatorname{Var}_{s,u}(\log d).
+\tag{210.24}
+$$
+
+这些公式定位了估计任务，却没有自行给出均值、方差或截断损失的渐近。欲证明损失仅为 $o(R_y)$，仍须提供该增长矩阶下的统一二变量估计或对应倾斜分布的下尾下界；不能用数值拟合或未证明的鞍点图像代替。
+
+式（210.15）已经约束所有这样的上界：任何有效的式（210.23）都不能把真实 $C_s(X)/U(s)$ 压到比式（210.15）更小。无论是否求出精确鞍点，单凭大小截断都不能提供本族逐点排除所需的整个 $\pi^2/6$ 主系数节省。
+
+### 210.7 文献前置与未决范围
+
+Weingartner, *The distribution functions of σ(n)/n and n/φ(n), II*, arXiv:1011.4262v1 (2010)，[固定原文](https://arxiv.org/html/1011.4262v1)：Lemma 4 证明的式（8）给下半段素因子替换；Lemma 5 证明的式（9）给强 Mertens/PNT 及两个积分的分解；式（13）、式（14）确定下半段自己的系数 $\pi^2/12$，式（19）与 Lemma 5 确定两段总系数 $\pi^2/6$。
+
+有限配置 $m$ 只证明所述大小截断与全整数区间矩的下界。固定 FIB 剩余类的额外加权节省、精确截断损失及原始逐点 Robin 目标均不由这些下界推出。
+
+## 追加锚（本行以下为增补区）

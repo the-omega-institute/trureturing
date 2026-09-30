@@ -189,7 +189,7 @@ Igor E. Shparlinski, *Distribution of modular inverses and multiples of small in
 - 原文：https://arxiv.org/html/math/0608596v3
 - 精确位置：$M_{a,m}$ 定义与 Theorem 1。
 
-令 $M_{a,m}(\mathcal X;Y,Z)$ 计数 $x\in\mathcal X$、$(x,m)=1$，且 $ax^{-1}\bmod m$ 落入 $[Z+1,Z+Y]$ 的项。Theorem 1 对正整数 $m,X,Y$、整数 $Z$、任意 $\mathcal X\subseteq[-X,X]$ 给
+令 $M_{a,m}(\mathcal X;Y,Z)$ 按同余解对 $(x,h)$ 计数：$x\in\mathcal X$、$(x,m)=1$、$h\in[Z+1,Z+Y]\cap\mathbb Z$，且 $ax^{-1}\equiv h\pmod m$。当 $Y>m$ 时保留同一个 $x$ 对应多个 $h$ 的重数；不能只检查一个标准余数代表。Theorem 1 对正整数 $m,X,Y$、整数 $Z$、任意 $\mathcal X\subseteq[-X,X]$ 给
 
 $$
 \sum_{a=1}^m\left|M_{a,m}(\mathcal X;Y,Z)
@@ -216,7 +216,7 @@ $$
 \alpha\in(9/2-3\beta,3\beta],
 $$
 
-并对素数模数 $p\to\infty$、$x=p^{\alpha+o(1)}$、$y=p^{\beta+o(1)}$ 给平方自由光滑数的下界
+并对素数模数 $p\to\infty$、可逆剩余类 $(a,p)=1$、$x=p^{\alpha+o(1)}$、$y=p^{\beta+o(1)}$ 给平方自由光滑数的下界
 
 $$
 \psi^\sharp(x,y;p,a)\ge x^{1+o(1)}/p.
@@ -228,7 +228,7 @@ $$
 
 在这里列明的原文范围内，未找到可以直接用于当前参数、当前指定模数和当前剩余类的逐点排除定理。这个陈述只针对上述已读原文范围，不能推出不存在适用文献或当前路线原创。
 
-一个可继续检验的精确接口是等差数列的矩分解。对有限整数区间 $I$，$T=|I|$、$X=\max_{g\in I}(1+gV)$，
+一个可继续检验的精确接口是等差数列的矩分解。对正整数 $V$、非空有限正整数区间 $I$，$T=|I|$、$X=\max_{g\in I}(1+gV)$，
 
 $$
 \sum_{g\in I}\left(\frac{1+gV}{\varphi(1+gV)}\right)^s
