@@ -1,7 +1,7 @@
 # Fixed prime sections of Fibonacci recurrences
 
 `prime_sections.py` reproduces finite source identities and root-permutation
-counts used in FIB theory §§196–199. It requires Python 3.9+ and only its
+counts used in FIB theory §§196–200. It requires Python 3.9+ and only its
 standard library:
 
 ```sh
@@ -38,9 +38,11 @@ program. The joint Euler-product estimate, fixed-seed asymptotic Robin margin,
 and passage over all indices are also outside these finite diagnostics and
 have not been newly verified in Lean.
 
-The result concerns each fixed seed with its own eventual threshold. It does
-not provide a common threshold for changing seeds, cover an added unit bit, or
-prove RH. The golden-unit classification and Fibonacci–Lucas doubling identity
+The result in §§196–199 concerns each fixed seed with its own eventual
+threshold. Section 200 gives a separate uniform paper estimate for seeds with
+a prescribed slow norm growth and a nonzero valuation coprime to the fixed
+window. Neither result covers all changing seeds, an added unit bit, or RH.
+The golden-unit classification and Fibonacci–Lucas doubling identity
 are existing repository results; their use does not certify the remaining
 number-field and analytic argument.
 
@@ -48,3 +50,28 @@ The prime 113 example additionally checks every displayed quadratic-algebra
 power and all 1,356 candidate roots of the twelve window-24 polynomials.
 The paper proof explains why this excludes 113 from all even-index terms;
 the program does not enumerate an infinite sequence.
+
+For §200, the window-105 experiment enumerates all 48 unit slopes and 105
+translations with the quadratic-character twist. It checks that the twisted
+slope map is an involutive group automorphism, gives 5,040 distinct
+permutations with a trivial kernel, and finds 2,304 permutations with a fixed
+root: exactly `16/35`. The full fixed-point histogram agrees with the Chinese
+remainder product over 3, 5 and 7. These are finite group checks; the paper
+must still establish the full Kummer degree before identifying a Galois group.
+
+The actual-source checks use seeds `(16,29)`, `(1,4)` and `(1,5)`, indices
+0 through 420 and primes at most 2,000 outside `5*k*Q`. They find 1,678
+actual prime incidences among 377,637 divisibility checks, including 405
+incidences at which the actual trace-polynomial root has zero derivative.
+For example, seed `(16,29)`, index 107 and prime 13 give trace root 10,
+`D_105(10) = 2` and `D_105'(10) = 0` modulo 13. The quadratic-algebra orbit and
+Frobenius relations still hold. Thus the diagnostic includes the repeated-root
+cases that a polynomial-discriminant exclusion would discard.
+
+For the changing family `(4+361*t,1)`, the program evaluates the displayed norm
+identity at 12 specified parameters and checks the actual source congruences
+for `t=0,...,7`, indices 0 through 210 and primes at most 500. It finds 1,959
+prime incidences among 152,131 divisibility checks. The all-parameter valuation
+statement follows in the paper from `Q_t = 19 (mod 361)`; finite samples do not
+prove it. These computations do not verify the discriminant estimate,
+exceptional-zero control, effective Chebotarev theorem or asymptotic Robin bound.
