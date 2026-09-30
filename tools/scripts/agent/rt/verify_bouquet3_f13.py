@@ -14,6 +14,10 @@ def rank(a):
     u=a[j][col]; a[j]=[(v-u*w)%P for v,w in zip(a[j],a[d])]
   d+=1
  return d
+
+import itertools
+for T in itertools.combinations(C,3):
+ assert rank(list(T))==3,('central triple',T)
 count=0
 for choices in product(range(6),repeat=K):
  if sum(2 if c==5 else int(c>0) for c in choices)!=K: continue
