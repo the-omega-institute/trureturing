@@ -91,3 +91,8 @@ None is 0 or +/-1. Normally the four values are distinct. They coincide in oppos
 
 ## Scope and provenance
 The graph is planar. The result is a finite tensor-network entropy theorem, not a claim about gravitational RT. Large-dimension existence of simultaneous exact RT with perfect stabilizer tensors is already implied by known random-stabilizer results (literature audit separately). The contribution claimed here is only the explicit small-field positive-support family, sharp parameter criterion and count, and the direct elementary certificate. Novelty against all existing literature has not been established.
+
+### Literature boundary (checked 2026-09-30)
+
+The connected-region perfect-tensor theorem of Pastawski–Yoshida–Harlow–Preskill (HaPPY, arXiv:1503.06237, https://arxiv.org/abs/1503.06237) does not cover the disconnected regions and positive-curvature central vertex used here. Cui–Mizera–Susskind (arXiv:1508.04644, https://arxiv.org/abs/1508.04644) establish max-flow/max-cut and maximal-entropy statements for a designated bipartition, not one fixed AME assignment simultaneously saturating all cuts. Random-stabilizer results of Apel–Kohler–Cubitt (arXiv:2105.12067, https://arxiv.org/abs/2105.12067) imply nonconstructive large-bond-dimension simultaneous exactness, but do not give this explicit q=9 witness. Bao–Cheng–Hernandez-Cuenca–Su (arXiv:2002.05317, https://arxiv.org/abs/2002.05317) formulate a broader AME/GHZ hypergraph prescription whose universal exactness remains conjectural and whose worked graphs differ from this five-tensor figure-eight. These references delimit provenance; they are not being claimed as formal prerequisites.
+
