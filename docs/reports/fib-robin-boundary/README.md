@@ -145,6 +145,9 @@ python3 -B docs/reports/fib-robin-boundary/robin_frontier_check.py \
   --out /tmp/fib_atomic_delivery/validation/robin-frontier-check.json
 python3 -B docs/reports/fib-robin-boundary/robin_frontier_regression.py \
   --out /tmp/fib_atomic_delivery/validation/robin-frontier-regression.json
+python3 -B docs/reports/fib-robin-boundary/robin_frontier_margin.py \
+  /tmp/fib_atomic_delivery/validation/robin-frontier.json --core 10080 \
+  --out /tmp/fib_atomic_delivery/validation/robin-frontier-margin.json
 ```
 
 The producer and checker retain exact `(suffix integer, sigma/suffix)` pairs
@@ -152,7 +155,9 @@ and remove only points dominated by a smaller suffix with at least as large a
 weight. The regression enumerates finite rough inputs and checks the ordered
 prime-exponent normalization and frontier domination. These programs evaluate
 no logarithm and make no Robin sign claim; the transfer to a fixed common core
-is the mathematical content of §156.
+is the mathematical content of §156. The margin tool applies the existing
+rational logarithm and Euler-constant lower bounds to the finite frontier; a
+positive result is scoped to that core and certificate.
 
 ## Recursive reserve, index stopping and gluing
 
