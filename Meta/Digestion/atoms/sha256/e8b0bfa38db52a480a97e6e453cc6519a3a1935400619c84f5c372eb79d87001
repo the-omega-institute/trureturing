@@ -1,0 +1,29 @@
+**推导。** 设 $r=n$、$h=c/r^2$、$u=z^n$、$S=\sum_{k<n}z^k$、$v=u/S$、$A=rv$。
+Bernoulli 不等式给出 $z^k\ge1-kh$。对这一不等式的前 $k$ 项求和，并使用
+$h\sum_{i<k}z^i=1-z^k$，得到
+
+$$
+1-kh\le z^k\le1-kh+\frac{k(k-1)}2h^2\le1-kh+k^2h^2.
+$$
+
+对前 $n$ 项求和及使用 $k<n$，得 $0\le E:=S-r+c/2\le5/r$。
+又因 $u\le z^k\le1$，有 $ru\le S\le r$，从而 $u\le A\le1$。
+Bernoulli 下界还给 $u\ge1-c/r$，所以 $0\le1-A\le c/r\le2/r$。
+钉版 Mathlib 的有限对数 Taylor 余项在 $0\le v\le1/r\le1/4$ 上给
+
+$$
+\left|\log(1+v)-v+\frac{v^2}{2}\right|
+\le\frac{v^3}{1-v}\le\frac{2}{r^3}.
+$$
+
+令 $R=r^2(v-v^2/2-\log(1+v))$。有限和递推与对数乘法式给出精确中心化恒等式
+
+$$
+r^2\Delta_{n-1}(z)-\frac{1-c}{2}
+=AE+\frac{(1-A)c}{2}+\frac{A^2-1}{2}+R.
+\tag{239.2}
+$$
+
+四项依次落在 $[0,5/r]$、$[0,2/r]$、$[-2/r,0]$、$[-2/r,2/r]$ 中。
+因而误差实际上在 $[-4/r,9/r]$ 内，式（239.1）的常数留有余量，不作最优性主张。
+
