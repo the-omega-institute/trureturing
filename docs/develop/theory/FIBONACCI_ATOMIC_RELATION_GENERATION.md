@@ -29872,3 +29872,539 @@ $\mathcal I_D\le c_D\|\widehat k_\eta\|_1=O(y)$，
 本节没有推出完整 FIB 家族的 Robin 不等式或任意整数的 RH 判据。
 
 ## 追加锚（本行以下为增补区）
+
+## 227. 实际增量源的大小累积量与移动窗口截断率
+
+### 227.1 对象、尺度与固定幂权源
+
+沿素数指标 $r\to\infty$，取
+
+$$
+V=F_r,\quad I=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\quad N_g=1+Vg,\quad A=\min_{g\in I}N_g,\quad X=\max_{g\in I}N_g,
+$$
+
+并记
+
+$$
+y=\log A,\qquad \ell=\log y,\qquad s=y\ell,
+\qquad R=\frac y{\ell^2},\qquad \delta=\frac y{\ell^3},
+\qquad T=\frac y{\ell^4},\qquad b_2=\frac{\pi^2}{6}.
+$$
+
+本节使用同一个非负乘法增量
+
+$$
+b_s(1)=1,\qquad
+b_s(p^j)=Z(p^j)^s-Z(p^{j-1})^s\quad(j\ge1),
+\qquad Z(n)=\frac{\sigma(n)}n,
+\qquad U(s)=\sum_{d\ge1}\frac{b_s(d)}d.
+$$
+
+这个家族满足 $\Delta_y:=\log(X/A)=O(1)$，且 §222 给出
+$p\mid V\Rightarrow p>2y$ 最终成立。取任意预先固定的 $a>0$，令
+$H=e^{aR}$、$D=X/H$，所以精确地
+
+$$
+\log D=y+\Delta_y-aR.
+\tag{227.1}
+$$
+
+以下渐近式均沿这个家族成立；$q\ge1$、$\beta\ge0$、$a>0$ 及出现的倾斜界 $C>0$ 均为预先固定的实数。常数与起效阈值可依赖这些已固定参数，不主张对增长的 $q$ 或 $\beta$ 一致。
+
+定义实际局部权重
+
+$$
+w_{p,0}=1,\qquad
+w_{p,j}=\frac{b_s(p^j)}{p^j}\quad(j\ge1),\qquad
+U_p=\sum_{j\ge0}w_{p,j},\qquad
+\mu_s(d)=\frac{b_s(d)}{dU(s)}.
+$$
+
+记 $S_q(\mu_s)=\sum_{d\ge1}\mu_s(d)^q$。每个固定实数 $q\ge1$ 定义幂权源概率
+
+$$
+P_q(d)=\frac{\mu_s(d)^q}{S_q(\mu_s)},\qquad
+c_{q,V}=P_q((d,V)=1),\qquad
+P_{q,V}(d)=\frac{P_q(d)\mathbf1_{(d,V)=1}}{c_{q,V}}.
+\tag{227.2}
+$$
+
+$P_1=\mu_s$，$P_{1,V}$ 是真实单位条件源。$P_4$ 是为估计截断四次幂和而单独构造的幂权源，不是实际命中或大小筛选后的分布。所有关于 $q$ 的结论只对预先固定的 $q$ 成立；不取增长的 $q$ 或 $q\to\infty$。
+
+### 227.2 低阶倾斜与真实素数幂的三段估计
+
+令 $L(d)=\log d$。在 $P_q$ 下作实倾斜 $e^{vL}$，其局部概率恰为
+
+$$
+\rho_{p,q,v}(j)
+=\frac{w_{p,j}^{q}p^{vj}}{Z_{p,q}(v)},\qquad
+Z_{p,q}(v)=\sum_{j\ge0}w_{p,j}^{q}p^{vj}.
+\tag{227.3}
+$$
+
+单位条件下删除 $p\mid V$ 的坐标，其余仍为式（227.3）。这只是对原源做显式实倾斜；大小截断和同余命中尚未施加。
+
+对每个固定 $s>0$，均值定理给 $w_{p,j}\ll_s p^{-2j}$，所以完整倾斜乘积在 $v<2q-1$ 收敛。在该开区间的紧子区间内，可附加任意固定次幂的 $j\log p$ 而保持尾部收敛，故下面的局部矩、对数导数及独立坐标求和均合法。特别地，对任意固定 $C>0$，最终可以在
+
+$$
+|v|\le C/\ell^2
+\tag{227.4}
+$$
+
+上一致求前三阶导数。
+
+**引理 227.1（实际局部矩与二态近似）。** 定义
+$z(x)=\log x-s/x$、$\lambda(u)=(1+e^u)^{-1}$，令 $B_{p,v}$ 为相互独立的 Bernoulli 变量，其成功概率为 $\lambda(qz(p)-v\log p)$。对固定 $q\ge1$、$C>0$ 及 $k\in\{1,2,3\}$，在式（227.4）上一致有
+
+$$
+\kappa_k(L)=\kappa_k\!\left(
+\sum_{p\le y/2}\log p+
+\sum_{y/2<p\le2y}(\log p)B_{p,v}\right)
++o_{q,C}(y/\ell^M)
+$$
+
+对每个固定 $M>0$ 成立。其中左侧取 $P_q$ 的实际倾斜律，$\kappa_k$ 表示第 $k$ 阶累积量；换成 $P_{q,V}$ 的实际倾斜律时同式成立。
+
+证明。分别覆盖小素数全部深赋值、中段高次赋值和无限大素数尾。
+
+小素数段 $p\le\sqrt{2s}$。
+
+令 $\pi_p(j)=w_{p,j}/U_p$。§216 的实际局部界是
+
+$$
+\pi_p(j)\le Q_s p^{-2j},\qquad Q_s=2e^2s^2\quad(j\ge1).
+\tag{227.5}
+$$
+
+取 $K_p=\lceil\log(4Q_s)/(2\log p)\rceil$。则
+
+$$
+\sum_{j>K_p}\pi_p(j)
+\le\frac{Q_sp^{-2K_p}}{p^2-1}\le\frac1{12}.
+$$
+
+局部倾斜的归一化也可写作
+$\sum_j\pi_p(j)^q p^{vj}$。前 $K_p+1$ 项的质量至少为 $11/12$，故由凸性
+
+$$
+\sum_j\pi_p(j)^q p^{vj}
+\ge e^{-|v|K_p\log p}(11/12)^q(K_p+1)^{1-q}.
+\tag{227.6}
+$$
+
+在本小素数段，$K_p\log p=O(\log s)$，所以式（227.4）使指数因子有一致正下界，式（227.6）的倒数至多为固定次幂的 $\log s$。
+
+再取 $J_p=\lceil4\log s/\log p\rceil$。在 $j\le J_p$ 上，$j\log p=O(\log s)$。在 $j>J_p$ 上，由式（227.5）有
+
+$$
+\pi_p(j)^q p^{vj}\le Q_s^q p^{-(2q-|v|)j}.
+$$
+
+最终 $2q-|v|\ge3q/2$；从 $J_p$ 起的系数至多为
+$O_q(s^{2q}e^{-6q\log s})=O_q(s^{-4q})$，后续为几何尾。除以式（227.6）后，任意固定的前三阶尾矩仍可忽略。因此
+
+$$
+\mathbb E_{p,q,v}(j\log p)^k\ll_{q,C,k}(\log s)^k,
+\qquad
+\sum_{p\le\sqrt{2s}}\mathbb E_{p,q,v}(j\log p)^k
+\ll_{q,C,k}\sqrt s(\log s)^k.
+\tag{227.7}
+$$
+
+这也控制方差和第三中心矩的绝对值：非负随机变量 $Y$ 满足
+$\operatorname{Var}Y\le\mathbb EY^2$ 及
+$\mathbb E|Y-\mathbb EY|^3\le8\mathbb EY^3$。将这一段换成确定的一次幂只会在均值中另加
+$\sum_{p\le\sqrt{2s}}\log p=O(\sqrt s\log s)$，仍在所述误差尺度内。
+
+中段 $\sqrt{2s}<p\le2y$。
+
+记
+
+$$
+P_p=(1-p^{-1})^{-s},\qquad z_p=(1+1/p)^s,
+\qquad w_{p,1}=(z_p-1)/p.
+$$
+
+此段最终一致有 $P_p/z_p\le e$、$z_p/(z_p-1)\le2$。均值定理给
+$w_{p,j}\le sP_pp^{-2j}$，所以对 $j\ge2$，
+
+$$
+\rho_{p,q,v}(j)
+\le\left(\frac{w_{p,j}}{w_{p,1}}\right)^q p^{v(j-1)}
+\le(2es)^q p^{q-2qj+v(j-1)}.
+\tag{227.8}
+$$
+
+因为 $p^{|v|}=e^{O_C(1/\ell)}$，式（227.8）给几何尾
+
+$$
+\sum_{j\ge2}j^k\rho_{p,q,v}(j)\ll_{q,C,k}s^q p^{-3q},
+\qquad
+\sum_{\sqrt{2s}<p\le2y}
+(\log p)^k\sum_{j\ge2}j^k\rho_{p,q,v}(j)
+\ll_{q,C,k}s^{(1-q)/2}(\log s)^k.
+\tag{227.9}
+$$
+
+这里使用整数尾 $\sum_{n>\sqrt{2s}}n^{-3q}(\log n)^k$；$q\ge1$ 足够保证收敛。每个局部的高次赋值质量为 $O_{q,C}(s^{-q/2})$，一致趋于零；局部 $j$ 的前三阶原始矩与其条件二态矩之差由式（227.9）的第一式控制，且 $j$ 的这些矩一致有界。前三阶累积量是这些原始矩的固定多项式；换成 $j\log p$ 后，第 $k$ 阶乘以 $(\log p)^k$，故式（227.9）的总误差也控制相应累积量之差。这里不要求全部中段素数的高次赋值总质量趋于零。
+
+条件 $j\in\{0,1\}$ 时，成功概率精确为
+
+$$
+\frac{w_{p,1}^q p^v}{1+w_{p,1}^q p^v}.
+$$
+
+按 $z(x)$ 的定义，§223 的真实赔率估计给
+
+$$
+0\le-\log w_{p,1}-z(p)
+\le\frac{s}{2p^2}+2z_p^{-1}.
+\tag{227.10}
+$$
+
+因此二态概率可替换为
+
+$$
+\lambda(qz(p)-v\log p),\qquad \lambda(u)=\frac1{1+e^u},
+\tag{227.11}
+$$
+
+且前三阶累积量总误差至多为
+$O_{q,C,k}(\sqrt s\,\ell^k+\sqrt y\,\ell^k)$：Bernoulli 的前三阶累积量作为对数赔率的函数均有有界导数，将式（227.10）乘以 $(\log p)^k$ 后求和即可。
+
+无限尾 $p>2y$。
+
+这里 $Z_{p,q}(v)\ge1$，且
+
+$$
+\rho_{p,q,v}(j)
+\le s^qP_p^q p^{-(2q-v)j},\qquad
+P_p^q\le e^{qs/(2y-1)}=O_q(y^{q/2}).
+$$
+
+对 $k\in\{1,2,3\}$，几何尾和整数积分给
+
+$$
+\begin{aligned}
+\sum_{p>2y}\mathbb E_{p,q,v}(j\log p)^k
+&\ll_{q,C,k}s^qy^{q/2}
+\sum_{n>2y}n^{-2q+C/\ell^2}(\log n)^k\\
+&\ll_{q,C,k}y^{1-q/2}\ell^{q+k}.
+\end{aligned}
+\tag{227.12}
+$$
+
+$2q-C/\ell^2>1$ 最终成立。式（227.12）对每个固定 $q\ge1$ 及固定 $M$ 都是 $o(y/\ell^M)$。它同时证明删除 $p\mid V$ 不影响下述任意固定对数精度的前三阶估计。
+
+式（227.7）、（227.9）、（227.10）、（227.12）处理了全部真实素数幂。对于 $\sqrt{2s}<p\le y/2$，式（227.11）的失败概率为 $O_{q,C}(y^{-q})$；故该段在均值中可换成确定的一次幂，在二、三阶累积量中可删去，额外误差为 $O_{q,C,k}(y^{1-q}\ell^k)$。于是只剩主窗口 $[y/2,2y]$ 的二态核，其余误差均小于任意固定 $y/\ell^M$ 尺度。$\square$
+
+### 227.3 均值、方差与统一第三累积量
+
+下列结论同时适用于 $P_q$ 和 $P_{q,V}$。令
+
+$$
+K_{q,V}(v)=\log\mathbb E_{P_{q,V}}e^{v(L-y)}.
+$$
+
+无单位条件时把下标 $V$ 删去。由上节，精确累积量可用主窗口二态核估计；这不是对截断或命中分布的独立性假设。
+
+**命题 227.2（固定幂权源的大小累积量）。** 对每个固定 $q\ge1$，
+
+$$
+\mathbb E_{P_{q,V}}L
+=y+\frac{2b_2}{q^2}R+O_q(\delta),
+\tag{227.13}
+$$
+
+$$
+\operatorname{Var}_{P_{q,V}}L
+=\frac yq+O_q(y/\ell).
+\tag{227.14}
+$$
+
+对每个固定 $C>0$，另有
+
+$$
+\sup_{|v|\le C/\ell^2}|K_{q,V}'''(v)|\ll_{q,C}y\ell.
+\tag{227.15}
+$$
+
+证明。先取 $v=0$。定义
+
+$$
+g_q(z)=\lambda(qz)-\mathbf1_{z<0},\qquad
+h_q(z)=\lambda(qz)(1-\lambda(qz)).
+$$
+
+$g_q$ 为奇函数（零点值无关积分），$h_q$ 为偶函数，二者有依赖固定 $q$ 的指数尾。基本积分为
+
+$$
+\int_{\mathbb R}g_q(z)\,dz=0,\qquad
+\int_{\mathbb R}z g_q(z)\,dz=\frac{b_2}{q^2},\qquad
+\int_{\mathbb R}h_q(z)\,dz=\frac1q.
+\tag{227.16}
+$$
+
+第二式使用 $2\int_0^\infty z/(1+e^{qz})\,dz=b_2/q^2$；第三式由 $\lambda'=-\lambda(1-\lambda)$ 得到。
+
+记 $\vartheta(x)=\sum_{p\le x}\log p$。使用 §223 的强素数定理误差 $\vartheta(x)=x+O(xe^{-c\sqrt{\log x}})$（某个 $c>0$），以及有界变差分部求和，将主窗口的均值修正换成
+
+$$
+\mathbb E L-\vartheta(y)
+=\int_{y/2}^{2y}g_q(z(x))\,dx+o_q(y/\ell^M)
+\tag{227.17}
+$$
+
+对任意固定 $M$ 成立。此处一次 $\log p$ 正好与素数密度抵消，故积分是 $dx$，不是 $dx/\log x$。若 $p=y$ 恰为素数，选取阶跃端点可能改变 $O(\ell)$，已包含在误差中。
+
+令 $x=x(z)$ 为 $z=\log x-s/x$ 的反函数，置
+
+$$
+v_y(z)=\frac{dx}{dz}=\frac{x(z)^2}{x(z)+s}.
+$$
+
+在整个对应窗口上一致有
+
+$$
+v_y(0)=\frac y{\ell+1},\qquad
+v_y'(0)=\frac{y(1+2\ell)}{(\ell+1)^3}
+=2R+O(\delta),\qquad
+v_y''(z)=O(y/\ell^3).
+\tag{227.18}
+$$
+
+最后一式由 $v(x)=x^2/(x+s)$ 的
+$v=O(y/\ell)$、$v'=O(1/\ell)$、$v''=O(1/(y\ell))$ 及链式法则得到。Taylor 展开为
+$v_y(z)=v_y(0)+v_y'(0)z+O(yz^2/\ell^3)$。转换区间端点是
+$-\ell-\log2$ 与 $\ell/2+\log2$；指数尾允许将所需矩扩到实线，端点误差小于任意固定对数精度。代入式（227.16），加上 $\vartheta(y)=y+o(y/\ell^M)$，即得式（227.13）。
+
+方差的相同素数求和给
+
+$$
+\operatorname{Var}L
+=\int_{y/2}^{2y}(\log x)h_q(z(x))\,dx+o_q(y/\ell^M).
+\tag{227.19}
+$$
+
+强素数定理的误差此时乘至多 $O(\ell)$ 的变差，仍小于任意固定对数精度。换元权重
+$j_y(z)=(\log x(z))v_y(z)$ 满足
+
+$$
+j_y(0)=\frac{y\ell}{\ell+1}=y+O(y/\ell),\qquad
+j_y'(z)=O(y/\ell).
+$$
+
+由式（227.16）及 $h_q$ 的一阶绝对矩有限，得到式（227.14）。
+
+最后，Bernoulli 第三累积量的绝对值不超过成功概率乘失败概率。对于式（227.4），主窗口的赔率平移是 $-v\log p=O_C(1/\ell)$。函数 $u\mapsto\lambda(u)(1-\lambda(u))$ 的对数导数绝对值不超过 $1$，所以平移后的该量至多为原量的固定倍数。再用 $\log p\le\ell+\log2$，
+
+$$
+\sum_{y/2<p\le2y}(\log p)^3
+\lambda(qz(p)-v\log p)(1-\lambda(qz(p)-v\log p))
+\ll_{q,C}\ell\sum_{y/2<p\le2y}(\log p)^2h_q(z(p))
+\ll_{q,C}y\ell.
+$$
+
+上节真实高次赋值与两端素数的第三累积量误差均是更小量，故式（227.15）成立。所有删除的模数素因子都属于式（227.12），所以同一证明适用于单位条件源。$\square$
+
+在 $q=1$ 时，式（227.13）的主偏移 $2b_2R$ 远大于 $\sqrt y$。下面的窗口下界只需实际方差与低阶倾斜。
+
+**推论 227.3（统一小实倾斜）。** 固定 $q\ge1$、$C>0$。在 $|c|\le C$ 上一致有
+
+$$
+\boxed{
+K_{q,V}(c/\ell^2)
+=\left(\frac{2b_2c}{q^2}+\frac{c^2}{2q}\right)T
++O_{q,C}(T/\ell).
+}
+\tag{227.20}
+$$
+
+相应倾斜分布的均值和方差满足
+
+$$
+\mathbb E_{q,V,c/\ell^2}L
+=y+\left(\frac{2b_2}{q^2}+\frac cq\right)R+O_{q,C}(\delta),
+\qquad
+\operatorname{Var}_{q,V,c/\ell^2}L
+=\frac yq+O_{q,C}(y/\ell).
+\tag{227.21}
+$$
+
+证明。对 $K$ 作三阶 Taylor 控制，使用
+$K'(0)=2b_2R/q^2+O(\delta)$、$K''(0)=y/q+O(y/\ell)$ 及式（227.15）。三项余量分别为
+$O(\ell^{-2}\delta)$、$O(\ell^{-4}y/\ell)$、$O(\ell^{-6}y\ell)$，均是 $O_{q,C}(y/\ell^5)=O_{q,C}(T/\ell)$。对前两阶导数作同样控制即得式（227.21）。$\square$
+
+### 227.4 实际窗口的截断率与倾斜下界
+
+**定理 227.4（固定幂权源的移动窗口质量）。** 固定 $q\ge1$、$\beta\ge0$ 及 $a>0$。在式（227.1）的实际大小范围内，
+
+$$
+\boxed{
+\log\mathbb E_{P_{q,V}}
+\left[\left(\frac dX\right)^\beta
+\mathbf1_{D<d\le X}\right]
+=-\frac{2b_2^2}{q^3}\frac y{\ell^4}
++O_{q,\beta,a}(y/\ell^5).
+}
+\tag{227.22}
+$$
+
+同式适用于无单位条件的 $P_q$。对于原始幂权源上同时限制单位的质量，还成立
+
+$$
+\log\mathbb E_{P_q}
+\left[\left(\frac dX\right)^\beta
+\mathbf1_{(d,V)=1}\mathbf1_{D<d\le X}\right]
+=-\frac{2b_2^2}{q^3}\frac y{\ell^4}
++O_{q,\beta,a}(y/\ell^5).
+\tag{227.23}
+$$
+
+证明。先在 $P_{q,V}$ 下工作，令
+$c_*=-2b_2/q$、$v_*=c_*/\ell^2<0$。因为 $d/X\le1$，Chernoff 的负倾斜给
+
+$$
+\mathbb E\left[(d/X)^\beta\mathbf1_{D<d\le X}\right]
+\le P(L\le\log X)
+\le\exp\bigl(K_{q,V}(v_*)-v_*\Delta_y\bigr).
+$$
+
+式（227.20）在 $c_*$ 处取二次式的最小值。又 $\Delta_y=O(1)$，因此右侧对数至多为
+
+$$
+-\frac{2b_2^2}{q^3}T+O_q(T/\ell).
+\tag{227.24}
+$$
+
+下界不能由这个 Chernoff 上界反推，须构造实际倾斜下尾。令
+
+$$
+b_y=\frac y{\ell^5}=T/\ell,
+\qquad m_y^*=\log X-b_y.
+$$
+
+在 $v=(c_*\pm1)/\ell^2$ 上，式（227.21）的均值分别在 $y$ 两侧相距 $R/q+O_q(\delta)$；目标 $m_y^*=y+O(1)-b_y$ 落在两者之间。倾斜均值连续且其导数是方差，后者在这个区间上至少为 $y/(2q)>0$。故存在唯一 $v_y$ 在这两个倾斜参数之间，使
+
+$$
+\mathbb E_{q,V,v_y}L=m_y^*,\qquad
+c_y:=\ell^2v_y=c_*+O_q(1/\ell).
+\tag{227.25}
+$$
+
+最后一式直接由式（227.21）及 $b_y/R=\ell^{-3}$ 得到。定义真实整数的窗口事件
+
+$$
+E_y=\{\log X-3b_y/2\le L\le\log X-b_y/2\}.
+$$
+
+因 $b_y=o(R)$，最终 $E_y\subset\{D<d\le X\}$。Chebyshev 在倾斜分布中给
+
+$$
+P_{q,V,v_y}(E_y)
+\ge1-O_q(y/b_y^2)=1-O_q(\ell^{10}/y)\longrightarrow1.
+\tag{227.26}
+$$
+
+倾斜的确切反变换为
+
+$$
+P_{q,V}(E_y)
+=\mathbb E_{q,V,v_y}
+\left[e^{K_{q,V}(v_y)-v_y(L-y)}\mathbf1_{E_y}\right].
+\tag{227.27}
+$$
+
+式（227.20）、（227.25）给
+$K_{q,V}(v_y)=-(2b_2^2/q^3)T+O_q(T/\ell)$。在 $E_y$ 上，
+$|v_y(L-y)|=O_q((b_y+1)/\ell^2)=o(T/\ell)$。又
+$(d/X)^\beta\ge e^{-3\beta b_y/2}$，这只付出 $O_\beta(T/\ell)$ 的对数代价。结合式（227.26）、（227.27），得到与式（227.24）匹配的下界，从而证明式（227.22）。这里没有把连续均值误当整数样本：$E_y$ 的质量来自该实际整数概率下的 Chebyshev 估计。
+
+不删除素数坐标时证明完全相同。对于式（227.23），有精确的因子 $c_{q,V}$。按式（227.3），
+
+$$
+-\log c_{q,V}
+=\sum_{p\mid V}\log Z_{p,q}(0)
+\le\sum_{p>2y}\sum_{j\ge1}w_{p,j}^q
+\ll_q y^{1-q/2}\ell^q
+=o_q(y/\ell^5).
+\tag{227.28}
+$$
+
+其中再次使用真实增量的均值定理尾与整数积分，未从条件事件的一般概率规律推断独立性。乘回 $c_{q,V}$ 不改变式（227.22）的显示误差，得到式（227.23）。$\square$
+
+### 227.5 真实大小质量与边缘预算
+
+**推论 227.5（真实源及加权大小边缘的截断率）。**
+
+取 $q=1$、$\beta=0$ 或 $1$，式（227.23）分别给
+
+$$
+\log\mu_s(D<d\le X,\ (d,V)=1)
+=-2b_2^2T+O_a(y/\ell^5),
+\tag{227.29}
+$$
+
+$$
+\boxed{
+\log\sum_{\substack{D<d\le X\\(d,V)=1}}
+\frac dX\mu_s(d)
+=-2b_2^2T+O_a(y/\ell^5).
+}
+\tag{227.30}
+$$
+
+无单位条件的 $d\le X$ 概率也有同一对数渐近：下界保留 $E_y$，上界仍为式（227.24）。因此 §211 的精细截断损失满足
+
+$$
+-\log\mu_s(d\le X)=2b_2^2\frac y{\ell^4}+O_a(y/\ell^5)=o(R).
+\tag{227.31}
+$$
+
+证明。前两式是定理 227.4 的直接应用。对 $d\le X$，保留同一个 $E_y$ 给下界，负倾斜给上界，从而得到式（227.31）。
+
+对于 Robin 预算，令 $t=e^\gamma\ell$、$\Lambda=XU(s)/t^s$。§210.2 的 $\log\Lambda=b_2R+o(R)$ 与式（227.30）给
+
+$$
+\log\left(
+\Lambda\sum_{\substack{D<d\le X\\(d,V)=1}}
+\frac dX\mu_s(d)\right)=b_2R+o(R)\longrightarrow+\infty.
+\tag{227.32}
+$$
+
+式（227.32）表明，丢掉指定逆余数命中关系后的纯大小边缘上包络不能压入临界预算；这个推导不提供实际命中核的下界。$\square$
+
+### 227.6 固定阶实际截断幂和
+
+**推论 227.6（截断保留完整幂和的前两项）。**
+
+对任意固定 $q\ge1$，令
+
+$$
+T_{q,D,V}:=\sum_{\substack{D<d\le X\\(d,V)=1}}\mu_s(d)^q.
+$$
+
+精确分离完整幂和后有
+
+$$
+\boxed{
+\log T_{q,D,V}-\log S_q(\mu_s)
+=-\frac{2b_2^2}{q^3}T+O_{q,a}(y/\ell^5).
+}
+\tag{227.33}
+$$
+
+因此截断四次幂和保留 §223 的 $R$ 与 $\delta$ 两项：
+
+$$
+\log T_{4,D,V}
+=-\frac{15b_2}{4}(R-\delta)+O(T).
+\tag{227.34}
+$$
+
+证明。由 $P_q(d)=\mu_s(d)^q/S_q(\mu_s)$，截断幂和与完整幂和之比恰为定理 227.4 中 $\beta=0$ 的原始幂权源单位窗口质量，故得到式（227.33）。再代入 §223 在 $q=4$ 时的完整幂和展开，即得式（227.34）。$\square$
+
+式（227.33）确定了纯大小截断损失的 $T$ 项；§223 的完整幂和自身仍有 $O(T)$ 余项，因此式（227.34）没有确定完整截断幂和的第三系数。
+
+## 追加锚（本行以下为增补区）
