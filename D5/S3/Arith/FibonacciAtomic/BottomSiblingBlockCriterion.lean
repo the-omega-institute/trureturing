@@ -1,10 +1,10 @@
 /- GID: D5/S3/Arith/FibonacciAtomic/BottomSiblingBlockCriterion
-   generality: G
+   generality: I
    mirror-B: none(waiver:source-contract-under-construction)
    mirror-E: none(waiver:source-contract-under-construction)
    anchors: []
    utility: none
-   digest: Actual sources fill every residue at one known-row depth; the full sibling-block target remains open. -/
+   digest: Actual common-depth sources and full raw-gcd future residue fidelity. -/
 
 import D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd
 import D5.S3.Factorization.PrimePowers.PrimeBudgetReadoutDichotomy
@@ -92,9 +92,9 @@ def FiniteIdentifiable (t H : Nat) (u v : ZMod H)
         (fun word (source : KnownRowFiber H u v) => rawGcd H source.val word.val.val)
         protocol)
 
-/-- This is the exact theorem 114.3 target, including actual row fullness,
-future fidelity, the adaptive criterion, and the necessary count. It is a
-proposition definition until every clause has a kernel-checked proof. -/
+/-- The exact theorem 114.3 target, including actual row fullness, future
+fidelity, the adaptive criterion, and the necessary count. Its proof is
+`BottomSiblingBlockResolution.result`. -/
 def Target (H t : Nat) (_hH : 2 ≤ H) (u v : ZMod H)
     (_hrow : ∃ source : ActualPrefix,
       ((nextRow source).1 : ZMod H) = u ∧
@@ -519,5 +519,438 @@ theorem actual_nonconverse :
         (ZMod.cast (ZMod.cast (2 : ZMod 4) : ZMod 4) : ZMod 2) ≠ 1) hfalse
 
 #print axioms actual_nonconverse
+
+/-- The original reset gcd answers on one reachable actual row determine exactly
+its source residue, for every literal suffix including failed End queries. -/
+theorem actual_future_residue_equivalence (H : Nat) (hH : 2 ≤ H) (u v : ZMod H)
+    (_hrow : ∃ source : ActualPrefix,
+      ((nextRow source).1 : ZMod H) = u ∧
+      ((nextRow source).2 : ZMod H) = v) :
+    ∀ x y : KnownRowFiber H u v,
+      CompleteFuture H x.val y.val ↔
+      (sourceNumber x.val : ZMod H) = (sourceNumber y.val : ZMod H) := by
+  have legal_to_success (H : Nat) (a b : ZMod H) (bs : List Bool)
+      (hbs : legal true bs) :
+      ∃ t : Nat, ∃ w : SuccessfulWord t,
+        value a b (flatten w.val) = value a b bs := by
+    classical
+    have pack_legal (t : Nat) (xs : List Bool) (hl : xs.length = 3 * t)
+        (s : Bool) (hs : legal s xs) :
+        (pack xs).length = t ∧ flatten (pack xs) = xs := by
+      induction t generalizing xs s with
+      | zero =>
+        have hnil : xs = [] := List.length_eq_zero_iff.1 (by omega)
+        subst xs
+        exact ⟨rfl, rfl⟩
+      | succ t ih =>
+        rcases xs with _ | ⟨x, _ | ⟨y, _ | ⟨z, tail⟩⟩⟩
+        · simp at hl
+        · simp at hl; omega
+        · simp at hl; omega
+        · have htail : tail.length = 3 * t := by simp only [List.length_cons] at hl; omega
+          have hlegal : legal z tail := hs.2.2.2
+          obtain ⟨hlen, hflat⟩ := ih tail htail z hlegal
+          cases x <;> cases y <;> cases z <;>
+            simp_all [legal, pack, triple, flatten, bits]
+    have legal_zeros (xs : List Bool) (k : Nat) (s : Bool) :
+        legal s (xs ++ List.replicate k false) ↔ legal s xs := by
+      induction xs generalizing s with
+      | nil =>
+        simp only [List.nil_append, legal, iff_true]
+        induction k generalizing s with
+        | zero => trivial
+        | succ k ih => simpa [List.replicate_succ, legal] using ih false
+      | cons c xs ih =>
+        cases s <;> cases c <;> simp [legal, ih]
+    have legal_zero_windows (xs : List Window) (k : Nat) (s : Bool) :
+        legal s (flatten (xs ++ List.replicate k .zero)) ↔ legal s (flatten xs) := by
+      induction xs generalizing s with
+      | nil =>
+        simp only [List.nil_append, flatten, List.flatMap_nil, legal, iff_true]
+        induction k generalizing s with
+        | zero => trivial
+        | succ k ih => simpa [List.replicate_succ, flatten, bits, legal] using ih false
+      | cons c xs ih =>
+        simp only [flatten, List.flatMap_append] at ih
+        cases s <;> cases c <;> simp [flatten, bits, legal, ih]
+    have trim_decomp (xs : List Window) :
+        ∃ k : Nat, xs = trim xs ++ List.replicate k .zero := by
+      induction xs with
+      | nil => exact ⟨0, rfl⟩
+      | cons c xs ih =>
+        obtain ⟨k, hk⟩ := ih
+        by_cases h : c = .zero ∧ trim xs = []
+        · refine ⟨k + 1, ?_⟩
+          change c :: xs = (if c = .zero ∧ trim xs = [] then [] else c :: trim xs) ++ _
+          rw [if_pos h, List.nil_append, List.replicate_succ, h.1]
+          congr 1
+          simpa only [h.2, List.nil_append] using hk
+        · refine ⟨k, ?_⟩
+          change c :: xs = (if c = .zero ∧ trim xs = [] then [] else c :: trim xs) ++ _
+          rw [if_neg h, List.cons_append, ← hk]
+    have trim_terminal (xs : List Window) (E : Bool) :
+        (trim xs).foldl (fun _ c => nonzero c) E =
+          if trim xs = [] then E else true := by
+      induction xs generalizing E with
+      | nil => rfl
+      | cons c xs ih =>
+        by_cases h : c = .zero ∧ trim xs = []
+        · simp [trim, h]
+        · simp only [trim, if_neg h, List.foldl_cons, List.cons_ne_nil, ↓reduceIte]
+          rw [ih]
+          by_cases ht : trim xs = []
+          · have hc : c ≠ .zero := by intro hc; exact h ⟨hc, ht⟩
+            simp [ht, nonzero, hc]
+          · simp [ht]
+    have value_zeros (n : Nat) (x y : ZMod H) :
+        value x y (List.replicate n false) = 0 := by
+      induction n generalizing x y with
+      | zero => simp [value]
+      | succ n ih => simpa [List.replicate_succ, value] using ih y (x+y)
+    have flat_zeros (n : Nat) :
+        flatten (List.replicate n .zero) = List.replicate (3*n) false := by
+      induction n with
+      | zero => rfl
+      | succ n ih =>
+        change bits .zero ++ flatten (List.replicate n .zero) = _
+        rw [ih]
+        rw [show bits .zero = List.replicate 3 false by rfl]
+        rw [← List.replicate_add]
+        congr 1
+        omega
+    let t := bs.length + 1
+    let padded := bs ++ List.replicate (3 * t - bs.length) false
+    have hlen : padded.length = 3 * t := by
+      dsimp [padded]
+      simp only [List.length_append, List.length_replicate]
+      omega
+    have hlegal : legal true padded := by
+      apply (legal_zeros bs _ true).2
+      exact hbs
+    obtain ⟨plen, pflat⟩ := pack_legal t padded hlen true hlegal
+    let packed := pack padded
+    let trimmed := trim packed
+    have htrimlegal : legal true (flatten trimmed) := by
+      obtain ⟨k, hk⟩ := trim_decomp packed
+      apply (legal_zero_windows trimmed k true).1
+      rw [← hk]
+      change legal true (flatten (pack padded))
+      rw [pflat]
+      exact hlegal
+    have hsuccess : Success trimmed := by
+      unfold Success
+      rw [(execution true true trimmed).1.2 htrimlegal]
+      change (trimmed.foldl (fun _ c => nonzero c) true) = true
+      change (trim packed).foldl (fun _ c => nonzero c) true = true
+      rw [trim_terminal]
+      by_cases hnil : trim packed = [] <;> simp [hnil]
+    have htrimle : trimmed.length ≤ t := by
+      obtain ⟨k, hk⟩ := trim_decomp packed
+      have hl := congrArg List.length hk
+      simp only [List.length_append, List.length_replicate] at hl
+      rw [show packed.length = t by simpa [packed] using plen] at hl
+      change (trim packed).length ≤ t
+      omega
+    refine ⟨t, ⟨trimmed, htrimle, hsuccess⟩, ?_⟩
+    obtain ⟨k, hk⟩ := trim_decomp packed
+    change value a b (flatten trimmed) = value a b bs
+    have hvtrim : value a b (flatten trimmed) = value a b (flatten packed) := by
+      change value a b (flatten (trim packed)) = value a b (flatten packed)
+      calc
+        value a b (flatten (trim packed)) =
+            value a b (flatten (trim packed ++ List.replicate k .zero)) := by
+          have hfa : flatten (trim packed ++ List.replicate k .zero) =
+              flatten (trim packed) ++ flatten (List.replicate k .zero) := by
+            simp [flatten]
+          rw [hfa, value_append, flat_zeros, value_zeros]
+          simp
+        _ = value a b (flatten packed) := by rw [← hk]
+    rw [hvtrim, show flatten packed = padded by simpa [packed] using pflat]
+    rw [show padded = bs ++ List.replicate (3*t-bs.length) false by rfl, value_append,
+      value_zeros, add_zero]
+  have reverse (x y : KnownRowFiber H u v)
+      (hfuture : CompleteFuture H x.val y.val) :
+      (sourceNumber x.val : ZMod H) = (sourceNumber y.val : ZMod H) := by
+    classical
+    letI : NeZero H := ⟨by omega⟩
+    have cast_advance (n : Nat) (z : Nat × Nat) :
+        (((advance n z).1 : ZMod H), ((advance n z).2 : ZMod H)) =
+          advance n ((z.1 : ZMod H), (z.2 : ZMod H)) := by
+      induction n with
+      | zero => rfl
+      | succ n ih =>
+        change
+          ((((fun z : Nat × Nat => (z.2, z.1 + z.2))^[n+1] z).1 : ZMod H),
+            (((fun z : Nat × Nat => (z.2, z.1 + z.2))^[n+1] z).2 : ZMod H)) =
+          ((fun z : ZMod H × ZMod H => (z.2, z.1 + z.2))^[n+1]
+            ((z.1 : ZMod H), (z.2 : ZMod H)))
+        change
+          ((((fun z : Nat × Nat => (z.2, z.1 + z.2))^[n] z).1 : ZMod H),
+            (((fun z : Nat × Nat => (z.2, z.1 + z.2))^[n] z).2 : ZMod H)) =
+          ((fun z : ZMod H × ZMod H => (z.2, z.1 + z.2))^[n]
+            ((z.1 : ZMod H), (z.2 : ZMod H))) at ih
+        simp only [Function.iterate_succ_apply', Nat.cast_add]
+        exact Prod.ext (congrArg Prod.snd ih)
+          (by simpa using congrArg (fun p : ZMod H × ZMod H => p.1 + p.2) ih)
+    let rowPerm (M : Nat) : (ZMod M × ZMod M) ≃ (ZMod M × ZMod M) := {
+      toFun z := (z.2, z.1 + z.2)
+      invFun z := (z.2 - z.1, z.1)
+      left_inv := by intro z; ext <;> simp
+      right_inv := by intro z; ext <;> simp
+    }
+    let P := orderOf (rowPerm H)
+    have hperiod : ∀ z : ZMod H × ZMod H, advance P z = z := by
+      intro z
+      change ((fun z : ZMod H × ZMod H => (z.2, z.1 + z.2))^[P]) z = z
+      calc
+        _ = ((rowPerm H) ^ P) z := by rw [Equiv.Perm.coe_pow]; rfl
+        _ = z := by rw [pow_orderOf_eq_one]; rfl
+    have advance_add_mod (n k : Nat) (z : ZMod H × ZMod H) :
+        advance (n + k) z = advance k (advance n z) := by
+      change
+        (fun z : ZMod H × ZMod H => (z.2, z.1 + z.2))^[n + k] z =
+          (fun z : ZMod H × ZMod H => (z.2, z.1 + z.2))^[k]
+            ((fun z : ZMod H × ZMod H => (z.2, z.1 + z.2))^[n] z)
+      simpa only [Nat.add_comm] using
+        Function.iterate_add_apply
+          (fun z : ZMod H × ZMod H => (z.2, z.1 + z.2)) k n z
+    let T := 3 * P
+    have hP : 0 < P := orderOf_pos _
+    have hT : 3 ≤ T := by dsimp [T]; omega
+    have hperiod3 : advance T ((0 : ZMod H), (1 : ZMod H)) = (0,1) := by
+      dsimp [T]
+      rw [show 3 * P = P + (P + P) by omega]
+      have hh := advance_add_mod P (P+P) ((0 : ZMod H), (1 : ZMod H))
+      rw [hh, hperiod]
+      have hh' := advance_add_mod P P ((0 : ZMod H), (1 : ZMod H))
+      rw [hh', hperiod, hperiod]
+    have advance_fib_mod (n : Nat) :
+        advance n ((0 : ZMod H), (1 : ZMod H)) =
+          ((Nat.fib n : ZMod H), (Nat.fib (n+1) : ZMod H)) := by
+      induction n with
+      | zero => norm_num [advance, Nat.fib]
+      | succ n ih =>
+        change (fun z : ZMod H × ZMod H => (z.2, z.1 + z.2))^[n+1]
+          ((0 : ZMod H), (1 : ZMod H)) = _
+        rw [Function.iterate_succ_apply']
+        change ((advance n ((0 : ZMod H), (1 : ZMod H))).2,
+          (advance n ((0 : ZMod H), (1 : ZMod H))).1 +
+            (advance n ((0 : ZMod H), (1 : ZMod H))).2) = _
+        rw [ih]
+        apply Prod.ext
+        · rfl
+        · simpa [Nat.add_assoc] using congrArg (fun z : Nat => (z : ZMod H))
+            (Nat.fib_add_two (n := n)).symm
+    have hF : (Nat.fib T : ZMod H) = 0 := by
+      have h := congrArg (fun z : ZMod H × ZMod H => z.1) hperiod3
+      rw [advance_fib_mod] at h
+      simpa using h
+    have hG : (Nat.fib (T+1) : ZMod H) = 1 := by
+      have h := congrArg (fun z : ZMod H × ZMod H => z.2) hperiod3
+      rw [advance_fib_mod] at h
+      simpa using h
+    have hrowx : advance (flatten x.val.past).length
+        ((2 : ZMod H), (3 : ZMod H)) = (u,v) := by
+      have hc := cast_advance (flatten x.val.past).length (2,3)
+      have hx := x.property
+      exact hc.symm.trans (Prod.ext hx.1 hx.2)
+    have bezout : ∃ e f : ZMod H, e*u + f*v = 1 := by
+      have hb : ∀ n : Nat, ∃ e f : ZMod H,
+          e * (advance n ((2 : ZMod H),(3 : ZMod H))).1 +
+            f * (advance n ((2 : ZMod H),(3 : ZMod H))).2 = 1 := by
+        intro n
+        induction n with
+        | zero => exact ⟨-1,1, by change (-1 : ZMod H)*2 + 1*3 = 1; ring⟩
+        | succ n ih =>
+          obtain ⟨e,f,h⟩ := ih
+          refine ⟨f-e,e,?_⟩
+          have ha : advance (n+1) ((2 : ZMod H),(3 : ZMod H)) =
+              ((advance n ((2 : ZMod H),(3 : ZMod H))).2,
+               (advance n ((2 : ZMod H),(3 : ZMod H))).1 +
+                 (advance n ((2 : ZMod H),(3 : ZMod H))).2) := by
+            change (fun z : ZMod H × ZMod H => (z.2, z.1 + z.2))^[n+1]
+              ((2 : ZMod H),(3 : ZMod H)) = _
+            rw [Function.iterate_succ_apply']
+            rfl
+          rw [ha]
+          linear_combination h
+      obtain ⟨e,f,h⟩ := hb (flatten x.val.past).length
+      refine ⟨e,f,?_⟩
+      simpa [hrowx] using h
+    obtain ⟨e,f,hef⟩ := bezout
+    have hprog := (D5.S3.Arith.ZeckendorfFutureKernel.result H T hH hT hF hG
+      true (sourceNumber x.val : ZMod H) u v (sourceNumber y.val : ZMod H) u v e f e f hef hef).1
+    obtain ⟨Aword, hAlegal, hAvalue⟩ := hprog (-((sourceNumber x.val : ZMod H) * e))
+      (-((sourceNumber x.val : ZMod H) * f))
+    obtain ⟨t, word, hwordvalue⟩ := legal_to_success H u v Aword (hAlegal true)
+    have run_append (q : Option (Bool × Bool)) (a b : List Window) :
+        run q (a ++ b) = run (run q a) b := by
+      induction a generalizing q with
+      | nil => rfl
+      | cons c cs ih => exact ih (step q c)
+    have value_cast (a b : Nat) (bs : List Bool) :
+        ((value (R := Nat) a b bs : Nat) : ZMod H) =
+          value (a : ZMod H) (b : ZMod H) bs := by
+      induction bs generalizing a b with
+      | nil => simp [value]
+      | cons c cs ih =>
+        cases c
+        · simp only [value, Bool.false_eq_true, ↓reduceIte, zero_add]
+          simpa only [Nat.cast_add] using ih b (a+b)
+        · simp only [value, ↓reduceIte, Nat.cast_add]
+          simpa only [Nat.cast_add] using congrArg (fun z => (a : ZMod H) + z)
+            (ih b (a+b))
+    have value_congr (a b c d : ZMod H) (ha : a = c) (hb : b = d)
+        (bs : List Bool) : value a b bs = value c d bs := by
+      subst c; subst d; rfl
+    have hraw (source : ActualPrefix) :
+        rawGcd H source word.val = some (Nat.gcd
+          (sourceNumber source + value (nextRow source).1 (nextRow source).2
+            (flatten word.val)) H) := by
+      unfold rawGcd observe
+      rw [run_append, source.terminal]
+      have hexec := (execution true true word.val).1.2
+      have hsuccess : endable (run (some (true, true)) word.val) = true := word.property.2
+      have hlegal : legal true (flatten word.val) := by
+        by_contra hn
+        have hnone := (execution true true word.val).2.2 hn
+        rw [hnone] at hsuccess
+        simp [endable] at hsuccess
+      rw [hexec hlegal]
+      have hpair : endable (some
+          (List.foldl (fun _ b => last b) true word.val,
+           List.foldl (fun _ b => nonzero b) true word.val)) = true := by
+        simpa [hexec hlegal] using hsuccess
+      rw [hpair]
+      have hvalue := value_append (flatten source.past) (flatten word.val) (2 : Nat) 3
+      simp only [sourceNumber, nextRow]
+      rw [show flatten (source.past ++ word.val) =
+        flatten source.past ++ flatten word.val by simp [flatten], hvalue]
+      simp [Nat.add_assoc]
+    let rx : ZMod H := sourceNumber x.val
+    have hwordneg : value u v (flatten word.val) = -rx := by
+      calc
+        value u v (flatten word.val) = value u v Aword := hwordvalue
+        _ = (-(rx * e)) * u + (-(rx * f)) * v := hAvalue u v
+        _ = -rx * (e*u + f*v) := by ring
+        _ = -rx := by rw [hef]; ring
+    have hxval :
+        ((value (nextRow x.val).1 (nextRow x.val).2 (flatten word.val) : Nat) : ZMod H) =
+          value u v (flatten word.val) := by
+      rw [value_cast]
+      exact value_congr _ _ _ _ x.property.1 x.property.2 _
+    have hxzero :
+        ((sourceNumber x.val + value (nextRow x.val).1 (nextRow x.val).2
+          (flatten word.val) : Nat) : ZMod H) = 0 := by
+      rw [Nat.cast_add, hxval, hwordneg]
+      simp [rx]
+    have hxdiv : H ∣ sourceNumber x.val + value (nextRow x.val).1
+        (nextRow x.val).2 (flatten word.val) := by
+      exact (ZMod.natCast_eq_zero_iff _ _).1 hxzero
+    have hxgcd : Nat.gcd (sourceNumber x.val + value (nextRow x.val).1
+        (nextRow x.val).2 (flatten word.val)) H = H :=
+      Nat.gcd_eq_right_iff_dvd.mpr hxdiv
+    have hgcd_eq : Nat.gcd (sourceNumber x.val + value (nextRow x.val).1
+        (nextRow x.val).2 (flatten word.val)) H =
+        Nat.gcd (sourceNumber y.val + value (nextRow y.val).1
+          (nextRow y.val).2 (flatten word.val)) H := by
+      have heq := hfuture word.val
+      rw [hraw x.val, hraw y.val] at heq
+      exact Option.some.inj heq
+    have hygcd : Nat.gcd (sourceNumber y.val + value (nextRow y.val).1
+        (nextRow y.val).2 (flatten word.val)) H = H := by
+      rw [← hgcd_eq]
+      exact hxgcd
+    have hydiv : H ∣ sourceNumber y.val + value (nextRow y.val).1
+        (nextRow y.val).2 (flatten word.val) :=
+      Nat.gcd_eq_right_iff_dvd.mp hygcd
+    have hyzero :
+        ((sourceNumber y.val + value (nextRow y.val).1 (nextRow y.val).2
+          (flatten word.val) : Nat) : ZMod H) = 0 :=
+      (ZMod.natCast_eq_zero_iff _ _).2 hydiv
+    have hyval :
+        ((value (nextRow y.val).1 (nextRow y.val).2 (flatten word.val) : Nat) : ZMod H) =
+          value u v (flatten word.val) := by
+      rw [value_cast]
+      exact value_congr _ _ _ _ y.property.1 y.property.2 _
+    rw [Nat.cast_add, hyval, hwordneg] at hyzero
+    have : (sourceNumber y.val : ZMod H) = rx := by
+      dsimp [rx] at *
+      linear_combination hyzero
+    simpa [rx] using this.symm
+  have forward (x y : KnownRowFiber H u v)
+      (hxy : (sourceNumber x.val : ZMod H) = (sourceNumber y.val : ZMod H)) :
+      CompleteFuture H x.val y.val := by
+    classical
+    have run_append (q : Option (Bool × Bool)) (a b : List Window) :
+        run q (a ++ b) = run (run q a) b := by
+      induction a generalizing q with
+      | nil => rfl
+      | cons c cs ih => exact ih (step q c)
+    have value_cast (a b : Nat) (bs : List Bool) :
+        ((value (R := Nat) a b bs : Nat) : ZMod H) =
+          value (a : ZMod H) (b : ZMod H) bs := by
+      induction bs generalizing a b with
+      | nil => simp [value]
+      | cons c cs ih =>
+        cases c
+        · simp only [value, Bool.false_eq_true, ↓reduceIte, zero_add]
+          simpa only [Nat.cast_add] using ih b (a + b)
+        · simp only [value, ↓reduceIte, Nat.cast_add]
+          simpa only [Nat.cast_add] using congrArg (fun z => (a : ZMod H) + z)
+            (ih b (a + b))
+    have value_congr (a b c d : ZMod H) (ha : a = c) (hb : b = d)
+        (bs : List Bool) : value a b bs = value c d bs := by
+      subst c; subst d; rfl
+    intro suffix
+    by_cases hs : Success suffix
+    · have hraw (source : ActualPrefix) :
+          rawGcd H source suffix = some (Nat.gcd
+            (sourceNumber source + value (nextRow source).1 (nextRow source).2
+              (flatten suffix)) H) := by
+        unfold rawGcd observe
+        rw [run_append, source.terminal]
+        have hexec := (execution true true suffix).1.2
+        have hsuccess : endable (run (some (true, true)) suffix) = true := hs
+        have hlegal : legal true (flatten suffix) := by
+          by_contra hn
+          have hnone := (execution true true suffix).2.2 hn
+          rw [hnone] at hsuccess
+          simp [endable] at hsuccess
+        rw [hexec hlegal]
+        have hpair : endable (some
+            (List.foldl (fun _ b => last b) true suffix,
+             List.foldl (fun _ b => nonzero b) true suffix)) = true := by
+          simpa [hexec hlegal] using hsuccess
+        rw [hpair]
+        have hvalue := value_append (flatten source.past) (flatten suffix) (2 : Nat) 3
+        simp only [sourceNumber, nextRow]
+        rw [show flatten (source.past ++ suffix) =
+          flatten source.past ++ flatten suffix by simp [flatten]]
+        rw [hvalue]
+        simp [Nat.add_assoc]
+      rw [hraw x.val, hraw y.val]
+      congr 1
+      apply Nat.ModEq.gcd_eq
+      apply (ZMod.natCast_eq_natCast_iff _ _ H).mp
+      rw [Nat.cast_add, Nat.cast_add, hxy, value_cast, value_cast]
+      congr 1
+      exact value_congr _ _ _ _
+        (x.property.1.trans y.property.1.symm)
+        (x.property.2.trans y.property.2.symm) _
+    · have hraw (source : ActualPrefix) : rawGcd H source suffix = none := by
+        unfold rawGcd observe
+        rw [run_append, source.terminal]
+        have hfalse : endable (run (some (true, true)) suffix) = false := by
+          cases h : endable (run (some (true, true)) suffix) with
+          | false => rfl
+          | true => exact False.elim (hs h)
+        rw [hfalse]
+        simp
+      rw [hraw x.val, hraw y.val]
+  intro x y
+  exact ⟨reverse x y, forward x y⟩
+
+#print axioms actual_future_residue_equivalence
 
 end D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockCriterion

@@ -7,7 +7,7 @@ internal sealed class BottomSiblingBlockCriterionDocument : IScribeDocumentDefin
     private const string Prefix = "D5/S3/Arith/FibonacciAtomic/BottomSiblingBlockCriterion.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Actual Fibonacci prefixes and globally attached words define the target; common-depth fullness and an actual bounded-word nonconverse are proved, while the full criterion remains open.",
+        "Actual Fibonacci prefixes and globally attached words define the target; common-depth fullness, raw-gcd future residue fidelity, and an actual bounded-word nonconverse are proved here. The companion resolution module proves the full target.",
         H("Actual Sources and Bottom Sibling Blocks"),
         Blocks(
             Describe.Lean(
@@ -64,7 +64,7 @@ internal sealed class BottomSiblingBlockCriterionDocument : IScribeDocumentDefin
             Describe.Lean(
                 DescribeId.Create("bottom-sibling-block-target"),
                 DeclarationHandle.Create(Prefix + "Target"),
-                H("The complete bottom sibling block claim remains open"),
+                H("The complete bottom sibling block target"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
@@ -91,8 +91,8 @@ internal sealed class BottomSiblingBlockCriterionDocument : IScribeDocumentDefin
                         + "The seventh clause requires an actual source of integer value "
                         + "five and an available "
                         + "SuccessfulWord family at H=4 and t=2 whose centers have cardinality "
-                        + "two but fail BottomBlocks. This declaration is a proposition "
-                        + "definition and supplies no proof of the full conjunction."))),
+                        + "two but fail BottomBlocks. The result theorem proves this full "
+                        + "conjunction without changing the Target definition."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("actual-common-depth-fullness"),
@@ -114,6 +114,27 @@ internal sealed class BottomSiblingBlockCriterionDocument : IScribeDocumentDefin
                     + "establish the raw gcd, future, adaptive or count clauses."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("actual-future-residue-equivalence"),
+                DeclarationHandle.Create(Prefix + "actual_future_residue_equivalence"),
+                H("Full raw gcd futures equal exactly on source residues"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For H at least two and an actual known row (u,v), two actual "
+                    + "prefixes in that row have equal original raw gcd End answers "
+                    + "for every literal suffix exactly when their source numbers "
+                    + "agree modulo H. The reverse implication uses a positive "
+                    + "period of the actual modular Fibonacci row, transports a "
+                    + "Bezout certificate from the initial row (2,3), obtains a "
+                    + "legal continuation of value minus the first source residue, "
+                    + "and lifts it to one successful literal word. On that same "
+                    + "word, the first original gcd answer is H; equality of "
+                    + "futures forces the second residue to agree. The forward "
+                    + "implication preserves the original terminal error and "
+                    + "uses congruent natural gcd inputs. This is the source-fidelity "
+                    + "component reused in the complete result."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("actual-bounded-word-nonconverse"),
                 DeclarationHandle.Create(Prefix + "actual_nonconverse"),
                 H("A real successful-word family misses a sibling block"),
@@ -126,7 +147,7 @@ internal sealed class BottomSiblingBlockCriterionDocument : IScribeDocumentDefin
                     + "The available successful words are the empty word and [010,001], "
                     + "both bounded by two windows. Their global centers are exactly "
                     + "{0,2}. This set has the necessary cardinality two, but the odd "
-                    + "bottom sibling block contains no available center. The statement "
-                    + "does not establish the general finite-identification criterion."))),
+                    + "bottom sibling block contains no available center. The complete "
+                    + "result uses this actual family for its nonconverse clause."))),
                 DescribeRole.Theorem))));
 }

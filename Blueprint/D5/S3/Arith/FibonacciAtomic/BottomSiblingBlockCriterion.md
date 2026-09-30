@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Actual Fibonacci prefixes and globally attached words define the target; common-depth fullness and an actual bounded-word nonconverse are proved, while the full criterion remains open.
+Actual Fibonacci prefixes and globally attached words define the target; common-depth fullness, raw-gcd future residue fidelity, and an actual bounded-word nonconverse are proved here. The companion resolution module proves the full target.
 
 **Definition 1.1 (One actual prefix is fixed through every reset).**
 
@@ -32,7 +32,7 @@ Fix natural window limit t, modulus H, an actual known row (u,v) in ZMod H, and 
 
 A protocol's query type is the subtype of available words, and its answer type is Option Nat. At each node it may branch on the full raw gcd or the common error. FiniteIdentifiable means that the actual source residue modulo H factors through the complete transcript of some finite such protocol. The empty available set is included in the definition.
 
-**Definition 1.3 (The complete bottom sibling block claim remains open).**
+**Definition 1.3 (The complete bottom sibling block target).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/BottomSiblingBlockCriterion.Target`
 
@@ -44,7 +44,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/BottomSiblingBlockCriterion.Target`
 
 Fix H at least 2, t at least 0, a known row (u,v) in ZMod H, and an actual prefix computing that row. Target is the conjunction of seven propositions. First, one common past length realizes every residue in ZMod H by an actual source in that known-row fiber. Second, every actual source has positive integer value. Third, on the known-row fiber equality of all original raw gcd End answers over every literal suffix is exactly equality of source residues. Fourth, equality of all original H/gcd End answers is equivalent to equality of all original gcd End answers. Fifth, for every finite available family of successful literal words, finite adaptive identification by raw gcd is equivalent to BottomBlocks.
 
-BottomBlocks requires that, for each prime factor p of H, with e=factorization(H,p), every fiber of reduction from ZMod(p^e) to ZMod(p^(e-1)) contain at least p-1 projected centers. This includes e=1, and the available set may be empty. Sixth, when BottomBlocks holds for all successful words of length at most t, p^(e-1)(p-1) is at most Fibonacci(3t+1) for every such prime p. The seventh clause requires an actual source of integer value five and an available SuccessfulWord family at H=4 and t=2 whose centers have cardinality two but fail BottomBlocks. This declaration is a proposition definition and supplies no proof of the full conjunction.
+BottomBlocks requires that, for each prime factor p of H, with e=factorization(H,p), every fiber of reduction from ZMod(p^e) to ZMod(p^(e-1)) contain at least p-1 projected centers. This includes e=1, and the available set may be empty. Sixth, when BottomBlocks holds for all successful words of length at most t, p^(e-1)(p-1) is at most Fibonacci(3t+1) for every such prime p. The seventh clause requires an actual source of integer value five and an available SuccessfulWord family at H=4 and t=2 whose centers have cardinality two but fail BottomBlocks. The result theorem proves this full conjunction without changing the Target definition.
 
 **Theorem 1.4 (One returned actual row contains every residue at a shared depth).**
 
@@ -58,7 +58,19 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/BottomSiblingBlockCriterion.actual_
 
 For H at least two and a row (u,v) computed by an actual literal prefix, there is one positive window depth j such that every residue modulo H is realized by a positive actual prefix of that same depth, computed row and terminal tag (true,true). The proof uses the successor graph to realize every integer in the Fibonacci interval [F_(3j+2), F_(3j+3)), packs its legal digits into original three-bit windows with a computed terminal tag, and returns the modular row by a finite permutation period. The initialization bit may vary across candidate sources. This establishes the actual-source fullness clause; it does not establish the raw gcd, future, adaptive or count clauses.
 
-**Theorem 1.5 (A real successful-word family misses a sibling block).**
+**Theorem 1.5 (Full raw gcd futures equal exactly on source residues).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/BottomSiblingBlockCriterion.actual_future_residue_equivalence`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/BottomSiblingBlockCriterion.actual_future_residue_equivalence` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For H at least two and an actual known row (u,v), two actual prefixes in that row have equal original raw gcd End answers for every literal suffix exactly when their source numbers agree modulo H. The reverse implication uses a positive period of the actual modular Fibonacci row, transports a Bezout certificate from the initial row (2,3), obtains a legal continuation of value minus the first source residue, and lifts it to one successful literal word. On that same word, the first original gcd answer is H; equality of futures forces the second residue to agree. The forward implication preserves the original terminal error and uses congruent natural gcd inputs. This is the source-fidelity component reused in the complete result.
+
+**Theorem 1.6 (A real successful-word family misses a sibling block).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/BottomSiblingBlockCriterion.actual_nonconverse`
 
@@ -68,7 +80,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/BottomSiblingBlockCriterion.actual_
 
 *Commentary.*
 
-At H=4, epsilon=false and past=[001] give an actual source of value five, hence positive with residue one modulo four, with computed next row (0,1) modulo four and live tag (true,true). The available successful words are the empty word and [010,001], both bounded by two windows. Their global centers are exactly {0,2}. This set has the necessary cardinality two, but the odd bottom sibling block contains no available center. The statement does not establish the general finite-identification criterion.
+At H=4, epsilon=false and past=[001] give an actual source of value five, hence positive with residue one modulo four, with computed next row (0,1) modulo four and live tag (true,true). The available successful words are the empty word and [010,001], both bounded by two windows. Their global centers are exactly {0,2}. This set has the necessary cardinality two, but the odd bottom sibling block contains no available center. The complete result uses this actual family for its nonconverse clause.
 
 ## References
 
@@ -76,6 +88,7 @@ At H=4, epsilon=false and past=[001] give an actual source of value five, hence 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/BottomSiblingBlockCriterion.FiniteIdentifiable`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/BottomSiblingBlockCriterion.Target`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/BottomSiblingBlockCriterion.actual_common_depth_fullness`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/BottomSiblingBlockCriterion.actual_future_residue_equivalence`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/BottomSiblingBlockCriterion.actual_nonconverse`
 - Dependency: [D5/S1/Digit/Infinite/WindowSuccessorGraph](../../../S1/Digit/Infinite/WindowSuccessorGraph.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd](LiteralWindowEnd.md)
