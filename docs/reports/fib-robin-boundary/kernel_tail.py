@@ -57,7 +57,12 @@ def exp_gamma_lower():
         Q(0),
     )
     assert value > Q(89, 50)
-    return gamma_lower, value
+    sharp_value = sum(
+        (gamma_lower ** k / factorial(k) for k in range(6)),
+        Q(0),
+    )
+    assert sharp_value > Q(1781, 1000)
+    return gamma_lower, value, sharp_value
 
 
 def is_prime(n):
@@ -120,6 +125,32 @@ def growth_lower_bounds(count):
     return primes, bounds
 
 
+def kernel_z_exact():
+    return (
+        Q(2 * 2**21 - 1, 2**21)
+        * Q(3**14 - 1, 2 * 3**13)
+        * Q(5**10 - 1, 4 * 5**9)
+        * Q(7**8 - 1, 6 * 7**7)
+        * Q(11**7 - 1, 10 * 11**6)
+    )
+
+
+def sharp_growth_lower_bounds(count, exp_lower, z_upper):
+    """The same finite sweep with sharper kernel and gamma bounds."""
+    primes = first_primes_at_least_13(count)
+    log_product_lower = growth_log_interval(Q(KERNEL), GROWTH_TERMS)[0]
+    support = Q(1)
+    bounds = []
+    for p in primes:
+        log_product_lower = floor_to_scale(
+            log_product_lower + growth_log_interval(Q(p), GROWTH_TERMS)[0]
+        )
+        support *= Q(p, p - 1)
+        loglog_lower = growth_log_interval(log_product_lower, GROWTH_TERMS)[0]
+        bounds.append(exp_lower * loglog_lower - z_upper * support)
+    return primes, bounds
+
+
 def main():
     assert KERNEL == 9527493263501079465984000000000
     assert Q(77, 16) == Q(2) * Q(3, 2) * Q(5, 4) * Q(7, 6) * Q(11, 10)
@@ -128,8 +159,12 @@ def main():
     log71_lower, _ = log_interval(Q(71))
     assert log_kernel_lower > Q(71)
     assert log71_lower > Q(21, 5)
-    _, exp_lower = exp_gamma_lower()
+    _, exp_lower, exp_sharp = exp_gamma_lower()
     assert exp_lower > Q(89, 50)
+    assert exp_sharp > Q(1781, 1000)
+    z_exact = kernel_z_exact()
+    assert z_exact == Q(72365886696479164830959537, 15037079014364077440000000)
+    assert z_exact < Z_UPPER
 
     # The rational lower margin in (155.3).
     assert Q(89, 50) * Q(21, 5) - Z_UPPER == DELTA_LOWER
@@ -159,12 +194,22 @@ def main():
     assert growth_bounds[120] == min(growth_bounds[:121])
     assert growth_bounds[121] < 0
 
+    sharp_primes, sharp_bounds = sharp_growth_lower_bounds(
+        132, exp_sharp, z_exact
+    )
+    assert sharp_primes[130] == 769 and sharp_primes[131] == 773
+    assert all(bound > Q(1, 10000) for bound in sharp_bounds[:131])
+    assert sharp_bounds[130] == min(sharp_bounds[:131])
+    assert sharp_bounds[131] < 0
+
     print({
         "status": "exact rational five-direction kernel certificate passed",
         "kernel": str(KERNEL),
         "log_kernel_lower_exceeds": "71",
         "log71_lower_exceeds": "21/5",
         "exp_gamma_lower_exceeds": "89/50",
+        "sharp_exp_gamma_lower_exceeds": "1781/1000",
+        "exact_kernel_z": str(z_exact),
         "support_threshold": str(SUPPORT_THRESHOLD),
         "worst_twelve_product": str(twelve),
         "worst_twelve_margin_lower": str(margin),
@@ -174,6 +219,11 @@ def main():
         "growth_121_lower_exceeds": "1/3000",
         "growth_next_prime": "709",
         "growth_next_lower_is_negative": True,
+        "sharp_prime_count_certified": "131",
+        "sharp_last_prime_certified": "769",
+        "sharp_132nd_prime": "773",
+        "sharp_131_lower_exceeds": "1/10000",
+        "sharp_next_lower_is_negative": True,
         "scope": "fixed v2=21,v3=13,v5=9,v7=7,v11=6 kernel; distinct primes p>=13",
     })
 
