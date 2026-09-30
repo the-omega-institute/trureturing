@@ -26,7 +26,8 @@ internal sealed class FibonacciPrefixDocument : IScribeDocumentDefinition
                 Paragraph(Text(
                     "The high-fibre permutation q(d,e,a,0) is identity; its next step sends (h0,h1) to (h1,h0+h1+k(d,a,t)) modulo e. "
                     + "J(d,e,t)=jointTrajectory d e t sends (a,h) to (F(d,t)(a),q(d,e,a,t)(h)). "
-                    + "V(d)=permMatrixHom(F(d,1)) and U(d,e)=permMatrixHom(J(d,e,1)) use forward-ket orientation. "
+                    + "The shared CarryTransport source defines fibonacci, carry, digit, digitJoin and transport; the theorem identifies F(d,1) with fibonacci d and J(d,e,1) with transport d e. "
+                    + "Its actual matrices are lowUnitary d=permMatrixHom(fibonacci d) and jointUnitary d e=permMatrixHom(transport d e), with the displayed adjoint-left/right factors giving the column-ket convention. "
                     + "R(d,e,t,B)=movingPullback d e t B is defined by the reindex algebra homomorphisms for the moving low observation and the joint pullback.")),
                 Paragraph(Text(
                     "S(d,e,N)=prefixAlgebra d e N is the intersection, over every positive time t≤N, of the comap of the lowEmbedding range under R(d,e,t). "
@@ -44,7 +45,7 @@ internal sealed class FibonacciPrefixDocument : IScribeDocumentDefinition
                     + "The sequence S is antitone, its intersection over positive N is Delta, every positive low permutation period gives S_P=Delta, and S_N=Delta for every N≥n(d).")),
                 Paragraph(Text(
                     "The estimate is independent of e≥2, sufficient rather than optimal, and asserts no coherence at every shorter prefix. It applies to the moving full-prefix algebra, not a single-endpoint algebra. "
-                    + "The iterated low and joint permutations have their specified source carry action. Identification of this joint action with U_de under the digit split x=a+d h requires the shared CarryTransport source interface; no digit-split realization theorem is asserted here."))),
+                    + "The iterated low and joint permutations have the specified source carry action. Under the canonical digit split x=a+d h, the shared source theorem supplies transport d e (a,h)=(fibonacci d a,(h1,h0+h1+carry d a)); the proved identifications above therefore connect the operational E trajectory to the actual digit-split source for every d,e≥2, including the non-coprime case."))),
             DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] args) =>
@@ -83,7 +84,7 @@ internal sealed class FibonacciPrefixDocument : IScribeDocumentDefinition
         Formula prefixEq = Eqn(s(n, a), s(n, b));
         Formula allLabels(Formula body) => For("a", labels, For("b", labels, body));
         Formula diagonal = Call("Delta", d);
-        Formula u = Call("U", d, e), v = Call("V", d);
+        Formula u = Call("jointUnitary", d, e), v = Call("lowUnitary", d);
         Formula up = Pow(u, t), vp = Pow(v, t);
         Formula pullback = Call("R", d, e, t, matrix);
         Formula low = Call("lowEmbedding", d, e, matrix);

@@ -45,11 +45,11 @@ def arena : Arena where
     prefixThreshold 2 = 4 ∧
     (∀ t (B : Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ),
       movingPullback d e t B =
-        ((Matrix.permMatrixHom (R := ℂ) (jointTrajectory d e 1)) ^ t)ᴴ *
-          (((Matrix.permMatrixHom (R := ℂ) (lowTrajectory d 1)) ^ t * B *
-            ((Matrix.permMatrixHom (R := ℂ) (lowTrajectory d 1)) ^ t)ᴴ) ⊗ₖ
+        (D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.jointUnitary d e ^ t)ᴴ *
+          (((D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowUnitary d) ^ t * B *
+            ((D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowUnitary d) ^ t)ᴴ) ⊗ₖ
               (1 : Matrix (ZMod e × ZMod e) (ZMod e × ZMod e) ℂ)) *
-          (Matrix.permMatrixHom (R := ℂ) (jointTrajectory d e 1)) ^ t) ∧
+          D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.jointUnitary d e ^ t) ∧
     (∀ N (B : Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ),
       B ∈ prefixAlgebra d e N ↔
         ∀ a b, carryPrefix d N a ≠ carryPrefix d N b → B a b = 0) ∧

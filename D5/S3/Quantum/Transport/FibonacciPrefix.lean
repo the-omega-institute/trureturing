@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Transport/FibonacciPrefix
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Transport/FibonacciPrefix
    mirror-E: none(waiver:finite-prefix-transport)
    anchors: []
@@ -8,6 +8,7 @@
 
 import D5.S3.Fourier.GoldenModelSetDelone
 import D5.S1.Eigenstructure.GoldenPowerLog
+import D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra
 import Mathlib.Data.ZMod.Basic
 import Mathlib.LinearAlgebra.Matrix.Permutation
 import Mathlib.LinearAlgebra.Matrix.Kronecker
@@ -132,11 +133,11 @@ theorem fibonacci_prefix_transport (d e : ℕ) [NeZero d] [NeZero e]
     prefixThreshold 2 = 4 ∧
     (∀ t (B : Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ),
       movingPullback d e t B =
-        ((Matrix.permMatrixHom (R := ℂ) (jointTrajectory d e 1)) ^ t)ᴴ *
-          (((Matrix.permMatrixHom (R := ℂ) (lowTrajectory d 1)) ^ t * B *
-            ((Matrix.permMatrixHom (R := ℂ) (lowTrajectory d 1)) ^ t)ᴴ) ⊗ₖ
+        (D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.jointUnitary d e ^ t)ᴴ *
+          (((D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowUnitary d) ^ t * B *
+            ((D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowUnitary d) ^ t)ᴴ) ⊗ₖ
               (1 : Matrix (ZMod e × ZMod e) (ZMod e × ZMod e) ℂ)) *
-          (Matrix.permMatrixHom (R := ℂ) (jointTrajectory d e 1)) ^ t) ∧
+          D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.jointUnitary d e ^ t) ∧
     (∀ N (B : Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ),
       B ∈ prefixAlgebra d e N ↔
         ∀ a b, carryPrefix d N a ≠ carryPrefix d N b → B a b = 0) ∧
@@ -151,6 +152,32 @@ theorem fibonacci_prefix_transport (d e : ℕ) [NeZero d] [NeZero e]
   have hphi : 0 < Real.goldenRatio := Real.goldenRatio_pos
   have hphi1 := Real.one_lt_goldenRatio
   have hD : 1 ≤ (d : ℝ) - 1 := by exact_mod_cast (show 1 ≤ (d : ℤ) - 1 by omega)
+  have hsource_action : ∀ (a : ZMod d × ZMod d) (h : ZMod e × ZMod e),
+      D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.transport d e (a, h) =
+        (D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.fibonacci d a,
+          (h.2, h.1 + h.2 +
+            (D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.carry d a : ZMod e))) := by
+    have hc := (D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.result d e hd he).1
+    simpa using hc
+  have hsource_low : lowTrajectory d 1 =
+      D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.fibonacci d := by
+    apply Equiv.ext
+    intro a
+    simp [lowTrajectory,
+      D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.fibonacci]
+  have hsource_carry (a : ZMod d × ZMod d) :
+      carryHistory d a 0 =
+        D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.carry d a := by
+    simp [carryHistory, lowTrajectory,
+      D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.carry]
+  have hsource_joint : jointTrajectory d e 1 =
+      D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.transport d e := by
+    apply Equiv.ext
+    rintro ⟨a, h⟩
+    rw [hsource_action]
+    rw [← hsource_carry a]
+    simp [jointTrajectory, lowTrajectory, fibreTrajectory, carryHistory,
+      D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.fibonacci]
   have hstep (a : ZMod d × ZMod d) (j : ℕ) :
       integerTrajectory d (j + 1) a = phi * integerTrajectory d j a -
         ((d * carryHistory d a j : ℕ) : GoldenInt) * phi := by
@@ -480,7 +507,7 @@ theorem fibonacci_prefix_transport (d e : ℕ) [NeZero d] [NeZero e]
     | zero => rfl
     | succ t ih =>
       rw [pow_succ', ← ih]
-      rfl
+      simp [lowTrajectory, Equiv.Perm.mul_def]
   have hjointstep (t : ℕ) :
       jointTrajectory d e (t + 1) = jointTrajectory d e 1 * jointTrajectory d e t := by
     apply Equiv.ext
@@ -498,7 +525,7 @@ theorem fibonacci_prefix_transport (d e : ℕ) [NeZero d] [NeZero e]
     rw [Equiv.Perm.permMatrix, PEquiv.toMatrix_toPEquiv_mul,
       Equiv.Perm.permMatrix, PEquiv.mul_toMatrix_toPEquiv]
     rfl
-  have hmatrix (t : ℕ) (B : Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ) :
+  have hmatrix_old (t : ℕ) (B : Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ) :
       movingPullback d e t B =
         ((Matrix.permMatrixHom (R := ℂ) (jointTrajectory d e 1)) ^ t)ᴴ *
           (((Matrix.permMatrixHom (R := ℂ) (lowTrajectory d 1)) ^ t * B *
@@ -523,6 +550,16 @@ theorem fibonacci_prefix_transport (d e : ℕ) [NeZero d] [NeZero e]
     simp only [Equiv.symm_symm] at hlowconj
     rw [hconjugate (jointTrajectory d e t), hlowconj]
     rfl
+  have hmatrix (t : ℕ) (B : Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ) :
+      movingPullback d e t B =
+        (D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.jointUnitary d e ^ t)ᴴ *
+          (((D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowUnitary d) ^ t * B *
+            ((D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowUnitary d) ^ t)ᴴ) ⊗ₖ
+              (1 : Matrix (ZMod e × ZMod e) (ZMod e × ZMod e) ℂ)) *
+          D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.jointUnitary d e ^ t := by
+    simpa [D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.jointUnitary,
+      D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowUnitary,
+      hsource_joint, hsource_low] using hmatrix_old t B
   exact ⟨hevolution, hbound, hperiod, hstrict, harithmetic.1, harithmetic.2.1,
     hthreshold, harithmetic.2.2, hmatrix, hsupport, hexact, hanti, hinter,
     fun P hP hp => hcollapse P (hperiod P hP hp),
