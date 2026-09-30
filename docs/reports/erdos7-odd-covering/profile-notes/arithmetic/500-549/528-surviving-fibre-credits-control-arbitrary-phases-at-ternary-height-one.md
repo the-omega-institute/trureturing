@@ -12405,3 +12405,166 @@ raw-box obstruction note. All deductions above retain the fixed
 higher words and head/root assignment. Arbitrary higher phases,
 extra numerical labels and unrestricted Erdős #7 remain outside
 this result.
+
+## A simultaneous all-six source with its actual group intersections
+
+This is an ordinary mathematical source certificate with exact rational
+arithmetic, not a new Lean verification. Fix either the FC110 or FC131
+head-row and selected-root table. At EVERY private q, set the shallow
+digits of all four named roles F5,S5,F7,S7 to 6. Keep the prescribed
+higher words, pure/star phases, numerical labels and exact FC159
+remainder inventory. This specifies one actual family, separately for
+each table; it does not combine independently optimized cells.
+
+### 1. Actual unions and the finite-depth correction
+
+For finite N >= 1 write
+
+    A_q,N=sum_(e=1..N)q^-e, c_q,N=1/(1-A_q,N),
+    u=c_q,N/q, t=c_q,N*sum_(e=2..N)q^-e,
+    b=u+t, epsilon=1_(r=2), g_r=1-epsilon*b.
+
+The higher role word 6^(e-1)j is contained in its own shallow [6]
+cylinder with the SAME head row and root gate. Its numerical label
+still exists and cannot be reused in the remainder. Within [6], the
+higher pure hole removes mass t; root 2 also loses the disjoint higher
+star hole of mass t. Every nonempty union of active roles therefore
+has mass
+
+    f_r=u-(1+epsilon)*t
+       =g_r/q+c_q,N*(1+epsilon)*q^(-(N+1)).          (FC533)
+
+The second equality follows by summing the finite geometric tail.
+Only at N tending to infinity is f_r=g_r/q. In particular substituting
+this limit at a finite N would lose a strictly positive correction.
+
+Let alpha and beta be the Boolean ORs of the actual active head-5 and
+head-7 roles, respectively, at the common root/head cell. They are not
+counts of named roles. All active private role events now coincide:
+
+    X=f_r*alpha, Y=f_r*beta, Z=f_r*alpha*beta,
+    H=g_r-f_r*(alpha OR beta),
+    P=g_r-f_r*(alpha+beta), K=g_r-max(X,Y)=H.        (FC534)
+
+Thus both within-head coincidences and the actual cross-head
+intersection are retained. The lower factor is positive: f_r<=b and
+g_r>=1-b imply P>=1-3*b>=2/3 for q>=11. No positive-part ambiguity
+changes these formulas.
+
+### 2. Two residuals with the same complete fee
+
+Use the actual finite head weights w from FC528, the uniform two-root
+weights gamma_r=1/2, and the fixed limiting cylinder caps. Define
+
+    A_P=sum_(r,i,j)gamma_r*w5*w7*product_q P_q,
+    A_H=sum_(r,i,j)gamma_r*w5*w7*product_q H_q,
+    J_P=A_P-F_K, J_H=A_H-F_K,
+    J_H-J_P=A_H-A_P>=0.                            (FC535)
+
+Here F_K is the same complete supported-head min-cap fee FC120–FC122,
+with all 2036 admitted nonternary supports, every supported head depth,
+the common free address across roots, and maxima INSIDE the depth
+sums. Because H=K, A_H is the exact skeleton survivor probability on
+this source, while F_K remains an upper bound on remainder deletion.
+Neither fee maxima nor distinct originals' maximizing phases are
+assumed simultaneously attained.
+
+At the limiting actual signatures, the exact scores are:
+
+| Fixed table | J_P | J_H |
+|---|---|---|
+| FC110 | 97373895113201000495238841/861965831418690450866163750 | 111020412324108354142968241/861965831418690450866163750 |
+| FC131 | 19025536164400117191868739/172393166283738090173232750 | 21843696569297614489160939/172393166283738090173232750 |
+
+In both cases
+
+    J_P>11/100, J_H>1/8.                            (FC536)
+
+The exact positive differences J_H-1/8, in the table's order, are
+
+    13098733587088191138791089/3447863325674761803464655000,
+    1178203135321412870027381/689572665134952360692931000. (FC537)
+
+### 3. Complete continuity and one actual source for every finite N
+
+The fixed all-six raw signatures converge. FC133–FC144 control the
+complete fee, including unsupported-head changes. For a raw-coordinate
+perturbation at most delta, |K-K'|<=2*delta within this family. The
+nine private factors and twelve head rows give |A_H-A_H'|<=30*delta
+by product telescoping. Consequently a valid complete modulus is
+
+    |J_H-J_H'| <=30*delta+Omega_fixed(delta)+45*S*delta,
+    S=480382582/1399052655, RHS -> 0.                (FC538)
+
+Choose this error smaller than half the smaller gap in FC537.
+Convergence of the two fixed sequences gives one finite N_six such
+that for all N>=N_six, every permitted finite globally phased
+remainder leaves pure-conditioned probability at least mu=1/8.
+This proves finite existence without asserting a numerical N_six.
+The actual remainder can have greater depths than N because the fee
+already includes its whole admitted depth inventory.
+
+For any original N>=1, complete to one finite
+N'>=max(N,2,N_six), filling ONLY missing prescribed pure/star/group
+labels. FC159 leaves those slots vacant at every depth. All existing
+phases and the remainder remain unchanged, and the completed survivor
+is contained in the original survivor. Put
+
+    a_N=product_(p in V)(1-A_p,N), C_V=1048576/403767.
+
+Let s be the completed survivor mass under its pure-conditioned
+two-root law Lambda_N'. The single measure
+
+    h_six=(2/3)*(1/8)/C_V=134589/4194304,
+    eta_six=(h_six/s)*Lambda_N' restricted to U_completed
+                                                               (FC539)
+
+has mass h_six, support inside the original survivor, and density
+at most h_six*3/(2*a_N'*s)<=1 relative to Haar. It is fixed before
+later queries. The correctly normalized original-source conclusions
+are
+
+    Haar(U_original)>=h_six,
+    Lambda_N(U_original)>=1/(8*C_V*a_N).             (FC540)
+
+The unscaled 1/8 bound under the ORIGINAL Lambda_N is asserted only
+when N itself is sufficiently large; completion does not erase the
+change in pure-carrier normalization.
+
+### 4. Exact data, reproduction and remaining interface
+
+The [all-six evaluator](../../../frontier/cover-geometry/pure-support-profiles/all_six_private_source.py)
+and its [exact results](../../../frontier/cover-geometry/pure-support-profiles/all_six_private_source.json)
+retain the rational local cells, root residuals, every support fee,
+aggregate scores and actual role addresses. The evaluator takes
+explicit `--arithmetic-library`, `--first-source`, `--second-source`
+and `--output` paths. The inputs are `head_mass_evaluate.py`,
+`first_layer_witness.json` and `bounded_joint_search.json` in
+`frontier/cover-geometry/fibre-credit-partition/` relative to the
+Erdős #7 report root. Its guarded entry does not run old producers.
+
+The exact calculation contains 107454 arithmetic checks and 172
+saved-source schema checks per case. An independent reconstruction
+from the original rows/masks, without importing the all-six evaluator,
+recomputed all 4072 support records (each with free and selected fees)
+across the two cases and matched
+25 aggregate/root/bucket values exactly (1274 assertions). Its
+endpoint targets were known; this was independent arithmetic, not a
+blind numerical prediction. The result bytes have SHA256
+`904d4bc7ec8cf29bf00a7dc8cc42f702f3c6a0a5dd125879b78a872f5086b3ca`.
+
+The saved result fields use the sufficient per-case choice mu=J_H/2.
+FC537–FC540 give the stronger common choice mu=1/8 by the same
+continuity argument; saved half-margin fields are not relabeled.
+
+This result certifies precisely the two simultaneous all-six families
+with the FC159 remainder. It does not by itself transfer old grouped
+query profiles to eta_six, establish a prime continuation, or settle
+unrestricted Erdős #7. A different source of the same scalar mass
+cannot inherit an old grouped profile without its measure comparison.
+The information used here is the actual identity
+
+    H=K and J_H=J_P+(A_H-A_P),                      (FC541)
+
+on one globally phased source, not coordinate monotonicity of a
+native residual on a larger raw box.
