@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Latin;
 
 internal sealed class LatinHFamilyTheoremDocument : IScribeDocumentDefinition
 {
