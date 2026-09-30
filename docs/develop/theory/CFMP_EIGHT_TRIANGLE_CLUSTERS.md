@@ -4,7 +4,7 @@
 
 Let (N,T) be a finite, connected, orientable ideal triangulation of a compact
 3-manifold whose boundary components have genus at least two. Assume every
-global edge has degree exactly 8 or at least 14. Write L for the degree-eight
+global edge has degree exactly 8 or at least 12. Write L for the degree-eight
 edges and H for the remaining edges.
 
 For a tetrahedron sigma, let S_sigma be the set of its six local edges whose
@@ -13,8 +13,8 @@ an incidence condition on actual local edge occurrences; it does not identify
 distinct global edges or impose equal lengths.
 
 The theorem below is a new valence-eight subcase at high-edge threshold 12. The
-three-star/three-cycle packet is the genuinely new local geometry; the four-cycle
-packet is retained so that one theorem covers mixed packets. The degree-twelve constant is below the existing degree-sixteen mixed-edge budget.
+three-star/three-cycle packet is the genuinely new local geometry. A separate
+four-cycle theorem remains available at threshold 14.
 
 ## Six-variable cosine
 
@@ -80,7 +80,7 @@ Put x1=2. The largest possible cosine is
   four-cycle:  (2,c,a,2,c)         phi_1 = 473/700.
 
 Each square is strictly smaller than 1/2:
-2*709^2 < 1003^2, 2*(11^2*249) < 249^2, and 2*2753^2 < 4012^2.
+2*709^2 < 1003^2, 2*(11^2*249) < 249^2, and 2*(2753^2) < 4012^2.
 Thus alpha_1 > pi/4 at every occurrence, the cone angle is strictly larger
 than 2*pi, and K_e < 0.
 
@@ -98,11 +98,7 @@ the choice of delta above.
 
 For x1=c, monotonicity and the high-occurrence condition give the endpoint bound
 
-  phi_1 <= 5965/6972 < cos(pi/6). Since pi<22/7, we have pi/7<22/49. The alternating Taylor lower bound
-T6(u)=1-u^2/2+u^4/24-u^6/720 gives T6(22/49)-53/59
-=95008047934/36748617518655 > 0, hence 53/59 < cos(pi/7). Therefore every high-edge occurrence
-has alpha_1 > pi/8. Since d(e) >= 14, its cone angle is strictly greater
-than 2*pi and K_e < 0.
+  phi_1 <= 5965/6972 < cos(pi/6). Since (5965/6972)^2 < 3/4 with margin 875363/48608784, every high-edge occurrence has alpha_1 > pi/6. Since d(e) >= 12, its cone angle is strictly greater than 2*pi and K_e < 0.
 
 ### Co-volume minimum
 
