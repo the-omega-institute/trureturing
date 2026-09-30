@@ -34,6 +34,8 @@ without comparing stored source digests with current repository bytes. Reused ro
 origins. Native report artifacts travel with `.lake/build` in the project snapshot;
 there is no separate report cache or preparation shortcut. Remote seed compatibility
 remains the resolved mathlib revision, with OS/architecture binary isolation.
+`ci-current` builds the report once and transports it with the project build directory;
+the split workflows consume their own unit results and do not select another report run.
 
 No release command selects a CI run or report artifact. Truth-release bundles are
 verified offline from their declared source and digest; eligibility and branch

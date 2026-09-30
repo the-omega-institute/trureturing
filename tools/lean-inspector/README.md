@@ -60,10 +60,12 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 报告是否可复用由 Lake trace 和 `report_cache_release_semantic_version` 决定。正常入口在 ensure 前不创建
 默认输出或日志目录，以保留新工作树的 donor 播种条件。
 
-程序编译义务由 FILEMAP 及其登记的 [ci-resources.json](../../Meta/ci-resources.json) 中 `lean_targets` 显式选择。
+程序编译义务由 `inspect.sh` 的默认目标选择；直接调用可用排序后的 JSON 列表通过
+`STRATALINT_LEAN_BUILD_TARGETS` 覆盖。报告、materials 与这些构建产物随项目
+`.lake/build` 缓存运输，不另建报告缓存。
 正常入口校验可选 `.reuse.json`：报告语义版本号、登记的报告模块与配置输入及其 mode、显式工具/环境/平台与上轮成功调用
 一致，并且报告五件套与收据逐字节相符、信封和输入坐标仍为当前时，复用报告数据。选中的程序目标仍须通过 Lake 增量编译；未选程序目标的命中不恢复 Lean 重缓存。
-缺失、损坏或不匹配时，同一次 Lake 调用构建 `:report` 和选中的程序目标。生产程序（含 Lean Inspector/audit、C#、脚本、构建属性）的字节不进入该收据，其兼容性只由 `report_cache_release_semantic_version` 表达；实际构建或检查失败仍失败，缓存命中不能代替判词。无 scope 的直接调用消费登记的全部程序目标。
+缺失、损坏或不匹配时，同一次 Lake 调用构建 `:report` 和选中的程序目标。生产程序（含 Lean Inspector/audit、C#、脚本、构建属性）的字节不进入该收据，其兼容性只由 `report_cache_release_semantic_version` 表达；实际构建或检查失败仍失败，缓存命中不能代替判词。未提供覆盖值的直接调用使用 Inspector 默认程序目标。
 `:report` 只构建登记报告模块及实际依赖，不隐式追加包的默认目标；选中的程序目标在报告命中与未命中时均须执行。
 程序构建义务独立于模块报告失效；只影响这些构建义务、未改变报告依赖的编辑，不会因此重提取无关模块报告。实际缺失或失效的模块
 提取会合批以共享加载工作，失效选择仍由 Lake 决定。输出
