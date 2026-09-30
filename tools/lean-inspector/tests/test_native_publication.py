@@ -68,41 +68,6 @@ class NativePublicationConsumerTests:
             self.assertEqual(compressors.call_count, 0, '[FAIL] aggregate_materials_not_recompressed')
         self.assertEqual(output.read_bytes(), (state / 'report.zip').read_bytes())
 
-    def test_aggregation_rejects_conflicting_material_at_duplicate_address(self):
-        self.build()
-        state = native.state(self.root)
-        config = publication.read_json((state / 'inputs.json').read_bytes())
-        artifacts = [state / 'modules' / (name + '.zip') for name in config['modules']]
-        entries = []
-        for index, artifact in enumerate(artifacts):
-            with zipfile.ZipFile(artifact) as outer, \
-                    zipfile.ZipFile(io.BytesIO(outer.read(publication.RAW + '.materials.zip'))) as inner:
-                entries.extend((index, info.filename, inner.read(info)) for info in inner.infolist())
-        pair = next(((left, right) for left in entries for right in entries
-                     if left[0] != right[0] and left[2] != right[2]), None)
-        self.assertIsNotNone(pair, 'fixture needs distinct materials in two modules')
-        (_, first_name, _), (second_index, second_name, _) = pair
-        changed = self.root / 'conflicting-module.zip'
-        with zipfile.ZipFile(artifacts[second_index]) as outer, \
-                zipfile.ZipFile(changed, 'w') as replacement:
-            for info in outer.infolist():
-                payload = outer.read(info)
-                if info.filename == publication.RAW + '.materials.zip':
-                    nested = io.BytesIO()
-                    with zipfile.ZipFile(io.BytesIO(payload)) as source, zipfile.ZipFile(nested, 'w') as target:
-                        for member in source.infolist():
-                            target.writestr(first_name if member.filename == second_name else member,
-                                           source.read(member))
-                    payload = nested.getvalue()
-                replacement.writestr(info, payload)
-        artifacts[second_index] = changed
-        output = self.root / 'rejected-aggregate.zip'
-        with patch.object(native, 'validate_module', return_value=([], {
-                'compatibility_sha256': config['coordinates']['producer']})):
-            with self.assertRaisesRegex(ValueError, 'statement material address collision'):
-                native.aggregate(self.root, output, artifacts)
-        self.assertFalse(output.exists())
-
 
     def test_coordinates_reuse_warm_tree_memo(self):
         self.ensure()

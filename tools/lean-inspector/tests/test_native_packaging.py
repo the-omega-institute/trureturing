@@ -318,8 +318,7 @@ namespace LeanInformationAudit
 open Lean Meta
 def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names => do
   let context ← readThe Core.Context
-  unless context.maxHeartbeats ==
-      Core.getMaxHeartbeats (({} : Options).set `maxHeartbeats 1000000) do
+  unless context.maxHeartbeats == Core.getMaxHeartbeats {} do
     throwError "changed production heartbeat limit"
   match ← IO.getEnv "FIXTURE_REPORT_FAILURE" with
   | some "heartbeat" =>
@@ -354,7 +353,7 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
                     self.assertIn('ordinary fixture failure', message)
                 if mode == 'heartbeat':
                     self.assertIn('native-report-regression', message)
-                    self.assertIn('maximum number of heartbeats (1000000)', message)
+                    self.assertIn('maximum number of heartbeats (200000)', message)
 
 
 class NativePackageConsumerTests(NativeReleaseSupport):
