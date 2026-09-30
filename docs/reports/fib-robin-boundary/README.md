@@ -742,3 +742,9 @@ For the earlier `source_scale.json`, the reported tail constant `63/2560`
 is a conservative bound: for `u>10`, use `8/u<4/5` and
 `log(u)/u<3/10` in `(6/512)(1+(8+log(u))/u)`. The sharper paper
 choice `log(u)/u<1/4` gives `123/5120`; both are below `1/40`.
+
+Theory §172 additionally derives a uniform vanishing Robin ratio for each
+fixed multiplier and bounded number of Fibonacci/Lucas factors. Its proof
+uses the full rank carrier and the standard subpolynomial divisor bound;
+it is a paper consequence of §167, not a conclusion of the finite script.
+Zero Fibonacci factors are excluded; Lucas index zero contributes two.
