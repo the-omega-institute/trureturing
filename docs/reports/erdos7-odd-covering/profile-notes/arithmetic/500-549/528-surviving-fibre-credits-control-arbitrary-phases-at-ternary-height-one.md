@@ -20441,3 +20441,229 @@ arithmetic existence obligation remains the unrestricted target.
 
 These are written CRT derivations and finite exact examples, with
 independent review; no numerical scan or new Lean proof is used.
+
+## The compulsory unit query sharpens the deletion stability bound
+
+Keep FC838's Q, complete layout family and tau>=0 fixed. Every layout
+contains the unit divisor, so L_j>=1. The pointwise floor and the
+nonnegative excess L_j^2-1 are already used in
+[Report339b UR5](../../321-384/339b-the-actual-near-j-source-and-the-unit-refund.md).
+Their capacity consumer strengthens FC854 as follows. For actual
+capacities u'=u-v<=u and deleted mass Delta=sum_z v_z,
+
+    0<=P(u)-P(u')<=(1-tau)_+ Delta.                 (FC856)
+
+For0<=tau<=1, clip an optimizer x<=u to x'_z=min(x_z,u'_z).
+Its lost mass delta is at most Delta. Every complete query loses at
+least delta, so C_e(x')<=C_e(x)-delta. Hence its score loses at most
+(1-tau)delta<=(1-tau)Delta. The smaller feasible box gives the other
+inequality. For tau>=1, C_e(x)>=mass(x) forces both optima to zero.
+The clipped marginal is an available new selector, not necessarily
+the actual restriction of an already implemented old selector.
+
+This applies to a whole deletion block, with Delta the SAME source's
+actual union mass, not the sum of separate event masses. Provided the
+same source hypotheses, query remainder and tail factor still apply,
+P(u)-(1-tau)Delta>tau epsilon_e suffices for FC840 when0<=tau<1.
+The unit-floor mechanism is reused; no new generic theorem is claimed.
+
+The coefficient is sharp even for actual period-preserving deletions.
+For any odd prime p, take the old original0 modp^2 and normalized Haar
+on its p^2-1 survivors. With Q=p, put a=p/(p^2-1). The capacities and
+complete query response are
+
+    u_0=1/(p+1), u_j=a for j!=0,
+    C_e(x)=sum_j x_j+3max_j x_j.
+
+Add the unused original1 modp. Its raw deletion mass is Delta=a;
+u'_1=0 and all other capacities remain unchanged. The period stays
+N=p^2, so k=1. For0<=tau<=(p-2)/(p+1),
+
+    P(u)=(1-tau)-3tau a,
+    P(u')=(1-tau)(1-a)-3tau a,
+    P(u)-P(u')=(1-tau)Delta.                       (FC857)
+
+To prove optimality for ALL selectors, mix uniformly the p-2 queries
+centered at roots2,...,p-1. Its score coefficient is1-tau at roots0,1
+and1-tau(1+3/(p-2)) elsewhere. All are nonnegative in the stated range,
+so the full available capacities maximize this mixed linear score.
+Every query in the mixture is maximizing on both u and u', so their
+primal values attain the common dual bound. For any fixed tau<1 an
+odd prime can be chosen large enough to satisfy the range. Thus the
+coefficient cannot be uniformly reduced using distinctness alone.
+
+The FINAL family{0 modp^2,1 modp} is disjoint, irredundant and has
+exactly the nonunit divisors of p^2 as labels. The old singleton
+inventory need not be divisor-closed. The new source is not
+renormalized. This family has survivors; the calculation concerns
+fixed-query margin loss, not a covering or a prescribed tail factor.
+
+There is an exact way to identify any further block saving. For a
+specified old selected measure F, its actual removed part G, and
+Delta=mass(G), set
+
+    s_j=C_e(F)-integral L_j^2 dF,
+    e_j(G)=integral(L_j^2-1)dG,
+    Psi(F,G)=min_j[s_j+e_j(G)]>=0.
+
+The existing query-credit identity from
+[Report752 JC1--JC4](../750-799/752-joint-deletion-credit-distinguishes-equal-marginal-sources.md)
+gives, with J_tau(F)=mass(F)-tau C_e(F),
+
+    J_tau(F-G)=J_tau(F)-(1-tau)Delta+tau Psi(F,G).   (FC858)
+
+Indeed C_e(F)-C_e(F-G)=min_j[s_j+integral L_j^2 dG]
+=Delta+Psi(F,G). Every complete query remains in this minimum. In
+FC857 an unaffected maximizing query has load1 on the deleted root,
+so Psi=0: distinctness and final irredundancy do not force extra credit.
+
+For an actual block union E=union_i E_i, use ONE measure F and a forest
+on its original labels. The existing
+[Report334 forest bound](../../321-384/334-same-chain-overlap-and-future-risk-certificates.md)
+supplies Delta<=Dbar:=sum_i F(E_i)-sum_(ij in forest)F(E_i intersect E_j).
+If the actual joint query intersections also give e_j(G)>=b_j>=0,
+then for0<=tau<1 the valid post-block lower score is
+
+    J_tau(F)-(1-tau)Dbar+tau min_j(s_j+b_j).
+
+Only a value exceeding tau epsilon_e, under the unchanged continuation
+hypotheses, gives FC840. These existing credits are combined on one
+source; they neither assert positive overlap in every block nor supply
+the all-family initial margin. Gains telescope only while the source
+restriction, query family and tau retain their declared meanings.
+
+## Full numerical chains couple the separate cofactor budgets
+
+Fix an IRREDUNDANT actual family, one stage p, one complete ternary
+source value y, its fixed raw reference rows, and an original e active
+at y. Let B be a specified subset of the other stage-p originals
+active at this same y; in FC820 it is the retained baseline. Its full
+numerical labels and literal phases remain fixed. This uses the
+existing comparable-class disjointness and common-source antichains
+of [Report363](../../321-384/363-common-source-antichain-capacity.md)
+and [Report535](535-mixed-chain-moments-retain-shared-prime-correlations.md).
+
+In FC823--824 notation let U={ell in V:ell<p} be the EARLIER
+NONTERNARY primes, and put
+
+    V_e=a_p product_(ell in U)M_eell,
+    lambda_e=(u_e/a_p)A_>p,
+    K_eb=product_(ell in R_e union R_b)kappa_ell,
+    r_b=beta_p(j_bp) product_(ell in U)v_eell(j_bell).
+
+Let E_e impose only e's EARLIER-coordinate conditions, and let D_b
+impose b's complete nonternary cylinder, INCLUDING its current
+p-coordinate. Under the fixed reference PRODUCT measure
+m_y=tau_p product_(ell in U)tau_ell, define z_b=integral1_(E_e)1_(D_b)dm_y.
+This is not the sequential joint source. The exact FC823 identity is
+
+    sum_(b in B)Psi_eb=lambda_e sum_(b in B)K_eb z_b,
+    0<=z_b<=r_b,
+    sum_(b in C)z_b<=V_e
+       for every divisibility chain C in the FULL labels of B. (FC859)
+
+Distinct comparable original classes in an irredundant family cannot
+intersect: the larger-modulus class would be redundant. Since all
+their ternary prefixes contain y, their nonternary cylinders D_b are
+disjoint. Integrating their indicator sum over E_e proves each chain
+constraint. The individual cap is exactly the FC824 depth cap. No
+current condition from e is inserted into the integral: the current
+factor in Psi is still a product. At a_p=0 use the existing zero
+convention; if V_e=0 every cross term vanishes.
+
+Maximize sum_b K_eb z_b over these finite constraints to obtain a valid
+upper relaxation. Keeping just one chain per fixed 3-free cofactor
+d gives FC824 exactly: that bucket has constant K_eb and r_b, and
+its total is at most min(N_d r_b,V_e). The full-chain bound is thus
+never weaker than that specific sum of separate bucket bounds.
+
+No optimizer is needed for an upper certificate. Nonnegative weights
+theta_C,eta_b satisfying eta_b+sum_(C containing b)theta_C>=K_eb give
+
+    sum_(b in B)Psi_eb
+      <=lambda_e[V_e sum_C theta_C+sum_b eta_b r_b]. (FC860)
+
+Multiply the chain and individual inequalities by these weights and
+sum. Overlapping chains are allowed because every label's coefficient
+is explicitly paid; they are not declared independent. This is a
+weighted consumer of existing disjointness, not a new antichain or
+generic linear-program duality theorem.
+
+The same construction can take all other active stage-p originals as
+B for each e, then add the separately known diagonal and sum rows to
+bound g_p. Separate upper relaxations do not assert jointly attained
+phases. Integrating against the same common selector and nu_3 preserves
+the FC819 interface. A finite selected chain part can be retained
+while its complement uses FC825's convergent depth allowance; this
+does not assert a depth-uniform finite optimization or positive margin.
+
+## A literal fourteen-label family gives a strict cross-bucket saving
+
+Take every nonunit divisor of5^4*7^2=30625, exactly14 labels. Their
+actual phases are the following CRT conditions:
+
+| Original labels | Fixed actual conditions |
+| --- | --- |
+| 5,25,125,625 | respectively0 mod5,6 mod25,26 mod125,126 mod625 |
+| 7,49 | respectively0 mod7,8 mod49 |
+| 5^a*7, a=1,2,3,4 | 1 mod5^a and a mod7 |
+| 5*49 | 2 mod5 and2 mod49 |
+| 25*49 | 3 mod25 and3 mod49 |
+| 125*49 | 51 mod125 and5 mod49 |
+| 625*49 | 1 mod625 and5 mod49 |
+
+This divisor-closed family is irredundant. For each pure5-power use
+its listed phase modulo625 and7-coordinate6 mod49 as a private point.
+For pure7 and49 use respectively0 and8 mod49, with5-coordinate4.
+For5^a*7 use(1,a) modulo(625,49). The remaining four private points
+are(2,2),(3,3),(51,5),(1,5). Each misses all other listed classes by
+their explicit conditions. The point(4,6) survives the whole family,
+so no whole-cover or whole-cover minimality premise is claimed.
+
+There are no ternary originals or stars. Thus H=0, all guards are
+vacuous, a_5=a_7=1, and tau_5,tau_7 are normalized pure-survivor laws
+on respectively469 of625 leaves and41 of49 leaves. These counts are
+625-125-25-5-1 and49-7-1. In numerical prime order U={5}, kappa_5=1
+and A_>7=1. Every label is active at every y.
+
+The35 packet has two occupants in first-root cell(x_7,x_5)=(5,1):
+125*49 and625*49. Other occupied cells have one occupant. Choose
+e=625*49 as the one extra; the remaining seven mixed labels form B.
+This is a legal singleton extra matching, with fixed rows throughout.
+For this e,
+
+    u_e=1/41, M_e5=1/469, K_eb=1,
+    Q_e:=u_e M_e5=1/(41*469).
+
+Here Q_e denotes this local allowance, not the query modulus Q.
+For earlier depths j=1,...,4, v_e5(j)=1/469, since even8/(3*5^4)
+is larger. The current depth allowances are beta_7(1)=12/35 and
+beta_7(2)=12/245. Every cofactor bucket is a singleton. Thus the old
+individual FC824 allowances are(12/35)Q_e for each of35,175,875,4375,
+and(12/245)Q_e for each of245,1225,6125. Their sum is(372/245)Q_e.
+
+The first four labels form ONE complete numerical chain. Pay that
+chain once, and each remaining label by its individual cap. In FC860
+take theta_C=1 for35|175|875|4375 and eta_b=1 for the other three
+labels, with all other coefficients zero. This gives
+
+    sum_(b in B)Psi_eb<=(281/245)Q_e<(372/245)Q_e,
+    saving=(13/35)Q_e.                            (FC861)
+
+This is an explicit analytic upper certificate, not a claimed optimum.
+The saving occurs before the factor2 in FC820's full extra increment.
+It spans different cofactors and retains every cross term in B. It
+does not claim superiority to the minimum of all other existing bounds.
+
+For comparison the actual cross sum on these supplied phases is
+even smaller: all three baseline49 projections miss E_e, while the
+four7-root masses total(6+7+7+7)/41=27/41. Hence its exact value is
+(27/41)Q_e. That direct evaluation is not a uniform phase-free bound.
+
+Full numerical chains now have an explicit consumer in the joint
+mixed-head budget. A universal argument still has to control the
+remaining incomparable labels, baseline and other rows on one source,
+or force enough useful chains to pay their total cost. Neither FC860
+nor this noncover example provides that all-family inequality.
+These are independently reviewed written proofs; no numerical scan,
+new producer or Lean proof is used.
