@@ -1,0 +1,37 @@
+**定理 7.4（离散运输与任意低层仪器的条件充分边界）。** 允许操作字母表 $\mathscr A_{\mathrm{disc}}$ 由未修正的 $U$ 和任意作用于 $A$ 的有限结果仪器组成，包含任意低层通道作为单结果仪器。选择器只依赖已保留的记录与控制数据，所有读出均在低层。则
+
+$$
+q_{\mathrm{disc}}(\rho)=(\sigma_p)_{p\in\widehat H}
+$$
+
+对所有初始联合态及所有有限自适应协议条件充分。若仪器分支为 $\mathcal I_y(X)=\sum_\mu K_{y\mu}XK_{y\mu}^\dagger$，其保留块、概率和归一化更新为
+
+$$
+\widetilde\sigma_{p,y}=\sum_\mu K_{y\mu}\sigma_pK_{y\mu}^\dagger,
+\qquad
+p_y=\sum_p\operatorname{Tr}\widetilde\sigma_{p,y},
+\qquad
+\sigma_{p\mid y}=\frac{\widetilde\sigma_{p,y}}{p_y}\quad(p_y>0).
+$$
+
+结论也适用于任意有限维旁观参考：此时将每个 $\sigma_p$ 取为 $A\otimes\mathrm{ref}$ 上的算子，所有作用于低层的算子张量 $I_{\mathrm{ref}}$。
+
+证明。定义高层 Fourier 去相干映射
+
+$$
+\mathcal E(\rho)=\sum_p(I_A\otimes|p\rangle\langle p|)\rho
+(I_A\otimes|p\rangle\langle p|)
+=\sum_p\sigma_p\otimes|p\rangle\langle p|.
+$$
+
+定理 7.3 表明 $U$ 将高层标签按 $g$ 双射重排，故
+
+$$
+\mathcal E\circ\operatorname{Ad}_U
+=\operatorname{Ad}_U\circ\mathcal E.
+$$
+
+每个低层 Kraus 算子与高层投影交换，所以 $\mathcal E$ 也与每个低层仪器分支交换；并且 $\operatorname{Tr}_H\mathcal E(\rho)=\operatorname{Tr}_H\rho$。由此在任何固定记录分支上，先去相干与沿分支操作再去相干的结果完全相同，且分支迹相同。
+
+更具体地，定理 7.3 给出运输更新，本定理显示公式给出每个仪器分支更新。沿协议树的深度归纳，拥有相同保留块的两输入在同记录节点选择相同操作，并产生相同的子分支概率和未归一化保留块。每条正概率路径用共同的正概率归一化，条件保留块仍相同。有限深度给出全部记录分布及后继边界相同；参考扩张的证明逐式不变。此结论比较的是保留边界和低层条件态，不声称被舍弃的高层非对角块也相同。$\square$
+
