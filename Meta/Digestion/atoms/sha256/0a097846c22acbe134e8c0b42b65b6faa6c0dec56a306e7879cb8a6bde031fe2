@@ -1,0 +1,10 @@
+## 188. 同一模边界上的局部 Euler 因子稳定性
+
+本节从 §187 的近界来源继续，但先证明一个可独立复用的算术关系。以下为经典 Mertens、§160 的 Axler 包络及初等估计上的纸面推导，未新增 Lean 声明。记
+
+$$
+z_p(a)=\sum_{i=0}^{a}p^{-i},\qquad
+Z(n)=\prod_{p\mid n}z_p(v_p(n)),\qquad
+Z_{\le m}(n)=\prod_{p\le m}z_p(v_p(n)).
+$$
+
