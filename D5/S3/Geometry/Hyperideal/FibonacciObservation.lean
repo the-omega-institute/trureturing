@@ -120,6 +120,35 @@ theorem kernel_phase_characterization (k : ℕ) (x y : ℤ) :
       push_cast
       ring
 
+/-- Image characterization. An observed residue pair modulo 5k is realizable
+exactly when its linear obstruction 2r+s vanishes modulo five. -/
+theorem image_condition (k : ℕ) (r s : ℤ) :
+    (∃ x y : ℤ,
+      modEq (5 * k) (observe (x, y)).1 r ∧
+        modEq (5 * k) (observe (x, y)).2 s) ↔
+      modEq 5 (2 * r + s) 0 := by
+  constructor
+  · rintro ⟨x, y, h1, h2⟩
+    change ((5 * k : ℕ) : ℤ) ∣ r - (2 * x - y) at h1
+    change ((5 * k : ℕ) : ℤ) ∣ s - (x + 2 * y) at h2
+    rcases h1 with ⟨a, ha⟩
+    rcases h2 with ⟨b, hb⟩
+    unfold modEq
+    refine ⟨-x - (k : ℤ) * (2 * a + b), ?_⟩
+    push_cast at ha hb ⊢
+    nlinarith
+  · intro h
+    change (5 : ℤ) ∣ -(2 * r + s) at h
+    rcases h with ⟨q, hq⟩
+    refine ⟨-(q), 2 * (-(q)) - r, ?_, ?_⟩
+    · unfold modEq
+      refine ⟨0, ?_⟩
+      simp [observe]
+    · unfold modEq
+      refine ⟨0, ?_⟩
+      simp [observe]
+      nlinarith [hq]
+
 /-- Specialization at the Robin cutoff modulus 5040 = 5 * 1008. The
 phase ambiguity uses only the factor five; the factor seven contributes no
 additional state in this observation. -/
