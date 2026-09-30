@@ -28654,3 +28654,479 @@ $$
 它们不单独推出整个 FIB 家族的 Robin 不等式或任意整数的完整 Robin 判据。
 
 ## 追加锚（本行以下为增补区）
+
+## 224. 全域增量源的熵、单位群集中与有界筛选迁移
+
+本节承接 §223 的固定阶 Rényi 二阶估计，研究同一增量概率在单位条件、模观察及有界筛选下的后果。所得集中与全谱模长估计不确定某个指定逆余数类的质量；实际命中仍须保留窗口、权重和字符相位。
+
+### 224.1 对象、参数与有限群观察
+
+沿素数指标 $r\to\infty$，取
+
+$$
+V=F_r,\quad I=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,
+\quad N_g=1+Vg,\quad A=\min_{g\in I}N_g,\quad X=\max_{g\in I}N_g,
+$$
+
+$$
+y=\log A,\quad\ell=\log y,\quad s=y\ell,\quad
+R=\frac y{\ell^2},\quad\delta=\frac y{\ell^3},\quad
+b_2=\frac{\pi^2}{6},\quad t=e^\gamma\ell.
+$$
+
+继续使用非负乘法增量与实际 Euler 概率
+
+$$
+b_s(1)=1,\qquad
+b_s(p^j)=Z(p^j)^s-Z(p^{j-1})^s\quad(j\ge1),
+\qquad Z(n)=\frac{\sigma(n)}n,
+$$
+
+$$
+U(s)=\sum_{d\ge1}\frac{b_s(d)}d,\qquad
+\mu_s(d)=\frac{b_s(d)}{dU(s)},\qquad
+U_p(s)=\sum_{j\ge0}\frac{b_s(p^j)}{p^j},\qquad
+\pi_p(j)=\frac{b_s(p^j)}{p^jU_p(s)}.
+$$
+
+定义单位条件、条件源及其模像为
+
+$$
+c_V=\mu_s((d,V)=1)>0,\qquad
+\widetilde\mu_s(d)=\frac{\mu_s(d)\mathbf1_{(d,V)=1}}{c_V},
+$$
+
+$$
+G=(\mathbb Z/V\mathbb Z)^\times,\qquad N=|G|=\varphi(V),
+\qquad
+\nu_s(a)=\sum_{d\equiv a\pmod V}\widetilde\mu_s(d).
+$$
+
+每个 $r$ 上的比较都使用这个指定群 $G$ 及其均匀律 $u_G$，群阶随 $r$ 增长。§222 给出
+
+$$
+\log N=y/2+O(1),\qquad
+p\mid V\Longrightarrow p>2y\quad\text{最终成立},\qquad
+0\le-\log c_V=O(\sqrt y\,\ell)=o(R).
+\tag{224.1}
+$$
+
+对可数概率 $P$，采用自然对数并定义
+
+$$
+H(P)=\sum_xP(x)\log\frac1{P(x)},\qquad
+S_q(P)=\sum_xP(x)^q,\qquad
+H_q(P)=\frac{\log S_q(P)}{1-q}\quad(q>0,\ q\ne1),
+\tag{224.2}
+$$
+
+其中零质量项对 Shannon 熵的贡献约定为零。熵起初允许为正无穷。
+
+### 224.2 单位条件保留二阶 Rényi 估计与 Shannon 主阶
+
+**命题 224.1（删除模数素因子的固定阶误差）。** 对每个固定 $q\in(1/2,1)\cup(1,\infty)$，单位条件源满足
+
+$$
+\boxed{
+\log S_q(\widetilde\mu_s)
+=b_2(q^{-1}-q)(R-\delta)+O_q(y/\ell^4).
+}
+\tag{224.3}
+$$
+
+式（224.3）与 §223 全域源的两个系数相同。常数及起效阈值可依赖固定的 $q$，不主张对 $q\downarrow1/2$、$q\to1$ 或 $q\to\infty$ 一致。
+
+证明。对每个固定 $V$，条件 $(d,V)=1$ 恰将有限组独立坐标 $p\mid V$ 固定为零，其余局部概率 $\pi_p$ 不变。因此由 §223 的收敛 Euler 分解，
+
+$$
+\log S_q(\widetilde\mu_s)
+=\sum_{p\nmid V}\log S_q(\pi_p),\qquad
+\log S_q(\mu_s)-\log S_q(\widetilde\mu_s)
+=\sum_{p\mid V}\log S_q(\pi_p).
+\tag{224.4}
+$$
+
+为保留删除误差的尺度，置 $P_p=(1-p^{-1})^{-s}$、$\rho_p=1-\pi_p(0)$。§222 的非负望远镜估计给
+
+$$
+\rho_p\le U_p(s)-1\le\frac{P_p-1}{p}
+\le\frac{s}{p(p-1)}\exp\!\left(\frac{s}{p-1}\right),
+\qquad
+\sum_{p>2y}\rho_p=O(\sqrt y\,\ell),
+\tag{224.5}
+$$
+
+且 $\sup_{p>2y}\rho_p=O(y^{-1/2})$。若 $q>1$，由
+$(1-\rho_p)^q\le S_q(\pi_p)\le1$ 得
+
+$$
+\sum_{p>2y}|\log S_q(\pi_p)|=O_q(\sqrt y\,\ell).
+\tag{224.6}
+$$
+
+若 $1/2<q<1$，必须估计每个小原子的 $q$ 次幂，不能只估计总尾质量。对最终的 $s\ge1$，均值定理给
+$b_s(p^j)\le sP_pp^{-j}$，于是
+
+$$
+\begin{aligned}
+0\le\log S_q(\pi_p)
+&\le S_q(\pi_p)-1
+\le\sum_{j\ge1}\pi_p(j)^q\\
+&\le\frac{s^qP_p^q p^{-2q}}{1-p^{-2q}}.
+\end{aligned}
+$$
+
+在 $p>2y$ 上有 $P_p^q\le\exp(qs/(2y-1))=O_q(y^{q/2})$。扩大到整数尾和，利用 $2q>1$，得到
+
+$$
+\sum_{p>2y}|\log S_q(\pi_p)|
+\ll_q s^q y^{q/2}\sum_{n>2y}n^{-2q}
+\ll_q y^{1-q/2}\ell^q.
+\tag{224.7}
+$$
+
+对每个固定的准许指数，式（224.6）、（224.7）均为 $o_q(y/\ell^4)$。由式（224.1），式（224.4）删除的全部坐标包含在这个大素数尾中；再代入 §223 的完整二阶估计，得到式（224.3）。$\square$
+
+这些无限坐标恒等式也可从有限柱集理解。若 $\mathcal P_m(d)$ 记录前 $m$ 个素数的赋值，则其概率降至 $\mu_s(d)$，且
+
+$$
+S_q(\text{第 }m\text{ 层观察})
+=\mathbb E_{\mu_s}[\mu_s(\mathcal P_m(d))^{q-1}].
+$$
+
+当 $q<1$ 时用单调收敛，当 $q>1$ 时用被 $1$ 控制的支配收敛，便得到幂和的无限乘积。同样，柱集信息量单调增加至 $-\log\mu_s(d)$，给出扩展值恒等式 $H(\mu_s)=\sum_pH(\pi_p)$；单位条件后只保留 $p\nmid V$ 的坐标。这些恒等式不预先假定 Shannon 熵有限。
+
+**定理 224.2（完整源与单位条件源的 Shannon 主阶）。** 两个源的 Shannon 熵均有限，且
+
+$$
+\boxed{
+H(\mu_s)=(2b_2+o(1))R,\qquad
+H(\widetilde\mu_s)=(2b_2+o(1))R,\qquad
+H(\nu_s)\le(2b_2+o(1))R=o(\log N).
+}
+\tag{224.8}
+$$
+
+证明。取 $P=\mu_s$ 或 $P=\widetilde\mu_s$。§223 及命题 224.1 对每个固定 $q\in(1/2,1)\cup(1,\infty)$ 给
+
+$$
+H_q(P)=b_2(1+q^{-1})(R-\delta)+O_q(y/\ell^4).
+\tag{224.9}
+$$
+
+先固定 $1/2<q_-<1$。随机变量 $L_P(d)=\log(1/P(d))$ 在 $P$ 的支撑上非负，且
+
+$$
+\mathbb E_P e^{(1-q_-)L_P}=S_{q_-}(P)<\infty.
+$$
+
+因此 $\mathbb E_PL_P<\infty$，Shannon 熵有限。对这个指数矩使用 Jensen 不等式，得 $H(P)\le H_{q_-}(P)$。再取任意固定 $q_+>1$，对 $e^{-(q_+-1)L_P}$ 使用 Jensen 不等式，得到
+
+$$
+H_{q_+}(P)\le H(P)\le H_{q_-}(P).
+\tag{224.10}
+$$
+
+先令 $r\to\infty$，由式（224.9）及 $\delta=o(R)$ 得
+
+$$
+b_2(1+q_+^{-1})
+\le\liminf\frac{H(P)}R
+\le\limsup\frac{H(P)}R
+\le b_2(1+q_-^{-1}).
+$$
+
+再令两侧的固定指数分别趋向 $1$，得到前两项。确定性模观察不增加 Shannon 熵，给出最后一项。$\square$
+
+式（224.10）只夹出主阶；本节没有对固定阶余项求导，也不由此主张 Shannon 熵的 $\delta$ 项。下端点 $q=1/2$ 仍须排除：§223 的 $\mu_s(p)\sim s/(U(s)p^2)$ 及素数倒数和发散，给出每个固定 $s>0$、$0<q\le1/2$ 的 $S_q(\mu_s)=\infty$。单位条件只删除有限个 $p\mid V$，所以条件源的同一幂和也发散。
+
+### 224.3 总变差趋一与有限源集中集
+
+总变差采用 $\|P-Q\|_{\mathrm{TV}}=\frac12\sum_a|P(a)-Q(a)|$。
+
+**定理 224.3（单位群观察与均匀律的距离）。** 对每个固定 $1/2<q<1$，记 $C_q=b_2(q^{-1}-q)>0$，则
+
+$$
+\boxed{
+1-\|\nu_s-u_G\|_{\mathrm{TV}}
+\le\exp\left(-(1-q)\log N+C_qR+o_q(R)\right).
+}
+\tag{224.11}
+$$
+
+特别地，$\|\nu_s-u_G\|_{\mathrm{TV}}\to1$。对任意固定 $\eta>0$，另有
+
+$$
+1-\|\nu_s-u_G\|_{\mathrm{TV}}
+\le\exp\left(-(1/4-\eta)y+O_\eta(R)\right).
+\tag{224.12}
+$$
+
+证明。对任意 $N$ 点集上的概率 $Q$，逐点不等式
+$\min(x,N^{-1})\le N^{q-1}x^q$ 给
+
+$$
+1-\|Q-u_N\|_{\mathrm{TV}}
+=\sum_a\min(Q(a),N^{-1})
+\le N^{q-1}S_q(Q).
+\tag{224.13}
+$$
+
+当 $0<q<1$ 时，合并源原子满足 $(\sum_i x_i)^q\le\sum_i x_i^q$，故
+$S_q(\nu_s)\le S_q(\widetilde\mu_s)$。代入命题 224.1 的主阶即得式（224.11）。由 $R=o(\log N)$ 得总变差趋一；再选充分接近 $1/2$ 的固定 $q>1/2$，结合式（224.1）得到式（224.12）。$\square$
+
+式（224.12）在 $0<\eta<1/4$ 时给衰减指数；它是缺额的上界，不是缺额的渐近等式。
+
+**推论 224.4（承载几乎全部质量的有限源集合）。** 取 $P=\widetilde\mu_s$，固定 $1/2<q<1$ 及 $c>0$。若
+
+$$
+K>\frac{C_q+c}{1-q},\qquad
+\mathcal T_s=\{d:P(d)\ge e^{-KR}\},
+$$
+
+则最终有
+
+$$
+|\mathcal T_s|\le e^{KR},\qquad
+P(\mathcal T_s^c)
+\le e^{-(1-q)KR}S_q(P)\le e^{-cR}.
+\tag{224.14}
+$$
+
+证明。集合内每项质量至少为 $e^{-KR}$，故第一项由总质量等于 $1$ 得到。集合外有
+$P(d)=P(d)^qP(d)^{1-q}\le e^{-(1-q)KR}P(d)^q$；求和并代入命题 224.1 的主阶即得第二项。$\square$
+
+所以其模像至多含 $e^{O(R)}=V^{o(1)}$ 个群元素，却承载趋于一的质量。这个集合由源概率确定，尚未识别其中是否含余数 $1$ 或某个指定的 $h^{-1}$。
+
+### 224.4 任意有界筛选的保留质量与合法迁移
+
+**命题 224.5（有界筛选的幂和、熵与总变差）。** 令 $w_r:\mathbb N\to[0,1]$ 为任意函数，不要求可乘或与素数坐标独立。在单位条件源 $P=\widetilde\mu_s$ 下记
+
+$$
+a_r=\sum_dP(d)w_r(d)>0,\qquad
+P_w(d)=\frac{P(d)w_r(d)}{a_r},\qquad
+\nu_w=\text{$P_w$ 在 }G\text{ 上的模像}.
+$$
+
+对每个固定 $1/2<q<1$，有
+
+$$
+S_q(P_w)
+=a_r^{-q}\sum_dP(d)^q w_r(d)^q
+\le a_r^{-q}S_q(P),
+\tag{224.15}
+$$
+
+$$
+H(\nu_w)\le H(P_w)
+\le\frac{C_qR+q\log(1/a_r)+o_q(R)}{1-q},
+\tag{224.16}
+$$
+
+以及
+
+$$
+\boxed{
+1-\|\nu_w-u_G\|_{\mathrm{TV}}
+\le\exp\left(-(1-q)\log N+C_qR+q\log(1/a_r)+o_q(R)\right).
+}
+\tag{224.17}
+$$
+
+若 $-\log a_r=o(y)$，则 $H(\nu_w)=o(y)$ 且总变差趋于一。若 $a_r\ge e^{-CR}$，其中 $C$ 固定，则式（224.17）的指数为
+$-(1-q)y/2+O_{q,C}(R)$。
+
+证明。式（224.15）直接来自 $w_r^q\le1$，且右侧有限，因而定理 224.2 的指数矩论证也给出 $H(P_w)<\infty$ 及 $H(P_w)\le H_q(P_w)$。代入命题 224.1 得式（224.16）。模观察对 $q<1$ 的幂和仍只作减小，再用式（224.13）得式（224.17）。最后两项由 $R=o(y)$ 与式（224.1）得到。$\square$
+
+式（224.15）—（224.17）的源余项不依赖筛选函数。若保留质量 $a_r$ 未被控制，仅有 $0\le w_r\le1$ 不能推出归一筛后分布的相应渐近结论：筛选可只留下极小源质量，再将其归一化。
+
+大小窗口、完整素数幂上限和固定核心条件都可进入 $w_r$；$d/X$ 权重在同时限制 $d\le X$ 时属于这个有界范围。命题 224.5 不声称筛后仍有 Euler 乘积，也不搬运 §222 的逐字符下界。
+
+例如沿用 §219 的最大素数幂统计 $B(d)$，以及
+
+$$
+B_\dagger=8(4e^2s^2)\Lambda(1+\log(8\Lambda)),\qquad
+\Lambda=\frac{XU(s)}{t^s}.
+$$
+
+单位条件可由删除坐标 $p\mid V$ 来耦合，删除不能增大 $B(d)$。因此
+
+$$
+P(B(d)>B_\dagger)
+\le\mu_s(B(d)>B_\dagger)
+\le\frac{4e^2s^2}{B_\dagger}=o(1).
+\tag{224.18}
+$$
+
+这个源筛选的保留质量趋于一，故适用式（224.17）。源自身的粗部分或累计深赋值筛选也可用 §§220–221 的局部矩估计确认质量。实际过滤 $B(n(d))\le B_\dagger$ 涉及命中整数，其保留质量不能由 $B(d)\le B_\dagger$ 的质量代替。
+
+### 224.5 实际临界核的条件接口
+
+**命题 224.6（非消失预算贡献所要求的保留质量）。** 取固定 $a>b_2$，令 $H=e^{aR}$、$D=X/H$，沿用实际唯一命中集 $\mathcal H_D$。令 $w_r$ 含有因子
+$(d/X)\mathbf1_{d\in\mathcal H_D}$ 及取值于 $[0,1]$ 的选定实际过滤。则在命题 224.5 的记号下，
+
+$$
+\mathcal B_w=\sum_d\mu_s(d)w_r(d)=c_Va_r,\qquad
+\Lambda\mathcal B_w=\Lambda c_Va_r.
+\tag{224.19}
+$$
+
+若某个子列上存在固定 $\varepsilon>0$ 使 $\Lambda\mathcal B_w\ge\varepsilon$，则该子列上
+
+$$
+\log(1/a_r)
+\le\log\Lambda+\log c_V+\log(1/\varepsilon)
+\le b_2R+o(R),
+\tag{224.20}
+$$
+
+因而归一筛后分布满足式（224.17）及其 $e^{-CR}$ 保留质量情形的总变差结论。
+
+证明。实际命中意味着 $d\mid N_g$，故 $(d,V)=1$ 且 $d\le X$。于是 $0\le w_r\le1$，且全域源与单位条件源的选中质量恰差因子 $c_V$，得到式（224.19）。取对数，并用 §§217–218 的
+
+$$
+\log\Lambda
+=\log(X/A)+b_2R-b_2\delta+O(y/\ell^4)
+=b_2R+o(R),
+$$
+
+以及 $\log c_V\le0$，得到式（224.20）。$\square$
+
+该命题仅在预算贡献不消失的子列上提供归一化接口，没有给 $\Lambda\mathcal B_w$ 的上界或下界。若实际命中已纳入 $w_r$，每个支撑点都满足
+$d\equiv h^{-1}\pmod V$、$1\le h<H$，故其模像至多含 $H$ 个元素。此时总变差趋一已可由 $H/N\to0$ 直接得到，不能再把这种集中解释为命中质量的证明。
+
+熵迁移的用途是在施加指定逆余数条件之前，研究大小窗口和可测过滤后的源律。即使保留质量已得到控制，式（224.17）仍没有确定所需逆余数是否属于重质量集合。
+
+### 224.6 碰撞概率与全谱 Fourier 总量
+
+沿 §222 的约定，令
+
+$$
+\widehat\nu_s(\chi)=\sum_{a\in G}\nu_s(a)\chi(a),\qquad
+\widehat\mu_s(\chi)=c_V\widehat\nu_s(\chi).
+$$
+
+Fourier 系数本身不除以 $N$。对固定 $p>0$，定义字符侧平均量
+
+$$
+\|\widehat\nu_s\|_{p,\mathrm{av}}
+=\left(\frac1N\sum_{\chi\in\widehat G}|\widehat\nu_s(\chi)|^p\right)^{1/p}.
+\tag{224.21}
+$$
+
+当 $p\ge1$ 时它是平均 $L^p$ 范数。
+
+**命题 224.7（源碰撞给出的谱平方下界与字符计数）。** 令
+$\alpha_r=S_2(\widetilde\mu_s)=\exp(-\frac32b_2R+o(R))$。则
+
+$$
+\sum_{a\in G}\nu_s(a)^2\ge\alpha_r,
+\qquad
+\sum_{\chi\ne1}|\widehat\nu_s(\chi)|^2\ge N\alpha_r-1.
+\tag{224.22}
+$$
+
+至少 $N\alpha_r/2-1$ 个非主字符满足
+
+$$
+|\widehat\nu_s(\chi)|\ge\sqrt{\alpha_r/2}.
+\tag{224.23}
+$$
+
+证明。每个余数纤维中 $(\sum_i x_i)^2\ge\sum_i x_i^2$，所以合并源原子只增加平方和；命题 224.1 在 $q=2$ 给出 $\alpha_r$ 的主阶。Parseval 在当前归一化下是
+
+$$
+\sum_{\chi\in\widehat G}|\widehat\nu_s(\chi)|^2
+=N\sum_{a\in G}\nu_s(a)^2.
+$$
+
+主字符的平方模为 $1$，删除后得到式（224.22）。若 $M$ 个字符的平方模至少为 $\alpha_r/2$，则 $|\widehat\nu_s|\le1$ 给
+
+$$
+N\alpha_r
+\le\sum_\chi|\widehat\nu_s(\chi)|^2
+\le M+(N-M)\alpha_r/2.
+$$
+
+因此 $M\ge N\alpha_r/(2-\alpha_r)\ge N\alpha_r/2$；删去主字符至多再减一。$\square$
+
+式（224.22）的非主平方总量下界为
+$\exp(y/2-\frac32b_2R+o(R))$；这是未归一总量，不能删去因子 $N$ 后据此宣称平均平方量不趋零。式（224.23）给出至少
+$\exp(y/2-\frac32b_2R+o(R))$ 个非主字符，模长至少
+$\exp(-\frac34b_2R+o(R))$。与 §222 的构造相比，这里字符数量的主指数更大，但该模长阈值不能写成 $e^{-o(R)}$。
+
+**命题 224.8（固定有限 Fourier 幂与平均范数）。** 对每个固定 $p>0$，
+
+$$
+\sum_{\chi\ne1}|\widehat\nu_s(\chi)|^p
+\ge N\exp\left(-\frac32b_2\max\{1,p/2\}R+o_p(R)\right)-1.
+\tag{224.24}
+$$
+
+对固定 $1<p\le2$，置 $q=p/(p-1)\ge2$，则有较强的范数界
+
+$$
+\|\widehat\nu_s\|_{p,\mathrm{av}}
+\ge\|\nu_s\|_{\ell^q(G)}
+\ge S_q(\widetilde\mu_s)^{1/q}
+=\exp\left[-b_2(1-q^{-2})R+o_q(R)\right],
+\tag{224.25}
+$$
+
+其中 $\ell^q(G)$ 使用计数测度。两个其余范围满足
+
+$$
+\|\widehat\nu_s\|_{1,\mathrm{av}}\ge\exp(-b_2R+o(R)),
+\qquad
+\|\widehat\nu_s\|_{p,\mathrm{av}}\ge\exp(-3b_2R/4+o_p(R))
+\quad(p\ge2\text{ 固定}).
+\tag{224.26}
+$$
+
+证明。当 $p\le2$ 时，对 $|z|\le1$ 逐项使用 $|z|^p\ge|z|^2$；当 $p\ge2$ 时，先对全体字符的平均量使用幂均值不等式，再删去主字符，即由式（224.22）得到式（224.24）。
+
+当 $1<p\le2$ 时，有限群 Fourier 反演的 Hausdorff–Young 不等式给出
+$\|\nu_s\|_{\ell^q(G)}\le\|\widehat\nu_s\|_{p,\mathrm{av}}$。由于 $q>1$，合并源原子增加 $q$ 次幂和；再用命题 224.1 的主阶即得式（224.25）。
+
+当 $p=1$ 时，反演公式给
+
+$$
+\|\nu_s\|_\infty
+\le\frac1N\sum_\chi|\widehat\nu_s(\chi)|.
+$$
+
+§218 的最大原子素支撑小于 $y+2$，最终与 $V$ 互素；故单位条件源的最大原子是
+$m_s/c_V=\exp(-b_2R+o(R))$。模投影的最大质量至少为这个原子质量，得到式（224.26）的第一项。最后对 $p\ge2$ 使用平均范数单调性与式（224.22）即得第二项。$\square$
+
+这些平均范数界也适用于删除主字符后的平均量：在相应的平均 $p$ 次幂和中只减去 $1/N$，相对于 $e^{-O(R)}$ 可忽略。若非主平均改用分母 $N-1$，结论也相同。由式（224.1），将每项乘以 $c_V^p$ 只引入指数 $o_p(R)$，因此相同主指数下界也适用于 $\widehat\mu_s$。
+
+命题 224.8 给出全谱总量的必要下界，排除与这些尺度不相容的上界；它仍允许在足够小的常数 $c>0$ 下，某些平均 $L^p$ 量具有 $e^{-cR}$ 级上界。§222 排除全体非主字符统一 $e^{-cR}$ 衰减所用的是更强的逐字符构造，不能由式（224.23）的较弱阈值替代。
+
+### 224.7 指定逆余类与实际核仍需哪些信息
+
+固定 $a\in G$ 的质量由反演给出
+
+$$
+\nu_s(a)-N^{-1}
+=\frac1N\sum_{\chi\ne1}\widehat\nu_s(\chi)\overline{\chi(a)}.
+\tag{224.27}
+$$
+
+式（224.22）—（224.26）只给模长总量的下界，尚未控制式（224.27）的相关和及相位抵消。对一般有限群概率，平移
+$\nu^{(b)}(a)=\nu(b^{-1}a)$ 保持 Shannon 熵、与均匀律的总变差、所有 Fourier 模长及全部平均 $L^p$ 量，却移动每个指定位置的质量。这个对照不主张实际算术源可以任意平移，而是说明上述统计量自身不足以识别指定位置。
+
+对于带窗口的实际核
+
+$$
+\sum_{\substack{1\le h<H\\(h,V)=1}}
+\sum_{\substack{d\in J_h\\d\equiv h^{-1}\!\!\pmod V}}
+\frac dX\mu_s(d),
+\qquad J_h=(D,X]\cap[A/h,X/h]\cap\mathbb N,
+\tag{224.28}
+$$
+
+仍须保留各 $h$ 的窗口、权重和字符相位。完整源熵与全谱模长没有建立所需的实际核上界或命中质量下界。
+
+本节的源结论承接 §223 使用无条件强素数定理的固定阶估计；单位条件、模投影和筛选均在同一个实际增量概率中处理。所得结果包括源 Shannon 熵的主常数 $2b_2$、单位群总变差趋一、受保留质量控制的有界筛选迁移，以及全谱 Fourier 总量的必要下界。实际指定逆余类质量、§221 的剩余核上界、整个 FIB 家族的 Robin 不等式及全部整数上的 RH 判据，仍未由这些结果确定。
+
+## 追加锚（本行以下为增补区）
