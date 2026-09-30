@@ -11218,3 +11218,331 @@ clipping, initialization, continuation, tail calculation or new Lean
 verification has been performed. The conclusion is an actual
 finite-family noncovering result under the exact stated inventory,
 with same-source mass and normalization accounted for.
+
+## A stronger uniform finite source from the strict limiting certificate
+
+For the normalized phase class in FC417–FC478, both fixed head/root
+assignments admit one actual Haar-dominated source of mass
+
+    h84=(2/3)*(21/250)/C_V=2826369/131072000,
+    C_V=1048576/403767.                             (FC487)
+
+This holds for every original finite N>=1 and every globally phased
+finite remainder in the exact FC159 inventory. The finite auxiliary
+completion is fixed before all future queries. The raw one-pair and
+uniform grouped query comparisons remain valid on this source; their
+upper-mass trim must use the new mass. All statements here are ordinary
+mathematical deductions, without new Lean verification.
+
+### 1. Fixed numerical centers and a strict common target
+
+Use exactly the two FC132 full min-cap center scores, with fixed limiting
+pure caps c_p=(p-1)/(p-2), root weights1/2, the exact nongroup inventory
+and the continuous raw formula from FC137–FC144:
+
+    J_first=17062109570167/198315713846250,
+    J_bounded=25372782312134/297473570769375.
+
+They are the values of the SAME functionalJ_infinity at the two limiting
+raw signaturesz_first,z_bounded. They are not the older separate-fee
+scores, not finite-N exact survival probabilities, and not values of a
+zero-row mask with a discontinuity.
+
+Putmu84=21/250. Both gaps are strictly positive:
+
+    J_first-mu84=201794803541/99157856923125,
+    J_bounded-mu84=770004735013/594947141538750.                      (FC488)
+
+These two subtractions and the simplification ofFC487 were checked by
+fixed rational arithmetic only. No source, radius orN was searched.
+Letg84 be the minimum of the two positive gaps. A common target below
+both limiting certificates is therefore available before any finite
+source or remainder phase is selected.
+
+### 2. Continuity applies to the complete infinite-depth allowance
+
+FC144 gives, for the fixed support, row labels, caps and inventory,
+
+    |J_infinity(z)-J_infinity(z_i)|<=E(delta),
+    E(delta)=39delta+Omega_fixed(delta)+45*S*delta,
+    S=480382582/1399052655.                          (FC489)
+
+The raw guards are nonnegative head masses with total at most1 and
+0<=X,Y<=g<=1. Every actual auxiliary family satisfies these guards.
+The functionOmega_fixed is the finite positive combination of
+Phi_(p,l)(delta) inFC140. FC133–FC134 establish
+
+    Phi_(p,l)(delta)=sum_(e>=l)min(c_p*p^-e,delta)->0.
+
+HenceE(delta)->0 asdelta decreases to0. This step is load-bearing:
+it controls the whole per-depth maximum/sum in the min-cap remainder
+fee, including unsupported-head integration changes. Replacing it by
+continuity of a finite truncated fee would not suffice.
+
+Choose once a positivedelta84 withE(delta84)<g84/2. No particular
+numerical value is needed. The old radius10^-4 and its errorFC145
+are not reused as if they implied this stronger margin; FC146 only
+certified the old weaker constants at that radius.
+
+The actual canonical raw signatures satisfyz_(i,n)->z_i by
+FC150–FC153. There are finitely many raw coordinates and only two
+assignments. Therefore there is a finiteN84>=2 such that, for BOTH
+i and EVERYn>=N84, all coordinate errors inFC143 are<=delta84.
+It follows that
+
+    J_infinity(z_(i,n))
+       >=J_infinity(z_i)-E(delta84)
+       >mu84, fori in{first,bounded}, n>=N84.        (FC490)
+
+One may enlargeN84 to include any pre-existing finite threshold if
+convenient. The new inequalityFC490 is proved by the smaller-error
+argument above, not by assigning the oldN_+ a new meaning. Neither
+monotonicity ofz_(i,n) nor monotonicity ofJ alongn is required.
+This is a finite existence argument; it does not replace the family
+by an infinite covering system or claim finite attainment ofz_i.
+
+### 3. Why the sameN84 works for every phase and every remainder
+
+For the FC417–FC429 class, within-head distinct private first digits and the fixed words
+give exactly the canonical raw signaturez_(i,n), even when cross-head
+intersections change. FC137's generalZ sandwich, not FC152's special
+Z=0, is the valid comparison.
+
+For the FC453–FC469 extension, keep the original phase registry unchanged and construct its
+one auxiliary registry by moving only selected shallow classes already
+contained in unchanged free classes. Simultaneously active roles within
+one head then have distinct private digits. Equal private digits on
+different head rows are allowed. Its raw signature is STILL exactly
+z_(i,n), byFC458–FC460, and its survivor is contained in the original
+survivor.
+
+For the FC470–FC478 extension, first move only shallow classes redundant against the fixed
+pure/star background intoR_q. The original and auxiliary registries
+remain separate. Then perform the selected-role repair of FC453–FC469. This again gives the same
+z_(i,n) and an actual survivor inclusion. It does not admit unprotected
+private1 or6 phases or arbitrary changes to higher words.
+
+Thus no threshold needs to be taken over the very large collection of
+phase assignments: all normalized auxiliary families share exactly
+one of the TWO sequencesz_(i,n). The degree of private intersection and
+the actual normalized full-survivor law can vary without changing the
+raw certificate or the commonN84.
+
+Fix any finite nongroupM in the full FC159 inventory and its global
+phases. Its depths may exceedn. It is NOT used to redefine the pure
+carrier or the grouped raw projections. ApplyFC120–FC122 to this ONE
+auxiliary family and charge each actual numerical original once. The
+complete geometric fee bounds every such finiteM and every phase choice,
+without claiming simultaneous attainment of per-label maxima.
+The fixed limitingcaps remain valid at each finite depth byFC158.
+Consequently
+
+    s_aux(i,n,theta,M,a)
+      =lambda_n(U_aux)>=J_infinity(z_(i,n))>=mu84,
+      for every n>=N84.                            (FC491)
+
+Uniform lifting to a resolving period including all remainder depths
+preserves the source, raw probabilities and supported-cylinder caps.
+This proves uniformity over finite labels and unbounded finite heights;
+it does not sum a countably infinite actual family.
+
+### 4. One larger actual source fixed before all queries
+
+For one complete auxiliary family atn>=N84, letlambda_n be the same
+uniform-two-root, nonternary pure-conditioned probability. Its complete
+actual survivorU_aux includes its particular globally fixed remainder.
+Put
+
+    mu_aux=lambda_n restricted toU_aux /s_aux,
+    D84=(3/2)*C_V/mu84=1/h84=131072000/2826369,
+    eta84=mu_aux/D84
+         =(h84/s_aux)*lambda_n restricted toU_aux. (FC492)
+
+The actual source caplambda_n<=(3/2)C_V H_R andFC491 give
+
+    eta84<=H_R,
+    eta84(total)=h84,
+    support(eta84) subsetU_aux subsetU_original.   (FC493)
+
+Indeed the density multiplier is at most
+h84*(3/2)C_V/mu84=1. The measure is positive and has the exact stated
+mass, independently of the unknown exact value ofs_aux.
+
+The original full-survivor law is not identified withmu_aux. Each
+actual family gets its own one auxiliary registry, actual survivor
+and normalized source; none is selected separately for different
+queries, costs or clipping hinges. Existence of the conditional law
+and ofN84 is sufficient for this proof. No procedure for cheaply
+computing that law, accessing the original phase data, or obtaining
+an optimal policy is asserted.
+
+The larger mass is strict:mu84 is greater than the old
+m_star=36518862868606981/466438558966380000, so
+
+    h84>h0=36518862868606981/1816999451688960000.    (FC494)
+
+The raw comparison geometry has not changed to produce this increase;
+it comes from using more of the strict limiting min-cap margin.
+
+### 5. Completion makes the stronger source available for every originalN>=1
+
+Fix one original finiteN>=1 in theFC417–FC478 domain, with its original
+registry and arbitrary admitted finite remainder. Normalize only the
+permitted redundant shallow roles into one auxiliary registry. Choose
+one finite
+
+    N_prime>=max(N,2,N84).
+
+Append only its absent prescribed pure, star and shallow grouped layers
+at depths N+1 through N_prime, using FC147–FC149 and the same fixed
+head/root assignment.
+The remainder inventory excludes ALL these labels at ALL depths, so
+no occupied old phase is overwritten and no modulus is duplicated.
+Future originals touching a new head/tail prime also cannot collide:
+each has a prime outside the old supportR, while the completion uses
+only old primes. The original registry remains unchanged.
+
+The completed auxiliary survivor is contained in the original survivor.
+Use it ONCE inFC492 atn=N_prime. This establishesFC493 at the new mass h84
+for every originalN, without calculatingN84 or requiringN>=the oldN_+.
+The completion is a finite comparison family and is fixed before every
+future query. Arbitrary new phases on supposedly vacant old slots would
+invalidate this step and remain outside the contract.
+
+The original scalar normalization still needs its explicit factor.
+Let a_N=product_(p in V)(1-A_(p,N)), witha_infinity=1/C_V. Then
+
+    lambda_N(U_original)
+       >=(a_(N_prime)/a_N)*mu84
+       >=mu84/(C_V*a_N)>0,
+    H_R(U_original)>=(2/3)*mu84/C_V=h84.            (FC495)
+
+The lower boundmu84 itself holds underlambda_(N_prime), and directly
+under the originallambda_N whenN>=N84 and no additional-layer
+completion is needed. It is NOT automatically the same lower bound
+under an arbitrary smaller-N original pure-conditioned law.
+Thus the explicit old-source and Haar bounds require no chosenN_prime
+value, while retaining the difference between those normalizations.
+
+### 6. The all-query comparison coefficients stay exactly the same
+
+The auxiliary sourceFC493 avoids its actual pure/star and repaired
+group originals. Retain only the first two pure/star layers in the
+upper reference, as before. Their beta_(p,r), a_(p,r), z_(p,r), run
+coefficients and absolute cylinder caps are unchanged whenN_prime
+increases. Ignoring additional genuine holes enlarges the reference
+and does not renormalizeeta84.
+
+The actual auxiliary free55 rectangle has head5 row2 and an allowed
+private first digit. Its restricted-Haar masses remain1/5 and1/11,
+so the phase-independent rectangle lemmaFC431–FC432 gives the SAME
+Xi_pair. Its proof uses Haar domination and rectangle avoidance,
+not the old massh0 or denominatorD0.
+
+At every head/root cell the simultaneously active repaired same-head
+roles have distinct private first digits,
+so their union still has the floor
+
+    w_star(q,r,i5,i7)=max(n5,n7)/q.
+
+The heads, root masks and private first-layer counts have not changed.
+FC434–FC441's positive conditional proof and allFC382 source conditions
+therefore give the SAME raw uniform profileXi_star,i, separately for
+each of the two head assignments. NeitherD0 nor the chosen initial
+source mass is a coefficient of that raw profile.
+
+For every finite complete query layoutPhi and every nonnegative
+increasing convexf, on ONE fixed physical sourceeta84,
+
+    integral f(L_Phi)deta84<=integral f dXi_pair,
+    integral f(L_Phi)deta84<=integral f dXi_star,i.  (FC496)
+
+All actual numerical labels, depth-zero terms, globally fixed phases,
+root indicators and repeated depths with distinct labels remain in
+the finite induction. Resolving a larger finite period changes none
+of the inequalities. The colour count is a deterministic bound on
+those same labels, not a reallocation of one label to separate sources.
+The unbounded run heights belong to the proved comparison, not an
+infinite list of actual originals.
+
+Takingf=1 inFC496 establishes mass(Xi)>=h84. Hence the new
+Top_(h84)(Xi) is legitimate; no old numeric mass bracket is needed to
+assert its existence. The weighted positive comparison, before
+trimming, supplies this fact independently of an initialization.
+
+### 7. What must be re-evaluated and what is already reusable
+
+The raw profiles and their exact saved moment/atom definitions are
+unchanged. ONLY the target mass in the initial upper-mass trim is
+changed. The new initial comparison is
+
+    Pi84=Top_(h84)(Xi), notTop_(h0)(Xi).             (FC497)
+
+Consequently the oldh0 trimmed moments, low atoms, trim cutoffs
+and stage masses cannot be reused as numerical values forPi84.
+The old cutoff8 bracket only implies
+
+    Xi(M>8)<=h0<h84;
+
+it does not provideh84<=Xi(M>=8). The new split must be checked; the
+old right-hand bracket and cutoff must not be relabelled. The same
+warning applies to subsequent hinge values, Top cutoffs and end moments.
+The fixed prime schedule and chosen delta/T clipping policy remain
+permitted inputs; they are not themselves changed by the new mass.
+
+It remains lawful to defineeta_old=(h0/h84)eta84. This is an explicitly
+downscaled Haar-dominated source of old massh0, on the same auxiliary
+survivor, so the prior old-mass continuation still certifies its original
+range. That separate reuse is not a numerical evaluation of the larger
+unscaled source, nor evidence that it crosses79 or improves a tail.
+
+Any numerical continuation using FC497 needs its own initialization
+and fixed-schedule arithmetic. The stronger source premise alone does
+not certify any new endpoint or prime range.
+
+### 8. Future physical sources and inventory remain coherent
+
+Declare every later actual original and phase once. Append exactly the
+same later originals to the original registry and the auxiliary one.
+The initial covered-set inclusion persists after adjoining their common
+future deletion union. Thus every auxiliary stage survivor lies inside
+the corresponding original stage survivor.
+
+Starting frometa84, apply the existing actual live-kernel restriction
+and one family/stage scalar whenever the NEW verified comparison gives
+a positive target mass. The scalar is fixed before later queries and
+costs. BecauseFC496 holds for all layouts on the same initial law, the
+same inherited induction applies without choosing a new starting source
+for each future objective. Each cap-two head step retains its old Haar
+density-cap factor; positivity and the resulting masses still require
+the correct new numerical comparison.
+
+The available numerical-label contract is unchanged: old-only additions
+must belong toFC159, while new head/tail originals touch an admitted
+new prime, may have arbitrary finite heights and keep the complete
+cofactor labels and global phases. The retained originalN completion
+adds only otherwise absent fixed-word old slots. No old-only9, extra
+arbitrary shallow group, middle prime or unrestricted covering family
+is gained merely by increasing the source mass.
+
+The inherited tail uses the same analytic prime-product premise. Its
+numeric lower reserve requires endpoint mass and fourth moment for the
+actual chosen comparison route. Previously saved values belong to the
+old source mass and cannot be silently assigned toeta84.
+
+### 9. Scope and remaining quantitative inputs
+
+The all-label finite-source existence, exact massh84, uniformN84,
+unchanged raw all-query profiles and coherent future-source interface
+are established by the proofs above. An explicit N84 value is not supplied and is unnecessary for this
+finite-existence comparison. The new Top/continuation arithmetic
+remains necessary before claiming an improved quantitative endpoint
+for the larger source.
+
+The load-bearing repository inputs are the exactFC132 center values,
+FC133–FC144 complete-depth continuity, FC150–FC158 actual raw convergence
+and finite caps, FC120–FC122/FC159 common-source remainder bounds,
+FC455–FC468 auxiliary inclusion/completion, the fixed-background normalization of FC470–FC478, and FC431–FC441 mass-independent positive query
+comparisons. This is ordinary mathematics and exact reuse; no new Lean
+verification, efficient-acquisition guarantee or unrestricted Erdős#7
+conclusion is claimed.
