@@ -21,11 +21,13 @@ theorem star_upper_sq : (121 : ℝ)^2 / 175^2 < 1 / 2 := by norm_num
 theorem triangle_upper_sq : (13 : ℝ)^2 * 41 / 123^2 < 1 / 2 := by norm_num
 theorem four_cycle_upper_sq : (473 : ℝ)^2 / 700^2 < 1 / 2 := by norm_num
 
-/-- The high-edge endpoint margin used at the degree-sixteen threshold. -/
-theorem high_upper_sq : (23 : ℝ)^2 / 25^2 < (2 + Real.sqrt 2) / 4 := by
-  have hs : (0 : ℝ) <= Real.sqrt 2 := Real.sqrt_nonneg 2
-  have hs2 : (Real.sqrt 2)^2 = (2 : ℝ) := by norm_num
-  nlinarith
+/- The high-edge Taylor certificate used at the degree-fourteen threshold. -/
+def t6 (u : ℝ) : ℝ := 1 - u^2 / 2 + u^4 / 24 - u^6 / 720
+
+theorem high_upper_taylor : (53 : ℝ) / 59 < t6 (22 / 49) := by
+  norm_num [t6]
+
+theorem high_upper_sq : (53 : ℝ)^2 / 59^2 < 1 := by norm_num
 
 #print axioms star_lower_sq
 #print axioms triangle_lower_sq
