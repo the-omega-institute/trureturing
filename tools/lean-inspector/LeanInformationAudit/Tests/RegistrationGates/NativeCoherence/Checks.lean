@@ -62,7 +62,7 @@ elab "observe_empty_report_driver_coherence" : command => withPrivateSources do
   let observe (label : String) (expected : Option String) : CommandElabM Unit := do
     let saved ← get
     let actual ← try
-      let (values, _) ← liftTermElabM <| finiteInformationTemplateReportDriver #[requested]
+      let values := (← liftTermElabM <| finiteInformationTemplateReportDriver #[requested]).map (·.1)
       unless values.size == 1 &&
           (values[0]!.getObjValAs? (Array Json) "inventory").toOption.any (·.isEmpty) do
         throwError "setup: expected exactly one empty inventory"
