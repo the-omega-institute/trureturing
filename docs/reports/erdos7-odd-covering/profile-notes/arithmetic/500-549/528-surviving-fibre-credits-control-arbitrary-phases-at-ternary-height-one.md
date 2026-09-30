@@ -1,5 +1,7 @@
 # Surviving-fibre credits give common query laws at ternary height one
 
+A [star-conditioned second-root estimate](#conditioning-every-star-complement-makes-the-other-root-positive) gives head Haar density greater than1/550 for the specified complementary1947-vector palette when the chosen root has no5-star. Both matching191/1947 root contracts together give density greater than1/500 and supported mass greater than9/8000 after the inherited outside-prime tail above100000. Arbitrary finite nonternary heights and fixed3,5,7 private-prime transport are retained; the mixed-palette and low-ternary conditions remain.
+
 An [exact paired-allocation refinement](#exact-paired-partitions-sharpen-the-common-source-certificate) improves the specified 191-vector head certificate to Haar density greater than1/4000 at arbitrary finite nonternary heights. Under the same head-only ternary and chosen-root restrictions, the inherited analytic tail now permits all outside primes greater than400000, with final supported mass greater than1/20000. The joint optimizer retains both head interfaces and every fractional row not discharged by its explicit condition.
 
 A [common-source two-axis estimate](#a-common-source-two-axis-union-makes-the-191-vector-palette-positive) gives head survivor density greater than 1/20000 for the specified 191-vector palette, with arbitrary finite nonternary heights and private-prime substitutions fixing 3,5,7. Head-only originals still have v3<=1, and only 5-stars may meet the chosen pure3-avoiding root. Any finite tail with primes outside that designated head greater than 10^7 retains supported mass greater than 1/24000 under the existing analytic tail premise.
@@ -4169,3 +4171,156 @@ leaves final supported mass
 This is the supported distorted-law mass of the tail construction, not the complete family's natural density. Positivity yields an uncovered integer for each finite family meeting these head and tail conditions. It does not settle unrestricted Erdős#7.
 
 The [paired-partition producer](../../../frontier/cover-geometry/fibre-credit-partition/paired_partition_union.py) and [exact results](../../../frontier/cover-geometry/fibre-credit-partition/paired_partition_union.json) bind the prior same-source certificate and inventory endpoint, retain exact optimizer witnesses, and compare the subset recurrence against independent exhaustive full/fractional allocations on small models. They also verify the complete-height density and smaller-threshold tail inequalities. These are ordinary proofs and exact finite computations, not new Lean verification.
+
+## Conditioning every star complement makes the other root positive
+
+The previous two-axis argument has a useful second consumer. For the specified 1947-vector complement of the 191-vector palette, a pure3-avoiding root with NO5-star leaves head Haar density greater than1/550, with arbitrary finite nonternary heights. Other primes' stars may be allocated arbitrarily; their unions are enlarged on that root under the same original source. Under the inherited analytic premise, every finite outside-prime tail above100000 leaves supported mass greater than83/88000. The mixed palette and head-only v3<=1 conditions remain material.
+
+If BOTH complementary root-palette conditions hold, adding the two disjoint Haar contributions improves the head density to greater than1/500 and the same tail's supported mass to greater than9/8000. Neither result removes arbitrary small-prime inventories or unrestricted low ternary-prefix collisions.
+
+### Two restricted heads and all restricted private coordinates
+
+Fix an actual ternary cell which avoids every actual pure3 original and on which every original's ternary condition is constant. A first root suffices for the height-one consumer; at deeper heights use a finite prefix partition resolving all these actual conditions. Use the same pure-conditioned nonternary product laws lambda_p as FC4. Let B_p be the actual active star union, or a declared enlargement on that source, and set
+
+    g_p=lambda_p(B_p^c),
+    W5=g_5, W7=g_7, G=product_(q>7)g_q,
+    M=G*W5*W7.
+
+Every event below is restricted to the ONE carrier K=product_p B_p^c. A zero g_p makes all its restricted event masses zero and is handled before division. It does not show that the actual originals cover; an enlargement may have removed additional points.
+
+For M>0 the private laws are
+
+    nu_q(E)=lambda_q(E intersect B_q^c)/g_q.
+
+They remain independent because the restrictions are coordinatewise within the fixed ternary fibre. Keep unnormalized head-row weights w_i,v_j, with sums W5,W7 and bounds a5=c5/5, a7=c7/7. The heads do not silently regain total mass one.
+
+Let A contain the free and selected originals 5q^e, and B those 7q^e, with q>7; selected labels carry their actual ternary powers. In the height-one consumer they are 3*5q^e and3*7q^e. Both-head originals and deeper-head originals remain outside these two disjoint inventories. For their actual private prefix unions write x_qi,y_qj and actual intersections z_qij under nu_q. The RAW budgets are
+
+    sum_i x_qi<=V5_q,
+    V5_q=(c_q/g_q)*sum_(actual A labels at q)q^-e,
+    sum_j y_qj<=V7_q,
+    V7_q=(c_q/g_q)*sum_(actual B labels at q)q^-e.       (FC82)
+
+In a free allowance plus a selected palette, each numerator becomes b_q+c_q*sum_selected q^-e. At arbitrary ternary depth, repeated active full numerical labels are counted separately; the allowance is not reset at each layer. A raw V can exceed one.
+
+The private denominator is necessary. With both head survival masses1/2 and a four-state uniform private coordinate restricted to two states, an event using one retained private state has actual mass1/16. Its conditioned private probability is1/2. Using the old unconditioned value1/4 with the restricted carrier mass1/8 would incorrectly give the upper bound1/32.
+
+### The common-source union inequality retains all three masses
+
+Let u=lambda(A), v=lambda(B), both measured in K. Integrate the existing actual-set product defect against G*w_i*v_j. Since
+
+    u=G*W7*sum_i w_i[1-product_q(1-x_qi)],
+    v=G*W5*sum_j v_j[1-product_q(1-y_qj)],
+
+the resulting bound is
+
+    lambda(A union B)<=u+v-u*v/M
+                  +G*sum_q (sum_i w_i*x_qi)
+                            (sum_j v_j*y_qj).          (FC83)
+
+The interaction denominator is the FULL carrier M; the correction contains G exactly once. This proof uses the actual factors1-x-y+z in[0,1], so it also applies when x+y>1. Dropping z into an untruncated negative product would not be valid.
+
+Each weighted projection sum is bounded both by its head carrier and its raw cap. Thus put
+
+    C=G*sum_q min(W5,a5*V5_q)*min(W7,a7*V7_q).
+
+If U5,U7 are separately valid upper bounds clipped to[0,M], monotonicity of u+v-u*v/M gives the safe joint upper
+
+    J=min(M,U5+U7,U5+U7-U5*U7/M+C).                     (FC84)
+
+As before, no intersection lower bound follows by substituting upper parameters into the product alone. FC53 supplies U5=min(M,G*W7*a5*Psi(W5/a5,P5)), where P5=product_q max(0,1-V5_q), and analogously for U7. The full piecewise Psi, including integer ratios, ratios below one and P=0, must be used. Clipping a factor for this residual product does not turn a raw budget V>1 into a valid row-sum bound of one.
+
+### Pay every remaining original once with a nonnegative expression
+
+An ungrouped numerical original with nonternary support D has the same-source fee
+
+    fee(m)=product_(p in D)c_p*p^(-v_p(m))
+                     *product_(p outside D)g_p.
+
+In particular all support-{5,7} originals, with all their depths, are retained here. Over private primes define
+
+    B0=product_q g_q=G,
+    B1=sum_q b_q*product_(r!=q)g_r,
+    B2=product_q(g_q+b_q)-B0-B1.
+
+B2 is the nonnegative sum over private supports of size at least two. Summing all free mixed labels except the two shallow head groups gives exactly
+
+    F_rem=(W5+b5)(W7+b7)*B2
+           +[(b5-a5)W7+(b7-a7)W5+b5*b7]*B1
+           +b5*b7*B0.                                 (FC85)
+
+The three terms correspond to private support size at least two, exactly one, and zero. In the middle term remove precisely a5*W7 and a7*W5. All coefficients are nonnegative because the permitted free exponent range includes the first powers. This proof includes every higher exponent rather than imposing a height cutoff.
+
+Keep the direct fee sum S_rem over the ungrouped selected labels. The actual survivor mass is at least
+
+    delta=M-F_rem-S_rem-J.                              (FC86)
+
+Missing permitted labels only reduce the necessary payment. No separate optimum is subtracted to manufacture a credit.
+
+### The second palette and its unrestricted nonternary heights
+
+Define I2 from the ORIGINAL selected numerical input by keeping labels assigned to root2 and removing77,91,119,133, which belong to the first palette after the four moves. Thus |I2|=1947; its indexing uses the same eleven nonternary axes5,7,11,13,17,19,23,29,31,37,41. For a chosen pure3-avoiding root, assume:
+
+- head-only originals satisfy v3<=1;
+- no active star has nonternary prime5;
+- the active selected mixed cofactors lie in the indexed I2 palette.
+
+All other stars may have arbitrary globally fixed phases and root allocations. All3-free originals, other-root mixed originals, pure classes, and finite nonternary heights are unrestricted on the declared support. For comparison, enlarge every non-5 active star union once to b_p and keep B5 empty. Therefore
+
+    g5=1, g_p=1-b_p for p>=7.
+
+The complete caps are c_p=(p-1)/(p-2), b_p=1/(p-2). The same1947 exponent vectors are retained; complete geometric sums apply to the unbounded free inventory. Among selected originals, the two grouped private inventories contain1 and23 labels, respectively;1923 selected labels remain, including the57 original. This accounts for all1947 labels exactly once.
+
+Exact root-bracket evaluation of FC86 gives
+
+    finite-profile delta2 >0.0143708574146238,
+    complete-height delta2 >0.0142620149893677>7/500.
+
+The exact complete-height fraction and the common density cap give the separate verified comparison
+
+    delta2/(1048576/134589)>1/550.                      (FC87)
+
+The weaker inequalities delta2>7/500 and cap<8 alone do NOT give1/550; FC87 uses the actual fraction. The finite-profile result has the same stated Haar threshold. All numerical values are lower certificates uniform over the declared phases, not an assertion that the allowance maxima are jointly attained.
+
+Fix3,5,7 and replace the indexed private primes by distinct componentwise larger primes. Divide every fee and the joint group bound by M before comparing: the head ratios remain fixed, while
+
+    b_q/g_q=1/(q-3),
+    c_q*q^-e/g_q=(q-1)*q^-e/(q-3)
+
+both decrease. The raw private budgets decrease, the normalized one-axis upper bounds decrease, and the entire normalized expression in FC84 decreases by monotonicity on[0,1]^2. The normalized remainder in FC85 and each selected fee are nonnegative polynomials in these decreasing quantities. Meanwhile M increases and the Haar density cap decreases. Positivity and FC87 therefore survive this transport for arbitrary actual fixed phases on the enlarged prime axes.
+
+Apply the existing SH11--SH13 tail with B=100000, l=10 and c_l=201/199. Its exact loss is less than7/8000. All actual primes outside the designated head exceed B; tail-touching originals have arbitrary finite head and tail exponents, including powers of3. The actual Haar seed has density at most one, and head primes need not precede the tail primes numerically. The final supported distorted-law mass is
+
+    >1/550-7/8000=83/88000>9/10000.                    (FC88)
+
+This is not a natural-density claim for the entire extended family.
+
+### Adding two disjoint root certificates
+
+When the SAME family meets BOTH the FC80 first-root191 condition and the FC87 second-root1947 condition on the two distinct pure3-avoiding roots, their actual Haar survivor sets are disjoint. Their lower bounds may therefore be added under the common density cap. Since delta1>1/500, delta2>7/500 and3*product_p c_p<8,
+
+    H_head(U)>1/500,
+    final supported mass>1/500-7/8000=9/8000.           (FC89)
+
+Both root contracts are required for this stronger constant. It is not an upgrade of the no5-star single-root theorem. The producer binds the paired first-root certificate through the SAME endpoint and original-input hashes before adding its contribution.
+
+### The full mixed inventory still needs a coupled allocation argument
+
+Replacing I2 by every smooth mixed cofactor gives raw budgets V5_q=V7_q=2*b_q/g_q. The remaining selected allowance is then a second F_rem. The same stated comparison gives
+
+    M=0.47595160726989877,
+    2*F_rem=0.39988260533633396,
+    J=0.20481916370953038,
+    M-2*F_rem-J=-0.12875016177596563.
+
+This negative lower comparison neither constructs a cover nor proves that a better joint bound fails. It identifies what this particular payment scheme has not controlled.
+
+One reusable shared-allocation inequality avoids charging the complete selected inventory independently on every root. Group only free originals for the moment, so group budgets do not depend on selected-root choices, and let C_r=M_r-F_rem,r-J_free,r. For fixed root weights gamma_r>=0 with sum one,
+
+    weighted survivor mass >=sum_r gamma_r*C_r
+      -sum_(|D|>=2)b_D
+          *max_r[gamma_r*product_(p outside D)g_(p,r)]. (FC90)
+
+Every actual selected numerical label3d is active on at most one retained root. Its weighted fee is consequently bounded by the displayed maximum once; sum its exponents to obtain b_D. Free originals still have one actual phase across the two roots. No simultaneous attainability of the support maxima is assumed. FC90 is a valid interface, not yet a uniform positive bound over arbitrary star and mixed allocations.
+
+The [star-conditioned producer](../../../frontier/cover-geometry/fibre-credit-partition/star_conditioned_union.py) and [exact results](../../../frontier/cover-geometry/fibre-credit-partition/star_conditioned_union.json) enumerate72 finite product models, including7 zero-carrier cases, and12 independent exponent checks of FC85. They retain the explicit wrong-normalization counterexample, reconstruct both finite independent endpoints from the actual labels, verify the1947-palette and shared-root consumers, and record the full-inventory method boundary. These results are ordinary proofs and exact finite controls; no new Lean verification or unrestricted Erdős#7 conclusion is claimed.
