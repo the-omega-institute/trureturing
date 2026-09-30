@@ -13,7 +13,7 @@ internal sealed class FibonacciObservationDocument : IScribeDocumentDefinition
         "D5/S3/Geometry/Hyperideal/FibonacciObservation.observe_phase_indistinguishable";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The cyclic CFMP return observation has an exact persistent five-phase modular kernel.",
+        "The cyclic CFMP return observation has a persistent phase congruence modulo 5k.",
         H("Persistent five-phase ambiguity in the CFMP return observation"),
         Blocks(
             Describe.Lean(
@@ -55,8 +55,9 @@ internal sealed class FibonacciObservationDocument : IScribeDocumentDefinition
                             + "input in the 5k-kernel has the form (k*t,2*k*t+5*k*s).")),
                     Paragraph(Text(
                         "At the concrete modulus 5040=5*1008, the same theorem gives the "
-                            + "five-part phase ambiguity. The factor seven in 5040 contributes "
-                            + "no additional kernel state to this observation.")),
+                            + "five-part phase ambiguity is exhibited. The factor seven in 5040 does "
+                            + "not enter the displayed kernel generator; no broader arithmetic "
+                            + "conclusion is claimed here.")),
                     Paragraph(Text(
                         "The obstruction is scoped to the framed return-parameter observation. "
                             + "It does not claim five distinct unmarked manifolds, a general "
