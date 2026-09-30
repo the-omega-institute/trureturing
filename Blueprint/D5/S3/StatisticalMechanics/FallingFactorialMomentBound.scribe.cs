@@ -19,7 +19,10 @@ internal sealed class FallingFactorialMomentBoundDocument : IScribeDocumentDefin
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Proof of the conjecture", Disp(F.Id("claim")),
                 "Since k!/(k - n)! = k(k - 1)...(k - n + 1), the claim is n^2 k(k - 1)...(k - n + 1) <= k^(n + 1). For n <= 3 this is direct: n = 2 reads 4(k - 1) <= k^2, and n = 3 reads 9 k(k - 1)(k - 2) <= k^4, which follows from k^4 - 9 k(k - 1)(k - 2) = k((k - 3)^3 + 9). For n >= 4, k(k - 1)...(k - n + 1) = k^n times the product of 1 - i/k over i < n, and 1 - x <= e^(-x) bounds this product by e^(-u) with u = n(n - 1)/(2k). Since u e^(-u) <= e^(-1) < 3/8, (n - 1) n^2 e^(-u) = 2 n k u e^(-u) <= (3/4) n k <= (n - 1) k, so n^2 e^(-u) <= k and the claim follows.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("malik-2020-falling-factorial-moment-bound"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(
