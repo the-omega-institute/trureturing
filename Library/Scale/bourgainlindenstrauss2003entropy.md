@@ -209,3 +209,13 @@ and their multipliers can absorb the supplied negative primes. No uniform
 all-candidate weighted deficit is supplied by this application. General
 Robin and RH remain unresolved; this note identifies an existing usable
 input and its exact remaining interface.
+
+The [Graham–Ringrose lower bound](grahamringrose1990least.md) already rules
+out an unrestricted logarithmic nonresidue supply based only on conductor.
+[Banks et al.](banksgaraevheathbrownshparlinski2008density.md) supply a
+smaller prime-conductor cutoff, but their guaranteed weight includes two
+and needs the actual exception budget. The
+[2026 smooth-modulus estimate](cochranegranvillezheng2026smooth.md) requires
+its own modulus class and length conditions. These inputs guide the
+remaining family-specific research; none supplies an all-source substitute
+for those conditions.
