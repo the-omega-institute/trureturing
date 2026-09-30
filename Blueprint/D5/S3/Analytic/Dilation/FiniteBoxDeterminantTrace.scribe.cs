@@ -65,14 +65,14 @@ internal sealed class FiniteBoxDeterminantTraceDocument : IScribeDocumentDefinit
         Formula Tr(Formula x) => F.Seq(F.Operatorname, F.Grp(F.Id("tr")), F.Open, x, F.Close);
         Formula Det(Formula x) => F.Seq(F.Operatorname, F.Grp(F.Id("det")), F.Open, x, F.Close);
         Formula Coeff(Formula box) => F.Seq(F.OpenBracket, Pow(p, a), Pow(q, b), F.CloseBracket,
-            F.Open, F.Minus, F.Log, D(box), F.Close);
+            F.Open, F.Minus, F.Log, F.Sp, D(box), F.Close);
         Formula Eq(Formula x, Formula y) => new Formula.Relation(x, FormulaRelationOperator.Equal, y);
         Formula sum = F.Seq(F.Sum, F.Underscore,
             F.Grp(k, F.Mid, Call("gcd", a, b)), F.Sp,
             new Formula.Fraction(Tr(Rho(new Formula.Fraction(a, k),
                 new Formula.Fraction(b, k), Pow(g, k))), k));
         Formula product = F.Seq(F.Prod, F.Underscore,
-            F.Grp(F.D(1), F.Le, m, F.Comma, n, F.Le, N), F.Sp,
+            F.Grp(F.D(1), F.Le, F.Sp, m, F.Comma, n, F.Le, F.Sp, N), F.Sp,
             Det(F.Seq(F.Id("I"), F.Minus, Pow(p, m), Pow(q, n), Rho(m, n, g))));
         Formula condition = F.Seq(a, F.Comma, b, F.Ge, F.D(1), F.Comma, F.Sp,
             N, F.Ge, Call("max", a, b));
