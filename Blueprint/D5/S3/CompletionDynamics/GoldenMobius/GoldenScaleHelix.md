@@ -131,7 +131,7 @@ The declaration keeps its parameters and hypotheses explicit; the result makes n
 
 **Theorem 1.9 (Even-cycle orientation monodromy).**
 
-Lean statement: \`D5/S3/CompletionDynamics/GoldenMobius/GoldenScaleHelix.orientationCover_monodromy\`
+Lean statement: `D5/S3/CompletionDynamics/GoldenMobius/GoldenScaleHelix.orientationCover_monodromy`
 
 *Formalization status.* Lean declaration added on branch `lane/theory/rt-variational-20260930`; focused kernel and CI checks are pending. ∎
 
@@ -143,7 +143,7 @@ Because each deck step flips the Boolean orientation, every even-length phase cy
 
 **Theorem 1.10 (80-step orientation monodromy).**
 
-Lean statement: \`D5/S3/CompletionDynamics/GoldenMobius/GoldenScaleHelix.goldenHelixStep_80_orientation\`
+Lean statement: `D5/S3/CompletionDynamics/GoldenMobius/GoldenScaleHelix.goldenHelixStep_80_orientation`
 
 *Formalization status.* Lean declaration added on branch `lane/theory/rt-variational-20260930`; focused kernel and CI checks are pending. ∎
 
@@ -155,7 +155,7 @@ The exact 80-step common phase orbit used by the 5040 Fibonacci certificate has 
 
 **Theorem 1.11 (16-step orientation monodromy).**
 
-Lean statement: \`D5/S3/CompletionDynamics/GoldenMobius/GoldenScaleHelix.goldenHelixStep_16_orientation\`
+Lean statement: `D5/S3/CompletionDynamics/GoldenMobius/GoldenScaleHelix.goldenHelixStep_16_orientation`
 
 *Formalization status.* Lean declaration added on branch `lane/theory/rt-variational-20260930`; focused kernel and CI checks are pending. ∎
 
