@@ -5,7 +5,7 @@ year: 2006
 title: Hardy-Lieb-Thirring inequalities for fractional Schrodinger operators
 doi: null
 url: https://arxiv.org/abs/math/0610593v2
-claim: The classical nonlocal IMS formula supplies the square-partition error structure. Its application to the actual Weil form must retain the joint pole-prime correction and prime translations between nonadjacent FIB windows; it supplies no all-support positivity estimate.
+claim: Nonlocal IMS retains a joint pole-prime correction. Ordinary non-even windows require the full two-pole form, and the known small-window spectral floor is already stronger than the elementary exterior-potential bound. No all-support positivity estimate is supplied.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -103,6 +103,48 @@ C_*:=\int_0^\infty\frac{t^2e^{-5t/2}}{1-e^{-2t}}\,dt
 $$
 
 A cutoff family with $B\le C/L$ would give an $O(L^{-2})$ bound for this Gamma remainder. The existence of such a family subordinate to increasingly fine FIB windows is an additional condition, not a consequence of the window count. The signed first integral in (2) remains the arithmetic obligation for the same actual $f$ and cutoffs. A large absolute-value envelope neither supplies that lower bound nor proves no better estimate is possible.
+
+## Ordinary windows require both poles
+
+The preceding even-test calculation has a general paper-level extension. For an arbitrary complex smooth compactly supported $g$, use
+
+$$
+A_\pm(g)=\int e^{\pm x/2}g(x)\,dx,
+\qquad P_{\rm full}(g)=2\Re\bigl(A_+(g)\overline{A_-(g)}\bigr).
+$$
+
+This is the two-pole term from the [general explicit formula](../../D5/S3/Weil/ZetaCore/ExplicitFormulaBridge.lean), rather than an application of the even-only rank-one energy bundle to a non-even function. With this pole term, write $Q_{\rm full}$ for the same energy expression with the same ambient $L$ and $c_L$. It agrees with $Q$ on even tests. Its pole kernel is $2\cosh((x-y)/2)$, so for arbitrary smooth $f$ and real smooth square multipliers on its ambient interval,
+
+$$
+P_{\rm full}(f)-\sum_iP_{\rm full}(\chi_i f)
+=2\int_0^\infty\cosh(t/2)K_f(t)\,dt.
+$$
+
+Thus (1) and (2) apply to $Q_{\rm full}$ without requiring the individual pieces to be even. On odd pieces the pole term is negative, not a positive square. Translation of $g$ multiplies $A_+$ and $A_-$ by opposite real factors, which cancel in their product; the full form is translation invariant. The actual general explicit-form interface is reusable, but the complete non-even jump-energy and localization bridge displayed here has not been compiled as a new Lean theorem.
+
+## Reuse the stronger small-window spectral floor
+
+For an interval of length $d<\log2$, prime autocorrelations vanish. This does not make the whole-line Gamma energy vanish: its interaction with the exterior supplies an endpoint potential. The relevant existing result is [Suzuki v3](suzuki2026screw.md), Corollary 1.2 and Theorem 1.4, not a new small-window positivity claim. With $\lambda^W_a$ the source's lowest Weil eigenvalue on $(-a,a)$, it gives
+
+$$
+\lambda^W_{d/2}=\log(1/d)-\gamma-\log\pi+\mu_1+O(d),
+\qquad \mu_1>0. \tag{3}
+$$
+
+Here $\mu_1$ is the lowest Rayleigh value of the closure of the form in its equation (4.4),
+
+$$
+\mathcal L(v)=\frac14\iint_{(-1,1)^2}\frac{|v(x)-v(y)|^2}{|x-y|}\,dx\,dy
+-\frac12\int_{-1}^1\log(1-x^2)|v(x)|^2\,dx.
+$$
+
+The initial domain is $H^1_0(-1,1)$; a constant is not in that initial domain. The smooth approximation in the source's §3.2 and the logarithmic Fourier form norm in (4.6) put the constant in the closed form domain. Its Rayleigh quotient is $1-\log2$, hence
+
+$$
+0<\mu_1\le1-\log2. \tag{4}
+$$
+
+This upper comparison uses the source's domain argument, rather than assuming that an arbitrary boundary value is admissible. A direct exterior-potential lower bound with asymptotic $\log(1/d)-\gamma-\log\pi+O(d)$ discards $\mu_1$ and is weaker than (3). Reproving that weaker local positivity would not close the present gap. The source theorem and this application have not been independently formalized here.
 
 ## A prime edge crossing an intermediate FIB window
 
