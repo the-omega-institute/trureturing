@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:799a2cd3339297df7a367885f0886433431707ed8241c2d75afb782401c6fed9
   normalized_sha256: sha256:799a2cd3339297df7a367885f0886433431707ed8241c2d75afb782401c6fed9
 cas_ref: sha256:799a2cd3339297df7a367885f0886433431707ed8241c2d75afb782401c6fed9
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Geometry/Polygons/BalancedPlanarClosure.result
+    target_statement_id: sha256:3b535820aedb0194380b799973da1bdf9f4850d67b28a4bf1106975b642107d9
 receipts:
   unresolved_subitems: []
