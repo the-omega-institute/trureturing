@@ -346,15 +346,21 @@ def RegistrationAssessmentInput.capture {m : Type → Type} [Monad m] [MonadEnv 
     [MonadOptions m] (rootId : Name) : m RegistrationAssessmentInput := do
   return { rootId, environment := ← getEnv, options := ← getOptions }
 
-private def sameEnvironmentConstants (env : Environment) : Array Name :=
-  (SMap.toList (Environment.constants env)).toArray.map (·.1) |>.qsort Name.quickLt
+private def environmentConstantNames (constants : ConstMap) : Array Name :=
+  (SMap.toList constants).toArray.map (·.1) |>.qsort Name.quickLt
 
 /-- Command lifts can rebuild the wrapper while preserving kernel inputs.
 Adding a declaration invalidates a captured assessment input. -/
 def sameRegistrationEnvironment (a b : Environment) : Bool :=
   a.header.mainModule == b.header.mainModule &&
     a.allImportedModuleNames == b.allImportedModuleNames &&
-    sameEnvironmentConstants a == sameEnvironmentConstants b
+    -- Command lifts can share the immutable constant map across wrappers.
+    -- The proof required by withPtrEq keeps the original comparison as its
+    -- logical definition and as the runtime fallback for different maps.
+    withPtrEq (Environment.constants a) (Environment.constants b)
+      (fun _ => environmentConstantNames (Environment.constants a) ==
+        environmentConstantNames (Environment.constants b))
+      (by intro h; simp only [h, beq_self_eq_true])
 
 end LeanInformationAudit
 
