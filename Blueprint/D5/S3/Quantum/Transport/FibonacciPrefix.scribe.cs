@@ -30,8 +30,8 @@ internal sealed class FibonacciPrefixDocument : IScribeDocumentDefinition
                     + "Its actual matrices are lowUnitary d=permMatrixHom(fibonacci d) and jointUnitary d e=permMatrixHom(transport d e), with the displayed adjoint-left/right factors giving the column-ket convention. "
                     + "R(d,e,t,B)=movingPullback d e t B is defined by the reindex algebra homomorphisms for the moving low observation and the joint pullback.")),
                 Paragraph(Text(
-                    "S(d,e,N)=prefixAlgebra d e N is the intersection, over every positive time t≤N, of the comap of the lowEmbedding range under R(d,e,t). "
-                    + "The lowEmbedding is B↦B tensor high identity, so membership has its literal operational meaning. "
+                    "S(d,e,N)=prefixAlgebra d e N is the intersection, over every positive time t≤N, of the comap of the lowTensor range under R(d,e,t). "
+                    + "The shared lowTensor hom is B↦B tensor high identity, so membership has its literal operational meaning. "
                     + "Delta(d)=diagonalAlgebra d is independently the range of Matrix.diagonalAlgHom. The displayed tensor is the Kronecker matrix representation.")),
                 Paragraph(Text(
                     "Equal N-prefixes give the integer difference evolution for every j≤N. A distinct collision at N≥1 obeys phi^N≤phi^3(d−1)^2. "
@@ -87,7 +87,7 @@ internal sealed class FibonacciPrefixDocument : IScribeDocumentDefinition
         Formula u = Call("jointUnitary", d, e), v = Call("lowUnitary", d);
         Formula up = Pow(u, t), vp = Pow(v, t);
         Formula pullback = Call("R", d, e, t, matrix);
-        Formula low = Call("lowEmbedding", d, e, matrix);
+        Formula low = Call("lowTensor", d, e, matrix);
         Formula period = For("a", labels, Eqn(Call("F", d, p, a), a));
         Formula inAlgebra = Seq(matrix, Sp, InMacro, Sp, algebra(n));
         Formula collision = For("N", nat, allLabels(Imp(

@@ -55,7 +55,7 @@ def arena : Arena where
         ∀ a b, carryPrefix d N a ≠ carryPrefix d N b → B a b = 0) ∧
     (∀ N (B : Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ),
       B ∈ prefixAlgebra d e N → ∀ t, 1 ≤ t → t ≤ N →
-        movingPullback d e t B = lowEmbedding d e B) ∧
+        movingPullback d e t B = D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor d e B) ∧
     Antitone (prefixAlgebra d e) ∧
     (⨅ N : ℕ, ⨅ (_ : 1 ≤ N), prefixAlgebra d e N) = diagonalAlgebra d ∧
     (∀ P, 1 ≤ P → (∀ a, lowTrajectory d P a = a) →
@@ -75,7 +75,10 @@ theorem rejected_law : ¬ arena.Law rejected := by
     funext j
     have hj : j = 0 := Fin.eq_zero j
     subst j
-    norm_num [carryPrefix, carryHistory, lowTrajectory, ZMod.val_one_eq_one_mod]
+    norm_num [carryPrefix, carryHistory, lowTrajectory,
+      D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.carry,
+      D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.fibonacci,
+      ZMod.val_one_eq_one_mod]
   have hx := congrArg Prod.fst (hi heq)
   exact zero_ne_one hx
 
@@ -98,7 +101,8 @@ def registration : Registration arena (arena.Law actual) where
     change lowTrajectory 2 0 = lowTrajectory 2 1 at h
     have hx := congrArg (fun q : (ZMod 2 × ZMod 2) ≃ (ZMod 2 × ZMod 2) =>
       (q ((1,0) : ZMod 2 × ZMod 2)).1) h
-    norm_num [lowTrajectory] at hx
+    norm_num [lowTrajectory,
+      D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.fibonacci] at hx
 
 register_information_theorem fibonacci_prefix_transport in arena
   readout via (realize signature (fun _ d t => lowTrajectory d t) (fun e => nomatch e))

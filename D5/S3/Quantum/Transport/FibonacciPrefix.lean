@@ -39,14 +39,12 @@ set_option autoImplicit false
 def lowTrajectory (d : ℕ) : ℕ → (ZMod d × ZMod d) ≃ (ZMod d × ZMod d)
   | 0 => Equiv.refl _
   | n + 1 => (lowTrajectory d n).trans
-      { toFun := fun a => (a.2, a.1 + a.2)
-        invFun := fun a => (a.2 - a.1, a.1)
-        left_inv := by intro a; ext <;> simp
-        right_inv := by intro a; ext <;> simp }
+      (D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.fibonacci d)
 
 /-- Actual integer carries along the low trajectory, including time zero. -/
 def carryHistory (d : ℕ) (a : ZMod d × ZMod d) (j : ℕ) : ℕ :=
-  ((lowTrajectory d j a).1.val + (lowTrajectory d j a).2.val) / d
+  D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.carry d
+    (lowTrajectory d j a)
 
 /-- The entire finite prefix, with no identification of distinct positions. -/
 def carryPrefix (d N : ℕ) (a : ZMod d × ZMod d) : Fin N → ℕ :=
@@ -80,33 +78,21 @@ def jointTrajectory (d e t : ℕ) :
   left_inv x := by simp
   right_inv x := by simp
 
-/-- Low operators tensored with the high identity, as an algebra homomorphism. -/
-def lowEmbedding (d e : ℕ) [NeZero d] [NeZero e] :
-    Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ →ₐ[ℂ]
-      Matrix ((ZMod d × ZMod d) × (ZMod e × ZMod e))
-        ((ZMod d × ZMod d) × (ZMod e × ZMod e)) ℂ where
-  toFun B := B ⊗ₖ (1 : Matrix (ZMod e × ZMod e) (ZMod e × ZMod e) ℂ)
-  map_zero' := by simp
-  map_one' := Matrix.one_kronecker_one
-  map_add' B C := Matrix.add_kronecker B C 1
-  map_mul' B C := by rw [← Matrix.mul_kronecker_mul]; simp
-  commutes' r := by
-    simp only [Algebra.algebraMap_eq_smul_one, Matrix.smul_kronecker,
-      Matrix.one_kronecker_one]
-
 /-- Moving low observation followed by the joint pullback, expressed by reindexing. -/
 def movingPullback (d e t : ℕ) [NeZero d] [NeZero e] :
     Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ →ₐ[ℂ]
       Matrix ((ZMod d × ZMod d) × (ZMod e × ZMod e))
         ((ZMod d × ZMod d) × (ZMod e × ZMod e)) ℂ :=
   ((Matrix.reindexAlgEquiv ℂ ℂ (jointTrajectory d e t).symm).toAlgHom).comp
-    ((lowEmbedding d e).comp (Matrix.reindexAlgEquiv ℂ ℂ (lowTrajectory d t)).toAlgHom)
+    ((D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor d e).comp
+      (Matrix.reindexAlgEquiv ℂ ℂ (lowTrajectory d t)).toAlgHom)
 
 /-- The operational full-prefix algebra: every positive moving time lands in low⊗I. -/
 def prefixAlgebra (d e : ℕ) [NeZero d] [NeZero e] (N : ℕ) : Subalgebra ℂ
     (Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ) :=
   ⨅ t : Fin (N + 1), ⨅ (_ : 0 < t.val),
-    (lowEmbedding d e).range.comap (movingPullback d e t)
+    (D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor d e).range.comap
+      (movingPullback d e t)
 
 /-- The independently defined computational diagonal algebra. -/
 def diagonalAlgebra (d : ℕ) [NeZero d] : Subalgebra ℂ
@@ -143,7 +129,7 @@ theorem fibonacci_prefix_transport (d e : ℕ) [NeZero d] [NeZero e]
         ∀ a b, carryPrefix d N a ≠ carryPrefix d N b → B a b = 0) ∧
     (∀ N (B : Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ),
       B ∈ prefixAlgebra d e N → ∀ t, 1 ≤ t → t ≤ N →
-        movingPullback d e t B = lowEmbedding d e B) ∧
+        movingPullback d e t B = D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor d e B) ∧
     Antitone (prefixAlgebra d e) ∧
     (⨅ N : ℕ, ⨅ (_ : 1 ≤ N), prefixAlgebra d e N) = diagonalAlgebra d ∧
     (∀ P, 1 ≤ P → (∀ a, lowTrajectory d P a = a) →
@@ -186,11 +172,15 @@ theorem fibonacci_prefix_transport (d e : ℕ) [NeZero d] [NeZero e]
     have hz := congrArg (fun n : ℕ => (n : ℤ)) hdiv
     simp only [Nat.cast_add, Nat.cast_mul] at hz
     apply GoldenInt.ext
-    · simp [integerTrajectory, lowTrajectory, Equiv.trans_apply, phi, sub_eq_add_neg]
+    · simp [integerTrajectory, lowTrajectory,
+        D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.fibonacci,
+        Equiv.trans_apply, phi, sub_eq_add_neg]
     · simp only [integerTrajectory, lowTrajectory, Equiv.trans_apply, Equiv.coe_fn_mk,
         ZMod.val_add, sub_eq_add_neg, b_add, b_neg, b_mul,
-        phi_a, phi_b, a_natCast, b_natCast]
+        phi_a, phi_b, a_natCast, b_natCast,
+        D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.fibonacci]
       unfold carryHistory
+      unfold D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.carry
       simp only [Nat.cast_mul]
       omega
   have hevolution : ∀ N (a b : ZMod d × ZMod d),
@@ -386,17 +376,17 @@ theorem fibonacci_prefix_transport (d e : ℕ) [NeZero d] [NeZero e]
       movingPullback d e t B (a,h) (b,h') =
         if fibreTrajectory d e a t h = fibreTrajectory d e b t h' then B a b else 0 := by
     simp [movingPullback, Matrix.reindex_apply, jointTrajectory,
-      lowEmbedding, Matrix.one_apply, mul_ite]
+      D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor, Matrix.one_apply, mul_ite]
   have hlowentry (B : Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ)
       (a b : ZMod d × ZMod d) (h h' : ZMod e × ZMod e) :
-      lowEmbedding d e B (a,h) (b,h') = if h = h' then B a b else 0 := by
-    simp [lowEmbedding, Matrix.one_apply, mul_ite]
+      D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor d e B (a,h) (b,h') = if h = h' then B a b else 0 := by
+    simp [D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor, Matrix.one_apply, mul_ite]
   have htime (t : ℕ) (B : Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ) :
-      movingPullback d e t B ∈ (lowEmbedding d e).range ↔
+      movingPullback d e t B ∈ (D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor d e).range ↔
         ∀ a b, B a b ≠ 0 → fibreTrajectory d e a t = fibreTrajectory d e b t := by
     constructor
     · rintro ⟨C, hC⟩ a b hB
-      change lowEmbedding d e C = movingPullback d e t B at hC
+      change D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor d e C = movingPullback d e t B at hC
       apply Equiv.ext
       intro h
       let h' := (fibreTrajectory d e b t).symm (fibreTrajectory d e a t h)
@@ -415,7 +405,7 @@ theorem fibonacci_prefix_transport (d e : ℕ) [NeZero d] [NeZero e]
       exact himg.symm
     · intro h
       refine ⟨B, ?_⟩
-      change lowEmbedding d e B = movingPullback d e t B
+      change D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor d e B = movingPullback d e t B
       ext ⟨a,u⟩ ⟨b,v⟩
       rw [hentry, hlowentry]
       by_cases hB : B a b = 0
@@ -424,7 +414,7 @@ theorem fibonacci_prefix_transport (d e : ℕ) [NeZero d] [NeZero e]
         simp only [Equiv.apply_eq_iff_eq]
   have hmem (N : ℕ) (B : Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ) :
       B ∈ prefixAlgebra d e N ↔
-        ∀ t, 1 ≤ t → t ≤ N → movingPullback d e t B ∈ (lowEmbedding d e).range := by
+        ∀ t, 1 ≤ t → t ≤ N → movingPullback d e t B ∈ (D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor d e).range := by
     simp only [prefixAlgebra, Algebra.mem_iInf, Subalgebra.mem_comap]
     constructor
     · intro h t ht htN
@@ -454,7 +444,7 @@ theorem fibonacci_prefix_transport (d e : ℕ) [NeZero d] [NeZero e]
       exact (hfibres N a b).2 hab t htN
   have hexact (N : ℕ) (B : Matrix (ZMod d × ZMod d) (ZMod d × ZMod d) ℂ)
       (hB : B ∈ prefixAlgebra d e N) (t : ℕ) (ht : 1 ≤ t) (htN : t ≤ N) :
-      movingPullback d e t B = lowEmbedding d e B := by
+      movingPullback d e t B = D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.lowTensor d e B := by
     have hh := (htime t B).1 ((hmem N B).1 hB t ht htN)
     ext ⟨a,u⟩ ⟨b,v⟩
     rw [hentry, hlowentry]
