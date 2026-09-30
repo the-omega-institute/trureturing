@@ -1,0 +1,627 @@
+{
+  "schema": "fib-robin-source-scale-v1",
+  "D": 2045861090389670400000000,
+  "constants": {
+    "comparisons": {
+      "D_gt_exp55": true,
+      "tauD_gt_exp10": true,
+      "log4_lt_7_over_5": true,
+      "log513_lt_7": true,
+      "log10_lt_5_over_2": true,
+      "log_primorial_lt_32e12": true,
+      "log_pK_lt_32": true,
+      "loglog_primorial_lt_31_5": true,
+      "loglog_primorial_gt_1": true,
+      "divisor_constant_cube_lt_64": true,
+      "rank_tail_lt_one_over_40": true,
+      "source_above_primorial": true
+    },
+    "e_bracket": [
+      [
+        65,
+        24
+      ],
+      [
+        49,
+        18
+      ]
+    ],
+    "local_divisor_ratio_cubes": {
+      "2": [
+        8,
+        1
+      ],
+      "3": [
+        3,
+        1
+      ],
+      "5": [
+        8,
+        5
+      ],
+      "7": [
+        8,
+        7
+      ]
+    },
+    "rank_tail_upper": [
+      63,
+      2560
+    ],
+    "final_affine_slack_at_v55": [
+      34,
+      39
+    ]
+  },
+  "bootstrap": [
+    {
+      "known_index_multiplier": 1,
+      "L_lower": 54,
+      "necessary_n_valuations": [
+        23,
+        15,
+        10,
+        8,
+        6
+      ],
+      "next_index_multiplier": 1260
+    },
+    {
+      "known_index_multiplier": 1260,
+      "L_lower": 61,
+      "necessary_n_valuations": [
+        24,
+        15,
+        10,
+        8,
+        7
+      ],
+      "next_index_multiplier": 27720
+    },
+    {
+      "known_index_multiplier": 27720,
+      "L_lower": 64,
+      "necessary_n_valuations": [
+        24,
+        15,
+        10,
+        8,
+        7
+      ],
+      "next_index_multiplier": 27720
+    }
+  ],
+  "method_obstruction": {
+    "index": 624788530159992954278797530981292404102310197813477198126355142421890161889886543800109696000000000000000000,
+    "n_valuations_first_nine": [
+      31,
+      23,
+      19,
+      17,
+      16,
+      11,
+      11,
+      11,
+      11
+    ],
+    "nine_factor_deficit": [
+      89659814295356364726064159540235752525924834918732807962453794734086077632079,
+      379227378928818294102532861226513758294500631209414345029647559401300796322286376953125
+    ],
+    "true_L_upper": 258,
+    "prime29_exact_valuation": 1,
+    "fixed_nine": {
+      "index": 624788530159992954278797530981292404102310197813477198126355142421890161889886543800109696000000000000000000,
+      "loglog_n_lower": [
+        246822553643993,
+        1000000000000
+      ],
+      "prime_limit": 23,
+      "valuation_cap": 40,
+      "observations": [
+        {
+          "p": 2,
+          "modulus": 2199023255552,
+          "residue": 749471793152,
+          "exact_valuation": 31,
+          "valuation_lower_if_capped": null
+        },
+        {
+          "p": 3,
+          "modulus": 36472996377170786403,
+          "residue": 2298741822153703116,
+          "exact_valuation": 23,
+          "valuation_lower_if_capped": null
+        },
+        {
+          "p": 5,
+          "modulus": 45474735088646411895751953125,
+          "residue": 34933225451333885192871093750,
+          "exact_valuation": 19,
+          "valuation_lower_if_capped": null
+        },
+        {
+          "p": 7,
+          "modulus": 44567640326363195900190045974568007,
+          "residue": 37837001984028693087549210507202047,
+          "exact_valuation": 17,
+          "valuation_lower_if_capped": null
+        },
+        {
+          "p": 11,
+          "modulus": 4978518112499354698647829163838661251242411,
+          "residue": 4260585278140885169228309361756766142083173,
+          "exact_valuation": 16,
+          "valuation_lower_if_capped": null
+        },
+        {
+          "p": 13,
+          "modulus": 4695452425098908797088971409337422035076128813,
+          "residue": 380523870815607477773046766803926488027791673,
+          "exact_valuation": 11,
+          "valuation_lower_if_capped": null
+        },
+        {
+          "p": 17,
+          "modulus": 280805607755268602048174614102036928492604365174417,
+          "residue": 261543882044334881847566202126930240524669867422000,
+          "exact_valuation": 11,
+          "valuation_lower_if_capped": null
+        },
+        {
+          "p": 19,
+          "modulus": 26847115986241183138017674520015691090350184323352819,
+          "residue": 15513219888736903381356509795881763538961472132737446,
+          "exact_valuation": 11,
+          "valuation_lower_if_capped": null
+        },
+        {
+          "p": 23,
+          "modulus": 67739389260745218861137988047774370539553852007909099223,
+          "residue": 3335065844958710106383671158633504104578118989551879464,
+          "exact_valuation": 11,
+          "valuation_lower_if_capped": null
+        }
+      ],
+      "eta_upper": [
+        379227378839158479807176496500449598754264878683489510110914751438847001588200299321046,
+        379227378928818294102532861226513758294500631209414345029647559401300796322286376953125
+      ],
+      "absent_product": 1,
+      "relative_bound_upper": [
+        2832764253162895028543113073969970956854531475439090864173435029972385657494504610455551957709859138816182302105137357757340094,
+        2832764252057202687012863255009683272060554815783505379769095773170005026417248412576169384027201870654565593074034195556640625
+      ],
+      "outcome": "UNRESOLVED"
+    },
+    "adaptive_tenth": {
+      "index": 624788530159992954278797530981292404102310197813477198126355142421890161889886543800109696000000000000000000,
+      "loglog_n_lower": [
+        246822553643993,
+        1000000000000
+      ],
+      "prime_limit": 29,
+      "valuation_cap": 40,
+      "observations": [
+        {
+          "p": 2,
+          "modulus": 2199023255552,
+          "residue": 749471793152,
+          "exact_valuation": 31,
+          "valuation_lower_if_capped": null
+        },
+        {
+          "p": 3,
+          "modulus": 36472996377170786403,
+          "residue": 2298741822153703116,
+          "exact_valuation": 23,
+          "valuation_lower_if_capped": null
+        },
+        {
+          "p": 5,
+          "modulus": 45474735088646411895751953125,
+          "residue": 34933225451333885192871093750,
+          "exact_valuation": 19,
+          "valuation_lower_if_capped": null
+        },
+        {
+          "p": 7,
+          "modulus": 44567640326363195900190045974568007,
+          "residue": 37837001984028693087549210507202047,
+          "exact_valuation": 17,
+          "valuation_lower_if_capped": null
+        },
+        {
+          "p": 11,
+          "modulus": 4978518112499354698647829163838661251242411,
+          "residue": 4260585278140885169228309361756766142083173,
+          "exact_valuation": 16,
+          "valuation_lower_if_capped": null
+        },
+        {
+          "p": 13,
+          "modulus": 4695452425098908797088971409337422035076128813,
+          "residue": 380523870815607477773046766803926488027791673,
+          "exact_valuation": 11,
+          "valuation_lower_if_capped": null
+        },
+        {
+          "p": 17,
+          "modulus": 280805607755268602048174614102036928492604365174417,
+          "residue": 261543882044334881847566202126930240524669867422000,
+          "exact_valuation": 11,
+          "valuation_lower_if_capped": null
+        },
+        {
+          "p": 19,
+          "modulus": 26847115986241183138017674520015691090350184323352819,
+          "residue": 15513219888736903381356509795881763538961472132737446,
+          "exact_valuation": 11,
+          "valuation_lower_if_capped": null
+        },
+        {
+          "p": 23,
+          "modulus": 67739389260745218861137988047774370539553852007909099223,
+          "residue": 3335065844958710106383671158633504104578118989551879464,
+          "exact_valuation": 11,
+          "valuation_lower_if_capped": null
+        },
+        {
+          "p": 29,
+          "modulus": 908485319620418693071190220095272672648773093786320077783229,
+          "residue": 255417714382409451071366159336208289248178298324492020257707,
+          "exact_valuation": 1,
+          "valuation_lower_if_capped": null
+        }
+      ],
+      "eta_upper": [
+        104614449334940270291634895586330923794279966533376416582321310741750896989848358433392,
+        104738990370816481228318599767322847528957317191171581008188373548930696127107666015625
+      ],
+      "absent_product": 1,
+      "relative_bound_upper": [
+        781452207769074490632582916957233367408146613914231962530602766888933974481242651160152264195823210707912359201417202139955888,
+        782382507711036932603552708526483951331010377692587200126702642113620435867620990140084877493227183323641925706161825439453125
+      ],
+      "outcome": "CERTIFIED_USING_PUBLISHED_INPUTS"
+    },
+    "exhausted_cap": {
+      "index": 624788530159992954278797530981292404102310197813477198126355142421890161889886543800109696000000000000000000,
+      "loglog_n_lower": [
+        246822553643993,
+        1000000000000
+      ],
+      "prime_limit": 29,
+      "valuation_cap": 0,
+      "observations": [
+        {
+          "p": 2,
+          "modulus": 2,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 3,
+          "modulus": 3,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 5,
+          "modulus": 5,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 7,
+          "modulus": 7,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 11,
+          "modulus": 11,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 13,
+          "modulus": 13,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 17,
+          "modulus": 17,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 19,
+          "modulus": 19,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 23,
+          "modulus": 23,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 29,
+          "modulus": 29,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        }
+      ],
+      "eta_upper": [
+        1,
+        1
+      ],
+      "absent_product": 1,
+      "relative_bound_upper": [
+        15036768861658178047726085063985645929667657,
+        15036768852233878047726085063985645929667657
+      ],
+      "outcome": "UNRESOLVED"
+    },
+    "absent_prime_padding": {
+      "index": 624788530159992954278797530981292404102310197813477198126355142421890161889886543800109696000000000000000000,
+      "loglog_n_lower": [
+        246822553643993,
+        1000000000000
+      ],
+      "prime_limit": 61,
+      "valuation_cap": 0,
+      "observations": [
+        {
+          "p": 2,
+          "modulus": 2,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 3,
+          "modulus": 3,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 5,
+          "modulus": 5,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 7,
+          "modulus": 7,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 11,
+          "modulus": 11,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 13,
+          "modulus": 13,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 17,
+          "modulus": 17,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 19,
+          "modulus": 19,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 23,
+          "modulus": 23,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 29,
+          "modulus": 29,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 31,
+          "modulus": 31,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 37,
+          "modulus": 37,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 41,
+          "modulus": 41,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 43,
+          "modulus": 43,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 47,
+          "modulus": 47,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 53,
+          "modulus": 53,
+          "residue": 0,
+          "exact_valuation": null,
+          "valuation_lower_if_capped": 1
+        },
+        {
+          "p": 59,
+          "modulus": 59,
+          "residue": 36,
+          "exact_valuation": 0,
+          "valuation_lower_if_capped": null
+        }
+      ],
+      "eta_upper": [
+        1,
+        1
+      ],
+      "absent_product": 59,
+      "relative_bound_upper": [
+        254722016678838641231420453631974243693305324518269281764512824552490065156932471900666413924076333812689915335484344843966193030058918752545116323594104910605128773,
+        259113775424694832865921380744806126051144009373790137683482431251401897298480593614596984783745431429077418437621350512836243295382820599245922488000000000000000000
+      ],
+      "outcome": "CERTIFIED_USING_PUBLISHED_INPUTS"
+    }
+  },
+  "finite_rank_buckets": {
+    "indices": [
+      1,
+      48
+    ],
+    "high_rank_buckets_checked": 77
+  },
+  "source_examples": [
+    {
+      "index": 2045861090389670400000000,
+      "loglog_n_lower": [
+        54591566642701,
+        1000000000000
+      ],
+      "prime_limit": 29,
+      "valuation_cap": 40,
+      "observations": [
+        {
+          "p": 2,
+          "modulus": 2199023255552,
+          "residue": 717303578624,
+          "exact_valuation": 21,
+          "valuation_lower_if_capped": null
+        }
+      ],
+      "eta_upper": [
+        4194303,
+        4194304
+      ],
+      "absent_product": 1,
+      "relative_bound_upper": [
+        9347890986483189981392181779736760551312238611,
+        9347892673709961541227220257448499483087208448
+      ],
+      "outcome": "CERTIFIED_USING_PUBLISHED_INPUTS"
+    },
+    {
+      "index": 2577784973890984704000000000,
+      "loglog_n_lower": [
+        61730433642647,
+        1000000000000
+      ],
+      "prime_limit": 29,
+      "valuation_cap": 40,
+      "observations": [
+        {
+          "p": 2,
+          "modulus": 2199023255552,
+          "residue": 3951034368,
+          "exact_valuation": 23,
+          "valuation_lower_if_capped": null
+        }
+      ],
+      "eta_upper": [
+        16777215,
+        16777216
+      ],
+      "absent_product": 1,
+      "relative_bound_upper": [
+        563793196578557432784042182102218788296005755135,
+        563793207595607394798284521134184588473138151424
+      ],
+      "outcome": "CERTIFIED_USING_PUBLISHED_INPUTS"
+    },
+    {
+      "index": 56711269425601663488000000000,
+      "loglog_n_lower": [
+        12964295219201,
+        200000000000
+      ],
+      "prime_limit": 29,
+      "valuation_cap": 40,
+      "observations": [
+        {
+          "p": 2,
+          "modulus": 2199023255552,
+          "residue": 86922756096,
+          "exact_valuation": 24,
+          "valuation_lower_if_capped": null
+        },
+        {
+          "p": 3,
+          "modulus": 36472996377170786403,
+          "residue": 8398658709551296161,
+          "exact_valuation": 15,
+          "valuation_lower_if_capped": null
+        }
+      ],
+      "eta_upper": [
+        22568878062755,
+        22568879259648
+      ],
+      "absent_product": 1,
+      "relative_bound_upper": [
+        49176398727232919152435001260567500787809119770350755,
+        49176399633632728373393459627715029800021181763944448
+      ],
+      "outcome": "CERTIFIED_USING_PUBLISHED_INPUTS"
+    }
+  ],
+  "requested": [],
+  "sources_sha256": {
+    "source_scale.py": "84938963a028c183130eed7e6e7050f4acf71db799a862a1995e7f297f5d1031",
+    "index_stopping.py": "4028bdcdf8b99655136c7ef730ad835ef40b3d25a4079459f067d79c03d2094e",
+    "kernel_tail.py": "e94521843b87d43a051ec9ee0fa409f14510516d674da2356bee6613dfc0300a"
+  },
+  "scope": "Finite exact diagnostics and conditional certificates; published analytic inputs are not reverified. The universal rank-bucket argument is paper mathematics, not Lean; no RH or originality claim."
+}

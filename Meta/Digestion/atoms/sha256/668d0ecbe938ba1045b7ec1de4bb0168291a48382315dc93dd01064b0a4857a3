@@ -1,0 +1,68 @@
+### 329.2 直接保留首币的条件目标与全域延拓
+
+先实际请求指定来源，保留 $X=x$，之后才使用两条新鲜尾流。所需条件概率为
+$$
+\Pr(Z=0\mid X=x)
+=\frac12+(-1)^x\frac{\varepsilon h^\beta}{u_x}.
+\tag{329.7}
+$$
+为给这一条件目标构造参考包络，令
+$$
+t=1-Bp,\qquad y=1-Bq.
+$$
+实际域满足
+$$
+t=hc/C>0,\qquad y=h/C,\qquad y/t\in[1,1/c_*].
+\tag{329.8}
+$$
+
+选非负 $C^\infty$ 函数 $\phi$，使
+$$
+\operatorname{supp}\phi\subset(1/2,2/c_*),\qquad
+\phi(z)=z^\beta\quad(1\le z\le1/c_*).
+$$
+它由正半轴内的平滑截止乘 $z^\beta$ 得到。对 $p\in I,q\in[0,1]$，定义
+$$
+v(p,q)=\varepsilon C^\beta t^\beta
+\phi\!\left(\frac{1-Bq}{t}\right)\quad(t>0),
+\qquad v(p_0,q)=0.
+\tag{329.9}
+$$
+另选光滑饱和函数
+$$
+\mathfrak s:[0,\infty)\to[0,3/40]
+$$
+在 $[0,1/16]$ 上等于恒等函数，满足 $\mathfrak s(0)=0$，并有有界的一、二阶导数。可在 $1/16$ 之后光滑过渡到一个小于 $3/40$ 的常值。
+
+选择光滑夹持函数
+$$
+\upsilon:[0,1]\to[1/6,5/6]
+$$
+在 $[3/16,13/16]$ 上等于恒等函数，置
+$$
+R_1(z)=1/\upsilon(z),\qquad R_0(z)=1/(1-\upsilon(z)).
+$$
+二者及其前两阶导数有界，且 $R_x\le6$。
+
+定义四个函数
+$$
+\begin{aligned}
+F_{T,x}(p,q)&=\frac12+(-1)^xR_x(p)\mathfrak s(v(p,q)),\\
+F_{H,x}(p,q)&=\frac12+(-1)^xR_x(q)\mathfrak s(v(p,q)).
+\end{aligned}
+\tag{329.10}
+$$
+它们在全闭矩形 $I\times[0,1]$ 上满足
+$$
+d\le F_{S,x}\le1-d,\qquad d=1/20,
+\tag{329.11}
+$$
+因为 $6(3/40)=9/20$。
+
+在每个实际世界，
+$$
+v=\varepsilon C^\beta t^\beta(y/t)^\beta
+=\varepsilon h^\beta<1/16.
+$$
+所以饱和不改目标，倒数也等于实际倒数，式（329.10）准确等于式（329.7）。延拓只为全部参考率提供合法决策系数；没有改变所需实现的原实际域。
+

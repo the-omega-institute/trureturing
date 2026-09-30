@@ -1,0 +1,56 @@
+### 339.4 同一程序的一般参考与任务矩界
+
+假设再有
+
+$$
+\sum_{k\ge0}\eta_k<\infty.
+\tag{339.16}
+$$
+
+参考尾和、式（339.14）及同世界式（339.6）给
+
+$$
+\begin{aligned}
+\mathbb ER_H^a
+&\le C+C\sum_{k\ge0}n_k^a
+   [\delta_k+m_k^{-a}+\Gamma_k(x,q)]\\
+&\le C\left(1+\sum_{k\ge0}\eta_k\right).
+\end{aligned}
+\tag{339.17}
+$$
+
+如果一族地板的和共同有界，则参考预算在这整个族内共同有界。参考初始批量 $d_0$ 固定；任务初始批量允许依地板变化，但必须计入下一式。
+
+令 $s=a-u\in[a/2,a)$。因为相邻任务批量比有固定上界，离散尾和给
+
+$$
+\mathbb ER_T^s
+\le C m_0^s+C\sum_{k\ge0}m_k^s
+   [\delta_k+m_k^{-a}+\Gamma_k(x,q)].
+\tag{339.18}
+$$
+
+常数对这一 $s$ 紧区间及地板族一致。可先对有限层和证明，再由非负单调收敛；不预先假设所求矩有限。
+
+由 $m_k^a\asymp n_k^a\eta_k^{-1}$ 得到通用估计
+
+$$
+\begin{aligned}
+\mathbb ER_T^{a-u}
+\le C\Bigg[
+&\eta_0^{-(a-u)/a}
++\sum_{k\ge0}n_k^{-u}\eta_k^{u/a}\\
+&+\sup_{k\ge0}
+ \bigl\{n_k^{-u}\eta_k^{-(a-u)/a}\bigr\}
+ \sum_{k\ge0}n_k^a\Gamma_k(x,q)
+\Bigg].
+\end{aligned}
+\tag{339.19}
+$$
+
+第二项同时覆盖地板与任务平滑误差：它们分别与
+$m_k^{a-u}n_k^{-a}\eta_k$
+和 $m_k^{-u}$ 同阶。第三项先在固定世界中使用式（339.6），再取数值权重的上确界；没有把不同层的最坏世界相加。
+
+因此，只须估计地板的两个一维数值量，便可保持实际两来源联合预算。
+

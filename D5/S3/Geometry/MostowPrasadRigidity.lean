@@ -8,11 +8,15 @@
 
 import Mathlib.Topology.MetricSpace.Isometry
 import Mathlib.Topology.Homotopy.Equiv
+import Mathlib.Logic.Function.Iterate
+import Mathlib.Topology.DenseEmbedding
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 open scoped ContinuousMap
+open scoped Topology
+open Filter
 
 namespace D5.S3.Geometry.MostowPrasadRigidity
 
@@ -164,6 +168,51 @@ theorem rangeCentralizerTrivial_of_dense_orbit
     _ = ρ g x₀ := by rw [hbase z hz]
     _ = (1 : X ≃ᵢ X) (ρ g x₀) := rfl
 
+/-- A centralizer fixes every attracting pole, hence is trivial when such poles are dense. -/
+theorem rangeCentralizerTrivial_of_dense_attracting_poles
+    {G X : Type*} [Group G] [TopologicalSpace X] [T2Space X]
+    (rho : G →* (X ≃ₜ X))
+    (hthree : ∀ b c : X, ∃ x : X, x ≠ b ∧ x ≠ c)
+    (hdense : Dense {a : X | ∃ (g : G) (b : X), a ≠ b ∧
+      ∀ x : X, x ≠ b →
+        Tendsto (fun n : ℕ => ((rho g : X → X)^[n]) x) atTop (𝓝 a)}) :
+    RangeCentralizerTrivial rho := by
+  intro z hz
+  have hfixed : ∀ a : X, a ∈ {a : X | ∃ (g : G) (b : X), a ≠ b ∧
+      ∀ x : X, x ≠ b →
+        Tendsto (fun n : ℕ => ((rho g : X → X)^[n]) x) atTop (𝓝 a)} →
+      z a = a := by
+    intro a ⟨g, b, _, hpole⟩
+    obtain ⟨x, hxb, hxpre⟩ := hthree b (z.symm b)
+    have hzxb : z x ≠ b := by
+      intro h
+      apply hxpre
+      calc
+        x = z.symm (z x) := (z.symm_apply_apply x).symm
+        _ = z.symm b := congrArg z.symm h
+    have hcomm : Function.Commute (z : X → X) (rho g : X → X) := by
+      intro y
+      exact congrArg (fun e : X ≃ₜ X => e y) (hz g)
+    have hleft : Tendsto
+        (fun n : ℕ => z (((rho g : X → X)^[n]) x)) atTop (𝓝 (z a)) :=
+      z.continuous.tendsto a |>.comp (hpole x hxb)
+    have hright : Tendsto
+        (fun n : ℕ => ((rho g : X → X)^[n]) (z x)) atTop (𝓝 a) :=
+      hpole (z x) hzxb
+    have hleft' : Tendsto
+        (fun n : ℕ => ((rho g : X → X)^[n]) (z x)) atTop (𝓝 (z a)) := by
+      convert hleft using 1
+      funext n
+      exact (hcomm.iterate_right n x).symm
+    exact tendsto_nhds_unique hleft' hright
+  have heq : (z : X → X) = id :=
+    hdense.denseRange_val.equalizer z.continuous continuous_id (by
+      funext a
+      exact hfixed a.1 a.2)
+  apply Homeomorph.ext
+  intro x
+  exact congrFun heq x
+
 theorem groupConjugacy_conjugator_unique
     (e : G ≃* H) (ρ : G →* K) (σ : H →* K)
     {a b : K}
@@ -193,5 +242,6 @@ end GroupConjugacy
 #print axioms groupConjugacy_trans
 #print axioms groupConjugacy_conjugator_unique
 #print axioms rangeCentralizerTrivial_of_dense_orbit
+#print axioms rangeCentralizerTrivial_of_dense_attracting_poles
 
 end D5.S3.Geometry.MostowPrasadRigidity

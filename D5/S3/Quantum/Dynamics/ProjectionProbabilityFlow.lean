@@ -90,7 +90,7 @@ private lemma evolvedDensity_hermitian (H : Matrix n n ℂ) (rho : DensityState 
       (densityMatrix_hermitian rho)
 
 omit [DecidableEq n] in
-private lemma trace_hermitian_product_real (A B : Matrix n n ℂ)
+lemma trace_hermitian_product_real (A B : Matrix n n ℂ)
     (hA : A.IsHermitian) (hB : B.IsHermitian) :
     (Matrix.trace (A * B)).im = 0 := by
   have hStar : star (Matrix.trace (A * B)) = Matrix.trace (A * B) := by

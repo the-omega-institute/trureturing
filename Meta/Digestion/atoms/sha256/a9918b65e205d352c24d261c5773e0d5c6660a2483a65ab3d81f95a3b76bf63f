@@ -1,0 +1,26 @@
+**证明。** 先核对 $E$ 的满性，而不是仅构造一些乘积扇区。对 $q=b-a+1$，Jones 的 AF 双模模型 [J24, §4.2, printed pp.35–36] 在有限层写成
+
+$$
+F^r_{a,b}(Z,\sigma)
+=\mathcal C(X^{\otimes(2r+q)},
+X^{\otimes(r+q)}\otimes Z\otimes X^{\otimes r}).
+\tag{QCA.20}
+$$
+
+在 $\mathcal C=\mathcal C_1\boxtimes\mathcal C_2$、$X=X_1\boxtimes X_2$、$Z=Z_1\boxtimes Z_2$ 下，式（QCA.20）恰为两个有限层空间的外张量积。内积由 $f^{\dagger}g$ 给出，右作用由预复合给出，左作用及张量子由半编织与复合给出；这些运算全部按两因子分解。扩展映射 $f\mapsto1_X\otimes f\otimes1_X$ 同样分解。故在共尾的相同窗口上取归纳极限，得到 Jones 实现函子与双模外张量积的相容。
+
+使用标准中心乘积等价 $\mathcal Z(\mathcal C_1\boxtimes\mathcal C_2)\simeq\mathcal Z(\mathcal C_1)\boxtimes\mathcal Z(\mathcal C_2)$：外积半编织逐因子给出；Hom 的两套半编织约束分别作用，故该函子全忠实；由 [EGNO15, Theorem 7.16.6]，中心的 Frobenius–Perron 维数等于原范畴维数的平方。Deligne 乘积的维数相乘，故这个全忠实函子的像与目标维数相同，在半单情形于是本质满。结合 [J24, Theorem 4.19] 的中心实现等价，式（QCA.18）本质满且全忠实。没有遗漏一个仅因因子分开观察而看不见的“混合扇区”。
+
+再核对 QCA 作用。Jones 的扭转定义在原双模向量空间上为
+
+$$
+a\triangleright_{\beta}\xi\triangleleft_{\beta}b
+=\beta^{-1}(a)\xi\beta^{-1}(b),
+\qquad
+\langle\xi,\eta\rangle_{\beta_*H}
+=\beta(\langle\xi,\eta\rangle_H).
+\tag{QCA.21}
+$$
+
+把 $a,b,\xi,\eta$ 都取为纯张量，式（QCA.21）逐项等于两个分别扭转的双模的外张量积。其张量子在平衡张量积的简单向量上是同一个恒等重排；外积的张量子把 $(\xi_1\otimes\xi_2)\boxtimes(\eta_1\otimes\eta_2)$ 送到 $(\xi_1\boxtimes\eta_1)\otimes(\xi_2\boxtimes\eta_2)$，也与扭转相容。选取左右分离的局部化基时，DHR 编织按两个因子分解。完成化、有限直和及子对象不改变这些等式。故式（QCA.19）是完整编织酉单子函子的相容，而非简单对象层面的相容。证毕。
+

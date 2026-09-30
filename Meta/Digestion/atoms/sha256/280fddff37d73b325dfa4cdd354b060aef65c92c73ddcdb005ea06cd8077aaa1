@@ -1,0 +1,13 @@
+**定理 2.4。** 有限个正则量子模式，采用 Schrödinger 表示、Weyl 对称二次量子化及共同 Schwartz 域。$\widehat y=O\widehat z$ 满足
+$$
+[\widehat y_i,\widehat y_j]=i\hbar(J_r)_{ij}I,
+\qquad \partial_t\widehat y=K\widehat y.
+$$
+可见 Weyl 子代数不变，约化 Hamilton 算子是 $\widehat y^TP^{-1}\widehat y/2$。存在与预测子空间相容的正则坐标及 metaplectic 酉实现，使
+$$
+\widehat H=\widehat H_r\otimes I+I\otimes\widehat H_h,
+\quad \gamma_\beta=\gamma_{r,\beta}\otimes\gamma_{h,\beta},
+\quad Z_\beta=Z_{r,\beta}Z_{h,\beta}.
+$$
+各正定块的配分函数为 $\prod_j[2\sinh(\beta\hbar\omega_j/2)]^{-1}$。有限二阶矩态还满足 $\Sigma_r=O\Sigma O^T$ 和 $\Sigma_r+i\hbar J_r/2\succeq0$，该条件由约化流保持。
+

@@ -1,0 +1,14 @@
+**定义319.5（有效费用）。** 在定义319.1的有限代码类中，置
+$$
+\mathcal C_s^{\mathrm{alg}}(\delta)=
+\inf\left\{\mathcal K_s(A):
+\begin{array}{l}
+A\text{ 在每个实际世界几乎必有限回答},\\
+\operatorname{err}(A)\le\delta
+\end{array}\right\}.
+\tag{319.11}
+$$
+空集下确界为 \(+\infty\)。抽象费用 \(\mathcal C_s^{\mathrm{pol}}(\delta)\) 仍按定义318.3。
+
+下面等式可以在无身份合同的两类内使用，也可以在命题319.4的首步身份子类内使用。每次比较必须在抽象侧与有效侧采用同一合同。首步身份子类在第318节的乘积空间中是闭条件，故定理318.4及有限最优值达到性仍适用。
+

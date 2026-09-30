@@ -1,0 +1,19 @@
+**命题 163.2（共同指标的大小秩分解）。** 令 $j\ge3$、$t=\tau(j)$、$Y\ge5$，并设
+
+$$
+A=\prod_{\substack{d\mid j\\d\le Y}}F_d\ge2.
+$$
+
+则
+
+$$
+\frac{F_j}{\varphi(F_j)}
+=\frac A{\varphi(A)}\exp(R),
+\qquad
+0\le R\le\frac{6t(1+\log Y)}Y.
+$$
+
+证明。小秩素数 $z(p)\le Y$ 且 $p\mid F_j$ 的集合，恰是 $A$ 的素支撑：两个方向分别用 $z(p)\mid j$ 和 $z(p)\mid d$。其 Euler 乘积恰为 $A/\varphi(A)$，不要求 $A\mid F_j$。其余素数按不同的 $d\mid j,d>Y$ 分桶，每个素数恰出现一次。引理 163.1 与 $(1+\log x)/x$ 在 $x>1$ 的递减性给尾界，因为桶数不超过 $t$。$\square$
+
+这是一种可直接用于 Robin 的 FIB 素切面：用来源指标的因子关系把所有素数通道分组，保留小秩的共同素支撑，并一次估计全部高秩贡献。权重由 Euler 乘积给出，不是五窗区间的长度权重。黄金递归在这里实际提供的是模素数回返关系 $z(p)\mid j$ 与 $z(p)\mid p\pm1$。
+

@@ -1,0 +1,81 @@
+### 342.5 充分构造与倍增极值界
+
+假设式（342.10）收敛，记其和为 $S_g<\infty$。选固定 $0<c\le1$，令
+
+$$
+\eta_k=\frac{c}{(k+2)g(k+2)}\qquad(k\ge0).
+\tag{342.16}
+$$
+
+它正、非增，且
+
+$$
+\frac{\eta_k}{\eta_{k+1}}
+ =\frac{(k+3)g(k+3)}{(k+2)g(k+2)}
+ \le2D,\qquad
+\sum_{k\ge0}\eta_k=cS_g.
+\tag{342.17}
+$$
+
+例如取 $c=(1+S_g)^{-1}$ 可使总和小于一；也可选足够小的正有理 $c$。第342.2节据此给固定准确策略与共同参考预算。
+
+令 $t=1/u\ge2$，限定 $0<u\le a/2$，并置 $x=k+2$。因为 $xg(x)\ge1$、$0<1-u/a\le1$，
+
+$$
+\begin{aligned}
+n_k^{-u}\eta_k^{-1+u/a}
+&=N^{-u}b^{-u(x-2)}
+   \left(\frac{xg(x)}c\right)^{1-u/a}\\
+&\le C\,b^{-x/t}xg(x),
+\end{aligned}
+\tag{342.18}
+$$
+
+其中常数不依 $u,k$。若 $x\le t$，非减性给 $xg(x)\le tg(t)$。若 $x>t$，选 $j\ge0$ 使
+$2^jt<x\le2^{j+1}t$，则
+
+$$
+b^{-x/t}xg(x)
+ \le(2D)^{j+1}b^{-2^j}\,tg(t).
+\tag{342.19}
+$$
+
+数列 $(2D)^{j+1}b^{-2^j}$ 有有限上确界，因此
+
+$$
+W_\eta(u)\le C\,t g(t).
+\tag{342.20}
+$$
+
+这是数值权重的上确界估计，不把不同世界的实际费用相加。
+
+为匹配下界，取 $k=\lfloor t\rfloor$，$x=k+2$。此时
+
+$$
+tg(t)\le xg(x)\le2D\,tg(t),\qquad
+n_k^{-u}\longrightarrow b^{-1}>0.
+\tag{342.21}
+$$
+
+由式（342.12），
+
+$$
+\frac{u}{a}\log\frac{xg(x)}c
+ =O\!\left(\frac{\log t}{t}\right)\longrightarrow0,
+\qquad
+\left(\frac{xg(x)}c\right)^{-u/a}\longrightarrow1.
+\tag{342.22}
+$$
+
+故对全部充分小 $u$，
+
+$$
+W_\eta(u)\ge
+n_k^{-u}\frac{xg(x)}c
+ \left(\frac{xg(x)}c\right)^{-u/a}
+ \ge c_1\,t g(t).
+\tag{342.23}
+$$
+
+结合式（342.20）及实际成本接口（342.4），即得式（342.11）。定理342.1证毕。
+

@@ -1,0 +1,18 @@
+### 324.8 文献关系与保留边界
+
+HNP 的兼容 Bernstein 包络及非整数 Hölder 速率提供第315节临界统一尾的可达性；其 §7 将有限分数矩的精确刻画与 Besov 边界问题列为进一步研究，并未给本节所用的端点必要性定理。Nacu–Peres 的整数矩可微性命题另外要求矩尾一致趋零，不能用来把统一有界矩改称为一致可积。[^critical_endpoint_sources]
+
+后续论文确实解决过这些旧文献中的其他问题。例如 Mendo 对 $p^r$、$0<r<1$ 给逐点有限均值工厂，明确解决 Nacu–Peres 关于 $\sqrt p$ 的逐点提问，并将辅助随机变量视为免费。这里的源端点是退化的 $p=0$；本节的零增益对应非退化 $p_0=1/B$，不能直接交换两个问题的尺度。[^critical_endpoint_mendo]
+
+2026年的 debiased Bernoulli factory 对 $\rho>3$ 的 $C^\rho[0,1]$ 函数给非自适应构造：输入数 $L$ 与来源币结果独立，其质量为 $n^{-\lambda}$ 的归一化，$1<\lambda<(\rho-1)/2$。它复用 HNP 的包络速率，并不提供本节临界 $\rho/2$ 阶矩的必要充分条件。[^critical_endpoint_debiased] 本节的排除依靠式（324.13）的正系数插值与有限停止预算，不以“旧问题在当前仍未解决”或文献原创性断言为前提。
+
+本节保留以下边界。式（324.26）是每个零邻域上的矩上确界无穷，不排除每个固定正 $h$ 的临界矩分别有限，也不证明该矩沿所有 $h\downarrow0$ 单调发散。一般有限分数矩的完整函数空间刻画没有在此建立。
+
+只参考调用数尤其需要另行处理：当任务调用不受预算限制时，事件“参考调用超过 $n$”可依赖任意多任务位；即使 $c=1$，它也不自动具有式（324.3）的 degree-$n$ 正多项式表示。因此第315—316节的参考临界矩与参考近似费用缺口没有被总调用结果填平。区别在于允许比较的共同有限观察量，不在于将两个同律来源改名。
+
+[^critical_endpoint_sources]: Olga Holtz, Fedor Nazarov and Yuval Peres, *New Coins from Old, Smoothly*, [arXiv:0808.1936v3](https://arxiv.org/pdf/0808.1936v3), Constructive Approximation 33 (2011), 331–363, [DOI](https://doi.org/10.1007/s00365-010-9108-5)。相关原文为 pp.3–4 的有限 Bernstein 正系数/兼容包络，以及 p.28 的 §7 分数矩与 Besov 问题。该文同时供应并计数 p 币与公平币；本节必要性证明直接使用免费私随机合同，不从其双币费用中省略假设。Şerban Nacu and Yuval Peres, *Fast Simulation of New Coins from Old*, [arXiv:math/0309222v5](https://arxiv.org/pdf/math/0309222v5), Annals of Applied Probability 15(1A) (2005), 93–115, [DOI](https://doi.org/10.1214/105051604000000549)；Proposition 22 使用矩尾一致衰减，Proposition 23 给统一均值下的 Lipschitz 结论，§8 Question 3 是进一步问题。本文矩尾计算采用准确差分权重 $n^s-(n-1)^s$。
+
+[^critical_endpoint_mendo]: Luis Mendo, *An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series*, [arXiv:1612.08923v5](https://arxiv.org/pdf/1612.08923v5)。p.2 规定辅助随机变量免费；Theorem 2 给 $\mathbb E_pN=f(p)/p$，对 $f(p)=p^r$ 得 $p^{r-1}$；Theorem 3 的信息下界另有 fast factory 假设。这里引用其已解决范围与成本合同，不将退化端点的逐点结论当作本节的统一预算结论。
+
+[^critical_endpoint_debiased]: Jere Koskela, Toni Karvonen, Krzysztof Łatuszyński and Dario Spanò, *A debiased Bernoulli factory and unbiased estimation of a probability*, [arXiv:2510.01941v2](https://arxiv.org/pdf/2510.01941v2)，版本日期2026-09-01，正文日期2026-09-02。Theorem 1 重述 HNP Theorem 8；Theorem 2 对 $\rho>3$ 给 [0,1] 值无偏估计构造，输入数分布见 §2。由其 $n^{-\lambda}$ 质量直接算得 $\mathbb EL^s<\infty$ 当且仅当 $s<\lambda-1$；该构造保证的阶数严格低于 $(\rho-3)/2$。§5 另列更轻尾及端点推广问题。
+

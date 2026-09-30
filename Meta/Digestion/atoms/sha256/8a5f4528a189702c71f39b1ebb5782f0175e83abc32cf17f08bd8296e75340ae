@@ -1,0 +1,15 @@
+**引理 164.1（Axler 输入导出的通用包络）。** 对每个整数 $A\ge2$，有
+
+$$
+\frac A{\varphi(A)}
+<e^\gamma\max\{32,\log\log A+a_0\},\qquad a_0=0.0094243.
+$$
+
+证明。若 $A\ge N_K$，§160.1 的解析输入以及 $\log\log A>1$ 直接给结论。若 $A<N_K$，其不同素因子数小于 $K$；把这些素数逐个换成最小的连续素数只增加 Euler 乘积，故 $A/\varphi(A)\le N_K/\varphi(N_K)$。又
+
+$$
+1<\log\log N_K<63/2,
+$$
+
+因为 $K\log2\le\log N_K\le K\log p_K<32\cdot10^{12}$，且 $e^{63}>(32\cdot10^{12})^2$。在 $N_K$ 使用 Axler 得 $N_K/\varphi(N_K)<32e^\gamma$。$\square$
+

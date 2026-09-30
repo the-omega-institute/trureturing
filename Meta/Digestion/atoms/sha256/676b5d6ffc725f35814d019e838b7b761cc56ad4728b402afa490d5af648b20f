@@ -1,0 +1,11 @@
+**定理 5.3。** $W_h\succeq0$。若 $\|\widehat F_h-F(h)\|\le\delta$，则
+$$
+\|\widehat W_h-M\|\le
+\eta(h,\delta):=\tfrac23b^4h^2+(2\delta+\delta^2)/h^2.
+$$
+大于 $\eta$ 的估计特征值个数是 $\operatorname{rank}M$ 的可靠下界。
+
+**证明。** $F$ 收缩给出半正定性。对 $P_t=F(t)F(t)^T$，有 $P''_0=-2M$ 和 $\|P_t^{(4)}\|\le16b^4$；双向 Taylor 给 $2b^4h^2/3$。每个乘积的数据扰动至多 $2\delta+\delta^2$。对称特征值的极小极大表述给最后结论。证毕。
+
+该上界在 $h_*^4=3(2\delta+\delta^2)/(2b^4)$ 处最小。带宽不可省：$\omega h=2\pi$ 的振子有 $F(h)=1,W_h=0$，但 $M=\omega^2$。
+

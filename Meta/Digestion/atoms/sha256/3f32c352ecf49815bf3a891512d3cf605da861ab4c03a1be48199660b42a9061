@@ -1,0 +1,4 @@
+**命题 25.1（左右电路保持带标记表的尾部）。** 若 $\beta=\gamma_L\alpha\gamma_R$，其中 $\gamma_L,\gamma_R$ 为 FDQC，则对每组固定 $\mathbf s,\mathbf t$，全部充分大 $n$ 有 $K_\beta(n;\mathbf s,\mathbf t)=K_\alpha(n;\mathbf s,\mathbf t)$。对任意有限探针集合，可取共同阈值。
+
+**证明。** 第 2 节引理对每个 $P_{\mathbf t}$ 给 $\gamma_R(P_{\mathbf t})=u_{\mathbf t}P_{\mathbf t}u_{\mathbf t}^\dagger$，其中酉元严格局部。QCA 把它送到仍严格局部的 $\alpha(u_{\mathbf t})$。再对 $\alpha(P_{\mathbf t})$ 和 $\gamma_L$ 用同一引理，合并为一个局部共轭。充分向左取 $-n+s_i$ 后，这个酉元与 $L_{n,\mathbf s}$ 对易，故共轭给两个相对交换子的同构。有限集合取阈值最大值即可。证毕。
+

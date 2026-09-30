@@ -1,0 +1,26 @@
+### 335.8 价格尺度与尚未取得的线性界
+
+对第328节的最优费用 $\mathcal V_a^{\mathcal C}(\delta,\lambda)$，其中 $\mathcal C\in\{\mathrm{pol},\mathrm{alg}\}$，定理335.1与同一程序上的次可加性或 Minkowski 给
+
+$$
+\mathcal V_a^{\mathcal C}(\delta,\lambda)
+\le K_{\mathrm{fin}}+C\lambda^aL^{E_\beta}
+\qquad(0<a\le1),
+\tag{335.50}
+$$
+
+$$
+[\mathcal V_a^{\mathcal C}(\delta,\lambda)]^{1/a}
+\le K_{\mathrm{fin}}^{1/a}+C\lambda L^{E_\beta/a}
+\qquad(a>1).
+\tag{335.51}
+$$
+
+这里先在定理335.1中取 $\epsilon\downarrow0$，再对相应策略类取下确界；首币身份子类与较大输出律合同各自在自身合同内适用。若 $\lambda L^{E_\beta/a}\to0$，最优费用的上极限不超过 $K_{\mathrm{fin}}$；若该乘积有界，费用仍共同有界。这些不声称最优极限恰等于构造常数。
+
+与固定准确策略不同，有限层构造把地板的临界预算分配到实际需要的 $J+1$ 层，并在 HNP 尾积分中保留较小的幅度。它给出显式可用上界，却没有证明式（335.2）的指数必要。线性对数仍需要更细的取得构造或估计，尤其须把实际输入的局部难度与同一世界的行触发质量共同处理；单纯去掉原接口中的多项式因子已经被命题335.3排除。
+
+本节为纸面综合推导，不认领 Lean 核验、内部计算时间上界或文献核定的原创性。
+
+[^finite_floor_hnp]: Olga Holtz, Fedor Nazarov and Yuval Peres, *New Coins from Old, Smoothly*, Constructive Approximation 33 (2011), 331–363, [DOI](https://doi.org/10.1007/s00365-010-9108-5), [arXiv:0808.1936v3](https://arxiv.org/pdf/0808.1936v3)。本节保留 Corollary 16 的逐阶初始系数界与 $\tau_1=0$、§5 Steps 1—4 中正则范数的一次线性依赖，以及式（47）—（49）的相容校正。有限层地板、商的正则界及双来源截短预算是对此构造与第330、331节接口的综合推导。
+

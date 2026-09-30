@@ -1,0 +1,37 @@
+### 314.3 一致矩上界
+
+对非负整数调用数，有限尾和恒等式给
+
+$$
+\mathbb E(M_S\wedge n)^m
+=\sum_{t=0}^{n-1}[(t+1)^m-t^m]\Pr(M_S>t).
+\tag{314.11}
+$$
+
+单独处理 $t=0$，其余用 $(t+1)^m-t^m\le C_mt^{m-1}$ 和式（314.9），得到
+
+$$
+\max_S\sup_{j,r,h}\mathbb E(M_S\wedge n)^m
+\le1+C_{m,\beta}\sum_{t=1}^{n-1}t^{m-1-\beta/2}.
+\tag{314.12}
+$$
+
+令
+
+$$
+n_\delta=\left\lceil(A_\beta/\delta)^{2/\beta}\right\rceil,
+\qquad0<\delta<1.
+\tag{314.13}
+$$
+
+截断后的共同程序属于 $\mathfrak A_\delta$，同时支持两种请求。非整数 $\beta<2m$ 时，式（314.12）为 $O(n^{m-\beta/2})$，所以
+
+$$
+\mathcal C_m(\delta)\le C\delta^{\,1-2m/\beta}.
+\tag{314.14}
+$$
+
+非整数 $\beta>2m$ 时，尾和可求和，给统一常数上界。非整数 $\beta=2m$ 不存在。正整数 $\beta$ 直接使用精确指数尾程序，误差为零且固定 $m$ 阶矩有共同上界。
+
+逐路径 $N_{H,S}^{[n]}\le M_S^{[n]}$，故这些上界也适用于 $\mathcal C_m^H$。上界见证本身的任务侧计数是原精确构造计数的前缀，因此仍有统一指数尾；没有把困难转移成任务矩发散才取得参考上界。
+

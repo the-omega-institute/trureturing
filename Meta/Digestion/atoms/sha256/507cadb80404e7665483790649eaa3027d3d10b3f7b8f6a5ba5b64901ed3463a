@@ -1,0 +1,12 @@
+### 345.13 范围与来源
+
+本节用同一个共同高阶中心完成同级上下顺序、两方向相邻相容和真实双来源执行。固定参考预算中的任务上界来自更大的基本批量 \(m_k\asymp n_k/\eta_k\)，实际计费始终使用 \(D_k=m_k+r\)。第343节对旧批量尺度的负部障碍仍然成立。
+
+\(O(u^{-a})\) 是允许随目标矩阶更换策略的上界；\(O(\log(1/\delta)^a)\) 是保持参考临界预算时的有限精度上界。本节不结算固定策略的最优近临界剖面、任意策略最优性、有限截止精度必要性或高阶价格路径的完整分界。式（345.18）、（345.22）明确保留标量误差常数及余量，不以这些上界代替所需的下界证明。
+
+成熟工具包括 HNP 的有限 Lorentz 算子、残差估计与共同迭代，以及 Nacu–Peres 的兼容 Bernstein 包络和超几何提升。[^high_order_common_tensor] 第330节提供参考系数及其任务参数尺度，第344节提供共同中心系数桥；本节将它们接成一份合法共同程序，并计算同一未决事件的两来源费用。
+
+全部结论为纸面数学与有效程序存在结论，不认领 Lean 核验、已运行实现或经文献核定的原创性。
+
+[^high_order_common_tensor]: Olga Holtz, Fedor Nazarov and Yuval Peres, *New Coins from Old, Smoothly*, Constructive Approximation 33 (2011), 331–363，[DOI](https://doi.org/10.1007/s00365-010-9108-5)，[arXiv:0808.1936v3](https://arxiv.org/abs/0808.1936v3)。相关接口为式（27）—（29）、Corollary 16、Lemmas 19、24及 §5 的共同迭代和残差估计。Şerban Nacu and Yuval Peres, *Fast Simulation of New Coins from Old*, Annals of Applied Probability 15(1A) (2005), 93–115，[DOI](https://doi.org/10.1214/105051604000000549)，[arXiv:math/0309222v5](https://arxiv.org/abs/math/0309222v5)；Proposition 3、式（7）—（11）及 Lemma 4 提供兼容包络与超几何提升接口。两来源潜在流归纳、准确私采样及条件矩母函数分割分别见本卷第338.6、332.2、339.8节。
+

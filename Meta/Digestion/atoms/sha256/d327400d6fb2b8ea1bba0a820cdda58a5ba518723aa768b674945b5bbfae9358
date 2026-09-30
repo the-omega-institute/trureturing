@@ -1,0 +1,4 @@
+**证明。** CCR 对二次对称乘积的交换子给出 $\partial_t\widehat z=JS\widehat z$，再用 $OA=KO$。$NJO^T=0$ 使隐藏与可见线性算子对易。$\operatorname{im}L$ 与 $\ker O$ 辛正交，各自非退化；在两块选 Darboux 基，能量交叉项仍为零。有限模 metaplectic 协变性和 Williamson 对角化给出两个张量因子与振子谱；几何级数证明热迹收敛。对 $X=\sum_jc_j(\widehat y_j-\langle\widehat y_j\rangle)$ 用 $\langle X^\dagger X\rangle\ge0$ 得不确定性式；$KJ_r+J_rK^T=0$ 保证其合同保持。证毕。[W12, ZGPG18, ZLDP23]
+
+有限模不等于有限 Hilbert 维数；有限维矩阵不能承担非零常数 CCR。均值闭合不认领一般量子态的完整恢复。
+
