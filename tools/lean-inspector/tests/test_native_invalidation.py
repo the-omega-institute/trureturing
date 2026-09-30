@@ -194,7 +194,7 @@ end D5.CommentOwner
         self.env['STRATALINT_ACCEPT_COLD_BUILD'] = '1'
         self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
 namespace LeanInformationAudit
-abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array Lean.Json × Array (Lean.Name × Lean.Name))
+abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array (Lean.Json × Array Lean.Name × Lean.Environment))
 ''')
         self.write('LeanInformationAudit/SealCommand.lean', '''import LeanInformationAudit.RegistryTypes
 namespace LeanInformationAudit
@@ -206,7 +206,8 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
       "compatibility_version=json.loads(pathlib.Path('lean-report-inputs.json').read_text())['report_cache_release_semantic_version']," ++
       "inventory=[],registered=[],records=[])))"] }
     IO.ofExcept (Json.parse result.stdout)
-  return (rows, #[])
+  let env ← getEnv
+  return rows.map fun row => (row, #[], env)
 ''')
 
         def build():
