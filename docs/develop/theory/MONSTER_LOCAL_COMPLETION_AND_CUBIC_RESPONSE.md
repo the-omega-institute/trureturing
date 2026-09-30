@@ -1101,6 +1101,8 @@ $$
 
 证明。令 $L_g$ 为左乘 $e_g$，它是带符号置换矩阵。对 $g\ne0$，第二变量线性和 $f(g,g)=1$ 给 $L_g^2=-I$，故 $L_g^T=-L_g$。对不同非零 $g,h$，在任意 $e_k$ 上比较两次左乘，其符号比是 $(-1)^{f(g,h)+f(h,g)}=-1$，所以 $L_gL_h+L_hL_g=0$。对 $L_x=x_0I+\sum_{g\ne0}x_gL_g$ 展开，混合项全部相消，得到 $L_x^TL_x=(\sum_gx_g^2)I$。取 $y$ 的二次型即得乘法范数，单位由 $f(0,h)=f(g,0)=0$ 给出。最后的正定八维合成代数识别使用经典 Hurwitz 定理 [B02]。证毕。
 
+本命题的全体实向量版本已在仓内形式化为 [`D5/S3/VertexAlgebra/MonsterTwistedOctonionNorm.norm_mul`](https://github.com/the-omega-institute/trureturing/blob/dev/D5/S3/VertexAlgebra/MonsterTwistedOctonionNorm.lean)。Lean 定义展开同一个带符号 Cayley–Dickson 表，直接对八个坐标完成 $\mathbb R$ 上的多项式恒等式，并另证单位元左右律。该形式化只覆盖辅助八元代数的范数与单位；它不把这个表提升为实际 VOA 的基态 OPE，也不替代 [Ba17, Theorem 1、§§5–6] 的扭曲群代数背景或 [B02] 的 Hurwitz 识别。
+
 **命题 32.2（任意两个语义生成元的结合范围）。** 将 Fibonacci 原子卷的两个原子解释成任意两个固定八元数，每个二叉节点解释为同一个乘法，则全部树评估落在一个结合子代数中。
 
 证明。八元数是交替代数，Artin 定理保证任意两个元素生成的子代数结合 [B02, §2]；对树作结构归纳，其值始终在这个子代数中。证毕。
