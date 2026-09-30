@@ -28005,3 +28005,652 @@ $|\mathcal E_r|\le\exp((1/4-\varepsilon)y)$，则充分大时仍有
 该实际 FIB 子族的 Robin 不等式，也没有解决全部整数的 RH 判据。
 
 ## 追加锚（本行以下为增补区）
+
+## 223. 完整增量概率的固定阶 Rényi 展开与二阶系数
+
+沿用 §210 的实际非负乘法增量。令 $y\to\infty$ 经过正实数，并记
+
+$$
+\ell=\log y,\qquad s=y\ell,\qquad
+R=\frac y{\ell^2},\qquad\delta=\frac y{\ell^3},
+\qquad b_2=\frac{\pi^2}{6}.
+$$
+
+对正整数 $n$，定义
+
+$$
+Z(n)=\frac{\sigma(n)}n,\qquad
+b_s(1)=1,\qquad
+b_s(p^a)=Z(p^a)^s-Z(p^{a-1})^s\quad(a\ge1),
+$$
+
+并将 $b_s$ 按乘法性延拓。完整归一化常数及概率为
+
+$$
+U(s)=\sum_{d\ge1}\frac{b_s(d)}d,\qquad
+\mu_s(d)=\frac{b_s(d)}{dU(s)}.
+$$
+
+此处的渐近先针对完整整数源；实际 FIB 参数是其中的特例。对离散概率 $P$，记
+
+$$
+S_q(P)=\sum_xP(x)^q,\qquad
+H_q(P)=\frac{\log S_q(P)}{1-q}\quad(q>0,\ q\ne1),
+$$
+
+其中使用自然对数，允许幂和先取扩展值。
+
+### 223.1 固定阶主定理
+
+**定理 223.1（完整增量源的两项 Rényi 展开）。** 对每个固定实数
+$q\in(1/2,1)\cup(1,\infty)$，当 $y$ 充分大时，完整幂和 $S_q(\mu_s)$ 有限且严格为正，并且
+
+$$
+\boxed{
+\log S_q(\mu_s)
+=-b_2\left(q-\frac1q\right)(R-\delta)
++O_q\left(\frac y{\ell^4}\right).
+}
+\tag{223.1}
+$$
+
+因而
+
+$$
+\boxed{
+H_q(\mu_s)
+=b_2\left(1+\frac1q\right)(R-\delta)
++O_q\left(\frac y{\ell^4}\right).
+}
+\tag{223.2}
+$$
+
+误差常数与充分大阈值可依赖预先固定的 $q$。上述公式不包含对
+$q\to1$、$q\downarrow1/2$、$q\to\infty$ 或 $q=q(y)$ 的一致性。
+
+证明分为 §223.2—§223.6。两段 $q$ 的共同部分使用同一个实际局部分布；
+$q<1$ 时另行估计真实幂尾，不能只用尾部的概率质量代替它。
+
+### 223.2 Euler 分解与小素数的完整深赋值
+
+对每个素数定义
+
+$$
+w_{p,a}=\frac{b_s(p^a)}{p^a},\qquad
+U_p=\sum_{a\ge0}w_{p,a},\qquad
+\pi_p(a)=\frac{w_{p,a}}{U_p},\qquad
+S_{p,q}=\sum_{a\ge0}\pi_p(a)^q,
+\qquad w_{p,0}=1.
+$$
+
+有限素数集上的非负乘法分解以及 $U(s)=\prod_pU_p$ 给
+
+$$
+S_q(\mu_s)=\prod_pS_{p,q},\qquad
+\log S_q(\mu_s)=\sum_p\log S_{p,q},
+\tag{223.3}
+$$
+
+只要右侧相应收敛。具体地，先对素支撑包含于有限素数集的整数求和，
+分解非负分子 $\sum_d(b_s(d)/d)^q$，再增加素数集；分子使用单调收敛，
+归一化分母的有限乘积趋于 $U(s)^q$。
+
+$q>1$ 时，$0<\mu_s(d)\le1$ 已经给
+$0<\mu_s(1)^q\le S_q(\mu_s)\le1$。
+$q<1$ 时，下节的无限素数尾界将证明幂和有限，再使用式（223.3）的有限正值形式。
+因此不会在未知可积性下先行交换带符号的级数。
+
+§216 给出对所有 $s\ge4$ 的局部界
+
+$$
+\pi_p(a)\le2e^2s^2p^{-2a}\qquad(a\ge1).
+\tag{223.4}
+$$
+
+取
+
+$$
+K_s=\left\lceil\frac{\log(8e^2s^2)}{2\log2}\right\rceil.
+$$
+
+对每个素数，有
+
+$$
+\sum_{a>K_s}\pi_p(a)
+\le2e^2s^2\sum_{a>K_s}4^{-a}
+=\frac{2e^2s^2}{3}\,4^{-K_s}\le\frac1{12}.
+\tag{223.5}
+$$
+
+所以前 $K_s+1=O(\log s)$ 个指数承载至少 $11/12$ 的局部质量。
+当 $q>1$ 时，凸性给
+
+$$
+1\ge S_{p,q}
+\ge(11/12)^q(K_s+1)^{1-q}.
+$$
+
+当 $1/2<q<1$ 时，式（223.4）还给
+
+$$
+\sum_{a>K_s}\pi_p(a)^q
+\le(2e^2s^2)^q\frac{4^{-q(K_s+1)}}{1-4^{-q}}=O_q(1).
+$$
+
+对前 $K_s+1$ 项使用凹性，得到
+
+$$
+1\le S_{p,q}\le(K_s+1)^{1-q}+O_q(1).
+$$
+
+两种情形因此共同给出
+
+$$
+|\log S_{p,q}|=O_q(1+\log\log s).
+\tag{223.6}
+$$
+
+把素数个数扩大为整数个数，得到
+
+$$
+\boxed{
+\sum_{p\le\sqrt{2s}}|\log S_{p,q}|
+=O_q\bigl(\sqrt s(1+\log\log s)\bigr).
+}
+\tag{223.7}
+$$
+
+所有小素数的深赋值均包含在这个界内。由于 $s=y\ell$，
+式（223.7）对每个固定 $K>0$ 都是 $o_q(y/\ell^K)$。
+
+### 223.3 无限大素数尾与收敛域
+
+记
+
+$$
+P_p=(1-p^{-1})^{-s},\qquad \rho_p=1-\pi_p(0).
+$$
+
+非负增量望远镜求和给
+
+$$
+\rho_p\le U_p-1
+\le\frac{P_p-1}{p}
+\le\frac{s}{p(p-1)}
+\exp\left(\frac{s}{p-1}\right).
+\tag{223.8}
+$$
+
+中间的界在 $p>2y$ 上给 $\sup\rho_p=O(y^{-1/2})$，因为
+$s/(2y-1)=\ell/2+O(\ell/y)$。另一方面，扩大到整数尾并望远镜求和，
+
+$$
+\sum_{p>2y}\rho_p
+\le\frac{s}{\lfloor2y\rfloor}
+\exp\left(\frac{s}{2y-1}\right)
+=O(\sqrt y\,\ell).
+$$
+
+当 $q>1$ 时，$S_{p,q}\le1$ 且
+$S_{p,q}\ge(1-\rho_p)^q$。充分大时 $\rho_p\le1/2$ 一致成立，故
+
+$$
+\boxed{
+\sum_{p>2y}|\log S_{p,q}|
+\le2q\sum_{p>2y}\rho_p
+=O_q(\sqrt y\,\ell).
+}
+\tag{223.9}
+$$
+
+对 $1/2<q<1$，尾部的概率质量不足以控制其 $q$ 次幂和，需要保留每个实际指数。
+当 $s\ge1$ 时，由均值定理和
+$Z(p^a)-Z(p^{a-1})=p^{-a}$，
+
+$$
+b_s(p^a)\le sP_pp^{-a},\qquad
+\pi_p(a)\le w_{p,a}\le sP_pp^{-2a}\quad(a\ge1).
+\tag{223.10}
+$$
+
+因此
+
+$$
+0\le\log S_{p,q}
+\le S_{p,q}-1
+\le\sum_{a\ge1}\pi_p(a)^q
+\le\frac{s^qP_p^qp^{-2q}}{1-p^{-2q}}.
+\tag{223.11}
+$$
+
+在 $p>2y$ 上，
+$P_p^q\le\exp(qs/(2y-1))=O_q(y^{q/2})$。因为 $2q>1$，
+
+$$
+\boxed{
+\sum_{p>2y}\log S_{p,q}
+\ll_qs^qy^{q/2}\sum_{n>2y}n^{-2q}
+\ll_q y^{1-q/2}\ell^q.
+}
+\tag{223.12}
+$$
+
+对每个充分大的固定 $s$，式（223.12）证明无限素数尾的对数乘积收敛。
+其余仅有有限个素数，各局部幂和已由式（223.6）证明有限。
+于是有限素数分解和非负极限给出式（223.3），并证明 $q<1$ 时完整幂和有限。
+$q>1$ 的式（223.9）也证明相应对数级数绝对收敛。
+
+这里使用的是实际增量尾。不能把 $e^{s/p}/p$ 当作所有大素数上的局部质量；
+这种替换会加入一个不存在于实际增量中的不可求和 $1/p$ 尾。
+
+### 223.4 中间素数的两态条件与真实幂尾
+
+在 $\sqrt{2s}<p\le2y$ 上，令
+
+$$
+z_p=(1+1/p)^s,\qquad
+w_p=w_{p,1}=\frac{z_p-1}{p},\qquad
+T_p=\sum_{a\ge2}w_{p,a}.
+$$
+
+望远镜求和给
+
+$$
+T_p\le\frac{P_p-z_p}{p^2},\qquad
+\frac{T_p}{w_p}
+\le\frac1p\left(\frac{P_p}{z_p}-1\right)\frac{z_p}{z_p-1}.
+\tag{223.13}
+$$
+
+在这个范围内，
+
+$$
+\frac{P_p}{z_p}=(1-p^{-2})^{-s},\qquad
+0\le\log(P_p/z_p)\le\frac{s}{p^2-1}<1
+$$
+
+充分大时成立。又有
+$z_p\ge\exp(s/(p+1))\ge\exp(s/(2y+1))\to\infty$，
+所以若记实际高次赋值质量为 $\eta_p$，则
+
+$$
+\eta_p:=\sum_{a\ge2}\pi_p(a)
+\le T_p/w_p\ll s/p^3,
+\qquad
+\sum_{\sqrt{2s}<p\le2y}\eta_p=O(1),
+\qquad \sup\eta_p\to0.
+\tag{223.14}
+$$
+
+条件 $a\in\{0,1\}$ 下的两个概率精确等于
+
+$$
+\beta_p=\left(\frac1{1+w_p},\frac{w_p}{1+w_p}\right).
+$$
+
+记 $B_{p,q}=\sum_{i=0}^1\beta_p(i)^q$、$E_{p,q}=\sum_{a\ge2}\pi_p(a)^q$，
+则同一局部分布满足
+
+$$
+S_{p,q}=(1-\eta_p)^qB_{p,q}+E_{p,q}.
+\tag{223.15}
+$$
+
+当 $q>1$ 时，$0\le E_{p,q}\le\eta_p^q$，
+$2^{1-q}\le B_{p,q}\le1$。在 $\eta_p\le1/2$ 上，
+$S_{p,q}\ge2^{1-2q}$，而两份幂和的差为 $O_q(\eta_p)$。
+对数在这个正区间上 Lipschitz，故
+
+$$
+|\log S_{p,q}-\log B_{p,q}|\le C_q\eta_p
+\qquad(q>1).
+\tag{223.16}
+$$
+
+当 $1/2<q<1$ 时，不能使用 $E_{p,q}\le\eta_p^q$。
+由 $P_p/z_p\le e$、$z_p/(z_p-1)\le2$ 及式（223.10），对每个 $a\ge2$ 有
+
+$$
+\pi_p(a)\le\frac{w_{p,a}}{w_p}
+\le2e\,s p^{1-2a}.
+$$
+
+所以实际幂尾满足
+
+$$
+E_{p,q}\ll_qs^qp^{-3q},\qquad
+\sum_{\sqrt{2s}<p\le2y}E_{p,q}\ll_qs^{(1-q)/2}.
+\tag{223.17}
+$$
+
+最后一步扩大到整数尾，使用 $3q>1$。
+此时 $1\le B_{p,q}\le2^{1-q}$，且 $S_{p,q}\ge1$。
+式（223.15）、$1-(1-\eta_p)^q\le C_q\eta_p$ 及对数在 $[1,\infty)$ 上的
+Lipschitz 性给
+
+$$
+|\log S_{p,q}-\log B_{p,q}|
+\le C_q\eta_p+E_{p,q}
+\qquad(1/2<q<1).
+\tag{223.18}
+$$
+
+因此，实际局部幂和与条件两态幂和之间的总对数误差为：
+$q>1$ 时 $O_q(1)$，$1/2<q<1$ 时
+$O_q(1+s^{(1-q)/2})$。完整高次赋值在这一步已经付出误差，
+并未将整个局部分布直接假设为 Bernoulli 分布。
+
+### 223.5 精确对数赔率、偶核与主素数窗口
+
+定义
+
+$$
+f_q(t)=\log(1+e^{-qt})-q\log(1+e^{-t}),\qquad
+t_s(x)=\log x-s/x,\qquad
+\kappa=\min(q,1)>1/2.
+\tag{223.19}
+$$
+
+条件两态的对数幂和精确等于 $f_q(-\log w_p)$。
+该函数满足
+
+$$
+f_q(-t)=f_q(t),\qquad
+|f_q(t)|\le\max(1,q)e^{-\kappa|t|},\qquad
+|f_q'(t)|\le q,
+$$
+
+$$
+\operatorname{Var}_{\mathbb R}(f_q)=2|1-q|\log2.
+\tag{223.20}
+$$
+
+确实，$t>0$ 时
+
+$$
+f_q'(t)=\frac q{1+e^t}-\frac q{1+e^{qt}}.
+$$
+
+$q>1$ 时 $f_q\le0$ 且在正半轴上递增趋零；
+$q<1$ 时 $f_q\ge0$ 且在正半轴上递减趋零。
+由偶性和 $f_q(0)=(1-q)\log2$ 得到总变差；
+指数尾直接来自 $\log(1+u)\le u$。
+
+中间范围内 $z_p\ge2$ 最终一致成立，故
+
+$$
+\begin{aligned}
+0\le-\log w_p-t_s(p)
+&=s\bigl(1/p-\log(1+1/p)\bigr)-\log(1-z_p^{-1})\\
+&\le\frac{s}{2p^2}+2z_p^{-1}.
+\end{aligned}
+\tag{223.21}
+$$
+
+第一项在 $p>\sqrt{2s}$ 上求和为 $O(\sqrt s)$。
+第二项使用
+$z_p^{-1}\le\exp(-s/(2y+1))=O(y^{-1/2})$，
+在 $p\le2y$ 上求和为 $O(\sqrt y)$。
+因此式（223.20）的 Lipschitz 界给
+
+$$
+\sum_{\sqrt{2s}<p\le2y}
+\left|f_q(-\log w_p)-f_q(t_s(p))\right|
+=O_q(\sqrt s+\sqrt y).
+\tag{223.22}
+$$
+
+充分大时 $\sqrt{2s}<y/2$，且 $t_s$ 严格递增。
+对 $p\le y/2$，
+
+$$
+t_s(p)\le-\ell-\log2,\qquad
+|f_q(t_s(p))|\ll_q y^{-\kappa}.
+$$
+
+所以理想两态核在 $(\sqrt{2s},y/2]$ 上的总贡献为
+$O_q(y^{1-\kappa})$。合并式（223.7）、（223.9）、（223.12）、
+（223.14）—（223.18）及式（223.22），得到
+
+$$
+\boxed{
+\log S_q(\mu_s)
+=\sum_{y/2<p\le2y}f_q(t_s(p))
++O_q\bigl(y^{1-\kappa/2}\ell^\kappa\bigr).
+}
+\tag{223.23}
+$$
+
+当 $q>1$ 时，显示的误差为 $O_q(\sqrt y\,\ell)$；
+当 $1/2<q<1$ 时，它为 $O_q(y^{1-q/2}\ell^q)$。
+后者对每个固定 $q$ 都支配
+$\sqrt s(1+\log\log s)$、$s^{(1-q)/2}$ 与 $y^{1-q}$。
+这些误差对每个固定 $K>0$ 均为 $o_q(y/\ell^K)$。
+
+### 223.6 素数积分、二阶 Jacobian 与奇项消去
+
+使用 §211、§218 已用的无条件强素数定理。可取绝对常数 $c_0>0$，使
+
+$$
+\pi(x)=\operatorname{Li}(x)+O\bigl(xe^{-c_0\sqrt{\log x}}\bigr).
+$$
+
+在 $[y/2,2y]$ 上，该误差的上确界为
+$O(ye^{-c_1\sqrt\ell})$，其中 $c_1>0$ 为绝对常数。
+式（223.20）与 $t_s$ 的单调性给
+$f_q(t_s(x))$ 的上确界和总变差一个仅依赖 $q$ 的常数界。
+Stieltjes 分部求和于是得到
+
+$$
+\sum_{y/2<p\le2y}f_q(t_s(p))
+=\int_{y/2}^{2y}f_q(t_s(x))\frac{dx}{\log x}
++O_q\bigl(ye^{-c_1\sqrt\ell}\bigr).
+\tag{223.24}
+$$
+
+这里使用总变差控制误差，未把导数的最坏值再乘以整个区间长度。
+式（223.24）的误差也是任意固定对数阶精度下的小量。
+
+置 $t=t_s(x)$。因为 $s=y\ell$，有 $t_s(y)=0$，
+而端点为
+
+$$
+t_-=-\ell-\log2,\qquad t_+=\ell/2+\log2.
+$$
+
+记这个区间上的递增反函数为 $x=x(t)$。实际素数密度换元后的 Jacobian 为
+
+$$
+J_y(t)=\frac{x(t)^2}{(x(t)+s)\log x(t)},\qquad
+J_y(0)=\frac{y}{\ell(\ell+1)}.
+\tag{223.25}
+$$
+
+为控制二阶项，在 $x\in[y/2,2y]$ 上令
+
+$$
+v(x)=\frac{x^2}{x+s},\qquad j(x)=\frac{v(x)}{\log x}.
+$$
+
+直接微分给出一致估计
+
+$$
+v=O(y/\ell),\qquad v'=O(1/\ell),\qquad
+v''=\frac{2s^2}{(x+s)^3}=O(1/(y\ell)),
+$$
+
+$$
+j'=O(\ell^{-2}),\qquad j''=O(1/(y\ell^2)).
+$$
+
+由于 $x'(t)=v(x)$，
+
+$$
+\begin{aligned}
+J_y'(t)&=j'(x)v(x)=O(y/\ell^3),\\
+J_y''(t)&=j''(x)v(x)^2+j'(x)v'(x)v(x)
+=O(y/\ell^4).
+\end{aligned}
+\tag{223.26}
+$$
+
+Taylor 定理因此在整个变换区间上一致给
+
+$$
+J_y(t)=J_y(0)+J_y'(0)t+
+O\left(\frac{yt^2}{\ell^4}\right).
+\tag{223.27}
+$$
+
+偶核及其指数尾满足
+
+$$
+\int_{\mathbb R}t f_q(t)\,dt=0,\qquad
+\int_{\mathbb R}t^2|f_q(t)|\,dt<\infty.
+\tag{223.28}
+$$
+
+虽然 $[t_-,t_+]$ 不对称，将零阶及一阶核矩延伸到整条实线，
+误差分别为 $O_q(y^{-\kappa/2})$ 和
+$O_q(\ell y^{-\kappa/2})$。
+乘以 $J_y(0)=O(y/\ell^2)$ 和
+$J_y'(0)=O(y/\ell^3)$ 后，两项误差均为
+$O_q(y^{1-\kappa/2}/\ell^2)=o_q(y/\ell^4)$。
+Taylor 余项由式（223.28）的二阶绝对矩控制。
+所以
+
+$$
+\boxed{
+\int_{y/2}^{2y}f_q(t_s(x))\frac{dx}{\log x}
+=\frac{y}{\ell(\ell+1)}
+\int_{\mathbb R}f_q(t)\,dt
++O_q(y/\ell^4).
+}
+\tag{223.29}
+$$
+
+对每个固定 $c>0$，由绝对可积的对数级数逐项积分，
+
+$$
+\int_0^\infty\log(1+e^{-ct})\,dt
+=\frac1c\sum_{k\ge1}\frac{(-1)^{k+1}}{k^2}
+=\frac{\pi^2}{12c}.
+$$
+
+于是
+
+$$
+\int_{\mathbb R}f_q(t)\,dt
+=\frac{\pi^2}{6}\left(\frac1q-q\right)
+=-b_2\left(q-\frac1q\right).
+\tag{223.30}
+$$
+
+另一方面，
+
+$$
+\frac{y}{\ell(\ell+1)}
+=R-\delta+O(y/\ell^4).
+\tag{223.31}
+$$
+
+式（223.23）、（223.24）及式（223.29）—（223.31）证明式（223.1），因为
+
+$$
+y^{1-\kappa/2}\ell^\kappa+
+ye^{-c_1\sqrt\ell}=o_q(y/\ell^4).
+$$
+
+对固定 $q\ne1$ 再除以 $1-q$，即得式（223.2），完成定理 223.1 的证明。$\square$
+
+二阶系数来自精确 Jacobian 在零点的值。
+其线性变化项没有额外贡献一个 $\delta$ 项，因为相应积分核是奇函数；
+若不保留这一消去，只能留下恰好处于待判尺度的误差。
+
+### 223.7 正阶幂和的收敛下边界
+
+**定理 223.2（半阶及以下的完整幂和发散）。** 对每个固定 $s>0$ 和
+$0<q\le1/2$，有 $S_q(\mu_s)=+\infty$。
+
+证明。已有归一化满足 $0<U(s)<\infty$。当素数 $p\to\infty$ 时，
+
+$$
+\mu_s(p)
+=\frac{(1+1/p)^s-1}{pU(s)}
+\sim\frac{s}{U(s)p^2}.
+\tag{223.32}
+$$
+
+因此
+
+$$
+S_q(\mu_s)\ge\sum_p\mu_s(p)^q=+\infty.
+\tag{223.33}
+$$
+
+在 $q=1/2$ 时，下界与发散的素数倒数和比较；
+当 $q<1/2$ 时，$p^{-2q}\ge p^{-1}$。$\square$
+
+所以定理 223.1 的下端点不能补入。
+$q=1$ 时 $S_1(\mu_s)=1$、$\log S_1(\mu_s)=0$；
+将 $q=1$ 代入式（223.2）不是 Shannon 熵展开的证明。
+对 $q\to1$ 或 $q\to\infty$ 的极限需要另行处理，不能由固定阶误差直接交换极限。
+
+### 223.8 有限集合与核的合法接口
+
+例如，取 $q=2$，定理 223.1 给完整碰撞幂和
+
+$$
+\log\sum_d\mu_s(d)^2
+=-\frac{\pi^2}{4}(R-\delta)+O(y/\ell^4).
+$$
+
+**定理 223.3（固定阶幂和的 Hölder 接口）。** 对每个固定 $q>1$、
+任意有限集合 $\mathcal A\subset\mathbb N_{>0}$，有
+
+$$
+\boxed{
+\mu_s(\mathcal A)
+\le|\mathcal A|^{1-1/q}
+\exp\left[-b_2(1-q^{-2})(R-\delta)
++O_q(y/\ell^4)\right].
+}
+\tag{223.34}
+$$
+
+更一般地，对任意有限支撑的非负核 $k(d)$，
+
+$$
+\boxed{
+\sum_dk(d)\mu_s(d)
+\le
+\left(\sum_dk(d)^{q/(q-1)}\right)^{1-1/q}
+\exp\left[-b_2(1-q^{-2})(R-\delta)
++O_q(y/\ell^4)\right].
+}
+\tag{223.35}
+$$
+
+这里的误差仅来自完整幂和，因而对所取的有限集合或有限支撑核一致。
+
+证明。Hölder 不等式给
+
+$$
+\sum_dk(d)\mu_s(d)
+\le\left(\sum_dk(d)^{q/(q-1)}\right)^{1-1/q}
+S_q(\mu_s)^{1/q}.
+$$
+
+将定理 223.1 除以 $q$ 后取指数，得到式（223.35）；
+取 $k=\mathbf1_{\mathcal A}$，得到式（223.34）。$\square$
+
+这两个接口使用 $q>1$，不适用于定理 223.1 的 $q<1$ 部分。
+它们保留有限集合大小或核的幂和；尚未估计实际存活命中集的对应因子。
+
+定理 223.1 只计算正整数上的完整源律。
+模 $V$ 的投影、大小窗口、完整素数幂上限以及 $d/X$ 权重都会改变待估计的对象，
+不能将它们的幂和直接等同于式（223.1）。
+以上结果没有给出指定 FIB 逆余数类的加权等分布，也没有控制 §221 的剩余实际核；
+它们不单独推出整个 FIB 家族的 Robin 不等式或任意整数的完整 Robin 判据。
+
+## 追加锚（本行以下为增补区）
