@@ -230,14 +230,15 @@ private def elaborateClosedTerm (inputSyntax : Syntax) : CommandElabM Expr := li
 
 private def registerEntry (entry : InformationRegistryEntry)
     (suppliedPrimitives : Option Expr := none) (viaDescriptor : Option Expr := none)
-    (outputEvidence : Option Expr := none) : CommandElabM Unit := do
+    (outputEvidence : Option Expr := none) (realizationSource : Option Name := none) :
+    CommandElabM Unit := do
   let input := TemplateBinding.currentDeclaration (← getEnv)
   let root := (← getEnv).header.mainModule
   let sourceText := (← read).fileMap.source
   let options ← getOptions
   modifyEnv fun env => RegistrationInputs.add env {
     entry := { entry with registrationModuleName := root },
-    sourceText, options, suppliedPrimitives, viaDescriptor, outputEvidence,
+    sourceText, options, suppliedPrimitives, viaDescriptor, outputEvidence, realizationSource,
     declaration := input }
 
 private def catalogIdFrom (id : TSyntax `ident) : CatalogId :=
@@ -564,7 +565,7 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => registrat
     let entry ← liftTermElabM <| prepareRecordedEntry (← getEnv).header.mainModule {
       theoremName, unitName, arenaName, realizationName }
     let realizationInfo ← match (← getEnv).find? realizationName with
-    | some (.thmInfo info) => pure info
+    | some info => pure info
     | _ => throwError "IE-C006 StatementProofMismatch: {theoremName}"
     let (theoremType, realizationType) ← if isInline then
       pure ((← getConstInfo theoremName).type, realizationInfo.type)
@@ -692,7 +693,7 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
   let (suppliedRealizationName, isInline) ← resolveLegacyRealization theoremName
     lawArenaName realizationName realizationSyntax
   let suppliedRealizationInfo <- match (← getEnv).find? suppliedRealizationName with
-  | some (.thmInfo info) => pure info
+  | some info => pure info
   | _ => throwError "IE-C006 StatementProofMismatch: {theoremName}"
   let (theoremType, realizationType) ← if isInline then
     pure ((← getConstInfo theoremName).type, suppliedRealizationInfo.type)
@@ -747,7 +748,7 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
   registerEntry { entry with
     variationWitness := ← optionalWitnessName stx[12]
     sensitivityWitness := ← optionalWitnessName stx[13]
-  } (some suppliedPrimitives)
+  } (some suppliedPrimitives) (realizationSource := some suppliedRealizationName)
 
 end LeanInformationAudit
 
