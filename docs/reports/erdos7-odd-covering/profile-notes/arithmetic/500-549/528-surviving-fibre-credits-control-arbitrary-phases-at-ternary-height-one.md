@@ -1,5 +1,7 @@
 # Surviving-fibre credits give common query laws at ternary height one
 
+An [exact paired-allocation refinement](#exact-paired-partitions-sharpen-the-common-source-certificate) improves the specified 191-vector head certificate to Haar density greater than1/4000 at arbitrary finite nonternary heights. Under the same head-only ternary and chosen-root restrictions, the inherited analytic tail now permits all outside primes greater than400000, with final supported mass greater than1/20000. The joint optimizer retains both head interfaces and every fractional row not discharged by its explicit condition.
+
 A [common-source two-axis estimate](#a-common-source-two-axis-union-makes-the-191-vector-palette-positive) gives head survivor density greater than 1/20000 for the specified 191-vector palette, with arbitrary finite nonternary heights and private-prime substitutions fixing 3,5,7. Head-only originals still have v3<=1, and only 5-stars may meet the chosen pure3-avoiding root. Any finite tail with primes outside that designated head greater than 10^7 retains supported mass greater than 1/24000 under the existing analytic tail premise.
 
 A [six-layer prefix condition](#six-ternary-layers-suffice-for-the-palette-with-unrestricted-deeper-head-originals) extends the specified twelve-prime palette to arbitrary ternary heights: only layers 1 through 6 on one declared root obey the palette and same-cofactor prefix-disjointness conditions; all deeper head originals are unrestricted and paid by a complete geometric budget. With the existing large-prime-tail premise, final supported mass exceeds 7/10000. This still requires a particular low-layer condition.
@@ -4014,3 +4016,156 @@ The analytic prime-product premise is the existing Chapter33 SH11 with its pinne
 
 
 The [two-axis union producer](../../../frontier/cover-geometry/fibre-credit-partition/two_axis_union.py) and [exact results](../../../frontier/cover-geometry/fibre-credit-partition/two_axis_union.json) bind the inherited endpoint to its original input, reconstruct the raw budgets and the complete free and 191-label charges, and check 585 predicates. These include 48 independently enumerated finite product-space cases with arbitrary private-coordinate overlaps, including x+y>1; exact radical brackets; the 28/4/159 payment split; the all-height margin; and the inherited tail consumer. The proofs above supply the all-phase inequalities. No scalar optimizer is presented as an actual p-adic realization, and no new Lean verification is claimed.
+
+## Exact paired partitions sharpen the common-source certificate
+
+For the same specified 191-vector palette and chosen-root conditions as FC75, an exact JOINT row-allocation comparison gives survivor mass greater than 1/500 and head Haar density greater than 1/4000, with arbitrary finite nonternary heights. It preserves fixed3,5,7 private-prime transport. The improved Haar seed admits the existing unrestricted-height tail when every actual prime outside the designated head exceeds400000, leaving supported mass greater than1/20000. These are conditional head results; arbitrary small-prime inventories and arbitrary low ternary-prefix collisions remain unresolved.
+
+### The joint scalar comparison and its extreme allocations
+
+Keep FC70's two disjoint private-prime groups A and B on ONE carrier. Use abstract head caps a,b, head masses W,V, and finite private budgets X_q,Y_q. Assume
+
+    a,b>0, W,V>0, X_q,Y_q>=0, X_q+Y_q<1.
+
+There must be enough head rows for the cap constraints below. Let
+
+    0<=w_i<=a, sum_i w_i=W,
+    0<=v_j<=b, sum_j v_j=V,
+    x_qi,y_qj>=0, sum_i x_qi<=X_q, sum_j y_qj<=Y_q.
+
+The actual same-q intersection is nonnegative. Hence the actual private-group union is bounded above by
+
+    F(w,v,x,y)=sum_i,j w_i v_j
+                [1-product_q(1-x_qi-y_qj)].             (FC77)
+
+All factors are nonnegative under the RAW paired-budget hypothesis. The following maximum is over BOTH the head weights and the raw allocations, not a formula for prescribed actual weights. It remains an upper comparison for the original arithmetic process.
+
+The feasible domain is compact. For fixed allocations and the other head weights, F is linear in one head-weight vector. Thus one can take both weight vectors at their capped-simplex vertices without lowering a global maximum. Write
+
+    W/a=k+rho, V/b=l+sigma,
+    k,l nonnegative integers, 0<=rho,sigma<1.
+
+The nonzero first-head weights are k copies of a and, if rho>0, one copy of rho*a; the second-head weights are l copies of b and possibly sigma*b. Zero rows may be omitted: moving a budget from a zero row into any positive row weakly increases the objective.
+
+With all other private coordinates fixed, the q-block of F is JOINTLY linear in the vectors x_q and y_q. There is no same-q x_qi*y_qj term in its factor. The objective is coordinatewise nondecreasing, so each complete X_q can be assigned to one first-head row and each complete Y_q to one second-head row. This establishes a finite paired-allocation maximum while preserving the interaction through the OTHER private coordinates. Separate optimization of the two group totals does not establish this maximum.
+
+### A sufficient rule to empty one fractional row
+
+Assume k>=1 and
+
+    P_star=product_q(1-X_q/(1-Y_q)) >= rho^k.            (FC78)
+
+Then a joint maximizer exists in which no first-head budget occupies the fractional row. No corresponding assertion about the second fractional row is made.
+
+To prove this, suppose X_q occupies the first fractional row. Remove coordinate q temporarily. For each second-head row j put
+
+    h_j=v_j product_(r!=q)(1-y_rj), C=sum_j h_j>0,
+    nu_j=h_j/C.
+
+For each full first-head row i, let
+
+    U_i/C=sum_j nu_j
+          product_(r assigned to i)(1-X_r/(1-y_rj)).
+
+The assigned index sets are disjoint, and q belongs to none of them. Every denominator is positive. Weighted Holder gives
+
+    product_(i=1..k)(U_i/C)
+      >= [sum_j nu_j
+            (product_i product_(r assigned to i)
+                       (1-X_r/(1-y_rj)))^(1/k)]^k
+      >= product_r(1-X_r/(1-Y_r))
+      >= rho^k.
+
+The second inequality first uses y_rj<=Y_r and then inserts the omitted factors, each in(0,1]. Therefore at least one full row satisfies U_i>=rho*C. The analogous derivative from the fractional row, with q removed, is at most C. Moving X_q to that full row changes the complementary mass by
+
+    a X_q [rho*U_fractional-U_i] <=0.
+
+This move does not alter the cap vertices or the one-row assignment property. Repeating empties the first fractional row. This proof tilts by the ACTUAL common second-head allocations; it does not insert independently chosen extremizers. If W or V is zero the group mass is zero and this argument is unnecessary.
+
+The exchanged condition with X and Y interchanged can empty the second fractional row, but it must be checked separately. For FC75,
+
+    P_star=647034089336019224270438011218339029829 /
+           2108489420347256004886427495960724408320
+           >1/4=rho^2.
+
+The exchanged product is approximately0.3539563555, below(5/6)^5. It supplies no such simplification for the second head. The exact optimizer below therefore retains that row even though its displayed optimizer eventually assigns it no events.
+
+### Exact subset recurrence with the second fractional row retained
+
+Assume also l>=1. Partition the private labels among the k full first-head rows, A_1,...,A_k; empty cells are allowed. For a subset S of private labels define
+
+    f_A(S)=a [sum_i product_q
+                    (1-X_q*1_(q in A_i)-Y_q*1_(q in S))
+                  +rho product_q(1-Y_q*1_(q in S))].
+
+The last term is the first fractional row, with no first-head events but still exposed to second-head events. Let D_j(M) be the minimum sum of f_A over a partition of M into j full second-head rows, allowing empty rows. Then
+
+    D_1(M)=f_A(M),
+    D_j(M)=min_(S subset M)[f_A(S)+D_(j-1)(M minus S)].
+
+The exact minimum complementary mass is
+
+    min_(first partition A) b min_(R subset Q)
+          [D_l(Q minus R)+sigma*f_A(R)].               (FC79)
+
+Here R is the LABELED fractional second row. Subtracting FC79 from WV gives the exact FC77 maximum under FC78. This is a finite recurrence, not a convergence or floating-point assertion. Identical full rows can be enumerated by forcing a chosen remaining label into the first nonempty cell; empty rows remain allowed.
+
+For the present profile k=2,l=5 and nine private primes. Interchanging the two full first-head rows reduces their enumeration to256 partitions. All denominators can be cleared once per prime, so every cost and comparison in the subset recurrence uses integers. Each finite/all-height calculation makes10077184 recurrence comparisons. No arithmetic phases are inferred from a row partition.
+
+A scalar example shows why the second fractional row cannot simply be deleted: take two private coordinates with X=(1/100,1/100), Y=(4/5,4/5), a=1/3, W=5/6, b=1/2 and V=19/20. FC78 holds, but the exact maximum uses the second fractional row. The retained control independently enumerates all full and fractional placements in this example.
+
+### Exact values and the retained arithmetic scope
+
+For the finite FC36 profile, the joint private union upper is
+
+    1293675610666019574788607175131347453846922145147 /
+    4667699064271985012355433645074960811694844092544
+      =0.27715488784789355... .
+
+Keeping the separately paid {5,7} group and the unchanged direct remainder gives survivor lower
+
+    195678314800077714792796591752441125436679703 /
+    81889457267929561620270765703069487924470948992
+      =0.0023895422112745076... .
+
+At complete nonternary height caps, the joint private union upper is
+
+    27859470109669235119764734186236711440897074064196 /
+    100517315668112111436140005695412960129245612661875
+      =0.277160904312801... .
+
+The corresponding survivor lower, after D_57 and FC74's remainder, is
+
+    delta_joint=
+    974123731366813675080404180458817146149177978323 /
+    462379652073315712606244026198899616594529818244625
+      =0.0021067616773334024... >1/500.                 (FC80)
+
+One optimal paired partition is the same at finite and complete height caps:
+
+    first full rows: {11,17,19,41} | {13,23,29,31,37};
+    second full rows: {11} | {13} | {17} | {19,37}
+                     | {23,29,31,41};
+    second fractional row: empty.
+
+These are optimizer witnesses for the scalar comparison only. They do not assign original congruence phases. The same actual pure-conditioned source, 28/4/159 label payment split, optional absent labels, 191 allowed mixed exponent vectors, and only5-stars on the selected pure3-avoiding root are all retained. Head-only originals still satisfy v3<=1; all finite nonternary heights are permitted as in FC75. Since the source density cap is1048576/134589<8, FC80 yields actual head Haar density greater than1/4000.
+
+Fix3,5,7 and increase the indexed private head primes componentwise, keeping them distinct. The joint scalar feasible domain decreases when its raw budgets decrease, so its maximum cannot increase. FC78 remains valid because each factor1-X/(1-Y) increases. The direct nonnegative remainder decreases by FC74, and the source density cap decreases. Thus the same mass and density constants survive; no transport of5 or7 is claimed.
+
+### Improved large-prime threshold
+
+Reuse the existing SH11--SH13 analytic tail premise and the actual head Haar submeasure, whose density is at most one. Every actual prime outside the designated head must exceed B=400000. Tail-touching originals have arbitrary finite head and tail exponents, including unrestricted ternary height; all original numerical labels remain distinct and their phases fixed globally. Head primes need not precede the tail primes numerically.
+
+Use l=11, 3^11=177147<=B, c_l=243/241, and the unchanged moment cap17517439415203/525533184000. The exact inherited tail expression
+
+    loss_tail=M2*c_l^7/B*(B/(B-3))^2
+                  *sum_(j=0..7)7!/((7-j)!*l^j)
+             <1/5000
+
+leaves final supported mass
+
+    >1/4000-1/5000=1/20000.                            (FC81)
+
+This is the supported distorted-law mass of the tail construction, not the complete family's natural density. Positivity yields an uncovered integer for each finite family meeting these head and tail conditions. It does not settle unrestricted Erdős#7.
+
+The [paired-partition producer](../../../frontier/cover-geometry/fibre-credit-partition/paired_partition_union.py) and [exact results](../../../frontier/cover-geometry/fibre-credit-partition/paired_partition_union.json) bind the prior same-source certificate and inventory endpoint, retain exact optimizer witnesses, and compare the subset recurrence against independent exhaustive full/fractional allocations on small models. They also verify the complete-height density and smaller-threshold tail inequalities. These are ordinary proofs and exact finite computations, not new Lean verification.
