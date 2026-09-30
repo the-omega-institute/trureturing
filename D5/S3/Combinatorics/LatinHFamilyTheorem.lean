@@ -144,7 +144,6 @@ theorem coordinate_permutations (k : ℕ) (hk : 9 ≤ k) (j : Fin 3) :
         rw [if_neg hsmall, show z % (order k : ℤ) =
           (z - order k) % (order k : ℤ) by simp,
           Int.emod_eq_of_lt hstep.1 hstep.2]
-
   have hcross (sym : Bool) (p : ℤ × ℤ)
       (hp : p ∈ (if sym then capSymbolComplement (shift j)
                         else capColumnComplement (shift j)))
@@ -244,7 +243,6 @@ theorem coordinate_permutations (k : ℕ) (hk : 9 ≤ k) (j : Fin 3) :
         cases hi
         rfl
   exact ⟨hbij false, hbij true⟩
-
 set_option maxHeartbeats 3000000 in
 /-- Summing the actual priority increments forces at least two distinguished entries in every transversal. -/
 theorem transversal_obstruction (k : ℕ) (hk : 9 ≤ k)
@@ -463,12 +461,10 @@ theorem transversal_obstruction (k : ℕ) (hk : 9 ≤ k)
     have ho : (order k : ℤ) = 4*(k : ℤ) := by simp [order]
     rw [ho] at hshift hmodEq
     omega
-
 /-- The literal distinguished entry indexed by a profile. -/
 def distinguished (k : ℕ) (hk : 9 ≤ k) (j : Fin 3) :
     Fin (order k) × Fin (order k) × Fin (order k) :=
   if j.val = 0 then d0 k hk else if j.val = 1 then d1 k hk else d2 k hk
-
 set_option maxHeartbeats 3000000 in
 /-- The complete integer-parameter H-family conclusion for the three literal profiles. -/
 theorem result (K : ℤ) (hK : 9 ≤ K) :
@@ -490,11 +486,180 @@ theorem result (K : ℤ) (hK : 9 ≤ K) :
   let k := K.toNat
   have hk : 9 ≤ k := by dsimp [k]; omega
   intro hLatin
+  have source_compatibility (j : Fin 3)
+      (a : Fin (order k)) :
+      symbol k hk j a = square k hk a (column k hk j a) := by
+    have bulk_source_compatibility (t : Fin (k - 9)) (r : Fin 4) :
+      square k hk (bulkRow k hk t r)
+        (column k hk j (bulkRow k hk t r)) =
+      symbol k hk j (bulkRow k hk t r) := by
+      let a := bulkRow k hk t r
+      let b := column k hk j a
+      have ht : t.val + 9 < k := by have := t.isLt; omega
+      have hr : r.val < 4 := r.isLt
+      have ha : 15 ≤ a.val ∧ a.val < order k - 21 := by
+        dsimp [a, bulkRow, order]
+        omega
+      have hq : (a.val - 15) / 4 = t.val := by
+        dsimp [a, bulkRow]
+        omega
+      have hs : (a.val - 15) % 4 = r.val := by
+        dsimp [a, bulkRow]
+        omega
+      have hraw : columnRaw k hk j a = bulkColumnRaw k j t.val r.val := by
+        simp [columnRaw, not_lt.mpr ha.1, Nat.not_le.mpr ha.2, hq, hs]
+      have hsym : symbolRaw k hk j a = bulkSymbolRaw k j t.val r.val := by
+        simp [symbolRaw, not_lt.mpr ha.1, Nat.not_le.mpr ha.2, hq, hs]
+      have hsum : bulkSymbolRaw k j t.val r.val =
+          (a.val : ℤ) + bulkColumnRaw k j t.val r.val +
+            (if r.val = 0 then 2 else 0) := by
+        fin_cases r <;> simp [a, bulkRow, bulkSymbolRaw, bulkColumnRaw] <;> ring
+      have hb : (b.val : ℤ) = bulkColumnRaw k j t.val r.val % (order k) := by
+        have hnonneg : 0 ≤ bulkColumnRaw k j t.val r.val % (order k : ℤ) :=
+          Int.emod_nonneg _ (by dsimp [order]; omega)
+        simp [b, column, residue, hraw, Int.toNat_of_nonneg hnonneg]
+      have hdelta : delta k a b = (if r.val = 0 then 2 else 0) := by
+        have ha4 : a.val % 4 = (3 + r.val) % 4 := by
+          dsimp [a, bulkRow]
+          omega
+        have hparity : (b.val : ℤ) % 2 = bulkColumnRaw k j t.val r.val % 2 := by
+          rw [hb]
+          exact Int.emod_emod_of_dvd _ (by dsimp [order]; omega)
+        have hparityNat : b.val % 2 = (bulkColumnRaw k j t.val r.val % 2).toNat := by
+          have hnonneg : 0 ≤ bulkColumnRaw k j t.val r.val % (2 : ℤ) :=
+            Int.emod_nonneg _ (by decide)
+          omega
+        have hsmall0 : a.val ≠ 0 ∧ a.val ≠ 5 ∧ a.val ≠ 10 := by omega
+        have hsmall1 : a.val ≠ 1 ∧ a.val ≠ 6 ∧ a.val ≠ 11 := by omega
+        have hsmall4 : a.val ≠ 4 ∧ a.val ≠ 9 ∧ a.val ≠ 14 := by omega
+        have hdelta : delta k a b =
+            if a.val % 4 = 3 ∧ b.val % 2 = 0 then 2
+            else if a.val % 4 = 1 ∧ b.val % 2 = 0 then -2 else 0 := by
+          simp [delta, hsmall0.1, hsmall0.2.1, hsmall0.2.2,
+            hsmall1.1, hsmall1.2.1, hsmall1.2.2,
+            hsmall4.1, hsmall4.2.1, hsmall4.2.2, ha.1, ha.2]
+        change delta k a b = if r.val = 0 then 2 else 0
+        rw [hdelta]
+        fin_cases r <;> fin_cases j
+        all_goals simp [ha4, hparityNat, bulkColumnRaw, shift]
+      change residue k hk ((a.val : ℤ) + (b.val : ℤ) + delta k a b) =
+        residue k hk (symbolRaw k hk j a)
+      rw [hdelta, hsym, hsum]
+      apply Fin.ext
+      simp only [residue]
+      rw [hb]
+      simp [Int.add_emod]
+    have head_source_compatibility (i : Fin 15) :
+      square k hk (headRow k hk i)
+        (column k hk j (headRow k hk i)) =
+      symbol k hk j (headRow k hk i) := by
+      let a := headRow k hk i
+      let b := column k hk j a
+      have hsym : symbolRaw k hk j a =
+          (a.val : ℤ) + columnRaw k hk j a + capEpsilon j ⟨i.val, by omega⟩ := by
+        simp [symbolRaw, a, headRow]
+      have hb : (b.val : ℤ) = columnRaw k hk j a % (order k : ℤ) := by
+        have hnonneg : 0 ≤ columnRaw k hk j a % (order k : ℤ) :=
+          Int.emod_nonneg _ (by dsimp [order]; omega)
+        simp [b, column, residue, Int.toNat_of_nonneg hnonneg]
+      have hdelta : delta k a b = capEpsilon j ⟨i.val, by omega⟩ := by
+        let raw := columnRaw k hk j a
+        have hraw : raw =
+            let p := capAffine j (k % 2 = 1) ⟨i.val, by omega⟩
+            p.1 * (k : ℤ) + p.2 := by
+          simp [raw, columnRaw, a, headRow]
+        have hbound : -3 ≤ raw ∧ raw < order k := by
+          rw [hraw]
+          fin_cases i <;> fin_cases j
+          all_goals by_cases hp : k % 2 = 1
+          all_goals (simp [capAffine, capTable, order, hp]; omega)
+        have hmod : (b.val : ℤ) = raw % (order k : ℤ) := by
+          have hnonneg : 0 ≤ raw % (order k : ℤ) :=
+            Int.emod_nonneg _ (by dsimp [order]; omega)
+          simp [b, column, residue, raw, Int.toNat_of_nonneg hnonneg]
+        have hord : 36 ≤ order k := by dsimp [order]; omega
+        have hb : (b.val : ℤ) = if raw < 0 then raw + order k else raw := by
+          by_cases hn : raw < 0
+          · have hstep : 0 ≤ raw + order k ∧ raw + order k < order k := by omega
+            have hshift : raw % (order k : ℤ) = (raw + order k) % (order k : ℤ) := by
+              simp
+            rw [hmod, if_pos hn, hshift, Int.emod_eq_of_lt hstep.1 hstep.2]
+          · have hnonneg : 0 ≤ raw := by omega
+            rw [hmod, if_neg hn, Int.emod_eq_of_lt hnonneg hbound.2]
+        have hbNat : b.val = (if raw < 0 then raw + order k else raw).toNat := by
+          omega
+        change delta k a b = capEpsilon j ⟨i.val, by omega⟩
+        fin_cases i <;> fin_cases j
+        all_goals by_cases hp : k % 2 = 1
+        all_goals simp [delta, a, headRow, hbNat, hraw, capAffine,
+          capTable, capEpsilon, order, hp] <;> omega
+      change residue k hk ((a.val : ℤ) + (b.val : ℤ) + delta k a b) =
+        residue k hk (symbolRaw k hk j a)
+      rw [hdelta, hsym]
+      apply Fin.ext
+      simp only [residue]
+      rw [hb]
+      simp [Int.add_emod]
+    have tail_source_compatibility (i : Fin 21) :
+      square k hk (tailRow k hk i)
+        (column k hk j (tailRow k hk i)) =
+      symbol k hk j (tailRow k hk i) := by
+      let a := tailRow k hk i
+      let b := column k hk j a
+      have htail : order k - 21 ≤ a.val := by simp [a, tailRow]
+      have hhead : 15 ≤ a.val := by dsimp [a, tailRow, order]; omega
+      have hdelta : delta k a b = 0 := by
+        simp [delta, show a.val ≠ 0 by omega, show a.val ≠ 5 by omega,
+          show a.val ≠ 10 by omega, show a.val ≠ 1 by omega,
+          show a.val ≠ 6 by omega, show a.val ≠ 11 by omega,
+          show a.val ≠ 4 by omega, show a.val ≠ 9 by omega,
+          show a.val ≠ 14 by omega, Nat.not_lt.mpr htail]
+      have hsym : symbolRaw k hk j a = (a.val : ℤ) + columnRaw k hk j a := by
+        simp [symbolRaw, not_lt.mpr hhead, htail]
+      have hb : (b.val : ℤ) = columnRaw k hk j a % (order k : ℤ) := by
+        have hnonneg : 0 ≤ columnRaw k hk j a % (order k : ℤ) :=
+          Int.emod_nonneg _ (by dsimp [order]; omega)
+        simp [b, column, residue, Int.toNat_of_nonneg hnonneg]
+      change residue k hk ((a.val : ℤ) + (b.val : ℤ) + delta k a b) =
+        residue k hk (symbolRaw k hk j a)
+      rw [hdelta, hsym]
+      apply Fin.ext
+      simp only [residue]
+      rw [hb]
+      simp [Int.add_emod]
+    by_cases hhead : a.val < 15
+    · let i : Fin 15 := ⟨a.val, hhead⟩
+      have ha : headRow k hk i = a := by apply Fin.ext; rfl
+      rw [← ha]
+      exact (head_source_compatibility i).symm
+    by_cases htail : order k - 21 ≤ a.val
+    · let i : Fin 21 := ⟨a.val - (order k - 21), by
+          have := a.isLt
+          omega⟩
+      have ha : tailRow k hk i = a := by
+        apply Fin.ext
+        dsimp [tailRow, i]
+        omega
+      rw [← ha]
+      exact (tail_source_compatibility i).symm
+    · have ha15 : 15 ≤ a.val := by omega
+      let u := a.val - 15
+      let t : Fin (k - 9) := ⟨u / 4, by
+        have hlt := a.isLt
+        dsimp [u, order] at *
+        omega⟩
+      let r : Fin 4 := ⟨u % 4, Nat.mod_lt _ (by decide)⟩
+      have ha : bulkRow k hk t r = a := by
+        apply Fin.ext
+        dsimp [bulkRow, t, r, u]
+        omega
+      rw [← ha]
+      exact (bulk_source_compatibility t r).symm
   have hT (j : Fin 3) : IsTransversal k hk (T k hk j) := by
     have hperm := coordinate_permutations k hk j
     refine ⟨?_,?_,?_,?_⟩
     · rintro f ⟨a,rfl⟩
-      exact source_compatibility k hk j a
+      exact source_compatibility j a
     · intro a
       refine ⟨entry k hk j a, ⟨⟨a,rfl⟩,rfl⟩, ?_⟩
       rintro f ⟨⟨b,rfl⟩,hba⟩
@@ -598,25 +763,216 @@ theorem result (K : ℤ) (hK : 9 ≤ K) :
     have hcard := Finset.card_le_card hsub
     rw [Finset.card_union_of_disjoint hdisjoint] at hcard
     omega
-  have hcommon := exact_common_entry k hk
+  have hcapResidue
+      (odd : Bool) (i : Fin 36) :
+      let p := capAffine 0 odd i
+      let q := capAffine 1 odd i
+      residue k hk (p.1 * (k : ℤ) + p.2) =
+        residue k hk (q.1 * (k : ℤ) + q.2) ↔ i.val = 11 := by
+    let p := capAffine 0 odd i
+    let q := capAffine 1 odd i
+    let x := p.1 * (k : ℤ) + p.2
+    let y := q.1 * (k : ℤ) + q.2
+    let d := x - y
+    have hdexpr : d = (p.1 - q.1) * (k : ℤ) + p.2 - q.2 := by
+      dsimp [d, x, y]
+      ring
+    have hd : (d = 0 ↔ i.val = 11) ∧ -(order k : ℤ) < d ∧ d < order k := by
+      have hbase :
+          (((p.1 - q.1) * (k : ℤ) + p.2 - q.2 = 0 ↔ i.val = 11) ∧
+          -(order k : ℤ) < (p.1 - q.1) * (k : ℤ) + p.2 - q.2 ∧
+          (p.1 - q.1) * (k : ℤ) + p.2 - q.2 < order k) := by
+        dsimp [p,q]
+        fin_cases i <;> cases odd <;>
+          simp [capAffine,capTable,order] <;> omega
+      change (((p.1 - q.1) * (k : ℤ) + p.2 - q.2 = 0 ↔ i.val = 11) ∧
+        -(order k : ℤ) < (p.1 - q.1) * (k : ℤ) + p.2 - q.2 ∧
+        (p.1 - q.1) * (k : ℤ) + p.2 - q.2 < order k) at hbase
+      rw [← hdexpr] at hbase
+      exact hbase
+    change residue k hk x = residue k hk y ↔ i.val = 11
+    constructor
+    · intro heq
+      have hmod : x % (order k : ℤ) = y % (order k : ℤ) := by
+        have hv := congrArg (fun z : Fin (order k) => (z.val : ℤ)) heq
+        have hx : 0 ≤ x % (order k : ℤ) :=
+          Int.emod_nonneg _ (by dsimp [order]; omega)
+        have hy : 0 ≤ y % (order k : ℤ) :=
+          Int.emod_nonneg _ (by dsimp [order]; omega)
+        simpa [residue, Int.toNat_of_nonneg hx, Int.toNat_of_nonneg hy] using hv
+      have hz : d % (order k : ℤ) = 0 := by
+        simpa [d] using (Int.emod_eq_emod_iff_emod_sub_eq_zero).mp hmod
+      have hpos : (0 : ℤ) < order k := by dsimp [order]; omega
+      have hd0 : d = 0 := by
+        by_cases h : 0 ≤ d
+        · have heqmod : d % (order k : ℤ) = d := Int.emod_eq_of_lt h hd.2.2
+          omega
+        · have hstep : 0 ≤ d + order k ∧ d + order k < order k := by omega
+          have heqmod : (d + order k) % (order k : ℤ) = d + order k :=
+            Int.emod_eq_of_lt hstep.1 hstep.2
+          have hsame : (d + order k) % (order k : ℤ) = d % (order k : ℤ) := by
+            simp
+          omega
+      exact hd.1.mp hd0
+    · intro hi
+      have hd0 := hd.1.mpr hi
+      have hxy : x = y := by dsimp [d] at hd0; omega
+      rw [hxy]
+  have hcolumnEquality
+      (a : Fin (order k)) :
+      column k hk 0 a = column k hk 1 a ↔ a.val = 11 := by
+    by_cases hhead : a.val < 15
+    · let i : Fin 36 := ⟨a.val, by omega⟩
+      have hcol (j : Fin 3) :
+          column k hk j a =
+            let p := capAffine j (k % 2 = 1) i
+            residue k hk (p.1 * (k : ℤ) + p.2) := by
+        simp [column, columnRaw, hhead, i]
+      rw [hcol 0, hcol 1]
+      exact hcapResidue (k % 2 = 1) i
+    by_cases htail : order k - 21 ≤ a.val
+    · let i : Fin 36 := ⟨a.val - (order k - 21) + 15, by
+          have := a.isLt
+          omega⟩
+      have hcol (j : Fin 3) :
+          column k hk j a =
+            let p := capAffine j (k % 2 = 1) i
+            residue k hk (p.1 * (k : ℤ) + p.2) := by
+        simp [column, columnRaw, not_lt.mpr (by omega : 15 ≤ a.val), htail, i]
+      rw [hcol 0, hcol 1]
+      have hi := hcapResidue (k % 2 = 1) i
+      exact hi.trans (by
+        constructor <;> intro h
+        · dsimp [i, order] at h
+          omega
+        · omega)
+    · have hbulk : 15 ≤ a.val ∧ a.val < order k - 21 := by omega
+      let t := (a.val - 15) / 4
+      let r := (a.val - 15) % 4
+      have hraw : bulkColumnRaw k 0 t r = bulkColumnRaw k 1 t r + 4 := by
+        have hr : r < 4 := Nat.mod_lt _ (by decide)
+        interval_cases r <;> simp [bulkColumnRaw, shift] <;> ring
+      have hcol (j : Fin 3) :
+          column k hk j a = residue k hk (bulkColumnRaw k j t r) := by
+        simp [column, columnRaw, not_lt.mpr hbulk.1,
+          Nat.not_le.mpr hbulk.2, t, r]
+      rw [hcol 0, hcol 1, hraw]
+      have hneq : residue k hk (bulkColumnRaw k 1 t r + 4) ≠
+          residue k hk (bulkColumnRaw k 1 t r) := by
+        intro heq
+        have hmod : (bulkColumnRaw k 1 t r + 4) % (order k : ℤ) =
+            bulkColumnRaw k 1 t r % (order k : ℤ) := by
+          have hv := congrArg (fun z : Fin (order k) => (z.val : ℤ)) heq
+          have hx : 0 ≤ (bulkColumnRaw k 1 t r + 4) % (order k : ℤ) :=
+            Int.emod_nonneg _ (by dsimp [order]; omega)
+          have hy : 0 ≤ bulkColumnRaw k 1 t r % (order k : ℤ) :=
+            Int.emod_nonneg _ (by dsimp [order]; omega)
+          simpa [residue, Int.toNat_of_nonneg hx,
+            Int.toNat_of_nonneg hy] using hv
+        have hz : (4 : ℤ) % (order k : ℤ) = 0 := by
+          simpa using (Int.emod_eq_emod_iff_emod_sub_eq_zero).mp hmod
+        have hfour : (4 : ℤ) % (order k : ℤ) = 4 :=
+          Int.emod_eq_of_lt (by omega) (by dsimp [order]; omega)
+        omega
+      simp [hneq]
+      omega
+  have hcommon : T k hk 0 ∩ T k hk 1 = {d2 k hk} ∧
+      T k hk 0 ∩ T k hk 1 ∩ T k hk 2 = ∅ := by
+    let row : Fin (order k) := ⟨11, by dsimp [order]; omega⟩
+    have hrow : residue k hk 11 = row := by
+      apply Fin.ext
+      change ((11 : ℤ) % (order k : ℤ)).toNat = 11
+      rw [Int.emod_eq_of_lt (by omega) (by dsimp [order]; omega)]
+      rfl
+    have hcap (j : Fin 3) (hj : j.val = 0 ∨ j.val = 1) :
+        column k hk j row = residue k hk 9 ∧
+        symbol k hk j row = residue k hk 23 := by
+      fin_cases j
+      all_goals by_cases hp : k % 2 = 1
+      all_goals simp [column, columnRaw, symbol, symbolRaw, row,
+        capAffine, capTable, capEpsilon, hp] at *
+    have hentry (j : Fin 3) (hj : j.val = 0 ∨ j.val = 1) :
+        entry k hk j row = d2 k hk := by
+      have hc := hcap j hj
+      simp [entry, d2, hrow, hc.1, hc.2]
+    have hthird : entry k hk 2 row ≠ d2 k hk := by
+      intro heq
+      have hc := congrArg (fun e : Fin (order k) × Fin (order k) × Fin (order k) =>
+        e.2.1) heq
+      change column k hk 2 row = residue k hk 9 at hc
+      have hraw : column k hk 2 row =
+          residue k hk (if k % 2 = 1 then 2 * (k : ℤ) + 9
+            else 2 * (k : ℤ) + 7) := by
+        by_cases hp : k % 2 = 1 <;>
+          simp [column, columnRaw, row, capAffine, capTable, hp]
+      rw [hraw] at hc
+      have hmod : (if k % 2 = 1 then 2 * (k : ℤ) + 9
+            else 2 * (k : ℤ) + 7) % (order k : ℤ) = 9 := by
+        have hv := congrArg (fun z : Fin (order k) => (z.val : ℤ)) hc
+        have hx : 0 ≤ (if k % 2 = 1 then 2 * (k : ℤ) + 9
+            else 2 * (k : ℤ) + 7) % (order k : ℤ) :=
+          Int.emod_nonneg _ (by dsimp [order]; omega)
+        have h9 : (9 : ℤ) % (order k : ℤ) = 9 :=
+          Int.emod_eq_of_lt (by omega) (by dsimp [order]; omega)
+        simpa [residue, Int.toNat_of_nonneg hx, h9] using hv
+      have hlt : 0 ≤ (if k % 2 = 1 then 2 * (k : ℤ) + 9
+            else 2 * (k : ℤ) + 7) ∧
+          (if k % 2 = 1 then 2 * (k : ℤ) + 9
+            else 2 * (k : ℤ) + 7) < order k := by
+        dsimp [order]
+        split <;> omega
+      rw [Int.emod_eq_of_lt hlt.1 hlt.2] at hmod
+      split at hmod <;> omega
+    have hcommon : T k hk 0 ∩ T k hk 1 = {d2 k hk} := by
+      ext e
+      constructor
+      · intro he
+        rcases he.1 with ⟨a, rfl⟩
+        rcases he.2 with ⟨b, hab⟩
+        have hr : b = a := by simpa [entry] using congrArg Prod.fst hab
+        subst b
+        have hc : column k hk 0 a = column k hk 1 a :=
+          (by simpa [entry] using
+            (congrArg (fun e : Fin (order k) × Fin (order k) × Fin (order k) =>
+              e.2.1) hab).symm)
+        have ha : a = row := by
+          apply Fin.ext
+          exact (hcolumnEquality a).mp hc
+        subst a
+        simpa [hentry 0 (Or.inl rfl)]
+      · intro he
+        have heq : e = d2 k hk := by simpa using he
+        subst e
+        constructor
+        · exact ⟨row, hentry 0 (Or.inl rfl)⟩
+        · exact ⟨row, hentry 1 (Or.inr rfl)⟩
+    constructor
+    · exact hcommon
+    · rw [hcommon]
+      ext e
+      constructor
+      · intro he
+        have heq : e = d2 k hk := by simpa using he.1
+        subst e
+        rcases he.2 with ⟨a, ha⟩
+        have hr : a = row := by
+          have h := congrArg Prod.fst ha
+          change a = residue k hk 11 at h
+          simpa [hrow] using h
+        subst a
+        exact (hthird ha).elim
+      · simp
   refine ⟨?_,?_,hcommon.1,hcommon.2,hpair,?_⟩
   · dsimp [order,k]
     omega
   · intro j
     exact ⟨(coordinate_permutations k hk j).1,(coordinate_permutations k hk j).2,
-      source_compatibility k hk j,hT j,hD j⟩
+      source_compatibility j,hT j,hD j⟩
   · intro f hpin
     have hf : f ∈ T k hk 0 ∩ T k hk 1 ∩ T k hk 2 :=
       ⟨⟨hpin.2 _ (hT 0),hpin.2 _ (hT 1)⟩,hpin.2 _ (hT 2)⟩
     rw [hcommon.2] at hf
     exact hf
-
-#print axioms D5.S3.Combinatorics.LatinHTransversals.bulk_source_increment
-#print axioms D5.S3.Combinatorics.LatinHTransversals.head_source_increment
-#print axioms D5.S3.Combinatorics.LatinHTransversals.source_compatibility
-#print axioms D5.S3.Combinatorics.LatinHTransversals.cap_zero_one_residue_eq_iff
-#print axioms D5.S3.Combinatorics.LatinHTransversals.column_zero_one_eq_iff
-#print axioms D5.S3.Combinatorics.LatinHTransversals.exact_common_entry
 #print axioms D5.S3.Combinatorics.LatinHTransversals.bulk_column_injective
 #print axioms D5.S3.Combinatorics.LatinHTransversals.bulk_symbol_injective
 #print axioms D5.S3.Combinatorics.LatinHTransversals.cap_column_injective
@@ -624,5 +980,4 @@ theorem result (K : ℤ) (hK : 9 ≤ K) :
 #print axioms coordinate_permutations
 #print axioms transversal_obstruction
 #print axioms result
-
 end D5.S3.Combinatorics.LatinHFamilyTheorem
