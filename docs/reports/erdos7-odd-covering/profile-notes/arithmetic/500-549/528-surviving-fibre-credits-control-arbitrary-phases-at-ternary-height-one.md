@@ -7100,3 +7100,156 @@ The [pure-root seed consumer](../../../frontier/cover-geometry/fibre-credit-part
 The seed performs5387 exact checks. These include1079 literal finite layouts:729 one-axis layouts at3 of height3,125 at5 of height2, and225 complete two-axis layouts with divisors1,3,5,15. Their actual masked-Haar convex hinges are independently enumerated. These finite controls do not prove(FC280) for all layouts or heights; that proof is the existing conditional comparison above. The remaining seed checks reconstruct exact factor moments, low atoms, all full-tail remainders, fixed-stage positive masses, resolved split atoms, the short rational bounds and the inherited quartic allowance. The continuation performs78 further checks, preserving the complete moments and repeating no finite-layout suite.
 
 There is a precise remaining barrier. After71 the current comparator has mean146.5846593778...>72; indeed its support starts at96. By Report773's criterion W<(q-1)m, this comparator cannot certify a positive next mass at73 for ANY constant clipping parameter. This excludes that scalar comparison step, not actual survival, a different common source/comparison, or the underlying noncoverage statement. No73 operation, threshold search or ordering search is performed. A next substantive direction must retain additional joint structure or provide a different finite-block estimate; continuing to optimize the same constant parameter cannot overcome this exact mean barrier.
+
+## Two actual pure layers improve the FC159 source reserve but do not cross73
+
+Keep either fixed FC110/FC131 actual skeleton on
+
+    R={3,5,7,11,13,17,19,23,29,31,37,41},
+
+and the FC159 admitted nongroup remainder: old-only ternary height at most one, nonternary support at least two in the remainder, no additional pure or star label and no shallow head/private grouped label. Impose the explicit additional condition
+
+    N>=max(2,N_+).                                    (FC291)
+
+The new comparison preserves the same initial physical FC159 source, but retains two of its actual pure exclusions in every nonternary coordinate. With the fixed half-clipping sequence43,47,53,59,61,67,71,73, the positive source construction again reaches71. On this depth-two domain its mass and fourth-moment tail reserve improve over the first-root comparison; its absolute second-moment bound is larger. The resulting bounds are:
+
+    mass > 3/2500,
+    complete-query second moment < 71/5,
+    complete-query fourth moment < 8010000,
+    full-Haar density <=128.                          (FC292)
+
+Thus the actual nineteen-prime head Haar survivor has mass greater than3/320000. Under [Report734's inherited analytic prime-product premise](../700-749/734-seven-and-eight-full-height-heads-admit-quartic-prime-tails.md), the SAME source admits every finite outside-prime tail strictly above10000 and retains distorted mass greater than1/1000. No final Haar-density bound of1/1000 is asserted.
+
+The next fixed73 ledger is nonpositive. In fact its mean criterion rules out EVERY constant clipping parameter for this declared comparator. The improvement therefore increases the certified reserve, but does not enlarge the previously reached prime-support class. It is not a noncoverage proof allowing arbitrary support primes from73 through10000, and does not resolve unrestricted Erdős #7.
+
+### 1. The literal second holes supply a stronger product reference
+
+Report528 FC148 gives, at p=5 or7, the pure prefixes
+
+    first depth: (p-1),
+    second depth: (p-2,0).
+
+Their residue classes are p-1 modp and p-2 modp^2. Their first digits differ, so these two ACTUAL original cylinders are disjoint. FC147 private role0 gives, at q in{11,13,17,19,23,29,31,37,41}, prefixes(0) and(6,0), hence classes0 modq and6 modq^2. These are disjoint because q>=11. The numerical originals at both depths are present under(FC291). Two arbitrary pure residues at different heights would not necessarily be disjoint; the fixed skeleton is used here.
+
+Let B_p be the complement of those two actual cylinders for p!=3. The ternary coordinate still excludes only the actual original0 mod3 in this reference. No pure modulus9 hole is supplied by this source contract. The exact reference masses are therefore
+
+    A_3=2/3,
+    A_p=1-1/p-1/p^2, p in R minus{3}.                 (FC293)
+
+Start with exactly the same initial physical source
+
+    D0=1816999451688960000/36518862868606981,
+    eta0=mu/D0,   h=mass(eta0)=1/D0,
+    eta0<=H_R.                                       (FC294)
+
+Here mu is one probability supported on the complete actual FC159 survivor and fixed from the actual family before any query. Resolve all finite head heights required anywhere in the family by uniform lifting. Since every source point already avoids the declared pure originals,
+
+    eta0 <= Lambda2 := product_(p in R)(H_p restricted to B_p). (FC295)
+
+The actual eta0 may be correlated. Independence is asserted only for the enlarged product reference Lambda2. Higher pure holes, stars, grouped originals and the remainder remain physically excluded; enlarging their upper reference does not modify them.
+
+### 2. Existing anchor comparison, with its full infinite tail
+
+Every depth-e query cylinder under H_p|B_p has absolute mass at most p^(-e). Reuse [Report771's general anchor factor](../750-799/771-stop-loss-profiles-preserve-the-ordinary-source-through-thirteen-primes.md), as applied in [Report779](../750-799/779-the-original-capped-source-lowers-the-general-eight-prime-tail-cutoff.md):
+
+    nu_p(1)=A_p-1/p,
+    nu_p(v)=(p-1)/p^v for each integer v>=2.           (FC296)
+
+All load-one atoms are nonnegative. If normalized reference factors are used instead, their cap is1/A_p; multiplying their comparisons back by product_p A_p gives exactly(FC296). Omitting this reference mass would be an error.
+
+A complete query Phi includes one arbitrary phase at every divisor of the finite head period, including the unit. Let L_Phi be its summed cylinder load. Let Pi2 be the auxiliary product(FC296), pushed forward by M=product_p v_p. The existing conditional ordered-increment/Jensen comparison gives, for every such Phi and every nonnegative increasing convex f,
+
+    integral f(L_Phi) deta0 <= integral f(M) dPi2.     (FC297)
+
+At a fixed current run j, the earlier layouts L_0,...,L_j can have different actual phases. Jensen bounds f(sum L_e) by the average of f((j+1)L_e), so the old-coordinate comparison applies separately to each term. No arbitrary complete layout is factored into independent actual prime queries. Pi2 is an auxiliary comparison, not a claim about actual-source independence.
+
+Relative to full-Haar comparison, only load-one mass1-A_p is removed. Thus complete factor moments of orders0,1,2,4 are
+
+    M0(p)=A_p,
+    M1(p)=p/(p-1)-(1-A_p),
+    M2(p)=p(p+1)/(p-1)^2-(1-A_p),
+    M4(p)=p(p^3+11p^2+11p+1)/(p-1)^4-(1-A_p).        (FC298)
+
+Product moments multiply. Positive-depth auxiliary tails remain complete, at every height. Since eta0 has exact mass h, Report773 sharpens Pi2 to Top_h(Pi2); its split-atom cutoff is12. This selection changes only the comparison, not the actual source by a query-dependent restriction.
+
+This is a new parameter application of existing771/779 machinery, not a new generic theorem. The prior two-hole ternary source in PR5–PR9 and the general `(prime,mass,cap)` exact-moment/upper-quantile implementations already support this mechanism; they have different actual source contracts. The depth2 here limits how much known support information is retained, not allowed original or query exponent heights.
+
+### 3. One fixed sequence, with actual source updates
+
+Process exactly43,47,53,59,61,67,71,73 in that order, with delta=1/2 at each attempted stage. Every added head-only original is assigned once to its greatest added prime, keeping its numerical identity, phase and full exponent vector. The added originals may have arbitrary finite heights, including ternary heights, but the old-only subfamily retains its FC159 restrictions. No projected cofactor of an outside-prime original becomes an additional forbidden head original.
+
+At q use the same actual live kernel as771:
+
+    K_live(x,dy)=1_(y outside B_x)H_q(dy)/[1-min(beta(x),1/2)],
+
+where beta is the actual forbidden union mass. For an old source of mass m and comparator Pi, set
+
+    T=(q-1)/2,
+    d_q=integral(z-T)_+ dPi /T,
+    m'=m-d_q.                                        (FC299)
+
+The inherited all-layout Jensen estimate bounds actual loss by d_q even when different q-exponents induce different old phases. If m'>0, one scalar thinning of the actual survivor gives exact mass m', followed by
+
+    Pi'=Top_(m')(Pi times pi_cap(q,2)).               (FC300)
+
+The scalar is fixed from the actual family and stage, before any query. These choices form one consistent physical source sequence. The initial eta0 is the same as FC277, but later scalars and sources differ because the comparison guarantees different target masses. The larger depth-two mass is not retroactively attributed to FC276's already fixed eta71.
+
+At the first nonpositive m', this prescribed schedule stops and no physical source or moment update at that prime is claimed. No clipping-parameter or ordering search is performed.
+
+### 4. Exact finite arithmetic and the failed73 step
+
+For this new run the low-load limit was fixed at256 before evaluation. Store every exact atom through that limit and the complete moments of orders0,1,2,4. Convolution cannot move a high load to a smaller atom. For every tested threshold T, the complete stop-loss is computed as
+
+    H_Pi(T)=W-T*m+sum_(z<T)(T-z)pi_z.                (FC301)
+
+All split-atom cutoffs lie at most48. Complete tail moments above256 are retained; no original height or auxiliary high load is truncated.
+
+The decimal displays below come from exact rational values:
+
+| Stage | Charge | Candidate remaining mass | Mean after positive stage | Top cutoff |
+|---|---:|---:|---:|---:|
+| 43 | .0034171137930395575 | .016681330834811877 | 22.2618755271 | 12 |
+| 47 | .0032142946029002170 | .013467036231911660 | 25.9100931228 | 12 |
+| 53 | .0028004392963145606 | .010666596935597100 | 29.9678579118 | 16 |
+| 59 | .0024754386103257747 | .008191158325271326 | 35.5010094666 | 18 |
+| 61 | .0025552524959210460 | .005635905829350280 | 43.6781279663 | 24 |
+| 67 | .0022560208883440516 | .003379884941006228 | 56.9363085853 | 32 |
+| 71 | .0021681045285982387 | .001211780412407989 | 91.5932615432 | 48 |
+| 73 | .0018713007055529102 | **-.000659520293144922** | no new source | none |
+
+At the last positive stage71,
+
+    M2=14.154458321534928... <71/5,
+    M4=8009845.106286318... <8010000.
+
+The seven cap-two kernels give density at most128, while restrictions and single scalars only decrease it. Together with mass>3/2500 this proves(FC292) and the actual head Haar bound. The complete single-query moments imply simultaneous mixed-query moments on that SAME physical measure by Hölder.
+
+The73 failure is stronger than the chosen half-clipping debit alone:
+
+    72*m71-W71=-.023742730553217184...<0.             (FC302)
+
+[Report773](../750-799/773-repeated-upper-mass-comparison-lowers-the-fourteen-prime-tail-cutoff.md) states that some constant clipping parameter gives a positive next ledger exactly when W<(q-1)m. Hence(FC302) excludes EVERY constant parameter at73 from this comparator. It is a failure of the declared upper-comparison route, not an upper bound on actual survival or a covering example.
+
+### 5. The unchanged quartic tail gives a stronger reserve
+
+The final complete fourth moment can be passed directly to Report734/779's same-source quartic tail. Retain B=10000, ell=8, delta=2/5 and growth exponent25. Under its existing analytic prime-product premise, the full loss allowance is K*tau4, where
+
+    tau4=(5625/6144)*((2ell^2+1)/(2ell^2-1))^25
+       *B/(B-1)^4*sum_(j=0..25)25!/[(25-j)!(3ell)^j]
+       =1.097943312946189...*10^(-11).                (FC303)
+
+All domain conditions hold. Exact rational arithmetic gives
+
+    3/2500-8010000*tau4 >1/1000>0.                   (FC304)
+
+The exact comparison reserve is0.0011238368536861704... . The resulting family consists of the specified FC159 old core, arbitrary added head-only originals supported through71 and touching an added prime, and arbitrary finite tail-touching originals whose outside primes are strictly above10000. It does not allow additional support primes from73 through10000. This preserves every actual finite height and support combination within the stated contract.
+
+### 6. Reuse and verification boundary
+
+The [depth-two consumer](../../../frontier/cover-geometry/pure-support-profiles/depth_two_profile.py) is a standalone standard-library exact consumer with required `--output`; it reads no prior result or hidden source file. It reuses the arithmetic formulas of the existing generic factor implementation. Its [exact result](../../../frontier/cover-geometry/pure-support-profiles/depth_two_profile.json) retains the full comparison data. The fixed schedule stops at73 before appending that coordinate. The saved final comparator and quartic consequence belong to the positive prefix ending71.
+
+The producer performs7387 checks, including1799 new literal two-depth query layouts:125 at5,343 at7 and1331 at11. These enumerate the actual two-hole masked-Haar loads and every discrete convex hinge on those local finite carriers. They are controls of the new support initialization, not a proof of(FC297) at arbitrary heights; that proof is the cited existing comparison. Other checks retain complete0/1/2/4 tails, exact atoms, resolved quantiles, charges, the first failed step, density counts, short bounds and the inherited tail allowance.
+
+The computations are exact arithmetic controls of the stated ordinary mathematical argument, not Lean verification.
+
+The remaining obstruction is now sharper: adding these actual second-layer relations materially improves the71 reserve, yet the declared comparison still has mean above72. Deeper actual support, cross-coordinate actual exclusions or a different finite-block estimate are possible further inputs; none is assumed in this result. In particular the smaller infinite-pure mass (p-2)/(p-1) cannot replace the finite actual mask mass as an upper reference.
