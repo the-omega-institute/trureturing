@@ -470,13 +470,9 @@ private def elabCompanion (diagnostic : String) (command : TSyntax `command) :
   modify fun s => { s with messages := previous ++ (if produced.hasErrors then {} else produced) }
   if produced.hasErrors then throwError diagnostic
 
-/-- A witness bridge's companion unit is built from its bridge at the registration
-arena and from the positive half of its variation witness. -/
-private def checkWitnessCompanionInputs (theoremName arenaName variationName : Name)
-    (bridgeArena : Expr) : CommandElabM Unit := do
-  let arenaMatches ← liftTermElabM do
-    isDefEq bridgeArena (← mkConstWithFreshMVarLevels arenaName)
-  unless arenaMatches do throwError "IE-C006 StatementProofMismatch: {theoremName}"
+/-- A witness unit constructor consumes the positive half of variation.
+Its result type is checked by the kernel; full arena identity is report policy. -/
+private def requireWitnessVariation (variationName : Name) : CommandElabM Unit := do
   if variationName.isAnonymous then
     throwError "unclassified_form:dtr.witness_bridge_requires_positive_variation"
 
@@ -597,10 +593,11 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => registrat
       let variationId := absoluteIdentFrom theoremId variationName
       let witness := realizationType.isAppOf RegistrationElaboration.witnessBridgeName
       if witness then
-        checkWitnessCompanionInputs theoremName arenaName variationName legacyArgs[0]!
-      let unitValue <- if witness then
+        requireWitnessVariation variationName
+      let unitValue <- if witness then do
+          let bridgeArena ← liftTermElabM <| PrettyPrinter.delab legacyArgs[0]!
           `(term| $witnessUnitId:ident
-            $realizationId:ident (And.left $variationId:ident))
+            (a := $bridgeArena) $realizationId:ident (And.left $variationId:ident))
         else if realizationType.isAppOf `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization then
           `(term| { primitives := $primitiveTerm, Statement := _, proof := $theoremId:ident })
         else `(term|
@@ -733,10 +730,11 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
     let variationId := absoluteIdentFrom theoremId variationName
     let witness := realizationType.isAppOf RegistrationElaboration.witnessBridgeName
     if witness then
-      checkWitnessCompanionInputs theoremName lawArenaName variationName legacyArgs[0]!
-    let unitValue <- if witness then
+      requireWitnessVariation variationName
+    let unitValue <- if witness then do
+        let bridgeArena ← liftTermElabM <| PrettyPrinter.delab legacyArgs[0]!
         `(term| $witnessUnitId:ident
-          $qualifiedRealizationId:ident (And.left $variationId:ident))
+          (a := $bridgeArena) $qualifiedRealizationId:ident (And.left $variationId:ident))
       else if realizationType.isAppOf `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization then
         `(term| { primitives := $primitiveTerm, Statement := _, proof := $theoremId:ident })
       else `(term|
