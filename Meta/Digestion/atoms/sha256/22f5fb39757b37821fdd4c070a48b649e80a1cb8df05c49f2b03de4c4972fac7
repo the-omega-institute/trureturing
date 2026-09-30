@@ -1,0 +1,28 @@
+**命题 8.2（模二三循环的精确振幅与回归）。** 取 $d=e=2$，用定义 7.2 的 Fourier 约定，置
+
+$$
+u=|10\rangle\otimes|p_{10}\rangle,\qquad
+v=|01\rangle\otimes|p_{11}\rangle,\qquad
+w=|11\rangle\otimes|p_{01}\rangle,
+$$
+
+其中 $p_{ij}=(i,j)$。则 $Uu=v,Uv=w,Uw=u$，三个相位均为 $+1$。在 $\mathcal V=\operatorname{span}\{u,v,w\}$ 上，令 $J_3$ 表示此有序基中的全 $1$ 矩阵，则
+
+$$
+L|_{\mathcal V}=3I-J_3,\qquad
+W(t)|_{\mathcal V}=\frac{J_3}{3}
++\exp(-3it)\left(I-\frac{J_3}{3}\right).
+$$
+
+从 $u$ 出发，在低层计算基 $10,01,11$ 上的概率依次为
+
+$$
+\left(\frac{5+4\cos3t}{9},\quad
+\frac{2-2\cos3t}{9},\quad
+\frac{2-2\cos3t}{9}\right).
+$$
+
+尤其 $W(2\pi/3)$ 在 $\mathcal V$ 上为恒等。
+
+证明。三个低层标签满足 $10\mapsto01\mapsto11\mapsto10$，三个高层对偶标签满足 $10\mapsto11\mapsto01\mapsto10$。前两个低层标签的进位为 $0$，第三个进位虽为 $1$，但对应高层标签 $01$ 的 $p_0=0$，故定理 7.3 的相位在三步均为 $1$。在三循环上 $U+U^\dagger=J_3-I$，所以得到 $L$ 的表达。$J_3/3$ 是均匀向量方向上的投影，其补空间的 $L$ 本征值为 $3$，指数公式随即成立。写 $r=\exp(-3it)$，从 $u$ 到自身的振幅为 $(1+2r)/3$，到另两基向量的振幅均为 $(1-r)/3$。各低层标签互异，偏迹后计算基概率就是这三个振幅的模平方，得到显示公式及回归。$\square$
+

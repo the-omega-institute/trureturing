@@ -1,0 +1,24 @@
+**定理 15.2（同一个标签达到循环群和正规群的阶）。** 对每个 $e\ge2$，包括合数，有
+
+$$
+\max_v|\langle g\rangle v|=T_e=\pi(e),\qquad
+\max_v|N_ev|=h_e=
+\begin{cases}
+T_e,&-I\in\langle g\rangle,\\
+2T_e,&-I\notin\langle g\rangle.
+\end{cases}
+\tag{15.1}
+$$
+
+两种最大值均由 $\alpha=(1,0)^{\mathsf T}$ 达到。若 $e=\prod_i p_i^{a_i}$，则 $T_e=\operatorname{lcm}_iT_{p_i^{a_i}}$。
+
+证明。$\alpha,g\alpha$ 的列矩阵为 $\left(\begin{smallmatrix}1&-1\\0&1\end{smallmatrix}\right)$，行列式为 $1$，所以在每个剩余环上均为一组基。任何与 $g$ 交换且固定 $\alpha$ 的矩阵也固定 $g\alpha$，因而为恒等。将此用于 $\langle g\rangle$ 与 $N_e$，两个稳定子均平凡，轨道大小分别达到相应群阶。$N_e$ 中元素形如 $\varepsilon g^k$，$\varepsilon\in\{1,-1\}$，故其阶为 $T_e$ 或 $2T_e$。
+
+对 $k\ge1$，Fibonacci 矩阵式
+
+$$
+M^k=\begin{pmatrix}F_{k-1}&F_k\\F_k&F_{k+1}\end{pmatrix}
+$$
+
+表明 $M^k=I$ 恰当 $F_k=0,F_{k+1}=1$ 模 $e$。转置与取逆保持矩阵阶，故 $T_e=\pi(e)$。CRT 下 $g_e^k=I$ 恰当同一个 $k$ 被每个局部矩阵阶整除，遂得最小公倍数。此处使用 Robinson, [*The Fibonacci Matrix Modulo m*，第 30–33 页，性质 (iii)、(iv) 及矩阵周期解释](https://www.fq.math.ca/Scanned/1-2/robinson.pdf)中的经典矩阵阶与最小公倍数工具；原文第 30、33 页的符号排印以[更正页](https://www.fq.math.ca/Scanned/2-1/corrections6.pdf)为准。上述基向量证明把这些周期工具具体接到本卷的完整 Fourier 轨道。$\square$
+
