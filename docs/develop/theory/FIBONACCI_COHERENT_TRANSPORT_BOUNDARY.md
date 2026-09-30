@@ -902,3 +902,508 @@ $$
 若去掉仪器支撑条件，同一效果可能来自保留模式分支，也可能来自把模式送到 $|\mathrm{vac}\rangle$ 的吸收分支；具体的相同点击概率、不同后继构造见[波粒事件卷命题 4.3](https://github.com/the-omega-institute/trureturing/blob/64b78db1ad18a8a90b42e13a412dfc281d5c0922/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md#L132)。因此概率记录不单独确定吸收或存活，只有指定实际操作才确定下一合法动作。这也符合[动态边界卷第 19 节](https://github.com/the-omega-institute/trureturing/blob/64b78db1ad18a8a90b42e13a412dfc281d5c0922/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md#L1562)将未来响应和选择器纳入边界的要求。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 11. 实际有限事件的效果张成、固定时钟与相干端口
+
+**定义 11.1（联合历史效果与四种 FIB 操作字母表）。** 沿用定义 1.1、1.2、7.2、8.1，输入遍历 $\mathcal H=\mathcal H_A\otimes\mathcal H_H$ 上的全部密度算子，允许任意层间关联。每项低层仪器均为定义 1.3 的任意有限结果仪器，其 Kraus 算子在联合空间上为 $K_{y\mu}\otimes I_H$。协议是有限自适应树；同一已有记录及同一声明的经典控制数据决定下一动作，所有终端读出也只在低层。对固定完整历史 $h$，令 $\mathcal J_h$ 为该路径上未归一化的完全正分支之复合。其实际事件效果及联合概率为
+
+$$
+E_h=\mathcal J_h^\dagger(I),\qquad
+\Pr_\rho(h)=\operatorname{Tr}\mathcal J_h(\rho)
+=\operatorname{Tr}(E_h\rho).
+$$
+
+对同一协议中若干互斥完整历史组成的事件 $B$，置 $E_B=\sum_{h\in B}E_h$；中途事件可对其全部后继历史求和。所有这些效果满足 $0\le E_B\le I$。对于给定字母表 $\Sigma$，记实际事件效果集合为 $\mathscr F_\Sigma$，并置
+
+$$
+S_\Sigma=\operatorname{span}_{\mathbb C}\mathscr F_\Sigma.
+$$
+
+联合事件的未归一化概率是输入的线性函数；正概率条件事件的比值另行计算，不作为上述线性效果。此用法与 Grigoletto–Ticozzi, [*Exact model reduction for discrete-time conditional quantum dynamics*，§II.A–B、定义 1 与问题 1](https://arxiv.org/pdf/2403.12575v2)的未归一化历史及条件精确约化约定一致。
+
+以下四种字母表均包含上述全部低层仪器，区别只在联合演化原语：$\Sigma_{\mathrm{dis}}$ 允许正向 $U$，即定理 7.4 的合同；$\Sigma_{\mathrm{orb}}$ 允许 $U$ 及所有实时间的 $W(t)$，即定理 8.5 的合同；$\Sigma_W$ 仅允许所有 $t\ge0$ 的 $W(t)$；对固定 $\Delta>0$，$\Sigma_\Delta$ 仅允许一个 $W(\Delta)$ 及其有限次重复。后两者都不以 $U$ 为原语。记
+
+$$
+\mathcal A_{\mathrm{dis}}:=\mathcal A_{\min}
+=\mathcal B(\mathcal H_A)\otimes\mathcal T_H,
+\qquad
+\mathcal A_{\mathrm{orb}}
+=\mathcal B(\mathcal H_A)\otimes
+\bigoplus_{O\in\widehat H/\langle g\rangle}\mathcal B(\mathbb C^O).
+$$
+
+**定理 11.2（离散与连续 FIB 的实际统计边界）。** 对所有 $d,e\ge2$，有
+
+$$
+S_{\mathrm{dis}}=\mathcal A_{\mathrm{dis}},\qquad
+S_{\mathrm{orb}}=\mathcal A_{\mathrm{orb}}.
+$$
+
+因而两个任意联合输入在 $\Sigma_{\mathrm{dis}}$ 的全部有限协议中具有相同事件概率，当且仅当定义 7.2 的每个 $\sigma_p$ 相同；在 $\Sigma_{\mathrm{orb}}$ 中具有相同的全部事件概率，当且仅当定义 8.4 的每个完整块 $\tau_O$ 相同。
+
+证明。对本定理任一字母表，先由实际仪器构造一个可应用既有最小性结果的代数。暂记 $S=S_\Sigma$；全部效果自伴且全事件效果为 $I$，故 $S^\dagger=S$ 且 $I\in S$。给定任意低层矩阵 $K$，取 $\epsilon>0$ 使 $\epsilon\|K\|\le1$。前置 Kraus 算子为
+
+$$
+\epsilon K,\qquad (I_A-\epsilon^2K^\dagger K)^{1/2}
+$$
+
+的低层二结果仪器，记录第一结果后继续产生效果 $E$ 的协议。这个联合事件的效果是 $\epsilon^2(K^\dagger\otimes I_H)E(K\otimes I_H)$。除去非零标量，再线性延拓，得到该夹乘对每个 $E\in S$ 都属于 $S$。省略高层恒等因子，极化给出
+
+$$
+A^\dagger EB=\frac14\sum_{r=0}^3i^{-r}
+(A+i^rB)^\dagger E(A+i^rB)\in S.
+$$
+
+取其中一个低层矩阵为恒等，即知 $S$ 是低层全矩阵代数的左右双模。所有低层终端效果也已张成 $\mathcal B(\mathcal H_A)\otimes I_H$。
+
+在此实际效果空间上定义乘子代数
+
+$$
+\mathfrak D(S)=\{X\in\mathcal B(\mathcal H):XS\subseteq S,
+\ SX\subseteq S\}.
+$$
+
+它对线性组合及乘积封闭，含 $I$。若 $X\in\mathfrak D(S)$，利用 $S^\dagger=S$，有 $X^\dagger E=(E^\dagger X)^\dagger\in S$ 及 $EX^\dagger=(XE^\dagger)^\dagger\in S$，故也对伴随封闭。它是有限维含幺 $C^*$ 代数；由 $I\in S$ 及低层双模性质，
+
+$$
+\mathcal B(\mathcal H_A)\otimes I_H
+\subseteq\mathfrak D(S)\subseteq S.
+$$
+
+若 $V$ 是任一允许酉，前置 $V$ 给出 $\alpha_V(S)\subseteq S$，其中 $\alpha_V(X)=V^\dagger XV$。有限维单射性使该包含成为相等。于是 $\alpha_V$ 也将 $\mathfrak D(S)$ 映到自身，且是满射：例如 $\alpha_V(X)E=\alpha_V(X\alpha_V^{-1}(E))\in S$，右乘情形相同，逆向包含同理。这只是在有限维空间中使用逆映射，没有增加物理逆门许可。
+
+对离散合同，定理 7.1 因而给出 $\mathcal A_{\mathrm{dis}}\subseteq\mathfrak D(S_{\mathrm{dis}})\subseteq S_{\mathrm{dis}}$。对原连续合同，定理 8.5 同样给出 $\mathcal A_{\mathrm{orb}}\subseteq\mathfrak D(S_{\mathrm{orb}})\subseteq S_{\mathrm{orb}}$。反过来，这两个既有代数分别在其允许酉拉回及每个低层完全正分支的伴随作用下不变，并包含低层终端效果。从终端沿每条有限历史反向归纳，再对事件求和，得到 $S_{\mathrm{dis}}\subseteq\mathcal A_{\mathrm{dis}}$ 和 $S_{\mathrm{orb}}\subseteq\mathcal A_{\mathrm{orb}}$，完成两项等式。
+
+实际效果的线性张成相等后，有限维迹配对表明：所有事件概率相同，恰好等价于两态在相应代数上的全部线性泛函相同。Fourier 单点块或轨道完整块正是这些泛函的密度矩阵表示。若某个保留块不同，存在代数中的自伴算子区分它们；将该算子展开成有限个实际效果的线性组合，至少一个实际事件就有不同概率。
+
+以观测线性空间刻画不可区分性的标准方法见 D’Alessandro, [*On Quantum State Observability and Measurement*，定理 5 及 §3 的式 (53)–(56)](https://arxiv.org/pdf/quant-ph/0307127v1)。本处从有限低层过滤、极化到 $\mathfrak D(S)$ 的推导承担具体 FIB 效果张成等于上述代数的桥梁。效果的线性组合不必本身是一个可执行效果；结论不授予高层投影仪器，不断言每个代数正元素均可由单一事件实现，也不提供单次未知态恢复或高效层析。统计等价的输入域是 $AH$；不能据此推出只读低层时对额外不可读参考关联的必要性结论。定理 7.4、8.5 的旁观参考逐分支充分性仍按各自的条件成立。$\square$
+
+**定理 11.3（仅非负时间行走已生成全部轨道响应）。** 对定义 11.1 中没有离散 $U$ 原语的 $\Sigma_W$，任意 $d,e\ge2$ 都有
+
+$$
+S_W=\mathcal A_{\mathrm{orb}}.
+$$
+
+因此其全部允许历史统计相同，当且仅当全部 $\tau_O$ 相同；加入离散 $U$ 不增加效果空间的方向。
+
+证明。将定理 11.2 的过滤、极化及乘子构造用于 $S_W$，记所得代数为 $\mathfrak D_W$。它包含低层全矩阵代数，满足 $\mathfrak D_W\subseteq S_W$，并被每个非负时间拉回
+
+$$
+\alpha_t(X)=W(t)^\dagger XW(t)
+$$
+
+规范化。以下交换子也可由有限个非负时间精确取得。令 $\Lambda=\operatorname{spec}L$、$\Omega=\Lambda-\Lambda$、$s=|\Omega|$。由于 $\Lambda\subseteq[0,4]$，不同 $\nu\in\Omega$ 的数 $z_\nu=\exp(i\pi\nu/8)$ 两两不同。Vandermonde 矩阵可逆，故存在 $b_0,\ldots,b_{s-1}\in\mathbb C$ 满足 $\sum_k b_kz_\nu^k=i\nu$。在 $L$ 的各谱角上比较，得到对所有 $X$ 的恒等式
+
+$$
+i[L,X]=\sum_{k=0}^{s-1}b_k\alpha_{k\pi/8}(X).
+$$
+
+于是 $[L,X]\in\mathfrak D_W$ 对每个 $X\in\mathfrak D_W$ 成立，没有使用无限协议或近似闭包。
+
+记高层置换 $V=U_e$，则 $U=\sum_aE_{f(a),a}\otimes T_{c(a)}V$。矩阵恒等式
+
+$$
+M-I=M^{-1},\qquad M^2-I=M
+$$
+
+使两者在模 $d$ 上都可逆。因此对任何 $a\ne0$，有 $f(a)\ne a$、$f^2(a)\ne a$。置 $P_a=E_{aa}\otimes I_H$、$b=f(a)$，得到
+
+$$
+P_b[L,P_a]P_a=P_bLP_a
+=-E_{ba}\otimes T_{c(a)}V\in\mathfrak D_W.
+$$
+
+这个低层非对角角中的 $2I$ 项为零；$U^\dagger$ 项要求 $f(b)=a$，已被排除。用低层矩阵单位左右夹乘并对低层对角求和，便有 $I_A\otimes T_{c(a)}V\in\mathfrak D_W$。
+
+特别取两个明确的非零低层标签
+
+$$
+a^{(0)}=(1,0),\qquad a^{(1)}=(d-1,1).
+$$
+
+它们在所有 $d\ge2$ 时有效，包括 $d=2$，且进位分别为 $0$ 与 $(0,1)$。所以 $I_A\otimes V$、$I_A\otimes T_{(0,1)}V$ 都是乘子。在已经成立的乘子代数内取乘积和伴随，得到
+
+$$
+I_A\otimes T_{(0,1)}\in\mathfrak D_W,\qquad
+I_A\otimes V^\dagger T_{(0,1)}V
+=I_A\otimes T_{(1,0)}\in\mathfrak D_W.
+$$
+
+这两个方向生成全部高层平移。Fourier 反演给出
+
+$$
+\Pi_p:=I_A\otimes|p\rangle\langle p|
+=\frac1{e^2}\sum_{v\in H}\omega^{-p\cdot v}(I_A\otimes T_v)
+\in\mathfrak D_W,
+\qquad
+\Pi_{gp}(I_A\otimes V)\Pi_p
+=I_A\otimes|gp\rangle\langle p|\in\mathfrak D_W.
+$$
+
+沿每条 $g$ 轨道相乘并取伴随，得到轨道内的全部矩阵单位；零轨道所需的对角投影也已在其中。再乘低层矩阵，得到 $\mathcal A_{\mathrm{orb}}\subseteq\mathfrak D_W\subseteq S_W$。这些乘积是乘子代数中的运算，不是把高层算子提升为可执行原语。
+
+反向包含由定理 8.5 的逐块不变性得到：每个 $W(t)$ 和低层 Kraus 算子都保持 $g$ 轨道块，故全部实际历史效果属于 $\mathcal A_{\mathrm{orb}}$。最后使用定理 11.2 的迹配对论证即得统计等价。$\square$
+
+**定理 11.4（固定采样门的全局谱差判据）。** 对定义 11.1 的 $\Sigma_\Delta$，令 $\Lambda=\operatorname{spec}L$ 为整个 $AH$ 空间上的谱，$\Omega=\Lambda-\Lambda$ 是所有不同全局谱差的集合。若
+
+$$
+\nu,\mu\in\Omega,\quad
+e^{i\Delta\nu}=e^{i\Delta\mu}\quad\Longrightarrow\quad\nu=\mu,
+\tag{11.1}
+$$
+
+则 $S_\Delta=\mathcal A_{\mathrm{orb}}$，全部历史统计等价于相同的轨道完整块。对于所有 $d,e\ge2$，每个固定的 $0<\Delta<\pi/4$ 都满足此充分条件，特别包括 $\Delta=\pi/8$。
+
+证明。写 $L=\sum_{\lambda\in\Lambda}\lambda R_\lambda$，则
+
+$$
+\alpha_t(X)=\sum_{\lambda,\kappa\in\Lambda}
+e^{it(\lambda-\kappa)}R_\lambda XR_\kappa.
+$$
+
+令 $s=|\Omega|$。条件 (11.1) 使 $z_\nu=e^{i\Delta\nu}$ 两两不同，故对任意 $t\ge0$ 有唯一的次数小于 $s$ 的插值多项式，其系数 $c_k(t)$ 满足
+
+$$
+\sum_{k=0}^{s-1}c_k(t)z_\nu^k=e^{it\nu}
+\quad(\nu\in\Omega).
+$$
+
+因此在整个算子空间上有精确恒等式
+
+$$
+\alpha_t=\sum_{k=0}^{s-1}c_k(t)\alpha_{k\Delta}.
+$$
+
+右侧第 $k$ 项由前置 $k$ 次固定门 $W(\Delta)$ 给出，$k=0$ 是不施加演化。故 $S_\Delta$ 在全部 $\alpha_t$ 下保持，且原本就在低层分支伴随映射下保持。从任意 $\Sigma_W$ 协议的终端反向展开，每个等待步骤只替换为上述有限线性组合；有限树、有限 Kraus 和与事件求和仍给有限个合法采样协议效果的线性组合。于是 $S_W\subseteq S_\Delta$。采样门又属于 $\Sigma_W$，所以 $S_\Delta\subseteq S_W$，定理 11.3 给出等式。
+
+由于 $\Omega\subseteq[-4,4]$，当 $0<\Delta<\pi/4$ 且 $\nu\ne\mu$ 时有 $0<|\Delta(\nu-\mu)|<2\pi$，故不可能等于 $2\pi$ 的整数倍。这证明统一充分界。若 $r=|\Lambda|$，则 $s\le r(r-1)+1$；每个等待步骤的插值只用非负幂 $0,\ldots,s-1$。这是效果空间中的有限精确展开，系数不是概率，不表示用一次采样门物理实现任意 $W(t)$，也不提供整个协议展开或统计估计的效率保证。$\square$
+
+**命题 11.5（采样端点与一个确切失效时钟）。** 对所有 $d,e\ge2$，$\Delta=\pi/4$ 都不满足 (11.1)。当 $d=e=2$、$\Delta=2\pi$ 时，则有真正严格的效果空间包含
+
+$$
+S_{2\pi}=\mathcal B(\mathbb C^4)\otimes I_4
+\subsetneq\mathcal A_{\mathrm{orb}},\qquad
+\dim_{\mathbb C}S_{2\pi}=16,\quad
+\dim_{\mathbb C}\mathcal A_{\mathrm{orb}}=160.
+$$
+
+证明。令 $n=de\ge4$。$U$ 与 $M$ 在 $(\mathbb Z/n\mathbb Z)^2$ 上的置换仅相差 digits 重标记。若 $M$ 的模 $n$ 阶为奇数，取行列式会得到 $-1=1\pmod n$，矛盾。这个线性作用忠实，故其置换阶也为偶数；置换阶是各循环长度的最小公倍数，所以至少有一个偶长循环，其循环移位具有特征值 $-1$。又零标签固定，$U$ 有特征值 $1$。于是 $0,4\in\Lambda$，$-4,4\in\Omega$。在 $\Delta=\pi/4$ 处，两者相位均为 $-1$，判据失效。
+
+对于 $d=e=2$，全局模数为 $4$，且
+
+$$
+M^3=\begin{pmatrix}1&2\\2&3\end{pmatrix},\qquad
+M^6=\begin{pmatrix}5&8\\8&13\end{pmatrix}\equiv I\pmod4.
+$$
+
+全局置换包含六循环
+
+$$
+(1,0)\to(0,1)\to(1,1)\to(1,2)
+\to(2,3)\to(3,1)\to(1,0).
+$$
+
+因 $U^6=I$ 且这条六循环给出全部六次单位根，得到 $\operatorname{spec}L=\{0,1,3,4\}$，故 $W(2\pi)=I$。此固定采样合同中的全部操作都只作用低层，效果张成恰为 $\mathcal B(\mathbb C^4)\otimes I_4$。高层模 $2$ 的 $g$ 轨道大小为 $1,3$，定理 8.5 给出轨道代数维数 $16(1+9)=160$。
+
+命题 8.2 的三循环限制谱不能代替这里的全局谱。$\Delta=\pi/4$ 的结论仅是充分判据失效，未判定该端点是否仍有 $S_\Delta=\mathcal A_{\mathrm{orb}}$；$\Delta=2\pi$ 的严格失败由上面的恒等门计算单独证明。所有可行采样时钟的必要充分分类仍未给出。$\square$
+
+**命题 11.6（相同响应空间不使连续等待成为离散运输）。** 对任意 $d,e\ge2$、任意实数 $t$ 及任意 $|\zeta|=1$，均有 $W(t)\ne\zeta U$。未插入低层控制的有限个 $W(t)$ 的乘积也不能等于 $\zeta U$。
+
+证明。由 $M-I=M^{-1}$ 与 $M^2-I=M$ 在模 $de$ 上可逆，$M$ 的每条非零循环长度 $\ell$ 都至少为 $3$。任选这样一条循环，$U$ 在其上有不同的特征值 $\lambda=e^{2\pi i/\ell}$ 和 $\lambda^{-1}$。两者在 $L$ 上具有同一能量 $2-\lambda-\lambda^{-1}$，所以 $W(t)$ 在这两个本征向量上给出相同相位；$\zeta U$ 则给出不同的 $\zeta\lambda$ 与 $\zeta\lambda^{-1}$，矛盾。有限个等待门的乘积是 $W(\sum t)$，故结论相同。这一论证只比较固定的 $U=U_M$ 与未插入控制的等待，不判定任意低层控制交错后的精确门合成。$\square$
+
+**定义 11.7（FIB 历史的共同 CPTP 状态解码资源）。** 选取定理 11.2–11.4 中一个已确定实际效果张成的 FIB 字母表 $\Sigma$，并取相应 Fourier 分割 $\mathcal P$：离散合同使用全部单点，轨道合同使用 $\langle g\rangle$ 轨道。置
+
+$$
+\mathcal H_O=\mathcal H_A\otimes\mathbb C^O,\qquad
+P_O=I_A\otimes Q_O,\qquad
+\mathcal E_{\mathcal P}(\rho)=\sum_{O\in\mathcal P}P_O\rho P_O.
+$$
+
+编码 $\mathrm{Enc}$ 与同一个状态解码 $\mathrm{Dec}$ 均为 CPTP；它们固定且不随随后选择的协议改变。只给一份未知的 $AH$ 输入，解码返回同一 $\mathcal H$ 上的状态。中间资源有两种计费合同：其一是普通有限 Hilbert 空间 $\mathcal K$，全部 $\dim\mathcal K$ 计费；其二是任意有限的免费经典 flag 集 $F$ 及公共 $q$ 维量子端口，中间态代数为 $\bigoplus_{f\in F}\mathcal B(\mathbb C^q)$，只计 $q$。后一合同允许一般编码分支 $\mathrm{Enc}_f$，各分支完全正、总和保迹，概率和量子态均可依赖整个输入；不预设 $f$ 是原块标签。解码写为 $\mathrm{Dec}(\bigoplus_f\sigma_f)=\sum_f\mathrm{Dec}_f(\sigma_f)$，每个 $\mathrm{Dec}_f$ 为 CPTP。
+
+中间传递资源恰为以上所列空间，没有隐藏量子旁路或预共享纠缠。允许固定局部辅助态并将其丢弃，均吸收入 CPTP 映射；经典 flag 是有限字母，不承载未知态的无限精度经典描述。统计任务要求 $T=\mathrm{Dec}\circ\mathrm{Enc}$ 对全部输入及全部实际历史效果满足
+
+$$
+\operatorname{Tr}(E T(\rho))=\operatorname{Tr}(E\rho)
+\quad(E\in\mathscr F_\Sigma).
+$$
+
+对应的精确块恢复任务要求 $T=\mathcal E_{\mathcal P}$。密度算子复线性张成全部算子，故对全部输入态的精确恢复也是线性映射恒等式，张量任意参考系统的恒等映射后仍成立。这是在 FIB 操作合同之外另行指定的编解码资源合同；不要求编码中的高层操作属于原有低层协议字母表。共同 CPTP 编解码及免费有限经典寄存器采用 Bluhm–Rauber–Wolf, [*Quantum Compression Relative to a Set of Measurements*，定义 4.1](https://arxiv.org/pdf/1708.04898v4)的约定。
+
+**命题 11.8（FIB 操作改变所需相干端口）。** 在定义 11.7 的单份精确共同解码合同下，离散 $\Sigma_{\mathrm{dis}}$ 的最小免费 flag 量子端口为 $d^2$；原连续 $\Sigma_{\mathrm{orb}}$、仅非负等待的 $\Sigma_W$，以及满足 (11.1) 的固定采样 $\Sigma_\Delta$，其最小端口均为 $d^2\max_{O\in\widehat H/\langle g\rangle}|O|$。这些合同的最小全计费 Hilbert 记忆维数均为 $d^2e^2$。特别地，当 $e=2$ 时，FIB 字母表所决定的响应块及两种精确成本为
+
+$$
+\begin{aligned}
+\Sigma_{\mathrm{dis}}:&\quad
+(d^2,d^2,d^2,d^2),\qquad
+q_{\min}=d^2,\qquad (\dim\mathcal K)_{\min}=4d^2,\\
+\Sigma_{\mathrm{orb}},\ \Sigma_W,\ \Sigma_\Delta\text{ 满足 (11.1)}:&\quad
+(d^2,3d^2),\qquad
+q_{\min}=3d^2,\qquad (\dim\mathcal K)_{\min}=4d^2.
+\end{aligned}
+$$
+
+其中每个 $0<\Delta<\pi/4$ 都适用。这些最优值对共同解码保持全部实际历史统计和精确恢复 $\mathcal E_{\mathcal P}$ 两项任务相同；两项任务要求的通道等式并不相同。
+
+证明。先把具体 FIB 效果识别接到共同解码要求。定理 11.2–11.4 给出
+
+$$
+\operatorname{span}_{\mathbb C}\mathscr F_\Sigma
+=\mathcal A_{\mathcal P}
+=\bigoplus_{O\in\mathcal P}\mathcal B(\mathcal H_O).
+$$
+
+所以统计保持等价于 $T^\dagger$ 在 $\mathcal A_{\mathcal P}$ 上逐点恒等。Pinching 关于迹配对自伴，像空间恰为 $\mathcal A_{\mathcal P}$，故对所有 $X$ 与 $\rho$，
+
+$$
+\operatorname{Tr}\bigl[X\mathcal E_{\mathcal P}(T(\rho)-\rho)\bigr]
+=\operatorname{Tr}\bigl[\mathcal E_{\mathcal P}(X)(T(\rho)-\rho)\bigr]=0.
+$$
+
+由迹配对非退化性得到准确的通道条件
+
+$$
+\mathcal E_{\mathcal P}\circ T=\mathcal E_{\mathcal P}.
+$$
+
+后置 $\mathcal E_{\mathcal P}$，将解码换为 $\mathrm{Dec}'=\mathcal E_{\mathcal P}\circ\mathrm{Dec}$，不改变中间资源，即取得 $\mathrm{Dec}'\circ\mathrm{Enc}=\mathcal E_{\mathcal P}$。反之，精确 pinching 固定每个实际效果的期望，自然保持全部历史统计。故两任务的可行记忆维数相同。这里没有从统计保持推出原来的 $T$ 就等于 pinching，例如恒等通道也保持统计。
+
+下面在这些已识别的 FIB 块上使用已知的精确块压缩工具。Bluhm–Rauber–Wolf 上引文定理 7.1 给出最大矩阵块维数的上界构造，定理 9.2 给出精确态族恢复的相应最优值；应用的态族是 $\{\mathcal E_{\mathcal P}(\rho):\rho\text{ 为密度算子}\}$，其生成代数正是 $\bigoplus_O\mathcal B(\mathcal H_O)$。固定这一态族与恢复全部输入的 pinching 有相同成本：后者固定该态族，前者只需在编码前再施加 pinching。为明确一般输入相关 flag 和全域 CPTP 解码的条件，将这些标准工具在本处的秩论证写出。
+
+令 $n_O=\dim\mathcal H_O=d^2|O|$，$J_O:\mathcal H_O\to\mathcal H$ 为自然包含。全记忆计费时，取全部块内正交基，合计 $\sum_On_O=d^2e^2$ 个向量 $u_j$。每个基态都被 pinching 固定。若 $\sigma_j=\mathrm{Enc}(|u_j\rangle\langle u_j|)$，则解码拉回的 POVM $Q_j=\mathrm{Dec}^\dagger(|u_j\rangle\langle u_j|)$ 满足 $\operatorname{Tr}(Q_j\sigma_k)=\delta_{jk}$。$\sigma_j$ 的支撑位于 $Q_j$ 的特征值 $1$ 子空间，而其余 $\sigma_k$ 的支撑位于其核。因此这些非零支撑两两正交，$\dim\mathcal K\ge\sum_On_O$。取 $\mathcal K=\mathcal H$、编码为 pinching、解码为恒等，达到此界。
+
+免费 flag 时，固定一个最大块 $O$，令编码分支 Kraus 算子为 $B_{f\alpha}:\mathcal H\to\mathbb C^q$，解码分支 Kraus 算子为 $A_{f\beta}:\mathbb C^q\to\mathcal H$。限制输入到该块后，复合 Kraus 算子为 $C_{f\alpha\beta}=A_{f\beta}B_{f\alpha}J_O$，每个秩至多为 $q$；这种经过公共量子端口的 Kraus 秩界也见 Bluhm–Rauber–Wolf 上引文引理 5.2 的证明。块恢复要求它们给出的通道恰为 $X\mapsto J_OXJ_O^\dagger$。其 Choi 算子是秩一的；用归一化最大纠缠向量 $|\Omega_O\rangle$ 表示，就是
+
+$$
+\sum_{f,\alpha,\beta}
+|(I\otimes C_{f\alpha\beta})\Omega_O\rangle
+\langle(I\otimes C_{f\alpha\beta})\Omega_O|
+=|(I\otimes J_O)\Omega_O\rangle
+\langle(I\otimes J_O)\Omega_O|.
+$$
+
+正算子之和为秩一时，每个非零求和向量都与目标向量共线：对目标的任意正交向量取二次型，各非负项只能全为零。向量化单射遂给出每个非零 $C_{f\alpha\beta}=\alpha_{f\alpha\beta}J_O$，其秩为 $n_O$。至少一个非零项存在，因而 $q\ge n_O$。这是 Nayak–Sen, [*Invertible Quantum Operations and Perfect Encryption of Quantum States*，定理 2.1 证明中的 $B_jA_i=\alpha_{ji}I$](https://arxiv.org/pdf/quant-ph/0605041v4)所用可逆 Kraus 秩论证在该 FIB 块上的应用；参考系统只用于通道等式的数学检验，不是额外传递或读出资源。下界没有限制 flag 怎样依赖输入。
+
+为达到上界，取 $q=\max_On_O$，为每块选等距映射 $V_O:\mathcal H_O\to\mathbb C^q$，将块标签作为一种可行的有限 flag，置
+
+$$
+\begin{aligned}
+\mathrm{Enc}_O(\rho)&=V_OJ_O^\dagger\rho J_OV_O^\dagger,\\
+\mathrm{Dec}_O(\sigma)&=J_OV_O^\dagger\sigma V_OJ_O^\dagger
++\operatorname{Tr}\bigl[(I_q-V_OV_O^\dagger)\sigma\bigr]\tau_*,
+\end{aligned}
+$$
+
+其中 $\tau_*$ 为固定的 $\mathcal H$ 上密度算子。各编码分支完全正且总迹守恒；解码的两项均完全正，迹之和为 $\operatorname{Tr}\sigma$，所以在端口全部状态上均为 CPTP。编码输出落在 $V_O$ 的像中，第二项为零，复合恰为 $\sum_OP_O\rho P_O$。由此在本 FIB 分割上得到 $q_{\min}=\max_On_O=d^2\max_O|O|$ 及全记忆值 $\sum_On_O=d^2e^2$。
+
+离散分割的 $e^2$ 个块均为单点。$e=2$ 时，$g$ 的轨道是 $\{00\}$ 与 $\{10,11,01\}$，故连续或满足判据的采样操作需要 $d^2$ 与 $3d^2$ 两个块，得到所述操作依赖的端口变化。
+
+这里必须使用实际效果的线性张成以及同一个 CPTP 状态解码器。仅有 $C^*(\mathscr F_\Sigma)=\mathcal A_{\mathcal P}$ 不足以推出上述下界，参见 Bluhm–Rauber–Wolf 上引文推论 8.5。逐测量另选读出、受限效果集、近似或渐近资源不由本命题判定。第 9 节合法字的区域 Schmidt 切口也不是本节的低高模数分解，其容量不能直接代入此编解码合同。$\square$
+
+## 12. 离散几何、连续几何与正规轨道边界
+
+**定义 12.1（无附加相位的混合几何合同）。** 在同一 digits 分解 $x=a+dh$ 上，固定整数矩阵
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}1&1\\0&-1\end{pmatrix},\qquad
+C=MJ=\begin{pmatrix}0&-1\\1&0\end{pmatrix}.
+$$
+
+对这些矩阵及其乘积 $G$，标准提升始终是不另加相位的置换 $|x\rangle\mapsto|[Gx]_{de}\rangle$。在低高分解中记为 $U_G$，并定义
+
+$$
+f_G(a)=[Ga]_d,\qquad
+c_G(a)=\frac{Ga-f_G(a)}d\pmod e,\qquad
+\gamma_G=G^{-\mathsf T}.
+$$
+
+分子用整数代表计算，允许负进位。于是
+
+$$
+U_G|a,h\rangle=|f_G(a),Gh+c_G(a)\rangle,
+\qquad U_GU_{G'}=U_{GG'}.
+$$
+
+沿用定义 7.2 的 Fourier 约定，写为
+
+$$
+\begin{aligned}
+U_G&=\sum_{p\in\widehat H}F_{G,p}\otimes|\gamma_Gp\rangle\langle p|,\\
+F_{G,p}|a\rangle&=\omega^{(\gamma_Gp)\cdot c_G(a)}|f_G(a)\rangle.
+\end{aligned}
+$$
+
+每个 $F_{G,p}$ 都是低层酉，且 $F_{G,p}|0\rangle=|0\rangle$。记 $g=M^{-\mathsf T}$、$j=J^{-\mathsf T}$，在 $\widehat H$ 上置
+
+$$
+\Gamma=\langle g,j\rangle,\qquad N=\langle g,-I\rangle,
+\qquad L_G=2I-U_G-U_G^\dagger,\quad W_G(t)=e^{-itL_G}.
+$$
+
+混合字母表 $\Sigma_{\mathrm{mix}}$ 允许离散 $U_M,U_J,U_C$、所有 $t\ge0$ 的 $W_M(t)$，以及定义 11.1 的任意低层有限仪器和有限自适应选择；全部读出在低层。它不含 $W_J$ 或 $W_C$。这里 $U_M=U$、$W_M(t)=W(t)$，且 $U_C=U_MU_J$。对 $K=N$ 或 $\Gamma$，记其 Fourier 轨道分割为 $\mathcal P_K=\widehat H/K$，并置
+
+$$
+\mathcal A_K=\mathcal B(\mathcal H_A)\otimes
+\bigoplus_{O\in\mathcal P_K}\mathcal B(\mathbb C^O),\qquad
+\mathcal E_K(\rho)=\sum_{O\in\mathcal P_K}(I_A\otimes Q_O)\rho(I_A\otimes Q_O).
+$$
+
+**定理 12.2（仅连续 $M$ 的混合合同保留正规闭包块）。** $N$ 恰是 $\langle g\rangle$ 在 $\Gamma$ 中的正规闭包。对全部 $d,e\ge2$，混合合同的实际事件效果张成、代数维数及条件充分边界为
+
+$$
+S_{\mathrm{mix}}=\mathcal A_N,\qquad
+\dim_{\mathbb C}\mathcal A_N=d^4\sum_{O\in\mathcal P_N}|O|^2,
+\qquad \rho\longmapsto\mathcal E_N(\rho).
+$$
+
+这里 pinching 保留每条正概率路径的后继块及整条记录分布。任意两联合输入的全部允许历史统计相同，当且仅当其全部 $N$ 轨道完整块相同。$\mathcal A_N$ 也恰为包含全部低层算子、在这些允许酉拉回下不变的最小含幺 $C^*$ 代数。
+
+进一步，每条 $\Gamma$ 轨道由一条或两条 $N$ 轨道组成，且
+
+$$
+\mathcal A_N=\mathcal A_\Gamma
+\quad\Longleftrightarrow\quad
+jp\in Np\quad\text{对所有 }p\in\widehat H.
+$$
+
+证明。直接乘矩阵得
+
+$$
+j^2=I,\qquad jgj=-g^{-1},\qquad C^{-\mathsf T}=gj.
+$$
+
+正规闭包包含 $g$ 及 $jgj=-g^{-1}$，因而包含它们的乘积 $-I$；反之，$N=\langle g,-I\rangle$ 被 $g$ 与 $j$ 的共轭保持。因此它正是所述正规闭包，且 $\Gamma=N\cup Nj$，其中两个陪集允许相同。由于正规性，$j(Np)=N(jp)$，故 $\Gamma p=Np\cup N(jp)$，两个轨道或者相等或者不交。各分割的块矩阵描述立即给出代数相等的判据。
+
+先证所有实际效果的上包含及逐分支充分性。定义 12.1 的展开表明离散 $U_G$ 对 $G=M,J,C$ 将 $\mathcal H_A\otimes\mathbb C^O$ 送到 $\mathcal H_A\otimes\mathbb C^{\gamma_GO}$。正规性保证 $\gamma_GO$ 仍是一条 $N$ 轨道。因此这些离散酉可以置换完整块，并规范化 $\mathcal A_N$。因为 $g\in N$，$U_M$ 保持每一条 $N$ 轨道，故 $L_M,W_M(t)$ 也逐块作用；低层 Kraus 算子与全部 $I_A\otimes Q_O$ 交换。
+
+于是 $\mathcal E_N$ 与每个允许离散酉通道、连续酉通道及低层仪器分支交换，且保持低层偏迹。固定分支的未归一化块可以先 pinching 再更新，或先更新再 pinching，结果相同；分支迹相同。沿有限自适应树归纳，得到全部记录概率相同，正概率时用共同的概率归一化后，后继块仍相同。这里 $U_J$ 可以置换块，充分性不要求每个块投影分别与 $U_J$ 交换。从终端效果反向归纳，同时得到 $S_{\mathrm{mix}}\subseteq\mathcal A_N$。
+
+为证明实际效果的下包含，把定理 11.2 的乘子构造用于此合同，记 $\mathfrak D_{\mathrm{mix}}=\mathfrak D(S_{\mathrm{mix}})$。它含全部低层矩阵，被每个允许酉共轭规范化，且包含于 $S_{\mathrm{mix}}$。将定理 11.3 的两低层 carry 角、非负时间有限插值及 Fourier 反演的论证直接用于 $\mathfrak D_{\mathrm{mix}}$，得到
+
+$$
+\Pi_p\in\mathfrak D_{\mathrm{mix}},\qquad
+I_A\otimes|gp\rangle\langle p|\in\mathfrak D_{\mathrm{mix}}
+\quad(p\in\widehat H).
+$$
+
+再作已允许的离散 $U_J$ 正向共轭，得到
+
+$$
+U_J(I_A\otimes|gp\rangle\langle p|)U_J^\dagger
+=F_{J,gp}F_{J,p}^\dagger\otimes|jgp\rangle\langle jp|
+\in\mathfrak D_{\mathrm{mix}}.
+$$
+
+低层系数是酉，可乘其伴随消去。令 $r=jp$，所得边为 $r\to jgjr=-g^{-1}r$。已有的 $g$ 边与这些 $-g^{-1}$ 边生成 $N=\langle g,-I\rangle$；沿有限轨道路径相乘并取伴随，就得到每条 $N$ 轨道内的全部矩阵单位。结合低层矩阵，有
+
+$$
+\mathcal A_N\subseteq\mathfrak D_{\mathrm{mix}}
+\subseteq S_{\mathrm{mix}}\subseteq\mathcal A_N.
+$$
+
+这证明实际张成等式。任何包含低层全矩阵且在允许拉回下不变的含幺 $C^*$ 代数，也在低层 Kraus 夹乘下保持，所以包含每个实际事件效果；因而包含 $S_{\mathrm{mix}}=\mathcal A_N$，得到所述最小性。有限维迹配对给出统计等价的必要性，块维数相加给出维数公式。
+
+有限等价关系的每个等价类产生全矩阵块，是 Sims, [*Étale groupoids and their C*-algebras*，例 3.3.7](https://arxiv.org/pdf/1710.10897v2)中离散等价关系紧算子块的有限情形。这里用的是 $N$ 轨道等价关系及其矩阵单位；所述代数不认同于另一个保留稳定子资料的变换群胚 crossed product。具体是哪一个等价关系，由上面的允许操作与正规闭包计算决定。$\square$
+
+**定理 12.3（再允许一种连续几何就保留整个 $\Gamma$ 块）。** 在 $\Sigma_{\mathrm{mix}}$ 上，任选 $G=J$ 或 $G=C$，额外允许所有 $t\ge0$ 的 $W_G(t)$，记新字母表为 $\Sigma_{\mathrm{mix}+G}$。对定义 12.1 的标准无附加相位提升，有
+
+$$
+S_{\mathrm{mix}+G}=\mathcal A_\Gamma.
+$$
+
+相应的 $\Gamma$ 块 pinching 条件充分；全部实际历史统计相同，当且仅当全部 $\Gamma$ 轨道完整块相同。
+
+证明。对新合同再次使用实际效果的乘子代数 $\mathfrak D_G$。定理 12.2 中提取 $N$ 轨道矩阵单位的论证对它仍成立，故 $\mathcal A_N\subseteq\mathfrak D_G$，特别包含全部 $\Pi_p$。由于 $\operatorname{spec}L_G\subseteq[0,4]$，定理 11.3 在步长 $\pi/8$ 上的有限插值同样给出 $[L_G,X]\in\mathfrak D_G$；这里全部非负 $W_G(t)$ 均已明确许可。
+
+若 $q=\gamma_Gp\ne p$，在高层 Fourier 角上计算有
+
+$$
+\Pi_q[L_G,\Pi_p]\Pi_p
+=-\left(F_{G,p}
++\mathbf1_{\{\gamma_Gq=p\}}F_{G,q}^\dagger\right)
+\otimes|q\rangle\langle p|\in\mathfrak D_G.
+$$
+
+第一项来自 $U_G$，第二项只在有反向边时来自 $U_G^\dagger$。即使两项之和不是可逆矩阵，也可取低层零角：由 $F_{G,p}|0\rangle=|0\rangle$，括号中算子的 $00$ 矩阵元为 $1+\mathbf1_{\{\gamma_Gq=p\}}$，只能是 $1$ 或 $2$。左右乘 $E_{00}\otimes I_H$ 后，该非零系数可除去；再用 $E_{a0}$、$E_{0a}$ 左右夹乘并对 $a$ 求和，得到
+
+$$
+I_A\otimes|\gamma_Gp\rangle\langle p|\in\mathfrak D_G.
+$$
+
+固定点的对角矩阵单位本已存在。因此所有 $\gamma_G$ 邻边都取得了。$\gamma_J=j$ 与 $\gamma_C=gj$ 分别同 $N$ 生成 $\Gamma$，故与已有 $N$ 边组合，得到全部 $\Gamma$ 轨道内的矩阵单位。这证明 $\mathcal A_\Gamma\subseteq\mathfrak D_G\subseteq S_{\mathrm{mix}+G}$。
+
+反过来，所有离散几何及两种获准连续演化均保持每个 $\Gamma$ 轨道子空间，低层分支也逐块作用。因此实际效果都在 $\mathcal A_\Gamma$ 内，且 $\mathcal E_\Gamma$ 与每条分支交换。结合迹配对及逐分支归纳，得到等式、统计必要充分性和条件充分性。乘子中的高层投影仍不是额外获准的高层仪器；新增的是指定的连续 $W_G$ 族。$\square$
+
+**命题 12.4（模十一的两条特征线与低层完美区分）。** 取 $e=11$、任意 $d\ge2$，在 $\widehat H=\mathbb F_{11}^2$ 中置
+
+$$
+p=(1,4),\qquad q=(1,8),\qquad
+O_4=\mathbb F_{11}^{\times}p,\quad
+O_8=\mathbb F_{11}^{\times}q.
+$$
+
+$O_4,O_8$ 是两条互不相交、各有十点的 $N$ 轨道，$\Gamma$ 将它们合为一条二十点轨道。令
+
+$$
+\begin{aligned}
+a&=(0,1),\qquad b=(1,d-1),\qquad\omega=e^{2\pi i/11},\\
+u&=|a\rangle\otimes|p\rangle,\qquad
+v=U_Ju=\omega^3|b\rangle\otimes|q\rangle,\\
+|\psi_\pm\rangle&=\frac{u\pm iv}{\sqrt2},\qquad
+\rho_\pm=|\psi_\pm\rangle\langle\psi_\pm|.
+\end{aligned}
+$$
+
+两输入有相同 $N$ 边界，因而在 $\Sigma_{\mathrm{mix}}$ 的所有允许有限历史中不可区分。若增加 $W_J$ 的许可，施加一次 $W_J(t)$ 后仅测低层 $b$，则
+
+$$
+\Pr_\pm(b;t)=\frac{1\pm\sin4t}{2}.
+$$
+
+特别在 $t=\pi/8$，两概率分别为 $1$ 与 $0$。
+
+证明。矩阵作用给出
+
+$$
+gp=3p,\qquad gq=7q,\qquad jp=q,\qquad jq=p.
+$$
+
+模 $11$ 的 $3$ 次幂为 $3,9,5,4,1$，阶为 $5$；$7^2=5$、$7^5=-1$ 且 $7\ne-1$，故 $7$ 阶为 $10$。于是 $\langle3,-1\rangle=\langle7,-1\rangle=\mathbb F_{11}^{\times}$。两向量不是标量倍数，给出不交的两条十点 $N$ 轨道；$j$ 交换它们，定理 12.2 给出所述二十点 $\Gamma$ 轨道。这只描述两条特征线上的非零标签，不穷尽全部 $121$ 个 Fourier 标签。
+
+对低层 $a=(0,1)$，有 $Ja=(1,-1)$，故 $f_J(a)=b$、$c_J(a)=(0,-1)$。Fourier 运输相位是 $\omega^{q\cdot c_J(a)}=\omega^{-8}=\omega^3$，得到显示的 $v$。标准提升满足 $U_J^2=I$，所以 $U_Jv=u$。因为 $p,q$ 属于不同 $N$ 轨道，
+
+$$
+\mathcal E_N(\rho_+)=\mathcal E_N(\rho_-)
+=\frac12\bigl(|u\rangle\langle u|+|v\rangle\langle v|\bigr).
+$$
+
+定理 12.2 因而保证原混合合同的全部事件概率相同。在 $\operatorname{span}\{u,v\}$ 上，$U_J$ 交换 $u,v$，且
+
+$$
+W_J(t)=e^{-2it}\bigl(\cos(2t)I+i\sin(2t)U_J\bigr).
+$$
+
+写 $c=\cos(2t)$、$s=\sin(2t)$，得到
+
+$$
+W_J(t)|\psi_\pm\rangle
+=\frac{e^{-2it}}{\sqrt2}
+\bigl((c\mp s)u+i(s\pm c)v\bigr).
+$$
+
+$a\ne b$，且此不变子空间中只有 $v$ 带低层标签 $b$，故概率为 $(s\pm c)^2/2=(1\pm\sin4t)/2$。该事件只用 $E_{bb}\otimes I_H$，没有高层或联合读出。新增连续许可确实读取原 $N$ pinching 舍去的相干；在 $t=\pi/4$ 则 $W_J(\pi/4)=U_J$，那个已有的离散时刻本身不给出此严格区分。$\square$
+
+**命题 12.5（连续几何必须指定提升的相位）。** 定义 12.1 的 $U_J$ 与 $\widetilde U_J=iU_J$ 给出同一个离散酉通道，但按 $2I-V-V^\dagger$ 规则生成的连续行走不同；后者的生成元为 $2I$，行走仅为标量相位。因此只给离散通道不足以指定定理 12.3 的连续几何。
+
+证明。标准 $J$ 满足 $J^2=I$，故 $U_J^2=I$ 且 $U_J^\dagger=U_J$。标量相位在共轭中消失，所以 $\widetilde U_J\rho\widetilde U_J^\dagger=U_J\rho U_J^\dagger$。但
+
+$$
+2I-\widetilde U_J-\widetilde U_J^\dagger
+=2I-iU_J+iU_J=2I,
+\qquad \widetilde W_J(t)=e^{-2it}I.
+$$
+
+因而在混合合同上只加入 $\widetilde W_J$ 不增加任何实际效果方向，仍为 $\mathcal A_N$；模十一的命题 12.4 则证明加入标准 $W_J$ 可以严格增加它。定理 12.3 的低层零角为 $1$ 或 $2$，用到了无附加相位的标准提升；将提升换成 $iU_J$ 时正反项相消。两种连续模型具有相同离散通道，并不构成矛盾，而是连续生成元的额外相位选择不能从该离散通道恢复。$\square$
+
+## 追加锚（本行以下为增补区）
