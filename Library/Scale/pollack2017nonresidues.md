@@ -42,6 +42,13 @@ exponent are not supplied here as numerical constants, so it is not a
 finite numerical certificate. The theorem is unconditional; GRH and a
 zero-free-region assumption are absent from its hypotheses.
 
+For a reciprocal-prime weight supply, directly reuse
+[Bourgain–Lindenstrauss, Theorem 5.1](bourgainlindenstrauss2003entropy.md).
+Its cutoff is $Y\ge D^{1/4+\varepsilon}$ for sufficiently large positive
+nonsquare $D$. The linked note records its exact weighted Robin budget
+and actual-source exceptions; the prime-count theorem here does not
+automatically supply that weight at $Y=\log N$.
+
 Theorem 1.2 strengthens the cutoff for characters of higher order, using
 the Dickman-function parameter $u_k$. Quadratic characters have order two,
 so their parameter is $u_2=\sqrt e$; increasing the modulus does not increase
