@@ -1,0 +1,104 @@
+name: CI tests-lean
+
+on:
+  pull_request:
+    branches: [dev, 'integration-**']
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [dev, 'integration-**']
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: ci-tests-lean-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  tests-lean:
+    uses: ./.github/workflows/ci-unit.yml
+    with:
+      lean: toolchain
+      run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj
+      paths: |
+        .editorconfig
+        .github/*
+        .gitignore
+        Directory.Build.props
+        Directory.Packages.props
+        Golden/gate-authority-roots.toml
+        Makefile
+        Meta/Digestion/atomizers.toml
+        Meta/FILEMAP.*.toml
+        Meta/FILEMAP.toml
+        Meta/ReportConsumers/*
+        Meta/ReportProducers/*
+        Meta/ci-checks.json
+        Meta/ci-resources.json
+        Meta/engineering-projects.json
+        Meta/judge-seed.json
+        Meta/package-materials.json
+        Reg/lake-manifest.json
+        Reg/lakefile.toml
+        docs/CONTRIBUTING.md
+        docs/GOVERNANCE.md
+        global.json
+        lake-manifest.json
+        lakefile.toml
+        lean-report-inputs.json
+        lean-toolchain
+        tools/ARCHITECTURE.md
+        tools/Architecture/*
+        tools/Makefile
+        tools/StrataLint.Engine/*
+        tools/StrataLint.Lean/*
+        tools/StrataLint.sln
+        tools/TOWER.yaml
+        tools/TestSupport/StrataLint.ProcessTestSupport/*
+        tools/TestSupport/StrataLint.TestSupport/*
+        tools/Trureturing.Truth/*
+        tools/lean-inspector-interface/*
+        tools/lean-inspector/*.json
+        tools/lean-inspector/*.mjs
+        tools/lean-inspector/*/*.sh
+        tools/lean-inspector/Census/*
+        tools/lean-inspector/Inspector.lean
+        tools/lean-inspector/LeanInformationAudit/*.py
+        tools/lean-inspector/LeanInformationAudit/Projection/OutputOnlyAudit.lean
+        tools/lean-inspector/LeanInformationAudit/Syntax.lean
+        tools/lean-inspector/LeanInformationAuditAnalysis/*
+        tools/lean-inspector/LeanInformationAuditRegAnalysis/*
+        tools/lean-inspector/LeanInformationAuditRegTests/*
+        tools/lean-inspector/inspect.sh
+        tools/lean-inspector/lakefile.lean
+        tools/lean-inspector/materials.py
+        tools/lean-inspector/native.py
+        tools/lean-inspector/native_image.c
+        tools/lean-inspector/publication.py
+        tools/lean-inspector/reuse.py
+        tools/lean-inspector/tests/*
+        tools/scripts/*.c
+        tools/scripts/*.lean
+        tools/scripts/*.metal
+        tools/scripts/*.txt
+        tools/scripts/agent/gpu5040/*
+        tools/scripts/agent/openproblem/TARGET-GATES.md
+        tools/scripts/lib/resource-observation-lib.sh
+        tools/scripts/report/lean-report-input.sh
+        tools/scripts/report/lean-report-selection.py
+        tools/scripts/report/lean-report.sh
+        tools/scripts/report/report-supervisor.sh
+        tools/scripts/workflow/ci-entry.sh
+        tools/scripts/worktree/*
+        tools/tests/Directory.Build.props
+        tools/tests/StrataLint.Lean.Tests/*
+        tools/tests/StrataLint.ScriptTests/*.cs
+        tools/tests/StrataLint.ScriptTests/*.csproj
+        tools/tests/StrataLint.ScriptTests/*.json
+        tools/tests/StrataLint.ScriptTests/Fixtures/analysis_cache_contract.py
+        tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py
+        tools/tests/StrataLint.ScriptTests/Fixtures/contribution_queue_contract.py
+        tools/tests/StrataLint.ScriptTests/Fixtures/lean_input_contract.py
+        tools/tests/StrataLint.ScriptTests/Fixtures/report_snapshot_contract.py
+        tools/tests/StrataLint.ScriptTests/Fixtures/truth_release_contract.py

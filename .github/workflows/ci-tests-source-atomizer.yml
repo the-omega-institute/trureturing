@@ -1,0 +1,109 @@
+name: CI tests-source-atomizer
+
+on:
+  pull_request:
+    branches: [dev, 'integration-**']
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [dev, 'integration-**']
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: ci-tests-source-atomizer-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  tests-source-atomizer:
+    uses: ./.github/workflows/ci-unit.yml
+    with:
+      run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.SourceAtomizer.Tests/StrataLint.SourceAtomizer.Tests.csproj
+      paths: |
+        .editorconfig
+        .github/*
+        .gitignore
+        Directory.Build.props
+        Directory.Packages.props
+        Golden/gate-authority-roots.toml
+        Makefile
+        Meta/Digestion/atomizers.toml
+        Meta/Digestion/atoms/sha256/ecd939e3d6a40f5626c00cc22c4584169e449dcd8e76d971c7f9ade9b1d4f901
+        Meta/Digestion/backfill/periodic-tree-registry/*
+        Meta/FILEMAP.*.toml
+        Meta/FILEMAP.toml
+        Meta/ReportConsumers/*
+        Meta/ReportProducers/*
+        Meta/ci-checks.json
+        Meta/ci-resources.json
+        Meta/engineering-projects.json
+        Meta/judge-seed.json
+        Meta/package-materials.json
+        Reg/lake-manifest.json
+        Reg/lakefile.toml
+        docs/CONTRIBUTING.md
+        docs/GOVERNANCE.md
+        docs/develop/theory/INTERFACE_PAPER.md
+        docs/develop/theory/INTERFACE_PHILOSOPHY.md
+        docs/develop/theory/PERIODIC_TREE_registry.jsonl
+        global.json
+        lake-manifest.json
+        lakefile.toml
+        lean-report-inputs.json
+        lean-toolchain
+        tools/ARCHITECTURE.md
+        tools/Architecture/*
+        tools/Makefile
+        tools/StrataLint.Cli/*
+        tools/StrataLint.Configuration/*
+        tools/StrataLint.Engine/*
+        tools/StrataLint.ExecutionEvidence/*
+        tools/StrataLint.FileMap/*
+        tools/StrataLint.InspectionScope/*
+        tools/StrataLint.Lean/*
+        tools/StrataLint.ResourcePlanning/*
+        tools/StrataLint.Scribe.Documents/*
+        tools/StrataLint.Scribe/*.cs
+        tools/StrataLint.Scribe/StrataLint.Scribe.csproj
+        tools/StrataLint.Scribe/Vendor/Katex/katex.min.js
+        tools/StrataLint.Scribe/packages.lock.json
+        tools/StrataLint.sln
+        tools/TOWER.yaml
+        tools/TestSupport/StrataLint.CliTestSupport/*
+        tools/TestSupport/StrataLint.DigestionTestSupport/*
+        tools/TestSupport/StrataLint.RegistrationTestSupport/*
+        tools/TestSupport/StrataLint.TestSupport/*
+        tools/Trureturing.Truth/*
+        tools/lean-inspector-interface/*
+        tools/lean-inspector/*.json
+        tools/lean-inspector/*.mjs
+        tools/lean-inspector/*/*.sh
+        tools/lean-inspector/Census/*
+        tools/lean-inspector/LeanInformationAudit/*.py
+        tools/lean-inspector/LeanInformationAuditAnalysis/*
+        tools/lean-inspector/inspect.sh
+        tools/lean-inspector/lakefile.lean
+        tools/lean-inspector/materials.py
+        tools/lean-inspector/native.py
+        tools/lean-inspector/native_image.c
+        tools/lean-inspector/publication.py
+        tools/lean-inspector/reuse.py
+        tools/scripts/*.c
+        tools/scripts/*.lean
+        tools/scripts/*.metal
+        tools/scripts/*.txt
+        tools/scripts/agent/gpu5040/*
+        tools/scripts/agent/openproblem/TARGET-GATES.md
+        tools/scripts/workflow/ci-entry.sh
+        tools/tests/Directory.Build.props
+        tools/tests/StrataLint.ScriptTests/*.cs
+        tools/tests/StrataLint.ScriptTests/*.csproj
+        tools/tests/StrataLint.ScriptTests/*.json
+        tools/tests/StrataLint.ScriptTests/Fixtures/analysis_cache_contract.py
+        tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py
+        tools/tests/StrataLint.ScriptTests/Fixtures/contribution_queue_contract.py
+        tools/tests/StrataLint.ScriptTests/Fixtures/lean_input_contract.py
+        tools/tests/StrataLint.ScriptTests/Fixtures/report_snapshot_contract.py
+        tools/tests/StrataLint.ScriptTests/Fixtures/truth_release_contract.py
+        tools/tests/StrataLint.SourceAtomizer.Tests/*
