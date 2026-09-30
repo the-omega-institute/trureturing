@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:81f8dfd25cd30dba305712f475455caa60f623841117ba72848a41b3a29c1729
   normalized_sha256: sha256:81f8dfd25cd30dba305712f475455caa60f623841117ba72848a41b3a29c1729
 cas_ref: sha256:81f8dfd25cd30dba305712f475455caa60f623841117ba72848a41b3a29c1729
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/PrimePowerGcdHorizon.sharp_prime_power_gcd_horizon
+    target_statement_id: sha256:4b150d02588ee1462a9491d076d7978b70848a512611e6b177bd6c7b3638ea18
 receipts:
   unresolved_subitems: []
