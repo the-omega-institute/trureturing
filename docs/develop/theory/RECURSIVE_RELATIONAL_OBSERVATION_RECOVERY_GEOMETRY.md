@@ -5024,6 +5024,17 @@ v_t+(v\cdot\nabla_z)v=(\nu/c^2)\Delta_zv-\nabla_zq.
 $$
 时间导数、对流与压力梯度各为原式的 $1/c$ 倍，$\Delta_zv=c\Delta_Xu$，故黏性须变为 $\nu/c^2$。此可逆换元保留寿命与有界性。原文 Theorem 37 的温和解类还要求 $L^2_tH^{s+1}_x$；这里所用 $C_tH^2$ 唯一性已直接证明，不将不同函数类混同。原文 Exercise 43 的定性依赖也不替代（25.106）的明确常数。$\square$
 
+**可复用支撑结果 25.4A（全模行散度热核的 Bochner 路径）。** 固定 $\nu>0$ 与 $\tau>0$。令 $K=\mathbb Z^2$，输出纤维为 $\mathbb C^2$，张量纤维为 $2\times2$ 复矩阵，并令 $H=\ell^2(K;\mathbb C^2)$、$G=\ell^2(K;\mathbb C^{2\times2})$。对 $k=(k_1,k_2)$ 置 $\rho(k)=k_1^2+k_2^2$、$\kappa(k)=(k_1,k_2)$，令 $P_k$ 为去除 $\mathbb C\kappa(k)$ 的正交投影（$k=0$ 时为恒等投影）。若 $q:\mathbb R\to G$ 在全实时间上连续，且存在 $C\ge0$ 使 $\|q(s)\|\le C$ 对全部 $s$ 成立，则存在连续 $D:\mathbb R\to H$，满足
+$$
+D(0)=0,\qquad \|D(t)\|\le 2C\sqrt{t/\nu}\quad(0\le t\le\tau),
+$$
+并且对全部 $k\in K$ 与 $t\in[0,\tau]$，
+$$
+D(t,k)=\int_0^t e^{-\nu(t-s)\rho(k)}\,iP_k
+\left(\sum_{j=1}^2\kappa_j(k)q(s,k)_{\bullet j}\right)\,ds.
+$$
+这里的行指标是输出分量，求和指标 $j$ 是导数频率指标；$k=0$ 时行散度本身为零。该支撑结果只构造任意给定全模张量路径的连续 Bochner 路径及其定量界；它不构造非线性张量积路径，也不单独给出不动点、唯一性、压力、光滑性或最大延拓。
+
 **引理 25.5（两个端口的共同二次泛函）。** 对任意实 $\phi\in L^\infty(\mathbb T^2)$、$\|\phi\|_\infty\le1$，在实 Banach 空间 $L^2(\mathbb T^2;\mathbb R^2)$ 上定义
 $$
 Q_\phi(u)=\int u_1u_2\phi\,d\mu.
@@ -7572,3 +7583,120 @@ $$
 空间切面、时间切面和记忆恢复器可以互相运输，只有在 (34.2)—(34.4) 的共同来源、分离性和自然性同时成立时，才可称为同一完成对象的不同表达。缺少任何一项时，最多得到形式 completion、近似恢复或任务相对的可识别性。本文新增的是恢复器接口的普通数学组织，Claim status: open；没有新增 Lean 声明。
 
 ## 34.99 追加锚
+
+## 35. 周期梯度支持估计
+
+本节记录两个在物理振幅下的周期梯度估计。它们使用原始实变量与区间测度；本节不把纯二阶导能量改写成 normalizedFourierH2，也不主张实际 25.3 温和解、时间导数、压力、闭区间光滑性或物理速度的最大延拓。
+
+**定理 35.1（标量周期导数四阶矩）。** 设 $a,b,M\in\mathbb R$，$a\le b$，$0\le M$，且 $f, f_p, f_{pp}:\mathbb R\to\mathbb R$。假设对每个 $x\in\mathbb R$，
+
+$$
+\operatorname{HasDerivAt} f (f_p x) x,
+\qquad
+\operatorname{HasDerivAt} f_p (f_{pp} x) x,
+$$
+
+$f_{pp}$ 在全体 $\mathbb R$ 上连续，端点满足 $f(b)=f(a)$、$f_p(b)=f_p(a)$，并且对每个 $x\in\operatorname{Icc}(a,b)$ 有幅度条件 $|f(x)|\le M$。则
+
+$$
+\int_a^b f_p(x)^4\,dx
+\le
+9M^2\int_a^b f_{pp}(x)^2\,dx,
+$$
+
+其中积分按定向区间积分理解，等价于在 $\operatorname{Ioc}(a,b)$ 上使用 Lebesgue 限制测度。结论的常数是 $9$。
+
+**证明。** 连续性和导数假设使分部积分合法。对 $f f_p^3$ 分部积分，并用两个端点等式消去边界项，得到
+
+$$
+\int_a^b f_p^4\,dx
+=-\int_a^b3f f_p^2f_{pp}\,dx.
+$$
+
+对每个 $x\in[a,b]$，由 $|f(x)|\le M$ 以及两个平方非负式
+
+$$
+(f_p^2+3ff_{pp})^2\ge0,
+\qquad
+9(M^2-f^2)f_{pp}^2\ge0
+$$
+
+相加并整理，得到
+
+$$
+-3f f_p^2f_{pp}
+\le\frac{f_p^4+9M^2f_{pp}^2}{2}.
+$$
+
+两边积分并移项即得所述 $9M^2$ 界。
+
+**定理 35.2（二维物理振幅周期梯度四阶矩）。** 设 $a,b,M\in\mathbb R$，$a\le b$，$0\le M$，并令
+
+$$
+\mu=\operatorname{volume}.\operatorname{restrict}(\operatorname{Ioc}(a,b)).
+$$
+
+令 $u,u_x,u_y,u_{xx},u_{yy}:\operatorname{Fin}2\to\mathbb R\to\mathbb R\to\mathbb R$，所有坐标及横向变量均遍历全体 $\mathbb R$。假设对每个 $i\in\operatorname{Fin}2$ 及所有 $x,y\in\mathbb R$，
+
+$$
+\begin{aligned}
+&\operatorname{HasDerivAt}(z\mapsto u\ i\ z\ y)\,(u_x\ i\ x\ y)\ x,\\
+&\operatorname{HasDerivAt}(z\mapsto u_x\ i\ z\ y)\,(u_{xx}\ i\ x\ y)\ x,\\
+&\operatorname{HasDerivAt}(z\mapsto u\ i\ x\ z)\,(u_y\ i\ x\ y)\ y,\\
+&\operatorname{HasDerivAt}(z\mapsto u_y\ i\ x\ z)\,(u_{yy}\ i\ x\ y)\ y.
+\end{aligned}
+$$
+
+再假设对每个 $i$ 及每个实横向坐标，$x\mapsto u_{xx}\ i\ x\ y$ 与 $y\mapsto u_{yy}\ i\ x\ y$ 分别连续；对每个实横向坐标有所有端点匹配
+
+$$
+u\ i\ b\ y=u\ i\ a\ y,\quad u_x\ i\ b\ y=u_x\ i\ a\ y,\qquad
+u\ i\ x\ b=u\ i\ x\ a,\quad u_y\ i\ x\ b=u_y\ i\ x\ a.
+$$
+
+并且对所有 $x,y\in\operatorname{Icc}(a,b)$ 有物理振幅条件
+
+$$
+(u\ 0\ x\ y)^2+(u\ 1\ x\ y)^2\le M^2.
+$$
+
+假设对每个 $i$，函数 $(x,y)\mapsto(u_x\ i\ x\ y)^4$、$(x,y)\mapsto(u_y\ i\ x\ y)^4$、$(x,y)\mapsto(u_{xx}\ i\ x\ y)^2$、$(x,y)\mapsto(u_{yy}\ i\ x\ y)^2$ 都在 $\mu\times\mu$ 下可积，并且
+
+$$
+\bigl((u_x\ 0\ x\ y)^2+(u_x\ 1\ x\ y)^2+(u_y\ 0\ x\ y)^2+(u_y\ 1\ x\ y)^2\bigr)^2
+$$
+
+也在 $\mu\times\mu$ 下可积（变量依次为 $(x,y)$）。则
+
+$$
+\begin{aligned}
+&\int_{\mathbb R^2}
+\bigl((u_x\ 0\ x\ y)^2+(u_x\ 1\ x\ y)^2+(u_y\ 0\ x\ y)^2+(u_y\ 1\ x\ y)^2\bigr)^2\,d(\mu\times\mu)\\
+&\quad\le36M^2\int_{\mathbb R^2}
+\bigl((u_{xx}\ 0\ x\ y)^2+(u_{xx}\ 1\ x\ y)^2+(u_{yy}\ 0\ x\ y)^2+(u_{yy}\ 1\ x\ y)^2\bigr)\,d(\mu\times\mu).
+\end{aligned}
+$$
+
+结论的常数是 $36$，测度严格是每个坐标的 $(a,b]$ 限制测度；它没有额外的归一化因子或 normalizedFourierH2 边界。
+
+**证明。** 固定 $i$ 和 $y\in\operatorname{Icc}(a,b)$，把定理 35.1 应用于 $x\mapsto u\ i\ x\ y$。振幅条件给出该切片的 $|u\ i\ x\ y|\le M$：由 $u0^2+u1^2\le M^2$、$M\ge0$ 和平方非负性逐分量推出。端点和连续性假设正好给出切片所需条件，因此
+
+$$
+\int u_xi^4\,d\mu\le9M^2\int u_{xx}i^2\,d\mu.
+$$
+
+对 $y$ 积分并用乘积测度的 Fubini 等式，得到每个 $i$ 的 $x$ 方向乘积积分界。固定 $i$ 和 $x\in\operatorname{Icc}(a,b)$，沿 $y$ 方向同理得到
+
+$$
+\int u_yi^4\,d(\mu\times\mu)\le9M^2\int u_{yy}i^2\,d(\mu\times\mu).
+$$
+
+对每个点 $(x,y)$ 令 $A=(u_x\ 0\ x\ y)^2$、$B=(u_x\ 1\ x\ y)^2$、$C=(u_y\ 0\ x\ y)^2$、$D=(u_y\ 1\ x\ y)^2$。平方差恒等式给出
+
+$$
+(A+B+C+D)^2\le4(A^2+B^2+C^2+D^2).
+$$
+
+积分后使用上述四个 $9M^2$ 界，并用可积性假设合法地拆分和重组积分，得到 $4\cdot9M^2=36M^2$ 的结论。证毕。
+
+## 35.99 追加锚

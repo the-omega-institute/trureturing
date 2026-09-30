@@ -1,0 +1,8 @@
+**推论 180.3（全部缓慢间距双项的一致极限）。** 固定正整数 $c$。对全部 $a>b\ge2$、奇间距 $k=a-b\ge3$ 的来源，若 $a\to\infty$ 且 $k=o(\log a)$，则 $c(F_a+F_b)$ 的 Robin 比值一致趋于零，不再要求额外排除 $D$ 为平方的情形。
+
+证明。Bugeaud、Mignotte、Siksek 的 *Classical and modular approaches to exponential Diophantine equations I. Fibonacci and Lucas perfect powers*, Annals of Mathematics 163 (2006), 969–1018，[Theorem 2](https://doi.org/10.4007/annals.2006.163.969) 证明 Lucas 序列中仅 $L_1=1,L_3=4$ 为完全幂；[期刊原文，第 971 页](https://annals.math.princeton.edu/wp-content/uploads/annals-v163-n3-p05.pdf) 给出这一明确陈述。因此 $k\ge5$ 时 $L_k$ 不是平方，无论 $b$ 的奇偶，$D=(-1)^bL_k$ 都非平方，§179 的统一字符界适用。
+
+当 $k=3$ 时，对所有 $b$ 都有 $F_{b+3}+F_b=2F_{b+2}$，以固定乘子 $2c$ 应用 §172，得到该分支的 Robin 比值也趋于零。两个分支各自统一，取共同阈值即可。$\square$
+
+这个推论保留 $k=o(\log a)$ 的间距条件，没有声称一般 $k$ 与 $a$ 同阶的异奇偶双项也已获得统一 Robin 估计。
+

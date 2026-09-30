@@ -1,0 +1,28 @@
+**Theorem 3.2 (Ptolemy construction of the metric).** The function (d_H) is a
+metric on (U_E), for every real inner product space (E).
+
+**Proof.** The Euclidean product distance gives
+(d_2(p,q^*)^2=d_2(p,q)^2+4h(p)h(q)). Thus
+
+\[
+ \sinh\frac{d_H(p,q)}2
+ =\frac{d_2(p,q)}{2\sqrt{h(p)h(q)}},\qquad
+ \cosh\frac{d_H(p,q)}2
+ =\frac{d_2(p,q^*)}{2\sqrt{h(p)h(q)}}.
+\]
+
+Ptolemy's inequality for the four Euclidean points (p,q,r,q^*) states
+
+\[
+ 2h(q)d_2(p,r)\leq
+ d_2(p,q)d_2(r,q^*)+d_2(q,r)d_2(p,q^*).
+\]
+
+Divide by (4h(q)\sqrt{h(p)h(r)}), which is positive. The hyperbolic sine
+addition formula turns the right side into
+(\sinh((d_H(p,q)+d_H(q,r))/2)); the left side is
+(\sinh(d_H(p,r)/2)). Strict monotonicity of hyperbolic sine proves the
+triangle inequality. Symmetry follows from symmetry of (d_2) and the height
+product. Since (\operatorname{arsinh}(z)=0) exactly when (z=0), positivity of
+the heights makes (d_H(p,q)=0) equivalent to (p=q).
+
