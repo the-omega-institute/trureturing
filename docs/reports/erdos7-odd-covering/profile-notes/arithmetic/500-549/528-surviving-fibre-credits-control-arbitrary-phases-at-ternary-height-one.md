@@ -8324,3 +8324,346 @@ The [grouped-pair continuation consumer](../../../frontier/cover-geometry/pure-s
 Its state records complete moments of orders 0,1,2,4, all exact low atoms through 256 and complete higher-load residual moments. Each stage retains the charge, exact mass, append and split-trim certificate. At 79 the saved mean diagnostic records that no hinge or update was evaluated. The last-positive state supplies both the density statement and the conditional quartic tail.
 
 The short inequalities (FC373)–(FC378) follow by exact comparison of the saved fractions and the complete tail coefficient. They require no repeat continuation. Source and dependency hashes record provenance without imposing a cache or admission gate. These are ordinary proof and exact-arithmetic results; no new Lean verification is claimed.
+
+## A conditional comparison retains all first-depth grouped roles
+
+The thirty-six actual first-depth grouped originals can be retained in a
+single source-dependent run measure. The required interface is a positive
+conditional comparison: process the nine private coordinates, retain
+their exact head-row dependent zero weights, then compare heads5 and7
+in that fixed order. Explicit row and total-mass conditions ensure every
+intermediate measure is positive. It yields one common coloured profile
+for each of the two prescribed physical sources, without combining
+favourable coefficients from different source assignments.
+
+The theorem below states those exact conditions. The fixed arithmetic
+certificate below verifies them for the two specified depth-two sources
+and both ternary roots. No profile, prime continuation, depth or ordering search is part
+of this proof audit. No claim of dominance over the earlier one-pair
+comparison or resolution of unrestricted Erdős #7 is made.
+
+### 1. Actual source and the thirty-six original relations
+
+Fix ONE assignment i: either FC110 or the final FC131 array. Keep its
+actual finite skeleton at N>=max(2,N_+), any permitted FC159 nongroup
+remainder, the same full survivor source eta0=mu/D0, and its unchanged
+mass
+
+    h=36518862868606981/1816999451688960000.
+
+All numerical original moduli and phases remain globally fixed. The
+old nongroup ternary-height-one, nonternary support and shallow-group
+exclusions remain exactly those of FC159. They concern the added
+nongroup remainder, not the already included pure/grouped skeleton.
+
+The comparison retains exactly the first two actual pure/star layers
+at every nonternary coordinate. Let
+
+    Q={11,13,17,19,23,29,31,37,41}, V={5,7} union Q,
+    u_p=1/p+1/p^2,
+    a_(p,r)=1-u_p-1_(star active on root r)u_p,
+    beta_(p,r)=H_p restricted to these pure/star survivors,
+    z_(p,r)=a_(p,r)-1/p.
+
+The active5 star has root1. The active7 and all private stars have root2.
+Every beta is an unnormalized measure on the actual retained sets,
+with positive-depth cylinder bound p^(-e). The complete physical source
+still avoids all its actual layers through N; ignored higher layers
+only enlarge the reference and do not rescale eta0.
+
+At each private q, FC147 gives four disjoint depth-one group roles:
+
+| Role | Private first digit | Actual numerical modulus | Head/root address |
+|---|---:|---:|---|
+|free5|2|5q|its fixed5 row, both roots|
+|free7|3|7q|its fixed7 row, both roots|
+|selected5|4|15q|its fixed5 row and selected root|
+|selected7|5|21q|its fixed7 row and selected root|
+
+These four private cylinders avoid the private pure/star restrictions.
+Their beta masses are exactly1/q. Within a private coordinate they are
+pairwise disjoint, even if two roles use the same head row. Origins at
+different private coordinates may overlap on the full source; the proof
+keeps that overlap through conditional products and does not add their
+masses as disjoint global events. No group beyond the present depth-one
+originals is created.
+
+For actual head rows i5 mod5 and i7 mod7, define the active role count
+
+    n_(q,r)(i5,i7)
+      =1_(i5=free5(q))+1_(i7=free7(q))
+       +1_(selected5root(q)=r)1_(i5=selected5(q))
+       +1_(selected7root(q)=r)1_(i7=selected7(q)),
+    w_(q,r)(i5,i7)=n_(q,r)(i5,i7)/q.                    (FC379)
+
+Thus the private conditional reference is beta_(q,r) with its active
+role cylinders removed, of exact mass a_(q,r)-w_(q,r). This is the
+conditional reference of one actual assignment and one actual root.
+At no point are FC110 and FC131 rows or selected-root masks mixed.
+
+### 2. Private-coordinate comparison and the remaining head law
+
+Suppress r and the assignment temporarily. Every factor has
+
+    0<=w_q<=4/q,
+    z_q>=1-3/q-2/q^2>4/q for q>=11.                   (FC380)
+
+Indeed the final inequality is q^2-7q-2>0, true for q>=11.
+Hence0<=1-w_q/z_q<=1. The conditional q measure retains the old
+absolute cylinder caps and has mass at least1/q. Applying FC331--FC332
+while holding the actual heads fixed gives zero-run coefficient
+z_q-w_q(i5,i7); every positive q-run j_q>=1 retains its coefficient
+(q-1)/q^(j_q+1).
+
+For a private zero set Z={q:j_q=0}, put
+
+    K_Z=product_(q in Z)z_q,
+    h_Z(i5,i7)=product_(q in Z)(1-w_q(i5,i7)/z_q),
+    H_Z(i7)=integral h_Z(i5,i7) d beta5(i5),
+    M_Z=integral H_Z(i7) d beta7(i7).                 (FC381)
+
+Empty products equal1. After all private comparisons the still-actual
+head measure in this run pattern is
+
+    K_Z h_Z beta5 tensor beta7,
+
+times the unchanged positive-run coefficients from Q\Z. This equation
+uses product independence in the enlarged private reference conditional
+on the actual heads. It does not assert independent actual survivors.
+
+All these integrals are finite head-row sums because h_Z depends only
+on the first digits. Write beta5[i5], beta7[i7] for the actual row masses.
+Their depth-two values can be reconstructed directly from FC148--FC149:
+the pure first row p-1 has mass0; the deeper-pure row p-2 has mass
+1/p-1/p^2; every other row starts at1/p; an active star sets row0 to0
+and subtracts1/p^2 from row1. No limit row law is substituted.
+
+### 3. Sufficient positive head conditions
+
+For every private zero set Z assume
+
+    H_Z(i7)>=1/5 for every row with beta7[i7]>0,
+    M_Z>=a5*a7-z5*z7.                               (FC382)
+
+Then the private/head comparison has a positive joint run measure that
+differs from the old product only at the head double-zero coefficient.
+Here is the complete conditional proof.
+
+First fix i7 and the private runs. The actual5 measure h_Z(.,i7)beta5
+has mass H_Z(i7), is bounded above by beta5, and therefore has the
+unchanged cap5^(-e). The first condition in(FC382) lets us apply the
+ordinary weighted comparison. Its positive5-run coefficients are
+unchanged, while its zero coefficient is H_Z(i7)-1/5.
+
+For j5>=1, compare beta7 in the usual way. For j5=0, the still-actual7
+measure is
+
+    g_Z=(H_Z(i7)-1/5)beta7.
+
+It is positive on the support of beta7, and0<=H_Z<=a5 gives
+
+    0<=g_Z<=z5 beta7,
+    mass(g_Z)=M_Z-a7/5.
+
+Thus its7-depth-e cylinder mass is at most z5*7^(-e). Since z5>0,
+divide by z5 and apply the weighted lemma if mass(g_Z)>=z5/7.
+This is exactly the second condition in(FC382), because
+
+    a5*a7-z5*z7=a7/5+z5/7.
+
+The resulting positive7-run coefficients on this branch are z5 times
+the usual7 positive coefficients. Its zero coefficient is
+
+    M_Z-a7/5-z5/7
+       =z5*z7-(a5*a7-M_Z)>=0.                       (FC383)
+
+Restore the factor K_Z and set
+
+    delta_Z=K_Z(a5*a7-M_Z)>=0.
+
+The head run weight is the old product K_Z nu5(j5)nu7(j7), except that
+delta_Z is subtracted at j5=j7=0. This proves the assertion. Its
+head mass is exactly K_Z M_Z, the true reference mass for that private
+run pattern. Neither normalization nor subtraction of unrelated query
+upper estimates is involved.
+
+Query-label details are essential. At each private or head comparison,
+keep the entire numerical label and all its remaining coordinate
+indicators as its nonnegative coefficient. Repeated depths may have
+different phases. Depth-zero query terms stay in the baseline. The
+previously processed run factors do not reassign a query's actual
+ternary colour. These are precisely the hypotheses of the weighted
+ordered-increment lemma, so the proof applies to arbitrary inherited
+nonnegative coefficients and every nonnegative increasing convex cost.
+
+### 4. Why one full-private-set check implies all512 zero-set conditions
+
+By(FC380), each factor1-w_q/z_q lies in[0,1]. Consequently for Z subset Q,
+
+    h_Z>=h_Q pointwise,
+    H_Z(i7)>=H_Q(i7), M_Z>=M_Q.                       (FC384)
+
+The thresholds in(FC382) are independent of Z. Therefore it suffices
+to check its row and total conditions just at Z=Q, for each of the
+two assignments and two roots. Rows of zero beta7 mass need no
+condition: they support no branch or query integral.
+
+The empty set gives h_empty=1, H_empty=a5 and M_empty=a5*a7, and
+its deficit is0, consistent with the unmodified product comparison.
+Non-strict equality in(FC382) is also valid and permits a zero joint
+head atom. These observations cover both endpoint and degeneracy
+cases; no hidden positive denominator other than the already positive
+z5 and z_q is used.
+
+The exact reconstruction below checks these four full-set cases and
+binds their source arrays. This theorem uses their precise inequalities,
+not reported decimals; a different assignment, depth or head
+order requires its own verification. A failed sufficient condition
+would obstruct this comparison, not refute a physical survivor.
+
+### 5. One joint run profile per source and root
+
+For a full run vector j in N_0^V let Z={q in Q:j_q=0}. Its corrected
+root weight is
+
+    pi'_r(j)
+      =[K_(Z,r) nu_(5,r)(j5)nu_(7,r)(j7)
+          -1_(j5=j7=0)delta_(Z,r)]
+         *product_(q in Q\Z)(q-1)/q^(j_q+1).          (FC385)
+
+For each fixed actual source, this is a positive common-index measure,
+and0<=pi'_r<=pi_r. The actual enlarged reference contains exactly the
+depth-two pure/star restrictions and all thirty-six depth-one grouped
+originals. The sequential conditional argument proves its complete
+labelled comparison with(FC385), including equality of total masses.
+
+Keep the original labels' ternary indicators through every coordinate.
+After all nonternary comparisons the usual common counts still satisfy
+
+    B(j)=product_(p in V)(1+j_p),
+    C_1(j,K)+C_2(j,K)<=B(j)K.
+
+The corrected weights need not factor across heads or private axes;
+the two-root convex combination only requires positive weights and
+this unchanged-label count on the same j,K. Thus the scalar profile
+for THIS source is
+
+    load B(j): coefficient min(pi'_1(j),pi'_2(j))/3;
+    load vB(j): coefficient2max(pi'_1(j),pi'_2(j))/3^v, v>=2. (FC386)
+
+Call it Xi'_i. For every finite query layout Phi on the same source and
+every nonnegative increasing convex f,
+
+    integral f(L_Phi)deta0_i<=integral f dXi'_i.       (FC387)
+
+No phase is changed and no separate physical maximizer is assumed.
+In particular mass(Xi'_i)>=h by f=1, all moments are finite, and
+Xi'_i<=Xi, where Xi is that source's old pure/star-only profile. Its
+Top_h initialization is therefore valid on the same eta0_i.
+
+The improvement over ignoring all groups is strict in every finite
+hinge after equal-mass trimming. Set j5=j7=j11=0, all other private
+runs positive, and let j13 grow. Then Z={11}. The free5 role at q=11
+has head5 row2 of positive mass on BOTH roots in BOTH assignments, so
+
+    delta_({11},r)=integral w_(11,r)(i5,i7)d(beta5 tensor beta7)>0.
+
+Thus both root coefficients decrease at these unbounded loads, and
+both their minimum and maximum decrease. The positive scalar deficit
+has nonzero tail above every finite threshold. For sufficiently high
+thresholds both raw tails are below h; the Top_h tail difference equals
+that deficit tail. Integrating tails gives strict hinge improvement at
+every finite threshold, by the same finite-first-moment argument as in
+the earlier one-pair theorem. This comparison is to Xi, not to the
+one-pair corrected profile.
+
+The two assignments each have their own Xi'_i. A uniform result may
+report conditions valid for both or combine whole-law upper bounds by
+an explicitly proved operation. It may not choose the smaller root
+coefficient or smaller moment from different sources as though one
+physical source simultaneously realized those choices.
+
+### 6. Zero-set consumer formula and its scope
+
+Let S={p in V:j_p=0} and Z=S intersect Q. Let
+
+    Z_r(S)=product_(p in S)z_(p,r).
+
+The new coefficient is simply
+
+    Z'_r(S)=Z_r(S)
+       -1_({5,7} subset S)delta_(Z,r).                (FC388)
+
+The delta already contains the full K_Z factor; it must not be
+multiplied by it a second time. The existing positive-run factors
+for p notin S are unchanged. Complete moment order k is
+
+    sum_(S subset V)[min(Z'_1(S),Z'_2(S))/3
+                     +T_k max(Z'_1(S),Z'_2(S))]
+                       *product_(p notin S)M^+_(p,k). (FC389)
+
+The minimum and maximum remain after computing both actual root
+coefficients for one source. All run heights are included in T_k and
+M^+_(p,k); a finite low-load array is an exact computational device,
+not a query-height truncation. Full masses must also agree with the
+finite head-row sum
+
+    (1/3)sum_(r=1,2)sum_(i5,i7)beta5_r[i5]beta7_r[i7]
+                       *product_(q in Q)(a_(q,r)-w_(q,r)(i5,i7)). (FC390)
+
+This is a useful independent mass identity for the consumer. It
+accounts for all overlaps of global group events by their conditional
+private products, not by adding individual hole masses.
+
+### 7. What this establishes and what it does not
+
+This is a conditional ordinary theorem with its exact source checks
+specified and independently fulfilled for the intended two inputs.
+The construction retains all depth-one grouped relations in the
+dominating actual reference, then relaxes them in a controlled order.
+It provides a stronger common comparator than ignoring groups entirely.
+
+It is NOT automatically stronger than the one-pair5/11 profile.
+The one-pair debit lives on runs j5=j11=0, even when j7>0. The present
+comparison leaves all j7>0 head branches uncorrected after the5
+comparison. Conversely it can debit j5=j7=0 patterns with j11>0 when
+other private zero coordinates carry active roles. These different
+relaxations preserve different relations; actual support inclusion
+alone does not order their final comparison measures. No numerical or
+stochastic dominance over the one-pair result is asserted.
+
+The following work remains separate:
+
+* Forming each source's raw and Top_h profile from the bound row-margin
+  certificates below.
+* Determining whether either new profile improves the concrete
+  continuation; no prime step or parameter search is performed here.
+* Retaining deeper grouped roles or combining this comparison with
+  the one-pair profile without double payment. Both require new
+  positive conditional proofs and their own exact premises.
+* Removing the FC159 source restrictions or resolving the general
+  odd distinct covering problem. Neither follows from this interface.
+
+The weighted conditional comparison and root-colour count reuse
+Report528 FC331--FC343 and the earlier positive rectangle lemma.
+FC147--FC152 supplies the actual disjoint private roles and common
+source relation. The new composed interface is(FC381)--(FC385), together
+with the full-set sufficiency reduction(FC384). No Lean verification or
+external novelty claim is added.
+
+### 8. Exact source-condition certificate
+
+The [condition consumer](../../../frontier/cover-geometry/pure-support-profiles/full_group_conditions.py) takes the actual [FC110 array](../../../frontier/cover-geometry/fibre-credit-partition/first_layer_witness.json), [FC131 array](../../../frontier/cover-geometry/fibre-credit-partition/bounded_joint_search.json) and an explicit [output](../../../frontier/cover-geometry/pure-support-profiles/full_group_conditions.json). It decodes each free address and selected row/root from the shared private-source data. It reconstructs the finite depth-two head laws by counting their literal residues, then evaluates the full-Q conditional product on the 35 head-row pairs of each source and root. Source-file hashes are provenance, not cache or admission gates.
+
+The minimum live-row H_Q and the total-mass slack are as follows. All entries are exact fractions; every row condition in the saved data is strictly positive.
+
+| Assignment | Root | Minimum live-row H_Q | M_Q-(a5*a7-z5*z7) |
+|---|---:|---|---|
+|FC110|1|420595361076467120577/1307459561121446828900|38524273118863817772801/512524147959607156928800|
+|FC110|2|32925582154301483800017/71457502883270511165440|418651984250738125541943/3501417641280255047106560|
+|FC131|1|484226945869929020307/1494239498424510661600|38474409240641663680737/512524147959607156928800|
+|FC131|2|643398199370040900327/1395654353188877171200|523801428991922740831131/4376772051600318808883200|
+
+Each displayed H_Q is greater than 1/5. The total threshold is 261/1225 on root 1 and 263/1225 on root 2. The consumer verifies source identities and each factor's range, and records every live-row inequality and total inequality. It computes only the full-Q condition; (FC384) proves all 512 zero-set conditions. The all-query comparison is the conditional proof above, not an inference from enumerated phase layouts.
+
+An independent reconstruction also checks stored metadata and arrays against the actual free and selected roles and verifies all seven head7 rows on each root, including zero-mass rows. Those stronger finite conditions agree with this certificate wherever its live-row domain applies. No profile initialization, prime continuation, alternative depth or head order is evaluated by the condition consumer. No new Lean verification is claimed.
