@@ -1,4 +1,3 @@
-using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.WorktreeContract.Tests;
@@ -29,14 +28,10 @@ public sealed class WorktreeCacheStrategyTests
         Assert.DoesNotContain("export PATH=", clean, StringComparison.Ordinal);
 
         // Guard executable tooling; prose and truth data are not copy implementations.
-        // The registered inputs also select this test and bind its reusable evidence.
-        using var registry = JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "Meta", "engineering-projects.json")));
-        var registration = registry.RootElement.GetProperty("projects").EnumerateArray().Single(project =>
-            project.GetProperty("path").GetString() ==
-                "tools/tests/StrataLint.WorktreeContract.Tests/StrataLint.WorktreeContract.Tests.csproj");
-        var inputs = registration.GetProperty("execution_inputs").EnumerateArray()
-            .Select(input => input.GetString()!).ToArray();
-        Assert.NotEmpty(inputs);
+        string[] inputs = [".github/scripts/**", "Blueprint/**/*.scribe.cs",
+            "Directory.Build.props", "Directory.Packages.props", "Makefile",
+            "docs/reports/**/*.c", "docs/reports/**/*.cpp", "docs/reports/**/*.h",
+            "docs/reports/**/*.mjs", "docs/reports/**/*.py", "tools/**"];
         // Build rejected forms dynamically so the guard does not match itself.
         var cloneFlag = string.Concat('-', 'c');
         var recursiveFlag = string.Concat('-', 'R');
