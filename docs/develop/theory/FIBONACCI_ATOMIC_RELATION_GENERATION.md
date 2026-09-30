@@ -32052,6 +32052,8 @@ $$
 =\sum_{d\mid n}\mu(n/d)\left(\frac{\sigma(d)}d\right)^\kappa.
 $$
 
+该论文已于 2026 年 6 月 7 日发表于 The Ramanujan Journal；此处公式定位仍钉在 2025 年 arXiv v1，未将预印本的排印问题外推到尚未取得正文的期刊版。
+
 取 $\kappa=s$，它就是本卷的 $b_s(n)$；其式（3）的 $c(s)$ 就是 $U(s)=\sum_n b_s(n)/n$。因此，真实增量源的定义、Möbius 展开与均值常数应直接引用该来源，不能作为 FIB 的新构造。该文的主要 $\kappa$-Robin 定理处理另一个函数 $\sigma^{[\kappa]}=\mu*\sigma^\kappa$，不自动成为 $b_s$ 的 Robin 定理；其固定 $\kappa$ 的均值误差也不能直接用于 $s=\log A\log\log A$。
 
 [Weingartner 的高正矩展开](../../../Library/ArithSums/weingartner2010distribution.md)已经提供 $s=y\log y$ 的尺度与 $\pi^2/6$ 的首项修正。该来源的 Euler 乘积 $W(s)$ 属于 $n/\varphi(n)$，与 $U(s)$ 的比较及实际增量源的亏损尾仍须各自核对。本卷已有此来源接口，不另行重建同名矩理论。
@@ -32204,6 +32206,15 @@ $$
 在这里核对的来源中，尚未取得可直接代入该联合预算的统一定理。下一步的研究对象是这项缺失估计，或能在同一量词范围内排除候选的条件；不再以重做 Möbius 源定义、支撑线构造或扩大已知有限验证范围内的实验代替它。已有有限窗口计算只承担方法核验，不作为 Robin 验证纪录的推进。本文不作原创性声明，不宣称全部 FIB 窗口的 Robin 不等式或 RH 已获证明。
 
 ### 233.6 近期解析输入的核验边界
+
+[Nicolas 的 2025 年单作者稿](../../../Library/ArithSums/nicolas2025comparison.md)已经无条件比较
+
+$$
+\Phi(X)=\max_{n\le X}n/\varphi(n),\qquad
+\Sigma(X)=\max_{n\le X}\sigma(n)/n.
+$$
+
+其 Theorems 1.2—1.3 给出 $\Phi(X)/\Sigma(X)$ 的任意固定阶渐近展开与有效余项界，首个修正为 $2\sqrt2/(\sqrt{\log X}\log\log X)$。这是同一截断下两个分别取得的最大值，不是同一个整数上两个函数之比。若从该来源取得正下界 $L(X)\le\Phi(X)/\Sigma(X)$，便可合法使用 $Z(n)\le\Sigma(X)\le\Phi(X)/L(X)$（$n\le X$）；使它小于实际 $n$ 的 Robin 预算仍须额外估计。该文的 CA 素幂阈值用于极值包络，未提供本卷实际增量源的增长矩尾界或保留指定余类的输送。这里不重建这份包络比较，也不将不同极值的实现合并成同一个来源。
 
 另外两条直接相关的近期来源是 Broadbent–Fiori–Kadiri–Ng–Wilk 的 [Bounds for Mertens sums, arXiv:2608.01498v1](https://arxiv.org/abs/2608.01498v1)，以及 Mishra–Sarkar 的 [A finite arithmetic form of Robin’s inequality and its equivalence to the Riemann hypothesis, arXiv:2609.26787v1](https://arxiv.org/abs/2609.26787v1)。前者提供显式 Mertens 乘积估计，后者提出按 $\omega(n)$ 截断指数级数的等价判据。这里已核对相关陈述，未独立审完全部证明；本节的短证只使用上面已经定位的经典渐近估计，不借这些新陈述宣告 RH 已解。
 

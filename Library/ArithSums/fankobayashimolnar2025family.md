@@ -3,7 +3,7 @@ bibkey: fankobayashimolnar2025family
 authors: Steve Fan, Mits Kobayashi, Grant Molnar
 year: 2025
 title: A family of analogues to the Robin criterion
-doi: null
+doi: 10.1007/s11139-026-01408-3
 url: https://arxiv.org/abs/2511.02106v1
 claim: "Equations (3)–(4) define exactly the increment source b_s and total moment U(s)=c(s). The κ-Robin criterion concerns a different LCM-power σ^[κ]; the pinned version has an extra e^γ in its introductory Lagarias formulas that is absent from section 7."
 strata_touched: []
@@ -17,8 +17,16 @@ The pinned source is the author preprint
 [A family of analogues to the Robin criterion, arXiv:2511.02106v1](https://arxiv.org/pdf/2511.02106v1),
 submitted 3 November 2025. The cited definitions, theorem statements and
 sections 3, 7 and 8 were inspected; the full analytic proof and numerical
-certificates were not independently verified. No journal-publication claim
-or Lean verification is made here.
+certificates were not independently verified. No Lean verification is made here.
+
+The paper was subsequently published in *The Ramanujan Journal* **70**,
+article 40 (2026), online 7 June 2026,
+[DOI: 10.1007/s11139-026-01408-3](https://doi.org/10.1007/s11139-026-01408-3).
+The publisher page and DOI metadata confirm publication. Formula and theorem
+locators below remain pinned to arXiv:2511.02106v1. The final full text was
+not accessible in this review: the publisher serves a subscription preview.
+Consequently the discrepancy documented below is established for v1 only;
+whether the version of record corrects the extra factor has not been checked.
 
 ## Exact identification with the FIB source
 
@@ -175,6 +183,8 @@ The erroneous introductory formula is not used as a premise here.
 
 ## Original-source locators
 
+- [Version of record](https://doi.org/10.1007/s11139-026-01408-3):
+  publication metadata verified; full text unavailable in this inspection.
 - [Pinned abstract](https://arxiv.org/abs/2511.02106v1).
 - [Pinned PDF](https://arxiv.org/pdf/2511.02106v1): equations (3)–(4), page 2;
   Theorem 1.5, page 3; Proposition 3.1, page 6; Proposition 3.4, page 9;
