@@ -20667,3 +20667,99 @@ or force enough useful chains to pay their total cost. Neither FC860
 nor this noncover example provides that all-family inequality.
 These are independently reviewed written proofs; no numerical scan,
 new producer or Lean proof is used.
+
+## No prime-support-independent repair of the anchored-only query bound
+
+Keep FC844--851's distinction between all complete divisor layouts C_Q
+and coherent anchored layouts A_Q. They use the SAME nonnegative law;
+the phases of auxiliary queries do not change the original family.
+The modulus-nine strict gap is not uniformly repairable by multiplying
+the anchored response by one absolute constant.
+
+For an odd prime p>=3, let
+
+    T_p={0,p,...,(p-1)p} union {1} subset Z/p^2,
+    rho_p(jp)=8/(11p+5) for0<=j<p,
+    rho_p(1)=(3p+5)/(11p+5).
+
+These masses sum to one. An anchored query has divisor labels1,p,p^2.
+For an anchor in root0, its square expectation is
+
+    (4p+5)*8/(11p+5)+(3p+5)/(11p+5)
+       =(35p+45)/(11p+5)=:a_p.
+
+The anchor1 has the same expectation, since all root0 points have
+load1 and the point1 has load3. An empty point in root1 has expectation
+(20p+20)/(11p+5)<a_p; any other root gives expectation1. Therefore
+
+    A_(p^2)(rho_p)=a_p<4.                          (FC862)
+
+The complete layout choosing0 modp and1 modp^2 has load exactly2 on
+every point of T_p. Thus its square expectation is4. Only this lower
+witness for C is needed below; no factorization of the complete
+optimization is assumed.
+
+Now take r distinct primes p_i>=5, Q=product_i p_i^2, and the joint
+probability rho=product_i rho_(p_i), using CRT to identify the carrier.
+For any coherent anchor z the entire divisor load factors pointwise:
+
+    sum_(d|Q)1_(x=z mod d)
+       =product_i[1+1_(x_i=z_i mod p_i)+1_(x_i=z_i mod p_i^2)].
+
+Expectation under this product law and maximization over z therefore
+give A_Q(rho)=product_i a_(p_i). For a legal COMPLETE layout, in each
+local exponent0 impose no condition, in exponent1 choose0 modp_i,
+and in exponent2 choose1 modp_i^2. CRT supplies one literal phase for
+each numerical divisor d. Its load is2^r everywhere on T=product_i T_(p_i),
+so
+
+    C_Q(rho)>=4^r,
+    C_Q(rho)/A_Q(rho)
+       >=product_i (44p_i+20)/(35p_i+45)
+       >=(12/11)^r.                               (FC863)
+
+The last comparison is equivalent to p_i>=5. Arbitrarily many distinct
+such primes exist. Consequently there is no finite constant independent
+of the prime support with C_Q(nu)<=K A_Q(nu) for all these laws. C_Q may
+be larger than the displayed product-layout lower bound; equality
+for the unrestricted tensor maximum has not been asserted.
+
+These laws are legal selected laws of actual distinct-odd pure cores.
+For each p_i take the original classes2 modp_i and1+p_i modp_i^2.
+The actual local survivor S_i has n_i=p_i(p_i-1)-1 points and contains T_i.
+Let mu_i be normalized Haar on S_i, and put
+
+    h_i(jp_i)=8/(3p_i+5), h_i(1)=1,
+    h_i=0 on the other survivors,
+    c_i=(11p_i+5)/(n_i(3p_i+5))>0.
+
+Then0<=h_i<=1 and h_i mu_i=c_i rho_i. There are no mixed or star originals,
+so the product of these local pure laws is the actual pure core law.
+If a ternary source coordinate is retained, add0 mod3, use normalized
+Haar on its two surviving roots, and set its query exponent to zero;
+the following responses do not change. Without that optional factor,
+
+    h=product_i h_i, mu=product_i mu_i,
+    h mu=(product_i c_i)rho.                       (FC864)
+
+With the optional ternary factor, tensor both source laws in this
+identity by that same normalized ternary law; FC864 then describes
+their Q-marginals.
+
+Thus both query responses scale by the SAME positive retained mass,
+and the unbounded ratio in FC863 occurs inside the actual selector
+domain, with all original numerical moduli distinct and odd.
+
+The tensor layout is pointwise constant on T. At the illustrative
+fixed-box coefficient tau=4^(-r), EVERY nonnegative measure x supported
+on T has sum x-tau C_Q(x)<=0, whereas the displayed selected law has
+sum x-tau A_Q(x)>0. This excludes a uniform constant repair of the
+anchored-only shortcut; it is not a full-tail certificate at that tau.
+T is a selected subset of the larger actual survivor S. Nothing here
+excludes a different source on all of S, and the pure cores are not
+coverings. A source-specific or prime-support-dependent upper comparison
+would require additional hypotheses and its own paid bound.
+
+This is an ordinary symbolic derivation from the complete query
+definitions, with no numerical scan or new Lean claim. It does not
+provide the all-family positive head margin needed for unrestricted #7.
