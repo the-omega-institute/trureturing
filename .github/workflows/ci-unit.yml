@@ -44,6 +44,13 @@ jobs:
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
           CI_PUSH_BEFORE: ${{ github.event.before }}
         run: bash tools/scripts/workflow/ci-entry.sh
+      - name: Validate whitelist result
+        env:
+          HIT: ${{ steps.entry.outputs.hit }}
+          COMMAND: ${{ inputs.command }}
+        run: |
+          case "$HIT" in true|false) ;; *) echo "CI_ENTRY_ERROR hit output is '$HIT'" >&2; exit 2 ;; esac
+          [[ -n "${COMMAND//[[:space:]]/}" ]] || { echo "CI_ENTRY_ERROR command input is empty" >&2; exit 2; }
       - if: steps.entry.outputs.hit == 'true'
         uses: actions/setup-dotnet@v5
         with:

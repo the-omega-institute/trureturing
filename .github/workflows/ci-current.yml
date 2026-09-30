@@ -86,6 +86,16 @@ jobs:
             !build/*
             !tools/Generated/scribe-emissions.v1.json
         run: bash tools/scripts/workflow/ci-entry.sh
+      - name: Validate whitelist results
+        env:
+          HIT: ${{ steps.entry.outputs.hit }}
+          DELTA_OUTCOME: ${{ steps.delta_entry.outcome }}
+          DELTA_HIT: ${{ steps.delta_entry.outputs.hit }}
+        run: |
+          case "$HIT" in true|false) ;; *) echo "CI_ENTRY_ERROR hit output is '$HIT'" >&2; exit 2 ;; esac
+          if [[ "$DELTA_OUTCOME" == success ]]; then
+            case "$DELTA_HIT" in true|false) ;; *) echo "CI_ENTRY_ERROR delta hit output is '$DELTA_HIT'" >&2; exit 2 ;; esac
+          fi
       - if: steps.entry.outputs.hit == 'true'
         uses: actions/setup-dotnet@v5
         with:

@@ -8,8 +8,6 @@ on:
       - '.github/workflows/lean-cache-publish.yml'
       - 'tools/scripts/workflow/**'
       - 'tools/scripts/worktree/**'
-      - 'tools/StrataLint.ReleaseSelection/**'
-      - 'tools/Trureturing.Truth/Release/TruthReleasePushRunSelector.cs'
       - 'Meta/ReportProducers/**'
       - 'Makefile'
       - 'global.json'
@@ -19,8 +17,8 @@ on:
 
 permissions: {}
 
-# This native integration event verifies shared publication programs. Its checks
-# are separate from required CI; a source still running CI is not publishable.
+# This native integration event verifies the Lean-cache publication and restore
+# programs. It is separate from the required CI workflows.
 jobs:
   cache:
     name: verify cache publication and restore
