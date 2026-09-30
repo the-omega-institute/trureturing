@@ -20893,3 +20893,116 @@ with strict improvement whenever some queried coordinate has a positive pure del
 The product hypothesis belongs to the reference mu, not necessarily to the selected nu. Stars or mixed kernels cannot be inserted into mu without a new comparison. For a supplied selected law, identifying it as h mu with 0<=h<=1 and proving its retained fraction are actual obligations; arbitrary normalization or substitution of a better pure reference is not allowed. The source may avoid mixed originals through h, but then all resulting concentration is paid by m and the sharper bound in FC867.
 
 Thus the usable conclusion is an absolute complete-query comparison for the unselected pure product, and a retained-mass-dependent comparison for its actual submeasures. It is a consumer of existing masked-Haar moments and anchor averaging. It supplies neither an all-family selector with positive FC840/843 margin nor a resolution of unrestricted Erdős #7.
+
+## Source optimization and query credit cannot be counted independently
+
+Fix one actual available source, its finite Q-marginal capacities u,
+the COMPLETE layout family, and0<=tau<1. Write C(F)=C_Q(F) and
+J(F)=mass(F)-tau C(F). Retain the exact same-source excess credit
+Psi(F,G) from FC858 and Report752 for an actual removed part G<=F.
+
+If F already attains P(u), every further restriction F-G remains
+feasible for the OLD problem. Thus J(F-G)<=J(F). If F_new is an
+optimizer after an actual block deletion, set F_hat=F-G and
+r=J(F_new)-J(F_hat). The new feasible set is contained in the old one,
+while F_hat is feasible in the new one. FC858 consequently gives
+
+    tau Psi(F,G)<=(1-tau)Delta,
+    0<=r<=(1-tau)Delta-tau Psi(F,G),
+    Delta=mass(G).                                      (FC868)
+
+This reuses the existing feasible-set optimum and exact credit formula.
+A deletion that improves the score identifies a previously suboptimal
+source; its gain cannot be added again on top of P(u). Reoptimization
+and query credit must be evaluated on the same source and block.
+
+For one F_0 and successive actual restrictions F_i, with NO intervening
+reweighting or kernel replacement, put G_i=F_(i-1)-F_i. The exact
+cost-drop identity telescopes:
+
+    sum_i mass(G_i)=mass(F_0)-mass(F_n),
+    sum_i Psi(F_(i-1),G_i)
+       =C(F_0)-C(F_n)-[mass(F_0)-mass(F_n)].              (FC869)
+
+Changing the order or partition of the same deleted union leaves
+these totals unchanged. If a hypothetical covering of the entire
+source support gives F_n=0, substituting both totals into FC858 gives
+J(F_n)=0 identically. A contradiction therefore needs an additional
+arithmetic bound incompatible with these totals. Sharper lower credits
+can improve a conservative estimate, but the identity alone supplies
+no positive final reserve. Source changes require their own actual
+mass and cost terms; FC869 does not hide them.
+
+## Separately positive deletion certificates can fail on their conjunction
+
+Take ONE prior mu=normalized Haar on Z/9, Q=9 and the illustrative
+coefficient tau=2/7. Fix the two original events
+
+    A=[0 mod3], B=[1 mod9].
+
+They are disjoint, have distinct odd nonunit moduli, and form an
+irredundant family with the nonunit divisor labels of9. The deletion
+sources F_A,F_B and mu|S are restrictions of this same prior, with
+these same phases. The later normalized rho is an auxiliary shape,
+not an unscaled submeasure of mu.
+
+For F_A=mu|A^c, the six survivors occupy two full roots. For
+F_B=mu|B^c, eight survive and two roots remain full. The complete
+query has one root and one independently chosen singleton. A singleton
+inside a full chosen root maximizes its square in both cases, giving
+
+    C(F_A)=2/3+3(1/3)+5(1/9)=20/9,
+    J(F_A)=2/63>0;
+    C(F_B)=8/9+3(1/3)+5(1/9)=22/9,
+    J(F_B)=4/21>0.
+
+The true joint survivor is S={2,4,5,7,8}. Its root2 has three cells
+and root1 has two. FC850's complete-query classification applies
+under the affine bijection x->2x+2 modulo9. Giving mass x to each
+root2 cell and y to each root1 cell produces the four maxima
+
+    17x+2y, 12x+5y, 3x+13y, 6x+8y.
+
+The inside/outside singleton choices give these four expressions;
+empty-root and unsupported-singleton choices are dominated. For
+x=11/61,y=14/61 the total mass is1 and the four costs are respectively
+215/61,202/61,215/61,178/61.
+
+A common lower witness works against EVERY probability on S, not
+only these symmetric ones. Mix the centered queries with weight11/61
+at each of the three root2 centers and14/61 at each root1 center.
+At any root2 source point the average square is
+9(11/61)+4(22/61)+28/61=215/61. At a root1 source point it is
+9(14/61)+4(14/61)+33/61=215/61. Thus the mixture has constant potential
+on all S, while the displayed probability attains that value against
+the full query family. Hence
+
+    min_(rho probability on S) C(rho)=215/61,
+    (2/7)(215/61)=430/427>1,
+    max_(0<=F<=mu|S) J(F)=0.                            (FC870)
+
+Indeed every NONZERO measure F supported on S has
+J(F)<=mass(F)(1-430/427)<0; only the zero selector attains0.
+The complete source classification is reused from FC850. The common
+constant-potential mixture supplies the present normalized lower bound;
+it is not the different capacity dual used there at tau=1/4.
+
+For the literal restrictions mu,F_A,mu|S, the complete costs are
+23/9,20/9,19/9. Each cost drop equals its deleted mass, so both exact
+excess credits Psi vanish. The final uniform source has score-1/21;
+reoptimization raises it to0, with no positive reserve.
+
+This is an obstruction to combining separately positive fixed-query
+certificates, including separately optimized ones, on one conjunction.
+Five residues actually survive. No full-tail value tau=2/7 has been
+asserted and no query remainder has been paid. The example excludes
+neither a different cutoff or continuation nor an argument exploiting
+additional necessary conditions of a hypothetical whole cover.
+
+The outstanding full-family obligation remains quantitative: for
+every original family, construct some legitimate cutoff and ONE
+source whose full-query cost, retained mass and density pay the actual
+continuation and remainder. Private-point constraints, chain savings
+and deletion credit still need a joint arithmetic estimate fulfilling
+that obligation. The present identities and noncovering example do
+not supply it. These are written derivations, not new Lean results.
