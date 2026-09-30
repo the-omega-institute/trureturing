@@ -8000,3 +8000,171 @@ The [depth-two joint-colour consumer](../../../frontier/cover-geometry/pure-supp
 The consumer checks the full support-mass identity, all 2048 zero-pattern coefficients, complete moments, exact low atoms, every fixed stage and the quartic reserve with rational arithmetic. The JSON includes complete high-tail moments, trim certificates, charges and final density. Dependency hashes record provenance without imposing admission or cache gates. The inequalities (FC358) use only saved complete mass and first moment.
 
 These conclusions use ordinary mathematical proofs and exact computation; no new Lean verification is claimed. Their scope remains the FC159 source class, the stated twenty-prime head and the conditional tail above 10000. General old sources and the middle-prime gap remain open.
+
+## An actual mod-55 exclusion removes a joint zero-run atom from the coloured profile
+
+The actual2 mod55 original permits a positive joint run comparison by subtracting1/55 from the joint zero-run coefficient of5 and11 on each ternary root. The resulting common profile bounds every finite labelled query on the same eta0 and strictly improves every finite-threshold hinge after the same Top_h trimming. No prime, depth, clipping or order search was made. This is an ordinary mathematical interface, not a new continuation computation or Lean verification.
+
+### 1. A concrete actual relation present in both fixed sources
+
+Keep either fixed FC110 or FC131 assignment, actual finite N>=max(2,N_+), the prescribed skeleton and arbitrary permitted FC159 nongroup remainder, unchanged eta0=mu/D0 and h=36518862868606981/1816999451688960000. The added nongroup remainder retains its old ternary-height-one, support and shallow-group exclusions; those restrictions do not remove pure/grouped originals already in the skeleton. Every numerical original and global phase remains fixed.
+
+Take the free5/private11 role at depth1. FC110's table has common free5 row2 at q=11. The stored [FC131 assignment](../../../frontier/cover-geometry/fibre-credit-partition/bounded_joint_search.json) likewise has first final_rows entry[2,0,3,3], and private_sources["11"]["5"]["free"]=[0,0,1/9,0,0], so the same free5 row is2. FC147 role2 at depth1 is private residue2 mod11. FC147–FC152 therefore include the actual original
+
+    x5=2 mod5 AND x11=2 mod11, equivalently x=2 mod55.       (FC360)
+
+It is free of3 and acts on BOTH retained ternary roots. It exists for every actual N>=1, has one fixed phase, and is not a projected or newly added forbidden class. The actual full-core survivor avoids it.
+
+The lemma allows any declared finite retained pure/star depth1<=n<=N as in FC330–FC343; the intended consumer here remains the fixed n=2 case, with no other depth evaluated. Let beta_(p,r) be the corresponding restricted unnormalized Haar factor, a_(p,r) its mass, and z_(p,r)=a_(p,r)−1/p. Write A={x5=2 mod5}, C={x11=2 mod11}. All head5 pure cylinders lie in rows4 or3; all head5 stars lie in rows0 or1. All private11 pure/star cylinders lie in rows0,1 or6. Hence, at every finite retained depth and on either root,
+
+    beta_(5,r)(A)=1/5, beta_(11,r)(C)=1/11.                (FC361)
+
+The root reference with this ONE actual group retained is beta5 tensor beta11 restricted outside A×C, tensored with all other retained factors. Actual eta0 is dominated by the sum of those two root references because it avoids every original, in particular(FC360). Omitting other group deletions is an enlargement, not a source change.
+
+### 2. A general two-coordinate zero-run lemma
+
+Fix integers p,q>=2. Let beta_p,beta_q be finite positive measures with masses a_p>=1/p,a_q>=1/q and cylinder bounds beta_p(D_e)<=p^(−e), beta_q(E_e)<=q^(−e). Let A,C be measurable sets, alpha=beta_p(A), b=beta_q(C), and put
+
+    z_p=a_p−1/p, z_q=a_q−1/q, delta=alpha*b.
+
+Assume
+
+    b<=z_q, delta<=z_p*z_q.                              (FC362)
+
+For the product reference with A×C removed, fix any nonnegative baseline c and finite labelled sum c+sum_i w_i*1_(D_i)*1_(E_i), with w_i>=0. A depth-zero indicator is identically one; each positive-depth indicator has its declared cylinder cap. The weights and baseline may depend on other coordinates held fixed. This sum obeys the nonnegative increasing-convex ordered-increment comparison with the POSITIVE joint run measure
+
+    Omega(j_p,j_q)
+       =nu_(p,a_p)(j_p)*nu_(q,a_q)(j_q)
+          −delta*1_(j_p=0,j_q=0),                       (FC363)
+
+where nu(0)=a−1/p and nu(j)=(p−1)/p^(j+1) for j>=1. Explicitly, if label i has depths d_i,e_i, the inequality is
+
+    integral f(c+sum_i w_i*1_(D_i)*1_(E_i)) d[(beta_p tensor beta_q)|_(A×C)^c]
+      <= sum_(j_p,j_q) Omega(j_p,j_q)
+           *f(c+sum_i w_i*1_(d_i<=j_p)*1_(e_i<=j_q)).
+
+All labels, actual phases and depth-zero terms remain as in the given sum. There is no restriction that labels with the same depth have the same phase.
+
+Proof. Integrate q first, holding the actual p value and every other coordinate fixed. Its conditional finite measure is beta_q−1_A(x_p)*(beta_q restricted to C), of mass a_q−b*1_A. It has the same absolute positive-depth cylinder bounds as beta_q. The first assumption in(FC362) makes its zero-run coefficient z_q−b*1_A nonnegative. The existing weighted ordered-increment proof applies, keeping every label. All q runs j_q>=1 have their original coefficients; only j_q=0 has the p-dependent coefficient z_q−b*1_A.
+
+For j_q=0, the remaining p measure is
+
+    g=(z_q−b*1_A)*beta_p.
+
+It is positive, has total mass z_q*a_p−delta, and every p-depth-e cylinder has g mass at most z_q*p^(−e). Apply the scaled version of the same lemma: its positive run coefficients are z_q*nu_(p,a_p)(j_p), j_p>=1, while its zero coefficient is
+
+    (z_q*a_p−delta)−z_q/p=z_q*z_p−delta>=0.
+
+This scaled version is the ordinary lemma after division by z_q when z_q>0; if z_q=0 the assumptions force b=delta=0 and the branch is zero. For j_q>=1 the ordinary p comparison is unchanged. Collecting the cases gives(FC363). The intermediate measures were positive throughout, so no upper estimate was subtracted from another upper estimate. Depth-zero terms remain the labelled baseline at both stages. This proves the assertion. The measure's mass is a_p*a_q−delta, exactly the remaining rectangle-reference mass.
+
+### 3. The lemma applies uniformly to the actual55 relation
+
+For p=5,q=11 in(FC360), alpha=1/5,b=1/11 and delta=1/55 on both roots. At any finite retained depth,
+
+    z_(5,r)>3/10,
+    z_(11,r)>39/55.
+
+These lower bounds follow from u5<1/4 and u11<1/10, with a_(p,r)>=1−2u_p. Thus b<z_(11,r) and
+
+    z_(5,r)*z_(11,r)>117/550>1/55.                       (FC364)
+
+The new joint measure is strictly positive even at its corrected zero atom. For the intended retained depth2, its pair-zero masses change from784/3025 to729/3025 on root1, and from1204/3025 to1149/3025 on root2. These are direct rational substitutions, not a profile run or finite-layout sampling.
+
+No independence of the actual surviving5 and11 coordinates is required. The product factors describe an enlarged reference; the actual correlation is retained precisely by the removed rectangle and(FC363).
+
+### 4. Improved common-root profile for every complete query
+
+In the FC330–FC343 common run index j in N_0^V define
+
+    pi'_r(j)=[nu_(5,r)(j5)*nu_(11,r)(j11)
+                 −(1/55)*1_(j5=j11=0)]
+                *product_(p outside{5,11})nu_(p,r)(j_p). (FC365)
+
+Use the q=11 then p=5 proof above first, and perform the existing labelled induction over the remaining nonternary coordinates. Each coefficient is positive, every numerical label remains present with the same ternary indicator, and the symbolic run set is shared by the two roots. The free-label bound B(j)=product_p(1+j_p) and the deterministic colour count C1+C2<=B*K therefore remain valid without modification.
+
+Put l'(j)=min(pi'_1(j),pi'_2(j)), w'(j)=max(pi'_1(j),pi'_2(j)). Define Xi' by
+
+    load B(j):       coefficient l'(j)/3,
+    load v*B(j):     coefficient 2*w'(j)/3^v, v>=2.       (FC366)
+
+Then for the SAME actual eta0, every finite complete layout Phi and every nonnegative increasing convex f,
+
+    integral f(L_Phi) deta0 <= integral f dXi'.          (FC367)
+
+This is a single query-independent positive profile. Pairing roots uses only the unchanged-label colour count and nonnegative weights, so it does not require the run weights to factor independently across5 and11. It does not choose rootwise maximizing actual layouts.
+
+Since0<=pi'_r<=pi_r, both min and max decrease. Consequently
+
+    0<=Xi'<=Xi as positive scalar measures.              (FC368)
+
+Its total mass equals the enlarged pure/star reference after deleting the actual55 rectangle, not an arbitrary reduced budget:
+
+    mass(Xi')=mass(Xi)
+       −(1/165)*sum_(r=1,2) product_(p outside{5,11})a_(p,r).
+
+The source domination or(FC367) at f=1 implies mass(Xi')>=h, so Top_h(Xi') is legal without changing the source mass.
+
+### 5. The improvement survives same-mass trimming
+
+This is more than removing a scalar atom at global load1. Fix j5=j11=0, hold every other run except j7 at zero, and let j7 grow. All remaining factors are positive. Both root weights in(FC365) strictly decrease, so their minimum and maximum strictly decrease. Already the load B(j)=1+j7 term loses positive mass at arbitrarily large loads. Thus for every finite t,
+
+    (Xi−Xi')((t,infinity))>0.
+
+The upper-h tail identity gives Top_h(Xi')<=st Top_h(Xi). For sufficiently large t both raw tails are below h, and the trimmed tail difference is their strictly positive raw difference. Integrating those tails yields, for EVERY finite threshold T,
+
+    integral(z−T)_+ dTop_h(Xi')
+       <integral(z−T)_+ dTop_h(Xi).                    (FC369)
+
+All moments are finite by domination by Xi. This is a strict universal comparator improvement on the same physical source and same h. This structural strictness alone does not quantify a subsequent prime extension or tail reserve.
+
+### 6. A finite exact consumer interface, with no new search
+
+The existing zero-set decomposition still applies. For S={p:j_p=0}, replace the old root coefficient Z_r(S)=product_(p in S)z_(p,r) by
+
+    Z'_r(S)=Z_r(S)
+       −1_({5,11} subset S)*(1/55)
+            *product_(p in S outside{5,11})z_(p,r).    (FC370)
+
+It is nonnegative by(FC364). Retain the existing positive-run factors on p notin S. All complete kth moments are then
+
+    sum_(S subset V)[min(Z'_1(S),Z'_2(S))/3
+                  +T_k*max(Z'_1(S),Z'_2(S))]
+                     *product_(p notin S)M^+_(p,k).   (FC371)
+
+The minimum and maximum remain AFTER the two root products and their joint correction. Replacing them by coordinatewise extrema or subtracting the same scalar from every pattern is not this theorem. Formula(FC371) retains all auxiliary heights; a bounded low-load inventory would be only an implementation device.
+
+### 7. Why a simple proportional mass debit is unsafe
+
+On the literal root1 first-digit5×11 pure/star reference, allowed head rows are{1,2,3}, private rows{1,...,10}, each pair with Haar mass1/55. Remove only the actual(2,2) rectangle(FC360). Choose the complete pair query phases1 mod5,3 mod11,36 mod55. The load1+I5+I11+I55 is4 at(1,3), which survives. At hinge threshold3, both the original and group-restricted integral equal1/55. The exact universal first-digit rectangular comparison has atoms18/55 at load1,11/55 at load2 and1/55 at load4, and the displayed query attains it. The reference mass changed from30/55 to29/55, so multiplying that whole finite profile by29/30 would incorrectly give a strictly smaller hinge bound29/1650. This rejects proportional rescaling as a general reference interface; it is not a claim about the final all-group conditioned mu.
+
+The valid(FC363) instead locates the debit at the JOINT zero-run coefficient of the selected pair, while retaining all other-coordinate continuations. It is proved through positive conditional comparisons rather than by subtracting a group fee from an unrelated query bound.
+
+### 8. Reuse, scope and remaining obligation
+
+Repository inputs read: Report528 FC110's literal free5 row table; retained bounded_joint_search.json final_rows and private_sources for FC131; FC147–FC159 actual group cylinders and common source; FC330–FC343 labelled convex comparison and joint root profile. Reports771/779 and FC331–FC333 supply the weighted/capped ordered-increment machinery.
+
+The underlying deletion-credit principle is reused. Report588 PI2–PI4 already extracts source deletion and cap-slack credits while retaining one actual prefix and its query labels. Report787 evaluates exact deletion credit for coherent source-query maxima, including cases where deletion leaves a competing maximum intact. Report790 keeps the same mixed-support allocation through a signed bound instead of combining separate extrema. No general deletion decomposition or common-source discipline is newly claimed.
+
+[Report656 B6–B8](../650-699/656-induced-responses-and-central-mask-bound-old-domain-fees.md) is an even closer central-mask precedent: it keeps the actual3/5 mask until the noncentral comparison, then subtracts a baseline expectation from the full convex response. Its central zero-run capacity also permits a positive scalar-measure interpretation. Those actual parent-branch laws and coefficients do not supply the FC159 two-root5/11 pair law directly; the positive conditional lemma above and its unchanged-label colour mapping discharge that remaining interface here. [Report831 Section7](../800-849/831-clean-root-query-phases-admit-exact-incidence-states-but-small-prefix-tails-remain-too-large.md) explains why an unconditional standalone cluster hinge gain cannot simply be subtracted from a total-load bound. The present lemma instead holds for every compatible nonnegative inherited coefficient and baseline throughout the conditional comparison.
+
+The specific bridge here is the positive conditional pair lemma(FC363), its verified actual2 mod55 application to both declared sources, and its insertion before the joint-colour min/max in(FC365)–(FC371). It supplies a query-independent positive measure at all finite query heights, with the exact deficit located in the joint zero pattern and strict same-h hinge improvement. No external novelty or completed Lean-reuse claim is made.
+
+This note uses one actual group only, present in both named skeletons, for finite actual N>=max(2,N_+) and retained1<=n<=N, with n=2 in the fixed initialization below. It does not remove all grouped originals, assume independence of physical survivors, alter source phases, increase h, apply a countable actual family, or enlarge old-only permissions. Combining multiple overlapping group debits would require a new positivity/conditional proof and is NOT licensed by adding copies of1/55. The displayed one-group result already gives strict high-tail and same-h hinge improvement.
+
+A quantitative continuation requires evaluation of this new profile. The earlier pure/star comparator's 79 mean obstruction (FC358)–(FC359) remains true for that comparator; it is not automatically a statement about the improved one. A possible further interface would condition each private first-digit role deletion on the actual head rows, retain the product of the corresponding zero coefficients, and then compare the head coordinates. That requires rowwise and zero-pattern positivity, not just a positive total mass; it is a candidate obligation, not established here.
+
+The general odd distinct covering problem remains unresolved; this section supplies the fixed-source comparison and its initialization, without new Lean verification.
+
+### 9. Fixed depth-two initialization consumer
+
+The [grouped-pair consumer](../../../frontier/cover-geometry/pure-support-profiles/grouped_pair_profile.py) takes required explicit paths to the [arithmetic library](../../../frontier/cover-geometry/pure-support-profiles/depth_two_profile.py), [coloured library](../../../frontier/cover-geometry/pure-support-profiles/coloured_star_profile.py) and [output](../../../frontier/cover-geometry/pure-support-profiles/grouped_pair_profile.json), and loads definitions only. It neither executes a dependency main nor repeats a finite-control suite. It retains all2048 zero patterns, corrects precisely the512 patterns containing both5 and11, and checks the positive scalar debit before forming the new profile. Complete moments use orders0,1,2,4 and include all run heights; low atoms are exact through256.
+
+The delivered initialization has raw mass0.14700872708279566... and Top_h cutoff8. Its initial complete moments have decimal displays
+
+    m=h=0.020098444627851434...,
+    W=0.3657403126908506...,
+    M2=10.615231914104031...,
+    M4=319417.640300189...,
+    W/m=18.197443606358757... .
+
+The result stores all exact fractions, the raw profile, actual group debit, complete tail moments, and the Top_h split certificate. It completes7749 checks and executes zero prime updates. Source hashes are provenance, not admission or cache gates. The consumer's scalar debit may be computed as the difference of the old and corrected min/max coefficients because the mathematical positive-measure comparison(FC365)–(FC368) has already justified that exact arithmetic representation; the proof does not subtract unrelated query upper bounds.
