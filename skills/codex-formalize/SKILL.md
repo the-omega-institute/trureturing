@@ -211,9 +211,15 @@ If any checklist item cannot be evidenced, end the task as `open` with no deposi
 
 ### 7. Deposit and cover, then commit the complete publication unit
 
-Only after Step 6 and independent review pass, freeze through deposit and cover. If review needs an
-early draft, first complete the publication boundary below and use Step 8 to publish the draft with
-freeze and cover still pending; return here after review. Review must precede freeze and merge.
+Only after Step 6 and an independent pre-freeze review pass, freeze through deposit and cover. The
+pre-freeze review is a read-only seat that did not produce the module; it checks the mirror, source
+fidelity and the per-declaration judgement form against the unfrozen tree; it passes when every blocking
+finding it lists is resolved in the tree that goes through the doors. In the two-stage pipeline of
+`CLAUDE.md` §3.6 (探针 → Stage A → 镜像核对 → Stage B → 三席评审) it is the mirror-check and
+judgement-form seat between Stage A and the Stage-B doors. The sshx review triplet (tests / quality /
+architecture) follows the doors in that order and must pass before merge. If a review needs an early
+draft, first complete the publication boundary below and use Step 8 to publish the draft with freeze
+and cover still pending; return here after that review.
 
 ```sh
 make deposit ATOM_ID=<id> GID=<D5/Path/Module.theorem_name>
@@ -263,7 +269,8 @@ This focused publication-completeness boundary reuses `filemap-conform`; it adds
 status and does not require a full local preflight before publication. Full local preflight remains
 post-push, parallel with CI under `CLAUDE.md` §8.2. The native check validates inventory; following this
 handoff procedure remains an agent/review obligation. Source fidelity, the no-wrapper rule, the
-explicit registration exception above, and independent review before freeze/merge still apply.
+explicit registration exception above, the independent pre-freeze review and the review triplet
+before merge still apply.
 
 **The theorem you cover with must own the clause unconditionally.** Before `make cover`, list the
 atom's clauses and the chosen theorem's explicit hypotheses side by side, and for each hypothesis name
@@ -305,7 +312,7 @@ make preflight MODE=push BASE=<explicit-existing-40-hex-commit-sha>
 Report its raw exit and rejected rules; it does not replace the three remote required checks or gate
 the push. Fix actual failures under their existing owners without weakening required checks.
 
-`AUTO_MERGE=1` explicitly opts an invocation into auto-merge; without that option, the door does not arm auto-merge. Do not arm auto-merge before independent review passes: the sshx review triplet (tests / quality / architecture) must finish and pass before freeze or merge, and may run before or after PR publication as reviewer access permits (memory `review-must-precede-automerge`, #2337 precedent). Before any later push, query the actual PR state and head. If the PR is still `OPEN`, update the same branch with a complete publication unit under Step 7, including the return to freeze after review, then rerun the required checks on the new exact head and watch them with `make pr-watch PR=<number> HEAD_SHA=<new-40-hex-head-sha>`. If the PR is `MERGED` or `CLOSED`, route later work to a new branch and a new pull request. Never infer that a successful later push reached `dev`; verify the actual merge and `dev` state.
+`AUTO_MERGE=1` explicitly opts an invocation into auto-merge; without that option, the door does not arm auto-merge. Do not arm auto-merge before review passes: the independent pre-freeze review (Step 7) passes before the doors, and the sshx review triplet (tests / quality / architecture) must finish and pass before merge; the triplet may run before or after PR publication as reviewer access permits (memory `review-must-precede-automerge`, #2337 precedent). Before any later push, query the actual PR state and head. If the PR is still `OPEN`, update the same branch with a complete publication unit under Step 7, then rerun the required checks on the new exact head and watch them with `make pr-watch PR=<number> HEAD_SHA=<new-40-hex-head-sha>`. If the PR is `MERGED` or `CLOSED`, route later work to a new branch and a new pull request. Never infer that a successful later push reached `dev`; verify the actual merge and `dev` state.
 
 If the dispatched sandbox forbids git writes, state that constraint explicitly and hand the exact `git push` and `make pr-open` invocations above, with substituted arguments, to the caller; do not report `success` as though the work landed. Otherwise report `success` only with the opened pull request, touched paths, door-produced commit subjects, every relevant exit code and completed fidelity-gate evidence. For each new public D5 theorem/lemma in scope, report either its retained Reg path, compiled target exit code, validated four-slot/binding-evidence result and continuation kind, or the linked issue and explicit unfinished-audit disclosure under the exception above. Report actual attempted compilation failures without inventing missing Reg targets or successful evidence. Delivery success with an issue does not mean registration completion. `proof_shape` (`content` | `bind-only`), direct frozen public dependencies (GID + `statement_id`), `escape_witness` (or `bind-only`) and the module's `admission_basis` remain required for the mathematical declaration. Or report `open`, naming the stopping step and carrying every evidence class reached; mark each unreached class not run and explain why. There is no third outcome.
 

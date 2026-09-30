@@ -1,0 +1,6 @@
+### 203.5 形式化复用与有限实验的范围
+
+仓内 [`golden_trace_discriminant`](../../../D5/S1/Scale/Lucas.lean) 已证明任意黄金整数的迹—范数平方恒等式；[`norm_mul`](../../../D5/S0/Carrier/Norm.lean)、[`norm_phi_pow`](../../../D5/S0/Carrier/Units.lean) 和 [`golden_phi_pow_eq_fib_pair`](../../../D5/S1/Scale/Fibonacci.lean) 承担已有乘法与 Fibonacci 坐标公式。单位初始化与有限合法地址的形式化接口位于 [`LiteralWindowEnd`](../../../D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd.lean)。这些源码已检索并读取，本节没有重新编译或宣称其包含上述新组合定理。纯粹代入与环展开不另建 Lean 包装。
+
+独立标准库实验精确检查了 $340$ 份移位平方恒等式、$3060$ 份平移范数与新公因子关系、$426$ 个实际素因子的二次剩余条件、$1506$ 个有界非负平移，以及 $118$ 个标准 Fibonacci 加一归约。旧支撑反例另穷尽检查模 $409$ 的 $409$ 个候选根，并验证模周期；输出仅保留参数、计数和有限见证，不保存置换矩阵或逐步过程。有限结果用于检出所述桥梁的区别；一般量词由本节的代数与引用承担，不把实验计数当作统一渐近证明。
+
