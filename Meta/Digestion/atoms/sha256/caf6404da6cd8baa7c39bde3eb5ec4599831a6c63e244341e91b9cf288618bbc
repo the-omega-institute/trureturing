@@ -1,0 +1,37 @@
+**定理 353.1（可数分支的叶质量守恒）。** 设 $E$ 为可数类型，$\operatorname{List}(E)$ 为其有限历史列表的类型，$[]$ 为空历史，$h\mathbin{++}[a]$ 表示在 $h$ 末尾追加一个字母 $a$。设 $T\subseteq\operatorname{List}(E)$ 包含 $[]$ 且前缀闭合：若 $k$ 是 $h$ 的前缀且 $h\in T$，则 $k\in T$。给定质量函数 $m:\operatorname{List}(E)\to[0,\infty]$，其中 $[0,\infty]$ 是扩展非负实数。假设关系
+
+$$
+r(k,h)\quad\Longleftrightarrow\quad
+k\in T\ \land\ h\in T\ \land\ \exists a\in E,\ k=h\mathbin{++}[a]
+$$
+
+为良基关系。这里 $r(k,h)$ 把子节点 $k$ 作为 $h$ 的归纳前驱，并非把较短前缀作为前驱的关系。定义
+
+$$
+\operatorname{Leaf}(h)\quad\Longleftrightarrow\quad
+h\in T\ \land\ \forall a\in E,\ h\mathbin{++}[a]\notin T.
+$$
+
+假设对每个满足 $h\in T$ 且 $\neg\operatorname{Leaf}(h)$ 的历史，局部质量守恒成立：
+
+$$
+m(h)=\sum_{a\in E}'
+\begin{cases}
+m(h\mathbin{++}[a]),&h\mathbin{++}[a]\in T,\\
+0,&h\mathbin{++}[a]\notin T.
+\end{cases}
+$$
+
+所有带撇求和均取扩展非负实数中的无条件和。则全部叶节点子类型上的质量和等于根质量：
+
+$$
+\sum_{\ell\in\{h:\operatorname{List}(E)\mid\operatorname{Leaf}(h)\}}'
+m(\ell)=m([]).
+$$
+
+对子类型元素，$m(\ell)$ 表示在其底层历史上取值。不要求有限分支、共同有限深度、有限期望长度、有限根质量或任何非零条件；叶节点不承担局部守恒等式。根本身为叶以及空字母表均包含在内。根有可数多个有限臂而臂长无共同有限上界的树也在适用范围内。
+
+证明：在证明内部，对每个 $h\in T$ 考察以 $h$ 为前缀的叶后代子类型 $L_h$，并对关系 $r$ 的可及性归纳，证明 $\sum_{\ell\in L_h}'m(\ell)=m(h)$。若 $h$ 是叶，则前缀闭合排除任何严格后代属于 $T$，故 $L_h$ 只有 $h$，其和为 $m(h)$。若 $h$ 不是叶，每个叶后代都严格延长 $h$，因而有唯一的紧接字母 $a$；前缀闭合保证 $h\mathbin{++}[a]\in T$。反之，每个这样的子节点的叶后代也是 $h$ 的叶后代。因此 $L_h$ 与各合法子节点的叶后代子类型的不交并一一对应。扩展非负实数的无条件和允许按此不交并重组，不需有限性或额外可求和假设。对子节点应用归纳假设，再使用 $h$ 处的局部守恒等式，得到所需等式。最后取 $h=[]$，空历史是所有历史的前缀，便得到根处结论。
+
+本节只为满足上述假设的内部控制片段提供退出质量守恒，不断言全局查询树良基，也不认定任何原控制器已经满足这些假设；此处不作原创性主张。
+

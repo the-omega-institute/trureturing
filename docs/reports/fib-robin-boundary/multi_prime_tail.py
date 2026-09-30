@@ -2,10 +2,11 @@
 """Exact support-budget checks for the high-v2 Robin tail.
 
 The certificate is deliberately weaker than a step-by-step multi-prime
-argument: it bounds the final Euler-factor product.  It proves the support
-criterion used in theory section 154 and records the nine-prime corollary;
-failure at ten primes only means that this certificate has run out of budget.
-All sign decisions use Fraction arithmetic.
+argument: it checks the final support products, the rational threshold and a
+factor-product instance.  The seed evaluation, logarithmic comparison and
+the proposition's generic multiplicativity argument remain paper-level proof.
+Failure at ten primes only means that this certificate has run out of budget.
+All arithmetic decisions use Fraction values.
 """
 
 from fractions import Fraction as Q
@@ -21,9 +22,20 @@ def euler_support(primes):
     assert len(set(primes)) == len(primes)
     value = Q(1)
     for p in primes:
-        assert p >= 19 and all(p % q for q in primes if q != p)
+        assert p >= 19 and is_prime(p)
         value *= Q(p, p - 1)
     return value
+
+
+def is_prime(n):
+    if n < 2:
+        return False
+    divisor = 2
+    while divisor * divisor <= n:
+        if n % divisor == 0:
+            return n == divisor
+        divisor += 1
+    return True
 
 
 def z_factor(p, exponent):
@@ -47,13 +59,15 @@ def main():
     assert margin == Q(44551188659, 528099264000)
     assert margin > 0
 
-    # Equation (154.1), checked on a mixed-exponent instance.
+    # The prime-power factor product in equation (154.1), checked on one
+    # mixed-exponent instance.
     primes = (19, 29, 53)
     exponents = (1, 3, 2)
     product = Q(1)
     for p, a in zip(primes, exponents):
         product *= z_factor(p, a)
     assert product < euler_support(primes)
+    assert euler_support(()) == 1
 
     # The support criterion itself is a rational implication.
     assert DELTA_LOWER - Z_UPPER * (SUPPORT_THRESHOLD - 1) == 0
