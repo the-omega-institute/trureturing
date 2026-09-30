@@ -22387,3 +22387,654 @@ print(json.dumps({'p': p, 'lambda': lam, 'n': n, 'A': A, 'B': B,
 新进展是零差层的结构排除及有界分离协议，以及一般安全集的纤维与代数复杂度约束。第103节11／31的有限取得仍用其原证据；第104节终端门和一般有限到达桥在此直接复用。没有由论文标题、平均关联估计或一次有限计算移入新的全族定理，也没有原创优先权主张。非零差层需要同时控制测试可用性与同一分支的后继；终端补集的放松反例说明，这一联合关系不能省略。一般取得与更广的最小关系恢复目标继续保留其未证义务。
 
 ## 105.99 追加锚
+
+## 106. 相关种子、逐纤维回路与保留相位的结构边界
+
+本节沿用105.1的 Fibonacci 参数与先报告合同，推进非零差层的几个必要条件和局部分离证书。结果是普通数学：逐纤维的边覆盖界、统一的相关种子界、两类陷阱排除，以及忘记相位后的逆像重数。它们各有明确消费者；一般非零 $\delta$ 下排除所有非空精确安全集的命题仍未证明，也未由本节反驳。原始来源、初始标签与当前候选的关系仍按92.2、94.1及103.2保存，空间坐标的代数表达不自动成为观察者取得的信息。
+
+### 106.1 参数与精确联合关系
+
+除106.4中特别标明的较弱计数假设外，固定(105.1)：$p>3$ 为素数，$n=(p-1)/2$ 为奇数，$\lambda^2-\lambda-1=0$，$\operatorname{ord}(\lambda)=n$，$\mu=1-\lambda=-\lambda^{-1}$，$Q=\langle\lambda\rangle$ 为非零平方子群。记 $\chi(0)=0$，$\chi$ 为二次特征；$-1$ 非平方，平方与四次方映射均置换 $Q$。沿用 $A,B$，置 $S=A-B$、$a=A/B$。105.1已经给出
+
+$$
+A+B=2,\quad AB=1/5,\quad S=4/(2\lambda-1),\quad
+a=\lambda^6\in Q,\quad n\ge5,\quad p\ge11.
+$$
+
+在固定差层写 $v=(c,w)$，代表候选对 $((c,w),(c-1,w-\delta))$。为避免符号被拆开，统一使用
+
+$$
+\begin{aligned}
+L_e(v,x)&=Ae c/x+Bxw,\\
+L'_e(v,x)&=Ae(c-1)/x+Bx(w-\delta),\\
+Z_e(v,x)&\Longleftrightarrow [L_e(v,x)=0]=[L'_e(v,x)=0],\\
+h_e(x)&=(x,e/x),\qquad J_\delta(c,w)=(2c-1)w-c\delta.
+\end{aligned}
+\tag{106.1}
+$$
+
+精确安全集是非空 $K$ 满足 $\forall v\in K\,\forall x\in Q\,\exists e\in\{1,-1\}$，同时有 $Z_e(v,x)$ 和 $v+h_e(x)\in K$。此处的一个 $e$ 承担测试与后继两个义务。只使用后继条件时，会明确说明这是必要条件；它不能单独证明相关游戏的安全或失败。
+
+### 106.2 每条纤维上的缩放回路和边重数
+
+**定理 106.1（逐纤维的边覆盖约束）。** 取105.4的 $t$，置
+
+$$
+D=\{e_1+e_2/t-e_3/(1+t):e_i\in\{1,-1\}\},\qquad
+q=|D|/2\le4.
+\tag{106.2}
+$$
+
+则 $D=-D$ 且 $0\notin D$。若 $K$ 满足精确安全条件，甚至只满足其中的后继条件，则每条纤维 $F_c=\{w:(c,w)\in K\}$ 非空，并且
+
+$$
+\forall w\in F_c\ \forall s\in Q,\qquad
+(w+D/s)\cap F_c\ne\varnothing.
+\tag{106.3}
+$$
+
+令 $m=|F_c|$，有
+
+$$
+q\binom m2\ge n\left\lceil\frac m2\right\rceil,
+\qquad m\ge1+\left\lceil\frac nq\right\rceil.
+\tag{106.4}
+$$
+
+若 $\chi(2)=-1$，可选 $t=1$ 并取 $q=3$；本节不在其他情形自动使用这个改进。
+
+证明。105.4证明了存在 $t\in Q$，使 $\chi(1+t)=-1$ 且(106.2)的全部值非零；同时取负全部三个符号证明对称性，至多八个值证明 $q\le4$。对每个 $s\in Q$，三个预定阶段
+
+$$
+x_1=s,\quad x_2=st,\quad x_3=-s(1+t)
+\tag{106.5}
+$$
+
+都属于 $Q$，和为零。连续应用后继条件，三个实际选中的符号给末态 $(c,w+d/s)$，$d\in D$；安全要求在每一步用其自身的同一个符号，未另选测试符号。故(106.3)成立。重复 $x=1$ 的后继令第一坐标遍历素域，证明所有纤维非空。
+
+在 $F_c$ 上定义简单无向图 $\Gamma_s$：不同的 $w,z$ 相连当且仅当 $s(z-w)\in D$。对称性保证无向，零被排除保证不是自环，(106.3)保证无孤立点。固定一对不同顶点，每个对踵对 $\{d,-d\}\subset D$ 在 $d/(z-w),-d/(z-w)$ 中恰给一个平方尺度，因为 $-1$ 非平方；不同对踵对给不同尺度。因此该无序边恰在 $q$ 个图中出现，重数并非八种符号路径的条数：不同路径产生同一个 $d$ 时只计一次。每个无孤立点图至少有 $\lceil m/2\rceil$ 条边，跨 $n$ 个尺度求和即得第一式。对单个顶点也有 $n\le q(m-1)$，给第二式。
+
+当 $m$ 为偶数时第一式化为 $q(m-1)\ge n$；当 $m$ 为奇数时，它要求
+
+$$
+q m(m-1)\ge n(m+1),
+\tag{106.6}
+$$
+
+严格强于单顶点界。在本族 $n\ge5,q\le4$，每条纤维至少三点，因而排除所有两点纤维；奇数情形还可能继续排除三点纤维。若 $\chi(2)=-1$，$t=1$ 满足105.4的条件，且 $D=\{\pm1/2,\pm3/2,\pm5/2\}$。$p\ge11$ 保证六个值不同且非零，故此时 $q=3$。证毕。
+
+### 106.3 一个接近获胜的列足以完成比较
+
+**命题 106.2（有条件的列完成消费者）。** 固定 $\delta$。假设已经实际证明，在某列 $c=h$，每个 $w\notin B_0$ 都有覆盖全部符号历史、至多 $r$ 个阶段且恰一次 $T$ 的分离策略，其中残余 $B_0\subseteq\mathbb F_p$ 已知。若
+
+$$
+q(|B_0|-1)<n,
+\tag{106.7}
+$$
+
+则全部规范候选对可用至多 $r+5$ 个阶段分离，仍恰一次 $T$。一个阶段包括至多 $n-1$ 个付费 $R$，随后一个 $G$ 或 $T$；在已实现接口中总成本至多 $n(r+5)$ 个付费原语，初始规范化偏移并入第一阶段。
+
+证明。对 $w\in B_0$，每个 $z\in B_0\setminus\{w\}$ 恰禁止 $q$ 个满足 $s(z-w)\in D$ 的尺度。禁止尺度少于 $n$，故可选 $s\in Q$，使 $(w+D/s)\cap B_0=\varnothing$。执行(106.5)的三个 $G$ 阶段；全部八种有效符号三元组都结束在同列的已认证区域。随后接其策略，给列内至多 $r+3$ 阶段。
+
+任意第一坐标 $c$ 到 $h$ 至多再用两个 $G$：写 $b=h-c$，$b=0$ 不接枝，$b\in Q$ 用 $x=b$；若 $b$ 非平方，用 $x=b/(1+t)$、$x'=bt/(1+t)$，二者为平方且和为 $b$。第一坐标增量与符号无关。两个对齐阶段加三个回路阶段给 $r+5$，并未新增 $T$。证毕。
+
+奇数边覆盖也有实质消费者。若对每个 $1\le k\le |B_0|$ 均有
+
+$$
+q\binom k2<n\lceil k/2\rceil,
+\tag{106.8}
+$$
+
+则残余上某个 $\Gamma_s$ 必有孤立顶点。它的三个回路阶段全部结束在当前残余外，故可认证并删除这一顶点；逐次删除，以已经认证的点作延续，得到至多 $r+3|B_0|+2$ 阶段。空残余直接使用已有策略。条件须对所有实际可能的剩余大小成立，不能只验初始大小。它确有比(106.7)多接纳的情形：$n=5,q=3,|B_0|=3$ 时(106.8)对 $k=1,2,3$ 成立，而(106.7)失败。两种条件均为充分条件。所需的获胜列补集尚未由传感器关系统一给出，不能把这一假设当作免费观察或已得结论。
+
+### 106.4 终端目标与同符号的混合传感器种子
+
+**引理 106.3（含退化端点的终端门）。** 在 $\delta\ne0$ 时，$H_\delta=\{J_\delta=0\}$ 恰是能选一个相位、对两个符号都由一次 $T$ 分离的集合。它有 $p-1$ 点，参数为
+
+$$
+(C,W)=\left(C,\frac{\delta C}{2C-1}\right),\qquad C\ne1/2.
+\tag{106.9}
+$$
+
+证明。零测试可写成 $c+uw=0$ 与 $c-1+u(w-\delta)=0$，其中 $u=e(B/A)x^2$。平方置换奇阶 $Q$，因此相位与两个符号提供全部非零斜率的对踵对。在 $H_\delta$ 上，除 $(0,0),(1,\delta)$ 外，两候选的零斜率分别为 $-(2C-1)/\delta$ 与 $(2C-1)/\delta$，不同且互为负数。选这一对，两个符号各恰使一个候选为零。两个端点有一个候选为原点，始终读零；另一候选至多禁止一个相位，$n>1$ 提供可避开的相位。$C=1/2$ 无解，证明计数。反之，除原点候选外，每个候选至多提供一个非零零斜率；两个符号均分离要求两个零斜率为不同对踵值，消去分母正得 $J_\delta=0$。坐标轴上的非原点候选可能没有非零零斜率，不能贡献第二个分离符号；上述两个原点端点已包含在内。故没有漏出的退化终端。证毕。
+
+**定理 106.4（统一非终端相关种子界）。** 本定理只需 $p>3$、$p\equiv3\pmod4$、$Q$ 为非零平方子群，以及 $AB(A-B)\delta\ne0$。定义
+
+$$
+C_\delta=\{v\notin H_\delta:\exists x\in Q,\ e\in\{1,-1\},\quad
+Z_e(v,x),\quad\neg Z_{-e}(v,x),\quad v+h_e(x)\in H_\delta\}.
+\tag{106.10}
+$$
+
+同一个 $e$ 的测试相等且后继终端，另一个符号直接分离。则
+
+$$
+|C_\delta|\ge\max\{0,\lceil p-9-2\sqrt p\rceil\}.
+\tag{106.11}
+$$
+
+因此 $p\ge19$ 时该集合非空；在105.1的 Fibonacci 子族，它对每个非零 $\delta$ 均非空，较小的 $p=11$ 由下面的五个证书补足。任何精确安全集均避开 $H_\delta\cup C_\delta$。
+
+证明。先让证明参数 $X$ 遍历全部非零域元素，$e$ 遍历两个符号。从(106.9)的终端目标取前驱
+
+$$
+c=C-X,\qquad w=W-e/X.
+$$
+
+要求相反符号的第一候选读零，即 $-Ae c/X+BXw=0$。清除非零分母后得到关于终端坐标 $C$ 的二次式
+
+$$
+F_e(X,C)=2AC^2-(Be\delta X^2+2SX+A)C+SX=0.
+\tag{106.12}
+$$
+
+$F_e(X,1/2)=-Be\delta X^2/2\ne0$，所以清分母没有引入 $C=1/2$ 的伪根。记 $b=Be\delta$。剔除下列三类关联：$bX^2=A$；$c=0$；$2Ac=A+bX^2$。其余关联满足 $w=ae c/X^2$。符号 $-e$ 的两读数是 $0$ 与 $Ae/X-BX\delta$，后者因第一类已排除而非零；符号 $e$ 的两读数是 $2Ae c/X$ 与 $Ae(2c-1)/X-BX\delta$，因第二、三类已排除而都非零。并且
+
+$$
+J_\delta(c,w)=c\bigl(ae(2c-1)/X^2-\delta\bigr)\ne0,
+\qquad (c,w)+h_e(X)=(C,W)\in H_\delta.
+$$
+
+因此两个合取项确实共享 $e$。
+
+若 $X\in Q$，直接输出 $v=(c,w),x=X$；若 $X$ 非平方，输出另一个起始候选对 $v'=(1-c,\delta-w),x=-X\in Q$，仍保留 $e$。映射 $I(c,w)=(1-c,\delta-w)$ 满足 $J_\delta(Iv)=J_\delta(v)$、$I(v+h_e(X))=Iv+h_e(-X)$；在 $Iv,-X$ 上的两读数是原来的两读数交换次序。因此得到合法平方相位的种子，第二候选承担相反符号的零。这里构造的是另一对起始候选，绝不执行免费的物理取负、交换来源或相位反转。
+
+下面只给(106.11)的一个计数证明。二次式的判别式为
+
+$$
+\mathcal D_e(X)=(bX^2+2SX+A)^2-8ASX.
+\tag{106.13}
+$$
+
+它有平方首项 $b^2$ 和非零常数 $A^2$，不是常数倍的平方，甚至在代数闭包中也不是平方。若它是平方，选平方根首项为 $b$；比较三次系数使平方根为 $bX^2+2SX+\ell$，比较一次系数给 $\ell=-A$，二次系数再给 $4bA=0$，矛盾。非平方常数乘平方也不可能，因为首项已经是平方。
+
+对这类四次式有
+
+$$
+\sum_{X\in\mathbb F_p}\chi(\mathcal D_e(X))\ge-1-2\sqrt p.
+\tag{106.14}
+$$
+
+精确文献桥如下。先除以平方 $b^2$，得到首一四次式 $f=X^4+a_3X^3+a_2X^2+a_1X+a_0$。在 $f$ 无重根时，Bogdan Nica，[*On quadratic character sums over quartics*，arXiv:2507.09991v1](https://arxiv.org/html/2507.09991v1)，定理2.2、式(6)给出的原陈述是
+
+$$
+\sum_X\chi(f(X))=-1+\sum_T\chi(g(T)),\quad
+g(T)=T^3+a_2T^2+(a_1a_3-4a_0)T+a_0(a_3^2-4a_2)+a_1^2.
+\tag{106.15}
+$$
+
+这里 $p>3$ 满足文章的特征限制，$f$ 首一和无重根是逐项假设，$-1$ 不得丢掉。若 $g$ 无重根，$y^2=g(T)$ 的光滑射影模型为椭圆曲线，且有一个有理无穷远点，所以点数为 $p+1+\sum_T\chi(g(T))$。经典 Hasse 界给特征和至少 $-2\sqrt p$。可核对的文献陈述是 Agathocleous–Joux–Taufer，[*Elliptic curves over Hasse pairs*，arXiv:2406.03399v1](https://arxiv.org/html/2406.03399v1)，定理2.1所引 Waterhouse 迹分类：把其 $q=p^a$ 取为 $p$、指数取1、$p>3$，非空椭圆曲线类的迹只可能属于其(a)或(e)，二者都满足 $|t|\le2\sqrt p$。本处不需要点数是素数幂、不需要 Hasse pair，也不借用曲线存在性来填补奇异情形。
+
+若 $g$ 有重根，它是 $(T-r)^2(T-s)$ 或 $(T-r)^3$，其中重复根在本域；前者的特征和为 $-\chi(r-s)$，后者为0。故仍有(106.14)，但不把奇异三次式称为椭圆曲线。若 $f$ 本身有重根，四次且非平方迫使 $f=h^2k$，$h$ 为首一一次式，$k$ 为首一无重根二次式，允许 $h$ 的根也是 $k$ 的根。理由是偶数总次数的奇重数部分只能有次数2；若有重复的不可约二次因子，则四次式是平方，已经排除。无重根二次式满足 $\sum_X\chi(k(X))=-1$，这可由完成平方后计数 $(u-v)(u+v)=d\ne0$ 得到；乘 $h^2$ 只在 $h$ 的一个根处删除一个值，故 $\sum\chi(f)\ge-2$。这也强于所需下界。全部重根情况都已单独覆盖。
+
+固定 $e,X\ne0$ 时，$2A\ne0$，所以二次式有 $1+\chi(\mathcal D_e(X))$ 个不同 $C$ 根，重根算一次。因 $\mathcal D_e(0)=A^2$，两符号的原始关联数至少
+
+$$
+2\bigl(p-2-1-2\sqrt p\bigr)=2p-6-4\sqrt p.
+\tag{106.16}
+$$
+
+三类剔除合计至多12次关联。第一类 $e\delta X^2=a$ 恰有两个 $(X,e)$：$-1$ 非平方使两符号仅一个可取平方根，每个至多两个 $C$ 根，故至多4。第二类 $c=0$ 使 $w=0$，终端后继条件化为 $e\delta X^2-2X+1=0$，每符号至多两个 $X$，故至多4。第三类在 $c\ne0$ 时令 $J_\delta(c,w)=0$；把 $c=(ae+\delta X^2)/(2ae)$ 代入其终端后继条件，得到 $e\delta X^2+2aX+a^2=0$，故至多4。与 $c=0$ 重叠者已由第二类计入；相互重复剔除只使并集上界更宽，不会增加12。
+
+每个输出点的重数至多2。非零坐标的一个候选恰有一个零传感器选择 $(x,e)$：两个符号决定平方类，平方在奇阶 $Q$ 上为双射。平方 $X$ 的构造由输出的第一候选唯一确定，非平方折叠的构造由输出的第二候选唯一确定；每一类还由 $C=c+X$ 唯一恢复终端目标。剩下关联数至少 $2p-18-4\sqrt p$，除以2、取整数上整并与零比较，即得(106.11)。$p-9-2\sqrt p$ 在 $p\ge19$ 为正且递增。
+
+本族 $p\ge11$，$p<19$ 且 $p\equiv3\pmod4$ 的唯一可能是11。该域 $A=6,B=7$；下列 $(\delta;c,w,x,e)$ 分别是五个证书：
+
+$$
+\begin{gathered}
+(1;9,3,1,+1),\quad(2;1,4,1,+1),\quad(3;9,0,9,+1),\\
+(4;2,1,5,-1),\quad(5;2,6,9,+1).
+\end{gathered}
+\tag{106.17}
+$$
+
+逐个代入(106.1)得到 $J_\delta(v)=9,2,6,6,8$，均非零；符号 $e$ 的两读数依次为 $(9,7),(1,3),(6,7),(4,6),(9,5)$，相反符号的两读数为 $(0,10),(0,3),(5,0),(0,4),(10,0)$，且全部同 $e$ 后继满足 $J_\delta=0$。对 $-\delta$ 用 $(c,-w,x,-e)$：读数共同取负，$J$ 共同取负，故覆盖全部十个非零差值。最后，安全集不能含终端点；在种子上 $-e$ 测试分离，$e$ 的后继终端，两个符号均不能履行安全合取。证毕。
+
+### 106.5 种子的付费执行和初始标签消费者
+
+**命题 106.5（每个种子至多两阶段、恰一次读）。** 对 $v\in C_\delta$ 及其证书 $(x,e)$，先用至多 $n-1$ 个实际 $R$ 对齐 $x$，消耗并记录每份 offer。到目标相位后，若已宣布的有效符号为 $-e$，执行 $T$；若为 $e$，执行 $G$，进入 $H_\delta$，再用至多 $n-1$ 个 $R$ 对齐引理106.3的终端相位并执行 $T$。每条执行至多 $2n$ 个付费原语、至多一个 $G$、恰一个 $T$。
+
+证明。保留的共同线性框架在 $j$ 个旋转和累计反射 $\eta$ 后为 $\operatorname{diag}(\lambda^j,\eta\mu^j)$。置 $x=\lambda^{-j}$、$\epsilon=\eta(-1)^j$，框架为 $\operatorname{diag}(1/x,\epsilon x)$。物理标量乘单位 $\epsilon$ 后正是 $L_\epsilon$；物理接枝的框架逆像正是 $h_\epsilon(x)$。因此报告给测试和接枝的是同一个有效符号。两个分支由(106.10)和引理106.3保证分离；每个阶段至多 $n-1$ 个旋转加一个 $G/T$。首份正号是已覆盖的两个符号之一，不能重发或放弃。初始虚拟规范化的偏移按103.4并入第一目标相位；逆框架只更新候选记忆，未实施逆动作。证毕。
+
+在既有物理装置 $E=M^{15},T=\gcd(2a+3b,341)$ 上，这一执行桥只用于11、31两个分量。一般素数的(106.11)属于抽象规范游戏，$\gcd341$ 不提供其他素数的整除位，$M^{15}$ 也不自动在其他域实现所需反射。模31候选必须在模11活动期间接收同一个实际命令和报告，反之亦然，不存在独立素数时序。
+
+每个存活槽保留不可变初始 $c_0$ 与共同 $c=u c_0+t$，$u\ne0$；$R$ 更新 $(u,t)$ 为 $(\lambda u,\lambda t)$，$G$ 更新为 $(u,t+1)$，报告和 $T$ 不改变它。来自同一实际来源的槽不会被正确零位筛选删除；一次证书比较删除至少一个不同标签的所选槽。这给可识别种子的局部取得消费者。它没有证明任意两个不同标签都能找到这种证书，也没有据此完成全标签取得。
+
+### 106.6 无平移周期和无二次标量带
+
+**定理 106.6（精确安全集的加法稳定子平凡）。** 在本族，对任意 $\delta$，非空精确安全集没有非零加法周期 $r$，即 $K+r=K$ 只能有 $r=0$。
+
+证明。固定一个非例外相位 $x$，使
+
+$$
+D_+D_-\ne0,\qquad D_e=Ae/x+Bx\delta.
+\tag{106.18}
+$$
+
+若 $\delta=0$，每个相位非例外；若 $\delta\ne0$，例外条件为 $x^4=a^2/\delta^2$，四次方置换奇阶 $Q$，故至多一个相位例外。$n>1$ 保证可选非例外相位。
+
+反设周期 $r=(u,v)\ne0$。素域性质给 $K+tr=K$ 对全部 $t\in\mathbb F_p$ 成立。对符号 $s$ 置 $q_s=L_{-s}(r,x)=-Asu/x+Bxv$、$z_s=\det(r,h_s)=su/x-vx$。至少一个 $s$ 使 $q_sz_s\ne0$。若 $u=0$ 或 $v=0$，由 $A,B,x$ 非零立即成立；否则令 $t=vx^2/u$，符号 $+$ 失败要求 $t\in\{1,a\}$，符号 $-$ 失败要求 $t\in\{-1,-a\}$。两集合不交，因为域特征非2，$a\ne0,-1$，其中 $a\ne-1$ 正是 $A+B\ne0$。这也覆盖 $a=1$ 时集合缩为单点的退化。
+
+选此 $s$。任取 $y\in K$，整条 $y+\mathbb F_p r$ 在 $K$；因 $q_s\ne0$，其中一点使 $L_{-s}=0$。其第二读数为 $-D_{-s}\ne0$，故只能选 $s$ 的安全后继。再减去周期位移，得到 $y+h_s\in K$。有限性把 $K+h_s\subseteq K$ 提升为相等。$z_s\ne0$ 使 $r,h_s$ 张成整个平面，故非空 $K$ 必为全平面。然而原点在该非例外相位的两个符号都读数不等，矛盾。证毕。
+
+消费者是直接拒绝任何非恒定线性坐标的集合谓词，包括任意多条平行直线的并、或对一个线性坐标施加特征谓词。数学周期在证明中用于矛盾，不授予控制器一次免费的物理平移。
+
+**定理 106.7（无次数至多二的共同标量带）。** 不存在非空精确安全集形如
+
+$$
+K=\{(c,w):w-f(c)\in U\},\qquad U\subseteq\mathbb F_p,\quad\deg f\le2.
+\tag{106.19}
+$$
+
+证明。$U=\varnothing$ 不满足非空前提。若 $f$ 为常数、一次式或零多项式，$(1,f(c+1)-f(c))$ 是非零周期，已由定理106.6排除；这包括 $U=\mathbb F_p$ 的全平面。设 $f(c)=a_2c^2+a_1c+a_0$，$a_2\ne0$。取 $u_0\in U$，后继的两个残余为
+
+$$
+u_0-[f(c+x)-f(c)]\pm1/x.
+$$
+
+对固定 $x\ne0$，$f(c+x)-f(c)=2a_2xc+a_2x^2+a_1x$ 遍历全域。后继闭合因而要求每个 $t$ 至少有 $t+1/x$、$t-1/x$ 之一在 $U$。若两个不同 $u,v$ 都不在 $U$，取允许的平方相位使 $\{1/x,-1/x\}=\{(u-v)/2,-(u-v)/2\}$；因 $Q\sqcup(-Q)=\mathbb F_p^\times$ 总可取到。以 $t=(u+v)/2$ 得矛盾，故 $U$ 至多漏一个值。
+
+若没有漏值，仍是全平面。若只漏 $b$，补集为图 $w=f(c)+b$。$\delta\ne0$ 时它与 $H_\delta$ 的交点满足 $(2c-1)(f(c)+b)-c\delta=0$；这是次数至多3的非零多项式，因为在 $c=1/2$ 值为 $-\delta/2\ne0$，故至多三个根。$H_\delta$ 有 $p-1$ 点，至少 $p-4>0$ 个终端点在 $K$，与安全矛盾。$\delta=0$ 已被定理105.3排除，不把非零差的清分母论证延伸过去。证毕。
+
+这排除任意选取平行抛物线的并，其定义乘积可以有很高次数；它不假定一般 $K$ 都能写成(106.19)。系数 $a_2=0$、空 $U$、全 $U$、只漏一点与零差层已经分别处理。$A,B,A+B$ 非零和 $n>1$ 是上面周期论证的实际假设，不能删去后声称同一排除仍成立。
+
+### 106.7 忘记相位后至多三重的强制逆像
+
+**命题 106.8（第一传感器强制关系的完整逆像）。** 在 $cw\ne0$ 时，恰有一个 $(x,e)\in Q\times\{1,-1\}$ 使 $L_e(v,x)=0$：$e=-\chi(cw)$，$x^2=-ae c/w$。定义
+
+$$
+\mathcal F(c,w)=(c+x,w-e/x).
+\tag{106.20}
+$$
+
+若 $v$ 属精确安全集且 $w-c\delta\ne0$，符号 $e$ 分离，安全性只能使用相反符号，故 $\mathcal F(v)$ 也在该集。目标 $(C,W)$ 的全部逆像恰为
+
+$$
+v=(C-x,W+e/x),\quad x\in Q,\quad e\in\{1,-1\},\quad
+BeWx^2+(B-A)x+AC=0,
+\tag{106.21}
+$$
+
+并要求 $(C-x)(W+e/x)\ne0$。忘记相位的 $\mathcal F$ 在全域至多三对一，此界可达。
+
+证明。$a\in Q$ 和 $-1$ 非平方使零方程唯一选择 $e$，奇阶 $Q$ 的平方双射再唯一选择 $x$。在该零方程下，另一候选读数为 $Ae/x-Bx\delta$，等价于 $w-c\delta\ne0$ 时非零；所以(106.20)是同一符号约束所迫的后继。代入目标逆像形式并乘 $x/e$ 即得(106.21)；反向代入加上非零坐标条件恢复定义中的唯一零分支，因此没有多算未知相位。
+
+若 $CW\ne0$，二次式判别式和根积分别是
+
+$$
+\Delta_e=S^2-4eAB CW=4(4-eCW)/5,\qquad
+\text{根积}=aeC/W.
+\tag{106.22}
+$$
+
+恰一个符号的根积非平方，其二次式最多一个平方根，另一个最多两个；重复根仍只算一个，故总数至多3。若 $C=0,W\ne0$，非零根是 $x=S/(BeW)$，两个符号给相反值，最多一个在 $Q$。若 $W=0,C\ne0$，根固定为 $x=AC/S$，两符号最多给两个逆像。$(C,W)=(0,0)$ 只剩 $-Sx=0$，没有允许根。这涵盖所有降次情形。
+
+界的可达证书为 $p=11,A=6,B=7,\delta=1$、目标 $(2,5)$：逆像 $(1,4),(8,7),(10,9)$ 分别使用 $(e,x)=(-1,1),(-1,5),(+1,3)$。三者 $cw\ne0,w-c\delta\ne0,J_\delta\ne0$，相反符号测试相等且达到目标。它们是不同相位历史，并非同一物理动作字把不同来源合并。证毕。
+
+非单射也有无需枚举的证书：取不同 $x,z\in Q$、任意 $e$，令 $C=Sxz/[A(x+z)]$、$W=S/[Be(x+z)]$。因 $-1$ 非平方，$x+z\ne0$；(106.21)的两个根是 $x,z$，给两个不同逆像。其非零坐标条件只可能被 $Ax+Bz=0$ 破坏，但 $x/z$ 为平方、$-B/A$ 非平方，故不会发生。第二传感器对应平移后的逆式
+
+$$
+Be(W-\delta)x^2+(B-A)x+A(C-1)=0.
+\tag{106.23}
+$$
+
+消费者须保留每条边的 $(x,e)$，并同时处理 $cw=0$、$(c-1)(w-\delta)=0$ 和静默线 $w=c\delta$。至多三重的逆像计数不能冒充扩张估计。相反，每份固定实际历史由可逆矩阵与平移组成，始终单射；103.1的初始标签运输未被这些跨历史碰撞推翻。
+
+### 106.8 一个实际单传感器控制器的五十原语周期
+
+**命题 106.9（固定正来源上的特定控制器失败）。** 在既有341装置、所有隐藏批均为零时，从固定正来源 $(93,93)$ 和 $(62,62)$ 分别执行同一无限字 $(T,G,R,R,R)^\infty$，两份执行的每次 gcd 相同而初始标签不同。这只反驳这个控制器，不是全相位精确安全集，也不反驳103的取得协议。
+
+证明。两初始标签 $a+81b\pmod{341}$ 为124、310，模31的两初态同为零。模11初始候选为 $((3,1),(2,8))$，差层 $\delta=4$。第 $k$ 次 $T$ 前有 $3k$ 个实际 $R$；拉回已记录框架得到 $x=\lambda^{-3k}$、有效符号 $(-1)^k$。这些是记忆中的运输计算。规范第一候选在十次比较处依次为
+
+$$
+\begin{gathered}
+(3,1),(4,2),(9,4),(1,8),(5,5),\\
+(3,10),(4,9),(9,7),(1,3),(5,6),
+\end{gathered}
+\tag{106.24}
+$$
+
+相位为 $1,5,3,4,9,1,5,3,4,9$，实际规范后继符号为 $+,-,+,-,+,-,+,-,+,-$。逐个代入，各点 $J_4\ne0$，实际符号的两标量都非零；相反符号令第一标量为零。在 $(3,1)$，$w=c\delta$，两候选零位对两个符号都相等；其他九点的相反符号分离，因此所列后继被第一传感器关系强制。按静默点所列分支继续，(106.20)闭合此十点周期，排除把这个规则及这份静默延续赋予严格下降秩的办法。
+
+直接用原始整数矩阵、绝不重新选模代表，十个 $T$ 的共同 gcd 为
+
+$$
+(31,1,1,31,1,1,1,1,1,1).
+\tag{106.25}
+$$
+
+周期为何永远继续也有代数证明。按103.2，$M^{30}\equiv I\pmod{341}$，且
+
+$$
+M^3=\begin{pmatrix}1&2\\2&3\end{pmatrix},\qquad
+\det(I-M^3)=-4
+$$
+
+是模341的单位。几何和恒等式给 $\sum_{j=0}^9M^{3j}=0$。$G$ 后三个 $R$ 的仿射作用为 $s\mapsto M^3s+M^3\alpha$；十次复合的平移为 $\sum_{j=1}^{10}M^{3j}\alpha=0$，故两剩余状态各自返回初态。$T$ 不改变状态，因此(106.25)无限重复。实际正整数来源继续增长，周期只在剩余和 gcd 层成立。一个周期恰十个 $T$、十个 $G$、三十个 $R$，共五十个付费原语与五十份已消耗 offer；每批 $k=0$，首份正号合法。十点甚至未投影到全部第一坐标，已不满足精确安全集的全相位要求。证毕。
+
+### 106.9 可复用的有界关联与原始整数核验
+
+以下程序有两个独立用途：核验显式混合关联的例外数与输出重数，并从固定正整数来源重放局部证书和特定失败字。它只用已经考察过的11、19、31，不作素数分类、全341候选乘积、安全集幂集或全局获胜秩枚举。关联计数逐个检查相同符号的测试与后继；五个11证书及其符号对称像的付费执行覆盖全部后续二元报告分支，首批固定零。负对照拒绝符号拆分、伪称十点全相位安全、错误种子符号及超预算；所有关键检查使用显式异常，优化运行也不能删去。每次运行限120秒、100000记录、1500000边，并限制原始整数位数；超限和核验失败均非零退出。数值核验支持这里的证书，通用下界由106.4的证明和文献条件承担。
+
+```python
+import json
+import math
+import signal
+from collections import Counter
+
+
+class CheckFailure(RuntimeError):
+    pass
+
+
+def require(ok, message):
+    if not ok:
+        raise CheckFailure(message)
+
+
+class Budget:
+    def __init__(self, records=100000, edges=1500000):
+        self.records = self.edges = 0
+        self.record_cap, self.edge_cap = records, edges
+
+    def charge(self, records=0, edges=0):
+        self.records += records
+        self.edges += edges
+        require(self.records <= self.record_cap, "record cap")
+        require(self.edges <= self.edge_cap, "edge cap")
+
+
+budget = Budget()
+
+
+def timeout(signum, frame):
+    raise CheckFailure("120 second cap")
+
+
+def rejected(function):
+    try:
+        function()
+    except CheckFailure:
+        return
+    raise CheckFailure("negative control accepted")
+
+
+def chi(t, p):
+    t %= p
+    if not t:
+        return 0
+    return 1 if pow(t, (p - 1) // 2, p) == 1 else -1
+
+
+def jvalue(c, w, d, p):
+    return ((2 * c - 1) * w - c * d) % p
+
+
+def readings(c, w, d, x, e, A, B, p):
+    inv = pow(x, -1, p)
+    return ((A * e * c * inv + B * x * w) % p,
+            (A * e * (c - 1) * inv + B * x * (w - d)) % p)
+
+
+def equal(c, w, d, x, e, A, B, p):
+    u, v = readings(c, w, d, x, e, A, B, p)
+    return (u == 0) == (v == 0)
+
+
+def seed(c, w, d, x, e, A, B, p):
+    require(d % p != 0 and e in (-1, 1), "seed parameters")
+    require(chi(x, p) == 1, "nonsquare physical phase")
+    require(jvalue(c, w, d, p) != 0, "terminal seed")
+    require(equal(c, w, d, x, e, A, B, p), "equal sign")
+    require(not equal(c, w, d, x, -e, A, B, p), "opposite split")
+    require(jvalue(c + x, w + e * pow(x, -1, p), d, p) == 0,
+            "same sign terminal successor")
+
+
+def incidence_audit():
+    parameters = max_bad = max_multiple = 0
+    for p, lam in ((11, 4), (19, 5), (31, 19)):
+        mu = (1 - lam) % p
+        inv = pow((lam - mu) % p, -1, p)
+        A, B = (3 - 2 * mu) * inv % p, (2 * lam - 3) * inv % p
+        S, a = (A - B) % p, A * pow(B, -1, p) % p
+        for d in range(1, p):
+            raw = bad = 0
+            outputs = Counter()
+            character_sums = []
+            for e in (-1, 1):
+                b = B * e * d % p
+                character_sum = sum(chi((b * X * X + 2 * S * X + A) ** 2
+                                        - 8 * A * S * X, p) for X in range(p))
+                budget.charge(records=p)
+                require(character_sum >= -1 - 2 * math.sqrt(p), "character bound")
+                character_sums.append(character_sum)
+                for X in range(1, p):
+                    roots = 0
+                    for C in range(p):
+                        budget.charge(records=1)
+                        polynomial = (2 * A * C * C
+                                      - (b * X * X + 2 * S * X + A) * C + S * X)
+                        if polynomial % p:
+                            continue
+                        roots += 1
+                        raw += 1
+                        require((2 * C - 1) % p != 0, "spurious denominator root")
+                        W = d * C * pow((2 * C - 1) % p, -1, p) % p
+                        c, w = (C - X) % p, (W - e * pow(X, -1, p)) % p
+                        if ((b * X * X - A) % p == 0 or c == 0
+                                or (2 * A * c - A - b * X * X) % p == 0):
+                            bad += 1
+                            continue
+                        if chi(X, p) == 1:
+                            x, out = X, (c, w)
+                        else:
+                            x, out = (-X) % p, ((1 - c) % p, (d - w) % p)
+                        seed(*out, d, x, e, A, B, p)
+                        budget.charge(edges=2)
+                        outputs[out] += 1
+                    disc = (b * X * X + 2 * S * X + A) ** 2 - 8 * A * S * X
+                    require(roots == 1 + chi(disc, p), "quadratic root count")
+            require(raw == 2 * (p - 2) + sum(character_sums), "incidence identity")
+            require(bad <= 12, "exceptional incidence count")
+            multiple = max(outputs.values(), default=0)
+            require(multiple <= 2, "fold multiplicity")
+            require(2 * len(outputs) >= raw - bad, "output count")
+            require(len(outputs) >= max(0, math.ceil(p - 9 - 2 * math.sqrt(p))),
+                    "seed lower bound")
+            parameters += 1
+            max_bad, max_multiple = max(max_bad, bad), max(max_multiple, multiple)
+    return {"parameters": parameters, "max_bad": max_bad,
+            "max_output_multiplicity": max_multiple}
+
+
+def rotate(v):
+    a, b = v
+    return b, a + b
+
+
+def reflect(v):
+    a, b = v
+    return 377 * a + 610 * b, 610 * a + 987 * b
+
+
+def coord(v, p):
+    a, b = v
+    return (a + 81 * b) % p, (a + 261 * b) % p
+
+
+def lift(c, w):
+    b = (w - c) * pow(4, -1, 11) % 11
+    a = (c - 4 * b) % 11
+    # A fixed positive lift, zero modulo 31, chosen once per execution.
+    return tuple(31 * (t * pow(31, -1, 11) % 11) or 341 for t in (a, b))
+
+
+def paid_seed(c, w, d, x, e):
+    seed(c, w, d, x, e, 6, 7, 11)
+    initial = (lift(c, w), lift((c - 1) % 11, (w - d) % 11))
+    labels = tuple(coord(v, 11)[0] for v in initial)
+    require(labels[0] != labels[1], "initial labels")
+    phases = {pow(4, -j, 11): j for j in range(5)}
+    leaves, max_paid = 0, 0
+
+    def walk(sources, c, w, phase, eta, remaining, terminal,
+             paid, nr, ng, u, t):
+        nonlocal leaves, max_paid
+        for k in ((0,) if paid == 0 else (0, 1)):
+            budget.charge(records=1, edges=2)
+            state = tuple(reflect(v) for v in sources) if k else sources
+            sign = eta * (-1 if k else 1)
+            epsilon = sign * (-1 if phase % 2 else 1)
+            current_x = pow(4, -phase, 11)
+            base = ((c, w), ((c - 1) % 11, (w - d) % 11))
+            for i, actual in enumerate(state):
+                require(max(a.bit_length() for a in actual) <= 8192, "integer cap")
+                expected = (pow(4, phase, 11) * base[i][0] % 11,
+                            sign * pow(8, phase, 11) * base[i][1] % 11)
+                require(coord(actual, 11) == expected, "retained physical frame")
+                require(expected[0] == (u * labels[i] + t) % 11, "label transport")
+            actual_zeros = tuple((2 * a + 3 * b) % 11 == 0 for a, b in state)
+            predicted = tuple(z == 0 for z in
+                              readings(c, w, d, current_x, epsilon, 6, 7, 11))
+            require(actual_zeros == predicted, "same sign reading bridge")
+            if remaining:
+                walk(tuple(rotate(v) for v in state), c, w, (phase + 1) % 5,
+                     -sign if phase == 4 else sign, remaining - 1, terminal,
+                     paid + 1, nr + 1, ng, 4 * u % 11, 4 * t % 11)
+            elif terminal or epsilon == -e:
+                require(actual_zeros[0] != actual_zeros[1], "paid T split")
+                values = tuple(math.gcd(2 * a + 3 * b, 341) for a, b in state)
+                require(values[0] != values[1], "actual gcd split")
+                require(paid + 1 <= 10 and nr <= 8 and ng <= 1, "paid bound")
+                leaves += 1
+                max_paid = max(max_paid, paid + 1)
+            else:
+                require(epsilon == e and current_x == x, "selected seed branch")
+                require(actual_zeros[0] == actual_zeros[1], "G tests agree")
+                nc, nw = (c + x) % 11, (w + e * pow(x, -1, 11)) % 11
+                require(jvalue(nc, nw, d, 11) == 0, "paid terminal successor")
+                target = next(y for y in sorted(phases)
+                              if all(not equal(nc, nw, d, y, s, 6, 7, 11)
+                                     for s in (-1, 1)))
+                aligned = (phases[target] - phase) % 5
+                next_sources = tuple((a + 1, b) for a, b in state)
+                walk(next_sources, nc, nw, phase, sign, aligned, True,
+                     paid + 1, nr, ng + 1, u, (t + 1) % 11)
+
+    walk(initial, c, w, 0, 1, phases[x], False, 0, 0, 0, 1, 0)
+    require(leaves > 0, "empty replay")
+    return leaves, max_paid
+
+
+def cycle_audit():
+    initial = ((93, 93), (62, 62))
+    state = initial
+    require(tuple((a + 81 * b) % 341 for a, b in state) == (124, 310),
+            "cycle initial labels")
+    vertices = ((3, 1), (4, 2), (9, 4), (1, 8), (5, 5),
+                (3, 10), (4, 9), (9, 7), (1, 3), (5, 6))
+    expected = (31, 1, 1, 31, 1, 1, 1, 1, 1, 1)
+    values = []
+    for k in range(10):
+        budget.charge(records=1, edges=10)
+        c, w = vertices[k]
+        x, e = pow(4, -3 * k, 11), (-1) ** k
+        require(jvalue(c, w, 4, 11) != 0, "cycle terminal")
+        require(equal(c, w, 4, x, e, 6, 7, 11), "cycle actual sign")
+        require(readings(c, w, 4, x, -e, 6, 7, 11)[0] == 0, "forced zero")
+        require((w - 4 * c) % 11 == 0 or
+                not equal(c, w, 4, x, -e, 6, 7, 11), "forced successor")
+        for i, actual in enumerate(state):
+            base = (c, w) if i == 0 else ((c - 1) % 11, (w - 4) % 11)
+            require(coord(actual, 11) == (pow(4, 3 * k, 11) * base[0] % 11,
+                                         pow(8, 3 * k, 11) * base[1] % 11),
+                    "cycle raw matrix frame")
+        ys = tuple(math.gcd(2 * a + 3 * b, 341) for a, b in state)
+        require(ys == (expected[k], expected[k]), "ten read pattern")
+        values.append(ys[0])  # T is paid and does not alter either source.
+        state = tuple((a + 1, b) for a, b in state)
+        for _ in range(3):
+            state = tuple(rotate(v) for v in state)
+    require(tuple(tuple(t % 341 for t in v) for v in state) == initial,
+            "50 primitive residue period")
+    return vertices, values
+
+
+def claims_audit(vertices):
+    # Reject an erroneous promotion of the selected cycle to an all-phase K.
+    for c, w in vertices:
+        for x in (1, 3, 4, 5, 9):
+            require(any(equal(c, w, 4, x, e, 6, 7, 11) and
+                        ((c + x) % 11, (w + e * pow(x, -1, 11)) % 11) in vertices
+                        for e in (-1, 1)), "cycle is not all-phase safe")
+
+
+def main():
+    signal.signal(signal.SIGALRM, timeout)
+    signal.alarm(120)
+    try:
+        incidences = incidence_audit()
+        certificates = ((1, 9, 3, 1, 1), (2, 1, 4, 1, 1), (3, 9, 0, 9, 1),
+                        (4, 2, 1, 5, -1), (5, 2, 6, 9, 1))
+        histories = max_paid = 0
+        for d, c, w, x, e in certificates:
+            for sign in (1, -1):
+                count, cost = paid_seed(c, sign * w % 11, sign * d % 11, x, sign * e)
+                histories += count
+                max_paid = max(max_paid, cost)
+        for c, w, e, x in ((1, 4, -1, 1), (8, 7, -1, 5), (10, 9, 1, 3)):
+            require(readings(c, w, 1, x, e, 6, 7, 11)[0] == 0, "sharp forbidden sign")
+            require(equal(c, w, 1, x, -e, 6, 7, 11), "sharp permitted sign")
+            require(((c + x) % 11, (w - e * pow(x, -1, 11)) % 11) == (2, 5),
+                    "sharp inverse target")
+        vertices, values = cycle_audit()
+        rejected(lambda: seed(9, 3, 1, 1, -1, 6, 7, 11))
+        rejected(lambda: claims_audit(vertices))
+        rejected(lambda: Budget(records=0).charge(records=1))
+        # At v=(9,3), separated existentials pass, but no same-sign branch
+        # both agrees and remains in the terminal complement.
+        branches = [(equal(9, 3, 1, 1, e, 6, 7, 11),
+                     jvalue(10, 3 + e, 1, 11) != 0) for e in (-1, 1)]
+        require(any(z for z, h in branches) and any(h for z, h in branches),
+                "negative control premise")
+        rejected(lambda: require(any(z and h for z, h in branches),
+                                 "independent sign relaxation"))
+        print(json.dumps({"incidences": incidences, "paid_seed_histories": histories,
+                          "max_paid_seed_primitives": max_paid,
+                          "cycle_paid_primitives": 50, "cycle_gcd": values,
+                          "negative_controls": 4, "records": budget.records,
+                          "edges": budget.edges}, sort_keys=True))
+    finally:
+        signal.alarm(0)
+
+
+if __name__ == "__main__":
+    main()
+```
+
+程序保留的有限数据是(106.17)、(106.24)、(106.25)及三重逆像证书；它不从工人意见或有限算术实例推导一般定理。原始矩阵执行在每一轮检查保留框架和初始标签，坐标拉回始终只发生在内存中。
+
+### 106.10 精确的剩余传感器到纤维传播义务
+
+对于非例外符号，定义该列禁止测试值
+
+$$
+\mathcal B_e(c,x)=\{-Ae c/(Bx^2),\ \delta-Ae(c-1)/(Bx^2)\}
+$$
+
+当 $Ae/x+Bx\delta\ne0$；若该差为零，令 $\mathcal B_e(c,x)=\varnothing$，因为两标量恒等。精确安全条件等价于每个 $c,x$ 的逐点包含
+
+$$
+K_c\subseteq
+\bigl((K_{c+x}-1/x)\setminus\mathcal B_+(c,x)\bigr)
+\ \cup\
+\bigl((K_{c+x}+1/x)\setminus\mathcal B_-(c,x)\bigr).
+\tag{106.26}
+$$
+
+两项各保留自己的符号，不能先合并边缘再选后继。106.4提供 $O(p)$ 个已经有相关分离证书的点，但总数并不保证某一列的获胜补集满足106.7或106.8，也不迫使任意 $K$ 与种子相交。由排除 $H_\delta\cup C_\delta$ 得到的总量上界仍允许稠密集合；106.1的逐纤维下界与106.6–106.7的形状排除也没有消除稠密、无周期、各列不规则的候选。105.8的终端补集满足放松后继条件，说明只反复改进这种放松条件不能替代传感器约束。
+
+一个具体充分目标是：从(106.26)及两个候选的强制逆像，证明对每个非零 $\delta$，至少一列除已知残余 $B_0$ 外均有恰一读的有限分离证书，并使 $q(|B_0|-1)<n$，或满足逐大小的奇偶剪除条件。106.2才会完成剩余比较；这一目标不是成功策略的必要条件，目前也未证明。另一条结算路线须给出真正全相位的精确 $K$，再证明启动及固定实际来源的实现桥；单传感器周期不承担这个义务。种子、纤维关系、实际时间字与初始标签记忆在此只建立了这些有条件对应，尚未互相恢复到一般取得结论。持续的关系恢复目标及一般非零差层排除保持未证；本节没有新增 Lean/kernel 核验、原创性、全素数族取得或整体完成主张。
+
+## 106.99 追加锚
