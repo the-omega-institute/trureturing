@@ -1,6 +1,4 @@
 using static StrataLint.Scribe.DefinitionDsl;
-using static StrataLint.Scribe.FormulaDsl;
-using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Geometry.Hyperideal;
 
@@ -68,16 +66,4 @@ internal sealed class FibonacciObservationDocument : IScribeDocumentDefinition
                             + "problem."))),
                 DescribeRole.Theorem))));
 
-    private static Formula IdentityFormula() =>
-        F.Disp(F.Seq(
-            Forall, Sp, F.Id("x,y"), Colon, Sp, F.Id("ℤ × ℤ"), Comma, Sp,
-            F.Id("D² = 5I"), Sp, Land, Sp,
-            F.Id("C = D∘J"), Sp, Land, Sp,
-            F.Id("C∘JFJ = F∘C"), Dot));
-
-    private static Formula PhaseFormula() =>
-        F.Disp(F.Seq(
-            Forall, Sp, F.Id("k,t"), Colon, Sp, F.Id("ℕ"), Comma, Sp,
-            Forall, Sp, F.Id("z"), Colon, Sp, F.Id("ℤ × ℤ"), Comma, Sp,
-            F.Id("modEq(5k, C(z+s(k,t)), C(z))"), Dot));
 }
