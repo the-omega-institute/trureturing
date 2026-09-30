@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:223283cd5185bf9672f12af952f5fab86d904e265b1475e4a68a6f4458d41923
   normalized_sha256: sha256:223283cd5185bf9672f12af952f5fab86d904e265b1475e4a68a6f4458d41923
 cas_ref: sha256:223283cd5185bf9672f12af952f5fab86d904e265b1475e4a68a6f4458d41923
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/VertexAlgebra/MonsterCompressionObstruction.compression_obstruction
+    target_statement_id: sha256:0f700627979e6c52eb5e4a3d3f77a9ee591b797116caeedc5398969ca36545c6
 receipts:
   unresolved_subitems: []
