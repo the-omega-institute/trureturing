@@ -108,6 +108,8 @@ internal static class CliApplication
                 RenderExplicit(environment.CheckCurrent(tail), console),
             ["check-delta"] = static (environment, tail, console) =>
                 RenderExplicit(environment.CheckDelta(tail), console, allowProtectedAnnotation: true),
+            ["compile-proof"] = static (_, tail, console) =>
+                RenderExplicit(CompileProofCommand.Run(tail, Environment.CurrentDirectory), console),
             ["clean-lanes"] = static (environment, tail, console) =>
                 RenderCommand(environment.CleanLanes(tail), console),
             ["coverage"] = static (environment, tail, console) =>
