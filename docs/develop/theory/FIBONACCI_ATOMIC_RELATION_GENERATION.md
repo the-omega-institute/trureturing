@@ -17597,3 +17597,146 @@ $$
 一般异奇偶双项可以有 $k$ 与 $a$ 同阶；此时本界的 $\log Q$ 至多为 $O(k)$，而 Robin 预算只有 $\log a$ 量级，式（178.2） 不自动小于一。§170.3 的共同局部高整除来源正属于没有被上述缓慢间距条件覆盖的方向。四相恒等式、范数相容与字符筛选仍没有给全部来源的一致 Robin 证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 180. 和指标的第二字符切面与较小基本判别式预算
+
+沿用 §§177–179 的同一个实际来源 $V=F_a+F_b$、$a>b\ge2$、$k=a-b\ge3$ 为奇数，记 $t=a+b$、$D=(-1)^bL_k$。
+
+**命题 180.1（始终非平凡的第二平方类）。** 令 $E=-L_t$。则
+
+$$
+(L_a-L_b)^2-5V^2=4E,
+\qquad E<0.
+$$
+
+因此 $E$ 永远不是整数平方。每个奇素因子 $p\mid V$ 都满足
+
+$$
+p\nmid E,\qquad \left(\frac Ep\right)=1.
+$$
+
+证明。恒等式 $L_j^2-5F_j^2=4(-1)^j$ 与 $L_aL_b+5F_aF_b=2L_{a+b}$，结合 $a,b$ 异奇偶，给出所列平方恒等式。§175.1 已有
+
+$$
+L_tL_k=5V(F_a-F_b)+4(-1)^a,
+$$
+
+故 $\gcd(V,L_t)\mid4$。奇 $p\mid V$ 时 $E$ 非零模 $p$，而
+
+$$
+E\equiv\left(\frac{L_a-L_b}{2}\right)^2\pmod p.
+$$
+
+这给出所需非零平方条件，包括 $p=5$。又 $L_t>0$，故 $E<0$。$\square$
+
+**推论 180.2（两切面的较小导子界）。** 令 $\Delta_E$ 是二次域 $\mathbb Q(\sqrt E)$ 的基本判别式，$q_E=|\Delta_E|$。若 $D$ 非平方，另令 $q_D$ 为 $\mathbb Q(\sqrt D)$ 的基本判别式绝对值，并定义
+
+$$
+q_*=
+\begin{cases}
+\min\{q_D,q_E\},&D\text{ 非平方},\\
+q_E,&D\text{ 为平方}.
+\end{cases}
+$$
+
+对任意正整数 $c$，设 $n=cV\ge8$、$\Lambda=\log\log n$，则
+
+$$
+Z(n)<\frac{2c}{\varphi(c)}e^{8+2/\Lambda}
+\sqrt{(1+\Lambda)(2+\log q_*)}.
+$$
+
+证明。命题 180.1 对每个实际奇素因子提供了模 $q_E$ 的非主实二次字符值一；其中 $p\nmid E$ 保证没有遗漏分歧素数。因而定理 178.1 的 Euler 乘积估计及推论 178.2 的本原字符版本都适用。若 $D$ 非平方，两个上界分别对同一个 $n$ 成立，取较小者即可。素数二与乘子 $c$ 仍分别支付至多二与 $c/\varphi(c)$。$\square$
+
+因此固定 $c$ 时，$\Lambda\to\infty$ 且 $\log q_*=o(\Lambda)$ 足以使 Robin 比值趋于零，这个条件没有主字符例外。不过 $q_E\le4L_t$ 的直接上界随总指标 $t$ 增长；当 $D$ 为平方时，不能仅凭存在第二字符，就宣称原来按小间距取得的预算自动保持。
+
+**推论 180.3（全部缓慢间距双项的一致极限）。** 固定正整数 $c$。对全部 $a>b\ge2$、奇间距 $k=a-b\ge3$ 的来源，若 $a\to\infty$ 且 $k=o(\log a)$，则 $c(F_a+F_b)$ 的 Robin 比值一致趋于零，不再要求额外排除 $D$ 为平方的情形。
+
+证明。Bugeaud、Mignotte、Siksek 的 *Classical and modular approaches to exponential Diophantine equations I. Fibonacci and Lucas perfect powers*, Annals of Mathematics 163 (2006), 969–1018，[Theorem 2](https://doi.org/10.4007/annals.2006.163.969) 证明 Lucas 序列中仅 $L_1=1,L_3=4$ 为完全幂；[期刊原文，第 971 页](https://annals.math.princeton.edu/wp-content/uploads/annals-v163-n3-p05.pdf) 给出这一明确陈述。因此 $k\ge5$ 时 $L_k$ 不是平方，无论 $b$ 的奇偶，$D=(-1)^bL_k$ 都非平方，§179 的统一字符界适用。
+
+当 $k=3$ 时，对所有 $b$ 都有 $F_{b+3}+F_b=2F_{b+2}$，以固定乘子 $2c$ 应用 §172，得到该分支的 Robin 比值也趋于零。两个分支各自统一，取共同阈值即可。$\square$
+
+这个推论保留 $k=o(\log a)$ 的间距条件，没有声称一般 $k$ 与 $a$ 同阶的异奇偶双项也已获得统一 Robin 估计。
+
+## 181. 本原 ATOM 组成的字符预算与可变公因子
+
+本节把字符条件接回组成层的原始数量观察，不要求来源先写成两项 Fibonacci 和。令有向整数组成 $(A,B)\in\mathbb Z^2$ 满足 $n_0=2A+3B>0$，并定义
+
+$$
+g=\gcd(|A|,|B|)>0,\qquad (a,b)=(A/g,B/g),
+\qquad u=2a+3b=n_0/g>0,
+$$
+
+$$
+w=4a+7b,\qquad \mathcal Q(a,b)=a^2+ab-b^2,
+\qquad D_{\mathrm{at}}=-\mathcal Q(a,b).
+$$
+
+**命题 181.1（本原数量的共同平方证书）。** 有
+
+$$
+w^2-5u^2=4D_{\mathrm{at}}.
+$$
+
+每个奇素因子 $p\mid u$ 都满足
+
+$$
+p\nmid D_{\mathrm{at}},\qquad
+\left(\frac{D_{\mathrm{at}}}{p}\right)=1.
+$$
+
+证明。平方恒等式直接展开得到。若奇 $p$ 同时整除 $u,D_{\mathrm{at}}$，则也整除 $w$。但
+
+$$
+\det\begin{pmatrix}2&3\\4&7\end{pmatrix}=2,
+\qquad b=w-2u,\qquad 2a=7u-3w,
+$$
+
+所以 $p\mid a,b$，与 $\gcd(a,b)=1$ 矛盾。因此 $D_{\mathrm{at}}$ 非零模 $p$，平方恒等式给 $D_{\mathrm{at}}\equiv(w/2)^2\pmod p$。$\square$
+
+**定理 181.2（完整来源的字符上界）。** 假设 $D_{\mathrm{at}}$ 非平方，令 $q$ 为二次域 $\mathbb Q(\sqrt{D_{\mathrm{at}}})$ 的基本判别式绝对值。对任意正整数 $c$，记
+
+$$
+C=cg,\qquad N=cn_0=Cu\ge8,\qquad \Lambda=\log\log N.
+$$
+
+则
+
+$$
+Z(N)<\frac{2C}{\varphi(C)}e^{8+2/\Lambda}
+\sqrt{(1+\Lambda)(2+\log q)}.
+$$
+
+证明。命题 181.1 保证每个实际奇素因子 $p\mid u$ 都不分歧，且在模 $q$ 的本原非主实二次字符下取值一。把 §178.1 的乘积证明中的来源 $V$ 换成 $u$、乘子换成 $C$ 即可：在 $x=\log N$ 处分割，低素数由字符乘积界控制，高素数用 $\sum_{p\mid u}\log p\le\log u\le\log N$ 控制；素数二与完整乘子分别支付至多二和 $C/\varphi(C)$。$\square$
+
+**推论 181.3（公因子变化时的充分联合条件）。** 对满足定理 181.2 条件的任意来源族，若
+
+$$
+\Lambda\longrightarrow\infty,\qquad
+\left(\frac C{\varphi(C)}\right)^2(2+\log q)=o(\Lambda),
+$$
+
+则 $N$ 的 Robin 比值趋于零。
+
+证明。将定理 181.2 除以 $e^\gamma\Lambda$ 后平方，右端为
+
+$$
+4e^{16-2\gamma+4/\Lambda}
+\left(\frac C{\varphi(C)}\right)^2
+\frac{(1+\Lambda)(2+\log q)}{\Lambda^2},
+$$
+
+由给定联合条件趋于零。$\square$
+
+两个边界说明为何必须同时保留本原化与非主字符前提。首先，固定本原种子 $(a,b)=(1,0)$ 时，$u=2$、$D_{\mathrm{at}}=-1$、$q=4$。若允许原组成 $(A,B)=(g,0)$ 中的 $g$ 任意变化，并取 $c=1$，则 $N=2g$ 覆盖全部正偶数。固定的小 $q$ 没有控制公因子的素数权重，不能删去 $C/\varphi(C)$。
+
+其次，一般本原组成的正平方例外不只来自黄金单位。取 $(a,b)=(16,29)$，则
+
+$$
+\gcd(16,29)=1,\qquad u=119,\qquad
+\mathcal Q(16,29)=-121,\qquad D_{\mathrm{at}}=121.
+$$
+
+此时相应平方类是主字符，定理 181.2 的非主字符步骤不适用；§180.3 的 Lucas 平方分类只处理那里特殊的双项来源，不能用来删除这里的一般平方例外。对于任意五模式种子，仍须另外证明其实际基本判别式与公因子满足上述联合预算。
+
+## 追加锚（本行以下为增补区）
