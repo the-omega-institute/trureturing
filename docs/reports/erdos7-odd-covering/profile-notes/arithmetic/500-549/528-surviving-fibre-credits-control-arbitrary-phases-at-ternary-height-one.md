@@ -8168,3 +8168,159 @@ The delivered initialization has raw mass0.14700872708279566... and Top_h cutoff
     W/m=18.197443606358757... .
 
 The result stores all exact fractions, the raw profile, actual group debit, complete tail moments, and the Top_h split certificate. It completes7749 checks and executes zero prime updates. Source hashes are provenance, not admission or cache gates. The consumer's scalar debit may be computed as the difference of the old and corrected min/max coefficients because the mathematical positive-measure comparison(FC365)–(FC368) has already justified that exact arithmetic representation; the proof does not subtract unrelated query upper bounds.
+
+## The actual55 group improves the fixed head reserve, with support still ending73
+
+Starting from the positive common profile that retains the already present
+2 mod55 original, the unchanged half-clipping sequence43,47,53,59,61,67,71,73
+has positive mass at every stage. Its final mass exceeds1/1000 and fourth
+moment is below11301000. Under the existing analytic prime-product premise,
+the fixed above10000 quartic tail retains distorted mass greater than7/8000.
+
+The endpoint mean still exceeds99, hence exceeds78. This same comparator
+cannot certify a positive79 step for any legal constant clipping parameter.
+No79 hinge or79 update was evaluated. The support range stays the declared
+twenty-prime odd head through73, with all additional support primes strictly
+above10000. This is an improved certificate for the fixed source class,
+not unrestricted Erdős #7 or new Lean certification.
+
+### 1. Fixed source and initialization
+
+Keep either FC110/FC131 skeleton assignment, actual finite
+N>=max(2,N_+), and every permitted FC159 nongroup remainder with globally
+fixed phases. The old-only nongroup restrictions remain unchanged:
+ternary height at most one, nonternary support at least two, and no extra
+pure/star or shallow head/private grouped numerical label. Pure and
+grouped originals already in the skeleton remain present. New head
+originals may have arbitrary finite exponents, including ternary
+exponents, but must touch a newly processed prime. Every original is
+assigned once and retains its actual phase and complete old cofactor.
+
+Use exactly the unchanged actual eta0=mu/D0 of mass
+
+    h=36518862868606981/1816999451688960000.
+
+The saved initialization comes from the retained first two actual
+pure/star layers and the actual common free5/private11 original2 mod55.
+The positive two-coordinate lemma reduces each root's joint5/11 zero-run
+coefficient by1/55 BEFORE the joint-colour min/max is taken. It supplies
+one complete-query increasing-convex comparison on this same eta0.
+
+This consumer reads that saved exact initial state. It does not rebuild
+the profile, change h using a finite-source cap, rerun finite controls,
+or evaluate another retained depth. The initial Top_h cutoff is8.
+
+### 2. The one declared continuation
+
+At q in the fixed sequence use delta=1/2 and
+
+    T=(q-1)/2,
+    H_Pi(T)=W-Tm+sum_(z<T)(T-z)pi_z,
+    deletion_charge=H_Pi(T)/T,
+    m'=m-deletion_charge.                               (FC372)
+
+Stop before append/trim if m'<=0. Otherwise append the normalized
+cap-two factor with mass1-2/q at load1 and mass2(q-1)/q^v at each v>=2,
+then keep Top_(m'). The complete moments include all auxiliary heights;
+the low atoms through256 resolve every threshold and split used here.
+
+As in the inherited construction, the actual survivor at each stage is
+scaled by one family/stage scalar to the certified target mass before
+any later query is chosen. The new targets define their own consistent
+source sequence from the unchanged eta0. They do not retroactively
+increase the mass of a previously constructed endpoint measure.
+
+| Prime | Retained mass | Normalized mean | Top cutoff |
+|---:|---:|---:|---:|
+|43|0.017015809835860665|20.8104955457|12|
+|47|0.014122496350927710|23.7056990551|12|
+|53|0.011600729455797069|27.3602398055|12|
+|59|0.009367457232279655|31.4112703897|16|
+|61|0.007057098838358632|37.7022494545|18|
+|67|0.005012722832739396|45.6224209349|24|
+|71|0.003030516782550437|59.5048507948|32|
+|73|0.001007600189569270|99.3339018097|64|
+
+All entries display exact fractions stored in the result JSON. At73,
+
+    m =0.00100760018956926972480035310670925031056396366...,
+    W =0.100088858294068689862944835296558465635604230...,
+    M2=14.0473348204798360793254272456936960669377973...,
+    M4=11300951.0634257920573531988033408035688051264... .
+    m>1/1000, M4<11301000.                              (FC373)
+
+Eight cap-two updates imply a full-head Haar density cap256. The actual
+twenty-prime head survivor therefore has Haar mass
+
+    >=m/256>1/256000.                                   (FC374)
+
+### 3. The endpoint rules out all constant79 parameters for this comparator
+
+The consumer first tests the necessary mean condition, using only the
+already saved73 state. It finds
+
+    W/m=99.3339018096600485218987608047754234489168635...>99,
+    78m-W=-0.0214960435076656513285172929732369414116150646...<-1/50. (FC375)
+
+For any legal constant delta,0<delta<1 and1/(1-delta)<=79, the existing
+ledger would have target
+
+    m_delta=m-H_Pi(78delta)/(78(1-delta))
+            <=(78m-W)/(78(1-delta))<0.                   (FC376)
+
+The inequality uses only(z-t)_+>=z-t. Thus no79 hinge evaluation or
+79 source update was called. It is an obstruction to this particular
+comparison, not an upper bound on true physical survival and not a
+covering construction.
+
+### 4. Fixed quartic tail on the last positive source
+
+Use exactly the inherited [Report734](../700-749/734-seven-and-eight-full-height-heads-admit-quartic-prime-tails.md) and [Report779](../750-799/779-the-original-capped-source-lowers-the-general-eight-prime-tail-cutoff.md) parameters B=10000,ell=8,
+delta=2/5 and growth exponent25, conditional on the same analytic
+prime-product premise. The coefficient is
+
+    tau4=(5625/6144)((2ell^2+1)/(2ell^2-1))^25
+          B/(B-1)^4 sum_(j=0..25)25!/((25-j)!(3ell)^j).
+
+The last positive source is the73 source above. Exact arithmetic gives
+
+    m-M4*tau4
+      =0.000883522153069065008930814739511245768049010064... . (FC377)
+
+A short checked rational certificate is
+
+    m>1/1000, M4<11301000,
+    m-M4*tau4>1/1000-11301000*tau4>7/8000.                (FC378)
+
+Hence every admitted finite outside-support continuation whose new
+primes all exceed10000 has positive common survivor mass in this tail
+construction. Additional support primes in(73,10000] remain excluded.
+The final reserve is distorted mass, not a final Haar density bound.
+
+### 5. What improves and what does not
+
+For comparison at the same fixed source, h and declared schedule, the
+previous pure/star-only result and the one-group result are
+
+| Quantity after73 | Pure/star-only comparison | With actual2 mod55 relation |
+|---|---:|---:|
+|Retained mass|0.000931279492106190|0.001007600189569270|
+|Normalized mean|102.3557127058|99.3339018097|
+|Complete second moment|13.7627924151|14.0473348205|
+|Complete fourth moment|11306124.4774|11300951.0634|
+|Fixed-tail distorted reserve|0.000807144654452974|0.000883522153069065|
+
+Thus mass, normalized mean and the stated tail reserve improve; raw
+second moment increases after the differently scaled survivor sequence.
+No all-coordinate moment dominance or larger admitted prime-support
+range is asserted. The theoretical advance is the reusable positive
+conditional group comparison; the single run establishes its concrete
+gain and its present necessary-mean limitation.
+
+### 6. Exact artifacts
+
+The [grouped-pair continuation consumer](../../../frontier/cover-geometry/pure-support-profiles/grouped_pair_continuation.py) requires explicit [seed](../../../frontier/cover-geometry/pure-support-profiles/grouped_pair_profile.json), [arithmetic-library](../../../frontier/cover-geometry/pure-support-profiles/depth_two_profile.py) and [output](../../../frontier/cover-geometry/pure-support-profiles/grouped_pair_continuation.json) paths. It reads the saved exact initialization and loads only library definitions. It does not rebuild the initialization or run any old finite controls.
+
+Its state records complete moments of orders 0,1,2,4, all exact low atoms through 256 and complete higher-load residual moments. Each stage retains the charge, exact mass, append and split-trim certificate. At 79 the saved mean diagnostic records that no hinge or update was evaluated. The last-positive state supplies both the density statement and the conditional quartic tail.
+
+The short inequalities (FC373)–(FC378) follow by exact comparison of the saved fractions and the complete tail coefficient. They require no repeat continuation. Source and dependency hashes record provenance without imposing a cache or admission gate. These are ordinary proof and exact-arithmetic results; no new Lean verification is claimed.
