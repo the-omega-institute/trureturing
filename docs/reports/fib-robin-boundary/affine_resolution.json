@@ -1,0 +1,122 @@
+{
+  "complete_local_phases": {
+    "a_range": [
+      5,
+      40
+    ],
+    "counts": {
+      "difference_only": 323,
+      "nonsplit": 4446,
+      "nonunit_denominator": 210,
+      "split": 3420,
+      "sum_branch": 335
+    },
+    "prime_range_excluding_2_5": [
+      3,
+      99
+    ]
+  },
+  "norm_threshold": {
+    "analytic_scope": "finite hypotheses and constants, not Robin verification",
+    "coefficient_range": [
+      0,
+      40
+    ],
+    "nonzero_seeds": 1680,
+    "primitive_norm_prime_checks": 1955,
+    "unit_seeds": 171
+  },
+  "odd_phases": {
+    "a_range": [
+      5,
+      100
+    ],
+    "actual_prime_phase_checks": 573,
+    "b_minimum": 2,
+    "doubling_carrier_obstruction": {
+      "a": 11,
+      "b": 6,
+      "p": 97,
+      "rank": 49
+    },
+    "factorization_a_at_most": 36,
+    "joint_identities": 2352,
+    "lost_sign_obstruction": {
+      "a": 8,
+      "b": 3,
+      "p": 19,
+      "sum": 23
+    },
+    "odd_gap_minimum": 3
+  },
+  "progressions": {
+    "a_range": [
+      3,
+      30
+    ],
+    "actual_prime_carrier_checks": 4377,
+    "branches": {
+      "even_d": 5040,
+      "odd_d_even_h": 2520,
+      "odd_d_odd_h": 2520
+    },
+    "complete_factorization_R_at_most": 42,
+    "d_range": [
+      1,
+      12
+    ],
+    "h_range": [
+      1,
+      30
+    ],
+    "identities": 10080
+  },
+  "scope": "finite exact diagnostics; not a proof of Robin or RH",
+  "source_sha256": "3ffed2228dd5e93fb18275ce60da12b8121cf8e9ec4a40f7174febaf543ebffd",
+  "window_geometry": {
+    "null_windows_low_end": [
+      0,
+      8
+    ],
+    "rows": [
+      {
+        "maximizing_mask": 5,
+        "maximum_abs_norm": 5,
+        "nonzero_words": 4,
+        "windows": 1
+      },
+      {
+        "maximizing_mask": 37,
+        "maximum_abs_norm": 19,
+        "nonzero_words": 20,
+        "windows": 2
+      },
+      {
+        "maximizing_mask": 341,
+        "maximum_abs_norm": 121,
+        "nonzero_words": 88,
+        "windows": 3
+      },
+      {
+        "maximizing_mask": 2645,
+        "maximum_abs_norm": 475,
+        "nonzero_words": 376,
+        "windows": 4
+      },
+      {
+        "maximizing_mask": 21845,
+        "maximum_abs_norm": 2205,
+        "nonzero_words": 1596,
+        "windows": 5
+      },
+      {
+        "maximizing_mask": 174421,
+        "maximum_abs_norm": 9151,
+        "nonzero_words": 6764,
+        "windows": 6
+      }
+    ],
+    "shift_identities": 79632,
+    "unit_bit": 0
+  }
+}

@@ -748,3 +748,53 @@ fixed multiplier and bounded number of Fibonacci/Lucas factors. Its proof
 uses the full rank carrier and the standard subpolynomial divisor bound;
 it is a paper consequence of §167, not a conclusion of the finite script.
 Zero Fibonacci factors are excluded; Lucas index zero contributes two.
+
+## Finite window resolution and arithmetic progressions (§§173–175)
+
+[`affine_resolution.py`](affine_resolution.py) connects the legal five-window
+source to its two golden coordinates and checks actual additive sources:
+
+```sh
+python3 -B docs/reports/fib-robin-boundary/affine_resolution.py \
+  --out /tmp/fib-affine-resolution.json
+```
+
+Python 3.9 or newer and the standard library are sufficient. The script is
+standalone, uses exact integers and rational constants, and writes only the
+required `--out` JSON file, overwriting that selected file. It rejects `-O`
+because assertions check the finite diagnostics. The result records the hash
+of the script; [`affine_resolution.json`](affine_resolution.json) is the
+retained default output.
+
+The default ranges check:
+
+- All 8,848 nonzero legal bit patterns in one through six windows, including
+  composition reconstructed independently by five-window Horner updates,
+  exact golden-coordinate comparisons, and 79,632 low-null shift identities.
+- All 1,680 nonzero coefficient pairs in `[0,40]^2`, with 1,955 primitive
+  norm-prime bounds and the separate small-core bound for 171 unit seeds.
+- 10,080 arithmetic-progression sums with `3 <= a <= 30`, `1 <= d <= 12`,
+  `1 <= h <= 30`, and 4,377 actual prime-carrier checks from complete
+  factorizations when the largest occupied index is at most 42.
+- 2,352 opposite-parity identities with largest index at most 100, plus
+  573 actual prime-phase checks when that index is at most 36.
+- The full 7,866 local cases with prime below 100, excluding 2 and 5, and
+  largest index at most 40. These include 210 nonunit denominators and
+  323 cases where the squared rank condition selects only the difference,
+  so the sum's divisibility does not follow.
+
+Ranks are computed using the classical `z(p) | p-(5/p)` bound for odd
+`p != 5`, modular fast doubling, and prime-factor reduction with minimality
+checks; ranks at 2 and 5 are handled separately. This rank computation is
+an arithmetic diagnostic using the known bound, not an independent proof
+of that bound. The example `F_11+F_6=97`, of rank 49, remains outside every
+power-of-two enlargement of the four indices 11, 6, 17, 5. The example
+`F_8-F_3=19`, with sum 23, records the sign information lost by squaring.
+
+Sections 173–175 are paper deductions, with no new Lean verification of
+their analytic composition. The window result excludes the independent
+unit bit and requires low-end null windows; the progression result fixes
+the multiplier while allowing unboundedly many regularly spaced terms.
+Neither applies to arbitrary five-window histories or proves RH. The
+Möbius relation uses the complete quadratic residue algebra and explicitly
+requires its denominator to be a unit.
