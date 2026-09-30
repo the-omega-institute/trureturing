@@ -474,7 +474,7 @@ theorem post_word_run (w : List ResponseSymbol) :
     have words := mapInjective output
     rw [words]
     exact value
-  
+
   · classical
     have zeroSyntax : ∀ (input : List ResponseSymbol) (e : Nat),
         responseZeroSuffix input = some e → input = List.replicate e .zero := by
