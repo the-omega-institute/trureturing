@@ -1,0 +1,738 @@
+{
+  "scope": "finite integer/polynomial identities and permutation counts; no analytic or Lean proof",
+  "source_sha256": "ef4cf7056f5dcffd2f1d53c4a02bf8cd10e76cbc3f21dc3876fef224a6e21fe2",
+  "seed": [
+    16,
+    29
+  ],
+  "source_windows": [
+    4,
+    8,
+    16,
+    24,
+    32
+  ],
+  "even_residues": "all 0 <= r < k",
+  "quotients": "0 <= ell < 10",
+  "prime_cutoff_exclusive": 500,
+  "source_checks": {
+    "polynomial_identities": 42,
+    "integer_factorizations": 420,
+    "actual_prime_congruences": 863,
+    "actual_factor_bridges": 863,
+    "prime_incidence_sha256": "60d5e4f82196d0365c49ba357a8f2582828888e9cb12d4c5116b45dd7aaff608"
+  },
+  "root_groups": [
+    {
+      "window": 4,
+      "group_order": 4,
+      "even_root_count": 2,
+      "odd_root_count": 2,
+      "both_count": 1,
+      "union_count": 3,
+      "union_fraction": "3/4",
+      "pointwise_kernels": [
+        [
+          [
+            1,
+            0
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        [
+          [
+            1,
+            0
+          ],
+          [
+            3,
+            2
+          ]
+        ]
+      ]
+    },
+    {
+      "window": 8,
+      "group_order": 16,
+      "even_root_count": 6,
+      "odd_root_count": 6,
+      "both_count": 1,
+      "union_count": 11,
+      "union_fraction": "11/16",
+      "pointwise_kernels": [
+        [
+          [
+            1,
+            0
+          ],
+          [
+            5,
+            0
+          ]
+        ],
+        [
+          [
+            1,
+            0
+          ],
+          [
+            5,
+            4
+          ]
+        ]
+      ]
+    },
+    {
+      "window": 16,
+      "group_order": 64,
+      "even_root_count": 22,
+      "odd_root_count": 22,
+      "both_count": 1,
+      "union_count": 43,
+      "union_fraction": "43/64",
+      "pointwise_kernels": [
+        [
+          [
+            1,
+            0
+          ],
+          [
+            9,
+            0
+          ]
+        ],
+        [
+          [
+            1,
+            0
+          ],
+          [
+            9,
+            8
+          ]
+        ]
+      ]
+    },
+    {
+      "window": 24,
+      "group_order": 96,
+      "even_root_count": 24,
+      "odd_root_count": 24,
+      "both_count": 4,
+      "union_count": 44,
+      "union_fraction": "11/24",
+      "pointwise_kernels": [
+        [
+          [
+            1,
+            0
+          ],
+          [
+            13,
+            0
+          ]
+        ],
+        [
+          [
+            1,
+            0
+          ],
+          [
+            13,
+            12
+          ]
+        ]
+      ]
+    },
+    {
+      "window": 32,
+      "group_order": 256,
+      "even_root_count": 86,
+      "odd_root_count": 86,
+      "both_count": 1,
+      "union_count": 171,
+      "union_fraction": "171/256",
+      "pointwise_kernels": [
+        [
+          [
+            1,
+            0
+          ],
+          [
+            17,
+            0
+          ]
+        ],
+        [
+          [
+            1,
+            0
+          ],
+          [
+            17,
+            16
+          ]
+        ]
+      ]
+    },
+    {
+      "window": 64,
+      "group_order": 1024,
+      "even_root_count": 342,
+      "odd_root_count": 342,
+      "both_count": 1,
+      "union_count": 683,
+      "union_fraction": "683/1024",
+      "pointwise_kernels": [
+        [
+          [
+            1,
+            0
+          ],
+          [
+            33,
+            0
+          ]
+        ],
+        [
+          [
+            1,
+            0
+          ],
+          [
+            33,
+            32
+          ]
+        ]
+      ]
+    },
+    {
+      "window": 128,
+      "group_order": 4096,
+      "even_root_count": 1366,
+      "odd_root_count": 1366,
+      "both_count": 1,
+      "union_count": 2731,
+      "union_fraction": "2731/4096",
+      "pointwise_kernels": [
+        [
+          [
+            1,
+            0
+          ],
+          [
+            65,
+            0
+          ]
+        ],
+        [
+          [
+            1,
+            0
+          ],
+          [
+            65,
+            64
+          ]
+        ]
+      ]
+    }
+  ],
+  "general_seed_checks": {
+    "coefficient_range": "0 <= a,b <= 6; gcd(a,b)=1",
+    "seeds": 25,
+    "windows": [
+      3,
+      7,
+      21
+    ],
+    "quotients": "0 <= ell < 5",
+    "prime_cutoff_exclusive": 100,
+    "integer_cases": 3875,
+    "actual_prime_congruences": 3649,
+    "odd_squarefree_root_groups": [
+      {
+        "window": 3,
+        "group_order": 6,
+        "fixed_root_count": 4,
+        "fixed_root_fraction": "2/3"
+      },
+      {
+        "window": 7,
+        "group_order": 42,
+        "fixed_root_count": 36,
+        "fixed_root_fraction": "6/7"
+      },
+      {
+        "window": 21,
+        "group_order": 252,
+        "fixed_root_count": 144,
+        "fixed_root_fraction": "4/7"
+      },
+      {
+        "window": 39,
+        "group_order": 936,
+        "fixed_root_count": 576,
+        "fixed_root_fraction": "8/13"
+      },
+      {
+        "window": 273,
+        "group_order": 39312,
+        "fixed_root_count": 20736,
+        "fixed_root_fraction": "48/91"
+      }
+    ]
+  },
+  "missing_prime": {
+    "prime": 113,
+    "pair_powers": {
+      "tau2": [
+        2,
+        3
+      ],
+      "tau16": [
+        100,
+        8
+      ],
+      "tau19": [
+        1,
+        0
+      ],
+      "theta2": [
+        10,
+        29
+      ],
+      "theta4": [
+        37,
+        65
+      ],
+      "theta32": [
+        70,
+        54
+      ],
+      "theta38": [
+        9,
+        94
+      ]
+    },
+    "residue_polynomials_with_no_root": 12,
+    "candidate_roots_checked": 1356
+  },
+  "cyclotomic_105": {
+    "root_action": {
+      "k": 105,
+      "prime_factors": [
+        3,
+        5,
+        7
+      ],
+      "unit_count": 48,
+      "parameter_count": 5040,
+      "distinct_permutations": 5040,
+      "twisted_slope_map_is_involution_and_bijection": true,
+      "twisted_slope_map_is_group_automorphism": true,
+      "chi5_minus_one": 1,
+      "kernel_parameters_A_b": [
+        [
+          1,
+          0
+        ]
+      ],
+      "affine_coefficients_cover_full_AGL": true,
+      "permutations_with_fixed_root": 2304,
+      "fixed_root_fraction": "16/35",
+      "fixed_root_count_histogram": {
+        "0": 2736,
+        "1": 1575,
+        "3": 525,
+        "5": 105,
+        "7": 45,
+        "15": 35,
+        "21": 15,
+        "35": 3,
+        "105": 1
+      },
+      "local_CRT_fixed_root_histograms": {
+        "3": {
+          "0": 2,
+          "1": 3,
+          "3": 1
+        },
+        "5": {
+          "0": 4,
+          "1": 15,
+          "5": 1
+        },
+        "7": {
+          "0": 6,
+          "1": 35,
+          "7": 1
+        }
+      },
+      "CRT_histogram_matches_direct_enumeration": true,
+      "CRT_coordinate_checks": 1587600
+    },
+    "actual_divisor_checks": [
+      {
+        "seed": [
+          16,
+          29
+        ],
+        "Q": -121,
+        "V_0": 119,
+        "V_1": 193,
+        "max_index_inclusive": 420,
+        "prime_limit_inclusive": 2000,
+        "eligible_primes": 299,
+        "integer_divisibility_checks": 125879,
+        "actual_divisor_hits": 719,
+        "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 719,
+        "trace_discriminant_zero_hits": 396,
+        "actual_trace_root_derivative_zero_hits": 179
+      },
+      {
+        "seed": [
+          1,
+          4
+        ],
+        "Q": -11,
+        "V_0": 14,
+        "V_1": 23,
+        "max_index_inclusive": 420,
+        "prime_limit_inclusive": 2000,
+        "eligible_primes": 299,
+        "integer_divisibility_checks": 125879,
+        "actual_divisor_hits": 452,
+        "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 452,
+        "trace_discriminant_zero_hits": 248,
+        "actual_trace_root_derivative_zero_hits": 95
+      },
+      {
+        "seed": [
+          1,
+          5
+        ],
+        "Q": -19,
+        "V_0": 17,
+        "V_1": 28,
+        "max_index_inclusive": 420,
+        "prime_limit_inclusive": 2000,
+        "eligible_primes": 299,
+        "integer_divisibility_checks": 125879,
+        "actual_divisor_hits": 507,
+        "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 507,
+        "trace_discriminant_zero_hits": 293,
+        "actual_trace_root_derivative_zero_hits": 131
+      }
+    ],
+    "changing_norm_family": {
+      "family": "v_t=(4+361t)+phi, t>=0",
+      "identity": "Q_t=19+3249t+130321t^2 == 19 (mod 19^2)",
+      "split_roots_mod_19": [
+        5,
+        15
+      ],
+      "identity_samples": [
+        {
+          "t": 0,
+          "seed": [
+            4,
+            1
+          ],
+          "Q": 19,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 1,
+          "seed": [
+            365,
+            1
+          ],
+          "Q": 133589,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 2,
+          "seed": [
+            726,
+            1
+          ],
+          "Q": 527801,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 3,
+          "seed": [
+            1087,
+            1
+          ],
+          "Q": 1182655,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 4,
+          "seed": [
+            1448,
+            1
+          ],
+          "Q": 2098151,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 5,
+          "seed": [
+            1809,
+            1
+          ],
+          "Q": 3274289,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 6,
+          "seed": [
+            2170,
+            1
+          ],
+          "Q": 4711069,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 7,
+          "seed": [
+            2531,
+            1
+          ],
+          "Q": 6408491,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 19,
+          "seed": [
+            6863,
+            1
+          ],
+          "Q": 47107631,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 105,
+          "seed": [
+            37909,
+            1
+          ],
+          "Q": 1437130189,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 1000000,
+          "seed": [
+            361000004,
+            1
+          ],
+          "Q": 130321003249000019,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        },
+        {
+          "t": 1000000000000,
+          "seed": [
+            361000000000004,
+            1
+          ],
+          "Q": 130321000000003249000000000019,
+          "Q_mod_19_squared": 19,
+          "v19_Q": 1,
+          "value_at_phi_15_mod_19": 0,
+          "value_at_phi_5_mod_19": 9
+        }
+      ],
+      "source_congruence_seed_parameters": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "source_congruences": [
+        {
+          "seed": [
+            4,
+            1
+          ],
+          "Q": 19,
+          "V_0": 11,
+          "V_1": 17,
+          "max_index_inclusive": 210,
+          "prime_limit_inclusive": 500,
+          "eligible_primes": 91,
+          "integer_divisibility_checks": 19201,
+          "actual_divisor_hits": 216,
+          "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 216,
+          "trace_discriminant_zero_hits": 157,
+          "actual_trace_root_derivative_zero_hits": 52
+        },
+        {
+          "seed": [
+            365,
+            1
+          ],
+          "Q": 133589,
+          "V_0": 733,
+          "V_1": 1100,
+          "max_index_inclusive": 210,
+          "prime_limit_inclusive": 500,
+          "eligible_primes": 89,
+          "integer_divisibility_checks": 18779,
+          "actual_divisor_hits": 241,
+          "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 241,
+          "trace_discriminant_zero_hits": 195,
+          "actual_trace_root_derivative_zero_hits": 71
+        },
+        {
+          "seed": [
+            726,
+            1
+          ],
+          "Q": 527801,
+          "V_0": 1455,
+          "V_1": 2183,
+          "max_index_inclusive": 210,
+          "prime_limit_inclusive": 500,
+          "eligible_primes": 91,
+          "integer_divisibility_checks": 19201,
+          "actual_divisor_hits": 282,
+          "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 282,
+          "trace_discriminant_zero_hits": 216,
+          "actual_trace_root_derivative_zero_hits": 76
+        },
+        {
+          "seed": [
+            1087,
+            1
+          ],
+          "Q": 1182655,
+          "V_0": 2177,
+          "V_1": 3266,
+          "max_index_inclusive": 210,
+          "prime_limit_inclusive": 500,
+          "eligible_primes": 89,
+          "integer_divisibility_checks": 18779,
+          "actual_divisor_hits": 246,
+          "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 246,
+          "trace_discriminant_zero_hits": 186,
+          "actual_trace_root_derivative_zero_hits": 64
+        },
+        {
+          "seed": [
+            1448,
+            1
+          ],
+          "Q": 2098151,
+          "V_0": 2899,
+          "V_1": 4349,
+          "max_index_inclusive": 210,
+          "prime_limit_inclusive": 500,
+          "eligible_primes": 90,
+          "integer_divisibility_checks": 18990,
+          "actual_divisor_hits": 225,
+          "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 225,
+          "trace_discriminant_zero_hits": 180,
+          "actual_trace_root_derivative_zero_hits": 64
+        },
+        {
+          "seed": [
+            1809,
+            1
+          ],
+          "Q": 3274289,
+          "V_0": 3621,
+          "V_1": 5432,
+          "max_index_inclusive": 210,
+          "prime_limit_inclusive": 500,
+          "eligible_primes": 91,
+          "integer_divisibility_checks": 19201,
+          "actual_divisor_hits": 249,
+          "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 249,
+          "trace_discriminant_zero_hits": 173,
+          "actual_trace_root_derivative_zero_hits": 51
+        },
+        {
+          "seed": [
+            2170,
+            1
+          ],
+          "Q": 4711069,
+          "V_0": 4343,
+          "V_1": 6515,
+          "max_index_inclusive": 210,
+          "prime_limit_inclusive": 500,
+          "eligible_primes": 90,
+          "integer_divisibility_checks": 18990,
+          "actual_divisor_hits": 252,
+          "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 252,
+          "trace_discriminant_zero_hits": 187,
+          "actual_trace_root_derivative_zero_hits": 63
+        },
+        {
+          "seed": [
+            2531,
+            1
+          ],
+          "Q": 6408491,
+          "V_0": 5065,
+          "V_1": 7598,
+          "max_index_inclusive": 210,
+          "prime_limit_inclusive": 500,
+          "eligible_primes": 90,
+          "integer_divisibility_checks": 18990,
+          "actual_divisor_hits": 248,
+          "quadratic_orbit_and_Frobenius_and_Dickson_checks_passed": 248,
+          "trace_discriminant_zero_hits": 184,
+          "actual_trace_root_derivative_zero_hits": 61
+        }
+      ],
+      "total_integer_divisibility_checks": 152131,
+      "total_actual_divisor_hits": 1959,
+      "total_actual_repeated_root_hits": 502,
+      "limitation": "These finite checks certify the evaluated identities and modular tests only; the all-t valuation statement follows from the displayed polynomial identity, not sampling."
+    }
+  }
+}
