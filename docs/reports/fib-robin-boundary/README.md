@@ -833,3 +833,140 @@ Optimized execution and missing `--out` were rejected with exit 2. These
 portability checks were performed on macOS/Python 3.9. All earlier result
 fields were preserved, apart from the intentionally updated source hash.
 No new Lean proof of §176 or RH is claimed.
+
+## Quadratic characters of actual FIB sources (§§177–181)
+
+[`character_slice.py`](character_slice.py) checks the source identities and
+finite character algebra used by the new Euler-weight estimate:
+
+```sh
+python3 -B docs/reports/fib-robin-boundary/character_slice.py \
+  --out /tmp/fib-character-slice.json
+```
+
+It is a standalone Python 3.9+ standard-library program. The required
+`--out` names the sole output file, which is overwritten; optimized Python
+is rejected because assertions verify the diagnostics. The retained default
+result is [`character_slice.json`](character_slice.json), including the
+script hash and explicit finite ranges.
+
+For a legal opposite-parity sum `V = F_a + F_b`, two square identities force
+every actual odd prime divisor, including 5, into quadratic-residue classes
+for `D = (-1)^b L_(a-b)` and `E = -L_(a+b)`. The first may be a square and
+must then be excluded from the nonprincipal-character argument; the second
+is always negative. The estimates use the actual prime support of the same
+integer. They can use the smaller available fundamental discriminant,
+rather than the full size of either Lucas value.
+
+The paper estimate for a nonprincipal real character modulo `m` is
+`P_chi(x) <= exp(8)*sqrt((1+log(x))*(2+log(m)))`, for `x >= 2`.
+It uses only absolute Euler products to the right of 1, a Chebyshev bound,
+and cancellation over a full character period. Neither finite character
+checks nor exact Euler-factor identities certify this infinite estimate.
+No PNT, GRH or ineffective zero-free-region constant is assumed.
+
+For each fixed positive multiplier `c`, the paper deduction gives a uniform
+vanishing Robin ratio for opposite-parity sums with gap `k = o(log(a))`.
+The cited published classification of Lucas squares handles the exceptional
+square branch through its Fibonacci factorization. This is an eventual
+bound on a specified family, not an all-index theorem for arbitrary gaps.
+The more general sufficient condition controls the fundamental discriminant
+relative to `log(log(c*V))`.
+
+For a general nonzero nonnegative ATOM composition, first remove its
+coordinate gcd `g`. The same argument applies to the primitive quantity
+`u = 2*a + 3*b` and its golden norm when the resulting `D` is nonsquare,
+but the multiplier is now `C = c*g`. Its cost `C/phi(C)` cannot be omitted.
+A fixed primitive seed `(1,0)` and arbitrary `g` already encode every even
+integer. The primitive example `(16,29)` instead has square `D = 121`,
+so the nonprincipal-character premise also cannot be dropped in that
+broader family.
+
+These additions are paper derivations and finite diagnostics. Their analytic
+composition has not been proved in Lean; no RH proof or literature-priority
+claim is made. The reusable formal gap is the uniform weighted tail estimate
+for a zero-mean periodic function, followed by the character Euler-product
+comparison. The formalization can reuse existing Chebyshev and character-sum results;
+no new bind-only declarations are retained.
+
+Default diagnostics check 6,162 opposite-parity pairs through index 160,
+with 9,678 actual odd prime-divisor checks through prime 500, including
+1,232 at prime 5. A separate complete-factorization window through index
+44 checks all odd prime factors of 420 sums, including 348 checks beyond
+that prime cutoff. The character/algebra checks cover 22 full induced
+character periods and 23 quadratic residue algebras. The primitive-ATOM
+window `[0,40]^2` checks 1,680 nonzero seeds and 2,048 actual odd-prime
+incidences. These ranges and the explicit principal-character boundary are
+recorded in the JSON; no finite window classifies all Lucas squares.
+
+The final script was independently rerun from a different directory, with
+its filename containing spaces and an environment containing only system
+PATH. Output matched the retained JSON byte for byte. Optimized execution,
+missing `--out`, and attempting to overwrite the program were rejected with
+exit 2. These execution checks were performed on macOS with system Python.
+The square classification is cited in the
+[primary-source note](../../../Library/Scale/bugeaud2006fibonaccipowers.md).
+
+The [Mertens progression note](../../../Library/Scale/languasco2008mertensprogressions.md)
+records the classical fixed-modulus background and why that asymptotic
+alone cannot replace the explicit estimate with a moving discriminant.
+
+## Canonical content and actual large-prime tails (§§182–187)
+
+Run the standalone Python 3.9+ standard-library diagnostic from any working
+folder, supplying an output path:
+
+```sh
+python3 canonical_content.py --out canonical_content.json
+```
+
+The program chooses the least positive even `j` with `phi^j > g` by exact
+quadratic-integer comparisons. It independently reconstructs the ordinary
+Zeckendorf address of `N = g F_(j+3)`, checks the unit bit, every five-window
+seam and End, and compares the complete reconstructed composition with
+`g M^j alpha`. It checks content `g`, primitive golden norm one, conductor
+four and `g^2 < N <= 5g^2`. Its fixed ranges are:
+
+- every `g` from 1 through 10,000;
+- factorial contents `m!` for `2 <= m <= 120`, plus the same 119
+  sources prefixed by `2*m` low null windows;
+- 26 primorial contents with largest prime at most 101;
+- 28 sources with 2, 4, 10 or 20 leading low null windows;
+- 11,207 positive-quantity lattice points in `[-40,80]^2`, of which 211
+  lie in the strict canonical strip and reconstruct the same source.
+
+For factorial parameters through 14, complete Fibonacci factorizations
+supply 32 actual prime-rank checks and exact divisor/totient products.
+For odd indices from 7 through 63, four cutoff choices supply 164 nonempty
+rank buckets. The program bounds each logarithmic Euler contribution by
+its exact larger reciprocal mass and compares it with both analytic
+bounds using outward rational logarithm intervals. It also checks the
+same-source inclusion `B = g A | N`, where `A` contains the small
+Fibonacci primes, retaining overlapping large primes as an upper bound.
+
+The paper estimate combines prime size and first divisibility rank:
+
+$$
+T(r,y)\le\tau(r)\sqrt{\frac{6(1+\log r)}{y\log y}},
+\qquad y\in\mathbb Z,\quad y\ge5.
+$$
+
+This supports the §§185–187 Robin estimates using the cited unconditional
+Axler input. The finite JSON certifies only its enumerated arithmetic,
+not these infinite estimates, RH, a useful numerical cutoff or a Lean
+proof. The new Robin bridges remain paper mathematics. The character
+series bound from the earlier slice was checked separately as a temporary
+exact Lean application of pinned Mathlib; it creates no new library theorem
+and does not certify this whole argument.
+
+The report records the program hash and a digest of all source rows.
+Optimization mode, a missing output argument and overwriting the source
+file, including a hardlink to it, are rejected. The program has no third-party runtime dependencies.
+
+Section 187 also compares two actual sources with the same growing null
+prefix: a single Fibonacci term has Robin ratio tending to zero, while
+an appropriate factorial-content source has ratio tending to one from
+below. Both contraction coordinates tend to zero. The paper argument
+therefore rules out a continuous Robin-ratio decoder at zero for this
+single contraction observation; the script checks finite source identity,
+not the limiting responses or continuity theorem.

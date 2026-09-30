@@ -1,0 +1,18 @@
+## 177. 从同源范数到异奇偶双项的二次特征切面
+
+本节令 $\phi=(1+\sqrt5)/2$，$\varphi(n)$ 为 Euler 函数，$Z(n)=\sigma(n)/n$。沿用 §175 的同源分式关系，取
+
+$$
+a>b\ge2,\qquad k=a-b\ge3\text{ 为奇数},\qquad
+V=F_a+F_b,\qquad t=a+b.
+$$
+
+先把两个层次区分。对奇素数 $p\ne5$，在 $R_p=(\mathbb Z/p\mathbb Z)[\theta]/(\theta^2-\theta-1)$ 中，若 $x\bar x=-1$ 且 $x+1$ 是单位，则
+
+$$
+f(x)=\frac{x-1}{x+1},\qquad
+f(x)\overline{f(x)}=-1,\qquad f^2(x)=\bar x=-x^{-1}.
+$$
+
+这直接来自 $\bar x=-x^{-1}$。不分裂时 $\bar x=x^p$，所以 $f^2$ 在该层上就是 Frobenius；分裂时共轭交换两个域分量。此处的范数与 Frobenius 相容性自动成立，不额外推出 $z(p)\mid4k$ 一类秩约束。分裂情形仍须保留分母单位条件，不能把整个范数 $-1$ 仿射集合中的每一点都当成可除。
+
