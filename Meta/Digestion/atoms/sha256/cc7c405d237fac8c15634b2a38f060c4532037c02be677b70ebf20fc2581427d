@@ -1,0 +1,19 @@
+**定义 10.1（有限满射观察塔及其完成）。** 设 $X\ne\varnothing$，每个 $B_r$ 为非空有限离散集合，实际观察满射
+
+$$
+q_r:X\twoheadrightarrow B_r,\qquad
+q_r=\pi_rq_{r+1}\quad(r\geq0).
+$$
+
+记 $\pi_{r,s}:B_s\to B_r$ 为 $s\geq r$ 时的连续截断复合，$\pi_{r,r}=I$。相容档案空间与实际像映射为
+
+$$
+\Omega=\varprojlim_r B_r
+=\{(b_r)_r:\pi_rb_{r+1}=b_r\},\qquad
+j(x)=(q_rx)_r.
+$$
+
+$\Omega$ 使用有限离散乘积的子空间拓扑。它是紧致 Hausdorff 空间：有限离散空间紧致，乘积紧致；每个相容等式是闭条件，故逆极限闭。其非空性也直接由任一 $j(x)$ 给出。非空有限柱集只规定有限多层，取最大层 $s$，再由 $q_s$ 满射选实际来源，就能同时实现这些规定，所以 $j(X)$ 稠密。$j$ 不必单射；单射恰要求观察族联合分离实际来源。稠密也不等于满射。
+
+这些是经典逆极限与紧致性在 FIB 观察塔上的支撑推导；同源联合实现与实际像的边界见 [关系观察过程几何](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 以及 [观察运输、记忆与完成](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)。
+

@@ -374,9 +374,9 @@ ball input from metric completeness. These scoped applications compile with
 only `propext`, `Classical.choice` and `Quot.sound`. They require no global
 compactness, orientability or finite-volume hypothesis. This finite-radius constructor selects `e` separately for each `R`. The
 global construction below uses one initial frame and one map over all radii.
-Global injectivity, covering-map structure, abstract hyperbolic-manifold
-realization, cusp classification and full Mostow-Prasad rigidity remain
-separate obligations. The same finite-radius
+Global injectivity, abstract hyperbolic-manifold realization, cusp
+classification and full Mostow-Prasad rigidity remain separate obligations.
+The global covering construction is checked below. The same finite-radius
 exponential conclusion is also checked for the previously constructed
 upper-half-space metric `g` and for its unique descended metric `gQ`, under the
 same free, compact-set proper isometric-action hypotheses. Their already
@@ -429,9 +429,10 @@ These scoped classical applications compile under the unchanged project pins
 and cited external revision with only `propext`, `Classical.choice` and
 `Quot.sound`. They are temporary applications, with no retained named project
 Lean declaration, new dependency or novelty claim. Surjectivity and a
-bijective differential do not supply the still-unproved covering structure,
-arbitrary-manifold realization as a hyperbolic quotient, cusp classification
-or full Mostow-Prasad existence and uniqueness. The noncompact and
+bijective differential alone do not establish covering-map structure; the
+checked covering construction is given below. Arbitrary-manifold realization
+as a hyperbolic quotient, cusp classification and full Mostow-Prasad
+existence and uniqueness remain unfinished. The noncompact and
 nonorientable cases remain part of the rigidity target.
 
 
@@ -473,6 +474,97 @@ orientability or finite-volume premise is added.
 
 These are scoped transient classical applications under the unchanged pins,
 with only `propext`, `Classical.choice` and `Quot.sound`. This increment does
-not establish that `e` is a covering map or injective. Arbitrary-manifold
+not by itself establish that `e` is a covering map or injective. The next
+section supplies the covering construction. Arbitrary-manifold
 hyperbolic quotient realization and full Mostow-Prasad rigidity, including
 cusps and nonorientable manifolds, remain unfinished.
+
+
+## Covering structure of the same global negative exponential
+
+The next checked composition establishes `IsCoveringMap e` for the same
+selected global exponential and its complete actual pullback metric. The
+source map is retained throughout; its normalization, radial geodesics at
+all real times, surjectivity, everywhere bijective differential, full
+negative polar identity and Euclidean inner lower bound remain.
+
+The generic covering check uses a complete smooth Riemannian metric on
+Euclidean space and a smooth map preserving its actual tangent inner
+products into a complete, preconnected smooth manifold of sectional
+curvature `-1`. No covering, source compactness, finite fiber count,
+orientability or finite-volume hypothesis is assumed.
+
+`SpaceForm/LocalIsometry/Geodesic.lean` transports affine geodesics through
+local metric isometries. Global source geodesics and initial-data uniqueness
+lift target geodesics. Smooth endpoint dependence supplies, for every target
+point `y`, one fixed global target exponential `eY` and smooth maps `Sx` for
+every source fiber point `x`, with `Sx 0 = x` and `F ∘ Sx = eY`. The same `eY`
+is used for all points in the fiber. Differentiating that identity shows
+that each `Sx` is a local diffeomorphism and hence an open map.
+
+Choose one inverse branch of `eY` near zero. Its open source `U` maps to one
+open target neighborhood `V`, shared by all the source sheets `Sx '' U`.
+Injectivity of `eY` on `U` and uniqueness of continuous lifts through a
+locally injective separated map make those sheets pairwise disjoint. To
+cover the entire preimage of `V`, lift a reversed target radial geodesic
+from any source point over `V` back to a point over `y`; lift uniqueness
+identifies the original point with its sheet endpoint. Each sheet maps
+homeomorphically onto `V`. Mathlib's `IsOpen.trivializationDiscrete` and
+`IsEvenlyCovered.of_trivialization` then provide the actual covering
+structure, including fibers with infinitely many points.
+
+The complete construction is checked for the same actually constructed
+upper-half-space metric `g` and descended quotient metric `gQ`, retaining
+all earlier source, curvature, completeness, volume, conditional core/tail,
+quotient and local tangent-isometry clauses. The original free, compact-set
+proper isometric-action conditions are retained; quotient metric uniqueness
+is within the chosen smooth structure. These scoped transient classical
+applications compile with only `propext`, `Classical.choice` and `Quot.sound`.
+
+This covering increment alone does not establish global injectivity or an
+inverse on hyperbolic three-space; the next section supplies the H3 inverse.
+Realization of every hyperbolic manifold as an isometric quotient, cusp
+classification and full Mostow-Prasad rigidity remain unfinished.
+The full rigidity target still includes noncompact cusps and nonorientable
+manifolds. No new project Lean declaration or novelty claim is retained.
+
+
+## Global smooth inverse of the same H3 exponential
+
+The project's `HyperbolicTopology.coordinatesHomeomorph` identifies the
+hyperbolic topology of H3 with the usual topology of the positive-height
+half-space in `Ambient ℂ`. The positive-height half-space is convex and
+nonempty, so Mathlib's `Convex.contractibleSpace` and transport through that
+homeomorphism give contractibility of the actual H3 type. Its simple
+connectedness follows from `SimplyConnectedSpace.ofContractible`. The
+selected Euclidean manifold atlas supplies local path connectedness through
+`ChartedSpace.locallyPathConnectedSpace`.
+
+The pinned upstream `PoincareLib/Topology/Covering/SimplyConnected.lean`, specifically
+`Poincare.Topology.bijective_of_isCoveringMap_of_simplyConnected`, makes the
+same previously checked covering exponential from Euclidean three-space
+to H3 bijective. Mathlib's `IsLocalDiffeomorph.diffeomorphOfBijective` then
+provides a global smooth diffeomorphism whose forward function is exactly
+that chosen exponential. Its inverse is smooth everywhere. No compactness,
+proper-map condition, finite-fiber condition or new simple-connectedness
+premise is supplied by the user.
+
+This is checked for the same actually constructed upper-half-space metric
+`g`, retaining the chosen exponential's normalization, radial geodesics at
+all real times, smoothness, surjectivity, bijective differential, complete
+actual pullback, Euclidean inner lower bound and full negative polar
+identity. Deleting the single added H3 diffeomorphism clause and reversing
+the import and theorem names restores the preceding combined constructor
+byte-for-byte. All earlier source, volume, curvature, conditional core/tail
+and quotient clauses and original free, compact-set proper action
+conditions are retained; quotient metric uniqueness remains within the
+chosen smooth structure.
+
+The quotient exponential retains its covering structure. Its target is
+not assumed to be simply connected, and no global inverse on an arbitrary
+quotient is asserted. Arbitrary-manifold isometric quotient realization,
+cusp classification and full Mostow-Prasad existence, homotopy and
+uniqueness remain unfinished, including noncompact and nonorientable
+manifolds. These are scoped transient classical applications under
+unchanged pins, with only `propext`, `Classical.choice` and `Quot.sound`;
+no new project Lean declaration or novelty claim is retained.
