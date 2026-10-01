@@ -792,3 +792,145 @@ verification. A uniform estimate of the same actual remaining cost
 against $B_r$, with the original low-loss incidence and window retained,
 is still missing; existence of a second negative prime alone supplies
 neither its required cost nor a proof of RH.
+
+## Resolve the remaining arithmetic phase beyond its Jacobi sign
+
+The additional character input is classical. Gao–Zhao,
+*Value-distribution of quartic Hecke L-functions*,
+[arXiv:1809.09822v2, §2.2, PDF p.3](https://arxiv.org/pdf/1809.09822v2),
+defines the Gaussian quartic power-residue symbol at an odd Gaussian
+prime and extends it multiplicatively to composite denominators. Only
+that definition is used here; the paper's distribution theorem over
+square-free Gaussian parameters is not applied to this Fibonacci modulus.
+This is an application to the existing benefit certificate, not a new
+quartic-character theorem or a Lean result.
+
+Retain the same actual family $V=F_r$, $N=1+Vk$, price $s=y\log y$
+and maximal reference $C_s$ above, with $r>5$ prime. The classical Cassini
+identity gives $t=F_{r-1}$ with $t^2=-1\pmod V$. Every prime $q\mid V$
+is odd and $q\equiv1\pmod4$. Orient its quartic character by this root:
+
+$$
+\psi_q(n)=i^j
+\quad\Longleftrightarrow\quad
+n^{(q-1)/4}\equiv t^j\pmod q,
+\qquad (n,q)=1,\quad j\in\mathbb Z/4\mathbb Z.
+$$
+
+In the Gaussian definition this uses the prime ideal $(q,i-t)$, whose
+residue field identifies $i$ with $t$. Retain all denominator exponents:
+
+$$
+\psi_V(n)=\prod_{q^E\parallel V}\psi_q(n)^E,
+\qquad (n,V)=1,\qquad \psi_V(n)^2=\chi_V(n).
+$$
+
+Neither primality nor square-freeness of $V$ is assumed. The resulting
+character can have order one, two or four, so four nonempty prime classes
+are not presumed. Identifying the residue root $t$ with complex $i$ does
+not assert $\psi_q(t)=i$. This arithmetic character is also different
+from the active composition rotation $C=MJ$ and from the existing scalar
+four-orbit analysis in [§7 of the Li note](../ArithUnits/li2026nonwieferich.md).
+No factorization-free evaluation algorithm or efficiency bound for this
+composite character is supplied here.
+
+Use the actual $g=\gcd(N,C_s)$, $u=N/g$, $v=C_s/g$ and
+$e=v_r(N)$, and set $u_0=u/r^e$. The existing $y<r$ argument gives
+$a_r=0$, and the existing Fibonacci entry-point congruence gives
+$r\nmid V$. These inputs hold on every prime-index residue class, not
+only the two classes with negative index-prime Jacobi sign. Charge the
+same exact block
+
+$$
+L_r=W_r(e)=e\log r-s\log Z(r^e).
+$$
+
+Since $g,u_0\mid N$ and $N\equiv1\pmod V$, both are units modulo
+$V$, without requiring $C_s$ to be a unit. Multiplicativity transports
+the remaining endpoint as
+
+$$
+\psi_V(u_0)=\psi_V(g)^{-1}\psi_V(r)^{-e}.
+$$
+
+This endpoint uses the same host and its actual index-prime valuation.
+When $u_0=1$, its phase is one and no remaining phase cost is forced.
+
+For $j=1,2,3$, use the existing positive first-entry cost $b_s(p)$ and
+define
+
+$$
+\beta_j=\min_{\substack{p\text{ prime},\ p\nmid vrV\\
+\psi_V(p)=i^j}}b_s(p),
+$$
+
+with value $+\infty$ for an empty class. Every nonempty class has a
+positive attained minimum: maximality of $C_s$ includes all ties, and
+$b_s(p)\to\infty$ at fixed price. This asserts no uniform gap as $s$
+and $V$ grow.
+
+The cheapest relaxed phase-word costs on $\mathbb Z/4\mathbb Z$ are
+
+$$
+\begin{aligned}
+c_0&=0,\\
+c_1&=\min\{\beta_1,\beta_2+\beta_3,3\beta_3\},\\
+c_2&=\min\{\beta_2,2\beta_1,2\beta_3\},\\
+c_3&=\min\{\beta_3,\beta_1+\beta_2,3\beta_1\}.
+\end{aligned}
+$$
+
+To use this relaxation, retain the actual prime-power word of $u_0$.
+The increasing post-reference marginal costs give $W_p(k)\ge k b_s(p)$,
+so repeated occurrences of one prime are charged. Replace each actual
+nonzero-phase occurrence by its class minimum. Phase-zero edges and
+positive-cost loops can then be deleted. A shortest nonzero-endpoint path
+visits at most the four states; its undominated increment words are
+$1,23,333$ for endpoint one, $2,11,33$ for endpoint two, and
+$3,12,111$ for endpoint three. This gives, for the actual endpoint
+$\psi_V(u_0)=i^j$, the paper-level application
+
+$$
+\boxed{D_s(N)\ge R_s(v)+L_r+c_j.}
+$$
+
+An actual endpoint guarantees a finite route even if some classes are
+empty. The relaxed minimizing word need not realize its class minima
+simultaneously, the real size window or the low-loss incidence; these
+facts are not required for a lower bound. They would be required to claim
+an actual realizing candidate.
+
+For odd $j$, the unrefined remaining Jacobi minimum is
+$m_s^{[r]}(V,v)=\min\{\beta_1,\beta_3\}$ and $c_j$ is at least this
+minimum. If $\beta_3<\beta_1$, then $c_1$ is strictly larger;
+if $\beta_1<\beta_3$, then $c_3$ is strictly larger. The relevant
+inequalities allow an empty opposite class. A reachable phase two has
+$c_2>0$, although its remaining Jacobi sign is positive. These are
+conditional improvements over the sign-only bound. There is no universal
+ordering against $m_{s,\mathrm{act}}^{[r]}(N)$: cheap eligible primes
+absent from the host can reduce $c_j$, whereas a required repeated phase
+can force more cost than one actual negative-prime minimum. Complete
+actual valuations already determine these phases.
+
+With $y\ge6$ and $0<h_0\le1/3$, the safe capacity combination is
+
+$$
+D_s(N)\ge R_s(v)+\max\{I_v(\log u),\ L_r+c_j\}.
+$$
+
+In the negative remaining-sign branch one may also include
+$L_r+m_{s,\mathrm{act}}^{[r]}(N)$ inside this maximum. These contributions
+bound the same additions; summing the full capacity contribution with
+$L_r+c_j$ would pay them twice.
+
+For the same host put $B_r=T_s(N)-R_s(v)-L_r$. The condition $c_j>B_r$
+is sufficient to pay its strict budget. No such comparison on every
+qualifying host has been established, and failure of this sufficient
+condition does not disprove Robin. Phase zero, $u_0=1$ and all zero-cost
+tied removals remain in scope; the actual gcd fixes each removed layer
+once, rather than licensing a repeatable free phase loop. The original
+window and the complete low-loss divisor contribution in
+[FIB §233.5](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)
+still require a joint estimate. This includes $h=1$, restoration-only and
+small-prime cofactors with their actual merged valuations. This
+character refinement alone supplies no uniform strict budget or RH proof.
