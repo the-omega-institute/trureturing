@@ -631,3 +631,306 @@ that comparison at the source price. Failure of this sufficient test does
 not imply failure of Robin. The original window, qualifying low-loss
 divisor, cofactor and all-candidate coverage remain required; no uniform
 strict-budget supplier or proof of RH is supplied here.
+
+## The Fibonacci index prime limits the unrefined sign test
+
+Use the actual family in FIB §§230–231, writing its multiplier as $k$
+to distinguish it from the gcd:
+
+$$
+V=F_r,\quad
+\lceil V/10\rceil\le k\le\lfloor V/5\rfloor,\quad N=1+Vk>5040,
+\quad A=1+V\lceil V/10\rceil,\quad y=\log A,\quad s=y\log y,
+$$
+
+where $r>5$ is prime. Keep the same $C_s,g,u,v$ and signed budget $B$.
+The ordinary Fibonacci bound $F_r<\varphi^{r-1}$, together with $A<V^2$
+and $2\log\varphi<1$, gives $1<y<r$. Hence
+
+$$
+s\ell_{r,1}=y\log y\,\log(1+1/r)
+<\frac{y\log y}{r}<\log r.
+$$
+
+Thus $a_r=0$, $r\nmid C_s$ and $r\nmid v$, with strictness unaffected
+by tied layers. The already existing
+`fibonacci_apparition_entry_point` in `D5/S3/Arith/GoldenApparition.lean`
+supplies the classical congruence
+
+$$
+F_r\equiv\left(\frac5r\right)\pmod r.
+$$
+
+In particular $r\nmid V$. Reciprocity and the supplementary law at
+minus one give
+
+$$
+\chi_V(r)=\left(\frac{F_r}{r}\right)
+=\left(\frac{(5/r)}r\right)=-1
+\quad\Longleftrightarrow\quad r\equiv3,7\pmod{20}.
+$$
+
+On these two classes the index prime is always eligible for the unrefined
+minimum, at exact cost
+
+$$
+b_s(r)=\log r-s\log(1+1/r)>0,\qquad m_s(V,v)\le b_s(r).
+$$
+
+Therefore $B\ge b_s(r)$ prevents the unrefined negative-gcd test
+$m_s(V,v)>B$ from succeeding. This is a limitation of that relaxation;
+it is not a Robin counterexample or an assertion that $r\mid u$.
+For the same actual host the congruence instead gives
+
+$$
+r\mid u\quad\Longleftrightarrow\quad r\mid N
+\quad\Longleftrightarrow\quad k\equiv1\pmod r.
+$$
+
+The conditional threshold does not exhibit a surviving actual source
+with $B\ge b_s(r)$. The [existing window budget](axler2024primorialcounting.md)
+gives $B\le T_s(N)\le T_s(X)$, where $X=1+V\lfloor V/5\rfloor$.
+If $T_s(X)<b_s(r)$, this index-prime obstruction never activates in
+that window. If $T_s(X)<0$, the window is already paid by the nonnegative
+benefit. Any claim of obstruction on the residual set requires an actual
+source there, retaining its low-loss divisor and cofactor.
+
+## Charge the actual index block before reading the remaining sign
+
+On the same two negative-index classes, retain
+
+$$
+e=v_r(N)=v_r(u),\qquad u_0=u/r^e,\qquad
+L_r=W_r(e)=e\log r-s\log Z(r^e),\qquad W_r(0)=0.
+$$
+
+This is the exact cost of all additions at $r$, since $a_r=0$.
+The remaining factor has neither $r$ nor any prime dividing $vV$.
+For every $j\ge1$, its required source resolution can be read as
+
+$$
+r^j\mid N
+\quad\Longleftrightarrow\quad
+k\equiv-F_r^{-1}\pmod{r^j}.
+$$
+
+The inverse exists because $r\nmid V$; $F_r\bmod r^j$ is the same
+modular $M^r\alpha$ readout used above. These are actual valuation probes,
+not a factorization of $V$ or an assumption about the unseen additions.
+
+Multiplicativity transports the endpoint after charging that block:
+
+$$
+\chi_V(u_0)=\chi_V(g)(-1)^e.
+$$
+
+If this remaining sign is negative, the actual $u_0$ contains a distinct
+eligible negative-character prime. Define, only in that branch,
+
+$$
+m_s^{[r]}(V,v)=
+\min_{\substack{p\nmid vrV\\\chi_V(p)=-1}}b_s(p)>0.
+$$
+
+The actual factor ensures nonemptiness, and the same finite-tail argument
+as above ensures attainment. The paper-level certificate is
+
+$$
+\begin{cases}
+D_s(N)\ge R_s(v)+L_r+m_s^{[r]}(V,v),
+ &\chi_V(g)(-1)^e=-1,\\
+D_s(N)\ge R_s(v)+L_r,
+ &\chi_V(g)(-1)^e=1.
+\end{cases}
+$$
+
+The index block and the distinct residual prime pay disjoint costs.
+If $\chi_V(g)=1$ and $e$ is odd, a second negative prime is forced,
+although the original negative-gcd test was inactive. If $e=0$ and
+$\chi_V(g)=-1$, the unused index prime disappears from the minimum.
+For an originally negative gcd, this bound is never weaker than
+$R_s(v)+m_s(V,v)$: when $e\ge1$, $L_r\ge b_s(r)\ge m_s(V,v)$;
+when $e=0$, the new minimum ranges over a subset of the old one.
+
+Put $B_r=T_s(N)-R_s(v)-L_r$. A negative $B_r$ is already paid.
+Otherwise, in the negative remaining-sign branch, $m_s^{[r]}(V,v)>B_r$
+is sufficient. The same cutoff $P_r=\max\{s,e^{B_r+1}\}$ applies to
+this unrestricted cheap-prime test.
+
+For pruning by the actual source, define a different minimum, only in
+the negative remaining-sign branch:
+
+$$
+m_{s,\mathrm{act}}^{[r]}(N)=
+\min_{\substack{p\nmid vrV,\ v_p(u_0)\ \mathrm{odd}\\
+\chi_V(p)=-1}}b_s(p).
+$$
+
+The negative endpoint supplies a nonempty subset of the finite actual
+prime support, so this minimum exists and is at least $m_s^{[r]}(V,v)$.
+The same disjoint-cost argument gives
+
+$$
+D_s(N)\ge R_s(v)+L_r+m_{s,\mathrm{act}}^{[r]}(N).
+$$
+
+With $B_r\ge0$, actual probes may discard even $v_p(u_0)$, including
+zero. If every eligible $p\le P_r$ with $b_s(p)\le B_r$ and odd
+$v_p(u_0)$ has $\chi_V(p)=1$, the finite cutoff gives
+$m_{s,\mathrm{act}}^{[r]}(N)>B_r$ and hence strict Robin for this host.
+This need not imply $m_s^{[r]}(V,v)>B_r$: a cheap negative prime absent
+from $u_0$ can keep that unrestricted minimum small. No efficiency or
+uniform source correlation is asserted for the actual-support test.
+
+When $y\ge6$ and $0<h_0\le1/3$, the previously established capacity
+bound still applies to all additions. It can be combined with the new
+bound by taking a maximum of their addition contributions. Summing that
+full capacity bound with $L_r+m_s^{[r]}$ would count the same additions
+twice. These are applications of the existing block decomposition,
+reciprocity and modular readout, with no new analytic theorem or Lean
+verification. A uniform estimate of the same actual remaining cost
+against $B_r$, with the original low-loss incidence and window retained,
+is still missing; existence of a second negative prime alone supplies
+neither its required cost nor a proof of RH.
+
+## Resolve the remaining arithmetic phase beyond its Jacobi sign
+
+The additional character input is classical. Gao–Zhao,
+*Value-distribution of quartic Hecke L-functions*,
+[arXiv:1809.09822v2, §2.2, PDF p.3](https://arxiv.org/pdf/1809.09822v2),
+defines the Gaussian quartic power-residue symbol at an odd Gaussian
+prime and extends it multiplicatively to composite denominators. Only
+that definition is used here; the paper's distribution theorem over
+square-free Gaussian parameters is not applied to this Fibonacci modulus.
+This is an application to the existing benefit certificate, not a new
+quartic-character theorem or a Lean result.
+
+Retain the same actual family $V=F_r$, $N=1+Vk$, price $s=y\log y$
+and maximal reference $C_s$ above, with $r>5$ prime. The classical Cassini
+identity gives $t=F_{r-1}$ with $t^2=-1\pmod V$. Every prime $q\mid V$
+is odd and $q\equiv1\pmod4$. Orient its quartic character by this root:
+
+$$
+\psi_q(n)=i^j
+\quad\Longleftrightarrow\quad
+n^{(q-1)/4}\equiv t^j\pmod q,
+\qquad (n,q)=1,\quad j\in\mathbb Z/4\mathbb Z.
+$$
+
+In the Gaussian definition this uses the prime ideal $(q,i-t)$, whose
+residue field identifies $i$ with $t$. Retain all denominator exponents:
+
+$$
+\psi_V(n)=\prod_{q^E\parallel V}\psi_q(n)^E,
+\qquad (n,V)=1,\qquad \psi_V(n)^2=\chi_V(n).
+$$
+
+Neither primality nor square-freeness of $V$ is assumed. The resulting
+character can have order one, two or four, so four nonempty prime classes
+are not presumed. Identifying the residue root $t$ with complex $i$ does
+not assert $\psi_q(t)=i$. This arithmetic character is also different
+from the active composition rotation $C=MJ$ and from the existing scalar
+four-orbit analysis in [§7 of the Li note](../ArithUnits/li2026nonwieferich.md).
+No factorization-free evaluation algorithm or efficiency bound for this
+composite character is supplied here.
+
+Use the actual $g=\gcd(N,C_s)$, $u=N/g$, $v=C_s/g$ and
+$e=v_r(N)$, and set $u_0=u/r^e$. The existing $y<r$ argument gives
+$a_r=0$, and the existing Fibonacci entry-point congruence gives
+$r\nmid V$. These inputs hold on every prime-index residue class, not
+only the two classes with negative index-prime Jacobi sign. Charge the
+same exact block
+
+$$
+L_r=W_r(e)=e\log r-s\log Z(r^e).
+$$
+
+Since $g,u_0\mid N$ and $N\equiv1\pmod V$, both are units modulo
+$V$, without requiring $C_s$ to be a unit. Multiplicativity transports
+the remaining endpoint as
+
+$$
+\psi_V(u_0)=\psi_V(g)^{-1}\psi_V(r)^{-e}.
+$$
+
+This endpoint uses the same host and its actual index-prime valuation.
+When $u_0=1$, its phase is one and no remaining phase cost is forced.
+
+For $j=1,2,3$, use the existing positive first-entry cost $b_s(p)$ and
+define
+
+$$
+\beta_j=\min_{\substack{p\text{ prime},\ p\nmid vrV\\
+\psi_V(p)=i^j}}b_s(p),
+$$
+
+with value $+\infty$ for an empty class. Every nonempty class has a
+positive attained minimum: maximality of $C_s$ includes all ties, and
+$b_s(p)\to\infty$ at fixed price. This asserts no uniform gap as $s$
+and $V$ grow.
+
+The cheapest relaxed phase-word costs on $\mathbb Z/4\mathbb Z$ are
+
+$$
+\begin{aligned}
+c_0&=0,\\
+c_1&=\min\{\beta_1,\beta_2+\beta_3,3\beta_3\},\\
+c_2&=\min\{\beta_2,2\beta_1,2\beta_3\},\\
+c_3&=\min\{\beta_3,\beta_1+\beta_2,3\beta_1\}.
+\end{aligned}
+$$
+
+To use this relaxation, retain the actual prime-power word of $u_0$.
+The increasing post-reference marginal costs give $W_p(k)\ge k b_s(p)$,
+so repeated occurrences of one prime are charged. Replace each actual
+nonzero-phase occurrence by its class minimum. Phase-zero edges and
+positive-cost loops can then be deleted. A shortest nonzero-endpoint path
+visits at most the four states; its undominated increment words are
+$1,23,333$ for endpoint one, $2,11,33$ for endpoint two, and
+$3,12,111$ for endpoint three. This gives, for the actual endpoint
+$\psi_V(u_0)=i^j$, the paper-level application
+
+$$
+\boxed{D_s(N)\ge R_s(v)+L_r+c_j.}
+$$
+
+An actual endpoint guarantees a finite route even if some classes are
+empty. The relaxed minimizing word need not realize its class minima
+simultaneously, the real size window or the low-loss incidence; these
+facts are not required for a lower bound. They would be required to claim
+an actual realizing candidate.
+
+For odd $j$, the unrefined remaining Jacobi minimum is
+$m_s^{[r]}(V,v)=\min\{\beta_1,\beta_3\}$ and $c_j$ is at least this
+minimum. If $\beta_3<\beta_1$, then $c_1$ is strictly larger;
+if $\beta_1<\beta_3$, then $c_3$ is strictly larger. The relevant
+inequalities allow an empty opposite class. A reachable phase two has
+$c_2>0$, although its remaining Jacobi sign is positive. These are
+conditional improvements over the sign-only bound. There is no universal
+ordering against $m_{s,\mathrm{act}}^{[r]}(N)$: cheap eligible primes
+absent from the host can reduce $c_j$, whereas a required repeated phase
+can force more cost than one actual negative-prime minimum. Complete
+actual valuations already determine these phases.
+
+With $y\ge6$ and $0<h_0\le1/3$, the safe capacity combination is
+
+$$
+D_s(N)\ge R_s(v)+\max\{I_v(\log u),\ L_r+c_j\}.
+$$
+
+In the negative remaining-sign branch one may also include
+$L_r+m_{s,\mathrm{act}}^{[r]}(N)$ inside this maximum. These contributions
+bound the same additions; summing the full capacity contribution with
+$L_r+c_j$ would pay them twice.
+
+For the same host put $B_r=T_s(N)-R_s(v)-L_r$. The condition $c_j>B_r$
+is sufficient to pay its strict budget. No such comparison on every
+qualifying host has been established, and failure of this sufficient
+condition does not disprove Robin. Phase zero, $u_0=1$ and all zero-cost
+tied removals remain in scope; the actual gcd fixes each removed layer
+once, rather than licensing a repeatable free phase loop. The original
+window and the complete low-loss divisor contribution in
+[FIB §233.5](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)
+still require a joint estimate. This includes $h=1$, restoration-only and
+small-prime cofactors with their actual merged valuations. This
+character refinement alone supplies no uniform strict budget or RH proof.
