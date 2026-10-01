@@ -11618,3 +11618,104 @@ When R is nonempty the P_i overlap, so disjoint-support consequences
 from the all-concentrated case cannot be carried over. Larger
 reciprocal inventories remain possible under these necessary bounds;
 unrestricted noncoverage is not established.
+
+## 85. The three actual square residuals have no further congruence concentration
+
+Keep section83's surviving layout, including the complete original
+color carriers X_j,X_k and their periods M_j,M_k. Put
+
+    E_j^B=E_j intersect B_(q^2),
+    E_j^C=E_j intersect C_(q^2).
+
+Both sets are nonempty by FL4, and E_k is nonempty by section80.
+Use PH3--PH4's congruence-hull construction on any nonempty Y in
+X_i: choose y_0 in Y and set
+
+    Gamma_i(Y)=gcd(M_i,{y-y_0:y in Y}).
+
+The construction is independent of representatives and base point.
+For each divisor t of M_i, Y lies in one residue modulo t exactly
+when t divides Gamma_i(Y). The remaining minimum-column source must
+satisfy
+
+    Gamma_j(E_j^B)=Gamma_j(E_j^C)=q^2,
+    Gamma_k(E_k)=r^2.                              (FL7)
+
+These equalities concern the actual residual sets with every
+original higher prime digit retained.
+
+### Additional concentration of a guarded square branch gives strict descent
+
+Suppose Gamma_j(E_j^C)>q^2. Since q^2 divides this hull, it has a
+divisor t distinct from1,q,q^2. Choose the actual class T modulo t
+containing E_j^C. Retain all5-free originals, delete the ten5-bearing
+originals, and insert:
+
+| Receiving ternary residue | Cofactor condition | Modulus |
+| --- | --- | --- |
+| j mod9 | none | 9 |
+| j+3 mod9 | A_q | 9q |
+| j+6 mod9 | B_(q^2) | 9q^2 |
+| j+6 mod9 | T | 9t |
+| k mod9 | A_r | 9r |
+| k+3 mod9 | A_(r^2) | 9r^2 |
+| k+6 mod27 | none | 27 |
+| k+15 mod27 | A_r | 27r |
+| k+24 mod27 | A_(r^2) | 27r^2 |
+
+The root-k rows are section82's complete five-leaf repair. On root
+j, the first two leaves cover E_j because E_j is contained in A_q.
+On its third leaf the B portion is covered by9q^2 and the C portion
+by9t. Every point missed by the retained originals has its own
+color coordinate in E_i, so all such points are covered. Root0 is
+still covered by the retained original3.
+
+At height two the cofactors are1,q,q^2,t,r,r^2. They are distinct:
+t differs from1,q,q^2 and is supported in S_j, while r,r^2 have
+support in the disjoint S_k. At height three the cofactors are
+1,r,r^2. All are3-free, so different heights cannot collide. All
+labels are fresh because retained originals have ternary height
+at most one. Each row defines one actual AP by CRT, and all
+original non-5 heights may remain in the output carrier.
+
+Nine classes replace ten, contradicting EB1. Interchanging B and C
+proves both guarded equalities in FL7. In particular t=q^3 is
+legitimate only when the actual residual branch is already in one
+q^3 prefix; no complete q^2 cylinder is replaced by a single lift.
+
+### Additional concentration of the opposite residual gives strict descent
+
+Suppose Gamma_k(E_k)>r^2. Choose a hull divisor t distinct from
+1,r,r^2 and its actual phase T containing E_k. Use section83's six
+guarded-root rows unchanged, and replace its three root-k rows by:
+
+| Receiving ternary residue | Cofactor condition | Modulus |
+| --- | --- | --- |
+| k mod9 | A_r | 9r |
+| k+3 mod9 | A_(r^2) | 9r^2 |
+| k+6 mod9 | T | 9t |
+
+Every root-k leaf covers E_k. The guarded-root repair remains
+valid. The height-two cofactors are1,q,q^2,r,r^2,t and the
+height-three cofactors are1,q,q^2; disjoint color supports and
+the choice of t give distinct labels at each height. The same
+freshness and complete-source coverage checks give nine classes
+in place of ten, proving the last equality in FL7.
+
+Consequently Gamma_j(E_j)=q. Indeed E_j is the union of its B and C
+pieces, each with hull q^2, and their two different q^2 residues
+have the same reduction modulo q. The hull of their union is the
+gcd of the two piece hulls and one difference of base points, whose
+q-depth is exactly one.
+
+Every additional prime s in S_j other than q therefore takes at
+least two first-root values on EACH guarded square residual.
+Likewise every s in S_k other than r takes at least two first-root
+values on E_k. When H_q>=3, neither guarded piece fits inside one
+q^3 lift; when H_r>=3, E_k does not fit inside one r^3 lift.
+
+These are necessary congruence-spread constraints. They give no
+product structure, uniform density lower bound or exclusion of
+the remaining layout. The arguments reuse PH3--PH4 and the actual
+repairs of sections82--83; no Lean verification or priority claim
+is asserted.
