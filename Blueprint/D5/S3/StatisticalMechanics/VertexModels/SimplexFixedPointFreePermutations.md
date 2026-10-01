@@ -42,7 +42,7 @@ For a map T from X^n to itself, R_v(T) applies T to the n coordinates on the edg
 
 **Definition 1.4 (The left side).**
 
-$$\operatorname{lhs}\left(T, 0\right) = \operatorname{id},\qquad\operatorname{lhs}\left(T, k + 1\right) = \operatorname{lhs}\left(T, k\right) \circ \operatorname{opR}\left(T, k\right)$$
+$$\operatorname{lhs}\left(T, 0\right) = \operatorname{id},\qquad\operatorname{lhs}\left(T, k + 1\right) = \operatorname{ite}\left(k < n + 1, \operatorname{lhs}\left(T, k\right) \circ \operatorname{opR}\left(T, k\right), \operatorname{lhs}\left(T, k\right)\right)$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/VertexModels/SimplexFixedPointFreePermutations.lhs` (`✓ std3`).
 
@@ -50,11 +50,11 @@ $$\operatorname{lhs}\left(T, 0\right) = \operatorname{id},\qquad\operatorname{lh
 
 *Commentary.*
 
-lhs(T, k) is the composition R_0(T) R_1(T) ... R_(k-1)(T) of the first k vertex operators, so that R_(k-1)(T) acts first; operators of vertices k > n are omitted.
+lhs(T, k) is defined for every natural number k. The step from k to k + 1 composes with R_k(T) on the right when k < n + 1, so that R_k(T) acts first, and leaves the value unchanged when k >= n + 1. Hence lhs(T, k) is the composition R_0(T) R_1(T) ... R_(k-1)(T) for k <= n + 1.
 
 **Definition 1.5 (The right side).**
 
-$$\operatorname{rhs}\left(T, 0\right) = \operatorname{id},\qquad\operatorname{rhs}\left(T, k + 1\right) = \operatorname{opR}\left(T, k\right) \circ \operatorname{rhs}\left(T, k\right)$$
+$$\operatorname{rhs}\left(T, 0\right) = \operatorname{id},\qquad\operatorname{rhs}\left(T, k + 1\right) = \operatorname{ite}\left(k < n + 1, \operatorname{opR}\left(T, k\right) \circ \operatorname{rhs}\left(T, k\right), \operatorname{rhs}\left(T, k\right)\right)$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/VertexModels/SimplexFixedPointFreePermutations.rhs` (`✓ std3`).
 
@@ -62,7 +62,7 @@ $$\operatorname{rhs}\left(T, 0\right) = \operatorname{id},\qquad\operatorname{rh
 
 *Commentary.*
 
-rhs(T, k) is the composition R_(k-1)(T) ... R_1(T) R_0(T) of the same operators in the reverse order.
+rhs(T, k) is defined in the same way with the operators in the reverse order: the step from k to k + 1 composes with R_k(T) on the left when k < n + 1 and leaves the value unchanged when k >= n + 1. Hence rhs(T, k) is the composition R_(k-1)(T) ... R_1(T) R_0(T) for k <= n + 1.
 
 **Definition 1.6 (The n-simplex equation).**
 

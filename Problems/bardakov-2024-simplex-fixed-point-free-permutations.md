@@ -42,9 +42,28 @@ Issue #11874 classifies the question as Tier 1 and records the bounded
 literature check before any Lean: the arXiv text and the journal version keep
 the question; Hietarinta's classification of permutation-type solutions
 (J. Phys. A 30 (1997) 4757) covers $n\le4$ only; the eleven citing works
-listed by Semantic Scholar, sixteen later simplex-equation sources and
-Dimakis–Müller-Hoissen arXiv:2510.12905 do not address fixed-point-free
-permutation solutions.
+listed by Semantic Scholar and sixteen later simplex-equation sources do not
+address fixed-point-free permutation solutions.
+
+The existence half for even $n$ is nevertheless implied by published work.
+Theorem 6.7 of S. M. Mihalache and T. Mochida, *Constructing Solutions of
+Simplex Equations from Polygon Equations*, arXiv:2510.12905v4, states that for
+a solution $T$ of the $(2k+1)$-gon equation and a solution $S$ of its dual
+satisfying their mixed relation,
+$\sigma_{1,2}\sigma_{3,4}\cdots\sigma_{2k-1,2k}T_{2,4,\dots,2k}S_{1,3,\dots,2k-1}$
+solves the $2k$-simplex equation on $V^{\otimes 2k}$, whose multi-indices are
+the rows of $MI_{2k}$ (their matrix $A_{4k+1}$ obeys the recursion of $MI_{2k}$,
+from $A_3=MI_1=[1,1]^{\mathsf T}$); the paper attributes the proof for the odd-gon
+equations to A. Dimakis and I. G. Korepanov, J. Math. Phys. 62 (2021) 051701.
+The identity maps satisfy the polygon equation, its dual and the mixed
+relation, so the product of the transpositions of adjacent factors solves the
+linear $2k$-simplex equation; restricted to the basis tensors of $V$ with basis
+$X$, it is the simple map of the fixed-point-free involution on $X$.
+Mihalache and Mochida cite the paper of Bardakov et al. only for general
+properties of simplex equations; they do not state this specialization or
+mention Question 2. The new content of
+this settlement is the non-existence for odd $n$ and the classification of
+simple solutions behind it; the existence for even $n$ is proved here directly.
 
 These are orchestrator-reported literature readings,
 `not-found-in-searched-scope`; they do not establish exhaustive worldwide
@@ -110,9 +129,12 @@ Tier 1 published question; resolution `Proved` by
 
 ### What the settlement shows
 
-- **Proved in this module:** for every $n$, the simple map of a permutation
-  without fixed points solves the $n$-simplex equation on every set iff $n$
-  is even; for $n>2$ this answers Question 2.
+- **Proved in this module:** for every $n>2$, there is a permutation without
+  fixed points whose simple map solves the $n$-simplex equation on every set
+  iff $n$ is even; this answers Question 2.
+- **Implied by published work, not new here:** the existence for even $n$,
+  as the specialization of Theorem 6.7 of arXiv:2510.12905v4 to identity
+  polygon solutions (see Gap).
 - **Follows from the private `chain_values` and the edge-map facts inside
   `result`, not stated as a declaration:** for every map $s$ of
   $\{0,\dots,n-1\}$, the simple map of $s$ solves the equation on every set
@@ -134,7 +156,9 @@ Tier 1 published question; resolution `Proved` by
 
 The bounded literature check does not establish worldwide priority or
 absence of an independent solution; in particular the full text of the
-English journal version was not read. The Lean kernel verifies the encoded
+English journal version was not read, and the Dimakis–Korepanov paper was
+not read: its role for the odd-gon case is as stated by Mihalache and Mochida.
+The Lean kernel verifies the encoded
 statement and its axiom closure; correspondence to the external paper,
 including the identification of the coordinates with edges through the rows
 of $MI_n$, is checked by reading the source, the definitions and the mirror,

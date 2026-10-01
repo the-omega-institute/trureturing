@@ -24,10 +24,10 @@ internal sealed class SimplexFixedPointFreePermutationsDocument : IScribeDocumen
                 "For a map T from X^n to itself, R_v(T) applies T to the n coordinates on the edges at v, taken in slot order, and leaves the other coordinates unchanged. An edge (a, b) at v is in slot b - 1 when a = v and in slot a when b = v.",
                 "opR"),
             Node("lhs", "The left side", LhsFormula(),
-                "lhs(T, k) is the composition R_0(T) R_1(T) ... R_(k-1)(T) of the first k vertex operators, so that R_(k-1)(T) acts first; operators of vertices k > n are omitted.",
+                "lhs(T, k) is defined for every natural number k. The step from k to k + 1 composes with R_k(T) on the right when k < n + 1, so that R_k(T) acts first, and leaves the value unchanged when k >= n + 1. Hence lhs(T, k) is the composition R_0(T) R_1(T) ... R_(k-1)(T) for k <= n + 1.",
                 "lhs"),
             Node("rhs", "The right side", RhsFormula(),
-                "rhs(T, k) is the composition R_(k-1)(T) ... R_1(T) R_0(T) of the same operators in the reverse order.",
+                "rhs(T, k) is defined in the same way with the operators in the reverse order: the step from k to k + 1 composes with R_k(T) on the left when k < n + 1 and leaves the value unchanged when k >= n + 1. Hence rhs(T, k) is the composition R_(k-1)(T) ... R_1(T) R_0(T) for k <= n + 1.",
                 "rhs"),
             Node("solution", "The n-simplex equation", SolutionFormula(),
                 "T is a solution of the n-simplex equation when R_0 R_1 ... R_n = R_n ... R_1 R_0 as maps of X^N, as in the paper. The two sides are mutually reverse words, so the equation does not depend on the convention for applying a written product of operators.",
@@ -117,18 +117,22 @@ internal sealed class SimplexFixedPointFreePermutationsDocument : IScribeDocumen
 
     private static Formula LhsFormula()
     {
-        Formula t = F.Id("T"), k = F.Id("k");
+        Formula t = F.Id("T"), k = F.Id("k"), n = F.Id("n");
         return Disp(Seq(Equal(Call(F.Id("lhs"), t, D(0)), Named(F.Id("id"))), Comma, Qquad,
             Equal(Call(F.Id("lhs"), t, Plus(k, D(1))),
-                Seq(Call(F.Id("lhs"), t, k), Sp, Circ, Sp, Call(F.Id("opR"), t, k)))));
+                Ite(Lt(k, Plus(n, D(1))),
+                    Seq(Call(F.Id("lhs"), t, k), Sp, Circ, Sp, Call(F.Id("opR"), t, k)),
+                    Call(F.Id("lhs"), t, k)))));
     }
 
     private static Formula RhsFormula()
     {
-        Formula t = F.Id("T"), k = F.Id("k");
+        Formula t = F.Id("T"), k = F.Id("k"), n = F.Id("n");
         return Disp(Seq(Equal(Call(F.Id("rhs"), t, D(0)), Named(F.Id("id"))), Comma, Qquad,
             Equal(Call(F.Id("rhs"), t, Plus(k, D(1))),
-                Seq(Call(F.Id("opR"), t, k), Sp, Circ, Sp, Call(F.Id("rhs"), t, k)))));
+                Ite(Lt(k, Plus(n, D(1))),
+                    Seq(Call(F.Id("opR"), t, k), Sp, Circ, Sp, Call(F.Id("rhs"), t, k)),
+                    Call(F.Id("rhs"), t, k)))));
     }
 
     private static Formula SolutionFormula()
