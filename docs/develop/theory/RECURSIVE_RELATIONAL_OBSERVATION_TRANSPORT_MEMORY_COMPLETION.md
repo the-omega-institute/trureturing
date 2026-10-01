@@ -5808,3 +5808,279 @@ $\langle\alpha,\beta\rangle$ 与 $\langle\beta,\alpha\rangle$ 有相同模组成
 四份名称只指同一任务商的条件表示。
 
 ## 追加锚（本行以下为增补区）
+
+## 15. FIB 生成层的同余商与内部观察闭合
+
+上一节把实际共同来源上的联合核下降条件写成了边界判据。本节补上 FIB 源层与
+该判据之间的一个接口：只有当观察任务对允许的组合上下文闭合时，FIB 的行为商
+才自身继承组合与后继；否则它只是一次读数的压缩，不能作为内部观察者继续运行的
+状态。
+
+### 15.1 组合上下文决定何时行为商继承源运算
+
+令
+
+$$
+\mathcal T=\mu X.\bigl(\{\alpha,\beta\}+X\times X\bigr)
+$$
+
+为 FIB 的自由有序二叉项。固定一个带类型的部分组合合同，其合法域记为
+$D_\mu\subseteq\mathcal T\times\mathcal T$；$\rho$ 若不是全定义的，记其合法域为
+$D_\rho\subseteq\mathcal T$。一个带一个孔的上下文由
+
+$$
+[-],\qquad \langle C[-],t\rangle,qquad
+\langle t,C[-]\rangle,qquad \rho\circ C[-]
+$$
+
+反复生成；实际任务只取其中声明为合法的上下文族 $\mathcal C$。要求恒等上下文
+$[-]$ 在 $\mathcal C$ 中；对每个 $(s,u)\in D_\mu$，外层上下文
+$\langle[-],u\rangle$ 在相应位置合法，对每个 $(u,s)\in D_\mu$，
+$\langle u,[-]\rangle$ 在相应位置合法；当 $s\in D_\rho$ 时 $\rho[-]$ 也合法。
+此外，$D_\mu,D_\rho$ 对下面的等价关系饱和，并要求 $\mathcal C$ 对把一个合法
+上下文代入另一个合法上下文封闭。设
+$\operatorname{Obs}(C[t])$ 包含该上下文的合法性、事件、记录、时钟和指定后继读数，
+并定义
+
+$$
+s\equiv_{\mathcal C}t
+\iff
+\forall C\in\mathcal C,\quad
+\operatorname{Obs}(C[s])=\operatorname{Obs}(C[t]).
+\tag{RA.1501}
+$$
+
+若 $s\equiv_{\mathcal C}t$，则对每个使相应组合合法的 $u$ 有
+
+$$
+\langle s,u\rangle\equiv_{\mathcal C}\langle t,u\rangle,
+\qquad
+\langle u,s\rangle\equiv_{\mathcal C}\langle u,t\rangle,
+\qquad
+\rho(s)\equiv_{\mathcal C}\rho(t).
+\tag{RA.1502}
+$$
+
+证明只需把外层上下文分别取为 $\langle[-],u\rangle$、$\langle u,[-]\rangle$
+和 $\rho[-]$；这些上下文只在相应合法域内使用，闭合条件保证它们仍属于测试族。
+于是 $\equiv_{\mathcal C}$ 是允许操作意义下的部分同余。令
+
+$$
+\bar D_\mu=\{([s],[t]):(s,t)\in D_\mu\}.
+$$
+
+饱和条件使它与代表元无关；商上的组合与后继应写成
+
+$$
+\bar\mu:\bar D_\mu\to\mathcal T/{\equiv_{\mathcal C}},
+\qquad
+\bar\mu([s],[t])=[\langle s,t\rangle],
+\qquad
+\bar\rho([s])=[\rho(s)]\quad([s]\in D_\rho/{\equiv_{\mathcal C}}).
+\tag{RA.1503}
+$$
+
+非法组合或非法后继若属于任务读数，则由 $\operatorname{Obs}$ 中的失败标签保留；
+否则它们不在（RA.1503）的定义域内。若上下文族不封闭，则（RA.1502）不能从一次
+读数相同推出，商最多是当前任务的摘要，不自动是一个能继续拼接的源过程。
+
+### 15.2 组成商是 FIB 源的一个同态边界
+
+在只观察组成及其 $\rho$ 后继的任务中，令
+
+$$
+c(\alpha)=(1,0),\qquad c(\beta)=(0,1),\qquad
+c(\langle s,t\rangle)=c(s)+c(t),
+$$
+
+并记 $B_c=c[\mathcal T]\subseteq\mathbb N^2$。则 $B_c$ 对加法和
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}
+$$
+
+作用封闭，并满足
+
+$$
+c(\langle s,t\rangle)=c(s)+c(t),
+\qquad
+c(\rho s)=Mc(s).
+\tag{RA.1504}
+$$
+
+因此 $c$ 在该任务下诱导
+
+$$
+\bar\mu_c(x,y)=x+y,
+\qquad
+\bar\rho_c(x)=Mx.
+\tag{RA.1505}
+$$
+
+FIB 卷的两层数量读数定理给出：对只读取组成和全部 $\rho$ 后继的观察族，
+$c(s)=c(t)$ 当且仅当两项具有相同的任务行为。因此 $B_c$ 是该任务行为商的
+一个实际同构编码；它忘记次序和括号，但不忘记该任务要求的组合与后继。
+
+相反，单个数量读数通常不是动态边界。取
+
+$$
+t=\langle\alpha,\langle\alpha,\alpha\rangle\rangle,
+\qquad
+u=\langle\beta,\beta\rangle,
+$$
+
+则 $c(t)=(3,0)$、$c(u)=(0,2)$。对 $\ell(a,b)=2a+3b$ 有
+
+$$
+\ell(c(t))=\ell(c(u))=6,
+$$
+但
+
+$$
+\ell(c(\rho t))=9,
+\qquad
+\ell(c(\rho u))=10.
+\tag{RA.1506}
+$$
+
+所以不存在 $\bar\rho:\ell[B_c]\to\ell[B_c]$ 使
+$\ell c\rho=\bar\rho\ell c$。一个当前标量可以是合法读数，却不是可递归运输的
+边界；两层读数或等价的联合关系才闭合。
+
+### 15.3 内部观察者何时只需访问边界
+
+本小节限于确定性操作和一个固定的共同初始记忆；随机或分支过程应改用第 14 节的
+联合事件—记录—后继核。令 $q:\mathcal T\to B$ 是一个候选边界，$M_O$ 是观察者的
+工作记忆。对任务中允许的每个操作 $a$，令 $L_a$ 为完整状态上的合法性指标，
+并假设存在边界合法性 $\bar L_a$、边界更新 $\bar T_a$、记录函数
+$\overline{\operatorname{Rec}}_a$ 和记忆更新 $\bar U_a$，满足
+
+$$
+\begin{aligned}
+L_a(s)&=\bar L_a(q(s)),\\
+q(T_a(s))&=\bar T_a(q(s))\qquad(L_a(s)=1),\\
+\operatorname{Rec}_a(s,m)&=\overline{\operatorname{Rec}}_a(q(s),m),\\
+U_a(s,m)&=\bar U_a(q(s),m)\qquad(L_a(s)=1).
+\end{aligned}
+\tag{RA.1507}
+$$
+
+当 $L_a(s)=0$ 时，记录函数取已声明的失败事件和失败记录；后继更新不被调用，
+或等价地把它扩展到一个失败吸收态。这样合法性和失败也都从边界恢复。
+
+并且选择器满足
+
+$$
+\pi(s,m)=\bar\pi(q(s),m).
+\tag{RA.1508}
+$$
+
+则对相同的初始记忆 $m$，任意有限内部转录只由 $(q(s),m)$ 决定。证明按转录长度归纳：零步时由
+（RA.1508）决定动作；执行后由（RA.1507）决定边界、记录与记忆的下一值；归纳
+假设再应用于下一步。因而观察者不需要访问完整树，只需访问动态充分边界及其实际
+保留的记忆。
+
+反向地，若一个表示对所有声明的组合、$\rho$ 接续及内部选择都能生成相同的
+有限转录，则它的核必须包含在相应行为等价关系中；若还要求该表示支持源层的
+组合更新，则其核必须对这些操作成同余。于是“FIB 只有两个不可约关系”不能直接
+成为观察者状态的结论；真正可执行的状态是
+
+$$
+\boxed{
+\text{两叶生成元的源签名}
+\;+
+\text{任务闭合的行为商}
+\;+
+\text{选择器实际保留的记忆}.
+}
+\tag{RA.1509}
+$$
+
+这把 FIB 的基础性限定在生成层，同时说明它怎样进入局部过程—观察者—边界—拼接
+模型：叶标签给出源，二元构造给出拼接，$\rho$ 给出后继，行为同余给出边界，
+而观察者记忆保存尚未被当前商吸收但仍影响后续选择的关系。所有结论仍限定在声明的
+有限或可定义任务族；它们不把组成商升级为完整树、物理时空或任意未声明实验的全知状态。
+
+### 15.4 数量矩阵相容不等于语法替换相容
+
+还需区分边界层的矩阵运输与源语法上的实际替换。对任意有限项
+$u,v\in\mathcal T$，定义叶替换同态
+
+$$
+\widehat A_{u,v}(\alpha)=u,\qquad
+\widehat A_{u,v}(\beta)=v,\qquad
+\widehat A_{u,v}(\langle s,t\rangle)
+ =\langle\widehat A_{u,v}(s),\widehat A_{u,v}(t)\rangle,
+$$
+
+并令
+
+$$
+A_{u,v}=\begin{bmatrix}c(u)&c(v)\end{bmatrix}\in M_2(\mathbb N).
+$$
+
+结构归纳给出
+
+$$
+c\bigl(\widehat A_{u,v}(t)\bigr)=A_{u,v}c(t)
+\qquad(t\in\mathcal T).
+\tag{RA.1510}
+$$
+
+若 $A_{u,v}M=MA_{u,v}$，则只有组成商上的交换式成立：
+
+$$
+c\bigl(\widehat A_{u,v}(\rho t)\bigr)
+=A_{u,v}Mc(t)
+=MA_{u,v}c(t)
+=c\bigl(\rho\widehat A_{u,v}(t)\bigr).
+\tag{RA.1511}
+$$
+
+但自由树上的交换有更强的充要条件：
+
+$$
+\boxed{
+\widehat A_{u,v}\circ\rho=\rho\circ\widehat A_{u,v}
+\iff
+v=\rho(u)\ \text{且}\ \rho(v)=\langle v,u\rangle .
+}
+\tag{RA.1512}
+$$
+
+证明。若两侧相等，在 $\alpha$ 上得到 $v=\rho(u)$，在 $\beta$ 上得到
+$\rho(v)=\langle v,u\rangle$。反向地，这两个等式使两侧在两个叶生成元上相同；
+两者又都是保持有序二元构造的同态，故对全部有限树作结构归纳即相同。证毕。
+
+矩阵中心化器条件不能替代（RA.1512）。取
+
+$$
+u=\langle\alpha,\alpha\rangle,
+\qquad
+v=\langle\beta,\beta\rangle.
+$$
+
+此时 $A_{u,v}=2I$，所以 $A_{u,v}M=MA_{u,v}$；然而
+
+$$
+\widehat A_{u,v}\rho(\beta)
+=\langle\langle\beta,\beta\rangle,\langle\alpha,\alpha\rangle\rangle,
+$$
+
+而
+
+$$
+\rho\widehat A_{u,v}(\beta)
+=\langle\langle\beta,\alpha\rangle,\langle\beta,\alpha\rangle\rangle.
+\tag{RA.1513}
+$$
+
+两棵有序树不同，但它们的组成均为 $(2,2)$，因而全部组成—$\rho$ 未来读数相同。
+这给出一个严格的层级分界：黄金整数或矩阵动力学的相容性是行为商上的运输条件，
+不是原子关系生成语法上的相容性。若观察者只访问组成边界，（RA.1511）已经足够；
+若它需要执行叶替换并保留完整树语法，则必须额外验证（RA.1512）或保存能区分
+（RA.1513）两棵树的结构记忆。
+
+因此，FIB 的“两个不可约关系”最稳妥的含义是两个叶生成元；其后的矩阵、黄金整数
+和边界运输都属于不同层。只有把相应的同态、行为商和观察任务逐层对齐，才能把
+生成层接到内部观察者的可执行拼接上。
