@@ -8,7 +8,7 @@ internal sealed class OeisA400168PrimorialGapDocument : IScribeDocumentDefinitio
 {
     private const string Prefix = "D5/S3/Arith/OeisA400168PrimorialGap.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/karttunen2026a400168");
+        LibraryNoteRef.Create("D5/L/Factorization/karttunen2026a400168");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A400168 has a term above one: at n = 2^49 the term is two.",

@@ -105,7 +105,7 @@ original existence question is answered yes.
 The Reg mirror reconstructs the complete
 negated universal claim and audits its derivative-length readout over
 all natural inputs. Source locators and complete equivalence are in
-`Library/Arith/karttunen2026a400168.md` and the six Describe nodes.
+`Library/Factorization/karttunen2026a400168.md` and the six Describe nodes.
 
 ## Triage
 
