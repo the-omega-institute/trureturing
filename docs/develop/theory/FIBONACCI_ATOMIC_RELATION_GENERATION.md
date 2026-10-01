@@ -34976,3 +34976,155 @@ $$
 $t=\log x$ 是价格尺度；式（254.7）未验证任何新的整数 Robin 区间。
 实际源误差 $B$ 及有符号 $\Phi$ 的条件仍保留，
 没有离散储备的全阶展开、实际无限尾项符号界或 RH 结论。
+
+## 追加锚（本行以下为增补区）
+
+## 255. 全阶截断证书的共同障碍与任意选阶
+
+本节沿用 §§253–254 的同一连续模型、系数与显式修正预算。
+与 RH 的连接只使用定理 92.3 所列经典有效素数定理、积分显式公式、
+零点计数与对称性、Landau 非负 Laplace 变换输入；
+定理 94.5 已给完整价格裕度的最终 RH 强度。
+这里比较的是同一个实际 $\Phi$ 上的全部修正截断阶数及其共同失败点。
+
+### definition 255.1 同一价格点的归一化证书族
+
+令 $t\ge100$、$K=2461/1000$、$c_R=2(\sqrt2-1)$，对整数 $N\ge0$ 定义
+
+$$
+\mathcal Z_t=t e^{t/2}\Phi(e^t),\qquad
+\Theta(t)=t e^{t/2}\mathcal M(t),\qquad
+e_N(t)=4\frac{(10/t)^{N+1}}{1-10/t},
+$$
+
+$$
+\begin{aligned}
+\mathscr C(t)&=\mathcal Z_t+\Theta(t)-\frac{2K}{t^2},\\
+\mathscr C_N(t)&=\mathcal Z_t+\mathcal J(1/t)
++\sum_{n=0}^N\frac{h_n}{t^n}-\frac{2K}{t^2}-e_N(t).
+\end{aligned}
+\tag{255.1}
+$$
+
+于是 $\mathscr C_N=t e^{t/2}(\Phi+\mathcal M_N-B-E_N^*)$，
+$\mathscr C=t e^{t/2}(\Phi+\mathcal M-B)$，函数 $\Phi$ 的输入均为 $e^t$。
+因此 $\mathscr C_N\ge0$ 恰是式（254.7）的正性充分条件。
+在相同实际价格源与其 Dusart 输入下，还有
+$t e^{t/2}\mathfrak D(e^t)>\mathscr C_N(t)$。
+
+### theorem 255.2 全部阶数的统一比较与共同辅助阈值
+
+对全部 $t\ge100$、全部 $N\ge0$，有
+
+$$
+\boxed{0\le\mathscr C(t)-\mathscr C_N(t)
+\le8\frac{(10/t)^{N+1}}{1-10/t}
+\le\frac{80}{t-10},}
+\tag{255.2}
+$$
+
+以及共同下界
+
+$$
+\boxed{\mathscr C_N(t)\ge\mathcal Z_t+c_R
+-\frac2t-\frac{40}{t-10}-\frac{2K}{t^2}.}
+\tag{255.3}
+$$
+
+特别地，在任何满足 $t\ge1000$ 与 $\mathcal Z_t\ge-1/2$ 的同一价格点，
+全部阶数同时满足
+
+$$
+\mathscr C_N(t)>\frac14.
+\tag{255.4}
+$$
+
+**证明。** 式（254.7）的模型误差乘以 $t e^{t/2}>0$ 后至多为 $e_N$。
+定义中另减去 $e_N$，故完整模型与证书之差位于 $[0,2e_N]$。
+由于 $0<10/t<1$，$(10/t)^{N+1}\le10/t$，得到式（255.2）。
+
+式（252.1）在零点的截止 $U(0)=\sqrt2$ 给出
+
+$$
+h_0=\sqrt2-1-2\int_0^{\log\sqrt2}e^{-z}\,dz
+=2\sqrt2-3=c_R-1.
+$$
+
+对 $s\ge0$，不等式 $1/(1+2sz)\ge1-2sz$ 及指数积分矩给
+$\mathcal J(s)\ge1-2s$。
+式（254.1）又给每个 $n\ge1$ 的 $h_nt^{-n}\ge-4(10/t)^n$。
+保留项与尾预算组合成同一个几何和：
+
+$$
+4\sum_{n=1}^N(10/t)^n+e_N(t)
+=4\frac{10/t}{1-10/t}=\frac{40}{t-10}.
+\tag{255.5}
+$$
+
+这包括 $N=0$ 的空和，代入式（255.1）即得式（255.3）。
+当 $t\ge1000$ 时，
+
+$$
+\frac2t+\frac{40}{t-10}+\frac{2K}{t^2}
+\le\frac2{1000}+\frac{40}{990}+\frac{2461}{500\cdot1000^2}
+<\frac1{20}.
+$$
+
+而 $\sqrt2>7/5$ 给 $c_R>4/5$。
+结合 $\mathcal Z_t\ge-1/2$，得到
+$\mathscr C_N>-1/2+4/5-1/20=1/4$。$\square$
+
+### theorem 255.3 任意选阶的最终证书仍有同一 RH 强度
+
+在定理 92.3 的经典分析输入下，以下四个陈述等价：
+
+1. RH 成立。
+2. 存在 $T\ge1000$，使全部 $t\ge T$、全部 $N\ge0$ 满足 $\mathscr C_N(t)>1/4$。
+3. 存在 $T\ge100$，使全部 $t\ge T$ 满足 $\mathscr C_0(t)\ge0$。
+4. 存在函数 $\nu:[100,\infty)\to\mathbb N$ 与 $T\ge100$，
+   使全部 $t\ge T$ 满足 $\mathscr C_{\nu(t)}(t)\ge0$。
+
+**证明。** 在 RH 下，定理 92.3 给 $\mathcal Z_t\ge-1/2$ 最终处处成立。
+将该实际起点与 $1000$ 取最大值，再用式（255.4），得到第一条蕴含第二条。
+第二条蕴含第三条，第三条以 $\nu(t)=0$ 蕴含第四条。
+
+反向若第四条成立，式（255.2）给 $\mathscr C(t)\ge0$。
+式（251.3）的模型上界 $\Theta(t)<c_R$ 及 $2K/t^2>0$ 给
+
+$$
+\mathscr C_{\nu(t)}(t)\le\mathscr C(t)<\mathcal Z_t+c_R.
+$$
+
+于是 $\mathcal Z_t>-c_R$ 最终处处成立。
+这是定理 92.3 中固定有限常数 $c_R$ 的单侧界，故推出 RH。$\square$
+
+辅助阈值 $1000$ 只控制模型与截断误差。
+上述证明未指定实际 $\Phi$ 的单侧界首次成立的位置。
+函数 $\nu$ 可以随价格任意变化或趋于无穷，结论不要求有界阶数或连续选阶。
+
+### theorem 255.4 非 RH 情形的同点全阶证书失败
+
+在相同的经典分析输入下，若 RH 不成立，则
+
+$$
+\boxed{\forall L\ge0\ \forall T\ge100\ \exists t\ge T
+\quad\forall N\ge0,\quad \mathscr C_N(t)<-L.}
+\tag{255.6}
+$$
+
+**证明。** 定理 92.3 的一般单侧推论给出：若 RH 不成立，
+$\mathcal Z_t$ 不可能有任何最终固定有限下界。
+给定 $L\ge0,T\ge100$，以有限正常数 $L+c_R$ 应用其逆否命题，
+得到同一个 $t\ge T$ 满足 $\mathcal Z_t<-(L+c_R)$。
+对这个点，式（255.2）及 $\Theta(t)<c_R$ 给所有 $N$ 的
+
+$$
+\mathscr C_N(t)\le\mathscr C(t)<\mathcal Z_t+c_R<-L.
+$$
+
+故共同点不依赖阶数，式（255.6）成立。$\square$
+
+式（255.6）是以非 RH 为前提的结论，未构造实际共同失败点。
+$\mathscr C_N<0$ 表示所用下界证书失败，不能单凭它推出实际 $\mathfrak D<0$。
+改变截断阶数可以改进有限点的认证，但不削弱该证书族最终非负性所需的单侧条件。
+本节未证明 RH、非 RH、实际 $\Phi$ 的最终单侧界或新的整数 Robin 覆盖。
