@@ -102,6 +102,54 @@ before any Lean. `theorem`; resolution `refuted`. The public theorem has
 function. Its admission basis is `open-problem-resolution`. Utility
 `kind=certified-instance; basis=refutes` with typed `claim` and `result`.
 
+### What the settlement shows
+
+**Proved (Lean):** for `m = 3` some sign function gives `‖Σ(β)‖ ≥ 21`, above
+`(√3 + 1)³ − 1 = 9 + 6√3`, so the conjectured bound fails at `m = 3`.
+
+**Mechanism (argument, not formalized):** for a unit vector `u` and any signs,
+`⟨u, Σ(β) u⟩ = Σ_{P≠I} ±⟨u, P u⟩ ≤ Σ_{P≠I} |⟨u, P u⟩|
+≤ ((4^m − 1) Σ_{P≠I} ⟨u, P u⟩²)^{1/2} = ((4^m − 1)(2^m − 1))^{1/2}`, since
+`Σ_P ⟨u, P u⟩² = 2^m` for a pure state. So `‖Σ(β)‖ ≤ ((4^m − 1)(2^m − 1))^{1/2}`
+for every `m` and every `β`, with equality only for a unit vector whose
+non-identity Pauli expectations all have modulus `(2^m + 1)^{−1/2}` and signs
+matching them. The conjectured bound is the value of the all-equal signs, whose
+top eigenvector is a product vector; the witness instead aligns every sign with
+a vector whose Pauli expectations are flat.
+
+**Computed (NumPy, not formalized):** at `m = 3` the bound is `21`, and the
+vector `v/√12` of Route has all 63 non-identity expectations of modulus `1/3`,
+so the witness attains it: the maximum of `‖Σ(β)‖` over all `β` is exactly
+`21`. At `m = 1` the bound is `√3`, the paper's value. At `m = 2` the
+exhaustive maximum is `3 + 2√3 ≈ 6.464`, below the bound `√45 ≈ 6.708`, so no
+two-qubit unit vector has all fifteen expectations of modulus `1/√5`.
+
+**Argument (not formalized), checked numerically for `m = 4, 5, 6`:** the
+conjecture fails for every `m ≥ 3`. With signs that are products over blocks of
+three qubits (the witness) and single qubits (`X + Y + Z`), the signed sum over
+all words, the identity included, is the tensor product of the blocks'
+`I + Σ_b`, of norms `22` and `1 + √3`. So for `m = 3k + r` with `k ≥ 1` and
+`r ∈ {0, 1, 2}` some `β` gives `‖Σ(β)‖ ≥ 22^k (1 + √3)^r − 1`, which exceeds
+`(1 + √3)^m − 1` because `22 > (1 + √3)³`; for `m = 4, 5, 6` these values are
+`59.11`, `163.21` and `483` against `54.71`, `151.21` and `414.85`. The growth
+rate of `max_β ‖Σ(β)‖` per qubit lies between `22^{1/3} ≈ 2.802` and
+`2^{3/2} ≈ 2.828`, not at the conjectured `1 + √3 ≈ 2.732`. The paper's random
+searches (best `18.528` at `m = 3`) did not reach these sign functions.
+
+**Source consequences (argument, not formalized):** the paper's worst-case
+success probability of the maximal `(4^m − 1, m, p)` QRACs with optimally
+scaled Bloch vectors is `p = (1 + 1/λ)/2` (its Eq. `poflambda` with `d = 2`),
+where `λ = max_β ‖Σ(β)‖`. Its upper bound
+`p ≤ (1 + 1/((1 + √3)^m − 1))/2` (Eq. `maximalnbound`) remains valid, but the
+claimed equality fails for every `m ≥ 3`. For `m = 3` the value is
+`p = (1 + 1/21)/2 = 11/21 ≈ 0.5238`, not `≈ 0.5258`; for `m ≥ 4` it lies
+between `(1 + 1/((4^m − 1)(2^m − 1))^{1/2})/2` and the value given by the block
+construction above. The paper's constructions and its results for `m = 1, 2`
+do not depend on the conjecture and stand.
+
+**Open:** the exact value of `max_β ‖Σ(β)‖` for `m ≥ 4`, and whether the
+per-qubit growth rate tends to `2^{3/2}`.
+
 ## ASSUMED-UNVERIFIED
 
 The published Phys. Rev. A text was not read, so it is unverified whether the
