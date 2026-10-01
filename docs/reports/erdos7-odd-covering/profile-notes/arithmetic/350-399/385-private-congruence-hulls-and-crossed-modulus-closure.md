@@ -3746,3 +3746,276 @@ the root-set condition directly, but no such condition is forced
 for arbitrary E. Nor is every q-bearing residual label forced to
 share a prime with E. The remaining mixed repairs and unrestricted
 noncoverage are not settled by BC4.
+
+## 27. Keeping the old q coordinate forces a joint repair cost
+
+The full-height transport in section26 shifts the old q digits.
+A different common-source map keeps them unchanged. It permits
+p-free q-bearing classes, and gives a joint cost for the classes
+which obstruct the transport. The finite matching step uses Hall's
+theorem; the new interface to check is the unchanged q coordinate
+and its actual numerical collisions, not another proof of Hall.
+
+Use precisely BC2's residual whole cover C, with L<n classes,
+after the repair B of the complete P_q has been made irredundant.
+Let E be the nonempty set of repeated residual moduli and r=|E|.
+Each is a q-free pair. Let p>q divide every m in E. Define
+
+    h0 = #{d in C: p does not divide d, v_q(d)=1},
+    h1 = #{d in C: p*q divides d}.
+
+These count actual classes. Moduli divisible by q occur at most
+once in C. In particular p-free classes of q-height at least two
+are in neither count; they will be kept without changing their
+digits or splitting their numerical labels.
+
+### Exclude duplicate endpoints and reserve potential output labels
+
+Choose a set S of at most r first-p roots hitting at least one
+endpoint of every pair in E. Such a set exists by taking one
+endpoint per pair.
+Discard p-bearing classes whose first-p root lies in S for the
+purpose of the proposed transport. Remaining p-bearing numerical
+labels are distinct, since every repeated modulus is divisible by p.
+
+For each p-free class of modulus q*u with q not dividing u,
+check whether a q-free class of modulus p*u remains. If so, put
+that class's first-p root in T. There is at most one such class
+after the S deletion. Thus |T|<=h0. Let
+
+    D=(Z/pZ) minus (S union T).
+
+For every first-q root b, let F_b contain the first-p roots of
+all actual classes in C divisible by p*q whose first-q root is b.
+Consider the bipartite graph with left vertices b in Z/qZ,
+right vertices a in D, and edge b--a exactly when a is not in F_b.
+All these roots belong to the same residual cover, not to separate
+choices of its phases.
+
+### A full matching gives a smaller distinct odd whole cover
+
+Suppose that graph has a matching covering every left vertex,
+written as an injection sigma: Z/qZ -> D with sigma(b) notin F_b.
+Write the complete period of C as p^A*q^B0*M, with A>=1,
+B0>=0 and gcd(M,p*q)=1. On the output carrier
+
+    p^(A-1)*q^max(1,B0)*M,
+
+assign one old witness y to each new point z by
+
+    y mod p^A = sigma(z mod q)+p*(z mod p^(A-1)),
+    y mod q^B0 = z mod q^B0,
+    y mod M = z mod M.                            (IC1)
+
+At B0=0 the second condition is vacuous and the output still
+has one q digit for branch selection. At every positive B0,
+the entire old q coordinate is unchanged, including all high digits.
+
+Every p-free class pulls back to the same class. Every p*q-bearing
+class has empty pullback: its first-q root b would require an old
+first-p root in F_b, whereas IC1 selects sigma(b) outside F_b.
+A q-free p-bearing class with modulus p^alpha*u, gcd(u,p*q)=1,
+has empty pullback if its first-p root xi is outside sigma's image.
+Otherwise, for the unique b with sigma(b)=xi, its pullback is
+one CRT class of modulus q*p^(alpha-1)*u, specified by
+
+    z=b mod q,
+    z=(a-xi)/p mod p^(alpha-1),
+    z=a mod u,
+
+where a is its old residue. The high-p residue is the divided
+tail, not the original residue. Every z is covered by the pullback
+of a class covering its SAME witness y, so these classes cover all
+integers. No closing class is added.
+
+The q-free p-bearing modulus map d -> q*d/p is injective.
+Its images have q-height exactly one; the unchanged p-free
+q-height at least two labels cannot collide with them. A possible
+collision with an unchanged q*u requires alpha=1 and old modulus
+p*u, and T has already excluded that class's root. Unchanged
+q-free labels contain no q and also cannot collide. S deletes at
+least one endpoint of every original duplicate pair. All output
+moduli are consequently distinct odd nonunits, with at most
+L-r<n classes. This contradicts global minimum cardinality.
+
+### Hall failure forces an actual complete root rectangle
+
+For EVERY admissible choice of S and the resulting T, the graph
+above has no full matching. When d0=|D|>=q, Hall's theorem gives
+a nonempty I subset Z/qZ, with t=|I|, such that
+
+    W = D intersect intersection_(b in I) F_b,
+    |W|>=d0-t+1.                                  (IC2)
+
+Indeed the union of the allowed neighbours of I is
+D minus W and has size less than t. Thus the actual first-root
+incidence of the p*q-bearing classes contains the whole rectangle
+I times W. Each such class supplies only ONE root pair, regardless
+of its higher exponents. Therefore the same original residual
+inventory satisfies
+
+    h1>=t*|W|>=t*(d0-t+1)>=d0,                    (IC3)
+
+where the last inequality follows from
+t*(d0-t+1)-d0=(t-1)*(d0-t)>=0. This counts distinct classes inside
+one actual rectangle, not separate witnesses that might be the
+same class. The rectangles for different primes or choices of S
+must not be added without a further disjointness argument.
+
+Since d0>=p-r-h0, either r+h0>=p-q+1, or d0>=q and IC3 applies.
+The resulting two alternatives are
+
+    r+h0>=p-q+1  OR  r+h0+h1>=p.                 (IC4)
+
+In particular r+h0+h1>=p-q+1. The larger lower bound p applies
+only in the second branch, not unconditionally.
+
+### The cost is paid by different original repair labels
+
+In BC2, C0 contributes no q-bearing residual label. Thus h0+h1
+counts exactly the effective repairs in the set
+
+    B_eff(p)={d in B: q^2|d and
+                         (p|d or v_q(d)=2)}.       (IC5)
+
+An effective repair with q-height at least three and no p factor
+is not in this set: its residual q-height is at least two and
+it cannot block IC1 through the numerical collision tested by T.
+This does not say such a repair has no covering effect.
+
+Every m in E also requires its own effective first-level repair
+q*m. These r labels are distinct and disjoint from B_eff(p).
+For k=|B| this gives the actual repair-cost bound
+
+    k>=r+|B_eff(p)|>=p-q+1,
+    p<=k+q-1.                                     (IC6)
+
+For example, a q=3 repair whose residual repeated moduli all
+share7 needs at least five classes; if they all share11 it needs
+at least nine. A single repeated modulus m obeys IC6 for EACH
+prime factor p>q, since each is a possible common divisor of E.
+At q=3 this covers every prime factor of m. The different-prime
+inequalities are simultaneous constraints on the same inventory,
+not additive budgets. In DR1 one may directly substitute the
+actual descendant deletion count for the upper bound on k.
+
+The baseline count of q-bearing residual classes already follows
+from the full-fibre counting argument in Jenkin--Simpson Lemma7:
+if one of those classes is essential, their reciprocal q-height
+sum is at least one, so there are at least q of them. The repair's
+private point in P_q remains private after BC2's restriction, so
+that existing bound applies. IC2--IC6 add the common prime p,
+the actual joint phases and the specific cost of preventing new
+numerical collisions; the baseline is not counted as new content.
+
+Neither a common divisor of all E nor a cheap root matching is
+guaranteed in every repair. The argument preserves arbitrary old
+and new prime heights, but it does not rule out general mixed
+repairs or settle unrestricted Erdős #7.
+
+## 28. Rebuild a common law after declared inside cofactor deletions
+
+An outside repair must cover the complete remainder left by the
+inside classes. Nonemptiness alone supplies no positive mass
+bound under the particular law used in NF10. The existing tree
+obstruction constructs another
+common law under the following explicit root-capacity condition.
+
+Keep the actual R_3 in B=Q/3^H and choose a support-prime chain
+
+    3<p_1<...<p_t,
+    lambda_1=3, lambda_i=p_(i-1) for i>1.
+
+Let C_j be a finite collection of cofactor classes modulo
+e_j>1 dividing B. For each j choose ONE chain prime dividing e_j.
+In coordinate i let S_i be the set of actual first-p_i residues
+of the classes assigned there, and put t_i=|S_i|. Shared roots
+are counted only once. Assume
+
+    lambda_i+t_i<=p_i for every i.                 (RC1)
+
+These choices refer to the entire collection, not to a separately
+optimized assignment for each future query. Define the actual set
+
+    R*={x in R_3: x mod p_i notin S_i for every i}.
+
+It is contained in R_3 minus union_j C_j, because avoiding a
+class's assigned prime root suffices to avoid that class. It need
+not equal the whole remaining region.
+
+### Existing product-tree blocking survives with changed arities
+
+Choose arbitrary complete (lambda_i+t_i)-ary trees through every
+original p_i height. At the first level delete branches in S_i.
+At least lambda_i branches remain; at every later node trim to
+lambda_i branches as well. The resulting product consists of
+legal lambda_i-ary trees for
+[Report376, section1](376-complete-prime-chain-transport-and-joint-prefix-laws.md#1-a-full-height-chain-has-injective-numerical-labels).
+That result supplies ONE actual point of R_3 in their product.
+Its selected roots avoid every S_i, so it belongs to R*.
+
+Consequently R* meets every stated product of wider trees and is
+nonempty. Apply Report376's weighted-tree and finite LP argument
+to this obstruction with the integer branching parameters
+lambda_i+t_i. It yields one probability nu* supported on R*,
+with simultaneous capacities
+
+    b_i=p_i-lambda_i-t_i+1,
+    nu*(x=a mod p_i^j)<=b_i^(-j)
+      for 0<=j<=v_(p_i)(B), every a.              (RC2)
+
+The weighted-tree argument requires integer branching, not that
+the branching parameter be prime. At b_i=1 its capacity is the
+trivial bound one; the corresponding full p_i tree is unique,
+and the same weighted estimate is just the sum of all prefix
+prices. No marginal independence is asserted or used.
+
+For a cofactor query a mod e, e|B, the one law therefore gives
+
+    nu*(a mod e)<=
+      min({b_i^(-v_(p_i)(e)):p_i|e} union {1}).    (RC3)
+
+If the query fixes a selected forbidden root in some S_i its
+mass is zero. Several query factors yield the minimum of their
+caps, not their product. For example, along3<5<7, deleting one
+specified5-root gives bases2 and3: a5-root costs at most1/2
+and a7-root at most1/3 under this SAME residual law. This does
+not retain the old5 price1/3 or assert that the old law gave
+the remainder positive mass.
+
+### Test the whole outside repair on a declared surviving tail
+
+Fix an actual old higher3-tail t which avoids all pure3-power
+inside classes. Among the remaining inside classes, take exactly
+those compatible with a_3 and this tail. Their cofactors are
+nonunit classes C_j as above. If RC1 can be met for this whole
+active collection, put the law nu* on R*, fix that old3-prefix,
+and lift uniformly to the LCM of Q and EVERY repair modulus.
+This single law is supported on actual P_3 points missed by all
+inside classes. The outside repair alone must cover it.
+
+For each outside class a_l mod m_l, let
+
+    g_l=gcd(m_l,Q), delta_l=m_l/g_l,
+    e_l=g_l/3^v_3(g_l),
+    epsilon_l(t)=1 if its old3-prefix agrees with (a_3,t),
+                 0 otherwise.
+
+The exact same-law necessary condition is
+
+    1<=sum_(outside l)
+          epsilon_l(t)*nu*(a_l mod e_l)/delta_l.   (RC4)
+
+Using RC3 gives a numerical upper bound on the RIGHT side;
+if that bound is below one, this proposed repair is impossible.
+All old cofactor coordinates remain on the same actual R*.
+Only new digits are uniformly summed out. Different complete
+assignments can give different laws and separate valid tests,
+but their best per-class prices cannot be pooled into RC4.
+
+Pure3-power inside classes are not removed by assigning a
+cofactor prime; their actual tail exclusion is required above.
+Nor does an arbitrary active inside collection have to satisfy
+RC1. The construction supplies a certified residual source when
+that condition holds, without giving a uniform payment bound for
+every mixed repair or resolving the unrestricted problem.

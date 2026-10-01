@@ -30914,6 +30914,42 @@ at m, every prime factor p of m requires at least one9-divisible
 repair not divisible by p. Arbitrary collision families and larger mixed
 repairs remain unresolved.
 
+[Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
+keeps the residual cover's entire old q coordinate unchanged.
+It excludes one endpoint per repeated pair and reserves the
+numerical labels which could collide after transport. A full
+matching between q roots and the remaining admissible p roots
+would give a smaller distinct odd whole cover. When at least q
+admissible p roots remain, matching failure forces an actual
+complete root rectangle occupied by different effective high-q
+repairs; fewer remaining roots give the first branch of IC4.
+In particular, for every p>q dividing ALL residual
+repeated moduli, the effective repair budget satisfies
+
+    k>=p-q+1.
+
+The refined two-case bound counts separately p-free residual
+q-height-one labels and p*q-bearing labels. Original repairs of
+q-height at least three without p do not pay either charge.
+No original height bound or new-prime assumption is used. The
+condition that p divides every repeated modulus remains necessary
+for this consumer, and inequalities for different p cannot be added
+as though their repair suppliers were disjoint.
+
+[Report385, section28](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#28-rebuild-a-common-law-after-declared-inside-cofactor-deletions)
+constructs a common probability inside the actual residual left
+by declared inside cofactor classes. Assigning each class to one
+of its prime roots uses t_i distinct roots in coordinate p_i.
+When lambda_i+t_i<=p_i along the selected chain, the existing
+product-tree obstruction and weighted-tree argument give a law
+with prefix bases p_i-lambda_i-t_i+1, avoiding every assigned
+root. Its uniformly lifted outside-class prices must sum to at
+least one on any declared surviving old3-tail. This provides a
+residual source without assuming the old law gave that remainder
+positive mass. Pure3-power inside classes require the separate
+tail exclusion, and the root-capacity premise is not automatic
+for an arbitrary repair.
+
 The new restrictions remove actual possible activations and height
 profiles which the specified earlier tests miss. They do not force
 useful vacancies in every hypothetical cover: densely occupied
