@@ -11377,3 +11377,72 @@ Larger column inventories and higher p or ternary heights remain
 outside these minimum-column descents. These constructions use the
 existing PH/RS interfaces and FC5; no new enumeration, generic
 covering theorem or Lean verification is asserted.
+
+## 82. Actual phase intersections exclude distinct-prime guarded columns
+
+Keep section81's final p=5,u=4 layout, including its actual nonempty
+residuals E_j,E_k. Let A_u be the common cofactor phase of guarded
+color j's singleton pair, and B_v,C_v the two different phases of
+its doubled cell. Write A_a,A_b for the two cofactor phases in
+color k. FL4 and section80's equality phases give
+
+    E_j subset A_u intersect (B_v union C_v),
+    E_k subset A_a intersect A_b.
+
+Suppose u and v are distinct primes. The opposite-color cofactors
+a,b are distinct but need not be coprime; their nonempty prime
+supports lie in S_k, disjoint from S_j. Every cofactor is coprime
+to15. Retain every original5-free AP unchanged, delete the ten
+original5-bearing classes, and insert these NINE complete APs:
+
+| Receiving ternary residue | Cofactor condition | Modulus |
+| --- | --- | --- |
+| j mod9 | none | 9 |
+| j+3 mod9 | A_u | 9u |
+| j+6 mod9 | B_v | 9v |
+| j+6 mod9 | A_u and C_v | 9uv |
+| k mod9 | A_a | 9a |
+| k+3 mod9 | A_b | 9b |
+| k+6 mod27 | none | 27 |
+| k+15 mod27 | A_a | 27a |
+| k+24 mod27 | A_b | 27b |
+
+The last three leaves partition k+6 mod9. Since u,v are coprime,
+A_u intersect C_v is ONE actual CRT class modulo uv. The fourth
+row uses PH1's direct joint-repair rule; it does not assert that5uv
+was original or that every output comes from an RS1 single-label
+transport. All its phase data belong to this same original source.
+
+An output point missed by retained5-free originals has nonzero
+ternary root i, since original3 is retained. Its complete X_i
+coordinate lies in E_i. In root j, pure9 covers the first leaf,
+9u covers the second, and9v or9uv covers the third according to
+which v phase occurs. The added u condition on9uv holds throughout
+E_j. In root k each of the five receiving leaves is covered because
+both A_a and A_b contain E_k. This proves whole output coverage.
+
+All labels are odd and greater than one. Every retained label has
+ternary height at most one. The height-two cofactor list
+
+    1,u,v,uv,a,b
+
+has no repetition: u,v are distinct primes; a!=b; and the two
+nonempty color supports are disjoint. At height three the cofactors
+1,a,b are distinct. Different ternary heights cannot collide. The
+output carrier may retain every complete original nonternary height
+apart from5, and extend the ternary height to three; uv already
+divides the original carrier.
+
+Nine new classes replace ten old classes, with all5-free originals
+unchanged, contradicting EB1. Therefore the minimum four-column
+flat-five branch must have guarded cofactors
+
+    u=q, v=q^2 for one original concentrated prime q. (FL5)
+
+This constructor does not cover FL5. There A_q intersect C_(q^2)
+is still a modulus-q^2 AP and repeats the third row's numerical
+label. Replacing it by a single q^3 AP would drop most of that
+original phase; the exact refinement would require all q lifts.
+The remaining power-column case, larger inventories and arbitrary
+heights are unresolved. No finite search, priority claim or Lean
+verification is asserted.
