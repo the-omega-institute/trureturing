@@ -14,6 +14,12 @@ triage: anchor
 
 # Block-structured coded retrieval
 
+## Verified locator
+
+DOI: `10.48550/arXiv.2603.17154`.
+URL: https://arxiv.org/html/2603.17154v2
+Scope: arXiv v2, Section II-A and Section VII-A, Conjecture 2.
+
 ## Source contract
 
 The source is arXiv:2603.17154v2, Section II-A, Definitions 1 and 2,
