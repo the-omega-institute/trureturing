@@ -486,3 +486,140 @@ does not give a positive lower bound for the gain or rule out payment of
 a smaller residual budget at a particular host. The remaining sufficient
 test is $R_s(v)+I_v(\log u)>T_s(N)$ for that same $N$; no uniform
 comparison on the original FIB residual sources has been established.
+
+## A full-modulus Jacobi test for actual addition cost
+
+The character input here is classical quadratic reciprocity and Fibonacci
+modular periodicity, recorded with their primary locators in the
+[Renault note](../notes/renault2013periodrankorder.md). The application
+uses the benefit decomposition above; it supplies neither a new analytic
+character estimate nor a Lean-verified theorem.
+
+Let $r>3$ be prime and $V=F_r$, with $F_0=0$, $F_1=1$. The Fibonacci
+pair modulo four has period six, and $r\equiv1,5\pmod6$, so $V\equiv1\pmod4$.
+Define the full-denominator Jacobi character
+
+$$
+\chi_V(a)=\left(\frac aV\right).
+$$
+
+The denominator need not be prime or squarefree. For every odd prime $p$,
+quadratic reciprocity gives
+
+$$
+\chi_V(p)=\left(\frac{F_r}{p}\right),
+$$
+
+including zero when $p\mid V$. The right-hand side reads $F_r\bmod p$
+from the second coordinate of $M^r\alpha$, where
+$M(a,b)=(b,a+b)$ and $\alpha=(1,0)$. This coordinate is different from
+the quantity readout $2a+3b$. The existing golden/Fibonacci modular pair
+in `D5/S3/Arith/GoldenApparition.lean` already supplies this interface;
+its private `phi_pow_eq_fib_pair_mod` is not a missing theorem to reprove.
+Neither the symbol evaluation nor the modular recurrence requires
+factorization of $V$.
+
+For the small primes, the finite pair recurrences modulo eight, three and
+five have periods twelve, eight and twenty respectively. Together with
+the supplementary law at two and reciprocity they give the familiar
+specializations
+
+$$
+\begin{aligned}
+\chi_V(2)&=\begin{cases}
+1,&r\equiv1,11\pmod{12},\\
+-1,&r\equiv5,7\pmod{12},
+\end{cases}\\
+\chi_V(3)&=\begin{cases}
+1,&r\equiv1,7\pmod8,\\
+-1,&r\equiv3,5\pmod8,
+\end{cases}\\
+\chi_V(5)&=\left(\frac r5\right)\quad(r>5),\qquad
+\chi_{F_5}(5)=0.
+\end{aligned}
+$$
+
+These symbol values are arithmetic observations, not the five containment
+labels `[null,2,3,2 5,5]`. For instance $r\equiv1\pmod{120}$ gives all
+three values $+1$; no fixed negative prime is forced by those three tests.
+This says nothing about signs throughout the growing price-prime prefix.
+
+Now retain the **same actual host** $N>5040$ and require $N\equiv1\pmod V$.
+Use $C=C_s$, $g=\gcd(N,C)$, $u=N/g$ and $v=C/g$. Both $g$ and $u$
+are units modulo $V$, since they divide $N$; this does not require
+$\gcd(C,V)=1$. Multiplicativity gives
+
+$$
+\chi_V(g)\chi_V(u)=1,\qquad \chi_V(u)=\chi_V(g).
+$$
+
+In the branch $\chi_V(g)=-1$, some prime dividing the actual $u$ has
+negative character and odd exponent in $u$. It is eligible for additions:
+$p\nmid vV$. The negative endpoint also certifies nonprincipality, without
+a separate nonsquare theorem for $V$. A positive full Jacobi symbol at a
+composite denominator does not certify a square root; the branch
+$\chi_V(g)=1$ remains outside this particular test.
+
+For eligible primes define the first-entry cost
+
+$$
+b_s(p)=\log p-s\ell_{p,a_p+1}>0.
+$$
+
+Maximality of $C$ includes every tied layer, so every post-reference cost
+is strictly positive. Its full addition block
+$W_p(k)=-\sum_{j=a_p+1}^{a_p+k}c_{p,j}$ is increasing for $k\ge1$ and
+$W_p(1)=b_s(p)$. Thus the negative-endpoint branch has the paper-level bound
+
+$$
+D_s(N)\ge R_s(v)+m_s(V,v),\qquad
+m_s(V,v):=\min_{\substack{p\nmid vV\\\chi_V(p)=-1}}b_s(p)>0.
+$$
+
+The actual $u$ supplies an eligible negative prime. The minimum is
+attained because $C$ has finite support and $b_s(p)\to\infty$ as
+$p\to\infty$. This is a fixed-price positive bound, not a uniform gap
+along growing prices and moduli.
+
+Write $B=T_s(N)-R_s(v)$. If $B<0$, removals already pay the budget.
+For $B\ge0$, define
+
+$$
+\mathcal P_B=\{p\text{ prime}:p\nmid vV,\ b_s(p)\le B\}.
+$$
+
+A sufficient test for this same host is
+$\chi_V(g)=-1$ and $\chi_V(p)=1$ for every $p\in\mathcal P_B$.
+It gives $m_s(V,v)>B$ and hence $D_s(N)>T_s(N)$. Zeros cannot occur
+on this eligible set.
+
+The test has an explicit finite cutoff. Put $P=\max\{s,e^{B+1}\}$.
+For $p>P$, one has $\log p>1$ and $p\log p>s$, so $a_p=0$ and
+
+$$
+b_s(p)=\log p-s\log(1+1/p)
+\ge\log p-s/p>B.
+$$
+
+Only primes $p\le P$ can belong to $\mathcal P_B$. This finiteness is
+not an efficiency bound at the actual source scale. Evaluating $g$, the
+exact removals and the symbol tests requires no factorization of $u$.
+
+In the common capacity range $s=y\log y$, $y\ge6$, $0<h_0\le1/3$, the
+safe combination in the negative-endpoint branch is
+
+$$
+D_s(N)\ge R_s(v)+\max\{I_v(\log u),m_s(V,v)\}.
+$$
+
+Both lower bounds pay the same additions, so they cannot be summed
+without a further allocation to disjoint costs. The missing joint input
+is enough loss on each surviving actual source's legal additions,
+compared with its own $B$. The one-bit sufficient test asks for a negative
+actual gcd and positive symbols at all eligible cheap primes. Neither
+modular periodicity nor the generic
+[Pollack nonresidue bounds](../Scale/pollack2017nonresidues.md) supplies
+that comparison at the source price. Failure of this sufficient test does
+not imply failure of Robin. The original window, qualifying low-loss
+divisor, cofactor and all-candidate coverage remain required; no uniform
+strict-budget supplier or proof of RH is supplied here.
