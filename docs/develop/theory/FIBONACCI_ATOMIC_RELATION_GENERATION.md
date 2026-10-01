@@ -35517,3 +35517,42 @@ $$
 $$
 
 在获得 (a) 或 (b) 之前，继续添加等价判据、正的 CA 权重、平滑恒等式或有限枚举，都不会缩小 §250.2 的量词缺口。上述判断仅把来源已公开的陈述与仓内纸面推导分开；它不声称四份来源的外部证明已经由 Lean 验证，也不改变 Robin/RH 的 open 状态。
+
+### 254.6 $\omega$-截断给出的 FIB 条件筛选
+
+Mishra--Sarkar 的预印本把
+
+$$
+P_k(x)=\sum_{j=0}^{k}\frac{x^j}{j!}
+$$
+
+作为 $k=\omega(n)$ 的截断，并声称当 $n>5040$ 且 $\omega(n)\le6$ 时
+
+$$
+\frac{\sigma(n)}n<e^\gamma P_{\omega(n)}(\log\log\log n).
+$$
+
+这条外部定理一旦成立，就能给当前 FIB 族一个直接但有限的筛选。对 $n>5040$，有 $\log\log\log n>0$；正项级数的严格截断给出
+
+$$
+P_{\omega(n)}(\log\log\log n)
+<e^{\log\log\log n}=\log\log n.
+$$
+
+故得到条件推论
+
+$$
+\boxed{
+N_g>5040\ \land\ \omega(N_g)\le6
+\ \Longrightarrow\
+\frac{\sigma(N_g)}{N_g}<e^\gamma\log\log N_g.
+}
+$$
+
+其中 $N_g=1+F_rg$ 的 FIB 地址、窗口范围和接缝规则没有被改变。等价地，在接受该预印本定理作为外部输入的前提下，任何 FIB Robin 反例都必须满足
+
+$$
+\omega(N_g)\ge7.
+$$
+
+这项筛选没有给出 $\omega(N_g)$ 的统一上界或下界的 FIB 证明，也没有说明该整数是 CA/SA；它只把一个现有的不同素因子条件正确地投影到同一实际整数。因而仍不能替代同一价格源和 §250 的有符号点值桥，亦不改变 Robin/RH 的 open 状态。
