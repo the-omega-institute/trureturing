@@ -1,0 +1,100 @@
+{
+  "scope": "One genuine retained five-leaf/Haar-5 source. Complete phase layouts on all divisors of 45, plus the full all-height maximum-depth remainder. No seven-prime positivity claim and no Lean verification.",
+  "checks": 91211,
+  "labels": [
+    1,
+    3,
+    5,
+    9,
+    15,
+    45
+  ],
+  "full_source_mass": "1",
+  "retained_mass": "1/10",
+  "retained_weights": {
+    "2": "1/25",
+    "4": "3/100",
+    "7": "3/200",
+    "13": "3/200"
+  },
+  "retained_table": [
+    [
+      "0",
+      "0",
+      "0",
+      "3/40",
+      "3/20"
+    ],
+    [
+      "0",
+      "0",
+      "3/40",
+      "0",
+      "0"
+    ],
+    [
+      "0",
+      "0",
+      "1/5",
+      "0",
+      "0"
+    ],
+    [
+      "0",
+      "0",
+      "0",
+      "0",
+      "0"
+    ],
+    [
+      "0",
+      "0",
+      "0",
+      "0",
+      "0"
+    ]
+  ],
+  "ordered_prefix_tuple_counts": {
+    "1": 1,
+    "3": 15,
+    "5": 15,
+    "9": 65,
+    "15": 225,
+    "45": 975
+  },
+  "phase_layouts_checked": 91125,
+  "maximizing_phases": [
+    2,
+    2,
+    2,
+    2,
+    2
+  ],
+  "number_of_maximizers": 1,
+  "max_global_layout_fourth": "417/8",
+  "sum_of_tuple_maxima": "211/4",
+  "strict_gap": "5/8",
+  "cylinder_maxima": {
+    "1": "1/10",
+    "3": "3/50",
+    "5": "11/200",
+    "9": "9/200",
+    "15": "1/25",
+    "45": "1/25"
+  },
+  "empty_envelopes": [
+    "1/10",
+    "3/50",
+    "9/200"
+  ],
+  "queried5_envelopes": [
+    "11/40",
+    "1/5",
+    "1/5"
+  ],
+  "full_ternary_depth_coefficient": "216",
+  "full_height_generic_moment": "2420243/6400",
+  "finite_box_generic_moment": "211/4",
+  "unbounded_height_remainder": "2082643/6400",
+  "prefix_phase_coherent_plus_full_remainder": "2416243/6400"
+}

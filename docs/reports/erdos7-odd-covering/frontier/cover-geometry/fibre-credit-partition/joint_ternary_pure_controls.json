@@ -1,0 +1,562 @@
+{
+  "status": "all_new_exact_controls_passed",
+  "check_count": 2334,
+  "scope": "Finite actual-label controls and rational table; the universal claims require the companion mathematical proof.",
+  "table": [
+    {
+      "q": 5,
+      "d_bound": 0,
+      "h": 0,
+      "fee": {
+        "numerator": 0,
+        "denominator": 1
+      }
+    },
+    {
+      "q": 7,
+      "d_bound": 1,
+      "h": 5,
+      "fee": {
+        "numerator": 1,
+        "denominator": 162
+      }
+    },
+    {
+      "q": 11,
+      "d_bound": 2,
+      "h": 4,
+      "fee": {
+        "numerator": 1,
+        "denominator": 54
+      }
+    },
+    {
+      "q": 13,
+      "d_bound": 3,
+      "h": 3,
+      "fee": {
+        "numerator": 1,
+        "denominator": 18
+      }
+    },
+    {
+      "q": 17,
+      "d_bound": 4,
+      "h": 3,
+      "fee": {
+        "numerator": 1,
+        "denominator": 18
+      }
+    },
+    {
+      "q": 19,
+      "d_bound": 5,
+      "h": 3,
+      "fee": {
+        "numerator": 5,
+        "denominator": 54
+      }
+    },
+    {
+      "q": 23,
+      "d_bound": 6,
+      "h": 3,
+      "fee": {
+        "numerator": 1,
+        "denominator": 12
+      }
+    },
+    {
+      "q": 29,
+      "d_bound": 7,
+      "h": 3,
+      "fee": {
+        "numerator": 1,
+        "denominator": 18
+      }
+    },
+    {
+      "q": 31,
+      "d_bound": 8,
+      "h": 3,
+      "fee": {
+        "numerator": 2,
+        "denominator": 27
+      }
+    },
+    {
+      "q": 37,
+      "d_bound": 9,
+      "h": 3,
+      "fee": {
+        "numerator": 1,
+        "denominator": 18
+      }
+    },
+    {
+      "q": 41,
+      "d_bound": 10,
+      "h": 3,
+      "fee": {
+        "numerator": 1,
+        "denominator": 18
+      }
+    }
+  ],
+  "complete10_budget": {
+    "numerator": 161,
+    "denominator": 324
+  },
+  "complete11_same_budget": {
+    "numerator": 179,
+    "denominator": 324
+  },
+  "uniform_good_mass": {
+    "complete10": {
+      "numerator": 1,
+      "denominator": 324
+    },
+    "two_degenerate_no5": {
+      "numerator": 11,
+      "denominator": 36
+    },
+    "two_degenerate_protected5": {
+      "numerator": 1,
+      "denominator": 4
+    },
+    "forest_reuse": {
+      "numerator": 7,
+      "denominator": 16
+    }
+  },
+  "fixtures": [
+    {
+      "name": "blocked_history_with_two_pure_depths",
+      "order": [
+        7,
+        5
+      ],
+      "heights": {
+        "3": 3,
+        "5": 2,
+        "7": 2
+      },
+      "period": 33075,
+      "originals": [
+        {
+          "modulus": 3,
+          "residue": 0,
+          "kind": "pure",
+          "p": 3,
+          "e": 1
+        },
+        {
+          "modulus": 5,
+          "residue": 4,
+          "kind": "pure",
+          "p": 5,
+          "e": 1
+        },
+        {
+          "modulus": 25,
+          "residue": 8,
+          "kind": "pure",
+          "p": 5,
+          "e": 2
+        },
+        {
+          "modulus": 7,
+          "residue": 6,
+          "kind": "pure",
+          "p": 7,
+          "e": 1
+        },
+        {
+          "modulus": 49,
+          "residue": 12,
+          "kind": "pure",
+          "p": 7,
+          "e": 2
+        },
+        {
+          "modulus": 35,
+          "residue": 0,
+          "kind": "pair",
+          "q": 7,
+          "r": 5,
+          "k": 0
+        },
+        {
+          "modulus": 105,
+          "residue": 91,
+          "kind": "pair",
+          "q": 7,
+          "r": 5,
+          "k": 1
+        },
+        {
+          "modulus": 315,
+          "residue": 217,
+          "kind": "pair",
+          "q": 7,
+          "r": 5,
+          "k": 2
+        },
+        {
+          "modulus": 945,
+          "residue": 28,
+          "kind": "pair",
+          "q": 7,
+          "r": 5,
+          "k": 3
+        }
+      ],
+      "predecessors": {
+        "7": 0,
+        "5": 1
+      },
+      "pure3_mass": {
+        "numerator": 2,
+        "denominator": 3
+      },
+      "actual_bad_masses": {
+        "7": {
+          "numerator": 0,
+          "denominator": 1
+        },
+        "5": {
+          "numerator": 1,
+          "denominator": 27
+        }
+      },
+      "good_ternary_mass": {
+        "numerator": 17,
+        "denominator": 27
+      },
+      "actual_full_survivor": {
+        "numerator": 12944,
+        "denominator": 33075
+      },
+      "integrated_local_lower": {
+        "numerator": 7708,
+        "denominator": 33075
+      },
+      "good_mass_lower": {
+        "numerator": 17,
+        "denominator": 1512
+      },
+      "legal_history_checks": 756
+    },
+    {
+      "name": "path_with_pure_and_disjoint_ternary_phases",
+      "order": [
+        5,
+        7,
+        11
+      ],
+      "heights": {
+        "3": 2,
+        "5": 2,
+        "7": 1,
+        "11": 1
+      },
+      "period": 17325,
+      "originals": [
+        {
+          "modulus": 3,
+          "residue": 0,
+          "kind": "pure",
+          "p": 3,
+          "e": 1
+        },
+        {
+          "modulus": 9,
+          "residue": 1,
+          "kind": "pure",
+          "p": 3,
+          "e": 2
+        },
+        {
+          "modulus": 5,
+          "residue": 4,
+          "kind": "pure",
+          "p": 5,
+          "e": 1
+        },
+        {
+          "modulus": 25,
+          "residue": 8,
+          "kind": "pure",
+          "p": 5,
+          "e": 2
+        },
+        {
+          "modulus": 7,
+          "residue": 6,
+          "kind": "pure",
+          "p": 7,
+          "e": 1
+        },
+        {
+          "modulus": 11,
+          "residue": 10,
+          "kind": "pure",
+          "p": 11,
+          "e": 1
+        },
+        {
+          "modulus": 35,
+          "residue": 0,
+          "kind": "pair",
+          "q": 5,
+          "r": 7,
+          "k": 0
+        },
+        {
+          "modulus": 105,
+          "residue": 86,
+          "kind": "pair",
+          "q": 5,
+          "r": 7,
+          "k": 1
+        },
+        {
+          "modulus": 315,
+          "residue": 67,
+          "kind": "pair",
+          "q": 5,
+          "r": 7,
+          "k": 2
+        },
+        {
+          "modulus": 77,
+          "residue": 1,
+          "kind": "pair",
+          "q": 7,
+          "r": 11,
+          "k": 0
+        },
+        {
+          "modulus": 231,
+          "residue": 135,
+          "kind": "pair",
+          "q": 7,
+          "r": 11,
+          "k": 1
+        },
+        {
+          "modulus": 693,
+          "residue": 500,
+          "kind": "pair",
+          "q": 7,
+          "r": 11,
+          "k": 2
+        }
+      ],
+      "predecessors": {
+        "5": 0,
+        "7": 1,
+        "11": 1
+      },
+      "pure3_mass": {
+        "numerator": 5,
+        "denominator": 9
+      },
+      "actual_bad_masses": {
+        "5": {
+          "numerator": 0,
+          "denominator": 1
+        },
+        "7": {
+          "numerator": 0,
+          "denominator": 1
+        },
+        "11": {
+          "numerator": 0,
+          "denominator": 1
+        }
+      },
+      "good_ternary_mass": {
+        "numerator": 5,
+        "denominator": 9
+      },
+      "actual_full_survivor": {
+        "numerator": 1712,
+        "denominator": 5775
+      },
+      "integrated_local_lower": {
+        "numerator": 703,
+        "denominator": 3465
+      },
+      "good_mass_lower": {
+        "numerator": 1,
+        "denominator": 1232
+      },
+      "legal_history_checks": 625
+    },
+    {
+      "name": "triangle_with_complete_first_three_ternary_layers",
+      "order": [
+        5,
+        7,
+        11
+      ],
+      "heights": {
+        "3": 2,
+        "5": 2,
+        "7": 1,
+        "11": 1
+      },
+      "period": 17325,
+      "originals": [
+        {
+          "modulus": 3,
+          "residue": 0,
+          "kind": "pure",
+          "p": 3,
+          "e": 1
+        },
+        {
+          "modulus": 5,
+          "residue": 4,
+          "kind": "pure",
+          "p": 5,
+          "e": 1
+        },
+        {
+          "modulus": 25,
+          "residue": 8,
+          "kind": "pure",
+          "p": 5,
+          "e": 2
+        },
+        {
+          "modulus": 7,
+          "residue": 6,
+          "kind": "pure",
+          "p": 7,
+          "e": 1
+        },
+        {
+          "modulus": 11,
+          "residue": 10,
+          "kind": "pure",
+          "p": 11,
+          "e": 1
+        },
+        {
+          "modulus": 35,
+          "residue": 0,
+          "kind": "pair",
+          "q": 5,
+          "r": 7,
+          "k": 0
+        },
+        {
+          "modulus": 105,
+          "residue": 22,
+          "kind": "pair",
+          "q": 5,
+          "r": 7,
+          "k": 1
+        },
+        {
+          "modulus": 315,
+          "residue": 254,
+          "kind": "pair",
+          "q": 5,
+          "r": 7,
+          "k": 2
+        },
+        {
+          "modulus": 55,
+          "residue": 46,
+          "kind": "pair",
+          "q": 5,
+          "r": 11,
+          "k": 0
+        },
+        {
+          "modulus": 165,
+          "residue": 113,
+          "kind": "pair",
+          "q": 5,
+          "r": 11,
+          "k": 1
+        },
+        {
+          "modulus": 495,
+          "residue": 345,
+          "kind": "pair",
+          "q": 5,
+          "r": 11,
+          "k": 2
+        },
+        {
+          "modulus": 77,
+          "residue": 37,
+          "kind": "pair",
+          "q": 7,
+          "r": 11,
+          "k": 0
+        },
+        {
+          "modulus": 231,
+          "residue": 60,
+          "kind": "pair",
+          "q": 7,
+          "r": 11,
+          "k": 1
+        },
+        {
+          "modulus": 693,
+          "residue": 391,
+          "kind": "pair",
+          "q": 7,
+          "r": 11,
+          "k": 2
+        }
+      ],
+      "predecessors": {
+        "5": 0,
+        "7": 1,
+        "11": 2
+      },
+      "pure3_mass": {
+        "numerator": 2,
+        "denominator": 3
+      },
+      "actual_bad_masses": {
+        "5": {
+          "numerator": 0,
+          "denominator": 1
+        },
+        "7": {
+          "numerator": 0,
+          "denominator": 1
+        },
+        "11": {
+          "numerator": 0,
+          "denominator": 1
+        }
+      },
+      "good_ternary_mass": {
+        "numerator": 2,
+        "denominator": 3
+      },
+      "actual_full_survivor": {
+        "numerator": 2008,
+        "denominator": 5775
+      },
+      "integrated_local_lower": {
+        "numerator": 722,
+        "denominator": 3465
+      },
+      "good_mass_lower": {
+        "numerator": 3,
+        "denominator": 3080
+      },
+      "legal_history_checks": 759
+    }
+  ]
+}

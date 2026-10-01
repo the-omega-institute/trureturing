@@ -126,7 +126,19 @@ Lean statement: `D5/S1/Recurrence/Invariants/CloitreActualRightProfile.Hyp21_1`
 
 SourceFoundations holds. For every positive n, 1<=C(n) and G(n)<=C(n)<=U(n)<=n. U(1)=1. For j at least three and F(j)<=n<F(j+1), U(n)=min(n-F(j-2),F(j)). U is nondecreasing on positive indices and U(n)<=U(n+1)<=U(n)+1. For every j at least two, U(F(j))=C(F(j))=G(F(j))=F(j-1). For every j at least three, G(F(j)+1)=C(F(j)+1)=F(j-1)+1. For every q at least six and every t, I(q,t) lies in D(F(q)+t), is invariant, captures the orbit of every point of that domain, and contains all its periodic points. DepthEntry holds for every N at least three. No monotonicity of C or arbitrary-width seed is assumed.
 
-**Theorem 1.11 (Every fixed right width).**
+**Theorem 1.11 (Unconditional actual finite-prefix foundations).**
+
+Lean statement: `D5/S1/Recurrence/Invariants/CloitreActualRightProfile.actual_foundations`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/CloitreActualRightProfile.actual_foundations` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For N at least three, every actual iterate X(N,i) lies in D(N), and C(N)=C(g(N))+C(N-g(N)). Both conclusions follow from the immutable finite-prefix construction without Hyp21_1. The conditional profile theorem consumes this shared proof.
+
+**Theorem 1.12 (Every fixed right width).**
 
 Lean statement: `D5/S1/Recurrence/Invariants/CloitreActualRightProfile.full21_3`
 
@@ -148,6 +160,7 @@ For every function U from natural numbers to natural numbers satisfying Hyp21_1,
 - Truth anchor: `D5/S1/Recurrence/Invariants/CloitreActualRightProfile.SourceFoundations`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CloitreActualRightProfile.T`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CloitreActualRightProfile.X`
+- Truth anchor: `D5/S1/Recurrence/Invariants/CloitreActualRightProfile.actual_foundations`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CloitreActualRightProfile.d`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CloitreActualRightProfile.full21_3`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CloitreActualRightProfile.g`

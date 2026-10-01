@@ -1,0 +1,516 @@
+{
+  "best_certificate_upper_bound": "-298825388328897992/26987232024244366875",
+  "best_certificate_upper_bound_decimal": -0.011072843189714451,
+  "checks": 5657,
+  "common_free_address_test": {
+    "admissible_permutations": 0,
+    "global_head5_permutations_checked": 120,
+    "necessary_inequality": "sum_i (g_2q*x_2qi-x_1qi)_+ <= selected_root2_unnormalized_budget",
+    "private_primes": [
+      11,
+      13
+    ],
+    "scope": "Projection unions before head-star restriction, with common physical head rows including zero-weight rows."
+  },
+  "contract": "One genuine feasible FC77 scalar array per root at a SINGLE shared-budget vertex. Its weighted line is a lower bound on the exact joint-scalar worst group fee. Thus the stated optimized comparison is an UPPER bound on the best all-real-weight exact-two-group/marginal-remainder certificate. No arithmetic AP realization or covering counterexample is asserted.",
+  "input_sha256": "abf69a11e38647699e35aa8d1b3c51c421a57ec1d79eae3331502a3525b90be4",
+  "limits": [
+    "Feasible scalar arrays need not arise from actual simultaneous AP phases.",
+    "The conclusion concerns the exact two-group scalar maximum PLUS the unchanged separate shared-support remaining charge.",
+    "Actual source relations, joint payment of remaining charges, more groups or other methods remain available.",
+    "UnrestrictedErdos7 remains unresolved; no Lean verification."
+  ],
+  "masks": [
+    510,
+    0
+  ],
+  "maximizing_weights": [
+    "311296/816493"
+  ],
+  "private_primes": [
+    11,
+    13,
+    17,
+    19,
+    23,
+    29,
+    31,
+    37,
+    41
+  ],
+  "rules_out_exact_two_group_certificate": true,
+  "shared_result_sha256": "57cc67f29a603a7ec5784034d4c3284bcb71dcdc140125a900786fa6495a6115",
+  "weight_candidate_count": 1783,
+  "witnesses": {
+    "1": {
+      "G": "1",
+      "carrier": "2/3",
+      "head5_rows": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "head5_weights": [
+        "4/15",
+        "4/15",
+        "2/15",
+        "0",
+        "0"
+      ],
+      "head7_rows": [
+        3,
+        1,
+        0,
+        4,
+        2,
+        2,
+        4,
+        0,
+        2
+      ],
+      "head7_weights": [
+        "6/35",
+        "6/35",
+        "6/35",
+        "6/35",
+        "6/35",
+        "1/7",
+        "0"
+      ],
+      "objective": "177964140232/734502643875",
+      "objective_decimal": 0.24229203491102275,
+      "q_arrays": {
+        "11": {
+          "x": [
+            "0",
+            "1/9",
+            "0",
+            "0",
+            "0"
+          ],
+          "y": [
+            "0",
+            "0",
+            "0",
+            "1/9",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "13": {
+          "x": [
+            "0",
+            "2/11",
+            "0",
+            "0",
+            "0"
+          ],
+          "y": [
+            "0",
+            "1/11",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "17": {
+          "x": [
+            "2/15",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "y": [
+            "1/15",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "19": {
+          "x": [
+            "2/17",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "y": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "1/17",
+            "0",
+            "0"
+          ]
+        },
+        "23": {
+          "x": [
+            "2/21",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "y": [
+            "0",
+            "0",
+            "1/21",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "29": {
+          "x": [
+            "0",
+            "2/27",
+            "0",
+            "0",
+            "0"
+          ],
+          "y": [
+            "0",
+            "0",
+            "1/27",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "31": {
+          "x": [
+            "0",
+            "2/29",
+            "0",
+            "0",
+            "0"
+          ],
+          "y": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "1/29",
+            "0",
+            "0"
+          ]
+        },
+        "37": {
+          "x": [
+            "2/35",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "y": [
+            "1/35",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "41": {
+          "x": [
+            "2/39",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "y": [
+            "0",
+            "0",
+            "1/39",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        }
+      },
+      "raw_X": [
+        "1/9",
+        "2/11",
+        "2/15",
+        "2/17",
+        "2/21",
+        "2/27",
+        "2/29",
+        "2/35",
+        "2/39"
+      ],
+      "raw_Y": [
+        "1/9",
+        "1/11",
+        "1/15",
+        "1/17",
+        "1/21",
+        "1/27",
+        "1/29",
+        "1/35",
+        "1/39"
+      ],
+      "root": 1,
+      "search_bound": {
+        "maximum_sweeps_per_start": 12,
+        "starts": 8
+      }
+    },
+    "2": {
+      "G": "1245184/2092959",
+      "carrier": "4980736/10464795",
+      "head5_rows": [
+        1,
+        0,
+        2,
+        2,
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      "head5_weights": [
+        "4/15",
+        "4/15",
+        "4/15",
+        "1/5",
+        "0"
+      ],
+      "head7_rows": [
+        1,
+        3,
+        2,
+        0,
+        0,
+        2,
+        3,
+        2,
+        0
+      ],
+      "head7_weights": [
+        "6/35",
+        "6/35",
+        "6/35",
+        "6/35",
+        "4/35",
+        "0",
+        "0"
+      ],
+      "objective": "800122400768/4721802710625",
+      "objective_decimal": 0.1694527386685523,
+      "q_arrays": {
+        "11": {
+          "x": [
+            "0",
+            "1/4",
+            "0",
+            "0",
+            "0"
+          ],
+          "y": [
+            "0",
+            "1/4",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "13": {
+          "x": [
+            "1/10",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "y": [
+            "0",
+            "0",
+            "0",
+            "1/5",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "17": {
+          "x": [
+            "0",
+            "0",
+            "1/14",
+            "0",
+            "0"
+          ],
+          "y": [
+            "0",
+            "0",
+            "1/7",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "19": {
+          "x": [
+            "0",
+            "0",
+            "1/16",
+            "0",
+            "0"
+          ],
+          "y": [
+            "1/8",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "23": {
+          "x": [
+            "1/20",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "y": [
+            "1/10",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "29": {
+          "x": [
+            "0",
+            "0",
+            "1/26",
+            "0",
+            "0"
+          ],
+          "y": [
+            "0",
+            "0",
+            "1/13",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "31": {
+          "x": [
+            "1/28",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "y": [
+            "0",
+            "0",
+            "0",
+            "1/14",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "37": {
+          "x": [
+            "0",
+            "0",
+            "1/34",
+            "0",
+            "0"
+          ],
+          "y": [
+            "0",
+            "0",
+            "1/17",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "41": {
+          "x": [
+            "1/38",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "y": [
+            "1/19",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        }
+      },
+      "raw_X": [
+        "1/4",
+        "1/10",
+        "1/14",
+        "1/16",
+        "1/20",
+        "1/26",
+        "1/28",
+        "1/34",
+        "1/38"
+      ],
+      "raw_Y": [
+        "1/4",
+        "1/5",
+        "1/7",
+        "1/8",
+        "1/10",
+        "1/13",
+        "1/14",
+        "1/17",
+        "1/19"
+      ],
+      "root": 2,
+      "search_bound": {
+        "maximum_sweeps_per_start": 12,
+        "starts": 8
+      }
+    }
+  }
+}

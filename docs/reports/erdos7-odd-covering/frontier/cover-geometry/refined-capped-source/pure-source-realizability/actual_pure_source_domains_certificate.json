@@ -1,0 +1,234 @@
+{
+  "schema": "e7-actual-pure-source-domains-v1",
+  "source_schema": "e7-three-kernel-atlas-counterexample-v1",
+  "normalization": "lambda_q=Haar restricted to actual pure survivor / Haar survivor mass",
+  "table_normalization": "mu=lambda_w restricted to U / lambda_w(U)",
+  "primes": [
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23
+  ],
+  "q5_cells": [
+    {
+      "name": "pure0",
+      "deleted_root": 0,
+      "vertices": [
+        [
+          "0",
+          "1/5",
+          "4/5"
+        ],
+        [
+          "0",
+          "4/15",
+          "11/15"
+        ]
+      ]
+    },
+    {
+      "name": "pure1",
+      "deleted_root": 1,
+      "vertices": [
+        [
+          "1/5",
+          "0",
+          "4/5"
+        ],
+        [
+          "4/15",
+          "0",
+          "11/15"
+        ]
+      ]
+    },
+    {
+      "name": "pure_other",
+      "deleted_root": 2,
+      "vertices": [
+        [
+          "1/5",
+          "4/15",
+          "8/15"
+        ],
+        [
+          "4/15",
+          "1/5",
+          "8/15"
+        ],
+        [
+          "4/15",
+          "4/15",
+          "7/15"
+        ]
+      ]
+    },
+    {
+      "name": "no_pure",
+      "deleted_root": null,
+      "vertices": [
+        [
+          "3/19",
+          "4/19",
+          "12/19"
+        ],
+        [
+          "4/19",
+          "3/19",
+          "12/19"
+        ],
+        [
+          "4/19",
+          "4/19",
+          "11/19"
+        ]
+      ]
+    }
+  ],
+  "binary_cells": [
+    {
+      "q": 7,
+      "zero": "0",
+      "positive_interval": [
+        "5/41",
+        "6/35"
+      ]
+    },
+    {
+      "q": 11,
+      "zero": "0",
+      "positive_interval": [
+        "9/109",
+        "10/99"
+      ]
+    },
+    {
+      "q": 13,
+      "zero": "0",
+      "positive_interval": [
+        "11/155",
+        "12/143"
+      ]
+    },
+    {
+      "q": 17,
+      "zero": "0",
+      "positive_interval": [
+        "15/271",
+        "16/255"
+      ]
+    },
+    {
+      "q": 19,
+      "zero": "0",
+      "positive_interval": [
+        "17/341",
+        "18/323"
+      ]
+    },
+    {
+      "q": 23,
+      "zero": "0",
+      "positive_interval": [
+        "21/505",
+        "22/483"
+      ]
+    }
+  ],
+  "expected_product_cells": 256,
+  "expected_product_vertices": 7290,
+  "pure_depth": 3,
+  "pure_root5": 2,
+  "deep_root5": 1,
+  "pure_root_other": 1,
+  "deep_root_other": 2,
+  "expected_probability5": [
+    "25/94",
+    "19/94",
+    "25/47"
+  ],
+  "expected_original_count": 46,
+  "gate_upper_bounds": [
+    "-1/50",
+    "-8/25",
+    "-13/20"
+  ],
+  "small_families": [
+    {
+      "q": 5,
+      "classes": []
+    },
+    {
+      "q": 5,
+      "classes": [
+        [
+          25,
+          1
+        ]
+      ]
+    },
+    {
+      "q": 5,
+      "classes": [
+        [
+          25,
+          1
+        ],
+        [
+          125,
+          1
+        ]
+      ]
+    },
+    {
+      "q": 5,
+      "classes": [
+        [
+          25,
+          1
+        ],
+        [
+          125,
+          2
+        ]
+      ]
+    },
+    {
+      "q": 5,
+      "classes": [
+        [
+          5,
+          0
+        ],
+        [
+          25,
+          0
+        ],
+        [
+          125,
+          1
+        ]
+      ]
+    },
+    {
+      "q": 5,
+      "classes": [
+        [
+          5,
+          0
+        ],
+        [
+          25,
+          1
+        ],
+        [
+          125,
+          26
+        ]
+      ]
+    }
+  ]
+}

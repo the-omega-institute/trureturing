@@ -1,5 +1,7 @@
 import D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
 import Reg.Support.DependentFamily
+import Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ScalarCountMatrices
+import Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.ResponseLaws
 
 open _root_.D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap
 open _root_.D5.S3.ConceptDynamics.Coding.ResponseQuotientKernel
@@ -91,8 +93,6 @@ def lagOneCertificate {q : ℕ} (M : CountMat q q)
     cases alpha with
     | cons a tail => cases tail; rfl
 
-abbrev U : CountMat 1 1 := fun _ _ => 1
-abbrev P2 : CountMat 1 1 := fun _ _ => 2
 abbrev I2 : CountMat 2 2 := identityMatrix 2
 
 def certificateU : CompatibleCertificate U U U (identityMatrix 1) 1 :=
