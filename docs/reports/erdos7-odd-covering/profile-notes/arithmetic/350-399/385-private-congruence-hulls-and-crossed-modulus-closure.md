@@ -4247,3 +4247,74 @@ the availability and effectiveness of inside repairs, and the
 general collision families of BC2 remain to be controlled. No
 unrestricted noncoverage conclusion or Lean certification follows
 from this finite-budget theorem.
+
+## 30. The complete prime3 private region needs at least five repair classes
+
+In the same minimum whole-cover model, no family of at most four
+classes with distinct odd nonunit moduli, with modulus3 unavailable,
+covers the complete P_3. This allows arbitrary proposed moduli and
+residues, requires no retention of C0, and imposes no height bound.
+It excludes inside as well as outside repairs at this budget.
+
+### Four shallow classes leave an actual cofactor witness
+
+First consider at most four cofactor APs with moduli e>1 dividing B,
+where each numerical e appears at most twice. They cannot cover R_3.
+Apply the capacity-two assignment from section29, using each class's
+actual prefix at an assigned dividing prime. If Hall holds, every
+coordinate has old PC6 capacity cost at most2/3, so PC1--PC4 give
+an actual point of R_3 missing all the classes.
+
+If Hall fails, at least three of the at most four items are pure
+p-powers for one prime p. A subset involving two primes has
+capacity at least four, so there is no other obstruction. If all
+items are p-powers, numerical multiplicity at most two bounds their
+total PC6 cost by
+
+    2/3+2/9=8/9<1.
+
+If exactly three are p-powers, their total cost is at most7/9.
+Assign the possible fourth item to a prime different from p, at
+cost at most1/3. Again every coordinate cost is below one, and
+the same product-tree obstruction supplies an actual point missing
+all classes. This is one common cofactor witness, not a tuple of
+unrelated marginal witnesses.
+
+### Deep ternary classes cannot pay the remaining complete tail
+
+Suppose a repair of P_3 with k<=4 classes exists. By NF13 its
+inside subfamily already covers P_3; discard the outside classes.
+Partition the remaining numerical moduli by their ternary height:
+
+    low: v_3(m)<=1,    high: v_3(m)>=2.
+
+Since1 and3 are unavailable, every low class has nonunit cofactor
+e. A fixed e has at most two low labels, e and3e. The preceding
+argument gives an actual z in R_3 missing every low cofactor class.
+The complete P_3 contains every old higher3-tail above this SAME z.
+Only high classes can cover it, and each covers at most1/3 of that
+tail space. There must be at least three high classes. At H=1
+there are no high inside labels, which already gives a contradiction.
+At every greater height, k<=4 now leaves at most one low class.
+
+Use the original full-chain PC7 law on R_3, independently of uniform
+old higher3 digits, with the original first3 root fixed. This gives
+ONE probability on complete P_3. Each low class has mass at most1/3.
+Among high classes, only numerical label9 can have mass above1/9:
+it has mass at most1/3; a higher pure power has an additional
+ternary factor, while any mixed high class has cofactor mass at
+most1/3 as well as a ternary-tail factor at most1/3. Distinctness
+allows label9 at most once. Thus the total repair mass is at most
+
+    1/3+1/3+2/9=8/9<1,                            (NF15)
+
+contradicting coverage. Fewer than four classes or no low class
+only reduce this upper bound.
+
+Accordingly every repair of complete P_3 avoiding label3 needs
+at least five classes. In DR1 a move deleting at most four
+descendants cannot be paid by any distinct odd repair palette,
+including unused old divisors and arbitrary new-period moduli.
+This constrains that complete repair route; it does not exclude
+larger repairs, simultaneous moves with another liability set,
+or an unrestricted odd cover. No Lean verification is asserted.

@@ -30898,6 +30898,19 @@ class in the proposed exchange. It does not establish existence
 of an inside repair or exclude larger mixed budgets. A pair in
 one top shadow does not supply the complete repair obligation.
 
+[Report385, section30](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#30-the-complete-prime3-private-region-needs-at-least-five-repair-classes)
+excludes ALL repairs of complete P_3 using at most four distinct
+odd nonunit moduli when label3 is unavailable. After NF13 removes
+outside classes, the low3-height cofactors each have numerical
+multiplicity at most two. Capacity-Hall assignment and prefix
+costs give one actual cofactor missing all of at most four such
+classes. Its complete ternary tail then needs at least three
+high3 classes. At most one low class remains; under one common
+cofactor law and uniform old3-tail, the entire repair has mass
+at most8/9. Thus a DR1 deletion of at most four descendants
+cannot pay any complete odd repair, even using new moduli.
+This still does not exclude larger or different joint exchanges.
+
 [Report385, section26](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#26-prime-parent-repairs-must-retain-a-first-level-modulus-collision)
 then reuses the existing Jenkin--Simpson branch restriction to
 exclude one prime-parent exchange route at EVERY budget. A repair
