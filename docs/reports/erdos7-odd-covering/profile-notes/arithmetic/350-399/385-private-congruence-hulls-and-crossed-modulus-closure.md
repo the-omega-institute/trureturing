@@ -34,6 +34,15 @@ uses the actual3q root to repair a movedq^2 parent. Under the same
 whole-family H3=1 condition it sharpens the3q^2-multiple bound to
 4q^2-6q-5 and retains stronger root-specific constraints.
 
+[Section68](#68-private-prefix-concentration-forces-distinct-mixed-inventory-at-all-heights)
+combines the existing private-hull closures into one injective mixed-label
+inventory bound. At arbitrary original ternary height, all3-free
+p-bearing labels whose complete private regions lie in one first-three
+root receive distinct mixed labels, except for one explicit maximal top
+per fully concentrated p-column. The injection uses only original mixed
+labels of ternary height one. It does not yet supply a complete legal
+transport below the original budget.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -9870,3 +9879,142 @@ The sharper §66 bound H+floor((p−1)/(q−1)) is NOT established for these sel
 ### The unresolved whole-cover comparison
 
 The useful refinement is exact retained-residual demand with selected original-label capacities and selected-only numerical collision checks. The general replacement and single-private-point logic are existing results. The missing global step remains to force a complete frontier satisfying RS1–RS3 below the original two-coordinate budget on a hypothetical extremal whole cover. The local control and finite bound do not supply that inequality or resolve unrestricted Erdős#7.
+
+## 68. Private-prefix concentration forces distinct mixed inventory at all heights
+
+This is an ordinary consumer of Report385 PH3–PH5, its stronger descendant-assisted DR3–DR4, and the original private-point map in Report350. It does not supply the unrestricted price-descent theorem, new generic set-cover mathematics, Lean verification, or a literature-priority claim.
+
+Fix one EB1-selected whole distinct odd cover with original numerical set D, complete period Q=p^A q^H M, p>q, A,H≥1 and gcd(M,pq)=1. Keep the actual original phases, with the prime classes simultaneously normalized to residue zero. Let P_d be the complete original private region of d and let W_d be its projection to Z/q^H. Every W_d is nonempty. For a q-free p-bearing original write d=p^alpha u, gcd(u,pq)=1. All inventory counts below refer to this one original family.
+
+### At original q-height one the mixed-root obstruction is exact
+
+First suppose H=1. For each nonzero original q-root j, every receiving leaf b contained in j has the same actual residual Γ_j=T×E_j, whatever its new depth. For a fixed original p-root a let D_a be its q-free p-bearing batch. Then
+
+    union_(d∈D_a) C_d covers Γ_j
+      iff no original p*q-bearing label has roots(a,j). (PI0)
+
+This ignores numerical output collisions, which remain a separate condition. For the forward implication, a mixed original in cell(a,j) has an original private point. Its divided p-tail and cofactor belong to Γ_j, and no q-free original at root a covers them. At H=1 the q coordinate j is complete, so this same obstruction persists in every new receiving descendant of j. For the reverse implication, whole coverage of the common original witness supplies a q-free p-bearing owner at root a whenever the retained originals miss the output. Thus its entire batch covers Γ_j. This reuses the original private-point witness and the existing common source; it does not extend to a lower-height mixed prefix inside an arbitrary larger original H without checking its actual private projection.
+
+### A common injective charge at all original heights
+
+Let M_d be the largest original numerical multiple of d. Say d has a crowded descendant phase when some actual proper-descendant residue group J_c from §10 contains at least two labels. Define
+
+    L_d={h:1≤h≤H, W_d is contained in one actual
+             residue class modulo q^h, and
+             [q^h d/p<M_d or d has a crowded descendant phase]}.
+
+The residues witnessing containment are coherent prefixes because they concern the same nonempty W_d. Thus L_d is an initial segment, possibly empty. No private witness is chosen separately for different h.
+
+For every h∈L_d, DR3 or DR4 forces the original numerical label
+
+    g(d,h)=q^h d/p                                    (PI1)
+
+to be present. Indeed all of P_d has the original residue modulo d and one residue modulo q^h. Since gcd(d,q)=1, it lies in a single AP modulo q^h d, so g(d,h) divides its complete private congruence hull Γ_d. Also g(d,h)|Q and g(d,h)>1. DR3 applies below M_d, and DR4 applies without a size threshold when its actual crowded-group premise holds. The simpler sufficient condition q^h<p gives g(d,h)<d≤M_d and is exactly the old PH5 route. No new private-hull closure theorem is asserted.
+
+The map (d,h)↦g(d,h) is injective: q valuation recovers h and multiplying the remaining q-free quotient by p recovers d. This is a count of actual labels in this one original family, rather than one independently selected repair for each pair.
+
+If alpha≥2, every image is a p*q-bearing original, so the SAME mixed inventory supplies both bounds
+
+    sum_(d:q∤d, v_p(d)≥2) |L_d| ≤ t_mix,
+
+    sum_(d:q∤d, v_p(d)≥2) (d/p) sum_(h∈L_d) q^h
+           ≤ D_mix.                                  (PI2)
+
+For L_d={1,...,ell_d}, the inner weight is q(q^ell_d−1)/(q−1). All terms are simultaneously realized by the injective map PI1; count and weight are not obtained from separate optimizers. Original g phases need not agree with the hull phase and are not used as replacement covers.
+
+If alpha=1, the image q^h u is p-free and therefore belongs to the RETAINED inventory. It cannot be charged to t_mix or D_mix. Moreover it creates a strict numerical collision for any attempted depth-h copy of that same original d, irrespective of the copied residue. Thus a selected collision-safe depth-h exponent-one copy, whenever the stated DR3 or DR4 threshold applies, requires W_d to meet at least two q^h prefixes. This conclusion concerns the complete original private region, not only an individual private witness or the private region of a selected subcover.
+
+### Ternary height-one consequence for the current subbatch interface
+
+Suppose q=3,H=1. Every W_d for q-free d misses root0 because the original pure3 class is retained and disjoint from every original private point. Hence W_d is one of {1},{2},{1,2}.
+
+For d=pu, if original label3u is absent, PI1 excludes the singleton cases, so
+
+    W_(pu)={1,2}.                                    (PI3)
+
+Every valid q-free subbatch at the first-p root of d, on ANY descendant of either original nonzero3-root, must then include d. The original private point at that3-root gives an element of the constant demand Γ_j=T×E_j covered by no other q-free label at that p-root. This necessity does not require excluding mixed originals; if mixed originals block the entire demand, no valid subbatch exists in the first place.
+
+Consequently every strict-collision-safe exponent-one label available to a depth-one subbatch is compulsory at BOTH original3-roots whenever that same p-root is used. All such selected shallow labels therefore remain compulsory if that root is reused at deeper leaves elsewhere. This is stronger than treating the shallow copy as an arbitrary freely replaceable set-cover column.
+
+More generally, whenever original3d/p is ABSENT for a q-free p-bearing d of any p-height, PH5 excludes a singleton W_d, so that d is compulsory in every valid subbatch at its p-root on either ternary branch. Thus any same-depth reuse of a positive-demand p-root, even across the two different original ternary branches, requires3d/p∈D for every d of that root batch. This is a necessary condition, not a sufficiency test: an already present crossed label does not imply absence of private demand.
+
+There is a second consequence for same-depth root reuse. If one p-root a is assigned at least two receiving leaves at the same depth, even in DIFFERENT original ternary branches, then
+
+    W_d is a singleton for every d∈D_a.               (PI4a)
+
+For otherwise a d whose W_d={1,2} is compulsory at both leaves, violating RS2. If the two leaves are in the SAME original3-root j, the stronger conclusion is that no d∈D_a can have a private q-projection meeting j, and hence
+
+    W_d={other root} for every d∈D_a.                 (PI4)
+
+Either PI4a or PI4 supplies original3d/p for EVERY d in that actual root batch, using PI1 at h=1. Its exponent-one members have retained collision labels, and its higher-p members have pairwise distinct mixed labels. In particular
+
+    #{d∈D_a:v_p(d)≥2} ≤ t_mix,
+    3 sum_(d∈D_a:v_p(d)≥2) d/p ≤ D_mix.              (PI5)
+
+If several roots admit such same-depth reuse, their original D_a are disjoint, so PI5 holds with their UNION in place of a single D_a. The injective map gives one shared budget; it is not legitimate to add separate copies of t_mix for those roots.
+
+If this same p-root were also used in the other original3-root, every member of D_a would be compulsory there by PI4. A strict-collision-safe depth-one subbatch in that other root therefore cannot coexist with even one exponent-one member of D_a. This last condition becomes useful only after independently checking that such a member exists; EB8 alone may supply a mixed exponent-one child instead of a q-free one, so it must not be silently upgraded.
+
+### Nonmaximal concentrated labels also have full mixed children
+
+Now take q=3 and allow ANY original height H≥1. Write V_d for the projection of the complete P_d modulo3, equivalently the first-root projection of W_d. If a3-free original d has singleton V_d and ANY proper original multiple, then
+
+    3d∈D.                                            (PI6)
+
+Here d may have p exponent one. Since P_d is concentrated in one ternary root,3d divides Γ_d. The largest original multiple M_d has odd quotient M_d/d≥3. If M_d=3d then the claimed label is already present. If M_d>3d, apply the existing DR3 with e=3d. This proof uses the smallest odd prime3; a proper multiple at ratio3 would not imply the analogous q-child statement for an arbitrary larger q.
+
+The map d↦3d is injective. Therefore for the single set N of ALL3-free p-bearing originals with singleton V_d and a proper original multiple,
+
+    |N|≤t_mix,       3 sum_(d∈N)d≤D_mix.              (PI7)
+
+This supplies actual mixed payers for concentrated exponent-one labels as well, provided the original descendant exists. In particular, if pu is concentrated and p^2u is original, its mixed child3pu is forced. More generally the proper multiple can have any odd composite ratio and any original phases.
+
+PI2/PI5 and PI7 are TWO separately valid injections into the same inventory. Their right-hand sides cannot simply be added. For example the payer3d from PI7 coincides with the PI1 payer3d'/p when d'=pd. Both are actual original q-free labels in such a case; phase or root distinction does not make their common numerical payer two labels.
+
+Every concentrated q-free p-bearing label is therefore in one of these classes: nonmaximal labels have the PI7 mixed payer; divisibility-maximal labels of p-height at least two have the PI1 mixed payer; divisibility-maximal exponent-one labels pu have only the proved retained payer3u. This classification provides actual possible payers, not a collision-free joint allocation between the two mixed-payer maps.
+
+### The two mixed-payer maps can be combined column by column
+
+The preceding collision can be resolved except for one explicit case per actual p-column. Keep q=3, ANY H≥1, and FIX the same p throughout. Concentration in this section means singleton V_d modulo3; W_d need not be a singleton modulo3^H. For each u with gcd(u,3p)=1 for which p*u is original, define
+
+    A_u=max{alpha≥1:p^alpha*u∈D},
+    S_u={alpha:1≤alpha≤A_u, V_(p^alpha*u) is a singleton}.
+
+Divisor closure supplies every actual q-free level1,...,A_u. A label at level alpha in S_u has the following proved mixed-payer choices:
+
+    alpha≥2:        3*p^(alpha−1)*u;
+    nonmaximal d:   3*p^alpha*u.                     (PI8)
+
+Here nonmaximal means that d has a proper ORIGINAL numerical multiple, which may have another cofactor. Every level alpha<A_u is nonmaximal. The right-hand levels are numbered by the p exponent of the mixed payer, and are at least one.
+
+Choose the payers simultaneously by this explicit rule.
+
+- If1∉S_u, give every alpha∈S_u its lower payer at level alpha−1.
+- If1∈S_u and the initial consecutive run is1,...,r with r<A_u, give this initial run the same-level payers1,...,r. Those originals are nonmaximal because their next q-free p-level exists. Give every remaining alpha∈S_u its lower payer at alpha−1; since alpha≥r+2, these right-hand levels exceed r.
+- If S_u is the whole column and the top p^A_u*u is nonmaximal, give every level its same-level payer.
+- If S_u is the whole column and its top is divisibility-maximal in D, give alpha<A_u their same-level payers and leave precisely the top unpaid.
+
+Within each case the payer levels are different. Between different u, their numerical3-free and p-free parts recover u, so their mixed labels cannot collide. Every payer exists by PI8. Thus there is one common injection from all concentrated q-free p-bearing originals EXCEPT those declared unpaid top labels into the original mixed inventory.
+
+More precisely, let L be the set of all3-free p-bearing originals with singleton V_d and let K be the set of columns satisfying the last case. Let U_top={p^A_u*u:u∈K}. Write t_mix,1 and D_mix,1 for the count and modulus sum of original p*3-bearing labels with v_3=1. The explicit payer map χ obeys
+
+    χ:L minus U_top → {d∈D:p divides d, v_3(d)=1} injectively,
+
+    |L|−|K|≤t_mix,1≤t_mix,
+    sum_(d∈L minus U_top) χ(d)≤D_mix,1≤D_mix.                (PI9)
+
+These count and weight statements use the SAME payer map. In a bad column, its mixed levels1,...,A_u−1 are all forced by the lower map. A mixed level A_u or greater with this same u cannot occur: it would be a proper original multiple of the declared maximal top. Consequently the column has exactly A_u−1 possible mixed payers of3-height one with this cofactor for its A_u concentrated labels. The one-label shortage is exact for these same-cofactor,3-height-one inventory payers; it is not a proof that another global payment or cover transformation cannot handle the top.
+
+When H=1, the union of root batches admitting the same-depth reuse in PI4a is a subset of L. Restricting this one χ pays that union except for the bad top labels actually belonging to it; no second inventory budget is created.
+
+When u>1, the original divisor u is p-free and retained, so it cannot be counted as an unused DELETED label. When u=1, it is not an admissible nonunit label. The one pure-p label also supplies at most one actual credit if it is unused, not one credit for each bad column. No argument here shows that U_top is unused in a constructed frontier.
+
+### Boundary of the payment
+
+PI2, PI5 and the deduplicated PI9 are actual original-inventory bounds and may pay for suitably identified copies. They do not yet prove the count-saving inequality
+
+    sum_d(k_d−1)<t_mix
+
+for a complete feasible frontier. Existence is itself unresolved: no result here forces the §64 Hall criterion for every whole cover or guarantees a complete frontier satisfying RS1–RS3. In particular, at original ternary height one, a required deep branch with at most two allowed roots has no finite complete frontier under the original per-depth root capacity; the broader subbatch capacity requires its own existence argument. No argument here puts EVERY repeated label into the concentrated class above, or bounds each such label to one extra occurrence. In particular a label whose private projection meets both ternary roots may recur at different depths; PI1 supplies no mixed payer for that recurrence. Concentrated divisibility-maximal exponent-one labels have only the proved retained payer unless another global argument supplies a distinct credit. A payer cannot be charged once for each appearance of the same original label. Nor are the payer sets for different observing primes p automatically disjoint.
+
+The old theorem interface is PH5 or the stronger DR3–DR4 on the actual complete private hull, followed by an injective numerical map into the same deleted or retained inventory. Depths with q^h≥p are available when the verified descendant threshold or crowded phase permits them; they are not an absolute exclusion. The remaining bridge is to construct a complete source-preserving frontier satisfying RS1–RS3 whose extra occurrences can be injected into a properly deduplicated choice of the PI2/PI9 payers plus unused original labels, with an unspent class credit or a strict common weight saving. That global construction has not been obtained.
