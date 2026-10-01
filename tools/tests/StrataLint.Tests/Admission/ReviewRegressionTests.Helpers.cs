@@ -36,15 +36,15 @@ public sealed partial class ReviewRegressionTests
         if (installWorkflow)
         {
             // 合成夹具,不复制真实 workflow:被测的是 AdmissionTopology 的判据
-            // (on.pull_request.branches 含默认分支,且 jobs 有 delta),
+            // (on.pull_request.branches 含默认分支,且 current 作业包含 check-delta),
             // 不是仓库 workflow 长什么样。对 workflow 的测试已被永久禁止,见
             // WorkflowTestProhibitionTests。
             var workflowDirectory = Path.Combine(repositoryRoot, ".github", "workflows");
             Directory.CreateDirectory(workflowDirectory);
             File.WriteAllText(
-                Path.Combine(workflowDirectory, "ci-pr.yml"),
-                "on:\n  pull_request:\n    branches: [dev]\njobs:\n  delta:\n"
-                + "    runs-on: ubuntu-latest\n    steps:\n      - run: 'true'\n",
+                Path.Combine(workflowDirectory, "ci-current.yml"),
+                "on:\n  pull_request:\n    branches: [dev]\njobs:\n  current:\n"
+                + "    runs-on: ubuntu-latest\n    steps:\n      - run: 'dotnet judge.dll check-delta'\n",
                 new UTF8Encoding(false));
         }
 

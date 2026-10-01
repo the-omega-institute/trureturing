@@ -1,17 +1,9 @@
 #!/usr/bin/env bash
 # header-check.sh <lean-file>... — deposit **之前**必跑。
 #
-# 立条依据 issue #3518(2026-08-27 实测):F-plane 头部若因 `digest:` 折行而成为 **7 行**,
-# `make deposit` **退出 0 并把模块 Freeze 掉**,缺陷只由 SL-012 在 preflight/CI 阶段报出。
-# 而 Freeze 是 append-only、不可逆的 —— 事后只能靠新增勘误,改不了已冻的那条。
-# 故这道检查必须在 deposit 之前跑,不能等 preflight。
-#
-# 2026-08-28 扩条(OB3 / PR #3654 血案):同一道门必须一并查 **SL-003 容量**。
-# 我的 deposit 模板当时查了头部形状与目录文件数,**唯独不查行数**;
-# 而实施 brief 里我自己写下了「455 → 855 行」这个数,却没拿它当判据。
-# 结果:`make deposit` 退出 0、**不可逆冻结**,随后 CI 才由
-# CapacityPolicyTests.RepositoryHasNoOversizeArtifactOrOverfullDirectory 判红(855 > 800)。
-# 教训与 #3518 同形:凡「deposit 会照做、只有事后 CI 报」的检查,一律前移到这道门。
+# 在 deposit 之前对一个或多个文件批量预检 F-plane 头部形状(SL-012)与 SL-003 行数硬线;
+# `--dirs` 模式量目录条目数与 SL-003 准入上限。上限从属主源码派生。冻结不可逆,
+# 不合规须在 deposit 之前改正。
 #
 # 合规形状(既有 6 行,或带 utility 的 7 行;末行以 ` -/` 收尾):
 #   /- GID: <path>
@@ -186,7 +178,7 @@ PYEOF
     local endline; endline=$(grep -n -- ' -/' "$f" | head -1 | cut -d: -f1)
     if [ -z "$endline" ]; then echo "  ✗ $f  <- 头部块没有 ' -/' 收尾"; bad=1; continue; fi
     if [ "$endline" -ne 6 ] && [ "$endline" -ne 7 ]; then
-      echo "  ✗ $f  <- 头部 $endline 行（应为 6，或含 utility 的 7）；#3518：deposit 会照冻不误，只有 SL-012 报"
+      echo "  ✗ $f  <- 头部 $endline 行（应为 6，或含 utility 的 7）"
       sed -n "1,${endline}p" "$f" | sed 's/^/      | /'
       bad=1; continue
     fi
@@ -225,7 +217,7 @@ PYEOF
       ''|*[!0-9]*) echo "  ✗ $f  <- 行数读数不是非负整数 —— fail closed"; bad=1; continue ;;
     esac
     if [ "$lines" -gt "$artifactlimit" ]; then
-      echo "  ✗ $f  <- $lines 行，超 SL-003 硬线 $artifactlimit(判据 >$artifactlimit;按 C# CountArtifactLines 口径)；deposit 会照冻不误，只有 CI 的 CapacityPolicyTests 报"
+      echo "  ✗ $f  <- $lines 行，超 SL-003 硬线 $artifactlimit(判据 >$artifactlimit;按 C# CountArtifactLines 口径)"
       bad=1; continue
     fi
     local dir dn; dir=$(dirname "$f")
@@ -275,7 +267,6 @@ PYEOF
       if [ -n "$viol" ]; then
         echo "  ✗ $f  <- SL-010 地层违规:G 工件的 import 闭包里有 I/E 事实:"
         printf "%b\n" "$viol"
-        echo "      (deposit 会照冻不误,只有 CI 的 dev baseline admission 以 SL-010 报)"
         bad=1; continue
       fi
     fi

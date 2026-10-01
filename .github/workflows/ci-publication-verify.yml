@@ -3,24 +3,11 @@ name: CI publication verification
 on:
   push:
     branches: ['integration-ci-*-tests']
-    paths:
-      - '.github/workflows/ci-*.yml'
-      - '.github/workflows/lean-cache-publish.yml'
-      - 'tools/scripts/workflow/**'
-      - 'tools/scripts/worktree/**'
-      - 'tools/StrataLint.ReleaseSelection/**'
-      - 'tools/Trureturing.Truth/Release/TruthReleasePushRunSelector.cs'
-      - 'Meta/ReportProducers/**'
-      - 'Makefile'
-      - 'global.json'
-      - 'lake-manifest.json'
-      - 'lakefile.toml'
-      - 'lean-toolchain'
 
 permissions: {}
 
-# This native integration event verifies shared publication programs. Its checks
-# are separate from required CI; a source still running CI is not publishable.
+# This native integration event verifies the Lean-cache publication and restore
+# programs. It is separate from the required CI workflows.
 jobs:
   cache:
     name: verify cache publication and restore
@@ -36,25 +23,60 @@ jobs:
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
-      - env:
-          CANDIDATE_SHA: ${{ github.sha }}
-        run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
-      - uses: actions/setup-dotnet@v5
+      - id: entry
+        name: Validate candidate, check the input patterns and strip checkout remote
+        env:
+          # The publication and restore programs and the build configuration they read.
+          CI_HIT_PATHS: |
+            .editorconfig
+            .github/workflows/ci-*.yml
+            .github/workflows/lean-cache-publish.yml
+            .gitignore
+            Directory.Build.props
+            Directory.Packages.props
+            Makefile
+            Meta/ReportProducers/*
+            Meta/engineering-projects.json
+            global.json
+            lake-manifest.json
+            lakefile.toml
+            lean-toolchain
+            tools/Architecture/*
+            tools/Makefile
+            tools/StrataLint.Cli/Commands/CompilationProof.cs
+            tools/StrataLint.Cli/Commands/CompileProofCommand.cs
+            tools/StrataLint.Cli/Commands/TestEvidenceCommands.cs
+            tools/StrataLint.Cli/Commands/TestResultEvidence.cs
+            tools/scripts/dotnet-test.sh
+            tools/scripts/workflow/*
+            tools/scripts/worktree/*
+            tools/tests/Directory.Build.props
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - name: Validate entry result
+        env:
+          HIT: ${{ steps.entry.outputs.hit }}
+        run: case "$HIT" in true|false) ;; *) echo "CI_ENTRY_ERROR hit output is '$HIT'" >&2; exit 2 ;; esac
+      - if: steps.entry.outputs.hit == 'true'
+        uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
-      - run: make -C tools dotnet
-      - id: keys
+      - if: steps.entry.outputs.hit == 'true'
+        run: make -C tools dotnet
+      - if: steps.entry.outputs.hit == 'true'
+        id: keys
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
       - id: elan
-        if: steps.keys.outputs.elan_key != ''
+        if: steps.entry.outputs.hit == 'true' && steps.keys.outputs.elan_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
-      - run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - if: steps.entry.outputs.hit == 'true'
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - id: dependency
-        if: steps.keys.outputs.dependency_key != ''
+        if: steps.entry.outputs.hit == 'true' && steps.keys.outputs.dependency_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -62,25 +84,28 @@ jobs:
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - id: project
-        if: steps.keys.outputs.project_key != ''
+        if: steps.entry.outputs.hit == 'true' && steps.keys.outputs.project_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
           restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
-      - name: Restore optional validated seeds
+      - if: steps.entry.outputs.hit == 'true'
+        name: Restore optional validated seeds
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
           PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
-      - name: Try the same-partition Release fallback
+      - if: steps.entry.outputs.hit == 'true'
+        name: Try the same-partition Release fallback
         env:
           GH_TOKEN: ${{ github.token }}
         run: make lean-cache-from-github-without-mathlib || printf '%s\n' 'Optional Release seed unavailable; production continues'
-      - name: Publish and restore an isolated verification snapshot
+      - if: steps.entry.outputs.hit == 'true'
+        name: Publish and restore an isolated verification snapshot
         env:
           GH_TOKEN: ${{ github.token }}
         run: make lean-cache-to-github-without-mathlib LEAN_CACHE_MODE=verification LEAN_CACHE_SOURCE_REF="$GITHUB_REF" LEAN_CACHE_SOURCE_COMMIT="$GITHUB_SHA"

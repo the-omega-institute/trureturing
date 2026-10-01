@@ -99,7 +99,7 @@ public sealed class SelfTestGovernancePolicyTests
         fixture.Write("tools/near/Near.csproj", "<Project><PropertyGroup><RootNamespace>Nearest</RootNamespace></PropertyGroup></Project>");
         fixture.Write("tools/near/Source.cs", "namespace Declared.Space;");
         fixture.Register(Owner("tools/near/Source.cs"),
-            new("tools/near/Near.csproj", "Nearest", "test-support", false, []));
+            new("tools/near/Near.csproj", "Nearest", "test-support", []));
         Assert.Empty(fixture.Inspect());
     }
 
@@ -192,7 +192,7 @@ public sealed class SelfTestGovernancePolicyTests
         using var fixture = new NamespaceFixture();
         const string source = "tools/shared/Shared.cs";
         fixture.Write(source, "namespace Wrong;");
-        var second = new EngineeringProjectFixture("tools/other/Other.csproj", "Other", "test-support", false,
+        var second = new EngineeringProjectFixture("tools/other/Other.csproj", "Other", "test-support",
             [source], RootNamespace: exceptionConflict ? "Declared.Space" : "Other.Space",
             GlobalNamespaceExceptions: exceptionConflict ? [source] : []);
         fixture.Write(second.Path, "<Project />");
@@ -211,7 +211,7 @@ public sealed class SelfTestGovernancePolicyTests
         const string source = "tools/shared/Shared.cs";
         fixture.Write(source, "namespace Declared.Space;");
         fixture.Write("tools/other/Other.csproj", "<Project />");
-        fixture.Register(Owner(source), new("tools/other/Other.csproj", "Other", "test-support", false,
+        fixture.Register(Owner(source), new("tools/other/Other.csproj", "Other", "test-support",
             [source], RootNamespace: "Declared.Space"));
         Assert.Empty(fixture.Inspect());
     }
@@ -245,15 +245,15 @@ public sealed class SelfTestGovernancePolicyTests
         fixture.Write(source, "namespace Declared.Space;");
         fixture.Write("tools/other/Other.csproj", "<Project />");
         fixture.Register(Owner() with { GlobalNamespaceExceptions = [source] },
-            new("tools/other/Other.csproj", "Other", "test-support", false, [source], RootNamespace: "Declared.Space"));
+            new("tools/other/Other.csproj", "Other", "test-support", [source], RootNamespace: "Declared.Space"));
         Assert.Contains("registered global namespace exception", Assert.Single(fixture.Inspect()));
         fixture.Register(Owner(source) with { GlobalNamespaceExceptions = [source], NamespaceExclude = [source] },
-            new("tools/other/Other.csproj", "Other", "test-support", false, []));
+            new("tools/other/Other.csproj", "Other", "test-support", []));
         Assert.Contains("registered global namespace exception", Assert.Single(fixture.Inspect()));
     }
 
     private static EngineeringProjectFixture Owner(params string[] include) =>
-        new("tools/owner/Owner.csproj", "Unrelated.Assembly", "test-support", false, include,
+        new("tools/owner/Owner.csproj", "Unrelated.Assembly", "test-support", include,
             RootNamespace: "Declared.Space");
 
     private sealed class NamespaceFixture : IDisposable
