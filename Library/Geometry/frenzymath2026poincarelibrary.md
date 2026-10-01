@@ -279,6 +279,24 @@ it supplies no finite total volume conclusion. All earlier source and
 quotient distance, completeness, curvature and chosen-structure metric
 uniqueness clauses remain in the combined construction.
 
+For the same source and quotient metrics, a further checked application
+shows that the global orbit projection contracts outer volume:
+$\operatorname{vol}_{g_Q}(q(A)) \le \operatorname{vol}_{g}(A)$ for every
+source subset $A$. Its canonical orbit distance is bounded by source distance
+using the identity group element in the orbit infimum, so the projection is
+1-Lipschitz. The Hausdorff image inequality and the previously established
+volume identities give the result. No measurability or injectivity premise
+on $A$ is required for this outer evaluation.
+
+Consequently, if a source region $A$ has finite volume and $q(A)$ is the
+whole quotient, then this same descended metric has finite total volume.
+This is a conditional criterion: a finite-volume covering region is still
+to be constructed for the actions relevant to rigidity. Freeness and
+compact-set proper discontinuity alone do not supply such a region.
+The criterion retains the previous construction, local volume equality,
+coordinate-density, completeness and curvature clauses, with metric
+uniqueness confined to the chosen quotient smooth structure.
+
 These checks compiled under the project pins using the unchanged cited
 external sources and only `propext`, `Classical.choice` and `Quot.sound`.
 They are temporary applications of existing results; no new named project
