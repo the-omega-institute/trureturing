@@ -10348,3 +10348,44 @@ If k contains any deep mixed original, divisor closure and concentration supply 
        iff at least one color has no deep mixed original.    (CP13)
 
 The freedom to switch whole seeds at successive exits supplies no new all-height case beyond CP10. This is not a prohibition on other HSW variants, changed closing families, selected subbatches, or another common source map. CP11–CP12 are conditional descent criteria; no result here forces their violation when a flat color exists or supplies a construction when both colors have deep mixed originals.
+
+## 71. Only nonconcentrated prime support can supply nonconcentrated ancestors
+
+### Nonconcentrated ancestors are supported only on nonconcentrated primes
+
+Keep the one original EB1 family, arbitrary original ternary height, and the complete private projections V_d used in sections69--70. Let
+
+    R={q>3: q is an original support prime and V_q={1,2}}.
+
+Report357's actual first-q reset gives V_e subset V_q whenever q divides the original e. Therefore every nonconcentrated 3-free original e has ALL its prime divisors in R. For a fixed nonconcentrated prime p and a top t in G, all its eligible nonconcentrated ancestors consequently divide
+
+    t_R=product_(q in R) q^(v_q(t)).
+
+This is a direct consumer of the existing private reset, not a converse: an original supported entirely on R may still be concentrated. It identifies the only part of a top from which additional DP4 slots can come.
+
+If R={p}, the set P minus L is exactly the original nonconcentrated pure p-powers. Every top in G is nonpure by DP10; its nontrivial p-free cofactor contains a concentrated prime. The private reset at that prime makes EVERY original level in this cofactor column concentrated. Hence B=G and section69's pure-power assignment is the FULL maximal-top ancestor graph. With the existing I_0 and A_*, the exact deficit is therefore
+
+    delta=epsilon_0
+      =max_(0<=h<=A_*)
+        [ #{t in G:v_p(t)<=h} - #{a in I_0:a<=h} ].
+
+No fresh matching theorem is used: DP3 and the already justified DP12 threshold calculation apply to this identified full graph. In particular, if also A_*=1 then I_0={1} and delta=max(|G|-1,0). These identities do not construct a legal frontier or rule out this whole-cover branch. They show that searching for nonpure nonconcentrated ancestor slots cannot improve it.
+
+### The pure-power concentration pattern has no supplied monotonicity law
+
+The existing first-p reset reaches P_p and preserves the whole p-tail. It does not supply a map from P_(p^a) to P_(p^b) for 1<b<a. Replacing the lower p-prefix may activate original mixed classes of smaller p-height. The threshold formula must retain the actual set I_0; no initial-segment assumption is justified by that map.
+
+The distinction already occurs in a partial actual AP family on period375:
+
+    (modulus,residue)=
+      (3,0),(5,0),(15,1),(25,1),(75,8),(125,2),(375,4).
+
+The numerical palette is divisor-closed above one; comparable original classes are disjoint. Private witnesses for these seven labels are respectively3,5,16,26,8,2,4. The complete private regions relevant to the pure powers are
+
+    5,10 in P_5,
+    P_25={26,101,176,251,326} mod375,
+    P_125={2,127} mod375.
+
+The pure-five projections are thus V_5={1,2}, V_25={2}, V_125={1,2}, giving I_0={1,3}. These identities follow directly from the listed congruences: A_15 removes root1 inside A_25, A_3 removes root0, and all other listed moduli have incompatible first-five phases there. The two nonzero-root lifts of A_125 avoid every other class.
+
+This is a NONCOVER: integer7 is uncovered. It does not refute an additional theorem under the full EB1 whole-cover hypothesis. The whole-cover question about I_0 remains unproved; the example only identifies which existing local premises cannot establish it. No numerical enumeration or Lean verification is asserted.
