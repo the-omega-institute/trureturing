@@ -13875,3 +13875,100 @@ and the absence of a complete local kernel replay of its arbitrary-height
 reduction. No new source replay, numerical optimization or Lean
 verification is asserted here. The all-concentrated cases at larger
 height and all branches with R nonempty remain unresolved.
+
+## 107. Deep prime-private concentration bounds every original root group
+
+Keep one EB1 original cover with R=empty and normalized prime classes.
+For a nonternary prime q, let P_q be its COMPLETE original private
+region and Gamma_q its congruence hull from PH3--PH4. Put
+
+    h_q=v_3(Gamma_q).
+
+Thus h_q is the largest h<=H_3 for which P_q lies in one actual residue
+u modulo3^h. Concentration gives h_q>=1. Choose ANY prime p in the
+opposite color, with no ordering requirement between p and q. Suppose
+
+    h_q>=p-2.                                      (RG1)
+
+For each nonzero q-root r, define the COMPLETE original group
+
+    J_r={d in D:q divides d, d>q, a_d=r modq}.
+
+Then every such group obeys
+
+    |J_r|<=p-1;                                    (RG2)
+    |J_r|=p-1 ==> sum_(d in J_r)d
+                    <=p*q*(3^(p-1)-1)/2.           (RG3)
+
+These bounds include all original q-exponents, same-color cofactors
+and ternary heights. They are not limited to the chain3^c q.
+
+### Apply the existing exact phase-group repair
+
+For nonempty J_r, use DR1 with parent q: move A_q to r modq, remove
+ALL J_r, and keep every other original. Its exact whole-cover hole
+set is P_q. In particular no removed child's independent private
+point is substituted for the actual joint obligation.
+
+By RG1, this obligation lies in the cylinder
+
+    x=0 modq, x=u mod3^(p-2).
+
+For a=0,...,p-2 add the complete CRT AP
+
+    x=0 modq, x=a+1 modp, x=u mod3^a,
+    numerical modulus3^a*p*q.                     (RG4)
+
+The ternary constraint at a=0 is empty. Every point of P_q avoids
+retained original A_p=0 modp, so its nonzero p-root selects a single
+one of these p-1 APs. Its fixed private prefix supplies that AP's
+ternary condition. Thus RG4 covers the entire P_q. Equivalently,
+RG4 together with retained A_p covers the larger displayed cylinder.
+
+Every new modulus contains opposite-color primes p and q, so CP1
+makes it absent from the entire old palette. The labels are distinct,
+odd nonunits, and divide the original period because p-2<=h_q<=H_3.
+No retained or freed original label is reused. The resulting whole
+cover has
+
+    N_new=N-|J_r|+(p-1),
+    W_new=W-sum_(d in J_r)d+p*q*sum_(a=0..p-2)3^a.
+
+DR2's two EB1 budgets give RG2 and RG3. An empty group satisfies RG2
+without a phase move. This is a consumer of DR1--DR2 and the vacant
+cross-color CRT palette, not a new general repair theorem.
+
+### Existing singleton roots sharpen the complete inventory bound
+
+Let t_q=max{c:3^c q belongs to D} and s=min(h_q,t_q). For each
+c=1,...,s, original3^c q divides Gamma_q. By DR5 its actual q-root
+group cannot contain any second original label. These s groups are
+therefore singletons, and their roots are distinct. Comparable-class
+disjointness makes every proper q-bearing original have a nonzero
+q-root. Hence, writing N_q for ALL original q-bearing labels,
+
+    N_q=1+sum_(r!=0)|J_r|
+       <=1+s+(q-1-s)*(p-1).                        (RG5)
+
+The initial1 is A_q. The singleton assertion is exactly the existing
+DR5 prohibition; no additional source-reset or singleton theorem is
+needed for this count.
+
+Conversely, if an actual group has at least p members, or has p-1
+members with modulus sum greater than the RG3 threshold, then
+
+    h_q<=p-3.                                      (RG6)
+
+Thus its complete private region meets at least two actual prefixes
+modulo3^(p-2). This is a dispersion statement about one source, not
+an independence or full-fiber claim.
+
+One may choose the smallest opposite-color prime; GM1 places it in
+{5,7,11,13}. For p=5, deep concentration means h_q>=3, every root
+group has at most four labels, and a four-label group's sum is at most
+200q. SG3's many actual collision roots do not establish RG1: their
+separate nonempty private traces need not share a deep ternary prefix.
+If RG1 fails, RG4 is not justified; if it holds and all groups meet
+these budgets, no strict descent follows from this operation. All
+original heights remain unrestricted. No Lean verification or
+unrestricted noncoverage is asserted.
