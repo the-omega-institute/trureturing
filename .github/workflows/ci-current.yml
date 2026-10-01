@@ -52,10 +52,17 @@ jobs:
           CI_UNITS: |
             # Shared: patterns of every unit.
             [*]
+            */.editorconfig
+            */Directory.Build.*
+            */Directory.Packages.props
+            */NuGet.Config
+            */NuGet.config
+            */global.json
+            */nuget.config
             .editorconfig
             .github/*
             .gitignore
-            Directory.Build.props
+            Directory.Build.*
             Directory.Packages.props
             Golden/gate-authority-roots.toml
             Makefile
@@ -65,6 +72,8 @@ jobs:
             Meta/ReportProducers/*
             Meta/ci-checks.json
             Meta/engineering-projects.json
+            NuGet.Config
+            NuGet.config
             Reg/lake-manifest.json
             Reg/lakefile.toml
             docs/CONTRIBUTING.md
@@ -74,6 +83,7 @@ jobs:
             lakefile.toml
             lean-report-inputs.json
             lean-toolchain
+            nuget.config
             tools/ARCHITECTURE.md
             tools/Architecture/*
             tools/Makefile
@@ -104,7 +114,6 @@ jobs:
             tools/scripts/agent/openproblem/TARGET-GATES.md
             tools/scripts/dotnet-test.sh
             tools/scripts/workflow/ci-entry.sh
-            tools/tests/Directory.Build.props
             tools/tests/StrataLint.ScriptTests/*
             [banned-api-proof]
             tools/StrataLint.Cli/*
@@ -468,6 +477,11 @@ jobs:
             tools/scripts/worktree/lean_cache.py
             tools/tests/StrataLint.CoverBatch.Tests/*
             [tests-declared-template]
+            D5/S3/Fourier/IntegerCharacterCoercivity.lean
+            D5/S3/TotalVariation/PrimitiveBridgeCancellation.lean
+            Reg/D5/S3/Fourier/IntegerCharacterCoercivity.lean
+            Reg/D5/S3/TotalVariation/PrimitiveBridgeCancellation.lean
+            tools/scripts/worktree/lean-cache-run.sh
             Meta/ci-cache-paths.json
             tools/StrataLint.Configuration/*
             tools/TestSupport/StrataLint.ConfigurationTestSupport/*
@@ -854,16 +868,15 @@ jobs:
       - id: judge_key
         env:
           JUDGE_INPUTS: |
-            .editorconfig
+            **/.editorconfig
+            **/Directory.Build.*
+            **/Directory.Packages.props
+            **/NuGet.Config
+            **/NuGet.config
+            **/global.json
+            **/nuget.config
             Blueprint/**/*.scribe.cs
-            Directory.Build.*
-            Directory.Packages.props
-            NuGet.Config
-            NuGet.config
-            global.json
-            nuget.config
             tools/Architecture/BannedSymbols*.txt
-            tools/Directory.Build.*
             tools/StrataLint.Cli/**
             tools/StrataLint.Configuration/**
             tools/StrataLint.Engine/**

@@ -53,6 +53,11 @@ class CiDetectTests(unittest.TestCase):
         self.assertEqual(self.hits(self.detect(spec, ["abc"])), {"deep": False, "one": True})
         self.assertEqual(self.hits(self.detect(spec, ["abbc"])), {"deep": False, "one": False})
 
+    def test_star_and_question_mark_match_newlines_in_paths(self):
+        spec = "[deep]\ntools/*\n[one]\na?b\n"
+        self.assertEqual(self.hits(self.detect(spec, ["tools/new\nname.cs"])), {"deep": True, "one": False})
+        self.assertEqual(self.hits(self.detect(spec, ["a\nb"])), {"deep": False, "one": True})
+
     def test_patterns_match_the_whole_path(self):
         spec = "[exact]\nMakefile\n"
         self.assertEqual(self.hits(self.detect(spec, ["tools/Makefile"])), {"exact": False})

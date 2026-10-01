@@ -50,8 +50,8 @@ without comparing stored source digests with current repository bytes. Reused ro
 origins. Native report artifacts travel with `.lake/build` in the project snapshot;
 there is no separate report cache or preparation shortcut. Remote seed compatibility
 remains the resolved mathlib revision, with OS/architecture binary isolation.
-`ci-current` builds the report once and transports it with the project build directory;
-the split workflows consume their own unit results and do not select another report run.
+The current job builds the report once and transports it with the project build directory;
+unit jobs consume their own results and do not select another report run.
 
 No release command selects a CI run or report artifact. Truth-release bundles are
 verified offline from their declared source and digest; eligibility and branch
@@ -62,7 +62,7 @@ CLAUDE.md §8.12; branch protection keeps `strict=false`.
 ## D5-T0017: deployment boundary
 
 `StrataLint topology` reads the workflow at the resolved remote default-branch
-commit and checks the independent workflow family and current pull-request
+commit and checks the CI workflow and its current pull-request
 contract. Its `STEADY-STATE-ACTIVE` result describes reachable topology; it does
 not prove that a run executed that version or that branch protection is configured.
 Deployment and protection state need their own observed evidence.

@@ -88,6 +88,9 @@ class CiRequiredTests(unittest.TestCase):
             (needs(alpha="success"), [], "HITS"),
             (needs(alpha="success"), {}, "HITS"),
             (needs(alpha="success"), {"alpha": "true"}, "HITS"),
+            (needs(alpha="success"), '{"alpha":true,"alpha":false}', "HITS has a duplicate member"),
+            ('{"detect":{"result":"success"},"detect":{"result":"failure"}}', {"alpha": True},
+             "NEEDS has a duplicate member"),
         ]
         for needs_value, hits, message in cases:
             with self.subTest(needs=needs_value, hits=hits):

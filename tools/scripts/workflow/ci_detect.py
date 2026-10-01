@@ -35,7 +35,8 @@ def pattern_regex(pattern):
         raise DetectError(f"invalid pattern: {pattern!r}")
     if any(char in "[]{}()|\\@" for char in pattern):
         raise DetectError(f"unsupported pattern syntax: {pattern!r}")
-    return re.compile(re.escape(pattern).replace(r"\*", ".*").replace(r"\?", "."))
+    # DOTALL: paths may contain newlines, which `*` and `?` match like any character.
+    return re.compile(re.escape(pattern).replace(r"\*", ".*").replace(r"\?", "."), re.DOTALL)
 
 
 def parse(spec):

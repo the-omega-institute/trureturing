@@ -25,9 +25,16 @@ def load(name):
     if text is None:
         raise InputError(f"{name} is required")
     try:
-        return json.loads(text)
+        return json.loads(text, object_pairs_hook=lambda pairs: unique_object(name, pairs))
     except json.JSONDecodeError as error:
         raise InputError(f"{name} is not JSON: {error}") from error
+
+
+def unique_object(name, pairs):
+    keys = [key for key, _ in pairs]
+    if len(set(keys)) != len(keys):
+        raise InputError(f"{name} has a duplicate member")
+    return dict(pairs)
 
 
 def main():
