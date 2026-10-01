@@ -30998,8 +30998,33 @@ L5(u)>51/100 or L7(u)>23/42. Here L5,L7 sum the corresponding
 conditional reciprocal costs only over classes active at that
 same u; the pure-power totals are bounded separately. No cited
 global bound yet provides a live u where both costs are small.
+PC7 supplies a single live-u law using only the primes of M,
+with first prefix base at least9 and subsequent true prime-gap
+bases. The original inventory's joint normalized upper cost
+(100/51)*sum5^(-j)*kappa(d)+(42/23)*sum7^(-j)*kappa(d)<=1
+would provide the required common u by averaging; that bound
+is not established. The query cap kappa is a minimum over its
+prime caps, and receives no5-forest factor.
 No actual covering example or general contradiction is supplied
 by this necessary shape.
+
+[Report385, section36](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#36-a-complete-prime-chain-can-retain-an-existing-q-coordinate)
+also gives a sufficient descent for mixed BC2 residuals without
+a common prime divisor of their repeated bases. It keeps the
+complete old q coordinate while moving complete selected prime
+coordinates p_1,p_2,... to q,p_1,... . Distributed prefixes remove
+one endpoint per repeated base. The first tree additionally
+reserves every cross-family numerical collision p_1^a*u/q^a*u
+at all common heights. A root matching into the surviving good
+p_1 tails excludes all q*p_1-bearing events. Then each remaining
+class pulls back to at most one AP through the same old point.
+Numerical labels are distinct, giving a smaller whole cover.
+If the other selected trees exist but the matching fails with
+at least q good p_1 roots, an actual root rectangle forces at
+least that many q*p_1-bearing residual classes. All-height
+collision reservation and a simultaneous successful assignment
+remain genuine conditions; this does not assert that every
+mixed residual can be transported.
 
 [Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
 keeps the residual cover's entire old q coordinate unchanged.

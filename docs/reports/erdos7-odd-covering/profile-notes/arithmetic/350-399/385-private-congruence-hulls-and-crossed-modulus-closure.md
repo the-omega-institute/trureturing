@@ -4849,8 +4849,175 @@ modulus contains both5 and7. Report376's injective full chain
 avoids that collision but supplies precisely its stated joint
 tree test, not two independently optimized coordinate bounds.
 
+The existing PC7 law gives a precise sufficient budget test.
+Select only the primes of M as a full-height chain starting at3,
+skipping5 and7, and put
+
+    kappa(d)=min_(p_i|d) r_i^(-v_(p_i)(d)), d>1,d|M.
+
+The first base is at least9; later bases are the actual selected
+prime gaps plus one. Project PC7's single law on R_3 to u. Its
+support consists of live sections and its AP bounds are kappa(d).
+Thus, if the actual original numerical inventory satisfies
+
+    (100/51) sum_(5^j*d in C0, j>=1,d>1,d|M) 5^(-j)*kappa(d)
+    +(42/23) sum_(7^j*d in C0, j>=1,d>1,d|M) 7^(-j)*kappa(d)
+       <=1,
+
+then the expected normalized cost
+(100/51)*L5(u)+(42/23)*L7(u) is at most one under this SAME law.
+At some live u both individual costs are therefore at most their
+BC11 thresholds, contradicting BC11. When M=1 both mixed sums
+are empty and the contradiction is immediate. This test directly
+uses PC7 and averaging; it is not another probability construction.
+Its inventory bound has not been proved for every hypothetical
+cover. The minimum in kappa must not be replaced by a product,
+and a four-root forest factor cannot be inserted into these
+queries, whose moduli d contain neither5 nor7.
+
 BC8--BC11 turn the numerical certificate's failure into phase,
 original-label and same-section requirements. They do not prove
 that these requirements are inconsistent. The existence of the
 required common section, arbitrary mixed residual repairs, and
 unrestricted odd-cover nonexistence remain unresolved.
+
+## 36. A complete prime chain can retain an existing q coordinate
+
+BC5 requires the entire BC2 residual to be q-free. The following
+consumer combines Report376's full-height chain with section27's
+root matching and applies to mixed residuals. It neither assumes
+that E has a common prime divisor nor asserts that its required
+trees and matching always exist.
+
+Use the actual BC2 whole cover C with L<n classes. Its repeated
+numerical bases E are all q-free, and each occurs twice; every
+q-bearing numerical label occurs at most once. Write its actual
+complete period as
+
+    q^B product_(i=1,...,t) p_i^H_i M,
+    q<p_1<...<p_t, H_i>=1,
+    gcd(M,q product_i p_i)=1.
+
+Here B is the residual q-height, not the cofactor-period symbol
+used in sections31--35. It can be zero. Each repeated base must
+have at least one dividing prime in the selected chain. Select
+one actual endpoint of each pair and assign its full prefix to
+one such prime, forming prefix collections S_i. All phases and
+heights come from C, including any new repair coordinates.
+
+### Reserve every numerical collision, at every height
+
+Besides S_1, exclude from the p_1 tree the following collection T.
+For every actual q-free class with modulus p_1^a*u, a>=1 and
+gcd(u,q*p_1)=1, include its complete p_1 prefix in T whenever C
+also contains numerical label q^a*u. The cofactor u may contain
+other selected primes; this comparison uses the entire numerical
+label. Put D_1=S_1 union T, interpreted as a union of prefix
+cylinders. The exponents requiring this reservation range through
+all a<=min(B,H_1), not just a=1 as in section27.
+
+Let G be the set of p_1 first roots under which a complete q-ary
+tail of depth H_1-1 avoids D_1. A forbidden whole root is not in
+G. Use Report375's complete-tree condition to determine this set;
+strict relative prefix capacity below one in a root's tail is
+one sufficient test, not a necessary numerical characterization.
+
+For every q root b, let F_b consist of the p_1 roots of ALL
+actual classes in C divisible by q*p_1 whose first-q root is b.
+Assume the graph with allowed edges
+
+    b -- a  iff  a in G and a notin F_b
+
+has a matching covering every q root, written as an injection
+sigma: Z/q -> G with sigma(b) notin F_b. Use these matched roots
+and their available tails to construct a complete q-ary p_1 tree.
+For every i>=2 also require a complete p_(i-1)-ary tree through
+all H_i digits avoiding S_i. BC5's capacity condition is sufficient
+on those coordinates, while their exact tree condition may admit
+more cases. All these choices must hold simultaneously.    (BC12)
+
+### The source keeps the old q digits and still has single-AP pullbacks
+
+Let lambda_1=q and lambda_i=p_(i-1). Write theta_i for the
+prefix-compatible injection supplied by each chosen complete tree;
+theta_1 has first-root map sigma. On the output carrier
+
+    q^max(B,H_1) product_(i=2,...,t) p_(i-1)^H_i M,
+
+associate to each z one actual old point y by CRT:
+
+    y mod q^B = z mod q^B,
+    y mod p_i^H_i = theta_i(z mod lambda_i^H_i),
+    y mod M = z mod M.
+
+The old q and old p_1 coordinates are correlated through z;
+they are not sampled independently. The q exponent max(B,H_1)
+provides every digit needed by both expressions. Every old point
+y is covered by C, so its covering class supplies an output
+event at that SAME z.
+
+Every class divisible by q*p_1 has empty pullback. If its
+first-q root is b, its old p_1 root lies in F_b, whereas the
+source map selects sigma(b) outside F_b. A remaining class has
+the unique numerical form
+
+    m=q^beta product_i p_i^alpha_i u,
+    gcd(u,q product_i p_i)=1, beta*alpha_1=0.
+
+It pulls back to zero or one AP with numerical modulus
+
+    m'=q^(beta+alpha_1) product_(i>=2) p_(i-1)^alpha_i u.
+
+When beta>0 the old q prefix is unchanged and alpha_1=0.
+When alpha_1>0, beta=0 and the p_1 prefix has one q-prefix
+inverse under theta_1. There is consequently no unspecified
+gap of q digits to split into multiple APs. All other primes
+use their own complete prefix inverse, as in PC2.
+
+The numerical map is injective within the q-free group and
+within the p_1-free q-bearing group. Equality across these
+groups forces old labels p_1^a*u and q^a*u with the SAME a
+and complete cofactor u: output valuations at all other chain
+coordinates recover all other old exponents. T has already
+deleted the former class's prefix. Labels containing neither
+q nor p_1 stay q-free in the output and cannot collide with
+either q-bearing image group.
+
+The S_i deletions remove at least one actual endpoint of every
+repeated base. Since E is q-free and all other numerical labels
+in C were unique, the remaining output labels are distinct.
+They are odd and nonunit, each input class supplies at most one
+output, and no closing class is added. Thus BC12 would give a
+whole distinct odd cover with at most L-|E|<n classes, contrary
+to minimum original cardinality.
+
+### A failed root matching has an actual mixed-label cost
+
+Fix one endpoint assignment and reserve collection as above, and
+assume all the required trees for i>=2 exist. The first-coordinate
+matching must fail. If g=|G|<q, the tail exclusions already leave
+too few available first roots. If g>=q, section27's same Hall
+argument supplies nonempty I subset Z/q, t=|I|, with
+
+    W=G intersect intersection_(b in I) F_b,
+    |W|>=g-t+1.
+
+The actual q*p_1-bearing classes must supply every pair in
+I times W. Each supplies only one root pair, irrespective of
+its higher exponents, so their number is at least
+
+    t*|W|>=t*(g-t+1)>=g.                          (BC13)
+
+This is a necessary cost for the one common assignment and
+source map, not additive costs from different optimized chains.
+Unlike section27, G now also accounts for deep prefix deletion
+and all-height collision reservation. The old count h0, which
+reserved only q-height-one labels, cannot replace these conditions.
+
+BC12--BC13 connect distributed repeated bases to actual mixed
+q-bearing blockers while keeping every old q digit. A general
+BC2 residual may fail the selected-tree or matching conditions;
+no argument here forces a successful assignment for every one.
+The unrestricted #7 objective and that joint existence problem
+remain unresolved. The result is an ordinary consumer of the
+existing tree transport and Hall argument, not new Lean evidence.
