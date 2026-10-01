@@ -1,0 +1,6 @@
+**Theorem 5.2 (exact coefficients and contraction).** At every natural exponent vector $\alpha$, the coefficient of $F_{U,m}$ is $c(\alpha)$ if $\sum_i\alpha_i=m$ and $R_U(\alpha)=V$, and zero otherwise. For each represented index $i$,
+
+$$
+\partial_i F_{U,m+1}=F_{U+\operatorname{span}\{a_i\},m}.
+$$
+

@@ -1559,3 +1559,51 @@ unfinished, including noncompact cusps and nonorientable manifolds.
 The existing escape audit remains unfinished:
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
 Neither these checks nor CI closes that audit or the remaining mathematics.
+
+## Continuous actual matrix coefficients and diagonal positive dilation
+
+Five further transient classical composition checks supply additional
+ingredients for the still missing actual recurrent-conjugation constraint.
+The same original H3 coordinate homeomorphism makes its Lorentz-coordinate
+map continuous. In the same actual compact-open isometry-group topology,
+existing point evaluation and the exact frame expansion make
+`e ↦ L(e)u` continuous for each fixed real four-vector `u`.
+The coefficient matrix `A(e)ij = (L(e)(single j 1))i` is therefore
+continuous in the finite real product topology. Existing Mathlib
+`LinearMap.toMatrix'` identifies these exact coefficients and gives
+`A(1)=1` and `A(e*f)=A(e)*A(f)`. The already proved faithful linear
+representation makes `A` injective. The matrices of `e` and `e⁻¹` are
+two-sided inverses. This does not assert a topological embedding or
+surjectivity onto a matrix group.
+
+A separate generic real dynamical check assumes `a>0`, `a≠1`, and
+neighborhood recurrence of `x` under `y ↦ a*y`; it proves `x=0`.
+Exact scalar iteration is `a^n*x`. Existing geometric-power convergence
+handles `0<a<1`; divergence of the absolute-value orbit handles `a>1`.
+The recurrence is expressed by arbitrarily late visits to every
+neighborhood, not by assuming a fixed point. This generic check alone
+classifies no actual H3 isometry.
+
+The real linear coordinate change
+`P(u)=(u0+u3,u1,u2,u0-u3)` has inverse
+`P⁻¹(v)=((v0+v3)/2,v1,v2,(v0-v3)/2)`.
+Conjugating the same actual isometry representation through `P` preserves
+its group multiplication and its action on every actual H3 point.
+For the actual positive upper-half-space dilation with scale `a>0`,
+the transformed coordinates have weights `(a,1,1,a⁻¹)`. Exact frame
+expansion proves that its transformed linear map acts with these weights
+on every real four-vector, not only on the coordinate-image points.
+This diagonalization is derived for the actual existing dilation and
+original metric; it is not supplied as a premise.
+
+The five scoped checks print 15 closures using only `propext`,
+`Classical.choice` and `Quot.sound` under the same pins. No tracked Lean
+declaration or mathematical novelty is claimed. Combining the actual
+continuous matrix coefficients, dilation diagonalization and generic
+scalar recurrence into an actual H3 recurrent-conjugation classification
+remains unfinished. Centralizer triviality, lattice conjugacy, cusp
+classification and full Mostow-Prasad homotopic-isometry existence and
+uniqueness remain unfinished, including noncompact cusps and nonorientable
+manifolds. The existing escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these checks nor CI closes that audit or the remaining mathematics.
