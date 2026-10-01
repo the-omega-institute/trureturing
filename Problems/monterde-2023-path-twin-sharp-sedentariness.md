@@ -86,7 +86,7 @@ NumPy on 400 000 times in `[0, 4000]` gives `min |U(t)_{1,1}| = 0.27785` for
 where the paper proves that the infimum is `1/5`.
 
 The rank statements in the Triage section are reproduced by the following
-exact program (Python with SymPy). Each `2cos(mπ/N)` is written as
+exact program (run with Python 3.9.6 and SymPy 1.14.0). Each `2cos(mπ/N)` is written as
 `ζ^m + ζ^(−m)` with `ζ = e^{iπ/N}` and reduced modulo the cyclotomic polynomial
 `Φ_{2N}`; integer relations are found by integer row reduction of the
 coefficient vectors.
