@@ -31473,8 +31473,47 @@ factor, and a paired p*u original, with different first-p roots for
 the different pairs. Each non-pure pair must have DIFFERENT residues
 on its complete common cofactor u; agreement would provide the one
 extra admissible root needed for a smaller cover. Thus N_3=28 forces
-P=29 and 27 actual unequal cofactor-residue pairs. This records a
-joint phase obstruction, not an exclusion of the remaining case.
+P=29 and 27 actual unequal cofactor-residue pairs. The configuration
+has ternary height one, so the existing Report707 SS4 already excludes
+it, with arbitrary remaining prime heights and actual phases.
+
+[Report385, sections58--59](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#58-reuse-the-height-one-source-before-resolving-individual-collision-phases)
+uses the original pure powers q^2,...,q^H_q, which lie outside both
+NF66 inventories, to give N_q>=p-q+1+H_q. Report708 TH3's existing
+thirteen-prime height-one theorem implies H_3=1 forces P>=47 and
+N_3>=46. No replay of either existing source certificate is needed.
+
+For arbitrary H_q, a guarded IC1 graph uses the q^h-prefixes left
+uncovered by the original pure-q classes. Its common witness retains
+every old q digit and every divided high-p digit. Collision reservations
+use the actual paired labels p*u,q^h*u, while mixed p*q originals
+forbid their p-root only at compatible q-prefixes. A full matching
+would delete the pure-p original and give a smaller distinct cover.
+When h exceeds the original q-height there are no paired-label
+collisions, but the same actual mixed-prefix restrictions remain.
+
+The equality N_3=29 forces P=29,H_3=2 and no mixed3*29 original.
+At h=3, pure3 and pure9 leave15 prefixes, which inject into the28
+nonzero29 roots. This contradicts minimum cardinality. Consequently
+the selected extremal whole cover must satisfy N_3>=30, while its
+height-one branch satisfies N_3>=46. More generally, absence of the
+pair3*29 forces H_3>=3 and N_3>=69 by three disjoint layer demands.
+These are ordinary proof consequences, with the source boundaries
+of the cited theorems; they do not settle unrestricted Erdős #7.
+
+[Report385, section60](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#60-the-two-first-root-branches-share-one-original-label-inventory)
+keeps the two first-three-root branches in the same Hall obstruction.
+Writing s for the number of actual support primes, it proves
+H_3=2 implies N_3>=P+s-7, and H_3>=3 implies N_3>=P+2. A mixed
+original has only one first-three root; a common forbidden P-root
+across both branches therefore requires two different original labels,
+even when those labels have three-height two. Fresh-prefix constraints
+at other actual support primes force the distinct labels3*r used in
+the SAME inventory bound. Their mixed inventories are not separately
+summed. The height-one case gives N_3>=P+s-5>=56, using the existing
+thirteen-prime source. Thus every EB1-selected whole cover requires
+N_3>=31. This excludes thirty labels without any new phase enumeration;
+it does not exclude all larger original inventories.
 
 [Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
 keeps the residual cover's entire old q coordinate unchanged.
@@ -31526,3 +31565,39 @@ mixed columns remain, and the complementary same-source charge Q_L
 is still unpaid in general. The unrestricted #7 objective is
 unchanged and unresolved. These are ordinary symbolic results;
 no new Lean verification or new finite producer is claimed.
+
+[Report385, section61](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#61-variable-depth-guarded-frontiers-retain-one-common-witness)
+permits a prefix antichain of different depths outside any selected
+actual pure-q guards containing A_q. Each leaf uses its own collision
+depth while retaining every old q digit and the literal divided p-tail.
+The interface contains every uniform-depth guarded graph, and a finite
+noncover with private points admits a variable-depth matching although
+all its uniform-depth graphs fail. For the full original q-height H,
+every successful finite frontier has a successful representative of
+depth at most H+1; an exact tree recurrence retains disjoint sets of
+assigned p-roots across child subtrees. These results concern the same
+actual source and give a finite joint interface, without asserting
+that every hypothetical cover admits a matching or adding Lean
+verification.
+
+[Report385, section62](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#62-weighted-root-reuse-retains-exact-original-label-budgets)
+allows a first-p root to be reused at different q-depths. Each use
+copies its actual q-free p-bearing original batch, charging its class
+count R_a and divided-modulus sum S_a. Positive batches are used at
+most once per depth; empty batches have no such capacity restriction.
+At fresh depths even the normalized pure-p root0 is available, with
+R_0=S_0=1 and output modulus q^h. The existing PH2 replacement rule
+compares the resulting count and modulus sum with the SAME removed
+original inventory. For a fixed frontier, ordinary minimum-cost
+assignment applies independently at each depth.
+
+[Report385, section63](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#63-finite-depth-bounds-retain-the-weighted-replacement-budget)
+makes the weighted strict-improvement search finite. After folding
+empty-workload branches at depth H+1, the existing full-tree leaf
+identity bounds the remaining depth by the actual removed class
+budget. A separate bound depends only on H, q and the number of
+positive root batches, using constant deep allowed lists and loop
+erasure that does not increase either cost. This extends the transport
+interface without proving that an improving allocation exists for
+every whole cover. Original labels, common witnesses and arbitrary
+original heights remain in scope; unrestricted Erdős #7 remains open.

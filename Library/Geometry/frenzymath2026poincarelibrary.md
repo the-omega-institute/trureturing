@@ -1505,3 +1505,105 @@ noncompact cusps and nonorientable manifolds. The existing escape audit
 remains unfinished:
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
 Neither these checks nor CI closes that audit or the remaining mathematics.
+
+## Lorentz coordinates and linear extension of actual H3 isometries
+
+A further transient classical composition starts from the same original
+upper-half-space metric, without replacing its distance. Existing
+half-distance and hyperbolic-function identities give, for original
+upper-half-space points `p,q`,
+`cosh(hyperbolicDist p q) = 1 + distAmbient(p,q)^2/(2*height p*height q)`.
+For the original H3 point with horizontal coordinate `x + i*y` and
+positive height `t`, define the real four-coordinate map
+`C(p) = ((x^2+y^2+t^2+1)/(2*t), x/t, y/t,
+(x^2+y^2+t^2-1)/(2*t))` and Lorentz bilinear form
+`B(u,v) = u0*v0-u1*v1-u2*v2-u3*v3`.
+The exact original-distance identity is `B(C(p),C(q)) = cosh(dist p q)`.
+It gives `B(C(p),C(p)) = 1`, injectivity of `C`, and preservation of this
+kernel by every actual H3 isometry.
+
+The four actual upper-half-space points `(0,1)`, `(0,2)`, `(1,1)` and
+`(i,1)` have Lorentz vectors `(1,0,0,0)`, `(5/4,0,0,3/4)`,
+`(3/2,1,0,1/2)` and `(3/2,0,1,1/2)`. Exact coefficient expansion spans
+the real four-dimensional vector space, and their Lorentz probes detect
+the zero vector. Distances to these four points determine every actual H3
+point. The values of an actual H3 isometry at these four points determine
+the entire isometry.
+
+For every actual H3 isometry `e`, preservation of the frame Gram matrix
+makes the four vectors `C(e(frame_i))` linearly independent. Existing
+Mathlib finite-dimensional basis construction and basis equivalence give
+a real linear equivalence `L(e)` sending each `C(frame_i)` to
+`C(e(frame_i))`. Pairing the exact frame expansion with the image basis
+proves `L(e)(C(p)) = C(e(p))` for every actual H3 point `p`, rather than
+only for the four frame points. Bilinearity and kernel preservation on
+the frame then give `B(L(e)u,L(e)v) = B(u,v)` for all real four-vectors.
+Agreement on the frame proves `L(1) = 1` and
+`L(e*f) = L(e)*L(f)`, with composition in the same order as the original
+isometry group. Coordinate injectivity and determination by the four
+frame values prove that this group homomorphism is injective. These
+arguments cover the full original H3 isometry group; they do not assume
+orientation preservation.
+
+The six scoped transient checks reuse the existing original
+upper-half-space metric, real hyperbolic-function identities, finite sums,
+finite-dimensional basis construction and basis equivalence. Their
+23 printed closures use only `propext`, `Classical.choice` and `Quot.sound`
+under the same pins. No tracked Lean declaration or mathematical novelty
+is claimed. Continuity of this representation, any assertion that its
+image is the full Lorentz group, and an actual H3 recurrent-conjugation
+constraint are not established by these checks. Centralizer triviality,
+lattice conjugacy, finite-volume cusp classification and full
+Mostow-Prasad homotopic-isometry existence and uniqueness remain
+unfinished, including noncompact cusps and nonorientable manifolds.
+The existing escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these checks nor CI closes that audit or the remaining mathematics.
+
+## Continuous actual matrix coefficients and diagonal positive dilation
+
+Five further transient classical composition checks supply additional
+ingredients for the still missing actual recurrent-conjugation constraint.
+The same original H3 coordinate homeomorphism makes its Lorentz-coordinate
+map continuous. In the same actual compact-open isometry-group topology,
+existing point evaluation and the exact frame expansion make
+`e ↦ L(e)u` continuous for each fixed real four-vector `u`.
+The coefficient matrix `A(e)ij = (L(e)(single j 1))i` is therefore
+continuous in the finite real product topology. Existing Mathlib
+`LinearMap.toMatrix'` identifies these exact coefficients and gives
+`A(1)=1` and `A(e*f)=A(e)*A(f)`. The already proved faithful linear
+representation makes `A` injective. The matrices of `e` and `e⁻¹` are
+two-sided inverses. This does not assert a topological embedding or
+surjectivity onto a matrix group.
+
+A separate generic real dynamical check assumes `a>0`, `a≠1`, and
+neighborhood recurrence of `x` under `y ↦ a*y`; it proves `x=0`.
+Exact scalar iteration is `a^n*x`. Existing geometric-power convergence
+handles `0<a<1`; divergence of the absolute-value orbit handles `a>1`.
+The recurrence is expressed by arbitrarily late visits to every
+neighborhood, not by assuming a fixed point. This generic check alone
+classifies no actual H3 isometry.
+
+The real linear coordinate change
+`P(u)=(u0+u3,u1,u2,u0-u3)` has inverse
+`P⁻¹(v)=((v0+v3)/2,v1,v2,(v0-v3)/2)`.
+Conjugating the same actual isometry representation through `P` preserves
+its group multiplication and its action on every actual H3 point.
+For the actual positive upper-half-space dilation with scale `a>0`,
+the transformed coordinates have weights `(a,1,1,a⁻¹)`. Exact frame
+expansion proves that its transformed linear map acts with these weights
+on every real four-vector, not only on the coordinate-image points.
+This diagonalization is derived for the actual existing dilation and
+original metric; it is not supplied as a premise.
+
+The five scoped checks print 15 closures using only `propext`,
+`Classical.choice` and `Quot.sound` under the same pins. No tracked Lean
+declaration or mathematical novelty is claimed. Combining the actual
+continuous matrix coefficients, dilation diagonalization and generic
+scalar recurrence into an actual H3 recurrent-conjugation classification
+remains unfinished. Centralizer triviality, lattice conjugacy, cusp
+classification and full Mostow-Prasad homotopic-isometry existence and
+uniqueness remain unfinished, including noncompact cusps and nonorientable
+manifolds. The existing escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these checks nor CI closes that audit or the remaining mathematics.
