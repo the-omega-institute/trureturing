@@ -31501,6 +31501,20 @@ pair3*29 forces H_3>=3 and N_3>=69 by three disjoint layer demands.
 These are ordinary proof consequences, with the source boundaries
 of the cited theorems; they do not settle unrestricted Erdős #7.
 
+[Report385, section60](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#60-the-two-first-root-branches-share-one-original-label-inventory)
+keeps the two first-three-root branches in the same Hall obstruction.
+Writing s for the number of actual support primes, it proves
+H_3=2 implies N_3>=P+s-7, and H_3>=3 implies N_3>=P+2. A mixed
+original has only one first-three root; a common forbidden P-root
+across both branches therefore requires two different original labels,
+even when those labels have three-height two. Fresh-prefix constraints
+at other actual support primes force the distinct labels3*r used in
+the SAME inventory bound. Their mixed inventories are not separately
+summed. The height-one case gives N_3>=P+s-5>=56, using the existing
+thirteen-prime source. Thus every EB1-selected whole cover requires
+N_3>=31. This excludes thirty labels without any new phase enumeration;
+it does not exclude all larger original inventories.
+
 [Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
 keeps the residual cover's entire old q coordinate unchanged.
 It excludes one endpoint per repeated pair and reserves the

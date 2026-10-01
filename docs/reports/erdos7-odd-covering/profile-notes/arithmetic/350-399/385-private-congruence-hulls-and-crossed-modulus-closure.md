@@ -8839,7 +8839,129 @@ verification is claimed.
 These inequalities do not bound N_3 from above or exclude every
 extremal family. For example the crude counts alone still permit
 N_3=30,H_3=2,P=29 with c_1+t=29,c_2=1,t>=14; they do not assert
-that any such inventory has actual covering phases. The full graphs
-retain additional prefix and cofactor restrictions, which must be
-used on the same original family. Unrestricted Erdős #7 remains
-unresolved.
+that any such inventory has actual covering phases. Section60 uses
+the full graphs on the same original family to exclude that count.
+Unrestricted Erdős #7 remains unresolved.
+
+## 60. The two first-root branches share one original label inventory
+
+Let P be the largest support prime of the same EB1-selected cover,
+and let s be its number of actual support primes. Retain the attributed
+nine-prime-support premise, so s>=9 and P>=29. The guarded graphs give
+
+    H_3=1  ==> N_3>=P+s-5>=56;
+    H_3=2  ==> N_3>=P+s-7;
+    H_3>=3 ==> N_3>=P+2.
+    In every height case, N_3>=31.                  (NF82)
+
+The height-one numerical bound also uses NF73's existing conclusion
+s>=14 and P>=47. All counts refer to one actual original family;
+no lower bounds optimized on different phase configurations are added.
+
+### The fresh third level forces actual labels at height two
+
+Assume H_3=2. For every actual support prime r>=17, NF79 applied to
+(p,q)=(r,3) gives at least r-15>0 original labels divisible by3*r.
+Divisor closure therefore supplies the actual numerical label3*r.
+This is a direct application of the existing fresh-prefix inequality,
+not another proof of its transport map.
+
+Relative to the fixed largest prime P, define
+
+    c1=#{d in D:P does not divide d, v3(d)=1},
+    c2=#{d in D:P does not divide d, v3(d)=2},
+    t =#{d in D:3*P divides d}.
+
+Thus N_3=c1+c2+t and c2>=1, because pure9 is original. There are
+exactly five support primes below17, namely3,5,7,11,13. Of the s-5
+support primes at least17, remove P. Their s-6 distinct original
+labels3*r, together with pure3, belong to c1. Hence
+
+    c1>=s-5.                                        (NF83)
+
+Only the existence of each actual label3*r is used. The separate
+mixed-label counts for different r are not added.
+
+### Five live words give a stronger shared charge
+
+At depth h=2, the NF75 graph has five live words. They lie in the two
+nonzero first-three-root branches, in groups of sizes three and two:
+pure9 removes one second-level word in exactly one branch. Let T2 be
+the collision-root reservation. Pure-P/pure9 puts zero in T2, and
+each collision pair has its own P-free original9*u, so |T2|<=c2.
+The number of right roots is therefore
+
+    d=P-|T2|>=P-c2.
+
+Suppose c2<=P-6, so d>=6. Hall failure supplies a nonempty left set I
+of size k<=5 and a right-root set W forbidden at EVERY word of I,
+with |W|>=d-k+1. If I lies in one first-root branch, k<=3, and each
+root of W requires a different mixed original. Consequently t>=d-2.
+
+If I meets both first-root branches, each root of W requires at least
+two mixed originals: an original class has only one first-three root.
+Different first-P roots again require different labels. Thus
+
+    t>=2|W|>=2(d-4)>=d-2.
+
+The last comparison uses d>=6. Both cases give the common charge
+
+    c2<=P-6 ==> c2+t>=P-2.                          (NF84)
+
+Mixed originals may have three-height TWO. Such a class forbids only
+a subset of its own first-root branch and cannot serve the other
+branch. The proof never assumes that pure9 is the only original of
+three-height two.
+
+### Combine the shared charges with the original two-case bound
+
+NF78 already supplies c2+t>=P-4 without the small-c2 premise; reuse
+that inequality directly. NF66 gives c1>=P-1 OR c1+t>=P. In the first
+case, N_3=c1+(c2+t)>=2P-5. In the second case with c2>=P-5, also
+N_3=(c1+t)+c2>=2P-5. Otherwise NF83 and NF84 give
+
+    N_3=c1+(c2+t)>=P+s-7.
+
+Since there are s distinct odd support primes at most P, P>=2s+1;
+in particular 2P-5>=P+s-7. This proves the height-two part of NF82
+for every actual original inventory, without a small-count assumption.
+
+For H_3>=4, NF72 already gives N_3>=P+2. If H_3=3 and N_3<=P+1,
+NF72 forces equality. Pure9 and pure27 lie outside c1 and t, so
+c1+t<=P-1. NF66 can only use its first branch, forcing
+
+    c1=P-1, t=0,
+    the only other three-bearing labels are9 and27.
+
+Then c2=1 contradicts NF78's c2+t>=P-4. Thus H_3=3 also requires
+N_3>=P+2. With s>=9, the height-two result gives that same bound.
+
+### The height-one case uses six fresh words
+
+Now assume H_3=1 and define c1,t as above, so N_3=c1+t. Applying
+NF79 to each support r>=7 forces an actual3*r label, because its
+mixed count is at least r-6>0. There are s-2 such support primes.
+Remove P and add pure3 to obtain c1>=s-2.
+
+For the pair (P,3), use NF75 at the fresh depth h=2. No original has
+three-height two, so the right side excludes only the pure-P root
+zero and has P-1 vertices. The six live words form two first-root
+branches of size three. A failing Hall set I of size k<=6 has at
+least P-k commonly forbidden right roots.
+
+If I lies in one branch, k<=3 gives t>=P-3. If I meets both, the
+same two-label charge per right root gives t>=2(P-6)>=P-3, since
+P>=29. Therefore
+
+    N_3=c1+t>=P+s-5.
+
+NF73 supplies s>=14 and P>=47 in this height-one case, yielding56.
+Together with the other heights, this proves all of NF82. In
+particular the thirty-label case is excluded by joint use of the
+actual graphs, although section59's coarse scalar counts allowed it.
+
+These are ordinary proofs using the stated source theorems, not new
+Lean verification or a claim of literature priority. No upper bound
+on the full three-bearing inventory has been established. Dense
+mixed inventories at arbitrary heights remain, and unrestricted
+Erdős #7 is unresolved.
