@@ -36802,3 +36802,77 @@ $$
 $$
 
 的运输。因而这项工作值得纳入历史和方法地图，却不能替代 §233.5 的联合预算；真正的新任务是构造一个既保留五窗来源、又具有 Ingham 型正则性指标的 FIB-gauged kernel，并证明该指标与 Robin 价格源相同。
+
+## 270. Fibonacci gauge 到 Ingham 核的精确接口仍缺一个加权分数部估计
+
+Cloitre 卷中的 Fibonacci gauge 可以与 Ingham 核写出一个精确接口，但这个接口也明确显示缺口在哪里。令
+
+$$
+G_F(n,k)=\Phi\!\left(\frac{F_k}{F_n}\right),
+\qquad 1\le k\le n,
+$$
+
+并使用
+
+$$
+\Phi(x)=x\left\lfloor\frac1x\right\rfloor
+=1-x\left\{\frac1x\right\}
+\qquad(0<x\le1).
+$$
+
+则逐项恒等式给出
+
+$$
+\boxed{
+\sum_{k=1}^{n}G_F(n,k)
+=n-\frac1{F_n}\sum_{k=1}^{n}F_k\left\{\frac{F_n}{F_k}\right\}.
+}
+\tag{270.1}
+$$
+
+这把 Fibonacci 分数部和真正接到了一个 Ingham 型核；它不是把两个同名的“gauge”直接认成同一对象。
+
+Harcos 的已知结果控制的是无权总和
+
+$$
+H_n=\sum_{k=1}^{n}\left\{\frac{F_n}{F_k}\right\},
+$$
+
+而式（270.1）需要加权总和
+
+$$
+W_n=\sum_{k=1}^{n}F_k\left\{\frac{F_n}{F_k}\right\}.
+$$
+
+令
+
+$$
+A_m=\sum_{k=1}^{m}\left\{\frac{F_n}{F_k}\right\},
+$$
+
+离散分部求和给出
+
+$$
+W_n=F_nA_n-\sum_{m=1}^{n-1}(F_{m+1}-F_m)A_m.
+\tag{270.2}
+$$
+
+所以一个终点估计 $A_n=H_n$ 不能决定 $W_n$；必须同时控制所有中间部分和 $A_m$。仅用 $0\le A_m\le m$ 得到的界，经过 $F_n^{-1}$ 归一化仍是宏观量，远不能提供正则性指标或 Robin 所需的点值误差。
+
+这给出一条可检验的新路线：先证明 $A_m$ 在 $m$ 与 $n$ 的二维范围内具有足够强的统一估计，再研究 $G_F$ 的离散正则性指标；随后还必须证明该指标和 Ingham 核的指标通过同一 Möbius/约数系数运输。即使前两步成功，也不能仅凭 Fibonacci 分数部定理推出 RH，因为 $G_F$ 的跳点是 Fibonacci 比值，尚未携带普通整数约数的 Euler 乘积。
+
+因此当前缺口可以精确写成
+
+$$
+\boxed{
+\text{Fibonacci 分数部}
+\;\longrightarrow\;
+W_n\text{ 的二维点态界}
+\;\longrightarrow\;
+\text{同一 Ingham/Möbius 系数源}
+\;\longrightarrow\;
+\text{RH 判据}.
+}
+$$
+
+这条接口比重新提出一个 Fibonacci zeta 或无权平均更接近 Robin/RH 的真实证明义务；目前仍未完成最后三步。
