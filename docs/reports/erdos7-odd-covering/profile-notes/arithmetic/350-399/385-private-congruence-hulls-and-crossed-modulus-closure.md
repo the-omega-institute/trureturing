@@ -3603,3 +3603,93 @@ NF1 nevertheless reduces ALL repairs of size at most four to an
 explicit finite modulus palette, including missing old divisors.
 Larger joint replacements and the unrestricted same-source covering
 contradiction remain unresolved.
+
+## 26. Prime-parent repairs must retain a first-level modulus collision
+
+The branch restriction of Jenkin--Simpson, Theorem8, already applied
+with all higher digits and original labels in
+[Report350, EB5--EB6](../../321-384/350-extremal-paired-branch-and-source-support.md#2-exact-branch-restriction-retains-every-higher-digit),
+gives a stopping condition for one entire repair route. This section
+is a consumer of that existing restriction, not a new branch theorem.
+
+Use the same globally minimum odd whole cover and an original prime
+q. Let C0 be all q-free original classes, let N_q be the number of
+q-bearing originals, and retain Report364's complete private product
+
+    P_q={a_q mod q} times T_q times R_q,
+    n=|C0|+N_q.
+
+In particular C0 together with P_q covers the whole class a_q mod q.
+Suppose k classes with distinct odd moduli m_i, all divisible by q^2,
+cover P_q. Their moduli need not divide the old period, and no fixed
+budget or bound on the old heights is assumed. Restrict C0 and these
+repair classes to the old a_q branch, using EB5 or equivalently the
+integer parametrization x=a_q+qz. Incompatible repair classes vanish.
+The remaining numerical moduli are
+
+    d for each d from C0;     m_i/q for each active repair.
+
+The first group is q-free, the second q-bearing. Each group retains
+distinct moduli, the two groups cannot collide, and all outputs are
+odd nonunits. This is a cover of every integer z, not just a selected
+finite sample or one cofactor projection. Its count is at most
+|C0|+k. Global minimum cardinality therefore gives
+
+    k>=N_q.                                        (BC1)
+
+The bound is attained if original-label availability is ignored.
+For each original q-bearing modulus q^v*e, q not dividing e, insert
+the old prime phase a_q as one new first q-digit. Its lifted class
+has modulus q^(v+1)*e, q-prefix a_q+q*a_(q^v*e) modulo q^(v+1),
+and its unchanged original residue modulo e. These N_q moduli
+are distinct and divisible by q^2. For any integer in P_q, remove
+that first q-digit while keeping its full cofactor coordinates.
+The resulting original configuration has cofactor in R_q, so it
+is covered by a q-bearing original; its lifted class covers the
+starting integer. The argument uses the enlarged q-height when
+necessary, retaining every integer lift. Consequently the minimum
+number in this unrestricted q^2-divisible repair palette is exactly
+N_q. This construction need not avoid labels retained by an actual
+exchange, so it does not assert a legal repair of the moved family.
+
+In DR1 a move of the prime parent q deletes a phase group of
+r<=N_q-1 proper descendants. A count-preserving or count-decreasing
+exchange has at most r repair classes. BC1 excludes EVERY such
+exchange whose repairs all have moduli divisible by q^2, regardless
+of their modulus sum. It applies to the complete P_q; it does not
+apply to a proper subset of that private region or a composite parent.
+
+In particular, even if the H_3=1 cofactor buckets in NF11 exist,
+their9e classes cannot pay for moving the original3 class and
+deleting one descendant phase group. Their existence remains a
+separate question, but resolving it affirmatively would not provide
+this descent. NF10 remains the stronger nonexistence statement for
+its stated height and six-class budget.
+
+More generally, consider ANY legal repair B of P_q with k<N_q,
+retaining all of C0 and the moved parent label q. Remove classes
+unnecessary for P_q. EB5 again gives a cover with fewer than n
+classes. Its moduli cannot all be distinct. Legality already
+prevents a q-free repair modulus from repeating a retained C0
+label. Within the q-bearing group, division by q is injective.
+Thus EB6 leaves only the following possible collision:
+
+    an effective repair class of modulus q*m, q not dividing m,
+    together with a retained C0 class of modulus m
+    or another q-free repair class of modulus m.    (BC2)
+
+Here m>1 since q itself is unavailable. The two residual classes
+have different phases: if they were the same, the q*m repair
+would either miss P_q entirely (the C0 case) or be redundant on
+P_q (the other-repair case). This is a necessary collision in the
+same actual branch, not permission to merge the two different
+phases into a single class modulo m.
+
+Every prime-parent repair that could pay the DR1 deletion budget
+must therefore use such a first-level collision. The statement
+includes missing old divisors and new-period moduli, and requires
+neither a class-budget bound nor a probability-law substitution.
+It does not eliminate the collisions: the remaining task is to
+control their actual parent and child phases, or to construct a
+different legal joint exchange. Unrestricted noncoverage is still
+unproved.

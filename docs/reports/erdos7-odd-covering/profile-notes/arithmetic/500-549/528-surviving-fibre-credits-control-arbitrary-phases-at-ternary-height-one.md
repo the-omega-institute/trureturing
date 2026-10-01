@@ -30884,6 +30884,18 @@ tau(K)>=3. The remaining coprime unions and larger replacement
 budgets are not excluded. These restrictions test full repair
 obligations; a pair in one top shadow does not supply them.
 
+[Report385, section26](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#26-prime-parent-repairs-must-retain-a-first-level-modulus-collision)
+then reuses the existing Jenkin--Simpson branch restriction to
+exclude one prime-parent exchange route at EVERY budget. A repair
+of the complete P_q using only moduli divisible by q^2 needs at
+least N_q classes, where N_q counts all original q-bearing labels.
+The DR1 move can delete at most N_q-1. Thus the H_3=1 buckets
+above, even if realized, cannot pay that move. Any legal repair
+which can pay it must instead create an actual residual collision
+between a first-level q*m repair and its q-free parent m, either
+retained or supplied by another repair. This necessary collision
+does not give a way to combine its two different phases legally.
+
 The new restrictions remove actual possible activations and height
 profiles which the specified earlier tests miss. They do not force
 useful vacancies in every hypothetical cover: densely occupied
