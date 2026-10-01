@@ -2,7 +2,7 @@
 
 ## Status and scope
 
-This note proves a finite-dimensional, deterministic tensor-network theorem. It is an RT identity for a specified state and graph min-cut function. It is not a claim about a continuum gravitational dual, a CFT limit, or arbitrary tensor networks.
+This note proves a finite-dimensional, deterministic tensor-network theorem. It is an RT identity for a specified state and graph min-cut function. It is not a claim about a continuum gravitational dual, a CFT limit, or arbitrary tensor networks. The vertex tensors have positive, uniform coefficients; the single repair edge is deliberately phase-twisted. Thus the global state is not claimed to be a positive-amplitude state, and the phase is part of the theorem rather than a gauge relabelling.
 
 The topology is a simple cycle with finite trees attached. Every bulk vertex has degree four after counting boundary legs. All edge capacities are one. The construction works over the odd prime-power rings \(\mathbb Z/3^n\mathbb Z\), with local dimension \(d=3^n\). One internal cycle contraction carries a fixed Fourier-quadratic phase. The phase repairs the arithmetic kernel that otherwise causes an entropy deficit.
 
@@ -94,7 +94,7 @@ If \(L\) is even and \(\alpha=0\), then
 \[
  c_k\equiv 2(-1)^k\pmod 3.
 \]
-Thus every \(c_k\) is nonzero modulo \(3\), hence a unit in every \(R=\mathbb Z/3^n\mathbb Z\). Define
+Thus every \(c_k\) is nonzero modulo \(3\), hence a unit in every \(R=\mathbb Z/3^n\mathbb Z\). This is a characteristic-specific statement: for a general odd modulus the exact requirement remains \(\gcd(c_k,d)=1\) for every \(k\); the parity choice (9) does not by itself control prime divisors other than (3). In characteristic (2), the local tensor already fails because the determinant (2) is not a unit. Define
 \[
  \alpha_L=\begin{cases}1,&L\text{ odd},\\0,&L\text{ even}.\end{cases}
  \tag{9}
@@ -139,4 +139,4 @@ The branch includes an independent direct-amplitude checker,
 
 ## 8. Literature status and limits
 
-Relevant established results include perfect-tensor holographic codes (Pastawski--Yoshida--Harlow--Preskill, arXiv:1503.06237), the quantum-error-correction derivation of RT (Harlow, arXiv:1607.03901), random-tensor RT (Hayden--Nezami--Qi--Thomas--Walter--Yang, arXiv:1601.01694), and quantum max-flow/min-cut (Cui--Freedman--Sattath--Stong--Guinton, arXiv:1508.04644). Those works do not state this fixed positive-uniform \(\mathbb Z/3^n\) cycle-with-trees construction or the unit criterion (6). The theorem is a deterministic finite-dimensional tensor-network result; it does not settle arbitrary multicycle graphs, arbitrary phases, arbitrary bond capacities, or gravitational RT. Priority is not claimed: a complete search of stabilizer, convolutional-code, and equivalent arithmetic tensor literature remains open.
+Relevant established results include perfect-tensor holographic codes (Pastawski--Yoshida--Harlow--Preskill, arXiv:1503.06237), the quantum-error-correction derivation of RT (Harlow, arXiv:1607.03901), random-tensor RT (Hayden--Nezami--Qi--Thomas--Walter--Yang, arXiv:1601.01694), and quantum max-flow/min-cut (Cui--Freedman--Sattath--Stong--Guinton, arXiv:1508.04644). Those works do not state this fixed positive-uniform \(\mathbb Z/3^n\) cycle-with-trees construction or the unit criterion (6). The theorem is a deterministic finite-dimensional tensor-network result; it does not settle arbitrary multicycle graphs, arbitrary phases, arbitrary bond capacities, or gravitational RT. Priority is not claimed: a complete search of stabilizer, convolutional-code, and equivalent arithmetic tensor literature remains open. In particular, this is an exact phase-assisted construction; it does not establish a positive-amplitude all-region theorem for a general unicyclic graph.
