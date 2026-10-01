@@ -11,8 +11,7 @@ internal sealed class CiWorkflowDocument(
     YamlMappingNode root,
     ImmutableDictionary<string, CiWorkflowJob> jobs)
 {
-    internal const string DeltaJobName = "delta";
-    internal const string PushCallName = "push";
+    internal const string DeltaJobName = "current";
     internal ImmutableDictionary<string, CiWorkflowJob> Jobs => jobs;
 
     internal static CiWorkflowDocument? Parse(string text)
@@ -75,7 +74,13 @@ internal sealed class CiWorkflowDocument(
     internal bool HasDeltaGate(string branch) =>
         RunsOnBranch("pull_request", branch)
         && Jobs.TryGetValue(DeltaJobName, out var job)
-        && job is { Name: DeltaJobName, Uses: null };
+        && job is { Name: DeltaJobName, Uses: null }
+        && Child(root, "jobs") is YamlMappingNode jobs
+        && jobs.Children.TryGetValue(new YamlScalarNode(DeltaJobName), out var rawJob)
+        && rawJob is YamlMappingNode current
+        && Child(current, "steps") is YamlSequenceNode steps
+        && steps.Children.OfType<YamlMappingNode>().Any(step =>
+            Child(step, "run") is YamlScalarNode run && run.Value?.Contains("check-delta", StringComparison.Ordinal) == true);
 
     private static YamlNode? Child(YamlMappingNode node, string key) =>
         node.Children.TryGetValue(new YamlScalarNode(key), out var value) ? value : null;
