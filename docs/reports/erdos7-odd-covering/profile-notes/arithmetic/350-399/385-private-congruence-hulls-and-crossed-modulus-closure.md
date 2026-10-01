@@ -10662,3 +10662,101 @@ has been shown impossible, and neither supplies an extra nonconcentrated
 ancestor or strict count/weight descent. The argument reuses SO1,
 DP9/SI1, comparable-class disjointness, divisor closure and irredundancy.
 No published sieve calculation, old experiment or Lean proof is repeated.
+
+## 75. One nonconcentrated prime gives a common two-root private source
+
+Keep one EB1 family with H=1 and R={p}; CP17 places p in {5,7,11,13}.
+Let X_i be the complete carrier of its concentrated support group S_i,
+and let A=v_p(Q). Every original p-height and phase is retained.
+The private reset excludes an original label involving primes from
+both S_1 and S_2, since its nonempty private projection would have to
+lie in both singleton colors.
+
+Choose an ORIGINAL private point w_i of A_p at ternary root i, for
+i=1,2; V_p={1,2} provides both. Its full X_i coordinate v_i avoids
+every p-free original cofactor phase supported in S_i, both the
+3-free phases and those of3m. Such an original3m has first-three root i
+by the private reset. Hence the one CRT combination
+
+    v=(v_1,v_2)
+
+simultaneously avoids ALL p-free originals at BOTH live ternary roots.
+A p-free non-pure-three label involves just one concentrated color:
+its 3-free phase is avoided by that color's v_i, while its 3-bearing
+phase is avoided there or has the wrong ternary root. The only pure
+three class is A_3 at root0.
+
+Thus the SAME nonternary, non-p cofactor v belongs to the actual R_p
+source at both roots. At first-p root0 and ANY higher p-tail, both
+lifts are private to A_p. This joint source uses the proved factor
+supports; it does not combine arbitrary unrelated private records.
+
+### Both colors occupy almost every nonzero p-root at that source
+
+Section73's pruning gives, for each i, whole coverage of root i by
+originals with nonternary support in {p} union S_i. This surviving
+union is independent of the other color's coordinates, so it remains
+a whole cover when they are set to the chosen v_(3-i). Both covering
+statements therefore hold at the common v.
+
+Fix a nonzero first-p root r. Originals in this surviving family that
+contain no S_i factor are pure p^a or3p^a. The original p is absent.
+Unless original3p has ternary root i AND first-p root r, every active
+class of those two types has a>=2. Their total relative p-tail measure
+over r is at most
+
+    2 sum_(a=2..A) p^(1-a)
+      =2(1-p^(1-A))/(p-1)<1.
+
+This includes the actual finite heights and allows overlaps. Whole
+coverage thus requires an actual original containing p and a prime
+of S_i, with first-p root r and its S_i cofactor phase equal to v_i.
+This holds simultaneously at the SAME v for both colors and every
+nonzero p-root, with at most one exceptional (i,r) cell supplied by
+the single original3p if present. In particular, both S_i are nonempty.
+
+The forced mixed original may have any actual p-exponent; exponent one
+has not been forced. Different roots require different originals, but
+no new numerical inventory or Hall slot is created. The shared pure-p
+classes have not been charged twice.
+
+The existing Report364 SI2 also gives F_p empty. A hypothetical m in F_p
+would satisfy V_(pm)=V_p={1,2}. A factor3 in m fixes a ternary root,
+and any concentrated prime factor forces a singleton private projection.
+Since p does not divide m and every other nonternary prime is
+concentrated, no such m>1 exists. This is a direct SI2/reset consumer,
+not another singleton-root theorem.
+
+### Pure-power private points survive exactly on their original colors
+
+Use the labelled surviving family in root i, before the affine
+coordinate change, keeping its original provenance. For every original
+pure p^a, its private set in this family equals
+
+    projection_(p,X_i)[P_(p^a) intersect {three root i}].
+
+Projection preserves absence of all retained originals. Conversely,
+lift a private point of the surviving family by setting every
+opposite-color q at its singleton3q root. All discarded originals
+vanish, while membership in retained originals is unchanged. The lift
+is an original private point of p^a at root i. Consequently
+
+    p^a is private in quotient i iff i belongs to V_(p^a).
+
+Every pure p^a concentrated only in the opposite color can be removed
+from this quotient SIMULTANEOUSLY. The removed APs are pairwise disjoint
+by comparable-original disjointness. A point losing coverage would
+therefore belong to exactly one removed class and be private to it,
+contrary to the displayed equivalence. The resulting quotient covers.
+
+This cannot delete original p, whose private points project to both
+quotients. An original3p^a active in root i also retains an original
+private point. Neither quotient becomes numerically distinct: S_i is
+nonempty, and for any q in S_i, DP9 supplies the actual q and3q pair;
+neither is a pure-p deletion, so their two quotient classes remain.
+Thus these certified deletions do not make the two supports disjoint
+or remove every repeated numerical modulus. Section71's exact deficit
+still uses the actual nonmonotone I_0, with no nonpure nonconcentrated
+ancestor in this branch. A further operation or estimate is required
+for strict descent. No experiment, new sieve bound or Lean verification
+is asserted.
