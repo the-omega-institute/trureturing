@@ -831,8 +831,8 @@ are not presumed. Identifying the residue root $t$ with complex $i$ does
 not assert $\psi_q(t)=i$. This arithmetic character is also different
 from the active composition rotation $C=MJ$ and from the existing scalar
 four-orbit analysis in [§7 of the Li note](../ArithUnits/li2026nonwieferich.md).
-No factorization-free evaluation algorithm or efficiency bound for this
-composite character is supplied here.
+The factorization-free evaluation below uses a classical Gaussian
+quartic-Jacobi algorithm with this same root orientation.
 
 Use the actual $g=\gcd(N,C_s)$, $u=N/g$, $v=C_s/g$ and
 $e=v_r(N)$, and set $u_0=u/r^e$. The existing $y<r$ argument gives
@@ -934,3 +934,109 @@ window and the complete low-loss divisor contribution in
 still require a joint estimate. This includes $h=1$, restoration-only and
 small-prime cofactors with their actual merged valuations. This
 character refinement alone supplies no uniform strict budget or RH proof.
+
+## Reuse the Gaussian quartic-Jacobi evaluator
+
+The algorithmic input is already available in Damgård–Frandsen,
+*Efficient algorithms for gcd and cubic residuosity in the ring of
+Eisenstein integers*,
+[BRICS RS-03-8, §5, printed pp.9–10, PDF pp.11–12](https://www.brics.dk/RS/03/8/BRICS-RS-03-8.pdf).
+Despite its title, that section treats Gaussian gcd and composite quartic
+symbols, with quadratic bit complexity for its specified approximate-norm
+method. Bach–Sandlund,
+*On Euclidean Methods for Cubic and Quartic Jacobi Symbols*,
+[arXiv:1807.07719v1, §7, pp.13–14](https://arxiv.org/pdf/1807.07719v1),
+distinguishes the naive exact-norm Euclidean implementation, which has
+cubic worst-case schoolbook complexity, from the improved quadratic
+quotient treatment. These algorithms are reused; no arithmetic algorithm
+or new analytic estimate is proposed here.
+
+For the same $V=F_r$ and $t=F_{r-1}$, form the Gaussian ideal
+
+$$
+I=(V,i-t)=\ker\bigl(\mathbb Z[i]\longrightarrow\mathbb Z/V\mathbb Z,
+\ a+bi\longmapsto a+bt\bigr).
+$$
+
+The map is well-defined because $t^2=-1\pmod V$, and it is surjective.
+Thus $\mathbb Z[i]/I\simeq\mathbb Z/V\mathbb Z$ and $I$ has norm $V$.
+Since $\mathbb Z[i]$ is Euclidean, a denominator is
+
+$$
+\eta=\operatorname{primary}\gcd_{\mathbb Z[i]}(V,t-i),
+\qquad \operatorname{Nm}(\eta)=V.
+$$
+
+Here primary means $\eta=a+bi$ with $b$ even and $a+b\equiv1\pmod4$.
+For each conceptual factor $q^E\parallel V$, only the selected prime
+ideal $(q,i-t)$ divides $t-i$; the conjugate prime does not, since $2t$
+is nonzero modulo $q$. Taking the gcd with $V$ retains exactly $E$
+copies of the selected prime. Consequently the previously defined
+full-denominator character is precisely
+
+$$
+\boxed{\psi_V(n)=\left(\frac n\eta\right)_4,\qquad (n,V)=1.}
+$$
+
+The factorization in this explanation verifies the input translation;
+the gcd and quartic-Jacobi algorithms do not require it. They must not
+replace the denominator by its radical or its primitive-character part.
+Two useful input checks are $a^2+b^2=V$ and $a+bt\equiv0\pmod V$.
+
+Multiplying $\eta$ by a Gaussian unit preserves its ideal and its symbol;
+conjugating it reverses the chosen orientation. Using the rational
+Gaussian integer $V$ as denominator instead includes both conjugate
+factors and gives
+
+$$
+\left(\frac nV\right)_{4,\mathbb Z[i]}
+=\psi_V(n)\overline{\psi_V(n)}=1\qquad (n,V)=1,
+$$
+
+so that substitution would erase the required phase.
+
+Numerator normalization has a different rule. The supplementary laws
+in the same Gao–Zhao §2.2 source give, for primary $\eta=a+bi$,
+
+$$
+\left(\frac i\eta\right)_4=i^{(1-a)/2},\qquad
+\left(\frac{1+i}\eta\right)_4=i^{(a-b-b^2-1)/4}.
+$$
+
+If $z=i^j(1+i)^h z_0$ with $z_0$ primary, these removed numerator
+factors contribute
+
+$$
+\left(\frac z\eta\right)_4
+=i^{j(1-a)/2+h(a-b-b^2-1)/4}\left(\frac{z_0}\eta\right)_4.
+$$
+
+The full published algorithm already tracks them. A wrapper that makes
+the numerator primary and discards the factors changes the answer,
+including at the cheap prime two. Since $2=-i(1+i)^2$, one obtains
+
+$$
+\boxed{\psi_V(2)=i^{-b/2}.}
+$$
+
+With $L=\lceil\log_2 V\rceil$, the cited quadratic algorithms give
+$O(L^2)$ bit operations for denominator construction and for each query
+after reducing a rational numerator modulo $V$. Reading and reducing an
+unreduced input is a separate cost. This bound is in the bit size of $V$,
+not in the bit size of the Fibonacci index $r$, and does not apply to
+arbitrary exact-norm Euclidean code.
+
+For the actual endpoint, cache $\eta$ and evaluate $(g/\eta)_4$ and
+$(r/\eta)_4$, then use
+
+$$
+\psi_V(u_0)=\left(\frac g\eta\right)_4^{-1}
+\left(\frac r\eta\right)_4^{-e}.
+$$
+
+This step needs neither factorization of $V$ nor of $u_0$; the actual
+valuation $e$ is still an input, with only $e\bmod4$ needed for this phase.
+The same evaluator labels eligible cheap primes for the existing
+$\beta_j$ minima. It supplies their phase labels, not their minimum cost,
+their occurrence in the same actual host, or $c_j>B_r$. The full weighted
+Robin budget in FIB §233.5 remains a separate unresolved estimate.
