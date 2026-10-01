@@ -263,6 +263,17 @@ class NativeReportConsumerTests:
         self.assertEqual(builds(), [[*workspace, 'build', ':report', *targets]])
         self.assertIn('phase=report status=completed', recovered.stderr)
         self.assertTrue(publication.member(output, '.reuse.json').is_file())
+        # A semantic-version mismatch must stop inspect.sh before its normal
+        # Lake fallback so the caller can refresh or explicitly rebuild.
+        policy['report_cache_release_semantic_version'] += 1
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        self.env['GITHUB_ACTIONS'] = ''
+        self.env.pop('STRATALINT_LEAN_REPORT_REBUILD_INCOMPATIBLE', None)
+        self.env.pop('STRATALINT_LEAN_REPORT_REUSE', None)
+        incompatible = self.inspect(success=False, phase='incompatible-report-cache')
+        self.assertEqual(incompatible.returncode, 4)
+        self.assertIn('LEAN_REPORT_CACHE_INCOMPATIBLE', incompatible.stderr)
+        self.assertNotIn('phase=report status=started', incompatible.stderr)
         policy['report_execution'] = dict(EXECUTION, tools=['arbitrary-command'])
         self.write('lean-report-inputs.json', json.dumps(policy))
         invalid = self.inspect(success=False, phase='invalid-execution-registration')

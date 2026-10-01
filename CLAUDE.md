@@ -11,6 +11,7 @@
 | 创建会话 worktree（已有则复用） | `make worktree KIND=<kind> NAME=<任务码> DEST=../trureturing-<session-id>` |
 | 编译指定 Lean 模块及依赖 | `make lean LEAN_TARGETS="<点分模块名>"`（省略 `LEAN_TARGETS` 为全项目） |
 | 生成 Lean 报告 / 发射 Scribe | `make lean-report` / `make emit` |
+| 报告缓存版本不匹配(`LEAN_REPORT_CACHE_INCOMPATIBLE`) | `make lean-cache-from-github-without-mathlib REFRESH_STALE=1`(取 dev 热缓存)或 `make lean-report REBUILD_REPORT_CACHE=1`(显式整库重建) |
 | 摄入指定理论源 | `make ingest SOURCE="<source-id 或源文件路径>"` |
 | 查看 atom / 连读上下文 | `make show-atom ATOM_ID=<id>` / `make atom-context ATOM_ID=<id>` |
 | 查看开放 atom 的就绪情况 | `make digestion-readiness` |

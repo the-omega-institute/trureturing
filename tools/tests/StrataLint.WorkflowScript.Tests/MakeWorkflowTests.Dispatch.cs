@@ -67,7 +67,16 @@ public sealed partial class MakeWorkflowTests
         }
         var leanRecipe = Recipe(makefile, "lean");
         Assert.Equal($"\t@/bin/bash {LeanCacheRunScriptPath} --build $(LEAN_TARGETS)", leanRecipe);
-        Assert.Contains(LeanReportScriptPath, Recipe(makefile, "lean-report"), StringComparison.Ordinal);
+        var cacheFetchRecipe = Recipe(makefile, "lean-cache-from-github-without-mathlib");
+        Assert.Contains("lean-cache-publish.sh fetch", cacheFetchRecipe, StringComparison.Ordinal);
+        Assert.Contains("$(if $(filter 1,$(REFRESH_STALE)),--refresh-stale,)", cacheFetchRecipe,
+            StringComparison.Ordinal);
+        var reportRecipe = Recipe(makefile, "lean-report");
+        Assert.Contains(LeanReportScriptPath, reportRecipe, StringComparison.Ordinal);
+        Assert.Contains("export STRATALINT_LEAN_REPORT_REBUILD_INCOMPATIBLE=1", makefile,
+            StringComparison.Ordinal);
+        Assert.Contains("REFRESH_STALE=1", makefile, StringComparison.Ordinal);
+        Assert.Contains("REBUILD_REPORT_CACHE=1", makefile, StringComparison.Ordinal);
         var inspector = File.ReadAllText(Path.Combine(root, "tools", "lean-inspector", "inspect.sh"));
         Assert.DoesNotContain("run_phase cache-get", inspector, StringComparison.Ordinal);
         Assert.DoesNotContain("run_phase report \"$LAKE\"", inspector, StringComparison.Ordinal);

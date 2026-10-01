@@ -25,6 +25,8 @@ import publication
 SCHEMA = 'stratalint-lean-report-reuse-v2'
 SUFFIX = '.reuse.json'
 COMPLETED = ['defaults', 'report', 'publication']
+INCOMPATIBLE_STATUS = 4
+REBUILD_INCOMPATIBLE_ENV = 'STRATALINT_LEAN_REPORT_REBUILD_INCOMPATIBLE'
 INVALID_SEED = (OSError, UnicodeError, ValueError, KeyError, TypeError,
                 zipfile.BadZipFile, zlib.error, NotImplementedError, subprocess.CalledProcessError)
 if zipfile.lzma is not None:
@@ -70,6 +72,33 @@ def warn_mismatch(result, stream):
         print('::warning title=Lean report cache mismatch::' + escaped, file=stream, flush=True)
     else:
         print('WARNING ' + message, file=stream, flush=True)
+
+
+def incompatible_local_mismatch(result):
+    """Return true only for an integer semantic-version mismatch on local runs."""
+    mismatch = result.get('mismatch')
+    return (isinstance(mismatch, dict)
+            and type(mismatch.get('cached_semantic_version')) is int
+            and mismatch['cached_semantic_version'] != mismatch.get('current_semantic_version')
+            and os.environ.get('GITHUB_ACTIONS') != 'true'
+            and os.environ.get(REBUILD_INCOMPATIBLE_ENV) != '1')
+
+
+def report_incompatible(result, stream):
+    mismatch = result['mismatch']
+    print(f"LEAN_REPORT_CACHE_INCOMPATIBLE cached_version={mismatch['cached_semantic_version']} "
+          f"current_version={mismatch['current_semantic_version']} "
+          f"added_inputs={mismatch['added_inputs']} removed_inputs={mismatch['removed_inputs']} "
+          f"changed_inputs={mismatch['changed_inputs']} "
+          f"execution_changed={str(mismatch['execution_changed']).lower()}",
+          file=stream, flush=True)
+    print('Fetch the warm cache produced by dev release publication with '
+          'make lean-cache-from-github-without-mathlib REFRESH_STALE=1, then rerun. '
+          'If that seed still has a different version, use the rebuild remedy.',
+          file=stream, flush=True)
+    print('Rebuild the report cache explicitly with make lean-report REBUILD_REPORT_CACHE=1 '
+          '(direct inspect.sh callers can set STRATALINT_LEAN_REPORT_REBUILD_INCOMPATIBLE=1).',
+          file=stream, flush=True)
 
 
 def capture(repository):
@@ -223,6 +252,9 @@ def main():
     else:
         result = reuse(args.repository, args.report, args.output)
         print('LEAN_INSPECTOR_REUSE ' + json.dumps(result, separators=(',', ':')))
+        if incompatible_local_mismatch(result):
+            report_incompatible(result, sys.stdout)
+            return INCOMPATIBLE_STATUS
         warn_mismatch(result, sys.stdout)
         if result['needs_lake']:
             return 3

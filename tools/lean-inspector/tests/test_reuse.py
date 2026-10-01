@@ -234,6 +234,85 @@ class ReuseTests(unittest.TestCase):
         self.assertIn('::warning title=Lean report cache mismatch::', reuse.stdout)
         self.assertFalse(self.output.exists())
 
+    def test_incompatible_semantic_version_fails_fast_with_local_remedies(self):
+        self.receipt()
+        self.policy['report_cache_release_semantic_version'] += 1
+        self.write_policy()
+        args = ['--repository', str(self.root), '--report', str(self.report),
+                '--output', str(self.output)]
+        with patch.dict(os.environ, {'GITHUB_ACTIONS': '',
+                                     'STRATALINT_LEAN_REPORT_REBUILD_INCOMPATIBLE': ''}):
+            result = subprocess.run([sys.executable, '-B', str(HERE / 'reuse.py'), 'reuse',
+                                     *args], text=True, capture_output=True, check=False)
+        self.assertEqual(result.returncode, 4, result.stdout + result.stderr)
+        self.assertIn('LEAN_REPORT_CACHE_INCOMPATIBLE cached_version=1 current_version=2', result.stdout)
+        self.assertIn('make lean-cache-from-github-without-mathlib REFRESH_STALE=1', result.stdout)
+        self.assertIn('make lean-report REBUILD_REPORT_CACHE=1', result.stdout)
+        self.assertNotIn('LEAN_REPORT_CACHE_MISMATCH', result.stdout)
+        self.assertNotIn('LEAN_INSPECTOR_WORK', result.stdout)
+        self.assertFalse(self.output.exists())
+
+    def test_incompatible_semantic_version_opt_in_keeps_normal_lake_miss(self):
+        self.receipt()
+        self.policy['report_cache_release_semantic_version'] += 1
+        self.write_policy()
+        args = ['--repository', str(self.root), '--report', str(self.report),
+                '--output', str(self.output)]
+        with patch.dict(os.environ, STRATALINT_LEAN_REPORT_REBUILD_INCOMPATIBLE='1',
+                        GITHUB_ACTIONS=''):
+            result = subprocess.run([sys.executable, '-B', str(HERE / 'reuse.py'), 'reuse',
+                                     *args], text=True, capture_output=True, check=False)
+        self.assertEqual(result.returncode, 3, result.stdout + result.stderr)
+        self.assertIn('WARNING LEAN_REPORT_CACHE_MISMATCH cached_version=1 current_version=2', result.stdout)
+        self.assertNotIn('LEAN_REPORT_CACHE_INCOMPATIBLE', result.stdout)
+
+    def test_incompatible_semantic_version_in_github_actions_keeps_warning_miss(self):
+        self.receipt()
+        self.policy['report_cache_release_semantic_version'] += 1
+        self.write_policy()
+        args = ['--repository', str(self.root), '--report', str(self.report),
+                '--output', str(self.output)]
+        with patch.dict(os.environ, GITHUB_ACTIONS='true',
+                        STRATALINT_LEAN_REPORT_REBUILD_INCOMPATIBLE=''):
+            result = subprocess.run([sys.executable, '-B', str(HERE / 'reuse.py'), 'reuse',
+                                     *args], text=True, capture_output=True, check=False)
+        self.assertEqual(result.returncode, 3, result.stdout + result.stderr)
+        self.assertIn('::warning title=Lean report cache mismatch::', result.stdout)
+        self.assertNotIn('LEAN_REPORT_CACHE_INCOMPATIBLE', result.stdout)
+
+    def test_same_version_execution_change_keeps_normal_miss(self):
+        self.receipt()
+        args = ['--repository', str(self.root), '--report', str(self.report),
+                '--output', str(self.output)]
+        with patch.dict(os.environ, GITHUB_ACTIONS='', ELAN_TOOLCHAIN='changed'):
+            result = subprocess.run([sys.executable, '-B', str(HERE / 'reuse.py'), 'reuse',
+                                     *args], text=True, capture_output=True, check=False)
+        self.assertEqual(result.returncode, 3, result.stdout + result.stderr)
+        self.assertIn('WARNING LEAN_REPORT_CACHE_MISMATCH cached_version=1 current_version=1', result.stdout)
+        self.assertNotIn('LEAN_REPORT_CACHE_INCOMPATIBLE', result.stdout)
+
+    def test_unknown_cached_version_and_same_version_input_change_keep_normal_miss(self):
+        self.receipt()
+        receipt = publication.member(self.report, '.reuse.json')
+        record = json.loads(receipt.read_text())
+        record['inputs']['semantic_version'] = 'unknown'
+        receipt.write_text(json.dumps(record))
+        args = ['--repository', str(self.root), '--report', str(self.report),
+                '--output', str(self.output)]
+        with patch.dict(os.environ, GITHUB_ACTIONS=''):
+            unknown = subprocess.run([sys.executable, '-B', str(HERE / 'reuse.py'), 'reuse',
+                                      *args], text=True, capture_output=True, check=False)
+        self.assertEqual(unknown.returncode, 3, unknown.stdout + unknown.stderr)
+        self.assertIn('WARNING LEAN_REPORT_CACHE_MISMATCH cached_version=unknown', unknown.stdout)
+        self.receipt()
+        self.write('D5/A.lean', 'def a := 2\n')
+        with patch.dict(os.environ, GITHUB_ACTIONS=''):
+            changed = subprocess.run([sys.executable, '-B', str(HERE / 'reuse.py'), 'reuse',
+                                      *args], text=True, capture_output=True, check=False)
+        self.assertEqual(changed.returncode, 3, changed.stdout + changed.stderr)
+        self.assertIn('WARNING LEAN_REPORT_CACHE_MISMATCH cached_version=1 current_version=1', changed.stdout)
+        self.assertNotIn('LEAN_REPORT_CACHE_INCOMPATIBLE', changed.stdout)
+
     def test_hits_and_unavailable_receipts_do_not_claim_input_mismatch(self):
         api = self.receipt()
         output = io.StringIO()
