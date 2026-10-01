@@ -402,7 +402,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertEqual(6, len(list(self.remote.glob("*/release.json"))))
 
     def test_invalid_release_budget_is_optional_but_real_build_failure_is_not(self):
-        for value in ("0", "-1", "nan", "601"):
+        for value in ("0", "-1", "nan", "1801"):
             with self.subTest(budget=value):
                 environment = {"STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS": value}
                 fetched = self.fetch_then_build(**environment)
@@ -413,6 +413,13 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
                 self.assertIn('"status":"failed"', published.stdout)
                 self.assertEqual(19, self.transport("publish", **environment, FAKE_BUILD_EXIT="19").returncode)
                 self.assertEqual([], list(self.remote.iterdir()))
+
+    def test_release_budget_accepts_values_up_to_the_ceiling(self):
+        for value in ("1", "600", "1800"):
+            with self.subTest(budget=value):
+                fetched = self.fetch_then_build(STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS=value)
+                self.assertEqual(0, fetched.returncode, fetched.stdout + fetched.stderr)
+                self.assertNotIn("STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS must be", fetched.stdout)
 
     def test_optional_fetch_miss_reaches_build_and_preserves_build_failure(self):
         for build_exit in (0, 19):
