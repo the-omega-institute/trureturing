@@ -13206,3 +13206,121 @@ or pay for discarded/split tests through one common RS1--RS3 replacement.
 
 No enumeration, Lean verification or assertion of a whole-cover
 realization is used in this finite argument.
+
+## 100. A vacant cross-color palette repairs large terminal-singular batches
+
+Keep one EB1 original distinct odd cover with R=empty and ternary height
+H. Assume the GLOBAL highest-three-digit occurrence counts are(1,1,t),
+with t>=1. This is the terminal-singularity hypothesis, not a consequence
+of choosing a few private-point suppliers. Write k=t+2 for the number
+of original highest-three-height classes.
+
+Reuse section98's terminal-singularity interface: the batch consists of
+
+    A_(3^H), A_(3^H*p), {A_(3^H*m):m in Mtop},
+    |Mtop|=t, p>3 prime, 1,p notin Mtop,
+
+all at one actual lower ternary prefix u modulo3^(H-1). If b is the
+actual p-phase of A_(3^H*p), the exact joint deletion obligation after
+removing this ENTIRE batch lies in the single AP
+
+    C={x:x=u mod3^(H-1), x=b modp}.                  (TR1)
+
+Every top nonternary cofactor belongs to the same color as p. Let q be
+the smallest prime in the opposite color. GM1 gives
+
+    q in {5,7,11,13}.
+
+The new necessary restriction is
+
+    terminal singularity and R=empty
+      ==> 3<=k<=q-2.                               (TR2)
+
+In particular, if the opposite color contains5, then k=3. With opposite
+minimum7,11,13, the respective upper bounds are5,9,11. This constrains
+terminal-singular families only; it neither establishes singularity nor
+rules out the remaining small batches.
+
+### Repair the whole coarsened cylinder while retaining its old ancestor
+
+The prime classes are normalized as before, so original A_q is0 modq.
+For each a=0,...,q-2 define one new AP by the compatible CRT conditions
+
+    B_a={x:x=u mod3^a, x=b modp, x=a+1 modq},
+    modulus(B_a)=3^a*p*q.                           (TR3)
+
+At a=0 the ternary condition is empty. CG1 gives H>=12, and q<=13,
+so a<=q-2<=H-1. Every point of C has its prescribed prefix modulo3^a.
+Its q-root is either zero, when the retained A_q covers it, or the
+unique value a+1 in{1,...,q-1}, when B_a covers it. Thus
+
+    C subset A_q union UNION_(a=0..q-2) B_a.         (TR4)
+
+The q-1 new numerical labels are pairwise distinct. CP1 makes every
+one absent from the entire original palette, since it contains the
+opposite-color primes p and q. Every other original is retained;
+in particular the occupied ancestor A_(3^(H-1)*p) is unchanged.
+The new labels divide the original complete period. No new coordinate,
+height restriction, or independently chosen original phase is used.
+
+TR1 and TR4 therefore give a WHOLE distinct odd cover with
+
+    N_new=N-k+(q-1),
+    W_added=p*q*(3^(q-1)-1)/2.                      (TR5)
+
+If k>=q this strictly lowers class count, contradicting EB1. The
+construction covers the full C, so it automatically covers the actual
+joint obligation, including its portions with multiple old owners.
+
+### The equal-count case also lowers the modulus sum
+
+Suppose k=q-1, equivalently t=q-3. The actual deleted modulus sum is
+
+    W_deleted=3^H*(1+p+sum_(m in Mtop)m).             (TR6)
+
+For q=5, H>=12 gives
+
+    W_added < (5/[2*3^(H-4)])*3^H*p < 3^H*p
+            < W_deleted.
+
+For q>=7, the t=q-3 distinct odd nonunit cofactors in Mtop are all
+at least5. In increasing order their sum is at least
+
+    5+7+...+(2t+3)=t*(t+4).
+
+Excluding p from that list can only increase this lower bound. Put
+
+    C_q=q^2-2*q-2.
+
+Then 1+p+sum_m m >= p+C_q. The opposite-color gap bound CG2 gives
+p<=H+q. For H>=q-1 define
+
+    F(H)=3^(H-q+1)*(1+C_q/(H+q)).
+
+This function is strictly increasing on integer H: its successive
+ratio is greater than 3*(H+q)/(H+q+1)>1. At the first possible value,
+
+    F(q-1)-q/2=(q-6)/(2*(2*q-1))>0.
+
+Since H>=12 and q<=13 imply H>=q-1, it follows that
+
+    W_deleted/(3^(q-1)*p)
+      >=3^(H-q+1)*(1+C_q/p)
+      >=F(H)>q/2
+      >W_added/(3^(q-1)*p).
+
+Thus every equal-count case strictly lowers the second EB1 objective.
+This excludes k=q-1 and proves TR2 without assuming a bound on any
+nonternary height.
+
+This repair is a direct CRT allocation using an entirely vacant
+cross-color palette. The earlier repair forests remain applicable in
+their own domains; no fresh-prime-height assumption is borrowed here.
+The occupied ancestor needs no movement because its old private
+liability remains covered by that same retained original class.
+
+The remaining difficulty is the genuinely small terminal-singular
+batch, or a nonsingular terminal digit. TR2 does not provide an
+affordable repair for those cases or settle arbitrary-height R=empty,
+shared support, or unrestricted Erdos7. No Lean verification or
+literature-priority claim is asserted.
