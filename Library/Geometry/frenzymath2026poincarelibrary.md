@@ -985,9 +985,9 @@ With its Borel measurable structure, pinned `Measure.haar` supplies a
 regular, sigma-finite left Haar measure. It is finite on compact sets and
 positive on nonempty open sets; finite total mass is not asserted.
 
-This Haar measure is on the isometry group. It has not been identified
-with the preceding normalized intrinsic Hausdorff3 measures on H3 or its
-quotient targets. No finite Haar covolume or lattice realization is derived
+This Haar measure is on the isometry group. These four checks alone do
+not identify its evaluation pushforward with normalized intrinsic
+Hausdorff3 on H3 or establish quotient-target Haar covolume. No finite Haar covolume or lattice realization is derived
 from target finite volume in this increment. These are four scoped
 transient classical composition checks under unchanged pins and standard
 three axioms, with no new tracked project Lean declaration or novelty
@@ -1028,13 +1028,87 @@ measure on a group structure imposed on H3.
 
 These are three scoped transient classical composition checks under the
 same pins and standard three axioms. They establish properties of the
-actual evaluation pushforward. They do not prove uniqueness of invariant
-measures on H3, equality or proportionality to normalized intrinsic
-Hausdorff3, a normalization scalar, unimodularity, a fundamental domain,
+actual evaluation pushforward. These three checks alone do not prove
+uniqueness of invariant measures on H3, equality or proportionality to
+normalized intrinsic Hausdorff3, a normalization scalar, unimodularity, a fundamental domain,
 finite Haar covolume or lattice realization. Cusp classification, lattice
 conjugacy and full Mostow-Prasad existence, homotopy and uniqueness remain
 unfinished, including noncompact cusps and nonorientable manifolds. No new
 tracked Lean declaration or mathematical novelty is claimed. The existing
 escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these checks nor CI closes that audit or the remaining mathematics.
+
+## Invariant H3 measure uniqueness and normalized Haar evaluation volume
+
+An auxiliary affine group supplies the invariant-measure comparison. It is
+Mathlib's semidirect product of additive complex translations and additive
+real log-height, expressed with `Multiplicative`, with action
+`z ↦ exp(t) • z`. Its topology is induced by its exact coordinate equivalence
+to `ℂ × ℝ`; the explicit multiplication and inverse formulas prove that
+it is a topological group. The horizontal coordinate and log of positive
+height give a homeomorphism from original H3 to `ℂ × ℝ`, whose inverse has
+height `exp(t)`. Combining these gives an actual homeomorphism between the
+auxiliary group and original H3. Left multiplication corresponds exactly
+to an existing positive dilation followed by an existing horizontal
+translation, hence to an actual original-H3 isometry. This auxiliary group
+is distinct from the full H3 isometry group with its compact-open topology.
+
+For any two nonzero original-H3 Borel measures that are finite on compact
+sets and invariant under every actual H3 isometry, there is a positive
+finite real scalar relating them. To prove this, push each measure back
+through the affine homeomorphism. The explicit left-multiplication identity
+makes these measures left invariant on the auxiliary group. Its coordinate
+homeomorphism supplies Hausdorffness, local compactness and second
+countability. Existing regularity and positivity results make each lifted
+measure a left Haar measure. Pinned `Measure.isMulLeftInvariant_eq_smul`
+and positivity of `haarScalarFactor` give proportionality there;
+injectivity of mapping by a measurable equivalence returns it to original
+H3. Proportionality is a conclusion, with nonzero, compact-finite and
+isometry-invariant measures as its hypotheses.
+
+The original-H3 normalized three-dimensional Hausdorff measure is a valid
+reference measure. Its nonzero and compact-finite properties are obtained
+by selecting the actual chart and smooth metric from the existing complete
+H3 source constructor, retaining its intrinsic distance and volume
+identities, and using the pinned local-finiteness result. The source's
+exact cylinder formula gives positive volume to the cylinder over the
+horizontal unit ball at heights above one. Invariance under every actual
+H3 isometry follows from existing
+`IsometryEquiv.measurePreserving_euclideanHausdorffMeasure`.
+
+For each supplied actual H3 point `p` and any supplied left Haar measure
+`μ` on the same full compact-open isometry group's Borel structure, the
+preceding evaluation-pushforward properties and this uniqueness result give
+`μ.map (fun e => e p) = c • Measure.euclideanHausdorffMeasure 3`
+for a positive `c : ℝ≥0`. Choosing an existing full-group Haar measure and
+scaling it by `c⁻¹` therefore gives a left Haar measure whose evaluation
+pushforward at this supplied `p` equals the original-H3 normalized
+Hausdorff3 measure exactly. The checked quantifiers choose a normalized
+measure for each supplied point; they do not assert that one chosen measure
+works simultaneously at every point or prove ambient unimodularity.
+
+For a supplied actual H3 smooth chart and manifold structure and a supplied
+smooth source metric `g` whose intrinsic extended distance agrees with the
+original H3 extended distance at every pair of points, the existing
+intrinsic-volume identification gives `g.volumeMeasure` as that same
+normalized Hausdorff3 measure. Thus a normalized full-group left Haar
+measure exists for which evaluation at the supplied `p` is measure
+preserving to this actual `g.volumeMeasure`. For every original-H3 Borel
+measurable set `S`, its evaluation preimage has Haar measure exactly
+`g.volumeMeasure S`, and these measures are finite if and only if each
+other is finite. This statement does not require an assumed target
+coordinate-density identity or a fundamental domain.
+
+These are five scoped transient classical composition checks under the
+same pins, with only `propext`, `Classical.choice` and `Quot.sound` in the
+successful printed closures. They add no tracked project Lean declaration
+or mathematical novelty claim. An actual deck fundamental domain, its
+measure restriction and finite Haar covolume still need to be established;
+unrestricted pushforward through an infinite-sheet orbit projection does
+not supply that volume comparison. Finite-volume cusp classification,
+lattice conjugacy and full Mostow-Prasad existence, homotopy and uniqueness
+remain unfinished, including noncompact cusps and nonorientable manifolds.
+The existing escape audit remains unfinished:
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
 Neither these checks nor CI closes that audit or the remaining mathematics.
