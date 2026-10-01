@@ -12741,3 +12741,51 @@ exclude a stronger continuation certificate reaching9.3. The conclusion
 only identifies the exact limitation of this prefix-supremum envelope
 when paired with the currently cited numerical certificate. No Lean
 verification or new continuation table is asserted.
+
+## 95. The standard sieve at three forces global five-or-seven support
+
+Directly reuse the published BBMST distortion sieve for a finite family
+of APs with distinct odd moduli greater than one. If this family covers
+the integers, its period Q must satisfy
+
+    5 divides Q or7 divides Q.                       (GS1)
+
+All original prime-power heights and phases are unrestricted. This is
+a direct application of the published tools, not a new initial-block
+theorem or an assertion about shared support between two roots.
+
+Suppose instead that5 and7 do not divide Q. If3 does not divide Q,
+BBMST Theorem7.1 already gives noncoverage. Otherwise number all ordinary
+primes as in its section6, so p_2=3 and p_4=7, and choose
+
+    delta_2=1/2,  delta_1=delta_3=delta_4=0.
+
+At the3 stage, the only new originals have pure-three moduli. Numerical
+distinctness alone gives, for H=v_3(Q),
+
+    alpha_2<=sum_(a=1..H)3^(-a)<1/2=delta_2.
+
+The positive-part loss formula in the proof of BBMST Lemma3.3 therefore
+gives P_2(B_2)=0. The2,5,7 bad sets are empty, so the original accounting
+masses satisfy mu_2=mu_3=mu_4=1. No auxiliary reserve or reset is used.
+
+BBMST Lemma3.4 has the ordinary cylinder factor nu(3)=2. Its resulting
+Euler estimate in Theorem3.2, equivalently section6 equation(21), permits
+the checkpoint i_0=4 with
+
+    kappa=1+(3*3-1)/[(1-1/2)*(3-1)^2]=5.
+
+Only3 occurs in that initial Euler product; absent primes contribute
+no factor. Thus section6 equation(19) gives f_4=kappa/mu_4=5. The published
+Table1 bound g_4>=5.860938 and Corollary6.3 imply noncoverage, proving GS1.
+The referenced source is arXiv:1811.03547v1, Lemmas3.3--3.4, Theorem3.2,
+section6 equations(19)--(21), Table1 and Corollary6.3.
+
+For the actual EB1 source partition used here, GS1 says precisely
+
+    (R union S_1 union S_2) intersects {5,7}.          (GS2)
+
+It does not assert that R intersects this set, that each P_i=R union S_i
+does, or that the two pruned roots share a prime. Shared support still
+requires a relation using the actual common source. No Lean verification
+is asserted.
