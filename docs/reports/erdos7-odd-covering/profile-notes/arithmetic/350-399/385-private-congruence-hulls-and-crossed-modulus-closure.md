@@ -3943,45 +3943,63 @@ It is contained in R_3 minus union_j C_j, because avoiding a
 class's assigned prime root suffices to avoid that class. It need
 not equal the whole remaining region.
 
-### Existing product-tree blocking survives with changed arities
+### Deleting first roots preserves the deeper prefix capacities
 
-Choose arbitrary complete (lambda_i+t_i)-ary trees through every
-original p_i height. At the first level delete branches in S_i.
-At least lambda_i branches remain; at every later node trim to
-lambda_i branches as well. The resulting product consists of
-legal lambda_i-ary trees for
-[Report376, section1](376-complete-prime-chain-transport-and-joint-prefix-laws.md#1-a-full-height-chain-has-injective-numerical-labels).
-That result supplies ONE actual point of R_3 in their product.
-Its selected roots avoid every S_i, so it belongs to R*.
+Put r_i=p_i-lambda_i+1 and b_i=r_i-t_i. There is one probability
+nu* supported on R*, with simultaneous capacities
 
-Consequently R* meets every stated product of wider trees and is
-nonempty. Apply Report376's weighted-tree and finite LP argument
-to this obstruction with the integer branching parameters
-lambda_i+t_i. It yields one probability nu* supported on R*,
-with simultaneous capacities
-
-    b_i=p_i-lambda_i-t_i+1,
-    nu*(x=a mod p_i^j)<=b_i^(-j)
+    c_i(0)=1, c_i(j)=1/(b_i*r_i^(j-1)) for j>=1,
+    nu*(x=a mod p_i^j)<=c_i(j)
       for 0<=j<=v_(p_i)(B), every a.              (RC2)
 
-The weighted-tree argument requires integer branching, not that
-the branching parameter be prime. At b_i=1 its capacity is the
-trivial bound one; the corresponding full p_i tree is unique,
-and the same weighted estimate is just the sum of all prefix
-prices. No marginal independence is asserted or used.
+Thus b_i=1 weakens the first-root bound to one, while every
+further digit still has its original factor r_i. Deleting first
+roots does not justify charging the same loss again at each depth.
+
+Here is a direct reuse of
+[Report376, sections3--4](376-complete-prime-chain-transport-and-joint-prefix-laws.md#3-weighted-prefix-potentials).
+In one coordinate give all positive-depth prefixes nonnegative
+prices w_u, let f be their path sum, and let
+
+    C=sum_u w_u*r_i^(-length(u)), delta=t_i/r_i<1.
+
+Give each root in S_i an additional price M, where M>C/(1-delta).
+The existing weighted-tree lemma supplies a complete lambda_i-ary
+tree with f+M*1_(first root in S_i)<=C+M*delta on every leaf.
+Since C+M*delta<M, the tree avoids S_i. Let M decrease to
+C/(1-delta). There are only finitely many full-height trees, so
+a fixed subsequence gives a tree avoiding S_i on which
+
+    f<=C/(1-delta).
+
+This also covers C=0, by taking positive M decreasing to zero.
+The cost C/(1-delta) is exactly sum_u w_u*c_i(length(u)).
+
+In Report376's finite LP, use variables on actual R*, the global
+mass bound one, and RC2's positive-depth prefix capacities.
+Write w_0 for the dual price of the global mass bound. If a dual
+cover had total cost below one, the trees just selected would give
+w_0+sum_i f_i(x_i)<=w_0+sum_i C_i/(1-delta_i)<1.
+Report376's product-tree obstruction supplies ONE point of R_3
+in their product. The trees avoid all S_i, so that point belongs
+to R*, contradicting the dual covering constraint. Pricing the
+global mass constraint by one gives the opposite bound. Strong
+duality therefore supplies an attained probability with all RC2
+bounds. This proves nonemptiness at the same time and uses neither
+independent marginals nor positive mass under an earlier law.
 
 For a cofactor query a mod e, e|B, the one law therefore gives
 
     nu*(a mod e)<=
-      min({b_i^(-v_(p_i)(e)):p_i|e} union {1}).    (RC3)
+      min({c_i(v_(p_i)(e)):p_i|e} union {1}).      (RC3)
 
 If the query fixes a selected forbidden root in some S_i its
 mass is zero. Several query factors yield the minimum of their
 caps, not their product. For example, along3<5<7, deleting one
-specified5-root gives bases2 and3: a5-root costs at most1/2
-and a7-root at most1/3 under this SAME residual law. This does
-not retain the old5 price1/3 or assert that the old law gave
-the remainder positive mass.
+specified5-root gives a5-prefix of depth j>=1 price
+1/(2*3^(j-1)) and a7-prefix of depth j price3^(-j), under this
+SAME residual law. This does not retain the old5-root price1/3
+or assert that the old law gave the remainder positive mass.
 
 ### Test the whole outside repair on a declared surviving tail
 
@@ -4019,3 +4037,213 @@ Nor does an arbitrary active inside collection have to satisfy
 RC1. The construction supplies a certified residual source when
 that condition holds, without giving a uniform payment bound for
 every mixed repair or resolving the unrestricted problem.
+
+### Full prefixes can fit even when their first-root counts do not
+
+For each cofactor class C_j, one may instead assign its complete
+prefix at a chosen dividing chain prime. In coordinate i, remove
+duplicates and prefixes contained in another selected prefix;
+write U_i for the resulting antichain and D_i for its union. Put
+
+    delta_i=sum_(u in U_i) r_i^(-length(u)).
+
+If delta_i<1 for every i, the same penalty argument applies:
+put price M on every u in U_i. Since these prefixes are disjoint,
+the added path score is exactly M on D_i and zero elsewhere.
+Its old capacity cost is M*delta_i. Reuse the same finite LP on
+R_D={x in R_3:x_i notin D_i for every i}. It gives one law with
+
+    nu_D(x=a mod p_i^j)
+      <=min(1,r_i^(-j)/(1-delta_i)), j>=1.        (RC5)
+
+Every assigned cofactor class misses R_D. With this whole
+assignment fixed, RC4 remains valid with nu_D in place of nu*.
+The sufficient condition is delta_i<1 separately on each axis,
+not sum_i delta_i<1. Only roots gives delta_i=t_i/r_i and
+recovers RC2 exactly. This is an interface use of the existing
+weighted-tree selection and common-source duality, not a new
+LP-duality theorem.
+
+For example, three depth-two5 prefixes at distinct first roots
+have delta_5=3/9=1/3 along3<5<7. Their three first roots exceed
+RC1's two-root allowance, but their complete prefixes satisfy
+RC5. The resulting5-prefix price is min(1,(3/2)*3^(-j)); all
+undeleted chain coordinates retain their original caps. This
+describes a sufficient deletion certificate for those actual
+prefixes, not an assertion that every inside collection has one.
+
+## 29. Six repair classes cannot need an outside modulus
+
+Keep the actual complete P_3 in the same lexicographically minimum
+whole cover, with Q=3^H B, H>=1. Allow any repair of P_3 by at most
+six distinct odd nonunit moduli, with numerical label3 unavailable.
+No retention of all old3-free classes is assumed. Then
+
+    all repair classes whose moduli do not divide Q
+      can be discarded.                           (NF13)
+
+This strengthens NF12 without a height or support-size restriction.
+It does not claim that a repair by the remaining available divisors
+exists. The proof reuses the essential-coset bound, the actual
+prime-chain source and the distinct original repair labels.
+
+### Count indispensable outside classes on their own private fibres
+
+Take an inclusion-minimal subfamily of the proposed repair and
+write k_out,k_in for its outside and inside counts. If k_out>0,
+an outside class has a private integer x in P_3. No inside class
+meets x+Q*Z: an inside class meeting that fibre contains all of
+it, including x. The compatible OUTSIDE classes therefore cover
+this fibre and the chosen class remains essential. NF9's published
+bound applies with k_out, giving
+
+    f(m/gcd(m,Q))<=k_out-1.                        (NF14)
+
+NF2 excludes k_out<=2. If k_out=6 then k_in=0 and NF10 excludes
+the repair. Only k_out=3,4,5 remain. For k_out=3 or4, every outside
+modulus has form3^(H+1)*e with e|B; its relative index is3.
+For k_out=5 the possible indices are3,5,9. The old support contains5,
+as in NF10.
+
+### Four or five outside classes fail one common residual budget
+
+Here k_in<=2. First select one old3-tail avoiding every pure3-power
+inside class. Such a tail exists: each such modulus is at least9,
+and two distinct pure powers occupy at most1/3+1/9 of the old
+tail space. At H=1 there are no such inside classes.
+
+Collect all mixed inside classes active at this one tail. Assign
+each to one of its cofactor prime roots, in the full consecutive
+support chain above3. Every r_i>=3, and at most two roots are
+assigned altogether, so RC1 holds. Use RC2's ONE law on R*, and
+lift uniformly above the selected complete old Q source to the
+LCM of every repair modulus. All inside classes have mass zero.
+
+Suppose k_out=4. If every b_i>=2, each nonunit cofactor query
+has mass at most1/2. There is at most one outside label with
+e=1, so total outside mass is at most
+
+    1/3+3/6=5/6<1.
+
+Otherwise precisely one coordinate p has b_p=1; it has r_p=3
+and received two distinct roots. All other coordinates retain
+b_i=r_i>=3. The ONLY nonunit numerical cofactor which can have
+mass above1/3 is e=p: a p^2 prefix already has mass at most1/3,
+and a factor at another prime gives the same bound. Distinctness
+permits e=1 and e=p at most once each among the outside labels.
+Their total mass is therefore at most
+
+    1/3+1/3+2/9=8/9<1.
+
+Now suppose k_out=5, so k_in<=1. All b_i>=2, and at most one
+coordinate can have b_i=2. If a modulus exceeds the old5-height,
+use its private Q-fibre and vary just the first new5 digit, keeping
+all other digits fixed. Every class not exceeding the old5-height
+misses that whole set. Every remaining class covers at most one
+of its five values. Thus all five outside classes exceed that
+height. Under the SAME lifted law, each fixes an old5 prefix of
+mass at most1/2 and an independent new5 digit, so their total
+mass is at most5/10=1/2<1.
+
+Otherwise all excess is at3, and the outside labels have form
+3^(H+j)*e, j=1 or2. Only j=1,e=1 can have mass above1/6,
+and it has mass at most1/3. Apart from this, the only label which
+can have mass above1/9 is j=1,e=p at the possible coordinate
+with b_p=2; its mass is at most1/6. All other labels have a second
+new3 digit, a deeper p prefix, or a different cofactor prime.
+Each then has mass at most1/9. Distinctness yields the bound
+
+    1/3+1/6+3/9=5/6<1.
+
+Absent exceptional labels only decrease these bounds. This excludes
+both cases without optimizing a separate law for each class.
+
+### Three outside classes would require too narrow a remainder
+
+Let P' be P_3 minus all inside classes; it is nonempty by
+irredundancy. NF4 applies to its three outside classes: P' must
+lie in ONE residue modulo3^H, and its complete cofactor hull K
+must have at least three distinct divisors. These are consequences
+of the same three actual phases covering every integer lift.
+
+If H>=3, choose a point of P' and fix its complete cofactor in B.
+Along that fixed cofactor the inside classes cover every old3-tail
+except the one containing the chosen point. Add that single tail
+as a class of index3^(H-1) on the ternary-tail parameter. This
+class is essential in the resulting whole cover of the parameter.
+The Lettl--Sun bound already used in NF9 gives
+
+    k_in>=f(3^(H-1))=2*(H-1)>=4,
+
+contradicting k_in<=3. The inside pullbacks may repeat numerical
+indices; the cited theorem permits this.
+
+If H=2, fix the same witness cofactor. An inside class of3-height
+zero or one misses the witness and hence every tail over this
+cofactor. Each of the other two old tails consequently needs an
+inside class of3-height two. Those two classes are distinct and
+belong to different tails. With at most three inside classes,
+each of these two tails has at most two active inside classes in
+total. Numerical label9 can occur only once. At the other tail
+every active class has a nonunit cofactor, of mass at most1/3
+under the original PC7 law. Their total mass at most2/3 cannot
+cover all of R_3, contradicting the asserted single-tail remainder.
+
+### At height one, three inside classes leave a hull of at most two divisors
+
+Let H=1 and write the inside cofactor classes as C_j modulo e_j>1,
+e_j|B. Each numerical e can occur at most twice: its only possible
+original inside labels are e and3e. Put R'=R_3 minus union_j C_j.
+It is nonempty, and choose w in R'. Its complete hull is
+
+    K=gcd(B,{x-w:x in R'}).
+
+Thus R_3 is contained in union_j C_j together with w mod K.
+We show that K is either1 or a prime.
+
+First suppose p^2|K. Enlarge the last class to w mod p^2. If
+the at most three inside cofactors are not all powers of one
+prime, assign each to a dividing prime so no prime receives more
+than two of them. Such an assignment exists for at most three
+items: the only capacity-two Hall obstruction is three singleton
+supports at the same prime. Use the full consecutive prime chain
+and each assigned class's actual prefix. Every coordinate has
+total PC6 capacity at most2/3 before the target, and adding its
+p^2 prefix raises the p-coordinate cost by at most1/9, still below
+one. If all inside cofactors are powers of one prime, numerical
+distinctness instead gives total capacity at most
+
+    2/3+1/9=7/9.
+
+Adding the target p^2 prefix again leaves every coordinate below
+one. PC6 therefore supplies in each coordinate a complete legal
+tree avoiding its assigned prefix union. Their product meets R_3
+by PC1--PC4, contradicting the displayed containment.
+
+Next suppose distinct primes p,s divide K. Enlarge the target to
+w mod p*s and allow its assigned prefix to be either its p root
+or its s root. Assign the at most four items, including that
+target, to dividing primes with capacity two each. Hall's only
+possible failure is that the three inside items all have singleton
+support at one prime t: a set with two available primes has total
+capacity four, and the target itself has two choices. Outside
+this exception every coordinate cost is at most2/3. In the
+exception, keep the inside items at t with cost at most7/9, and
+assign the target to one of p,s different from t, at cost at most
+1/3. In both cases the same PC6 product-tree contradiction applies.
+The finite assignment step is the existing capacity-Hall criterion
+used in
+[Report386, section3](386-pair-root-conflicts-and-original-survivor-capacity.md#3-capacitated-hall-is-a-simpler-sufficient-condition),
+with every capacity set to two, not a new matching theorem.
+
+Consequently K has at most two divisors. This contradicts NF4 and
+completes all k_out cases, proving NF13. Every inclusion-minimal
+subrepair therefore consists solely of inside classes, so the
+inside subfamily of the original repair already covers P_3.
+
+The six-class conclusion concerns a complete periodic obligation,
+not an arbitrary proper part of P_3. Repairs with more classes,
+the availability and effectiveness of inside repairs, and the
+general collision families of BC2 remain to be controlled. No
+unrestricted noncoverage conclusion or Lean certification follows
+from this finite-budget theorem.

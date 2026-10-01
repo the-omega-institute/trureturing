@@ -30880,12 +30880,19 @@ label3^(H_3+1), at most1/3. An essential excess5 or7 digit forces
 at least five or seven corresponding classes; their smaller
 masses make the entire eight-class total less than one. The
 existing Report378 incidence bound gives N_3>=9, and branch
-restriction excludes the remaining9-divisible palette. In any
-repair using at most four distinct odd nonunit moduli, with label3
-unavailable, all outside classes can be discarded. At height one,
-Report376's joint prime-chain obstruction makes the hull of
-R_3 minus any cofactor class modulo e>1, e|B with B=Q/3, equal to1;
-this excludes the three-outside completion. This statement about
+restriction excludes the remaining9-divisible palette.
+[Report385, section29](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#29-six-repair-classes-cannot-need-an-outside-modulus)
+also excludes indispensable outside classes in ANY repair with
+at most six distinct odd nonunit moduli and label3 unavailable.
+Four or five outside classes fail one common residual mass budget;
+three would force the remainder into one complete old3-tail with
+a cofactor hull having at least three divisors. At heights above
+one the inside classes cannot confine the remainder to that tail.
+At height one, at most three inside classes leave a nonempty
+cofactor hull which is1 or a prime: capacity-Hall assignment and
+the weighted-tree obstruction exclude a square or two different
+prime factors. Distinct original labels matter because each
+cofactor e then occurs at most twice, as e and3e. This statement about
 the COMPLETE old private region does not require retaining every old3-free
 class in the proposed exchange. It does not establish existence
 of an inside repair or exclude larger mixed budgets. A pair in
@@ -30940,10 +30947,17 @@ as though their repair suppliers were disjoint.
 constructs a common probability inside the actual residual left
 by declared inside cofactor classes. Assigning each class to one
 of its prime roots uses t_i distinct roots in coordinate p_i.
-When lambda_i+t_i<=p_i along the selected chain, the existing
-product-tree obstruction and weighted-tree argument give a law
-with prefix bases p_i-lambda_i-t_i+1, avoiding every assigned
-root. Its uniformly lifted outside-class prices must sum to at
+When lambda_i+t_i<=p_i along the selected chain, put
+r_i=p_i-lambda_i+1 and b_i=r_i-t_i. The existing product-tree
+obstruction and weighted-tree argument give a law avoiding every
+assigned root, with depth-j prefix bound1/(b_i*r_i^(j-1)) for
+j>=1. Only the first level pays the deleted-root loss; deeper
+digits retain the old base r_i. More generally, assigning full
+cofactor prefixes of total old capacity delta_i<1 in EACH
+coordinate gives simultaneous bounds
+min(1,r_i^(-j)/(1-delta_i)). This can accommodate deep deletions
+whose first-root counts exceed the root-only allowance. Its
+uniformly lifted outside-class prices must sum to at
 least one on any declared surviving old3-tail. This provides a
 residual source without assuming the old law gave that remainder
 positive mass. Pure3-power inside classes require the separate
