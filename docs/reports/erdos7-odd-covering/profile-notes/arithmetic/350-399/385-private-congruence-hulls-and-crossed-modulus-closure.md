@@ -14146,3 +14146,65 @@ excluded. Their supplier intersections and occupied original
 labels remain part of the unresolved repair problem. This is an
 ordinary two-level consumer of the existing coarsening and
 cross-color repair; no Lean verification is asserted.
+
+## 110. Paying the occupied ancestor transports the phase exclusion to a second center
+
+Keep the same original three-class top batch T. Write its cofactor
+intersection as alpha modM and its lower ternary prefix as u, as in
+section108. The occupied original ancestor of numerical modulus
+3^(H-1)M has its OWN actual cylinder
+
+    A_0={x:x=v mod3^(H-1),x=beta modM}.
+
+There is a whole-cover exchange preserving the entire numerical
+palette D, cardinality N and modulus sum W. Delete T and A_0. Put
+the ancestor label at C_M=(u,alpha). Reinsert the three freed top
+labels3^H,3^H p,3^H s above v, on three distinct final digits,
+with their nonpure cofactor phases the restrictions of beta.
+
+The reassigned ancestor covers E_T. The three relocated top classes
+cover the ENTIRE old A_0, since every point of A_0 has the required
+cofactor phase for whichever final digit it occupies. The exact
+simultaneous deletion region lies in E_T union A_0. Thus the output
+is a whole distinct cover with exactly the old labels and both old
+objectives. In particular it is again EB1-minimal. The ancestor's
+old liability was paid; it was not silently discarded or treated
+as an available free label.
+
+### Apply AC2 at the new top center without transferring private colors
+
+The relocated top classes have center(v,beta) and still occupy the
+three final digits singly. In the exchanged whole cover, their
+top-deletion remainder lies in
+
+    {x:x=v mod3^(H-1),x=beta modM}.
+
+This follows by looking at each of the three top digits; the
+retained lower classes do not depend on that digit. All originals
+other than T and A_0 remain untouched.
+
+Consequently, for every untouched lower original A_d and prime
+ell dividing M, the following simultaneous agreement is impossible:
+
+    27ell divides d,
+    a_d=v mod27, a_d=beta modell.                  (PX1)
+
+Indeed these data instantiate the already proved AC2 repair at
+center(v,beta). The needed numerical vacancies5ell,15ell,45ell,
+135ell are unchanged: the exchange preserves D, and their absence
+was established by ORIGINAL CP1. Original A_5 is also untouched.
+The exact joint obligation lies in the common27ell cylinder,
+and the four replacement moduli have sum200ell, below the deleted
+top budget. EB1 therefore rules out PX1.
+
+No claim is needed that private regions or their color classification
+stay unchanged under the exchange. The reused interface only needs
+the new actual top center, the unchanged numerical vacancies, the
+retained A_5 and the untouched class's actual phase. The four-top-label
+exchange itself need not be a descent.
+
+Together with original AC2, PX1 places the phase exclusion around
+BOTH actual centers(u,alpha) and(v,beta), with PX1 restricted to
+untouched originals. This does not force an excluded agreement to
+occur or exclude the nonsingleton local incidences in section109.
+No new Lean verification or unrestricted noncoverage is asserted.
