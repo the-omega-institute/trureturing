@@ -34,7 +34,7 @@ public sealed partial class FrozenSurfaceRuleTests
         "tools/scripts/worktree/lean-cache-ensure.sh",
         "tools/scripts/lib/resource-observation-lib.sh",
         "tools/scripts/lean-report-pair.sh",
-        ".github/workflows/ci-push.yml",
+        ".github/workflows/ci-current.yml",
         "Directory.Build.props",
         "Directory.Packages.props",
         "global.json",
@@ -57,7 +57,7 @@ public sealed partial class FrozenSurfaceRuleTests
         "tools/scripts/worktree/lean-cache-ensure.sh",
         "tools/scripts/lib/resource-observation-lib.sh",
         "tools/scripts/lean-report-pair.sh",
-        ".github/workflows/ci-push.yml",
+        ".github/workflows/ci-current.yml",
         "lean-toolchain",
         "lakefile.toml",
         "lakefile.lean",
@@ -68,7 +68,7 @@ public sealed partial class FrozenSurfaceRuleTests
     {
         "lean-report-inputs.json",
         "lean-toolchain",
-        ".github/workflows/ci-push.yml",
+        ".github/workflows/ci-current.yml",
         "tools/StrataLint.Cli/Program.cs",
     };
 

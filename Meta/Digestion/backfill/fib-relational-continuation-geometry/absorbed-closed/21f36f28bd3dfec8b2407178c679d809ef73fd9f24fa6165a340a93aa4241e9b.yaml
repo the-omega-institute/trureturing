@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:21f36f28bd3dfec8b2407178c679d809ef73fd9f24fa6165a340a93aa4241e9b
+  normalized_sha256: sha256:21f36f28bd3dfec8b2407178c679d809ef73fd9f24fa6165a340a93aa4241e9b
+cas_ref: sha256:21f36f28bd3dfec8b2407178c679d809ef73fd9f24fa6165a340a93aa4241e9b
+coverage_gids:
+  - gid: D5/S1/Recurrence/Invariants/CloitreActualWeightedCone.full30_6
+    target_statement_id: sha256:146c75509e70920e01123d4fbe16fcb2df6a1436c286d030084f3171ce6b2299
+receipts:
+  unresolved_subitems: []

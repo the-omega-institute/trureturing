@@ -89,12 +89,12 @@ public sealed class UtilityDepositEntryTests
         Assert.Equal(2, result.ExitCode);
         if (refutation)
         {
-            Assert.Contains("DEPOSIT_HEADER_CHECKED", output, StringComparison.Ordinal);
+            Assert.True(output.Contains("DEPOSIT_HEADER_CHECKED", StringComparison.Ordinal), output);
             Assert.Contains("REACHED_EMISSION", output, StringComparison.Ordinal);
         }
         else
         {
-            Assert.Contains("DEPOSIT_HEADER_UTILITY_ORDINARY_INSTANCE_BANNED", output, StringComparison.Ordinal);
+            Assert.True(output.Contains("DEPOSIT_HEADER_UTILITY_ORDINARY_INSTANCE_BANNED", StringComparison.Ordinal), output);
             Assert.DoesNotContain("REACHED_EMISSION", output, StringComparison.Ordinal);
         }
         Assert.Equal(0, fixture.FreezeCount());

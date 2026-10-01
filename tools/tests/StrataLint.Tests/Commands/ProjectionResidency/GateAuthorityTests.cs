@@ -18,13 +18,13 @@ public sealed class GateAuthorityTests
     // and would let a root be dropped silently. Retiring one is a deliberate act: change the
     // number here in the same commit.
     [Fact]
-    public void RepositoryCatalogHasTenUniqueUtf8SortedRoots()
+    public void RepositoryCatalogHasSixUniqueUtf8SortedRoots()
     {
         var repositoryRoot = TestRepositoryLayout.FindRoot();
         var catalog = File.ReadAllBytes(Path.Combine(repositoryRoot, GateAuthorityRootCatalogLoader.RelativePath));
         var roots = GateAuthorityRootCatalogLoader.Parse(catalog);
 
-        Assert.Equal(10, roots.Length);
+        Assert.Equal(6, roots.Length);
         Assert.Equal(
             roots.Length,
             roots.Select(root => root.RootId).Distinct().Count());
@@ -214,14 +214,40 @@ public sealed class GateAuthorityTests
         Assert.Contains("GATE_AUTHORITY_INVALID", result.Error, StringComparison.Ordinal);
     }
 
-    private static byte[] ProduceBytes() =>
-        GateAuthorityProducer.Write(GateAuthorityProducer.Create(TestRepositoryLayout.FindRoot(), OldBuild));
+    // Authority bytes come from a synthetic repository; entrypoint bytes are opaque fixtures.
+    private static TemporaryDirectory SyntheticRepository()
+    {
+        var repository = new TemporaryDirectory();
+        Directory.CreateDirectory(Path.Combine(repository.Path, "Golden"));
+        File.WriteAllText(Path.Combine(repository.Path, GateAuthorityRootCatalogLoader.RelativePath), """
+            schema = "gate-authority-roots-v1"
+            [[roots]]
+            root_id = "Alpha/check"
+            entrypoint = "entry.sh"
+            [[roots]]
+            root_id = "entry.sh/check"
+            entrypoint = "entry.sh"
+            [[roots]]
+            root_id = "fixture.yml/required"
+            entrypoint = "fixture.yml"
+            """ + "\n");
+        File.WriteAllText(Path.Combine(repository.Path, "entry.sh"), "#!/bin/sh\ncheck\n");
+        File.WriteAllText(Path.Combine(repository.Path, "fixture.yml"), "opaque fixture entrypoint\n");
+        return repository;
+    }
 
-    private static int ValidateAuthority(byte[] bytes, string? expectedAuthoritySha256) =>
-        GateAuthorityReader.Validate(
-            bytes,
-            expectedAuthoritySha256,
-            GateAuthorityRootCatalogLoader.LoadRepository(TestRepositoryLayout.FindRoot()));
+    private static byte[] ProduceBytes()
+    {
+        using var repository = SyntheticRepository();
+        return GateAuthorityProducer.Write(GateAuthorityProducer.Create(repository.Path, OldBuild));
+    }
+
+    private static int ValidateAuthority(byte[] bytes, string? expectedAuthoritySha256)
+    {
+        using var repository = SyntheticRepository();
+        return GateAuthorityReader.Validate(bytes, expectedAuthoritySha256,
+            GateAuthorityRootCatalogLoader.LoadRepository(repository.Path));
+    }
 
     private static byte[] WriteMutation(string oldBuild, IEnumerable<JsonElement> roots) =>
         StructuredCanonicalWriter.WriteJson(JsonSerializer.SerializeToElement(new
