@@ -66,14 +66,8 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
   have eval_lift_from (q : RawState m) (w : List Window) :
       (atomicMachine m).toDFA.evalFrom q (w.map Action.window) =
         (rawMachine m).toDFA.evalFrom q w := by
-    induction w generalizing q with
-    | nil => rfl
-    | cons b w ih =>
-      simp only [List.map_cons, DFA.evalFrom_cons]
-      change (atomicMachine m).toDFA.evalFrom
-          (atomicTransition q (.window b)) (List.map Action.window w) =
-        (rawMachine m).toDFA.evalFrom (rawTransition q b) w
-      simpa [atomicTransition] using ih (rawTransition q b)
+    simpa [DFA.evalFrom, DFA.comap, atomicMachine, rawMachine, atomicTransition] using
+      ((atomicMachine m).toDFA.evalFrom_comap Action.window q w).symm
   have eval_lift (w : List Window) :
       (atomicMachine m).toDFA.eval (w.map Action.window) =
         (rawMachine m).toDFA.eval w := by
