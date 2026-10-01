@@ -114,6 +114,36 @@ T_s(N)=\log\mathcal Q_s+\log N
 -s\log(e^\gamma\log\log N).
 $$
 
+
+A finite whole-host screen can instead start from the actual signed budget,
+without transferring the divisor's benefit. In the prescribed window
+$N\in[A,X]$, use $s=\log A\log\log A$ and $A>5040$. If that host fails
+the strict Robin test, then
+
+$$
+\operatorname{Ben}_{C_s,1/s}(N)\le\frac{T_s(N)}s.
+$$
+
+The endpoint step in Axler's proof directly supplies a uniform finite
+cutoff here. Writing $L=\log N\ge\log A$, the budget has derivative
+$1-s/(L\log L)\ge0$ with respect to $L$, so $T_s(N)\le T_s(X)$.
+If $T_s(X)<0$, the nonnegative benefit already pays every host in this
+window. Otherwise any fixed positive cutoff
+
+$$
+\beta_{\mathrm{host}}\ge\frac{T_s(X)}s
+$$
+
+contains every possible host failure. This includes the endpoint
+$T_s(X)=0$ by choosing a positive cutoff and retaining all zero-benefit
+ties. The parameter ratio for this host screen is
+$\beta_{\mathrm{host}}/\varepsilon=s\beta_{\mathrm{host}}$;
+its behavior is not determined by the divisor cutoff $\beta_y$.
+After enumeration, the original window, Fibonacci residue, qualifying
+source divisor and exact strict budget still require their own checks.
+This is the source's fixed-price endpoint method applied to the existing
+budget, not a new finiteness proof or a uniform tail certificate.
+
 Lemma 5.2 and Proposition 5.3 supply neither that joint signed estimate
 nor an exclusion of all actual growing-price FIB hosts. Their definitions,
 finiteness theorem and reported numerical interval are reused directly;
