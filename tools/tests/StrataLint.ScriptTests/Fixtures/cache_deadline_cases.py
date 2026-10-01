@@ -4,6 +4,7 @@ import json
 import pathlib
 import subprocess
 from datetime import datetime, timezone
+from unittest import mock
 
 from lean_seed_support import ROOT
 
@@ -68,6 +69,30 @@ class CacheDeadlineCases:
         self.assertEqual(280, later.remaining())
         self.assertEqual(215, later.snapshot_seconds())
         self.assertEqual({"save_allowed": True, "save_timeout_minutes": 4}, owner.save_outputs(later))
+
+    def test_cache_deadline_120_minute_current_window_allows_cache_writes(self):
+        owner, env, epoch, clock, jobs, calls, fetch = self.deadline_fixture()
+        first = owner.begin(self.root, "current", 120, env=env, fetch_jobs=fetch,
+                            now=lambda: epoch, monotonic=lambda: clock[0])
+        self.assertEqual("available", first.reason)
+        self.assertEqual(4780, first.remaining())
+        record = json.loads(owner.state_path(self.root, "current").read_text())
+        self.assertEqual(120, record["job_timeout_minutes"])
+        later = owner.load_deadline(self.root, "current", env=env, monotonic=lambda: clock[0])
+        self.assertEqual("available", later.reason)
+        self.assertEqual({"save_allowed": True, "save_timeout_minutes": 12}, owner.save_outputs(later))
+        output = self.root / "github-output"
+        with mock.patch.dict(owner.os.environ, {**env, "GITHUB_OUTPUT": str(output)}, clear=True), \
+                mock.patch("sys.argv", ["cache_deadline.py", "begin", "--repository", str(self.root),
+                                       "--stage", "current", "--job-timeout-minutes", "120"]), \
+                mock.patch.object(owner, "query_jobs", fetch), \
+                mock.patch.object(owner.time, "time", return_value=epoch), \
+                mock.patch.object(owner.time, "monotonic", side_effect=lambda: clock[0]), \
+                mock.patch("builtins.print") as printed:
+            self.assertEqual(0, owner.main())
+        values = json.loads(printed.call_args.args[0].split(" ", 1)[1])
+        self.assertIs(True, values["cache_allowed"])
+        self.assertEqual("cache_allowed=true\n", output.read_text())
 
     def test_cache_deadline_allows_pull_request_merge_ref_writes(self):
         for job, stage in (("build", "build"), ("engineering", "engineering"),
@@ -144,7 +169,7 @@ class CacheDeadlineCases:
                 self.assertEqual(1, len(calls))
 
     def test_cache_deadline_rejects_out_of_range_or_noninteger_timeouts_at_begin_and_load(self):
-        for invalid in (61, 0, -1, True, False, 60.0, "60", None):
+        for invalid in (361, 0, -1, True, False, 60.0, "60", None):
             with self.subTest(timeout=invalid):
                 owner, env, epoch, clock, jobs, calls, fetch = self.deadline_fixture()
                 owner.begin(self.root, "current", 45, env=env, fetch_jobs=fetch,
@@ -306,7 +331,7 @@ class CacheDeadlineCases:
         path = self.root / "build/ci/cache-deadline-current.json"
         original = json.loads(path.read_text())
         for key, value in (("started_at", False), ("cutoff_monotonic", "later"),
-                           ("sampled_monotonic", float("nan")), ("job_timeout_minutes", 61)):
+                           ("sampled_monotonic", float("nan")), ("job_timeout_minutes", 361)):
             path.write_text(json.dumps({**original, key: value}))
             self.assertEqual(0, owner.load_deadline(self.root, "current", env=env,
                              monotonic=lambda: clock[0]).save_timeout_minutes())
