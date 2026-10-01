@@ -2121,3 +2121,73 @@ general target uniqueness or the full finite-volume cusped/nonorientable
 Mostow–Prasad endpoint. The compatible original geometric inputs remain
 explicit. The linked escape audit is unfinished; new registration work
 remains paused by the repository instructions.
+
+
+### Homotopic actual isometries are unique for the same compatible covers
+
+The homotopy-class uniqueness step is now proved under the same explicit
+compatible original-H3/base geometric and full-deck-cover hypotheses.
+For ordinary metric bases whose distances agree with the supplied
+intrinsic metrics, and finite intrinsic volume of the source, every
+prescribed homotopy equivalence has at most one actual isometric
+bijection homotopic to it. The prescribed homotopy equivalence need not
+itself preserve distance in this final statement. The theorem is exactly
+the existing UniqueIsometryRepresentative predicate. It does not assert
+that an isometric representative exists. No compactness, orientation,
+dense-orbit, separately supplied centralizer or separately supplied
+faithfulness premise is added to that final statement.
+
+A generic covering-homotopy composition starts with the same supplied
+continuous lift and equivariant deck homomorphism. The actual base
+homotopy pulls back along the source projection and lifts continuously
+through the target covering. At every source point, uniqueness of lifted
+paths on the unit interval compares source deck action with target action
+through that same homomorphism; their initial equality is precisely the
+original equivariance. Consequently the lifted homotopy retains that same
+homomorphism at every time and point, and its endpoint projects to the
+other base map. No based or relative homotopy condition is assumed.
+
+The exact H3 composition first treats a prescribed intrinsic-distance-
+preserving homotopy equivalence and another continuous intrinsic-distance-
+preserving map homotopic to it. The earlier constructor supplies the same
+lift/tau/d and its full ambient isometry. The lifted base homotopy starts
+from that lift and keeps tau, so its endpoint becomes another full H3
+isometry through the established local metric and global extension
+theorems. Both ambient isometries realize the same d and actual deck
+representations. The existing actual finite-volume centralizer theorem
+and existing conjugator-uniqueness theorem make them equal; source-cover
+surjectivity then makes the two base maps equal. The finite-volume
+centralizer is proved by the earlier library result, not supplied as a
+new hypothesis.
+
+For two ordinary base isometries homotopic to an arbitrary prescribed
+homotopy equivalence, compose their actual homotopies, use the first
+isometry's homotopy equivalence, and obtain intrinsic distance preservation
+from the explicit metric compatibility. The faithful source representation
+is derived from the same full-deck-cover evaluation injectivity and its
+all-point evaluation identity. The resulting base-map equality is the
+required actual isometry equality. Compatible H3/base smooth structures,
+original/intrinsic distance compatibility, metric covering local
+diffeomorphisms, tangent inner preservation, base measurability/Borel
+structure and source finite intrinsic volume remain explicit.
+
+Two accepted serial scoped transient cache-guarded checks exited zero
+with three axiom closures using only propext, Classical.choice and
+Quot.sound. 7 warning headers are recorded, including one unused-
+tactic warning and the remaining haveILetI style warnings. Two exact
+failed source/log pairs are preserved and excluded; direct evaluation
+and composition expressions required explicit beta-normalization before
+rewriting. The prior accepted final statement with separately supplied
+source faithfulness is preserved, while the stronger accepted final
+statement discharges that premise from the same cover rather than
+supplying it. Its validity delta and the unchanged first implication's
+scope are recorded. Default resources and all original metrics are
+retained; no suppression, tracked Lean or novelty claim.
+
+This closes homotopy-class isometry uniqueness for the supplied compatible
+actual covers. Existence of an isometric representative for an arbitrary
+homotopy equivalence, existence of its ambient lattice conjugator and
+discharge of canonical original-H3 geometry remain open. The full
+finite-volume cusped/nonorientable Mostow–Prasad endpoint remains active
+and incomplete. The linked escape audit is unfinished, and new
+registration work remains paused.
