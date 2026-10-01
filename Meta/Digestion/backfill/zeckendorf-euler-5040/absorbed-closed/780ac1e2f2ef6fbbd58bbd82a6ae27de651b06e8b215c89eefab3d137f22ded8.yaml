@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:780ac1e2f2ef6fbbd58bbd82a6ae27de651b06e8b215c89eefab3d137f22ded8
   normalized_sha256: sha256:780ac1e2f2ef6fbbd58bbd82a6ae27de651b06e8b215c89eefab3d137f22ded8
 cas_ref: sha256:780ac1e2f2ef6fbbd58bbd82a6ae27de651b06e8b215c89eefab3d137f22ded8
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Weil/RobinWorstCounterexampleSelfPrice.robin_worst_counterexample_self_price
+    target_statement_id: sha256:55d24c90daee2fbb4c1622bb3984b7a05755c1a231efbd9be31b61910a81fb23
 receipts:
   unresolved_subitems: []
