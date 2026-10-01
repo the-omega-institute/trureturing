@@ -10760,3 +10760,127 @@ still uses the actual nonmonotone I_0, with no nonpure nonconcentrated
 ancestor in this branch. A further operation or estimate is required
 for strict descent. No experiment, new sieve bound or Lean verification
 is asserted.
+
+## 76. Existing Simpson cuts constrain each actual color seed
+
+Keep CP1--CP5's all-concentrated two-color EB1 family at arbitrary H.
+Let D_i consist of its original labels with nonempty nonternary support
+in S_i, and n_i=|D_i|. Define
+
+    Q_i=product_(p in S_i)p^H_p,
+    E_i=sum_(p in S_i)H_p(p-1),
+
+using every full ORIGINAL height H_p. Both S_i are nonempty by CP3.
+Let g_i count the owned original pure-three guards of height at least
+two, and h_i be the ternary height of CP9's actual seed: the maximum
+of1 and the ternary heights in D_i and its owned guards. Its exact
+period is3^h_i Q_i. In particular, every original pure p^H_p is
+retained, so no nonternary height has disappeared.
+
+### Both closing classes also satisfy the minimal-cover hypothesis
+
+CP9 gives whole coverage and a private point for every retained
+original. For either added modulus3 closing class, take the S_i
+projection of the cofactor of an original private point of A_3.
+It avoids every retained3-free original. At that closing root, all
+retained3-bearing originals, owned pure guards and the other closing
+class are inactive. Thus both added classes also have private points,
+and the whole seed is inclusion-minimal despite its repeated modulus3.
+
+Reuse Simpson's Theorem2 exactly as retained in
+[Report343, section2](../../321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md)
+and [the existing divisor-cut citation](../../../../../../Library/Arith/mcnewsetty2026covering.md#4-lemma-31-is-already-supplied-by-the-existing-divisor-cut):
+
+    Dcut|Qseed, Dcut!=Qseed
+      ==> #{seed classes whose modulus does not divide Dcut}
+            >=1+f(Qseed/Dcut),
+    f(u)=sum_p v_p(u)(p-1).
+
+Numerical multiplicity one is not a hypothesis. For1<=a<=h_i and
+0<=c_p<=H_p, choose Dcut=3^a product_(p in S_i)p^c_p. Let K_i(a,c)
+count the UNION of actual d in D_i satisfying v_3(d)>a or v_p(d)>c_p
+for at least one p in S_i. A label crossing several thresholds is
+counted once. Let G_i(a) count owned pure guards above height a.
+The two closing classes divide Dcut since a>=1. Whenever
+
+    2(h_i-a)+sum_(p in S_i)(H_p-c_p)(p-1)>0,
+
+the cut is proper and gives
+
+    K_i(a,c)+G_i(a)
+      >=1+2(h_i-a)+sum_(p in S_i)(H_p-c_p)(p-1).      (SC1)
+
+Taking a=1 and all c_p=0 is proper because S_i is nonempty. Every
+label in D_i is counted, yielding
+
+    n_i+g_i >=2h_i+E_i-1.                            (SC2)
+
+The period here belongs to the actual minimal seed; no single
+original modulus is assumed to contain all of Q_i.
+
+### An existing cut gives an additional flat-construction budget test
+
+If color i is flat in CP10's sense, its opposite seed has h_op=H
+and g_op=H-1. SC2 gives
+
+    n_op >=H+E_op.                                  (SC3)
+
+This also follows DIRECTLY from the original family's Simpson cut
+Dcut=3Q_i. Its counted labels are exactly the n_op opposite nonpure
+originals and H-1 higher pure-three originals, and Q/Dcut=3^(H-1)Q_op.
+SC3 is a consumer of the retained full divisor-cut theorem, not a new
+Simpson inequality.
+
+For ell in S_op put B_ell=(ell-2)b_i+2ell-2, using CP11's actual flat
+count b_i. The unchanged HSW output has
+
+    n_old-n_new=n_op+H-1-B_ell.
+
+Together with the existing top-fan bound n_op>=2(H+1), SC3 supplies
+the necessary no-descent condition
+
+    max{3H+1, 2H+E_op-1} <= B_ell.                   (SC4)
+
+The second term is stronger exactly when E_op>H+2. If either lower
+bound exceeds B_ell, the already established HSW construction has
+strictly fewer classes than the original cover. If the ACTUAL counts
+satisfy n_op+H-1=B_ell, CP12's modulus-sum comparison remains necessary.
+Equality of a lower bound with B_ell alone does not imply equal actual
+counts or justify switching to the weight objective.
+
+### The two seeds count each shared pure guard once
+
+Write N for the original class count. Divisor closure and comparable
+disjointness give
+
+    N=H+n_1+n_2,
+    g_1+g_2=H-1,
+    max(h_1,h_2)=H.
+
+Every pure-three power through H is original, and no higher guard can
+lie at A_3's root0. Each belongs to exactly one seed. Adding the two
+SC2 inequalities therefore yields
+
+    N >=2(h_1+h_2)+E_1+E_2-1
+       =1+2H+E_1+E_2+2(min(h_1,h_2)-1).             (SC5)
+
+The first four terms on the second line are the original cover's
+aggregate Simpson bound. If both seeds reach height two or above,
+SC5 strengthens that aggregate bound by at least two classes. This
+does not assert independence from every other existing divisor cut.
+
+More generally, take1<=a<=min(h_1,h_2) with both cuts in SC1 proper.
+All pure guards above a are assigned once, so G_1(a)+G_2(a)=H-a.
+Adding SC1 gives
+
+    K_1(a,c_1)+K_2(a,c_2)
+      >=2+2(h_1+h_2-2a)
+         +sum_(p in S_1 union S_2)(H_p-c_p)(p-1)
+         -(H-a).                                   (SC6)
+
+The D_i are disjoint actual inventories. No independent optimization
+or duplicated guard budget enters these inequalities. They do not
+force their own violation, establish all-height support intersection,
+or prove unrestricted noncoverage. These are ordinary applications
+of the existing Simpson and source/HSW results, with no new numerical
+computation or Lean verification.
