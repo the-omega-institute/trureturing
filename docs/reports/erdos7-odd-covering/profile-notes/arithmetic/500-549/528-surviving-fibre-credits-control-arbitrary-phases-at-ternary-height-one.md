@@ -30489,3 +30489,153 @@ inventories is still an unproved obligation. Neither FC1288 nor the
 marked-family estimate FC1287 settles that obligation or the missing
 arbitrary-support middle-prime costs in FC1274. Unrestricted Erdos#7
 remains unresolved.
+
+## Consuming the joint constraint in the existing ordinary source bounds
+
+The constant components of the already used ordinary comparisons do
+supply a compatible response coefficient. This resolves that consumer
+obligation for those components, while leaving unrestricted inventory
+control unresolved. Reuse the charged7 version of the Chapter30 source:
+its ordinary stage7 upper bound already pays for the charged padding,
+whereas its32 basic later-stage rows use the ORDINARY normalized J7
+comparison. They do not yet use the author's matched zero replacement.
+The following deductions apply to these rows, not to a finer row which
+has already consumed the same zero-atom reduction.
+
+### Retain the live7 kernel before comparing the full hinge
+
+For each actual first-hit loss at a prime q>7, an upper carrier starts from H35|A,
+retains the source's actual live7 subkernel, and uses the same normalized
+later kernels while omitting their deletions. It dominates the incoming
+actual survivors. It is itself dominated by the old raw law which
+omits ALL deletions. No mass deficit is assigned to that latter raw law.
+
+Complete the old nonnegative test inventory before the comparison,
+keeping each original cofactor and current-exponent label separate.
+Missing labels are added only to the upper test function; they are not
+new physical forbidden classes. Use the existing current-exponent
+aggregation and reverse ordered-increment comparison of coordinates
+above7. At a fixed actual anchor h and fixed later auxiliary values,
+the remaining full hinge is an increasing convex function F_h of a
+nonnegative sum of7-cylinder indicators. Its live7 integral obeys
+
+    integral F_h d kappa7_h
+      <=E_(ordinary J7) F_h-c_phi(h)*F_h(0).           (FC1290)
+
+Indeed, the constant term is multiplied by kappa7_h(1)<=1-c_phi(h),
+and the nonnegative ordered increments use the same depth bounds
+3/(2*7^e) as the ordinary comparison. Equivalently, only its zero atom
+is reduced by c_phi(h). The resulting zero mass is nonnegative, as
+in the attributed charged-fibre lemma. Distinct phase-labelled events
+remain distinct until that lemma's ordered comparison is applied.
+
+The order matters. Apply FC1290 to the FULL convex hinge, then lower
+bound F_h(0) and subtract that bound. Only afterwards apply the positive
+anchor-constant split of FC1266 or FC1271 to the remaining ordinary
+expectation. A difference of two hinges is not asserted to be convex
+in the7 coordinate, and no subtraction is made from an unrelated upper.
+
+### Prefix credit with two finite new constant expressions
+
+For q=11,13,17 use the complete prefix inventory and thresholds of
+FC1266. Let
+
+    M'_q=product_(11<=p<q)(1+J_p),
+    S_q=E(M'_q-tau_q)_+/beta_q.
+
+The zero7 branch of the completed inventory still contains every
+cofactor supported on these later old primes, so F_h(0) is at least
+the displayed hinge before division by beta_q. Integrating FC1290,
+then applying the SAME ordinary anchor estimate FC1266, gives
+
+    loss_q<=L_q^ordinary/135-Delta_basic*T_q-I*S_q.
+                                                            (FC1291)
+
+The baseline basic reserve, kernels and already paid stage7 charge
+are unchanged. Thus the prefix mass satisfies
+
+    mu_6(1)>=m_6+Gamma+I*S_prefix,
+    S_prefix=S_13+S_17.                                (FC1292)
+
+The new constants are
+
+    S_11=0,
+    S_13=1/63888,
+    S_17=13668155202529/469551775017756288,
+    S_prefix=7005921167235/156517258339252096.
+                                                            (FC1293)
+
+For S_13, the geometric tail gives E(J11-3)_+=1/7986, then
+divide by8. For S_17 put a11=28/33,a13=23/26 and reuse
+w_p(j)=C_p*(p-1)/p^(j+1). The complete product mean is21/16;
+its complementary hinge is the finite expression
+
+    E(8-M'_17)_+=7*a11*a13
+      +a13*sum_(j=1..6)(7-j)*w11(j)
+      +a11*sum_(j=1..6)(7-j)*w13(j)
+      +4*w11(1)*w13(1)
+      +2*(w11(1)*w13(2)+w11(2)*w13(1)).
+
+Add21/16-8 and divide by8 to obtain S_17. The complete mean
+accounts for every high state. These are finite rational expressions;
+the old source geometry and its finite certificate are reused.
+
+### The corresponding later-row interface
+
+For a three-factor row q of FC1271, put
+
+    B_q_without7=sum_(11<=p<q)K_p
+                  +sum_(11<=p<r<q)K_p*K_r,
+    b_q_without7=E(B_q_without7-t_q)_+/(q-2-t_q).
+
+Complete this three-factor TEST inventory before reverse comparison.
+Additional actual labels may remain as nonnegative terms. The zero7
+branch contains B_q_without7, so FC1290 and then FC1271 give
+
+    actual_row_fee<=U_q^old
+                   -Delta*b_q_free-I*b_q_without7.     (FC1294)
+
+Here U_q^old denotes the old raw comparison upper with any declared
+extra-inventory charge included. This is an upper bound for the actual
+row fee using the carrier which retains7 deletion. It is not a claim
+that the undeleted raw sigma has a smaller mass. The same full-history
+caps, original labels and first-hit accounting apply; normalized killed
+survivors are never given the raw caps. The general weighted response
+outside these constant components is not replaced by this scalar bound.
+
+### A uniform joint improvement of the actual-inventory certificate
+
+For the FC1249/FC1274 contract, retain only the three old Delta credits
+and the prefix I credit; further nonnegative credits from FC1294 may
+be omitted. Put
+
+    alpha=b_19_free+b_23_free+b_29_free.
+
+Before replacing either anchor statistic by a uniform bound, the SAME
+source leaves mass strictly greater than
+
+    6247/8000000+Gamma+alpha*Delta+S_prefix*I-Phi/16.
+
+FC1272 gives alpha>674/1000000. FC1293 gives
+S_prefix/7<1/10000, so alpha>S_prefix/7. Applying the actual
+joint constraint FC1289 therefore leaves mass strictly greater than
+
+    6247/8000000+Gamma+(73/1800)*alpha+J_joint-Phi/16,
+    J_joint=(34/1800)*(S_prefix/7)
+      =7940043989533/65737248502485880320
+      >1/10000000.                                    (FC1295)
+
+This is a uniform improvement of FC1274 on its declared inventory
+contract. For example, its conservative positivity condition becomes
+
+    Phi/16<=6967/8000000+J_joint,                      (FC1296)
+
+using the same strict90/1000000 total gain of FC1268 and FC1273.
+The earlier single1995 conclusion remains valid and gains J_joint.
+No optimization or independent realization of Delta and I was used.
+
+The improvement is small: it closes the scalar joint-consumption
+bridge for explicit constant components, not the full response geometry.
+Arbitrary higher-support middle-prime inventories still have unpaid
+costs, and no whole-cover argument places every hypothetical cover in
+FC1249. The unrestricted Erdős#7 objective remains unresolved.
