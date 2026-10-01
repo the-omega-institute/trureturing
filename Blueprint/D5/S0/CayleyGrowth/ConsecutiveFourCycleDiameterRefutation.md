@@ -70,6 +70,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/CayleyGrowth/ConsecutiveFourCycleDiameterRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/chervov-2026-cayleypy4-conjecture-eleven-refutation` (refuted) by `D5/S0/CayleyGrowth/ConsecutiveFourCycleDiameterRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"chervov-2026-cayleypy4-conjecture-eleven-refutation","declaration_gid":"D5/S0/CayleyGrowth/ConsecutiveFourCycleDiameterRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. Chervov and others (2026). *CayleyPy-4: AI-Holography. Towards analogs of holographic string dualities for AI tasks*. DOI: [10.48550/arXiv.2603.22195](https://doi.org/10.48550/arXiv.2603.22195). URL: <https://arxiv.org/abs/2603.22195v1>.
