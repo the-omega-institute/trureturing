@@ -54,7 +54,10 @@ no improvement; a whole-cover condition excluding the deficit is missing.
 shows that concentration of every nonternary prime requires both nonzero
 ternary colors. Different colors cannot share an original modulus.
 At ternary height one, the existing multiplicity-two exclusion forces
-5 and7 into opposite colors; arbitrary-height quotient collisions remain.
+5 and7 into opposite colors. [Section72](#72-small-prime-overlap-excludes-the-height-one-all-concentrated-branch)
+uses the stronger two-cover support-intersection consequence of published
+distortion bounds to exclude this entire height-one concentrated branch.
+The arbitrary-height branch and unrestricted Erdős#7 remain unresolved.
 
 ## 1. Replace only the region that depends on the changed classes
 
@@ -10307,6 +10310,7 @@ For a general input, separating the shifted height sets could avoid this particu
 [Report536](../500-549/536-ternary-conditioning-preserves-a-joint-query-and-entropy-boundary.md) already explains the other direct failure: removing all ternary digits can project several distinct original heights to more than two cofactor classes. CP9 adds the same-source obstruction to repairing that loss by the literal first-exit closing. Neither statement rules out another legal transport, and neither supplies an all-height flat or multiplicity-two seed. That bridge remains unproved.
 
 The remaining all-concentrated branch therefore has two nonempty color groups, no original label mixing their nonternary supports, and both complete-word quotient-cover obligations CP5. A useful next bridge must exploit the distinct original labels to resolve those quotient collisions, or give a jointly legal replacement with strict count or modulus-sum descent. The existing singleton-color root permutations preserve those budgets and do not provide that bridge.
+
 ### One flat color gives the existing budget comparison at arbitrary global height
 
 Retain the all-concentrated two-color branch, with arbitrary global ternary height H. Suppose one color i has NO mixed original3^a m with a≥2 and m>1. Choose a complete ternary word in root i outside every original pure-three guard, as CP2 permits. Its group quotient is a whole cover by CP5. All its mixed originals have height one, so this same group quotient is independent of the higher ternary digits throughout root i. Every hypothetical original pure-three class of height at least two in root i would then be covered by these group originals and have no private point. Thus none exists, and the actual color-i seed is3-flat even when the opposite group has arbitrary height.                    (CP10)
@@ -10389,3 +10393,92 @@ The numerical palette is divisor-closed above one; comparable original classes a
 The pure-five projections are thus V_5={1,2}, V_25={2}, V_125={1,2}, giving I_0={1,3}. These identities follow directly from the listed congruences: A_15 removes root1 inside A_25, A_3 removes root0, and all other listed moduli have incompatible first-five phases there. The two nonzero-root lifts of A_125 avoid every other class.
 
 This is a NONCOVER: integer7 is uncovered. It does not refute an additional theorem under the full EB1 whole-cover hypothesis. The whole-cover question about I_0 remains unproved; the example only identifies which existing local premises cannot establish it. No numerical enumeration or Lean verification is asserted.
+
+## 72. Small-prime overlap excludes the height-one all-concentrated branch
+
+[Report348, SO1](../../321-384/348-fresh-prime-root-transport-and-two-copy-reduction.md#two-multiplicity-two-covers-share-a-small-prime)
+combines the published KKL bounded-multiplicity moment estimate with
+BBMST's continuation criterion and Table1. It proves that two finite
+whole AP covers whose moduli are greater than one and coprime to6,
+each with numerical multiplicity at most two, must have prime supports
+intersecting within {5,7,11,13}. The moment and continuation interfaces,
+published threshold direction, and three exact rational substitutions
+are checked there. No new moment theorem, recomputation of the published
+table, literature priority or Lean verification is claimed here.
+
+### The two actual quotients satisfy every overlap hypothesis
+
+Keep CP1--CP5's one actual all-concentrated family and its disjoint
+nonempty support groups S_1,S_2. Suppose H=1. For i=1,2, retain the
+actual group-i originals and restrict by the single map x=i+3t.
+The original pure3 class at root0 is inactive. The only original labels
+with a given nonunit3-free cofactor m are m and3m; each occurs at most
+once. Both images have numerical modulus m, and their actual phases are
+
+    t = 3^(-1)(a_d-i) mod m.
+
+The same affine map is used on every complete nonternary coordinate;
+there is no separate choice of phases for different labels. CP5 makes
+each image a whole cover of its carrier, equivalently of all integers.
+Every image modulus is greater than one, coprime to6, and occurs at most
+twice. All original nonternary heights are retained. Its prime support
+is contained in S_i.
+
+The two image supports are disjoint, contradicting SO1. Thus
+
+    every p>3 concentrated ==> H>=2.                  (CP14)
+
+This excludes the COMPLETE H=1 all-concentrated branch, regardless of
+the number or heights of the other primes. The earlier CP6 and CP6a--c
+remain necessary implications, but that branch no longer requires a
+separate search for a count-budget violation. The result does not say
+that all H=1 odd covers are excluded: some nonternary prime may be
+nonconcentrated.
+
+### One flat color forces actual high-level activity in the other
+
+CP10--CP13 retain their stated all-height scopes. If both colors had
+no deep mixed original, CP10 would exclude every higher pure-three
+guard in both live roots. Such a guard at root0 is also impossible
+by disjointness from A_3. Divisor closure supplies pure9 whenever H>=2,
+so both colors flat would force H=1, now excluded by CP14.
+
+Suppose just one color i is flat. Its quotient is a whole cover with
+numerical multiplicity at most two. At ANY complete opposite-root word
+outside the original pure-three guards, CP5 supplies another whole
+quotient, on disjoint nonternary support. SO1 implies that this quotient
+must have at least three originals with a common cofactor m. Their
+original numerical labels are comparable powers3^a m. With the common
+ternary word active in all of them, comparable-original disjointness
+forces their mod-m phases to be pairwise different. Thus
+
+    every guard-free opposite word has at least three
+      DISTINCT active phases at some cofactor m>1.    (CP15)
+
+This is a necessary multiplicity obstruction, not a distinct-cover
+construction or an all-height contradiction.
+
+There is also one cofactor point that must use higher mixed levels
+across the entire opposite root. Take the opposite group's actual
+3-free originals and its originals3m, and project their original phases
+to m. This low-level family has multiplicity at most two and support
+disjoint from the flat cover. By SO1 it cannot itself cover. Choose
+one full opposite-group cofactor v avoiding ALL of these actual phases.
+For every complete ternary word in that root outside the pure guards,
+CP5 at this SAME v must therefore use an original3^a m with a>=2 and
+v=a_(3^a m) mod m.
+
+The pure-three guards have total relative root measure
+sum_(a=2..H)3^(1-a)=(1-3^(1-H))/2, since CP10 puts all of them in
+the opposite root and comparable pure classes are disjoint. The union
+bound on the remaining actual prefixes gives
+
+    sum_(3^a m original in opposite group, a>=2, m>1,
+         v=a_(3^a m) mod m) 3^(1-a)
+      >= (1+3^(1-H))/2.                              (CP16)
+
+Both the common v and every prefix are from the original family. This
+retains their joint source instead of optimizing a different cofactor
+at each ternary word. CP16 supplies a necessary high-level coverage
+obligation. It does not show that the available originals violate it,
+resolve their copied-label collisions, or force the CP11--CP12 descent.
