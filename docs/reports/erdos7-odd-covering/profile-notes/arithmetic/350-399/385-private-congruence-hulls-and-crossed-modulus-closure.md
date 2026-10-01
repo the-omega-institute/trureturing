@@ -11809,3 +11809,117 @@ The two quotient count decreases cannot be added as a decrease of
 the original family, because original5 belongs to both quotients.
 No distinct-modulus descent or Lean verification follows from this
 elimination alone.
+
+## 87. Shared ternary labels impose a joint reciprocal constraint at every height
+
+Return to section84's arbitrary-height source, with nonternary support
+R,S_1,S_2 and the same retained root families. Keep every original
+height, and set
+
+    Q_R=product_(p in R)p^H_p,
+    rho=sum_(m|Q_R,m>1)1/m,
+    Rex_i=Rhat_i-rho,
+    theta=theta_H, tau_i=1-beta_i,
+    s_i=(2*tau_i+theta)*Rhat_i-tau_i.
+
+Here Rex_i is the reciprocal divisor inventory whose support meets
+S_i, not an actual residual measure. CM1 gives beta_1+beta_2=theta,
+including theta=0 at H=1, and CM6 gives s_i>=0. Original numerical
+label ownership additionally requires, for ALL nonnegative real
+lambda_1,lambda_2,
+
+    lambda_1*s_1+lambda_2*s_2
+      >=rho*[min(lambda_1*tau_1,lambda_2*tau_2)
+             +theta*min(lambda_1,lambda_2)].         (CM7)
+
+In particular,
+
+    s_1+s_2>=(1+min(beta_1,beta_2))*rho.            (CM8)
+
+If R is nonempty, simultaneous equality in the two separate CM6
+thresholds is impossible. The correction comes from labels that
+cannot belong to both ternary roots.
+
+### Count the same shared originals once where they have one owner
+
+Let ell_i be the SUM of cofactor reciprocal weights of the actual
+low originals m,3m in root i, with m>1. Let h_i be the sum of
+3^(1-a)/m over its actual retained high originals3^a m, a>=2,m>1.
+Section84's complement inequality and the low union bound give
+
+    tau_i<=tau_i*ell_i+h_i.                         (CM9)
+
+This remains valid when the low reciprocal sum exceeds one; no
+assumption that Rhat_i<1/2 is needed.
+
+Separate the shared and exclusive numerical inventories. Let f be
+the reciprocal sum of actual3-free originals m>1 supported only
+on R. Let a_i be the reciprocal sum of actual3m supported only
+on R and owned by first-three root i. Let b_i be the high sum
+of3^(1-a)/m for actual3^a m supported only on R and owned by i.
+Write ell_i^ex,h_i^ex for the corresponding inventories whose
+cofactor support meets S_i. Then exactly
+
+    ell_i=ell_i^ex+f+a_i,
+    h_i=h_i^ex+b_i.
+
+A3-free shared original really occurs in both retained families.
+A3-bearing shared original has only ONE first-three root. The
+retained original3 and comparable-class disjointness exclude root0
+for every other3-bearing original. Numerical distinctness therefore
+gives the joint bounds
+
+    f<=rho, a_1+a_2<=rho, b_1+b_2<=theta*rho,
+    ell_i^ex<=2*Rex_i, h_i^ex<=theta*Rex_i.          (CM10)
+
+The divisor inventories permit every possible label and height
+pair. Missing original labels only improve these upper bounds;
+no saturated inventory or maximizing root allocation is asserted
+to be realizable.
+
+Multiply CM9 by lambda_i and sum. CM10 gives
+
+    sum_i lambda_i*tau_i
+      <=sum_i lambda_i*(2*tau_i+theta)*Rex_i
+        +rho*[lambda_1*tau_1+lambda_2*tau_2
+               +max(lambda_1*tau_1,lambda_2*tau_2)
+               +theta*max(lambda_1,lambda_2)].
+
+For example, the shared low mixed contribution is at most
+rho*max(lambda_1*tau_1,lambda_2*tau_2), because there is one
+shared3m pool. The high shared pool similarly pays only the
+maximum weight. Substitute Rex_i=Rhat_i-rho and rearrange to
+obtain CM7. Equal weights and beta_1+beta_2=theta give CM8.
+
+Each inequality concerns the same original family. The two
+normalized retained carriers can differ: the same numerical
+cofactor m has weight1/m in either full carrier. This accounting
+does not combine unrelated phase choices or conditional laws.
+
+### Two breakpoints suffice for the weighted condition
+
+Exchange the root names if necessary so tau_1>=tau_2>0. CM7 is
+equivalent to s_1,s_2>=0 together with
+
+    s_1+s_2>=rho*(tau_2+theta),
+    tau_2*s_1+tau_1*s_2>=rho*tau_2*(tau_1+theta).   (CM11)
+
+For lambda_2>0 set x=lambda_1/lambda_2. The difference between
+the two sides of CM7 is affine between its only two breakpoints
+x=tau_2/tau_1 and x=1. CM11 checks those points; the individual
+nonnegative slacks control the end directions. Zero weights add
+only those individual inequalities.
+
+At H=1, tau_1=tau_2=1 and theta=0. Alongside CM6, this reduces to
+
+    Rhat_1+Rhat_2>=1+rho/2.                         (CM12)
+
+SO1 remains a separate support constraint at height one; no sieve
+calculation is repeated here. At higher heights the argument uses
+the actual root complement and full inventory, without assuming
+multiplicity two after removal of the ternary coordinate.
+
+These are necessary joint inventory bounds, not phase-realization
+criteria or strict EB1 descents. Larger reciprocal inventories can
+satisfy them. No unrestricted noncoverage or Lean verification is
+asserted.
