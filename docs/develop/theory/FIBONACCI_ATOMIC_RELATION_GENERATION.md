@@ -37851,3 +37851,112 @@ $$
 关键条件是 $557$ 与 $2417$ 在全部 Fibonacci 数及全部两项 Fibonacci 和上的整除签名相同；论文还给出由共同出现秩和四次剩余构造更多素数对的有限判据。
 
 这项结果不能推出 $Z(n)=\sigma(n)/n$ 在任何 FIB 族上失控，也不是 Robin 反例。它排除的是一种过强的识别路线：只用 Fibonacci 数值或两项 Fibonacci 和的加法测试，不能恢复任意乘法函数的完整素数贡献。因而本卷的 `GraftAffineClosure` 或五窗口地址若要进入 Robin 点值估计，仍须保留同一个候选的素数幂赋值、完整约数探针，或证明专门针对 $\sigma(n)/n$ 的联合估计；有限 FIB 测试签名本身不足以承担这项义务。
+
+## 279. 加权 Fibonacci Ingham 行和的指数收敛速率
+
+§271 只给出了加权和的极限。对当前核，实际上可以把误差压到 Fibonacci 尺度的一半指数。令
+
+$$
+W_n=\sum_{k=1}^{n}F_k\left\{\frac{F_n}{F_k}\right\},
+\qquad q=\varphi^{-1}.
+$$
+
+### 命题 279.1
+
+当 $n\to\infty$ 时，
+
+$$
+\boxed{
+\frac{W_n}{F_n}=\frac2{\sqrt5}+O\!\left(\varphi^{-n/2}\right).
+}
+\tag{279.1}
+$$
+
+因此，若沿用 §270 的
+
+$$
+G_F(n,k)=\Phi\!\left(\frac{F_k}{F_n}\right),
+\qquad
+\Phi(x)=x\left\lfloor\frac1x\right\rfloor,
+$$
+
+则
+
+$$
+\boxed{
+\sum_{k=1}^{n}G_F(n,k)
+=n-\frac2{\sqrt5}+O\!\left(\varphi^{-n/2}\right).
+}
+\tag{279.2}
+$$
+
+**证明。** 写 $j=n-k$，并记
+
+$$
+u_{n,j}=\frac{F_{n-j}}{F_n},
+\qquad
+r_{n,j}=\frac{F_n}{F_{n-j}}.
+$$
+
+Binet 公式给出
+
+$$
+F_m=\frac{\varphi^m}{\sqrt5}(1-(-1)^mq^{2m}).
+$$
+
+所以对 $1\le j<n$ 存在绝对常数 $C_0$ 使
+
+$$
+\left|u_{n,j}-q^j\right|\le C_0q^{2n-j},
+\qquad
+\left|r_{n,j}-\varphi^j\right|\le C_0q^{2n-3j}.
+\tag{279.3}
+$$
+
+另一方面，Lucas 数恒等式给出（对 $j\ge2$）
+
+$$
+\operatorname{dist}(\varphi^j,\mathbb Z)=q^j.
+\tag{279.4}
+$$
+
+指数 $j=1$ 是固定的边界例外：$\{\varphi\}=q$，而
+$\operatorname{dist}(\varphi,\mathbb Z)=1-q=q^2$；它可以单独吸收到主段估计中。固定一个足够大的整数 $K$，并在下文先取 $j\ge2$。当
+$j\le n/2-K$ 时，式（279.3）小于式（279.4）的一半，于是分数部没有跨过整数：
+
+$$
+\left|\{r_{n,j}\}-\{\varphi^j\}\right|
+\le C_0q^{2n-3j}.
+$$
+
+结合式（279.3），主段的逐项差满足
+
+$$
+\left|u_{n,j}\{r_{n,j}\}-q^j\{\varphi^j\}\right|
+\le C_1\bigl(q^{2n-j}+q^{2n-2j}\bigr).
+\tag{279.5}
+$$
+
+对 $j\le n/2-K$ 求和，右端为 $O(nq^n)$。中间带 $|j-n/2|\le K$ 的至多 $2K+1$ 项，各项及其极限都为 $O(q^{n/2})$。剩余尾段对应 $k<n/2-K$，由 Fibonacci 和的指数界
+
+$$
+\sum_{k<n/2-K}\frac{F_k}{F_n}=O(q^{n/2})
+$$
+
+控制；分数部只会减小绝对值。于是
+
+$$
+\frac{W_n}{F_n}
+=\sum_{j\ge1}q^j\{\varphi^j\}+O(q^{n/2}).
+$$
+
+§271 已计算该几何级数为 $2/\sqrt5$，得到式（279.1）。最后逐项使用
+
+$$
+\Phi\!\left(\frac{F_k}{F_n}\right)
+=1-\frac{F_k}{F_n}\left\{\frac{F_n}{F_k}\right\}
+$$
+
+即得式（279.2）。证毕。 $\square$
+
+这条速率估计是当前加权 FIB 核的实质新信息：它说明 §271 的常数项不是只在极限意义上出现，而以 $\varphi^{-n/2}$ 的速度稳定。它仍不能替代 Robin 所需的普通整数 Möbius/约数系数，因为 $G_F$ 的跳点仍由 Fibonacci 比值给出；要从式（279.2）进入 RH，还需要证明同一误差核保留 $\sigma(n)/n$ 的点值源，而不是只保留 Fibonacci gauge 的行和。
