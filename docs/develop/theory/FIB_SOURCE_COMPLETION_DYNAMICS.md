@@ -14177,3 +14177,518 @@ $$
 本章不给 $R$ 的精确值、域成员关系、算术性质、达到性或等号处记忆阶数，不把源标签时钟与仿射坐标解释成物理时空起源。结论是原 FIB 合同下的纸面数学：精确闭根表示的大小下界、任意合法逆闭合的增长链，以及满足明确统一提取条件时的后果。
 
 ## 40.99 追加锚（本行以下为增补区）
+
+## 41. 正预算余量下的有限回返分支表示
+
+本章固定临界六格 FIB 仪器、一个固定切点归属和出发时钟。记
+
+$$
+t=\frac{\sqrt5-1}{2},\qquad \phi=1+t,\qquad g=t^3,\qquad \lambda=\frac{t^2}{10},
+$$
+
+$$
+X=I_0=[-1,\phi],\qquad I_1=[-1,t],\qquad D_X=\operatorname{diam}X=\phi^2,
+$$
+
+$$
+f_\ell(x)=\Delta_\ell-gx,\qquad
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})=(-t,0,t^2,1,2-t).
+$$
+
+来源字母表为 $\Lambda=\{3,0,5,2,25\}$，颜色字母表为 $\mathcal C=\{0,1,2,3,4,5\}$。合法 guard 边为
+
+$$
+0\to0:3,0,2;\qquad 0\to1:5,25;\qquad 1\to0:3,0;\qquad 1\to1:5.
+$$
+
+$A_s$ 是 incoming guard 为 $s$ 的完整合法来源地址，$D_s\subseteq A_s$ 是最终全为空窗的地址，且 $\Omega=A_0$、$D=D_0$。来源边在 出发时取得一个颜色；取得 $M$ 个颜色观察坐标 $0,\ldots,M-1$，坐标 $M$ 的尾端不观察。颜色格闭包记为 $J_i$，闭预算 $a$ 的扩张为
+
+$$
+E_i^a=\{x\in X:\operatorname{dist}(x,J_i)\le a\}.
+$$
+
+来源身份、guard、颜色和标量属于不同层次；同标量的不同字面来源地址始终保留。以下直接使用定理39.2.1、推论39.2.2和定理39.3.2给出的规范凸包、来源非退化性及最小闭预算；正裕量转移和与 $R$ 的比较分别沿用定理39.8.1与定理39.9.1的相应证明。
+
+### 41.1　正余量主定理
+
+令 $0\le b<c<\lambda$，$\Delta=c-b>0$，并置
+
+$$
+q_\Delta=\left\lceil\frac{D_X}{(1-g)\Delta}\right\rceil+1,\qquad N_\Delta=64q_\Delta^2.
+$$
+
+则存在一个至多含 $8q_\Delta$ 个单来源顶点的有限闭片表示。记 $\mathcal L_a(w)$ 为真实完整来源在预算 $a$ 下实现颜色词 $w$ 的集合，有限词只约束已取得的 出发坐标，空词不施加颜色约束；记 $\mathcal L_{\rm mesh}(w)$ 为下述完整无限网格路径语言，则对每个有限或无限 $w$ 有
+
+$$
+\mathcal L_b(w)\subseteq\mathcal L_{\rm mesh}(w)\subseteq\mathcal L_c(w).
+$$
+
+有序单来源乘积至多含 $N_\Delta$ 个成对顶点。若 $b$ 有闭分支族，则 $c$ 的成对表示有可达含环 SCC，其第一来源投影不相干；可取得两个同基点返回，未同步时每个返回的长度和分歧边数至多 $2N_\Delta-1$。同步并改根到一条来源边的末端后，有一条出发边前缀和两条等长不相干返回，返回共同长度至多
+
+$$
+2N_\Delta(2N_\Delta-1).
+$$
+
+该字族还有 $\theta\in\mathbb Q(t)$ 满足 $R\le\theta\le c$，其中 $R$ 是完整闭图不相干分支预算集合的下确界。下面证明这些断言，并始终分开网格余量 $c-b$ 与实际化余量 $\nu-\theta$。
+
+### 41.2　重叠网格、裁剪和全包含边
+
+取
+
+$$
+h=(1-g)\Delta,\qquad r=\frac{1+g}{2(1-g)}h=\frac{1+g}{2}\Delta,
+$$
+
+中心为
+
+$$
+a_j=-1+jh,\qquad 0\le j\le\left\lceil D_X/h\right\rceil.
+$$
+
+末中心可在 $X$ 右侧，但所有片都实际裁剪，右端覆盖不丢失；每个 $x\in X$ 距某中心至多 $h/2$。对八个合法 $(s,\ell)$ 和每个中心保留非空闭片
+
+$$
+P(s,\ell,j)=I_s\cap f_\ell(I_{s'})\cap[a_j-r,a_j+r],
+$$
+
+其中 $s\xrightarrow{\ell}s'$ 合法。顶点 $(s,\ell,j)$ 的 $s$ 是真实 incoming guard，$\ell$ 是当前出发边的来源标签装饰，不是额外观察。单点片、闭端点和同片的不同装饰全部保留，故单来源顶点不超过 $8q_\Delta$。
+
+若 $v=(s,\ell,j)$、$w=(s',m,k)$，定义边
+
+$$
+v\xrightarrow{\ell}w
+\quad\Longleftrightarrow\quad
+s\xrightarrow{\ell}s'\text{ 合法且 }f_\ell(P_w)\subseteq P_v.
+$$
+
+颜色 $i$ 在 $v$ 容许，当且仅当 $P_v\subseteq E_i^c$。边使用原始 $f_\ell$，不引入宏步、重置或新系数；初态 guard 为零。
+
+固定一条预算 $b$ 下实际满足颜色约束的完整来源，保留其真实 guard $s_j$、标签 $\ell_j$ 和坐标 $x_j$，并对每个 $x_j$ 选最近中心 $a_{k_j}$。则 $x_j\in P(s_j,\ell_j,k_j)$。对 $z\in P_{j+1}$，有
+
+$$
+\begin{aligned}
+|f_{\ell_j}(z)-a_{k_j}|
+&\le gr+g\frac h2+\frac h2\\
+&=gr+\frac{1+g}{2}h=r.
+\end{aligned}
+$$
+
+又 $f_{\ell_j}(z)\in f_{\ell_j}(I_{s_{j+1}})\subseteq I_{s_j}$，所以 guard 和下一标签的分支裁剪不会破坏包含。若 $x_j\in E_i^b$，则对任意 $z\in P_j$ 有
+
+$$
+|z-x_j|\le r+\frac h2=\Delta,\qquad
+\operatorname{dist}(z,J_i)\le b+\Delta=c,
+$$
+
+故 $P_j\subseteq E_i^c$。最近中心选择沿同一来源地址完成，不能为不同观察位置另换来源；有限历史结束后仍沿同一地址选中心，只解除后续颜色约束。
+
+### 41.3　完整无限路径语言和有限终尾提升
+
+$\mathcal L_{\rm mesh}(w)$ 的元素必须由从 guard 零出发的一条完整无限网格路径及其字面来源词给出。若 $|w|=M<\infty$，仅在出发顶点 $v_j$、$0\le j<M$ 要求容许 $w_j$，$v_M$ 及以后不要求颜色；若 $w$ 无限，则每次出发都受约束。没有外部实数成员资格作为接受条件。
+
+对固定无限网格路径和位置 $j$，令
+
+$$
+K_{j,N}=f_{\ell_j}\circ\cdots\circ f_{\ell_{j+N-1}}(P_{v_{j+N}}).
+$$
+
+全包含边使 $K_{j,N+1}\subseteq K_{j,N}\subseteq P_{v_j}$；它们非空紧，且 $\operatorname{diam}K_{j,N}\le g^ND_X\to0$。交集唯一，坐标满足 $x_j=f_{\ell_j}(x_{j+1})$；有界尾项消失，故它正是该完整字面来源的真实标量。片的颜色容许性遂给出 $c$-闭约束，得到
+
+$$
+\mathcal L_b(w)\subseteq\mathcal L_{\rm mesh}(w)\subseteq\mathcal L_c(w),
+\qquad \mathcal L_{\rm mesh}(\varnothing)=\Omega.
+$$
+
+有限路径另有独立的语义提升：给定一条 $M$ 边有限图路径，在最终 incoming guard 的终片中取一点，再由状态相对满像取一条编码该点的合法无限终尾，前接这 $M$ 个原始标签。全包含倒推给出全部已观察坐标的颜色约束，终端坐标不观察；单点片也有这样的终尾。此终尾不必从同一装饰顶点继续：其首标签可能不同于该顶点装饰，首标签即使相同也没有逐个后继片的全包含链。因此有限提升不代替无限路径证明，也不声称一个片等于其装饰顶点所有无限标量路径的像。
+
+端点别名为
+
+$$
+\zeta_-=(3,25)^\infty,\qquad \zeta_t=5\zeta_-,\qquad
+\kappa(\zeta_-)=-1,\quad\kappa(\zeta_t)=t,
+$$
+
+且
+
+$$
+g=f_0(-1)=f_5(t).
+$$
+
+两个不同根地址 $0\zeta_-$、$5\zeta_t$ 给出同一根标量。一个 guard 零、下一标签装饰为 $0$ 且含 $g$ 的片，可在有限提升中选择第二条地址作为终尾，却不能用自己的出边装饰拼出它。故来源保持必须保留字面地址。两侧一般只是包含，闭扩张端点也不自动成为任意固定归属下的实际颜色目标。
+
+### 41.4　成对有限历史和来源词分支
+
+取全部有序单来源顶点对，成对顶点数至多
+
+$$
+(8q_\Delta)^2=N_\Delta.
+$$
+
+成对边由两条合法来源边和一个共同出发颜色组成，有限历史的末成对顶点不要求下一共同色。有限共同颜色词由两条各自无限的底层来源路径实现，只在已观察前缀要求共同颜色；此前缀后两条来源独立继续，未来颜色可不同。只有无限共同颜色词才在每一步要求无限共同色边路径。单来源包含证明按此约定同时保留实际来源对及其历史。
+
+从全部 guard 零初态沿共同颜色的等标签边到首次分歧，再保留其后全部共同色可达延续，得到分歧图；分歧前历史不复制顶点，所以仍不超过 $N_\Delta$。若预算 $b$ 有闭分支族，固定其前缀、同步返回和一对终尾，并把分支分量定为第一来源。对每个二进制词 $z=z_1\cdots z_n$，网格提升给出两条各自无限来源，第一来源词含固定前缀及
+
+$$
+U_{z_1}\cdots U_{z_n},
+$$
+
+故有 $2^n$ 个不同来源词，长度随 $n$ 线性增长。
+
+若分歧图每个含环 SCC 的第一来源投影都相干，定理36.22的来源词相位刻画及其凝聚 DAG 多幂模板论证给出有限个有界幂模板；长度不超过 $T$ 的第一来源词数只呈多项式增长，不能容纳上述指数族。因此存在可达含环 SCC，其第一来源投影不相干。这里计数的是不同字面来源词，不使用路径重数、颜色词数、标量格点数或解码候选宽度作为代理。
+
+### 41.5　直接应用短返回测试
+
+对该 SCC 的第一来源标签投影直接应用引理36.29的短返回测试。若 SCC 有 $s\le N_\Delta$ 个顶点，则同一基点有最短非空返回长度 $p\le s$，以及另一返回长度 $q\le2s-1$；最小公倍数同步后两条第一来源词不同。每条边只输出一个来源符号，正好满足测试假设。
+
+未同步时，两返回长度及分歧边数均至多 $2N_\Delta-1$；同步长度为
+
+$$
+L=\operatorname{lcm}(p,q)\le pq\le s(2s-1)\le N_\Delta(2N_\Delta-1).
+$$
+
+同步保留原始 guard、共同颜色和逐边全包含关系。这是网格表示中的返回界，不是任意精确端点图的字面返回界。
+
+### 41.6　排除全等返回并改根
+
+先证每个可达非空返回含不同来源标签边。若某返回全部标签相同，反复它并作整条路径提升，两个分量得到相同字面周期尾和相同标量序列。把该尾接在一条可达分歧前缀后，在最后一个不同来源标签处，定义33.1的式 (33.4)—(33.7) 所列当前分支和共同闭格端点关系给出
+
+$$
+|x_{j+1}-y_{j+1}|\ge\frac{2(\lambda-c)}g>0.
+$$
+
+这个分隔只用当前共同闭色和不同当前标签，不要求下一坐标已观察，也不要求终尾属于 $D$，与相同周期尾导致的相等矛盾。故所有返回都含分歧边。
+
+令同步返回为 $\Gamma_0,\Gamma_1$，长度均为 $L$，基点为 $q$。在 $\Gamma_0$ 选一条分歧边，写
+
+$$
+\Gamma_0=AB,
+$$
+
+其中 $A$ 以该边结束、终点为 $r$，$B:r\to q$ 可为空。在 $r$ 定义
+
+$$
+\rho_0=BABA,\qquad \rho_1=B\Gamma_1A.
+$$
+
+两者长度均为 $2L$。若 $\alpha,\beta,V$ 是 $A,B,\Gamma_1$ 的第一来源词，则新词是
+
+$$
+\beta\alpha\beta\alpha,\qquad \beta V\alpha.
+$$
+
+若相等，左右消去给出 $\alpha\beta=V$，违背原同步不相干性。故
+
+$$
+L_*=2L\le2N_\Delta(2N_\Delta-1).
+$$
+
+只取 $A$ 的最后一条分歧边作前缀，保留其来源标签 $\ell\ne m$ 和共同出发颜色。固定 $r$ 的一对合法终尾，有限提升使同一对终尾支持 $\rho_0,\rho_1$ 的所有有限拼接，包括空拼接。若该边原来从 guard 一出发，标签 $3,0,5$ 均在 guard 零行合法，下一 guard、尾域和映射不变；一次来源边和颜色已经计入，不能把它写成复制顶点或重置图。
+
+### 41.7　规范凸包和域值阈值
+
+把上述族写为
+
+$$
+F=(\ell,m,i_*;U_0,V_0,W_0;U_1,V_1,W_1),
+$$
+
+其中 $\ell\ne m$、$U_0\ne U_1$，三个词族长度均为 $L_*$。因 $L_*$ 偶数，
+
+$$
+a=(-g)^{L_*}=g^{L_*}\in(0,1),
+$$
+
+$$
+f_{U_i}(x)=A_{1i}+ax,\qquad f_{V_i}(y)=A_{2i}+ay.
+$$
+
+令 $A_j^- =\min_i A_{ji}$、$A_j^+=\max_i A_{ji}$，[定理39.2.1](https://github.com/the-omega-institute/trureturing/blob/2df103b7b35a286abf0c12170a4694af808bb92a/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13238)给出
+
+$$
+H_j=\left[\frac{A_j^-}{1-a},\frac{A_j^+}{1-a}\right]\subseteq I_{s_j}.
+$$
+
+一般候选还允许奇数返回。完整公式是
+
+$$
+H_j=
+\begin{cases}
+\left[\dfrac{A_j^-}{1-a},\dfrac{A_j^+}{1-a}\right],&a>0,\\[8pt]
+\left[\dfrac{A_j^-+aA_j^+}{1-a^2},\dfrac{A_j^++aA_j^-}{1-a^2}\right],&a<0.
+\end{cases}
+$$
+
+由[推论39.2.2](https://github.com/the-omega-institute/trureturing/blob/2df103b7b35a286abf0c12170a4694af808bb92a/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13295)，等长的 $U_0\ne U_1$ 使仿射平移项不同、第一凸包非退化：否则同一最终空尾接在两个不同来源词后会给两个不同 $D$ 地址同一标量，违反14.7给出的标量映射在 $D$ 上的单射性。第二凸包允许为单点。
+
+有限端点—颜色清单为
+
+$$
+(f_\ell(H_1),i_*),\qquad(f_m(H_2),i_*),
+$$
+
+$$
+(f_{U_i[r:]}(H_1),(W_i)_r),\qquad
+(f_{V_i[r:]}(H_2),(W_i)_r),
+\quad i=0,1,\quad0\le r<L_*.
+$$
+
+对 $K=[p,q]$ 定义
+
+$$
+d(K,J_i)=\max\{\operatorname{dist}(p,J_i),\operatorname{dist}(q,J_i)\},
+$$
+
+令 $\theta$ 为该有限清单的最大代价。仿射系数、端点、距离和有限最大值均在 $\mathbb Q(t)$，故 $\theta\in\mathbb Q(t)$。[定理39.3.2](https://github.com/the-omega-institute/trureturing/blob/2df103b7b35a286abf0c12170a4694af808bb92a/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13336)保证同一对合法 $\Omega$ 终尾实现全部有限二进制拼接（含空拼接）的闭历史，并以同一对终尾给出最小性；不把两个分量分别最优的轨迹拼作联合轨迹。该定理的必要性应用于 $c$ 下已有的同一对终尾竞争族，得到
+
+$$
+0\le\theta\le c<\lambda.
+$$
+
+这里不对任意实数 $c$ 构造域端点精确图。
+
+### 41.8　从 $\theta$ 出发的严格余量实际化
+
+将[定理39.8.1](https://github.com/the-omega-institute/trureturing/blob/2df103b7b35a286abf0c12170a4694af808bb92a/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13526)用于上述一边前缀族。取 $\theta<\nu<\lambda$，置 $\delta=\nu-\theta>0$。从 $H_1,H_2$ 取 $x,y$，由状态相对满像取合法尾 $\xi\in A_{s_1}$、$\eta\in A_{s_2}$；单点也有合法尾。一次性选最终空尾
+
+$$
+\widehat\xi\in D_{s_1},\qquad \widehat\eta\in D_{s_2},\qquad
+|\widehat x-x|<\delta/4,\quad|\widehat y-y|<\delta/4.
+$$
+
+替换尾不随二进制词和长度改变，也不必留在旧凸包或网格片内。对 $z=z_1\cdots z_n$，令
+
+$$
+\widehat\alpha_z=\ell U_{z_1}\cdots U_{z_n}\widehat\xi,\qquad
+\widehat\beta_z=mV_{z_1}\cdots V_{z_n}\widehat\eta,
+$$
+
+$$
+h_z=i_*W_{z_1}\cdots W_{z_n},\qquad M_n=1+nL_*.
+$$
+
+把替换尾与预算 $\theta$ 下的原尾比较，在所有 $j<M_n$ 有
+
+$$
+\widehat x_j-x_j=(-g)^{M_n-j}(\widehat x-x),\qquad
+\widehat y_j-y_j=(-g)^{M_n-j}(\widehat y-y).
+$$
+
+故位移严格小于 $\delta/4$。距离到闭格为 $1$-Lipschitz；若 $p_i$ 是到 $J_i$ 的投影、$m_i$ 是格中点，取
+
+$$
+\tau=\frac{\delta}{4D_X}\in(0,1),\qquad T_i(v)=(1-\tau)p_i(v)+\tau m_i.
+$$
+
+目标在格内部且在 $X$ 内，故裁剪固定它，并有
+
+$$
+\operatorname{dist}(\widehat x_j,J_i)<\theta+\delta/4,\qquad
+|T_i(\widehat x_j)-\widehat x_j|<\theta+\delta/2<\nu,
+$$
+
+第二分量同理。该严格界对所有词、长度、分量和固定归属统一成立。完成 $M_n$ 次出发 后，未观察终尾正是 $\widehat\xi$ 或 $\widehat\eta$，分别接零误差未来得
+
+$$
+h_zS_{\widehat\xi},\qquad h_zS_{\widehat\eta}.
+$$
+
+第一分量未来 $S_{\widehat\xi}$ 对所有 $z,n$ 相同；两分量未来不要求同色，也没有重复取得终端。等长 $U_0\ne U_1$ 给出 $2^n$ 个不同第一来源。临界完整记录唯一性按预算包含适用于 $\nu<\lambda$，故不同二进制词的 $h_z$ 不可相同。首标签 $\ell\ne m$ 使安全性迫使整个 $h_z$ 期间静默；若两个末配置相同，接同一第一未来将导致相同输出，违背不同 $D$ 来源的逐位置生效。因此取得 $M_n$ 次后至少有 $2^n$ 个不同完整配置，得到
+
+$$
+B^{\mathrm{worst}}_{\nu,\mathcal A}(M_n)\ge n-O(1),\qquad
+B^{\mathrm{worst}}_{\nu,\mathcal A}(N)\ge
+\left\lfloor\frac{N-1}{L_*}\right\rfloor-O(1).
+$$
+
+沿用[定理39.9.1](https://github.com/the-omega-institute/trureturing/blob/2df103b7b35a286abf0c12170a4694af808bb92a/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13609)证明中的正裕量反证：若 $\theta<R$，取 $\theta<\nu<R$，便与定理36.27的 $R$ 以下对数上界冲突，故
+
+$$
+R\le\theta\le c,\qquad\theta\in\mathbb Q(t).
+$$
+
+此处必须有 $\nu-\theta>0$，绝不以可能非正的 $\nu-c$ 替代；$\nu=\theta$ 不给出实际颜色结论。
+
+### 41.9　精度给出的返回字长界
+
+令 $\mathcal B\subseteq\mathbb Q(t)\cap[0,\lambda)$ 为存在不相干可达含环 SCC 的完整闭预算集合，$R=\inf\mathcal B$。固定有限端点最大值 $\rho_U$ 采用定义33.9的式 (33.34)。令
+
+$$
+\zeta=\frac{2t}{5},\quad z_U=\frac{23+14g}{76},\quad z_V=\frac{6+9g}{76},\quad
+h=z_U-\zeta,\quad \ell_0=\zeta-z_V,
+$$
+
+$$
+\chi=g^{20},\qquad \varsigma=g^{60},\qquad
+\delta_H=\chi(1-\varsigma)h,\qquad \delta_L=\chi(1-\varsigma)\ell_0.
+$$
+
+取定义33.7的式 (33.25) 所定六字返回词 $U,V$ 和颜色词 $d_*$，写
+$P_{U,j}=f_{U_j}\circ\cdots\circ f_{U_5}$、
+$P_{V,j}=f_{V_j}\circ\cdots\circ f_{V_5}$。则
+
+$$
+\begin{aligned}
+\rho_U=\max\{&\operatorname{dist}(P_{U,j}(x),J_{(d_*)_j}):
+ x\in\{\zeta+\chi^2\delta_H,t^2\},\\
+&\operatorname{dist}(P_{V,j}(y),J_{(d_*)_j}):
+ y\in\{0,\zeta-\chi^2\delta_L\},\ 0\le j<6\}.
+\end{aligned}
+$$
+
+这是固定的有限端点最大值，已知 $\rho_U<\lambda$。令
+
+$$
+R_C=\frac{\lambda+g^2t^2}{2},\qquad
+\nu_0=\frac{\lambda+\max\{\rho_U,R_C\}}2.
+$$
+
+定理36.27给出 $R\le\nu_0<\lambda$。有效输入为
+
+$$
+\epsilon\in\mathbb Q(t),\qquad0<\epsilon<\lambda-\nu_0.
+$$
+
+定义
+
+$$
+Q_\epsilon=\left\lceil\frac{2D_X}{(1-g)\epsilon}\right\rceil+1,\qquad
+N_\epsilon=64Q_\epsilon^2,\qquad
+B(\epsilon)=2N_\epsilon(2N_\epsilon-1).
+$$
+
+在证明中若 $0<\epsilon<\lambda-R$，取 $b\in\mathcal B$ 满足
+$R\le b<R+\epsilon/2$，令 $c_*=R+\epsilon$，则
+
+$$
+\Delta=c_*-b>\epsilon/2,\qquad q_\Delta\le Q_\epsilon,\qquad N_\Delta\le N_\epsilon.
+$$
+
+网格、短返回和改根给出一边前缀族，返回长度至多 $B(\epsilon)$。真实网格预算可为任意实数；这里不调用任意实预算的域端点图。域值运算只在提取出有限字后由凸包公式完成。
+
+### 41.10　充分上界和两个零余量边界
+
+$8q_\Delta$、$N_\Delta$、$2N_\Delta-1$ 和 $2N_\Delta(2N_\Delta-1)$ 都是充分上界，不是必要状态数、最短返回或最小分歧数下界。它们随 $\Delta\downarrow0$ 的构造阶数分别至多为 $\Delta^{-1}$、$\Delta^{-2}$、$\Delta^{-2}$ 和 $\Delta^{-4}$。
+
+当 $\Delta=0$ 时网格尺度消失；当 $\nu-\theta=0$ 时终尾替换和内部目标没有严格余量。两项正余量结果不能取极限推出同预算结论。也不由此得到 $R$ 的精确值、域成员性、下确界取得、端点记忆阶数、统一返回界或物理时空解释。定理36.30—36.31已给出 $R$ 的有效逼近；本章新增的是精度依赖的语义字长和证书形式，不是新的可计算性或效率声明。
+
+### 41.11　只以有效精度为输入的完整有限选择
+
+#### 41.11.1　完整候选语法
+
+对 $\epsilon$ 考虑所有 $1\le L\le B(\epsilon)$ 的有序元组
+
+$$
+F=(\ell,m,c;U_0,V_0,W_0;U_1,V_1,W_1).
+$$
+
+要求：
+
+1. $\ell,m\in\Lambda$ 都从初始 guard 零合法出发，$\ell\ne m$，下一 guard 为 $s_1,s_2$，前缀颜色 $c\in\mathcal C$；
+2. $U_i$ 是从 $s_1$ 回到 $s_1$ 的合法来源词，$V_i$ 是从 $s_2$ 回到 $s_2$ 的合法来源词，四者长度均为 $L$；
+3. $W_i\in\mathcal C^L$；
+4. $U_0\ne U_1$。
+
+候选有序，保留两种来源分量排列；每个返回和前缀都按 出发取得颜色，终端坐标不观察。允许奇数和偶数 $L$、第二分量单点、任意颜色词；不要求 $V_0\ne V_1$ 或 $W_0\ne W_1$，不施加端点图可达性过滤，也不要求候选返回出现在预先选定的精确图中。
+
+未经 guard 和内容筛选的候选数至多
+
+$$
+120\sum_{L=1}^{B(\epsilon)}5^{4L}6^{2L},
+$$
+
+故候选集有限；该上界只证明有限性，不给出选择所需计算量的效率界。
+
+#### 41.11.2　正负斜率凸包和严格筛选
+
+对语法合法 $F$ 置 $a=(-g)^L$，写
+
+$$
+ f_{U_i}(x)=A_{1i}+ax,\qquad f_{V_i}(y)=A_{2i}+ay,
+$$
+
+$A_j^- =\min_iA_{ji}$、$A_j^+=\max_iA_{ji}$，并用完整公式
+
+$$
+H_j=
+\begin{cases}
+\left[\dfrac{A_j^-}{1-a},\dfrac{A_j^+}{1-a}\right],&a>0,\\[8pt]
+\left[\dfrac{A_j^-+aA_j^+}{1-a^2},\dfrac{A_j^++aA_j^-}{1-a^2}\right],&a<0.
+\end{cases}
+$$
+
+然后列出全部 前缀/后缀 端点区间
+
+$$
+(f_\ell(H_1),c),\quad(f_m(H_2),c),
+$$
+
+$$
+(f_{U_i[r:]}(H_1),(W_i)_r),\quad
+(f_{V_i[r:]}(H_2),(W_i)_r),
+\quad i=0,1,\quad0\le r<L.
+$$
+
+对每项 $(K,j)$ 取端点距离最大值，全部项的最大值定义为 $\theta(F)$。因
+
+$$
+\operatorname{dist}(x,[u,v])=\max\{u-x,0,x-v\},
+$$
+
+$\theta(F)\in\mathbb Q(t)$ 且严格比较 $\theta(F)<\lambda$ 可决定。只保留
+
+$$
+\mathcal C_\epsilon=\{F:\text{语法合法且 }\theta(F)<\lambda\}.
+$$
+
+定理39.2.1和定理39.3.2给每个保留族一对固定合法终尾，支持所有有限二进制拼接（含空拼接）；单点对手和奇数返回均保留。
+
+#### 41.11.3　每个保留候选的下界
+
+设 $F\in\mathcal C_\epsilon$。对任意 $\theta(F)<\nu<\lambda$，第41.8节（定理39.8.1的一边前缀特例）的同一替换终尾、内部目标和共同第一未来给出线性完整记忆下界。若 $\theta(F)<R$，取 $\theta(F)<\nu<R$，便与该预算的对数上界冲突。因此
+
+$$
+R\le\theta(F)\qquad(F\in\mathcal C_\epsilon).
+$$
+
+这个证明独立于返回奇偶和第二凸包是否单点，只用 $\ell\ne m$、$U_0\ne U_1$、规范闭实现和严格正余量。
+
+#### 41.11.4　非空性和近优候选
+
+输入条件及 $R\le\nu_0$ 给出 $R+\epsilon<\lambda$。在正确性证明中取 $b\in\mathcal B$ 满足 $R\le b<R+\epsilon/2$，令 $c_*=R+\epsilon$。前述网格—改根构造给出语法合法 $F_*$，其长度不超过 $B(\epsilon)$ 且
+
+$$
+\theta(F_*)\le c_*=R+\epsilon<\lambda.
+$$
+
+故 $F_*\in\mathcal C_\epsilon$，候选集非空。未知 $R,b,c_*$ 只在存在性证明出现，不是候选生成、阈值计算或比较预言机的输入。
+
+#### 41.11.5　完整最小值和证书边界
+
+在固定有限顺序下取
+
+$$
+F_\epsilon\in\operatorname*{argmin}_{F\in\mathcal C_\epsilon}\theta(F),
+\qquad\theta_\epsilon=\theta(F_\epsilon).
+$$
+
+有限性、非空性和 $\mathbb Q(t)$ 精确次序给出纸面终止性，并且
+
+$$
+R\le\theta_\epsilon\le\theta(F_*)\le R+\epsilon.
+$$
+
+返回的局部证书包括字面元组、两个 guard、两个凸包端点、全部后缀—颜色区间和端点最大值；它足以核对 $R\le\theta_\epsilon$。但是单个局部证书不能推出 $\theta_\epsilon-\epsilon\le R$；这一侧必须由完整预定候选集合的全局最小化与近优候选存在性共同承担。有限候选最小值的取得也不等于同一个族取得 $R$。
+
+由上述有限性和最小值选择可得：每个有效输入 $\epsilon\in\mathbb Q(t)$、$0<\epsilon<\lambda-\nu_0$ 都有一个完整有限候选集，其返回长度满足
+
+$$
+L\le B(\epsilon)=2N_\epsilon(2N_\epsilon-1),
+$$
+
+并可选择阈值满足
+
+$$
+R\le\theta_\epsilon\le R+\epsilon.
+$$
+
+## 41.99 追加锚（本行以下为增补区）
