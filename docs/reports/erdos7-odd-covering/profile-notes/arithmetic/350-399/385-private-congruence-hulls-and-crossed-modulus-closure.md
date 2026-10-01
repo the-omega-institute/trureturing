@@ -13972,3 +13972,79 @@ If RG1 fails, RG4 is not justified; if it holds and all groups meet
 these budgets, no strict descent follows from this operation. All
 original heights remain unrestricted. No Lean verification or
 unrestricted noncoverage is asserted.
+
+## 108. The next terminal row needs an actual supplier coprime to the top cofactor
+
+Keep section103's one R=empty EB1 source with exactly three global
+top classes and opposite-color prime5. Write those classes as T, with
+numerical labels3^H,3^H p,3^H s, where either s=r is a prime different
+from p or s=p^2. Put M=lcm(p,s). Their common lower ternary prefix is
+u modulo3^(H-1), and their compatible cofactor phase is alpha modulo M.
+The exact top-deletion remainder is nonempty and lies in
+
+    E_T subset C_M={x:x=u mod3^(H-1),x=alpha modM}.
+
+Reuse AC2's exclusion of retained originals matching one top prime
+phase and the first three ternary digits. The new inventory consequence
+is an ORIGINAL class
+
+    3^(H-1)n, n>1, gcd(n,M)=1, supp(n) subset S_i,  (NS1)
+
+where i is the top color. Thus there is an original numerical label
+
+    3^(H-1)ell, ell in S_i minus supp(M).           (NS2)
+
+No phase is copied from the composite supplier to this divisor label.
+The height is the actual next-to-top height, not just the presence
+of another prime somewhere in the original support.
+
+### Two altered siblings require actual next-row suppliers
+
+Choose x in E_T, keep ALL its nonternary coordinates, and vary only
+its (H-1)-st ternary digit. The two altered siblings have prefixes
+different from u, with the same w=u mod3^(H-2). They lie in no top
+class, since all top classes require u. No original of height at most
+H-2 covers either sibling: it would then also cover x. Whole original
+coverage therefore supplies an original of height exactly H-1 at each
+altered sibling.
+
+The unique pure class A_(3^(H-1)) covers at most one of these two
+siblings. Choose the other and a mixed supplier3^(H-1)n covering it.
+Its first H-2 ternary digits agree with u. In particular its first
+three do, since this branch has H>=20 by IG4. If ell divided both
+n and M, its actual ell-phase would be alpha modell, because the
+nonternary coordinates were kept. This is precisely the forbidden
+AC2 configuration. Hence gcd(n,M)=1. The first ternary root is i,
+so concentration puts every prime of n in S_i. Divisor closure
+then gives NS2 for any prime ell dividing n.
+
+### The same supplier family covers the complete projected obligation
+
+Let V be the nonternary projection of E_T. The two altered digit
+values are fixed by u. Choose one value j which is not covered by
+the pure height-H-1 guard on the prefix w; at most one value is
+excluded by that guard. This choice is independent of the point in V.
+For EVERY z in V, keep z and use that same altered ternary sibling.
+The argument above shows
+
+    V subset union {the actual cofactor AP of A:
+      A original, h_3(A)=H-1,
+      A has prefix w+j*3^(H-2) modulo3^(H-1),
+      n(A)>1, gcd(n(A),M)=1, supp(n(A)) subset S_i}. (NS3)
+
+This is one simultaneous family of actual phases covering V. It does
+not assert that V is a full cofactor carrier or replace its points by
+independently optimized sources.
+
+The original height-H-1 row therefore contains at least five labels
+in the distinct-prime case, with cofactors1,p,r,pr,ell, and at least
+four in the square case, with cofactors1,p,p^2,ell. The M ancestor
+used here is already forced by section103; ell is supplied by NS2.
+These are global row counts, not claims that all those classes have
+the same lower ternary prefix.
+
+CM3 already rules out a two-prime color not containing5. The new
+content is NS1--NS3's next-row numerical height and actual supplier
+coverage, not another proof that the top color has at least three
+primes. More complex next-row incidence is not excluded. No new
+Lean verification or unrestricted noncoverage is asserted.
