@@ -125,7 +125,7 @@ map `s`, and steps 4 and 5.
 Tier 1 published question; resolution `Proved` by
 `D5/S3/StatisticalMechanics/VertexModels/SimplexFixedPointFreePermutations.result`.
 `proof_shape: content`; `admission_basis: open-problem-resolution`
-(issue #11874). Utility `none`: the result is a theorem over every $n$.
+(issue #11874). Utility `none`: the result is a theorem over every $n>2$.
 
 ### What the settlement shows
 
