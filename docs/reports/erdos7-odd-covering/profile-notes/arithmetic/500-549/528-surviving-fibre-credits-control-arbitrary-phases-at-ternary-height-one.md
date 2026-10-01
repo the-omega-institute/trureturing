@@ -30119,3 +30119,373 @@ verification is claimed. Arbitrary higher-support inventories at19 or
 at other middle-window primes are still outside the proved positive
 budget; no argument here forces a minimum cover into this contract.
 Unrestricted Erdos#7 remains unresolved.
+
+## Actual-anchor charged7 credit has no uniform positive lower bound
+
+The charged source supplies a physical pointwise loss of conditional
+mass, not a uniform occupation claim on the surviving anchor. Reuse
+the source's charged-fibre lemma and report513(S4--S8). For one fixed
+global tuple phi of selected21/35/63/105 projections, write
+
+    s_phi(h)=1_(h3=a mod3)+1_(h5=b mod5)+1_(h3=c mod9)
+             +1_(h3=d mod3,h5=d mod5),
+    c_phi(h)=(3*s_phi(h)-4)_+/14,
+    I(A,phi)=integral_A c_phi dH35.                     (FC1276)
+
+The live7 conditional mass is at most1-c_phi. Report513 retains this
+correction inside each fixed-layout upper comparison and integrates
+over its enlarged anchor A6. Its positive lower bound for
+integral_A6 c_phi does not assert a positive lower bound for FC1276
+on the smaller ACTUAL anchor A. The following finite families show
+that the latter cannot follow from divisor closure, comparable-class
+disjointness and irredundancy alone.
+
+### One finite original family and a permitted completion
+
+Fix N>=3. Include original pure classes0 mod3,1 mod9 and
+
+    a_(3,e)=3^(e-1)-5 mod3^e, 3<=e<=N,
+
+along with0 mod5,1 mod25,0 mod7 and0 mod11. The fixed mixed
+original pairs(modulus,residue) are
+
+    (15,2),(45,22),(75,31),(21,8),(35,22),(63,4),
+    (105,1),(165,1),(33,2),(55,2).                       (FC1277)
+
+For every3<=e<=N add one original of modulus5*3^e with phase
+
+    x3=2*3^(e-1)-5 mod3^e, x5=1 mod5.                  (FC1278)
+
+All numerical moduli are distinct odd nonunits. The palette contains
+every nonunit divisor of each of its moduli. In particular33 and55
+are included as proper divisors of165. Comparable original classes
+are disjoint. For successive ternary levels the pure and mixed phases
+are the two distinct children of -5 mod3^(e-1), leaving its third
+child. Mixed15 and45 use different projections from their descendants;
+75 has5-adic prefix6 mod25, avoiding the pure5 and25 classes.
+For the selected7 and11 labels,21/63 and21/105 are separated at3,
+35/105 at5, and33/165 and55/165 at11. Their pure ancestors are also
+avoided. These statements check the literal original phases.
+
+Thus the increasing-modulus keep-if-legal source completion keeps
+each selected original. A selected label newly inserted in a numerical
+gap cannot divide an original, since every such divisor is already
+an original. This is only the existing completion interface; it is
+not a claim that this family is a globally minimum whole cover.
+
+Continue the pure3 formula for all e>N, and complete pure5 by
+
+    a_(5,e)=(5^(e-1)-1)/4 mod5^e, e>=1.                 (FC1279)
+
+These are disjoint pure antichains. At3 the formulas retain the
+initial0 mod3 and1 mod9 separately. At a first differing deeper
+level the phases have different ternary children. At5 the usual
+comb has a terminal0 where every later leaf has1. Complete pure7
+and pure11 by the same standard prime-p formula
+(p^(e-1)-1)/(p-1), and use this formula at any later source primes.
+There are no other3/5-only mixed originals. Define A as the actual
+anchor avoiding these completed pure3/5 classes and all3/5-only
+mixed originals. Put F=P_3^c times P_5^c, so H35(F)=3/8.
+
+### Credit collapses on a live anchor of uniformly positive mass
+
+The globally fixed selected tuple is phi=(2,2,4,1). Its four
+projections have exactly three nonempty pair intersections:
+
+    C15={h3=2 mod3,h5=2 mod5},
+    Q2 ={h3=4 mod9,h5=2 mod5},
+    Q1 ={h3=4 mod9,h5=1 mod5}.                         (FC1280)
+
+They are disjoint and there is no triple intersection. Consequently
+c_phi=1/7 on their union and is zero elsewhere. Original15 deletes
+C15, and original45 deletes Q2. On Q1, each level3..N of the pure
+and mixed ternary comb deletes two children, leaving only
+
+    h3=-5 mod3^N.
+
+The specified higher pure3 completion deletes half this last
+cylinder. At5, pure25 deletes child1 mod25 and75 deletes child6;
+the entire higher pure5 tail lies in child6. The remaining quinary
+mass in root1 is3/25. Hence the actual-anchor credit is exactly
+
+    I(A,phi)=(1/7)*(1/(2*3^N))*(3/25)
+            =3/(350*3^N).                              (FC1281)
+
+The anchor itself stays large. Within F the15,45,75 deletions are
+pairwise disjoint and have masses1/15,1/90,1/200. In the last
+quantity the surviving ternary root has mass1/6 and the surviving
+quinary child has mass1/25-1/100=3/100. Each extra mixed comb
+class, after the75 and pure deletions, has mass3/(25*3^e), and
+these extra pieces are disjoint. Therefore
+
+    H35(A)=3/8-1/15-1/90-1/200
+                 -(3/25)*sum_(e=3..N)3^(-e)
+          =257/900+3/(50*3^N).                          (FC1282)
+
+The failure is also uniform over the unprescribed pure tails.
+The FINITE original ternary comb already leaves only the one
+3^(-N) cylinder inside Q1, and original25 and75 already leave
+quinary mass3/25. Every other legal higher pure completion only
+removes points from it. The selected tuple and15/45/75 phases
+remain fixed. Thus
+
+    sup_(legal higher pure completions) I(A,phi)
+        <=3/(175*3^N) ->0.                             (FC1283)
+
+Changing those pure tails cannot provide a uniform positive scalar
+credit. This does not invalidate the fixed-layout comparison over A6,
+and it does not assert that every useful weighted response credit
+vanishes uniformly over arbitrary original families.
+
+### The finite originals are irredundant
+
+This strengthening concerns the finite original family, not the
+countable completion. Let r_N=3^N-5. In CRT coordinates
+(x3,x5,x7,x11) modulo(3^N,25,7,11), the following point belongs
+only to the original named in its row:
+
+| Original | Private witness coordinates |
+| --- | --- |
+| pure3^e,1<=e<=N | (a_(3,e),3,2,3), with a_(3,1)=0,a_(3,2)=1 |
+| pure5 | (2,0,2,3) |
+| pure25 | (2,1,2,3) |
+| pure7 | (2,3,0,3) |
+| pure11 | (2,3,2,0) |
+| 15 | (2,2,2,3) |
+| 45 | (r_N,2,2,3) |
+| 75 | (7,6,2,3) |
+| 21 | (2,3,1,3) |
+| 35 | (7,2,1,3) |
+| 63 | (r_N,3,4,3) |
+| 105 | (7,11,1,3) |
+| 165 | (7,11,2,1) |
+| 33 | (2,3,2,2) |
+| 55 | (7,2,2,2) |
+| extra5*3^e,3<=e<=N | (2*3^(e-1)-5,11,2,3) |
+
+For the variable-height rows, the first differing ternary child
+separates every other pure or mixed comb leaf. The choices x3=7
+and x5=11 avoid all deeper comb leaves or selected25 children,
+respectively. The remaining exclusions follow from the displayed
+7/11 targets. CRT realizes all these finite witnesses. In contrast,
+(2,3,2,3) avoids every original. This family is within known
+small-prime noncoverage; its role is to refute the proposed uniform
+credit inference, not to extend a noncoverage range.
+
+### Disappearing credit here accompanies a smaller actual source loss
+
+Keep the completion FC1279 and the standard7/11 tails. On actual A,
+the active7 target sets are empty,{1},{4}, or{1,4}; only the last
+occurs on Q1. Their sizes equal the active projection counts, so
+charged padding adds no further root. The good7 fibre masses are
+respectively5/6,5/7,29/42,4/7. Under the source cap3/2, only
+the last fibre loses mass, and its exact conditional loss is1/7.
+Consequently the actual7 loss is precisely FC1281, leaving
+
+    mu7(1)=H35(A)-I(A,phi)
+           =257/900+9/(175*3^N).                       (FC1284)
+
+At11, originals33 and55 target root2, whereas165 targets root1.
+The33 and55 projections cannot coexist on A because their intersection
+is C15; the165 projection is disjoint from each. There is at most
+one mixed forbidden11 root. Its good Haar mass is at least89/110,
+so the good-set normalizing density is at most110/89<5/3 and there
+is no11 loss. Standard pure-only13 and17 stages likewise have no
+loss under their existing caps. Thus FC1284 is also the exact mass
+of this family's source through17.
+
+The same actual family therefore has small credit AND small charged7
+loss. A failure of a uniform lower bound for I alone does not imply
+failure of joint source estimates. A valid improvement must retain
+anchor deletions, the physical projection tuple and the required
+query response on one common law, as in reports513,752 and784.
+The example assumes neither minimum whole-cover provenance nor the
+additional restrictions implied by a full covering. Those restrictions
+remain available, but must be proved before use. All statements here
+are ordinary symbolic deductions; no new Lean verification is claimed.
+
+## The vanishing marked component has a full original-label query bound
+
+For the specified finite family and completion, let nu_N be its actual
+source through17. Split this SAME measure by the actual event Q1:
+
+    nu_N=nu_base+eta_N,
+    nu_base=nu_N restricted to Q1^c,
+    eta_N=nu_N restricted to Q1,
+    nu_base(1)=257/900,
+    eta_N(1)=9/(175*3^N).                              (FC1285)
+
+Outside Q1 all original-induced exclusions and all conditional kernels
+are independent of N. Thus nu_base is the same restricted measure
+for every N. This does not introduce an infinite mixed completion.
+It is a positive marked decomposition of each finite family's source.
+
+For a finite measure rho on the six old coordinates, reuse the complete
+first-query functional
+
+    W(rho)=sum_(d supported on3,5,7,11,13,17)
+                         max_(a mod d)rho(x=a mod d),
+
+including d=1 and every finite exponent. It retains distinct numerical
+cofactor labels. Under eta_N/eta_N(1), the coordinates are independent
+in this PARTICULAR marked component: the anchor is a product there,
+and the normalized good7 and11 laws are constant on Q1. Their laws
+and complete one-coordinate query factors are
+
+| Coordinate | Normalized marked law | Query factor |
+| --- | --- | --- |
+| 3 | fixed -5 mod3^N, then avoids the specified pure comb tail | N+2 |
+| 5 | uniform on children11,16,21 mod25 | 29/12 |
+| 7 | uniform on roots2,3,5,6 | 31/24 |
+| 11 | uniform on roots2 through10 | 101/90 |
+| 13 | normalized completed pure-avoiding Haar | 12/11 |
+| 17 | normalized completed pure-avoiding Haar | 16/15 |
+
+At3 the maxima for depths0..N are1; beyond N they are
+2/3^j,j>=1, summing to1. At5 the depth0 and1 maxima are1;
+from depth2 onward they are1/(3*5^j),j>=0. Uniform surviving
+root sets at7 and11 give geometric sums1+7/24 and1+11/90.
+For p=13,17 the density on the pure survivor is(p-1)/(p-2);
+an untouched root attains this density at every positive depth,
+giving total query factor(p-1)/(p-2). These facts account for
+the full infinite exponent sums, not a finite truncation.
+
+Product structure and nonnegative summation therefore give
+
+    W(eta_N)=9/(175*3^N)*(N+2)*(29/12)*(31/24)
+                         *(101/90)*(12/11)*(16/15)
+             =90799*(N+2)/(433125*3^N).                 (FC1286)
+
+For any positive decomposition, each cylinder maximum is monotone
+and subadditive. Hence here
+
+    0<=W(nu_N)-W(nu_base)<=W(eta_N)->0.                 (FC1287)
+
+All three query sums are finite: the existing full-history density
+caps give a convergent geometric upper for W(nu_N), and the marked
+parts are dominated by nu_N. FC1287 does not select different
+sources for different queries. It bounds the entire complete-label
+response of the small residual component on the same actual law.
+Its N+2 factor also records why its small mass alone does not bound
+this response by a fixed multiple independent of depth.
+
+## A joint anchor-deletion and charged7 constraint
+
+The preceding family defeats a uniform positive lower bound on I,
+but a uniform JOINT bound survives. Return to an arbitrary completed
+source satisfying the anchor hypotheses of FC1269 and the legal
+selected21/35/63/105 projections. Keep its actual A subset F and
+its one global phi. Write Delta=3/8-H35(A) and I=I(A,phi).
+Then
+
+    Delta+7*I>=107/1800.                               (FC1288)
+
+This is a constraint on one actual pair(Delta,I), not a combination
+of separate minimizing source geometries. No query kernel has yet
+been applied to this inequality.
+
+### Shared pure budgets and the selected mixed classes
+
+Let D={s_phi>=2} and E=C15 union C75. Since E is disjoint from A
+and c_phi>=1/7 on D,
+
+    H35(F intersect(E union D))<=Delta+7*I.
+
+It suffices to bound the left side. Write the21 root as a, the35
+root as b, the63 prefix as c mod9 with i=c mod3, and the105
+root pair as(j,k). The15 root pair is(r,h), different from(j,k)
+by proper-divisor disjointness. Put mu_p=H_p restricted to P_p^c.
+The two surviving ternary roots have total mass1/2, each at least
+1/6. The surviving63 prefix has mass w>=1/18 and at most1/9.
+At5, every allowed root has mass at least3/20, any two distinct
+allowed roots have total mass at least7/20, and the allowed75
+prefix has mass at least3/100. These are simultaneous consequences
+of the same disjoint pure budgets, as in FC1270.
+
+First suppose i=a. Put x=mu3(a). The double-activation set contains
+
+    D0=(c times P_5^c) union(a times b).
+
+Its mass is at least(3/4)w+(3/20)(x-w)>=7/120.
+If15 is not on root pair(a,b), its contribution outside D0 is at
+least1/120: on root a use x-w>=1/18; on the other root use1/6.
+If15 is on(a,b),75 cannot have that root pair. A75 prefix on root
+a adds at least(3/100)(x-w)>=1/600 outside D0; a prefix on the
+other root adds at least1/200. This case therefore gives at least
+7/120+1/600=108/1800.
+
+Now suppose i!=a. Set x=mu3(a), z=mu3(i)=1/2-x and
+t=x+w. Their shared pure3 budget implies t>=5/18: the union
+of root a and prefix c initially has mass4/9 and loses at most1/6
+to deeper pure classes. Write v_b=mu5(b), and similarly for other
+quinary roots.
+
+If the105 pair is(a,k) with k!=b, double activation includes
+a times(b union k) and c times b. Their mass is at least
+(1/6)(7/20)+(1/18)(3/20)=1/15. If the105 pair is(i,b),
+D contains both ternary roots times b, of mass at least3/40.
+If the105 pair is(a,b), the15 pair must differ. A15 pair on
+root a supplies a second quinary root and gives at least1/15;
+a15 pair(i,b) completes both ternary roots times b and gives
+3/40. A15 pair(i,h),h!=b adds a disjoint rectangle of mass
+at least1/40 to t*v_b>=1/24, giving1/15. All these bounds
+exceed107/1800.
+
+The remaining case has105 pair(i,k), k!=b. Here
+
+    D=(a times b) union(c times(b union k)),
+    H35(F intersect D)=t*v_b+w*v_k
+       >=(3/20)*t+w/5.
+
+The last inequality uses v_b+v_k>=7/20 and t>=w. If15 is
+not(a,b), its pair cannot be(i,k). A15 pair(i,b) fills both
+ternary roots times b, giving at least3/40. Every other allowed
+pair adds a disjoint rectangle of mass at least1/40 to the bound
+19/360 already furnished by D. Thus only15 pair(a,b) remains.
+
+Let the75 prefix have quinary root ell. If its ternary root is a,
+then ell!=b, so its extra mass outside D is at least3*x/100.
+The resulting lower bound is
+
+    (3/20)*t+w/5+(3/100)*(t-w)
+      =(9/50)*t+(17/100)*w>=107/1800.
+
+If its ternary root is i and ell is outside{b,k}, its extra mass
+is at least3*z/100. This gives
+
+    (3/25)*t+(23/100)*w+3/200>=110/1800.
+
+Finally, on root i with ell in{b,k}, only the part outside
+prefix c is new, but it has mass at least3*(z-w)/100. Hence
+
+    (3/25)*t+w/5+3/200>=107/1800.
+
+These cases exhaust the legal selected projections and75 positions,
+and prove FC1288 using common pure budgets throughout.
+
+### Conditional use in a same-source cost comparison
+
+Combine FC1288 with the old independent bound Delta>=73/1800
+from FC1269. For nonnegative coefficients alpha,beta this yields
+
+    alpha*Delta+beta*I
+      >=alpha*(73/1800)+(34/1800)*min(alpha,beta/7).
+                                                            (FC1289)
+
+For alpha<=beta/7 use alpha*(Delta+7I); otherwise write the
+left side as(alpha-beta/7)*Delta+(beta/7)*(Delta+7I).
+This proves the formula without asserting that either endpoint
+geometry is realizable or that the bound is sharp.
+
+FC1289 is available only when the consumer has separately proved
+that alpha*Delta and beta*I are compatible credits in the SAME
+upper comparison. The anchor-free constant component in FC1271
+already supplies its stated Delta credit. A weighted charged7
+query correction is generally an integral of c_phi times a response;
+it is not automatically a constant beta times I. Reports513 and784
+retain that response and its physical target constraints. Supplying
+such a compatible positive response bound for unrestricted actual
+inventories is still an unproved obligation. Neither FC1288 nor the
+marked-family estimate FC1287 settles that obligation or the missing
+arbitrary-support middle-prime costs in FC1274. Unrestricted Erdos#7
+remains unresolved.
