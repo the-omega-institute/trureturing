@@ -4,44 +4,29 @@ Production harness projects, scripts, manifests, and architecture material live 
 `tools/`; all harness test and compile-fail projects live under `tools/tests/`.
 `Meta/` is the data side of this boundary and contains no harness program directory.
 
-`Meta/ci-units.json`, registered in FILEMAP, is the authority for CI selection,
-required-check names, TOWER engineering members, and CI gate roots.
-`ci_units.py` expands shared inputs, the unit workflow, explicitly registered
-project includes and transitive references, and unit inputs into bash patterns.
-Project exclusions do not narrow this selection; registered includes under a
-`closure_excludes` prefix (Blueprint content, judged by `current`) stay out of
-project closures unless a unit lists them in its inputs. The resolver requires the
-run's `github.workflow_ref` and rejects a unit called from any workflow other than
-the one registered for it. `ci-entry.sh` consumes the
-resolved patterns through `CI_HIT_PATHS_FILE`; the entry verifies
-the checked-out `GITHUB_SHA`, the complete event range and the pull-request merge
-parents before deciding whether the unit is hit. A miss skips that unit and exits
-successfully. Workflows run in parallel; steps within one workflow may be serial.
-The entry removes remote state after the fixed candidate and any required base data
-are available, and no workflow executes protected-base code.
+CI is one workflow, `ci-current.yml`, whose unit patterns are the only authority
+for CI selection. Its `detect` job fetches commits and trees only, verifies the
+event candidate through `ci-entry.sh` (the checked-out `GITHUB_SHA`, the complete
+event range and the pull-request merge parents), lists the changed paths, and
+`ci_detect.py` decides from the `CI_UNITS` sections written in the workflow which
+units the change hits. A section is named by its job id; `[*]` patterns apply to
+every unit; `*` also matches `/`, `?` matches one character and `!` excludes. More
+than 3000 changed paths fail detection. The patterns are written, not derived from
+project registrations, FILEMAP or call graphs.
 
-`ci-unit.yml` supplies the common checkout, path hit, .NET and optional Lean cache
-steps. Test units run the fixed registered-project make command; non-test units
-supply their command in the caller workflow. Test projects, selftests,
-compile-fail proofs, FILEMAP and current each have
-their own workflow. `ci-current.yml` produces one Lean report and runs
-`check-current`, Scribe, and (for pull requests) `check-delta` against the first
-parent as data. `ci-filemap.yml` owns FILEMAP conformance. Every independent
-workflow registers its required check in `Meta/ci-units.json`: reusable units
-use `<id> / unit`, current uses `current`, and delta and publication-verify use
-null. Non-null names are unique; `ci_units.py contexts` emits them in registration
-order for ruleset configuration. Installed protection and actual execution remain
-observations of the ruleset and real Actions runs.
-
-TOWER engineering-ci declares only `members_from: ci-units`. Its members are the
-ids whose check ends in ` / unit`; each must have the same job id and name in its
-registered workflow. Every `ci-*.yml` except ci-unit.yml must be registered.
-Report-ci and dev-baseline retain explicit members. Gate roots combine the
-non-CI static roots in `Golden/gate-authority-roots.toml` with one
-`<workflow filename>/<unit id>` root per non-null check, using its workflow as
-the entrypoint. The combined roots are unique and sorted by UTF-8 root_id. C#
-consumers fail closed on missing or malformed inventory fields; ci_units.py owns
-complete registration validation.
+Each test project, selftest, compile-fail proof, FILEMAP and current is one job
+that runs only when hit; jobs run in parallel and steps within a job may be
+serial. `ci-unit.yml` supplies the common checkout, candidate verification, .NET
+and optional Lean cache steps and runs either the unit's test project through the
+fixed make command or its command. The current job produces one Lean report and
+runs `check-current`, Scribe, and (for pull requests) `check-delta` against the
+first parent as data. The one required check is the `required` job:
+`ci_required.py` is green only when detection succeeded, the unit sections and the
+jobs it needs correspond one to one, every hit unit succeeded and every missed unit
+was skipped. Each entry removes remote state after the fixed candidate and any
+required base data are available, and no job executes protected-base code; the
+actual required check names and deployment state come from the installed ruleset
+and real Actions runs.
 
 Local validation uses the same independent commands: `make test` runs
 `lean-report` and `check-current`, while `make gate BASE=<40-hex-commit-sha>` runs

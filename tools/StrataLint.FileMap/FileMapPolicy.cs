@@ -64,7 +64,6 @@ internal static partial class FileMapPolicy
             ["lean-build"] = "tools/scripts/worktree/lean-cache-run.sh",
             ["lean-inspector"] = "tools/lean-inspector/inspect.sh",
             ["NativeArchivePaths"] = "tools/scripts/worktree/lean_actions.py",
-            ["CiUnits"] = "tools/scripts/workflow/ci_units.py",
             ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,
             ["DomainsLoader"] = DomainsLoaderPath,
             ["ReportProducerScope"] = "tools/StrataLint.Engine/RepositoryIo/ReportProducerScope.cs",
@@ -683,12 +682,8 @@ internal static partial class FileMapPolicy
                 && !FileMapDocuments.IsPolicyPath(path)
                 && IsMachineDataPath(path))
             {
-                var content = path switch
-                {
-                    EngineeringProjectRegistry.ManifestPath => EngineeringContentStrings(source).ToArray(),
-                    "Meta/ci-units.json" => CiUnitContentStrings(source),
-                    _ => [source],
-                };
+                var content = path == EngineeringProjectRegistry.ManifestPath
+                    ? EngineeringContentStrings(source).ToArray() : [source];
                 foreach (var generatedPath in content.Any(text => text.AsSpan().ContainsAny(generatedSearch))
                     ? generatedPaths.Where(generated => content.Any(text => text.Contains(generated, StringComparison.Ordinal)))
                     : [])
@@ -719,57 +714,6 @@ internal static partial class FileMapPolicy
         }
 
         return findings;
-    }
-
-    private static string[] CiUnitContentStrings(string source)
-    {
-        // Input patterns select changed paths; they do not read artifact content.
-        // Validate this projection's shape; ci_units.py owns complete unit admission.
-        using var document = JsonDocument.Parse(source);
-        var root = document.RootElement;
-        RequireKeys(root, ["schema", "shared_inputs", "closure_excludes", "units", "caches"]);
-        if (root.GetProperty("schema").ValueKind != JsonValueKind.String
-            || root.GetProperty("schema").GetString() != "ci-units-v1"
-            || root.GetProperty("units").ValueKind != JsonValueKind.Array)
-            throw new InvalidDataException("invalid CI unit selection shape");
-        RequirePatterns(root.GetProperty("shared_inputs"));
-        RequirePatterns(root.GetProperty("closure_excludes"));
-        var content = new List<string>();
-        if (root.GetProperty("caches").ValueKind != JsonValueKind.Object)
-            throw new InvalidDataException("invalid CI unit selection shape");
-        foreach (var cache in root.GetProperty("caches").EnumerateObject())
-        {
-            RequireKeys(cache.Value, ["project", "inputs"]);
-            RequirePatterns(cache.Value.GetProperty("inputs"));
-            content.AddRange(JsonStrings(cache.Value.GetProperty("project")));
-        }
-        foreach (var unit in root.GetProperty("units").EnumerateArray())
-        {
-            RequireKeys(unit, ["id", "workflow", "check", "project", "test", "lean", "dotnet", "inputs"]);
-            if (unit.GetProperty("check").ValueKind is not (JsonValueKind.Null or JsonValueKind.String))
-                throw new InvalidDataException("invalid CI unit check shape");
-            RequirePatterns(unit.GetProperty("inputs"));
-            foreach (var field in unit.EnumerateObject().Where(property => property.Name != "inputs"))
-                content.AddRange(JsonStrings(field.Value));
-        }
-        return content.ToArray();
-
-        static void RequireKeys(JsonElement element, string[] keys)
-        {
-            if (element.ValueKind != JsonValueKind.Object)
-                throw new InvalidDataException("invalid CI unit selection object");
-            var actual = element.EnumerateObject().Select(property => property.Name).ToArray();
-            if (actual.Length != keys.Length || actual.Distinct(StringComparer.Ordinal).Count() != keys.Length
-                || actual.Except(keys, StringComparer.Ordinal).Any())
-                throw new InvalidDataException("invalid CI unit selection keys");
-        }
-
-        static void RequirePatterns(JsonElement element)
-        {
-            if (element.ValueKind != JsonValueKind.Array
-                || element.EnumerateArray().Any(value => value.ValueKind != JsonValueKind.String))
-                throw new InvalidDataException("invalid CI unit selection patterns");
-        }
     }
 
     private static IEnumerable<string> EngineeringContentStrings(string source)

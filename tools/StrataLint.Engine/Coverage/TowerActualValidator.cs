@@ -103,12 +103,6 @@ internal static class TowerActualValidator
         ImmutableArray<TowerFinding>.Builder findings,
         ImmutableArray<TowerCheck>.Builder checks)
     {
-        if (component.MembersFrom == "ci-units")
-        {
-            ValidateRegisteredCiJobs(component, snapshot, findings, checks);
-            return;
-        }
-
         var jobs = CiChecks(snapshot);
         foreach (var member in component.Members.Order(StringComparer.Ordinal))
         {
@@ -122,60 +116,12 @@ internal static class TowerActualValidator
         }
     }
 
-    private static void ValidateRegisteredCiJobs(
-        TowerComponentSyntax component,
-        RepositorySnapshot snapshot,
-        ImmutableArray<TowerFinding>.Builder findings,
-        ImmutableArray<TowerCheck>.Builder checks)
-    {
-        ImmutableArray<CiUnitRegistration> units;
-        try
-        {
-            if (!snapshot.TryGetFile(CiUnitInventory.RelativePath, out var registration))
-                throw new FormatException($"missing {CiUnitInventory.RelativePath}");
-            units = CiUnitInventory.Parse(registration.Text);
-        }
-        catch (FormatException exception)
-        {
-            findings.Add(new TowerFinding("TOWER-CI-UNITS", component.Id, exception.Message));
-            return;
-        }
-
-        var members = units.Where(unit => unit.Check?.EndsWith(CiUnitInventory.UnitCheckSuffix, StringComparison.Ordinal) == true).ToArray();
-        if (members.Length == 0)
-            findings.Add(new TowerFinding("TOWER-CI-UNITS", component.Id, "CI registration contains no engineering members"));
-        foreach (var member in members.OrderBy(unit => unit.Id, StringComparer.Ordinal))
-        {
-            var workflow = snapshot.TryGetFile(member.Workflow, out var file) ? CiWorkflowDocument.Parse(file.Text) : null;
-            if (workflow is null || !workflow.RunsOnBranch("pull_request", "dev")
-                || !workflow.RunsOnBranch("push", "dev")
-                || !workflow.Jobs.TryGetValue(member.Id, out var job) || job.Name != member.Id)
-            {
-                findings.Add(new TowerFinding("TOWER-CI-JOB", component.Id,
-                    $"missing ci job {member.Id} in registered workflow {member.Workflow} with dev PR/push triggers"));
-                continue;
-            }
-
-            checks.Add(new TowerCheck(component.Id, "verified", $"ci check {member.Id} workflow={member.Workflow}"));
-        }
-
-        var registered = units.Select(unit => unit.Workflow).ToHashSet(StringComparer.Ordinal);
-        foreach (var file in snapshot.Files.Values.Where(file => IsCiWorkflow(file.Path.Value)
-                     && file.Path.Value != ".github/workflows/ci-unit.yml").OrderBy(file => file.Path.Value, StringComparer.Ordinal))
-            if (!registered.Contains(file.Path.Value))
-                findings.Add(new TowerFinding("TOWER-CI-WORKFLOW", component.Id,
-                    $"unregistered ci workflow {file.Path.Value}"));
-    }
-
-    private static bool IsCiWorkflow(string path) =>
-        path.StartsWith(".github/workflows/ci-", StringComparison.Ordinal)
-        && path.EndsWith(".yml", StringComparison.Ordinal);
-
     private static ImmutableDictionary<string, string> CiChecks(RepositorySnapshot snapshot)
     {
         var jobs = ImmutableDictionary.CreateBuilder<string, string>(StringComparer.Ordinal);
         foreach (var file in snapshot.Files.Values.Where(item =>
-                     IsCiWorkflow(item.Path.Value)))
+                     item.Path.Value.StartsWith(".github/workflows/ci-", StringComparison.Ordinal)
+                     && item.Path.Value.EndsWith(".yml", StringComparison.Ordinal)))
         {
             var workflow = CiWorkflowDocument.Parse(file.Text);
             if (workflow?.RunsOnBranch("pull_request", "dev") != true

@@ -1,8 +1,7 @@
 #!/bin/bash
-# Entry step of every CI workflow: verify the event candidate, decide whether
-# this unit's registered input patterns are hit, then drop remote state.
-# Environment: exactly one of CI_HIT_PATHS or CI_HIT_PATHS_FILE (a readable file
-# containing the same text: one bash pattern per line; `*` also matches `/`;
+# Entry step of every CI job: verify the event candidate, decide whether the
+# given path patterns are hit, then drop remote state.
+# Environment: CI_HIT_PATHS (one bash pattern per line; `*` also matches `/`;
 # a leading `!` excludes; blank lines and `#` lines are ignored; a path hits
 # when it matches an including pattern and no excluding one), GITHUB_EVENT_NAME, GITHUB_SHA,
 # GITHUB_OUTPUT, CI_PR_HEAD (pull_request), CI_PUSH_BEFORE (push), and optionally
@@ -36,21 +35,15 @@ finish() {
   exit 0
 }
 
-[[ "${CI_HIT_PATHS+x}${CI_HIT_PATHS_FILE+x}" == x ]] || fail "set exactly one of CI_HIT_PATHS or CI_HIT_PATHS_FILE"
-if [[ "${CI_HIT_PATHS_FILE+x}" == x ]]; then
-  [[ -f "$CI_HIT_PATHS_FILE" && -r "$CI_HIT_PATHS_FILE" ]] || fail "cannot read CI_HIT_PATHS_FILE"
-  hit_paths="$(cat -- "$CI_HIT_PATHS_FILE")" || fail "cannot read CI_HIT_PATHS_FILE"
-else
-  hit_paths="$CI_HIT_PATHS"
-fi
+[[ "${CI_HIT_PATHS+x}" == x ]] || fail "CI_HIT_PATHS is required"
 include=() exclude=()
 while IFS= read -r line; do
   line="${line#"${line%%[![:space:]]*}"}"
   line="${line%"${line##*[![:space:]]}"}"
   [[ -z "$line" || "$line" == \#* ]] && continue
   if [[ "$line" == !* ]]; then exclude+=("${line#!}"); else include+=("$line"); fi
-done <<< "$hit_paths"
-[[ ${#include[@]} -gt 0 ]] || fail "hit paths have no including pattern"
+done <<< "$CI_HIT_PATHS"
+[[ ${#include[@]} -gt 0 ]] || fail "CI_HIT_PATHS has no including pattern"
 if [[ -n "${CI_CHANGED_PATHS_FILE:-}" ]]; then
   rm -f -- "$CI_CHANGED_PATHS_FILE" || fail "cannot clear $CI_CHANGED_PATHS_FILE"
 fi

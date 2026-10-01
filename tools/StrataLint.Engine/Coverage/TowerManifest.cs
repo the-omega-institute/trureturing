@@ -9,8 +9,7 @@ public sealed record TowerComponentSyntax(
     string Kind,
     ImmutableArray<string> Members,
     ImmutableArray<string> JudgedBy,
-    string Verification,
-    string? MembersFrom = null);
+    string Verification);
 
 public sealed record TowerBootstrapSyntax(
     string Id,
@@ -98,14 +97,7 @@ public static class TowerManifestValidator
                     "component must declare judged_by"));
             }
 
-            if (component.Id == "engineering-ci" || component.MembersFrom is not null)
-            {
-                if (component.Id != "engineering-ci" || component.Kind != "ci-jobs"
-                    || component.MembersFrom != "ci-units" || !component.Members.IsDefault)
-                    findings.Add(new TowerFinding("TOWER-MEMBER-SOURCE", component.Id,
-                        "engineering-ci must use only members_from: ci-units; other components use explicit members"));
-            }
-            else if (component.Members.IsDefaultOrEmpty
+            if (component.Members.IsDefaultOrEmpty
                 || component.Members.Any(string.IsNullOrWhiteSpace)
                 || component.Members.Distinct(StringComparer.Ordinal).Count() != component.Members.Length)
             {

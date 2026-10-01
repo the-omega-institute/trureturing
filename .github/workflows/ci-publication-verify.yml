@@ -23,14 +23,34 @@ jobs:
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
-      - name: Resolve registered inputs
-        env:
-          WORKFLOW_REF: ${{ github.workflow_ref }}
-        run: python3 tools/scripts/workflow/ci_units.py resolve publication-verify --paths-file "$RUNNER_TEMP/hit-paths" --workflow-ref "$WORKFLOW_REF"
       - id: entry
-        name: Validate candidate, check registered inputs and strip checkout remote
+        name: Validate candidate, check the input patterns and strip checkout remote
         env:
-          CI_HIT_PATHS_FILE: ${{ runner.temp }}/hit-paths
+          # The publication and restore programs and the build configuration they read.
+          CI_HIT_PATHS: |
+            .editorconfig
+            .github/workflows/ci-*.yml
+            .github/workflows/lean-cache-publish.yml
+            .gitignore
+            Directory.Build.props
+            Directory.Packages.props
+            Makefile
+            Meta/ReportProducers/*
+            Meta/engineering-projects.json
+            global.json
+            lake-manifest.json
+            lakefile.toml
+            lean-toolchain
+            tools/Architecture/*
+            tools/Makefile
+            tools/StrataLint.Cli/Commands/CompilationProof.cs
+            tools/StrataLint.Cli/Commands/CompileProofCommand.cs
+            tools/StrataLint.Cli/Commands/TestEvidenceCommands.cs
+            tools/StrataLint.Cli/Commands/TestResultEvidence.cs
+            tools/scripts/dotnet-test.sh
+            tools/scripts/workflow/*
+            tools/scripts/worktree/*
+            tools/tests/Directory.Build.props
           CI_PUSH_BEFORE: ${{ github.event.before }}
         run: bash tools/scripts/workflow/ci-entry.sh
       - name: Validate entry result

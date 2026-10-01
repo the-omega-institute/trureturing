@@ -45,24 +45,6 @@ public sealed class CoverageWriterTests
         Assert.Equal(12, json.RootElement.GetProperty("matrix").GetArrayLength());
     }
 
-    [Fact]
-    public void DerivedMemberSourceIsPreservedInTextAndJson()
-    {
-        var syntax = Tower().Syntax with
-        {
-            Components = [new TowerComponentSyntax("engineering-ci", "ci-jobs", default,
-                ["bootstrap-pr-1"], "verified", "ci-units")],
-        };
-        var tower = Assert.IsType<TowerValidationOutcome.Accepted>(
-            TowerManifestValidator.ValidateStructure(syntax)).Manifest;
-        var text = Encoding.UTF8.GetString(CoverageCanonicalWriter.WriteText(Report(), tower).AsSpan());
-        using var json = JsonDocument.Parse(CoverageCanonicalWriter.WriteJson(Report(), tower).ToArray());
-        Assert.Contains("members_from=ci-units", text, StringComparison.Ordinal);
-        var component = json.RootElement.GetProperty("tower").GetProperty("components")[0];
-        Assert.Equal("ci-units", component.GetProperty("members_from").GetString());
-        Assert.False(component.TryGetProperty("members", out _));
-    }
-
     private static CoverageReport Report()
     {
         Assert.True(RepoPath.TryCreate("scratch/note.txt", out var path));

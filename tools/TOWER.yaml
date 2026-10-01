@@ -141,7 +141,7 @@ components:
     members:
       - Directory.Packages.props
       - .github/workflows/ci-current.yml
-      - .github/workflows/ci-banned-api-proof.yml
+      - .github/workflows/ci-unit.yml
       - tools/Architecture/BannedSymbols.txt
       - tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj
       - tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs
@@ -161,7 +161,8 @@ components:
     verification: verified
   - id: engineering-ci
     kind: ci-jobs
-    members_from: ci-units
+    members:
+      - required
     judged_by:
       - dev-baseline
     verification: verified

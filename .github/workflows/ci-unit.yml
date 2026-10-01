@@ -1,21 +1,28 @@
 name: CI unit
 
-# One independent CI unit. The manifest owns its inputs and tool requirements.
-# Callers supply commands for non-test units. When no registered path changed, the
-# remaining steps are skipped and the job succeeds.
+# One CI unit. The calling job runs it only when the change hits the unit; this
+# workflow verifies the candidate, prepares the requested tools and runs either
+# the unit's test project or its command.
 
 on:
   workflow_call:
     inputs:
-      unit:
-        description: Unit id registered in Meta/ci-units.json
-        required: true
-        type: string
-      command:
-        description: Command for a non-test unit, executed from the repository root
-        required: false
+      project:
+        description: Test project run through make -C tools test; empty for a command unit
         type: string
         default: ''
+      command:
+        description: Command of a non-test unit, executed from the repository root
+        type: string
+        default: ''
+      dotnet:
+        description: Set up the .NET SDK
+        type: boolean
+        default: true
+      lean:
+        description: 'Lean preparation: none, toolchain, or build (toolchain plus build seeds)'
+        type: string
+        default: none
       timeout-minutes:
         type: number
         default: 30
@@ -29,56 +36,48 @@ jobs:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: ${{ inputs.timeout-minutes }}
     steps:
+      - name: Validate the unit definition
+        env:
+          PROJECT: ${{ inputs.project }}
+          COMMAND: ${{ inputs.command }}
+          LEAN: ${{ inputs.lean }}
+        run: |
+          has_project=false has_command=false
+          [[ -z "$PROJECT" ]] || has_project=true
+          [[ -z "${COMMAND//[[:space:]]/}" ]] || has_command=true
+          [[ "$has_project" != "$has_command" ]] || { echo "CI_UNIT_ERROR set exactly one of project and command" >&2; exit 2; }
+          case "$LEAN" in none|toolchain|build) ;; *) echo "CI_UNIT_ERROR lean is '$LEAN'" >&2; exit 2 ;; esac
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
           fetch-depth: 2
           persist-credentials: false
-      - id: unit
-        name: Resolve registered unit
+      - name: Verify the candidate
         env:
-          UNIT: ${{ inputs.unit }}
-          WORKFLOW_REF: ${{ github.workflow_ref }}
-        run: python3 tools/scripts/workflow/ci_units.py resolve "$UNIT" --paths-file "$RUNNER_TEMP/hit-paths" --workflow-ref "$WORKFLOW_REF" >> "$GITHUB_OUTPUT"
-      - id: entry
-        name: Check registered inputs
-        env:
-          CI_HIT_PATHS_FILE: ${{ runner.temp }}/hit-paths
+          CI_HIT_PATHS: '*'
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
           CI_PUSH_BEFORE: ${{ github.event.before }}
         run: bash tools/scripts/workflow/ci-entry.sh
-      - name: Validate entry result and command
-        env:
-          HIT: ${{ steps.entry.outputs.hit }}
-          COMMAND: ${{ inputs.command }}
-          TEST: ${{ steps.unit.outputs.test }}
-        run: |
-          case "$HIT" in true|false) ;; *) echo "CI_ENTRY_ERROR hit output is '$HIT'" >&2; exit 2 ;; esac
-          case "$TEST" in
-            true) [[ -z "$COMMAND" ]] || { echo "CI_ENTRY_ERROR test unit command must be empty" >&2; exit 2; } ;;
-            false) [[ -n "${COMMAND//[[:space:]]/}" ]] || { echo "CI_ENTRY_ERROR non-test unit command is empty" >&2; exit 2; } ;;
-            *) echo "CI_ENTRY_ERROR test output is '$TEST'" >&2; exit 2 ;;
-          esac
-      - if: steps.entry.outputs.hit == 'true' && steps.unit.outputs.dotnet == 'true'
+      - if: inputs.dotnet
         uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
           cache: true
           cache-dependency-path: '**/packages.lock.json'
       - id: keys
-        if: steps.entry.outputs.hit == 'true' && steps.unit.outputs.lean != 'none'
+        if: inputs.lean != 'none'
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
       - id: elan
-        if: steps.entry.outputs.hit == 'true' && steps.unit.outputs.lean != 'none' && steps.keys.outputs.elan_key != ''
+        if: inputs.lean != 'none' && steps.keys.outputs.elan_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
-      - if: steps.entry.outputs.hit == 'true' && steps.unit.outputs.lean != 'none'
+      - if: inputs.lean != 'none'
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - id: dependency
-        if: steps.entry.outputs.hit == 'true' && steps.unit.outputs.lean == 'build' && steps.keys.outputs.dependency_key != ''
+        if: inputs.lean == 'build' && steps.keys.outputs.dependency_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -86,7 +85,7 @@ jobs:
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - id: project
-        if: steps.entry.outputs.hit == 'true' && steps.unit.outputs.lean == 'build' && steps.keys.outputs.project_key != ''
+        if: inputs.lean == 'build' && steps.keys.outputs.project_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -94,7 +93,7 @@ jobs:
           key: ${{ steps.keys.outputs.project_key }}
           restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
       - name: Restore optional Lean build seeds
-        if: steps.entry.outputs.hit == 'true' && steps.unit.outputs.lean == 'build'
+        if: inputs.lean == 'build'
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
           PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
@@ -102,18 +101,14 @@ jobs:
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
       - name: Run
-        if: steps.entry.outputs.hit == 'true'
         env:
           CI: 'true'
           DOTNET_CLI_UI_LANGUAGE: en-US
-          TEST: ${{ steps.unit.outputs.test }}
-          PROJECT: ${{ steps.unit.outputs.project }}
+          PROJECT: ${{ inputs.project }}
           COMMAND: ${{ inputs.command }}
         run: |
-          if [[ "$TEST" == true ]]; then
-            [[ -z "$COMMAND" ]] || { echo "CI_ENTRY_ERROR test unit command must be empty" >&2; exit 2; }
+          if [[ -n "$PROJECT" ]]; then
             make -C tools test TEST_PROJECT="$PROJECT"
           else
-            [[ -n "${COMMAND//[[:space:]]/}" ]] || { echo "CI_ENTRY_ERROR non-test unit command is empty" >&2; exit 2; }
             bash -e -o pipefail -c "$COMMAND"
           fi

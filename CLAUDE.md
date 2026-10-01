@@ -538,11 +538,11 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 
 **零信任提交:机械 harness 判准入,dev 集成、main 发布、worktree 隔离。** 维护者、agent 与 fork 均过相同机械门;评审增加质量,不替代检查。
 
-owner 原话:「只要是独立的部分就跑独立的CI, 不要混在一起了」「把CI改成白名单体系, 改了这些文件, 跑这个特定的workflow」「你就单独建立workflow的ci文件, 然后在文件内部判断是否hit不就好了」「CI里面串行没问题, 我要的是workflow并行」。
+owner 原话:「只要是独立的部分就跑独立的CI, 不要混在一起了」「把CI改成白名单体系, 改了这些文件, 跑这个特定的workflow」「CI里面串行没问题, 我要的是workflow并行」「写在workflow里面检测吧, 用workflow做唯一真源, 超过3000 ci直接报错让开发者拆PR」。
 
 - `dev` 是集成主分支;实施经 PR 合入。`main` 是发布分支,依 spec A14 的 release PR 与 tag 推进。
 - 实施分支由 `WorktreeCommand` 的 creation grammar 创建,会话复用独立 worktree;生命周期清理仍识别其 `LifecycleNamespaces`,不因创建词表变化缩小清理范围。
-- 每个独立 CI workflow 对应一个 required check;`Meta/ci-units.json` 的登记展开决定是否执行本程序,未命中仍报告成功。测试项目、selftest、两类编译反证、FILEMAP 和 current 分属独立 workflow。`ci-current.yml` 串行运行 Lean report、check-current、Scribe,PR 事件按 delta 白名单运行 check-delta；FILEMAP 由独立 workflow 执行。检查只执行候选代码,base 只作为固定数据。
+- CI 是一个 workflow `ci-current.yml`:`detect` 作业一次列出改动路径,按写在该 workflow 里的单元白名单判定命中哪些单元;每个测试项目、selftest、两类编译反证、FILEMAP 与 current 各为一个作业,只在命中时运行,作业之间并行、作业内部串行。唯一 required check 是 `required` 作业:检测成功、每个单元恰在命中时运行且通过才绿,失败、取消或与命中不符均红。改动超过 3000 个路径时检测失败,须拆 PR。current 作业串行运行 Lean report、check-current、Scribe,PR 事件按 delta 白名单运行 check-delta。检查只执行候选代码,base 只作为固定数据。
 - required 名称与部署状态按 §8.12 的真实运行核验,本地文件不证明远端 ruleset 已更新。绿且显式选择 auto-merge 才自动合;缺省不 arm。PR merge-ref 检查与 dev push 检测保留 M1→M2 的残余边界,`strict=false`。
 - PR 保留必要来源与 §5.2 产地信息;不留过程转录(§2.10)。
 
@@ -553,7 +553,7 @@ owner 原话:「只要是独立的部分就跑独立的CI, 不要混在一起了
 **base 判官永久禁止(τ=0 owner 裁决)**。历史裁决原话(其中判官/内容不得同 PR 的限制已由 2026-09-24 owner 裁决撤销):「彻底移除 base 判官,判官跟非判官不能在一个 PR,防止无休止的死锁,但为了防止为了让数据过顺手改判官,所以不能一起提交。」
 **定义**:为判候选而 checkout/restore/编译/执行 protected base 或任何非受审 HEAD 修订的代码,即 base 判官;含 base worktree/checkout、`git show <base>:<脚本> | bash|python|dotnet`、指向非候选自身内容寻址构建的 `--judge-root/--judge-dll`,以及 base 拥有的 derive/verify/classify/floor。**执行 base 代码禁,读 base 数据许**:可读 `HEAD^1` SHA 做对象 diff,以 `RevisionSnapshot`/`git show` 取 FILEMAP/账本/拓扑/workflow 哈希等字节喂候选判官。
 workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/地板/过渡/防篡改复建。独立检查入口只运行候选判官。owner 接受候选可削弱自审判官的残余逃逸(`38b865a59c`,#5285),以 SL-029 按端点分树分类(仅快照证成的删除端按 protected-base FILEMAP,其余端按 candidate FILEMAP)给出非阻断警告,并保留 SL-022 标注、dev push 检测与独立评审,不另造 base 判官。
-**SL-029 现役语义(τ=0 owner 2026-09-24 裁决)**:允许判官与内容以一个完整 PR 交付。合法混面 delta 恰报一条 `ADMISSION-PLANE-MIXED`,显示为 `Warning`,准入效果为 `Observe`,随后继续全部普通验证;警告随完整 `check` 和 `check-delta` 的结果输出,其它 Block 仍拒绝,SL-022 标注不变。缺失、畸形、歧义、不安全的 FILEMAP、错误的策略文件分类或无有效 base 登记的删除端仍是基础设施失败。混面不削减适用的 engineering 义务;生产 CI 按 FILEMAP 登记的 `Meta/ci-units.json` 选择测试/检查。警告不强制分面,不能防止同一 PR 同时修改判官和内容;候选自审的残余边界仍在,不得把警告、标注、后续检测或评审冒充准入时点的独立保证。
+**SL-029 现役语义(τ=0 owner 2026-09-24 裁决)**:允许判官与内容以一个完整 PR 交付。合法混面 delta 恰报一条 `ADMISSION-PLANE-MIXED`,显示为 `Warning`,准入效果为 `Observe`,随后继续全部普通验证;警告随完整 `check` 和 `check-delta` 的结果输出,其它 Block 仍拒绝,SL-022 标注不变。缺失、畸形、歧义、不安全的 FILEMAP、错误的策略文件分类或无有效 base 登记的删除端仍是基础设施失败。混面不削减适用的 engineering 义务;生产 CI 按 workflow 内的单元白名单选择测试/检查。警告不强制分面,不能防止同一 PR 同时修改判官和内容;候选自审的残余边界仍在,不得把警告、标注、后续检测或评审冒充准入时点的独立保证。
 **停用与证据边界**:base 判官的隔离曾被候选提前写 `$GITHUB_PATH` 伪造 dotnet 破坏(#4380/#5132),且自身造成全仓自锁;永久禁令管这种形态,不是只删某实例。base 执行地板、分面分类器、纯 revert 分类器均已移除。旧“候选判官=狐狸判鸡舍/永不候选自判/base 侧法官”属 verify-conservative 时代 inactive 成本形,不作现役指令。检查只搜字面 `HEAD^1:` 会漏变量修订,须依 git 动词及代码/数据用途判;producer/agent 侧读取 base 数据和读 HEAD 自身对象不在禁令内。判官面 PR 由 SL-030 判,不重复写普查过程。
 *成熟锚*:hermetic CI、单写者、验证输入不凭来源身份、Andon。
 〔守护:**硬(τ=0 裁决)+ 半硬(SL-030)+ 软,诚实分栏**·**机器面**:SL-030「Judge surface reads no other revision」(`tools/StrataLint.Engine/Rules/Trust/RepositoryRules.JudgeSurface.cs`,Block,trust)对候选 delta 内的判官面文件(`.github/**`、`tools/scripts/workflow/**`)逐行扫描能物化修订文件的 git 动词——`show <rev>:<path>`、`cat-file -p/blob/--batch`、`archive <rev>`、`worktree add`、`checkout <rev>`、`restore --source`、`read-tree`、`checkout-index`——修订不是字面 `HEAD` 即红,修订为变量时 fail-closed;workflow 中 `actions/checkout` 的 `ref:` 指向 base(`base_ref` / `pull_request.base`)亦红。四次有案的 base 判官形态(`worktree add`、三次 `git show HEAD^1:<脚本> > 文件`)在它面前**全部为红**(`JudgeSurfaceRevisionRuleTests`)。它不与第 8.13 条 冲突:该律禁的是**对 workflow 本身写测试**,而 SL-030 的测试喂的是合成文本、不断言真实 workflow 的内容,正是该律明列的豁免类(消费 workflow 文本的生产逻辑及其夹具)。**反例集合(两维,写不出就不能说「保证」)**:①绕过——面外脚本(`tools/scripts/ingest.sh`、`agent/**`、`report/**`)里物化、再由面内调用;**扫描器支持的语法之外的一切编码**——它支持的 shell 语法是:单/双引号(双引号内反斜杠只转义 `$`、反引号、`"`、`\`、换行)、`$'…'` ANSI-C 引号(解码 `\xHH`、八进制、`\cX` 控制转义(含 `\c\\`,操作数按反斜杠对消耗)与 C 转义;首个 NUL 截断)与反斜杠转义、`$(…)`(定界与命令词法共用同一注释/引号状态:替换体内未引用的词首 `#` 到行尾为注释)/反引号(含转义的嵌套反引号)/`<(…)` 替换、含描述符前缀(数字或 `{name}`)与 `>|` 的重定向(操作符只由未引用的字符构成,引号内的 `>` 是目标)、`| ; & && ||` 与 `( ) { }` 边界、`if/while/…`、赋值、`!`、`time`、`coproc` 前缀、反斜杠续行、`#` 注释只到行尾;动词位动态(`git $(…) …`、`git $V …`)即 fail-closed;命令位动态(`$GIT`、`"$(command -v git)"`)且后随受管动词即按 git 判,后随其他词不判;**git 选项按显式元数模型解析**:各动词的选项表由本机 `git <verb> -h`(git 2.50.1)派生成 flag / 取下一词或附着值 / 仅附着可选值三类,含 `--no-` 形与唯一前缀缩写,未知或歧义选项 fail-closed——`show` 例外,其选项空间是整个 log/diff 选项集(表由 `man git-log` 派生),未知选项当 flag,只会多判不会少判;支持的 YAML 载体是:`.github/**` 下的 YAML **整体由 YamlDotNet 解析**(GitHub Actions runner 同一解析器族),任何位置的 `run:` 标量(块/流映射、引号/纯/块标量、标签、锚点与别名、合并键、多文档皆由解析器处理)、job 级 `uses:` 同一映射内 `with.command` 标量与 `ref:` 标量;解析失败、`run:` 值非标量皆 fail-closed 红。**不支持即不判**(fail-open,写在这里就是反例集合):heredoc 体、`$((…))`、`case … in <pattern>)` 的模式括号(`$(…)` 内:模式的 `)` 会提前闭合替换)、参数展开(`${X}`、`git${X}`)、别名与函数、`bash -c` 拼接、`eval`、经 `env`/`command`/`exec`/`sudo`/`xargs` 等包装器调用 git;`curl` 从 raw.githubusercontent 按 SHA 取脚本;C# 进程内 `git show`(候选判官自己的读者,按定义允许);Python / JS 载体;②检查被跳过——`IsAffectedBy` 谓词漏路径、判官二进制被同一 PR 改弱(第 7.5 条已接受的残余逃逸,SL-029 仅警告,不提供隔离保证)。故 SL-030 是**早反馈**,不是「不存在 base 判官」的证明;复辟仍由**评审**按定义判、由**真跑**(第 8.12 条“安装后首个真实 run 立即核验”款)暴露自锁。其余现役机器面:SL-029 混面警告、SL-022 保护面标注(改 workflow 与判官保护面须按实际 rc 入账)。按第 8.5 条,面外形态「不可 lint」不构成豁免——重建 base 判官即违规,与第 2.4 条冒领同罪〕
@@ -757,16 +757,14 @@ CI/权限/门控改动的独立 PR 开前评审归位;交付 PR 开出前完成�
 **dev 因 harness 红,仅增加数据的内容/理论 lane 改投 `integration-theory-<date>`。** 适用面封闭为①`D5/**/*.lean`;②`Blueprint/**/*.scribe.cs` 及其 md 投影;③`Golden/Frozen/accepted/**`;④`Meta/Digestion/**`。仅加 DAG 节点、不改判官/门/workflow;触 tools/**、.github/workflows/** 或任何判官/准入面不得援引,须第 8.12/8.14 条。
 判据为红因层次:dev 全部 required checks因判官逻辑/自锁/workflow/准入面红,该 lane 自身未红且只在四面才可改投。Lean 编译、SL-008、coverage 等内容判词须自己修;不能只凭所改路径认定无因果关系。
 **步骤**:从当时 dev 建新日子命名分支,内容 PR base 改投它;若他人已建且当前绿,直接共用,不另建。dev 全部 required checks一恢复绿即整体 PR 回 dev,带其新增量复测全部 required checks,不得跨过下一次 harness 红。创建/红绿时间由 CI 可查;分支若跨第二红说明首次绿未及时合。合回即删除,下次取新日子重建,不复用陈旧支。
-改投不绕门:integration 全部 required checks照跑,只改候选/受保护基线,不改变 pull_request 使用 PR merge-tree workflow;逐 run 版本/范围依第 8.12 条,回 dev 再验。改投不替代第 7.14 条恢复 dev。重复红在无关 harness 时应换 base,不陪跑。**归因边界**:测试由 FILEMAP 登记的 `Meta/ci-units.json` 选择,单项目入口校验其真实执行证据;一个实证 dev 红不推出全部 open PR 同红,未逐一核实者 `ASSUMED-UNVERIFIED`。
+改投不绕门:integration 全部 required checks照跑,只改候选/受保护基线,不改变 pull_request 使用 PR merge-tree workflow;逐 run 版本/范围依第 8.12 条,回 dev 再验。改投不替代第 7.14 条恢复 dev。重复红在无关 harness 时应换 base,不陪跑。**归因边界**:测试由 CI workflow 内的单元白名单选择,单项目入口校验其真实执行证据;一个实证 dev 红不推出全部 open PR 同红,未逐一核实者 `ASSUMED-UNVERIFIED`。
 〔守护:**全软+no consumer**·红因及 PR 引 dev 具名判词原文靠对手官核验;tools/.github 无字段消费者、正文可改,有无引用现役门同判,不称硬投影;缺引用仍无改投评审依据,不豁免任何检测〕
 
 ### 8.16 CI 与判官的显式白名单权威
 
-CI 选工的唯一权威是 FILEMAP 登记的 `Meta/ci-units.json`。workflow 传 unit id,`ci_units.py` 展开 shared_inputs、workflow、工程登记的 include 与 references 递归闭包、unit.inputs;不从 exclude 收窄,闭包不进入 `closure_excludes` 前缀(Blueprint 内容由 current 判定),单元需要时在 inputs 中显式列出。每个 workflow 的入口通过 `CI_HIT_PATHS_FILE` 消费展开模式,`ci-entry.sh` 核对候选与事件身份并判断 hit;未命中不启动程序。独立 workflow 并行,文件内部可以串行。
+CI 选工的唯一权威是 `ci-current.yml` 中 `detect` 作业的单元白名单 `CI_UNITS`:每个单元一段,段名为其作业 id,`[*]` 段适用于全部单元;`*` 跨 `/`,`?` 匹配一个字符,`!` 排除。`ci_detect.py` 一次判定全部单元并输出命中表,改动超过 3000 个路径即失败;单元作业以 `if:` 读取命中表,未命中即跳过。`required` 作业由 `ci_required.py` 核对检测成功、白名单段与作业一一对应、命中者成功、未命中者跳过。增删或改名单元须同时改白名单段、作业与 `required` 的 needs,不一致时 `required` 红。白名单不从工程登记、FILEMAP 或调用关系推导;工程依赖或测试读取的文件改变时,同一 PR 修改对应单元的白名单。
 
-每个单元的 `check` 登记必需检查名或 `null`；非 null 名称唯一，`ci_units.py contexts` 按单元顺序输出名单，供 ruleset 配置使用。`TOWER.yaml` 的 `engineering-ci` 只声明 `members_from: ci-units`，成员由 `Meta/ci-units.json` 中 check 以 ` / unit` 结尾的单元 id 推导；每个成员须在其登记 workflow 有同名 job，每个 `ci-*.yml`（`ci-unit.yml` 除外）须被登记。`report-ci` 与 `dev-baseline` 保持显式 members。gate 根合并 `Golden/gate-authority-roots.toml` 的非 CI 静态根与登记中每个非 null check 的 `<workflow 文件名>/<单元 id>` 根，绑定其 workflow 路径；合并集合须 root_id 唯一并按 UTF-8 排序。C# 读取所需字段并对缺失或畸形登记失败关闭，完整登记准入由 `ci_units.py` 校验。
-
-FILEMAP 管路径归属、custody、准入面、symlink 与 Evidence 格式;其登记的 manifest 声明 CI 选工。工程登记管程序集、项目引用与测试归属;Lean/Lake 按原生依赖执行增量。SL-003/SL-015 的检查材料仍在 `Meta/ci-checks.json` 显式声明。不得重建跨 workflow 的分析、阶段计划、公共执行证据或 transport 体系。
+FILEMAP 管路径归属、custody、准入面、symlink 与 Evidence 格式。工程登记管程序集、项目引用与测试归属;Lean/Lake 按原生依赖执行增量。SL-003/SL-015 的检查材料仍在 `Meta/ci-checks.json` 显式声明。不得重建跨 workflow 的分析、阶段计划、公共执行证据或 transport 体系。
 
 登记缺失与冲突具名失败,只修对应登记;不得通过 MSBuild、目录/名称启发式、反射、调用图或 IO 效果推导 CI 影响范围。缓存只复用增量工作,命中不构成检查成功。实际 required set、事件、覆盖、性能及稳定验证依 §8.12;workflow 测试禁令依 §8.13。
 
@@ -799,11 +797,11 @@ FILEMAP 管路径归属、custody、准入面、symlink 与 Evidence 格式;其�
 
 ### 9.5 head/base 与远端状态独立性
 
-各 CI workflow 通过 `ci-entry.sh` 使用固定事件候选。PR 检出 `GITHUB_SHA=M`,核对双父与第二父为触发 PR head,第一父 `B=M^1` 只供 delta 和路径判定读数据。push 核对 `HEAD=GITHUB_SHA=event.after`,按完整 `event.before→event.after` 端点差异判断 hit;初始 push 的全零 before 使用当前树路径。schedule/dispatch 也核对 HEAD 与 GITHUB_SHA。取得所需固定对象后移除 remote 与 remote refs;坏身份或缺失对象显式失败,不猜移动分支。
+各 CI 作业通过 `ci-entry.sh` 使用固定事件候选。PR 检出 `GITHUB_SHA=M`,核对双父与第二父为触发 PR head,第一父 `B=M^1` 只供 delta 和路径判定读数据。push 核对 `HEAD=GITHUB_SHA=event.after`,按完整 `event.before→event.after` 端点差异判断 hit;初始 push 的全零 before 使用当前树路径。schedule/dispatch 也核对 HEAD 与 GITHUB_SHA。取得所需固定对象后移除 remote 与 remote refs;坏身份或缺失对象显式失败,不猜移动分支。
 
 current 只检查候选最终树,不读 base、不消费工程阶段证据。check-delta 必须显式传 `--protected-base` 与 `--candidate-lean-report`,独立检查跨树约束;base 不 checkout、不编译执行。普通 push 不运行 delta。独立测试入口验证真实 TRX;compile-proof 验证预期编译拒绝,都能单独运行。
 
-每个 workflow 的入口按 `Meta/ci-units.json` 登记展开的模式决定 hit,不产生跨 workflow 计划。候选缓存按自身 PR 隔离范围运输,缓存命中不代替实际程序退出码。所有检查只执行候选代码,其它修订只按固定输入角色读数据;不在判词中查询 latest 分支。PR 检查时 M1 与落地 M2 的差别由 dev push 检测,不许可 strict。
+`detect` 作业按 workflow 内的单元白名单一次决定各单元是否命中,不产生跨作业计划或执行证据。候选缓存按自身 PR 隔离范围运输,缓存命中不代替实际程序退出码。所有检查只执行候选代码,其它修订只按固定输入角色读数据;不在判词中查询 latest 分支。PR 检查时 M1 与落地 M2 的差别由 dev push 检测,不许可 strict。
 
 移除 remote 只剥夺按名解析能力,固定对象与显式网络 URL 仍可达;这不证明远端完全隔离。候选可以修改 workflow,本文不提供 base 侧 workflow 文本保证。实际事件、权限、缓存与部署版本须按 §8.12 真跑核验,不新增 workflow 文本形状测试(§8.13)。
 

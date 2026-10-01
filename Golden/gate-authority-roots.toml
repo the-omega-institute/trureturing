@@ -11,5 +11,20 @@ entrypoint = "Makefile"
 
 
 [[roots]]
+root_id = "ci-current.yml/current"
+entrypoint = ".github/workflows/ci-current.yml"
+
+
+[[roots]]
+root_id = "ci-current.yml/required"
+entrypoint = ".github/workflows/ci-current.yml"
+
+
+[[roots]]
+root_id = "ci-unit.yml/run"
+entrypoint = ".github/workflows/ci-unit.yml"
+
+
+[[roots]]
 root_id = "local-harness-gate.sh/gate"
 entrypoint = "tools/scripts/local-harness-gate.sh"
