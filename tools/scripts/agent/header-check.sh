@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # header-check.sh <lean-file>... — deposit **之前**必跑。
 #
-# F-plane 头部形状不合规(SL-012)或模块超出 SL-003 行数/目录容量时,`make deposit`
-# 仍退出 0 并把模块冻结,缺陷只在 gate/CI 阶段报出;冻结不可逆,事后只能新增勘误。
-# 故凡「deposit 会照做、只有事后 CI 报」的检查,都在这道门里于 deposit 之前执行。
+# 在 deposit 之前对一个或多个文件批量预检 F-plane 头部形状(SL-012)与 SL-003 行数硬线;
+# `--dirs` 模式量目录条目数与 SL-003 准入上限。上限从属主源码派生。冻结不可逆,
+# 不合规须在 deposit 之前改正。
 #
 # 合规形状(既有 6 行,或带 utility 的 7 行;末行以 ` -/` 收尾):
 #   /- GID: <path>
@@ -178,7 +178,7 @@ PYEOF
     local endline; endline=$(grep -n -- ' -/' "$f" | head -1 | cut -d: -f1)
     if [ -z "$endline" ]; then echo "  ✗ $f  <- 头部块没有 ' -/' 收尾"; bad=1; continue; fi
     if [ "$endline" -ne 6 ] && [ "$endline" -ne 7 ]; then
-      echo "  ✗ $f  <- 头部 $endline 行（应为 6，或含 utility 的 7）；#3518：deposit 会照冻不误，只有 SL-012 报"
+      echo "  ✗ $f  <- 头部 $endline 行（应为 6，或含 utility 的 7）"
       sed -n "1,${endline}p" "$f" | sed 's/^/      | /'
       bad=1; continue
     fi

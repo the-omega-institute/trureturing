@@ -111,6 +111,11 @@ entrypoint = ".github/workflows/ci-tests-instruction-contract.yml"
 
 
 [[roots]]
+root_id = "ci-tests-integration-mirror.yml/tests-integration-mirror"
+entrypoint = ".github/workflows/ci-tests-integration-mirror.yml"
+
+
+[[roots]]
 root_id = "ci-tests-lean-cache-script.yml/tests-lean-cache-script"
 entrypoint = ".github/workflows/ci-tests-lean-cache-script.yml"
 

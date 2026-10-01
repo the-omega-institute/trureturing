@@ -181,6 +181,7 @@ components:
       - tests-filemap
       - tests-header-script
       - tests-instruction-contract
+      - tests-integration-mirror
       - tests-lean
       - tests-lean-cache-script
       - tests-lean-report-script

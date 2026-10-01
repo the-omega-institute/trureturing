@@ -1,0 +1,27 @@
+name: CI tests-integration-mirror
+
+on:
+  pull_request:
+    branches: [dev, 'integration-**']
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [dev, 'integration-**']
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: ci-tests-integration-mirror-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  tests-integration-mirror:
+    uses: ./.github/workflows/ci-unit.yml
+    with:
+      command: bash tools/scripts/agent/integration-mirror-test.sh
+      paths: |
+        .github/workflows/ci-tests-integration-mirror.yml
+        .github/workflows/ci-unit.yml
+        tools/scripts/agent/integration-mirror-test.sh
+        tools/scripts/agent/integration-mirror.sh
