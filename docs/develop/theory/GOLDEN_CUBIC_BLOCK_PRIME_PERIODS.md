@@ -3322,3 +3322,133 @@ Jacobi sum identities in the pinned Mathlib library and retains
 both Frobenius directions.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 59. Simultaneous square periods and sinks in a finite support
+
+Let $S$ be a nonempty finite set of rational primes greater than five,
+and put $M=\prod_{p\in S}p$. Let $Q$ be the Fibonacci matrix
+$\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$.
+Write $\pi(m)$ for its order modulo $m$ and $\pi_s(m)$ for the order
+of $Q^s$ modulo $m$. For each $p\in S$, retain the original rank
+$\rho(p)$ and depth $h_p=v_p(F_{\rho(p)})$. Put $\tau_p=\pi(p)$.
+Draw a directed edge $p\longrightarrow q$ when $p\mid\tau_q$;
+a sink has no outgoing edge to any member of $S$.
+These are the objects of PCL.3--PCL.4 in
+Problems/wall-sun-sun-golden-unit-lift.md.
+
+**Theorem 59.1 (finite-support square period ratio).** Every edge
+$p\longrightarrow q$ satisfies $p<q$, so the directed graph has
+no nonempty directed cycle. For every $s\geq1$ with
+$\gcd(s,M)=1$,
+
+$$
+\frac{\pi_s(M^2)}{\pi_s(M)}
+=\prod_{\substack{p\in S\\p\text{ is a sink}\\h_p=1}}p.
+$$
+
+Consequently,
+
+$$
+\pi_s(M^2)=\pi_s(M)
+\quad\Longleftrightarrow\quad
+h_p\geq2\text{ for every sink }p\in S.
+$$
+
+If the periods are equal, the largest prime of $S$ has
+original Fibonacci depth at least two.
+
+Proof. The split and inert prime-period bounds give
+$\tau_q\mid q-1$ or $\tau_q\mid2(q+1)$, and $q\nmid\tau_q$.
+Any prime divisor $p$ of these bounds is smaller than $q$;
+in the inert case an odd $p$ divides $(q+1)/2$. Thus every
+edge strictly increases its prime label, and the maximum is a sink.
+The Chinese remainder equivalence identifies the matrix orders
+modulo $M$ and $M^2$ with the least common multiples of the
+orders on their prime and prime-square factors. The exact lift is
+$\pi(p^2)=\tau_p p^{\max(2-h_p,0)}$.
+A depth-one factor $p$ is already present in the least common
+multiple of the $\tau_q$ exactly when some edge leaves $p$.
+The factors not already present are therefore precisely the
+depth-one sinks; they are pairwise coprime and coprime to that
+least common multiple. Taking the order of $Q^s$ divides each
+order by its gcd with $s$. Since $s$ is coprime to $M$, none of
+the remaining sink factors cancels, giving the displayed ratio.
+The product equals one exactly when it is empty. Positivity
+of all original depths then gives the equivalence and maximum
+prime consequence.
+
+The equal-period test detects all sinks at once. It does not
+imply depth at least two for nonsinks whose prime factor is
+already masked by another residue period.
+
+## 追加锚（本行以下为增补区）
+
+
+## 60. Largest-prime depth under arbitrary period iteration
+
+Let $Q$ be the Fibonacci matrix and let $\pi(m)$ denote its
+order over $\mathbb Z/m\mathbb Z$. For a prime $P>5$, write
+$\rho(P)$ for the first positive Fibonacci index divisible by
+$P$, and put $h_P=v_P(F_{\rho(P)})$. Iteration $\pi^{\circ n}$
+means repeated application of the period function, with
+$\pi^{\circ0}(m)=m$.
+
+**Theorem 60.1 (original-depth loss for every positive modulus).**
+Let $m$ be any positive integer whose largest prime divisor
+is $P>5$, and put $a=v_P(m)$. For every integer $n\geq0$,
+
+$$
+v_P(\pi^{\circ n}(m))=\max(a-nh_P,0).
+$$
+
+The prime $P$ divides the $n$th iterate exactly when
+
+$$
+n<\left\lceil\frac{a}{h_P}\right\rceil
+=\frac{a+h_P-1}{h_P}\quad\text{with integer division}.
+$$
+
+Thus its first disappearance occurs at iteration
+$\lceil a/h_P\rceil$, and it never returns. Every positive
+fixed point of $\pi$ has no prime divisor greater than five.
+If $\pi(m^2)=\pi(m)$ for the same $m$ and $P$, then
+$h_P\geq2a$.
+
+Proof. The determinant of $Q$ is $-1$, so its reduction is
+invertible over every finite residue ring. In particular all
+periods, and hence all iterates of a positive modulus, are positive.
+The Chinese remainder decomposition identifies each period with
+the least common multiple of its prime-power periods. At a prime
+$q>5$, the exact lift is
+$\pi(q^b)=\pi(q)q^{\max(b-h_q,0)}$; every prime divisor of
+$\pi(q)$ is smaller than $q$.
+
+For the small primes, direct matrix returns and binomial lifting give
+
+$$
+\pi(2^{u+2})\mid6\cdot2^u,\qquad
+\pi(3^{u+1})\mid8\cdot3^u,\qquad
+\pi(5^{u+1})\mid20\cdot5^u\qquad(u\geq0).
+$$
+
+The remaining moduli $2$ and $1$ have periods $3$ and $1$.
+Consequently none of the small-prime factors contributes a prime
+greater than five. No prime larger than $P$ is created, and only
+the factor $P^a$ can contribute $P$ to the next period. The
+factorization of a least common multiple takes the maximum local
+valuation, so the next $P$-valuation is $\max(a-h_P,0)$.
+Induction gives the displayed formula even after $P$ disappears.
+Since $h_P>0$, the first-zero threshold follows. A fixed point
+containing a prime greater than five contradicts the strict
+decrease at its largest prime. Finally, equality of the periods
+of $m$ and $m^2$ gives
+$\max(2a-h_P,0)=\max(a-h_P,0)$; with $a>0$ this forces
+$2a\leq h_P$.
+
+This is PCL12 for arbitrary positive moduli in
+Problems/wall-sun-sun-golden-unit-lift.md. It neither classifies
+all fixed points nor bounds the total time to a fixed point, and
+it places no upper bound on the original depth $h_P$.
+
+## 追加锚（本行以下为增补区）

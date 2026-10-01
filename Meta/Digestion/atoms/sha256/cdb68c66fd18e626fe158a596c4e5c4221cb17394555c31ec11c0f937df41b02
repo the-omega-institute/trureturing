@@ -1,0 +1,9 @@
+## 60. Largest-prime depth under arbitrary period iteration
+
+Let $Q$ be the Fibonacci matrix and let $\pi(m)$ denote its
+order over $\mathbb Z/m\mathbb Z$. For a prime $P>5$, write
+$\rho(P)$ for the first positive Fibonacci index divisible by
+$P$, and put $h_P=v_P(F_{\rho(P)})$. Iteration $\pi^{\circ n}$
+means repeated application of the period function, with
+$\pi^{\circ0}(m)=m$.
+

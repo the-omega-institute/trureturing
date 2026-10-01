@@ -1,0 +1,45 @@
+**Theorem 59.1 (finite-support square period ratio).** Every edge
+$p\longrightarrow q$ satisfies $p<q$, so the directed graph has
+no nonempty directed cycle. For every $s\geq1$ with
+$\gcd(s,M)=1$,
+
+$$
+\frac{\pi_s(M^2)}{\pi_s(M)}
+=\prod_{\substack{p\in S\\p\text{ is a sink}\\h_p=1}}p.
+$$
+
+Consequently,
+
+$$
+\pi_s(M^2)=\pi_s(M)
+\quad\Longleftrightarrow\quad
+h_p\geq2\text{ for every sink }p\in S.
+$$
+
+If the periods are equal, the largest prime of $S$ has
+original Fibonacci depth at least two.
+
+Proof. The split and inert prime-period bounds give
+$\tau_q\mid q-1$ or $\tau_q\mid2(q+1)$, and $q\nmid\tau_q$.
+Any prime divisor $p$ of these bounds is smaller than $q$;
+in the inert case an odd $p$ divides $(q+1)/2$. Thus every
+edge strictly increases its prime label, and the maximum is a sink.
+The Chinese remainder equivalence identifies the matrix orders
+modulo $M$ and $M^2$ with the least common multiples of the
+orders on their prime and prime-square factors. The exact lift is
+$\pi(p^2)=\tau_p p^{\max(2-h_p,0)}$.
+A depth-one factor $p$ is already present in the least common
+multiple of the $\tau_q$ exactly when some edge leaves $p$.
+The factors not already present are therefore precisely the
+depth-one sinks; they are pairwise coprime and coprime to that
+least common multiple. Taking the order of $Q^s$ divides each
+order by its gcd with $s$. Since $s$ is coprime to $M$, none of
+the remaining sink factors cancels, giving the displayed ratio.
+The product equals one exactly when it is empty. Positivity
+of all original depths then gives the equivalence and maximum
+prime consequence.
+
+The equal-period test detects all sinks at once. It does not
+imply depth at least two for nonsinks whose prime factor is
+already masked by another residue period.
+
