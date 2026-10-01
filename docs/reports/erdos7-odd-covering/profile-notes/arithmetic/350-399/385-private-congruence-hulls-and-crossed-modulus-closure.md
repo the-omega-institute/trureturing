@@ -10307,3 +10307,44 @@ For a general input, separating the shifted height sets could avoid this particu
 [Report536](../500-549/536-ternary-conditioning-preserves-a-joint-query-and-entropy-boundary.md) already explains the other direct failure: removing all ternary digits can project several distinct original heights to more than two cofactor classes. CP9 adds the same-source obstruction to repairing that loss by the literal first-exit closing. Neither statement rules out another legal transport, and neither supplies an all-height flat or multiplicity-two seed. That bridge remains unproved.
 
 The remaining all-concentrated branch therefore has two nonempty color groups, no original label mixing their nonternary supports, and both complete-word quotient-cover obligations CP5. A useful next bridge must exploit the distinct original labels to resolve those quotient collisions, or give a jointly legal replacement with strict count or modulus-sum descent. The existing singleton-color root permutations preserve those budgets and do not provide that bridge.
+### One flat color gives the existing budget comparison at arbitrary global height
+
+Retain the all-concentrated two-color branch, with arbitrary global ternary height H. Suppose one color i has NO mixed original3^a m with a≥2 and m>1. Choose a complete ternary word in root i outside every original pure-three guard, as CP2 permits. Its group quotient is a whole cover by CP5. All its mixed originals have height one, so this same group quotient is independent of the higher ternary digits throughout root i. Every hypothetical original pure-three class of height at least two in root i would then be covered by these group originals and have no private point. Thus none exists, and the actual color-i seed is3-flat even when the opposite group has arbitrary height.                    (CP10)
+
+Reuse Report348's flat construction and the unchanged output prices C_ell,D_ell from CP6c. Let f_i,b_i,F_i,B_i have their CP6 meanings for this flat group. Let n_op,W_op count and sum ALL original non-pure-three labels in the opposite group, at every original height. Let g_op,T_op count and sum its original pure-three guards of height at least two. The full original count and weight are exactly
+
+    n_old=1+f_i+b_i+n_op+g_op,
+    W_old=3+F_i+3B_i+W_op+T_op.
+
+For any prime ell in the opposite group, freshness holds for this one flat seed. The existing construction has
+
+    n_new=f_i+(ell−1)b_i+2ell−1,
+    W_new=F_i+C_ell B_i+C_ell+D_ell.
+
+Consequently the two EB1 objectives give
+
+    n_op+g_op≤(ell−2)b_i+2ell−2;                    (CP11)
+
+    equality in CP11 ==>
+      W_op+T_op≤(C_ell−3)B_i+C_ell+D_ell−3.         (CP12)
+
+A strict reversal supplies an actual count descent, or a strict weight descent at equal count. These bounds compare one actual source and one output. No high pure-three guard is omitted from the old budget. Divisor closure supplies every pure-three power through H, and CP10 puts all higher ones in the opposite root, so g_op=H−1 and T_op=(3^(H+1)−9)/2. At H=1 these formulas recover CP6a and CP6c exactly. No new HSW proof or arithmetic computation is required.
+
+For H≥2, directly reuse [Report371, section2](371-private-top-fans-and-ancestor-cuts.md#2-the-private-top-fan-has-an-escaping-first-ancestor): the private point of the original pure3^H class supplies two different nonunit cofactors m_1,m_2 at that same first-three root. CP10 places this root opposite the flat group, and concentration places both cofactors' nonternary supports there. Divisor closure supplies3^a m_j for a=0,...,H and j=1,2, all with distinct numerical labels. Therefore n_op≥2(H+1), and CP11 implies the additional necessary budget
+
+    3H+1≤(ell−2)b_i+2ell−2.                        (CP12a)
+
+This is a consumer of the existing top fan, not another proof of it.
+
+### Switching entire color seeds at successive exits does not enlarge that domain
+
+Consider ONLY this specified extension of the existing closing construction. Keep its standard first-digit1 pure guards with exponents1 through ell−1 and its standard terminal closing classes for one odd prime ell fresh for BOTH groups. At each exit h=0,...,ell−2, one may choose either color and copy ALL of that seed's positive-three-height classes in its normalized live root2 by the literal map of CP9. Retain the3-free originals of every color actually used. Changing the guards, splitting a seed, or making a joint replacement is outside this constructor.
+
+For H≥2 the actual original pure9 exists and lies in one nonzero root j. If color j were chosen at exit0, its9-copy would collide numerically with the standard modulus9 guard: their ternary valuations are0 and1. If chosen at exit1, its27-copy would collide with the standard modulus27 guard: their valuations are1 and2. Since ell≥5, both guards and both exits are present. Thus exits0 and1 must BOTH use the other color k.
+
+If k contains any deep mixed original, divisor closure and concentration supply its original3m and9m in the same seed. Copying at these two exits produces precisely the nonmergeable collision CP9. Therefore a distinct output in this constructor requires a color with no deep mixed original. Conversely CP10 makes such a color's seed genuinely flat, and selecting it at every exit is exactly the existing valid Report348 construction. The H=1 case is already flat. Hence, within this specified constructor,
+
+    a distinct output exists
+       iff at least one color has no deep mixed original.    (CP13)
+
+The freedom to switch whole seeds at successive exits supplies no new all-height case beyond CP10. This is not a prohibition on other HSW variants, changed closing families, selected subbatches, or another common source map. CP11–CP12 are conditional descent criteria; no result here forces their violation when a flat color exists or supplies a construction when both colors have deep mixed originals.
