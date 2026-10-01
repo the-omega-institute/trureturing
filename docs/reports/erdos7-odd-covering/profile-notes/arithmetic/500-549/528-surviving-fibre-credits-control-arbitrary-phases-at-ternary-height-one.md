@@ -29362,3 +29362,253 @@ higher support at19, and higher-support originals ending at
 other middle-window primes, still require further arguments.
 These are ordinary mathematical deductions with no new Lean
 verification or literature-priority claim.
+
+## Actual exponent inventories give a finite nineteen-interface and a sharp threshold boundary
+
+The additional19 originals need not be completed to whole
+support towers. Their exact auxiliary fee depends on one
+complete weighted sum and95 specified shallow cofactor
+weights. This gives a criterion for arbitrary finite19
+inventories, including arbitrary heights and all support sizes.
+It also locates a remaining obstruction already at the single
+original1995, rather than only at its completed support tower.
+
+Keep A, the actual six-prime source, all later thresholds,
+and the conditions away from19 of FC1241. In particular,
+originals ending between23 and10^12 still have at most three
+prime factors; originals ending beyond10^12 are unrestricted.
+The source conditional comparison is reused directly. None
+of the new summaries below replaces original labels before
+that comparison or asserts a joint law of aligned actual phases.
+
+### Retain the finite numerical inventory after the source comparison
+
+Let E be the set of actual higher-support originals ending
+at19. For every numerical old cofactor d supported on A with
+omega(d)>=3, define
+
+    lambda_d=sum_(e>=1: d*19^e is an original in E)18/19^e,
+    V(K)=sum_d lambda_d*1_{v_p(d)<=K_p for all p|d},
+    J=E V=sum_d lambda_d*product_(p|d)c_p/p^v_p(d).
+                                                            (FC1249)
+
+All these sums are finite and lambda_d<=1. Different current
+depths can have different old phases; they are kept as
+separate original labels until the source's conditional convex
+comparison. Only in its aligned auxiliary load do they share
+the same cofactor indicator and admit the displayed aggregation.
+The complete three-factor part is bounded by the same N as
+before. Construct one actual19 kernel for that whole family.
+Its raw fee is bounded by E(N+V-11)_+/16.
+
+For a subset S of A, put d_S=product_(p in S)p. For triples T
+and quartets Q, abbreviate
+
+    alpha_T=lambda_(d_T),
+    beta_(T,p)=lambda_(d_T*p) for p in T,
+    gamma_Q=lambda_(d_Q).
+
+Absent numerical cofactors have weight zero. The exact
+increment Phi=E[(N+V-11)_+-(N-11)_+] is
+
+    Phi=J
+      -P0*sum_(|T|=3)h_T*
+             [alpha_T*(1+sum_(p in T)r_p)
+                          +sum_(p in T)r_p*beta_(T,p)]
+      -P0*sum_(|Q|=4)h_Q*
+             min(1,gamma_Q+sum_(T subset Q,|T|=3)alpha_T).
+                                                            (FC1250)
+
+To prove this, reuse FC1243 and the complete low-state table
+FC1234. With three positive coordinates T at heights111,
+N=6 and V=alpha_T<=1, so all of V is absorbed. At heights211,
+with p carrying the extra height, N=9 and
+V=alpha_T+beta_(T,p)<=2, again fully absorbed. At four positive
+coordinates Q of height one, N=10 and V is the quartet weight
+plus its four triple weights; exactly min(1,V) is absorbed.
+With at most two positive coordinates V=0. There are no other
+low states with V positive. The full J retains every remaining
+height and support, so no positive high-state contribution
+has been truncated.
+
+There are20 alpha weights,60 beta weights and15 gamma weights.
+Thus J and these95 fixed cofactors suffice for this auxiliary
+fee; they are not asserted to determine the actual phase law
+or to be a minimal representation. They all come from the
+same actual numerical inventory. In particular the quartet
+minimum cannot be split into separate triple credits.
+
+The common-source continuation from FC1244 gives
+
+    actual final surviving mass >6247/8000000-Phi/16.
+                                                            (FC1251)
+
+The sufficient inequality remains Phi<=6247/500000. The new
+formula accepts finite weights and exponent patterns directly;
+FC1242 is its complete-support specialization. Neither
+formula treats its auxiliary fee as an actual deletion
+increment on a previously constructed final survivor.
+
+### Every old support is allowed in a bounded ternary-depth class
+
+As one uniform application, allow every additional19 original
+with at least four distinct prime factors subject only to
+
+    v_19(m)>=2, v_3(m)<=1.
+
+The prime3 may be absent. The positive exponents on5,7,11,13,17
+are arbitrary, and every support among those primes is allowed,
+including the full seven-prime support A union{19}. All
+other originals retain the contract preceding FC1249.
+
+For a completed upper inventory put
+
+    J_3=min(K_3,1), J_p=K_p for p in A minus{3},
+    W=sum_(S subset A,|S|>=3)product_(p in S)J_p.
+
+The additional aligned load is bounded by W/19: completing
+only the allowed current heights gives
+sum_(e>=2)18/19^e=1/19. This numerical enlargement bounds
+every finite inventory in the class without adding actual
+phases. Write e_j for an elementary symmetric sum, and use
+the existing g,h,r,P0 of FC1234. Independence of AUXILIARY
+heights gives the complete mean and absorption
+
+    E W=443/1152,
+    credit=(P0/19)*[e_3(h)
+       +sum_(|T|=3)h_T*sum_(p in T)r_p*(1+1_{p!=3})
+       +5*e_4(h)].
+
+For the first identity, evaluate
+product_(p in A)(1+j_p)-1-sum j_p-sum_(p<r)j_p*j_r
+at j_3=2/3 and j_p=g_p otherwise. For the second, the triple
+111 state contributes1/19. A triple211 state contributes1/19
+if3 has height two, and2/19 otherwise. At a quartet1111 state,
+the four triples and one quartet contribute5/19, below its
+unit deficit. These account for every possible absorption.
+
+Consequently, for the completed upper inventory,
+
+    Phi/16=(E W/19-credit)/16
+       =4079857483194224029/5824368393125458176000
+       <71/100000.
+                                                            (FC1252)
+
+Monotonicity of the hinge increment bounds every actual
+finite subinventory by this value. Equations FC1251--1252
+leave mass greater than567/8000000>1/15000, for all permitted
+original phases and heights.
+
+The coarse mean fee alone is443/350208>6247/8000000. This
+failure already has a finite inventory: take every permitted
+old support of size at least three, use ternary exponent one
+when present, exponents one or two at every other old prime,
+and current19 exponent two or three. Each monomial retains
+at least the fraction1-6/25=19/25 of its full geometric sum,
+because at most six truncated prime directions remain and
+each is at least5. Its coarse mean fee is therefore at least
+
+    (19/25)*(443/350208)=443/460800>6247/8000000.
+                                                            (FC1253)
+
+This is a comparison of sufficient estimates, not an actual
+loss lower bound. The class does not establish the same
+conclusion after removing either exponent condition. In
+particular it does not handle arbitrary19 originals in a
+divisor-closed minimum covering candidate: such a candidate
+can require the missing current-depth-one divisors.
+
+### A single original already defeats the fixed completed baseline
+
+Take E to consist of one original modulus1995=3*5*7*19,
+with an arbitrary globally fixed residue. Its aligned
+additional load is lambda*I, where
+
+    lambda=18/19, I=1_{K_3>=1,K_5>=1,K_7>=1}.
+
+On I, every N<11 low state still has N+lambda<=11.
+Thus Phi=lambda*Pr(I,N>=11). Formula FC1250 reduces to
+
+    Pr(I,N>=11)
+      =4/105-P0*h_3*h_5*h_7*
+                    (1+r_3+r_5+r_7+h_11+h_13+h_17)
+      =305239756/21718371675,
+    Phi/16=228929817/275099374550>6247/8000000.
+                                                            (FC1254)
+
+No extra old height or current19 height has been completed
+in this example. The completed THREE-FACTOR baseline N and
+the fixed source reserve remain upper/lower estimates. Their
+criterion fails already for this actual single-label inventory;
+this does not say its actual loss exceeds the reserve or
+that the whole original family covers.
+
+### Every lower threshold retains that obstruction
+
+Changing the physical19 threshold while keeping its conditional
+cap at most3 cannot repair FC1254 under these same estimates.
+Write t=17*delta_19. The cap is18/(17-t), so the relevant
+physical range is0<=t<=11. Every unchanged later charge is
+still valid throughout this range.
+
+Reuse the complete low-state domain of FC1234, now summing
+its probabilities rather than its complementary hinge:
+
+    p11=Pr(N>=11)
+       =1-P0*sum_(S,n:nu(n)<11)
+                    product_(p in S)h_p*r_p^(n_p-1)
+       >1/25.
+                                                            (FC1255)
+
+The empty support contributes one. The finite rational
+expression is0.04721466845821746...; the strict rational
+inequality is the input used below. This new probability
+calculation does not recompute the old19 hinge or old
+continuation certificate.
+
+For any0<=lambda<=1 let L=N+lambda*I. The old FC1235 bound
+and E I=4/105 imply
+
+    E(L-11)_+ <6*(3303/100000)+4/105<6/25.
+
+Since L>=N, Pr(L>=11)>=p11>1/25. Hence
+
+    E[(L-17)*1_{L>=11}]
+       =E(L-11)_+-6*Pr(L>=11)<0.
+
+For t<11, the additional values included by1_{L>t} but not
+by1_{L>=11} are all below11, and their L-17 is negative.
+On every differentiable piece, therefore,
+
+    d/dt [E(L-t)_+/(17-t)]
+       =E[(L-17)*1_{L>t}]/(17-t)^2<0.
+                                                            (FC1256)
+
+There are only finitely many breakpoints in this bounded
+t interval, and the expected hinge is continuous. It follows
+that the complete19 fee is strictly decreasing on[0,11].
+For lambda=18/19, its minimum under the stated cap restriction
+occurs at t=11. To compare increments with the same conservative
+reserve, put H11=E(N-11)_+ and
+
+    Delta(t)=(3/8)*[E(L-t)_+/(17-t)-H11/6].
+
+The unchanged estimates give surviving mass greater than
+6247/8000000-Delta(t). Monotonicity gives
+Delta(t)>=Delta(11)=Phi/16>6247/8000000, so this sufficient
+criterion fails throughout the range. Its negative bound
+is not a claim about the sign of actual surviving mass.
+Larger thresholds would change the conditional-cap contract and require a new
+justification of the later fees; this theorem makes no claim
+about them.
+
+The unrestricted gap is consequently more specific than an
+unbounded height list: the95-weight interface removes that
+extra-inventory completion, while a single shallow original
+and all cap-preserving thresholds still defeat the current
+completed baseline. Relations between actual phases, a
+sharper common source or a justified different continuation
+remain possible routes. No such uniform input is supplied
+here. These results reuse the published comparison and
+unchanged certificate; they are ordinary mathematics, with
+no new Lean verification or resolution of unrestricted Erdos#7.
