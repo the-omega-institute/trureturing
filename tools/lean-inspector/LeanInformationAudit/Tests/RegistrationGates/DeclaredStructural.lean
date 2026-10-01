@@ -1,4 +1,7 @@
 import LeanInformationAudit.DispositionEvidence
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredStructural
 open Lean Meta Elab Command
@@ -7,7 +10,7 @@ open D5.S3.ConceptDynamics.InformationEscape
 def template (A : StructuralArena) (sig : StructuralPrimitiveSignature)
     (f : ∀ i, A.State → sig.Output i) : StructuralPrimitiveRealization A sig := ⟨f⟩
 
-register_information_template template
+test_assess in register_information_template template
 
 abbrev arena : StructuralArena := ⟨Bool⟩
 def signature : StructuralPrimitiveSignature := ⟨Unit, inferInstance, fun _ => Bool⟩

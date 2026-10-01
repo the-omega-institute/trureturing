@@ -1,0 +1,19 @@
+**证明。** $Z(p^a)=1+\cdots+p^{-a}$，差为 $p^{-(a+1)}$。式 (143.1) 的局部损失只在最高探针层出现：旧体为 $(p-1)p^{-(a+1)}Z(K)$，未来体为 $(p-1)p^{-(a+2)}Z(K)$。$\square$
+
+$p\nmid H$ 时不存在旧体的 $H/p$ 商；$E_H(pH)$ 是 **未来体** 上的新探针层，不是旧体零误差。未来模数的均匀相位约化到模 $H$ 给旧相位分布，这是已声明的耦合；实际来源数量由 $6H$ 换为 $6pH$，并未称它为固定数量来源的 FIB 时间演化。
+
+对 $H>1$ 定义 Robin 余量与预算
+
+$$
+\Delta(H)=e^\gamma\log\log H-Z(H),\qquad
+b_p(H)=e^\gamma\log\left(1+\frac{\log p}{\log H}\right).
+$$
+
+精确关系为 $\Delta(pH)=\Delta(H)+b_p(H)-G_p(H)$。特别地，一个便于核验的充分条件是
+
+$$
+G_p(H)\le e^\gamma\frac{\log p}{\log(pH)}\le b_p(H), \tag{144.3}
+$$
+
+因为 $\log(1+x)\ge x/(1+x)$。$\Delta(H)>0$ 与此条件一起保证下一步严格为正；它不是必要条件。
+

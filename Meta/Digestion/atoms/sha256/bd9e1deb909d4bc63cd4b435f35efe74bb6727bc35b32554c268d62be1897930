@@ -1,0 +1,28 @@
+### 1.3 半链、迹与传播预算
+
+在唯一迹的 GNS 表示中写 $M=A''$，并定义
+
+$$
+M_t=\left(\bigcup_{I\subset(-\infty,t]}A_I\right)''.
+\tag{QCA.4}
+$$
+
+[JL24, Theorem 3.9、Remark 3.10] 提供本卷使用的有限指数半链因子，以及自对偶强生成情况下的关键识别
+
+$$
+M_s'\cap M_t=A_{(s,t]}\cong
+\operatorname{End}_{\mathcal C}(X^{\otimes(t-s)}),\qquad s<t.
+\tag{QCA.5}
+$$
+
+这是在指定 GNS 表示中的相对交换子恒等式，不只是两边增长率相同。它是外部子因子理论输入，不是本卷新证明的定理。
+
+每个 QCA 保持唯一迹，故正常延拓到 $M$。若传播半径为 $r$，则
+
+$$
+M_{t-r}\subset\alpha(M_t)\subset M_{t+r}.
+\tag{QCA.6}
+$$
+
+右侧由局部性及闭包得到，左侧对逆 QCA 使用相同论证。
+

@@ -1,0 +1,129 @@
+{
+  "status": "passed",
+  "arithmetic": "exact integers and Fraction",
+  "scope": "Finite diagnostics only; no actual VOA, fusion-category realization, intertwining nonzero coefficient, Monster or Lean proof.",
+  "counts": {
+    "H_defect_cycle": 64,
+    "all_64_labels": 8,
+    "ancestral_GL3_count": 1,
+    "associator_and_carry": 4096,
+    "basis_gauge_isomorphism": 4096,
+    "carry_cocycle": 4096,
+    "character_coefficient_integrality_positivity": 132,
+    "diagonal_and_reciprocal": 512,
+    "eight_distinct_forms": 1,
+    "excited_full_fourier": 1344,
+    "existing_rank_three_table": 1,
+    "forced_1216_channel": 168,
+    "full_fusion_closure": 8,
+    "heptad_permutation_extends": 5040,
+    "heptad_quadratic_isometry": 322560,
+    "integer_channel_character_identity": 33,
+    "leading_multiplicities": 6,
+    "mod_two_three_cycle": 64,
+    "modular_word_identities": 1,
+    "negative_ground_closure": 1,
+    "negative_two_atom_extrapolation": 1,
+    "no_ground_channel": 168,
+    "recorded_carry_composition": 32768,
+    "row_character": 4096,
+    "subset_classification": 512,
+    "two_atom_fibonacci_period": 168
+  },
+  "canonical_dual_labels": [
+    0,
+    7,
+    6,
+    5,
+    4,
+    1,
+    3,
+    2
+  ],
+  "type_counts": {
+    "vacuum": 1,
+    "ground_half_weight": 7,
+    "other_half_integer": 21,
+    "nonzero_integer": 35
+  },
+  "character_leading_terms_x_q_half": [
+    [
+      [
+        -2,
+        1
+      ],
+      [
+        2,
+        28436
+      ],
+      [
+        4,
+        2770944
+      ],
+      [
+        6,
+        109122498
+      ]
+    ],
+    [
+      [
+        -1,
+        1
+      ],
+      [
+        1,
+        724
+      ],
+      [
+        3,
+        293058
+      ],
+      [
+        5,
+        18331480
+      ]
+    ],
+    [
+      [
+        1,
+        1216
+      ],
+      [
+        3,
+        315648
+      ],
+      [
+        5,
+        18698880
+      ],
+      [
+        7,
+        552626688
+      ]
+    ],
+    [
+      [
+        2,
+        24064
+      ],
+      [
+        4,
+        2674688
+      ],
+      [
+        6,
+        107882496
+      ],
+      [
+        8,
+        2529394688
+      ]
+    ]
+  ],
+  "spectral_fusion_stabilizer_order": 5040,
+  "ancestry_preserving_order": 168,
+  "generic_independent_pair_first_allowed_weight": "3/2",
+  "first_channel_multiplicity": 1216,
+  "ordinary_type_record_bits": 3,
+  "auxiliary_associator_cohomology_class": "zero: explicitly a coboundary"
+}

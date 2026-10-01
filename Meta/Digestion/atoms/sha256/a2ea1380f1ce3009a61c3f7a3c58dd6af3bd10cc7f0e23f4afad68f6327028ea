@@ -1,0 +1,9 @@
+### theorem 62.1 同块关系的容斥反演
+
+$$
+\boxed{
+ m_S=\sum_{\substack{T\in\mathcal K^+\\S\subseteq T}}
+ (-1)^{|T|-|S|}y_T.
+}
+$$
+

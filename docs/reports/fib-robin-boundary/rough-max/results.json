@@ -1,0 +1,165 @@
+{
+  "status": "PASS",
+  "known_exact_results": [
+    {
+      "status": "PASS",
+      "y": 7,
+      "bound": 1000,
+      "value": [
+        168,
+        143
+      ],
+      "witness": 143,
+      "states": 4,
+      "branches": 3,
+      "prime_prefix": [
+        11,
+        13,
+        17
+      ],
+      "scope": "Exact canonical recurrence checked; normalization to all y-rough integers is an external mathematical argument.",
+      "certificate_path": "certificate-y7-B1000.json",
+      "certificate_sha256": "949aaeb30a91e5a0892004771fc57e7676e7266a0bad2c3addced264b293b5f7"
+    },
+    {
+      "status": "PASS",
+      "y": 7,
+      "bound": 4181,
+      "value": [
+        3024,
+        2431
+      ],
+      "witness": 2431,
+      "states": 7,
+      "branches": 6,
+      "prime_prefix": [
+        11,
+        13,
+        17,
+        19
+      ],
+      "scope": "Exact canonical recurrence checked; normalization to all y-rough integers is an external mathematical argument.",
+      "certificate_path": "certificate-y7-B4181.json",
+      "certificate_sha256": "10dd8697a9cd3d975b7e2304ae9838bb21586d2b65bb463c524f45417ca35c65"
+    },
+    {
+      "status": "PASS",
+      "y": 7,
+      "bound": 46188,
+      "value": [
+        33516,
+        26741
+      ],
+      "witness": 26741,
+      "states": 11,
+      "branches": 10,
+      "prime_prefix": [
+        11,
+        13,
+        17,
+        19
+      ],
+      "scope": "Exact canonical recurrence checked; normalization to all y-rough integers is an external mathematical argument.",
+      "certificate_path": "certificate-y7-B46188.json",
+      "certificate_sha256": "073b690178161bcdeaa1106b2550e44247e109ad6c3d6fc322e83449e2060285"
+    },
+    {
+      "status": "PASS",
+      "y": 7,
+      "bound": 1000000,
+      "value": [
+        35280,
+        26741
+      ],
+      "witness": 508079,
+      "states": 18,
+      "branches": 17,
+      "prime_prefix": [
+        11,
+        13,
+        17,
+        19,
+        23
+      ],
+      "scope": "Exact canonical recurrence checked; normalization to all y-rough integers is an external mathematical argument.",
+      "certificate_path": "certificate-y7-B1000000.json",
+      "certificate_sha256": "54495dd1ac23c5eb35fb2c106284e856e90e85bbd9d11d48145846b7eae8ea4a"
+    },
+    {
+      "status": "PASS",
+      "y": 7,
+      "bound": 1000000000000,
+      "value": [
+        30888345600,
+        20458175309
+      ],
+      "witness": 388705330871,
+      "states": 134,
+      "branches": 140,
+      "prime_prefix": [
+        11,
+        13,
+        17,
+        19,
+        23,
+        29,
+        31,
+        37,
+        41
+      ],
+      "scope": "Exact canonical recurrence checked; normalization to all y-rough integers is an external mathematical argument.",
+      "certificate_path": "certificate-y7-B1000000000000.json",
+      "certificate_sha256": "f861391fecb4084061495246e029be82e77763e3435494308784b33863dce6fa"
+    },
+    {
+      "status": "PASS",
+      "y": 1,
+      "bound": 5040,
+      "value": [
+        403,
+        105
+      ],
+      "witness": 5040,
+      "states": 63,
+      "branches": 66,
+      "prime_prefix": [
+        2,
+        3,
+        5,
+        7,
+        11,
+        13
+      ],
+      "scope": "Exact canonical recurrence checked; normalization to all y-rough integers is an external mathematical argument.",
+      "certificate_path": "certificate-y1-B5040.json",
+      "certificate_sha256": "ae712b0f4f3a1b4bfdb42fd2ddfb1a8cd6d28a1c65f1db559d950b33709d608c"
+    }
+  ],
+  "direct_sigma_sieve_cutoff": 256,
+  "direct_sigma_sieve_thresholds": [
+    1,
+    2,
+    7,
+    13
+  ],
+  "direct_sigma_sieve_comparisons": 1024,
+  "deliberate_corruptions_rejected": [
+    "missing allowed branch",
+    "false lower value",
+    "unattained upper value",
+    "incorrect attaining witness",
+    "incorrect child budget",
+    "skipped first allowed prime",
+    "incorrect root exponent cap",
+    "missing reachable child state"
+  ],
+  "source_hashes": {
+    "rough_max.py": "1e62396b876ed15e76ec558a249d635a12d2b404c893f549b53f7659448eb8eb",
+    "rough_max_check.py": "8070c98cf134ae05bf59e07f0b3a9fc36479bbce62c458a9fb94f519d3f40cab",
+    "rough_max_regression.py": "6077d5438ed8a3e06ae8f3b60b7fd650b5ca74ba4b4ed459654ef664f0d20193"
+  },
+  "limitations": [
+    "Exact finite computation, not a Lean theorem.",
+    "The checker proves the supplied finite recurrence by exact arithmetic; the paper must justify canonical normalization to all rough integers."
+  ]
+}

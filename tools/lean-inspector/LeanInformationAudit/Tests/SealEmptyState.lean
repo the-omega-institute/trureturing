@@ -1,4 +1,7 @@
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 /-! T-017 empty-state companion: `Fin 0` is constructible as an arena, but
 the seal rejects it as degenerate before publishing any generated declaration. -/
@@ -31,19 +34,19 @@ def emptyRealization : PrimitiveRealization arena.signature where
   readout := emptyReadout
   anchor := Fin.elim0
 
-information_theorem emptyTheorem
+test_assess in information_theorem emptyTheorem
   in arena
   primitives emptyRealization
   : arena.Law emptyRealization := by trivial
 
-expect_information_occurrence emptyTheorem
+test_assess in expect_information_occurrence emptyTheorem
   in arena
   from "LeanInformationAudit.Tests.SealEmptyState"
 
 /-- error: IE-C004 DegenerateArena:
 LeanInformationAudit.Tests.SealEmptyState.arena -/
 #guard_msgs (error) in
-#seal_information_theory
+test_assess in #seal_information_theory
 
 /-- error: Invalid field `__information_catalog`: The environment does not contain
 `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.__information_catalog`, so it is

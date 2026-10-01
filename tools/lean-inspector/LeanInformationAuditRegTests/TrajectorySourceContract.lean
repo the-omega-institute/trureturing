@@ -1,5 +1,8 @@
 import Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory
 import Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 namespace LeanInformationAuditRegTests.TrajectorySourceContract

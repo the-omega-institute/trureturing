@@ -1,0 +1,15 @@
+**定理 10.1（相关曲率的非线性分解）。**
+\[
+D^T=-D,\quad F''(0)=-\mathbb E[vv^T],\qquad
+\boxed{M:=D^2-F''(0)=N+E_{\rm expr}\succeq0.}
+\]
+对任意平方可积当前漂移拟合器 $g(u)$，
+\[
+\mathbb E\|v-g(u)\|^2=\operatorname{tr}N+\mathbb E\|b(u)-g(u)\|^2.
+\]
+固定 $t$，最佳线性预测为 $F(t)u$，最佳任意可测预测为 $\mathsf P\mathsf U_tu$，两者的风险差恰为 $\|\mathsf P\mathsf U_tu-F(t)u\|_{L^2}^2$。
+
+**证明。** 生成元的反对称性给 $D_{ij}=-D_{ji}$ 及 $\langle\mathscr L^2u_i,u_j\rangle=-\langle\mathscr Lu_i,\mathscr Lu_j\rangle$。展开 $\mathbb E[(v-Du)(v-Du)^T]$ 得 $\mathbb E[vv^T]+D^2$。再写 $v-Du=r_u+(b(u)-Du)$，由 $\mathbb E[r_u\mid u]=0$ 使交叉矩阵为零。其余风险等式都是同一正交分解。证毕。
+
+$E_{\rm expr}$ 衡量当前变量已足够表达、但线性函数没有利用的非线性部分；$N$ 衡量给定当前变量后仍存在的速度不确定性。第 5 节的线性 Gaussian 情况有 $b(u)=Du$，故 $E_{\rm expr}=0$、$M=N$。一般非线性系统不能直接把 $M$ 全部当作信息缺失。回归误差只给 $\operatorname{tr}N$ 的上界，除非额外控制了回归近似误差。
+

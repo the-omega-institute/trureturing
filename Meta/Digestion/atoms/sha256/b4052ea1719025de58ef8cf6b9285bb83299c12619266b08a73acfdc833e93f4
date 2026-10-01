@@ -1,0 +1,15 @@
+**命题 24.1（$S_3$ 标准表示的精确障碍）。** 取 $\mathcal C=\operatorname{Rep}(S_3)$，简单对象按 $1,\varepsilon,v$ 排列，$v$ 是二维标准表示。则
+
+$$
+N_v=\begin{pmatrix}0&0&1\\0&0&1\\1&1&1\end{pmatrix},\quad
+D(n)=\frac{4^n+2}{6}\quad(n\ge1),\quad \chi_v=2,
+\tag{SC.12}
+$$
+
+且对 $n>k\ge1$，
+
+$$
+\Delta_v(n,k)=\frac{4^{n-k}(4^k-1)^2}{18}>0.
+\tag{SC.13}
+$$
+

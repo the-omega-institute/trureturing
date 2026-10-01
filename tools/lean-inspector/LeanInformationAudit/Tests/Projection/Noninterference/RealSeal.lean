@@ -1,6 +1,9 @@
 import LeanInformationAudit.SealCommand
 import LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
 import LeanInformationAudit.Tests.Projection.FixtureState
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 /-!
 T-041 production-command fixture. Negative runs select publication or export audit
@@ -21,7 +24,7 @@ open Lean Lean.Elab.Command LeanInformationAudit
 open LeanInformationAudit.Tests.ImportClosureProducer
 open LeanInformationAudit.Tests.Projection
 
-expect_information_occurrence importedTheorem
+test_assess in expect_information_occurrence importedTheorem
   in objectArena
   from "LeanInformationAudit.Tests.Occurrence.ImportClosureProducer"
 
@@ -113,7 +116,7 @@ run_cmd do
     logInfo s!"RealSeal rejected export before seal: {expected}"
     return
 
-  let sealErrors ← commandErrors (← `(command| #seal_information_theory))
+  let sealErrors ← commandErrors (← `(command| test_assess in #seal_information_theory))
   match expectedSeal with
   | some expected =>
       unless sealErrors == #[expected] do

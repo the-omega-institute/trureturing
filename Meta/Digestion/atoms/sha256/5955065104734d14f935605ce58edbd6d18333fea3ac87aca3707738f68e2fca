@@ -1,0 +1,8 @@
+### theorem 44.1 两个时刻的行列式
+
+对 $s<t$，有
+
+$$
+\boxed{\det\begin{pmatrix}F_s&F_{s+1}\\F_t&F_{t+1}\end{pmatrix}=(-1)^{s+1}F_{t-s}.}
+$$
+

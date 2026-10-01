@@ -1,0 +1,22 @@
+### theorem 13.2 体更新与边界更新严格交织
+
+令
+
+$$
+U=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+$$
+
+对所有整数权重 $u,v$ 和组成状态 $z$，有
+
+$$
+H_{u,v}M=UH_{u,v},
+\qquad
+\partial_{u,v}(Mz)=U\partial_{u,v}(z).
+$$
+
+因此边界状态 $(n,n')$ 的递归更新恒为
+
+$$
+(n,n')\longmapsto(n',n+n').
+$$
+

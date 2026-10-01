@@ -1,0 +1,18 @@
+### proposition 153.2（更正命题 13.5 的模数假设）
+
+令 $u,v$ 为正整数，令
+
+$$
+H_{u,v}=\begin{pmatrix}u&v\\v&u+v\end{pmatrix},
+\qquad
+\Delta=u^2+uv-v^2,
+$$
+
+则 $\Delta\ne0$，整数线性映射 $z\mapsto H_{u,v}z$ 是单射，且其像在 $\mathbb Z^2$ 中的指标为 $|\Delta|$。对每个**正**整数模数 $m\ge1$，约化映射
+
+$$
+H_{u,v}: (\mathbb Z/m\mathbb Z)^2\longrightarrow(\mathbb Z/m\mathbb Z)^2
+$$
+
+可逆当且仅当 $\gcd(|\Delta|,m)=1$；当且仅当 $\gcd(|\Delta|,m)>1$ 时，它有非零核，因而存在不同余数输入的碰撞。
+

@@ -1,0 +1,48 @@
+**引理 194.2（固定倍数窗口的乘积精度）。** 在式（194.1）下，对任意固定 $0<c_0\le c_1<\infty$，一致于 $a\in[c_0,c_1]$ 有
+
+$$
+\log\frac{P_S(aL)}{P_S(L)}
+=\frac{\delta\log a}{\log L}
++o\!\left(\frac1{\log L}\right)
+\quad(L\to\infty).
+\tag{194.5}
+$$
+
+$T$ 的相应系数为 $1-\delta$。此外，在式（194.2）与通常素数定理下，
+
+$$
+\frac{P(L)}{e^\gamma}\le\log L+o(1).
+\tag{194.6}
+$$
+
+证明。把 $c_0,c_1$ 必要时扩展到包含一。对 $a\ge1$，有
+
+$$
+\begin{aligned}
+\log\frac{P_S(aL)}{P_S(L)}
+&=\sum_{\substack{L<p\le aL\\p\in S}}\frac1p+O(1/L)\\
+&=\int_{(L,aL]}\frac1{x\log x}\,d\vartheta_S(x)+O(1/L).
+\end{aligned}
+$$
+
+写 $\vartheta_S(x)=\delta x+R(x)$。在固定倍数区间 $[c_0L,c_1L]$ 上，$\sup |R(x)|/x\to0$。对含 $R$ 的积分分部求和，边界项和积分项均为 $o(1/\log L)$，且一致于 $a$。主项为
+
+$$
+\delta\int_L^{aL}\frac{dx}{x\log x}
+=\delta\log\frac{\log(aL)}{\log L}
+=\frac{\delta\log a}{\log L}+O\!\left(\frac1{(\log L)^2}\right).
+$$
+
+当 $a<1$ 时反向积分即可。因此式（194.5）成立；这一论证只比较固定倍数窗口，不需要整个 $P_S$ 的 Mertens 常数。
+
+令 $R_L=\prod_{p\le L}p$。因 $\log R_L=\vartheta(L)=L+o(L)$，$R_L$ 最终超过式（194.2）的固定门槛，故
+
+$$
+\frac{P(L)}{e^\gamma}
+=\frac{R_L}{e^\gamma\varphi(R_L)}
+\le\log\vartheta(L)+\frac{a_0}{(\log\vartheta(L))^2}
+=\log L+o(1).
+$$
+
+这里误差是加性的 $o(1)$；仅有未指定速度的相对 $o(1)$ 乘积渐近不能替代这一步。$\square$
+

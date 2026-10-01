@@ -1,0 +1,28 @@
+**命题 167.1（允许多余通道的秩载体）。** 设 $N\ge2$，有限正整数集 $\mathcal S$ 包含 $3$，并且每个素因子 $p\mid N$ 的首次 Fibonacci 整除秩都属于 $\mathcal S$。令
+
+$$
+T=\max\{|\mathcal S|,32768\},\quad u=\log T,\quad
+Y=\lceil512Tu\rceil,\quad
+A=\prod_{\substack{d\in\mathcal S\\d\le Y}}F_d.
+$$
+
+则在 §164.1 的已发表输入下，
+
+$$
+\frac{\sigma(N)}N
+<e^\gamma\frac{40}{39}
+\max\left\{32,\ 7+\frac94\log T+a_0\right\}.
+$$
+
+证明。$u>10$，且 $3\in\mathcal S$ 保证 $A\ge2$；同时 $\log A<TY$。低秩实际素因子全部整除 $A$，但允许 $A$ 含有多余素数，这只会增加 Euler 上界。因此
+
+$$
+\frac N{\varphi(N)}\le\frac A{\varphi(A)}e^R,
+\qquad
+R=\sum_{\substack{p\mid N\\z(p)>Y}}\log\frac p{p-1}.
+$$
+
+按 §163.1 分桶，桶数不超过 $T$，故 $R\le6T(1+\log Y)/Y<1/40$。再用 $Y\le513Tu$、$\log513<7$、$\log u\le u/4$ 得 $\log\log A<7+9u/4$；§164.1 给结论。没有使用 $A\mid N$，也没有把重复出现的素因子重复计入 Euler 乘积。$\square$
+
+若载体是固定数目 $r$ 个约数集之并，且这些指标都不超过 $K a$，则其基数至多 $4rK^{1/3}a^{1/3}+4$（最后四项可用于固定乘子）。这给出一类有可控来源复杂度的尾估计。$r,K$ 必须固定或另受明确界约束；不能让表示中的项数自由增长，却仍使用固定的常数。
+

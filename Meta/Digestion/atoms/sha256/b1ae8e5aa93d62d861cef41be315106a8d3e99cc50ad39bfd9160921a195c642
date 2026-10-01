@@ -1,0 +1,18 @@
+### 14.2 Fibonacci 局部真空通道的完整块
+
+取邻接关系 $b\in\mathsf N(a,\tau)$，$d=(1,\varphi)$，$\delta=\varphi$。式（FT.11）由 $\varphi^2=1+\varphi$ 得到。在第 12 节的路径中，固定 $(x_{i-1},x_{i+1})$ 后，$P_i$ 的全部情形为
+
+$$
+\begin{array}{c|c}
+(x_{i-1},x_{i+1})&P_i\text{ 在允许的 }x_i\text{ 上的块}\\\hline
+(\mathbf1,\mathbf1)&(1)\\
+(\mathbf1,\tau)\text{ 或 }(\tau,\mathbf1)&(0)\\
+(\tau,\tau)&\begin{pmatrix}r^2&rs\\rs&r\end{pmatrix}.
+\end{array}
+\tag{FT.14}
+$$
+
+对最后一块，$P_i=F\operatorname{diag}(1,0)F^\dagger$；其余块由唯一通道或禁止通道得到。因此它就是先重括号使第 $i,i+1$ 两片叶相邻融合、投影到总类型 $\mathbf1$、再返回原基的操作，[TTWL09, §3.1] 给同一物理相互作用。该投影在真实网中属于位置 $[i,i+1]$ 的窗口代数。路径坐标 $x_i$ 是前缀总类型，不能把“改变一个 $x_i$”误当作物理上独立的一位量子比特操作。
+
+在右扩展下，原有 $P_i$ 的系数不依赖新加的末尾标签；式（FT.5）于是将它精确送入更大窗口的同一个 $P_i$。左侧扩展及其他括号形式使用第 13 节的相容运输，不任意重选矩阵。
+

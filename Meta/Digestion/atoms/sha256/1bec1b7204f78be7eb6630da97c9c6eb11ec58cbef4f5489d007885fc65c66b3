@@ -1,0 +1,33 @@
+### 197.3 比例模型与临界可行性
+
+设固定允许集具有联合密度
+
+$$
+\alpha=\operatorname{dens}(S_1),\qquad
+\beta=\operatorname{dens}(S_2),\qquad
+\kappa=\operatorname{dens}(S_1\cap S_2),\qquad
+u=\alpha+\beta-\kappa.
+$$
+
+这里采用 $\vartheta_C(X)=\operatorname{dens}(C)X+o(X)$ 的加权密度形式。在总需求 $(1+s)L$ 的比例模型中，四类需求分别按其密度分配；式（197.9）恰好成为
+
+$$
+\lambda\le\alpha(1+s),\qquad
+1-\lambda\le\beta(1+s),\qquad
+1\le u(1+s).
+\tag{197.10}
+$$
+
+这是比例模型的准确可行条件，不是任意有限 $X$ 的精确素数求和公式。在等号边界，是否存在具体有限分配仍须回到式（197.8），不能用一阶渐近决定低阶误差的符号。
+
+对原来的两个二次字符，$\alpha=\beta=1/2$、$\kappa=1/4$、$u=3/4$，式（197.10）等价于
+
+$$
+s\ge\max\{1/3,\ |2\lambda-1|\}.
+\tag{197.11}
+$$
+
+实际因子具有 $\lambda\to1/2$。在平衡比例 $\lambda=1/2$ 下，整个 $1/3\le s\le1$ 都允许完整支撑。尤其 $s=1$ 时，四类各需 $L/2$，可取
+
+| 联合类 | 来源 $U_1$ | 来源 $U_2$ | 来源 $g$ |
+|---|---:|---:|---:|

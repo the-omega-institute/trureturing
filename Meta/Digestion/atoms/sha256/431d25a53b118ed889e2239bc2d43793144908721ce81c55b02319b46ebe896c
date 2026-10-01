@@ -1,0 +1,24 @@
+**证明。** 停止后取吸收历史并补零。对每个固定整数 $m$，迭代条件期望得到
+
+$$
+\mathbb E\exp\left(\theta\sum_{j=1}^mX_j\right)\le K^m.
+\tag{334.6}
+$$
+
+取 $b=\theta/(2\log K)>0$、$m=\lfloor bt\rfloor$。在 $J\le m$ 上，全部实际费用等于前 $m$ 段之和，故
+
+$$
+\begin{aligned}
+\Pr\left(\sum_{j=1}^JX_j>t\right)
+&\le\Pr(J>m)
++\Pr\left(\sum_{j=1}^mX_j>t\right)\\
+&\le Ae^{-\eta m}+e^{-\theta t}K^m\\
+&\le Ae^\eta e^{-\eta bt}+e^{-\theta t/2}.
+\end{aligned}
+\tag{334.7}
+$$
+
+合并常数即得结论；小 $t$ 也由扩大 $A'$ 覆盖。证毕。
+
+这个判据可以条件于一个更早的起始历史使用，只要两个输入界对该历史一致。段之间可以读取来源、更新控制状态或决定是否继续；只须所写的条件矩界仍成立。
+

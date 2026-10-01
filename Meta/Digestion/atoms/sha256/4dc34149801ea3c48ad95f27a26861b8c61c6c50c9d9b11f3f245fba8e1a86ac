@@ -1,0 +1,28 @@
+**推论324.6（可比较取得钟的临界边界）。** 假设存在共同常数 $0<\mu\le C_{\mathrm{clk}}<\infty$，使每个实际世界、完整历史和可选来源动作满足
+
+$$
+0\le c_{\mathrm{clk}}(h,a,y)\le C_{\mathrm{clk}},
+\qquad
+\sum_y\kappa_\theta(y\mid h,a)c_{\mathrm{clk}}(h,a,y)\ge\mu.
+\tag{324.37}
+$$
+
+则非整数 $\beta$ 下，准确共同策略具有统一有限 $s$ 阶取得钟矩的可达范围同样恰为
+
+$$
+\boxed{0<s<\beta/2.}
+\tag{324.38}
+$$
+
+若按相同输出合同定义最优钟费用 $\mathcal D_s^{\mathrm{pol}}$ 与 $\mathcal D_s^{\mathrm{alg}}$，则在 $a=\beta/2$ 处，
+
+$$
+\mathcal D_a^{\mathrm{pol}}(0)
+=\mathcal D_a^{\mathrm{alg}}(0)=\infty,
+\qquad
+\lim_{\delta\downarrow0}\mathcal D_a^{\mathrm{pol}}(\delta)
+=\lim_{\delta\downarrow0}\mathcal D_a^{\mathrm{alg}}(\delta)
+=\infty.
+\tag{324.39}
+$$
+

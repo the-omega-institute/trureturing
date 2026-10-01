@@ -1,5 +1,8 @@
 import LeanInformationAudit.DispositionCensus
 import LeanInformationAudit.Tests.SealSuccess
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit DispositionCensus
 open D5.S3.ConceptDynamics.InformationEscape
@@ -108,16 +111,16 @@ def inventory : DispositionInventory := {
       .certified <| .unreachable ⟨.noCanonicalObjectCarrier, ``noCarrier⟩⟩]
 }
 
-expect_information_occurrence SealSuccess.fstTheorem
+test_assess in expect_information_occurrence SealSuccess.fstTheorem
   in SealSuccess.arena from "LeanInformationAudit.Tests.SealSuccess"
-expect_information_occurrence SealSuccess.sndTheorem
+test_assess in expect_information_occurrence SealSuccess.sndTheorem
   in SealSuccess.arena from "LeanInformationAudit.Tests.SealSuccess"
-expect_information_occurrence SealSuccess.notTheorem
+test_assess in expect_information_occurrence SealSuccess.notTheorem
   in SealSuccess.notArena from "LeanInformationAudit.Tests.SealSuccess"
-expect_information_occurrence SealSuccess.idTheorem
+test_assess in expect_information_occurrence SealSuccess.idTheorem
   in SealSuccess.t001Arena from "LeanInformationAudit.Tests.SealSuccess"
 
-#seal_information_theory
+test_assess in #seal_information_theory
 
 run_cmd Lean.Elab.Command.liftTermElabM do
   validateEvidence (← getEnv).header.mainModule inventory

@@ -1,0 +1,10 @@
+### definition 8.3 经认证的 Fib 素原子
+
+当已有 $\operatorname{Prime}_{\mathcal N}(q(c(T_j)))$ 证明时，注册 $T_j$ 为 Fib 素原子并定义封装名 $\mathsf P_j=\operatorname{Pack}(T_j)$，保存
+
+$$
+\operatorname{Expand}(\mathsf P_j)=T_j.
+$$
+
+例如 $T_2$ 的读数为 $5$，$T_4$ 的读数为 $13$，二者都可作为更高层接口。乘法不可分不妨碍其 Fibonacci 结构可展开。
+

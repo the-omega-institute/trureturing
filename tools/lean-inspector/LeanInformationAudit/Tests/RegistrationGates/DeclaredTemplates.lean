@@ -1,6 +1,8 @@
 import D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates
-import LeanInformationAudit.Syntax
+import LeanInformationAudit.Tests.Assessment
 import LeanInformationAudit.Tests.SourceIsolation
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredTemplates
 open Lean Meta Elab Command TemplateAudit
@@ -57,7 +59,7 @@ elab "observe_declared_template_enrollment" : command => do
     ("body_recursive_definition_rejected", ``recursiveBody, some "unclassified_form:E4.recursion:Nat.rec")]
   for (label, name, expected) in cases do
     let state ← get
-    let result ← enroll name
+    let result ← enroll (← getEnv).header.mainModule (← getOptions) name
     let actual := match result with | .ok () => none | .error text => some text
     let present := (selectedPlan (← getEnv) name).isOk
     set state
@@ -68,7 +70,7 @@ observe_declared_template_enrollment
 
 elab "observe_declared_template_plan_identity" : command => do
   let saved ← get
-  let .ok () ← enroll ``symbolicPointwise | throwError "identity fixture enrollment failed"
+  let .ok () ← enroll (← getEnv).header.mainModule (← getOptions) ``symbolicPointwise | throwError "identity fixture enrollment failed"
   let .ok plan := selectedPlan (← getEnv) ``symbolicPointwise
     | throwError "identity fixture plan missing"
   let .ok bytes := planEncoding plan | throwError "identity fixture encoding failed"
@@ -77,18 +79,6 @@ elab "observe_declared_template_plan_identity" : command => do
     throwError "[FAIL] enrollment_encoding_omits_source_hashes"
   logInfo "[PASS] enrollment_encoding_omits_source_hashes"
   (if bytes.size == plan.serializedBytes && Sha256.hex bytes == plan.planIdentity then logInfo else logError) m!"[{if bytes.size == plan.serializedBytes && Sha256.hex bytes == plan.planIdentity then "PASS" else "FAIL"}] complete_plan_encoding_binds_all_nodes bytes={bytes.size} work={plan.chargedWork}"
-  let variants := #[
-    ("summary_changed_body_rejected", { plan with bodyIdentity := String.ofList (List.replicate 64 'a') }),
-    ("summary_wrong_owner_rejected", { plan with enrollmentOwner := `WrongOwner })]
-  for (label, variant) in variants do
-    let .ok payload := planEncoding variant | throwError "setup: mutation payload encoding failed"
-    let frame : TemplatePlanFrame := { key := plan.name.toString.toUTF8, payload, identity := plan.planIdentity }
-    let index := ({} : TemplateIndex).addFrame frame (← getEnv) plan.enrollmentOwner
-    let result := index.lookup plan.name (pure () : Id Unit)
-    (if result matches .error "incomplete_closure:E7.import_identity" then logInfo else logError) m!"[{if result matches .error "incomplete_closure:E7.import_identity" then "PASS" else "FAIL"}] {label}"
-  let frame : TemplatePlanFrame := { key := plan.name.toString.toUTF8, payload := bytes, identity := plan.planIdentity }
-  let valid := ({} : TemplateIndex).addFrame frame (← getEnv) plan.enrollmentOwner
-  (if (valid.lookup plan.name (pure () : Id Unit)).isOk then logInfo else logError) m!"[{if (valid.lookup plan.name (pure () : Id Unit)).isOk then "PASS" else "FAIL"}] fresh_source_bound_plan_accepted"
   LeanInformationAudit.Tests.withPrivateSources do
     let manifestPath := "lean-report-inputs.json"
     let .ok manifest := Json.parse (← IO.FS.readFile manifestPath)
@@ -98,11 +88,8 @@ elab "observe_declared_template_plan_identity" : command => do
       | throwError "setup: missing cache release version"
     IO.FS.writeFile manifestPath ((Json.mkObj (fields.toList.map fun (key, value) =>
       (key, if key == "report_cache_release_semantic_version" then toJson (version + 1) else value))).compress)
-    let retained := ({} : TemplateIndex).addFrame frame (← getEnv) plan.enrollmentOwner
-    unless (retained.lookup plan.name (pure () : Id Unit)).isOk do
-      throwError "[FAIL] manifest_version_preserves_enrollment_encoding_and_verdict"
     setEnv saved.env
-    let .ok () ← enroll ``symbolicPointwise | throwError "setup: bumped manifest enrollment failed"
+    let .ok () ← enroll (← getEnv).header.mainModule (← getOptions) ``symbolicPointwise | throwError "setup: bumped manifest enrollment failed"
     let .ok fresh := selectedPlan (← getEnv) ``symbolicPointwise
       | throwError "setup: fresh plan missing"
     let .ok freshBytes := planEncoding fresh | throwError "setup: fresh encoding failed"

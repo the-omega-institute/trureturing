@@ -1,0 +1,18 @@
+### 11.6 非线性磁模型的精确记忆坐标与奇异边界
+
+回到第 10.5 节，记 $p=p_x$、$z=y-a x^2$、$w=p_y$。定义两个动态记忆坐标
+\[
+ r=\dot p+x^3=2\kappa axz+cw,\quad
+ \chi=4\kappa a^2x^2+c^2,
+\]
+\[
+ s=\dot r+\chi p
+   =\kappa(2ap-c)z+2\kappa axw.
+\]
+于是
+\[
+ \binom r s=A(x,p)\binom z w,\quad
+ A=\begin{pmatrix}2\kappa ax&c\\\kappa(2ap-c)&2\kappa ax\end{pmatrix},
+ \quad \Delta=\det A=\kappa(4\kappa a^2x^2-2acp+c^2).
+\]
+

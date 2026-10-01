@@ -1,0 +1,9 @@
+**实例 148.2（有限数字诊断）。** 对 $P=\{2,3,5,7\}$，$c_P=1/(12\zeta(2))$。在 $X=100000$，精确整数计算给
+
+$$
+\sum\mu=-48,\quad \sum\mu^2=60794,\quad \sum f_P=5064,\quad
+\sum(-1)^{s_\varphi}f_P=326,\quad \sum(-1)^{s_\varphi}\mu=-230.
+$$
+
+所有和均取 $1\le n\le X$。[保留程序](../../reports/fib-robin-boundary/temporal_projection.py) 另保留 $X=100,1000,10000$、平方自由展开及秩壳碰撞的精确诊断，[结果](../../reports/fib-robin-boundary/temporal_projection.json) 只承担这些有限范围；式 (148.1) 的无穷结论由上面的证明承担，式 (148.4) 由所引原定理承担。
+

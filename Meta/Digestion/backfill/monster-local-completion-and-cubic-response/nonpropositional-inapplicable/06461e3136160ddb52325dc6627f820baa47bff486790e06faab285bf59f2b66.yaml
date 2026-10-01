@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:06461e3136160ddb52325dc6627f820baa47bff486790e06faab285bf59f2b66
+  normalized_sha256: sha256:06461e3136160ddb52325dc6627f820baa47bff486790e06faab285bf59f2b66
+cas_ref: sha256:06461e3136160ddb52325dc6627f820baa47bff486790e06faab285bf59f2b66
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: All proposition clauses are bind-only over pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d. Function.Commute.iterate_eq_of_map_eq, matrix exponential and Kronecker identities, finite discrete preconnected images and derivative uniqueness give infinitesimal rigidity; matrix single-entry identities and IsCompact.exists_isMinOn give the attained positive skew-sphere minimum. Frobenius norm inequalities and polynomial normalization give local coercivity, IsCompact.exists_forall_le' gives the positive compact-complement threshold, and orthonormal tensor norm_dual, map_exp and triangle inequalities give the exact arbitrary-Euclidean-space distance and noisy bounds. The complete source statement has compiled exact supplier reductions with only standard axioms. No existing repository GID supplies this full upstream composition, so this receipt records zero-new-Lean reuse under CLAUDE 3.2; no theorem, freeze or coverage edge is introduced.
+    previous_atom_id: 268cad5a2e567557ec6d55368b3761e6eec781f8e2d986aba9d2c14184c74f37
+    next_atom_id: 16ceca0fbc876df048a8cfa2ed9fab31d2bf23c8714fd0c8551bff32b68011bf

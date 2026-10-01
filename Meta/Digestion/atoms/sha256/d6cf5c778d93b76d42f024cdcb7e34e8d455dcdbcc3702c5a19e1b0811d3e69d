@@ -1,0 +1,16 @@
+### theorem 44.2 任意有限采样的 Smith 缺陷
+
+令 $g(\mathcal T)=\gcd(t_1-t_0,\ldots,t_{m-1}-t_0)$，并令 $H_{\mathcal T}$ 为 $O_{\mathcal T}$ 的整数矩阵。其非零 Smith 因子为
+
+$$
+\boxed{1,\ F_{g(\mathcal T)}.}
+$$
+
+所以
+
+$$
+\boxed{|\ker(O_{\mathcal T}\bmod n)|=\gcd(n,F_{g(\mathcal T)})},
+$$
+
+且 $O_{\mathcal T}\bmod n$ 单射，当且仅当 $\gcd(n,F_{g(\mathcal T)})=1$。
+

@@ -22,7 +22,7 @@ Lean statement: `D5/S0/CayleyGrowth/QuasipolynomialWordMetricRefutation.cayleyPy
 
 *Proof.* Machine-checked in Lean as `D5/S0/CayleyGrowth/QuasipolynomialWordMetricRefutation.cayleyPy_conjecture2_refuted` (`✓ std3`). ∎
 
-*Citation.* A. Chervov and others (2025). *CayleyPy Growth: Efficient growth computations and hundreds of new conjectures on Cayley graphs*. DOI: [10.48550/arXiv.2509.19162](https://doi.org/10.48550/arXiv.2509.19162).
+*Citation.* A. Chervov and others (2025). *CayleyPy Growth: Efficient growth computations and hundreds of new conjectures on Cayley graphs*. DOI: [10.48550/arXiv.2509.19162](https://doi.org/10.48550/arXiv.2509.19162). URL: <https://arxiv.org/abs/2509.19162v2>.
 
 *Commentary.*
 

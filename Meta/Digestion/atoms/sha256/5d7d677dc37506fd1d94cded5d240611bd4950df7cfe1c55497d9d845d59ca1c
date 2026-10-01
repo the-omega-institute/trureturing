@@ -1,0 +1,14 @@
+**推论338.4（价格上界及幂路径分界）。** 对 $0<\delta<\delta_0$、$\lambda\ge0$，令 $L=\log(1/\delta)$，则两种实现类均有
+
+$$
+\boxed{\mathcal V_a^{\mathcal C}(\delta,\lambda)
+\le K+C\lambda^aL.}
+\tag{338.39}
+$$
+
+对任意固定 $r\ge0$，沿 $\lambda(\delta)=L^{-r}$、$\delta\downarrow0$：
+
+- 若 $0\le r<1/a$，则 $\mathcal V_a^{\mathcal C}(\delta,L^{-r})\to\infty$。
+- 若 $r\ge1/a$，则该费用在全部充分小正精度上共同有界。
+- 若 $r>1/a$，进一步有 $\limsup_{\delta\downarrow0}\mathcal V_a^{\mathcal C}(\delta,L^{-r})\le K$。等号 $r=1/a$ 在本推论中只取得有界性。
+

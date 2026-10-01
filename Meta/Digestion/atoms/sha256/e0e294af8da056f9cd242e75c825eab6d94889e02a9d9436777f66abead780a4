@@ -1,0 +1,12 @@
+### theorem 21.2 关系网络按共享端口作纤维积拼接
+
+设网络 $U,V$ 覆盖 $U\cup V$，并且每个局部关系都包含在至少一个区域中。保留交界上的全部共享端口，则
+
+$$
+\boxed{
+\mathcal S(U\cup V)
+\cong
+\mathcal S(U)\times_{\mathcal S(U\cap V)}\mathcal S(V).
+}
+$$
+

@@ -1,0 +1,55 @@
+**定理 25.2（$(m+1)^2$ 个整数的精确恢复）。** 设 $\chi_X>0$。令 $\mathcal E=\{\mathbf0,e_1,\ldots,e_m\}$。对 $n+\min_i k_i\ge2$，表
+
+$$
+\{K_{\Phi_{\mathbf k,\sigma}}(n;\mathbf s,\mathbf t):
+\mathbf s,\mathbf t\in\mathcal E\}
+\tag{SC.15}
+$$
+
+唯一确定 $(\mathbf k,\sigma)$。这也唯一确定任意左右 FDQC 修饰后的尾部所对应的参数。
+
+**证明。** 实际相对交换子与产品包含给
+
+$$
+K(n;\mathbf s,\mathbf t)
+=\prod_{j=1}^mD(n+k_j+(\sigma\mathbf t)_j-s_j).
+\tag{SC.16}
+$$
+
+写 $B_0=K(n;\mathbf0,\mathbf0)$，并计算矩形的交叉差分
+
+$$
+C_{ji}=B_0K(n;e_j,e_i)-K(n;e_j,\mathbf0)K(n;\mathbf0,e_i).
+\tag{SC.17}
+$$
+
+若 $j\ne\sigma(i)$，两项中的两个变化作用于不同因子，其余因子相同，直接乘法消去给 $C_{ji}=0$。若 $j=\sigma(i)$，令 $u_j=n+k_j$ 和 $A_j=\prod_{\ell\ne j}D(n+k_\ell)>0$，则
+
+$$
+C_{ji}=A_j^2\bigl(D(u_j)^2-D(u_j-1)D(u_j+1)\bigr)<0.
+\tag{SC.18}
+$$
+
+严格性由定理 21.3，且 $u_j\ge2$。因此每列恰有一个负值，其位置就是 $\sigma(i)$；整个置换被恢复，即使不同层的位移相同也不会失效。
+
+随后
+
+$$
+\frac{K(n;\mathbf0,e_i)}{B_0}
+=\frac{D(n+k_{\sigma(i)}+1)}{D(n+k_{\sigma(i)})}.
+\tag{SC.19}
+$$
+
+由 $D(t+2)D(t)>D(t+1)^2$，正整数上的比值 $D(t+1)/D(t)$ 严格递增。因此每个比值唯一确定整数 $t=n+k_{\sigma(i)}$，减去已知 $n$ 得带符号位移。对承诺属于这些模板的精确数据，顺次枚举正整数并进行整数交叉相乘比较会在真实 $t$ 处停止。电路修饰由命题 25.1 消去。证毕。
+
+未标记的表只记录 $\prod_iD(n+k_i)$，会混淆层置换，并在两层零和例中混淆 $k$ 与 $-k$。式（SC.17）同时改变来源切口与目标切口，通过交叉项识别它们是否属于同一被运输层。这一步恢复了旧总维数差看不见的方向。
+
+例如 Fib、$m=2$、$n=4$、$\mathbf k=(1,-1)$、$\sigma$ 交换两层，按 $\mathbf0,e_1,e_2$ 排列行列，表为
+
+$$
+\begin{pmatrix}170&442&445\\65&169&170\\68&170&178\end{pmatrix}.
+\tag{SC.20}
+$$
+
+混合差分矩阵为 $\left(\begin{smallmatrix}0&-25\\-1156&0\end{smallmatrix}\right)$，先确定交换，再由两个比值恢复 $1,-1$。本表来自精确融合维数，不是实验噪声下已取得的测量数据。
+

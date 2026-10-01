@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredDiscardedObligations
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredResultTypeObligations
 open Lean Meta Elab Command
@@ -14,11 +17,11 @@ def resultHelper (n : Nat) : resultType n (boundProof n) :=
 
 def template (n : Nat) : PrimitiveRealization (cutSignature Bool Bool) := resultHelper n
 
-register_information_template template
+test_assess in register_information_template template
 
-information_theorem expandedDomainTarget in targetArena primitives (template 0)
+test_assess in information_theorem expandedDomainTarget in targetArena primitives (template 0)
   : Nat.lt 0 (Nat.succ 0) := Nat.zero_lt_succ 0
-information_theorem expandedDomainIndependent in independentArena primitives (template 0)
+test_assess in information_theorem expandedDomainIndependent in independentArena primitives (template 0)
   : Nat.lt 1 (Nat.succ 1) := Nat.lt_succ_self 1
 run_meta do
   for (name, template, label, shouldValidate) in #[

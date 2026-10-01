@@ -1,0 +1,25 @@
+### theorem 41.4 Fibonacci 偶步闭合的分裂边界
+
+对正偶数 $m\ge2$，令
+
+$$
+B_1=2M-I,
+\qquad
+B_2=F_mM^m.
+$$
+
+则 $B_2B_1=M^{2m}-I$，并且第 38 节的扩张
+
+$$
+0\longrightarrow\mathbb Z/5\mathbb Z
+\longrightarrow\mathcal D_{2m}
+\longrightarrow(\mathbb Z/F_m\mathbb Z)^2
+\longrightarrow0
+$$
+
+分裂，当且仅当
+
+$$
+\boxed{\gcd(F_m,5)=1.}
+$$
+

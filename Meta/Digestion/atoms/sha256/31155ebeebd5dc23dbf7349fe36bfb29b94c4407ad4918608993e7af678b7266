@@ -1,0 +1,13 @@
+**引理328.4（正误差下的有限有效参考预算）。** 对每个 $\delta>0$ 与 $\epsilon>0$，存在一份有限深的有效共同策略 $A_{\delta,\epsilon}$，使
+
+$$
+\sup_{w,S}\operatorname{TV}
+\bigl(P_{A_{\delta,\epsilon}},P_{\mathrm{target}}\bigr)
+<\delta,
+\qquad
+\sup_{w,S}\mathbb E N_H^a\le K_*+\epsilon.
+\tag{328.11}
+$$
+
+它的真实总调用有确定有限上界 $n_{\delta,\epsilon}$，并保持所选合同中的首枚 $X$ 身份。本存在结论不要求固定实参数有可计算名字。
+

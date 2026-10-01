@@ -1,0 +1,35 @@
+### theorem 19.4 递归与方向提取生成全部线性操作
+
+$$
+\boxed{
+\mathbb Z\langle M,\partial\rangle
+=\operatorname{Mat}_2(\mathbb Z).
+}
+$$
+
+因此对每个 $n\ge2$，模 $n$ 后的 $M,\partial$ 生成
+
+$$
+\operatorname{Mat}_2(\mathbb Z/n\mathbb Z).
+$$
+
+**证明。**
+
+由 $\partial=E_{12}$ 有
+
+$$
+E_{11}=\partial M-\partial,
+\qquad
+E_{21}=ME_{11},
+\qquad
+E_{22}=I-E_{11}.
+$$
+
+四个标准矩阵单位均已生成，结论随即成立。还可由
+
+$$
+J=I+(I-2M)\partial
+$$
+
+恢复共轭。这里的完备性是二维整数线性意义下的完备，不涉及原始树的括号、次序或物理解释。证毕。 $\square$
+

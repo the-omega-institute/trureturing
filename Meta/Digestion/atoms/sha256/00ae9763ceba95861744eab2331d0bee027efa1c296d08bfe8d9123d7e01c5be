@@ -1,0 +1,2 @@
+**theorem 3.3 (Arbitrary post-error entry).** For every one of the twenty-four post-control states and every arbitrary ternary input, quotient and shift-stack contents, the fixed post-machine at badInput with empty output reaches the exact clean halt containing the one-symbol zero in at most the sum of those three stack lengths plus three actual transitions. All three starting stacks are emptied and control is reset; no unary or Boolean scratch-content premise is imposed.
+

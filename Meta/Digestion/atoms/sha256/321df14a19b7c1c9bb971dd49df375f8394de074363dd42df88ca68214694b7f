@@ -1,0 +1,2 @@
+**定理 2.1。** 对全部 $t\ge0$ 有 $Ce^{At}z=Ce^{At}z'$，当且仅当 $Oz=Oz'$。存在唯一 $K$ 及某个 $D_0$ 使 $OA=KO,C=D_0O$。任何能决定全部未来读数的线性编码 $Rz$ 均满足 $\operatorname{rank}R\ge\operatorname{rank}O$。
+

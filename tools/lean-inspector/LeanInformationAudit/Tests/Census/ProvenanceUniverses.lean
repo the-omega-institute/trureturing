@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.Census.CommandRejection
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit DispositionCensus Lean.Elab.Command
 open D5.S3.ConceptDynamics.InformationEscape

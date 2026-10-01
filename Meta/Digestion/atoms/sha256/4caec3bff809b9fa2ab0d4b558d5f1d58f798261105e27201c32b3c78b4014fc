@@ -1,0 +1,11 @@
+### 85.3 任意有限群的参考桥和准确的资源判据
+
+令 $U_G=\mathbb R[G]$ 为正则表示，$n=|G|$。对任意同维 $G$ 表示 $E,F$、任意底层线性同构 $J:E\to F$，逐参考分支置
+
+$$
+B_r=\rho_F(r)J\rho_E(r^{-1}),\qquad r\in G.
+\tag{85.7}
+$$
+
+直接相乘给 $B_{gr}\rho_E(g)=\rho_F(g)B_r$，且 $B_r$ 可逆。因此 $E\otimes U_G\simeq F\otimes U_G$。若 $\dim E=N$，两边均同构于 $U_G^{\oplus N}$。这在非交换群也成立；不能把 $r^{-1}g^{-1}$ 的次序调换。集合层面的相对编码仍为 $(v,r)\mapsto(\rho_E(r^{-1})v,r)$，共同左作用只改变第二坐标。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1e7ce225749f1ce190a4316036e1c657de6e529f7f0d7890fca1827c0f01a04c
+  normalized_sha256: sha256:1e7ce225749f1ce190a4316036e1c657de6e529f7f0d7890fca1827c0f01a04c
+cas_ref: sha256:1e7ce225749f1ce190a4316036e1c657de6e529f7f0d7890fca1827c0f01a04c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'CLAUDE.md 3.2 upstream-only bind-only settlement; pinned Mathlib db584cd6d46c92f209a44c0f1c829460d327499d. Exact declarations: FreeMagma.hom_ext, FreeMagma.lift_of, Matrix.mul_fin_two. For the first clause child only: both c composed with rho and M composed with c are magma homomorphisms into addition on N^2. hom_ext reduces equality to alpha and beta, where the two coordinates normalize to (0,1) and (1,1). M^2=M+I follows from mul_fin_two and arithmetic normalization. No frozen repository GID states the tree-composition homomorphism equation.'
+    previous_atom_id: 50047f0923940392c559899626d07249618394680715706ad72ff94807bc7a22
+    next_atom_id: baeeac4d0392b36a6bb50dc6942cccc611a3b81ed7177eabe297b99edfb29ef5

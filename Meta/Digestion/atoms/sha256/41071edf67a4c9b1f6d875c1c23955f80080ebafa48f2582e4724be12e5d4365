@@ -1,0 +1,15 @@
+**定理321.2（同一容差的有效与抽象费用）。** 固定 $\delta>0$。若同一合同内存在抽象策略 $\pi_0$，满足
+$$
+e=\operatorname{err}(\pi_0)<\delta,
+\qquad
+K_0=\mathcal K_s(\pi_0)<\infty,
+\tag{321.7}
+$$
+则
+$$
+\boxed{
+\mathcal C_s^{\mathrm{alg}}(\delta)
+=\mathcal C_s^{\mathrm{pol}}(\delta)<\infty.}
+\tag{321.8}
+$$
+

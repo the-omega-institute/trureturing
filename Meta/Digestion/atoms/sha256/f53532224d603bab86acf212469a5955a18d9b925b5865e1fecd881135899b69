@@ -1,0 +1,4 @@
+**约定 105.9（来源与形式边界）。** §§99–102 提供本节沿用的 $F_H$、操作库、$\eta_{H,d}$、共同来源与宏端口合同。[Katz 接口笔记 §12](../../../Library/notes/katz2015goldeninterfaces.md#12-exact-zeckendorf-predictive-states-at-the-original-prime-square-scale) 的 ZP1–ZP3 针对允许高位补零的逐位语言，给出系数脉冲、单位缩放未来和该语言的状态计数；不能把这些计数直接当作正值规范三位 End 的结论。[ZeckendorfFutureKernel.lean](../../../D5/S3/Arith/ZeckendorfFutureKernel.lean) 的 `result` 在显式 Fibonacci 返回与两行 Bézout 前提下，陈述合法位词的所有系数探针及同接缝的终端可整除未来等价；证明内部的 `pulseFacts`、`repeats` 给出脉冲长度和恢复性质，导出陈述本身未携带规范三窗末端条件。[PrimePowerAffineBehavior.lean](../../../D5/S3/Arith/Congruence/PrimePowerAffineBehavior.lean) 的 `local_classification` 是素幂局部 $S/D$ 标签、代表无关性、正提升及有限算术词的现有形式化来源，其范围不包含这里的全局 CRT 窗口读者。
+
+本附录的规范帽、正值初始化、联合可达区间、实际标量返回及全体自主读者最小性，均以上述明确合同作普通参考推导；准确连接这些子句的 canonical Lean bridge 尚未编译。引用既有声明不把整个接口提升为 kernel 证明，也不表示取得新增形式化声明准入或原创性结论。固定 $H$ 的终端任务只保留所声明的 gcd/算术未来；它不是任意素数判定器，也不是 Robin 裕度判定器。它不恢复无限整数的规模、$Z(N)$ 或全部因子信息，亦未处理读取与算术交错的新合同。无限自匹配族上所需的 Robin 严格正性仍为开放问题，本附录没有给出该无界定量结论。
+

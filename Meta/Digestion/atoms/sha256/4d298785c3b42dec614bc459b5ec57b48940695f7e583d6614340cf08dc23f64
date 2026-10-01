@@ -1,0 +1,15 @@
+**引理327.4（每行的严格三分类余量）。** 对每个 $k\ge1$ 和 $0\le t\le d_k$，
+
+$$
+\begin{aligned}
+\widehat\ell_{k,t}
+-(E_k\widehat\ell_{k-1})_t
+&\ge c_0(\delta_{k-1}-\delta_k)>0,\\
+(E_k\widehat u_{k-1})_t-\widehat u_{k,t}
+&\ge c_0(\delta_{k-1}-\delta_k)>0,\\
+\widehat u_{k,t}-\widehat\ell_{k,t}
+&\ge\delta_k>0.
+\end{aligned}
+\tag{327.34}
+$$
+

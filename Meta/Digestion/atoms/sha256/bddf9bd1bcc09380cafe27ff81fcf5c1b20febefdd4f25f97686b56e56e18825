@@ -1,0 +1,22 @@
+**命题 181.1（本原数量的共同平方证书）。** 有
+
+$$
+w^2-5u^2=4D_{\mathrm{at}}.
+$$
+
+每个奇素因子 $p\mid u$ 都满足
+
+$$
+p\nmid D_{\mathrm{at}},\qquad
+\left(\frac{D_{\mathrm{at}}}{p}\right)=1.
+$$
+
+证明。平方恒等式直接展开得到。若奇 $p$ 同时整除 $u,D_{\mathrm{at}}$，则也整除 $w$。但
+
+$$
+\det\begin{pmatrix}2&3\\4&7\end{pmatrix}=2,
+\qquad b=w-2u,\qquad 2a=7u-3w,
+$$
+
+所以 $p\mid a,b$，与 $\gcd(a,b)=1$ 矛盾。因此 $D_{\mathrm{at}}$ 非零模 $p$，平方恒等式给 $D_{\mathrm{at}}\equiv(w/2)^2\pmod p$。$\square$
+

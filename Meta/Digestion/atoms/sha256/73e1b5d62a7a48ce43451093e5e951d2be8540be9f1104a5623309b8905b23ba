@@ -1,0 +1,18 @@
+**定理 1.2。** 光滑完整向量场在 $\mathbb R^d$ 上生成流时，
+$$
+(U_t\psi)(x)=|\det D\Phi_{-t}(x)|^{1/2}\psi(\Phi_{-t}(x))
+$$
+是 $L^2(dx)$ 上的强连续酉群。在紧支光滑测试函数上，其生成微分表达式为
+$$
+\partial_t\psi=-f\cdot\nabla\psi-\tfrac12(\operatorname{div}f)\psi,
+\qquad
+\widehat{\mathcal H}_f=-i\hbar(f\cdot\nabla+\tfrac12\operatorname{div}f).
+$$
+它满足
+$$
+\partial_t|\psi|^2+\operatorname{div}(f|\psi|^2)=0,
+\qquad
+\widehat{\mathcal H}_f=\tfrac12\sum_j(f_j\widehat p_j+\widehat p_jf_j),
+\quad\widehat p_j=-i\hbar\partial_j.
+$$
+

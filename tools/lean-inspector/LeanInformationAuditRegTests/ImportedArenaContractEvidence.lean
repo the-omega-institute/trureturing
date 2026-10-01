@@ -1,4 +1,8 @@
-import LeanInformationAuditRegTests.DesignatedRootSeal
+import Reg.Catalogs.SharedInformationRoot
+import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Elab Command LeanInformationAudit
 

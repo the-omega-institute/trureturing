@@ -1,0 +1,32 @@
+**定理 14.1（条件良好的实验仍可编码 CLIQUE）。** 即使正频率位于 $(1,2)$、互异，$F$ 的谱位于 $[1/2,3/2]$，且不同模态间的归一化关联任意小，精确最小化 (14.1) 的模态子集问题仍是 NP-hard。这里 NP-hard 指返回极小子集；它不声称 $\mathrm P\ne\mathrm{NP}$，也不声称固定常数精度近似同样困难。
+
+**证明。** 给定 $n\ge3$ 点简单图的邻接矩阵 $A$ 和所需点数 $m$，取
+\[
+ \varepsilon=\frac1{8n^3},\qquad
+ F=(I_n+\varepsilon A)\otimes I_2,\quad
+ G=(2I_n+\varepsilon A)\otimes I_2,\quad
+ \omega_j=1+\frac j{n+1}.
+\]
+用 $L=I_{2n}$、$R=F^{-1}$ 实现该实验。矩阵均由有理数给定，逆矩阵的位数有多项式界；$\|A\|\le n-1$ 保证 $F$ 落在所列谱区间。任意候选都已经精确保留动力学与辛结构。
+
+记 $e(S)$ 为诱导子图边数。Kronecker 行列式和 log 级数给
+\[
+ \Delta(S)=\log\det(2I_m+\varepsilon A_{SS})
+ =m\log2-\frac{\varepsilon^2}{4}e(S)+r(S).
+\]
+令 $q=\varepsilon n/2<1/2$。由于 $\operatorname{tr}A_{SS}=0$、
+$\operatorname{tr}A_{SS}^2=2e(S)\le n^2$，余项满足
+\[
+ |r(S)|\le
+ \frac{\varepsilon^3\|A_{SS}\|\operatorname{tr}(A_{SS}^2)}{24(1-q)}
+ \le\frac{\varepsilon^3n^3}{12}
+ =\frac{\varepsilon^2}{96}.
+\]
+因此，若 $e(S_1)\ge e(S_2)+1$，则
+\[
+ \Delta(S_1)\le\Delta(S_2)-\frac{11\varepsilon^2}{48}.
+\]
+极小子集必有最多诱导边。检查其边数是否达到 $m(m-1)/2$ 即可决定 CLIQUE。甚至附加误差不超过 $\varepsilon^2/8$ 的解，也足以给出同一判断。这个精度随输入规模多项式缩小。精确优化还可直接比较有理行列式，不要求实数对数 oracle。证毕。
+
+谱投影解决 §13 的线性能量目标，不能据此推断它也解决带联合相关的 logdet 目标。这个归约是当前物理/统计可行类的明确边界；行列式选择的困难性本身为既有研究，不认领一般复杂性概念的首创。
+
