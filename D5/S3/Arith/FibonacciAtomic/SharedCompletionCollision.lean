@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Arith/FibonacciAtomic/SharedCompletionCollision
    mirror-E: none(waiver:unbounded-shared-collision-proof)
-   anchors: [D5/S3/Arith/FibonacciAtomic/FirstRejectionCutCapacity.result]
+   anchors: [mathlib/module/Mathlib.Tactic]
    utility: none
    digest: The six-state shared-completion collision law for every positive length and cut. -/
 
