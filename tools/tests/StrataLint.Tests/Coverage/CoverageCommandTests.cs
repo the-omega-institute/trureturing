@@ -203,10 +203,12 @@ public sealed class CoverageCommandTests
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             [RuleFixture.WorkflowPath] = """
-                on: {pull_request: {branches: [dev]}}
+                on: {pull_request: {branches: [dev]}, push: {branches: [dev]}}
                 jobs:
-                  delta:
-                    name: delta
+                  current:
+                    name: current
+                    steps:
+                      - run: dotnet judge.dll check-delta
                 """,
             ["Meta/domains.yaml"] = TestFileMap.Domains,
             ["Meta/FILEMAP.toml"] = TestFileMap.Canonical,
@@ -248,7 +250,7 @@ public sealed class CoverageCommandTests
           - id: dev-baseline
             kind: ci-jobs
             members:
-              - delta
+              - current
             judged_by:
               - bootstrap-pr-1
             verification: verified

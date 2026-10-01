@@ -45,7 +45,6 @@ internal static partial class JudgeSurfaceRevisionScanner
 
     internal static bool IsJudgeSurfacePath(string path) =>
         path.StartsWith(".github/", StringComparison.Ordinal)
-        || path == "tools/scripts/ci-stage.sh"
         || path.StartsWith("tools/scripts/workflow/", StringComparison.Ordinal);
 
     internal static ImmutableArray<string> Scan(string path, string text)
@@ -110,6 +109,7 @@ internal static partial class JudgeSurfaceRevisionScanner
         switch (node)
         {
             case YamlMappingNode mapping:
+                ScanReusableJobCommand(mapping, messages);
                 foreach (var (key, value) in mapping.Children)
                 {
                     if (key is YamlScalarNode { Value: "run" })
@@ -155,6 +155,59 @@ internal static partial class JudgeSurfaceRevisionScanner
                 }
 
                 break;
+        }
+    }
+
+    private static void ScanReusableJobCommand(
+        YamlMappingNode mapping,
+        ImmutableArray<string>.Builder messages)
+    {
+        // Reusable workflow jobs carry their shell in `with.command`; inspect that scalar only
+        // when the same mapping is a job invocation (`uses:`). Workflow resolution is deliberately
+        // out of scope: the command is judged where it appears.
+        var hasUses = false;
+        YamlNode? with = null;
+        foreach (var (key, value) in mapping.Children)
+        {
+            if (key is not YamlScalarNode scalarKey)
+            {
+                continue;
+            }
+
+            if (scalarKey.Value == "uses")
+            {
+                hasUses = true;
+            }
+            else if (scalarKey.Value == "with")
+            {
+                with = value;
+            }
+        }
+
+        if (!hasUses || with is not YamlMappingNode withMapping)
+        {
+            return;
+        }
+
+        foreach (var (key, value) in withMapping.Children)
+        {
+            if (key is not YamlScalarNode { Value: "command" })
+            {
+                continue;
+            }
+
+            if (value is YamlScalarNode command)
+            {
+                var firstLine = (int)command.Start.Line
+                    + (command.Style is ScalarStyle.Literal or ScalarStyle.Folded ? 1 : 0);
+                messages.AddRange(JudgeShell(firstLine, command.Value ?? string.Empty));
+            }
+            else
+            {
+                messages.Add(
+                    $"line {value.Start.Line}: a `with.command:` whose value is not a scalar is fail-closed"
+                    + Suffix);
+            }
         }
     }
 

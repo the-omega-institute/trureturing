@@ -217,9 +217,7 @@ public static class AdmissionPipeline
         RuleCatalog.Default.ExecuteCurrent(context, measureRule);
 
     internal static RuleExecutionOutcome CheckDelta(DeltaRuleContext context, RuleEvaluationMeasure? measureRule) =>
-        context.CommonResults is null
-            ? new RuleExecutionOutcome.InfrastructureFailure("delta requires validated current/engineering evidence")
-            : RuleCatalog.Default.ExecuteDelta(context, measureRule);
+        RuleCatalog.Default.ExecuteDelta(context, measureRule);
 
     public static AdmissionOutcome Evaluate(
         RepositorySnapshot current,
