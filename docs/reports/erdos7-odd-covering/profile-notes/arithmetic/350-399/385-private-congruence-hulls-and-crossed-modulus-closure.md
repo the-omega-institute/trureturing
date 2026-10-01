@@ -50,6 +50,12 @@ nonconcentrated original divisors. The existing private-point reset
 identifies a concentrated-prime branch where this enlargement supplies
 no improvement; a whole-cover condition excluding the deficit is missing.
 
+[Section70](#70-concentrated-prime-private-roots-require-both-ternary-colors)
+shows that concentration of every nonternary prime requires both nonzero
+ternary colors. Different colors cannot share an original modulus.
+At ternary height one, the existing multiplicity-two exclusion forces
+5 and7 into opposite colors; arbitrary-height quotient collisions remain.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -10127,3 +10133,87 @@ Report364's singleton-root capacities allow this color; the associated prime-par
 The exact unpaid amount for this divisor relation is DP3. Closing it requires enough DISTINCT nonconcentrated ancestors for every selected set of concentrated maximal labels, or a different actual inventory payment or legal whole-family transformation. PH5 supplies the candidate labels and the private reset supplies DP7–DP9, but neither forces that expansion. In particular the concentrated-prime branch has no such ancestor at all unless G is empty; G=empty has not been proved in that branch.
 
 Even δ=0 would only settle this inventory payment for one copy of each concentrated label. It would not construct a complete frontier satisfying RS1–RS3, put every repeated label in L, control multiple extra occurrences of one label, or establish the required strict joint count/weight descent. These remain separate obligations for the same actual original family.
+## 70. Concentrated prime-private roots require both ternary colors
+
+Keep one EB1-selected original whole distinct odd cover with full period Q=3^H M, H≥1 and gcd(3,M)=1. Normalize the original prime classes by the existing common translation. For every original label d, let V_d be the projection modulo3 of its COMPLETE original private region. It is nonempty. For each support prime p>3, V_p is a nonempty subset of {1,2}; call p concentrated of color i when V_p={i}. No assumption makes the complete projection modulo3^H a singleton.
+
+The private reset is Report357's actual coordinate map, already used in DP6. The separator identity below is reused from section57 and problem detail17. The new consumer is that concentration of every nonternary prime cannot have only one color. It does not settle unrestricted Erdős#7, give a new separator theorem, or provide Lean verification.
+
+### Different concentrated colors cannot occur in one original label
+
+Let p,r>3 be two concentrated support primes of different colors. If an original d were divisible by both, its actual private witness could be reset at p and, separately from the same witness, at r. Each reset preserves the complete ternary coordinate. Hence
+
+    V_d ⊆ V_p ∩ V_r = empty,
+
+contrary to irredundancy. Therefore
+
+    V_p∩V_r=empty ==> no original d is divisible by pr. (CP1)
+
+This includes originals divisible by3 and every higher prime power. The two resets are separate applications to the same private source, not a claim that a successive reset remains private to the second prime. Unconcentrated primes may still occur in the family and share labels with concentrated primes. Thus CP1 alone does not split the full nonternary support when unconcentrated primes remain.
+
+### A single concentrated color would make the original pure3 class redundant
+
+Suppose every support prime p>3 is concentrated and all have color i. Every original d which contains both3 and some nonternary prime then has actual first-three root i: reset its private witness at that prime. Its AP fixes that same first root.
+
+Let j be the other nonzero ternary root. No such mixed original meets j. The original pure3 class lies at root0. The remaining pure-three labels have heights h≥2. In the full ternary carrier their total number of covered words is at most
+
+    sum_(h=2..H) 3^(H-h)
+       = (3^(H-1)−1)/2 < 3^(H-1).                  (CP2)
+
+There is therefore a COMPLETE ternary word z of first root j covered by no original pure-three class. At this word no3-bearing original is active. Whole coverage forces the original3-free subfamily to cover every remaining cofactor coordinate. Because that subfamily is independent of the ternary coordinate, it already covers the entire original carrier, contradicting the private point of A_3.
+
+The empty nonternary-support case is also impossible: finitely many distinct pure-three powers cannot cover, by the same bound. Consequently
+
+    every p>3 concentrated ==> both colors occur.     (CP3)
+
+This argument retains arbitrary original ternary height and does not move phases or replace the original family by separately chosen completions.
+
+### Both colors give two actual conditional quotient covers
+
+In the all-concentrated branch write S_1,S_2 for the two nonempty sets of support primes. CP1 implies that every original modulus with a nonunit3-free cofactor has that cofactor supported entirely in one S_i. Put
+
+    X_i=product_(p∈S_i) Z/p^H_p,
+
+using the complete original heights. Let C_i⊆X_i be the union of the original3-free classes supported in S_i. A private point of the original A_3 avoids all3-free originals, so BOTH complements X_i\C_i are nonempty.
+
+For a complete ternary word z, let B_i(z) be C_i together with the actual cofactor classes of all group-i3-bearing originals whose full ternary prefix contains z. Assign each pure-three original to the common guard set Z_pure. The existing exact-separator identity gives the literal uncovered set at each z∉Z_pure as
+
+    (X_1\B_1(z)) × (X_2\B_2(z)).                   (CP4)
+
+If z has first root i, every group-(3−i) mixed original is inactive, so B_(3−i)(z)=C_(3−i). Its complement is nonempty. Whole coverage in CP4 therefore forces
+
+    B_i(z)=X_i
+      for every z∉Z_pure with first-three root i.     (CP5)
+
+CP2 ensures that each root supplies at least one such complete z. Thus the two conditional quotient covers are forced by this ONE original family. They use different ternary words and are not two independent candidate families which may be combined freely.
+
+CP5 is not yet a smaller distinct odd cover. On fixing the complete3-coordinate, original labels m and3^h m can project to the SAME cofactor modulus m with different actual residues. Even retaining the ternary tail and only restricting to one first root sends m and3m to two classes of modulus m. Divisor closure supplies the original parent m whenever3m occurs with m>1; comparable disjointness makes their two phases different rather than deleting either one. Removing the opposite group instead leaves its other ternary branch uncovered. The established separator identity therefore identifies the required conditional covers but does not supply the missing legal numerical-label transformation.
+
+### At ternary height one the two colors must separate5 and7
+
+Now additionally assume H=1. Fix the complete ternary word i for each color group. The quotient family in CP5 has odd moduli greater than one, all coprime to3, and at most TWO classes for each numerical cofactor m: only the original labels m and3m can project to it. Its nonternary prime-power heights remain arbitrary.
+
+[Report348, section3](../../321-384/348-fresh-prime-root-transport-and-two-copy-reduction.md#a-two-copy-seed-coprime-to-6-must-use-5-or-7) already proves that a finite family with each numerical modulus used at most twice cannot cover when its period is coprime to210. Applying that existing result to each actual quotient cover shows that each S_i contains5 or7. Because S_1 and S_2 are disjoint,
+
+    H=1 and every p>3 concentrated
+       ==> 5 and7 have opposite concentrated colors.  (CP6)
+
+This directly reuses Report348's unrestricted-height multiplicity-two result and its existing arithmetic evidence; no sieve or endpoint computation is repeated. At H>1, fixing a complete ternary word can retain more than two original3-heights at one cofactor modulus, so the same application is not justified. CP3–CP5 retain their arbitrary-H scope.
+
+### A repeated-label odd cover realizes the source relations
+
+The following finite family illustrates exactly why concentration and the separator relations alone cannot exclude the two-color branch. It has odd moduli and covers all integers, but intentionally repeats numerical labels:
+
+    0 mod3, 0 mod5, 0 mod7;
+    1,4,7,13 mod15;
+    2,5,8,11,17,20 mod21.                            (CP7)
+
+There are13 classes on the complete period105. At first-three root0, A_3 covers. At root1, A_5 together with the four15-classes covers all five residues modulo5. At root2, A_7 together with the six21-classes covers all seven residues modulo7. This proves whole coverage without enumeration.
+
+Every class has an actual private point. For A_3 choose both the5 and7 coordinates nonzero. For A_5 choose root1 and a nonzero7-coordinate; for A_7 choose root2 and a nonzero5-coordinate. For each15-class choose a nonzero7-coordinate, and for each21-class choose a nonzero5-coordinate. These choices also show the COMPLETE prime-private projections are
+
+    V_5={1},       V_7={2}.                           (CP8)
+
+The example keeps the actual common CRT source, oddness, private points, and the normalized prime classes. Its numerical palette is divisor-closed. Numerical distinctness fails explicitly: label15 occurs four times and label21 six times. It is neither an extremal distinct cover nor a counterexample to Erdős#7. Its role is solely to demonstrate that the private-reset and separator relations, even with both forced colors, require an additional use of distinctness before they can yield a contradiction.
+
+The remaining all-concentrated branch therefore has two nonempty color groups, no original label mixing their nonternary supports, and both complete-word quotient-cover obligations CP5. A useful next bridge must exploit the distinct original labels to resolve those quotient collisions, or give a jointly legal replacement with strict count or modulus-sum descent. The existing singleton-color root permutations preserve those budgets and do not provide that bridge.
