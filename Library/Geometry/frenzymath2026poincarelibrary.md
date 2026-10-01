@@ -374,9 +374,10 @@ ball input from metric completeness. These scoped applications compile with
 only `propext`, `Classical.choice` and `Quot.sound`. They require no global
 compactness, orientability or finite-volume hypothesis. This finite-radius constructor selects `e` separately for each `R`. The
 global construction below uses one initial frame and one map over all radii.
-Global injectivity, abstract hyperbolic-manifold realization, cusp
-classification and full Mostow-Prasad rigidity remain separate obligations.
-The global covering construction is checked below. The same finite-radius
+These finite-radius clauses alone do not establish global injectivity or
+abstract hyperbolic-manifold realization. The following sections supply the
+global covering, H3 inverse and isometric target realization. Cusp
+classification and full Mostow-Prasad rigidity remain separate obligations. The same finite-radius
 exponential conclusion is also checked for the previously constructed
 upper-half-space metric `g` and for its unique descended metric `gQ`, under the
 same free, compact-set proper isometric-action hypotheses. Their already
@@ -430,9 +431,10 @@ and cited external revision with only `propext`, `Classical.choice` and
 `Quot.sound`. They are temporary applications, with no retained named project
 Lean declaration, new dependency or novelty claim. Surjectivity and a
 bijective differential alone do not establish covering-map structure; the
-checked covering construction is given below. Arbitrary-manifold realization
-as a hyperbolic quotient, cusp classification and full Mostow-Prasad
-existence and uniqueness remain unfinished. The noncompact and
+checked covering construction is given below. The following sections also
+supply arbitrary-target realization as a hyperbolic isometric quotient.
+Cusp classification and full Mostow-Prasad existence and uniqueness remain
+unfinished. The noncompact and
 nonorientable cases remain part of the rigidity target.
 
 
@@ -475,9 +477,10 @@ orientability or finite-volume premise is added.
 These are scoped transient classical applications under the unchanged pins,
 with only `propext`, `Classical.choice` and `Quot.sound`. This increment does
 not by itself establish that `e` is a covering map or injective. The next
-section supplies the covering construction. Arbitrary-manifold
-hyperbolic quotient realization and full Mostow-Prasad rigidity, including
-cusps and nonorientable manifolds, remain unfinished.
+section supplies the covering construction; the later target-distance
+comparison supplies arbitrary-manifold isometric quotient realization.
+Full Mostow-Prasad rigidity, including cusps and nonorientable manifolds,
+remains unfinished.
 
 
 ## Covering structure of the same global negative exponential
@@ -523,8 +526,9 @@ applications compile with only `propext`, `Classical.choice` and `Quot.sound`.
 
 This covering increment alone does not establish global injectivity or an
 inverse on hyperbolic three-space; the next section supplies the H3 inverse.
-Realization of every hyperbolic manifold as an isometric quotient, cusp
-classification and full Mostow-Prasad rigidity remain unfinished.
+The later target-distance comparison supplies isometric quotient
+realization under its explicit target metric and topology conditions.
+Cusp classification and full Mostow-Prasad rigidity remain unfinished.
 The full rigidity target still includes noncompact cusps and nonorientable
 manifolds. No new project Lean declaration or novelty claim is retained.
 
@@ -562,10 +566,10 @@ chosen smooth structure.
 
 The quotient exponential retains its covering structure. Its target is
 not assumed to be simply connected, and no global inverse on an arbitrary
-quotient is asserted. Arbitrary-manifold isometric quotient realization,
-cusp classification and full Mostow-Prasad existence, homotopy and
-uniqueness remain unfinished, including noncompact and nonorientable
-manifolds. These are scoped transient classical applications under
+quotient is asserted. The later target-distance comparison supplies
+arbitrary-manifold isometric quotient realization. Cusp classification and
+full Mostow-Prasad existence, homotopy and uniqueness remain unfinished,
+including noncompact and nonorientable manifolds. These are scoped transient classical applications under
 unchanged pins, with only `propext`, `Classical.choice` and `Quot.sound`;
 no new project Lean declaration or novelty claim is retained.
 
@@ -612,8 +616,8 @@ These scoped transient classical applications use unchanged pins and only
 `propext`, `Classical.choice` and `Quot.sound`, with no new tracked project
 Lean declaration or novelty claim. The preceding covering clause alone does
 not include the deck-action conclusions. The following composition supplies
-the faithful isometric deck action and topological quotient identification.
-Global isometric quotient-to-target realization, finite-volume cusp
+the faithful isometric deck action and topological quotient identification,
+then the global isometric quotient-to-target realization. Finite-volume cusp
 classification and covolume, and full Mostow-Prasad existence, homotopy and
 uniqueness remain unfinished. Noncompact cusps and nonorientable manifolds
 remain within the full rigidity target.
@@ -657,9 +661,10 @@ transfer along its pointwise equality with the deck action.
 
 The orbit relation equals the covering's fiber relation. Mathlib's quotient
 homeomorphism constructions therefore identify the orbit quotient with the
-target and retain the projection identity. This is a topological
-identification: global distance preservation by that quotient-to-target
-homeomorphism has not yet been checked.
+target and retain the projection identity. This clause is a topological
+identification; the following distance comparison supplies global distance
+preservation by a quotient-to-target homeomorphism selected within that
+construction.
 
 The combined check adds one arbitrary-target isometric-deck clause for the
 same actual H3 metric `g`. Removing that clause and its application and
@@ -673,10 +678,74 @@ within its selected smooth structure.
 
 These are scoped transient classical applications under unchanged pins,
 with only `propext`, `Classical.choice` and `Quot.sound`. No new tracked
-project Lean declaration or novelty claim is retained. Isometric realization
-of an arbitrary target, finite-volume cusp classification and covolume,
-and full Mostow-Prasad existence, homotopy and uniqueness remain unfinished,
+project Lean declaration or novelty claim is retained. The following section
+supplies isometric realization of an arbitrary target. Finite-volume cusp
+classification and covolume, and full Mostow-Prasad existence, homotopy and
+uniqueness remain unfinished,
 including noncompact cusps and nonorientable manifolds. The existing escape
 audit remains unfinished:
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
 Neither these recorded compilation checks nor prior CI closes that audit.
+
+
+## Isometric quotient realization of an arbitrary negative target
+
+For the same constructed H3 metric and a preconnected smooth
+three-manifold with `T3Space` topology, a smooth Riemannian metric that is
+`MetricComplete` and has sectional curvature `-1`, and supplied Levi-Civita
+data, the selected deck-orbit-to-target homeomorphism now preserves the
+actual target intrinsic distance. For every two quotient points, that
+distance equals `ENNReal.ofReal` of the existing H3 orbit distance. The
+covering, full deck group, faithful free and compact-set proper isometric
+representation, homeomorphism and projection identity are chosen together
+within this construction. No target simple connectedness, compactness,
+orientability or finite-volume premise is added.
+
+The distance comparison uses the existing metric pullback contraction,
+Mathlib's covering lifts, the previously checked smoothness of continuous
+curve lifts and the pinned path-length pullback equality. For one bound,
+project a source curve and compare against every deck translate of the
+second endpoint; taking the orbit-distance infimum gives the target
+intrinsic-distance upper bound. For the other, choose a global `C¹` target
+curve whose length is arbitrarily close to its intrinsic distance, lift it
+through the actual covering from the first endpoint, and use its smoothness
+and unchanged length. The lifted last point is in the second endpoint's
+fiber, hence in its full deck orbit. Its source distance bounds the orbit
+infimum and is bounded by the lifted length. The two inequalities give the
+exact distance identity. No shortest target curve or distance equality is
+assumed.
+
+The prior quotient-to-target homeomorphism respects the selected
+projection, so the pointwise fiber-distance identity descends to all
+quotient points. The target intrinsic extended distance is finite for all
+point pairs by this identity and surjectivity of the homeomorphism. Mathlib's
+`EMetricSpace.ofRiemannianMetric` constructs this actual target intrinsic
+metric with the original topology; `EMetricSpace.toMetricSpace` converts
+its proved finite distances to real distances while retaining its
+uniformity and topology. Together with the existing `orbitMetricSpace`,
+the same homeomorphism is the underlying function of an actual
+`IsometryEquiv` from the H3 orbit quotient to the target. This construction
+uses the metric arising from the supplied target Riemannian metric, with
+no substituted target-distance definition or supplied isometry premise.
+
+The combined check binds the realization to the same actual H3 metric `g`
+and adds one universal arbitrary-target clause. Removing that clause and
+its application and reversing names restores the preceding entire
+constructor byte-for-byte. All preceding source, exponential, volume,
+curvature, completeness, conditional core/tail and quotient clauses and
+original free, compact-set proper action conditions are retained. The new
+covering and deck representation are selected within this new clause;
+identity with separate earlier existential witnesses is not asserted.
+Quotient metric uniqueness remains within the selected smooth structure.
+
+These are scoped transient classical applications under unchanged pins,
+with only `propext`, `Classical.choice` and `Quot.sound`, with no retained
+new project Lean declaration or novelty claim. An isometric quotient
+realization does not establish that a homotopy equivalence induces a lattice
+isomorphism realized by an ambient conjugator. Finite-volume cusp
+classification and covolume, lattice rigidity, and full Mostow-Prasad
+existence, homotopy and uniqueness remain unfinished, including noncompact
+cusps and nonorientable manifolds. The existing escape audit remains
+unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these compilation checks nor CI closes that audit.
