@@ -1437,3 +1437,71 @@ and uniqueness remain unfinished, including noncompact cusps and
 nonorientable manifolds. The existing escape audit remains unfinished:
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
 Neither these checks nor CI closes that audit or the remaining mathematics.
+
+## Continuous centralizer conjugation and recurrence constraints
+
+For a supplied topological group `K`, subgroup `Γ`, and element `z`
+commuting with every element of `Γ`, the actual function
+`x ↦ x * z * x⁻¹` descends to a continuous map `Φ : (K ⧸ Γ) → K`.
+The defining left-coset relation gives `x⁻¹ * y ∈ Γ`; the supplied
+commutation makes the conjugation values agree on that relation.
+Existing quotient lifting and continuity then give the map with exact
+value `Φ (QuotientGroup.mk x) = x * z * x⁻¹` and exact equivariance
+`Φ (g • q) = g * Φ q * g⁻¹`. Subgroup normality is not assumed.
+
+For continuous `Φ` semiconjugating two supplied self-maps, neighborhood
+recurrence of a point transfers to neighborhood recurrence of its image.
+The preimage of an image-point neighborhood is a neighborhood of the
+original point, and existing semiconjugacy iteration identifies the
+iterates. Only continuity of `Φ` is assumed for this transfer.
+Apply it to the actual continuous centralizer map above, for a locally
+compact, second-countable ambient topological group with actual Hausdorff
+Borel coset space and supplied finite nonzero ambient-left-invariant
+coset measure `ν`. For each fixed ambient `g`, almost every coset has
+`Φ q` recurrent under conjugation `y ↦ g * y * g⁻¹`. The already checked
+open positivity and existing `Measure.dense_of_ae` make these cosets
+a dense subset of the actual coset space. This asserts density of the
+specified cosets, not density of their images or of a conjugacy orbit in
+`K`.
+
+Under the supplied compatible original-H3 smooth source geometry,
+original pairwise distance identity, actual target geometry/Borel,
+actual full-deck quotient covering/local diffeomorphism/tangent-metric
+pullback, faithful representation implementing the actual action at every
+point, and finite actual target volume, bind this to the same original-H3
+full compact-open isometry group, actual image `ρ.range`, normalized Haar
+`μ` and actual coset measure `ν` from the preceding construction.
+The same ambient topology/Borel/Polish/local compactness/second countability,
+actual closed deck image and actual coset Hausdorff/Borel compatibility
+supply the hypotheses. Retain left/right Haar invariance, actual covolume
+and `ν` total mass equal to actual target volume, explicit `μ.inv`
+quotient-measure relation, and finite nonzero ambient-left-invariant,
+open-positive `ν`. For each supplied `z` centralizing that actual image,
+the exact continuous `Φ` above has, for each ambient `g` separately,
+almost-everywhere and dense cosets with conjugation-recurrent `Φ q`.
+This does not prove `z = 1`.
+
+A further generic conditional check isolates a remaining geometric
+obligation. With the same supplied ambient-group, coset-measure and
+centralizer hypotheses, fix `g` and supply a closed subset `S ⊆ K`
+containing every neighborhood-recurrent point of conjugation by `g`.
+The preimage `Φ⁻¹(S)` is closed and contains the dense set of
+conjugation-recurrent cosets. It therefore contains every coset; the
+exact value formula gives `x * z * x⁻¹ ∈ S` for every `x : K`.
+The closed set and its coverage of all recurrent conjugation points are
+explicitly supplied premises. No such concrete classification or closed
+constraint for actual H3 is established by this generic check.
+
+These are five further scoped transient classical composition checks,
+with five printed closures using only `propext`, `Classical.choice` and
+`Quot.sound` under the same pins; the semiconjugacy-transfer closure uses
+only `propext` and `Quot.sound`. No tracked project Lean declaration or
+mathematical novelty is claimed. No compactness or orientability premise
+is added to the actual finite-volume construction. An actual H3
+recurrent-conjugation constraint, centralizer triviality, lattice
+conjugacy, finite-volume cusp classification and full Mostow-Prasad
+homotopic isometry existence and uniqueness remain unfinished, including
+noncompact cusps and nonorientable manifolds. The existing escape audit
+remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these checks nor CI closes that audit or the remaining mathematics.

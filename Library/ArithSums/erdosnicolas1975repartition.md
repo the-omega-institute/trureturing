@@ -13,7 +13,7 @@ triage: anchor
 
 # Répartition des nombres superabondants
 
-Primary source: *Bulletin de la Société Mathématique de France* **103** (1975), 65–90, [Numdam article record](https://www.numdam.org/item/BSMF_1975__103__65_0/) and [original scan](https://www.numdam.org/item/10.24033/bsmf.1793.pdf). The relevant locator is §3, Proposition 5 and its proof, printed pp.73–74. This note records the definition and its scope; it is not a verification of every proof in the paper or a Lean result.
+Primary source: *Bulletin de la Société Mathématique de France* **103** (1975), 65–90, [Numdam article record](https://www.numdam.org/item/BSMF_1975__103__65_0/) and [original scan](https://www.numdam.org/item/10.24033/bsmf.1793.pdf). The relevant locators are Proposition 4(c)–(d) and its proof on printed pp.70–71, and §3, Proposition 5 and its proof on pp.73–74. This note records the definitions and their scope; it is not a verification of every proof in the paper or a Lean result.
 
 Let $Z(n)=\sigma(n)/n$, and let $N$ maximize $Z(n)n^{-\epsilon}$ for a fixed $\epsilon>0$. On printed p.74, the authors define, for an arbitrary positive integer $m$,
 
@@ -321,3 +321,79 @@ window and source checks. An asymptotic height improvement is not an
 effective reconstruction threshold or a positive Robin margin. It does
 not prove that the actual host's gcd resources satisfy the strict budget
 in the preceding section.
+
+## Charge the actual removals before bounding additions
+
+The classical layer identity also permits a stronger pointwise use of the
+same gcd data. Put $g=\gcd(N,C_s)$ and $v=C_s/g$. The known factorization
+of $C_s$ fixes every removed layer, with exact cost
+
+$$
+R_s(v)=\sum_{p\mid v}\sum_{j=a_p-v_p(v)+1}^{a_p}c_{p,j}
+=s\log\frac{Z(C_s)}{Z(C_s/v)}-\log v\ge0.
+$$
+
+Under the same finite capacity assumptions above, the already established
+addition bound and this exact removal cost give
+
+$$
+\boxed{
+D_s(N)\ge R_s(v)+G_+(z_+)
+\ge G_-(z_-)+G_+(z_+).
+}
+$$
+
+The two terms in the first lower bound pay disjoint parts of the existing
+layer decomposition: all actual removals and only the additions. The
+removal-side capacity bound gives $R_s(v)\ge G_-(z_-)$, which proves the
+second comparison. Thus the sharper certificate is
+$R_s(v)+G_+(z_+)>T_s(N)$ for the same actual host. Whenever
+$R_s(v)>G_-(z_-)$, its lower bound increases by that difference. No
+factorization of $N/g$ is needed to evaluate either input.
+
+This is a direct application of the classical layer decomposition and the
+existing capacity bounds, not a new benefit theorem or a Lean result. It
+does not assert that the improvement exceeds the actual budget on the FIB
+residual set. Tied removals retain their exact zero costs.
+
+## Exact zero-benefit exceptions use at most four branches
+
+Proposition 4(c)–(d) and its proof, printed pp.70–71, already give the
+complete tied-optimizer alternatives. The proof uses the six-exponentials
+theorem, cited there through Lang, to exclude a common threshold for three
+distinct primes. It retains both exponent choices at each tied prime.
+This is a classical result to reuse, not a new tie theorem or a Lean result.
+
+At the price $1/s$, keep the maximal optimizer $C_s$ and the layer notation
+above, and define
+
+$$
+\mathcal T_s=\{p\mid C_s:c_{p,v_p(C_s)}=0\}.
+$$
+
+In these parameters the source's alternatives state
+
+$$
+|\mathcal T_s|\le2,\qquad
+\{N\ge1:D_s(N)=0\}
+=\left\{\frac{C_s}{\prod_{p\in S}p}:S\subseteq\mathcal T_s\right\}.
+$$
+
+Thus the exact zero-benefit set has one, two or four members at every
+positive price. This conclusion concerns exact ties, not the number of
+near-zero layers or a uniform lower bound for the next positive cost.
+
+For the actual host, $g=\gcd(N,C_s)$ fixes the denominator $v=C_s/g$ and
+therefore every removed layer. The zero-benefit alternative is precisely
+that $v$ is a product of a subset of $\mathcal T_s$ and $N=g$; it cannot
+become an unrestricted repetition of a free prime edit. One can retain the
+source's at most four possibilities before computing the gcd, or use the
+actual gcd to determine the removals directly.
+
+Each of these integers still requires the original FIB window, residue and
+qualifying-divisor checks. If an actual zero-benefit host has $T_s(N)<0$,
+its budget is already paid. If it has $T_s(N)\ge0$, this classification
+provides no positive loss: a source-preserving exclusion or a favourable
+signed budget remains necessary. The [fixed-price screening application](axler2024primorialcounting.md)
+keeps these ties when its endpoint budget is zero. Neither the finite
+branch list nor the gcd determines a uniform Robin margin.
