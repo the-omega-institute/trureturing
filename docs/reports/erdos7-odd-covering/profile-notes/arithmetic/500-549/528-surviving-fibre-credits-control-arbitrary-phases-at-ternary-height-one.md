@@ -31079,8 +31079,8 @@ If the residual has exactly one repeated base m divisible by49,
 the single p=7 cost in BC18 is c=5. The same repair must then
 have k>=kappa+v+5>=8, excluding this entire seven-class branch.
 This is a joint exclusion under the stated repair contract;
-multiple collision bases, remaining mixed low/high inventories,
-all-low repairs and the unrestricted covering question remain.
+sections41--42 below exclude every seven-class repair under
+that contract. Larger repairs and unrestricted noncoverage remain.
 
 [Report385, section40](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#40-three-low-classes-cannot-leave-a-cofactor-confined-to-one-nonunit-ap)
 also excludes the mixed count(3 low,4 high). Three legal low
@@ -31097,8 +31097,32 @@ An inclusion-minimal seven-class repair therefore remains either
 all low or(4 low,3 high). In the latter case the three high
 classes have3-height exactly two and different next3 roots;
 their cofactor APs have one common intersection containing the
-whole low remainder, with composite LCM. Neither surviving
-branch is excluded in general.
+whole low remainder, with composite LCM. This is the input to
+the complete seven-class exclusion below.
+
+[Report385, sections41--42](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#41-four-low-cofactors-cannot-confine-the-remainder-to-a-composite-ap)
+shows that four legal low cofactors cannot confine the actual
+remaining source to any composite-modulus AP. Capacity-two
+Hall, full-prefix depths and actual free new coordinates reduce
+the five-item covering hypothesis to low cofactors{5,7,35,35}
+and a modulus35 query. Adding those five APs to the same C0
+would give a whole3-free cover with5 and7 each repeated twice
+and35 repeated three times. Select four actual endpoint
+deletions, two per prime axis. Complete3-ary5 and5-ary7 trees
+avoid them; PC1--PC2 give distinct odd output moduli and at most
+|C0|+1<n classes. This contradicts minimum cardinality without
+assuming BC5's pair-only condition for the triple repetition.
+
+The mixed four-low three-high branch is thus impossible.
+The all-low branch is already excluded by BC7: at most seven
+repairs produce at most seven repeated bases, but an entirely
+3-free BC2 residual requires at least eight. Consequently every
+complete legal P_3 repair retaining C0 and excluding3 needs
+at least eight classes, even with new-period moduli. Translating
+each non-parent first3 branch as in NF19 forces at least eight
+original labels in each branch and gives N_3>=17. This bound
+is downstream; earlier bootstrap proofs retain their independent
+N_3>=9 input. Larger inventories and unrestricted #7 remain open.
 
 [Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
 keeps the residual cover's entire old q coordinate unchanged.

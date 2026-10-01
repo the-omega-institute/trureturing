@@ -5422,10 +5422,10 @@ uncovered by all low classes,
 so at least three high classes are required. Combining NF22
 with section31's exclusion of high-containing six-class repairs
 leaves only the mixed counts(3 low,4 high) or(4 low,3 high)
-at budget seven, before using other restrictions. All-low repairs
-remain possible at the level of these necessary conditions.
-Unrestricted #7 and those remaining joint repair branches are
-unresolved; no new Lean verification is claimed.
+at budget seven, before using other restrictions. Sections40--42
+exclude these mixed cases and the all-low seven-class branch.
+Unrestricted #7 and larger joint repairs remain unresolved;
+no new Lean verification is claimed.
 
 ## 40. Three low classes cannot leave a cofactor confined to one nonunit AP
 
@@ -5531,7 +5531,194 @@ least three; in particular K is composite.             (NF26)
 
 This is a condition on one actual intersection and the same
 remaining cofactor set. Three separately live cofactor phases
-would not suffice. Excluding every such four-low remainder,
-and the all-low seven-class branch, remain open here. These
-ordinary deductions do not settle unrestricted Erdős #7 or
-claim new Lean verification.
+would not suffice. Sections41--42 exclude the composite-AP
+confinement and the all-low seven-class branch. These ordinary
+deductions do not settle unrestricted Erdős #7 or claim new
+Lean verification.
+
+## 41. Four low cofactors cannot confine the remainder to a composite AP
+
+Take four distinct legal low repair labels, retaining all C0
+and excluding3. Write their nonunit cofactor APs as C_1,...,C_4.
+Let A be an AP of a composite modulus K coprime to6. Enlarge
+the old cofactor period B to include the four cofactor moduli and K,
+and let R-star be the full preimage of the SAME original R_3.
+Then
+
+    R-star minus union_(i=1,...,4) C_i not subset A. (NF27)
+
+The query A need not be a repair and may repeat a low phase.
+No bound on the total number of other repair classes is used.
+The proof classifies five labelled cofactor items using the
+existing Hall and full-prefix criteria, and disposes of the
+remaining numerical pattern by the existing whole-coordinate
+transport. It does not require new probability estimates.
+
+### Five items reduce to one two-prime squarefree pattern
+
+Suppose the four C_i and A cover R-star. An assignment with
+at most two items per prime would give prefix costs at most
+2/3, contradicting the expanded product-tree property in NF20's
+carrier check. By capacity-two Hall, either at least three
+items are pure powers of one prime, or all five items use
+only two primes. Three neighboring primes already have total
+capacity six, so there is no additional Hall case.
+
+First collect all pure p-power items when there are at least
+three. If p is old, at most one low item has cofactor p,
+because label p is occupied by C0. The query, if pure p,
+has depth at least two since K is composite. The total full-
+prefix cost of this entire group is at most
+
+    1/3+4/9=7/9<1.
+
+At most two other items remain, each having a prime factor
+different from p. Assign them there, with at most2/3 cost on
+any such axis. PC6 and the actual expanded source contradict
+coverage.
+
+If p is new, its entire coordinate is free. Among the four
+low items, depth-one cofactor p can occur at most twice, from
+the distinct labels p and3p. The query, if it belongs to this
+pure group, has depth at least two.
+Under uniform measure in this free p coordinate, the pure
+group's forbidden prefixes have total mass at most
+
+    2/p+3/p^2<1, p>=5.
+
+Choose a point outside their actual union. The at most two
+remaining items can first be avoided on non-p axes using the
+expanded tree property with this free coordinate omitted.
+Joining these choices by CRT preserves one old R_3 point.
+This also rules out the pure-group case for arbitrary new
+heights; it does not pretend that p is an old constrained axis.
+
+There are now at most two pure items on any axis. A remaining
+Hall failure forces all five items onto exactly two primes p,j.
+Suppose any item has exponent at least two at p. At least three
+items are divisible by p, since otherwise at least three would
+be pure j powers. Assign three p-divisible items to p, including
+the deep item and every pure p item. This is possible because
+there are at most two pure p items. The other two items are
+divisible by j. Their respective costs are at most7/9 and2/3,
+again contradicting coverage. The same argument applies at j.
+
+Thus all five cofactor moduli are squarefree, using only p,j,
+and the composite query has K=p*j. If p is new and j old,
+assign A and all pure j low items to j. There is at most one
+such low item, so the old j coordinate has at most two roots
+to avoid; its actual single-coordinate tree supplies a common
+old source point. All remaining low items contain p, and the
+free p coordinate can avoid their at most four first roots.
+If both primes are new, the A and pure j group forbids at most
+three j roots, and the remaining low group at most four p roots.
+Both free complements are nonempty. These are actual free
+coordinates of R-star, not independent replacements of old ones.
+
+Only the case of two OLD primes remains. Their pure low
+cofactors p and j occur at most once each. The cofactor pj
+occurs at most twice, from labels pj and3pj. Four low items
+therefore force the numerical list
+
+    {p,j,pj,pj}, with query K=pj.
+
+Order p<j and select just the chain3<p<j, with full actual
+heights. Its capacities are r_p=p-2 and r_j=j-p+1. Assign
+one pure item and two of the three mixed items to one axis,
+and the other pure item and remaining mixed item to the other.
+If either capacity is greater than three, give that axis the
+three items; both costs are strictly below one. Both capacities
+equal three only when p=5,j=7. Hence coverage would force
+
+    low cofactors {5,7,35,35}, K=35,
+    actual low repair labels {15,21,35,105}.
+
+In particular original C0 has no label35: it would make repair
+35 unavailable. The old pure labels5 and7 each occur in C0.
+
+### A triple repetition can be removed by the same source map
+
+The assumed confinement says that the five actual cofactor APs
+with moduli5,7,35,35,35 cover all of R-star. Adding them to C0
+therefore covers the entire cofactor carrier and, by periodicity,
+all integers. This is one common family, not five separate tests.
+Its only repeated numerical labels are5 and7, each twice, and35,
+three times. All other C0 numerical labels occur once.
+
+Choose one actual5 endpoint and assign its root to the5 axis.
+Choose one actual7 endpoint and assign its root to the7 axis.
+Of the three35 events choose any two different labelled events,
+assigning one to5 and the other to7. Each axis has at most two
+forbidden first roots. Continue a complete3-ary5 tree and a
+complete5-ary7 tree through their full coordinate heights,
+avoiding these roots. Use the SAME CRT source map of PC1.
+
+The four selected events have empty pullback. PC2 gives at
+most one AP for each other input, with numerical map
+
+    5^a*7^b*u -> 3^a*5^b*u, gcd(u,3*5*7)=1.
+
+It is injective on the original numerical labels, so all output
+labels are distinct after the selected deletions. They remain
+odd and nonunit. Every new point has one old witness covered
+by the input family, so the output family covers every integer.
+Its count is at most
+
+    |C0|+5-4=|C0|+1<n.
+
+The independent old N_3>=9 already makes this strict; no new
+bound from section42 is used. This contradicts minimum original
+cardinality and proves NF27. The consumer directly uses PC1--PC2;
+BC5's stated pair-only hypothesis is not applied to a triple.
+No condition on the relative phases of the three35 APs is needed.
+
+## 42. Every complete legal ternary repair needs eight classes
+
+Consider any complete P_3 repair retaining every C0 class, using
+distinct odd nonunit moduli and excluding label3. Then
+
+    number of repair classes >=8.                  (NF28)
+
+If it had at most seven classes, discard unnecessary classes.
+Section40 leaves only an all-low repair or the mixed count
+four low and three high. In the mixed case, NF26 confines the
+same nonempty low remainder to one composite-modulus AP.
+NF27 excludes that confinement, including outside repair moduli.
+
+The all-low case is a direct use of BC7, rather than a new
+cofactor classification. Restrict C0 and the repair to the
+original first3 branch as in BC2. The resulting whole cover
+is entirely3-free and has at most |C0|+7<n classes, using the
+independent old N_3>=9. Its repeated bases E are pairs, each
+requiring a distinct effective first-level repair3m. Hence
+|E|<=7. BC7 requires at least eight repeated bases in an
+entirely3-free BC2 residual, a contradiction. This closes the
+all-low branch without estimating its possible seven-item
+cofactor phase layouts separately.
+
+### Each non-parent ternary root now needs eight original labels
+
+Reuse NF19's entire-branch CRT translation. For each of the
+two first3 roots rho different from a_3, its full original
+3-bearing inventory covers {rho} times T_3 times R_3.
+Translate ALL those classes by the same c satisfying
+
+    c=a_3-rho mod3^H, c=0 modB.
+
+This preserves numerical labels, cofactor phases and every
+higher3 digit, and yields a legal complete P_3 repair. NF28
+requires at least eight labels in each of these disjoint
+original inventories. Including the original prime3 class,
+
+    N_3>=1+8+8=17.                                (NF29)
+
+This is a necessary condition on the same minimum hypothetical
+whole cover, with unrestricted original heights and total prime
+support. The new bound is downstream of NF10, NF16 and BC7;
+their independent N_3>=9 input must not be replaced by NF29.
+
+The proof reuses the established matching and tree transports
+and adds the four-low composite-confinement exclusion. It is
+ordinary symbolic mathematics, not new Lean verification or
+a claim of literature priority. Larger repairs, arbitrary
+collision inventories and unrestricted Erdős #7 remain open.
