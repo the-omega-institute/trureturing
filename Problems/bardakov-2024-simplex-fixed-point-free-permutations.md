@@ -46,6 +46,11 @@ listed by Semantic Scholar and sixteen later simplex-equation sources do not
 address fixed-point-free permutation solutions.
 
 The existence half for even $n$ is nevertheless implied by published work.
+In the paper itself, Proposition 4.13 of arXiv:2206.08906v1 (l. 992–996)
+states that $R\times A$ solves the $(n+m)$-simplex equation whenever $R$ solves
+the $n$-simplex equation and $A$ is one of the maps of Example 4.12, among
+them $P(x,y)=(y,x)$; repeating it from $R=P$ gives the product of the
+transpositions of adjacent pairs for every even $n$. Independently,
 Theorem 6.7 of S. M. Mihalache and T. Mochida, *Constructing Solutions of
 Simplex Equations from Polygon Equations*, arXiv:2510.12905v4, states that for
 a solution $T$ of the $(2k+1)$-gon equation and a solution $S$ of its dual
@@ -133,8 +138,9 @@ Tier 1 published question; resolution `Proved` by
   fixed points whose simple map solves the $n$-simplex equation on every set
   iff $n$ is even; this answers Question 2.
 - **Implied by published work, not new here:** the existence for even $n$,
-  as the specialization of Theorem 6.7 of arXiv:2510.12905v4 to identity
-  polygon solutions (see Gap).
+  from Proposition 4.13 of the paper applied repeatedly to $P$, and also as
+  the specialization of Theorem 6.7 of arXiv:2510.12905v4 to identity polygon
+  solutions (see Gap).
 - **Follows from the private `chain_values` and the edge-map facts inside
   `result`, not stated as a declaration:** for every map $s$ of
   $\{0,\dots,n-1\}$, the simple map of $s$ solves the equation on every set
