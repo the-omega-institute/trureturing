@@ -90,6 +90,13 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
   have correct : (atomicMachine m).CorrectOn Set.univ (atomicTask m) := by
     intro w _
     rfl
+  have observation_onto : Function.Surjective
+      (GraftAffineClosure.observe (A := ZMod m)) := by
+    rcases GraftAffineClosure.result.2 m (by omega) (0, 0) with
+      ⟨_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, inverse, _⟩
+    intro z
+    exact ⟨(5 * z.1 - 3 * z.2, -3 * z.1 + 2 * z.2), inverse z⟩
+  have observation_injective := Finite.injective_iff_surjective.mpr observation_onto
   have distinguish (q r : RawState m) (hne : q ≠ r) :
       ∃ w : List Action,
         atomicOutput ((atomicMachine m).toDFA.evalFrom q w) ≠
@@ -107,13 +114,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
         rcases r with ⟨t, y⟩
         by_cases h0 : quantity x = quantity y
         · by_cases h1 : quantity (step x) = quantity (step y)
-          · have hx : x.1 = y.1 := by
-              dsimp [quantity, step] at h0 h1
-              linear_combination 5 * h0 - 3 * h1
-            have hy : x.2 = y.2 := by
-              dsimp [quantity, step] at h0 h1
-              linear_combination 2 * h1 - 3 * h0
-            have hxy : x = y := Prod.ext hx hy
+          · have hxy : x = y := observation_injective (Prod.ext h0 h1)
             have hst : s ≠ t := by
               intro hst
               apply hne
