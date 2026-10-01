@@ -9,7 +9,6 @@
   <ItemGroup>
     <ProjectReference Include="../../StrataLint.Cli/StrataLint.Cli.csproj" />
     <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />
-    <ProjectReference Include="../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" />
     <ProjectReference Include="../../StrataLint.Lean/StrataLint.Lean.csproj" />
     <ProjectReference Include="../../TestSupport/StrataLint.CliTestSupport/StrataLint.CliTestSupport.csproj" />
     <ProjectReference Include="../../TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj" />

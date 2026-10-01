@@ -1,0 +1,755 @@
+{
+  "schema": "e7-root-other-capacity-kernel-v1",
+  "source_schema": "e7-three-kernel-atlas-counterexample-v1",
+  "normalization": "nu_u restricted to U / nu_u(U)",
+  "hinge_comparison": "full product lambda_w dominates retained nu_u",
+  "moment_comparison": "same-source retained nu_u all-height queried-colour capacity",
+  "pure5_deleted_roots": [
+    2,
+    3,
+    4
+  ],
+  "other_reference_roots": "all six reference roots0 remain live",
+  "prime_support": "3,5,7,11,13,17,19,23,29 and any finite set of primes strictly above1600; primes31..1600 excluded",
+  "q5_vertices": [
+    [
+      "1/5",
+      "4/15",
+      "8/15"
+    ],
+    [
+      "4/15",
+      "1/5",
+      "8/15"
+    ],
+    [
+      "4/15",
+      "4/15",
+      "7/15"
+    ]
+  ],
+  "binary_live_intervals": [
+    {
+      "q": 7,
+      "lower": "5/41",
+      "upper": "6/35"
+    },
+    {
+      "q": 11,
+      "lower": "9/109",
+      "upper": "10/99"
+    },
+    {
+      "q": 13,
+      "lower": "11/155",
+      "upper": "12/143"
+    },
+    {
+      "q": 17,
+      "lower": "15/271",
+      "upper": "16/255"
+    },
+    {
+      "q": 19,
+      "lower": "17/341",
+      "upper": "18/323"
+    },
+    {
+      "q": 23,
+      "lower": "21/505",
+      "upper": "22/483"
+    }
+  ],
+  "expected_vertices": 192,
+  "expected_min_gate": "339360219314474607543720792041689335998391012562706890896955019483276412368052637037708153822816109068362722536875281820153695514979763618991233950549844682871/9254325910466478708096200756399532987689610020706214662387870763008650053466857987346307658920755868975364421107353600000000000000000000000000000000000000000000",
+  "expected_worst_vertex": [
+    1,
+    63
+  ],
+  "gate_floor": "9/250",
+  "final_mass_floor": "1/750",
+  "weights": [
+    "24248949/100000000",
+    "24248949/100000000",
+    "10487203/50000000",
+    "1907981/12500000",
+    "1907981/12500000"
+  ],
+  "nonzero_u": [
+    {
+      "leaf_index": 0,
+      "pattern_id": 127,
+      "u": "24248949/100000000"
+    },
+    {
+      "leaf_index": 0,
+      "pattern_id": 191,
+      "u": "24248949/100000000"
+    },
+    {
+      "leaf_index": 1,
+      "pattern_id": 127,
+      "u": "24248949/100000000"
+    },
+    {
+      "leaf_index": 1,
+      "pattern_id": 191,
+      "u": "24248949/100000000"
+    },
+    {
+      "leaf_index": 2,
+      "pattern_id": 62,
+      "u": "4194881/20000000"
+    },
+    {
+      "leaf_index": 2,
+      "pattern_id": 63,
+      "u": "4194881/20000000"
+    },
+    {
+      "leaf_index": 2,
+      "pattern_id": 158,
+      "u": "4194881/20000000"
+    },
+    {
+      "leaf_index": 2,
+      "pattern_id": 159,
+      "u": "4194881/20000000"
+    },
+    {
+      "leaf_index": 2,
+      "pattern_id": 172,
+      "u": "3431961/100000000"
+    },
+    {
+      "leaf_index": 2,
+      "pattern_id": 173,
+      "u": "3431961/100000000"
+    },
+    {
+      "leaf_index": 2,
+      "pattern_id": 174,
+      "u": "4194881/20000000"
+    },
+    {
+      "leaf_index": 2,
+      "pattern_id": 175,
+      "u": "4194881/20000000"
+    },
+    {
+      "leaf_index": 2,
+      "pattern_id": 182,
+      "u": "4194881/20000000"
+    },
+    {
+      "leaf_index": 2,
+      "pattern_id": 183,
+      "u": "4194881/20000000"
+    },
+    {
+      "leaf_index": 2,
+      "pattern_id": 184,
+      "u": "5760103/100000000"
+    },
+    {
+      "leaf_index": 2,
+      "pattern_id": 185,
+      "u": "5760103/100000000"
+    },
+    {
+      "leaf_index": 2,
+      "pattern_id": 186,
+      "u": "4194881/20000000"
+    },
+    {
+      "leaf_index": 2,
+      "pattern_id": 187,
+      "u": "4194881/20000000"
+    },
+    {
+      "leaf_index": 2,
+      "pattern_id": 188,
+      "u": "4954391/25000000"
+    },
+    {
+      "leaf_index": 2,
+      "pattern_id": 189,
+      "u": "4954391/25000000"
+    },
+    {
+      "leaf_index": 2,
+      "pattern_id": 190,
+      "u": "6325597/50000000"
+    },
+    {
+      "leaf_index": 2,
+      "pattern_id": 191,
+      "u": "6325597/50000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 62,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 63,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 88,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 89,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 90,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 91,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 92,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 93,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 94,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 95,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 96,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 97,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 98,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 99,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 100,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 101,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 102,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 103,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 104,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 105,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 106,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 107,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 108,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 109,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 110,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 111,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 112,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 113,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 114,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 115,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 116,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 117,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 118,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 119,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 120,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 121,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 122,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 123,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 124,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 125,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 126,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 127,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 157,
+      "u": "5559/6250000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 158,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 159,
+      "u": "3788463/25000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 174,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 175,
+      "u": "3012261/20000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 181,
+      "u": "841923/20000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 182,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 183,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 186,
+      "u": "14923907/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 187,
+      "u": "3775497/25000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 188,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 189,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 190,
+      "u": "36799/500000"
+    },
+    {
+      "leaf_index": 3,
+      "pattern_id": 191,
+      "u": "147391/2000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 62,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 63,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 88,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 89,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 90,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 91,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 92,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 93,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 94,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 95,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 96,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 97,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 98,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 99,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 100,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 101,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 102,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 103,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 104,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 105,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 106,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 107,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 108,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 109,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 110,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 111,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 112,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 113,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 114,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 115,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 116,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 117,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 118,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 119,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 120,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 121,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 122,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 123,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 124,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 125,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 126,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 127,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 156,
+      "u": "1863799/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 157,
+      "u": "887427/50000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 158,
+      "u": "3788463/25000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 159,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 174,
+      "u": "3012261/20000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 175,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 180,
+      "u": "841923/20000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 182,
+      "u": "15015411/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 183,
+      "u": "15015411/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 186,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 187,
+      "u": "7542883/50000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 188,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 189,
+      "u": "15263847/100000000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 190,
+      "u": "36799/500000"
+    },
+    {
+      "leaf_index": 4,
+      "pattern_id": 191,
+      "u": "7350051/100000000"
+    }
+  ]
+}

@@ -17,8 +17,6 @@ internal static partial class RepositoryPathPolicy
     internal const string SpecRootPath = "docs/develop/spec/";
     internal const string ReportsRootPath = "docs/reports/";
     internal const string AssumptionRegistryPath = "D5/X_Assumptions/REGISTRY.md";
-    internal const string PrWorkflowPath = ".github/workflows/ci-pr.yml";
-    internal const string PushWorkflowPath = Trureturing.Truth.TruthReleasePushRunSelector.WorkflowPath;
     // 缓存发布 workflow（#2542）。`.github` 下是白名单而非通配，新增控制工件必须在此具名登记。
     internal const string CachePublicationWorkflowPath =
         ".github/workflows/lean-cache-publish.yml";
@@ -29,7 +27,6 @@ internal static partial class RepositoryPathPolicy
         ".github/workflows/ci-publication-verify.yml";
     internal const string AnalysisFixturesWorkflowPath =
         ".github/workflows/lean-analysis-fixtures.yml";
-    internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
     internal const string RepositoryCoordinate = "the-omega-institute/trureturing";
 
     internal static bool ContainsRepositorySourceMaterializationIndicator(string value) =>
@@ -59,6 +56,9 @@ internal static partial class RepositoryPathPolicy
         @"(?:^|[\s;&|])(?:dotnet\s+(?:build|run|test)\b|lake(?:\s|$)|make\s+|run\s+--project\b|(?:\./)?(?:tools|scripts)/|(?:bash|sh|source|python\d*|node)\s+\./)",
         RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]
     private static partial Regex RepositorySourceExecutionIndicator();
+
+    [GeneratedRegex(@"^\.github/workflows/ci-[a-z0-9-]+\.yml$", RegexOptions.CultureInvariant)]
+    private static partial Regex CiWorkflowFamilyPath();
 
     internal static ImmutableArray<Diagnostic> Evaluate(
         RepositorySnapshot snapshot,
@@ -165,13 +165,10 @@ internal static partial class RepositoryPathPolicy
             or "D5/X_Frontier/HeartsAuthorizations.md"
             or "Golden/values-kernels.toml" or "Golden/gate-authority-roots.toml"
             or "Meta/Digestion/atomizers.toml"
-            or PrWorkflowPath
-            or PushWorkflowPath
             or CachePublicationWorkflowPath
             or TruthReleasePublicationWorkflowPath
             or PublicationVerificationWorkflowPath
             or AnalysisFixturesWorkflowPath
-            or HarnessGatePath
             or ".github/CODEOWNERS"
             || value.StartsWith("tools/", StringComparison.Ordinal)
             || FileMapDocuments.IsPolicyPath(value)
@@ -189,7 +186,8 @@ internal static partial class RepositoryPathPolicy
             || value.StartsWith(DigestionOpaquePathPolicy.TheoryRootPath, StringComparison.Ordinal)
             || value.StartsWith(SpecRootPath, StringComparison.Ordinal)
             || IsGoldenProjectionData(value)
-            || IsCanonicalFutureCoordinate(value))
+            || IsCanonicalFutureCoordinate(value)
+            || CiWorkflowFamilyPath().IsMatch(value))
         {
             return null;
         }

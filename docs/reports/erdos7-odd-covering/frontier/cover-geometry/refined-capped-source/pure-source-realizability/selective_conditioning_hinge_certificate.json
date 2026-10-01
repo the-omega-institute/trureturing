@@ -1,0 +1,56 @@
+{
+  "schema": "e7-selective-conditioning-certificate-v1",
+  "plan_sha256": "7ca6994a77d53ee6baa13a14454c3e6c98e48eaf3981a0e885b6dc190159f0d3",
+  "phase45": 31,
+  "sourcepoint": "C",
+  "thresholds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28
+  ],
+  "partial_boxes": 2916,
+  "full_colour_boxes": 192,
+  "input_bindings": [
+    {
+      "file": "retained_factorial_hinge_certificate.json",
+      "sha256": "17557f86d60a40310275025219d893e28ba103b5f099cf53886a8eb8ef970aca"
+    },
+    {
+      "file": "retained_factorial_hinge.json",
+      "sha256": "1e76928fa5e63ca221913ad6cdd7ba0db4a54ab093a3a2c26086e1e08b1710e5"
+    },
+    {
+      "file": "conditional_root_hinge.json",
+      "sha256": "66c87071b36d67ef2738cda721aed8495c78a5a52da3d209e11fbe60cb2d10ac"
+    }
+  ],
+  "normalization": "nu_u restricted to U / nu_u(U)",
+  "scope": "one unchanged fixed phase31/C candidate; no new solver, candidate or source sweep",
+  "tree_tie_break": "stop first, then smallest prime; colours in stored order"
+}

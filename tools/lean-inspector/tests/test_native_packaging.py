@@ -33,11 +33,8 @@ class NativeReleaseSupport:
         self.reg_package()
         for name in ('lean-cache-publish.sh', 'lean_cache_release.py'):
             self.copy('tools/scripts/worktree/' + name)
-        self.copy('tools/scripts/workflow/ci_plan.py')
-        self.write('Meta/ci-resources.json', json.dumps(dict(schema='ci-resource-execution-v1',
-            resources=[dict(id='fixture-program-build', projects=[], checks=[], steps=[],
-                            lean_targets=['leanInspector/reportInspector', 'trureturing/Audit'])])))
-        self.env.pop('STRATALINT_LEAN_BUILD_TARGETS')
+        self.env['STRATALINT_LEAN_BUILD_TARGETS'] = json.dumps(
+            ['leanInspector/reportInspector', 'trureturing/Audit'])
         self.env.update(STRATALINT_CACHE_REPO='fixture/cache', GITHUB_SHA='a' * 40,
             GITHUB_RUN_ID='4242', GITHUB_RUN_ATTEMPT='1', GITHUB_EVENT_NAME='schedule',
             GITHUB_REF='refs/heads/dev', STRATALINT_ACTIONS_CACHE_SEEDED='',

@@ -3014,3 +3014,689 @@ D5/S3/Observer/ProbabilisticClosure/StrongLumpabilityDescent.lean 的 strong_lum
 本节保留的综合推导是累计时钟多项式运输、条件化与动态恢复的两个交换式、联合签名细化及两个不同恢复任务的独立性。其精确核、动作合同、实际来源和初始像条件均需由具体系统供给。连续或无界时钟支持、未知核的有限样本认证、近似细化的稳定误差、一般预测表示的全局最小性和物理时空解释均未由此解决。Claim status: open；没有执行新增形式化。
 
 ## 29.99 追加锚
+
+## 30. 单一有类型过程关系的四视图承载与可恢复性
+
+前面各节分别给出了有类型边、完整路径、联合事件—时钟核和动态边界。本节把它们压到一个共同的底层对象上，目的不是重新定义未来行为商，而是说明四种表达究竟从什么载体导出，以及恢复时缺少哪一项会失败。
+
+### 30.1 有类型原子过程关系
+
+取类型集 \(I\)，每类接口的载体为 \(X_i\)，令
+
+$$
+X=\coprod_{i\in I}X_i .
+$$
+
+一个**有类型过程关系**由以下数据组成：
+
+$$
+\mathfrak P=(X,\tau,E,s,t,a,\lambda,\iota,\mathsf D,\circ,1,\delta_1,\sigma).
+\tag{PG.3001}
+$$
+
+其中：
+
+* \(\tau:X\to I\) 给出接口类型；
+* \(E\) 是原子边集合，\(s,t:E\to X\) 给出源与靶，\(a:E\to A\) 给出动作标签，\(\lambda:E\to L\) 给出事件、失败或读数标签；
+* \(\iota:E\hookrightarrow J\) 是单射的原子标识，并进入可观察记录，用来区分同端点、同标签的平行原子边；
+* \(\mathsf D\subseteq E\times E\) 是可接续域，\(e_2\circ e_1\) 只在 \(\mathsf D\) 上定义，并保留中间类型与中间事件；
+* \(1_x\) 是接口 \(x\) 上的单位过程，单位和结合律只在声明的有类型路径上要求；
+* \(\delta_1:E\to G\) 是取值于加法幺半群 \(G\) 的单步 grade；
+* \(\sigma:E\to S\) 是可选的空间支持或边权数据。若空间被定义为过程支持，需要另声明从 \(S\) 到支持图的解释；若空间有独立连接或度量，\(\sigma\) 必须作为额外数据声明。\(\sigma\) 本身不是动作选择器；若它参与选择，必须另给出可访问的选择合同。
+
+路径是 \(E\) 中满足 \(\mathsf D\) 的有限词；\(\operatorname{Path}(\mathfrak P)\) 还包含单位路径和合法复合，单位路径长度为零。定义 \(\operatorname{grade}:\operatorname{Path}(\mathfrak P)\to G\) 为
+
+$$
+\operatorname{grade}(1_x)=0,\qquad
+\operatorname{grade}(e)=\delta_1(e),\qquad
+\operatorname{grade}(e_2\circ e_1)=\operatorname{grade}(e_1)+\operatorname{grade}(e_2).
+\tag{PG.3002}
+$$
+
+顺序写在复合符号中：先执行 \(e_1\)，再执行 \(e_2\)。若一个接口可以有多个后继，由 \(s,a,t\) 给出的可接续关系不是函数；不能把关系的多值性偷偷改写成一个选择器。
+
+### 30.2 从同一载体导出的四种视图
+
+给定一条合法路径 \(p\)，四种视图分别记录不同层次的关系：
+
+$$
+\begin{aligned}
+B(p)&=(\tau(s(p)),s(p);\tau(t(p)),t(p)),\\
+T(p)&=(\text{原子标识序列},\text{路径前缀顺序},\operatorname{grade}(p)),\\
+M_{\mathcal Q}(p)(q)&=\operatorname{Obs}(p\circ q)\qquad(q\in\mathcal Q),
+\end{aligned}
+\tag{PG.3003}
+$$
+
+其中 \(\mathcal Q\) 是声明的后续测试族，\(\operatorname{Obs}\) 至少包括合法性、失败、事件、记录和指定后继读数。\(B\) 是边界视图；\(T\) 是路径时间视图；\(M_{\mathcal Q}\) 是记忆视图，因为它保存了这条历史面对后续接口的响应。
+
+空间视图取 \(\sigma\) 的支持图。若 \(\sigma\) 只标出无向相邻边，并给每条边正权，空间距离可以约定为支持图上的最短路距离；这是一条模型合同，不是由裸过程关系自动推出的物理度量。
+
+因此，四视图不是四个独立对象：
+
+$$
+\mathsf V_{\mathfrak P}(p)=
+\bigl(\operatorname{Space}_\sigma(p),B(p),T(p),M_{\mathcal Q}(p)\bigr)
+\tag{PG.3004}
+$$
+
+是同一个 \(\mathfrak P\) 的不同投影。若只给出四份边缘表而没有同一实际来源中的联合路径，则不能把它们重新拼成（PG.3001）。
+
+### 30.3 条件性重构定理
+
+**定理 30.1（过程关系四视图的忠实重构）。** 假设：
+
+1. 路径有单位和有类型结合，且长度一的原子过程通过联合视图中的单射原子标识可反复识别；
+2. 类型、源、靶和 \(\lambda\) 在允许的有类型同构下分离原子边；
+3. \(\operatorname{grade}\) 由（PG.3002）递归给出，且 \(\delta_1\) 的值可从单步记录读取；
+4. \(\mathcal Q\) 对允许的同端点路径是分离的：两条不同的原子路径至少被一个测试响应区分；
+5. 若空间任务独立于过程标签，则 \(\sigma\) 与边权已经声明，且空间距离确实采用支持图的最短路合同。
+
+则联合数据
+
+$$
+\bigl(\operatorname{Space}_\sigma,\ B,\ T,\ M_{\mathcal Q}\bigr)
+\tag{PG.3005}
+$$
+
+确定 \(\mathfrak P\) 到有类型过程同构；若只要求指定测试族下的行为，则确定到该测试族的行为同构。
+
+**证明。** 长度一的记录给出单射原子标识、源、靶、类型和标签，故恢复 \(E,s,t,a,\tau,\lambda,\iota\)。有类型结合和单位恢复所有合法有限路径的复合；测试分离性恢复不同路径的可观察响应和可接续域。由（PG.3002）递归恢复每条路径的 grade。若空间任务采用第五项的合同，\(\sigma\) 的支持解释和边权恢复空间图及其最短路距离。任意视图保持这些数据的映射因此给出 \(\mathfrak P\) 的有类型同构；若测试族只分离行为类，则只能得到行为同构，不能恢复被任务明确商掉的内部差异。证毕。
+
+这个定理给出恢复义务，而不是声称四个当前数值足以恢复一切。若只保存总 grade、端点和一个当前读数，长度一原子或中间接口可能已经被合并，定理的第一项或第四项就不成立。
+
+### 30.4 时间何时能由边界恢复
+
+若 \(G\) 是加法群，在每个选定根 \(x_0\) 可达的区域内，任意两条从 \(x_0\) 到同一端点的合法路径具有相同 grade，则存在一个端点势
+
+$$
+\theta:X\to G,\qquad
+\operatorname{grade}(p)=\theta(t(p))-\theta(s(p)).
+\tag{PG.3006}
+$$
+
+反之，若存在这样的 \(\theta\)，每个闭路径的 grade 总和必为零。
+
+**证明。** 由可达性定义 \(\theta(x)\) 为任意从 \(x_0\) 到 \(x\) 的路径 grade；路径独立性保证定义良好。对任意 \(p:x\to y\)，把根到 \(x\) 的路径接上 \(p\)，得到（PG.3006）。反向把（PG.3006）沿闭路径相加，端点项消去。势在每个根可达区域上只差一个常数。若过程是有向群胚或每个区域强连通且边具有逆，根可达的路径独立性等价于每个闭路径 grade 为零；对一般有向关系，单有“无闭路径”并不足以推出端点势。
+
+所以在上述路径独立条件下，时间可以由端点边界恢复；在群胚情形这就是闭路零 grade。若路径独立性失败，只能恢复路径时间 \(T(p)\)，不能把它压成端点的单值时间。这个条件与已有 holonomy/势差判据相同，但这里明确了它在共同过程载体中的位置。
+
+### 30.5 空间何时能由过程支持恢复
+
+若空间被定义为 \(\sigma\)-支持的简单无向图的无权最短路距离 \(d\)，并且没有平行边、自环或未记录的权重，则从 \(d\) 反恢复原子空间边至少需要声明
+
+$$
+\sigma=\{(x,y):d(x,y)=1\}
+\tag{PG.3007}
+$$
+
+或提供等价的 geodesic irreducibility 条件。没有这个条件，直接边可能被捷径或额外权重折叠：同一距离函数可以来自不同的原子支持图。因此独立的空间任务必须把 \(\sigma\) 或等价的空间合同纳入共同关系对象。
+
+### 30.6 三个最小失效例子
+
+**例 30.2（类型缺失）。** 一条未标类型的有向边只写成 \(x\to y\)。它可以解释为 \(A\to B\) 的跨类型接口，也可以解释为 \(A\to A\) 的自环。若边界任务要判断能否与 \(B\)-端口接续，两个解释给出不同合法性；裸边关系不能恢复边界类型。
+
+**例 30.3（总 grade 丢失原子分解）。** 直接边 \(A\to C\) 的 grade 为 \(2\)，和路径 \(A\to B\to C\) 的两个 grade \(1\) 在端点与总 grade 上相同。若未来测试能读取中间 \(B\) 或分别调用两步动作，两者不可合并；只存（端点，总 grade）不是动态充分边界。
+
+**例 30.4（端点和时间丢失未来记忆）。** 第25节的四世界关系给出两条历史：它们可以有相同的当前目标后验、端点和已累计 grade，但在保存的 parity/reference 关系不同后，下一次读取同一参考会产生不同输出。因此 \(B\) 与 \(T\) 不能替代 \(M_{\mathcal Q}\)。这不是新的 XOR 定理，而是把已有有限反例接到（PG.3003）的记忆视图。
+
+还可有独立的空间失效：同一过程支持若不声明 \(\sigma\)，可以赋予线形或三角形的空间度量；空间不能从过程标签单独恢复。
+
+### 30.7 FIB 原子生成层的接合
+
+在 FIB 生成层，取自由树 sort 的叶标签/源项 \(\alpha,\beta\)；它们不是两个动态端口。把有序 \(\langle-, -\rangle\) 作为构造器、\(\rho\) 作为保持该 sort 的后继，把 \(E\) 取为《递归关系观察：运输、任务记忆与完成化》§24 的 ReadTag、DownL、DownR、Up、ApplyRho 合法动作。动作的源、靶取游标载体的相应类型子集，并把失败标签、绝对纪元和 writer 记录放入 \(\lambda\)。则：
+
+* 边界视图保留源／靶接口类型和当前游标位置；
+* 时间视图保留绝对纪元与路径 grade；
+* 空间视图由有序上下文的支持关系给出；
+* 记忆视图是《递归关系观察：运输、任务记忆与完成化》§25 的未来续接核或其指定测试族商。
+
+若只观察组成计数，测试族不分离括号和左右次序，四视图只能恢复组成行为商；加入左、右路径读取后，\(\langle\alpha,\beta\rangle\) 与 \(\langle\beta,\alpha\rangle\) 被分开，必须使用更细的过程关系。这里再次说明：\(\alpha,\beta\) 是叶生成元，配对和 \(\rho\) 是构造与动力学，真正的过程边是带源/靶类型的动作；四视图的恢复条件不能把它们压成两个无类型数。
+
+### 30.8 范围与未决边界
+
+本节是对已有 typed process、holonomy、联合核和 FIB 游标接口的结构性收束，没有新增 Lean 声明。它不证明物理时空、无限完成、量子通道或任意空间度量；在多端口局部块中，二元端点需推广为端口列表或相应 operadic 合同。若测试族不分离路径、空间支持未声明、或实际共同来源不闭合，重构只能得到指定任务的行为同构，不能得到原子关系本身。
+
+## 30.99 追加锚
+
+## 31. 有限有类型过程的联合视图核与最小可执行商
+
+第30节说明了四种视图从同一过程载体导出，但“能够区分全部路径”仍不是一个最小、可执行的边界判据。本节在有限经典模型中把它收紧为一个分割迭代。所有结论都针对从声明根和允许动作实际可达的子关系；不可达边若没有进入测试族，不能由观察结果恢复。
+
+### 31.1 有限联合核
+
+令 \(\mathsf S\) 是有限的完整配置集，\(\mathsf A\) 是动作集，\(\mathsf Y\) 是输出集，\(\mathsf L\) 是事件、失败和原子标识的记录集，\(G\) 是加法幺半群。每个动作 \(a\) 给出一个有限次概率核
+
+$$
+K_a(\ell,y,d,s'\mid s)\ge0,\qquad
+\sum_{\ell,y,d,s'}K_a(\ell,y,d,s'\mid s)\le1 .
+\tag{EX.3101}
+$$
+
+这里 \(d\in G\) 是本步 grade 增量；确定性过程是取值为零或一的特例。合法性由总质量是否为零决定。把类型、当前边界、空间支持、参考和权限等不希望被此任务合并的静态字段放入
+
+$$
+v_0:\mathsf S\longrightarrow V_0,\qquad
+\Pi_0=\ker v_0 .
+\tag{EX.3102}
+$$
+
+对任一分割 \(\Pi\) 和其块 \(C\in\Pi\)，定义动作的块响应
+
+$$
+K_a^\Pi(\ell,y,d,C\mid s)
+=\sum_{s'\in C}K_a(\ell,y,d,s'\mid s).
+\tag{EX.3103}
+$$
+
+由此定义细化算子
+
+$$
+s\mathrel{\equiv_{\operatorname{Ref}(\Pi)}}t
+\iff
+\bigl[v_0(s)=v_0(t)\ \land\
+\forall a,\ell,y,d,C:
+K_a^\Pi(\ell,y,d,C\mid s)=K_a^\Pi(\ell,y,d,C\mid t)\bigr].
+\tag{EX.3104}
+$$
+
+动作选择本身也在量词中：若某动作在一代表上非法而在另一代表上有正质量，取总质量即可把两者分开。令
+
+$$
+\Pi_{n+1}=\operatorname{Ref}(\Pi_n).
+\tag{EX.3105}
+$$
+
+这一步同时保留了输出、失败、原子标识、grade 和后继块的联合关系；分别保存这些边缘量再拼接并不等价。
+
+### 31.2 稳定平台与最小可执行边界
+
+**定理 31.1（有限联合核的平台定理）。** 设 \(\mathsf S\) 有限。则：
+
+1. \(\Pi_{n+1}\) 细化 \(\Pi_n\)，并在至多 \(|\mathsf S|-|\Pi_0|\) 次严格细化后达到固定分割 \(\Pi_\ast\)；
+2. 对 \(q_\ast:\mathsf S\to\mathsf S/\Pi_\ast\)，以下商核良定义：
+
+$$
+\overline K_a(\ell,y,d,C\mid q_\ast(s))
+=\sum_{u\in C}K_a(\ell,y,d,u\mid s),
+\qquad C\in\Pi_\ast .
+\tag{EX.3106}
+$$
+
+3. 合法性、事件、输出、grade 增量和下一块都由 \(q_\ast(s)\) 决定；任意有限动作词的联合响应都从这个商递归得到；
+4. 若 \(r:\mathsf S\to R\) 也是一个保留 \(v_0\) 且使每个动作核在 \(r\)-纤维上强可合并的表示，则在实际摘要像上
+
+$$
+r(s)=r(t)\Longrightarrow q_\ast(s)=q_\ast(t).
+\tag{EX.3107}
+$$
+
+因而 \(\Pi_\ast\) 是指定任务下最粗的可执行动态边界。
+
+**证明。** 每次严格细化至少增加一个非空块，故得到次数界。固定后，式（EX.3104）保证同一块内对每个动作、记录标签、输出、grade 和目标块的质量相同，所以（EX.3106）与代表无关。对动作词长度作归纳，得到任意有限续接的联合响应因子化。最后，若 \(r\) 的纤维满足强可合并条件，则同一 \(r\)-块中的状态对 \(\Pi_n\) 的每个块有相同响应；归纳得到该 \(r\)-块细化每个 \(\Pi_n\)，直到细化 \(\Pi_\ast\)。这正是最粗性。证毕。
+
+这个定理的“最小”是相对于已声明的动作、记录、概率核和 \(v_0\) 而言；它不是恢复完整内部配置的绝对最小编码。若目标只要求一个有限 horizon \(H\)，可停在 \(\Pi_H\)；若要求所有有限续接，则取固定平台 \(\Pi_\ast\)。仓内的有限未来层迭代、controlled behavior universal property 和 strong lumpability 结果分别承担这一递推、因子化与概率商的既有形式化支点；本节只给出它们在四视图载体上的统一解释。
+
+### 31.3 视图之间的恢复只由核包含决定
+
+设 \(u:S\to U\)、\(w:S\to W\) 是同一实际来源上的两个有限视图。则
+
+$$
+w=F\circ u\text{（在 }\operatorname{im}u\text{ 上存在唯一 }F)
+\iff
+\ker u\subseteq\ker w .
+\tag{EX.3108}
+$$
+
+因此，两个视图互相可恢复，当且仅当它们的核相等。把第30节的联合视图写成
+
+$$
+\Phi=(\operatorname{Space}_\sigma,B,T,M_{\mathcal Q}),
+\tag{EX.3109}
+$$
+
+把指定任务的完整未来行为写成 \(\beta_{\mathcal Q}\)，则
+
+$$
+\ker\Phi\subseteq\ker\beta_{\mathcal Q}
+\tag{EX.3110}
+$$
+
+是 \(\Phi\) 对该任务动态充分的充要条件；只有
+
+$$
+\ker\Phi=\ker\beta_{\mathcal Q}
+\tag{EX.3111}
+$$
+
+时，\(\Phi\) 才与最小行为边界互相无损。若还要求恢复原过程本身，右侧必须进一步替换为从声明根可达的有类型过程同构关系；不可达部分不能由当前观察凭空补出。
+
+式（EX.3108）是纤维上的良定义判据。它说明“空间、时间、边界和记忆都来自同一对象”并不自动推出任意两者互相恢复；每一条恢复箭头都要检查相应的核包含。
+
+### 31.4 trace 等价与可执行等价的差别
+
+若 \(\mathcal Q\) 只记录一组未必包含全部动作、也未必对前缀封闭的输出词，那么相同 trace 不足以保证下一步动作合法性或概率核可执行。可执行商必须使用式（EX.3104）的逐动作、逐标签、逐后继块质量条件。
+
+**例 31.2（遗漏动作）。** 取两个当前配置 \(u,v\)，它们有相同的 \(v_0\)。动作 \(a\) 在二者上都输出 \(0\) 并回到相同的可见块；另一个动作 \(f\) 只在 \(u\) 上合法。若 \(\mathcal Q\) 只含 \(a\) 的 trace，二者 trace 等价；但选择器若可提出 \(f\)，两者的合法性不同，故不能合并到同一可执行状态。
+
+**例 31.3（首步相同、后继不同）。** 取 \(u,v,r,s\)，令 \(a\) 在 \(u,v\) 上都输出 \(0\)，但分别把它们送到 \(r,s\)；再令动作 \(b\) 在 \(r\) 上输出 \(0\)、在 \(s\) 上输出 \(1\)。只看长度一的 \(a\)-trace 时，\(u,v\) 相同；加入两步续接后，式（EX.3104）的第一次细化把它们分开。于是零即时读数并不等于零未来区别。
+
+在确定性、动作全集已声明且测试族前缀封闭时，稳定平台可与相应的带标签 bisimulation 商相合；在概率系统中仍需保留每个输出标签到每个后继类的质量，不能仅以 trace 相等替代强可合并条件。
+
+### 31.5 回接第30节与 FIB
+
+第30节中的四视图在本有限模型中分别进入：
+
+* \(\operatorname{Space}_\sigma\) 与 \(B\) 进入 \(v_0\) 或其指定静态细化；
+* 原子标识 \(\iota\)、动作 \(a\)、失败/读数 \(\lambda\) 进入 \((\ell,y)\)；
+* 路径 grade 通过 \(d\) 的加法运输；
+* 未来续接记忆由 \(\Pi_\ast\) 的行为类承担。
+
+对 FIB，\(\alpha,\beta\) 仍只是自由树的叶生成元；有序配对和 \(\rho\) 生成源结构与纪元变化。真正进入 \(K_a\) 的是带游标、来源、绝对纪元、参考和权限合同的 ReadTag、DownL、DownR、Up、ApplyRho 动作。因而一个可执行的最小边界应至少形如
+
+$$
+(\text{sort},\text{cursor},\text{reference/permission},[s]_{\Pi_\ast}),
+\tag{EX.3112}
+$$
+
+其中最后一项是指定未来任务的稳定行为类；只保存 \(\alpha,\beta\) 计数、当前端点或来源边缘后验，不能保证下一次 DownL/DownR 的合法性和读出。
+
+## 31.99 追加锚
+
+## 32. 依赖类型生成器与可达行为核心
+
+第30节的过程元组保留了所有接口字段，第31节的联合核给出了有限商的算法。本节再向下收缩一次：把类型、原子边、合法性、后继和当前读出作为生成器的原语，把路径、复合、时间响应和动态边界全部递归导出。结论只针对给定根集合生成的可达子关系。
+
+### 32.1 最小的有类型生成数据
+
+取类型集 \(I\)，每个类型 \(i\) 的配置纤维为 \(S_i\)，每对类型的原子边集合为 \(E_{ij}\)。一条边 \(e\in E_{ij}\) 的动作标签、事件标签和原子标识记为
+
+$$
+a(e)\in A,\qquad
+\lambda(e)\in L,\qquad
+\iota(e)\in J .
+\tag{TG.3201}
+$$
+
+每个类型有当前读出 \(q_i:S_i\to O_i\)。边的单步语义是部分函数
+
+$$
+\operatorname{step}_e:S_i\longrightarrow
+\operatorname{Option}\bigl(L_e\times S_j\bigr),
+\qquad e\in E_{ij}.
+\tag{TG.3202}
+$$
+
+返回 \(\operatorname{none}\) 表示该边在当前配置不合法；返回 \(\operatorname{some}(\ell,s')\) 同时给出事件标签和后继。若过程具有随机性，把右侧换成有限次概率分布，并保留每个输出标签到后继类的质量；本节先写确定性版本。
+
+从这些数据导出有限 typed path。空路径 \(1_i:i\to i\) 是每个类型的单位；若 \(e:i\to j\) 且 \(p:j\to k\)，则 \(p\circ e:i\to k\)。只有索引相等的边才能接续，因此不需要另把“接口类型相容”作为一个无类型布尔条件附加在路径外。
+
+若每条边还有单步 grade \(\delta_1(e)\in G\)，其中 \(G\) 是加法幺半群，则路径 grade 由
+
+$$
+\operatorname{grade}(1_i)=0,\qquad
+\operatorname{grade}(p\circ e)
+=\delta_1(e)+\operatorname{grade}(p)
+\tag{TG.3203}
+$$
+
+导出。空间支持 \(\sigma(e)\) 若不由边类型和 step 定义，也必须作为独立字段加入；它不是生成器可以免费推出来的坐标。
+
+### 32.2 完整有限路径响应与行为核
+
+对 \(p:i\to k\) 和 \(s\in S_i\)，递归定义响应
+
+$$
+\operatorname{Resp}_{1_i}(s)=\operatorname{ok}(q_i(s)),
+\tag{TG.3204}
+$$
+
+若 \(p\) 以 \(e:i\to j\) 开始，则
+
+$$
+\operatorname{Resp}_{p\circ e}(s)=
+\begin{cases}
+\operatorname{fail}(e),&
+\operatorname{step}_e(s)=\operatorname{none},\\
+\operatorname{event}\bigl(e,\ell,
+\operatorname{Resp}_p(s')\bigr),&
+\operatorname{step}_e(s)=\operatorname{some}(\ell,s').
+\end{cases}
+\tag{TG.3205}
+$$
+
+这里的响应保留动作、原子标识、事件、失败、终端读出和路径顺序。定义完整行为
+
+$$
+\beta_i(s):
+\bigl\{p:i\to k\text{ 的有限 typed path}\bigr\}
+\longrightarrow
+\operatorname{Response},
+\qquad
+\beta_i(s)(p)=\operatorname{Resp}_p(s).
+\tag{TG.3206}
+$$
+
+在实际根集合 \(R_i\subseteq S_i\) 上，只取由（TG.3202）反复产生的可达闭包
+\(\operatorname{Reach}(R)\)。所有后续等价和最小性都在这个闭包上判断；未从声明根可达的状态和边不被当前观察自动恢复。
+
+### 32.3 最小可执行行为商
+
+在同一类型纤维上定义
+
+$$
+s\mathrel{\approx_i}t
+\iff
+\beta_i(s)=\beta_i(t).
+\tag{TG.3207}
+$$
+
+**定理 32.1（有类型行为核的动态充分性与最小性）。** 在可达闭包上，\(\approx_i\) 是等价关系，并满足：
+
+1. \(s\approx_i t\) 时，当前读出相同：\(q_i(s)=q_i(t)\)；
+2. 对每条 \(e:i\to j\)，若 \(\operatorname{step}_e(s)=\operatorname{none}\)，则 \(\operatorname{step}_e(t)=\operatorname{none}\)；若
+   \[
+   \operatorname{step}_e(s)=\operatorname{some}(\ell,s'),
+   \]
+   则存在 \(t'\) 使
+   \[
+   \operatorname{step}_e(t)=\operatorname{some}(\ell,t')
+   \quad\text{且}\quad s'\approx_j t' ;
+   \tag{TG.3208}
+   \]
+3. 因而 \(q_i\)、每条 \(\operatorname{step}_e\) 以及所有有限路径响应都下降到商
+   \[
+   \mathsf S_{\mathrm{beh}}=\operatorname{Reach}(R)/{\approx};
+   \tag{TG.3209}
+   \]
+4. 若 \(r\) 是另一个实际可达摘要，并且
+   \[
+   r(s)=r(t)
+   \Longrightarrow
+   \bigl(q_i(s)=q_i(t)\ \land\
+   \text{每条 }e\text{ 的合法性、标签与 }r\text{-后继相同}\bigr),
+   \tag{TG.3210}
+   \]
+   则在 \(\operatorname{im}r\) 上存在唯一映射
+   \[
+   \overline\beta(r(s))=[s]_{\approx}
+   \quad\text{且}\quad
+   \overline\beta\circ r=q_{\mathrm{beh}} .
+   \tag{TG.3211}
+   \]
+   所以任何这样的精确摘要的实际状态数都不小于行为商的类数。
+
+**证明。** 等价关系由函数 \(\beta_i\) 的相等得到。取空路径，立即得到当前读出相等。若一步在 \(s\) 上失败而在 \(t\) 上成功，长度一响应已经不同；若两边都成功但事件标签不同，同样由长度一响应矛盾。因此成功状态具有相同标签。对成功后继 \(s',t'\)，任意后续路径 \(p\) 的响应由 \(p\circ e\) 的响应给出；\(\beta_i(s)=\beta_i(t)\) 遂推出 \(\beta_j(s')=\beta_j(t')\)。这给出（TG.3208），并按路径长度归纳得到商上的全部响应。若 \(r(s)=r(t)\)，条件（TG.3210）沿任意路径归纳给出 \(\beta_i(s)=\beta_i(t)\)，故（TG.3211）在实际像上良定义且唯一。证毕。
+
+这里的唯一性只在 \(\operatorname{im}r\) 上成立；若给摘要值域加入从未由实际来源取得的点，因子在那些点上的延拓没有意义，也不能被称作观察者的最小实现。
+
+### 32.4 四视图恢复的方向性
+
+令 \(\Phi\) 是第30节的联合视图，限制在 \(\operatorname{Reach}(R)\) 上。由（TG.3207）得到
+
+$$
+\ker\Phi\subseteq\approx
+\quad\Longleftrightarrow\quad
+\text{\(\Phi\) 足以决定指定的全部有限路径响应}.
+\tag{TG.3212}
+$$
+
+若还要求 \(\Phi\) 本身就是最小动态边界，则必须有
+
+$$
+\ker\Phi=\approx .
+\tag{TG.3213}
+$$
+
+只有当联合视图含有空路径读出、全部声明动作及其失败响应、原子标识和所有允许的有限 typed continuation 时，\(\ker\Phi\) 才有机会达到（TG.3213）。遗漏空路径会遗漏当前边界读数；遗漏某个动作会把不同的合法性合并；遗漏某个后缀会把未来才出现的区别推到视图核中。
+
+这也给出一个更精简的生成层—视图层分界：
+
+* \(I,S_i,E_{ij},\operatorname{step}_e,q_i\) 决定可达过程和完整行为核；
+* \(\delta_1\) 是可选的路径时间读出，只有在进入响应或另有同步合同后才可由行为恢复；
+* \(\sigma\) 是可选的空间读出，不能仅由 \(\operatorname{step}\) 的数值响应推出；
+* \(\Phi\) 的最小充分边界是行为商 \(\operatorname{Reach}(R)/{\approx}\)，而不是任意单个坐标、总 grade 或当前后验。
+
+### 32.5 FIB 的依赖类型特化
+
+对 Fibonacci 生成层，可以令一个源类型承载自由树项，另设游标、纪元和权限的配置类型。叶常元是
+
+$$
+\alpha,\beta:\mathsf{Tree},
+\qquad
+\langle-,-\rangle:\mathsf{Tree}\times\mathsf{Tree}\to\mathsf{Tree},
+\qquad
+\rho:\mathsf{Tree}\to\mathsf{Tree}.
+\tag{TG.3214}
+$$
+
+它们分别是叶生成元、构造器和替换；真正的 \(E_{ij}\) 是带源/靶索引的
+ReadTag、DownL、DownR、Up、ApplyRho 等游标动作。把动作的失败、事件、绝对纪元和
+writer 收据放入 \(\operatorname{step}_e\) 的标签，行为核便同时决定：
+
+$$
+\text{当前读数},\quad
+\text{下一动作是否合法},\quad
+\text{后缀上下文怎样变化},\quad
+\text{未来读数怎样继续}.
+\tag{TG.3215}
+$$
+
+若任务只读取组成，\(\approx\) 可以把不同括号和左右次序合并；若任务包含路径读取，
+（TG.3208）会把这些后继差异保留下来。故“两个不可约关系”准确地说是
+自由语法的两个叶生成元；最小运行边界还必须包含类型化动作和其行为商。
+
+**例 32.2（空路径与不可达边）。** 若观察只记录非空动作的输出而不记录
+\(q_i(s)\)，两个当前读数不同但每个非空动作都失败的状态会被错误合并。反过来，
+若一条边从任何声明根都不可达，改变它的动作标签或 grade 不会改变任何
+\(\operatorname{Resp}_p\)；因此完整过程的全局同构不能由可达观察推出，最多得到
+\(\operatorname{Reach}(R)\) 上的同构。
+
+## 32.99 追加锚
+
+## 33. 根标记历史的端点核与展开图拼接
+
+第32节的行为核给出了动态上最小的可执行商，但它没有自动说明两条成功的有类型历史是否在同一个实际可达配置结束。下面只补入这一条端点关系；它把行为响应与端点的图拼接分开。根、类型、合法性和共同来源仍取前文已经声明的范围。本节只讨论（TG.3202）的确定性部分 step 函数，不主张概率或非确定性系统的相应提升。
+
+### 33.1 成功历史、端点映射与两个核
+
+固定一组带来源标签的根 \(R\)。实际配置载体取为不交并 \(\mathsf C=\coprod_{(\xi,\nu,i)}S_{\xi,\nu,i}\)，其中 \(\xi\) 是来源身份，\(i\) 是当前类型，\(\nu\) 是使用时声明的 epoch；不使用纪元时略去该索引。根 \(r\in R\subseteq\mathsf C\) 的标签保留在其配置身份中，不能仅因内部状态值相同而抹去来源、类型或纪元。第32节的 \(\operatorname{step}_e\) 与 \(q_i\) 在此按标签提升为 \(\operatorname{step}_{\xi,\nu,e}:S_{\xi,\nu,i}\to\operatorname{Option}(L_e\times S_{\xi,\nu,j})\)（\(e\in E_{ij}\)）及 \(q_{\xi,\nu,i}:S_{\xi,\nu,i}\to O_i\)，其中 step 保持来源及声明的固定 epoch，返回的后继仍带这些标签。本节在标签由输入确定时，用 \(\operatorname{step}_e\) 和 \(q_i\) 或 \(q\) 简记这些带标签的提升；\(\operatorname{Reach}(R)\) 是此带标签载体中的可达闭包。根标记是指定映射 \(R\to\operatorname{Reach}(R),\ r\mapsto r\)，不额外把出发根写成每个后继顶点的路径属性。同源的不同根可以到达同一配置；跨根的 \(\operatorname{EqEnd}\) 只在显式共同 source identity 合同及同一声明的 epoch 范围内有意义。
+
+令 \(H_R\) 为所有从 \(R\) 出发的成功有类型历史。历史允许长度为零，并以 \(\varepsilon_r\) 表示根 \(r\) 的空历史。若 \(h\) 的端点上有合法 typed edge \(e\)，且该步返回事件 \(\ell\) 与带标签后继 \(s'\)，则把扩展记为 \(he\)，并要求 \(he\in H_R\)。端点求值 \(\eta:H_R\to\operatorname{Reach}(R)\) 递归定义为
+
+$$
+\eta(\varepsilon_r)=r,
+\qquad
+\operatorname{step}_e(\eta(h))=\operatorname{some}(\ell,s')
+\Longrightarrow
+\eta(he)=s'.
+\tag{EG.3301}
+$$
+
+这里的 \(\operatorname{Reach}(R)\) 只包括从声明根反复执行成功 typed edge 得到的实际配置。令 \(U_R\) 为 \(H_R\) 的有类型前缀展开：其顶点是历史，其边为
+
+$$
+h\xrightarrow{e}_{U_R}he
+\quad\Longleftrightarrow\quad
+he\in H_R.
+\tag{EG.3302}
+$$
+
+给每个可达配置 \(s\) 的完整未来响应记为 \(\beta(s)\)。它对每个允许的有限 typed continuation 返回当前读出、合法或失败、事件与标签以及该 continuation 的单步 grade 序列；若要把 grade 纳入某次任务响应，就按该任务的声明合同纳入，而不把端点本身偷偷加入响应。令 \(H_{R;\xi,\nu,i}=\{h\in H_R:\eta(h)\in S_{\xi,\nu,i}\}\)，这些纤维按端点的来源、声明的 epoch 与当前类型划分 \(H_R\)。以 \(\beta_{\xi,\nu,i}\) 表示 \(\beta\) 在 \(\operatorname{Reach}(R)\cap S_{\xi,\nu,i}\) 上的限制，只在同一纤维内比较响应。定义端点核及这些纤维内行为核的并
+
+$$
+K_{\mathrm{end}}
+ :=\{(h,k)\in H_R^2:\eta(h)=\eta(k)\},
+\qquad
+K_{\mathrm{beh}}
+ :=\bigcup_{(\xi,\nu,i)}
+ \{(h,k)\in H_{R;\xi,\nu,i}^{\,2}:\beta_{\xi,\nu,i}(\eta(h))=\beta_{\xi,\nu,i}(\eta(k))\}.
+\tag{EG.3303}
+$$
+
+后文的 \(H_R/K_{\mathrm{beh}}\) 及 \(\beta\) 在商上的诱导映射均使用这个保留标签的关系。
+
+于是历史相等的对角关系、端点核和行为核满足
+
+$$
+\Delta_{H_R}\subseteq K_{\mathrm{end}}\subseteq K_{\mathrm{beh}}.
+\tag{EG.3304}
+$$
+
+第二个包含关系只使用“同一实际端点产生同一未来响应”：若 \(\eta(h)=\eta(k)\)，则两边的所有后缀执行完全相同。它不反向断言未来响应能够识别端点。
+
+### 33.2 端点商就是可达根图
+
+定义实际的可达根标记 decorated typed transition graph \(\mathcal G_R\)。其签名包含顶点集 \(V_R=\operatorname{Reach}(R)\)、根标记 \(R\to V_R\) 的指定映射，以及顶点的来源/epoch/类型标签、当前读出 \(q_{\xi,\nu,i}\) 和所有已供应且声明为端点不变量的 support 字段。其边关系 \(\mathcal E_R\) 由带标签的 step 在 \(V_R\) 上诱导；边装饰保留动作 \(a(e)\)、原子标识 \(\iota(e)\)、原子标签 \(\lambda(e)\)、返回事件 \(\ell\) 及已供应的单步 grade \(\delta_1(e)\)。这些装饰是图签名的输入，未供应的字段不由端点商恢复。对 \(s\in V_R\cap S_{\xi,\nu,i}\)、\(s'\in V_R\cap S_{\xi,\nu,j}\) 和 \(e\in E_{ij}\)，令
+
+$$
+s\xrightarrow{e,\ell}_{\mathcal G_R}s'
+\quad\Longleftrightarrow\quad
+\operatorname{step}_{\xi,\nu,e}(s)=\operatorname{some}(\ell,s').
+\tag{EG.3305}
+$$
+
+端点映射先诱导顶点集之间唯一的良定义双射
+
+$$
+\overline\eta:H_R/K_{\mathrm{end}}\;\longrightarrow\;V_R,
+\qquad
+\overline\eta([h])=\eta(h).
+\tag{EG.3306}
+$$
+
+其理由是：\(\eta\) 按可达性的定义满射；两个历史落在同一端点类当且仅当它们的 \(\eta\) 值相等，所以商后单射；每个根的空历史保留根的类型与来源标签。商上的边只在扩展合法时定义：
+
+$$
+[h]\xrightarrow{e,\ell}_{H_R/K_{\mathrm{end}}}[he]
+\quad\Longleftrightarrow\quad
+he\in H_R\ \land\
+\operatorname{step}_e(\eta(h))=\operatorname{some}(\ell,\eta(he)).
+\tag{EG.3307}
+$$
+
+该定义与代表无关。若 \([h]=[h']\)，则 \(\eta(h)=\eta(h')\)；同一实际配置给出相同的 typed edge 合法性、事件和标签，并给出端点相同的后继，于是 \(he\) 与 \(h'e\) 仍属于同一 \(K_{\mathrm{end}}\)-类。配上上述诱导边关系及装饰后，\(\overline\eta\) 才成为根标记 decorated typed graph 的同构：它保持并反映类型、边的合法性、事件/标签、当前读出 \(q\) 和已供应的单步 grade。商边的 grade 读出 \(\overline\delta_1\) 定义为沿用原子边的 \(\delta_1(e)\)：
+
+$$
+q([h])=q(\eta(h)),
+\qquad
+\operatorname{lab}([h],e)=\operatorname{lab}(\eta(h),e),
+\qquad
+\overline\delta_1\bigl([h]\xrightarrow{e,\ell}[he]\bigr):=\delta_1(e).
+\tag{EG.3308}
+$$
+
+任何已供应且声明为端点不变量的 support 字段也同样下降到商。在 §32 的加法幺半群约定下，历史的累计 grade 是按执行次序累加的路径数据；若还声明了序，则沿用该序：
+
+$$
+\operatorname{Grade}(\varepsilon_r)=0,
+\qquad
+\operatorname{Grade}(h e)
+ =\operatorname{Grade}(h)+\delta_1(e),
+\tag{EG.3309}
+$$
+
+不同长度或不同绕行历史可以到达同一顶点而具有不同的累计值，因此累计 grade 一般不下降为顶点坐标。这一商是“根标记可达图”的规范实现；它不把不可达配置加入图，也不把路径记忆误写成顶点属性。
+
+### 33.3 端点观察的必要性与充分性
+
+对 \(h,k\in H_R\)，写精确端点比较观察为
+
+$$
+\operatorname{EqEnd}(h,k)\;:\Longleftrightarrow\;\eta(h)=\eta(k).
+\tag{EG.3310}
+$$
+
+相对于已知且带完整响应装饰的前缀展开 \(U_R\)、已供应的根/类型、标签、读出及可选 grade/support 字段，全部成对的 \(\operatorname{EqEnd}\) 恰好给出 \(K_{\mathrm{end}}\)。这里“必要且充分”只指：由这些输入与端点比较可构造端点商图；反过来，由该图连同历史求值映射可恢复端点比较，因而在式（EG.3306）的规范对应下互相可恢复。它不是比特数或查询次数的下界，也不能恢复输入中遗漏的装饰。充分性来自先取端点类再按（EG.3307）接边；必要性指任何连同历史求值精确恢复端点身份的重建，都必须能判定这同一端点核，否则无法确定哪些历史指向同一顶点。等价地，可以使用一个端点代码 \(c\) 代替成对比较，只要
+
+$$
+c(h)=c(k)\quad\Longleftrightarrow\quad\operatorname{EqEnd}(h,k).
+\tag{EG.3311}
+$$
+
+行为观察只给出 \(K_{\mathrm{beh}}\)。用 §32 的动态同余（TG.3208）定义该商的转移：若 \(\operatorname{step}_e(\eta(h))=\operatorname{none}\)，则 \(\operatorname{step}^{\mathrm{beh}}_e([h])=\operatorname{none}\)；若 \(he\in H_R\) 且该步返回 \(\ell\)，则 \(\operatorname{step}^{\mathrm{beh}}_e([h])=\operatorname{some}(\ell,[he])\)。同余保证合法性、事件及后继行为类与代表无关，商边沿用动作/原子标签及已供应的 \(\delta_1(e)\)，当前读出由空路径响应下降。以 \([\varepsilon_r]\) 标记根，便得到行为商 typed graph \(\mathcal G_{\mathrm{beh}}\)，其顶点集为 \(H_R/K_{\mathrm{beh}}\)。因此
+
+$$
+\overline\eta_{\mathrm{beh}}:\mathcal G_{\mathrm{beh}}\longrightarrow\mathcal G_R,
+\qquad
+\overline\eta_{\mathrm{beh}}([h])=\eta(h)
+\quad\text{为良定义的规范同构}
+\quad\Longleftrightarrow\quad
+K_{\mathrm{end}}=K_{\mathrm{beh}},
+\tag{EG.3312}
+$$
+
+这里 \(\overline\eta_{\mathrm{beh}}\) 的公式先是顶点映射候选；两核相等时它良定义且为双射，再由上述商转移成为同构，仍保留根标记、typed edge、合法性、标签、读出和已供应的单步 grade。其他已供应的端点不变量也在两核相等时下降；不额外宣称它们在一般行为类上不变。若包含关系严格，则行为商只恢复行为核心，不能恢复端点图的全部 gluing。仅测试“是否回到根”更弱：它只回答某条历史的端点是否等于指定根，不能比较两个非根端点，也不能区分两个都不回根但彼此不同的端点。
+
+### 33.4 反例 A：相同被动响应而不同循环端点
+
+这里的 \(C_m\) 与 \(C_n\) 是在同一个外部被动响应合同下比较的独立模型；它们的响应相等是跨模型见证，不是同一个来源标记 \(H_R\) 内的 \(K_{\mathrm{beh}}\) 配对。
+
+对 \(m\ge2\)，令 \(C_m\) 的状态为 \(\mathbb Z/m\mathbb Z\)，根为 \(0\)，唯一总动作为 \(a\)，并令
+
+$$
+\operatorname{step}_a(x)=\operatorname{some}(\lambda_0,x+1\!\!\pmod m),
+\qquad
+q(x)=q_0,
+\qquad
+\delta_1(a)=1,
+\tag{EG.3313}
+$$
+
+事件和其他支持字段均为常量。根历史 \(a^k\) 的有限响应都是同一个常量事件词、终端读出 \(q_0\) 和累计 grade \(k\)；因此对每个固定 \(k\)，\(C_2\) 与 \(C_3\) 的被动响应完全相同，包括 grade \(k\)。然而
+
+$$
+(a^i,a^j)\in K_{\mathrm{end}}^{(m)}
+\quad\Longleftrightarrow\quad
+i\equiv j\pmod m,
+\tag{EG.3314}
+$$
+
+而可达图的顶点数分别为 \(2\) 与 \(3\)。从任一端点开始的未来行为在两个系统内都只看到同一常量响应，故行为核没有提供这一个模 \(m\) 的端点拼接信息。该例把“响应长度和 grade”与“循环端点数”明确分开。
+
+### 33.5 反例 B：分支汇点与根回返不足
+
+这里的 \(B_1\) 与 \(B_2\) 是在同一个外部被动响应合同下比较的独立模型；它们的响应相等是跨模型见证，不是同一个来源标记 \(H_R\) 内的 \(K_{\mathrm{beh}}\) 配对。
+
+取相同的根 \(r\)、动作 \(a,b\)、常量读出 \(q_0\)、常量事件 \(\lambda_0\) 和单步 grade \(\delta_1(a)=\delta_1(b)=1\)。用 \(T_j\) 表示 \(B_j\) 的总后继函数，即 \(\operatorname{step}_e(x)=\operatorname{some}(\lambda_0,T_j(x,e))\)。系统 \(B_1\) 有状态 \(\{r,s\}\)，其全部转移为
+
+$$
+T_1(r,a)=T_1(r,b)=s,
+\qquad
+T_1(s,a)=T_1(s,b)=s.
+\tag{EG.3315}
+$$
+
+系统 \(B_2\) 有状态 \(\{r,s_a,s_b\}\)，其全部转移为
+
+$$
+T_2(r,a)=s_a,
+\quad
+T_2(r,b)=s_b,
+\qquad
+T_2(s_a,a)=T_2(s_a,b)=s_a,
+\quad
+T_2(s_b,a)=T_2(s_b,b)=s_b.
+\tag{EG.3316}
+$$
+
+两者对每个有限动作词都给出相同的常量输出、事件和 grade 长度；所有非空词都不回到根，所以任意被动响应与根回返测试均一致。但在 \(B_1\) 中
+
+$$
+\operatorname{EqEnd}(a,b)\text{ 为真},
+\tag{EG.3317}
+$$
+
+在 \(B_2\) 中 \(\operatorname{EqEnd}(a,b)\) 为假。于是分支是否在一个实际汇点粘合，不能由根回返或被动响应单独决定。
+
+### 33.6 解释、取得合同与来源边界
+
+在这一层，\(K_{\mathrm{end}}\) 是边界/空间的 incidence glue：它说明哪些前缀历史指向同一个实际配置；grade 与 writer 历史仍是路径时间和历史记录；\(K_{\mathrm{beh}}\) 是面向任务的记忆抽象。这里的“空间”和“时间”是这些关系的结构名称，不推出空间度量、物理时间或物理时空完成。
+
+多个根之间的比较必须携带显式 source identity；只有在共同来源合同已经声明时，跨根的 \(\operatorname{EqEnd}\) 才有意义。取得端点比较还需要合法 replay、reference stability、固定 epoch 以及相应 permission；被动响应语义本身只授予输出和后缀行为，不授予端点相等的权限。若这些条件缺失，\(\operatorname{EqEnd}\) 应保持为未取得的接口观测，而不能从相同响应推断。
+
+下一迭代问题是：对选定 carrier，哪一个具体的 FIB cursor/archive/permission 合同能够提供精确的端点比较？
+
+来源边界：本节复用本卷 §§3.3、4.4 的精确纤维与来源/行为分离条件，以及 §30–§32 的四视图、有类型生成器和行为核；它也复用仓内既有 ReachableBehavior* 与 contextual-congruence 结果所承载的可达行为最小性和同余事实。上述结果在此只作接口前提，不在本节重复证明，也不声称本节已有 Lean 验证。本文是理论层追加；端点 acquisition contract 仍由接口所有者给出，长期的物理时空解释仍未解决。
+
+## 33.99 追加锚

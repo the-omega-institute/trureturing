@@ -1,0 +1,12 @@
+### 243.4 平方采样保留单边 RH 判据的强度
+
+在定理 92.3 明列的经典有效素数定理、积分显式公式、零点计数与对称性、Landau 非负 Laplace 变换定理下，
+
+$$
+\mathrm{RH}\quad\Longleftrightarrow\quad
+\exists K\ge0\ \exists N\in\mathbb N,\ N\ge2,\quad
+\forall n\in\mathbb N,\ n\ge N\Longrightarrow
+w(n^2)\Phi(n^2)\ge-K.
+\tag{243.7}
+$$
+

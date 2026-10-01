@@ -22,7 +22,14 @@ public sealed partial class MakeWorkflowTests
         foreach (var target in RootTargets)
         {
             Assert.Matches(new Regex($"(?m)^{Regex.Escape(target)}:", RegexOptions.CultureInvariant), makefile);
-            Assert.InRange(RecipeCount(makefile, target), 0, 1);
+            if (target == "gate")
+            {
+                Assert.Equal(8, RecipeCount(makefile, target));
+            }
+            else
+            {
+                Assert.InRange(RecipeCount(makefile, target), 0, 1);
+            }
         }
 
         Assert.Contains("build: lean", makefile, StringComparison.Ordinal);
@@ -34,7 +41,7 @@ public sealed partial class MakeWorkflowTests
         // make test 是薄委托;数学门链条的唯一真源在 math-gate.sh 里,断言脚本本体。
         var mathematicalTestRecipe = Recipe(makefile, "test");
         Assert.DoesNotContain("dotnet test", mathematicalTestRecipe, StringComparison.Ordinal);
-        Assert.Contains("tools/scripts/workflow/math-gate.sh", mathematicalTestRecipe, StringComparison.Ordinal);
+        Assert.Contains("make lean-report", mathematicalTestRecipe, StringComparison.Ordinal);
         Assert.Equal(
             $"\t@/bin/bash {LeanCacheEnsureScriptPath}",
             Recipe(makefile, "lean-cache-ensure"));
@@ -50,9 +57,6 @@ public sealed partial class MakeWorkflowTests
         {
             WorktreeInitScriptPath,
             LeanCacheEnsureScriptPath,
-            PreflightScriptPath,
-            "tools/scripts/workflow/math-gate.sh",
-            LocalHarnessGateScriptPath,
         })
         {
             var excludedText = File.ReadAllText(Path.Combine(root, excludedCaller));
@@ -128,10 +132,9 @@ public sealed partial class MakeWorkflowTests
             EchoResidualSummaryScriptPath,
             Recipe(makefile, "echo-residual-summary"),
             StringComparison.Ordinal);
-        Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);
-        Assert.Equal(
-            $"\t@MODE=\"$(MODE)\" BASE=\"$(BASE)\" /bin/bash {PreflightScriptPath}",
-            Recipe(makefile, "preflight"));
+        var gateRecipe = string.Join('\n', RecipeLines(makefile, "gate"));
+        Assert.Contains("check-current", gateRecipe, StringComparison.Ordinal);
+        Assert.Contains("check-delta", gateRecipe, StringComparison.Ordinal);
         var worktreeRecipe = Recipe(makefile, "worktree");
         Assert.Contains(WorktreeInitScriptPath, worktreeRecipe, StringComparison.Ordinal);
         Assert.Contains("\"$(KIND)\" \"$(NAME)\"", worktreeRecipe, StringComparison.Ordinal);
@@ -155,8 +158,6 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("WORKTREE_DEST = $(if $(DEST)", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("$(origin PATH)", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("$(PATH)", makefile, StringComparison.Ordinal);
-        Assert.Contains("[DEST=DIR]", makefile, StringComparison.Ordinal);
-        Assert.DoesNotContain("[PATH=DIR]", makefile, StringComparison.Ordinal);
         Assert.Contains(PrOpenScriptPath, Recipe(makefile, "pr-open"), StringComparison.Ordinal);
         Assert.Contains("--head \"$(HEAD)\"", Recipe(makefile, "pr-open"), StringComparison.Ordinal);
         Assert.DoesNotContain("pr-update", makefile, StringComparison.Ordinal);
@@ -174,8 +175,6 @@ public sealed partial class MakeWorkflowTests
         var openRecipe = Recipe(makefile, "pr-open");
         var watchRecipe = Recipe(makefile, "pr-watch");
 
-        Assert.Contains("make pr-open HEAD=branch MESSAGE=file [AUTO_MERGE=1]  Create from a message file, optionally arm auto-merge, and wait for required-CI verdict", makefile, StringComparison.Ordinal);
-        Assert.Contains("make pr-watch PR=n HEAD_SHA=sha   Wait for required-CI verdict on the explicit PR head", makefile, StringComparison.Ordinal);
         Assert.Single(Regex.Matches(openRecipe, Regex.Escape(PrOpenScriptPath)));
         Assert.Single(Regex.Matches(watchRecipe, Regex.Escape(PrWatchScriptPath)));
         Assert.Contains("$(if $(filter 1,$(AUTO_MERGE)),--auto-merge,)", openRecipe, StringComparison.Ordinal);
@@ -253,7 +252,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("make -C tools xi-quantization-test ", helpRecipe, StringComparison.Ordinal);
         var testRecipe = Recipe(makefile, "test");
         Assert.Contains("TEST_PROJECT ?= $(HERE)/StrataLint.sln", makefile, StringComparison.Ordinal);
-        Assert.Contains("scripts/dotnet-test.sh \"$(TEST_PROJECT)\"", testRecipe, StringComparison.Ordinal);
+        Assert.Contains("scripts/dotnet-test.sh \"$(SELECTED_TEST_PROJECT)\"", testRecipe, StringComparison.Ordinal);
         Assert.Contains("$(if $(TEST_FILTER),--filter \"$(TEST_FILTER)\",)", testRecipe, StringComparison.Ordinal);
         foreach (var selected in OperatingSystem.IsWindows() ? Array.Empty<bool>() : new[] { false, true })
         {
@@ -271,6 +270,12 @@ public sealed partial class MakeWorkflowTests
             Assert.Equal(expected, Encoding.UTF8.GetString(dispatch.StandardOutput).Trim());
         }
         var dotnetTest = File.ReadAllText(Path.Combine(root, "tools", "scripts", "dotnet-test.sh"));
+        Assert.Contains("tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj", dotnetTest, StringComparison.Ordinal);
+        Assert.DoesNotContain("StrataLint.Cli", dotnetTest, StringComparison.Ordinal);
+        var proofRecipe = Recipe(makefile, "compile-proof");
+        Assert.Contains("StrataLint.TestEvidence/StrataLint.TestEvidence.csproj", proofRecipe, StringComparison.Ordinal);
+        Assert.Contains("StrataLint.TestEvidence.dll\" compile-proof", proofRecipe, StringComparison.Ordinal);
+        Assert.DoesNotContain("StrataLint.Cli", proofRecipe, StringComparison.Ordinal);
         Assert.Contains("dotnet test \"$@\"", dotnetTest, StringComparison.Ordinal);
         Assert.Contains(
             "list-test-owner-assemblies --repository \"$ROOT\"",
@@ -434,8 +439,9 @@ public sealed partial class MakeWorkflowTests
 
         Assert.Equal(0, rootResult.ExitCode);
         var rootOutput = System.Text.Encoding.UTF8.GetString(rootResult.StandardOutput);
-        Assert.All(RootTargets, target => Assert.Contains($"make {target}", rootOutput, StringComparison.Ordinal));
-        Assert.Contains("values", rootOutput, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("make test  Run lean-report and check-current", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make gate [BASE=origin/dev]  Run independent CI-equivalent commands", rootOutput, StringComparison.Ordinal);
+        Assert.Contains("make lean-report  Produce the canonical raw Lean report", rootOutput, StringComparison.Ordinal);
         Assert.DoesNotContain("make dotnet", rootOutput, StringComparison.Ordinal);
         Assert.DoesNotContain("make tools-test", rootOutput, StringComparison.Ordinal);
         Assert.DoesNotContain("pr-update", rootOutput, StringComparison.Ordinal);
