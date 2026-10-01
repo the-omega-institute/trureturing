@@ -11511,3 +11511,211 @@ prime-power palette, A_r intersect A_(r^2) still has modulus r^2,
 so the third row above would repeat the second row's label.
 FL6 remains an unexcluded layout, not a full covering example.
 No additional experiment or Lean verification is asserted.
+
+## 84. The actual low-cofactor complement imposes a colorwise reciprocal threshold
+
+Keep CP1–CP5's one all-concentrated two-color EB1 original cover, with full ternary height H≥2. For i∈{1,2}, use the complete original cofactor carrier
+
+    Q_i=product_(p∈S_i)p^H_p,   X_i=Z/Q_i,
+    R_i=sum_(m|Q_i,m>1)1/m,
+    theta_H=sum_(a=2..H)3^(1−a)=(1−3^(1−H))/2<1/2.
+
+Write Ω_i for the complete first-three root i in Z/3^H, with normalized counting measure, and give X_i normalized counting measure. Let G_i⊆Ω_i be the union of the actual original pure-three guards owned by this root, and put beta_i=mu(G_i). Every pure-three power through H is original. Comparable-class disjointness makes these guards disjoint and excludes root0, so
+
+    beta_1+beta_2=theta_H,   0≤beta_i≤theta_H.       (CM1)
+
+Let L_i⊆X_i be the union of the actual cofactor classes of the group-i low originals m and3m, with m>1, and put U_i=X_i\L_i. Numerical distinctness permits at most two such classes for each cofactor divisor m. Thus
+
+    mu(U_i)≥max{0,1−2R_i}.                          (CM2)
+
+The same set U_i is retained at every complete ternary word. By CP5, every point of (Ω_i\G_i)×U_i must be covered by an actual group-i original3^a m with a≥2 and m>1. For each numerical pair(a,m), at most one such original exists. Its mass under this one product measure is exactly3^(1−a)/m. Summing over every possible pair only enlarges the actual inventory, giving
+
+    (1−beta_i)mu(U_i)
+      ≤sum_(actual group-i3^a m,a≥2,m>1)3^(1−a)/m
+      ≤theta_H R_i.
+
+Consequently
+
+    (1−beta_i)max{0,1−2R_i}≤theta_H R_i,
+
+    R_i≥(1−beta_i)/(2(1−beta_i)+theta_H)
+       ≥(1−theta_H)/(2−theta_H)>1/3.                (CM3)
+
+For R_i≥1/2 the second line is automatic; for R_i<1/2 it is the rearrangement of the first. All masses are relative to a single ternary root, which accounts for the factor3^(1−a). No conditional cofactor law or separately selected tail witness is used.
+
+### The color not owning the original9 has a stronger threshold
+
+Let j be the first-three root of the original pure9 class, and let k be the other nonzero root. The9 guard has relative root mass1/3, so CM1 gives beta_k≤theta_H−1/3. Substitution in CM3 yields
+
+    R_k≥(4/3−theta_H)/(8/3−theta_H)>5/13.           (CM4)
+
+At H=2 the exact guard masses are beta_j=1/3 and beta_k=0. Hence
+
+    R_j≥2/5,   R_k≥3/7.                            (CM5)
+
+These are necessary inequalities for the same original family. They do not assert that arbitrary choices of the two color inventories can be realized jointly.
+
+### Restrictions on two-prime color supports
+
+For a single prime p≥5, finite original height gives R_i<1/(p−1)≤1/4, contradicting CM3. If S_i={p,q}, with p<q, then
+
+    R_i< p*q/((p−1)(q−1))−1.
+
+The strict inequality retains the finite original heights. For p≥7 the right side is at most17/60, attained at p=7,q=11. For p=5 and q≥17 it is at most21/64. Thus CM3 leaves only
+
+    {5,7}, {5,11}, {5,13}
+
+as possible two-prime supports. For the color k not owning9, CM4 leaves only{5,7}: the next largest two-prime Euler limit is3/8 for{5,11}, below5/13. At H=2, CM5 leaves only{5,7} for either color. The supports are disjoint, so they cannot both be two-prime supports. These restrictions do not imply that each color has at least three primes; the finite-height Euler masses on{5,7} can exceed both thresholds in CM5. No new lower bound on the total number of support primes is claimed.
+
+The deduction uses CP5's actual complete-root cover and the same low-cofactor complement as section74, now measuring the entire complement instead of selecting one point. Its measure estimates are elementary product counting and the union bound; it is not another Simpson cut or HSW construction. The HSW budget conditions CP11–CP12 and SC4 remain the existing conditional descent criteria. Arbitrary color supports can have larger divisor reciprocal mass, so CM3–CM4 alone do not exclude the remaining all-concentrated branch or establish a strict count or modulus-sum descent. These are ordinary deductions, with no Lean verification or priority claim.
+
+### The same threshold applies with arbitrary nonconcentrated support
+
+The all-concentrated hypothesis is unnecessary for the measure
+inequality. Keep section73's partition R,S_1,S_2 of the nonternary
+support, with arbitrary H>=1, and set
+
+    P_i=R union S_i,
+    Qhat_i=product_(p in P_i)p^H_p,
+    Rhat_i=sum_(m|Qhat_i,m>1)1/m.
+
+Section74's singleton-root elimination gives whole coverage of root
+i by the actual originals whose nonternary support is contained in
+P_i. This statement precedes, and does not require, the additional
+small-prime condition used for CP19. Every retained coordinate keeps
+its full original height. Form the low union from the surviving
+originals m and the surviving3m classes active at root i; retain
+every actual pure-three guard there. The same fixed-complement
+argument gives
+
+    Rhat_i>=(1-beta_i)/(2(1-beta_i)+theta_H).         (CM6)
+
+Only numerical distinctness bounds the low inventory by2Rhat_i
+and the high product inventory by theta_H Rhat_i. Originals
+supported entirely on R can occur in both retained families. Each
+inequality is proved separately on its actual retained carrier;
+no disjointness or irredundancy of these families, and no duplicated
+joint inventory budget, is asserted.
+
+For H>=2, CM1--CM5 remain valid with Rhat_i in place of R_i.
+In particular each Rhat_i>1/3, and the root not owning9 has
+Rhat_i>5/13. For H=1, theta_H=beta_i=0, giving Rhat_i>=1/2.
+
+If R={p} and S_i were empty, its retained carrier would be p^H_p
+and
+
+    Rhat_i=sum_(a=1..H_p)p^(-a)<1/(p-1)<=1/4,
+
+contrary to CM6 at every H>=1. Thus a unique nonconcentrated prime
+forces BOTH concentrated color groups to be nonempty at arbitrary
+ternary height. This extends section75's nonemptiness conclusion,
+not its height-one common private-source construction.
+
+The individual two-prime tests apply to P_i, not to S_i. At H=1
+every P_i has at least three primes: the largest two-prime Euler
+limit is11/24<1/2. Hence R={p} further gives |S_i|>=2 at H=1.
+When R is nonempty the P_i overlap, so disjoint-support consequences
+from the all-concentrated case cannot be carried over. Larger
+reciprocal inventories remain possible under these necessary bounds;
+unrestricted noncoverage is not established.
+
+## 85. The three actual square residuals have no further congruence concentration
+
+Keep section83's surviving layout, including the complete original
+color carriers X_j,X_k and their periods M_j,M_k. Put
+
+    E_j^B=E_j intersect B_(q^2),
+    E_j^C=E_j intersect C_(q^2).
+
+Both sets are nonempty by FL4, and E_k is nonempty by section80.
+Use PH3--PH4's congruence-hull construction on any nonempty Y in
+X_i: choose y_0 in Y and set
+
+    Gamma_i(Y)=gcd(M_i,{y-y_0:y in Y}).
+
+The construction is independent of representatives and base point.
+For each divisor t of M_i, Y lies in one residue modulo t exactly
+when t divides Gamma_i(Y). The remaining minimum-column source must
+satisfy
+
+    Gamma_j(E_j^B)=Gamma_j(E_j^C)=q^2,
+    Gamma_k(E_k)=r^2.                              (FL7)
+
+These equalities concern the actual residual sets with every
+original higher prime digit retained.
+
+### Additional concentration of a guarded square branch gives strict descent
+
+Suppose Gamma_j(E_j^C)>q^2. Since q^2 divides this hull, it has a
+divisor t distinct from1,q,q^2. Choose the actual class T modulo t
+containing E_j^C. Retain all5-free originals, delete the ten5-bearing
+originals, and insert:
+
+| Receiving ternary residue | Cofactor condition | Modulus |
+| --- | --- | --- |
+| j mod9 | none | 9 |
+| j+3 mod9 | A_q | 9q |
+| j+6 mod9 | B_(q^2) | 9q^2 |
+| j+6 mod9 | T | 9t |
+| k mod9 | A_r | 9r |
+| k+3 mod9 | A_(r^2) | 9r^2 |
+| k+6 mod27 | none | 27 |
+| k+15 mod27 | A_r | 27r |
+| k+24 mod27 | A_(r^2) | 27r^2 |
+
+The root-k rows are section82's complete five-leaf repair. On root
+j, the first two leaves cover E_j because E_j is contained in A_q.
+On its third leaf the B portion is covered by9q^2 and the C portion
+by9t. Every point missed by the retained originals has its own
+color coordinate in E_i, so all such points are covered. Root0 is
+still covered by the retained original3.
+
+At height two the cofactors are1,q,q^2,t,r,r^2. They are distinct:
+t differs from1,q,q^2 and is supported in S_j, while r,r^2 have
+support in the disjoint S_k. At height three the cofactors are
+1,r,r^2. All are3-free, so different heights cannot collide. All
+labels are fresh because retained originals have ternary height
+at most one. Each row defines one actual AP by CRT, and all
+original non-5 heights may remain in the output carrier.
+
+Nine classes replace ten, contradicting EB1. Interchanging B and C
+proves both guarded equalities in FL7. In particular t=q^3 is
+legitimate only when the actual residual branch is already in one
+q^3 prefix; no complete q^2 cylinder is replaced by a single lift.
+
+### Additional concentration of the opposite residual gives strict descent
+
+Suppose Gamma_k(E_k)>r^2. Choose a hull divisor t distinct from
+1,r,r^2 and its actual phase T containing E_k. Use section83's six
+guarded-root rows unchanged, and replace its three root-k rows by:
+
+| Receiving ternary residue | Cofactor condition | Modulus |
+| --- | --- | --- |
+| k mod9 | A_r | 9r |
+| k+3 mod9 | A_(r^2) | 9r^2 |
+| k+6 mod9 | T | 9t |
+
+Every root-k leaf covers E_k. The guarded-root repair remains
+valid. The height-two cofactors are1,q,q^2,r,r^2,t and the
+height-three cofactors are1,q,q^2; disjoint color supports and
+the choice of t give distinct labels at each height. The same
+freshness and complete-source coverage checks give nine classes
+in place of ten, proving the last equality in FL7.
+
+Consequently Gamma_j(E_j)=q. Indeed E_j is the union of its B and C
+pieces, each with hull q^2, and their two different q^2 residues
+have the same reduction modulo q. The hull of their union is the
+gcd of the two piece hulls and one difference of base points, whose
+q-depth is exactly one.
+
+Every additional prime s in S_j other than q therefore takes at
+least two first-root values on EACH guarded square residual.
+Likewise every s in S_k other than r takes at least two first-root
+values on E_k. When H_q>=3, neither guarded piece fits inside one
+q^3 lift; when H_r>=3, E_k does not fit inside one r^3 lift.
+
+These are necessary congruence-spread constraints. They give no
+product structure, uniform density lower bound or exclusion of
+the remaining layout. The arguments reuse PH3--PH4 and the actual
+repairs of sections82--83; no Lean verification or priority claim
+is asserted.
