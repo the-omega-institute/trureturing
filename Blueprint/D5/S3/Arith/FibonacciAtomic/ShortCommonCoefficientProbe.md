@@ -130,7 +130,7 @@ For either initialization bit epsilon and every literal prefix p legal at that b
 
 The saturation depths satisfy D(H)<=D00(H)<=L(H). An explicit logarithmic estimate is L(H)<=2 floor(log_2 H)+5, where the integer logarithm Nat.log takes base two. In terms of the real natural logarithm, L(H)<=7 log(H)/log(2), which gives O(log H).
 
-A shifted rational Fibonacci grid supplies H<=n<H(q+1) with the prescribed integer and shifted-Zeckendorf residues. The Zeckendorf support of n lies below m. Place its digits at their original indices, group into triples, and remove only terminal whole zero windows. The support evaluates to shiftedFibSum(n)u+nv over every commutative semiring. Its positive natural value excludes the empty word, and the two leading zeros preserve legality at either seam. The existing literal End theorem supplies positivity after a legal prefix. Finally 2^r<=F(2r+2) and H<2^(floor(log_2 H)+1) bound m by 4 floor(log_2 H)+12.
+A shifted rational Fibonacci grid supplies H<=n<H(q+1) with the prescribed integer and shifted-Zeckendorf residues. The Zeckendorf support of n lies below m. Place its digits at their original indices in an IndependentWord. The public LiteralWindowEnd equivalence supplies its successful inverse with the required length bound. Its padded-bit and numeric readout identities give the two basis coefficients; linearity extends them to shiftedFibSum(n)u+nv on every modular row. Its positive natural value excludes the empty word, and the two leading zeros preserve legality at either seam. The existing literal End theorem supplies positivity after a legal prefix. Finally 2^r<=F(2r+2) and H<2^(floor(log_2 H)+1) bound m by 4 floor(log_2 H)+12.
 
 **Remark 1.11 (The modular Hofstadter G antecedent).**
 
