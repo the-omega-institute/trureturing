@@ -1,0 +1,32 @@
+### theorem 244.1 全部几何端点为零的连续反例
+
+对任意固定实数 $q>1$，定义
+
+$$
+f_q(x)=-\frac{|\sin(\pi\log x/\log q)|}{\log x},
+\qquad x>1,
+\qquad B_q=\frac{\pi}{\log q}+1.
+\tag{244.1}
+$$
+
+$f_q$ 在 $(1,\infty)$ 连续，$B_q>0$，且具有以下三个性质：
+
+$$
+f_q(q^n)=0\qquad(n\in\mathbb N,\ n\ge1),
+\tag{244.2}
+$$
+
+$$
+|f_q(y)-f_q(a)|\le B_q\frac{y-a}{a\log a}
+\qquad(4\le a\le y),
+\tag{244.3}
+$$
+
+$$
+\forall K\ge0\ \forall X\in\mathbb R\ \exists x\ge\max(4,X),
+\qquad \sqrt x\log x\,f_q(x)<-K.
+\tag{244.4}
+$$
+
+因此，即使所有几何端点的归一值都为零，该函数也没有最终有限的归一下界。
+
