@@ -42,6 +42,10 @@ def patterns(value, label, ordered=True, includes_only=False):
                 or pattern == "!" or pattern.startswith("#")
                 or any(ord(char) < 32 or ord(char) == 127 for char in pattern)):
             raise RegistrationError(f"invalid {label} pattern: {pattern!r}")
+        # Only `*` (crossing /) and `?` are pattern syntax: the entry matches with
+        # bash and the fingerprint with an equivalent translation of these two.
+        if any(char in "[]{}\\" for char in pattern):
+            raise RegistrationError(f"unsupported {label} pattern syntax: {pattern!r}")
         if includes_only and pattern.startswith("!"):
             raise RegistrationError(f"{label} include cannot be an exclusion: {pattern}")
     if len(set(value)) != len(value):

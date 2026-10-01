@@ -254,6 +254,15 @@ class CiUnitsTests(unittest.TestCase):
                 result = self.fingerprint()
                 self.assertEqual(result.returncode, 2, result.stdout)
 
+    def test_patterns_are_limited_to_star_and_question_mark(self):
+        for pattern in ("assets/[ab].cs", "assets/{a,b}.cs", "assets/\\*.cs", "assets/a]"):
+            with self.subTest(pattern=pattern):
+                self.manifest["units"][0]["inputs"] = sorted(["!linked/Omit.cs", "global.json", pattern])
+                self.assert_error(self.resolve(), "pattern")
+        self.manifest["units"][0]["inputs"] = ["!linked/Omit.cs", "assets/*", "global.json"]
+        self.projects["projects"][2]["include"] = ["shared/[E]xact.cs"]
+        self.assert_error(self.resolve(), "pattern")
+
     def test_diamond_references_are_deduplicated(self):
         self.projects["projects"][0]["references"].append("src/D/D.csproj")
         result = self.resolve()
