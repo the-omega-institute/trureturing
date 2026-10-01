@@ -4,8 +4,8 @@ Production harness projects, scripts, manifests, and architecture material live 
 `tools/`; all harness test and compile-fail projects live under `tools/tests/`.
 `Meta/` is the data side of this boundary and contains no harness program directory.
 
-Each `ci-*.yml` workflow is an independent required-check unit.
-`Meta/ci-units.json`, registered in FILEMAP, is the authority for CI selection.
+`Meta/ci-units.json`, registered in FILEMAP, is the authority for CI selection,
+required-check names, TOWER engineering members, and CI gate roots.
 `ci_units.py` expands shared inputs, the unit workflow, explicitly registered
 project includes and transitive references, and unit inputs into bash patterns.
 Project exclusions do not narrow this selection; registered includes under a
@@ -27,8 +27,21 @@ compile-fail proofs, FILEMAP and current each have
 their own workflow. `ci-current.yml` produces one Lean report and runs
 `check-current`, Scribe, and (for pull requests) `check-delta` against the first
 parent as data. `ci-filemap.yml` owns FILEMAP conformance. Every independent
-workflow has its own required check; the actual names and deployment state come
-from the installed ruleset and real Actions runs.
+workflow registers its required check in `Meta/ci-units.json`: reusable units
+use `<id> / unit`, current uses `current`, and delta and publication-verify use
+null. Non-null names are unique; `ci_units.py contexts` emits them in registration
+order for ruleset configuration. Installed protection and actual execution remain
+observations of the ruleset and real Actions runs.
+
+TOWER engineering-ci declares only `members_from: ci-units`. Its members are the
+ids whose check ends in ` / unit`; each must have the same job id and name in its
+registered workflow. Every `ci-*.yml` except ci-unit.yml must be registered.
+Report-ci and dev-baseline retain explicit members. Gate roots combine the
+non-CI static roots in `Golden/gate-authority-roots.toml` with one
+`<workflow filename>/<unit id>` root per non-null check, using its workflow as
+the entrypoint. The combined roots are unique and sorted by UTF-8 root_id. C#
+consumers fail closed on missing or malformed inventory fields; ci_units.py owns
+complete registration validation.
 
 Local validation uses the same independent commands: `make test` runs
 `lean-report` and `check-current`, while `make gate BASE=<40-hex-commit-sha>` runs

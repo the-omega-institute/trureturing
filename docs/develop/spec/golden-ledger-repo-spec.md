@@ -422,6 +422,8 @@ CI 的独立入口、固定候选、报告、退出及缓存由 A22 定义。`ma
 
 **入口与选工。** 每个独立程序或测试项目使用一个 `ci-*.yml` workflow，PR 与 push 各自触发，workflow 之间并行，文件内部可串行。`Meta/ci-units.json` 经 FILEMAP 登记，是 CI 选工的唯一权威；workflow 只传 unit id，非测试单元另传 command。checkout 后 `ci_units.py resolve` 展开 shared_inputs、workflow 路径、project 的登记输入与 references 递归闭包、unit.inputs，交由该 workflow 的 `ci-entry.sh` 入口通过 `CI_HIT_PATHS_FILE` 判断 hit，不使用 GitHub 事件级 `on.paths` 过滤。入口核对固定候选与完整事件端点；未命中跳过后续程序并报告成功，身份、对象或输入异常以 exit 2 失败，不能静默免跑。FILEMAP 管路径归属、custody、准入面、symlink 和 Evidence 格式；其登记的 manifest 声明 CI 选工。
 
+**检查与成员清单。** `Meta/ci-units.json` 的每个单元含 `check`：复用 `ci-unit.yml` 的单元为 `<id> / unit`，current 为 `current`，delta 与 publication-verify 为 `null`。非 null 名称须唯一，`ci_units.py contexts` 按登记顺序输出必需检查名，作为 ruleset 名单来源。`TOWER.yaml` 的 engineering-ci 使用封闭的 `members_from: ci-units`，不得同时或另行手列 members；成员为 check 以 ` / unit` 结尾的单元 id。验证器核对每个成员在其登记 workflow 中的同名 job，并核对每个 `ci-*.yml`（ci-unit.yml 除外）均有单元登记。report-ci 与 dev-baseline 保持显式 members。C# 投影只读取所需字段，缺文件或畸形登记产生 finding 或 schema 错；完整校验由 `ci_units.py` 承担。
+
 PR 检出固定 `GITHUB_SHA=M`，验证 M 有两个父提交，第二父是触发 PR head，第一父 `B=M^1` 只作路径比较和 delta 的数据。push 核对 `HEAD=GITHUB_SHA=event.after`，按完整 `event.before→event.after` 端点差异判 hit；初始 push 的全零 before 使用当前树路径。schedule/dispatch 同样核对 HEAD 与 GITHUB_SHA。取得所需固定对象后移除 remote 与 remote refs；固定对象及显式网络 URL 仍可达，不宣称完全网络隔离。只执行候选代码，不 checkout、编译或执行 base 判官。
 
 **独立命令。** 各入口验证自己的必需输入与真实结果，不要求其它 workflow 的执行证据：
@@ -1107,7 +1109,7 @@ accepted-set validator 必须先按 `previous_case_event_sha256` 重建历史，
 
 REMOVED：多语言递归静态调用图、runtime `--list-admission-verifiers` export、adapter fallback、内部 verifier catalog 四重机制及“独立 completeness verifier”声明。old tree 没有封闭语法标注或 registry 可把普通 helper 与 admission verifier 机器区分，因此本 SPEC 不拆内部 obligation；只有未来先在 old tree 建成并由当时 base judge 获准的封闭 registry，后续版本才可细分。
 
-`Golden/gate-authority-roots.toml` 在每个快照中声明具名顶层 roots。当前登记包括 Make gate/test、各独立 CI workflow 的作业、公共执行入口及本地 gate。root 以 `<entrypoint-id>/<stage-id>` 区分，绑定完整 entrypoint bytes，不从程序调用图发现内部义务；历史 authority 使用其自身快照的登记集合。
+具名顶层 gate roots 由所选快照的两份登记合并推导：`Golden/gate-authority-roots.toml` 声明 Make gate/test、本地 gate 等非 CI 静态根；`Meta/ci-units.json` 中每个非 null check 的单元生成 `<workflow 文件名>/<单元 id>` 根，entrypoint 为登记的 workflow 路径。合并集合须 root_id 唯一且按 UTF-8 排序。root 绑定完整 entrypoint bytes，不从程序调用图发现内部义务；历史 authority 使用其自身快照的登记集合。
 
 P0-0 bootstrap 已完成；现役唯一命令形为 `dotnet StrataLint.dll gate-authority --check`，一次性 producer 与 Make target 已退役。内部 authority schema 固定为 `expected-gate-authority-v1={schema:"expected-gate-authority-v1",old_build_sha256,roots:[{root_id,entrypoint,entrypoint_blob_sha256}]}`，roots 恰为所选快照的登记集合，按 `root_id` UTF-8 排序且字段封闭；每一 `entrypoint_blob_sha256` 绑定该 root 所属完整 Makefile/script/workflow bytes，不绑定内部 helper 子集。authority SHA 定义为 `sha256(UTF8("expected-gate-authority-v1") || 0x00 || JCS(object))`，由 base judge 通过独立、不可由 candidate 覆写的 verdict input `EXPECTED_GATE_AUTHORITY_SHA256` 注入。`Golden/refactor-v1/manifest.json` 可以记录同值作审计，但 candidate manifest、candidate authority 或 candidate catalog 均不是判词输入；不等即 base judge exit `2`。
 
