@@ -3906,3 +3906,97 @@ text and the condition for replacing a port by a pinned upstream
 declaration are recorded in `Library/ArithUnits/tauceti2026canonicalheight.md`.
 
 ## 追加锚（本行以下为增补区）
+
+## 66. Persistent noncube tests and the complete earlier-support field
+
+Use the fields, radicands and specified cube roots of Section 62.
+The predicates in the following assertion are tests on the base field,
+including a terminal predicate $P_J$.
+
+**Theorem 66.1 (terminal noncube persistence).**
+Suppose that for every $0\le n\le J$, $P_n(a)$ excludes a cube
+root of $a$ in $K$, and is preserved under multiplication by
+$a_i^e$ for $1\le i\le n$ and $e\in\mathbb N$. Suppose also that
+$P_n(a_{n+1})$ holds for $0\le n<J$. Then
+
+$$
+[K_J:K]=3^J,\qquad
+P_J(a)\Longrightarrow \forall x\in K_J,\quad x^3\ne a.
+$$
+
+This includes the empty tower. Theorem 62.1 requires no terminal
+predicate: apply this assertion to
+$Q_n(a)=(n<J)\land P_n(a)$, whose terminal predicate is empty,
+and take its degree conclusion.
+
+Proof. Induct on $m$ with the invariant that for
+$0\le m\le n\le J$, $P_n(a)$ excludes a cube root in $K_m$.
+The base case is the base-field test. The fresh predicate proves
+that the next cubic polynomial is irreducible. Cubic descent from
+a hypothetical cube root at the next stage produces a cube root
+in the preceding stage of $a a_{m+1}^e$. Saturation puts this
+element in the same predicate and the preceding invariant
+excludes it. Thus the invariant persists through $m=J$.
+Multiplication of the degree-three stage degrees gives $3^J$.
+
+**Theorem 66.2 (complete earlier-support degree and unit obstruction).**
+Let $j\in\mathbb N$, $E=\mathbb Q(\zeta_3)$ and
+$\Omega$ be an algebraic closure of $E$. Put
+
+$$
+B_i=L_{3^i}^{\,2}+3,\qquad
+S_j=\bigcup_{1\le i<j}\{p:p\text{ is a rational prime dividing }B_i\}.
+$$
+
+There is a single choice of primary Eisenstein factors
+$\pi_p$ for $p\in S_j$ such that $(\pi_p)$ is prime,
+$N(\pi_p)=p$, $\pi_p\equiv1\pmod3$,
+$p\equiv1\pmod3$ and $\pi_p$ is coprime to its conjugate.
+Factors at distinct rational primes are coprime in all four
+primary/conjugate combinations. This same choice satisfies
+
+$$
+\eta_i=\prod_{p\mid B_i}\pi_p^{\delta_p}
+\quad(1\le i<j),\qquad
+\delta_p=v_p(F_{\rho(p)}).
+$$
+
+Choose cube roots in $\Omega$ of each $\pi_p$, each
+$\overline\pi_p$, and of $2$ and $3$. For the field $M_j$
+generated over $E$ by these same roots,
+
+$$
+[M_j:E]=3^{\,2|S_j|+2},\qquad
+\forall x\in M_j,\quad x^3\ne\zeta_3.
+$$
+
+The support is the earlier range $1\le i<j$. For $j\le1$
+this support is empty and the two rational radicands remain.
+
+Proof. Pairwise coprimality of the blocks makes their prime
+supports disjoint, so the primary factorizations can be selected
+consistently. The principal prime-ideal valuations for the primary
+factors and their conjugates, and the valuations above $2$ and
+$3$, give a diagonal matrix: each corresponding radicand has
+integer valuation not divisible by three, while every other
+radicand has valuation zero. All these valuations vanish on
+$\zeta_3$. Moreover $\zeta_3$ is not a cube in $E$: a cube
+root would be a primitive ninth root of unity, contrary to the
+cyclotomic root-of-unity bound in $E$.
+For the successive saturation tests, include the fresh radicand
+and the multiplicative span of $\zeta_3$ with powers of all
+radicands. A cube equation in the latter span would force every
+radicand exponent to be divisible by three, by the diagonal
+valuations. Removing their cubes would make $\zeta_3$ a cube
+in $E$. Theorem 66.1 therefore gives both the full degree and
+the terminal unit obstruction in the same generated field.
+
+The persistence argument extends the saturated-test construction
+of Section 62. The actual support and oriented products use the
+primary factorization and block coprimality results already stated
+in this volume. The unit obstruction supplies a condition needed
+for the cyclotomic intersection argument of Theorem 55.8;
+the intersection, its Frobenius identification and its rational-prime
+density require their own proofs.
+
+## 追加锚（本行以下为增补区）
