@@ -47,9 +47,30 @@ worldwide literature coverage or publication priority.
 
 ## Route
 
-The Lean definitions specialize the source's elementary and complete homogeneous
-symmetric sums and its hook Schur tableau expansion to Fin n, then define the
-alternating ratio Q and the conjunction of the two conjectured bounds.
+For the hook shape $\lambda=(a+1,1^b)$, the Schur polynomial is the sum of
+tableau monomials over semistandard Young tableaux of shape $\lambda$.
+Regrouping first by content and then by permutations of that content gives
+the source's Kostka expansion $s_\lambda=\sum_\mu K_{\lambda\mu}m_\mu$:
+$K_{\lambda\mu}$ counts tableaux of shape $\lambda$ and content $\mu$, and
+$m_\mu$ sums the distinct monomials with that exponent partition.
+Specializing to the finite alphabet `Fin n` relabels $1,\ldots,n$ by
+$0,\ldots,n-1$ and sets the remaining variables to zero. Thus
+
+$$
+s_\lambda(z)=\sum_{T\in\operatorname{SSYT}_n(\lambda)}
+\prod_{u\in\lambda}z_{T(u)}
+=\sum_{\mu:\,\ell(\mu)\le n}K_{\lambda\mu}m_\mu(z).
+$$
+
+In `schurHook`, a tableau has corner `c`, an arm multiset of cardinality
+$a$ with entries at least `c`, and a leg subset of cardinality $b$ with
+entries strictly greater than `c`. Sorting the arm and leg gives the weak
+row and strict column, counting each tableau once. This is the finite
+specialization of the source's expansion described in
+Library/Analytic/ostrovskii2025amplitude.md. The other Lean definitions
+specialize the elementary and complete homogeneous symmetric sums to
+`Fin n`, then define the alternating ratio Q and the conjunction of the
+two conjectured bounds.
 
 For the refutation choose $(t,n,k)=(3,2,1)$ and
 $z=(-9/10+(2/5)i,-9/10-(2/5)i)$. The entries are a conjugate pair, have
@@ -57,6 +78,22 @@ squared norm $97/100$, and have no real values. After adding the pointwise
 numeral $1$, the finite sums give
 $e_1=1/5$, $s_{(0|0)}=1/5$ and $s_{(1|0)}=-13/100$.
 The resulting ratio is $Q(3,2,1,z+1)=73/60$, whose norm is greater than one.
+
+The second-clause witness recorded in #11514 also has $(t,n,k)=(3,2,1)$,
+but uses $z=(1/10+(9/10)i,1/10-(9/10)i)$. It is a nonreal conjugate pair,
+with $|z_i|^2=41/50\le1$ and $\Re z_i=1/10\ge0$. Here
+$e_1(z)=1/5$, $e_2(z)=41/50$, and the one-row hook gives
+$s_{(1|0)}(z)=h_2(z)=e_1(z)^2-e_2(z)=-39/50$. Hence
+
+$$
+|s_{(1|0)}(z)|=|h_2(z)|=39/50>3/5=\binom{3}{2}|e_1(z)|.
+$$
+
+[computed: python3 `fractions.Fraction`, complex multiplication on rational
+real/imaginary pairs; squared norms $41/50$, $h_2=-39/50$, right-hand side
+$3/5$, strict gap $9/50$.] This is exact arithmetic evidence for failure
+of the second clause. The single Lean settlement uses the first-clause
+witness and does not separately formalize this second calculation.
 
 ## Falsifier
 
@@ -93,6 +130,10 @@ new information that this named conjecture has a concrete counterexample.
 
 - **Proved:** the first clause fails at $(t,n,k)=(3,2,1)$ for the displayed
   self-conjugate pair.
+- **Computed:** the second clause fails at the same parameters for
+  $z=(1/10\pm(9/10)i)$, including its nonnegative-real-part premise,
+  by the exact rational calculation above. This is not a second Lean
+  settlement.
 - **Open:** no universal corrected bound, no maximal admissible radius, and no
   proof for all real self-conjugate grids is claimed here. The t=n identity
   and the k=0 neighboring cases are not formalized or independently computed
