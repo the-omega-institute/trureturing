@@ -94,7 +94,7 @@ If \(L\) is even and \(\alpha=0\), then
 \[
  c_k\equiv 2(-1)^k\pmod 3.
 \]
-Thus every \(c_k\) is nonzero modulo \(3\), hence a unit in every \(R=\mathbb Z/3^n\mathbb Z\). This is a characteristic-specific statement: for a general odd modulus the exact requirement remains \(\gcd(c_k,d)=1\) for every \(k\); the parity choice (9) does not by itself control prime divisors other than (3). In characteristic (2), the local tensor already fails because the determinant (2) is not a unit. Define
+Thus every \(c_k\) is nonzero modulo \(3\), hence a unit in every \(R=\mathbb Z/3^n\mathbb Z\). This is a characteristic-specific statement: for a general odd modulus the exact requirement remains \(\gcd(c_k,d)=1\) for every \(k\); the parity choice (9) does not by itself control prime divisors other than \\(3\\). In characteristic \\(2\\), the local tensor already fails because the determinant \\(2\\) is not a unit. Define
 \[
  \alpha_L=\begin{cases}1,&L\text{ odd},\\0,&L\text{ even}.\end{cases}
  \tag{9}
