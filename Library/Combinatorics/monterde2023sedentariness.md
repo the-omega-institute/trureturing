@@ -24,7 +24,8 @@ symmetric graph matrices `M`. A vertex `u` is `C`-sedentary if
 graph `P_n'` obtained from the path `P_n` by adding a vertex `v = n + 1` that
 is a non-adjacent twin of the end vertex `u = 1`. It shows
 `|U(t)_{u,u}| ≥ 1/n` for all `t`, proves sharpness for `n = 5` from the
-linear independence of the nonzero eigenvalues in the support of `u`, and
+linear independence over `ℚ` of the positive eigenvalues in the support of
+`u` (the paper says "nonzero eigenvalues"; they come in pairs `±λ`), and
 states:
 
 > We conjecture that $u$ is sharply $(\frac{1}{n})$-sedentary in $P_n'$ for
