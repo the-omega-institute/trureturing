@@ -5,7 +5,7 @@ year: 2026
 title: Growing-modulus interfaces for affine Fibonacci Robin candidates
 doi: null
 url: https://github.com/the-omega-institute/trureturing
-claim: "A parameter comparison of the cited primary sources, including Pascadi's 2025 unconditional exponent 5/8: positive moment bounds transfer to finite intervals, while the quoted distribution theorems do not supply the required fixed Fibonacci modulus estimate at logarithmic smoothness with growing weights and a subpower cofactor."
+claim: "A parameter comparison of the cited primary sources, including Pascadi's 2025 unconditional exponent 5/8 and Bourgain–Garaev's subpower prime-modulus reciprocal cancellation: finite positive moments and unweighted cancellation do not supply the same-candidate strict Robin budget with the actual low-loss weights."
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -236,6 +236,68 @@ $$
 原文描述的一个非平凡使用范围是足够稠密的 $\mathcal X$，及 $X,Y\ge m^{1/2+\varepsilon}$。
 
 当前 $C H\equiv1\pmod V$ 需要固定 $a=1$，核心集合稀疏，而余因子区间长为 $V^{o(1)}$，远小于 $V^{1/2}$。该均方定理没有因此给出指定 $a=1$ 的无命中结论。也可对每个核心写 $g_C=-V^{-1}\bmod C$，但这样模数 $C$ 随核心改变；不能直接当成一个固定模数逆元分布。逆元映射是单位群置换，只保持整个单位群的计数，并不自动使光滑稀疏子集在短区间均匀分布。
+
+## Bourgain–Garaev：素数模的次幂长度消去与逐点误差
+
+Jean Bourgain, M. Z. Garaev, *Sumsets of reciprocals in prime fields and multilinear Kloosterman sums*, arXiv:1211.4184v1 (2012)。
+
+- 原文：https://arxiv.org/pdf/1211.4184v1
+- 精确位置：Theorem 16，第10页；§12.2 的证明从第54页开始。
+
+在素数模 $p$ 下，令 $n^{-1}$ 为模 $p$ 逆元、$e_p(z)=\exp(2\pi iz/p)$。对 $2\le M<p$，所引定理给
+
+$$
+\max_{a\not\equiv0\pmod p}
+\left|\sum_{n\le M}e_p(an^{-1})\right|
+\ll M\frac{(\log\log p)^3\log p}{(\log M)^{3/2}},
+$$
+
+隐常数绝对。原文列出的非平凡使用范围包括
+
+$$
+M>\exp\bigl((\log p)^{2/3}(\log\log p)^3\bigr).
+$$
+
+这里的 $M$ 是从1开始的未加权区间端点；不能把该式当作任意平移区间、任意系数或低亏损子集上的同一估计。素指标 $r$ 也不保证 $F_r$ 为素数。
+
+仅在另外满足 $p=V=F_r$ 为素数时，可以比较旧大除数分支的最大余因子尺度。令 $y=\log(1+V\lceil V/10\rceil)$，固定 $a_0>0$，取整数端点
+
+$$
+M=\left\lfloor\exp\left(\frac{a_0y}{(\log y)^2}\right)\right\rfloor.
+$$
+
+由于 $y=2\log p+O(1)$，这个端点充分大时在上述消去范围内。写
+
+$$
+\varepsilon_p(M)=\frac{(\log\log p)^3\log p}{(\log M)^{3/2}},
+$$
+
+则在这个端点尺度有
+
+$$
+\varepsilon_p(M)\asymp_{a_0}
+\frac{(\log\log p)^6}{\sqrt{\log p}}\longrightarrow0,
+\qquad M\varepsilon_p(M)\longrightarrow\infty.
+$$
+
+因此，“次幂区间一律太短而没有消去”不是这里的正确障碍。即使以该统一频率界控制一个指定逆元剩余类的未加权计数，误差尺度仍是 $M\varepsilon_p(M)$；主项 $M/p$ 加这个误差的上界不能降到1以下以证明无命中。相对消去不等于指定单点排除。
+
+此外，一个实际余因子 $h\le M$ 未必达到定理的非平凡尺度。实际约束还包括 $d\mid N$、$dh=N=1+Vk$、共同乘积窗口以及 $J_s(d)\le J_0$。定理没有给这个子集的加权消去，更没有给同一个 $N$ 的完整价格损失。以所有 $n\le M$ 的消去替换经过低亏损筛选的部分和，没有可直接引用的支配关系。
+
+Jean Bourgain, M. Z. Garaev, *Kloosterman sums in residue rings*, arXiv:1309.1124v1 (2013)。
+
+- 原文：https://arxiv.org/pdf/1309.1124v1
+- 精确位置：Theorem 5，第4页；§6.2 的证明从第14页开始。
+
+其复合模数版本对固定小常数 $c>0$ 和 $M>m^c$ 给
+
+$$
+\max_{(a,m)=1}
+\left|\sum_{\substack{n\le M\\(n,m)=1}}e_m(an^{-1})\right|
+\ll_c M\frac{(\log\log m)^{O(1)}}{\sqrt{\log m}}.
+$$
+
+不能令 $c$ 随 $m$ 趋于0来覆盖 $M=m^{o(1)}$，因为定理固定 $c$，且隐常数依赖它。这个版本不弥补上述次幂余因子尺度在一般 $F_r$ 模数下的接口；素数模版本的全部非零频率界也不能直接运输到这里只控制可逆 $a$ 的陈述。
 
 ## Munsch–Shparlinski–Yau：另一个光滑度范围的存在下界
 
