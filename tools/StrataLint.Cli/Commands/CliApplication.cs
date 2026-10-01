@@ -94,7 +94,7 @@ internal static class CliApplication
     {
         using var output = new StringWriter();
         using var error = new StringWriter();
-        var exit = TestEvidenceCommands.Run([command, .. tail], output, error);
+        var exit = StrataLint.TestEvidence.Program.Run([command, .. tail], Environment.CurrentDirectory, output, error);
         return RenderExplicit(new(exit, output.ToString(), error.ToString()), console);
     }
 
@@ -117,7 +117,7 @@ internal static class CliApplication
             ["check-delta"] = static (environment, tail, console) =>
                 RenderExplicit(environment.CheckDelta(tail), console, allowProtectedAnnotation: true),
             ["compile-proof"] = static (_, tail, console) =>
-                RenderExplicit(CompileProofCommand.Run(tail, Environment.CurrentDirectory), console),
+                RenderTestEvidence("compile-proof", tail, console),
             ["clean-lanes"] = static (environment, tail, console) =>
                 RenderCommand(environment.CleanLanes(tail), console),
             ["coverage"] = static (environment, tail, console) =>

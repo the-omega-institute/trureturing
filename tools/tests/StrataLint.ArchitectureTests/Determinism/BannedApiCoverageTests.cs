@@ -1,4 +1,4 @@
-using StrataLint.Cli;
+using StrataLint.TestEvidence;
 
 namespace StrataLint.ArchitectureTests;
 

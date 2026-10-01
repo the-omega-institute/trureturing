@@ -49,6 +49,15 @@ those plus Scribe, FILEMAP and explicit-base `check-delta`. A project-specific
 test is run with `make -C tools test TEST_PROJECT=...`; local success is early
 feedback and does not replace remote required checks.
 
+`StrataLint.TestEvidence` owns `list-test-owner-assemblies`, `verify-trx`, and
+`compile-proof`. It references only Engine; its project closure contains neither
+Scribe nor Scribe.Documents. `dotnet-test.sh` and the compile-proof make target
+build and invoke this executable. CLI forwards the same commands through a project
+reference. TRX validation requires successful executed tests, the selected owner
+assemblies, and no infrastructure hang guard skips. The tool's owned tests also
+compile into the existing CLI integration test project through an explicit source
+link, so that CI unit executes both entrypoints' regression checks.
+
 Report compatibility is the explicit `report_cache_release_semantic_version` in the registered
 `lean-report-inputs.json`. Native Lake facets own report reuse and always require
 the default Lean/audit targets and current inspector build. Lake traces and the explicit

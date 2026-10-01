@@ -15,7 +15,8 @@
         "tools/StrataLint.FileMap/StrataLint.FileMap.csproj",
         "tools/StrataLint.Lean/StrataLint.Lean.csproj",
         "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
-        "tools/StrataLint.Scribe/StrataLint.Scribe.csproj"
+        "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
+        "tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj"
       ],
       "owner": null,
       "owned_test_assembly": "StrataLint.Tests",
@@ -25,6 +26,26 @@
       "global_namespace_exceptions": [
         "tools/StrataLint.Cli/AssemblyInfo.cs",
         "tools/StrataLint.Cli/Usings.cs"
+      ]
+    },
+    {
+      "path": "tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj",
+      "assembly": "StrataLint.TestEvidence",
+      "role": "production",
+      "include": [
+        "tools/StrataLint.TestEvidence/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.Engine/StrataLint.Engine.csproj"
+      ],
+      "owner": null,
+      "owned_test_assembly": "StrataLint.TestEvidence.Tests",
+      "test_partition": null,
+      "root_namespace": "StrataLint.TestEvidence",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": [
+        "tools/StrataLint.TestEvidence/AssemblyInfo.cs"
       ]
     },
     {
@@ -191,6 +212,7 @@
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
         "tools/StrataLint.FileMap/StrataLint.FileMap.csproj",
         "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
+        "tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj",
         "tools/TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
         "tools/TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj",
         "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
@@ -536,7 +558,8 @@
       "assembly": "StrataLint.CliIntegration.Tests",
       "role": "cross-cutting-test",
       "include": [
-        "tools/tests/StrataLint.CliIntegration.Tests/**/*.cs"
+        "tools/tests/StrataLint.CliIntegration.Tests/**/*.cs",
+        "tools/tests/StrataLint.TestEvidence.Tests/TestEvidenceCommandTests.cs"
       ],
       "exclude": [],
       "references": [
@@ -545,6 +568,7 @@
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
         "tools/StrataLint.Lean/StrataLint.Lean.csproj",
         "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
+        "tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj",
         "tools/TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
         "tools/TestSupport/StrataLint.CliTestSupport/StrataLint.CliTestSupport.csproj",
         "tools/TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj",
@@ -558,7 +582,9 @@
       "owned_test_assembly": null,
       "test_partition": "tools/tests/StrataLint.CliIntegration.Tests",
       "root_namespace": "StrataLint.CliIntegration.Tests",
-      "namespace_exclude": [],
+      "namespace_exclude": [
+        "tools/tests/StrataLint.TestEvidence.Tests/TestEvidenceCommandTests.cs"
+      ],
       "global_namespace_exceptions": [
         "tools/tests/StrataLint.CliIntegration.Tests/Usings.cs"
       ]
@@ -1329,6 +1355,28 @@
         "tools/tests/StrataLint.TruthRelease.Tests/AssemblyInfo.cs",
         "tools/tests/StrataLint.TruthRelease.Tests/Usings.cs"
       ]
+    },
+    {
+      "path": "tools/tests/StrataLint.TestEvidence.Tests/StrataLint.TestEvidence.Tests.csproj",
+      "assembly": "StrataLint.TestEvidence.Tests",
+      "role": "owned-test",
+      "include": [
+        "tools/tests/StrataLint.TestEvidence.Tests/**/*.cs"
+      ],
+      "exclude": [],
+      "references": [
+        "tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj",
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
+      ],
+      "owner": {
+        "path": "tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj",
+        "assembly": "StrataLint.TestEvidence"
+      },
+      "owned_test_assembly": null,
+      "test_partition": "tools/tests/StrataLint.TestEvidence.Tests",
+      "root_namespace": "StrataLint.TestEvidence.Tests",
+      "namespace_exclude": [],
+      "global_namespace_exceptions": []
     }
   ],
   "historical_projects": [],

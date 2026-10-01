@@ -270,6 +270,12 @@ public sealed partial class MakeWorkflowTests
             Assert.Equal(expected, Encoding.UTF8.GetString(dispatch.StandardOutput).Trim());
         }
         var dotnetTest = File.ReadAllText(Path.Combine(root, "tools", "scripts", "dotnet-test.sh"));
+        Assert.Contains("tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj", dotnetTest, StringComparison.Ordinal);
+        Assert.DoesNotContain("StrataLint.Cli", dotnetTest, StringComparison.Ordinal);
+        var proofRecipe = Recipe(makefile, "compile-proof");
+        Assert.Contains("StrataLint.TestEvidence/StrataLint.TestEvidence.csproj", proofRecipe, StringComparison.Ordinal);
+        Assert.Contains("StrataLint.TestEvidence.dll\" compile-proof", proofRecipe, StringComparison.Ordinal);
+        Assert.DoesNotContain("StrataLint.Cli", proofRecipe, StringComparison.Ordinal);
         Assert.Contains("dotnet test \"$@\"", dotnetTest, StringComparison.Ordinal);
         Assert.Contains(
             "list-test-owner-assemblies --repository \"$ROOT\"",

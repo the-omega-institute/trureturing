@@ -2,11 +2,13 @@ using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
 
-namespace StrataLint.Cli;
+namespace StrataLint.TestEvidence;
+
+internal sealed record CompilationProofResult(int ExitCode, string Output, string Error);
 
 internal static class CompileProofCommand
 {
-    internal static ExplicitCommandResult Run(IReadOnlyList<string> arguments, string repositoryRoot)
+    internal static CompilationProofResult Run(IReadOnlyList<string> arguments, string repositoryRoot)
     {
         var output = new StringBuilder();
         try

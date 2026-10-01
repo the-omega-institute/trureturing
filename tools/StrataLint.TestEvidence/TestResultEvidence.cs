@@ -1,7 +1,7 @@
 using StrataLint.Engine;
 using System.Xml.Linq;
 
-namespace StrataLint.Cli;
+namespace StrataLint.TestEvidence;
 
 internal sealed record TestResultEvidence(
     int Executed,

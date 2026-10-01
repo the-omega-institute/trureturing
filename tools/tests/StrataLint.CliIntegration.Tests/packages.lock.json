@@ -137,6 +137,7 @@
           "StrataLint.Lean": "[1.0.0, )",
           "StrataLint.Scribe": "[1.0.0, )",
           "StrataLint.Scribe.Documents": "[1.0.0, )",
+          "StrataLint.TestEvidence": "[1.0.0, )",
           "Tomlyn": "[2.10.1, )"
         }
       },
@@ -247,6 +248,12 @@
         "type": "Project",
         "dependencies": {
           "StrataLint.Scribe": "[1.0.0, )"
+        }
+      },
+      "stratalint.testevidence": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )"
         }
       },
       "stratalint.testsupport": {

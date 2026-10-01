@@ -113,7 +113,9 @@ public sealed class DotnetTestScriptTests
         Assert.True(result.ExitCode == expectedExit, $"expected exit {expectedExit}, actual {result.ExitCode}\n{output}\n{error}");
         Assert.Single(File.ReadAllLines(log), line => line.StartsWith("test ", StringComparison.Ordinal));
         Assert.All(File.ReadAllLines(log).Where(line => line.StartsWith("run ", StringComparison.Ordinal)),
-            line => Assert.StartsWith("run --project " + Path.Combine(root, "tools/StrataLint.Cli/StrataLint.Cli.csproj") + " ", line));
+            line => Assert.StartsWith("run --project " + Path.Combine(root, "tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj") + " ", line));
+        Assert.StartsWith("build " + Path.Combine(root, "tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj") + " ",
+            Assert.Single(File.ReadAllLines(log), line => line.StartsWith("build ", StringComparison.Ordinal)), StringComparison.Ordinal);
         if (expectedExit == 0 && (!filtered || scope != "solution"))
         {
             var required = scope == "solution" ? owners : [selectedAssembly];

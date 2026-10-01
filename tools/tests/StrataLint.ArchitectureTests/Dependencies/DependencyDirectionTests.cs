@@ -26,7 +26,7 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
-    public void CliReferencesExactlyConfigurationEngineScribeTomlynAndTruth()
+    public void CliReferencesExactlyConfigurationEngineScribeTestEvidenceTomlynAndTruth()
     {
         Assert.Equal(
             [
@@ -36,10 +36,20 @@ public sealed class DependencyDirectionTests
                 "StrataLint.Lean",
                 "StrataLint.Scribe",
                 "StrataLint.Scribe.Documents",
+                "StrataLint.TestEvidence",
                 "Tomlyn",
                 "Trureturing.Truth",
             ],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(StrataLint.Cli.Program).Assembly));
+    }
+
+    [Fact]
+    public void TestEvidenceReferencesExactlyEngine()
+    {
+        Assert.Equal(["StrataLint.Engine"],
+            AssemblyReferencePolicy.NonPlatformReferences(typeof(StrataLint.TestEvidence.Program).Assembly));
+        Assert.Equal(["../StrataLint.Engine/StrataLint.Engine.csproj"], ProjectReferences(XDocument.Load(
+            Path.Combine(RepositoryLayout.FindRoot(), "tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj"))));
     }
 
     [Fact]
@@ -127,6 +137,7 @@ public sealed class DependencyDirectionTests
                 "../../StrataLint.Engine/StrataLint.Engine.csproj",
                 "../../StrataLint.FileMap/StrataLint.FileMap.csproj",
                 "../../StrataLint.Scribe/StrataLint.Scribe.csproj",
+                "../../StrataLint.TestEvidence/StrataLint.TestEvidence.csproj",
                 "../../TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
                 "../../TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj",
                 "../../TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",

@@ -7,6 +7,8 @@
     <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="../StrataLint.TestEvidence.Tests/TestEvidenceCommandTests.cs" Link="TestEvidenceCommandTests.cs" />
+    <ProjectReference Include="../../StrataLint.TestEvidence/StrataLint.TestEvidence.csproj" />
     <ProjectReference Include="../../TestSupport/StrataLint.RuleTestSupport/StrataLint.RuleTestSupport.csproj" />
     <ProjectReference Include="../../TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj" />
     <ProjectReference Include="../../StrataLint.Configuration/StrataLint.Configuration.csproj" />

@@ -1,8 +1,8 @@
 using StrataLint.Engine;
 
-namespace StrataLint.Cli;
+namespace StrataLint.TestEvidence;
 
-// These standalone validators survive removal of cross-stage evidence orchestration.
+// Standalone validators for successful test execution evidence.
 internal static class TestEvidenceCommands
 {
     internal static int Run(IReadOnlyList<string> arguments, TextWriter output, TextWriter error)
