@@ -53,12 +53,15 @@ theorem component_shape_and_div44 (d : CenterLinkComponent) :
     omega
   have hN' : 5 * d.tetrahedra = 44 * (d.genus - 1) := by
     apply Int.ofNat_inj.mp
-    simpa [Nat.cast_mul, Nat.cast_sub hg] using hN
+    norm_num [Nat.cast_mul, Nat.cast_sub hg]
+    linarith [hN]
   have h44mul : 44 ∣ 5 * d.tetrahedra := by
     exact ⟨d.genus - 1, hN'⟩
+  have h44mul' : 44 ∣ d.tetrahedra * 5 := by
+    simpa [Nat.mul_comm] using h44mul
   have h44 : 44 ∣ d.tetrahedra := by
     exact (Nat.Coprime.dvd_of_dvd_mul_right
-      (show Nat.Coprime 44 5 by norm_num) h44mul)
+      (show Nat.Coprime 44 5 by norm_num) h44mul')
   exact ⟨hN', h44⟩
 
 /-- A role-homogeneous pure three-cycle inventory with low degree eight and
@@ -82,9 +85,11 @@ theorem inventory_tetrahedra_div88 (inv : PureCycleInventory) :
     exact h44sum
   have h8mul : 8 ∣ 3 * inv.tetrahedra := by
     exact ⟨inv.lowEdges, inv.low_edge_balance.symm⟩
+  have h8mul' : 8 ∣ inv.tetrahedra * 3 := by
+    simpa [Nat.mul_comm] using h8mul
   have h8 : 8 ∣ inv.tetrahedra := by
     exact (Nat.Coprime.dvd_of_dvd_mul_right
-      (show Nat.Coprime 8 3 by norm_num) h8mul)
+      (show Nat.Coprime 8 3 by norm_num) h8mul')
   have h88 : Nat.lcm 44 8 ∣ inv.tetrahedra :=
     Nat.lcm_dvd h44 h8
   refine ⟨hcomponent, ?_⟩
