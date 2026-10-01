@@ -12,7 +12,8 @@ internal sealed class ThetaCubeDocument : IScribeDocumentDefinition
         H("Fixed Avoiders of the Third Iterate"),
         Blocks(
             Node("fundamental-bijection-thetacube-result", "The third-iterate generating function", "result",
-                "For each pattern sigma equal to 231 or 312, the ordinary generating function for sigma-avoiding permutations fixed by the third iterate of the fundamental bijection, multiplied by 1 - x - x squared - 2x cubed, equals one.", DescribeRole.Theorem)),
+                "For each pattern sigma equal to 231 or 312, the ordinary generating function for sigma-avoiding permutations fixed by the third iterate of the fundamental bijection, multiplied by 1 - x - x squared - 2x cubed, equals one.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("archer-laudone-theta-cube-231-312"), ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,

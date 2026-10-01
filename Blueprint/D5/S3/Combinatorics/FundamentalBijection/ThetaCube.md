@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/FundamentalBijection/ThetaCube.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/FundamentalBijection/ThetaCube.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/archer-laudone-theta-cube-231-312` (proved) by `D5/S3/Combinatorics/FundamentalBijection/ThetaCube.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"archer-laudone-theta-cube-231-312","declaration_gid":"D5/S3/Combinatorics/FundamentalBijection/ThetaCube.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Kassie Archer, Robert P. Laudone (2024). *Pattern avoidance and the fundamental bijection*. DOI: [10.48550/arXiv.2407.06338](https://doi.org/10.48550/arXiv.2407.06338). URL: <https://arxiv.org/abs/2407.06338v1>.

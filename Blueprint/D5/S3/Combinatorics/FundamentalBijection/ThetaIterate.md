@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/FundamentalBijection/ThetaIterate.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/FundamentalBijection/ThetaIterate.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/archer-laudone-theta-iterate-132` (proved) by `D5/S3/Combinatorics/FundamentalBijection/ThetaIterate.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"archer-laudone-theta-iterate-132","declaration_gid":"D5/S3/Combinatorics/FundamentalBijection/ThetaIterate.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Kassie Archer, Robert P. Laudone (2024). *Pattern avoidance and the fundamental bijection*. DOI: [10.48550/arXiv.2407.06338](https://doi.org/10.48550/arXiv.2407.06338). URL: <https://arxiv.org/abs/2407.06338v1>.
