@@ -74,13 +74,17 @@ $$claim \Leftrightarrow (\forall d : \mathbb{N}, \forall C : \operatorname{Matri
 
 *Commentary.*
 
-Conjecture 1 (arXiv:2303.11382v1, p. 2): "(Extended MUB regime). Let C⁽²⁾ be a doubly stochastic matrix. Its norm is equal to that of C⁽²⁾_MUB, i.e. it is given by eq. (7), as long as (1−μ)/μ (1−λ)/λ ≥ σ₂², where σ₂ is the second largest singular value of C⁽²⁾." Equation (7) reads log ||C⁽²⁾_MUB||_(1/μ → 1/(1−λ)) = (1−λ−μ) log d. The encoding uses C for C⁽²⁾, d >= 2, and 0 < mu, lambda < 1, with ordinary real-vector norms; val(d) is the coercion of the natural dimension to the reals. Equation (5) in the source allows complex vectors; the real vector used below belongs to that larger domain as well, so its strict lower bound also rules out the source's proposed complex norm value. No equality between real and complex operator norms is needed for this counterexample.
+Conjecture 1 (arXiv:2303.11382v1, p. 2): "(Extended MUB regime). Let C⁽²⁾ be a doubly stochastic matrix. Its norm is equal to that of C⁽²⁾_MUB, i.e. it is given by eq. (7), as long as (1−μ)/μ (1−λ)/λ ≥ σ₂², where σ₂ is the second largest singular value of C⁽²⁾." Equation (7) reads that the logarithm of the MUB norm from 1/μ to 1/(1−λ) equals (1−λ−μ) log d. The encoding uses C for C⁽²⁾, d >= 2, and 0 < mu, lambda < 1, with ordinary real-vector norms; val(d) is the coercion of the natural dimension to the reals. Equation (5) in the source allows complex vectors; the real vector used below belongs to that larger domain as well, so its strict lower bound also rules out the source's proposed complex norm value. No equality between real and complex operator norms is needed for this counterexample.
 
 **Theorem 1.7 (The predicted norm equality fails).**
 
 $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/ExtendedMubNormRefutation.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/rotundo-schwonnek-2023-extended-mub-norm-refutation` (refuted) by `D5/S3/Quantum/Information/ExtendedMubNormRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"rotundo-schwonnek-2023-extended-mub-norm-refutation","declaration_gid":"D5/S3/Quantum/Information/ExtendedMubNormRefutation.result","resolution_kind":"refuted"} -->
 
 *Source.* Repository-derived.
 

@@ -30,18 +30,22 @@ internal sealed class ExtendedMubNormRefutationDocument : IScribeDocumentDefinit
                 "The supremum of the ratio set is the ordinary real mixed operator norm for p, q >= 1. The proof bounds the ratio set using the continuous linear map between finite PiLp spaces and its operator norm. The conjecture only uses exponents greater than one.",
                 "opNorm", AssessedProvenance.FromLiterature(Source)),
             Node("claim", "Conjecture 1: extended MUB regime", ClaimFormula(),
-                "Conjecture 1 (arXiv:2303.11382v1, p. 2): \"(Extended MUB regime). Let C⁽²⁾ be a doubly stochastic matrix. Its norm is equal to that of C⁽²⁾_MUB, i.e. it is given by eq. (7), as long as (1−μ)/μ (1−λ)/λ ≥ σ₂², where σ₂ is the second largest singular value of C⁽²⁾.\" Equation (7) reads log ||C⁽²⁾_MUB||_(1/μ → 1/(1−λ)) = (1−λ−μ) log d. The encoding uses C for C⁽²⁾, d >= 2, and 0 < mu, lambda < 1, with ordinary real-vector norms; val(d) is the coercion of the natural dimension to the reals. Equation (5) in the source allows complex vectors; the real vector used below belongs to that larger domain as well, so its strict lower bound also rules out the source's proposed complex norm value. No equality between real and complex operator norms is needed for this counterexample.",
+                "Conjecture 1 (arXiv:2303.11382v1, p. 2): \"(Extended MUB regime). Let C⁽²⁾ be a doubly stochastic matrix. Its norm is equal to that of C⁽²⁾_MUB, i.e. it is given by eq. (7), as long as (1−μ)/μ (1−λ)/λ ≥ σ₂², where σ₂ is the second largest singular value of C⁽²⁾.\" Equation (7) reads that the logarithm of the MUB norm from 1/μ to 1/(1−λ) equals (1−λ−μ) log d. The encoding uses C for C⁽²⁾, d >= 2, and 0 < mu, lambda < 1, with ordinary real-vector norms; val(d) is the coercion of the natural dimension to the reals. Equation (5) in the source allows complex vectors; the real vector used below belongs to that larger domain as well, so its strict lower bound also rules out the source's proposed complex norm value. No equality between real and complex operator norms is needed for this counterexample.",
                 "claim", AssessedProvenance.FromLiterature(Source)),
             Node("result", "The predicted norm equality fails", Disp(new Formula.Not(F.Id("claim"))),
                 "Set d = 3, C = I/2 + J/6, x = (4,1,1), and mu = lambda = 2/3. The matrix is doubly stochastic. Its Gram matrix is I/4 + J/4, with descending eigenvalues (1,1/4,1/4), so sigma2(C) = 1/2 and the spectral condition holds with equality. The input exponent is 3/2 and the output exponent is 3. Since Cx = (3,3/2,3/2), the input norm cubed is 100 and the output norm cubed is 135/4. The norm ratio cubed is therefore 27/80 > 1/3, whereas the conjectured value 3^(-1/3) has cube 1/3. Boundedness of the ratio set makes this ratio a lower bound for its supremum, contradicting the predicted equality. This argument supplies a lower bound, without asserting that x maximizes the ratio; it concerns the arXiv norm statement rather than the journal's entropic reformulation.",
-                "result", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem)),
+                "result", AssessedProvenance.FromRepo(Source), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("rotundo-schwonnek-2023-extended-mub-norm-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        string declaration, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition) =>
+        string declaration, AssessedProvenance provenance, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("mixnorm-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] arguments) =>
