@@ -27426,3 +27426,200 @@ FC1178--1187 are ordinary symbolic deductions. They reuse the
 whole-class replacement and complete same-law tail theorems,
 retain all original labels, and introduce no new Lean verification.
 They do not settle unrestricted Erdős#7 or force a passing cut.
+
+## Only mixed ancestors with actual future extensions enter the inventory
+
+Keep the present-P setting of FC1178--1187, including the same
+globally minimum whole cover, complete head B, P=15 or105, J and
+fixed maximal-J-divisor map. Let N_B be the set of ALL complete
+future parts m_>B>1 of original labels. It includes composite
+suffixes, prime powers and pure originals, whether selected or
+light. Use the same immutable selected/light partition as FC1182.
+
+The bound s*W_P counts mixed head labels even when they have no
+relevant continuation in the original family. The following
+refinement uses numerical incidence of original labels, without
+assuming that a descendant has its ancestor's literal phase.
+
+### The maximal divisor must have the same actual suffix
+
+For each proper T subset A and nu in N_B define
+
+    J_(T,nu)={j in J:
+              supp(j) disjoint from A without T,
+              A_T*j*nu in D}.
+
+For the full anchor support define separately
+
+    J_(A,nu)={j in J:P*j*nu in D}.               (FC1188)
+
+All membership tests refer to the original numerical set D.
+The future factor nu is unchanged. These sets do not assert
+that the listed ancestor's residue agrees with a descendant.
+
+Consider a LIGHT original m=d*nu with C-supported old part
+d=A_T*z in a proper T. The fixed maximal divisor j of z lies
+in J, and FC1180 gives tau(z/j)<=R_T. Since
+
+    A_T*j*nu divides A_T*z*nu=m,
+
+divisor closure puts the NONUNIT ancestor A_T*j*nu in D.
+It follows that j belongs to J_(T,nu). The same injective map
+z maps to(j,z/j) now bounds this particular low section by
+|J_(T,nu)|*D_(R_T)(k+|T|), rather than s times that polynomial.
+Full-anchor old parts are P*j with j in J_(A,nu); all stay light.
+Consequently the pointwise light core bound is
+
+    a_nu=|J_(A,nu)|
+              +sum_(T proper subset A)|J_(T,nu)|D_(R_T)(k+|T|),
+    a_tail=max_(nu in N_B)a_nu<=s*W_P(c).        (FC1189)
+
+The maximum of an empty set is zero. The actual unit old part
+is counted through T empty and j=1; it has not been discarded.
+Numerical distinctness still gives at most one original at each
+fixed old part and suffix. Absent light sections may be bounded
+by the same nonnegative expression without introducing new labels.
+
+### Used interfaces require a union over the whole future
+
+Only a minimal high interface assigned at least one selected
+future original needs to be paid. For a fixed T put
+
+    J_T^tail=union_(nu in N_B)J_(T,nu).
+
+Let h=A_T*z be such a used interface, assigned to an original
+m=d*nu. Its fixed maximal J-divisor j divides z, and h divides d.
+Thus A_T*j*nu divides m and j belongs to J_(T,nu), hence to
+J_T^tail. FC1181 gives tau(z/j)<=2R_T. Injectivity of the same
+map on interfaces bounds their number by
+
+    number of used T interfaces
+                  <=|J_T^tail|D_(2R_T)(k+|T|).
+
+With their unchanged common capacity R_T-1, the ENTIRE selected
+head activation count at every head point is at most
+
+    b_tail=sum_(T proper subset A)(R_T-1)
+                       *|J_T^tail|D_(2R_T)(k+|T|)
+          <=s*V_P(c).                            (FC1190)
+
+An interface assigned several suffixes is counted once. This is
+a union over actual numerical ancestors followed by one interface
+count; it is not a sum of independently chosen per-suffix budgets.
+Using the exact used-interface inventory can reduce b_tail further,
+including to zero when no original is selected.
+
+### Both costs remain on one continuation
+
+Apply FC1144--1146 to these bounds on the SAME initial core
+Dirac survivor, companion source and new light-only Haar path.
+No kernel, probability normalization or source hypothesis has
+changed. The complete sufficient test, for pi(B)>=10, is
+
+    B>2b_tail,
+    [a_tail+sqrt(5Theta_O)]^2
+                         /[1-2b_tail/B]<=T_B.    (FC1191)
+
+The full N_B was fixed at B. At subsequent primes, FC1107
+regroups the actual sections of the immutable light family;
+each old subgroup is the appropriate original suffix section.
+The construction does not recalculate J using a later cut or
+remove a section because its ancestor's phase is inconvenient.
+Pure labels and terminal sections remain included.
+
+Since both bounds are no larger than their FC1182 predecessors,
+every cut passing FC1185 also passes FC1191. An improvement can
+be strict, but is not asserted for every actual family. This
+comparison concerns the same partition and source construction.
+
+There is an essential quantifier distinction: a_tail takes a
+MAXIMUM over suffixes, while b_tail uses their UNION. Small
+separate suffix inventories do not alone bound that union.
+The argument V_P/W_P=O(c+1) used in FC1186 therefore cannot be
+applied to b_tail/a_tail without another hypothesis. FC1191
+retains both costs. For an asymptotic sufficient condition one
+may, for example, supply b_tail=o(B) AND
+a_tail<=theta*sqrt(B log B) for fixed0<theta<1; the existing
+uniform companion and T_B comparisons then apply. Neither
+condition is forced here for an arbitrary minimum whole cover.
+
+Nor can the numerical ancestor test be replaced by the ancestor
+class's own head indicator. Divisor closure retains its LABEL,
+not equality of phases after the future coordinates are omitted.
+FC1120 already exhibits overlapping old projections of comparable
+originals whose full events are disjoint. The incidence proof
+above uses no such phase gate and makes no new independence claim.
+
+### A growing actual head inventory can have a fixed continuation inventory
+
+Here is a symbolic separation of the two numerical bounds. It is
+an irredundant NONCOVER, not an example of a minimum whole cover
+or a counterexample to #7. Its purpose is to retain an actual
+common-source model for the inventory comparison.
+
+Fix H>=1 and an old cutoff B>=11. Put in the head every nonunit
+divisor of105*11^H, together with the pure primes r satisfying
+13<=r<=B. Let p be the first prime above B, and add only the
+two future labels p and3p. This numerical set is divisor-closed
+and has the initial odd-prime support through p. The core C is
+{3,5,7,11}; the additional old primes are separate components.
+For P=15 the actual mixed inventory is
+
+    J={7^e*11^i: e in {0,1}, 0<=i<=H},
+    s=2(H+1), c=4, k=2.
+
+There is just one future suffix, nu=p. Its nonempty ancestor
+sets are J_(empty,p)=J_({3},p)={1}; every other proper-T set
+and J_(A,p) is empty. Thus the uniform formulas give
+
+    s*W_15(4)=76(H+1),
+    a_tail=D_8(2)+D_4(3)=20+13=33,
+    b_tail=7D_16(2)+3D_8(3)=350+114=464.         (FC1192)
+
+The actual old parts1 and3 both have z=1 and E_T(z)=0, so the
+selected family is empty and its exact shared debit is zero.
+The coarse number464 is only the valid unused-interface upper
+bound from FC1190. The actual light section has two labels.
+The refined bounds are independent of H, whereas the earlier
+light majorant grows linearly with H. The head includes the
+four-prime original105*11^H, so it does not satisfy FC1103's
+three-factors-per-head-original premise.
+
+To specify one actual phase model, use CRT coordinates. For
+the seven nonunit divisors of105, put the three prime classes
+at zero, the three pair classes at(1,1), and the triple class
+at(2,2,2). The point v=(1,2,2) avoids all seven classes.
+Choose a bijection a maps to r_a from the eight divisors of105
+to {1,...,8}. For each a|105 and1<=i<=H, give a*11^i the phase
+
+    x mod a = v mod a,
+    x_11 = r_a*11^(i-1) mod11^i.
+
+The latter means that the first nonzero11-digit occurs at
+position i-1 and has value r_a. Different pairs(a,i) give
+disjoint11-cylinders. Each such original has a private point
+with105-coordinate v. The seven base originals have private
+points at11-coordinate zero: for a pair use its(1,1) and put
+the third coordinate at2; for a prime use zero there and2 in
+the others; for the triple use(2,2,2).
+
+Give each extra old pure prime residue zero. Set the future
+p-class at zero and the3p-class at(2 mod3,1 modp). All old
+private points can use p-coordinate2 and coordinate2 at every
+extra old prime except their own owner, if any. An extra pure
+prime owner uses zero at its own coordinate,105-coordinate v
+and11-coordinate zero. The future
+p-class has a private point with105-coordinate v and11-coordinate
+zero. The3p-class has a private point with105-coordinate(2,2,1)
+and11-coordinate zero. Both future points use coordinate2 at
+all extra old primes. These choices avoid every other original.
+A point with105-coordinate v,11-coordinate zero, all extra
+old coordinates2 and p-coordinate2 avoids the entire family.
+
+This explicit noncover is used only to show that large global
+J need not reflect a large actual continuation inventory. It
+does not satisfy, or refute, the minimum-whole-cover hypothesis.
+The new consumer FC1188--1191 still needs a jointly passing cut.
+Its deductions are ordinary symbolic mathematics, reuse the
+existing maximal-divisor and continuation proofs, and introduce
+no new Lean verification or unrestricted resolution.
