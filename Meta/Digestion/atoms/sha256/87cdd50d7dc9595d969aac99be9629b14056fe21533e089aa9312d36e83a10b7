@@ -1,0 +1,4 @@
+**Theorem 62.1 (saturated noncube tests determine the tower degree).**
+Suppose that for every $0\leq n<J$ the following conditions hold:
+
+- if $P_n(a)$, then there is no $c\in K$ with $c^3=a$;

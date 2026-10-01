@@ -3520,3 +3520,67 @@ sequence. Neither a stride plateau nor a coupled-period plateau
 identifies the depth by itself.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 62. Cubic towers certified by saturated base-field tests
+
+Let $K\subseteq L$ be fields and let $\zeta\in K$ be a primitive
+cube root of unity. Fix $J\in\mathbb N$, elements $a_j\in K$ and
+$\beta_j\in L$ for $1\leq j\leq J$, with
+$\beta_j^3=a_j$. Put
+
+$$
+K_0=K,\qquad K_m=K(\beta_1,\ldots,\beta_m)
+\quad(0\leq m\leq J).
+$$
+
+For each $0\leq n<J$, let $P_n$ be a predicate on $K$. These
+predicates describe tests in the base field; they are not tests
+assumed to hold in an extension field.
+
+**Theorem 62.1 (saturated noncube tests determine the tower degree).**
+Suppose that for every $0\leq n<J$ the following conditions hold:
+
+- if $P_n(a)$, then there is no $c\in K$ with $c^3=a$;
+- for every $1\leq i\leq n$ and every $e\in\mathbb N$,
+  $P_n(a)$ implies $P_n(a a_i^e)$;
+- $P_n(a_{n+1})$ holds.
+
+Then
+
+$$
+[K_J:K]=3^J.
+$$
+
+In particular every $a_j$ in the stated range is nonzero; this is
+a consequence of the tests, since zero is a cube, and requires
+no additional nonvanishing assumption. The conclusion includes
+$J=0$.
+
+Proof. The invariant is that whenever $0\leq m\leq n<J$ and
+$P_n(a)$ holds, $a$ has no cube root in $K_m$. For $m=0$ this
+is the first condition. Suppose the invariant is established
+through $m$. Applying it to $P_m(a_{m+1})$ makes
+$T^3-a_{m+1}$ irreducible over $K_m$, so adjoining
+$\beta_{m+1}$ has degree three. In a degree-three extension
+containing a primitive cube root of unity, cubic descent says
+that a cube root of $a$ in $K_{m+1}$ would imply
+$a a_{m+1}^e=c^3$ for some nonnegative exponent $e$ and
+some $c\in K_m$. For $m+1\leq n$, saturation gives
+$P_n(a a_{m+1}^e)$, contradicting the induction invariant
+in $K_m$. This establishes the invariant at the next stage.
+The fresh test therefore makes every adjoining degree exactly
+three, and the degree multiplication law gives the result.
+
+A useful choice of $P_n(a)$ is nonvanishing together with a
+valuation of $a$ whose integer logarithm is not divisible by
+three. Earlier radicands with valuation one leave that test
+unchanged under multiplication. For the conjugate-complete
+field in Theorem 55.7, the required valuation data belong to
+the actual principal prime ideals of the oriented factors and
+their conjugates, together with the primes above two and three.
+The theorem supplies the tower-degree step after those data
+are proved; it does not by itself identify that field's Galois
+coordinates, Frobenius elements, or cyclotomic intersections.
+
+## 追加锚（本行以下为增补区）
