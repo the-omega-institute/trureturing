@@ -34571,7 +34571,8 @@ $x=e^t$ 是价格尺度，式（251.4）不是新的整数覆盖区间。
 仍取 $K=2461/1000$，并定义
 
 $$
-P_2(t)=e^{-t/2}\left(rac{c_R}t+rac{c_2}{t^2}ight),\qquad
+P_2(t)=e^{-t/2}\left(rac{c_R}t+rac{c_2}{t^2}
+ight),\qquad
 L(t)=rac{e^{-t/2}}{(t+2)^3}.
 $$
 
@@ -34592,10 +34593,14 @@ $$
 =rac{e^{-t/2}}{t^3}igl(c_3-2K-1+O(t^{-1})igr).
 $$
 
-§249 的 $ho>7/5$、$\log2>2/3$ 逐项给
+§249 的 $
+ho>7/5$、$\log2>2/3$ 逐项给
 
 $$
-c_3=8(ho-1)+4ho\log2+rac{3ho}4(\log2)^2
+c_3=8(
+ho-1)+4
+ho\log2+rac{3
+ho}4(\log2)^2
 >rac{16}5+rac{56}{15}+rac7{15}=rac{37}5.
 $$
 
@@ -35128,3 +35133,814 @@ $$
 $\mathscr C_N<0$ 表示所用下界证书失败，不能单凭它推出实际 $\mathfrak D<0$。
 改变截断阶数可以改进有限点的认证，但不削弱该证书族最终非负性所需的单侧条件。
 本节未证明 RH、非 RH、实际 $\Phi$ 的最终单侧界或新的整数 Robin 覆盖。
+
+## 256. 实际素数脉冲的精确弦余量与四次预算
+
+本节保留 §§92、243 的实际尾项 $\Phi$，利用其素数幂事件的导数跳跃方向。
+既有 [Guth–Maynard 笔记](../../../Library/Analytic/guthmaynard2024largevalues.md)
+已给同一 $I_\psi=\Phi$ 在 $q(x)=1/(x\log x)$ 坐标下的双端插值，
+以及间距 $O(x^{3/4})$ 的单边采样 RH 强度。这里复用该尺度，
+新增其实际有限素数脉冲的精确正修正、原价格坐标下的显式预算与六次网格反例。
+所用二次修正凹性与弦插值是经典半凹函数方法，参见 Cannarsa–Sinestrari,
+*Semiconcave Functions, Hamilton–Jacobi Equations, and Optimal Control*,
+[DOI:10.1007/b138356](https://doi.org/10.1007/b138356)。
+四次网格与 Fibonacci 叶宽只作为这些预算的具体应用；
+不将一般插值方法或 §92.3 的经典 RH 桥接重新列为新判据。
+
+### definition 256.1 价格倒数坐标与有限脉冲核
+
+取 $1<a<b$，定义
+
+$$
+q(x)=\frac1{x\log x},\qquad A=q(a),\quad B=q(b),\quad z=q(y),
+\qquad F_0(x)=\log\log x-\frac1{\log x}.
+$$
+
+对 $y\in[a,b]$，$B\le z\le A$ 且 $A>B$。置
+
+$$
+\lambda_y=\frac{z-B}{A-B},\qquad
+G_{A,B}(z,u)=\frac{(\min(z,u)-B)(A-\max(z,u))}{A-B}
+\quad(B\le u\le A).
+\tag{256.1}
+$$
+
+该核非负；当 $B<z,u<A$ 时严格为正。
+对同一实际区间内的素数幂事件 $r=p^h\in(a,b)$，其质量为 $\log p$，位置为 $u=q(r)$。
+
+### theorem 256.2 同一实际尾项的精确双端分解
+
+对全部 $y\in[a,b]$，有有限恒等式
+
+$$
+\boxed{\begin{aligned}
+\Phi(y)={}&\lambda_y\Phi(a)+(1-\lambda_y)\Phi(b)\\
+&+F_0(y)-\lambda_yF_0(a)-(1-\lambda_y)F_0(b)\\
+&+\sum_{\substack{r=p^h\\a<r<b}}\log p\,G_{A,B}(q(y),q(r)).
+\end{aligned}}
+\tag{256.2}
+$$
+
+若 $a<y<b$ 且区间内至少有一个素数幂事件，最后一行严格为正。
+若没有内部事件，它等于零，前两行给精确值。
+
+**证明。** §92 的有限公式给
+
+$$
+\Phi(x)-F_0(x)=\gamma-P(x)+\Psi(x)q(x).
+$$
+
+事件 $r=p^h$ 的 $P$ 增量为 $\log p\,q(r)$，$\Psi$ 增量为 $\log p$。
+因此在 $[a,b]$ 上，$\Phi-F_0$ 在 $z=q(x)$ 坐标下等于一个仿射函数加上
+
+$$
+\sum_{a<r<b}\log p\,\min(z-q(r),0).
+$$
+
+左端点的事件已经包含在 $P(a),\Psi(a)$ 中；
+右端点若是事件，其两项增量在 $x=b$ 抵消，对该区间的函数值不作贡献。
+对任意 $B\le z,u\le A$，分 $z\le u$ 与 $z\ge u$ 两种情形展开即得
+
+$$
+\min(z-u,0)-\frac{A-z}{A-B}(B-u)=G_{A,B}(z,u).
+$$
+
+仿射部分的双端弦余量为零，逐事件相加即得式（256.2）。
+严格性来自每个内部事件的 $\log p>0$ 与核的严格正性。$\square$
+
+函数 $F_0(q^{-1}(z))$ 的导数为 $-q^{-1}(z)$、二阶导数为 $1/k(q^{-1}(z))>0$，
+其中 $k=-q'$。所以式（256.2）的第二行非正；最后一行是实际内部脉冲给出的精确非负修正。
+既有笔记的曲率插值界由舍去最后一行并对第二行估计得到。
+这份有限分解没有去掉两端实际 $\Phi$ 所承载的未知尾部信息，
+也没有比较不同素数历史在未固定端点时的函数大小。
+
+### theorem 256.3 实际尾项的二次修正凹性
+
+取 §243.3 的无条件 Chebyshev 常数 $C\ge1$，满足 $0\le\Psi(x)\le Cx$。
+令
+
+$$
+k(x)=\frac{\log x+1}{x^2\log^2x},\qquad
+M_a=\frac{7C}{a^2\log a},\qquad a\ge4.
+$$
+
+对任意 $b>a$，函数
+
+$$
+g_a(x)=\Phi(x)-\frac{M_a}{2}x^2
+\tag{256.3}
+$$
+
+在 $[a,b]$ 上凹。特别地，对 $a\le y\le b$，
+
+$$
+\boxed{\Phi(y)\ge
+\frac{b-y}{b-a}\Phi(a)+\frac{y-a}{b-a}\Phi(b)
+-\frac{7C}{2a^2\log a}(y-a)(b-y).}
+\tag{256.4}
+$$
+
+**证明。** 素数幂事件之外，$\Psi$ 局部常值且 $\Phi'=k(x)(x-\Psi(x))$。
+置 $t=\log x\ge1$，直接微分得
+
+$$
+k'(x)=-\frac{2t^2+3t+2}{x^3t^3},\qquad
+\Phi''(x)=
+\frac{-t^2-2t-2+(\Psi(x)/x)(2t^2+3t+2)}{x^2t^3}
+\le\frac{7C}{x^2\log x}\le M_a.
+\tag{256.5}
+$$
+
+这里仅使用 $\Psi(x)/x\le C$ 与 $2t^2+3t+2\le7t^2$。
+在事件 $x=p^r$，§243.3 的两项跳幅抵消保证 $\Phi$ 连续，
+而导数的左右极限满足
+
+$$
+\Phi'_+(p^r)-\Phi'_-(p^r)=-k(p^r)\log p<0.
+\tag{256.6}
+$$
+
+每个紧区间只含有限个这样的事件。
+因此 $g_a'$ 在各光滑段不增，跨事件也向下跳；$g_a$ 连续且分段光滑。
+对任意相邻的两个子区间，积分平均斜率按同一方向排序，故 $g_a$ 凹。
+将其弦不等式展开，并使用
+
+$$
+\frac{b-y}{b-a}a^2+\frac{y-a}{b-a}b^2-y^2=(y-a)(b-y),
+$$
+
+即得式（256.4）。
+该论证保留事件处的导数跳跃，未把 $\Phi$ 当作全域二次可微函数。$\square$
+
+### theorem 256.4 两端点预算在四次单元内的统一传递
+
+沿用 $w(x)=\sqrt x\log x$。取整数 $j\ge2$，令 $a=j^4,b=(j+1)^4$。
+若 $K\ge0$ 且同一实际尾项满足
+
+$$
+w(a)\Phi(a)\ge-K,\qquad w(b)\Phi(b)\ge-K,
+$$
+
+则所有 $y\in[a,b]$ 满足
+
+$$
+\boxed{w(y)\Phi(y)\ge-(8K+567C).}
+\tag{256.7}
+$$
+
+**证明。** $w$ 在 $[4,\infty)$ 上正且递增。
+故两个端值均不小于 $-K/w(a)$，它们的弦也不小于这个数。
+又有
+
+$$
+b\le16a,\qquad \log a\ge\log16,
+\qquad w(y)\le8w(a),\qquad b-a\le9j^3.
+\tag{256.8}
+$$
+
+前两个界给 $\sqrt y\le4\sqrt a$、$\log y\le2\log a$。
+最后一个界来自
+
+$$
+\frac{(j+1)^4-j^4}{j^3}
+=4+\frac6j+\frac4{j^2}+\frac1{j^3}
+\le\frac{65}{8}<9.
+$$
+
+由 $(y-a)(b-y)\le(b-a)^2/4$ 与式（256.4），
+
+$$
+w(y)\Phi(y)\ge
+-8K-8w(a)\frac{M_a(b-a)^2}{8}
+=-8K-7C\frac{(b-a)^2}{a^{3/2}}
+\ge-8K-567C.
+$$
+
+这里 $a^{3/2}=j^6$，所有误差使用同一单元两端的实际价格源。$\square$
+
+### corollary 256.5 四次采样保留同一单边 RH 强度
+
+在 §92.3 明列的经典有效素数定理、积分显式公式、零点计数与对称性、
+Landau 非负 Laplace 变换输入下，
+
+$$
+\boxed{\mathrm{RH}\iff
+\exists K\ge0\ \exists J\in\mathbb N,\ J\ge2,
+\quad\forall j\ge J,\quad w(j^4)\Phi(j^4)\ge-K.}
+\tag{256.9}
+$$
+
+**证明。** 右侧通过定理 256.4 覆盖相邻四次单元的并 $[J^4,\infty)$，
+给出实际尾项的最终有限下界 $-(8K+567C)$；§92.3 遂给 RH。
+反向限制 §92.3 在 RH 下的最终连续下界即可。$\square$
+
+该应用把 §243 的平方采样改为四次采样；它未给出所需的实际统一 $K,J$。
+$j^4$ 是 $\Phi$ 的价格输入，不据此认证整数 $n=j^4$ 的 Robin 不等式。
+有限个采样点也不完成式（256.9）的无限量词。
+
+### proposition 256.6 单侧曲率类仍允许更粗网格的深负谷
+
+取 $B>0$，对整数 $j\ge2$ 置 $a_j=j^6,b_j=(j+1)^6$。
+在 $[64,\infty)$ 定义连续的分段函数
+
+$$
+f_B(x)=\frac{B(x-a_j)(x-b_j)}{2b_j^2\log b_j}
+\quad(a_j\le x\le b_j).
+\tag{256.10}
+$$
+
+相邻公式在端点均为零，故定义相容。
+该函数满足 $f_B(j^6)=0$，光滑段内
+
+$$
+f_B''(x)=\frac{B}{b_j^2\log b_j}\le\frac{B}{x^2\log x},
+$$
+
+并且导数在每个接缝向下跳。
+但在 $m_j=(a_j+b_j)/2$，有
+
+$$
+w(m_j)f_B(m_j)\le-\frac{9B}{16384}j\longrightarrow-\infty.
+\tag{256.11}
+$$
+
+**证明。** 一个单元的左导数为负、右导数为正，进入下个单元时又为负，
+故接缝方向如述。中点值等于 $-B(b_j-a_j)^2/(8b_j^2\log b_j)$。
+利用
+
+$$
+b_j-a_j\ge6j^5,\quad b_j\le64a_j,\quad
+\log b_j\le2\log a_j,\quad
+\sqrt{m_j}\ge j^3,\quad\log m_j\ge\log a_j,
+$$
+
+即得式（256.11）。$\square$
+
+这是具有同方向导数接缝的函数类反例；接缝位置不要求是实际素数幂，
+也未将 $f_B$ 识别为 $\Phi$。
+它说明六次网格上的端值与上述曲率上界仍不足以控制归一负谷。
+二次弦误差的尺度是 $(b-a)^2/a^{3/2}$；四次网格使其有界，六次网格则没有此保证。
+本节不排除使用额外实际算术信息的更稀疏采样方法。
+
+### proposition 256.7 Fibonacci 叶宽与 5040 的四次入口
+
+设 $K,L\ge0$。若沿 §243.5 的 Fibonacci 区间森林应用式（256.4），
+可用叶宽条件 $b-a\le L a^{3/4}$、$b\le16a$、$a\ge16$ 替代原来的平方宽度条件，
+但每片叶子必须携带两个端点的同源归一尾项下界。
+若两端下界均为 $-K$，则叶内下界为 $-(8K+7CL^2)$。
+
+另外 $8^4=4096<5040<6561=9^4$。
+若用四次网格从价格 $5040$ 开始覆盖，需要处理 $[5040,6561]$ 的首片，
+例如携带 $4096$ 与 $6561$ 两端的尾项预算再限制该单元。
+只从采样点 $6561$ 开始，不能由上述相邻单元推论覆盖此前的价格区间。
+
+**证明。** 第一条将 $b-a\le L a^{3/4}$ 代入定理 256.4 中尚未使用四次网格的误差式。
+第二条由三个整数的严格大小关系及相邻四次单元的覆盖域得到。$\square$
+
+本节的改进来自实际导数跳跃的方向与单侧曲率，而非五类标签的数量。
+来源地址与实际价格源的桥接、全部叶端点的统一尾项预算仍须证明。
+以上没有建立 RH、一般 Robin 不等式或新的有限整数认证范围。
+
+## 257. 2025--2026 年 Robin 前沿与 FIB 接口审计
+
+Robin 研究的主线可以按“极值压缩—等价判据—候选类缩减—显式误差”排列：Ramanujan 的高丰数渐近、Alaoglu--Erdős 的极丰数结构、Robin 的 CA 区间归约与 RH 等价，随后是 Lagarias 的初等判据、Akbary--Friggstad 的最小反例为 superabundant 归约，以及 Nicolas 的 primorial/totient 判据。近两年的结果继续压缩候选集，但没有消除点态尾项。
+
+| 来源 | 直接贡献 | 对当前 FIB 主线的实际接口 |
+| --- | --- | --- |
+| Assani--Chester--Paschal, 2025 | 对不含 $2,3,5$ 因子、primorial、若干 $p$-free 类给出 Robin 安全性；Kaneko--Lagarias 可缩到 superabundant。 | 五窗的 $[null,2,3,2\,5,5]$ 是加法 Fibonacci 包含状态，不是 $p$-进整除状态；必须另证具体 FIB 整数的素因子条件。 |
+| Zimov, 2025 | 在假设 RH 失败时，把最小 CA 反例限制到 $e^\gamma<G(n)<e^\gamma(1+c/(\log n)^b)$，$0<b<1/2$。 | 该带宽远大于 §250 的 $1/(\sqrt n(\log n)^3)$ 间隔，不能控制同一 $\Phi$ 尾项，也不能把 FIB 候选变成 CA。 |
+| MacArevey, 2026 | 用连续调和数延拓证明 Lagarias 反例的最小者为 superabundant。 | 它是另一预算函数的极值归约；不等同于 Robin 的 $\sigma(n)/n$ 预算，更没有 FIB 价格源桥。 |
+| Mishra--Sarkar, 2026 | 以 $\omega(n)$ 截断指数和提出更强的 Robin 形式，声称与 Robin/RH 等价，并覆盖 $\omega\le6$、primorial、奇数与平方自由类。 | 截断阶数是实际不同素因子数；FIB 地址没有给出 $\omega(N_g)$ 的统一小界，故不能直接消费该定理。 |
+| Musin, 2026 | 在同一 CA 比较集上构造高阶接触坐标，并给出保留 Robin 判据的充分条件。 | 它明确要求同一 CA 源、支撑接触和增长/凹性条件；FIB 的 $1+F_rg$ 族尚未满足这些条件。 |
+
+这份历史脉络对项目的去重结论是明确的：已有工作已经覆盖了 CA/SA 候选缩减、多个分族的无条件安全性、totient/Lagarias/截断判据和高阶接触坐标。当前 FIB 仍缺的不是再造一个等价判据，而是把一个实际 FIB 来源同时接到
+
+$$
+\text{同一价格源}\quad\longrightarrow\quad
+\text{§249 的单侧误差}\quad\longrightarrow\quad
+\text{§250 的点值传递}.
+$$
+
+具体地，尚未发现可直接复用的文献定理能同时提供：
+
+1. $N_g=1+F_rg$ 是 CA/SA 或 Robin 检验所需的同一极值源；
+2. 该来源的 $b_s(d)/d$ 增量亏损与 §247--§249 的价格层逐项相同；
+3. 在同一整数上控制有符号 $\Phi$ 尾项，足以验证 §250.2 的点值条件。
+
+因此，下一步应优先证明一项真实的“来源保持”或构造一对具有相同 FIB 观察而不同价格源的反例；继续重复 CA 支撑线、Robin 等价式或有限安全类的证明不会缩小当前缺口。上述三项新来源的精确陈述与适用边界分别见 [Mishra--Sarkar](../../../Library/ArithSums/mishra2026finiterobin.md)、[Zimov](../../../Library/ArithSums/zimov2025leastca.md) 和 [Assani--Chester--Paschal](../../../Library/ArithSums/assani2025robinkaneko.md)。
+
+## 258. 最新来源的去重审计：平滑、有限 CA 证书与有符号障碍
+
+截至 2026 年 10 月 1 日，针对本项目缺口新增核对了四份来源。它们覆盖不同历史层次，但没有一份提供从五窗地址到同一 Robin 候选的点值桥接。
+
+### 258.1 Ramanujan 变换只给平滑控制
+
+[Danesh 的工作论文](../../../Library/Analytic/danesh2026ramanujanrobin.md)用约数 Lambert 级数
+
+$$
+S(x)=\sum_{n\ge1}\sigma(n)e^{-nx}
+$$
+
+及 Ramanujan 变换研究 Robin 缺陷的 Laplace 表达。它明确区分平滑后的正性与每个整数的系数正性，并把潜在问题集中到 CA 或最高丰数等除数丰富整数。这个区分与 §250 的点值条件完全同向：对 FIB 家族证明某种平滑平均为正，不会自动给出同一整数上的
+
+$$
+\Phi(x)+R(x)>0.
+$$
+
+五窗递归没有给出 Lambert 系数的逐项正下界，也没有把 FIB 整数识别成其极值检验集合。因此这里是障碍的独立文献确认，不是新的 Robin 估计。
+
+### 258.2 有限 CA 证书扩大了边界，但不改变无限义务
+
+[Polak 的有限计算机辅助证书](../../../Library/Analytic/polak2026finiterobinca.md)报告了
+
+$$
+5041\le n\le10^{7.1\times10^{22}}
+$$
+
+范围内的 Robin 验证，并在同一来源中保留了精确的 prime-power cell 与 signed-triangular residual。有限证书按 CA 指数剖面和相邻 CA 插值组织；FIB 地址按加法窗口和接缝组织。两者之间没有来源保持映射，且该文明确把无限事件上的统一目标留为未证。故重复该有限计算不会推进 FIB 到 §250.2 的点值条件。
+
+它仍然给当前 FIB 窗口一个可复用的有限推论。若沿用
+
+$$
+V=F_r,\qquad \lceil V/10\rceil\le g\le\lfloor V/5\rfloor,
+\qquad N_g=1+Vg,
+$$
+
+则 $F_r\ge2$ 时 $N_g\le F_r^2$。由 $F_r<\varphi^{r-1}$，只要
+
+$$
+r\le169866504820749141983216,
+$$
+
+便有
+
+$$
+\log_{10}N_g
+<2(r-1)\log_{10}\varphi
+<7.1\times10^{22}.
+$$
+
+因此 Polak 预印本所声称的有限定理，若其外部证书被接受，可覆盖该窗口中所有 $N_g>5040$。这是对已有有限验证的范围更新，不是新的 FIB 估计：它没有处理 $g>F_r/5$、更高秩的整数，或 §250 的无限点值条件。
+
+### 258.3 Möbius 取消诊断确认了真正的符号缺口
+
+[Estrada 的诊断论文](../../../Library/Analytic/estrada2026mobiuscancellationbarrier.md)把路线写成
+
+$$
+\text{素性/CA 正结构}\to\Lambda\to\mu\to\text{带符号抵消}.
+$$
+
+其 Nyman--Beurling 分析要求有限残差之外还要有斜率和系数质量控制；CA-active 加权变体没有消除残差衰减义务。FIB 的五模式同样首先提供正的局部源数据；除非另建到 Möbius 或 $\Phi$ 的带符号运输，并证明平方根尺度的共同误差界，否则不能把它解释成 RH 级抵消。这个来源因此排除了“再加一层正 CA 几何就自动完成”的重复路线。
+
+### 258.4 分拆分支是另一种 Robin 分解，不是 FIB 分解
+
+[Segovia 的分拆预印本](../../../Library/ArithSums/segovia2026partitions.md)研究 Espinosa 分支，证明首支并报告若干依赖 Alaoglu--Erdős 猜想的高支实现。分支索引、钩形分拆及其 cutoff divisors 不等于 Fibonacci 秩、五窗包含状态或 $\omega(n)$。当前没有从 FIB 地址到其具体除数子集的保源映射，故不重复移植其渐近常数。
+
+### 258.5 去重后的唯一实质缺口
+
+这四份来源与 §§233--255 的历史接口共同把可复用结果分成三层：
+
+1. **经典结构层**：CA/SA 极值、Robin 等价、Lagarias 与 Nicolas 判据、分族安全性；仓内已有，不再重证。
+2. **有限证书层**：更大有限区间和 CA profile 枚举；可作外部边界，不提供无限证明。
+3. **符号点值层**：同一实际 FIB 候选上的有符号 $\Phi$ 或 Möbius 尾项界；这仍未得到。
+
+因此当前可检验的下一步只有两类：
+
+$$
+\text{(a) 证明 FIB 地址保持 CA/价格源/检验集合；}
+$$
+
+或
+
+$$
+\text{(b) 构造同一 FIB 观察下价格源不同的成对实例，证明现有切面不充分。}
+$$
+
+在获得 (a) 或 (b) 之前，继续添加等价判据、正的 CA 权重、平滑恒等式或有限枚举，都不会缩小 §250.2 的量词缺口。上述判断仅把来源已公开的陈述与仓内纸面推导分开；它不声称四份来源的外部证明已经由 Lean 验证，也不改变 Robin/RH 的 open 状态。
+
+### 258.6 $\omega$-截断给出的 FIB 条件筛选
+
+Mishra--Sarkar 的预印本把
+
+$$
+P_k(x)=\sum_{j=0}^{k}\frac{x^j}{j!}
+$$
+
+作为 $k=\omega(n)$ 的截断，并声称当 $n>5040$ 且 $\omega(n)\le6$ 时
+
+$$
+\frac{\sigma(n)}n<e^\gamma P_{\omega(n)}(\log\log\log n).
+$$
+
+这条外部定理一旦成立，就能给当前 FIB 族一个直接但有限的筛选。对 $n>5040$，有 $\log\log\log n>0$；正项级数的严格截断给出
+
+$$
+P_{\omega(n)}(\log\log\log n)
+<e^{\log\log\log n}=\log\log n.
+$$
+
+故得到条件推论
+
+$$
+\boxed{
+N_g>5040\ \land\ \omega(N_g)\le6
+\ \Longrightarrow\
+\frac{\sigma(N_g)}{N_g}<e^\gamma\log\log N_g.
+}
+$$
+
+其中 $N_g=1+F_rg$ 的 FIB 地址、窗口范围和接缝规则没有被改变。等价地，在接受该预印本定理作为外部输入的前提下，任何 FIB Robin 反例都必须满足
+
+$$
+\omega(N_g)\ge7.
+$$
+
+这项筛选没有给出 $\omega(N_g)$ 的统一上界或下界的 FIB 证明，也没有说明该整数是 CA/SA；它只把一个现有的不同素因子条件正确地投影到同一实际整数。因而仍不能替代同一价格源和 §250 的有符号点值桥，亦不改变 Robin/RH 的 open 状态。
+
+### 258.7 26-free 筛在 FIB 窗口上的精确余类投影
+
+[Fabbian 的显式 Mertens 预印本](../../../Library/ArithSums/fabbian2026mertens.md)声称：对 $n>5040$，条件 $v_2(n)\le25$ 足以推出 Robin 严格不等式。把这个外部条件投影到
+
+$$
+N_g=1+F_rg,qquad
+I_r=\left[\left\lceil\frac{F_r}{10}\right\rceil,
+\left\lfloor\frac{F_r}{5}\right\rfloor\right]
+$$
+
+得到一个比一般 26-free 标签更细的 FIB 筛选。Fibonacci 奇偶性给出
+
+$$
+3\mid r\Longrightarrow 2\mid F_r\Longrightarrow N_g\text{ 为奇数},
+$$
+
+所以这部分窗口自动满足 $v_2(N_g)=0$. 若 $3\nmid r$，则 $F_r$ 在模 $2^{26}$ 下可逆；任何 Robin 反例必须满足
+
+$$
+2^{26}\mid N_g
+\iff
+g\equiv-F_r^{-1}\pmod{2^{26}}.
+$$
+
+因此，在接受 Fabbian 预印本的外部定理作为输入时，窗口中的潜在反例只可能出现在
+
+$$
+3\nmid r,qquad
+g\in I_r\cap\bigl(-F_r^{-1}+2^{26}\mathbb Z\bigr).
+$$
+
+并且其个数满足显式计数界
+
+$$
+\#\bigl(I_r\cap(-F_r^{-1}+2^{26}\mathbb Z)\bigr)
+\le
+\left\lfloor\frac{F_r}{10\cdot2^{26}}\right\rfloor+1.
+$$
+
+这是同一 FIB 地址到同一整数的真实余类约束，不是把窗口长度当作随机概率。它仍没有控制奇数秩窗口中的剩余素因子、CA 身份或 §250 的有符号尾项；外部证书的证明与数值依赖也未由 Lean 重核。因此它是一个新的候选密度筛选，不是 Robin 或 RH 的全称结论。
+
+## 追加锚（本行以下为增补区）
+
+## 259. FIB 模数素数位于同一 CA 价格前沿之外
+
+本节把 §205.2 的素指标素支撑下界与 §234 的固定价格层判据放在同一个实际整数尺度上。结论只排除“用 $F_r$ 的缺素数制造 CA 价格损失”这一具体路线；它不把 $N_g$ 识别为 CA，也不提供 Robin 的点值界。
+
+固定素数指标 $r\ge7$，置
+
+$$
+V=F_r,qquad
+I_r=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,qquad
+N_g=Vg+1,qquad g\in I_r.
+$$
+
+记 $\rho=\log\phi$，并令
+
+$$
+ y=\log N_g,qquad s=y\log y,qquad \lambda=s^{-1}.
+$$
+
+由于 $F_r=\phi^r/\sqrt5+O(\phi^{-r})$，且 $g\asymp V$，对同一 $r$ 的全部 $g\in I_r$ 一致有
+
+$$
+\log V=\rho r+O(1),qquad
+y=2\rho r+O(1),qquad
+y\log y=(2\rho+o(1))r\log r.
+\tag{259.1}
+$$
+
+### 命题 259.1 强制缺素数的首层价格低于 CA 价格
+
+若 $p\mid F_r$，则对充分大的素数指标 $r$，有
+
+$$
+ p\log p>y\log y,
+$$
+并且
+
+$$
+\frac{\log(1+1/p)}{\log p}<\lambda.
+\tag{259.2}
+$$
+
+**证明。** §205.2 给出 $p\ge2r-1$。因此
+
+$$
+ p\log p\ge(2r-1)\log(2r-1)=(2+o(1))r\log r.
+$$
+
+式（259.1）及 $\rho=\log\phi<1$ 给
+
+$$
+ y\log y=(2\rho+o(1))r\log r,
+$$
+
+故前一个严格不等式最终成立。再用 $\log(1+u)<u$（$u>0$），得到
+
+$$
+\frac{\log(1+1/p)}{\log p}
+<\frac1{p\log p}
+<\frac1{y\log y}=\lambda.
+$$
+证毕。 $\square$
+
+### 推论 259.2 模数缺素数不产生同价 CA 损失
+
+令 $C$ 为价格 $\lambda$ 下最大化
+
+$$
+\frac{Z(n)^s}{n},qquad Z(n)=\frac{\sigma(n)}n,
+$$
+的任一正整数。对每个 $p\mid F_r$，充分大时都有 $p\nmid C$。另一方面，实际 FIB 整数满足
+
+$$
+N_g\equiv1\pmod p,qquad p\nmid N_g.
+$$
+
+因此，$F_r$ 的素因子既没有出现在实际 $N_g$ 中，也没有出现在同一价格的 CA 参考整数 $C$ 中；仅凭这个同余不能给 $N_g$ 相对于 $C$ 的正价格损失。
+
+**证明。** 若 $p\mid C$，把 $C$ 的 $p$-指数减一得到另一个正整数。目标值的比值满足
+
+$$
+\frac{Z(C)^s/C}{Z(C/p)^s/(C/p)}
+=\frac{(Z(p^a)/Z(p^{a-1}))^s}{p}
+\le\frac{(1+1/p)^s}{p}<1,
+$$
+
+其中 $a=v_p(C)\ge1$，且 $Z(p^a)/Z(p^{a-1})\le1+1/p$。
+由式（259.2），该比值严格小于一，与 $C$ 的最大性矛盾。因此 $p\nmid C$。而 $p\mid F_r$ 时 $N_g=Vg+1\equiv1\pmod p$，故 $p\nmid N_g$。证毕。 $\square$
+
+这个结论把一个常见的候选路线精确地排除在目标尺度之外：$F_r$ 的素因子下界约为 $2r$，而窗口整数的 CA 首层价格前沿约在 $\log N_g\sim2r\log\phi$ 对应的素数尺度。两者之间有固定的线性缺口。仍可能存在来自实际指数向量、同余候选、完整约数响应或有符号 $\Phi$ 尾项的价格损失；本节没有控制这些量，也没有证明 Robin 不等式或 RH。
+
+## 追加锚（本行以下为增补区）
+
+
+## 260. 中心化素数增量与扩宽递归网格上的消失弦误差
+
+沿用 §§92、256 的实际尾项 $\Phi$、$q(x)=1/(x\log x)$ 与 $k=-q'$。
+§256 的有限脉冲分解保留光滑项和内部素数幂事件；本节将两者联合中心化，
+使区间起点的绝对误差 $\Psi(a)-a$ 从双端弦余量中准确消去。
+经典区间积分估计及 [Guth–Maynard 的一致短区间素数计数](../../../Library/Analytic/guthmaynard2024largevalues.md)
+是以下推导的文献输入。新增结论是同一实际源在扩宽网格上的一致消失误差，
+不将已有的 $O(a^{3/4})$ 曲率采样或 §92.3 的 RH 桥接另列为新判据。
+
+### definition 260.1 局部中心化源与双端弦余量
+
+取 $1<a<b$、$y\in[a,b]$，置
+
+$$
+A=q(a),\quad B=q(b),\quad z=q(y),\qquad
+\lambda_y=\frac{z-B}{A-B},\qquad w(y)=\sqrt y\log y.
+$$
+
+定义
+
+$$
+E_a(v)=\Psi(v)-\Psi(a)-(v-a),\qquad
+M_{a,b}=\sup_{a\le v\le b}|E_a(v)|,
+$$
+
+$$
+\mathcal R_{a,b}(y)
+=\Phi(y)-\lambda_y\Phi(a)-(1-\lambda_y)\Phi(b).
+\tag{260.1}
+$$
+
+这里 $\mathcal R$ 是弦余量，区别于 §87 的正储备 $R$。
+紧区间内素数幂事件有限，故 $M_{a,b}<\infty$。
+
+### theorem 260.2 同一实际源的中心化恒等式与局部预算
+
+对定义 260.1 的全部参数，有
+
+$$
+\boxed{\mathcal R_{a,b}(y)
+=-\lambda_y\int_a^y k(v)E_a(v)\,dv
++(1-\lambda_y)\int_y^b k(v)E_a(v)\,dv.}
+\tag{260.2}
+$$
+
+特别地，使用 §256 的核，有
+
+$$
+|\mathcal R_{a,b}(y)|
+\le 2M_{a,b}G_{A,B}(z,z)
+\le\frac{M_{a,b}}2(A-B).
+\tag{260.3}
+$$
+
+若 $a\ge4$、$b\le2a$、$h=b-a$，则
+
+$$
+\boxed{w(y)|\mathcal R_{a,b}(y)|
+\le\frac{4hM_{a,b}}{a^{3/2}}.}
+\tag{260.4}
+$$
+
+**证明。** 实际 $\Phi$ 连续，在每个无事件区间有
+$\Phi'(v)=k(v)(v-\Psi(v))$。逐个有限事件区间积分可得
+
+$$
+\mathcal R_{a,b}(y)
+=\lambda_y\int_a^y k(v)(v-\Psi(v))\,dv
+-(1-\lambda_y)\int_y^b k(v)(v-\Psi(v))\,dv.
+$$
+
+代入 $v-\Psi(v)=a-\Psi(a)-E_a(v)$，并用
+
+$$
+\int_a^y k(v)\,dv=A-z,\quad
+\int_y^b k(v)\,dv=z-B,\qquad
+\lambda_y(A-z)=(1-\lambda_y)(z-B),
+$$
+
+常数 $a-\Psi(a)$ 的贡献为零，即得式（260.2）。事件端点的单点值不改变积分。
+由 $k\ge0$ 与 $|E_a|\le M_{a,b}$，两个积分的绝对值分别不超过
+$M_{a,b}(A-z)$ 与 $M_{a,b}(z-B)$。加权相加给出式（260.3）的第一界。
+因为 $(z-B)(A-z)\le(A-B)^2/4$，第二界成立。
+最后，$k$ 在 $(1,\infty)$ 递减，且在上述范围有
+
+$$
+A-B\le k(a)h,\qquad
+k(a)\le\frac2{a^2\log a},\qquad
+w(y)\le4w(a).
+$$
+
+将这些界代入式（260.3）即得式（260.4）。$\square$
+
+### theorem 260.3 扩宽区间上的实际归一弦误差一致趋零
+
+令 $L=\log a$、$u=L^{1/4}$，定义
+
+$$
+H(a)=a^{3/4}\frac{\exp(u/2)}L.
+\tag{260.5}
+$$
+
+则 $H(a)/a^{3/4}\to\infty$、$H(a)/a\to0$，并且
+
+$$
+\sup_{\substack{a<b\le a+H(a)\\a\le y\le b}}
+w(y)|\mathcal R_{a,b}(y)|\longrightarrow0
+\qquad(a\to\infty).
+\tag{260.6}
+$$
+
+更具体地，存在固定常数，使全部充分大的 $a$ 及上述全部 $b,y$ 满足
+
+$$
+w(y)|\mathcal R_{a,b}(y)|\ll
+\frac1L
++a^{-1/12}\frac{e^{u/2}}L
++a^{-1/4}\frac{e^{3u/2}}{L^4}
++a^{-1/4}Le^{u/2}.
+\tag{260.7}
+$$
+
+**证明。** 使用 Guth–Maynard,
+*New large value estimates for Dirichlet polynomials*,
+[arXiv:2405.20552v2, Corollary 1.3](https://arxiv.org/html/2405.20552v2)：
+固定 $\epsilon=1/20$ 后，对
+$a^{37/60}\le t\le a^{0.99}$ 一致有
+
+$$
+\pi(a+t)-\pi(a)=\frac tL+O(te^{-u}).
+\tag{260.8}
+$$
+
+这是逐区间一致输入。以下不使用该文 Corollary 1.4 的几乎处处版本。
+对 $a^{2/3}\le t\le a^{0.99}$，记 $N=\pi(a+t)-\pi(a)$。
+区间内素数权重满足
+
+$$
+LN\le\vartheta(a+t)-\vartheta(a)
+\le\log(a+t)N\le(L+t/a)N.
+$$
+
+将式（260.8）代入并吸收 $O((t/a)te^{-u})$，得到
+
+$$
+|\vartheta(a+t)-\vartheta(a)-t|
+\ll tLe^{-u}+\frac{t^2}{aL}.
+\tag{260.9}
+$$
+
+若 $0\le t<a^{2/3}$，由 $\vartheta$ 的单调性及式（260.9）在
+$t=a^{2/3}$ 的值，上述绝对误差为 $O(a^{2/3})$。
+经典初等高次素数幂估计给
+$0\le\Psi(x)-\vartheta(x)\ll\sqrt x\log^2x$：
+每个指数 $m\ge2$ 至多含 $x^{1/m}$ 个底数，每项权重至多 $\log x$，
+而指数个数至多 $\log_2x$；将 $m=2$ 与 $m\ge3$ 分开求和即可。
+因此对全部 $a^{2/3}\le T\le a^{0.99}$，有一致界
+
+$$
+\sup_{0\le t\le T}|E_a(a+t)|
+\ll a^{2/3}+TLe^{-u}+\frac{T^2}{aL}+\sqrt a\,L^2.
+\tag{260.10}
+$$
+
+这里没有假定 $\Psi(a)-a$ 的 RH 尺度界。
+因 $u=o(L)$ 且 $\log L=o(u)$，式（260.5）的两个比值满足所述极限，
+且最终 $a^{2/3}\le H(a)\le a^{0.99}$、$a+H(a)\le2a$。
+对任意较短区间也可使用式（260.10）在共同截止 $T=H(a)$ 的界。
+式（260.4）于是给
+
+$$
+w(y)|\mathcal R_{a,b}(y)|
+\ll\frac{H(a)}{a^{3/2}}
+\left(a^{2/3}+H(a)Le^{-u}
++\frac{H(a)^2}{aL}+\sqrt a\,L^2\right).
+$$
+
+逐项代入 $H(a)$ 即得式（260.7）。其中短区间计数误差准确给出
+
+$$
+\frac{H(a)^2Le^{-u}}{a^{3/2}}=\frac1L.
+\tag{260.11}
+$$
+
+其余三项的负幂指数压过 $e^{cu}$ 与 $L$ 的有限幂，故全都趋零。
+例如改用 $L=u^4$ 后，其指数部分依次为
+$-u^4/12+u/2$、$-u^4/4+3u/2$、$-u^4/4+u/2$，
+充分大时均不超过 $-u$；多项式乘 $e^{-u}$ 趋零。
+界对全部较短区间与全部内部点一致，故式（260.6）成立。$\square$
+
+### theorem 260.4 固定端点预算的传递与递归价格网格
+
+固定 $K\ge0$ 与 $\eta>0$。存在阈值 $a_*(K,\eta)$，使
+$a\ge a_*$、$a<b\le a+H(a)$ 且
+
+$$
+w(a)\Phi(a)\ge-K,\qquad w(b)\Phi(b)\ge-K
+\tag{260.12}
+$$
+
+时，对全部 $y\in[a,b]$ 都有
+
+$$
+w(y)\Phi(y)\ge-K-\eta.
+\tag{260.13}
+$$
+
+选择足够大的 $a_0\ge4$，递归定义
+
+$$
+a_{j+1}=a_j+H(a_j)\qquad(j\ge0).
+\tag{260.14}
+$$
+
+该网格严格递增、趋于无穷，且各胞腔 $[a_j,a_{j+1}]$ 覆盖 $[a_0,\infty)$。
+在 §92.3 的经典解析假设下，RH 等价于存在一个固定有限 $K\ge0$，
+使式（260.12）的端点下界在这整条网格上最终成立。
+
+**证明。** $w$ 在 $(1,\infty)$ 严格递增。
+由两个端点假设及 $0\le\lambda_y\le1$，端点弦不小于 $-K/w(a)$。
+而 $H(a)/a\to0$ 保证一致的 $w(y)/w(a)=1+o(1)$。
+结合式（260.6），选择共同阈值使
+$K(w(y)/w(a)-1)+w(y)|\mathcal R_{a,b}(y)|\le\eta$，
+即得式（260.13）。$K$ 固定时这个选择才给共同阈值。
+
+最终 $H(a)\ge a^{3/4}$。取 $a_0\ge4$ 且超过该阈值，归纳有
+$a_j\ge a_0+j$、$a_{j+1}>a_j$，故不存在有限聚点。
+任意 $y\ge a_0$，取最小的正指标 $m$ 满足 $a_m>y$，
+则 $a_{m-1}\le y<a_m$，从而得到覆盖。
+若固定端点预算最终成立，取 $\eta=1$，所有充分大的胞腔给
+$w(y)\Phi(y)\ge-K-1$，§92.3 遂推出 RH。
+反向在 RH 下，§92.3 给每个固定 $K>C_\gamma$ 的全域最终下界，
+故也给整条网格的端点下界。这里复用经典 RH 桥接，并未证明端点预算。$\square$
+
+### proposition 260.5 双端差分预算用于五窗来源的条件
+
+固定 $K\ge0$ 与 $\eta>0$。若一条合法五窗来源族有显式映射到同一实际价格源，
+且相应价格胞腔满足定理 260.4 的宽度条件、共同端点预算及
+左端 $a\ge a_*(K,\eta)$，则其胞腔内的实际尾项满足式（260.13）。
+接缝类型、组成坐标或递归层数本身不属于式（260.12）的替代前提。
+
+**证明。** 对该映射所得的每个实际胞腔应用定理 260.4。
+共同端点预算控制价格弦的水平，中心化增量控制弦内变化；
+式（260.2）仅消掉局部变化中的常数背景，保留两端 $\Phi$ 的未知水平。
+因此结论需要两项条件同时成立，不能由某一个已知入口点向后自动传播。$\square$
+
+§241 的首次跨越 $5040$ 给有限入口，§§236–240 的接缝及组成给合法转移。
+本节提供的是另一种可用于递归分割的误差合同：控制胞腔内的中心化源变化，
+可使较宽实际价格胞腔的误差一致趋零，而无须先估计起点的绝对 $\Psi(a)-a$。
+尚未取得全部五窗来源到式（260.14）的价格映射或共同端点预算；
+这些价格胞腔不增加 Robin 的整数认证覆盖范围。

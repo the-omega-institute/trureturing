@@ -68,6 +68,7 @@ does not supply that existence or uniqueness theorem.
 | `Geometry/Riemannian/Measure/Basic.lean` | `PoincareMT.RiemannianMetric.volumeMeasure` | Defines intrinsic volume as normalized Hausdorff measure for the specified metric's induced Riemannian distance. |
 | `Geometry/Riemannian/Measure/Density.lean` | `PoincareMT.RiemannianMetric.pullbackVolumeDensity` | Defines coordinate density as the square root of the Gram determinant of the parametrization differential in the same metric. |
 | `Geometry/Riemannian/Measure/HausdorffDensity.lean` | `PoincareMT.RiemannianMetric.volumeMeasure_image_eq_lintegral_pullbackVolumeDensity` | Computes the volume of a smooth coordinate image as the Lebesgue integral of this density, for a measurable subset of the parametrization source and a smooth inverse. |
+| `Geometry/Riemannian/Measure/LocalFinite.lean` | `PoincareMT.RiemannianMetric.volumeMeasure_lt_top_of_isCompact` | Compact subsets have finite intrinsic volume for a smooth Riemannian manifold with Borel measurable structure and `T3Space`; completeness and curvature are not required. |
 
 The `Geometry/` paths in this table have the prefix `PoincareLib/`.
 `MetricComplete` means completeness of the emetric obtained from the specified
@@ -307,6 +308,22 @@ measure-preserving `WithLp` product coordinates, and integrates the derived
 height density $h^{-3}$. Finite horizontal area therefore gives finite source
 tail volume. This does not identify a cusp quotient or provide a region
 covering an entire quotient; cusp geometry and core coverage remain open.
+
+For the same constructed source and descended quotient metrics, suppose a
+compact quotient subset $C$ together with finitely many projected source
+tails $q(T(K_i,H_i))$ covers the whole quotient, where every $K_i$ is
+measurable with finite horizontal area and every $H_i>0$. Then
+$\operatorname{vol}_{g_Q}(Q)\le
+\operatorname{vol}_{g_Q}(C)+\sum_i\operatorname{area}(K_i)/(2H_i^2)<\infty$.
+The cited compact-volume theorem makes the core contribution finite;
+projection contraction, the same-source tail formula and finite
+subadditivity bound the remaining contributions. Neither disjointness,
+projection injectivity nor measurability of the projected tails is needed.
+The empty tail family includes the compact case. The check supplies this
+conditional estimate within the same metric construction and chosen smooth
+quotient structure; it does not construct the core, classify cusps or prove
+the covering condition. No orientability premise is introduced; the
+noncompact and nonorientable rigidity cases remain in scope.
 
 These checks compiled under the project pins using the unchanged cited
 external sources and only `propext`, `Classical.choice` and `Quot.sound`.
