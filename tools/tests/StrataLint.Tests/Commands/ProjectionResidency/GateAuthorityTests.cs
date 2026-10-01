@@ -11,27 +11,57 @@ public sealed class GateAuthorityTests
     private const string OldBuild =
         "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
 
-    // The literal is a shrink sentinel, not a restatement of roots.Length. These roots are
-    // an authority selection, not every stage in the entrypoints: the Makefile carries
-    // dozens of other targets, none of which the catalog
-    // admits. Comparing the count against the collection it came from would assert nothing
-    // and would let a root be dropped silently. Retiring one is a deliberate act: change the
-    // number here in the same commit.
     [Fact]
-    public void RepositoryCatalogHasFortyFiveUniqueUtf8SortedRoots()
+    public void RepositoryCatalogDerivesUniqueUtf8SortedRootsFromUnitsAndStaticRoots()
     {
         var repositoryRoot = TestRepositoryLayout.FindRoot();
         var catalog = File.ReadAllBytes(Path.Combine(repositoryRoot, GateAuthorityRootCatalogLoader.RelativePath));
-        var roots = GateAuthorityRootCatalogLoader.Parse(catalog);
+        var staticRoots = GateAuthorityRootCatalogLoader.Parse(catalog);
+        using var registration = JsonDocument.Parse(File.ReadAllBytes(Path.Combine(repositoryRoot, "Meta/ci-units.json")));
+        var requiredUnits = registration.RootElement.GetProperty("units").EnumerateArray()
+            .Where(unit => unit.GetProperty("check").ValueKind != JsonValueKind.Null).ToArray();
+        var roots = GateAuthorityRootCatalogLoader.LoadRepository(repositoryRoot);
 
-        Assert.Equal(45, roots.Length);
-        Assert.Equal(
-            roots.Length,
-            roots.Select(root => root.RootId).Distinct().Count());
-        Assert.Equal(
-            roots.Select(root => root.RootId),
-            roots.Select(root => root.RootId)
-                .OrderBy(value => Encoding.UTF8.GetBytes(value), ByteArrayComparer.Instance));
+        Assert.Equal(staticRoots.Length + requiredUnits.Length, roots.Length);
+        Assert.Equal(roots.Length, roots.Select(root => root.RootId).Distinct().Count());
+        Assert.Equal(roots.Select(root => root.RootId), roots.Select(root => root.RootId)
+            .OrderBy(value => Encoding.UTF8.GetBytes(value), ByteArrayComparer.Instance));
+        Assert.All(requiredUnits, unit => Assert.Contains(roots, root =>
+            root.RootId == Path.GetFileName(unit.GetProperty("workflow").GetString()) + "/" + unit.GetProperty("id").GetString()
+            && root.Entrypoint == unit.GetProperty("workflow").GetString()));
+        Assert.DoesNotContain(staticRoots, root => root.RootId.StartsWith("ci-", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void LoaderMergesStaticAndRequiredCiRootsAndSkipsNullChecks()
+    {
+        using var repository = SyntheticRepository();
+        var roots = GateAuthorityRootCatalogLoader.LoadRepository(repository.Path);
+        Assert.Equal(new[] { "Alpha/check", "ci-current.yml/current", "ci-fixture.yml/fixture", "entry.sh/check" },
+            roots.Select(root => root.RootId));
+        Assert.Equal(".github/workflows/ci-fixture.yml", roots.Single(root => root.RootId == "ci-fixture.yml/fixture").Entrypoint);
+    }
+
+    [Fact]
+    public void StaticAndDerivedRootCollisionIsRejected()
+    {
+        using var repository = SyntheticRepository();
+        File.WriteAllText(Path.Combine(repository.Path, GateAuthorityRootCatalogLoader.RelativePath),
+            "schema = \"gate-authority-roots-v1\"\n[[roots]]\nroot_id = \"ci-fixture.yml/fixture\"\nentrypoint = \"entry.sh\"\n");
+        Assert.Throws<FormatException>(() => GateAuthorityRootCatalogLoader.LoadRepository(repository.Path));
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("{")]
+    [InlineData("{\"schema\":\"ci-units-v1\",\"units\":{}}")]
+    [InlineData("{\"schema\":\"ci-units-v1\",\"units\":[{\"id\":\"fixture\",\"workflow\":\"../ci-fixture.yml\",\"check\":\"fixture / unit\"}]}")]
+    public void RequiredCiRegistrationFailsClosed(string? text)
+    {
+        using var repository = SyntheticRepository();
+        var path = Path.Combine(repository.Path, "Meta/ci-units.json");
+        if (text is null) File.Delete(path); else File.WriteAllText(path, text);
+        Assert.Equal(2, GateAuthorityCommand.Run(repository.Path, ["--check"]).ExitCode);
     }
 
     [Fact]
@@ -151,6 +181,7 @@ public sealed class GateAuthorityTests
     public void CheckRejectsAStaleRootTargetInASyntheticRepository()
     {
         using var repository = new TemporaryDirectory();
+        WriteRegistration(repository.Path, OptionalRegistration);
         var catalog = Path.Combine(repository.Path, "Golden", "gate-authority-roots.toml");
         Directory.CreateDirectory(Path.GetDirectoryName(catalog)!);
         File.WriteAllText(catalog, """
@@ -172,6 +203,7 @@ public sealed class GateAuthorityTests
     public void CheckBindsSyntheticEntrypointBytesIntoStrictAuthority()
     {
         using var repository = new TemporaryDirectory();
+        WriteRegistration(repository.Path, OptionalRegistration);
         var catalog = Path.Combine(repository.Path, "Golden", "gate-authority-roots.toml");
         Directory.CreateDirectory(Path.GetDirectoryName(catalog)!);
         File.WriteAllText(catalog, """
@@ -197,6 +229,7 @@ public sealed class GateAuthorityTests
     public void CheckRejectsInvalidUtf8EntrypointAsSchemaExitTwo()
     {
         using var repository = new TemporaryDirectory();
+        WriteRegistration(repository.Path, OptionalRegistration);
         var catalog = Path.Combine(repository.Path, "Golden", "gate-authority-roots.toml");
         Directory.CreateDirectory(Path.GetDirectoryName(catalog)!);
         File.WriteAllText(catalog, """
@@ -214,14 +247,55 @@ public sealed class GateAuthorityTests
         Assert.Contains("GATE_AUTHORITY_INVALID", result.Error, StringComparison.Ordinal);
     }
 
-    private static byte[] ProduceBytes() =>
-        GateAuthorityProducer.Write(GateAuthorityProducer.Create(TestRepositoryLayout.FindRoot(), OldBuild));
+    private const string OptionalRegistration = """
+        {"schema":"ci-units-v1","units":[{"id":"optional","workflow":".github/workflows/ci-optional.yml","check":null}]}
+        """;
 
-    private static int ValidateAuthority(byte[] bytes, string? expectedAuthoritySha256) =>
-        GateAuthorityReader.Validate(
-            bytes,
-            expectedAuthoritySha256,
-            GateAuthorityRootCatalogLoader.LoadRepository(TestRepositoryLayout.FindRoot()));
+    private static TemporaryDirectory SyntheticRepository()
+    {
+        var repository = new TemporaryDirectory();
+        Directory.CreateDirectory(Path.Combine(repository.Path, "Golden"));
+        File.WriteAllText(Path.Combine(repository.Path, GateAuthorityRootCatalogLoader.RelativePath), """
+            schema = "gate-authority-roots-v1"
+            [[roots]]
+            root_id = "Alpha/check"
+            entrypoint = "entry.sh"
+            [[roots]]
+            root_id = "entry.sh/check"
+            entrypoint = "entry.sh"
+            """ + "\n");
+        File.WriteAllText(Path.Combine(repository.Path, "entry.sh"), "#!/bin/sh\ncheck\n");
+        WriteRegistration(repository.Path, """
+            {"schema":"ci-units-v1","units":[
+              {"id":"current","workflow":".github/workflows/ci-current.yml","check":"current"},
+              {"id":"fixture","workflow":".github/workflows/ci-fixture.yml","check":"fixture / unit"},
+              {"id":"optional","workflow":".github/workflows/ci-optional.yml","check":null}]}
+            """);
+        var directory = Path.Combine(repository.Path, ".github/workflows");
+        Directory.CreateDirectory(directory);
+        File.WriteAllText(Path.Combine(directory, "ci-current.yml"), "jobs: {current: {steps: []}}\n");
+        File.WriteAllText(Path.Combine(directory, "ci-fixture.yml"), "jobs: {fixture: {uses: ./unit.yml}}\n");
+        return repository;
+    }
+
+    private static void WriteRegistration(string root, string text)
+    {
+        Directory.CreateDirectory(Path.Combine(root, "Meta"));
+        File.WriteAllText(Path.Combine(root, "Meta/ci-units.json"), text);
+    }
+
+    private static byte[] ProduceBytes()
+    {
+        using var repository = SyntheticRepository();
+        return GateAuthorityProducer.Write(GateAuthorityProducer.Create(repository.Path, OldBuild));
+    }
+
+    private static int ValidateAuthority(byte[] bytes, string? expectedAuthoritySha256)
+    {
+        using var repository = SyntheticRepository();
+        return GateAuthorityReader.Validate(bytes, expectedAuthoritySha256,
+            GateAuthorityRootCatalogLoader.LoadRepository(repository.Path));
+    }
 
     private static byte[] WriteMutation(string oldBuild, IEnumerable<JsonElement> roots) =>
         StructuredCanonicalWriter.WriteJson(JsonSerializer.SerializeToElement(new
