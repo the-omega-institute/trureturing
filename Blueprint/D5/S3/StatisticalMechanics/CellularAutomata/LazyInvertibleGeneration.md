@@ -18,7 +18,7 @@ For a group G and an alphabet A, a map T from A^G to itself is a cellular automa
 
 **Definition 1.2 (Lazy cellular automata).**
 
-$$\operatorname{IsLazy}\left(T\right) \Leftrightarrow (\exists S \in \operatorname{Finset}\left(G\right), e \in S, mu, p \in A^{S}, (\forall z \in A^{S}, mu\left(z\right) = z\left(e\right) \Leftrightarrow z \ne p) \land (\forall x \in A^{G}, g \in G, T\left(x\right)\left(g\right) = mu\left(s \mapsto x\left(s \cdot g\right)\right)))$$
+$$\operatorname{IsLazy}\left(T\right) \Leftrightarrow (\exists S \in \operatorname{Finset}\left(G\right), e \in S, mu:A^{S}\to A, p \in A^{S}, (\forall z \in A^{S}, mu\left(z\right) = z\left(e\right) \Leftrightarrow z \ne p) \land (\forall x \in A^{G}, g \in G, T\left(x\right)\left(g\right) = mu\left(s \mapsto x\left(s \cdot g\right)\right)))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/CellularAutomata/LazyInvertibleGeneration.IsLazy` (`✓ std3`).
 
@@ -42,7 +42,7 @@ A cellular automaton T is invertible when some cellular automaton T' satisfies T
 
 **Definition 1.4 (Problem 2).**
 
-$$claim \Leftrightarrow (\forall G, A, (((\operatorname{Group}\left(G\right)) \land (\operatorname{Finite}\left(A\right))) \land (\left|A\right| \ge 2)) \Rightarrow \forall T, (\operatorname{IsCA}\left(T\right)) \Rightarrow T \in \langle ICA \cup L\rangle)$$
+$$claim \Leftrightarrow (\forall G, A, (((\operatorname{Group}\left(G\right)) \land (\operatorname{Finite}\left(A\right))) \land (\left|A\right| \ge 2)) \Rightarrow \forall T:A^{G}\to A^{G}, (\operatorname{IsCA}\left(T\right)) \Rightarrow T \in \langle \{U : \operatorname{IsInvertibleCA}\left(U\right)\} \cup \{U : \operatorname{IsLazy}\left(U\right)\}\rangle)$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/CellularAutomata/LazyInvertibleGeneration.claim` (`✓ std3`).
 

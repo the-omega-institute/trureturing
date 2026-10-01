@@ -92,7 +92,8 @@ internal sealed class LazyInvertibleGenerationDocument : IScribeDocumentDefiniti
                 Rel(z, FormulaRelationOperator.NotEqual, F.Id("p"))));
         return Disp(Iff(Call(F.Id("IsLazy"), F.Id("T")),
             SomeOf(Seq(Member(F.Id("S"), Call(F.Id("Finset"), F.Id("G"))), Comma, Sp,
-                    Member(e, F.Id("S")), Comma, Sp, F.Id("mu"), Comma, Sp, Member(F.Id("p"), Patterns())),
+                    Member(e, F.Id("S")), Comma, Sp, F.Id("mu"), Colon, Patterns(), To, Sp, F.Id("A"), Comma, Sp,
+                    Member(F.Id("p"), Patterns())),
                 And(active, LocalRule()))));
     }
 
@@ -108,12 +109,16 @@ internal sealed class LazyInvertibleGenerationDocument : IScribeDocumentDefiniti
 
     private static Formula ClaimFormula()
     {
-        Formula generators = Seq(F.Id("ICA"), Sp, Cup, Sp, F.Id("L"));
+        Formula u = F.Id("U");
+        Formula generators = Seq(
+            OpenBrace, u, Sp, Colon, Sp, Call(F.Id("IsInvertibleCA"), u), CloseBrace, Sp, Cup, Sp,
+            OpenBrace, u, Sp, Colon, Sp, Call(F.Id("IsLazy"), u), CloseBrace);
         Formula closure = Seq(Langle, Sp, generators, Rangle);
         return Disp(Iff(F.Id("claim"),
             AllOf(Seq(F.Id("G"), Comma, Sp, F.Id("A")),
                 Implies(And(And(Call(F.Id("Group"), F.Id("G")), Call(F.Id("Finite"), F.Id("A"))),
                         Rel(new Formula.Absolute(F.Id("A")), FormulaRelationOperator.GreaterThanOrEqual, D(2))),
-                    AllOf(F.Id("T"), Implies(Call(F.Id("IsCA"), F.Id("T")), Member(F.Id("T"), closure)))))));
+                    AllOf(Seq(F.Id("T"), Colon, Configurations(), To, Sp, Configurations()),
+                        Implies(Call(F.Id("IsCA"), F.Id("T")), Member(F.Id("T"), closure)))))));
     }
 }
