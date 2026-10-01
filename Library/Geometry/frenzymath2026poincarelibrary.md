@@ -1505,3 +1505,57 @@ noncompact cusps and nonorientable manifolds. The existing escape audit
 remains unfinished:
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
 Neither these checks nor CI closes that audit or the remaining mathematics.
+
+## Lorentz coordinates and linear extension of actual H3 isometries
+
+A further transient classical composition starts from the same original
+upper-half-space metric, without replacing its distance. Existing
+half-distance and hyperbolic-function identities give, for original
+upper-half-space points `p,q`,
+`cosh(hyperbolicDist p q) = 1 + distAmbient(p,q)^2/(2*height p*height q)`.
+For the original H3 point with horizontal coordinate `x + i*y` and
+positive height `t`, define the real four-coordinate map
+`C(p) = ((x^2+y^2+t^2+1)/(2*t), x/t, y/t,
+(x^2+y^2+t^2-1)/(2*t))` and Lorentz bilinear form
+`B(u,v) = u0*v0-u1*v1-u2*v2-u3*v3`.
+The exact original-distance identity is `B(C(p),C(q)) = cosh(dist p q)`.
+It gives `B(C(p),C(p)) = 1`, injectivity of `C`, and preservation of this
+kernel by every actual H3 isometry.
+
+The four actual upper-half-space points `(0,1)`, `(0,2)`, `(1,1)` and
+`(i,1)` have Lorentz vectors `(1,0,0,0)`, `(5/4,0,0,3/4)`,
+`(3/2,1,0,1/2)` and `(3/2,0,1,1/2)`. Exact coefficient expansion spans
+the real four-dimensional vector space, and their Lorentz probes detect
+the zero vector. Distances to these four points determine every actual H3
+point. The values of an actual H3 isometry at these four points determine
+the entire isometry.
+
+For every actual H3 isometry `e`, preservation of the frame Gram matrix
+makes the four vectors `C(e(frame_i))` linearly independent. Existing
+Mathlib finite-dimensional basis construction and basis equivalence give
+a real linear equivalence `L(e)` sending each `C(frame_i)` to
+`C(e(frame_i))`. Pairing the exact frame expansion with the image basis
+proves `L(e)(C(p)) = C(e(p))` for every actual H3 point `p`, rather than
+only for the four frame points. Bilinearity and kernel preservation on
+the frame then give `B(L(e)u,L(e)v) = B(u,v)` for all real four-vectors.
+Agreement on the frame proves `L(1) = 1` and
+`L(e*f) = L(e)*L(f)`, with composition in the same order as the original
+isometry group. Coordinate injectivity and determination by the four
+frame values prove that this group homomorphism is injective. These
+arguments cover the full original H3 isometry group; they do not assume
+orientation preservation.
+
+The six scoped transient checks reuse the existing original
+upper-half-space metric, real hyperbolic-function identities, finite sums,
+finite-dimensional basis construction and basis equivalence. Their
+23 printed closures use only `propext`, `Classical.choice` and `Quot.sound`
+under the same pins. No tracked Lean declaration or mathematical novelty
+is claimed. Continuity of this representation, any assertion that its
+image is the full Lorentz group, and an actual H3 recurrent-conjugation
+constraint are not established by these checks. Centralizer triviality,
+lattice conjugacy, finite-volume cusp classification and full
+Mostow-Prasad homotopic-isometry existence and uniqueness remain
+unfinished, including noncompact cusps and nonorientable manifolds.
+The existing escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these checks nor CI closes that audit or the remaining mathematics.
