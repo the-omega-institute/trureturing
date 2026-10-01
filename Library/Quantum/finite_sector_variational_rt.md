@@ -1,5 +1,5 @@
 ---
-bibkey: codex2026finitertvariation
+bibkey: finite_sector_variational_rt
 authors: the-omega-institute/trureturing
 title: "Finite-sector variational domination and orientation-cover obstruction"
 year: 2026
