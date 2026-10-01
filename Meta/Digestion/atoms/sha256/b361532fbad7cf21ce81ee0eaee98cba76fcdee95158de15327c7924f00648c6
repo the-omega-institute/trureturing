@@ -1,0 +1,4 @@
+## 4. Sources
+
+Brändén and Huh, *Lorentzian polynomials*, arXiv:1902.03719v8, Sections 2 and 3, supplies the published concavity context. The displayed matrix argument is an ordinary finite-dimensional spectral/max-principle dependency. The pinned Mathlib matrix spectral theorem supplies the orthonormal eigenbasis; no general Lorentzian formal framework is asserted here.
+
