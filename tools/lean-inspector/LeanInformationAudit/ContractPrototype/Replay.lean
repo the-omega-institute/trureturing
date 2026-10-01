@@ -11,9 +11,10 @@ private def command (action : CommandElabM Unit) : MetaM Unit :=
 
 /-- Discovery is shared; selection, template plans and assessments are rooted at
 one target. No report hook executes while Reg is compiled. -/
-def replay (root : Name) (snapshot : Snapshot) : MetaM Unit := do
+def replay (root : Name) (snapshot : Snapshot)
+    (checkpoint : String → MetaM Unit := fun _ => pure ()) : MetaM Unit := do
   let saved ← getEnv
-  try
+  tryCatchRuntimeEx (do
     let reachable := reachableModules saved root
     let selected (owner : Name) := reachable.contains owner
     let registrations := snapshot.registrations.filter (selected ∘ Prod.fst)
@@ -25,15 +26,19 @@ def replay (root : Name) (snapshot : Snapshot) : MetaM Unit := do
       if seen.contains owner then throwError "IE-C028 DuplicateRootContract: {owner}"
       seen := seen.insert owner
       command <| RootCatalogs.declare contract
+      checkpoint "root"
     for (owner, expected) in snapshot.expected do
       unless selected owner do continue
       unless owner == expected.rootId do throwError "incomplete_closure:dtr.expected_owner"
       modifyEnv (ExpectedOccurrenceManifest.addEntry · expected)
+      checkpoint "expectation"
     for (owner, payload) in snapshot.companions do
       if selected owner then
         GeneratedDeclarations.withOwner owner <| prepareCompanions owner payload.input payload
+        checkpoint "companions"
     modifyEnv fun env => TemplateAudit.resetTemplatePlans <|
       TemplateBinding.resetAssessmentRecords <| InformationRegistry.reset env
+    checkpoint "reset"
     command <| do
       for (_, contract) in contracts do
         liftTermElabM <| RootCatalogs.acquireProvenance contract
@@ -47,6 +52,7 @@ def replay (root : Name) (snapshot : Snapshot) : MetaM Unit := do
         unless owner == registration.entry.registrationModuleName do
           throwError "incomplete_closure:dtr.input_owner"
         GeneratedDeclarations.withOwner owner <| assessRecordedEntry owner registration
+    checkpoint "assessment"
     seen := {}
     for (owner, request) in snapshot.seals do
       unless selected owner do continue
@@ -55,7 +61,8 @@ def replay (root : Name) (snapshot : Snapshot) : MetaM Unit := do
       seen := seen.insert owner
       withOptions (fun _ => request.options) <| GeneratedDeclarations.withOwner owner do
         liftM (assessAndSealRegistration (← RegistrationAssessmentInput.capture owner) : CoreM Unit)
-  catch error =>
+      checkpoint "seal"
+  ) fun error => do
     setEnv saved
     throw error
 
