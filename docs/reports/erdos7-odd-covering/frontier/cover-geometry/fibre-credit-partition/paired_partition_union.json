@@ -1,0 +1,232 @@
+{
+  "all_nonternary_heights": {
+    "complement_lower": "39152073669072172504328602944038595311933334377054/100517315668112111436140005695412960129245612661875",
+    "decimal": 0.277160904312801,
+    "dp_transitions": 10077184,
+    "first_fractional_budget_masks": [],
+    "first_fractional_guard": "647034089336019224270438011218339029829/2108489420347256004886427495960724408320",
+    "first_fractional_weight_ratio": "1/2",
+    "first_full_partition_primes": [
+      [
+        11,
+        17,
+        19,
+        41
+      ],
+      [
+        13,
+        23,
+        29,
+        31,
+        37
+      ]
+    ],
+    "first_full_partitions": 256,
+    "first_partition_masks": [
+      269,
+      242
+    ],
+    "improvement_over_product_defect_upper": "2007325099621147154702379666434990211657557134166333830848688074685503682214747/1193643123558831323304162567633028901534791650359765625000000000000000000000000000",
+    "second_fractional_mask": 0,
+    "second_fractional_primes": [],
+    "second_fractional_weight_ratio": "5/6",
+    "second_full_partition_masks": [
+      1,
+      2,
+      4,
+      136,
+      368
+    ],
+    "second_full_partition_primes": [
+      [
+        11
+      ],
+      [
+        13
+      ],
+      [
+        17
+      ],
+      [
+        19,
+        37
+      ],
+      [
+        23,
+        29,
+        31,
+        41
+      ]
+    ],
+    "survivor_decimal": 0.0021067616773334024,
+    "survivor_lower": "974123731366813675080404180458817146149177978323/462379652073315712606244026198899616594529818244625",
+    "union_upper": "27859470109669235119764734186236711440897074064196/100517315668112111436140005695412960129245612661875"
+  },
+  "checks": 54,
+  "contract": "Exact paired scalar relaxation with subunit total private budgets; no original arithmetic phase realization or unrestricted cover conclusion.",
+  "endpoint_sha256": "146aa515c980b30edb14bb477cef1b452ab6a758d98f4610fdd38c43061bd219",
+  "finite": {
+    "complement_lower": "1818787545245717871590037358679302609582702989941/4667699064271985012355433645074960811694844092544",
+    "decimal": 0.27715488784789355,
+    "dp_transitions": 10077184,
+    "first_fractional_budget_masks": [],
+    "first_fractional_guard": "246835079657538249015282956156564825/804333244041324855294232076164985376",
+    "first_fractional_weight_ratio": "313/625",
+    "first_full_partition_primes": [
+      [
+        11,
+        17,
+        19,
+        41
+      ],
+      [
+        13,
+        23,
+        29,
+        31,
+        37
+      ]
+    ],
+    "first_full_partitions": 256,
+    "first_partition_masks": [
+      269,
+      242
+    ],
+    "improvement_over_product_defect_upper": "158287282528659093526054838639371714465146103228505724492738767038659361018602266574879483357930543241791202711/94136972430517352394957534172148209418057617247099012015543126650582109934807946560000000000000000000000000000000",
+    "second_fractional_mask": 0,
+    "second_fractional_primes": [],
+    "second_fractional_weight_ratio": "2001/2401",
+    "second_full_partition_masks": [
+      1,
+      2,
+      4,
+      136,
+      368
+    ],
+    "second_full_partition_primes": [
+      [
+        11
+      ],
+      [
+        13
+      ],
+      [
+        17
+      ],
+      [
+        19,
+        37
+      ],
+      [
+        23,
+        29,
+        31,
+        41
+      ]
+    ],
+    "survivor_decimal": 0.0023895422112745076,
+    "survivor_lower": "195678314800077714792796591752441125436679703/81889457267929561620270765703069487924470948992",
+    "union_upper": "1293675610666019574788607175131347453846922145147/4667699064271985012355433645074960811694844092544"
+  },
+  "large_prime_tail": {
+    "B": 400000,
+    "M2_upper": "17517439415203/525533184000",
+    "c_ell": "243/241",
+    "contract": "Specified191 head exponent palette, only5-stars on declared pure3-avoiding root, head-only v3<=1; arbitrary finite nonternary heights; fix3,5,7 and componentwise enlarge private primes. All primes outside designated head>400000; all tail-touching heights arbitrary finite. Uses existing SH11 analytic premise. Supported distorted mass, not natural density.",
+    "ell": 11,
+    "final_supported_mass_lower": "2055853657069392215731299780559567/37920570692721246704416676180800768000",
+    "final_supported_mass_threshold": "1/20000",
+    "head_Haar_mass_lower": "1/4000",
+    "polynomial": "43210290/19487171",
+    "tail_loss_upper": "59394312128887355682982954117125/303364565541769973635333409446406144"
+  },
+  "private_primes": [
+    11,
+    13,
+    17,
+    19,
+    23,
+    29,
+    31,
+    37,
+    41
+  ],
+  "small_controls": [
+    {
+      "X": [
+        "1/10",
+        "1/8"
+      ],
+      "Y": [
+        "1/6",
+        "1/7"
+      ],
+      "max_union": "1093/7560",
+      "raw_assignments_checked": 81,
+      "second_fraction": "1/2",
+      "second_fractional_mask": 0,
+      "second_full_rows": 2
+    },
+    {
+      "X": [
+        "0",
+        "1/10"
+      ],
+      "Y": [
+        "1/3",
+        "1/5"
+      ],
+      "max_union": "23/135",
+      "raw_assignments_checked": 81,
+      "second_fraction": "1/3",
+      "second_fractional_mask": 0,
+      "second_full_rows": 2
+    },
+    {
+      "X": [
+        "0"
+      ],
+      "Y": [
+        "0"
+      ],
+      "max_union": "0",
+      "raw_assignments_checked": 6,
+      "second_fraction": "0",
+      "second_fractional_mask": 0,
+      "second_full_rows": 2
+    },
+    {
+      "X": [
+        "1/20",
+        "1/15",
+        "1/12"
+      ],
+      "Y": [
+        "1/9",
+        "1/8",
+        "1/7"
+      ],
+      "max_union": "209983/1360800",
+      "raw_assignments_checked": 729,
+      "second_fraction": "2/3",
+      "second_fractional_mask": 0,
+      "second_full_rows": 2
+    },
+    {
+      "X": [
+        "1/100",
+        "1/100"
+      ],
+      "Y": [
+        "4/5",
+        "4/5"
+      ],
+      "max_union": "9557/15000",
+      "raw_assignments_checked": 36,
+      "second_fraction": "9/10",
+      "second_fractional_mask": 2,
+      "second_full_rows": 1
+    }
+  ],
+  "source_sha256": "9bfd3fd80294952125fa45d7aa8701b11e40bec514de4cc00ef04d49c81b99ac"
+}

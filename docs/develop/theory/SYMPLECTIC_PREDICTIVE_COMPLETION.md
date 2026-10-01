@@ -3064,3 +3064,40 @@ $$
 证明。紧支测试导数的支撑在有界平移下落入同一个紧集。其一致有界性与该集的有限测度使测试配对的差商可在平方可积假设下控制；不需要 $f$ 全局可积。对每个平移后的测试应用弱等式与标量微积分基本定理，再将连续线性配对与 Bochner 区间积分交换。紧支光滑测试分离局部可积函数的几乎处处类，故 $V(t)[f]-[f]=\int_0^t V(r)[h]\,dr$，向量微积分基本定理给强导数。反向把同一测试配对的导数分别由强轨道导数和移位测试微分计算，并用导数唯一性得到所示负号。
 
 此结论只识别一维平移的最大一阶弱导数域。定理 2.4 的多维振子闭图、张量算子域、一般辛实现与 Gibbs 迹公式仍需各自的解析桥梁。
+
+## 25. 有限 Gaussian 观测的实际条件概率与信息
+
+**定理 25.1（Gaussian 观测律的后验、似然与条件自由能）。** 设 $n,p\ge0$，$M:\mathbb R^n\to\mathbb R^p$ 是任意实矩阵，$\beta>0$，$\sigma\in\mathbb R$ 满足 $\sigma^2>0$，置 $\tau=\sigma^{-2}$。在同一个概率律中取相互独立的 $X\sim\mathcal N(0,\beta^{-1}I_n)$ 与 $N\sim\mathcal N(0,\tau^{-1}I_p)$，令 $Y=MX+N$。具体地，共同输入律是 $\mathbb R^{n+p}$ 上块对角协方差 $\operatorname{diag}(\beta^{-1}I_n,\tau^{-1}I_p)$ 的中心 Gaussian 律，$X,N,Y$ 是其坐标线性映射。令 $P$ 为 $(Y,X)$ 的实际推前联合律，$\mu$ 为 $Y$ 的实际边缘律，并置
+
+$$
+Q=\beta I_n+\tau M^{\mathsf T}M,\qquad
+\Sigma=Q^{-1},\qquad A=\tau\Sigma M^{\mathsf T},\qquad
+K_y=\mathcal N(Ay,\Sigma).
+$$
+
+这里 $K$ 作为概率核是中心律 $\mathcal N(0,\Sigma)$ 经 $x\mapsto Ay+x$ 的推前。它给出实际联合律的条件分解 $P=\mu\otimes K$。对实际概率密度定义
+
+$$
+h(\nu)=-\int\log\left(\frac{d\nu}{dx}\right)\,d\nu,
+\qquad \mathcal F_\beta(\nu)=\int\frac{\|x\|^2}{2}\,d\nu-\beta^{-1}h(\nu).
+$$
+
+令 $\ell=\log\bigl(dP/d(P_Y\otimes P_X)\bigr)$ 是实际 Radon–Nikodym 导数的对数。则 $\ell$ 对 $P$ 可积，$D_{\rm KL}(P\Vert P_Y\otimes P_X)<\infty$，而其积分和互信息满足
+
+$$
+\begin{aligned}
+\int \ell\,dP
+=I(X:Y)
+&=\frac12\left(\log\det(\beta^{-1}I_n)-\log\det\Sigma\right)\\
+&=\frac12\log\det\left(I_n+\frac{\tau}{\beta}M^{\mathsf T}M\right),\\
+\int\mathcal F_\beta(K_y)\,d\mu(y)
+ -\mathcal F_\beta\bigl(\mathcal N(0,\beta^{-1}I_n)\bigr)
+&=\beta^{-1}I(X:Y).
+\end{aligned}
+$$
+
+空指标与零维空间均在范围内，空行列式为 $1$。$\sigma$ 可以为负；概率律依赖其平方，不要求 $M$ 单射。这些式子没有把有限积分矩 Gramian 与完整轨迹 Gramian 在正时间上混同。
+
+证明。精度 $Q$ 正定，因为 $\beta I_n$ 正定而 $\tau M^{\mathsf T}M$ 半正定。Gaussian 创新 $R=X-AY$ 的协方差是 $\Sigma$，且与 $Y$ 的交叉协方差为零；Gaussian 独立性与 $X=AY+R$ 给出所述条件分解。标准 Gaussian 的密度由实际一维 Gaussian 密度的可积乘积和矩形集上的积分得到。经可逆平方根与平移的 Haar 测度变换给出一般正定 Gaussian 密度，其 Jacobian 用绝对行列式。这个密度的 Radon–Nikodym 导数给出实际对数似然比，Gaussian 二阶矩使其可积。对联合律积分得到两协方差的对数行列式之差；平均条件能量等于先验能量，平均条件熵的差因此给出自由能恒等式。
+
+## 追加锚（本行以下为增补区）

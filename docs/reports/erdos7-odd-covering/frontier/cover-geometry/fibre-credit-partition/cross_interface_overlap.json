@@ -1,0 +1,43 @@
+{
+  "actual_pair": {
+    "compatible_group_union": "22771331303/432601753328",
+    "compatible_overlap": "1997331875/432601753328",
+    "first": {
+      "modulus": 35,
+      "residue": 4
+    },
+    "first_mass": "1500625/32830064",
+    "incompatible_group_union": "12384331589/216300876664",
+    "incompatible_overlap": "0",
+    "second_compatible": {
+      "modulus": 77,
+      "residue": 4
+    },
+    "second_incompatible": {
+      "modulus": 77,
+      "residue": 26
+    },
+    "second_mass": "4994927553/432601753328"
+  },
+  "checks": 8870,
+  "complete_phase_rule": "Keep original85 pure/star source. For every mixed cofactor d retain free d and selected3d; free35 and77 have the displayed phases. Every other free d has residue0 mod d. Each selected3d has residue d*((t*inverse(d mod3)) mod3), including four flipped roots. Thus all other mixed originals lie in an actual pure first-prime hole.",
+  "complete_roster_count": 4361,
+  "conditional_density_lower": "162090032293421176406878599100320121046645100462103728661987/909022954888471893722956214885377480474440450820312500000000000",
+  "conditional_density_threshold": "1/6000",
+  "conditional_survivor_lower": "162090032293421176406878599100320121046645100462103728661987/116692476606799625308885841126874020292371102313600000000000000",
+  "conditional_survivor_lower_decimal": 0.0013890358402417885,
+  "conditional_survivor_threshold": "1/750",
+  "contract": "Conditional theorem for the same four-flip finite profile; all actual phases arbitrary except the stated clean compatible35/77 relation. Phase countermodels retain the complete2138 mixed selected and2138 free numerical roster plus85 pure/star originals. They are not covers or irredundant families.",
+  "density_cap": "473822896595812134889805482765418601878125/60825270670482213092093639674969620903168",
+  "endpoint_sha256": "146aa515c980b30edb14bb477cef1b452ab6a758d98f4610fdd38c43061bd219",
+  "input_sha256": "abf69a11e38647699e35aa8d1b3c51c421a57ec1d79eae3331502a3525b90be4",
+  "limits": [
+    "The alignment/cleanliness premise is additional actual phase information.",
+    "Equal group masses/caps do not determine cross-group intersection.",
+    "Zero overlap in the second model does not rule out a uniform overlap-or-slack theorem.",
+    "No Lean verification or unrestricted Erdos7 resolution."
+  ],
+  "old_root1_lower": "-20143901363203143744800586446475240701080793556842324476859/16670353800971375044126548732410574327481586044800000000000000",
+  "old_root1_upper": "-5035975340796181500659932007938714905360458686519451749469/4167588450242843761031637183102643581870396511200000000000000",
+  "uniform_overlap_lower": "1/385"
+}

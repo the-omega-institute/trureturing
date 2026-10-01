@@ -1,0 +1,271 @@
+{
+  "schema": "root-incidence-repair-v1",
+  "primes": [
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23
+  ],
+  "short_forbidden_primes": [
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23
+  ],
+  "reference_digits": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "selected_labels": [
+    15,
+    21,
+    45,
+    33,
+    35,
+    39,
+    63,
+    51,
+    57,
+    55,
+    105,
+    75,
+    69,
+    65,
+    99,
+    77,
+    85,
+    117,
+    95,
+    165,
+    91,
+    147,
+    225
+  ],
+  "actual_family": [
+    {
+      "modulus": 3,
+      "phase": 0
+    },
+    {
+      "modulus": 9,
+      "phase": 1
+    },
+    {
+      "modulus": 15,
+      "phase": 10
+    },
+    {
+      "modulus": 21,
+      "phase": 7
+    },
+    {
+      "modulus": 45,
+      "phase": 40
+    },
+    {
+      "modulus": 33,
+      "phase": 22
+    },
+    {
+      "modulus": 35,
+      "phase": 0
+    },
+    {
+      "modulus": 39,
+      "phase": 13
+    },
+    {
+      "modulus": 63,
+      "phase": 49
+    },
+    {
+      "modulus": 51,
+      "phase": 34
+    },
+    {
+      "modulus": 57,
+      "phase": 19
+    },
+    {
+      "modulus": 55,
+      "phase": 0
+    },
+    {
+      "modulus": 105,
+      "phase": 70
+    },
+    {
+      "modulus": 75,
+      "phase": 25
+    },
+    {
+      "modulus": 69,
+      "phase": 46
+    },
+    {
+      "modulus": 65,
+      "phase": 0
+    },
+    {
+      "modulus": 99,
+      "phase": 22
+    },
+    {
+      "modulus": 77,
+      "phase": 0
+    },
+    {
+      "modulus": 85,
+      "phase": 0
+    },
+    {
+      "modulus": 117,
+      "phase": 13
+    },
+    {
+      "modulus": 95,
+      "phase": 0
+    },
+    {
+      "modulus": 165,
+      "phase": 55
+    },
+    {
+      "modulus": 91,
+      "phase": 0
+    },
+    {
+      "modulus": 147,
+      "phase": 49
+    },
+    {
+      "modulus": 225,
+      "phase": 175
+    }
+  ],
+  "witness": {
+    "coordinates": [
+      [
+        4,
+        9
+      ],
+      [
+        1,
+        25
+      ],
+      [
+        1,
+        49
+      ],
+      [
+        1,
+        11
+      ],
+      [
+        1,
+        13
+      ],
+      [
+        1,
+        17
+      ],
+      [
+        1,
+        19
+      ],
+      [
+        1,
+        23
+      ]
+    ],
+    "integer": 7808250451,
+    "period": 11712375675
+  },
+  "cases": [
+    {
+      "name": "arbitrary_pure_inventory_3000",
+      "weights": [
+        "7/26",
+        "7/26",
+        "2/13",
+        "2/13",
+        "2/13"
+      ],
+      "cap_kind": "pure_survivor",
+      "source_mode": "box",
+      "expected_source_mass": "572908282021678/19219130054499375",
+      "expected_box_mass": "572908282021678/19219130054499375",
+      "expected_worst_vertex": 127,
+      "tails": [
+        {
+          "cutoff": 3000,
+          "ell": 7,
+          "growth": 21,
+          "delta": "2/7",
+          "mass_floor": "3/200",
+          "expected_box_pass": true
+        }
+      ]
+    },
+    {
+      "name": "empty_pure_inventory_1600",
+      "weights": [
+        "1/4",
+        "1/4",
+        "1/6",
+        "1/6",
+        "1/6"
+      ],
+      "cap_kind": "pure_survivor",
+      "source_mode": "haar",
+      "expected_source_mass": "44628705330203/788477130441000",
+      "expected_box_mass": "3158635751951/140242967865000",
+      "expected_worst_vertex": 127,
+      "tails": [
+        {
+          "cutoff": 1600,
+          "ell": 6,
+          "growth": 21,
+          "delta": "2/7",
+          "mass_floor": "9/50",
+          "expected_box_pass": false
+        },
+        {
+          "cutoff": 3000,
+          "ell": 7,
+          "growth": 21,
+          "delta": "2/7",
+          "mass_floor": "1/4",
+          "expected_box_pass": false
+        }
+      ]
+    },
+    {
+      "name": "empty_pure_tight_cap_control",
+      "weights": [
+        "1/4",
+        "1/4",
+        "1/6",
+        "1/6",
+        "1/6"
+      ],
+      "cap_kind": "haar",
+      "source_mode": "haar",
+      "expected_source_mass": "2451321248291693/12665107161907200",
+      "expected_box_mass": "2451321248291693/12665107161907200",
+      "expected_worst_vertex": 127,
+      "tails": []
+    }
+  ]
+}

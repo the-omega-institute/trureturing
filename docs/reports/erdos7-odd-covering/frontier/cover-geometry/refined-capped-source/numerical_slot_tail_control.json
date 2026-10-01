@@ -1,0 +1,65 @@
+{
+  "schema": "actual-numerical-slot-tail-control-v1",
+  "primes": [
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23
+  ],
+  "positive_matching_majorant": "189181/80325",
+  "rows": [
+    {
+      "nonternary_cutoff": 100,
+      "nonternary_numerical_slots": 16,
+      "root_and_leaf_numerical_slots": 32,
+      "complete_error_bound": "208580169007018/265352880436875",
+      "complete_error_decimal": 0.7860482564335204
+    },
+    {
+      "nonternary_cutoff": 1000,
+      "nonternary_numerical_slots": 60,
+      "root_and_leaf_numerical_slots": 120,
+      "complete_error_bound": "124006207970570393417546/641315302977150723796875",
+      "complete_error_decimal": 0.1933623092960696
+    },
+    {
+      "nonternary_cutoff": 10000,
+      "nonternary_numerical_slots": 178,
+      "root_and_leaf_numerical_slots": 356,
+      "complete_error_bound": "44097722662095336300886329778/1036759938522406517350885078125",
+      "complete_error_decimal": 0.04253416921659179
+    },
+    {
+      "nonternary_cutoff": 100000,
+      "nonternary_numerical_slots": 445,
+      "root_and_leaf_numerical_slots": 890,
+      "complete_error_bound": "262754840113894264981660115020356374/30433388182366740692436019620931640625",
+      "complete_error_decimal": 0.008633768890252441
+    },
+    {
+      "nonternary_cutoff": 1000000,
+      "nonternary_numerical_slots": 988,
+      "root_and_leaf_numerical_slots": 1976,
+      "complete_error_bound": "760356568344098324283312324488566133618806/465944150921548598189699729022251592802734375",
+      "complete_error_decimal": 0.0016318620307611076
+    },
+    {
+      "nonternary_cutoff": 10000000,
+      "nonternary_numerical_slots": 2007,
+      "root_and_leaf_numerical_slots": 4014,
+      "complete_error_bound": "8405154263551753033585140345997038984849088185938/28874671635778172670726921384943444916787043212890625",
+      "complete_error_decimal": 0.0002910909038057095
+    },
+    {
+      "nonternary_cutoff": 100000000,
+      "nonternary_numerical_slots": 3819,
+      "root_and_leaf_numerical_slots": 7638,
+      "complete_error_bound": "6885792533615521650469893063101084122113391927420533302/140037681859420591836261606044161041612455057590821533203125",
+      "complete_error_decimal": 4.9170997707088236e-05
+    }
+  ],
+  "scope": "Two completed allocations agree on the actual root and leaf labels 3n and 9n for every nonternary Q-smooth n up to the cutoff. Each unweighted leaf signed response, its positive clipping, and any one fixed probability-weighted clipped sum differ by at most the displayed complete error. Every exponent tail is retained. This is an approximation bound, not a uniform positive source certificate, actual-family realization, or Lean verification."
+}

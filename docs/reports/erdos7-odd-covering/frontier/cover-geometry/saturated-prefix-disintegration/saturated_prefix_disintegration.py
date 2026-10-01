@@ -2,7 +2,8 @@
 """Exact finite controls for saturated first-prime fibres (report 378).
 
 The general argument is in the report. These checks exercise nested
-prefix isolation, the three-box classification and exact incidence bounds.
+prefix isolation, the three-box classification, exact incidence bounds,
+and sharp near-saturation critical-leaf counts against complete test trees.
 They are not instances of an unknown minimum odd covering system.
 """
 from fractions import Fraction as F
@@ -88,7 +89,57 @@ for alpha, beta in product(range(4), range(4)):
     price_controls.append(dict(alpha=alpha, beta=beta, old=str(old), new=str(new)))
 check(next(x for x in price_controls if x['alpha'] == x['beta'] == 1)['new'] == '1/9',
       'joint low-prefix price')
-print(json.dumps(dict(saturated_leaf_count=len(A), isolation_checks=len(A),
+
+# Independent complete-source/test-tree checks for the near-saturation count.
+def complete_test_trees(p,q,k,offset=0):
+    if k==0:
+        return [1<<offset]
+    descendants=[complete_test_trees(p,q,k-1,offset+i*p**(k-1)) for i in range(p)]
+    return [sum(parts) for inds in combinations(range(p),q)
+            for parts in product(*(descendants[i] for i in inds))]
+
+def critical_leaf_control(p,q,k):
+    r=p-q+1
+    masks=complete_test_trees(p,q,k)
+    minima={}
+    blocker_count=0
+    near_count=0
+    for source in range(1<<(p**k)):
+        critical=0
+        for test in masks:
+            hit=source&test
+            if hit==0:
+                break
+            if hit&(hit-1)==0:
+                critical |= hit
+        else:
+            blocker_count+=1
+            size=source.bit_count()
+            surplus=size-r**k
+            count=critical.bit_count()
+            if count < r**k-r*surplus:
+                raise RuntimeError(('critical_bound',p,q,k,source,count,surplus))
+            minima[surplus]=min(minima.get(surplus,count),count)
+            if surplus<r**(k-1):
+                near_count+=1
+            for b in range(k+1):
+                length=p**(k-b)
+                for prefix in range(p**b):
+                    block=((1<<length)-1)<<(prefix*length)
+                    if (critical&block).bit_count()>r**(k-b):
+                        raise RuntimeError(('prefix_bound',p,q,k,source,b,prefix))
+    for surplus in range(r**(k-1)+1):
+        if minima.get(surplus)!=r**k-r*surplus:
+            raise RuntimeError(('sharpness',p,q,k,surplus,minima.get(surplus)))
+    return {'p':p,'q':q,'k':k,'sources':1<<(p**k),'test_trees':len(masks),
+            'blockers':blocker_count,'near_saturated_blockers':near_count,
+            'min_critical_by_surplus':minima}
+
+
+critical_controls=[critical_leaf_control(*triple) for triple in
+    ((3,2,2),(4,2,2),(4,3,2),(5,3,1),(5,4,1))]
+
+print(json.dumps(dict(critical_leaf_controls=critical_controls, saturated_leaf_count=len(A), isolation_checks=len(A),
                       grid_box_count=len(boxes), grid_rectangles=len(rectangles),
                       grid_multisets_checked=count, blocking_triples=len(blocking),
                       incidence=incidence, price_controls=price_controls,

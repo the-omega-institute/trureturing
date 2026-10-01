@@ -1,0 +1,209 @@
+{
+  "schema": "same-source-leakage-v1",
+  "source_case": "three_sixteenths_short_leaf",
+  "weights": [
+    "3/16",
+    "3/16",
+    "5/24",
+    "5/24",
+    "5/24"
+  ],
+  "actual_family": [
+    {
+      "modulus": 3,
+      "phase": 0
+    },
+    {
+      "modulus": 9,
+      "phase": 1
+    },
+    {
+      "modulus": 15,
+      "phase": 7
+    },
+    {
+      "modulus": 21,
+      "phase": 2
+    },
+    {
+      "modulus": 45,
+      "phase": 22
+    },
+    {
+      "modulus": 33,
+      "phase": 2
+    },
+    {
+      "modulus": 35,
+      "phase": 2
+    },
+    {
+      "modulus": 39,
+      "phase": 2
+    },
+    {
+      "modulus": 63,
+      "phase": 2
+    },
+    {
+      "modulus": 51,
+      "phase": 2
+    },
+    {
+      "modulus": 57,
+      "phase": 2
+    },
+    {
+      "modulus": 55,
+      "phase": 2
+    },
+    {
+      "modulus": 105,
+      "phase": 37
+    },
+    {
+      "modulus": 75,
+      "phase": 52
+    },
+    {
+      "modulus": 69,
+      "phase": 2
+    },
+    {
+      "modulus": 65,
+      "phase": 2
+    },
+    {
+      "modulus": 99,
+      "phase": 2
+    },
+    {
+      "modulus": 77,
+      "phase": 2
+    },
+    {
+      "modulus": 85,
+      "phase": 2
+    },
+    {
+      "modulus": 117,
+      "phase": 2
+    },
+    {
+      "modulus": 95,
+      "phase": 2
+    },
+    {
+      "modulus": 165,
+      "phase": 112
+    },
+    {
+      "modulus": 91,
+      "phase": 2
+    },
+    {
+      "modulus": 147,
+      "phase": 100
+    },
+    {
+      "modulus": 225,
+      "phase": 202
+    }
+  ],
+  "expected_positive_labels": [
+    147
+  ],
+  "expected_union_leakage": "20736/4732273",
+  "expected_sum_leakage": "20736/4732273",
+  "leakage_budget": "20736/4732273",
+  "tail_floor": "1/1000",
+  "comparison_floor": "3/50",
+  "common_crt_period": 11712375675,
+  "witnesses": [
+    {
+      "name": "positive selected leakage",
+      "coordinates": [
+        [
+          4,
+          9
+        ],
+        [
+          0,
+          25
+        ],
+        [
+          2,
+          49
+        ],
+        [
+          0,
+          11
+        ],
+        [
+          0,
+          13
+        ],
+        [
+          0,
+          17
+        ],
+        [
+          0,
+          19
+        ],
+        [
+          0,
+          23
+        ]
+      ],
+      "integer": 9932944450,
+      "actual_hits": [
+        147
+      ]
+    },
+    {
+      "name": "finite family survivor",
+      "coordinates": [
+        [
+          4,
+          9
+        ],
+        [
+          0,
+          25
+        ],
+        [
+          0,
+          49
+        ],
+        [
+          0,
+          11
+        ],
+        [
+          0,
+          13
+        ],
+        [
+          0,
+          17
+        ],
+        [
+          0,
+          19
+        ],
+        [
+          0,
+          23
+        ]
+      ],
+      "integer": 10411000600,
+      "actual_hits": []
+    }
+  ],
+  "over_budget_control": {
+    "modulus": 225,
+    "phase": 2
+  },
+  "expected_over_budget_leakage": "3456/676039"
+}

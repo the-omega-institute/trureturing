@@ -22,6 +22,11 @@ These are ordinary deductions with exact finite controls. They retain
 arbitrary original prime support and heights, but do not convert the
 new probabilities to original Haar or resolve unrestricted Erdős #7.
 
+[Section8](#8-near-saturated-projections-retain-isolatable-prefixes) extends
+the isolation step to projections with a controlled surplus above the
+minimum. Its sharp critical-leaf count quantifies the loss in one actual
+common law; it does not assume every projection is near saturation.
+
 ## 1. One saturated projection can be isolated at every surviving leaf
 
 Assume a globally minimum-cardinality distinct odd whole cover. For a
@@ -303,3 +308,194 @@ same-source and all-height conditions are explicit above. No claim of
 literature priority or new Lean certification is made. The unresolved
 step is to make these lawful composite prices and/or original incidence
 requirements contradict the full original covering budget.
+
+## 8. Near-saturated projections retain isolatable prefixes
+
+Exact saturation is not necessary for a quantitative part of the
+conditional construction. If a depth-k projection has only D leaves
+above its minimum r^k, at least r^k-rD leaves remain individually
+isolatable. For D<r^(k-1), their actual fibres support one common law
+with an explicit loss in the p-bearing joint bounds. The sharp count
+below holds at every depth. It does not force that small-surplus premise
+in an arbitrary minimum odd cover.
+
+### Sharp critical-leaf count
+
+Fix integers 2≤q<p and set r=p−q+1. Let A be a set of leaves in a complete p-ary tree of depth k≥1. Suppose A meets every complete q-ary depth-k subtree. The existing tree complement duality in report 375 is equivalent to saying that A contains the leaves of a complete r-ary depth-k subtree.
+
+Define
+
+    E(A) = {u in A : A without u no longer meets every q-ary tree}.
+
+These are exactly the leaves which some legal q-ary tree isolates:
+
+    u in E(A) iff there is a q-tree T with T intersect A = {u}.       (NS1)
+
+Indeed, a q-tree disjoint from A without u must meet A, so its intersection with A is exactly u; the converse uses the same tree. No particular r-tree is needed for this equivalence.
+
+Write |A|=r^k+D, where D≥0. Then
+
+    |E(A)| ≥ r^k − rD.                                             (NS2)
+
+Moreover E(A) is contained in **every** complete r-tree whose leaves lie in A. If such a tree omitted u, it would remain inside A without u and would still block all q-trees, contradicting the definition of E(A). Consequently, for every prefix v of depth b≤k,
+
+    |E(A) intersect descendants(v)| ≤ r^(k−b).                     (NS3)
+
+Absent prefixes have zero count. This is the required prefix bound; it is not inferred merely from |E(A)|.
+
+#### Proof of NS2
+
+Call a child successful if A restricted below it contains a complete r-tree of the remaining depth. A successful node has at least r successful children. At height zero a successful node consists of its one leaf, and its critical count is one.
+
+At a height-k successful node let t be the number of successful children.
+
+If t≥r+1, removal of one leaf can destroy at most one successful child, leaving at least r. Hence E(A) is empty. Each successful child contains at least r^(k−1) leaves, so
+
+    D = |A|−r^k ≥ r^(k−1),
+
+and the right side of NS2 is nonpositive.
+
+If t=r, a leaf is critical exactly when it belongs to a successful child and is critical within that child. Write |A_i|=r^(k−1)+D_i for these r children, and let W be the total number of leaves in unsuccessful children. Then D=sum D_i+W. Induction gives
+
+    |E(A)| = sum_i |E(A_i)|
+           ≥ r^k − r sum_i D_i
+           ≥ r^k − rD.
+
+This proves NS2 for every depth, including cases where an inductive lower bound is negative.
+
+#### Sharpness and the exact isolation threshold
+
+Start with a complete r-tree of depth k. At D distinct parents at depth k−1, add one additional leaf child outside the r-tree. This is possible for every 0≤D≤r^(k−1), since p≥r+1. The new set has r^k+D leaves and still blocks every q-tree.
+
+At an altered terminal parent there are r+1 active leaves, so none is critical. At an unaltered terminal parent all r leaves are critical, and all earlier levels have exactly r successful children. Thus
+
+    |E(A)| = r^k − rD.
+
+At D=r^(k−1), no leaf is isolatable. This makes the condition D<r^(k−1) sharp for a guarantee based on this isolation mechanism. It does **not** prove that no useful common law exists above that threshold.
+
+### A single near-saturated law on actual R_q
+
+Keep the actual minimum-cover source and complete chain of reports 376–378:
+
+    q<p_1<...<p_t,  r=p_1−q+1,
+    r_i=p_i−p_(i−1)+1 for i>1,
+    H_i=the full original p_i height.
+
+Fix 1≤k≤H_1 and let A be the actual projection of R_q modulo p_1^k. Suppose
+
+    |A|=r^k+D,  D<r^(k−1).
+
+Put E=E(A) and e=|E|, so e≥r^k−rD>0.
+
+For each u in E choose the isolating depth-k q-tree from NS1. Below u choose any q-ary tail tree through the remaining H_1−k digits, complete the other depth-k leaves arbitrarily, and choose all the other coordinate trees independently. Full product-tree blocking of R_q gives one actual witness. Its depth-k prefix must be u because no other member of A is in the isolating tree.
+
+Thus the actual fibre
+
+    R_u={x in R_q : x=u mod p_1^k}
+
+inherits precisely the remaining product-tree property used in report 378 §2. Reusing report 376's weighted-tree/LP argument there supplies a probability nu_u on that actual fibre such that
+
+    nu_u(p_1-tail prefix of length b) ≤ r^(−b),
+    nu_u(p_i-prefix of length a) ≤ r_i^(−a),  i>1.                 (NS4)
+
+All omitted cofactor coordinates stay attached to the actual source point. After fixing the actual original family and its R_q, choose each nu_u once before any independently chosen query phases, and set
+
+    nu = (1/e) sum_(u in E) nu_u.                                 (NS5)
+
+This is one probability on the original R_q. Its probabilities on q-free forbidden originals remain zero.
+
+For a cofactor modulus m dividing the complete q-free carrier B, put
+
+    alpha=v_(p_1)(m),
+    c(m)=min({r_i^(−v_(p_i)(m)) : i>1, p_i divides m} union {1}).
+
+For a literal query x=a mod m with alpha≤k, let
+
+    e_a = #{u in E : u=a mod p_1^alpha}.
+
+The SAME law satisfies
+
+    nu(x=a mod m) ≤ [e_a/e] c(m),                         alpha≤k; (NS6)
+
+    nu(x=a mod m) ≤ [1/e] min(r^(−(alpha−k)),c(m)),        alpha>k, (NS7)
+
+where the second bound is zero if the specified depth-k prefix is outside E. For alpha=0, e_a=e and NS6 is exactly c(m).
+
+Proof: sum the conditional bounds over the actual fibres selected by the query. When alpha≤k, use the other-coordinate bound c(m) in each fibre. When alpha>k, only one fibre can contribute; inside it use the minimum of its tail and other-coordinate bounds. This multiplication is justified by the explicitly assigned fibre mass 1/e, not by multiplying unconditional marginals.
+
+By NS3, define rho=r^k/e≤1/(1−rD/r^k). For alpha≤k, NS6 implies
+
+    nu(x=a mod m) ≤ c(m) min(1, rho r^(−alpha)).                   (NS8)
+
+For alpha>k, NS7 is
+
+    nu(x=a mod m) ≤ rho r^(−k) min(r^(−(alpha−k)),c(m)).            (NS9)
+
+Thus the saturated SF6 caps survive, with inflation at most rho on the p_1-bearing side; the p_1-free caps remain unchanged. One may use e and the actual e_a for sharper residue-sensitive prices. No pure-prefix r^(−alpha) cap without inflation is asserted for this law. A separate original PC7 law still exists, but taking a pointwise minimum with its prices is not permitted; only an explicitly constructed convex mixture would combine them.
+
+### Consumers and their precise limits
+
+#### Original mixed-tail budget
+
+For q=3 and the original conventions of report 378, every non-pure ternary root-tail is covered by its active original cofactor APs. Apply their union bound under the single law NS5. Each query receives its NS6–NS7 residue-sensitive price, or the uniform bound NS8–NS9. Consequently the same integration as SF9 gives
+
+    sum_(original 3^j m, m>1) 3^(1−j) gamma_NS(a_(3^j m),m)
+        ≥ B_H=(3+3^(1−H))/2.                                    (NS10)
+
+All prices come from one actual supported law, all complete numerical labels are retained, and the ternary factor remains its original tail mass. This is a direct consumer of the new critical-leaf construction and the existing mixed-tail union argument. A contradiction still requires an upper bound on this actual weighted inventory below B_H; the construction supplies no such unrestricted upper bound.
+
+#### Complete 5/7 layout moments
+
+For q=3,p_1=5,p_2=7 let r=r_2=3. Reuse C_(H,K)(k) from report379,
+RF17–RF18, and put S_K=sum_(B=0..K)(2B+1)3^(-B).
+Here Gamma is the maximum second moment of the complete divisor layout
+on the 5^H7^K carrier, including the unit label, over all query phases.
+The new law's all-label LCM expansion gives
+
+    Gamma_(5^H7^K)(nu) ≤ S_K + rho [C_(H,K)(k)−S_K].             (NS11)
+
+Here the A=0 row of the exponent rectangle keeps its exact old pure-seven cap; the remaining rows use at most rho times the saturated caps. Independent phases remain independent.
+
+Taking the existing infinite-height envelope and using e≥3^k−3D yields
+
+    Gamma ≤ 9 + [18D + 15k/2 + 21]/[3^k−3D].                   (NS12)
+
+For fixed D this approaches nine as k grows, from above. At D=0 it recovers RF18 exactly. This is quantitative stability of the saturated certificate, not a new bound below nine or a solution of the arbitrary-height moment target.
+
+This bound concerns the displayed two-coordinate head. A weighted,
+partial-inventory or head–tail consumer still needs its own complete
+budget; no bound of nine on an arbitrary full carrier is asserted.
+
+### Checks and remaining boundary
+
+The expanded [finite control](../../../frontier/cover-geometry/saturated-prefix-disintegration/saturated_prefix_disintegration.py)
+enumerates every source subset and every legal test tree for
+(p,q,k)=(3,2,2),(4,2,2),(4,3,2),(5,3,1),(5,4,1).
+Among 131648 source subsets it finds 65834 blockers. Criticality is
+computed from singleton intersections with the explicitly listed test
+trees, independently of the critical-count induction. All critical
+counts and every prefix bound hold; the minima attain r^k-rD for every
+D from zero to r^(k-1) in those parameter sets. Composite branching
+numbers are combinatorial controls, not asserted arithmetic primes.
+These finite checks support the all-depth ordinary proof and provide
+no witness for the hypothetical minimum odd-cover premise.
+
+The same surplus need not determine the critical-prefix profile. For
+p=5,q=3,k=2, take the nine leaves with both digits in{0,1,2}. Adding a
+fourth terminal child below an occupied root leaves six critical leaves;
+adding one leaf below an unoccupied root leaves nine. Both projections
+have D=1. At the sharp threshold D=r^(k-1), the construction above has
+no critical leaves, but its product with a full second coordinate still
+admits useful supported laws. This threshold limits the isolation
+argument, not the existence of every possible common law.
+
+The critical-leaf cardinality bound supplies a parameter not retained by
+[379's root forests](379-root-forest-disintegration-and-residue-costs.md)
+or the occupied-child restrictions of
+[445](../400-449/445-occupied-branch-restrictions-and-weighted-root-caps.md).
+Those existing constructions remain applicable under their own
+hypotheses. This section claims neither literature priority nor new
+Lean verification. A useful unrestricted consumer must still connect
+small-surplus fibres, or their complementary large projections, to one
+actual weighted inventory budget. No uniform strict margin, upper bound
+on support, or resolution of Erdős #7 follows here.
