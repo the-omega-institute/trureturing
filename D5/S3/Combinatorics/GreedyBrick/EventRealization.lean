@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/GreedyBrick/EventRealization
    mirror-E: none(waiver:infinite-rest-history)
-   anchors: [D5/S3/Combinatorics/GreedyBrick/SuccessorBand]
+   anchors: [mathlib/module/Mathlib.Data.Nat.Find]
    utility: none
    digest: Actual rest histories have finite coordinate budgets and recurring labels. -/
 
