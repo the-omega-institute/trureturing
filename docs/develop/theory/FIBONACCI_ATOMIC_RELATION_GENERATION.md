@@ -35944,3 +35944,264 @@ $w(y)\Phi(y)\ge-K-1$，§92.3 遂推出 RH。
 可使较宽实际价格胞腔的误差一致趋零，而无须先估计起点的绝对 $\Psi(a)-a$。
 尚未取得全部五窗来源到式（260.14）的价格映射或共同端点预算；
 这些价格胞腔不增加 Robin 的整数认证覆盖范围。
+
+
+## 261. 精确 Fibonacci 采样的相位盲区与单调脉冲模型
+
+§244 的几何采样反例只规定函数的局部变化，未在精确 Fibonacci 点给出同一结论。
+本节构造一个较强的模型：它具有单调、右连续的正脉冲源、绝对收敛的同型尾积分，
+以及强于 §260 所需量级的局部增量误差；精确 Fibonacci 采样的归一尾项仍趋零，
+而连续半轴上没有最终有限下界。
+构造使用经典 Binet 公式、正弦相位与取整误差；新增对象是这些条件在同一模型上的联合实现。
+模型事件不规定为素数幂，事件质量为一，不识别为实际 $\Psi$ 或 $\Phi$。
+
+### definition 261.1 相位、光滑原函数与取整源
+
+令 $\varphi=(1+\sqrt5)/2$、$\omega=\pi/\log\varphi>0$，对 $x>1$ 置
+
+$$
+L=\log x,\qquad
+\theta(x)=\omega\left(\log x+\frac{\log5}{2}\right),\qquad
+f(x)=\frac{x^{-1/4}}{\log x}\sin\theta(x),
+$$
+
+$$
+q(x)=\frac1{x\log x},\qquad
+k(x)=-q'(x)=\frac{\log x+1}{x^2\log^2x}.
+\tag{261.1}
+$$
+
+记 $c=\omega\log5/2$，并定义对数变量上的函数
+
+$$
+A(L)=\frac{(L/4+1)\sin(\omega L+c)-\omega L\cos(\omega L+c)}{L+1},
+\qquad B(x)=x+x^{3/4}A(\log x).
+\tag{261.2}
+$$
+
+取
+
+$$
+D=\omega^2+2\omega+2,\qquad
+X=\max\{e,4,(2D)^4\}.
+$$
+
+在 $x\ge X$ 上定义人工源及其尾项
+
+$$
+\Psi^*(x)=\lfloor B(x)\rfloor,
+\qquad
+\Phi^*(x)=\int_x^\infty(\Psi^*(v)-v)k(v)\,dv.
+\tag{261.3}
+$$
+
+星号表示模型量。以下所有源与局部增量结论限定在这个定义域。
+
+### theorem 261.2 正脉冲源、全局误差及全部局部增量
+
+在 $x\ge X$ 上，$B$ 严格递增且
+
+$$
+\frac12\le B'(x)\le\frac32,\qquad B(x)\ge x/2.
+\tag{261.4}
+$$
+
+因此 $\Psi^*$ 非负、右连续、单调；每个紧区间只有有限个事件，
+每次内部事件的跳跃恰为一。全局有
+
+$$
+|\Psi^*(x)-x|\le(1+\omega)x^{3/4}+1.
+\tag{261.5}
+$$
+
+对每个 $a\ge X$ 及全部 $t\ge0$，有
+
+$$
+\boxed{|\Psi^*(a+t)-\Psi^*(a)-t|
+\le Dta^{-1/4}+1.}
+\tag{261.6}
+$$
+
+特别地，对每个固定 $c_0>0$，有
+$\Psi^*(x)-x=O(xe^{-c_0\sqrt{\log x}})$。
+若 $L_a=\log a$、$u_a=L_a^{1/4}$，则对
+$a^{2/3}\le t\le a^{0.99}$ 一致有
+
+$$
+|\Psi^*(a+t)-\Psi^*(a)-t|
+=o(tL_ae^{-u_a}).
+\tag{261.7}
+$$
+
+这是与 §260 由 Guth–Maynard 输入导出的 Chebyshev 增量预算相容的模型界；
+它不将人工事件计数识别为素数计数 $\pi$。
+
+**证明。** 对式（261.2）求导，其中 $A'$ 指对 $L$ 求导，得到
+
+$$
+A'(L)=\frac{(\omega^2L^2+\omega^2L-3/4)\sin(\omega L+c)
++\omega(L^2/4+5L/4)\cos(\omega L+c)}{(L+1)^2}.
+\tag{261.8}
+$$
+
+在 $L\ge1$ 时，直接由三角函数的绝对值上界得
+
+$$
+|A(L)|\le1+\omega,\qquad
+|A'(L)|\le\frac54+\omega^2+\frac{5\omega}{4}.
+$$
+
+第二界也可先对分子 $N(L)$ 求导：
+$N'=(1/4+\omega^2L)\sin(\omega L+c)+(\omega L/4)\cos(\omega L+c)$，
+再用 $|A'|\le |N'|/(L+1)+|N|/(L+1)^2$。
+所以
+
+$$
+B'(x)=1+x^{-1/4}\left(\frac34A(L)+A'(L)\right),\qquad
+|B'(x)-1|\le Dx^{-1/4}\le\frac12.
+$$
+
+阈值同时给 $x^{1/4}\ge2D\ge2(1+\omega)$，故
+$B(x)\ge x-(1+\omega)x^{3/4}\ge x/2$。
+连续严格递增的 $B$ 穿过整数时，$\lfloor B\rfloor$ 产生单位正跳跃，
+取整值在事件点取右值；紧区间内 $B$ 的值域有界，因而事件有限。
+由 $-1<\lfloor B(x)\rfloor-B(x)\le0$ 得式（261.5）。
+
+在 $[a,a+t]$ 对 $B'-1$ 积分，因 $v^{-1/4}\le a^{-1/4}$，有
+$|B(a+t)-B(a)-t|\le Dta^{-1/4}$。
+两个取整误差之差的绝对值小于一，故式（261.6）成立。
+最后，$e^{-L/4+c_0\sqrt L}\to0$；且在所列局部范围中
+
+$$
+\frac{Dta^{-1/4}+1}{tL_ae^{-u_a}}
+\le\frac{(Da^{-1/4}+a^{-2/3})e^{u_a}}{L_a}\longrightarrow0.
+$$
+
+这分别给出全局强 PNT 量级与一致局部预算。$\square$
+
+### theorem 261.3 取整尾项与光滑原函数的精确夹逼
+
+式（261.3）的积分绝对收敛，并且对每个 $x\ge X$，有
+
+$$
+\boxed{f(x)-q(x)\le\Phi^*(x)\le f(x).}
+\tag{261.9}
+$$
+
+在无事件区间，$\Phi^{*\prime}(x)=k(x)(x-\Psi^*(x))$。
+$\Phi^*$ 在事件处连续，导数的右值减左值恰为 $-k(x)<0$。
+
+**证明。** 对 $f$ 求导得
+
+$$
+f'(x)=\frac{x^{-5/4}}{L^2}
+\left[(-L/4-1)\sin\theta(x)+\omega L\cos\theta(x)\right].
+$$
+
+所以 $B(x)-x=-f'(x)/k(x)$。
+式（261.5）与 $k(x)=O(1/(x^2\log x))$ 保证尾积分绝对收敛。
+又 $f(x)\to0$，故普通分段积分给
+
+$$
+\Phi^*(x)=f(x)
++\int_x^\infty(\lfloor B(v)\rfloor-B(v))k(v)\,dv.
+\tag{261.10}
+$$
+
+最后一个积分位于 $[-\int_x^\infty k(v)\,dv,0]=[-q(x),0]$。
+局部导数公式、连续性与跳跃方向则由有限事件积分及单位质量给出。$\square$
+
+### theorem 261.4 精确 Fibonacci 端点近零与连续负谷无界
+
+记 $F_n$ 为标准 Fibonacci 数，$w(x)=\sqrt x\log x$。
+对全部满足 $F_n\ge X$ 的指标，有
+
+$$
+\boxed{|w(F_n)\Phi^*(F_n)|
+\le2\omega\varphi^{-7n/4}+F_n^{-1/2}\longrightarrow0.}
+\tag{261.11}
+$$
+
+但对 $j\ge0$ 定义
+
+$$
+x_j=\frac{\varphi^{2j+3/2}}{\sqrt5},
+$$
+
+则全部充分大的 $j$ 满足 $x_j\ge X$，且
+
+$$
+w(x_j)\Phi^*(x_j)\le-x_j^{1/4}\longrightarrow-\infty.
+\tag{261.12}
+$$
+
+因此不存在固定有限 $K$，使 $w(x)\Phi^*(x)\ge-K$ 在连续半轴上最终成立。
+这个失败与在全部精确 Fibonacci 端点上的归一尾项趋零同时发生。
+
+**证明。** 经典 Binet 公式及 $\psi=-\varphi^{-1}$ 给
+
+$$
+F_n=\frac{\varphi^n}{\sqrt5}(1-\delta_n),\qquad
+\delta_n=(-1)^n\varphi^{-2n}.
+$$
+
+$F_n\ge X\ge4$ 保证 $n\ge1$，且 $|\delta_n|\le\varphi^{-2}<1/2$。
+于是
+
+$$
+\theta(F_n)=n\pi+\omega\log(1-\delta_n).
+\tag{261.13}
+$$
+
+由 $|\log(1-v)|\le2|v|$ 对 $|v|\le1/2$ 的经典对数界，
+以及 $|\sin(n\pi+r)|\le|r|$，得到
+
+$$
+|\sin\theta(F_n)|\le2\omega\varphi^{-2n}.
+$$
+
+又 $F_n\le\varphi^n$，且 $w(x)f(x)=x^{1/4}\sin\theta(x)$，
+所以 $|w(F_n)f(F_n)|\le2\omega\varphi^{-7n/4}$。
+式（261.9）另给 $w(x)|\Phi^*(x)-f(x)|\le x^{-1/2}$，
+即得式（261.11）。$F_n\to\infty$ 与 $\varphi>1$ 给显示极限。
+
+对所列 $x_j$，有 $\theta(x_j)=(2j+3/2)\pi$，故正弦为 $-1$。
+利用 $\Phi^*\le f$ 得式（261.12），其增长给最终有限下界的否定。$\square$
+
+### proposition 261.5 消失的胞腔误差仍容许端点水平失控
+
+取 §260 的 $H(a)=a^{3/4}e^{(\log a)^{1/4}/2}/\log a$。
+对模型 $\Phi^*$ 用同一 $q$ 坐标定义双端弦余量 $\mathcal R^*_{a,b}$。
+令 $u=(\log a)^{1/4}$、$L=\log a$，则所有充分大的 $a$、
+$a<b\le a+H(a)$ 及 $y\in[a,b]$ 都有
+
+$$
+w(y)|\mathcal R^*_{a,b}(y)|
+\le4D\,a^{-1/4}\frac{e^u}{L^2}
++4a^{-3/4}\frac{e^{u/2}}L
+\longrightarrow0
+\tag{261.14}
+$$
+
+且该收敛对 $b,y$ 一致。
+
+**证明。** §260.2 的有限积分消去只需连续尾项与局部源增量，
+不使用事件位置是素数幂。式（261.6）给
+$M^*_{a,b}\le D(b-a)a^{-1/4}+1$。
+最终 $b\le2a$，故同一积分估计给
+
+$$
+w(y)|\mathcal R^*_{a,b}(y)|
+\le\frac{4(b-a)M^*_{a,b}}{a^{3/2}}
+\le\frac{4D H(a)^2}{a^{7/4}}+\frac{4H(a)}{a^{3/2}}.
+$$
+
+代入 $H(a)$ 即得式（261.14）；$u=o(\log a)$ 保证两项趋零。$\square$
+
+本模型同时保留强全局误差、全部局部增量预算、同型尾积分、正脉冲导数跳跃，
+在所有充分大的精确 Fibonacci 端点上，归一尾项趋于零。
+因此这些条件的联合，仍不足以用未经细分的 Fibonacci 价格骨架替代连续半轴下界。
+在五窗深度取固定步长的 Fibonacci 子列也继承式（261.11），并不能消除该盲区。
+尚需实际素数幂位置与权重、适当细分的共同端点预算或另外证明的谱控制。
+这里的 $F_n$ 始终是模型尾项的价格输入；结论不反驳任何整数的 Robin 不等式，
+也不将人工源的相位认作 zeta 的实际零点。
