@@ -1,0 +1,7 @@
+**Definition 53.103 (Smooth1).** The smoothed indicator $S_{\nu,\epsilon}$ is the multiplicative convolution of the indicator of $(0,1]$ with $\Delta_{\nu,\epsilon}$.
+
+```lean
+noncomputable def Smooth1 (ν : ℝ → ℝ) (ε : ℝ) : ℝ → ℝ :=
+  MellinConvolution (fun x ↦ if 0 < x ∧ x ≤ 1 then 1 else 0) (DeltaSpike ν ε)
+```
+

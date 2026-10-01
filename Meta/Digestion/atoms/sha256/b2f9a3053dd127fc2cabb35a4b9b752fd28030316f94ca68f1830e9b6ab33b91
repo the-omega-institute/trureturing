@@ -1,0 +1,17 @@
+**Theorem 53.7 (Lower vertical-tail bound).** For a nonnegative once continuously differentiable kernel supported in [1/2, 2] with unit multiplicative Haar mass, one positive constant bounds the first vertical tail by C times X times log X divided by epsilon times T, whenever X and T are greater than three and epsilon lies strictly between zero and one.
+
+The exact quantified contract is:
+
+```lean
+theorem I1Bound
+    {SmoothingF : ℝ → ℝ}
+    (suppSmoothingF : Function.support SmoothingF ⊆ Icc (1 / 2) 2) (ContDiffSmoothingF : ContDiff ℝ 1 SmoothingF)
+    (SmoothingFnonneg : ∀ x > 0, 0 ≤ SmoothingF x)
+    (mass_one : ∫ x in Ioi 0, SmoothingF x / x = 1) :
+    ∃ C > 0, ∀(ε : ℝ) (_ : 0 < ε)
+    (_ : ε < 1)
+    (X : ℝ) (_ : 3 < X)
+    {T : ℝ} (_ : 3 < T),
+    ‖I₁ SmoothingF ε X T‖ ≤ C * X * Real.log X / (ε * T)
+```
+

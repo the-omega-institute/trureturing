@@ -1,0 +1,11 @@
+**Theorem 53.1 (Vertical-strip Mellin decay).** For every once continuously differentiable real kernel supported in [1/2, 2], one positive constant bounds its complex Mellin transform by that constant divided by the norm of the transform parameter. The bound applies uniformly when the real part is positive and at most two.
+
+The exact quantified contract is:
+
+```lean
+lemma MellinOfPsi {ν : ℝ → ℝ} (diffν : ContDiff ℝ 1 ν)
+    (suppν : ν.support ⊆ Set.Icc (1 / 2) 2) :
+    ∃ C > 0, ∀ (σ₁ : ℝ) (_ : 0 < σ₁) (s : ℂ) (_ : σ₁ ≤ s.re) (_ : s.re ≤ 2),
+    ‖𝓜 (fun x ↦ (ν x : ℂ)) s‖ ≤ C * ‖s‖⁻¹
+```
+

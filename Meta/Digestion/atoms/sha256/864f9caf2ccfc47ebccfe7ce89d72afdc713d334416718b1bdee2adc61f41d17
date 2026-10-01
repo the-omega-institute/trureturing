@@ -1,0 +1,28 @@
+**Theorem 53.12 (Quantitative prime number theorem).** There exists a positive real c such that the second Chebyshev function minus the identity is bounded asymptotically by a constant times x times exp of minus c times the one-tenth power of log x. Neither c nor the eventual multiplicative bound is asserted to be explicit.
+
+The exact quantified contract is:
+
+```lean
+theorem MediumPNT : ∃ c > 0,
+    (ψ - id) =O[atTop]
+      fun (x : ℝ) ↦ x * Real.exp (-c * (Real.log x) ^ ((1 : ℝ) / 10))
+```
+
+The first five estimates use compact support, changes of variables in
+multiplicative convolution, integration by parts, and dominated convergence.
+The sixth compares Mellin inversion with the von Mangoldt sum and controls the
+transition region. The remaining intermediate estimates use the same actual
+smoothed integrand, the specified zeta logarithmic-derivative bounds, and
+punctured-rectangle contour deformation. Conjugation relates the upper and
+lower pieces. The final theorem chooses the smoothing and truncation parameters
+together, constructs a nonnegative smooth kernel of unit mass, and combines the
+smoothing error with the contour estimates. These are the classical analytic
+proofs in the cited source.
+
+The final conclusion gives $\psi(X)/X\to1$. Substitution into the uniform lcm
+escape estimate in Theorem 10.6 supplies its asymptotic prime-growth application;
+that consequence does not require a new named copy of the prime number theorem.
+The theorem has logarithmic exponent $1/10$, with existential constants. It does
+not provide an effective numerical cutoff, an explicit decay constant, or a
+stronger logarithmic exponent.
+

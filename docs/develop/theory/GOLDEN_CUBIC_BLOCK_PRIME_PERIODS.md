@@ -2049,3 +2049,416 @@ classifications; their use does not assert that the complete Fibonacci
 square-class theorem has already been verified in Lean.
 
 ## 追加锚（本行以下为增补区）
+
+## 53. Mellin smoothing and contour estimates for uniform prime escape
+
+The quantitative prime number theorem used in Theorem 10.6 is a classical
+analytic input. The contracts below specify its consumed Mellin and contour
+arguments, including the hypotheses of the intermediate bounds. They concern
+the usual Riemann zeta function and the second Chebyshev function; they assert
+neither an optimal error exponent nor explicit numerical error constants.
+
+The mathematical source is *PrimeNumberTheoremAnd*, immutable revision
+`6a380f0c4658c04a420a9eb00b1ed62a1e3fde01`, files
+`PrimeNumberTheoremAnd/MellinCalculus.lean` and
+`PrimeNumberTheoremAnd/MediumPNT.lean`:
+https://github.com/AlexKontorovich/PrimeNumberTheoremAnd/tree/6a380f0c4658c04a420a9eb00b1ed62a1e3fde01 .
+The argument belongs to the classical Perron--Mellin smoothing and
+contour-shifting method for the prime number theorem, using the zeta pole at
+one, a zero-free region, and logarithmic-derivative estimates. A classical
+analytic reference is E. C. Titchmarsh, *The Theory of the Riemann Zeta-Function*,
+second edition revised by D. R. Heath-Brown, Oxford University Press (1986),
+Chapter III. The exact intermediate contracts here are those of the cited
+immutable Lean source, rather than claims of novelty or canonical local
+compilation.
+
+### 53.0 Mathematical conventions and consumed definitions
+
+Write $\zeta$ for the ordinary Riemann zeta function, $\zeta'$ for its complex
+derivative, and
+
+$$
+\psi(X)=\sum_{1\leq n\leq\lfloor X\rfloor}\Lambda(n),
+$$
+
+where $\Lambda$ is the von Mangoldt function; the sum is empty if its upper
+limit is less than one. Let $i^2=-1$. For a function $f$ on the positive real
+axis, its complex Mellin transform is
+
+$$
+\mathcal M f(s)=\int_0^\infty x^{s-1}f(x)\,dx.
+$$
+
+The real kernel is coerced into the complex numbers when the transform is
+applied to it. Support means the set where a function is nonzero. All set
+integrals in the contracts use Lebesgue measure; finite integrals
+$\int_a^b$ are oriented interval integrals. In Lean notation `Icc`, `Ioo`,
+`Ioc`, `Iic`, `Ici`, and `uIcc` mean closed, open, left-open right-closed,
+closed lower half-line, closed upper half-line, and unordered closed intervals,
+respectively. `ContDiff ℝ 1 ν` means that $\nu$ is once continuously
+differentiable. `HolomorphicOn f K` means complex differentiability on $K$,
+namely `DifferentiableOn ℂ f K`. The complex rectangle $[a,b]\times_{\mathbb C}
+[c,d]$ consists of complex numbers with real part in the first interval and
+imaginary part in the second.
+
+For a complex-valued integrand $h$, the normalized vertical integral used here
+is
+
+$$
+V'(h,\sigma)=\frac{1}{2\pi i}\,i\int_{\mathbb R}h(\sigma+it)\,dt.
+$$
+
+This is `VerticalIntegral' h σ`. The contour normalization and its orientation
+are part of every definition below; no unsigned path-length replacement is
+intended. The functions and predicates are defined for all displayed real
+parameters. Conditions such as $\epsilon>0$, $X>3$, or unit mass are imposed
+only in the individual theorem that requires them. In particular, support does
+not silently imply nonnegativity, smoothness, or unit mass.
+
+The exact definition fragments and theorem type fragments use the following
+notation. They specify mathematical contracts and are not standalone proof
+files.
+
+```lean
+open Set Function Filter Complex Real MeasureTheory ComplexConjugate Topology
+open ArithmeticFunction (vonMangoldt)
+open scoped Chebyshev ContDiff
+local notation "𝓜" => mellin
+local notation "Λ" => vonMangoldt
+local notation "ζ" => riemannZeta
+local notation "ζ'" => deriv ζ
+variable {𝕂 : Type*} [RCLike 𝕂]
+```
+
+**Definition 53.101 (MellinConvolution).** Multiplicative convolution of $f,g:\mathbb R\to\mathbb K$, where $\mathbb K$ is an `RCLike` scalar type, integrates $f(y)g(x/y)$ against $dy/y$ over $y>0$.
+
+```lean
+noncomputable def MellinConvolution (f g : ℝ → 𝕂) (x : ℝ) : 𝕂 :=
+  ∫ y in Ioi 0, f y * g (x / y) / y
+```
+
+**Definition 53.102 (DeltaSpike).** The dilation kernel associated with a real kernel $\nu$ is $\Delta_{\nu,\epsilon}(x)=\nu(x^{1/\epsilon})/\epsilon$. Its total real-power definition is the one displayed below; its analytic uses impose the required positive-parameter conditions.
+
+```lean
+noncomputable def DeltaSpike (ν : ℝ → ℝ) (ε : ℝ) : ℝ → ℝ :=
+  fun x ↦ ν (x ^ (1 / ε)) / ε
+```
+
+**Definition 53.103 (Smooth1).** The smoothed indicator $S_{\nu,\epsilon}$ is the multiplicative convolution of the indicator of $(0,1]$ with $\Delta_{\nu,\epsilon}$.
+
+```lean
+noncomputable def Smooth1 (ν : ℝ → ℝ) (ε : ℝ) : ℝ → ℝ :=
+  MellinConvolution (fun x ↦ if 0 < x ∧ x ≤ 1 then 1 else 0) (DeltaSpike ν ε)
+```
+
+**Definition 53.104 (SmoothedChebyshevIntegrand).** For a real smoothing kernel $\nu$, write $h_{\nu,\epsilon,X}(s)$ for minus the logarithmic derivative of zeta times $\mathcal M(S_{\nu,\epsilon})(s)X^s$. Complex powers and the coercion of the real smoothed indicator are exactly as displayed.
+
+```lean
+noncomputable abbrev SmoothedChebyshevIntegrand
+    (SmoothingF : ℝ → ℝ) (ε : ℝ) (X : ℝ) : ℂ → ℂ :=
+  fun s ↦ (- deriv riemannZeta s) / riemannZeta s *
+    𝓜 (fun x ↦ (Smooth1 SmoothingF ε x : ℂ)) s * (X : ℂ) ^ s
+```
+
+**Definition 53.105 (SmoothedChebyshev).** The smoothed Chebyshev reading is $V^{\prime}\!\left(h_{\nu,\epsilon,X},1+(\log X)^{-1}\right)$, using the normalized vertical integral defined above.
+
+```lean
+noncomputable def SmoothedChebyshev (SmoothingF : ℝ → ℝ) (ε : ℝ) (X : ℝ) : ℂ :=
+  VerticalIntegral' (SmoothedChebyshevIntegrand SmoothingF ε X) ((1 : ℝ) + (Real.log X)⁻¹)
+```
+
+**Definition 53.106 (I₁).** $I_1$ is the lower infinite vertical tail on the line of real part $1+(\log X)^{-1}$, with imaginary parameter $t\leq-T$.
+
+```lean
+noncomputable def I₁ (SmoothingF : ℝ → ℝ) (ε X T : ℝ) : ℂ :=
+  (1 / (2 * π * I)) * (I * (∫ t : ℝ in Iic (-T),
+      SmoothedChebyshevIntegrand SmoothingF ε X ((1 + (Real.log X)⁻¹) + t * I)))
+```
+
+**Definition 53.107 (I₂).** $I_2$ is the horizontal piece at imaginary part $-T$, oriented from real part $\sigma_1$ to $1+(\log X)^{-1}$.
+
+```lean
+noncomputable def I₂ (SmoothingF : ℝ → ℝ) (ε T X σ₁ : ℝ) : ℂ :=
+  (1 / (2 * π * I)) * ((∫ σ in σ₁..(1 + (Real.log X)⁻¹),
+    SmoothedChebyshevIntegrand SmoothingF ε X (σ - T * I)))
+```
+
+**Definition 53.108 (I₃₇).** $I_{37}$ is the complete finite vertical piece on the line of real part $\sigma_1$, oriented from imaginary part $-T$ to $T$.
+
+```lean
+noncomputable def I₃₇ (SmoothingF : ℝ → ℝ) (ε T X σ₁ : ℝ) : ℂ :=
+  (1 / (2 * π * I)) * (I * (∫ t in (-T)..T,
+    SmoothedChebyshevIntegrand SmoothingF ε X (σ₁ + t * I)))
+```
+
+**Definition 53.109 (I₈).** $I_8$ is the horizontal piece at imaginary part $T$, oriented from real part $\sigma_1$ to $1+(\log X)^{-1}$.
+
+```lean
+noncomputable def I₈ (SmoothingF : ℝ → ℝ) (ε T X σ₁ : ℝ) : ℂ :=
+  (1 / (2 * π * I)) * ((∫ σ in σ₁..(1 + (Real.log X)⁻¹),
+    SmoothedChebyshevIntegrand SmoothingF ε X (σ + T * I)))
+```
+
+**Definition 53.110 (I₉).** $I_9$ is the upper infinite vertical tail on the line of real part $1+(\log X)^{-1}$, with imaginary parameter $t\geq T$.
+
+```lean
+noncomputable def I₉ (SmoothingF : ℝ → ℝ) (ε X T : ℝ) : ℂ :=
+  (1 / (2 * π * I)) * (I * (∫ t : ℝ in Ici T,
+      SmoothedChebyshevIntegrand SmoothingF ε X ((1 + (Real.log X)⁻¹) + t * I)))
+```
+
+**Definition 53.111 (I₃).** $I_3$ is the lower finite vertical piece on the line of real part $\sigma_1$, oriented from imaginary part $-T$ to $-3$.
+
+```lean
+noncomputable def I₃ (SmoothingF : ℝ → ℝ) (ε T X σ₁ : ℝ) : ℂ :=
+  (1 / (2 * π * I)) * (I * (∫ t in (-T)..(-3),
+    SmoothedChebyshevIntegrand SmoothingF ε X (σ₁ + t * I)))
+```
+
+**Definition 53.112 (I₇).** $I_7$ is the upper finite vertical piece on the line of real part $\sigma_1$, oriented from imaginary part $3$ to $T$.
+
+```lean
+noncomputable def I₇ (SmoothingF : ℝ → ℝ) (ε T X σ₁ : ℝ) : ℂ :=
+  (1 / (2 * π * I)) * (I * (∫ t in (3 : ℝ)..T,
+    SmoothedChebyshevIntegrand SmoothingF ε X (σ₁ + t * I)))
+```
+
+**Definition 53.113 (I₄).** $I_4$ is the short horizontal piece at imaginary part $-3$, oriented from real part $\sigma_2$ to $\sigma_1$.
+
+```lean
+noncomputable def I₄ (SmoothingF : ℝ → ℝ) (ε X σ₁ σ₂ : ℝ) : ℂ :=
+  (1 / (2 * π * I)) * ((∫ σ in σ₂..σ₁,
+    SmoothedChebyshevIntegrand SmoothingF ε X (σ - 3 * I)))
+```
+
+**Definition 53.114 (I₆).** $I_6$ is the short horizontal piece at imaginary part $3$, oriented from real part $\sigma_2$ to $\sigma_1$.
+
+```lean
+noncomputable def I₆ (SmoothingF : ℝ → ℝ) (ε X σ₁ σ₂ : ℝ) : ℂ :=
+  (1 / (2 * π * I)) * ((∫ σ in σ₂..σ₁,
+    SmoothedChebyshevIntegrand SmoothingF ε X (σ + 3 * I)))
+```
+
+**Definition 53.115 (I₅).** $I_5$ is the central finite vertical piece on the line of real part $\sigma_2$, oriented from imaginary part $-3$ to $3$.
+
+```lean
+noncomputable def I₅ (SmoothingF : ℝ → ℝ) (ε X σ₂ : ℝ) : ℂ :=
+  (1 / (2 * π * I)) *
+    (I * (∫ t in (-3)..3, SmoothedChebyshevIntegrand SmoothingF ε X (σ₂ + t * I)))
+```
+
+**Definition 53.116 (LogDerivZetaHasBound).** The predicate $\mathsf{ZetaBound}(A,C)$ requires $|\zeta'(\sigma+it)/\zeta(\sigma+it)|\leq C(\log|t|)^9$ for every real $\sigma,t$ with $3<|t|$ and $\sigma\geq1-A/(\log|t|)^9$. It has no hidden upper bound on $\sigma$.
+
+```lean
+def LogDerivZetaHasBound (A C : ℝ) : Prop := ∀ (σ : ℝ) (t : ℝ) (_ : 3 < |t|)
+    (_ : σ ∈ Ici (1 - A / Real.log |t| ^ 9)), ‖ζ' (σ + t * I) / ζ (σ + t * I)‖ ≤
+    C * Real.log |t| ^ 9
+```
+
+**Definition 53.117 (LogDerivZetaIsHoloSmall).** The predicate $\mathsf{SmallHolo}(\sigma_2)$ requires the logarithmic derivative to be holomorphic on the unordered closed rectangle with real endpoints $\sigma_2,2$ and imaginary endpoints $-3,3$, with the point one removed.
+
+```lean
+def LogDerivZetaIsHoloSmall (σ₂ : ℝ) : Prop :=
+    HolomorphicOn (fun (s : ℂ) ↦ ζ' s / (ζ s))
+    (((uIcc σ₂ 2)  ×ℂ (uIcc (-3) 3)) \ {1})
+```
+
+### 53.1 Quantified analytic conclusions
+
+The following twelve clauses retain their own hypotheses independently. Their
+exact contracts are displayed to fix the quantifier order, parameter dependence,
+strict inequalities, orientations, and zero-free or holomorphic assumptions.
+
+**Theorem 53.1 (Vertical-strip Mellin decay).** For every once continuously differentiable real kernel supported in [1/2, 2], one positive constant bounds its complex Mellin transform by that constant divided by the norm of the transform parameter. The bound applies uniformly when the real part is positive and at most two.
+
+The exact quantified contract is:
+
+```lean
+lemma MellinOfPsi {ν : ℝ → ℝ} (diffν : ContDiff ℝ 1 ν)
+    (suppν : ν.support ⊆ Set.Icc (1 / 2) 2) :
+    ∃ C > 0, ∀ (σ₁ : ℝ) (_ : 0 < σ₁) (s : ℂ) (_ : σ₁ ≤ s.re) (_ : s.re ≤ 2),
+    ‖𝓜 (fun x ↦ (ν x : ℂ)) s‖ ≤ C * ‖s‖⁻¹
+```
+
+**Theorem 53.2 (Exact lower smoothing threshold).** A kernel supported in [1/2, 2] with unit multiplicative Haar mass gives a smoothed indicator equal to one for positive x at most 1 minus epsilon times log two, for every positive epsilon.
+
+The exact quantified contract is:
+
+```lean
+lemma Smooth1Properties_below {ν : ℝ → ℝ} (suppν : ν.support ⊆ Icc (1 / 2) 2)
+    (mass_one : ∫ x in Ioi 0, ν x / x = 1) :
+    ∃ (c : ℝ), 0 < c ∧ c = Real.log 2 ∧
+      ∀ (ε x) (_ : 0 < ε), 0 < x → x ≤ 1 - c * ε → Smooth1 ν ε x = 1
+```
+
+**Theorem 53.3 (Exact upper smoothing threshold).** For a kernel supported in [1/2, 2] and epsilon strictly between zero and one, the smoothed indicator vanishes when x is at least 1 plus twice epsilon times log two.
+
+The exact quantified contract is:
+
+```lean
+lemma Smooth1Properties_above {ν : ℝ → ℝ} (suppν : ν.support ⊆ Icc (1 / 2) 2) :
+    ∃ (c : ℝ), 0 < c ∧ c = 2 * Real.log 2 ∧
+      ∀ (ε x) (_ : ε ∈ Ioo 0 1), 1 + c * ε ≤ x → Smooth1 ν ε x = 0
+```
+
+**Theorem 53.4 (Mellin transform of the smoothed indicator).** For a once continuously differentiable kernel supported in [1/2, 2], every positive epsilon and every complex s with positive real part, the Mellin transform of the smoothed indicator equals the Mellin transform of the kernel at epsilon times s divided by s.
+
+The exact quantified contract is:
+
+```lean
+lemma MellinOfSmooth1a {ν : ℝ → ℝ} (diffν : ContDiff ℝ 1 ν)
+    (suppν : ν.support ⊆ Icc (1 / 2) 2)
+    {ε : ℝ} (εpos : 0 < ε) {s : ℂ} (hs : 0 < s.re) :
+    𝓜 (fun x ↦ (Smooth1 ν ε x : ℂ)) s =
+      s⁻¹ * 𝓜 (fun x ↦ (ν x : ℂ)) (ε * s)
+```
+
+**Theorem 53.5 (Continuity of the smoothed indicator).** For a nonnegative once continuously differentiable kernel supported in [1/2, 2] and every positive epsilon, its smoothed indicator is continuous at every positive argument.
+
+The exact quantified contract is:
+
+```lean
+lemma Smooth1ContinuousAt {SmoothingF : ℝ → ℝ}
+    (diffSmoothingF : ContDiff ℝ 1 SmoothingF)
+    (SmoothingFpos : ∀ x > 0, 0 ≤ SmoothingF x)
+    (suppSmoothingF : SmoothingF.support ⊆ Icc (1 / 2) 2)
+    {ε : ℝ} (εpos : 0 < ε) {y : ℝ} (ypos : 0 < y) :
+    ContinuousAt (fun x ↦ Smooth1 SmoothingF ε x) y
+```
+
+**Theorem 53.6 (Chebyshev smoothing error).** For a nonnegative once continuously differentiable kernel supported in [1/2, 2] with unit multiplicative Haar mass, one positive constant bounds the smoothing error by C times epsilon times X times log X, whenever X is greater than three, epsilon lies strictly between zero and one, and X times epsilon is greater than two.
+
+The exact quantified contract is:
+
+```lean
+theorem SmoothedChebyshevClose {SmoothingF : ℝ → ℝ}
+    (diffSmoothingF : ContDiff ℝ 1 SmoothingF)
+    (suppSmoothingF : Function.support SmoothingF ⊆ Icc (1 / 2) 2)
+    (SmoothingFnonneg : ∀ x > 0, 0 ≤ SmoothingF x)
+    (mass_one : ∫ x in Ioi 0, SmoothingF x / x = 1) :
+    ∃ C > 0, ∀ (X : ℝ) (_ : 3 < X) (ε : ℝ) (_ : 0 < ε) (_ : ε < 1) (_ : 2 < X * ε),
+    ‖SmoothedChebyshev SmoothingF ε X - ψ X‖ ≤ C * ε * X * Real.log X
+```
+
+**Theorem 53.7 (Lower vertical-tail bound).** For a nonnegative once continuously differentiable kernel supported in [1/2, 2] with unit multiplicative Haar mass, one positive constant bounds the first vertical tail by C times X times log X divided by epsilon times T, whenever X and T are greater than three and epsilon lies strictly between zero and one.
+
+The exact quantified contract is:
+
+```lean
+theorem I1Bound
+    {SmoothingF : ℝ → ℝ}
+    (suppSmoothingF : Function.support SmoothingF ⊆ Icc (1 / 2) 2) (ContDiffSmoothingF : ContDiff ℝ 1 SmoothingF)
+    (SmoothingFnonneg : ∀ x > 0, 0 ≤ SmoothingF x)
+    (mass_one : ∫ x in Ioi 0, SmoothingF x / x = 1) :
+    ∃ C > 0, ∀(ε : ℝ) (_ : 0 < ε)
+    (_ : ε < 1)
+    (X : ℝ) (_ : 3 < X)
+    {T : ℝ} (_ : 3 < T),
+    ‖I₁ SmoothingF ε X T‖ ≤ C * X * Real.log X / (ε * T)
+```
+
+**Theorem 53.8 (Long horizontal-tail bound).** For a once continuously differentiable kernel supported in [1/2, 2], a positive logarithmic-derivative bound constant, and A strictly positive and at most one half, one positive constant bounds the horizontal tail by C times X divided by epsilon times T. The left endpoint is 1 minus A divided by the ninth power of log T; X and T exceed three and epsilon lies strictly between zero and one.
+
+The exact quantified contract is:
+
+```lean
+lemma I2Bound {SmoothingF : ℝ → ℝ}
+    (suppSmoothingF : Function.support SmoothingF ⊆ Icc (1 / 2) 2)
+    (ContDiffSmoothingF : ContDiff ℝ 1 SmoothingF)
+    {A C₂ : ℝ} (has_bound : LogDerivZetaHasBound A C₂) (C₂pos : 0 < C₂) (A_in : A ∈ Ioc 0 (1 / 2)) :
+    ∃ (C : ℝ) (_ : 0 < C),
+    ∀(X : ℝ) (_ : 3 < X) {ε : ℝ} (_ : 0 < ε)
+    (_ : ε < 1) {T : ℝ} (_ : 3 < T),
+    let σ₁ : ℝ := 1 - A / (Real.log T) ^ 9
+    ‖I₂ SmoothingF ε T X σ₁‖ ≤ C * X / (ε * T)
+```
+
+**Theorem 53.9 (Long vertical bound).** Under the same kernel, positive zeta-bound constant, and A conditions as the horizontal estimate, one positive constant bounds the long vertical piece by C times X times X to the power minus A divided by the ninth power of log T, divided by epsilon. The same endpoint and parameter restrictions apply.
+
+The exact quantified contract is:
+
+```lean
+theorem I3Bound {SmoothingF : ℝ → ℝ}
+    (suppSmoothingF : Function.support SmoothingF ⊆ Icc (1 / 2) 2)
+    (ContDiffSmoothingF : ContDiff ℝ 1 SmoothingF)
+    {A Cζ : ℝ} (hCζ : LogDerivZetaHasBound A Cζ) (Cζpos : 0 < Cζ) (hA : A ∈ Ioc 0 (1 / 2)) :
+    ∃ (C : ℝ) (_ : 0 < C),
+      ∀ (X : ℝ) (_ : 3 < X)
+        {ε : ℝ} (_ : 0 < ε) (_ : ε < 1)
+        {T : ℝ} (_ : 3 < T),
+        let σ₁ : ℝ := 1 - A / (Real.log T) ^ 9
+        ‖I₃ SmoothingF ε T X σ₁‖ ≤ C * X * X ^ (- A / (Real.log T ^ 9)) / ε
+```
+
+**Theorem 53.10 (Short horizontal bound).** For a once continuously differentiable kernel supported in [1/2, 2], a small-strip holomorphic logarithmic derivative, a lower real part strictly between zero and one, and A strictly positive and at most one half, there are a nonnegative bound constant and a T threshold greater than three. Above that threshold the short horizontal piece satisfies the stated logarithmic-power bound for X greater than three and epsilon strictly between zero and one.
+
+The exact quantified contract is:
+
+```lean
+lemma I4Bound {SmoothingF : ℝ → ℝ}
+    (suppSmoothingF : Function.support SmoothingF ⊆ Icc (1 / 2) 2)
+    (ContDiffSmoothingF : ContDiff ℝ 1 SmoothingF)
+    {σ₂ : ℝ} (h_logDeriv_holo : LogDerivZetaIsHoloSmall σ₂) (hσ₂ : σ₂ ∈ Ioo 0 1)
+    {A : ℝ} (hA : A ∈ Ioc 0 (1 / 2)) :
+    ∃ (C : ℝ) (_ : 0 ≤ C) (Tlb : ℝ) (_ : 3 < Tlb),
+    ∀ (X : ℝ) (_ : 3 < X)
+    {ε : ℝ} (_ : 0 < ε) (_ : ε < 1)
+    {T : ℝ} (_ : Tlb < T),
+    let σ₁ : ℝ := 1 - A / (Real.log T) ^ 9
+    ‖I₄ SmoothingF ε X σ₁ σ₂‖ ≤ C * X * X ^ (- A / (Real.log T ^ 9)) / ε
+```
+
+**Theorem 53.11 (Contour deformation bound).** For a nonnegative once continuously differentiable kernel supported in [1/2, 2] with unit multiplicative Haar mass and a small-strip holomorphic logarithmic derivative, there is a positive constant for the central vertical piece. Under both explicit punctured-rectangle holomorphy assumptions and the stated strict parameter ordering, the error from the Mellin mass term is at most the sum of the eight remaining contour norms and that central bound.
+
+The exact quantified contract is:
+
+```lean
+theorem SmoothedChebyshevContourBound {SmoothingF : ℝ → ℝ}
+    (suppSmoothingF : Function.support SmoothingF ⊆ Icc (1 / 2) 2)
+    (ContDiffSmoothingF : ContDiff ℝ 1 SmoothingF)
+    (SmoothingFnonneg : ∀ x > 0, 0 ≤ SmoothingF x)
+    (mass_one : ∫ x in Ioi 0, SmoothingF x / x = 1)
+    {σ₂ : ℝ} (holoSmall : LogDerivZetaIsHoloSmall σ₂) (hσ₂ : σ₂ ∈ Ioo 0 1) :
+    ∃ C₅ > 0, ∀ (X ε T σ₁ : ℝ), 3 < X → 0 < ε → ε < 1 → 3 < T →
+      0 < σ₁ → σ₁ < 1 → σ₂ < σ₁ →
+      HolomorphicOn (ζ' / ζ) ((Icc σ₁ 2 ×ℂ Icc (-T) T) \ {1}) →
+      HolomorphicOn (SmoothedChebyshevIntegrand SmoothingF ε X)
+        (Icc σ₂ 2 ×ℂ Icc (-3) 3 \ {1}) →
+      ‖SmoothedChebyshev SmoothingF ε X -
+          𝓜 (fun x ↦ (Smooth1 SmoothingF ε x : ℂ)) 1 * X‖ ≤
+        ‖I₁ SmoothingF ε X T‖ + ‖I₂ SmoothingF ε T X σ₁‖ +
+        ‖I₃ SmoothingF ε T X σ₁‖ + ‖I₄ SmoothingF ε X σ₁ σ₂‖ +
+        C₅ * X ^ σ₂ / ε + ‖I₆ SmoothingF ε X σ₁ σ₂‖ +
+        ‖I₇ SmoothingF ε T X σ₁‖ + ‖I₈ SmoothingF ε T X σ₁‖ +
+        ‖I₉ SmoothingF ε X T‖
+```
+
+**Theorem 53.12 (Quantitative prime number theorem).** There exists a positive real c such that the second Chebyshev function minus the identity is bounded asymptotically by a constant times x times exp of minus c times the one-tenth power of log x. Neither c nor the eventual multiplicative bound is asserted to be explicit.
+
+The exact quantified contract is:
+
+```lean
+theorem MediumPNT : ∃ c > 0,
+    (ψ - id) =O[atTop]
+      fun (x : ℝ) ↦ x * Real.exp (-c * (Real.log x) ^ ((1 : ℝ) / 10))
+```
+
+The first five estimates use compact support, changes of variables in
+multiplicative convolution, integration by parts, and dominated convergence.
+The sixth compares Mellin inversion with the von Mangoldt sum and controls the
+transition region. The remaining intermediate estimates use the same actual
+smoothed integrand, the specified zeta logarithmic-derivative bounds, and
+punctured-rectangle contour deformation. Conjugation relates the upper and
+lower pieces. The final theorem chooses the smoothing and truncation parameters
+together, constructs a nonnegative smooth kernel of unit mass, and combines the
+smoothing error with the contour estimates. These are the classical analytic
+proofs in the cited source.
+
+The final conclusion gives $\psi(X)/X\to1$. Substitution into the uniform lcm
+escape estimate in Theorem 10.6 supplies its asymptotic prime-growth application;
+that consequence does not require a new named copy of the prime number theorem.
+The theorem has logarithmic exponent $1/10$, with existential constants. It does
+not provide an effective numerical cutoff, an explicit decay constant, or a
+stronger logarithmic exponent.
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,8 @@
+**Definition 53.112 (I₇).** $I_7$ is the upper finite vertical piece on the line of real part $\sigma_1$, oriented from imaginary part $3$ to $T$.
+
+```lean
+noncomputable def I₇ (SmoothingF : ℝ → ℝ) (ε T X σ₁ : ℝ) : ℂ :=
+  (1 / (2 * π * I)) * (I * (∫ t in (3 : ℝ)..T,
+    SmoothedChebyshevIntegrand SmoothingF ε X (σ₁ + t * I)))
+```
+

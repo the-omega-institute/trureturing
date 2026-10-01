@@ -1,0 +1,8 @@
+**Definition 53.111 (I₃).** $I_3$ is the lower finite vertical piece on the line of real part $\sigma_1$, oriented from imaginary part $-T$ to $-3$.
+
+```lean
+noncomputable def I₃ (SmoothingF : ℝ → ℝ) (ε T X σ₁ : ℝ) : ℂ :=
+  (1 / (2 * π * I)) * (I * (∫ t in (-T)..(-3),
+    SmoothedChebyshevIntegrand SmoothingF ε X (σ₁ + t * I)))
+```
+

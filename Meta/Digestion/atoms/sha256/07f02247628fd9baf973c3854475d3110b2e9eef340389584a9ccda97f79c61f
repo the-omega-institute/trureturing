@@ -1,0 +1,12 @@
+**Theorem 53.4 (Mellin transform of the smoothed indicator).** For a once continuously differentiable kernel supported in [1/2, 2], every positive epsilon and every complex s with positive real part, the Mellin transform of the smoothed indicator equals the Mellin transform of the kernel at epsilon times s divided by s.
+
+The exact quantified contract is:
+
+```lean
+lemma MellinOfSmooth1a {ν : ℝ → ℝ} (diffν : ContDiff ℝ 1 ν)
+    (suppν : ν.support ⊆ Icc (1 / 2) 2)
+    {ε : ℝ} (εpos : 0 < ε) {s : ℂ} (hs : 0 < s.re) :
+    𝓜 (fun x ↦ (Smooth1 ν ε x : ℂ)) s =
+      s⁻¹ * 𝓜 (fun x ↦ (ν x : ℂ)) (ε * s)
+```
+

@@ -1,0 +1,17 @@
+**Theorem 53.9 (Long vertical bound).** Under the same kernel, positive zeta-bound constant, and A conditions as the horizontal estimate, one positive constant bounds the long vertical piece by C times X times X to the power minus A divided by the ninth power of log T, divided by epsilon. The same endpoint and parameter restrictions apply.
+
+The exact quantified contract is:
+
+```lean
+theorem I3Bound {SmoothingF : ℝ → ℝ}
+    (suppSmoothingF : Function.support SmoothingF ⊆ Icc (1 / 2) 2)
+    (ContDiffSmoothingF : ContDiff ℝ 1 SmoothingF)
+    {A Cζ : ℝ} (hCζ : LogDerivZetaHasBound A Cζ) (Cζpos : 0 < Cζ) (hA : A ∈ Ioc 0 (1 / 2)) :
+    ∃ (C : ℝ) (_ : 0 < C),
+      ∀ (X : ℝ) (_ : 3 < X)
+        {ε : ℝ} (_ : 0 < ε) (_ : ε < 1)
+        {T : ℝ} (_ : 3 < T),
+        let σ₁ : ℝ := 1 - A / (Real.log T) ^ 9
+        ‖I₃ SmoothingF ε T X σ₁‖ ≤ C * X * X ^ (- A / (Real.log T ^ 9)) / ε
+```
+

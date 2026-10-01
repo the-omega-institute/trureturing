@@ -1,0 +1,11 @@
+**Theorem 53.2 (Exact lower smoothing threshold).** A kernel supported in [1/2, 2] with unit multiplicative Haar mass gives a smoothed indicator equal to one for positive x at most 1 minus epsilon times log two, for every positive epsilon.
+
+The exact quantified contract is:
+
+```lean
+lemma Smooth1Properties_below {ν : ℝ → ℝ} (suppν : ν.support ⊆ Icc (1 / 2) 2)
+    (mass_one : ∫ x in Ioi 0, ν x / x = 1) :
+    ∃ (c : ℝ), 0 < c ∧ c = Real.log 2 ∧
+      ∀ (ε x) (_ : 0 < ε), 0 < x → x ≤ 1 - c * ε → Smooth1 ν ε x = 1
+```
+

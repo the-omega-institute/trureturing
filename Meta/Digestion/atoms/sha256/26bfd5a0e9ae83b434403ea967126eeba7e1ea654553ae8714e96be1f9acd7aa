@@ -1,0 +1,14 @@
+**Theorem 53.6 (Chebyshev smoothing error).** For a nonnegative once continuously differentiable kernel supported in [1/2, 2] with unit multiplicative Haar mass, one positive constant bounds the smoothing error by C times epsilon times X times log X, whenever X is greater than three, epsilon lies strictly between zero and one, and X times epsilon is greater than two.
+
+The exact quantified contract is:
+
+```lean
+theorem SmoothedChebyshevClose {SmoothingF : ℝ → ℝ}
+    (diffSmoothingF : ContDiff ℝ 1 SmoothingF)
+    (suppSmoothingF : Function.support SmoothingF ⊆ Icc (1 / 2) 2)
+    (SmoothingFnonneg : ∀ x > 0, 0 ≤ SmoothingF x)
+    (mass_one : ∫ x in Ioi 0, SmoothingF x / x = 1) :
+    ∃ C > 0, ∀ (X : ℝ) (_ : 3 < X) (ε : ℝ) (_ : 0 < ε) (_ : ε < 1) (_ : 2 < X * ε),
+    ‖SmoothedChebyshev SmoothingF ε X - ψ X‖ ≤ C * ε * X * Real.log X
+```
+

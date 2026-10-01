@@ -1,0 +1,8 @@
+**Definition 53.106 (I₁).** $I_1$ is the lower infinite vertical tail on the line of real part $1+(\log X)^{-1}$, with imaginary parameter $t\leq-T$.
+
+```lean
+noncomputable def I₁ (SmoothingF : ℝ → ℝ) (ε X T : ℝ) : ℂ :=
+  (1 / (2 * π * I)) * (I * (∫ t : ℝ in Iic (-T),
+      SmoothedChebyshevIntegrand SmoothingF ε X ((1 + (Real.log X)⁻¹) + t * I)))
+```
+

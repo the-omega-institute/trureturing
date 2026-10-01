@@ -1,0 +1,7 @@
+**Definition 53.105 (SmoothedChebyshev).** The smoothed Chebyshev reading is $V^{\prime}\!\left(h_{\nu,\epsilon,X},1+(\log X)^{-1}\right)$, using the normalized vertical integral defined above.
+
+```lean
+noncomputable def SmoothedChebyshev (SmoothingF : ℝ → ℝ) (ε : ℝ) (X : ℝ) : ℂ :=
+  VerticalIntegral' (SmoothedChebyshevIntegrand SmoothingF ε X) ((1 : ℝ) + (Real.log X)⁻¹)
+```
+

@@ -1,0 +1,8 @@
+**Definition 53.108 (I₃₇).** $I_{37}$ is the complete finite vertical piece on the line of real part $\sigma_1$, oriented from imaginary part $-T$ to $T$.
+
+```lean
+noncomputable def I₃₇ (SmoothingF : ℝ → ℝ) (ε T X σ₁ : ℝ) : ℂ :=
+  (1 / (2 * π * I)) * (I * (∫ t in (-T)..T,
+    SmoothedChebyshevIntegrand SmoothingF ε X (σ₁ + t * I)))
+```
+

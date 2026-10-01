@@ -1,0 +1,25 @@
+**Theorem 53.11 (Contour deformation bound).** For a nonnegative once continuously differentiable kernel supported in [1/2, 2] with unit multiplicative Haar mass and a small-strip holomorphic logarithmic derivative, there is a positive constant for the central vertical piece. Under both explicit punctured-rectangle holomorphy assumptions and the stated strict parameter ordering, the error from the Mellin mass term is at most the sum of the eight remaining contour norms and that central bound.
+
+The exact quantified contract is:
+
+```lean
+theorem SmoothedChebyshevContourBound {SmoothingF : ℝ → ℝ}
+    (suppSmoothingF : Function.support SmoothingF ⊆ Icc (1 / 2) 2)
+    (ContDiffSmoothingF : ContDiff ℝ 1 SmoothingF)
+    (SmoothingFnonneg : ∀ x > 0, 0 ≤ SmoothingF x)
+    (mass_one : ∫ x in Ioi 0, SmoothingF x / x = 1)
+    {σ₂ : ℝ} (holoSmall : LogDerivZetaIsHoloSmall σ₂) (hσ₂ : σ₂ ∈ Ioo 0 1) :
+    ∃ C₅ > 0, ∀ (X ε T σ₁ : ℝ), 3 < X → 0 < ε → ε < 1 → 3 < T →
+      0 < σ₁ → σ₁ < 1 → σ₂ < σ₁ →
+      HolomorphicOn (ζ' / ζ) ((Icc σ₁ 2 ×ℂ Icc (-T) T) \ {1}) →
+      HolomorphicOn (SmoothedChebyshevIntegrand SmoothingF ε X)
+        (Icc σ₂ 2 ×ℂ Icc (-3) 3 \ {1}) →
+      ‖SmoothedChebyshev SmoothingF ε X -
+          𝓜 (fun x ↦ (Smooth1 SmoothingF ε x : ℂ)) 1 * X‖ ≤
+        ‖I₁ SmoothingF ε X T‖ + ‖I₂ SmoothingF ε T X σ₁‖ +
+        ‖I₃ SmoothingF ε T X σ₁‖ + ‖I₄ SmoothingF ε X σ₁ σ₂‖ +
+        C₅ * X ^ σ₂ / ε + ‖I₆ SmoothingF ε X σ₁ σ₂‖ +
+        ‖I₇ SmoothingF ε T X σ₁‖ + ‖I₈ SmoothingF ε T X σ₁‖ +
+        ‖I₉ SmoothingF ε X T‖
+```
+

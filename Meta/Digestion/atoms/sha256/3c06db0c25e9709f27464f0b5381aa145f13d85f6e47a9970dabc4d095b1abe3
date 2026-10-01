@@ -1,0 +1,8 @@
+**Definition 53.113 (I₄).** $I_4$ is the short horizontal piece at imaginary part $-3$, oriented from real part $\sigma_2$ to $\sigma_1$.
+
+```lean
+noncomputable def I₄ (SmoothingF : ℝ → ℝ) (ε X σ₁ σ₂ : ℝ) : ℂ :=
+  (1 / (2 * π * I)) * ((∫ σ in σ₂..σ₁,
+    SmoothedChebyshevIntegrand SmoothingF ε X (σ - 3 * I)))
+```
+

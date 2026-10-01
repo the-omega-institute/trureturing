@@ -1,0 +1,58 @@
+### 53.0 Mathematical conventions and consumed definitions
+
+Write $\zeta$ for the ordinary Riemann zeta function, $\zeta'$ for its complex
+derivative, and
+
+$$
+\psi(X)=\sum_{1\leq n\leq\lfloor X\rfloor}\Lambda(n),
+$$
+
+where $\Lambda$ is the von Mangoldt function; the sum is empty if its upper
+limit is less than one. Let $i^2=-1$. For a function $f$ on the positive real
+axis, its complex Mellin transform is
+
+$$
+\mathcal M f(s)=\int_0^\infty x^{s-1}f(x)\,dx.
+$$
+
+The real kernel is coerced into the complex numbers when the transform is
+applied to it. Support means the set where a function is nonzero. All set
+integrals in the contracts use Lebesgue measure; finite integrals
+$\int_a^b$ are oriented interval integrals. In Lean notation `Icc`, `Ioo`,
+`Ioc`, `Iic`, `Ici`, and `uIcc` mean closed, open, left-open right-closed,
+closed lower half-line, closed upper half-line, and unordered closed intervals,
+respectively. `ContDiff ℝ 1 ν` means that $\nu$ is once continuously
+differentiable. `HolomorphicOn f K` means complex differentiability on $K$,
+namely `DifferentiableOn ℂ f K`. The complex rectangle $[a,b]\times_{\mathbb C}
+[c,d]$ consists of complex numbers with real part in the first interval and
+imaginary part in the second.
+
+For a complex-valued integrand $h$, the normalized vertical integral used here
+is
+
+$$
+V'(h,\sigma)=\frac{1}{2\pi i}\,i\int_{\mathbb R}h(\sigma+it)\,dt.
+$$
+
+This is `VerticalIntegral' h σ`. The contour normalization and its orientation
+are part of every definition below; no unsigned path-length replacement is
+intended. The functions and predicates are defined for all displayed real
+parameters. Conditions such as $\epsilon>0$, $X>3$, or unit mass are imposed
+only in the individual theorem that requires them. In particular, support does
+not silently imply nonnegativity, smoothness, or unit mass.
+
+The exact definition fragments and theorem type fragments use the following
+notation. They specify mathematical contracts and are not standalone proof
+files.
+
+```lean
+open Set Function Filter Complex Real MeasureTheory ComplexConjugate Topology
+open ArithmeticFunction (vonMangoldt)
+open scoped Chebyshev ContDiff
+local notation "𝓜" => mellin
+local notation "Λ" => vonMangoldt
+local notation "ζ" => riemannZeta
+local notation "ζ'" => deriv ζ
+variable {𝕂 : Type*} [RCLike 𝕂]
+```
+

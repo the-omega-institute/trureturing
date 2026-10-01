@@ -1,0 +1,8 @@
+**Definition 53.110 (I₉).** $I_9$ is the upper infinite vertical tail on the line of real part $1+(\log X)^{-1}$, with imaginary parameter $t\geq T$.
+
+```lean
+noncomputable def I₉ (SmoothingF : ℝ → ℝ) (ε X T : ℝ) : ℂ :=
+  (1 / (2 * π * I)) * (I * (∫ t : ℝ in Ici T,
+      SmoothedChebyshevIntegrand SmoothingF ε X ((1 + (Real.log X)⁻¹) + t * I)))
+```
+

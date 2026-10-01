@@ -1,0 +1,8 @@
+**Definition 53.109 (I₈).** $I_8$ is the horizontal piece at imaginary part $T$, oriented from real part $\sigma_1$ to $1+(\log X)^{-1}$.
+
+```lean
+noncomputable def I₈ (SmoothingF : ℝ → ℝ) (ε T X σ₁ : ℝ) : ℂ :=
+  (1 / (2 * π * I)) * ((∫ σ in σ₁..(1 + (Real.log X)⁻¹),
+    SmoothedChebyshevIntegrand SmoothingF ε X (σ + T * I)))
+```
+
