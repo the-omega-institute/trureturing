@@ -10,7 +10,7 @@ target statement, including its original telescope. The report checks the bridge
 constant identities, source ownership and all semantic policies. -/
 structure Registration {P : Prop} (target : P)
     (A : Sort aa) (O : Sort bb)
-    (Readout : Type d) (Bundle : Type e) (Variation : Sort f)
+    (Readout : Type d) (Variation : Sort f)
     (Sensitivity : Sort g) (From : Type h) (Residual : Sort i)
     (FamilyRecord : Sort j) where
   targetName : Name
@@ -20,7 +20,6 @@ structure Registration {P : Prop} (target : P)
   localNames : Bool
   realization : Implementation.{u,v,w,t,s,r,o,a,k} P
   readout : Option Readout
-  primitives : Option Bundle
   variation : Option (Ref Variation)
   sensitivity : Option (Ref Sensitivity)
   escapeFrom : Option From
