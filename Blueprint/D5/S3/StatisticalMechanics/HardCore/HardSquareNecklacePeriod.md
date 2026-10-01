@@ -286,6 +286,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/HardCore/HardSquareNecklacePeriod.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/adamaszek-2012-necklace-cycle-length` (proved) by `D5/S3/StatisticalMechanics/HardCore/HardSquareNecklacePeriod.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"adamaszek-2012-necklace-cycle-length","declaration_gid":"D5/S3/StatisticalMechanics/HardCore/HardSquareNecklacePeriod.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Michal Adamaszek (2012). *Hard squares on cylinders revisited*. URL: <https://arxiv.org/abs/1202.1655v2>.

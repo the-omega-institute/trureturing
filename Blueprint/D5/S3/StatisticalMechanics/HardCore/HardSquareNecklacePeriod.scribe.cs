@@ -63,7 +63,10 @@ internal sealed class HardSquareNecklacePeriodDocument : IScribeDocumentDefiniti
                 H("Proof of Conjecture 7.4"), StatementSource.FromAuthor(Disp(F.Id("claim"))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Sort the physical stones and extend their coordinates periodically to integers. The compressed positions yᵢ=2xᵢ+vᵢ−3i are strictly ordered, with circumference 2(n−3k); their velocities are sign(vᵢ)(2|vᵢ|−3), hence ±1. FIX exchanges the velocities at disjoint crossing pairs, so the compressed evolution is free motion followed by relabelling. At L=n−3k steps both velocities give the same spatial displacement modulo 2L, and an increasing bijection of the integer labels is a translation. The total compressed first moment determines this label shift as minus the number of negative compressed velocities. Even physical circumference fixes its parity, allowing recovery of each physical vector and position. The final isometry is a rotation, so reflection is not needed for the return."))),
-                DescribeRole.Theorem)), []));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("adamaszek-2012-necklace-cycle-length"),
+                    ResolutionKind.Proved))), []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose, string declaration) =>
         Describe.Lean(DescribeId.Create("adam-" + id), DeclarationHandle.Create(Prefix + declaration[(declaration.LastIndexOf('.') + 1)..]),
