@@ -29832,3 +29832,290 @@ remain outside this obstruction. Arbitrary higher-support
 originals at other middle-window primes also remain untreated.
 The comparison and these deductions do not resolve unrestricted
 Erdos#7 and do not claim new Lean verification.
+
+## Retained anchor holes increase the same six-prime source mass
+
+The six-prime source of Chapter30 admits a uniform improvement without
+changing its kernels, caps, original family or initial reserve. Its32
+basic upper comparisons ignore some anchor holes which the actual
+source already avoids. Their anchor-independent constant terms can
+instead be integrated over the actual anchor. This supplies a positive
+correction even when the remaining anchor-dependent terms keep their
+old upper estimates.
+
+Use the completed pure unions P_3,P_5 and selected classes C_m from
+Schroeder's pinned source, as cited in Chapter30. Completion preserves
+inclusion of the original covered set; selected15,45,75 are disjoint from their
+selected proper-divisor classes. No new completion or change to an
+original ending beyond17 is needed. Write
+
+    F=P_3^c times P_5^c, H(F)=3/8,
+    A=the actual anchor avoiding every completed3--5 class,
+    A_basic=(C_3 union C_9 union C_27)^c
+                         times P_5^c, with C_15 removed.
+
+Thus A is contained in F minus C_15, which is contained in A_basic.
+The actual anchor can have further mixed holes. Haar measure H in this
+section is on the two anchor coordinates. The basic source's total
+comparison mass is EXACTLY H(A_basic): above each retained coarse
+cell, its extra3 masses sum to2/3+1/3=1, and its extra5 masses sum to
+(4/5-D_h)+1/5=1-D_h. This is the quantity called mathcal M in the
+source's exact multiplier-remainder formula, divided by135.
+
+### A uniform amount of ignored anchor mass
+
+The completed pure3 classes beyond27 have disjoint total mass1/54.
+At each such ternary point the remaining pure5 fibre, after removing
+the15 class, has mass at least3/4-1/5=11/20. Consequently restoring
+these pure3 holes removes at least11/1080 from A_basic.
+
+Inside the FULL pure survivor product F, the selected45 class has
+mass at least(1/18)(3/20)=1/120. Its ternary prefix is disjoint from
+the pure3 and9 classes; deeper pure3 mass is at most1/18. Its quinary
+root is disjoint from pure5 and loses at most1/20 to deeper pure5.
+Likewise the selected75 class has mass at least(1/6)(3/100)=1/200:
+its ternary root loses at most1/6 to deeper pure3, and its quinary
+depth-two prefix avoids pure5 and25 and loses at most1/100 below25.
+Their intersection has Haar mass at most1/lcm(45,75)=1/225.
+Both are disjoint from C_15. Hence their union inside F removes at
+least2/225 more. This piece is disjoint from the restored pure3 holes.
+It follows that
+
+    Delta_basic:=H(A_basic)-H(A)>=11/1080+2/225
+                                      =103/5400.          (FC1265)
+
+This comparison does not assert that the selected classes are mutually
+independent. It uses their actual intersections and shared pure unions.
+
+### Subtract the same constant component from the basic upper costs
+
+For q=7,11,13,17 retain the source thresholds tau=(2,4,4,8),
+denominators beta=(4,6,8,8), and conditional caps
+C=(3/2,5/3,3/2,2). After reverse comparison of the nonanchor
+coordinates, its complete unrestricted inventory has baseline
+
+    M_q=product_(7<=p<q)(1+J_p),
+    Pr(J_p>=a)=C_p/p^a, a>=1.
+
+The remaining anchor-dependent load R is nonnegative. At a fixed
+auxiliary multiplier m and h(u)=(u-tau_q)_+, use
+
+    h(m+R)=h(m)+[h(m+R)-h(m)].
+
+The bracket is nonnegative, increasing and convex in R. Integrate the
+first term over actual A, and enlarge the anchor only for the bracket.
+All original exponent labels stay separate until the cited source
+comparison; J_p are independent AUXILIARY heights, not actual coordinates.
+
+For m<tau_q the constant is zero and the old finite hinge comparison
+is unchanged. For m>=tau_q the source already uses its exact linear
+formula m*mathcal W-tau_q*mathcal M. Replacing only the constant
+(m-tau_q)*mathcal M by135*H(A)*(m-tau_q) subtracts precisely the
+same constant component. The positive anchor-dependent linear remainder
+still has its old bound. Thus no unrelated upper bound is subtracted,
+and the old omitted-height comparisons and upward rounding remain valid.
+
+If L_q is the old basic loss bound in135-cell units, the actual raw
+stage loss therefore satisfies
+
+    loss_q<=L_q/135-Delta_basic*T_q,
+    T_q=E(M_q-tau_q)_+/beta_q.                           (FC1266)
+
+Normalized kernels and deletion are the same positive operators as
+before. The lower reserve R_basic is also unchanged: it already paid
+for all mixed anchor types and used the full pure-product mass.
+The correction103*T_q/5400 is uniform over the32 basic vertices,
+so the source's affine-reserve/convex-cost interpolation still applies.
+
+### Only three new small product-hinge expressions are needed
+
+There is no correction at7, since M_7=1<2. For the other three
+rows the exact expressions are
+
+    T_11=1/8232,
+    T_13=881/379456,
+    T_17=18020494476077220143/20088107919659639827968,
+    T_11+T_13+T_17
+       =22366733733356919245/6696035973219879942656.      (FC1267)
+
+These are new constant-component integrals, not recomputations of
+the old source geometry or deletion fees. Here are finite closed
+formulas sufficient to evaluate them. Put
+
+    a_p=1-C_p/p, w_p(j)=C_p*(p-1)/p^(j+1), j>=1.
+
+At11, E(M_11-4)_+=E(J_7-3)_+=1/1372. At13 the full
+mean is35/24 and the probabilities for M=1,2,3 are respectively
+2/3,61/231,571/17787. Consequently
+
+    E(M_13-4)_+=35/24-4+3*(2/3)+2*(61/231)+571/17787
+               =881/47432.
+
+At17 let P={7,11,13}. Its full mean is105/64. Its finite
+complementary hinge is
+
+    E(8-M_17)_+=7*product_P a_p
+      +sum_(p in P)(product_(r!=p)a_r)
+                           *sum_(j=1..6)(7-j)*w_p(j)
+      +4*sum_(p<r in P)w_p(1)*w_r(1)*a_s
+      +2*sum_(p!=r in P)w_p(1)*w_r(2)*a_s,
+
+where s is the third prime in the last two sums. Add105/64-8
+to obtain E(M_17-8)_+, then divide by8. The list is complete:
+a product below8 has no positive heights, one positive height1..6,
+or two factors(2,2) or(2,3). Three factors at least2 already
+have product at least8. The complete mean retains every high state.
+
+Reusing Chapter30's old exact minimum gives, for the SAME source,
+
+    mu_6(1)>=m_6+Gamma,
+    Gamma=(103/5400)*(T_11+T_13+T_17)
+      =460754714907152536447/7231718851077470338068480
+      >63/1000000.                                      (FC1268)
+
+The old relation mu_6<=Lambda_6 and its raw conditional caps remain
+valid. No conditional cap is assigned to normalized killed survivors.
+This is a uniform prefix improvement for arbitrary finite head
+inventories and phases, independently of any selected later example.
+
+## The same anchor also saves part of each later cofactor fee
+
+Retaining the actual anchor instead of enlarging it to F yields an
+additional, separate improvement. The three selected classes15,45,75
+give the uniform bound
+
+    Delta:=3/8-H(A)>=73/1800.                            (FC1269)
+
+To prove it with their shared pure budgets, let their anchor projections
+be respectively(r mod3,h mod5), (s mod9,k mod5), and
+(j mod3,l mod25). Put i=s mod3 and ell=l mod5. For
+mu3=H3 restricted to P_3^c and mu5=H5 restricted to P_5^c, write
+
+    u=mu3(r mod3), w=mu3(s mod9), z=mu3(j mod3),
+    v=mu5(h mod5), x=mu5(k mod5), y=mu5(l mod25).
+
+Pure completion gives u,z>=1/6, w>=1/18, v,x>=3/20 and
+3/100<=y<=1/25. If i!=r, also u+w>=5/18: their ternary
+union has initial mass4/9, and pure3 mass beyond depth one is1/6.
+If j!=r, the two surviving ternary roots give u+z=1/2.
+Because15 is disjoint from both45 and75, their union within F has
+EXACT mass
+
+    D=uv+wx+zy-1_(i=j,k=ell)*wy,
+    Delta>=D.                                          (FC1270)
+
+If i!=r, ignore75 and use D>=uv+wx>=1/24.
+If i=r and j!=r, there is no45/75 intersection, and
+
+    D=u*(v-y)+y/2+wx
+       >=v/6+y/3+x/18>=13/300.
+
+Here v-y>0. In the remaining case i=j=r, disjointness from15
+forces k!=h and ell!=h. Both coefficients below are nonnegative:
+
+    D=u*(v+y)+w*(x-1_(k=ell)*y)
+      >=v/6+x/18+(1/6-1_(k=ell)/18)*y.
+
+If k=ell, before higher pure5 deletions this last weighted quinary
+mass is11/225. Its pointwise weight is at most1/6: it is1/6
+on root h and on prefix l, and1/18 on root k outside l.
+The pure5 root is disjoint, and all deeper pure5 classes have total
+mass1/20. Their weighted loss is at most1/120, leaving73/1800.
+If k!=ell, the three supports are disjoint, their initial weighted
+mass is23/450 and the same loss bound leaves77/1800. These cases
+prove FC1269 without minimizing the three intersections independently.
+
+### A constant-component identity on the common raw law
+
+Keep the same physical tail kernels and extend the raw measure starting
+from H restricted to A without later deletions. Call this raw law sigma.
+It dominates the actual survivor and is dominated by the old raw law
+Lambda starting from F. These three laws share the same kernels.
+
+At a later three-factor row q, after comparing the nonanchor coordinates
+first, complete its anchor-free cofactor inventory to
+
+    B_q=sum_(7<=p<q)K_p+sum_(7<=p<r<q)K_p*K_r.
+
+The aligned load is B_q+R with R>=0. The remainder can also include
+any declared additional original labels. At fixed auxiliary heights,
+split the hinge as in FC1266. Integrate the constant(B_q-t_q)_+
+over actual A; enlarge only its nonnegative convex remainder to F
+and apply the old anchor comparison. Thus the raw upper fee decreases by
+
+    Delta*b_q_free,
+    b_q_free=E(B_q-t_q)_+/(q-2-t_q).                    (FC1271)
+
+This is a refinement of the SAME comparison before integration. It is
+not proportional trimming of every positive-depth atom and does not
+deduct a fraction of an unrelated upper estimate. It preserves the
+literal phases and all current-exponent labels through their conditional
+comparison. All row credits can be added by first-hit accounting on
+the same sigma, together with the independent prefix gain FC1268.
+
+For q=19,23,29 use the thresholds and caps of FC1234. Their
+anchor-free means are53/64,637/576,48931/36288. The old finite
+complementary-hinge formula FC1234, with indices3,5 removed and
+these complete means, gives
+
+    b_19_free=0.0003210793961287864...>321/1000000,
+    b_23_free=0.0002686982594676981...>268/1000000,
+    b_29_free=0.0000859668896389520...>85/1000000.
+                                                            (FC1272)
+
+The finite domains remain exactly the corresponding columns of the
+FC1234 table, restricted to the remaining primes. In that formula
+P0 is the product of1-c_p/p on the remaining primes; at23 and29
+it is1840/4199 and303760/793611. This specifies exact rational
+expressions including the full high-state contribution. The displayed
+rational inequalities, rather than the decimal approximations, imply
+
+    (73/1800)*(b_19_free+b_23_free+b_29_free)
+      >(73/1800)*(674/1000000)>27/1000000.               (FC1273)
+
+No credit is deducted from R_31 solely because it is an upper bound;
+the later remainder and far-tail budgets retain their previous values.
+
+### The actual-inventory criterion crosses the single1995 obstruction
+
+Retain the contract of FC1249: all head originals are unrestricted;
+originals ending at19 may have the specified actual extra inventory;
+other originals ending through B=10^12 have at most three distinct
+prime factors; originals ending beyond B are unrestricted. Its exact
+additional normalized hinge Phi is still FC1250. All same-source
+bounds now leave actual mass strictly greater than
+
+    6247/8000000+Gamma
+      +(73/1800)*(b_19_free+b_23_free+b_29_free)-Phi/16.
+                                                            (FC1274)
+
+This is a sufficient test for every such actual inventory. In
+particular it is positive whenever Phi/16<=6967/8000000,
+since the two gains together strictly exceed90/1000000.
+The formula preserves the full original labels and does not replace
+their joint phase law by independent actual coordinates.
+
+For the single extra original1995, reuse the exact FC1254 charge
+
+    Phi/16=228929817/275099374550<833/1000000.
+
+Consequently FC1274 gives mass strictly greater than
+
+    6247/8000000+90/1000000-833/1000000
+       =303/8000000>1/30000.                            (FC1275)
+
+Finite CRT therefore supplies an uncovered integer for every phase
+assignment satisfying this contract, including this1995 original.
+The prefix gain alone already clears that single-label obstruction;
+the later credits strengthen the common inventory budget further.
+This does not contradict FC1264, whose negative sufficient bound kept
+the old prefix reserve/loss estimate and enlarged raw anchor.
+
+The new ingredient is a uniform improvement of the existing source and
+its continuation, not a new computation of the author's finite geometry.
+Attribution, arbitrary-height premises and the local verification
+boundary remain those of Chapter30 and the pinned source. No new Lean
+verification is claimed. Arbitrary higher-support inventories at19 or
+at other middle-window primes are still outside the proved positive
+budget; no argument here forces a minimum cover into this contract.
+Unrestricted Erdos#7 remains unresolved.
