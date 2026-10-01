@@ -16161,3 +16161,70 @@ $$
 [^boundary79-presentation]: [Pauly 的表示空间来源条目](../../../Library/ConceptDynamics/pauly2016represented.md)说明有效内容必须绑定表示。本节对有限显式表给出了直接枚举算法；该算法不需要用无限表示空间定理充当证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 80. 协议—关系极性的方向与关系闭包勘正
+
+第31.1节式(31.3)、该节末段将 $\mathsf K$ 称为“反单调”且否认其为单调闭包的说明，以及第31.4节末段的“反单调闭包”表述，均以本节为准。关系侧的 $\mathsf K$ 是扩张、单调、幂等的闭包算子；第31.2节式(31.5)—(31.6)关于协议族扩展使联合核缩小的结论仍然成立。
+
+### 80.1 两个反单调映射的复合
+
+固定状态集 $X$、读出值域 $O$ 与全部读出 $X\to O$。对关系 $\mathscr R\subseteq X\times X$ 和读出族 $\mathscr P\subseteq O^X$，写
+
+$$
+\Pi(\mathscr R)=\{q:X\to O:\mathscr R\subseteq\ker q\},\qquad
+J(\mathscr P)=\bigcap_{q\in\mathscr P}\ker q,\qquad
+\mathsf K=J\circ\Pi.
+\tag{80.1}
+$$
+
+空读出族的交取为 $X\times X$。直接由定义，
+
+$$
+\begin{aligned}
+\mathscr R\subseteq\mathscr S
+&\Longrightarrow\Pi(\mathscr S)\subseteq\Pi(\mathscr R),\\
+\mathscr P\subseteq\mathscr Q
+&\Longrightarrow J(\mathscr Q)\subseteq J(\mathscr P).
+\end{aligned}
+\tag{80.2}
+$$
+
+第一行是关系约束越多，保持这些关系的读出越少；第二行是参与求交的核越多，交集越小。因此式(31.3)的正确替代为
+
+$$
+\boxed{
+\mathscr R\subseteq\mathscr S
+\Longrightarrow
+\mathsf K(\mathscr R)\subseteq\mathsf K(\mathscr S).
+}
+\tag{80.3}
+$$
+
+这里先减少读出，再对较少的核取交，两次反向合成为同向。关系增多表示要求更多状态对具有相同读数，并不等于增加可区分它们的协议。
+
+### 80.2 三条闭包律与反向包含的反例
+
+每个 $q\in\Pi(\mathscr R)$ 都保持 $\mathscr R$，故 $\mathscr R\subseteq\mathsf K(\mathscr R)$。同时
+
+$$
+\Pi(\mathsf K(\mathscr R))=\Pi(\mathscr R).
+$$
+
+一个方向由扩张性与 $\Pi$ 的反单调性得到；另一个方向是：若 $q\in\Pi(\mathscr R)$，则定义中的交核满足 $\mathsf K(\mathscr R)\subseteq\ker q$，所以 $q\in\Pi(\mathsf K(\mathscr R))$。再作用一次 $J$，即得
+
+$$
+\mathsf K(\mathsf K(\mathscr R))=\mathsf K(\mathscr R).
+\tag{80.4}
+$$
+
+因此式(31.2)的扩张性与式(31.4)的幂等性仍成立，并与式(80.3)一起组成普通集合包含序下的三条闭包律。
+
+反向包含并非另一种同样成立的表述。取 $X=O=\{0,1\}$、$\mathscr R=\Delta_X$、$\mathscr S=X\times X$。所有读出都保持对角关系，恒等读出使 $\mathsf K(\mathscr R)=\Delta_X$；保持全关系的读出都是常值读出，所以 $\mathsf K(\mathscr S)=X\times X$。于是 $\mathscr R\subseteq\mathscr S$，但 $(0,1)\in\mathsf K(\mathscr S)\setminus\mathsf K(\mathscr R)$，否定旧式(31.3)的方向。
+
+### 80.3 单次联合核与既有声明的范围
+
+第31.2节固定协议的读出语义，仅将协议族从 $\mathscr P_0$ 扩大到 $\mathscr P_1$；其运算是单次 $J$，因此仍有 $K_{\mathscr P_1}\subseteq K_{\mathscr P_0}$。这与关系闭包 $J\Pi$ 的单调性分别对应式(80.2)第二行和式(80.3)，不可混用。协议扩展的严格性仍须有新增读出分开旧核中的一对状态，幂等性也不代替无限协议族的实际来源或取得条件。
+
+第31.4节末段中的“反单调闭包”应读作“单调的关系闭包”。其关系侧三律直接复用既有 `ProtocolRelationClosureLaws.protocol_relation_closure_laws` 的声明，源码为 `D5/S3/ConceptDynamics/Closure/ProtocolRelationClosureLaws.lean`；其中关系包含蕴含的正是式(80.3)方向。本节纠正的是理论表述，不新增 Lean 声明，不将协议扩展的严格性或无限联合的实际来源条件交由这条闭包定理承担。
+
+## 80.99 追加锚
