@@ -5722,3 +5722,287 @@ and adds the four-low composite-confinement exclusion. It is
 ordinary symbolic mathematics, not new Lean verification or
 a claim of literature priority. Larger repairs, arbitrary
 collision inventories and unrestricted Erdős #7 remain open.
+
+## 43. Five low classes cannot confine the remainder to any nonunit AP
+
+The complete-coordinate transport also handles one numerical
+triple among the input classes. The necessary extension of NF17
+concerns the list of endpoints to delete, not the list of all
+repair cofactors.
+
+### Six deletion items permit one repeated numerical value
+
+Let D be a labelled list of at most six integers greater than
+one and coprime to6. Suppose every numerical value occurs once,
+except that at most one value may occur twice. Then its items
+can be assigned to dividing primes with
+
+    sum_(m assigned to p) 3^(-v_p(m))<1
+      at every assigned prime p.                         (NF30)
+
+If the repeated value is absent or is not a pure prime power,
+this is exactly an application of NF17. It remains to allow
+two copies of p^a. All other numerical values are distinct.
+Use the same capacity-two Hall criterion as NF17.
+
+Suppose first that at least three items are pure powers of r.
+Assign all of them to r. If r=p, their finite total cost is
+less than1/2+3^(-a)<=5/6. Otherwise it is less than1/2.
+At most three items remain, each having a factor outside r.
+Capacity two on those other factors fails only when precisely
+three items have the same singleton support {q} after r is
+removed.
+
+If r!=p and one of the three is mixed, move it to r, at cost
+at most1/3; the r cost stays below5/6 and the other two cost
+at most2/3 at q. If all three are pure q powers, their cost
+is below5/6, including the possible repeated pure power.
+
+If r=p, the three remaining values are distinct. Unless all
+three have q-exponent one, assign them all to q, at cost at
+most2/3+1/9=7/9. Otherwise write them as r^u*q. Their three
+u values are distinct nonnegative integers, so one is at least
+two. Assign that item to r and the other two to q. The r cost
+is then below5/6+1/9=17/18, and the q cost is at most2/3.
+This proves the pure-group case.
+
+Now every prime has at most two pure items. A remaining Hall
+failure places five or six items in a pair of primes. That pair
+must contain p: otherwise its five items and the two pure p^a
+items would exceed six. Write the pair as {p,q}. Any item outside
+it can be assigned to a factor outside it; there is at most one.
+The pure p items are exactly the two copies of p^a, with total
+cost at most2/3. Let t<=2 count the pure q items. Their values
+are distinct, giving cost at most0,1/3,4/9 for t=0,1,2.
+
+Initially assign mixed items of p-depth one to q, and those of
+p-depth at least two to p. If at most two go to p, its cost is
+at most8/9. The mixed items initially sent to q have distinct
+q-exponents. For t=0 or1 their finite sum is less than1/2,
+so the total q cost is below5/6. For t=2 there are at most
+two mixed items; their cost is at most4/9, giving total at most
+8/9. If instead at least three mixed items initially go to p,
+move all but two of them to q. There are then at most two
+items in total at q: two pure p items and two mixed p items
+already account for four of the at most six items. Hence q
+costs at most2/3 and p at most8/9. This completes NF30 using
+indivisible assignments and the existing Hall theorem.
+
+### One common cover supplies the endpoint list
+
+Take any kappa<=5 distinct legal low repair labels, retaining
+C0 and excluding3. Let their cofactor APs be C_1,...,C_kappa.
+For ANY nonunit cofactor AP A, with modulus K coprime to6,
+enlarge the common cofactor period to contain all these moduli
+and take the full preimage R-star of the original R_3. Then
+
+    R-star minus union_i C_i not subset A.                 (NF31)
+
+This includes prime K and arbitrary new-period moduli. No total
+repair-budget bound or effectiveness assumption on the low
+classes is needed. A is a query; it need not be a legal repair.
+
+If confinement held, C0 together with the kappa low cofactor
+APs and A would cover the whole enlarged cofactor carrier and
+therefore every integer. Before A is added, each numerical
+cofactor m occurs at most twice. When C0 contains m, legality
+forbids repair label m, leaving only possible label3m. When
+C0 does not contain m, the only low labels with that cofactor
+are m and3m. Adding A leaves multiplicity at most three, with
+only its modulus K capable of occurring three times.
+
+At every repeated modulus choose all but one actual event for
+deletion. The resulting numerical deletion list has at most
+kappa+1<=6 items; only K can occur twice. NF30 assigns these
+events to prime coordinates at strict base3 cost. Take all
+their prime factors as the chain starting at3, with full heights
+in this ACTUAL cover. Every PC6 base is at least3. Merging
+coincident or contained prefixes only decreases the assigned
+costs, so PC6 supplies complete avoiding trees.
+
+Apply the SAME CRT map and numerical injection of PC1--PC2.
+Each selected event disappears; every remaining event pulls
+back to at most one AP; no numerical repetition remains.
+The output moduli are distinct odd nonunits and cover every
+integer through its one old witness. Their number is at most
+
+    |C0|+kappa+1<=|C0|+6<n,
+
+using only the independent old N_3>=9. If the deletion list
+is empty, the input cover itself gives this contradiction.
+Thus NF31 holds. This reuses the transport on the actual
+common cover, without a new law or an assumed product source.
+
+NF31 strengthens NF24 and NF27, while leaving their independent
+proofs and their downstream bootstrap uses intact. It does not
+exclude a larger low family, or confinement to an arbitrary
+union of query APs.
+
+## 44. Every eight-class repair is entirely first-level and repeats retained labels
+
+Keep the same complete P_3, retained C0 and unavailable label3.
+Let kappa be the number of effective low repair classes and h
+the number of effective high classes. All cofactor statements
+below use ONE R-star in the enlarged common period. Write
+R-low for its complement of all actual low cofactor APs.
+
+### One or two low classes require larger high inventories
+
+For kappa<=2, take t nonunit query cofactor APs whose numerical
+moduli are pairwise distinct, with kappa+t<=4. Then
+
+    the kappa low APs and t query APs cannot cover R-star.
+                                                               (NF32)
+
+This is the four-item argument of NF24 with a different role
+allocation. Capacity-two Hall succeeds unless at least three
+items are pure powers of one prime p. For an old p, at most
+one low item has depth one, since C0 retains label p, and at
+most one query has depth one, since their numerical moduli
+are distinct. The entire pure group's prefix cost is at most
+2/3+2/9=8/9. At most one other item remains and has a prime
+factor outside p; assign it there. PC6 and the expanded tree
+property supply one common avoidance point. For a new p its
+coordinate is genuinely free; avoid the at most four first
+roots of the pure items, and avoid any outside item on another
+axis before freely completing the p coordinate. This also
+proves that R-low is nonempty.
+
+Partition high classes by their second3 root. Call a class
+shallow high if its original modulus has3-height two. Within
+one second3 root, every deeper high class occupies at most
+1/3 of the complete remaining3 tail at any fixed cofactor.
+These are finite proportions through the common maximum height;
+no old or newly required digit is omitted.
+
+Suppose first kappa=2. A root without an effective label9 cannot
+have at most two high classes. If it has shallow high classes,
+their nonunit cofactor moduli are distinct. NF32 gives one
+z in R-low missed by all of them; at most one deeper class
+remains, which cannot cover that root's complete tail at z.
+If both classes are deeper, their total tail proportion is at
+most2/3. Thus every such root needs at least three high classes.
+
+For kappa=1, a root without9 cannot have at most three high
+classes. If at least one is shallow, NF32 simultaneously avoids
+all shallow cofactors, leaving at most two deeper classes and
+tail proportion at most2/3. If all are deeper, a count at most
+two again fails. For three deeper classes, covering the complete
+tail for every z in R-low requires all three to have3-height
+exactly three and each cofactor AP to contain the whole R-low.
+Otherwise, at some z the sum of their tail proportions is
+strictly below one. Their distinct labels27e force at least
+one e>1, whose confinement contradicts NF32 with a single query.
+
+At most one root can contain numerical label9; even that root
+needs at least one high class. Consequently, without a bound
+on the total repair budget,
+
+    kappa=1 ==> h>=9, and h>=12 if no effective9;
+    kappa=2 ==> h>=7, and h>=9  if no effective9.           (NF33)
+
+For kappa=0, BC1 gives k>=N_3; the independent old lower bound
+N_3>=9 already excludes a repair of at most eight classes.
+Thus a complete repair with k<=8 must have at least three low
+classes. NF33 does not assert that its equality cases exist.
+
+### Five high classes cannot supplement three low classes
+
+Consider an inclusion-minimal complete repair with exactly
+eight classes. NF28 makes every repair of at most eight classes
+have exactly eight after unnecessary classes are removed.
+If both low and high classes occur, R-low is nonempty: otherwise
+all high classes would be unnecessary. Each of the three next3
+roots therefore requires at least one high class.
+
+With three low classes, five high classes remain. If two
+roots are singletons, their labels must be9e and9f, with e!=f,
+and both cofactor APs must contain the same R-low. At least one
+is nonunit, contradicting NF31. The root counts are therefore
+(1,2,2), and the singleton must be label9.
+
+In either two-class root, both high classes must have3-height
+two. Two deeper classes cover at most2/3 of the tail. If one
+class is shallow and the other deeper, the shallow cofactor
+must contain all of R-low: at any cofactor it misses, the lone
+deeper class cannot cover the complete tail. By NF31 the shallow
+class would then have to be another label9, which is unavailable.
+
+The four two-class-root labels are thus9e_1,...,9e_4, where
+the e_i are distinct and greater than one. Each root's pair
+of cofactor APs covers the SAME R-low. If any3e_i is not one
+of the three existing low numerical labels, add a fourth low
+class with numerical modulus3e_i, first3 root a_3 and exactly
+that query's cofactor phase. CRT supplies its actual residue.
+This is a legal low label: it is not3, is distinct from the
+existing lows, and cannot coincide with any label in3-free C0.
+It also differs from every high label by its3-height.
+
+The new low remainder is contained in the other nonunit AP
+from the same two-class root. NF31 forbids that confinement.
+Hence each of the four distinct labels3e_i would have to be
+one of only three low labels, a contradiction. This promotion
+checks numerical availability; it never assumes an arbitrary
+query is already a legal repair.
+
+Together with NF25, the same argument has no total-budget
+restriction: exactly three low classes require at least six
+high classes. NF31 likewise shows that exactly four or five
+low classes require at least five high classes, since three
+or four high classes would supply two forbidden singletons.
+
+### The only eight-class possibility repeats eight retained cofactors
+
+For four low and four high classes, at least two next3 roots
+are singletons, again contradicting NF31. For five low and
+three high classes, all three roots are singletons, with the
+same contradiction. Six or seven low classes leave fewer than
+three high classes and cannot cover any remaining full tail.
+NF33 and BC1 handle zero, one or two lows. Therefore
+
+    every complete legal repair with at most eight classes
+    has exactly eight classes, all low.                    (NF34)
+
+This is a structural necessary condition, not an exclusion of
+every eight-class repair. Apply BC2 to such a repair, using
+k=8<N_3 from the independent old N_3>=9. Its restricted whole
+cover is entirely3-free. BC7 requires at least eight repeated
+bases, and each one consumes a different first-level repair3m.
+All eight repair labels must therefore be of that form. There
+is no3-free repair left to supply the other endpoint of a
+repetition; each m must occur in retained C0. In particular,
+
+    repair labels are3m_1,...,3m_8;
+    m_1,...,m_8 are distinct original C0 labels.            (NF35)
+
+Every such repair divides the original period Q, since3 divides
+Q and each m_i divides its3-free part. Thus no new prime, new
+height or high3 repair can occur at this minimum budget. The
+actual phases of the eight pairs are still subject to coverage;
+NF35 does not supply them or show they exist.
+
+### Equality in the seventeen-label bound has ternary height one
+
+If N_3=17, NF19 and NF28 force each non-parent first3 branch
+to have exactly eight original labels. Translating each entire
+branch as in NF19 yields an eight-class legal complete repair.
+NF35 shows that every one of those originals has3-height one
+and its cofactor label is already in C0. Together with the
+original prime3 class, these account for all seventeen originals.
+Consequently
+
+    N_3=17 ==> v_3(d)<=1 for every original modulus d.      (NF36)
+
+Equivalently, any minimum hypothetical whole cover with an
+original modulus divisible by9 must have N_3>=18. This is a
+downstream consequence of NF29 and NF34--NF35; the earlier
+independent N_3>=9 bootstrap is unchanged.
+
+The remaining eight-class problem is a common cofactor cover
+with eight distinct repeated retained labels. BC6 stops at
+seven distinct bases, and section34's eight-base example still
+blocks a universal numerical assignment argument. Its actual
+pair phases, larger repair budgets and unrestricted Erdős #7
+remain unresolved. These are ordinary symbolic deductions,
+independently checked as mathematics, not new Lean verification
+or a claim of literature priority.

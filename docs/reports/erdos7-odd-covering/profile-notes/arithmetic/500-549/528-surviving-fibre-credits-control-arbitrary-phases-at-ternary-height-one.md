@@ -31124,6 +31124,47 @@ original labels in each branch and gives N_3>=17. This bound
 is downstream; earlier bootstrap proofs retain their independent
 N_3>=9 input. Larger inventories and unrestricted #7 remain open.
 
+[Report385, sections43--44](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#43-five-low-classes-cannot-confine-the-remainder-to-any-nonunit-ap)
+strengthens the confinement exclusion: at most five legal low
+cofactor classes cannot leave the same actual residual contained
+in ANY nonunit cofactor AP, including a prime-modulus query and
+new-period moduli. Adding a hypothetical containing query to C0
+and those lows would produce a whole3-free cover. Its numerical
+multiplicities are at most two except for one possible triple.
+The endpoints needed to delete repetitions form a list of at
+most six items, with at most one value repeated twice. NF17
+handles a non-pure repeat; the pure repeat is resolved by the
+same capacity-two Hall split, retaining its full exponent.
+PC6 and PC1--PC2 then produce a smaller distinct odd whole cover.
+This uses the independent old N_3>=9, not the later bound17.
+
+A separate four-item consumer of the same prefix criteria
+simultaneously avoids at most two legal low classes and distinct
+nonunit query moduli. At each second3 root, deeper high classes
+occupy at most1/3 of the complete remaining tail. Consequently
+one low class requires at least nine highs, and two lows at
+least seven; without effective label9 the bounds are twelve
+and nine. Three lows require at least six highs. In the only
+possible five-high distribution(1,2,2), the singleton is9 and
+the other four labels are9e with different nonunit e. Each
+pair covers the same low remainder. At least one query can be
+promoted to a new legal low label3e, after checking availability;
+the other query then gives the forbidden confinement. Four or
+five lows similarly require at least five highs, because two
+singleton roots would force two copies of numerical label9.
+
+It follows that every complete legal repair with at most eight
+classes consists of exactly eight LOW classes. BC2 and BC7 then
+force all eight labels to be3m_i, where the eight distinct m_i
+are already retained C0 labels. No new period or high3 class is
+possible at this budget. If a minimum hypothetical whole cover
+has N_3=17, both non-parent first3 branches have exactly eight
+labels, so their translated repairs give v3(d)<=1 for EVERY
+original modulus. A minimum cover containing a9-divisible
+original must therefore have N_3>=18. Eight first-level repairs
+on retained labels have not been excluded; the actual pair
+phases, larger inventories and unrestricted #7 remain open.
+
 [Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
 keeps the residual cover's entire old q coordinate unchanged.
 It excludes one endpoint per repeated pair and reserves the
