@@ -18,7 +18,7 @@ Lean statement: `D5/S3/VertexAlgebra/MonsterFanoReconstruction.block_intersectio
 
 Unique pair incidence alone bounds the intersection of two distinct blocks by one point. Two distinct common points would make both blocks witnesses to the same unique block, a contradiction. No block cardinality, additive closure, labeling, or enumeration is used.
 
-This is the first formalized incidence premise in the Fano closure argument of PR #10310 section 30.1. It does not construct VOA modules, fusion products, conformal weights, or a CFT.
+This is the first formalized incidence premise in the Fano closure argument for the Monster short-support theory. It does not construct VOA modules, fusion products, conformal weights, or a CFT.
 
 A block system consists of three-element subsets of seven points. Every two distinct points lie in exactly one block. No labeling, additive presentation, intersection rule, or block count is assumed.
 

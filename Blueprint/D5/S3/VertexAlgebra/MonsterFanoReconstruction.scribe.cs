@@ -24,7 +24,7 @@ internal sealed class MonsterFanoReconstructionDocument : IScribeDocumentDefinit
                         + "make both blocks witnesses to the same unique block, a contradiction. "
                         + "No block cardinality, additive closure, labeling, or enumeration is used.")),
                     Paragraph(Text("This is the first formalized incidence premise in the Fano "
-                        + "closure argument of PR #10310 section 30.1. It does not construct "
+                        + "closure argument for the Monster short-support theory. It does not construct "
                         + "VOA modules, fusion products, conformal weights, or a CFT."))),
                 DescribeRole.Theorem),
             Paragraph(Text("A block system consists of three-element subsets of seven points. "
