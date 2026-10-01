@@ -9347,3 +9347,365 @@ $\delta_z$。因此“每个局部边界都最小”不推出“复合边界仍�
 Lean 声明。
 
 ## 57.99 追加锚
+
+## 58. 有限 FIB 实际源的联合叶读取与边界核下降
+
+### 58.1 范围与合同
+
+本节把 `FIBONACCI_ATOMIC_RELATION_GENERATION.md` 第247—249节的二叶自由项、
+有序配对和替换，接到第56节的有限联合选择器—事件—后继核。实际项支撑和事件
+字母都有限；超出叶数上限的替换必须发出显式 cutoff 事件并进入带类型的终止点。
+这里只定义有限截断过程，不声称无限 $\rho$ 闭包、量子过程、物理时空或新的
+Lean 核验。自由语法提供项，随机读取律仍须由实际来源合同给出。
+
+### 定义 58.2（有限实际项源与计数边界）
+
+固定整数 $N\ge1$。令 $\mathcal T_{\le N}$ 是以 $\alpha,\beta$ 为叶、以
+$\langle s,t\rangle$ 为有序二元构造，叶数在 $1$ 到 $N$ 之间的有限二叉树集。
+叶数有界时树形和叶标记的可能数都有限。定义
+
+$$
+\begin{aligned}
+c(\alpha)&=(1,0),&c(\beta)&=(0,1),\\
+c(\langle s,t\rangle)&=c(s)+c(t),&c(t)&=(a(t),b(t)),\\
+L(t)&=a(t)+b(t),&M(a,b)&=(b,a+b).
+\end{aligned}
+\tag{58.1}
+$$
+
+沿用该 FIB 卷的替换
+
+$$
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,\qquad
+\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle.
+\tag{58.2}
+$$
+
+选定非空的实际可达或已声明项支撑 $S_N\subseteq\mathcal T_{\le N}$，要求它
+对上限内的替换闭合：若 $t\in S_N$ 且 $L(\rho t)\le N$，则 $\rho t\in S_N$。
+例如可以从声明的初始项集合取截断替换的可达支撑；未声明的树不因可写出就成为
+实际来源。令
+
+$$
+U_N=S_N\sqcup\{\bot_T^{\mathrm{cut}}\},\qquad
+q(t)=c(t),\qquad q(\bot_T^{\mathrm{cut}})=\bot_B^{\mathrm{cut}},\qquad
+B_N=q[U_N].
+\tag{58.3}
+$$
+
+这里两个终止点有各自的源类型和边界类型，且都不等于普通计数对 $(0,0)$。
+$U_N$ 是实际项加一个终止点，不能另取“树值域 $\times$ 记忆值域”的任意产品；
+若某个档案或 writer 字段属于任务，它须来自同一实际项或同一实际历史，并另验
+下述下降条件。
+
+按树的构造归纳，替换将每个 $\alpha$ 贡献变成 $(0,1)$，每个 $\beta$ 贡献变成
+$(1,1)$，所以 $c(\rho t)=M c(t)$ 且 $L(\rho t)=a(t)+2b(t)$。定义截断后继
+
+$$
+R_N(t)=
+\begin{cases}
+\rho t,&a(t)+2b(t)\le N,\\
+\bot_T^{\mathrm{cut}},&a(t)+2b(t)>N,
+\end{cases}
+\qquad R_N(\bot_T^{\mathrm{cut}})=\bot_T^{\mathrm{cut}}.
+\tag{58.4}
+$$
+
+因此只有在上限内才有 $q(\rho t)=M q(t)$ 作为实际源到实际边界的等式；越界时
+实际后继是带 cutoff 标签的终止点，不把越界的计数对偷偷加入 $B_N$。
+
+### 定义 58.3（叶票与根票的联合源核）
+
+动作集是 $A=\{\mathrm{read},\rho\}$。对每个非终止项 $t$，合同规定在其
+$L(t)$ 张叶出现票和一张根票中均匀抽取：叶票选择 read，根票选择 $\rho$。
+这里计数的是叶的出现次数，不是不同标签的个数。于是
+
+$$
+\Lambda_T(\mathrm{read}\mid t)=\frac{L(t)}{L(t)+1},\qquad
+\Lambda_T(\rho\mid t)=\frac1{L(t)+1}.
+\tag{58.5}
+$$
+
+固定时钟或权重合同 $d(\alpha)=1,d(\beta)=2$，替换及 cutoff 的增量取 $1$，
+吸收停止的增量取 $0$。这些数值是声明的读取合同，不由语法推出。一次完整事件
+记为 $\eta=(a,\chi,\ell,d)$，同时保存动作、事件种类、叶标签和增量；无叶事件
+用带类型的空标签 $\varnothing_\ell$。有限事件字母为
+
+$$
+\begin{aligned}
+\eta_\alpha&=(\mathrm{read},\mathrm{leaf},\alpha,1),\\
+\eta_\beta&=(\mathrm{read},\mathrm{leaf},\beta,2),\\
+\eta_{\mathrm{rep}}&=(\rho,\mathrm{replace},\varnothing_\ell,1),\\
+\eta_{\mathrm{cut}}&=(\rho,\mathrm{cutoff},\varnothing_\ell,1),\\
+\eta_{\mathrm{stop},a}&=(a,\mathrm{stop},\varnothing_\ell,0),\qquad a\in A.
+\end{aligned}
+\tag{58.6}
+$$
+
+对 read 条件化后，把所有同标签的叶出现汇总，项本身不变：
+
+$$
+K_T(t;\eta_\alpha,t\mid\mathrm{read})=\frac{a(t)}{L(t)},\qquad
+K_T(t;\eta_\beta,t\mid\mathrm{read})=\frac{b(t)}{L(t)}.
+\tag{58.7}
+$$
+
+对 $\rho$ 条件化后，若 $a(t)+2b(t)\le N$，则
+$K_T(t;\eta_{\mathrm{rep}},\rho t\mid\rho)=1$；否则
+$K_T(t;\eta_{\mathrm{cut}},\bot_T^{\mathrm{cut}}\mid\rho)=1$。
+各条件核的其余质量为零。终止点的选择器取
+$\Lambda_T(\mathrm{read}\mid\bot_T^{\mathrm{cut}})=1$、
+$\Lambda_T(\rho\mid\bot_T^{\mathrm{cut}})=0$；对每个动作 $a$ 都声明条件核
+$K_T(\bot_T^{\mathrm{cut}};\eta_{\mathrm{stop},a},\bot_T^{\mathrm{cut}}\mid a)=1$。
+这样终止点吸收，零选择质量的动作也有明确的条件核。
+
+完整联合核是
+
+$$
+J_T(t;a,\eta,v)=\Lambda_T(a\mid t)K_T(t;\eta,v\mid a),\qquad
+\sum_{a,\eta,v}J_T(t;a,\eta,v)=1.
+\tag{58.8}
+$$
+
+只有事件内的动作字段与外侧动作一致的组合有正质量。叶票位置在此合同中不作为
+输出字段；若任务要报告位置、权限、来源或 writer 记录，须把它们一并加入同一个
+有限事件字母并重新检验联合下降，不能分别比较边缘后再假定独立。
+
+### 命题 58.4（实际计数像上的选择器与联合核）
+
+对非终止边界 $(a,b)\in B_N$，令 $L=a+b$，定义
+
+$$
+\Lambda_B(\mathrm{read}\mid a,b)=\frac{a+b}{a+b+1},\qquad
+\Lambda_B(\rho\mid a,b)=\frac1{a+b+1}.
+\tag{58.9}
+$$
+
+边界的条件 read 核分别以 $a/L,b/L$ 发出 $\eta_\alpha,\eta_\beta$ 并留在
+$(a,b)$；其联合质量为
+
+$$
+J_B((a,b);\mathrm{read},\eta_\alpha,(a,b))=\frac{a}{a+b+1},\qquad
+J_B((a,b);\mathrm{read},\eta_\beta,(a,b))=\frac{b}{a+b+1}.
+\tag{58.10}
+$$
+
+边界的条件 $\rho$ 核由同一个上限判据确定，联合质量为
+
+$$
+\begin{cases}
+J_B((a,b);\rho,\eta_{\mathrm{rep}},M(a,b))=\dfrac1{a+b+1},
+&a+2b\le N,\\
+J_B((a,b);\rho,\eta_{\mathrm{cut}},\bot_B^{\mathrm{cut}})=\dfrac1{a+b+1},
+&a+2b>N.
+\end{cases}
+\tag{58.11}
+$$
+
+终止边界沿用定义58.3的吸收选择器和条件停止核。所有未列出的联合质量为零。
+支撑闭合保证上限内的 $M(a,b)$ 确在实际像中。上述公式只用计数，不用树形或
+所选代表；有限票数直接给出归一化
+
+$$
+\frac{a}{L+1}+\frac{b}{L+1}+\frac1{L+1}=1.
+\tag{58.12}
+$$
+
+这里 $a,b$ 允许一项为零，但 $L\ge1$；终止边界另有自己的归一化行。
+
+### 命题 58.5（联合纤维条件与唯一下降）
+
+对 $C\subseteq U_N$，称它为 $q$-饱和集，若存在 $\bar C\subseteq B_N$ 使
+$C=q^{-1}(\bar C)$。精确桥梁条件是：对任意 $t,u\in U_N$，若 $q(t)=q(u)$，
+则对每个动作 $a$、完整事件 $\eta$ 和每个饱和集 $C$，有
+
+$$
+\boxed{
+\sum_{v\in C}J_T(t;a,\eta,v)
+=\sum_{v\in C}J_T(u;a,\eta,v).
+}
+\tag{58.13}
+$$
+
+等价地，实际像上存在唯一的联合核 $J_B$，满足
+
+$$
+\boxed{
+\sum_{q(v)=b'}J_T(t;a,\eta,v)
+=J_B(q(t);a,\eta,b'),\qquad b'\in B_N.
+}
+\tag{58.14}
+$$
+
+证明。由(58.13)，在每个单点逆像上求和定义右侧，与代表无关；有限可加性和
+总质量 $1$ 给出联合 PMF。反向把(58.14)在 $b'\in\bar C$ 上求和即可。
+$q$ 对实际像满射，所以每一行都由某个实际代表决定，核唯一。定义58.3的 read
+行只依赖叶计数，替换行的后继类和 cutoff 判据也只依赖计数，因而给出命题58.4。
+
+若选择器是内部的，还须有
+$\Lambda_T(a\mid t)=\Lambda_B(a\mid q(t))$；对联合核按事件和后继求和也能
+读出这项条件。零步报告须满足 $r_0^T=r_0^B\circ q$。任务保留的记忆字段
+$m_T$ 和确定性 writer 更新 $W_T$ 则须有
+
+$$
+m_T=m_B\circ q,\qquad
+q(W_T(t,a,\eta))=W_B(q(t),a,\eta)
+\tag{58.15}
+$$
+
+在全部正质量且类型正确的事件上成立，且更新后仍在实际源中；随机 writer 的
+后继与记录须并入联合核后满足(58.13)，不能另加一个独立的记忆来源。若记录是
+实际历史的函数，则它须在相应的实际商轨迹纤维上因子化；若它影响后续动作却
+不因子化，当前 $q$ 就不足以表示这个任务。
+
+复合项并不自动具有一个确定的叶标签函数 $\ell(t)\in\{\alpha,\beta\}$。
+这里下降的是合同规定的联合叶事件分布及其明确投影，不是从自由语法推出的
+单值标签。在 `external-probe` 模式，外部动作律另行固定为共同 probe law，
+并对 $K_T(\cdot;\eta,v\mid a)$ 逐动作检验联合下降；不能用某动作在内部
+选择器下质量为零来替代外部探测所需的条件。
+
+### 命题 58.6（源律推前与有限轨迹）
+
+给定 $U_N$ 上的初始律 $\mu$，令
+$\nu=q_*\mu$，即 $\nu(b)=\sum_{q(t)=b}\mu(t)$。把更新连同动作和完整事件
+一起保留，则(58.14)给出
+
+$$
+\begin{aligned}
+\sum_t\mu(t)\sum_{q(v)=b'}J_T(t;a,\eta,v)
+&=\sum_t\mu(t)J_B(q(t);a,\eta,b')\\
+&=\sum_b\nu(b)J_B(b;a,\eta,b').
+\end{aligned}
+\tag{58.16}
+$$
+
+再对动作和事件求和，得到通常的后继源律更新；不求和则得到完整事件—后继的
+更新律。令 $\mathsf{Law}^{(n)}_T(\mu)$ 是
+$(t_0,a_1,\eta_1,t_1,\ldots,a_n,\eta_n,t_n)$ 的联合轨迹律，令 $Q_n$ 对每个
+项状态应用 $q$，保留所有动作和事件。在初始律满足 $\nu=q_*\mu$、联合可合并性、零步报告
+及选择器/writer 因子化都成立时，有
+
+$$
+\boxed{
+(Q_n)_*\mathsf{Law}^{(n)}_T(\mu)
+=\mathsf{Law}^{(n)}_B(\nu),\qquad n\ge0.
+}
+\tag{58.17}
+$$
+
+证明。零步是 $\nu=q_*\mu$ 及零步报告因子化。归纳步固定一个已经实现的前缀，
+用(58.14)推前下一步的动作—完整事件—后继律，再对前缀的有限质量求和。
+若使用有限自适应 probe，须在两侧使用同一个由已保留报告与事件决定的策略；
+writer 和策略更新的因子化使归纳继续成立。这不允许策略额外读取被 $q$ 丢弃的
+树形或位置。固定步数下累积时钟由事件中的 $d$ 求和得到，不增添无界源状态。
+
+没有联合可合并性时，固定某一 $\mu$ 仍可按其纤维条件律平均出一次粗更新，但
+该平均依赖 $\mu$；选代表定义的行则依赖代表。它们不是由 $B_N$ 唯一决定的
+源核，不能作为第57节规范商复合的输入。
+
+### 例 58.7（位置偏置破坏计数下降）
+
+取 $N\ge2$，并在实际支撑中声明
+
+$$
+t=\langle\alpha,\beta\rangle,\qquad
+u=\langle\beta,\alpha\rangle,\qquad
+q(t)=q(u)=(1,1).
+\tag{58.18}
+$$
+
+把 read 合同改为总是读取最左叶，仍让 read 后继为原项，并保持(58.5)的动作
+选择质量。于是对饱和集 $C=q^{-1}(\{(1,1)\})$，有
+
+$$
+\sum_{v\in C}J_T(t;\mathrm{read},\eta_\alpha,v)=\frac23,\qquad
+\sum_{v\in C}J_T(u;\mathrm{read},\eta_\alpha,v)=0.
+\tag{58.19}
+$$
+
+同一计数纤维中，一个项发出 $\alpha$ 事件，另一个发出 $\beta$ 事件，故(58.13)
+失败。均匀叶票读取是额外的实际来源合同，不是二叶自由语法的推论。第56.5节
+还给出了各字段边缘相等而联合关系不同的反例；因此即使不出现这个位置偏置，
+也必须保留完整的事件—后继联合律，不能只比较叶、时钟和后继的分别边缘。
+
+### 58.8 替换等变性与商复合
+
+定义58.2的支撑闭合和 $q\rho=Mq$ 给出上限内的替换等变性；越界时两侧同步
+进入各自的 cutoff 终止点。若把 $M$ 也扩充为带同一判据的截断操作 $\bar R_N$，
+则在整个实际源上有 $q\circ R_N=\bar R_N\circ q$。这只保证声明替换的下降，
+不保证任意二元拼接、任意 Eval 解释或任意附加记录的下降。
+
+若两段源核 $K_{01},K_{12}$ 都满足第57.1节的实际像与联合下降合同，且第二段
+接收第一段产出的同一个实际中间项 $t_1$，第57.2节的有限求和给出
+
+$$
+\sum_{q_2(t_2)=b_2}(K_{12}\star K_{01})(t_0;e_1,e_2,t_2)
+=(\bar K_{12}\odot\bar K_{01})(q_0(t_0);e_1,e_2,b_2).
+\tag{58.20}
+$$
+
+这里可把 $(a,\eta)$ 合并作为第57节的事件坐标。接续的左右两段若独立抽取
+各自的中间项，而不是让第二段使用第一段的实际后继，就改变了共同来源合同；
+即使计数边缘相同，也不能把该独立抽样解释为(58.20)的细绑定。
+
+先推前再绑定的交换性仍不等于中间边界可恢复。反向恢复需要第57.4节的可达行差
+张成空间条件，即式(57.7)的
+$\ker\mathcal L_{12}\cap V_{\mathrm{reach}}=\{0\}$；没有这项单射条件，后续核
+仍可合并不同的中间分布。
+
+### 58.9 四表达的条件性回接
+
+在同一个实际边界像 $B_N$ 上，取
+$i\in\{\mathrm{space},\mathrm{time},\mathrm{boundary},\mathrm{memory}\}$ 的
+表达 $r_i:B_N\to V_i$，并提升到项源为
+
+$$
+r_i^T=r_i\circ q:U_N\to V_i.
+\tag{58.21}
+$$
+
+固定有限 horizon $H$ 和完整任务字段，令 $\mathcal F_H^T$ 表示在所有声明的
+合法策略及长度不超过 $H$ 的续接下，零步报告和完整联合响应律相同的未来行为
+核。若响应、选择器、writer 和联合后继核都按命题58.5通过 $q$ 因子化，再要求
+
+$$
+\ker r_{\mathrm{space}}^T
+=\ker r_{\mathrm{time}}^T
+=\ker r_{\mathrm{boundary}}^T
+=\ker r_{\mathrm{memory}}^T
+=\mathcal F_H^T,
+\tag{58.22}
+$$
+
+则状态恢复器在各自实际像上可定义为
+
+$$
+g_{ij}(r_i^T(t))=r_j^T(t).
+\tag{58.23}
+$$
+
+核相等使它与代表无关，并以 $g_{ji}$ 为逆。动态自然性还须保持
+`RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md` 第116.9节的其余合同：
+同一实际事件接口上的事件箭头核相等，任务字段和更新在各表达纤维上下降，以及
+所需长度的粗路径恰为实际路径像。有限 horizon 下应逐个剩余长度检查这些条件，
+后继的恢复在 $h-1$ 层进行，不能用单个 $H$ 层的状态核等式代替全部更新条件。
+在这些条件都成立的有限范围内，该节式(116.18)的实际像双射及其动态自然性判据
+才可用于四表达；若采用该节的全长度合同，则全部长度的条件仍须另证。
+
+本节供应的是 FIB 实际项到有限联合核的前提，不自动证明(58.22)、事件路径合同
+或最小性。语法叶 $\alpha,\beta$、按声明测试区分的行为状态、足以继续接续的
+完整边界是三个层次；叶的种类数为二不决定行为状态数，也不决定完整边界必须
+包含哪些关系。
+
+### 58.10 来源、状态与限制
+
+来源范围为 repo-derived：本节是 FIB 第247—249节、过程几何第56—57节和边界
+动力学第116.9节恢复判据的普通理论连接。Claim status: open；没有新增 Lean
+声明或 Lean 核验，有限计数推导不冒称 kernel 验证。
+
+全部来源和后继只在声明的有限叶数上限内解释，cutoff 是合同的一部分。本节没有
+消除无限闭包、无界历史或真实取得成本的缺口，没有构造任意实际过程的随机 FIB
+来源满射，不主张普适的二状态本体，也不主张量子定律或物理时空定律。
+
+## 58.99 追加锚
