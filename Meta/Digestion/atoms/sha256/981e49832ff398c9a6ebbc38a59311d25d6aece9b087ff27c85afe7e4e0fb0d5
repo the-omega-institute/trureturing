@@ -1,0 +1,20 @@
+**命题 7.2（实际立方张量范数）。** 在式（MC.7）的标准规范下，
+
+$$
+\|T^\natural\|_F^2=\frac{2728404614}{3}.
+\tag{MC.21}
+$$
+
+证明。用单位向量 $e/\sqrt3$ 和 $W$ 正交基分解 $R_u$，其块矩阵为
+
+$$
+R_u=\begin{pmatrix}0&u^T/\sqrt3\\u/\sqrt3&T_u\end{pmatrix},
+\qquad\langle T_uv,w\rangle=T^\natural(u,v,w).
+$$
+
+式（MC.12）给 $\operatorname{Tr}T_uT_v=(4620-2/3)\langle u,v\rangle$。对 $W$ 的 196883 个单位基向量求和得式（MC.21）。证毕。
+
+本批把这一步的有限维求和接口写入 `D5/S3/VertexAlgebra/MonsterTensorNorm.lean`。`symmetric_trace_gram_square_sum` 对任意有限指标集证明：对称矩阵族若每个对角迹满足 $\operatorname{Tr}(T_i^2)=c$，则坐标 Frobenius 平方和为 $|I|c$；`moonshine_tensor_square_sum` 在输入 $|I|=196883$ 与 $c=4620-2/3$ 后逐项化简为 $2728404614/3$。这里的对称性和迹恒等式仍是 [M01, Corollary 4.1] 提供的实际 Norton 输入；Lean 声明没有把它们误报成 VOA 构造，也没有给出尚未计算的 $\kappa_{T^\natural}$ 或 $\eta_{T^\natural}$。
+
+本文没有计算实际 $\kappa_{T^\natural}$ 或 $\eta_{T^\natural}$；它们的存在不能被报道成数值认证。若只掌握每个张量系数误差至多 $a$，保守 Frobenius 界为 $d_W^{3/2}a$，维数成本不能删除。定理 5.2 是单个三元组的实际脉冲预算，与本节全张量预算分开结算。
+
