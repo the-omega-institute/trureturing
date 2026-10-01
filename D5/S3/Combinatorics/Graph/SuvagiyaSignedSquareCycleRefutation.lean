@@ -521,7 +521,8 @@ theorem result : ¬ claim := by
   have recurrence : ∀ k : Fin 8,
       horner k.castSucc * square + coefficients k • (1 : Matrix (Fin 32) (Fin 32) ℚ) =
         horner k.succ := by
-    decide +kernel
+    intro k
+    fin_cases k <;> decide +kernel
   classical
   let p : Polynomial ℝ :=
     (((((((Polynomial.X - Polynomial.C 32) * Polynomial.X + Polynomial.C 416) *
