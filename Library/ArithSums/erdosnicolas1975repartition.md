@@ -1393,3 +1393,165 @@ residue, low-loss divisor incidence, cofactor $h=1$, small-prime cofactors
 and all-candidate scope of FIB §233.5 remain obligations. A larger finite
 search, a positive phase cost, or the abstract strict-gain example is not
 a proof of the complete weighted Robin inequality or RH.
+
+## Retain each prime's complete reduced-cost block
+
+A stronger application keeps the layered supply and the phase endpoint
+in one finite-state problem. The optimization algorithm is already
+classical: Mohri, *Semiring Frameworks and Algorithms for Shortest-Distance
+Problems*, [§4, Corollary 2, author-PDF p.17, with its proof on p.18;
+§5.1, p.19](https://cs.nyu.edu/~mohri/pub/jalc.pdf), gives exact shortest
+distances on finite acyclic weighted graphs over a semiring and explicitly
+includes the real min-plus semiring. The prime-stage graph below is
+acyclic; no new shortest-path algorithm is proposed. This is a paper
+application, not a Lean-verified arithmetic bridge.
+
+For $p\in\mathcal P$, define
+
+$$
+f_{p,h}(k)=W_p(k)-hk\log p,\qquad k\ge0,\qquad
+K_p(h)=\sum_{\ell\ge1}(h\log p-d_{p,\ell})_+.
+$$
+
+The reduced marginals increase and eventually become positive for
+$h<1$, so $\min_{k\ge0}f_{p,h}(k)=-K_p(h)$. For every local phase,
+including zero, retain the table
+
+$$
+a_{p,z}(h)=K_p(h)+
+\min_{\substack{k\ge0\\kj_p=z\pmod4}}f_{p,h}(k),
+\qquad \psi_V(p)=i^{j_p},
+$$
+
+with $+\infty$ for an unreachable local phase. Every finite table entry
+is nonnegative. Let
+
+$$
+\delta_j(h)=
+\inf_{\substack{(k_p)\text{ finite support}\\
+\sum_p k_pj_p=j\pmod4}}
+\left\{K_{\mathcal P}(h)+\sum_p f_{p,h}(k_p)\right\}.
+$$
+
+Only finitely many $K_p(h)$ are nonzero. For any such word, its expression
+inside braces equals
+
+$$
+\sum_{\text{omitted layers}}(h\log p-d_{p,\ell})_+
++\sum_{\text{selected layers}}(d_{p,\ell}-h\log p)_+.
+$$
+
+The omitted weak deficits retain which prefixes were not selected; they
+cannot all be collected independently of the endpoint. The selected
+positive residuals pay at least the earlier clipped phase cost, giving
+$\delta_j(h)\ge c_j(h)$. The actual word is also allowed, hence
+
+$$
+\boxed{
+D_s(N)\ge R_s(v)+L_r+
+\sup_{0\le h\le h_0}
+\{h\log u_0-K_{\mathcal P}(h)+\delta_j(h)\}
+\ge R_s(v)+\mathcal L_s(N).
+}
+$$
+
+This refinement can improve the zero-phase branch: the collection of
+locally minimizing prefixes need not have total phase zero. No positive
+improvement is guaranteed. When $u_0=1$, both optimized residual
+certificates equal zero. The empty word bounds the block expression by
+zero, and $h=0$ attains zero.
+
+### Four local choices in the existing capacity range
+
+For $h\le1/3$, the already established marginal separation gives
+$d_{p,\ell}>\tfrac12\log p$ for $\ell\ge2$. Thus $f_{p,h}(k)$ is
+strictly increasing for $k\ge1$, and
+
+$$
+f_{p,h}(4)>
+\left[-h+3\left(\tfrac12-h\right)\right]\log p
+\ge\tfrac16\log p>0.
+$$
+
+Every local phase minimum is therefore attained among $k=0,1,2,3$.
+For an odd $j_p$, the zero phase prefers $k=0$ to $k=4$ and all later
+representatives; each other phase uses its least positive representative.
+For $j_p=2$, the zero phase compares $k=0,2$ and phase two uses $k=1$.
+For $j_p=0$, only $k=0,1$ need be compared. This reduces the local
+minimization; it does not assert that actual residual valuations are at
+most three.
+
+On a complete finite prime list, process each prime once:
+
+$$
+q_n(z)=\min_{t\in\mathbb Z_4}
+\{q_{n-1}(z-t)+a_{p_n,t}(h)\},
+\qquad q_0(0)=0,\quad q_0(z\ne0)=+\infty.
+$$
+
+The stage advances even for a zero phase, so a negative raw reduced block
+could also be used safely on this acyclic graph. It cannot be repeatedly
+reused as a subsidizing cycle. An arbitrary truncated prime list is not
+complete for the infinite certificate: omitted weak deficits or cheap
+phase blocks can raise the computed lower bound incorrectly. Tail
+coverage remains required.
+
+### A finite conditional test for the actual budget
+
+Fix $B=B_r(N)\ge0$ and suppose the actual remaining cost were at most
+$B$. Every used prime then has $b_s(p)\le B$ and lies below
+$P_B=\max\{s,e^{B+1}\}$ by the existing first-entry cutoff. Every used
+exponent belongs to the finite set
+
+$$
+\mathcal K_p(B)=\{k\ge0:W_p(k)\le B\},
+$$
+
+since $W_p(k)\ge k b_s(p)$ and $b_s(p)>0$. For all eligible primes
+$p\le P_B$, and any real multiplier $\lambda$, compute by the same
+acyclic recurrence
+
+$$
+Q_B(\lambda,j)=
+\min_{\substack{k_p\in\mathcal K_p(B)\\
+\sum_p k_pj_p=j\pmod4}}
+\sum_p\{W_p(k_p)-\lambda k_p\log p\}.
+$$
+
+The hypothesized low-cost actual word is included, so
+
+$$
+\boxed{
+\lambda\log u_0+Q_B(\lambda,j)>B
+\quad\Longrightarrow\quad
+\mathcal A_s^{[r]}(N)>B.
+}
+$$
+
+An empty endpoint-feasible set also rejects the low-cost hypothesis.
+This is a conditional rejection test, not an unconditional lower bound
+from an unproved truncation. The finite formulation permits
+$\lambda=1$; it does not extend the unrestricted deficit $K(1)$, whose
+prime sum diverges. Real logarithmic resources are retained; integer
+rounding of them would require an additional valid relaxation.
+
+For an abstract zero-phase gain, take one prime block with resource one,
+phase one per occurrence, first cost $1/20$, and later costs
+$d_k=1-1/(k+2)$ for $k\ge2$. Consume four occurrences, so the endpoint
+is zero and the actual cost is $73/30$. On $0\le h\le1/3$, only the
+first layer can have a weak deficit, $f_{p,h}(4)>0$, and the local
+zero-phase minimizer is $k=0$. Therefore the optimized clipped bound is
+$21/20$, while the optimized block bound is $4/3$, a gain of $17/60$.
+This is a layered allocation example, not an actual FIB low-loss host.
+
+The phase endpoint is retained exactly within each relaxation; pricing
+the resource gives a lower bound and supplies no strong-duality equality
+with the original constrained arithmetic problem. Failure of a sufficient
+rejection test does not imply failure of Robin.
+
+The blockwise certificate and the finite conditional test still need to
+pay the same host's $B_r(N)$ on the original qualifying sources, or
+exclude the cases where they do not. They retain, rather than discharge,
+the full window, residue, weighted divisor incidence, tied removals,
+merged valuations and cofactor-$h=1$ obligations. The cited optimization
+results supply no uniform weighted Robin estimate or proof of RH.
