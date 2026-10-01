@@ -1,0 +1,31 @@
+**定义 4.2（折扣延拓距离及 Bellman 分解）。** 取离散输出距离 $\delta(y,y')=\mathbf1_{y\ne y'}$，固定 $0<\lambda<1$，定义
+
+$$
+d_h(x,y)=\sup_{|w|\leq h}\lambda^{|w|}
+\delta(o(T_wx),o(T_wy)),\qquad
+d_\infty(x,y)=\sup_{h\geq0}d_h(x,y).
+$$
+
+这里 $\lambda$ 是折扣参数，与摘要映射 $\eta$ 无关。空动作集的上确界取零。按空词及首动作分解，经典 Bellman 分解在本实验距离上成为
+
+$$
+d_{h+1}(x,y)=\max\left\{
+\delta(o(x),o(y)),\quad
+\lambda\sup_{a\in A}d_h(T_ax,T_ay)\right\}.
+$$
+
+遗漏实验的长度至少 $h+1$，其贡献不超过 $\lambda^{h+1}$，故
+
+$$
+0\leq d_\infty-d_h\leq\lambda^{h+1},\qquad
+d_\infty(x,y)=0\Longleftrightarrow x\sim_\infty y.
+$$
+
+对任一固定词，离散距离的拉回满足强三角不等式，乘正数后仍满足。再对固定的所有词取上确界，得到
+
+$$
+d_\infty(x,z)\leq\max\{d_\infty(x,y),d_\infty(y,z)\}.
+$$
+
+因此它在 $X$ 上是超伪度量，在行为商 $Q$ 上是超度量。若最短区分词长度为 $k$，长度小于 $k$ 的贡献为零、长度 $k$ 有贡献 $\lambda^k$、更长贡献不超过它，所以 $d_h=0$（$h<k$）、$d_h=\lambda^k$（$h\geq k$），且 $d_\infty=\lambda^k$。这些标准距离构造服务于第七节的具体 FIB 几何；相关边界距离背景见 [关系观察上下文几何](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md)。
+
