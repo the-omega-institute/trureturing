@@ -64,6 +64,7 @@ def sixEmbed {K : Type*} [Field K] : RawState 0 → SixState K
 def sixPrefixes : Fin 6 → List Window :=
   ![[], [.middle], [.high], [.low], [.middle, .low], [.high, .low]]
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 800000 in
 /-- Every integer-induced response is realized over any field, and actual
 input histories span the whole six-dimensional homogeneous state space. -/
@@ -75,6 +76,14 @@ theorem result (K : Type*) [Field K] :
     Submodule.span K (Set.range (fun w : List Window =>
       wordMap (sixDimensional K).transition w (sixDimensional K).initial)) = ⊤ := by
   classical
+  have castZero : Int.cast (R := K) (0 : ZMod 0) = 0 := Int.cast_zero
+  have castOne : Int.cast (R := K) (1 : ZMod 0) = 1 := Int.cast_one
+  have castAdd (a b : ZMod 0) : Int.cast (R := K) (a + b) =
+      Int.cast (R := K) a + Int.cast (R := K) b := Int.cast_add a b
+  have castMul (a b : ZMod 0) : Int.cast (R := K) (a * b) =
+      Int.cast (R := K) a * Int.cast (R := K) b := Int.cast_mul a b
+  have castNat (n : ℕ) : Int.cast (R := K) (n : ZMod 0) = (n : K) :=
+    Int.cast_natCast n
   have commute (q : RawState 0) (b : Window) :
       sixTransition b (sixEmbed (K := K) q) = sixEmbed (K := K) (rawTransition q b) := by
     cases q with
@@ -84,7 +93,7 @@ theorem result (K : Type*) [Field K] :
       rcases q with ⟨s, a, c⟩
       cases s <;> cases b <;> ext i <;> fin_cases i <;>
         simp [sixTransition, sixUpdate, sixEmbed, rawTransition, clock,
-          step, displacement, first, last] <;> push_cast <;> ring
+          step, displacement, first, last, castZero, castOne, castAdd, castMul, castNat] <;> ring
   have simulation (w : List Window) (q : RawState 0) :
       wordMap (sixTransition (K := K)) w (sixEmbed (K := K) q) =
         sixEmbed (K := K) ((rawMachine 0).toDFA.evalFrom q w) := by
@@ -106,23 +115,24 @@ theorem result (K : Type*) [Field K] :
     | none => simp [sixOutput, sixEmbed, rawOutput]
     | some q =>
       rcases q with ⟨s, a, b⟩
-      cases s <;> simp [sixOutput, sixEmbed, rawOutput, quantity] <;> push_cast <;> ring
+      cases s <;> simp [sixOutput, sixEmbed, rawOutput, quantity, castAdd, castMul, castNat] <;> ring
   have correct (w : List Window) :
       wordBehavior (sixDimensional K) w = integerFieldTask K w := by
     have initial : (sixDimensional K).initial =
         sixEmbed (K := K) (rawMachine 0).start := by
       ext i
-      fin_cases i <;> simp [sixDimensional, sixEmbed, rawMachine]
+      fin_cases i <;> simp [sixDimensional, sixEmbed, rawMachine, castZero]
     unfold wordBehavior
     rw [initial]
     change sixOutput (wordMap (sixTransition (K := K)) w
       (sixEmbed (K := K) (rawMachine 0).start)) = _
     rw [simulation, observe]
-    simp only [integerFieldTask, integerTask, task, DFAO.evalOutput]
-    change (match rawOutput ((rawMachine 0).toDFA.eval w) with
-      | none => (0, 0)
-      | some n => (1, (Int.castRingHom K) n)) = _
-    cases h : rawOutput ((rawMachine 0).toDFA.eval w) <;> simp [h]
+    have evaluated : (rawMachine 0).toDFA.evalFrom (rawMachine 0).start w =
+        (rawMachine 0).toDFA.eval w := rfl
+    have readback : rawOutput ((rawMachine 0).toDFA.eval w) = task 0 w := rfl
+    rw [evaluated, readback]
+    simp only [integerFieldTask, integerTask]
+    cases h : task 0 w <;> simp [h]
   let reach : Fin 6 → SixState K := fun j =>
     wordMap (sixDimensional K).transition (sixPrefixes j) (sixDimensional K).initial
   let P : Matrix (Fin 6) (Fin 6) K := fun i j => reach j i

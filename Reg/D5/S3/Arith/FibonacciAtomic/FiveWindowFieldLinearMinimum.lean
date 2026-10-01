@@ -61,12 +61,12 @@ def registration : Registration arena.{u} (arena.{u}.Law actual) where
       exact nomatch i
   dependence := by
     intro i
-    refine ⟨⟨ULift.{u} ℚ, inferInstance⟩, ([] : List Window), ([.low] : List Window), ?_⟩
+    refine ⟨⟨ULift.{u} ℚ, inferInstance⟩, ([] : List Window), ([.low, .high] : List Window), ?_⟩
     norm_num [actual, realize, integerFieldTask, integerTask, task, DFAO.evalOutput,
       rawMachine, DFA.eval, DFA.evalFrom, rawOutput, rawTransition, clock, step,
       displacement, first, last, quantity]
 
-register_information_theorem result in arena
+register_information_theorem _root_.D5.S3.Arith.FibonacciAtomic.FiveWindowFieldLinearMinimum.result in arena
   readout via (realize signature (fun _ p w => @integerFieldTask p.1 p.2 w)
     (fun e => nomatch e))
   realizes registration
