@@ -3452,3 +3452,71 @@ all fixed points nor bounds the total time to a fixed point, and
 it places no upper bound on the original depth $h_P$.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 61. Exact masking for arbitrary finite prime-power support
+
+Let $S$ be a nonempty finite set of distinct primes greater than five.
+Write $Q=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$,
+$\pi(m)$ for the order of $Q$ modulo a positive integer $m$, and
+$\pi_s(m)$ for the order of $Q^s$ modulo $m$. For $p\in S$, let
+$\tau_p=\pi(p)$, let $\rho(p)$ be the first positive Fibonacci index
+divisible by $p$, and keep its original depth
+$h_p=v_p(F_{\rho(p)})$. Fix positive integers $a_p$ and $s$, and put
+
+$$
+M_0=\prod_{p\in S}p,\qquad
+m=\prod_{p\in S}p^{a_p},\qquad
+T=\operatorname{lcm}_{p\in S}\tau_p,\qquad
+\beta_p=v_p(T),\qquad u_p=v_p(s).
+$$
+
+**Theorem 61.1 (combined coupling and stride masking).** For every
+choice above, without an assumption that any depth equals one,
+
+$$
+\pi_s(m)=\frac{T}{\gcd(T,s)}
+  \prod_{p\in S}p^{\max(0,a_p-h_p-\max(\beta_p,u_p))}.
+$$
+
+Fix $p_0\in S$. For $e\geq1$, let
+$m_e=p_0^e\prod_{q\in S\setminus\{p_0\}}q$, keeping every other
+support exponent equal to one. Then
+
+$$
+\pi_s(m_e)=\pi_s(M_0)
+  p_0^{\max(0,e-h_{p_0}-\max(\beta_{p_0},u_{p_0}))}.
+$$
+
+Consequently $\pi_s(m_e)>\pi_s(M_0)$ holds exactly when
+$e>h_{p_0}+\max(\beta_{p_0},u_{p_0})$. The first contributing
+exponent is $h_{p_0}+\max(\beta_{p_0},u_{p_0})+1$.
+
+Proof. The exact prime-power lift gives
+$\pi(p^{a_p})=\tau_p p^{\max(a_p-h_p,0)}$, where
+$p\nmid\tau_p$ and $h_p>0$. Chinese remaindering makes
+$\pi(m)$ the least common multiple of these local periods.
+At a support prime $p$, its valuation is
+$\max(\beta_p,a_p-h_p)$; at every prime outside $S$, it is
+the valuation of $T$. The order-of-a-power identity gives
+$\pi_s(m)=\pi(m)/\gcd(\pi(m),s)$, so the resulting support-prime
+valuation exceeds that of $T/\gcd(T,s)$ by
+
+$$
+\max(\max(\beta_p,a_p-h_p)-u_p,0)
+ -\max(\beta_p-u_p,0)
+=\max(0,a_p-h_p-\max(\beta_p,u_p)).
+$$
+
+The factors outside $S$ agree. Unique prime factorization gives
+the first formula. Setting every exponent except $a_{p_0}=e$
+to one makes their excess valuations zero because $h_q>0$.
+At $e=1$ the target excess also vanishes. Its exponent becomes
+positive exactly beyond the stated threshold, and the baseline
+period is positive.
+
+The depth in this formula is that of the original Fibonacci
+sequence. Neither a stride plateau nor a coupled-period plateau
+identifies the depth by itself.
+
+## 追加锚（本行以下为增补区）
