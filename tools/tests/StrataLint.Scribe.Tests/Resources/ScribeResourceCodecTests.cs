@@ -85,6 +85,33 @@ public sealed class ScribeResourceCodecTests
         Assert.Contains("\"additionalMembers\":[\"D5/S1/Scale/Other.additional\"]", Encoding.UTF8.GetString(encoded), StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void CodecRejectsAuthoredFormulaWithDeclarationOnlyKind()
+    {
+        var resource = JsonNode.Parse(ScribeResourceCodec.Encode(AuthoredFormulaDefinition()))!.AsObject();
+        var block = resource["document"]!["content"]![0]!.AsObject();
+        block["kindSource"]!["kind"] = "Theorem";
+
+        var error = Assert.Throws<ScribeResourceException>(() =>
+            ScribeResourceCodec.Decode(Encoding.UTF8.GetBytes(resource.ToJsonString())));
+
+        Assert.Equal(ScribeResourceErrorCode.InvalidValue, error.ReasonCode);
+    }
+
+    [Fact]
+    public void CodecRejectsMismatchedDeclarationHandleAndStatement()
+    {
+        var resource = JsonNode.Parse(ScribeResourceCodec.Encode(ClaimDefinition()))!.AsObject();
+        var block = resource["document"]!["content"]![0]!.AsObject();
+        block["claim"] = null;
+        block["statement"]!["value"] = "D5/S1/Scale/Other.different";
+
+        var error = Assert.Throws<ScribeResourceException>(() =>
+            ScribeResourceCodec.Decode(Encoding.UTF8.GetBytes(resource.ToJsonString())));
+
+        Assert.Equal(ScribeResourceErrorCode.InvalidValue, error.ReasonCode);
+    }
+
     [Theory]
     [InlineData("formula")]
     [InlineData("remark")]
@@ -135,6 +162,20 @@ public sealed class ScribeResourceCodecTests
             ScribeNode.Create("resource-digest", DefinitionDsl.H("Claim"), DefinitionDsl.Blocks(describe),
                 sourcePath: "Blueprint/D5/S1/Scale/Claim.scribe.cs"),
             "Blueprint/D5/S1/Scale/Claim.scribe.cs");
+    }
+
+    private static DocumentDefinition AuthoredFormulaDefinition()
+    {
+        var describe = Describe.Remark(
+            DescribeId.Create("authored"),
+            DefinitionDsl.H("Authored"),
+            DefinitionDsl.Equal(DefinitionDsl.Num(1), DefinitionDsl.Num(1)),
+            AssessedProvenance.FromRepo(),
+            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("authored"))));
+        return DocumentDefinition.Create(
+            ScribeNode.Create("resource-digest", DefinitionDsl.H("Authored"), DefinitionDsl.Blocks(describe),
+                sourcePath: "Blueprint/D5/S1/Scale/Authored.scribe.cs"),
+            "Blueprint/D5/S1/Scale/Authored.scribe.cs");
     }
 
     [Fact]
