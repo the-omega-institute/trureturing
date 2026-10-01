@@ -22,7 +22,10 @@ internal sealed class SplitCovarianceIntersectionEvenConvexityDocument : IScribe
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Both even-order derivative inequalities", Disp(ClaimBody()),
                 "For positive definite inputs, introduce a three-block positive definite affine pencil M and its lower two-block compression K. The upper inverse corner is splitP, and det(splitP) = det(K)/det(M). Noncommutative differentiation of the affine inverse gives positive semidefinite even inverse derivatives by a matrix congruence. Spectral diagonalization and scalar Jensen applied to squared overlaps give the even-power trace inequality for isometric compression; this makes each even derivative of log det(K) minus log det(M) nonnegative. Adding a positive scalar multiple of the identity to each input and taking the scalar to zero extends both inequalities to semidefinite inputs. Joint smoothness near each interior weight gives continuity of every fixed-order derivative in the regularization parameter.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))), []));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("li-2026-split-cif-even-order-convexity"),
+                    ResolutionKind.Proved))), []));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose,
         DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(

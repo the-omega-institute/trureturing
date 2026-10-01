@@ -34,6 +34,10 @@ $$\forall n \in \mathbb{N},\; \forall A \in \operatorname{Matrix}\left(\operator
 
 *Proof.* Machine-checked in Lean as `D5/S3/Estimation/SplitCovarianceIntersectionEvenConvexity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/li-2026-split-cif-even-order-convexity` (proved) by `D5/S3/Estimation/SplitCovarianceIntersectionEvenConvexity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"li-2026-split-cif-even-order-convexity","declaration_gid":"D5/S3/Estimation/SplitCovarianceIntersectionEvenConvexity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Hao Li (2026). *Conjecture About Arbitrary Even-Order Convexity of w-Optimization of the Split CIF*. URL: <https://arxiv.org/abs/2606.27260v1>.
