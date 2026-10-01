@@ -43073,3 +43073,168 @@ K_L(H_L(z_L))=\frac{m}{4\ell}
 后两个误差都是 $o(m/\ell^2)$，故正偏置仍在，最终超出预算。若 $b_0=0$，式（307.22）与（305.8）相减给正的比较系数 $Ed^2/8$。若 $b_0<0$，取 $0<d<-4b_0$ 则 $d^2/8+db_0/2<0$；所以带有漂移的条件系数也容许比较余量下降。此处没有断言这样的实际漂移族必然存在。
 
 严格 Robin 符号还需控制共同的 $S(m)$。此外，（307.21）既不由（307.16）自动推出，也不能将 $b_L$ 直接换成 $[\vartheta(m)-m]/m$：Euler 乘积误差同时进入 $b_L$。`Library/ArithSums/nicolas2025comparison.md` 中 Nicolas 的经典相关端点罚项也在 $m^{3/4}$ 尺度产生平方项，但其有符号积分、截断与本节的 $b_L$ 是不同对象；不能把同尺度当作同一个已控制的误差。此处新增的承重内容是实际仿射纤维中保留失衡的成对响应及（307.10）–（307.24）的条件比较，不提供新的素数分布估计、不解决共同基线符号或价格剥离尾项，也不推出全体整数的 Robin 判据。$\square$
+
+## 308. 实际末端矩证书与不指定宽度系数的中心化响应
+
+**定义 308.0。** 沿用定义307.0的实际整数与素数集合，令 $L\ge16$、$m/2\le z\le m$、$D=m-z$，仍记 $\ell=\log m$、$X_L=\log T_L$、$\lambda_L=U_L/E$。在 $h_L,s_L,M_L$ 之外定义
+\[
+J_{2,L}=\sum_{p\in\mathcal T_L(z)}(m-p)^2\log p,
+\qquad \rho_L=m^{1/4}.
+\tag{308.1}
+\]
+所有和均沿实际删除集合取值；空集时四个和均为零。
+
+**定理 308.1（实际有限权重的矩证书）。** 对定义308.0中的每个 $L,z$，置
+\[
+r_L=s_L-\frac{h_L}{m\ell}
+-\frac{(1+1/\ell)M_L}{m^2\ell}.
+\tag{308.2}
+\]
+则
+\[
+J_{2,L}\le DM_L\le D^2h_L,
+\tag{308.3}
+\]
+\[
+|r_L|\le\frac{16J_{2,L}}{m^3\ell}
++\frac{16h_L}{m^2\ell}
+\le\frac{16DM_L}{m^3\ell}+\frac{16h_L}{m^2\ell}
+\le\frac{16h_LD^2}{m^3\ell}+\frac{16h_L}{m^2\ell}.
+\tag{308.4}
+\]
+
+**证明。** 因 $m\ge50$，有 $\ell\ge2$。例如经典对数下界 $\log2\ge2/3$ 给 $\log16=4\log2>2$，再用对数单调性即可。每个删除素数满足 $m/2<p\le m$，所以
+\[
+0\le m-p\le D,\qquad
+\log p\ge\ell-\log2\ge\ell/2>0.
+\tag{308.5}
+\]
+将 $v^2\le Dv$ 与 $v\le D$ 分别乘 $\log p$ 后求和，得到（308.3）。
+
+下述局部估计使用经典对数级数余项；可参照 Mathlib 的 [abs_log_sub_add_sum_range_le](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/Log/Deriv.lean)。令 $t=(m-p)/m\in[0,1/2]$，$q=\log(1-t)+t$，$c=1+t+t/\ell$。一阶余项给 $|q|\le2t^2$，且 $0\le c\le2$。精确代数分解为
+\[
+\frac1{1-t}-\left(1+\frac{\log(1-t)}\ell\right)
+\left(1+(1+1/\ell)t\right)
+=\frac{t^2}{1-t}+\frac{t^2}\ell+\frac{t^2}{\ell^2}
+-\frac{qc}\ell.
+\tag{308.6}
+\]
+右侧前三项之和不超过 $4t^2$，最后一项绝对值不超过 $4t^2$。又有 $p=m(1-t)$ 与 $\log p=\ell+\log(1-t)$，因而
+\[
+\left|\frac1p-\frac{\log p}{m\ell}
+-\frac{(1+1/\ell)(m-p)\log p}{m^2\ell}\right|
+\le\frac{8(m-p)^2}{m^3}.
+\tag{308.7}
+\]
+同一经典余项在 $p\ge2$ 时给
+\[
+\left|\log(1+p^{-1})-p^{-1}\right|
+\le\frac2{p^2}\le\frac8{m^2}.
+\tag{308.8}
+\]
+将（308.7）–（308.8）相加，再利用（308.5）将每个无权误差乘上不小于一的 $2\log p/\ell$，得到
+\[
+\left|\log(1+p^{-1})-\frac{\log p}{m\ell}
+-\frac{(1+1/\ell)(m-p)\log p}{m^2\ell}\right|
+\le\frac{16(m-p)^2\log p}{m^3\ell}
++\frac{16\log p}{m^2\ell}.
+\tag{308.9}
+\]
+有限和的三角不等式与（308.3）即给（308.4）。常数不声称最优；第一项保留实际二阶矩，第二项来自局部 $\log(1+p^{-1})$ 与 $p^{-1}$ 的差。$\square$
+
+**假设 308.1（实际质量、矩与核心比值）。** 令 $L\to\infty$，取最终满足 $m/2\le z_L\le m$ 的序列，$D_L=m-z_L$，并假设对有限实数 $a,j$，
+\[
+\frac{D_L}{m}\longrightarrow0,\qquad
+\frac{h_L}{\rho_L^3}\longrightarrow a,\qquad
+\frac{M_L}{\rho_L^6}\longrightarrow j,
+\tag{308.10}
+\]
+\[
+\frac{U_L}{E\ell}\longrightarrow1,
+\qquad\frac m{X_L}\longrightarrow1.
+\tag{308.11}
+\]
+各和按 $z=z_L$ 取值。本假设直接保留实际质量与矩的极限，不要求 $D_L/\rho_L^3$ 收敛，也不从普通素数短区间估计推断模三剩余类规律。
+
+**定理 308.2（由实际矩确定的一般响应系数）。** 在假设308.1下，
+\[
+\rho_L^2\lambda_L\left(s_L-\frac{h_L}{m\ell}\right)
+\longrightarrow j,\qquad
+\rho_L\ell s_L\longrightarrow a,
+\tag{308.12}
+\]
+且
+\[
+\sqrt m\left[
+\frac{\Delta(H_L(z_L))-\Delta(T_L)}E
+-\frac{h_L}m b_L\right]
+\longrightarrow j-\frac{a^2}{2}.
+\tag{308.13}
+\]
+若 $a>0$，实际加权平均删除距离 $\bar v_L=M_L/h_L$ 最终有定义，并满足
+\[
+\frac{\bar v_L}{m^{3/4}}\longrightarrow\frac ja,
+\qquad j-\frac{a^2}{2}=a\left(\frac ja-\frac a2\right).
+\tag{308.14}
+\]
+因此中心化系数同时取决于删除质量与平均删除位置。
+
+**证明。** 在（308.4）中使用保留一阶矩的界，并利用 $m=\rho_L^4$，得
+\[
+\rho_L^2\lambda_L|r_L|
+\le16\frac{\lambda_L}\ell\frac{M_L}{\rho_L^6}\frac{D_L}{\rho_L^4}
++16\frac{\lambda_L}\ell\frac{h_L}{\rho_L^3}\frac1{\rho_L^3}
+\longrightarrow0,
+\tag{308.15}
+\]
+\[
+\rho_L\ell|r_L|
+\le16\frac{M_L}{\rho_L^6}\frac{D_L}{\rho_L^4}\frac1{\rho_L}
++16\frac{h_L}{\rho_L^3}\frac1{\rho_L^4}
+\longrightarrow0.
+\tag{308.16}
+\]
+这里仅用有限极限与 $D_L/m\to0$，没有额外收敛速率。由（308.2），
+\[
+\rho_L^2\lambda_L\left(s_L-\frac{h_L}{m\ell}\right)
+=\frac{\lambda_L}\ell(1+1/\ell)\frac{M_L}{\rho_L^6}
++\rho_L^2\lambda_Lr_L,
+\]
+\[
+\rho_L\ell s_L
+=\frac{h_L}{\rho_L^3}
++(1+1/\ell)\frac{M_L}{\rho_L^6}\frac1{\rho_L}
++\rho_L\ell r_L.
+\]
+这给（308.12）。另令 $u_L=h_L/X_L$，则
+\[
+\rho_Lu_L=\frac{h_L}{\rho_L^3}\frac m{X_L}\longrightarrow a.
+\tag{308.17}
+\]
+因 $\rho_L,\ell\to\infty$，有 $u_L,s_L\to0$，最终 $|u_L|<1$、$|s_L|\le1$。经典对数与指数 Taylor 余项在（307.20）中给出的上界，乘 $\rho_L^2$ 后趋零：
+\[
+\rho_L^2\frac{|u_L|^3}{1-|u_L|}
+=\frac{(\rho_Lu_L)^2|u_L|}{1-|u_L|}\longrightarrow0,
+\quad
+\rho_L^2|\lambda_L|s_L^2
+=\frac{\lambda_L}\ell\frac{(\rho_L\ell s_L)^2}\ell\longrightarrow0.
+\tag{308.18}
+\]
+第二式使用实际 $\lambda_L>0$。另一方面，保留失衡的精确消去式为
+\[
+\lambda_Ls_L-u_L-\frac{h_L}m b_L
+=\lambda_L\left(s_L-\frac{h_L}{m\ell}\right).
+\tag{308.19}
+\]
+将（308.12）、（308.17）–（308.19）代入实际有限响应（307.7），线性项贡献 $j$，对数二次项贡献 $-a^2/2$，其余项趋零，得（308.13）。若 $a>0$，由 $h_L/\rho_L^3\to a$ 知 $h_L$ 最终为正，取两个实际矩极限的商即给（308.14）。$\square$
+
+**定理 308.3（均匀短边系数的特例与保留边界）。** 在假设307.1下，假设308.1取
+\[
+a=d/2,\qquad j=d^2/4,
+\tag{308.20}
+\]
+故（308.13）给 $d^2/8$。若 $a>0$，中心化系数的正、零、负分别等价于 $j/a>a/2$、$j/a=a/2$、$j/a<a/2$。这些等价关系不保证任一组实际素数矩极限存在，也不决定 $\Delta(H_L(z_L))$ 的严格符号。
+
+**证明。** （307.8）、（307.12）–（307.13）给（308.10）及（308.20）；假设302.1给（308.11）。代入得 $d^2/4-(d/2)^2/2=d^2/8$。其余符号关系由（308.14）与 $a>0$ 得到。
+
+（308.3）–（308.19）是该实际仿射族上的有限证书与条件推导：它们将权重误差及非线性余项归于实际质量、距离矩与核心比值。它们不提供（308.10）–（308.11）的新素数分布证明；共同基线 $S(m)$、有符号失衡 $b_L$ 的速率、价格剥离尾项以及全体整数的 Robin 判据仍各有独立义务。特别是（308.13）保留了 $h_Lb_L/m$，不由 $b_L\to0$ 推断它在 $\sqrt m$ 尺度上消失。$\square$
