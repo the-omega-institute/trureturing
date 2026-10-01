@@ -247,6 +247,26 @@
       ]
     },
     {
+      "id": "publication-verify",
+      "workflow": ".github/workflows/ci-publication-verify.yml",
+      "project": null,
+      "test": false,
+      "lean": "build",
+      "dotnet": true,
+      "inputs": [
+        ".github/workflows/ci-*.yml",
+        ".github/workflows/lean-cache-publish.yml",
+        "Makefile",
+        "Meta/ReportProducers/*",
+        "global.json",
+        "lake-manifest.json",
+        "lakefile.toml",
+        "lean-toolchain",
+        "tools/scripts/workflow/*",
+        "tools/scripts/worktree/*"
+      ]
+    },
+    {
       "id": "selftest",
       "workflow": ".github/workflows/ci-selftest.yml",
       "project": "tools/StrataLint.Cli/StrataLint.Cli.csproj",
@@ -2490,10 +2510,14 @@
       "project": "tools/StrataLint.Cli/StrataLint.Cli.csproj",
       "inputs": [
         ".editorconfig",
-        "Directory.Build.props",
+        "Directory.Build.*",
         "Directory.Packages.props",
+        "NuGet.Config",
+        "NuGet.config",
         "global.json",
+        "nuget.config",
         "tools/Architecture/BannedSymbols*.txt",
+        "tools/Directory.Build.*",
         "tools/StrataLint.Scribe/Vendor/Katex/katex.min.js"
       ]
     }

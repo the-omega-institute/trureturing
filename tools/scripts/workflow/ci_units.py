@@ -76,6 +76,8 @@ def project_registry(root):
         if not isinstance(project, dict):
             raise RegistrationError("invalid project registration")
         path = repo_path(project.get("path"), "project", ".csproj")
+        if not (root / path).is_file() or not (root / path).resolve().is_relative_to(root.resolve()):
+            raise RegistrationError(f"registered project file is missing: {path}")
         if path in projects:
             raise RegistrationError(f"duplicate project: {path}")
         if project.get("role") not in ("production", "owned-test", "cross-cutting-test", "test-support", "compile-fail-proof"):

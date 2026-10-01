@@ -21,6 +21,9 @@ class CiUnitsTests(unittest.TestCase):
         workflow = self.root / ".github/workflows/ci-fixture.yml"
         workflow.parent.mkdir(parents=True)
         workflow.write_text("opaque synthetic workflow\n")
+        for project in ("tests/T/T.csproj", "src/P/P.csproj", "src/D/D.csproj"):
+            (self.root / project).parent.mkdir(parents=True, exist_ok=True)
+            (self.root / project).write_text("<Project />\n")
         self.projects = {"version": 1, "projects": [
             {"path": "tests/T/T.csproj", "role": "owned-test",
              "include": ["linked/**/*.cs", "tests/T/**/*.cs"],
@@ -262,6 +265,12 @@ class CiUnitsTests(unittest.TestCase):
         self.manifest["units"][0]["inputs"] = ["!linked/Omit.cs", "assets/*", "global.json"]
         self.projects["projects"][2]["include"] = ["shared/[E]xact.cs"]
         self.assert_error(self.resolve(), "pattern")
+
+    def test_registered_project_files_must_exist(self):
+        (self.root / "src/D/D.csproj").unlink()
+        self.assert_error(self.resolve(), "project file")
+        (self.root / "src/D/D.csproj").mkdir()
+        self.assert_error(self.resolve(), "project file")
 
     def test_diamond_references_are_deduplicated(self):
         self.projects["projects"][0]["references"].append("src/D/D.csproj")
