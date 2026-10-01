@@ -12870,3 +12870,118 @@ heights, total prime support, or phases. It does not exclude the
 remaining all-concentrated configurations with H_3>=12 or settle the
 branches with nonconcentrated support. Unrestricted Erdos7 remains
 unresolved. No new Lean verification is asserted.
+
+## 97. Opposite-color gaps force actual mixed prime labels
+
+Keep the one EB1 original family with R=empty, original numerical
+palette D, and disjoint nonempty concentrated supports S_1,S_2.
+For every nonternary support prime p and 1<=a<=H_p define the actual
+mixed-height profile
+
+    h_p(a)=max{c>=0:3^c*p^a is in D},
+    t_p=h_p(1).
+
+The set is nonempty because the pure p-powers are original. Divisor
+closure makes its c-values an initial segment and gives h_p(a)<=t_p.
+All these profiles refer to the same original family.
+
+The new original-label requirement is
+
+    p,q in opposite colors, g=|p-q|
+      ==> t_p>=g and t_q>=g
+      ==> 3^g*p and 3^g*q are ORIGINAL labels.        (MHG1)
+
+This does not create labels by transport or require bounded nonternary
+heights. In particular, because opposite odd primes differ by at least
+two and both colors are nonempty,
+
+    9p is original for EVERY nonternary prime p.     (MHG2)
+
+### Use the existing collision-reservation construction
+
+Fix opposite-color p<q and put r=q-p+1. Reuse exactly section96's
+BC12--BC14 single-source construction, preserving the original p
+coordinate and compressing the entire q coordinate into it. There
+are no pq-bearing originals. Its only numerical collision pairs are
+
+    3^c*q^a and 3^c*p^a.
+
+At each a<=min(H_p,H_q), the number of actual pairs is precisely
+1+min(h_p(a),h_q(a)). Reserve their actual complete q-prefixes as
+before, deduplicating them and removing descendants of retained
+ancestors. If Delta_pq is the resulting BC14 antichain cost, then
+
+    Delta_pq
+      <=sum_(a=1..min(H_p,H_q))
+            [1+min(h_p(a),h_q(a))]/r^a.             (MHG3)
+
+The established source construction gives a smaller whole distinct
+odd cover whenever Delta_pq<1: the mixed blacklists are empty, and
+the actual reserved q and 3q originals disappear. Hence the same
+original family must satisfy the coupled profile restriction
+
+    1<=Delta_pq
+      <=sum_(a=1..min(H_p,H_q))
+            [1+min(h_p(a),h_q(a))]/r^a              (MHG4)
+
+for EVERY opposite-color pair p<q. These are conditions on one set
+of original labels and phases. They must not be added as disjoint
+inventory charges: one original may occur in several pair tests.
+
+Let t=min(t_p,t_q). The finite sum in MHG3 is strictly less than
+
+    (t+1)*sum_(a>=1)r^(-a)=(t+1)/(q-p).
+
+If t<=q-p-1 this is at most one, contradicting MHG4. Therefore
+t>=q-p, which proves MHG1 by divisor closure. No tree theorem or
+prime-set enumeration is repeated.
+
+### The former flat-color HSW branch is excluded
+
+CP10's flat-color premise says that one color has no original
+3^c*m with c>=2 and m>1 supported there. Choosing any prime p in
+that color contradicts its actual original 9p from MHG2. Thus neither
+color of a remaining R=empty family is flat.
+
+The conditional HSW comparisons CP11--CP12 and SC4 retain their stated
+validity, but their flat-color premise cannot occur in this branch.
+Likewise CP13's specified constructor, which switches entire seeds
+at successive exits, has no distinct output in the remaining branch.
+This is the existing constructor's proved limitation, not a claim
+that other HSW variants or other source maps fail.
+
+### An attained terminal gap prevents singular elimination
+
+Suppose some opposite-color pair has |p-q|=H_3=H. MHG1 supplies
+original 3^H*p and 3^H*q in different first-three roots. At a private
+point of either original, retain every other coordinate and the first
+H-1 ternary digits, and vary only the highest ternary digit. The
+existing private-sibling argument says that none of the three points
+is covered by any lower-height original. Every one therefore requires
+a highest-height original in that same first-three root.
+
+Applying this argument in the two distinct roots gives at least two
+highest-height originals at EACH of the three highest-digit values.
+Consequently the global terminal occurrence counts are all at least
+two, the highest-three batch has at least six classes, and the
+terminal digit is not singular. In particular it cannot have the
+singular-elimination pattern(1,1,t).
+
+At H=12 this obstruction is automatic. Section96's color-support
+argument already excludes opposite-color gaps all at most10; since
+the gaps are even, their maximum is at least12. CG2 bounds that same
+maximum by H=12, so an opposite-color gap12 is attained. Thus every
+remaining H_3=12, R=empty family has at least six top-three classes
+and a nonsingular terminal digit. The singular reduction does not
+automatically handle this lowest remaining height.
+
+This does not exclude the H_3=12 branch. At larger H the largest
+opposite-color gap may be below H, and MHG2 alone puts9p at height
+two rather than at the global terminal height. No general terminal
+singularity or nonsingularity is asserted in that case.
+
+MHG1--MHG4 strengthen the original inventory conditions. They do not
+force a contradiction for arbitrary nonflat profiles, or settle
+R!=empty or unrestricted Erdos7. They are ordinary deductions from
+the already established source-map construction; no Lean verification
+or literature-priority claim is asserted.
