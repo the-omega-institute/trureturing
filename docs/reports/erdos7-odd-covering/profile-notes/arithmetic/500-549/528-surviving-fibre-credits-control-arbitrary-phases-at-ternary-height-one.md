@@ -31271,9 +31271,47 @@ than N_3 classes, as BC2 requires. When every original3-bearing
 label has3-height one, both non-parent branches cannot have at most nine
 labels: the two actual branches would both need numerical15.
 This gives N_3>=19 under the whole-family height-one hypothesis.
-Nine-class repairs with higher3 labels are still unresolved;
-the unrestricted lower bound remains N_3>=18. No new Lean
-verification or literature-priority claim is made.
+Section49 supplies the additional argument for higher3 labels.
+
+[Report385, section49](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#49-small-repeated-value-lists-exclude-all-nine-class-repairs-without-fifteen)
+proves two small-list certificates using the existing Hall
+and full-prefix criteria. Seven labelled cofactor values with
+at most one numerical duplicate admit a strict full-support
+chain assignment. Applied to the actual endpoint deletion list,
+this extends the nonconfinement statement from five to six
+legal low classes plus any nonunit query. Separately, six
+items with at most two double values admit a strict selected
+chain when numerical5 is absent.
+
+In a minimal mixed nine-class repair, these statements and
+the earlier low/high bounds leave no case without15. The
+possible counts (2,7),(3,6),(4,5),(6,3) are excluded using
+complete tails, legal query promotions and actual deletion
+lists. With at most four low classes, a root containing at most
+three high classes must be entirely of3-height two: a deeper remainder
+cannot fill a complete tail missed by the shallow classes.
+The four-low/five-high case forces four paired labels3e_i,9e_i;
+when15 is absent its actual six-item deletion list omits5
+and meets the second certificate's hypotheses. No new phase
+table or independently optimized source is substituted.
+
+Every complete legal repair of at most nine classes therefore
+requires numerical15, whether its3-heights are one or larger.
+The two actual non-parent first3 branches cannot both have at
+most nine labels, since their translated repairs preserve labels
+and would both require15. One branch has at least ten labels,
+the other at least eight, and the parent contributes one:
+
+    N_3>=19 without a restriction on support or heights.
+
+The dependency is NF38's independent N_3>=18, then the
+nine-class repair result, then this nineteen-label consequence;
+the earlier N_3>=9 bootstrap remains unchanged. This is a
+necessary condition on a minimum hypothetical whole cover.
+Eight- and nine-class repairs containing15 have not been
+excluded. Repairs of ten or more classes and unrestricted
+Erdős #7 remain unresolved.
+No new Lean verification or literature-priority claim is made.
 
 [Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
 keeps the residual cover's entire old q coordinate unchanged.

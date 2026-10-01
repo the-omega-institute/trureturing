@@ -6730,8 +6730,304 @@ For the excluded equality N_3=18, each translated repair has
 fewer than N_3 classes, so BC2 applies without an additional
 small-cover assumption. In general a nine-class repair can
 contain higher3 labels. The proof above does not eliminate that
-case and does not strengthen the unrestricted N_3>=18 bound.
+case by itself. Section49 handles mixed nine-class repairs
+without15 and obtains N_3>=19 without the height restriction.
 The arbitrary remaining inventory in NF43 and unrestricted
 Erdős #7 remain unresolved. These are ordinary symbolic
 deductions, with no new Lean verification or literature-priority
 claim.
+
+## 49. Small repeated-value lists exclude all nine-class repairs without fifteen
+
+Two additional assignment cases control the higher3 classes
+which section48 leaves untreated. They reuse the same Hall,
+complete-prefix and common CRT transport criteria. Numerical
+items in this section are labelled: two equal values represent
+two actual events whose prefixes may be different.
+
+### Seven items permit one repeated numerical value
+
+Let D be a list of at most seven nonunit values coprime to6,
+with every value occurring once except at most one which may
+occur twice. The full support prime chain above3 admits
+
+    sum_(m assigned to p_i) r_i^(-v_(p_i)(m))<1
+      on every axis.                                     (NF47)
+
+NF30 covers at most six items, and BC6 covers seven distinct
+values. Assume exactly seven items and one repeated value.
+Try capacity two on all support primes.
+
+If the full group of pure p items has size k>=3, put them at p.
+Their total conservative-base3 cost is below5/6, including
+the possible duplicate. At most four items remain. Unless
+capacity two works on their other factors, collect all items
+with singleton projected support {q} as T. There are three
+or four such items; at most one further item has a factor
+outside {p,q}. Write T as p^u*q^v.
+
+Let h count T items with v=1. If h<=2, all of T costs at
+most2/3+2/9=8/9 at q. If h>=3, retain the two smallest u
+values among these h items at q and move the others to p.
+Keep every v>=2 item at q, still at cost at most8/9.
+If the duplicate is pure p, T is numerically distinct. For
+k=3, the initial p cost is at most7/9, and the moved u values
+are at least2 and3 when two are moved, adding at most4/27.
+For k=4, three T items leave just one moved u>=2, and the
+initial p cost is at most22/27. Both bounds give at most25/27.
+If instead the pure p items are distinct, their cost is below
+1/2. For h=3 the moved u is at least one, adding at most1/3.
+For h=4, k=3 and the initial cost is at most13/27. At most
+one u value repeats; the largest two u values are at least
+one and two, adding at most4/9 and giving at most25/27.
+Assign the possible remaining item outside {p,q}.
+
+Now assume each axis has at most two pure items. If at least
+five items lie in a pair {p,q}, take all g of them. For
+g<=6 use NF30 inside the pair and put the at most two other
+items outside it. It remains that all seven items use this pair.
+
+If the duplicate is pure p^a, its two copies cost at most2/3
+at p. The other at most five items have a q factor and are
+numerically distinct. If at most two have q-depth one, assign
+all of them to q. Its cost is at most one; equality requires
+two depth-one and three depth-two items. Those three have
+different p exponents, so move one with p-depth at least two
+to p, giving p cost at most7/9 and q cost at most8/9.
+If h>=3 have q-depth one, move the h-2 largest p exponents
+to p. They are different and at least two, so their finite
+cost is below1/6. The p cost is below5/6 and q costs at most8/9.
+
+Suppose the duplicate is mixed. If pq occurs at most once,
+the seven-item pair proof of BC6 applies without alteration:
+that proof uses only the distinct pure powers, the number of
+deep items and their depths, not uniqueness of the deep mixed
+values. With pq present, the two initial deep-plus-pure loads
+are each at most8/9 and have sum at most10/9; put pq on the
+lighter axis. Without pq, each load is at most one. Equality
+forces every mixed item onto that axis and leaves the other
+load zero, so moving one mixed item makes both costs strict.
+
+If pq is the repeated value, first assign each other mixed
+item to a depth of at least two. The initial loads A,B are
+each at most7/9 and their sum is at most one. Indeed, with
+P=0,1,2,3,4 pure items, their maximum combined costs are
+(0,3,6,7,8)/9, and at most5-P deep items remain. If both
+A,B<2/3, put one pq on each axis. If the heavier load is
+at least2/3 and the lighter is less than1/3, put both pq
+items on the lighter axis. The sole remaining boundary is
+(A,B)=(2/3,1/3), after exchanging the axes if necessary.
+
+Attaining sum one forces every deep item's chosen depth to
+be exactly two. The boundary can have two pure items, one
+on each axis, with all three deep items on the heavier axis;
+or three pure items, two on the heavier axis, with both deep
+items there. Four pure items give loads at most5/9 on each
+axis and cannot reach this boundary. The deep mixed values
+are distinct because pq uses the only duplicate. At least
+two of them have the same heavier-axis depth two, so their
+other depths differ; one of those other depths is at least
+two. Move that item to the lighter axis. The loads become
+at most5/9,4/9. One pq on each gives at most8/9,7/9.
+
+With neither a pure group of three nor a pair of five, a
+remaining Hall failure places all seven items on exactly three
+primes. The full-support chain has integer capacities r_i-1
+of total at least eight; its singleton and pair demands are
+at most two and four. Hall applies. All earlier cases used
+base3 bounds and therefore remain valid on the full support
+chain. This completes NF47.
+
+Apply NF47 to the actual endpoint deletion list in NF31.
+With kappa<=6 low classes plus one query, this list has at
+most seven items and only the query's modulus can occur twice.
+The input whole cofactor cover has at most |C0|+7<n classes,
+using the independent N_3>=9. The same PC1--PC2 map therefore
+gives the extended nonconfinement statement
+
+    kappa<=6 ==> R-star minus union_i C_i not subset A
+      for every nonunit cofactor AP A.                    (NF48)
+
+The low labels remain legal and distinct, C0 is retained,
+and the query is arbitrary with modulus coprime to6. Full
+actual heights and any enlarged period are kept as in NF31.
+
+### Six items with two repeated values suffice when five is missing
+
+Let D have at most six labelled nonunit values coprime to6,
+each of multiplicity at most two, with at most two values
+having multiplicity two. Suppose numerical5 is absent. Then
+some selected prime chain admits a strict prefix assignment.
+                                                               (NF49)
+
+Try capacity two. A Hall failure has either three pure powers
+on one axis or five items supported on a pair. Suppose first
+there are k>=3 pure p items. Their finite total base3 cost is
+less than1/2+1/3+1/9=17/18: the distinct powers cost below
+1/2, and at most two different powers can be repeated.
+For k>=4, assign the at most two remaining items outside p.
+
+For k=3, the only further capacity-two failure has three items
+p^u*q^v. If any v>=2, put all three at q, at cost at most7/9.
+If all v=1 and one u>=2, move such an item to p. Three pure
+p items cost at most7/9, so p then costs at most8/9 and the
+other two items cost at most2/3 at q. Otherwise every u is
+zero or one. Both values q and pq must occur, since no value
+has multiplicity three. Move one pq to p. If the pure p
+items are distinct, their cost at most13/27 leaves the total
+at most22/27. If a repeated pure p^a has a>=2, their cost
+is at most5/9 and the new total at most8/9.
+
+The remaining pure group is {p,p,p^b}, b>=2. As q also
+occurs and5 is missing, neither p nor q is5. Select only
+this pair. At least one of its bases is at least five. If
+that is the q base, all three other items cost at most3/5
+there. Otherwise place one pq at p, with total p cost at
+most2/5+1/25+1/5=16/25, and the other two items at q.
+
+Now every axis has at most two pure items. Collect all g>=5
+items supported on a pair {p,q}. If either pair base is at
+least five, the integer capacities are at least four and two;
+singleton demands are at most two and total demand at most
+six, so Hall succeeds. For g=6 select the pair alone. If
+both bases are three, the pair is {5,7}. Without numerical5,
+the only squarefree available values are7 and35. Each occurs
+at most twice, so at least two items have a depth of at least
+two. Reserve two such items; the other four satisfy capacity
+two on the pair, and restoring them costs at most8/9 per axis.
+
+For g=5 and one outside item, select one of its factors outside
+the pair, together with p,q; if there is no outside item,
+select just the pair. Unless some pair base exceeds three,
+the pair must contain5. Indeed, two core primes different
+from5 with base three would need two different outside
+predecessors, two less than themselves. They cannot be each
+other's predecessors, which would require three primes greater
+than3 spaced by two. There is at most one selected outside
+prime. Thus at most two squarefree pair values remain available
+when5 is missing, accounting for at most four items. Reserve
+one deep item, assign the other four with capacity two, and
+restore it. Put the possible outside item at its chosen outside
+factor. This completes NF49.
+
+### Small high-root groups are shallow in a minimal repair
+
+Consider an inclusion-minimal legal complete repair of nine
+classes. Let kappa be its low count and h its high count.
+If h>0, the common cofactor remainder R-low after all lows
+is nonempty, and each of the three second3 roots needs at
+least one high class. NF33, NF31 and BC1 with NF38 leave
+only the mixed counts
+
+    (kappa,h)=(2,7),(3,6),(4,5),(6,3).
+
+The last case fails NF48. Its three roots are singletons;
+each singleton must have original3-height two and its cofactor
+must contain all of R-low. NF48 forces each to be the pure
+label9, contrary to numerical distinctness.
+
+For kappa<=4, every root containing at most three high
+classes consists entirely of classes of original3-height two.
+To see this, a mixture of shallow and deeper classes has at
+most two deeper classes. They occupy strictly less than the
+complete remaining3 tail at each fixed cofactor. Therefore
+the shallow cofactors must already cover all of R-low, making
+every deeper class in that root redundant. If all classes
+are deeper, at most two cannot cover the complete tail.
+Three could do so only if all have3-height exactly three
+and each cofactor contains R-low. NF31 then forces all three
+to have numerical label27, again impossible. This uses the
+one actual R-low and complete tails through the common height.
+
+A singleton root must consequently be the pure label9.
+In a minimal repair, that label also occupies its root alone.
+Every other two- or three-class root therefore supplies two
+or three distinct nonunit cofactor queries with labels9e.
+Their union covers the SAME R-low.
+
+If a two-query root has a label3e absent from the current
+lows, promote that query to a low class with numerical label3e,
+first3 root a_3 and the same cofactor phase. Its label is legal: it is not3,
+not in C0, not a high label and not an existing low label.
+The new low remainder is confined to the other nonunit query.
+For kappa<=4 this contradicts NF31 with at most five lows.
+Thus BOTH promoted labels from every two-query root must
+already occur among the lows.
+
+If a three-query root has two promoted labels absent from
+the lows, promote those two distinct queries. For kappa<=3
+there are at most five lows, whose remainder is confined to
+the remaining nonunit query, contradicting NF31. Hence at
+least TWO of its three promoted labels must already be lows.
+
+For (kappa,h)=(2,7), NF33 forces label9 and root counts
+(1,3,3). The two triple roots demand at least four different
+low labels, but there are only two. For (3,6), the only root
+counts are (2,2,2) without9 or (1,2,3) with9. The former
+requires six low labels; the latter requires four different
+low labels. Both exceed three. These exclusions do not assume
+that the query APs were originally allowed repair labels:
+promotion checks their availability before adding them.
+
+### The last mixed case without fifteen has a six-item deletion list
+
+For (kappa,h)=(4,5), the only root counts are (1,2,2).
+The singleton is9, and the other four high labels are9e_i,
+with e_1,...,e_4 different nonunit cofactors. The promotion
+argument forces the four current low labels to be precisely
+3e_1,...,3e_4. Suppose the complete repair omits numerical15;
+then every e_i differs from5.
+
+Fix one of the two-query roots. The family consisting of C0,
+the four low cofactor APs, and those two actual queries covers
+the whole cofactor carrier. Its numerical multiplicities are
+at most three at the two query moduli and at most two at
+the other low moduli. Delete all but one event at each
+repeated modulus. The deletion list has at most six items,
+at most two different values occurring twice, and no value5:
+all of its values lie among e_1,...,e_4.
+
+Apply NF49 to this list and use the complete PC1--PC2 witness
+map through its actual heights. Every deleted event has empty
+pullback; every remaining event has at most one AP as pullback;
+the surviving numerical moduli are distinct odd nonunits.
+The resulting whole cover has at most |C0|+6<n classes.
+This contradicts minimal original cardinality and excludes
+the last mixed case without15.
+
+For an arbitrary complete repair of at most nine classes,
+first take an inclusion-minimal complete subfamily. If it has
+at most eight classes, NF28, NF34 and NF37 force eight low
+classes including15. If it has nine classes and is all low,
+NF38 gives9<N_3 and NF45 forces15. If it has nine classes
+and is mixed, the cases just proved force15. Therefore
+
+    every legal complete repair with at most nine classes
+    retaining C0 and excluding3 must use numerical15.     (NF50)
+
+### Nineteen ternary labels are necessary without a height restriction
+
+Apply NF19 to the two actual non-parent first3 branches of
+the same minimum hypothetical original cover. Its CRT
+translations keep every numerical label and every higher3
+tail, and separately give legal complete repairs. Each branch
+has at least eight labels by NF28. If both had at most nine,
+NF50 would require numerical15 in both original branches,
+violating global distinctness. One branch must therefore
+have at least ten labels. Including the parent3 gives
+
+    N_3>=1+8+10=19.                                       (NF51)
+
+This conclusion has no bound on original prime support or
+heights. The independent N_3>=18 of NF38 supplies the small
+repair comparison in NF50; NF51 is downstream and does not
+replace the earlier N_3>=9 bootstrap premises. The two branch
+arguments use necessary numerical labels, not independently
+chosen optimal phases or different source laws combined as one.
+
+NF51 is a necessary condition on a minimum hypothetical whole
+cover. Eight- and nine-class repairs containing15 have not
+been excluded. Repairs of ten or more classes, the remaining
+inventory in NF43 and unrestricted Erdős #7 remain unresolved. NF47--NF51
+are ordinary symbolic deductions, without new Lean verification
+or a literature-priority claim.
