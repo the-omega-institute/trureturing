@@ -1701,3 +1701,45 @@ linked issue. The compatible original-H3 smooth geometry and the full
 covering/action/metric inputs remain supplied. Lattice conjugacy, general
 homotopic-isometry existence and the full Mostow–Prasad endpoint, including
 cusps and nonorientable manifolds, remain unproved by these checks.
+
+
+## Centralizer and conjugator uniqueness for a selected complete target
+
+For a preconnected smooth three-dimensional target with `T3Space` topology,
+Borel structure, complete Riemannian metric of sectional curvature `-1`,
+Levi-Civita data and finite intrinsic volume, and a supplied compatible
+smooth original-H3 metric with the exact original distance, completeness,
+sectional curvature `-1` and Levi-Civita data, the existing complete-target
+constructor now selects a covering and full deck representation with trivial
+range centralizer. The covering, local diffeomorphism and all-point deck
+metric action needed by the preceding finite-target result are obtained from
+that constructor rather than supplied independently in this extension.
+The compatible original-H3 geometric inputs remain explicit.
+
+The same selected covering retains its prescribed basepoint, smoothness,
+surjectivity, tangent metric pullback, full-deck quotient-covering property,
+fundamental-group equivalence with the opposite deck group, free action and
+compact-set properness. Its same faithful actual H3 representation retains
+discreteness in the original compact-open topology, freeness, proper
+discontinuity, smooth inverse actions and tangent metric preservation.
+The same orbit homeomorphism retains its projection identity, actual target
+intrinsic-distance comparison, intrinsic isometric realization and the
+existing conditional quotient-volume contract. No independently chosen
+covering, representation or quotient witness is substituted.
+
+For any second representation of this selected deck group, if two actual
+ambient H3 isometries implement the same pointwise conjugation relation,
+they are equal. The existing generic conjugator-uniqueness theorem supplies
+this implication from the newly obtained range centralizer. This is a
+uniqueness implication; existence of an ambient conjugator remains missing.
+No compactness or orientation restriction is imposed.
+
+One scoped transient cache-guarded check exited zero and printed one axiom
+closure using only `propext`, `Classical.choice` and `Quot.sound`. It directly
+reuses the preceding complete-target constructor and conditional actual
+centralizer result; it does not recompile or claim a fresh whole check of
+the older long H3 constructor. This is classical composition with no tracked
+Lean or novelty claim. General lattice conjugacy, homotopic-isometry
+existence, global target uniqueness and the full Mostow–Prasad endpoint,
+including cusps and nonorientable manifolds, remain unproved by this check.
+The existing escape audit remains unfinished at the linked issue.
