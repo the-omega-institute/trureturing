@@ -1778,6 +1778,36 @@ is still an additional source condition; using a larger set of words is
 valid for exclusion but does not prove that any minimizing word has a
 low-loss divisor.
 
+Keep the resource and signed budget attached to the same integer to
+obtain a sharper comparison. Put $N_{\min}=\max\{A,G\}$ and
+
+$$
+\Theta_\lambda(N)=\lambda\log(N/G)
+-\{T_s(N)-R_s(v)-L_r\}.
+$$
+
+As a function of $L=\log N>1$, this is concave, since its second
+derivative is $-s(\log L+1)/(L^2(\log L)^2)<0$. Its minimum on the
+actual interval is therefore at an endpoint. Still use the **same**
+complete universe defined by $B_0$; the stronger sufficient test is
+
+$$
+\boxed{
+Q_{B_0}^{\mathrm{unit}}(\lambda,G^{-1})
++\min\{\Theta_\lambda(N_{\min}),\Theta_\lambda(X)\}>0.
+}
+$$
+
+For every actual word under the unpaid hypothesis, the left-hand
+expression is at most $D_s(N)-T_s(N)\le0$, yielding the contradiction.
+Also $\Theta_\lambda(N)\ge H(\lambda)-B_0$ throughout the interval,
+so this test retains every exclusion made by the separated window bound.
+For $\lambda=1$, $\Theta_1$ is increasing and the improvement in the
+lower certificate is exactly $T_s(X)-T_s(N_{\min})\ge0$. This is a
+joint-window calculation, not a gain established on an unpaid FIB host.
+Concavity supplies this endpoint comparison; it does not establish
+strong duality or the strict positivity of the resulting certificate.
+
 ### Increase resolution only where a quotient loses a useful distinction
 
 The same finite-word minimum can first keep $u_0\bmod m$ for any $m\mid V$.
