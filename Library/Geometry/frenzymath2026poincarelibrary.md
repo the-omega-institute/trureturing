@@ -944,9 +944,56 @@ discrete subset is not inferred.
 
 These three additional scoped transient classical checks retain the same
 pins and standard three axioms. They add no tracked project Lean
-mathematical declaration, volume premise or novelty claim. Ambient-group
-local compactness, Haar covolume, finite-volume cusp classification,
+mathematical declaration, volume premise or novelty claim. Haar covolume, finite-volume cusp classification,
 lattice conjugacy and full Mostow-Prasad existence, homotopy and uniqueness
 remain unfinished, including noncompact cusps and nonorientable manifolds.
 The preceding intrinsic normalized Hausdorff3 volume definition and the
 unfinished escape-audit disclosure remain in force.
+
+
+## Locally compact isometry group and existence of Haar measure
+
+For an actual original-H3 basepoint `p`, the same explicitly induced
+compact-open isometry-group topology is locally compact. For every real
+`R`, the set of actual isometries satisfying `dist (e p) p ≤ R` is compact.
+With positive `R` this is a neighborhood of the identity. This establishes
+local compactness of the isometry group itself.
+
+The forward and inverse continuous maps form a closed embedding into a
+product of continuous-map spaces. Its range is characterized by distance
+preservation and both inverse identities. Joint continuous-map evaluation
+and continuity of distance make these constraints closed. The product
+pairing homeomorphism and the existing compact-convergence embedding put
+this same pair into the function space used by pinned Arzela-Ascoli.
+
+The paired functions `x ↦ (e x, e.symm x)` preserve distances for the product
+metric, so they form a uniformly equicontinuous family. When the image of
+`p` moves by at most `R`, both coordinates of the image of any `x` lie in
+an actual proper-H3 product closed ball of radius `dist x p + R` centered
+at `(p,p)`. These balls are compact. Applying
+`ArzelaAscoli.isCompact_closure_of_isClosedEmbedding` to all compact H3
+subsets proves compactness of the closure of the bounded-basepoint set.
+Continuous evaluation and distance make that set closed, so it equals its
+compact closure. The positive-radius identity neighborhood and
+`IsCompact.locallyCompactSpace_of_mem_nhds_of_group` give local compactness
+in the original specified group topology.
+
+The original coordinate homeomorphism gives second countability of H3.
+The existing second-countability result for `C(H3,H3)` and the induced
+bundling topology give second countability of the same isometry group.
+With its Borel measurable structure, pinned `Measure.haar` supplies a
+regular, sigma-finite left Haar measure. It is finite on compact sets and
+positive on nonempty open sets; finite total mass is not asserted.
+
+This Haar measure is on the isometry group. It has not been identified
+with the preceding normalized intrinsic Hausdorff3 measures on H3 or its
+quotient targets. No finite Haar covolume or lattice realization is derived
+from target finite volume in this increment. These are four scoped
+transient classical composition checks under unchanged pins and standard
+three axioms, with no new tracked project Lean declaration or novelty
+claim. Finite-volume cusp classification, Haar covolume identification,
+lattice conjugacy and full Mostow-Prasad existence, homotopy and uniqueness
+remain unfinished, including noncompact cusps and nonorientable manifolds.
+The existing escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these compilation checks nor CI closes that audit.
