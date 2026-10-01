@@ -195,9 +195,9 @@ class NativeCompilerConsumerTests:
     def test_mapped_image_matches_loaded_bytes(self):
         self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
 namespace LeanInformationAudit
-abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array Lean.Json)
+abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array (Lean.Json × Array Lean.Name × Lean.Environment))
 ''')
-        self.write('LeanInformationAudit/Registry.lean', '''import LeanInformationAudit.RegistryTypes
+        self.write('LeanInformationAudit/SealCommand.lean', '''import LeanInformationAudit.RegistryTypes
 namespace LeanInformationAudit
 open Lean
 private structure RegionLayout where
@@ -230,12 +230,12 @@ unsafe def finiteInformationTemplateReportDriver : InformationTemplateReportDriv
     ("mapped_image_root_out_of_range_falls_back", toJson (!test (coordinates.set! 2 view.size) bytes)),
     ("mapped_image_scalar_root_falls_back", toJson (mappedImageMatch (unsafeCast (0 : Nat)) coordinates bytes == 0))]
   let debug := s!"mapped={view.isMemoryMapped} size={view.size} base={view.baseAddr} offset={view.bufferOffset} root={ptrAddrUnsafe view.root}"
-  return names.map fun _ => Json.mkObj [("checks", checks), ("debug", toJson debug)]
+  return names.map (fun _ => (Json.mkObj [("checks", checks), ("debug", toJson debug)], #[], env))
 ''')
         self.copy('tools/lean-inspector/Inspector.lean')
         self.ensure()
         built = subprocess.run(['make', 'lean',
-            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone @trureturing/LeanInformationAudit.Registry'],
+            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone @trureturing/LeanInformationAudit.SealCommand'],
             cwd=self.root, env=self.env, capture_output=True, text=True, timeout=120)
         self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
         output = self.root / 'mapped.spool.json'
@@ -263,26 +263,26 @@ unsafe def finiteInformationTemplateReportDriver : InformationTemplateReportDriv
         # These fixture records test lifetime only, not binding admission.
         self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
 namespace LeanInformationAudit
-abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array Lean.Json)
+abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array (Lean.Json × Array Lean.Name × Lean.Environment))
 initialize fixtureExtension : Lean.SimplePersistentEnvExtension Lean.Name (Array Lean.Name) ←
   Lean.registerSimplePersistentEnvExtension {
     addEntryFn := fun entries entry => entries.push entry
     addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
 ''')
-        self.write('LeanInformationAudit/Registry.lean', '''import LeanInformationAudit.RegistryTypes
+        self.write('LeanInformationAudit/SealCommand.lean', '''import LeanInformationAudit.RegistryTypes
 namespace LeanInformationAudit
 def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names => do
   let env ← Lean.getEnv
   let entries := fixtureExtension.getState env
-  return names.map fun name => Lean.Json.mkObj [
+  return names.map (fun name => (Lean.Json.mkObj [
     ("fixture_root", Lean.toJson name.toString),
     ("fixture_modules", Lean.toJson env.header.moduleNames.size),
-    ("fixture_entries", Lean.toJson entries.size)]
+    ("fixture_entries", Lean.toJson entries.size)], #[], env))
 ''')
         self.copy('tools/lean-inspector/Inspector.lean')
         self.ensure()
         built = subprocess.run(['make', 'lean',
-            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone @trureturing/LeanInformationAudit.Registry'],
+            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone @trureturing/LeanInformationAudit.SealCommand'],
             cwd=self.root, env=self.env, capture_output=True, text=True, timeout=120)
         self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
         output = self.root / 'driver.spool.json'
@@ -311,9 +311,9 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
         # records make no declaration-admission claim.
         self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
 namespace LeanInformationAudit
-abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array Lean.Json)
+abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array (Lean.Json × Array Lean.Name × Lean.Environment))
 ''')
-        self.write('LeanInformationAudit/Registry.lean', '''import LeanInformationAudit.RegistryTypes
+        self.write('LeanInformationAudit/SealCommand.lean', '''import LeanInformationAudit.RegistryTypes
 namespace LeanInformationAudit
 open Lean Meta
 def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names => do
@@ -326,12 +326,13 @@ def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := f
     Core.checkMaxHeartbeats "native-report-regression"
   | some "ordinary" => throwError "ordinary fixture failure"
   | _ => pure ()
-  return names.map fun _ => Json.mkObj [("fixture", toJson true)]
+  let env ← getEnv
+  return names.map (fun _ => (Json.mkObj [("fixture", toJson true)], #[], env))
 ''')
         self.copy('tools/lean-inspector/Inspector.lean')
         self.ensure()
         built = subprocess.run(['make', 'lean',
-            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone @trureturing/LeanInformationAudit.Registry'],
+            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone @trureturing/LeanInformationAudit.SealCommand'],
             cwd=self.root, env=self.env, capture_output=True, text=True, timeout=120)
         self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
         executable = self.root / '.lake/build/lean-inspector/producer/bin/reportInspector'
@@ -432,7 +433,7 @@ class NativePackageConsumerTests(NativeReleaseSupport):
             publication.validate_bundle(output, publication.coordinates(clone), clone)
             self.assertEqual(output.read_bytes(), expected[0])
             self.assertEqual(publication.member(output, '.materials.zip').read_bytes(), expected[1])
-            for phase in ['inputs', 'utility-input-build', 'ensure', 'report', 'publish']:
+            for phase in ['inputs', 'producer-build', 'ensure', 'report', 'publish']:
                 self.assertEqual((logs / (phase + '.exit.log')).read_text(), '0\n')
             row = Path('.lake/build/lean-inspector/modules/D5.Alone.zip')
             self.assertNotEqual((donor / row).stat().st_ino, (clone / row).stat().st_ino)

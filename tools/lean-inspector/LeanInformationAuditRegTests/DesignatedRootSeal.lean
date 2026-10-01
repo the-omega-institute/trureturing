@@ -1,5 +1,8 @@
 import Reg.Catalogs.SharedInformationRoot
 import LeanInformationAuditRegTests.ProductionInputs
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Elab.Command LeanInformationAudit
 open Reg.Support

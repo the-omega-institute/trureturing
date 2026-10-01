@@ -1,0 +1,11 @@
+**定义 16.1（物理标签的统一对偶环坐标）。** 记基环 $B_e=\mathbb Z/e\mathbb Z$，二次环及其共轭为
+
+$$
+R_e=B_e[z]/(z^2+z-1),\qquad
+\overline z=-1-z=-z^{-1},\qquad
+\Phi(x,y)=y+xz,\qquad\operatorname{Nm}(f)=f\bar f,
+\qquad H_e=\langle z,-1\rangle\le R_e^\times.
+$$
+
+$\Phi$ 是从完整物理 Fourier 标签到二次环元素的 $B_e$ 模同构，不是 Hilbert 态的整体相位识别。对标签 $v=(x,y)$，称其本原，指 $B_ex+B_ey=B_e$；称其循环，指 $v,gv$ 构成 $B_e^2$ 的基；称其 $N_e$ 自由，指稳定子只含恒等群元素。
+

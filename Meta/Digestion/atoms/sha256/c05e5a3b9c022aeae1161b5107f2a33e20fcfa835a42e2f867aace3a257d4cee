@@ -1,0 +1,12 @@
+**命题 12.5（连续几何必须指定提升的相位）。** 定义 12.1 的 $U_J$ 与 $\widetilde U_J=iU_J$ 给出同一个离散酉通道，但按 $2I-V-V^\dagger$ 规则生成的连续行走不同；后者的生成元为 $2I$，行走仅为标量相位。因此只给离散通道不足以指定定理 12.3 的连续几何。
+
+证明。标准 $J$ 满足 $J^2=I$，故 $U_J^2=I$ 且 $U_J^\dagger=U_J$。标量相位在共轭中消失，所以 $\widetilde U_J\rho\widetilde U_J^\dagger=U_J\rho U_J^\dagger$。但
+
+$$
+2I-\widetilde U_J-\widetilde U_J^\dagger
+=2I-iU_J+iU_J=2I,
+\qquad \widetilde W_J(t)=e^{-2it}I.
+$$
+
+因而在混合合同上只加入 $\widetilde W_J$ 不增加任何实际效果方向，仍为 $\mathcal A_N$；模十一的命题 12.4 则证明加入标准 $W_J$ 可以严格增加它。定理 12.3 的低层零角为 $1$ 或 $2$，用到了无附加相位的标准提升；将提升换成 $iU_J$ 时正反项相消。两种连续模型具有相同离散通道，并不构成矛盾，而是连续生成元的额外相位选择不能从该离散通道恢复。$\square$
+

@@ -355,17 +355,25 @@ def zip_files(destination, paths):
                 shutil.copyfileobj(reader, writer, materials.BUFFER_BYTES)
 
 
-def unpack(artifact, directory, suffixes=SUFFIXES):
+def bundle_members(archive, suffixes=SUFFIXES):
+    """The exact regular, unencrypted members of an open bundle, by name."""
     expected = {RAW + suffix for suffix in suffixes}
+    if len(archive.namelist()) != len(expected) or set(archive.namelist()) != expected:
+        raise ValueError('invalid native artifact members')
+    members = {}
+    for name in sorted(expected):
+        info = archive.getinfo(name)
+        if info.is_dir() or stat.S_IFMT(info.external_attr >> 16) not in (0, stat.S_IFREG):
+            raise ValueError('nonregular native artifact member')
+        if info.flag_bits & 1:
+            raise ValueError('encrypted native artifact member')
+        members[name] = info
+    return members
+
+
+def unpack(artifact, directory, suffixes=SUFFIXES):
     with zipfile.ZipFile(artifact) as archive:
-        if len(archive.namelist()) != len(expected) or set(archive.namelist()) != expected:
-            raise ValueError('invalid native artifact members')
-        for name in sorted(expected):
-            info = archive.getinfo(name)
-            if info.is_dir() or stat.S_IFMT(info.external_attr >> 16) not in (0, stat.S_IFREG):
-                raise ValueError('nonregular native artifact member')
-            if info.flag_bits & 1:
-                raise ValueError('encrypted native artifact member')
+        for name, info in bundle_members(archive, suffixes).items():
             with open_zip_member(archive, info) as reader, (Path(directory) / name).open('wb') as writer:
                 shutil.copyfileobj(reader, writer, materials.BUFFER_BYTES)
     return Path(directory) / RAW

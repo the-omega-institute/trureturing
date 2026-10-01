@@ -1,0 +1,32 @@
+### 243.3 实际尾项具有无条件的局部变化界
+
+在素数幂事件之间，§92 的有限公式给出
+
+$$
+\Phi'(t)=\frac{(\log t+1)(t-\Psi(t))}{t^2\log^2t}.
+\tag{243.5}
+$$
+
+在事件 $t=p^k$，$P$ 的跳跃为 $1/(kp^k)$，而
+$\Psi/(t\log t)$ 的跳跃为 $\log p/(p^k\log(p^k))=1/(kp^k)$，
+所以 $\Phi$ 连续。经典 Chebyshev 界提供固定常数 $C\ge1$，使
+$0\le\Psi(t)\le Ct$；可取明确的 $C=\log4+4$。
+这个上界也见 Mathlib 的 `Chebyshev.psi_le_const_mul_self`，但引用现有上界不替代本节所需的分段微分论证。
+
+对 $t\ge4$，$\log t\ge1$，且 $|t-\Psi(t)|\le Ct$，所以
+
+$$
+|\Phi'(t)|\le\frac{2C}{t\log t}.
+$$
+
+任意紧区间 $[a,y]\subset[4,\infty)$ 只含有限个素数幂事件。
+在这些事件处分段，使用导数界、中值定理及端点连续性，再相加，可得
+
+$$
+|\Phi(y)-\Phi(a)|\le2C\frac{y-a}{a\log a}.
+\tag{243.6}
+$$
+
+因此实际尾项满足定理 243.2 的变化假设，取 $B=2C$。
+这一变化界来自既有有限公式与经典 Chebyshev 界，不假设 RH。
+

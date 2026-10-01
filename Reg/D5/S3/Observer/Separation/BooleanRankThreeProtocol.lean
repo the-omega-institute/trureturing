@@ -78,16 +78,6 @@ register_information_theorem result in arena
       functionOperand := true }] })
   escape continues (open)
 
-open Lean in
-run_meta do
-  let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-    record.occurrence.key.theoremName ==
-      `D5.S3.Observer.Separation.BooleanRankThreeProtocol.result
-  let valid := row.any fun record => match record.result with
-    | .declaredValidated _ => true
-    | _ => false
-  unless valid do throwError "Boolean rank-three protocol registration is not declaredValidated"
-
 #print axioms result
 #print axioms registration
 

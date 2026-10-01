@@ -24,14 +24,14 @@ def validateCatalogArena (root catalogId arenaName : Name) (catalog arena : Expr
   let declaredArena := type.appArg!
   let declaredOwner := if declaredArena.isAppOf ``PrimitiveLawArena.toArena then
       declaredArena.appArg! else declaredArena
-  let declaredOwner := if declaredOwner.isAppOf (RegistrationGates.witnessArenaName.str "toPrimitiveLawArena") ||
-      declaredOwner.isAppOf (RegistrationGates.witnessArenaName.str "toArena") ||
-      declaredOwner.isAppOf (RegistrationGates.objectDomainArenaName.str "toPrimitiveLawArena") then
+  let declaredOwner := if declaredOwner.isAppOf (RegistrationElaboration.witnessArenaName.str "toPrimitiveLawArena") ||
+      declaredOwner.isAppOf (RegistrationElaboration.witnessArenaName.str "toArena") ||
+      declaredOwner.isAppOf (RegistrationElaboration.objectDomainArenaName.str "toPrimitiveLawArena") then
       declaredOwner.appArg! else declaredOwner
   let canonicalName := declaredOwner.constName?
   unless canonicalName == some arenaName do fail "object-arena"
   let named ← mkConstWithFreshMVarLevels arenaName
-  let named := (← RegistrationGates.normalizeArena named).finite
+  let named := (← RegistrationElaboration.normalizeArena named).finite
   unless (← isDefEq named declaredArena) && (← isDefEq named arena) do fail "object-arena"
   let actualCard : Nat ← reduceEval (← mkAppM ``Arena.card #[named])
   unless actualCard == stateCard do fail "arena-counts"
@@ -106,7 +106,7 @@ def validateAnalysisBindings (root : Name) (original reflected arena : Expr)
     let declaredType ← whnf (← inferType declared)
     let realized ← if declaredType.isAppOf ``LegacyPrimitiveRealization || declaredType.isAppOf
         `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization ||
-        declaredType.isAppOfArity RegistrationGates.witnessBridgeName 3 then
+        declaredType.isAppOfArity RegistrationElaboration.witnessBridgeName 3 then
         pure declaredType.appArg!
       else if declaredType.isAppOf ``PrimitiveRealization then pure declared
       else do fail "realization-type"; pure declared

@@ -1414,3 +1414,3098 @@ $$
 五个索引不同且最后一行闭合，得到最短周期五；其最大最小索引与缺陷差给出所列读数。这一证书的局部轮廓正缺陷为 $(6,3,5,3,5)$，与规范缺陷不同，故不能把文献的轮廓缺陷字直接代入式 (19.1)。
 
 ## 追加锚（本行以下为增补区）
+
+## 20. 缺陷词图闭合与有界周期的五窗分离
+
+**定义 20.1（共同长度合同及比较映射）。** 沿用定义 14.1 的 $G$、$M$、$S$、$q$、$r_G$、$d_\sigma$ 与定义 17.2 的高到低词 $W(n)$。记 $L(n)$ 为规范词的窗口数，故 $L(0)=L(1)=0$。对 $H\geq L(n)$，定义
+
+$$
+W_H(n)=\mathrm{null}^{H-L(n)}W(n).
+$$
+
+对任意 $f:\mathbb N_{>0}\to\mathbb N$，其全补零同步词图是
+
+$$
+\mathcal G_f=
+\left\{\bigl(W_H(n),W_H(f(n))\bigr)_{\mathrm{sync}}:
+ n\geq1,\ H\geq\max\{L(n),L(f(n))\}\right\}.
+\tag{20.1}
+$$
+
+其中每个词恰含 $H$ 个窗口配对字母，最后恰有一个单位位配对字母；窗口字母和单位末字母的字母表不交。三轨及投影也使用同一个 $H$，只删除相应轨道，不改变字母数。每一轨都须满足定义 2.1 的不相邻占位条件。这里保留所有共同长度，不只取最短共同长度；$n=1$、零值输出、零窗口词及任意额外高端 $\mathrm{null}$ 都在合同内。
+
+取 $A=[2]$、$B=\mathrm{null}$，并定义
+
+$$
+\begin{aligned}
+\mathcal S&=\{n_m:m\geq1\},&
+n_m&=F_{6m+9}+F_{3m+6}+2,\\
+p_0(n)&=G(n),&
+p_\star(n)&=G(n)+\mathbf1_{\mathcal S}(n).
+\end{aligned}
+\tag{20.2}
+$$
+
+对 $G(n)\leq p(n)\leq n$ 的映射记 $E_p(n)=p(n)-G(n)$。对 $N\geq2$，记 $D_N=\{1,\ldots,N-1\}$、$T_{N,p}(x)=N-p(x)$；周期长度指此映射在 $D_N$ 中一条周期的不同索引数，与同步词图的窗口数无关。
+
+**定理 20.2（缺陷闭合等价及合法五窗分离）。** 对每个 $p:\mathbb N_{>0}\to\mathbb N$，若对所有 $n\geq1$ 都有 $G(n)\leq p(n)\leq n$，则在定义 20.1 的全补零合同中
+
+$$
+\operatorname{Reg}(\mathcal G_p)
+\quad\Longleftrightarrow\quad
+\operatorname{Reg}(\mathcal G_{E_p}).
+\tag{20.3}
+$$
+
+定义 20.1 的两个比较映射都全局单调不减，并满足
+
+$$
+\begin{aligned}
+1&\leq p_0(n)\leq p_\star(n)\leq n&& (n\geq1),\\
+p_0(F_j)&=p_\star(F_j)=F_{j-1}&& (j\geq2),\\
+\lim_{n\to\infty}\frac{p_0(n)}n
+&=\lim_{n\to\infty}\frac{p_\star(n)}n=\alpha,\\
+E_{p_0}(n)&=0,\qquad E_{p_\star}(n)\in\{0,1\}&& (n\geq1).
+\end{aligned}
+\tag{20.4}
+$$
+
+对每个 $N\geq2$，$T_{N,p_0}$ 与 $T_{N,p_\star}$ 均保持 $D_N$，其每条周期长度都至多二。然而 $\mathcal G_{p_0}$ 正则，$\mathcal G_{p_\star}$ 与 $\mathcal G_{E_{p_\star}}$ 非正则。后者的扰动有合法规范来源
+
+$$
+W(n_m)=AB^mAB^mA\underline0\qquad(m\geq1),
+\tag{20.5}
+$$
+
+故即使同时给出黄金上下界、全部 Fibonacci 锚、黄金极限斜率、缺陷振幅至多一、全局单调性及周期长度至多二，也不能推出规范五窗同步词图正则。
+
+这两个比较映射均在 $n=7$ 违反定义 15.1 的 Cloitre 自指方程。对实际 Cloitre 序列，在假设 18.1 下，式 (20.3) 只给出条件等价
+
+$$
+\operatorname{Reg}(\mathcal G_C)
+\quad\Longleftrightarrow\quad
+\operatorname{Reg}(\mathcal G_{E_C}),
+\qquad
+E_C(n)=\sum_{u\in I_n}\delta(g_{m_u},m_u-g_{m_u}),
+\tag{20.6}
+$$
+
+其中右侧是定理 15.3 的同一实际拆分树总进位；本定理不判定这两个实际词图中的任何一个是否正则，也不证明实际内周期长度无界。
+
+证明。先确定共同长度的数值资源。$H$ 个窗口连同单位位所能占用的 Fibonacci 索引恰为 $2,\ldots,3H+2$。令 $V_K$ 是索引 $2,\ldots,K$ 中不相邻占位的最大和，取 $V_1=0$、$V_2=1$。按最高位是否占用，有
+
+$$
+V_K=\max\{V_{K-1},F_K+V_{K-2}\}\qquad(K\geq3),\qquad
+V_K=F_{K+1}-1\qquad(K\geq1).
+$$
+
+最后一个等式由 Fibonacci 递推归纳得到。若整数的规范表示含索引至少 $K+1$，其值至少为 $F_{K+1}$；反之，由规范表示的存在性，小于此阈值的整数不可能含这种索引。因此
+
+$$
+L(x)\leq H
+\quad\Longleftrightarrow\quad
+0\leq x<F_{3H+3}.
+\tag{20.7}
+$$
+
+特别地，$n$ 能放入 $H$ 个窗口时，每个 $0\leq x\leq n$ 都能放入同样的 $H$ 个窗口。这包括 $H=0$ 的两个数零、一；其阈值为 $F_3=2$。后面所有投影所需的辅助数 $p(n)$、$E_p(n)$、$G(n)$、零和一均不超过正输入 $n$，所以不需要增加共同窗口数。
+
+构造三轨关系 $\mathcal A$：三个合法共长词分别表示 $(n,z,y)$，第一轨要求 $n\geq1$，并满足
+
+$$
+y=G(n)+z.
+\tag{20.8}
+$$
+
+Fibonacci 表示的同步加法、有限进位及正则语言闭合是已知中间工具，先例为 Du、Mousavi、Schaeffer、Shallit，[*Decision Algorithms for Fibonacci-Automatic Words, with Applications to Pattern Avoidance*](https://arxiv.org/abs/1406.0670)，§2 的高端补零三轨加法。这里将这一工具按本卷的降阶黄金读出、五窗及独立单位位具体化；$\mathcal A$ 本身不作为新的通用自动机定理。
+
+由于
+
+$$
+M^{-1}=\begin{pmatrix}-1&1\\1&0\end{pmatrix},
+\qquad qM^{-1}=r_G,\qquad M^{-1}S=SM^{-1},
+$$
+
+对从高到低读入的窗口三元组 $(\sigma_{\mathrm{input}},\sigma_{\mathrm{defect}},\sigma_{\mathrm{output}})$，从 $h_0=0\in\mathbb Z^2$ 更新
+
+$$
+\begin{aligned}
+h'&=Sh+M^{-1}d_{\mathrm{input}}+d_{\mathrm{defect}}-d_{\mathrm{output}},\\
+qh+e_{\mathrm{input}}+e_{\mathrm{defect}}-e_{\mathrm{output}}&=0
+\quad\text{在单位末字母处接受}.
+\end{aligned}
+\tag{20.9}
+$$
+
+这里 $d_{\mathrm{input}}$ 等分别指对应窗口的 $d_\sigma$。Horner 展开及上述交换式给
+
+$$
+h_H=M^{-1}c_Z(n)+c_Z(z)-c_Z(y).
+$$
+
+由式 (14.1)，式 (20.9) 的终态左侧恰为 $G(n)+z-y$；即使某一轨有额外高端零窗口，该恒等式也不改变。
+
+为把式 (20.9) 限制在有限状态内，令
+
+$$
+\begin{aligned}
+D&=\{M^{-1}d_\sigma+d_\tau-d_\upsilon:
+\sigma,\tau,\upsilon\in\Sigma\},\\
+\Lambda&=\varphi^3=2+\sqrt5,\qquad
+\Theta=-\varphi^{-3}=2-\sqrt5,\\
+q_+&=\frac{q(S-\Theta I)}{\Lambda-\Theta},\qquad
+q_- =\frac{q(\Lambda I-S)}{\Lambda-\Theta},\\
+A_\pm&=\max_{\Delta\in D}|q_\pm\Delta|,\qquad
+B_- =\frac{A_-}{1-|\Theta|},\qquad
+B_+ =\frac{A_+}{\Lambda-1}+B_-+2.
+\end{aligned}
+$$
+
+这些常数只依赖固定的五窗字母表。两个行读出满足 $q=q_++q_-$、$q_+S=\Lambda q_+$、$q_-S=\Theta q_-$，且相互独立：$q$ 和 $qS=(8,13)$ 不成比例，故 $q$ 在两个不同特征方向上的分量都非零。对任何从零开始的前缀状态，收缩方向的几何和给
+
+$$
+|q_-h_j|\leq B_-.
+$$
+
+若完整词满足式 (20.8)，在前缀后还剩 $t=H-j$ 个窗口，单位位差
+
+$$
+\zeta=e_{\mathrm{input}}+e_{\mathrm{defect}}-e_{\mathrm{output}}
+\in\{-1,0,1,2\}
+$$
+
+满足 $q_+h_H=-q_-h_H-\zeta$。展开剩余窗口的更新，得到
+
+$$
+\begin{aligned}
+\Lambda^t|q_+h_j|
+&\leq A_+\frac{\Lambda^t-1}{\Lambda-1}+B_-+2,\\
+|q_+h_j|&\leq B_+.
+\end{aligned}
+$$
+
+因此所有可接受词的全部前缀状态都属于固定集合
+
+$$
+Q=\{h\in\mathbb Z^2:|q_-h|\leq B_-,\ |q_+h|\leq B_+\}.
+$$
+
+两个独立线性读出的有界区间在 $\mathbb R^2$ 中给出有界区域，故 $Q$ 有限。只保留 $Q$，按式 (20.9) 更新，越界拒绝，单位末字母按终态等式接受。所有满足式 (20.8) 的词均不越界；所有接受词也都满足该式。这是 Fibonacci/Pisot 有限进位机制在当前三轨关系上的应用，界不随 $n$、$H$ 或填充数量改变。
+
+还须分别核对三轨的合法性。写窗口的三位为 $(l_\sigma,m_\sigma,u_\sigma)$，次序仍为低到高。窗口内的不相邻条件已由 $\Sigma$ 保证；高到低读取相邻窗口 $\sigma$、$\tau$ 时，只须检查 $l_\sigma u_\tau=0$。读者保存最近窗口的最低位 $l_\sigma$，随后更新为 $l_\tau$；读到单位位时检查最低窗口的 $l$ 与该单位位不能同时为一。没有窗口时保存位取零。三轨各使用这一有限接缝守卫，再要求恰有一个专用末字母及第一轨非零，即得到准确的 $\mathcal A$。不要求各轨最高窗口同时非空；共同加一个全 $\mathrm{null}$ 的高端三元组时，初态仍为零，各轨接缝仍合法。故该识别涵盖所有高端填充，包括零窗口及仅有单位位的情形。
+
+用 $\pi_{n,z}$、$\pi_{n,y}$ 表示三轨上的同步投影。算术等式与合法性给出
+
+$$
+\begin{aligned}
+\mathcal G_p
+&=\pi_{n,y}\left(\mathcal A\cap
+\pi_{n,z}^{-1}(\mathcal G_{E_p})\right),\\
+\mathcal G_{E_p}
+&=\pi_{n,z}\left(\mathcal A\cap
+\pi_{n,y}^{-1}(\mathcal G_p)\right).
+\end{aligned}
+\tag{20.10}
+$$
+
+两个方向的存在见证分别是 $z=E_p(n)$ 和 $y=p(n)$。它们满足
+
+$$
+0\leq E_p(n)\leq p(n)\leq n,\qquad 0\leq G(n)\leq n.
+$$
+
+式 (20.7) 因而保证每个原配对词的同一 $H$ 上都有所需第三轨，式 (20.10) 没有漏掉最短词或只保留较长填充词。反向包含由 $y=G(n)+z$ 直接得到。特别地，$n=1$ 强制 $p(1)=1$、$E_p(1)=0$，在 $H=0$ 时三轨的单位末字母为 $(\underline1,\underline0,\underline1)$，终态等式成立。正则语言对逆字母投影、相交和字母投影封闭，所以式 (20.10) 证明式 (20.3)，并给出精确的有限状态闭合判据：在这些界内，缺陷的同合同同步词图正则既充分又必要。
+
+下面证明比较映射的全部条件。$n_m$ 的占位索引恰为
+
+$$
+3,\quad 3m+6,\quad 6m+9.
+$$
+
+三者均属于窗口的最低位，窗口层数依次为 $0,m+1,2m+2$，索引间隔均为 $3m+3\geq6$，单位位为零。这是合法 Zeckendorf 来源，其高到低规范词正是式 (20.5)，且
+
+$$
+n_1=F_{15}+F_9+2=610+34+2=646.
+$$
+
+三个占位保证它不等于任何单占位 Fibonacci 锚；$F_2=1$ 也不在 $\mathcal S$。由式 (14.1) 的降阶和，每个支持点都满足
+
+$$
+\begin{aligned}
+G(n_m)&=F_{6m+8}+F_{3m+5}+1,\\
+n_m-G(n_m)&=F_{6m+7}+F_{3m+4}+1
+=a(n_m)+b(n_m)\geq3.
+\end{aligned}
+\tag{20.11}
+$$
+
+所以支持点上加一仍不超过 $n_m$，非支持点上 $p_\star=G$。取整式给 $1\leq G(n)\leq n$，得到式 (20.4) 的界。降阶和给 $G(F_j)=F_{j-1}$，支持又避开全部锚，得到两个映射的锚值。因为 $|G(n)-\alpha n|<1$ 且扰动介于零、一之间，两个商都趋于 $\alpha$，所列缺陷也直接成立。
+
+$G$ 单调不减。对每个支持点 $n_m$，将最低窗口 $[2]$ 换成 $[3]$，其余窗口不变，占位索引变为 $4,3m+6,6m+9$，仍无相邻占位，故是合法规范来源；它的数量从 $n_m$ 增为 $n_m+1$，黄金读出也从 $G(n_m)$ 增为 $G(n_m)+1$。因此
+
+$$
+p_\star(n_m)=G(n_m)+1=G(n_m+1)\leq p_\star(n_m+1).
+$$
+
+对非支持点 $n$，有 $p_\star(n)=G(n)\leq G(n+1)\leq p_\star(n+1)$。两类穷尽全部相邻整数，证明全局单调性。
+
+对 $p=p_0$ 或 $p=p_\star$，界 $1\leq p(x)\leq x\leq N-1$ 给 $1\leq N-p(x)\leq N-1$，所以 $T_{N,p}$ 保持 $D_N$。单调性使 $T_{N,p}$ 单调不增。在任何一条周期的有限有序点集 $O=\{x_1<\cdots<x_\ell\}$ 上，它又是双射，因此必须满足
+
+$$
+T_{N,p}(x_i)=x_{\ell+1-i},\qquad T_{N,p}^{2}(x_i)=x_i.
+$$
+
+故一条周期的长度至多二。这里使用有限有序集反序双射的经典性质，与定理 19.2 中零振幅的中间步骤相同；不据此断言前周期长度有统一界。
+
+$E_{p_0}=0$ 的词图由任意合法正输入轨及全零输出轨组成，输出窗口全为 $\mathrm{null}$、单位位为零，故正则；式 (20.3) 给 $\mathcal G_{p_0}$ 正则。为证明另一个词图非正则，在正则关系 $\mathcal A$ 中把缺陷轨限制为常数一，即任意个 $\mathrm{null}$ 后接 $\underline1$，并删除该轨。得到正则过滤关系
+
+$$
+\mathcal J=\{(W_H(n),W_H(y))_{\mathrm{sync}}:
+ n\geq1,\ y=G(n)+1,\ H\geq\max\{L(n),L(y)\}\}.
+$$
+
+常数一在每个 $H\geq0$ 都有表示；过滤未增加词长。若 $\mathcal G_{p_\star}$ 正则，则与 $\mathcal J$ 相交、投影到输入轨，得到支持 $\mathcal S$ 的全部高端补零词。每个支持点的输出不超过输入，所以其规范输入长度上的见证也由式 (20.7) 存在。再与“最高窗口非 $\mathrm{null}$，或没有窗口”的规范合法词语言相交，恰得到
+
+$$
+\mathcal L_{\mathcal S}=\{AB^mAB^mA\underline0:m\geq1\},
+$$
+
+且该语言将为正则。
+
+但对每个 $i\geq1$，取前缀 $u_i=AB^iA$ 和后缀 $v_i=B^iA\underline0$。对所有 $j\geq1$，
+
+$$
+u_jv_i\in\mathcal L_{\mathcal S}
+\quad\Longleftrightarrow\quad j=i.
+$$
+
+各个 $u_i$ 因而有两两不同的右残余，由经典 Myhill–Nerode 判据，$\mathcal L_{\mathcal S}$ 非正则，矛盾。这里的非正则语言来自已核对的合法五窗占位，而非任意外加编码。故 $\mathcal G_{p_\star}$ 非正则，式 (20.3) 同时给 $\mathcal G_{E_{p_\star}}$ 非正则。这证明有界缺陷及短周期仍能保留两段空窗长度相等的无界约束；给出缺陷的取值集合不能代替识别哪些合法输入取得这些值。
+
+最后核对自指边界。$n_m$ 严格递增且首项为 646，所以两个比较映射在索引七及其以下都等于 $G$。对其中任意一个 $p$，有
+
+$$
+p(6)=4,\quad p(3)=2,\quad p(5)=3,\quad p(4)=3,\quad p(7)=4.
+$$
+
+固定外部索引七，从六开始、深度为 $p(6)=4$ 的实际比较轨道是
+
+$$
+6\longmapsto7-p(6)=3
+\longmapsto7-p(3)=5
+\longmapsto7-p(5)=4
+\longmapsto7-p(4)=4.
+$$
+
+因此所选终点为四，Cloitre 方程要求
+
+$$
+p(7)=p(4)+p(7-4)=3+2=5,
+$$
+
+而比较映射给 $p(7)=4$。它们不是定义 15.1 的实际 $C$；不能将该分离构造当作实际 Cloitre 正则性的反例。
+
+若实际 $C$ 满足假设 18.1，$G\leq C\leq n$ 正好履行式 (20.3) 的前提，定理 15.3 则把这里的 $E_C$ 确认为同一实际拆分树总标量进位，得到式 (20.6)。树对每个输入有限，并不保证跨全部输入的进位读出具有有限状态的同步词图；相反，本定理要求检验的恰是这个全局缺陷读出。比较映射未履行实际自指方程，故其短周期及非正则性均不能转移给 $C$。实际 $C$ 的两种五窗词图正则性、以及实际周期是否存在无界长度族，仍分别需要满足递归约束的证明。
+
+## 追加锚（本行以下为增补区）
+
+## 21. 实际 Cloitre 的任意固定右宽度与五窗正则性约束
+
+**假设 21.1（实际递归的全局来源前提）。** 沿用 $F_0=0$、$F_1=1$、$F_{j+1}=F_j+F_{j-1}$、$\varphi=(1+\sqrt5)/2$、$\alpha=\varphi^{-1}$ 与 $G(n)=\lfloor\alpha(n+1)\rfloor$。本节的 $C$ 始终是定义 15.1 的实际 Cloitre 序列：
+
+$$
+\begin{aligned}
+C(1)&=C(2)=1,\\
+D_N&=\{1,\ldots,N-1\},\qquad T_N(x)=N-C(x),\\
+x_0&=N-1,\qquad x_{i+1}=T_N(x_i),\qquad d_N=C(N-1),\\
+g_N&=x_{d_N},\qquad C(N)=C(g_N)+C(N-g_N)\quad(N\ge3).
+\end{aligned}
+$$
+
+取 [Cloitre 黄金结构，§§5–6](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/golden-proof.md) 的下列全局关系作为显式前提。对每个正整数 $n$，
+
+$$
+G(n)\le C(n)\le U(n)\le n,
+$$
+
+其中 $U(1)=1$，对 $F_j\le n<F_{j+1}$、$j\ge3$，
+
+$$
+U(n)=\min\{n-F_{j-2},F_j\}.
+$$
+
+此外，$U$ 非减且满足 $0\le U(n+1)-U(n)\le1$，并有
+
+$$
+\begin{aligned}
+U(F_j)&=C(F_j)=G(F_j)=F_{j-1}&&(j\ge2),\\
+G(F_j+1)&=C(F_j+1)=F_{j-1}+1&&(j\ge3).
+\end{aligned}
+$$
+
+这里不假设 $C$ 单调。使用 [Fibonacci collars，§1](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/fibonacci-collars.md) 的全轨道捕获结论：对 $q\ge6$、整数 $t\ge0$、$N=F_q+t$，每条 $T_N$ 轨道最终进入不变区间
+
+$$
+I_{q,t}=[F_{q-1},F_{q-1}+t]\cap\mathbb Z\subseteq D_N,
+$$
+
+且全部周期都在其中。还使用 [Cloitre foundations，§4](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/proof.md) 的规定深度入周期结论：对每个 $N\ge3$，起点 $N-1$ 的最短前周期 $\mu_N$ 满足 $d_N\ge\mu_N$，所以 $g_N$ 是同一实际轨道的周期点。
+
+这些全局前提承继来源的计算辅助基础：黄金结构使用区间 $[16384,131071]$ 上的有限比值前提及 $[1,65535]$ 上的有限归纳基，规定深度入周期使用 $3\le N\le52$ 的有限初值前提。以下结论条件于这些来源前提，不给它们另一个独立证明。[Fibonacci collars，§6](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/fibonacci-collars.md) 的额外双种子只给出固定带 $-12\le t\le32$；本节不把该固定带当作任意宽度的种子。
+
+**定义 21.2（右侧轮廓缺陷）。** 对整数 $j\ge2$、$t\ge0$，定义
+
+$$
+H_j(t)=F_{j-1}+t-C(F_j+t).
+$$
+
+这是右侧线性轮廓的亏量，与规范黄金缺陷 $E_C(n)=C(n)-G(n)$ 分开。对 $t\ge0$，它是所引 Fibonacci collars §7 的轮廓缺陷 $D_j(t)=C(F_j+t)-F_{j-1}-\max(0,t)$ 的相反数。特别地，$H_j(t)=0$ 不意味着 $E_C(F_j+t)=0$。
+
+**定理 21.3（任意固定右宽度的实际轮廓）。** 在假设 21.1 下，对每个整数 $t\ge0$ 及每个整数 $k\ge6t+6$，
+
+$$
+C(F_k+t)=F_{k-1}+t.
+\tag{21.1}
+$$
+
+证明。先列出用于归纳的界与实际拆分恒等式。对 $j\ge6$，锚值给 $H_j(0)=0$。若 $t\ge1$，$U$ 的 1-Lipschitz 性及 $G$ 的单调性分别给
+
+$$
+C(F_j+t)\le U(F_j)+t=F_{j-1}+t,
+\qquad
+C(F_j+t)\ge G(F_j+1)=F_{j-1}+1.
+$$
+
+因此
+
+$$
+0\le H_j(t)\le t-1\qquad(j\ge6,\ t\ge1).
+$$
+
+对 $q\ge6$、$N=F_q+t$，捕获及规定深度入周期使实际所选拆分具有唯一整数偏移 $s$：
+
+$$
+g_N=F_{q-1}+s,\qquad N-g_N=F_{q-2}+t-s,
+\qquad 0\le s\le t.
+$$
+
+两项均在 $D_N$ 中。将它们代入实际加法递归并使用 Fibonacci 递推，得到
+
+$$
+H_q(t)=H_{q-1}(s)+H_{q-2}(t-s).
+\tag{21.2}
+$$
+
+这个 $s$ 是同一实际轨道在深度 $d_N$ 处选出的偏移，不能自由选择。
+
+对偏移 $t$ 作强归纳。$t=0$ 由锚值成立。固定 $t\ge1$，假设式 (21.1) 对全部 $0\le u<t$ 成立，令 $K=6t$。因为 $6u+6\le K$，归纳假设统一给出
+
+$$
+H_j(u)=0\qquad(0\le u<t,\ j\ge K).
+$$
+
+下面先考察任意 $q\ge K+2$，写
+
+$$
+A=F_{q-1},\qquad B=F_{q-2},\qquad N=A+B+t,
+\qquad I=[A,A+t]\cap\mathbb Z.
+$$
+
+所有阶数及指标均合法。事实上，$F_r\ge r-1$ 对 $r\ge2$ 由 Fibonacci 递推归纳成立，所以
+
+$$
+F_{q-2}\ge q-3\ge6t-1>t.
+$$
+
+于是 $F_q+t<F_{q+1}$、$A+t<F_q<N$，区间 $I$ 及所选拆分的两个指标均属于已定义前缀。所用低阶 $q-1,q-2$ 均至少为 $K$，可以使用全部较小偏移的归纳结论；这里没有附加新的宽度种子。
+
+对 $0\le u<t$，归纳假设给 $C(A+u)=B+u$。令 $h=H_{q-1}(t)$，则 $0\le h\le t-1$，且
+
+$$
+\begin{aligned}
+T_N(A+u)&=A+t-u&&(0\le u<t),\\
+T_N(A+t)&=A+h.
+\end{aligned}
+$$
+
+若 $h>0$，则 $1\le h<t$。内部偏移 $1,\ldots,t-1$ 在反射 $u\mapsto t-u$ 下封闭，而端点依次映为 $0\mapsto t\mapsto h$。两个端点都是暂态点，不能属于周期。捕获及规定深度入周期遂迫使所选 $s$ 满足 $0<s<t$。式 (21.2) 的两项都是较小偏移，故 $H_q(t)=0$。
+
+若 $h=0$，整个 $I$ 上都有反射 $T_N(A+u)=A+t-u$。若 $0<s<t$，式 (21.2) 仍给零；若 $s=t$，它给 $H_{q-1}(t)+H_{q-2}(0)=0$。所以唯一可能产生正值的所选偏移是 $s=0$。得到端点亏量二分的关键蕴含：
+
+$$
+H_q(t)>0
+\quad\Longrightarrow\quad
+H_{q-1}(t)=0,\qquad g_N=A,\qquad
+H_q(t)=H_{q-2}(t)>0.
+\tag{21.3}
+$$
+
+还须确定这一端点选择的实际时间相位。在式 (21.3) 的情形，所选周期是端点二周期 $A\leftrightarrow A+t$。起点满足 $x_0=N-1>A+t$，因为 $B>1$。对区间外的实际域内指标，来源上界及黄金下界给
+
+$$
+\begin{aligned}
+x<A&\quad\Longrightarrow\quad
+C(x)\le U(x)\le U(A)=B,
+\quad T_N(x)\ge A+t,\\
+x>A+t&\quad\Longrightarrow\quad
+C(x)\ge G(x)\ge G(A+1)=B+1,
+\quad T_N(x)\le A+t-1.
+\end{aligned}
+$$
+
+整个 $I$ 是反射，内部偏移的反射周期与端点周期互不相交。因此，一条最终处于端点周期的轨道不可能先进入内部。它在进入 $I$ 前，只能由右外侧移到左外侧或下端点，由左外侧移到右外侧或上端点。从右外侧的时刻零开始，仍在外侧的偶数时刻在右边，仍在外侧的奇数时刻在左边。若首次进入是从右外侧进入区间，则进入下端点 $A$，时间为奇数；若首次进入是从左外侧进入区间，则进入上端点 $A+t$，时间为偶数。此后反射保持同样的相位。
+
+所以每次访问下端点都发生在入区间后的奇数时刻，上端点都发生在入区间后的偶数时刻；这不把入区间之前的奇数外侧时刻说成端点访问。由于 $g_N=x_{d_N}=A$，实际深度必须为奇数。较小偏移 $t-1$ 的归纳结论又给出精确深度
+
+$$
+d_N=C(F_q+t-1)=F_{q-1}+t-1.
+$$
+
+现在取 $k\ge K+6$。若 $H_k(t)>0$，式 (21.3) 在阶数 $k$、$k-2$、$k-4$ 处依次适用，因为最小的 $k-4\ge K+2$。正亏量依次传到 $H_{k-2}(t)$、$H_{k-4}(t)$，上述相位论证迫使三个数
+
+$$
+F_{k-1}+t-1,\qquad F_{k-3}+t-1,\qquad F_{k-5}+t-1
+\tag{21.4}
+$$
+
+同时为奇数。但 Fibonacci 递推模二从 $(F_0,F_1)=(0,1)$ 给周期位串 $0,1,1$，即 $F_j$ 为偶数当且仅当 $j\equiv0\pmod3$。三个指标 $k-1,k-3,k-5$ 覆盖全部模三余数，其 Fibonacci 值不能同奇偶；加上同一个 $t-1$ 也不能使它们全为奇数。矛盾。
+
+由 $H_k(t)\ge0$ 得 $H_k(t)=0$，完成偏移强归纳并证明式 (21.1)。特别地，对每个固定整数右宽度 $R\ge0$，都有统一结论
+
+$$
+C(F_k+t)=F_{k-1}+t
+\qquad(k\ge6R+6,\ 0\le t\le R).
+\tag{21.5}
+$$
+
+量词中的 $R$ 任意；它没有从固定带种子外推，也不包含负偏移轮廓。
+
+**定理 21.4（全部实际周期与无界规范振幅）。** 在假设 21.1 下，对整数 $t\ge1$、$k\ge6t+7$，令 $N=F_k+t$、$A=F_{k-1}$。$T_N$ 在 $D_N$ 上的全部周期恰为
+
+$$
+\{A+s,A+t-s\}\qquad
+\left(s\in\mathbb Z,\ 0\le s<\frac t2\right),
+$$
+
+以及在 $t$ 为偶数时的唯一中点固定周期 $\{A+t/2\}$。每条轨道最终进入其中一个周期。特别地，端点对 $\{A,A+t\}$ 是实际二周期，且其规范黄金缺陷振幅为
+
+$$
+E_C(A)=0,\qquad E_C(A+t)=t-G(t),\qquad
+\Delta_{\{A,A+t\}}=t-G(t).
+\tag{21.6}
+$$
+
+当 $t\to\infty$ 且每次取任意 $k\ge6t+7$ 时，这个振幅趋于无穷；因此实际 $E_C$ 在正整数域上无界。
+
+证明。因为 $k-1\ge6t+6$，定理 21.3 在阶数 $k-1$ 处对全部 $0\le u\le t$ 给出
+
+$$
+C(A+u)=F_{k-2}+u,\qquad
+T_N(A+u)=A+t-u.
+$$
+
+捕获区间的全部点都在 $D_N$ 中，每条轨道进入该区间，且所有周期都在其中。反射的非中点轨道是上述互不相交的二周期，偶数宽度的中点是固定点，故分类完整。
+
+锚值直接给 $E_C(A)=0$。还须按同一规范表示计算另一个端点，不能把 $G$ 当作任意加法上的线性函数。由 $k\ge6t+7$ 得 $t<F_{k-2}$。所以 $t$ 的 Zeckendorf 占位索引都至多为 $k-3$，与 $A=F_{k-1}$ 的单占位没有相邻接缝。将两套占位合并是合法的规范 Zeckendorf 加法，低位保持不变。定理 14.2 的逐位降阶读出因而给
+
+$$
+G(A+t)=F_{k-2}+G(t).
+$$
+
+与刚得的 $C(A+t)=F_{k-2}+t$ 相减，得到式 (21.6)。由于
+
+$$
+t-G(t)=(1-\alpha)t-\alpha+\{\alpha(t+1)\},
+\qquad 1-\alpha=\alpha^2>0,
+$$
+
+振幅趋于无穷。例如取 $k=6t+7$，上端点构成实际索引的一列无界缺陷值。由定理 15.3，这些缺陷值也分别是各自实际拆分树的总标量进位。
+
+这里分类的是全部实际周期，未指定起点 $N-1$ 及深度 $C(N-1)$ 一定选中端点对。上述端点对的周期长度始终为二；无界振幅不会把定理 19.2 的“无界周期长度必有无界振幅”反向变成无界周期长度的证明。
+
+**定理 21.5（实际五窗正则性与黄金收敛的互斥条件）。** 在假设 21.1 下，严格使用定义 17.2、20.1 的高到低规范五窗、独立单位末字母及全部共同高端补零合同，有
+
+$$
+\begin{aligned}
+\operatorname{Reg}(\mathcal G_C)
+&\quad\Longrightarrow\quad
+\limsup_{n\to\infty}\frac{C(n)}n>\alpha,\\
+\frac{C(n)}n\longrightarrow\alpha
+&\quad\Longrightarrow\quad
+\neg\operatorname{Reg}(\mathcal G_C).
+\end{aligned}
+\tag{21.7}
+$$
+
+证明。来源界履行定理 20.2 的实际前提，故
+
+$$
+\operatorname{Reg}(\mathcal G_C)
+\quad\Longleftrightarrow\quad
+\operatorname{Reg}(\mathcal G_{E_C}),\qquad
+0\le E_C(n)\le n.
+$$
+
+定理 21.4 又给出实际 $E_C$ 无界。接下来只在这条实际缺陷词图的推导中使用有限自动机泵送。整数进制同步函数的相关方法先例见 Goč、Schaeffer、Shallit，[*Subword Complexity and k-Synchronization*, arXiv:1206.5352v4，§5，Theorem 16 的证明](https://arxiv.org/abs/1206.5352v4)。该整数进制论证不直接承担这里的 Fibonacci 权重；下面给出当前五窗合同中的具体估计。
+
+记 $f=E_C$，假设其词图正则。与“输入没有额外高端零窗口”的正则语言相交，得到正则语言 $\mathcal L$。它对每个 $n\ge1$ 恰有一个词，窗口数为 $H=L(n)$；当 $H>0$ 时首个输入窗口非 $\mathrm{null}$。定理 20.2 中的共同长度资源等式
+
+$$
+L(x)\le H\quad\Longleftrightarrow\quad 0\le x<F_{3H+3}
+$$
+
+及 $0\le f(n)\le n$ 保证输出在同样的 $H$ 个窗口内，故这个限制保留每个实际输入，未另加输出窗口。
+
+取识别 $\mathcal L$ 的确定有限自动机，其状态数为 $Q\ge1$。$f$ 无界，所以存在实际输入 $n$ 使 $L(f(n))\ge Q+1$。选取它在 $\mathcal L$ 中的唯一词，设从高端起第一个非零输出窗口为第 $b$ 个窗口，则
+
+$$
+b=H-L(f(n))+1,\qquad H-b\ge Q.
+$$
+
+输入的第一个窗口已非零。读完第 $b$ 个窗口之后，两轨前缀都已经非零。在读完窗口 $b,b+1,\ldots,H$ 后的 $H-b+1\ge Q+1$ 个状态中，有两个相同。取其位置 $b\le i<j\le H$，令 $\ell=j-i\ge1$，将配对词写成 $uvw$，其中 $u$ 含前 $i$ 个窗口，$v$ 含随后 $\ell$ 个配对窗口，$w$ 含剩余窗口和唯一的单位末字母。
+
+泵块 $v$ 非空且不含单位末字母；它在两轨均已有非零前缀之后。对每个整数 $m\ge0$，词 $uv^mw$ 被同一自动机接受，因而仍属于准确的实际语言 $\mathcal L$。特别地，两轨都满足原接缝合法性、单位末字母条件及实际函数关系，而不只是满足某个放松的数值约束。记解码值为 $(n_m,f(n_m))$，窗口数为
+
+$$
+H_m=H+(m-1)\ell.
+$$
+
+首个输入非零窗口仍在第一位，首个输出非零窗口仍在第 $b$ 位。该泵送没有重复任何先于首次输出非零的填充块，故不可能只产生同一个整数的更长高端补零表示。
+
+为确定增长及比值，按本卷窗口索引直接计算：从低端数第 $a$ 个窗口、$a\ge0$，占用 Fibonacci 索引 $3a+3,3a+4,3a+5$。非零窗口的最小权重为 $F_{3a+3}$。因此，对所有 $m\ge0$，
+
+$$
+\begin{aligned}
+n_m&\ge F_{3H_m},&n_m&<F_{3H_m+3},\\
+f(n_m)&\ge F_{3(H_m-b+1)}.
+\end{aligned}
+\tag{21.8}
+$$
+
+因为 $H_m\to\infty$，输入 $n_m\to\infty$。Binet 公式 $F_r=(\varphi^r-(-\varphi^{-1})^r)/\sqrt5$ 在固定 $b$ 下给
+
+$$
+\liminf_{m\to\infty}\frac{f(n_m)}{n_m}
+\ge\lim_{m\to\infty}
+\frac{F_{3(H_m-b+1)}}{F_{3H_m+3}}
+=\varphi^{-3b}>0.
+$$
+
+这个估计只用合法窗口的准确 Fibonacci 权重及自动机在首次输出非零之后的循环；其常数可以依赖所选实际词和自动机。由 $G(n)/n\to\alpha$，同一列实际输入遂满足
+
+$$
+\limsup_{n\to\infty}\frac{C(n)}n
+\ge\liminf_{m\to\infty}\frac{C(n_m)}{n_m}
+\ge\alpha+\varphi^{-3b}>\alpha.
+$$
+
+这证明第一条蕴含，第二条是其逆否命题。
+
+式 (21.7) 将定理 21.4 的无界实际进位缺陷接到定理 20.2 的准确词图闭合条件，并未分别决定 $\mathcal G_C$ 的正则性或 $C(n)/n$ 的全局收敛。任意固定右宽度的反射也没有覆盖 Fibonacci 块中心、负宽度轮廓或全部外部索引。实际周期是否存在无界长度族，以及从输出词图正则性到按可变深度选取 $T_N^{C(N-1)}(N-1)$ 的全局同步图所需的额外条件，仍未由这些结论解决。Campbell 的实际三尺度结果仍保持定理 17.3 的适用范围。
+
+## 追加锚（本行以下为增补区）
+
+## 22. 实际端点相位与零进位缺陷脊线
+
+本节把定理 21.4 中存在的端点二周期接到实际起点 $N-1$ 和规定深度 $C(N-1)$，再追踪同一实际拆分树中的偏移子节点。全节关于 $C$ 的结论均条件于假设 21.1，直接使用定理 21.3 的任意右宽度轮廓、定理 14.2 的规范降阶读出及定理 15.3 的实际树总进位式。来源的捕获与规定深度入周期结论保留其计算辅助前提，不在这里重新证明。记
+
+$$
+K(t)=12t+7,\qquad h(t)=t-G(t),\qquad E(n)=E_C(n)=C(n)-G(n).
+$$
+
+下面的阈值用于同时保证内区间及其右外壳的轮廓；它没有取代定理 21.3、21.4 各自较小的阈值，也不主张是端点选择的必要阈值。
+
+**定理 22.1（实际起点的端点选择与绝对时间相位）。** 在假设 21.1 下，对每个整数 $t\ge1$、$k\ge K(t)$，设
+
+$$
+N=F_k+t,\qquad A=F_{k-1},\qquad B=F_{k-2},\qquad
+x_0=N-1,\quad x_{i+1}=T_N(x_i)=N-C(x_i).
+$$
+
+这条实际轨道首次进入 $I=[A,A+t]\cap\mathbb Z$ 的时间 $\mu$ 为偶数，首次进入点为 $A+t$；$\mu$ 也是它的最短前周期。此后
+
+$$
+x_i=
+\begin{cases}
+A+t,&i\ge\mu\text{ 且 }i\equiv0\pmod2,\\
+A,&i\ge\mu\text{ 且 }i\equiv1\pmod2.
+\end{cases}
+\tag{22.1}
+$$
+
+规定深度及实际所选点准确为
+
+$$
+d_N=C(N-1)=A+t-1,\qquad
+g_N=x_{d_N}=
+\begin{cases}
+A+t,&A+t-1\equiv0\pmod2,\\
+A,&A+t-1\equiv1\pmod2.
+\end{cases}
+\tag{22.2}
+$$
+
+因此被规定深度选中的最短周期恰为二，且其规范缺陷振幅为 $h(t)$。$t=1$ 时此二周期的振幅为零；$t\ge2$ 时振幅为正。当 $t\to\infty$、每次取任意 $k\ge K(t)$ 时，被实际起点及规定深度选中的周期振幅趋于无穷，周期长度仍恰为二。
+
+证明。首先核对所有指标及规范接缝。沿用 §21.3 中的 $F_r\ge r-1$，有
+
+$$
+B=F_{k-2}\ge k-3\ge12t+4>2t+1.
+\tag{22.3}
+$$
+
+故 $A+2t+1\le N-1$，$I\subseteq D_N$，且 $x_0=N-1>A+t$。定理 21.3 在阶数 $k-1$ 处可用于全部 $0\le v\le2t$，因为
+
+$$
+k-1\ge12t+6\ge6v+6.
+$$
+
+于是 $C(A+v)=B+v$。特别地，$I$ 上的映射是反射
+
+$$
+T_N(A+u)=A+t-u\qquad(0\le u\le t).
+\tag{22.4}
+$$
+
+对每个左外侧的实际域内点 $1\le x<A$，假设 21.1 的上界及 $U$ 的非减性给
+
+$$
+C(x)\le U(x)\le U(A)=B,
+\qquad T_N(x)\ge A+t.
+\tag{22.5}
+$$
+
+对右外侧分两段。若 $A+t<x\le A+2t$，刚得的轮廓给 $C(x)\ge B+t+1$。若 $A+2t+1\le x\le N-1$，使用黄金下界及单调的 $G$：
+
+$$
+C(x)\ge G(x)\ge G(A+2t+1)=B+G(2t+1)\ge B+t+1.
+\tag{22.6}
+$$
+
+其中的等式直接使用定理 21.4 证明中已有的分离加法规则：由式 (22.3)，$2t+1<F_{k-2}$，所以 $2t+1$ 的全部 Zeckendorf 占位索引至多为 $k-3$，与 $A=F_{k-1}$ 的占位相隔至少二；两套占位合并合法，定理 14.2 的降阶读出可逐位相加。最后的不等式由 $2\alpha>1$ 给出：$\alpha(2t+2)>t+1$，故 $G(2t+1)=\lfloor\alpha(2t+2)\rfloor\ge t+1$。两段合起来得到
+
+$$
+x>A+t\quad\Longrightarrow\quad T_N(x)\le A-1.
+\tag{22.7}
+$$
+
+这比仅在 $I$ 上知道反射更强：右外侧不能直接进入 $I$。来源捕获结论保证首次进入时间存在。在首次进入之前，式 (22.5)、(22.7) 强迫左右外侧交替；时刻零在右外侧，所以仍在外侧的偶数时刻在右，奇数时刻在左。首次进入只能从左外侧发生，且式 (22.5) 迫使进入点为上端点 $A+t$，时间为偶数。式 (22.4) 随后使它在两个不同端点间交替，给出式 (22.1)。这些端点已经是周期点；首次进入前没有周期点，否则捕获与周期轨道的不变性会矛盾。因此首次进入时间正是最短前周期 $\mu$。这个论证没有给 $\mu$ 的新上界。
+
+假设 21.1 中的规定深度入周期结论给 $d_N\ge\mu$。定理 21.3 在阶数 $k$、偏移 $t-1$ 处适用，因为 $k\ge6(t-1)+6$，从而 $d_N=A+t-1$。把这个实际深度代入式 (22.1)，得到式 (22.2)。规范振幅直接取定理 21.4 的端点读数 $E(A)=0$、$E(A+t)=h(t)$；这里新增的是这条端点周期确由实际起点及规定深度选中。$G(1)=1$ 给 $h(1)=0$；对 $t\ge2$，$\alpha(t+1)<t$ 给 $G(t)\le t-1$，所以 $h(t)\ge1$。其无界性及趋于无穷的估计直接沿用式 (21.6) 后的 $h(t)=\alpha^2t-\alpha+\{\alpha(t+1)\}$。
+
+偏移零单独使用假设 21.1 及供应源 [黄金结构，§6](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/golden-proof.md)：$N=F_k$、$k\ge6$ 时实际轨道到达固定点 $F_{k-1}$，规定深度选中该点，周期长度一、振幅零。它不使用正偏移端点的奇偶选择式。
+
+**定理 22.2（同一实际拆分脊线的零进位与六种同余控制）。** 在假设 21.1 下，固定整数 $t\ge1$、$k\ge K(t)$。从实际树 $\mathcal T_{F_k+t}$ 的根开始，每逢当前节点为 $F_j+t$、$j\ge K(t)$，保留其带偏移 $t$ 的实际子节点，另一子节点为 Fibonacci 锚。具体的有序拆分为
+
+$$
+(g_{F_j+t},F_j+t-g_{F_j+t})=
+\begin{cases}
+(F_{j-1}+t,F_{j-2}),&F_{j-1}+t-1\equiv0\pmod2,\\
+(F_{j-1},F_{j-2}+t),&F_{j-1}+t-1\equiv1\pmod2.
+\end{cases}
+\tag{22.8}
+$$
+
+当前节点与带偏移子节点的规范缺陷均为 $h(t)$，锚兄弟节点的规范缺陷为零，且每个脊线拆分的标量进位都恰为零。阶数按
+
+$$
+j\longmapsto j-r(j,t),\qquad
+r(j,t)=
+\begin{cases}
+1,&F_{j-1}+t-1\equiv0\pmod2,\\
+2,&F_{j-1}+t-1\equiv1\pmod2
+\end{cases}
+\tag{22.9}
+$$
+
+递减，首次低于 $K(t)$ 时停在 $J\in\{K(t)-1,K(t)-2\}$。终端节点 $F_J+t$ 的规范缺陷仍为 $h(t)$。每个被分出的 Fibonacci 锚兄弟节点的完整实际子树总标量进位为零。因此整棵根树的总标量进位 $h(t)$ 等于这个终端节点完整实际子树的总标量进位。
+
+步长只需以下六种同余情形；每步保留 $t\bmod2$，将 $j\bmod3$ 更新为 $(j-r)\bmod3$：
+
+| $t$ 的奇偶 | $j\bmod3=0$ 时的 $r$ | $j\bmod3=1$ 时的 $r$ | $j\bmod3=2$ 时的 $r$ |
+| --- | --- | --- | --- |
+| $t$ 为奇数 | $2$ | $1$ | $2$ |
+| $t$ 为偶数 | $1$ | $2$ | $1$ |
+
+对 $t\ge2$，带偏移的子节点是这两个子节点中唯一具有正规范缺陷的节点；对 $t=1$，两者的缺陷均为零，只能按带偏移的标签区分所保留子节点。
+
+证明。式 (22.8) 是定理 22.1 在同一个实际节点上的所选相位，子节点均在该节点自己的已定前缀内。令 $\ell\in\{j,j-1,j-2\}$。对 $j\ge K(t)$，有
+
+$$
+\ell\ge12t+5\ge6t+6,\qquad
+F_{j-3}\ge j-4\ge12t+3>t.
+\tag{22.10}
+$$
+
+所以定理 21.3 给 $C(F_\ell+t)=F_{\ell-1}+t$。同时，$t<F_{j-3}\le F_{\ell-1}$ 保证 $t$ 的占位最高至 $\ell-2$，与 $F_\ell$ 的占位具有合法分离接缝；直接复用定理 21.4 中的规范加法规则，有
+
+$$
+G(F_\ell+t)=F_{\ell-1}+G(t),\qquad E(F_\ell+t)=h(t).
+\tag{22.11}
+$$
+
+锚上的缺陷由假设 21.1 为零。对式 (22.8) 的上、下两个分支，分别得到
+
+$$
+\begin{aligned}
+G(F_{j-1}+t)+G(F_{j-2})
+&=F_{j-2}+G(t)+F_{j-3}=G(F_j+t),\\
+G(F_{j-1})+G(F_{j-2}+t)
+&=F_{j-2}+F_{j-3}+G(t)=G(F_j+t).
+\end{aligned}
+\tag{22.12}
+$$
+
+故每个实际脊线拆分的 $\delta(g_{F_j+t},F_j+t-g_{F_j+t})=0$。这计算的是标量黄金进位；它没有断言式 (14.2) 中独立的单位位进位也为零。
+
+Fibonacci 的奇偶规律已在 §21.3 给出：$F_m$ 为偶数当且仅当 $m\equiv0\pmod3$。将其代入式 (22.9)，便得到表中的六种情形。每步下降一或二，故一定存在首次低于 $K(t)$ 的阶数，且只能是 $K(t)-1$ 或 $K(t)-2$。对这两个可能的终端阶数，仍有 $J\ge12t+5\ge6t+6$ 及 $t<F_{J-1}$，所以式 (22.11) 仍成立；停止仅表示端点选择定理的阈值不再保证下一步的拆分形状，不表示终端轮廓或缺陷失效。
+
+所有步骤都在定理 15.3 的同一实际树内进行，因而其总进位式可直接用于兄弟子树和终端子树。Fibonacci 锚兄弟的根缺陷为零，故其完整子树的总标量进位为零。沿有限脊线展开整棵树时，脊线各拆分本身的进位为零，各兄弟子树的总进位也为零，剩下的正是终端完整子树；它的总进位等于 $E(F_J+t)=h(t)$。这里用的是各子树总量的相消恒等式，不能从兄弟子树总量零推出其中每个内部节点的进位都为零。正缺陷子节点的唯一性来自 $h(t)>0$，故必须另列 $t=1$。
+
+式 (22.9) 是实际拆分阶数的六状态同余控制。节点标签中的数值载荷 $t$ 在脊线上原样保留，停止阈值 $K(t)$ 也依赖它；六种同余状态没有给 $t$ 一个统一数值界，没有识别所有未受阈值控制的终端子树，也没有证明实际 $C$ 或实际选择器的全局五窗正则性。
+
+**推论 22.3（固定右宽度的实际选择器同步词图）。** 在假设 21.1 下，对每个固定整数 $R\ge1$，严格使用定义 17.2、20.1 的全部共同高端补零合同，语言
+
+$$
+\mathcal S_R=
+\left\{(W_H(N),W_H(g_N))_{\mathrm{sync}}:
+\begin{array}{l}
+N=F_k+t,\quad k\ge12R+7,\quad 1\le t\le R,\\
+H\ge\max\{L(N),L(g_N)\}
+\end{array}\right\}
+\tag{22.13}
+$$
+
+是正则语言。它是该实际输入域上的选择器图，不是全体正整数域上的选择器图。
+
+证明。直接调用 §§17.3、20.2 的固定算术过滤、黄金读出关系、接缝守卫及正则语言闭合，不重新构造通用加法自动机。令 $K_R=12R+7$。单占位锚的合法全补零语言由定义 2.1 的窗口索引直接写成
+
+$$
+\mathcal F_{K_R}=
+\bigcup_{a\in\{3,4,5\}}
+\left\{\mathrm{null}^{p}\sigma_a\mathrm{null}^{m}\underline0:
+p,m\ge0,\ 3m+a\ge K_R\right\},
+\quad
+\sigma_3=[2],\ \sigma_4=[3],\ \sigma_5=[5].
+\tag{22.14}
+$$
+
+这里 $k=3m+a$，高端填充数 $p$ 不进入阶数条件。因为 $K_R$ 固定，对各 $a$ 只限制 $m$ 的固定下限，故该语言正则，恰识别 $q=F_k$、$k\ge K_R$ 的全部高端填充词。固定数 $t\in\{1,\ldots,R\}$ 的词轨也有正则的全补零语言 $\mathrm{null}^*W(t)$。
+
+对每个这样的固定 $t$，在共长辅助词轨上要求
+
+$$
+q=F_k,\quad k\ge K_R,\qquad N=q+t,\qquad A=G(q),\qquad
+g=
+\begin{cases}
+A+t,&A+t-1\equiv0\pmod2,\\
+A,&A+t-1\equiv1\pmod2.
+\end{cases}
+\tag{22.15}
+$$
+
+$N=q+t$ 和上分支的 $g=A+t$ 是 §17.3 已用的固定整数线性过滤的应用：窗口差取 $d_N-d_q-d_t$ 或 $d_g-d_A-d_t$，单位末字母差取相应的 $e_N-e_q-e_t$ 或 $e_g-e_A-e_t$，都是该有限进位论证允许的固定有限差集。$A=G(q)$ 则直接调用 §20.2 的关系 $y=G(n)+z$，将 $z$ 轨限制为零；下分支 $g=A$ 是逐字母相等关系。每轨均使用已有接缝守卫及独立单位末字母条件。没有使用未经验证的递归图作为辅助关系。
+
+奇偶分支只需读取式 (22.14) 中唯一非零锚字母的窗内位置：$a\equiv k\pmod3$，且 $A=F_{k-1}$ 为偶数恰当 $k\equiv1\pmod3$。因此固定奇 $t$ 选上分支恰当 $k\equiv1\pmod3$，固定偶 $t$ 选上分支恰当 $k\equiv0,2\pmod3$。这些都是单占位语言上的有限字母过滤；下分支是其余情形。对各固定 $t$ 相交这些关系，再投影到 $(N,g)$，最后对 $1\le t\le R$ 作有限并，所得语言正则。由 $k\ge K_R\ge K(t)$ 及式 (22.2)，其数值关系恰为式 (22.13) 的实际选择器。
+
+还须核对投影不会漏掉原合同中的较短词。辅助数 $q,A,t,0$ 及被选 $g$ 均不超过 $N$；特别地，$A+t<N$。式 (20.7) 保证只要原输入 $N$ 能放入给定 $H$，所有辅助数就能放入同一个 $H$。反向地，任何投影见证都给出式 (22.15) 的数值关系及合法表示。所以式 (22.13) 包含每个允许的共同 $H$，没有只识别加长后的表示。这里 $R$ 是先固定的外部参数；对所有 $R$ 的无穷并不由正则闭合性质保证正则，也没有识别数值偏移无界且满足 $k\ge12t+7$ 的统一语言。
+
+**命题 22.4（根轮廓不足以决定实际端点选择）。** 实际索引 $N=38=F_9+4$ 满足根上的右侧线性值 $C(38)=F_8+4$，但起点 $37$、深度 $C(37)$ 所选周期是内部固定点，不是端点对 $\{F_8,F_8+4\}$。
+
+证明。按定义 15.1 的原递归逐次迭代计算，实际轨道为
+
+$$
+37\longmapsto14\longmapsto29\longmapsto18\longmapsto26
+\longmapsto20\longmapsto25\longmapsto22\longmapsto24
+\longmapsto23\longmapsto23.
+\tag{22.16}
+$$
+
+这些内步所用的 $C$ 值，按上式从左到右的自变量次序，依次为
+
+$$
+(C(37),C(14),C(29),C(18),C(26),C(20),C(25),C(22),C(24),C(23))
+=(24,9,20,12,18,13,16,14,15,15).
+$$
+
+所以最短前周期为九，最短周期为一，$d_{38}=24$、$g_{38}=23$，递归输出为 $C(23)+C(15)=15+10=25=F_8+4$。同时 $G(38)=24$，所以 $E(38)=1$；所选固定周期的规范振幅却为零。这里 $A=F_8=21$、$B=F_7=13$、$t=4$，故 $23$ 严格在端点 $21,25$ 之间。例如内轮廓已经有 $C(A+3)=C(24)=15\ne B+3=16$，因而没有定理 22.1 所用的内区间及宽至 $2t$ 的右外壳联合轮廓。此例只否定“根输出已在线性轮廓上，所以实际轨道选端点”的推断；它不满足 $k\ge K(4)$，不能反驳定理 22.1，也不说明该充分阈值必要。
+
+**接口 22.5（Campbell 的实际起点与深度相位）。** 比较仍使用定义 15.1 中的实际 $b$，并只取
+
+$$
+x_0=n-1,\qquad x_{i+1}=n-b(x_i),\qquad d=b(n-1).
+$$
+
+直接复用供应源 [Campbell note，Theorem 1 及 §§2–3](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/campbell/note.tex) 的已证实际起点结论：$n\ge2$ 时 $x_6=x_4$，所以 $i\ge4$ 时 $x_{i+2}=x_i$。对 $n\ge9$，同一来源给 $d\equiv n\pmod2$，偶数 $n$ 的 $d\ge4$，奇数 $n$ 的 $d\ge5$。因此实际输出相位为
+
+$$
+b(n)=x_d=
+\begin{cases}
+x_4,&n\ge9\text{ 且 }n\text{ 为偶数},\\
+x_5,&n\ge9\text{ 且 }n\text{ 为奇数}.
+\end{cases}
+\tag{22.17}
+$$
+
+$2\le n\le8$ 使用该来源的单独小索引计算，不能仅由 $x_6=x_4$ 推出较浅实际深度已经位于第四步起的周期段。该来源给出的 $x_4=x_6$ 依次为 $(1,2,3,4,3,4,5)$，而实际 $b(2),\ldots,b(8)$ 为 $(1,2,3,2,3,4,5)$；例如 $n=5$ 的 $d=3$，实际输出为 $x_3=2$。$n=1$ 仍是初值。
+
+式 (22.17) 及供应源的三尺度分段值在这里是来源复用，不计作新增推导。它与定理 22.1 的共同接口是同一个实际起点、合法前缀映射及规定深度对绝对时间奇偶的选择；不同递归的终端读出仍分别是
+
+$$
+b(n)=x_d,\qquad C(N)=C(g_N)+C(N-g_N),\quad g_N=x_{d_N}.
+$$
+
+供应源的 $x_6=x_4$ 没有在此被推广为 Campbell 对每个任意起点的统一结论；Cloitre 的来源捕获适用于全部起点，定理 22.1 的端点时间相位则特指 $N-1$。短周期或同为奇偶相位都没有给出两个实际数值轨道间的共轭，更没有把 Campbell 的三进制公式或三进制正则性移植到五窗；其准确五窗图的非正则性仍由定理 17.3 承担。
+
+本节的项目内新增推导是正偏移大阶数域上实际端点选择、所选振幅及同一实际零进位脊线；固定 $R$ 的选择器图是这些新相位公式对既有同步算术关系的直接应用。规范降阶与分离加法、实际树总进位、任意右宽度输出轮廓、全部周期分类及 Campbell 相位表各保留原来源与适用条件。本节不作未经文献尽调的世界原创性判断，也没有提供 Lean 核验证明。
+
+保留的全局边界是实际 Cloitre 五窗图及实际全域选择器图的正则性、实际周期是否存在无界长度族、以及 $C(n)/n$ 的全局黄金收敛；定理 21.5 的条件互斥关系保持原范围。这里即使选中振幅无界，所选周期长度仍为二，且根缺陷经零进位脊线传给未受端点阈值控制的终端子树，不能把这一局部传递当作全局缺陷估计。下一步有用的联合缺口是：在 Fibonacci 块中心及这些终端子树上，能否同时控制实际入口相位、规定深度与树总进位，并将这种控制表达为所有合法共同词长上的有限同步关系。仅有根轮廓、周期长度界、六种同余步长或固定宽度的逐一正则性，都还没有给出该联合关系。
+
+## 追加锚（本行以下为增补区）
+## 23. 实际锚点奇数瞬态的缺陷预算与同点阻碍
+
+**假设 23.1（同一实际递归与锚前值）。** 全节使用定义 15.1 的实际 $C$，并条件于假设 21.1 的全局下界、上限函数 $U$、锚值、有限捕获及规定深度入周期前提。仍取 $F_0=0$、$F_1=1$、$\alpha=\varphi^{-1}$、$G(n)=\lfloor\alpha(n+1)\rfloor$、$E(n)=C(n)-G(n)\ge0$，不假设 $C$ 单调。另显式使用假设 21.1 未列出的锚前恒等式
+
+$$
+C(F_j-1)=F_{j-1}\qquad(j\ge5),
+$$
+
+其出处为 [Cloitre 黄金结构，主陈述 4 及 §6](https://github.com/the-omega-institute/nested-recurrences/blob/645fe1c19cb00fc7964500eef114fcdca94cebae/cloitre-conway/golden-proof.md)。这些来源前提承继假设 21.1 所列的计算辅助基础；本节不提供对那些有限基础的独立核验，也不宣称 Lean 核验证明。
+
+对整数 $k\ge6$，固定同一个外部参数及其实际轨道
+
+$$
+\begin{aligned}
+N&=F_k,&A&=F_{k-1},&B&=F_{k-2},\\
+x_0&=N-1,&x_{i+1}&=N-C(x_i),&
+\mu_k&=\min\{i\ge0:x_i=A\}.
+\end{aligned}
+$$
+
+来源捕获在偏移零时把全部周期限定为固定点 $A$，所以 $\mu_k$ 存在且等于这条实际轨道的最短前周期。规定深度仍是 $d_N=C(N-1)$，所选点仍是 $g_N=x_{d_N}$。时间下标的奇偶表示迭代次数，不表示自变量 $x_i$ 的奇偶。
+
+这里直接复用 [Fibonacci collars，§1 的定量捕获](https://github.com/the-omega-institute/nested-recurrences/blob/645fe1c19cb00fc7964500eef114fcdca94cebae/cloitre-conway/fibonacci-collars.md)：到捕获区间的整数距离每两步至多缩为原距离的 $2/3$ 向下取整。其整数预算为 $Q(0)=0$、$Q(d)=1+Q(\lfloor2d/3\rfloor)$，$d\ge1$。在当前锚点和实际起点上，该已证结果给
+
+$$
+\mu_k\le2Q(B-1),\qquad
+Q(d)\le1+\lfloor\log_{3/2}d\rfloor\quad(d\ge1),
+$$
+
+从而 $\mu_k=O(k)$。这是来源的上界应用；以下承重结论研究同一实际瞬态所迫使的规范缺陷下界。
+
+**定理 23.2（实际奇数瞬态的迫使预算与同一见证的阻碍）。** 在假设 23.1 下，对每个整数 $k\ge6$，有 $\mu_k=2R_k\ge4$，并且
+
+$$
+\begin{aligned}
+d_N&=A\ge\mu_k,&g_N&=A,&E(N)&=0,\\
+B&\le x_{2r+1}\le A-1&&&(0\le r<R_k).
+\end{aligned}
+\tag{23.1}
+$$
+
+所选周期长度为一。定义这一条实际轨道上奇数时间的最大规范缺陷
+
+$$
+M_k=\max_{0\le r<R_k}E(x_{2r+1}).
+$$
+
+则
+
+$$
+\begin{aligned}
+M_k&\ge
+\frac{\alpha^{\mu_k+3}F_k}{1-\alpha^{\mu_k-2}}-1,\\
+\mu_k&\ge
+2+\log_\varphi\left(1+\frac{\alpha^5F_k}{M_k+1}\right).
+\end{aligned}
+\tag{23.2}
+$$
+
+进一步，固定偶数 $m\ge4$。若存在无限集合 $\mathcal K\subseteq\{6,7,\ldots\}$，使每个 $k\in\mathcal K$ 都满足实际前周期 $\mu_k\le m$，令
+
+$$
+c_m=\frac{\alpha^{m+3}}{1-\alpha^{m-2}},\qquad
+0<c_m\le c_4=\alpha^6<\alpha^2.
+$$
+
+对每个 $k\in\mathcal K$，从同一轨道的奇数时间中选取一个达到 $M_k$ 的实际自变量 $y_k$。这些同一见证满足
+
+$$
+y_k\longrightarrow\infty,\qquad
+B\le y_k\le A-1,\qquad
+E(y_k)=M_k\ge c_mF_k-1,
+\tag{23.3}
+$$
+
+以及
+
+$$
+\begin{aligned}
+\liminf_{\substack{k\to\infty\\k\in\mathcal K}}
+\frac{y_k-F_{k-2}}{F_k}&\ge\frac{c_m}{\alpha^2},\\
+\liminf_{\substack{k\to\infty\\k\in\mathcal K}}
+\frac{F_{k-1}-y_k}{F_k}&\ge\frac{c_m}{\alpha},\\
+\limsup_{n\to\infty}\frac{C(n)}n
+&\ge\alpha+\frac{\alpha c_m}{\alpha^2-c_m}
+=\frac{\alpha^3}{\alpha^2-c_m}>\alpha.
+\end{aligned}
+\tag{23.4}
+$$
+
+式 (23.3)–(23.4) 全部条件于这个无限有界前周期子列的存在；它们没有建立该子列的存在。
+
+作为式 (23.2)–(23.4) 的必要条件应用，若实际 $C(n)/n\to\alpha$，则 $\mu_k\to\infty$。若更具体地存在常数 $K\ge0$、$0\le\gamma<1$ 和正整数 $n_0$，使所有整数 $n\ge n_0$ 都有 $E(n)\le K n^\gamma$，则对所有充分大的 $k$，
+
+$$
+\mu_k\ge(1-\gamma)\log_\varphi F_k-3-\log_\varphi(K+1).
+\tag{23.5}
+$$
+
+这些必要条件不含逆向蕴含，也不把锚点前周期增长转成周期长度增长。
+
+证明。锚前恒等式及锚值给
+
+$$
+x_1=N-A=B,\qquad
+x_2=N-C(B)=2B>A,\qquad
+2B-A=F_{k-4}>0.
+$$
+
+若实际域内的 $x>A$，则 $G(x)\ge G(A+1)=B+1$，所以 $N-C(x)\le A-1$。同时 $C(x)\le U(x)\le U(N-1)=A$，所以 $N-C(x)\ge B$。若 $x<A$，则 $C(x)\le U(x)\le U(A)=B$，所以 $N-C(x)\ge A$；尚未到达 $A$ 时该不等式严格。$A$ 自身固定，因为 $C(A)=B$。因此落点前的偶数时间严格在 $A$ 之上，奇数时间在 $[B,A-1]$ 中；首次落到 $A$ 只能发生于偶数时间。$x_0,x_1,x_2$ 均不等于 $A$，故 $\mu_k=2R_k\ge4$。规定深度入周期的来源前提再给 $d_N\ge\mu_k$，而 $d_N=C(N-1)=A$，所以 $g_N=A$。锚值给 $C(N)=G(N)=A$，证明式 (23.1)。这里使用的是 $G$ 与 $U$ 的单调性，没有使用 $C$ 的单调性。
+
+为估计这条瞬态，定义单变量的舍入量与仿射误差
+
+$$
+\begin{aligned}
+\rho(n)&=G(n)-\alpha n
+=\alpha-\{\alpha(n+1)\},\\
+\eta(n)&=E(n)+\rho(n)=C(n)-\alpha n,\\
+s_k&=\alpha N-A=(-1)^{k-1}\alpha^k,\qquad
+z_i=x_i-\alpha N.
+\end{aligned}
+$$
+
+本节的单变量 $\eta(n)$ 与定义 14.1 的双变量单位进位 $\eta(x,y)$ 分开使用。对正整数 $n$，无理性给 $-\alpha^2<\rho(n)<\alpha$。由 $\alpha^2+\alpha=1$，实际内步满足
+
+$$
+z_{i+1}=-\alpha z_i-\eta(x_i),\qquad
+z_{2r+2}=\alpha^2z_{2r}+\alpha\eta(x_{2r})-\eta(x_{2r+1}).
+\tag{23.6}
+$$
+
+其实际两端为
+
+$$
+z_2=\alpha^4N+2s_k,\qquad z_{\mu_k}=-s_k.
+\tag{23.7}
+$$
+
+第一式使用 $x_2=2B$ 及 $\alpha^4=2-3\alpha$，第二式使用 $x_{\mu_k}=A$。把式 (23.6) 从 $r=1$ 到 $R_k-1$ 沿这条实际轨道展开，得到辅助望远镜恒等式
+
+$$
+\begin{aligned}
+&\sum_{r=1}^{R_k-1}\alpha^{\mu_k-2r-2}
+\bigl[\eta(x_{2r+1})-\alpha\eta(x_{2r})\bigr]\\
+&\qquad=\alpha^{\mu_k-2}z_2-z_{\mu_k}\\
+&\qquad=\alpha^{\mu_k+2}N+
+(1+2\alpha^{\mu_k-2})s_k.
+\end{aligned}
+\tag{23.8}
+$$
+
+这一步只是迫使预算的仿射计算，没有另外给出一个递归族或独立闭合定理。
+
+每个括号中，奇数时间缺陷至多为 $M_k$，偶数时间缺陷非负，且 $\rho$ 的严格界给
+
+$$
+\eta(x_{2r+1})-\alpha\eta(x_{2r})
+<M_k+\alpha+\alpha^3.
+$$
+
+权重和为
+
+$$
+\sum_{r=1}^{R_k-1}\alpha^{\mu_k-2r-2}
+=\frac{1-\alpha^{\mu_k-2}}{\alpha}.
+$$
+
+因此式 (23.8) 蕴含
+
+$$
+M_k>
+\frac{\alpha^{\mu_k+3}N}{1-\alpha^{\mu_k-2}}
+-\alpha-\alpha^3
+-\frac{\alpha^{k+1}(1+2\alpha^{\mu_k-2})}
+ {1-\alpha^{\mu_k-2}}.
+$$
+
+因为 $k\ge6$、$\mu_k\ge4$，分母至少为 $1-\alpha^2=\alpha$，最后一项至多为 $\alpha^6(1+2\alpha^2)$。端点误差与舍入的总扣减满足
+
+$$
+\alpha+\alpha^3+\alpha^6(1+2\alpha^2)
+=30-47\alpha<1.
+\tag{23.9}
+$$
+
+最后的严格不等式等价于 $47\sqrt5>105$，平方后为 $11045>11025$。于是得到式 (23.2) 的第一式。令 $q=\alpha^{\mu_k-2}$，则它给
+
+$$
+M_k+1\ge\frac{\alpha^5Nq}{1-q},\qquad
+q\le\frac1{1+\alpha^5N/(M_k+1)}.
+$$
+
+取以 $\varphi$ 为底的对数，得到式 (23.2) 的第二式。$\mu_k\ge4$ 保证加权和非空、$1-\alpha^{\mu_k-2}>0$，所以没有空和或零分母的边界遗漏。
+
+现固定满足定理前提的 $m$ 与无限 $\mathcal K$。函数 $q/(1-q)$ 在 $0<q<1$ 上递增，所以 $\mu_k\le m$ 使式 (23.2) 的系数至少为 $c_m$。达到最大值的实际奇数时间点遂满足式 (23.3)；$y_k\ge B\to\infty$。$c_m$ 随 $m$ 增大而减小，且 $c_4=\alpha^7/(1-\alpha^2)=\alpha^6<\alpha^2$。
+
+接下来始终在这个同一 $y=y_k$ 上使用上限函数。由 $B\le y<A$，其实际 Fibonacci 块是 $[F_{k-2},F_{k-1})$，因而
+
+$$
+U(y)=\min\{y-F_{k-4},B\}.
+$$
+
+又有 $E(y)=C(y)-\alpha y-\rho(y)<U(y)-\alpha y+\alpha^2$。分别使用上述最小值的两个分支，以及
+
+$$
+\left|F_{k-4}-\alpha^2B\right|=\alpha^{k-2},\qquad
+\left|B-\alpha A\right|=\alpha^{k-1},
+$$
+
+得到在同一实际点同时成立的两个界
+
+$$
+\begin{aligned}
+E(y)&<\alpha^2(y-B)+\alpha^2+\alpha^{k-2},\\
+E(y)&<\alpha(A-y)+\alpha^2+\alpha^{k-1}.
+\end{aligned}
+\tag{23.10}
+$$
+
+将它们各与 $E(y)\ge c_mN-1$ 联合，除以 $N$ 并令 $k\in\mathcal K$ 趋于无穷，证明式 (23.4) 的两个位置下界。它们把被迫的大缺陷限定在实际块的内部，不能把任意一个靠锚的小缺陷点换成这个见证。
+
+比只用 $y\le A$ 更强的比值估计，使用同一见证的 $C(y)\le B$ 和式 (23.3)：
+
+$$
+\alpha y\le B-c_mN+1+\alpha^2,\qquad
+\eta(y)\ge c_mN-1-\alpha^2.
+\tag{23.11}
+$$
+
+当 $k\in\mathcal K$ 充分大时，第二式的右端正，第一式右端也正；后者除以 $N$ 趋于 $\alpha^2-c_m>0$。因此
+
+$$
+\frac{C(y)}y
+=\alpha+\frac{\eta(y)}y
+\ge\alpha+
+\frac{\alpha(c_mN-1-\alpha^2)}{B-c_mN+1+\alpha^2}.
+\tag{23.12}
+$$
+
+沿同一 $\mathcal K$ 取下极限，用 $B/N\to\alpha^2$，再用 $y_k\to\infty$，就得到式 (23.4) 的全局上极限下界。其增量 $\alpha c_m/(\alpha^2-c_m)$ 严格大于仅由 $y\le A$ 得到的 $c_m/\alpha$。这里联合了同一个实际点的缺陷、位置和上限，没有把分别可达的最优值当作同时可达的事实。
+
+若实际黄金收敛成立而 $\mu_k$ 不趋于无穷，整数偶数序列 $\mu_k\ge4$ 就存在一个有界无限子列，与式 (23.4) 矛盾。这只证明收敛的必要条件。对于幂次缺陷前提，所有奇数时间点都至少为 $B$，故当 $B\ge n_0$ 时，$M_k\le K N^\gamma$。于是 $M_k+1\le(K+1)N^\gamma$，式 (23.2) 给
+
+$$
+\begin{aligned}
+\mu_k
+&\ge2+\log_\varphi\frac{\alpha^5N}{M_k+1}\\
+&\ge(1-\gamma)\log_\varphi N-3-\log_\varphi(K+1),
+\end{aligned}
+$$
+
+证明式 (23.5)。该幂次假设没有在这里被证明，来源的 $\mu_k=O(k)$ 上界也不提供它。
+
+树与词长资源仍取实际对象。对每一个轨道自变量 $x_i$，分别调用定理 15.3 得
+
+$$
+E(x_i)=\sum_{u\in I_{x_i}}
+\delta(g_{m_u},m_u-g_{m_u}).
+\tag{23.13}
+$$
+
+每个和式属于它自己的实际树 $\mathcal T_{x_i}$；式 (23.8) 的不同自变量没有被宣称为一棵共同父树的节点，也没有树间独立性前提。单个有符号进位可以为负，来源下界只保证这些整树总量 $E(x_i)$ 非负。因此本定理迫使的是某个实际奇数时间自变量自己的整树总量，不能替换为该树中每一个节点的正进位要求。
+
+在定义 20.1 的全部共同补零合同中，令 $H=L(N)$。实际整数 $N,A,B,x_i,y_k,\mu_k,d_N,g_N,E(x_i),M_k$ 全都在 $[0,N]$ 中：时钟用 $\mu_k\le d_N=A<N$，缺陷用 $0\le E(x_i)\le C(x_i)\le x_i<N$。所以式 (20.7) 直接保证它们均能使用同一个 $H$，也能使用每一个更大的共同高端补零长度。这里的 $\alpha^j$、$\rho$、$\eta$ 和仿射位移是分析量，不是新增整数轨道。随 $k$ 变化的轨道字段数没有给出固定轨数的同步自动机；共同长度能容纳每个字段，也不等于能够以有限状态取得所有字段。
+
+在这些锚点上 $g_N=A$ 已是简单的选择公式，尽管分析瞬态使用了精确 $\mu_k$。精确时钟不是选择器必须输出的字段；本定理没有从时钟的增长推出选择器的非正则性。锚点周期始终为一，也没有从这里推出实际周期长度无界。
+
+**问题 23.3（实际左侧亏量的缺失下屏障）。** 对上述同一实际轨道，写 $R=R_k$，并在落点前定义
+
+$$
+a_r=x_{2r}-A,\qquad b_r=A-x_{2r+1}\quad(1\le r<R),
+$$
+
+另令 $a_R=0$。这些量满足 $1\le a_r\le B-1$、$1\le b_r\le A-B$。在 $1\le b\le A-B$ 上定义实际左侧亏量
+
+$$
+L_k(b)=B-C(A-b)\ge0.
+$$
+
+由原内步直接得到
+
+$$
+\begin{aligned}
+a_1&=F_{k-4},\\
+b_r&=C(A+a_r)-B,\\
+a_{r+1}&=L_k(b_r)\qquad(1\le r<R),\\
+a_R&=0.
+\end{aligned}
+\tag{23.14}
+$$
+
+当前未证的问题是：是否存在统一常数 $0<\kappa\le\alpha$、$K\ge0$ 和整数 $k_0\ge6$，使所有整数 $k\ge k_0$ 及其所有实际落点前时间 $1\le r<R_k$ 都满足
+
+$$
+L_k(b_r)\ge\kappa b_r-Kk?
+\tag{23.15}
+$$
+
+这要求的是在实际访问点上的左亏量下屏障。已引用的 $G$ 下界、$U$ 上限与定量捕获控制左亏量的上界，没有给出式 (23.15) 的下界。若存在趋于无穷的实际阶数和被这条实际轨道访问的左平台点，满足 $b_r/k\to\infty$ 且 $C(A-b_r)=B$，则 $L_k(b_r)=0$ 会否定任意这样的统一正 $\kappa$ 与有限 $K$。这里只给出可推翻判据，没有建立这些宽平台的实际存在；未被实际轨道访问的平台或比较轮廓不能替代这个判据。
+
+供应源 [Fibonacci collars，§§8–9](https://github.com/the-omega-institute/nested-recurrences/blob/645fe1c19cb00fc7964500eef114fcdca94cebae/cloitre-conway/fibonacci-collars.md) 的共同闭合与重构接口，已经区分同尺度缺陷词、跨尺度实际子拆分见证、以及规定起点的盆地和入口对齐相位。本节直接保留这些接口及其范围，不重新证明一般闭合或重构结果；它们没有给出式 (23.15) 的实际左侧下屏障，也没有给出全部阶数上的统一缺陷或分支预算。这里的 $E$ 是规范黄金缺陷，不与那些接口中的轮廓亏量混同。
+
+定理 23.2 的承重推导是实际锚点奇数瞬态的迫使下界，以及同一实际见证的上限与位置所加强的收敛阻碍。仿射展开、上限函数应用、树总量解释及共同词长资源是这一推导的支撑；捕获上界和来源闭合接口保留其原出处。本节不作未经文献尽调的世界原创性判断。
+
+完整的未证边界仍包括实际 Cloitre 全域五窗图及全域选择器图的有限状态闭合、块中心与终端实际子树的联合缺陷估计、真实周期是否存在无界长度族，以及 $C(n)/n$ 的全局黄金收敛。无限有界时钟族、无条件时钟发散和无条件线性缺陷族均未由本节建立；式 (23.5) 的幂次衰减前提和式 (23.15) 的实际下屏障也仍未证。来源的固定宽度种子、实际 Campbell 相位公式和本节锚点族均没有被推广到任意宽度或全局递归图。
+
+## 追加锚（本行以下为增补区）
+## 24. 实际左平台的精确边界、继承亏量与锚点时钟
+
+**假设 24.1（来源条件及实际闭块拆分接口）。** 本节条件于假设 23.1，始终使用定义 15.1 的同一个实际 Cloitre 序列，取 $F_0=0$、$F_1=1$、$\alpha=(\sqrt5-1)/2$。具体的起点、内步、深度和终端读出是
+
+$$
+\begin{aligned}
+C(1)&=C(2)=1,\\
+x_0&=n-1,&x_{i+1}&=n-C(x_i),\\
+d_n&=C(n-1),&g_n&=x_{d_n},\\
+C(n)&=C(g_n)+C(n-g_n)\qquad(n\ge3).
+\end{aligned}
+\tag{24.1}
+$$
+
+直接使用 [Cloitre foundations，§§1、4](https://github.com/the-omega-institute/nested-recurrences/blob/197832c30e732ff45e3c92a0fbd15ada26dbb260/cloitre-conway/proof.md) 的合法域 $1\le x_i<n$ 及规定深度已入周期结论，以及 [黄金结构，主陈述 1、3–5 与 §§5–6](https://github.com/the-omega-institute/nested-recurrences/blob/197832c30e732ff45e3c92a0fbd15ada26dbb260/cloitre-conway/golden-proof.md) 的
+
+$$
+\begin{aligned}
+G(n)&=\lfloor\alpha(n+1)\rfloor\le C(n)\le U(n),\\
+U(n)&=\min\{n-F_{q-2},F_q\}\quad(F_q\le n<F_{q+1},\ q\ge3),\\
+U(1)&=1,\qquad U\text{ 非减},\\
+C(F_q)&=G(F_q)=U(F_q)=F_{q-1}\quad(q\ge2),\\
+G(F_q+1)&=F_{q-1}+1\quad(q\ge3),\\
+C(F_q-1)&=F_{q-1}\quad(q\ge5).
+\end{aligned}
+\tag{24.2}
+$$
+
+这些输入保留假设 21.1、23.1 所列的计算辅助基础；本节的普遍结论是条件于这些输入的纸面推导，不是 Lean 核验结论。不假设 $C$ 单调，也不假设 $C(n)/n\to\alpha$。
+
+还直接使用 [Fibonacci collars，§1 的负偏移捕获及全锚交集、§9 的逐行参数递归窗口](https://github.com/the-omega-institute/nested-recurrences/blob/197832c30e732ff45e3c92a0fbd15ada26dbb260/cloitre-conway/fibonacci-collars.md)。把其自然闭块坐标改写为从上锚向左的缺口：对整数 $j\ge6$、$0\le b\le F_{j-1}$，令 $n=F_{j+1}-b$。负锚捕获区间是
+
+$$
+I_{j,b}=[F_j-b,F_j]\cap D_n,\qquad D_n=\{1,\ldots,n-1\},
+$$
+
+实际域内的每条轨道最终进入该不变区间。全部周期点还同时满足全锚交集
+
+$$
+\begin{aligned}
+x&\in[\max(F_{j-1},F_j-b),\ \min(F_j,F_j+F_{j-3}-b)]\cap\mathbb Z,\\
+z=F_j-x&\in J_{j,b}:=
+[\max(0,b-F_{j-3}),\ \min(b,F_{j-2})]\cap\mathbb Z.
+\end{aligned}
+\tag{24.3}
+$$
+
+特别地，实际所选的两子索引准确为
+
+$$
+\begin{aligned}
+g_n&=F_j-z,&n-g_n&=F_{j-1}-w,&z+w&=b,\\
+0\le z&\le F_{j-2},&0\le w&\le F_{j-3}.
+\end{aligned}
+\tag{24.4}
+$$
+
+父索引属于自然闭块 $[F_j,F_{j+1}]$，两个子索引依次属于 $[F_{j-1},F_j]$ 和 $[F_{j-2},F_{j-1}]$，继承的自然阶数是 $j-1,j-2$。$b=0$ 时两子索引为这两个闭块的上端点；$b=F_{j-1}$ 时两子缺口为 $F_{j-2},F_{j-3}$，子索引为下端点。上端点仍按继承阶数表示，不重新归入更高块。式 (24.3)–(24.4) 是来源接口在当前坐标中的使用，不作为新增闭合定理；来源的参数网络、共享物理行约束、终端编码及守恒逆标签预算也保留原范围。它们并不预先决定本节所需的实际平台边界相位。
+
+**定义 24.2（上锚高度亏量与候选平台宽度）。** 对整数 $m\ge8$、$0\le t\le F_{m-2}$，定义
+
+$$
+\lambda_m(t)=F_{m-1}-C(F_m-t),\qquad
+p_m=\left\lfloor\frac{2m-9}{3}\right\rfloor.
+\tag{24.5}
+$$
+
+$\lambda_m(t)$ 是上锚 Fibonacci 高度的亏量。由 $U$ 非减，它是非负整数；它与规范黄金缺陷 $E(n)=C(n)-G(n)$ 的准确关系是
+
+$$
+E(F_m-t)=F_{m-1}-G(F_m-t)-\lambda_m(t).
+\tag{24.6}
+$$
+
+因而高度亏量为零不等于规范缺陷为零。这里的 $\lambda_m$ 也不沿用供应源终端编码中同名字母的右侧轮廓含义。
+
+**定理 24.3（实际最大左平台、同步上锥与零亏量路由）。** 在假设 24.1 下，对所有整数 $m\ge8$ 和 $0\le t\le F_{m-2}$，
+
+$$
+\begin{aligned}
+\lambda_m(t)=0&\quad\Longleftrightarrow\quad0\le t\le p_m,\\
+p_m<t\le F_{m-2}&\quad\Longrightarrow\quad
+1\le\lambda_m(t)\le\max(1,t-p_m-1).
+\end{aligned}
+\tag{24.7}
+$$
+
+所以 $p_m$ 是整个自然闭块中从上锚向左的最大等高平台宽度，块内没有另外一段不相连的同高平台。对每个整数 $W\ge0$，只要
+
+$$
+m\ge\max\left(8,\left\lceil\frac{3W+9}{2}\right\rceil\right),
+$$
+
+就同时对所有 $0\le t\le W$ 有 $C(F_m-t)=F_{m-1}$。
+
+更精确地，对整数 $j\ge9$，在实际零亏量节点 $n=F_{j+1}-b$、$0\le b\le F_{j-1}$ 上，式 (24.4) 的所选子缺口只有两种可能：
+
+$$
+(z,w)=
+\begin{cases}
+(b,0),&0\le b\le p_j,\\
+(p_j,1),&b=p_j+1\text{ 且 }F_j\text{ 为奇数}.
+\end{cases}
+\tag{24.8}
+$$
+
+在边界 $b=p_j+1$，实际所选周期恰为二，规定深度及所选点为
+
+$$
+\begin{aligned}
+d_n&=F_j-1,\\
+g_n&=
+\begin{cases}
+F_j-p_j,&F_j\text{ 为奇数},\\
+F_j-p_j-1,&F_j\text{ 为偶数}.
+\end{cases}
+\end{aligned}
+\tag{24.9}
+$$
+
+证明。对阶数作同时归纳，零集断言和上锥断言一同保留。两条完整基行是
+
+$$
+\begin{aligned}
+(\lambda_8(t))_{t=0}^{8}&=(0,0,0,1,1,2,3,4,5),&p_8&=2,\\
+(\lambda_9(t))_{t=0}^{13}&=(0,0,0,0,1,1,2,2,3,5,6,6,7,8),&p_9&=3.
+\end{aligned}
+\tag{24.10}
+$$
+
+这两行由式 (24.1) 的字面初值取得。具体地，按 $n=3,4,\ldots,34$ 的次序，每次先在已定前缀中从 $n-1$ 迭代恰好 $C(n-1)$ 步，再对所选互补索引求和，得到
+
+$$
+\begin{aligned}
+(C(n))_{n=1}^{34}={}&(1,1,2,3,3,4,5,5,6,7,7,8,8,9,10,11,12,12,\\
+&13,13,13,14,15,15,16,18,19,19,20,20,21,21,21,21),\\
+(g_n)_{n=3}^{34}={}&(2,3,2,3,4,5,5,7,6,7,8,9,8,10,10,11,\\
+&12,12,13,13,15,13,13,17,17,16,17,18,19,19,20,21).
+\end{aligned}
+$$
+
+代入 $F_8=21$、$F_9=34$ 及其左闭块范围，即为式 (24.10)；各项直接满足式 (24.7)。没有用固定宽度来源种子推出任意宽度。
+
+设 $j\ge9$，式 (24.7) 已在阶数 $j$ 和 $j-1$ 成立，记 $p=p_j$。在父索引 $n=F_{j+1}-b$ 上，周期点 $x=F_j-z$ 的字面内步给
+
+$$
+z_{\mathrm{next}}=b-\lambda_j(z).
+\tag{24.11}
+$$
+
+在实际所选点上，子缺口 $z,w=b-z$ 属于式 (24.4) 的各自合法域，原递归求和给
+
+$$
+\lambda_{j+1}(b)=\lambda_j(z)+\lambda_{j-1}(w).
+\tag{24.12}
+$$
+
+两项均为非负整数。周期本身的式 (24.11) 用于约束所有周期点；式 (24.12) 的 $z$ 则始终是规定深度所选的实际点。
+
+先核对小边界的域。$p\le j-6$，而 $F_r\ge r-1$ 对 $r\ge2$ 成立，所以
+
+$$
+p+2\le j-4\le F_{j-3},\qquad
+F_{j-1}\ge j-2>p+2.
+\tag{24.13}
+$$
+
+因此 $b\le p+2$ 时整个捕获缺口区间 $[0,b]$ 都在 $\lambda_j$ 的域内，式 (24.3) 没有截去它的端点，父索引及邻点 $n-1$ 也仍在所用闭块中。对 $b\le p$，归纳假设使 $\lambda_j$ 在 $[0,b]$ 上恒为零，式 (24.11) 是常值映射 $z\mapsto b$。唯一周期为固定点 $z=b$，实际拆分的另一缺口为零，式 (24.12) 给 $\lambda_{j+1}(b)=0$，并给出式 (24.8) 的第一条路由。
+
+对任意 $b\ge p+2$，每个周期缺口都满足 $0\le z\le b$。归纳上锥在全部这样的合法点上给
+
+$$
+\lambda_j(z)\le b-p-1.
+$$
+
+这里 $z\le p$ 时左侧为零；$z>p$ 时用 $\max(1,z-p-1)\le b-p-1$。每个周期点都有一个同周期前驱，所以式 (24.11) 迫使每个周期缺口都至少为 $p+1$。归纳零集于是使每个周期点的 $\lambda_j(z)\ge1$，再沿一个周期边得到所有周期缺口至多为 $b-1$。故
+
+$$
+p+1\le z\le b-1,\qquad w=b-z\ge1,
+\tag{24.14}
+$$
+
+并由式 (24.12) 得到父亏量至少为一。特别地，先处理 $b=p+2$：式 (24.14) 把周期压成单点 $z=p+1$，而归纳假设给 $\lambda_j(p+1)=1$、$\lambda_{j-1}(1)=0$，所以
+
+$$
+\lambda_{j+1}(p+2)=1.
+\tag{24.15}
+$$
+
+这一步先于边界 $b=p+1$ 的深度计算，不使用其待定输出。
+
+现在取 $b=p+1$，令 $A=F_j$、$B=F_{j-1}$、$L=A-b$。在捕获区间 $[L,A]$ 的缺口坐标中，式 (24.11) 把所有 $z\le p$ 映为 $p+1$，把 $p+1$ 映为 $p$。唯一周期是 $\{p,p+1\}$，但周期集合尚不能决定实际返回相位。
+
+式 (24.13) 给实际起点 $x_0=n-1=A+B-b-1>A$。对每个右外侧实际点 $x>A$，黄金下界及锚后一值给
+
+$$
+C(x)\ge G(A+1)=B+1,\qquad T_n(x)\le A-b-1=L-1.
+\tag{24.16}
+$$
+
+对每个左外侧实际点 $x<L$，若 $x\ge B$，则 $z=A-x\ge p+2$ 且 $z\le F_{j-2}$，由归纳零集 $C(x)\le B-1$；若 $x<B$，则 $C(x)\le U(x)\le U(B)=F_{j-2}<B$，也有 $C(x)\le B-1$。因此统一地
+
+$$
+T_n(x)\ge A-b+1=L+1\qquad(x<L).
+\tag{24.17}
+$$
+
+只要尚未捕获，实际轨道的偶数绝对时间严格在 $A$ 右侧，奇数绝对时间严格在 $L$ 左侧。来源保证最终捕获。令 $\tau$ 为首次进入 $[L,A]$ 的时间，则 $\tau$ 为偶数；进入这一步来自左外侧，所以入口不可能是 $L$，而其缺口 $z_\tau$ 满足 $0\le z_\tau\le p$。
+
+必须进一步区分区间入口和周期入口。若 $z_\tau=p$，入口已经在二周期上，最短前周期为 $\tau$；若 $z_\tau<p$，入口不在二周期上，但下一步为 $p+1$，最短前周期为 $\tau+1$。两种情形都给同一绝对时间规则：在已入周期的时段，偶数时间缺口为 $p$，奇数时间缺口为 $p+1$。这没有自由选相位，也没有把 $\tau$ 一概当成最短前周期。
+
+由已经取得的式 (24.15)，当前父索引的邻点 $n-1=F_{j+1}-(p+2)$ 满足
+
+$$
+d_n=C(n-1)=F_j-1.
+\tag{24.18}
+$$
+
+规定深度已入周期的来源前提使上述绝对时间规则可用于 $d_n$。若 $F_j$ 为奇数，$d_n$ 为偶数，实际选择 $z=p$、$w=1$，式 (24.12) 给父亏量零；若 $F_j$ 为偶数，$d_n$ 为奇数，实际选择 $z=p+1$、$w=0$，父亏量为一。因此
+
+$$
+p_{j+1}=p_j+\begin{cases}1,&F_j\text{ 为奇数},\\0,&F_j\text{ 为偶数}.
+\end{cases}
+\tag{24.19}
+$$
+
+模二的 Fibonacci 递推从 $(F_0,F_1)=(0,1)$ 给重复模式 $0,1,1$，所以 $F_j$ 为偶数当且仅当 $j\equiv0\pmod3$。直接分别对 $j\equiv0,1,2\pmod3$ 计算
+
+$$
+\left\lfloor\frac{2(j+1)-9}{3}\right\rfloor
+-\left\lfloor\frac{2j-9}{3}\right\rfloor
+=\begin{cases}0,&j\equiv0\pmod3,\\1,&j\equiv1,2\pmod3,
+\end{cases}
+$$
+
+可见式 (24.19) 正是声明的 $p_m$，与两个基行一致。前面各范围的零集和非零性遂已确定，式 (24.9) 也已得到。
+
+还须闭合同时归纳中的上锥。边界 $b=p+1,p+2$ 已分别计算为零或一，均符合新 $p_{j+1}\in\{p,p+1\}$ 的要求。对 $b\ge p+3$，采用同一实际所选 $z,w$。若 $z\ge p+2$，归纳上锥给
+
+$$
+\lambda_j(z)\le z-p-1,\qquad
+\lambda_{j-1}(w)\le w-1\quad(w\ge1).
+$$
+
+后一界在零亏量子点上也成立；在非零子点上，由 $p_{j-1}\ge2$ 及归纳上锥取得。式 (24.12) 因此至多为 $b-p-2$。若 $z=p+1$，则第一子亏量为一，$w=b-p-1\ge2$。当第二子亏量为零时，有 $\lambda_{j-1}(w)=0\le w-2$；当它非零时，$w\ge p_{j-1}+1\ge3$，归纳上锥给
+
+$$
+\lambda_{j-1}(w)\le\max(1,w-p_{j-1}-1)\le w-2.
+$$
+
+父亏量仍至多为 $1+w-2=b-p-2$。这两个分支明确包含零亏量和非零亏量的实际兄弟子树，没有遗漏小 $w$。若 $p_{j+1}=p+1$，该界就是 $b-p_{j+1}-1$；若 $p_{j+1}=p$，它更强于所需界。结合已经证明的正性，得到式 (24.7) 的新阶上锥，完成同时归纳。
+
+式 (24.7) 再说明零亏量父节点只能在 $b\le p_j$，或在 $b=p_j+1$ 且 $F_j$ 为奇数时出现；已计算的实际相位分别给式 (24.8) 的两条路由。最后，$m\ge\lceil(3W+9)/2\rceil$ 等价于 $p_m\ge W$。域也足够：$p_8\le F_6$、$p_9\le F_7$，且 $p_m\le m-3\le F_{m-2}$ 对 $m\ge8$ 成立。因此整个 $[0,W]$ 均在合法闭块中，得到任意固定宽度结论。
+
+**定义 24.4（继承自然阶数的左亏量）。** 在实际闭块树的每个节点保留其继承自然阶数 $h\ge4$，定义
+
+$$
+\ell_h(b)=F_h-C(F_{h+1}-b),\qquad
+0\le b\le F_{h-1},\qquad
+\zeta_h=\max\left(1,\left\lfloor\frac{2h-7}{3}\right\rfloor\right).
+\tag{24.20}
+$$
+
+树在 $h\ge6$ 时沿式 (24.4) 的实际所选子索引展开，子阶数为 $h-1,h-2$，在四、五阶停止。同一物理上端点不改变其继承阶数。于是父缺口及其非负整数亏量都在这一棵实际树上相加：
+
+$$
+b=z+w,\qquad
+\ell_h(b)=\ell_{h-1}(z)+\ell_{h-2}(w).
+\tag{24.21}
+$$
+
+这只使用来源的实际闭块树和原输出和式；终端编码、窗口参数网络及逆标签预算不需要另一个证明。
+
+**定理 24.5（全根左亏量的逆二次屏障）。** 在假设 24.1 下，对每个整数 $h\ge4$ 及其全部合法缺口 $0\le b\le F_{h-1}$，
+
+$$
+\begin{aligned}
+\ell_h(b)=0&\quad\Longleftrightarrow\quad b\le\zeta_h,\\
+\ell_h(b)>0&\quad\Longrightarrow\quad b\le h^2\ell_h(b),\\
+b&\le\zeta_h+h^2\ell_h(b),\\
+\ell_h(b)&\ge\max\left(0,\frac{b-\zeta_h}{h^2}\right).
+\end{aligned}
+\tag{24.22}
+$$
+
+证明。小阶闭块的完整亏量行，按 $b$ 从零到其域上端点排列，为
+
+$$
+\begin{aligned}
+(\ell_4(b))_{b=0}^{2}&=(0,0,1),\\
+(\ell_5(b))_{b=0}^{3}&=(0,0,1,2),\\
+(\ell_6(b))_{b=0}^{5}&=(0,0,1,1,2,3).
+\end{aligned}
+\tag{24.23}
+$$
+
+它们由式 (24.1) 的 $C(3),\ldots,C(13)$ 得到，前三个 $\zeta_h$ 都为一。$h=7$ 时 $\ell_7(b)=\lambda_8(b)$、$\zeta_7=p_8=2$；一般 $h\ge7$ 时 $\ell_h=\lambda_{h+1}$、$\zeta_h=p_{h+1}$，所以零集由定理 24.3 给出。这也把小阶终端与高阶平台接在同一继承坐标中。
+
+对正亏量结论，沿实际树作阶数强归纳。四、五阶由式 (24.23) 直接满足。固定 $h\ge6$ 的一个正亏量根，写 $e=\ell_h(b)\ge1$，沿其实际拆分取 $e_1=\ell_{h-1}(z)$、$e_2=\ell_{h-2}(w)$，由式 (24.21) 有 $e_1+e_2=e$。若两子亏量都为正，归纳假设给
+
+$$
+b=z+w\le(h-1)^2e_1+(h-2)^2e_2\le(h-1)^2e\le h^2e.
+$$
+
+若恰有一子亏量为正，其缺口至多为 $(h-1)^2e$；零亏量兄弟的缺口由已经证明的零集至多为 $\zeta_{h-1}$，因为 $\zeta_h$ 随 $h$ 非减。又有 $\zeta_{h-1}\le h-1$，所以
+
+$$
+\begin{aligned}
+b&\le(h-1)^2e+(h-1)\\
+&\le\bigl((h-1)^2+h-1\bigr)e
+=h(h-1)e\le h^2e.
+\end{aligned}
+\tag{24.24}
+$$
+
+第二行的吸收使用的是同一个父亏量为整数且至少一，不是额外频率或独立性假设。两子都为零会使父亏量零，已被正亏量前提排除。归纳完成。父亏量为零时 $b\le\zeta_h$，为正时已有更强的 $b\le h^2\ell_h(b)$，两者给式 (24.22) 的统一界及其等价下屏障。
+
+该屏障作用于全部实际根及其继承子树，而非逐节点外加的数值帽。二次阶数因子来自正亏量下降路径上零亏量兄弟缺口的逐层吸收。它随阶数增长，故还没有产生统一正系数的左亏量下界，也没有把式 (24.6) 中的规范缺陷估计一并完成。
+
+**定理 24.6（同一实际锚点轨道的末次缺口与严格时钟下界）。** 在假设 24.1 下，固定整数 $k\ge9$，保留假设 23.1 的实际锚点轨道和定理 23.2 的时间记号：
+
+$$
+\begin{aligned}
+N&=F_k,&A&=F_{k-1},&B&=F_{k-2},\\
+x_0&=N-1,&x_{i+1}&=N-C(x_i),&\mu_k&=2R_k,\\
+a_r&=x_{2r}-A,&b_r&=A-x_{2r+1}\quad(1\le r<R_k),&a_{R_k}&=0.
+\end{aligned}
+$$
+
+令
+
+$$
+H=k-2,\qquad D=H^2,\qquad
+Z=\zeta_H=\left\lfloor\frac{2k-11}{3}\right\rfloor,
+\qquad L_k(b)=B-C(A-b)=\ell_H(b)\quad(0\le b\le F_{k-3}).
+\tag{24.25}
+$$
+
+在同一实际落点前轨道上，最后一次缺口和所有较早缺口满足
+
+$$
+1\le b_{R_k-1}\le Z,\qquad
+b_r>Z\quad(1\le r<R_k-1).
+\tag{24.26}
+$$
+
+每个实际访问时间 $1\le r<R_k$ 同时有
+
+$$
+\alpha a_r-1<b_r\le Z+D a_{r+1},\qquad
+L_k(b_r)\ge\max\left(0,\frac{b_r-Z}{D}\right).
+\tag{24.27}
+$$
+
+因此，对每个整数 $k\ge9$，最短前周期严格满足
+
+$$
+\mu_k>
+2+\frac{2\log\left(1+\dfrac{(D-\alpha)F_{k-4}}{Z+1}\right)}
+{\log(D/\alpha)}.
+\tag{24.28}
+$$
+
+特别地，$\mu_k=\Omega(k/\log k)$ 且 $\mu_k\to\infty$。这两个结论不附加黄金收敛前提；它们仍条件于假设 24.1 的来源基础。所选锚点周期长度仍为一，$d_N=A$、$g_N=A$。
+
+证明。定理 23.2 及式 (23.14) 给同一个实际对象上的
+
+$$
+\begin{aligned}
+R=R_k&\ge2,\qquad a_1=F_{k-4},\qquad a_R=0,\\
+1\le a_r&\le B-1,\qquad1\le b_r\le F_{k-3},\\
+b_r&=C(A+a_r)-B,\qquad a_{r+1}=L_k(b_r)\quad(1\le r<R).
+\end{aligned}
+\tag{24.29}
+$$
+
+参数对应 $F_{H+1}=A$、$F_H=B$、$F_{H-1}=F_{k-3}$ 使式 (24.25) 在整个闭域上准确成立，包含 $b=0$ 和 $b=F_{k-3}$。这里没有换轨道、换入口或换规定深度。定理 24.5 的零集给 $L_k(b)=0$ 当且仅当 $b\le Z$。最末一步 $a_R=0$、较早每个 $a_{r+1}>0$，连同 $b_r\ge1$，即为式 (24.26)。$R=2$ 时较早时间范围为空，末次时间仍为 $r=1$。
+
+由同一实际右侧点上的黄金下界及 $G(A)=B$，
+
+$$
+\begin{aligned}
+b_r&\ge G(A+a_r)-G(A)\\
+&=\lfloor\alpha(A+a_r+1)\rfloor-
+\lfloor\alpha(A+1)\rfloor>\alpha a_r-1.
+\end{aligned}
+\tag{24.30}
+$$
+
+另一方面，定理 24.5 在其同一个实际下一步自变量 $A-b_r$ 上给 $b_r\le Z+D L_k(b_r)=Z+D a_{r+1}$，以及式 (24.27) 的下屏障。这些上下界是每次实际访问同时满足的联合条件。
+
+设
+
+$$
+q=\frac D\alpha>1,\qquad c=\frac{Z+1}{\alpha}>0.
+$$
+
+式 (24.27) 化为 $a_r<q a_{r+1}+c$。从 $a_R=0$ 出发，沿 $r=R-1,R-2,\ldots,1$ 反向展开，恰好使用 $R-1$ 个不等式，得到
+
+$$
+\begin{aligned}
+F_{k-4}=a_1
+&<c\sum_{i=0}^{R-2}q^i
+=c\frac{q^{R-1}-1}{q-1}\\
+&=\frac{Z+1}{D-\alpha}\bigl(q^{R-1}-1\bigr).
+\end{aligned}
+\tag{24.31}
+$$
+
+$D-\alpha>0$，所以
+
+$$
+q^{R-1}>1+\frac{(D-\alpha)F_{k-4}}{Z+1},\qquad
+R-1>\frac{\log\left(1+(D-\alpha)F_{k-4}/(Z+1)\right)}{\log q}.
+$$
+
+用 $\mu_k=2R$ 就得到式 (24.28)，严格号来自式 (24.30)。Binet 公式和 $Z=2k/3+O(1)$、$D=(k-2)^2$ 给
+
+$$
+\begin{aligned}
+\log\left(1+\frac{(D-\alpha)F_{k-4}}{Z+1}\right)
+&=k\log\varphi+\log k+O(1),\\
+\log(D/\alpha)&=2\log k+O(1).
+\end{aligned}
+$$
+
+所以式 (24.28) 右侧除以 $k/\log k$ 趋于 $\log\varphi>0$，证明所述增长下界与发散。来源的捕获上界 $\mu_k=O(k)$ 仍按 §23.1 的范围使用；这里不重新证明它。锚点所选周期及所选拆分仍由定理 23.2 给出，时钟增长没有改变周期一的事实。
+
+这一结论补足 §23 末尾列出的来源条件下、不另假设收敛的时钟发散缺口。定理 23.2 中“若存在无限有界时钟子列，则同一奇数时间见证产生线性规范缺陷及收敛阻碍”的条件蕴含仍然有效；式 (24.28) 说明，在本节共同来源前提下，该无限有界时钟子列的存在前件不可能成立。因此不能借旧条件蕴含宣称实际存在无条件线性规范缺陷族。式 (23.5) 的幂次缺陷前提仍未取得，式 (23.15) 的固定正系数屏障也未由 $D^{-1}$ 这一趋零系数给出。
+
+式 (24.26) 还排除了 §23.3 的一种具体反例路线：任意 $k\ge9$ 的实际访问零亏量点都只能是末次点，且 $b_r\le Z=O(k)$，故不存在实际访问点族同时满足 $L_k(b_r)=0$ 和 $b_r/k\to\infty$。这排除的是零亏量宽平台；上述估计仍未排除正但小亏量伴随更大缺口的实际访问点，不能据此取得固定 $\kappa$。
+
+共同词长资源直接复用 §20.7 的合同，使用实际根 $N$ 的 $L(N)$ 及其全部更长共同高端补零长度。每条实际轨道及其闭块子树中的索引、所选子索引、规定深度、缺口和非负整数亏量都不超过 $N$；其中时钟用 $\mu_k\le d_N=A<N$。分析系数 $D$、$\alpha$ 和对数不是新增的选择器输出字段。能以同一个词长容纳这些实际整数，不等于存在固定轨数的同步自动机，也不等于能以有限状态取得时钟或子树证书。锚点选择器仍是 $g_N=A$，精确时钟不是它必须输出的字段。
+
+**定义 24.7（更强实际屏障与未证桥梁）。** 更强的访问点屏障仍指问题 23.3 的统一量词：存在与 $k,r$ 无关的常数 $0<\kappa\le\alpha$、$K\ge0$ 和整数 $k_0$，使所有 $k\ge k_0$、$1\le r<R_k$ 的同一实际访问点满足
+
+$$
+L_k(b_r)\ge\kappa b_r-Kk.
+\tag{24.32}
+$$
+
+式 (24.22)–(24.28) 不以式 (24.32) 为前提，也没有证明它。正亏量子层的相位与亏量锥能否限制零亏量兄弟在正亏量脊线上的累计附着，仍是取得固定系数所缺的联合约束。需要同时保留父缺口映射、实际规定深度及相邻 $b+1$ 处的深度来源；定理 24.3 已分类零亏量路由，但没有给出正亏量子层的统一累计预算。
+
+此处的未证条件还包括全部实际根上的规范 $E$ 控制和黄金收敛、正但小亏量的平台族控制、实际周期的无界长度族、Cloitre 全域五窗图与全域选择器图的有限状态闭合、统一的逆取得证书，以及完整的跨递归结构对应。来源窗口闭合和条件逆标签预算、几何终端编码及参数网络直接保留其已有结论；提供坐标或复原已有参数不自动解决实际参数和盆地相位的取得成本。定理 24.3–24.6 的新增推导处理实际平台边界、同树亏量下屏障及实际锚点瞬态，不以比较映射替代字面递归。
+
+与 Campbell 的对应仍严格按定义 15.1 和接口 22.5：两者都从 $n-1$ 出发，用各自序列给规定深度并选择绝对时间相位，但 Campbell 返回所选状态，Cloitre 返回两子值的和。供应源 [Campbell note，Theorem 1 与 §§2–3](https://github.com/the-omega-institute/nested-recurrences/blob/197832c30e732ff45e3c92a0fbd15ada26dbb260/campbell/note.tex) 的实际 $x_6=x_4$ 和深度奇偶公式保留其原域；它们没有把四步捕获、三尺度公式或三进制正则性传给 $C$。本节的发散是 $C$ 在 Fibonacci 锚点处的最短前周期发散，既不建立周期长度发散，也不决定任何一种递归的全域选择器正则性。
+
+## 追加锚（本行以下为增补区）
+
+## 25. 实际 Cloitre 全域五窗输出词图的非正则性
+
+**定理 25.1（实际最大左平台排除全域有限状态输出）。** 在假设 24.1 下，定义 15.1、式 (24.1) 的同一个实际 Cloitre 序列 $C$ 的全补零五窗同步词图 $\mathcal G_C$ 不是正则语言。这里完整采用定义 17.2、20.1 的合同：输入为全部 $n\ge1$，每个共同窗口数 $H\ge\max\{L(n),L(C(n))\}$ 都在词图内；每轨满足不相邻 Fibonacci 占位条件，恰有一个专用单位位配对末字母。结论排除在此准确合同下识别全域输出关系的任意有限状态自动机。
+
+显式继承假设 24.1 经假设 23.1、21.1 给出的界、黄金锚读出，以及定理 24.3 的整个自然闭块零集：
+
+$$
+\begin{aligned}
+G(n)&\le C(n)\le U(n)\le n&& (n\ge1),\\
+G(F_m)&=F_{m-1}&& (m\ge8),\\
+C(F_m-b)=F_{m-1}
+&\quad\Longleftrightarrow\quad b\le p_m
+&& (m\ge8,\ 0\le b\le F_{m-2}),\\
+p_m&=\left\lfloor\frac{2m-9}{3}\right\rfloor.
+\end{aligned}
+\tag{25.1}
+$$
+
+$F_0=0$、$F_1=1$、$G(n)=\lfloor\alpha(n+1)\rfloor$ 的约定不变。这些来源条件所承继的计算辅助基础仍作为显式假设（`ASSUMED-UNVERIFIED`）：黄金结构的有限比值区间 $[16384,131071]$、有限归纳基 $[1,65535]$，以及规定深度入周期的有限初值域 $3\le N\le52$。它们不在本定理中取得独立证明或 Lean 内核认证。以下只证明实际平台到全域输出非正则性的桥梁，不重新证明这些基础或定理 24.3，也不假设 $C$ 单调、黄金收敛、选择器正则或周期长度规律。
+
+证明。反设 $\mathcal G_C$ 正则。首先在一轨上使用正则锚过滤
+
+$$
+\mathcal F_2=\mathrm{null}^{*}[5]\mathrm{null}^{+}\underline0.
+\tag{25.2}
+$$
+
+由定义 2.1 的窗口权重，若 $[5]$ 以下有 $k\ge1$ 个窗口，则其值恰为 $F_{3k+5}$。故此过滤精确给出所有 $W_H(F_m)$，其中 $m\ge8$、$m\equiv2\pmod3$、$H\ge L(F_m)$。$[5]$ 以上的任意高端补零不计入 $m$。
+
+在同一个 $H$ 上取四条合法同步轨 $(A,b,n,y)$，要求
+
+$$
+W_H(A)\in\mathcal F_2,\qquad
+n+b=A,\qquad y=G(A),\qquad
+\bigl(W_H(n),W_H(y)\bigr)_{\mathrm{sync}}\in\mathcal G_C.
+\tag{25.3}
+$$
+
+其中 $b$ 是非负左偏移，$n\ge1$，而 $y$ 同时是实际输出 $C(n)$ 和锚的黄金读出；没有另加一条实际输出轨。直接调用 §§17、20 已使用的同步加法、黄金读出关系及逐轨接缝守卫，再用正则语言的相交、逆字母投影和字母投影闭合，即知这些四轨词向 $(A,b)$ 的投影 $\mathcal P_2$ 正则。算术中间工具的先例仍是 Du、Mousavi、Schaeffer、Shallit，[《Decision Algorithms for Fibonacci-Automatic Words, with Applications to Pattern Avoidance》§2](https://arxiv.org/abs/1406.0670)；此处不另立通用算术定理。所有投影只删轨道，不删位置，也不增加共同窗口数。
+
+关键是对每一个允许的 $H$，都有精确等式
+
+$$
+\mathcal P_2=
+\left\{\bigl(W_H(F_m),W_H(b)\bigr)_{\mathrm{sync}}:
+\begin{array}{l}
+m\ge8,\quad m\equiv2\pmod3,\quad 0\le b\le p_m,\\
+H\ge\max\{L(F_m),L(b)\}
+\end{array}\right\}.
+\tag{25.4}
+$$
+
+先取任意投影见证。锚过滤和式 (25.3) 给 $A=F_m$、$y=F_{m-1}$、$n=A-b\ge1$。由实际界 $y=C(n)\le n$，必有
+
+$$
+0\le b\le A-y=F_{m-2}.
+$$
+
+于是见证确实落在定理 24.3 的整个自然闭块内；$C(n)=F_{m-1}$ 强制 $b\le p_m$。其两条保留轨本来就在同一 $H$ 上，故属于式 (25.4) 右侧。这个自然块限制来自实际 $C(n)\le n$，无需额外引入非负松弛轨。
+
+反之，取式 (25.4) 右侧任意一词及其原有的 $H$。由 $F_k\ge k-1$（$k\ge2$），有 $p_m\le m-3\le F_{m-2}$。令
+
+$$
+n=F_m-b,\qquad y=F_{m-1}=G(F_m).
+$$
+
+则 $n\ge y\ge1$，式 (25.1) 给 $C(n)=y$，且 $0\le n,y\le A$。式 (20.7) 的准确资源等价
+
+$$
+L(x)\le H\quad\Longleftrightarrow\quad0\le x<F_{3H+3}
+$$
+
+保证只要 $A$ 已能放进这个 $H$，辅助数 $n,y$ 也各能放进同一个 $H$。因此全补零实际图恰含这个长度上的 $(n,y)$ 见证；同步加法和黄金读出也在这个长度上成立。该论证适用于最短共同长度以及每一个额外共同高端补零长度，证明式 (25.4) 的反向包含，没有只保留加长后的表示。
+
+令识别投影语言 $\mathcal P_2$ 的确定有限自动机有 $q\ge1$ 个状态。$q$ 仅计此二轨自动机的状态，不是递归周期、内步次数或原四轨识别者的状态数。取
+
+$$
+H=3q,\qquad m=3H+2=9q+2,\qquad
+b=p_m=2H-2=6q-2,\qquad \ell=L(b).
+\tag{25.5}
+$$
+
+这是式 (25.4) 中被接受的最短共同长度词，其锚轨为 $[5]\mathrm{null}^{H-1}\underline0$。由于
+
+$$
+b=6q-2<F_{6q},\qquad 6q=3(2q-1)+3,
+$$
+
+式 (20.7) 给 $\ell\le2q-1$。所以首个配对字母 $([5],\mathrm{null})$ 之后、完整的低端 $b$ 后缀之前，有至少
+
+$$
+H-1-\ell\ge q
+$$
+
+个连续配对字母 $\Delta=(\mathrm{null},\mathrm{null})$。这是最高占位锚之下的内部共同空窗区间，不是两轨共同的额外高端补零。
+
+考察这一区间前 $q$ 个 $\Delta$ 的 $q+1$ 个状态边界，必有两个状态相同。删去其间 $t$ 个完整窗口，$1\le t\le q$，自动机仍接受。最高占位 $[5]$、表示 $b$ 的完整低端后缀和唯一单位位配对末字母 $(\underline0,\underline{e(b)})$ 都未被删除。删后窗口数 $H'=H-t$ 满足
+
+$$
+H'\ge2q>\ell,\qquad H'-1\ge1.
+$$
+
+锚轨仍只有一个占位且单位位为零；$b$ 轨只减少了其完整后缀以上的高端空窗，并仍有至少一个这样的空窗。两轨各自的窗口内条件、跨窗口接缝和最低窗口到单位位的接缝均合法；删环没有拼接两个新的占位。单位末字母仍恰出现一次，且仍在最后。
+
+短词的准确解码是
+
+$$
+A'=F_{m'},\qquad m'=3H'+2=m-3t,\qquad b\text{ 不变}.
+\tag{25.6}
+$$
+
+这次删除降低了最高占位的 Fibonacci 阶数，而不只是改变同一整数的填充量。低端 $b$ 后缀的权重相对于单位位未动。还有
+
+$$
+\begin{aligned}
+m'&\ge6q+2\ge8,\qquad m'\equiv2\pmod3,\\
+0\le b&<F_{6q}\le F_{m'-2},\\
+p_{m'}&=\left\lfloor\frac{2(m-3t)-9}{3}\right\rfloor
+=p_m-2t=b-2t<b.
+\end{aligned}
+\tag{25.7}
+$$
+
+故短词的锚仍通过过滤，$H'=L(A')>L(b)$，并仍处在定理 24.3 的自然闭块域。若它在 $\mathcal P_2$ 中，式 (25.4) 就要求 $b\le p_{m'}$，与式 (25.7) 矛盾。因此 $\mathcal P_2$ 不可能正则，反设 $\mathcal G_C$ 正则也随之被否定。
+
+删环只发生在已经投影后的二轨自动机中。原来的 $n,y$ 见证不必在该区间为空窗，也不要求删后仍是见证。式 (25.4) 在每个共同长度上的等式保证：若短词被投影语言接受，就必须有新的 $n'=A'-b$、$y'=G(A')=F_{m'-1}$ 四轨见证。它们满足 $n'\ge y'\ge1$、$n',y'\le A'$，因而也能使用这个 $H'$；但定理 24.3 与 $b>p_{m'}$ 排除了 $C(n')=y'$。这正是投影后内部删环的矛盾，不要求原四轨共享空窗。证毕。
+
+由假设 24.1 的 $G\le C\le n$，直接复用式 (20.6) 的正则性等价，得到规范黄金缺陷词图 $\mathcal G_{E_C}$ 也非正则；这不是另一个新增证明。$E_C(n)=C(n)-G(n)$ 仍是定理 15.3 的实际拆分树总进位，不是定义 24.2 的上锚高度亏量 $\lambda_m$，二者关系仍由式 (24.6) 承担。
+
+本定理是本卷实际平台与同步资源接口的联合推导（`repo-derived`），所引算术结果仅为已知中间工具。[供应源钉版 $0a803199$ 的 Fibonacci collars，§6 的五模式读出](https://github.com/the-omega-institute/nested-recurrences/blob/0a803199ff33595826df32ebbf597f756edb2992/cloitre-conway/fibonacci-collars.md) 对每个固定合法低位上下文给出最终实际加性；该结果直接保留其原量词，固定窗口的最终加性不等于全域同步输出图正则，也不作为这里的新贡献。此处不主张世界原创性或完备文献搜索。
+
+与定理 17.3 合用时，Campbell 和实际 $C$ 在各自已列来源假设下共享“准确全域五窗输出词图非正则”这一性质。定义 15.1、接口 22.5 的实际读出仍不同：二者各从 $n-1$ 出发，用各自前值规定深度并选择同一条实际轨道的绝对时间相位；Campbell 返回被选状态，Cloitre 返回两个互补子值之和。这个共有输出性质没有传递 Campbell 的三尺度公式、三进制正则性或四步捕获，也没有建立两种递归的共轭。
+
+定理 25.1 在假设 24.1 下解除定义 24.7 中实际全域输出词图及其规范缺陷词图的正则性未决项；其余数学问题仍保留：全域可变深度选择器 $g_n$ 的同步图正则性、统一的规范缺陷与终端占用估计、$C(n)/n\to\alpha$、实际内周期的无界长度族、式 (24.32) 的固定正系数同轨亏量屏障、正但小亏量的平台族、全局相位与逆取得证书，以及完整的跨递归结构对应。平台宽度和锚阶数增加不是实际周期长度增加；上述否定结论不提供收敛反例。定理 15.2 的完整五窗表示仍保留每一步、规定深度及被选相位；非正则性只否定本合同中的有限状态准确词图识别，不否定可计算性、更丰富的表示或受限域上的有限状态结论。
+
+## 追加锚（本行以下为增补区）
+
+## 26. 实际选择树的离散度传递与周期跳幅约束
+
+**定理 26.1（零高度亏量后裔向根传递离散度）。** 在假设 24.1 下，取同一个实际 Cloitre 序列 $C$，仍从 $n-1$ 出发、迭代规定深度 $d_n=C(n-1)$，由被选相位 $g_n$ 拆成 $g_n,n-g_n$。对任意整数 $j\ge16$ 及实际闭块根 $F_j\le N\le F_{j+1}$，令
+
+$$
+b=F_{j+1}-N,\qquad e=\ell_j(b)=F_j-C(N),\qquad D(N)=E_C(N)=C(N)-G(N).
+$$
+
+若这棵实际选择树在某个深度 $0\le r\le3$ 有一个零高度亏量的出现节点，则
+
+$$
+V_4(j,N)\ge\frac1{108800}\left(\frac bN\right)^2
+\ge\frac1{108800}\left(\frac{D(N)}N\right)^2
+\ge\frac1{108800}\left(\frac{D(N)}N\right)^4.
+\tag{26.1}
+$$
+
+特别地，全部满足 $e\le7$ 的实际根都满足此估计；不要求根自身高度亏量为零。
+
+本章共享的树与离散度记号直接取自 [供应源 $8b8d4620$ 的 Fibonacci collars，§9，式 (9.22)–(9.24)](https://github.com/the-omega-institute/nested-recurrences/blob/8b8d4620c94ef181bf98006e3fc5e9f043e8bda2/cloitre-conway/fibonacci-collars.md#size-biased-martingales-and-the-four-generation-dispersion-criterion)。出现节点 $(h,M)$ 的两子索引准确为 $a=g_M$、$c=M-a$，继承阶标 $h-1,h-2$；四、五阶停止，上端点不重新归阶。按概率 $a/M,c/M$ 选择下一子节点，保持来源原读数 $X=F_h/M\in[3/5,1]$，并写
+
+$$
+\begin{aligned}
+v(h,M)&=\frac{(F_{h-1}c-F_{h-2}a)^2}{M^2ac},\\
+V_0&=0,\\
+V_m(h,M)&=v(h,M)+\frac aM V_{m-1}(h-1,a)
+                      +\frac cM V_{m-1}(h-2,c)\quad(h\ge6).
+\end{aligned}
+\tag{26.2}
+$$
+
+停止节点的方差增量为零。直接使用来源已经给出的鞅、正交方差恒等式与路径展开：$V_m=\mathbb E[(X_m-X_0)^2]$，深度 $r$ 的一个出现节点 $(h,M)$ 的路径概率为 $M/N$，且 $V_m$ 是深度小于 $m$ 的全部出现节点局部方差的加权和。同一物理整数的多次出现共享实际 $C$ 和 $g$，每条路径仍分别保留阶标和权重；没有独立分枝假设，也不对出现节点去重。高度亏量 $\ell_h(t)=F_h-C(F_{h+1}-t)$、亏量相加和零集分别直接使用式 (24.20)–(24.22)，不把 $\ell_h$ 当作 $D$。假设 24.1 所含计算辅助基础继续作为未另行验证的来源前提；本章结论是条件纸面推导。
+
+证明。先在一个零高度亏量出现节点 $(h,M)$ 上作实际选择专属的估计。写 $M=F_{h+1}-t$、$A=F_{h-1}$、$B=F_{h-2}$，其中 $h\ge10$。式 (24.8) 给出的真实子路由是
+
+$$
+\begin{aligned}
+a&=F_h-z,&c&=A-w,\\
+(z,w)&=(t,0),&&0\le t\le p_h,\\
+\text{或 }(z,w)&=(p_h,1),&&t=p_h+1\text{ 且 }F_h\text{ 为奇数}.
+\end{aligned}
+$$
+
+这里 $p_h=\lfloor(2h-9)/3\rfloor\ge3$。直接应用 [黄金结构 §3 所用的 Fibonacci 行列式与 Cassini 恒等式](https://github.com/the-omega-institute/nested-recurrences/blob/8b8d4620c94ef181bf98006e3fc5e9f043e8bda2/cloitre-conway/golden-proof.md)，有
+
+$$
+Ac-Ba=(-1)^h+Bz-Aw.
+$$
+
+第一条路由在 $t\ge1$ 时满足 $|Ac-Ba|\ge Bt-1\ge Bt/2$。第二条路由使用 $A\le2B$、$B\ge21$，得到
+
+$$
+|Ac-Ba|\ge B(p_h-2)-1
+\ge\frac{B(p_h-2)}2
+\ge\frac{B(p_h+1)}8=\frac{Bt}8.
+$$
+
+$t=0$ 的非负下界亦成立。由于 $M\le F_{h+1}=2A+B\le5B$ 且 $ac\le M^2/4$，把这个真实路由的行列式下界代入式 (26.2)，得到
+
+$$
+v(h,M)\ge\frac1{400}\left(\frac tM\right)^2.
+\tag{26.3}
+$$
+
+现固定定理中的零亏量出现节点 $u$。它的阶标满足 $j-6\le h\le j$，故 $h\ge10$。令 $q=M/N$、$\Delta=X_u-X_0$、$\eta=b/N$。在同一根、同一概率律下，$V_r$ 中该节点的读数偏移和第 $r$ 代该节点的条件方差是互不重叠的方差贡献，所以
+
+$$
+V_4(j,N)\ge q\bigl(\Delta^2+v(h,M)\bigr).
+\tag{26.4}
+$$
+
+若 $r=0$，第一项为零；仍保留根的局部方差。此处没有把两个不同实现的最优值相加。
+
+令 $R_k=F_{k+1}/F_k$，则准确有 $\eta=R_jX_0-1$、$t/M=R_hX_u-1$。Fibonacci 行列式恒等式给
+
+$$
+|R_j-R_h|=\frac{F_{j-h}}{F_jF_h}
+\le\frac8{F_jF_{j-6}}.
+$$
+
+$b\ge1$ 时，$X_u\le1$、$N\le2F_j$、$F_{j-6}\ge F_{10}=55$ 使阶标漂移误差满足
+
+$$
+|R_j-R_h|X_u\le\frac{16}{55}\eta\le\frac\eta2.
+$$
+
+因此 $R_j\le2$ 给出 $\eta\le4|\Delta|+2t/M$，进而
+
+$$
+\eta^2\le32\Delta^2+8(t/M)^2
+\le3200\bigl(\Delta^2+v(h,M)\bigr).
+$$
+
+$b=0$ 时目标下界为零，不需吸收漂移误差。又因
+
+$$
+F_{n+7}=13F_{n+1}+8F_n\le34F_n,
+$$
+
+该出现节点的路径质量满足 $q\ge F_{j-6}/F_{j+1}\ge1/34$。与式 (26.4) 联合即得式 (26.1) 的第一项。
+
+式 (24.2) 的上帽及黄金锚值给
+
+$$
+0\le D(N)\le F_j-G(F_{j+1}-b)
+             =G(F_{j+1})-G(F_{j+1}-b)\le b,
+\tag{26.5}
+$$
+
+因为 $G$ 的整数增量为零或一。并有 $0\le D(N)/N\le1$，故两项缺陷下界随之成立。最后，$j\ge16$ 使深度三之前无停止。式 (24.21) 将根的非负整数亏量 $e$ 准确分配到八个深度三出现节点；若 $e\le7$，至少一个亏量为零。证毕。
+
+同一证明还给出固定亏量预算的扩展。对任意固定整数 $R\ge0$，令 $r=\lceil\log_2(R+1)\rceil$；若
+
+$$
+j-2r\ge10,\qquad F_{j-2r}\ge4F_{2r},\qquad e\le R,
+$$
+
+则 $2^r>R$ 个深度 $r$ 出现节点中必有零亏量节点，且
+
+$$
+V_{r+1}(j,N)\ge\frac1{3200F_{2r+3}}\left(\frac bN\right)^2
+\ge\frac1{3200F_{2r+3}}\left(\frac{D(N)}N\right)^2
+\ge\frac1{3200F_{2r+3}}\left(\frac{D(N)}N\right)^4.
+\tag{26.6}
+$$
+
+具体地，行列式误差至多为 $F_{2r}/(F_jF_{j-2r})$，相对于 $b/N$ 至多为 $2F_{2r}/F_{j-2r}\le1/2$；路径质量至少为 $1/F_{2r+3}$，由 $F_{n+2r+1}\le F_{2r+3}F_n$ 取得。因此式 (26.3)–(26.4) 的同一传递估计适用。这里代数为 $r+1$，完整展开有 $2^{r+1}-1$ 个内部出现节点；常数及合法阶数依赖 $R$。亏量预算无界时不能当作统一四代结论。
+
+**定理 26.2（实际正侧门的三代前沿传递）。** 在假设 24.1 下，直接采用 [钉版 Fibonacci collars，§6 的 growing positive collar 与 growing actual selector domain](https://github.com/the-omega-institute/nested-recurrences/blob/8b8d4620c94ef181bf98006e3fc5e9f043e8bda2/cloitre-conway/fibonacci-collars.md#every-fixed-positive-offset-eventually-becomes-linear) 的
+
+$$
+\begin{aligned}
+L_k&=32+2\left\lfloor\frac{k-23}{6}\right\rfloor
+     +\mathbf1_{\{(k-23)\bmod6\ge4\}},\qquad k\ge23,\\
+W_k&=\max(32,G(L_k)).
+\end{aligned}
+\tag{26.7}
+$$
+
+来源在每个 $h\ge24$、$1\le s\le W_{h-1}$ 上已经给出实际被选子索引：$g_{F_h+s}=F_{h-1}+s$ 当该整数为奇数，否则为 $F_{h-1}$。这是真实起点、规定深度及相位的定理，不是从固定宽度种子外推的自由选择。$s=0$ 时直接使用锚值及锚点拆分。
+
+取任意 $j\ge30$、$N=F_j+t$、$0\le t\le F_{j-1}$。在根的三代实际前沿上，对八个位置出现节点 $v$ 写
+
+$$
+(h_v,n_v),\qquad s_v=n_v-F_{h_v},\qquad
+\beta_v=F_{h_v}/F_j.
+$$
+
+若至少一个节点满足 $0\le s_v\le W_{h_v-1}$，则
+
+$$
+V_4(j,N)\ge\frac4{1625}\left(\frac tN\right)^2
+\ge\frac4{1625}\left(\frac{D(N)}N\right)^2
+\ge\frac4{1625}\left(\frac{D(N)}N\right)^4.
+\tag{26.8}
+$$
+
+尤其令
+
+$$
+\begin{aligned}
+T_j&=W_{j-4}+3W_{j-5}+3W_{j-6}+W_{j-7},\\
+B_j&=\min(F_{j-1},T_j+7).
+\end{aligned}
+\tag{26.9}
+$$
+
+则每个 $j\ge30$、$0\le N-F_j\le B_j$ 的实际根都满足式 (26.8)，无需另加前沿假设。
+
+证明。实际闭块拆分保持子低锚偏移非负且相加；在三代前沿，准确有
+
+$$
+\sum_v s_v=t,\qquad \sum_vF_{h_v}=F_j,\qquad
+\mathbb P(v)=n_v/N,
+$$
+
+其中 $j-6\le h_v\le j-3$。使用式 (26.2) 的原方差展开，
+
+$$
+\begin{aligned}
+V_3(j,N)&=\sum_v\frac{n_v}N
+                   \left(\frac{F_{h_v}}{n_v}-\frac{F_j}N\right)^2,\\
+V_4(j,N)&=V_3(j,N)+\sum_v\frac{n_v}N v(h_v,n_v).
+\end{aligned}
+$$
+
+选择一个实际处于门内的出现节点，简写为 $(h,n)$、$s$、$\beta$，并令 $A=F_{h-1}$、$B=F_{h-2}$。其实际第一子为 $A+r$，第二子为 $B+s-r$。在 $s>0$ 时被选规则使 $r\in\{0,s\}$；$s=0$ 的下界仍为零。因此行列式 $As-F_hr$ 的绝对值至少为 $Bs$。$X\ge3/5$ 与 $B/F_h\ge1/3$ 给 $B/n\ge1/5$，子乘积至多为 $n^2/4$，从而
+
+$$
+\frac nN v(h,n)\ge\frac{4s^2}{25Nn}.
+$$
+
+同一个出现节点在 $V_3$ 的贡献准确为
+
+$$
+\frac nN\left(\frac{F_h}n-\frac{F_j}N\right)^2
+=\left(\frac{F_j}N\right)^2\frac{(\beta t-s)^2}{Nn}
+\ge\frac{9(\beta t-s)^2}{25Nn}.
+$$
+
+将这两项联合，并在其内部应用配方恒等式
+
+$$
+9(y-s)^2+4s^2=\frac{36}{13}y^2
+                      +13\left(s-\frac9{13}y\right)^2,
+$$
+
+得到
+
+$$
+V_4(j,N)\ge\frac{36}{325}\frac{\beta^2t^2}{Nn}.
+$$
+
+仍在该继承节点上，$n\le(5/3)F_h\le(5/3)\beta N$；连续三次每至多降两阶，$F_{k-2}/F_k\ge1/3$ 给 $\beta\ge1/27$。故上式至少为 $(108/1625)\beta(t/N)^2\ge(4/1625)(t/N)^2$。
+
+由 $C(F_j+t)\le F_{j-1}+t$、$G(F_j+t)\ge G(F_j)=F_{j-1}$，有
+
+$$
+0\le D(F_j+t)\le t.
+\tag{26.10}
+$$
+
+这给出式 (26.8) 的其余下界。深度三的阶标 $j-3,j-4,j-5,j-6$ 的位置重数分别为 $1,3,3,1$。若八个偏移全部大于各自门宽，整性就迫使 $\sum_vs_v\ge T_j+8$。所以 $t\le T_j+7$ 必有门内实际出现节点，证明式 (26.9) 的全部根域。证毕。
+
+式 (26.7) 给 $B_j=(8\alpha/3)j+O(1)$，而原被选门宽为 $W_{j-1}=(\alpha/3)j+O(1)$、精确值 collar 宽为 $L_j=j/3+O(1)$。因此这个父域超出原精确值 collar；还覆盖父偏移较大但实际三代前沿含有门内节点的根。其常数和四代成本统一，父域宽度仍仅为 $O(j)$，相对于长度 $F_{j-1}$ 的整个块趋于零。
+
+**定理 26.3（两锚的实际互补脊线门放大）。** 在假设 24.1 及式 (26.7) 的已知门条件下，对每个整数 $m\ge1$、$j\ge2m+22$ 和实际根 $F_j\le N\le F_{j+1}$，下面任一域成立即足够：
+
+$$
+\begin{aligned}
+\text{低锚域： }&s=N-F_j,\qquad
+0\le s\le2^{m-1}W_{j-2m+1};\\
+\text{高锚域： }&s=F_{j+1}-N,\qquad
+0\le s\le2^{m-1}p_{j-2m+2}.
+\end{aligned}
+\tag{26.11}
+$$
+
+用相应的锚距 $s$，有
+
+$$
+V_m(j,N)\ge\frac{s^2}{9\,16^{m-1}N^2}
+\ge\frac1{9\,16^{m-1}}\left(\frac{D(N)}N\right)^2.
+\tag{26.12}
+$$
+
+特别地，对全部 $j\ge30$，只要
+
+$$
+N-F_j\le8W_{j-7}\quad\text{或}\quad
+F_{j+1}-N\le8p_{j-6},
+$$
+
+便有相应锚距的下界，以及
+
+$$
+V_4(j,N)\ge\frac1{36864}\left(\frac{D(N)}N\right)^2
+\ge\frac1{36864}\left(\frac{D(N)}N\right)^4,
+\qquad 36864=9\cdot16^3.
+\tag{26.13}
+$$
+
+证明。在一个出现节点 $(h,M)$ 上令 $A=F_{h-1}$、$B=F_{h-2}$，保留其实际第一子 $a=g_M$ 及互补子 $c=M-a$。低锚坐标和高锚坐标分别准确为
+
+$$
+\begin{array}{c|c|c|c}
+ &M&a&c\\ \hline
+\text{低锚}&F_h+s&A+s-q&B+q\\
+\text{高锚}&F_{h+1}-s&F_h-s+q&A-q
+\end{array}
+$$
+
+其中 $0\le q\le s$，互补子继承阶标 $h-2$，并保留同一种锚坐标、锚距 $q$。原局部方差的行列式分别是
+
+$$
+Ac-Ba=
+\begin{cases}
+F_hq-Bs,&\text{低锚},\\
+(-1)^h+Bs-F_hq,&\text{高锚}.
+\end{cases}
+\tag{26.14}
+$$
+
+高锚的 Cassini 项不能删去；即使 $s=0$、$D(M)=0$，其继承读数的局部方差亦不因此必为零。
+
+称 $s/4\le q\le s/2$ 为中央拆分。对 $h\ge24$，成熟 Fibonacci 比值界给 $3/8\le B/F_h\le2/5$。若 $s\ge1$ 且拆分不在中央，则
+
+$$
+|F_hq-Bs|\ge F_hs/10.
+$$
+
+高锚的额外符号项至多损失一；$F_hs\ge60$ 使两种坐标都满足 $|Ac-Ba|\ge F_hs/12$。由 $ac\le M^2/4$、$M<2F_h$，得到
+
+$$
+v(h,M)\ge\frac{s^2}{144M^2}
+\quad\text{（非中央拆分）}.
+\tag{26.15}
+$$
+
+在低锚门 $1\le s\le W_{h-1}$ 中，式 (26.7) 的实际端点规则使 $q\in\{0,s\}$，所以 $|Ac-Ba|\ge Bs\ge F_hs/3$。在高锚门 $1\le s\le p_h$ 中，直接应用式 (24.8) 的第一条实际路由，得到 $q=0$；于是
+
+$$
+|Ac-Ba|=|(-1)^h+Bs|\ge F_hs/3,
+$$
+
+其中用了 $B/F_h\ge3/8$ 和 $F_hs\ge24$。高锚门刻意止于 $p_h$，没有使用父平台的较大宽度 $p_{h+1}$，也没有跳过其边界相位。两门均给
+
+$$
+v(h,M)\ge\frac{s^2}{9M^2}.
+\tag{26.16}
+$$
+
+令根锚距 $s>0$。只在此前拆分均处中央时，沿同一棵实际树的互补子继续，最多走 $m-1$ 条边。深度 $k$ 的该出现节点满足
+
+$$
+h_k=j-2k,\qquad \frac{s}{4^k}\le s_k\le\frac{s}{2^k},
+\qquad \mathbb P(\text{该路径})=M_k/N.
+$$
+
+相关阶标均至少为 $24$，故停止规则不打断这些贡献。如果首次非中央拆分发生在 $k\le m-2$，式 (26.15) 使它对 $V_m$ 的贡献至少为
+
+$$
+\frac{M_k}N\frac{s_k^2}{144M_k^2}
+\ge\frac{s^2}{144\,16^kN^2}
+\ge\frac{s^2}{9\,16^{m-1}N^2}.
+$$
+
+若此前 $m-1$ 次全部中央，则末节点阶标为 $h=j-2m+2$，锚距至多为 $s/2^{m-1}$。式 (26.11) 将它放入相应实际门。其贡献由式 (26.16) 至少为
+
+$$
+\frac{M_{m-1}}N\frac{s_{m-1}^2}{9M_{m-1}^2}
+\ge\frac{s^2}{9\,16^{m-1}N^2}.
+$$
+
+$m=1$ 时就是根门本身。所有未使用的方差贡献非负。低锚用式 (26.10)，高锚用式 (26.5)，两者均有 $D(N)\le s$；$s=0$ 时 $D(N)=0$，目标下界为零。故式 (26.12) 成立。取 $m=4$ 并用 $D(N)/N\le1$ 即得式 (26.13)。证毕。
+
+固定四代时，两端认证宽度分别为 $(8\alpha/3)j+O(1)$ 和 $(16/3)j+O(1)$，仍仅占 $O(j)$ 个索引。可变代数虽然按 $2^{m-1}$ 放大门宽，常数同时降为 $1/(9\,16^{m-1})$。写末节点阶标 $h=j-2m+2\ge24$，两宽分别成为
+
+$$
+2^{(j-h)/2}W_{h-1},\qquad 2^{(j-h)/2}p_h.
+$$
+
+$W_{h-1},p_h=O(h)$，所以在全部许可 $m$ 上取最大值也只有 $O(2^{j/2})=o(F_j)$。完整 $m$ 代展开最多含 $2^m-1$ 个内部出现节点；证明中的特定脊线只有 $m$ 个局部方差贡献。这个机制即使用可变代数，也没有覆盖块中心；三次中央拆分只给 $s/64\le s_3\le s/8$，不能把任意宏观锚距送进 $O(j)$ 的实际门。
+
+**定理 26.4（小正高度亏量的四代叶联合估计）。** 在假设 24.1 下，对全部 $j\ge12$、$F_j\le N\le F_{j+1}$、$0\le e=F_j-C(N)\le15$，令 $b=F_{j+1}-N$、$Q=F_{j-8}$，并写 $[x]_+=\max(x,0)$。有
+
+$$
+V_4(j,N)\ge\frac QN
+\left[\frac{\alpha b-1}N-\frac{j+1}Q\right]_+^2.
+\tag{26.17}
+$$
+
+因而
+
+$$
+\begin{aligned}
+b&\le\frac{1+89(j+1)+N\sqrt{89V_4(j,N)}}\alpha,\\
+\frac{D(N)}N&\le\frac{1+89(j+1)}{\alpha N}
+                     +\frac{\sqrt{89}}\alpha\sqrt{V_4(j,N)}.
+\end{aligned}
+\tag{26.18}
+$$
+
+若还满足 $D(N)\ge2[1+89(j+1)]/\alpha$，则
+
+$$
+V_4(j,N)\ge\frac{\alpha^2}{356}\left(\frac{D(N)}N\right)^2
+\ge\frac{\alpha^2}{356}\left(\frac{D(N)}N\right)^4.
+\tag{26.19}
+$$
+
+证明。深度三最低阶标为 $j-6\ge6$，故深度四准确有十六个叶出现节点，阶标 $h\in[j-8,j-4]$。式 (24.21) 使它们的非负整数亏量之和准确为 $e\le15$，至少一个叶 $v$ 的亏量为零。式 (24.22) 的准确零集给其高锚缺口 $b_v\le\zeta_h\le j$，其自然块给 $N_v\ge F_h\ge Q$。因此 Fibonacci 误差恒等式 $|F_h-\alpha F_{h+1}|=\alpha^{h+1}<1$ 给
+
+$$
+X_v-\alpha
+=\frac{F_h-\alpha F_{h+1}+\alpha b_v}{N_v}
+\le\frac{j+1}Q.
+$$
+
+同一根读数满足
+
+$$
+X_0-\alpha
+=\frac{F_j-\alpha F_{j+1}+\alpha b}N
+\ge\frac{\alpha b-1}N.
+$$
+
+若所示根减叶的下界为正，该叶在 $V_4=\mathbb E[(X_4-X_0)^2]$ 中的贡献至少为 $N_v/N$ 乘此下界的平方；若不为正，所需正部下界为零。使用 $N_v/N\ge Q/N$ 即得式 (26.17)。这是同一实际叶与根的联合估计，没有另选一个最优叶读数。
+
+对 $r=j-8\ge4$，$F_{r+9}=34F_{r+1}+21F_r\le89F_r$，所以 $N/Q\le89$。式 (26.17) 在两种正部情形下都推出
+
+$$
+\alpha b\le1+(N/Q)(j+1)+N\sqrt{(N/Q)V_4(j,N)}.
+$$
+
+结合式 (26.5) 的 $D(N)\le b$，即得式 (26.18)，误差项明确为 $O(j/N)$。最后，在式 (26.19) 的阈值下，式 (26.18) 的首项至多为 $D(N)/(2N)$，故 $D(N)/(2N)\le(\sqrt{89}/\alpha)\sqrt{V_4}$，给出所述常数。证毕。
+
+对每个固定 $M\ge0$，若这一实际根族还满足 $V_4(j,N)\le M/N^2$，则式 (26.18) 给
+
+$$
+b\le\frac{1+89(j+1)+\sqrt{89M}}\alpha=O(j).
+\tag{26.20}
+$$
+
+所以不能同时有 $b/j\to\infty$。这比式 (24.22) 在 $0<e\le15$ 时的 $b\le15j^2$ 多出一个真实低离散度下的线性缺口限制；没有断言这样的无界 $b/j$ 根族存在。固定 $e\le15$ 原已由式 (24.22) 满足 $D(N)/N=O(j^2/F_j)$，因此此处新增的是联合接口约束，而不是重复证明该扇区的缺陷衰减。$e\ge16$ 时叶计数不再保证零亏量叶；低于式 (26.19) 缺陷阈值的根也不能由该条取得统一四次下界。
+
+**定理 26.5（实际互补脊线的正跳幅与离散度屏障）。** 在假设 24.1 下，取每个整数 $m\ge1$、$j\ge2m+23$ 和实际根 $F_j\le N\le F_{j+1}$。沿实际互补子脊线定义
+
+$$
+\begin{aligned}
+N_0&=N,&h_s&=j-2s,\\
+a_s&=g_{N_s},&N_{s+1}&=N_s-a_s\quad(0\le s<m),\\
+T_{N_s}(x)&=N_s-C(x),&K_s&=a_s-T_{N_s}(a_s),\\
+K_s^+&=\max(K_s,0),&\varepsilon&=D(N)/N.
+\end{aligned}
+\tag{26.21}
+$$
+
+直接使用 [钉版 golden-proof，§§1–2 的全局帽与实际所选拆分界](https://github.com/the-omega-institute/nested-recurrences/blob/8b8d4620c94ef181bf98006e3fc5e9f043e8bda2/cloitre-conway/golden-proof.md)：
+
+$$
+\begin{aligned}
+C(u)&\le cu,\qquad c=15225/22877<2/3\quad(u\ge16384),\\
+5M/9&<g_M<2M/3\quad(M\ge65536).
+\end{aligned}
+$$
+
+令 $\phi=1/\alpha$、$\delta=c-\alpha>0$、$q=4/9$、$S_m=\sum_{s=0}^{m-1}q^s=(1-q^m)/(1-q)$、$\tau_m=\delta q^m$。则对这个全部根域，有
+
+$$
+\varepsilon\le\phi\sqrt{S_mV_m(j,N)}+\tau_m+\frac1N
+                              +\frac1N\sum_{s=0}^{m-1}K_s^+.
+\tag{26.22}
+$$
+
+若
+
+$$
+r_m=\varepsilon-\phi\sqrt{S_mV_m(j,N)}-\tau_m-1/N>0,
+$$
+
+则至少一个实际 $s<m$ 满足
+
+$$
+K_s>0,\qquad \frac{K_s}{N_s}\ge\frac{r_m}{S_m}.
+\tag{26.23}
+$$
+
+它的被选周期空间直径至少为 $K_s$，周期至少为二。
+
+对 $\varepsilon>0$，取
+
+$$
+m=\max\left(1,\left\lceil
+             \frac{\log(4\delta/\varepsilon)}{\log(9/4)}
+             \right\rceil\right).
+\tag{26.24}
+$$
+
+若同时 $j\ge2m+23$、$N\ge4/\varepsilon$ 和
+
+$$
+V_m(j,N)\le\frac{\varepsilon^2}{16\phi^2S_m},
+$$
+
+则存在实际被选的正跳幅满足
+
+$$
+\frac{K_s}{N_s}\ge\frac{\varepsilon}{4S_m}
+                         \ge\frac5{36}\varepsilon.
+\tag{26.25}
+$$
+
+固定四代还有一个真实相位符号子域：对全部 $j\ge31$，若这条脊线上四个被选相位均满足 $a_s\le T_{N_s}(a_s)$，则
+
+$$
+V_4(j,N)\ge\frac{[\varepsilon-\delta(4/9)^4-1/N]_+^2}{\phi^2S_4}.
+\tag{26.26}
+$$
+
+若再有 $\varepsilon\ge2(\delta(4/9)^4+1/N)$，则
+
+$$
+V_4(j,N)\ge\frac{\varepsilon^4}{4\phi^2S_4},
+\qquad S_4=1+4/9+(4/9)^2+(4/9)^3.
+\tag{26.27}
+$$
+
+这个域包含被选固定点和被选向上相位，不预设所有实际根都属于它。如果四个被选点都是固定点，可把式 (26.26)–(26.27) 中的 $q=4/9$ 同时换成
+
+$$
+q_f=\frac c{1+c}=\frac{15225}{38102},\qquad
+S_{4,f}=\sum_{s=0}^3q_f^s,
+$$
+
+使阈值成为 $2(\delta q_f^4+1/N)$，四次下界常数成为 $1/(4\phi^2S_{4,f})$。仅有 $K_s\le0$ 不足以使用这个较强收缩率。
+
+证明。沿式 (26.21) 的真实脊线，末内部阶标 $h_{m-1}\ge25$，尾阶标 $h_m\ge23$。因而内部索引至少为 $F_{25}=75025\ge65536$，第一子至少为 $F_{24}=46368\ge16384$，尾索引至少为 $F_{23}=28657\ge16384$，来源帽与拆分界都在其合法域内。令 $p_s=N_s/N$；真实互补子界给 $p_s\le q^s$，而 $p_s$ 正是该特定出现路径的概率。
+
+令 $\eta(u)=C(u)-\alpha u$。实际加性沿同一脊线展开为
+
+$$
+\eta(N)=\sum_{s=0}^{m-1}\eta(a_s)+\eta(N_m).
+\tag{26.28}
+$$
+
+实际轨道的下一步给
+
+$$
+\eta(a_s)=N_s-\phi a_s+K_s.
+$$
+
+取 $\theta_h=F_{h-1}/F_h$、$t_s=a_s/N_s-\theta_{h_s}$、$v_s=v(h_s,N_s)$。式 (26.2) 的原行列式给
+
+$$
+t_s^2=\frac{a_sN_{s+1}}{F_{h_s}^2}v_s\le v_s,
+$$
+
+其中用了 $a_sN_{s+1}\le N_s^2/4$、$N_s<2F_{h_s}$。同时 Fibonacci 误差为 $|\theta_h-\alpha|=\alpha^h/F_h$，故
+
+$$
+\eta(a_s)\le\phi N_s\sqrt{v_s}
+                 +\phi N_s\frac{\alpha^{h_s}}{F_{h_s}}+K_s^+.
+$$
+
+全部 $p_sv_s$ 属于同一棵实际树的 $V_m$ 展开，所以 $\sum_{s<m}p_sv_s\le V_m$。直接应用加权 Cauchy–Schwarz，
+
+$$
+\sum_{s<m}p_s\sqrt{v_s}
+\le\sqrt{\left(\sum_{s<m}p_s\right)
+                 \left(\sum_{s<m}p_sv_s\right)}
+\le\sqrt{S_mV_m}.
+\tag{26.29}
+$$
+
+尾帽给 $\eta(N_m)\le\delta N_m\le\delta q^mN$。除以 $N$ 后，Fibonacci 误差总和至多为
+
+$$
+\frac{2\phi}N\sum_{s<m}\alpha^{j-2s}
+\le\frac{2\alpha^{23}}N,
+$$
+
+因为末内部阶标至少为 $25$，且 $1-\alpha^2=\alpha$。准确黄金取整区间是
+
+$$
+G(u)-\alpha u=\alpha-\{\alpha(u+1)\}\in(-\alpha^2,\alpha).
+\tag{26.30}
+$$
+
+所以 $D(N)<\eta(N)+\alpha^2$，而 $\alpha^2+2\alpha^{23}<1$。将式 (26.28)–(26.30) 代入，即得带 $1/N$ 误差的式 (26.22)。
+
+若 $r_m>0$，式 (26.22) 迫使 $\sum_{s<m}K_s^+/N\ge r_m$。由于
+
+$$
+\frac1N\sum_{s<m}K_s^+
+=\sum_{s<m}p_s\frac{K_s^+}{N_s},\qquad
+\sum_{s<m}p_s\le S_m,
+$$
+
+至少一项 $K_s^+/N_s\ge r_m/S_m$，并且该 $K_s$ 为正。假设 24.1 的规定深度已入周期结论保证 $a_s$ 和 $T_{N_s}(a_s)=a_s-K_s$ 是同一个实际被选周期的相邻点，故其空间直径至少为 $K_s$。式 (26.24) 使 $\tau_m\le\varepsilon/4$；另外两个显示条件分别使 $1/N$ 及 $\phi\sqrt{S_mV_m}$ 至多为 $\varepsilon/4$。于是 $r_m\ge\varepsilon/4$，再用 $S_m\le9/5$，即得式 (26.25)。
+
+在非正跳幅的真实相位子域，所有 $K_s^+$ 消失。重排式 (26.22) 得式 (26.26)；显示阈值使剩余正部至少为 $\varepsilon/2$，而 $0\le\varepsilon\le1$，故二次下界亦给式 (26.27)。实际固定点时有 $N_{s+1}=C(a_s)\le ca_s$，从而 $N_{s+1}/N_s\le c/(1+c)=q_f$；相同估计的路径和、尾项同时改用 $q_f$，即得固定点改进。证毕。
+
+式 (26.22) 在所列全部根域内给一个联合替代估计；低离散度、较大规范缺陷必须由同一真实脊线上的正跳幅承担。它控制的是周期空间振幅：二周期可以有大跳幅，返回值也可以在周期上恒定，因此不能从式 (26.23)–(26.25) 推出周期长度无界或逐相位读出可区分。可变代数 $m=O(1+\log(1/\varepsilon))$，完整树至多需 $2^m-1$ 个内部出现节点；它不是来源的固定 $V_4$，不能在四代衰减判据中静默替换。所有涉及的整数 $N_s,a_s,N_{s+1},T_{N_s}(a_s),d_{N_s},|K_s|$ 均在 $[0,N]$ 内。
+
+**定义 26.6（全域离散度义务、策略合同与跨递归边界）。** 本章对实际 $V_4$ 的确定覆盖包括：定理 26.1 的三代内零亏量出现节点域及 $e\le7$ 全根域，定理 26.2 的实际正门前沿域及父带 $B_j$，定理 26.3 的两锚带，定理 26.4 的 $e\le15$ 联合估计及显示缺陷阈值域，以及定理 26.5 的显示相位符号、缺陷阈值域。定理 26.3 单独留下的正缺陷内域准确为
+
+$$
+\mathcal R_j=\{N\in\mathbb Z:F_j\le N\le F_{j+1},\ D(N)>0,
+\ N-F_j>8W_{j-7},\ F_{j+1}-N>8p_{j-6}\},\qquad j\ge30.
+$$
+
+其他定理可以再从中排除部分根；本章没有在全部剩余根上证明独立于 $j,N$ 的 $\kappa>0$ 使 $V_4(j,N)\ge\kappa(D(N)/N)^4$，也没有给实际 $C$ 的反例。特别地，定理 26.5 仍容许缺陷由正跳幅承担，没有把这项费用统一吸收到离散度中。正亏量子层的规定深度、邻点 $C(N-1)$ 和共同子树如何联合限制这项费用，仍是实际选择树路线的缺口。式 (24.32) 的固定系数同轨高度亏量屏障亦未由本章取得。
+
+另一个衰减合同直接使用 [供应源 §9 的 basin lower envelopes 与 additive dispersion policies](https://github.com/the-omega-institute/nested-recurrences/blob/8b8d4620c94ef181bf98006e3fc5e9f043e8bda2/cloitre-conway/fibonacci-collars.md#additive-dispersion-policies-without-orbit-qualification)。对已给实际 $C$ 值及起点 $N-1$ 到达的实际周期 $\Gamma_N$，其盆内 Bellman 最小值 $\mathcal B_m$、保持父值的盆内最小值 $\mathcal Q_m$ 已满足
+
+$$
+\mathcal B_m(j,N)\le\mathcal Q_m(j,N)\le V_m(j,N).
+$$
+
+这些是各出现节点可分别选相位的松弛最小值，不是全局共享选择器的准确最小值。来源的实际局部方差读出商亦依赖所保留读数：数值输出相同的相位未必有相同方差，已给周期的方差读出最小相位信息不能替代盆内最小值的证明。以上均直接复用，不作为本章新增定理。
+
+来源还定义了几何合法且保持同一实际值的集合
+
+$$
+\mathcal A_h(M)=\{a:F_{h-1}\le a\le F_h,\quad
+F_{h-2}\le M-a\le F_{h-1},\quad C(a)+C(M-a)=C(M)\}.
+$$
+
+其符号在来源中为 $\mathcal R_h(M)$；这里改用 $\mathcal A$ 以区别上述剩余根域。这个集合含实际所选点，但允许认证的替代拆分离开实际内周期、盆和规定深度相位。直接复用来源的自适应加性策略判据：若有固定 $m\ge1$、$q_0\ge1$、$\kappa>0$、$J$，使全部实际值闭块、$h\ge J$ 的有限期 Bellman 最大值满足
+
+$$
+\mathcal M_m(h,M)\ge\kappa\left(\frac{D(M)}M\right)^{q_0},
+$$
+
+则 $C(n)-\alpha n=O(n/(\log n)^{1/q_0})$。它使用达到最大值的保持父值策略、同一实际 $C$ 值以及共同继承阶标，证明衰减并不需要重构原被选相位。式 (26.30) 的上界已足够承担该判据中的黄金取整误差；不需其差值非负。来源没有供给全域统一的策略下界或实际被选 $V_4$ 下界，本章也未供给二者。来源的上帽共享反例族说明几何、终端值及方差恒等式不足，其强制加性拆分反例还说明单纯改取最大值不足；这些族违反实际嵌套或实际全局包络，不能当作实际 $C$ 的收敛反例。有限策略读数不提升为无限域下界。
+
+共同资源仍采用式 (20.7) 的同一个窗口数 $H\ge L(N)$ 及更大的共同补零：本章出现的物理索引、被选子索引、规定深度、缺口和高度亏量均不超过原根 $N$，不在不同长度或不同实现间拼接读数。解析比例、$\alpha$ 与方差是分析量，不是替换整数轨道的编码。固定四代树最多有十五个内部出现节点、十六个叶出现节点；可变代数的出现次数与常数已经分别列明。上述估计不提供有限状态选择器、盆或相位证书的统一取得算法。
+
+本章的承重内容是实际路由、亏量分配与共同方差权重之间的新增传递和跳幅估计（`repo-derived`）。Fibonacci 恒等式、配方、Cauchy–Schwarz、来源鞅及 Bellman 接口均只作已知中间输入；不主张完备文献搜索、世界原创性或内核形式化。定理 25.1 在假设 24.1 下的输出及规范缺陷词图非正则性继续有效，但不推出选择器正则性、收敛与否或无界实际周期。本章仍未证明全域终端占用控制、$C(n)/n\to\alpha$、实际内周期长度无界、全局相位与逆取得证书或完整跨递归结构对应。
+
+Cloitre 的共同拆分和读数支撑保持值策略；Campbell 仍用自己的前值规定深度，返回同一实际轨道上被选状态，而非两互补值之和。[钉版 Campbell note](https://github.com/the-omega-institute/nested-recurrences/blob/8b8d4620c94ef181bf98006e3fc5e9f043e8bda2/campbell/note.tex) 的三进制端点模板保留其原域与输出合同。供应源的策略边界已给出 Campbell 在 $n=5$ 的值为二，而四个互补值和分别为 $4,3,3,4$，不存在该索引的加性保持值策略；本章直接使用这个区别，不将 $C$ 的策略衰减判据迁移为 Campbell 结论。共有反射描述或非正则输出性质也不建立二者共轭，完整五窗实际表示继续保留每一步、规定深度和被选相位。
+
+## 追加锚（本行以下为增补区）
+
+
+## 27. 实际规定选择器的全域同步图
+
+**定义 27.1（实际规定选择器与全补零合同）。** 保留假设 24.1 的同一个实际 Cloitre 序列 $C$，并固定
+$F_0=0$、$F_1=1$ 及
+$$
+ p_j=\left\lfloor\frac{2j-9}{3}\right\rfloor .
+$$
+对每个 $n\ge3$，从同一个实际起点 $x_0=n-1$ 开始，按
+$$
+ x_{i+1}=n-C(x_i),\qquad 0\le i<d_n,
+ \qquad d_n=C(n-1),
+$$
+取规定深度的被选状态
+$$
+ g_n=x_{d_n}.
+$$
+这里的 $d_n$ 是实际序列给出的深度，$g_n$ 不由任意可选周期相位替代。沿用定义 17.2 的高到低五窗词、独立单位末字母和定义 20.1 的共同窗口数，定义实际规定选择器的全补零同步图为
+$$
+ \mathcal G_g=
+ \left\{\bigl(W_H(n),W_H(g_n)\bigr)_{\mathrm{sync}}:
+ n\ge3,\ H\ge\max\{L(n),L(g_n)\}\right\}.
+ \tag{27.1}
+$$
+每个 $H$ 都保留；两轨在同一 $H$ 上逐窗配对，末尾恰有一个单位末字母，所有窗口接缝和最低窗口到单位位的接缝均须合法。
+
+**定理 27.2（实际规定选择器的全域五窗同步图非正则）。** 在假设 24.1 下，语言 $\mathcal G_g$ 不是正则语言。证明内部直接使用式 (24.8)、(24.9)、(24.14) 的如下等价表述：对任意 $j\ge9$ 和 $0\le b\le F_{j-1}$，令
+$$
+ n_{j,b}=F_{j+1}-b.
+$$
+则实际选择器满足精确的锚—互补带
+$$
+ g_{n_{j,b}}=F_j-b
+ \quad\Longleftrightarrow\quad
+ \bigl(b\le p_j\bigr)\ \lor\ \bigl(b=p_j+1\ \land 3\mid j\bigr).
+ \tag{27.2}
+$$
+删去或加入有限多个固定小输入的全补零词族后，非正则结论仍成立。
+
+**证明。** 先落实式 (27.2) 所用既有结果的前提。对 $b\le p_j$，有 $b\le p_j\le p_{j+1}$；结合 $0\le b\le F_{j-1}$，在父阶数 $j+1$ 应用式 (24.7) 得 $\lambda_{j+1}(b)=0$，满足式 (24.8) 的零亏量父节点前提。于是定理 24.3 的式 (24.8) 给出实际所选缺口 $z=b$、另一缺口 $w=0$，故
+$$
+ g_{n_{j,b}}=F_j-z=F_j-b.
+$$
+边界 $b=p_j+1$ 时，式 (24.9) 给出
+$$
+ g_{n_{j,p_j+1}}=
+ \begin{cases}
+ F_j-p_j,&F_j\text{ 为奇数},\\
+ F_j-p_j-1,&F_j\text{ 为偶数}.
+ \end{cases}
+$$
+模二 Fibonacci 递推说明 $F_j$ 偶当且仅当 $3\mid j$，所以边界恰在 $3\mid j$ 时等于 $F_j-b$。最后，若 $b\ge p_j+2$，式 (24.14) 对实际规定深度所选周期的每个缺口给出 $z\le b-1$，于是 $z=b$ 不可能，故 $g_{n_{j,b}}=F_j-b$ 不成立。这三段覆盖 $0\le b\le F_{j-1}$，证明式 (27.2)。
+
+下面把式 (27.2) 接到式 (25.4) 定义的语言，其非正则性已在定理 25.1 的证明中由式 (25.4)–(25.7) 建立。记
+$$
+ \mathcal P_2=
+ \left\{\bigl(W_H(F_j),W_H(b)\bigr)_{\mathrm{sync}}:
+ \begin{array}{l}
+ j\ge8,\ j\equiv2\pmod3,\ 0\le b\le p_j,\\
+ H\ge\max\{L(F_j),L(b)\}
+ \end{array}\right\}.
+ \tag{27.3}
+$$
+定理 25.1 的证明由式 (25.4)–(25.7) 在相同的五窗字母、单位末字母和每个共同 $H$ 的合同下建立了 $\mathcal P_2$ 的非正则性；本节直接复用该结论，不重复其删环或 pumping 论证。令
+$$
+\begin{aligned}
+ \mathcal E_0&=\left\{\bigl(W_H(F_j),W_H(0)\bigr)_{\mathrm{sync}}:
+ j\ge8,\ j\equiv2\pmod3,\ H\ge L(F_j)\right\},\\
+ \mathcal E_8&=\left\{\bigl(W_H(F_8),W_H(b)\bigr)_{\mathrm{sync}}:
+ 0\le b\le p_8,\ H\ge\max\{L(F_8),L(b)\}\right\},\\
+ \mathcal E&=\mathcal E_0\cup\mathcal E_8,
+ \qquad \mathcal P=\mathcal P_2\setminus\mathcal E.
+\end{aligned}
+\tag{27.4}
+$$
+$\mathcal E_0$ 是锚轨正则过滤与零轨的交集，$\mathcal E_8$ 是三个固定整数对在任意共同高端补零下的有限并，二者均正则。因此 $\mathcal P$ 非正则：若 $\mathcal P$ 正则，则 $\mathcal P_2=\mathcal P\cup\mathcal E$ 正则，矛盾。按定义，$\mathcal P$ 正好由
+$$
+ j\ge11,\qquad j\equiv2\pmod3,\qquad 1\le b\le p_j
+ \tag{27.5}
+$$
+的所有共同长度词组成。
+
+反设 $\mathcal G_g$ 正则。使用五条同步轨道 $(A,b,r,N,a)$，其中每条轨道都在同一个 $H$ 上，施加下列正则约束：
+
+1. $A$ 轨接受
+   $$
+   \mathrm{null}^{*}[5]\mathrm{null}^{\ge2}\underline0;
+   $$
+   这精确给出 $A=F_j$、$j\ge11$、$j\equiv2\pmod3$。轨 $r$ 在同一窗口位置把唯一的 $[5]$ 换成 $[3]$，其余窗口和单位位保持对应，故 $r=F_{j-1}$。
+2. 轨 $b$ 为合法五窗整数，并满足 $1\le b\le r$；这是同步比较关系的正则约束。
+3. 轨 $a,b,A$ 满足同步 Fibonacci 加法 $a+b=A$，轨 $a,r,N$ 满足同步 Fibonacci 加法 $a+r=N$。
+4. 轨对 $(N,a)$ 属于假定正则的 $\mathcal G_g$，仍使用同一 $H$ 和原图的全部接缝、单位位及高端补零条件。
+
+同步 Fibonacci 加法、比较、固定标记替换、交、逆字母投影和字母投影都是 §17、§20 已使用的正则闭包操作。故上述五轨语言正则，其向 $(A,b)$ 的投影也正则。证明该投影恰为 $\mathcal P$，并且逐个共同长度成立。
+
+先取投影中的任意见证。第 1 条给出 $A=F_j$，其中 $j\ge11$ 且 $j\equiv2\pmod3$；第 2、3 条给出
+$$
+ r=F_{j-1},\qquad 1\le b\le r,\qquad a=A-b,\qquad N=A+r-b=F_{j+1}-b.
+ \tag{27.6}
+$$
+第 4 条和图定义给出 $g_N=a=F_j-b$。由于 $j\equiv2\pmod3$，$3\nmid j$；式 (27.2) 遂强制 $b\le p_j$（边界 $b=p_j+1$ 的例外不发生，$b\ge p_j+2$ 也被排除）。五轨本来就在同一 $H$ 上，故 $H\ge\max\{L(F_j),L(b)\}$，这个见证属于式 (27.5) 的 $\mathcal P$。
+
+反向取 $\mathcal P$ 中任意一个词，固定其原有共同窗口数 $H$。于是存在 $j\ge11$、$j\equiv2\pmod3$ 和 $1\le b\le p_j$，且
+$$
+ A=F_j,\qquad r=F_{j-1},\qquad a=F_j-b,\qquad N=F_{j+1}-b.
+ \tag{27.7}
+$$
+由 $p_j\le j-3\le F_{j-1}$，有 $b\le r$，从而 $a=F_j-b\ge F_{j-2}\ge1$，且 $N=F_{j+1}-b\ge F_j\ge3$。所有五轨整数 $A,b,r,N,a$ 均非负，$b$ 属于式 (27.2) 的自然闭块域，$N$ 属于图 (27.1) 的输入域。式 (27.2) 因此给出 $g_N=a$。这些是既有前提的直接应用。还须验证见证没有偷偷增加窗口。令 $H_0=L(F_j)$；由共同资源式 (20.7) 及 $j\equiv2\pmod3$，有 $j=3H_0+2$。因为 $b\ge1$，
+$$
+ N\le F_{j+1}-1=F_{3H_0+3}-1<F_{3H_0+3},
+$$
+而 $a,r,b\le N$。再次应用式 (20.7)，$N,a,r,b$ 全部能在最短的 $H_0$ 个窗口中编码；原词给出 $H\ge H_0$，在每条轨道高端统一补 $H-H_0$ 个 $\mathrm{null}$ 即得到同一 $H$ 的五轨见证。同步加法与比较的低端接缝、唯一单位末字母以及 $A$ 的 $[5]\mapsto[3]$ 标记关系均保持合法，所以该词属于上述五轨投影。这里 $b\ge1$ 是必要的：若 $b=0$，则 $N=F_{j+1}=F_{3H_0+3}$，不落在最短 $H_0$ 的严格资源界内；这正是删除 $\mathcal E_0$ 的原因。$j=8$ 的固定层已由 $\mathcal E_8$ 删除。
+
+两向均对最短 $H=H_0$ 成立，也对任意额外的共同高端补零成立，故五轨投影正好等于 $\mathcal P$。这与 $\mathcal P$ 非正则矛盾，反设不成立，遂得 $\mathcal G_g$ 非正则。
+
+对固定的非负整数对 $(n,v)$，令 $h=\max\{L(n),L(v)\}$、$u=\operatorname{sync}(W_h(n),W_h(v))$、$\Delta=(\mathrm{null},\mathrm{null})$。其全部合法共同高端补零词族恰为 $\{\Delta^k u:k\ge0\}$，$u$ 中唯一的单位末字母对始终位于最后；故该词族正则。若对有限多个固定输入 $n$ 修改 $g_n$，或增删这些输入的全部合法补零词，原图与修改后图的对称差是有限个此类固定对词族的并，因而正则。正则语言对对称差封闭，且对称差运算可逆，所以原图正则当且仅当修改后图正则；非正则性在两个方向都保留。
+
+**来源、结论范围与未决项。** 式 (27.2) 是式 (24.8)、(24.9)、(24.14) 在本证明内部的直接应用，不单独计为新增的选择器带内容。本节新增的 `repo-derived` 结果是实际规定选择器在全域、全补零合同下的非正则性归约：五轨投影对每一个共同 $H$ 都与式 (27.5) 双向精确对应。规定深度、实际相位和共同窗口资源直接复用本卷既有结果；$\mathcal P_2$ 的非正则性直接复用定理 25.1 证明中式 (25.4)–(25.7) 建立的结论。黄金锚、实际递归合法域、Fibonacci 加法自动机和窗口资源式的来源仍是 §24.1、§25.1 已列的固定版本；本节没有重跑基础前缀、算术普查或外部文献证明，也不声明世界原创性。
+
+结论只关闭“实际规定选择器 $g_n$ 在全部 $n\ge3$、全部合法共同高端补零下的五窗同步图是否正则”这一条件性问题，并保留有限输入修改不变性。它不吸收式 (24.32) 的固定系数同轨亏量费用，不给出 $C(n)/n\to\alpha$、全局收敛、实际内周期无界性、规范缺陷或终端占用的统一控制，也不取得全局相位、逆标签或完整跨递归结构对应。五窗表示、可计算性、丰富载体和受限输入域的有限状态结果均未被本节否定。
+
+## 追加锚（本行以下为增补区）
+
+## 28. 实际树的可调截断与统一正跳费用
+
+**约定 28.1（同一实际递归、继承闭块与来源条件）。** 全节条件于假设 24.1 的完整前提，包括它经假设 23.1、21.1 继承的合法域、全局上下包络、黄金锚值、有限捕获和规定深度入周期结论。仍取 $F_0=0$、$F_1=1$、$\alpha=(\sqrt5-1)/2$、$G(n)=\lfloor\alpha(n+1)\rfloor$，始终使用式 (24.1) 的同一个实际序列：
+
+$$
+\begin{aligned}
+C(1)&=C(2)=1,&T_n(x)&=n-C(x),\\
+x_0&=n-1,&d_n&=C(n-1),\\
+g_n&=T_n^{d_n}(n-1),&C(n)&=C(g_n)+C(n-g_n)\quad(n\ge3).
+\end{aligned}
+$$
+
+上述内步、深度和选择器的定义取整数 $n\ge3$。各实际内步的索引都在 $\{1,\ldots,n-1\}$ 中，所选点仍是从这个起点走恰好 $d_n$ 步取得的相位。不假设 $C$ 单调，不改选盆、入口、深度或返回相位。来源的计算辅助基础仍作为本节未独立核验的条件输入。
+
+对整数 $j\ge4$、实际闭块根 $F_j\le N\le F_{j+1}$，严格沿用式 (24.20)：
+
+$$
+\begin{aligned}
+b&=F_{j+1}-N,&0\le b&\le F_{j-1},\\
+e&=\ell_j(b)=F_j-C(N)\ge0,&D(N)&=C(N)-G(N)\ge0,\\
+\ell_h(t)&=F_h-C(F_{h+1}-t),&
+\zeta_h&=\max\left(1,\left\lfloor\frac{2h-7}{3}\right\rfloor\right)
+\quad(h\ge4,\ 0\le t\le F_{h-1}).
+\end{aligned}
+\tag{28.1}
+$$
+
+$e$ 是上锚高度亏量，$D$ 是规范黄金缺陷，两者不能互换。每个树节点是一个出现节点 $(h,M)$，保留继承阶数 $h$ 及自身缺口 $b_v=F_{h+1}-M$、亏量 $e_v=\ell_h(b_v)$。在 $h\ge6$ 时用实际 $g_M$ 拆分，两个子阶数为 $h-1,h-2$，在四、五阶停止；上端点不重新归阶。同一物理索引的全部出现共享一个实际 $C$、$g$ 和规定深度，各出现节点的质量、阶标和路径仍分别保留。式 (24.21) 的质量、缺口、亏量三项加性，以及式 (24.22) 的零集和正亏量逆二次界，直接作为已证输入使用。
+
+这些接口的不可变来源分别是 [ff6e foundations，§§1、4](https://github.com/the-omega-institute/nested-recurrences/blob/ff6e5cfc7ed95ca0a7b656f7b48c18572fda20f6/cloitre-conway/proof.md)、[ff6e 黄金结构，§§1–2、5–6](https://github.com/the-omega-institute/nested-recurrences/blob/ff6e5cfc7ed95ca0a7b656f7b48c18572fda20f6/cloitre-conway/golden-proof.md)、[ff6e 闭块捕获及锚交集](https://github.com/the-omega-institute/nested-recurrences/blob/ff6e5cfc7ed95ca0a7b656f7b48c18572fda20f6/cloitre-conway/fibonacci-collars.md#intersecting-the-anchor-bounds) 和 [ff6e 递归下降及共享物理行](https://github.com/the-omega-institute/nested-recurrences/blob/ff6e5cfc7ed95ca0a7b656f7b48c18572fda20f6/cloitre-conway/recursive-descent.md)。本节直接复用其实际树与来源基础，不另证参数窗口、共享网络或逆标签接口。
+
+**定理 28.2（实际出现树的截断界与亏量密度模量）。** 在约定 28.1 下，对所有整数 $j\ge r\ge8$ 及上述全部实际根，令
+
+$$
+\tau_r=\frac{\zeta_{r-1}}{F_{r-1}}.
+$$
+
+则
+
+$$
+b\le r^2e+\tau_rN.
+\tag{28.2}
+$$
+
+进一步，对每个 $j\ge4$ 的正亏量实际根，令
+
+$$
+u=\frac eN\in(0,1],\qquad
+R(u)=12+4\left\lceil\log_2\frac1u\right\rceil.
+$$
+
+有
+
+$$
+\frac bN\le u\bigl[R(u)^2+1\bigr].
+\tag{28.3}
+$$
+
+零亏量根则直接保留式 (24.22) 的准确界 $b\le\zeta_j$，不把 $e=0$ 代入对数。特别地，正亏量域上有绝对常数意义的
+
+$$
+b=O\left(e\left[1+\log\frac Ne\right]^2\right),
+$$
+
+其中常数不依赖 $j,N,e$。
+
+证明。先在 $j\ge r\ge8$ 的这一棵实际出现树上剪枝：遇到 $e_v=0$ 立即停止；只展开 $e_v>0$ 且 $h_v>r$ 的节点，其余正亏量节点在 $h_v\le r$ 时停止。沿每条展开边阶数下降一或二，故树有限。前沿 $\mathcal F$ 的全部阶数都至少为 $r-1$；正亏量截断节点的阶数只能是 $r$ 或 $r-1$，零亏量节点可以更高。若根已零亏量，前沿就是保留原根阶标的单点；若 $j=r$ 且根正亏量，前沿也是单点。展开从不跨过四、五阶停止约定。
+
+每次替换一个父出现节点为它的两个实际子出现节点，都由式 (24.21) 及互补索引和式保持三项总量。因而在同一个前沿上准确有
+
+$$
+\sum_{v\in\mathcal F}M_v=N,\qquad
+\sum_{v\in\mathcal F}b_v=b,\qquad
+\sum_{v\in\mathcal F}e_v=e.
+\tag{28.4}
+$$
+
+这里没有对重复物理行去重，也没有概率独立性前提。对正亏量截断节点，直接用式 (24.22) 得 $b_v\le h_v^2e_v\le r^2e_v$。对零亏量节点，同一式给 $b_v\le\zeta_{h_v}$，其自然域给 $M_v\ge F_{h_v}$。
+
+当 $h\ge7$ 时，$\zeta_h\ge2$ 且 $\zeta_{h+1}\le\zeta_h+1\le3\zeta_h/2$；Fibonacci 递推及 $F_{h-1}\ge F_h/2$ 给 $F_{h+1}\ge3F_h/2$。所以
+
+$$
+\frac{\zeta_{h+1}}{F_{h+1}}\le\frac{\zeta_h}{F_h}
+\qquad(h\ge7).
+\tag{28.5}
+$$
+
+这是 $\zeta_h/F_h$ 的单调性，不是 $C$ 或 $\ell_h$ 的单调性。由于每个零亏量前沿阶数 $h_v\ge r-1\ge7$，有 $b_v\le\tau_rM_v$。把正、零两类的界在式 (28.4) 上相加，分别以非负总亏量和总质量控制，得到式 (28.2)。这也直接覆盖零亏量根的单点前沿。
+
+现在令 $e>0$、$k=\lceil\log_2(1/u)\rceil\ge0$、$r=R(u)=12+4k$。因为 $0\le e\le F_j\le N$，$u$ 在声明的域内。递推 $F_{h+2}\ge2F_h$ 及两个初始奇偶阶给 $F_h\ge2^{(h-2)/2}$，$h\ge2$；又有 $\zeta_{r-1}\le r$。对所有整数 $k\ge0$，$12+4k\le16\cdot2^k$：$k=0$ 时成立，且 $12+4(k+1)\le2(12+4k)$ 使归纳闭合。因此
+
+$$
+\begin{aligned}
+\tau_r&\le r\,2^{-(r-3)/2}
+=(12+4k)2^{-9/2}4^{-k}\\
+&\le\frac{16}{2^{9/2}}2^{-k}
+\le2^{-k}\le u.
+\end{aligned}
+\tag{28.6}
+$$
+
+若 $j\ge r$，将式 (28.6) 代入式 (28.2) 得式 (28.3)。若 $j<r$，直接用已有正亏量界 $b\le j^2e\le r^2e$；这个分支不构造高于根阶数的截断树。再用 $\lceil y\rceil\le y+1$ 即得所列绝对模量。证毕。
+
+剪枝资源也沿出现节点计数：完整的阶数截断树在根阶数为 $r-1$ 或 $r$ 时叶数均为一，之后叶数满足同一个 Fibonacci 递推，所以根阶数 $j\ge r$ 时至多有 $F_{j-r+2}$ 个叶出现节点、$2F_{j-r+2}-1$ 个总出现节点；提前截去零亏量节点只减少这些数。该资源随根阶数和分析截断阶数变化，不是固定代数或有限状态证书取得算法。
+
+**推论 28.3（实际根族的密度等价与规范缺陷衰减）。** 在假设 24.1 下，对任意实际根族 $(j_i,N_i)$，其中 $j_i\to\infty$、$F_{j_i}\le N_i\le F_{j_i+1}$，按式 (28.1) 取 $b_i,e_i$，有
+
+$$
+\frac{e_i}{N_i}\longrightarrow0
+\quad\Longleftrightarrow\quad
+\frac{b_i}{N_i}\longrightarrow0.
+\tag{28.7}
+$$
+
+任一条件还推出 $D(N_i)/N_i\to0$。
+
+证明。正亏量子列上，式 (28.3) 的右侧满足 $u[R(u)^2+1]\to0$，$u\downarrow0$，因为它至多是常数倍的 $u[1+\log(1/u)]^2$。零亏量子列上，直接复用 $b_i\le\zeta_{j_i}$，并有 $N_i\ge F_{j_i}$、$\zeta_{j_i}=O(j_i)$，故 $b_i/N_i\to0$。这两个子列一起覆盖可能交错的全部根族。
+
+反向只需已知黄金下界和 Fibonacci 取整关系。把已有误差恒等式代入，$\gamma_j=\alpha(F_{j+1}+1)-F_j=\alpha-(-1)^{j+1}\alpha^{j+1}\in(0,1)$，$j\ge4$；因而 $F_j-G(F_{j+1}-b)=\lceil\alpha b-\gamma_j\rceil<\alpha b+1$。在同一闭块中遂有
+
+$$
+0\le e_i\le F_{j_i}-G(F_{j_i+1}-b_i)<\alpha b_i+1.
+\tag{28.8}
+$$
+
+除以 $N_i\to\infty$ 即得反向蕴含。最后直接复用式 (26.5) 的 $0\le D(N_i)\le b_i$，得到规范缺陷结论。证毕。
+
+式 (28.7) 将旧界 $b\le j^2e$ 所需的 $e=o(N/j^2)$ 扇区扩到全部 $e=o(N)$，包括正且无界的次线性亏量。它不证明所有实际根都属于这个扇区，也不从子列结论推出全域 $C(n)/n\to\alpha$。
+
+**推论 28.4（固定宏观缺口域上的同轨正系数）。** 在假设 24.1 下，先固定任意实数 $\rho>0$，定义
+
+$$
+r_\rho=\min\{r\in\mathbb Z:r\ge8,\ \tau_r\le\rho/2\}.
+$$
+
+该整数存在。对全部 $j\ge r_\rho$ 的实际根，只要 $b\ge\rho N$，就有
+
+$$
+e\ge\frac{b}{2r_\rho^2}.
+\tag{28.9}
+$$
+
+在式 (23.14)、(24.25) 的同一实际锚点轨道上，对所有 $k\ge r_\rho+2$ 及其每个落点前实际缺口 $b_t$，若
+
+$$
+b_t\ge\rho(F_{k-1}-b_t),
+$$
+
+则准确有
+
+$$
+L_k(b_t)\ge\frac{b_t}{2r_\rho^2}.
+\tag{28.10}
+$$
+
+证明。式 (28.5) 及 $\zeta_h=O(h)$、$F_h\ge2^{(h-2)/2}$ 给 $\tau_r\to0$，所以 $r_\rho$ 存在。式 (28.2) 在上述根域上给
+
+$$
+b\le r_\rho^2e+\tau_{r_\rho}N
+\le r_\rho^2e+b/2,
+$$
+
+即式 (28.9)。对轨道逐项代入
+
+$$
+j=k-2,\qquad N=F_{k-1}-b_t,\qquad
+b=b_t,\qquad e=\ell_{k-2}(b_t)=L_k(b_t).
+\tag{28.11}
+$$
+
+原轨道的 $0\le b_t\le F_{k-3}$ 正好是该实际闭块的自然缺口域；其 $C$、入口和规定深度未变。式 (28.9) 遂给式 (28.10)。证毕。
+
+这里 $\rho$ 在锚阶数和时间变化前固定，正系数依赖 $\rho$，当 $\rho\downarrow0$ 时不保留统一正下界。次宏观缺口，尤其 $b_t/k\to\infty$ 而 $b_t/F_k\to0$ 的可能扇区，不被这个固定宏观域屏障覆盖。因此它不是式 (24.32) 的全部访问点统一屏障。
+
+### 28.5 同一实际互补脊线上的统一正费用应用
+
+这一应用承接定理 28.2 的根缺口估计，保留式 (26.21) 的全部实际对象。取任意整数 $m\ge1$、$j\ge2m+23$ 及 $F_j\le N\le F_{j+1}$，仍令
+
+$$
+\begin{aligned}
+N_0&=N,&h_s&=j-2s,\\
+a_s&=g_{N_s},&N_{s+1}&=N_s-a_s,\\
+K_s&=a_s-T_{N_s}(a_s),&K_s^+&=\max(K_s,0)
+\quad(0\le s<m),\\
+Q_m&=\sum_{s=0}^{m-1}K_s^+,&\beta&=b/N,\qquad q=4/9.
+\end{aligned}
+\tag{28.12}
+$$
+
+各 $g_{N_s}$ 都用该物理行自己的起点 $N_s-1$、规定深度 $C(N_s-1)$ 和实际所选相位，不能在后裔处另选保持值策略。定义分析函数
+
+$$
+H_q(B)=\sum_{\ell=1}^{\infty}\min(B,q^\ell)
+\quad(0\le B\le1),\qquad H_q(0)=0.
+\tag{28.13}
+$$
+
+则同一根、同一实际出现路径上有
+
+$$
+\frac{Q_m}{N}
+\le\sum_{s=0}^{m-1}\min(\beta,q^{s+1})
+\le\min\bigl(m\beta,H_q(\beta)\bigr).
+\tag{28.14}
+$$
+
+对每个 $0<B\le1$，令 $n(B)=\lfloor\log(1/B)/\log(1/q)\rfloor$，准确几何分段公式及其上包络为
+
+$$
+\begin{aligned}
+H_q(B)&=n(B)B+\frac{q^{n(B)+1}}{1-q},\\
+H_q(B)&\le\min\left\{\frac45,
+ B\left[\frac{\log(1/B)}{\log(9/4)}+\frac95\right]\right\}.
+\end{aligned}
+\tag{28.15}
+$$
+
+$H_q$ 在 $[0,1]$ 上非减且在零处连续；零处的定义不计算对数。
+
+当根亏量 $e>0$ 时，令 $u=e/N$ 并取定理 28.2 的同一个 $R(u)$，置
+
+$$
+B(u)=\min\{1,u[R(u)^2+1]\}.
+$$
+
+当根亏量 $e=0$ 时，置 $B_0(j,N)=\min\{1,\zeta_j/N\}$。于是
+
+$$
+\frac{Q_m}{N}\le
+\begin{cases}
+\min\{mB(u),H_q(B(u))\},&e>0,\\
+\min\{mB_0(j,N),H_q(B_0(j,N))\},&e=0.
+\end{cases}
+\tag{28.16}
+$$
+
+正亏量分支随 $u\downarrow0$ 统一趋零，且 $H_q(B(u))=O(u[1+\log(1/u)]^3)$，常数独立于所有满足 $j\ge2m+23$ 的 $m$。对任何 $j_i\to\infty$、$e_i/N_i\to0$ 的实际根族，允许每个根任取全部合法脊长，有
+
+$$
+\sup_{\substack{m\in\mathbb Z,\ m\ge1\\2m+23\le j_i}}
+\frac{Q_m(j_i,N_i)}{N_i}\longrightarrow0.
+\tag{28.17}
+$$
+
+此式对充分大的 $i$ 使用非空的脊长域，并包括零、正亏量交错的根族。
+
+证明。对脊线上的每一行使用继承上锚坐标：
+
+$$
+\begin{aligned}
+b_s&=F_{h_s+1}-N_s,&a_s&=F_{h_s}-z_s,\\
+N_{s+1}&=F_{h_s-1}-b_{s+1},&
+E_s&=F_{h_s-1}-C(a_s)=\ell_{h_s-1}(z_s)\ge0.
+\end{aligned}
+\tag{28.18}
+$$
+
+$E_s$ 是第一子的高度亏量，不是规范缺陷 $D(a_s)$。式 (24.4)、(24.21) 给
+
+$$
+\begin{aligned}
+b_s&=z_s+b_{s+1},&0\le z_s&\le F_{h_s-2},\\
+0\le b_{s+1}&\le F_{h_s-3},&N_{s+1}&\ge F_{h_s-2}.
+\end{aligned}
+$$
+
+沿这一条路径，$b_{s+1}\le b_s\le b_0=b$；自然子域还给 $b_{s+1}\le F_{h_s-3}\le N_{s+1}$。现在仅在实际 $T$ 中代入，不变换深度：
+
+$$
+K_s=a_s-N_s+C(a_s)=b_{s+1}-E_s,
+\qquad K_s^+\le b_{s+1}\le\min(b,N_{s+1}).
+\tag{28.19}
+$$
+
+末内部阶数 $h_{m-1}\ge25$，尾阶数 $h_m\ge23$。定理 26.5 已核定这条实际脊线上的索引都在来源实际拆分界的合法域内；直接复用其 $N_{s+1}\le qN_s$，迭代得 $N_{s+1}/N\le q^{s+1}$。于是式 (28.19) 逐项除以同一个原根 $N$ 后给式 (28.14)。这是根缺口守恒与实际质量收缩的共同估计，未在各子点重新优化密度，也未对共享物理行作独立赋值。
+
+对 $0<B\le1$，写 $t=\log(1/B)/\log(1/q)$、$n=\lfloor t\rfloor$，则 $q^{n+1}<B\le q^n$。所以前 $n$ 个求和项等于 $B$，余下项是从 $q^{n+1}$ 起的几何尾；$n=0$ 时前段为空，$B=q^n$ 时等号项也正确归入前段。这证明式 (28.15) 的准确公式。每个求和项都对 $B$ 非减，且由可和列 $q^\ell$ 控制，所以 $H_q$ 非减。再用
+
+$$
+n\le\frac{\log(1/B)}{\log(9/4)},\qquad
+q^{n+1}\le B,\qquad
+\sum_{\ell\ge1}q^\ell=\frac{q}{1-q}=\frac45
+$$
+
+得到式 (28.15) 的两个上界，并由 $B\log(1/B)\to0$ 得零处连续性。所有这些断点计算只在 $B>0$ 上进行。
+
+根自然域给 $0\le\beta\le1$。正亏量时，式 (28.3) 直接给 $\beta\le B(u)$；零亏量时，已有准确零集给 $\beta\le B_0(j,N)$。将这两个根界分别代入式 (28.14)，仅用 $H_q$ 非减性即得式 (28.16)。正分支中 $R(u)\le16+4\log_2(1/u)$，故 $B(u)\to0$。当 $u$ 足够小时，$B(u)=u[R(u)^2+1]\ge u$，于是 $\log(1/B(u))\le\log(1/u)$；式 (28.15) 即给所列三次对数模量。它与 $m$ 无关，证明正分支的统一性。零分支中 $B_0(j,N)\le\zeta_j/F_j\to0$，再由 $H_q$ 的零处连续性得到同样的统一结论。这两分支共同证明式 (28.17)。若根缺口本身为零，式 (28.14) 直接给 $Q_m=0$，也没有对数零值问题。证毕。
+
+现在只把这个实际费用界代入已有式 (26.22)。令 $S_m=(1-q^m)/(1-q)$、$\phi=1/\alpha$、$c=15225/22877$、$\delta=c-\alpha$，并按 $e>0$ 或 $e=0$ 分别取上面的 $B_*=B(u)$ 或 $B_*=B_0(j,N)$，就得到
+
+$$
+\frac{D(N)}N
+\le\phi\sqrt{S_mV_m(j,N)}+\delta q^m+\frac1N
+                       +\min\{mB_*,H_q(B_*)\}.
+\tag{28.20}
+$$
+
+这里 $V_m$ 是定理 26.5 的同一实际选择树、同一继承阶标的离散度；其鞅、方差分解和式 (26.22) 直接复用 [ff6e dispersion 的实际树接口](https://github.com/the-omega-institute/nested-recurrences/blob/ff6e5cfc7ed95ca0a7b656f7b48c18572fda20f6/cloitre-conway/dispersion.md#size-biased-martingales-and-the-four-generation-dispersion-criterion)，不重作其证明。式 (28.14)–(28.20) 是截断估计在原费用缺口上的实际应用，不把来源界或代入包装另计为新基础成果。
+
+### 28.6 共同资源、成果范围与剩余边界
+
+共同窗口合同仍是原根的 $H\ge L(N)$，并包括每个更大的共同高端补零。树及脊线上全部物理索引、实际起点、被选子索引、轨道点、规定深度、缺口和高度亏量都不超过原根 $N$；式 (28.19) 的两个实际相邻轨道点还保证 $|K_s|\le N_s\le N$。重复出现的物理行在每个共同 $H$ 下保持同一个实际 $C,g$，不能跨长度或跨实现拼接。上锚 $F_{h+1}$ 是解析参照，可以超过对应物理节点；截断阶数 $r$、$R(u)$、对数、比值、$H_q$ 及估计中的乘积也都是分析量，可以超过节点或根，不是额外编码轨道，不声称这些参照本身必须装入 $H=L(N)$。因此这些估计既保留五窗共同资源，也不把可变大小的截断树称为固定状态取得程序。
+
+本节新增的 `repo-derived` 纸面内容是实际树可调截断、亏量密度模量及其对同一实际正费用的统一控制。准确零集、逆二次界、Fibonacci 取整、来源基础与实际拆分收缩均为复用输入；不主张世界原创性或完备文献尽调。所证统一性只覆盖 $e/N\to0$ 的实际根族，推论 28.3 还在该扇区给出规范缺陷衰减。固定正 $u$ 时，式 (28.16) 的上界可以仍是正数乃至仅为 $4/5$，不能保证该费用被 $V_4$ 吸收；在假设 24.1 下，允许的继承下锚根 $N_j=F_j$ 由式 (24.2) 给出 $b_j=F_{j-1}$、$e_j=F_{j-2}$，故 $b_j/N_j\to\alpha$、$e_j/N_j\to\alpha^2>0$。因此 $e/N\to0$ 只是受限根扇区，不能覆盖全部实际根；全域规范缺陷收敛仍需正高度亏量密度扇区的控制。
+
+因此，全部根域上 $V_4(j,N)\ge\kappa(D(N)/N)^4$ 的统一正系数、式 (24.32) 的全部访问点固定系数屏障、实际 $C(n)/n\to\alpha$、全域规范缺陷与终端占用控制、实际内周期长度的无界族、全局相位和逆取得证书，以及完整的 Cloitre–Campbell 跨递归结构对应，仍为未解决的边界。这里的正跳费用估计不把周期空间振幅等同于周期长度，也不将 Cloitre 的互补值和式用于 Campbell 自己的前值规定深度与被选状态返回。§25 的实际输出及规范缺陷全域词图非正则性、§27 的实际规定选择器全域同步图非正则性，在各自的假设和全部共同补零合同下继续成立；本节不把已结算的选择器问题重新列为未决项。
+
+## 追加锚（本行以下为增补区）
+## 29. 单位亏量以上锥、亏二脊线与浅层占用
+
+本节继续在假设 24.1 的同一实际递归 $C$、同一规定深度和同一实际选择器 $g_n$ 下工作。所有闭块坐标、捕获交集、继承阶数、共同高端补零和物理行标签均沿用 §§24、26、28；特别地，若一个物理索引在不同出现节点重复出现，它仍共享同一个 $C$ 与 $g$，不能把不同出现拼成独立实现。来源的参数窗口、共享网络、终端编码和基础计算仍只是条件输入，本文不重新验证其基础，也不把条件结论提升为全域结论。
+
+**定义 29.1（单位亏量坐标）。** 对 $m\ge12$ 与 $0\le t\le F_{m-2}$，沿用
+
+$$
+\lambda_m(t)=F_{m-1}-C(F_m-t),\qquad
+p_m=\left\lfloor\frac{2m-9}{3}\right\rfloor,
+\qquad
+q_m=\left\lfloor\frac{4m-19}{3}\right\rfloor .
+$$
+
+来源的单位子水平定理采用 $R_m=m+\lfloor(m-1)/3\rfloor-6$、$Q_m$ 和 $L_m$ 的字母；在这里它们逐项对应于 $q_m$、$\lambda_m$ 和 $p_m$。该对应只改变记号，不改变来源各结论的自然域和有限前提。来源在 $m\ge19$ 的高阶单位子水平、$m\ge20$ 的实际选择器和无相位二次盆界，分别作为直接复用输入（见 [unit sublevel and selector statements](https://github.com/the-omega-institute/nested-recurrences/blob/fb505464ce1e9c88b962860aa9b14829db3d577d/cloitre-conway/exact-collars.md)）。其中来源的 $U.4$ 是自然标签 $j=m-1$ 的既有盆界，不能解释成全局实际 $V_4$ 下界。
+
+**定理 29.2（高亏量锥及单位层接口）。** 在假设 24.1 下，对所有 $m\ge12$ 和 $0\le t\le F_{m-2}$，有
+
+$$
+\lambda_m(t)=1\quad\Longleftrightarrow\quad p_m<t\le q_m,
+\tag{29.1}
+$$
+
+并且
+
+$$
+\lambda_m(t)\ge3\quad\Longrightarrow\quad t-\lambda_m(t)\ge2m-14.
+\tag{29.2}
+$$
+
+从而
+
+$$
+\lambda_m(t)\ge2\quad\Longrightarrow\quad t-\lambda_m(t)\ge q_m-1.
+\tag{29.3}
+$$
+
+式 (29.3) 是 (29.1)、(29.2) 的逐点推论，不是第三个独立的归纳不变量。
+
+证明。$m=12,13$ 的有限接口使用 146 个合法缺口实例：物理计算只到索引 233；在 $m=12$ 时单位缺口为 $6,7,8,9$，亏量至少二、至少三时的 $t-\lambda_m(t)$ 下确界分别为 $8,10$；在 $m=13$ 时单位缺口为 $6,7,8,9,10,11$，相应下确界为 $10,12$。这两行给出归纳的起点，不把有限表外推成来源基础。
+
+先从两个基阶归纳到 $19$。对 $13\le j\le18$，假定 (29.1)、(29.2) 在阶数 $j,j-1$ 成立；父索引写成 $N=F_{j+1}-b$，$0\le b\le F_{j-1}$，周期缺口 $z$ 的实际内步为
+
+$$
+z_{\rm next}=b-\lambda_j(z),
+\qquad
+\lambda_{j+1}(b)=\lambda_j(z)+\lambda_{j-1}(b-z).
+\tag{29.4}
+$$
+
+其中第二式的 $z$ 是实际规定深度选出的子缺口；第一式只在同一实际周期的合法点上使用。式 (24.3)、(24.4) 保证每个周期缺口都在 $J_{j,b}$ 中，其互补缺口在 $[0,F_{j-3}]$ 中。小边界的域满足 $q_j+3\le20<F_{10}\le F_{j-3}$ 及 $q_j+3<F_{j-1}$，故下述边界与邻点均合法。
+
+先取得整个尾部周期的无返回估计。由 $j\ge13$，
+
+$$
+2j-14\ge q_j+1,
+\qquad
+\lambda_j(r)\le\max(2,r-q_j-1)
+\quad(0\le r\le F_{j-2}).
+$$
+
+后一式在亏量至多二时直接成立；亏量至少三时由归纳锥得到。若 $b\ge q_j+3$，合法缺口 $r\le q_j$ 的亏量至多一，故其后继 $b-\lambda_j(r)\ge b-1>q_j$；对 $q_j<r\le b$ 的合法缺口，
+
+$$
+b-\lambda_j(r)\ge b-\max(2,r-q_j-1)\ge q_j+1.
+$$
+
+这些像若不在 $J_{j,b}$ 中，就不能是周期点。每个周期点都有同周期前驱，因此周期不能返回 $r\le q_j$；单位子水平分类再使每个周期点的亏量至少二。沿一个周期边遂有
+
+$$
+q_j+1\le z\le b-2,\qquad w=b-z\ge2.
+$$
+
+归纳锥还给 $\lambda_j(q_j+1)=2$：该处已排除零、一，若亏量至少三，则 $(q_j+1)-\lambda_j(q_j+1)<2j-14$。特别地，先取 $b=q_j+3$，上述区间压成单点 $z=q_j+1$，互补缺口为二；旧零平台给 $\lambda_{j-1}(2)=0$，故 $\lambda_{j+1}(q_j+3)=2$。这一步不需要选择相位。
+
+对 $b\le p_j+1$，式 (24.7) 的零集和上锥给出零层及其可能的单位端点。对 $p_j+2\le b\le q_j+1$，式 (24.14) 把整个周期限制在 $[p_j+1,b-1]\subseteq[p_j+1,q_j]$，其中亏量恒为一，故周期唯一固定在 $z=b-1$，$w=1$，父亏量为一。尾部 $b\ge q_j+3$ 的父亏量至少二，余下只须判定 $b=q_j+2$。
+
+在 $b=q_j+2$，式 (24.14) 给所有周期缺口 $p_j+1\le z\le q_j+1$；其中 $z\le q_j$ 时后继为 $q_j+1$，$z=q_j+1$ 时后继为 $q_j$，故唯一周期恰为 $\{q_j,q_j+1\}$。直接复用来源的双点入口门，并核对它在本低阶合法域的前提。令 $A=F_j$、$B=F_{j-1}$、$N=F_{j+1}-(q_j+2)$，以及
+
+$$
+a_1=A-q_j,\qquad a_0=a_1-1,
+\qquad T_N(a_1)=a_0,\quad T_N(a_0)=a_1.
+$$
+
+这两个等式分别用 $\lambda_j(q_j)=1$ 与 $\lambda_j(q_j+1)=2$。对全部 $x\in D_N$，若 $a_1<x\le A$，则 $0\le A-x<q_j$，单位子水平分类给 $C(x)\ge B-1$；若 $x>A$，则黄金下界给 $C(x)\ge G(A+1)=B+1$。若 $B\le x<a_0$，则 $q_j+2\le A-x\le F_{j-2}$，单位子水平分类给 $C(x)\le B-2$；若 $x<B$，则 $C(x)\le U(x)\le U(B)=F_{j-2}\le B-2$。因此在完整合法域上，
+
+$$
+x>a_1\Longrightarrow C(x)\ge B-1\Longrightarrow T_N(x)\le a_0,
+\qquad
+x<a_0\Longrightarrow C(x)\le B-2\Longrightarrow T_N(x)\ge a_1.
+$$
+
+实际起点 $x_0=N-1=A+B-q_j-3>A$。由于 $a_0,a_1$ 相邻，在首次到达这两个点之前，偶数绝对时钟在 $a_1$ 右侧，奇数时钟在 $a_0$ 左侧；从右侧首次入周期必到奇数时钟的 $a_0$，从左侧首次入周期必到偶数时钟的 $a_1$。来源的最终捕获保证存在该入口，故 $a_1$ 在周期的偶数时钟、$a_0$ 在奇数时钟，且没有把广捕获区间的入口误当作周期入口。已先取得的邻点亏量给出
+
+$$
+d_N=C(N-1)=F_j-\lambda_{j+1}(q_j+3)=F_j-2.
+$$
+
+规定深度已入周期的前提于是使 $F_j$ 偶时选中 $a_1$，即 $(z,w)=(q_j,2)$、父亏量一；$F_j$ 奇时选中 $a_0$，即 $(z,w)=(q_j+1,1)$、父亏量二。因为 $F_j$ 偶当且仅当 $j\equiv0\pmod3$，这正给出 $q_{j+1}=q_j+2$（该剩余类）或 $q_j+1$（其余剩余类），闭合 (29.1)，并固定了临界边界的实际相位。
+
+还须闭合高亏量锥。前述小边界的父亏量至多二；在尾部写 $e_1=\lambda_j(z)\ge2$、$e_2=\lambda_{j-1}(w)$。由 $w\ge2$、$p_{j-1}\ge5$ 和式 (24.7)，$w-e_2\ge2$，且 $e_2\ge1$ 时 $w-e_2\ge p_{j-1}$。若 $e_1\ge3$，归纳锥给 $(z-e_1)+(w-e_2)\ge(2j-14)+2$。若父亏量至少三而 $e_1=2$，则 $e_2\ge1$，并有
+
+$$
+(z-e_1)+(w-e_2)\ge q_j-1+p_{j-1}\ge2j-12=2(j+1)-14.
+$$
+
+后一取整不等式的差在 $j\bmod3=0,1,2$ 时分别为 $0,1,0$。所用点始终属于同一实际选择周期，这就把 (29.2) 同时归纳到阶数 $19$。
+
+现明确接入来源的阶数 $19$ shelf 前提。已有 $p_{19}=9$、$q_{19}=19$；对整个合法域 $0\le t\le F_{17}=1597$，上述分类给零区 $0..9$ 和单位区 $10..19$。在 $t>19$ 时亏量至少二；若亏量恰为二，则满足来源的上界，若亏量至少三，则
+
+$$
+t-\lambda_{19}(t)\ge24\ge q_{19}+1=20.
+$$
+
+因此整个尾部都满足
+
+$$
+2\le\lambda_{19}(t)\le\max(2,t-q_{19}-1)\qquad(19<t\le1597),
+$$
+
+正是来源的 (U.1)，不是另加的数值前提。阶数至少 $18$ 的 $0..9$ 平坦缺口直接由旧零平台 $p_{18}=9$ 及 $p_m$ 非减给出。来源高阶单位子水平及选择器所需的完整入射接口遂已齐备。
+
+对 $m\ge20$，令 $j=m-1$，直接复用来源的高阶单位子水平及实际临界边界相位，只继续归纳高亏量锥。实际边界排除了 $b\le q_j+2$ 的父亏量至少三情形；上述无返回估计在 $j\ge19$ 同样由前一阶强锥成立，故 $b\ge q_j+3$ 的整个实际周期中，第一亏量至少为二且互补缺口 $w=b-z$ 至少为二。若第一亏量 $e_1\ge3$，由已得高亏量锥及同一周期的 $w-e_2\ge2$，得
+
+$$
+b-(e_1+e_2)=(z-e_1)+(w-e_2)
+\ge(2j-14)+2=2m-14.
+$$
+
+若父亏量至少三而 $e_1=2$，则 $e_2\ge1$，并由单位边界及旧零层界得到
+
+$$
+b-(e_1+e_2)\ge(q_j-1)+p_{j-1}\ge2j-12=2m-14.
+$$
+
+这里的两项都在同一实际选择周期中取值；没有为不同相位另造 $C$ 或另选邻点。最后，若 $\lambda_m(t)=2$，单位区间的右端排除给出 $t\ge q_m+1$，故 $t-\lambda_m(t)\ge q_m-1$；若 $\lambda_m(t)\ge3$，则
+
+$$
+2m-14\ge q_m-1\qquad(m\ge12),
+$$
+
+于是得到 (29.3)。证毕。
+
+**推论 29.3（实际单位根的选择相位）。** 对 $m\ge14$，若 $N=F_m-t$ 且 $\lambda_m(t)=1$，令
+
+$$
+K(N)=g_N-\bigl(N-C(g_N)\bigr).
+$$
+
+则
+
+$$
+K(N)=
+\begin{cases}
+ 1,&m\equiv1\pmod3,\ t=q_m,\\
+ -1,&m\equiv1\pmod3,\ t=p_m+1,\\
+ 0,&\text{其余单位根}.
+\end{cases}
+\tag{29.5}
+$$
+
+第一、第二种例外分别是实际二周期的两个端点；其余单位根的实际周期为一。每个单位根的第一子亏量为一，互补子亏量为零。
+
+这是 (29.1) 与实际规定深度的应用。上端点由 $z=q_{m-1}$、$w=2$ 读出，故 $K=1$；下端点在 $F_{m-1}$ 偶时由既有边界 $z=p_{m-1}+1$、$w=0$ 读出，故 $K=-1$。内部单位根的实际周期固定在 $z=t-1$、$w=1$，故 $K=0$。来源的高阶选择器在 $m\ge20$ 直接提供这些读数，$14\le m\le19$ 由上面的有限接口接入；这不是对来源全球单位归纳的重复证明。
+
+**推论 29.4（亏二带与同周期高亏量前驱）。** 令
+
+$$
+B_m=2m-12.
+$$
+
+对 $m\ge14$ 的合法缺口 $q_m<t\le B_m$，有
+
+$$
+\lambda_m(t)=2.
+\tag{29.6}
+$$
+
+这些实际根的第一子亏量为二、互补子亏量为零。其选择跳跃满足：仅当 $m\not\equiv1\pmod3$ 且 $t=q_m+1$ 时 $K=-1$；其余情形 $K=0$ 且互补缺口为二。一般地，对任一 $m\ge14$ 的合法亏二根，写实际选择的两个缺口为 $z,w$，使 $z+w=t$，则
+
+$$
+\lambda_{m-1}(z)=2,\qquad
+\lambda_{m-2}(w)=0,\qquad
+K=w-2,\qquad w\le p_{m-2}.
+\tag{29.7}
+$$
+
+若 $K>0$，则同一实际周期中存在一个合法前驱缺口 $u\le t-2$，满足
+
+$$
+\lambda_{m-1}(u)=w\ge3,
+\qquad
+u-w\ge2m-16,
+\qquad z=t-w\ge2m-14.
+\tag{29.8}
+$$
+
+证明。先由 (29.1) 和旧零集排除保证带中的亏量零、一；若 $\lambda_m(t)\ge3$，则 (29.2) 迫使 $t\ge2m-11>B_m$，故保证带的父亏量恰为二。由 $q_m<t$，只有 $t=q_{m-1}+2$ 的临界端点可能先于 $q_{m-1}+3$；该端点的负跳跃由定理 29.2 的临界边界相位计算给出：$m\not\equiv1\pmod3$、$t=q_m+1$、$z=q_{m-1}+1$、$w=1$，第一子亏量二、互补子亏量零。其余保证带根的整个实际周期落在 $t\ge q_{m-1}+3$ 的尾部分类中，周期亏量至少二，周期缺口至多为 $t-2$。若周期中某点亏量至少三，则 (29.2) 在阶数 $m-1$ 给出该点缺口至少 $2m-13$，而该点至多为 $t-2\le2m-14$，矛盾。因此所有周期点的亏量均为二，缺口映射恒为 $t-2$，实际周期固定于此，其互补缺口为二，给出 (29.6)、(29.7) 及 $K=0$。
+
+对一般亏二根，临界边界或尾部分类先给实际所选第一子亏量至少二；实际亏量可加性遂使它恰为二、互补亏量为零，故 $K=w-2$。若 $K>0$，则 $w\ge3$，从而根不在上述保证带内。实际周期中从 $z$ 的前一个点 $u$ 走到 $z$，即 $z=t-\lambda_{m-1}(u)=t-w$，所以 $\lambda_{m-1}(u)=w\ge3$；尾部周期界还给 $u\le t-2$。将 (29.2) 用在这个同一物理行的合法前驱上，得到 $u-w\ge2(m-1)-14=2m-16$；再由 $t-u\ge2$ 得 (29.8) 的 $z\ge2m-14$。这只是正跳跃的必要位置条件，不是对跳跃总和的上界。证毕。
+
+**定理 29.5（亏二第一子脊线的正跳跃分区）。** 取一个阶数 $M\ge13$ 的实际亏二根，沿实际第一子递归定义
+
+$$
+N_{s+1}=g_{N_s},\qquad m_s=M-s,\qquad
+N_s=F_{m_s}-b_s,
+$$
+
+只在父阶数 $m_s\ge14$ 的合法捕获交集中展开，到阶数 $13$ 的节点停止。亏量二在这些第一子边上保持，互补子为零亏量；令 $z_s=b_{s+1}$ 为第一子缺口。对每条这样的边有
+
+$$
+K_s^+=[b_s-B_{m_s}]_+-[z_s-B_{m_s-1}]_+.
+\tag{29.9}
+$$
+
+具体地，
+
+$$
+b_s\le B_{m_s}\Longrightarrow z_s\le B_{m_s-1},\quad K_s\le0,
+$$
+
+而
+
+$$
+b_s>B_{m_s}\Longrightarrow z_s\ge B_{m_s-1},\quad K_s\ge0.
+$$
+
+因此对每个 $0\le\ell\le M-13$ 有望远镜恒等式
+
+$$
+\sum_{s<\ell}K_s^+
+=[b_0-B_M]_+-[b_\ell-B_{M-\ell}]_+.
+\tag{29.10}
+$$
+
+证明。由 (29.7)，$K_s=w_s-2$ 且 $b_s=z_s+w_s$；又 $B_{m_s}=B_{m_s-1}+2$。若 $b_s\le B_{m_s}$，亏二根必有 $q_{m_s}<b_s$，故推论 29.4 给一般情形 $w_s=2$、$z_s=b_s-2\le B_{m_s-1}$；临界例外则为 $w_s=1$、$z_s=q_{m_s}\le B_{m_s-1}$。两者均有 $K_s\le0$。若 $b_s>B_{m_s}$，则 $b_s\ge q_{m_s-1}+3$，尾部周期分类先给 $w_s\ge2$，故 $K_s\ge0$。当 $K_s=0$ 时，$z_s=b_s-2>B_{m_s-1}$；当 $K_s>0$ 时，才用 (29.8) 的同周期前驱约束得到 $z_s\ge2m_s-14=B_{m_s-1}$。在两种扇区中均有
+
+$$
+b_s-B_{m_s}=(z_s-B_{m_s-1})+K_s,
+$$
+
+正部恒等式遂给出 (29.9)，在父阶数至少 $14$ 的边上迭代即得 (29.10)，其中 $\ell=0$ 也成立，末节点可以是阶数 $13$。一旦轨道进入 $b_s\le B_{m_s}$，其后在该范围内仍留在此侧，因而 $K_s^+=0$；仅在 $m_s\not\equiv1\pmod3$ 且 $b_s=q_{m_s}+1$ 的临界例外有 $K_s=-1$、$w_s=1$，其余情形 $K_s=0$、$w_s=2$。特别地，$q_{m_s}+1<B_{m_s}$，所以精确边界 $b_s=B_{m_s}$ 沿每条合法展开边保持 $z_s=B_{m_s-1}$、$w_s=2$。这里没有把初始超额 $[b_0-B_M]_+$ 截成线性量；故 (29.10) 不是 $\sum w_s\le AM+B$，也不是式 (24.32) 的全域费用界。证毕。
+
+**推论 29.6（单位层的实际占用）。** 在同一锚点轨道中，$k\ge13$ 且一次实际访问满足
+
+$$
+p_{k-1}<b_r\le q_{k-1},
+$$
+
+则它必为倒数第二次访问：若 $A=F_{k-1}$，轨道尾部逐字为
+
+$$
+A-b_r\longmapsto A+1\longmapsto A-1\longmapsto A.
+\tag{29.11}
+$$
+
+因此更早的 $r\le R_k-3$ 只能满足 $b_r\ge q_{k-1}+1$。这是假设存在该访问时的条件分类，不断言此类访问一定存在。
+
+还可把来源的正胶囊与已有的浅层零层直接组合。对 $k\ge24$，令
+
+$$
+c_+(h)=32+2\left\lfloor\frac{h-23}{6}\right\rfloor
+ +\mathbf 1_{(h-23)\bmod6\ge4},
+\qquad
+M_k=\min\{c_+(k-1),p_{k-1}\}.
+$$
+
+若实际访问 $1\le e=L_k(b_r)\le M_k$，则仍有 $r=R_k-2$，且尾部为
+
+$$
+A-b_r\longmapsto A+e\longmapsto A-e\longmapsto A.
+\tag{29.12}
+$$
+
+证明只用同一实际轨道的两步恒等式：$a_{r+1}=e$；正胶囊在 $e\le c_+(k-1)$ 时给 $C(A+e)=F_{k-2}+e$，故下一缺口为 $e$；$e\le p_{k-1}$ 又落在既有零平台，给 $C(A-e)=F_{k-2}$，于是再下一亏量为零。故这次访问只能是倒数第二次。对更早访问，已有零亏量排除与 (29.1) 排除 $1,\ldots,M_k$，遂得
+
+$$
+L_k(b_r)\ge M_k+1\qquad(r\le R_k-3).
+\tag{29.13}
+$$
+
+这里没有声称访问存在，也没有给出倒数第二次缺口的上界；$M_k/k\to1/3$ 只说明浅层正亏量的占用排除带宽度渐近为三分之一。
+
+**推论 29.7（单位及亏二层对既有费用式的应用）。** 在式 (26.21) 的同一实际互补脊线上，令 $m\ge1$、$j\ge2m+23$，并沿用 $Q_m=\sum_{s<m}K_s^+$、$e=F_j-C(N)$。则直接由 (29.5)、(29.7) 及既有零层路由，
+
+$$
+\begin{array}{c|c}
+ e&Q_m\\ \hline
+ 0,1&Q_m\le1,\quad K_s=0\ (s\ge1)\\
+ 2&Q_m\le p_{j-1}-1,\quad K_s=0\ (s\ge2)\\
+ 3&Q_m\le q_{j-1}-1,\quad K_s=0\ (s\ge2)
+\end{array}
+\tag{29.14}
+$$
+
+故式 (26.22) 中的同一实际离散度 $V_m(j,N)$ 和同一 $S_m,\phi,\delta$ 只需把余项写成
+
+$$
+\frac{D(N)}N
+\le\phi\sqrt{S_mV_m(j,N)}+\delta\left(\frac49\right)^m
+ +\frac{1+B_j(e)}N,
+\tag{29.15}
+$$
+
+其中
+
+$$
+B_j(0)=B_j(1)=1,\qquad B_j(2)=p_{j-1}-1,
+\qquad B_j(3)=q_{j-1}-1.
+$$
+
+这是对现有式 (26.22) 的实际单位层应用；§26 已覆盖其低亏量离散度域，故 (29.15) 不产生新的 $V_4$ 覆盖，也不把代入包装成新的基础定理。
+
+**29.8 共同资源与边界。** 式 (29.1)–(29.15) 的每一个 $C$ 值、周期前驱、选中相位、亏量、缺口和规定深度都属于同一实际物理行及其合法捕获交集；共同资源仍是 $H\ge L(\text{root})$ 及其所有更大的高端补零。$F_m$ 锚、$B_m$、$p_m$、$q_m$、$c_+$ 和门槛只是在证明中的解析坐标，不是新增编码轨道或固定宽度种子。
+
+正高度亏量密度本身不能推出离散度：实际下锚根仍可有 $e/N\to\alpha^2$、$D/N\to0$ 和 $V_r\to0$。同样，式 (29.10) 只控制亏二第一子脊线相对初始超额的正费用，不能控制初始超额，也不能推广到任意亏量访问。来源的无相位盆界是自然标签的既有条件结果，不能替代实际四代选择树的 $V_4$ 估计。式 (24.1) 的全域条件、§25 的实际 $C$/缺陷图非正则性和 §27 的实际选择器图非正则性继续按原范围保留。
+
+因此，任意亏量的式 (24.32) 固定系数、全域实际 $V_4$ 或四次离散度桥、$C(n)/n\to\alpha$ 的全局收敛、统一终端占用、实际内周期无界族、全局相位与逆取得证书，以及完整的 Cloitre–Campbell 对应仍未解决。本文没有重证来源的全球单位归纳、选择器分类或 $U.4$，也没有从有限基行推出世界原创性结论。
+
+## 追加锚（本行以下为增补区）
