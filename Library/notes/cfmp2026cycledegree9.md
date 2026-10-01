@@ -22,8 +22,10 @@ are on the strict sides of `1/2` for degree eight and of
 `cos(2*pi/9)^2` for degree nine; the latter is bracketed by the cubic
 `8q^3-6q+1=0`.
 
-Luo--Yang's shared-edge co-volume derivative and the compact-box inward-face
-argument then produce an interior zero-curvature point. This is conditional on
+Uemura, arXiv:2609.34108v1, Theorem 3.2 supplies the abstract invariant-box
+criterion; the packet-specific endpoint arithmetic below is separate. Zhao's Lemma 3.4 supplies monotonicity. Luo--Yang, arXiv:1404.5365v2,
+Theorems 1.4 and 6.3, supply the shared-edge co-volume derivative and
+interior-minimum mechanism; together they produce an interior zero-curvature point. This is conditional on
 a valid finite connected orientable ideal triangulation with the packet roles;
 no explicit face pairing or non-vacuity witness is claimed. It does not
 resolve arbitrary minimum-eight or minimum-six CFMP, and no Lean

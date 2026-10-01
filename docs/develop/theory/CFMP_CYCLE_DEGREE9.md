@@ -36,26 +36,28 @@ nonincreasing in the opposite coordinate (Zhao Lemma 3.4; the opposite
 partial derivative is `-(x1^2-1)/sqrt(A B)`). The universal `[1,2]^6`
 envelope places the box below in the genuine hyper-ideal length domain.
 
+Source locators: Zhao, arXiv:2601.15174v2, Lemma 3.4 (coordinate monotonicity), Lemma 2.2 and Proposition 2.4 (the six-variable cosine and genuine length domain), https://arxiv.org/html/2601.15174v2. The co-volume gradient and interior-minimum mechanism are Luo--Yang, arXiv:1404.5365v2, Theorems 1.4 and 6.3, https://arxiv.org/abs/1404.5365.
+
 Use a shared global cosh-length box
 
 ```
-low:  A=73/50 <= x_e <= 2,
-high: C=53/40 <= x_e <= D=347/200.
+low:  low_box_A=73/50 <= x_e <= 2,
+high: high_box_C=53/40 <= x_e <= high_box_D=347/200.
 ```
 
 For a low target edge, the cycle packet has adjacent low/high coordinates and
 opposite high, so monotonicity gives the lower/upper-face endpoint tuples
-`(A,A,C,D,C,A)` and `(2,2,D,C,D,2)`. For a high target, adjacent coordinates
-are low,low,high,high and the opposite is low, giving `(C,A,A,2,C,C)` and
-`(D,2,2,A,D,D)`.
+`(low_box_A,low_box_A,high_box_C,high_box_D,high_box_C,low_box_A)` and `(2,2,high_box_D,high_box_C,high_box_D,2)`. For a high target, adjacent coordinates
+are low,low,high,high and the opposite is low, giving `(high_box_C,low_box_A,low_box_A,2,high_box_C,high_box_C)` and
+`(high_box_D,2,2,low_box_A,high_box_D,high_box_D)`.
 
 The exact squared endpoint cosines are
 
 ```
-Llo^2 = phi(A,A,C,D,C,A)^2 = 23001041/45748800 > 1/2,
-Lup^2 = phi(2,2,D,C,D,2)^2 = 1261129/2527362 < 1/2,
-Hlo^2 = phi(C,A,A,2,C,C)^2 = 1111822336/1885209561,
-Hup^2 = phi(D,2,2,A,D,D)^2 = 12826261216129/21905208090000.
+Llo^2 = phi(low_box_A,low_box_A,high_box_C,high_box_D,high_box_C,low_box_A)^2 = 23001041/45748800 > 1/2,
+Lup^2 = phi(2,2,high_box_D,high_box_C,high_box_D,2)^2 = 1261129/2527362 < 1/2,
+Hlo^2 = phi(high_box_C,low_box_A,low_box_A,2,high_box_C,high_box_C)^2 = 1111822336/1885209561,
+Hup^2 = phi(high_box_D,2,2,low_box_A,high_box_D,high_box_D)^2 = 12826261216129/21905208090000.
 ```
 
 Let `q=cos(2*pi/9)`. It is the root in `(3/4,4/5)` of
