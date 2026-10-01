@@ -745,7 +745,9 @@ internal static partial class FileMapPolicy
         }
         foreach (var unit in root.GetProperty("units").EnumerateArray())
         {
-            RequireKeys(unit, ["id", "workflow", "project", "test", "lean", "dotnet", "inputs"]);
+            RequireKeys(unit, ["id", "workflow", "check", "project", "test", "lean", "dotnet", "inputs"]);
+            if (unit.GetProperty("check").ValueKind is not (JsonValueKind.Null or JsonValueKind.String))
+                throw new InvalidDataException("invalid CI unit check shape");
             RequirePatterns(unit.GetProperty("inputs"));
             foreach (var field in unit.EnumerateObject().Where(property => property.Name != "inputs"))
                 content.AddRange(JsonStrings(field.Value));

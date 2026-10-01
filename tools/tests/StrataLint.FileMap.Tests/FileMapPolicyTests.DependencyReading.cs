@@ -18,6 +18,16 @@ public sealed partial class FileMapPolicyTests
     }
 
     [Theory]
+    [InlineData(null)]
+    [InlineData("fixture / unit")]
+    public void CiCheckAcceptsNullOrString(string? check)
+    {
+        var document = CiSelection();
+        document["units"]![0]!["check"] = check;
+        Assert.Empty(InspectCiDependencies(document.ToJsonString()));
+    }
+
+    [Theory]
     [InlineData("workflow")]
     [InlineData("project")]
     public void CiContentReferencesRemainDependencies(string field)
@@ -44,6 +54,8 @@ public sealed partial class FileMapPolicyTests
     [InlineData("closure-type")]
     [InlineData("caches-type")]
     [InlineData("cache-unknown-field")]
+    [InlineData("check-type")]
+    [InlineData("missing-check")]
     [InlineData("input-type")]
     [InlineData("unknown-field")]
     [InlineData("duplicate-key")]
@@ -59,6 +71,8 @@ public sealed partial class FileMapPolicyTests
             case "cache-unknown-field":
                 document["caches"] = JsonNode.Parse("""{"judge":{"project":"p.csproj","inputs":[],"unknown":1}}""");
                 break;
+            case "check-type": document["units"]![0]!["check"] = new JsonArray(); break;
+            case "missing-check": document["units"]![0]!.AsObject().Remove("check"); break;
             case "input-type": document["units"]![0]!["inputs"] = GeneratedInput; break;
             case "unknown-field": document["units"]![0]!["unknown"] = GeneratedInput; break;
         }
@@ -69,7 +83,7 @@ public sealed partial class FileMapPolicyTests
 
     private static JsonNode CiSelection() => JsonNode.Parse("""
         {"schema":"ci-units-v1","shared_inputs":[],"closure_excludes":[],"caches":{},"units":[{
-          "id":"fixture","workflow":".github/workflows/ci-fixture.yml","project":null,
+          "id":"fixture","check":"fixture / unit","workflow":".github/workflows/ci-fixture.yml","project":null,
           "test":false,"lean":"none","dotnet":false,"inputs":[]
         }]}
         """)!;

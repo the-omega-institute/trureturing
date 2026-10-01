@@ -41,7 +41,7 @@ class CiUnitsTests(unittest.TestCase):
 
     @staticmethod
     def unit():
-        return {"id": "fixture", "workflow": ".github/workflows/ci-fixture.yml",
+        return {"id": "fixture", "check": "fixture / unit", "workflow": ".github/workflows/ci-fixture.yml",
                 "project": "tests/T/T.csproj", "test": True, "lean": "toolchain",
                 "dotnet": True, "inputs": ["!linked/Omit.cs", "assets/*", "global.json"]}
 
@@ -61,6 +61,41 @@ class CiUnitsTests(unittest.TestCase):
         self.assertIn(message, result.stderr)
         self.assertEqual(result.stdout, "")
         self.assertFalse(self.paths.exists())
+
+    def contexts(self):
+        (self.root / "Meta/engineering-projects.json").write_text(json.dumps(self.projects))
+        (self.root / "Meta/ci-units.json").write_text(json.dumps(self.manifest))
+        return subprocess.run([sys.executable, str(self.script), "contexts"],
+                              cwd=tempfile.gettempdir(), capture_output=True, text=True)
+
+    def test_contexts_follow_unit_order_and_skip_null(self):
+        self.manifest["units"] = [dict(self.unit(), id=unit_id, check=check)
+                                  for unit_id, check in (("a", "Z / unit"), ("b", None),
+                                                         ("c", "current"), ("d", None))]
+        result = self.contexts()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout, "Z / unit\ncurrent\n")
+
+    def test_null_check_resolves(self):
+        self.manifest["units"][0]["check"] = None
+        result = self.resolve()
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_invalid_check_and_missing_check(self):
+        for value in (True, 1, [], {}, "", " x", "x ", "x\ny", "x\x7fy"):
+            with self.subTest(value=value):
+                self.manifest["units"][0]["check"] = value
+                self.assert_error(self.resolve(), "check")
+        del self.manifest["units"][0]["check"]
+        self.assert_error(self.resolve(), "keys")
+
+    def test_duplicate_non_null_checks_rejected_by_every_command(self):
+        self.manifest["units"].append(dict(self.unit(), id="z-other"))
+        self.assert_error(self.resolve(), "duplicate check")
+        result = self.contexts()
+        self.assertEqual(result.returncode, 2)
+        self.assertEqual(result.stdout, "")
+        self.assertIn("duplicate check", result.stderr)
 
     def test_unknown_unit(self):
         self.assert_error(self.resolve("unknown"), "unknown unit")
@@ -123,13 +158,13 @@ class CiUnitsTests(unittest.TestCase):
 
     def test_validates_other_units_too(self):
         other = self.unit()
-        other.update(id="z-other", project=None)
+        other.update(id="z-other", check="z-other / unit", project=None)
         self.manifest["units"].append(other)
         self.assert_error(self.resolve(), "project")
 
     def test_units_must_be_sorted(self):
         other = self.unit()
-        other["id"] = "a-other"
+        other.update(id="a-other", check="a-other / unit")
         self.manifest["units"].append(other)
         self.assert_error(self.resolve(), "sorted")
 

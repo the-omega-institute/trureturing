@@ -27,6 +27,7 @@
     {
       "id": "banned-api-proof",
       "workflow": ".github/workflows/ci-banned-api-proof.yml",
+      "check": "banned-api-proof / unit",
       "project": "tools/StrataLint.Cli/StrataLint.Cli.csproj",
       "test": false,
       "lean": "none",
@@ -101,6 +102,7 @@
     {
       "id": "capability-proof",
       "workflow": ".github/workflows/ci-capability-proof.yml",
+      "check": "capability-proof / unit",
       "project": "tools/StrataLint.Cli/StrataLint.Cli.csproj",
       "test": false,
       "lean": "none",
@@ -175,6 +177,7 @@
     {
       "id": "current",
       "workflow": ".github/workflows/ci-current.yml",
+      "check": "current",
       "project": "tools/StrataLint.Cli/StrataLint.Cli.csproj",
       "test": false,
       "lean": "build",
@@ -198,6 +201,7 @@
     {
       "id": "delta",
       "workflow": ".github/workflows/ci-current.yml",
+      "check": null,
       "project": "tools/StrataLint.Cli/StrataLint.Cli.csproj",
       "test": false,
       "lean": "build",
@@ -226,6 +230,7 @@
     {
       "id": "filemap",
       "workflow": ".github/workflows/ci-filemap.yml",
+      "check": "filemap / unit",
       "project": "tools/StrataLint.Cli/StrataLint.Cli.csproj",
       "test": false,
       "lean": "none",
@@ -249,6 +254,7 @@
     {
       "id": "publication-verify",
       "workflow": ".github/workflows/ci-publication-verify.yml",
+      "check": null,
       "project": null,
       "test": false,
       "lean": "build",
@@ -269,6 +275,7 @@
     {
       "id": "selftest",
       "workflow": ".github/workflows/ci-selftest.yml",
+      "check": "selftest / unit",
       "project": "tools/StrataLint.Cli/StrataLint.Cli.csproj",
       "test": false,
       "lean": "none",
@@ -343,6 +350,7 @@
     {
       "id": "tests-architecture",
       "workflow": ".github/workflows/ci-tests-architecture.yml",
+      "check": "tests-architecture / unit",
       "project": "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
       "test": true,
       "lean": "none",
@@ -543,6 +551,7 @@
     {
       "id": "tests-cache",
       "workflow": ".github/workflows/ci-tests-cache.yml",
+      "check": "tests-cache / unit",
       "project": "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -609,6 +618,7 @@
     {
       "id": "tests-cache-native",
       "workflow": ".github/workflows/ci-tests-cache-native.yml",
+      "check": "tests-cache-native / unit",
       "project": "tools/tests/StrataLint.Cache.Native.Tests/StrataLint.Cache.Native.Tests.csproj",
       "test": true,
       "lean": "toolchain",
@@ -669,6 +679,7 @@
     {
       "id": "tests-cache-release",
       "workflow": ".github/workflows/ci-tests-cache-release.yml",
+      "check": "tests-cache-release / unit",
       "project": "tools/tests/StrataLint.Cache.Release.Tests/StrataLint.Cache.Release.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -735,6 +746,7 @@
     {
       "id": "tests-ci-entry",
       "workflow": ".github/workflows/ci-tests-ci-entry.yml",
+      "check": "tests-ci-entry / unit",
       "project": null,
       "test": false,
       "lean": "none",
@@ -747,6 +759,7 @@
     {
       "id": "tests-cli",
       "workflow": ".github/workflows/ci-tests-cli.yml",
+      "check": "tests-cli / unit",
       "project": "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
       "test": true,
       "lean": "toolchain",
@@ -818,6 +831,7 @@
     {
       "id": "tests-cli-integration",
       "workflow": ".github/workflows/ci-tests-cli-integration.yml",
+      "check": "tests-cli-integration / unit",
       "project": "tools/tests/StrataLint.CliIntegration.Tests/StrataLint.CliIntegration.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -876,6 +890,7 @@
     {
       "id": "tests-configuration",
       "workflow": ".github/workflows/ci-tests-configuration.yml",
+      "check": "tests-configuration / unit",
       "project": "tools/tests/StrataLint.Configuration.Tests/StrataLint.Configuration.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -931,6 +946,7 @@
     {
       "id": "tests-cover-batch",
       "workflow": ".github/workflows/ci-tests-cover-batch.yml",
+      "check": "tests-cover-batch / unit",
       "project": "tools/tests/StrataLint.CoverBatch.Tests/StrataLint.CoverBatch.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -1007,6 +1023,7 @@
     {
       "id": "tests-declared-template",
       "workflow": ".github/workflows/ci-tests-declared-template.yml",
+      "check": "tests-declared-template / unit",
       "project": "tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj",
       "test": true,
       "lean": "build",
@@ -1071,6 +1088,7 @@
     {
       "id": "tests-digestion",
       "workflow": ".github/workflows/ci-tests-digestion.yml",
+      "check": "tests-digestion / unit",
       "project": "tools/tests/StrataLint.Digestion.Tests/StrataLint.Digestion.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -1126,6 +1144,7 @@
     {
       "id": "tests-engine",
       "workflow": ".github/workflows/ci-tests-engine.yml",
+      "check": "tests-engine / unit",
       "project": "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -1181,6 +1200,7 @@
     {
       "id": "tests-filemap",
       "workflow": ".github/workflows/ci-tests-filemap.yml",
+      "check": "tests-filemap / unit",
       "project": "tools/tests/StrataLint.FileMap.Tests/StrataLint.FileMap.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -1237,6 +1257,7 @@
     {
       "id": "tests-header-script",
       "workflow": ".github/workflows/ci-tests-header-script.yml",
+      "check": "tests-header-script / unit",
       "project": "tools/tests/StrataLint.HeaderScript.Tests/StrataLint.HeaderScript.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -1294,6 +1315,7 @@
     {
       "id": "tests-instruction-contract",
       "workflow": ".github/workflows/ci-tests-instruction-contract.yml",
+      "check": "tests-instruction-contract / unit",
       "project": "tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -1354,6 +1376,7 @@
     {
       "id": "tests-integration-mirror",
       "workflow": ".github/workflows/ci-tests-integration-mirror.yml",
+      "check": "tests-integration-mirror / unit",
       "project": null,
       "test": false,
       "lean": "none",
@@ -1366,6 +1389,7 @@
     {
       "id": "tests-lean",
       "workflow": ".github/workflows/ci-tests-lean.yml",
+      "check": "tests-lean / unit",
       "project": "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
       "test": true,
       "lean": "toolchain",
@@ -1436,6 +1460,7 @@
     {
       "id": "tests-lean-cache-script",
       "workflow": ".github/workflows/ci-tests-lean-cache-script.yml",
+      "check": "tests-lean-cache-script / unit",
       "project": "tools/tests/StrataLint.LeanCacheScript.Tests/StrataLint.LeanCacheScript.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -1492,6 +1517,7 @@
     {
       "id": "tests-lean-report-script",
       "workflow": ".github/workflows/ci-tests-lean-report-script.yml",
+      "check": "tests-lean-report-script / unit",
       "project": "tools/tests/StrataLint.LeanReportScript.Tests/StrataLint.LeanReportScript.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -1554,6 +1580,7 @@
     {
       "id": "tests-playbook-script",
       "workflow": ".github/workflows/ci-tests-playbook-script.yml",
+      "check": "tests-playbook-script / unit",
       "project": "tools/tests/StrataLint.PlaybookScript.Tests/StrataLint.PlaybookScript.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -1610,6 +1637,7 @@
     {
       "id": "tests-pr-script",
       "workflow": ".github/workflows/ci-tests-pr-script.yml",
+      "check": "tests-pr-script / unit",
       "project": "tools/tests/StrataLint.PrScript.Tests/StrataLint.PrScript.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -1666,6 +1694,7 @@
     {
       "id": "tests-report-supervisor",
       "workflow": ".github/workflows/ci-tests-report-supervisor.yml",
+      "check": "tests-report-supervisor / unit",
       "project": "tools/tests/StrataLint.ReportSupervisor.Tests/StrataLint.ReportSupervisor.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -1724,6 +1753,7 @@
     {
       "id": "tests-repository-configuration",
       "workflow": ".github/workflows/ci-tests-repository-configuration.yml",
+      "check": "tests-repository-configuration / unit",
       "project": "tools/tests/StrataLint.RepositoryConfiguration.Tests/StrataLint.RepositoryConfiguration.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -1784,6 +1814,7 @@
     {
       "id": "tests-repository-contract",
       "workflow": ".github/workflows/ci-tests-repository-contract.yml",
+      "check": "tests-repository-contract / unit",
       "project": "tools/tests/StrataLint.RepositoryContract.Tests/StrataLint.RepositoryContract.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -1914,6 +1945,7 @@
     {
       "id": "tests-repository-digestion",
       "workflow": ".github/workflows/ci-tests-repository-digestion.yml",
+      "check": "tests-repository-digestion / unit",
       "project": "tools/tests/StrataLint.RepositoryDigestion.Tests/StrataLint.RepositoryDigestion.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -1974,6 +2006,7 @@
     {
       "id": "tests-repository-filemap",
       "workflow": ".github/workflows/ci-tests-repository-filemap.yml",
+      "check": "tests-repository-filemap / unit",
       "project": "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -1985,6 +2018,7 @@
     {
       "id": "tests-repository-topology",
       "workflow": ".github/workflows/ci-tests-repository-topology.yml",
+      "check": "tests-repository-topology / unit",
       "project": "tools/tests/StrataLint.RepositoryTopology.Tests/StrataLint.RepositoryTopology.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -1996,6 +2030,7 @@
     {
       "id": "tests-resource-observation",
       "workflow": ".github/workflows/ci-tests-resource-observation.yml",
+      "check": "tests-resource-observation / unit",
       "project": "tools/tests/StrataLint.ResourceObservation.Tests/StrataLint.ResourceObservation.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -2052,6 +2087,7 @@
     {
       "id": "tests-rules",
       "workflow": ".github/workflows/ci-tests-rules.yml",
+      "check": "tests-rules / unit",
       "project": "tools/tests/StrataLint.Rules.Tests/StrataLint.Rules.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -2107,6 +2143,7 @@
     {
       "id": "tests-scribe",
       "workflow": ".github/workflows/ci-tests-scribe.yml",
+      "check": "tests-scribe / unit",
       "project": "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -2169,6 +2206,7 @@
     {
       "id": "tests-scribe-documents",
       "workflow": ".github/workflows/ci-tests-scribe-documents.yml",
+      "check": "tests-scribe-documents / unit",
       "project": "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -2225,6 +2263,7 @@
     {
       "id": "tests-source-atomizer",
       "workflow": ".github/workflows/ci-tests-source-atomizer.yml",
+      "check": "tests-source-atomizer / unit",
       "project": "tools/tests/StrataLint.SourceAtomizer.Tests/StrataLint.SourceAtomizer.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -2286,6 +2325,7 @@
     {
       "id": "tests-truth",
       "workflow": ".github/workflows/ci-tests-truth.yml",
+      "check": "tests-truth / unit",
       "project": "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -2341,6 +2381,7 @@
     {
       "id": "tests-truth-release",
       "workflow": ".github/workflows/ci-tests-truth-release.yml",
+      "check": "tests-truth-release / unit",
       "project": "tools/tests/StrataLint.TruthRelease.Tests/StrataLint.TruthRelease.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -2400,6 +2441,7 @@
     {
       "id": "tests-workflow-script",
       "workflow": ".github/workflows/ci-tests-workflow-script.yml",
+      "check": "tests-workflow-script / unit",
       "project": "tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj",
       "test": true,
       "lean": "none",
@@ -2473,6 +2515,7 @@
     {
       "id": "tests-worktree-contract",
       "workflow": ".github/workflows/ci-tests-worktree-contract.yml",
+      "check": "tests-worktree-contract / unit",
       "project": "tools/tests/StrataLint.WorktreeContract.Tests/StrataLint.WorktreeContract.Tests.csproj",
       "test": true,
       "lean": "none",
