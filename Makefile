@@ -34,6 +34,11 @@ warm-donor:
 lean:
 	@/bin/bash tools/scripts/worktree/lean-cache-run.sh --build $(LEAN_TARGETS)
 
+.PHONY: contract-prototype-checks
+contract-prototype-checks:
+	@test -n "$(OUT)" -a -n "$(UNIT)"
+	@python3 tools/lean-inspector/ContractPrototype/checks.py --root "$(CURDIR)" --out "$(OUT)" --unit "$(UNIT)" $(if $(REFERENCE),--reference "$(REFERENCE)",)
+
 lean-report:
 	@/bin/bash tools/scripts/report/lean-report.sh
 
