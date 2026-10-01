@@ -19,12 +19,14 @@ tensor products of elements of `𝒜`. Standard stabilizer states are those
 stabilized by `𝒫 = {±1, ±i}·{𝟙, X, Y, Z}`. After an exhaustive analysis of two
 and three qubits the paper states:
 
-> \begin{conj} All states stabilized by the set $\mathcal A$ composed of binary
-> operators and the identity {\it i.e.}, $\mathcal{A}=\{A_{\theta,\phi},\1_2\}$,
-> are locally equivalent to standard stabilizer states (\textit{i.e.},
-> stabilized by the Pauli group
-> $\mathcal{P}=\{\pm 1,\pm i\}\cdot\{\1,\sigma_X,\sigma_Y,\sigma_Z\}$).
-> \end{conj}
+```latex
+\begin{conj} All states stabilized by the set $\mathcal A$ composed of binary
+operators and the identity {\it i.e.}, $\mathcal{A}=\{A_{\theta,\phi},\1_2\}$,
+are locally equivalent to standard stabilizer states (\textit{i.e.},
+stabilized by the Pauli group
+$\mathcal{P}=\{\pm 1,\pm i\}\cdot\{\1,\sigma_X,\sigma_Y,\sigma_Z\}$).
+\end{conj}
+```
 
 Issue #11565 fixes the reading. `A_{θ,φ} = cos θ Z + sin θ (cos φ X + sin φ Y)`,
 stabilization needs no commutativity, and local equivalence is
