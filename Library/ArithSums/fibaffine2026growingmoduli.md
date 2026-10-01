@@ -299,6 +299,47 @@ $$
 
 不能令 $c$ 随 $m$ 趋于0来覆盖 $M=m^{o(1)}$，因为定理固定 $c$，且隐常数依赖它。这个版本不弥补上述次幂余因子尺度在一般 $F_r$ 模数下的接口；素数模版本的全部非零频率界也不能直接运输到这里只控制可逆 $a$ 的陈述。
 
+## Garaev–Shparlinski：选择模数产生的逆元聚集
+
+Moubariz Z. Garaev, Igor E. Shparlinski, *On the distribution of modular inverses from short intervals*, arXiv:2304.07953v1 (2023)。
+
+- 原文：https://arxiv.org/pdf/2304.07953v1
+- 精确位置：Theorem 1.1，第3页；§3.1，第6—7页。
+
+该定理对任意固定 $A_0>1$ 和充分大的整数 $M$，给出**存在某个素数** $p$，满足
+
+$$
+M\asymp(\log p)^{A_0},\qquad D_p(M)\gg1,
+$$
+
+其中 $D_p(M)$ 是序列 $n^{-1}/p$（$1\le n\le M$）的归一化 discrepancy。证明先取 $[M,2M]$ 中的 $(2M)^{1/A_0}$-光滑数集合 $\mathcal S$，令 $m=\operatorname{lcm}(\mathcal S)$，再选素数 $p\equiv-1\pmod m$。于是每个 $z\in\mathcal S$ 的标准逆元代表恰好是 $(p+1)/z$，由这份共同模数选择产生聚集；正文在长度 $2M$ 上完成论证。
+
+它反驳的是把所有短逆元区间一律当作均匀分布的外推。它没有把模数限制为 Fibonacci 数，也没有保留实际同价参考 $C_s$、低亏损筛选或 $N=1+F_rk$ 的窗口。因此这是自由选模数下的障碍实例，不能登记为原 FIB 候选的反例，更不能登记为 Robin 反例。其长度范围也不同于前一节已经有非平凡消去的次幂端点，两个结论不矛盾。
+
+## 近期模双曲线与光滑相邻数：共同来源条件
+
+Tsz Ho Chan, *Close Points on a Modular Hyperbola*, INTEGERS 26A (2026), #A5，发表版本 2026-09-28。
+
+- 原文：https://math.colgate.edu/~integers/aap5/aap5.pdf
+- 精确位置：Theorem 2，第3页；§4，第5—7页。
+
+令 $p>2$ 为素数、$(c,p)=1$，$\mathcal M$ 是具有正下密度 $\delta$ 的乘法封闭正整数集。该定理对每个固定 $\epsilon>0$ 给常数 $C_{\delta,\epsilon}$，保证模双曲线 $xy\equiv c\pmod p$ 上存在两个点 $(x,y)$、$(x+h,y+k)$，且
+
+$$
+h,k\in\mathcal M\cap
+\left[1,C_{\delta,\epsilon}p^{1/4}
+\exp\bigl((\log p)^{1/2+\epsilon}\bigr)\right].
+$$
+
+基点 $(x,y)$ 是存在性结论的一部分，没有固定为实际低亏损除数及其余因子；$h,k$ 是两点之间的增量。定理的方向是存在两点，而当前目标是排除指定的危险共同实现或支付其预算。固定光滑界的光滑数集合虽乘法封闭，下密度却为0；让光滑界随 $p$ 增长也不能忽略所需密度与常数的一致性。对数光滑稀疏核心不由这里的正下密度假设直接覆盖。仅出现同一模双曲线方程，不足以运输结论。
+
+Erik Mulder, Bruno Sterner, Wessel van Woerden, *Large smooth twins from short lattice vectors*, arXiv:2509.17699v3，版本 2026-09-17。
+
+- 原文：https://arxiv.org/pdf/2509.17699v3
+- 精确位置：Theorem 1.3，第2页；Heuristic 3.1 及其应用，第5—6页。
+
+论文给出搜索连续 $B$-光滑整数的短格向量算法；Theorem 1.3 的极值渐近明确以 Heuristic 3.1 为前提，不是无条件的相邻光滑数排除界。实际来源 $N=1+Vk$ 没有要求 $N$ 与 $N-1$ 同时 $B$-光滑，且素指标 Fibonacci 模数与低亏损权重也是额外条件。可以复用其候选搜索工具时，仍须另作这些实际来源检查；启发式极值和有限搜索不能支付 §233.5 的统一完整预算。
+
 ## Munsch–Shparlinski–Yau：另一个光滑度范围的存在下界
 
 Marc Munsch, Igor E. Shparlinski, Kam Hung Yau,
