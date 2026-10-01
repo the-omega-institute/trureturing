@@ -8,6 +8,7 @@
 
 import D5.S3.Analytic.GoldenEulerBetaZeckendorf
 import D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd
+import Mathlib.Data.Nat.Log
 import Mathlib.Algebra.Order.Round
 import Mathlib.RingTheory.Coprime.Lemmas
 
@@ -246,9 +247,15 @@ private theorem bounded_coefficient_pair (H : Nat) (hH : 2 ≤ H) :
     have hc := congrArg (fun v : Int => (v : ZMod H)) hi
     simpa [a, Int.cast_add, Int.cast_mul] using hc
 
-/-! The remainder of the module is the literal-window bridge for the preceding
-integer construction.  It keeps the old Diophantine argument private: the
-public result below consumes it only through the actual window language. -/
+/-- The first Fibonacci index whose value bounds the integer construction. -/
+def lengthIndex (H : Nat) : Nat := Nat.find (show
+    ∃ m, H * (Nat.fib (firstIndex H) + 1) ≤ Nat.fib m from by
+  refine ⟨H * (Nat.fib (firstIndex H) + 1) + 5, ?_⟩
+  exact (by omega : H * (Nat.fib (firstIndex H) + 1) ≤
+    H * (Nat.fib (firstIndex H) + 1) + 5).trans (Nat.le_fib_self (by omega)))
+
+/-- Ceiling of one third of the first index bounding the construction. -/
+def lengthBound (H : Nat) : Nat := (lengthIndex H + 2) / 3
 
 def windowCoefficients (H : Nat) (w : List Window) : ZMod H × ZMod H :=
   (value 1 0 (flatten w), value 0 1 (flatten w))
@@ -258,10 +265,13 @@ def firstTwoZero (w : List Window) : Prop :=
 
 def Covers (H L : Nat) : Prop :=
   ∀ A B : ZMod H, ∃ w : List Window,
-    w.length ≤ L ∧ firstTwoZero w ∧ Success w ∧
+    w.length ≤ L ∧ w ≠ [] ∧ Success w ∧
       windowCoefficients H w = (A, B)
 
-def Covers00 (H L : Nat) : Prop := Covers H L
+def Covers00 (H L : Nat) : Prop :=
+  ∀ A B : ZMod H, ∃ w : List Window,
+    w.length ≤ L ∧ w ≠ [] ∧ firstTwoZero w ∧ Success w ∧
+      windowCoefficients H w = (A, B)
 
 noncomputable def D (H : Nat) : Nat :=
   sInf {L : Nat | Covers H L}
@@ -385,24 +395,24 @@ private theorem supportBits_legal (n t : Nat) (hn : 0 < n) :
       zeckendorf_no_adj n hn (i + 2) htrue
 
 set_option maxHeartbeats 800000 in
-private theorem fib_value {H : Nat} (n k : Nat) (u v : ZMod H)
+private theorem fib_value {R : Type*} [CommSemiring R] (n k : Nat) (u v : R)
     (f : Fin n → Bool) :
-    value ((Nat.fib k : ZMod H) * u + (Nat.fib (k + 1) : ZMod H) * v)
-        ((Nat.fib (k + 1) : ZMod H) * u + (Nat.fib (k + 2) : ZMod H) * v)
+    value ((Nat.fib k : R) * u + (Nat.fib (k + 1) : R) * v)
+        ((Nat.fib (k + 1) : R) * u + (Nat.fib (k + 2) : R) * v)
         (List.ofFn f) =
       ∑ i, if f i then
-        (Nat.fib (k + i.val) : ZMod H) * u +
-          (Nat.fib (k + i.val + 1) : ZMod H) * v else 0 := by
+        (Nat.fib (k + i.val) : R) * u +
+          (Nat.fib (k + i.val + 1) : R) * v else 0 := by
   induction n generalizing k with
   | zero => simp [value]
   | succ n ih =>
       rw [List.ofFn_succ, value, Fin.sum_univ_succ]
       have hnext :
-          ((Nat.fib k : ZMod H) * u + (Nat.fib (k + 1) : ZMod H) * v) +
-              ((Nat.fib (k + 1) : ZMod H) * u +
-                (Nat.fib (k + 2) : ZMod H) * v) =
-            (Nat.fib (k + 2) : ZMod H) * u +
-              (Nat.fib (k + 3) : ZMod H) * v := by
+          ((Nat.fib k : R) * u + (Nat.fib (k + 1) : R) * v) +
+              ((Nat.fib (k + 1) : R) * u +
+                (Nat.fib (k + 2) : R) * v) =
+            (Nat.fib (k + 2) : R) * u +
+              (Nat.fib (k + 3) : R) * v := by
         have hF := Nat.fib_add_two (n := k)
         have hG : Nat.fib (k + 3) = Nat.fib (k + 1) + Nat.fib (k + 2) := by
           simpa only [Nat.add_assoc] using Nat.fib_add_two (n := k + 1)
@@ -410,14 +420,14 @@ private theorem fib_value {H : Nat} (n k : Nat) (u v : ZMod H)
         ring
       have hi := ih (k + 1) (Fin.tail f)
       have hi' :
-          value ((Nat.fib (k + 1) : ZMod H) * u +
-              (Nat.fib (k + 2) : ZMod H) * v)
-              ((Nat.fib (k + 2) : ZMod H) * u +
-                (Nat.fib (k + 3) : ZMod H) * v)
+          value ((Nat.fib (k + 1) : R) * u +
+              (Nat.fib (k + 2) : R) * v)
+              ((Nat.fib (k + 2) : R) * u +
+                (Nat.fib (k + 3) : R) * v)
               (List.ofFn (fun i => f i.succ)) =
             ∑ i : Fin n, if f i.succ = true then
-              (Nat.fib (k + 1 + i.val) : ZMod H) * u +
-                (Nat.fib (k + 1 + i.val + 1) : ZMod H) * v else 0 := by
+              (Nat.fib (k + 1 + i.val) : R) * u +
+                (Nat.fib (k + 1 + i.val + 1) : R) * v else 0 := by
         convert hi using 1 <;>
           simp [Fin.tail_def, show k + 1 + 1 = k + 2 by omega,
             show k + 1 + 2 = k + 3 by omega] <;>
