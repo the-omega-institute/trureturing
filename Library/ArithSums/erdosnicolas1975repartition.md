@@ -755,12 +755,32 @@ when $e=0$, the new minimum ranges over a subset of the old one.
 Put $B_r=T_s(N)-R_s(v)-L_r$. A negative $B_r$ is already paid.
 Otherwise, in the negative remaining-sign branch, $m_s^{[r]}(V,v)>B_r$
 is sufficient. The same cutoff $P_r=\max\{s,e^{B_r+1}\}$ applies to
-its cheap-prime test. Further actual probes may discard primes with
-even $v_p(u_0)$, including zero: a negative remaining sign must be
-carried by an odd exponent. It is therefore also sufficient that every
-eligible $p\le P_r$ with $b_s(p)\le B_r$ and odd $v_p(u_0)$ has
-$\chi_V(p)=1$. No efficiency or uniform source correlation is asserted
-for this finite test.
+this unrestricted cheap-prime test.
+
+For pruning by the actual source, define a different minimum, only in
+the negative remaining-sign branch:
+
+$$
+m_{s,\mathrm{act}}^{[r]}(N)=
+\min_{\substack{p\nmid vrV,\ v_p(u_0)\ \mathrm{odd}\\
+\chi_V(p)=-1}}b_s(p).
+$$
+
+The negative endpoint supplies a nonempty subset of the finite actual
+prime support, so this minimum exists and is at least $m_s^{[r]}(V,v)$.
+The same disjoint-cost argument gives
+
+$$
+D_s(N)\ge R_s(v)+L_r+m_{s,\mathrm{act}}^{[r]}(N).
+$$
+
+With $B_r\ge0$, actual probes may discard even $v_p(u_0)$, including
+zero. If every eligible $p\le P_r$ with $b_s(p)\le B_r$ and odd
+$v_p(u_0)$ has $\chi_V(p)=1$, the finite cutoff gives
+$m_{s,\mathrm{act}}^{[r]}(N)>B_r$ and hence strict Robin for this host.
+This need not imply $m_s^{[r]}(V,v)>B_r$: a cheap negative prime absent
+from $u_0$ can keep that unrestricted minimum small. No efficiency or
+uniform source correlation is asserted for the actual-support test.
 
 When $y\ge6$ and $0<h_0\le1/3$, the previously established capacity
 bound still applies to all additions. It can be combined with the new
