@@ -98,12 +98,12 @@ theorem is `result : claim`. The public definitions are the spectral
 idempotent `idempotent`, the average mixing matrix `avgMixing` and
 `claim`.
 
-- Module statement identity: `sha256:2646b397c29645dbb9ab929f610a47d186a08d72d276eb5a0fe71d16ef0792bf`.
+- Module statement identity: `sha256:f3ad8da0a10efb8e839077b995e914932eb32b242fa4bb9c270995b8f23c9110`.
 - `result`: `sha256:543de5ce995d1f90520172a150daffb22fe40d8024fbab20b31098cb15fd7dd0`.
 - `claim`: `sha256:6886baf6f8f18b6815d1b15135636c68dd967e4517343a3140921b3dd9f47e86`.
-- `avgMixing`: `sha256:98c3965d7783ac6be598e472376aa5e002c4ef7cd0b7075eecd45dfc5a370868`.
-- `idempotent`: `sha256:a5f58085409610dcf0c84c7c28485ea651fa2ede7e3bf36bbbc99229d9ff7d85`.
-- Freeze event: `sha256:19f56b2e1791c30880d0371cbf3a95ae5be0b7e95978a17e6ae783982e5f2e57`.
+- `avgMixing`: `sha256:7611a60f0f8b9b05283e0dfe4e1ecda2ba69c0aa90a6b731bbba19c013596049`.
+- `idempotent`: `sha256:64ed2f0892f8f978123e3bf15ad51c0d5ff7dc5b38413a148671ba2d3f512d5a`.
+- Freeze event: `sha256:3e9439b1a900462ce82edb57e9cf2d0f84b28e0df68e6afbb321cbd1e31c03e6`.
 
 The proof uses only `propext`, `Classical.choice` and `Quot.sound`, with
 no `native_decide`, `sorry` or new axiom. The private theorem

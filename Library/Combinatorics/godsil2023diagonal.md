@@ -51,3 +51,13 @@ Y. Xu and H. Zhan, *Laziness of Quantum Walks on Graphs*,
 arXiv:2608.20739 (2026), restate the conjecture as: "It is conjectured in
 [Godsil2023] that $K_n$ maximizes $\operatorname{tr}(X)$ relative to the
 adjacency matrix over all connected graphs on $n$ vertices."
+
+## Verified locator
+
+- DOI: https://doi.org/10.48550/arXiv.1910.02039 (the arXiv record; the
+  journal version, Australas. J. Combin. 86(3) (2023) 373–386, states the
+  conjecture as Conjecture 9.1, and its text was read by a scout subagent).
+- URL: https://arxiv.org/abs/1910.02039v1 (source `main.tex` retrieved
+  2026-10-01): the spectral form of the average mixing matrix (Section 2), the
+  trace at the complete graph and Corollary 6.3 (Section 6), Table 2
+  (Section 8) and the conjecture (Section 9).
