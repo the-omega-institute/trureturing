@@ -8,7 +8,7 @@ url: https://arxiv.org/abs/1605.08273v14
 claim: The v14 preprint claims an RH proof by combining Robin and Lagarias criteria with odd integer class-number sets; its key derivative-transfer proposition is false, so the claimed proof is not established.
 strata_touched: []
 license: citation-only
-triage: audit
+triage: anchor
 ---
 
 # Robin/Lagarias proof claim and its derivative-transfer gap
