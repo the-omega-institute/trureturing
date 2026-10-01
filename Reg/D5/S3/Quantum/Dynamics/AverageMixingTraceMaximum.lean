@@ -30,25 +30,6 @@ abbrev arena : Arena where
     (O.readout () n G).Connected →
       (avgMixing G).trace ≤ (avgMixing (⊤ : SimpleGraph (Fin n))).trace
 
-theorem rows_orthonormal {n : ℕ} {A : Matrix (Fin n) (Fin n) ℝ} (hA : A.IsHermitian)
-    (a b : Fin n) :
-    ∑ i, hA.eigenvectorBasis i a * hA.eigenvectorBasis i b = if a = b then 1 else 0 := by
-  have h := congrFun (congrFun (mem_unitaryGroup_iff.mp hA.eigenvectorUnitary.2) a) b
-  simpa [mul_apply, star_apply, one_apply] using h
-
-theorem col_norm {n : ℕ} {A : Matrix (Fin n) (Fin n) ℝ} (hA : A.IsHermitian) (i : Fin n) :
-    ∑ c, hA.eigenvectorBasis i c * hA.eigenvectorBasis i c = 1 := by
-  have h := congrFun (congrFun (mem_unitaryGroup_iff'.mp hA.eigenvectorUnitary.2) i) i
-  simpa [mul_apply, star_apply, one_apply] using h
-
-/-- The trace of `avgMixing G`, written through any Hermitian witness of `A(G)`. -/
-theorem trace_eq {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
-    (hA : (G.adjMatrix ℝ).IsHermitian) :
-    (avgMixing G).trace = ∑ a, ∑ θ ∈ univ.image hA.eigenvalues,
-      (∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a) ^ 2 := by
-  simp only [avgMixing, idempotent, trace, diag_apply, Matrix.sum_apply, hadamard_apply,
-    vecMulVec_apply, sq]
-
 theorem trace_bot : (avgMixing (⊥ : SimpleGraph (Fin 2))).trace = 2 := by
   have hA : ((⊥ : SimpleGraph (Fin 2)).adjMatrix ℝ).IsHermitian :=
     isHermitian_iff_isSymm.mpr (⊥ : SimpleGraph (Fin 2)).isSymm_adjMatrix
@@ -60,8 +41,13 @@ theorem trace_bot : (avgMixing (⊥ : SimpleGraph (Fin 2))).trace = 2 := by
       hA.eigenvectorBasis i a * hA.eigenvectorBasis i a = 1 := by
     intro a
     rw [filter_true_of_mem fun i _ => by rw [h0]; rfl]
-    simpa using rows_orthonormal hA a a
-  rw [trace_eq _ hA, himg]
+    have h := congrFun (congrFun (mem_unitaryGroup_iff.mp hA.eigenvectorUnitary.2) a) a
+    simpa [mul_apply, star_apply, one_apply] using h
+  have htr : (avgMixing (⊥ : SimpleGraph (Fin 2))).trace = ∑ a, ∑ θ ∈ univ.image hA.eigenvalues,
+      (∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a) ^ 2 := by
+    simp only [avgMixing, idempotent, trace, diag_apply, Matrix.sum_apply, hadamard_apply,
+      vecMulVec_apply, sq]
+  rw [htr, himg]
   simp only [sum_singleton, hrow]
   norm_num
 
@@ -79,7 +65,9 @@ theorem trace_top_le : (avgMixing (⊤ : SimpleGraph (Fin 2))).trace ≤ 1 := by
     have e1 : hA.eigenvectorBasis i 0 = hA.eigenvalues i * hA.eigenvectorBasis i 1 := by
       simpa [Matrix.mulVec, dotProduct, Fin.sum_univ_two, SimpleGraph.adjMatrix_apply]
         using congrFun heq 1
-    have hn := col_norm hA i
+    have hn : ∑ c, hA.eigenvectorBasis i c * hA.eigenvectorBasis i c = 1 := by
+      have h := congrFun (congrFun (mem_unitaryGroup_iff'.mp hA.eigenvectorUnitary.2) i) i
+      simpa [mul_apply, star_apply, one_apply] using h
     rw [Fin.sum_univ_two] at hn
     generalize hA.eigenvectorBasis i 0 = x at e0 e1 hn ⊢
     generalize hA.eigenvectorBasis i 1 = y at e0 e1 hn ⊢
@@ -136,8 +124,13 @@ theorem trace_top_le : (avgMixing (⊤ : SimpleGraph (Fin 2))).trace ≤ 1 := by
       hA.eigenvectorBasis i a * hA.eigenvectorBasis i a = 1 := by
     intro a
     rw [sum_fiberwise_of_maps_to (fun i _ => mem_image_of_mem _ (mem_univ i))]
-    simpa using rows_orthonormal hA a a
-  rw [trace_eq _ hA]
+    have h := congrFun (congrFun (mem_unitaryGroup_iff.mp hA.eigenvectorUnitary.2) a) a
+    simpa [mul_apply, star_apply, one_apply] using h
+  have htr : (avgMixing (⊤ : SimpleGraph (Fin 2))).trace = ∑ a, ∑ θ ∈ univ.image hA.eigenvalues,
+      (∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a) ^ 2 := by
+    simp only [avgMixing, idempotent, trace, diag_apply, Matrix.sum_apply, hadamard_apply,
+      vecMulVec_apply, sq]
+  rw [htr]
   calc ∑ a, ∑ θ ∈ univ.image hA.eigenvalues,
         (∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a) ^ 2
       ≤ ∑ a : Fin 2, ∑ θ ∈ univ.image hA.eigenvalues, (1 / 2 : ℝ) *

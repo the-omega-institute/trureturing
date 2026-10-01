@@ -8,8 +8,7 @@
 
 /-
 proof_shape: result: content; private vertex_bound: content; private simplex_bound: content;
-  private complete_eigen: content; private complete_diag: content; the other private
-  declarations: bind-only
+  private complete_eigen: content; private complete_diag: content
 escape_witness: vertex_bound shows (E_θ)_aa ≤ 1 - 1/n at every vertex a with a neighbour,
   by Cauchy–Schwarz on the eigen-equation of E_θ e_a at a and at one neighbour of a;
   complete_eigen and complete_diag evaluate the diagonal of the average mixing matrix of K_n.
@@ -30,25 +29,22 @@ namespace D5.S3.Quantum.Dynamics.AverageMixingTraceMaximum
 
 variable {n : ℕ}
 
-private theorem adj_isHermitian (G : SimpleGraph (Fin n)) [DecidableRel G.Adj] :
-    (G.adjMatrix ℝ).IsHermitian :=
-  isHermitian_iff_isSymm.mpr G.isSymm_adjMatrix
-
 /-- The spectral idempotent `E_θ` of the adjacency matrix `A(G)`: the sum of `v vᵀ` over the
 vectors `v` of an orthonormal eigenbasis of `A(G)` with eigenvalue `θ`. It is the orthogonal
 projection onto the `θ`-eigenspace, whatever the orthonormal eigenbasis, and it is zero when `θ`
 is not an eigenvalue. -/
 noncomputable def idempotent (G : SimpleGraph (Fin n)) [DecidableRel G.Adj] (θ : ℝ) :
     Matrix (Fin n) (Fin n) ℝ :=
-  ∑ i with (adj_isHermitian G).eigenvalues i = θ,
-    vecMulVec ⇑((adj_isHermitian G).eigenvectorBasis i) ⇑((adj_isHermitian G).eigenvectorBasis i)
+  let hA : (G.adjMatrix ℝ).IsHermitian := isHermitian_iff_isSymm.mpr G.isSymm_adjMatrix
+  ∑ i with hA.eigenvalues i = θ, vecMulVec ⇑(hA.eigenvectorBasis i) ⇑(hA.eigenvectorBasis i)
 
 /-- The average mixing matrix `M̂_A = Σ_θ E_θ ∘ E_θ` of the continuous-time quantum walk with
 Hamiltonian `A(G)`, the sum running over the distinct eigenvalues `θ` of `A(G)` and `∘` being
 the Schur (entrywise) product. -/
 noncomputable def avgMixing (G : SimpleGraph (Fin n)) [DecidableRel G.Adj] :
     Matrix (Fin n) (Fin n) ℝ :=
-  ∑ θ ∈ univ.image (adj_isHermitian G).eigenvalues, idempotent G θ ⊙ idempotent G θ
+  let hA : (G.adjMatrix ℝ).IsHermitian := isHermitian_iff_isSymm.mpr G.isSymm_adjMatrix
+  ∑ θ ∈ univ.image hA.eigenvalues, idempotent G θ ⊙ idempotent G θ
 
 /-- Conjecture 9.1 of Godsil, Guo and Sobchuk (arXiv:1910.02039), read over connected graphs:
 for every `n` and every connected graph `G` on `n` vertices, the trace of the average mixing
@@ -57,80 +53,6 @@ def claim : Prop :=
   ∀ (n : ℕ) (G : SimpleGraph (Fin n)) [DecidableRel G.Adj], G.Connected →
     (avgMixing G).trace ≤ (avgMixing (⊤ : SimpleGraph (Fin n))).trace
 
-section Spectral
-
-variable {A : Matrix (Fin n) (Fin n) ℝ} (hA : A.IsHermitian)
-include hA
-
-private theorem rows_orthonormal (a b : Fin n) :
-    ∑ i, hA.eigenvectorBasis i a * hA.eigenvectorBasis i b = if a = b then 1 else 0 := by
-  have h := congrFun (congrFun (mem_unitaryGroup_iff.mp hA.eigenvectorUnitary.2) a) b
-  simpa [mul_apply, star_apply, one_apply] using h
-
-private theorem cols_orthonormal (i j : Fin n) :
-    ∑ c, hA.eigenvectorBasis i c * hA.eigenvectorBasis j c = if i = j then 1 else 0 := by
-  have h := congrFun (congrFun (mem_unitaryGroup_iff'.mp hA.eigenvectorUnitary.2) i) j
-  simpa [mul_apply, star_apply, one_apply] using h
-
-private noncomputable def proj (θ : ℝ) : Matrix (Fin n) (Fin n) ℝ :=
-  ∑ i with hA.eigenvalues i = θ, vecMulVec ⇑(hA.eigenvectorBasis i) ⇑(hA.eigenvectorBasis i)
-
-private theorem proj_apply (θ : ℝ) (b c : Fin n) :
-    proj hA θ b c =
-      ∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i b * hA.eigenvectorBasis i c := by
-  simp [proj, Matrix.sum_apply, vecMulVec_apply]
-
-private theorem proj_diag_nonneg (θ : ℝ) (a : Fin n) : 0 ≤ proj hA θ a a := by
-  rw [proj_apply]
-  exact sum_nonneg fun i _ => mul_self_nonneg _
-
-private theorem sum_proj_diag (a : Fin n) :
-    ∑ θ ∈ univ.image hA.eigenvalues, proj hA θ a a = 1 := by
-  simp_rw [proj_apply]
-  rw [sum_fiberwise_of_maps_to (fun i _ => mem_image_of_mem _ (mem_univ i))]
-  simpa using rows_orthonormal hA a a
-
-private theorem proj_eq_zero (θ : ℝ) (hθ : θ ∉ univ.image hA.eigenvalues) (a : Fin n) :
-    proj hA θ a a = 0 := by
-  rw [proj_apply]
-  refine sum_eq_zero fun i hi => ?_
-  exact absurd ((mem_filter.mp hi).2 ▸ mem_image_of_mem _ (mem_univ i)) hθ
-
-private theorem mulVec_proj_col (θ : ℝ) (a : Fin n) :
-    A *ᵥ (fun c => proj hA θ c a) = θ • fun c => proj hA θ c a := by
-  have hu : (fun c => proj hA θ c a) =
-      ∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a • ⇑(hA.eigenvectorBasis i) := by
-    ext c
-    rw [proj_apply, Finset.sum_apply]
-    refine sum_congr rfl fun i _ => ?_
-    simp [mul_comm]
-  rw [hu, mulVec_sum, Finset.smul_sum]
-  refine sum_congr rfl fun i hi => ?_
-  rw [mulVec_smul, hA.mulVec_eigenvectorBasis, (mem_filter.mp hi).2, smul_comm]
-
-private theorem sum_sq_proj_col (θ : ℝ) (a : Fin n) :
-    ∑ c, proj hA θ c a ^ 2 = proj hA θ a a := by
-  simp_rw [proj_apply]
-  set S := (univ : Finset (Fin n)).filter (fun i => hA.eigenvalues i = θ)
-  calc ∑ c, (∑ i ∈ S, hA.eigenvectorBasis i c * hA.eigenvectorBasis i a) ^ 2
-      = ∑ c, ∑ i ∈ S, ∑ j ∈ S, (hA.eigenvectorBasis i a * hA.eigenvectorBasis j a) *
-          (hA.eigenvectorBasis i c * hA.eigenvectorBasis j c) := by
-        refine sum_congr rfl fun c _ => ?_
-        rw [sq, sum_mul_sum]
-        exact sum_congr rfl fun i _ => sum_congr rfl fun j _ => by ring
-    _ = ∑ i ∈ S, ∑ j ∈ S, (hA.eigenvectorBasis i a * hA.eigenvectorBasis j a) *
-          ∑ c, hA.eigenvectorBasis i c * hA.eigenvectorBasis j c := by
-        rw [sum_comm]
-        refine sum_congr rfl fun i _ => ?_
-        rw [sum_comm]
-        exact sum_congr rfl fun j _ => by rw [mul_sum]
-    _ = ∑ i ∈ S, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a := by
-        refine sum_congr rfl fun i hi => ?_
-        simp_rw [cols_orthonormal hA, mul_ite, mul_one, mul_zero]
-        rw [sum_ite_eq S i]
-        simp [hi]
-
-end Spectral
 
 /-- The vertex bound: if `a` has a neighbour, `A u = θ u`, and `‖u‖² = u a`, then
 `n · u a ≤ n - 1`. Applied to `u = E_θ e_a` it gives `(E_θ)_aa ≤ 1 - 1/n`. -/
@@ -270,58 +192,14 @@ private theorem simplex_bound (I : Finset ℝ) (P : ℝ → ℝ) (hn : (2 : ℝ)
     nlinarith [mul_le_mul_of_nonneg_left hsq2 (sq_nonneg (n : ℝ)),
       mul_lt_mul_of_pos_left hsmall hn0]
 
-/-- Every diagonal entry of an average mixing matrix is at most `1`. -/
-private theorem diag_le_one {A : Matrix (Fin n) (Fin n) ℝ} (hA : A.IsHermitian) (a : Fin n) :
-    ∑ θ ∈ univ.image hA.eigenvalues, proj hA θ a a ^ 2 ≤ 1 := by
-  calc ∑ θ ∈ univ.image hA.eigenvalues, proj hA θ a a ^ 2
-      ≤ ∑ θ ∈ univ.image hA.eigenvalues, proj hA θ a a := by
-        refine sum_le_sum fun θ hθ => ?_
-        have h0 := proj_diag_nonneg hA θ a
-        have h1 : proj hA θ a a ≤ 1 := by
-          rw [← sum_proj_diag hA a]
-          exact single_le_sum (fun x _ => proj_diag_nonneg hA x a) hθ
-        nlinarith
-    _ = 1 := sum_proj_diag hA a
-
-private theorem trace_avgMixing (G : SimpleGraph (Fin n)) [DecidableRel G.Adj] :
-    (avgMixing G).trace = ∑ a, ∑ θ ∈ univ.image (adj_isHermitian G).eigenvalues,
-      proj (adj_isHermitian G) θ a a ^ 2 := by
-  simp only [trace, diag_apply, avgMixing, Matrix.sum_apply, hadamard_apply, sq]
-  rfl
-
-/-- On a connected graph every diagonal entry of `M̂_A` is at most `1 - 2/n + 2/n²`. -/
-private theorem diag_bound_connected (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
-    (hG : G.Connected) (a : Fin n) :
-    (n : ℝ) ^ 2 * ∑ θ ∈ univ.image (adj_isHermitian G).eigenvalues,
-      proj (adj_isHermitian G) θ a a ^ 2 ≤ n ^ 2 - 2 * n + 2 := by
-  have hA := adj_isHermitian G
-  rcases Nat.lt_or_ge n 2 with h1 | h2
-  · have hn1 : n = 1 := by have := a.pos; omega
-    subst hn1
-    have := diag_le_one (adj_isHermitian G) a
-    rw [Nat.cast_one]
-    linarith
-  · have : Nontrivial (Fin n) := Fin.nontrivial_iff_two_le.mpr h2
-    obtain ⟨b, hb⟩ := exists_ne a
-    obtain ⟨w⟩ := hG.preconnected a b
-    cases w with
-    | nil => exact absurd rfl hb
-    | cons hadj _ =>
-      refine simplex_bound _ _ (by exact_mod_cast h2) (fun θ _ => proj_diag_nonneg _ θ a)
-        (fun θ _ => ?_) (sum_proj_diag _ a)
-      exact vertex_bound G (fun c => proj (adj_isHermitian G) θ c a) θ hadj
-        (fun c => by
-          have := congrFun (mulVec_proj_col (adj_isHermitian G) θ a) c
-          simpa [SimpleGraph.adjMatrix_mulVec_apply] using this)
-        (sum_sq_proj_col _ θ a)
 
 /-- On `K_n` with `n ≥ 2`, every eigenvector with eigenvalue other than `-1` is constant with
 eigenvalue `n - 1`. -/
 private theorem complete_eigen (hA : ((⊤ : SimpleGraph (Fin n)).adjMatrix ℝ).IsHermitian)
-    (hn : 2 ≤ n) (i : Fin n) (hi : hA.eigenvalues i ≠ -1) :
+    (hn : 2 ≤ n) (i : Fin n) (hi : hA.eigenvalues i ≠ -1)
+    (hno : ∑ c, hA.eigenvectorBasis i c * hA.eigenvectorBasis i c = 1) :
     hA.eigenvalues i = n - 1 ∧ ∀ c, hA.eigenvectorBasis i c ^ 2 = 1 / n := by
   have heq := hA.mulVec_eigenvectorBasis i
-  have hno := cols_orthonormal hA i i
   generalize hA.eigenvalues i = l at heq hi ⊢
   generalize ⇑(hA.eigenvectorBasis i) = v at heq hno ⊢
   have hrow : ∀ c, ∑ d, v d = (l + 1) * v c := by
@@ -335,7 +213,7 @@ private theorem complete_eigen (hA : ((⊤ : SimpleGraph (Fin n)).adjMatrix ℝ)
   obtain ⟨κ, hc⟩ : ∃ κ, ∀ c, v c = κ :=
     ⟨(∑ d, v d) / (l + 1), fun c => by rw [eq_div_iff hl, hrow c]; ring⟩
   have hnorm : (n : ℝ) * κ ^ 2 = 1 := by
-    simp only [hc, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul, ite_true] at hno
+    simp only [hc, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul] at hno
     linear_combination hno
   have hκ : κ ≠ 0 := by
     rintro rfl
@@ -350,17 +228,27 @@ private theorem complete_eigen (hA : ((⊤ : SimpleGraph (Fin n)).adjMatrix ℝ)
   rw [hc c, eq_div_iff hn0]
   linarith
 
-/-- On `K_n`, every diagonal entry of `M̂_A` is `1 - 2/n + 2/n²`; only `≥` is used. -/
+/-- On `K_n`, every diagonal entry of `M̂_A` is `1 - 2/n + 2/n²`; only `≥` is used. The
+hypotheses are the unit norms of the row of the eigenbasis matrix at `a` and of its columns. -/
 private theorem complete_diag (hA : ((⊤ : SimpleGraph (Fin n)).adjMatrix ℝ).IsHermitian)
-    (hn : 1 ≤ n) (a : Fin n) :
-    (n : ℝ) ^ 2 - 2 * n + 2 ≤ (n : ℝ) ^ 2 * ∑ θ ∈ univ.image hA.eigenvalues, proj hA θ a a ^ 2 := by
-  have hnn : 0 ≤ ∑ θ ∈ univ.image hA.eigenvalues, proj hA θ a a ^ 2 :=
+    (hn : 1 ≤ n) (a : Fin n)
+    (hrow : ∑ i, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a = 1)
+    (hcol : ∀ i, ∑ c, hA.eigenvectorBasis i c * hA.eigenvectorBasis i c = 1) :
+    (n : ℝ) ^ 2 - 2 * n + 2 ≤ (n : ℝ) ^ 2 * ∑ θ ∈ univ.image hA.eigenvalues,
+      (∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a) ^ 2 := by
+  have hsum : ∑ θ ∈ univ.image hA.eigenvalues,
+      ∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a = 1 := by
+    rw [sum_fiberwise_of_maps_to (fun i _ => mem_image_of_mem _ (mem_univ i))]
+    exact hrow
+  have hnn : 0 ≤ ∑ θ ∈ univ.image hA.eigenvalues,
+      (∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a) ^ 2 :=
     sum_nonneg fun _ _ => sq_nonneg _
   rcases Nat.lt_or_ge n 2 with h1 | h2
   · have hn1 : (n : ℝ) = 1 := by exact_mod_cast (show n = 1 by omega)
     have hcs := sq_sum_le_card_mul_sum_sq (s := univ.image hA.eigenvalues)
-      (f := fun θ => proj hA θ a a)
-    rw [sum_proj_diag hA a] at hcs
+      (f := fun θ => ∑ i with hA.eigenvalues i = θ,
+        hA.eigenvectorBasis i a * hA.eigenvectorBasis i a)
+    rw [hsum] at hcs
     have hcard : ((univ.image hA.eigenvalues).card : ℝ) ≤ 1 := by
       have : (univ.image hA.eigenvalues).card ≤ n := card_image_le.trans (by simp)
       rw [← hn1]
@@ -375,11 +263,12 @@ private theorem complete_diag (hA : ((⊤ : SimpleGraph (Fin n)).adjMatrix ℝ).
       · simp only [mem_insert, mem_singleton]
         exact Or.inr h
       · simp only [mem_insert, mem_singleton]
-        exact Or.inl (complete_eigen hA h2 i h).1
+        exact Or.inl (complete_eigen hA h2 i h (hcol i)).1
     have hne : (n : ℝ) - 1 ≠ -1 := by linarith
     have hzero : ∀ θ ∈ ({(n : ℝ) - 1, -1} : Finset ℝ), θ ∉ univ.image hA.eigenvalues →
-        proj hA θ a a = 0 :=
-      fun θ _ hθ => proj_eq_zero hA θ hθ a
+        ∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a = 0 :=
+      fun θ _ hθ => sum_eq_zero fun i hi =>
+        absurd ((mem_filter.mp hi).2 ▸ mem_image_of_mem _ (mem_univ i)) hθ
     -- the trace of `A(K_n)` is zero, so exactly one eigenvalue is `n - 1`
     have htr : ∑ i, hA.eigenvalues i = 0 := by
       have h := hA.trace_eq_sum_eigenvalues
@@ -395,7 +284,7 @@ private theorem complete_diag (hA : ((⊤ : SimpleGraph (Fin n)).adjMatrix ℝ).
             exact hne.symm
           rw [if_neg hne2, h]
           ring
-        · rw [if_pos (complete_eigen hA h2 i h).1, (complete_eigen hA h2 i h).1]
+        · rw [if_pos (complete_eigen hA h2 i h (hcol i)).1, (complete_eigen hA h2 i h (hcol i)).1]
           ring
       rw [sum_congr rfl fun i _ => hsplit i, sum_sub_distrib, ← mul_sum] at htr
       simp only [sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul, mul_one] at htr
@@ -404,29 +293,44 @@ private theorem complete_diag (hA : ((⊤ : SimpleGraph (Fin n)).adjMatrix ℝ).
       rcases mul_eq_zero.mp hprod with h | h
       · exact absurd h hn0.ne'
       · linarith
-    have hp1 : proj hA ((n : ℝ) - 1) a a = 1 / n := by
-      rw [proj_apply, sum_filter]
+    have hp1 : ∑ i with hA.eigenvalues i = (n : ℝ) - 1,
+        hA.eigenvectorBasis i a * hA.eigenvectorBasis i a = 1 / n := by
+      rw [sum_filter]
       have : ∀ i, (if hA.eigenvalues i = (n : ℝ) - 1 then
           hA.eigenvectorBasis i a * hA.eigenvectorBasis i a else 0) =
           (1 / n) * (if hA.eigenvalues i = (n : ℝ) - 1 then (1 : ℝ) else 0) := by
         intro i
         by_cases h : hA.eigenvalues i = (n : ℝ) - 1
         · rw [if_pos h, if_pos h, mul_one, ← sq]
-          exact (complete_eigen hA h2 i (by rw [h]; exact hne)).2 a
+          exact (complete_eigen hA h2 i (by rw [h]; exact hne) (hcol i)).2 a
         · rw [if_neg h, if_neg h, mul_zero]
       rw [sum_congr rfl fun i _ => this i, ← mul_sum, hK, mul_one]
-    have hsum1 : proj hA ((n : ℝ) - 1) a a + proj hA (-1) a a = 1 := by
-      have hp : ∑ θ ∈ ({(n : ℝ) - 1, -1} : Finset ℝ), proj hA θ a a =
-          proj hA ((n : ℝ) - 1) a a + proj hA (-1) a a := sum_pair hne
+    have hsum1 : (∑ i with hA.eigenvalues i = (n : ℝ) - 1,
+        hA.eigenvectorBasis i a * hA.eigenvectorBasis i a) +
+        ∑ i with hA.eigenvalues i = -1, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a = 1 := by
+      have hp : ∑ θ ∈ ({(n : ℝ) - 1, -1} : Finset ℝ),
+          ∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a =
+          (∑ i with hA.eigenvalues i = (n : ℝ) - 1,
+            hA.eigenvectorBasis i a * hA.eigenvectorBasis i a) +
+          ∑ i with hA.eigenvalues i = -1, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a :=
+        sum_pair hne
       rw [← hp, ← sum_subset hsub hzero]
-      exact sum_proj_diag hA a
-    have hsq : ∑ θ ∈ univ.image hA.eigenvalues, proj hA θ a a ^ 2 =
-        proj hA ((n : ℝ) - 1) a a ^ 2 + proj hA (-1) a a ^ 2 := by
-      have hp2 : ∑ θ ∈ ({(n : ℝ) - 1, -1} : Finset ℝ), proj hA θ a a ^ 2 =
-          proj hA ((n : ℝ) - 1) a a ^ 2 + proj hA (-1) a a ^ 2 := sum_pair hne
+      exact hsum
+    have hsq : ∑ θ ∈ univ.image hA.eigenvalues,
+        (∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a) ^ 2 =
+        (∑ i with hA.eigenvalues i = (n : ℝ) - 1,
+          hA.eigenvectorBasis i a * hA.eigenvectorBasis i a) ^ 2 +
+        (∑ i with hA.eigenvalues i = -1, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a) ^ 2 := by
+      have hp2 : ∑ θ ∈ ({(n : ℝ) - 1, -1} : Finset ℝ),
+          (∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a) ^ 2 =
+          (∑ i with hA.eigenvalues i = (n : ℝ) - 1,
+            hA.eigenvectorBasis i a * hA.eigenvectorBasis i a) ^ 2 +
+          (∑ i with hA.eigenvalues i = -1, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a) ^ 2 :=
+        sum_pair hne
       rw [← hp2]
       exact sum_subset hsub fun θ h hθ => by rw [hzero θ h hθ]; ring
-    have hm1 : proj hA (-1) a a = 1 - 1 / n := by linarith
+    have hm1 : ∑ i with hA.eigenvalues i = -1,
+        hA.eigenvectorBasis i a * hA.eigenvectorBasis i a = 1 - 1 / n := by linarith
     rw [hsq, hp1, hm1]
     have hval : (n : ℝ) ^ 2 * ((1 / n) ^ 2 + (1 - 1 / n) ^ 2) = n ^ 2 - 2 * n + 2 := by
       field_simp
@@ -435,21 +339,114 @@ private theorem complete_diag (hA : ((⊤ : SimpleGraph (Fin n)).adjMatrix ℝ).
 
 theorem result : claim := by
   intro n G _ hG
+  -- the rows and the columns of the matrix of an orthonormal eigenbasis are orthonormal
+  have rows : ∀ {A : Matrix (Fin n) (Fin n) ℝ} (hA : A.IsHermitian) (a : Fin n),
+      ∑ i, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a = 1 := by
+    intro A hA a
+    have h := congrFun (congrFun (mem_unitaryGroup_iff.mp hA.eigenvectorUnitary.2) a) a
+    simpa [mul_apply, star_apply, one_apply] using h
+  have cols : ∀ {A : Matrix (Fin n) (Fin n) ℝ} (hA : A.IsHermitian) (i j : Fin n),
+      ∑ c, hA.eigenvectorBasis i c * hA.eigenvectorBasis j c = if i = j then 1 else 0 := by
+    intro A hA i j
+    have h := congrFun (congrFun (mem_unitaryGroup_iff'.mp hA.eigenvectorUnitary.2) i) j
+    simpa [mul_apply, star_apply, one_apply] using h
+  -- the trace as the sum of the squared diagonal entries of the spectral idempotents
+  have htrace : ∀ (H : SimpleGraph (Fin n)) [DecidableRel H.Adj]
+      (hH : (H.adjMatrix ℝ).IsHermitian), (avgMixing H).trace = ∑ a, ∑ θ ∈ univ.image hH.eigenvalues,
+        (∑ i with hH.eigenvalues i = θ, hH.eigenvectorBasis i a * hH.eigenvectorBasis i a) ^ 2 := by
+    intro H _ hH
+    simp only [avgMixing, idempotent, trace, diag_apply, Matrix.sum_apply, hadamard_apply,
+      vecMulVec_apply, sq]
   have hpos : 0 < n := (hG.nonempty.some).pos
-  have hn : (0 : ℝ) < n := by exact_mod_cast hpos
+  have hA : (G.adjMatrix ℝ).IsHermitian := isHermitian_iff_isSymm.mpr G.isSymm_adjMatrix
+  -- every diagonal entry of `M̂_A(G)` is at most `1 - 2/n + 2/n²`
+  have hdiag : ∀ a, (n : ℝ) ^ 2 * ∑ θ ∈ univ.image hA.eigenvalues,
+      (∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a) ^ 2 ≤
+        n ^ 2 - 2 * n + 2 := by
+    intro a
+    have hsum : ∑ θ ∈ univ.image hA.eigenvalues,
+        ∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a = 1 := by
+      rw [sum_fiberwise_of_maps_to (fun i _ => mem_image_of_mem _ (mem_univ i))]
+      exact rows hA a
+    have hnonneg : ∀ θ, 0 ≤ ∑ i with hA.eigenvalues i = θ,
+        hA.eigenvectorBasis i a * hA.eigenvectorBasis i a :=
+      fun θ => sum_nonneg fun i _ => mul_self_nonneg _
+    rcases Nat.lt_or_ge n 2 with h1 | h2
+    · have hn1 : (n : ℝ) = 1 := by exact_mod_cast (show n = 1 by omega)
+      rw [hn1]
+      have hle : ∑ θ ∈ univ.image hA.eigenvalues,
+          (∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a) ^ 2
+            ≤ 1 := by
+        calc _ ≤ ∑ θ ∈ univ.image hA.eigenvalues,
+              ∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a := by
+              refine sum_le_sum fun θ hθ => ?_
+              have hle1 : ∑ i with hA.eigenvalues i = θ,
+                  hA.eigenvectorBasis i a * hA.eigenvectorBasis i a ≤ 1 := by
+                rw [← hsum]
+                exact single_le_sum (fun x _ => hnonneg x) hθ
+              nlinarith [hnonneg θ]
+          _ = 1 := hsum
+      linarith
+    · have : Nontrivial (Fin n) := Fin.nontrivial_iff_two_le.mpr h2
+      obtain ⟨b, hb⟩ := exists_ne a
+      obtain ⟨w⟩ := hG.preconnected a b
+      cases w with
+      | nil => exact absurd rfl hb
+      | cons hadj _ =>
+        refine simplex_bound _ _ (by exact_mod_cast h2) (fun θ _ => hnonneg θ) (fun θ _ => ?_) hsum
+        -- the column `u = E_θ e_a` satisfies `A u = θ u` and `‖u‖² = u a`
+        have hvec : (fun c => ∑ i with hA.eigenvalues i = θ,
+            hA.eigenvectorBasis i c * hA.eigenvectorBasis i a) =
+            ∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a • ⇑(hA.eigenvectorBasis i) := by
+          ext c
+          rw [Finset.sum_apply]
+          refine sum_congr rfl fun i _ => ?_
+          simp [mul_comm]
+        have hmul : G.adjMatrix ℝ *ᵥ (fun c => ∑ i with hA.eigenvalues i = θ,
+            hA.eigenvectorBasis i c * hA.eigenvectorBasis i a) =
+            θ • fun c => ∑ i with hA.eigenvalues i = θ,
+              hA.eigenvectorBasis i c * hA.eigenvectorBasis i a := by
+          rw [hvec, mulVec_sum, Finset.smul_sum]
+          refine sum_congr rfl fun i hi => ?_
+          rw [mulVec_smul, hA.mulVec_eigenvectorBasis, (mem_filter.mp hi).2, smul_comm]
+        have hnorm : ∑ c, (∑ i with hA.eigenvalues i = θ,
+            hA.eigenvectorBasis i c * hA.eigenvectorBasis i a) ^ 2 =
+            ∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a := by
+          set S := (univ : Finset (Fin n)).filter (fun i => hA.eigenvalues i = θ)
+          calc ∑ c, (∑ i ∈ S, hA.eigenvectorBasis i c * hA.eigenvectorBasis i a) ^ 2
+              = ∑ c, ∑ i ∈ S, ∑ j ∈ S, (hA.eigenvectorBasis i a * hA.eigenvectorBasis j a) *
+                  (hA.eigenvectorBasis i c * hA.eigenvectorBasis j c) := by
+                refine sum_congr rfl fun c _ => ?_
+                rw [sq, sum_mul_sum]
+                exact sum_congr rfl fun i _ => sum_congr rfl fun j _ => by ring
+            _ = ∑ i ∈ S, ∑ j ∈ S, (hA.eigenvectorBasis i a * hA.eigenvectorBasis j a) *
+                  ∑ c, hA.eigenvectorBasis i c * hA.eigenvectorBasis j c := by
+                rw [sum_comm]
+                refine sum_congr rfl fun i _ => ?_
+                rw [sum_comm]
+                exact sum_congr rfl fun j _ => by rw [mul_sum]
+            _ = ∑ i ∈ S, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a := by
+                refine sum_congr rfl fun i hi => ?_
+                simp_rw [cols hA, mul_ite, mul_one, mul_zero]
+                rw [sum_ite_eq S i]
+                simp [hi]
+        exact vertex_bound G _ θ hadj
+          (fun c => by simpa [SimpleGraph.adjMatrix_mulVec_apply] using congrFun hmul c) hnorm
+  have hT : ((⊤ : SimpleGraph (Fin n)).adjMatrix ℝ).IsHermitian :=
+    isHermitian_iff_isSymm.mpr (⊤ : SimpleGraph (Fin n)).isSymm_adjMatrix
   have hG' : (n : ℝ) ^ 2 * (avgMixing G).trace ≤ n * (n ^ 2 - 2 * n + 2) := by
-    rw [trace_avgMixing, mul_sum]
-    calc ∑ a, (n : ℝ) ^ 2 * ∑ θ ∈ univ.image (adj_isHermitian G).eigenvalues,
-          proj (adj_isHermitian G) θ a a ^ 2
-        ≤ ∑ _a : Fin n, ((n : ℝ) ^ 2 - 2 * n + 2) :=
-          sum_le_sum fun a _ => diag_bound_connected G hG a
+    rw [htrace G hA, mul_sum]
+    calc ∑ a, (n : ℝ) ^ 2 * ∑ θ ∈ univ.image hA.eigenvalues,
+          (∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a) ^ 2
+        ≤ ∑ _a : Fin n, ((n : ℝ) ^ 2 - 2 * n + 2) := sum_le_sum fun a _ => hdiag a
       _ = n * (n ^ 2 - 2 * n + 2) := by rw [sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul]
-  have hT : (n : ℝ) * (n ^ 2 - 2 * n + 2) ≤
+  have hK : (n : ℝ) * (n ^ 2 - 2 * n + 2) ≤
       (n : ℝ) ^ 2 * (avgMixing (⊤ : SimpleGraph (Fin n))).trace := by
-    rw [trace_avgMixing, mul_sum]
+    rw [htrace ⊤ hT, mul_sum]
     calc (n : ℝ) * (n ^ 2 - 2 * n + 2) = ∑ _a : Fin n, ((n : ℝ) ^ 2 - 2 * n + 2) := by
           rw [sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul]
-      _ ≤ _ := sum_le_sum fun a _ => complete_diag (adj_isHermitian ⊤) hpos a
-  exact le_of_mul_le_mul_left (hG'.trans hT) (by positivity)
+      _ ≤ _ := sum_le_sum fun a _ =>
+          complete_diag hT hpos a (rows hT a) (fun i => by simpa using cols hT i i)
+  exact le_of_mul_le_mul_left (hG'.trans hK) (by positivity)
 
 end D5.S3.Quantum.Dynamics.AverageMixingTraceMaximum
