@@ -601,6 +601,64 @@ private theorem trim_success (w : List Window) (hw : legal true (flatten w)) :
   rw [trim_terminal w true]
   by_cases hnil : trim w = [] <;> simp [hnil]
 
+private theorem support_value {R : Type*} [CommSemiring R]
+    (n t : Nat) (hbound : ∀ k ∈ Nat.zeckendorf n, k < 3 * t)
+    (u v : R) :
+    value u v (supportBits n t) =
+      (shiftedFibSum n : R) * u + (n : R) * v := by
+  classical
+  have hp := Nat.isZeckendorfRep_zeckendorf n
+  rw [List.IsZeckendorfRep, List.isChain_iff_pairwise] at hp
+  have hlo : ∀ k ∈ Nat.zeckendorf n, 2 ≤ k := by
+    intro k hk
+    have hh := (List.pairwise_append.mp hp).2.2 k hk 0 (by simp)
+    simpa using hh
+  have hnd := gap_nodup _ (List.pairwise_append.mp hp).1
+  have hs (f : Nat → R) :
+      (∑ i : Fin (3 * t - 2), if i.val + 2 ∈ Nat.zeckendorf n
+        then f (i.val + 2) else 0) =
+      ∑ k ∈ (Nat.zeckendorf n).toFinset, f k := by
+    rw [← Finset.sum_filter]
+    apply Finset.sum_bij (fun i _ => i.val + 2)
+    · intro i hi
+      exact List.mem_toFinset.mpr (Finset.mem_filter.mp hi).2
+    · intro i hi j hj hij
+      apply Fin.ext
+      omega
+    · intro k hk
+      have hk' := List.mem_toFinset.mp hk
+      have hl := hlo k hk'
+      have hu := hbound k hk'
+      refine ⟨⟨k - 2, by omega⟩, ?_, by simp; omega⟩
+      apply Finset.mem_filter.mpr
+      simp only [Finset.mem_univ, true_and]
+      simpa only [Nat.sub_add_cancel hl] using hk'
+    · intro i hi
+      rfl
+  have hfv := fib_value (R := R) (3 * t - 2) 1 u v
+    (fun i => decide (i.val + 2 ∈ Nat.zeckendorf n))
+  have hstart : value u v (supportBits n t) =
+      ∑ i : Fin (3 * t - 2), if i.val + 2 ∈ Nat.zeckendorf n then
+        (Nat.fib (i.val + 1) : R) * u + (Nat.fib (i.val + 2) : R) * v else 0 := by
+    simpa [supportBits, value, Nat.fib_add_two, add_comm, add_left_comm, add_assoc,
+      two_mul] using hfv
+  rw [hstart]
+  have hrewrite :
+      (∑ i : Fin (3 * t - 2), if i.val + 2 ∈ Nat.zeckendorf n then
+        (Nat.fib (i.val + 1) : R) * u + (Nat.fib (i.val + 2) : R) * v else 0) =
+      ∑ k ∈ (Nat.zeckendorf n).toFinset,
+        ((Nat.fib (k - 1) : R) * u + (Nat.fib k : R) * v) := by
+    simpa using hs (fun k => (Nat.fib (k - 1) : R) * u + (Nat.fib k : R) * v)
+  rw [hrewrite, Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.sum_mul]
+  have hA : (∑ k ∈ (Nat.zeckendorf n).toFinset, (Nat.fib (k - 1) : R)) =
+      (shiftedFibSum n : R) := by
+    rw [← Nat.cast_sum]
+    congr 1
+    exact sum_toFinset_fib _ _ hnd
+  have hB : (∑ k ∈ (Nat.zeckendorf n).toFinset, (Nat.fib k : R)) = (n : R) := by
+    rw [← Nat.cast_sum, sum_toFinset_fib _ _ hnd, Nat.sum_zeckendorf_fib]
+  rw [hA, hB]
+
 #print axioms bounded_coefficient_pair
 
 end
