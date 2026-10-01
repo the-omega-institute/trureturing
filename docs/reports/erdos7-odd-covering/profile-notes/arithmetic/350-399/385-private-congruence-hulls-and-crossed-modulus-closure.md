@@ -11923,3 +11923,112 @@ These are necessary joint inventory bounds, not phase-realization
 criteria or strict EB1 descents. Larger reciprocal inventories can
 satisfy them. No unrestricted noncoverage or Lean verification is
 asserted.
+
+## 88. A reserved distortion margin excludes the remaining flat-five minimum
+
+The exceptional square multiplicities in section86 can be paid from
+the existing distortion continuation margin. The reusable input is
+[Report348, SO1](../../321-384/348-fresh-prime-root-transport-and-two-copy-reduction.md#two-multiplicity-two-covers-share-a-small-prime):
+the KKL repeated-label moment bound and the BBMST continuation
+criterion, with arbitrary finite prime heights. No sieve table is
+recomputed.
+
+### Two additional prime-square classes cannot fill the reserved mass
+
+Let B be any finite labelled AP family whose moduli are greater
+than one and coprime to210, each used at most twice. Include any
+additional square moduli in one complete ambient period. Construct
+the actual BBMST distortion measures P_i from B; unused coordinates
+are uniform. Number all ordinary primes, including absent primes,
+so p_4=7 and the first four bad sets B_i are empty. Put
+
+    a_i=(3*p_i-1)/(p_i-1)^2,
+    b_i=1/[4*(p_i-1)^2],
+    C_i=product_(4<j<=i)[1+a_j/(1-delta_j)].
+
+The existing labelled second-moment estimate gives, for every later
+allowed distortion sequence,
+
+    M_i^(2)<=4*C_(i-1)/(p_i-1)^2.
+
+Absent-prime factors in C_i only enlarge this bound. Reserve one
+fifth by defining the SCALAR accounting quantities
+
+    nu_i=4/5-sum_(4<j<=i)P_j(B_j),
+    F_i=4*C_i/nu_i when nu_i>0.
+
+The probability measures are unchanged; no conditioning or
+renormalization is performed. Initially nu_4=4/5 and F_4=5.
+BBMST Lemma3.3 and the moment estimate imply
+
+    nu_(i-1)-nu_i=P_i(B_i)
+      <=nu_(i-1)*b_i*F_(i-1)/[delta_i*(1-delta_i)].
+
+Whenever b_i*F_(i-1)<delta_i*(1-delta_i), this proves nu_i>0 and
+
+    F_i<=[1+a_i/(1-delta_i)]
+          *[1-b_i*F_(i-1)/(delta_i*(1-delta_i))]^(-1)*F_(i-1).
+
+This is precisely BBMST Lemma6.2's recurrence(23). Its proof uses
+the displayed loss difference, moment bound and nu_i*F_i=4*C_i;
+it does not require the initial accounting mass to equal one.
+The positive-denominator induction in Theorem6.1 uses the same
+scalar recurrence. Table1 of arXiv:1811.03547v1, p.19, gives
+g_4>=5.860938>5. The definition of g_4 before Corollary6.3
+therefore supplies a successful scalar continuation from F_4=5,
+followed by that analytic tail. Monotonicity of the recurrence
+on its positive-denominator domain bounds the actual F_i by this
+continuation, proving nu_n>0 at every finite final stage.
+
+This uses the PROOF of the continuation criterion with a reserved
+accounting mass. Corollary6.3's noncoverage statement by itself
+would not supply the quantitative margin. All measures still
+belong to the one actual base family B.
+
+BBMST Lemma2.1 preserves earlier-coordinate marginals. Thus under
+the SAME final probability P_n,
+
+    P_n(union of the base classes)<=sum_i P_i(B_i)<4/5,
+    P_n(R_base)>1/5.                               (RM1)
+
+Lemma3.4, equation(11), applies to every residue class whose modulus
+divides the ambient period, including omitted classes. An extra
+pure-square class A=(c modq^2) therefore satisfies
+
+    P_n(A)<=1/[q^2*(1-delta_q)]<=2/q^2.
+
+The whole q-primary coordinate is processed once; the square does
+not create a second distortion factor. Hence adding at most two
+prime-square classes, with their primes at least11, gives
+
+    P_n(R_base minus the extra classes)
+      >1/5-4/121=101/605>0.                        (RM2)
+
+This is a bound in the actual distorted probability, not in uniform
+counting measure. Its positivity proves that the augmented family
+cannot cover. More generally the same argument allows any finite
+list of extra pure-square classes with sum_A 2/q_A^2<1/5.
+
+### Apply the margin to the actual singular-elimination outputs
+
+The two whole covers G_j,G_k of section86 have disjoint supports
+S_j,S_k and all moduli coprime to30. At least one omits7. In that
+cover remove enough occurrences of its exceptional square modulus
+to leave numerical multiplicity at most two: two removals suffice
+for G_j, and one suffices for G_k. The resulting base is coprime
+to210. Its exceptional prime is at least11, so RM2 contradicts
+whole coverage after the removed classes are restored.
+
+Thus FL6 is impossible. Combining this with sections81--83 excludes
+ALL minimum-column configurations at p=5. Together with FL2 and
+CP17, the flat unique-nonconcentrated-prime branch satisfies
+
+    H_3=H_p=1, R={p}
+      ==> p in {5,7,11,13} and |U_1|+|U_2|>=p.    (FL9)
+
+This retains every other original prime height. The argument
+closes the minimum |U_1|+|U_2|=p-1 case; it does not exclude larger
+column inventories, larger p or ternary heights, or several
+nonconcentrated primes. Unrestricted Erdos7 remains unresolved.
+The deductions reuse published moments, AP-mass bounds and the
+published continuation threshold; no Lean verification is asserted.
