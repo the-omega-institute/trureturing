@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Globalization;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -38,7 +37,15 @@ public static class ScribeResourceCodec
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Default,
+        MaxDepth = 1024,
         WriteIndented = false,
+    };
+
+    private static readonly JsonDocumentOptions JsonParseOptions = new()
+    {
+        AllowTrailingCommas = false,
+        CommentHandling = JsonCommentHandling.Disallow,
+        MaxDepth = 1024,
     };
 
     public static byte[] Encode(DocumentDefinition definition)
@@ -83,11 +90,12 @@ public static class ScribeResourceCodec
         JsonDocument document;
         try
         {
-            document = JsonDocument.Parse(text, new JsonDocumentOptions { AllowTrailingCommas = false, CommentHandling = JsonCommentHandling.Disallow });
+            document = JsonDocument.Parse(text, JsonParseOptions);
         }
         catch (JsonException exception)
         {
-            var code = text.AsSpan().TrimEnd().Length != 0 && !text.AsSpan().TrimEnd().EndsWith('}')
+            var lastClose = text.LastIndexOf('}');
+            var code = lastClose >= 0 && text[(lastClose + 1)..].Trim().Length != 0
                 ? ScribeResourceErrorCode.TrailingData
                 : ScribeResourceErrorCode.InvalidJson;
             throw new ScribeResourceException(code, "Resource JSON is not a single valid document.", exception);
@@ -130,7 +138,7 @@ public static class ScribeResourceCodec
         {
             throw;
         }
-        catch (Exception exception) when (exception is ArgumentException or InvalidOperationException or FormatException)
+        catch (Exception exception) when (exception is ArgumentException or InvalidOperationException or FormatException or JsonException)
         {
             throw new ScribeResourceException(ScribeResourceErrorCode.InvalidValue, exception.Message, exception);
         }
@@ -589,12 +597,12 @@ public static class ScribeResourceCodec
     };
 
     private static JsonObject RequireObject(JsonElement value) => value.ValueKind is JsonValueKind.Object
-        ? value.Deserialize<JsonObject>() ?? throw Invalid("Object is null.")
+        ? value.Deserialize<JsonObject>(JsonOptions) ?? throw Invalid("Object is null.")
         : throw InvalidType("Expected an object.");
 
     private static JsonElement Element(JsonObject value)
     {
-        using var document = JsonDocument.Parse(value.ToJsonString());
+        using var document = JsonDocument.Parse(value.ToJsonString(JsonOptions), JsonParseOptions);
         return document.RootElement.Clone();
     }
 
@@ -607,7 +615,8 @@ public static class ScribeResourceCodec
     private static JsonObject Typed(JsonObject obj, string type, params string[] fields)
     {
         if (!string.Equals(ReadType(obj), type, StringComparison.Ordinal)) throw UnknownType(obj);
-        var element = JsonDocument.Parse(obj.ToJsonString()).RootElement;
+        using var document = JsonDocument.Parse(obj.ToJsonString(JsonOptions), JsonParseOptions);
+        var element = document.RootElement;
         RequireFields(element, new[] { "type" }.Concat(fields).ToArray());
         return obj;
     }
@@ -634,7 +643,7 @@ public static class ScribeResourceCodec
     {
         try { return reader(); }
         catch (ScribeResourceException) { throw; }
-        catch (Exception exception) when (exception is ArgumentException or InvalidOperationException or FormatException)
+        catch (Exception exception) when (exception is ArgumentException or InvalidOperationException or FormatException or JsonException)
         {
             throw new ScribeResourceException(ScribeResourceErrorCode.InvalidValue, exception.Message, exception);
         }
@@ -642,6 +651,11 @@ public static class ScribeResourceCodec
 
     private static void RequireFields(JsonElement value, params string[] fields)
     {
+        if (value.ValueKind is not JsonValueKind.Object)
+        {
+            throw InvalidType("Expected an object.");
+        }
+
         var expected = fields.ToHashSet(StringComparer.Ordinal);
         foreach (var property in value.EnumerateObject())
         {
@@ -660,7 +674,18 @@ public static class ScribeResourceCodec
         }
     }
 
-    private static string ReadType(JsonObject value) => value["type"]?.GetValue<string>() ?? throw new ScribeResourceException(ScribeResourceErrorCode.MissingField, "Missing field 'type'.");
+    private static string ReadType(JsonObject value)
+    {
+        if (value["type"] is null)
+        {
+            throw new ScribeResourceException(ScribeResourceErrorCode.MissingField, "Missing field 'type'.");
+        }
+
+        return value["type"] is JsonValue type
+            && type.TryGetValue<string>(out var result)
+                ? result
+                : throw InvalidType("Field 'type' must be a string.");
+    }
 
     private static string ReadString(JsonElement parent, string name) =>
         parent.TryGetProperty(name, out var value) ? ReadRequiredString(value, name) : throw Missing(name);
