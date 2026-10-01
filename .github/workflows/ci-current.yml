@@ -77,10 +77,8 @@ jobs:
             tools/ARCHITECTURE.md
             tools/Architecture/*
             tools/Makefile
-            tools/StrataLint.Cli/Commands/CompilationProof.cs
-            tools/StrataLint.Cli/Commands/CompileProofCommand.cs
-            tools/StrataLint.Cli/Commands/TestEvidenceCommands.cs
-            tools/StrataLint.Cli/Commands/TestResultEvidence.cs
+            tools/StrataLint.Engine/*
+            tools/StrataLint.TestEvidence/*
             tools/StrataLint.sln
             tools/TOWER.yaml
             tools/Trureturing.Truth/*
@@ -111,7 +109,6 @@ jobs:
             [banned-api-proof]
             tools/StrataLint.Cli/*
             tools/StrataLint.Configuration/*
-            tools/StrataLint.Engine/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
             tools/StrataLint.Scribe.Documents/*
@@ -137,7 +134,6 @@ jobs:
             [capability-proof]
             tools/StrataLint.Cli/*
             tools/StrataLint.Configuration/*
-            tools/StrataLint.Engine/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
             tools/StrataLint.Scribe.Documents/*
@@ -191,7 +187,6 @@ jobs:
             [selftest]
             tools/StrataLint.Cli/*
             tools/StrataLint.Configuration/*
-            tools/StrataLint.Engine/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
             tools/StrataLint.Scribe.Documents/*
@@ -217,7 +212,6 @@ jobs:
             [tests-architecture]
             tools/StrataLint.Cli/*
             tools/StrataLint.Configuration/*
-            tools/StrataLint.Engine/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
             tools/StrataLint.Scribe.Documents/*
@@ -383,7 +377,6 @@ jobs:
             Meta/ci-cache-paths.json
             tools/StrataLint.Cli/*
             tools/StrataLint.Configuration/*
-            tools/StrataLint.Engine/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
             tools/StrataLint.Scribe.Documents/*
@@ -416,7 +409,6 @@ jobs:
             [tests-cli-integration]
             tools/StrataLint.Cli/*
             tools/StrataLint.Configuration/*
-            tools/StrataLint.Engine/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
             tools/StrataLint.Scribe.Documents/*
@@ -434,7 +426,6 @@ jobs:
             tools/tests/StrataLint.Tests/Commands/*
             [tests-configuration]
             tools/StrataLint.Configuration/*
-            tools/StrataLint.Engine/*
             tools/TestSupport/StrataLint.ConfigurationTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/tests/StrataLint.Configuration.Tests/*
@@ -444,7 +435,6 @@ jobs:
             Golden/values-kernels.toml
             tools/StrataLint.Cli/*
             tools/StrataLint.Configuration/*
-            tools/StrataLint.Engine/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
             tools/StrataLint.Scribe.Documents/*
@@ -480,7 +470,6 @@ jobs:
             [tests-declared-template]
             Meta/ci-cache-paths.json
             tools/StrataLint.Configuration/*
-            tools/StrataLint.Engine/*
             tools/TestSupport/StrataLint.ConfigurationTestSupport/*
             tools/TestSupport/StrataLint.DeclaredTemplateTestSupport/*
             tools/TestSupport/StrataLint.RegistrationTestSupport/*
@@ -497,7 +486,6 @@ jobs:
             tools/tests/StrataLint.DeclaredTemplate.Tests/*
             [tests-digestion]
             tools/StrataLint.Configuration/*
-            tools/StrataLint.Engine/*
             tools/TestSupport/StrataLint.ConfigurationTestSupport/*
             tools/TestSupport/StrataLint.DigestionTestSupport/*
             tools/TestSupport/StrataLint.RegistrationTestSupport/*
@@ -505,21 +493,18 @@ jobs:
             tools/TestSupport/StrataLint.TestSupport/*
             tools/tests/StrataLint.Digestion.Tests/*
             [tests-engine]
-            tools/StrataLint.Engine/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/TestSupport/StrataLint.RegistrationTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/tests/StrataLint.Engine.Tests/*
             [tests-filemap]
             tools/StrataLint.Configuration/*
-            tools/StrataLint.Engine/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Scribe/*
             tools/TestSupport/StrataLint.ConfigurationTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/tests/StrataLint.FileMap.Tests/*
             [tests-header-script]
-            tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs
             tools/TestSupport/StrataLint.ScriptProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/scripts/agent/header-check.sh
@@ -529,7 +514,6 @@ jobs:
             D5/*
             skills/codex-theory-ingest/*
             skills/formal-thinking-and-answer/*
-            tools/StrataLint.Engine/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/scripts/agent/batch_pr.sh
             tools/tests/StrataLint.InstructionContract.Tests/*
@@ -538,7 +522,6 @@ jobs:
             tools/scripts/agent/integration-mirror.sh
             [tests-lean]
             Meta/ci-cache-paths.json
-            tools/StrataLint.Engine/*
             tools/StrataLint.Lean/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
@@ -557,14 +540,12 @@ jobs:
             tools/scripts/worktree/*
             tools/tests/StrataLint.Lean.Tests/*
             [tests-lean-cache-script]
-            tools/StrataLint.Engine/*
             tools/StrataLint.Lean/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/scripts/worktree/lean-cache-run.sh
             tools/tests/StrataLint.LeanCacheScript.Tests/*
             [tests-lean-report-script]
-            tools/StrataLint.Engine/*
             tools/TestSupport/StrataLint.LeanTestSupport/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
@@ -577,20 +558,17 @@ jobs:
             tools/scripts/worktree/lean-cache-publish.sh
             tools/tests/StrataLint.LeanReportScript.Tests/*
             [tests-playbook-script]
-            tools/StrataLint.Engine/*
             tools/TestSupport/StrataLint.AdmissionTestSupport/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/scripts/workflow/playbook-workflows.sh
             tools/tests/StrataLint.PlaybookScript.Tests/*
             [tests-pr-script]
-            tools/StrataLint.Engine/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/scripts/pr.sh
             tools/tests/StrataLint.PrScript.Tests/*
             [tests-report-supervisor]
-            tools/StrataLint.Engine/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/scripts/lib/resource-observation-lib.sh
@@ -601,7 +579,6 @@ jobs:
             Meta/domains.yaml
             tools/StrataLint.Cli/Commands/FileMap/*
             tools/StrataLint.Configuration/*
-            tools/StrataLint.Engine/*
             tools/TestSupport/StrataLint.ConfigurationTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/scripts/report/lean-report.sh
@@ -611,7 +588,6 @@ jobs:
             [tests-repository-contract]
             tools/StrataLint.Cli/*
             tools/StrataLint.Configuration/*
-            tools/StrataLint.Engine/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
             tools/StrataLint.Scribe.Documents/*
@@ -699,7 +675,6 @@ jobs:
             D5/S3/*
             D5/X_Frontier/*
             Meta/Digestion/backfill/*
-            tools/StrataLint.Engine/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/tests/StrataLint.RepositoryDigestion.Tests/*
             [tests-repository-filemap]
@@ -707,14 +682,12 @@ jobs:
             [tests-repository-topology]
             *
             [tests-resource-observation]
-            tools/StrataLint.Engine/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/scripts/lib/resource-observation-lib.sh
             tools/tests/StrataLint.ResourceObservation.Tests/*
             [tests-rules]
             tools/StrataLint.Configuration/*
-            tools/StrataLint.Engine/*
             tools/TestSupport/StrataLint.ConfigurationTestSupport/*
             tools/TestSupport/StrataLint.RegistrationTestSupport/*
             tools/TestSupport/StrataLint.RuleTestSupport/*
@@ -723,7 +696,6 @@ jobs:
             [tests-scribe]
             Meta/domains.yaml
             tools/StrataLint.Cli/Commands/FileMap/*
-            tools/StrataLint.Engine/*
             tools/StrataLint.Scribe/*
             tools/TestSupport/StrataLint.RegistrationTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
@@ -733,7 +705,6 @@ jobs:
             tools/tests/StrataLint.Scribe.Tests/*
             tools/tests/StrataLint.Tests/Commands/*
             [tests-scribe-documents]
-            tools/StrataLint.Engine/*
             tools/StrataLint.Scribe.Documents/*
             tools/StrataLint.Scribe/*
             tools/tests/StrataLint.Scribe.Documents.Tests/*
@@ -745,7 +716,6 @@ jobs:
             docs/develop/theory/PERIODIC_TREE_registry.jsonl
             tools/StrataLint.Cli/*
             tools/StrataLint.Configuration/*
-            tools/StrataLint.Engine/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
             tools/StrataLint.Scribe.Documents/*
@@ -755,6 +725,9 @@ jobs:
             tools/TestSupport/StrataLint.RegistrationTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/tests/StrataLint.SourceAtomizer.Tests/*
+            [tests-test-evidence]
+            tools/TestSupport/StrataLint.TestSupport/*
+            tools/tests/StrataLint.TestEvidence.Tests/*
             [tests-truth]
             tools/tests/Trureturing.Truth.Tests/*
             [tests-truth-release]
@@ -764,7 +737,6 @@ jobs:
             Golden/Projection/*
             tools/StrataLint.Cli/*
             tools/StrataLint.Configuration/*
-            tools/StrataLint.Engine/*
             tools/StrataLint.FileMap/*
             tools/StrataLint.Lean/*
             tools/StrataLint.Scribe.Documents/*
@@ -777,7 +749,6 @@ jobs:
             tools/TestSupport/StrataLint.TestSupport/*
             tools/tests/StrataLint.TruthRelease.Tests/*
             [tests-workflow-script]
-            tools/StrataLint.Engine/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/scripts/agent/test_xi_quantization.py
@@ -900,6 +871,7 @@ jobs:
             tools/StrataLint.Lean/**
             tools/StrataLint.Scribe.Documents/**
             tools/StrataLint.Scribe/**
+            tools/StrataLint.TestEvidence/**
             tools/Trureturing.Truth/**
         run: |
           sdk="$(dotnet --version)"
@@ -1285,6 +1257,13 @@ jobs:
     with:
       project: tools/tests/StrataLint.SourceAtomizer.Tests/StrataLint.SourceAtomizer.Tests.csproj
 
+  tests-test-evidence:
+    needs: detect
+    if: fromJSON(needs.detect.outputs.hits || '{}')['tests-test-evidence']
+    uses: ./.github/workflows/ci-unit.yml
+    with:
+      project: tools/tests/StrataLint.TestEvidence.Tests/StrataLint.TestEvidence.Tests.csproj
+
   tests-truth:
     needs: detect
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-truth']
@@ -1317,7 +1296,7 @@ jobs:
   # failed detection, is red rather than skipped.
   required:
     if: always()
-    needs: [detect, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-cli-integration, tests-configuration, tests-cover-batch, tests-declared-template, tests-digestion, tests-engine, tests-filemap, tests-header-script, tests-instruction-contract, tests-integration-mirror, tests-lean, tests-lean-cache-script, tests-lean-report-script, tests-playbook-script, tests-pr-script, tests-report-supervisor, tests-repository-configuration, tests-repository-contract, tests-repository-digestion, tests-repository-filemap, tests-repository-topology, tests-resource-observation, tests-rules, tests-scribe, tests-scribe-documents, tests-source-atomizer, tests-truth, tests-truth-release, tests-workflow-script, tests-worktree-contract]
+    needs: [detect, banned-api-proof, capability-proof, current, filemap, selftest, tests-architecture, tests-cache, tests-cache-native, tests-cache-release, tests-ci-entry, tests-cli, tests-cli-integration, tests-configuration, tests-cover-batch, tests-declared-template, tests-digestion, tests-engine, tests-filemap, tests-header-script, tests-instruction-contract, tests-integration-mirror, tests-lean, tests-lean-cache-script, tests-lean-report-script, tests-playbook-script, tests-pr-script, tests-report-supervisor, tests-repository-configuration, tests-repository-contract, tests-repository-digestion, tests-repository-filemap, tests-repository-topology, tests-resource-observation, tests-rules, tests-scribe, tests-scribe-documents, tests-source-atomizer, tests-test-evidence, tests-truth, tests-truth-release, tests-workflow-script, tests-worktree-contract]
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 10
     steps:

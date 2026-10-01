@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace StrataLint.Cli;
+namespace StrataLint.TestEvidence;
 
 internal static partial class CompilationProof
 {

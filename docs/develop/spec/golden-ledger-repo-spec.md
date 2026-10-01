@@ -428,9 +428,9 @@ PR 检出固定 `GITHUB_SHA=M`，验证 M 有两个父提交，第二父是触�
 
 | 入口 | 义务 |
 |---|---|
-| `make -C tools test TEST_PROJECT=tools/tests/<项目>/<项目>.csproj` | locked restore/build、该项目完整测试与真实成功 TRX 校验；缺失结果、失败或 infrastructure hang guard 不能记成功。 |
+| `make -C tools test TEST_PROJECT=tools/tests/<项目>/<项目>.csproj` | locked restore/build、该项目完整测试与 `StrataLint.TestEvidence` 的 owner 程序集及真实成功 TRX 校验；证据工具只引用 Engine；缺失结果、失败或 infrastructure hang guard 不能记成功。 |
 | `make -C tools selftest` | 执行 selftest 的放行与拒绝判据。 |
-| `make -C tools compile-proof PROOF=capability-proof` / `PROOF=banned-api-proof` | 验证预期的编译拒绝及具名诊断，任意编译失败不替代反证。 |
+| `make -C tools compile-proof PROOF=capability-proof` / `PROOF=banned-api-proof` | 构建并调用 `StrataLint.TestEvidence` 验证预期的编译拒绝及具名诊断，任意编译失败不替代反证；CLI 的同名入口复用该实现。 |
 | `make lean-report` | 经受保护的 Lean 缓存入口和原生 Lake 增量生产规范报告。 |
 | `check-current --candidate-lean-report FILE` | 当前树有效性；context 无 base 或 changes，可在根提交、无 remote 的仓库中独立运行。 |
 | `check-delta --protected-base <40-hex-sha> --candidate-lean-report FILE` | 读取固定 base 数据，验证跨树保护、分区、首次冻结、棘轮及候选测试拓扑；删除测试项目不因基线登记缺失而阻断。 |

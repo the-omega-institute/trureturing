@@ -1,5 +1,7 @@
 using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("StrataLint.TestEvidence.Tests")]
+
 [assembly: InternalsVisibleTo("JudgeSeedTask.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.AdmissionTestSupport")]
 [assembly: InternalsVisibleTo("StrataLint.ArchitectureTests")]
