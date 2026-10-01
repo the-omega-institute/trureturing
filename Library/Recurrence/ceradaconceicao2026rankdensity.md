@@ -15,16 +15,21 @@ triage: anchor
 
 The primary source is [arXiv:2604.20014v3](https://arxiv.org/pdf/2604.20014v3),
 dated 22 August 2026; the first version appeared in April 2026.
-The locators below refer to the introduction and Theorem 1 of that version.
+The locators below refer to the introduction, Theorem 1, and Section 2 of
+that version.
 They do not assert an independent proof audit or Lean verification.
 
 ## The predicate and the published counting theorem
 
-The paper defines $U_0=0$, $U_1=1$,
+The paper takes nonzero integer parameters $a_1,a_2$ and defines $U_0=0$, $U_1=1$,
 $U_{n+2}=a_1U_{n+1}-a_2U_n$, and uses
 $\rho_U(p)=\min\{n\ge1:p\mid U_n\}$ when it exists.
 For characteristic roots $a,b$, put $K=\mathbb Q(a)$,
 $\gamma=a/b$, and $\Delta=a_1^2-4a_2$.
+Section 2, printed p.4, assumes that $\gamma$ is not a root of unity and
+focuses on irreducible $X^2-a_1X+a_2$; the reducible case was settled by
+Wiertelak. These hypotheses remain in force for the counting statement
+below.
 Away from the displayed exceptional primes, the rank equals the order of
 $\gamma$ in the appropriate residue field.
 
@@ -61,6 +66,7 @@ Fibonacci case for all $d\ge1$ was already completed by Cubre and Rouse,
 *Divisibility properties of the Fibonacci entry point*, Proceedings of
 the AMS 142 (2014), 3771–3785, DOI
 [10.1090/S0002-9939-2014-12269-6](https://doi.org/10.1090/S0002-9939-2014-12269-6).
+Its original preprint is [arXiv:1212.6221v1](https://arxiv.org/abs/1212.6221v1).
 Sanna's general Lucas predecessor is *On the divisibility of the rank of
 appearance of a Lucas sequence*, IJNT 18 (2022), 2145–2156, DOI
 [10.1142/S1793042122501093](https://doi.org/10.1142/S1793042122501093).
