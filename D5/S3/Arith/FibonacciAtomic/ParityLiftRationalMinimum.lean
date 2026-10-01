@@ -7,6 +7,7 @@
    digest: The rational lift of five-window parity has attained minimum dimension four. -/
 
 import D5.S3.Arith.FibonacciAtomic.ImmediateWindowStateCapacity
+import D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound
 import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Tactic
 
@@ -17,6 +18,7 @@ namespace D5.S3.Arith.FibonacciAtomic.ParityLiftRationalMinimum
 
 open D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd (Window first last)
 open D5.S3.Arith.FibonacciAtomic.ImmediateWindowStateCapacity
+open D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound (wordOperator)
 
 /-- A linear representation of finite words, with one operator per letter.
 The state space need not be reachable, observable or finite dimensional. -/
@@ -28,10 +30,9 @@ structure WordRepresentation (K : Type*) [Field K] (Alphabet : Type*)
 
 /-- Operators act in chronological order, starting at the leftmost letter. -/
 def wordMap {K : Type*} [Field K] {Alphabet V : Type*}
-    [AddCommGroup V] [Module K V] (T : Alphabet → V →ₗ[K] V) :
-    List Alphabet → V →ₗ[K] V
-  | [] => LinearMap.id
-  | b :: w => (wordMap T w).comp (T b)
+    [AddCommGroup V] [Module K V] (T : Alphabet → V →ₗ[K] V)
+    (w : List Alphabet) : V →ₗ[K] V :=
+  wordOperator T w.reverse
 
 def wordBehavior {K : Type*} [Field K] {Alphabet V Y : Type*}
     [AddCommGroup V] [Module K V] [AddCommGroup Y] [Module K Y]
@@ -128,12 +129,15 @@ theorem result :
   have simulation (w : List Window) (q : RawState 2) :
       wordMap blockTransition w (embed q) =
         embed ((rawMachine 2).toDFA.evalFrom q w) := by
-    induction w generalizing q with
+    induction w using List.reverseRecOn with
     | nil => rfl
-    | cons b w ih =>
-      simp only [wordMap, LinearMap.comp_apply, DFA.evalFrom_cons]
-      rw [commute]
-      exact ih (rawTransition q b)
+    | append_singleton w b ih =>
+      simp only [wordMap, List.reverse_append, List.reverse_singleton,
+        List.singleton_append, wordOperator, LinearMap.comp_apply,
+        DFA.evalFrom_append_singleton]
+      change blockTransition b (wordMap blockTransition w (embed q)) =
+        embed (rawTransition ((rawMachine 2).toDFA.evalFrom q w) b)
+      rw [ih, commute]
   have observe (q : RawState 2) :
       blockOutput (embed q) = parityEncode (rawOutput q) := by
     cases q with
@@ -157,10 +161,14 @@ theorem result :
     have append (u w : List Window) :
         wordMap R.transition (u ++ w) =
           (wordMap R.transition w).comp (wordMap R.transition u) := by
-      induction u with
-      | nil => simp [wordMap]
-      | cons b u ih =>
-        simp only [List.cons_append, wordMap, ih, LinearMap.comp_assoc]
+      have productAppend (a c : List Window) :
+          wordOperator R.transition (a ++ c) =
+            (wordOperator R.transition a).comp (wordOperator R.transition c) := by
+        induction a with
+        | nil => simp [wordOperator]
+        | cons b a ih =>
+          simp only [List.cons_append, wordOperator, ih, LinearMap.comp_assoc]
+      simpa only [wordMap, List.reverse_append] using productAppend w.reverse u.reverse
     let reach : Fin 4 → V := fun j => wordMap R.transition (prefixes j) R.initial
     let observe : V →ₗ[ℚ] (Fin 4 → ℚ) :=
       LinearMap.pi fun i =>
