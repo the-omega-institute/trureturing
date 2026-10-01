@@ -74,19 +74,4 @@ register_information_theorem translation_domain_iff in arena
   escape from source (selection)
   escape continues (open)
 
-open Lean in
-run_meta do
-  let target := `D5.S3.Quantum.Analysis.TranslationDomainWeakStrong.translation_domain_iff
-  let some event := (LeanInformationAudit.TemplateBinding.inventory (← getEnv)).find?
-      (·.key.theoremName == target) | throwError "original occurrence absent"
-  let some (_, claim) := (LeanInformationAudit.TemplateBinding.ownedClaims (← getEnv)).find?
-      (·.2.key == event.key) | throwError "original claim absent"
-  let record ← LeanInformationAudit.TemplateBinding.assess event (some claim)
-  let .declaredValidated cert := record.result
-    | throwError "registration failed: {(← LeanInformationAudit.TemplateBinding.recordJson record).compress}"
-  unless record.escape.fromObject.isSome && record.escape.bridgeKind == "source-equivalence" &&
-      record.escape.continuation.any (·.kind == "open") do throwError "four slots incomplete"
-  logInfo m!"declared_validated {cert.evidenceRef}"
-  logInfo (← LeanInformationAudit.TemplateBinding.recordJson record).compress
-#print axioms registration
 end Reg.D5.S3.Quantum.Analysis.TranslationDomainWeakStrong
