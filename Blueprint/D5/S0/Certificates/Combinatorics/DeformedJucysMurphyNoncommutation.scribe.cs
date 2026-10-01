@@ -34,15 +34,15 @@ internal sealed class DeformedJucysMurphyNoncommutationDocument : IScribeDocumen
             Node("claim", "Coulter--Do Conjecture 5.4(a)", ClaimFormula(),
                 "Conjecture 5.4(a), page 34: \"The 𝒥-operators commute when restricted to 𝒳(k) — that is, 𝒥ₘ 𝒥ₙ (v) = 𝒥ₙ 𝒥ₘ (v) for 1 ⩽ m ⩽ n ⩽ k and for all v ∈ 𝒳(k).\" The encoding quantifies over every positive natural k and all ordered indices in that interval. It uses K = RatFunc C, the rational-function field C(b), and b = RatFunc.X, an indeterminate. Operator equality on each v is equality of coefficient functions; b is never fixed to a complex number in the claim.", "claim", true),
             Node("result", "Refutation on X(6)", Disp(new Formula.Not(F.Id("claim"))),
-                "Let v = J_6 J_6 J_5 J_4 J_3 e_6 and T = (1 5 | 2 7 | 3 9 | 4 11 | 6 10 | 8 12). The generating word places v in X(6). Coefficientwise ring-homomorphism transport embeds the integer-polynomial model into C(b), then evaluates its polynomial coefficients at 2. The T-coefficients of J_2 J_4 v and J_4 J_2 v evaluate to 78 and 81. Injectivity of the polynomial embedding shows that the original coefficients in C(b) cannot agree. A support invariant for increasing words and the forced partner at the top pair reduce the finite sums to a backward path.", "result", false, DescribeRole.Theorem)),
+                "Let v = J_6 J_6 J_5 J_4 J_3 e_6 and T = (1 5 | 2 7 | 3 9 | 4 11 | 6 10 | 8 12). The generating word places v in X(6). Coefficientwise ring-homomorphism transport embeds the integer-polynomial model into C(b), then evaluates its polynomial coefficients at 2. The T-coefficients of J_2 J_4 v and J_4 J_2 v evaluate to 78 and 81. Injectivity of the polynomial embedding shows that the original coefficients in C(b) cannot agree. A support invariant for increasing words and the forced partner at the top pair reduce the finite sums to a backward path.", "result", false, DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("coulter-do-2025-deformed-jucys-murphy-noncommutation"), ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula,
-        string prose, string declaration, bool literature, DescribeRole role = DescribeRole.Definition) =>
+        string prose, string declaration, bool literature, DescribeRole role = DescribeRole.Definition, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("coulter-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] args) =>

@@ -132,6 +132,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Combinatorics/DeformedJucysMurphyNoncommutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/coulter-do-2025-deformed-jucys-murphy-noncommutation` (refuted) by `D5/S0/Certificates/Combinatorics/DeformedJucysMurphyNoncommutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"coulter-do-2025-deformed-jucys-murphy-noncommutation","declaration_gid":"D5/S0/Certificates/Combinatorics/DeformedJucysMurphyNoncommutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Coulter, Xavier; Do, Norman (2025). *From Weingarten calculus for real Grassmannians to deformations of monotone Hurwitz numbers and Jucys–Murphy elements*. DOI: [10.48550/arXiv.2506.04002](https://doi.org/10.48550/arXiv.2506.04002). URL: <https://arxiv.org/abs/2506.04002v1>.
