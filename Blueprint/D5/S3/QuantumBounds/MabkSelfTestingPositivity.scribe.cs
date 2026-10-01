@@ -26,13 +26,17 @@ internal sealed class MabkSelfTestingPositivityDocument : IScribeDocumentDefinit
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Positivity on the whole cube", Disp(F.Id("claim")),
                 "Write r = sqrt(2), x_i = 1 - v_i, y_i = sqrt(2 v_i - v_i^2), a_i = 1 - ((1+r)/r)v_i and b_i = ((1+r)/r)v_i. The coordinate bounds give a_i >= x_i^2, b_i <= 1/2, y_i^2 <= 1/2 and x_i^2+y_i^2=1. For the complementary block J, let q be the product of x_i, d = card(J), B = product_T b_i, Y = product_T y_i and s = 1+r. A finite-product induction gives (product_J y_i)^2 <= (1-q^2) 2^{1-d}. Set K=(2+r)BY, C=1-K/2-s^2 2^{1-d} and F=1-s^2 Y^2+rB+K. Keeping the positive cubic term and using 2q^3 >= 3q^2-1 gives the lower bound C(1-q^2)+Fq^2. For h=1, F is nonnegative by factorization on the unit circle; the certificate is the denominator-cleared version of the factorization with t=y/(1+x). For h=2, F is bounded below by 1-(5/2+13r/8)Y^2+(5/4+7r/8)Y^3 for 0 <= Y <= 1/2, which is at least (34-19r)/64 > 0. The block-size bounds make C nonnegative in both cases. This proves the scalar conjecture; the Bell-operator reductions and the extractability conclusions of the source are outside this module.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("cao-zhang-shi-zhao-2026-mabk-optimal-robustness-positivity"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("mabk-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
-        StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+        StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula All(string name, Formula type, Formula body) =>

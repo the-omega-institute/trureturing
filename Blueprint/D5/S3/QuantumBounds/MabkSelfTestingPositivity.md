@@ -46,6 +46,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumBounds/MabkSelfTestingPositivity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cao-zhang-shi-zhao-2026-mabk-optimal-robustness-positivity` (proved) by `D5/S3/QuantumBounds/MabkSelfTestingPositivity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cao-zhang-shi-zhao-2026-mabk-optimal-robustness-positivity","declaration_gid":"D5/S3/QuantumBounds/MabkSelfTestingPositivity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Shen Cao; Xingjian Zhang; Fei Shi; Qi Zhao (2026). *Size-Independent Robustness in Multipartite Bell Self-Testing*. DOI: [10.48550/arXiv.2608.30851](https://doi.org/10.48550/arXiv.2608.30851). URL: <https://arxiv.org/abs/2608.30851v1>.
