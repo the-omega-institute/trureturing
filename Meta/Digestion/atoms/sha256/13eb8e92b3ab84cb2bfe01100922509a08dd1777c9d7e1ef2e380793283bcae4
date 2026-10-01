@@ -1,0 +1,19 @@
+**theorem 8.4 (Clean dense-to-query compiler and decoded count).**
+For every raw conventional word $w$, set $L=|w|$ and $B=L^2+8L+7$. The fixed
+twenty-three-stack Boolean query compiler reaches its clean halt with output
+the unary preprocessor's prepared query for $u(w)$ within
+
+$$
+80(L+1)^2+4B^2+22B+15
+$$
+
+actual transitions. The total physical-query decoder accepts that exact output
+as the densely prepared explicit-universe formula $F(w)$. Its ordinary CNF
+count on the whole declared universe equals the independent conventional
+appearing-name count $C(w)$. The transfer from the dense output stack to the
+preprocessor input is paid symbol by symbol in two actual reversal loops.
+Malformed $w$ therefore reaches the valid zero-variable one-empty-clause
+physical query with count zero. A valid empty-clause source may have that same
+output. This is the complete deterministic prefix before the physical Ask;
+the response and full trace bounds are those of Theorem 7.1.
+

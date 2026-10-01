@@ -1,0 +1,38 @@
+**theorem 6.2 (Paid reverse conversion with declared unused variables).** There
+is one fixed finite Boolean stack machine $R$ such that, for every raw unary
+source word $w$ of length $L$, its clean initial configuration reaches a clean
+halt with conventional output $v(w)$ in at most
+
+$$
+10L^2+41L+33
+$$
+
+actual transitions, and
+
+$$
+|v(w)|\le 4L^2+14L+6.
+$$
+
+Let $E(w)$ be the independently defined ordinary CNF count of the formula on
+its entire explicit universe when the unary whole-word decoder succeeds, and
+zero when it rejects. Then the conventional whole-word decoder succeeds on
+$v(w)$ and $C(v(w))=E(w)$. For an accepted $n$-variable formula $F$, the output
+renames variable $i$ to the canonical binary word consisting of a one followed
+by $i$ zeros, and appends the clause $x_i\lor\neg x_i$ for every $i<n$. Thus every
+declared variable appears, even when absent from $F$, and the appearing-name
+assignment universe is in bijection with all $n$ declared variables. Empty
+formulas, empty clauses, $n=0$, repeated literals and tautologies are included.
+On rejection the conventional output is011000, one empty clause on the empty
+appearing universe, with count zero. Valid unary source0011000 also reaches that
+output.
+
+The reverse program executes the actual unary preprocessor, scans and removes
+query coefficients, writes binary names, restores its unary index counter,
+appends the tautology clauses, reverses the result and clears all scratch
+stacks. The explicit unary header pays for dimension-dependent work and output.
+The appended tautologies belong only to the conventional consumer converter;
+they do not alter the original raw physical clauses, Hamiltonian or partition
+function. Both converter results concern ordinary word execution and assignment
+transport. Their further paid composition with the physical oracle retains the
+same raw clause Hamiltonian and is a separate operational claim.
+

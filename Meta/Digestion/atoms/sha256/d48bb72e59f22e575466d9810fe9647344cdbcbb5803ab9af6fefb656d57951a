@@ -1,0 +1,18 @@
+**theorem 5.2 (Paid lookup with the restored dictionary and first index).**
+For every Boolean query word $q$, every list $D$ of Boolean name words and
+every frame $f$, the fixed nine-stack, twelve-label lookup machine starts
+with query $q$, stream $S(D)$, frame $f$ and all other stacks empty. It
+reaches its terminal label and reset control within
+
+$$
+(2|q|+12)|D|+4|S(D)|+3
+$$
+
+transitions. The query and the entire dictionary stream are restored
+literally, the frame is unchanged, and all candidate, comparison, backup
+and history stacks are empty. The index output is the membership flag
+$\operatorname{decide}(q\in D)$ followed by $\operatorname{idxOf}(q,D)$ true
+symbols. Here the index is the first match and is $|D|$ when no match exists;
+dictionary repetitions are permitted. Extraction, comparison, candidate
+draining and stream restoration are ordinary charged machine transitions.
+

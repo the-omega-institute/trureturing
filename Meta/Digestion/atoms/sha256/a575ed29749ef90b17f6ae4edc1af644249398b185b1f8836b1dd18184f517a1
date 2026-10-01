@@ -1,0 +1,15 @@
+**theorem 5.1 (Whole-name comparison with literal restoration).** For every
+pair of Boolean words $a,b$, every previous output word $o$ and every caller
+frame $f$, the fixed six-stack, four-label comparison machine starts with
+operands $a,b$, empty operand backups, output $o$ and frame $f$. Within
+
+$$
+2(|a|+|b|)+4
+$$
+
+transitions it reaches its terminal label and reset control with operands
+exactly $a,b$, empty backups, output $\operatorname{decide}(a=b)::o$ and the
+unchanged frame $f$. This includes unequal operand lengths, empty words and
+arbitrary spellings. The routine consumes and saves actual bits during
+comparison and restores them with actual stack transfers.
+

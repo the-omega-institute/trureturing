@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a575ed29749ef90b17f6ae4edc1af644249398b185b1f8836b1dd18184f517a1
+  normalized_sha256: sha256:a575ed29749ef90b17f6ae4edc1af644249398b185b1f8836b1dd18184f517a1
+cas_ref: sha256:a575ed29749ef90b17f6ae4edc1af644249398b185b1f8836b1dd18184f517a1
+coverage_gids:
+  - gid: D5/S0/Computability/BinaryNameComparison.name_compare_run
+    target_statement_id: sha256:558212671efc65b1acc77e208c473305e8e3c208b508d75a3b2aea46cc3e6b31
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,13 @@
+**theorem 8.1 (Translated parser endpoint and accepted source spelling).**
+For every raw conventional word $w$, the eighteen-stack dense converter, from
+its clean initialization, reaches its parser-return label within $4|w|+5$
+transitions. Its control is the reset dense-word control. The translated parser
+stacks contain the restored source $w$, an empty saved stack, an empty caller
+frame, the occurrence stream $S(\operatorname{rev}(\operatorname{occurrences}F))$
+when the total conventional decoder returns $F$ and the empty stream otherwise,
+and the singleton acceptance flag. All stacks outside the translated parser
+are empty. For every formula $F$ accepted by that decoder, the whole original
+word is exactly its conventional formula encoding, and every clause of $F$
+has length at most three. This is a parser phase endpoint of the actual dense
+converter; the caller frame is empty.
+

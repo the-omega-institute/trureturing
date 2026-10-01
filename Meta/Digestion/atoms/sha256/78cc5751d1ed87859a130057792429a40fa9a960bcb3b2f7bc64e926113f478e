@@ -1,0 +1,11 @@
+## 6. Paid count-preserving clause word converters
+
+The conventional source alphabet is Boolean. A variable name is a nonempty
+most-significant-bit binary word whose first bit is one. Literal and clause tags
+use the whole-word conventional grammar of Section 5: clauses have at most three
+literals, names are escaped, and the final formula tag consumes the entire word.
+The assignment universe consists exactly of the distinct appearing name words,
+without declaring names of smaller numerical value. Write $C(w)$ for the number
+of assignments satisfying the decoded ordinary CNF; set $C(w)=0$ when the total
+decoder rejects $w$. This count uses ordinary CNF evaluation alone.
+

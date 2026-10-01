@@ -1,0 +1,26 @@
+**theorem 5.3 (Rightmost dictionary construction with a quadratic clock).**
+For every list $A$ of Boolean name words, every frame $f$ and every dimension
+suffix $d$, the fixed eleven-stack, twenty-one-label builder starts with
+source stream $S(\operatorname{rev}A)$, dimension suffix $d$, frame $f$, and
+empty dictionary, index, comparison and backup stacks. Within
+
+$$
+20(|S(A)|+1)^2
+$$
+
+transitions it reaches its terminal label and reset control. Its dictionary
+stream is exactly $S(\operatorname{dedup}A)$, where deduplication retains
+rightmost occurrences in their original relative order. Its dimension
+stack is $|\operatorname{dedup}A|$ true symbols followed by exactly $d$.
+The frame remains $f$; the source, index, candidate, comparison, operand
+backups and history stacks are empty.
+
+The builder scans occurrences from right to left, invokes the actual lookup
+routine, consumes its membership flag, and either drains the already-present
+name or inserts its escaped reversed spelling at the head of the dictionary.
+Each insertion pushes one dimension symbol. The proof follows these actual
+branches and charges extraction, lookup, index draining and writing; the
+quadratic estimate bounds the resulting sum of phase clocks. All stack
+alphabets are Boolean, and the builder has 108 possible finite controls,
+independent of the occurrence list and name lengths.
+

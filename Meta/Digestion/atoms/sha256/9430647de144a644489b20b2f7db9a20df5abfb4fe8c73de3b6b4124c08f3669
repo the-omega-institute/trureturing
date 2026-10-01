@@ -1,0 +1,36 @@
+**theorem 6.1 (Paid dense forward conversion).** There is one fixed finite
+Boolean stack machine $D$ such that, for every raw conventional word $w$ of
+length $L$, its clean initial configuration reaches its clean halted
+configuration with output $u(w)$ in at most
+
+$$
+80(L+1)^2
+$$
+
+actual machine transitions. The output satisfies
+
+$$
+|u(w)|\le L^2+8L+7.
+$$
+
+Its total unary decoder succeeds with an explicitly declared universe and a
+formula $F(w)$ all of whose clauses have width at most three. The ordinary CNF
+count on that entire explicit universe equals $C(w)$. On accepted source words,
+the universe is the length of the occurrence dictionary formed by retaining
+rightmost occurrences in their original relative order. Each original literal
+is relabeled by its first dictionary index. On rejected words the output is
+source0011000, the valid zero-variable one-empty-clause formula, with count zero.
+A valid conventional empty-clause word can have that same output, so output
+equality alone does not identify rejection.
+
+The fixed program translates the whole-word parser, paid dictionary builder
+and restored lookup instruction by instruction. Dimension symbols, candidate
+names, occurrence stream, dictionary, literal indices, backups and output
+occupy ordinary stacks. Its execution proof follows the source grammar and
+actual transfer loops, includes all restoration and output growth, and ends
+with every non-output stack empty and initial control restored. The dictionary
+bijection transports assignments; literal relabeling preserves ordinary CNF
+evaluation, including repeated variables and opposite polarities. No decoder
+certificate, externally supplied dictionary run, or input-dependent control is
+an input to the machine or theorem.
+

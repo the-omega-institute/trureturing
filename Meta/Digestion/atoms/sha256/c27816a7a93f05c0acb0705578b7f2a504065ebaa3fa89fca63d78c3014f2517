@@ -1,0 +1,30 @@
+**theorem 5.4 (All-input conventional parsing with restored source).**
+For every raw Boolean word $w$ and every caller frame $f$, the fixed
+five-stack, four-label, 792-control parser starts with source $w$, frame
+$f$ and empty saved, occurrence and result stacks. Within
+
+$$
+4|w|+5
+$$
+
+transitions it reaches its terminal label and reset control with source
+exactly $w$, empty saved stack and unchanged frame $f$. Its result stack is
+one Boolean symbol, true exactly when the total conventional decoder
+returns a formula $F$. In that accepted case its occurrence stack is
+
+$$
+S(\operatorname{rev}(\operatorname{occurrences}F)).
+$$
+
+On rejection the occurrence stack is empty. Thus incomplete tags or names,
+a leading-zero name, a fourth literal, truncation and trailing symbols
+enter the actual occurrence cleanup branch; every consumed source symbol is
+restored onto its untouched suffix. Occurrences on accepted words are
+written with real pushes while the finite grammar control scans the input.
+
+These are routine boundaries: comparison and lookup retain their operand
+words, and parsing retains the complete raw source. They are the operational
+components for dense-name conversion. Assignment transport, clean complete
+forward and reverse word conversion, and their composition with the paid
+physical protocol require the further converter execution statements.
+

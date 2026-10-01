@@ -269,3 +269,349 @@ oracle-program implementation of the entire phase relation.
 **theorem 5.1 (Full raw-clause physical identities).** For every natural n and every finite list F of raw Boolean clauses over the explicit universe Fin n, put d=2^n and let v_F(a) count the violated clauses of assignment a. Let each Pi_c be the diagonal violation projector, P=diag(0,1), H_F=(n+1)sum_c Pi_c, H=P tensor I+I tensor H_F, and S=sum_a 2^((n+1)(|F|-v_F(a))). At beta=log2 the actual complex exponential trace is Z=3S/2^((n+1)|F|+1), and floor((2/3)Re Z) equals the ordinary CNF satisfying count over every declared assignment. H_F and H are Hermitian; each clause projector is Hermitian and idempotent, depends only on a variable set of cardinality at most its literal length, all clause projectors commute, and the empty-clause projector is I. With H_A=P-I/2 and H_B=H_F+I/2, the normalized centered visible partial trace of H is H_A, half its visible-factor partial trace is H_B, and H=H_A tensor I+I tensor H_B. For every complex visible matrix M, [H,M tensor I]=[P,M] tensor I and its normalized visible conditional-expectation residual is zero. For every real time t and every complex joint matrix R, the actual evolution U=exp(-itH) satisfies Tr_B(U R U*)=U_A Tr_B(R) U_A*, where U_A=exp(-itH_A). Define Gamma(K)=exp(-beta K)/Tr(exp(-beta K)). The actual full Gibbs state is Gamma(H_A) tensor Gamma(H_F), Gamma(H_A)=Gamma(P), Gamma(H_B)=Gamma(H_F), and the hidden marginal is Gamma(H_F); if n=0 that hidden state is the singleton identity. For every visible density state rho, including singular states, its support is contained in Gamma(H_A), the support of rho tensor Gamma(H_F) is contained in Gamma(H), its visible marginal is rho, its extended support-aware relative entropy against Gamma(H) equals that of rho against Gamma(H_A), the corresponding finite trace-log difference is zero, and its extended relative entropy against itself is zero. All these identities use the identical H and H_F, without an assumed partition/count certificate or full-rank hypothesis on rho.
 
 ## Append Anchor 5
+## 6. Conventional binary names and actual dictionary routines
+
+A conventional name is a positive most significant bit first binary spelling.
+Its word representation replaces each bit $b$ by the pair $1b$ and appends a
+zero terminator. Write $E(a)$ for this escaped representation of a Boolean
+word $a$, and define the dictionary stream of a list $D$ of names by
+
+$$
+S(D)=E(\operatorname{rev}(D_1))\cdots E(\operatorname{rev}(D_{|D|})).
+$$
+
+The conventional clause word has a clause prefix `01`, a literal prefix
+`11` followed by its Boolean polarity and escaped name, a clause terminator
+`10`, and a final formula terminator `00`. Each clause has at most three
+literals. Names have leading bit one. There is no declared variable-universe
+header. The independently defined count ranges over Boolean assignments to
+exactly the distinct names appearing in the parsed clauses, evaluates the
+ordinary CNF, and assigns zero to malformed words. The empty formula has one
+assignment, and an empty clause rejects every assignment.
+
+**theorem 6.1 (Whole-name comparison with literal restoration).** For every
+pair of Boolean words $a,b$, every previous output word $o$ and every caller
+frame $f$, the fixed six-stack, four-label comparison machine starts with
+operands $a,b$, empty operand backups, output $o$ and frame $f$. Within
+
+$$
+2(|a|+|b|)+4
+$$
+
+transitions it reaches its terminal label and reset control with operands
+exactly $a,b$, empty backups, output $\operatorname{decide}(a=b)::o$ and the
+unchanged frame $f$. This includes unequal operand lengths, empty words and
+arbitrary spellings. The routine consumes and saves actual bits during
+comparison and restores them with actual stack transfers.
+
+**theorem 6.2 (Paid lookup with the restored dictionary and first index).**
+For every Boolean query word $q$, every list $D$ of Boolean name words and
+every frame $f$, the fixed nine-stack, twelve-label lookup machine starts
+with query $q$, stream $S(D)$, frame $f$ and all other stacks empty. It
+reaches its terminal label and reset control within
+
+$$
+(2|q|+12)|D|+4|S(D)|+3
+$$
+
+transitions. The query and the entire dictionary stream are restored
+literally, the frame is unchanged, and all candidate, comparison, backup
+and history stacks are empty. The index output is the membership flag
+$\operatorname{decide}(q\in D)$ followed by $\operatorname{idxOf}(q,D)$ true
+symbols. Here the index is the first match and is $|D|$ when no match exists;
+dictionary repetitions are permitted. Extraction, comparison, candidate
+draining and stream restoration are ordinary charged machine transitions.
+
+**theorem 6.3 (Rightmost dictionary construction with a quadratic clock).**
+For every list $A$ of Boolean name words, every frame $f$ and every dimension
+suffix $d$, the fixed eleven-stack, twenty-one-label builder starts with
+source stream $S(\operatorname{rev}A)$, dimension suffix $d$, frame $f$, and
+empty dictionary, index, comparison and backup stacks. Within
+
+$$
+20(|S(A)|+1)^2
+$$
+
+transitions it reaches its terminal label and reset control. Its dictionary
+stream is exactly $S(\operatorname{dedup}A)$, where deduplication retains
+rightmost occurrences in their original relative order. Its dimension
+stack is $|\operatorname{dedup}A|$ true symbols followed by exactly $d$.
+The frame remains $f$; the source, index, candidate, comparison, operand
+backups and history stacks are empty.
+
+The builder scans occurrences from right to left, invokes the actual lookup
+routine, consumes its membership flag, and either drains the already-present
+name or inserts its escaped reversed spelling at the head of the dictionary.
+Each insertion pushes one dimension symbol. The proof follows these actual
+branches and charges extraction, lookup, index draining and writing; the
+quadratic estimate bounds the resulting sum of phase clocks. All stack
+alphabets are Boolean, and the builder has 108 possible finite controls,
+independent of the occurrence list and name lengths.
+
+**theorem 6.4 (All-input conventional parsing with restored source).**
+For every raw Boolean word $w$ and every caller frame $f$, the fixed
+five-stack, four-label, 792-control parser starts with source $w$, frame
+$f$ and empty saved, occurrence and result stacks. Within
+
+$$
+4|w|+5
+$$
+
+transitions it reaches its terminal label and reset control with source
+exactly $w$, empty saved stack and unchanged frame $f$. Its result stack is
+one Boolean symbol, true exactly when the total conventional decoder
+returns a formula $F$. In that accepted case its occurrence stack is
+
+$$
+S(\operatorname{rev}(\operatorname{occurrences}F)).
+$$
+
+On rejection the occurrence stack is empty. Thus incomplete tags or names,
+a leading-zero name, a fourth literal, truncation and trailing symbols
+enter the actual occurrence cleanup branch; every consumed source symbol is
+restored onto its untouched suffix. Occurrences on accepted words are
+written with real pushes while the finite grammar control scans the input.
+
+These are routine boundaries: comparison and lookup retain their operand
+words, and parsing retains the complete raw source. They are the operational
+components for dense-name conversion. Assignment transport, clean complete
+forward and reverse word conversion, and their composition with the paid
+physical protocol require the further converter execution statements.
+
+## Append Anchor 6
+
+## 7. Paid count-preserving clause word converters
+
+The conventional source alphabet is Boolean. A variable name is a nonempty
+most-significant-bit binary word whose first bit is one. Literal and clause tags
+use the whole-word conventional grammar of Section 6: clauses have at most three
+literals, names are escaped, and the final formula tag consumes the entire word.
+The assignment universe consists exactly of the distinct appearing name words,
+without declaring names of smaller numerical value. Write $C(w)$ for the number
+of assignments satisfying the decoded ordinary CNF; set $C(w)=0$ when the total
+decoder rejects $w$. This count uses ordinary CNF evaluation alone.
+
+**theorem 7.1 (Paid dense forward conversion).** There is one fixed finite
+Boolean stack machine $D$ such that, for every raw conventional word $w$ of
+length $L$, its clean initial configuration reaches its clean halted
+configuration with output $u(w)$ in at most
+
+$$
+80(L+1)^2
+$$
+
+actual machine transitions. The output satisfies
+
+$$
+|u(w)|\le L^2+8L+7.
+$$
+
+Its total unary decoder succeeds with an explicitly declared universe and a
+formula $F(w)$ all of whose clauses have width at most three. The ordinary CNF
+count on that entire explicit universe equals $C(w)$. On accepted source words,
+the universe is the length of the occurrence dictionary formed by retaining
+rightmost occurrences in their original relative order. Each original literal
+is relabeled by its first dictionary index. On rejected words the output is
+source0011000, the valid zero-variable one-empty-clause formula, with count zero.
+A valid conventional empty-clause word can have that same output, so output
+equality alone does not identify rejection.
+
+The fixed program translates the whole-word parser, paid dictionary builder
+and restored lookup instruction by instruction. Dimension symbols, candidate
+names, occurrence stream, dictionary, literal indices, backups and output
+occupy ordinary stacks. Its execution proof follows the source grammar and
+actual transfer loops, includes all restoration and output growth, and ends
+with every non-output stack empty and initial control restored. The dictionary
+bijection transports assignments; literal relabeling preserves ordinary CNF
+evaluation, including repeated variables and opposite polarities. No decoder
+certificate, externally supplied dictionary run, or input-dependent control is
+an input to the machine or theorem.
+
+**theorem 7.2 (Paid reverse conversion with declared unused variables).** There
+is one fixed finite Boolean stack machine $R$ such that, for every raw unary
+source word $w$ of length $L$, its clean initial configuration reaches a clean
+halt with conventional output $v(w)$ in at most
+
+$$
+10L^2+41L+33
+$$
+
+actual transitions, and
+
+$$
+|v(w)|\le 4L^2+14L+6.
+$$
+
+Let $E(w)$ be the independently defined ordinary CNF count of the formula on
+its entire explicit universe when the unary whole-word decoder succeeds, and
+zero when it rejects. Then the conventional whole-word decoder succeeds on
+$v(w)$ and $C(v(w))=E(w)$. For an accepted $n$-variable formula $F$, the output
+renames variable $i$ to the canonical binary word consisting of a one followed
+by $i$ zeros, and appends the clause $x_i\lor\neg x_i$ for every $i<n$. Thus every
+declared variable appears, even when absent from $F$, and the appearing-name
+assignment universe is in bijection with all $n$ declared variables. Empty
+formulas, empty clauses, $n=0$, repeated literals and tautologies are included.
+On rejection the conventional output is011000, one empty clause on the empty
+appearing universe, with count zero. Valid unary source0011000 also reaches that
+output.
+
+The reverse program executes the actual unary preprocessor, scans and removes
+query coefficients, writes binary names, restores its unary index counter,
+appends the tautology clauses, reverses the result and clears all scratch
+stacks. The explicit unary header pays for dimension-dependent work and output.
+The appended tautologies belong only to the conventional consumer converter;
+they do not alter the original raw physical clauses, Hamiltonian or partition
+function. Both converter results concern ordinary word execution and assignment
+transport. Their further paid composition with the physical oracle retains the
+same raw clause Hamiltonian and is a separate operational claim.
+
+## Append Anchor 7
+
+## 8. Conventional word execution through the physical query
+
+**theorem 8.1 (Paid conventional physical query and ordinary count recovery).**
+Use the independent appearing-name convention of Section 7. For every raw
+Boolean source word $w$, let $L=|w|$, $B=L^2+8L+7$, and let $F(w)$ be the total
+densely prepared explicit-universe formula. The fixed finite query compiler
+executes actual dense naming, pays for transferring its output to the unary
+query constructor, and reaches the exact clean query configuration for the raw
+clauses of $F(w)$. Its twenty-three Boolean stacks, labels and finite control are
+fixed independently of $w$.
+
+The physical phase has a response word $r$ satisfying exactly the positive
+rational trace relation: for some $z\in\mathbb Q$,
+
+$$
+z>0,\qquad z=\operatorname{Tr}\exp[-(\log 2)H_{F(w)}]
+$$
+
+under the complex embedding, and $r$ is the canonical reduced binary numerator,
+slash and denominator of $z$. This relation has no clause-count, dyadic,
+divisibility or arithmetic-suitability hypothesis. The denominator is spelled
+explicitly even when it is one. The response obeys
+
+$$
+|r|\le 2(B+1)^2+B+5.
+$$
+
+There is an actual complete counted trace from the compiler's clean input to
+the postprocessor's exact clean halt, using that response, of length at most
+
+$$
+80(L+1)^2+20B^2+72B+87.
+$$
+
+The trace performs precisely one distinguished physical Ask. It reads the
+external response stream symbol by symbol, writes every symbol to ordinary
+stacks, reverses the written word and executes the fixed four-stack
+postprocessor. The most significant bit first ordinary output represents
+$C(w)$, the independently defined satisfying assignment count of the raw
+conventional word. Every complete trace starting at this same clean input has
+exactly one Ask, not merely the constructed witness trace.
+
+Malformed sources pass through the valid zero-variable one-empty-clause
+physical query and still perform one Ask. A valid empty-clause source may
+produce that same query. Acceptance is therefore determined by the source
+decoder and execution phase, never by equality with the fallback query. The
+Hamiltonian in this trace uses the original densely renamed raw clauses with
+coefficient $n+1$, the full visible factor $3/2$, and inverse temperature
+$\log 2$. The reverse converter's unused-variable tautologies do not enter the
+physical clauses. The direct clock follows actual finite instructions and
+paid transfer loops; it does not assume a general polynomial composition
+principle or instantaneous response loading.
+
+## Append Anchor 8
+
+## 9. Exact paid phase boundaries of the finite converters
+
+Use the escaped names, rightmost dictionary, ordinary clause grammar and
+independent total decoders of Sections 6 and 7. All words are most significant
+bit first Boolean lists. An execution bound counts applications of the actual
+fixed machine step. A clean halt has the output on its designated stack, every
+other stack empty, the initial finite control restored and no remaining label.
+
+**theorem 9.1 (Translated parser endpoint and accepted source spelling).**
+For every raw conventional word $w$, the eighteen-stack dense converter, from
+its clean initialization, reaches its parser-return label within $4|w|+5$
+transitions. Its control is the reset dense-word control. The translated parser
+stacks contain the restored source $w$, an empty saved stack, an empty caller
+frame, the occurrence stream $S(\operatorname{rev}(\operatorname{occurrences}F))$
+when the total conventional decoder returns $F$ and the empty stream otherwise,
+and the singleton acceptance flag. All stacks outside the translated parser
+are empty. For every formula $F$ accepted by that decoder, the whole original
+word is exactly its conventional formula encoding, and every clause of $F$
+has length at most three. This is a parser phase endpoint of the actual dense
+converter; the caller frame is empty.
+
+**theorem 9.2 (Complete dense execution with the explicit phase clock).**
+For every raw conventional word $w$, the fixed eighteen-stack dense machine
+reaches its clean halt with output $u(w)$ defined in Theorem 7.1. Write $L=|w|$.
+On decoder rejection its clock is $5L+15$. On acceptance of $F$, put
+$d=\operatorname{dedup}(\operatorname{occurrences}F)$ and
+$s=|S(\operatorname{occurrences}F)|$. Define the literal and clause clocks by
+
+$$
+\begin{aligned}
+t_d(a,\epsilon)
+ &= (2|a|+12)|d|+4|S(d)|+3+4|a|
+    +\operatorname{idxOf}(a,d)+8,\\
+t_d(c)&=\sum_{\ell\in c}t_d(\ell)+4.
+\end{aligned}
+$$
+
+The complete accepted execution is bounded by
+
+$$
+4L+5+1+20(s+1)^2+(|d|+1)
+ +\left(\sum_{c\in F}t_d(c)+2\right)
+ +(|S(d)|+1)+(|u(w)|+1).
+$$
+
+The accepted decoder also implies $w$ is exactly the conventional encoding
+of $F$ and every clause of $F$ has length at most three. The clock includes
+the actual parser return, rightmost dictionary construction, dimension output,
+restored name lookup, index writing, dictionary draining and output reversal.
+Rejection drains its actual remaining source and emits the valid zero-variable
+one-empty-clause unary source. This execution statement does not by itself
+assert the assignment-count correspondence of Theorem 7.1.
+
+**theorem 9.3 (Complete reverse execution with the explicit phase clock).**
+For every raw unary word $w$, let $(n,F)$ be its total prepared explicit-universe
+formula: the decoder's formula on acceptance and the zero-variable
+one-empty-clause formula on rejection. Let $v(w)$ be the conventional output
+of Theorem 7.2. The fixed ten-stack reverse machine reaches its exact clean
+halt with output $v(w)$ within
+
+$$
+(4|w|+20)|w|+13
+ +\sum_{c\in F}\left(n+6+\sum_{(i,\epsilon)\in c}(i+4)\right)
+ +2+n(n+3)+2n+6+|v(w)|
+$$
+
+actual transitions. The execution includes the complete total unary
+preprocessor, coefficient removal, canonical binary name writing, restored
+index counters, one tautology for every declared variable and output reversal.
+Those tautologies occur only in $v(w)$; they do not enter the raw physical
+formula. This statement supplies the actual execution before the decoder and
+assignment-count refinement of Theorem 7.2.
+
+**theorem 9.4 (Clean dense-to-query compiler and decoded count).**
+For every raw conventional word $w$, set $L=|w|$ and $B=L^2+8L+7$. The fixed
+twenty-three-stack Boolean query compiler reaches its clean halt with output
+the unary preprocessor's prepared query for $u(w)$ within
+
+$$
+80(L+1)^2+4B^2+22B+15
+$$
+
+actual transitions. The total physical-query decoder accepts that exact output
+as the densely prepared explicit-universe formula $F(w)$. Its ordinary CNF
+count on the whole declared universe equals the independent conventional
+appearing-name count $C(w)$. The transfer from the dense output stack to the
+preprocessor input is paid symbol by symbol in two actual reversal loops.
+Malformed $w$ therefore reaches the valid zero-variable one-empty-clause
+physical query with count zero. A valid empty-clause source may have that same
+output. This is the complete deterministic prefix before the physical Ask;
+the response and full trace bounds are those of Theorem 8.1.
+
+## Append Anchor 9
