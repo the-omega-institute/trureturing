@@ -512,3 +512,56 @@ integer satisfying (A4), once $n_0$ is large enough for the preceding
 eventual bounds. This gives a quadratic-scale stopping interval for
 this observation; no effective starting threshold or bound for gaps
 between actual Robin violations is supplied.
+
+### Recurring doubling activations improve the unbounded-subset rate
+
+The layer-refined chain processes every prime-power layer, so it has
+infinitely many steps with $p_j=2$. This additional relation improves
+the unbounded-subset bound, without changing the finite stopping
+hypotheses of (A5).
+
+Suppose every sufficiently late member of such a complete chain had
+$|E(n)|\le1/[100\log n]$. At every late step, (A3) and $p_j\le4L_j$
+give
+
+$$
+|E(n_{j+1})-p_jE(n_j)|
+\le\frac{p_j+1}{100L_j}\le\frac1{20}.
+$$
+
+Choose a late doubling step. Here $t=2h_j-h_{j+1}$ has $|t|\le2$,
+and (A2) would give at least $1/12$ if $t\ne0$. Thus both unit bits
+are zero, and the remaining integer difference is zero. Once the
+current bit is zero, the next arbitrary prime step has
+$t=-h_{j+1}\in\{0,-1\}$. The nonzero alternative would give at least
+$1/6$, so the bit stays zero and $E(n_{j+1})=p_jE(n_j)$.
+
+Induction after that doubling step contradicts $E(n)\to0$, since the
+initial nonzero residual scales by the unbounded ratio of the actual
+integers. Therefore every complete layer-refined CA chain contains
+arbitrarily large members with $|E(n)|>1/[100\log n]$.
+
+For those same members, $c\ge2(n-h)$ and (A1) give
+$|D(n)|\ge(2+\sqrt5)(n-1)|E(n)|-5$. Hence an unbounded subset obeys
+the stronger rate
+
+$$
+\boxed{|D(n)|>\frac{n}{100\log n}.}
+\tag{A6}
+$$
+
+This still makes no assertion about the distribution of the witnesses
+or a thinning that omits the recurring doubling steps. For a nonsquare
+witness, write $D=f^2\Delta$ with $\Delta$ a signed fundamental
+discriminant and $q=|\Delta|$ the primitive quadratic conductor.
+If an independent same-candidate bound $q\le C(\log n)^K$ held, then
+(A6) would require
+
+$$
+f^2>\frac{n}{100C(\log n)^{K+1}}.
+$$
+
+Thus a small-conductor route must also account for a square factor of
+that size on these witnesses. This conditional alternative supplies
+neither a lower bound for $q$ nor a bound for the faithful exception
+mask; square $D$ remains outside the nonprincipal-character application.
