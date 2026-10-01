@@ -38,13 +38,11 @@ def atomicTransition {m : ℕ} : RawState m → Action → RawState m
   | none, .mu => none
   | some (s, x), .mu => some (s, step x)
 
-def atomicOutput {m : ℕ} : RawState m → Option (ZMod m) := rawOutput
-
 def atomicMachine (m : ℕ) : DFAO Action (Option (ZMod m)) (RawState m) where
   step := atomicTransition
   start := some (false, (0, 0))
   accept := ∅
-  output := atomicOutput
+  output := rawOutput
 
 def atomicTask (m : ℕ) (w : List Action) : Option (ZMod m) :=
   (atomicMachine m).evalOutput w
@@ -93,16 +91,16 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
   have observation_injective := Finite.injective_iff_surjective.mpr observation_onto
   have distinguish (q r : RawState m) (hne : q ≠ r) :
       ∃ w : List Action,
-        atomicOutput ((atomicMachine m).toDFA.evalFrom q w) ≠
-          atomicOutput ((atomicMachine m).toDFA.evalFrom r w) := by
+        rawOutput ((atomicMachine m).toDFA.evalFrom q w) ≠
+          rawOutput ((atomicMachine m).toDFA.evalFrom r w) := by
     cases q with
     | none =>
       cases r with
       | none => exact (hne rfl).elim
-      | some r => exact ⟨[], by simp [atomicMachine, atomicOutput, rawOutput]⟩
+      | some r => exact ⟨[], by simp [atomicMachine, rawOutput]⟩
     | some q =>
       cases r with
-      | none => exact ⟨[], by simp [atomicMachine, atomicOutput, rawOutput]⟩
+      | none => exact ⟨[], by simp [atomicMachine, rawOutput]⟩
       | some r =>
         rcases q with ⟨s, x⟩
         rcases r with ⟨t, y⟩
@@ -115,31 +113,31 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
               simp [hst, hxy]
             refine ⟨[.window .high], ?_⟩
             cases s <;> cases t <;>
-              simp [atomicMachine, atomicOutput, atomicTransition,
+              simp [atomicMachine, atomicTransition,
                 rawTransition, rawOutput, first, last, hxy] at hst ⊢
           · exact ⟨[.mu], by
-              simpa [atomicMachine, atomicOutput, atomicTransition, rawOutput,
+              simpa [atomicMachine, atomicTransition, rawOutput,
                 step, quantity] using h1⟩
         · exact ⟨[], by
-            simpa [atomicMachine, atomicOutput, rawOutput] using h0⟩
+            simpa [atomicMachine, rawOutput] using h0⟩
   let history (q : RawState m) := Classical.choose (reachable q)
   have hp (q : RawState m) :
       (atomicMachine m).toDFA.eval (history q) = q :=
     Classical.choose_spec (reachable q)
   have sep (q r : RawState m) : ∃ w : List Action, q ≠ r →
-      atomicOutput ((atomicMachine m).toDFA.evalFrom q w) ≠
-        atomicOutput ((atomicMachine m).toDFA.evalFrom r w) := by
+      rawOutput ((atomicMachine m).toDFA.evalFrom q w) ≠
+        rawOutput ((atomicMachine m).toDFA.evalFrom r w) := by
     by_cases h : q = r
     · exact ⟨[], fun hn => (hn h).elim⟩
     · obtain ⟨w, hw⟩ := distinguish q r h
       exact ⟨w, fun _ => hw⟩
   have history_output (q : RawState m) (w : List Action) :
       atomicTask m (history q ++ w) =
-        atomicOutput ((atomicMachine m).toDFA.evalFrom q w) := by
+        rawOutput ((atomicMachine m).toDFA.evalFrom q w) := by
     rw [← correct (Set.mem_univ _)]
-    change atomicOutput ((atomicMachine m).toDFA.evalFrom _ (history q ++ w)) = _
+    change rawOutput ((atomicMachine m).toDFA.evalFrom _ (history q ++ w)) = _
     rw [DFA.evalFrom_of_append]
-    change atomicOutput ((atomicMachine m).toDFA.evalFrom
+    change rawOutput ((atomicMachine m).toDFA.evalFrom
       ((atomicMachine m).toDFA.eval (history q)) w) = _
     rw [hp]
   let certificate : DistinguishingFamily Set.univ (atomicTask m) (RawState m) := {

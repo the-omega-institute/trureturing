@@ -43,7 +43,6 @@ internal sealed class AtomicActionStateCapacityDocument : IScribeDocumentDefinit
             Definition("Action", "The extended alphabet", "An input is either a five-window symbol or the atomic action mu."),
             Definition("atomicTransition", "Window and atomic transitions", "Window symbols use the raw affine transition. "
                 + "On a live state (s,x), mu sends it to (s,Mx), and mu preserves the error state."),
-            Definition("atomicOutput", "Immediate output", "A live state returns its current quantity modulo m; the error state returns the distinguished error label."),
             Definition("atomicMachine", "The initialized extended reader", "The reader starts at seam zero and composition (0,0), and evaluates every finite extended word."),
             Definition("atomicTask", "The extended finite-word task", "The task is the immediate output after every finite word over the five windows and mu."),
             Definition("capacity", "Complete state count", "N(m)=2m^2+1, counting both seam values for every composition and one error state."),
@@ -80,4 +79,3 @@ internal sealed class AtomicActionStateCapacityDocument : IScribeDocumentDefinit
             And(Call("FiniteState", stateType), EqOf(Call("card", stateType), n), upper, lower))));
     }
 }
-
