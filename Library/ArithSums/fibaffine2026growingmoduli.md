@@ -363,6 +363,25 @@ $$
 
 当前 $V=F_r$ 不假设为素数，且 $Y=V^{o(1)}$，相当于光滑度指数趋于0，超出该固定 $\beta$ 范围。它给存在性下界，本来也不是排除 Robin 反例的上界。不能因目标中出现逆元、素指标、光滑核心等相同术语就转移其结论。
 
+## 全部低亏损除数的范围与退化端点
+
+上面的完整赋值光滑核心 $C$ 及其粗余因子 $H$，与 [FIB §232—233](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md) 的任意低亏损除数 $d$ 及其补因子 $h=N/d$ 是不同分解；同价 CA 参考 $C_s$ 也不是这个 $C$。它们不能共用未证的素数下界或余因子阈值。
+
+对实际来源仍取
+
+$$
+V=F_r,\quad r>5\text{ 为素数},\quad
+\lceil V/10\rceil\le k\le\lfloor V/5\rfloor,\quad N=1+Vk>5040.
+$$
+
+§231 的大除数分支还要求 $d>X/\exp(aR)$，从而给 $h<\exp(aR)$；§232—233 的全部低亏损除数不保留这项阈值。前一节取 $M=\lfloor\exp(a_0y/\log^2y)\rfloor$ 所做的逆元消去比较，因而只覆盖相应旧子分支的端点比较，不能扩大成所有 §233 候选的补因子界。
+
+[Erdős–Nicolas 来源笔记](erdosnicolas1975repartition.md)的 “Low increment loss supplies a smaller reconstruction height” 已给低亏损集合的 $O_K(y/\log y)$ 编辑高度；[Monagan 来源笔记](../Arith/monagan2004reconstruction.md)的 “Whole-host bounds and actual-source filters” 已处理完整补因子约分。这些结果直接复用，不另造重建定理；可取得唯一共同来源仍不提供价格损失的符号。
+
+令 $c=\gcd(d,C_s)$、$b=C_s/c$、$\tau=\gcd(h,b)$。已有完整补因子公式保留如下退化端点：$h=1$ 时没有新增补因子成本；$h=\tau$ 时补因子只恢复缺失的参考素幂层，没有外加素幂成本。若全部素因子很小，也不能先当作粗余因子收费。这些是必须覆盖的代数情形，尚未断言它们在一个实际未支付候选上发生。
+
+所需估计仍是 [同价价格笔记](erdosnicolas1975repartition.md)中同一个实际 $N$ 的 $D_s(N)>T_s(N)$，或直接支付 FIB §233.5 的完整低亏损与高亏损贡献。参考 $C_s$ 保留全部零成本 ties；实际素幂重数、乘积窗口、指定余类和低亏损条件须同时保留。仅在旧大除数分支证明估计、仅在 $F_r$ 另外为素数时得到消去，或只对无权逆元的整体给相对误差，都不是这个全范围结论。
+
 ## 仍缺的联合关系
 
 在这里列明的原文范围内，未找到可以直接用于当前参数、当前指定模数和当前剩余类的逐点排除定理。这个陈述只针对上述已读原文范围，不能推出不存在适用文献或当前路线原创。
