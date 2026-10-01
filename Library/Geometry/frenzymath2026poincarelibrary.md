@@ -2013,3 +2013,111 @@ uniqueness, constructing the ambient lattice conjugator and completing the
 full Mostow–Prasad endpoint remain unfinished, including cusps and
 nonorientable manifolds. The compatible original-H3 geometric inputs
 remain explicit supplied premises.
+
+
+### A Lorentz linear equivalence induces an actual H3 isometry
+
+A real linear equivalence of the same four-dimensional Lorentz coordinates
+that preserves the bilinear kernel and maps one supplied actual H3 point
+to another now yields a full isometric bijection of the original H3, with
+that same linear equivalence agreeing with its coordinates at every point.
+Neither an ambient isometry nor positivity at every point is assumed.
+
+The original H3 contractibility supplies connectedness. For every H3
+point the transformed coordinate vector has self-kernel one; its light
+difference cannot vanish, since vanishing would make that self-kernel the
+negative sum of two squares. Continuity of the same linear equivalence
+and the established coordinate map, together with the intermediate value
+theorem and positivity at the supplied mapped point, forces positive
+light difference everywhere. Kernel preservation by the inverse and the
+same mapped-point identity give the inverse positivity statement. The
+established future-unit inverse therefore constructs both maps. Their
+coordinate identities and the existing coordinate injectivity prove both
+inverse laws. The same Lorentz kernel/cosh-distance identity and cosh
+injectivity on nonnegative distances prove preservation of the original
+H3 metric.
+
+One serial scoped transient cache-guarded check exited zero with two axiom
+closures containing only propext, Classical.choice and Quot.sound. One
+haveILetI style warning is recorded, with no rejected converse source.
+Default resources and the original metric are retained. This is classical
+reuse/composition; no tracked Lean or novelty claim.
+
+This is a converse model interface. It does not yet construct a Lorentz
+linear equivalence extending an arbitrary locally distance-preserving
+lift; small spanning frames inside arbitrary neighborhoods and their
+local extensions remain to be proved. Global lift identification, general
+target uniqueness, ambient lattice conjugator existence and the full
+finite-volume cusped/nonorientable Mostow–Prasad endpoint remain open.
+The linked escape audit remains unfinished; new registrations are paused
+by the synchronized repository instructions.
+
+
+### From local distance preservation to the same full ambient H3 isometry
+
+The local-to-global metric obligation is now discharged in the original
+H3: any map that preserves every pairwise distance on some positive ball
+at every point equals a unique full original-H3 isometric bijection at
+all points. No smoothness, global distance preservation, injectivity,
+surjectivity, orientation or supplied linear extension is assumed. The
+map need not be supplied as continuous for this implication. Uniqueness
+here concerns the full ambient isometry agreeing with this same map.
+
+The small-frame gap identified above is now closed. At the reference
+point, the four coordinate points (0,1), (0,1+d²), (d,1) and (di,1) vary
+continuously with the real parameter d and coincide at d=0. For d>0,
+their Lorentz vectors are independent: the two horizontal coordinates
+detect two coefficients, the nonzero vertical coordinate detects the
+third, and the time coordinate detects the fourth. A sufficiently small
+positive parameter places all four in any reference ball. The existing
+actual H3 transitivity and its Lorentz representation transport this
+frame into any positive-radius ball without changing the metric.
+
+For a map preserving all pairwise distances on such a ball, the image
+frame has the same Lorentz Gram matrix. Basis expansion and the same
+nondegenerate kernel prove its independence. The resulting real linear
+basis equivalence preserves the kernel everywhere, and distances to the
+frame prove its coordinate agreement with the map at every point of the
+same ball. The preceding Lorentz converse supplies a full ambient
+isometry agreeing there. Two actual ambient isometries agreeing on any
+positive ball agree everywhere, by the contained spanning frame and the
+existing coordinate representation. Choose one local extension; the
+points where it agrees with the map on a neighborhood form a nonempty
+open and closed set. At a closure point, another local extension overlaps
+one of those neighborhoods; ball agreement forces the two extensions
+equal. Original H3 contractibility supplies connectedness, giving the
+same full isometry at every point. This propagates neighborhood agreement
+rather than only equality at one point.
+
+The exact application retains the previously constructed target fiber
+point, continuous lift L, homomorphism tau and deck isomorphism d for the
+prescribed intrinsic-distance-preserving homotopy equivalence. It keeps
+d.toMonoidHom=tau, the basepoint equality, projection, equivariance,
+fundamental-group binding and local extended-distance identities. The
+latter are converted to distances in the original metric. The new full
+ambient isometry equals that same L at every point, and its exact
+conjugacy of the supplied actual full-deck representations follows from
+that same equivariance. Uniqueness is only among ambient isometries
+pointwise equal to this selected L; it is not general uniqueness of
+isometric representatives in a homotopy class. Compatible original-H3/base
+structures, T3Spaces, intrinsic metric compatibility, local covering
+diffeomorphisms, tangent inner preservation and forward intrinsic
+distance preservation remain supplied in this application.
+
+Five serial scoped transient cache-guarded checks, including the earlier
+reviewed Lorentz converse, exited zero and printed twelve axiom closures
+using only propext, Classical.choice and Quot.sound. 3 style warnings
+are recorded. Two rejected small-frame source/log pairs are preserved
+and excluded; normalized zero equations produced disjunctions, and a
+local parameter-continuity helper needed explicit real-domain types. The
+repairs keep the theorem telescopes and original metric unchanged. No
+resource increase, suppression, tracked Lean or novelty claim is made.
+
+This closes the metric local-to-global lift step, including its exact
+same-lift/deck-isomorphism application for an already distance-preserving
+prescribed map. It does not prove an arbitrary homotopy equivalence has
+an isometric representative, ambient lattice conjugator existence,
+general target uniqueness or the full finite-volume cusped/nonorientable
+Mostow–Prasad endpoint. The compatible original geometric inputs remain
+explicit. The linked escape audit is unfinished; new registration work
+remains paused by the repository instructions.
