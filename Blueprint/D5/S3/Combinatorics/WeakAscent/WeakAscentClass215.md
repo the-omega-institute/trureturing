@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/WeakAscent/WeakAscentClass215.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/WeakAscent/WeakAscentClass215.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/callan-mansour-weak-ascent-class-215` (proved) by `D5/S3/Combinatorics/WeakAscent/WeakAscentClass215.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"callan-mansour-weak-ascent-class-215","declaration_gid":"D5/S3/Combinatorics/WeakAscent/WeakAscentClass215.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* David Callan, Toufik Mansour (2025). *Ascent Sequences and Weak Ascent Sequences Avoiding a Quadruple of Length-3 Patterns*. DOI: [10.5281/zenodo.17144266](https://doi.org/10.5281/zenodo.17144266). URL: <https://math.colgate.edu/~integers/z80/z80.pdf>.

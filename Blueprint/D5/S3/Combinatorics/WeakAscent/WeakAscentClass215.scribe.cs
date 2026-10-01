@@ -12,7 +12,8 @@ internal sealed class WeakAscentClass215Document : IScribeDocumentDefinition
         H("Equinumerosity of the Weak Ascent Sequence Classes in Class 215"),
         Blocks(
             Node("weak-ascent-weakascentclass215-result", "The Class 215 equinumerosity", "result",
-                "For every nonnegative integer n, the number of weak ascent sequences of length n avoiding 100, 101, 110 and 201 equals the number avoiding 021, 101, 201 and 210.", DescribeRole.Theorem)),
+                "For every nonnegative integer n, the number of weak ascent sequences of length n avoiding 100, 101, 110 and 201 equals the number avoiding 021, 101, 201 and 210.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("callan-mansour-weak-ascent-class-215"), ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,
