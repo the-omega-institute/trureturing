@@ -9545,3 +9545,81 @@ The claim is only for the ordering of these fixed groups within this comb constr
 ### The remaining budget obligation
 
 NF99 is an exact static test for existence of some finite deep continuation of these forced actual parent jobs. It does not decide whether any continuation satisfies the strict original lexicographic budget: feasibility and affordable transport are different statements. NF102--NF103 give a computable sufficient candidate cost after a Hall allocation; failure of that candidate's cost does not rule out a cheaper noncomb cut. The existing weighted finite-horizon search and fixed-frontier minimum-cost assignment remain available for the full strict-budget question. No condition NF99 has been proved for every hypothetical odd cover, and no unrestricted Erdős#7 conclusion follows from this interface alone. These are ordinary mathematical applications and interface deductions, with no new Lean verification or literature-priority claim.
+
+## 65. All-root injections charge every deleted mixed original
+
+Keep the same EB1-selected original cover, support primes p>q and
+section62's actual root batches. Let t count its mixed p*q-bearing
+originals. A globally injective frontier allocation into ALL p roots,
+respecting its actual lists F_b,T_b, satisfies
+
+    sum_b R_sigma(b)<=sum_a R_a<t+sum_a R_a
+      whenever t>0.                                (NF104)
+
+By NF93--NF94 this would strictly reduce the original class count.
+Such a matching is therefore forbidden when t>0. Literal root0 may
+be used: the strict saving is supplied by the deleted mixed originals,
+without requiring deletion of pure p. This directly reuses the
+weighted transport and its exact inventory, not a new witness map.
+
+### The fresh-level mixed-label bound gains one class
+
+Let H be the full original q-height. Choose all actual pure-q guards
+and use the uniform fresh depth H+1. Section59 gives
+
+    ell_H=((q-2)*q^H+1)/(q-1),
+    ell=q*ell_H
+
+live words, with no numerical collision reservations. Then
+
+    t>=p-q*ell_H+1.                                 (NF105)
+
+If p-ell+1<=0, this follows from t>=0. Otherwise ell<=p. Since ell
+is a positive multiple of q and p is a different prime, ell!=p.
+The existing NF79 consequently gives t>=p-ell>=1.
+
+Let F be the set of actual first-p roots of all t mixed originals,
+so |F|<=t. If t<=p-ell, at least p-t>=ell roots lie outside F.
+Every such root is allowed at every live word, because the fresh
+collision lists are empty. A full injection into these roots would
+contradict NF104. Thus t>=p-ell+1, proving NF105.
+
+The count uses one global set of actual mixed roots. It does not
+charge a deeper mixed original separately at every compatible prefix,
+and it places no restriction on the other original prime heights.
+
+### The height-one consumer retains both first-root branches
+
+Assume H_3=1, let P be the largest support prime and let s be the
+number of actual support primes. NF73 supplies s>=14 and P>=47.
+For the pair (P,3), NF79 gives t>=P-6>0. Thus NF104 forbids a full
+matching of the six fresh depth-two words into all P roots.
+
+Reuse section60's Hall charge on the two first-three-root branches,
+each containing three live words. A failing left set I of size k<=6
+has a common forbidden-root set W with |W|>=P-k+1. If I stays in
+one branch, k<=3 and distinct roots of W require different mixed
+originals, giving t>=P-2. If I meets both branches, each root in W
+requires two different originals, because an original has only one
+first-three root. Therefore
+
+    t>=2|W|>=2(P-5)>=P-2.
+
+The last inequality holds here since P>=47. Literal root0 lies in
+every allowed list; it cannot be a commonly forbidden root. This
+rules out a singleton failing I, without changing the stated bound.
+
+Section60 already supplies c1>=s-2 from the actual labels3*r with
+r>=7 and pure3. These P-free labels and the mixed originals are
+disjoint and exhaust the three-bearing inventory at height one.
+Consequently
+
+    H_3=1 ==> t>=P-2,
+               N_3=c1+t>=P+s-4>=57.                 (NF106)
+
+This consumer uses the same existing thirteen-prime source premise
+as NF73. The general addition is NF104--NF105's full-root inventory
+charge; no new phase enumeration or height truncation is used.
+These are ordinary mathematical deductions with no new Lean
+verification. They do not bound the full mixed inventory from above,
+and unrestricted Erdős #7 remains unresolved.

@@ -31616,3 +31616,15 @@ fixed shallow costs in the final comparison. This supplies a concrete
 budget candidate, without asserting that feasible continuation is
 cheap enough or that this sequential construction minimizes all
 frontier costs. The unrestricted whole-cover obligation is unchanged.
+
+[Report385, section65](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#65-all-root-injections-charge-every-deleted-mixed-original)
+uses the exact replacement budget to forbid any globally injective
+all-root allocation when at least one mixed p*q original is deleted.
+At fresh depth H+1 this gives t>=p-q*ell_H+1, where H is the full
+original q-height and ell_H=((q-2)*q^H+1)/(q-1). Literal root0 may
+remain in the matching; the mixed-label deletion supplies the strict
+saving. For ternary height one, the same two-branch Hall charge gives
+t>=P-2 and N_3>=P+s-4>=57 under the existing thirteen-prime source
+premise. All counts use one actual original family. This is an
+ordinary consequence of the weighted interface, without new Lean
+verification or a resolution of unrestricted Erdős #7.
