@@ -28192,3 +28192,143 @@ unrestricted missing step remains a structural one: no result
 here forces every minimum whole cover to have principal
 proper-row inventories, S<=rho*p and the required core size.
 The non-principal and larger-volume cases remain unexcluded.
+
+## Several maximal inventory elements retain the same complete budget
+
+Keep the actual last-prime family and S from FC1203. For each
+nonempty proper row, write its finite divisor downset as
+
+    K_T=union_(i=1,...,r_T)Div(j_(T,i)),
+
+where the j_(T,i) are its ACTUAL divisibility-maximal elements.
+Let t_T be the number of prime directions occurring in their
+union, and n_T=l_T-t_T. Let g_T be the number of minimal
+missing divisors supported entirely on these active directions,
+inside the same finite carrier. These g_T need not be pure
+powers. As before, K_A needs no shape hypothesis and its full
+cardinality stays in S.
+
+### Reuse the monomial-ideal intersection rule for the missing boundary
+
+Encode prime exponents as monomials in the t_T active variables.
+The complement of Div(j_(T,i)) is the monomial ideal generated
+by X_q^(v_q(j_(T,i))+1), one for each active q. The complement
+of their union is the intersection of these ideals. The
+standard intersection formula generates this ideal by LCMs
+of one generator from each constituent ideal.
+
+Thus, on t_T>=1, there are at most t_T^(r_T) candidate LCMs.
+Minimal generators form a subset after duplicates and divisible
+candidates are removed. A candidate outside the finite carrier
+cannot divide an actual carrier element, so truncation only
+removes candidates. Also each Div(j_(T,i)) lies in K_T and
+has at least2^(number of its prime directions) elements.
+Consequently
+
+    t_T<=r_T log_2|K_T|,
+    g_T<=t_T^(r_T) when t_T>=1;
+    g_T=0 when t_T=0.                           (FC1213)
+
+This is an application of the existing monomial intersection
+rule, not a new general ideal theorem. It concerns K_T itself,
+not the possibly much larger global mixed inventory J.
+
+### The active-direction argument does not require pure generators
+
+Write z=x*y on zero and active directions. No element of K_T
+uses a zero direction, so the exact count is
+
+    E_(K_T)(xy)=tau(x)tau(y)-|K_T intersect Div(y)|.
+
+When y belongs to K_T, this is (tau(x)-1)tau(y), exactly as
+in FC1207. When y does not belong to K_T, choose an active
+minimal missing g|y. The quotient bounds of FC1205 use only
+minimal missing membership; they do not require g to be a
+pure power. Thus the proof of FC1208--1209 applies with the
+number of generator choices g_T in place of t_T, giving
+
+    A_T^max=|K_T|
+          +(g_T+1)D_(R_T)(n_T)D_(R_T-1)(t_T),
+    B_T^max=F_(R_T,1)(n_T)
+          +(g_T+1)D_(R_T)(n_T)D_(2(R_T-1))(t_T). (FC1214)
+
+The same injective encoding(g,x,y/g) counts the outside-active
+case. The inside-active case is counted directly by(x,y),
+without another generator multiplier. For a minimal high z
+with y>1, x is still a proper divisor, which gives tau(x)<=R_T.
+For y=1 the previous F_(R_T,1) count is unchanged.
+
+Summing A_T^max together with |K_A| gives a_max; summing
+(R_T-1)B_T^max gives b_max. Empty rows are omitted. The full
+sufficient test remains the SAME-source FC1210 with a_max and
+b_max. No step replaces the volume charge S by a maximal-
+element count. In particular this does not contradict the
+unbounded-height obstruction to such a replacement at FC1187.
+
+For every fixed bound r_T<=r, FC1213 and S<=rho*p imply
+t_T=O_r(log p), g_T=O_r((log p)^r). The mixed corrections in
+FC1214 are therefore lower powers of c times fixed powers of
+log p. The two core-size scales and strict gamma constants
+of FC1211 remain valid for this larger class of inventories.
+There is also a uniform range in which r itself can grow.
+
+### The allowed number of maximal elements can grow logarithmically
+
+Put d=4 for P=15 and d=6 for P=105. Fix0<rho<1 and a positive
+gamma satisfying the corresponding strict inequality in FC1211.
+Use natural logarithms below and define
+
+    r_p=max_(nonempty proper rows)r_T.
+
+For all sufficiently large largest support primes p, the
+following joint conditions exclude a minimum whole cover:
+
+    S<=rho*p,
+    c<=gamma p^(1/d),
+    r_p<=log p/[2d loglog p].                   (FC1215)
+
+Thus the last bound is log p/(8 loglog p) for15 and
+log p/(12 loglog p) for105. It permits non-principal actual
+inventories and unbounded r_p. The sufficient threshold for
+p is uniform over families satisfying these bounds, with
+dependence only on P,rho,gamma.
+
+To retain the endpoint coefficient1/(2d), set L=log p and
+ell=loglog p. FC1213 and S<=rho*p give, with constants
+depending only on d,
+
+    t_T<=C L^2/ell,
+    log t_T<=2ell-log ell+C' for t_T>=2.
+
+The LCM count consequently gives the sharper estimate
+
+    g_T<=p^(1/d)
+                exp[-L(log ell-C')/(2d ell)].  (FC1216)
+
+Every fixed divisor polynomial in t_T contributes at most
+exp(O(ell)). For the largest proper R_T, D_(R_T)(n_T) has
+degree d-1, and every other row has no larger degree. Dividing
+either mixed correction in FC1214 by p, and using the stated
+core-size bound, therefore gives an upper bound of the form
+
+    O_gamma(exp[-L(log ell-C')/(2d ell)+O(ell)]),
+
+which tends to zero. This negative subleading term is needed
+to justify the endpoint; the coarser statement
+g_T<=p^(1/d+o(1)) alone would not suffice. When t_T=0 or1,
+g_T is respectively0 or at most1, and the same vanishing
+correction follows directly. All estimates are uniform in the
+actual exponents, generator choices and literal phases.
+
+The untouched F terms have upper leading terms7c^4/24 for15
+and47c^6/720 for105. Thus the complete charge is at most
+rho+7gamma^4/24+o(1), or rho+47gamma^6/720+o(1), respectively.
+The strict gamma inequalities make it less than one on the
+same full head source and complete p-Haar extension.
+
+FC1213--1216 relax the shape hypothesis of FC1211; they do
+not force the displayed volume, maximal-count or core-size
+conditions in an arbitrary minimum whole cover. Larger actual
+boundary complexity and volume remain unresolved. These are
+ordinary symbolic applications and deductions, not new Lean
+verification or a resolution of unrestricted Erdős#7.
