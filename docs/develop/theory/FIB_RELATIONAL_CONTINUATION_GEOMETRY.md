@@ -4908,3 +4908,332 @@ $$
 带外亏四支集的统一线性包络及其等价完整正费用线性界、式 (24.32) 的全部实际访问固定系数、全域实际 $V_4$ 的规范缺陷敏感界与收敛、无限制终端占用、实际内周期长度无界族、全局相位和逆取得，以及完整 Cloitre–Campbell 对应仍未解决。没有比较序列替换实际 $C$，也没有把相同标量读数或各自可达的最优相位当作共同实际实现。
 
 ## 追加锚（本行以下为增补区）
+
+## 31. 实际外侧入口轨迹与有限点值补充的边界
+
+**假设 31.1（完整来源前提与自然闭块包络）。** 全节条件于完整假设 24.1，包括其经假设 23.1、21.1 继承的全部计算辅助基础、合法域、全局上下包络、黄金锚值、有限捕获、规定深度入周期及实际闭块拆分接口。始终使用定义 15.1 的同一个实际 Cloitre 序列，而非另造的比较映射：
+
+$$
+\begin{aligned}
+C(1)&=C(2)=1,&D_N&=\{1,\ldots,N-1\},\\
+T_N(x)&=N-C(x),&x_0&=N-1,&x_{i+1}&=T_N(x_i),\\
+d_N&=C(N-1),&g_N&=x_{d_N},\\
+C(N)&=C(g_N)+C(N-g_N)\qquad(N\ge3).
+\end{aligned}
+\tag{31.1}
+$$
+
+沿用 $F_0=0,F_1=1$、$F_{j+1}=F_j+F_{j-1}$、$\alpha=(\sqrt5-1)/2$、$\varphi=\alpha^{-1}$ 与 $G(n)=\lfloor\alpha(n+1)\rfloor$。完整假设 24.1 给出的 $G\le C\le U$、$U$ 非减、$C(F_j)=G(F_j)=F_{j-1}$、$G(F_j+1)=F_{j-1}+1$、$C(F_j-1)=F_{j-1}$ 及各自合法阶数均保留；其中 $U(1)=1$，$F_j\le n<F_{j+1}$、$j\ge3$ 时 $U(n)=\min(n-F_{j-2},F_j)$。对 $j\ge6$、$0\le b\le F_{j-1}$、$N=F_{j+1}-b$，同一 $T_N$ 的全部实际轨道最终进入不变区间 $[F_j-b,F_j]\cap D_N$，周期和所选两子的全锚交集及继承阶数仍按式 (24.3)–(24.4) 使用。这里没有删去其端点条件，也没有把规定深度改成任意周期相位。
+
+对整数 $j\ge8$，采用来源的上锚记号
+
+$$
+Q_j(t)=F_{j-1}-C(F_j-t)=\lambda_j(t),\qquad 0\le t\le F_{j-2},
+$$
+
+其中与本卷 $\lambda_j$ 的对应只在上述自然闭块上使用。直接复用固定版本 [Recursive descent，C.1](https://github.com/the-omega-institute/nested-recurrences/blob/d9dbad876c0d3c7b46b692241569fcdf36594344/cloitre-conway/recursive-descent.md#a-quadratic-enclosure-for-every-bounded-cap-level) 的
+
+$$
+\begin{aligned}
+L_j&=\left\lfloor\frac{2j}{3}\right\rfloor-3,
+&P_9&=13,
+&P_j&=\left\lfloor\frac{(j-2)^2}{3}\right\rfloor-3j+30\quad(j\ge10),\\
+Q_j(t)=0&\ \Longrightarrow\ t\le L_j,
+&Q_j(t)>0&\ \Longrightarrow\ t\le P_jQ_j(t)\qquad(j\ge9),\\
+t&\le L_j+P_jQ_j(t),&L_j&\le P_j.
+\end{aligned}
+\tag{31.2}
+$$
+
+最后一行在 $j\ge9$ 使用，只是同一来源包络的应用。还直接使用 [Fibonacci collars，式 (1.1) 的锚降界](https://github.com/the-omega-institute/nested-recurrences/blob/d9dbad876c0d3c7b46b692241569fcdf36594344/cloitre-conway/fibonacci-collars.md#quantitative-capture-and-a-short-exterior-certificate) 在这些实际闭块上的 $0\le Q_j(t)\le\lfloor2t/3\rfloor$，以及定理 24.3 在 $j\ge8$ 的完整零平台 $Q_j(t)=0\Longleftrightarrow t\le L_j$。这些是来源条件与既有结果的调用，不重新证明平台、锚降界或 C.1。全部继承的计算辅助基础在本节保留为 ASSUMED-UNVERIFIED；以下为条件纸面推导，不是 Lean 核验结论。不另假设 $C$ 单调、黄金收敛、分枝独立或任意宽度的有限种子。
+
+**定义 31.2（同一根的入口、右增量与自然帽域）。** 对整数 $k\ge23$ 及 $0\le v\le\lfloor F_{k-4}/2\rfloor$，记
+
+$$
+\begin{aligned}
+N&=F_k-v,&A&=F_{k-1},&B&=F_{k-2},&J&=F_{k-4},\\
+I&=[A-v,A]\cap\mathbb Z,&\sigma&=Q_k(v+1),&d_N&=A-\sigma,\\
+\theta(k,v)&=\min\{i\ge0:x_i\in I\},
+&\mu_N&=\min\{i\ge0:x_i\text{ 位于该轨道的最终周期}\},\\
+\iota_k(a)&=C(A+a)-B&&&&(1\le a\le J),\\
+P&=P_{k-1},&L&=L_{k-1},&q&=P/\alpha,
+&\gamma&=\frac{L+(P-1)v+1}{\alpha},\\
+\beta(k,v)&=\frac{\log\!\left(1+\dfrac{(P-\alpha)(J-v)}{L+(P-1)v+1}\right)}{\log(P/\alpha)}.
+\end{aligned}
+\tag{31.3}
+$$
+
+$\theta$ 是首次进入区间的时钟，$\mu_N$ 是最短周期前段长度，两者不预设相等；来源 C.5、C.10 的首次入口字段对应这里的 $\theta$。$\sigma$ 固定为同一实际前驱行的亏量，不是自由的深度修正。右增量 $\iota_k$ 与共同词长 $H$ 分别使用。
+
+对每个正整数 $y$，令 $j\ge2$ 为满足 $F_j\le y<F_{j+1}$ 的唯一自然阶数，定义自然帽亏量及其点值域
+
+$$
+\begin{aligned}
+\mathfrak c(y)&=F_j-C(y),\\
+S_h&=\{y\ge1:0\le\mathfrak c(y)\le h\},\\
+\mathcal A&=\{F_j:j\ge2\},\\
+R_h&=\{1,\ldots,55\}\cup S_h\cup\mathcal A\qquad(h\in\mathbb Z_{\ge0}).
+\end{aligned}
+\tag{31.4}
+$$
+
+这里 $\mathfrak c$ 对应来源 [Five-window closure，M.3](https://github.com/the-omega-institute/nested-recurrences/blob/d9dbad876c0d3c7b46b692241569fcdf36594344/cloitre-conway/five-window-closure.md#the-least-recursive-completion-adds-fibonacci-anchors) 的自然帽记号，区别于本卷规范黄金缺陷 $E_C(y)=C(y)-G(y)$，也不是规范缺陷离散度中的 $D$。非锚 $N=F_k-v$ 满足 $\mathfrak c(N)=Q_k(v)$；$v=0$ 的锚端点则按 $\mathcal A$ 纳入，不能把继承的 $Q_k(0)=0$ 当作其自然帽亏量。直接调用 M.3：每个固定非负整数 $h$ 的 $R_h$ 在实际所选两子操作下闭合。因此任一根属于 $R_h$ 时，其所有实际所选后裔也属于 $R_h$；这不包括从 $N-1$ 生成所选点时的全部内轨道自变量。
+
+**定理 31.3（实际双行入口、联合时钟与宏观自然帽行数）。** 在假设 31.1 下，对定义 31.2 的每个 $k,v$，存在整数 $R\ge2$，使 $\theta(k,v)=2R$。同一实际轨道的首对外侧点为来源 C.7 的
+
+$$
+\begin{aligned}
+x_1&=B-v+\sigma,\\
+x_2&=A+a_1,
+&a_1&=J-v+Q_{k-2}(v-\sigma),
+&J-v&\le a_1\le J.
+\end{aligned}
+\tag{31.5}
+$$
+
+对全部整数 $1\le r<R$，令 $a_r=x_{2r}-A$、$b_r=A-x_{2r+1}$，并令 $a_R=x_{2R}-A$。则
+
+$$
+\begin{aligned}
+1\le a_r&\le J,&b_r&=v+\iota_k(a_r),&v<b_r&\le v+J\le F_{k-3},\\
+x_{2r+1}&=A-b_r,&a_{r+1}&=Q_{k-1}(b_r)-v,
+&a_{r+1}&\le\frac{2a_r-v}{3},\\
+a_r&<q a_{r+1}+\gamma,&-v&\le a_R\le0.
+\end{aligned}
+\tag{31.6}
+$$
+
+各次 $Q_{k-1}(b_r)$ 均在其实际自然闭块域中。所有正 $a_r$ 严格递减，精确停止条件及入口缺口为
+
+$$
+\begin{aligned}
+Q_{k-1}(b_r)&>v&&(1\le r<R-1),\\
+Q_{k-1}(b_{R-1})&\le v,&
+v<b_{R-1}&\le L+Pv,&a_{R-1}&<\gamma,\\
+r_0&=A-x_{\theta}=v-Q_{k-1}(b_{R-1})\in[0,v]\cap\mathbb Z.
+\end{aligned}
+\tag{31.7}
+$$
+
+在同一个入口之前实际访问的右侧物理行
+
+$$
+\mathcal Y_{k,v}=\{y_r=A+a_r:1\le r<R\}
+$$
+
+两两不同，都是非锚，且全部满足
+
+$$
+\begin{aligned}
+A<y_r&\le A+J<N-1<N,\\
+\mathfrak c(y_r)&=Q_k(F_k-y_r)
+\ge F_{k-5}\ge N/13,\\
+|\mathcal Y_{k,v}|=R-1&>\beta(k,v),\\
+\theta(k,v)&>2+2\beta(k,v),
+&\theta(k,v)&\le\mu_N\le d_N.
+\end{aligned}
+\tag{31.8}
+$$
+
+因此每个被计数的点值 $C(y_r)$ 都在实际规定深度之前被这条入口轨道使用。这里的宏观亏量结论只针对 $\mathfrak c$，不提供 $E_C$、$D$ 或内周期长度的下界。
+
+证明。先核对来源首对公式的使用域。由定理 24.3 的平台，$v=0,1$ 时 $\sigma=0$；$v\ge2$ 时锚降界给 $0\le\sigma\le\lfloor2(v+1)/3\rfloor\le v$。因此 $v-\sigma\in[0,v]\subseteq[0,F_{k-4}]$，$v+1$ 也在 $Q_k$ 的域中。直接调用 [Recursive descent，C.7](https://github.com/the-omega-institute/nested-recurrences/blob/d9dbad876c0d3c7b46b692241569fcdf36594344/cloitre-conway/recursive-descent.md#a-quadratic-enclosure-for-every-bounded-cap-level) 得到式 (31.5) 的两个恒等式；锚降界给 $0\le Q_{k-2}(v-\sigma)\le2(v-\sigma)/3$，故 $J-v\le a_1\le J$。$x_0>A$、$x_2>A$，而
+
+$$
+x_1-(A-v)=-F_{k-3}+\sigma<0.
+$$
+
+于是时间 $0,1,2$ 均尚未入 $I$。这一首对及 $v=0$ 的锚点时钟按 C.7、定理 24.6 直接复用；以下保留正缺口与两条实际行之间的联合约束。
+
+对每个整数 $1\le a\le J$，同一实际右侧点满足
+
+$$
+\begin{aligned}
+1&\le\iota_k(a)\le a,\\
+\iota_k(a)&\ge G(A+a)-G(A)>\alpha a-1.
+\end{aligned}
+\tag{31.9}
+$$
+
+第一行下界来自 $G(A+1)=B+1$ 与 $G$ 非减，上界来自 $U(A+a)=\min(B+a,A)\le B+a$；第二行由两个取整数之差取得。故在任一实际右侧点 $A+a_r$，字面内步首先到达
+
+$$
+x_{2r+1}=N-C(A+a_r)=A-v-\iota_k(a_r)=A-b_r.
+$$
+
+这个奇数时间点严格在 $I$ 左侧。$b_r\le v+J\le3J/2\le F_{k-3}$，因为 $F_{k-3}=J+F_{k-5}$ 且 $J\le2F_{k-5}$。所以它是同一 $Q_{k-1}$ 的合法实际自变量；在这一物理行上作下一步，恰好得到
+
+$$
+x_{2r+2}=N-C(A-b_r)=A+Q_{k-1}(b_r)-v.
+$$
+
+锚降界与 $\iota_k(a_r)\le a_r$ 给
+
+$$
+a_{r+1}\le\frac23\bigl(v+\iota_k(a_r)\bigr)-v
+\le\frac{2a_r-v}{3}.
+$$
+
+只要下一偶数坐标仍为正，它便严格小于前一正整数坐标，也仍不超过 $J$。正整数不可能如此无限下降，故存在首次非正坐标 $a_R$，且 $R\ge2$；非负的 $Q$ 又保证 $a_R\ge-v$。其前各偶数点在 $I$ 右侧，奇数点在 $I$ 左侧，首次进入恰在 $2R$。这证明式 (31.6) 的实际配对及式 (31.7) 的精确停止谓词，没有把来自不同轮廓的值拼接成一条轨道。
+
+由式 (31.2) 在末次实际奇数行上的应用，
+
+$$
+b_{R-1}\le L+P Q_{k-1}(b_{R-1})\le L+Pv.
+$$
+
+将 $b_{R-1}=v+\iota_k(a_{R-1})>v+\alpha a_{R-1}-1$ 代入，得 $a_{R-1}<\gamma$。入口缺口公式直接来自 $a_R=Q_{k-1}(b_{R-1})-v$，并保持非负实际缺口表示。
+
+更一般地，在每一对实际访问行上同时有
+
+$$
+v+\alpha a_r-1<b_r
+\le L+P Q_{k-1}(b_r)
+=L+P(a_{r+1}+v).
+$$
+
+重排就是 $a_r<q a_{r+1}+\gamma$。从同一最终 $a_R\le0$ 沿恰好 $R-1$ 对反向代入，得
+
+$$
+\begin{aligned}
+J-v\le a_1
+&<q^{R-1}a_R+\gamma\sum_{i=0}^{R-2}q^i\\
+&\le\frac{L+(P-1)v+1}{P-\alpha}\bigl(q^{R-1}-1\bigr).
+\end{aligned}
+\tag{31.10}
+$$
+
+因 $q>1$、$P-\alpha>0$，即有 $R-1>\beta(k,v)$ 与 $\theta>2+2\beta(k,v)$。这里的上、下估计始终约束同一个右点及其实际下一奇数点，未取各自独立可达的极值。
+
+正 $a_r$ 严格下降，故 $y_r$ 为 $R-1$ 个不同物理行。$A<y_r\le A+J<F_k$，其间没有 Fibonacci 锚。还因 $B=2J+F_{k-5}$、$v\le J/2$ 及 $k\ge23$，有 $B-v-J-1>0$，所以 $A+J<N-1$。这些行的自然最高权重为 $A$，且 $F_k-y_r=B-a_r\in[0,B]$。同一上包络于是给
+
+$$
+\begin{aligned}
+\mathfrak c(y_r)
+&=A-C(A+a_r)\\
+&\ge A-B-a_r\\
+&\ge F_{k-3}-J=F_{k-5}.
+\end{aligned}
+\tag{31.11}
+$$
+
+Fibonacci 恒等式 $F_k=8F_{k-5}+5F_{k-6}\le13F_{k-5}$ 以及 $N\le F_k$ 给出 $\mathfrak c(y_r)\ge N/13$。这一步估计的是自然帽高度，不把它代入规范黄金缺陷。
+
+最后，假设 24.1 的捕获及不变性使该轨道的最终周期包含于 $I$。首次到周期不能先于首次到 $I$，故 $\theta\le\mu_N$；规定深度已入周期又给 $\mu_N\le d_N$。于是 $2r\le\theta-2<d_N$ 对全部被计数右行成立，完成同一规定起点、深度与被选相位的对应。证毕。
+
+**推论 31.4（完整固定帽族与增长缺口的统一行数）。** 在假设 31.1 下，固定任意整数 $m\ge0$，对整数 $k\ge9$ 令
+
+$$
+\mathcal V_k(m)=\{v\in\mathbb Z:0\le v\le F_{k-2},\ Q_k(v)\le m\}.
+$$
+
+存在整数 $K_m$，使对全部 $k\ge K_m$ 及全部 $v\in\mathcal V_k(m)$，定理 31.3 适用，实际根及其全部所选后裔在 $R_m$ 内，而 $\mathcal Y_{k,v}\cap R_m=\varnothing$。此外，令 $\nu(k,v)=|\mathcal Y_{k,v}|$，则
+
+$$
+\begin{aligned}
+\liminf_{k\to\infty}\inf_{v\in\mathcal V_k(m)}
+\frac{\theta(k,v)\log k}{k}&\ge\log\varphi,\\
+\liminf_{k\to\infty}\inf_{v\in\mathcal V_k(m)}
+\frac{\nu(k,v)\log k}{k}&\ge\frac{\log\varphi}{2}.
+\end{aligned}
+\tag{31.12}
+$$
+
+每个 $\mathcal V_k(m)$ 都非空，因为 $Q_k(0)=0$；其 $v=0$ 项仍按锚类别处理。这里的下确界包括整个合法继承子水平，不要求其支集连续。
+
+对任意整数缺口族 $(v_k)_{k\ge23}$，$0\le v_k\le F_{k-2}$，若 $\log(v_k+1)=o(k)$，则它最终满足定理 31.3 的窄缺口域，且
+
+$$
+\liminf_{k\to\infty}\frac{\theta(k,v_k)\log k}{k}\ge\log\varphi,
+\qquad
+\liminf_{k\to\infty}\frac{\nu(k,v_k)\log k}{k}\ge\frac{\log\varphi}{2}.
+\tag{31.13}
+$$
+
+若改取任意固定实数 $0\le\eta<1$ 并要求 $0\le v_k\le F_k^\eta$，则式 (31.13) 的两个下界分别改为 $(1-\eta)\log\varphi$ 与 $(1-\eta)\log\varphi/2$。增长缺口结论不要求根具有固定帽资格。
+
+证明。置 $M=\max(1,m)$。式 (31.2) 对全部 $v\in\mathcal V_k(m)$ 同时给 $v\le MP_k$：正亏量时用 $v\le mP_k$，零亏量时用 $v\le L_k\le P_k$。$P_k$ 为二次量、$J$ 与 $F_{k-5}$ 指数增长，故可选 $K_m\ge23$，使以后全部 $k$ 同时满足 $MP_k\le J/2$、$F_{k-5}>m$。非锚根的自然帽亏量是 $Q_k(v)\le m$，锚根由 $\mathcal A$ 纳入 $R_m$；所选后裔留在 $R_m$ 直接使用 M.3，不重复证明闭合。定理 31.3 的右行均大于 $55$、不是锚且自然帽亏量大于 $m$，所以它们都在 $R_m$ 之外。
+
+函数 $(J-v)/(L+(P-1)v+1)$ 随 $v$ 递减，故 $\beta(k,v)$ 在所用区间内递减。用 $v\le MP_k$ 及 Binet 公式，
+
+$$
+\begin{aligned}
+P=P_{k-1}&=k^2/3+O(k),&L&=O(k),\\
+J&=\varphi^{k-4}/\sqrt5+O(\varphi^{-(k-4)}),\\
+\log\!\left(1+\frac{(P-\alpha)(J-v)}{L+(P-1)v+1}\right)
+&\ge k\log\varphi-O_m(\log k),\\
+\log(P/\alpha)&=2\log k+O(1).
+\end{aligned}
+\tag{31.14}
+$$
+
+该估计在完整 $\mathcal V_k(m)$ 上统一成立。将其代入式 (31.8)，便得式 (31.12)。这计数一条实际轨道中的不同物理行，不对不同根的重合行累加。
+
+若 $\log(v_k+1)=o(k)$，则 $v_k/J\to0$，且
+
+$$
+\log\bigl(L+(P-1)v_k+1\bigr)
+\le\log(v_k+1)+O(\log k)=o(k)+O(\log k).
+$$
+
+式 (31.14) 的分子下界遂为 $k\log\varphi-o(k)$，给出式 (31.13)。若 $v_k\le F_k^\eta$、$\eta<1$，仍有 $v_k/J\to0$，而上述对数至多为 $\eta k\log\varphi+O(\log k)$；分子下界为 $(1-\eta)k\log\varphi-O(\log k)$，得到相应系数。它们最终都满足 $v_k\le\lfloor J/2\rfloor$。这些是同一实际序列上的解析后果，不是有限样本或自由轮廓的推广。证毕。
+
+**推论 31.5（供应前驱与两张负侧表后的点值补充必要条件）。** 在假设 31.1 下，固定定理 31.3 的任一实际根 $N=F_k-v$。考虑如下字面入口取得合同：已供应实际 $\sigma=Q_k(v+1)$、两张实际表 $Q_{k-1}(0..v)$、$Q_{k-2}(0..v)$，以及 $R_h$ 上的实际 $C$ 点值，其中 $h\in\mathbb Z_{\ge0}$ 且 $h<F_{k-5}$。另准许任意依赖于此根的有限物理行集合 $\mathcal E_{k,v}$，供应其中每行的真实 $C$ 值。取得者从 $x_0=N-1$ 按 $x_{i+1}=N-C(x_i)$ 逐点回放直到首次入 $I$；除这些供应的点值及其记忆外，没有已证明的符号替代、读出等价替代或其它取得不可用转移的方法。
+
+则成功完成该字面回放的必要条件是
+
+$$
+\mathcal Y_{k,v}\subseteq\mathcal E_{k,v},\qquad
+|\mathcal E_{k,v}|\ge\nu(k,v)=R-1>\beta(k,v).
+\tag{31.15}
+$$
+
+特别地，对任意固定整数 $m,s\ge0$，存在整数 $K_{m,s}$，使全部 $k\ge K_{m,s}$、$v\in\mathcal V_k(m)$ 的合同都不能由 $|\mathcal E_{k,v}|\le s$ 的补充成功完成，哪怕这些补充逐根单独选择。允许任意随根或随 $k$ 改变的整数截断 $0\le h<F_{k-5}$，上述结论仍成立，并不只限于固定 $h$。
+
+这一合同还具有实际无界继承帽的增长缺口族：对全部充分大的整数 $k$，取
+
+$$
+\begin{aligned}
+v_k&=k^3,&N_k&=F_k-k^3,\\
+e_k&=Q_k(k^3),&m_k&=\left\lfloor\frac{2k^3}{3}\right\rfloor.
+\end{aligned}
+$$
+
+则
+
+$$
+\left\lceil\frac{k^3}{P_k}\right\rceil
+\le e_k\le m_k,\qquad e_k\longrightarrow\infty.
+\tag{31.16}
+$$
+
+实际非锚根 $N_k$ 及其全部所选后裔属于 $R_{m_k}$，其入口轨道却有式 (31.13) 所计数的不同右行在 $R_{m_k}$ 之外。因而即使供应两张负侧表与实际前驱，这个实际族也不能由在 $R_{m_k}$ 上查表加固定数量的额外点值支持完整字面入口回放。
+
+证明。两张负侧表可读到的物理行准确为
+
+$$
+\mathcal T_{k,v}
+=\{A-t:0\le t\le v\}\cup\{B-t:0\le t\le v\}.
+$$
+
+它们均不超过 $A$，而每个 $y_r>A$。所给前驱是物理行 $N-1$，由式 (31.8) 又有 $y_r<N-1$，故这些右行也不等于该前驱。每个 $y_r$ 大于 $55$、不是锚，且 $\mathfrak c(y_r)\ge F_{k-5}>h$，因而既不在 $R_h$ 中，也不在两张负侧表或所给前驱行中。字面回放在时间 $2r<\theta$ 必须使用 $C(y_r)$；合同没有别的可用替代，所以每个这样的物理行必须属于 $\mathcal E_{k,v}$。它们在此根上两两不同，得式 (31.15)。推论 31.4 的统一下界使 $\inf_{v\in\mathcal V_k(m)}\nu(k,v)\to\infty$，取其大于 $s$ 的共同阈值即得 $K_{m,s}$。全程只用 $h<F_{k-5}$，因此同样允许变化的截断。
+
+对多项式缺口族，$k^3/J\to0$，故 $0<k^3\le\lfloor J/2\rfloor$ 最终成立。又因 $k^3>L_k$，完整平台律给 $e_k>0$；式 (31.2) 与锚降界直接给出式 (31.16)。$P_k=k^2/3+O(k)$，所以 $k^3/P_k\sim3k$，取得实际继承帽的无界性。$N_k$ 最终严格在 $A$ 与 $F_k$ 之间，其自然帽亏量准确为 $e_k\le m_k$；对每个这样的 $k$ 单独调用 M.3，得到实际所选后裔仍在 $R_{m_k}$。另一方面，$F_{k-5}>m_k$ 最终成立，所以所有 $y_r$ 在 $R_{m_k}$ 外。$\log(k^3+1)=o(k)$ 给出式 (31.13) 的同一行数下界，进而排除固定数量补充。
+
+这个实际族还满足 $k^3\le e_kP_k\le m_kP_k$ 及 $k^3\le J$，因而处于来源 C.8–C.10 的供应数据选择合同中；入口证明仍是那个合同的显式输入。它的 $e_k$ 最终大于四，不能应用定理 30.3 的父亏四资格来消去入口字段。这里没有把 M.3 对各个固定帽的图资源常数推广成增长 $m_k$ 的统一复杂度结论，也没有由 $e_k\to\infty$ 推出周期无界或规范 $E_C,D$ 的下界。证毕。
+
+式 (31.15) 是入口证书取得的一条受限必要条件。对只在 $R_h$ 上查表的未补充途径，$x_2$ 是所需的域外自变量；这里不对较早查表是否已经失败作断言，因而不把 $x_2$ 宣称为该途径的首次失败。推论 31.5 则已额外供应真实前驱与两张负侧表，再排除有界点值补充。允许已认证的符号转移或读出等价压缩时，合同改变，行数结论不构成对该替代方法的反驳。它不计独立信息量，不给出无约束算法的查询、时间、空间、通信或证书长度下界。跨根、跨后裔出现标签的相同物理行始终共享同一个 $C,g,d$；不同根的计数不被当作独立数据相加。
+
+定理 30.3 的准确亏四资格与单轮廓选择仍按原域使用。来源 [Recursive descent，C.8–C.11](https://github.com/the-omega-institute/nested-recurrences/blob/d9dbad876c0d3c7b46b692241569fcdf36594344/cloitre-conway/recursive-descent.md#a-modular-symbolic-selector-with-small-working-memory) 的模选择与条件 Campbell 剩余类对应也仍是供应数据后的合同；式 (31.15) 只限制其中入口字段的一种字面生成途径。来源 [Dispersion，A.1–A.6 的帽自适应与停止包络](https://github.com/the-omega-institute/nested-recurrences/blob/d9dbad876c0d3c7b46b692241569fcdf36594344/cloitre-conway/dispersion.md#cap-adaptive-quadratic-dispersion) 已允许高帽处全部标量有效几何拆分，并以依赖父帽的世代数及阶数门槛达到低帽或零子分支，不需要高帽入口与相位。该离散度合同与这里的实际端点取得分别成立；本节不为其重证，也不从外侧行数另推离散度收益。其帽依赖时域不等于全域固定时域的规范缺陷敏感界。
+
+所有实际索引、非负缺口、自然帽亏量、入口时钟、最短前周期及规定深度都不超过原根 $N$，直接保留原根资源及全部共同高端补零长度 $H\ge L(N)$。$\iota_k(a_r)$ 与右行时间标签 $2r$ 也在这一整数资源内；$P,L,\alpha$ 与对数是解析参照。每个整数字段能装入同一窗口，不界定整条轨迹的总存储，也不产生有限状态取得证明。符号引用中的 $L_j$ 是平台宽度，$L(N)$ 是既有词长，二者分别使用。
+
+同一实际外侧操作
+
+$$
+a\longmapsto Q_{k-1}\bigl(v+\iota_k(a)\bigr)-v
+$$
+
+的算术或读出等价输运仍有未证义务：在不隐含更宽表或前缀的条件下，从 $k,v$、实际 $\sigma$ 及两张 $0..v$ 负侧表取得正确入口对，或取得足以消去独立入口对的实际周期读出类与相位修正。原入口之后若还有局部瞬态 $\tau$、实际周期 $p$，来源 C.10 的修正仍含 $(\sigma+\theta+\tau)\bmod p$；$\theta=2R$ 不独立取得该剩余类。可以先对 $v=k^3$ 的实际根或完整固定帽族证明这种输运，而 $\sigma$、两张下行轮廓与资格的自主取得另须证明。实际亏四的完整支集线性包络与累计高亏量正费用、式 (24.32) 的固定系数实际访问界、全域固定时域的同实现 $D$ 敏感离散度与全局收敛、无限制终端占用、实际内周期无界族及完整 Cloitre–Campbell 对应仍未由这些入口结论解决。
+
+## 追加锚（本行以下为增补区）

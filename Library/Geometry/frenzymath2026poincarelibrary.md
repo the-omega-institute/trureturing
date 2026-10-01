@@ -1607,3 +1607,97 @@ uniqueness remain unfinished, including noncompact cusps and nonorientable
 manifolds. The existing escape audit remains unfinished:
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
 Neither these checks nor CI closes that audit or the remaining mathematics.
+
+## Actual recurrent-conjugation constraint for positive H3 dilation
+
+Three further transient classical composition checks bind the preceding
+scalar recurrence result to the actual full original H3 isometry group.
+The light-coordinate coefficient matrices of `P*L(e)*P⁻¹` are continuous
+in the same actual compact-open topology, preserve multiplication and
+are injective. For the actual positive dilation `d` of scale `a>0`,
+its matrix is diagonal with weights `w=(a,1,1,a⁻¹)`; the matrix of its
+actual inverse has the reciprocal weights. Thus the actual coefficient
+formula is `A(d*e*d⁻¹)ij = (wi/wj)*A(e)ij`.
+
+Suppose an actual H3 isometry `e` is neighborhood-recurrent under
+conjugation by this actual `d`. Each continuous matrix coefficient
+transports that recurrence through its exact scalar semiconjugacy.
+All weights are positive. If `wi≠wj`, the positive multiplier `wi/wj`
+is unequal to one, so the generic scalar check forces `A(e)ij=0`.
+The resulting coefficient constraints make `A(e)` commute with the
+actual diagonal matrix of `d`. Matrix injectivity gives `e*d=d*e` in
+the actual original H3 isometry group. The constraint set
+`S={e | e*d=d*e}` is closed by actual compact-open group continuity
+and Hausdorff equality. This proves the previously supplied geometric
+premise for this concrete closed constraint and positive dilation.
+It does not assert an arbitrary-conjugating-isometry classifier.
+
+Under the supplied compatible original-H3 smooth source geometry and
+original pairwise distance identity, actual target geometry/Borel,
+full-deck quotient covering/local diffeomorphism/tangent-metric pullback,
+faithful representation implementing the actual deck action at every
+point, and finite actual target volume, select the same normalized Haar
+`μ` and finite nonzero invariant actual coset measure `ν` as before.
+Retain actual covolume and `ν` mass equal to actual target volume,
+Haar right invariance, explicit `μ.inv` quotient relation and `ν` open
+positivity. For every `z` centralizing the actual deck image, for every
+positive scale and every ambient actual isometry `x`, the same accepted
+closed-constraint argument now gives
+`(x*z*x⁻¹)*d = d*(x*z*x⁻¹)` for the actual dilation at that scale.
+The geometric recurrence-coverage premise is proved here rather than
+supplied. No subgroup normality, compactness or orientation-preserving
+restriction is introduced. The conclusion concerns all actual conjugates
+of the supplied centralizer element; it still does not prove `z=1`.
+
+These three scoped checks print 11 closures using only `propext`,
+`Classical.choice` and `Quot.sound` under the same pins. No tracked Lean
+or mathematical novelty is claimed. Centralizer triviality, lattice
+conjugacy, finite-volume cusp classification and full Mostow-Prasad
+homotopic-isometry existence and uniqueness remain unfinished, including
+noncompact cusps and nonorientable manifolds. The existing escape audit
+remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these checks nor CI closes that audit or the remaining mathematics.
+
+
+## Actual H3 centralizer identity from translations and dilation
+
+The same original H3 horizontal translations satisfy
+`dₐ Tᵤ dₐ⁻¹ = Tₐᵤ` for every positive real scale. In particular,
+`Tᵤ d₂ Tᵤ⁻¹ d₂⁻¹ = T₋ᵤ`. The group conjugation identity and
+these actual action formulas show that if every ambient conjugate of `z`
+commutes with `d₂`, then `z` commutes with every horizontal translation.
+No supplied translation relation or classification is used.
+
+For an actual full H3 isometry commuting with `d₂`, `T₁` and `Tᵢ`, write
+its image of `(0,1)` as `(u,t)` with `t>0`. Commutation identifies the
+images of the other three accepted frame points as `(2u,2t)`, `(u+1,t)`
+and `(u+i,t)`. The original rational cosh-distance identity for the first
+horizontal pair gives `t=1`; the doubled-height pair then gives `u=0`.
+The four actual frame values and the previously checked determination
+lemma imply that the isometry is the identity. This uses the original
+metric and full isometry group, with no orientation restriction.
+
+Under the same supplied compatible smooth original-H3 geometry and exact
+original-distance identity, actual target smooth geometry and Borel
+structure, full-deck quotient covering, local diffeomorphism and tangent
+metric pullback, faithful all-point actual deck action and finite actual
+target volume, the selected Haar and coset measures from the preceding
+construction now give `z=1` for every element centralizing the actual deck
+image. The same witnesses retain right Haar invariance, covolume and coset
+mass equal to actual target volume, the inverse-Haar quotient relation,
+and a finite nonzero ambient-left-invariant open-positive coset measure.
+The all-conjugates dilation constraint and centralizer identity are derived;
+centralizer triviality is no longer an extra premise of this conditional
+finite-target result. Compactness, orientability and subgroup normality
+are not added.
+
+The three scoped checks contain ten accepted axiom closures using only
+`propext`, `Classical.choice` and `Quot.sound`. Two rejected frame-identity
+source/log pairs are excluded from the accepted evidence. This is transient
+classical reuse and composition; no tracked Lean declaration or mathematical
+novelty is claimed. The existing escape audit remains unfinished at the
+linked issue. The compatible original-H3 smooth geometry and the full
+covering/action/metric inputs remain supplied. Lattice conjugacy, general
+homotopic-isometry existence and the full Mostow–Prasad endpoint, including
+cusps and nonorientable manifolds, remain unproved by these checks.

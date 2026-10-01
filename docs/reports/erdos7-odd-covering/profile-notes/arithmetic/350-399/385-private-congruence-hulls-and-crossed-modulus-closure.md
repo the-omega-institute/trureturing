@@ -9466,3 +9466,235 @@ replacement for every hypothetical cover. Additional absolute-depth
 restrictions or costs that grow when leaves move shallower would
 require another argument. These are ordinary mathematical results,
 with no new Lean verification; unrestricted Erdős #7 remains open.
+
+## 64. The common literal zero root makes deep feasibility a static Hall condition
+
+The weighted all-root interface supplies one root allowed in every fresh-depth list: literal p-root zero. Its original batch is exactly the pure-p class, so R_0=S_0=1. This section reuses the ordinary capacitated Hall theorem, the complete-prefix Kraft identity and the rearrangement inequality. It supplies an exact criterion for finite deep-frontier existence and the cost of one explicit construction. It does not assert that this construction improves the original budget or minimizes all possible frontier costs.
+
+### Actual deep jobs and the common root
+
+Fix one actual original family with highest q-height H and set D=H+1. Fix all chosen live frontier leaves at depths at most H. Remove the deep obligations whose constant allowed list contains a zero-workload root by the existing free-folding rule. Each remaining live H-prefix is one actual parent job. Its entire cylinder must be partitioned by leaves of depths at least D. Its allowed root set A_i is constant throughout that subtree, contains literal root0, and consists entirely of positive-workload roots.
+
+Write r_A for the number of remaining actual parents having allowed set A, and r=sum_A r_A. Types with r_A=0 are omitted. All lists retain their actual original mixed-phase restrictions. A positive root may be used at most once at each absolute depth; it may recur at different depths. There are no original collision labels at these fresh depths. Existing shallow leaves occupy different depths and impose no same-depth capacity restriction here.
+
+When r=0 there is no hard continuation and its cost is zero. Suppose r>=1. Then a finite complete deep cut with permitted per-depth root assignments exists if and only if
+
+    |union_(A in S) A| >= (q-1)*sum_(A in S) r_A + 1
+      for every nonempty set S of occurring types.          (NF99)
+
+### Necessity keeps all actual trees in each type collection
+
+Fix a nonempty type set S, and put r_S=sum_(A in S)r_A and K_S=|union_(A in S)A|. Its parents supply exactly q*r_S nodes at depth D. The complete finite cut below those nodes satisfies the forest Kraft identity
+
+    q*r_S = sum_(j=0..J) L_(S,j)*q^(-j),
+
+where L_(S,j) is the number of their leaves at depth D+j. The root assignments are globally injective within each depth, and every such leaf uses a root in the same union of actual lists. Hence L_(S,j)<=K_S. Since the cut is finite,
+
+    q*r_S <= K_S*sum_(j=0..J)q^(-j) < K_S*q/(q-1).
+
+Thus (q-1)r_S<K_S, which is precisely the integer inequality NF99. This does not sum bounds from different sources: it counts the literal leaves of those actual parent subtrees.
+
+### Sufficiency is a direct Hall allocation followed by comb completion
+
+Because root0 belongs to every A, NF99 is equivalent to
+
+    |union_(A in S)(A minus {0})| >= (q-1)*sum_(A in S)r_A.
+
+Create q-1 labelled demand slots for each actual parent i, all with allowed set A_i minus {0}. The displayed inequalities imply Hall's condition for every subset of these slots: if its represented types are S, its size is at most (q-1)r_S and its neighbor union is exactly the displayed union. Ordinary finite Hall matching therefore supplies disjoint sets
+
+    U_i subset A_i minus {0}, |U_i|=q-1,
+    U_i intersect U_j=empty for i!=j.                      (NF100)
+
+This is the same cloning use of capacitated Hall as Report386 PC13 and Report385's existing capacity assignments. The upstream finite theorem is Finset.all_card_le_biUnion_card_iff_existsInjective'; no new generic matching statement is needed.
+
+Choose any completion order, giving each parent i a different completion stage ell_i in {1,...,r}. At stage ell=1, each unfinished parent exposes its q actual children at depth D. Stop q-1 of them, labelling those leaves by its reserved U_i. The remaining child is its continuing branch, except that the unique parent completing at this stage labels that child by root0 and stops it too. At each later stage split every continuing branch into q children and apply the same rule.
+
+All nonzero roots used at a stage are distinct because the U_i are disjoint. Root0 is used exactly once at that stage. Every root belongs to the actual job's fixed allowed list. Each job completes its whole cylinder with a finite comb, and its actual H-prefix remains unchanged. The deepest resulting leaf has depth
+
+    D+r-1.                                               (NF101)
+
+At the count-vector level, a stage selects
+
+    m_A=(q-1)r_A+1_(A is the completing job's type),
+    r'_A=q*r_A-m_A=r_A-1_(A is that type).
+
+Thus every type count weakly decreases, and the sum decreases by one. This also explains why all subset conditions remain valid; a separate polymatroid preservation theorem is unnecessary.
+
+Applying the established weighted transport to this actual labelled cut preserves the one old witness rule, complete old q-coordinates, cofactor coordinates and divided p-tails. The common root0 copies pure p to a fresh q-power output; it is not claimed deleted. The explicit comparison with the original count and modulus-sum budgets remains necessary.
+
+### Exact costs for fixed reserved root groups
+
+For each parent put
+
+    R_i=R(U_i)=sum_(a in U_i)R_a,
+    S_i=S(U_i)=sum_(a in U_i)S_a.
+
+The roots in U_i occur once at each stage1 through ell_i. The pure-p root0 occurs once at each parent's finishing stage. Therefore the deep construction has exact costs
+
+    C_comb=r+sum_i ell_i*R_i,                             (NF102)
+
+    W_comb=q^D*sum_i [ ((q^ell_i-1)/(q-1))*S_i
+                       +q^(ell_i-1) ].                   (NF103)
+
+Add the fixed shallow-leaf costs to NF102--NF103 before comparing with the original removed-class budget. The free folds contribute zero. These formulas use the original root batches, rather than a newly optimized arithmetic source.
+
+For fixed disjoint groups U_i, the lexicographically best completion order sorts R_i in nonincreasing order and, within an equal-R_i block, sorts S_i in nonincreasing order. The count assertion is the standard rearrangement inequality between increasing completion times and descending weights. Any inversion of two unequal R_i strictly increases the count, so the remaining freedom at minimum count consists only of ties. On a tie block the coefficient (q^ell-1)/(q-1) is strictly increasing, and rearrangement again puts larger S_i earlier. The root0 sum sum_i q^(ell_i-1) is independent of the order. This is direct reuse of the rearrangement principle; Mathlib's Antivary.sum_mul_le_sum_mul_comp_perm provides the corresponding generic inequality.
+
+The claim is only for the ordering of these fixed groups within this comb construction. It neither optimizes the Hall assignment nor says a comb is globally cost-minimal. For example, if every job permits all k roots and k>=q*r, all q*r children may stop already at depth D with distinct roots. That valid cut can use fewer leaves than sequential comb completion.
+
+### The remaining budget obligation
+
+NF99 is an exact static test for existence of some finite deep continuation of these forced actual parent jobs. It does not decide whether any continuation satisfies the strict original lexicographic budget: feasibility and affordable transport are different statements. NF102--NF103 give a computable sufficient candidate cost after a Hall allocation; failure of that candidate's cost does not rule out a cheaper noncomb cut. The existing weighted finite-horizon search and fixed-frontier minimum-cost assignment remain available for the full strict-budget question. No condition NF99 has been proved for every hypothetical odd cover, and no unrestricted Erdős#7 conclusion follows from this interface alone. These are ordinary mathematical applications and interface deductions, with no new Lean verification or literature-priority claim.
+
+## 65. All-root injections charge every deleted mixed original
+
+Keep the same EB1-selected original cover, support primes p>q and
+section62's actual root batches. Let t count its mixed p*q-bearing
+originals. A globally injective frontier allocation into ALL p roots,
+respecting its actual lists F_b,T_b, satisfies
+
+    sum_b R_sigma(b)<=sum_a R_a<t+sum_a R_a
+      whenever t>0.                                (NF104)
+
+By NF93--NF94 this would strictly reduce the original class count.
+Such a matching is therefore forbidden when t>0. Literal root0 may
+be used: the strict saving is supplied by the deleted mixed originals,
+without requiring deletion of pure p. This directly reuses the
+weighted transport and its exact inventory, not a new witness map.
+
+### The fresh-level mixed-label bound gains one class
+
+Let H be the full original q-height. Choose all actual pure-q guards
+and use the uniform fresh depth H+1. Section59 gives
+
+    ell_H=((q-2)*q^H+1)/(q-1),
+    ell=q*ell_H
+
+live words, with no numerical collision reservations. Then
+
+    t>=p-q*ell_H+1.                                 (NF105)
+
+If p-ell+1<=0, this follows from t>=0. Otherwise ell<=p. Since ell
+is a positive multiple of q and p is a different prime, ell!=p.
+The existing NF79 consequently gives t>=p-ell>=1.
+
+Let F be the set of actual first-p roots of all t mixed originals,
+so |F|<=t. If t<=p-ell, at least p-t>=ell roots lie outside F.
+Every such root is allowed at every live word, because the fresh
+collision lists are empty. A full injection into these roots would
+contradict NF104. Thus t>=p-ell+1, proving NF105.
+
+The count uses one global set of actual mixed roots. It does not
+charge a deeper mixed original separately at every compatible prefix,
+and it places no restriction on the other original prime heights.
+
+### The height-one consumer retains both first-root branches
+
+Assume H_3=1, let P be the largest support prime and let s be the
+number of actual support primes. NF73 supplies s>=14 and P>=47.
+For the pair (P,3), NF79 gives t>=P-6>0. Thus NF104 forbids a full
+matching of the six fresh depth-two words into all P roots.
+
+Reuse section60's Hall charge on the two first-three-root branches,
+each containing three live words. A failing left set I of size k<=6
+has a common forbidden-root set W with |W|>=P-k+1. If I stays in
+one branch, k<=3 and distinct roots of W require different mixed
+originals, giving t>=P-2. If I meets both branches, each root in W
+requires two different originals, because an original has only one
+first-three root. Therefore
+
+    t>=2|W|>=2(P-5)>=P-2.
+
+The last inequality holds here since P>=47. Literal root0 lies in
+every allowed list; it cannot be a commonly forbidden root. This
+rules out a singleton failing I, without changing the stated bound.
+
+Section60 already supplies c1>=s-2 from the actual labels3*r with
+r>=7 and pure3. These P-free labels and the mixed originals are
+disjoint and exhaust the three-bearing inventory at height one.
+Consequently
+
+    H_3=1 ==> t>=P-2,
+               N_3=c1+t>=P+s-4>=57.                 (NF106)
+
+This consumer uses the same existing thirteen-prime source premise
+as NF73. The general addition is NF104--NF105's full-root inventory
+charge; no new phase enumeration or height truncation is used.
+These are ordinary mathematical deductions with no new Lean
+verification. They do not bound the full mixed inventory from above,
+and unrestricted Erdős #7 remains unresolved.
+
+## 66. Promoting unused roots bounds the depth without increasing either replacement cost
+
+Fix the actual family and weighted all-root interface of sections62--65. Let H be the maximum original q-height and D=H+1. Keep one chosen shallow frontier at depths at most H. Apply the existing free-folding rule to every remaining live H-prefix whose constant deep allowed list contains a zero-workload root. The other actual live H-prefixes form r hard parent jobs, with type counts r_A. All roots allowed in a hard type have positive integer workload R_a>=1 and nonnegative divided-modulus weight S_a. In the arithmetic interface these are the literal original root-batch count and weight.
+
+For depths at least D, each hard job's allowed list is constant and every original same-depth collision list is empty. Roots may recur at different depths but each positive root occurs at most once at any one depth. The following normalization uses precisely these conditions. It does not require the distinguished root0 to belong to every list; that common-root property is needed for the separate static feasibility criterion NF99.
+
+Every finite feasible hard frontier has another feasible frontier whose two costs are individually no greater and, when r>=1, whose maximum leaf depth is at most
+
+    D+r-1=H+r.                                          (NF107)
+
+Thus the short depth bound preserves an actual strict lexicographic budget improvement. It concerns general frontiers, not only the comb construction. When r=0 there is no hard cost and the free folds have depth at most D.
+
+### A future root absent from the present layer can be promoted
+
+Take a finite feasible hard frontier. Suppose a root a labels a leaf at depth e>d>=D but labels no leaf at depth d. The ancestor v of that leaf at depth d has not already stopped: otherwise the original frontier antichain could not contain the deeper leaf. The descendant frontier inside v partitions its entire actual cylinder.
+
+Replace that whole descendant frontier by the single leaf v labelled a. Its constant allowed list contains a because the old deeper leaf used a in that same subtree. No other depth-d leaf uses a, so the new same-depth assignment is injective. At deeper levels this operation only deletes leaves; it creates no new capacity conflict. It preserves the complete partition and changes no shallow leaf.
+
+The deleted cut contains the old a-labelled leaf and at least q-1 other leaves: a nontrivial complete q-ary subtree has at least q leaves. Its old count cost is therefore strictly larger than R_a. The new modulus-sum contribution is q^d*S_a, whereas the deleted old a-leaf alone contributed q^e*S_a. All other deleted contributions are nonnegative. Consequently this promotion strictly reduces the class-count cost and does not increase the modulus-sum cost.                      (NF108)
+
+This change preserves the receiving node's actual q-prefix. Applying the established transport to the modified frontier still copies the output point's full original q-coordinate and cofactor coordinates into its one old witness and retains the literal divided p-tail. The promoted root is checked against the actual constant list at v, not against a different source. All new output q-heights are greater than H; original-label collisions remain absent. Same-depth root uniqueness retains the existing injectivity argument for transported numerical labels.
+
+Repeat promotions while possible. The finite leaf count decreases at every step, so the procedure stops. Both accumulated costs never increase. In the resulting frontier, every root used at any later layer must already be used at each earlier active layer. In particular, if U_j is the set of roots used at depth D+j, then
+
+    U_(j+1) subset U_j.
+
+No optimal frontier has to be selected abstractly for this conclusion: the normalization starts from the supplied finite candidate.
+
+### Nested root use forces the complete forest width to decrease
+
+Let n_j be the number of hard nodes awaiting a stopping decision at depth D+j, and u_j=|U_j|. Since all remaining workloads are positive and same-depth labels are injective, u_j is exactly the number of leaves selected at that layer. The actual full q-ary expansion gives
+
+    n_0=q*r, n_(j+1)=q*(n_j-u_j).
+
+Every positive n_j is a multiple of q. The preceding normalization makes u_j nonincreasing. If at any nonterminal layer n_(j+1)>=n_j, then
+
+    q*u_j <= (q-1)*n_j.
+
+At every subsequent layer, the available selected-leaf count is at most u_j. Inductively the live-node count stays at least n_j and never decreases, so the finite frontier could not terminate. This contradiction shows that n_(j+1)<n_j at every active layer of the normalized frontier. Starting at q*r and decreasing in positive multiples of q, the forest completes in at most r layers. This proves NF107.
+
+Reuse the earlier complete-forest Kraft bound. If k is the number of positive-workload roots, finite feasibility gives
+
+    (q-1)*r<k,
+    r<=floor((k-1)/(q-1)).
+
+For the actual all-root interface, k<=p. Because p>q, floor((p-1)/(q-1))>=1 also accommodates the r=0 free-fold case. Every finite feasible candidate therefore has a cost-dominating representative with maximum depth
+
+    H+floor((p-1)/(q-1)).                              (NF109)
+
+At q=3 and odd p this is H+(p-1)/2. The bound is independent of the original class-count budget and is substantially smaller than the earlier general loop-erasure horizon. It preserves both costs, rather than merely asserting the existence of some feasible shallow replacement.
+
+### The exact deep minimum uses a strictly decreasing count-state recurrence
+
+For the fixed shallow choice and fixed free folds, collect hard nodes by their actual constant allowed-root type A. A state z=(z_A) means that the current layer has q*z_A pending nodes of type A. Initially z_A=r_A. An admissible stage chooses a subset of positive roots and injectively assigns each chosen root a to one pending node of a type A containing a. Write m_A for the number assigned to type A, so
+
+    0<=m_A<=q*z_A,
+    z'_A=q*z_A-m_A.
+
+Restrict to assignments satisfying |z'|<|z|, where |z|=sum_A z_A. This restriction includes every stage of a normalized frontier. The layer costs are
+
+    c=sum_(used roots a)R_a,
+    s=sum_(used roots a)S_a.
+
+The state retains all future constraints needed in this deep regime: actual nodes within one type have the same allowed list, original collision labels are absent, and root capacity resets at the next depth. Actual cylinders are still retained for reconstruction; the count state does not replace their source coordinates.
+
+Let V(z) be the lexicographically minimum pair of remaining costs, with its second coordinate measured relative to the current depth. Use V(0)=(0,0), and the usual infeasible value if no completion exists. The standard finite-horizon Bellman principle gives the exact recurrence
+
+    V(z)=min_lex [ c+V_C(z'), s+q*V_S(z') ],              (NF110)
+
+over all admissible strict-width-decreasing assignments with a feasible successor. Its actual initial deep modulus-sum cost is q^D*V_S((r_A)); its deep class-count cost is V_C((r_A)). Add the previously fixed shallow costs before making the original lexicographic comparison. Free folds contribute zero.
+
+Every recurrence path constructs an actual complete prefix cut: assign its roots to distinct literal pending nodes of their indicated types, stop those nodes, and split all others into their q children. When r>=1 its depth is at most D+r-1; for r=0 the hard cut is empty. Conversely, NF107 normalizes every arbitrary finite feasible candidate to such a path while increasing neither coordinate. The restricted recurrence therefore attains the same global minimum as the unrestricted finite deep-cut problem; it is not merely the minimum over combs or a newly imposed approximation. The multiplication by q in the second coordinate accounts for moving the remaining decisions one depth later.
+
+NF110 is an application of the ordinary Bellman principle. The additional arithmetic interface is the proved cost-preserving normalization and the sufficiency of these actual deep type counts. No new generic dynamic-programming theorem, literature-priority claim or Lean verification is asserted. A hypothetical extremal odd cover must still be shown to admit some shallow choice and resulting minimum satisfying the strict original budget. This section makes that remaining price comparison a finite exact search with the stated depth bound for each fixed original family; it does not supply the missing uniform inequality or resolve unrestricted Erdős#7.
