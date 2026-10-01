@@ -3584,3 +3584,69 @@ are proved; it does not by itself identify that field's Galois
 coordinates, Frobenius elements, or cyclotomic intersections.
 
 ## 追加锚（本行以下为增补区）
+
+## 63. Cubic orbit independence modulo a fixed subgroup
+
+**定理 63.1（Cubic orbit independence）。** Let $G$ be an additive
+commutative group, $H$ an additive subgroup, and $J$ a nonnegative
+integer. For $i\in\{0,\ldots,J-1\}$ let $P_i\in G$. Let $T:G\to G$
+and $\sigma_j:G\to G$ be additive homomorphisms. Suppose every
+$\sigma_j$ fixes every element of $H$, and that
+
+$$
+\begin{aligned}
+\sigma_j(P_i)&=\begin{cases}T(P_i)&i=j,\\P_i&i\ne j,\end{cases}\\
+\sigma_j(T(P_i))&=\begin{cases}T^2(P_i)&i=j,\\T(P_i)&i\ne j.\end{cases}
+\end{aligned}
+$$
+
+Suppose also that $P_i+T(P_i)+T^2(P_i)=0$ and that $P_i$ has
+infinite additive order for every $i$. Then, for all integer
+coefficient families $a_i,b_i$,
+
+$$
+\sum_{i=0}^{J-1}\bigl(a_iP_i+b_iT(P_i)\bigr)\in H
+\quad\Longrightarrow\quad
+\forall i,\ a_i=b_i=0.
+$$
+
+The homomorphisms need not be invertible. No commutation between
+$T$ and $\sigma_j$ is assumed outside the displayed orbit values.
+The result includes the empty family.
+
+Proof. Apply $\sigma_j$ to the given sum. All terms with $i\ne j$
+are fixed, and the sum is fixed because it belongs to $H$.
+Cancellation gives
+
+$$
+a_j(TP_j-P_j)+b_j(T^2P_j-TP_j)=0.
+$$
+
+Use the cubic trace relation and write $x=a_j+b_j$ and
+$y=2b_j-a_j$. The preceding equality implies
+$xP_j+yTP_j=0$. Apply $T$ and subtract $y$ times the trace
+relation to obtain $-yP_j+(x-y)TP_j=0$. Eliminating $TP_j$ gives
+
+$$
+\bigl(x(x-y)+y^2\bigr)P_j=0.
+$$
+
+Infinite additive order forces $x(x-y)+y^2=0$. The identity
+
+$$
+2\bigl(x(x-y)+y^2\bigr)=x^2+y^2+(x-y)^2
+$$
+
+then forces $x=y=0$. Hence $a_j+b_j=2b_j-a_j=0$, so
+$a_j=b_j=0$. This works for every $j$.
+
+For GIR4, $H$ is the image of the base-field point group in the
+common extension field, and $T$ is the cubic coordinate rotation.
+The displayed action, cubic trace and infinite-order hypotheses
+must be established for the actual fixed-curve points. The
+abstract theorem alone does not establish those arithmetic
+hypotheses or a numerical rank bound. It uses cancellation,
+additive functoriality and the positive Eisenstein quadratic norm;
+it is a synthesis of these elementary structures.
+
+## 追加锚（本行以下为增补区）
