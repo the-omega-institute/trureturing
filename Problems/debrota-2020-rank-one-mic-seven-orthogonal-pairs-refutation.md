@@ -77,10 +77,9 @@ cardinality nine, and the contradiction with seven. This establishes a
 lower bound of nine; the formal result does not assert an exact pair count.
 
 The effect traces are `9/46,4/23,3/23,10/23,3/23,6/23,27/46,14/23,11/23`,
-so the counterexample is biased. A separate numerical search reports
-candidate unbiased configurations;
-these have no exact certificate or Lean proof and do not settle a conjecture
-restricted to unbiased MICs.
+so the counterexample is biased. The equal-trace restriction remains an
+unsettled neighbouring question [open]; no exact certificate or Lean proof
+for that restriction is included here.
 
 ## Triage
 
