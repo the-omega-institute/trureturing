@@ -7031,3 +7031,413 @@ been excluded. Repairs of ten or more classes, the remaining
 inventory in NF43 and unrestricted Erdős #7 remain unresolved. NF47--NF51
 are ordinary symbolic deductions, without new Lean verification
 or a literature-priority claim.
+
+## 50. Branch contraction excludes ten-class repairs with only one or two lows
+
+Keep the minimum hypothetical whole cover, its retained C0,
+complete private region P_3 and legal repair contract of NF18.
+All low classes have original3-height at most one. All high
+classes are partitioned by their actual second3 digit. The
+cofactor carrier includes the full periods of any new repair
+labels; R-low is the actual remainder after the low classes.
+
+### A small root must collide with a retained low parent
+
+The branch restriction of Jenkin--Simpson, Theorem8, is already
+recorded in [the source note](../../../../../../Library/Arith/jenkin2003compositecovering.md)
+and used in BC1--BC2. Apply that restriction inside one
+second3 root, keeping the lows. Its collision check gives
+
+    kappa+t<8 ==> the root contains9, or contains a shallow9f
+      whose parent label3f is already a low label.        (NF52)
+
+Here kappa counts all retained low repair classes and t counts
+the high classes in this root. No bound on their heights is
+imposed. This is a consumer of the existing branch restriction
+and NF28, not a new general restriction theorem.
+
+For completeness, take one cofactor period B containing C0,
+all low classes and the selected high classes. Choose J at
+least the original3-height and every selected high height
+minus one. Enlarge the old carrier to3^(J+1)*B and use
+3^J*B for the new carrier. On the complete private first3
+branch, use the single CRT map
+
+    (a_3+3u,z) |-> (a_3+3s+9u,z),
+
+where s is the selected second3 digit. It is a bijection
+between these two complete tail spaces and leaves the entire
+cofactor coordinate unchanged. Every retained low class has
+the same membership condition before and after this map.
+The pullback of a selected high class3^a*f is one actual AP
+of modulus3^(a-1)*f, with its cofactor phase unchanged and
+its complete ternary phase obtained from this same map.
+
+The lows and these pullbacks cover all of the new P_3: a
+point missed by the lows maps to the old selected root and
+must be covered by one of that root's high classes. Distinct
+selected labels remain distinct after division by3. A
+contracted label cannot collide with3-free C0 or a3-free
+low. A deep label stays of height at least two, so it cannot
+collide with any low. The only possible low collision is
+9f becoming3f; the only forbidden label3 comes from9.
+
+If neither exception in NF52 occurs, the kappa+t classes
+therefore form a legal complete repair. NF28 gives at least
+eight classes, proving NF52. The contracted labels belong
+to an explicitly constructed NEW repair; no claim that
+contraction preserves the old numerical labels is made.
+Labels from discarded original3-bearing branches are not
+additional forbidden labels in the legal repair contract.
+
+### Shallow query roots require at least two occupied parents
+
+Reuse the small-root argument of section49 with NF48 in
+place of NF31. In an inclusion-minimal repair with kappa<=6,
+any root containing at most three high classes is entirely
+of3-height two. If it has both shallow and deep classes,
+at most two deep classes remain. At every cofactor missed
+by the shallow classes they cover at most2/3 of the full
+tail, so the shallow classes already cover R-low and the
+deep classes are redundant. If all are deep, at most two
+cannot cover a tail; three can do so only when all have
+height three and every cofactor query contains R-low.
+NF48 would force all three numerical labels to be27.
+
+In particular, a singleton root must be9, which occupies
+its root alone in a minimal repair. In a different shallow
+root let j>=2 distinct nonunit queries cover R-low. If
+
+    kappa+j-1<=6,
+
+at least TWO of their distinct parent labels3e must already
+be lows. Otherwise at least j-1 parents are available;
+promote those queries with their actual cofactor phases.
+These are legal new low classes. The remaining nonunit
+query contains the new remainder, contradicting NF48.
+This conclusion is two occupied parents, not j-1 parents.
+
+### One and two low classes cannot support a ten-class repair
+
+Take an inclusion-minimal complete repair with ten classes.
+Zero lows are excluded by BC1 and the independent N_3>=19
+of NF51. If kappa=1, NF33 forces9 and root counts(1,4,4).
+For each four-class root, kappa+t=5<8. NF52 requires a
+shallow parent already among the lows. The two roots have
+different shallow numerical labels and therefore require
+two different low parents, contradicting kappa=1.
+
+If kappa=2, NF33 forces9 and root counts(1,3,4). The
+three-class root is shallow. Its three queries require at
+least two occupied parent labels, so both lows are parents
+of labels in that root. Every shallow label in the other
+four-class root is numerically different; none of its parents
+is low. But kappa+t=6<8, contradicting NF52. Consequently
+
+    every inclusion-minimal ten-class complete repair
+      has at least three low classes.                    (NF53)
+
+No absence-of15 premise is used in NF52 or NF53.
+
+### Three or four lows in a ten-class repair require fifteen
+
+For kappa=3,h=7, at most one root is a singleton. Without9
+the root counts must be(2,2,3), whose two pair roots already
+demand four different low parents. With9 they are(1,3,3)
+or(1,2,4). The two triple roots in the former again demand
+four parents. Thus only(1,2,4) remains.
+
+For kappa=4,h=6, the possible root counts are(2,2,2) or
+(1,2,3). Three pair roots demand six low parents, excluding
+the former. Both remaining cases have a shallow pair root.
+Its two cofactors e,f have their parent labels3e,3f among
+the lows. If the repair omits15, neither e nor f is5.
+
+Use ONE such root. C0, the kappa low cofactor APs and its
+two actual queries cover the whole cofactor carrier. Delete
+all but one event at each repeated numerical modulus. The
+deletion list has at most kappa+2<=6 items, multiplicity at
+most two and at most two double values. Its only possible
+double values are e and f. Numerical5 is absent: neither
+query has that value, and without15 at most one event of
+modulus5 occurs among C0 and the lows. A low label5, when
+legal, means that C0 does not contain5.
+
+Apply NF49 and the unchanged PC1--PC2 transport to these
+actual deleted events. It gives a distinct odd nonunit whole
+cover with at most |C0|+6<n classes, using NF51 for the
+comparison. This contradicts minimum original cardinality.
+Together with NF53 this proves
+
+    an inclusion-minimal ten-class complete repair with
+      at most four low classes must contain15.            (NF54)
+
+Also kappa=6,h=4 is impossible: two roots are singletons,
+and NF48 would require both to have numerical label9.
+One or two high classes cannot cover all three second3 roots
+of the nonempty low remainder. Thus a ten-class repair
+omitting15 is either all low or has counts(5,5) or(7,3).
+These are remaining possibilities, not constructed repairs.
+The deductions in this section are ordinary mathematics;
+no new Lean verification or literature-priority claim is made.
+
+## 51. Disjoint query pairs exclude five-low ten-class repairs without fifteen
+
+All numbers in this section are integers greater than one and coprime to six. A **strict certificate** for a labelled list is a selected increasing prime chain
+
+$$
+3<p_1<\cdots<p_t,
+\qquad r_1=p_1-2,\qquad r_i=p_i-p_{i-1}+1\quad(i>1),
+$$
+
+and an assignment of every labelled item $m$ to a selected prime dividing it, such that
+
+$$
+\sum_{m\text{ assigned to }p_i}r_i^{-v_{p_i}(m)}<1
+\quad\text{for every }i.
+$$
+
+Repeated values remain separate labelled events. The capacities, complete-prefix avoidance theorem and the common CRT transport are those already used in NF49. All bases are at least three. Assigning at most $r_i-1$ items to axis $i$ gives a strict cost. In particular, an assignment of at most two items per axis has cost at most $2/3$.
+
+### A prime-chain observation
+
+If two distinct core primes $p,q>5$ are selected together with at most one further prime, their two bases cannot both be three. A base three requires the immediately preceding selected prime to be two smaller. As neither core prime is five, these two predecessor requirements would need two different external primes unless one core prime were the predecessor of the other. In the latter case the one external prime and the two core primes would be three consecutive odd integers greater than three, all prime, which is impossible modulo three. Consequently at least one core base is at least five.
+
+We use capacitated Hall in its existing form: a two-slot assignment fails only if some collection of items has fewer than half as many neighboring prime axes. For at most seven items, a failure is witnessed by at least three items supported on one prime, at least five supported on two primes, or all seven supported on three primes.
+
+### Lemma: an obstructed repeated pair lies in a prime triangle
+
+Let $E$ consist of five different values, with $5\notin E$. Let $Q\subset E$ have two elements and form the seven-item list $D=E\sqcup Q$. If $D$ has no strict certificate, then there are different primes $p,q$ such that
+
+$$
+\{p,q,pq\}\subset E,
+\qquad Q\subset\{p,q,pq\}.
+\tag{DP1}
+$$
+
+**Proof.** There are exactly two repeated values, each of multiplicity two.
+
+First suppose at least three items are pure powers of one prime $p$, and collect all $k\ge3$ such items. Put them at $p$. Their conservative base-three cost is less than
+
+$$
+\frac12+\frac13+\frac19=\frac{17}{18}:
+$$
+
+the different powers have finite total cost below $1/2$, and the two possible extra copies occur at different depths. If $k\ge5$, assign the at most two other items to non-$p$ factors; each other axis receives cost at most $2/3$.
+
+It remains that $k=3$ or $4$. Try a two-slot assignment of the other items to their non-$p$ factors. If it succeeds the proof is complete. Otherwise at least three of these at most four items have the same singleton support $\{q\}$ after $p$ is removed. Collect all such items as $T$, writing each as $p^u q^v$, $u\ge0$, $v\ge1$. There are either three or four items in $T$. When there are three, at most one further item has a factor outside $\{p,q\}$; when there are four, $k=3$ and there is no further item.
+
+For three items in $T$, if any $v\ge2$, put all three at $q$, at cost at most $7/9$. Assume instead that all $v=1$.
+
+* If the value $q$ is absent from $T$, all $u\ge1$. For $k=3$, a largest $u$ is at least two, since no value occurs three times. Move that item to $p$; its cost there is at most $7/9+1/9=8/9$. For $k=4$ with at most one repeated pure value, the initial pure cost is at most $22/27$, so the same move gives at most $25/27$. For $k=4$ with two repeated pure values, the three $T$ values are different and their largest $u$ is at least three; the cost at $p$ is at most $8/9+1/27=25/27$. Only two items remain at $q$.
+* If $q$ occurs and $p=5$, absence of numerical five makes the pure $p$ cost at most $8/27$. Some $T$ item has $u>0$; moving it to $p$ gives at most $17/27$, and leaves cost at most $2/3$ at $q$.
+* If $q$ occurs and $p\ne5$, then $p,q>5$. Select just these primes and, if needed, one outside factor $r$ of the possible remaining item. By the prime-chain observation, one core base is at least five. If it is the $q$ base, all three $T$ items cost at most $3/5$. If it is the $p$ base, the pure group costs at most $2/5+2/25=12/25$; move one $T$ item with $u>0$ there, giving at most $17/25$, and leave the other two at $q$. Assign the outside item to $r$.
+
+Now let $|T|=4$, so the pure group has three items. Let $h$ count the $T$ items with $v=1$. If $h\le2$, all of $T$ costs at most $8/9$ at $q$.
+
+If $h=3$ and $q$ is absent from those three items, their largest $u$ is at least two. Move that item to $p$; the costs are at most $8/9$ at $p$ and $7/9$ at $q$. If $q$ occurs, some other depth-one item has $u>0$. For $p=5$, the pure group costs at most $7/27$, and moving that mixed item adds at most $1/3$. For $p\ne5$, select only $p,q>5$. If the $q$ base is at least five, place all four $T$ items there, costing at most $4/5$. Otherwise the $p$ base is at least five; move the mixed item to $p$, giving at most $11/25+1/5=16/25$, while $q$ costs at most $7/9$.
+
+Finally let $h=4$. If $q$ is absent and the pure group is numerically distinct, its cost is at most $13/27$. The two largest $u$ values in $T$ are at least two and two; moving these two items to $p$ gives at most $19/27$. If the pure group contains a repeated value, $T$ contains at most one repeated value, so its two largest $u$ values are at least two and three. Moving them gives at most $7/9+1/9+1/27=25/27$. If $q$ occurs, the two largest $u$ values are both positive. For $p=5$, move those two items: the $p$ cost is at most $7/27+2/3=25/27$. For $p\ne5$, use the actual two-prime chain. A $q$ base at least five takes all four items at cost at most $4/5$; a $p$ base at least five takes the two moved items with total cost at most $11/25+2/5=21/25$. The other axis receives only two items.
+
+This eliminates every case with a pure group of size at least three.
+
+Assume now every pure group has at most two items. If no pair of primes supports five items, the only possible two-slot Hall failure places all seven items on three primes. Select those three primes. Their actual integer capacities $r_i-1$ sum to the largest prime minus three, which is at least eight; singleton and pair demands are at most two and four. Hall therefore supplies a strict assignment.
+
+It remains to collect all $g\ge5$ items supported on a pair $\{p,q\}$.
+
+For $g=6$, at most one outside item remains. Select $p,q$ and one outside factor if needed. If one core base is at least five, the pair capacities sum to at least six, and singleton demands are at most two, so Hall assigns the six items. If both core bases equal three, the prime-chain observation forces one core prime to be five. Since numerical five is absent, the only squarefree values on this pair are the other prime and five times that prime. They account for at most four labelled items; reserve two items that have some depth at least two. Assign the remaining four with two slots per axis and restore the reservations to deep axes. Each core cost is at most $2/3+2/9=8/9$. Give the possible outside item to its chosen factor.
+
+For $g=7$, select only the pair. If one base is at least five, reserve one deep item, assign the other six by Hall, and restore it to a deep axis. At a base $r$, restoration leaves cost at most $(r-1)/r+r^{-2}<1$. A deep item exists because seven labelled items of multiplicity at most two cannot all come from the three squarefree values. If both bases are three, the pair is $\{5,7\}$. There are only two available squarefree values, seven and thirty-five, whereas $E$ has five different values. Reserve three numerically different deep items. Assign the other four with two slots per axis. If the reserved items can be assigned to axes at which their depth is at least two with at most two reservations per axis, restore them at cost at most $2/9$ per axis. Otherwise all three have depth at least two only at the same axis. The other exponent is zero or one; three different values then force at least one exponent on the common deep axis to be at least three. Their total restoration cost is at most $2/9+1/27<1/3$. This is also strict after the previous $2/3$ load.
+
+For $g=5$, choose a non-$p,q$ factor for each of the two outside items and select them together with $p,q$. The outside items cost at most $2/3$ on any outside axis. If a core base is at least five, Hall assigns all five internal items because the two capacities total at least six and singleton demands are at most two. If one internal item is deep, reserve it, assign the other four with two slots per axis, and restore it for at most $1/9$.
+
+Thus failure requires all five internal items to be squarefree on $p,q$. They take the three values $p,q,pq$, each with multiplicity at most two; their multiplicities must be $(2,2,1)$ in some order. Both duplicated values of $D$ are therefore among these three values. This proves (DP1). Notice that $p,q>5$, because the numerical value five is absent. $\square$
+
+### Theorem: two disjoint repeated pairs cannot both be obstructed
+
+Under the same assumptions on $E$, let $Q_1,Q_2\subset E$ be disjoint two-element subsets. At least one of the two seven-item lists
+
+$$
+D_1=E\sqcup Q_1,
+\qquad D_2=E\sqcup Q_2
+\tag{NF55}
+$$
+
+has a strict certificate.
+
+**Proof.** If both failed, the lemma would give two prime triangles $T_i=\{p_i,q_i,p_iq_i\}\subset E$ with $Q_i\subset T_i$. If the triangles were equal, their two-element subsets could not be disjoint. Different prime triangles can share at most one value, and any shared value must be a prime: a product of two different primes is not prime, and equality of two such products identifies their prime pairs. Since their union lies in the five-element set $E$, they share exactly one prime. Relabel to obtain
+
+$$
+E=\{p,q,pq,r,pr\},
+\qquad T_1=\{p,q,pq\},
+$$
+
+where $p,q,r$ are different primes greater than five. Select just these three primes. The core bases at $p,q$ cannot both be three by the prime-chain observation. The five items of $D_1$ on $T_1$ have singleton demands at most two and fit its total integer capacity of at least six. The two remaining items, $r,pr$, are assigned to $r$ at cost at most $2/3$. This is a strict certificate for $D_1$, a contradiction. $\square$
+
+The disjoint-pair hypothesis matters. A single seven-item list can fail even when numerical five is absent: $\{7,7,11,13,13,65,91\}$ has no strict certificate. Pure seven, eleven and thirteen force those primes into the chain. If five is omitted, the base at thirteen is at most three and both thirteen copies together with sixty-five cost at least one. If five is included, the bases at seven and thirteen are at most three; ninety-one cannot be assigned to either without reaching one. Additional unused primes only reduce these bases. This is a numerical assignment obstruction, not a family of covering phases.
+
+### Consumer: a ten-class repair with five low and five high classes must contain fifteen
+
+Use the same minimum hypothetical original distinct odd cover, complete private region $P_3$, retained three-free family $C_0$, unavailable numerical label three and enlarged common cofactor carrier as NF48--NF50. Suppose an inclusion-minimal legal complete repair has exactly five low and five high classes and omits numerical fifteen. Write $R_{\mathrm{low}}$ for the same actual cofactor remainder after its five lows.
+
+The remainder is nonempty, or all high classes would be redundant. Every second-three root requires a high class. A singleton must have original three-height two and its cofactor AP must contain all of $R_{\mathrm{low}}$; by NF48, its cofactor is a unit, so its numerical label is nine. There cannot be two singletons because numerical moduli are distinct. Hence the root counts are $(1,2,2)$, with nine occupying the singleton root.
+
+Both two-class roots are entirely shallow. Two deeper classes cannot cover a complete tail. A mixture of one shallow and one deeper class would make the shallow cofactor contain all of $R_{\mathrm{low}}$, so NF48 would force a second numerical nine. Thus the four high labels in these roots are
+
+$$
+9e_1,9e_2,9e_3,9e_4,
+$$
+
+where the $e_i>1$ are all different and coprime to six. Their actual cofactor APs form two pairs, each of whose union contains the same $R_{\mathrm{low}}$.
+
+For every $i$, if numerical $3e_i$ were absent from the five low labels, promote that query to a low class, with the same complete cofactor phase and the repair's first-three root. CRT supplies its actual phase. The label is not three, cannot equal a retained three-free label or a high label, and by assumption is not an existing low label. The new six-low remainder would be confined to the other nonunit query in the same root, contrary to NF48. Therefore the four labels $3e_i$ are already four of the five lows. In particular $e_i\ne5$.
+
+For either two-class root, take one actual cofactor cover consisting of $C_0$, the five low cofactor APs and the two query APs of that root. It covers the whole cofactor carrier and hence all integers by periodicity. At each repeated numerical modulus, select all but one actual event for deletion. There are at most seven deletion items. Their multiplicities are at most two, and at most the two query moduli can have two deletion items: before queries are added, a cofactor can have at most two events, because a retained $m\in C_0$ forbids repair label $m$, leaving only $3m$, while if $m\notin C_0$ only low labels $m,3m$ are possible.
+
+Numerical five does not enter either deletion list. None of the four promoted-parent lows or either query has cofactor five. If the fifth low does, the absence of fifteen forces its numerical label to be five; legality then means $C_0$ contains no five, so that event is unique and is not deleted.
+
+If either deletion list has at most six items, NF49 supplies a strict certificate. Otherwise both lists have seven items. Exactly seven events were added to $C_0$, so deletion count seven means no new numerical cofactor value was introduced. Hence all five low cofactor values already occur in $C_0$. Such a value $m$ forces its low label to be $3m$, so distinct original repair labels make the five cofactor values different. They form a five-element set $E$ with $5\notin E$. Each root's two query values are a two-element subset $Q_i\subset E$, and the four high numerical labels make $Q_1,Q_2$ disjoint. The two deletion lists are numerically exactly $E\sqcup Q_i$. The theorem above supplies a strict certificate for at least one.
+
+Equivalently, if the fifth low repeats one of the first four cofactor values, the two low labels at that value must be $m,3m$, so $m\notin C_0$. This introduces at least one new numerical value and makes the deletion count at most six; it is already covered by NF49.
+
+Use the successful certificate with the same complete-prefix avoidance and PC1--PC2 CRT map as NF49, taking every selected axis through its full actual height in the input whole cofactor cover. All deleted events have empty pullback. Every remaining event has at most one AP pullback, with all actual heights and complete phases retained; the output numerical moduli are distinct, odd and nonunit. Every output point inherits the same old covering witness through this single map. Consequently the output is a whole distinct odd cover of size at most
+
+$$
+|C_0|+7<n,
+$$
+
+using the independent earlier bound $N_3\ge9$. This contradicts minimum original cardinality. Thus a ten-class repair with five low and five high classes must contain numerical fifteen.
+
+Only one of the two candidate cofactor covers is transported. The proof does not combine separately optimized phases, points or prime chains into a single source. Promotion checks numerical availability within the chosen complete repair; no additional globally unused label is assumed. Numerical fifteen itself is unique in the original distinct-modulus family, so two translated original branches cannot each require their own copy. The result leaves ten-class repairs containing fifteen, other ten-class splits and unrestricted Erdős #7 unresolved. All conclusions here are ordinary mathematical deductions; no new Lean verification is asserted.
+
+Together with NF53--NF54 and the singleton exclusions in section50,
+this leaves the exact necessary alternatives
+
+    a complete ten-class repair omitting15 is either
+      all low, or has seven low and three high classes.   (NF56)
+
+Such a repair is automatically inclusion-minimal: any smaller
+complete subfamily would still omit15, contrary to NF50.
+NF56 does not claim that either remaining alternative is realizable.
+In its all-low alternative, BC2 and NF45 require at least ten
+different repeated bases. Each consumes a different low label3m,
+so all ten lows are of this form and each m is retained in C0.
+Thus this alternative also has no new cofactor prime or height.
+
+## 52. The remaining three singleton roots force retained divisors and unit phase gaps
+
+Consider the seven-low/three-high alternative of NF56. Each
+second3 root has one high class. It must be shallow: a deeper
+class cannot fill that root's complete tail at any point of
+the nonempty R-low. Write the three different labels as9e_i.
+Their actual cofactor APs A_i all contain the SAME R-low.
+At most one e_i is1. Their intersection is a nonempty AP
+
+    A = alpha mod K, K=lcm(e_1,e_2,e_3).
+
+In particular K is composite: three distinct positive divisors
+e_i cannot all divide1 or one prime. The following necessary
+conditions concern this one actual intersection:
+
+    the seven low labels are3m for a seven-element set
+      E of different retained C0 labels, with5 not in E;
+    every nonunit divisor d of K is a retained C0 label;
+    d|K, d>1, d!=5 ==> d in E;
+    if beta_d is the actual low cofactor phase at d,
+      gcd(d,alpha-beta_d)=1 for each such d.               (NF57)
+
+Consequently tau(K)<=8+1_(5 divides K), and every singleton
+cofactor belongs to{1,5} union E. These are necessary label
+and phase restrictions, not a construction of a repair.
+
+### The seven low cofactors must already be retained labels
+
+Fix any nonunit singleton query. C0, the seven low cofactor
+APs and this query form one whole cofactor cover. Delete all
+but one actual event at each repeated numerical modulus.
+The deletion list has at most eight items, multiplicity at
+most two and at most one double value, namely the query
+modulus. These are the same multiplicity facts used in NF31.
+
+If any newly added cofactor value were absent from C0, the
+number of different moduli would increase by at least one,
+so at most seven deletions would be needed. NF47 and the
+same PC1--PC2 transport would give a distinct odd whole cover
+with at most |C0|+8<n classes, contradicting NF51 and minimum
+original cardinality. Hence all seven low cofactor values,
+as well as this query's value, already occur in C0.
+
+A retained cofactor m forbids low label m, leaving only3m.
+Distinct low labels therefore give seven different cofactors
+E. Absence of15 gives5 not in E. Repeating this argument
+with any nonunit query containing R-low shows that its
+numerical modulus must also occur in C0. In particular this
+applies to every projection alpha mod d with d>1 dividing K.
+
+### All non-five divisors are occupied, and their phase differences are units
+
+For d|K with d>1 and d!=5, suppose3d were not a low label.
+Add the actual query alpha mod d as a low repair with first3
+root a_3. Its label is available: it differs from3, all C0
+labels, all current lows and all height-two highs. Since it
+contains R-low, the seven old lows plus this new low are a
+complete eight-class repair omitting15. NF50 forbids it.
+Thus d belongs to E. Counting these different occupied labels
+gives tau(K)-1-1_(5 divides K)<=7.
+
+Now remove the low with cofactor phase beta_d, keeping the
+other six. Their remainder is contained in
+
+    (alpha mod d) union (beta_d mod d):
+
+any point outside the removed low was already in R-low and
+therefore in A. If g=gcd(d,alpha-beta_d)>1, both APs lie
+in the same nonunit AP alpha mod g. This would confine the
+six-low remainder, contradicting NF48. Hence g=1, completing
+NF57. The retained C0 phase at d also differs from alpha,
+since its event is disjoint from R-low. Its phase differs
+from beta_d as well, or that low class would be redundant.
+These three phase distinctions belong to the actual common
+source; they are not arbitrary independent choices.
+
+### Eight numerical deletion items alone do not settle this case
+
+The one-query proof cannot extend NF47 blindly to eight items
+even when numerical5 is absent. For example,
+
+    D={7,13,13,35,65,91,455,11}
+
+has just one repeated value but no strict selected-chain
+certificate. Pure7,11,13 force those axes. If5 is omitted,
+the other seven items are squarefree on their available axes
+7 and13. Their bases are at most5 and3, so their total strict
+integer capacity is at most4+2=6. If5 is selected, the seven
+core items use5,7,13 with bases at most3, giving capacity
+2+2+2=6. Extra selected primes cannot receive these core
+items or increase their bases. This is a counterexample to
+the numerical assignment claim, not an odd covering family.
+
+The seven distinct values in this example are compatible with
+the forced divisor inclusion for K=91. That numerical fact
+does not supply the actual phases, R-low, or a complete repair
+required by NF57. The unit phase gaps and the complete common
+intersection remain additional restrictions to use.
+
+There is one further consequence for a hypothetical equality
+N_3=19. NF28 and NF50 force its two non-parent branch counts
+to be8 and10. The eight-class branch uses15 and21 by NF37,
+so the other actual branch has neither label. If that branch
+has seven lows and a singleton cofactor5, promoting its query
+to15 and discarding the highs gives an eight-class repair.
+NF37 requires21 in that repair. The only new label is15,
+so21 must have been among the seven retained original lows,
+contradicting global distinctness. Such a singleton is therefore
+excluded in this equality case. This argument constrains the
+retained original label21; it does not forbid new repairs from
+using a label discarded from another original branch.
+
+NF56--NF57 leave all-low ten-class repairs and the remaining
+seven-low/three-high phase configurations unresolved. They do
+not raise NF51's unconditional bound N_3>=19 or settle
+unrestricted Erdős #7. The proofs are ordinary symbolic
+deductions, not newly compiled Lean results.

@@ -31313,6 +31313,45 @@ excluded. Repairs of ten or more classes and unrestricted
 Erdős #7 remain unresolved.
 No new Lean verification or literature-priority claim is made.
 
+[Report385, sections50--52](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#50-branch-contraction-excludes-ten-class-repairs-with-only-one-or-two-lows)
+restrict the ten-class repairs that omit15. The existing
+Jenkin--Simpson branch restriction contracts one selected
+second3 root, while retaining all lows and complete cofactor
+phases. If the contracted root avoids label3 and collisions
+with low parents, NF28 requires at least eight resulting
+classes. This excludes the ten-class splits(1,9) and(2,8).
+Legal query promotion and the existing NF49 certificate
+exclude splits(3,7) and(4,6) without15.
+
+For split(5,5), four high labels form two disjoint query
+pairs and force four existing low parents. If six or fewer
+actual endpoint deletions suffice, NF49 applies. Otherwise
+both deletion lists are E plus one of two disjoint pairs,
+where E has five different retained cofactor values and
+omits5. The new seven-item argument proves that at least
+one of these two lists admits a strict selected-chain
+certificate. One successful actual cover is transported;
+the two source laws or phase choices are not combined.
+Thus this split also requires15.
+
+Consequently a ten-class repair omitting15 has only two
+remaining forms: ten lows, or seven lows and three shallow
+singleton highs9e_i. In the latter form all seven low
+cofactors are different retained C0 labels. The singleton
+queries contain the same nonempty remainder and meet in
+one AP alpha mod K, where K=lcm(e_1,e_2,e_3) is composite.
+Every nonunit divisor d of K other than5 must already have
+a low parent3d; its actual cofactor phase beta_d satisfies
+gcd(d,alpha-beta_d)=1. Hence tau(K)<=8+1_(5 divides K).
+
+These phase and divisor constraints are necessary, not a
+realization of the remaining cases. An explicit eight-item
+list with one duplicate and missing5 has no numerical prefix
+certificate, so extending NF47 by item count alone is invalid.
+The unrestricted conclusion remains N_3>=19; neither remaining
+ten-class form nor Erdős #7 is settled by these deductions.
+These are ordinary symbolic results, without new Lean verification.
+
 [Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
 keeps the residual cover's entire old q coordinate unchanged.
 It excludes one endpoint per repeated pair and reserves the
