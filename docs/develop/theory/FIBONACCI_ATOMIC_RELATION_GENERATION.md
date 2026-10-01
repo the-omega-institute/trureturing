@@ -35597,3 +35597,95 @@ $$
 $$
 
 这是同一 FIB 地址到同一整数的真实余类约束，不是把窗口长度当作随机概率。它仍没有控制奇数秩窗口中的剩余素因子、CA 身份或 §250 的有符号尾项；外部证书的证明与数值依赖也未由 Lean 重核。因此它是一个新的候选密度筛选，不是 Robin 或 RH 的全称结论。
+
+## 追加锚（本行以下为增补区）
+
+## 257. FIB 模数素数位于同一 CA 价格前沿之外
+
+本节把 §205.2 的素指标素支撑下界与 §234 的固定价格层判据放在同一个实际整数尺度上。结论只排除“用 $F_r$ 的缺素数制造 CA 价格损失”这一具体路线；它不把 $N_g$ 识别为 CA，也不提供 Robin 的点值界。
+
+固定素数指标 $r\ge7$，置
+
+$$
+V=F_r,qquad
+I_r=[\lceil V/10\rceil,\lfloor V/5\rfloor]\cap\mathbb Z,qquad
+N_g=Vg+1,qquad g\in I_r.
+$$
+
+记 $\rho=\log\phi$，并令
+
+$$
+ y=\log N_g,qquad s=y\log y,qquad \lambda=s^{-1}.
+$$
+
+由于 $F_r=\phi^r/\sqrt5+O(\phi^{-r})$，且 $g\asymp V$，对同一 $r$ 的全部 $g\in I_r$ 一致有
+
+$$
+\log V=\rho r+O(1),qquad
+y=2\rho r+O(1),qquad
+y\log y=(2\rho+o(1))r\log r.
+\tag{257.1}
+$$
+
+### 命题 257.1 强制缺素数的首层价格低于 CA 价格
+
+若 $p\mid F_r$，则对充分大的素数指标 $r$，有
+
+$$
+ p\log p>y\log y,
+$$
+并且
+
+$$
+\frac{\log(1+1/p)}{\log p}<\lambda.
+\tag{257.2}
+$$
+
+**证明。** §205.2 给出 $p\ge2r-1$。因此
+
+$$
+ p\log p\ge(2r-1)\log(2r-1)=(2+o(1))r\log r.
+$$
+
+式（257.1）及 $\rho=\log\phi<1$ 给
+
+$$
+ y\log y=(2\rho+o(1))r\log r,
+$$
+
+故前一个严格不等式最终成立。再用 $\log(1+u)<u$（$u>0$），得到
+
+$$
+\frac{\log(1+1/p)}{\log p}
+<\frac1{p\log p}
+<\frac1{y\log y}=\lambda.
+$$
+证毕。 $\square$
+
+### 推论 257.2 模数缺素数不产生同价 CA 损失
+
+令 $C$ 为价格 $\lambda$ 下最大化
+
+$$
+\frac{Z(n)^s}{n},qquad Z(n)=\frac{\sigma(n)}n,
+$$
+的任一正整数。对每个 $p\mid F_r$，充分大时都有 $p\nmid C$。另一方面，实际 FIB 整数满足
+
+$$
+N_g\equiv1\pmod p,qquad p\nmid N_g.
+$$
+
+因此，$F_r$ 的素因子既没有出现在实际 $N_g$ 中，也没有出现在同一价格的 CA 参考整数 $C$ 中；仅凭这个同余不能给 $N_g$ 相对于 $C$ 的正价格损失。
+
+**证明。** 若 $p\mid C$，把 $C$ 的 $p$-指数减一得到另一个正整数。目标值的比值为
+
+$$
+\frac{Z(C)^s/C}{Z(C/p)^s/(C/p)}
+=\frac{(1+1/p)^s}{p}.
+$$
+
+由式（257.2），该比值严格小于一，与 $C$ 的最大性矛盾。因此 $p\nmid C$。而 $p\mid F_r$ 时 $N_g=Vg+1\equiv1\pmod p$，故 $p\nmid N_g$。证毕。 $\square$
+
+这个结论把一个常见的候选路线精确地排除在目标尺度之外：$F_r$ 的素因子下界约为 $2r$，而窗口整数的 CA 首层价格前沿约在 $\log N_g\sim2r\log\phi$ 对应的素数尺度。两者之间有固定的线性缺口。仍可能存在来自实际指数向量、同余候选、完整约数响应或有符号 $\Phi$ 尾项的价格损失；本节没有控制这些量，也没有证明 Robin 不等式或 RH。
+
+## 追加锚（本行以下为增补区）
