@@ -521,8 +521,50 @@ proper isometric-action conditions are retained; quotient metric uniqueness
 is within the chosen smooth structure. These scoped transient classical
 applications compile with only `propext`, `Classical.choice` and `Quot.sound`.
 
-This covering result does not yet establish global injectivity, an inverse
-on hyperbolic three-space, realization of every hyperbolic manifold as an
-isometric quotient, cusp classification or full Mostow-Prasad rigidity.
+This covering increment alone does not establish global injectivity or an
+inverse on hyperbolic three-space; the next section supplies the H3 inverse.
+Realization of every hyperbolic manifold as an isometric quotient, cusp
+classification and full Mostow-Prasad rigidity remain unfinished.
 The full rigidity target still includes noncompact cusps and nonorientable
 manifolds. No new project Lean declaration or novelty claim is retained.
+
+
+## Global smooth inverse of the same H3 exponential
+
+The project's `HyperbolicTopology.coordinatesHomeomorph` identifies the
+hyperbolic topology of H3 with the usual topology of the positive-height
+half-space in `Ambient ℂ`. The positive-height half-space is convex and
+nonempty, so Mathlib's `Convex.contractibleSpace` and transport through that
+homeomorphism give contractibility of the actual H3 type. Its simple
+connectedness follows from `SimplyConnectedSpace.ofContractible`. The
+selected Euclidean manifold atlas supplies local path connectedness through
+`ChartedSpace.locallyPathConnectedSpace`.
+
+The pinned upstream `PoincareLib/Topology/Covering/SimplyConnected.lean`, specifically
+`Poincare.Topology.bijective_of_isCoveringMap_of_simplyConnected`, makes the
+same previously checked covering exponential from Euclidean three-space
+to H3 bijective. Mathlib's `IsLocalDiffeomorph.diffeomorphOfBijective` then
+provides a global smooth diffeomorphism whose forward function is exactly
+that chosen exponential. Its inverse is smooth everywhere. No compactness,
+proper-map condition, finite-fiber condition or new simple-connectedness
+premise is supplied by the user.
+
+This is checked for the same actually constructed upper-half-space metric
+`g`, retaining the chosen exponential's normalization, radial geodesics at
+all real times, smoothness, surjectivity, bijective differential, complete
+actual pullback, Euclidean inner lower bound and full negative polar
+identity. Deleting the single added H3 diffeomorphism clause and reversing
+the import and theorem names restores the preceding combined constructor
+byte-for-byte. All earlier source, volume, curvature, conditional core/tail
+and quotient clauses and original free, compact-set proper action
+conditions are retained; quotient metric uniqueness remains within the
+chosen smooth structure.
+
+The quotient exponential retains its covering structure. Its target is
+not assumed to be simply connected, and no global inverse on an arbitrary
+quotient is asserted. Arbitrary-manifold isometric quotient realization,
+cusp classification and full Mostow-Prasad existence, homotopy and
+uniqueness remain unfinished, including noncompact and nonorientable
+manifolds. These are scoped transient classical applications under
+unchanged pins, with only `propext`, `Classical.choice` and `Quot.sound`;
+no new project Lean declaration or novelty claim is retained.
