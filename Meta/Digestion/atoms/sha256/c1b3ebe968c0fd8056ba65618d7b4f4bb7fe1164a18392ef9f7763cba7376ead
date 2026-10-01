@@ -1,0 +1,43 @@
+### 339.2 第338节的张量系数接口
+
+以下在第336.3节的公共有理扩域上使用第338节的系数：取 $\underline c=3/5$、$x^\dagger=11/40$，原实际来源族包含在此构造域中。固定第338节的 $n_k=Nb^k$、$d_k=n_k+\lfloor\rho\rfloor$、$\rho>\max(\beta,2)$，以及全任务区间上的系数
+$\bar\ell_{k,t}(p),\bar u_{k,t}(p)$。它们满足：
+
+$$
+c_0\le\bar\ell_{k,t}\le\bar u_{k,t}\le1-c_0,\qquad
+\sup_{k,t}\bigl(\|\bar\ell_{k,t}\|_{C^\beta}
+                +\|\bar u_{k,t}\|_{C^\beta}\bigr)\le C_1,
+\tag{339.3}
+$$
+
+$$
+\mathsf E^H_k\bar\ell_{k-1}\le\bar\ell_k,\qquad
+\bar u_k\le\mathsf E^H_k\bar u_{k-1}.
+\tag{339.4}
+$$
+
+这些关系在全部 $p\in[0,1]$ 成立。在实际世界 $x=C(1-Bp)=hc$ 上，原参考多项式的差满足
+
+$$
+\Gamma_k(x,q)\le Cx^\beta
+\min\{1,(n_kx^2)^{-\rho/2}\},
+\tag{339.5}
+$$
+
+并且在每个固定实际 $x$ 中
+
+$$
+\sum_{k\ge0}n_k^a\Gamma_k(x,q)\le C_2.
+\tag{339.6}
+$$
+
+最后，由二项或超几何平均的均值匹配，在共同 $C^\beta$ 界下，
+
+$$
+|\mathbb Eg(V)-g(\mathbb EV)|\le C_3 m^{-a}
+\quad\text{若 }\operatorname{Var}(V)\le C/m.
+\tag{339.7}
+$$
+
+$0<\beta<1$ 用直接 Hölder 界，$1<\beta<2$ 用一阶 Taylor 后消掉线性项。上述都是第338节已经写出的数学接口，不使用其有限截止结论反推准确程序。
+

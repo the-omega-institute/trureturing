@@ -1,5 +1,8 @@
 import Reg.Support.DependentFamily
 import Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 namespace LeanInformationAuditRegTests.ExplicitSourceOperands

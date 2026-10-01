@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.Census.Json
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit DispositionCensus
 

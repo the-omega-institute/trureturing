@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3a39ff82fdcad9e3400e5be8846ab7d594ee0135f319deb09decd5c3f2cfe07e
+  normalized_sha256: sha256:3a39ff82fdcad9e3400e5be8846ab7d594ee0135f319deb09decd5c3f2cfe07e
+cas_ref: sha256:3a39ff82fdcad9e3400e5be8846ab7d594ee0135f319deb09decd5c3f2cfe07e
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/ThresholdChainReduction.threshold_chain_reduction
+    target_statement_id: sha256:7834a9a9a46294bac626c2ae61dbfb682b039fb747953aaee3b6f839080795b9
+receipts:
+  unresolved_subitems: []

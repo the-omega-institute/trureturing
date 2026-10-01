@@ -1,0 +1,9 @@
+**命题 12.3（相容的有限迹态）。**
+
+$$
+t_n(A)=\varphi^{-n}\sum_c d_c\operatorname{Tr}(A_c)
+\tag{FT.6}
+$$
+
+是 $\mathfrak A_n$ 上的忠实归一化迹态，并且 $t_{n+1}j_n=t_n$。
+

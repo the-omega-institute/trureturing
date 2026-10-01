@@ -1,0 +1,99 @@
+### 346.2 同一个实际尾及准确包装
+
+记原参考上下多项式为 \(L_k(x,q),U_k(x,q)\)，其差为 \(\Gamma_k(x,q)\)。全任务延拓在真实域保持这些函数。第345节已固定两个不同的标量逼近常数：
+
+\[
+\|S_m\bar L_k^q-\bar L_k^q\|_\infty\le C_Lm^{-a},\qquad
+\|S_m\bar\Gamma_k^q-\bar\Gamma_k^q\|_\infty
+\le C_{\mathrm{gap}}m^{-a}.
+\tag{346.6}
+\]
+
+同一次充分 \(M\) 的选择满足
+
+\[
+C_LM^{-a}\le c_\delta/4,\qquad
+C_{\mathrm{gap}}M^{-a}\le c_\delta/2.
+\]
+
+由于 \(a>1\)、\(\eta_k\le1\)，相应有
+
+\[
+C_Lm_k^{-a}\le\delta_k/4,\qquad
+C_{\mathrm{gap}}m_k^{-a}\le\delta_k/2.
+\tag{346.7}
+\]
+
+合法数组与实际执行给
+
+\[
+\begin{aligned}
+\mathcal L_k&=(1-\delta_k)S_{m_k}\bar L_k^q,\\
+G_k&=\delta_k+(1-\delta_k)S_{m_k}\bar\Gamma_k^q,\\
+\Pr(R_T>D_k)&=\Pr(R_H>d_k)=G_k,
+\end{aligned}
+\tag{346.8}
+\]
+
+其中 \(R_H,R_T\) 是同一次核心执行的真实调用数。有限截止时最后一式用于 \(k<J\)，无限程序用于全部 \(k\)。
+
+进一步有
+
+\[
+\delta_k/2\le G_k
+\le\delta_k+C_{\mathrm{gap}}m_k^{-a}+\Gamma_k(x,q),
+\qquad
+\sup_w\sum_{k\ge0}n_k^a\Gamma_k(x,q)\le C_{\rm loc}.
+\tag{346.9}
+\]
+
+局部和在同一世界求和后才取上确界。下界来自合法系数或标量误差吸收，不使用 \(S_m\) 保正。
+
+由实际批量增长，
+
+\[
+\frac{D_{k+1}}{D_k}\ge\lambda_T:=\frac{b+1}{2}>1,\qquad
+\frac{d_{k+1}}{d_k}\ge
+\lambda_H:=\frac{bN+r_\rho}{N+r_\rho}>1.
+\tag{346.10}
+\]
+
+核心精确尾和为
+
+\[
+\begin{aligned}
+\mathbb ER_T^s
+&=D_0^s+\sum_{k<J}(D_{k+1}^s-D_k^s)G_k,\\
+\mathbb ER_H^s
+&=d_0^s+\sum_{k<J}(d_{k+1}^s-d_k^s)G_k .
+\end{aligned}
+\tag{346.11}
+\]
+
+无限情形用单调收敛取无限和，允许值为无穷。
+
+设请求来源实际成功率为 \(z\)。准确首币门控给
+
+\[
+\Pr(\text{触发},X=0)=\Pr(\text{触发},X=1)=1/6,
+\qquad\Pr(\text{触发})=1/3.
+\tag{346.12}
+\]
+
+条件于完整门控记录，核心使用该世界的新鲜来源尾。因此对每个世界、请求及 \(s>0\)，
+
+\[
+\mathbb EN_T^s\ge\tfrac13\mathbb ER_T^s,\qquad
+\mathbb EN_H^s\ge\tfrac13\mathbb ER_H^s.
+\tag{346.13}
+\]
+
+门控长度不需要与触发事件独立。包装的附加来源费用有共同有限 \(a\) 矩，上界则用
+
+\[
+(x+y)^a\le2^{a-1}(x^a+y^a)
+\tag{346.14}
+\]
+
+及触发后的条件新鲜性加入，不使用低阶次可加性。
+

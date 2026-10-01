@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5905275ab1608270e3390583e5dd2a8bc108f06c05f68701627bc11ba2b8cfc7
+  normalized_sha256: sha256:5905275ab1608270e3390583e5dd2a8bc108f06c05f68701627bc11ba2b8cfc7
+cas_ref: sha256:5905275ab1608270e3390583e5dd2a8bc108f06c05f68701627bc11ba2b8cfc7
+coverage_gids:
+  - gid: D5/S3/Observer/Linear/PhysicalFixedNoiseInformation.physical_fixed_noise_information
+    target_statement_id: sha256:6f042919c894edef45aad3535acfeb8d25548a97e90d542e340f411b82ca62ba
+receipts:
+  unresolved_subitems: []

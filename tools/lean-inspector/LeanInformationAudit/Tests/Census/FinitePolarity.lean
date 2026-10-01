@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.Census.Evidence
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 open Lean Lean.Meta Lean.Elab.Command LeanInformationAudit DispositionCensus
 -- A kernel-valid proof of True cannot satisfy a positive occurrence certificate.
 /-- info: finite-polarity rejected -/

@@ -1,0 +1,8 @@
+### theorem 53.2 加法任务的完整障碍
+
+若 $F:D\to Z$ 是群同态，则两侧单独充分当且仅当 $F(E_X)=F(E_Y)=0$。在此条件下，$F|_E$ 下降为 $\bar F:\mathfrak J\to Z$，并且
+
+$$
+\boxed{\text{联合解码存在}\iff\bar F=0,\qquad |R|_{\min}=|\operatorname{im}\bar F|=|F(E)|.}
+$$
+

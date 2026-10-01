@@ -1,0 +1,18 @@
+**定理 312.6（微分预算的坐标保持）。** 有
+
+$$
+H^{\nabla}G=J^{\mathsf T}(\operatorname{Hess}_pg)J,
+\qquad \nabla_\theta G=J^{\mathsf T}\nabla_pg.
+\tag{312.26}
+$$
+
+因此定理312.3在新坐标中给
+
+$$
+-J^{\mathsf T}D_aJ\preceq H^{\nabla}G
+\preceq J^{\mathsf T}D_aJ,
+\tag{312.27}
+$$
+
+一阶信息预算也按同样的矩阵合同变换保持。
+

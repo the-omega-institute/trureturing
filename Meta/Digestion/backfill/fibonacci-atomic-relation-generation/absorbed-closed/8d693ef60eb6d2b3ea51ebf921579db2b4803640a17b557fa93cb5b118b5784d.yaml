@@ -1,0 +1,25 @@
+fingerprints:
+  raw_sha256: sha256:8d693ef60eb6d2b3ea51ebf921579db2b4803640a17b557fa93cb5b118b5784d
+  normalized_sha256: sha256:8d693ef60eb6d2b3ea51ebf921579db2b4803640a17b557fa93cb5b118b5784d
+cas_ref: sha256:8d693ef60eb6d2b3ea51ebf921579db2b4803640a17b557fa93cb5b118b5784d
+coverage_gids:
+  - gid: D5/S1/Recurrence/FiniteSamplingSmithDefect.finite_sampling_smith_defect
+    target_statement_id: sha256:9f6657ad26c6b975f7b0a054d13ec3f7eece2d9a61ae1c167afb2afdfb904bd2
+  - gid: D5/S3/Quantum/Entanglement/FiniteAdditiveReadoutBlocks.actual_block_matrices
+    target_statement_id: sha256:13d85ecf5807cbc3c94cd39c0c898176e72d7b6ef690260da768474415b3ddb6
+  - gid: D5/S3/Quantum/Entanglement/FiniteAdditiveReadoutBlocks.actual_coefficient_block
+    target_statement_id: sha256:3f4926a214ae30cb2bccc92cc0eb385eae7c45e31a067000a978abc6322ddb8d
+  - gid: D5/S3/Quantum/Entanglement/FiniteAdditiveReadoutBlocks.paired_block_iff
+    target_statement_id: sha256:615656ebc068932ed5701a3461cedaf5da242361091f702f7ed8e947bfa7729a
+  - gid: D5/S3/Quantum/Entanglement/FiniteAdditiveReadoutBlocks.right_block_card
+    target_statement_id: sha256:c76b20a4bd167047b4f4188cdcf6b4fcdc5a301bab23f52b6239491801b8a9c6
+  - gid: D5/S3/Quantum/Entanglement/FiniteAdditiveReadoutBlocks.source_coset_product
+    target_statement_id: sha256:f438e1c48b3d8a613f5f9768bf755c17f7cf4105cbb30466272e7486340796db
+  - gid: D5/S3/Quantum/Entanglement/FiniteAdditiveReadoutSpectrum.actual_eigenspaces
+    target_statement_id: sha256:51e32765e85e63bedf8786ece3dab2a9e88eee22e1a1efd6c63b261091867863
+  - gid: D5/S3/Quantum/Entanglement/FiniteAdditiveReadoutSpectrum.actual_flat_reductions
+    target_statement_id: sha256:9131cf0502d02ea0389f30f094832b2bfcfe0566f5ea55bd1cfeb807d03bbe02
+  - gid: D5/S3/Quantum/Entanglement/FiniteAdditiveReadoutSpectrum.actual_joint_state
+    target_statement_id: sha256:941d424bd0d94beabe7c801e0e47667432db4912e168c14826bfba310bc6233d
+receipts:
+  unresolved_subitems: []

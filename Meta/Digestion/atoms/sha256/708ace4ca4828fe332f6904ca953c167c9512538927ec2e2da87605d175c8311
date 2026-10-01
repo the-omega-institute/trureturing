@@ -1,0 +1,12 @@
+**定理 5.2。** 对任意可测平方可积 $f(u_0)$，
+$$
+\mathbb E\|u_t-f(u_0)\|^2=\operatorname{tr}G_t+
+\mathbb E\|F(t)u_0-f(u_0)\|^2,
+\quad G_t=I-F(t)F(t)^T.
+$$
+故最小风险为 $\operatorname{tr}G_t=t^2\operatorname{tr}M+O(t^4)$。
+
+**证明。** 分解初态 $\xi_0=Q^Tu_0+V^Tv_0$，得到条件均值 $F(t)u_0$ 和协方差 $Qe^{t\Omega}(I-\Pi)e^{-t\Omega}Q^T=G_t$。条件期望正交性给风险分解。矩阵 Taylor 首项为 $t^2M+O(t^3)$，而迹 $r-\|F(t)\|_F^2$ 是偶函数，故迹余项从四阶开始。证毕。
+
+这是当前输入和 Gibbs 先验下所有预测器的共同下限。增加历史或传感器会改变条件化对象。
+

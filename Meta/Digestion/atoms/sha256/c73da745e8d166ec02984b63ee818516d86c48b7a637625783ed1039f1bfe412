@@ -1,0 +1,16 @@
+**定理 3.3。**
+$$
+\Sigma_T=(\beta I+\sigma^{-2}G_T)^{-1},\quad
+\widehat X=\sigma^{-2}\Sigma_TL_T^TY,
+$$
+$$
+I_T=\tfrac12\log\det(I+G_T/(\beta\sigma^2)),
+\quad \mathcal R_T=\inf_{\widehat x}\mathbb E\tfrac12\|X-\widehat x(Y)\|^2
+=\tfrac12\operatorname{tr}\Sigma_T.
+$$
+对于 $\mathcal F(p)=\mathbb E_p\|X\|^2/2-\beta^{-1}h(p)$，
+$$
+\mathbb E_Y[\mathcal F(p_{X|Y})-\mathcal F(p_X)]=\beta^{-1}I_T.
+$$
+若 $B^T=-B$，已知动力学下的未来最优能量风险仍为 $\mathcal R_T$。
+

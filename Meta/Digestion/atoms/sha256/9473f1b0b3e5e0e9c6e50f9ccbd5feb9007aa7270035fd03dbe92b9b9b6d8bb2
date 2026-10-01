@@ -1,0 +1,33 @@
+**命题 165.2（范数方向的有效 Robin 阈值）。** 在命题 165.1 下，记 $A=v_p(5040g)$、$a_0=0.0094243$。选实数 $h\ge32$。若 $A\ge1$，要求
+
+$$
+h^3\ge a_0(p^{A+1}-1).
+$$
+
+若 $A=0$，则改要求
+
+$$
+h^3\ge2a_0(p-1),\qquad e^h\ge2(p-1)\log p.
+$$
+
+在相应条件下，所有 $j>4e^h$ 的 $n_j$ 均满足 Robin。
+
+证明。非负种子非零，故 $U_j\ge F_j$。对 $j\ge2$ 有 $F_j\ge2^{(j-2)/2}$，进而 $\log n_j>j/4$；所以 $L=\log\log n_j>h$。由 $e^{32}>32\cdot10^{12}>\log N_K$，进入 Axler 的解析范围。
+
+若 $A\ge1$，这是一个实际存在的素因子，保留因子 $1-p^{-A-1}$ 即由第一条件停止。若 $A=0$，必须使用 $m=pn_j$ 的 totient 补位，不能把缺素数加入实际因子积。令 $\delta=\log(1+\log p/\log n_j)$，则 $\log\log m=L+\delta$。所需的充分条件为
+
+$$
+(p-1)\left(\delta+\frac{a_0}{(L+\delta)^2}\right)\le L.
+$$
+
+因为 $\delta\le(\log p)e^{-L}$，左端除以 $L$ 至多
+
+$$
+(p-1)\left(\frac{\log p}{e^L L}+\frac{a_0}{L^3}\right)
+<\frac1{2h}+\frac12<1.
+$$
+
+这正是第二组条件所保证的范围。$\square$
+
+这些阈值依赖实际种子的范数素因子和公因子 $g$。在没有有效阈值的任务中，也可直接使用现有 `PrimeValuationGap.bounded_prime_valuation_robin_ratio` 的固定素数、有界赋值结论；这只是复用其结论，不新增一份绑定定理。
+

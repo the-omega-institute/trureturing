@@ -3,6 +3,9 @@ import D5.S3.Quantum.Information.InfiniteCalibrationControl
 import D5.S3.Quantum.Information.ActualQubitChordObstruction
 import D5.S1.Words.Patterns.CyclicStackPreimages
 import LeanInformationAudit.Registry.Evidence
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Meta Lean.Elab.Command LeanInformationAudit
 

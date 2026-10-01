@@ -1,5 +1,7 @@
-import LeanInformationAudit.Syntax
+import LeanInformationAudit.Tests.Assessment
 import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredProofBindings
 open Lean Meta Elab Command TemplateAudit TemplateBinding
@@ -42,7 +44,7 @@ elab "observe_proof_plan_identities" : command => do
     liftCoreM <| addDecl (.defnDecl { definition with name := probe, all := [probe] })
     let .defnInfo actual ← getConstInfo probe | throwError "[FAIL] proof_variant_setup"
     exactInput := exactInput && actual.value.equal definition.value
-    let result ← enroll probe
+    let result ← enroll (← getEnv).header.mainModule (← getOptions) probe
     match selectedPlan (← getEnv) probe with
     | .ok plan => plans := plans.push plan
     | .error error => logError m!"[FAIL] proof_variant_enrolled {name}: {error}; {repr result}"
@@ -92,7 +94,7 @@ elab "observe_constructor_proof_identity" : command => do
     let .ok (identity, _) := rawStatementIdentity [] info.type
       | throwError "[FAIL] constructor_proof_raw_setup"
     rawTypes := rawTypes.push identity
-    let result ← enroll ``cutRealization #[ast]
+    let result ← enroll (← getEnv).header.mainModule (← getOptions) ``cutRealization #[ast]
     match selectedPlan (← getEnv) ``cutRealization with
     | .ok plan => plans := plans.push plan
     | .error error => logError m!"[FAIL] constructor_proof_enrolled {error}; {repr result}"
@@ -108,8 +110,8 @@ elab "observe_constructor_proof_identity" : command => do
 
 observe_constructor_proof_identity
 
-register_information_template cutRealization
-register_information_template termBound
+test_assess in register_information_template cutRealization
+test_assess in register_information_template termBound
 
 def arena : PrimitiveLawArena where
   toArena := Arena.ofFintype Bool
@@ -121,7 +123,7 @@ instance : DecidableEq arena.State := instDecidableEqBool
 theorem suppliedLaw : arena.Law omegaBound := by intro x; rfl
 theorem suppliedBridge : LegacyPrimitiveRealization arena (arena.Law omegaBound) omegaBound :=
   ⟨Iff.rfl⟩
-register_information_theorem suppliedLaw in arena
+test_assess in register_information_theorem suppliedLaw in arena
   readout via (@cutRealization Bool (Fin 4) (instDecidableEqFin 4) (fun _ =>
     ⟨Nat.zero, (let h : Nat.lt Nat.zero 4 := (by change 0 < 4; decide); h)⟩))
   primitives omegaBound.toPrimitiveBundle realization suppliedBridge
@@ -133,7 +135,7 @@ def literalBound : PrimitiveRealization (cutSignature Bool (Fin 4)) where
 
 theorem planLaw : arena.Law literalBound := by intro x; rfl
 theorem planBridge : LegacyPrimitiveRealization arena (arena.Law literalBound) literalBound := ⟨Iff.rfl⟩
-register_information_theorem planLaw in arena
+test_assess in register_information_theorem planLaw in arena
   readout via (termBound)
   primitives literalBound.toPrimitiveBundle realization planBridge
 

@@ -1,0 +1,17 @@
+## 19. 可观测补空间上的导数层与一致指数余项
+
+设 $V$ 为任意有限维实内积空间，$W$ 为任意完备实内积空间，$B:V\to V$ 与 $C:V\to W$ 为线性映射。令 $n=\dim V$，并定义
+
+$$
+N_j=\bigcap_{0\le k<j}\ker(CB^k),\qquad
+U=N_n^\perp,\qquad
+E_j=N_j\cap N_{j+1}^\perp\quad(0\le j<n).
+$$
+
+空交为 $V$。以 $i:U\hookrightarrow V$ 表示包含映射，以 $\Pi_j:V\to V$ 表示值域为 $E_j$ 的正交投影。保留全部 $n$ 个层，包括零维层；允许 $V$ 或 $U$ 为零维。以下范数均为内积诱导的算子范数。写 $b,c$ 为 $B,C$ 对应的连续线性映射。对连续线性自映射 $X$，置 $L_j(X)=cX\Pi_j i$，并令
+
+$$
+F(T,s)=\sum_{j=0}^{n-1}T^{-j}L_j(e^{Ts b}),\qquad
+P(s)=\sum_{j=0}^{n-1}\frac{s^j}{j!}L_j(b^j).
+$$
+

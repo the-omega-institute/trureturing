@@ -1,0 +1,10 @@
+**计算 2145.4（具体模式的 Heisenberg 关系及其 Sugawara 作用）。** 对问题 2145.1 的复多项式 Fock 模式和定理 2145.3 的同一个 $L_m$，逐整数有
+
+$$
+[a_m,a_n]=m\delta_{m+n,0}\,\mathrm{id},\qquad
+[L_m,a_r]=-r\,a_{m+r}\qquad(m,n,r\in\mathbb Z).
+\tag{2145.4}
+$$
+
+第一式的混合符号情形来自 $\partial_{X_i}(X_jv)=\delta_{ij}v+X_j\partial_{X_i}v$，同号模式分别由偏导数和乘法的交换性处理。第二式逐态交换有限正规序和后仅有 $k=-r$ 与 $k=m+r$ 两个可能贡献，各给出 $-r a_{m+r}$，外侧系数 $1/2$ 消去两份之和。一般的局部截断 Heisenberg 表示上的第二式见 [Kytölä 2025, `Sugawara.lean`, `commutator_sugawaraGen_heiOper`, 固定提交 `5ff4245`](https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean) [文献注](../../../Library/VertexAlgebra/kytola2025virasoro.md)；这里还须履行第一式与本节具体模式、有限和之间的对应。
+

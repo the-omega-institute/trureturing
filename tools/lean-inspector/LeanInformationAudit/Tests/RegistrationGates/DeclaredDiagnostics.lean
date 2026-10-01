@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredBindings
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredDiagnostics
 open Lean Meta TemplateBinding

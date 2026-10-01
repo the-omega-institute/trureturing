@@ -1,5 +1,8 @@
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 /-! T-005: the fst, snd, and product identity kernels are overcomplete. The
 seal reports the first sorted zero-marginal member; three count assertions
@@ -39,17 +42,17 @@ def idRealization : PrimitiveRealization arena.signature where
   readout := fun _ state => state
   anchor := Fin.elim0
 
-information_theorem fstTheorem
+test_assess in information_theorem fstTheorem
   in arena
   primitives fstRealization
   : arena.Law fstRealization := by trivial
 
-information_theorem sndTheorem
+test_assess in information_theorem sndTheorem
   in arena
   primitives sndRealization
   : arena.Law sndRealization := by trivial
 
-information_theorem idTheorem
+test_assess in information_theorem idTheorem
   in arena
   primitives idRealization
   : arena.Law idRealization := by trivial
@@ -124,20 +127,20 @@ example : fixtureCatalog.uniqueCaptureCount (0 : Fin 3) = 0 := by decide
 example : fixtureCatalog.uniqueCaptureCount (1 : Fin 3) = 0 := by decide
 example : fixtureCatalog.uniqueCaptureCount (2 : Fin 3) = 0 := by decide
 
-expect_information_occurrence fstTheorem
+test_assess in expect_information_occurrence fstTheorem
   in arena
   from "LeanInformationAudit.Tests.SealOvercomplete"
 
-expect_information_occurrence sndTheorem
+test_assess in expect_information_occurrence sndTheorem
   in arena
   from "LeanInformationAudit.Tests.SealOvercomplete"
 
-expect_information_occurrence idTheorem
+test_assess in expect_information_occurrence idTheorem
   in arena
   from "LeanInformationAudit.Tests.SealOvercomplete"
 
 #guard_msgs (error) in
-#seal_information_theory
+test_assess in #seal_information_theory
 
 /-- error: Invalid field `__lowers_escape`: The environment does not contain
 `True.__lowers_escape`, so it is not possible to project the field `__lowers_escape` from an

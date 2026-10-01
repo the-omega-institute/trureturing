@@ -1,0 +1,18 @@
+## 27. 形式化接口、来源与实际检错
+
+本批主要推导链为：秩三基态符号的非线性部分固定为三阶行列式；该同一三形式成为基态截面的字符进位；真实融合要求补足 $E^*$；七个基态模生成全部六十四个类型；混合迹确定被迫离开基态的 $1216$ 重最低输出通道；全部字符归成四类，产生可计算的 $S_7$ 谱融合稳定子及 $168$ 阶来源稳定子。Fibonacci 的作用是给出有类型的递归、记录与模标签接口，并明确两来源观察的盲区。
+
+有限形式化次序是：$E=(\mathrm{Fin}\ 3\to\mathbb F_2)$、实际对偶、式（FC.4）的有限和；证明所有解之差双线性；用多项式恒等式证明行列式进位；构造六维群的截面与展开同构；证明七生成元唯一关系和子集正常形；有限 Fourier 投影推导重数；最后接实际模块融合与模函数。辅助八元数可通过显式系数同构复用已有理论，不以它作为待证明 OPE 的定义。没有新增 Lean/Scribe 或当前编译结论。
+
+[FAG26] 用户指定原子关系卷，固定提交、blob 及读取范围见 §20。重点使用 §§2–5、8、19、25–27。其原始树、数量商、操作环和本卷的缺陷标签具有不同类型；本批不把全称结论从一种载体直接搬到另一种载体。
+
+[Ba17] Tathagata Basak, *The octonions as a twisted group algebra*, arXiv:1702.05705v1 (2017), https://arxiv.org/pdf/1702.05705 。实际读取 Theorem 1、Lemma 3、§§5–6 的证明。PDF 第 2、3 页截图请求失败，读取的是可解析文本，不报告视觉复核。
+
+[AM99] Helena Albuquerque and Shahn Majid, *Quasialgebra Structure of the Octonions*, Journal of Algebra 220 (1999), 188–224; arXiv:math/9802116v1, https://arxiv.org/pdf/math/9802116 。采用 §2 的 Eq. (11)、Definition 2.3 和 Corollary 2.4；PDF 第 6 页已视觉核对。八元数的余边界实现保留既有归属。
+
+[K02] 的实际 double 实现和 [EMS20] 的循环轨形为本批物理接口的外部来源；本批重读两份原论文相应部分。共同相位归一化、实际固定点模及范畴 $S$ 的匹配仍有 §14 的条件边界。没有把全部形式符号表宣布为可实现 VOA。
+
+本批代码 [`bridge_checks.py`](../../reports/monster-fibonacci-character-carry/bridge_checks.py) 及输出 [`bridge_results.json`](../../reports/monster-fibonacci-character-carry/bridge_results.json) 使用标准库整数与 Fraction，实际运行并复跑。覆盖八个符号表的全部有限三元组、字符进位和展开复合、全部七点置换的二次型保持、$168$ 阶来源子群计数、字符到 $x^{30}$ 的有限系数、输出 $724/1216/24064$ 重数，以及两原子递归和第三独立输入反例。逐系数检查和边界实例存在包含关系，不相加当作独立结果数。
+
+这些有限运行没有构造完整 VOA、intertwining operator 的非零系数、Monster 或其反常类。普通证明尚无独立审定或全球优先权认证。本批没有把秩三全 A 分支排除，也没有证明任何 $S_7$ 置换提升为完整场对称。接下来真正的未知量已具体缩小为那些 $1216$ 重通道的实际耦合及其 crossing 相容性；它们须由场论构造，而非给辅助八元数改名。
+

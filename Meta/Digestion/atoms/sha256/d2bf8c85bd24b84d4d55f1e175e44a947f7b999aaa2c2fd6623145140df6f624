@@ -1,0 +1,12 @@
+**定理 3.1。** 对 $p_N(t;x)=\sum_{k=0}^Nt^kCB^kx/k!$，
+$$
+\|\mathcal T_Tx-p_N\|_{L^2}\le R_N(T)\|x\|,
+\quad R_N(T)=\frac{ce^{bT}b^{N+1}T^{N+3/2}}{(N+1)!\sqrt{2N+3}}.
+$$
+若 $a(T_0)\ge a_0>0$，取使 $R_N(T_0)\le\sqrt{a_0}/2$ 的 $N$，则
+$$
+\mu_N\ge\frac{a_0}{4L_N(T_0)^2},
+\quad L_N(T_0)^2=\sum_{k=0}^N\frac{T_0^{2k+1}}{(2k+1)(k!)^2}.
+$$
+这样的有限 $N$ 总存在。
+

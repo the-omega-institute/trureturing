@@ -1,0 +1,11 @@
+### 231.3 候选补集上的实际矩预算
+
+对 $d\ge1$，记
+
+$$
+A_{I\setminus E_y}(d)
+=\#\{g\in I\setminus E_y:d\mid N_g\},
+\qquad
+\mathcal M_{\mathrm{out}}(s)=\sum_{g\in I\setminus E_y}Z(N_g)^s.
+$$
+

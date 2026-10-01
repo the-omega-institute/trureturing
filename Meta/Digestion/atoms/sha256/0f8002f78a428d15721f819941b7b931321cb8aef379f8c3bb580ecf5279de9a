@@ -1,0 +1,45 @@
+**定理 3.2（单步低层可观测量的精确代数）。** 对任意 $d,e\ge2$，定义
+
+$$
+\mathcal D_{\mathrm{out}}
+=\{B\in\mathcal B(\mathcal H_A):
+U^\dagger(B\otimes I_H)U\in\mathcal B(\mathcal H_A)\otimes I_H\}.
+$$
+
+则
+
+$$
+\boxed{\mathcal D_{\mathrm{out}}
+=U_d\bigl(\mathcal B(\mathcal H_0)\oplus\mathcal B(\mathcal H_1)\bigr)U_d^\dagger.}
+$$
+
+对其中的 $B$，有 $U^\dagger(B\otimes I_H)U=\alpha(B)\otimes I_H$；对不在其中的 $B$，其单步输出期望不能对全部联合输入仅由低层约化态决定。扇区和代数维数为
+
+$$
+\dim\mathcal H_0=\frac{d(d+1)}2,\qquad
+\dim\mathcal H_1=\frac{d(d-1)}2,\qquad
+\dim_{\mathbb C}\mathcal D_{\mathrm{out}}
+=\dim_{\mathbb R}(\mathcal D_{\mathrm{out}})_{\mathrm{sa}}
+=\frac{d^2(d^2+1)}2.
+$$
+
+证明。令 $V_a=T_{c(a)}U_e$。因 $M(1,0)=(0,1)$，有
+
+$$
+V_a=U_eR^{k(a)},\qquad
+U=\sum_a|f(a)\rangle\langle a|\otimes V_a.
+$$
+
+逐个矩阵单位展开得到
+
+$$
+U^\dagger(B\otimes I_H)U
+=\sum_{a,a'}B_{f(a),f(a')}E_{aa'}\otimes R^{k(a')-k(a)}.
+$$
+
+由于 $e\ge2$，$R$ 与 $R^{-1}$ 都不是标量恒等算子。各 $E_{aa'}$ 线性独立，所以此算子属于 $\mathcal B(\mathcal H_A)\otimes I_H$，当且仅当 $k(a)\ne k(a')$ 时 $B_{f(a),f(a')}=0$。这正是 $\alpha(B)$ 在两进位扇区间无交叉块的条件。保留的项中高层因子全为 $I_H$，给出所述拉回公式。
+
+若某输出期望对所有联合密度算子都只依赖偏迹，则其线性泛函消灭偏迹核；有限维对偶性给出对应算子必须属于 $\mathcal B(\mathcal H_A)\otimes I_H$。对自伴算子也可直接用满秩密度算子加减足够小的自伴偏迹零扰动得到同一结论。因此上述代数确实最大。计数 $a_0+a_1<d$ 得 $1+2+\cdots+d=d(d+1)/2$；余下标签数为 $d(d-1)/2$。两个全矩阵块的复维数是两扇区维数的平方和；自伴部分的实维数相同。
+
+一般“半因果酉必为张量积”的结论见 Beckman–Gottesman–Nielsen–Preskill, [*Causal and localizable quantum operations*，定理 7](https://arxiv.org/abs/quant-ph/0102043)。这里的结论是给定进位运输的最大可保留子代数，由上面的矩阵单位计算确定。$\square$
+

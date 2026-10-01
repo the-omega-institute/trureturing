@@ -1,0 +1,18 @@
+### 215.3 完整实际核心的提取与互素条件
+
+定义完整小素数核心
+
+$$
+C_w(n)=\prod_{p\le w}p^{v_p(n)}.
+\tag{215.8}
+$$
+
+固定一个 $w$-光滑正整数 $C$。若 $(C,V)>1$，则 $C_w(N_g)=C$ 的类为空，
+因为 $(N_g,V)=1$。否则取唯一的 $g_C\in\{0,\ldots,C-1\}$，使
+$1+Vg_C\equiv0\pmod C$，并令
+
+$$
+b_C=\frac{1+Vg_C}{C},\qquad
+K_C=\{k\in\mathbb Z:g_C+Ck\in I_r\}.
+$$
+

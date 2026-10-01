@@ -1,0 +1,18 @@
+### definition 21.3 边界任务的全息性
+
+给定相容解集 $\mathcal S(\mathcal K)$ 和边界观察
+
+$$
+O_B:\mathcal S(\mathcal K)\to\mathcal B,
+$$
+
+对任务 $\tau:\mathcal S(\mathcal K)\to Y$，若存在 $D_B$ 使
+
+$$
+\tau=D_B\circ O_B,
+$$
+
+则称边界 $B$ 对任务 $\tau$ 全息。等价地，$O_B$ 的每个纤维上 $\tau$ 都是常值的。若 $\tau$ 是恒等任务，则全息性就是边界观察的单射性。
+
+这里的“全息”是任务相对的边界充分性，不等于物理全息原理。
+

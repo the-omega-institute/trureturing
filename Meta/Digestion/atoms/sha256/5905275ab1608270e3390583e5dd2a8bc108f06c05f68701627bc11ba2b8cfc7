@@ -1,0 +1,14 @@
+**定理 22.1（实际指数 Gramian 的二次余项）。** 设 $V$ 为任意有限维实内积空间，$W$ 为任意完备实内积空间，$B:V\to V$ 和 $C:V\to W$ 为有界线性映射。允许零维空间与不可观测方向。固定先验精度 $\beta>0$ 和坐标噪声方差 $\eta>0$，定义实际算子
+
+$$
+H=C^*C,\qquad G(T)=\int_0^T (Ce^{tB})^*(Ce^{tB})\,dt.
+$$
+
+积分是算子空间中的 Bochner 区间积分。行列式和迹作用于有限维状态空间，范数是内积诱导的算子范数。存在 $K\ge0$ 和 $\delta>0$，使得对每个 $0<T\le\delta$，
+
+$$
+\left|\frac12\log\det\left(I_V+(\beta\eta)^{-1}G(T)\right)-\frac{T}{2\beta\eta}\operatorname{tr}(C^*C)\right|\le K T^2.
+$$
+
+证明。指数函数的解析性给出被积函数 $f(t)=(Ce^{tB})^*(Ce^{tB})$ 在零点可微且 $f(0)=H$。因而在零点附近有 $\|f(t)-H\|\le R|t|$，对实际区间积分得到 $\|G(T)-TH\|\le RT^2$。$G(T)$ 为半正定自伴随算子；在其实际正交特征基中，$\log\det(I+sG(T))$ 是 $\sum_i\log(1+s\lambda_i)$。对 $x\ge0$ 有 $|\log(1+x)-x|\le x^2/2$，且 $0\le\lambda_i\le\|G(T)\|$。这给出对数余项的二次界。再用 $|\operatorname{tr}(L)|\le\dim(V)\|L\|$ 控制 $G(T)-TH$ 的迹，即得结论。
+

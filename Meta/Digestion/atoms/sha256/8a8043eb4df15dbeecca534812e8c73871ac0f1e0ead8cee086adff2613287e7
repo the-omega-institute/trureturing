@@ -1,0 +1,37 @@
+**定理 120.9（$H\mid n$ 的退化及实际除数占用）。** 对任意 $H\ge1$，若 $H\mid n$，则
+
+$$
+R_H(n,z)=R_H(n,z')\ \Longleftrightarrow\ \gcd(z,H)=\gcd(z',H).
+$$
+
+若 $d=\gcd(z,H)$，第 $k$ 项准确为
+
+$$
+\gcd(y_k,H)=d\gcd(F_k,H/d).
+$$
+
+令 $\mu$ 为 Möbius 函数，则实际类数为
+
+$$
+Q_H(n)=\sum_{d\mid H}\mathbf1_{\left\{
+\sum_{t\mid H/d}\mu(t)W_{I_n}(dt,0)>0\right\}}.
+$$
+
+长度至少 $H$ 时它等于除数个数 $\tau(H)$。特别地 $H=5040$ 的完整除数容量为 $5\cdot3\cdot2\cdot2=60$，短区间仍取上述占用。
+
+证明。$H\mid n$ 给 $y_k\equiv F_kz\pmod H$。写 $z=du,H=dH'$，有 $\gcd(u,H')=1$，于是
+
+$$
+\gcd(F_kz,H)=d\gcd(F_ku,H')=d\gcd(F_k,H').
+$$
+
+这证明充分性；$k=1$ 的读数就是 $d$，证明必要性。对于 $d\mid H$，条件 $\gcd(z,H)=d$ 的指标为
+
+$$
+\mathbf1_{\{d\mid z\}}\sum_{t\mid H/d}\mu(t)\mathbf1_{\{dt\mid z\}}.
+$$
+
+把它对实际区间求和就是内层取整和，再数非空类即可。$z=0$ 时也成立：$d<H$ 的 Möbius 和为零，$d=H$ 时为一。完整剩余系中每个除数都可作为 gcd 出现，给饱和结论。
+
+实际 $n=0$ 只含 $z=0$，全部读数为 $H$，所以 $Q_H(0)=1$；$n=1$ 为空，故 $Q_H(1)=0$。$H=1$ 时素数标签元组为空，所有读数恒为 1，非空纤维类数为一，空纤维类数为零。$\square$
+

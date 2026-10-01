@@ -1,0 +1,23 @@
+### 324.3 自然参数插值把端点小尾传到统计尺度
+
+令
+
+$$
+\vartheta=\log\frac p{1-p},\qquad
+\Lambda(\vartheta)=\log(1+e^\vartheta),\qquad
+\vartheta_0=\log\frac{p_0}{1-p_0}.
+\tag{324.9}
+$$
+
+按成功次数合并式（324.3），可写成
+
+$$
+q_n(\vartheta)
+=e^{-n\Lambda(\vartheta)}
+\sum_{r=0}^n c_{n,r}e^{r\vartheta},
+\qquad c_{n,r}\ge0.
+\tag{324.10}
+$$
+
+记号 $q_n(\vartheta)$ 表示在对应 Bernoulli 率下的同一尾概率。
+

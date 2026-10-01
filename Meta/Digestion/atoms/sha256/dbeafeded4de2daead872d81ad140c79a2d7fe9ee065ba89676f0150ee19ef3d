@@ -1,0 +1,47 @@
+### 347.3 四项实际预算与双向剖面
+
+第345.7节的实际尾和、同世界参考局部化及固定包装给
+
+\[
+\begin{aligned}
+T_{a-u}(A_\eta)\le C\biggl[
+1+\eta_0^{-s}
+&+\sum_{k\ge0}n_k^{-u}\eta_k^{1-s}\\
+&+\sum_{k\ge0}n_k^{-u}\eta_k^u
++W_\eta(u)\biggr].
+\end{aligned}
+\tag{347.13}
+\]
+
+其中初始任务批量已经计入 \(\eta_0^{-s}\)。局部化项先在每个世界中使用
+\(\sum_kn_k^a\Gamma_k(x,q)\le C\)，再取权重上确界。
+
+前两类项分别满足
+
+\[
+\eta_0^{-s}\le N^{u_*}W_\eta(u),\qquad
+\sum_kn_k^{-u}\eta_k^{1-s}
+\le W_\eta(u)\sum_k\eta_k
+\le K_\Sigma W_\eta(u).
+\tag{347.14}
+\]
+
+平滑项有
+
+\[
+\sum_kn_k^{-u}\eta_k^u
+\le\frac{N^{-u}}{1-b^{-u}}\le C/u.
+\tag{347.15}
+\]
+
+由地板非增及总和上界，\((k+1)\eta_k\le K_\Sigma\)。取
+\(k=\lfloor1/u\rfloor\)，则 \(n_k^{-u}\) 有共同正下界，因而
+
+\[
+W_\eta(u)\ge cK_\Sigma^{-s}u^{-s}
+\ge c_{K_\Sigma}u^{-s}.
+\tag{347.16}
+\]
+
+由于 \(s\ge s_->1\)，这个下界共同控制 \(1/u\) 和固定包装费用。代回式（347.13）得到以下实际剖面。
+

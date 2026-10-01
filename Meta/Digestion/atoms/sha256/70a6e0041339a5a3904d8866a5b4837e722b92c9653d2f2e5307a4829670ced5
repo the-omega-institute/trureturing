@@ -1,0 +1,32 @@
+**定理 29.6（解析、执行、组合与展开交换）。** 对所有有限声明程序及逐步合法初态，
+
+$$
+\begin{aligned}
+\operatorname{Decode}\operatorname{Encode}(P)&=P,\\
+\operatorname{Encode}(PQ)&=\operatorname{Encode}(P)\star\operatorname{Encode}(Q),\\
+\operatorname{Exec}(\operatorname{Encode}(P),x)&=\operatorname{Eval}(P,x),\\
+\operatorname{Exec}(n\star n',x)
+&=\operatorname{Exec}(n',\operatorname{Exec}(n,x)).
+\end{aligned}
+\tag{29.7}
+$$
+
+最后一式对 $n,n'\in\mathscr N$ 的定义域恰为 $x\in\mathcal D_{\operatorname{Decode}(n)}$ 且 $\operatorname{Exec}(n,x)\in\mathcal D_{\operatorname{Decode}(n')}$，即先执行 $n$、再执行 $n'$ 均合法的初态。展开同样满足
+
+$$
+\mathcal U(\operatorname{Encode}(\varepsilon))=\mathsf{Empty},\qquad
+\mathcal U(\operatorname{Encode}(jP))=(j,\operatorname{Encode}(P)).
+$$
+
+证明。权重严格递增且无界，所以正余量的最大可用指标存在；每次减去至少一，余量严格下降并有限终止于零。若选中 $k\ge1$，最大性给
+
+$$
+r<w_{k+1}=w_k+w_{k-1},\qquad r-w_k<w_{k-1}.
+$$
+
+所以非零余量的下一指标至多为 $k-2$；$k=1$ 时余量已经为零，$k=0$ 时 $r=1$ 且余量也为零。递推展开给 $n=\sum_jb_j(n)w_j$，相邻两位不同时为一；规范 Zeckendorf 唯一性使此贪心位串等于完整来源码。
+
+编码递推给 $e_{h+1}(P)=\sum_{r=0}^hd_r(P)w_r$。定理 29.4 已证外包装位串无相邻一，最高一恰在 $h=4m+1$，所以其完整规范位就是 $d_r(P)$，三窗补零及精确成本仍如 (29.5)。解码因此逐块恢复原标签，保留标记前全部 $4m$ 位，包括末尾零数据块，得到第一式；反向任何通过全部解码条件（包括每个数据块属于码表）的完整来源也有同一位串，重新编码仍为该数。$m=0$ 时只有 $d_1=1$，故空程序码为 $w_1=2$。由 (29.6) 立即得到第二式。
+
+空词求值为恒等；对 $jP$，解码给同一头标签，guard 是同一 $D_j$，后续按同一余词递归，故得到第三式。对词长归纳，同一递推给 $\operatorname{Eval}(PQ,x)=\operatorname{Eval}(Q,\operatorname{Eval}(P,x))$，且定义域恰为 $x\in\mathcal D_P$、$\operatorname{Eval}(P,x)\in\mathcal D_Q$；代入 (29.6) 给第四式及其全部逐步 guard 条件。解析逆最后使空词和头尾两种展开逐项相同。$\square$
+

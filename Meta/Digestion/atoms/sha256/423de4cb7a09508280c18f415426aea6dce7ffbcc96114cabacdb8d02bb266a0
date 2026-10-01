@@ -1,0 +1,29 @@
+### 344.4 高次数下的 Taylor 余项系数
+
+令 \(T_{p,r}P\) 为 \(P\) 在 \(p\) 的 \(r\) 阶 Taylor 多项式。有限 Taylor 恒等式、引理344.2及引理344.3给
+\[
+\begin{aligned}
+|C_{D,J}(P-T_{p,r}P)|
+&\le
+\sum_{\ell=r+1}^d
+ \frac{|P^{(\ell)}(p)|}{\ell!}|\mu_{D,J,\ell}|\\
+&\le B\sum_{\ell=r+1}^d
+ \left(C_\mu e^6\sqrt{\frac dD}\right)^\ell.
+\end{aligned}
+\tag{344.16}
+\]
+这里使用了
+\[
+R_{D,\ell}(p)\le\sqrt{d/D}\,R_{d,\ell}(p).
+\]
+平方根项按该倍率变化，线性项按更小的 \(d/D\) 变化，故取最大值仍成立。
+
+因此，存在绝对 \(A\ge1\)，使 \(D\ge Ad\) 时
+\[
+\boxed{
+|C_{D,J}(P-T_{p,r}P)|
+\le C_r B(d/D)^{(r+1)/2}.}
+\tag{344.17}
+\]
+例如取 \(A\ge4(C_\mu e^6)^2\)，式（344.16）中的几何比至多 \(1/2\)。所有高阶导数和中心乘积矩的常数均已控制为一个共同几何因子，没有对未受控的阶数常数求和。
+

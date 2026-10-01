@@ -1,0 +1,10 @@
+### theorem 10.2 函数抽象的有限树编译
+
+令 $\mathsf I=\mathsf S\mathsf K\mathsf K$，对含变量 $x$ 的应用表达式递归定义
+
+$$
+[x]x=\mathsf I,\qquad [x]t=\mathsf Kt\ (x\text{ 不在 }t\text{ 中自由出现}),\qquad [x](uv)=\mathsf S([x]u)([x]v).
+$$
+
+则 $([x]t)a\to^*t[x:=a]$。
+

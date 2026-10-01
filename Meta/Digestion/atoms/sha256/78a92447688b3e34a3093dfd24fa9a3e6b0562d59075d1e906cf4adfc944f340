@@ -1,0 +1,51 @@
+**引理 200.2（只有 $5kQ$ 例外的实际素支撑）。** 设 $j=r+k\ell$、$\ell\ge0$。若 $p\nmid5kQ$ 且 $p\mid V_j$，则 $p$ 在 $\mathcal L/\mathbb Q$ 的 Frobenius 共轭类对上述特征零迹根有固定点。
+
+证明。$p\ne5$ 时 $\phi-\psi$ 在 $R/pR$ 中可逆，故 §199.2 的实际系数计算在 $p=2$ 时也成立：
+
+$$
+\tau^{j+3}=\rho,\qquad
+ y=\tau^\ell\in(R/pR)^\times,\qquad y^k=\rho_r.
+$$
+
+令 $\varepsilon\in\{1,-1\}$ 为 $p$ 在 $K$ 上的 Frobenius 符号；对奇 $p$ 它是 $(5/p)$，对 $p=2$ 它为 $-1$。由于 $\operatorname N(\tau)=1$，有 $y^p=y^\varepsilon$。
+
+取 $\mathcal L$ 中的素理想 $\mathfrak P\mid p$。由引理200.1，该处不分歧；$u$ 为局部单位，$\zeta_k$ 的约化仍有精确阶 $k$。$X^k-\rho_r$ 的 $k$ 个根在剩余域中彼此不同。于是存在唯一 $h\pmod k$，使
+
+$$
+\overline{u\zeta_k^h}=\overline y.
+$$
+
+将 $\mathfrak P$ 处的 Frobenius 写成 §199.3 的参数
+
+$$
+\sigma(\zeta_k)=\zeta_k^A,\qquad
+\sigma(u)=\zeta_k^b u^\varepsilon.
+$$
+
+其约化满足
+
+$$
+\overline{u^\varepsilon\zeta_k^{Ah+b}}
+=\overline{\sigma(u\zeta_k^h)}
+=\overline y^{\,p}
+=\overline{(u\zeta_k^h)^\varepsilon}.
+$$
+
+消去局部单位，并使用单位根约化的精确阶，得到
+
+$$
+Ah+b\equiv\varepsilon h\pmod k.
+$$
+
+而特征零迹根上的作用是 $h\mapsto\varepsilon Ah+\varepsilon b$，所以它固定 $h$。本证明不要求不同迹根在模 $p$ 后仍不同。$\square$
+
+以后令 $S_{v,r,k}$ 为上述 Frobenius 固定事件的素数集合，再加入所有 $p\mid5kQ$。引理200.2给
+
+$$
+p\mid V_j\ \Longrightarrow\ p\in S_{v,r,k},
+\qquad j\equiv r\pmod k.
+\tag{200.4}
+$$
+
+这份例外集的总对数质量至多 $\log\operatorname{rad}(5k|Q|)\le\log(5k)+\log|Q|$，确实由范数控制。
+

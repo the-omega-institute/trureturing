@@ -1,0 +1,5 @@
+source_id = "mostow-attracting-poles-centralizer"
+path = "docs/develop/theory/MOSTOW_ATTRACTING_POLES_CENTRALIZER.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

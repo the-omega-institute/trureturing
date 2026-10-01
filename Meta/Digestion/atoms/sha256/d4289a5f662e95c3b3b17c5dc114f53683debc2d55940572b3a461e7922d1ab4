@@ -1,0 +1,8 @@
+### theorem 63.1 三叶观察的完整核
+
+$$
+\boxed{\ker L=\operatorname{span}\{D_{a,b}:1\le a\le4,\ 0\le b\le2\},\qquad\dim\ker L=12.}
+$$
+
+**证明。** 两个状态的 $C$ 值都是 $(a,b,1)$。这 12 个二点纤维之外，其余 36 个纤维为单点；每个二点纤维恰有一个总量不变方向，且支撑互不相交。证毕。 $\square$
+
