@@ -62,7 +62,7 @@ $$claim \Leftrightarrow (\forall N \in \mathbb{N}, \forall A \subseteq \operator
 
 *Commentary.*
 
-For every N and every set A of qubits among N with 1 <= |A| < N: every unit vector psi gives F_A(psi) >= m(N, |A|), and some unit vector attains equality.
+Write Conf for the set of configurations of the N qubits, the maps from Fin N to {0, 1}, so that a vector of amplitudes is an element psi of C^Conf. For every N and every set A of qubits among N with 1 <= |A| < N: every unit vector psi gives F_A(psi) >= m(N, |A|), and some unit vector attains equality.
 
 **Theorem 1.6 (Proof of the conjecture).**
 
