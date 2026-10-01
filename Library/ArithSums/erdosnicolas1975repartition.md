@@ -831,8 +831,8 @@ are not presumed. Identifying the residue root $t$ with complex $i$ does
 not assert $\psi_q(t)=i$. This arithmetic character is also different
 from the active composition rotation $C=MJ$ and from the existing scalar
 four-orbit analysis in [§7 of the Li note](../ArithUnits/li2026nonwieferich.md).
-No factorization-free evaluation algorithm or efficiency bound for this
-composite character is supplied here.
+The factorization-free evaluation below uses a classical Gaussian
+quartic-Jacobi algorithm with this same root orientation.
 
 Use the actual $g=\gcd(N,C_s)$, $u=N/g$, $v=C_s/g$ and
 $e=v_r(N)$, and set $u_0=u/r^e$. The existing $y<r$ argument gives
@@ -934,3 +934,212 @@ window and the complete low-loss divisor contribution in
 still require a joint estimate. This includes $h=1$, restoration-only and
 small-prime cofactors with their actual merged valuations. This
 character refinement alone supplies no uniform strict budget or RH proof.
+
+## Reuse the Gaussian quartic-Jacobi evaluator
+
+The algorithmic input is already available in Damgård–Frandsen,
+*Efficient algorithms for gcd and cubic residuosity in the ring of
+Eisenstein integers*,
+[BRICS RS-03-8, §5, printed pp.9–10, PDF pp.11–12](https://www.brics.dk/RS/03/8/BRICS-RS-03-8.pdf).
+Despite its title, that section treats Gaussian gcd and composite quartic
+symbols, with quadratic bit complexity for its specified approximate-norm
+method. Bach–Sandlund,
+*On Euclidean Methods for Cubic and Quartic Jacobi Symbols*,
+[arXiv:1807.07719v1, §7, pp.13–14](https://arxiv.org/pdf/1807.07719v1),
+distinguishes the naive exact-norm Euclidean implementation, which has
+cubic worst-case schoolbook complexity, from the improved quadratic
+quotient treatment. These algorithms are reused; no arithmetic algorithm
+or new analytic estimate is proposed here.
+
+For the same $V=F_r$ and $t=F_{r-1}$, form the Gaussian ideal
+
+$$
+I=(V,i-t)=\ker\bigl(\mathbb Z[i]\longrightarrow\mathbb Z/V\mathbb Z,
+\ a+bi\longmapsto a+bt\bigr).
+$$
+
+The map is well-defined because $t^2=-1\pmod V$, and it is surjective.
+Thus $\mathbb Z[i]/I\simeq\mathbb Z/V\mathbb Z$ and $I$ has norm $V$.
+Since $\mathbb Z[i]$ is Euclidean, a denominator is
+
+$$
+\eta=\operatorname{primary}\gcd_{\mathbb Z[i]}(V,t-i),
+\qquad \operatorname{Nm}(\eta)=V.
+$$
+
+Here primary means $\eta=a+bi$ with $b$ even and $a+b\equiv1\pmod4$.
+For each conceptual factor $q^E\parallel V$, only the selected prime
+ideal $(q,i-t)$ divides $t-i$; the conjugate prime does not, since $2t$
+is nonzero modulo $q$. Taking the gcd with $V$ retains exactly $E$
+copies of the selected prime. Consequently the previously defined
+full-denominator character is precisely
+
+$$
+\boxed{\psi_V(n)=\left(\frac n\eta\right)_4,\qquad (n,V)=1.}
+$$
+
+The factorization in this explanation verifies the input translation;
+the gcd and quartic-Jacobi algorithms do not require it. They must not
+replace the denominator by its radical or its primitive-character part.
+Two useful input checks are $a^2+b^2=V$ and $a+bt\equiv0\pmod V$.
+
+Multiplying $\eta$ by a Gaussian unit preserves its ideal and its symbol;
+conjugating it reverses the chosen orientation. Using the rational
+Gaussian integer $V$ as denominator instead includes both conjugate
+factors and gives
+
+$$
+\left(\frac nV\right)_{4,\mathbb Z[i]}
+=\psi_V(n)\overline{\psi_V(n)}=1\qquad (n,V)=1,
+$$
+
+so that substitution would erase the required phase.
+
+Numerator normalization has a different rule. The supplementary laws
+in the same Gao–Zhao §2.2 source give, for primary $\eta=a+bi$,
+
+$$
+\left(\frac i\eta\right)_4=i^{(1-a)/2},\qquad
+\left(\frac{1+i}\eta\right)_4=i^{(a-b-b^2-1)/4}.
+$$
+
+If $z=i^j(1+i)^h z_0$ with $z_0$ primary, these removed numerator
+factors contribute
+
+$$
+\left(\frac z\eta\right)_4
+=i^{j(1-a)/2+h(a-b-b^2-1)/4}\left(\frac{z_0}\eta\right)_4.
+$$
+
+The full published algorithm already tracks them. A wrapper that makes
+the numerator primary and discards the factors changes the answer,
+including at the cheap prime two. Since $2=-i(1+i)^2$, one obtains
+
+$$
+\boxed{\psi_V(2)=i^{-b/2}.}
+$$
+
+With $L=\lceil\log_2 V\rceil$, the cited quadratic algorithms give
+$O(L^2)$ bit operations for denominator construction and for each query
+after reducing a rational numerator modulo $V$. Reading and reducing an
+unreduced input is a separate cost. This bound is in the bit size of $V$,
+not in the bit size of the Fibonacci index $r$, and does not apply to
+arbitrary exact-norm Euclidean code.
+
+For the actual endpoint, cache $\eta$ and evaluate $(g/\eta)_4$ and
+$(r/\eta)_4$, then use
+
+$$
+\psi_V(u_0)=\left(\frac g\eta\right)_4^{-1}
+\left(\frac r\eta\right)_4^{-e}.
+$$
+
+This step needs neither factorization of $V$ nor of $u_0$; the actual
+valuation $e$ is still an input, with only $e\bmod4$ needed for this phase.
+The same evaluator labels eligible cheap primes for the existing
+$\beta_j$ minima. It supplies their phase labels, not their minimum cost,
+their occurrence in the same actual host, or $c_j>B_r$. The full weighted
+Robin budget in FIB §233.5 remains a separate unresolved estimate.
+
+## The half-index Fibonacci pair already gives the denominator
+
+For this particular modulus, even the generic Gaussian gcd preprocessing
+can be omitted. The Fibonacci doubling and Cassini identities are
+classical; the pinned Mathlib sources already contain
+[`Nat.fib_two_mul_add_one` and `Nat.fib_two_mul`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Nat/Fib/Basic.lean)
+and
+[`Int.fib_succ_mul_fib_pred_sub_fib_sq`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Int/Fib/Lemmas.lean).
+Their application here is a denominator recipe, not a new Fibonacci
+identity or a compiled Lean bridge.
+
+Write $r=2m+1$, $A=F_{m+1}$ and $B=F_m$. The same identities give
+
+$$
+V=A^2+B^2,\qquad t=B(2A-B),\qquad
+A^2-AB-B^2=(-1)^m,
+$$
+
+and hence the exact integer relation
+
+$$
+tB+(-1)^m A=(A-B)V.
+$$
+
+Thus the explicitly oriented Gaussian integer
+
+$$
+\eta_0=A+(-1)^m iB
+$$
+
+has norm $V$ and belongs to $I=(V,i-t)$. Its principal ideal is contained
+in $I$ and has the same index $V$, so $(\eta_0)=I$. Multiplying by the
+unique unit that makes it primary yields the same $\eta$ as above.
+No factorization or Gaussian gcd is needed for this Fibonacci recipe;
+computing the half-index pair and preserving its sign and primary unit
+are still necessary. Choosing an arbitrary sum-of-two-squares
+representation, or imposing a positive imaginary part, need not retain
+the prescribed root orientation.
+
+At the cheap prime two the supplementary law now needs only this pair
+modulo eight. Its pair recurrence returns to $(0,1)$ after twelve steps;
+the sign $(-1)^m$ has the same period. Primary normalization depends
+only on the coordinates modulo four, so $b\bmod8$ is determined by
+$m\bmod12$. For every prime $r>5$ this gives
+
+| $r\bmod24$ | $1$ | $5$ | $7$ | $11$ | $13$ | $17$ | $19$ | $23$ |
+|---|---|---|---|---|---|---|---|---|
+| $\psi_V(2)$ | $1$ | $-i$ | $i$ | $1$ | $1$ | $-i$ | $i$ | $1$ |
+
+For example, $r=7$ gives $\eta=3-2i$, $\psi_{13}(2)=i$ and
+$\psi_{13}(t)=\psi_{13}(8)=-i$. The root identifies $i$ with $t$ in
+the quotient but does not require the character value at $t$ to be $i$.
+For $r=19$ the modulus is composite, $V=4181=37\cdot113$; the same
+recipe gives $\eta=55-34i$ and $\psi_V(2)=i$, with no prime-modulus
+substitution in the evaluator.
+
+This resolves one eligible prime's arithmetic phase from a finite
+Fibonacci observation. It does not force two to occur in $u_0$: the
+actual valuation must still be probed, and two is eligible only when
+$2\nmid vrV$. In that case its known phase merely gives an upper bound
+$\beta_j\le b_s(2)$ for the corresponding nonzero class minimum, not
+the lower bound needed to pay $B_r$. A phase-zero label adds no cost
+to the phase-word relaxation. The cheap-prime and actual-support
+conditions therefore remain distinct, as does the full weighted budget.
+
+## A pinned implementation reference and its interface limits
+
+The archived MOVA arithmetic source contains an implementation attributed
+to Yvonne Anne Oswald:
+[`quarticb3` in `winter_04_05_oswald/tester/quartic2.c`](https://github.com/sduc/undeniable-signature/blob/c8277fa71be292890a6d6733aff392372e1be02f/winter_04_05_oswald/tester/quartic2.c#L489),
+at commit `c8277fa71be292890a6d6733aff392372e1be02f`.
+It returns a Gaussian fourth root, with zero for a common factor,
+rather than a Boolean quartic-residuosity flag. The finite controls
+below used this source unchanged, compiled with C/GMP and an external
+`stdlib.h` include for its `abs` declaration.
+
+| Input $V,t$ | Primary oriented denominator $\eta$ | Observed $(2/\eta)_4$ |
+|---|---|---|
+| $13,8$ | $3-2i$ | $i$ |
+| $233,144$ | $13+8i$ | $1$ |
+| $4181,2584$ | $55-34i$ | $i$ |
+| $25,7$ | $-3+4i$ | $-1$ |
+
+The last row is a generic repeated-denominator control, not a Fibonacci
+modulus: the selected prime above five occurs twice. Removing that
+multiplicity would change the phase at two. Unit associates leave each
+symbol unchanged, conjugation reverses it, and the rational Gaussian
+denominator $V$ gives one on the rational unit domain, as required by
+the preceding source translation.
+
+The upstream functions use mutable GMP storage inside structs passed
+by value; those copies are not independent copies of their integer
+buffers. In particular, `primaryExp` changes its inputs and returns the
+removed unit exponent in $z=i^j z_{\mathrm{primary}}$. The interface
+controls used fresh per-query processes, so they do not certify an
+ownership-safe persistent cache or general software correctness. A
+caller retaining $\eta$ must supply independently owned working inputs.
+The implementation uses exact-norm Euclidean division; the cited
+quadratic bit bound must not be attributed to it. Its code license has
+not been verified, and no upstream code is vendored here. These controls
+support reuse of the published arithmetic interface, not a new algorithm,
+a Lean result, or a strict Robin budget.
