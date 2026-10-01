@@ -12623,3 +12623,121 @@ with one initial product block. The paper is not claimed to state this
 model extension as a separate theorem. No new continuation table or
 Lean verification is asserted. Arbitrary-height common support between
 the two roots, and unrestricted Erdos7, remain unresolved.
+
+## 94. A finite exact obstruction to the uniform prefix-supremum envelope
+
+Keep the actual single-root initial-block construction of section93.
+One possible refinement replaces conditioned Haar measure by an arbitrary
+probability lambda supported on the complete pure-guard complement, and
+then bounds every compatible pair of original ternary prefixes by the
+largest lambda mass of a cylinder at its intersection depth. This refinement
+has an exact finite limitation, even when lambda is allowed to vanish on
+any of the surviving leaves.
+
+Fix ternary height H=4. Inside one nonzero first-three root, represent the
+remaining three ternary digits as words over {0,1,2}. Take the actual local
+pure-three guard prefixes to be
+
+    1, 01, 001.                                      (PE1)
+
+They have relative depths1,2,3 and represent the original pure labels
+9,27,81, respectively. They are pairwise disjoint, as required by
+comparable-class disjointness. Their complement contains14 of the27
+complete relative-depth-three words:
+
+    {2ab : a,b in {0,1,2}}
+      union {02b : b in {0,1,2}}
+      union {000,002}.
+
+This is a locally admissible guard configuration. Its occurrence in an
+entire EB1 covering family is not asserted or required for the finite
+optimization below.
+
+Let lambda be ANY probability supported on this complement. Full support
+on all14 leaves is not an assumption. For h=1,2,3 define
+
+    M_h(lambda)=max_(word w of length h) lambda([w]).
+
+The depth-zero bound is exactly one. The same ordered-height-pair count
+used in section93 therefore gives the prefix-supremum envelope
+
+    E(lambda)=4+5*M_1(lambda)+7*M_2(lambda)+9*M_3(lambda).
+
+Its exact optimum is
+
+    min_lambda E(lambda)=93/10.                     (PE2)
+
+### Exact lower bound for every probability
+
+Write
+
+    x=lambda([2]),  y=lambda([02]),  z=lambda([00]).
+
+These are nonnegative and x+y+z=1. Five immediate prefix constraints are
+
+    x<=M_1,
+    x<=3*M_2,
+    y<=M_2,
+    z<=M_2,
+    z<=2*M_3.
+
+The second constraint splits [2] into its three depth-two children. The
+last uses the exclusion of001, so [00] has only000 and002 in the allowed
+support. Multiply these five inequalities, in order, by50,3,53,8,45 and
+add. This gives
+
+    53=53*(x+y+z)<=50*M_1+70*M_2+90*M_3,
+
+and hence
+
+    E(lambda)>=4+53/10=93/10.
+
+The argument uses no positivity assumption on individual surviving leaves
+and no numerical optimization.
+
+### A probability attaining the bound
+
+Assign mass1/15 to each of the nine words2ab and each of the three
+words02b. Assign mass1/10 to each of000 and002. The total mass is
+
+    12/15+2/10=1,
+
+and the three maximal prefix masses are
+
+    (M_1,M_2,M_3)=(3/5,1/5,1/10).
+
+They give E=93/10, proving attainment in PE2. Conditioned Haar measure on
+the same guard complement instead gives
+
+    (M_1,M_2,M_3)=(9/14,3/14,1/14),
+    E=131/14=93/10+2/35.
+
+Thus choosing a different initial law strictly improves this particular
+envelope, but its exact optimum remains9.3.
+
+### Scope of the obstruction
+
+The currently reused BBMST Table1 certificate is
+
+    g_5>=9.032082,
+
+and93/10 exceeds that certified lower threshold by0.267918. Consequently,
+a method that uses only local pure-guard legality, chooses any initial
+lambda, and then replaces each prefix intersection by the separate
+depth-wise supremum cannot uniformly supply an initial scalar at most
+9.032082 for every such guard configuration. PE1 already obstructs that
+specific sufficient route to the five-prime checkpoint.
+
+PE2 is the optimum of the stated envelope, not a lower bound for the
+actual original-family second moment. Actual prefixes, cofactor phases,
+shared numerical-label ownership and private-point relations may prevent
+the separate maxima from being realized jointly. A restriction supplied
+by a whole covering family may also exclude PE1; no such restriction is
+proved here. The local guard configuration is not a covering counterexample.
+
+Nor does PE2 give an upper bound on the true continuation threshold g_5.
+The published number9.032082 is a lower bound for g_5, so PE2 does not
+exclude a stronger continuation certificate reaching9.3. The conclusion
+only identifies the exact limitation of this prefix-supremum envelope
+when paired with the currently cited numerical certificate. No Lean
+verification or new continuation table is asserted.
