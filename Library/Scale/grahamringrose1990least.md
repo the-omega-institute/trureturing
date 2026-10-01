@@ -87,6 +87,60 @@ results are not reproved or used as a distribution theorem for the polynomial
 below. Here three divides the fundamental discriminant, so the constructed
 integers are **not standard pseudosquares**.
 
+Closer polynomial and recent character interfaces are also already available:
+
+* Lamzouri, *Extreme values of class numbers of real quadratic fields*,
+  [arXiv:1501.01003v2](https://arxiv.org/pdf/1501.01003v2), dated
+  6 February 2015, Corollary 2.2 on p.4: for
+  $\sqrt{\log X}\le y\le(\log X)/8$, at least
+  $X^{1/2}\exp(-y(1+o(1)))$ squarefree discriminants
+  $d=4t^2+1\le X$ have $\chi_d(p)=1$ at every prime $p\le y$.
+  Its preceding Lemma 2.1 is attributed to Montgomery–Weinberger,
+  *Real quadratic fields with large class number*, Mathematische Annalen
+  225 (1977), 173–176,
+  [DOI:10.1007/BF01351721](https://doi.org/10.1007/BF01351721).
+  This supplies a polynomial fundamental-discriminant family directly,
+  but for $4t^2+1$, without the unit-one FIB identification or the
+  prescribed ramification at three.
+* Farashahi–Shparlinski, *On Pseudopoints of Algebraic Curves*,
+  [arXiv:1005.4775v1](https://arxiv.org/pdf/1005.4775v1), submitted
+  26 May 2010, Theorem 1 on p.2: for fixed absolutely irreducible
+  $f(U,V)\in\mathbb Z[U,V]$ with $\deg_V f\ge2$, the least
+  $x$-pseudopoint satisfies $N_f(x)\le M_f(x)^{1/2+o(1)}$.
+  Here $M_f(x)$ multiplies the primes at most $x$ for which the curve
+  has a modular point. A pseudopoint is an integer first coordinate
+  having a modular second coordinate at all those primes, while having
+  no integer second coordinate solving $f=0$. The published article is
+  Archiv der Mathematik 95 (2010), 529–537,
+  [DOI:10.1007/s00013-010-0200-7](https://doi.org/10.1007/s00013-010-0200-7).
+  This is the relevant local-solubility framework for
+  $f(U,V)=4U^2+5-V^2$. Raw modular zeros are permitted, so the theorem
+  alone does not ensure their persistence after removal of a square part,
+  nor supply the actual canonical FIB source.
+* Lamzouri, *A note on large values of Dirichlet $L$-functions for
+  characters of fixed order at $1/2<\sigma\le1$*,
+  [arXiv:2606.09818v1](https://arxiv.org/pdf/2606.09818v1), submitted
+  8 June 2026, §2 equations (2.2)–(2.3) and Lemma 2.2 on p.4:
+  specialize to order two and take $X$ large,
+  $2\le y\le(\log X)^2$, with
+  $2^{\pi(y)+2}\le c_0\sqrt X/\log X$ for a suitably small
+  absolute $c_0>0$. The family formed by pairs of distinct primes in
+  $(\sqrt X/2,\sqrt X)$ with matching quadratic-character vectors at
+  primes up to $y$ contains
+  $\gg X/(2^{\pi(y)+2}(\log X)^2)$ primitive quadratic characters.
+  Their conductors lie in $(X/4,X)$ and they equal one at every
+  prime at most $y$. This is an existing direct character supplier,
+  not a claim about discriminants of the form $4g^2+5$ or extremal
+  Robin integers. Its almost-positivity conclusion averages over this
+  character family; it is not pointwise positivity of one actual source.
+
+The linked original PDFs and arXiv version histories supply these statements
+and dates. Montgomery–Weinberger's full proof was not inspected here;
+its recorded input is read through Lamzouri's exact attribution. The
+applications below do not redo these constructions or transfer their
+distribution bounds to a different polynomial. This is a bounded source
+comparison, not a complete literature survey or a novelty certificate.
+
 The necessary interface is a common realization of local character values,
 canonical unit initialization and size at the actual cutoff. It uses
 [the FIB volume](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)
