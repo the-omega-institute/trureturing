@@ -631,3 +631,66 @@ that comparison at the source price. Failure of this sufficient test does
 not imply failure of Robin. The original window, qualifying low-loss
 divisor, cofactor and all-candidate coverage remain required; no uniform
 strict-budget supplier or proof of RH is supplied here.
+
+## The Fibonacci index prime limits the unrefined sign test
+
+Use the actual family in FIB §§230–231, writing its multiplier as $k$
+to distinguish it from the gcd:
+
+$$
+V=F_r,\quad
+\lceil V/10\rceil\le k\le\lfloor V/5\rfloor,\quad N=1+Vk>5040,
+\quad A=1+V\lceil V/10\rceil,\quad y=\log A,\quad s=y\log y,
+$$
+
+where $r>5$ is prime. Keep the same $C_s,g,u,v$ and signed budget $B$.
+The ordinary Fibonacci bound $F_r<\varphi^{r-1}$, together with $A<V^2$
+and $2\log\varphi<1$, gives $1<y<r$. Hence
+
+$$
+s\ell_{r,1}=y\log y\,\log(1+1/r)
+<\frac{y\log y}{r}<\log r.
+$$
+
+Thus $a_r=0$, $r\nmid C_s$ and $r\nmid v$, with strictness unaffected
+by tied layers. The already existing
+`fibonacci_apparition_entry_point` in `D5/S3/Arith/GoldenApparition.lean`
+supplies the classical congruence
+
+$$
+F_r\equiv\left(\frac5r\right)\pmod r.
+$$
+
+In particular $r\nmid V$. Reciprocity and the supplementary law at
+minus one give
+
+$$
+\chi_V(r)=\left(\frac{F_r}{r}\right)
+=\left(\frac{(5/r)}r\right)=-1
+\quad\Longleftrightarrow\quad r\equiv3,7\pmod{20}.
+$$
+
+On these two classes the index prime is always eligible for the unrefined
+minimum, at exact cost
+
+$$
+b_s(r)=\log r-s\log(1+1/r)>0,\qquad m_s(V,v)\le b_s(r).
+$$
+
+Therefore $B\ge b_s(r)$ prevents the unrefined negative-gcd test
+$m_s(V,v)>B$ from succeeding. This is a limitation of that relaxation;
+it is not a Robin counterexample or an assertion that $r\mid u$.
+For the same actual host the congruence instead gives
+
+$$
+r\mid u\quad\Longleftrightarrow\quad r\mid N
+\quad\Longleftrightarrow\quad k\equiv1\pmod r.
+$$
+
+The conditional threshold does not exhibit a surviving actual source
+with $B\ge b_s(r)$. The [existing window budget](axler2024primorialcounting.md)
+gives $B\le T_s(N)\le T_s(X)$, where $X=1+V\lfloor V/5\rfloor$.
+If $T_s(X)<b_s(r)$, this index-prime obstruction never activates in
+that window. If $T_s(X)<0$, the window is already paid by the nonnegative
+benefit. Any claim of obstruction on the residual set requires an actual
+source there, retaining its low-loss divisor and cofactor.
