@@ -31165,6 +31165,36 @@ original must therefore have N_3>=18. Eight first-level repairs
 on retained labels have not been excluded; the actual pair
 phases, larger inventories and unrestricted #7 remain open.
 
+[Report385, section45](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#45-the-eight-base-obstruction-forces-a-twin-prime-cube-and-eighteen-original-labels)
+classifies the remaining eight-base numerical obstruction. Among
+at most eight different nonunit values coprime to6, a strict
+prefix assignment on SOME selected prime chain fails exactly for
+
+    {5,7,s,35,5s,7s,35s,(s-2)^a},
+    a>=1, s>=13, with s and s-2 both prime.
+
+Pure-group and two-axis Hall failures are resolved at conservative
+base3, reusing NF30 for the one extra projected item. The last
+obstruction contains the seven nonempty squarefree products of
+three primes. Selecting only those primes and one factor of
+the eighth item forces the displayed twin-prime arrangement;
+otherwise actual prime gaps or a deep prefix supply strict
+capacity. The freedom to select a subchain is necessary: failure
+on a prescribed full support chain is not the classified property.
+
+NF35 and BC5 force every eight-class complete legal repair to
+have precisely these eight retained cofactors, and hence to use
+both15 and21 as repair labels. If N_3=17, the two non-parent
+first3 branches each yield eight-class repairs after the common
+translation within each branch. Both would require original
+labels15 and21, violating global numerical distinctness. Thus
+every minimum hypothetical whole cover satisfies N_3>=18.
+The earlier height-one condition at equality17 is superseded
+by this exclusion of equality. The twin-prime family is only
+an obstruction to this numerical certificate, not a realized
+repair or a covering counterexample. Its actual pair phases,
+nine-class repairs and unrestricted #7 remain unresolved.
+
 [Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
 keeps the residual cover's entire old q coordinate unchanged.
 It excludes one endpoint per repeated pair and reserves the

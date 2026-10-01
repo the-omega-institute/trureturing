@@ -6006,3 +6006,213 @@ pair phases, larger repair budgets and unrestricted Erdős #7
 remain unresolved. These are ordinary symbolic deductions,
 independently checked as mathematics, not new Lean verification
 or a claim of literature priority.
+
+## 45. The eight-base obstruction forces a twin-prime cube and eighteen original labels
+
+The selected prime chain in BC5 need not contain every prime
+factor of the repeated bases. It must contain a dividing prime
+to which each deletion item can be assigned. This freedom gives
+an exact numerical boundary at eight DISTINCT bases.
+
+Let E contain at most eight distinct integers greater than one,
+all coprime to6. A strict certificate means a selected increasing
+chain3<p_1<...<p_t and an assignment to dividing selected primes
+such that
+
+    sum_(m assigned to p_i) r_i^(-v_(p_i)(m))<1,
+    r_1=p_1-2, r_i=p_i-p_(i-1)+1 for i>1.
+
+Such a certificate fails to exist precisely when E has the form
+
+    {5,7,s,35,5s,7s,35s,(s-2)^a},
+    a>=1, s>=13, and both s and s-2 are prime.              (NF37)
+
+This classifies the numerical certificate, not actual covering
+families or all possible transports. The necessity below first
+resolves the small Hall obstructions at conservative base3,
+then uses the freedom to select the chain. NF17, NF30 and the
+existing capacitated Hall theorem are reused directly.
+
+For at most seven items the conclusion already follows from
+BC6, so assume there are eight. Choosing a subchain is essential:
+the seven nonempty squarefree products of7,13,19, together with
+5*11*17, fail on their full support chain. Its7,13,19 bases
+are all three. Selecting only5,7,13,19 instead allows costs
+1/3,2/3,3/7,2/7: assign5*11*17 to5; assign7 and7*13 to7;
+assign13,13*19 and7*13*19 to13; and assign19 and7*19 to19.
+Thus the absence of a certificate on one imposed chain would
+not justify invoking NF37.
+
+### Three pure items still admit a strict assignment at eight bases
+
+Suppose at least three items are pure powers of p. Assign all
+of them to p, at finite total cost below1/2. At most five items
+remain. Try capacity two on their factors other than p.
+
+If at least three have the same singleton support {q} after
+p is removed, collect ALL such items in T. They are distinct
+p^u*q^v, with u>=0,v>=1. Move the v=1 items with u>=2 to p.
+Their distinct u values give additional cost below1/6. At q
+there remain at most two depth-one items, with u=0 or1, and
+all other items have q-depth at least two.
+
+The q cost is strictly below one except for the possible crude
+bound2/3+3/9=1. Equality in that bound requires five T items:
+two at depth one and three at depth two. The three depth-two
+items have different u values, so one has u>=2. Move that
+item to p as well. The p cost stays below
+
+    1/2+1/6+1/9=7/9,
+
+and the q cost becomes at most8/9. At most two items lie
+outside T and the pure p group; each has a factor outside
+{p,q}, so assign them there at cost at most2/3 on any axis.
+
+If no such singleton obstruction exists, capacity-two Hall can
+fail only when all five remaining items use just two primes
+q,r after p is removed. If any of them still has a p factor,
+assign it to p, increasing its cost by at most1/3. The four
+others satisfy capacity-two Hall on q,r. If none has a p factor,
+these five distinct values are assigned by NF17. This resolves
+the entire pure-group case without altering actual exponents.
+
+### Five items on a pair also admit a strict assignment
+
+Assume no prime has three pure items. If at least five items
+are supported within {p,q}, take all g of them, where5<=g<=8.
+First consider the internal pair. For at most seven items use
+the conservative-base pair proof in BC6. For eight items, each
+axis has at most two pure items. Their total costs are bounded
+by0,3/9,4/9 when their counts are0,1,2.
+
+There is at most one shallow mixed item pq. Assign every other
+mixed item to an axis where its depth is at least two, at cost
+at most1/9. If pq is present, the two initial axis costs are
+each at most one and together at most11/9. When both are below
+one, assign pq to the lighter axis, giving cost at most
+11/18+1/3=17/18 there. If an axis has cost one, move one of
+its deep mixed items to the other axis and also put pq there.
+The other axis originally costs at most2/9, so it finishes at
+most2/9+1/3+1/3=8/9. The first axis strictly decreases.
+
+If pq is absent, each initial axis costs at most10/9 and their
+sum is at most4/3. An axis of cost exactly one can transfer
+one mixed item to the other; the latter originally costs at
+most1/3 and finishes at most2/3. If an axis costs more than
+one, transfer two mixed items to the other. Its initial cost
+is below1/3, so its final cost is below one. On the first
+axis, one pure item leaves at most five deep mixed items,
+giving3/9+5/9=8/9; two pure items leave at most four deep
+mixed items, giving4/9+4/9=8/9. Zero pure items cannot produce
+a cost above one. This proves the eight-item pair assignment.
+
+At most three items lie outside the pair. Capacity two on
+their factors outside {p,q} succeeds unless there are exactly
+three, all with the same singleton outside support {r}. Then
+g=5. If all three are pure r powers, their distinct values
+give total cost below1/2. Otherwise choose one with a nonunit
+{p,q}-part u. Apply NF30 to the five internal pair values and
+u: only u can duplicate one existing value. Replace that u
+item by the actual outside item; its assigned p or q exponent
+is unchanged. Assign the other two outside items to r, at cost
+at most2/3. Thus this obstruction also has a strict assignment.
+All these assignments remain valid when further support primes
+are included in the chain, since every base is at least3.
+
+### The remaining three-axis core determines every exceptional value
+
+There are now at most two pure items per prime and at most four
+items supported on any pair. Capacity-two Hall can fail only
+through seven or eight items supported on exactly three primes
+U={u_1<u_2<u_3}. If all eight lie there, select U alone and use
+integer capacities
+
+    u_1-3, u_2-u_1, u_3-u_2.
+
+Each is at least two and their sum u_3-3 is at least eight.
+Singleton-supported groups have at most two items and pairs
+at most four. Hall gives an assignment with at most r_i-1
+items on each axis, hence strict prefix cost.
+
+Suppose exactly seven items lie in U, with one other value w.
+If a core item has depth at least two at some u in U, reserve
+that item at u. The other six core items satisfy capacity two:
+their singleton and pair counts remain at most two and four.
+The u cost is at most2/3+1/9=7/9, and the other U costs at
+most2/3. Give w to a factor outside U. Including that factor
+in the chain leaves all bases at least3, so this is a strict
+certificate.
+
+Otherwise the seven distinct core values are precisely the
+seven nonempty squarefree products of the three primes in U.
+If w has a factor in U, select U alone. The eight items then
+still have singleton-supported counts at most two and pair-
+supported counts at most four, even after w's outside factors
+are ignored. The preceding integer-capacity Hall argument
+again succeeds.
+
+Thus w must be coprime to all primes in U. Select one prime
+j dividing w and take only U union{j} as the chain. The item
+w can go to j. If any U base exceeds three, its integer capacity
+is at least four; the other two capacities are at least two.
+Hall assigns all seven core items strictly. Failure therefore
+requires all three U bases to equal three.
+
+In a four-prime chain above3, three specified primes have base
+three only in this arrangement:
+
+    U={5,7,s}, j=s-2, s>=13.
+
+Indeed a first prime with base three must be5. If the extra
+prime j came first or second, three successive selected primes
+greater than3 would differ by two, which is impossible because
+one would be divisible by3. If j came fourth, the first three
+primes would have to be5,7,9. Thus j is third, giving the
+displayed arrangement. If w had any other prime factor, selecting
+that factor instead of j would break this arrangement and give
+a certificate. Therefore w=(s-2)^a for some a>=1, proving the
+necessity in NF37.
+
+Conversely, in the displayed exceptional family the pure values
+5,7,s and(s-2)^a force every certificate to include all four
+primes. The bases at5,7,s are at most three; extra selected
+primes cannot increase them. Each of the seven squarefree core
+items costs at least1/3 wherever it is assigned. Strict cost
+allows at most two such items at each of those three axes,
+only six in total. The(s-2) axis cannot receive a core item.
+No strict certificate exists. This proves the exact boundary.
+
+### The two original ternary branches cannot both have eight labels
+
+For an eight-class repair, NF35 gives eight distinct retained
+cofactor labels E. Its BC2 residual is entirely3-free and has
+fewer than n classes, using the independent old N_3>=9. A
+strict certificate for E would let BC5 construct a smaller
+distinct odd whole cover. NF37 therefore forces E to have the
+displayed twin-prime form. In particular every such repair must
+use both numerical labels15 and21.
+
+If N_3 were17, NF19 and NF28 would give eight original labels
+at EACH non-parent first3 root. Translate each entire branch
+by its own NF19 translation, which preserves numerical labels.
+Each translated repair must contain15 and21. The original
+family would therefore use each of those numerical moduli in
+both disjoint first3 branches, contrary to global distinctness.
+The contradiction combines necessary label requirements from
+two separately valid whole-cover descents; it does not combine
+their source laws or choose their phases independently. Hence
+
+    N_3>=18 in every minimum hypothetical odd whole cover. (NF38)
+
+For an arbitrary eight-class repair, the numerical necessity
+is exactly
+
+    {15,21,3s,105,15s,21s,105s,3(s-2)^a},
+
+with the same twin-prime condition. Its cofactor labels are all
+retained in C0. This does not assert that phases completing
+such a repair exist, or that all transports fail there. Actual
+pair phases, nine-class repairs and unrestricted Erdős #7
+remain unresolved. NF37--NF38 are ordinary symbolic deductions
+using the cited existing criteria, without new Lean verification
+or a claim of literature priority.
