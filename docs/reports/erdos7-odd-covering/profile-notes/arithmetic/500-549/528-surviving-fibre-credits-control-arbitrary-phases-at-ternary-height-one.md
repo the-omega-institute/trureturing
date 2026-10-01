@@ -29128,3 +29128,237 @@ The source construction, conditional comparison, old charge
 certificate and complete unrestricted tail are reused with
 their stated premises. This is ordinary mathematics, with no
 new Lean verification or unrestricted resolution of Erdos#7.
+
+## A shared threshold deficit admits four- and five-factor originals at19
+
+The middle-window condition FC1233 can be relaxed at19. In
+addition to every three-factor original, one may allow every
+original supported on {7,11,13,17,19}, with arbitrary heights
+and phases. Together with the arbitrary six-prime head and
+the unrestricted tail beyond10^12, this still gives an actual
+surviving submeasure of mass greater than1/15000.
+
+A different admitted class allows every four-factor original
+with support exactly{3,13,17,19}, instead of the additional
+five-prime box above; its mass is greater than1/4500. These
+are alternative specializations of the common interface below.
+Their individual credits must not be combined as if the same
+available threshold deficit could be spent twice.
+
+### Keep the entire actual19 inventory in one kernel
+
+Let A={3,5,7,11,13,17}, B=10^12, and let H be a family of
+subsets of A, each with at least three elements. Keep FC1233's
+hypotheses at every ending prime other than19. At19 additionally
+allow higher-support originals whose old prime support
+supp(m/19^v19(m)) belongs to H. No restriction is imposed on
+these originals' positive exponents or globally fixed phases.
+
+Construct the actual19 forbidden union using this ENTIRE
+inventory, and use the same threshold delta_19=11/17. This
+can change the19 kernel from the one for a smaller inventory;
+its complete-past cap is nevertheless still C_19=3. Apply
+that one new normalized kernel, and the actual later kernels,
+to both mu_6 and Lambda_6. Their domination and common source
+are retained. All later cap-based estimates of FC1235--1240
+still apply, including the arbitrary-support far tail.
+
+Use the auxiliary variables and constants of FC1234 at19.
+Write g_S=product_(p in S)g_p, h_S=product_(p in S)h_p and
+
+    N=sum_(p in A)K_p+sum_(p<r in A)K_p*K_r,
+    V_H=sum_(S in H)product_(p in S)K_p.
+
+Apply the source's general conditional convex comparison to
+all original mixed19 labels before identifying their numerical
+old cofactors. For each fixed numerical cofactor, distinctness
+bounds the sum of its current19-depth weights18/19^e by one.
+Completing the old heights therefore bounds the actual aligned
+load by N+V_H. This uses no independence or phase alignment
+of the actual prime coordinates. Only the AUXILIARY heights
+are independent.
+
+Consequently the new19 raw fee is at most
+
+    (1/16)*E(N+V_H-11)_+,
+
+because (3/8)/(17-11)=1/16. Its auxiliary upper-bound increment
+relative to FC1235 is Phi(H)/16, where
+
+    Phi(H)=E[(N+V_H-11)_+-(N-11)_+].                       (FC1241)
+
+This is not a claim that deleting the new originals directly
+from an old final survivor costs Phi(H)/16. The comparison
+bounds the reconstructed kernel for the complete new family.
+
+### Exact absorption is determined by three- and four-coordinate relations
+
+Let
+
+    H3={T in H: |T|=3},
+    Q_H={Q subset A: |Q|=4 and
+                  (Q in H or some T in H3 satisfies T subset Q)}.
+
+Then the complete all-height increment is
+
+    Phi(H)=sum_(S in H)g_S
+       -P0*sum_(T in H3)h_T*(1+2*sum_(p in T)r_p)
+       -P0*sum_(Q in Q_H)h_Q.                            (FC1242)
+
+In particular each Q is counted ONCE, even if several
+three-coordinate supports inside it are present.
+
+To prove the formula, use the pointwise identity
+
+    (N+V-11)_+-(N-11)_+
+       =V-min(V,(11-N)_+).                               (FC1243)
+
+The full mean of V_H is sum_H g_S. Its unbounded high states
+are retained. The nonzero absorption comes only from the
+complete t=11 low-state table of FC1234:
+
+* With at most two positive coordinates, V_H=0.
+* On three positive coordinates T, only the monomial for T
+  can be active. At heights(1,1,1), N=6 and it absorbs one.
+  At heights(2,1,1), N=9 and it absorbs two. Their probabilities
+  give h_T*(1+2*sum_T r_p), multiplied by P0.
+* On four positive coordinates Q, the only low state is all
+  heights one, with N=10. Here V_H is positive exactly when
+  Q belongs to Q_H. The remaining deficit is one, so the
+  absorption is one regardless of how many supports activate.
+* On five or six positive coordinates, N>=15 and there is no
+  absorption. Supports of size five or six enter only the
+  full mean term of FC1242.
+
+This proves FC1242 without a height cutoff or a search over
+support families. It also proves Phi(H)>=0 and monotonicity
+under inclusion of H, directly from FC1241. The marked
+four-set term records joint activation; summing a separate
+credit for every active triple would give a false subtraction.
+
+Every other fee in FC1240 remains valid. Hence one actual
+full-family surviving submeasure has mass strictly greater than
+
+    6247/8000000-Phi(H)/16.                               (FC1244)
+
+Thus Phi(H)<=6247/500000 is a sufficient noncoverage condition;
+equality is allowed because the baseline mass bound is strict.
+It is not asserted necessary for actual noncoverage.
+
+### A complete five-prime box passes after its coarse budget fails
+
+Take L={7,11,13,17} and
+
+    H={S subset L: |S|=3} union {L}.
+
+These are all four possible four-factor support towers ending
+at19 and the full five-factor tower. They can coexist with
+all original moduli supported on A, all later three-factor
+originals through B, and arbitrary originals ending beyond B.
+
+Write e_j for the elementary symmetric sum of the displayed
+coordinates. The full extra mean is
+
+    E V_H=e_3(g_L)+e_4(g_L)=9/512.
+
+The marked four-sets are L itself and every L-triple with
+one of3,5 adjoined. Thus FC1242's absorption is
+
+    credit=P0*[sum_(T subset L,|T|=3)
+                       h_T*(1+2*sum_(p in T)r_p)
+                 +(h_3+h_5)*e_3(h_L)+e_4(h_L)]
+          =211430529316/33598320981225.
+
+Exact rational subtraction gives
+
+    Phi(H)=194132457821233/17202340342387200,
+    Phi(H)/16<71/100000.                                  (FC1245)
+
+FC1244 therefore leaves mass greater than
+
+    6247/8000000-71/100000
+       =567/8000000>1/15000.                              (FC1246)
+
+The coarse mean charge would be (E V_H)/16=9/8192, which
+exceeds the available6247/8000000. This failure already occurs
+for a finite inventory: take exponents1 or2 on every new
+numerical label. Every supported term has at most five prime
+factors, all at least7. Its retained/full geometric ratio is
+at least1-5/49=44/49. The resulting coarse charge is at least
+
+    (44/49)*(9/8192)>9/10000>6247/8000000.
+
+This compares two sufficient estimates. The coarse upper
+bound's failure is not a lower bound on actual deletion loss.
+The integrated hinge construction proves noncoverage for every
+phase assignment to these finite inventories and to their
+arbitrary-height extensions.
+
+For a numerical scope example, take the union of a complete
+finite nonunit A-divisor box, a complete finite nonunit
+{7,11,13,17,19}-divisor box, and all nonunit labels with at
+most three prime factors on any larger finite prime set,
+using common finite height bounds. The numerical union is
+divisor-closed, contains the five-factor19 label and the
+six-factor17 label, and has arbitrarily large connected prime
+interaction graphs through labels3q. No arbitrary assignment
+is claimed irredundant. FC1233 alone does not admit its new
+four- and five-factor19 labels.
+
+### One four-factor tower involving3 also passes
+
+Alternatively take H={{3,13,17}}. Its full mean is1/64.
+Formula FC1242 gives absorption
+
+    P0*h_3*h_13*h_17
+      *[1+h_5+h_7+h_11+2*(r_3+r_13+r_17)]
+       =343085312/51000993225.
+
+Consequently
+
+    Phi(H)/16=29043533257/52225017062400,
+    6247/8000000-Phi(H)/16
+       =7336048088501/32640635664000000>1/4500.            (FC1247)
+
+All exponents and phases in this four-factor tower remain
+arbitrary, while the rest of the family has the same contract.
+Its coarse full-height charge1/1024 exceeds the old available
+mass as well. This example is an alternative to FC1245, not
+permission to add their independently quoted credits.
+
+### A heavy small-prime triple exposes the remaining method gap
+
+The same criterion does not handle every possible H. Suppose
+{3,5,7} belongs to H. On the AUXILIARY event
+
+    K_3>=2, K_5>=2, K_7>=1,
+
+one has N>=13, so no threshold deficit remains. FC1243's
+increment is V_H there, at least K_3*K_5*K_7. Independence
+of the auxiliary heights therefore gives
+
+    Phi(H)>=E[K_3;K_3>=2]*E[K_5;K_5>=2]*E K_7
+           =(5/9)*(3/25)*(1/4)=1/60,
+    Phi(H)/16>=1/960>6247/8000000.                        (FC1248)
+
+Thus merely permitting the whole support tower{3,5,7,19}
+already prevents FC1244's fixed sufficient criterion from
+passing. This is a lower bound on the SPECIFIED auxiliary
+fee, not on the actual source's loss or its possible mass.
+It does not test a comparison retaining the actual finite
+sparse height inventory instead of completing whole towers.
+It is neither a covering counterexample nor an obstruction
+to other thresholds, sharper source information or another
+common-law construction. In particular it does not identify
+an auxiliary positive event with an actual independent prime
+configuration.
+
+FC1241--1248 retain the source comparison and old continuation
+without repeating their proofs or certificates. The additional
+work is the exact joint deficit formula, its new full-height
+support applications and the explicit boundary of this fixed
+criterion. The unrestricted problem remains open: arbitrary
+higher support at19, and higher-support originals ending at
+other middle-window primes, still require further arguments.
+These are ordinary mathematical deductions with no new Lean
+verification or literature-priority claim.
