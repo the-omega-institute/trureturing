@@ -659,7 +659,113 @@ private theorem support_value {R : Type*} [CommSemiring R]
     rw [← Nat.cast_sum, sum_toFinset_fib _ _ hnd, Nat.sum_zeckendorf_fib]
   rw [hA, hB]
 
-#print axioms bounded_coefficient_pair
+/-- A common bounded nonempty word realizes every coefficient pair and ends
+canonically after every actual legal prefix. -/
+theorem result (H : Nat) (hH : 2 ≤ H) :
+    5 ≤ firstIndex H ∧
+    2 * H < Nat.fib (firstIndex H) ∧ Nat.fib (firstIndex H) < 4 * H ∧
+    ∀ A B : ZMod H, ∃ w : List Window,
+      w.length ≤ lengthBound H ∧ w ≠ [] ∧ firstTwoZero w ∧ Success w ∧
+      windowCoefficients H w = (A, B) ∧
+      (∀ u v : ZMod H, value u v (flatten w) = A * u + B * v) ∧
+      (∀ (epsilon : Bool) (p : List Window), legal epsilon (flatten p) →
+        ∃ N : Nat, 0 < N ∧ initialized epsilon (p ++ w) = some N) := by
+  classical
+  obtain ⟨hj, hq, hq4, hpair⟩ := bounded_coefficient_pair H hH
+  refine ⟨hj, hq, hq4, ?_⟩
+  intro A B
+  obtain ⟨n, hnlo, hnhi, hnB, hnA⟩ := hpair A B
+  have hn : 0 < n := by omega
+  let t := lengthBound H
+  have hm : H * (Nat.fib (firstIndex H) + 1) ≤ Nat.fib (lengthIndex H) := by
+    unfold lengthIndex
+    exact Nat.find_spec (p := fun k => H * (Nat.fib (firstIndex H) + 1) ≤ Nat.fib k) _
+  have ht : lengthIndex H ≤ 3 * t := by dsimp [t, lengthBound]; omega
+  have htpos : 1 ≤ t := by
+    by_contra hh
+    have heq : lengthIndex H = 0 := by dsimp [t, lengthBound] at *; omega
+    rw [heq, Nat.fib_zero] at hm
+    omega
+  have hbnd : ∀ k ∈ Nat.zeckendorf n, k < 3 * t := by
+    intro k hk
+    have hkn : Nat.fib k ≤ n := by
+      rw [← Nat.sum_zeckendorf_fib n]
+      exact List.single_le_sum (fun _ _ => Nat.zero_le _) _ (List.mem_map.mpr ⟨k, hk, rfl⟩)
+    have hkm : k < lengthIndex H := by
+      by_contra hh
+      have hf := Nat.fib_mono (by omega : lengthIndex H ≤ k)
+      omega
+    omega
+  have hlegal := supportBits_legal n t hn
+  obtain ⟨hpacklen, hpackflat⟩ := pack_support n t htpos hlegal
+  let w := trim (supportWord n t)
+  have hval {R : Type} [CommSemiring R] (u v : R) :
+      value u v (flatten w) = (shiftedFibSum n : R) * u + (n : R) * v := by
+    dsimp [w]
+    rw [trim_value, hpackflat]
+    exact support_value n t hbnd u v
+  have hnonempty : w ≠ [] := by
+    intro he
+    have hz : 0 = n := by simpa [he, flatten, value] using hval (R := Nat) 0 1
+    omega
+  have hfirst : firstTwoZero (supportWord n t) := by
+    rw [firstTwoZero, hpackflat]
+    simp [supportBits]
+  have hfirsttrim : firstTwoZero w := by
+    cases he : supportWord n t with
+    | nil => simp [w, he, trim] at hnonempty
+    | cons b tail =>
+      have hkeep : trim (b :: tail) = b :: trim tail := by
+        change (if b = .zero ∧ trim tail = [] then [] else b :: trim tail) = _
+        split
+        · simp [w, he, trim, *] at hnonempty
+        · rfl
+      dsimp [w]
+      rw [he, hkeep]
+      rw [he] at hfirst
+      cases b <;> simp [firstTwoZero, flatten, bits] at hfirst ⊢
+  have hsuccess : Success w := trim_success (supportWord n t) (by rw [hpackflat]; exact hlegal)
+  have hwlegal : legal true (flatten w) :=
+    trim_legal (supportWord n t) (by rw [hpackflat]; exact hlegal)
+  have halllegal (s : Bool) : legal s (flatten w) := by
+    cases s
+    · cases he : flatten w with
+      | nil => trivial
+      | cons b bs =>
+        rw [he] at hwlegal
+        exact ⟨by simp, hwlegal.2⟩
+    · exact hwlegal
+  have hterminal (E : Bool) : w.foldl (fun _ b => nonzero b) E = true := by
+    have hh := hsuccess
+    rw [Success, (execution true true w).1.2 hwlegal] at hh
+    simp only [endable, Option.any_some] at hh
+    cases he : w with
+    | nil => exact False.elim (hnonempty he)
+    | cons b bs => simpa only [he, List.foldl_cons] using hh
+  have hend (s E : Bool) : endable (run (some (s, E)) w) = true := by
+    rw [(execution s E w).1.2 (halllegal s)]
+    simpa only [endable, Option.any_some] using hterminal E
+  refine ⟨w, (trim_length _).trans (hpacklen.le), hnonempty, hfirsttrim, hsuccess, ?_, ?_, ?_⟩
+  · apply Prod.ext <;> simp [windowCoefficients, hval, hnA, hnB]
+  · intro u v
+    rw [hval, hnA, hnB]
+  · intro epsilon p hp
+    have run_append (q : Option (Bool × Bool)) (a b : List Window) :
+        run q (a ++ b) = run (run q a) b := by
+      induction a generalizing q with
+      | nil => rfl
+      | cons a as ih => exact ih (step q a)
+    have hout : initialized epsilon (p ++ w) =
+        some ((if epsilon then 1 else 0) + value 2 3 (flatten (p ++ w))) := by
+      unfold initialized observe
+      rw [run_append, (execution epsilon epsilon p).1.2 hp, hend]
+      rfl
+    refine ⟨_, ?_, hout⟩
+    exact (LiteralWindowEnd.result 0).2.2.2.2.2.2.2 epsilon (p ++ w) _ hout
+
+#print axioms result
+
+
 
 end
 end D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe
