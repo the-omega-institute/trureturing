@@ -10281,4 +10281,29 @@ Every class has an actual private point. For A_3 choose both the5 and7 coordinat
 
 The example keeps the actual common CRT source, oddness, private points, and the normalized prime classes. Its numerical palette is divisor-closed. Numerical distinctness fails explicitly: label15 occurs four times and label21 six times. It is neither an extremal distinct cover nor a counterexample to Erdős#7. Its role is solely to demonstrate that the private-reset and separator relations, even with both forced colors, require an additional use of distinctness before they can yield a contradiction.
 
+### The actual color seed forces a collision in direct first-exit closing
+
+Keep the all-concentrated, two-color branch at arbitrary H. Fix one color i and retain every original label whose NONEMPTY nonternary support lies in S_i, together with every original pure-three class of height at least two whose first root is i. Add two pure-three classes at the other two first roots. On root i, CP5 covers every complete ternary word outside the retained pure-three guards; those guards cover the rest. The two added classes cover the other roots. This is therefore an actual finite odd WHOLE cover on the original3-coordinate and X_i, in which only numerical modulus3 is repeated, exactly twice. All other numerical labels are the retained distinct originals.
+
+Every retained group label has all its original private points on root i, by the actual prime reset. A retained pure-three class has its private points there because its own first root is i. Project any such original private point to the3-coordinate and X_i. Membership in every retained class is preserved, while the two new closing classes lie at other roots. The projected point is consequently still private to that retained label in this ONE seed. Conflicting originals cannot simply be deleted from the seed.
+
+Normalize the two pure-three closing classes to roots0 and1 by one first-digit permutation, making the live color root2. In the direct extension of [Report348, section2](../../321-384/348-fresh-prime-root-transport-and-two-copy-reduction.md#2-two-repeated-prime-classes-with-a-prime-flat-input), an original class of modulus3^a m, with3 not dividing m, is copied at first-exit depth h to modulus
+
+    3^(a+h)m,
+
+with its original cofactor phase and ternary residue multiplied by3^h. Its first nonzero ternary digit is at position h, counting positions from zero, because the original first digit is2. Continuous exit depths include both h=0 and h=1 in that construction.
+
+Suppose this actual color group has any original mixed label3^a m with a≥2 and m>1. Divisor closure supplies both ORIGINAL labels3m and9m. Every nonternary prime dividing m has color i, so resetting their actual private points forces both originals to have first-three root i. Both therefore belong to this same seed, regardless of their higher ternary digits and cofactor phases. The direct closing now produces
+
+    old9m at exit0  → numerical9m, first nonzero position0;
+    old3m at exit1  → numerical9m, first nonzero position1. (CP9)
+
+These two output APs have the same modulus and different ternary residues; they cannot be identified as one class. This obstruction holds for every fresh odd prime used for Report348's finite terminal closing. It uses actual original labels and private points, not an abstract tree or a separately chosen quotient.
+
+Post-copy pruning cannot remove the collision either. For a copied original at exit h, take its old private point, multiply the COMPLETE old ternary coordinate by3^h, preserve every nonternary coordinate, and set the fresh-prime coordinate to ell−1. The retained3-free originals and other copies at the same exit are absent by the old private-point property. Copies at other exits have a different ternary valuation; the pure first-exit guards require first nonzero digit1, while this point has digit2. A terminal class indexed by k≤h requires fresh-prime residue k rather than ell−1>h; for k>h it requires divisibility by3^k, contradicting valuation h. Thus every copied original still has a private point in the constructed family, including both9m copies in CP9.
+
+For a general input, separating the shifted height sets could avoid this particular collision. Here divisor closure and the common concentrated color already force consecutive positive heights1 and2 whenever a deep mixed label exists. Thus that sparse-height escape is unavailable for the actual color seed. A construction changing the source map or replacing the conflicting originals would need a new coverage and numerical-distinctness argument.
+
+[Report536](../500-549/536-ternary-conditioning-preserves-a-joint-query-and-entropy-boundary.md) already explains the other direct failure: removing all ternary digits can project several distinct original heights to more than two cofactor classes. CP9 adds the same-source obstruction to repairing that loss by the literal first-exit closing. Neither statement rules out another legal transport, and neither supplies an all-height flat or multiplicity-two seed. That bridge remains unproved.
+
 The remaining all-concentrated branch therefore has two nonempty color groups, no original label mixing their nonternary supports, and both complete-word quotient-cover obligations CP5. A useful next bridge must exploit the distinct original labels to resolve those quotient collisions, or give a jointly legal replacement with strict count or modulus-sum descent. The existing singleton-color root permutations preserve those budgets and do not provide that bridge.
