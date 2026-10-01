@@ -27,12 +27,13 @@ REPO = os.environ.get("STRATALINT_CACHE_REPO", "the-omega-institute/trureturing"
 # Issue #6194, run 34119746844: Release assets must be strictly below 2 GiB.
 # Keep dev's 1.5 GiB headroom and two-digit, at-most-100-part inventory.
 CHUNK_BYTES = 1610612736
-# Optional transport policy (#5985, 2026-09-08): a ten-minute operation ceiling,
-# configurable downward, leaves headroom over the recorded 5m08s Release fetch
-# (#2634). This is a policy choice, not a throughput derivation or a copy of the
-# C# ArchiveBudget. Review against real multipart transfers during integration.
+# Optional transport policy (#5985): a thirty-minute operation ceiling,
+# configurable downward, leaves headroom over measured multipart Release fetches
+# of the 4 GB seed on a developer host (5m08s, #2634; 7m09s for one fetch, and
+# over ten minutes when two fetches share the link). This is a policy choice,
+# not a throughput derivation or a copy of the C# ArchiveBudget.
 # Fetch includes all snapshot attempts; publish starts only after the current report succeeds.
-RELEASE_OPERATION_TIMEOUT_SECONDS = 600
+RELEASE_OPERATION_TIMEOUT_SECONDS = 1800
 
 
 def operation_deadline():

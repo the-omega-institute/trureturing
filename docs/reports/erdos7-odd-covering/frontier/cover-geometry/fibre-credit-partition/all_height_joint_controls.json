@@ -1,0 +1,69 @@
+{
+  "contract": {
+    "evidence": "exact finite arithmetic, not Lean verification",
+    "positivity_claim": "none for unrestricted Erd\u0151s #7",
+    "scope": "two actual finite globally phased odd-modulus families"
+  },
+  "distinct_height_labels": {
+    "actual_classes": [
+      [
+        0,
+        3
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        0,
+        7
+      ],
+      [
+        1,
+        105
+      ],
+      [
+        281,
+        315
+      ]
+    ],
+    "actual_union": "1/36",
+    "correct_per_height_fee": "1/36",
+    "incorrect_once_per_d_mincap_fee": "1/48",
+    "label105_mass": "1/48",
+    "label315_mass": "1/144",
+    "source_size": 144,
+    "undercharge": "1/144",
+    "universal_cap_once_per_d_undercharge": "31/6300"
+  },
+  "exact_checks": 32,
+  "shared_ternary_mixture": {
+    "actual_classes": [
+      [
+        0,
+        3
+      ],
+      [
+        55,
+        99
+      ],
+      [
+        247,
+        351
+      ]
+    ],
+    "condition": "pure3-conditioned Haar, then first root t=1 mod3",
+    "conditioned_joint_minus_product": "-360/1530169",
+    "grid_size": 1287,
+    "joint_survival": "1237/1287",
+    "mean11": "32/33",
+    "mean13": "116/117",
+    "product_of_means_minus_joint": "1/3861",
+    "surviving_coordinate_zero_counts": [
+      77,
+      85,
+      5
+    ],
+    "survivors": 1237
+  }
+}

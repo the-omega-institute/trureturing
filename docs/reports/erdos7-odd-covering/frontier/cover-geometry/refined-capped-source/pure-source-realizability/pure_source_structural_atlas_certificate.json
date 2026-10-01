@@ -1,0 +1,79 @@
+{
+  "schema": "e7-pure-source-structural-atlas-v1",
+  "source814_schema": "e7-three-kernel-atlas-counterexample-v1",
+  "quarter_kernel": "quarter",
+  "quarter_normalization": "mu=lambda_w restricted to U / lambda_w(U)",
+  "retained_certificate_sha256": "b751e98a9e879887a6651e2e0d3e72db21b3af2e65ebc473edeb1f841a4185b5",
+  "retained_normalization": "nu_u restricted to U / nu_u(U)",
+  "structural_rule": "pure5 removes2/3/4: at mostone live other reference root uses quarter; at leasttwo use821 retained",
+  "q5_vertices": [
+    [
+      "1/5",
+      "4/15",
+      "8/15"
+    ],
+    [
+      "4/15",
+      "1/5",
+      "8/15"
+    ],
+    [
+      "4/15",
+      "4/15",
+      "7/15"
+    ]
+  ],
+  "other_primes": [
+    7,
+    11,
+    13,
+    17,
+    19,
+    23
+  ],
+  "endpoint_codes": "0=deleted reference;1=actual live lower;2=live upper cap",
+  "expected_cells": {
+    "quarter": 7,
+    "retained": 57,
+    "total": 64
+  },
+  "expected_vertices": {
+    "quarter": 39,
+    "retained": 2148,
+    "total": 2187
+  },
+  "quarter_gate_floor": "6/25",
+  "retained_gate_floor": "7/500",
+  "root_other_mass_floor": "7/13500",
+  "all_pure_mass_floor": "1/2000",
+  "expected_quarter_min_gate": "1724414692969066565792227064052072402282402376780066080754034557117936529712371780113566411621773447052322545779699412703490066184589697599115416136323/7107322299238255647817882180914841334545620495902372860713884745990643241062546934281964282051140507373079875410447564800000000000000000000000000000000",
+  "expected_retained_min_gate": "114832121398358963474135538169578654853379623686964339726061600849163436936456067218591521074673768717049405954650172050342587681799448611010706505457785894943099/8069772193926769433459887059580392765265339938055819185602223305343542846623100164965980278578899117746517775205612339200000000000000000000000000000000000000000000",
+  "expected_quarter_worst": [
+    2,
+    [
+      2,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  ],
+  "expected_retained_worst": [
+    2,
+    [
+      2,
+      1,
+      0,
+      0,
+      0,
+      0
+    ]
+  ],
+  "external_source_cases": {
+    "pure5_absent": "Report819;C5=20/19 consistently;complete reserve>29/100",
+    "pure5_reference": "Report817;actual phase0/1;complete source atlas;mass>1/800",
+    "pure5_other": "This certificate;actual phase2/3/4;all64 zero/live patterns;mass>7/13500"
+  },
+  "scope": "Fixed25 actual anchor/selected originals including23 mixed phases; arbitrary finite old pure inventories and other allowed head originals; support3..23,29,and finite primes>1600; primes31..1600 excluded; no arbitrary mixed-phase claim"
+}

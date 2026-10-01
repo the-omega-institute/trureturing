@@ -1,0 +1,98 @@
+**定理 26.2（实际正侧门的三代前沿传递）。** 在假设 24.1 下，直接采用 [钉版 Fibonacci collars，§6 的 growing positive collar 与 growing actual selector domain](https://github.com/the-omega-institute/nested-recurrences/blob/8b8d4620c94ef181bf98006e3fc5e9f043e8bda2/cloitre-conway/fibonacci-collars.md#every-fixed-positive-offset-eventually-becomes-linear) 的
+
+$$
+\begin{aligned}
+L_k&=32+2\left\lfloor\frac{k-23}{6}\right\rfloor
+     +\mathbf1_{\{(k-23)\bmod6\ge4\}},\qquad k\ge23,\\
+W_k&=\max(32,G(L_k)).
+\end{aligned}
+\tag{26.7}
+$$
+
+来源在每个 $h\ge24$、$1\le s\le W_{h-1}$ 上已经给出实际被选子索引：$g_{F_h+s}=F_{h-1}+s$ 当该整数为奇数，否则为 $F_{h-1}$。这是真实起点、规定深度及相位的定理，不是从固定宽度种子外推的自由选择。$s=0$ 时直接使用锚值及锚点拆分。
+
+取任意 $j\ge30$、$N=F_j+t$、$0\le t\le F_{j-1}$。在根的三代实际前沿上，对八个位置出现节点 $v$ 写
+
+$$
+(h_v,n_v),\qquad s_v=n_v-F_{h_v},\qquad
+\beta_v=F_{h_v}/F_j.
+$$
+
+若至少一个节点满足 $0\le s_v\le W_{h_v-1}$，则
+
+$$
+V_4(j,N)\ge\frac4{1625}\left(\frac tN\right)^2
+\ge\frac4{1625}\left(\frac{D(N)}N\right)^2
+\ge\frac4{1625}\left(\frac{D(N)}N\right)^4.
+\tag{26.8}
+$$
+
+尤其令
+
+$$
+\begin{aligned}
+T_j&=W_{j-4}+3W_{j-5}+3W_{j-6}+W_{j-7},\\
+B_j&=\min(F_{j-1},T_j+7).
+\end{aligned}
+\tag{26.9}
+$$
+
+则每个 $j\ge30$、$0\le N-F_j\le B_j$ 的实际根都满足式 (26.8)，无需另加前沿假设。
+
+证明。实际闭块拆分保持子低锚偏移非负且相加；在三代前沿，准确有
+
+$$
+\sum_v s_v=t,\qquad \sum_vF_{h_v}=F_j,\qquad
+\mathbb P(v)=n_v/N,
+$$
+
+其中 $j-6\le h_v\le j-3$。使用式 (26.2) 的原方差展开，
+
+$$
+\begin{aligned}
+V_3(j,N)&=\sum_v\frac{n_v}N
+                   \left(\frac{F_{h_v}}{n_v}-\frac{F_j}N\right)^2,\\
+V_4(j,N)&=V_3(j,N)+\sum_v\frac{n_v}N v(h_v,n_v).
+\end{aligned}
+$$
+
+选择一个实际处于门内的出现节点，简写为 $(h,n)$、$s$、$\beta$，并令 $A=F_{h-1}$、$B=F_{h-2}$。其实际第一子为 $A+r$，第二子为 $B+s-r$。在 $s>0$ 时被选规则使 $r\in\{0,s\}$；$s=0$ 的下界仍为零。因此行列式 $As-F_hr$ 的绝对值至少为 $Bs$。$X\ge3/5$ 与 $B/F_h\ge1/3$ 给 $B/n\ge1/5$，子乘积至多为 $n^2/4$，从而
+
+$$
+\frac nN v(h,n)\ge\frac{4s^2}{25Nn}.
+$$
+
+同一个出现节点在 $V_3$ 的贡献准确为
+
+$$
+\frac nN\left(\frac{F_h}n-\frac{F_j}N\right)^2
+=\left(\frac{F_j}N\right)^2\frac{(\beta t-s)^2}{Nn}
+\ge\frac{9(\beta t-s)^2}{25Nn}.
+$$
+
+将这两项联合，并在其内部应用配方恒等式
+
+$$
+9(y-s)^2+4s^2=\frac{36}{13}y^2
+                      +13\left(s-\frac9{13}y\right)^2,
+$$
+
+得到
+
+$$
+V_4(j,N)\ge\frac{36}{325}\frac{\beta^2t^2}{Nn}.
+$$
+
+仍在该继承节点上，$n\le(5/3)F_h\le(5/3)\beta N$；连续三次每至多降两阶，$F_{k-2}/F_k\ge1/3$ 给 $\beta\ge1/27$。故上式至少为 $(108/1625)\beta(t/N)^2\ge(4/1625)(t/N)^2$。
+
+由 $C(F_j+t)\le F_{j-1}+t$、$G(F_j+t)\ge G(F_j)=F_{j-1}$，有
+
+$$
+0\le D(F_j+t)\le t.
+\tag{26.10}
+$$
+
+这给出式 (26.8) 的其余下界。深度三的阶标 $j-3,j-4,j-5,j-6$ 的位置重数分别为 $1,3,3,1$。若八个偏移全部大于各自门宽，整性就迫使 $\sum_vs_v\ge T_j+8$。所以 $t\le T_j+7$ 必有门内实际出现节点，证明式 (26.9) 的全部根域。证毕。
+
+式 (26.7) 给 $B_j=(8\alpha/3)j+O(1)$，而原被选门宽为 $W_{j-1}=(\alpha/3)j+O(1)$、精确值 collar 宽为 $L_j=j/3+O(1)$。因此这个父域超出原精确值 collar；还覆盖父偏移较大但实际三代前沿含有门内节点的根。其常数和四代成本统一，父域宽度仍仅为 $O(j)$，相对于长度 $F_{j-1}$ 的整个块趋于零。
+

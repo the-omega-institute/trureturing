@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7359f1f7bf6549d2c515e149684faf5e0cc3c916fd8915ff0dc442a13b05a0c5
+  normalized_sha256: sha256:7359f1f7bf6549d2c515e149684faf5e0cc3c916fd8915ff0dc442a13b05a0c5
+cas_ref: sha256:7359f1f7bf6549d2c515e149684faf5e0cc3c916fd8915ff0dc442a13b05a0c5
+coverage_gids:
+  - gid: D5/S3/Observer/Linear/ObservableTrajectoryCoordinates.observable_trajectory_coordinates
+    target_statement_id: sha256:abc8bb30f0715065fdd3c3108763c57500d067ff88e6a60eb33c5a8406059fc4
+receipts:
+  unresolved_subitems: []

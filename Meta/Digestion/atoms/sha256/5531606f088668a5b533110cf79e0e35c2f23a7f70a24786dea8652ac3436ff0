@@ -1,0 +1,4 @@
+## 3. Intended consumer and boundaries
+
+The intended consumer is the induction for reciprocal-factorial represented spanning polynomials. Its normalized Hessian has the form $S=D^{1/2}HD^{1/2}$ on active coordinates. The induction must independently provide entrywise nonnegativity, connected positive support, the strictly positive fixed vector, and the quadratic inequality. No polynomial concavity, orbit averaging, sampling identity, stopping-time comparison, expectation inequality, or full optimizer settlement follows from this matrix implication alone.
+

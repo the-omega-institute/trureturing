@@ -3064,3 +3064,97 @@ $$
 证明。紧支测试导数的支撑在有界平移下落入同一个紧集。其一致有界性与该集的有限测度使测试配对的差商可在平方可积假设下控制；不需要 $f$ 全局可积。对每个平移后的测试应用弱等式与标量微积分基本定理，再将连续线性配对与 Bochner 区间积分交换。紧支光滑测试分离局部可积函数的几乎处处类，故 $V(t)[f]-[f]=\int_0^t V(r)[h]\,dr$，向量微积分基本定理给强导数。反向把同一测试配对的导数分别由强轨道导数和移位测试微分计算，并用导数唯一性得到所示负号。
 
 此结论只识别一维平移的最大一阶弱导数域。定理 2.4 的多维振子闭图、张量算子域、一般辛实现与 Gibbs 迹公式仍需各自的解析桥梁。
+
+## 25. 有限 Gaussian 观测的实际条件概率与信息
+
+**定理 25.1（Gaussian 观测律的后验、似然与条件自由能）。** 设 $n,p\ge0$，$M:\mathbb R^n\to\mathbb R^p$ 是任意实矩阵，$\beta>0$，$\sigma\in\mathbb R$ 满足 $\sigma^2>0$，置 $\tau=\sigma^{-2}$。在同一个概率律中取相互独立的 $X\sim\mathcal N(0,\beta^{-1}I_n)$ 与 $N\sim\mathcal N(0,\tau^{-1}I_p)$，令 $Y=MX+N$。具体地，共同输入律是 $\mathbb R^{n+p}$ 上块对角协方差 $\operatorname{diag}(\beta^{-1}I_n,\tau^{-1}I_p)$ 的中心 Gaussian 律，$X,N,Y$ 是其坐标线性映射。令 $P$ 为 $(Y,X)$ 的实际推前联合律，$\mu$ 为 $Y$ 的实际边缘律，并置
+
+$$
+Q=\beta I_n+\tau M^{\mathsf T}M,\qquad
+\Sigma=Q^{-1},\qquad A=\tau\Sigma M^{\mathsf T},\qquad
+K_y=\mathcal N(Ay,\Sigma).
+$$
+
+这里 $K$ 作为概率核是中心律 $\mathcal N(0,\Sigma)$ 经 $x\mapsto Ay+x$ 的推前。它给出实际联合律的条件分解 $P=\mu\otimes K$。对实际概率密度定义
+
+$$
+h(\nu)=-\int\log\left(\frac{d\nu}{dx}\right)\,d\nu,
+\qquad \mathcal F_\beta(\nu)=\int\frac{\|x\|^2}{2}\,d\nu-\beta^{-1}h(\nu).
+$$
+
+令 $\ell=\log\bigl(dP/d(P_Y\otimes P_X)\bigr)$ 是实际 Radon–Nikodym 导数的对数。则 $\ell$ 对 $P$ 可积，$D_{\rm KL}(P\Vert P_Y\otimes P_X)<\infty$，而其积分和互信息满足
+
+$$
+\begin{aligned}
+\int \ell\,dP
+=I(X:Y)
+&=\frac12\left(\log\det(\beta^{-1}I_n)-\log\det\Sigma\right)\\
+&=\frac12\log\det\left(I_n+\frac{\tau}{\beta}M^{\mathsf T}M\right),\\
+\int\mathcal F_\beta(K_y)\,d\mu(y)
+ -\mathcal F_\beta\bigl(\mathcal N(0,\beta^{-1}I_n)\bigr)
+&=\beta^{-1}I(X:Y).
+\end{aligned}
+$$
+
+空指标与零维空间均在范围内，空行列式为 $1$。$\sigma$ 可以为负；概率律依赖其平方，不要求 $M$ 单射。这些式子没有把有限积分矩 Gramian 与完整轨迹 Gramian 在正时间上混同。
+
+证明。精度 $Q$ 正定，因为 $\beta I_n$ 正定而 $\tau M^{\mathsf T}M$ 半正定。Gaussian 创新 $R=X-AY$ 的协方差是 $\Sigma$，且与 $Y$ 的交叉协方差为零；Gaussian 独立性与 $X=AY+R$ 给出所述条件分解。标准 Gaussian 的密度由实际一维 Gaussian 密度的可积乘积和矩形集上的积分得到。经可逆平方根与平移的 Haar 测度变换给出一般正定 Gaussian 密度，其 Jacobian 用绝对行列式。这个密度的 Radon–Nikodym 导数给出实际对数似然比，Gaussian 二阶矩使其可积。对联合律积分得到两协方差的对数行列式之差；平均条件能量等于先验能量，平均条件熵的差因此给出自由能恒等式。
+
+## 追加锚（本行以下为增补区）
+## 26. 可观测轨迹像的归一积分坐标
+
+**定理 26.1（轨迹像坐标与连续 Gramian 的精确相等）。** 设 $d,p\ge0$，$E=\mathbb R^d$、$W=\mathbb R^p$ 取欧氏内积，$B:E\to E$、$C:E\to W$ 为实线性映射，并满足 $\bigcap_{0\le k<d}\ker(CB^k)=\{0\}$。对每个 $T>0$，在实 Hilbert 空间 $H_T=L^2((0,T];W)$ 中存在有界线性轨迹映射 $F_T:E\to H_T$，其任意代表满足
+
+$$
+(F_Tx)(t)=Ce^{tB}x\quad\text{对几乎所有 }t\in(0,T].
+$$
+
+此映射单射，像的维数恰为 $d$。取其像的一个正交归一基 $b_0,\ldots,b_{d-1}$，令 $P_T$ 为 $H_T$ 到该像的实际正交投影，$U_T$ 为 $P_T$ 后接这个基的坐标映射。对每个 $f\in H_T$ 及每个 $i<d$，系数函数 $t\mapsto\langle b_i(t),f(t)\rangle$ 可积，且
+
+$$
+(U_Tf)_i=\int_0^T\langle b_i(t),f(t)\rangle\,dt,
+\qquad \|U_Tf\|\le\|f\|,
+\qquad U_T^*U_T=P_T.
+$$
+
+在 $E$ 的标准欧氏基中令 $M_T$ 表示 $U_TF_T$，则
+
+$$
+(U_TF_T)^*(U_TF_T)=F_T^*F_T
+ =\int_0^T(Ce^{tB})^*(Ce^{tB})\,dt,
+\qquad
+M_T^{\mathsf T}M_T=\int_0^T e^{tB^{\mathsf T}}C^{\mathsf T}Ce^{tB}\,dt.
+$$
+
+这些积分是实际连续算子的积分；坐标公式适用于全部 $L^2$ 类，不要求噪声代表连续。当 $d=0$ 时基与坐标指标为空，上述单射、投影与矩阵等式仍成立。
+
+证明。连续轨迹在有限区间上属于 $L^2$，逐点线性和有限维定义域使 $F_T$ 有界线性。若 $F_Tx=0$，连续性将几乎处处的轨迹消失提升为区间上的消失。指数轨迹实解析，连通性与唯一性使其在整个实轴消失；零点的指数幂级数系数给出 $CB^kx=0$，可观测性于是给出 $x=0$。像的维数为 $d$，故可取所述正交归一基。正交投影收缩与基坐标的等距性给出范数界；$L^2$ 内积的可积性给出全部系数公式。轨迹位于投影像内，故坐标映射保持轨迹内积。将该内积写成积分，并与有限维连续线性算子的积分交换，得到算子与矩阵的两个 Gramian 等式。
+
+## 追加锚（本行以下为增补区）
+
+## 27. 一阶最大域上的弱正则交换关系
+
+本节使用 $H=L^2(\mathbb R,\mathbb C;dx)$，内积在第一变量共轭线性、第二变量线性。对平方可积代表函数 $u$，记 $[u]$ 为其 $L^2$ 类；所有积分均为实直线的 Lebesgue 体积积分。真实平移取 $V(t)[u]=[x\mapsto u(x+t)]$，真实调制取 $U(s)[u]=[x\mapsto e^{isx}u(x)]$。
+
+**定理 27.1（一阶域上的弱 CCR）。** 任取 $\hbar>0$ 及函数 $f,g,d_f,d_g:\mathbb R\to\mathbb C$。假设 $f,g,d_f,d_g,x\mapsto xf(x),x\mapsto xg(x)$ 均平方可积，并对每个实值紧支 $C^\infty$ 测试函数 $\varphi$ 有
+
+$$
+\int_{\mathbb R}\varphi'(x)f(x)\,dx
+ =-\int_{\mathbb R}\varphi(x)d_f(x)\,dx,
+\qquad
+\int_{\mathbb R}\varphi'(x)g(x)\,dx
+ =-\int_{\mathbb R}\varphi(x)d_g(x)\,dx.
+$$
+
+定义实际位置与动量输出 $QF=[xf]$、$QG=[xg]$、$PF=-i\hbar[d_f]$、$PG=-i\hbar[d_g]$，以及 $F=[f]$、$G=[g]$。则
+
+$$
+\langle QF,PG\rangle-\langle PF,QG\rangle
+ =i\hbar\langle F,G\rangle.
+$$
+
+证明。调制差商由 $|xf|$ 控制，平方误差由 $4|xf|^2$ 控制，支配收敛给出真实 $L^2$ 调制轨道的强导数 $iQF$；对 $g$ 同理。定理 18.1 将两个紧支弱测试等式识别为真实平移轨道的强导数。实际公式给出 $V(t)U(s)=e^{ist}U(s)V(t)$。将这一有界关系写成差分配对后依次对两实参数求导，仅使用各自的一阶强导数。第一槽的共轭线性与 $P=-i\hbar d/dx$ 给出所示正号。无需 $QP$ 或 $PQ$ 的乘积域、全局 $L^1$、二阶导数或四阶矩。
+
+本结论是第一域上的纯向量形式等式。一般正常态的有限二阶矩对应、多模态闭图与完成张量算子域、一般辛实现、Gibbs 及基无关迹仍各需其实际解析桥梁。
+
+## 追加锚（本行以下为增补区）

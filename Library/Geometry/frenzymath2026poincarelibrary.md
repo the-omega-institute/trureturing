@@ -1437,3 +1437,462 @@ and uniqueness remain unfinished, including noncompact cusps and
 nonorientable manifolds. The existing escape audit remains unfinished:
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
 Neither these checks nor CI closes that audit or the remaining mathematics.
+
+## Continuous centralizer conjugation and recurrence constraints
+
+For a supplied topological group `K`, subgroup `Γ`, and element `z`
+commuting with every element of `Γ`, the actual function
+`x ↦ x * z * x⁻¹` descends to a continuous map `Φ : (K ⧸ Γ) → K`.
+The defining left-coset relation gives `x⁻¹ * y ∈ Γ`; the supplied
+commutation makes the conjugation values agree on that relation.
+Existing quotient lifting and continuity then give the map with exact
+value `Φ (QuotientGroup.mk x) = x * z * x⁻¹` and exact equivariance
+`Φ (g • q) = g * Φ q * g⁻¹`. Subgroup normality is not assumed.
+
+For continuous `Φ` semiconjugating two supplied self-maps, neighborhood
+recurrence of a point transfers to neighborhood recurrence of its image.
+The preimage of an image-point neighborhood is a neighborhood of the
+original point, and existing semiconjugacy iteration identifies the
+iterates. Only continuity of `Φ` is assumed for this transfer.
+Apply it to the actual continuous centralizer map above, for a locally
+compact, second-countable ambient topological group with actual Hausdorff
+Borel coset space and supplied finite nonzero ambient-left-invariant
+coset measure `ν`. For each fixed ambient `g`, almost every coset has
+`Φ q` recurrent under conjugation `y ↦ g * y * g⁻¹`. The already checked
+open positivity and existing `Measure.dense_of_ae` make these cosets
+a dense subset of the actual coset space. This asserts density of the
+specified cosets, not density of their images or of a conjugacy orbit in
+`K`.
+
+Under the supplied compatible original-H3 smooth source geometry,
+original pairwise distance identity, actual target geometry/Borel,
+actual full-deck quotient covering/local diffeomorphism/tangent-metric
+pullback, faithful representation implementing the actual action at every
+point, and finite actual target volume, bind this to the same original-H3
+full compact-open isometry group, actual image `ρ.range`, normalized Haar
+`μ` and actual coset measure `ν` from the preceding construction.
+The same ambient topology/Borel/Polish/local compactness/second countability,
+actual closed deck image and actual coset Hausdorff/Borel compatibility
+supply the hypotheses. Retain left/right Haar invariance, actual covolume
+and `ν` total mass equal to actual target volume, explicit `μ.inv`
+quotient-measure relation, and finite nonzero ambient-left-invariant,
+open-positive `ν`. For each supplied `z` centralizing that actual image,
+the exact continuous `Φ` above has, for each ambient `g` separately,
+almost-everywhere and dense cosets with conjugation-recurrent `Φ q`.
+This does not prove `z = 1`.
+
+A further generic conditional check isolates a remaining geometric
+obligation. With the same supplied ambient-group, coset-measure and
+centralizer hypotheses, fix `g` and supply a closed subset `S ⊆ K`
+containing every neighborhood-recurrent point of conjugation by `g`.
+The preimage `Φ⁻¹(S)` is closed and contains the dense set of
+conjugation-recurrent cosets. It therefore contains every coset; the
+exact value formula gives `x * z * x⁻¹ ∈ S` for every `x : K`.
+The closed set and its coverage of all recurrent conjugation points are
+explicitly supplied premises. No such concrete classification or closed
+constraint for actual H3 is established by this generic check.
+
+These are five further scoped transient classical composition checks,
+with five printed closures using only `propext`, `Classical.choice` and
+`Quot.sound` under the same pins; the semiconjugacy-transfer closure uses
+only `propext` and `Quot.sound`. No tracked project Lean declaration or
+mathematical novelty is claimed. No compactness or orientability premise
+is added to the actual finite-volume construction. An actual H3
+recurrent-conjugation constraint, centralizer triviality, lattice
+conjugacy, finite-volume cusp classification and full Mostow-Prasad
+homotopic isometry existence and uniqueness remain unfinished, including
+noncompact cusps and nonorientable manifolds. The existing escape audit
+remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these checks nor CI closes that audit or the remaining mathematics.
+
+## Lorentz coordinates and linear extension of actual H3 isometries
+
+A further transient classical composition starts from the same original
+upper-half-space metric, without replacing its distance. Existing
+half-distance and hyperbolic-function identities give, for original
+upper-half-space points `p,q`,
+`cosh(hyperbolicDist p q) = 1 + distAmbient(p,q)^2/(2*height p*height q)`.
+For the original H3 point with horizontal coordinate `x + i*y` and
+positive height `t`, define the real four-coordinate map
+`C(p) = ((x^2+y^2+t^2+1)/(2*t), x/t, y/t,
+(x^2+y^2+t^2-1)/(2*t))` and Lorentz bilinear form
+`B(u,v) = u0*v0-u1*v1-u2*v2-u3*v3`.
+The exact original-distance identity is `B(C(p),C(q)) = cosh(dist p q)`.
+It gives `B(C(p),C(p)) = 1`, injectivity of `C`, and preservation of this
+kernel by every actual H3 isometry.
+
+The four actual upper-half-space points `(0,1)`, `(0,2)`, `(1,1)` and
+`(i,1)` have Lorentz vectors `(1,0,0,0)`, `(5/4,0,0,3/4)`,
+`(3/2,1,0,1/2)` and `(3/2,0,1,1/2)`. Exact coefficient expansion spans
+the real four-dimensional vector space, and their Lorentz probes detect
+the zero vector. Distances to these four points determine every actual H3
+point. The values of an actual H3 isometry at these four points determine
+the entire isometry.
+
+For every actual H3 isometry `e`, preservation of the frame Gram matrix
+makes the four vectors `C(e(frame_i))` linearly independent. Existing
+Mathlib finite-dimensional basis construction and basis equivalence give
+a real linear equivalence `L(e)` sending each `C(frame_i)` to
+`C(e(frame_i))`. Pairing the exact frame expansion with the image basis
+proves `L(e)(C(p)) = C(e(p))` for every actual H3 point `p`, rather than
+only for the four frame points. Bilinearity and kernel preservation on
+the frame then give `B(L(e)u,L(e)v) = B(u,v)` for all real four-vectors.
+Agreement on the frame proves `L(1) = 1` and
+`L(e*f) = L(e)*L(f)`, with composition in the same order as the original
+isometry group. Coordinate injectivity and determination by the four
+frame values prove that this group homomorphism is injective. These
+arguments cover the full original H3 isometry group; they do not assume
+orientation preservation.
+
+The six scoped transient checks reuse the existing original
+upper-half-space metric, real hyperbolic-function identities, finite sums,
+finite-dimensional basis construction and basis equivalence. Their
+23 printed closures use only `propext`, `Classical.choice` and `Quot.sound`
+under the same pins. No tracked Lean declaration or mathematical novelty
+is claimed. Continuity of this representation, any assertion that its
+image is the full Lorentz group, and an actual H3 recurrent-conjugation
+constraint are not established by these checks. Centralizer triviality,
+lattice conjugacy, finite-volume cusp classification and full
+Mostow-Prasad homotopic-isometry existence and uniqueness remain
+unfinished, including noncompact cusps and nonorientable manifolds.
+The existing escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these checks nor CI closes that audit or the remaining mathematics.
+
+## Continuous actual matrix coefficients and diagonal positive dilation
+
+Five further transient classical composition checks supply additional
+ingredients for the still missing actual recurrent-conjugation constraint.
+The same original H3 coordinate homeomorphism makes its Lorentz-coordinate
+map continuous. In the same actual compact-open isometry-group topology,
+existing point evaluation and the exact frame expansion make
+`e ↦ L(e)u` continuous for each fixed real four-vector `u`.
+The coefficient matrix `A(e)ij = (L(e)(single j 1))i` is therefore
+continuous in the finite real product topology. Existing Mathlib
+`LinearMap.toMatrix'` identifies these exact coefficients and gives
+`A(1)=1` and `A(e*f)=A(e)*A(f)`. The already proved faithful linear
+representation makes `A` injective. The matrices of `e` and `e⁻¹` are
+two-sided inverses. This does not assert a topological embedding or
+surjectivity onto a matrix group.
+
+A separate generic real dynamical check assumes `a>0`, `a≠1`, and
+neighborhood recurrence of `x` under `y ↦ a*y`; it proves `x=0`.
+Exact scalar iteration is `a^n*x`. Existing geometric-power convergence
+handles `0<a<1`; divergence of the absolute-value orbit handles `a>1`.
+The recurrence is expressed by arbitrarily late visits to every
+neighborhood, not by assuming a fixed point. This generic check alone
+classifies no actual H3 isometry.
+
+The real linear coordinate change
+`P(u)=(u0+u3,u1,u2,u0-u3)` has inverse
+`P⁻¹(v)=((v0+v3)/2,v1,v2,(v0-v3)/2)`.
+Conjugating the same actual isometry representation through `P` preserves
+its group multiplication and its action on every actual H3 point.
+For the actual positive upper-half-space dilation with scale `a>0`,
+the transformed coordinates have weights `(a,1,1,a⁻¹)`. Exact frame
+expansion proves that its transformed linear map acts with these weights
+on every real four-vector, not only on the coordinate-image points.
+This diagonalization is derived for the actual existing dilation and
+original metric; it is not supplied as a premise.
+
+The five scoped checks print 15 closures using only `propext`,
+`Classical.choice` and `Quot.sound` under the same pins. No tracked Lean
+declaration or mathematical novelty is claimed. Combining the actual
+continuous matrix coefficients, dilation diagonalization and generic
+scalar recurrence into an actual H3 recurrent-conjugation classification
+remains unfinished. Centralizer triviality, lattice conjugacy, cusp
+classification and full Mostow-Prasad homotopic-isometry existence and
+uniqueness remain unfinished, including noncompact cusps and nonorientable
+manifolds. The existing escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these checks nor CI closes that audit or the remaining mathematics.
+
+## Actual recurrent-conjugation constraint for positive H3 dilation
+
+Three further transient classical composition checks bind the preceding
+scalar recurrence result to the actual full original H3 isometry group.
+The light-coordinate coefficient matrices of `P*L(e)*P⁻¹` are continuous
+in the same actual compact-open topology, preserve multiplication and
+are injective. For the actual positive dilation `d` of scale `a>0`,
+its matrix is diagonal with weights `w=(a,1,1,a⁻¹)`; the matrix of its
+actual inverse has the reciprocal weights. Thus the actual coefficient
+formula is `A(d*e*d⁻¹)ij = (wi/wj)*A(e)ij`.
+
+Suppose an actual H3 isometry `e` is neighborhood-recurrent under
+conjugation by this actual `d`. Each continuous matrix coefficient
+transports that recurrence through its exact scalar semiconjugacy.
+All weights are positive. If `wi≠wj`, the positive multiplier `wi/wj`
+is unequal to one, so the generic scalar check forces `A(e)ij=0`.
+The resulting coefficient constraints make `A(e)` commute with the
+actual diagonal matrix of `d`. Matrix injectivity gives `e*d=d*e` in
+the actual original H3 isometry group. The constraint set
+`S={e | e*d=d*e}` is closed by actual compact-open group continuity
+and Hausdorff equality. This proves the previously supplied geometric
+premise for this concrete closed constraint and positive dilation.
+It does not assert an arbitrary-conjugating-isometry classifier.
+
+Under the supplied compatible original-H3 smooth source geometry and
+original pairwise distance identity, actual target geometry/Borel,
+full-deck quotient covering/local diffeomorphism/tangent-metric pullback,
+faithful representation implementing the actual deck action at every
+point, and finite actual target volume, select the same normalized Haar
+`μ` and finite nonzero invariant actual coset measure `ν` as before.
+Retain actual covolume and `ν` mass equal to actual target volume,
+Haar right invariance, explicit `μ.inv` quotient relation and `ν` open
+positivity. For every `z` centralizing the actual deck image, for every
+positive scale and every ambient actual isometry `x`, the same accepted
+closed-constraint argument now gives
+`(x*z*x⁻¹)*d = d*(x*z*x⁻¹)` for the actual dilation at that scale.
+The geometric recurrence-coverage premise is proved here rather than
+supplied. No subgroup normality, compactness or orientation-preserving
+restriction is introduced. The conclusion concerns all actual conjugates
+of the supplied centralizer element; it still does not prove `z=1`.
+
+These three scoped checks print 11 closures using only `propext`,
+`Classical.choice` and `Quot.sound` under the same pins. No tracked Lean
+or mathematical novelty is claimed. Centralizer triviality, lattice
+conjugacy, finite-volume cusp classification and full Mostow-Prasad
+homotopic-isometry existence and uniqueness remain unfinished, including
+noncompact cusps and nonorientable manifolds. The existing escape audit
+remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these checks nor CI closes that audit or the remaining mathematics.
+
+
+## Actual H3 centralizer identity from translations and dilation
+
+The same original H3 horizontal translations satisfy
+`dₐ Tᵤ dₐ⁻¹ = Tₐᵤ` for every positive real scale. In particular,
+`Tᵤ d₂ Tᵤ⁻¹ d₂⁻¹ = T₋ᵤ`. The group conjugation identity and
+these actual action formulas show that if every ambient conjugate of `z`
+commutes with `d₂`, then `z` commutes with every horizontal translation.
+No supplied translation relation or classification is used.
+
+For an actual full H3 isometry commuting with `d₂`, `T₁` and `Tᵢ`, write
+its image of `(0,1)` as `(u,t)` with `t>0`. Commutation identifies the
+images of the other three accepted frame points as `(2u,2t)`, `(u+1,t)`
+and `(u+i,t)`. The original rational cosh-distance identity for the first
+horizontal pair gives `t=1`; the doubled-height pair then gives `u=0`.
+The four actual frame values and the previously checked determination
+lemma imply that the isometry is the identity. This uses the original
+metric and full isometry group, with no orientation restriction.
+
+Under the same supplied compatible smooth original-H3 geometry and exact
+original-distance identity, actual target smooth geometry and Borel
+structure, full-deck quotient covering, local diffeomorphism and tangent
+metric pullback, faithful all-point actual deck action and finite actual
+target volume, the selected Haar and coset measures from the preceding
+construction now give `z=1` for every element centralizing the actual deck
+image. The same witnesses retain right Haar invariance, covolume and coset
+mass equal to actual target volume, the inverse-Haar quotient relation,
+and a finite nonzero ambient-left-invariant open-positive coset measure.
+The all-conjugates dilation constraint and centralizer identity are derived;
+centralizer triviality is no longer an extra premise of this conditional
+finite-target result. Compactness, orientability and subgroup normality
+are not added.
+
+The three scoped checks contain ten accepted axiom closures using only
+`propext`, `Classical.choice` and `Quot.sound`. Two rejected frame-identity
+source/log pairs are excluded from the accepted evidence. This is transient
+classical reuse and composition; no tracked Lean declaration or mathematical
+novelty is claimed. The existing escape audit remains unfinished at the
+linked issue. The compatible original-H3 smooth geometry and the full
+covering/action/metric inputs remain supplied. Lattice conjugacy, general
+homotopic-isometry existence and the full Mostow–Prasad endpoint, including
+cusps and nonorientable manifolds, remain unproved by these checks.
+
+
+## Centralizer and conjugator uniqueness for a selected complete target
+
+For a preconnected smooth three-dimensional target with `T3Space` topology,
+Borel structure, complete Riemannian metric of sectional curvature `-1`,
+Levi-Civita data and finite intrinsic volume, and a supplied compatible
+smooth original-H3 metric with the exact original distance, completeness,
+sectional curvature `-1` and Levi-Civita data, the existing complete-target
+constructor now selects a covering and full deck representation with trivial
+range centralizer. The covering, local diffeomorphism and all-point deck
+metric action needed by the preceding finite-target result are obtained from
+that constructor rather than supplied independently in this extension.
+The compatible original-H3 geometric inputs remain explicit.
+
+The same selected covering retains its prescribed basepoint, smoothness,
+surjectivity, tangent metric pullback, full-deck quotient-covering property,
+fundamental-group equivalence with the opposite deck group, free action and
+compact-set properness. Its same faithful actual H3 representation retains
+discreteness in the original compact-open topology, freeness, proper
+discontinuity, smooth inverse actions and tangent metric preservation.
+The same orbit homeomorphism retains its projection identity, actual target
+intrinsic-distance comparison, intrinsic isometric realization and the
+existing conditional quotient-volume contract. No independently chosen
+covering, representation or quotient witness is substituted.
+
+For any second representation of this selected deck group, if two actual
+ambient H3 isometries implement the same pointwise conjugation relation,
+they are equal. The existing generic conjugator-uniqueness theorem supplies
+this implication from the newly obtained range centralizer. This is a
+uniqueness implication; existence of an ambient conjugator remains missing.
+No compactness or orientation restriction is imposed.
+
+One scoped transient cache-guarded check exited zero and printed one axiom
+closure using only `propext`, `Classical.choice` and `Quot.sound`. It directly
+reuses the preceding complete-target constructor and conditional actual
+centralizer result; it does not recompile or claim a fresh whole check of
+the older long H3 constructor. This is classical composition with no tracked
+Lean or novelty claim. General lattice conjugacy, homotopic-isometry
+existence, global target uniqueness and the full Mostow–Prasad endpoint,
+including cusps and nonorientable manifolds, remain unproved by this check.
+The existing escape audit remains unfinished at the linked issue.
+
+
+## Continuous interpolation equivariant under the full original H3 group
+
+The original H3 Lorentz coordinates have light difference
+`v₀-v₃=1/height>0`. Every real four-vector with Lorentz self-kernel `1`
+and positive light difference has an explicit original-H3 inverse: its
+horizontal real and imaginary coordinates are `v₁/(v₀-v₃)` and
+`v₂/(v₀-v₃)`, and its height is `1/(v₀-v₃)`. This recovers every actual
+original H3 point. It is a point-coordinate inverse; no surjectivity claim
+for the matrix representation of the isometry group is made.
+
+For `r∈[0,1]` and actual points `p,q`, form the Lorentz vector
+`v=(1-r)L(p)+rL(q)`. Its self-kernel is
+`(1-r)²+r²+2r(1-r)cosh(dist(p,q))`, hence at least `1`; its light difference
+is positive. Dividing by the square root of that self-kernel and applying
+the explicit future-unit-vector inverse gives an actual original H3 point.
+The resulting interpolation has endpoints `p,q`. Every actual full H3
+isometry preserves this interpolation: the existing exact linear extension
+preserves the Lorentz kernel and agrees on every actual H3 point. No affine
+shape, orientation restriction or substituted metric is used.
+
+The interpolation is jointly continuous in the closed-interval parameter
+and both points, using the same original H3 coordinate homeomorphism and
+continuous Lorentz coordinate map. The proof keeps every reciprocal away
+from zero through the proved positive-light and positive-kernel bounds.
+For any topological source space and two continuous maps into original H3,
+the construction supplies an actual continuous homotopy with the stated
+endpoints. If both maps are equivariant for the same group action on the
+source and the same representation into the actual full H3 isometry group,
+that very homotopy is equivariant for every group element and every time.
+Continuity here is joint in time and the source point; no joint continuity
+in the group variable is asserted or required.
+
+Three scoped transient cache-guarded checks exited zero and printed nineteen
+axiom closures using only `propext`, `Classical.choice` and `Quot.sound`.
+One rejected algebra source/log pair and two rejected continuity/homotopy
+pairs are excluded. The repaired composition uses explicitly typed maps
+and a local irreducibility annotation for the already proved interpolation
+operator; the original statements, metric, actions and resource limits are
+retained. These are classical compositions, with no new tracked Lean or
+novelty claim. The existing escape audit remains unfinished at the linked
+issue.
+
+This check constructs the original-H3 equivariant homotopy. It does not yet
+descend that homotopy through the actual target coverings, construct an
+equivariant lift of an arbitrary prescribed homotopy equivalence, or obtain
+an ambient conjugator from an abstract lattice isomorphism. General
+homotopic-isometry existence, global target uniqueness and the full
+Mostow–Prasad endpoint remain unfinished, including cusps and nonorientable
+manifolds.
+
+
+### Homotopy descent and continuous equivariant covering lifts
+
+For the same original H3 equivariant homotopy, a supplied quotient covering
+`F:X→M`, a continuous map `P:H3→N` invariant under the same representation,
+and continuous lifts `f,g:X→H3` equivariant under that representation now
+supply a homotopy between continuous maps `φ,ψ:M→N`, provided the all-point
+identities `P(f(x))=φ(F(x))` and `P(g(x))=ψ(F(x))` hold. Fiber equality gives
+an actual group orbit; equivariance and invariance make the projected
+homotopy independent of a chosen representative. The chosen section is
+not assumed continuous. The product of the identity on the time interval
+with the same open quotient covering is an open quotient map, which proves
+continuity of the descended homotopy and preserves both endpoints.
+
+Separately, for quotient coverings `F:X→M` and `P:Y→N` by groups `G,H`, a
+simply connected, locally path connected source `X`, a continuous base map
+`φ:M→N` and compatible supplied basepoints, the same coverings now select
+a continuous lift `L:X→Y` and a group homomorphism `τ:G→H`. The lift has the
+specified basepoint and the all-point projection identity, and satisfies
+`L(a•x)=τ(a)•L(x)` for every group element and source point. The construction
+uses the existing unique continuous covering lift. It selects the unique
+target group element matching each source action at the lift basepoint;
+covering lift uniqueness proves equivariance at every point, and the free
+target action proves both homomorphism laws. No equivariance of the lift
+or homomorphism laws are assumed.
+
+An exact application uses the original H3 on both covering spaces and their
+same full deck groups. Original-H3 simple connectivity is reused; a supplied
+compatible H3 chart supplies local path connectivity. Thus any continuous
+map between those actual bases with compatible chosen basepoints admits
+the stated continuous lift and actual deck-group homomorphism. No metric,
+orientation, compactness or group-variable continuity premise is added to
+this topological conclusion.
+
+Two serial scoped transient cache-guarded checks exited zero and printed
+three axiom closures using only `propext`, `Classical.choice` and
+`Quot.sound`. Two rejected descent source/log pairs are excluded. Five
+`haveILetI` style warnings in the successful lift check are recorded; they
+are not errors or proof exceptions. These are classical compositions with
+no tracked Lean or novelty claim. The linked escape audit remains unfinished.
+
+This closes conditional quotient homotopy descent and continuous equivariant
+lift construction. It does not yet prove that the constructed deck-group
+homomorphism is bijective for a homotopy equivalence or equals the previously
+bound fundamental-group deck isomorphism. An ambient lattice conjugator,
+general homotopic-isometry existence, global target uniqueness and the full
+Mostow–Prasad endpoint remain unfinished, including cusps and nonorientable
+manifolds. All supplied compatible original-H3 geometric inputs of the
+complete-target constructor remain explicit in that earlier result.
+
+
+### The lift-induced deck homomorphism is the fundamental-group isomorphism
+
+For the same coverings `F:X→M`, `P:Y→N`, continuous maps `φ:M→N`,
+`L:X→Y` and all-point identity `P(L(x))=φ(F(x))`, mapping the actual lifted
+path by `L` proves monodromy naturality. For the same quotient-covering
+actions and a homomorphism `τ:G→H` satisfying `L(a•x)=τ(a)•L(x)`, this
+identifies the opposite-group map of `τ` with the map on fundamental groups
+through the two covering correspondences. When both covering spaces are
+simply connected and `φ` is the forward map of an actual homotopy
+equivalence, the existing induced fundamental-group equivalence and those
+same covering equivalences prove that this same `τ` is bijective. Neither
+bijectivity nor replacement by another deck homomorphism is assumed.
+
+For the same actual original-H3 full-deck quotient coverings `FM,FN`, an
+actual homotopy equivalence `h:M≃ₕN`, a supplied compatible H3 chart and any
+source point `pHM`, target-cover surjectivity selects `pHN` with
+`FN(pHN)=h(FM(pHM))`. The existing continuous lift constructor supplies
+`L,τ`; the proved bijectivity promotes that very `τ` to a deck-group
+isomorphism `d`, with `d.toMonoidHom=τ`. The same chosen lift retains its
+basepoint, all-point projection and equivariance identities. The same `d`
+implements `FundamentalGroup.map h.toFun (FM pHM)` through the two actual
+covering fundamental-group equivalences. It is unique among deck-group
+isomorphisms implementing that binding with those same chosen points.
+
+A separate exact check compares this with the earlier binding written using
+`FundamentalGroup.mapOfEq h.toFun rfl`: the reflexive endpoint cast equals
+the ordinary induced map. For the same actual covers, compatible basepoints,
+continuous lift, projection and equivariance, any deck isomorphism satisfying
+that earlier binding has underlying homomorphism exactly `τ`. This closes
+the previously recorded lift-induced deck-isomorphism binding gap; it does
+not assert uniqueness of isometries on the target manifold.
+
+Three serial scoped transient cache-guarded checks exited zero and printed
+six axiom closures using only `propext`, `Classical.choice` and `Quot.sound`.
+One rejected monodromy source/log pair and one rejected exact-binding pair
+are preserved and excluded. Typed heterogeneous path equalities and the
+existing reflexive-cast identity repair endpoint elaboration; explicit
+homomorphism extensionality compares deck elements. Statements, endpoints,
+actions and resource limits are retained. Two `haveILetI` style warnings
+are recorded, one in each actual-H3 check; they are not proof exceptions.
+These are classical compositions with no tracked Lean or novelty claim.
+The linked escape audit remains unfinished.
+
+An ambient lattice conjugator, general homotopic-isometry existence, global
+target uniqueness and the full Mostow–Prasad endpoint remain unfinished,
+including cusps and nonorientable manifolds. The supplied compatible
+original-H3 geometric inputs of the complete-target constructor remain
+explicit. The present result supplies the actual lift/deck-isomorphism
+connection; it does not obtain an ambient isometry from an abstract lattice
+isomorphism.

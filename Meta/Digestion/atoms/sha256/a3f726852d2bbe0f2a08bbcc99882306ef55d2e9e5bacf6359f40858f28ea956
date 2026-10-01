@@ -1,0 +1,42 @@
+**定义 33.1（零初始化、直方图与计数约定）。** 沿用第6、31、32节的低位到高位总任务，记
+
+$$
+X=100,\qquad Y=001,\qquad Z=101,\qquad U=000,\qquad V=010.
+\tag{33.1}
+$$
+
+单位初始接缝位固定为零，End 仍是词外查询，$F$ 在全部 $\Sigma^\ast$ 上保持式（32.3）的 $F=LE$。$U,V$ 的第一、第三位都为零，称为中性窗；每个中性窗都实际消耗一个输入位置，$U$ 不等于空词。对非负整数直方图
+
+$$
+(a,b,c,r,s)=(N_X(w),N_Y(w),N_Z(w),N_U(w),N_V(w)),\qquad t=r+s,\qquad n=a+b+c+t,
+\tag{33.2}
+$$
+
+$N_g(w)$ 沿用式（32.8）的单词字母计数；无词参数的 $N_f$ 则表示下述合法末窗词数。令 $\mathcal W(a,b,c,r,s)$ 为具有这些计数的全部不同窗词，令 $\mathcal W_f$ 为其中精确末窗为 $f\in\Sigma$ 的词。定义
+
+$$
+\begin{aligned}
+T_f&=|\mathcal W_f|,\\
+H(a,b,c,r,s)&=|\mathcal W(a,b,c,r,s)\cap\mathrm{Legal}|,\\
+N_f&=|\mathcal W_f\cap\mathrm{Legal}|,\\
+J(w_1\cdots w_n)&=\sum_{i=1}^{n-1}b_3(w_i)b_1(w_{i+1}).
+\end{aligned}
+\tag{33.3}
+$$
+
+$J(\varepsilon)=0$，长度一的和也为空；$L(w)=1$ 恰当且仅当 $J(w)=0$。合法性只排除坏接缝，接受性另要求 $E=1$。若指定末窗的出现次数为零，则 $\mathcal W_f$ 为空，$T_f=N_f=0$。空直方图的唯一词是 $\varepsilon$，它没有末窗，$H(0,0,0,0,0)=1$，$F(\varepsilon)=0$。
+
+对整数 $k\ge0$ 与整数 $x$，约定
+
+$$
+C_k(x)=
+\begin{cases}
+\displaystyle\binom{x+k-1}{k-1},&k\ge1,\ x\ge0,\\
+1,&k=0,\ x=0,\\
+0,&k=0,\ x>0\text{，或 }x<0.
+\end{cases}
+\tag{33.4}
+$$
+
+对非负整数 $q$，$\binom qj=0$ 若 $j<0$ 或 $j>q$。$H$ 的任一参数为负时先定义其值为零，不对负参数计算阶乘。$C_k(x)$ 是将 $x$ 份同类窗分配到 $k$ 个有序间隙的弱分拆数；$k=0$ 的约定表示没有容纳位置。计数中的中性窗总数用 $t$ 表示，与既有失败态 $D$ 区别。
+
