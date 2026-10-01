@@ -4,7 +4,7 @@ authors: trureturing contributors
 year: 2026
 title: Pure three-cycle packets with degree-eight low edges and degree-nine high edges
 doi: null
-url: https://github.com/the-omega-institute/trureturing/pull/new
+url: https://github.com/the-omega-institute/trureturing/pull/11934
 claim: A paper-first strict hyper-ideal realization theorem for role-homogeneous pure three-cycle packets with low global degree 8 and high global degree 9, under the stated manifold and incidence hypotheses.
 license: citation-only
 triage: anchor
@@ -24,8 +24,9 @@ are on the strict sides of `1/2` for degree eight and of
 
 Uemura, arXiv:2609.34108v1, Theorem 3.2 supplies the abstract invariant-box
 criterion; the packet-specific endpoint arithmetic below is separate. Zhao's Lemma 3.4 supplies monotonicity. Luo--Yang, arXiv:1404.5365v2,
-Theorems 1.4 and 6.3, supply the shared-edge co-volume derivative and
-interior-minimum mechanism; together they produce an interior zero-curvature point. This is conditional on
+Section 4.3, Corollary 4.12 and Section 5 formula (5.1), supply the
+co-volume differential; the displayed compact-box minimum argument yields
+an interior zero-curvature point. This is conditional on
 a valid finite connected orientable ideal triangulation with the packet roles;
 no explicit face pairing or non-vacuity witness is claimed. It does not
 resolve arbitrary minimum-eight or minimum-six CFMP, and no Lean
@@ -38,4 +39,6 @@ Primary references:
   Compact 3-Manifolds with Boundary*, arXiv:2601.15174:
   https://arxiv.org/html/2601.15174v2
 - Luo--Yang, *Volume and rigidity of hyperbolic polyhedral 3-manifolds*:
-  https://arxiv.org/abs/1404.5365
+  https://arxiv.org/html/1404.5365v2#S4.SS3
+- Uemura, abstract invariant-box criterion, Theorem 3.2:
+  https://arxiv.org/html/2609.34108v1

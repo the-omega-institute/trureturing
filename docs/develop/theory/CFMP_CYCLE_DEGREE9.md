@@ -1,7 +1,6 @@
 # CFMP pure three-cycle packet at degree (8,9): exact box certificate
 
-This is a local research note, not a repository change. It records a
-nonduplicate extension of the current dev results: all low global edges have
+This paper-first note proves a restricted packet theorem: all low global edges have
 degree 8 and all high global edges have degree 9 in a role-homogeneous pure
 three-cycle packet.
 
@@ -19,6 +18,25 @@ No explicit face-pairing is asserted here; the theorem is conditional on the
 stated manifold and incidence hypotheses. It is not the unrestricted CFMP
 minimum-eight theorem.
 
+## Role separation and necessary topology counts
+
+The three peripheral low edges form the unique LLL face opposite `c`.
+The other faces are LHH, with a unique low edge opposite the center vertex.
+Because degrees 8 and 9 are distinct, face maps preserve low and high classes,
+so LLL pairs only with LLL and LHH only with LHH; every LHH map preserves
+the center role. Center vertices therefore cannot identify with peripheral
+vertices.
+
+For a center-link component `S`, let `N_S` be its number of center triangles
+and `h_S` its number of incident high quotient edges. Each high edge has one
+center endpoint and contributes one link vertex. Hence
+`F=N_S`, `E=3*N_S/2`, `V=h_S`, and `9*h_S=3*N_S`. Therefore
+`chi(S)=-N_S/6=2-2*g_S`, so `N_S=12*(g_S-1)`.
+Globally the low-edge count is `3*N/8`, which is integral and forces `8|N`.
+Summing the center counts gives `12|N`; thus `24|N`.
+These are necessary conditions only. No sufficient pairing construction or
+non-vacuity is claimed.
+
 ## Cosine and monotonicity
 
 Use the standard local ordering `(e1,...,e6)` with opposite pairs `(1,4),
@@ -33,10 +51,10 @@ B = 2*x1*x3*x5 + x1^2+x3^2+x5^2-1.
 
 On `[1,2]^6`, `phi` is nondecreasing in the four adjacent coordinates and
 nonincreasing in the opposite coordinate (Zhao Lemma 3.4; the opposite
-partial derivative is `-(x1^2-1)/sqrt(A B)`). The universal `[1,2]^6`
-envelope places the box below in the genuine hyper-ideal length domain.
+partial derivative is `-(x1^2-1)/sqrt(A B)`). For target `1<u<=2`, the universal `[1,2]^6` envelope is
+`2*(2-u)/(u+1) <= phi_u <= (9-u)/(7+u) < 1`. Thus every coordinate in the box below is strictly greater than 1 and has `0<=phi_u<1`; the length-domain criterion puts the entire box in the genuine hyper-ideal domain.
 
-Source locators: Zhao, arXiv:2601.15174v2, Lemma 3.4 (coordinate monotonicity), Lemma 2.2 and Proposition 2.4 (the six-variable cosine and genuine length domain), https://arxiv.org/html/2601.15174v2. The co-volume gradient and interior-minimum mechanism are Luo--Yang, arXiv:1404.5365v2, Theorems 1.4 and 6.3, https://arxiv.org/abs/1404.5365.
+Source locators: Zhao, arXiv:2601.15174v2, Lemma 3.4 (coordinate monotonicity), Lemma 2.2 and Proposition 2.4 (the six-variable cosine and genuine length domain), https://arxiv.org/html/2601.15174v2. The co-volume differential is Luo--Yang, arXiv:1404.5365v2, Section 4.3 (the displayed Schlaefli identity), Corollary 4.12, and Section 5, formula (5.1) and the following gradient paragraph, https://arxiv.org/html/1404.5365v2#S4.SS3 and https://arxiv.org/html/1404.5365v2#S5. The compact-box minimum argument is given below, not attributed to the volume-maximization Theorems 1.4/6.3.
 
 Use a shared global cosh-length box
 
@@ -98,3 +116,14 @@ This uses the same cited ordinary geometric inputs as the current CFMP notes;
 only the packet-specific endpoint arithmetic is new. It does not claim Lean
 formalization, an explicit 24-tetrahedron pairing, or the unrestricted
 minimum-eight CFMP conjecture.
+
+## Provenance and scope
+
+The abstract invariant-box method is prior art: Uemura, arXiv:2609.34108v1,
+Theorem 3.2, https://arxiv.org/html/2609.34108v1#S3.Thmtheorem2.
+This note supplies the exact packet-specific degree-(8,9) certificate; it
+does not claim a new variational method. The repository's pure-cycle
+degree-(8,10) packet in PR #11648 has a different degree class. Zhao's
+unrestricted minimum-nine theorem does not directly apply here because the
+prescribed triangulation has degree-eight edges. No exhaustive literature
+priority claim is made.
