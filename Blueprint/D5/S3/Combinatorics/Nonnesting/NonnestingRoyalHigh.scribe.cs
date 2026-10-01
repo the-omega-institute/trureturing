@@ -14,7 +14,8 @@ internal sealed class NonnestingRoyalHighDocument : IScribeDocumentDefinition
         H("Enumeration for 1233 and 1322"),
         Blocks(
             Node("nonnesting-nonnestingroyalhigh-result", "The 1233 and 1322 generating function", "result",
-                "Let R be the ordinary generating function counting doubled nonnesting permutations avoiding 1233 and 1322 by the number of distinct letters. Then xR squared - (1 - x) squared times R + (1 - x) squared equals zero.", DescribeRole.Theorem)),
+                "Let R be the ordinary generating function counting doubled nonnesting permutations avoiding 1233 and 1322 by the number of distinct letters. Then xR squared - (1 - x) squared times R + (1 - x) squared equals zero.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("elizalde-luo-nonnesting-1233-1322"), ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,
