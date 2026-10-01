@@ -1317,3 +1317,123 @@ including noncompact cusps and nonorientable manifolds. The existing escape
 audit remains unfinished:
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
 Neither these checks nor CI closes that audit or the remaining mathematics.
+
+## Finite invariant actual group quotient measure and recurrence
+
+Starting with the same Borel left-subgroup fundamental domain `D` and
+same left and right Haar measure `μ`, inversion is measure preserving
+from `μ.inv` to `μ`. Existing `IsFundamentalDomain.preimage_of_equiv`,
+with the subgroup bijection given by inversion followed by `equivOp`,
+therefore makes `D⁻¹` a Borel right-subgroup fundamental domain for
+`Γ.op` and `μ.inv`. Its mass is exactly `μ D`, hence finite.
+The inverse measure is itself left Haar and right invariant. This step
+keeps the inverse measure explicit; it does not assert `μ.inv = μ`.
+
+For a supplied Polish topological group with its Borel structure, a
+countable subgroup `Γ`, and the actual Hausdorff Borel coset space
+`K ⧸ Γ`, define
+`ν = (μ.inv.restrict D⁻¹).map QuotientGroup.mk`.
+Existing fundamental-domain quotient-measure results give
+`QuotientMeasureEqMeasurePreimage μ.inv ν` and ambient left-action
+invariance `SMulInvariantMeasure K (K ⧸ Γ) ν`.
+The measurable quotient map gives `ν univ = μ D`. Thus `ν` is finite
+and nonzero, with nonzero domain mass obtained from the existing
+fundamental-domain theorem and Haar nonzero. No normality of `Γ` is
+assumed: this is the actual coset space, without a quotient-group
+multiplication requirement. The left/right action directions and
+inverse measure are part of the construction.
+
+For the same full original-H3 compact-open isometry group, existing
+coordinate second countability, source completeness and properness,
+complete metrizability of continuous maps, and the already checked
+closed embedding of isometries as map/inverse pairs give complete
+metrizability. Together with the group's already checked second
+countability this gives a Polish space for that same topology.
+The actual covering's closed image theorem then makes the actual
+coset space by `ρ.range` Hausdorff; `CosetSpace.borelSpace` supplies its
+Borel compatibility without assuming subgroup normality.
+
+Under the supplied compatible original-H3 smooth source geometry and
+original pairwise distance identity, actual target geometry and Borel
+structure, actual full-deck quotient covering/local diffeomorphism/
+tangent-metric pullback, faithful representation implementing the actual
+action at every point, and finite actual target volume, use the same
+jointly selected source domain, lifted group domain and normalized Haar
+measure from the actual target-volume construction. The already checked
+finite-domain argument makes that same `μ` right invariant.
+The actual deck/image countability and closedness, and the same lifted
+Borel fundamental domain, now supply a measure `ν` on the actual space
+`(H3 ≃ᵢ H3) ⧸ ρ.range`. It is finite, nonzero and invariant under the
+ambient group's left action. Its total mass equals the actual target
+Riemannian total volume, while that same `μ` still has actual image
+covolume equal to that volume. The quotient-measure relation is with
+`μ.inv`, as above.
+
+For any supplied finite nonzero ambient-invariant Borel coset measure on
+a second-countable topological coset space, each fixed ambient element
+acts measure preservingly by existing `measurePreserving_smul`.
+Existing `MeasurePreserving.conservative` and
+`Conservative.ae_frequently_mem_of_mem_nhds` imply that almost every coset
+returns to every neighborhood infinitely often under iteration of that
+fixed element. Nonzero total mass supplies at least one such coset.
+Bind this to the same `ν` on the actual original-H3 coset space above,
+retaining its inverse-Haar relation and actual-volume normalization.
+The quantifiers are: for every ambient element separately, almost every
+coset is recurrent and some recurrent coset exists. These checks do not
+supply one coset recurrent for all ambient elements, recurrence of every
+coset, boundary density, centralizer triviality or lattice conjugacy.
+
+These are six further scoped transient classical composition checks,
+with six printed closures using only `propext`, `Classical.choice` and
+`Quot.sound` under the same pins. No tracked project Lean declaration or
+mathematical novelty is claimed. No compactness or orientability premise
+is added to the actual finite-volume construction. Any additional library
+lattice predicate, finite-volume cusp classification, lattice conjugacy
+and full Mostow-Prasad existence, homotopy and uniqueness remain
+unfinished, including noncompact cusps and nonorientable manifolds.
+The existing escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these checks nor CI closes that audit or the remaining mathematics.
+
+## Open positivity and dense recurrence on the same actual coset space
+
+For a supplied locally compact, second-countable topological group and
+actual Hausdorff Borel coset space by a subgroup, let `ν` be a finite,
+nonzero measure invariant under the ambient group's left action.
+The actual coset space is locally compact and second countable; its
+Hausdorff locally compact topology gives the regularity and metrizability
+needed by the existing finite-measure regularity instance. The ambient
+coset action is transitive, hence minimal. Existing
+`measure_isOpen_pos_of_smulInvariant_of_ne_zero` makes every nonempty
+open subset have positive `ν` measure. This gives `ν.IsOpenPosMeasure`.
+For each fixed ambient element, apply the preceding almost-everywhere
+neighborhood recurrence and existing `Measure.dense_of_ae` to obtain a
+dense subset of recurrent cosets for that element.
+
+Under the same supplied compatible original-H3 smooth source geometry,
+original pairwise distance identity, actual target geometry/Borel,
+actual full-deck quotient covering/local diffeomorphism/tangent-metric
+pullback, faithful representation implementing the actual action at every
+point, and finite actual target volume, bind this to the same actual
+normalized Haar `μ` and actual coset measure `ν` above. The existing
+compact-open ambient-group local compactness and second countability,
+actual closed deck image, and actual coset Hausdorff/Borel compatibility
+supply the required hypotheses without normality or compactness of the
+subgroup or quotient. Retain the same left/right Haar invariance,
+actual covolume and `ν` mass equal to actual target total volume, explicit
+`μ.inv` quotient-measure relation, and finite nonzero ambient-left-invariant
+`ν`. That same `ν` is positive on every nonempty open coset subset, and
+for every ambient element separately its recurrent cosets are dense.
+
+These are two further scoped transient classical composition checks,
+with two printed closures using only `propext`, `Classical.choice` and
+`Quot.sound` under the same pins, with no tracked project Lean declaration
+or mathematical novelty claim. Dense recurrence here concerns the actual
+group coset space. It supplies no dense interior deck orbit, no boundary
+or attracting-pole density, no common recurrent coset for all ambient
+elements, and no recurrence of every coset. Lattice conjugacy, finite-volume
+cusp classification and full Mostow-Prasad homotopic isometry existence
+and uniqueness remain unfinished, including noncompact cusps and
+nonorientable manifolds. The existing escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these checks nor CI closes that audit or the remaining mathematics.

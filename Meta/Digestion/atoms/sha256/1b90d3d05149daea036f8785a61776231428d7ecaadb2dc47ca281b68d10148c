@@ -1,0 +1,63 @@
+**最小性：** 若 $S\subseteq U$ 具有上述支持性，则
+
+$$
+\Sigma_v\subseteq S.
+$$
+
+令 $\Sigma=\bigcup_v\Sigma_v$。对 $k\in\mathbb N$，定义局部可行关系
+
+$$
+R_v(k)=
+\left\{
+s\in O^{\Sigma_v}:
+c_v(H)\leq k\text{ 对任意满足 }H|_{\Sigma_v}=s\text{ 的延拓 }H
+\right\}.
+$$
+
+则
+
+$$
+\boxed{
+P_T(D,f)\leq k
+\quad\Longleftrightarrow\quad
+\mathcal N_T(k)\neq\varnothing,
+}
+$$
+
+其中自然连接写成
+
+$$
+\mathcal N_T(k)
+=
+\left\{
+s\in O^{\Sigma}:
+s|_{\Sigma_v}\in R_v(k)\text{ 对所有 }v
+\right\}.
+$$
+
+换言之，联合剖面判据可以只在各节点真正敏感的非法格上计算；不敏感的非法格不携带任何共同峰值信息。
+
+#### 证明
+
+先证支持性。设 $H,H'$ 在 $\Sigma_v$ 上相同。把 $H$ 与 $H'$ 在 $U$ 上不同的坐标列出为
+
+$$
+u_1,\ldots,u_m.
+$$
+
+在 $H$ 与 $H'$ 之间逐次只改变一个 $u_i$，得到延拓链
+
+$$
+H=H_0,H_1,\ldots,H_m=H'.
+$$
+
+每个 $u_i$ 都不属于 $\Sigma_v$，所以按敏感坐标定义，$c_v(H_{i-1})=c_v(H_i)$。沿链传递即得 $c_v(H)=c_v(H')$。
+
+若 $S$ 具有支持性而某个 $u\in\Sigma_v\setminus S$，取定义中的 $H,H'$。它们在 $S$ 上相同，却有不同的 $c_v$，与 $S$ 的支持性矛盾。因此 $\Sigma_v\subseteq S$。
+
+再证连接刻画。若 $P_T(D,f)\leq k$，由定理 53 存在延拓 $H$，使所有节点的活动容量均不超过 $k$。令 $s=H|_\Sigma$，则由定义 $s|_{\Sigma_v}\in R_v(k)$，故自然连接非空。
+
+反过来，取 $s\in\mathcal N_T(k)$。在 $\Sigma$ 外任意填值，把 $s$ 延拓成 $h:U\to O$，再令 $H_h$ 在 $D$ 上等于 $f$、在 $U$ 上等于 $h$。对每个节点 $v$，$H_h|_{\Sigma_v}=s|_{\Sigma_v}\in R_v(k)$，所以 $c_v(H_h)\leq k$。定理 53 给出一个峰值不超过 $k$ 的正确树协议。∎
+
+这个定理有两个直接含义。第一，$\Sigma_v$ 是每个节点的最小信息支撑，因而它不是为了算法方便任意选出的变量子集。第二，原先在 $O^U$ 上搜索共同延拓，现在可以先求各 $\Sigma_v$，再在 $O^{\Sigma}$ 上求自然连接；这是严格的状态空间缩减，而非近似。
+
