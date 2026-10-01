@@ -300,7 +300,6 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
       have hi : (shiftedFibSum n : Int) = (a : Int) + (H : Int) * z := hs.symm.trans hfloor
       have hc := congrArg (fun v : Int => (v : ZMod H)) hi
       simpa [a, Int.cast_add, Int.cast_mul] using hc
-
   have legal_of_no_adj (N : Nat) (f : Fin N → Bool) :
       ∀ s : Bool,
         (s = true → ∀ h : 0 < N, f ⟨0, h⟩ = false) →
@@ -331,7 +330,6 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
         rcases hbad with ⟨hs', hbit⟩
         have hfalse := hs hs' (by omega)
         exact Bool.noConfusion (hfalse.symm.trans hbit)
-
   have no_consecutive_of_pairwise {l : List Nat}
       (hp : l.Pairwise (fun a b => b + 2 ≤ a)) :
       ∀ i, i ∈ l → i + 1 ∉ l := by
@@ -351,7 +349,6 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
           · have h := hp.1 _ hi
             omega
           · exact ih hp.2 i hi hj
-
   have zeckendorf_no_adj (n : Nat) (_hn : 0 < n) :
       ∀ i : Nat,
         (decide (i ∈ Nat.zeckendorf n) : Bool) = true →
@@ -365,7 +362,6 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
     by_cases hnext : i + 1 ∈ Nat.zeckendorf n
     · exact False.elim (hno hnext)
     · simp [hnext]
-
   have pack_legal (t : Nat) (bs : List Bool) (hl : bs.length = 3 * t)
       (s : Bool) (hs : legal s bs) :
       (pack bs).length = t ∧ flatten (pack bs) = bs := by
@@ -387,7 +383,6 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
           obtain ⟨hlen, hflat⟩ := ih tail htail c hlegal
           cases a <;> cases b <;> cases c <;>
             simp_all [legal, pack, triple, bits, flatten]
-
   have pack_support (n t : Nat) (ht : 1 ≤ t)
       (hlegal : legal true (supportBits n t)) :
       (supportWord n t).length = t ∧
@@ -396,7 +391,6 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
     apply pack_legal t (supportBits n t) ?_ true hlegal
     simp only [supportBits, List.length_cons, List.length_ofFn]
     omega
-
   have supportBits_legal (n t : Nat) (hn : 0 < n) :
       legal true (supportBits n t) := by
     change ¬ (true = true ∧ false = true) ∧
@@ -408,7 +402,6 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
     · intro i hi htrue
       simpa [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using
         zeckendorf_no_adj n hn (i + 2) htrue
-
   have fib_value {R : Type} [CommSemiring R] (n k : Nat) (u v : R)
       (f : Fin n → Bool) :
       value ((Nat.fib k : R) * u + (Nat.fib (k + 1) : R) * v)
@@ -450,7 +443,6 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
         simp only [Fin.val_zero, Nat.add_zero, Fin.val_succ]
         rw [hi']
         simp only [Nat.add_comm, Nat.add_left_comm]
-
   have sum_toFinset_fib (l : List Nat) (f : Nat → Nat)
       (hnodup : l.Nodup) :
       (∑ j ∈ l.toFinset, f j) = (l.map f).sum := by
@@ -459,7 +451,6 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
     | cons a l ih =>
         obtain ⟨ha, hl⟩ := List.nodup_cons.mp hnodup
         simp [ha, ih hl]
-
   have gap_nodup (l : List Nat) :
       l.Pairwise (fun a b => b + 2 ≤ a) → l.Nodup := by
     induction l with
@@ -472,7 +463,6 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
         intro hm
         have hh := ha a hm
         omega
-
   have trim_value {R : Type} [AddMonoid R]
       (u v : R) (w : List Window) :
       value u v (flatten (trim w)) = value u v (flatten w) := by
@@ -509,7 +499,6 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
       value u v (flatten (trim w)) = value u v (flatten (trim w ++ List.replicate k .zero)) :=
         (value_zeros (trim w) k u v).symm
       _ = value u v (flatten w) := by rw [← hk]
-
   have trim_legal (w : List Window) (hw : legal true (flatten w)) :
       legal true (flatten (trim w)) := by
     have trim_decomp (w : List Window) :
@@ -543,7 +532,6 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
     apply (legal_zeros (trim w) k true).1
     rw [hk] at hw
     exact hw
-
   have trim_length (w : List Window) : (trim w).length ≤ w.length := by
     have trim_decomp (w : List Window) :
         ∃ k : Nat, w = trim w ++ List.replicate k .zero := by
@@ -564,7 +552,6 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
     have hl := congrArg List.length hk
     simp only [List.length_append, List.length_replicate] at hl
     omega
-
   have trim_success (w : List Window) (hw : legal true (flatten w)) :
       Success (trim w) := by
     have trim_decomp (w : List Window) :
@@ -614,7 +601,6 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
     simp only [endable, Option.any_some]
     rw [trim_terminal w true]
     by_cases hnil : trim w = [] <;> simp [hnil]
-
   have support_value {R : Type} [CommSemiring R]
       (n t : Nat) (hbound : ∀ k ∈ Nat.zeckendorf n, k < 3 * t)
       (u v : R) :
@@ -835,10 +821,6 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
         mul_le_mul_of_nonneg_left (Real.natLog_le_logb H 2) (by norm_num)
       _ = (7 / Real.log 2) * Real.log (H : Real) := by unfold Real.logb; ring
   exact ⟨hj, hq, hq4, hwords, hdepth, hdepth00, hlog, hreal⟩
-
-#print axioms result
-
-
 
 end
 end D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe

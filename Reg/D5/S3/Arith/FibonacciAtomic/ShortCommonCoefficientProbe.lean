@@ -77,7 +77,5 @@ register_information_theorem
       "fn", "arg"], stateBinder := 4}] })
   escape continues (open)
 
-#print axioms registration
-
 end
 end Reg.D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe
