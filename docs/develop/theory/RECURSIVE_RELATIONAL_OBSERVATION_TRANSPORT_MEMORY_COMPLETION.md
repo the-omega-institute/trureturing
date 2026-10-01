@@ -5837,8 +5837,7 @@ $$
 $[-]$ 在 $\mathcal C$ 中；对每个 $(s,u)\in D_\mu$，外层上下文
 $\langle[-],u\rangle$ 在相应位置合法，对每个 $(u,s)\in D_\mu$，
 $\langle u,[-]\rangle$ 在相应位置合法；当 $s\in D_\rho$ 时 $\rho[-]$ 也合法。
-此外，$D_\mu,D_\rho$ 对下面的等价关系饱和，并要求 $\mathcal C$ 对把一个合法
-上下文代入另一个合法上下文封闭。设
+此外，要求 $\mathcal C$ 对把一个合法上下文代入另一个合法上下文封闭。设
 $\operatorname{Obs}(C[t])$ 包含该上下文的合法性、事件、记录、时钟和指定后继读数，
 并定义
 
@@ -5850,14 +5849,16 @@ s\equiv_{\mathcal C}t
 \tag{RA.1501}
 $$
 
+以下假设 $D_\mu,D_\rho$ 对（RA.1501）的等价关系饱和。
+
 若 $s\equiv_{\mathcal C}t$，则对每个使相应组合合法的 $u$ 有
 
 $$
+\begin{gathered}
 \langle s,u\rangle\equiv_{\mathcal C}\langle t,u\rangle,
-\qquad
-\langle u,s\rangle\equiv_{\mathcal C}\langle u,t\rangle,
-\qquad
-\rho(s)\equiv_{\mathcal C}\rho(t).
+\qquad \langle u,s\rangle\equiv_{\mathcal C}\langle u,t\rangle,\\
+s,t\in D_\rho\Longrightarrow \rho(s)\equiv_{\mathcal C}\rho(t).
+\end{gathered}
 \tag{RA.1502}
 $$
 
