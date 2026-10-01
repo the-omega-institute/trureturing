@@ -13,15 +13,15 @@ public sealed class ScribeResourceCodecTests
                 "resource-digest",
                 DefinitionDsl.H("Resource"),
                 DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("hello"))),
-                sourcePath: "Blueprint/D5/S1/Resource.scribe.cs"),
-            "Blueprint/D5/S1/Resource.scribe.cs");
+                sourcePath: "Blueprint/D5/S1/Scale/Resource.scribe.cs"),
+            "Blueprint/D5/S1/Scale/Resource.scribe.cs");
 
         var encoded = ScribeResourceCodec.Encode(definition);
         var decoded = ScribeResourceCodec.Decode(encoded);
 
         Assert.Equal(encoded, ScribeResourceCodec.Encode(decoded));
-        Assert.Equal("D5/S1/Resource", decoded.Document.Header.Gid.Value);
-        Assert.Equal("Blueprint/D5/S1/Resource.scribe.cs", decoded.SourcePath);
+        Assert.Equal("D5/S1/Scale/Resource", decoded.Document.Header.Gid.Value);
+        Assert.Equal("Blueprint/D5/S1/Scale/Resource.scribe.cs", decoded.SourcePath);
     }
 
     [Fact]

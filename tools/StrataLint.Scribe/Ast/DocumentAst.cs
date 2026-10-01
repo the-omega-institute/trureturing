@@ -299,6 +299,39 @@ public abstract record DocumentBlock
                 openProblemResolutionClaim);
         }
 
+        internal static Describe Restore(
+            DescribeId id,
+            Heading title,
+            DescribeStatement statement,
+            AssessedProvenance provenance,
+            BlockSequence content,
+            Formula? statementFormula,
+            StatementSource? statementSource,
+            OpenProblemResolutionClaim? openProblemResolutionClaim,
+            DescribeKindSource kindSource) =>
+            new(
+                id,
+                kindSource is DescribeKindSource.Authored authored ? authored.Value :
+                kindSource is DescribeKindSource.ReportDerived derived && derived.Role is { } role
+                    ? role switch
+                    {
+                        DescribeRole.Definition => DescribeKind.Definition,
+                        DescribeRole.Theorem => DescribeKind.Theorem,
+                        DescribeRole.Proposition => DescribeKind.Proposition,
+                        DescribeRole.Lemma => DescribeKind.Lemma,
+                        DescribeRole.Remark => DescribeKind.Remark,
+                        _ => null,
+                    }
+                    : null,
+                title,
+                statement,
+                provenance,
+                content,
+                statementFormula,
+                kindSource,
+                statementSource,
+                openProblemResolutionClaim);
+
     }
 
     internal static BlockSequence ResolveBlocks(BlockSequence content, DeclarationCatalog catalog) =>
