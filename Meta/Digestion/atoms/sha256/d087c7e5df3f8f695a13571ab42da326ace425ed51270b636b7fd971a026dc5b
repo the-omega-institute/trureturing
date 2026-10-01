@@ -1,0 +1,14 @@
+**引理 15.3（奇素数幂的局部负单位条件）。** 对奇素数 $p$ 与每个 $a\ge1$，
+
+$$
+-I\in\langle g\rangle\pmod{p^a}
+\quad\Longleftrightarrow\quad4\mid T_{p^a},
+\qquad
+\nu_2(T_{p^a})=\nu_2(T_p).
+\tag{15.2}
+$$
+
+证明。$\det g=-1$ 使 $T=T_{p^a}$ 为偶数。若 $-I$ 属于该循环群，它必须是唯一的非平凡二阶元素 $g^{T/2}$；比较行列式得 $T/2$ 为偶数。反向设 $4\mid T$，令 $B=g^{T/2}$，则 $B^2=I$、$B\ne I$、$\det B=1$。约化到 $\mathbb F_p$，其最小多项式整除 $(X-1)(X+1)$，故可对角化；二维、行列式为 $1$ 的对合只能为 $I$ 或 $-I$。若 $B\equiv I\pmod p$，则 $B+I$ 在 $\mathbb Z/p^a\mathbb Z$ 上可逆，由 $(B-I)(B+I)=0$ 得 $B=I$，矛盾。于是 $B\equiv-I\pmod p$，$B-I$ 可逆，得 $B=-I$。
+
+约化 $\operatorname{GL}_2(\mathbb Z/p^a\mathbb Z)\to\operatorname{GL}_2(\mathbb F_p)$ 的核有过滤 $I+p^sX$，相邻商嵌入模 $p$ 的矩阵加法群，故为有限 $p$ 群。因此 $T_{p^a}/T_p$ 是 $p$ 的幂，$p$ 为奇数给第二式。这是 Robinson 上引性质 (iv) 所容许的周期平台与奇素数提升的直接群论后果，并未假设每一层都增长 $p$ 倍。$\square$
+
