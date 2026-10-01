@@ -13324,3 +13324,83 @@ batch, or a nonsingular terminal digit. TR2 does not provide an
 affordable repair for those cases or settle arbitrary-height R=empty,
 shared support, or unrestricted Erdos7. No Lean verification or
 literature-priority claim is asserted.
+
+## 101. Conditional tree choices can fail after the old prime absorbs root zero
+
+The section99 control requires all seven output7-columns. Its six
+constant safe11-roots would suffice if the old original7 class were
+allowed to absorb output root0. It therefore does not by itself obstruct
+that smaller source interface. The following finite control explicitly
+allows this free covered column and still forbids a common single-AP
+realization. It is not an EB1 whole-cover realization.
+
+Take p=7,q=11 and a ternary carrier Z/3^K with ANY K>=6. The retained
+old7 class covers p-root0. Only x in{1,...,6} needs transportation.
+For each full ternary t choose an injection
+
+    theta_t:{1,...,6}->Z/11.
+
+Reserve q-root0 everywhere and the following actual prefix/root pairs:
+
+    q-root1 when t=2 mod3,
+    q-root2 when t=2 mod9,
+    q-root3 when t=5 mod27,
+    q-root4 when t=8 mod81,
+    q-root5 when t=17 mod243,
+    q-root6 when t=26 mod729.
+
+The last five cylinders are pairwise disjoint. Their second ternary
+digits first separate0,1,2; within digit2, the last three have third
+digits0,1,2. Thus each t forbids at most three q-roots:0, possibly1,
+and at most one further root. Each fiber has at least eight available
+roots, more than the six needed by theta_t.
+
+For r=q-p+1=5, the corresponding joint prefix cost is
+
+    (1+sum_(c=1..6)3^(-c))/5=1093/3645<1.
+
+The pairs can be viewed as the numerical collisions q vs p and
+3^c q vs3^c p: put each q-side class at the displayed3-prefix and
+q-root c, and each p-side counterpart in the other first-three root
+with p-root c. This is a partial literal inventory, with no pq-label.
+No whole-cover or complete private-color condition is inferred.
+
+Expose the nonzero q-roots using ten distinct three-free labels
+11*ell_j, j=1,...,10, with distinct primes ell_j outside{3,7,11}.
+Their original conditions are q-root j and ell_j-root1. The one source
+retains the ternary and all cofactor coordinates and sets y_q=theta_t(x).
+On the six required columns, the pullback of label j is its unchanged
+ell_j condition times
+
+    E_j={(t,x):x!=0, theta_t(x)=j}.
+
+Require each original test's pullback to agree EXACTLY with at most
+one complete AP on the required output region. Values on the already-covered
+p-root0 may be ignored. A nonempty such E_j must still be ONE ternary
+prefix times ONE nonzero p-root. An AP not fixing a p-root would meet
+all six required columns above every admitted t, whereas the injection
+allows at most one. With a p-root fixed, a single AP has just one
+ternary prefix. Extra restrictions on free cofactor or higher p-digits
+would discard points of this exact pullback and are therefore unavailable.
+
+The E_j partition the complete six-column region, since q-root0 is
+excluded. Each j supplies at most one rectangle and can occur in at
+most one column. Only roots7,8,9,10 are always safe. Hence at least
+two columns use none of these four safe labels.
+
+Each such column must use only labels1,...,6. Every one of these
+labels is forbidden at some point of first-three root2, so no admitted
+prefix in that column can contain the entire root2 cylinder. A complete
+ternary prefix partition consequently needs at least five leaves:
+at least one in each other first root, and at least three under root2.
+The two columns therefore need at least ten DISTINCT bad labels, but
+only six exist. Equivalently the entire partition needs at least
+5+5+4=14 rectangles and has at most ten labels. This is impossible.
+
+The argument holds for all K>=6 and permits arbitrary extra ternary
+depth in each output AP. It ignores p-root0 completely. Thus fiberwise
+availability and small joint prefix cost still fail to provide the
+single-AP source after the old prime's zero column has been absorbed.
+It does not rule out further retained coverage on nonzero columns,
+RS subbatch deletion, several output APs per original, or another source
+map. No enumeration or Lean verification is claimed.
