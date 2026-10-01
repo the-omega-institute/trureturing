@@ -3132,3 +3132,29 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
+## 27. 一阶最大域上的弱正则交换关系
+
+本节使用 $H=L^2(\mathbb R,\mathbb C;dx)$，内积在第一变量共轭线性、第二变量线性。对平方可积代表函数 $u$，记 $[u]$ 为其 $L^2$ 类；所有积分均为实直线的 Lebesgue 体积积分。真实平移取 $V(t)[u]=[x\mapsto u(x+t)]$，真实调制取 $U(s)[u]=[x\mapsto e^{isx}u(x)]$。
+
+**定理 27.1（一阶域上的弱 CCR）。** 任取 $\hbar>0$ 及函数 $f,g,d_f,d_g:\mathbb R\to\mathbb C$。假设 $f,g,d_f,d_g,x\mapsto xf(x),x\mapsto xg(x)$ 均平方可积，并对每个实值紧支 $C^\infty$ 测试函数 $\varphi$ 有
+
+$$
+\int_{\mathbb R}\varphi'(x)f(x)\,dx
+ =-\int_{\mathbb R}\varphi(x)d_f(x)\,dx,
+\qquad
+\int_{\mathbb R}\varphi'(x)g(x)\,dx
+ =-\int_{\mathbb R}\varphi(x)d_g(x)\,dx.
+$$
+
+定义实际位置与动量输出 $QF=[xf]$、$QG=[xg]$、$PF=-i\hbar[d_f]$、$PG=-i\hbar[d_g]$，以及 $F=[f]$、$G=[g]$。则
+
+$$
+\langle QF,PG\rangle-\langle PF,QG\rangle
+ =i\hbar\langle F,G\rangle.
+$$
+
+证明。调制差商由 $|xf|$ 控制，平方误差由 $4|xf|^2$ 控制，支配收敛给出真实 $L^2$ 调制轨道的强导数 $iQF$；对 $g$ 同理。定理 18.1 将两个紧支弱测试等式识别为真实平移轨道的强导数。实际公式给出 $V(t)U(s)=e^{ist}U(s)V(t)$。将这一有界关系写成差分配对后依次对两实参数求导，仅使用各自的一阶强导数。第一槽的共轭线性与 $P=-i\hbar d/dx$ 给出所示正号。无需 $QP$ 或 $PQ$ 的乘积域、全局 $L^1$、二阶导数或四阶矩。
+
+本结论是第一域上的纯向量形式等式。一般正常态的有限二阶矩对应、多模态闭图与完成张量算子域、一般辛实现、Gibbs 及基无关迹仍各需其实际解析桥梁。
+
+## 追加锚（本行以下为增补区）
