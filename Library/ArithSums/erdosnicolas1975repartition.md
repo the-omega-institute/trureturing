@@ -792,3 +792,66 @@ verification. A uniform estimate of the same actual remaining cost
 against $B_r$, with the original low-loss incidence and window retained,
 is still missing; existence of a second negative prime alone supplies
 neither its required cost nor a proof of RH.
+
+## Resolve the remaining arithmetic phase beyond its Jacobi sign
+
+The additional character input is classical. Gao–Zhao,
+*Value-distribution of quartic Hecke L-functions*,
+[arXiv:1809.09822v2, §2.2, PDF p.3](https://arxiv.org/pdf/1809.09822v2),
+defines the Gaussian quartic power-residue symbol at an odd Gaussian
+prime and extends it multiplicatively to composite denominators. Only
+that definition is used here; the paper's distribution theorem over
+square-free Gaussian parameters is not applied to this Fibonacci modulus.
+This is an application to the existing benefit certificate, not a new
+quartic-character theorem or a Lean result.
+
+Retain the same actual family $V=F_r$, $N=1+Vk$, price $s=y\log y$
+and maximal reference $C_s$ above, with $r>5$ prime. The classical Cassini
+identity gives $t=F_{r-1}$ with $t^2=-1\pmod V$. Every prime $q\mid V$
+is odd and $q\equiv1\pmod4$. Orient its quartic character by this root:
+
+$$
+\psi_q(n)=i^j
+\quad\Longleftrightarrow\quad
+n^{(q-1)/4}\equiv t^j\pmod q,
+\qquad (n,q)=1,\quad j\in\mathbb Z/4\mathbb Z.
+$$
+
+In the Gaussian definition this uses the prime ideal $(q,i-t)$, whose
+residue field identifies $i$ with $t$. Retain all denominator exponents:
+
+$$
+\psi_V(n)=\prod_{q^E\parallel V}\psi_q(n)^E,
+\qquad (n,V)=1,\qquad \psi_V(n)^2=\chi_V(n).
+$$
+
+Neither primality nor square-freeness of $V$ is assumed. The resulting
+character can have order one, two or four, so four nonempty prime classes
+are not presumed. Identifying the residue root $t$ with complex $i$ does
+not assert $\psi_q(t)=i$. This arithmetic character is also different
+from the active composition rotation $C=MJ$ and from the existing scalar
+four-orbit analysis in [§7 of the Li note](../ArithUnits/li2026nonwieferich.md).
+No factorization-free evaluation algorithm or efficiency bound for this
+composite character is supplied here.
+
+Use the actual $g=\gcd(N,C_s)$, $u=N/g$, $v=C_s/g$ and
+$e=v_r(N)$, and set $u_0=u/r^e$. The existing $y<r$ argument gives
+$a_r=0$, and the existing Fibonacci entry-point congruence gives
+$r\nmid V$. These inputs hold on every prime-index residue class, not
+only the two classes with negative index-prime Jacobi sign. Charge the
+same exact block
+
+$$
+L_r=W_r(e)=e\log r-s\log Z(r^e).
+$$
+
+Since $g,u_0\mid N$ and $N\equiv1\pmod V$, both are units modulo
+$V$, without requiring $C_s$ to be a unit. Multiplicativity transports
+the remaining endpoint as
+
+$$
+\psi_V(u_0)=\psi_V(g)^{-1}\psi_V(r)^{-e}.
+$$
+
+This endpoint uses the same host and its actual index-prime valuation.
+When $u_0=1$, its phase is one and no remaining phase cost is forced.
