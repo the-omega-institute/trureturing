@@ -94,6 +94,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/QuditSwappingProductBoundRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/starke-2025-qudit-swapping-product-bound-refutation` (refuted) by `D5/S3/Quantum/Entanglement/QuditSwappingProductBoundRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"starke-2025-qudit-swapping-product-bound-refutation","declaration_gid":"D5/S3/Quantum/Entanglement/QuditSwappingProductBoundRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Diego S. Starke; Marcos L. W. Basso; Lucas C. Céleri; Jonas Maziero (2025). *Entanglement swapping for partially entangled qudits and the role of quantum complementarity*. DOI: [10.48550/arXiv.2508.00813](https://doi.org/10.48550/arXiv.2508.00813). URL: <https://arxiv.org/abs/2508.00813v2>.

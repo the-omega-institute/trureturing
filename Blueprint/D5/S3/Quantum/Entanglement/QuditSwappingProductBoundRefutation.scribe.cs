@@ -32,7 +32,10 @@ internal sealed class QuditSwappingProductBoundRefutationDocument : IScribeDocum
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The bound fails in dimension four", Disp(new Formula.Not(F.Id("claim"))),
                 "Take d=4 and c=b=(7/10,1/10,7/10,1/10). Both sums of squared moduli are 1 and both El1 values are 39/25. For arbitrary positive dimension, the phase has modulus 1 and the weighted entanglement of an outcome is (1/d) times the ordered off-diagonal sum of |c_(p+j)c_(p+k)b_j b_k|. In the zero-probability case, every supported coefficient vanishes; otherwise the squared normalizing factor cancels the probability. Summing over q removes the factor 1/d. Evaluating the resulting correlation sum at these inputs gives 723/625, strictly greater than (39/25)^2/3=507/625.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("starke-2025-qudit-swapping-product-bound-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
