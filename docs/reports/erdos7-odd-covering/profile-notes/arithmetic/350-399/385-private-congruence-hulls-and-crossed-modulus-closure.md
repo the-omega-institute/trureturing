@@ -9466,3 +9466,82 @@ replacement for every hypothetical cover. Additional absolute-depth
 restrictions or costs that grow when leaves move shallower would
 require another argument. These are ordinary mathematical results,
 with no new Lean verification; unrestricted Erdős #7 remains open.
+
+## 64. The common literal zero root makes deep feasibility a static Hall condition
+
+The weighted all-root interface supplies one root allowed in every fresh-depth list: literal p-root zero. Its original batch is exactly the pure-p class, so R_0=S_0=1. This section reuses the ordinary capacitated Hall theorem, the complete-prefix Kraft identity and the rearrangement inequality. It supplies an exact criterion for finite deep-frontier existence and the cost of one explicit construction. It does not assert that this construction improves the original budget or minimizes all possible frontier costs.
+
+### Actual deep jobs and the common root
+
+Fix one actual original family with highest q-height H and set D=H+1. Fix all chosen live frontier leaves at depths at most H. Remove the deep obligations whose constant allowed list contains a zero-workload root by the existing free-folding rule. Each remaining live H-prefix is one actual parent job. Its entire cylinder must be partitioned by leaves of depths at least D. Its allowed root set A_i is constant throughout that subtree, contains literal root0, and consists entirely of positive-workload roots.
+
+Write r_A for the number of remaining actual parents having allowed set A, and r=sum_A r_A. Types with r_A=0 are omitted. All lists retain their actual original mixed-phase restrictions. A positive root may be used at most once at each absolute depth; it may recur at different depths. There are no original collision labels at these fresh depths. Existing shallow leaves occupy different depths and impose no same-depth capacity restriction here.
+
+When r=0 there is no hard continuation and its cost is zero. Suppose r>=1. Then a finite complete deep cut with permitted per-depth root assignments exists if and only if
+
+    |union_(A in S) A| >= (q-1)*sum_(A in S) r_A + 1
+      for every nonempty set S of occurring types.          (NF99)
+
+### Necessity keeps all actual trees in each type collection
+
+Fix a nonempty type set S, and put r_S=sum_(A in S)r_A and K_S=|union_(A in S)A|. Its parents supply exactly q*r_S nodes at depth D. The complete finite cut below those nodes satisfies the forest Kraft identity
+
+    q*r_S = sum_(j=0..J) L_(S,j)*q^(-j),
+
+where L_(S,j) is the number of their leaves at depth D+j. The root assignments are globally injective within each depth, and every such leaf uses a root in the same union of actual lists. Hence L_(S,j)<=K_S. Since the cut is finite,
+
+    q*r_S <= K_S*sum_(j=0..J)q^(-j) < K_S*q/(q-1).
+
+Thus (q-1)r_S<K_S, which is precisely the integer inequality NF99. This does not sum bounds from different sources: it counts the literal leaves of those actual parent subtrees.
+
+### Sufficiency is a direct Hall allocation followed by comb completion
+
+Because root0 belongs to every A, NF99 is equivalent to
+
+    |union_(A in S)(A minus {0})| >= (q-1)*sum_(A in S)r_A.
+
+Create q-1 labelled demand slots for each actual parent i, all with allowed set A_i minus {0}. The displayed inequalities imply Hall's condition for every subset of these slots: if its represented types are S, its size is at most (q-1)r_S and its neighbor union is exactly the displayed union. Ordinary finite Hall matching therefore supplies disjoint sets
+
+    U_i subset A_i minus {0}, |U_i|=q-1,
+    U_i intersect U_j=empty for i!=j.                      (NF100)
+
+This is the same cloning use of capacitated Hall as Report386 PC13 and Report385's existing capacity assignments. The upstream finite theorem is Finset.all_card_le_biUnion_card_iff_existsInjective'; no new generic matching statement is needed.
+
+Choose any completion order, giving each parent i a different completion stage ell_i in {1,...,r}. At stage ell=1, each unfinished parent exposes its q actual children at depth D. Stop q-1 of them, labelling those leaves by its reserved U_i. The remaining child is its continuing branch, except that the unique parent completing at this stage labels that child by root0 and stops it too. At each later stage split every continuing branch into q children and apply the same rule.
+
+All nonzero roots used at a stage are distinct because the U_i are disjoint. Root0 is used exactly once at that stage. Every root belongs to the actual job's fixed allowed list. Each job completes its whole cylinder with a finite comb, and its actual H-prefix remains unchanged. The deepest resulting leaf has depth
+
+    D+r-1.                                               (NF101)
+
+At the count-vector level, a stage selects
+
+    m_A=(q-1)r_A+1_(A is the completing job's type),
+    r'_A=q*r_A-m_A=r_A-1_(A is that type).
+
+Thus every type count weakly decreases, and the sum decreases by one. This also explains why all subset conditions remain valid; a separate polymatroid preservation theorem is unnecessary.
+
+Applying the established weighted transport to this actual labelled cut preserves the one old witness rule, complete old q-coordinates, cofactor coordinates and divided p-tails. The common root0 copies pure p to a fresh q-power output; it is not claimed deleted. The explicit comparison with the original count and modulus-sum budgets remains necessary.
+
+### Exact costs for fixed reserved root groups
+
+For each parent put
+
+    R_i=R(U_i)=sum_(a in U_i)R_a,
+    S_i=S(U_i)=sum_(a in U_i)S_a.
+
+The roots in U_i occur once at each stage1 through ell_i. The pure-p root0 occurs once at each parent's finishing stage. Therefore the deep construction has exact costs
+
+    C_comb=r+sum_i ell_i*R_i,                             (NF102)
+
+    W_comb=q^D*sum_i [ ((q^ell_i-1)/(q-1))*S_i
+                       +q^(ell_i-1) ].                   (NF103)
+
+Add the fixed shallow-leaf costs to NF102--NF103 before comparing with the original removed-class budget. The free folds contribute zero. These formulas use the original root batches, rather than a newly optimized arithmetic source.
+
+For fixed disjoint groups U_i, the lexicographically best completion order sorts R_i in nonincreasing order and, within an equal-R_i block, sorts S_i in nonincreasing order. The count assertion is the standard rearrangement inequality between increasing completion times and descending weights. Any inversion of two unequal R_i strictly increases the count, so the remaining freedom at minimum count consists only of ties. On a tie block the coefficient (q^ell-1)/(q-1) is strictly increasing, and rearrangement again puts larger S_i earlier. The root0 sum sum_i q^(ell_i-1) is independent of the order. This is direct reuse of the rearrangement principle; Mathlib's Antivary.sum_mul_le_sum_mul_comp_perm provides the corresponding generic inequality.
+
+The claim is only for the ordering of these fixed groups within this comb construction. It neither optimizes the Hall assignment nor says a comb is globally cost-minimal. For example, if every job permits all k roots and k>=q*r, all q*r children may stop already at depth D with distinct roots. That valid cut can use fewer leaves than sequential comb completion.
+
+### The remaining budget obligation
+
+NF99 is an exact static test for existence of some finite deep continuation of these forced actual parent jobs. It does not decide whether any continuation satisfies the strict original lexicographic budget: feasibility and affordable transport are different statements. NF102--NF103 give a computable sufficient candidate cost after a Hall allocation; failure of that candidate's cost does not rule out a cheaper noncomb cut. The existing weighted finite-horizon search and fixed-frontier minimum-cost assignment remain available for the full strict-budget question. No condition NF99 has been proved for every hypothetical odd cover, and no unrestricted Erdős#7 conclusion follows from this interface alone. These are ordinary mathematical applications and interface deductions, with no new Lean verification or literature-priority claim.

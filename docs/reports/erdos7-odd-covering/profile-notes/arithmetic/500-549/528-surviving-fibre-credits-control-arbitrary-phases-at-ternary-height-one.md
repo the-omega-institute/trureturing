@@ -31601,3 +31601,18 @@ erasure that does not increase either cost. This extends the transport
 interface without proving that an improving allocation exists for
 every whole cover. Original labels, common witnesses and arbitrary
 original heights remain in scope; unrestricted Erdős #7 remains open.
+
+[Report385, section64](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#64-the-common-literal-zero-root-makes-deep-feasibility-a-static-hall-condition)
+uses the common fresh-depth root0 to decide finite deep continuation
+exactly. After fixing the shallow leaves and removing free deep jobs,
+let r_A count actual H-prefix parents with constant allowed set A.
+Every A contains0 and has only positive-workload roots. Finite
+continuation exists exactly when every nonempty collection S of
+types satisfies |union_(A in S) A|>=(q-1)*sum_(A in S)r_A+1.
+The existing capacitated Hall theorem assigns q-1 disjoint private
+roots per parent; the common0 then completes one parent per level.
+Its exact original-batch costs are given explicitly, including the
+fixed shallow costs in the final comparison. This supplies a concrete
+budget candidate, without asserting that feasible continuation is
+cheap enough or that this sequential construction minimizes all
+frontier costs. The unrestricted whole-cover obligation is unchanged.
