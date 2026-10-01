@@ -64,21 +64,26 @@ run_mirror() {
     bash "$SUBJECT" --integration integration-x --since "$TIP" --dry-run "$@" 2>&1)" || RC=$?
 }
 
+# check NAME EXIT [FRAGMENT...]: the run exited EXIT and its log contains every FRAGMENT.
 check() {
-  local name="$1" want="$2" pattern="${3:-}"
+  local name="$1" want="$2" fragment; shift 2
   if [[ $RC -ne $want ]]; then
-    echo "FAIL $name: exit $RC, want $want; log: $LOG"; failures=$((failures + 1))
-  elif [[ -n "$pattern" && "$LOG" != *"$pattern"* ]]; then
-    echo "FAIL $name: log lacks '$pattern'; log: $LOG"; failures=$((failures + 1))
-  else
-    echo "PASS $name"; passed=$((passed + 1))
+    echo "FAIL $name: exit $RC, want $want; log: $LOG"; failures=$((failures + 1)); return
   fi
+  for fragment in "$@"; do
+    if [[ "$LOG" != *"$fragment"* ]]; then
+      echo "FAIL $name: log lacks '$fragment'; log: $LOG"; failures=$((failures + 1)); return
+    fi
+  done
+  echo "PASS $name"; passed=$((passed + 1))
 }
 
 run_mirror "$OLD"; check equal-sets 0 'MIRROR_RESULT mirrored=0 pending=0 exit=0'
 run_mirror "$OLD" --required-checks-under-test '#5'; check equal-sets-with-reference 0 'MIRROR_RESULT mirrored=0 pending=0 exit=0'
 run_mirror "$NEW"; check differ-without-reference 64 'same checks as dev'
-run_mirror "$NEW" --required-checks-under-test '#5'; check differ-open-reference 0 'required checks under test (#5 open)'
+run_mirror "$NEW" --required-checks-under-test '#5'; check differ-open-reference 0 \
+  "required checks under test (#5 open): dev=$(jq -c '.protection.required_status_checks.contexts | unique' <<<"$OLD") integration=$(jq -c '.protection.required_status_checks.contexts | unique' <<<"$NEW")" \
+  'MIRROR_RESULT mirrored=0 pending=0 exit=0'
 run_mirror "$NEW" --required-checks-under-test '#6'; check differ-missing-reference 64 'cannot read #6'
 run_mirror "$NEW" --required-checks-under-test '#7'; check differ-closed-reference 64 '#7 is closed'
 run_mirror "$NEW" --required-checks-under-test '#8'; check differ-unreadable-reference 64 'cannot read #8'

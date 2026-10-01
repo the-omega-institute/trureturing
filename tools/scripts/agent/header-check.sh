@@ -217,7 +217,7 @@ PYEOF
       ''|*[!0-9]*) echo "  ✗ $f  <- 行数读数不是非负整数 —— fail closed"; bad=1; continue ;;
     esac
     if [ "$lines" -gt "$artifactlimit" ]; then
-      echo "  ✗ $f  <- $lines 行，超 SL-003 硬线 $artifactlimit(判据 >$artifactlimit;按 C# CountArtifactLines 口径)；deposit 会照冻不误，只有 CI 的 CapacityPolicyTests 报"
+      echo "  ✗ $f  <- $lines 行，超 SL-003 硬线 $artifactlimit(判据 >$artifactlimit;按 C# CountArtifactLines 口径)"
       bad=1; continue
     fi
     local dir dn; dir=$(dirname "$f")
@@ -267,7 +267,6 @@ PYEOF
       if [ -n "$viol" ]; then
         echo "  ✗ $f  <- SL-010 地层违规:G 工件的 import 闭包里有 I/E 事实:"
         printf "%b\n" "$viol"
-        echo "      (deposit 会照冻不误,只有 CI 的 dev baseline admission 以 SL-010 报)"
         bad=1; continue
       fi
     fi
