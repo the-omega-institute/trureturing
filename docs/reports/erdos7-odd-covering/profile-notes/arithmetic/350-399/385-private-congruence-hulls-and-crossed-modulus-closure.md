@@ -13106,3 +13106,103 @@ Section97 excludes TS in the remaining R=empty, H=12 branch: each
 terminal digit occurs at least twice there. At larger H, neither TS
 nor an affordable occupied-ancestor repair is established. These
 conditional reductions do not settle unrestricted Erdos7.
+
+## 99. Fiberwise collision avoidance need not admit a common single-AP source
+
+This is a finite source-shape obstruction to replacing the uniform
+q-prefix reservation in sections96--97 by its ternary-weighted cost.
+It is NOT an extremal whole-cover example or a counterexample to E7.
+It permits the output APs to acquire extra ternary powers; even that
+freedom does not suffice in this control.
+
+### Existing interfaces
+
+Report375 LA2--LA3 permits a tree to depend on a retained coordinate
+only because every retained transported label fixes that FULL coordinate.
+section38 (BC17--BC19) merges equal COMPLETE output phases,
+not different phases of the same numerical modulus. For opposite colors,
+the two original 3^c p^a and 3^c q^a phases have different first-three
+roots when c>=1; preserving that coordinate prevents their merger.
+PH5 concerns the complete PRIVATE region, not the entire original AP.
+Dropping parts of several classes instead requires PH1 and RS1--RS3.
+
+### A literal conditional reservation
+
+Take p=7, q=11 and the retained ternary coordinate t in Z/81. The
+q-tree has depth one. Reserve q-root0 at every t, and additionally
+
+    root1 when t=2 mod3,
+    root2 when t=2 mod9,
+    root3 when t=5 mod27,
+    root4 when t=8 mod81.
+
+The last three ternary cylinders are disjoint, since their second
+ternary digits are respectively0,1,2. Thus at every t at most three
+q-roots are forbidden: root0, possibly root1, and at most one more.
+There are at least eight available q-roots, so every t separately
+admits a complete seven-ary tree avoiding its actual reservations.
+
+These are precisely the collision shapes q vs p and3^c q vs3^c p,
+1<=c<=4. On the q-side assign the four displayed ternary prefixes
+and q-root c. On the p-side give each counterpart first-three root1
+and any full extension, with p-root c. Comparable members on either
+side are disjoint because their prime roots differ. There is no pq-label.
+Only this partial inventory is specified; whole coverage, private-color
+concentration, divisor closure and EB1 are not inferred from it.
+
+With r=q-p+1=5, the proposed joint prefix cost is
+
+    (1+1/3+1/9+1/27+1/81)/5 = 121/405 < 1.
+
+Nevertheless no conditional source of the following permitted form
+can keep all the specified original tests as single APs.
+
+### Expose the q-roots through distinct three-free original labels
+
+Choose ten distinct primes ell_j outside {3,7,11}. Include the ten
+literal three-free classes d_j=11*ell_j, 1<=j<=10, whose conditions
+are q-root j and ell_j-root1. Keep all these cofactor coordinates
+and the ternary coordinate unchanged. For each t choose an injection
+
+    theta_t: Z/7 -> Z/11
+
+avoiding the reservations above. The one common source is
+
+    y_3=t, y_p=x, y_q=theta_t(x), y_other=z_other.
+
+The pullback of d_j is its unchanged ell_j condition times
+
+    E_j={(t,x):theta_t(x)=j} subset (Z/81)x(Z/7).
+
+If this pullback is empty or ONE entire AP, E_j must be empty or
+one ternary prefix cylinder times one p-root. Indeed its period
+divides 81*7, and injectivity gives at most one p-root over each t.
+Its extra ternary height may be any integer from0 through4.
+
+The E_j partition all 81*7 output points: q-root0 is always excluded.
+Thus they form at most ten labeled prefix rectangles partitioning
+seven complete ternary columns. Each label j occurs in at most one
+rectangle and hence in only one p-column.
+
+Only q-roots5,...,10 are never forbidden. There are six of these,
+so at least one of the seven p-columns uses none of them. This column
+must be partitioned using roots1,...,4. Each of those four is forbidden
+at some point of the first-three root2. No rectangle in that column
+can therefore contain all of that root. A complete ternary prefix
+partition with the root2 branch subdivided has at least FIVE leaves:
+at least one in each other first root and at least three under root2.
+The other six p-columns each require at least one rectangle. Hence
+the source would need at least 5+6=11 rectangles, exceeding the ten
+available nonzero q-root labels. This is impossible.
+
+The obstruction persists on every higher ternary carrier by lifting
+these cylinders; deeper subdivision cannot reduce the prefix-leaf
+count. It already fails before numerical collisions among the output
+APs are checked. Therefore separate fiberwise trees and joint cost
+below one do not imply a legal single-AP transport, even with arbitrary
+extra ternary powers. A successful whole-cover argument must use more
+than these premises: it must prove actual unobserved prefix freedom,
+or pay for discarded/split tests through one common RS1--RS3 replacement.
+
+No enumeration, Lean verification or assertion of a whole-cover
+realization is used in this finite argument.
