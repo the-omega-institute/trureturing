@@ -32,3 +32,25 @@ Bundschuh--Bundschuh, Distribution of Fibonacci and Lucas Numbers Modulo 3^k,
 Fibonacci Quarterly 49 (2011), 201--210; it does not state this weighted
 actual-depth congruence. No matching M81 theorem was found in the checked
 repository or recent WSS PR history.
+
+The recurrence has a full 3-adic limit. Set
+v_j=(-1)^(j+1)u_j. Then v_(j+1)=v_j-4*3^(2j+1)*v_j^3, v_1=1, and there is a unique A in Z_3 with
+v_3(A-v_j)=2j+1. Therefore
+u_j=(-1)^(j+1)A modulo 3^(2j+1), sharply (the congruence fails
+modulo 3^(2j+2)). For K>=1, A modulo 3^K is represented by v_(J_K),
+where J_K=max(1,ceil((K-1)/2)); the first residues are
+1,1,1,55,136,379,1108,3295 for K=1,...,8.
+
+Writing S_j=sum h_p b_(p,j), the full binomial product gives
+B_j=1+m_j S_j+m_j^2 Q_j, hence S_j=(-1)^(j+1)A modulo 3^(j+1).
+The exponent j+1 is the maximal modulus forced by the TBN.2--TBN.3
+hypotheses: (u_j-S_j)/3^(j+1)=2Q_j modulo 3, so a lift requires the
+extra condition Q_j=0 modulo 3. Accidental lifts occur in small blocks and
+do not make a uniform theorem.
+
+OEIS A268924 and A271223 concern Hensel/Lucas approximants to the
+3-adic square root of -2 and their base-3 digits. A is the normalized
+residual limit for (L_(3^j)^2+2)/(2*3^(j+1)); the weighted actual-depth
+congruence is additional and is not asserted by those entries. See
+https://oeis.org/A268924 and https://oeis.org/A271223. This remains
+paper-first and does not resolve WSS existence.

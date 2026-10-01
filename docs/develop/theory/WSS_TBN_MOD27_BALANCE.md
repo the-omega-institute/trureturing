@@ -240,3 +240,136 @@ the existing M27 result is likewise not a Lean theorem. Adding a bind-only
 Lean wrapper would overstate the formal status, so no such wrapper is claimed
 here. The argument above is a complete elementary proof conditional only on
 the already-recorded TBN.2--TBN.3 identities.
+
+## The 3-adic limit and the sharp depth-indexed approximation
+
+The modulus in M81 is not the end of the recurrence information. Put
+
+\[
+ v_j:=(-1)^{j+1}u_j.
+\]
+
+Then \(v_1=1\), and the exact recurrence (M27.3) becomes
+
+\[
+ v_{j+1}=v_j-4\cdot3^{2j+1}v_j^3. \tag{A.1}
+\]
+
+Every \(v_j\) is a 3-adic unit. There is therefore a unique limit
+\(A\in\mathbf Z_3\) with
+
+\[
+ A=\lim_{j\to\infty}v_j,
+ \qquad
+ v_3(A-v_j)=2j+1. \tag{A.2}
+\]
+
+Consequently, for every \(j\ge1\),
+
+\[
+ \boxed{u_j\equiv(-1)^{j+1}A\pmod {3^{2j+1}},}
+ \qquad
+ u_j\not\equiv(-1)^{j+1}A\pmod {3^{2j+2}}. \tag{A.3}
+\]
+
+The exponent \(2j+1\) is sharp. To give a finite representative of \(A\),
+for \(K\ge1\) set
+\[
+ J_K=\max\!\left(1,\left\lceil\frac{K-1}{2}\right\rceil\right).
+\]
+Then \(A\equiv v_{J_K}\pmod {3^K}\), so (A.3) is an effective residue
+formula at every prescribed power of 3. The first representatives are
+\[
+\begin{array}{c|rrrrrrrr}
+ K&1&2&3&4&5&6&7&8\\ \hline
+ A\bmod 3^K&1&1&1&55&136&379&1108&3295.
+\end{array}
+\]
+Thus M81 is the \(K=4\) projection of a single 3-adic constant, while the
+new sharp statement is the depth-indexed modulus in (A.3), rather than a
+fixed-modulus periodicity claim.
+
+### Proof of the limit and sharpness
+
+From (A.1), \(v_{j+1}-v_j=-4\cdot3^{2j+1}v_j^3\) has valuation exactly
+\(2j+1\), since \(v_j\) is a unit. The increments tend to zero 3-adically,
+so \((v_j)\) is Cauchy and converges to \(A\). For fixed \(j\), write
+\[
+ A-v_j=\sum_{t\ge j}(v_{t+1}-v_t).
+\]
+The first summand has valuation \(2j+1\), while every later summand has
+valuation at least \(2j+3\). The ultrametric inequality therefore gives
+the equality in (A.2), and hence both assertions in (A.3). The formula for
+\(J_K\) follows from the same tail estimate.
+
+### Weighted-depth corollary and its exact boundary
+
+Let
+\[
+ S_j:=\sum_{p\mid B_j}h_p b_{p,j},
+ \qquad m_j=2\cdot3^{j+1}.
+\]
+For each prime factor write \(p=1+m_jb_{p,j}\). Expanding all powers and
+collecting the linear term gives an integer \(Q_j\) such that
+\[
+ B_j=1+m_jS_j+m_j^2Q_j. \tag{A.4}
+\]
+Since \(B_j=1+m_ju_j\), (A.4) implies
+\[
+ \boxed{S_j\equiv u_j\equiv(-1)^{j+1}A\pmod {3^{j+1}}}\qquad(j\ge1). \tag{A.5}
+\]
+This contains M27 and M81 after reduction to their respective ranges.
+
+The modulus \(3^{j+1}\) in the first congruence of (A.5) is the strongest
+one forced by the TBN.2--TBN.3 hypotheses alone. More explicitly,
+\[
+ Q_j=\sum_{p\mid B_j}\binom{h_p}{2}b_{p,j}^2
+     +\sum_{p<q}h_ph_qb_{p,j}b_{q,j},
+\]
+and
+\[
+ \frac{u_j-S_j}{3^{j+1}}\equiv 2Q_j\pmod3. \tag{A.6}
+\]
+Thus a lift to modulus \(3^{j+2}\) requires the additional condition
+\(Q_j\equiv0\pmod3\), which is not part of TBN.2--TBN.3. Individual blocks
+can lift accidentally (the displayed small factorizations do), but no uniform
+stronger weighted congruence follows without new information on the depth and
+residue vector. This is the obstruction behind the distinction between the
+sharp recurrence modulus \(3^{2j+1}\) in (A.3) and the guaranteed weighted
+modulus \(3^{j+1}\) in (A.5).
+
+### Exact recurrence checks
+
+Using integer recurrence evaluation, the sign-normalized approximants are
+\[
+\begin{array}{c|r|r|r}
+ j&3^{2j+1}&u_j\bmod 3^{2j+1}&v_j\bmod 3^{2j+1}\\ \hline
+ 1&27&1&1\\
+ 2&243&107&136\\
+ 3&2187&1108&1108\\
+ 4&19683&9827&9856\\
+ 5&177147&49222&49222
+\end{array}
+\]
+and direct factorization of the first four blocks gives the weighted sums
+\(S_1=1\), \(S_2=107\), \(S_3=386749\), and
+\(S_4=247065898404113126344022723\). Their differences \(u_j-S_j\) are
+zero for \(j=1,2\) and have 3-adic valuation 6 for \(j=3,4\), confirming
+the guaranteed congruence and illustrating the possible accidental lift.
+
+### Relation to existing residue tables and formalization boundary
+
+OEIS A268924 records successive Hensel representatives of the 3-adic square
+root of \(-2\) (the representatives congruent to 1 modulo 3), and notes their
+Lucas-number interpretation; OEIS A271223 records the corresponding base-3
+digits via scaled first differences. Those entries concern the Lucas
+approximants themselves. The constant \(A\) here is the limit of the
+normalized residuals \((-1)^{j+1}(L_{3^j}^2+2)/(2\cdot3^{j+1})\), and (A.5)
+adds the actual Fibonacci-depth product \(S_j\), which is not a statement of
+either OEIS entry. See [A268924](https://oeis.org/A268924) and
+[A271223](https://oeis.org/A271223).
+
+This remains paper-first. No block-factorization/depth-vector Lean API is
+present, so no bind-only formal wrapper is claimed. The result is conditional
+only on the already-recorded TBN.2--TBN.3 rank and valuation identities and
+does not resolve the Wall--Sun--Sun problem.
