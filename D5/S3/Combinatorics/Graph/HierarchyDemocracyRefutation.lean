@@ -21,6 +21,7 @@ import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.FinCases
 import Mathlib.Data.Real.Basic
+import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.NormNum
 
@@ -47,14 +48,17 @@ def indeg {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) (j : Fin n) : ℝ := ∑ i,
 def lapT {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) : Matrix (Fin n) (Fin n) ℝ :=
   (Matrix.diagonal (indeg A) - A)ᵀ
 
-/-- The squared residual `‖M x − d‖²`. -/
-def residual {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) (x : Fin n → ℝ) : ℝ :=
-  ∑ i, ((lapT A *ᵥ x) i - indeg A i) ^ 2
+/-- The Euclidean residual `‖M x − d‖₂`. -/
+noncomputable def residual {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) (x : Fin n → ℝ) : ℝ :=
+  ‖(WithLp.toLp 2 (lapT A *ᵥ x - indeg A) : EuclideanSpace ℝ (Fin n))‖
 
-/-- `g` minimizes the norm among the minimizers of `‖M x − d‖`. -/
+/-- Definition 3.1: `g` minimizes `‖M x − d‖₂`, and among the minimizers it has the least
+Euclidean norm `‖x‖₂`. -/
 def IsForwardLevels {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) (g : Fin n → ℝ) : Prop :=
   (∀ x, residual A g ≤ residual A x) ∧
-    ∀ x, (∀ y, residual A x ≤ residual A y) → ∑ i, g i ^ 2 ≤ ∑ i, x i ^ 2
+    ∀ x, (∀ y, residual A x ≤ residual A y) →
+      ‖(WithLp.toLp 2 g : EuclideanSpace ℝ (Fin n))‖ ≤
+        ‖(WithLp.toLp 2 x : EuclideanSpace ℝ (Fin n))‖
 
 /-- The forward democracy coefficient `1 − Mean(g_j − g_i)` over the arcs, weighted by `a_ij`. -/
 noncomputable def forwardDemocracy {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) (g : Fin n → ℝ) : ℝ :=
@@ -92,18 +96,33 @@ theorem result : ¬ claim := by
     ext i j
     fin_cases i <;> fin_cases j <;>
       simp [lapT, hd, A, Matrix.transpose_apply]
-  -- `‖M x − d‖² = ‖M g − d‖² + ‖M (x − g)‖²`, from `Mᵀ (M g − d) = 0`
-  have hres : ∀ x : Fin 6 → ℝ, residual A x =
-      residual A g + ∑ i, ((lapT A *ᵥ (x - g)) i) ^ 2 := by
+  -- Euclidean norms as square roots of sums of squares.
+  have hnormv : ∀ v : Fin 6 → ℝ,
+      ‖(WithLp.toLp 2 v : EuclideanSpace ℝ (Fin 6))‖ = √(∑ i, v i ^ 2) := by
+    intro v
+    rw [EuclideanSpace.norm_eq]
+    simp [Real.norm_eq_abs, sq_abs]
+  set Sq : (Fin 6 → ℝ) → ℝ := fun x => ∑ i, ((lapT A *ᵥ x) i - indeg A i) ^ 2 with hSq
+  have hnormr : ∀ x, residual A x = √(Sq x) := by
     intro x
-    simp only [residual, hL, hd]
+    rw [residual, hnormv]
+    simp [hSq]
+  -- `‖M x − d‖² = ‖M g − d‖² + ‖M (x − g)‖²`, from `Mᵀ (M g − d) = 0`
+  have hres : ∀ x : Fin 6 → ℝ, Sq x = Sq g + ∑ i, ((lapT A *ᵥ (x - g)) i) ^ 2 := by
+    intro x
+    simp only [hSq, hL, hd]
     simp [Matrix.mulVec, dotProduct, Fin.sum_univ_six, g]
     ring
   have hlev : IsForwardLevels A g := by
-    refine ⟨fun x => by rw [hres x]; linarith [Finset.sum_nonneg (fun i (_ : i ∈ Finset.univ) =>
-      sq_nonneg ((lapT A *ᵥ (x - g)) i))], fun x hx => ?_⟩
+    refine ⟨fun x => ?_, fun x hx => ?_⟩
+    · rw [hnormr, hnormr]
+      apply Real.sqrt_le_sqrt
+      rw [hres x]
+      linarith [Finset.sum_nonneg (fun i (_ : i ∈ Finset.univ) =>
+        sq_nonneg ((lapT A *ᵥ (x - g)) i))]
     have hle := hx g
-    rw [hres x] at hle
+    rw [hnormr, hnormr, Real.sqrt_le_sqrt_iff (Finset.sum_nonneg fun i _ => sq_nonneg _),
+      hres x] at hle
     have hzero : ∀ i, (lapT A *ᵥ (x - g)) i = 0 := by
       have hsum : ∑ i, ((lapT A *ᵥ (x - g)) i) ^ 2 = 0 := by
         have := Finset.sum_nonneg (fun i (_ : i ∈ Finset.univ) =>
@@ -120,8 +139,10 @@ theorem result : ¬ claim := by
     have e4 := hzero 4
     have e5 := hzero 5
     simp [hL, Matrix.mulVec, dotProduct, Fin.sum_univ_six, g] at e0 e1 e2 e3 e4 e5
+    rw [hnormv, hnormv]
+    apply Real.sqrt_le_sqrt
     simp only [Fin.sum_univ_six]
-    simp only [Fin.isValue, cons_val_zero, cons_val_one, cons_val, ge_iff_le, g]
+    simp only [Fin.isValue, cons_val_zero, cons_val_one, cons_val, g]
     have h1 : x 1 = x 4 + (-991 / 2694 - 767 / 2694) := by linarith
     have h2 : x 2 = x 4 + (-991 / 2694 - 767 / 2694) := by linarith
     have h0 : x 0 = x 4 + (227 / 2694 - 767 / 2694) := by linarith
