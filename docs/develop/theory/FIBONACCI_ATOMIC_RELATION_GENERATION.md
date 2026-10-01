@@ -34571,7 +34571,8 @@ $x=e^t$ 是价格尺度，式（251.4）不是新的整数覆盖区间。
 仍取 $K=2461/1000$，并定义
 
 $$
-P_2(t)=e^{-t/2}\left(rac{c_R}t+rac{c_2}{t^2}ight),\qquad
+P_2(t)=e^{-t/2}\left(rac{c_R}t+rac{c_2}{t^2}
+ight),\qquad
 L(t)=rac{e^{-t/2}}{(t+2)^3}.
 $$
 
@@ -34592,10 +34593,14 @@ $$
 =rac{e^{-t/2}}{t^3}igl(c_3-2K-1+O(t^{-1})igr).
 $$
 
-§249 的 $ho>7/5$、$\log2>2/3$ 逐项给
+§249 的 $
+ho>7/5$、$\log2>2/3$ 逐项给
 
 $$
-c_3=8(ho-1)+4ho\log2+rac{3ho}4(\log2)^2
+c_3=8(
+ho-1)+4
+ho\log2+rac{3
+ho}4(\log2)^2
 >rac{16}5+rac{56}{15}+rac7{15}=rac{37}5.
 $$
 
@@ -35395,3 +35400,31 @@ $$
 本节的改进来自实际导数跳跃的方向与单侧曲率，而非五类标签的数量。
 来源地址与实际价格源的桥接、全部叶端点的统一尾项预算仍须证明。
 以上没有建立 RH、一般 Robin 不等式或新的有限整数认证范围。
+
+## 257. 2025--2026 年 Robin 前沿与 FIB 接口审计
+
+Robin 研究的主线可以按“极值压缩—等价判据—候选类缩减—显式误差”排列：Ramanujan 的高丰数渐近、Alaoglu--Erdős 的极丰数结构、Robin 的 CA 区间归约与 RH 等价，随后是 Lagarias 的初等判据、Akbary--Friggstad 的最小反例为 superabundant 归约，以及 Nicolas 的 primorial/totient 判据。近两年的结果继续压缩候选集，但没有消除点态尾项。
+
+| 来源 | 直接贡献 | 对当前 FIB 主线的实际接口 |
+| --- | --- | --- |
+| Assani--Chester--Paschal, 2025 | 对不含 $2,3,5$ 因子、primorial、若干 $p$-free 类给出 Robin 安全性；Kaneko--Lagarias 可缩到 superabundant。 | 五窗的 $[null,2,3,2\,5,5]$ 是加法 Fibonacci 包含状态，不是 $p$-进整除状态；必须另证具体 FIB 整数的素因子条件。 |
+| Zimov, 2025 | 在假设 RH 失败时，把最小 CA 反例限制到 $e^\gamma<G(n)<e^\gamma(1+c/(\log n)^b)$，$0<b<1/2$。 | 该带宽远大于 §250 的 $1/(\sqrt n(\log n)^3)$ 间隔，不能控制同一 $\Phi$ 尾项，也不能把 FIB 候选变成 CA。 |
+| MacArevey, 2026 | 用连续调和数延拓证明 Lagarias 反例的最小者为 superabundant。 | 它是另一预算函数的极值归约；不等同于 Robin 的 $\sigma(n)/n$ 预算，更没有 FIB 价格源桥。 |
+| Mishra--Sarkar, 2026 | 以 $\omega(n)$ 截断指数和提出更强的 Robin 形式，声称与 Robin/RH 等价，并覆盖 $\omega\le6$、primorial、奇数与平方自由类。 | 截断阶数是实际不同素因子数；FIB 地址没有给出 $\omega(N_g)$ 的统一小界，故不能直接消费该定理。 |
+| Musin, 2026 | 在同一 CA 比较集上构造高阶接触坐标，并给出保留 Robin 判据的充分条件。 | 它明确要求同一 CA 源、支撑接触和增长/凹性条件；FIB 的 $1+F_rg$ 族尚未满足这些条件。 |
+
+这份历史脉络对项目的去重结论是明确的：已有工作已经覆盖了 CA/SA 候选缩减、多个分族的无条件安全性、totient/Lagarias/截断判据和高阶接触坐标。当前 FIB 仍缺的不是再造一个等价判据，而是把一个实际 FIB 来源同时接到
+
+$$
+\text{同一价格源}\quad\longrightarrow\quad
+\text{§249 的单侧误差}\quad\longrightarrow\quad
+\text{§250 的点值传递}.
+$$
+
+具体地，尚未发现可直接复用的文献定理能同时提供：
+
+1. $N_g=1+F_rg$ 是 CA/SA 或 Robin 检验所需的同一极值源；
+2. 该来源的 $b_s(d)/d$ 增量亏损与 §247--§249 的价格层逐项相同；
+3. 在同一整数上控制有符号 $\Phi$ 尾项，足以验证 §250.2 的点值条件。
+
+因此，下一步应优先证明一项真实的“来源保持”或构造一对具有相同 FIB 观察而不同价格源的反例；继续重复 CA 支撑线、Robin 等价式或有限安全类的证明不会缩小当前缺口。上述三项新来源的精确陈述与适用边界分别见 [Mishra--Sarkar](../../../Library/ArithSums/mishra2026finite_robin.md)、[Zimov](../../../Library/ArithSums/zimov2025least_ca.md) 和 [Assani--Chester--Paschal](../../../Library/ArithSums/assani2025robin_kaneko.md)。
