@@ -1,0 +1,42 @@
+**定理 65.2（Canonical-height construction with its full comparison）。**
+Let $F$ carry admissible absolute values and let $W/F$ be elliptic.
+Define
+
+$$
+\widehat h(P)=\lim_{n\to\infty}\frac{h(2^nP)}{2\,4^n}.
+$$
+
+For every $P$ the displayed sequence converges. There is one real
+constant $D$, depending on the curve and height system, such that
+for all $P$,
+
+$$
+\left|\widehat h(P)-\tfrac12 h(P)\right|\le D.
+$$
+
+For all $P,Q$ the same construction satisfies
+
+$$
+\widehat h(P+Q)+\widehat h(P-Q)
+=2\bigl(\widehat h(P)+\widehat h(Q)\bigr).
+$$
+
+No Northcott hypothesis is needed for these assertions.
+
+Proof. Projective height is invariant under the nonzero scale in
+Theorem 65.1. The symmetric-square height differs from $h(P)+h(Q)$
+by a uniformly bounded amount, and the homogeneous quadratic
+addition-and-subtraction map changes height by twice the input
+height up to a uniformly bounded amount. Hence
+
+$$
+\left|h(P+Q)+h(P-Q)-2(h(P)+h(Q))\right|\le C
+$$
+
+with a constant uniform in both points. Put $Q=P$ to bound the
+successive differences of $h(2^nP)/(2\,4^n)$ by a summable geometric
+sequence. Completeness gives convergence, and summing this bound
+gives the uniform comparison with $h(P)/2$. Apply the full two-point
+bound to $2^nP,2^nQ$, divide by $2\,4^n$, and pass to the limit;
+its error tends to zero and gives the exact parallelogram law.
+
