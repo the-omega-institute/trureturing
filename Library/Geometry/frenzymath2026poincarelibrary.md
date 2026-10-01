@@ -1394,3 +1394,46 @@ unfinished, including noncompact cusps and nonorientable manifolds.
 The existing escape audit remains unfinished:
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
 Neither these checks nor CI closes that audit or the remaining mathematics.
+
+## Open positivity and dense recurrence on the same actual coset space
+
+For a supplied locally compact, second-countable topological group and
+actual Hausdorff Borel coset space by a subgroup, let `ν` be a finite,
+nonzero measure invariant under the ambient group's left action.
+The actual coset space is locally compact and second countable; its
+Hausdorff locally compact topology gives the regularity and metrizability
+needed by the existing finite-measure regularity instance. The ambient
+coset action is transitive, hence minimal. Existing
+`measure_isOpen_pos_of_smulInvariant_of_ne_zero` makes every nonempty
+open subset have positive `ν` measure. This gives `ν.IsOpenPosMeasure`.
+For each fixed ambient element, apply the preceding almost-everywhere
+neighborhood recurrence and existing `Measure.dense_of_ae` to obtain a
+dense subset of recurrent cosets for that element.
+
+Under the same supplied compatible original-H3 smooth source geometry,
+original pairwise distance identity, actual target geometry/Borel,
+actual full-deck quotient covering/local diffeomorphism/tangent-metric
+pullback, faithful representation implementing the actual action at every
+point, and finite actual target volume, bind this to the same actual
+normalized Haar `μ` and actual coset measure `ν` above. The existing
+compact-open ambient-group local compactness and second countability,
+actual closed deck image, and actual coset Hausdorff/Borel compatibility
+supply the required hypotheses without normality or compactness of the
+subgroup or quotient. Retain the same left/right Haar invariance,
+actual covolume and `ν` mass equal to actual target total volume, explicit
+`μ.inv` quotient-measure relation, and finite nonzero ambient-left-invariant
+`ν`. That same `ν` is positive on every nonempty open coset subset, and
+for every ambient element separately its recurrent cosets are dense.
+
+These are two further scoped transient classical composition checks,
+with two printed closures using only `propext`, `Classical.choice` and
+`Quot.sound` under the same pins, with no tracked project Lean declaration
+or mathematical novelty claim. Dense recurrence here concerns the actual
+group coset space. It supplies no dense interior deck orbit, no boundary
+or attracting-pole density, no common recurrent coset for all ambient
+elements, and no recurrence of every coset. Lattice conjugacy, finite-volume
+cusp classification and full Mostow-Prasad homotopic isometry existence
+and uniqueness remain unfinished, including noncompact cusps and
+nonorientable manifolds. The existing escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these checks nor CI closes that audit or the remaining mathematics.
