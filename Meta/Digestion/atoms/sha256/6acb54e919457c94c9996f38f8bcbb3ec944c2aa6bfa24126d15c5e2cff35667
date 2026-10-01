@@ -1,0 +1,18 @@
+**定义 3.2（动态充分边界及纤维检验）。** 摘要 $\eta:X\to B$ 动态充分，是指在实际像 $B_{\mathrm{act}}=\eta(X)$ 上存在 $\bar o$、$\bar T_a$，满足
+
+$$
+o=\bar o\eta,\qquad
+\eta T_a=\bar T_a\eta.
+$$
+
+它的准确检验是：对于所有 $x,y\in X$，
+
+$$
+\eta(x)=\eta(y)
+\Longrightarrow
+\left[o(x)=o(y)\ \text{且}\ \forall a\in A,\quad
+\eta(T_ax)=\eta(T_ay)\right].
+$$
+
+支撑推导。若已有下降映射，把同一个摘要代入即得检验。反向，在每个非空纤维上以任一代表定义 $\bar o(b)=o(x)$、$\bar T_a(b)=\eta(T_ax)$。检验使结果与代表无关，且后者仍在实际像中；于是两条交换式成立。不对像外摘要值虚构操作语义。若策略也要仅靠边界执行，其动作选择和停止选择须由边界及其保留的控制记录决定。
+
