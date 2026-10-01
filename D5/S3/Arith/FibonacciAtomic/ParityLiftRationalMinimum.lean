@@ -17,7 +17,6 @@ namespace D5.S3.Arith.FibonacciAtomic.ParityLiftRationalMinimum
 
 open D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd (Window first last)
 open D5.S3.Arith.FibonacciAtomic.ImmediateWindowStateCapacity
-open D5.S3.Arith.FibonacciAtomic.GraftAffineClosure (step quantity)
 
 /-- A linear representation of finite words, with one operator per letter.
 The state space need not be reachable, observable or finite dimensional. -/
@@ -46,25 +45,11 @@ def parityEncode : Option (ZMod 2) → ℚ × ℚ
 
 def parityTask (w : List Window) : ℚ × ℚ := parityEncode (task 2 w)
 
-/-- Integer contributions of the five three-bit windows. -/
-def integerDisplacement : Window → ℤ × ℤ
-  | .zero => (0, 0)
-  | .low => (1, 0)
-  | .middle => (0, 1)
-  | .ends => (2, 1)
-  | .high => (1, 1)
-
-def integerTransition : Option (Bool × (ℤ × ℤ)) → Window → Option (Bool × (ℤ × ℤ))
-  | none, _ => none
-  | some (s, x), b =>
-    if s && last b then none
-    else some (first b, step (step (step x)) + integerDisplacement b)
-
 /-- Legality and the complete integer quantity, before selecting a coefficient field. -/
 def integerTask (w : List Window) : ℤ × ℤ :=
-  match w.foldl integerTransition (some (false, (0, 0))) with
+  match task 0 w with
   | none => (0, 0)
-  | some (_, x) => (1, quantity x)
+  | some x => (1, x)
 
 /-- Coordinatewise natural embedding of the integer response into any field. -/
 def integerFieldTask (K : Type*) [Field K] (w : List Window) : K × K :=

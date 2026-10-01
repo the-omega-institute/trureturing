@@ -57,13 +57,9 @@ internal sealed class ParityLiftRationalMinimumDocument : IScribeDocumentDefinit
                 + "the immediate mod-two Fibonacci quantity task. Legal zero quantity yields "
                 + "(1,0), distinct from error. This encoding takes the residue representative before "
                 + "passing to rational coordinates."),
-            Definition("integerDisplacement", "Integer window contributions", "The five window "
-                + "displacements are (0,0), (1,0), (0,1), (2,1), (1,1), respectively."),
-            Definition("integerTransition", "Complete integer composition", "At a legal seam, "
-                + "update x to M^3 x plus the window displacement, with M(a,b)=(b,a+b), and store "
-                + "the new low bit as seam. An illegal seam maps to error."),
-            Definition("integerTask", "The integer response", "A legal final composition x "
-                + "yields (1,qx) in Z^2, and an illegal word yields (0,0). This response is computed "
+            Definition("integerTask", "The integer response", "Apply the existing immediate "
+                + "quantity reader at modulus zero, whose carrier ZMod(0) is Z. A legal quantity "
+                + "q yields (1,q) in Z^2, and an illegal word yields (0,0). This response is computed "
                 + "before a coefficient field is selected."),
             Definition("integerFieldTask", "Natural change of coefficient field", "For any field "
                 + "K, f_K applies the natural map from Z to K to both coordinates of integerTask. "

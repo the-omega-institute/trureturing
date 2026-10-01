@@ -66,31 +66,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.parityTas
 
 g(w) applies parityEncode to the immediate mod-two Fibonacci quantity task. Legal zero quantity yields (1,0), distinct from error. This encoding takes the residue representative before passing to rational coordinates.
 
-**Definition 1.6 (Integer window contributions).**
-
-Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.integerDisplacement`
-
-*Formalization.* `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.integerDisplacement` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The five window displacements are (0,0), (1,0), (0,1), (2,1), (1,1), respectively.
-
-**Definition 1.7 (Complete integer composition).**
-
-Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.integerTransition`
-
-*Formalization.* `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.integerTransition` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-At a legal seam, update x to M^3 x plus the window displacement, with M(a,b)=(b,a+b), and store the new low bit as seam. An illegal seam maps to error.
-
-**Definition 1.8 (The integer response).**
+**Definition 1.6 (The integer response).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.integerTask`
 
@@ -100,9 +76,9 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.integerTa
 
 *Commentary.*
 
-A legal final composition x yields (1,qx) in Z^2, and an illegal word yields (0,0). This response is computed before a coefficient field is selected.
+Apply the existing immediate quantity reader at modulus zero, whose carrier ZMod(0) is Z. A legal quantity q yields (1,q) in Z^2, and an illegal word yields (0,0). This response is computed before a coefficient field is selected.
 
-**Definition 1.9 (Natural change of coefficient field).**
+**Definition 1.7 (Natural change of coefficient field).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.integerFieldTask`
 
@@ -114,7 +90,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.integerFi
 
 For any field K, f_K applies the natural map from Z to K to both coordinates of integerTask. It retains the legality coordinate separately from quantity.
 
-**Definition 1.10 (The integer-induced rational task).**
+**Definition 1.8 (The integer-induced rational task).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.integerRationalTask`
 
@@ -126,7 +102,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.integerRa
 
 f_Q(w) starts with seam zero and integer composition (0,0). A legal final composition (a,b) yields (1,2a+3b) in Q^2. Error yields (0,0). No mod-two reduction is taken.
 
-**Definition 1.11 (Two homogeneous seam blocks).**
+**Definition 1.9 (Two homogeneous seam blocks).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.BlockState`
 
@@ -138,7 +114,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.BlockStat
 
 V=Q^4 has coordinates (b_0,c_0,b_1,c_1). An actual legal state occupies only its current seam block with c=1 and b in {0,1}; error is the zero vector.
 
-**Definition 1.12 (Linear parity flips and seam routing).**
+**Definition 1.10 (Linear parity flips and seam routing).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.blockUpdate`
 
@@ -150,7 +126,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.blockUpda
 
 Null and [2] preserve parity, while [3], [25] and [5] flip it using J(b,c)=(c-b,c). Allowed source blocks are sent to the new seam, with contributions added when both source blocks have the same destination. Disallowed blocks map to zero. These formulas define linear maps on all of Q^4.
 
-**Definition 1.13 (The letter operators).**
+**Definition 1.11 (The letter operators).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.blockTransition`
 
@@ -162,7 +138,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.blockTran
 
 Each blockUpdate is regarded as a rational linear endomorphism of the four-dimensional state space.
 
-**Definition 1.14 (Two output channels).**
+**Definition 1.12 (Two output channels).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.blockOutput`
 
@@ -174,7 +150,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.blockOutp
 
 The output is (c_0+c_1,b_0+b_1).
 
-**Definition 1.15 (The initialized four-dimensional representation).**
+**Definition 1.13 (The initialized four-dimensional representation).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.fourDimensional`
 
@@ -186,7 +162,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.fourDimen
 
 The initial vector is (0,1,0,0), each letter uses blockTransition, and the output is blockOutput.
 
-**Definition 1.16 (Actual mod-two states).**
+**Definition 1.14 (Actual mod-two states).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.embed`
 
@@ -198,7 +174,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.embed`
 
 Embed a legal mod-two raw state by retaining the standard representative of its second composition coordinate in its seam block, with homogeneous coordinate one. Embed error as zero.
 
-**Definition 1.17 (Four actual histories).**
+**Definition 1.15 (Four actual histories).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.prefixes`
 
@@ -210,7 +186,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.prefixes`
 
 The histories are the empty word, [3], [2], and [3][2], in that order.
 
-**Definition 1.18 (Actual continuation tests).**
+**Definition 1.16 (Actual continuation tests).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.suffixes`
 
@@ -222,7 +198,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.suffixes`
 
 The four row tests use [5], [5], null[5], null[5], respectively.
 
-**Definition 1.19 (Scalar row observations).**
+**Definition 1.17 (Scalar row observations).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.selectOutput`
 
@@ -234,7 +210,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.selectOut
 
 Rows zero and two observe legality, the first output coordinate. Rows one and three observe parity, the second output coordinate.
 
-**Definition 1.20 (The actual response matrix).**
+**Definition 1.18 (The actual response matrix).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.responseMinor`
 
@@ -246,7 +222,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.responseM
 
 The entry in row i and column j is the selected scalar response of g to prefix j followed by suffix i. Denote this fixed matrix by H. Its rows are (1,1,0,0), (1,0,0,0), (1,1,1,1), (1,0,1,0); its determinant is one.
 
-**Theorem 1.21 (Attained minimum dimension four).**
+**Theorem 1.19 (Attained minimum dimension four).**
 
 $$(\operatorname{Realizes}\left(F, g\right)) \land \\(\operatorname{dim}\left(Q4\right) = 4) \land \\(\forall V, \forall R, ((\operatorname{FiniteQSpace}\left(V\right)) \land \\(\operatorname{LinearWordRep}\left(R, V\right))) \implies ((\operatorname{Realizes}\left(R, g\right)) \implies (4 \leq \operatorname{dim}\left(V\right)))) \land \\(\operatorname{g}\left(word3\right) = \operatorname{pair}\left(1, 1\right)) \land \\(\operatorname{fQ}\left(word3\right) = \operatorname{pair}\left(1, 3\right)) \land \\(responseMinor = H) \land \\(\operatorname{det}\left(responseMinor\right) = 1)$$
 
@@ -273,11 +249,9 @@ The four-dimensional representation attains this lower bound. On [3], the parity
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.blockUpdate`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.embed`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.fourDimensional`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.integerDisplacement`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.integerFieldTask`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.integerRationalTask`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.integerTask`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.integerTransition`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.parityEncode`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.parityTask`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.prefixes`
