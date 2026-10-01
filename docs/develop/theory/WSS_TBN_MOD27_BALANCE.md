@@ -467,3 +467,99 @@ TBN.3 factorization and are paper-first. The no-go statement concerns what can
 be inferred from TBN.3 alone; it neither asserts that the actual \(E_{2,j}\)
 sequence has no deeper law nor changes the open status of Wall--Sun--Sun primes.
 
+
+## Theorem (FQ5: a mod-5 Fermat-quotient balance on the same blocks)
+
+The 3-adic balances above have an independent fixed-prime companion. Keep
+
+\[
+ B_j=L_{2\cdot 3^j}+1=\prod_{p\mid B_j}p^{h_p},\qquad j\ge1,
+\]
+
+with the original Fibonacci depths h_p from TBN.3. For every integer x coprime
+to five, write
+
+\[
+ \lambda_5(x)=\frac{x^4-1}{5}\pmod 5\in\mathbb F_5.
+\]
+
+This is the same Fermat-quotient character as RP.1 in PERIODIC_TREE.md, but it
+is applied here to the even-rank Lucas blocks B_j. It is additive on products:
+
+\[
+ \lambda_5(xy)=\lambda_5(x)+\lambda_5(y),\qquad
+ \lambda_5(x^a)=a\lambda_5(x)\pmod 5.
+\]
+
+**Theorem FQ5.** For every j\ge1,
+
+\[
+ \boxed{\sum_{p\mid B_j}h_p\lambda_5(p)
+ =\begin{cases}4\pmod 5,&j\text{ odd},\\1\pmod 5,&j\text{ even}.\end{cases}}
+ \tag{FQ5.1}
+\]
+
+Consequently every B_j has a prime divisor p with
+
+\[
+ 5\nmid h_p,\qquad p\bmod25\notin\{1,7,18,24\}.
+ \tag{FQ5.2}
+\]
+By TBN.3 this p is in the fixed golden field, has exact Fibonacci rank
+\(\rho(p)=2\cdot3^{j+1}\), and h_p is its original initial depth. Thus the
+same block always contains a depth not divisible by five at a nontrivial
+modulo-25 Fermat-quotient class. If h_p=1 this is a non-WSS witness; if
+h_p\ge2 it is a WSS witness. The theorem does not choose between those two
+cases.
+
+**Proof.** TBN.2 gives B_1=19 and
+\[
+ B_{j+1}=B_j^3-3B_j^2+3.
+\]
+Modulo 25 this recurrence alternates 19 and 4, since
+\[
+ 19^3-3\cdot19^2+3\equiv4,\qquad
+ 4^3-3\cdot4^2+3\equiv19\pmod{25}.
+\]
+RP.1 gives \(\lambda_5(19)=4\) and \(\lambda_5(4)=1\). Since TBN.3 excludes p=5 and records the exact factorization with the original exponents,
+additivity gives
+\[
+ \sum_{p\mid B_j}h_p\lambda_5(p)=\lambda_5(B_j),
+\]
+which is FQ5.1. The kernel of \(\lambda_5\) on
+\((\mathbb Z/25\mathbb Z)^\times\) is
+\(\{1,7,18,24\}\) (the four roots of x^4=1 modulo 25), so a zero sum would
+result if every term had either 5|h_p or p in that kernel. The nonzero right
+side therefore forces FQ5.2. TBN.3 supplies the rank and fixed-field claims.
+
+There are no exceptional starting indices: j=1 and j=2 are included directly
+by B_1=19 and the recurrence. The first exact factorizations provide an
+independent audit:
+
+\[
+\begin{array}{c|c|c|c}
+j&B_j&\text{prime factors}&\sum h_p\lambda_5(p)\bmod5\\\hline
+1&19&19&4\\
+2&5779&5779&1\\
+3&192900153619&3079\cdot62650261&4\\
+4&7177905237579946589743592924684179
+ &59779\cdot120074026624398979403194983601&1\\
+5&369822356418414944143680173221426891716916679027557977938929258031490127514207143830378340325399155219&1459\cdot58321\cdot67234945243909760461\cdot64642456533364216165903625998192510598323380531684784427098565775883411861&4
+\end{array}
+\]
+
+The displayed rows are checks only; FQ5.1 does not use a factorization search.
+
+**Relation to existing results and boundary.** RP.3 already gives a mod-5
+weighted depth identity for odd-index primitive Fibonacci blocks. The present
+statement is not an instantiation of RP.3: the factors here have exact rank
+\(2r_j\), the even-rank Lucas block B_j is the fixed-golden TBN tower, and the
+argument uses its cubic recurrence to evaluate B_j modulo 25. A targeted search
+of the dev tree and WSS PR history found no prior \(\lambda_5(B_j)\) or even-rank
+B_j depth balance. The claim is paper-first; no Lean/Scribe declaration is
+introduced. It constrains the actual initial-depth vector but does not prove a
+WSS prime, a non-WSS prime family, or a resolution of Wall--Sun--Sun.
+
+The only arithmetic inputs are the already recorded TBN.2--TBN.3 identities,
+the elementary multiplicativity of the Fermat quotient, and the RP.1 kernel
+calculation. No abc, height, equidistribution, or Robin/RH hypothesis is used.
