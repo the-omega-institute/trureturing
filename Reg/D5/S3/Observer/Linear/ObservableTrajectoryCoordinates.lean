@@ -98,14 +98,4 @@ def registration : Registration arena (arena.Law actual) where
       exact (hne (by cases role;cases other;rfl)).elim
     · intro e;exact nomatch e
   dependence := dependence_proof
-register_information_theorem _root_.D5.S3.Observer.Linear.ObservableTrajectoryCoordinates.observable_trajectory_coordinates in arena
-  readout via (realize signature (fun _ p x => p.2.2.2.1 ((NormedSpace.exp (p.2.2.2.2 • p.2.2.1)) x)) emptyAnchor)
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Observer.Linear.ObservableTrajectoryCoordinates,
-    coordinates := #[0,1,2,3,9],
-    readouts := #[{
-      path := #["body","body","body","body","body","body","body","arg","body","fn","arg","body","arg","body"],
-      stateOperand := some #["arg","arg"] }] })
-  escape continues (open)
 end Reg.D5.S3.Observer.Linear.ObservableTrajectoryCoordinates
