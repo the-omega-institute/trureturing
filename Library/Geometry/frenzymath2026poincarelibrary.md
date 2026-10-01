@@ -749,3 +749,58 @@ cusps and nonorientable manifolds. The existing escape audit remains
 unfinished:
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
 Neither these compilation checks nor CI closes that audit.
+
+
+## Fundamental groups and the actual deck and holonomy groups
+
+For the actual H3 quotient covering selected in the preceding realization,
+Mathlib's `IsQuotientCoveringMap.fundamentalGroupEquiv` identifies the target
+fundamental group at the selected basepoint with the opposite of the full
+covering deck group. The source uses its already established simple
+connectedness in the original H3 topology. The lifted basepoint is in the
+actual fiber because the same selected covering sends it to the prescribed
+target basepoint. No new simple-connectedness premise is imposed on the
+target. Opposite multiplication is retained explicitly; the plain `op` or
+`unop` function is not treated as a group homomorphism.
+
+The target realization check includes this fundamental-group equivalence
+for that very covering, along with its faithful free and compact-set proper
+original-H3 isometric representation, projection-compatible homeomorphism
+and intrinsic isometric realization. One universal target clause is added
+to the constructor for the same actual H3 metric `g`. Removing that clause
+and its application and reversing names/import restores the preceding whole
+constructor byte-for-byte. All its earlier clauses remain. Witnesses in the
+new clause are selected together; no equality with separately quantified
+older covering witnesses is asserted.
+
+For a homotopy equivalence between two target spaces, Mathlib's
+`FundamentalGroupoidFunctor.equivOfHomotopyEquiv` supplies an equivalence of
+fundamental groupoids. Its fully faithful functor's `mulEquivEnd` gives an
+isomorphism of fundamental groups whose underlying homomorphism is exactly
+`FundamentalGroup.map` for the given continuous map. Basepoint transport by
+`eqToIso.conj` retains exactly `FundamentalGroup.mapOfEq` when the image
+basepoint is identified with the target basepoint.
+
+Composing this induced isomorphism with the two actual covering
+fundamental-group equivalences gives an isomorphism of opposite deck
+groups. Mathlib's `MulEquiv.unop` converts the whole isomorphism to one
+between the actual deck groups. Its opposite commutes with the given
+map's induced fundamental-group homomorphism and the two selected covering
+equivalences, pointwise on every loop class. Thus the constructed group
+isomorphism has the required relation to the original homotopy equivalence.
+For the faithful original-H3 deck representations, `MonoidHom.ofInjective`
+then transports a deck-group isomorphism to an abstract isomorphism of their
+image subgroups, taking each represented deck element to the representation
+of its corresponding element.
+
+These are six scoped transient classical applications under unchanged pins,
+with only `propext`, `Classical.choice` and `Quot.sound`; no new project Lean
+declaration or novelty claim is retained. The image subgroup isomorphism
+does not establish discreteness in the ambient isometry-group topology,
+finite covolume or realization by an ambient conjugator. Finite-volume
+cusp classification and covolume, lattice rigidity, and full Mostow-Prasad
+existence, homotopy and uniqueness remain unfinished, including noncompact
+cusps and nonorientable manifolds. The existing escape audit remains
+unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these compilation checks nor CI closes that audit.
