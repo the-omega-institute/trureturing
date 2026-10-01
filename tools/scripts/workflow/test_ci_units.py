@@ -237,6 +237,19 @@ class CiUnitsTests(unittest.TestCase):
                 self.assertNotEqual(changed.stdout, first.stdout)
                 first = changed
 
+    def test_extended_patterns_are_rejected_in_shared_cache_and_project_patterns(self):
+        self.commit_tree(self.base_tree())
+        cases = (("shared_inputs", ["!x(a)", "global.json"]),
+                 ("caches", {"fixture-build": {"project": "tests/T/T.csproj", "inputs": ["config/@(build).props"]}}))
+        for key, value in cases:
+            with self.subTest(key=key):
+                saved = self.manifest[key]
+                self.manifest[key] = value
+                self.assertEqual(self.fingerprint().returncode, 2)
+                self.manifest[key] = saved
+        self.projects["projects"][2]["include"] = ["shared/@(Exact).cs"]
+        self.assertEqual(self.fingerprint().returncode, 2)
+
     def test_fingerprint_ignores_closure_excludes(self):
         self.manifest["closure_excludes"] = ["shared/"]
         self.commit_tree(self.base_tree())
@@ -258,7 +271,9 @@ class CiUnitsTests(unittest.TestCase):
                 self.assertEqual(result.returncode, 2, result.stdout)
 
     def test_patterns_are_limited_to_star_and_question_mark(self):
-        for pattern in ("assets/[ab].cs", "assets/{a,b}.cs", "assets/\\*.cs", "assets/a]"):
+        for pattern in ("assets/[ab].cs", "assets/{a,b}.cs", "assets/\\*.cs", "assets/a]",
+                        "assets/@(a|b).cs", "assets/+(a).cs", "assets/?(a).cs", "assets/*(a).cs",
+                        "assets/a|b.cs", "assets/(a).cs"):
             with self.subTest(pattern=pattern):
                 self.manifest["units"][0]["inputs"] = sorted(["!linked/Omit.cs", "global.json", pattern])
                 self.assert_error(self.resolve(), "pattern")
