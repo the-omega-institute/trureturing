@@ -38,19 +38,19 @@ The proof consumes the IsSignTable opposite law, so the quadratic datum is not a
 
 Lean statement: `D5/S3/VertexAlgebra/MonsterShortSupportSpin.shortWeight`
 
-*Formalization.* `D5/S3/VertexAlgebra/MonsterShortSupportSpin.shortWeight` (`✓ std3`).
+*Definition.* Machine-checked in Lean as `D5/S3/VertexAlgebra/MonsterShortSupportSpin.shortWeight` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* F. J. MacWilliams and N. J. A. Sloane (1977). *The Theory of Error-Correcting Codes*. URL: <https://archive.org/details/theoryoferrorcor00macw>.
+*Acknowledgement.* Tathagata Basak (2017). *The octonions as a twisted group algebra*. URL: <https://arxiv.org/abs/1702.05705>.
 
 *Commentary.*
 
-The existing unique representative theorem remains in MonsterShortSupport; this declaration supplies its public weight expression.
+The existing unique representative theorem remains in `MonsterShortSupport`; this declaration supplies its public weight expression.
 
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/MonsterShortSupportSpin.labelQuadratic_groundSection`
 - Truth anchor: `D5/S3/VertexAlgebra/MonsterShortSupportSpin.labelQuadratic_groundSection_polar`
-- Truth anchor: `D5/S3/VertexAlgebra/MonsterShortSupportSpin.shortWeight`
+- Truth anchor: `D5/S3/VertexAlgebra/MonsterShortSupportSpin.unique_short_support_public`
 - Dependency: [D5/S3/VertexAlgebra/MonsterShortSupport](MonsterShortSupport.md)

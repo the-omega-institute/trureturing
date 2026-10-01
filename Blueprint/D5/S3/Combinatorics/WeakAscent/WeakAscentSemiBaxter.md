@@ -24,6 +24,10 @@ Lean statement: `D5/S3/Combinatorics/WeakAscent/WeakAscentSemiBaxter.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/WeakAscent/WeakAscentSemiBaxter.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/benyi-mansour-ramirez-weak-ascent-210` (proved) by `D5/S3/Combinatorics/WeakAscent/WeakAscentSemiBaxter.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"benyi-mansour-ramirez-weak-ascent-210","declaration_gid":"D5/S3/Combinatorics/WeakAscent/WeakAscentSemiBaxter.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Beáta Bényi, Toufik Mansour, José L. Ramírez (2024). *Pattern Avoidance in Weak Ascent Sequences*. DOI: [10.46298/dmtcs.12273](https://doi.org/10.46298/dmtcs.12273). URL: <https://arxiv.org/abs/2309.06518v4>.
