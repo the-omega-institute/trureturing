@@ -35944,3 +35944,127 @@ $w(y)\Phi(y)\ge-K-1$，§92.3 遂推出 RH。
 可使较宽实际价格胞腔的误差一致趋零，而无须先估计起点的绝对 $\Psi(a)-a$。
 尚未取得全部五窗来源到式（260.14）的价格映射或共同端点预算；
 这些价格胞腔不增加 Robin 的整数认证覆盖范围。
+
+## 261. $\alpha,\beta$ 的生成基础与“不可约关系”的边界
+
+本节把“两个不可约关系”校准为一个严格的代数命题。$\alpha,\beta$
+确实给出当前语法的两个最底层生成元，但它们不是已经证明的两种普遍关系类型。
+结构关系由二元接合 $\langle\_,\_\rangle$ 给出，Fibonacci 关系由替换 $\rho$ 的两条生成规则给出。
+
+### 定义 261.1（自由二叶关系语法）
+
+令
+
+$$
+F(X)=\{\alpha,\beta\}\sqcup(X\times X).
+$$
+
+本卷的原始项代数是 $F$ 的初始代数 $\mathcal T$。其构造写成
+
+$$
+t::=\alpha\mid\beta\mid\langle s,t\rangle.
+$$
+
+因此，$\alpha,\beta$ 是两个零元构造子，$\langle s,t\rangle$ 是唯一的结构接合构造子。
+称 $\alpha,\beta$ 为原子，是因为它们不能再由该接合构造拆成更小的项；
+这一定义的“不可约”只相对于这份语法成立。
+
+### 定理 261.2（生成元的初始性）
+
+对任意集合 $X$、两个元素 $x_\alpha,x_\beta\in X$ 及二元运算
+$\mu:X\times X\to X$，存在唯一映射
+
+$$
+\operatorname{eval}_{x_\alpha,x_\beta,\mu}:\mathcal T\to X
+$$
+
+满足
+
+$$
+\operatorname{eval}(\alpha)=x_\alpha,
+\qquad
+\operatorname{eval}(\beta)=x_\beta,
+\qquad
+\operatorname{eval}(\langle s,t\rangle)
+=\mu(\operatorname{eval}(s),\operatorname{eval}(t)).
+$$
+
+所以任何在本语法中可表达的关系对象，都由这两个原子和反复接合生成；
+这说明的是一个**最小生成表示**，不是说任意关系网络在任何任务下都只有两个状态。
+
+### 定义 261.3（Fibonacci 递归层）
+
+在同一初始代数上，令 $\rho$ 是由下列两叶像并按二元接合递归扩展的唯一树替换映射：
+
+$$
+\rho(\alpha)=\beta,
+\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,
+\qquad
+\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle.
+$$
+
+它是取上述叶像并保持二元接合的唯一递归映射。于是 Fibonacci 结构不是额外添加的第三个原子，
+而是作用在同一生成语法上的一个内部递归过程。
+
+若 $c:\mathcal T\to\mathbb N^2$ 是第 3.3 节的叶计数观察，则有交换式
+
+$$
+\begin{CD}
+\mathcal T @>{\rho}>> \mathcal T\\
+@V{c}VV @VV{c}V\\
+\mathbb N^2 @>{M}>> \mathbb N^2
+\end{CD}
+\qquad
+\text{即}
+\qquad
+c\circ\rho=M\circ c.
+$$
+
+这给出四个不同层次：
+
+$$
+\boxed{
+\text{原子生成元 }(\alpha,\beta)
+\longrightarrow
+\text{结构接合 }\langle\_,\_\rangle
+\longrightarrow
+\text{递归作用 }\rho
+\longrightarrow
+\text{数量观察 }c\text{ 与矩阵 }M.
+}
+$$
+
+### 命题 261.4（原子层不等于数量层）
+
+数量观察不是原始语法的同一性判定。具体地，
+
+$$
+t_1=\langle\alpha,\beta\rangle,
+\qquad
+t_2=\langle\beta,\alpha\rangle
+$$
+
+满足 $c(t_1)=c(t_2)$，且对所有 $j$ 都有
+$c(\rho^j(t_1))=c(\rho^j(t_2))$；但 $t_1\ne t_2$。
+若任务声明了按位置读取或保留有序叶事件的接口，则该接口可以区分二者。
+
+因此，$\alpha,\beta$ 是生成整个原始关系语法的最小原子字母，
+而 $(a,b)$ 只是指定数量任务下的行为商。若未来操作会读取次序、括号、共享来源、
+权限或记录，边界必须回到能够保留这些关系的更细状态；不能把“两个原子”
+直接当作所有任务的两个充分状态。
+
+### 结论 261.5（对项目统一模型的定位）
+
+在“局部过程—观察者—边界—拼接”框架中，最准确的基础声明是：
+
+$$
+\boxed{
+\text{底层只有两个原子生成元，}
+\text{但关系由接合、递归作用和任务观察共同生成。}
+}
+$$
+
+所以本卷比后续的素性封装、数量边界和外部读取更基础，
+原因是它先给出可递归生成的语法；但它没有单独证明所有关系都可压缩成两个状态，
+也没有替代由指定未来实验定义的最小行为边界。
