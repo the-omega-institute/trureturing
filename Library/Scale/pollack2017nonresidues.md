@@ -412,3 +412,37 @@ reach the cutoff for $m_1$, (P4) lets that supplied negative-prime weight
 contribute to $J_{\rm miss}$ without deleting the listed exceptions again.
 The missing estimate must still cross the full same-integer Euler budget;
 $D$ square, unit bit zero and uncontrolled $q$ remain separate branches.
+
+## A canonical family outside the sufficient conductor cutoff
+
+The [canonical local-residue construction](grahamringrose1990least.md#a-canonical-source-with-vanishing-logarithmic-character-weight)
+uses the same actual unit-one source and has $D\asymp n$,
+$Y=\log n\sim2z$, no negative primitive-character prime up to $z$,
+and $W_\delta^{\log}(Y)\to0$. It retains the ramified zero at three.
+Its primitive conductor $q=\delta$ satisfies $q>z$: choose
+$1\le a<q$ with $\chi_\delta(a)=-1$. Its prime factors have nonzero
+character, and at least one has value $-1$, hence lies strictly between
+$z$ and $q$. In particular $q\to\infty$.
+
+For each preassigned $\beta_0<b<1/4$, choose
+$0<c<\log(4\sqrt e\,b)$. The weighted consequence above gives
+$W_{\chi_\delta}(q^b)\ge c$ once $q$ reaches its stated threshold.
+If $q^b\le Y$, then
+
+$$
+c\le W_{\chi_\delta}(q^b)
+\le W_\delta^{\log}(Y),
+$$
+
+which contradicts the latter's convergence to zero. Thus this canonical
+family eventually has
+
+$$
+q^b>\log n,\qquad m_1^b\ge q^b>\log n.
+$$
+
+The actual primitive conductor already exceeds this sufficient cutoff;
+an improved upper certificate for $m_1$ cannot change that fact on this
+family. The onset may depend on the fixed $b,c$. This is a paper-level
+application of the existing weighted estimate, not a new analytic theorem,
+an assertion $q\asymp n$, or an obstruction proved on SA/CA candidates.

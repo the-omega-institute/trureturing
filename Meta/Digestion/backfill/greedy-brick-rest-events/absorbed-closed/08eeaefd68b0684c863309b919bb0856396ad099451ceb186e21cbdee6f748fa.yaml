@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:08eeaefd68b0684c863309b919bb0856396ad099451ceb186e21cbdee6f748fa
+  normalized_sha256: sha256:08eeaefd68b0684c863309b919bb0856396ad099451ceb186e21cbdee6f748fa
+cas_ref: sha256:08eeaefd68b0684c863309b919bb0856396ad099451ceb186e21cbdee6f748fa
+coverage_gids:
+  - gid: D5/S3/Combinatorics/GreedyBrick/EventRealization.successor_inverse_laws
+    target_statement_id: sha256:d6b723b146b77cf6cad9f9865fa70fa94f27db24543b595e14cee0b9bfdf9caf
+receipts:
+  unresolved_subitems: []
