@@ -695,8 +695,26 @@ jobs:
             tools/tests/StrataLint.RepositoryDigestion.Tests/*
             [tests-repository-filemap]
             *
+            !Blueprint/*
+            !D5/*
+            !Evidence/*
+            !Golden/Frozen/*
+            !Library/*
+            !Meta/Digestion/*
+            !Problems/*
+            !Reg/D5/*
+            !docs/*
             [tests-repository-topology]
             *
+            !Blueprint/*
+            !D5/*
+            !Evidence/*
+            !Golden/Frozen/*
+            !Library/*
+            !Meta/Digestion/*
+            !Problems/*
+            !Reg/D5/*
+            !docs/*
             [tests-resource-observation]
             tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
