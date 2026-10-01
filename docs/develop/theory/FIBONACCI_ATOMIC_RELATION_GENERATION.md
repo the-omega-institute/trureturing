@@ -42360,3 +42360,201 @@ H_{L,k}=3^{e_L}Q_L^k
 **证明。** 取定理303.2的 $\eta=0$ 即得整个子纤维的安全性。$A_L\mid H$ 使约数倒数和单调，故 $U_H\ge U_{A_L}$；相同素支撑的饱和上界给 $U_H\le\mathscr F_L$。由（302.22）–（302.23），$U_{A_L}=\mathscr F_L\delta(A_L)$、$\mathscr F_L=O(\log L)$，得到（303.23）。$Q_L$ 与三互素，且 $H_{L,k}=A_LQ_L^{k-1}$，所以（302.6）给同签名，素支撑不变。
 
 因而对充分大 $L$，在三赋值固定时，仅增加已可见的非三素数幂次不能产生本纤维的 Robin 违例；甚至低于（303.11）预算的新素轴也不足以消掉所列余量。剩余候选允许在模三等于一的缺失带、或更高素数处引入足够多新轴。定理303.3只给该来源纤维的数量条件，不排除全部此类候选，也没有估计任意整数或价格剥离的有符号尾项。$\square$
+
+## 304. 缺失素数的分位填充与同签名预算纤维的精确极限余量
+
+**定义 304.0。** 沿用 §§302–303 的 $m=m_L=3L+2$、$A_L$、$E$、$\mathscr F_L$、$\mathcal N_L(H)$、$K_L(H)$ 与 $J_L(H)$。对 $L\ge3$、整数 $K\ge0$，置
+\[
+x_L(K)=\frac{K\log m}{m},\qquad
+Y_L(K)=\frac m2+2K\log m.
+\tag{304.1}
+\]
+对 $y>1$，定义只依赖来源核心与截断的有限集合及费用
+\[
+\mathcal M_L(y)=\{p:p\text{ 为素数},\ p\nmid A_L,\ p\le y\},
+\qquad
+\mathcal Q_L(y,K)=\frac K{y-1}
++\sum_{p\in\mathcal M_L(y)}
+\left(\frac1{p-1}-\frac1{y-1}\right).
+\tag{304.2}
+\]
+定义实曲线
+\[
+\delta(x)=\log(3/4+x)-\tfrac12\log(1/2+2x),\qquad x\ge0.
+\tag{304.3}
+\]
+对 $0\le\eta\le1/4$，定义完整预算纤维及其下确界
+\[
+\mathcal B_L(\eta)=\{H\ge1:\mathcal O_L(H)=\mathcal O_L(A_L),\
+K_L(H)\log m/m\le\eta\},
+\qquad
+\mathfrak D_L(\eta)=\inf_{H\in\mathcal B_L(\eta)}\Delta(H).
+\tag{304.4}
+\]
+$A_L\in\mathcal B_L(\eta)$。集合不设整数高度上限或非三素数指数上限；同签名仍固定 $v_3(H)=e_L$。有限下界来自（303.4）、$H\ge A_L$ 及所列计数预算，因此（304.4）的实下确界存在。
+
+**定理 304.1（同一个整数的高度费用与分位证书）。** 对 $L\ge3$、$H\ge1$ 且 $\mathcal O_L(H)=\mathcal O_L(A_L)$，记 $K=K_L(H)$。对每个实数 $y>1$，有
+\[
+A_L\prod_{p\in\mathcal N_L(H)}p\mid H,
+\qquad
+\log H\ge\log A_L+K\log(m/2),
+\qquad
+J_L(H)\le\mathcal Q_L(y,K).
+\tag{304.5}
+\]
+从而有不使用假设302.1的有限证书
+\[
+\Delta(H)\ge
+E\log\bigl(\log A_L+K\log(m/2)\bigr)
+-\mathscr F_L\exp\bigl(\mathcal Q_L(y,K)\bigr).
+\tag{304.6}
+\]
+这里对数的内层参数为正。
+
+**证明。** $A_L\mid H$，新素数的平方自由乘积也整除 $H$；它与 $A_L$ 互素，所以二者的乘积整除 $H$。每个新素数大于 $m/2$，取对数并求和给高度界。这只对新素数计一次，没有把 $A_L$ 已含的幂次重复收费。
+
+对任意有限集合 $S$、候选集合 $T$、权重 $w$ 与实数 $q$，若 $w(p)\le q$ 对 $p\in S\setminus T$ 成立，且 $w(p)\ge q$ 对 $p\in T$ 成立，则经典有限截断求和给
+\[
+\sum_{p\in S}w(p)\le |S|q+\sum_{p\in T}(w(p)-q).
+\tag{304.7}
+\]
+证明是在 $S\cap T$ 上保留 $w-q$，在其补集上用 $q$，随后以非负项补齐 $T\setminus S$。这是单调权重的标准重排中间步骤，并非新的重排原理。
+
+取 $S=\mathcal N_L(H)$、$T=\mathcal M_L(y)$、$w(p)=1/(p-1)$、$q=1/(y-1)$。$w$ 对 $p>1$ 递减；（303.10）使 $J_L(H)\le\sum_{p\in S}w(p)$，于是得到最后一项。$A_L\ge5$ 且 $m/2>1$，故 $\log A_L+K\log(m/2)>0$。Robin 阈值随正的 $\log H$ 单调，而 $U_H\le\mathscr F_Le^{J_L(H)}$；将同一个 $H$ 的这两个界相减即得（304.6）。$\square$
+
+**定理 304.2（整个预算纤维的一致余量曲线）。** 假设302.1成立。对每个固定 $0\le\eta\le1/4$ 及每个 $\varepsilon>0$，全部充分大的 $L$ 与全部 $H\in\mathcal B_L(\eta)$ 一致满足
+\[
+\Delta(H)\ge E\delta\bigl(x_L(K_L(H))\bigr)-\varepsilon
+\ge E\delta(\eta)-\varepsilon.
+\tag{304.8}
+\]
+当 $\eta<1/4$ 时，$\delta(\eta)>0$，所以整个预算纤维最终满足严格 Robin 不等式，且其成员最终都大于5040。阈值允许依赖 $\eta$、$\varepsilon$ 与固定解析输入。
+
+**证明。** 记 $x=x_L(K)\in[0,\eta]$、$\beta=1/2+2x\in[1/2,1]$，并取 $y=Y_L(K)=\beta m$。由（302.7），
+\[
+\mathcal M_L(\beta m)
+=\{p:m/2<p\le\beta m,\ p\equiv1\pmod3\}.
+\tag{304.9}
+\]
+三已整除核心，另一剩余类在 $p\le m$ 内已经全部可见。
+
+令 $N_L(\beta)=|\mathcal M_L(\beta m)|$、$S_L(\beta)=\sum_{p\in\mathcal M_L(\beta m)}1/(p-1)$。假设302.1的固定模素数定理经分部求和给
+\[
+N_L(\beta)=\frac{(\beta-1/2)m}{2\log m}
++O\!\left(\frac m{\log^2m}\right)
+=K+O\!\left(\frac m{\log^2m}\right),
+\tag{304.10}
+\]
+\[
+S_L(\beta)=\frac{\log(2\beta)}{2\log m}
++O\!\left(\frac1{\log^2m}\right).
+\tag{304.11}
+\]
+误差对整个闭区间 $\beta\in[1/2,1]$ 一致；在 $\beta=1/2$ 时两个实际和均为空。替换 $1/p$ 为 $1/(p-1)$ 的总误差为 $O(1/m)$。这里使用绝对误差，不要求短区间的相对计数误差趋零，因此覆盖 $K=0$ 及很小的 $K$。
+
+有限分位费用恰为
+\[
+\mathcal Q_L(\beta m,K)
+=S_L(\beta)+\frac{K-N_L(\beta)}{\beta m-1},
+\qquad
+\log m\,\mathcal Q_L(\beta m,K)
+=\tfrac12\log(1+4x)+o(1),
+\tag{304.12}
+\]
+最后的误差一致于全部预算中的整数 $K$。计数项的两个主费用在这里抵消；直接以 $2K/(m-2)$ 代替它不会保留这种精度。
+
+由 §302 的解析计算，
+\[
+\frac{\log A_L}{m}=\frac34+o(1),\qquad
+\mathscr F_L=E\log m-\frac E2\log2+o(1).
+\tag{304.13}
+\]
+因此一致于 $x\in[0,\eta]$，
+\[
+E\log\bigl(\log A_L+K\log(m/2)\bigr)
+=E\log m+E\log(3/4+x)+o(1),
+\tag{304.14}
+\]
+\[
+\mathscr F_L\exp\bigl(\mathcal Q_L(\beta m,K)\bigr)
+=E\log m-\frac E2\log2
++\frac E2\log(1+4x)+o(1).
+\tag{304.15}
+\]
+第二式使用一致的 $\mathcal Q_L=O(1/\log m)$ 与指数在零处的展开。相减的右端就是 $E\delta(x)+o(1)$，所以（304.6）给（304.8）的第一式。
+
+曲线的纯代数恒等式与导数为
+\[
+2\delta(x)=\log\left(1+\frac{(x-1/4)^2}{1/2+2x}\right),
+\qquad
+\delta'(x)=\frac{x-1/4}{(3/4+x)(1/2+2x)}.
+\tag{304.16}
+\]
+故 $\delta$ 在 $[0,1/4]$ 递减，在 $[0,1/4)$ 为正，并且 $\delta(1/4)=0$。这给第二式与最终严格性。$H\ge A_L$ 和 $\log A_L\sim3m/4$ 保证共同阈值之后 $H>5040$。$\square$
+
+**定理 304.3（实际填充达到下确界的极限）。** 假设302.1成立。对每个固定 $0\le\eta\le1/4$，将不整除 $A_L$ 的全部素数按全局大小递增排列为 $q_{L,1},q_{L,2},\ldots$，并置
+\[
+k_L=\left\lfloor\frac{\eta m}{\log m}\right\rfloor,
+\qquad
+T_{L,\eta}=\prod_{j=1}^{k_L}q_{L,j},\qquad
+H_{L,\eta}=A_LT_{L,\eta}.
+\tag{304.17}
+\]
+空乘积取一。则 $H_{L,\eta}\in\mathcal B_L(\eta)$，且
+\[
+\frac{\log H_{L,\eta}}m\longrightarrow\frac34+\eta,
+\qquad
+U_{H_{L,\eta}}
+=E\log m+\frac E2\log(1/2+2\eta)+o(1),
+\tag{304.18}
+\]
+\[
+\Delta(H_{L,\eta})\longrightarrow E\delta(\eta),
+\qquad
+\mathfrak D_L(\eta)\longrightarrow E\delta(\eta).
+\tag{304.19}
+\]
+特别地，在 $\eta=1/4$ 时，这两个极限均为零；这不决定该端点各有限整数的严格 Robin 符号。
+
+**证明。** $L\ge3$ 时，三整除 $A_L$，所以每个被选择的素数不同于三，且不整除 $A_L$。$T_{L,\eta}$ 平方自由并与 $A_L$ 互素；（302.6）给同签名，新增素数个数恰为 $k_L$，故满足预算。当 $\eta=0$ 时，结论归为 §302 的核心余量。
+
+对 $\eta>0$，记最后选中素数为 $z_L$。由（304.10）及端点外的普通素数计数，
+\[
+\frac{z_L}m\longrightarrow\beta_\eta:=\frac12+2\eta.
+\tag{304.20}
+\]
+当 $\eta<1/4$ 时，$z_L<m$ 最终成立，选中者全在模三等于一的缺失带内。当 $\eta=1/4$ 时，全局排序的定义仍有效：对任何固定 $h>0$，截至 $(1-h)m$ 的缺失素数不足预算，而截至 $(1+h)m$ 已超过预算，因此 $z_L/m\to1$；不需要声称该端点所选素数全部小于等于 $m$。
+
+所选素数都至少为 $m/2$，且至多为 $(\beta_\eta+o(1))m$，所以它们的对数除以 $\log m$ 一致趋于一。由 $k_L\log m/m\to\eta$，得 $\log T_{L,\eta}/m\to\eta$，给大小渐近。固定剩余类分部求和及（304.20）还给
+\[
+\log m\sum_{j=1}^{k_L}\log(1-q_{L,j}^{-1})^{-1}
+\longrightarrow\tfrac12\log(2\beta_\eta).
+\tag{304.21}
+\]
+端点附近超出或未达到 $m$ 的部分总贡献为 $o(1/\log m)$，由固定比例夹逼即可得到。
+
+约数权重的互素乘法性给精确式
+\[
+U_{H_{L,\eta}}=U_{A_L}\prod_{j=1}^{k_L}(1+q_{L,j}^{-1})
+=U_{A_L}\exp\left(\sum_{j=1}^{k_L}\log(1-q_{L,j}^{-1})^{-1}\right)
+\prod_{j=1}^{k_L}(1-q_{L,j}^{-2}).
+\tag{304.22}
+\]
+最后乘积的缺损为 $O(1/m)$，与 $U_{A_L}=O(\log m)$ 相乘仍为 $o(1)$。用（302.16）与（304.21）展开，就得（304.18）的权重项；与同一整数的阈值相减得到余量极限。定理304.2给全部成员的一致下界，构造成员给下确界的上界，夹逼得到（304.19）。这里断言的是下确界的精确极限，没有断言构造在每个有限 $L$ 上实现精确最小值。$\square$
+
+**定理 304.4（数量门槛、平均差与适用边界）。** 假设302.1成立。对每个 $\varepsilon>0$，全部充分大的 $L$ 与全部同签名 Robin 非严格违例 $H>5040$ 都满足
+\[
+\frac{K_L(H)\log m}{m}>\frac14-\varepsilon.
+\tag{304.23}
+\]
+同时，精确极限余量可以写成
+\[
+\delta(\eta)=\log\frac{(1+\beta_\eta)/2}{\sqrt{\beta_\eta}},
+\qquad \beta_\eta=1/2+2\eta.
+\tag{304.24}
+\]
+它是两个剩余类截断系数 $1$、$\beta_\eta$ 的算术平均与几何平均之比的对数。
+
+**证明。** 若（304.23）失败，取一个固定 $\eta<1/4$，使该整数的归一化计数不大于 $\eta$；定理304.2的最终严格性矛盾。对任意给定 $\varepsilon>0$，可取 $\eta=\max\{0,1/4-\varepsilon/2\}$，于是同一个阈值覆盖全部违例。式（304.24）由（304.3）直接化简。
+
+仅就定性排除而言，§233.2 的经典 benefit 缺失支撑质量界、§303 的 Euler 计数上界及按 $\log H/m$ 分割高度，已经可以推出相应必要门槛；这里没有把经典支撑损失另命名为新原理。新增承重是实际饱和来源上的一致曲线（304.8）与达到其极限的平方自由填充（304.17）–（304.19）。这些推导不宣称文献优先权。（304.19）的零端点不证明违例存在，不将 $1/4$ 认定为严格 Robin 安全性的尖锐阈值，也不控制其他签名、任意整数或价格剥离的有符号尾项。$\square$
