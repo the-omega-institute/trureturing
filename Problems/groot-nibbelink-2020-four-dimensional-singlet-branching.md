@@ -17,12 +17,14 @@ S. Groot Nibbelink, O. Loukas, A. Mütter, E. Parr and P. K. S. Vaudrevange
 question of heterotic orbifolds that are supersymmetric in every twisted sector
 but not globally to a statement about finite groups:
 
-> There does not exist any finite group $\mathbf{H}$ that has a
-> four-dimensional representation $D_\rep{4}$ with the following three
-> properties: (i) $D_\rep{4}$ has a trivial determinant … (ii) $D_\rep{4}$ does
-> not contain the trivial singlet representation of $\mathbf{H}$ … (iii) but
-> the branchings of $D_\rep{4}$ to all $\Z{N} \subset \mathbf{H}$ subgroups
-> always contain the trivial $\Z{N}$-singlet representation.
+```latex
+There does not exist any finite group $\mathbf{H}$ that has a
+four-dimensional representation $D_\rep{4}$ with the following three
+properties: (i) $D_\rep{4}$ has a trivial determinant … (ii) $D_\rep{4}$ does
+not contain the trivial singlet representation of $\mathbf{H}$ … (iii) but
+the branchings of $D_\rep{4}$ to all $\Z{N} \subset \mathbf{H}$ subgroups
+always contain the trivial $\Z{N}$-singlet representation.
+```
 
 Issue #11489 fixes the reading: `H` is any finite group, `D` any complex
 representation on `ℂ⁴`, (ii) means that no nonzero vector is fixed by all of
