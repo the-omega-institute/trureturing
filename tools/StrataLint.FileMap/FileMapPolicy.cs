@@ -4,7 +4,6 @@ using System.Text.RegularExpressions;
 using System.Text.Json;
 using StrataLint.Engine;
 using StrataLint.Configuration;
-using StrataLint.EngineeringScope;
 using StrataLint.Scribe;
 
 namespace StrataLint.FileMap;
@@ -54,9 +53,8 @@ internal static partial class FileMapPolicy
     private static readonly IReadOnlyDictionary<string, string> DataVerifierImplementations =
         new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            ["CommonExecutionEvidence"] = "tools/StrataLint.ExecutionEvidence/CommonExecutionEvidence.cs",
+            ["RegisteredCheckMaterials"] = "tools/StrataLint.Engine/RepositoryIo/RegisteredCheckMaterials.cs",
             ["EngineeringProjectRegistry"] = "tools/StrataLint.Engine/RepositoryIo/EngineeringProjectRegistry.cs",
-            ["JudgeSeedRegistration"] = "tools/scripts/report/dotnet_producer.py",
             ["BackfillInventoryLoader"] = BackfillLoaderPath,
             ["FileMapLoader"] = FileMapLoaderPath,
             ["FrozenStateRecordLoader"] = FrozenStateRecordLoaderPath,
@@ -66,9 +64,9 @@ internal static partial class FileMapPolicy
             ["lean-build"] = "tools/scripts/worktree/lean-cache-run.sh",
             ["lean-inspector"] = "tools/lean-inspector/inspect.sh",
             ["NativeArchivePaths"] = "tools/scripts/worktree/lean_actions.py",
-            ["PackageMaterialRegistry"] = "tools/StrataLint.BuildRuntime/PackageMaterialRegistry.cs",
             ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,
             ["DomainsLoader"] = DomainsLoaderPath,
+            ["ReportProducerScope"] = "tools/StrataLint.Engine/RepositoryIo/ReportProducerScope.cs",
             ["ScribeEmitter"] = ScribeEmitterPath,
             ["ScribeCompiler"] = ScribeProjectPath,
             ["SnapshotDecoder"] = SnapshotDecoderPath,
@@ -219,8 +217,7 @@ internal static partial class FileMapPolicy
         var selected = selectedPaths is null ? paths : paths.Where(selectedPaths.Contains).ToArray();
         var selectedManifest = selectedPaths is null ? manifest : new FileMapManifest(manifest.ResidencePolicy,
             manifest.Entries.Where(entry => selectedPaths.Any(entry.Matches)).ToImmutableArray(),
-            manifest.ArtifactKinds,
-            manifest.Resources);
+            manifest.ArtifactKinds);
         var trackedModes = TrackedModes(repositoryRoot);
         var dependencyFindings = InspectDependencies(
             manifest,
@@ -721,25 +718,10 @@ internal static partial class FileMapPolicy
 
     private static IEnumerable<string> EngineeringContentStrings(string source)
     {
-        // Use the execution consumers' strict schema without binding or reading targets.
-        // Test runtime materials are byte inputs to execution evidence, not authoritative
-        // content dependencies of this registry. Policy queries retain their own semantics.
-        var registration = EngineeringProjectRegistry.Parse(source);
+        // Validate the canonical project schema before inspecting its content references.
+        _ = EngineeringProjectRegistry.Parse(source);
         using var document = JsonDocument.Parse(source);
-        foreach (var property in document.RootElement.EnumerateObject())
-        {
-            if (property.Name is "projects" or "historical_projects")
-            {
-                var projects = property.Name == "projects" ? registration.Projects : registration.HistoricalProjects;
-                foreach (var (project, declaration) in property.Value.EnumerateArray().Zip(projects))
-                foreach (var member in project.EnumerateObject())
-                    if (member.Name != "execution_filemap_paths"
-                        && !(declaration.IsTest && member.Name == "execution_inputs"))
-                        foreach (var value in JsonStrings(member.Value)) yield return value;
-            }
-            else
-                foreach (var value in JsonStrings(property.Value)) yield return value;
-        }
+        return JsonStrings(document.RootElement).ToArray();
     }
 
     private static IEnumerable<string> JsonStrings(JsonElement element)
