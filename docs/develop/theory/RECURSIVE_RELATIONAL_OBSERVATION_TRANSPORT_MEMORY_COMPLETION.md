@@ -5454,7 +5454,7 @@ $\bar F$ 使 $qF=\bar Fq$。这说明当前读数相同不是动态充分性。
 
 ### 13.1 两个叶生成元与独立的组合原语
 
-FIB 卷的最小源签名可以写成
+FIB 卷所用的源签名可以写成
 
 $$
 \Sigma_{\mathrm{Fib}}
@@ -5829,8 +5829,8 @@ $D_\mu\subseteq\mathcal T\times\mathcal T$；$\rho$ 若不是全定义的，记�
 $D_\rho\subseteq\mathcal T$。一个带一个孔的上下文由
 
 $$
-[-],\qquad \langle C[-],t\rangle,qquad
-\langle t,C[-]\rangle,qquad \rho\circ C[-]
+[-],\qquad \langle C[-],t\rangle,\qquad
+\langle t,C[-]\rangle,\qquad \rho\circ C[-]
 $$
 
 反复生成；实际任务只取其中声明为合法的上下文族 $\mathcal C$。要求恒等上下文
@@ -6123,3 +6123,127 @@ $$
 `signature_extension_refines`；本节只把它们特化到 FIB 的源签名和组成边界，未新增
 Lean 声明。部分操作的合法性、失败标签和实际共同来源仍须按第 14 节的联合核条件
 保留，不能因签名扩展而省略。
+
+### 15.6 精确有限观察器必须覆盖完整行为商
+
+再固定一个有限的 FIB 任务：源状态集为有限实际像 $Y$，动作更新为
+$T_a:Y\to Y$，当前读出为 $o:Y\to O$。令
+
+$$
+\mathsf B(y)(w)=o(T_w(y)),
+\qquad
+Q=Y/{\ker\mathsf B},
+\qquad
+q:Y\twoheadrightarrow Q,
+\tag{RA.1516}
+$$
+
+其中 $w$ 遍历包括空词的全部有限动作词，$T_w$ 按动作词逐项复合。
+完整行为相等在每个动作下保持，且包含当前读数相等，因此商上有良定义的
+$T_a^Q([y])=[T_a(y)]$ 与 $o_Q([y])=o(y)$。若一个有限观察器载体 $W$ 具有满射实现
+$r:Y\twoheadrightarrow W$、更新 $\widetilde T_a$ 和读出 $\widetilde o$，并满足
+
+$$
+rT_a=\widetilde T_a r,
+\qquad
+o=\widetilde o r,
+\tag{RA.1517}
+$$
+
+则存在唯一满射
+
+$$
+f:W\twoheadrightarrow Q,
+\qquad q=fr,
+\tag{RA.1518}
+$$
+
+且 $f$ 交织每个动作更新和当前读出：
+
+$$
+f\widetilde T_a=T_a^Qf,
+\qquad o_Qf=\widetilde o.
+\tag{RA.1518a}
+$$
+
+证明是：由（RA.1517）沿动作词归纳，
+$r$ 的同一纤维产生同一完整行为，因此 $\mathsf B$ 在 $r$ 的纤维上恒定；实际像
+给出 $f(r(y))=q(y)$ 的良定义。$r$ 满射保证它定义在整个 $W$ 上且唯一；
+$q=fr$ 及 $q$ 满射保证 $f$ 满射。把每个 $w\in W$ 写成 $r(y)$，
+再应用（RA.1517），即得（RA.1518a）。于是
+
+$$
+|Q|\le |W|.
+\tag{RA.1519}
+$$
+
+对 FIB 的组成—$\rho$ 后继任务，固定 $m\ge2$ 并取
+
+$$
+Y=V_m=(\mathbb Z/m\mathbb Z)^2,
+\qquad T(x)=Mx,\qquad o(x)=2x_1+3x_2.
+$$
+
+则前两层数量读数的可逆矩阵使 $Q\cong V_m$，故任何精确有限观察器至少需要
+$m^2$ 个实际实现状态。若整个观察器状态只保存一个模 $m$ 标量，则至多有 $m$ 个
+值，不能满足这一界；两层读数作为联合状态达到它。这里计数的是全部允许初态的
+完整未来行为，不是某一次输出的字母表大小。§14.4 已说明每个模组成状态都有
+实际树来源；这里不把从单个 $\alpha$ 出发的 $M$ 轨道等同于整个 $V_m$。
+
+（RA.1516）—（RA.1519）是仓内
+`D5.S3.ObserverMemory.Prediction.ControlledBehaviorUniversality.controlled_behavior_universal_property`
+的 FIB 特化说明；本节没有新增 Lean 声明。它把“两个叶生成元”与“观察者必须
+保存多少可继续使用的边界状态”明确分开：前者是源签名的大小，后者由任务行为商
+决定，二者不能相互替代。
+
+### 15.7 叶原子数与允许操作下的最少种子数
+
+§13.3 的两叶最小性固定了“保留两类叶、仅用配对构造”的口径。
+若讨论允许动力学后的生成能力，就必须重新声明允许的操作。记
+$\mu(s,t)=\langle s,t\rangle$，令
+
+$$
+\Omega_0=\{\mu\},\qquad \Omega_1=\{\mu,\rho\}.
+$$
+
+对初始种子集 $A\subseteq\mathcal T$，记 $\langle A\rangle_\Omega$ 为包含 $A$
+且对 $\Omega$ 中操作封闭的最小子集。这里闭包只使用列明的正元数操作；
+$\alpha,\beta$ 是载体中的元素，不作为可免费注入闭包的零元运算。
+否则若把两叶都列作可调用常元，空种子已经能生成全部项，种子计数就换了口径。
+
+**命题 15.1（固定操作集下的种子最小性）。** 对上述两种闭包，有
+
+$$
+\min\{|A|:\langle A\rangle_{\Omega_0}=\mathcal T\}=2,
+\qquad
+\min\{|A|:\langle A\rangle_{\Omega_1}=\mathcal T\}=1.
+\tag{RA.1520}
+$$
+
+第一式由 $\{\alpha,\beta\}$ 达到，第二式由 $\{\alpha\}$ 达到。
+
+证明。配对的结果总是非叶项，故若纯配对闭包含有 $\alpha,\beta$，
+这两个叶必须都已在种子集中；两叶又按自由树的定义生成全部有限项，证明第一式。
+加入 $\rho$ 后，$\rho(\alpha)=\beta$，所以从 $\{\alpha\}$ 先取得两叶，
+再由配对生成全部项。空集在一元和二元操作下仍封闭，不能生成非空的 $\mathcal T$，
+证明第二式。事实上 $\mu$ 和 $\rho$ 都不会输出根为 $\alpha$ 的项，
+所以任何生成全部项的种子集仍必须含 $\alpha$；这里没有声称任意单种子都足够。
+证毕。
+
+仅有 $\rho$ 的单种子轨道也不同于允许配对的闭包：
+
+$$
+\{\rho^n(\alpha):n\ge0\}\subsetneq\mathcal T.
+\tag{RA.1521}
+$$
+
+例如 $\langle\alpha,\alpha\rangle$ 不在该轨道中：零步只有 $\alpha$，
+而从第一步起每个后继都含有 $\beta$ 叶。这直接来自两条叶替换规则。
+所以把初始种子数降为一，没有消除配对操作，也没有把全部树压成一条后继路径。
+
+这些结论只使用 FIB 卷定义 2.1、定理 2.2 与定义 3.1，是对生成口径的纸面推导，
+不宣称新增 Lean 核验。$\beta$ 在配对语法中不可分解，与它能通过
+$\rho(\alpha)$ 取得并不冲突。FIB 的生成基础应由叶类型、组合构造和替换规则共同
+给出；生成元或种子的数量不能替代 §15.6 中由未来行为决定的观察器容量。
+
+## 追加锚（本行以下为增补区）
