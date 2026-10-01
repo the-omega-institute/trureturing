@@ -1170,10 +1170,87 @@ absent.
 
 These are five further scoped transient classical composition checks
 under the same pins and standard three axioms, with no tracked project
-Lean declaration or mathematical novelty claim. They do not yet identify
+Lean declaration or mathematical novelty claim. These five checks alone do not identify
 the restricted source-volume pushforward on `D` with the actual target's
-intrinsic volume. In particular, actual target finite volume has not yet
-been used to prove finite Haar covolume. Ambient unimodularity, finite-volume
+intrinsic volume or derive finite Haar covolume from actual target finite
+volume. Ambient unimodularity, finite-volume
+cusp classification, lattice conjugacy and full Mostow-Prasad existence,
+homotopy and uniqueness remain unfinished, including noncompact cusps and
+nonorientable manifolds. The existing escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these checks nor CI closes that audit or the remaining mathematics.
+
+## Actual target Riemannian volume and finite normalized Haar covolume
+
+For an actual quotient covering of original H3, a disjoint covering
+neighborhood contains a ball of positive radius `R`. If two points lie in
+the concentric ball of radius `R/4`, every nonidentity deck translate of
+the second point lies outside the larger ball. The triangle inequalities
+show that its distance from the first point is at least their original
+distance. The infimum over the actual deck orbit therefore equals the
+original distance between the two points. Combining this with the existing
+actual metric-covering fiber-distance formula proves local distance
+preservation. This step retains the actual source smooth chart and metric,
+its pairwise intrinsic-distance identity with original H3, the actual
+quotient covering, local diffeomorphism, tangent-metric pullback identity,
+and exact evaluation identity of the full deck representation. Local
+isometry is a conclusion here.
+
+On each such locally isometric ball, existing
+`Isometry.euclideanHausdorffMeasure_image`, applied to the ball subtype and
+its source inclusion, identifies normalized Hausdorff3 measures of a
+subset and its image. Original-H3 second countability gives a countable
+cover by these balls. Disjointizing the source balls partitions any Borel
+set `D` on which `F` is injective. The restriction of `F` to each ball is
+an open embedding, so its Borel piece images are Borel. Injectivity on `D`
+makes these images disjoint, and countable additivity proves that the
+normalized Hausdorff3 measure of `F '' D` equals that of `D`. Apply the
+same argument to `D ∩ F ⁻¹' S` for each Borel target set `S`. When `F '' D`
+is the whole target, this proves that restriction of source Hausdorff3 to
+`D` pushes forward to target Hausdorff3. This intermediate comparison uses
+a target extended metric space and its Borel structure.
+
+For the actual supplied smooth target metric `gM`, install its existing
+Riemannian bundle and intrinsic extended metric. Their topology and Borel
+structure are the supplied target topology and Borel structure. Bind the
+local distance result above to this metric, and use the existing source
+volume identity and target volume definition. For an original-H3 Borel
+transversal of the actual covering, the result is
+`MeasurePreserving F (gH.volumeMeasure.restrict D) gM.volumeMeasure`.
+In particular, `gH.volumeMeasure D = gM.volumeMeasure univ`, with finiteness
+equivalent. There is no assumed coordinate-density comparison or assumed
+restricted-volume identity, and no unrestricted covering pushforward.
+
+Choose the same `D` and normalized left Haar measure `μ` from the preceding
+actual deck-domain construction. For a faithful representation of the
+full deck group whose evaluation is the actual action at every point,
+its actual image subgroup then satisfies
+`covolume ρ.range (H3 ≃ᵢ H3) μ = gM.volumeMeasure univ`.
+This is an equality for that jointly selected domain and measure. Thus
+actual target finite volume implies finite covolume under that measure,
+without an extra finiteness premise on the source domain. The fundamental
+domains are constructed before applying the covolume formula.
+
+A shortened composition also binds this result to the existing actual
+complete curvature-minus-one target constructor. Given the actual
+complete original-H3 smooth source metric with curvature minus one and its
+original pairwise distance formula, an actual preconnected complete
+smooth target of curvature minus one with finite intrinsic volume, and
+actual source and target basepoints, choose the constructor's covering
+`F` and its same faithful full deck representation `ρ`. The exact action
+identity, actual quotient covering, tangent-metric pullback identity,
+fundamental-group/deck-group correspondence, and compact-open discreteness
+of `ρ.range` are retained. There exists a normalized full-group left Haar
+measure whose actual image-subgroup covolume equals that target's volume
+and is finite. This uses the already checked source constructor contract;
+it does not claim compilation of the earlier entire 455-line extension.
+
+These are five further scoped transient classical composition checks,
+with nine printed closures using only `propext`, `Classical.choice` and
+`Quot.sound` under the same pins. No tracked project Lean declaration or
+mathematical novelty is claimed. Neither compactness nor orientability is
+assumed in these checks; they do not classify noncompact ends. Ambient
+unimodularity, any additional library lattice predicate, finite-volume
 cusp classification, lattice conjugacy and full Mostow-Prasad existence,
 homotopy and uniqueness remain unfinished, including noncompact cusps and
 nonorientable manifolds. The existing escape audit remains unfinished:
