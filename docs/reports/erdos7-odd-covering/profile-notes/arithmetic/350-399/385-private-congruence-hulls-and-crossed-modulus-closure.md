@@ -2683,3 +2683,187 @@ proof. With Python3.10+ and only the standard library, run
 ```sh
 python3 -I -S -B docs/reports/erdos7-odd-covering/frontier/cover-geometry/composite-parent-contraction/square_guarded_repair.py --output /tmp/square_guarded_repair.json
 ```
+
+## 20. Actual mixed-column heights determine the available repair forest
+
+The globally fresh palette ML1 waits until the full p-height has been
+passed. Distinctness also permits earlier repairs in mixed columns which
+stop below that height. Reuse section13's prefix-cut argument with the
+actual depth-dependent availability, and PH2 for the resulting exchange.
+This classifies a specified repair palette; it introduces no new general
+exchange principle and makes no literature-priority claim.
+
+### Actual vacancies and exact qualification
+
+Let D be a finite divisor-closed set of odd nonunits, with one actual
+class at each label. Fix an odd prime p, possibly absent from D, and an
+original h=p^a*n>1 with gcd(p,n)=1. For each e|n define
+
+    H_e=max({0} union {k>=0:p^k*e belongs to D}).       (VH1)
+
+The formal zero handles e=1 when p is absent; it does not insert
+modulus1. Divisor closure gives H_e>=a and makes the fresh labels
+in that column exactly p^k*e,k>H_e. Also H_e>=H_f when e|f|n.
+Consider repairs of the ENTIRE class c mod h using only
+
+    R_h={p^k*e:e|n,k>H_e}.                            (VH2)
+
+These are distinct odd nonunits absent from the ENTIRE original D,
+even when k is below its global p-height. A nonempty restriction to
+the target uses cofactor phase c mod e and a compatible p-prefix;
+its target-relative mass is p^(a-k). No retained pure or mixed
+guard is credited in this fresh-only palette.
+
+At relative depth j>=1 the number of available labels is
+
+    t_j=#{e|n:H_e<a+j}.
+
+Their total target-relative capacity is
+
+    C_h=sum_(j>=1)t_j/p^j
+       =(1/(p-1))*sum_(e|n)p^(a-H_e).
+
+A finite repair from VH2 exists if and only if
+
+    sum_(e|n)p^(a-H_e)>p-1.                           (VH3)
+
+Necessity is the usual cylinder/Kraft bound: every finite union has
+mass at most its finite capacity sum, strictly below C_h because
+each cofactor has infinitely many later available labels. This
+excludes equality as well as C_h<1.
+
+For sufficiency start with the target root u_0=1 and, at each
+relative depth, select leaves and retain uncovered nodes by
+
+    m_j=min(t_j,p*u_(j-1)),
+    u_j=p*u_(j-1)-m_j.                                (VH4)
+
+Assign distinct available cofactors to the m_j selected p-prefixes,
+using c mod e for each. Labels at different depths remain distinct.
+Before termination, u_j=p^j*(1-sum_(ell=1..j)t_ell/p^ell).
+When C_h>1 some finite partial sum reaches1, so the construction
+terminates and covers every integer of c mod h, including lifts
+beyond the original period.
+
+### Exact minimum count and modulus sum
+
+Let J be the first terminating depth and N=sum_(j=1..J)m_j.
+Then N is the minimum repair count within VH2. Discard empty or
+redundant restrictions from any competing repair. Its remaining
+prefixes form a complete prefix-free cut with at most t_j leaves
+at depth j. Its internal-node counts satisfy u'_j>=u_j inductively.
+The full p-ary tree identity
+
+    number of leaves=1+(p-1)*sum_(j>=0)u'_j
+
+therefore proves minimality. Equality fixes every u'_j=u_j and
+hence every layer count m_j. This is ML3's forest argument with
+the actual t_j retained.
+
+Let sigma_m(E) sum the m smallest members of a finite set E, with
+sigma_0(E)=0. Among all N-class repairs the exact minimum numerical
+modulus sum is
+
+    S=sum_(j=1..J)p^(a+j)*sigma_(m_j)({e|n:H_e<a+j}). (VH5)
+
+Minimum count fixes the layer sizes. Each layer attains its least
+sum by taking its smallest available cofactors; all their phases
+can be imposed on any of the chosen target prefixes since e|n.
+Different layers do not compete for numerical labels. Thus this
+lower bound is attained. When all H_e equal the global height,
+VH3--VH5 recover ML2--ML4. This is not optimality over other repair
+palettes, retained guards or smaller joint liabilities.
+
+### The old price shortcut is not automatic
+
+The uniform-height bound S<h*N^2 from ML6 cannot be imported.
+For p=3,h=25,a=0, take H_1=3,H_5=H_25=0, realized by the
+divisor-closed palette {3,9,27,5,25}. Its first three relative
+layers have available cofactors5,25; the fourth also has1. Then
+
+    N=2+2+2+3=9,
+    S=(3+9+27)*(5+25)+81*(1+5+25)=3681
+       >25*9*11=2475.                                (VH6)
+
+Even S<h*N*(N+2) fails for this fresh-only optimum. A different
+guarded repair is cheaper: retained0 mod3 and the vacant labels
+15,75 already give FC1128's two-label repair. This does not refute
+that repair or assert optimality among all possible exchanges.
+
+### Whole-cover phase capacity with the actual price
+
+Now let the same D and phases belong to a hypothetical whole cover
+globally minimizing class count and then modulus sum. Suppose VH3
+holds and define q_h(c)=#{u in D:h|u,a_u=c mod h}.
+The own phase c=a_h has q_h(c)=1 by comparable disjointness.
+At any other phase, move h to c, delete a chosen collection of
+these proper multiples, and repair the ENTIRE old a_h mod h
+using VH4--VH5. Deleted classes lie in the moved h; all old h-points
+are repaired; all other originals stay; every new label is unused.
+Thus PH2 gives
+
+    q_h(c)<=N,
+    q_h(c)=N ==> sum_(u:h|u,a_u=c mod h)u<=S
+                                         (c!=a_h).   (VH7)
+
+Any selected N descendants whose modulus sum exceeds S likewise
+give a forbidden exchange. N distinct proper odd multiples of h
+have sum at least h*(3+5+...+(2N+1))=h*N*(N+2), so
+
+    S<h*N*(N+2) ==> q_h(c)<=N-1 for every c.          (VH8)
+
+Here N>=p>=3 because no repair label divides h, so the own-phase
+value1 also satisfies VH8. If this price condition fails, retain
+VH7 and its literal sum test; do not silently replace N by N-1.
+For a chosen subinventory whose moduli are all at least L, N*L>S
+also excludes N simultaneous occupants. The capacities are shared
+across all original labels, not repeated per future prime or suffix.
+
+At p=3 there is a useful uniform two-layer consumer. If at least
+two labels are available at relative depth1 and at least three at
+depth2, choose two first-layer leaves and the three children of
+the remaining branch. This repairs the entire target with five
+labels. Since every chosen cofactor is at most n, its modulus sum
+is at most(2*3+3*9)h=33h<35h, so every h-phase has capacity4.
+This conclusion requires neither a bound on the global ternary
+height nor a compatible guard. If three first-layer labels are
+already available, reuse the stronger one-layer capacity2 instead.
+
+### A two-layer105 repair at arbitrary global ternary height
+
+Take p=3,h=105,a=1,n=35 and assume the ACTUAL column heights
+
+    H_1=H>=3,H_5=1,H_7=2,H_35=1.                     (VH9)
+
+The first two relative layers have available cofactors{5,35} and
+{5,7,35}. Their repair labels and optimum are
+
+    absolute depth2:45,315;
+    absolute depth3:135,189,945;
+    N=5,S=1629<105*5*7=3675.
+
+The first two labels cover two modulo9 lifts of the old h-phase;
+the last three cover the modulo27 children of the remaining lift,
+with the old cofactor residues where needed. No actual guard is
+required. VH8 proves
+
+    q_105(c)<=4 for EVERY c mod105.                   (VH10)
+
+The old globally fresh/RP qualifications do not supply this repair.
+At3 even their best retained-pure threshold is at least
+3^(H-1)+1>=10, exceeding tau(35)=4. At5 the full-height threshold
+is4, and tau(21)=4 does not strictly exceed it; larger5 heights
+only worsen the test. At7, tau(15)=4<=6. At primes at least11,
+tau(105)=8 is below even the first-layer threshold. The next
+ternary layer itself has only two vacancies; a deeper single layer
+has at most four labels for at least nine target lifts. Conditional
+guard repairs remain valid where their phase premise holds, but
+that premise is not automatic.
+
+The profile forces the105-multiples themselves to have ternary
+height one; the GLOBAL ternary height and the remaining family
+stay unrestricted. No argument forces VH9 in every hypothetical
+whole cover. Report528 after FC1296 gives an actual finite profile
+and the shared future-inventory consumer. These are ordinary
+symbolic proofs, without new Lean verification; unrestricted
+Erdős#7 remains unresolved.

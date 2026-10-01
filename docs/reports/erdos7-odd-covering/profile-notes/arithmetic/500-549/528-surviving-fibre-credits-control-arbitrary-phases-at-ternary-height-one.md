@@ -30639,3 +30639,166 @@ bridge for explicit constant components, not the full response geometry.
 Arbitrary higher-support middle-prime inventories still have unpaid
 costs, and no whole-cover argument places every hypothetical cover in
 FC1249. The unrestricted Erdős#7 objective remains unresolved.
+
+## Actual column vacancies constrain a lower-height part of the blind inventory
+
+The exact global-height blindness statements FC1014--1015 and
+FC1034--1037 concern their specified repair palettes. They do not
+exclude repairs using mixed labels which are absent BELOW the global
+height. [Report385, section20](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#20-actual-mixed-column-heights-determine-the-available-repair-forest)
+retains those actual vacancies. For an original h=p^a*n, its
+cofactor columns H_e=max({0} union{k:p^k*e is original}),e|n,
+give the exact fresh-only repair criterion
+
+    sum_(e|n)p^(a-H_e)>p-1.
+
+Its depth-dependent prefix forest supplies the minimum repair count
+N and exact minimum modulus sum S. PH2 then bounds the SAME original
+phase inventory by N, and by N-1 when S<h*N*(N+2). This sufficient
+price condition must be checked: VH6 gives a finite counterexample
+to importing the old uniform-height price bound.
+The forest and exchange are proved there; the consumer below reuses
+the existing shared-interface and terminal-charge machinery.
+
+### Two layers give a shared four-label capacity
+
+Fix one hypothetical whole cover globally minimizing class count
+and then modulus sum. For an original h=3^a*n with3 not dividing n,
+suppose at least two cofactors e|n have H_e=a and at least three
+have H_e<=a+1. Thus there are two fresh labels at the next ternary
+layer and three at the following layer. The two-plus-three repair
+has five classes and modulus sum at most33h<35h. VH8 gives
+
+    #{u original:h|u,a_u=c mod h}<=4, for every c.    (FC1297)
+
+With three immediately available labels, the stronger existing
+one-layer capacity two applies. There is no upper bound on the
+global ternary height here; all absences are from the FULL original
+numerical family. Emptying a query list or truncating a height does
+not manufacture these vacancies.
+
+In particular VH9 uses h=105 and
+
+    H_1=H>=3,H_5=1,H_7=2,H_35=1.
+
+Its two layers have literal repair labels45,315 and135,189,945,
+with total1629. The global-height tests at every repair prime are
+blind to this h, as checked in VH10. The profile forces105-bearing
+originals to have ternary height one, while allowing arbitrarily
+high pure and other mixed ternary columns.
+
+### One allowance across every future prime and suffix
+
+Resolve all original old exponents at a head B>=17, and select
+ALL future originals divisible by105, with no other support or
+exponent restriction. At any actual old point x, their literal
+old activations I_u(x) satisfy
+
+    C_all(x)=sum_(selected future u)I_u(x)
+           <=q_105(x mod105)<=4.                      (FC1298)
+
+Every original receives one label, even if it has additional old
+factors, several future primes or a deep current exponent. The
+count is shared by all later sections. This is an actual-phase
+capacity; the independent auxiliary K values in FC1249 do not
+automatically satisfy it.
+
+Reuse FC1001--FC1004 with this new selected inventory. Specifically,
+take ANY finite actual head-survivor measure eta of mass s and the
+FC936 full-family normalized continuation, with its pure-avoiding
+coordinate laws nu_p and their cylinder caps c_p=(p-1)/(p-2).
+These are that continuation's kernels, not an implicit change to
+the fixed-cap prefix source used in FC1295. If the selected inventory
+is empty, W_B=0, both selected debits are zero, and total failure is
+at most Q_L; no p_* is needed. Otherwise let p_* be the first
+terminal prime of a selected original and put f_*=c_(p_*)/p_*.
+For each selected u let lambda_u be its terminal cylinder's nu_p
+mass, retaining its complete original terminal exponent. Then
+
+    W_B(x)=sum_(selected u)lambda_u*I_u(x)<=4*f_*,
+    selected first-hit failure mass<=integral W_B deta<=4*f_*s,
+    total failure mass<=Q_L+2 integral W_B deta
+                       <=Q_L+8*f_*s.                 (FC1299)
+
+The first inequality follows once from lambda_u<=f_* and FC1298,
+not once per stage. The next two are the existing full-family
+kernel and Lipschitz consumers. Q_L is the entire complementary
+quadratic charge on that SAME combined process. It is not the
+charge of a separately evolved light-only source. For light-only
+moment estimates one must use FC1004's declared alternative law
+and its factor-two selected debit.
+
+For terminal primes at least19 the two selected allowances are
+respectively72s/323 and144s/323. They are uniform in the selected
+support size and heights but do not by themselves pay Q_L or
+produce a positive overall margin at19. For several qualified
+interfaces, add their actual capacities to FC1007's existing
+nonnegative incidence domination; do not charge the same selected
+original independently through every divisor.
+
+### An actual finite profile tests the additional extremality constraint
+
+The profile and its simultaneous activation are realizable before
+whole-cover extremality is imposed. The following explicit family
+is a NONCOVER, used to separate those premises. Fix H>=3. Include
+pure3^k,1<=k<=H, with phase(3^(k-1)-1)/2, pure5 and7 with
+phase0, and the mixed pairs
+
+    (15,1),(21,16),(63,22),(35,2),(105,71).             (FC1300)
+
+Put R=(3^H-1)/2. In coordinates modulo(3^H,5,7), private points
+for15,21,63,35,105 are respectively
+
+    (R,1,3),(R,3,2),(R,3,1),(2,2,2),(2,1,1).
+
+A pure3^k point uses its own comb phase with the other coordinates
+(3,3). Pure5 and7 use(2,0,3),(2,3,0). The pure comb is disjoint,
+R avoids every pure leaf, and the displayed differing old roots
+exclude all competing mixed originals. The point x0=(2,3,3)
+survives. This proves irredundancy as well as noncoverage, with
+the exact column heights VH9 and every nonunit divisor present.
+
+Add pure11,13,17 with phase0, and let
+
+    T={19,23,29,31,37}.
+
+For every q in T include pure q with phase0 and, for each
+d in{3,5,7,15,21,35,105}, one original dq. Its old d-phase is
+x0 mod d; its q-root is the corresponding member of{1,2,3,4,5,6,7}
+in the displayed order. All these numerical labels are distinct,
+and divisor closure still holds. Comparable classes in a q-column
+have different q-roots; across different q-columns they are
+incomparable. Every new mixed class avoids its old divisors because
+x0 avoids the entire old family.
+
+Old private points remain private by setting all q coordinates to8
+and the11/13/17 coordinates to2. New dq classes have private points
+with old coordinates x0, their own q-root, and other q coordinates8.
+The pure new primes have the analogous zero-coordinate witnesses.
+The same point with old x0 and all new coordinates8 (and11/13/17
+coordinates2) survives. Thus the extension is still an irredundant,
+divisor-closed NONCOVER with comparable classes disjoint.
+
+All five originals105q now have the same old105 phase38, although
+the old105 class has phase71. They violate FC1297, so the family
+cannot be a globally minimum whole cover, nor can a globally minimum
+whole-cover extension preserve the vacancy profile and these five phases.
+The exchange is literal: move105 to38, remove the five105q classes,
+and repair old71 mod105 with the five fresh labels in VH10.
+Class count is unchanged, while the removed modulus sum is
+
+    105*(19+23+29+31+37)=14595>1629.                   (FC1301)
+
+The moved105 class covers every deleted class, including points
+covered only by deleted labels; the five repairs cover the entire
+former105 class. No complete future intersection was replaced by
+a projection, and no replacement residue was assumed to have been
+an original residue.
+
+The new restriction therefore removes an actual possible high-support
+activation which the global-height qualification misses. It does
+not force useful vacancies in every hypothetical cover: densely
+occupied mixed columns remain, and the complementary same-source
+charge Q_L is still unpaid in general. The unrestricted #7 objective
+is unchanged and unresolved. These are ordinary symbolic results;
+no new Lean verification or new finite producer is claimed.
