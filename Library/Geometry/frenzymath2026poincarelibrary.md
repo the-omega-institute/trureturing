@@ -372,10 +372,11 @@ The application constructs parallel transport and derives the normal Jacobi
 `sinh/cosh` formulas by linear ODE uniqueness; it supplies the compact intrinsic
 ball input from metric completeness. These scoped applications compile with
 only `propext`, `Classical.choice` and `Quot.sound`. They require no global
-compactness, orientability or finite-volume hypothesis. The selected `e` may
-depend on `R`: compatibility between radii, global injectivity or surjectivity,
-abstract hyperbolic-manifold realization, cusp classification and full
-Mostow-Prasad rigidity have not been established. The same finite-radius
+compactness, orientability or finite-volume hypothesis. This finite-radius constructor selects `e` separately for each `R`. The
+global construction below uses one initial frame and one map over all radii.
+Global injectivity, covering-map structure, abstract hyperbolic-manifold
+realization, cusp classification and full Mostow-Prasad rigidity remain
+separate obligations. The same finite-radius
 exponential conclusion is also checked for the previously constructed
 upper-half-space metric `g` and for its unique descended metric `gQ`, under the
 same free, compact-set proper isometric-action hypotheses. Their already
@@ -384,3 +385,51 @@ application inputs; no replacement metric or supplied exponential is used.
 All prior source, volume and quotient clauses are retained, with metric
 uniqueness still within the chosen smooth quotient structure. These are
 classical prerequisite applications, with no novelty claim.
+
+## Global normalized exponentials and surjectivity
+
+`Geodesic/Complete.lean` supplies global geodesics for every initial coordinate
+velocity. `Coordinates/Exponential/SmoothExtension.lean` supplies smooth
+endpoint dependence without requiring smoothness of a chosen geodesic family;
+`EndpointAgreement.lean` identifies the zero endpoint and its derivative.
+Together with one orthonormal coordinate frame and `RadialCurve.lean`, these
+results construct one globally smooth normalized map `e` at each base point of
+any complete smooth Riemannian manifold with `T3Space` topology. Every radial
+curve is a geodesic on all of `ℝ`. The map is fixed over the whole tangent
+space; it is not selected again when a radius changes.
+
+When the manifold is also preconnected, the same selected `e` is surjective.
+`Comparison/Laplacian/Branch/Complete.lean` supplies a minimizing geodesic
+from the base point to any target point. The inverse initial frame specifies
+a velocity for `e`, and `Coordinates/Exponential/Uniqueness.lean` identifies
+the radial curve with that geodesic by their initial position and coordinate
+velocity. This surjectivity application requires no curvature hypothesis.
+
+With supplied Levi-Civita data of constant sectional curvature `-1`, the
+same global `e` has a bijective manifold differential at every tangent-space
+point and satisfies the negative polar metric formula above for every unit
+`θ` and every `t ≥ 0`. The finite-radius formula is applied with `R = t + 1`
+and differential nonsingularity with `R = ‖x‖ + 1`; neither application changes
+`e`. The estimate `sinh(t) ≥ t` and Cauchy-Schwarz give the positivity used for
+nonsingularity. These constructions require no global compactness,
+orientability or finite-volume premise.
+
+The combined global surjectivity, nonsingularity and metric formula are also
+checked for the same constructed upper-half-space metric `g` and its unique
+descended metric `gQ` under the original free, compact-set proper isometric
+group-action hypotheses. Source connectedness follows from the coordinate
+homeomorphism to the convex positive-height region, and quotient connectedness
+from the existing quotient topology. All earlier source, curvature,
+completeness, volume, conditional core/tail bound and quotient clauses remain
+in the application; metric uniqueness is still within the chosen smooth
+quotient structure. Smooth local tangent-metric isometries through arbitrary
+prescribed source and quotient points are checked in the same construction.
+
+These scoped classical applications compile under the unchanged project pins
+and cited external revision with only `propext`, `Classical.choice` and
+`Quot.sound`. They are temporary applications, with no retained named project
+Lean declaration, new dependency or novelty claim. Surjectivity and a
+bijective differential do not supply the still-unproved covering structure,
+arbitrary-manifold realization as a hyperbolic quotient, cusp classification
+or full Mostow-Prasad existence and uniqueness. The noncompact and
+nonorientable cases remain part of the rigidity target.
