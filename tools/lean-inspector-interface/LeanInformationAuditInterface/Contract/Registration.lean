@@ -1,15 +1,15 @@
-import LeanInformationAuditInterface.Contract.Core
+import LeanInformationAuditInterface.Contract.Implementation
 
 /- L0 原型 -/
 namespace LeanInformationAudit.Contract
 open Lean
-universe a b c d e f g h i j
+universe aa bb d e f g h i j u v w t s r o a k
 
-/-- A complete four-slot input. Bridge is instantiated with the target theorem
-statement, including its original telescope. The report checks the bridge family,
+/-- A complete four-slot input. The implementation is indexed by the
+target statement, including its original telescope. The report checks the bridge family,
 constant identities, source ownership and all semantic policies. -/
 structure Registration {P : Prop} (target : P)
-    (A : Sort a) (O : Sort b) (Bridge : Prop → Sort c)
+    (A : Sort aa) (O : Sort bb)
     (Readout : Type d) (Bundle : Type e) (Variation : Sort f)
     (Sensitivity : Sort g) (From : Type h) (Residual : Sort i)
     (FamilyRecord : Sort j) where
@@ -18,7 +18,7 @@ structure Registration {P : Prop} (target : P)
   objectArena : Ref O
   catalog : Name
   localNames : Bool
-  realization : Ref (Bridge P)
+  realization : Implementation.{u,v,w,t,s,r,o,a,k} P
   readout : Option Readout
   primitives : Option Bundle
   variation : Option (Ref Variation)

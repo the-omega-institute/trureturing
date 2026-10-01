@@ -24,12 +24,19 @@ structure ExpectedOccurrence where
   statementIdentity : Option String
   registrationModuleName : Name
 
-structure RootCatalog where
+structure RootCatalogData where
   rootId : Name
   expected : Array ExpectedOccurrence
   source : Array ExpectedOccurrence
   baseline : Array ExpectedOccurrence
   companionPrefix : Option Name
+
+structure RootCatalog where
+  data : RootCatalogData
+
+structure ExpectedDeclaration where
+  rootId : Name
+  occurrence : ExpectedOccurrence
 
 structure Seal where
   rootId : Name
