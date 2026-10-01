@@ -1,0 +1,34 @@
+**证明。** 先取一个承诺内编码 \(m:D_A\to M\) 和解码器 \(d\)，其可达消息集记为 \(R=m(D_A)\)。从 \(R\) 中选一个固定元素，并把 \(m\) 任意延拓为
+
+$$
+\bar m:X_A\to R
+$$
+
+使得 \(\bar m|_{D_A}=m\)。定义
+
+$$
+H(a\sqcup b)=d(\bar m(a),b).
+$$
+
+当 \(a\sqcup b\in D\) 时，\(\bar m(a)=m(a)\)，故 \(H=f\)；所以 \(H\in\operatorname{Ext}(D,f)\)。对每个 \(a\)，剩余响应 \(R_A^H(a)\) 只由 \(\bar m(a)\) 决定，因而
+
+$$
+\kappa_A(H)\leq |R|=|m(D_A)|.
+$$
+
+反向，给定 \(H\in\operatorname{Ext}(D,f)\)，取
+
+$$
+m=\eta_A^H|_{D_A},
+\qquad
+d([a]_A,b)=H(a\sqcup b).
+$$
+
+边界等价保证 \(d\) 良定义；在 \(D\) 上它输出 \(f\)，并且
+
+$$
+|m(D_A)|\leq|\mathsf S_A(H)|=\kappa_A(H).
+$$
+
+两方向取最小即得等式。证毕。
+
