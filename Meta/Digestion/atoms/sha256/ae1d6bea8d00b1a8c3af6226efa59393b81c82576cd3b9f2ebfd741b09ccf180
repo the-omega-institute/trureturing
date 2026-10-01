@@ -1,0 +1,26 @@
+### 328.1 两种来源的加权费用
+
+沿用原非整数 $\beta>0$、$a=\beta/2$、实际未知 $c,h$ 与共同选择规则。选择第326节的无额外身份输出合同，或其“第一全局调用取得所请求来源真实 $X$”子类；以下结果在这两个合同各自内部成立。
+
+对实现类 $\mathcal C\in\{\mathrm{pol},\mathrm{alg}\}$、误差 $\delta\ge0$ 与任务单价 $\lambda\ge0$，定义
+
+$$
+\mathcal V_a^{\mathcal C}(\delta,\lambda)
+=
+\inf_{A\in\mathcal A_{\mathcal C}(\delta)}
+\sup_{w,S}\mathbb E_{w,S}^{A}
+\bigl(N_H+\lambda N_T\bigr)^a.
+\tag{328.1}
+$$
+
+$w$ 遍历原合法世界，$S$ 遍历两种目标请求。$\mathcal A_{\mathcal C}(\delta)$ 要求逐世界几乎必经有限真实调用与有限内部执行返回，输出总变差误差统一不超过 $\delta$。空可行集的下确界为正无穷。$\lambda=0$ 只是不计任务调用这一费用坐标，没有取消真实调用与有限执行的要求。
+
+令 $\mathcal C_a^{\mathcal C}(\delta)$ 为第326节以 $M=N_H+N_T$ 计费的最优费用。对每个固定 $\lambda>0$，逐路径有
+
+$$
+\min\{1,\lambda\}M
+\le N_H+\lambda N_T
+\le\max\{1,\lambda\}M.
+\tag{328.2}
+$$
+

@@ -1,0 +1,4 @@
+### theorem 9.2 唯一解析与前缀自由
+
+上述编码是单射、码集前缀自由，并存在递归解码器满足 $\operatorname{decode}(\operatorname{code}(t))=t$。
+

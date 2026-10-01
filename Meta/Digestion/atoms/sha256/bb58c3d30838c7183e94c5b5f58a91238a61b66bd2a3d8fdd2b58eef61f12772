@@ -1,0 +1,22 @@
+### 7.3 恒温磁耦合和摩擦的相关分离
+
+假设存在性、光滑性、可积性及分部积分无边界余项。静态 $B$、常数对称 $\Gamma\succeq0$ 下，
+$$
+dr=\pi\,dt/m,
+\quad d\pi=(-\nabla U+e\mathcal B\pi/m-\Gamma\pi/m)dt
++\sqrt{2\beta^{-1}\Gamma}\,dW.
+$$
+Gibbs 密度 $g_\beta\propto e^{-\beta(|\pi|^2/(2m)+U)}$ 不变，且
+$$
+\frac d{dt}D(\rho\Vert g_\beta)
+=-\beta^{-1}\int\rho\,\nabla_\pi\log(\rho/g_\beta)^T\Gamma
+\nabla_\pi\log(\rho/g_\beta)\le0.
+$$
+证明：Hamilton–Lorentz 漂移无散并与能量梯度正交，摩擦扩散写为 $\beta^{-1}\nabla_\pi\cdot[\Gamma\rho\nabla_\pi\log(\rho/g_\beta)]$；分部积分。固定磁场不自动具有普通详细平衡，物理时间反演也翻转磁场；变温或消惯性另有条件 [Bir17]。
+
+常数磁场、平衡初态下，$K_v(t)=\beta m\mathbb E[v_tv_0^T]$ 满足
+$$
+K_v'(0+)=(e\mathcal B-\Gamma)/m.
+$$
+位置速度独立、速度零均值使势力交叉项为零，噪声增量与初态无关，直接用生成元求导得到。因此反对称部分读取磁耦合，对称部分读取摩擦；这一式允许非二次势。
+

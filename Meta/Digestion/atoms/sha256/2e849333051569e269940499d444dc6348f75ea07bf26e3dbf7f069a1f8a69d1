@@ -1,0 +1,26 @@
+**定理 116.5（自然密度与条件细化比）。** 对定理 116.4 的每个固定前缀 $w$，当 $X\to\infty$ 时有
+
+$$
+|\mathcal C_w\cap[0,X)|=\varphi^{-h}X+O_w(1),\qquad
+d(\mathcal C_w)=\varphi^{-h}.
+$$
+
+若 $b$ 是一个与输入接缝 $\sigma$ 相容的 $r$ 位扩展，输出接缝为 $\tau$，则
+
+$$
+\lim_{X\to\infty}
+\frac{|\mathcal C_{wb}\cap[0,X)|}{|\mathcal C_w\cap[0,X)|}
+=\frac{d(\mathcal C_{wb})}{d(\mathcal C_w)}
+=\varphi^{-(r+\tau-\sigma)}.
+$$
+
+$r=0$ 时取 $\tau=\sigma$。上述误差是对固定前缀的有界误差，不断言对所有前缀长度一致。
+
+证明。$h\ge1$ 时，上一证明和 $F_{h-1}+\varphi F_h=\varphi^h$ 给
+
+$$
+s^h(t)=\varphi^h t+F_h\delta(t),\qquad |F_h\delta(t)|<F_h.
+$$
+
+固定 $B=F_h$，所有满足 $V+\varphi^ht+B<X$ 的非负整数 $t$ 都被计入；被计入的 $t$ 必满足 $V+\varphi^ht-B<X$。任一实数阈值以下的非负整数个数与该阈值的非负部分相差至多 1。因此在 $X$ 足够大时，这两个界的计数均为 $\varphi^{-h}X+O(V\varphi^{-h}+B\varphi^{-h}+1)$。双射给出所需计数，除以 $X$ 得密度。$h=0$ 时直接数 $t<X-V$，在本情形 $V=0$，同样成立。扩展后的前缀长 $m+r$，末位为 $\tau$，其密度为 $\varphi^{-(m+r+\tau)}$；原密度正，故取两个计数渐近式的比就得到公式。$\square$
+

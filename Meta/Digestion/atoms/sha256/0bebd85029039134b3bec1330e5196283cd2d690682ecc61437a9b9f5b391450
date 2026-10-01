@@ -1,0 +1,10 @@
+### definition 10.1 组合操作结构码
+
+令 $\mathsf K=\langle\alpha,\alpha\rangle$、$\mathsf S=\langle\alpha,\beta\rangle$、$\operatorname{App}(x,y)=\langle\beta,\langle x,y\rangle\rangle$，并额外声明归约规则
+
+$$
+\mathsf Kxy\to x,\qquad \mathsf Sxyz\to xz(yz).
+$$
+
+这些是额外的执行语义，不是 Fibonacci 递推自动推出的规则。
+

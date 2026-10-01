@@ -1,0 +1,10 @@
+### 9.2 仓库接口
+
+`FORMAL_DYNAMICAL_INTERFACE_RESIDUALS.md` 给一般目标商和 carry 障碍。
+
+`D5/S3/ObserverMemory/PredictionCertificates/LocalCertificateCanonicalMinimality.lean` 给有限状态的预测等价与唯一商更新；它不直接证明连续空间维数下界。
+
+`D5/S3/Quantum/Dynamics/HamiltonianEffectCompletionGenerator.lean` 和 `AnalyticFlowGeneration.lean` 给有限矩阵的观测轨道与交换子闭包；正则模式部分另有无限维算子域。
+
+`D5/S3/Weil/ZetaLinear/SchurComplementAssociativity.lean` 给逆算子前件下的消元结合性。`D5/S3/Observer/Hankel/HoKalmanPerturbation.lean` 给观测逆裕量及后验线性求解误差；本卷未把它们冒认为全部新增理论已形式化。
+

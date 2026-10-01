@@ -1,0 +1,20 @@
+## 4. A paid one-query operational protocol
+
+The source word is a raw Boolean word in the unary declared-universe grammar.
+For a word $w$, let $L=|w|$. Total preprocessing selects its parsed formula
+when parsing succeeds and the zero-variable one-empty-clause formula otherwise.
+Denote this formula by $F_w$ and its actual emitted physical query by $q_w$.
+A valid source can itself describe the fallback formula; the query value does
+not identify acceptance or rejection.
+
+The protocol consists of actual preprocessing transitions, a query handoff,
+one physical ask, an external read-only response stream, ordinary response
+writing and reversal, actual postprocessing transitions and a terminal handoff.
+The stream is outside finite control and the ordinary writable stacks. Reading
+one stream symbol costs one transition and loads only that symbol into finite
+control. A separate transition of a fixed four-stack, two-label materialization
+machine pushes it. Its real reversal transfers the completed word onto the
+postprocessor input stack. The subsequent handoff preserves those stack
+contents and changes only the finite label and control. Each protocol edge,
+including a handoff and the ask, has unit cost.
+

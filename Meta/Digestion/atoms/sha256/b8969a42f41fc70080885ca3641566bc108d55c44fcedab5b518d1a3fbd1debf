@@ -1,0 +1,35 @@
+**定义 116.2（裸观察与另外观察到的 End）。** 对每个 $n\in\mathbb N$，将其规范数位看成有限支持的无限序列，在最高非零位以上补零。$O_L(n)$ 只读单位位 $b_0$ 和随后 $L$ 个三位窗口，故共固定 $1+3L$ 个完整数位；$L=0$ 仍观察单位。若 $0\le L\le K$，截去后面的窗口给投影 $\pi_L^K$，从而
+
+$$
+O_L=\pi_L^K O_K,\qquad
+\pi_L^L=\mathrm{id},\qquad
+\pi_L^J\pi_J^K=\pi_L^K\quad(L\le J\le K).
+$$
+
+这些恒等式逐位成立，也在与 $q\circ c$ 复合后成立。提高 $L$ 始终观察同一个数值源；它没有施加 $\rho$。若另有证书确认已读前缀就在其实际规范 End 处结束，即已读到最后非零窗口，或单位 1 后立即 End，则未读尾部被证明全零，完整数值码的相容纤维为单点。只知道更高处的 End 位置而没有观察中间窗口，只给长度限制，不能据此断言单点。裸观察的高位补零约定本身不供应 End 证书。
+
+对语义上的尾部，允许全零有限支持序列；删除它的首个零窗仍得同一全零尾部。对实际执行并终止的正值词，规则仍严格采用定义 104.2：单位初始化时 $\chi=\varepsilon$，每次合法读入窗口 $b$ 后
+
+$$
+\chi_{\mathrm{new}}=[b\ne\mathsf E],\qquad\mathsf E=000.
+$$
+
+这是当前 End 合法性，不能改成与旧 $\chi$ 作逻辑或。非空词的最后整个窗口须非零，最后一个单独数位可以为零；因此 $100$、$010$ 都可作末窗。$\varepsilon=1$ 的空窗口词可 End，$\varepsilon=0$ 的空窗口词不能作正值 End，结构零另外表示。首窗条件 $\varepsilon b_{0,0}=0$ 只在至少有一个窗口时才有该下标。
+
+为说明单位在提升中的位置，令 $R=M^3$，对三位窗口 $b$ 置 $d_b=(b_0+b_2,b_1+b_2)$，对窗口词 $w=(b_0,\ldots,b_{L-1})$ 置 $x(w)=\sum_{j<L}R^jd_{b_j}$。由于 $M\mathbf e=(1,0)$，且 $M^{j+1}\mathbf e=c(\rho^j(\alpha))$，合法完整码满足
+
+$$
+\iota(\nu(\varepsilon;w))=\varepsilon\mathbf e+x(w),\qquad
+\nu(\varepsilon;w)=\varepsilon+q(x(w)).
+$$
+
+证明就在每个占用位置上应用上述等式后求和；单位不能从第一式删去。特别地 $\iota(0)=0$、$\iota(1)=(-1,1)$。若 $w$ 非空，在它前面插入一个零窗口而保留单位字段，$x(\mathsf Ew)=M^3x(w)$，所以数值变成
+
+$$
+n\longmapsto\varepsilon+s^3(n-\varepsilon).
+$$
+
+例如 $4=1+3$ 的码是 $(1;010)$，插入零窗得到 $1+13=14$；整体位移却是 $s^3(4)=s^3(1)+s^3(3)=5+13=18$，这里的相加是两个不相邻位置的逐位计算。若 $w$ 为空，插入完整零窗不会创造新的正值规范 End 码，补零语义中的数值仍只是原单位。
+
+组成矩阵的可逆性也不恢复原始树。$\langle\alpha,\beta\rangle$ 与 $\rho(\beta)=\langle\beta,\alpha\rangle$ 组成相同，前者却不在 $\rho(\mathcal T)$ 中：它不是叶子，也不是 $\rho(\beta)$；若它等于一个二叉来源的像，其左子树就要求 $\rho(t)=\alpha$，而任何像都不是 $\alpha$。因此整数矩阵 $M^{-1}$ 所恢复的组成不构成有序来源的逆。来源封装若采用 §8.4 的展开映射 $E:\mathcal A\to\mathcal T$ 和截面 $\zeta:\mathcal T\to\mathcal A$，则仍须 $E\zeta=\mathrm{id}$；这才给 $E\widehat\rho^k=\rho^kE$，其中 $\widehat\rho=\zeta\rho E$。观察 $O_L\circ q\circ c\circ E$ 的投影相容性与这个展开恒等式类型不同，不能互相代替。
+

@@ -1,6 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredRegistration
 import LeanInformationAudit.Tests.RegistrationGates.IndexWork.Selected
 import LeanInformationAudit.Tests.SourceIsolation
+import LeanInformationAudit.Tests.Assessment
 
 namespace LeanInformationAudit.Tests.DeclaredAssessmentCache
 open Lean Meta Elab Command TemplateBinding TemplateAudit
@@ -8,9 +9,37 @@ open Lean Meta Elab Command TemplateBinding TemplateAudit
 private def observe (name : String) (ok : Bool) : MetaM Unit :=
   (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {name}"
 
+-- Lake hashes source text modulo CRLF. The report's assessment starts from a
+-- fresh environment, so native coherence checks the unchanged trace rather than
+-- an earlier in-process snapshot; only an obsolete raw source hash would reject.
+run_meta withPrivateSources do
+  let fresh ← getEnv
+  let root := fresh.header.mainModule
+  assessRecordedRegistrations root
+  let rows ← assessJoined (← RegistrationAssessmentInput.capture root)
+  let #[record] := rows | throwError "setup: exactly one registration occurrence required"
+  let some descriptor := record.descriptor | throwError "setup: descriptor absent"
+  let .ok plan := selectedPlan (← getEnv) descriptor.getAppFn.constName!
+    | throwError "setup: selected plan absent"
+  setEnv fresh
+  let path := TemplateAudit.sourcePath plan.enrollmentOwner
+  let original ← IO.FS.readBinFile path
+  try
+    let edited := (String.fromUTF8! original).crlfToLf.replace "\n" "\r\n"
+    unless edited.toUTF8 != original do throwError "setup: line endings did not change bytes"
+    IO.FS.writeFile path edited
+    assessRecordedRegistrations root
+    let changed ← assessJoined (← RegistrationAssessmentInput.capture root)
+    observe "imported_line_endings_preserve_verdict"
+      (!changed.isEmpty && changed.all (fun row => row.result matches .declaredValidated _))
+  finally IO.FS.writeBinFile path original
+  setEnv fresh
+
+test_imported_assessment
+
 run_meta withPrivateSources do
   let initial ← getEnv
-  let rows ← assessJoined
+  let rows ← (assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   let #[record] := rows | throwError "setup: exactly one registration occurrence required"
   let .declaredValidated _ := record.result | throwError "setup: registration is not validated"
   let some descriptor := record.descriptor | throwError "setup: descriptor absent"
@@ -19,22 +48,8 @@ run_meta withPrivateSources do
     | throwError "setup: selected plan absent"
   let primed ← getEnv
   let before := (observedAssessments primed).size
-  discard <| assessJoined
+  discard <| (assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   observe "authoritative_assessment_reused" ((observedAssessments (← getEnv)).size == before)
-  -- Lake hashes source text modulo CRLF. Start a fresh assessment environment
-  -- so native coherence checks the unchanged trace rather than an earlier
-  -- in-process snapshot; only the obsolete enrolled raw hash would reject.
-  setEnv initial
-  let path := TemplateAudit.sourcePath plan.enrollmentOwner
-  let original ← IO.FS.readBinFile path
-  try
-    let edited := (String.fromUTF8! original).crlfToLf.replace "\n" "\r\n"
-    unless edited.toUTF8 != original do throwError "setup: line endings did not change bytes"
-    IO.FS.writeFile path edited
-    let changed ← assessJoined
-    observe "imported_line_endings_preserve_verdict"
-      (changed.all (fun row => row.result matches .declaredValidated _))
-  finally IO.FS.writeBinFile path original
   setEnv primed
   -- An isolated change to the retained statement identity must not reuse the old
   -- record. Native ownership/statement validation is separately tested at the join.
@@ -50,18 +65,18 @@ run_meta withPrivateSources do
   let bytes ← IO.FS.readBinFile unrelated
   try
     IO.FS.writeFile unrelated ((String.fromUTF8! bytes) ++ "\n-- changed unrelated enrollment input\n")
-    let unchanged ← assessJoined
+    let unchanged ← (assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
     observe "unrelated_template_keeps_selected_evidence"
       (unchanged.all (fun row => row.result matches .declaredValidated _) &&
         (observedAssessments (← getEnv)).size == before)
   finally IO.FS.writeBinFile unrelated bytes
   setEnv primed
   setReducibilityStatus plan.name .irreducible
-  discard <| assessJoined
+  discard <| (assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   observe "changed_native_metadata_not_cached_safe"
     ((observedAssessments (← getEnv)).size == before + 1)
   setEnv primed
-  let lowered ← withOptions (fun options => informationTemplate.work.set options 1) assessJoined
+  let lowered ← withOptions (fun options => informationTemplate.work.set options 1) do (assessJoined (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   observe "changed_options_not_cached_safe"
     (lowered.all (fun row => row.result matches .declaredUnresolved _) &&
       (observedAssessments (← getEnv)).size == before + 1)
@@ -71,6 +86,25 @@ run_meta withPrivateSources do
   observe "changed_claim_not_cached_safe"
     ((changedRecord.result matches .declaredUnresolved _) &&
       (observedAssessments (← getEnv)).size == before + 1)
+  setEnv initial
+
+-- The imported registration universe grows with the repository. A retained
+-- assessment's currency check and every other joined step own a fixed budget;
+-- the complete join shares none of it.
+run_meta withPrivateSources do
+  let initial ← getEnv
+  let primed ← (exportSnapshot (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
+  unless primed.selected.all (fun row => row.result matches .declaredValidated _) do
+    throwError "setup: retained assessment requires a validated registration"
+  let owners := primed.originals.foldl (fun owners row =>
+    let owner := row.occurrence.key.registrationModule
+    if owners.contains owner then owners else owners.push owner) #[]
+  let modules := owners.map fun owner =>
+    (owner, primed.originals.filter (·.occurrence.key.registrationModule == owner) |>.map (·.occurrence.key))
+  IO.addHeartbeats ((← readThe Core.Context).maxHeartbeats + 1)
+  let rows ← tryCatchRuntimeEx (reportJson modules) fun error =>
+    throwError "[FAIL] joined_occurrence_budget_is_per_occurrence: {error.toMessageData}"
+  observe "joined_occurrence_budget_is_per_occurrence" (!rows.isEmpty && rows.size == modules.size)
   setEnv initial
 
 end LeanInformationAudit.Tests.DeclaredAssessmentCache

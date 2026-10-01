@@ -1,0 +1,10 @@
+### theorem 20.2 全部封闭子结构恰为因子倍子结构
+
+$$
+\boxed{
+W\text{ 封闭}
+\iff
+W=dV_n\text{ 对某个唯一 }d\mid n.
+}
+$$
+

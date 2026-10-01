@@ -1,0 +1,31 @@
+**引理315.2（临界尾包络的截断矩预算）。** 若
+$$
+L_X=\limsup_{n\to\infty}n^aQ_X(n)<\infty,
+$$
+则
+$$
+\boxed{
+\limsup_{n\to\infty}n^{a-m}T_{X,m}(n)
+\le\frac m{m-a}L_X.}
+\tag{315.11}
+$$
+
+证明。任取 \(\eta>0\)，存在 \(k_\eta\) 使
+\(Q_X(k)\le(L_X+\eta)k^{-a}\) 对所有 \(k\ge k_\eta\) 成立。有限早期部分并入 \(C_\eta\)，由式（315.10）有
+$$
+T_{X,m}(n)\le C_\eta+
+(L_X+\eta)\sum_{k=k_\eta}^{n-1}
+[(k+1)^m-k^m]k^{-a}.
+$$
+因为 \(m>a\)，
+$$
+\lim_{n\to\infty}n^{a-m}
+\sum_{k=k_\eta}^{n-1}
+[(k+1)^m-k^m]k^{-a}
+=\frac m{m-a}.
+\tag{315.12}
+$$
+可用
+\((k+1)^m-k^m=mk^{m-1}+O(k^{m-2})\)
+及幂次和的积分比较验证；主项指数 \(m-1-a>-1\)，其余项在该归一化下消失。有限 \(C_\eta\) 也因 \(a-m<0\) 消失。最后令 \(\eta\downarrow0\)，得到结论。证毕。
+

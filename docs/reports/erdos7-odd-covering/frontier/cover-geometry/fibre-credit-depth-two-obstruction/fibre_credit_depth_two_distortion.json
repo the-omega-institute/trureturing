@@ -1,0 +1,135 @@
+{
+  "Haar_seed_comparison": "571565231731969973/1234875417431040000",
+  "all_order_beta_lower": "105794741/2000000000",
+  "comparison_beta": "1/19",
+  "constructive_beta": "571565231731969973/10805159902521600000",
+  "constructive_steps": [
+    {
+      "delta": "7/22",
+      "loss_coefficient": "121/10500",
+      "next_moment_factor": "551/375",
+      "prime": 11
+    },
+    {
+      "delta": "5/14",
+      "loss_coefficient": "26999/2430000",
+      "next_moment_factor": "251807/121500",
+      "prime": 13
+    },
+    {
+      "delta": "23/60",
+      "loss_coefficient": "251807/29410560",
+      "next_moment_factor": "392567113/143856000",
+      "prime": 17
+    },
+    {
+      "delta": "17/40",
+      "loss_coefficient": "392567113/45560633760",
+      "next_moment_factor": "951190114799/268003728000",
+      "prime": 19
+    },
+    {
+      "delta": "25/54",
+      "loss_coefficient": "32799659131/4448347200000",
+      "next_moment_factor": "145204090972937/32428451088000",
+      "prime": 23
+    },
+    {
+      "delta": "1/2",
+      "loss_coefficient": "145204090972937/25423905652992000",
+      "next_moment_factor": "34703777742531943/6355976413248000",
+      "prime": 29
+    }
+  ],
+  "evidence": "Ordinary mathematical derivations and exact rational certificate verification, not new Lean verification or unrestricted Erd\u0151s#7 resolution.",
+  "exact_envelope_cases": [
+    {
+      "actual_survivors": 120,
+      "dual_budget_checks": 11,
+      "dual_cell_checks": 120,
+      "dual_terms": 71,
+      "exact_minimum": false,
+      "lower": "8698724081/9970030512",
+      "margin_above_one": "-1271306431/9970030512",
+      "name": "pure-only control",
+      "primal_atoms": 96,
+      "primal_deep_loss": "49/256",
+      "primal_second_moment_cap": "29815/2304",
+      "universal_envelope_obstruction": false,
+      "upper": "19097/21888"
+    },
+    {
+      "actual_survivors": 75,
+      "dual_budget_checks": 11,
+      "dual_cell_checks": 75,
+      "dual_terms": 58,
+      "exact_minimum": true,
+      "lower": "187297/166896",
+      "margin_above_one": "20401/166896",
+      "name": "opposite-root stars and three mixed originals",
+      "primal_atoms": 62,
+      "primal_deep_loss": "91/366",
+      "primal_second_moment_cap": "145801/8784",
+      "universal_envelope_obstruction": true,
+      "upper": "187297/166896"
+    },
+    {
+      "actual_survivors": 85,
+      "dual_budget_checks": 11,
+      "dual_cell_checks": 85,
+      "dual_terms": 54,
+      "exact_minimum": true,
+      "lower": "51419/45828",
+      "margin_above_one": "5591/45828",
+      "name": "same-root stars and three mixed originals",
+      "primal_atoms": 80,
+      "primal_deep_loss": "133/536",
+      "primal_second_moment_cap": "80095/4824",
+      "universal_envelope_obstruction": true,
+      "upper": "51419/45828"
+    }
+  ],
+  "excluded_scope": "Does not exclude first/second-moment hybrids, actual joint Gamma, sharper propagation, row-dependent parameters, other source classes or other distortion constructions.",
+  "inverse_kernel_density_cap": "24679/591360",
+  "mode_fees": {
+    "105": "239/76",
+    "15": "143/152",
+    "21": "89/114",
+    "3": "3/19",
+    "315": "844/171",
+    "35": "463/342",
+    "45": "213/152",
+    "5": "73/152",
+    "63": "407/342",
+    "7": "127/342",
+    "9": "5/19"
+  },
+  "parameter_scope": "All720 orders of the six outside primes and one scalar delta per step in(0,1), jointly chosen with the source.",
+  "positive_bridges": [
+    {
+      "Haar_density_lower": "40909504857324630160499/42573234043414609920000000",
+      "Haar_density_lower_decimal": 0.000960920770444797,
+      "head_Haar_mass": "5/21",
+      "head_classes": 11,
+      "head_survivors": 75,
+      "name": "opposite-root stars and three mixed originals",
+      "scope": "These eleven are the COMPLETE 3,5,7-only original subfamily. All further originals must involve at least one of the six outside primes; their phases and nonternary heights are arbitrary, whole-family v3<=2.",
+      "second_moment_cap": "23053/1350",
+      "survivor_mass_lower": "1410672581287056212431/14586965868404160000000"
+    },
+    {
+      "Haar_density_lower": "32754940924739977980629/34058587234731687936000000",
+      "Haar_density_lower_decimal": 0.0009617234179149305,
+      "head_Haar_mass": "17/63",
+      "head_classes": 11,
+      "head_survivors": 85,
+      "name": "same-root stars and three mixed originals",
+      "scope": "These eleven are the COMPLETE 3,5,7-only original subfamily. All further originals must involve at least one of the six outside primes; their phases and nonternary heights are arbitrary, whole-family v3<=2.",
+      "second_moment_cap": "21163/1224",
+      "survivor_mass_lower": "1129480721542757861401/13225515720686438400000"
+    }
+  ],
+  "quadratic_checks": 192,
+  "scope": "Finite distinct odd original moduli, support within3,5,7,11,13,17,19,23,29, whole-family v3<=2. Positive bridges forbid additional357-only originals. Negative certificates concern only the declared shared prefix-Haar source, complete deep union debit and separate-cylinder second-moment envelope.",
+  "subset_states": 64
+}

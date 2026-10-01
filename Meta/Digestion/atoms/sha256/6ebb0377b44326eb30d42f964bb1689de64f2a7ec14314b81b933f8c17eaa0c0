@@ -1,0 +1,14 @@
+### theorem 34.2 完整相容极限
+
+令 $\mathcal D_{B,p}$ 为 $\mathcal D_B$ 的 $p$-主子群，则
+
+$$
+\boxed{\varprojlim_rK_r=0,\qquad \varprojlim_rC_r\cong\mathcal D_{B,p}.}
+$$
+
+等价地，在 $p$-进整数上有
+
+$$
+\boxed{0\longrightarrow\mathbb Z_p^d\overset B\longrightarrow\mathbb Z_p^d\longrightarrow\mathcal D_{B,p}\longrightarrow0.}
+$$
+

@@ -1,0 +1,222 @@
+{
+  "G3new": "906617738995/159166336",
+  "actual_source_points": [
+    1,
+    2,
+    4,
+    7,
+    8,
+    11,
+    13,
+    14
+  ],
+  "carrier": 15,
+  "checks": 1920,
+  "coherent_collision_energies": [
+    {
+      "collision_energy": "99/8",
+      "law": "uniform"
+    },
+    {
+      "collision_energy": "153/7",
+      "law": "biased_same_support"
+    },
+    {
+      "collision_energy": "4601/324",
+      "law": "weighted_same_support"
+    },
+    {
+      "collision_energy": "4601/324",
+      "law": "reverse_weighted_same_support"
+    }
+  ],
+  "complete_layout_count": 225,
+  "conditional_cylinder_kernel_checks": 96,
+  "interpretation": "A real embedding must supply its residue-incidence table. Full-query weighted-cylinder tests, not selected scalar moments, then check it. Replicating formal atoms without giving incidence does not settle compatibility.",
+  "literal_five_actual_rows_cubic_lower": "15684600331/800",
+  "minimum_fine_row_counts_per_formal_block": [
+    3443,
+    2789,
+    1588,
+    1143,
+    981
+  ],
+  "minimum_total_fine_rows_from_blocks": 9944,
+  "necessary_actual_row_mass_cap": "906458572659/9012491837460608",
+  "scope": "Actual fixed-phase complete queries on the same CRT carrier; ordinary exact checks, not Lean. No rejection of arbitrary fine embeddings of the formal five-block model.",
+  "shallow23_dictionary_size": 384,
+  "source_results": [
+    {
+      "law": "uniform",
+      "localized_subset": [
+        2,
+        8,
+        11,
+        13,
+        14
+      ],
+      "selected_query_cube": "1",
+      "stationary_suboptimal_examples": [
+        {
+          "cube": "81/8",
+          "global": "99/8",
+          "phases": [
+            0,
+            1,
+            2,
+            1
+          ]
+        },
+        {
+          "cube": "81/8",
+          "global": "99/8",
+          "phases": [
+            0,
+            1,
+            2,
+            2
+          ]
+        }
+      ],
+      "strict_ascent_layouts": 201,
+      "strongest_localized_lower": "1803/200",
+      "universal_cubic_max": "99/8",
+      "weights": [
+        "1/8",
+        "1/8",
+        "1/8",
+        "1/8",
+        "1/8",
+        "1/8",
+        "1/8",
+        "1/8"
+      ]
+    },
+    {
+      "law": "biased_same_support",
+      "localized_subset": [
+        1
+      ],
+      "selected_query_cube": "1",
+      "stationary_suboptimal_examples": [
+        {
+          "cube": "15/2",
+          "global": "69/2",
+          "phases": [
+            0,
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "cube": "87/14",
+          "global": "69/2",
+          "phases": [
+            0,
+            2,
+            3,
+            2
+          ]
+        }
+      ],
+      "strict_ascent_layouts": 217,
+      "strongest_localized_lower": "65/2",
+      "universal_cubic_max": "69/2",
+      "weights": [
+        "1/2",
+        "1/14",
+        "1/14",
+        "1/14",
+        "1/14",
+        "1/14",
+        "1/14",
+        "1/14"
+      ]
+    },
+    {
+      "law": "weighted_same_support",
+      "localized_subset": [
+        14
+      ],
+      "selected_query_cube": "1",
+      "stationary_suboptimal_examples": [
+        {
+          "cube": "379/36",
+          "global": "163/9",
+          "phases": [
+            0,
+            1,
+            2,
+            7
+          ]
+        },
+        {
+          "cube": "142/9",
+          "global": "163/9",
+          "phases": [
+            0,
+            1,
+            3,
+            13
+          ]
+        }
+      ],
+      "strict_ascent_layouts": 214,
+      "strongest_localized_lower": "15",
+      "universal_cubic_max": "163/9",
+      "weights": [
+        "1/36",
+        "1/18",
+        "1/12",
+        "1/9",
+        "5/36",
+        "1/6",
+        "7/36",
+        "2/9"
+      ]
+    },
+    {
+      "law": "reverse_weighted_same_support",
+      "localized_subset": [
+        1
+      ],
+      "selected_query_cube": "1",
+      "stationary_suboptimal_examples": [
+        {
+          "cube": "115/9",
+          "global": "163/9",
+          "phases": [
+            0,
+            1,
+            2,
+            2
+          ]
+        },
+        {
+          "cube": "49/4",
+          "global": "163/9",
+          "phases": [
+            0,
+            1,
+            2,
+            4
+          ]
+        }
+      ],
+      "strict_ascent_layouts": 215,
+      "strongest_localized_lower": "15",
+      "universal_cubic_max": "163/9",
+      "weights": [
+        "2/9",
+        "7/36",
+        "1/6",
+        "5/36",
+        "1/9",
+        "1/12",
+        "1/18",
+        "1/36"
+      ]
+    }
+  ]
+}

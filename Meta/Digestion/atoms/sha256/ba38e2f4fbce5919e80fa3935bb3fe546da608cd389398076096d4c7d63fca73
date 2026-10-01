@@ -1,0 +1,60 @@
+**命题 22.1（实际效果的有限饱和）。** 对实际事件效果 $E$ 及任意低层矩阵 $K$，选 $\varepsilon>0$ 使 $\varepsilon K$ 为收缩；前置 Kraus 分支 $\varepsilon K$、$\sqrt{I-\varepsilon^2K^\dagger K}$ 并记录第一分支，得到实际联合事件效果 $\varepsilon^2K^\dagger EK$，调用预算不变。对 $E$ 的有限复线性组合延拓，故 $K^\dagger EK\in S_N$。极化恒等式
+
+$$
+A^\dagger EB=\frac14\sum_{r=0}^3i^{-r}(A+i^rB)^\dagger E(A+i^rB)
+$$
+
+给出任意左右低层矩阵作用。若 $E_{ab}$ 是 $E\in S_N$ 的高层矩阵角，用低层矩阵单位夹取并复制到所有低层对角，
+
+$$
+\sum_r(|r\rangle\langle a|\otimes I)E(|b\rangle\langle r|\otimes I)
+=I_A\otimes E_{ab}\in S_N.
+$$
+
+反之，对 $I_A\otimes X$ 左乘矩阵单位得每个 $|a\rangle\langle b|\otimes X$。零调用协议仅作用于 $A$，任意低层终端效果又张成全矩阵空间。因此
+
+$$
+S_N=\mathcal B(\mathbb C^4)\otimes T_N,\qquad T_0=\operatorname{span}\{I_H\},\qquad\dim T_0=1.
+\tag{22.1}
+$$
+
+将一个至多 $N+1$ 次调用的有限协议树在第一次 $W$ 调用处切开。每个经典前缀的低层完全正映射有有限 Kraus 和 $\sum_rK_r(\cdot)K_r^\dagger$；第一次调用后的尾协议效果属于 $S_N$。因而精确递推为
+
+$$
+\boxed{
+S_{N+1}=\operatorname{span}\left(S_N\cup
+\{K^\dagger W^\dagger EWK:E\in S_N,\ K\in\mathcal B(A)\}\right).}
+\tag{22.2}
+$$
+
+反向包含由“先执行一个缩放的 $K$ 分支、调用一次 $W$、再执行尾协议”实现；正向包含由第一次调用前的所有有限前缀 Kraus 和得到。停止分支已包含在 $S_0$ 中；整个证明只使用经典 continue/stopped 记录，不引入相干控制。
+
+尚未调用就停止的前缀只贡献低层效果；未被记录的 Kraus 指标只用于计算有限完全正和，不被当作可访问记录。若 $S_N=S_{N+1}$，递推立即给出 $S_{N+2}=S_{N+1}$，所以平台永久保持。每个有限协议有有限最坏调用数，而 $S_N$ 递增，故其并为最终线性空间 $S_\infty$。若 $r=\dim_\mathbb C T_\infty<\infty$，每次尚未达到 $T_\infty$ 的递推都至少增加一维；从一维出发，$r-1$ 次增长必已达到最终维数，故
+
+$$
+\boxed{S_{r-1}=S_\infty.}
+\tag{22.3}
+$$
+
+定理 14.1 的实际效果分类给出
+
+$$
+\dim T_\infty=\begin{cases}
+1,&\Delta\equiv0\pmod{2\pi},\\
+4,&\Delta\equiv\pm2\pi/3\pmod{2\pi},\\
+10,&\text{其余 }\Delta.
+\end{cases}
+$$
+
+因此 $0,3,9$ 分别是达到最终实际效果空间的充分调用上界，而非最优性断言。其相应的高层上界必须分别由三件不同事实给出：$W=I$ 时整个高层保持恒等；在 $\pm2\pi/3$ 共振时每个 Fourier 单点子空间不变，故效果为 Fourier 对角；非共振时完整的零轨道与三维非零轨道投影保持，故上界为
+
+$$
+\mathcal B(\mathbb C^4)\otimes(\mathbb C\oplus\mathcal B(\mathbb C^3)).
+$$
+
+不能仅以“轨道投影不变”替代中间共振的逐单点不变性。
+
+若 $S_\infty$ 中两态效果不同，(22.3) 把相应效果写成有限个真实事件效果的复线性组合；若每个这些事件概率相同便矛盾，所以存在一个真实有限事件给出非零概率差。这个差没有正的统一下界，也不推出完美区分。调用数只计 $W$；仪器数、记录数、展开系数精度和控制参数精度不由此界控制。协议中的仪器和线性展开系数可以依赖已知的 $\Delta$；不要求统一一套控制序列和有界系数同时覆盖所有时钟。
+
+对任意有限可访问辅助 $B$，允许仪器作用于 $AB$、时钟作用于 $AH\otimes I_B$。相同的缩放、极化和第一次调用切分给 $S_N^{AB}=\mathcal B(AB)\otimes T_N^{AB}$，且 $\dim T_0^{AB}=1$。三种上界分别由 $W=I$、Fourier 单点不变、轨道投影不变给出；原 $A$ 协议张量 $I_B$ 后，再用免费的 $AB$ 双模作用填满 $\mathcal B(AB)$，给最终空间的反向包含。因此 $\dim T_\infty^{AB}$ 仍分别为 $1,4,10$，同一递推证明 $0,3,9$ 的充分界与 $\dim B$ 无关。此处并不把 $S_N$ 假设成对一般乘法封闭的代数。
+

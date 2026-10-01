@@ -1,8 +1,15 @@
-import LeanInformationAuditRegTests.LegacyAssignedTransport
-import LeanInformationAuditRegTests.LegacyContextCausalBindings
+import Reg.Catalogs.InformationRoot
+import Reg.Catalogs.TemplateShadow
+import Reg.Catalogs.SharedInformationRoot
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 namespace LeanInformationAuditRegTests.LegacyCausalFiniteBindings
+
+private def alteredLaw (a : D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena) :
+    D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena := { a with Law := fun _ => True }
 
 run_meta do
   let env ← getEnv
@@ -43,7 +50,7 @@ run_meta do
       (``Reg.Support.LegacyCausalSlots.localArena, ``Reg.Support.LegacyCausalSlots.local_sensitivity),
       (``Reg.Support.LegacyCausalSlots.icArena, ``Reg.Support.LegacyCausalSlots.ic_sensitivity),
       (``Reg.Support.LegacyCausalSlots.oiArena, ``Reg.Support.LegacyCausalSlots.oi_sensitivity)] do
-    let altered ← mkAppM ``LegacyAssignedTransport.alteredLaw #[mkConst arena]
+    let altered ← mkAppM ``alteredLaw #[mkConst arena]
     let expectedType ← mkAppM ``FiniteSlotSensitivity #[altered]
     if ← RegistrationGates.checked sensitivityName expectedType then
       throwError "original sensitivity accepted for a constant-true Law"

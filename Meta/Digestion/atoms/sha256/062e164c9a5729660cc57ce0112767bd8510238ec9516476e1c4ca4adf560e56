@@ -1,0 +1,8 @@
+**证明。** $j=0$ 时是 $\rho(\beta)=\langle\beta,\alpha\rangle$。若 $T_{j+2}=\langle T_{j+1},T_j\rangle$，则
+
+$$
+T_{j+3}=\rho(T_{j+2})=\langle T_{j+2},T_{j+1}\rangle .
+$$
+
+结构归纳完成。$□$
+

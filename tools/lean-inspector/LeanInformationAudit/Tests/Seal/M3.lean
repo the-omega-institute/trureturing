@@ -3,6 +3,9 @@ import D5.S3.ConceptDynamics.Sufficiency.SufficiencyIsTargetRelative
 import D5.S3.ConceptDynamics.InterventionLaws.ObservationInterventionKernelStrictness
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 set_option backward.isDefEq.respectTransparency.types false
 set_option maxHeartbeats 2000000
 set_option maxRecDepth 100000
@@ -10,7 +13,7 @@ namespace LeanInformationAudit.Tests.Seal.M3
 open D5.S3.ConceptDynamics D5.S3.ConceptDynamics.InformationEscape
 open D5.S3.ConceptDynamics.InformationEscapeArenas
 local macro "expect_member " t:ident " in " a:ident : command =>
-  `(command| expect_information_occurrence $t in $a from "LeanInformationAudit.Tests.Seal.M3")
+  `(command| test_assess in expect_information_occurrence $t in $a from "LeanInformationAudit.Tests.Seal.M3")
 section Intervention
 open Interventions.InterventionCounterfactualSeparation Interventions.CounterfactualKernelStrictlyFiner
 open Interventions.CounterfactualIdentifiabilityCriterion Sufficiency.SufficiencyIsTargetRelative
@@ -21,7 +24,7 @@ def interventionRealization := InformationEscapeRealizations.FourthFifthRealizat
 theorem intervention_bridge : LegacyPrimitiveRealization interventionArena
     (∃ M N : DeterministicBoolSCM, Int M = Int N ∧ CF M ≠ CF N) interventionRealization :=
   InformationEscapeRealizations.FourthFifthRealizations.intervention_strictly_weaker_than_counterfactual_realization
-register_information_theorem intervention_strictly_weaker_than_counterfactual in interventionArena
+test_assess in register_information_theorem intervention_strictly_weaker_than_counterfactual in interventionArena
   primitives interventionRealization.toPrimitiveBundle realization intervention_bridge
 expect_member intervention_strictly_weaker_than_counterfactual in interventionArena
 theorem finer_bridge : LegacyPrimitiveRealization interventionArena
@@ -29,7 +32,7 @@ theorem finer_bridge : LegacyPrimitiveRealization interventionArena
       ∃ M N : DeterministicBoolSCM, Int M = Int N ∧ CF M ≠ CF N) interventionRealization := by
   refine ⟨Iff.trans ?_ intervention_bridge.equivalence⟩
   exact ⟨And.right, fun h => ⟨counterfactual_eq_implies_interventional_eq, h⟩⟩
-register_information_theorem counterfactual_kernel_strictly_finer in interventionArena
+test_assess in register_information_theorem counterfactual_kernel_strictly_finer in interventionArena
   primitives interventionRealization.toPrimitiveBundle realization finer_bridge
 expect_member counterfactual_kernel_strictly_finer in interventionArena
 theorem fiber_bridge : LegacyPrimitiveRealization interventionArena
@@ -41,7 +44,7 @@ theorem fiber_bridge : LegacyPrimitiveRealization interventionArena
     exact ⟨M, N, hM.trans hN.symm, hCF⟩
   · rintro ⟨M, N, hInt, hCF⟩
     exact ⟨allSingleWorldMarginals M, M, N, rfl, hInt.symm, hCF⟩
-register_information_theorem boolean_counterfactual_varies_on_coupling_fiber in interventionArena
+test_assess in register_information_theorem boolean_counterfactual_varies_on_coupling_fiber in interventionArena
   primitives interventionRealization.toPrimitiveBundle realization fiber_bridge
 expect_member boolean_counterfactual_varies_on_coupling_fiber in interventionArena
 theorem not_identifiable_bridge : LegacyPrimitiveRealization interventionArena
@@ -52,7 +55,7 @@ theorem not_identifiable_bridge : LegacyPrimitiveRealization interventionArena
   rw [counterfactual_identifiable_iff_constant_on_fiber]
   simp only [not_forall, exists_prop]
   rfl
-register_information_theorem boolean_counterfactual_not_identifiable in interventionArena
+test_assess in register_information_theorem boolean_counterfactual_not_identifiable in interventionArena
   primitives interventionRealization.toPrimitiveBundle realization not_identifiable_bridge
 expect_member boolean_counterfactual_not_identifiable in interventionArena
 theorem target_bridge : LegacyPrimitiveRealization interventionArena
@@ -67,7 +70,7 @@ theorem target_bridge : LegacyPrimitiveRealization interventionArena
   rw [self.1, self.2, target.1, target.2]
   simp only [not_forall, exists_prop]
   exact ⟨And.right, fun h => ⟨fun _ _ hsame => hsame, h⟩⟩
-register_information_theorem interventional_marginal_sufficient_but_counterfactual_joint_not
+test_assess in register_information_theorem interventional_marginal_sufficient_but_counterfactual_joint_not
   in interventionArena primitives interventionRealization.toPrimitiveBundle realization target_bridge
 expect_member interventional_marginal_sufficient_but_counterfactual_joint_not in interventionArena
 end Intervention
@@ -79,7 +82,7 @@ def observationRealization := InformationEscapeRealizations.ObservationIntervent
 theorem observation_bridge : LegacyPrimitiveRealization observationInterventionArena
     (∃ M N : DeterministicBoolSCM, Obs M = Obs N ∧ Int M ≠ Int N) observationRealization :=
   InformationEscapeRealizations.ObservationIntervention.observation_strictly_weaker_than_intervention_realization
-register_information_theorem observation_strictly_weaker_than_intervention in observationInterventionArena
+test_assess in register_information_theorem observation_strictly_weaker_than_intervention in observationInterventionArena
   primitives observationRealization.toPrimitiveBundle realization observation_bridge
 expect_member observation_strictly_weaker_than_intervention in observationInterventionArena
 theorem profile_bridge : LegacyPrimitiveRealization observationInterventionArena
@@ -100,13 +103,13 @@ theorem profile_bridge : LegacyPrimitiveRealization observationInterventionArena
   · rintro ⟨M, N, hObs, hInt⟩
     refine ⟨fun _ h => congrFun h none, (M, N), hObs, fun h => hInt ?_⟩
     funext x; exact congrFun h (some x)
-register_information_theorem intervention_kernel_strictly_finer_than_observation
+test_assess in register_information_theorem intervention_kernel_strictly_finer_than_observation
   in observationInterventionArena primitives observationRealization.toPrimitiveBundle realization profile_bridge
 expect_member intervention_kernel_strictly_finer_than_observation in observationInterventionArena
 end Observation
 open Lean Meta LeanInformationAudit
 #guard_msgs (error) in
-#seal_information_theory
+test_assess in #seal_information_theory
 run_cmd do
   let env ← getEnv
   let records := SealRecords.forRoot env env.header.mainModule

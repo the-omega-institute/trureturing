@@ -1,0 +1,8 @@
+## 45. 粗时钟闭合与细时钟失败
+
+固定 $g=g(\mathcal T)$，令 $u_j=r_{t_0+jg}(x)$，并记 $L_g=\operatorname{tr}(M^g)$。Cayley–Hamilton 关系给出
+
+$$
+\boxed{u_{j+2}=L_g u_{j+1}-(-1)^g u_j.}
+$$
+

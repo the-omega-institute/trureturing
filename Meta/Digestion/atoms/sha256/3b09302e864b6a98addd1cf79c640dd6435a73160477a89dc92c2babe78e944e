@@ -1,0 +1,12 @@
+### definition 29.1 三节点闭环的隐藏核
+
+令
+
+$$
+B=\begin{pmatrix}1&2&0\\0&1&2\\2&0&1\end{pmatrix},
+\qquad
+K_r=\ker(B\bmod3^r).
+$$
+
+$K_r$ 只记录边界看不见的内部差异，不是全部内部允许状态。
+

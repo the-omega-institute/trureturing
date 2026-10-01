@@ -1,0 +1,21 @@
+### definition 17.1 同一输入的共轭权重双通道
+
+沿用 $R=\mathbb Z[\theta]/(\theta^2-\theta-1)$、$x=a+b\theta$，并记
+
+$$
+\theta^*=1-\theta,\qquad
+x^*=(a+b)-b\theta,\qquad
+N(x)=xx^*=a^2+ab-b^2,\qquad
+\operatorname{Tr}(x)=x+x^*=2a+b.
+$$
+
+这里 $N$ 与第 15 节的 $\mathcal N$ 是同一范数。对整数权重 $u,v$，定义
+
+$$
+h=(v-u)+u\theta,\qquad
+E_h:R\longrightarrow R^2,\qquad
+E_h(x)=(hx,h^*x).
+$$
+
+第二通道是以共轭权重 $h^*$ 乘同一个输入 $x$；它不是把第一通道的输出取共轭，因为 $(hx)^*=h^*x^*$。这里输出的是两个完整的 $R$ 值，亦即四个整数系数；$E_h$ 是双通道编码，不称为压缩。
+

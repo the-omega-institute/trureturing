@@ -1,0 +1,59 @@
+**定理 192.2（好指标上共同公因子的统一 Robin 余量）。**
+
+令 $\mathcal G_v=\{j\ge3:j\notin\mathcal E_v\}$。固定任意实数 $C>0$，考虑同一个好指标 $j\in\mathcal G_v$ 下的全部整数
+
+$$
+1\le g\le C\phi^j,\qquad N_{g,j}=gV_j.
+$$
+
+则
+
+$$
+\liminf_{\substack{j\to\infty\\j\in\mathcal G_v}}
+\inf_{1\le g\le C\phi^j}
+\left(e^\gamma\log\log N_{g,j}-Z(N_{g,j})\right)
+\ge e^\gamma\log2.
+\tag{192.4}
+$$
+
+这里每个好指标上的乘子可以指数级大，且不要求其素支撑固定；阈值依赖固定的种子与 $C$，但不依赖这个范围内的单独 $g$。
+
+证明。取 $y=\lceil j^{5/6}\rceil$，
+
+$$
+A_j=\prod_{\substack{p\mid V_j\\p\le y}}p,\qquad B=gA_j.
+$$
+
+则 $A_j\mid V_j$、$B\mid N_{g,j}$，并且
+
+$$
+Z(N_{g,j})<\frac B{\varphi(B)}e^{T_j(y)},\qquad
+T_j(y)\le T_j(j^{5/6})\le\frac1{(\log j)^2}.
+$$
+
+Chebyshev 初等上界给 $\log A_j=O(j^{5/6})$。设 $h=\log g\le j\log\phi+\log C$，而 Binet 公式给 $\log V_j=j\log\phi+O_v(1)$。
+
+当 $h\ge j^{11/12}$ 时，$\log\log B=\log h+O(j^{-1/12})$。因 $B\ge e^{j^{11/12}}\to\infty$，Axler 精确上界一致适用，得到
+
+$$
+\frac{Z(N_{g,j})}{e^\gamma}
+<\left(\log\log B+\frac{a_0}{(\log\log B)^2}\right)e^{T_j(y)}
+=\log h+o(1).
+$$
+
+所有误差一致于 $g$。由 $h\le j\log\phi+O_C(1)$，
+
+$$
+\log\log N_{g,j}-\log h
+=\log\left(1+\frac{\log V_j}{h}\right)
+\ge\log2-o_{v,C}(1).
+$$
+
+当 $h<j^{11/12}$ 时，用 §164.1 的通用包络（$B=1$ 单独以 $B/\varphi(B)=1$ 处理），得到
+
+$$
+Z(N_{g,j})/e^\gamma\le(11/12)\log j+O_v(1),
+$$
+
+因为 $\log B\le j^{11/12}+O(j^{5/6})$，且尾部乘积增加的加性误差为 $O(1/\log j)$。实际预算至少为 $\log\log V_j=\log j+O_v(1)$，两者之差一致趋于无穷。合并即得式（192.4）。$\square$
+

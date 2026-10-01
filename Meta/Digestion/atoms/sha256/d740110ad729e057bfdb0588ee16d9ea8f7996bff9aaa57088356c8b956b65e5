@@ -1,0 +1,9 @@
+### 15.7 加入未来更新后：能隙相容性是另一项独立约束
+
+先处理两个标签、共同本征基的 $H_0=\operatorname{diag}(E_{0j})$、$H_1=\operatorname{diag}(E_{1j})$，$\tau_a=\operatorname{diag}(p_{aj})$。进一步要求一个固定逻辑 Hamiltonian $K=\operatorname{diag}(\kappa_0,\kappa_1)$ 的全部时间协变：
+\[
+ e^{-itH}\mathcal R(\rho)e^{itH}
+ =\mathcal R(e^{-itK}\rho e^{itK}),\quad\forall\rho,t.
+\]
+记 $\omega=\kappa_0-\kappa_1$。这个条件比只在平衡态上静止更强，且不等同于所有真实 thermal operations 的完整刻画 [LJR15, FOR15]。
+

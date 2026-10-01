@@ -1,0 +1,22 @@
+### 315.8 全部严格高低实数矩阶
+
+若某个实数 \(s>a\) 的统一矩有限，设
+\(\sup_{\mathrm{合法},S}\mathbb EX_S^s\le K_s\)，则
+$$
+\mathbb E[X_S^a\mathbf1_{\{X_S>n\}}]
+\le n^{a-s}\mathbb EX_S^s
+\le K_sn^{a-s}\longrightarrow0
+$$
+一致成立，推出被推论315.3排除的一致可积性。也可直接由 Markov 得
+$$
+n^aQ_X(n)\le K_sn^{a-s}\longrightarrow0,
+$$
+与正 limsup 下界矛盾。
+
+反向地，对每个 \(0<s<a\)，第315.4节的同一个 HNP 包装满足
+$$
+\mathbb EX_S^s=
+\sum_{n\ge0}[(n+1)^s-n^s]\Pr(X_S>n).
+$$
+大 \(n\) 增量为 \(O_s(n^{s-1})\)，乘以统一 \(O(n^{-a})\) 尾后可求和。参考计数不超过总计数，所以同一构造同时供应两种费用的所有严格次临界矩。
+

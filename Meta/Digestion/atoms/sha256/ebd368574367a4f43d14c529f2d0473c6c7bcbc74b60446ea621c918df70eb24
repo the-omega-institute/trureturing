@@ -1,0 +1,16 @@
+**定理 11.5（一个过去点的有限时间保证）。**
+\[
+ \mathbb E\operatorname{tr}\operatorname{Cov}(\mathscr Lu\mid\mathcal A_h)
+ \le h^2c_2^2/4,
+\]
+\[
+ \boxed{\inf_f\mathbb E\|u_t-f(u_0,u_{-h})\|^2
+       \le \tfrac14t^2(t+h)^2c_2^2.}
+\]
+若过去读数改成 $u_{-h}+e$，$\|e\|_{L^2}\le\delta$，则
+\[
+ \boxed{\sqrt{\mathcal R_{h,\delta}(t)}
+ \le t(hc_2/2+\delta/h)+t^2c_2/2.}
+\]
+该界不要求误差 $e$ 与状态独立。右侧中关于 $h$ 的两项在 $h=\sqrt{2\delta/c_2}$ 时最小，若这个延迟在允许范围内且 $c_2,\delta>0$。
+

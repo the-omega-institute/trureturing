@@ -1,0 +1,108 @@
+**定理347.3（同一充分参考预算中的严格改善）。** 存在另一份满足同一单调性、相邻比 \(R_*\) 和总和预算的固定地板 \(\vartheta\)，使新策略的全部充分近临界任务矩仍有限，且
+
+\[
+\boxed{
+\frac{T_{a-u}(A_\vartheta)}
+     {T_{a-u}(A_\eta)}
+\longrightarrow0\qquad(u\downarrow0).}
+\tag{347.40}
+\]
+
+两份策略均满足式（347.5）的同一个充分参考预算。结论不要求新策略的实际参考费逐世界小于旧策略，也不保证保留任意一个低于该共同充分界的紧预算。
+
+**证明。** 对整数 \(N\ge0\)，定义截平总量
+
+\[
+A_N=\sum_{k\ge0}\min(\eta_k,\eta_N)
+=(N+1)\eta_N+\sum_{k>N}\eta_k.
+\tag{347.41}
+\]
+
+非增可求和性给 \(N\eta_N\to0\)，故 \(A_N\to0\)。固定
+\(0<\epsilon\le\min(1,K_\Sigma)\)，选严格递增整数 \(N_j\)，使
+
+\[
+A_{N_j}\le\epsilon2^{-j}\qquad(j\ge1).
+\tag{347.42}
+\]
+
+令
+
+\[
+\vartheta_k=\sum_{j\ge1}\min(\eta_k,\eta_{N_j}).
+\tag{347.43}
+\]
+
+非负 Tonelli 求和给
+
+\[
+\sum_k\vartheta_k
+=\sum_jA_{N_j}\le\epsilon.
+\tag{347.44}
+\]
+
+所以每个 \(\vartheta_k\) 严格为正，且
+\(\vartheta_k\le\epsilon\le1\)。逐项单调性给
+\(\vartheta_{k+1}\le\vartheta_k\)。
+
+若 \(\eta_k\le R_*\eta_{k+1}\)，则对每个固定 \(c>0\)，
+
+\[
+\min(\eta_k,c)\le R_*\min(\eta_{k+1},c).
+\]
+
+逐项求和得到 \(\vartheta_k/\vartheta_{k+1}\le R_*\)，原相邻比合同精确保留，包括旧地板含平坦区间的情形。
+
+对 \(k\ge N_j\)，有
+\(\min(\eta_k,\eta_{N_j})=\eta_k\)。因此
+
+\[
+\frac{\vartheta_k}{\eta_k}
+\ge\#\{j:N_j\le k\}\longrightarrow\infty.
+\tag{347.45}
+\]
+
+同时，全体层上有固定正比例下界。取
+\(c_0=\eta_{N_1}/\eta_0\in(0,1]\)，则
+
+\[
+\vartheta_k\ge\min(\eta_k,\eta_{N_1})\ge c_0\eta_k.
+\tag{347.46}
+\]
+
+故 \(W_\vartheta(u)\le c_0^{-a}W_\eta(u)\)，旧近临界剖面的有限性传给新剖面，没有对两个无穷量作比值。
+
+令
+
+\[
+h_L=\inf_{k\ge L}\frac{\vartheta_k}{\eta_k}.
+\]
+
+式（347.45）给 \(h_L\to\infty\)。对充分大的固定 \(L\)，
+\(h_L\ge1\)，尾段满足
+
+\[
+\sup_{k\ge L}n_k^{-u}\vartheta_k^{-s}
+\le h_L^{-s_-}W_\eta(u).
+\]
+
+有限前缀由
+\(C_L^{\rm pre}=\max_{k<L}\vartheta_k^{-a}<\infty\)
+共同控制。因此
+
+\[
+W_\vartheta(u)
+\le\max\{C_L^{\rm pre},\,h_L^{-s_-}W_\eta(u)\}.
+\tag{347.47}
+\]
+
+式（347.16）给 \(W_\eta(u)\to\infty\)。先令 \(u\downarrow0\)，再令 \(L\to\infty\)，得到
+
+\[
+\frac{W_\vartheta(u)}{W_\eta(u)}\longrightarrow0.
+\]
+
+用两份实际策略的双向剖面比较，便得到式（347.40）。证毕。
+
+可以进一步选 \(\epsilon\le\sum_k\eta_k\)，使新地板总和不超过旧总和；但这仍不推出实际参考费的逐世界排序。早期 \(\vartheta_k\) 可以小于 \(\eta_k\)，初始任务批量也可以增大。有限前缀已由式（347.47）处理，所以严格改善不是逐层支配，也不声称每个固定矩阶在每个世界都更便宜。
+

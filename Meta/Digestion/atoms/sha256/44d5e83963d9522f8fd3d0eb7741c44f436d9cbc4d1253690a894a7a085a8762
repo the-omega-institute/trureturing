@@ -1,0 +1,42 @@
+**引理 184.1（大小素数与首次秩的共同尾界）。** 对任意整数 $r\ge6$、整数 $y\ge5$，令
+
+$$
+T(r,y)=\sum_{\substack{p\mid F_r\\p>y}}\log\frac p{p-1}.
+$$
+
+则
+
+$$
+0\le T(r,y)\le\tau(r)\sqrt{\frac{6(1+\log r)}{y\log y}}
+<4r^{1/3}\sqrt{\frac{6(1+\log r)}{y\log y}}.
+\tag{184.1}
+$$
+
+证明。按同一个实际 Fibonacci 指标的首次秩 $d=z(p)\mid r$ 分桶，写
+
+$$
+B_{d,>y}=\sum_{\substack{p>y\\z(p)=d}}\log\frac p{p-1}.
+$$
+
+$d\le5$ 时没有这样的素数，因为 $F_1,\ldots,F_5$ 的素因子至多为五。对 $d>5$，引理 163.1 给
+
+$$
+B_{d,>y}\le\frac{6(1+\log d)}d.
+$$
+
+另一方面，桶内所有不同素数的乘积整除 $F_d<e^d$，每个素数大于 $y$，所以个数小于 $d/\log y$。$y$ 为整数且 $p>y$ 给 $p-1\ge y$，因此
+
+$$
+B_{d,>y}\le\frac d{y\log y}.
+$$
+
+对同一个桶取两界的较小者，并用 $\min(u,v)\le\sqrt{uv}$，得到
+
+$$
+B_{d,>y}\le
+\sqrt{\frac{6(1+\log d)}{y\log y}}
+\le\sqrt{\frac{6(1+\log r)}{y\log y}}.
+$$
+
+桶数至多 $\tau(r)$，引理 164.2 已给 $\tau(r)<4r^{1/3}$。$\square$
+

@@ -1,0 +1,21 @@
+**定理 94.1（带质量和位置的精确传输）。** 对 $1<a\le b$ 定义有限二端点量
+
+$$
+J_{a,b}=\sum_{a<m\le b}\Lambda(m)(\lambda_m-\lambda_b),\qquad
+M_{a,b}=\sum_{a<m\le b}\Lambda(m).
+$$
+
+它不同于第 92 节的一变量尾积分 $J(x)$。有
+
+$$
+\Phi(b)=\Phi(a)+\log\frac{\log b}{\log a}
++(\Psi(a)-b)\lambda_b-(\Psi(a)-a)\lambda_a-J_{a,b},
+$$
+
+且对 $a\le b\le c$，
+
+$$
+M_{a,c}=M_{a,b}+M_{b,c},\qquad
+J_{a,c}=J_{a,b}+J_{b,c}+(\lambda_b-\lambda_c)M_{a,b}.
+$$
+

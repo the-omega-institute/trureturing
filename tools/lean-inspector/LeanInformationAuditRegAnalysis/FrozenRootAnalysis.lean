@@ -1,6 +1,9 @@
 import Reg.Catalogs.InformationRoot
 import LeanInformationAudit.SealCommand
 import LeanInformationAudit.Tests.Projection.FixtureState
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 /-!
 This full-analysis fixture belongs to `LeanInformationAuditRegAnalysis` and stays

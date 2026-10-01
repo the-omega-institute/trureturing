@@ -1,0 +1,33 @@
+### 4.1 可形式化的有限数据
+
+固定月光 VOA 的正定实形式。令 $B=(V_2^\natural)_{\mathbb R}$，并定义
+
+$$
+a\cdot b=a_{(1)}b,\qquad
+\langle a,b\rangle\mathbf1=a_{(3)}b,
+\qquad e=\omega/2.
+\tag{MC.7}
+$$
+
+这里 $\mathbf1\in V_0$ 是真空，$e\in B$ 才是这个有限代数的单位。VOA 的实际运算给出交换乘法、不变正定形式、$e\cdot a=a$、$\|e\|^2=3$。乘法一般不结合。令
+
+$$
+W=e^\perp,\quad d_W=196883,\quad
+T(u,v,w)=\langle u\cdot v,w\rangle\quad(u,v,w\in W).
+\tag{MC.8}
+$$
+
+$T$ 是对称三线性形式。因 $V_1=0$，$W$ 中向量是权重二的 Virasoro primary：$L_1u=0$，$L_2u=\langle u,\omega\rangle\mathbf1=0$，更高正模因权重为负而为零。
+
+其二、三点真空相关函数为
+
+$$
+\langle\phi_u(z_1)\phi_v(z_2)\rangle
+=\frac{\langle u,v\rangle}{z_{12}^4},\qquad
+\langle\phi_u(z_1)\phi_v(z_2)\phi_w(z_3)\rangle
+=\frac{T(u,v,w)}{z_{12}^2z_{23}^2z_{13}^2}.
+\tag{MC.9}
+$$
+
+度量和三线性形式是剥去固定坐标因子后的局部相关数据；需要保留相位/符号及共同场标定。
+

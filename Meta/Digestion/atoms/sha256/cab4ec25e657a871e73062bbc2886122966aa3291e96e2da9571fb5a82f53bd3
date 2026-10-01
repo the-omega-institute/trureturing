@@ -1,0 +1,24 @@
+### theorem 48.1 超度量与精度参数
+
+$d_p$ 是平移不变超度量。若 $z(p)$ 如上并令 $e_p=v_p(F_{z(p)})$，则对奇素数 $p$
+
+$$
+ v_p(F_d)=\begin{cases}0,&z(p)\nmid d,\\e_p+v_p(d/z(p)),&z(p)\mid d,\end{cases}
+$$
+
+并有
+
+$$
+ z(p^r)=z(p)p^{\max(0,r-e_p)}.
+$$
+
+**证明。** 若 $p^q$ 同时整除两个差值的 Fibonacci 数，则相应矩阵幂是可逆标量矩阵；相乘或取逆给出第三个差值的同样整除性，得到超三角不等式。赋值公式是奇素数 Fibonacci 赋值提升定理（见 Lengyel, *The Order of the Fibonacci and Lucas Numbers*, 1995）；二进通道不纳入本式。证毕。 $\square$
+
+对间隔 $g$ 的采样，Smith 因子 $F_g$ 还给出精度滞后 $\lambda_p(g)=v_p(F_g)$。例如 $F_{12}=144=9\cdot16$，由 $r_0=b,r_{12}=144a+233b$ 可在合法边界上按
+
+$$
+ a\equiv16^{-1}\frac{r_{12}-233r_0}{9}\pmod{3^r}
+$$
+
+恢复 $a$ 到模 $3^r$；边界需要多两位三进精度。参数 $e_p$ 不统一设为1，$p=2$ 需单独处理。
+

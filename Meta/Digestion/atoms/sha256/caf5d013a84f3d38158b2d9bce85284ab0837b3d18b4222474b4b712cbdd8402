@@ -1,0 +1,12 @@
+**定理 4.1。** 若一个有限 $T_0>0$ 上有 $a_0\|x\|^2\le\mathcal E_{T_0}(x)\le M_0\|x\|^2$，$a_0>0$，则每个有限 $T>0$ 上都有正的上下帧界。
+
+内积对第一变量线性。令 $E_A$ 为谱测度、$r_A=\max(1,\|A\|)$，在 $\operatorname{Re}z>0$ 取
+$$
+R_z=\int_{\lambda\ne0}e^{z\overline{\ell(\lambda)}}dE_A(\lambda),
+\quad R_0=I,
+\quad V_v=\int_{\lambda\ne0}e^{iv\overline{\ell(\lambda)}}dE_A(\lambda)+E_A(\{0\}).
+$$
+则 $R_t=(A^t)^*$、$\|R_t\|\le r_A^t$、$\|V_v\|\le e^{\pi|v|}$，并有 $R_{u+iv}=R_uV_v$、$R_{s+u}=R_uR_s$，$u>0,s\ge0$。
+
+$R_z$ 算子范数全纯：在 $\operatorname{Re}z\ge\varepsilon>0$ 的紧邻域，各阶乘子导数由 $\rho^{\operatorname{Re}z}(|\log\rho|+\pi)^ke^{\pi|\operatorname{Im}z|}$ 一致控制，并在 $\rho\downarrow0$ 时趋零；用较大紧邻域的二阶余项控制谱上确界差商。该证明不在零时刻对无界 $\log A$ 求算子范数导数。
+

@@ -1,0 +1,13 @@
+### 5.3 从相关导数恢复必要状态秩
+
+块矩阵
+$$
+\mathcal H_m=[(-1)^iF^{(i+j)}(0)]_{i,j=0}^m
+$$
+等于 $[Q^T,\Omega Q^T,\ldots,\Omega^mQ^T]^T[Q^T,\Omega Q^T,\ldots,\Omega^mQ^T]$。每个块由反对称性直接核对，故其秩就是相应预测闭包维数。特别地
+$$
+\mathcal H_1=\begin{pmatrix}I&D\\-D&-F''(0)\end{pmatrix},
+\qquad\operatorname{rank}\mathcal H_1=r+\operatorname{rank}M,
+$$
+因为消去首块后的 Schur 补为 $M$。这只给第一轮增加的方向，最终维数须继续补全；有限精度应使用谱余量而非精确秩。
+

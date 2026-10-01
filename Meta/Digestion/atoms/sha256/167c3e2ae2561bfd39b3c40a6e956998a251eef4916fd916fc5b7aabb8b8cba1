@@ -1,0 +1,61 @@
+**证明式（340.6）。** 数组逐系数满足
+
+$$
+B_{k,s,t}-A_{k,s,t}
+ =\delta_k+(1-\delta_k)
+  [\bar u_{k,t}(s/m_k)-\bar\ell_{k,t}(s/m_k)]
+ \ge\delta_k.
+\tag{340.33}
+$$
+
+因此每个世界中 $G_k\ge\delta_k$。核心参考计数取值于 $d_k$，离散尾和精确给
+
+$$
+\mathbb E R_H^a
+ =d_0^a+\sum_{k\ge0}
+      (d_{k+1}^a-d_k^a)G_k.
+\tag{340.34}
+$$
+
+该等式由非负单调收敛成立，无需预先假定矩有限。因为
+$d_k=Nb^k+\lfloor\rho\rfloor$，存在固定 $c_d,C_d>0$，使所有 $k\ge0$ 都有
+
+$$
+c_dn_k^a\le d_{k+1}^a-d_k^a\le C_dn_k^a.
+\tag{340.35}
+$$
+
+大 $k$ 的比值趋于 $b^a-1>0$，有限初项可吸收进常数。由此
+
+$$
+\mathbb E R_H^a
+ \ge d_0^a+\frac{c_dN^a}{4}\sum_{k\ge0}\eta_k.
+\tag{340.36}
+$$
+
+这个下界逐世界成立。如果地板和发散，式（340.30）说明每一种完整请求的参考矩也无限。
+
+反向由式（340.18）、（340.19）和批量下界，
+
+$$
+\begin{aligned}
+\mathbb E R_H^a
+&\le d_0^a+
+ C_d\sum_{k\ge0}n_k^a
+       [\delta_k+C_1m_k^{-a}+\Gamma_k(x,q)]\\
+&\le C_6\left(1+\sum_{k\ge0}\eta_k\right).
+\end{aligned}
+\tag{340.37}
+$$
+
+这一上界先在每个同一世界求和，再取统一常数。加回式（340.31）的包装，得到
+
+$$
+c_4\left(1+\sum_{k\ge0}\eta_k\right)
+ \le H_a(A)\le
+C_7\left(1+\sum_{k\ge0}\eta_k\right).
+\tag{340.38}
+$$
+
+常数依固定模型、共同批量常数和固定包装，不依检验矩阶。按扩展实数理解此式，即得参考充要条件。证毕。
+

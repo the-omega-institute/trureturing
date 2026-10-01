@@ -1,0 +1,7 @@
+**引理 2.2（任意有限深度与显式支撑预算）。** 设 $\gamma=\gamma_d\cdots\gamma_1$，第 $j$ 层区间长度至多 $w_j$，$W=\sum_{j=1}^d w_j$。若 $P$ 满足式（QCA.7），则存在
+
+$$
+u\in\mathcal U(A_{[a-W,b+W]}),\qquad \gamma(P)=uPu^{\dagger}.
+\tag{QCA.8}
+$$
+

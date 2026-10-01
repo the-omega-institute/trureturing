@@ -1,0 +1,89 @@
+**引理340.2（未启动区在真实平滑后仍有正尾）。** 存在只依固定模型与式（340.3）共同常数的 $c_{\rm tail}>0$、$\eta_{\rm conc}>0$ 和几何阈值 $k_{\rm geom}$，使对任一满足
+
+$$
+k\ge k_{\rm geom},\qquad \eta_k\le\eta_{\rm conc}
+\tag{340.20}
+$$
+
+的层，存在原合同合法世界 $w_k$，其中
+
+$$
+x_k=r_k/2,\qquad
+c=1,\quad h=x_k,\quad
+p_k=q_k=\frac{1-x_k/C}{B},
+\tag{340.21}
+$$
+
+并且
+
+$$
+\boxed{G_k(p_k,q_k)\ge c_{\rm tail}n_k^{-a}.}
+\tag{340.22}
+$$
+
+**证明。** 选择固定 $k_{\rm geom}$，使 $k\ge k_{\rm geom}$ 时 $r_k\le1/4$。于是式（340.21）中的增益严格为正且不超过 $1/4$，$c=1$ 由 $j=0,r=1$ 实现，确为合法世界。
+
+在这一个世界中，令
+
+$$
+S_k\sim\operatorname{Bin}(m_k,p_k),\qquad
+\widehat x_k=C(1-BS_k/m_k).
+$$
+
+其均值和方差满足
+
+$$
+\mathbb E\widehat x_k=x_k,\qquad
+\operatorname{Var}(\widehat x_k)
+ =\frac{(CB)^2p_k(1-p_k)}{m_k}
+ \le\frac{(CB)^2}{4m_k}.
+\tag{340.23}
+$$
+
+取事件 $E_k=\{|\widehat x_k-x_k|\le x_k/2\}$。在该事件上，
+
+$$
+x_k/2\le\widehat x_k\le3x_k/2<r_k\le1/4.
+$$
+
+所以延拓函数 $\zeta$ 恰为恒等，式（340.14）对所有参考成功数同时成立：
+
+$$
+\bar u_{k,t}(S_k/m_k)-\bar\ell_{k,t}(S_k/m_k)
+ =\Omega\widehat x_k^\beta
+ \ge\Omega(x_k/2)^\beta.
+\tag{340.24}
+$$
+
+参考 Bernstein 权重非负且和为一，由此在同一事件上有
+$\bar\Gamma_k(S_k/m_k,q_k)\ge\Omega(x_k/2)^\beta$。事件外的差仍非负。
+
+由 Chebyshev 不等式和式（340.3），
+
+$$
+\Pr(E_k^c)
+ \le\frac{(CB)^2}{m_kx_k^2}
+ \le C_4\frac{n_k}{m_k}
+ \le C_5\eta_k^{1/a},
+\qquad
+n_kx_k^2=\frac{N(x^\dagger)^2}{4b}.
+\tag{340.25}
+$$
+
+常数 $C_5$ 只依固定模型和批量下比较常数 $c_m$，不依 $k,\eta$。取
+$\eta_{\rm conc}=\min\{1,(2C_5)^{-a}\}$，则式（340.20）保证 $\Pr(E_k)\ge1/2$。因此
+
+$$
+\begin{aligned}
+\mathsf B_{m_k}[\bar\Gamma_k(\,\cdot\,,q_k)](p_k)
+&=\mathbb E\bar\Gamma_k(S_k/m_k,q_k)\\
+&\ge\frac{\Omega}{2}(x_k/2)^\beta
+ \ge c_1n_k^{-a}.
+\end{aligned}
+\tag{340.26}
+$$
+
+最后用 $\delta_k\le1/4$ 和式（340.16）得到式（340.22）。证毕。
+
+若 $\sum_k\eta_k<\infty$，则 $\eta_k\to0$，所以存在依该固定序列的 $k_*\ge k_{\rm geom}$，使式（340.22）对全部 $k\ge k_*$ 成立。这里只等待已固定策略的地板进入集中范围，没有更换批量常数。每次证明均在同一个 $w_k$ 中平均，未把不同世界的尾相加。
+

@@ -1,0 +1,32 @@
+### 4.2 产品网与半链
+
+取 $B=A(\mathrm{Fib},\tau)$，其半链记为 $N_t$。Deligne 乘积的 Hom、复合和伴随按因子分解，所以实际的网同构是
+
+$$
+A(\mathrm{Fib}\boxtimes\mathrm{Fib},\tau\boxtimes\tau)_I
+\cong B_I\otimes B_I.
+\tag{QCA.14}
+$$
+
+这个同构与式（QCA.3）的左右补单位嵌入相容；同窗口的乘积系统在独立窗口乘积系统中共尾。因此全局准局部代数为 $A=B\otimes_{\min}B$，其迹为乘积迹，半链为
+
+$$
+M_t=N_t\,\overline\otimes\,N_t.
+$$
+
+$X=\tau\boxtimes\tau$ 自对偶，$X^{\otimes2}=(\mathbf1\oplus\tau)\boxtimes(\mathbf1\oplus\tau)$ 包含四个简单对象，故确属原问题允许的强张量生成情形。
+
+令 $T$ 为把区间向右平移一格的网自同构。定义
+
+$$
+\alpha_k=T^k\otimes T^{-k},\qquad k\in\mathbb Z.
+\tag{QCA.15}
+$$
+
+每个因子的窗口像都包含于统一扩大 $|k|$ 的窗口，逆同样成立，故这是真正的 QCA，而非仅在有限链上定义的置换。其半链像为
+
+$$
+\alpha_k(M_0)=N_k\,\overline\otimes\,N_{-k}.
+\tag{QCA.16}
+$$
+

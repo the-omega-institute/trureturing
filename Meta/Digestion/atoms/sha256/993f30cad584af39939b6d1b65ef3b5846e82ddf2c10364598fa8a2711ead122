@@ -1,0 +1,13 @@
+### 339.9 固定参考预算下的最优增长指数
+
+第333节定义
+$$
+\mathcal T_s^{\mathcal C}(K)
+=\inf\left\{
+\sup_{w,S}\mathbb E^A N_T^s:
+A\text{ 准确，属于 }\mathcal C,\quad
+\sup_{w,S}\mathbb E^A N_H^a\le K
+\right\}.
+\tag{339.35}
+$$
+
