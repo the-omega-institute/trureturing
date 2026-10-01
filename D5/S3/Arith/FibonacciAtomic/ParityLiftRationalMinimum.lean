@@ -39,6 +39,52 @@ def wordBehavior {K : Type*} [Field K] {Alphabet V Y : Type*}
     (R : WordRepresentation K Alphabet V Y) (w : List Alphabet) : Y :=
   R.output (wordMap R.transition w R.initial)
 
+/-- Concatenation applies the prefix first and the suffix second. -/
+theorem word_map_append {K : Type*} [Field K] {Alphabet V : Type*}
+    [AddCommGroup V] [Module K V] (T : Alphabet → V →ₗ[K] V)
+    (u w : List Alphabet) :
+    wordMap T (u ++ w) = (wordMap T w).comp (wordMap T u) := by
+  have productAppend (a c : List Alphabet) :
+      wordOperator T (a ++ c) = (wordOperator T a).comp (wordOperator T c) := by
+    induction a with
+    | nil => simp [wordOperator]
+    | cons b a ih =>
+      simp only [List.cons_append, wordOperator, ih, LinearMap.comp_assoc]
+  simpa only [wordMap, List.reverse_append] using productAppend w.reverse u.reverse
+
+/-- A nonsingular matrix of actual prefix/suffix responses bounds every
+finite-dimensional all-word realization from below. -/
+theorem response_minor_le_finrank {K : Type*} [Field K] {Alphabet V Y : Type*}
+    [AddCommGroup V] [Module K V] [FiniteDimensional K V]
+    [AddCommGroup Y] [Module K Y] {n : ℕ}
+    (R : WordRepresentation K Alphabet V Y) (f : List Alphabet → Y)
+    (correct : ∀ w, wordBehavior R w = f w)
+    (pre suf : Fin n → List Alphabet) (select : Fin n → Y →ₗ[K] K)
+    (det : (fun i j => select i (f (pre j ++ suf i)) : Matrix (Fin n) (Fin n) K).det ≠ 0) :
+    n ≤ Module.finrank K V := by
+  classical
+  let reach : Fin n → V := fun j => wordMap R.transition (pre j) R.initial
+  let observe : V →ₗ[K] (Fin n → K) :=
+    LinearMap.pi fun i =>
+      (select i).comp (R.output.comp (wordMap R.transition (suf i)))
+  let minor : Matrix (Fin n) (Fin n) K := fun i j => select i (f (pre j ++ suf i))
+  have factor (i j : Fin n) : observe (reach j) i = minor i j := by
+    change select i (R.output (wordMap R.transition (suf i)
+      (wordMap R.transition (pre j) R.initial))) = _
+    change select i (R.output (((wordMap R.transition (suf i)).comp
+      (wordMap R.transition (pre j))) R.initial)) = _
+    rw [← word_map_append]
+    exact congrArg (select i) (correct (pre j ++ suf i))
+  have independent : LinearIndependent K (observe ∘ reach) := by
+    have columns := Matrix.linearIndependent_cols_of_det_ne_zero det
+    have eq : observe ∘ reach = minor.col := by
+      ext j i
+      exact factor i j
+    rw [eq]
+    exact columns
+  have statesIndependent := independent.of_comp observe
+  simpa using statesIndependent.fintype_card_le_finrank
+
 /-- Standard representatives are taken before embedding into the rational numbers. -/
 def parityEncode : Option (ZMod 2) → ℚ × ℚ
   | none => (0, 0)
@@ -158,38 +204,8 @@ theorem result :
     decide +kernel
   refine ⟨upper, by simp [BlockState], ?_, ?_, ?_, minor, detValue⟩
   · intro V _ _ _ R correct
-    have append (u w : List Window) :
-        wordMap R.transition (u ++ w) =
-          (wordMap R.transition w).comp (wordMap R.transition u) := by
-      have productAppend (a c : List Window) :
-          wordOperator R.transition (a ++ c) =
-            (wordOperator R.transition a).comp (wordOperator R.transition c) := by
-        induction a with
-        | nil => simp [wordOperator]
-        | cons b a ih =>
-          simp only [List.cons_append, wordOperator, ih, LinearMap.comp_assoc]
-      simpa only [wordMap, List.reverse_append] using productAppend w.reverse u.reverse
-    let reach : Fin 4 → V := fun j => wordMap R.transition (prefixes j) R.initial
-    let observe : V →ₗ[ℚ] (Fin 4 → ℚ) :=
-      LinearMap.pi fun i =>
-        (selectOutput i).comp (R.output.comp (wordMap R.transition (suffixes i)))
-    have factor (i j : Fin 4) : observe (reach j) i = responseMinor i j := by
-      change selectOutput i (R.output (wordMap R.transition (suffixes i)
-        (wordMap R.transition (prefixes j) R.initial))) = _
-      change selectOutput i (R.output (((wordMap R.transition (suffixes i)).comp
-        (wordMap R.transition (prefixes j))) R.initial)) = _
-      rw [← append]
-      exact congrArg (selectOutput i) (correct (prefixes j ++ suffixes i))
-    have det : responseMinor.det ≠ 0 := by rw [detValue]; norm_num
-    have independent : LinearIndependent ℚ (observe ∘ reach) := by
-      have columns := Matrix.linearIndependent_cols_of_det_ne_zero det
-      have eq : observe ∘ reach = responseMinor.col := by
-        ext j i
-        exact factor i j
-      rw [eq]
-      exact columns
-    have statesIndependent := independent.of_comp observe
-    simpa using statesIndependent.fintype_card_le_finrank
+    exact response_minor_le_finrank R parityTask correct prefixes suffixes selectOutput
+      (by change responseMinor.det ≠ 0; rw [detValue]; norm_num)
   · decide +kernel
   · decide +kernel
 

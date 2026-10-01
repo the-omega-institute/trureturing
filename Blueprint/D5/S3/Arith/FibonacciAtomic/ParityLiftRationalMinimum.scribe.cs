@@ -50,6 +50,33 @@ internal sealed class ParityLiftRationalMinimumDocument : IScribeDocumentDefinit
             Definition("wordBehavior", "Full word responses", "The behavior of R "
                 + "on w is its output map applied to the word operator acting on its initial vector. "
                 + "R realizes a task when these responses agree on every finite word."),
+            Describe.Lean(DescribeId.Create("word-map-concatenation"),
+                DeclarationHandle.Create(Prefix + "word_map_append"), H("Composition of chronological products"),
+                StatementSource.FromAuthor(Disp(All("T", All("u", All("w",
+                    EqOf(Call("wordMap", V("T"), Call("concat", V("u"), V("w"))),
+                        Call("compose", Call("wordMap", V("T"), V("w")),
+                            Call("wordMap", V("T"), V("u"))))))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For any field K, "
+                    + "alphabet and K-vector space V, T assigns a linear endomorphism to each "
+                    + "letter. For finite words u and w, concat(u,w) is their concatenation, "
+                    + "and compose(A,B) applies B first and A second. The chronological operator "
+                    + "of a concatenation applies the prefix operator before the suffix operator."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-response-minor-lower-bound"),
+                DeclarationHandle.Create(Prefix + "response_minor_le_finrank"), H("Actual response rank bounds dimension"),
+                StatementSource.FromAuthor(Disp(All("K", All("R", All("f", All("pre", All("suf", All("select",
+                    Imp(And(Call("Realizes", V("R"), V("f")), Call("Nonsingular", V("M"))),
+                        LeOf(V("n"), Call("dimK", V("V")))))))))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("K is any field, V "
+                    + "is a finite-dimensional K-vector space, Y is any K-vector space and R "
+                    + "is a linear word representation on V with output in Y. The task f maps "
+                    + "finite words to Y. The families pre and suf contain n actual prefixes "
+                    + "and suffixes; select contains n K-linear scalar observations on Y. "
+                    + "M(i,j)=select(i)(f(concat(pre(j),suf(i)))). Nonsingular(M) means its "
+                    + "determinant is nonzero. If R realizes f on every finite word, its reached "
+                    + "prefix vectors map linearly to the columns of M. Independence of these "
+                    + "columns forces independence of the n reached vectors and n<=dim_K(V)."))),
+                DescribeRole.Theorem),
             Definition("parityEncode", "Rational encoding after reduction", "An error maps to "
                 + "(0,0). A residue b in ZMod(2) maps to (1,val(b)), where val(b) is the standard "
                 + "representative zero or one, then embedded into the rational numbers."),
