@@ -37581,3 +37581,43 @@ $$
 而 $60\mid r$ 时 $m_r=1$，比例升为 $1$，正好恢复上一段的整窗结论。
 
 这项计数把前沿文献的整除条件具体投影到 FIB 仿射窗口；它没有控制剩余的 $1-4/15$ 候选，也没有提供这些候选的 CA 身份或完整约数预算。因此它缩小了 Robin 反例可能落入的 FIB 地址纤维，但没有关闭全称缺口。
+
+## 276. Cloitre 的精确 Fibonacci 分数部余项与加权接口的边界
+
+2026 年 7 月的 Cloitre 预印本 [*Fibonacci, Dirichlet, and Gauss in a single sum*](../../../Library/Analytic/cloitre2026fibonacciddp.md) 把本卷前面使用的 Fibonacci 分数部 gauge 放进两个经典误差问题。对
+
+$$
+\mathcal F(n)=\sum_{k=1}^{n}\left\{\frac{F_n}{F_k}\right\},
+$$
+
+它给出奇偶分离的精确余项：
+
+$$
+\mathcal F(n)=\frac{\pi}{8}n
+ +\frac14\left(\Delta_C(n)-\Delta_C(n/2)\right)+O(n^\varepsilon)
+ \qquad(n\ge3\text{ 奇}),
+$$
+
+以及
+
+$$
+\mathcal F(n)=\frac{3\log2}{4}n
+ +2\Delta_H(n/2)-5\Delta_H(n/4)+2\Delta_H(n/8)+O(n^\varepsilon)
+ \qquad(n\ge4\text{ 偶}).
+$$
+
+这里 $\Delta_C$ 是 Gauss 圆问题余项，$\Delta_H$ 是 Dirichlet 除数问题余项。该文还证明反向的指数传递：奇指标上的 $\mathcal F(n)$ 余项指数给出 $\Delta_C$ 的指数，偶指标上的余项指数给出 $\Delta_H$ 的指数；普通 Lucas 序列交换这两个奇偶角色。
+
+这项结果是当前文献史上对 Fibonacci 分数部和的更强接口，但它与本卷 §270–§271 的任务仍有一个不可省略的权重差别。那里需要的是
+
+$$
+A_n=\sum_{k=1}^{n}F_k\left\{\frac{F_n}{F_k}\right\},
+$$
+
+而 Cloitre 的定理没有 $F_k$ 权重。由于 $F_k$ 随指标指数增长，不能把无权主项或余项乘上一个平均 $F_k$ 就得到 $A_n$ 的估计；必须另证加权的局部余数控制。即使得到该控制，还要证明所得核的系数能运输普通整数的 Möbius/约数权重，才能回到 Robin 的点值
+
+$$
+\frac{\sigma(1+F_rg)}{1+F_rg}.
+$$
+
+因此，这篇最新来源完成的是“Fibonacci gauge 的无权余项属于哪一个经典误差问题”的历史定位；它没有关闭本项目的 FIB 来源到 Robin 价格的联合估计，也没有改变 RH 仍为开放问题的状态。重复证明其无权奇偶公式不会推进当前缺口；下一项真实任务仍是加权局部余数与完整约数源之间的同一对象估计。
