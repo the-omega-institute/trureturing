@@ -43,6 +43,13 @@ per fully concentrated p-column. The injection uses only original mixed
 labels of ternary height one. It does not yet supply a complete legal
 transport below the original budget.
 
+[Section69](#69-cross-cofactor-divisor-payment-reduces-exactly-to-nonconcentrated-ancestors)
+allows payers from other cofactor columns. Its exact matching deficit
+depends on whether concentrated maximal labels have enough distinct
+nonconcentrated original divisors. The existing private-point reset
+identifies a concentrated-prime branch where this enlargement supplies
+no improvement; a whole-cover condition excluding the deficit is missing.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -10039,3 +10046,84 @@ PI2, PI5 and the deduplicated PI9 are actual original-inventory bounds and may p
 for a complete feasible frontier. Existence is itself unresolved: no result here forces the §64 Hall criterion for every whole cover or guarantees a complete frontier satisfying RS1–RS3. In particular, at original ternary height one, a required deep branch with at most two allowed roots has no finite complete frontier under the original per-depth root capacity; the broader subbatch capacity requires its own existence argument. No argument here puts EVERY repeated label into the concentrated class above, or bounds each such label to one extra occurrence. In particular a label whose private projection meets both ternary roots may recur at different depths; PI1 supplies no mixed payer for that recurrence. Concentrated divisibility-maximal exponent-one labels have only the proved retained payer unless another global argument supplies a distinct credit. A payer cannot be charged once for each appearance of the same original label. Nor are the payer sets for different observing primes p automatically disjoint.
 
 The old theorem interface is PH5 or the stronger DR3–DR4 on the actual complete private hull, followed by an injective numerical map into the same deleted or retained inventory. Depths with q^h≥p are available when the verified descendant threshold or crowded phase permits them; they are not an absolute exclusion. The remaining bridge is to construct a complete source-preserving frontier satisfying RS1–RS3 whose extra occurrences can be injected into a properly deduplicated choice of the PI2/PI9 payers plus unused original labels, with an unspent class credit or a strict common weight saving. That global construction has not been obtained.
+
+## 69. Cross-cofactor divisor payment reduces exactly to nonconcentrated ancestors
+
+Keep section68's one EB1-selected original whole cover, a fixed support prime p>3, and arbitrary original ternary height H≥1. Let V_d be the projection of the COMPLETE original private region P_d modulo3. Define
+
+    P={d∈D: p divides d and 3 does not divide d},
+    L={d∈P: V_d is a singleton},
+    G={d∈L: d has no proper numerical multiple in D}.
+
+All sets retain the original numerical labels and actual private regions. This section reuses PH5, PI6, finite Hall matching, and Report357's actual first-prime reset. It supplies an exact reduction of the inventory-payment deficit, not a new Hall theorem, a legal replacement cover, or new Lean verification.
+
+### Proper divisors supply actual payers across cofactor columns
+
+If d∈L and e is a proper p-bearing divisor of d, then3e divides Γ_d. Since d is odd and3-free, d/e≥5, so3e<d. PH5 therefore supplies the ORIGINAL label3e. If d∈L\G, PI6 also supplies3d. Thus the available divisor-payment relation is
+
+    d → 3e  when e∈P, e|d, and [e<d or d∉G].       (DP1)
+
+Every right label has ternary height exactly one and still contains p. In particular, removing a prime from the cofactor of d does not turn this payer into a retained p-free label when the divisor e still contains p. The crossed-divisor closure itself is already PH5/PH7; its simultaneous inventory matching is the present consumer. Actual payer phases are not prescribed and these labels are not asserted to cover any transported demand.
+
+For S⊆L write
+
+    down_p(S)={e∈P: e divides some d∈S}.
+
+Identify a right label3e by its unique index e. The EXACT neighbor set is
+
+    N(S)=down_p(S) minus (S∩G).                     (DP2)
+
+Every proper divisor is supplied by DP1; each nonglobal-maximal member has its self index. A globally maximal member of S can be neither its own neighbor nor a proper divisor of another member. This proves both inclusions without adding hypothetical numerical labels.
+
+### Only maximal concentrated labels need nonconcentrated ancestors
+
+Finite Hall deficiency, applied to this one graph, now becomes
+
+    δ=max_(T⊆G) [ |T|−|down_p(T)\L| ],             (DP3)
+
+with T=empty contributing zero. To obtain this exact reduction, start with S⊆L and add all its concentrated ancestors, replacing it by L∩down_p(S). This keeps down_p(S) and S∩G unchanged and cannot reduce its deficiency. Put T=S∩G after this completion. Deleting the elements outside down_p(T) leaves the same globally maximal labels and can only shrink the nonconcentrated ancestor set. The resulting deficiency is precisely the expression in DP3. Conversely each T realizes that expression with S=L∩down_p(T).
+
+Consequently the maximum number of concentrated labels receiving DISTINCT DP1 payers is exactly |L|−δ. Equivalently, all of L can be paid if and only if the globally maximal labels G can be matched injectively to NONconcentrated proper p-bearing divisors:
+
+    d∈G → e_d∈P\L,  e_d|d,  e_d different.        (DP4)
+
+Indeed, match as many elements of G as possible by DP4, and pay every d∈L\G by its self label3d. These images are disjoint because their indices lie respectively outside and inside L. The Hall deficits of the two graphs agree by DP3, so this construction attains |L|−δ, not merely a sufficient submatching.
+
+For the resulting single matching χ, let L_paid be its domain. With section68's actual ternary-height-one inventory,
+
+    |L_paid|=|L|−δ≤t_mix,1,
+    sum_(d∈L_paid) χ(d)≤D_mix,1.                   (DP5)
+
+Count and weight use the SAME actual labels. The earlier column matching is contained in DP1, so δ≤|K| for section68's bad-column set K. Cross-cofactor divisors can remove an earlier column deficit only through these shared nonconcentrated ancestor slots; neither a retained cofactor nor repeated use of one slot supplies another credit. DP3 restricts deficient sets to ideals generated by selected maximal labels. It does not identify each such ideal with the entire original p-bearing palette.
+
+### The actual private reset gives two different whole-cover branches
+
+Report357's first-p reset sends every original P_d with p|d, d≠p into P_p while preserving ALL other prime coordinates, including the full ternary coordinate. Hence
+
+    V_d⊆V_p  for every original p-bearing d.         (DP6)
+
+The case d=p is the identity. This is a direct consumer of that existing map; it is not an inference from a marginal bound.
+
+If p∈L, DP6 gives L=P. There are then NO nonconcentrated ancestors and
+
+    p∈L ==> δ=|G|.                                 (DP7)
+
+In this branch every q-free p-column is concentrated. Its unpaid top in section68 is precisely a member of G, so DP7 equals the old column deficit: the enlarged divisor graph gives no improvement here.
+
+The whole-cover condition used in the other branch is explicit. EB8 supplies an original exponent-one child pm with m>1 on every nonzero first-p branch. Thus p has a proper original multiple and is never in G. Consequently if p∉L, the numerical label p is a nonconcentrated PROPER divisor of every member of G. Every nonempty T⊆G has at least this one common neighbor, giving
+
+    p∉L ==> δ≤max(|G|−1,0).                        (DP8)
+
+This is only one shared slot, represented by the actual deleted mixed label3p whenever G is nonempty. It cannot be counted once per top or once per cofactor column. Other nonconcentrated divisors may strengthen DP8 through DP3, but their required simultaneous abundance has not been proved.
+
+The p∈L branch also has an exact existing source interpretation. Write R_p for the actual cofactor region avoiding ALL p-free originals. Then P_p={0}×T_p×R_p, so p∈L means that R_p lies in one nonzero ternary first-root class. EB8 and PI6 supply3p; its actual private witness fixes that same ternary residue. Report364 SI1 therefore identifies
+
+    p∈L iff 3 is an original singleton cofactor color in F_p. (DP9)
+
+Report364's singleton-root capacities allow this color; the associated prime-parent swap is a whole-family first-p-root permutation and preserves the numerical inventory, class count and modulus sum. Those existing results do not exclude DP7 or produce an extra payment.
+
+### The remaining bridge is a source constraint on ancestor expansion
+
+The exact unpaid amount for this divisor relation is DP3. Closing it requires enough DISTINCT nonconcentrated ancestors for every selected set of concentrated maximal labels, or a different actual inventory payment or legal whole-family transformation. PH5 supplies the candidate labels and the private reset supplies DP7–DP9, but neither forces that expansion. In particular the concentrated-prime branch has no such ancestor at all unless G is empty; G=empty has not been proved in that branch.
+
+Even δ=0 would only settle this inventory payment for one copy of each concentrated label. It would not construct a complete frontier satisfying RS1–RS3, put every repeated label in L, control multiple extra occurrences of one label, or establish the required strict joint count/weight descent. These remain separate obligations for the same actual original family.
