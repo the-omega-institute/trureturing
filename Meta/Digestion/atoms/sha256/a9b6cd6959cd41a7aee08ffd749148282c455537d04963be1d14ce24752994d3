@@ -1,0 +1,159 @@
+**定理 26.5（实际互补脊线的正跳幅与离散度屏障）。** 在假设 24.1 下，取每个整数 $m\ge1$、$j\ge2m+23$ 和实际根 $F_j\le N\le F_{j+1}$。沿实际互补子脊线定义
+
+$$
+\begin{aligned}
+N_0&=N,&h_s&=j-2s,\\
+a_s&=g_{N_s},&N_{s+1}&=N_s-a_s\quad(0\le s<m),\\
+T_{N_s}(x)&=N_s-C(x),&K_s&=a_s-T_{N_s}(a_s),\\
+K_s^+&=\max(K_s,0),&\varepsilon&=D(N)/N.
+\end{aligned}
+\tag{26.21}
+$$
+
+直接使用 [钉版 golden-proof，§§1–2 的全局帽与实际所选拆分界](https://github.com/the-omega-institute/nested-recurrences/blob/8b8d4620c94ef181bf98006e3fc5e9f043e8bda2/cloitre-conway/golden-proof.md)：
+
+$$
+\begin{aligned}
+C(u)&\le cu,\qquad c=15225/22877<2/3\quad(u\ge16384),\\
+5M/9&<g_M<2M/3\quad(M\ge65536).
+\end{aligned}
+$$
+
+令 $\phi=1/\alpha$、$\delta=c-\alpha>0$、$q=4/9$、$S_m=\sum_{s=0}^{m-1}q^s=(1-q^m)/(1-q)$、$\tau_m=\delta q^m$。则对这个全部根域，有
+
+$$
+\varepsilon\le\phi\sqrt{S_mV_m(j,N)}+\tau_m+\frac1N
+                              +\frac1N\sum_{s=0}^{m-1}K_s^+.
+\tag{26.22}
+$$
+
+若
+
+$$
+r_m=\varepsilon-\phi\sqrt{S_mV_m(j,N)}-\tau_m-1/N>0,
+$$
+
+则至少一个实际 $s<m$ 满足
+
+$$
+K_s>0,\qquad \frac{K_s}{N_s}\ge\frac{r_m}{S_m}.
+\tag{26.23}
+$$
+
+它的被选周期空间直径至少为 $K_s$，周期至少为二。
+
+对 $\varepsilon>0$，取
+
+$$
+m=\max\left(1,\left\lceil
+             \frac{\log(4\delta/\varepsilon)}{\log(9/4)}
+             \right\rceil\right).
+\tag{26.24}
+$$
+
+若同时 $j\ge2m+23$、$N\ge4/\varepsilon$ 和
+
+$$
+V_m(j,N)\le\frac{\varepsilon^2}{16\phi^2S_m},
+$$
+
+则存在实际被选的正跳幅满足
+
+$$
+\frac{K_s}{N_s}\ge\frac{\varepsilon}{4S_m}
+                         \ge\frac5{36}\varepsilon.
+\tag{26.25}
+$$
+
+固定四代还有一个真实相位符号子域：对全部 $j\ge31$，若这条脊线上四个被选相位均满足 $a_s\le T_{N_s}(a_s)$，则
+
+$$
+V_4(j,N)\ge\frac{[\varepsilon-\delta(4/9)^4-1/N]_+^2}{\phi^2S_4}.
+\tag{26.26}
+$$
+
+若再有 $\varepsilon\ge2(\delta(4/9)^4+1/N)$，则
+
+$$
+V_4(j,N)\ge\frac{\varepsilon^4}{4\phi^2S_4},
+\qquad S_4=1+4/9+(4/9)^2+(4/9)^3.
+\tag{26.27}
+$$
+
+这个域包含被选固定点和被选向上相位，不预设所有实际根都属于它。如果四个被选点都是固定点，可把式 (26.26)–(26.27) 中的 $q=4/9$ 同时换成
+
+$$
+q_f=\frac c{1+c}=\frac{15225}{38102},\qquad
+S_{4,f}=\sum_{s=0}^3q_f^s,
+$$
+
+使阈值成为 $2(\delta q_f^4+1/N)$，四次下界常数成为 $1/(4\phi^2S_{4,f})$。仅有 $K_s\le0$ 不足以使用这个较强收缩率。
+
+证明。沿式 (26.21) 的真实脊线，末内部阶标 $h_{m-1}\ge25$，尾阶标 $h_m\ge23$。因而内部索引至少为 $F_{25}=75025\ge65536$，第一子至少为 $F_{24}=46368\ge16384$，尾索引至少为 $F_{23}=28657\ge16384$，来源帽与拆分界都在其合法域内。令 $p_s=N_s/N$；真实互补子界给 $p_s\le q^s$，而 $p_s$ 正是该特定出现路径的概率。
+
+令 $\eta(u)=C(u)-\alpha u$。实际加性沿同一脊线展开为
+
+$$
+\eta(N)=\sum_{s=0}^{m-1}\eta(a_s)+\eta(N_m).
+\tag{26.28}
+$$
+
+实际轨道的下一步给
+
+$$
+\eta(a_s)=N_s-\phi a_s+K_s.
+$$
+
+取 $\theta_h=F_{h-1}/F_h$、$t_s=a_s/N_s-\theta_{h_s}$、$v_s=v(h_s,N_s)$。式 (26.2) 的原行列式给
+
+$$
+t_s^2=\frac{a_sN_{s+1}}{F_{h_s}^2}v_s\le v_s,
+$$
+
+其中用了 $a_sN_{s+1}\le N_s^2/4$、$N_s<2F_{h_s}$。同时 Fibonacci 误差为 $|\theta_h-\alpha|=\alpha^h/F_h$，故
+
+$$
+\eta(a_s)\le\phi N_s\sqrt{v_s}
+                 +\phi N_s\frac{\alpha^{h_s}}{F_{h_s}}+K_s^+.
+$$
+
+全部 $p_sv_s$ 属于同一棵实际树的 $V_m$ 展开，所以 $\sum_{s<m}p_sv_s\le V_m$。直接应用加权 Cauchy–Schwarz，
+
+$$
+\sum_{s<m}p_s\sqrt{v_s}
+\le\sqrt{\left(\sum_{s<m}p_s\right)
+                 \left(\sum_{s<m}p_sv_s\right)}
+\le\sqrt{S_mV_m}.
+\tag{26.29}
+$$
+
+尾帽给 $\eta(N_m)\le\delta N_m\le\delta q^mN$。除以 $N$ 后，Fibonacci 误差总和至多为
+
+$$
+\frac{2\phi}N\sum_{s<m}\alpha^{j-2s}
+\le\frac{2\alpha^{23}}N,
+$$
+
+因为末内部阶标至少为 $25$，且 $1-\alpha^2=\alpha$。准确黄金取整区间是
+
+$$
+G(u)-\alpha u=\alpha-\{\alpha(u+1)\}\in(-\alpha^2,\alpha).
+\tag{26.30}
+$$
+
+所以 $D(N)<\eta(N)+\alpha^2$，而 $\alpha^2+2\alpha^{23}<1$。将式 (26.28)–(26.30) 代入，即得带 $1/N$ 误差的式 (26.22)。
+
+若 $r_m>0$，式 (26.22) 迫使 $\sum_{s<m}K_s^+/N\ge r_m$。由于
+
+$$
+\frac1N\sum_{s<m}K_s^+
+=\sum_{s<m}p_s\frac{K_s^+}{N_s},\qquad
+\sum_{s<m}p_s\le S_m,
+$$
+
+至少一项 $K_s^+/N_s\ge r_m/S_m$，并且该 $K_s$ 为正。假设 24.1 的规定深度已入周期结论保证 $a_s$ 和 $T_{N_s}(a_s)=a_s-K_s$ 是同一个实际被选周期的相邻点，故其空间直径至少为 $K_s$。式 (26.24) 使 $\tau_m\le\varepsilon/4$；另外两个显示条件分别使 $1/N$ 及 $\phi\sqrt{S_mV_m}$ 至多为 $\varepsilon/4$。于是 $r_m\ge\varepsilon/4$，再用 $S_m\le9/5$，即得式 (26.25)。
+
+在非正跳幅的真实相位子域，所有 $K_s^+$ 消失。重排式 (26.22) 得式 (26.26)；显示阈值使剩余正部至少为 $\varepsilon/2$，而 $0\le\varepsilon\le1$，故二次下界亦给式 (26.27)。实际固定点时有 $N_{s+1}=C(a_s)\le ca_s$，从而 $N_{s+1}/N_s\le c/(1+c)=q_f$；相同估计的路径和、尾项同时改用 $q_f$，即得固定点改进。证毕。
+
+式 (26.22) 在所列全部根域内给一个联合替代估计；低离散度、较大规范缺陷必须由同一真实脊线上的正跳幅承担。它控制的是周期空间振幅：二周期可以有大跳幅，返回值也可以在周期上恒定，因此不能从式 (26.23)–(26.25) 推出周期长度无界或逐相位读出可区分。可变代数 $m=O(1+\log(1/\varepsilon))$，完整树至多需 $2^m-1$ 个内部出现节点；它不是来源的固定 $V_4$，不能在四代衰减判据中静默替换。所有涉及的整数 $N_s,a_s,N_{s+1},T_{N_s}(a_s),d_{N_s},|K_s|$ 均在 $[0,N]$ 内。
+

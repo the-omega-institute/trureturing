@@ -1,0 +1,126 @@
+**定理 26.1（零高度亏量后裔向根传递离散度）。** 在假设 24.1 下，取同一个实际 Cloitre 序列 $C$，仍从 $n-1$ 出发、迭代规定深度 $d_n=C(n-1)$，由被选相位 $g_n$ 拆成 $g_n,n-g_n$。对任意整数 $j\ge16$ 及实际闭块根 $F_j\le N\le F_{j+1}$，令
+
+$$
+b=F_{j+1}-N,\qquad e=\ell_j(b)=F_j-C(N),\qquad D(N)=E_C(N)=C(N)-G(N).
+$$
+
+若这棵实际选择树在某个深度 $0\le r\le3$ 有一个零高度亏量的出现节点，则
+
+$$
+V_4(j,N)\ge\frac1{108800}\left(\frac bN\right)^2
+\ge\frac1{108800}\left(\frac{D(N)}N\right)^2
+\ge\frac1{108800}\left(\frac{D(N)}N\right)^4.
+\tag{26.1}
+$$
+
+特别地，全部满足 $e\le7$ 的实际根都满足此估计；不要求根自身高度亏量为零。
+
+本章共享的树与离散度记号直接取自 [供应源 $8b8d4620$ 的 Fibonacci collars，§9，式 (9.22)–(9.24)](https://github.com/the-omega-institute/nested-recurrences/blob/8b8d4620c94ef181bf98006e3fc5e9f043e8bda2/cloitre-conway/fibonacci-collars.md#size-biased-martingales-and-the-four-generation-dispersion-criterion)。出现节点 $(h,M)$ 的两子索引准确为 $a=g_M$、$c=M-a$，继承阶标 $h-1,h-2$；四、五阶停止，上端点不重新归阶。按概率 $a/M,c/M$ 选择下一子节点，保持来源原读数 $X=F_h/M\in[3/5,1]$，并写
+
+$$
+\begin{aligned}
+v(h,M)&=\frac{(F_{h-1}c-F_{h-2}a)^2}{M^2ac},\\
+V_0&=0,\\
+V_m(h,M)&=v(h,M)+\frac aM V_{m-1}(h-1,a)
+                      +\frac cM V_{m-1}(h-2,c)\quad(h\ge6).
+\end{aligned}
+\tag{26.2}
+$$
+
+停止节点的方差增量为零。直接使用来源已经给出的鞅、正交方差恒等式与路径展开：$V_m=\mathbb E[(X_m-X_0)^2]$，深度 $r$ 的一个出现节点 $(h,M)$ 的路径概率为 $M/N$，且 $V_m$ 是深度小于 $m$ 的全部出现节点局部方差的加权和。同一物理整数的多次出现共享实际 $C$ 和 $g$，每条路径仍分别保留阶标和权重；没有独立分枝假设，也不对出现节点去重。高度亏量 $\ell_h(t)=F_h-C(F_{h+1}-t)$、亏量相加和零集分别直接使用式 (24.20)–(24.22)，不把 $\ell_h$ 当作 $D$。假设 24.1 所含计算辅助基础继续作为未另行验证的来源前提；本章结论是条件纸面推导。
+
+证明。先在一个零高度亏量出现节点 $(h,M)$ 上作实际选择专属的估计。写 $M=F_{h+1}-t$、$A=F_{h-1}$、$B=F_{h-2}$，其中 $h\ge10$。式 (24.8) 给出的真实子路由是
+
+$$
+\begin{aligned}
+a&=F_h-z,&c&=A-w,\\
+(z,w)&=(t,0),&&0\le t\le p_h,\\
+\text{或 }(z,w)&=(p_h,1),&&t=p_h+1\text{ 且 }F_h\text{ 为奇数}.
+\end{aligned}
+$$
+
+这里 $p_h=\lfloor(2h-9)/3\rfloor\ge3$。直接应用 [黄金结构 §3 所用的 Fibonacci 行列式与 Cassini 恒等式](https://github.com/the-omega-institute/nested-recurrences/blob/8b8d4620c94ef181bf98006e3fc5e9f043e8bda2/cloitre-conway/golden-proof.md)，有
+
+$$
+Ac-Ba=(-1)^h+Bz-Aw.
+$$
+
+第一条路由在 $t\ge1$ 时满足 $|Ac-Ba|\ge Bt-1\ge Bt/2$。第二条路由使用 $A\le2B$、$B\ge21$，得到
+
+$$
+|Ac-Ba|\ge B(p_h-2)-1
+\ge\frac{B(p_h-2)}2
+\ge\frac{B(p_h+1)}8=\frac{Bt}8.
+$$
+
+$t=0$ 的非负下界亦成立。由于 $M\le F_{h+1}=2A+B\le5B$ 且 $ac\le M^2/4$，把这个真实路由的行列式下界代入式 (26.2)，得到
+
+$$
+v(h,M)\ge\frac1{400}\left(\frac tM\right)^2.
+\tag{26.3}
+$$
+
+现固定定理中的零亏量出现节点 $u$。它的阶标满足 $j-6\le h\le j$，故 $h\ge10$。令 $q=M/N$、$\Delta=X_u-X_0$、$\eta=b/N$。在同一根、同一概率律下，$V_r$ 中该节点的读数偏移和第 $r$ 代该节点的条件方差是互不重叠的方差贡献，所以
+
+$$
+V_4(j,N)\ge q\bigl(\Delta^2+v(h,M)\bigr).
+\tag{26.4}
+$$
+
+若 $r=0$，第一项为零；仍保留根的局部方差。此处没有把两个不同实现的最优值相加。
+
+令 $R_k=F_{k+1}/F_k$，则准确有 $\eta=R_jX_0-1$、$t/M=R_hX_u-1$。Fibonacci 行列式恒等式给
+
+$$
+|R_j-R_h|=\frac{F_{j-h}}{F_jF_h}
+\le\frac8{F_jF_{j-6}}.
+$$
+
+$b\ge1$ 时，$X_u\le1$、$N\le2F_j$、$F_{j-6}\ge F_{10}=55$ 使阶标漂移误差满足
+
+$$
+|R_j-R_h|X_u\le\frac{16}{55}\eta\le\frac\eta2.
+$$
+
+因此 $R_j\le2$ 给出 $\eta\le4|\Delta|+2t/M$，进而
+
+$$
+\eta^2\le32\Delta^2+8(t/M)^2
+\le3200\bigl(\Delta^2+v(h,M)\bigr).
+$$
+
+$b=0$ 时目标下界为零，不需吸收漂移误差。又因
+
+$$
+F_{n+7}=13F_{n+1}+8F_n\le34F_n,
+$$
+
+该出现节点的路径质量满足 $q\ge F_{j-6}/F_{j+1}\ge1/34$。与式 (26.4) 联合即得式 (26.1) 的第一项。
+
+式 (24.2) 的上帽及黄金锚值给
+
+$$
+0\le D(N)\le F_j-G(F_{j+1}-b)
+             =G(F_{j+1})-G(F_{j+1}-b)\le b,
+\tag{26.5}
+$$
+
+因为 $G$ 的整数增量为零或一。并有 $0\le D(N)/N\le1$，故两项缺陷下界随之成立。最后，$j\ge16$ 使深度三之前无停止。式 (24.21) 将根的非负整数亏量 $e$ 准确分配到八个深度三出现节点；若 $e\le7$，至少一个亏量为零。证毕。
+
+同一证明还给出固定亏量预算的扩展。对任意固定整数 $R\ge0$，令 $r=\lceil\log_2(R+1)\rceil$；若
+
+$$
+j-2r\ge10,\qquad F_{j-2r}\ge4F_{2r},\qquad e\le R,
+$$
+
+则 $2^r>R$ 个深度 $r$ 出现节点中必有零亏量节点，且
+
+$$
+V_{r+1}(j,N)\ge\frac1{3200F_{2r+3}}\left(\frac bN\right)^2
+\ge\frac1{3200F_{2r+3}}\left(\frac{D(N)}N\right)^2
+\ge\frac1{3200F_{2r+3}}\left(\frac{D(N)}N\right)^4.
+\tag{26.6}
+$$
+
+具体地，行列式误差至多为 $F_{2r}/(F_jF_{j-2r})$，相对于 $b/N$ 至多为 $2F_{2r}/F_{j-2r}\le1/2$；路径质量至少为 $1/F_{2r+3}$，由 $F_{n+2r+1}\le F_{2r+3}F_n$ 取得。因此式 (26.3)–(26.4) 的同一传递估计适用。这里代数为 $r+1$，完整展开有 $2^{r+1}-1$ 个内部出现节点；常数及合法阶数依赖 $R$。亏量预算无界时不能当作统一四代结论。
+

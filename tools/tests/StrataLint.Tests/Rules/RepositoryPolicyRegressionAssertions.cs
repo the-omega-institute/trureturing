@@ -138,7 +138,6 @@ internal static class RepositoryPolicyRegressionAssertions
         const string linkEntries = """
             [[files]]
             pattern = ".claude/skills"
-            require = []
             kind = "program"
             admission_plane = "judge"
             produced_by = "none"
@@ -150,7 +149,6 @@ internal static class RepositoryPolicyRegressionAssertions
 
             [[files]]
             pattern = ".codex/skills"
-            require = []
             kind = "program"
             admission_plane = "judge"
             produced_by = "none"
@@ -231,9 +229,9 @@ internal static class RepositoryPolicyRegressionAssertions
 
         (string Before, string After, string Marker)[] malformed =
         [
-            ("schema_version = 5", "schema_version = 2", "schema_version"),
-            ("schema_version = 5", "schema_version = 5\nunknown = true", "unknown"),
-            ("schema_version = 5", "schema_version = 5\nschema_version = 5", "TOML"),
+            ("schema_version = 6", "schema_version = 2", "schema_version"),
+            ("schema_version = 6", "schema_version = 6\nunknown = true", "unknown"),
+            ("schema_version = 6", "schema_version = 6\nschema_version = 6", "TOML"),
             ("profile = \"structured-json\"", "profile = \"structured-json\"\nprofile = \"opaque-text\"", "TOML"),
             ("profile = \"structured-json\"", "profile = \"unknown\"", "profile"),
             ("profile = \"structured-json\"", "profile = 1", "profile"),
@@ -295,8 +293,7 @@ internal static class RepositoryPolicyRegressionAssertions
         var ambiguous = new FileMapManifest(
             manifest.ResidencePolicy,
             manifest.Entries.Add(extra).OrderBy(e => e.Pattern, StringComparer.Ordinal).ToImmutableArray(),
-            manifest.ArtifactKinds,
-            manifest.Resources);
+            manifest.ArtifactKinds);
         var ambiguousPolicy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(FileMapCanonicalWriter.Write(ambiguous).AsSpan(), Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
         Assert.Contains("matches=2", RepositoryPathPolicy.Validate(RepoPath.CreateKnown("Evidence/D5/S0/Carrier/Demo.result.json"), ambiguousPolicy)!.Message, StringComparison.Ordinal);
     }
@@ -335,7 +332,6 @@ internal static class RepositoryPolicyRegressionAssertions
         const string registeredEntry = """
             [[files]]
             pattern = "docs/GOVERNANCE.md"
-            require = []
             kind = "program"
             admission_plane = "judge"
             produced_by = "none"
@@ -347,8 +343,8 @@ internal static class RepositoryPolicyRegressionAssertions
             """ + "\n";
         var root = TestFileMap.Canonical
             .Replace(
-                "schema_version = 5\n",
-                "schema_version = 5\ninclude = [\"FILEMAP.sources.toml\"]\n",
+                "schema_version = 6\n",
+                "schema_version = 6\ninclude = [\"FILEMAP.sources.toml\"]\n",
                 StringComparison.Ordinal)
             .Replace(registeredEntry, string.Empty, StringComparison.Ordinal);
         var baseline = Snapshot(root, registeredEntry);
@@ -377,7 +373,7 @@ internal static class RepositoryPolicyRegressionAssertions
 
         static RepositorySnapshot Snapshot(string root, string entry)
         {
-            var fragment = "schema_version = 5\n" + entry;
+            var fragment = "schema_version = 6\n" + entry;
             return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
                 RawRepositorySnapshot.Create(
                 [
