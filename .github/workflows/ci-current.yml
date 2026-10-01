@@ -53,6 +53,7 @@ jobs:
             # Shared: patterns of every unit.
             [*]
             */.editorconfig
+            */.globalconfig
             */Directory.Build.*
             */Directory.Packages.props
             */NuGet.Config
@@ -62,6 +63,7 @@ jobs:
             .editorconfig
             .github/*
             .gitignore
+            .globalconfig
             Directory.Build.*
             Directory.Packages.props
             Golden/gate-authority-roots.toml
@@ -870,6 +872,7 @@ jobs:
         env:
           JUDGE_INPUTS: |
             **/.editorconfig
+            **/.globalconfig
             **/Directory.Build.*
             **/Directory.Packages.props
             **/NuGet.Config
