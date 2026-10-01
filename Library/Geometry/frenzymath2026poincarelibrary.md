@@ -5,7 +5,7 @@ year: 2026
 title: Poincare-Conjecture library prerequisites for hyperbolic rigidity
 doi: null
 url: https://github.com/frenzymath/Poincare-Conjecture/tree/432c38f2aa5a30efb13871292d17b4a3309a496a
-claim: Generic smooth gluing, metric pullback, covering completeness and curvature transport provide prerequisites for a Mostow-Prasad formalization; the Poincare endpoints do not supply hyperbolic rigidity.
+claim: Generic smooth gluing, metric pullback, covering completeness, curvature transport and coordinate volume provide prerequisites for a Mostow-Prasad formalization; the Poincare endpoints do not supply hyperbolic rigidity.
 strata_touched:
   - D5/S3/Geometry/MostowPrasadCovering
   - D5/S3/Geometry/IsometricOrbitMetric
@@ -65,6 +65,9 @@ does not supply that existence or uniqueness theorem.
 | `Geometry/Riemannian/Metric/Induced/Complete.lean` | `PoincareMT.RiemannianMetric.pathELength_map_of_metric_pullback` | Preserves the length of a continuously differentiable curve under a smooth map preserving tangent inner products. |
 | `Geometry/Riemannian/Metric/Induced/Complete.lean` | `PoincareMT.RiemannianMetric.edist_map_le_of_metric_pullback` | A smooth map preserving tangent inner products contracts the induced path distance; an inverse with the same properties gives distance equality. |
 | `Geometry/Riemannian/Metric/Gluing/Descent.lean` | `Poincare.Gluing.exists_unique_metric_of_covering_local_diffeomorphisms` | Descends metrics through a family of local diffeomorphisms covering the target, provided equal projected tangent vectors have equal source inner products; the target smooth structure is input. |
+| `Geometry/Riemannian/Measure/Basic.lean` | `PoincareMT.RiemannianMetric.volumeMeasure` | Defines intrinsic volume as normalized Hausdorff measure for the specified metric's induced Riemannian distance. |
+| `Geometry/Riemannian/Measure/Density.lean` | `PoincareMT.RiemannianMetric.pullbackVolumeDensity` | Defines coordinate density as the square root of the Gram determinant of the parametrization differential in the same metric. |
+| `Geometry/Riemannian/Measure/HausdorffDensity.lean` | `PoincareMT.RiemannianMetric.volumeMeasure_image_eq_lintegral_pullbackVolumeDensity` | Computes the volume of a smooth coordinate image as the Lebesgue integral of this density, for a measurable subset of the parametrization source and a smooth inverse. |
 
 The `Geometry/` paths in this table have the prefix `PoincareLib/`.
 `MetricComplete` means completeness of the emetric obtained from the specified
@@ -96,6 +99,13 @@ closure was checked separately: 13 external modules, 76,771 bytes excluding
 Mathlib, with unchanged sources; ten required new compilation and three reused
 source-identical cached modules. Its cited declaration has the same three
 standard axioms. This separate closure count is not added to the union above.
+The volume definition closure was checked separately: two external modules,
+3,780 bytes, with one newly compiled and one source-identical cached module.
+The coordinate-volume closure comprises 14 external modules, 76,343 bytes;
+eleven newly compiled and three reused source-identical cached modules.
+All copied sources are unchanged, and the cited coordinate image integral
+theorem has the same three standard axioms. These separate counts are not
+added to the 47-module union above.
 This establishes source
 compatibility for the checked closures, not installation of an external
 dependency or independent verification of the complete Poincare proof.
@@ -238,6 +248,36 @@ source and quotient metrics and Levi-Civita data while retaining all earlier
 distance, completeness, local-diffeomorphism and metric-uniqueness clauses.
 It assumes neither source curvature nor a supplied quotient metric, and
 metric uniqueness remains within the chosen smooth quotient structure.
+
+Canonical Borel measurable structures are chosen for the source and each
+actual orbit quotient. For the same constructed source metric, its intrinsic
+volume equals normalized three-dimensional Hausdorff measure for the
+original hyperbolic distance, and every isometry of that distance preserves
+volume on every set. For the same descended quotient metric, its intrinsic
+volume equals normalized Hausdorff measure for the canonical orbit distance.
+The already established all-pair distance identities identify the metrics
+used by these volume definitions; neither volume identity is assumed.
+
+At every source point there is a positive-radius ball on which the actual
+orbit projection is isometric and preserves the volume of every subset.
+No measurability premise is needed for this local image equality: it uses
+the measure's outer evaluation on arbitrary sets. This does not assert that
+the projection preserves volumes of sets extending beyond such a ball.
+
+In the same chosen source chart, the inverse parametrization has identity
+differential on the chart target. The forward differential is identity,
+and the chart inverse chain rule gives the inverse differential. Thus the
+pullback Gram matrix of this same metric is $h^{-2}I_3$, its determinant is
+$h^{-6}$, and its positive square root is $h^{-3}$, where $h$ is the positive
+height of the parametrized point. For every measurable coordinate subset
+$S$ contained in that chart target, the same source metric's volume of the
+inverse-chart image is the Lebesgue integral over $S$ of this density.
+The coordinate-volume theorem above supplies the integral identity after
+smoothness of the chart and its inverse is checked. This relates hyperbolic
+Hausdorff volume to Euclidean coordinate volume with the derived weight;
+it supplies no finite total volume conclusion. All earlier source and
+quotient distance, completeness, curvature and chosen-structure metric
+uniqueness clauses remain in the combined construction.
 
 These checks compiled under the project pins using the unchanged cited
 external sources and only `propext`, `Classical.choice` and `Quot.sound`.
