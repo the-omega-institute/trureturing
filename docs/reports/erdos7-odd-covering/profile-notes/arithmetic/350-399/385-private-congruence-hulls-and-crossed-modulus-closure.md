@@ -10235,6 +10235,36 @@ Now additionally assume H=1. Fix the complete ternary word i for each color grou
 
 This directly reuses Report348's unrestricted-height multiplicity-two result and its existing arithmetic evidence; no sieve or endpoint computation is repeated. At H>1, fixing a complete ternary word can retain more than two original3-heights at one cofactor modulus, so the same application is not justified. CP3–CP5 retain their arbitrary-H scope.
 
+### The existing flat construction constrains both original group budgets
+
+Still assume H=1 and all nonternary primes concentrated. For group i let f_i count its original3-free labels and b_i count its original3-bearing labels. Divisor closure supplies a distinct parent m for every original3m, so b_i≤f_i. Let n_i=f_i+b_i. The original whole family contains exactly1+n_1+n_2 labels, including pure3.
+
+Use the actual group-i quotient from CP5 as Report348 section3's two-copy seed. In CRT coordinates, retain the original3-free classes, place each original3m class at first-three root2 with its original mod-m residue, and add0 and1 mod3. The quotient-cover identity CP5 verifies the remaining root2. This is the existing seed interface with only numerical3 repeated exactly twice, so Report348 section2 applies.
+
+Any prime ell in the opposite group is fresh for this seed. In the four output families of that existing construction there are respectively ell−1 pure3 labels, ell fresh-ell closing labels, f_i retained3-free labels, and (ell−1)b_i transported mixed labels. All distinctness and coverage conditions are those already proved in Report348; the opposite color supplies its freshness hypothesis. Thus EB1 requires
+
+    n_(3−i) ≤ (ell−2)b_i+2ell−2
+      for every ell∈S_(3−i).                         (CP6a)
+
+A strict reverse inequality would give an actual smaller distinct odd cover, not only a projected collision count. In particular, name the two groups by which of5 and7 they contain, as CP6 permits. Choosing the smallest prime in each opposite group gives
+
+    n_7 ≤ 5*b_5+12,      n_5 ≤ 3*b_7+8.              (CP6b)
+
+These two necessary inequalities concern the SAME original cover. They do not assert that both alternative output covers are produced simultaneously.
+
+The existing construction also gives an exact modulus-sum comparison in the equality-count case. Set
+
+    F_i=sum_(m original3-free in group i) m,
+    B_i=sum_(3m original in group i) m,
+    W_(3−i)=sum_(d original in the opposite group) d,
+    C_ell=(3^ell−3)/2,      D_ell=ell*(3^ell−1)/2.
+
+Its output modulus sum is F_i+C_ell*B_i+C_ell+D_ell, whereas the original sum is3+F_i+3*B_i+W_(3−i). Therefore if equality holds in CP6a, the second EB1 objective requires
+
+    W_(3−i) ≤ (C_ell−3)B_i+C_ell+D_ell−3.             (CP6c)
+
+All counts and weights are taken from one chosen group and one fresh opposite prime. No optimization over unrelated phases is combined. These are direct consumers of the HSW-based construction already retained in Report348; they supply conditional strict descent but do not force a violated inequality. At arbitrary H the flat seed premise remains missing.
+
 ### A repeated-label odd cover realizes the source relations
 
 The following finite family illustrates exactly why concentration and the separator relations alone cannot exclude the two-color branch. It has odd moduli and covers all integers, but intentionally repeats numerical labels:
