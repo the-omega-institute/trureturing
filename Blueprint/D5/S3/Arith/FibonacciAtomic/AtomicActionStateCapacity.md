@@ -30,19 +30,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/AtomicActionStateCapacity.atomicTra
 
 Window symbols use the raw affine transition. On a live state (s,x), mu sends it to (s,Mx), and mu preserves the error state.
 
-**Definition 1.3 (Immediate output).**
-
-Lean statement: `D5/S3/Arith/FibonacciAtomic/AtomicActionStateCapacity.atomicOutput`
-
-*Formalization.* `D5/S3/Arith/FibonacciAtomic/AtomicActionStateCapacity.atomicOutput` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-A live state returns its current quantity modulo m; the error state returns the distinguished error label.
-
-**Definition 1.4 (The initialized extended reader).**
+**Definition 1.3 (The initialized extended reader).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/AtomicActionStateCapacity.atomicMachine`
 
@@ -54,7 +42,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/AtomicActionStateCapacity.atomicMac
 
 The reader starts at seam zero and composition (0,0), and evaluates every finite extended word.
 
-**Definition 1.5 (The extended finite-word task).**
+**Definition 1.4 (The extended finite-word task).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/AtomicActionStateCapacity.atomicTask`
 
@@ -66,7 +54,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/AtomicActionStateCapacity.atomicTas
 
 The task is the immediate output after every finite word over the five windows and mu.
 
-**Definition 1.6 (Complete state count).**
+**Definition 1.5 (Complete state count).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/AtomicActionStateCapacity.capacity`
 
@@ -78,7 +66,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/AtomicActionStateCapacity.capacity`
 
 N(m)=2m^2+1, counting both seam values for every composition and one error state.
 
-**Theorem 1.7 (Exact minimal capacity after adding mu).**
+**Theorem 1.6 (Exact minimal capacity after adding mu).**
 
 $$\forall m, ((m \in \operatorname{Nats}\left(\right)) \land \\(2 \leq m)) \implies ((\operatorname{FiniteState}\left(\operatorname{RawState}\left(m\right)\right)) \land \\(\operatorname{card}\left(\operatorname{RawState}\left(m\right)\right) = \operatorname{N}\left(m\right)) \land \\(\exists M, (\operatorname{Correct}\left(M, \operatorname{T}\left(m\right)\right)) \land \\(\forall q, (q \in \operatorname{RawState}\left(m\right)) \implies (\exists w, \operatorname{eval}\left(M, w\right) = q))) \land \\(\forall S, (\operatorname{FiniteState}\left(S\right)) \implies (\forall M, (\operatorname{Correct}\left(M, \operatorname{T}\left(m\right)\right)) \implies (\operatorname{N}\left(m\right) \leq \operatorname{card}\left(S\right)))))$$
 
@@ -94,11 +82,12 @@ The present quantity and the quantity after one mu action are the two linear for
 
 Reachable histories together with these common distinguishing continuations form a finite distinguishing family. The general output-automaton lower-bound theorem then forces every correct finite-state reader to have at least N(m) states, while the raw reader attains this bound.
 
+Explanatory boundaries from the source: for odd moduli, the original window summary already recovers the composition; for even moduli, adding mu strictly refines the original quotient. Closure under the three-bit window clock does not establish closure under the atomic clock. These are explanations, not independent Lean clauses of result.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/AtomicActionStateCapacity.Action`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/AtomicActionStateCapacity.atomicMachine`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/AtomicActionStateCapacity.atomicOutput`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/AtomicActionStateCapacity.atomicTask`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/AtomicActionStateCapacity.atomicTransition`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/AtomicActionStateCapacity.capacity`

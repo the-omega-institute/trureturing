@@ -60,7 +60,12 @@ internal sealed class AtomicActionStateCapacityDocument : IScribeDocumentDefinit
                     Paragraph(Text("Reachable histories together with these common distinguishing continuations form "
                         + "a finite distinguishing family. The general output-automaton lower-bound theorem then "
                         + "forces every correct finite-state reader to have at least N(m) states, while the raw reader "
-                        + "attains this bound."))), DescribeRole.Theorem))));
+                        + "attains this bound.")),
+                    Paragraph(Text("Explanatory boundaries from the source: for odd moduli, the original window "
+                        + "summary already recovers the composition; for even moduli, adding mu strictly refines "
+                        + "the original quotient. Closure under the three-bit window clock does not establish "
+                        + "closure under the atomic clock. These are explanations, not independent Lean clauses "
+                        + "of result."))), DescribeRole.Theorem))));
 
     private static Formula ResultFormula()
     {
