@@ -30838,6 +30838,19 @@ also forces3*p^(H_p-1) or9*p^(H_p-3) to be original for every
 p>=5 with H_p>=3. That necessary mixed-height alternative does
 not force those labels to participate at a chosen head point.
 
+[Report385, sections22--23](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#22-the-actual-two-root-forest-gives-a-whole-mixed-height-constraint)
+also retains the original pure3 guard in the actual-column forest
+and constrains its leaf count by the same private-point demand.
+Its disjoint supplier buckets give, with s original support primes,
+
+    9*p^(a-2) absent, p>=5, a>=2
+       ==> H_p<=a+floor((5s-9)/(p-2)).
+
+The six-label repair of p^a*q proves this with no global bound on
+H_3. The scope remains a necessary condition on the same minimum
+whole cover. It does not supply the unbounded dense remainder's
+head-law mass, moments or terminal payment.
+
 The new restrictions remove actual possible activations and height
 profiles which the specified earlier tests miss. They do not force
 useful vacancies in every hypothetical cover: densely occupied

@@ -2940,3 +2940,171 @@ cofactor traces at one point, but need not all contain3 or another
 specified common cofactor. Thus the unrestricted same-source
 dense-inventory bound remains missing. These are ordinary symbolic
 deductions with no new Lean verification.
+
+## 22. The actual two-root forest gives a whole mixed-height constraint
+
+Retain the same minimum whole cover, original0 mod3 and an original
+h=p^a for a prime p>=5. Here a>=1. Define the actual ternary heights
+of its cofactor columns by
+
+    K_i=max({0} union{j>=0:3^j*p^i in D}), 0<=i<=a,
+    t_j=#{i in{0,...,a}:K_i<j}, j>=1.                (GF1)
+
+Thus K_0=H_3>=1 and K_0>=K_1>=...>=K_a. Only the original
+pure0 mod3 is credited as a retained guard. The fresh palette is
+3^j*p^i with0<=i<=a and j>K_i. It is absent from the full D.
+Every such label can be assigned any ternary prefix with nonzero
+first digit, with the old h-phase restricted to its p^i factor.
+
+This is the existing prefix-forest construction with two depth-one
+roots and depth-dependent availability from VH4. Its complete
+available ternary mass is(1/2)sum_i3^(-K_i), and the remaining
+target mass is2/3. Each finite subpalette has strictly smaller
+capacity than that infinite sum. Hence the specified repair exists
+if and only if
+
+    sum_(i=0..a)3^(-K_i)>4/3.                        (GF2)
+
+For the sufficient direction, start with
+
+    m_1=min(t_1,2), u_1=2-m_1;
+    m_j=min(t_j,3u_(j-1)), u_j=3u_(j-1)-m_j, j>=2.
+
+Before termination, u_j=3^j[2/3-sum_(ell=1..j)t_ell/3^ell].
+GF2 makes some finite partial capacity reach2/3, so this process
+terminates and covers both remaining roots. Reuse VH4's assignment
+of distinct cofactors at each depth. If J is the first stopping
+depth, the minimum number of fresh classes is
+
+    N=sum_(j=1..J)m_j=2+2sum_(j=1..J-1)u_j.         (GF3)
+
+The two-root full-ternary-forest identity gives the equality; the
+same componentwise internal-node comparison as VH4 proves the
+minimum. In particular N is even. These are properties of this
+specified palette; higher pure or mixed guards can make another
+repair cheaper and are not included in this optimum.
+
+PH2's count comparison gives q_h(c)<=N at every non-own phase;
+the own phase has value one. If H_p>a, HC1 gives an actual phase
+with at least1+(H_p-a)(p-1) labels. That demand is odd, while N
+is even. Consequently every GF2-qualified pure interface obeys
+
+    (H_p-a)(p-1)<=N-2.                              (GF4)
+
+This conclusion needs no modulus-sum estimate for the fresh
+forest. The price counterexample VH6 is not bypassed by asserting
+that its false uniform bound holds in this guarded palette.
+
+### A missing short staircase forces a deep original label
+
+Let a>=2 and J>=2. Suppose all three labels
+
+    3*p^a, 9*p^(a-1), 3^J*p^(a-2)                  (GF5)
+
+are absent. Use one fresh class3*p^a on one nonzero first root.
+At each depth j=2,...,J-1, use3^j*p^(a-1) and3^j*p^a on two
+children of the remaining branch. At depth J use all three
+labels3^J*p^(a-2),3^J*p^(a-1),3^J*p^a on its last children.
+Every label is globally absent by GF5 and divisor closure, and
+every p-phase is inherited from the old h-class. With retained
+0 mod3 these1+2(J-2)+3=2J fresh classes repair the ENTIRE old
+h-class. No compatible higher pure guard is required.
+
+If H_p>a and2J<= (H_p-a)(p-1), the HC1 phase demand exceeds
+this repair count, contrary to PH2. Taking a=H_p-1 and
+J=(p-1)/2 therefore proves
+
+    H_p>=3 ==> at least one of
+       3*p^(H_p-1), 9*p^(H_p-2),
+       3^((p-1)/2)*p^(H_p-3) belongs to D.           (GF6)
+
+For p=5 this reduces to MH5 by divisor closure. For p>=7 it can
+force deeper actual ternary columns. For example, at
+p=7,H_p=3,K_0=2,K_1=1,K_2=0, GF1 gives layer counts1,2,3,
+so N=6 but HC1 demands at least7. FC1150 gives H_7<=3 because
+the last present3*7^j has j=1. That bound, MH5's requirement
+that9 be present and HC5's H_7<=13 at H_3=2
+do not exclude those numerical parameters. This is a comparison
+with those specified bounds, not a claimed phase realization or
+independence from every other constraint on a whole cover.
+
+GF6 forces numerical presence and does not assert that the forced
+original class meets a chosen private point. The following
+consumer instead bounds actual suppliers at that same point.
+
+## 23. A local second-row vacancy bounds the complete private supplier packet
+
+Let s be the number of support primes of the same minimum whole
+cover. Fix a support prime p>=5 and a>=2 with
+
+    9*p^(a-2) notin D.                              (SP1)
+
+There is no upper bound on H_3. Suppose first H_p>a and choose
+ONE private point x of the original pure p^H_p class. Put
+delta=H_p-a. QC1--QC2 supplies at least delta(p-1) other labels
+of p-height greater than a, agreeing with x modulo p^a and at
+their complete p-free cofactors. At most delta-1 are pure
+p-powers: the owner p^H_p is not a supplier. Thus the number
+of mixed suppliers is at least
+
+    1+delta(p-2).                                   (SP2)
+
+This is HC8's count on the same actual point, with general cut a.
+Assign the mixed suppliers to disjoint buckets: put all labels
+divisible by3 in the3-bucket; assign every remaining label to
+one chosen prime q!=3,p of its cofactor. There are at most s-2
+such q-buckets. Every bucket retains x's actual phase.
+
+If the3-bucket is nonempty, its common original interface is
+h=3*p^a. The three fresh labels9*p^(a-2),9*p^(a-1),9*p^a
+cover its three next ternary children with the inherited p-phases.
+Their sum is3h(1+1/p+1/p^2)<15h. Three distinct proper odd
+h-multiples have sum at least15h, so the existing one-layer
+exchange gives phase capacity two, just as FC1141. Every actual
+supplier in the bucket shares x modulo h; hence its count is at
+most two. Empty buckets require no original interface.
+
+For a nonempty q-bucket take h=p^a*q, which is original because
+it divides a supplier. Retain0 mod3 and use the six fresh labels
+
+    9*p^i, 9*p^i*q, i=a-2,a-1,a.                   (SP3)
+
+All are absent by SP1 and divisor closure. They are distinct
+because p and q are different primes. Assign them to the six
+modulo9 roots outside0 mod3, with phases inherited from the old
+h-class at their p^i and q factors. This repairs that entire
+class, at every higher digit and outside coordinate. Their sum is
+
+    S_q/h=9(1+1/q)(1+1/p+1/p^2)
+          <=9*(6/5)*(31/25)<48.
+
+Six distinct proper odd h-multiples have sum at least48h, so PH2
+gives phase capacity five; the own phase has only one original.
+Each q-bucket is therefore at most five on the SAME private x.
+These are simultaneous inequalities for disjoint label groups,
+not a claim that their different hypothetical repairs are all
+performed at once. Summing them with SP2 yields
+
+    1+(H_p-a)(p-2)<=2+5(s-2),
+    H_p<=a+floor((5s-9)/(p-2)).                     (SP4)
+
+Since3 and p are support primes, s>=2 and5s-9>0. For H_p<=a
+the second bound is automatic. Write k_p=floor((5s-9)/(p-2)).
+The corresponding presence consequence is
+
+    H_p>=k_p+3 ==> 9*p^(H_p-k_p-3) belongs to D.     (SP5)
+
+Indeed otherwise SP4 at a=H_p-k_p-1>=2 would give H_p<=H_p-1.
+When the exponent in SP5 is zero, the required original is pure9.
+At a=2, SP1 means H_3=1 and SP4 recovers the already proved HC9.
+For a>=3 it applies with arbitrary global H_3. In particular,
+p>5s-7 gives k_p=0, so H_p>=3 forces9*p^(H_p-3), regardless
+of whether the first alternative in MH5 is present.
+
+The supplier lower bound, one-layer exchange and disjoint-bucket
+accounting are reused. The additional interface SP3 makes the
+same-source argument valid under a local vacancy in place of the
+global H_3=1 restriction. Its conclusion limits actual mixed-column
+heights; it still permits a densely occupied second row and does
+not bound every complementary continuation charge. No unrestricted
+noncoverage conclusion or new Lean verification follows here.
