@@ -66,15 +66,8 @@ noncomputable def D (H : Nat) : WithTop Nat :=
 noncomputable def D00 (H : Nat) : WithTop Nat :=
   sInf ((fun L : Nat => (L : WithTop Nat)) '' {L : Nat | 1 ≤ L ∧ Covers00 H L})
 
-private def supportBits (n t : Nat) : List Bool :=
-  false :: false :: List.ofFn (fun i : Fin (3 * t - 2) =>
-    decide (i.val + 2 ∈ Nat.zeckendorf n))
-
-private def supportWord (n t : Nat) : List Window :=
-  pack (supportBits n t)
-
 set_option maxHeartbeats 2000000 in
--- The bounded real grid and the recursive literal-word constructions share one proof.
+-- The bounded real grid is connected to the public successful-word equivalence.
 /-- A common bounded nonempty word realizes every coefficient pair and ends
 canonically after every actual legal prefix. -/
 theorem result (H : Nat) (hH : 2 ≤ H) :
@@ -300,36 +293,18 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
       have hi : (shiftedFibSum n : Int) = (a : Int) + (H : Int) * z := hs.symm.trans hfloor
       have hc := congrArg (fun v : Int => (v : ZMod H)) hi
       simpa [a, Int.cast_add, Int.cast_mul] using hc
-  have legal_of_no_adj (N : Nat) (f : Fin N → Bool) :
-      ∀ s : Bool,
-        (s = true → ∀ h : 0 < N, f ⟨0, h⟩ = false) →
-        (∀ (i : Nat) (hi : i + 1 < N),
-          f ⟨i, Nat.lt_of_succ_lt hi⟩ = true →
-          f ⟨i + 1, hi⟩ = false) →
-        legal s (List.ofFn f) := by
-    induction N with
-    | zero => intro s _ _; simp [legal]
-    | succ N ih =>
-        intro s hs hsep
-        rw [List.ofFn_succ]
-        have htail : legal (f ⟨0, by omega⟩)
-            (List.ofFn (Fin.tail f)) := by
-          apply ih (Fin.tail f) (f ⟨0, by omega⟩)
-          · intro hf hpos
-            have hfalse : f ⟨1, by omega⟩ = false := by
-              exact hsep 0 (by omega) hf
-            simpa [Fin.tail] using hfalse
-          · intro i hi htrue
-            have hs := hsep (i + 1) (by omega)
-              (by simpa [Fin.tail] using htrue)
-            simpa [Fin.tail] using hs
-        change (¬(s = true ∧ f ⟨0, by omega⟩ = true) ∧
-          legal (f ⟨0, by omega⟩) (List.ofFn (Fin.tail f)))
-        refine ⟨?_, htail⟩
-        intro hbad
-        rcases hbad with ⟨hs', hbit⟩
-        have hfalse := hs hs' (by omega)
-        exact Bool.noConfusion (hfalse.symm.trans hbit)
+  have adm_of_no_adj (N : Nat) (f : Fin N → Bool)
+      (hsep : ∀ (i : Nat) (hi : i + 1 < N),
+        ¬ (f ⟨i, Nat.lt_of_succ_lt hi⟩ = true ∧ f ⟨i + 1, hi⟩ = true)) :
+      D5.S1.Words.AdmissibleWords.AdmissibleCount.Adm N f := by
+    induction N using Nat.twoStepInduction with
+    | zero => trivial
+    | one => trivial
+    | more N _ ih =>
+      rw [D5.S1.Words.AdmissibleWords.AdmissibleCount.adm_two_iff]
+      refine ⟨by simpa using hsep 0 (by omega), ih (Fin.tail f) ?_⟩
+      intro i hi
+      simpa [Fin.tail, Nat.add_assoc] using hsep (i + 1) (by omega)
   have no_consecutive_of_pairwise {l : List Nat}
       (hp : l.Pairwise (fun a b => b + 2 ≤ a)) :
       ∀ i, i ∈ l → i + 1 ∉ l := by
@@ -362,87 +337,6 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
     by_cases hnext : i + 1 ∈ Nat.zeckendorf n
     · exact False.elim (hno hnext)
     · simp [hnext]
-  have pack_legal (t : Nat) (bs : List Bool) (hl : bs.length = 3 * t)
-      (s : Bool) (hs : legal s bs) :
-      (pack bs).length = t ∧ flatten (pack bs) = bs := by
-    induction t generalizing bs s with
-    | zero =>
-        have hnil : bs = [] := List.length_eq_zero_iff.1 (by omega)
-        subst bs
-        exact ⟨rfl, rfl⟩
-    | succ t ih =>
-        rcases bs with _ | ⟨a, _ | ⟨b, _ | ⟨c, tail⟩⟩⟩
-        · simp at hl
-        · simp at hl; omega
-        · simp at hl; omega
-        · have htail : tail.length = 3 * t := by
-            simp only [List.length_cons] at hl
-            omega
-          have hlegal : legal c tail := by
-            simpa only [legal] using hs |>.2 |>.2 |>.2
-          obtain ⟨hlen, hflat⟩ := ih tail htail c hlegal
-          cases a <;> cases b <;> cases c <;>
-            simp_all [legal, pack, triple, bits, flatten]
-  have pack_support (n t : Nat) (ht : 1 ≤ t)
-      (hlegal : legal true (supportBits n t)) :
-      (supportWord n t).length = t ∧
-        flatten (supportWord n t) = supportBits n t := by
-    unfold supportWord
-    apply pack_legal t (supportBits n t) ?_ true hlegal
-    simp only [supportBits, List.length_cons, List.length_ofFn]
-    omega
-  have supportBits_legal (n t : Nat) (hn : 0 < n) :
-      legal true (supportBits n t) := by
-    change ¬ (true = true ∧ false = true) ∧
-      ¬ (false = true ∧ false = true) ∧ _
-    refine ⟨by simp, by simp, ?_⟩
-    apply legal_of_no_adj (3 * t - 2) (fun i =>
-      decide (i.val + 2 ∈ Nat.zeckendorf n)) false
-    · simp
-    · intro i hi htrue
-      simpa [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using
-        zeckendorf_no_adj n hn (i + 2) htrue
-  have fib_value {R : Type} [CommSemiring R] (n k : Nat) (u v : R)
-      (f : Fin n → Bool) :
-      value ((Nat.fib k : R) * u + (Nat.fib (k + 1) : R) * v)
-          ((Nat.fib (k + 1) : R) * u + (Nat.fib (k + 2) : R) * v)
-          (List.ofFn f) =
-        ∑ i, if f i then
-          (Nat.fib (k + i.val) : R) * u +
-            (Nat.fib (k + i.val + 1) : R) * v else 0 := by
-    induction n generalizing k with
-    | zero => simp [value]
-    | succ n ih =>
-        rw [List.ofFn_succ, value, Fin.sum_univ_succ]
-        have hnext :
-            ((Nat.fib k : R) * u + (Nat.fib (k + 1) : R) * v) +
-                ((Nat.fib (k + 1) : R) * u +
-                  (Nat.fib (k + 2) : R) * v) =
-              (Nat.fib (k + 2) : R) * u +
-                (Nat.fib (k + 3) : R) * v := by
-          have hF := Nat.fib_add_two (n := k)
-          have hG : Nat.fib (k + 3) = Nat.fib (k + 1) + Nat.fib (k + 2) := by
-            simpa only [Nat.add_assoc] using Nat.fib_add_two (n := k + 1)
-          simp only [hF, hG, Nat.cast_add]
-          ring
-        have hi := ih (k + 1) (Fin.tail f)
-        have hi' :
-            value ((Nat.fib (k + 1) : R) * u +
-                (Nat.fib (k + 2) : R) * v)
-                ((Nat.fib (k + 2) : R) * u +
-                  (Nat.fib (k + 3) : R) * v)
-                (List.ofFn (fun i => f i.succ)) =
-              ∑ i : Fin n, if f i.succ = true then
-                (Nat.fib (k + 1 + i.val) : R) * u +
-                  (Nat.fib (k + 1 + i.val + 1) : R) * v else 0 := by
-          convert hi using 1 <;>
-            simp [Fin.tail_def, show k + 1 + 1 = k + 2 by omega,
-              show k + 1 + 2 = k + 3 by omega] <;>
-            rfl
-        rw [hnext]
-        simp only [Fin.val_zero, Nat.add_zero, Fin.val_succ]
-        rw [hi']
-        simp only [Nat.add_comm, Nat.add_left_comm]
   have sum_toFinset_fib (l : List Nat) (f : Nat → Nat)
       (hnodup : l.Nodup) :
       (∑ j ∈ l.toFinset, f j) = (l.map f).sum := by
@@ -463,163 +357,22 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
         intro hm
         have hh := ha a hm
         omega
-  have trim_value {R : Type} [AddMonoid R]
-      (u v : R) (w : List Window) :
-      value u v (flatten (trim w)) = value u v (flatten w) := by
-    have trim_decomp (w : List Window) :
-        ∃ k : Nat, w = trim w ++ List.replicate k .zero := by
-      induction w with
-      | nil => exact ⟨0, rfl⟩
-      | cons b w ih =>
-        obtain ⟨k, hk⟩ := ih
-        by_cases h : b = .zero ∧ trim w = []
-        · refine ⟨k + 1, ?_⟩
-          change b :: w = (if b = .zero ∧ trim w = [] then [] else b :: trim w) ++ _
-          rw [if_pos h, List.nil_append, List.replicate_succ, h.1]
-          congr 1
-          simpa only [h.2, List.nil_append] using hk
-        · refine ⟨k, ?_⟩
-          change b :: w = (if b = .zero ∧ trim w = [] then [] else b :: trim w) ++ _
-          rw [if_neg h, List.cons_append, ← hk]
-    have value_zeros (w : List Window) (k : Nat) (u v : R) :
-        value u v (flatten (w ++ List.replicate k .zero)) = value u v (flatten w) := by
-      induction w generalizing u v with
-      | nil =>
-        simp only [List.nil_append, flatten, List.flatMap_nil, value]
-        induction k generalizing u v with
-        | zero => rfl
-        | succ k ih =>
-          simpa [List.replicate_succ, flatten, bits, value] using
-            (ih (v + (u + v)) ((u + v) + (v + (u + v))))
-      | cons b w ih =>
-        simp only [flatten, List.flatMap_append] at ih
-        cases b <;> simp [flatten, bits, value, ih]
-    obtain ⟨k, hk⟩ := trim_decomp w
-    calc
-      value u v (flatten (trim w)) = value u v (flatten (trim w ++ List.replicate k .zero)) :=
-        (value_zeros (trim w) k u v).symm
-      _ = value u v (flatten w) := by rw [← hk]
-  have trim_legal (w : List Window) (hw : legal true (flatten w)) :
-      legal true (flatten (trim w)) := by
-    have trim_decomp (w : List Window) :
-        ∃ k : Nat, w = trim w ++ List.replicate k .zero := by
-      induction w with
-      | nil => exact ⟨0, rfl⟩
-      | cons b w ih =>
-        obtain ⟨k, hk⟩ := ih
-        by_cases h : b = .zero ∧ trim w = []
-        · refine ⟨k + 1, ?_⟩
-          change b :: w = (if b = .zero ∧ trim w = [] then [] else b :: trim w) ++ _
-          rw [if_pos h, List.nil_append, List.replicate_succ, h.1]
-          congr 1
-          simpa only [h.2, List.nil_append] using hk
-        · refine ⟨k, ?_⟩
-          change b :: w = (if b = .zero ∧ trim w = [] then [] else b :: trim w) ++ _
-          rw [if_neg h, List.cons_append, ← hk]
-    have legal_zeros (xs : List Window) (k : Nat) (s : Bool) :
-        legal s (flatten (xs ++ List.replicate k .zero)) ↔
-          legal s (flatten xs) := by
-      induction xs generalizing s with
-      | nil =>
-        simp only [List.nil_append, flatten, List.flatMap_nil, legal, iff_true]
-        induction k generalizing s with
-        | zero => trivial
-        | succ k ih => simpa [List.replicate_succ, flatten, bits, legal] using ih false
-      | cons c xs ih =>
-        simp only [flatten, List.flatMap_append] at ih
-        cases s <;> cases c <;> simp [flatten, bits, legal, ih]
-    obtain ⟨k, hk⟩ := trim_decomp w
-    apply (legal_zeros (trim w) k true).1
-    rw [hk] at hw
-    exact hw
-  have trim_length (w : List Window) : (trim w).length ≤ w.length := by
-    have trim_decomp (w : List Window) :
-        ∃ k : Nat, w = trim w ++ List.replicate k .zero := by
-      induction w with
-      | nil => exact ⟨0, rfl⟩
-      | cons b w ih =>
-        obtain ⟨k, hk⟩ := ih
-        by_cases h : b = .zero ∧ trim w = []
-        · refine ⟨k + 1, ?_⟩
-          change b :: w = (if b = .zero ∧ trim w = [] then [] else b :: trim w) ++ _
-          rw [if_pos h, List.nil_append, List.replicate_succ, h.1]
-          congr 1
-          simpa only [h.2, List.nil_append] using hk
-        · refine ⟨k, ?_⟩
-          change b :: w = (if b = .zero ∧ trim w = [] then [] else b :: trim w) ++ _
-          rw [if_neg h, List.cons_append, ← hk]
-    obtain ⟨k, hk⟩ := trim_decomp w
-    have hl := congrArg List.length hk
-    simp only [List.length_append, List.length_replicate] at hl
-    omega
-  have trim_success (w : List Window) (hw : legal true (flatten w)) :
-      Success (trim w) := by
-    have trim_decomp (w : List Window) :
-        ∃ k : Nat, w = trim w ++ List.replicate k .zero := by
-      induction w with
-      | nil => exact ⟨0, rfl⟩
-      | cons b w ih =>
-        obtain ⟨k, hk⟩ := ih
-        by_cases h : b = .zero ∧ trim w = []
-        · refine ⟨k + 1, ?_⟩
-          change b :: w = (if b = .zero ∧ trim w = [] then [] else b :: trim w) ++ _
-          rw [if_pos h, List.nil_append, List.replicate_succ, h.1]
-          congr 1
-          simpa only [h.2, List.nil_append] using hk
-        · refine ⟨k, ?_⟩
-          change b :: w = (if b = .zero ∧ trim w = [] then [] else b :: trim w) ++ _
-          rw [if_neg h, List.cons_append, ← hk]
-    have legal_zeros (xs : List Window) (k : Nat) (s : Bool) :
-        legal s (flatten (xs ++ List.replicate k .zero)) ↔
-          legal s (flatten xs) := by
-      induction xs generalizing s with
-      | nil =>
-        simp only [List.nil_append, flatten, List.flatMap_nil, legal, iff_true]
-        induction k generalizing s with
-        | zero => trivial
-        | succ k ih => simpa [List.replicate_succ, flatten, bits, legal] using ih false
-      | cons c xs ih =>
-        simp only [flatten, List.flatMap_append] at ih
-        cases s <;> cases c <;> simp [flatten, bits, legal, ih]
-    have trim_terminal (w : List Window) (E : Bool) :
-        (trim w).foldl (fun _ b => nonzero b) E =
-          if trim w = [] then E else true := by
-      induction w generalizing E with
-      | nil => rfl
-      | cons b w ih =>
-        by_cases h : b = .zero ∧ trim w = []
-        · simp [trim, h]
-        · simp only [trim, if_neg h, List.foldl_cons, List.cons_ne_nil, ↓reduceIte]
-          rw [ih]
-          by_cases ht : trim w = []
-          · have hb : b ≠ .zero := by intro hb; exact h ⟨hb, ht⟩
-            simp [ht, nonzero, hb]
-          · simp [ht]
-    obtain ⟨k, hk⟩ := trim_decomp w
-    unfold Success
-    rw [(execution true true (trim w)).1.2 (trim_legal w hw)]
-    simp only [endable, Option.any_some]
-    rw [trim_terminal w true]
-    by_cases hnil : trim w = [] <;> simp [hnil]
-  have support_value {R : Type} [CommSemiring R]
-      (n t : Nat) (hbound : ∀ k ∈ Nat.zeckendorf n, k < 3 * t)
-      (u v : R) :
-      value u v (supportBits n t) =
-        (shiftedFibSum n : R) * u + (n : R) * v := by
-    classical
+  have support_offset (n r : Nat)
+      (hbound : ∀ k ∈ Nat.zeckendorf n, k < 3 * (r + 1))
+      (x : IndependentWord (r + 1))
+      (hx : x.val = fun i => decide (i.val + 1 ∈ Nat.zeckendorf n))
+      (u v : Nat) :
+      independentOffset (r + 1) u v x = shiftedFibSum n * u + n * v := by
     have hp := Nat.isZeckendorfRep_zeckendorf n
     rw [List.IsZeckendorfRep, List.isChain_iff_pairwise] at hp
-    have hlo : ∀ k ∈ Nat.zeckendorf n, 2 ≤ k := by
-      intro k hk
-      have hh := (List.pairwise_append.mp hp).2.2 k hk 0 (by simp)
-      simpa using hh
+    have hlo := canonical_two_le n
     have hnd := gap_nodup _ (List.pairwise_append.mp hp).1
-    have hs (f : Nat → R) :
-        (∑ i : Fin (3 * t - 2), if i.val + 2 ∈ Nat.zeckendorf n
-          then f (i.val + 2) else 0) =
+    have hs (f : Nat → Nat) :
+        (∑ i : Fin (3 * (r + 1) - 1), if i.val + 1 ∈ Nat.zeckendorf n
+          then f (i.val + 1) else 0) =
         ∑ k ∈ (Nat.zeckendorf n).toFinset, f k := by
       rw [← Finset.sum_filter]
-      apply Finset.sum_bij (fun i _ => i.val + 2)
+      apply Finset.sum_bij (fun i _ => i.val + 1)
       · intro i hi
         exact List.mem_toFinset.mpr (Finset.mem_filter.mp hi).2
       · intro i hi j hj hij
@@ -629,35 +382,31 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
         have hk' := List.mem_toFinset.mp hk
         have hl := hlo k hk'
         have hu := hbound k hk'
-        refine ⟨⟨k - 2, by omega⟩, ?_, by simp; omega⟩
+        refine ⟨⟨k - 1, by omega⟩, ?_, by simp; omega⟩
         apply Finset.mem_filter.mpr
         simp only [Finset.mem_univ, true_and]
-        simpa only [Nat.sub_add_cancel hl] using hk'
+        simpa only [Nat.sub_add_cancel (by omega : 1 ≤ k)] using hk'
       · intro i hi
         rfl
-    have hfv := fib_value (R := R) (3 * t - 2) 1 u v
-      (fun i => decide (i.val + 2 ∈ Nat.zeckendorf n))
-    have hstart : value u v (supportBits n t) =
-        ∑ i : Fin (3 * t - 2), if i.val + 2 ∈ Nat.zeckendorf n then
-          (Nat.fib (i.val + 1) : R) * u + (Nat.fib (i.val + 2) : R) * v else 0 := by
-      simpa [supportBits, value, Nat.fib_add_two, add_comm, add_left_comm, add_assoc,
-        two_mul] using hfv
-    rw [hstart]
-    have hrewrite :
-        (∑ i : Fin (3 * t - 2), if i.val + 2 ∈ Nat.zeckendorf n then
-          (Nat.fib (i.val + 1) : R) * u + (Nat.fib (i.val + 2) : R) * v else 0) =
-        ∑ k ∈ (Nat.zeckendorf n).toFinset,
-          ((Nat.fib (k - 1) : R) * u + (Nat.fib k : R) * v) := by
-      simpa using hs (fun k => (Nat.fib (k - 1) : R) * u + (Nat.fib k : R) * v)
-    rw [hrewrite, Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.sum_mul]
-    have hA : (∑ k ∈ (Nat.zeckendorf n).toFinset, (Nat.fib (k - 1) : R)) =
-        (shiftedFibSum n : R) := by
-      rw [← Nat.cast_sum]
-      congr 1
-      exact sum_toFinset_fib _ _ hnd
-    have hB : (∑ k ∈ (Nat.zeckendorf n).toFinset, (Nat.fib k : R)) = (n : R) := by
-      rw [← Nat.cast_sum, sum_toFinset_fib _ _ hnd, Nat.sum_zeckendorf_fib]
-    rw [hA, hB]
+    change (∑ i, if x.val i then Nat.fib i.val * u + Nat.fib (i.val + 1) * v
+      else 0) = _
+    rw [hx]
+    simp only [decide_eq_true_eq]
+    have hrewrite := hs (fun k => Nat.fib (k - 1) * u + Nat.fib k * v)
+    simp only [Nat.add_sub_cancel] at hrewrite
+    rw [hrewrite, Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.sum_mul,
+      sum_toFinset_fib _ _ hnd, sum_toFinset_fib _ _ hnd, Nat.sum_zeckendorf_fib]
+    rfl
+  have value_linear (bs : List Bool) (a b c d u v : ZMod H) :
+      value (a * u + b * v) (c * u + d * v) bs =
+        value a c bs * u + value b d bs * v := by
+    induction bs generalizing a b c d with
+    | nil => simp [value]
+    | cons bit bs ih =>
+      cases bit <;> simp only [value, Bool.false_eq_true, ↓reduceIte, zero_add]
+      all_goals rw [show a * u + b * v + (c * u + d * v) =
+        (a + c) * u + (b + d) * v by ring, ih]
+      all_goals ring
   obtain ⟨hj, hq, hq4, hpair⟩ := bounded_coefficient_pair H hH
   have hwords : ∀ A B : ZMod H, ∃ w : List Window,
       w.length ≤ lengthBound H ∧ w ≠ [] ∧ firstTwoZero w ∧ Success w ∧
@@ -688,37 +437,77 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
         have hf := Nat.fib_mono (by omega : lengthIndex H ≤ k)
         omega
       omega
-    have hlegal := supportBits_legal n t hn
-    obtain ⟨hpacklen, hpackflat⟩ := pack_support n t htpos hlegal
-    let w := trim (supportWord n t)
-    have hval {R : Type} [CommSemiring R] (u v : R) :
-        value u v (flatten w) = (shiftedFibSum n : R) * u + (n : R) * v := by
-      dsimp [w]
-      rw [trim_value, hpackflat]
-      exact support_value n t hbnd u v
+    obtain ⟨r, hr⟩ : ∃ r, t = r + 1 := ⟨t - 1, by omega⟩
+    rw [hr] at hbnd
+    let x : IndependentWord (r + 1) := ⟨
+      fun i => decide (i.val + 1 ∈ Nat.zeckendorf n), by
+        apply adm_of_no_adj
+        intro i hi hbad
+        have hadj := zeckendorf_no_adj n hn (i + 1) hbad.1
+        have htrue := hbad.2
+        simp only [decide_eq_true_eq] at htrue
+        simp [htrue, Nat.add_assoc] at hadj⟩
+    obtain ⟨e, hencode, hbits, hquery, hreadout⟩ := (LiteralWindowEnd.result (r + 1)).1
+    let sw := e.symm x
+    let w := sw.val
+    have he : e sw = x := e.apply_symm_apply x
+    have hoff (u v : Nat) : independentOffset (r + 1) u v (e sw) =
+        shiftedFibSum n * u + n * v := by
+      rw [he]
+      exact support_offset n r hbnd x rfl u v
+    have hsuccess : Success w := sw.property.2
+    have hvalNat : value 0 1 (flatten w) = n := by
+      have h := hquery sw 0 0 1
+      rw [hoff] at h
+      simpa [query, observe, show endable (run (some (true, true)) w) = true
+        from hsuccess, w] using h
     have hnonempty : w ≠ [] := by
       intro he
-      have hz : 0 = n := by simpa [he, flatten, value] using hval (R := Nat) 0 1
+      have hz : 0 = n := by simpa [he, flatten, value] using hvalNat
       omega
-    have hfirst : firstTwoZero (supportWord n t) := by
-      rw [firstTwoZero, hpackflat]
-      simp [supportBits]
     have hfirsttrim : firstTwoZero w := by
-      cases he : supportWord n t with
-      | nil => simp [w, he, trim] at hnonempty
-      | cons b tail =>
-        have hkeep : trim (b :: tail) = b :: trim tail := by
-          change (if b = .zero ∧ trim tail = [] then [] else b :: trim tail) = _
-          split
-          · simp [w, trim, *] at hnonempty
-          · rfl
-        dsimp [w]
-        rw [he, hkeep]
-        rw [he] at hfirst
-        cases b <;> simp [firstTwoZero, flatten, bits] at hfirst ⊢
-    have hsuccess : Success w := trim_success (supportWord n t) (by rw [hpackflat]; exact hlegal)
-    have hwlegal : legal true (flatten w) :=
-      trim_legal (supportWord n t) (by rw [hpackflat]; exact hlegal)
+      have hx0 : x.val ⟨0, by omega⟩ = false := by
+        change decide (1 ∈ Nat.zeckendorf n) = false
+        simp only [decide_eq_false_iff_not]
+        intro hmem
+        have := canonical_two_le n 1 hmem
+        omega
+      have htake : List.take 2 (independentBits (r + 1) x) = [false, false] := by
+        have hlen : 3 * (r + 1) - 1 = (3 * r + 1) + 1 := by omega
+        simp only [independentBits, List.take_succ_cons]
+        rw [List.ofFn_congr hlen]
+        simpa [List.ofFn_succ] using hx0
+      have hpad := hbits sw
+      rw [he] at hpad
+      have hwlen : 2 ≤ (flatten w).length := by
+        cases hw : w with
+        | nil => exact False.elim (hnonempty hw)
+        | cons b bs => cases b <;> simp [flatten, bits] <;> omega
+      rw [hpad, pad, flatten, List.flatMap_append] at htake
+      change List.take 2 (flatten w ++ _) = [false, false] at htake
+      rw [List.take_append_of_le_length hwlen] at htake
+      exact htake
+    have hwlegal : legal true (flatten w) := by
+      by_contra h
+      have hnone := (execution true true w).2.2 h
+      have hs := hsuccess
+      rw [Success, hnone] at hs
+      simp [endable] at hs
+    have hcoeff : windowCoefficients H w = (A, B) := by
+      apply Prod.ext
+      · have h := hreadout H 1 0 sw
+        rw [hoff] at h
+        simpa [windowCoefficients, hnA] using h
+      · have h := hreadout H 0 1 sw
+        rw [hoff] at h
+        simpa [windowCoefficients, hnB] using h
+    have hval (u v : ZMod H) : value u v (flatten w) = A * u + B * v := by
+      have hl := value_linear (flatten w) 1 0 0 1 u v
+      have hA := congrArg Prod.fst hcoeff
+      have hB := congrArg Prod.snd hcoeff
+      change value 1 0 (flatten w) = A at hA
+      change value 0 1 (flatten w) = B at hB
+      simpa only [one_mul, zero_mul, add_zero, zero_add, hA, hB] using hl
     have halllegal (s : Bool) : legal s (flatten w) := by
       cases s
       · cases he : flatten w with
@@ -737,23 +526,20 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
     have hend (s E : Bool) : endable (run (some (s, E)) w) = true := by
       rw [(execution s E w).1.2 (halllegal s)]
       simpa only [endable, Option.any_some] using hterminal E
-    refine ⟨w, (trim_length _).trans (hpacklen.le), hnonempty, hfirsttrim, hsuccess, ?_, ?_, ?_⟩
-    · apply Prod.ext <;> simp [windowCoefficients, hval, hnA, hnB]
-    · intro u v
-      rw [hval, hnA, hnB]
-    · intro epsilon p hp
-      have run_append (q : Option (Bool × Bool)) (a b : List Window) :
-          run q (a ++ b) = run (run q a) b := by
-        induction a generalizing q with
-        | nil => rfl
-        | cons a as ih => exact ih (step q a)
-      have hout : initialized epsilon (p ++ w) =
-          some ((if epsilon then 1 else 0) + value 2 3 (flatten (p ++ w))) := by
-        unfold initialized observe
-        rw [run_append, (execution epsilon epsilon p).1.2 hp, hend]
-        rfl
-      refine ⟨_, ?_, hout⟩
-      exact (LiteralWindowEnd.result 0).2.2.2.2.2.2.2 epsilon (p ++ w) _ hout
+    refine ⟨w, by simpa only [← hr] using sw.property.1, hnonempty, hfirsttrim, hsuccess, hcoeff, hval, ?_⟩
+    intro epsilon p hp
+    have run_append (q : Option (Bool × Bool)) (a b : List Window) :
+        run q (a ++ b) = run (run q a) b := by
+      induction a generalizing q with
+      | nil => rfl
+      | cons a as ih => exact ih (step q a)
+    have hout : initialized epsilon (p ++ w) =
+        some ((if epsilon then 1 else 0) + value 2 3 (flatten (p ++ w))) := by
+      unfold initialized observe
+      rw [run_append, (execution epsilon epsilon p).1.2 hp, hend]
+      rfl
+    refine ⟨_, ?_, hout⟩
+    exact (LiteralWindowEnd.result 0).2.2.2.2.2.2.2 epsilon (p ++ w) _ hout
   have hcover00 : Covers00 H (lengthBound H) := by
     intro A B
     obtain ⟨w, hl, hn, h00, hs, hc, _⟩ := hwords A B

@@ -53,7 +53,7 @@ private theorem canonical_pairwise (n : Nat) :
   rw [List.IsZeckendorfRep, List.isChain_iff_pairwise] at h
   exact (List.pairwise_append.mp h).1
 
-private theorem canonical_two_le (n : Nat) :
+theorem canonical_two_le (n : Nat) :
     forall k, k ∈ Nat.zeckendorf n -> 2 <= k := by
   have h := Nat.isZeckendorfRep_zeckendorf n
   rw [List.IsZeckendorfRep, List.isChain_iff_pairwise] at h
