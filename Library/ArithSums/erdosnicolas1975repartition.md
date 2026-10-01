@@ -581,7 +581,15 @@ attained because $C$ has finite support and $b_s(p)\to\infty$ as
 $p\to\infty$. This is a fixed-price positive bound, not a uniform gap
 along growing prices and moduli.
 
-Write $B=T_s(N)-R_s(v)$. If $B<0$, removals already pay the budget.
+Use the inherited budget normalization
+
+$$
+T_s(N)=\log\mathcal Q_s+\log N-s\log(e^\gamma\log\log N),
+\qquad \mathcal Q_s=Z(C_s)^s/C_s,
+$$
+
+so $D_s(N)>T_s(N)$ is exactly strict Robin. Write
+$B=T_s(N)-R_s(v)$. If $B<0$, removals already pay the budget.
 For $B\ge0$, define
 
 $$
