@@ -34694,3 +34694,154 @@ $n!\ge(n/2)^{\lfloor n/2\rfloor}$，故 $(n!)^{1/n}\to\infty$。
 每个固定有限阶的渐近展开仍有效，其余项常数可依赖阶数；
 未给出实际储备的变阶统一误差界。形式级数发散并不否定 §251 的完整模型或有限阶证书。
 本节未证明有符号 $\Phi$ 的所需单侧界、Robin 全称不等式或 RH。
+
+## 追加锚（本行以下为增补区）
+
+## 253. 完整截止模型的阶乘归一与统一修正预算
+
+沿用 §252 的同一归一化连续模型
+$\mathcal F(s)=\mathcal J(s)+\mathcal H(s)$。
+取 $\varepsilon,C,q>0$，使 $\mathcal H$ 在 $|s|<\varepsilon$ 解析，
+其 Taylor 系数满足 $|h_n|\le Cq^n$，且式（252.1）在 $0<s<\varepsilon$ 成立。
+经典 Borel–Laplace 方法作为中间工具，背景见
+[DLMF §2.11(v)](https://dlmf.nist.gov/2.11#v) 及其中的 Borel 文献指引；
+本节将其用于既定移动截止模型，并把只截断解析修正的统一预算接回式（251.4）。
+
+### theorem 253.1 移动截止修正保留一个确定的 Borel 极点
+
+在原点附近定义阶乘归一的形式级数
+
+$$
+\widehat{\mathcal F}(\xi)=\sum_{n\ge0}\frac{m_n}{n!}\xi^n,
+\qquad
+\widehat{\mathcal H}(\xi)=\sum_{n\ge0}\frac{h_n}{n!}\xi^n.
+$$
+
+则 $\widehat{\mathcal H}$ 延拓为整函数，且
+
+$$
+|\widehat{\mathcal H}(\xi)|\le Ce^{q|\xi|},\qquad
+\boxed{\widehat{\mathcal F}(\xi)
+=\frac1{1+2\xi}+\widehat{\mathcal H}(\xi).}
+\tag{253.1}
+$$
+
+右式给出整个复平面的亚纯延拓，其唯一有限奇点为 $\xi=-1/2$，
+是留数 $1/2$ 的简单极点。
+原点处的 Borel Taylor 级数收敛半径恰为 $1/2$。
+对同时满足 $0<s<\varepsilon$ 与 $qs<1$ 的实数 $s$，有绝对收敛的恢复公式
+
+$$
+\boxed{\mathcal F(s)=\int_0^\infty
+e^{-z}\widehat{\mathcal F}(sz)\,dz.}
+\tag{253.2}
+$$
+
+**证明。** 式（252.2）的系数关系在 $|\xi|<1/2$ 给出
+
+$$
+\sum_{n\ge0}\frac{m_n}{n!}\xi^n
+=\sum_{n\ge0}(-2\xi)^n
++\sum_{n\ge0}\frac{h_n}{n!}\xi^n.
+$$
+
+第一项是几何级数 $1/(1+2\xi)$。
+第二项在任意紧圆盘上一致绝对收敛，因为
+
+$$
+\sum_{n\ge0}\frac{|h_n||\xi|^n}{n!}
+\le C\sum_{n\ge0}\frac{(q|\xi|)^n}{n!}=Ce^{q|\xi|}.
+$$
+
+于是式（253.1）成立，且修正项为整函数。
+在 $\xi=-1/2$ 附近，整函数不能改变
+$1/(1+2\xi)=\tfrac12(\xi+\tfrac12)^{-1}$ 的主部；
+故极点、留数与 Taylor 半径如所述。
+
+在正实轴上，$1/(1+2sz)$ 无奇点且绝对值不超过一。
+修正项的逐项积分交换由下列总预算保证：
+
+$$
+\sum_{n\ge0}\int_0^\infty
+e^{-z}\frac{|h_n|s^nz^n}{n!}\,dz
+=\sum_{n\ge0}|h_n|s^n
+\le\frac{C}{1-qs}<\infty.
+\tag{253.3}
+$$
+
+这里使用经典阶乘矩 $\int_0^\infty e^{-z}z^n\,dz=n!$。
+因此
+
+$$
+\int_0^\infty e^{-z}\widehat{\mathcal H}(sz)\,dz
+=\sum_{n\ge0}h_ns^n=\mathcal H(s).
+$$
+
+有理项的积分正是 $\mathcal J(s)$，由式（252.1）得到式（253.2）。$\square$
+
+### theorem 253.2 保留积分尾部时的全阶统一 Robin 条件预算
+
+令 $K=2461/1000$，并对每个整数 $N\ge0$ 定义
+
+$$
+\begin{aligned}
+\mathcal M_N(t)&=\frac{e^{-t/2}}t
+\left[\mathcal J(1/t)+\sum_{n=0}^{N}\frac{h_n}{t^n}\right],\\
+E_N(t)&=\frac{Ce^{-t/2}}t
+\frac{(q/t)^{N+1}}{1-q/t},\qquad
+B(t)=\frac{2Ke^{-t/2}}{t^3}.
+\end{aligned}
+\tag{253.4}
+$$
+
+在 §251 同一实际价格源与其 Dusart 输入下，
+对全部同时满足 $t\ge100$、$1/t<\varepsilon$、$q<t$ 的 $t$，
+以及全部 $N\ge0$，有
+
+$$
+\boxed{|\mathcal M(t)-\mathcal M_N(t)|\le E_N(t),\qquad
+R(e^t)>\mathcal M_N(t)-B(t)-E_N(t).}
+\tag{253.5}
+$$
+
+特别地，同一点的条件
+
+$$
+\Phi(e^t)+\mathcal M_N(t)\ge B(t)+E_N(t)
+\tag{253.6}
+$$
+
+蕴含 $\mathfrak D(e^t)>0$。
+对每个上述固定 $t$，$E_N(t)\to0$，全部阶数使用同一 $C,q$。
+若该点满足严格条件 $\Phi(e^t)+\mathcal M(t)>B(t)$，
+则所有充分大的 $N$ 均满足式（253.6）。
+
+**证明。** 保留 $\mathcal J$ 不作幂展开，模型误差只来自解析修正：
+
+$$
+\left|\mathcal H(1/t)-\sum_{n=0}^{N}h_nt^{-n}\right|
+\le\sum_{n=N+1}^\infty C(q/t)^n
+=C\frac{(q/t)^{N+1}}{1-q/t}.
+$$
+
+乘以 $e^{-t/2}/t>0$ 即得式（253.5）的第一式。
+式（251.4）给 $R(e^t)>\mathcal M(t)-B(t)$，
+而第一式给 $\mathcal M(t)\ge\mathcal M_N(t)-E_N(t)$，
+故第二式成立。
+再加上式（253.6），由 $\mathfrak D=\Phi+R$ 得到严格正性。
+固定 $t$ 时 $0<q/t<1$，故几何预算趋于零。
+
+最后的有限阶断言也由同一预算给出：置
+$\delta=\Phi(e^t)+\mathcal M(t)-B(t)>0$，
+对充分大的 $N$ 有 $2E_N(t)\le\delta$，从而
+$\Phi(e^t)+\mathcal M_N(t)\ge B(t)+\delta-E_N(t)\ge B(t)+E_N(t)$。$\square$
+
+式（253.5）是保留完整积分尾部、只递归解析修正的预算。
+它与式（252.2）的阶乘增长不矛盾，因为 $\mathcal J$ 未被截成幂多项式。
+未给出 $C,q,\varepsilon$ 的显式数值时，本条件不提供新增的有效起点或整数覆盖。
+即使令 $N\to\infty$，实际源预算 $B(t)$ 仍保留；
+该极限只将式（253.6）恢复为式（251.5），不证明其对所有 $t$ 成立。
+这里是条件阈值的极限；在式（251.5）恰取等号的点，不保证存在有限阶证书。
+Borel 极点属于归一化连续模型，不是黎曼 $\zeta$ 的零点，
+也不由上述单阶实际误差推出离散储备 $R$ 的全阶 Borel 变换。
+本节没有证明实际有符号 $\Phi$ 的所需单侧界、Robin 全称不等式或 RH。
