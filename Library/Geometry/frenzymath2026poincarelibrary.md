@@ -1958,3 +1958,58 @@ remain unfinished, as does the full Mostow–Prasad endpoint including cusps
 and nonorientable manifolds. Compatible original-H3 geometric inputs of
 the complete-target constructor remain explicit supplied premises. The
 conditional construction does not prove the ambient conjugator exists.
+
+
+### The same lift of a base map preserving distance is locally isometric
+
+For metric covering spaces `X,Y`, extended metric bases `M,N`, maps
+`F:X→M`, `P:Y→N`, a continuous lift `L:X→Y` and a base map `φ:M→N`
+preserving distance, the all-point identity `P(L(x))=φ(F(x))` now proves
+that `L` preserves every pairwise distance on a ball at each source point,
+provided `F` and `P` themselves preserve all pairwise distances on a ball
+at each of their points. Choose the source projection's ball and the
+target projection's ball at `L(a)`; continuity of the same `L` provides a
+source ball mapping into the latter. On the intersection radius, the same
+projection identity and distance preservation of `φ,F,P` compare every
+pair of lifted points. No global distance preservation of `L` is assumed.
+
+An exact application uses the same actual original H3 on both covering
+spaces, the same full-deck quotient coverings and their actual
+representations evaluating to the deck actions. With supplied compatible
+H3 and base manifold structures, base `T3Space` hypotheses, the same
+Riemannian metrics, compatibility of the H3 intrinsic distance with the
+original metric, local diffeomorphism of both coverings and preservation
+of their tangent inner products, the existing covering distance theorem
+supplies both local projection properties. A supplied continuous lift of
+a base map preserving the actual intrinsic distances therefore has the
+stated local distance property in the original H3 metric. No smoothness
+of the base map or of the lift is assumed for this implication.
+
+A further exact application takes a prescribed actual homotopy equivalence
+whose forward map preserves those intrinsic distances. The earlier
+same-cover constructor selects the target fiber point, continuous lift,
+equivariant deck homomorphism and its deck isomorphism. Their same
+basepoint, projection, all-point equivariance and fundamental-group binding
+are retained, and that very selected lift now satisfies the local pairwise
+distance conclusion. This covers the isometry case of the prescribed map;
+it does not yet identify that lift as a full ambient H3 isometry.
+
+Three serial scoped transient cache-guarded checks exited zero and printed
+three axiom closures using only `propext`, `Classical.choice` and
+`Quot.sound`. One rejected actual-H3 source/log pair is preserved and
+excluded. Its first proposed telescope lacked the base `T3Space` instances
+required to form the existing intrinsic extended metrics; those explicit
+premises, already required in the earlier complete-target constructor,
+were added in the accepted exact application. This telescope change is
+recorded, and the earlier proposal is not accepted. Seven `haveILetI`
+style warnings are recorded; they are not proof exceptions. The original
+H3 metric, covering identities, actions and resource limits are retained.
+These are classical compositions with no tracked Lean or novelty claim.
+The linked escape audit remains unfinished.
+
+The new result is local preservation of distance by the same actual lift.
+Promoting such a lift to a full ambient isometry, proving general target
+uniqueness, constructing the ambient lattice conjugator and completing the
+full Mostow–Prasad endpoint remain unfinished, including cusps and
+nonorientable manifolds. The compatible original-H3 geometric inputs
+remain explicit supplied premises.
