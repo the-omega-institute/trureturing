@@ -342,3 +342,45 @@ sphere covering results cannot replace them.
 - Endpoint supplier and audit: `PoincareConjecture/PoincareLib/Topology/Manifold/Poincare.lean` and `PoincareConjecture/scripts/check_poincare_endpoints.lean`.
 - Generic prerequisites: the exact module paths and declaration names in the table above.
 - Verification claims: `PoincareConjecture/verification.md`; complete upstream proof checks are reported there and were not reproduced here.
+
+## Negative curvature and finite-radius exponential geometry
+
+The unchanged `SpaceForm/Curvature.lean` radial curvature formula supports
+arbitrary constant sectional curvature, and
+`Connection/AlongCurve/Manifold.lean` constructs isometric parallel transport
+from the smooth metric. `SpaceForm/ParallelJacobi.lean`,
+`SpaceForm/GeodesicJacobi.lean` and `SpaceForm/ExponentialMetric.lean` give
+positive-curvature sine formulas; their conclusions are not negative-curvature
+formulas. `Analysis/ODE/Jacobi/Basic.lean` and `Analysis/ODE/Linear.lean`
+supply the Jacobi predicate and linear ODE uniqueness used for the adaptation.
+
+A transient negative-curvature application checks the following for any
+complete smooth Riemannian manifold with a `T3Space` topology and supplied
+Levi-Civita data of constant sectional curvature `-1`. For each point `p` and
+each finite `R > 0`, the precompact-ball exponential constructor selects an
+actual smooth normalized radial geodesic map `e` on the Euclidean ball of
+radius `R`, with `e(0) = p`. Writing `De` for its manifold differential, for
+`inner(θ,θ) = 1` and `0 ≤ t < R` the same selected map satisfies
+
+```text
+t² g[e(tθ)](De[tθ]w, De[tθ]z)
+  = sinh(t)² inner(w,z)
+    + (t² - sinh(t)²) inner(w,θ) inner(z,θ).
+```
+
+The application constructs parallel transport and derives the normal Jacobi
+`sinh/cosh` formulas by linear ODE uniqueness; it supplies the compact intrinsic
+ball input from metric completeness. These scoped applications compile with
+only `propext`, `Classical.choice` and `Quot.sound`. They require no global
+compactness, orientability or finite-volume hypothesis. The selected `e` may
+depend on `R`: compatibility between radii, global injectivity or surjectivity,
+abstract hyperbolic-manifold realization, cusp classification and full
+Mostow-Prasad rigidity have not been established. The same finite-radius
+exponential conclusion is also checked for the previously constructed
+upper-half-space metric `g` and for its unique descended metric `gQ`, under the
+same free, compact-set proper isometric-action hypotheses. Their already
+constructed Levi-Civita data, completeness and curvature `-1` discharge the
+application inputs; no replacement metric or supplied exponential is used.
+All prior source, volume and quotient clauses are retained, with metric
+uniqueness still within the chosen smooth quotient structure. These are
+classical prerequisite applications, with no novelty claim.
