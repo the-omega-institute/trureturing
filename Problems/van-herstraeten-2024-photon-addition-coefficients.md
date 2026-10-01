@@ -141,8 +141,10 @@ term is `1.003, 1.010, 1.021, 1.036` for `k = 2, 3, 4, 5`.
 compare `σ^{k,k}` with `σ^{l,l}` for `l ≥ 2`. The quotient `N_k/N_l` has a
 negative coefficient for every pair `2 ≤ l < k ≤ 12` checked (`N_3/N_2` starts
 `1, 7, 1, 39, −87`). The reason is that `P_l` has a root in `(−1, 0)` for
-`l ≥ 2` (for example `−2 + √3` for `l = 2`), which gives `N_k/N_l` a pole
-inside the unit disk. Whether `σ^{k,k} ≺ σ^{l,l}` holds is not decided here;
+`l ≥ 2` (for example `−2 + √3` for `l = 2`), and `P_k` does not vanish there:
+for every checked pair the greatest common divisor of `P_k` and `P_l` is `1`,
+or `x + 1` when `k` and `l` are both odd (SymPy), so that root is a pole of
+`N_k/N_l` inside the unit disk. Whether `σ^{k,k} ≺ σ^{l,l}` holds is not decided here;
 the paper notes that failure of its method would not refute the majorization.
 
 **Computed, not formalized:** for the paper's numerical observation
