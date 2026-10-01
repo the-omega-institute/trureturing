@@ -1,0 +1,4424 @@
+{
+  "schema": "single-tag-all-pair-haar-control-v1",
+  "scope": "Two declared finite exact controls for the same single-tag construction. Local covered-private fibres; globally noncovering. No unrestricted covering claim.",
+  "compression": "All tag conditions are zero congruences. Tag valuation j<K has exact weight 4/5^(j+1); j=K has weight1/5^K. Every core P-by-3 residue is tested once per stratum.",
+  "cases": [
+    {
+      "P": [
+        7
+      ],
+      "n": 1,
+      "D": 7,
+      "A": 6,
+      "K": 8,
+      "full_period": "8203125",
+      "full_period_enumerated": false,
+      "originals": [
+        {
+          "index": 0,
+          "kind": "P",
+          "modulus": "35",
+          "residue": "0",
+          "tag_height": 1,
+          "metadata": {
+            "assignment": [
+              0
+            ],
+            "j": 1
+          },
+          "private_witness": "2734375",
+          "observed_private_compressed_states": 21
+        },
+        {
+          "index": 1,
+          "kind": "P",
+          "modulus": "175",
+          "residue": "100",
+          "tag_height": 2,
+          "metadata": {
+            "assignment": [
+              2
+            ],
+            "j": 2
+          },
+          "private_witness": "1562500",
+          "observed_private_compressed_states": 18
+        },
+        {
+          "index": 2,
+          "kind": "P",
+          "modulus": "875",
+          "residue": "500",
+          "tag_height": 3,
+          "metadata": {
+            "assignment": [
+              3
+            ],
+            "j": 3
+          },
+          "private_witness": "5078125",
+          "observed_private_compressed_states": 15
+        },
+        {
+          "index": 3,
+          "kind": "P",
+          "modulus": "4375",
+          "residue": "1250",
+          "tag_height": 4,
+          "metadata": {
+            "assignment": [
+              4
+            ],
+            "j": 4
+          },
+          "private_witness": "390625",
+          "observed_private_compressed_states": 12
+        },
+        {
+          "index": 4,
+          "kind": "P",
+          "modulus": "21875",
+          "residue": "12500",
+          "tag_height": 5,
+          "metadata": {
+            "assignment": [
+              5
+            ],
+            "j": 5
+          },
+          "private_witness": "3906250",
+          "observed_private_compressed_states": 9
+        },
+        {
+          "index": 5,
+          "kind": "P",
+          "modulus": "109375",
+          "residue": "93750",
+          "tag_height": 6,
+          "metadata": {
+            "assignment": [
+              6
+            ],
+            "j": 6
+          },
+          "private_witness": "7421875",
+          "observed_private_compressed_states": 6
+        },
+        {
+          "index": 6,
+          "kind": "Q0",
+          "modulus": "234375",
+          "residue": "0",
+          "tag_height": 7,
+          "metadata": {},
+          "private_witness": "3515625",
+          "observed_private_compressed_states": 2
+        },
+        {
+          "index": 7,
+          "kind": "Q2",
+          "modulus": "1171875",
+          "residue": "781250",
+          "tag_height": 8,
+          "metadata": {},
+          "private_witness": "781250",
+          "observed_private_compressed_states": 1
+        },
+        {
+          "index": 8,
+          "kind": "C",
+          "modulus": "8203125",
+          "residue": "6250000",
+          "tag_height": 8,
+          "metadata": {
+            "target_axis": 0
+          },
+          "private_witness": "6250000",
+          "observed_private_compressed_states": 1
+        }
+      ],
+      "global_hole": "4687501",
+      "actual_covered_private_boundaries": [
+        [
+          {
+            "tag_stratum": 8,
+            "other_P_coordinates": []
+          }
+        ]
+      ],
+      "tag_strata": [
+        {
+          "tag_valuation_stratum": 0,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "5"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 1,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "25"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 2,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 3,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 4,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "3125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 5,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "15625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 6,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "78125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 7,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "390625"
+          },
+          "core_excess_sum": 6,
+          "rectangle_core_counts": [
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 8,
+          "tag_haar_weight": {
+            "numerator": "1",
+            "denominator": "390625"
+          },
+          "core_excess_sum": 12,
+          "rectangle_core_counts": [
+            12
+          ],
+          "covered_private_boundary_counts": [
+            1
+          ]
+        }
+      ],
+      "excess_haar_mass": {
+        "numerator": "12",
+        "denominator": "2734375"
+      },
+      "rectangle_haar_masses": [
+        {
+          "numerator": "4",
+          "denominator": "2734375"
+        }
+      ],
+      "summed_rectangle_haar_mass": {
+        "numerator": "4",
+        "denominator": "2734375"
+      },
+      "ratio": {
+        "numerator": "1",
+        "denominator": "3"
+      },
+      "counts": {
+        "unique_compressed_states": 189,
+        "numeric_membership_tests": 1701,
+        "private_witness_membership_tests": 81,
+        "global_pair_admissibility_checks": 8,
+        "compressed_canonical_fibres_tested": 9,
+        "compressed_fibre_member_reads": 189,
+        "explicit_check_calls": 2012
+      }
+    },
+    {
+      "P": [
+        11,
+        13
+      ],
+      "n": 2,
+      "D": 143,
+      "A": 120,
+      "K": 122,
+      "full_period": "8068593224044181454697407591493494332547320381683608747636071711895056068897247314453125",
+      "full_period_enumerated": false,
+      "originals": [
+        {
+          "index": 0,
+          "kind": "P",
+          "modulus": "715",
+          "residue": "0",
+          "tag_height": 1,
+          "metadata": {
+            "assignment": [
+              0,
+              0
+            ],
+            "j": 1
+          },
+          "private_witness": "5379062149362787636464938394328996221698213587789072498424047807930037379264831542968750",
+          "observed_private_compressed_states": 363
+        },
+        {
+          "index": 1,
+          "kind": "P",
+          "modulus": "3575",
+          "residue": "275",
+          "tag_height": 2,
+          "metadata": {
+            "assignment": [
+              0,
+              2
+            ],
+            "j": 2
+          },
+          "private_witness": "2896418080426116419634966827715613350145191931886423652997564204270020127296447753906250",
+          "observed_private_compressed_states": 360
+        },
+        {
+          "index": 2,
+          "kind": "P",
+          "modulus": "17875",
+          "residue": "16500",
+          "tag_height": 3,
+          "metadata": {
+            "assignment": [
+              0,
+              3
+            ],
+            "j": 3
+          },
+          "private_witness": "1655096045957780811219981044408921914368681103935099230284322402440011501312255859375000",
+          "observed_private_compressed_states": 357
+        },
+        {
+          "index": 3,
+          "kind": "P",
+          "modulus": "89375",
+          "residue": "75625",
+          "tag_height": 4,
+          "metadata": {
+            "assignment": [
+              0,
+              4
+            ],
+            "j": 4
+          },
+          "private_witness": "413774011489445202804995261102230478592170275983774807571080600610002875328063964843750",
+          "observed_private_compressed_states": 354
+        },
+        {
+          "index": 4,
+          "kind": "P",
+          "modulus": "446875",
+          "residue": "206250",
+          "tag_height": 5,
+          "metadata": {
+            "assignment": [
+              0,
+              5
+            ],
+            "j": 5
+          },
+          "private_witness": "7241045201065291049087417069289033375362979829716059132493910510675050318241119384765625",
+          "observed_private_compressed_states": 351
+        },
+        {
+          "index": 5,
+          "kind": "P",
+          "modulus": "2234375",
+          "residue": "515625",
+          "tag_height": 6,
+          "metadata": {
+            "assignment": [
+              0,
+              6
+            ],
+            "j": 6
+          },
+          "private_witness": "5999723166596955440672431285982341939586469001764734709780668708845041692256927490234375",
+          "observed_private_compressed_states": 348
+        },
+        {
+          "index": 6,
+          "kind": "P",
+          "modulus": "11171875",
+          "residue": "1718750",
+          "tag_height": 7,
+          "metadata": {
+            "assignment": [
+              0,
+              7
+            ],
+            "j": 7
+          },
+          "private_witness": "4758401132128619832257445502675650503809958173813410287067426907015033066272735595703125",
+          "observed_private_compressed_states": 345
+        },
+        {
+          "index": 7,
+          "kind": "P",
+          "modulus": "55859375",
+          "residue": "38671875",
+          "tag_height": 8,
+          "metadata": {
+            "assignment": [
+              0,
+              8
+            ],
+            "j": 8
+          },
+          "private_witness": "3517079097660284223842459719368959068033447345862085864354185105185024440288543701171875",
+          "observed_private_compressed_states": 342
+        },
+        {
+          "index": 8,
+          "kind": "P",
+          "modulus": "279296875",
+          "residue": "64453125",
+          "tag_height": 9,
+          "metadata": {
+            "assignment": [
+              0,
+              9
+            ],
+            "j": 9
+          },
+          "private_witness": "2275757063191948615427473936062267632256936517910761441640943303355015814304351806640625",
+          "observed_private_compressed_states": 339
+        },
+        {
+          "index": 9,
+          "kind": "P",
+          "modulus": "1396484375",
+          "residue": "537109375",
+          "tag_height": 10,
+          "metadata": {
+            "assignment": [
+              0,
+              10
+            ],
+            "j": 10
+          },
+          "private_witness": "1034435028723613007012488152755576196480425689959437018927701501525007188320159912109375",
+          "observed_private_compressed_states": 336
+        },
+        {
+          "index": 10,
+          "kind": "P",
+          "modulus": "6982421875",
+          "residue": "2685546875",
+          "tag_height": 11,
+          "metadata": {
+            "assignment": [
+              0,
+              11
+            ],
+            "j": 11
+          },
+          "private_witness": "7861706218299458853294909960942379093251235243691721343850531411590054631233215332031250",
+          "observed_private_compressed_states": 333
+        },
+        {
+          "index": 11,
+          "kind": "P",
+          "modulus": "34912109375",
+          "residue": "18798828125",
+          "tag_height": 12,
+          "metadata": {
+            "assignment": [
+              0,
+              12
+            ],
+            "j": 12
+          },
+          "private_witness": "6620384183831123244879924177635687657474724415740396921137289609760046005249023437500000",
+          "observed_private_compressed_states": 330
+        },
+        {
+          "index": 12,
+          "kind": "P",
+          "modulus": "174560546875",
+          "residue": "47607421875",
+          "tag_height": 13,
+          "metadata": {
+            "assignment": [
+              2,
+              0
+            ],
+            "j": 13
+          },
+          "private_witness": "978011299884143206629988798968908403945129743234376817895281419623643159866333007812500",
+          "observed_private_compressed_states": 327
+        },
+        {
+          "index": 13,
+          "kind": "P",
+          "modulus": "872802734375",
+          "residue": "463867187500",
+          "tag_height": 14,
+          "metadata": {
+            "assignment": [
+              2,
+              2
+            ],
+            "j": 14
+          },
+          "private_witness": "6563960454991653444497424823849019864939428469015336720104869527858681976795196533203125",
+          "observed_private_compressed_states": 324
+        },
+        {
+          "index": 14,
+          "kind": "P",
+          "modulus": "4364013671875",
+          "residue": "61035156250",
+          "tag_height": 15,
+          "metadata": {
+            "assignment": [
+              2,
+              3
+            ],
+            "j": 15
+          },
+          "private_witness": "5322638420523317836082439040542328429162917641064012297391627726028673350811004638671875",
+          "observed_private_compressed_states": 321
+        },
+        {
+          "index": 15,
+          "kind": "P",
+          "modulus": "21820068359375",
+          "residue": "14495849609375",
+          "tag_height": 16,
+          "metadata": {
+            "assignment": [
+              2,
+              4
+            ],
+            "j": 16
+          },
+          "private_witness": "4081316386054982227667453257235636993386406813112687874678385924198664724826812744140625",
+          "observed_private_compressed_states": 318
+        },
+        {
+          "index": 16,
+          "kind": "P",
+          "modulus": "109100341796875",
+          "residue": "90026855468750",
+          "tag_height": 17,
+          "metadata": {
+            "assignment": [
+              2,
+              5
+            ],
+            "j": 17
+          },
+          "private_witness": "2839994351586646619252467473928945557609895985161363451965144122368656098842620849609375",
+          "observed_private_compressed_states": 315
+        },
+        {
+          "index": 17,
+          "kind": "P",
+          "modulus": "545501708984375",
+          "residue": "274658203125000",
+          "tag_height": 18,
+          "metadata": {
+            "assignment": [
+              2,
+              6
+            ],
+            "j": 18
+          },
+          "private_witness": "1598672317118311010837481690622254121833385157210039029251902320538647472858428955078125",
+          "observed_private_compressed_states": 312
+        },
+        {
+          "index": 18,
+          "kind": "P",
+          "modulus": "2727508544921875",
+          "residue": "1659393310546875",
+          "tag_height": 19,
+          "metadata": {
+            "assignment": [
+              2,
+              7
+            ],
+            "j": 19
+          },
+          "private_witness": "357350282649975402422495907315562686056874329258714606538660518708638846874237060546875",
+          "observed_private_compressed_states": 309
+        },
+        {
+          "index": 19,
+          "kind": "P",
+          "modulus": "13637542724609375",
+          "residue": "10681152343750000",
+          "tag_height": 20,
+          "metadata": {
+            "assignment": [
+              2,
+              8
+            ],
+            "j": 20
+          },
+          "private_witness": "7184621472225821248704917715502365582827683882990998931461490428773686289787292480468750",
+          "observed_private_compressed_states": 306
+        },
+        {
+          "index": 20,
+          "kind": "P",
+          "modulus": "68187713623046875",
+          "residue": "3337860107421875",
+          "tag_height": 21,
+          "metadata": {
+            "assignment": [
+              2,
+              9
+            ],
+            "j": 21
+          },
+          "private_witness": "5943299437757485640289931932195674147051173055039674508748248626943677663803100585937500",
+          "observed_private_compressed_states": 303
+        },
+        {
+          "index": 21,
+          "kind": "P",
+          "modulus": "340938568115234375",
+          "residue": "255107879638671875",
+          "tag_height": 22,
+          "metadata": {
+            "assignment": [
+              2,
+              10
+            ],
+            "j": 22
+          },
+          "private_witness": "4701977403289150031874946148888982711274662227088350086035006825113669037818908691406250",
+          "observed_private_compressed_states": 300
+        },
+        {
+          "index": 22,
+          "kind": "P",
+          "modulus": "1704692840576171875",
+          "residue": "1120567321777343750",
+          "tag_height": 23,
+          "metadata": {
+            "assignment": [
+              2,
+              11
+            ],
+            "j": 23
+          },
+          "private_witness": "3460655368820814423459960365582291275498151399137025663321765023283660411834716796875000",
+          "observed_private_compressed_states": 297
+        },
+        {
+          "index": 23,
+          "kind": "P",
+          "modulus": "8523464202880859375",
+          "residue": "8463859558105468750",
+          "tag_height": 24,
+          "metadata": {
+            "assignment": [
+              2,
+              12
+            ],
+            "j": 24
+          },
+          "private_witness": "2219333334352478815044974582275599839721640571185701240608523221453651785850524902343750",
+          "observed_private_compressed_states": 294
+        },
+        {
+          "index": 24,
+          "kind": "P",
+          "modulus": "42617321014404296875",
+          "residue": "27120113372802734375",
+          "tag_height": 25,
+          "metadata": {
+            "assignment": [
+              3,
+              0
+            ],
+            "j": 25
+          },
+          "private_witness": "6846079099189002446409921592782358827615908202640637725266969937365502119064331054687500",
+          "observed_private_compressed_states": 291
+        },
+        {
+          "index": 25,
+          "kind": "P",
+          "modulus": "213086605072021484375",
+          "residue": "171363353729248046875",
+          "tag_height": 26,
+          "metadata": {
+            "assignment": [
+              3,
+              2
+            ],
+            "j": 26
+          },
+          "private_witness": "4363435030252331229579950026168975956062886546737988879840486333705484867095947265625000",
+          "observed_private_compressed_states": 288
+        },
+        {
+          "index": 26,
+          "kind": "P",
+          "modulus": "1065433025360107421875",
+          "residue": "499188899993896484375",
+          "tag_height": 27,
+          "metadata": {
+            "assignment": [
+              3,
+              3
+            ],
+            "j": 27
+          },
+          "private_witness": "3122112995783995621164964242862284520286375718786664457127244531875476241111755371093750",
+          "observed_private_compressed_states": 285
+        },
+        {
+          "index": 27,
+          "kind": "P",
+          "modulus": "5327165126800537109375",
+          "residue": "4023313522338867187500",
+          "tag_height": 28,
+          "metadata": {
+            "assignment": [
+              3,
+              4
+            ],
+            "j": 28
+          },
+          "private_witness": "1880790961315660012749978459555593084509864890835340034414002730045467615127563476562500",
+          "observed_private_compressed_states": 282
+        },
+        {
+          "index": 28,
+          "kind": "P",
+          "modulus": "26635825634002685546875",
+          "residue": "17136335372924804687500",
+          "tag_height": 29,
+          "metadata": {
+            "assignment": [
+              3,
+              5
+            ],
+            "j": 29
+          },
+          "private_witness": "639468926847324404334992676248901648733354062884015611700760928215458989143371582031250",
+          "observed_private_compressed_states": 279
+        },
+        {
+          "index": 29,
+          "kind": "P",
+          "modulus": "133179128170013427734375",
+          "residue": "115483999252319335937500",
+          "tag_height": 30,
+          "metadata": {
+            "assignment": [
+              3,
+              6
+            ],
+            "j": 30
+          },
+          "private_witness": "7466740116423170250617414484435704545504163616616299936623590838280506432056427001953125",
+          "observed_private_compressed_states": 276
+        },
+        {
+          "index": 30,
+          "kind": "P",
+          "modulus": "665895640850067138671875",
+          "residue": "586733222007751464843750",
+          "tag_height": 31,
+          "metadata": {
+            "assignment": [
+              3,
+              7
+            ],
+            "j": 31
+          },
+          "private_witness": "6225418081954834642202428701129013109727652788664975513910349036450497806072235107421875",
+          "observed_private_compressed_states": 273
+        },
+        {
+          "index": 31,
+          "kind": "P",
+          "modulus": "3329478204250335693359375",
+          "residue": "791624188423156738281250",
+          "tag_height": 32,
+          "metadata": {
+            "assignment": [
+              3,
+              8
+            ],
+            "j": 32
+          },
+          "private_witness": "4984096047486499033787442917822321673951141960713651091197107234620489180088043212890625",
+          "observed_private_compressed_states": 270
+        },
+        {
+          "index": 32,
+          "kind": "P",
+          "modulus": "16647391021251678466796875",
+          "residue": "2328306436538696289062500",
+          "tag_height": 33,
+          "metadata": {
+            "assignment": [
+              3,
+              9
+            ],
+            "j": 33
+          },
+          "private_witness": "3742774013018163425372457134515630238174631132762326668483865432790480554103851318359375",
+          "observed_private_compressed_states": 267
+        },
+        {
+          "index": 33,
+          "kind": "P",
+          "modulus": "83236955106258392333984375",
+          "residue": "47148205339908599853515625",
+          "tag_height": 34,
+          "metadata": {
+            "assignment": [
+              3,
+              10
+            ],
+            "j": 34
+          },
+          "private_witness": "2501451978549827816957471351208938802398120304811002245770623630960471928119659423828125",
+          "observed_private_compressed_states": 264
+        },
+        {
+          "index": 34,
+          "kind": "P",
+          "modulus": "416184775531291961669921875",
+          "residue": "8731149137020111083984375",
+          "tag_height": 35,
+          "metadata": {
+            "assignment": [
+              3,
+              11
+            ],
+            "j": 35
+          },
+          "private_witness": "1260129944081492208542485567902247366621609476859677823057381829130463302135467529296875",
+          "observed_private_compressed_states": 261
+        },
+        {
+          "index": 35,
+          "kind": "P",
+          "modulus": "2080923877656459808349609375",
+          "residue": "552972778677940368652343750",
+          "tag_height": 36,
+          "metadata": {
+            "assignment": [
+              3,
+              12
+            ],
+            "j": 36
+          },
+          "private_witness": "18807909613156600127499784595555930845098648908353400344140027300454676151275634765625",
+          "observed_private_compressed_states": 258
+        },
+        {
+          "index": 36,
+          "kind": "P",
+          "modulus": "10404619388282299041748046875",
+          "residue": "7566995918750762939453125000",
+          "tag_height": 37,
+          "metadata": {
+            "assignment": [
+              4,
+              0
+            ],
+            "j": 37
+          },
+          "private_witness": "4645553674449680231492446795102314918739366280363289885002586743212305009365081787109375",
+          "observed_private_compressed_states": 255
+        },
+        {
+          "index": 37,
+          "kind": "P",
+          "modulus": "52023096941411495208740234375",
+          "residue": "32378011383116245269775390625",
+          "tag_height": 38,
+          "metadata": {
+            "assignment": [
+              4,
+              2
+            ],
+            "j": 38
+          },
+          "private_witness": "2162909605513009014662475228488932047186344624460641039576103139552287757396697998046875",
+          "observed_private_compressed_states": 252
+        },
+        {
+          "index": 38,
+          "kind": "P",
+          "modulus": "260115484707057476043701171875",
+          "residue": "216459739021956920623779296875",
+          "tag_height": 39,
+          "metadata": {
+            "assignment": [
+              4,
+              3
+            ],
+            "j": 39
+          },
+          "private_witness": "921587571044673406247489445182240611409833796509316616862861337722279131412506103515625",
+          "observed_private_compressed_states": 249
+        },
+        {
+          "index": 39,
+          "kind": "P",
+          "modulus": "1300577423535287380218505859375",
+          "residue": "36379788070917129516601562500",
+          "tag_height": 40,
+          "metadata": {
+            "assignment": [
+              4,
+              4
+            ],
+            "j": 40
+          },
+          "private_witness": "7748858760620519252529911253369043508180643350241600941785691247787326574325561523437500",
+          "observed_private_compressed_states": 246
+        },
+        {
+          "index": 40,
+          "kind": "P",
+          "modulus": "6502887117676436901092529296875",
+          "residue": "636646291241049766540527343750",
+          "tag_height": 41,
+          "metadata": {
+            "assignment": [
+              4,
+              5
+            ],
+            "j": 41
+          },
+          "private_witness": "6507536726152183644114925470062352072404132522290276519072449445957317948341369628906250",
+          "observed_private_compressed_states": 243
+        },
+        {
+          "index": 41,
+          "kind": "P",
+          "modulus": "32514435588382184505462646484375",
+          "residue": "31150193535722792148590087890625",
+          "tag_height": 42,
+          "metadata": {
+            "assignment": [
+              4,
+              6
+            ],
+            "j": 42
+          },
+          "private_witness": "5266214691683848035699939686755660636627621694338952096359207644127309322357177734375000",
+          "observed_private_compressed_states": 240
+        },
+        {
+          "index": 42,
+          "kind": "P",
+          "modulus": "162572177941910922527313232421875",
+          "residue": "113686837721616029739379882812500",
+          "tag_height": 43,
+          "metadata": {
+            "assignment": [
+              4,
+              7
+            ],
+            "j": 43
+          },
+          "private_witness": "4024892657215512427284953903448969200851110866387627673645965842297300696372985839843750",
+          "observed_private_compressed_states": 237
+        },
+        {
+          "index": 43,
+          "kind": "P",
+          "modulus": "812860889709554612636566162109375",
+          "residue": "488853402202948927879333496093750",
+          "tag_height": 44,
+          "metadata": {
+            "assignment": [
+              4,
+              8
+            ],
+            "j": 44
+          },
+          "private_witness": "2783570622747176818869968120142277765074600038436303250932724040467292070388793945312500",
+          "observed_private_compressed_states": 234
+        },
+        {
+          "index": 44,
+          "kind": "P",
+          "modulus": "4064304448547773063182830810546875",
+          "residue": "1676880856393836438655853271484375",
+          "tag_height": 45,
+          "metadata": {
+            "assignment": [
+              4,
+              9
+            ],
+            "j": 45
+          },
+          "private_witness": "1542248588278841210454982336835586329298089210484978828219482238637283444404602050781250",
+          "observed_private_compressed_states": 231
+        },
+        {
+          "index": 45,
+          "kind": "P",
+          "modulus": "20321522242738865315914154052734375",
+          "residue": "426325641456060111522674560546875",
+          "tag_height": 46,
+          "metadata": {
+            "assignment": [
+              4,
+              10
+            ],
+            "j": 46
+          },
+          "private_witness": "300926553810505602039996553528894893521578382533654405506240436807274818420410156250000",
+          "observed_private_compressed_states": 228
+        },
+        {
+          "index": 46,
+          "kind": "P",
+          "modulus": "101607611213694326579570770263671875",
+          "residue": "11368683772161602973937988281250000",
+          "tag_height": 47,
+          "metadata": {
+            "assignment": [
+              4,
+              11
+            ],
+            "j": 47
+          },
+          "private_witness": "7128197743386351448322418361715697790292387936265938730429070346872322261333465576171875",
+          "observed_private_compressed_states": 225
+        },
+        {
+          "index": 47,
+          "kind": "P",
+          "modulus": "508038056068471632897853851318359375",
+          "residue": "42632564145606011152267456054687500",
+          "tag_height": 48,
+          "metadata": {
+            "assignment": [
+              4,
+              12
+            ],
+            "j": 48
+          },
+          "private_witness": "5886875708918015839907432578409006354515877108314614307715828545042313635349273681640625",
+          "observed_private_compressed_states": 222
+        },
+        {
+          "index": 48,
+          "kind": "P",
+          "modulus": "2540190280342358164489269256591796875",
+          "residue": "1616484723854227922856807708740234375",
+          "tag_height": 49,
+          "metadata": {
+            "assignment": [
+              5,
+              0
+            ],
+            "j": 49
+          },
+          "private_witness": "2445028249710358016574971997422271009862824358085942044738203549059107899665832519531250",
+          "observed_private_compressed_states": 219
+        },
+        {
+          "index": 49,
+          "kind": "P",
+          "modulus": "12700951401711790822446346282958984375",
+          "residue": "10214051826551440171897411346435546875",
+          "tag_height": 50,
+          "metadata": {
+            "assignment": [
+              5,
+              2
+            ],
+            "j": 50
+          },
+          "private_witness": "8030977404817868254442408022302382470857123083866901946947791657294146716594696044921875",
+          "observed_private_compressed_states": 216
+        },
+        {
+          "index": 50,
+          "kind": "P",
+          "modulus": "63504757008558954112231731414794921875",
+          "residue": "29753977059954195283353328704833984375",
+          "tag_height": 51,
+          "metadata": {
+            "assignment": [
+              5,
+              3
+            ],
+            "j": 51
+          },
+          "private_witness": "6789655370349532646027422238995691035080612255915577524234549855464138090610504150390625",
+          "observed_private_compressed_states": 213
+        },
+        {
+          "index": 51,
+          "kind": "P",
+          "modulus": "317523785042794770561158657073974609375",
+          "residue": "239808173319033812731504440307617187500",
+          "tag_height": 52,
+          "metadata": {
+            "assignment": [
+              5,
+              4
+            ],
+            "j": 52
+          },
+          "private_witness": "5548333335881197037612436455688999599304101427964253101521308053634129464626312255859375",
+          "observed_private_compressed_states": 210
+        },
+        {
+          "index": 52,
+          "kind": "P",
+          "modulus": "1587618925213973852805793285369873046875",
+          "residue": "1021405182655144017189741134643554687500",
+          "tag_height": 53,
+          "metadata": {
+            "assignment": [
+              5,
+              5
+            ],
+            "j": 53
+          },
+          "private_witness": "4307011301412861429197450672382308163527590600012928678808066251804120838642120361328125",
+          "observed_private_compressed_states": 207
+        },
+        {
+          "index": 53,
+          "kind": "P",
+          "modulus": "7938094626069869264028966426849365234375",
+          "residue": "6883382752675970550626516342163085937500",
+          "tag_height": 54,
+          "metadata": {
+            "assignment": [
+              5,
+              6
+            ],
+            "j": 54
+          },
+          "private_witness": "3065689266944525820782464889075616727751079772061604256094824449974112212657928466796875",
+          "observed_private_compressed_states": 204
+        },
+        {
+          "index": 54,
+          "kind": "P",
+          "modulus": "39690473130349346320144832134246826171875",
+          "residue": "34972025275692431023344397544860839843750",
+          "tag_height": 55,
+          "metadata": {
+            "assignment": [
+              5,
+              7
+            ],
+            "j": 55
+          },
+          "private_witness": "1824367232476190212367479105768925291974568944110279833381582648144103586673736572265625",
+          "observed_private_compressed_states": 201
+        },
+        {
+          "index": 55,
+          "kind": "P",
+          "modulus": "198452365651746731600724160671234130859375",
+          "residue": "47184478546569152968004345893859863281250",
+          "tag_height": 56,
+          "metadata": {
+            "assignment": [
+              5,
+              8
+            ],
+            "j": 56
+          },
+          "private_witness": "583045198007854603952493322462233856198058116158955410668340846314094960689544677734375",
+          "observed_private_compressed_states": 198
+        },
+        {
+          "index": 56,
+          "kind": "P",
+          "modulus": "992261828258733658003620803356170654296875",
+          "residue": "138777878078144567552953958511352539062500",
+          "tag_height": 57,
+          "metadata": {
+            "assignment": [
+              5,
+              9
+            ],
+            "j": 57
+          },
+          "private_witness": "7410316387583700450234915130649036752968867669891239735591170756379142403602600097656250",
+          "observed_private_compressed_states": 195
+        },
+        {
+          "index": 57,
+          "kind": "P",
+          "modulus": "4961309141293668290018104016780853271484375",
+          "residue": "2810252031082427492947317659854888916015625",
+          "tag_height": 58,
+          "metadata": {
+            "assignment": [
+              5,
+              10
+            ],
+            "j": 58
+          },
+          "private_witness": "6168994353115364841819929347342345317192356841939915312877928954549133777618408203125000",
+          "observed_private_compressed_states": 192
+        },
+        {
+          "index": 58,
+          "kind": "P",
+          "modulus": "24806545706468341450090520083904266357421875",
+          "residue": "520417042793042128323577344417572021484375",
+          "tag_height": 59,
+          "metadata": {
+            "assignment": [
+              5,
+              11
+            ],
+            "j": 59
+          },
+          "private_witness": "4927672318647029233404943564035653881415846013988590890164687152719125151634216308593750",
+          "observed_private_compressed_states": 189
+        },
+        {
+          "index": 59,
+          "kind": "P",
+          "modulus": "124032728532341707250452600419521331787109375",
+          "residue": "32959746043559334793826565146446228027343750",
+          "tag_height": 60,
+          "metadata": {
+            "assignment": [
+              5,
+              12
+            ],
+            "j": 60
+          },
+          "private_witness": "3686350284178693624989957780728962445639335186037266467451445350889116525650024414062500",
+          "observed_private_compressed_states": 186
+        },
+        {
+          "index": 60,
+          "kind": "P",
+          "modulus": "620163642661708536252263002097606658935546875",
+          "residue": "281892564846231152841937728226184844970703125",
+          "tag_height": 61,
+          "metadata": {
+            "assignment": [
+              6,
+              0
+            ],
+            "j": 61
+          },
+          "private_witness": "244502824971035801657497199742227100986282435808594204473820354905910789966583251953125",
+          "observed_private_compressed_states": 183
+        },
+        {
+          "index": 61,
+          "kind": "P",
+          "modulus": "3100818213308542681261315010488033294677734375",
+          "residue": "520417042793042128323577344417572021484375000",
+          "tag_height": 62,
+          "metadata": {
+            "assignment": [
+              6,
+              2
+            ],
+            "j": 62
+          },
+          "private_witness": "5830451980078546039524933224622338561980581161589554106683408463140949606895446777343750",
+          "observed_private_compressed_states": 180
+        },
+        {
+          "index": 62,
+          "kind": "P",
+          "modulus": "15504091066542713406306575052440166473388671875",
+          "residue": "11492543028346347000478999689221382141113281250",
+          "tag_height": 63,
+          "metadata": {
+            "assignment": [
+              6,
+              3
+            ],
+            "j": 63
+          },
+          "private_witness": "4589129945610210431109947441315647126204070333638229683970166661310940980911254882812500",
+          "observed_private_compressed_states": 177
+        },
+        {
+          "index": 63,
+          "kind": "P",
+          "modulus": "77520455332713567031532875262200832366943359375",
+          "residue": "16263032587282566510111792013049125671386718750",
+          "tag_height": 64,
+          "metadata": {
+            "assignment": [
+              6,
+              4
+            ],
+            "j": 64
+          },
+          "private_witness": "3347807911141874822694961658008955690427559505686905261256924859480932354927062988281250",
+          "observed_private_compressed_states": 174
+        },
+        {
+          "index": 64,
+          "kind": "P",
+          "modulus": "387602276663567835157664376311004161834716796875",
+          "residue": "284603070277444913926956360228359699249267578125",
+          "tag_height": 65,
+          "metadata": {
+            "assignment": [
+              6,
+              5
+            ],
+            "j": 65
+          },
+          "private_witness": "2106485876673539214279975874702264254651048677735580838543683057650923728942871093750000",
+          "observed_private_compressed_states": 171
+        },
+        {
+          "index": 65,
+          "kind": "P",
+          "modulus": "1938011383317839175788321881555020809173583984375",
+          "residue": "1328147661294742931659129681065678596496582031250",
+          "tag_height": 66,
+          "metadata": {
+            "assignment": [
+              6,
+              6
+            ],
+            "j": 66
+          },
+          "private_witness": "865163842205203605864990091395572818874537849784256415830441255820915102958679199218750",
+          "observed_private_compressed_states": 168
+        },
+        {
+          "index": 66,
+          "kind": "P",
+          "modulus": "9690056916589195878941609407775104045867919921875",
+          "residue": "2371692252312040949391303001902997493743896484375",
+          "tag_height": 67,
+          "metadata": {
+            "assignment": [
+              6,
+              7
+            ],
+            "j": 67
+          },
+          "private_witness": "7692435031781049452147411899582375715645347403516540740753271165885962545871734619140625",
+          "observed_private_compressed_states": 165
+        },
+        {
+          "index": 67,
+          "kind": "P",
+          "modulus": "48450284582945979394708047038875520229339599609375",
+          "residue": "24733362059825569900795017019845545291900634765625",
+          "tag_height": 68,
+          "metadata": {
+            "assignment": [
+              6,
+              8
+            ],
+            "j": 68
+          },
+          "private_witness": "6451112997312713843732426116275684279868836575565216318040029364055953919887542724609375",
+          "observed_private_compressed_states": 162
+        },
+        {
+          "index": 68,
+          "kind": "P",
+          "modulus": "242251422914729896973540235194377601146697998046875",
+          "residue": "143995601033231057641614825115539133548736572265625",
+          "tag_height": 69,
+          "metadata": {
+            "assignment": [
+              6,
+              9
+            ],
+            "j": 69
+          },
+          "private_witness": "5209790962844378235317440332968992844092325747613891895326787562225945293903350830078125",
+          "observed_private_compressed_states": 159
+        },
+        {
+          "index": 69,
+          "kind": "P",
+          "modulus": "1211257114573649484867701175971888005733489990234375",
+          "residue": "796210970419042318724223150638863444328308105468750",
+          "tag_height": 70,
+          "metadata": {
+            "assignment": [
+              6,
+              10
+            ],
+            "j": 70
+          },
+          "private_witness": "3968468928376042626902454549662301408315814919662567472613545760395936667919158935546875",
+          "observed_private_compressed_states": 156
+        },
+        {
+          "index": 70,
+          "kind": "P",
+          "modulus": "6056285572868247424338505879859440028667449951171875",
+          "residue": "5082197683525802034409935004077851772308349609375000",
+          "tag_height": 71,
+          "metadata": {
+            "assignment": [
+              6,
+              11
+            ],
+            "j": 71
+          },
+          "private_witness": "2727146893907707018487468766355609972539304091711243049900303958565928041934967041015625",
+          "observed_private_compressed_states": 153
+        },
+        {
+          "index": 71,
+          "kind": "P",
+          "modulus": "30281427864341237121692529399297200143337249755859375",
+          "residue": "19058241313221757629037256265291944146156311035156250",
+          "tag_height": 72,
+          "metadata": {
+            "assignment": [
+              6,
+              12
+            ],
+            "j": 72
+          },
+          "private_witness": "1485824859439371410072482983048918536762793263759918627187062156735919415950775146484375",
+          "observed_private_compressed_states": 150
+        },
+        {
+          "index": 72,
+          "kind": "P",
+          "modulus": "151407139321706185608462646996486000716686248779296875",
+          "residue": "68821426964411902549301203180220909416675567626953125",
+          "tag_height": 73,
+          "metadata": {
+            "assignment": [
+              7,
+              0
+            ],
+            "j": 73
+          },
+          "private_witness": "6112570624275895041437429993555677524657060895214855111845508872647769749164581298828125",
+          "observed_private_compressed_states": 147
+        },
+        {
+          "index": 73,
+          "kind": "P",
+          "modulus": "757035696608530928042313234982430003583431243896484375",
+          "residue": "127054942088145050860248375101946294307708740234375000",
+          "tag_height": 74,
+          "metadata": {
+            "assignment": [
+              7,
+              2
+            ],
+            "j": 74
+          },
+          "private_witness": "3629926555339223824607458426942294653104039239312206266419025268987752497196197509765625",
+          "observed_private_compressed_states": 144
+        },
+        {
+          "index": 74,
+          "kind": "P",
+          "modulus": "3785178483042654640211566174912150017917156219482421875",
+          "residue": "2805796637779869873163818283501313999295234680175781250",
+          "tag_height": 75,
+          "metadata": {
+            "assignment": [
+              7,
+              3
+            ],
+            "j": 75
+          },
+          "private_witness": "2388604520870888216192472643635603217327528411360881843705783467157743871212005615234375",
+          "observed_private_compressed_states": 141
+        },
+        {
+          "index": 75,
+          "kind": "P",
+          "modulus": "18925892415213273201057830874560750089585781097412109375",
+          "residue": "3970466940254532839382761721935821697115898132324218750",
+          "tag_height": 76,
+          "metadata": {
+            "assignment": [
+              7,
+              4
+            ],
+            "j": 76
+          },
+          "private_witness": "1147282486402552607777486860328911781551017583409557420992541665327735245227813720703125",
+          "observed_private_compressed_states": 138
+        },
+        {
+          "index": 76,
+          "kind": "P",
+          "modulus": "94629462076066366005289154372803750447928905487060546875",
+          "residue": "69483171454454324689198330133876879699528217315673828125",
+          "tag_height": 77,
+          "metadata": {
+            "assignment": [
+              7,
+              5
+            ],
+            "j": 77
+          },
+          "private_witness": "7974553675978398454059908668515714678321827137141841745915371575392782688140869140625000",
+          "observed_private_compressed_states": 135
+        },
+        {
+          "index": 77,
+          "kind": "P",
+          "modulus": "473147310380331830026445771864018752239644527435302734375",
+          "residue": "324254800120786848549592207291425438597798347473144531250",
+          "tag_height": 78,
+          "metadata": {
+            "assignment": [
+              7,
+              6
+            ],
+            "j": 78
+          },
+          "private_witness": "6733231641510062845644922885209023242545316309190517323202129773562774062156677246093750",
+          "observed_private_compressed_states": 132
+        },
+        {
+          "index": 78,
+          "kind": "P",
+          "modulus": "2365736551901659150132228859320093761198222637176513671875",
+          "residue": "579026428787119372409986084448973997496068477630615234375",
+          "tag_height": 79,
+          "metadata": {
+            "assignment": [
+              7,
+              7
+            ],
+            "j": 79
+          },
+          "private_witness": "5491909607041727237229937101902331806768805481239192900488887971732765436172485351562500",
+          "observed_private_compressed_states": 129
+        },
+        {
+          "index": 79,
+          "kind": "P",
+          "modulus": "11828682759508295750661144296600468805991113185882568359375",
+          "residue": "6038418471637102026561283452110728831030428409576416015625",
+          "tag_height": 80,
+          "metadata": {
+            "assignment": [
+              7,
+              8
+            ],
+            "j": 80
+          },
+          "private_witness": "4250587572573391628814951318595640370992294653287868477775646169902756810188293457031250",
+          "observed_private_compressed_states": 126
+        },
+        {
+          "index": 80,
+          "kind": "P",
+          "modulus": "59143413797541478753305721483002344029955565929412841796875",
+          "residue": "35155176033503676182034869412973421276547014713287353515625",
+          "tag_height": 81,
+          "metadata": {
+            "assignment": [
+              7,
+              9
+            ],
+            "j": 81
+          },
+          "private_witness": "3009265538105056020399965535288948935215783825336544055062404368072748184204101562500000",
+          "observed_private_compressed_states": 123
+        },
+        {
+          "index": 81,
+          "kind": "P",
+          "modulus": "295717068987707393766528607415011720149777829647064208984375",
+          "residue": "194387443949961503594781042636441270587965846061706542968750",
+          "tag_height": 82,
+          "metadata": {
+            "assignment": [
+              7,
+              10
+            ],
+            "j": 82
+          },
+          "private_witness": "1767943503636720411984979751982257499439272997385219632349162566242739558219909667968750",
+          "observed_private_compressed_states": 120
+        },
+        {
+          "index": 82,
+          "kind": "P",
+          "modulus": "1478585344938536968832643037075058600748889148235321044921875",
+          "residue": "1240770918829541512307113038104944280348718166351318359375000",
+          "tag_height": 83,
+          "metadata": {
+            "assignment": [
+              7,
+              11
+            ],
+            "j": 83
+          },
+          "private_witness": "526621469168384803569993968675566063662762169433895209635920764412730932235717773437500",
+          "observed_private_compressed_states": 117
+        },
+        {
+          "index": 83,
+          "kind": "P",
+          "modulus": "7392926724692684844163215185375293003744445741176605224609375",
+          "residue": "4652890945610780671151673892893541051307693123817443847656250",
+          "tag_height": 84,
+          "metadata": {
+            "assignment": [
+              7,
+              12
+            ],
+            "j": 84
+          },
+          "private_witness": "7353892658744230649852415776862368960433571723166179534558750674477778375148773193359375",
+          "observed_private_compressed_states": 114
+        },
+        {
+          "index": 84,
+          "kind": "P",
+          "modulus": "36964633623463424220816075926876465018722228705883026123046875",
+          "residue": "13441684953986699716660391246136896370444446802139282226562500",
+          "tag_height": 85,
+          "metadata": {
+            "assignment": [
+              8,
+              0
+            ],
+            "j": 85
+          },
+          "private_witness": "3912045199536572826519955195875633615780518972937507271581125678494572639465332031250000",
+          "observed_private_compressed_states": 111
+        },
+        {
+          "index": 85,
+          "kind": "P",
+          "modulus": "184823168117317121104080379634382325093611143529415130615234375",
+          "residue": "64623485355705287099328804067965847934829071164131164550781250",
+          "tag_height": 86,
+          "metadata": {
+            "assignment": [
+              8,
+              2
+            ],
+            "j": 86
+          },
+          "private_witness": "1429401130599901609689983629262250744227497317034858426154642074834555387496948242187500",
+          "observed_private_compressed_states": 108
+        },
+        {
+          "index": 86,
+          "kind": "P",
+          "modulus": "924115840586585605520401898171911625468055717647075653076171875",
+          "residue": "348966820920808550336375541967015578848076984286308288574218750",
+          "tag_height": 87,
+          "metadata": {
+            "assignment": [
+              8,
+              3
+            ],
+            "j": 87
+          },
+          "private_witness": "188079096131566001274997845955559308450986489083534003441400273004546761512756347656250",
+          "observed_private_compressed_states": 105
+        },
+        {
+          "index": 87,
+          "kind": "P",
+          "modulus": "4620579202932928027602009490859558127340278588235378265380859375",
+          "residue": "4329773518832254235655029872553711811633547767996788024902343750",
+          "tag_height": 88,
+          "metadata": {
+            "assignment": [
+              8,
+              4
+            ],
+            "j": 88
+          },
+          "private_witness": "7015350285707411847557419654142362205221796042815818328364230183069594204425811767578125",
+          "observed_private_compressed_states": 102
+        },
+        {
+          "index": 88,
+          "kind": "P",
+          "modulus": "23102896014664640138010047454297790636701392941176891326904296875",
+          "residue": "6462348535570528709932880406796584793482907116413116455078125000",
+          "tag_height": 89,
+          "metadata": {
+            "assignment": [
+              8,
+              5
+            ],
+            "j": 89
+          },
+          "private_witness": "5774028251239076239142433870835670769445285214864493905650988381239585578441619873046875",
+          "observed_private_compressed_states": 99
+        },
+        {
+          "index": 89,
+          "kind": "P",
+          "modulus": "115514480073323200690050237271488953183506964705884456634521484375",
+          "residue": "68662453190436867543036854322213713430755888111889362335205078125",
+          "tag_height": 90,
+          "metadata": {
+            "assignment": [
+              8,
+              6
+            ],
+            "j": 90
+          },
+          "private_witness": "4532706216770740630727448087528979333668774386913169482937746579409576952457427978515625",
+          "observed_private_compressed_states": 96
+        },
+        {
+          "index": 90,
+          "kind": "P",
+          "modulus": "577572400366616003450251186357444765917534823529422283172607421875",
+          "residue": "246377037918626407066191065509119795251535833813250064849853515625",
+          "tag_height": 91,
+          "metadata": {
+            "assignment": [
+              8,
+              7
+            ],
+            "j": 91
+          },
+          "private_witness": "3291384182302405022312462304222287897892263558961845060224504777579568326473236083984375",
+          "observed_private_compressed_states": 93
+        },
+        {
+          "index": 91,
+          "kind": "P",
+          "modulus": "2887862001833080017251255931787223829587674117647111415863037109375",
+          "residue": "424091622646815946589345276696025877072315779514610767364501953125",
+          "tag_height": 92,
+          "metadata": {
+            "assignment": [
+              8,
+              8
+            ],
+            "j": 92
+          },
+          "private_witness": "2050062147834069413897476520915596462115752731010520637511262975749559700489044189453125",
+          "observed_private_compressed_states": 90
+        },
+        {
+          "index": 92,
+          "kind": "P",
+          "modulus": "14439310009165400086256279658936119147938370588235557079315185546875",
+          "residue": "4644813009941317510264257792385045320315839489921927452087402343750",
+          "tag_height": 93,
+          "metadata": {
+            "assignment": [
+              8,
+              9
+            ],
+            "j": 93
+          },
+          "private_witness": "808740113365733805482490737608905026339241903059196214798021173919551074504852294921875",
+          "observed_private_compressed_states": 87
+        },
+        {
+          "index": 93,
+          "kind": "P",
+          "modulus": "72196550045827000431281398294680595739691852941177785396575927734375",
+          "residue": "14641258400901979108441682171648512422734711435623466968536376953125",
+          "tag_height": 94,
+          "metadata": {
+            "assignment": [
+              8,
+              10
+            ],
+            "j": 94
+          },
+          "private_witness": "7636011302941579651764912545795707923110051456791480539720851083984598517417907714843750",
+          "observed_private_compressed_states": 84
+        },
+        {
+          "index": 94,
+          "kind": "P",
+          "modulus": "360982750229135002156406991473402978698459264705888926982879638671875",
+          "residue": "270105973947674442172975860752826005040105883381329476833343505859375",
+          "tag_height": 95,
+          "metadata": {
+            "assignment": [
+              8,
+              11
+            ],
+            "j": 95
+          },
+          "private_witness": "6394689268473244043349926762489016487333540628840156117007609282154589891433715820312500",
+          "observed_private_compressed_states": 81
+        },
+        {
+          "index": 95,
+          "kind": "P",
+          "modulus": "1804913751145675010782034957367014893492296323529444634914398193359375",
+          "residue": "1464125840090197910844168217164851242273471143562346696853637695312500",
+          "tag_height": 96,
+          "metadata": {
+            "assignment": [
+              8,
+              12
+            ],
+            "j": 96
+          },
+          "private_witness": "5153367234004908434934940979182325051557029800888831694294367480324581265449523925781250",
+          "observed_private_compressed_states": 78
+        },
+        {
+          "index": 96,
+          "kind": "P",
+          "modulus": "9024568755728375053910174786835074467461481617647223174571990966796875",
+          "residue": "5742907390008965943397383955258683752020942847593687474727630615234375",
+          "tag_height": 97,
+          "metadata": {
+            "assignment": [
+              9,
+              0
+            ],
+            "j": 97
+          },
+          "private_witness": "1711519774797250611602480398195589706903977050660159431316742484341375529766082763671875",
+          "observed_private_compressed_states": 75
+        },
+        {
+          "index": 97,
+          "kind": "P",
+          "modulus": "45122843778641875269550873934175372337307408088236115872859954833984375",
+          "residue": "36287601640166543048939514003008166564967496015015058219432830810546875",
+          "tag_height": 98,
+          "metadata": {
+            "assignment": [
+              9,
+              2
+            ],
+            "j": 98
+          },
+          "private_witness": "7297468929904760849469916423075701167898275776441119333526330592576414346694946289062500",
+          "observed_private_compressed_states": 72
+        },
+        {
+          "index": 98,
+          "kind": "P",
+          "modulus": "225614218893209376347754369670876861686537040441180579364299774169921875",
+          "residue": "105707361299615581925171627747893354776209662304609082639217376708984375",
+          "tag_height": 99,
+          "metadata": {
+            "assignment": [
+              9,
+              3
+            ],
+            "j": 99
+          },
+          "private_witness": "6056146895436425241054930639769009732121764948489794910813088790746405720710754394531250",
+          "observed_private_compressed_states": 69
+        },
+        {
+          "index": 99,
+          "kind": "P",
+          "modulus": "1128071094466046881738771848354384308432685202205902896821498870849609375",
+          "residue": "851969777638692749844666850505409128047062949917744845151901245117187500",
+          "tag_height": 100,
+          "metadata": {
+            "assignment": [
+              9,
+              4
+            ],
+            "j": 100
+          },
+          "private_witness": "4814824860968089632639944856462318296345254120538470488099846988916397094726562500000000",
+          "observed_private_compressed_states": 66
+        },
+        {
+          "index": 100,
+          "kind": "P",
+          "modulus": "5640355472330234408693859241771921542163426011029514484107494354248046875",
+          "residue": "3628760164016654304893951400300816656496749601501505821943283081054687500",
+          "tag_height": 101,
+          "metadata": {
+            "assignment": [
+              9,
+              5
+            ],
+            "j": 101
+          },
+          "private_witness": "3573502826499754024224959073155626860568743292587146065386605187086388468742370605468750",
+          "observed_private_compressed_states": 63
+        },
+        {
+          "index": 101,
+          "kind": "P",
+          "modulus": "28201777361651172043469296208859607710817130055147572420537471771240234375",
+          "residue": "24454688061851365967763585523766373119869399488379713147878646850585937500",
+          "tag_height": 102,
+          "metadata": {
+            "assignment": [
+              9,
+              6
+            ],
+            "j": 102
+          },
+          "private_witness": "2332180792031418415809973289848935424792232464635821642673363385256379842758178710937500",
+          "observed_private_compressed_states": 60
+        },
+        {
+          "index": 102,
+          "kind": "P",
+          "modulus": "141008886808255860217346481044298038554085650275737862102687358856201171875",
+          "residue": "124245592572309359352347249032038831173530013529671123251318931579589843750",
+          "tag_height": 103,
+          "metadata": {
+            "assignment": [
+              9,
+              7
+            ],
+            "j": 103
+          },
+          "private_witness": "1090858757563082807394987506542243989015721636684497219960121583426371216773986816406250",
+          "observed_private_compressed_states": 57
+        },
+        {
+          "index": 103,
+          "kind": "P",
+          "modulus": "705044434041279301086732405221490192770428251378689310513436794281005859375",
+          "residue": "167632942359465008649992320122592073805556367460667388513684272766113281250",
+          "tag_height": 104,
+          "metadata": {
+            "assignment": [
+              9,
+              8
+            ],
+            "j": 104
+          },
+          "private_witness": "7918129947138928653677409314729046885786531190416781544882951493491418659687042236328125",
+          "observed_private_compressed_states": 54
+        },
+        {
+          "index": 104,
+          "kind": "P",
+          "modulus": "3525222170206396505433662026107450963852141256893446552567183971405029296875",
+          "residue": "493038065763132378382330353301741393545754021943139377981424331665039062500",
+          "tag_height": 105,
+          "metadata": {
+            "assignment": [
+              9,
+              9
+            ],
+            "j": 105
+          },
+          "private_witness": "6676807912670593045262423531422355450010020362465457122169709691661410033702850341796875",
+          "observed_private_compressed_states": 51
+        },
+        {
+          "index": 105,
+          "kind": "P",
+          "modulus": "17626110851031982527168310130537254819260706284467232762835919857025146484375",
+          "residue": "9984020831703430662242189654360263219301518944348572404123842716217041015625",
+          "tag_height": 106,
+          "metadata": {
+            "assignment": [
+              9,
+              10
+            ],
+            "j": 106
+          },
+          "private_witness": "5435485878202257436847437748115664014233509534514132699456467889831401407718658447265625",
+          "observed_private_compressed_states": 48
+        },
+        {
+          "index": 106,
+          "kind": "P",
+          "modulus": "88130554255159912635841550652686274096303531422336163814179599285125732421875",
+          "residue": "1848892746611746418933738824881530225796577582286772667430341243743896484375",
+          "tag_height": 107,
+          "metadata": {
+            "assignment": [
+              9,
+              11
+            ],
+            "j": 107
+          },
+          "private_witness": "4194163843733921828432451964808972578456998706562808276743226088001392781734466552734375",
+          "observed_private_compressed_states": 45
+        },
+        {
+          "index": 107,
+          "kind": "P",
+          "modulus": "440652771275799563179207753263431370481517657111680819070897996425628662109375",
+          "residue": "117096540618743939865803458909163580967116580211495602270588278770446777343750",
+          "tag_height": 108,
+          "metadata": {
+            "assignment": [
+              9,
+              12
+            ],
+            "j": 108
+          },
+          "private_witness": "2952841809265586220017466181502281142680487878611483854029984286171384155750274658203125",
+          "observed_private_compressed_states": 42
+        },
+        {
+          "index": 108,
+          "kind": "P",
+          "modulus": "2203263856378997815896038766317156852407588285558404095354489982128143310546875",
+          "residue": "600890142648817586153465118086497323383887714243201116914860904216766357421875",
+          "tag_height": 109,
+          "metadata": {
+            "assignment": [
+              10,
+              0
+            ],
+            "j": 109
+          },
+          "private_witness": "7579587574102109851382413192009040130574755510066420338688431002083234488964080810546875",
+          "observed_private_compressed_states": 39
+        },
+        {
+          "index": 109,
+          "kind": "P",
+          "modulus": "11016319281894989079480193831585784262037941427792020476772449910640716552734375",
+          "residue": "5854827030937196993290172945458179048355829010574780113529413938522338867187500",
+          "tag_height": 110,
+          "metadata": {
+            "assignment": [
+              10,
+              2
+            ],
+            "j": 110
+          },
+          "private_witness": "5096943505165438634552441625395657259021733854163771493261947398423217236995697021484375",
+          "observed_private_compressed_states": 36
+        },
+        {
+          "index": 110,
+          "kind": "P",
+          "modulus": "55081596409474945397400969157928921310189707138960102383862249553203582763671875",
+          "residue": "770371977754894341222391177033970927415240659286155278095975518226623535156250",
+          "tag_height": 111,
+          "metadata": {
+            "assignment": [
+              10,
+              3
+            ],
+            "j": 111
+          },
+          "private_witness": "3855621470697103026137455842088965823245223026212447070548705596593208611011505126953125",
+          "observed_private_compressed_states": 33
+        },
+        {
+          "index": 111,
+          "kind": "P",
+          "modulus": "275407982047374726987004845789644606550948535694800511919311247766017913818359375",
+          "residue": "182963344716787406040317904545568095261119656580461878547794185578823089599609375",
+          "tag_height": 112,
+          "metadata": {
+            "assignment": [
+              10,
+              4
+            ],
+            "j": 112
+          },
+          "private_witness": "2614299436228767417722470058782274387468712198261122647835463794763199985027313232421875",
+          "observed_private_compressed_states": 30
+        },
+        {
+          "index": 112,
+          "kind": "P",
+          "modulus": "1377039910236873634935024228948223032754742678474002559596556238830089569091796875",
+          "residue": "1136298667188469153303026986125107117937479972447079035191563889384269714355468750",
+          "tag_height": 113,
+          "metadata": {
+            "assignment": [
+              10,
+              5
+            ],
+            "j": 113
+          },
+          "private_witness": "1372977401760431809307484275475582951692201370309798225122221992933191359043121337890625",
+          "observed_private_compressed_states": 27
+        },
+        {
+          "index": 113,
+          "kind": "P",
+          "modulus": "6885199551184368174675121144741115163773713392370012797982781194150447845458984375",
+          "residue": "3466673899897024535500760296652869173368582966787698751431889832019805908203125000",
+          "tag_height": 114,
+          "metadata": {
+            "assignment": [
+              10,
+              6
+            ],
+            "j": 114
+          },
+          "private_witness": "131655367292096200892498492168891515915690542358473802408980191103182733058929443359375",
+          "observed_private_compressed_states": 24
+        },
+        {
+          "index": 114,
+          "kind": "P",
+          "modulus": "34425997755921840873375605723705575818868566961850063989913905970752239227294921875",
+          "residue": "20944488145211189901983760125611084589101855424342346623234334401786327362060546875",
+          "tag_height": 115,
+          "metadata": {
+            "assignment": [
+              10,
+              7
+            ],
+            "j": 115
+          },
+          "private_witness": "6958926556867942047174920300355694412686500096090758127331810101168230175971984863281250",
+          "observed_private_compressed_states": 21
+        },
+        {
+          "index": 115,
+          "kind": "P",
+          "modulus": "172129988779609204366878028618527879094342834809250319949569529853761196136474609375",
+          "residue": "134815096107106509713918455980944912297667115375077173666795715689659118652343750000",
+          "tag_height": 116,
+          "metadata": {
+            "assignment": [
+              10,
+              8
+            ],
+            "j": 116
+          },
+          "private_witness": "5717604522399606438759934517049002976909989268139433704618568299338221549987792968750000",
+          "observed_private_compressed_states": 18
+        },
+        {
+          "index": 116,
+          "kind": "P",
+          "modulus": "860649943898046021834390143092639395471714174046251599747847649268805980682373046875",
+          "residue": "42129717533470784285599517494045285093020973554711616770873661153018474578857421875",
+          "tag_height": 117,
+          "metadata": {
+            "assignment": [
+              10,
+              9
+            ],
+            "j": 117
+          },
+          "private_witness": "4476282487931270830344948733742311541133478440188109281905326497508212924003601074218750",
+          "observed_private_compressed_states": 15
+        },
+        {
+          "index": 117,
+          "kind": "P",
+          "modulus": "4303249719490230109171950715463196977358570870231257998739238246344029903411865234375",
+          "residue": "3219914125772409941827963122759175360680888693110102138916772673837840557098388671875",
+          "tag_height": 118,
+          "metadata": {
+            "assignment": [
+              10,
+              10
+            ],
+            "j": 118
+          },
+          "private_witness": "3234960453462935221929962950435620105356967612236784859192084695678204298019409179687500",
+          "observed_private_compressed_states": 12
+        },
+        {
+          "index": 118,
+          "kind": "P",
+          "modulus": "21516248597451150545859753577315984886792854351156289993696191231720149517059326171875",
+          "residue": "14143548029093763295879838015858059995514183979081757058793300529941916465759277343750",
+          "tag_height": 119,
+          "metadata": {
+            "assignment": [
+              10,
+              11
+            ],
+            "j": 119
+          },
+          "private_witness": "1993638418994599613514977167128928669580456784285460436478842893848195672035217285156250",
+          "observed_private_compressed_states": 9
+        },
+        {
+          "index": 119,
+          "kind": "P",
+          "modulus": "107581242987255752729298767886579924433964271755781449968480956158600747585296630859375",
+          "residue": "106828926602729488724198776502757687200160325799447313954715355066582560539245605468750",
+          "tag_height": 120,
+          "metadata": {
+            "assignment": [
+              10,
+              12
+            ],
+            "j": 120
+          },
+          "private_witness": "752316384526264005099991383822237233803945956334136013765601092018187046051025390625000",
+          "observed_private_compressed_states": 6
+        },
+        {
+          "index": 120,
+          "kind": "Q0",
+          "modulus": "11284745767893960076499870757333558507059189345012040206484016380272805690765380859375",
+          "residue": "0",
+          "tag_height": 121,
+          "metadata": {},
+          "private_witness": "5868067799304859239779932793813450423670778459406260907371688517741858959197998046875000",
+          "observed_private_compressed_states": 46
+        },
+        {
+          "index": 121,
+          "kind": "Q2",
+          "modulus": "56423728839469800382499353786667792535295946725060201032420081901364028453826904296875",
+          "residue": "37615819226313200254999569191111861690197297816706800688280054600909352302551269531250",
+          "tag_height": 122,
+          "metadata": {},
+          "private_witness": "489005649942071603314994399484454201972564871617188408947640709811821579933166503906250",
+          "observed_private_compressed_states": 23
+        },
+        {
+          "index": 122,
+          "kind": "C",
+          "modulus": "620661017234167804207492891653345717888255413975662211356620900915004312992095947265625",
+          "residue": "75231638452626400509999138382223723380394595633413601376560109201818704605102539062500",
+          "tag_height": 122,
+          "metadata": {
+            "target_axis": 0
+          },
+          "private_witness": "3178536724623465421547463596648952312821671665511724658159664613776840269565582275390625",
+          "observed_private_compressed_states": 12
+        },
+        {
+          "index": 123,
+          "kind": "C",
+          "modulus": "733508474913107404972491599226681302958847307425782613421461064717732369899749755859375",
+          "residue": "470197740328915003187494614888898271127466222708835008603500682511366903781890869140625",
+          "tag_height": 122,
+          "metadata": {
+            "target_axis": 1
+          },
+          "private_witness": "4137740114894452028049952611022304785921702759837748075710806006100028753280639648437500",
+          "observed_private_compressed_states": 10
+        }
+      ],
+      "global_hole": "3441847459207657823332460580986735344653052750228672262977624995983205735683441162109376",
+      "actual_covered_private_boundaries": [
+        [
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              0
+            ]
+          },
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              2
+            ]
+          },
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              3
+            ]
+          },
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              4
+            ]
+          },
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              5
+            ]
+          },
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              6
+            ]
+          },
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              7
+            ]
+          },
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              8
+            ]
+          },
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              9
+            ]
+          },
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              10
+            ]
+          },
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              11
+            ]
+          },
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              12
+            ]
+          }
+        ],
+        [
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              0
+            ]
+          },
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              2
+            ]
+          },
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              3
+            ]
+          },
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              4
+            ]
+          },
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              5
+            ]
+          },
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              6
+            ]
+          },
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              7
+            ]
+          },
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              8
+            ]
+          },
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              9
+            ]
+          },
+          {
+            "tag_stratum": 122,
+            "other_P_coordinates": [
+              10
+            ]
+          }
+        ]
+      ],
+      "tag_strata": [
+        {
+          "tag_valuation_stratum": 0,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "5"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 1,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "25"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 2,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 3,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 4,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "3125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 5,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "15625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 6,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "78125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 7,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "390625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 8,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "1953125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 9,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "9765625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 10,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "48828125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 11,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "244140625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 12,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "1220703125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 13,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "6103515625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 14,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "30517578125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 15,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "152587890625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 16,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "762939453125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 17,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "3814697265625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 18,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "19073486328125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 19,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "95367431640625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 20,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "476837158203125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 21,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "2384185791015625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 22,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "11920928955078125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 23,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "59604644775390625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 24,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "298023223876953125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 25,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "1490116119384765625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 26,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "7450580596923828125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 27,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "37252902984619140625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 28,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "186264514923095703125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 29,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "931322574615478515625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 30,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "4656612873077392578125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 31,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "23283064365386962890625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 32,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "116415321826934814453125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 33,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "582076609134674072265625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 34,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "2910383045673370361328125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 35,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "14551915228366851806640625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 36,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "72759576141834259033203125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 37,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "363797880709171295166015625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 38,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "1818989403545856475830078125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 39,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "9094947017729282379150390625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 40,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "45474735088646411895751953125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 41,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "227373675443232059478759765625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 42,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "1136868377216160297393798828125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 43,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "5684341886080801486968994140625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 44,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "28421709430404007434844970703125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 45,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "142108547152020037174224853515625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 46,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "710542735760100185871124267578125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 47,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "3552713678800500929355621337890625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 48,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "17763568394002504646778106689453125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 49,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "88817841970012523233890533447265625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 50,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "444089209850062616169452667236328125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 51,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "2220446049250313080847263336181640625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 52,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "11102230246251565404236316680908203125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 53,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "55511151231257827021181583404541015625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 54,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "277555756156289135105907917022705078125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 55,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "1387778780781445675529539585113525390625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 56,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "6938893903907228377647697925567626953125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 57,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "34694469519536141888238489627838134765625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 58,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "173472347597680709441192448139190673828125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 59,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "867361737988403547205962240695953369140625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 60,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "4336808689942017736029811203479766845703125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 61,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "21684043449710088680149056017398834228515625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 62,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "108420217248550443400745280086994171142578125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 63,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "542101086242752217003726400434970855712890625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 64,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "2710505431213761085018632002174854278564453125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 65,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "13552527156068805425093160010874271392822265625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 66,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "67762635780344027125465800054371356964111328125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 67,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "338813178901720135627329000271856784820556640625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 68,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "1694065894508600678136645001359283924102783203125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 69,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "8470329472543003390683225006796419620513916015625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 70,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "42351647362715016953416125033982098102569580078125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 71,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "211758236813575084767080625169910490512847900390625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 72,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "1058791184067875423835403125849552452564239501953125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 73,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "5293955920339377119177015629247762262821197509765625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 74,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "26469779601696885595885078146238811314105987548828125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 75,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "132348898008484427979425390731194056570529937744140625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 76,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "661744490042422139897126953655970282852649688720703125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 77,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "3308722450212110699485634768279851414263248443603515625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 78,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "16543612251060553497428173841399257071316242218017578125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 79,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "82718061255302767487140869206996285356581211090087890625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 80,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "413590306276513837435704346034981426782906055450439453125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 81,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "2067951531382569187178521730174907133914530277252197265625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 82,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "10339757656912845935892608650874535669572651386260986328125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 83,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "51698788284564229679463043254372678347863256931304931640625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 84,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "258493941422821148397315216271863391739316284656524658203125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 85,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "1292469707114105741986576081359316958696581423282623291015625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 86,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "6462348535570528709932880406796584793482907116413116455078125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 87,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "32311742677852643549664402033982923967414535582065582275390625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 88,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "161558713389263217748322010169914619837072677910327911376953125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 89,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "807793566946316088741610050849573099185363389551639556884765625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 90,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "4038967834731580443708050254247865495926816947758197784423828125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 91,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "20194839173657902218540251271239327479634084738790988922119140625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 92,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "100974195868289511092701256356196637398170423693954944610595703125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 93,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "504870979341447555463506281780983186990852118469774723052978515625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 94,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "2524354896707237777317531408904915934954260592348873615264892578125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 95,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "12621774483536188886587657044524579674771302961744368076324462890625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 96,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "63108872417680944432938285222622898373856514808721840381622314453125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 97,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "315544362088404722164691426113114491869282574043609201908111572265625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 98,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "1577721810442023610823457130565572459346412870218046009540557861328125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 99,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "7888609052210118054117285652827862296732064351090230047702789306640625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 100,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "39443045261050590270586428264139311483660321755451150238513946533203125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 101,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "197215226305252951352932141320696557418301608777255751192569732666015625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 102,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "986076131526264756764660706603482787091508043886278755962848663330078125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 103,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "4930380657631323783823303533017413935457540219431393779814243316650390625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 104,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "24651903288156618919116517665087069677287701097156968899071216583251953125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 105,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "123259516440783094595582588325435348386438505485784844495356082916259765625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 106,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "616297582203915472977912941627176741932192527428924222476780414581298828125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 107,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "3081487911019577364889564708135883709660962637144621112383902072906494140625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 108,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "15407439555097886824447823540679418548304813185723105561919510364532470703125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 109,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "77037197775489434122239117703397092741524065928615527809597551822662353515625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 110,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "385185988877447170611195588516985463707620329643077639047987759113311767578125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 111,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "1925929944387235853055977942584927318538101648215388195239938795566558837890625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 112,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "9629649721936179265279889712924636592690508241076940976199693977832794189453125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 113,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "48148248609680896326399448564623182963452541205384704880998469889163970947265625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 114,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "240741243048404481631997242823115914817262706026923524404992349445819854736328125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 115,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "1203706215242022408159986214115579574086313530134617622024961747229099273681640625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 116,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "6018531076210112040799931070577897870431567650673088110124808736145496368408203125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 117,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "30092655381050560203999655352889489352157838253365440550624043680727481842041015625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 118,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "150463276905252801019998276764447446760789191266827202753120218403637409210205078125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 119,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "752316384526264005099991383822237233803945956334136013765601092018187046051025390625"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 120,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "3761581922631320025499956919111186169019729781670680068828005460090935230255126953125"
+          },
+          "core_excess_sum": 0,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 121,
+          "tag_haar_weight": {
+            "numerator": "4",
+            "denominator": "18807909613156600127499784595555930845098648908353400344140027300454676151275634765625"
+          },
+          "core_excess_sum": 120,
+          "rectangle_core_counts": [
+            0,
+            0
+          ],
+          "covered_private_boundary_counts": [
+            0,
+            0
+          ]
+        },
+        {
+          "tag_valuation_stratum": 122,
+          "tag_haar_weight": {
+            "numerator": "1",
+            "denominator": "18807909613156600127499784595555930845098648908353400344140027300454676151275634765625"
+          },
+          "core_excess_sum": 241,
+          "rectangle_core_counts": [
+            240,
+            240
+          ],
+          "covered_private_boundary_counts": [
+            12,
+            10
+          ]
+        }
+      ],
+      "excess_haar_mass": {
+        "numerator": "721",
+        "denominator": "8068593224044181454697407591493494332547320381683608747636071711895056068897247314453125"
+      },
+      "rectangle_haar_masses": [
+        {
+          "numerator": "16",
+          "denominator": "537906214936278763646493839432899622169821358778907249842404780793003737926483154296875"
+        },
+        {
+          "numerator": "16",
+          "denominator": "537906214936278763646493839432899622169821358778907249842404780793003737926483154296875"
+        }
+      ],
+      "summed_rectangle_haar_mass": {
+        "numerator": "32",
+        "denominator": "537906214936278763646493839432899622169821358778907249842404780793003737926483154296875"
+      },
+      "ratio": {
+        "numerator": "480",
+        "denominator": "721"
+      },
+      "counts": {
+        "unique_compressed_states": 52767,
+        "numeric_membership_tests": 6543108,
+        "private_witness_membership_tests": 15376,
+        "global_pair_admissibility_checks": 246,
+        "compressed_canonical_fibres_tested": 2952,
+        "compressed_fibre_member_reads": 105534,
+        "explicit_check_calls": 6597811
+      }
+    }
+  ]
+}

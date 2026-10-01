@@ -1,0 +1,214 @@
+{
+  "scope": "Two fixed skeletons; exactly three prescribed witnesses each. Depth-one originals checked explicitly; higher-depth avoidance uses first-root guards.",
+  "checks": 288,
+  "results": {
+    "FC110": {
+      "source": "/Users/auric/trureturing-erdos7-odd-covering-0916/docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/first_layer_witness.json",
+      "source_sha256": "5540ef30fbf02147b4c4687e80e4e617b96cdd58f41a706b8a3f460793ce0a70",
+      "source_hash_role": "provenance only; no hash admission condition",
+      "actual_rows": [
+        [
+          2,
+          0,
+          3,
+          3
+        ],
+        [
+          2,
+          2,
+          4,
+          4
+        ],
+        [
+          1,
+          1,
+          2,
+          2
+        ],
+        [
+          3,
+          3,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          1,
+          5
+        ],
+        [
+          1,
+          3,
+          1,
+          1
+        ],
+        [
+          1,
+          3,
+          1,
+          5
+        ],
+        [
+          1,
+          2,
+          4,
+          4
+        ],
+        [
+          1,
+          2,
+          4,
+          5
+        ]
+      ],
+      "actual_masks": [
+        510,
+        0
+      ],
+      "private_primes": [
+        11,
+        13,
+        17,
+        19,
+        23,
+        29,
+        31,
+        37,
+        41
+      ],
+      "witnesses": [
+        {
+          "private11_digit": 3,
+          "period": 152125131763605,
+          "residue": 53342578670362,
+          "canonical_hits": [],
+          "changed_hits": [
+            55
+          ]
+        },
+        {
+          "private11_digit": 2,
+          "period": 152125131763605,
+          "residue": 39513021237307,
+          "canonical_hits": [
+            55
+          ],
+          "changed_hits": []
+        },
+        {
+          "private11_digit": 7,
+          "period": 152125131763605,
+          "residue": 108660808402582,
+          "canonical_hits": [],
+          "changed_hits": []
+        }
+      ],
+      "pair_intersection_mod385": 157
+    },
+    "FC131": {
+      "source": "/Users/auric/trureturing-erdos7-odd-covering-0916/docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-partition/bounded_joint_search.json",
+      "source_sha256": "7ff231d7a8c95f0a7bc9e5181fd4c7099e816f985403325fdd608dd176ce37c6",
+      "source_hash_role": "provenance only; no hash admission condition",
+      "actual_rows": [
+        [
+          2,
+          0,
+          3,
+          3
+        ],
+        [
+          2,
+          2,
+          4,
+          4
+        ],
+        [
+          1,
+          1,
+          2,
+          2
+        ],
+        [
+          3,
+          3,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          1,
+          5
+        ],
+        [
+          1,
+          3,
+          1,
+          4
+        ],
+        [
+          1,
+          3,
+          1,
+          5
+        ],
+        [
+          1,
+          2,
+          4,
+          5
+        ],
+        [
+          1,
+          3,
+          1,
+          5
+        ]
+      ],
+      "actual_masks": [
+        510,
+        0
+      ],
+      "private_primes": [
+        11,
+        13,
+        17,
+        19,
+        23,
+        29,
+        31,
+        37,
+        41
+      ],
+      "witnesses": [
+        {
+          "private11_digit": 3,
+          "period": 152125131763605,
+          "residue": 53342578670362,
+          "canonical_hits": [],
+          "changed_hits": [
+            55
+          ]
+        },
+        {
+          "private11_digit": 2,
+          "period": 152125131763605,
+          "residue": 39513021237307,
+          "canonical_hits": [
+            55
+          ],
+          "changed_hits": []
+        },
+        {
+          "private11_digit": 7,
+          "period": 152125131763605,
+          "residue": 108660808402582,
+          "canonical_hits": [],
+          "changed_hits": []
+        }
+      ],
+      "pair_intersection_mod385": 157
+    }
+  }
+}

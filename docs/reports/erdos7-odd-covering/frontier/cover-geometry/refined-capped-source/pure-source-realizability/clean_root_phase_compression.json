@@ -1,0 +1,1029 @@
+{
+  "schema": "e7-clean-root-phase-compression-v1",
+  "scope": "12 prescribed layouts on one fixed actual two-axis source and one actual53-original restriction counterexample; no research-candidate evaluation or optimization",
+  "pure5_originals": [
+    [
+      5,
+      2
+    ],
+    [
+      25,
+      8
+    ]
+  ],
+  "ternary_leaves_mod9": [
+    4,
+    7,
+    2,
+    5,
+    8
+  ],
+  "retained_table_numerators_over20": [
+    [
+      4,
+      1,
+      2
+    ],
+    [
+      1,
+      4,
+      0
+    ],
+    [
+      2,
+      0,
+      4
+    ],
+    [
+      0,
+      2,
+      3
+    ],
+    [
+      3,
+      1,
+      1
+    ]
+  ],
+  "actual_source_points_before_zero_table": 95,
+  "ambient_compressed_states_before_zero_table": 35,
+  "mass": "9/19",
+  "delta5": "25/19",
+  "a5": "5/19",
+  "pi5": [
+    "5/19",
+    "5/19",
+    "9/19"
+  ],
+  "labels": [
+    1,
+    3,
+    5,
+    9,
+    15,
+    25,
+    45,
+    75,
+    225
+  ],
+  "layout_controls": [
+    {
+      "index": 0,
+      "literal_phases": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "same_colour_clean_phases": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "hinge_nonnegative_gaps_h0_through9": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "fourth_moment_nonnegative_gap": "0",
+      "compressed_load_law": [
+        [
+          1,
+          "13/38"
+        ],
+        [
+          2,
+          "2/19"
+        ],
+        [
+          3,
+          "1/38"
+        ]
+      ]
+    },
+    {
+      "index": 1,
+      "literal_phases": [
+        0,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "same_colour_clean_phases": [
+        0,
+        2,
+        4,
+        2,
+        14,
+        4,
+        29,
+        29,
+        29
+      ],
+      "hinge_nonnegative_gaps_h0_through9": [
+        "33/95",
+        "33/95",
+        "61/190",
+        "5/19",
+        "3/19",
+        "9/95",
+        "3/95",
+        "2/95",
+        "1/95",
+        "0"
+      ],
+      "fourth_moment_nonnegative_gap": "2730/19",
+      "compressed_load_law": [
+        [
+          1,
+          "29/190"
+        ],
+        [
+          2,
+          "27/190"
+        ],
+        [
+          3,
+          "7/95"
+        ],
+        [
+          4,
+          "4/95"
+        ],
+        [
+          6,
+          "1/19"
+        ],
+        [
+          9,
+          "1/95"
+        ]
+      ]
+    },
+    {
+      "index": 2,
+      "literal_phases": [
+        0,
+        1,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "same_colour_clean_phases": [
+        0,
+        1,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "hinge_nonnegative_gaps_h0_through9": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "fourth_moment_nonnegative_gap": "0",
+      "compressed_load_law": [
+        [
+          1,
+          "18/95"
+        ],
+        [
+          2,
+          "3/20"
+        ],
+        [
+          3,
+          "41/380"
+        ],
+        [
+          6,
+          "2/95"
+        ],
+        [
+          9,
+          "1/190"
+        ]
+      ]
+    },
+    {
+      "index": 3,
+      "literal_phases": [
+        0,
+        2,
+        3,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8
+      ],
+      "same_colour_clean_phases": [
+        0,
+        2,
+        4,
+        8,
+        14,
+        4,
+        44,
+        29,
+        179
+      ],
+      "hinge_nonnegative_gaps_h0_through9": [
+        "1/10",
+        "1/10",
+        "9/95",
+        "27/380",
+        "1/20",
+        "11/380",
+        "3/380",
+        "1/190",
+        "1/380",
+        "0"
+      ],
+      "fourth_moment_nonnegative_gap": "780/19",
+      "compressed_load_law": [
+        [
+          1,
+          "29/190"
+        ],
+        [
+          2,
+          "14/95"
+        ],
+        [
+          3,
+          "13/190"
+        ],
+        [
+          4,
+          "7/95"
+        ],
+        [
+          6,
+          "11/380"
+        ],
+        [
+          9,
+          "1/380"
+        ]
+      ]
+    },
+    {
+      "index": 4,
+      "literal_phases": [
+        0,
+        1,
+        3,
+        4,
+        13,
+        13,
+        13,
+        13,
+        13
+      ],
+      "same_colour_clean_phases": [
+        0,
+        1,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "hinge_nonnegative_gaps_h0_through9": [
+        "7/190",
+        "7/190",
+        "3/190",
+        "3/190",
+        "1/95",
+        "1/190",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "fourth_moment_nonnegative_gap": "255/38",
+      "compressed_load_law": [
+        [
+          1,
+          "18/95"
+        ],
+        [
+          2,
+          "3/20"
+        ],
+        [
+          3,
+          "41/380"
+        ],
+        [
+          6,
+          "2/95"
+        ],
+        [
+          9,
+          "1/190"
+        ]
+      ]
+    },
+    {
+      "index": 5,
+      "literal_phases": [
+        0,
+        0,
+        4,
+        6,
+        9,
+        24,
+        24,
+        24,
+        24
+      ],
+      "same_colour_clean_phases": [
+        0,
+        0,
+        4,
+        6,
+        9,
+        4,
+        24,
+        54,
+        204
+      ],
+      "hinge_nonnegative_gaps_h0_through9": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "fourth_moment_nonnegative_gap": "0",
+      "compressed_load_law": [
+        [
+          1,
+          "13/38"
+        ],
+        [
+          2,
+          "2/19"
+        ],
+        [
+          3,
+          "1/38"
+        ]
+      ]
+    },
+    {
+      "index": 6,
+      "literal_phases": [
+        0,
+        2,
+        1,
+        4,
+        11,
+        24,
+        4,
+        41,
+        140
+      ],
+      "same_colour_clean_phases": [
+        0,
+        2,
+        1,
+        4,
+        11,
+        4,
+        4,
+        26,
+        50
+      ],
+      "hinge_nonnegative_gaps_h0_through9": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "fourth_moment_nonnegative_gap": "0",
+      "compressed_load_law": [
+        [
+          1,
+          "1/76"
+        ],
+        [
+          2,
+          "137/380"
+        ],
+        [
+          3,
+          "21/380"
+        ],
+        [
+          4,
+          "7/190"
+        ],
+        [
+          5,
+          "3/380"
+        ]
+      ]
+    },
+    {
+      "index": 7,
+      "literal_phases": [
+        0,
+        0,
+        0,
+        2,
+        6,
+        10,
+        8,
+        30,
+        221
+      ],
+      "same_colour_clean_phases": [
+        0,
+        0,
+        0,
+        2,
+        6,
+        0,
+        44,
+        0,
+        176
+      ],
+      "hinge_nonnegative_gaps_h0_through9": [
+        "1/380",
+        "1/380",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "fourth_moment_nonnegative_gap": "3/76",
+      "compressed_load_law": [
+        [
+          1,
+          "87/380"
+        ],
+        [
+          2,
+          "15/76"
+        ],
+        [
+          3,
+          "4/95"
+        ],
+        [
+          4,
+          "1/190"
+        ]
+      ]
+    },
+    {
+      "index": 8,
+      "literal_phases": [
+        0,
+        1,
+        4,
+        0,
+        1,
+        21,
+        12,
+        19,
+        77
+      ],
+      "same_colour_clean_phases": [
+        0,
+        1,
+        4,
+        0,
+        1,
+        1,
+        39,
+        4,
+        104
+      ],
+      "hinge_nonnegative_gaps_h0_through9": [
+        "3/380",
+        "3/380",
+        "3/380",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "fourth_moment_nonnegative_gap": "39/76",
+      "compressed_load_law": [
+        [
+          1,
+          "69/380"
+        ],
+        [
+          2,
+          "73/380"
+        ],
+        [
+          3,
+          "31/380"
+        ],
+        [
+          4,
+          "7/380"
+        ]
+      ]
+    },
+    {
+      "index": 9,
+      "literal_phases": [
+        0,
+        0,
+        2,
+        5,
+        6,
+        18,
+        20,
+        72,
+        14
+      ],
+      "same_colour_clean_phases": [
+        0,
+        0,
+        4,
+        5,
+        6,
+        4,
+        20,
+        54,
+        104
+      ],
+      "hinge_nonnegative_gaps_h0_through9": [
+        "5/38",
+        "5/38",
+        "11/190",
+        "3/190",
+        "3/380",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "fourth_moment_nonnegative_gap": "773/95",
+      "compressed_load_law": [
+        [
+          1,
+          "49/190"
+        ],
+        [
+          2,
+          "3/19"
+        ],
+        [
+          3,
+          "1/20"
+        ],
+        [
+          5,
+          "3/380"
+        ]
+      ]
+    },
+    {
+      "index": 10,
+      "literal_phases": [
+        0,
+        0,
+        4,
+        8,
+        6,
+        1,
+        32,
+        39,
+        32
+      ],
+      "same_colour_clean_phases": [
+        0,
+        0,
+        4,
+        8,
+        6,
+        1,
+        14,
+        54,
+        104
+      ],
+      "hinge_nonnegative_gaps_h0_through9": [
+        "9/190",
+        "9/190",
+        "9/190",
+        "3/380",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "fourth_moment_nonnegative_gap": "75/19",
+      "compressed_load_law": [
+        [
+          1,
+          "99/380"
+        ],
+        [
+          2,
+          "3/19"
+        ],
+        [
+          3,
+          "9/190"
+        ],
+        [
+          4,
+          "3/380"
+        ]
+      ]
+    },
+    {
+      "index": 11,
+      "literal_phases": [
+        0,
+        2,
+        4,
+        7,
+        11,
+        6,
+        7,
+        59,
+        212
+      ],
+      "same_colour_clean_phases": [
+        0,
+        2,
+        4,
+        7,
+        11,
+        1,
+        34,
+        29,
+        104
+      ],
+      "hinge_nonnegative_gaps_h0_through9": [
+        "3/380",
+        "3/380",
+        "3/380",
+        "3/380",
+        "3/380",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "fourth_moment_nonnegative_gap": "1107/380",
+      "compressed_load_law": [
+        [
+          1,
+          "8/95"
+        ],
+        [
+          2,
+          "89/380"
+        ],
+        [
+          3,
+          "12/95"
+        ],
+        [
+          4,
+          "2/95"
+        ],
+        [
+          5,
+          "3/380"
+        ]
+      ]
+    }
+  ],
+  "restriction_counterexample": {
+    "original_family": [
+      [
+        3,
+        0
+      ],
+      [
+        9,
+        1
+      ],
+      [
+        15,
+        10
+      ],
+      [
+        21,
+        7
+      ],
+      [
+        45,
+        31
+      ],
+      [
+        33,
+        22
+      ],
+      [
+        35,
+        0
+      ],
+      [
+        39,
+        13
+      ],
+      [
+        63,
+        49
+      ],
+      [
+        51,
+        34
+      ],
+      [
+        57,
+        19
+      ],
+      [
+        55,
+        0
+      ],
+      [
+        105,
+        70
+      ],
+      [
+        75,
+        25
+      ],
+      [
+        69,
+        46
+      ],
+      [
+        65,
+        0
+      ],
+      [
+        99,
+        22
+      ],
+      [
+        77,
+        0
+      ],
+      [
+        85,
+        0
+      ],
+      [
+        117,
+        13
+      ],
+      [
+        95,
+        0
+      ],
+      [
+        165,
+        55
+      ],
+      [
+        91,
+        0
+      ],
+      [
+        147,
+        49
+      ],
+      [
+        225,
+        175
+      ],
+      [
+        5,
+        2
+      ],
+      [
+        25,
+        8
+      ],
+      [
+        125,
+        28
+      ],
+      [
+        625,
+        128
+      ],
+      [
+        7,
+        1
+      ],
+      [
+        49,
+        9
+      ],
+      [
+        343,
+        51
+      ],
+      [
+        2401,
+        345
+      ],
+      [
+        11,
+        1
+      ],
+      [
+        121,
+        13
+      ],
+      [
+        1331,
+        123
+      ],
+      [
+        14641,
+        1333
+      ],
+      [
+        13,
+        1
+      ],
+      [
+        169,
+        15
+      ],
+      [
+        2197,
+        171
+      ],
+      [
+        28561,
+        2199
+      ],
+      [
+        17,
+        1
+      ],
+      [
+        289,
+        19
+      ],
+      [
+        4913,
+        291
+      ],
+      [
+        83521,
+        4915
+      ],
+      [
+        19,
+        1
+      ],
+      [
+        361,
+        21
+      ],
+      [
+        6859,
+        363
+      ],
+      [
+        130321,
+        6861
+      ],
+      [
+        23,
+        1
+      ],
+      [
+        529,
+        25
+      ],
+      [
+        12167,
+        531
+      ],
+      [
+        279841,
+        12169
+      ]
+    ],
+    "ternary_weights_on_declared_five_leaves": [
+      "0",
+      "0",
+      "1",
+      "0",
+      "0"
+    ],
+    "retained_slice": {
+      "ternary_leaf_mod9": 2,
+      "prime5_colour": [
+        0
+      ],
+      "other_prime_colours": "nonzero"
+    },
+    "retained_table": "indicator of this categorical slice",
+    "additional_original": [
+      375,
+      125
+    ],
+    "query_before": [
+      375,
+      275
+    ],
+    "query_after_same_colour_clean_move": [
+      375,
+      125
+    ],
+    "actual_prime5_survivor_count_mod625": 469,
+    "restricted_prime5_support_count": 120,
+    "before_hit_count": 5,
+    "after_hit_count": 0,
+    "common_positive_factor": "product of the unchanged other-prime nonzero-colour probabilities",
+    "restricted_mass_without_common_factor": "120/469",
+    "query_before_mass_without_common_factor": "5/469",
+    "query_after_mass_without_common_factor": "0",
+    "normalized_query_before": "1/24",
+    "normalized_query_after": "0",
+    "boundary": "arbitrary additional deep originals need a new restricted-density or clean-path premise"
+  },
+  "checks": 621,
+  "not_claimed": [
+    "all-layout proof from finite samples",
+    "a bound for the827 coherent hinge",
+    "prefix maximum",
+    "positive E7 gate",
+    "Lean verification"
+  ]
+}
