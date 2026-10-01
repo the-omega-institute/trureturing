@@ -51,9 +51,11 @@ decomposition, not a FIB-specific invariant.
 In “Calcul de bénéfices”, printed pp.119–120, $k$ is fixed and the primes
 $Q_1,\ldots,Q_n$ immediately above $x_k$ are added to $N$, while primes
 $q_1,\ldots,q_n$ immediately below $x_k$ are deleted. The displayed estimates
-are for $n\to\infty$ with $n\le x_k^{5/8}/\log x_k$; their proof also uses
-the short-interval prime input to keep each modification in the same
-exponent layer. For $W_n=N\prod_iQ_i$, equation (14) reads
+are printed with $n\to\infty$ together with $x$ and
+$n\le x^{5/8}/\log x$. The argument uses the short-interval prime input
+and states that the modifications remain in the same exponent layer;
+this note does not independently verify that argument throughout the
+printed range. For $W_n=N\prod_iQ_i$, equation (14) reads
 
 $$
 \operatorname{ben}(W_n)\gtrsim
@@ -66,7 +68,7 @@ and the displayed upper bound
 $$
 \frac{n^2\log2}{x_k\log x}
 \lesssim\operatorname{ben}(W'_n)
-\le\frac{n\log2}{x_k^{1-5/8}\log x}.
+\lesssim\frac{n\log2}{x_k^{1-5/8}\log x}.
 $$
 
 The symbols here preserve the paper's asymptotic comparison; they are not
@@ -76,7 +78,8 @@ Renaming it stability, transport, or boundary loss does not make it new.
 
 Proposition 4, printed p.120, makes the stronger assumption that $A$ is
 **highly composite** and $N$ is the preceding superior highly composite
-integer. If $p_k$ is its largest prime with exponent exactly $k$, then
+integer. For fixed $k$, if $p_k$ is the largest prime dividing $A$ with
+exponent exactly $k$, then, asymptotically as $x\to\infty$,
 
 $$
 \pi(p_k)-\pi(x_k)=O((x_k\log x)^{1/2}).
