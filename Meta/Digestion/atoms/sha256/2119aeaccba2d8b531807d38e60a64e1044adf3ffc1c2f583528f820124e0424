@@ -1,0 +1,8 @@
+**Theorem 7.1 (positive evaluation and quotient rank).** Let the represented index set be finite and nonempty, let $V$ be finite dimensional, and suppose $U+\operatorname{span}\{a_i:i\in I\}=V$. At every strictly positive real coordinate vector $x$ and every degree $m$, the actual represented polynomial satisfies $F_{U,m}(x)\ge0$, and
+
+$$
+F_{U,m}(x)>0\quad\Longleftrightarrow\quad \dim_K(V/U)\le m.
+$$
+
+**Proof.** Every admitted coefficient is a product of strictly positive reciprocal factorials, so every monomial evaluates nonnegatively. For positivity, induct on degree using the actual contractions and the evaluated homogeneous Euler identity. At degree zero the constant polynomial is one exactly when $U=V$, equivalently when the quotient dimension is zero. At successor degree, positivity of the finite Euler sum is equivalent to positivity of at least one actual contracted derivative, because each $x_i$ is strictly positive. A loop leaves the quotient dimension unchanged and a nonloop lowers it by exactly one. If $U\ne V$, full represented spanning supplies a nonloop. If $U=V$, the nonempty index set supplies an index for padding. This proves both directions without replacing the polynomial or enumerating a positive finite surrogate.
+

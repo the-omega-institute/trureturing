@@ -1,0 +1,211 @@
+{
+  "schema": "same-source-leakage-result-v1",
+  "check_count": 189,
+  "scope": "Conditional ordinary repair of the identified801 source. One actual union, one fixed law, full29 and prime tail above3000. No arbitrary-shallow-phase or unrestrictedErdos7 conclusion; not Lean.",
+  "inherited_source_sha256": "dc4ceba98c8e992a85c001d50aed1928a255c937f4b1bc248b6f1850cb6e222c",
+  "inherited_source_case": "three_sixteenths_short_leaf",
+  "weights": [
+    "3/16",
+    "3/16",
+    "5/24",
+    "5/24",
+    "5/24"
+  ],
+  "alpha23": "16790988780569/557509082130000",
+  "positive_mass_gate": "6132177166161098300271623941347580349585005045492124136004733606854216508902424855057704690231129854630125894914384380626403991897867112943763146026088289846375401695701573872906318205187569/238818988806164984427960459745572786053200091996233652050113679879758780579100486705746281403525422646425233745978155849997579638398808852983436945620721803366225467487575900160000000000000000",
+  "minimizing_gate_h": 16,
+  "leakage_supremum": "1060543257891287267615244223045427593408044008512168352197605168921551170539416278197221912356031586236157580465476231589560615161366552620734518953148566981332846067063036678901681794812431/238818988806164984427960459745572786053200091996233652050113679879758780579100486705746281403525422646425233745978155849997579638398808852983436945620721803366225467487575900160000000000000000",
+  "leakage_supremum_decimal": 0.004440782800366291,
+  "comparison_floor": "3/50",
+  "comparison_floor_leakage_supremum": "89526000644215215950517020852371521103982386221588866290289434191822533814767725207806821006764791719209311289195048940405393208370007769527334180951591309592232619089814254407601794812431/206578425317332711530185797679920459936018079576742109023348333095991345200921921000470533414049490589157827190271104810247906387214969657830672957961924359911785029376753153638400000000000000",
+  "comparison_floor_leakage_supremum_decimal": 0.00043337536582869693,
+  "actual_family": [
+    {
+      "modulus": 3,
+      "phase": 0,
+      "selected": false,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 9,
+      "phase": 1,
+      "selected": false,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 15,
+      "phase": 7,
+      "selected": true,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 21,
+      "phase": 2,
+      "selected": true,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 45,
+      "phase": 22,
+      "selected": true,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 33,
+      "phase": 2,
+      "selected": true,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 35,
+      "phase": 2,
+      "selected": true,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 39,
+      "phase": 2,
+      "selected": true,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 63,
+      "phase": 2,
+      "selected": true,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 51,
+      "phase": 2,
+      "selected": true,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 57,
+      "phase": 2,
+      "selected": true,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 55,
+      "phase": 2,
+      "selected": true,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 105,
+      "phase": 37,
+      "selected": true,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 75,
+      "phase": 52,
+      "selected": true,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 69,
+      "phase": 2,
+      "selected": true,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 65,
+      "phase": 2,
+      "selected": true,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 99,
+      "phase": 2,
+      "selected": true,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 77,
+      "phase": 2,
+      "selected": true,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 85,
+      "phase": 2,
+      "selected": true,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 117,
+      "phase": 2,
+      "selected": true,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 95,
+      "phase": 2,
+      "selected": true,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 165,
+      "phase": 112,
+      "selected": true,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 91,
+      "phase": 2,
+      "selected": true,
+      "core_intersection": "0"
+    },
+    {
+      "modulus": 147,
+      "phase": 100,
+      "selected": true,
+      "core_intersection": "20736/4732273"
+    },
+    {
+      "modulus": 225,
+      "phase": 202,
+      "selected": true,
+      "core_intersection": "0"
+    }
+  ],
+  "absent_selected_labels": [],
+  "actual_union_leakage": "20736/4732273",
+  "actual_union_leakage_decimal": 0.004381826661310537,
+  "individual_leakage_sum": "20736/4732273",
+  "exact_union_terms": 1,
+  "certified_leakage_budget": "20736/4732273",
+  "budget_slack": "14079845513210787856323278864016822812358360698971394010459738810761265965392824281871954485151532613665038941222867570716011018317810425289634749639748425302361077329271558901681794812431/238818988806164984427960459745572786053200091996233652050113679879758780579100486705746281403525422646425233745978155849997579638398808852983436945620721803366225467487575900160000000000000000",
+  "continuation": {
+    "alpha": "14348080620569/557509082130000",
+    "threshold": 16,
+    "query_upper": "2819426547249368478465594110829897239007115034643133479190383081769898630834721622708808543180661314699874706673658398611885246/102211380045217721482124072284264666883946488595593776439540132729544149597445334784247469747184338385215948995478833251953125",
+    "query_upper_decimal": 27.584272377518733,
+    "post29_mass": "42492094016727723033879913129513433743386646033492261116740634657337557893747751250120609740500160086171865199748932442802254/2759707261220878480017349951675146005866555192081031963867583583697692039131024039174681683173977136400830622877928497802734375",
+    "full_tail_reserve": "14079845513210787856323278864016822812358360698971394010459738810761265965392824281871954485151532613665038941222867570716011018317810425289634749639748425302361077329271558901681794812431/13829078276267195448287881245476093637894067663929964942534185027746199993452589778514047450611633121298529601175116308443520006561416077580368756745388086111274966239319402221568000000000000",
+    "full_tail_reserve_decimal": 0.0010181333297804777
+  },
+  "common_crt_period": 11712375675,
+  "witnesses": [
+    {
+      "name": "positive selected leakage",
+      "integer": 9932944450,
+      "actual_hits": [
+        147
+      ]
+    },
+    {
+      "name": "finite family survivor",
+      "integer": 10411000600,
+      "actual_hits": []
+    }
+  ],
+  "over_budget_control": {
+    "modulus": 225,
+    "phase": 2,
+    "leakage": "3456/676039",
+    "leakage_decimal": 0.005112131104862293
+  }
+}

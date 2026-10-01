@@ -1,0 +1,54 @@
+{
+  "scope": "Finite actual-phase and complete-period controls only; general all-height proof is separate.",
+  "cases": [
+    {
+      "prime": 5,
+      "joint_period": 225,
+      "proper_phase_assignments": 160,
+      "guarded_assignments": 40,
+      "unguarded_assignments": 120,
+      "allowed_original_h_phase_assignments": 5320,
+      "guarded_full_liability_target_checks": 1000,
+      "guarded_inventory_bound": 38,
+      "unguarded_inventory_bound": 65,
+      "uniform_inventory_bound": 65,
+      "repair_moduli": [
+        9,
+        45,
+        225
+      ],
+      "repair_modulus_sum": 279,
+      "three_deleted_sum_lower_bound": 675,
+      "same_star_root_capacity_max": 29,
+      "different_star_roots_capacity_max": [
+        30,
+        37
+      ]
+    },
+    {
+      "prime": 7,
+      "joint_period": 441,
+      "proper_phase_assignments": 504,
+      "guarded_assignments": 84,
+      "unguarded_assignments": 420,
+      "allowed_original_h_phase_assignments": 37884,
+      "guarded_full_liability_target_checks": 4116,
+      "guarded_inventory_bound": 82,
+      "unguarded_inventory_bound": 149,
+      "uniform_inventory_bound": 149,
+      "repair_moduli": [
+        9,
+        63,
+        441
+      ],
+      "repair_modulus_sum": 513,
+      "three_deleted_sum_lower_bound": 1323,
+      "same_star_root_capacity_max": 69,
+      "different_star_roots_capacity_max": [
+        70,
+        81
+      ]
+    }
+  ],
+  "checks_passed": true
+}
