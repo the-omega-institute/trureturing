@@ -4,13 +4,13 @@ authors: Burton S. Kaliski Jr.
 year: 2017
 title: Targeted Fibonacci Exponentiation
 url: https://arxiv.org/abs/1711.02491v1
-claim: Every modular Hofstadter G coefficient pair has a bounded solution and a Zeckendorf representation of logarithmic length.
+claim: Every prescribed modular Hofstadter G pair has a realizing Zeckendorf word of at most 2h bits when the modulus is below phi^h.
 strata_touched: []
 license: citation-only
 triage: anchor
 ---
 
-# Modular Hofstadter G pairs
+# Short Zeckendorf words for modular Hofstadter G pairs
 
 ## Verified locator
 
@@ -33,7 +33,7 @@ Zeckendorf length of a realizing integer, are literature-attested.
 
 The short common coefficient theorem uses a shifted rational grid with
 `q=F_j`, where j is the first index with `F_j>2H`, and obtains the positive
-range `H<=n<H(q+1)`. These particular constants are a refinement of the
+range `H<=n<H(q+1)`. These particular first-index constants use a shifted-grid version of the
 same construction. The five-window alphabet, the first two zero bits,
 removal of terminal whole zero windows, and positive canonical End after
 an arbitrary actual legal prefix are additional literal-language claims.
