@@ -160,7 +160,7 @@ theorem result (K : Type*) [Field K] :
     | none => simp [sixOutput, sixEmbed, rawOutput]
     | some q =>
       rcases q with ⟨s, a, b⟩
-      cases s <;> simp [sixOutput, sixEmbed, rawOutput, quantity, castAdd, castMul, castNat] <;> ring
+      cases s <;> simp [sixOutput, sixEmbed, rawOutput, quantity, castAdd, castMul, castNat]
   have correct (w : List Window) :
       wordBehavior (sixDimensional K) w = integerFieldTask K w := by
     have initial : (sixDimensional K).initial =
@@ -177,7 +177,7 @@ theorem result (K : Type*) [Field K] :
     have readback : rawOutput ((rawMachine 0).toDFA.eval w) = task 0 w := rfl
     rw [evaluated, readback]
     simp only [integerFieldTask, integerTask]
-    cases h : task 0 w <;> simp [h]
+    cases task 0 w <;> simp
   let reach : Fin 6 → SixState K := fun j =>
     wordMap (sixDimensional K).transition (sixPrefixes j) (sixDimensional K).initial
   let P : Matrix (Fin 6) (Fin 6) K := fun i j => reach j i
@@ -213,8 +213,7 @@ theorem result (K : Type*) [Field K] :
     have trimLetter (b : Window) (x : SixState K) :
         fourTransition b (fourTrim x) = fourTrim (sixTransition b x) := by
       cases b <;> ext i <;> fin_cases i <;>
-        simp [fourTransition, fourUpdate, fourTrim, sixTransition, sixUpdate, htwo, three] <;>
-        ring
+        simp [fourTransition, fourUpdate, fourTrim, sixTransition, sixUpdate, htwo, three]
     have trimWords (w : List Window) (x : SixState K) :
         wordMap fourTransition w (fourTrim x) =
           fourTrim (wordMap sixTransition w x) := by
@@ -248,8 +247,7 @@ theorem result (K : Type*) [Field K] :
           fourTransition, fourUpdate, LinearMap.comp_apply]
     have fourDeterminant : Q.det = 1 := by
       rw [fourValues]
-      simp [Matrix.det_succ_row_zero, Fin.sum_univ_succ, Matrix.submatrix, Fin.succAbove] <;>
-        ring
+      simp [Matrix.det_succ_row_zero, Fin.sum_univ_succ, Matrix.submatrix, Fin.succAbove]
     have fourNonzero : Q.det ≠ 0 := by rw [fourDeterminant]; exact one_ne_zero
     have fourIndependent : LinearIndependent K fourReach := by
       change LinearIndependent K Q.col
@@ -260,7 +258,5 @@ theorem result (K : Type*) [Field K] :
     apply Submodule.span_mono
     rintro _ ⟨j, rfl⟩
     exact ⟨prefixes j, rfl⟩
-
-#print axioms result
 
 end D5.S3.Arith.FibonacciAtomic.FiveWindowFieldLinearMinimum

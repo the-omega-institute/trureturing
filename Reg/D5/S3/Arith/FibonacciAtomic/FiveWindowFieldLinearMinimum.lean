@@ -75,7 +75,8 @@ def registration : Registration arena.{u} (arena.{u}.Law actual) where
     intro h
     exact one_ne_zero (congrArg Prod.fst h)
 
-register_information_theorem _root_.D5.S3.Arith.FibonacciAtomic.FiveWindowFieldLinearMinimum.result in arena
+register_information_theorem
+  _root_.D5.S3.Arith.FibonacciAtomic.FiveWindowFieldLinearMinimum.result in arena
   readout via (realize signature (fun _ p w => @integerFieldTask p.1 p.2 w)
     (fun e => nomatch e))
   realizes registration
@@ -86,7 +87,5 @@ register_information_theorem _root_.D5.S3.Arith.FibonacciAtomic.FiveWindowFieldL
       path := #["body", "body", "fn", "arg", "body", "arg"]
       stateBinder := 2 }] })
   escape continues (open)
-
-#print axioms registration
 
 end Reg.D5.S3.Arith.FibonacciAtomic.FiveWindowFieldLinearMinimum
