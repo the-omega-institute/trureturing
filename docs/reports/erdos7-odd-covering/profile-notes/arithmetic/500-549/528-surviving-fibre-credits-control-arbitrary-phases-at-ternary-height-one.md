@@ -31565,3 +31565,83 @@ mixed columns remain, and the complementary same-source charge Q_L
 is still unpaid in general. The unrestricted #7 objective is
 unchanged and unresolved. These are ordinary symbolic results;
 no new Lean verification or new finite producer is claimed.
+
+[Report385, section61](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#61-variable-depth-guarded-frontiers-retain-one-common-witness)
+permits a prefix antichain of different depths outside any selected
+actual pure-q guards containing A_q. Each leaf uses its own collision
+depth while retaining every old q digit and the literal divided p-tail.
+The interface contains every uniform-depth guarded graph, and a finite
+noncover with private points admits a variable-depth matching although
+all its uniform-depth graphs fail. For the full original q-height H,
+every successful finite frontier has a successful representative of
+depth at most H+1; an exact tree recurrence retains disjoint sets of
+assigned p-roots across child subtrees. These results concern the same
+actual source and give a finite joint interface, without asserting
+that every hypothetical cover admits a matching or adding Lean
+verification.
+
+[Report385, section62](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#62-weighted-root-reuse-retains-exact-original-label-budgets)
+allows a first-p root to be reused at different q-depths. Each use
+copies its actual q-free p-bearing original batch, charging its class
+count R_a and divided-modulus sum S_a. Positive batches are used at
+most once per depth; empty batches have no such capacity restriction.
+At fresh depths even the normalized pure-p root0 is available, with
+R_0=S_0=1 and output modulus q^h. The existing PH2 replacement rule
+compares the resulting count and modulus sum with the SAME removed
+original inventory. For a fixed frontier, ordinary minimum-cost
+assignment applies independently at each depth.
+
+[Report385, section63](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#63-finite-depth-bounds-retain-the-weighted-replacement-budget)
+makes the weighted strict-improvement search finite. After folding
+empty-workload branches at depth H+1, the existing full-tree leaf
+identity bounds the remaining depth by the actual removed class
+budget. A separate bound depends only on H, q and the number of
+positive root batches, using constant deep allowed lists and loop
+erasure that does not increase either cost. This extends the transport
+interface without proving that an improving allocation exists for
+every whole cover. Original labels, common witnesses and arbitrary
+original heights remain in scope; unrestricted Erdős #7 remains open.
+
+[Report385, section64](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#64-the-common-literal-zero-root-makes-deep-feasibility-a-static-hall-condition)
+uses the common fresh-depth root0 to decide finite deep continuation
+exactly. After fixing the shallow leaves and removing free deep jobs,
+let r_A count actual H-prefix parents with constant allowed set A.
+Every A contains0 and has only positive-workload roots. Finite
+continuation exists exactly when every nonempty collection S of
+types satisfies |union_(A in S) A|>=(q-1)*sum_(A in S)r_A+1.
+The existing capacitated Hall theorem assigns q-1 disjoint private
+roots per parent; the common0 then completes one parent per level.
+Its exact original-batch costs are given explicitly, including the
+fixed shallow costs in the final comparison. This supplies a concrete
+budget candidate, without asserting that feasible continuation is
+cheap enough or that this sequential construction minimizes all
+frontier costs. The unrestricted whole-cover obligation is unchanged.
+
+[Report385, section65](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#65-all-root-injections-charge-every-deleted-mixed-original)
+uses the exact replacement budget to forbid any globally injective
+all-root allocation when at least one mixed p*q original is deleted.
+At fresh depth H+1 this gives t>=p-q*ell_H+1, where H is the full
+original q-height and ell_H=((q-2)*q^H+1)/(q-1). Literal root0 may
+remain in the matching; the mixed-label deletion supplies the strict
+saving. For ternary height one, the same two-branch Hall charge gives
+t>=P-2 and N_3>=P+s-4>=57 under the existing thirteen-prime source
+premise. All counts use one actual original family. This is an
+ordinary consequence of the weighted interface, without new Lean
+verification or a resolution of unrestricted Erdős #7.
+
+[Report385, section66](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#66-promoting-unused-roots-bounds-the-depth-without-increasing-either-replacement-cost)
+normalizes every finite deep frontier without increasing either of
+its original-batch costs. A root used at a later depth but absent at
+an earlier depth can replace the complete descendant cut of its
+actual ancestor. The resulting nested root-use sets force the
+pending forest width to decrease at each layer. For r hard parents
+at the full original height H, all hard leaves then have depth at
+most H+r; Kraft gives the uniform bound
+H+floor((p-1)/(q-1)), including the free-fold case. This bound
+preserves strict budget improvement and needs no bound on original
+heights or class count. A Bellman recurrence on the counts of actual
+constant-list types attains the same lexicographic minimum as all
+finite deep cuts, with the correct exponential modulus-sum cost.
+The remaining whole-cover obligation is to force that minimum,
+after some legal shallow choice, below the same original inventory.
+No such uniform price inequality or new Lean verification is claimed.
