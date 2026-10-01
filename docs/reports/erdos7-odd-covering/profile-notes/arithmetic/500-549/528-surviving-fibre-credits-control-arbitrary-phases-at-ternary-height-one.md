@@ -31405,6 +31405,33 @@ remaining split, or raise the unconditional bound above nineteen.
 The deductions reuse the existing actual-cover transport and are
 ordinary mathematical proofs, without new Lean verification.
 
+[Report385, section55](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#55-ten-distinct-collision-values-have-one-complete-obstruction-pattern)
+classifies all ten-value numerical failures of the strict selected-chain
+certificate when five and seven are absent. The unique pattern is the
+seven nonempty squarefree products of three primes q_i, together with
+three pure powers of their distinct prime predecessors p_i=q_i-2.
+The result allows arbitrary prime sizes and exponents; it is not a
+finite search or an assertion that the associated APs cover anything.
+
+In the actual N_3=19 split, divisor closure and disjointness from the
+eight-class template force all three predecessor powers and the old
+separator power to have exponent one. The two cofactor sets have
+disjoint prime supports. Hence every original modulus divisible by
+three is squarefree. Equivalently, if any original three-bearing
+modulus has any squared prime factor, then N_3>=20. This strengthens
+the earlier condition involving only a factor nine. Other retained
+C0 labels may still have arbitrary heights; the theorem for wholly
+squarefree odd covering systems cannot be applied to them.
+
+The remaining nineteen-label case consists numerically of two
+squarefree three-prime cubes, on disjoint supports, and four separate
+lower-twin prime labels. Their actual phases must still provide two
+repairs of the same R_3, while all other C0 originals retain their
+original numerical labels and full heights. No exclusion of this
+common-source configuration or unconditional N_3>=20 is claimed.
+The classification and its application are ordinary mathematical
+proofs, without new Lean verification.
+
 [Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
 keeps the residual cover's entire old q coordinate unchanged.
 It excludes one endpoint per repeated pair and reserves the

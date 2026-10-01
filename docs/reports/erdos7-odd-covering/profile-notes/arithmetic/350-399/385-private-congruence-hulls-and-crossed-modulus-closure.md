@@ -7774,3 +7774,550 @@ still unrestricted. NF61--NF63 do not exclude the whole all-low
 eight-plus-ten case, increase the unconditional bound N_3>=19,
 or settle Erdős #7. These are ordinary mathematical deductions,
 not newly compiled Lean results.
+
+## 55. Ten distinct collision values have one complete obstruction pattern
+
+Use the strict selected-chain certificates defined in section53. All
+values below are distinct nonunit integers coprime to six. The following
+classification allows arbitrary support primes and exponents.
+
+Let D have ten different values and omit numerical5 and7. It has no
+strict selected-chain certificate if and only if
+
+    D = {all seven nonempty squarefree products of q_1,q_2,q_3}
+          union {p_1^b_1,p_2^b_2,p_3^b_3},
+    p_i=q_i-2, b_i>=1,
+
+where all p_i,q_i are primes, q_i>=13, and the six primes are different.
+                                                        (NF64)
+
+The proof reuses NF39's two-axis envelopes, NF44, NF58's small
+reservations and conservative two-prime lemma, and NF63's pure-group
+extension. The pair and triple cases below are considered after the
+pure-group case has restricted every axis to at most two pure powers.
+These are ordinary mathematical deductions, not new Lean verification.
+
+### Reused bounds and chain facts
+
+All selected bases are at least three. At most r-1 assigned items give
+load at most (r-1)/r. One or two reserved deep items (exponent at least
+two on the chosen receiving axis) may be restored, because
+
+    (r-1)/r + 2/r^2 < 1  for r>=3.
+
+NF58's two-prime lemma works at conservative base three for at most
+eight items with at most one numerical duplicate. Shorter lists may
+be padded by fresh high pure powers on the same axes and then restricted
+back. Projecting one actual item onto two axes introduces at most one
+duplicate, while preserving its exponents at the receiving axis.
+
+NF39's two-axis infinite envelopes remain available: if either axis's
+actual base is at least five, both loads can be made strict. If both
+bases are three and the numerical pure value on one axis is absent,
+put equal-exponent mixed values on that axis; the two loads are at most
+11/12 and3/4. The latter fact uses absence of the pure value itself,
+not absence of that prime from all items.
+
+For a chain of three primes, integer capacities sum to the largest
+prime minus3, hence at least8. At most one pair has capacity4; the other
+pairs have capacity at least6. For a chain of four primes, total capacity
+is at least10. A triple has capacity6 only when its three bases are3.
+At most three bases can be3 in a chain of four or five primes: two
+neighboring positions j,j+1 with j>=2 cannot both have base3, since
+that would require three consecutive odd primes greater than3.
+
+Three core primes selected with at most one external prime can all
+have base3 only if the core contains5 and7. Three core primes selected
+with at most two external primes can all have base3 only if the core
+contains5. For the latter claim, if5 is absent from the core, every
+core prime needs its predecessor two smaller to be external. A core
+predecessor would itself need a prime predecessor and form the same
+impossible triple. Three different external predecessors would then
+be required.
+
+The two-slot Hall obstructions for ten items are: at least3 on one
+prime, at least5 on a pair, at least7 on a triple, or at least9 on four
+primes. Actual integer capacities will be used whenever two-slot Hall
+is insufficient.
+
+### At least three pure powers permit a certificate
+
+Four or more pure items are already covered by the verified extension
+of Report385 section48: an arbitrary finite distinct pure group plus
+at most six other items has a strict certificate. It remains to treat
+exactly three pure-p items and seven non-pure-p items. At conservative
+base three the pure group costs at most 13/27, and at an actual base R
+it costs less than 1/(R-1).
+
+#### Reused small two-axis certificate
+
+NF58's two-prime lemma gives a certificate at conservative base three
+for eight items supported on two primes, with at most one value doubled
+and every other value occurring once. It also applies to any shorter
+such list: append unused sufficiently high pure powers to make eight
+items, apply the lemma, and discard the appended items. No new selected
+prime is introduced. This argument will be used on projected values;
+their exponents on the two surviving axes are their actual original
+exponents, so its assignment pulls back to the original items.
+
+The following recurring subcase is therefore closed. Seven non-pure-p
+items are supported on {p,q,r}, and at least five are p-free:
+
+* With seven p-free items, apply the small two-axis certificate to all
+  seven on q,r and leave the pure group at p.
+* With six p-free items, put the remaining p-bearing item at p and use
+  NF17 or the small two-axis certificate on the other six.
+* With five p-free items, put one of the two p-bearing items at p.
+  Remove the p factor from the other one and combine its q,r projection
+  with the five p-free values. This six-item list has at most one double
+  value, so the small two-axis certificate applies.
+
+The p cost in the latter two cases is at most 13/27+1/3=22/27. All
+other costs are strict at conservative base three. Call this the
+five-p-free subcase.
+
+#### Project away p and first treat projected singleton groups
+
+Try to assign the seven remaining items on their factors other than p
+with capacity two per prime. If successful, combine that assignment
+with the pure-p group. Suppose first that a projected singleton supports
+at least three items. Choose one with maximum count and call it q.
+Collect ALL its items as T. They are different values p^u q^v, u>=0,
+v>=1; write t=|T|, so 3<=t<=7. Every outside item has a factor outside
+{p,q}.
+
+If t=7, all ten items have support on p,q. NF39 applies because numerical
+five and seven are absent. If t=5 or6, use the existing section48
+assignment: move to p every T item with u>=2 and v=1 or2. Their added
+cost is less than 1/3, while q receives at most two depth-one items,
+two depth-two items and at most two further items of depth at least
+three. The loads are less than 22/27 at p and at most 26/27 at q.
+At most two outside items remain and are assigned to outside factors.
+
+##### Four items in T and three outside
+
+Let h count the T items with q-depth one. If h<=2, put all four at q;
+the q cost is at most 8/9 and p remains at most 13/27. If h=3, the
+three corresponding p-depths are different, so one is at least two.
+Move that item to p. The costs are at most 16/27 at p and 7/9 at q.
+If h=4, the two largest p-depths are at least two and three. Move those
+two to p, yielding at most 17/27 at p and 2/3 at q.
+
+If the outside items admit capacity two on their outside factors, use
+that assignment. Otherwise their outside supports are all the same
+singleton {r}. They have the form p^a q^b r^c, c>=1.
+
+If their r-depths are not all one, place all three at r, costing at
+most 7/9. If all are one and some item has a p factor, place that item
+at p, whose cost is at most 17/27+1/3=26/27; the other two go to r.
+
+If all are r-shallow and none has a p factor, they are three different
+values q^b r. One has b>=2. Place that item at q and the other two at r.
+This is strict whenever the earlier q load is less than 8/9. Equality
+8/9 requires exactly two T items of q-depth one and two of q-depth two.
+One of these four items has a positive p-depth, since values at each
+fixed q-depth are distinct. Move such an item to p instead. This adds
+at most 1/3 to its unchanged pure-group load 13/27, and removes at least
+1/9 from q before the outside item adds at most 1/9. The q load remains
+at most 8/9 and the p load is at most 22/27.
+
+##### Three items in T and four outside
+
+Use the sharper existing T assignment. If some q-depth is at least two,
+put all three at q, costing at most 7/9. Otherwise their different
+p-depths include one at least two; move it to p, yielding at most
+16/27 at p and 2/3 at q.
+
+If the four outside items admit capacity two on their outside factors,
+we are done. Otherwise collect all l>=3 items with the same singleton
+outside support {r}. If l=3, the fourth outside item has a factor
+outside {p,q,r}. The existing section48 three-plus-three argument
+applies to T and these three r-items: either all go to r with load
+at most 7/9, or one p-bearing item goes to p with load at most 25/27,
+or a p-free item of q-depth at least two goes to q with load at most
+8/9. Assign the fourth item to its external factor.
+
+It remains l=4, when the whole list is supported on p,q,r. The maximal
+choice t=3 means at most three non-pure-p items have projected support
+{r}. In particular, at most three of the four r-items are q-free.
+
+If all three T items are pure q-powers, assign them to q at cost less
+than 1/2. The p group also costs less than 1/2. Deal with the four
+r-items as follows. With at most two r-shallow items, all four fit at
+r with load at most 8/9. With three r-shallow items, move any one of
+them with a p or q factor to that axis; such an item exists by
+distinctness, and its cost at most 1/3 fits above the pure group.
+With four r-shallow items, at least three quotients after removing r
+are nonunits. If two of these quotients can be assigned to different
+axes p,q, do so at cost at most 1/3 on each axis. Otherwise all nonunit
+quotients are powers of one axis; the two largest distinct exponents
+are at least two and three. Move those two there at total cost at most
+4/27. In each case at most two r-shallow items remain at r.
+
+If instead at least three of the four r-items are pure r-powers, put
+all four at r: the pure subgroup costs less than 1/2, and any single
+remaining item adds at most 1/3. Use the sharper T assignment above.
+
+Now suppose both the pure-q and pure-r counts are at most two. Select
+exactly p,q,r, and use capacities
+
+    c_p=R_p-2, c_q=R_q-1, c_r=R_r-1
+
+for the seven non-pure-p items. Their total capacity is max(p,q,r)-4,
+which is at least seven. Every singleton demand fits. The {p,q} demand
+is t=3 and the {p,r} demand is at most three by maximality of T; their
+capacities are at least three. Only {q,r} can fail Hall, which requires
+at least five p-free items. That subcase was closed above. Otherwise
+Hall applies, and the pure-group envelope combines strictly with c_p.
+This finishes every projected singleton case.
+
+#### No projected singleton has three items
+
+A capacity-two failure now places at least five projected items on a
+pair {q,r}, or all seven on a triple. Collect ALL items on a chosen
+projected pair and write g for their number.
+
+If g=5, at most two other items remain and have factors outside
+{p,q,r}. If an internal item has a p factor, move one such item to p;
+the remaining four fit capacity two on q,r because projected singleton
+demands are at most two. If all five are p-free, use NF17. Assign the
+outside items to their outside factors.
+
+If g=6, at most one outside item remains. If at least five of the six
+internal items are p-free, either all six are assigned by NF17 or the
+single p-bearing item goes to p and the other five use NF17. Suppose
+at most four are p-free. If any internal item is deep on p,q or r,
+reserve it. The other five fit conservative capacities one at p and
+two each at q,r: singleton demands fit, pairs containing p have demand
+at most two by the projected-singleton assumption, and {q,r} demand
+is at most four. Restoring the deep item costs at most 1/9. At p the
+load is at most 13/27+1/3+1/9=25/27, and the other axes cost at most
+7/9. Assign the outside item to an outside factor.
+
+If all six internal items are squarefree, they must be exactly
+
+    q,r,pq,pr,qr,pqr.
+
+Select p,q,r and, if present, one outside factor of the seventh item.
+The three core bases cannot all be three: the triple-plus-one-external
+prime-chain observation would force both five and seven into the core.
+But q and r occur as numerical items and so are neither five nor seven;
+at most p could be one of them. Some core base is therefore at least
+five. The actual capacities R_p-2,R_q-1,R_r-1 total at least seven;
+singleton and pair demands fit as above. Apply Hall to the six internal
+items and assign the outside item separately.
+
+If g=7, select exactly p,q,r and use the same actual capacities. They
+total at least seven. Singleton demands and pairs containing p fit by
+the projected-singleton assumption. A failure on {q,r} gives at least
+five p-free items, already closed by the recurring subcase. Otherwise
+Hall applies directly.
+
+Finally suppose no projected pair supports five items. A projected
+Hall obstruction then places all seven non-pure-p items on three primes
+U={q,r,t}. If any of those seven has a p factor, put that item at p;
+the other six fit capacity two on U, since singleton and pair demands
+are at most two and four. If none has a p factor, select U together
+with p. If some U base is at least five, its total integer capacity is
+at least eight and Hall assigns the seven U items. If all U bases are
+three, the prime-chain observation forces five and seven into U.
+Because their numerical values are absent, at most five different
+squarefree values on U are available. Some of the seven items is deep.
+Reserve one, assign the other six with capacity two and restore it for
+at most 1/9. Leave the pure-p group at p in all these cases.
+
+Every pure-group case therefore has a strict certificate.
+
+### Auxiliary: nine items on a triple with two pure values absent
+
+Let U={5,7,s} be a prime triple. Suppose nine different U-supported
+values omit numerical5 and7, with pure demands at most2 and pair
+demands at most5. They have a strict certificate even at conservative
+base3 on all three axes.
+
+There are at most five squarefree values, so at least four items are
+deep. Call a pair critical if it supports five items. Removing at least
+one deep item from each critical pair, and three items in total, leaves
+six items satisfying two-slot Hall.
+
+If all three pairs are critical, their total demand is15. If P is the
+number of pure items, counting within the triple gives at most9+P<=15.
+Equality forces exactly two pure items at each prime and one mixed
+item on each pair, with no triple-supported item. Reserve one deep pure
+power on each axis; these exist because each pure group has two distinct
+values. The remaining six fit and the restoration loads are at most1/9
+per axis.
+
+Otherwise there are at most two critical pairs. Choose one deep item
+in each; such items exist because a pair has only three squarefree
+values. Complete these choices to three different deep reservations.
+If not all available deep items are forced to the same receiving axis,
+these three can be chosen and assigned so that no axis receives three:
+only two reservations are needed to hit the critical pairs, leaving a
+choice of a reservation with another available deep axis. The restoration
+load is then at most2/9 per axis.
+
+If all deep items have only one deep axis t, but some such item has
+t-depth at least3, include it among the three reservations. The two
+critical-pair obligations can still be met by the other two choices.
+The total restored load is at most2/9+1/27<1/3 on t.
+
+The remaining exceptional shape has every deep item forced to t at
+exact depth2. Its other two exponents are zero or one, so there are at
+most four such different items. There are therefore exactly four, and
+the other five are exactly
+
+    s,35,5s,7s,35s.
+
+Assign all four deep items to t, at cost4/9. The five squarefree items
+fit integer capacities one at t and two at the other axes: singleton
+demand is at most one, any pair has at most two such items, and total
+capacity is five. This gives load at most7/9 at t and2/3 elsewhere.
+Every case is strict, proving the auxiliary lemma.
+
+### A pair containing five or more items always permits a certificate
+
+Let g>=5 be the maximum number of D items supported on any pair, and
+choose a maximizing pair {p,q}. All g internal items have full support
+there; every other item has a factor outside {p,q}.
+
+For g=9 or10, select p,q and, if necessary, one outside factor. If one
+core base is at least five, apply NF39's infinite pair envelopes. If
+both core bases are three, the two-core-plus-one-external chain fact
+forces one core prime to be five, whose numerical pure value is absent;
+use the conservative11/12,3/4 envelopes. Put the possible outside item
+at its selected outside factor.
+
+For g=8, use NF58's conservative pair lemma internally and assign the
+two outside items to outside factors, at cost at most2/3 per axis.
+
+For g=7, the same internal lemma works whenever the three outside items
+admit a two-slot assignment on outside factors. Otherwise all three
+outside projected supports equal {r}. If all three are pure r-powers,
+they cost less than1/2 at r. Otherwise project one outside item with a
+nonunit p,q-part onto p,q. Together with the seven internal values this
+is an eight-item list with at most one duplicate; NF58's pair lemma
+assigns it at base3. Pull that projected assignment back to the actual
+item, and put the other two outside items at r.
+
+For g=6, four outside items remain. If outside two-slot Hall fails,
+collect all t>=3 items whose projected support is the same singleton
+{r}; t is3 or4. For t=3, use the previous projection trick on one of
+these three non-pure-r items, producing seven pair items with at most
+one duplicate; the two others go to r. If all three are pure r-powers,
+put them all at r. The fourth outside item has a factor outside p,q,r.
+For t=4 the whole list is supported on p,q,r. Their actual total capacity
+is at least8, and every pair demand is at most6 by maximality of g.
+Reserve two deep items, choosing enough from the only possible
+capacity-four pair to bring its demand down to4. This is possible:
+a pair with demand5 or6 has at least two or three deep values. If that
+pair needs no reduction, there are at least three deep items globally,
+since a triple has only seven squarefree values. The remaining eight
+satisfy actual-capacity Hall; restore the two deep items. If outside
+Hall did not fail in the first place, use the internal conservative
+pair lemma and the outside assignment.
+
+It remains g=5, with five outside items. If outside two-slot Hall
+succeeds, combine it with the internal pair lemma. First suppose a
+projected singleton {r} supports t>=3 outside items; collect all of
+them. For t=3, the projection trick produces six internal pair items
+with at most one duplicate, leaves two items at r, and the two other
+outside items have factors outside p,q,r. Pure-r items can instead
+all stay at r.
+
+For t=4, nine items lie on U={p,q,r}, with one genuinely outside item.
+Select U plus one factor of that outside item. If some U base exceeds3,
+the U capacity sum is at least8. Reserve one deep U item, taking it
+from the only possible capacity-four pair when that pair has demand5.
+Such a deep item exists, and otherwise any deep item works. The remaining
+eight U items fit actual capacities: other pair capacities are at least6,
+whereas all pair demands are at most5. Restore the reservation and put
+the outside item at its selected factor. If all three U bases are3,
+then U contains5 and7. Its nine items satisfy the auxiliary lemma above;
+use that conservative certificate and assign the outside item separately.
+
+For t=5, all ten items lie on p,q,r and every pair demand is at most5.
+The same two-deep reservation and actual-capacity Hall argument used
+for g=6,t=4 applies.
+
+Finally suppose there is no projected singleton with three items.
+An outside Hall failure must put all five outside items on two projected
+primes r,t. The entire support is contained in U={p,q,r,t}. Every
+triple supports at most seven items: a triple containing p,q has the
+five internal items plus at most two projected-singleton items; a triple
+omitting p or q has at most two internal pure items plus all five outside
+items. Select these four primes. Pair capacities below6 equal4; triple
+capacities below8 equal6. A capacity-six triple has all bases3 and
+therefore contains5 and7. Any demanded seven-item such triple has a deep
+item because it has at most five allowed squarefree values.
+
+At most one capacity-four pair can have demand5. If two did, their
+union would be a triple supporting at least5+5-2=8 items, contrary to
+the bound seven. If that critical pair exists, reserve one of its deep
+items; it also lies in the possible capacity-six triple. If no pair is
+critical but a capacity-six triple has demand7, reserve one deep item
+there. Otherwise reserve nothing. All actual Hall conditions now hold:
+singletons have demand at most2; capacity-four pairs now have demand
+at most4, and all other pairs have demand at most5 with capacity at
+least6; the possible capacity-six triple now has demand at most6,
+and all other triples have demand at most7 with capacity at least8;
+total capacity is at least10. Restore the possible reservation.
+This closes every pair with g>=5.
+
+### Remaining triple and four-axis obstructions
+
+Assume every pure group has at most two items and every pair at most
+four. Let g>=7 be the maximum number of items supported on any triple,
+and choose U with that many items.
+
+For g=10, select U, reserve two deep items and assign the other eight
+by actual Hall. At least three deep items exist because U has only seven
+squarefree values. Singleton and pair demands already meet capacities;
+total capacity is at least8. Restore both reservations.
+
+For g=9, select U and one outside factor. If one core base is at least5,
+reserve a deep core item, fit the other eight with actual capacities,
+and restore it. If all three bases are3, U contains5 and7; use the
+nine-item auxiliary lemma. Assign the outside item to its chosen factor.
+
+For g=8, choose one outside factor for each of the two remaining items.
+If some core base is at least5, its total integer capacity is at least8,
+so all core items fit. Otherwise all core bases equal3; with at most two
+external primes selected this forces5 into U. At most six different
+squarefree core values are then allowed. Reserve two deep core items,
+assign the other six with two slots each, and restore the reservations.
+The two outside items cost at most2/3 on any external axis.
+
+For g=7, first test outside two-slot Hall. If it fails, all three
+outside items have the same singleton projected support {r}; hence all
+ten items use U union {r}. In the actual four-prime chain every proper
+demand fits except possibly a triple of capacity6 and demand7. Such
+a triple contains5 and7 and therefore has a deep item. Reserve that
+item if necessary, apply actual Hall and restore it. Total capacity
+is at least10, pair demands are at most4 and other triples have
+capacity at least8. Thus this outside failure is always harmless.
+
+When outside two-slot Hall succeeds, any deep core item can be reserved:
+the other six use two slots each and the outside assignment supplies
+at most two items per outside axis. Restore the deep item. Consequently
+the only remaining possibility is that the seven core values are
+exactly all nonempty squarefree products of U. Numerical5 and7 being
+absent, every prime in U exceeds7.
+
+If an outside item w has a factor in U, assign it together with the
+seven core items to U. Choose one outside factor for each of the other
+two items and select those with U. Some U base must be at least5:
+otherwise the three core primes above7 would need three distinct
+external predecessors, but at most two were selected. The core capacity
+sum is therefore at least8. Its singleton and pair demands after adding
+w are at most two and four. Hall fits these eight items, and the other
+two outside items cost at most2/3 externally.
+
+Thus any obstruction has seven squarefree core products of U and three
+outside values w_1,w_2,w_3, all coprime to the primes of U. Their precise
+form is determined in the next section.
+
+If there is no seven-item triple, a two-slot obstruction has nine or ten
+items on four primes. For ten, selecting the four primes gives capacity
+at least10, while singletons, pairs and triples demand at most2,4,6.
+For nine, select the four core primes and one outside factor. Four core
+bases cannot all be3 in a chain of at most five primes; one is at least5.
+The core capacity sum is therefore at least10 and the same proper-demand
+bounds suffice. Assign the one outside item separately. If no four-prime
+set contains nine items, two-slot Hall already succeeds on full support.
+
+### The three outside values must be pure predecessor powers
+
+We are left with the seven squarefree products of U={q_1,q_2,q_3}, all
+q_i>7, and three outside values coprime to U.
+
+Choose one dividing prime for each outside value whenever possible so
+that no chosen prime receives more than two items. This fails only when
+all three outside values are pure powers of the same prime; in that
+case their distinct powers have total cost below1/2 and one external
+axis suffices. Three core bases could not all be3 with only one external
+axis, so that case has a strict certificate too.
+
+For any successful choice of outside axes, if any core base exceeds3,
+the seven core items fit their actual capacities, whose sum is at least8
+and whose singleton and pair demands are only one and three. The outside
+loads are at most2/3. Failure therefore requires all three core bases3.
+No core prime can supply another core prime's predecessor: it would
+itself need a prime predecessor two smaller, making three consecutive
+odd primes above3. Hence each q_i has a different external predecessor
+p_i=q_i-2. These three p_i must be prime, different and outside U. Any
+chosen outside-prime set yielding failure is exactly P={p_1,p_2,p_3}.
+In particular q_i>=13.
+
+Every prime factor of every outside value must lie in P. To see this,
+if w_1 has a factor z outside P, assign w_1 to z. Unless both other
+values are pure z-powers, choose their factors so that no axis receives
+three items. The chosen set includes z and cannot equal P, so some core
+base exceeds3 and a strict certificate results. If both other values
+are distinct pure z-powers, put all three outside items at z; their total
+cost at conservative base3 is at most1/3+(1/3+1/9)=7/9. With one outside
+axis the core again has capacity at least8.
+
+Now all outside supports are subsets of the three-element set P. Start
+from a successful outside assignment with at most two items per axis;
+the case where all three values are pure powers of one prime was already
+handled. If this assignment uses at most two axes, it omits a predecessor
+and gives a certificate. Otherwise it uses all three axes, one item on
+each. If any item has another prime factor, that factor is another one
+of the three occupied axes; move the item there. The assignment now uses
+only two axes, with counts two and one, so it again gives a certificate.
+The only remaining case has each item supported on its own singleton
+axis. Therefore the three outside values are precisely
+p_1^b_1,p_2^b_2,p_3^b_3, with b_i>=1.
+
+Conversely, for this displayed family, the pure q_i values and pure
+p_i powers force all six primes to be selected. The base at each q_i is
+at most3 because p_i=q_i-2 is selected. Extra selected primes cannot
+increase these bases or receive any squarefree core item. Seven core
+items each cost at least1/3 on one of three axes, whose strict capacities
+allow at most two core items each. Thus no strict certificate exists.
+This proves the classification (NF64).
+
+### Squarefree original ternary labels and disjoint prime supports
+
+For the actual N3=19 split let
+
+    E={5,7,s,35,5s,7s,35s,u^a}, u=s-2,
+
+and let F be its disjoint retained ten-value set. Both E union F and the
+original numerical palette have their stated divisor closure. A strict
+certificate for F would contradict the same minimum cover through the
+existing single-source CRT transport, so F has the exceptional form.
+
+Every predecessor exponent b_i equals one. Otherwise divisor closure
+puts p_i in E union F, while p_i is not among F's other five distinct
+prime axes and is not its sole p_i^b_i value. Thus p_i belongs to E.
+Since p_i>=11, this means p_i=s or, when a=1, p_i=u. The former makes
+u,s,s+2=q_i three consecutive odd primes; the latter makes q_i=s collide
+with E. Both are impossible.
+
+Similarly a=1. If a>1, divisor closure puts u in F. If u=p_i, then
+q_i=s collides with E; if u=q_i, then p_i=u-2,u,s=u+2 are three consecutive
+odd primes. Both are impossible.
+
+Thus E and F are squarefree, and their prime supports are disjoint.
+The primes5 and7 cannot appear in F. Equality of s or u with any of
+F's upper or lower twin primes is excluded by the same collisions and
+three-prime argument. The remaining cofactor palette therefore consists
+of two squarefree cubes on disjoint triples, together with their four
+separate lower-twin prime labels: one for E and three for F.
+
+Consequently
+
+    N_3=19 ==> every original three-bearing modulus is squarefree;
+    a nonsquarefree original modulus divisible by3 ==> N_3>=20. (NF65)
+
+The prime supports of E and F are disjoint. No squarefreeness assertion
+is made for C0 labels outside E union F.
+
+This is a numerical necessary structure for the ACTUAL same-source
+configuration. It does not prove that phases covering the same R3 exist,
+or exclude that configuration. The earlier compatible numerical example
+s=43,u=41 and upper F primes13,19,31 attains this numerical pattern.
+The common-source phase problem and the unrestricted odd-covering problem
+remain unresolved. No new Lean verification is claimed.
