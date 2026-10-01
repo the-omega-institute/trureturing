@@ -1,0 +1,15 @@
+**假设 1.5（Event laws）。** The predicate $\mathcal L(E)$ requires all the following laws. For every $t\in\mathbb N$, $0<k_t\le H_t$, the function $H$ is nondecreasing, and $n_{t+1}=n_t+k_{t+1}$. For every positive $h\in\mathbb N$, $H_{\beta(h)}=h$, $k_{\beta(h)}=h$, and for every $t\in\mathbb N$,
+
+$$
+H_t<h\quad\Longleftrightarrow\quad t<\beta(h).
+$$
+
+For every renewal $f$, $p_f<f$ and $k_{p_f}=k_f$, and every $g$ with $p_f<g<f$ satisfies $k_g\ne k_f$. Finally, for every renewal $f$, the exact reset balance is
+
+$$
+n_{p_f}+H_{p_f}+\rho_{k_f}(p_f)
+=H_f+\rho_{k_f}(f).
+$$
+
+There is no successor-existence law, band inequality or counting reciprocity among these assumptions. Values of $\beta(0)$ and predecessors at nonrenewals have no prescribed properties.
+
