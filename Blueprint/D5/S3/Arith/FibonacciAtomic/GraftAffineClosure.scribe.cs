@@ -91,7 +91,7 @@ internal sealed class GraftAffineClosureDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "result"), H("Translation classification, realization, and minimal states"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("The first two groups quantify all natural p,h,e with p prime and e<=h, "
+                    Paragraph(Text("The first group quantifies all natural p,h,e with p prime and e<=h, "
                         + "including h=0. The remaining group quantifies every H>0 and every actual graft w; the affine assertions also hold at H=1. "
                         + "In its local-axis clause, h_p=v_p(H) and e_p=v_p(d), for each prime p dividing H. "
                         + "The local depth is saturated at h; for nonzero integers v_p is the usual valuation. "
@@ -141,13 +141,9 @@ internal sealed class GraftAffineClosureDocument : IScribeDocumentDefinition
         Formula p=V("p"), h=V("h"), e=V("e"), x=V("X"), y=V("Y"), b=V("b"),
             hh=V("H"), w=V("w"), v=V("v"), vp=V("v'"), k=V("k"), a=V("A"), bb=V("B"),
             word=V("W"), t=V("t"), z=V("z"), d=V("d"), l=V("L"), j=V("j"), u=V("u");
-        Formula r=Call("r",x), ph=Pow(p,h), pe=Pow(p,e), lw=Seq(V("L"),Underscore,Grp(w));
+        Formula ph=Pow(p,h), pe=Pow(p,e), lw=Seq(V("L"),Underscore,Grp(w));
         Formula localTest=IffOf(All("b",EqOf(Gcd(Add(x,Mul(pe,b)),ph),Gcd(Add(y,Mul(pe,b)),ph))),
             EqOf(Psi(p,h,e,x),Psi(p,h,e,y)));
-        Formula facts=And(LeOf(r,h),EqOf(Gcd(x,ph),Pow(p,r)),
-            IffOf(EqOf(r,h),Seq(ph,Sp,Mid,Sp,x)),
-            Imp(Seq(x,Sp,Neq,Sp,D(0)),EqOf(r,Call("min",Call("valuation",p,x),h))),
-            IffOf(LeOf(e,r),Seq(pe,Sp,Mid,Sp,x)));
         Formula localHyp=And(Call("Prime",p),LeOf(e,h));
         Formula affine=All("W",Some("k",Some("t",And(InOf(Rho(t),lw),
             All("v",EqOf(T(word,v),Add(M(k,v),t)))))));
@@ -205,7 +201,6 @@ internal sealed class GraftAffineClosureDocument : IScribeDocumentDefinition
             All("S,E,deltaR,deltaG,oS",Imp(Call("A",hh,w,V("E"),V("deltaR"),V("deltaG"),V("oS")),
                 LeOf(Pow(hh,D(2)),Call("card",Call("image",V("E")))))))));
         return Disp(And(All("p,h,e",Imp(localHyp,All("X,Y",localTest))),
-            All("p,h,e",Imp(localHyp,All("X",facts))),
             All("H",Imp(LtOf(D(0),hh),All("w",And(affine,period,exact,realize,ideal,tests,axes,
                 observation,matrices,stable,lengths,endpoints,atomic))))));
     }

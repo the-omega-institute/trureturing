@@ -31,11 +31,6 @@ def rejected : Realization signature :=
     (∀ (p h e : ℕ), p.Prime → e ≤ h → ∀ x y : ℤ,
       (∀ b : ℤ, Int.gcd (x + (p : ℤ) ^ e * b) ((p : ℤ) ^ h) =
         Int.gcd (y + (p : ℤ) ^ e * b) ((p : ℤ) ^ h)) ↔ psi p h e x = psi p h e y) ∧
-    (∀ (p h e : ℕ), p.Prime → e ≤ h → ∀ x : ℤ,
-      depth p h x ≤ h ∧ Int.gcd x ((p : ℤ) ^ h) = p ^ depth p h x ∧
-        (depth p h x = h ↔ (p : ℤ) ^ h ∣ x) ∧
-        (x ≠ 0 → depth p h x = min (padicValInt p x) h) ∧
-        (e ≤ depth p h x ↔ (p : ℤ) ^ e ∣ x)) ∧
     (∀ (H : ℕ), 0 < H → ∀ w : ℕ × ℕ,
       (∀ W : List Bool, ∃ k : ℕ, ∃ t : ℕ × ℕ,
         residue H t ∈ graftSpace H w ∧ ∀ v : ℕ × ℕ,
@@ -103,7 +98,7 @@ theorem actual_law : arena.Law actual := result
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  have hglobal := h.2.2 1 Nat.zero_lt_one (atomicBlock 0)
+  have hglobal := h.2 1 Nat.zero_lt_one (atomicBlock 0)
   have hatomic := hglobal.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2 0 rfl
   have hlower := hatomic.2.2.2.2.2.2.2.2.2.2
   have hauto : Autonomous 1 (atomicBlock 0) (fun _ => ()) (fun _ => ())
@@ -138,7 +133,7 @@ register_information_theorem result in arena
     owner := `D5.S3.Arith.FibonacciAtomic.GraftAffineClosure
     coordinates := #[]
     readouts := #[{
-      path := #["arg", "arg", "body", "body", "body", "arg", "arg", "arg",
+      path := #["arg", "body", "body", "body", "arg", "arg", "arg",
         "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg",
         "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg",
         "arg", "arg", "arg", "arg", "arg", "arg", "arg", "body",

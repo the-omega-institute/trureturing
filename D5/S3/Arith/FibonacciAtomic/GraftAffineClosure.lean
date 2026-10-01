@@ -7,13 +7,14 @@
    digest: Forward Fibonacci graft words realize the observable translation ideal. -/
 
 import D5.S3.Arith.Congruence.PrimePowerAffineBehavior
-import D5.S3.Factorization.PrimePowers.AffineGcdBehavior
 import Mathlib.Data.Nat.Fib.Basic
 import Mathlib.Data.Fintype.Perm
 import Mathlib.Data.List.Induction
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Data.Nat.Factorization.Basic
 import Mathlib.SetTheory.Cardinal.Finite
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.LinearCombination
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -91,11 +92,6 @@ theorem result :
     (∀ (p h e : ℕ), p.Prime → e ≤ h → ∀ x y : ℤ,
       (∀ b : ℤ, Int.gcd (x + (p : ℤ) ^ e * b) ((p : ℤ) ^ h) =
         Int.gcd (y + (p : ℤ) ^ e * b) ((p : ℤ) ^ h)) ↔ psi p h e x = psi p h e y) ∧
-    (∀ (p h e : ℕ), p.Prime → e ≤ h → ∀ x : ℤ,
-      depth p h x ≤ h ∧ Int.gcd x ((p : ℤ) ^ h) = p ^ depth p h x ∧
-        (depth p h x = h ↔ (p : ℤ) ^ h ∣ x) ∧
-        (x ≠ 0 → depth p h x = min (padicValInt p x) h) ∧
-        (e ≤ depth p h x ↔ (p : ℤ) ^ e ∣ x)) ∧
     (∀ (H : ℕ), 0 < H → ∀ w : ℕ × ℕ,
       (∀ W : List Bool, ∃ k : ℕ, ∃ t : ℕ × ℕ,
         residue H t ∈ graftSpace H w ∧ ∀ v : ℕ × ℕ,
@@ -279,23 +275,7 @@ theorem result :
       change run w (List.replicate k true) (v + w) = v + (k + 1) • w
       rw [ih, succ_nsmul]
       ac_rfl
-  have primeFacts (p h e : ℕ) (hp : p.Prime) (he : e ≤ h) (x : ℤ) :
-      depth p h x ≤ h ∧ Int.gcd x ((p : ℤ) ^ h) = p ^ depth p h x ∧
-        (depth p h x = h ↔ (p : ℤ) ^ h ∣ x) ∧
-        (x ≠ 0 → depth p h x = min (padicValInt p x) h) ∧
-        (e ≤ depth p h x ↔ (p : ℤ) ^ e ∣ x) := by
-    have facts := (D5.S3.Arith.Congruence.PrimePowerAffineBehavior.local_classification
-      p h e hp he).1 x
-    refine ⟨facts.1, facts.2.1, facts.2.2.1, facts.2.2.2.1, ?_⟩
-    constructor
-    · intro hd
-      exact (pow_dvd_pow (p : ℤ) hd).trans (by
-        simpa only [facts.2.1, Nat.cast_pow] using Int.gcd_dvd_left x ((p : ℤ) ^ h))
-    · intro hx
-      have hg := Int.dvd_coe_gcd hx (pow_dvd_pow (p : ℤ) he)
-      rw [facts.2.1] at hg
-      exact (Nat.pow_dvd_pow_iff_le_right hp.one_lt).mp (by exact_mod_cast hg)
-  refine ⟨localClassifier, primeFacts, ?_⟩
+  refine ⟨localClassifier, ?_⟩
   intro H hH w
   letI : NeZero H := ⟨hH.ne'⟩
   let L := (H ^ 2).factorial
