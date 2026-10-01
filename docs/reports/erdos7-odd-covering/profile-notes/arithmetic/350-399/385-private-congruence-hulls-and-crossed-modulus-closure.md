@@ -12032,3 +12032,87 @@ column inventories, larger p or ternary heights, or several
 nonconcentrated primes. Unrestricted Erdos7 remains unresolved.
 The deductions reuse published moments, AP-mass bounds and the
 published continuation threshold; no Lean verification is asserted.
+
+## 89. Actual root capacity requires at least six flat-five columns
+
+Keep H_3=H_5=1 and R={5}, but impose NO minimum-column equality.
+Retain the complete original color supports and all their prime
+heights. Let j own the original15, let k be the other color, and
+write u_i=|U_i| as in section80. For every color i with7 not in S_i,
+
+    u_i>=5-e_i, where e_i=1 if i=j and e_i=0 if i=k. (FL10)
+
+In particular,
+
+    u_j+u_k>=6.                                    (FL11)
+
+If7 is in S_j the stronger total is at least7. If7 is in neither
+color, it is at least9. These are original nonpure5-column counts,
+not counts of independent optimized quotient sources.
+
+### Reserve mass for the actual5-free cofactor remainder
+
+Fix a color omitting7. Its retained5-free cofactor classes have
+moduli coprime to210, with numerical multiplicity at most two:
+only original m and3m can contribute to the same cofactor m.
+Construct section88's distortion law for this actual family.
+Use reserve3/10, so the initial accounting mass is7/10 and
+the initial scalar is40/7<5.860938. The same published threshold
+and reserved-mass proof give, under the resulting full-cofactor
+probability P,
+
+    P(E_i)>3/10,                                   (FL12)
+
+where E_i avoids exactly this actual5-free family. No measure is
+conditioned on E_i. For ANY original mixed cofactor phase modulo m,
+BBMST Lemma3.4 in this same law gives
+
+    P(a modm)<=2^omega(m)/m.
+
+All prime factors of m are at least11. Hence every such bound is
+at most2/11. Except for m=11 or m=13, it is at most2/17. Indeed
+a different prime is at least17; a prime power of exponent at
+least two gives at most2/121; and a cofactor with two distinct
+prime factors gives at most4/(11*13)<2/17. Further factors only
+decrease the product.
+
+### Every required5 root spends its own original labels
+
+There are t_i=4-e_i nonzero5 roots not covered by the possible
+original15 at root i. The original5 occupies root0, and no other
+pure5 power is present since H_5=1. At each of these t_i roots,
+the actual mixed originals5m,15m of color i must cover EVERY
+point of E_i. This follows from section73's whole-root pruning:
+opposite-color originals have been removed by the same legal
+source assignment, and the5-free originals all miss E_i.
+
+A single mixed original covers P-mass at most2/11<3/10, so each
+required root needs at least two such originals. Every original
+has one fixed5 root. There are at most2u_i mixed originals in
+total, since each column offers only5m and15m.
+
+Suppose u_i<=t_i. The root demands force equality throughout:
+exactly2t_i mixed originals, with exactly two at every required
+root. A pair involving any cofactor other than11,13 has total
+P-mass at most
+
+    2/11+2/17=56/187<3/10,
+    3/10-56/187=1/1870>0.
+
+It cannot cover E_i. Thus all2t_i required originals would have
+cofactor11 or13. Only four numerical original labels are available
+with these cofactors:55,165,65,195. But2t_i>=6. This contradiction
+proves u_i>=t_i+1=5-e_i, without assumptions on the other columns'
+phases or on whether every potential original actually occurs.
+
+The supports S_j,S_k are disjoint, so at least one omits7. FC5
+already supplies u_i>=2 for either color. If j omits7, FL10 gives
+u_j>=4 and hence the total at least6. If k omits7, it gives
+u_k>=5 and hence the total at least7. Applying both when both
+omit7 gives the stated total9.
+
+This closes the four- and five-column cases under the stated flat
+unique-shared-five hypotheses. It does not rule out six or more
+columns, nonflat5 or3 heights, or more than one nonconcentrated
+prime. The proof reuses the same continuation and actual AP-mass
+interface; no new sieve computation or Lean verification is claimed.
