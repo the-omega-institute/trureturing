@@ -48,9 +48,54 @@ Lean statement: `D5/S3/VertexAlgebra/MonsterShortSupportSpin.shortWeight`
 
 The existing unique representative theorem remains in MonsterShortSupport; this declaration supplies its public weight expression.
 
+**Theorem 1.4 (Explicit six-section expansion).**
+
+Lean statement: `D5/S3/VertexAlgebra/MonsterShortSupportSpin.sixMap_explicit`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/MonsterShortSupportSpin.sixMap_explicit` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Tathagata Basak (2017). *The octonions as a twisted group algebra*. URL: <https://arxiv.org/abs/1702.05705>.
+
+*Commentary.*
+
+This coordinate expansion is the public interface used by the finite full-map quadratic proof.
+
+**Theorem 1.5 (All-ones six-section relation).**
+
+Lean statement: `D5/S3/VertexAlgebra/MonsterShortSupportSpin.sixMap_allOnes_explicit`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/MonsterShortSupportSpin.sixMap_allOnes_explicit` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Tathagata Basak (2017). *The octonions as a twisted group algebra*. URL: <https://arxiv.org/abs/1702.05705>.
+
+*Commentary.*
+
+The seven-section relation identifies the all-ones six-section sum with the seventh nonzero ground section.
+
+**Theorem 1.6 (Quadratic parity of the full seven-section map).**
+
+Lean statement: `D5/S3/VertexAlgebra/MonsterShortSupportSpin.labelQuadratic_fullMap`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/MonsterShortSupportSpin.labelQuadratic_fullMap` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Tathagata Basak (2017). *The octonions as a twisted group algebra*. URL: <https://arxiv.org/abs/1702.05705>.
+
+*Commentary.*
+
+The proof sums over the selected support, inducts on its cardinality, and uses the ground-section value and distinct-section polar pairing. It proves the binomial parity formula in F_2. This is still a finite label theorem and does not construct VOA modules, fusion intertwiners, OPE coefficients, or conformal weights.
+
 ## References
 
+- Truth anchor: `D5/S3/VertexAlgebra/MonsterShortSupportSpin.labelQuadratic_fullMap`
 - Truth anchor: `D5/S3/VertexAlgebra/MonsterShortSupportSpin.labelQuadratic_groundSection`
 - Truth anchor: `D5/S3/VertexAlgebra/MonsterShortSupportSpin.labelQuadratic_groundSection_polar`
 - Truth anchor: `D5/S3/VertexAlgebra/MonsterShortSupportSpin.shortWeight`
+- Truth anchor: `D5/S3/VertexAlgebra/MonsterShortSupportSpin.sixMap_allOnes_explicit`
+- Truth anchor: `D5/S3/VertexAlgebra/MonsterShortSupportSpin.sixMap_explicit`
 - Dependency: [D5/S3/VertexAlgebra/MonsterShortSupport](MonsterShortSupport.md)
