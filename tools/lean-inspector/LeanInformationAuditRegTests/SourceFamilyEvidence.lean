@@ -2,6 +2,9 @@ import Reg.D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation
 import Reg.D5.S1.Words.Patterns.CyclicStackPreimagesCore
 import Reg.D5.S3.Quantum.Information.InfiniteCalibrationControl
 import LeanInformationAuditRegTests.CompiledSourceWire
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 namespace LeanInformationAuditRegTests.SourceFamilyEvidence
@@ -34,7 +37,7 @@ run_meta do
         record.escape.fromObject.isSome && record.escape.continuation.any (·.kind == "open") do
       throwError "[FAIL] original source four slots: {name}"
     logInfo m!"SOURCE_ASSESSMENT {name}: internal_heartbeats={heartbeats} ms={elapsed} evidence_ref={certificate.evidenceRef}"
-  let snapshot ← TemplateBinding.exportSnapshot
+  let snapshot ← (TemplateBinding.exportSnapshot (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   let modules := #[
     `Reg.D5.S3.Estimation.DataProcessing.FiniteHistoryConditionalExpectation,
     `Reg.D5.S1.Words.Patterns.CyclicStackPreimagesCore,

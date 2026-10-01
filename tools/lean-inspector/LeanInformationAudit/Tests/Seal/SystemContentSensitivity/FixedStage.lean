@@ -1,5 +1,8 @@
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open D5.S3.ConceptDynamics.CIRPT
 open D5.S3.ConceptDynamics.InformationEscape
@@ -46,16 +49,16 @@ def fixedStageRealization : PrimitiveRealization arena.signature where
   readout := fun _ _ => (censusCatalog false).uniqueCaptureCount (0 : Fin 1)
   anchor := Fin.elim0
 
-information_theorem systemTheorem
+test_assess in information_theorem systemTheorem
   in arena
   primitives fixedStageRealization
   : arena.Law fixedStageRealization := by trivial
 
-expect_information_occurrence systemTheorem
+test_assess in expect_information_occurrence systemTheorem
   in arena
   from "LeanInformationAudit.Tests.Seal.SystemContentSensitivity.FixedStage"
 
 #guard_msgs (error) in
-#seal_information_theory
+test_assess in #seal_information_theory
 
 end LeanInformationAudit.Tests.Seal.T013FixedStage

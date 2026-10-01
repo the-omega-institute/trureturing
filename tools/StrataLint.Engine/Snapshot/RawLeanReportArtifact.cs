@@ -120,7 +120,7 @@ internal static class RawLeanReportArtifact
 
         var missing = expected.Values
             .Select(static item => item.Path.Value)
-            .Where(path => !reports.ContainsKey(path) && LeanClosureValidator.IsRequiredReportLean(path))
+            .Where(path => !reports.ContainsKey(path))
             .Order(StringComparer.Ordinal)
             .ToArray();
         if (missing.Length > 0)
@@ -141,8 +141,6 @@ internal static class RawLeanReportArtifact
         var material = JsonSerializer.SerializeToElement(new
         {
             modules = expected
-                .Where(item => report.Files.ContainsKey(item.Value.Path)
-                    || LeanClosureValidator.IsRequiredReportLean(item.Value.Path.Value))
                 .OrderBy(static item => item.Key, StringComparer.Ordinal)
                 .Select(item =>
                 {

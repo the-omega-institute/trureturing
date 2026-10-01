@@ -88,19 +88,6 @@ register_information_theorem
       stateBinder := 9 }] })
   escape continues (open)
 
-run_meta do
-  let target :=
-    ``_root_.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.flat_unique_cover_lift
-  let env ← getEnv
-  let #[event] := (TemplateBinding.inventory env).filter (·.key.theoremName == target)
-    | throwError "expected one periodic-grid cover-lift registration"
-  let some (_, claim) := (TemplateBinding.ownedClaims env).find? (·.2.key == event.key)
-    | throwError "periodic-grid cover-lift source claim missing"
-  let record ← TemplateBinding.assess event (some claim)
-  let .declaredValidated _ := record.result
-    | throwError "periodic-grid cover-lift registration did not validate"
-  logInfo "periodic-grid cover-lift registration declared_validated"
-
 #print axioms actual_law
 #print axioms rejected_law
 #print axioms sensitivity_proof

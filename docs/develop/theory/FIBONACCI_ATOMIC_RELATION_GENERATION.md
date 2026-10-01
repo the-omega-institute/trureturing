@@ -38774,3 +38774,353 @@ $6\cdot4\equiv1\pmod{23}$，故 $r_+=24$、$r_-=138-24=114$。
 两者均由同一实际来源与同一指标的合同得到，不把局部候选相位当作实际供给。
 满足互素扩张时，Robin 差额仍由 §282 末尾的规模增益与新增素数成本共同决定；
 本节没有给出这两项的统一比较，也没有扩大全部整数的 Robin 覆盖。
+
+## 284. 强整除序列筛法的历史输入仍是指标平均量
+
+[Browning--Verzobio 的强整除序列筛法](../../../Library/Recurrence/browningverzobio2024sds.md)
+给出了当前 FIB 素切面最接近的一个外部筛法接口。其定理 1.2、1.4、1.5、1.7
+以及 Fibonacci 推论 1.6 分别控制：项的所有素因子都较大的指标集合的上下密度、素项的指标密度，
+以及 Eratosthenes--Legendre 筛积。对 Fibonacci 数列，这些结果说明大素因子项在指标集合中有可量化的
+稀疏性与下界，但量词仍是
+\[
+\#\{j\le J:\text{条件在 }V_j\text{ 上成立}\},
+\]
+而不是每个指定 $j$ 的素因子尾部。
+
+因此它不能直接替代命题 195.4 所需的逐点条件
+\[
+(\log j)\sum_{\substack{p>j^{5/6}\\p\mid V_j}}\frac1{p-1}\longrightarrow0
+\]
+（即使允许删去一个密度为零的指标集也不够，因为 Robin 需要覆盖同一候选的全部指标），
+也不能给出 §233.5 所需的同一整数 $gV_j$ 的完整约数权重。要消费这一来源，仍须新增一个
+“FIB 地址避开筛法异常指标”或“异常指标上的直接 Robin 裕量”桥梁。没有这个桥梁，重复平均筛估计不会缩小当前点态缺口。
+
+## 追加锚（本行以下为增补区）
+
+## 285. 同秩素数的同步供给与可变乘子 Robin 尾段
+
+沿用 §282 的实际来源 $A_{m,n}=d_{mn-1}F_{2mn}$、$B_{m,n}=4mF_n$，其中
+$d_k=F_{3k}/F_k=L_k^2-(-1)^k$。记 $Z(x)=\sigma(x)/x$，并记
+\[
+\mathcal E(m)=\{n\ge1:\ \exists M\ge1,\ A_{m,n}=B_{m,n}M,
+\ \gcd(B_{m,n},M)=1\}.
+\tag{285.1}
+\]
+下面的共同秩与原序列首次深度均保持实际值。秩界与赋值公式仍取
+Lengyel (1995), §3，见 [既有文献条目](../../../Library/Scale/lengyel1995fibonacciorder.md)。
+
+### 定理 285.1 同秩系数只能同步选择供给路线
+
+设 $s>1$、$\gcd(s,6)=1$，非空有限素数集 $P$ 中每个素数均满足
+\[
+z(p)=3s,\qquad h_p=v_p(F_{3s}).
+\]
+取正指数 $a_p\ge1$，令
+\[
+m=\prod_{p\in P}p^{a_p},\qquad
+\eta=\prod_{p\in P}\varepsilon_p^{a_p}\in\{1,-1\},
+\qquad \varepsilon_p=(5/p).
+\tag{285.2}
+\]
+定义 $r_+=6(6^{-1}\bmod s)$、$r_-=6s-r_+$，逆元取标准正代表。
+则
+\[
+\boxed{\quad
+n\in\mathcal E(m)
+\quad\Longleftrightarrow\quad
+n\equiv0\pmod{6s}
+\ \text{或}\ 
+\left(\forall p\in P,\ a_p=h_p,\quad n\equiv r_\eta\pmod{6s}\right).
+\quad}
+\tag{285.3}
+\]
+其中 $r_\eta$ 在 $\eta=1$ 时取 $r_+$，在 $\eta=-1$ 时取 $r_-$。
+因此额外分支需要整份系数深度向量与首次深度向量同时匹配；在这些实际参数上，不存在部分系数素数走骨架、其余走 Lucas 的混合供给。
+扩张域的自然密度在深度全匹配时为 $1/(3s)$，否则为 $1/(6s)$。
+
+**证明。** $z(p)=3s>3$ 排除二和五。秩界给 $p\equiv\varepsilon_p\pmod s$，
+故 $m\equiv\eta\pmod s$。在六整除 $n$ 时，$k=mn-1$ 与六互素。
+§282.1对每个系数素数给同一份骨架条件 $3s\mid n$，或同一份 Lucas 指标条件
+$s\mid k$，另加各自的深度条件 $a_p=h_p$。
+若骨架成立，则全部素数都走该路；若不成立，每个素数都必须满足 Lucas 条件和自身深度条件。
+所以整个合同是
+\[
+6\mid n,\qquad
+3s\mid n\ \text{或}\ 
+\left(s\mid mn-1,\ \forall p\in P,\ a_p=h_p\right).
+\]
+前一联合条件给 $n\equiv0\pmod{6s}$；后一联合条件给 $n\equiv r_\eta\pmod{6s}$。
+两类不交，周期计数给密度。$\square$
+
+### 定理 285.2 素指标 Lucas 整包保留全部首次深度并消去集体负相位
+
+对素数 $s\ge5$，定义实际整数
+\[
+m_s=\frac{L_s^2+1}{2}=\frac{F_{3s}}{2F_s}.
+\tag{285.4}
+\]
+则 $m_s>1$ 为奇整数，它的素因子集合恰为 $\{p:z(p)=3s\}$，并且
+\[
+\boxed{\quad v_p(m_s)=h_p\quad\text{对每个 }p\mid m_s.\quad}
+\tag{285.5}
+\]
+还有
+\[
+m_s\equiv1\pmod s,\qquad
+\prod_{p\mid m_s}\varepsilon_p^{h_p}=1.
+\tag{285.6}
+\]
+因此，对每个正整数 $a$，
+\[
+\boxed{\quad
+n\in\mathcal E(m_s^a)
+\quad\Longleftrightarrow\quad
+n\equiv0\pmod{6s}
+\ \text{或}\ 
+\left(a=1,\quad n\equiv r_+\pmod{6s}\right).
+\quad}
+\tag{285.7}
+\]
+本判据不需要假设任一 $h_p$ 等于一。对全部幂次，候选额外相位均为 $r_+$；其实际存在性只保留在一次整包系数中。
+
+**证明。** 使用经典三倍指标与 Lucas–Fibonacci 范数恒等式，因 $s$ 为奇数，
+\[
+d_s=L_s^2+1=5F_s^2-3.
+\]
+$s$ 不被三整除，所以 $F_s,L_s$ 为奇数，而 $3s\equiv3\pmod6$。
+经典二赋值式给 $v_2(d_s)=1$，因此式（285.4）为奇整数；$s\ge5$ 又给 $L_s\ge11$，故 $m_s\ge61$。
+
+若奇素数 $p\mid d_s$，则 $p\mid F_{3s}$，故 $z(p)\mid3s$。
+因 $s$ 为素数，可能秩只有 $1,3,s,3s$；前两者不能属于奇素数。
+若 $z(p)=s$，则 $p\mid F_s$，而 $d_s=5F_s^2-3$ 迫使 $p=3$。
+但 $z(3)=4$，不可能等于奇素数 $s$。所以必有 $z(p)=3s$。
+反过来，实际秩为 $3s$ 的素数不整除 $F_s$；由 $F_{3s}=2m_sF_s$ 得 $p\mid m_s$。
+它在该乘积的其余因子上赋值为零，故式（285.5）成立。
+
+经典 Lucas 素指标同余 $L_s\equiv1\pmod s$ 可在黄金整数环中直接由二项式证明：
+写 $\psi=1-\phi$，则
+\[
+\phi^s+\psi^s\equiv(\phi+\psi)^s=1\pmod{s\mathbb Z[\phi]}.
+\]
+素数 $s$ 整除所有中间二项式系数，且整数在该环中的 $s$ 整除等价于普通整数的 $s$ 整除。
+因二在模 $s$ 下可逆，式（285.4）给 $m_s\equiv1\pmod s$。
+另一方面，式（285.5）与经典秩界给
+\[
+m_s\equiv\prod_{p\mid m_s}\varepsilon_p^{h_p}\pmod s.
+\]
+右端只能为正一或负一，$s\ge5$ 使它们在模 $s$ 下不同，得到式（285.6）。
+
+$m_s^a$ 的各素数深度为 $ah_p$。全部 $h_p\ge1$，且素支撑非空，
+所以向量合同 $ah_p=h_p$ 对全部素数成立当且仅当 $a=1$。
+定理285.1遂给式（285.7）。$\square$
+
+### 定理 285.3 整包任意幂次的统一 Euler 成本
+
+对式（285.4）的全部素数 $s\ge5$ 与全部 $a\ge1$，有
+\[
+1<Z(m_s^a)\le\frac{m_s}{\varphi(m_s)}<\frac{16}{15}.
+\tag{285.8}
+\]
+更准确地，令
+\[
+\Theta_s=\min\left\{
+\frac{2s\log\phi}{(6s-2)\log(6s-1)},\quad
+\frac{2(1+\log(3s))}{s}\right\}.
+\tag{285.9}
+\]
+则
+\[
+\log\frac{m_s}{\varphi(m_s)}\le\Theta_s,
+\qquad
+\sup_{a\ge1}\bigl(Z(m_s^a)-1\bigr)
+\le e^{\Theta_s}-1
+=O\!\left(\frac{\log s}{s}\right).
+\tag{285.10}
+\]
+最后的极限沿素数 $s\to\infty$，且对幂次 $a$ 一致。
+
+**证明。** 每个素因子 $p$ 的秩为奇数 $3s$。经典秩界给 $3s\mid p-1$ 或 $3s\mid p+1$。
+因为 $p$ 为奇数，相应正倍数必须为偶数，故
+\[
+p\ge6s-1.
+\tag{285.11}
+\]
+若 $q_s$ 为不同素因子数，则它们的乘积整除 $m_s$，所以
+$q_s\log(6s-1)\le\log m_s$。
+由 $\log(p/(p-1))\le1/(p-1)$，得到
+\[
+\log\frac{m_s}{\varphi(m_s)}
+\le\frac{q_s}{6s-2}
+\le\frac{\log m_s}{(6s-2)\log(6s-1)}.
+\tag{285.12}
+\]
+Binet 给 $L_s=\phi^s-\phi^{-s}$，故
+\[
+m_s=\frac{\phi^{2s}+\phi^{-2s}-1}{2}<\phi^{2s}.
+\]
+这给式（285.9）的第一条上界。第二条直接来自 §163.1 在同一个完整秩桶 $d=3s$ 上的 Euler 对数估计，
+而不是将不同来源的素数极值相乘。
+
+为得到全域常数，使用 $\log\phi<1/2$、$\log29>3$，以及
+$2s/(6s-2)\le5/14$。前两条可由 $e>8/3>\phi^2$ 与 $e<3$ 得到。
+所以第一条上界严格小于
+\[
+\frac5{84}<\frac1{16}<\log\frac{16}{15}.
+\]
+最后一个不等式是 $-\log(1-x)>x$ 在 $x=1/16$ 的情形。
+每个幂次的有限 Euler 因子不超过其饱和因子，得到式（285.8）与式（285.10）。$\square$
+
+### 定理 285.4 跨全部整包系数和幂次的一致 Robin 尾段
+
+取 $C\in\{4,5040\}$、全部素数 $s\ge5$、全部正整数 $a,n$，令
+\[
+B_{C,s,a,n}=Cm_s^aF_n,\qquad R=n+as.
+\tag{285.13}
+\]
+则对每个 $\varepsilon>0$，存在同一个 $R_0$，使两种 $C$ 及所有 $R\ge R_0$ 的这些参数均满足
+\[
+\boxed{\quad
+0<\frac{Z(B_{C,s,a,n})}{e^\gamma\log\log B_{C,s,a,n}}<\varepsilon.
+\quad}
+\tag{285.14}
+\]
+因此该完整参数族有一个共同的最终 Robin 安全阈值；它不只逐个固定 $s$ 或 $a$ 取得阈值。
+
+**证明。** Euler 局部因子给标准次乘法性 $Z(xy)\le Z(x)Z(y)$，无须互素条件。
+由定理285.3，
+\[
+Z(B_{C,s,a,n})\le\frac{16}{15}Z(CF_n).
+\tag{285.15}
+\]
+§172.1分别在固定乘子四与 $5040$、单个 Fibonacci 因子上给 Robin 比值趋零。
+结合 Binet 的 $\log\log(CF_n)\sim\log n$，得到
+\[
+Z(CF_n)=o(\log n)\qquad(n\to\infty).
+\tag{285.16}
+\]
+此处只把已有固定乘子结论用于这两个固定基础族；变化乘子的成本由式（285.15）另行支付。
+
+记 $c=(\log2)/4>0$。递推增长给 $F_n\ge2^{(n-2)/2}$ 对 $n\ge2$ 成立，
+单独检查 $n=1,2,3$，遂得 $\log(4F_n)\ge cn$ 对全部正指标成立。
+又 $m_s\ge L_s\ge F_s$，$s\ge5$ 给 $\log m_s\ge cs$。
+所以
+\[
+\log B_{C,s,a,n}\ge c(n+as)=cR.
+\tag{285.17}
+\]
+当 $R$ 足够大时，$\log(cR)\ge\tfrac12\log R>0$，因此分母至少为 $\tfrac12e^\gamma\log R$。
+
+给定 $\varepsilon>0$，对两份式（285.16）取共同的 $N\ge2$，使全部 $n\ge N$ 都满足
+$Z(CF_n)<15\varepsilon e^\gamma\log n/32$。
+在这一范围内，$n\le R$ 与式（285.15）使所求比值严格小于 $\varepsilon$。
+对剩下的 $1\le n<N$，取有限最大值 $C_N=\max_{C\in\{4,5040\},\ 1\le n<N}Z(CF_n)$。
+只要再令 $\log R>32C_N/(15\varepsilon e^\gamma)$，同一估计亦严格小于 $\varepsilon$。
+两范围共享一个 $R_0$，证明式（285.14）。
+
+此外 $F_n\le\phi^n$、$m_s<\phi^{2s}$ 给
+\[
+\log B_{C,s,a,n}<\log5040+2R\log\phi.
+\]
+所以充分大的实际整数规模也强制 $R$ 超过该共同阈值。
+取 $\varepsilon=1$，得到整个参数族的最终 Robin 安全性。$\square$
+
+### 定理 285.5 两个非分裂素数合成正相位的实际同秩整包
+
+对 $s=19$，有
+\[
+L_{19}=9349,\quad F_{19}=4181,\quad F_{57}=365435296162,
+\qquad m_{19}=43701901=797\cdot54833.
+\tag{285.18}
+\]
+两个因子都是素数，首次秩均为 $57$，首次深度均为一，黄金分裂符号均为负一。
+各自单独作系数时，§283的额外相位为
+\[
+r_-=114-96=18\pmod{114}.
+\]
+合成整包后却有
+\[
+\boxed{\quad
+\mathcal E(m_{19}^a)=
+\{n\ge1:\ n\equiv0\pmod{114}\}
+\cup
+\begin{cases}
+\{n\ge1:\ n\equiv96\pmod{114}\},&a=1,\\
+\varnothing,&a\ge2.
+\end{cases}
+\quad}
+\tag{285.19}
+\]
+因此不能把分别单独作系数时的负相位直接交给合成系数；合成后必须用同一实际 $m$ 重算共同指标。
+
+**证明。** 式（285.18）来自整数递推与因式分解。
+$797\equiv2\pmod5$、$54833\equiv3\pmod5$ 给两份负符号，
+而 $797\equiv54833\equiv-1\pmod{19}$，故乘积为正一模十九。
+$6^{-1}\equiv16\pmod{19}$ 给 $r_+=96$。
+两素数平方均不整除 $F_{57}$，此前正指标均不被它们整除，确定所述首次秩和深度。
+式（285.19）由定理285.2得到。$\square$
+
+### 定理 285.6 加入 5040 小素数骨架后的精确递归入口
+
+对素数 $s\ge5$、$a\ge1$，取同一实际来源的系数
+\[
+\widetilde m=1260m_s^a,\qquad
+B_{\widetilde m,n}=5040m_s^aF_n.
+\tag{285.20}
+\]
+则整包与小素数骨架互素，且
+\[
+\gcd(m_s,5040)=1,\qquad
+Z(5040m_s^a)=\frac{403}{105}Z(m_s^a).
+\tag{285.21}
+\]
+其互素扩张入口精确为
+\[
+\boxed{\quad n\in\mathcal E(1260m_s^a)
+\quad\Longleftrightarrow\quad
+24\mid n\quad\text{且}\quad
+\left[3s\mid n\ \text{或}\ \bigl(a=1,\ s\mid1260n-1\bigr)\right].
+\quad}
+\tag{285.22}
+\]
+对 $s=5,7$，这等价于 $n\equiv0\pmod{24s}$，没有额外类。
+对素数 $s\ge11$，令
+\[
+\widetilde r_s=24(30240^{-1}\bmod s),\qquad 0<\widetilde r_s<24s.
+\]
+则式（285.22）等价于
+\[
+n\equiv0\pmod{24s}
+\quad\text{或}\quad
+\bigl(a=1,\ n\equiv\widetilde r_s\pmod{24s}\bigr).
+\tag{285.23}
+\]
+自然密度在 $s\ge11,a=1$ 时为 $1/(12s)$，其余情形为 $1/(24s)$。
+特别地，$s=19$ 的额外类为 $168\pmod{456}$。
+
+**证明。** 定理285.3给每个整包素因子 $p\ge6s-1\ge29$，而
+$5040$ 的素支撑为 $\{2,3,5,7\}$，故互素。经典约数和乘法性及
+$Z(5040)=(31/16)(13/9)(6/5)(8/7)=403/105$ 给式（285.21）。
+
+对系数中的三、七，§282.1的 Lucas 路线不可能发生，因为其首次秩四、八均与三互素。
+二方向要求 $6\mid n$，五方向自动匹配，三、七分别要求 $4\mid n$、$8\mid n$；
+联合条件恰为 $24\mid n$。
+每个整包素数的系数深度仍为 $ah_p$，全部实际首次深度 $h_p>0$。
+因此它们共同要求骨架 $3s\mid n$，或 Lucas 指标 $s\mid\widetilde mn-1$ 和 $a=1$。
+定理285.2给 $m_s^a\equiv1\pmod s$，故后一指标条件恰为 $s\mid1260n-1$。
+这证明式（285.22）。
+
+若 $s=5,7$，则 $s\mid1260$，后一条件不可能。
+若 $s\ge11$，$30240=24\cdot1260$ 在模 $s$ 下可逆；
+写 $n=24t$，后一条件恰为 $t\equiv30240^{-1}\pmod s$。
+前一条件与 $24\mid n$ 联合恰为 $24s\mid n$。
+非零逆元保证两个类不交，给式（285.23）及密度。
+最后 $30240\equiv11\pmod{19}$、$11^{-1}\equiv7\pmod{19}$，所以
+$\widetilde r_{19}=24\cdot7=168$。$\square$
+
+本节的一致性来自同秩整包的真实素支撑与饱和 Euler 成本上界。
+它允许 $s$、幂次及 Fibonacci 指标共同变化，仍没有覆盖任意乘子、任意五窗加法来源或全体正整数。
+在整包幂次迭代中，素支撑与饱和 Euler 成本保持不变，实际供给深度随幂次变化；
+式（285.7）与式（285.23）的额外分支因此在第二次幂起消失。
+该乘法递归族接回了 $5040$ 骨架，但未建立任意五窗加法转移的统一成本。
+互素扩张的存在仍不自动给出 §282 末尾两份 Robin 差额之间的传递方向；
+定理285.4直接估计同一个旧整数的真实约数权重，不从新来源安全性倒推旧来源。
