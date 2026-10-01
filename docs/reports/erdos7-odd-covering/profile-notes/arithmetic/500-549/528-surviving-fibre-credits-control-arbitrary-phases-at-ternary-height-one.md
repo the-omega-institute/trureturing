@@ -31215,8 +31215,8 @@ an explicit assignment attaining82/81,80/81. This is an
 unmerged numerical obstruction; actual endpoint coincidences
 can still save prefix cost. Separately, the nine values
 {5,13,19,65,95,247,1235,11,17} have no selected-chain
-certificate despite omitting7. The missing5 nine-item question
-and its whole-cover consumer are not settled by this counterexample.
+certificate despite omitting7. Section48 gives the separate
+missing5 theorem and its precisely restricted whole-cover consumer.
 
 [Report385, section47](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#47-actual-endpoint-phases-force-a-positive-common-covering-demand)
 uses the actual endpoints of an eight-class repair. If two
@@ -31249,6 +31249,31 @@ alone do not contradict each other. The missing step is a bound
 on the unrestricted remaining inventory over this SAME complement;
 positive complement density before those classes is not a proof
 of an uncovered integer. No new Lean verification is claimed.
+
+[Report385, section48](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#48-nine-distinct-collision-bases-without-five-admit-a-strict-certificate)
+proves that any nine different nonunit values coprime to6 and
+omitting the numerical value5 admit a strict selected-chain
+certificate. It reuses the existing Hall and prefix criteria;
+the additional cases reserve at most two items at depth at
+least two before assigning the others. The bound
+(R-1)/R+2/R^2<1 preserves strictness when they are restored.
+Ten values already fail this numerical guarantee: the seven
+nonempty squarefree products of13,19,31 together with11,17,29.
+They omit both5 and7 but force seven shallow core items onto
+six strict slots. This supplies no covering phases.
+
+Consequently an entirely3-free BC2 residual with fewer than n
+classes must have at least ten repeated bases if numerical5
+is absent. Every legal complete repair of at most nine classes
+with such a residual therefore requires label15 and repeated
+cofactor5. The known N_3>=18 ensures these repairs have fewer
+than N_3 classes, as BC2 requires. When every original3-bearing
+label has3-height one, both non-parent branches cannot have at most nine
+labels: the two actual branches would both need numerical15.
+This gives N_3>=19 under the whole-family height-one hypothesis.
+Nine-class repairs with higher3 labels are still unresolved;
+the unrestricted lower bound remains N_3>=18. No new Lean
+verification or literature-priority claim is made.
 
 [Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
 keeps the residual cover's entire old q coordinate unchanged.

@@ -6326,8 +6326,8 @@ of5,13,19. Each of those three axes has base three, and adding
 more primes cannot increase these bases. Seven core items
 cannot fit the six strict slots on those axes. Thus NF37's
 requirement for the numerical value7 cannot be extended to nine
-items. This does not decide the corresponding missing5 claim
-or produce a covering counterexample.
+items. The corresponding missing5 claim holds by section48;
+this numerical example does not produce a covering counterexample.
 
 ## 47. Actual endpoint phases force a positive common covering demand
 
@@ -6474,3 +6474,264 @@ It verifies that the local endpoint and divisor conditions alone
 do not give a contradiction. The unresolved step is to control
 the remaining original classes on the positive common complement.
 These are ordinary symbolic results, not new Lean verification.
+
+## 48. Nine distinct collision bases without five admit a strict certificate
+
+Let E contain at most nine different nonunit integers coprime
+to6. If the numerical value5 does not occur, some selected
+prime chain above3 admits a strict assignment:
+
+    sum_(m assigned to p_i) r_i^(-v_(p_i)(m))<1
+      at every selected axis,
+    r_1=p_1-2, r_i=p_i-p_(i-1)+1.                         (NF44)
+
+The hypotheses concern the numerical value5, not the absence
+of prime5 from every factorization. The proof reuses the Hall
+criterion, NF17, NF37 and NF39. It adds the nine-item cases;
+it does not reprove those assignment or transport theorems.
+For at most eight items NF37 already proves the assertion,
+so assume that E has nine items.
+
+A useful way to apply the existing Hall criterion is to reserve
+at most two items, each at an axis where its exponent is at
+least two. Assign the remaining items with integer capacities
+r_i-1. Even if both reserved items use the same axis, its
+total cost is at most
+
+    (r_i-1)/r_i+2/r_i^2=1-(r_i-2)/r_i^2<1.
+
+Conservative capacity two and base three can also be used,
+giving cost at most8/9. Reserving an item always keeps its
+actual prime exponent; no numerical replacement is involved.
+
+### A group of three pure powers admits a strict assignment
+
+Suppose at least three items are pure powers of p. Assign all
+of them to p. Their distinct exponents give cost less than1/2
+at conservative base three. At most six items remain. Try
+capacity two on their prime factors other than p.
+
+First suppose a prime q has at least three remaining items
+whose support after removing p is exactly {q}. Collect ALL
+such items in T, with3<=|T|<=6. They are different values
+p^u*q^v, u>=0,v>=1. Assign to p every T item with u>=2 and
+v equal to1 or2. Their total added p cost is less than
+
+    2*sum_(u>=2)3^(-u)=1/3.
+
+Thus p costs less than5/6. At q there remain at most two
+items of depth one, at most two of depth two, and all others
+have depth at least three. Its cost is at most
+
+    2/3+2/9+2/27=26/27.
+
+If at most two items lie outside the pure p group and T,
+assign them to factors outside {p,q}. Every such axis costs
+at most2/3. This also works for three outside items whenever
+their outside factors admit capacity two.
+
+The only additional failure has exactly three pure p items,
+three T items and three outside items whose outside support
+is the same singleton {r}. Use a sharper assignment for T.
+If their q depths are not all one, put them all at q, at cost
+at most7/9. Otherwise their p depths are different, so one is
+at least two; put that item at p and the other two at q.
+The p cost is at most13/27+1/9=16/27, and q costs at most2/3.
+
+If the three outside r depths are not all one, put all three
+at r, at cost at most7/9. If all are one and an outside item
+has a p factor, put that item at p, whose cost is at most
+25/27, and the other two at r. If none has a p factor, the
+three values are q^b*r with different b. Put one with b>=2
+at q. Its cost is then at most7/9+1/9=8/9; the other two
+cost at most2/3 at r. This resolves every singleton failure.
+
+Now assume that no projected singleton has three items. A
+capacity-two failure must place five or six remaining items
+in a pair {q,r} after removing p. If there are five and one
+has a p factor, put one such item at p, at total p cost less
+than5/6; the other four satisfy capacity two on q,r. If all
+five are p-free, assign them by NF17. At most one other item
+remains, and it has a factor outside {p,q,r}.
+
+If there are six, the entire support is U={p,q,r}. Select
+only U, and denote the corresponding bases by R_p,R_q,R_r.
+For the six non-pure-p items use capacities
+
+    c_p=R_p-2, c_q=R_q-1, c_r=R_r-1.
+
+The already assigned pure p group costs less than1/(R_p-1),
+and1/(R_p-1)+(R_p-2)/R_p<1. The total capacity is
+max(U)-4>=7. A singleton q or r contains at most two items;
+either pair containing p also contains at most two, by the
+projected-singleton assumption. Hall can therefore fail only
+on {q,r}. Its capacity is even, so failure requires capacity
+four and at least five p-free items. Assign those five or six
+different values directly by NF17; any one remaining item has
+a p factor and goes to p at total cost less than5/6.
+Otherwise Hall supplies the required assignment. This completes
+the pure-group case, without using the missing5 hypothesis.
+
+### Five or more items on a pair also admit a strict assignment
+
+Assume every prime has at most two pure-power items. Suppose
+g>=5 items are supported on a pair {p,q}, and take ALL such
+items. If g=9, select the pair alone and apply NF39: its only
+possible exception requires the missing numerical value5.
+If g is seven or eight, reuse the conservative-base pair
+assignment in sections34 and45. At most two outside items
+remain; assign them outside {p,q}, at cost at most2/3 per axis.
+
+It remains to treat g=5 or6. If the outside items admit
+capacity two on their factors outside {p,q}, use that assignment
+and the existing internal pair assignment. Failure gives at
+least three outside items with the same singleton outside
+support {r}. Write U={p,q,r}. At most two distinct internal
+pure powers occur at either p or q. Among the internal pair
+values, only p,q,pq can be squarefree, so at least g-3 items
+have a depth of at least two.
+
+If g=6, there are exactly three outside items, all supported
+on U. Reserve two deep internal items. If another pair, say
+{p,r}, has five items, it must contain both internal pure p
+items and all three outside items. Choose the deep pure p
+item as one reservation. Both external pairs cannot have
+five items: that would make all three outside items pure r
+powers, contrary to the present assumption. After these two
+reservations every singleton has at most two items and every
+pair at most four. The seven remaining items satisfy Hall
+for the actual U-chain capacities R_i-1, whose sum is
+max(U)-3>=8. Restore the deep reservations using the bound
+at the start of this section.
+
+If g=5 and exactly three of the four outside items have outside
+support {r}, the fourth item has a factor outside U. Reserve
+two deep internal items. If {p,r} has five items, reserve the
+deep pure p item as one of them; again both external pairs
+cannot have five items. The six remaining U items satisfy
+capacity two. Restore the reservations, and assign the fourth
+outside item to a factor outside U. Every axis has cost at
+most8/9, regardless of the added prime's effect on the chain.
+
+Finally let g=5 with all four outside items supported on U.
+Use the actual U-chain capacities, of total at least eight.
+The following reservations leave every pair with at most four
+items and at most eight items altogether:
+
+- If both {p,r} and {q,r} have at most four items, reserve
+  any deep internal item.
+- If only {p,r} is too large and has six items, it consists
+  of two internal pure p items and all four outside items.
+  Reserve the deep pure p item and one deep outside item.
+  The latter exists because the four outside values are
+  supported on {p,r}, contain r, and only r and pr among
+  them can be squarefree.
+- If only {p,r} is too large and has five items, reserve the
+  deep pure p item when there are two internal pure p items.
+  If there is just one, all four outside items belong to
+  {p,r}; reserve any deep internal item and a deep outside
+  item. Exchange p,q for the symmetric cases.
+- If both external pairs have at least five items, each has
+  exactly five. There must be two internal pure p items,
+  two internal pure q items, two outside pure r items, one
+  outside item with support {p,r}, and one with support
+  {q,r}. Indeed, counting the four outside items in both
+  pairs forces at least two pure r items, and there cannot
+  be three. Reserve the deep pure p and deep pure q items.
+
+Singleton counts remain at most two. Hall applies, and at most
+two restored deep items keep every cost strict. This resolves
+the pair case without replacing any actual exponent.
+
+### The remaining Hall obstructions are three- and four-axis cores
+
+Now every singleton has at most two items and every pair at
+most four. Suppose exactly g>=7 items lie on three primes
+U, taking all items supported there.
+
+For g=9, at least one item is deep, since only seven nonunit
+squarefree values use U. Reserve it. The remaining eight items
+satisfy the actual U-chain Hall capacities, whose sum is at
+least eight, and the reservation keeps the costs strict.
+
+For g=8, give the ninth item to a factor j outside U and
+select U together with j. If any U base exceeds three, their
+total integer capacity is at least eight, so Hall assigns all
+eight core items. Otherwise all three U bases equal three.
+The four-prime chain analysis in NF37 forces U to contain5.
+Because numerical5 is missing, at most six core items are
+squarefree. Reserve two deep items and apply capacity two to
+the remaining six. Assign the outside item to j.
+
+For g=7, a deep core item can be reserved while the other six
+use capacity two. Assign the two outside items to factors
+outside U, at cost at most2/3 per outside axis. If there is
+no deep item, the core is exactly the seven nonempty squarefree
+products of U. Thus5 is not in U. Choose one outside factor
+for each of the other two items and select these with U.
+The three U bases cannot all equal three: each U prime would
+need its predecessor two smaller in the selected chain. That
+predecessor cannot itself lie in U, since then three primes
+greater than3 would be spaced by two. Such a triple is
+impossible by reduction modulo3. Hence three different outside
+predecessors would be required, but at most two were selected.
+One U base is therefore at least five. Hall assigns the seven
+core items using total capacity at least eight; the two outside
+items use at most2/3 at their chosen outside axes.
+
+If no triple contains seven items, capacity-two Hall can fail
+only when all nine items are supported on four primes U.
+Select those four primes. Their capacities sum to max(U)-3,
+which is at least ten. Singletons, pairs and triples have at
+most two, four and six items, respectively, so Hall holds.
+If no such four-prime support exists, capacity two already
+succeeds on the full support. This completes NF44.
+
+### The missing-five threshold is sharp for this numerical criterion
+
+Take the seven nonempty squarefree products of {13,19,31}
+together with the three values11,17,29. These ten different
+values omit both5 and7. Their six pure prime values force a
+selected chain to contain11,13,17,19,29,31. The bases at13,19,31
+are all three; adding selected primes cannot increase them.
+Seven squarefree core items still require seven slots on three
+axes which each have only two strict slots. No numerical strict
+certificate exists. This is the same obstruction mechanism as
+NF41 and establishes the sharp nine-item threshold in NF44.
+It specifies no covering phases and is not a covering example.
+
+### The whole-cover consumer keeps the three-free hypothesis
+
+In an entirely3-free BC2 residual cover with fewer than n
+classes, let E be the distinct repeated cofactor bases. NF44
+and BC5 give the necessary condition
+
+    numerical5 absent from E ==> |E|>=10.                 (NF45)
+
+Each repeated base m consumes a different first-level repair
+label3m. Consequently a legal complete repair of at most nine
+classes whose BC2 residual is entirely3-free must use label15
+and repeat cofactor5. Equivalently, if the repair omits15 and
+its BC2 residual is entirely3-free, its class count is at least ten.
+For these at-most-nine-class repairs, the already established
+NF38 gives k<=9<N_3, so BC2 supplies the smaller whole cover.
+
+There is one immediate restricted original-family consequence:
+if every original3-bearing label has3-height one, the two
+non-parent first3 branches cannot each have at most nine labels.
+NF19 translates either whole branch into a repair with entirely
+3-free BC2 residual; NF45 would force numerical15 in both
+disjoint branches.
+Each branch still has at least eight labels by NF28. Therefore
+
+    original3-heights at most one ==> N_3>=19.            (NF46)
+
+For the excluded equality N_3=18, each translated repair has
+fewer than N_3 classes, so BC2 applies without an additional
+small-cover assumption. In general a nine-class repair can
+contain higher3 labels. The proof above does not eliminate that
+case and does not strengthen the unrestricted N_3>=18 bound.
+The arbitrary remaining inventory in NF43 and unrestricted
+Erdős #7 remain unresolved. These are ordinary symbolic
+deductions, with no new Lean verification or literature-priority
+claim.
