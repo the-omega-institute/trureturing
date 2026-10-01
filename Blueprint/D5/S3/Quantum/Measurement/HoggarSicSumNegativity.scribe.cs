@@ -75,7 +75,10 @@ internal sealed class HoggarSicSumNegativityDocument : IScribeDocumentDefinition
                     + "Nonnegative eigenvalues and trace one imply Tr(rho^2)<=1. The quadratic majorant (9/2)(t-5/96)^2 bounds max(0,-t) for t>=-1/32; summing gives N<=7/8. "
                     + "For w=conj(v), the state w w*/12 has 28 coordinates -1/32 and 36 coordinates 5/96, giving N=7/8. "
                     + "The conclusion includes every mixed density matrix, not just the pure attaining state."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("debrota-2017-hoggar-sic-sum-negativity"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,

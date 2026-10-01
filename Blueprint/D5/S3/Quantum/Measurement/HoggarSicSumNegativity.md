@@ -94,6 +94,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/HoggarSicSumNegativity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/debrota-2017-hoggar-sic-sum-negativity` (proved) by `D5/S3/Quantum/Measurement/HoggarSicSumNegativity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"debrota-2017-hoggar-sic-sum-negativity","declaration_gid":"D5/S3/Quantum/Measurement/HoggarSicSumNegativity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* John B. DeBrota; Christopher A. Fuchs (2017). *Negativity Bounds for Weyl–Heisenberg Quasiprobability Representations*. DOI: [10.1007/s10701-017-0098-z](https://doi.org/10.1007/s10701-017-0098-z). URL: <https://arxiv.org/abs/1703.08272v2>.
