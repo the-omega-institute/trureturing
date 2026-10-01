@@ -37,6 +37,21 @@ Its proof uses the full reduction d/gcd(d,p), without flatness or
 square-free hypotheses. It does not assert distinctness of the
 resulting moduli or provide a covering choice among duplicate classes.
 
+Lemma 7, pages 6–7, groups moduli by their p-adic heights and
+gives a test for unhelpful moduli. Its proof also supplies a
+fixed-residue counting argument. For a fixed covering and
+1<=j<=alpha=max_m v_p(m), if the classes of heights below j
+miss an integer x, fix x's complete p-free coordinate and vary
+the higher p digits above its depth j-1 prefix. The classes of
+heights at least j must cover all p^(alpha-j+1) such points.
+Writing M_i for the multiset of moduli of height i gives
+sum_(i=j,...,alpha) p^(-i)*|M_i| >= p^(1-j).
+At j=1 this implies at least p p-bearing classes whenever the
+p-free subfamily does not cover. An actual private point of a
+p-bearing class supplies that premise; this application of the
+proof does not identify private essentiality with the paper's
+modulus-set definition of helpfulness.
+
 Theorem 3, page 3, cites Simpson's bound
 n >= 1+sum_p H_p(p−1) for an irredundant whole cover with full period
 product_p p^H_p. That bound is already retained in
