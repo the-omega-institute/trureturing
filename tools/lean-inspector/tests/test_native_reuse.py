@@ -52,7 +52,8 @@ class NativeReportConsumerTests:
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
 
         def entry(phase):
-            result = self.guarded_command(['make', 'lean-report'], env=self.env)
+            arguments = ['REBUILD_REPORT_CACHE=1'] if phase == 'production-initial' else []
+            result = self.guarded_command(['make', 'lean-report', *arguments], env=self.env)
             logs = Path(str(output) + '.logs')
             paths = [path for path in logs.iterdir() if path.is_file()]
             self.record_result(phase, dict(exit_code=result.returncode,

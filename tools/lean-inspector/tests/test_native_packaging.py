@@ -408,13 +408,13 @@ class NativePackageConsumerTests(NativeReleaseSupport):
             manifest = (clone / 'lean-report-inputs.json').read_text()
             self.write('lean-report-inputs.json', manifest.replace('"report_cache_release_semantic_version": 1',
                                                                  '"report_cache_release_semantic_version": 0'))
-            rejected = subprocess.run(['make', 'lean-report'], cwd=clone, env=self.env,
+            rejected = subprocess.run(['make', 'lean-report', 'REBUILD_REPORT_CACHE=1'], cwd=clone, env=self.env,
                 text=True, capture_output=True, timeout=120)
             self.assertNotEqual(rejected.returncode, 0, rejected.stdout + rejected.stderr)
             self.assertIn('report_cache_release_semantic_version', rejected.stderr)
             self.assertFalse((clone / '.lake').exists(), 'rejected inputs must preserve donor eligibility')
             self.write('lean-report-inputs.json', manifest)
-            result = subprocess.run(['make', 'lean-report'], cwd=clone, env=self.env,
+            result = subprocess.run(['make', 'lean-report', 'REBUILD_REPORT_CACHE=1'], cwd=clone, env=self.env,
                 text=True, capture_output=True, timeout=120)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             output = clone / '.lake/build/stratalint/raw-lean-report.json'

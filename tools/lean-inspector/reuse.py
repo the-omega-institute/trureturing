@@ -107,7 +107,7 @@ def bundle_hashes(report):
     return {suffix: publication.digest(publication.member(report, suffix)) for suffix in publication.SUFFIXES}
 
 
-def read_receipt(report, captured):
+def load_receipt(report):
     path = publication.member(report, SUFFIX)
     if path.is_symlink() or not path.is_file():
         raise ValueError('reuse receipt is absent or nonregular')
@@ -115,6 +115,26 @@ def read_receipt(report, captured):
     materials.require_keys(receipt, {'schema', 'completed', 'inputs', 'bundle'}, 'reuse receipt')
     if receipt['schema'] != SCHEMA or receipt['completed'] != COMPLETED:
         raise ValueError('reuse receipt lacks complete entry success')
+    return receipt
+
+
+def seed_version(repository, report):
+    """Read seed availability/version only; Lake still owns same-version changes."""
+    current = publication.selection.Selection(repository).data['report_cache_release_semantic_version']
+    try:
+        receipt = load_receipt(report)
+        publication._require_bundle_files(report)
+        local = receipt['inputs']['semantic_version']
+        if type(local) is not int or local <= 0:
+            raise ValueError('seed semantic version is absent or invalid')
+    except INVALID_SEED:
+        return dict(local_version='unavailable', current_version=current, reason='seed-unavailable')
+    return dict(local_version=local, current_version=current,
+                reason='version-matched' if local == current else 'version-mismatch')
+
+
+def read_receipt(report, captured):
+    receipt = load_receipt(report)
     if receipt['inputs'] != captured:
         raise InputMismatch(receipt['inputs'], captured)
     if receipt['bundle'] != bundle_hashes(report):
@@ -197,7 +217,7 @@ def reuse(repository, report, output):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=('probe', 'reuse', 'capture', 'seal'))
+    parser.add_argument('command', choices=('probe', 'reuse', 'capture', 'seal', 'seed-version'))
     parser.add_argument('--repository', required=True, type=Path)
     parser.add_argument('--report', type=Path)
     parser.add_argument('--output', type=Path)
@@ -205,7 +225,7 @@ def main():
     parser.add_argument('--diagnostics', action='store_true',
                         help='emit probe mismatch warnings to stderr while retaining JSON stdout')
     args = parser.parse_args()
-    if args.command in ('probe', 'reuse', 'seal') and args.report is None:
+    if args.command in ('probe', 'reuse', 'seal', 'seed-version') and args.report is None:
         parser.error('--report is required')
     if args.command == 'reuse' and args.output is None:
         parser.error('--output is required')
@@ -215,6 +235,10 @@ def main():
         args.snapshot.write_bytes(materials.canonical_json(capture(args.repository)))
     elif args.command == 'seal':
         seal(args.repository, args.report, publication.read_json(args.snapshot.read_bytes()))
+    elif args.command == 'seed-version':
+        result = seed_version(args.repository, args.report)
+        # Three whitespace-free fields for the local shell entry; no writes.
+        print(result['local_version'], result['current_version'], result['reason'])
     elif args.command == 'probe':
         result = probe(args.repository, args.report)
         print(json.dumps(result, separators=(',', ':')))

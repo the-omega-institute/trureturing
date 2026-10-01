@@ -376,6 +376,7 @@ public sealed class LeanReportSelectionTests
             "-u", "STRATALINT_LEAN_REPORT_LOG_DIR", "LEAN_REPORT=" + output,
             "LEAN_REPORT_TEST_ARGUMENTS=" + argumentLog,
             "LEAN_REPORT_TEST_EXIT=" + nativeExit,
+            "REBUILD_REPORT_CACHE=1",
         };
         if (logDirectory is not null)
             arguments.Add("STRATALINT_LEAN_REPORT_LOG_DIR=" + logDirectory);
