@@ -11067,3 +11067,76 @@ instead merge m,3m,pm,3pm into FOUR quotient classes of modulus m;
 it does not preserve SO1's multiplicity-two hypothesis. The present
 replacement retains the p-free labels and checks the fresh9m labels
 directly. No numerical search or Lean verification is asserted.
+
+## 79. Height-two singleton branches force an original lcm ancestor
+
+Keep one all-concentrated EB1 family with H_3=2 and the actual color
+seeds of section76. Fix a deep color i. Let L_i be the union on its
+complete carrier X_i of the cofactor phases of all its original
+3-free m and original3m classes, and put R_i=X_i minus L_i.
+A private point of any original height-two class at root i projects
+into R_i, so R_i is nonempty. CP5's whole-root coverage holds at
+every point of this SAME cofactor remainder.
+
+At each of the three second-three digits, collect all original
+height-two classes in that branch. Call a branch singleton if its
+collection has exactly one member. If that member is9m with m>1,
+its actual cofactor AP contains ALL of R_i: at that word every low
+original is absent on R_i and the sole high original must cover.
+A pure9 singleton imposes no cofactor restriction.
+
+Select any nonempty collection of singleton mixed branches with
+actual cofactor moduli m_1,...,m_k, and put
+
+    L=lcm(m_1,...,m_k).
+
+Their actual phases are jointly compatible, since their cofactor
+APs all contain the same nonempty R_i. Their intersection is one
+class alpha modL and contains R_i. Then
+
+    numerical3L is ORIGINAL.                       (LC1)
+
+### An absent label would give a strict whole-cover descent
+
+Suppose3L were absent. Delete ALL original height-two classes at
+root i, including its pure9 guard if owned, and add the one CRT
+class with ternary root i and cofactor phase alpha modL. Outside
+root i nothing is removed. Inside it, retained low originals cover
+every cofactor outside R_i, and the new3L covers R_i across all
+three second-digit branches. This is a whole cover.
+
+The new modulus is odd, nonunit and distinct from every retained
+label by its assumed absence. Its nonternary exponents are original
+ones, since L divides the complete color period Q_i. Each of the
+three second-digit branches has at least one original high class;
+otherwise it misses every point of R_i. Thus at least three labels
+were removed and only one added, contradicting EB1. This proves LC1
+by the existing joint replacement and singular-digit elimination
+interfaces, not by a new general covering theorem.
+
+Divisor closure now supplies original d and3d for every nonunit
+d dividing L. These include cross-cofactor joins that need not
+divide any one original9m_j. If the top-digit Simpson cut is tight
+at this deep seed, its high-class count is exactly three, so all
+three second-digit branches are singleton. The guard-owning seed
+then forces3 times the lcm of its two mixed top cofactors; a seed
+without a pure guard forces3 times the lcm of its three mixed top
+cofactors. This is more than the count bound alone, but does not
+assert that those labels were absent in every possible source.
+
+### An occupied ancestor has a real private obligation
+
+When3L is already original, its ternary root is i by concentration.
+Its old cofactor phase beta differs from alpha modulo L: R_i is
+nonempty, avoids every original low class, and lies in alpha modL.
+Reassigning this occupied3L to alpha while deleting the high batch
+does NOT preserve coverage. An original private point of3L lies in
+beta, misses every other original, and also misses the new alpha
+phase. The proposed output leaves that same point uncovered.
+
+Consequently LC1 is an actual numerical-availability consequence.
+It neither repairs the occupied ancestor's private region nor
+excludes all tight-cut configurations. The argument reuses PH1--PH2,
+CP5, SC1 and the elimination interface in
+[Report343, section4](../../321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md).
+No new cut theorem, enumeration or Lean verification is asserted.
