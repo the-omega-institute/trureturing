@@ -10557,3 +10557,108 @@ pure-power private colors, create additional Hall slots, or supply
 strict descent in those remaining cases. Section71 retains the full
 ancestor deficit there. No new sieve computation, squarefree-shadow
 argument or Lean verification is asserted.
+
+## 74. At arbitrary height one root must retain actual prefix collisions
+
+Keep the one EB1 original cover, its full period Q=3^H M, and arbitrary
+H>=1. Let R,S_1,S_2 partition its original nonternary support primes as
+in section73, and put K={5,7,11,13}. Then either R intersects K, or
+one complete ternary root satisfies the actual prefix-cover and
+common-cofactor obligations below. No color is assumed flat.
+
+### Complete-word multiplicity is an actual prefix test
+
+The singleton-root CRT elimination in section73 does not use H=1.
+For root i, fix every q in S_(3-i) at its original singleton3q root.
+All originals involving any such prime disappear throughout the
+complete root i. The retained originals with nonternary support in
+R union S_i cover that WHOLE root, with every ternary tail retained.
+Keep its actual pure-three guards. At any complete ternary word z
+outside these guards, the active cofactor quotient B_i(z) is a whole
+cover with nonunit moduli coprime to6 and support in R union S_i.
+
+For each occurring retained nonunit cofactor m, divisor closure supplies
+the original m. Its exact quotient multiplicity at z is
+
+    1 + #{a>=1: 3^a m is original,
+                 z=a_(3^a m) mod3^a}.                (CP18)
+
+All the counted originals, including height zero m, have different
+actual mod-m phases. Their numerical labels are comparable; equality
+of both their cofactor phases and active ternary prefixes would make
+two original APs intersect. Thus identical-AP merging cannot reduce
+this multiplicity.
+
+Write G_i for the union of the actual pure-three prefixes of heights
+2,...,H in root i. Let C_i be the set of retained actual labels3^c m,
+with m>1, c>=2 and first-three root i, for which some ORIGINAL lower
+positive height3^b m, 1<=b<c, satisfies
+
+    a_(3^c m)=a_(3^b m) mod3^b.
+
+Let T_i be the union of the ternary prefixes of labels in C_i. By CP18,
+outside G_i, membership in T_i is equivalent to a quotient modulus
+having multiplicity at least three. This tests the original phases;
+it does not presume that every deep mixed prefix agrees with its3m
+ancestor. That agreement follows from the private reset when m contains
+a concentrated prime in S_i. For m supported only on R, the explicit
+lower-prefix test remains necessary.
+
+Suppose R intersects K trivially. If each root had a word outside
+G_i union T_i, the two whole quotients at those words would have
+multiplicity at most two. SO1 would give a common prime in K, while
+their common support is contained in R. This contradiction proves that
+for ONE i,
+
+    G_i union T_i = the complete ternary root i.       (CP19)
+
+This is an all-height phase condition, allowing arbitrary nonconcentrated
+primes outside K and preserving their full exponents. At H=1 both
+prefix families are empty, recovering CP17 by the existing input.
+
+### The same root admits one cofactor avoiding every low class
+
+For the root selected by CP19, let L_i consist of the actual cofactor
+phases of retained originals m and originals3m at root i. It cannot
+cover: otherwise these actual low originals cover the entire root,
+independently of its tail, and every original of ternary height at
+least two there has no private point. This excludes every guard and
+every member of C_i, contradicting CP19.
+
+Choose one full retained cofactor v avoiding ALL of L_i. The same CRT
+elimination preserves this v at every tail. Original coverage therefore
+requires, at every word outside G_i, an actual retained3^a m with
+a>=2, m>1 and v=a_(3^a m) mod m.
+
+Let beta_i be the exact relative root measure of G_i. The two necessary
+charges at this SAME root are
+
+    sum_(3^c m in C_i) 3^(1-c) >= 1-beta_i;            (CP20)
+
+    sum_(retained original3^a m at root i, a>=2, m>1,
+         v=a_(3^a m) mod m) 3^(1-a) >= 1-beta_i.       (CP21)
+
+The actual pure-three classes are comparable and disjoint, so
+
+    beta_i=sum_(original pure3^a at root i,a>=2)3^(1-a)
+          <= (1-3^(1-H))/2.
+
+Thus both right sides are at least (1+3^(1-H))/2. CP19 retains the
+complete prefix-cover condition, which is stronger than its union
+bound CP20. CP21 holds at one fixed v across every ternary tail,
+extending CP16 without requiring an opposite flat color. The labels
+in CP20 and CP21 need not coincide; these two inequalities cannot be
+charged against two copies of one inventory budget.
+
+At least two different cofactors occur among C_i. For one fixed m,
+numerical distinctness permits at most one label at each height c;
+their total prefix mass is at most (1-3^(1-H))/2. Even adding every
+pure guard gives at most1-3^(1-H)<1, contrary to CP19. This is a direct
+consumer of the original height inventory, not a new top-fan theorem.
+
+The remaining alternative is exact: R meets {5,7,11,13}, or one root
+has CP19 and the common-cofactor obligation CP21. Neither obligation
+has been shown impossible, and neither supplies an extra nonconcentrated
+ancestor or strict count/weight descent. The argument reuses SO1,
+DP9/SI1, comparable-class disjointness, divisor closure and irredundancy.
+No published sieve calculation, old experiment or Lean proof is repeated.
