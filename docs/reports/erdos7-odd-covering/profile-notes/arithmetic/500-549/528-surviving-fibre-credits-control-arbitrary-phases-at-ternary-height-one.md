@@ -28915,3 +28915,216 @@ unrestricted obstruction is reduced but not removed: larger
 J_19 and originals with at least four prime factors ending
 after17 remain outside this sufficient result. Nothing
 here proves that a minimum whole cover must avoid those cases.
+
+## Three exact early fees remove the19 restriction and admit an unrestricted far tail
+
+Let B=10^12. Every finite family of pairwise-distinct odd
+nonunit moduli is noncovering if
+
+    19<=Pplus(m)<=B implies omega(m)<=3
+    for every original modulus m.                         (FC1233)
+
+Here Pplus(m) is its largest prime divisor and omega counts
+distinct prime divisors. Originals ending at or before17 and
+originals ending beyond B may have arbitrary support sizes.
+All original residues and finite heights are arbitrary. The
+construction below gives one actual surviving submeasure of
+mass greater than1/1300. This extends FC1231 by removing its
+J_19 restriction and by allowing unrestricted far originals;
+it does not assert FC1233 for every possible covering family.
+
+Reuse the SAME pair mu_6<=Lambda_6 of FC1227. Its head mass is
+at least m_6, its raw mass is3/8, and only the normalized RAW
+law is assigned conditional prefix caps. Keep every physical
+threshold in the original three-factor schedule from19 onward.
+The old and new caps differ only at13 and17, where the new
+caps are3/2 and2 instead of12/5 and160/63. All later caps
+remain exactly the old ones, irrespective of support size.
+The conditional-kernel and cofactor comparison are the cited
+source propositions, not new general results.
+
+### The first three complete cofactor charges have finite exact formulas
+
+For q=19,23,29 use all earlier odd primes and independent
+AUXILIARY heights with tails Pr(K_p>=a)=c_p/p^a. At the head
+use FC1227's c; the additional caps are
+
+    c_19=3, c_23=550/189.
+
+They arise from the retained actual thresholds11/17 and16/25.
+Write
+
+    N=sum_p K_p+sum_(p<r)K_p*K_r,
+    g_p=c_p/(p-1),
+    M=E N=sum_p g_p+sum_(p<r)g_p*g_r,
+    a_p=1-c_p/p, r_p=1/p,
+    h_p=c_p*(p-1)/(p^2*a_p), P0=product_p a_p.
+
+The three full means M are1949/576,2237/576 and156131/36288,
+respectively.
+
+All a_p are strictly positive. If exactly the coordinates in
+S have positive heights n_p, their probability is
+
+    P0*product_(p in S)h_p*r_p^(n_p-1).
+
+Let nu(n)=sum_(p in S)n_p+sum_(p<r in S)n_p*n_r.
+For each of the three thresholds t, the exact identity is
+
+    H(t):=E(N-t)_+
+      =M-t+P0*sum_(S,n:nu(n)<t)
+               (t-nu(n))*product_(p in S)h_p*r_p^(n_p-1).
+                                                            (FC1234)
+
+The empty support contributes t inside the sum. The full M
+retains EVERY high state; the finite sum is the complementary
+hinge, not a truncation of the original positive tail.
+
+For completeness, the entire nonempty low-state domain in
+FC1234 is the following table. Each entry is an unordered
+multiset of positive heights. Sum its distinct assignments
+to the chosen coordinate set once each; repeated heights do
+not create extra permutations.
+
+| Number of positive coordinates | t=11 | t=336/25 | t=19 |
+|---|---|---|---|
+|1| (j), 1<=j<=10 | (j), 1<=j<=13 | (j), 1<=j<=18 |
+|2| (1,j), 1<=j<=4; (2,2) | (1,j), 1<=j<=6; (2,2), (2,3) | (1,j), 1<=j<=8; (2,j), 2<=j<=5; (3,3) |
+|3| (1,1,1), (1,1,2) | (1,1,j), 1<=j<=3; (1,2,2) | (1,1,j), 1<=j<=5; (1,2,2), (1,2,3), (2,2,2) |
+|4| (1,1,1,1) | (1,1,1,1) | (1,1,1,j), 1<=j<=3 |
+|5| none | none | (1,1,1,1,1) |
+|6 or more| none | none | none |
+
+To verify exhaustion, put n_p=1+z_p on k positive coordinates.
+Then
+
+    nu=k*(k+1)/2+k*sum z_p+sum_(p<r)z_p*z_r.
+
+The table follows by comparing this nonnegative expression
+with t. For k=2 one can equivalently use
+nu=(n_1+1)*(n_2+1)-1. For k=1 the sum is a finite geometric
+first moment. These identities also give direct rational
+polynomials for every entry, without invoking the old
+certificate's state recurrence.
+
+Substitution in FC1234 gives the strict rational bounds
+
+    b_19=H(11)/6                  <3303/100000,
+    b_23=(25/189)*H(336/25)        <2279/100000,
+    b_29=H(19)/8                  <1015/100000.              (FC1235)
+
+Their values are respectively
+0.03302820338347912..., 0.02278843594898679... and
+0.01014891924818437.... The inequalities, not the displayed
+decimal approximations, are used below. Original labels with
+different current exponents and different old phases remain
+separate until the source conditional comparison. Completing
+those aligned labels to N is justified by their original
+numerical distinctness, exactly as in its cofactor proposition.
+Thus FC1235 handles ALL three-factor originals at these rows;
+no J_19 budget or phase alignment premise remains.
+
+### The unchanged remainder pays every later three-factor row
+
+The existing upward-rounded certificate has cumulative budget
+through29 equal to871020592316995003397252/10^24. Subtracting
+these constituent budget rows from the SAME total certificate
+Gamma_0=937076/10^6 gives a complete remainder strictly below
+
+    R_31=66055407683004996602748/10^24
+          <66056/10^6.                                    (FC1236)
+
+The improved head caps are coordinatewise no larger than the
+old ones. The source auxiliary comparison and its nonnegative
+completion therefore bound every actual three-factor row at
+q>=31 by its old budget. No old recurrence or analytic tail
+is recomputed. Only the first three posthead charges have
+changed, on one common actual law.
+
+If every original ending beyond17 has at most three factors,
+FC1235--1236 leave mass strictly greater than
+
+    403/8000-(3/8)*(3303/100000+2279/100000
+                         +1015/100000+66056/10^6)
+       =3461/4000000>1/1200.                              (FC1237)
+
+In particular, the complete six-prime head now has a full
+three-factor continuation without the additional19 condition.
+
+### Reuse the unrestricted second-moment tail after10^12
+
+Under FC1233, use the same three-factor fees only through B.
+The complete remainder FC1236 bounds that partial sum as well.
+Beyond B use the source's existing Unrestricted second-moment
+charge lemma and Complete unrestricted tail proposition from
+its section8. They allow all nonempty old cofactor types,
+including old cofactors with arbitrarily many prime divisors.
+The original physical thresholds and complete-past caps are
+unchanged, so these propositions apply to the very same raw
+law. No independently chosen survivor distribution is inserted.
+
+For that comparison put
+
+    S(x)=product_(3<=p<=x)(1+C_p*(3*p-1)/(p-1)^2),
+
+using the OLD schedule caps for a dominating bound. The cited
+source certificate gives S(1000)<28851. Its explicit
+Rosser--Schoenfeld product-ratio lemma from1000 to B yields
+
+    S(B)<28851*(73/71)^6*4^6<150000000,                    (FC1238)
+
+since log(B)/log(1000)=4 and (73/71)^6<6/5.
+The new source has no larger auxiliary square moment.
+
+For the complete tail choose ell=25; 3^25<B. The source
+proposition bounds the NORMALIZED raw tail charge by
+S(B)*tau(B,25), where
+
+    tau(B,ell)=((2*ell^2+1)/(2*ell^2-1))^6/B
+               *(B/(B-3))^2
+               *sum_(h=0..6)6!/((6-h)!*ell^h).
+
+At this B,
+
+    (1251/1249)^6<21/20,
+    (B/(B-3))^2<22/21,
+    sum_(h=0..6)6!/((6-h)!*25^h)<25/19<4/3.
+
+The last bound enlarges a positive finite sum to the geometric
+series with ratio6/25. The product of the three bounds is
+22/15<3/2. Consequently
+
+    tau(B,25)<3/(2*B),
+    S(B)*tau(B,25)<9/40000.                               (FC1239)
+
+Multiplication by the raw mass3/8 gives an additional fee
+less than27/320000. Combining it with FC1237 proves that the
+actual final surviving submeasure has mass greater than
+
+    3461/4000000-27/320000
+       =6247/8000000>1/1300.                              (FC1240)
+
+Using a full three-factor series to bound its part below B
+and then adding the unrestricted tail is conservative. It
+does not subtract an upper bound as if it were an actual loss,
+and it never assumes the originals beyond B have three factors.
+All tail kernels remain normalized on complete histories;
+positive domination extends mu_6<=Lambda_6 through them before
+any tail union is deleted. Pure originals have zero mass under
+the respective actual pure-conditioned laws. Finite CRT then
+turns positive surviving mass into an uncovered integer.
+
+Thus any covering counterexample to unrestricted Erdos#7
+would require an original modulus with at least four distinct
+prime factors and largest prime between19 and10^12, inclusive.
+The source's older upper-cutoff theorem supplies a different
+necessary condition; their individual existential witnesses
+must not be identified without proof. No claim is made that
+all families avoid the middle-window obstruction.
+
+The new arithmetic consists of the three finite rational
+formulas FC1234--1235 and their common-source continuation.
+The source construction, conditional comparison, old charge
+certificate and complete unrestricted tail are reused with
+their stated premises. This is ordinary mathematics, with no
+new Lean verification or unrestricted resolution of Erdos#7.
