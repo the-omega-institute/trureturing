@@ -374,9 +374,10 @@ ball input from metric completeness. These scoped applications compile with
 only `propext`, `Classical.choice` and `Quot.sound`. They require no global
 compactness, orientability or finite-volume hypothesis. This finite-radius constructor selects `e` separately for each `R`. The
 global construction below uses one initial frame and one map over all radii.
-Global injectivity, abstract hyperbolic-manifold realization, cusp
-classification and full Mostow-Prasad rigidity remain separate obligations.
-The global covering construction is checked below. The same finite-radius
+These finite-radius clauses alone do not establish global injectivity or
+abstract hyperbolic-manifold realization. The following sections supply the
+global covering, H3 inverse and isometric target realization. Cusp
+classification and full Mostow-Prasad rigidity remain separate obligations. The same finite-radius
 exponential conclusion is also checked for the previously constructed
 upper-half-space metric `g` and for its unique descended metric `gQ`, under the
 same free, compact-set proper isometric-action hypotheses. Their already
@@ -430,9 +431,10 @@ and cited external revision with only `propext`, `Classical.choice` and
 `Quot.sound`. They are temporary applications, with no retained named project
 Lean declaration, new dependency or novelty claim. Surjectivity and a
 bijective differential alone do not establish covering-map structure; the
-checked covering construction is given below. Arbitrary-manifold realization
-as a hyperbolic quotient, cusp classification and full Mostow-Prasad
-existence and uniqueness remain unfinished. The noncompact and
+checked covering construction is given below. The following sections also
+supply arbitrary-target realization as a hyperbolic isometric quotient.
+Cusp classification and full Mostow-Prasad existence and uniqueness remain
+unfinished. The noncompact and
 nonorientable cases remain part of the rigidity target.
 
 
@@ -475,9 +477,10 @@ orientability or finite-volume premise is added.
 These are scoped transient classical applications under the unchanged pins,
 with only `propext`, `Classical.choice` and `Quot.sound`. This increment does
 not by itself establish that `e` is a covering map or injective. The next
-section supplies the covering construction. Arbitrary-manifold
-hyperbolic quotient realization and full Mostow-Prasad rigidity, including
-cusps and nonorientable manifolds, remain unfinished.
+section supplies the covering construction; the later target-distance
+comparison supplies arbitrary-manifold isometric quotient realization.
+Full Mostow-Prasad rigidity, including cusps and nonorientable manifolds,
+remains unfinished.
 
 
 ## Covering structure of the same global negative exponential
@@ -523,8 +526,9 @@ applications compile with only `propext`, `Classical.choice` and `Quot.sound`.
 
 This covering increment alone does not establish global injectivity or an
 inverse on hyperbolic three-space; the next section supplies the H3 inverse.
-Realization of every hyperbolic manifold as an isometric quotient, cusp
-classification and full Mostow-Prasad rigidity remain unfinished.
+The later target-distance comparison supplies isometric quotient
+realization under its explicit target metric and topology conditions.
+Cusp classification and full Mostow-Prasad rigidity remain unfinished.
 The full rigidity target still includes noncompact cusps and nonorientable
 manifolds. No new project Lean declaration or novelty claim is retained.
 
@@ -562,10 +566,10 @@ chosen smooth structure.
 
 The quotient exponential retains its covering structure. Its target is
 not assumed to be simply connected, and no global inverse on an arbitrary
-quotient is asserted. Arbitrary-manifold isometric quotient realization,
-cusp classification and full Mostow-Prasad existence, homotopy and
-uniqueness remain unfinished, including noncompact and nonorientable
-manifolds. These are scoped transient classical applications under
+quotient is asserted. The later target-distance comparison supplies
+arbitrary-manifold isometric quotient realization. Cusp classification and
+full Mostow-Prasad existence, homotopy and uniqueness remain unfinished,
+including noncompact and nonorientable manifolds. These are scoped transient classical applications under
 unchanged pins, with only `propext`, `Classical.choice` and `Quot.sound`;
 no new project Lean declaration or novelty claim is retained.
 
@@ -612,8 +616,8 @@ These scoped transient classical applications use unchanged pins and only
 `propext`, `Classical.choice` and `Quot.sound`, with no new tracked project
 Lean declaration or novelty claim. The preceding covering clause alone does
 not include the deck-action conclusions. The following composition supplies
-the faithful isometric deck action and topological quotient identification.
-Global isometric quotient-to-target realization, finite-volume cusp
+the faithful isometric deck action and topological quotient identification,
+then the global isometric quotient-to-target realization. Finite-volume cusp
 classification and covolume, and full Mostow-Prasad existence, homotopy and
 uniqueness remain unfinished. Noncompact cusps and nonorientable manifolds
 remain within the full rigidity target.
@@ -657,9 +661,10 @@ transfer along its pointwise equality with the deck action.
 
 The orbit relation equals the covering's fiber relation. Mathlib's quotient
 homeomorphism constructions therefore identify the orbit quotient with the
-target and retain the projection identity. This is a topological
-identification: global distance preservation by that quotient-to-target
-homeomorphism has not yet been checked.
+target and retain the projection identity. This clause is a topological
+identification; the following distance comparison supplies global distance
+preservation by a quotient-to-target homeomorphism selected within that
+construction.
 
 The combined check adds one arbitrary-target isometric-deck clause for the
 same actual H3 metric `g`. Removing that clause and its application and
@@ -673,10 +678,504 @@ within its selected smooth structure.
 
 These are scoped transient classical applications under unchanged pins,
 with only `propext`, `Classical.choice` and `Quot.sound`. No new tracked
-project Lean declaration or novelty claim is retained. Isometric realization
-of an arbitrary target, finite-volume cusp classification and covolume,
-and full Mostow-Prasad existence, homotopy and uniqueness remain unfinished,
+project Lean declaration or novelty claim is retained. The following section
+supplies isometric realization of an arbitrary target. Finite-volume cusp
+classification and covolume, and full Mostow-Prasad existence, homotopy and
+uniqueness remain unfinished,
 including noncompact cusps and nonorientable manifolds. The existing escape
 audit remains unfinished:
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
 Neither these recorded compilation checks nor prior CI closes that audit.
+
+
+## Isometric quotient realization of an arbitrary negative target
+
+For the same constructed H3 metric and a preconnected smooth
+three-manifold with `T3Space` topology, a smooth Riemannian metric that is
+`MetricComplete` and has sectional curvature `-1`, and supplied Levi-Civita
+data, the selected deck-orbit-to-target homeomorphism now preserves the
+actual target intrinsic distance. For every two quotient points, that
+distance equals `ENNReal.ofReal` of the existing H3 orbit distance. The
+covering, full deck group, faithful free and compact-set proper isometric
+representation, homeomorphism and projection identity are chosen together
+within this construction. No target simple connectedness, compactness,
+orientability or finite-volume premise is added.
+
+The distance comparison uses the existing metric pullback contraction,
+Mathlib's covering lifts, the previously checked smoothness of continuous
+curve lifts and the pinned path-length pullback equality. For one bound,
+project a source curve and compare against every deck translate of the
+second endpoint; taking the orbit-distance infimum gives the target
+intrinsic-distance upper bound. For the other, choose a global `C¹` target
+curve whose length is arbitrarily close to its intrinsic distance, lift it
+through the actual covering from the first endpoint, and use its smoothness
+and unchanged length. The lifted last point is in the second endpoint's
+fiber, hence in its full deck orbit. Its source distance bounds the orbit
+infimum and is bounded by the lifted length. The two inequalities give the
+exact distance identity. No shortest target curve or distance equality is
+assumed.
+
+The prior quotient-to-target homeomorphism respects the selected
+projection, so the pointwise fiber-distance identity descends to all
+quotient points. The target intrinsic extended distance is finite for all
+point pairs by this identity and surjectivity of the homeomorphism. Mathlib's
+`EMetricSpace.ofRiemannianMetric` constructs this actual target intrinsic
+metric with the original topology; `EMetricSpace.toMetricSpace` converts
+its proved finite distances to real distances while retaining its
+uniformity and topology. Together with the existing `orbitMetricSpace`,
+the same homeomorphism is the underlying function of an actual
+`IsometryEquiv` from the H3 orbit quotient to the target. This construction
+uses the metric arising from the supplied target Riemannian metric, with
+no substituted target-distance definition or supplied isometry premise.
+
+The combined check binds the realization to the same actual H3 metric `g`
+and adds one universal arbitrary-target clause. Removing that clause and
+its application and reversing names restores the preceding entire
+constructor byte-for-byte. All preceding source, exponential, volume,
+curvature, completeness, conditional core/tail and quotient clauses and
+original free, compact-set proper action conditions are retained. The new
+covering and deck representation are selected within this new clause;
+identity with separate earlier existential witnesses is not asserted.
+Quotient metric uniqueness remains within the selected smooth structure.
+
+These are scoped transient classical applications under unchanged pins,
+with only `propext`, `Classical.choice` and `Quot.sound`, with no retained
+new project Lean declaration or novelty claim. An isometric quotient
+realization does not establish that a homotopy equivalence induces a lattice
+isomorphism realized by an ambient conjugator. Finite-volume cusp
+classification and covolume, lattice rigidity, and full Mostow-Prasad
+existence, homotopy and uniqueness remain unfinished, including noncompact
+cusps and nonorientable manifolds. The existing escape audit remains
+unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these compilation checks nor CI closes that audit.
+
+
+## Fundamental groups and the actual deck and holonomy groups
+
+For the actual H3 quotient covering selected in the preceding realization,
+Mathlib's `IsQuotientCoveringMap.fundamentalGroupEquiv` identifies the target
+fundamental group at the selected basepoint with the opposite of the full
+covering deck group. The source uses its already established simple
+connectedness in the original H3 topology. The lifted basepoint is in the
+actual fiber because the same selected covering sends it to the prescribed
+target basepoint. No new simple-connectedness premise is imposed on the
+target. Opposite multiplication is retained explicitly; the plain `op` or
+`unop` function is not treated as a group homomorphism.
+
+The target realization check includes this fundamental-group equivalence
+for that very covering, along with its faithful free and compact-set proper
+original-H3 isometric representation, projection-compatible homeomorphism
+and intrinsic isometric realization. One universal target clause is added
+to the constructor for the same actual H3 metric `g`. Removing that clause
+and its application and reversing names/import restores the preceding whole
+constructor byte-for-byte. All its earlier clauses remain. Witnesses in the
+new clause are selected together; no equality with separately quantified
+older covering witnesses is asserted.
+
+For a homotopy equivalence between two target spaces, Mathlib's
+`FundamentalGroupoidFunctor.equivOfHomotopyEquiv` supplies an equivalence of
+fundamental groupoids. Its fully faithful functor's `mulEquivEnd` gives an
+isomorphism of fundamental groups whose underlying homomorphism is exactly
+`FundamentalGroup.map` for the given continuous map. Basepoint transport by
+`eqToIso.conj` retains exactly `FundamentalGroup.mapOfEq` when the image
+basepoint is identified with the target basepoint.
+
+Composing this induced isomorphism with the two actual covering
+fundamental-group equivalences gives an isomorphism of opposite deck
+groups. Mathlib's `MulEquiv.unop` converts the whole isomorphism to one
+between the actual deck groups. Its opposite commutes with the given
+map's induced fundamental-group homomorphism and the two selected covering
+equivalences, pointwise on every loop class. Thus the constructed group
+isomorphism has the required relation to the original homotopy equivalence.
+For the faithful original-H3 deck representations, `MonoidHom.ofInjective`
+then transports a deck-group isomorphism to an abstract isomorphism of their
+image subgroups, taking each represented deck element to the representation
+of its corresponding element.
+
+These are six scoped transient classical applications under unchanged pins,
+with only `propext`, `Classical.choice` and `Quot.sound`; no new project Lean
+declaration or novelty claim is retained. The image subgroup isomorphism
+does not establish discreteness in the ambient isometry-group topology,
+finite covolume or realization by an ambient conjugator. Finite-volume
+cusp classification and covolume, lattice rigidity, and full Mostow-Prasad
+existence, homotopy and uniqueness remain unfinished, including noncompact
+cusps and nonorientable manifolds. The existing escape audit remains
+unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these compilation checks nor CI closes that audit.
+
+
+## Intrinsic volume transfer for the selected target realization
+
+For a preconnected smooth three-manifold with `T3Space` topology, a smooth
+Riemannian metric that is `MetricComplete` and has sectional curvature `-1`,
+and supplied Levi-Civita data, the same actual H3 construction now also
+transfers intrinsic volume through its selected isometric orbit realization.
+Here `gM.volumeMeasure` and a supplied quotient metric's `gQ.volumeMeasure`
+mean the pinned library's normalized three-dimensional Hausdorff measures of
+their respective intrinsic extended metrics. This increment does not check
+identification with coordinate volume density for the arbitrary target.
+
+The original target and orbit topologies supply their Borel structures.
+For the selected full deck representation, the existing `orbitMetricSpace`
+supplies the source metric. The intrinsic-isometry clause supplies finite
+pairwise target distances and an `IsometryEquiv` whose underlying function
+is exactly the selected quotient-to-target homeomorphism `j`. Mathlib's
+`IsometryEquiv.measurePreserving_euclideanHausdorffMeasure` then proves that
+`j` preserves the normalized orbit Hausdorff measure into the target's
+actual `gM.volumeMeasure`. The target Riemannian bundle and intrinsic metric
+are installed from that same `gM`; the finite-distance conversion retains
+its extended distance, uniformity and original topology.
+
+Applying this measure-preservation identity to the whole target gives
+exact equality of extended-valued total measures. The normalized orbit
+Hausdorff total measure is finite if and only if the target intrinsic total
+volume is finite. This is an equivalence; no unconditional finite-volume
+conclusion or finite-volume premise is introduced. The finite pairwise
+distance proof used to construct the target metric is a separate fact from
+finiteness of its total volume.
+
+A separate scoped check takes a supplied quotient Riemannian metric `gQ`
+whose intrinsic distance equals `ENNReal.ofReal` of the same orbit distance,
+under its smooth-manifold, `T3Space` and Borel conditions. The previously
+checked intrinsic-metric/Hausdorff-volume identification derives that
+`gQ.volumeMeasure` equals the normalized orbit Hausdorff measure. Thus the
+same `j` preserves `gQ.volumeMeasure` into `gM.volumeMeasure`, their total
+measures are equal, and their finiteness is equivalent. Volume equality is
+derived, not assumed. This supplied-metric check does not identify `gQ`
+with separately quantified older quotient-metric witnesses.
+
+The universal target clause selects the covering, full deck representation,
+basepoint fundamental-group equivalence, homeomorphism, intrinsic isometry
+and intrinsic-volume preservation together. It is bound to the same actual
+H3 metric `g`. Removing the one added clause and application and reversing
+names/import restores the preceding entire constructor byte-for-byte. All
+previous source, exponential, volume, curvature, completeness, conditional
+core/tail and quotient clauses remain. The new clause adds no compactness,
+orientability, finite-volume or target-simple-connectedness premise.
+
+These are six scoped transient classical applications under unchanged pins,
+with only `propext`, `Classical.choice` and `Quot.sound`, with no new tracked
+project Lean declaration or novelty claim. Transfer of intrinsic quotient
+volume does not identify Haar covolume in an ambient isometry group or
+establish a lattice-conjugacy theorem. Finite-volume
+cusp classification, Haar covolume and full Mostow-Prasad existence, homotopy
+and uniqueness remain unfinished, including noncompact cusps and
+nonorientable manifolds. The existing escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these compilation checks nor CI closes that audit.
+
+
+## Discrete actual deck image in the compact-open topology
+
+Give the original-H3 isometry group the topology induced by sending each
+isometry to its bundled continuous map in `C(HyperbolicThreeSpace,
+HyperbolicThreeSpace)`, equipped with Mathlib's compact-open topology.
+This explicitly specified topology is used throughout this increment.
+Evaluation at every fixed H3 point is continuous, by
+`continuous_eval_const` and continuity of the induced map.
+
+For an actual quotient covering `F` by its full covering deck group and an
+isometric representation whose evaluation equals that deck action,
+evaluation of the image subgroup at a fixed point lands in the actual
+fiber of `F`. The covering's evenly covered neighborhood gives that fiber
+its discrete subtype topology. Freeness from
+`IsQuotientCoveringMap.isCancelSMul` makes evaluation on the image subgroup
+injective. Applying `DiscreteTopology.of_continuous_injective` proves that
+the actual image subgroup has discrete subtype topology in the specified
+compact-open topology. No discreteness premise or replacement discrete
+ambient topology is used.
+
+For each preconnected smooth three-manifold with `T3Space` topology, a
+smooth `MetricComplete` Riemannian metric of sectional curvature `-1`, and
+supplied Levi-Civita data, this discreteness conclusion is attached to the
+same jointly selected covering, faithful full deck representation,
+basepoint fundamental-group equivalence, intrinsic isometric orbit
+realization and intrinsic-volume transfer. The volume measures retain the
+preceding pinned intrinsic normalized Hausdorff3 definition and original
+Borel structures. No compactness, orientability or finite-volume premise
+is added. A shortened source-contract check chooses the actual H3 chart and metric from the
+preceding complete source constructor and retains its actual distance,
+completeness and curvature data while supplying the new target contract.
+The previous entire constructor remains available unchanged. Extending
+its large statement with the new clause did not compile within the default
+heartbeat limit; no successful extension of that entire statement is
+claimed here.
+
+These are four scoped transient classical composition checks under the
+unchanged pins, with only `propext`, `Classical.choice` and `Quot.sound`.
+No new tracked project Lean declaration or mathematical novelty is claimed.
+The four discreteness checks alone do not supply continuity of group
+multiplication or inversion, local compactness of the ambient group, Haar
+covolume, cusp classification or an ambient conjugator. Full Mostow-Prasad existence,
+homotopy and uniqueness remain unfinished, including noncompact cusps and
+nonorientable manifolds. The existing escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these compilation checks nor CI closes that audit.
+
+
+## Hausdorff topological group and closed actual deck image
+
+The same explicitly induced compact-open topology makes the actual
+original-H3 isometry group a Hausdorff topological group. The original-H3
+proper-space instance supplies local compactness of H3 for the existing
+continuous-map joint-evaluation interface; this does not assert local
+compactness of the isometry group.
+
+Joint evaluation is continuous by Mathlib's `continuous_eval` through the
+induced bundling map. Joint inverse evaluation is continuous by the exact
+identity
+`dist (e.symm x) (e0.symm x0) = dist x (e (e0.symm x0))`:
+the right side tends to zero by fixed-point evaluation continuity and
+continuity of distance. `ContinuousMap.continuous_of_continuous_uncurry`
+and the inducing-map continuity equivalence then give continuity of
+isometry-group multiplication and inversion in that same topology.
+
+Bundling an actual isometry as a continuous map is injective. Applying
+`T2Space.of_injective_continuous` to this map into the Hausdorff
+continuous-map space proves Hausdorffness of the isometry-group topology.
+For an actual quotient covering and its full deck representation with the
+exact deck-action evaluation identity, the previously checked discrete
+image conclusion and this group structure meet the hypotheses of pinned
+`Subgroup.isClosed_of_discrete`. Hence the same actual image subgroup is
+closed in the specified compact-open topology. Closedness of an arbitrary
+discrete subset is not inferred.
+
+These three additional scoped transient classical checks retain the same
+pins and standard three axioms. They add no tracked project Lean
+mathematical declaration, volume premise or novelty claim. Haar covolume, finite-volume cusp classification,
+lattice conjugacy and full Mostow-Prasad existence, homotopy and uniqueness
+remain unfinished, including noncompact cusps and nonorientable manifolds.
+The preceding intrinsic normalized Hausdorff3 volume definition and the
+unfinished escape-audit disclosure remain in force.
+
+
+## Locally compact isometry group and existence of Haar measure
+
+For an actual original-H3 basepoint `p`, the same explicitly induced
+compact-open isometry-group topology is locally compact. For every real
+`R`, the set of actual isometries satisfying `dist (e p) p ≤ R` is compact.
+With positive `R` this is a neighborhood of the identity. This establishes
+local compactness of the isometry group itself.
+
+The forward and inverse continuous maps form a closed embedding into a
+product of continuous-map spaces. Its range is characterized by distance
+preservation and both inverse identities. Joint continuous-map evaluation
+and continuity of distance make these constraints closed. The product
+pairing homeomorphism and the existing compact-convergence embedding put
+this same pair into the function space used by pinned Arzela-Ascoli.
+
+The paired functions `x ↦ (e x, e.symm x)` preserve distances for the product
+metric, so they form a uniformly equicontinuous family. When the image of
+`p` moves by at most `R`, both coordinates of the image of any `x` lie in
+an actual proper-H3 product closed ball of radius `dist x p + R` centered
+at `(p,p)`. These balls are compact. Applying
+`ArzelaAscoli.isCompact_closure_of_isClosedEmbedding` to all compact H3
+subsets proves compactness of the closure of the bounded-basepoint set.
+Continuous evaluation and distance make that set closed, so it equals its
+compact closure. The positive-radius identity neighborhood and
+`IsCompact.locallyCompactSpace_of_mem_nhds_of_group` give local compactness
+in the original specified group topology.
+
+The original coordinate homeomorphism gives second countability of H3.
+The existing second-countability result for `C(H3,H3)` and the induced
+bundling topology give second countability of the same isometry group.
+With its Borel measurable structure, pinned `Measure.haar` supplies a
+regular, sigma-finite left Haar measure. It is finite on compact sets and
+positive on nonempty open sets; finite total mass is not asserted.
+
+This Haar measure is on the isometry group. These four checks alone do
+not identify its evaluation pushforward with normalized intrinsic
+Hausdorff3 on H3 or establish quotient-target Haar covolume. No finite Haar covolume or lattice realization is derived
+from target finite volume in this increment. These are four scoped
+transient classical composition checks under unchanged pins and standard
+three axioms, with no new tracked project Lean declaration or novelty
+claim. Finite-volume cusp classification, Haar covolume identification,
+lattice conjugacy and full Mostow-Prasad existence, homotopy and uniqueness
+remain unfinished, including noncompact cusps and nonorientable manifolds.
+The existing escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these compilation checks nor CI closes that audit.
+
+## Proper evaluation, transitivity and pushed Haar measure on H3
+
+For every supplied actual original-H3 point `p`, evaluation `e ↦ e p` from
+the same compact-open isometry group to original H3 is proper. A compact
+H3 set is bounded inside some closed ball centered at `p`; its evaluation
+preimage is a closed subset of the previously checked compact displacement
+sublevel. The existing Hausdorff compact-coherence criterion gives
+`IsProperMap`. In particular, the actual stabilizer set `{e | e p = p}` is
+compact as the preimage of the singleton `{p}`.
+
+The actual isometry group acts transitively on original H3. For supplied
+points `p,q`, compose the project's positive dilation by the ratio of
+their positive coordinate heights with a horizontal translation correcting
+the horizontal coordinate. This is an actual `IsometryEquiv` carrying `p`
+to `q`, using the existing dilation and translation constructions. Proper
+evaluation is therefore a continuous closed surjection and, by the existing
+closed-surjection theorem, a quotient map to the original H3 topology.
+
+For any supplied left Haar measure `μ` on the same group's Borel structure,
+its pushforward by evaluation at `p` is a measure on the original H3 Borel
+structure. It is finite on compact sets by properness, positive on nonempty
+open sets by continuous surjectivity, sigma-finite and regular by the
+existing original-H3 topology and measure instances. It is invariant under
+each actual H3 isometry: composition with such an isometry corresponds to
+left multiplication on the group, and measure-map composition and left Haar
+invariance give the equality. This is a pushed measure on H3, not a Haar
+measure on a group structure imposed on H3.
+
+These are three scoped transient classical composition checks under the
+same pins and standard three axioms. They establish properties of the
+actual evaluation pushforward. These three checks alone do not prove
+uniqueness of invariant measures on H3, equality or proportionality to
+normalized intrinsic Hausdorff3, a normalization scalar, unimodularity, a fundamental domain,
+finite Haar covolume or lattice realization. Cusp classification, lattice
+conjugacy and full Mostow-Prasad existence, homotopy and uniqueness remain
+unfinished, including noncompact cusps and nonorientable manifolds. No new
+tracked Lean declaration or mathematical novelty is claimed. The existing
+escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these checks nor CI closes that audit or the remaining mathematics.
+
+## Invariant H3 measure uniqueness and normalized Haar evaluation volume
+
+An auxiliary affine group supplies the invariant-measure comparison. It is
+Mathlib's semidirect product of additive complex translations and additive
+real log-height, expressed with `Multiplicative`, with action
+`z ↦ exp(t) • z`. Its topology is induced by its exact coordinate equivalence
+to `ℂ × ℝ`; the explicit multiplication and inverse formulas prove that
+it is a topological group. The horizontal coordinate and log of positive
+height give a homeomorphism from original H3 to `ℂ × ℝ`, whose inverse has
+height `exp(t)`. Combining these gives an actual homeomorphism between the
+auxiliary group and original H3. Left multiplication corresponds exactly
+to an existing positive dilation followed by an existing horizontal
+translation, hence to an actual original-H3 isometry. This auxiliary group
+is distinct from the full H3 isometry group with its compact-open topology.
+
+For any two nonzero original-H3 Borel measures that are finite on compact
+sets and invariant under every actual H3 isometry, there is a positive
+finite real scalar relating them. To prove this, push each measure back
+through the affine homeomorphism. The explicit left-multiplication identity
+makes these measures left invariant on the auxiliary group. Its coordinate
+homeomorphism supplies Hausdorffness, local compactness and second
+countability. Existing regularity and positivity results make each lifted
+measure a left Haar measure. Pinned `Measure.isMulLeftInvariant_eq_smul`
+and positivity of `haarScalarFactor` give proportionality there;
+injectivity of mapping by a measurable equivalence returns it to original
+H3. Proportionality is a conclusion, with nonzero, compact-finite and
+isometry-invariant measures as its hypotheses.
+
+The original-H3 normalized three-dimensional Hausdorff measure is a valid
+reference measure. Its nonzero and compact-finite properties are obtained
+by selecting the actual chart and smooth metric from the existing complete
+H3 source constructor, retaining its intrinsic distance and volume
+identities, and using the pinned local-finiteness result. The source's
+exact cylinder formula gives positive volume to the cylinder over the
+horizontal unit ball at heights above one. Invariance under every actual
+H3 isometry follows from existing
+`IsometryEquiv.measurePreserving_euclideanHausdorffMeasure`.
+
+For each supplied actual H3 point `p` and any supplied left Haar measure
+`μ` on the same full compact-open isometry group's Borel structure, the
+preceding evaluation-pushforward properties and this uniqueness result give
+`μ.map (fun e => e p) = c • Measure.euclideanHausdorffMeasure 3`
+for a positive `c : ℝ≥0`. Choosing an existing full-group Haar measure and
+scaling it by `c⁻¹` therefore gives a left Haar measure whose evaluation
+pushforward at this supplied `p` equals the original-H3 normalized
+Hausdorff3 measure exactly. The checked quantifiers choose a normalized
+measure for each supplied point; they do not assert that one chosen measure
+works simultaneously at every point or prove ambient unimodularity.
+
+For a supplied actual H3 smooth chart and manifold structure and a supplied
+smooth source metric `g` whose intrinsic extended distance agrees with the
+original H3 extended distance at every pair of points, the existing
+intrinsic-volume identification gives `g.volumeMeasure` as that same
+normalized Hausdorff3 measure. Thus a normalized full-group left Haar
+measure exists for which evaluation at the supplied `p` is measure
+preserving to this actual `g.volumeMeasure`. For every original-H3 Borel
+measurable set `S`, its evaluation preimage has Haar measure exactly
+`g.volumeMeasure S`, and these measures are finite if and only if each
+other is finite. This statement does not require an assumed target
+coordinate-density identity or a fundamental domain.
+
+These are five scoped transient classical composition checks under the
+same pins, with only `propext`, `Classical.choice` and `Quot.sound` in the
+successful printed closures. They add no tracked project Lean declaration
+or mathematical novelty claim. These five checks alone do not establish an actual deck fundamental
+domain, its measure restriction or finite Haar covolume;
+unrestricted pushforward through an infinite-sheet orbit projection does
+not supply that volume comparison. Finite-volume cusp classification,
+lattice conjugacy and full Mostow-Prasad existence, homotopy and uniqueness
+remain unfinished, including noncompact cusps and nonorientable manifolds.
+The existing escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these checks nor CI closes that audit or the remaining mathematics.
+
+## Actual Borel deck domains and normalized Haar covolume as source-domain volume
+
+For a supplied actual original-H3 point `p`, every supplied surjective
+local homeomorphism `F` from original H3 to a space with its Borel measurable
+structure admits an original-H3 Borel set `D` on which `F` is injective and
+whose image is the whole target. The construction uses local injectivity
+to choose open source sheets. Original-H3 second countability gives a
+countable subcover, enumerated by natural numbers. Their open target
+images cover the target. Disjointizing these images with existing
+`disjointed` gives a Borel partition. Intersect each source sheet with the
+preimage of its target piece and take their countable union. The resulting
+set is Borel, covers every fiber, and is injective over the target by
+disjointness of the pieces and injectivity within each sheet.
+
+For any supplied actual quotient covering `F` by a group `G` acting on
+original H3, that construction supplies a Borel transversal. The quotient
+covering's orbit/fiber identity and freeness imply that exactly one group
+element moves any original-H3 point into the transversal. Existing
+`IsFundamentalDomain.mk'` therefore makes it a fundamental domain for any
+supplied measure on original-H3 Borel. Its pointwise selection implies
+the required almost-everywhere coverage and disjointness; a fundamental
+domain is not assumed as a premise.
+
+For a supplied original-H3 smooth chart/manifold and smooth source metric
+`g` with its pairwise intrinsic extended distance equal to original H3
+extended distance, a supplied actual point `p`, and a faithful group
+homomorphism `ρ` into the same full compact-open H3 isometry group whose
+evaluation agrees with the actual `G` action at every point, any such
+Borel `G` fundamental domain for `g.volumeMeasure` lifts through evaluation
+to a fundamental domain for the actual image subgroup `ρ.range` acting
+on the full isometry group by left multiplication. Use the preceding
+normalized evaluation measure-preserving map and existing
+`IsFundamentalDomain.preimage_of_equiv`; `ρ.rangeRestrict` is bijective by
+faithfulness and range surjectivity, and the exact representation identity
+supplies the required evaluation equivariance. The lifted domain's Haar
+measure equals `g.volumeMeasure D` exactly, with finiteness equivalent.
+
+The actual quotient-covering group is countable. Its fiber above `F p` is
+discrete by the actual covering map and second countable as an original-H3
+subspace, hence countable by existing separability/discreteness results.
+The covering's actual `fiberEquivGroup` transfers countability to `G`, and
+the range restriction transfers it to the actual image subgroup.
+
+Combining these checks chooses the same Borel domain `D` and normalized
+left Haar measure `μ` together. The source domain is injective and
+surjective over the actual target, and its evaluation preimage is an
+actual image-subgroup fundamental domain. Existing
+`IsFundamentalDomain.covolume_eq_volume`, with the derived countability and
+left Haar invariance, identifies `covolume ρ.range (H3 ≃ᵢ H3) μ` with
+`g.volumeMeasure D`. Thus this covolume is finite if and only if this
+actual source-domain volume is finite. Both the domain and its lifted
+fundamental-domain property are established before using the covolume
+definition; no inference is made from its default value when a domain is
+absent.
+
+These are five further scoped transient classical composition checks
+under the same pins and standard three axioms, with no tracked project
+Lean declaration or mathematical novelty claim. They do not yet identify
+the restricted source-volume pushforward on `D` with the actual target's
+intrinsic volume. In particular, actual target finite volume has not yet
+been used to prove finite Haar covolume. Ambient unimodularity, finite-volume
+cusp classification, lattice conjugacy and full Mostow-Prasad existence,
+homotopy and uniqueness remain unfinished, including noncompact cusps and
+nonorientable manifolds. The existing escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these checks nor CI closes that audit or the remaining mathematics.

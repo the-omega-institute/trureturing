@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredProofBindings
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredOpaqueProofShapes
 open Lean Meta Elab Command TemplateAudit TemplateBinding
@@ -19,7 +22,7 @@ elab "observe_constructor_hidden_proof" : command => do
   liftCoreM <| addDecl (.inductDecl [] 0
     [{ name := ast, type := mkSort (.succ .zero),
        ctors := [{ name := ast.str "mk", type := ctorType }] }] false)
-  let result ← enroll ``constructorProbe #[ast]
+  let result ← enroll (← getEnv).header.mainModule (← getOptions) ``constructorProbe #[ast]
   let retained := (selectedPlan (← getEnv) ``constructorProbe).isOk
   set initial
   let ok := result.isOk && retained
@@ -34,7 +37,7 @@ def forwardTerm (h : True) (f : Bool → Bool) := proofTemplate h f
 def forwardLet (h : True) (f : Bool → Bool) :=
   proofTemplate (let _saved := h; True.intro) f
 
-register_information_template proofTemplate
+test_assess in register_information_template proofTemplate
 
 def arena : PrimitiveLawArena where
   toArena := Arena.ofFintype Bool
@@ -42,12 +45,12 @@ def arena : PrimitiveLawArena where
   Law r := ∀ x : Bool, r.readout () x = x.not.not
 instance : DecidableEq arena.State := instDecidableEqBool
 
-information_theorem termLaw in arena
+test_assess in information_theorem termLaw in arena
   readout via (proofTemplate True.intro (fun x => x))
   primitives (forwardTerm True.intro (fun x => x))
   : ∀ x : Bool, x = x.not.not := by intro x; exact (Bool.not_not x).symm
 
-information_theorem letLaw in arena
+test_assess in information_theorem letLaw in arena
   readout via (proofTemplate True.intro (fun x => x))
   primitives (forwardLet True.intro (fun x => x))
   : ∀ x : Bool, x = x.not.not := by intro x; exact (Bool.not_not x).symm

@@ -101,7 +101,12 @@ public sealed class RuleEngineTests
             ? green.Build()
             : green.BuildScopeProbe(RawChangeSet.Create(green.Changes));
         var greenResult = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(number), greenContext);
-        Assert.Empty(greenResult.Diagnostics);
+        Assert.All(greenResult.Diagnostics, diagnostic =>
+        {
+            Assert.Equal(1, number);
+            Assert.Equal(AdmissionEffect.Observe, diagnostic.AdmissionEffect);
+            Assert.StartsWith("REG-IMPLEMENTATION debt:", diagnostic.Message, StringComparison.Ordinal);
+        });
         Assert.Null(greenResult.DeferredCase);
 
         var red = new RuleFixture();
@@ -122,6 +127,8 @@ public sealed class RuleEngineTests
         var redResult = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(number), redContext);
 
         Assert.NotEmpty(redResult.Diagnostics);
+        if (number == 1)
+            Assert.Contains(redResult.Diagnostics, diagnostic => diagnostic.AdmissionEffect == AdmissionEffect.Block);
         Assert.All(
             redResult.Diagnostics,
             diagnostic => Assert.Equal(RuleId.CreateKnown(number), diagnostic.RuleId));
@@ -584,9 +591,10 @@ public sealed class RuleEngineTests
         // Stratum content -> X_Assumptions (carrying a registered classical debt): allowed.
         var allowed = new RuleFixture();
         allowed.AddAssumptionImport();
-        Assert.Empty(RuleCatalog.Default.EvaluateSingle(
+        Assert.DoesNotContain(RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(1),
-            allowed.BuildScopeProbe(RawChangeSet.Create(allowed.Changes))).Diagnostics);
+            allowed.BuildScopeProbe(RawChangeSet.Create(allowed.Changes))).Diagnostics,
+            diagnostic => diagnostic.AdmissionEffect == AdmissionEffect.Block);
 
         // X_Assumptions -> stratum content: forbidden, so the foundation stays a sink.
         var forbidden = new RuleFixture();
@@ -594,7 +602,8 @@ public sealed class RuleEngineTests
         var diagnostic = Assert.Single(
             RuleCatalog.Default.EvaluateSingle(
                 RuleId.CreateKnown(1),
-                forbidden.BuildScopeProbe(RawChangeSet.Create([RuleFixture.AssumptionDebtPath]))).Diagnostics);
+                forbidden.BuildScopeProbe(RawChangeSet.Create([RuleFixture.AssumptionDebtPath]))).Diagnostics
+                .Where(diagnostic => diagnostic.AdmissionEffect == AdmissionEffect.Block));
         Assert.Equal(RuleId.CreateKnown(1), diagnostic.RuleId);
         Assert.Equal(RuleFixture.AssumptionDebtPath, diagnostic.Path);
         Assert.Contains("may not import", diagnostic.Message, StringComparison.Ordinal);

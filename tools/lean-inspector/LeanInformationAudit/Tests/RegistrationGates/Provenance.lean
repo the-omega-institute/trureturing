@@ -1,6 +1,9 @@
 import LeanInformationAudit.Tests.RegistrationGates.Positive
 import LeanInformationAudit.Tests.RegistrationGates.Structural
 import LeanInformationAudit.Tests.RegistrationGates.P2Padding
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit DispositionCensus
 open D5.S3.ConceptDynamics.InformationEscape
@@ -31,7 +34,7 @@ local instance : DecidableEq RegistrationPositive.arena.State :=
   RegistrationPositive.arena.toArena.stateDecidableEq
 theorem bridge : LegacyPrimitiveRealization RegistrationPositive.arena True truthReads :=
   ⟨⟨fun _ => rfl, fun _ => True.intro⟩⟩
-register_information_theorem truth in RegistrationPositive.arena
+test_assess in register_information_theorem truth in RegistrationPositive.arena
   primitives truthReads.toPrimitiveBundle realization bridge
   variation RegistrationPositive.lawVariation sensitivity RegistrationPositive.slotSensitivity
 

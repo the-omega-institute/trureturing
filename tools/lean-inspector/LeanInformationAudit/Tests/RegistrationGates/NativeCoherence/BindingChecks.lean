@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.BindingOwner
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.NativeCoherence
 open Lean Meta TemplateAudit

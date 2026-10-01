@@ -1,4 +1,7 @@
-import LeanInformationAudit.Syntax
+import LeanInformationAuditInterface.Syntax
+import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
+import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure
 import D5.S3.ConceptDynamics.InformationEscape.MechanicalAtomicMeasureRegistration
 import Reg.Support.PointwiseEqualityRegistrations
@@ -395,19 +398,5 @@ register_information_theorem
   realization rationalJumpBridge
   variation rationalJumpVariation sensitivity rationalJumpSensitivity
   escape from (ℝ) escape continues (open)
-
-open Lean in
-run_meta do
-  for theoremName in #[
-      `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_apply_Iic,
-      `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_singleton_hit,
-      `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_atomic_support,
-      `D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure.geometric_rational_left_jump_closed_form] do
-    let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-      record.occurrence.key.theoremName == theoremName
-    let valid := row.any fun record => match record.result with
-      | .declaredValidated _ => true
-      | _ => false
-    unless valid do throwError "atomic-measure information registration is not declaredValidated: {theoremName}"
 
 end Reg.D5.S1.Words.Mechanical.MechanicalReadoutAtomicMeasure
