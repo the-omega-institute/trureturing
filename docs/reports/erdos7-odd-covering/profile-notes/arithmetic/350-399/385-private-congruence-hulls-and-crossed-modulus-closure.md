@@ -10884,3 +10884,87 @@ force their own violation, establish all-height support intersection,
 or prove unrestricted noncoverage. These are ordinary applications
 of the existing Simpson and source/HSW results, with no new numerical
 computation or Lean verification.
+
+## 77. Independent color permutations force every nonzero private p-root of3
+
+Keep one EB1 family with H_3=H_p=1 and R={p}. Section73 gives
+p in {5,7,11,13}, and section75 gives both nonempty concentrated
+support groups S_i and their complete carriers X_i. All other original
+heights, cofactor phases and numerical labels remain fixed. The
+private reset excludes any original involving both color groups.
+
+### A separate nonzero-root permutation in each color preserves coverage
+
+For i=1,2 choose a permutation sigma_i of F_p fixing zero. For every
+p-bearing original whose modulus has a prime factor in S_i, replace
+only its p-residue r by sigma_i(r). If the pure original3p exists,
+apply sigma_i to its p-residue, where i is its original ternary root.
+Keep original p and every p-free original unchanged. There are no
+higher p-digits; CRT gives one AP with the SAME modulus for each
+changed original. Its complete cofactor phase and any ternary root
+stay unchanged.
+
+This transformed family covers. Original3 covers ternary root0 and
+original p covers p-root0. At a point with nonzero roots i,r, choose
+one original source with p-coordinate sigma_i^(-1)(r), the same full
+X_i coordinate, and the opposite-color singleton-root choices from
+section73. The latter theorem removes all opposite-color originals
+and supplies whole coverage by the retained family on {p} union S_i.
+An active p-bearing owner in that family was transformed by sigma_i;
+an active p-free owner is unchanged. It therefore covers the output
+point after the indicated transformation.
+
+The number and numerical moduli of classes are unchanged. The new
+whole family has the same EB1 objectives and hence is irredundant.
+This holds for every pair of independent permutations. It does not
+assert that a single global coordinate permutation transports all
+original private sets or their cross-color intersections.
+
+### No color's complete3-free section can cover at any p-root
+
+For r in F_p let C_i(r) be the union on X_i of all ORIGINAL3-free
+classes with nonempty concentrated support in S_i, after fixing p=r.
+This includes every p-free original supported in S_i; a p-bearing
+original contributes only at its actual p-root. The pure original p
+is excluded. Then
+
+    C_i(r) != X_i for i=1,2 and every r in F_p.
+
+At r=0, section75's private cofactor v_i avoids all the p-free
+originals in question, and comparable disjointness from original p
+excludes every other p-bearing original.
+
+Suppose C_i(r)=X_i at a nonzero root. Section75 supplies a p-bearing
+original d with a factor in the opposite group S_j. Its actual p-root
+s is nonzero. Keep sigma_i the identity and choose sigma_j with
+sigma_j(s)=r. The preceding operation preserves whole coverage and
+all numerical labels. Every point of transformed A_d is now covered
+by the unchanged color-i3-free classes: they cover X_i at p=r and
+are independent of the ternary and X_j coordinates. None has label d,
+since the two nonempty concentrated supports are disjoint. Deleting
+transformed A_d yields a whole distinct odd cover with fewer classes,
+contrary to EB1. The argument uses one transformed whole cover, not
+private witnesses chosen from different families.
+
+### The original private region of3 has an exact product description
+
+Put E_i(r)=X_i minus C_i(r). Every E_i(r) is nonempty. At ternary
+root0 all other3-bearing originals are absent by comparable
+disjointness. At p-root0 original p prevents privacy for original3.
+At every nonzero p-root, all remaining3-free originals split into
+the two color families just defined. Thus in ORIGINAL full coordinates,
+
+    P_3={0}_3 x disjoint_union_(r!=0)
+          ({r}_p x E_1(r) x E_2(r)).
+
+In particular the projection of the complete original P_3 to F_p is
+exactly F_p minus {0}. The complements can depend on r: no common
+cofactor avoiding every r-section is inferred. This also gives no
+root free of3p-bearing originals, since those originals are absent
+from the definitions of C_i(r). The source statement does not give
+an uncovered original point or exclude this entire flat branch.
+
+The operation reuses section73's retained whole-branch cover and
+section75's color support and occupancy. Its new consequence is the
+full original private p-projection of3. No new numerical experiment,
+sieve estimate or Lean verification is asserted.
