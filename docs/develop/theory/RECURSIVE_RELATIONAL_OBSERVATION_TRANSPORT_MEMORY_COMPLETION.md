@@ -7798,3 +7798,215 @@ $$
 本节的有限逆是既有范数、容量和纤维下降机制在当前受限来源上的普通数学应用。FIB 卷的完整模行为及目标锁定约数探针（§§272–273）各有自己的观察与取得假设，不授予这里的标量数字接口；方阵 Smith 精度及全域自主容量（§§36、42–43）也不是这条三角来源单标量判据。空间邻接、端口与粘合、拓扑或度量、因果时间，以及这些结构与边界和记忆互相恢复的条件，仍须另给来源关系、观察映射及恢复证明。计数商的有限操作桥不替代这些长期义务。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 22. 一次全局替换的实际节点、单孔边界与来源恢复
+
+本节沿用 [FIB 关系延拓几何定义 1.1、1.3](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) 的自由有序来源、替换和计数；跨卷及 D5 引用固定在提交 `678d9ac377e1215354f6c9f4a99094d947e9d15f`，本卷 §20.5–20.6 的引用固定在提交 `e96860cb1d3b238554ad8a7d13ea3a8bf4995a38`。以下讨论实际树形上的一次替换。
+
+### 22.1 同一来源的节点与单孔对应
+
+**约定 22.1（有序树、出现地址与已记录的一步）。** $\mathcal T$ 是全部非空有限有序二叉树，两个叶标签不同，配对全定义，左右顺序与括号不取商：
+
+$$
+\begin{gathered}
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\qquad
+E=\langle\beta,\alpha\rangle,\\
+\rho(\alpha)=\beta,\qquad \rho(\beta)=E,\qquad
+\rho(\langle x,y\rangle)=\langle\rho(x),\rho(y)\rangle.
+\end{gathered}
+\tag{RA.2201}
+$$
+
+固定同一实际来源 $u$ 及当前树 $t=\rho(u)$。历史解释另以正确保留的记录 $\mathsf{rec}_\rho$ 为前提：最后实际动作确是对该 $u$ 施加一次全局 $\rho$。该记录在下述候选观察中只表示动作及此承诺，不含完整源树、外部上下文或更早历史。
+
+节点是有限 $L/R$ 字的实际出现，根为 $\varepsilon$。不同地址即使标签相同也不合并。写 $t|_p$ 为地址 $p$ 的完整子树，$|p|$ 为字长；非根地址 $p=qL$ 或 $qR$ 的父地址为 $p^-=q$。递归定义
+
+$$
+\begin{aligned}
+\operatorname{Pos}(\alpha)=\operatorname{Pos}(\beta)&=\{\varepsilon\},\\
+\operatorname{Pos}(\langle x,y\rangle)
+&=\{\varepsilon\}\sqcup L\operatorname{Pos}(x)\sqcup R\operatorname{Pos}(y),\\
+\mathcal B(u)&=\{r\in\operatorname{Pos}(u):u|_r=\beta\},\qquad
+K(u,p)=\mathbf1_{\{p\in\operatorname{Pos}(u)\}}\quad(p\in\operatorname{Pos}(t)).
+\end{aligned}
+\tag{RA.2202}
+$$
+
+这里 $L\operatorname{Pos}(x)=\{Lq:q\in\operatorname{Pos}(x)\}$，右侧同理。称 $K=1$ 的切口为旧切口，含义是同一地址已在该源树中出现。
+
+纯配对单孔上下文由 $H::=\square\mid\langle H,w\rangle\mid\langle w,H\rangle$、$w\in\mathcal T$ 形成，保留每条实际旁支。对 $p\in\operatorname{Pos}(t)$，删去且只删去 $t|_p$ 得 $C_{t,p}$，其填充满足
+
+$$
+\begin{aligned}
+C_{t,\varepsilon}[v]&=v,\\
+C_{\langle x,y\rangle,Lq}[v]&=\langle C_{x,q}[v],y\rangle,\\
+C_{\langle x,y\rangle,Rq}[v]&=\langle x,C_{y,q}[v]\rangle.
+\end{aligned}
+\tag{RA.2203}
+$$
+
+令 $\widehat\rho(H)$ 固定唯一孔并将每条旁支 $w$ 换成 $\rho(w)$。这些上下文的组合语义复用 [StrictOneHoleContexts](../../../D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.lean) 的 `Generator`、`contextDenote` 和 `forall_contexts_iff_words`：取二元操作为 $\operatorname{some}(\langle x,y\rangle)$，固定参数就是实际旁支。其一般强同余结论 `contextual_equivalence_is_greatest` 不另证明；像成员测试是成功后的布尔读数，假读数不等于配对失败。
+
+**命题 22.2（实际替换的节点与孔实现）。** 对每个 $u\in\mathcal T$，令 $t=\rho(u)$。对每个 $p\in\operatorname{Pos}(t)$，非根切口的新旧归属只由其直接父节点是否为扩张块 $E$ 决定：
+
+$$
+\boxed{K(u,p)=1\iff
+p=\varepsilon\ \text{或}\ \bigl(p\ne\varepsilon\ \text{且}\ t|_{p^-}\ne E\bigr).}
+\tag{RA.2204}
+$$
+
+具体地，存在以下不交节点分解；旧节点的嵌入就是同地址映射 $p\mapsto p$：
+
+$$
+\operatorname{Pos}(\rho(u))
+=\operatorname{Pos}(u)
+\sqcup\{rL:r\in\mathcal B(u)\}
+\sqcup\{rR:r\in\mathcal B(u)\}.
+\tag{RA.2205}
+$$
+
+对同一 $u$ 的每个旧切口 $p\in\operatorname{Pos}(u)$，子树及单孔上下文都按该地址对应，且对每个 $v\in\mathcal T$ 有
+
+$$
+\begin{gathered}
+(\rho(u))|_p=\rho(u|_p),\qquad
+C_{\rho(u),p}=\widehat\rho(C_{u,p}),\\
+\boxed{\rho(C_{u,p}[v])=C_{\rho(u),p}[\rho(v)].}
+\end{gathered}
+\tag{RA.2206}
+$$
+
+证明。先确定本次替换的像语法。令 $\mathcal R=\rho(\mathcal T)$。它恰是由下面三个产生式生成的最小集合；相应解析在像上唯一：
+
+$$
+\begin{gathered}
+\mathcal R::=\beta\mid E\mid\langle\mathcal R,\mathcal R\rangle,\qquad
+\alpha\notin\mathcal R,\\
+\delta(\beta)=\alpha,\quad \delta(E)=\beta,\quad
+\delta(\langle x,y\rangle)=\langle\delta(x),\delta(y)\rangle
+\quad(x,y\in\mathcal R),\\
+\delta(\rho(u))=u,\qquad \rho(\delta(t))=t\quad(t\in\mathcal R).
+\end{gathered}
+\tag{RA.2207}
+$$
+
+源树结构归纳将每个像放入该语法。语法不产生叶 $\alpha$，故特殊块 $E$ 的右孩子不在语法中，$E$ 不能同时按一般配对产生式解析；叶、特殊块和一般配对三种情形不交。$\delta$ 在一般配对处递归到严格更小的有限子树。语法归纳给出每个生成树的原像及 $\rho\delta=\operatorname{id}$，源树归纳给出 $\delta\rho=\operatorname{id}$。这证明像的准确性、唯一解析和 $\rho$ 的单射性；这里的解析只为具体节点论证提供支持。
+
+再对 $u$ 归纳。源 $\alpha$ 只有旧根，像为叶 $\beta$；源 $\beta$ 的根仍在原地址，像为 $E$，恰多出左右两个孩子。源为 $\langle x,y\rangle$ 时，保留根并分别给两子树的归纳分解加前缀 $L,R$，即得（RA.2205）。源叶没有后代，不同源叶地址互不为前缀，所以新增地址既不与旧地址相交，也不彼此混同。旧父子边及左右次序都保留；源 $\beta$ 的旧根由叶变为分支，故嵌入不声称保留标签或叶性。
+
+同一归纳在旧地址上给出子树等式。因此输出中每个 $E$ 出现的根恰对应一个源 $\beta$ 叶：源 $\alpha$ 的像是 $\beta$；源配对的像有两个 $\mathcal R$ 子树，右子树不可能为 $\alpha$；新增节点本身都是叶。于是 $E$ 的两个孩子恰为新增节点，旧非根节点的父节点必来自源配对且其像不等于 $E$。根总是旧节点，得到（RA.2204）。
+
+最后沿旧地址证明上下文等式。根孔两侧均为 $\square$；若 $u=\langle x,y\rangle$、$p=Lq$，则
+$\widehat\rho(C_{u,p})=\langle\widehat\rho(C_{x,q}),\rho(y)\rangle=C_{\rho(u),Lq}$，右孔同理。再按上下文构造归纳：孔处恒等，左右包裹处使用（RA.2201），得 $\rho(H[v])=\widehat\rho(H)[\rho(v)]$ 对每个 $v$ 成立；代入已对应的实际上下文即得（RA.2206）。它覆盖根、源 $\alpha$ 叶、源 $\beta$ 的旧根和任意深度的源内部节点。新增地址 $rL,rR$ 不在 $\operatorname{Pos}(u)$ 中，$C_{u,rL},C_{u,rR}$ 未定义；输出孔仍可合法填充。证毕。
+
+### 22.2 像测试推论与外部兄弟关系
+
+**推论 22.3（两项像测试及其边界）。** 在命题 22.2 的同源承诺下，定义
+
+$$
+I(t,p)=\mathbf1_{\mathcal R}(t|_p),\qquad
+J(t,p)=\mathbf1_{\mathcal R}(C_{t,p}[E]),\qquad
+\eta(t,p)=(I(t,p),J(t,p)).
+\tag{RA.2208}
+$$
+
+所有输出切口恰有下列三类，且 $K(u,p)=1$ 当且仅当 $\eta(t,p)=(1,1)$：
+
+| §22 切口来源 | 完整焦点 $t|_p$ | $I$ | $J$ |
+| --- | --- | --- | --- |
+| 旧节点 $p\in\operatorname{Pos}(u)$ | $\rho(u|_p)$ | 1 | 1 |
+| 新左孩子 $p=rL$，$r\in\mathcal B(u)$ | $\beta$ | 1 | 0 |
+| 新右孩子 $p=rR$，$r\in\mathcal B(u)$ | $\alpha$ | 0 | 1 |
+
+证明。旧切口的焦点由（RA.2206）属于 $\mathcal R$；取 $v=\beta$，又得 $C_{t,p}[E]=\rho(C_{u,p}[\beta])\in\mathcal R$。
+
+新左切口 $rL$ 的焦点为 $\beta$，填入 $E$ 后在旧地址 $r$ 形成 $X=\langle E,\alpha\rangle$。$X$ 不等于 $E$，且右孩子不在 $\mathcal R$，所以 $X\notin\mathcal R$。还须排除祖先重新解析的吸收：若 $X$ 是不属于 $\mathcal R$ 的复合树，则其任何直接祖先 $\langle X,s\rangle$ 或 $\langle s,X\rangle$ 都不能等于两个叶组成的 $E$，也不能按 $\langle\mathcal R,\mathcal R\rangle$ 解析；祖先仍是像外复合树。沿有限祖先链归纳，这个缺陷一直传到根，包括 $r=\varepsilon$ 时的零层祖先情形。因此整个新左填充在像外。
+
+新右切口 $rR$ 的焦点是像外叶 $\alpha$，填入 $E$ 却使旧地址 $r$ 的块成为 $\langle\beta,E\rangle=\rho(\langle\alpha,\beta\rangle)$。在旧切口 $r$ 应用（RA.2206），得
+$C_{t,rR}[E]=\rho(C_{u,r}[\langle\alpha,\beta\rangle])\in\mathcal R$。此像的原像改变了源 $r$ 处的叶，并没有在实际旧源 $u$ 中提供 $rR$ 孔。节点分解穷尽三类，故 $(0,0)$ 不出现。
+
+根恒为旧切口，整树替成 $E$ 仍在像中。源 $\alpha$ 的唯一输出切口为旧根 $\beta$；源 $\beta$ 的输出 $E$ 在根、$L$、$R$ 分别给 $(1,1),(1,0),(0,1)$。旧内部节点及旧两类叶已经由任意旧地址的运输式覆盖。新左例说明单独 $I$ 不能分类，新右例说明单独 $J$ 不能分类；这是这项合取判据的分量敏感性，$K$ 本身就是一位目标，（RA.2204）也直接给一项布尔判据，因而不能推出所有表示的两位下界。
+
+非吸收论证只用像外复合块，不能换成无条件反射 $H[x]\in\mathcal R\Rightarrow x\in\mathcal R$。实际取 $u=\langle\alpha,\alpha\rangle$、$t=\langle\beta,\beta\rangle$、旧孔 $p=R$，有 $C_{t,R}[\alpha]=E\in\mathcal R$ 而 $\alpha\notin\mathcal R$；解码后的源为 $\beta$，已没有原来的 $R$ 孔。新右孩子的像外焦点同样可以由父节点吸收到 $E$。这不影响（RA.2206）对 $\rho(v)$ 填充的限定。证毕。
+
+进一步，令 $d(t,p)=1$ 恰当 $p=qL$ 且右兄弟 $t|_{qR}$ 为叶 $\alpha$，其余情形（包括根）为零。则
+
+$$
+I(t,p)=\mathbf1_{\{t|_p\ne\alpha\}},\qquad
+J(t,p)=1-d(t,p),\qquad
+K(u,p)=I(t,p)(1-d(t,p)).
+\tag{RA.2209}
+$$
+
+证明。对像语法归纳：$E$ 的孩子都是叶，一般配对的复合真子树由归纳假设处理，故每个输出复合子树都在 $\mathcal R$；唯一可能的像外子树是特殊块右孩子 $\alpha$。而输出中右兄弟为 $\alpha$ 的左切口恰为 $E$ 的新左孩子。故前式及后两式分别由像语法和三类表得到。候选观察若已保留完整焦点，就已决定 $I$；所需补充可以只取外部兄弟谓词 $d$。这只是集合层面的充分支持观察，未断言已取得兄弟地址或其读数。
+
+### 22.3 相同候选观察下的实际分离对
+
+**命题 22.4（计数、叶序与完整焦点仍可遗漏源节点归属）。** 写 $c(t)=(a,b)$ 为两类叶计数，$q(c(t))=2a+3b$；有序叶序满足 $\operatorname{fr}(\alpha)=\alpha$、$\operatorname{fr}(\beta)=\beta$，配对时依左右顺序拼接。取实际联合域及候选投影
+
+$$
+\begin{gathered}
+\mathcal X=\{(u,p):u\in\mathcal T,\ p\in\operatorname{Pos}(\rho(u))\},\\
+O(u,p)=\bigl(c(t),\operatorname{fr}(t),p,t|_p,|p|,\mathsf{rec}_\rho\bigr),
+\qquad t=\rho(u).
+\end{gathered}
+\tag{RA.2210}
+$$
+
+即使再给源计数和源叶序，也不能从这个投影恢复 $K$。它只是一项声明的候选观察，不限制完整观察者已获档案中的其他证据。
+
+证明。令 $B=\beta$，取
+
+$$
+\begin{aligned}
+U&=\langle\langle\alpha,\beta\rangle,\langle\alpha,\beta\rangle\rangle,&
+V&=\langle\langle\langle\alpha,\beta\rangle,\alpha\rangle,\beta\rangle,\\
+S=\rho(U)&=\langle\langle B,E\rangle,\langle B,E\rangle\rangle,&
+T=\rho(V)&=\langle\langle\langle B,E\rangle,B\rangle,E\rangle,\qquad p=RL.
+\end{aligned}
+\tag{RA.2211}
+$$
+
+每条联合记录都由它自己的同一实际源树经同一个全局 $\rho$ 取得，没有拼接独立边缘。直接按树计算得
+
+$$
+\begin{gathered}
+c(U)=c(V)=(2,2),\qquad
+\operatorname{fr}(U)=\operatorname{fr}(V)=\alpha\beta\alpha\beta,\\
+c(S)=c(T)=(2,4),\qquad q(c(S))=q(c(T))=16,\\
+\operatorname{fr}(S)=\operatorname{fr}(T)=\beta\beta\alpha\beta\beta\alpha,\qquad
+S|_{RL}=T|_{RL}=B,\quad |RL|=2,\\
+O(U,RL)=O(V,RL),\qquad K(U,RL)=1,\quad K(V,RL)=0.
+\end{gathered}
+\tag{RA.2212}
+$$
+
+在 $U$ 中 $RL$ 是右配对的左叶 $\alpha$；在 $V$ 中右孩子只是叶 $\beta$，没有 $RL$ 地址，$T$ 的 $RL$ 是其扩张所新增的左孩子。对应的父子树分别为 $\langle B,E\rangle$ 与 $E$，与主判据相符。残余上下文为
+
+$$
+\begin{aligned}
+C_{S,RL}[z]&=\langle\langle B,E\rangle,\langle z,E\rangle\rangle,\\
+C_{T,RL}[z]&=\langle\langle\langle B,E\rangle,B\rangle,\langle z,\alpha\rangle\rangle.
+\end{aligned}
+\tag{RA.2213}
+$$
+
+共同填入 $E$，第一式等于
+$\rho(\langle\langle\alpha,\beta\rangle,\langle\beta,\beta\rangle\rangle)$，第二式含像外复合块 $\langle E,\alpha\rangle$，不能被祖先吸收。所以两处 $\eta$ 分别为 $(1,1),(1,0)$，外部兄弟谓词分别为零、一。两份填充都仍是合法非空有限树；不同的是额外的像及旧源孔对应性质，不是原始配对合法性。叶序保留了叶标签顺序，却没有保留括号或焦点与父节点的关系。
+
+现直接应用既有 [TargetRecoveryCriterion](../../../D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean) 的 `target_recovery_criterion`，取状态域 $\mathcal X$、过程 $O$、目标 $K$；$\mathcal X$ 由 $(\alpha,\varepsilon)$ 居住。上述同纤维异目标对排除了 $K=f\circ O$。若只在实际观察像上表述，则使用 [HistoryPayloadFactorization](../../../D5/S3/ConceptDynamics/Observation/HistoryPayloadFactorization.lean) 的 `ker_beta_subset_ker_payload_iff_unique_factorization`。这里引用已有恢复判据，不另立一般恢复结果。证毕。
+
+### 22.4 已获完整码、动作记录与恢复范围
+
+像语法给每个 $t\in\mathcal R$ 唯一的数学原像 $\delta(t)$；只有在约定 22.1 的真实最后动作与同源承诺下，它才等于实际立即前态 $u$。单凭 $E\in\mathcal R$ 不能判定它由替换取得还是由直接配对构成。即使最后动作确为 $\rho$，历史 $\beta\xrightarrow{\rho}E$ 与 $\alpha\xrightarrow{\rho}\beta\xrightarrow{\rho}E$ 仍有相同末态、最后动作与立即前态，却有不同的更早历史。初态、步数或历史档案是额外条件。
+
+已经取得当前实际树的有效完整码时，复用 [FIB 原子关系生成定义 9.1、定理 9.2–9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md) 的结构解码或全部路径重建，即可恢复 $t$，再用（RA.2207）取得 $u$ 并判断 $p\in\operatorname{Pos}(u)$。另一既有完整码是 [SourceTreeEncoding](../../../D5/S0/History/Spacetime/SourceTreeEncoding.lean)：将 $\alpha,\beta$ 分别嵌入 `FreeMagma Nat` 的 `.of 0`、`.of 1`，配对嵌入 `.mul`，使用 `sourceCode_injective`、`source_code_equiv`、`decodeSource_encode`。完整有序树保留括号及可重建的出现地址，相同叶标识不合并出现。已有完整源码也直接足够。本节不重复编码或完整码恢复理论；这条充分路线以码已经取得及最后动作记录正确为前提。
+
+数学填充、像测试、父兄弟判据及原像解码均不授予实际读、计算、复制、写、复位、回滚或逆向执行权限。$\eta$ 的两项输出与 $K$ 的一项输出，不计算取得支持树或上下文、验证记录、定位地址、暂存及持久保存的成本；维护已有正确记录也不替代取得与初始化。沿用本卷 §20.5–20.6：完整计数精度仍不恢复树形，取得与维护须分开计费；持续操作下的更新代价及保持充分性的条件还须单独给出。
+
+当前 $K$ 的充分支持观察还不构成持续任务的自主更新记录。[递归关系观察定理 120.4–120.5](RECURSIVE_RELATIONAL_OBSERVATION.md) 已给出指定操作、全部未来响应及可达确定实现的相应条件；这里没有为 $O$、$\eta$ 或 $d$ 证明那些更新交织条件，也没有有限观察机或最小状态结论。全部有限树组成无限载体，单棵树有限不能代替整个残余响应族有限。
+
+在这个限定模型中，同地址出现关系给组合空间的位置，单孔上下文给可填充边界，正确动作记录把两者连接到一次变化，外部兄弟信息则补足当前归属任务遗漏的关系。空间、时间、边界与记忆的完整关系恢复目标仍然保留；多孔共同来源、持续动态充分性、更早实际历史以及物理空间和时间的互相恢复，各需自己的来源、访问、更新与结构条件，不能由本节的一步单孔结论推出。
+
+## 追加锚（本行以下为增补区）
