@@ -30795,10 +30795,53 @@ former105 class. No complete future intersection was replaced by
 a projection, and no replacement residue was assumed to have been
 an original residue.
 
-The new restriction therefore removes an actual possible high-support
-activation which the global-height qualification misses. It does
-not force useful vacancies in every hypothetical cover: densely
-occupied mixed columns remain, and the complementary same-source
-charge Q_L is still unpaid in general. The unrestricted #7 objective
-is unchanged and unresolved. These are ordinary symbolic results;
+### A finite qualification test identifies the remaining unpaid labels
+
+For an original future label retain its COMPLETE old part d>1.
+Divisor closure makes d original. For every odd repair prime p,
+including future or absent primes, write d=p^a*n and define using
+the SAME full original D
+
+    F_p(d)=sum_(e|n)p^(a-H_e),
+    H_e=max({0} union{k>=0:p^k*e in D}).
+
+If h=p^b*f is a nonunit old divisor of d, its column heights H_e
+are unchanged, f|n and b<=a. Thus
+
+    F_p(h)<=p^(b-a)*F_p(d)<=F_p(d),
+    some old h|d passes VH3 at p
+       iff F_p(d)>p-1.                              (FC1302)
+
+This directly reuses the qualification comparison from FC1036 with
+VH3's actual columns. Since H_e>=a, each term is at most one;
+qualification forces p<=tau(n)<=tau(d). Only the finite set of
+odd primes p<=tau(d) needs testing. For an absent p, a=0 and all
+H_e=0, so F_p(d)=tau(d); among absent primes, testing the smallest
+absent odd prime suffices. For d=1 there is no nonunit old divisor
+and no qualifying row.
+
+If every test fails, every wholly old VH phase-capacity row has coefficient
+zero on this original label. Nonnegative combinations of those
+rows in FC1007 cannot dominate a positive terminal weight on it.
+This identifies the unpaid set for the stated fresh-only palette,
+not for retained mixed guards or every possible joint exchange.
+Conversely, passing supplies at least one row, not an adequate
+total payment. Smaller qualified divisors may have better counts,
+prices and shared incidence; FC1302 does not eliminate their role
+in allocating the complete charge. VH7's cap N and its conditional
+price improvement must retain their respective premises.
+
+The105 example shows why these tests extend the old global-height
+qualifications. The retained-guard consumer in
+[Report385, section21](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#21-a-retained-ternary-guard-forces-a-two-level-mixed-height-alternative)
+also forces3*p^(H_p-1) or9*p^(H_p-3) to be original for every
+p>=5 with H_p>=3. That necessary mixed-height alternative does
+not force those labels to participate at a chosen head point.
+
+The new restrictions remove actual possible activations and height
+profiles which the specified earlier tests miss. They do not force
+useful vacancies in every hypothetical cover: densely occupied
+mixed columns remain, and the complementary same-source charge Q_L
+is still unpaid in general. The unrestricted #7 objective is
+unchanged and unresolved. These are ordinary symbolic results;
 no new Lean verification or new finite producer is claimed.

@@ -2867,3 +2867,76 @@ whole cover. Report528 after FC1296 gives an actual finite profile
 and the shared future-inventory consumer. These are ordinary
 symbolic proofs, without new Lean verification; unrestricted
 Erdős#7 remains unresolved.
+
+## 21. A retained ternary guard forces a two-level mixed-height alternative
+
+Keep the same globally minimum whole cover, with original pure3
+normalized to0 and complete p-height H_p. Fix an odd prime p>=5 and a>=2 with
+p^a original. Suppose BOTH numerical labels
+
+    3*p^a and9*p^(a-2) are absent from D.             (MH1)
+
+Divisor closure also makes9*p^(a-1) and9*p^a absent. Retain0 mod3.
+The entire old class c modp^a can be repaired with four fresh labels:
+
+    3*p^a;
+    9*p^(a-2),9*p^(a-1),9*p^a.                       (MH2)
+
+Give the first label one nonzero ternary root and p-phase c modp^a.
+Give the other nonzero root's three modulo9 children to the last
+three labels, with p-phases inherited from c at their respective
+depths. The retained pure class covers root0. Every old p^a-point
+therefore belongs to a retained or repair class, with all higher
+digits and outside coordinates unrestricted. At a=2 the label9
+has no p-condition and is still an odd nonunit; MH1 asserts that
+this pure label is absent. No modulus1 is inserted.
+
+All four labels are globally unused and distinct. Their sum is
+
+    S=[3+9(1+p^(-1)+p^(-2))]*p^a
+      <=354*p^a/25 <24*p^a.                         (MH3)
+
+Move the original p^a-class to a different phase and delete four
+proper original p^a-multiples there. They have distinct odd
+quotients at least3,5,7,9, so their modulus sum is at least24*p^a.
+MH2 repairs the whole former class and the moved parent covers
+every deleted class. PH2 contradicts the unchanged count and
+strictly smaller sum. Comparable disjointness handles the own
+phase. Hence MH1 implies
+
+    q_(p^a)(c)<=3 for EVERY phase c.                 (MH4)
+
+Now assume H_p>a. At a private point of the original pure p^H_p
+class, the EXISTING HC1/QC2 demand supplies one actual p^a-phase
+containing at least1+(H_p-a)(p-1)>=p>=5 original labels. This
+contradicts MH4. Even the weaker count-only cap four would suffice.
+We obtain the necessary mixed-height alternative
+
+    H_p>a>=2 ==> 3*p^a in D OR9*p^(a-2) in D,
+                                                    (MH5)
+    H_p>=3 ==> 3*p^(H_p-1) in D OR9*p^(H_p-3) in D.
+
+The second line is the strongest member at fixed H_p: its present
+label forces the corresponding lower labels in MH5 by divisor
+closure. This is a consumer of the existing private demand and
+joint exchange, with a retained guard and two different fresh
+depths; neither underlying general theorem is re-proved here.
+
+For comparison, FC1150 with repair prime3 and HC1 only force
+3*p^(H_p-2) to be original when H_p>=3. Indeed, if
+t=max({0} union{j>=1:3*p^j in D}), its interface at a=t+2
+has capacity one, implying H_p<=t+2. This permits t=H_p-2
+with9*p^(H_p-3) absent; MH5 excludes that numerical profile in
+the same minimum cover. For example, at H_p=4 it forces3*p^3
+or9*p, even when the global ternary height is arbitrarily large.
+This comparison is with that specified single-layer bound, not
+an independence claim against every other repository constraint.
+
+MH5 forces one of the displayed labels to be present; at H_p=3
+the second alternative is the pure label9. It does not force a
+usable vacancy elsewhere or a lower bound on joint phase activity.
+The private suppliers share a p-prefix and their own
+cofactor traces at one point, but need not all contain3 or another
+specified common cofactor. Thus the unrestricted same-source
+dense-inventory bound remains missing. These are ordinary symbolic
+deductions with no new Lean verification.
