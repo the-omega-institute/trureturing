@@ -1,4 +1,7 @@
 import LeanInformationAuditAnalysis.Tests.RootContract.Producer
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit
 open LeanInformationAudit.Tests.Occurrence.JointImport
@@ -9,10 +12,10 @@ open LeanInformationAuditAnalysis.Tests.RootContract.Producer in
 open LeanInformationAuditAnalysis.Tests.RootContract.Producer in
 #check LeanInformationAudit.Tests.Occurrence.JointImport.shared.__primitive_realization
 
-expect_information_occurrence shared in arena
+test_assess in expect_information_occurrence shared in arena
   from "LeanInformationAuditAnalysis.Tests.RootContract.Producer"
 
-#seal_information_theory
+test_assess in #seal_information_theory
 
 run_cmd do
   let env ← getEnv

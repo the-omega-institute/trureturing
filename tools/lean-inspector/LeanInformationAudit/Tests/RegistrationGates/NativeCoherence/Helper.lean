@@ -1,4 +1,6 @@
-import LeanInformationAudit.Syntax
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace DTRNativeFixture
 

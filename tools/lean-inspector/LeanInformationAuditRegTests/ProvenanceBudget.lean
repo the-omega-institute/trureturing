@@ -2,6 +2,9 @@ import LeanInformationAuditRegTests.ProductionInputs
 import Reg.Catalogs.InformationRoot
 import Reg.Catalogs.TemplateShadow
 import D5.S3.ConceptDynamics.InformationEscape.TemplateShadow
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit LeanInformationAudit.RegistrationGates
 

@@ -49,6 +49,9 @@ inductive Pauli
   | I | X | Y | Z
   deriving DecidableEq
 
+/-- The four Pauli labels form a finite type. -/
+instance : Fintype Pauli := ⟨{.I, .X, .Y, .Z}, fun p => by cases p <;> simp⟩
+
 /-- The Pauli matrices: `X`, `Z` are the frozen `qubitX`, `qubitZ`, and `Y = i X Z`. -/
 noncomputable def pauliMatrix : Pauli → Matrix (Fin 2) (Fin 2) ℂ
   | .I => 1
@@ -114,13 +117,13 @@ def claim : Prop :=
         qubitPermutation σ)) = codespace Sminus)
 
 /-- Whether two single-qubit Paulis anticommute. -/
-private def anticomm : Pauli → Pauli → Bool
+def anticomm : Pauli → Pauli → Bool
   | .I, _ => false
   | _, .I => false
   | a, b => a != b
 
 /-- The commutation sign of two single-qubit Paulis. -/
-private def sgn (a b : Pauli) : ℤ := if anticomm a b then -1 else 1
+def sgn (a b : Pauli) : ℤ := if anticomm a b then -1 else 1
 
 /-- The span of `M ψ` over `ψ ∈ C` and product operators `M` that are the identity on `T`. -/
 private noncomputable def outerSpan {n : ℕ} (T : Finset (Fin n))

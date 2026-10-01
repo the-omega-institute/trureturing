@@ -1,5 +1,8 @@
 import LeanInformationAudit.Tests.Seal.SystemContentSensitivity.ConstantReadout
 import LeanInformationAudit.Tests.Seal.SystemContentSensitivity.FixedStage
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 /-! T-013 primitive-content mutations.
 

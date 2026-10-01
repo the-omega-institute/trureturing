@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredTelescopeObligations
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredExpandedTelescopeObligations
 open Lean Meta Elab Command
@@ -12,16 +15,16 @@ def expandedDomainTemplate (n : Nat) : PrimitiveRealization (cutSignature Bool B
 def expandedBodyDomainTemplate (n : Nat) : PrimitiveRealization (cutSignature Bool Bool) :=
   bodyDomainTemplate n true
 
-register_information_template expandedDomainTemplate
-register_information_template expandedBodyDomainTemplate
+test_assess in register_information_template expandedDomainTemplate
+test_assess in register_information_template expandedBodyDomainTemplate
 
-information_theorem expandedDomainTarget in targetArena primitives (expandedDomainTemplate 0)
+test_assess in information_theorem expandedDomainTarget in targetArena primitives (expandedDomainTemplate 0)
   : Nat.lt 0 (Nat.succ 0) := Nat.zero_lt_succ 0
-information_theorem expandedDomainIndependent in independentArena primitives (expandedDomainTemplate 0)
+test_assess in information_theorem expandedDomainIndependent in independentArena primitives (expandedDomainTemplate 0)
   : Nat.lt 1 (Nat.succ 1) := Nat.lt_succ_self 1
-information_theorem expandedBodyDomainTarget in targetArena primitives (expandedBodyDomainTemplate 0)
+test_assess in information_theorem expandedBodyDomainTarget in targetArena primitives (expandedBodyDomainTemplate 0)
   : Nat.lt 0 (Nat.succ 0) := Nat.zero_lt_succ 0
-information_theorem expandedBodyDomainIndependent in independentArena primitives (expandedBodyDomainTemplate 0)
+test_assess in information_theorem expandedBodyDomainIndependent in independentArena primitives (expandedBodyDomainTemplate 0)
   : Nat.lt 1 (Nat.succ 1) := Nat.lt_succ_self 1
 
 run_meta do

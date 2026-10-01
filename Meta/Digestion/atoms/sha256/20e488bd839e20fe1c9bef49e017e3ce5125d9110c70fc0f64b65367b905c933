@@ -1,0 +1,11 @@
+**Definition 1.2 (Physical history and estimation).** For each hidden state $\sigma$, the physical history at stage $n$ has probability law $\mu_n^\sigma$ and a measurable integrable matrix density $R_n^\sigma(h)$, positive with trace one everywhere. Its initial law is $\delta_{h_0}$ and $R_0^\sigma=\rho_A\otimes\sigma$ almost everywhere. Its actual transition equation, entry by entry on every measurable next-history event, is
+
+$$
+\int_E R_{n+1}^\sigma(k)\,d\mu_{n+1}^\sigma(k)
+ =\int_{F_n}\mathcal T_{n,h}(E)(R_n^\sigma(h))\,d\mu_n^\sigma(h),
+$$
+
+with the stopped action on $S_n$. Total trace preservation is required almost everywhere on executed active histories separately under each $\mu_n^\sigma$. Neither record independence nor product posterior equality is an assumption. The protocol only imposes these equations for $n<N$.
+
+An estimator is an arbitrary Markov kernel $\kappa$ from the returned record to $\mathbb R$, fixed before the unknown hidden state is chosen. Its output law is $Q^\sigma=((r_N)_*\mu_N^\sigma)\kappa$. For $\theta(\sigma)=\beta^{-1}D(\sigma\Vert I_B/e)$, its risk is the extended nonnegative expectation $\int |z-\theta(\sigma)|\,dQ^\sigma(z)$, with value $+\infty$ permitted. Outputs are not clipped or bounded.
+

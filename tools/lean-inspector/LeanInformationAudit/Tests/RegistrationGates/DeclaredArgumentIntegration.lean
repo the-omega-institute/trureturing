@@ -1,5 +1,8 @@
 import LeanInformationAudit.Tests.RegistrationGates.Positive
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredStructural
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredArgumentIntegration
 open Lean Meta Elab Command RegistrationGates

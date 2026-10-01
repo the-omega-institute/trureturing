@@ -1,6 +1,9 @@
 import LeanInformationAudit.Tests.Census.CommandRejection
 import LeanInformationAudit.Census.Query
 import LeanInformationAudit.RegistrationGates
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit DispositionCensus
 open D5.S3.ConceptDynamics.InformationEscape

@@ -1,5 +1,8 @@
 import LeanInformationAudit.Tests.Projection.Noninterference.SealedRoot
 import LeanInformationAudit.Tests.Projection.FixtureState
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 /-!
 The selected root was sealed in another module. The mutation runner requires exact

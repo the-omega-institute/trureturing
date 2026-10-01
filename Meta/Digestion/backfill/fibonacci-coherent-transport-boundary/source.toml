@@ -1,0 +1,5 @@
+source_id = "fibonacci-coherent-transport-boundary"
+path = "docs/develop/theory/FIBONACCI_COHERENT_TRANSPORT_BOUNDARY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

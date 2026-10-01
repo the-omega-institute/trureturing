@@ -1,0 +1,23 @@
+### 232.4 任意增长模数的统一推论
+
+公共核心还适用于没有 FIB 来源的模数。给定实数 $1<A\le X$、正整数 $m$ 及 $(c,m)=1$，令
+
+$$
+\mathcal A(A,X;m,c)
+=\{N\in\mathbb Z\cap[A,X]:N\equiv c\pmod m\}.
+\tag{232.15}
+$$
+
+其乘子集合 $I=\{g\in\mathbb Z:A\le c+mg\le X\}$ 是连续整数区间；空集时下述结论平凡成立。对非空集合，有
+
+$$
+\operatorname{diam}(I)\le(X-A)/m.
+$$
+
+因此有限公共核心充分条件可以直接写成
+
+$$
+\boxed{n_\circ e^{-2L_0}>(X-A)/m.}
+\tag{232.16}
+$$
+
