@@ -4318,3 +4318,271 @@ including unused old divisors and arbitrary new-period moduli.
 This constrains that complete repair route; it does not exclude
 larger repairs, simultaneous moves with another liability set,
 or an unrestricted odd cover. No Lean verification is asserted.
+
+## 31. Six-class repairs reduce to their low inside subfamily
+
+Keep the same minimum whole-cover model, Q=3^H*B and complete
+P_3. Suppose at most six classes with pairwise distinct numerical
+odd moduli greater than one, none equal to3, cover P_3. Then their
+subfamily with moduli dividing Q and ternary height at most one
+already covers P_3. No retention of C0 is assumed here.       (NF16)
+
+NF13 first removes every outside class. Take an inclusion-minimal
+subrepair from the inside classes, and call its classes low or
+high according as v_3(m)<=1 or v_3(m)>=2. Write their counts as
+ell and h. If h>0, a private point of a high class has cofactor
+z in R_3 missed by every low class. All old higher3 tails above
+this SAME z belong to P_3. Each high class covers at most one
+third of that complete tail, so h>=3 and ell<=3. At H=1 there
+are no high inside classes in the first place.
+
+For ell<=3 the following construction gives one law on the
+actual cofactor remainder avoiding all low classes. Independently
+adjoin uniform old higher3 digits, keeping first root a_3 fixed.
+Low classes have mass zero under this law. We show that the
+entire high subfamily has mass strictly below one:
+
+| Low count ell | Maximum high count h | High mass upper bound |
+| --- | ---: | ---: |
+| 0 | 6 | 8/9 |
+| 1 | 5 | 5/6 |
+| 2 | 4 | 8/9 |
+| 3 | 3 | 5/6 |
+
+With no low class, use PC7. Numerical label9 has mass at most
+1/3, and every other high label has mass at most1/9, giving
+1/3+5/9=8/9.
+
+With one low class, assign its cofactor to any dividing prime
+root and use RC2. Every b_i>=2 and at most one b_p equals2.
+Only9 and, at that exceptional coordinate,9p can exceed1/9;
+their masses are at most1/3 and1/6. The total for h<=5 is at
+most1/3+1/6+3/9=5/6.
+
+With two low classes, assign their cofactors to dividing roots.
+If every b_i>=2, each high label other than9 has mass at most
+1/6, so the total is at most1/3+3/6=5/6. Otherwise precisely
+one coordinate p has b_p=1 and r_p=3; both deleted roots lie
+there. RC2 still gives a p^2 prefix mass at most1/3 and every
+other prime-root mass at most1/3. Thus only9 and9p can exceed
+1/9, each at most1/3, giving1/3+1/3+2/9=8/9.
+
+With three low classes, assign their cofactors to primes with
+capacity two each. The only Hall obstruction is that all three
+cofactors are pure powers of one prime p. Outside that exception,
+RC2 applies. At most one coordinate p can have b_p=1; every
+other coordinate has b_i>=2. Its depth-two bound is at most1/3.
+Consequently only9 and9p can exceed1/6, each at most1/3, and
+three high classes have mass at most5/6. If there is no b_p=1,
+the bound only improves.
+
+In the pure-power exception a numerical cofactor may occur twice,
+from low labels e and3e; this argument does not assume C0 is
+retained. Assign the three complete prefixes at p. Their old
+capacity, before any antichain simplification, is at most
+
+    delta_p<=2/3+1/9=7/9.
+
+RC5 supplies one actual residual law with first-p prefix cap at
+most one and depth-two cap at most(1/9)/(1-7/9)=1/2. Every other
+coordinate retains its original cap at most1/3. Under the product
+with uniform old3 tails, only9 and9p can exceed1/6. A9p^2 class
+has mass at most1/6, a deeper pure3 label at most1/9, and a high
+class with another cofactor prime at most1/9. The same5/6 bound
+therefore applies.
+
+All four cases contradict a high-containing minimal subrepair.
+Such a minimal subrepair consists only of low inside classes;
+these belong to the asserted original subfamily, proving NF16.
+The common-law construction does not require the private witness
+to have positive mass under an earlier probability. Nor does it
+assert that a low subrepair actually exists at this budget.
+
+## 32. Retaining the original q-free classes rules out six-class repairs
+
+The additional retained-label condition excludes the low subfamily
+left by NF16. The finite assignment below reuses the capacitated
+Hall criterion of
+[Report386, section3](386-pair-root-conflicts-and-original-survivor-capacity.md#3-capacitated-hall-is-a-simpler-sufficient-condition)
+and the prefix costs of PC6. It adds an explicit six-item consumer,
+not a new Hall or tree-selection theorem.
+
+### Six items admit strict per-coordinate prefix capacities
+
+Let a labelled list contain at most six integers m>1 coprime to6.
+Assume each numerical pure prime power occurs at most once and
+every other numerical value occurs at most twice. One can assign
+each item to one of its dividing primes such that
+
+    sum_(m assigned to p) 3^(-v_p(m))<1
+       for every assigned prime p.                         (NF17)
+
+First try the capacity-two Hall assignment. If it exists, each
+coordinate costs at most2/3. Otherwise consider the following
+two exhaustive obstructions and use complete exponents.
+
+Suppose at least three items are pure p-powers for some p. Assign
+all pure p-powers to p. Their exponents are distinct, so their
+finite total cost is less than sum_(a>=1)3^(-a)=1/2. At most
+three items remain, each with a prime divisor other than p. Try
+capacity two on those other primes. It fails only if precisely
+three remaining items have the same singleton support {q} after
+deleting p. If all three are pure q-powers, assign them to q at
+total cost less than1/2. Otherwise move one mixed p^a*q^b item
+to p, increasing its cost by at most1/3. The p cost is then
+less than5/6, and the other two items cost at most2/3 at q.
+
+Now suppose every prime has at most two pure-power items. A Hall
+failure must contain at least five items supported within a pair
+{p,q}: a singleton cannot fail, and three available primes already
+have capacity six. Take all items supported within this pair.
+There are five or six; any remaining item has a prime outside
+the pair and can be assigned there at cost at most1/3.
+
+At either of p,q, zero, one or two pure-power items cost at most
+0,3/9 or4/9, respectively. Let S<=2 count the shallow mixed
+items with numerical value pq. Each other mixed item has depth
+at least two at one axis; assign it to such an axis, at cost
+at most1/9. Before assigning the S shallow items, each axis has
+cost at most8/9: with zero, one or two pure items its bound is
+respectively6/9, (3+5)/9 or(4+4)/9.
+
+If S=0, the assignment is complete. If S=1, let P be the total
+number of pure items on the pair. For P=0,1,2,3,4 their combined
+cost is at most(0,3,6,7,8)/9. There are at most5-P deep mixed
+items, so the combined base cost of both axes is at most one.
+One axis has cost at most1/2; assign pq to it, obtaining at most
+5/6 there. The other axis remains at most8/9.
+
+If S=2, there are at most4-P deep mixed items and the combined
+base cost is at most8/9. When both axes have cost below2/3,
+assign one pq to each. Otherwise one axis has cost at least2/3,
+so the other has cost at most2/9. Assign both pq items to the
+latter, bringing its cost to at most8/9. Every axis remains
+strictly below one. This proves NF17, with indivisible items;
+no fractional assignment or independent phase choice was used.
+
+### A legal complete repair needs at least seven classes
+
+Require the repair to retain every original class in C0, to use
+pairwise distinct odd nonunit moduli, and to avoid label3 and
+all numerical labels occupied by C0. Then
+
+    number of repair classes >=7.                          (NF18)
+
+Indeed, if there were at most six, NF16 would leave a low inside
+subfamily covering P_3. Its nonunit cofactors e divide B, and each
+numerical e occurs at most twice, from labels e and3e. For a pure
+cofactor e=p^a, divisor closure of the lexicographically minimum
+original cover makes p^a an original C0 label. That label is
+unavailable to the repair, so only3p^a can occur: pure cofactor
+values occur at most once.
+
+Apply NF17 to this actual cofactor list. Use the full increasing
+chain of old support primes above3, whose PC6 bases r_i are at
+least3. In each coordinate, assign the actual full prefix of each
+assigned class. Its total PC6 capacity is at most the corresponding
+NF17 sum, hence strictly below one. PC6 gives a complete legal
+tree avoiding all those prefixes on each axis. PC1--PC4 force
+their product to meet actual R_3, giving one cofactor missed by
+every low class. This contradicts coverage of complete P_3.
+
+Retention of C0 is essential to this proof: without it a pure
+cofactor may occur twice, and NF17's hypothesis is not established.
+NF15 and NF16 have the broader unretained-label scope stated there.
+
+### Every non-parent ternary root needs seven original classes
+
+NF18 implies a necessary condition on the original minimum whole
+cover itself, with no chosen DR1 deletion. For each first3 root
+rho different from a_3, let D_rho be the original3-bearing
+classes whose first3 root is rho. The whole product
+
+    {rho} times T_3 times R_3
+
+must be covered by D_rho: C0 misses R_3, and classes at another
+first3 root miss this product. Choose one CRT translation c with
+
+    c=a_3-rho mod3^H,    c=0 modB.
+
+Translate every class in D_rho by this SAME c. A complete prefix
+rho+3t becomes a_3+3t, so all higher3 digits and all cofactor
+residues are preserved. Its numerical modulus is unchanged.
+The translated family covers complete P_3, has distinct numerical
+labels divisible by3, and has no label3. It therefore conflicts
+with neither retained C0 nor the unavailable parent label3.
+NF18 gives |D_rho|>=7 for each of the two non-parent roots.
+Their original inventories are disjoint; adding the original
+prime3 label gives
+
+    N_3>=1+7+7=15.                                         (NF19)
+
+This is a whole-cover inventory condition with unrestricted old
+heights. NF13's proof through NF10 retains its independent earlier
+Report378 lower bound N_3>=9; NF19 is downstream and must not
+be substituted into that bootstrap proof. The lower bound15 does
+not exclude larger inventories or settle unrestricted #7. These
+are ordinary symbolic deductions without new Lean verification.
+
+## 33. Distributed prefixes remove q-free residual collision families
+
+The full-coordinate map of Report376 also applies to a BC2 residual
+whole cover C having L<n classes, when every modulus in C is
+q-free. This is an explicit restriction: effective repairs divisible
+by q^2 would leave q-bearing residual classes and are excluded from
+this consumer. Let E be the set of repeated numerical moduli in C.
+Each repetition is a pair of actual classes, as established in BC2.
+
+Choose a chain q<p_1<...<p_t such that every m in E has a selected
+prime divisor. The selected primes may include new repair primes.
+Use their complete heights H_i in the actual period of C, put
+lambda_1=q, lambda_i=p_(i-1), and r_i=p_i-lambda_i+1. For each
+m in E choose one actual endpoint of its pair and assign that
+endpoint's full p_i prefix to one selected p_i dividing m.
+Within each coordinate remove duplicate or contained prefixes,
+obtaining an antichain U_i. If
+
+    delta_i=sum_(u in U_i) r_i^(-length(u))<1
+       for every selected coordinate i,                    (BC5)
+
+the residual cover contradicts minimum original cardinality.
+
+PC6 selects a complete lambda_i-ary full-height tree avoiding U_i
+for every i. Apply PC1's common CRT map using these trees and all
+unselected cofactor coordinates. Since C covers every integer,
+each new point's one old witness is covered by a class of C.
+PC2 pulls each such event back to at most one AP, with numerical map
+
+    m=r product_i p_i^alpha_i
+      -> r product_i lambda_i^alpha_i.
+
+All C moduli are q-free, so the unselected cofactor r contains
+neither q nor a selected prime. The map is injective on numerical
+labels; whole coordinate exponents move, with no old tail left
+to collide at a new coordinate. Every repeated pair loses at
+least its chosen endpoint because the corresponding prefix was
+excluded. Thus the pullbacks have distinct odd nonunit moduli,
+cover every new point through its SAME old witness, and number
+at most L-|E|<n. No closing class is added. This is the existing
+full-height transport with a distributed deletion certificate;
+no common prime divisor of E is required.
+
+At q=3, |E|<=6 always supplies such a certificate. The numerical
+bases in E are distinct odd integers coprime to3. They therefore
+satisfy NF17, including uniqueness of every pure-power value.
+Assign each base as in NF17 and choose either actual endpoint
+of each pair. Taking all primes occurring in E as the increasing
+chain gives r_i>=3, hence every coordinate capacity is below one.
+The actual phases and antichain simplification can only decrease
+that bound. Consequently a BC2 residual that is entirely3-free
+must have at least seven repeated numerical bases, irrespective
+of the total number of repair classes.
+
+For general q, q-freeness alone does not ensure that a repeated
+base has a prime divisor above q; the stated chain and assignment
+remain hypotheses. For q=3 the remaining arbitrary-budget cases
+include mixed3-bearing residuals and collision families with no
+strict prefix assignment. The transported cover supplies a
+cardinality contradiction, not a replacement repair retaining the
+old labels. Neither this consumer nor NF19 is an unrestricted
+noncoverage proof.

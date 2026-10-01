@@ -30911,6 +30911,29 @@ at most8/9. Thus a DR1 deletion of at most four descendants
 cannot pay any complete odd repair, even using new moduli.
 This still does not exclude larger or different joint exchanges.
 
+[Report385, sections31--32](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#31-six-class-repairs-reduce-to-their-low-inside-subfamily)
+further reduces ANY repair with at most six distinct odd nonunit
+moduli and label3 unavailable to its low3-height inside subfamily.
+An essential high class would leave a low-missing cofactor whose
+complete old tail needs at least three high classes. With zero,
+one, two or three low classes, one common residual law bounds the
+remaining high mass by8/9,5/6,8/9 or5/6, respectively. No C0
+retention is needed for this reduction; its pure cofactor exception
+permits two copies and uses full-prefix capacity at most7/9.
+
+If the complete repair also retains all original C0 labels, six
+classes are impossible. Divisor closure permits only one copy of
+each pure-power low cofactor; other numerical cofactors occur at
+most twice. A six-item capacity-Hall and full-prefix assignment
+then leaves an actual common point of R_3 uncovered. For each
+non-parent first3 root, uniformly translating its entire original
+3-bearing inventory to a_3 preserves all higher digits, cofactor
+residues and numerical labels, and gives such a legal repair.
+Each of the two root inventories therefore has at least seven
+classes; adding the original prime3 class gives N_3>=15. This
+stronger necessary condition is downstream of NF13. The independent
+N_3>=9 input to NF10 remains unchanged, avoiding circular use.
+
 [Report385, section26](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#26-prime-parent-repairs-must-retain-a-first-level-modulus-collision)
 then reuses the existing Jenkin--Simpson branch restriction to
 exclude one prime-parent exchange route at EVERY budget. A repair
@@ -30933,6 +30956,20 @@ new repair prime p. In particular, for a single q=3 collision
 at m, every prime factor p of m requires at least one9-divisible
 repair not divisible by p. Arbitrary collision families and larger mixed
 repairs remain unresolved.
+
+[Report385, section33](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#33-distributed-prefixes-remove-q-free-residual-collision-families)
+removes the common-divisor restriction when the whole BC2 residual
+is q-free and its duplicate endpoints admit strict per-coordinate
+prefix capacities. One actual endpoint per repeated numerical base
+is excluded in a selected full-height prime chain. Report376's
+single-witness transport then gives distinct odd nonunit labels
+and a smaller whole cover, without adding a closing class. At
+q=3, at most six repeated bases automatically admit this assignment,
+regardless of total repair count. Thus an entirely3-free residual
+needs at least seven repeated bases. Mixed3-bearing residuals and
+larger collision families failing the capacity condition remain
+unresolved; the output is a whole-cover descent, not a repair
+retaining the original numerical labels.
 
 [Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
 keeps the residual cover's entire old q coordinate unchanged.
