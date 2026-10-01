@@ -35427,7 +35427,7 @@ $$
 2. 该来源的 $b_s(d)/d$ 增量亏损与 §247--§249 的价格层逐项相同；
 3. 在同一整数上控制有符号 $\Phi$ 尾项，足以验证 §250.2 的点值条件。
 
-因此，下一步应优先证明一项真实的“来源保持”或构造一对具有相同 FIB 观察而不同价格源的反例；继续重复 CA 支撑线、Robin 等价式或有限安全类的证明不会缩小当前缺口。上述三项新来源的精确陈述与适用边界分别见 [Mishra--Sarkar](../../../Library/ArithSums/mishra2026finite_robin.md)、[Zimov](../../../Library/ArithSums/zimov2025least_ca.md) 和 [Assani--Chester--Paschal](../../../Library/ArithSums/assani2025robin_kaneko.md)。
+因此，下一步应优先证明一项真实的“来源保持”或构造一对具有相同 FIB 观察而不同价格源的反例；继续重复 CA 支撑线、Robin 等价式或有限安全类的证明不会缩小当前缺口。上述三项新来源的精确陈述与适用边界分别见 [Mishra--Sarkar](../../../Library/ArithSums/mishra2026finiterobin.md)、[Zimov](../../../Library/ArithSums/zimov2025leastca.md) 和 [Assani--Chester--Paschal](../../../Library/ArithSums/assani2025robinkaneko.md)。
 
 ## 256. 最新来源的去重审计：平滑、有限 CA 证书与有符号障碍
 
@@ -35435,7 +35435,7 @@ $$
 
 ### 256.1 Ramanujan 变换只给平滑控制
 
-[Danesh 的工作论文](../../../Library/Analytic/danesh2026ramanujan_robin.md)用约数 Lambert 级数
+[Danesh 的工作论文](../../../Library/Analytic/danesh2026ramanujanrobin.md)用约数 Lambert 级数
 
 $$
 S(x)=\sum_{n\ge1}\sigma(n)e^{-nx}
@@ -35451,7 +35451,7 @@ $$
 
 ### 256.2 有限 CA 证书扩大了边界，但不改变无限义务
 
-[Polak 的有限计算机辅助证书](../../../Library/Analytic/polak2026finite_robin_ca.md)报告了
+[Polak 的有限计算机辅助证书](../../../Library/Analytic/polak2026finiterobinca.md)报告了
 
 $$
 5041\le n\le10^{7.1\times10^{22}}
@@ -35484,7 +35484,7 @@ $$
 
 ### 256.3 Möbius 取消诊断确认了真正的符号缺口
 
-[Estrada 的诊断论文](../../../Library/Analytic/estrada2026mobius_cancellation_barrier.md)把路线写成
+[Estrada 的诊断论文](../../../Library/Analytic/estrada2026mobiuscancellationbarrier.md)把路线写成
 
 $$
 \text{素性/CA 正结构}\to\Lambda\to\mu\to\text{带符号抵消}.

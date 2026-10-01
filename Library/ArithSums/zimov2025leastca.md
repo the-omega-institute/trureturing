@@ -1,5 +1,5 @@
 ---
-bibkey: zimov2025least_ca
+bibkey: zimov2025leastca
 authors: Bruce Zimov
 year: 2025
 title: On the Least Colossally Abundant Exception to Robin's Inequality

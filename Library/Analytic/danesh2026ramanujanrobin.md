@@ -1,5 +1,5 @@
 ---
-bibkey: danesh2026ramanujan_robin
+bibkey: danesh2026ramanujanrobin
 authors: Payam Danesh
 year: 2026
 title: A Ramanujan view of Robin's inequality

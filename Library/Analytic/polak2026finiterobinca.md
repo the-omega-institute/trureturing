@@ -1,5 +1,5 @@
 ---
-bibkey: polak2026finite_robin_ca
+bibkey: polak2026finiterobinca
 authors: Robert Polak
 year: 2026
 title: A Finite Computer-Assisted Verification of Robin's Inequality via Colossally Abundant Profiles, with Exact Prime-Power Residual Dynamics

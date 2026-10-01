@@ -1,5 +1,5 @@
 ---
-bibkey: assani2025robin_kaneko
+bibkey: assani2025robinkaneko
 authors: Idris Assani; Aiden Chester; Alex Paschal
 year: 2025
 title: On Robin's Inequality and the Kaneko-Lagarias Inequality

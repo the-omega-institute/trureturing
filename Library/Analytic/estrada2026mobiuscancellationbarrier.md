@@ -1,5 +1,5 @@
 ---
-bibkey: estrada2026mobius_cancellation_barrier
+bibkey: estrada2026mobiuscancellationbarrier
 authors: Roberto Estrada
 year: 2026
 title: Prime Irreducibility, CA Pressure, and the Möbius Cancellation Barrier

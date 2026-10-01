@@ -1,5 +1,5 @@
 ---
-bibkey: mishra2026finite_robin
+bibkey: mishra2026finiterobin
 authors: Challenger Mishra; Rahul Sarkar
 year: 2026
 title: A finite arithmetic form of Robin's inequality and its equivalence to the Riemann hypothesis
