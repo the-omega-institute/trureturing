@@ -1658,3 +1658,145 @@ This identifies a redundant source filter in the dangerous budget range.
 It leaves the actual congruence and strict signed budget untouched.
 Existence of a low-loss divisor, including this explicit gcd witness,
 does not establish FIB §233.5 or RH.
+
+## Retain the actual unit residue and the original host window
+
+The remaining arithmetic constraint is the product congruence itself.
+Reuse the preceding budget-conditioned finite prime universe and Mohri's
+finite acyclic min-plus method. Replace only its endpoint quotient:
+each prime block acts by multiplication on $(\mathbb Z/V\mathbb Z)^\times$.
+This is a classical algorithm applied to a stronger observation, not a
+new shortest-path or residue-distribution theorem.
+
+For the same actual $N$, $g$, $e$ and $u_0$, put $G=gr^e$. Actual
+$N\equiv1\pmod V$ forces $(G,V)=1$ and
+
+$$
+\boxed{u_0\equiv\rho:=G^{-1}\pmod V.}
+$$
+
+There is no extra factor $u_0^{-1}$ in this endpoint. It belongs to the
+residual product itself, rather than to a chosen divisor separately from
+its cofactor. An inverse modulo a composite $V$ can be computed by the
+extended Euclidean algorithm without assuming a factorization of $V$.
+
+For $B=B_r(N)\ge0$, use **all** eligible primes $p\le P_B$ and every
+$k\in\mathcal K_p(B)$ from the preceding conditional test. Define
+
+$$
+Q_B^{\mathrm{unit}}(\lambda,\rho)=
+\min_{\substack{k_p\in\mathcal K_p(B)\\
+\prod_p p^{k_p}\equiv\rho\pmod V}}
+\sum_p\{W_p(k_p)-\lambda k_p\log p\}.
+$$
+
+The prime stage still advances once per block; negative reduced costs
+are permitted on that acyclic graph. If the actual residual cost were
+at most $B$, its exact word would be present. The existing weak-duality
+test therefore becomes
+
+$$
+\boxed{\lambda\log u_0+Q_B^{\mathrm{unit}}(\lambda,\rho)>B
+\quad\Longrightarrow\quad\mathcal A_s^{[r]}(N)>B.}
+$$
+
+For the same complete finite universe and the same multiplier,
+
+$$
+Q_B^{\mathrm{unit}}(\lambda,\rho)
+\ge Q_B(\lambda,j),\qquad \psi_V(\rho)=i^j.
+$$
+
+Only a subset of the quartic-endpoint words reaches the actual unit
+residue. No distribution theorem or independence of the prime labels is
+used. Equality remains possible. An empty endpoint-feasible set excludes
+the conditional low-cost host; the existence of a cheap path gives only
+a relaxed lower bound and supplies no violating integer.
+
+### A simultaneous fixed-gcd and fixed-index branch
+
+One can retain the original window without choosing a separate host at
+each optimum. Fix a divisor $g\mid C_s$ and an integer $e\ge0$, keep
+$v=C_s/g$, $G=gr^e$, and consider only hosts with
+
+$$
+\gcd(N,C_s)=g,\qquad v_r(N)=e,\qquad
+A\le N\le X,\qquad N\equiv1\pmod V.
+$$
+
+If $(G,V)>1$ or $X/G<1$, this branch is empty. Otherwise put
+
+$$
+U_{\min}=\max\{1,A/G\},\qquad U_{\max}=X/G.
+$$
+
+The eligible set $p\nmid vrV$ and the reference exponents $a_p$ ensure
+that a residual word keeps the fixed gcd and exact index valuation:
+primes removed from $C_s$ cannot be added back, other reference primes
+can only increase from their full accepted exponent, and $r$ is not
+reused. All zero-cost removals are retained in $R_s(v)$.
+
+In the original price choice $s=y\log y$, $y=\log A$, write $L=\log N$.
+The already defined threshold has derivative
+
+$$
+\frac{d}{dL}T_s(e^L)=1-\frac{s}{L\log L}\ge0
+\qquad(L\ge y>1).
+$$
+
+Thus every hypothesized unpaid host in this branch has residual cost at
+most the same ceiling
+
+$$
+B_0=T_s(X)-R_s(v)-L_r.
+$$
+
+If $B_0<0$, the removals and fixed index block already exclude that
+hypothesis throughout the branch. For $B_0\ge0$, build the complete
+finite universe using $B_0$, not an independently favorable host budget.
+For any real multiplier define
+
+$$
+H(\lambda)=
+\begin{cases}
+\lambda\log U_{\min},&\lambda\ge0,\\
+\lambda\log U_{\max},&\lambda<0.
+\end{cases}
+$$
+
+Every actual residual resource in the original window obeys
+$\lambda\log u_0\ge H(\lambda)$. Hence
+
+$$
+\boxed{H(\lambda)+Q_{B_0}^{\mathrm{unit}}(\lambda,G^{-1})>B_0}
+$$
+
+excludes every unpaid host in this **same** fixed-gcd/index/window branch.
+Pricing the interval retains a lower relaxation, not exact arithmetic
+attainability. Outside the low-loss saturation condition above, incidence
+is still an additional source condition; using a larger set of words is
+valid for exclusion but does not prove that any minimizing word has a
+low-loss divisor.
+
+### Increase resolution only where a quotient loses a useful distinction
+
+The same finite-word minimum can first keep $u_0\bmod m$ for any $m\mid V$.
+For $m_1\mid m_2\mid V$, retaining the finer endpoint at the same budget,
+prime universe and price cannot decrease the minimum. These are compatible
+arithmetic observations of one residual product. A four-phase character
+is another quotient observation; it need not distinguish two different
+unit residues, even when both products have identical phase.
+
+The empty residual word is retained. For an actual $u_0=1$, its full
+residue is one and its cost is zero; no refinement can force a positive
+residual cost for that host. Restoration-only branches, tied removals and
+the divisor-cofactor $h=1$ branch are therefore not discarded. Keeping
+$g,e$ fixed does not cap the actual higher valuations at three.
+
+This application supplies a source-preserving **sufficient branch test**.
+It claims neither a uniform gain over the quartic bound nor feasibility
+of running a full $\varphi(V)$-state computation at arbitrary scale.
+To finish FIB §233.5, the strict signed budget must still be paid for all
+qualifying branches, or the unpaid branches excluded. A finite graph,
+more residue information, and the redundant low-loss incidence condition
+do not by themselves supply that estimate or a proof of RH.
