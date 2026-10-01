@@ -1794,3 +1794,53 @@ an ambient conjugator from an abstract lattice isomorphism. General
 homotopic-isometry existence, global target uniqueness and the full
 Mostow–Prasad endpoint remain unfinished, including cusps and nonorientable
 manifolds.
+
+
+### Homotopy descent and continuous equivariant covering lifts
+
+For the same original H3 equivariant homotopy, a supplied quotient covering
+`F:X→M`, a continuous map `P:H3→N` invariant under the same representation,
+and continuous lifts `f,g:X→H3` equivariant under that representation now
+supply a homotopy between continuous maps `φ,ψ:M→N`, provided the all-point
+identities `P(f(x))=φ(F(x))` and `P(g(x))=ψ(F(x))` hold. Fiber equality gives
+an actual group orbit; equivariance and invariance make the projected
+homotopy independent of a chosen representative. The chosen section is
+not assumed continuous. The product of the identity on the time interval
+with the same open quotient covering is an open quotient map, which proves
+continuity of the descended homotopy and preserves both endpoints.
+
+Separately, for quotient coverings `F:X→M` and `P:Y→N` by groups `G,H`, a
+simply connected, locally path connected source `X`, a continuous base map
+`φ:M→N` and compatible supplied basepoints, the same coverings now select
+a continuous lift `L:X→Y` and a group homomorphism `τ:G→H`. The lift has the
+specified basepoint and the all-point projection identity, and satisfies
+`L(a•x)=τ(a)•L(x)` for every group element and source point. The construction
+uses the existing unique continuous covering lift. It selects the unique
+target group element matching each source action at the lift basepoint;
+covering lift uniqueness proves equivariance at every point, and the free
+target action proves both homomorphism laws. No equivariance of the lift
+or homomorphism laws are assumed.
+
+An exact application uses the original H3 on both covering spaces and their
+same full deck groups. Original-H3 simple connectivity is reused; a supplied
+compatible H3 chart supplies local path connectivity. Thus any continuous
+map between those actual bases with compatible chosen basepoints admits
+the stated continuous lift and actual deck-group homomorphism. No metric,
+orientation, compactness or group-variable continuity premise is added to
+this topological conclusion.
+
+Two serial scoped transient cache-guarded checks exited zero and printed
+three axiom closures using only `propext`, `Classical.choice` and
+`Quot.sound`. Two rejected descent source/log pairs are excluded. Five
+`haveILetI` style warnings in the successful lift check are recorded; they
+are not errors or proof exceptions. These are classical compositions with
+no tracked Lean or novelty claim. The linked escape audit remains unfinished.
+
+This closes conditional quotient homotopy descent and continuous equivariant
+lift construction. It does not yet prove that the constructed deck-group
+homomorphism is bijective for a homotopy equivalence or equals the previously
+bound fundamental-group deck isomorphism. An ambient lattice conjugator,
+general homotopic-isometry existence, global target uniqueness and the full
+Mostow–Prasad endpoint remain unfinished, including cusps and nonorientable
+manifolds. All supplied compatible original-H3 geometric inputs of the
+complete-target constructor remain explicit in that earlier result.
