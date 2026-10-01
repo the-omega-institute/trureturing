@@ -9,6 +9,8 @@ claim: "In Table 4 we list some cases that seem to give interesting enumeration 
 strata_touched:
   - D5/S3/Combinatorics/Nonnesting/NonnestingFour
   - D5/S3/Combinatorics/Nonnesting/NonnestingOneThreeTwoTwo
+  - D5/S3/Combinatorics/Nonnesting/NonnestingRoyalLow
+  - D5/S3/Combinatorics/Nonnesting/NonnestingRoyalHigh
 license: citation-only
 triage: anchor
 ---
