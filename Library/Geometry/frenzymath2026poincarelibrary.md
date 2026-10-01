@@ -568,3 +568,50 @@ uniqueness remain unfinished, including noncompact and nonorientable
 manifolds. These are scoped transient classical applications under
 unchanged pins, with only `propext`, `Classical.choice` and `Quot.sound`;
 no new project Lean declaration or novelty claim is retained.
+
+
+## Global metric-preserving covering of an arbitrary negative target
+
+For any complete, preconnected smooth three-manifold with a smooth
+Riemannian metric of sectional curvature `-1` and the stated Levi-Civita
+data, the next composition constructs a smooth covering from the actually
+constructed H3 metric to that target. Any prescribed source and target
+points can be matched. No compactness, orientability or finite-volume
+hypothesis is added.
+
+Within this covering construction, choose one normalized global H3
+exponential and its global diffeomorphism witness, and one normalized global
+target covering exponential. Their differential pullback inner products
+agree at every Euclidean parameter. At zero this is their common initial
+normalization; at a nonzero parameter, write it as its norm times a unit
+vector and apply both full negative polar identities. The positive squared
+norm cancels. This establishes the equality over the entire parameter
+space, without a finite-radius restriction.
+
+Compose the target exponential with the smooth inverse of the chosen H3
+diffeomorphism. The derivative chain rule and the inverse differential
+identity convert the pullback equality into preservation of the actual
+tangent metrics at every H3 point. Covering structure follows from the
+target exponential's `IsCoveringMap` by Mathlib's
+`IsCoveringMap.comp_homeomorph`. The value at the chosen basepoint follows
+from the two exponential normalizations. The target need not be simply
+connected.
+
+The combined check binds this statement to the same constructed H3 metric
+`g` and retains all prior source, exponential, volume, curvature,
+completeness, conditional core/tail and quotient clauses and the original
+free, compact-set proper action conditions. Quotient metric uniqueness
+remains within its selected smooth structure. Removing the one new
+arbitrary-target covering clause and its application and reversing names
+restores the preceding combined constructor byte-for-byte. The exponentials
+used within this new covering construction are selected there; no identity
+with existential exponential witnesses in separate earlier clauses is
+asserted.
+
+These scoped transient classical applications use unchanged pins and only
+`propext`, `Classical.choice` and `Quot.sound`, with no new tracked project
+Lean declaration or novelty claim. A global H3 covering with a local tangent
+metric identity does not yet supply the isometric deck action and quotient
+realization, finite-volume cusp classification or full Mostow-Prasad
+existence, homotopy and uniqueness. Noncompact cusps and nonorientable
+manifolds remain within the full rigidity target.
