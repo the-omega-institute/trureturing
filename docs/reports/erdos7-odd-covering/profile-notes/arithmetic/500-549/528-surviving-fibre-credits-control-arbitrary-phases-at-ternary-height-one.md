@@ -31423,14 +31423,42 @@ the earlier condition involving only a factor nine. Other retained
 C0 labels may still have arbitrary heights; the theorem for wholly
 squarefree odd covering systems cannot be applied to them.
 
-The remaining nineteen-label case consists numerically of two
+The nineteen-label classification consists numerically of two
 squarefree three-prime cubes, on disjoint supports, and four separate
 lower-twin prime labels. Their actual phases must still provide two
 repairs of the same R_3, while all other C0 originals retain their
-original numerical labels and full heights. No exclusion of this
-common-source configuration or unconditional N_3>=20 is claimed.
-The classification and its application are ordinary mathematical
-proofs, without new Lean verification.
+original numerical labels and full heights. The classification alone
+does not exclude this common-source configuration. The following
+application to the original cover does exclude it, without further
+phase enumeration. These are ordinary mathematical proofs, without
+new Lean verification.
+
+[Report385, section56](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#56-the-original-cover-needs-enough-small-prime-labels-to-block-compression)
+applies IC1 directly to the EB1-selected original distinct cover.
+For support primes p>q, let h0 count p-free original moduli of q-height
+one, and h1 count original moduli divisible by p*q. Actual roots of
+paired labels p*u,q*u are excluded to prevent output collisions; the
+pure pair p,q excludes the pure-p root. The pure-q class already covers
+one whole output root, so only q-1 roots require the same-source map.
+A full matching would delete A_p and yield at most n-1 distinct classes.
+Hall failure consequently forces
+
+    h0>=p-q+2  OR  h0+h1>=p,
+    N_q>=p-q+2.
+
+The unchanged q coordinate retains every old high digit. The result
+requires neither squarefreeness nor an absence of mixed p*q moduli.
+It uses minimum cardinality and the original pure-prime classes;
+it is not a claim about every arbitrary covering family.
+
+Writing P for the largest support prime, this gives N_3>=P-1. The
+existing seven-prime noncoverage result and EB3's initial-segment
+support give N_3>=22. Directly using Schroeder's attributed
+nine-prime-support theorem strengthens this to N_3>=28, with the
+source's existing ordinary-mathematical evidence boundary. No new
+local kernel verification of that external theorem is claimed.
+Thus the nineteen-label case is excluded. The unrestricted problem
+still permits larger original inventories and is not settled.
 
 [Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
 keeps the residual cover's entire old q coordinate unchanged.

@@ -8316,8 +8316,140 @@ The prime supports of E and F are disjoint. No squarefreeness assertion
 is made for C0 labels outside E union F.
 
 This is a numerical necessary structure for the ACTUAL same-source
-configuration. It does not prove that phases covering the same R3 exist,
-or exclude that configuration. The earlier compatible numerical example
-s=43,u=41 and upper F primes13,19,31 attains this numerical pattern.
-The common-source phase problem and the unrestricted odd-covering problem
-remain unresolved. No new Lean verification is claimed.
+configuration. The classification alone does not prove that phases
+covering the same R3 exist or exclude that configuration. The compatible
+numerical example s=43,u=41 and upper F primes13,19,31 attains this
+numerical pattern. Section56 excludes the nineteen-label case by applying
+the existing transport to the original extremal cover. The unrestricted
+odd-covering problem remains unresolved. No new Lean verification is claimed.
+
+## 56. The original cover needs enough small-prime labels to block compression
+
+Keep the original distinct odd whole cover selected by EB1: first minimize
+cardinality, then the sum of its numerical moduli. Let p>q be two of its
+support primes, and write N_q for the number of original moduli divisible
+by q. Divisor closure supplies the original pure classes A_p,A_q; use the
+single EB3 translation so both have first root zero. Define
+
+    h0 = #{d in D: p does not divide d, v_q(d)=1},
+    h1 = #{d in D: p*q divides d}.
+
+Then the same original inventory satisfies
+
+    h0>=p-q+2  OR  h0+h1>=p,
+    N_q>=p-q+2.                                      (NF66)
+
+Every original prime height is unrestricted. The bound is asserted for
+the selected extremal cover, not for every distinct family without the
+pure-prime and minimum-cardinality hypotheses.
+
+The reusable construction is section27's IC1 map and its numerical
+collision analysis. That section applies them to BC2's residual cover
+with repeated labels and already fewer than n classes. Those input
+hypotheses are not asserted here. The interface below starts with the
+original n distinct labels and obtains strict deletion from A_p instead.
+Also A_q already covers one whole output root, so only q-1 roots need
+transport. This is an application with a checked interface, not another
+proof of Hall's theorem or of the complete-prime-chain obstruction.
+
+### Reserve actual collision roots
+
+There are no repeated input labels, so take S empty. For every pair of
+original moduli p*u and q*u with gcd(u,p*q)=1, put the actual first-p
+root of A_(p*u) into T. Each such pair has its own q*u label counted by
+h0, whence |T|<=h0. In particular u=1 is a pair, so 0 belongs to T.
+Put D0=(Z/pZ) minus T and d0=|D0|.
+
+For b in Z/qZ, let F_b contain the actual first-p roots of the original
+p*q-bearing classes whose first-q root is b. These sets and T refer to
+one original configuration; no independent phase choices are made.
+On the left take only B=(Z/qZ) minus {0}. On the right take D0, with
+edge b--a exactly when a is not in F_b.
+
+### A full matching would delete the pure p class
+
+Suppose there is an injection sigma:B -> D0 avoiding every F_b.
+Write the full old period as p^A*q^B0*M, where A,B0>=1 and
+gcd(M,p*q)=1. The output carrier is p^(A-1)*q^B0*M. On its subset
+z mod q !=0 use precisely the IC1 common witness
+
+    y mod p^A = sigma(z mod q)+p*(z mod p^(A-1)),
+    y mod q^B0 = z mod q^B0,
+    y mod M = z mod M.
+
+All p-free original classes are retained as whole classes, with their
+original numerical moduli and residues. Their restricted pullbacks on
+this subset lie in those same whole classes. In particular the retained
+A_q covers every omitted output point with z mod q=0; no witness is
+needed on that subset. This is a covering extension of the restricted
+pullbacks, not an assertion that those restricted sets are whole APs.
+
+By the existing IC1 verification, every p*q-bearing original has empty
+pullback on the transported subset. A q-free p-bearing original of
+modulus p^alpha*u has empty pullback or one whole CRT class, of modulus
+
+    q*p^(alpha-1)*u,
+
+on its unique first-q root b in B. Its high-p coordinate is still the
+divided original tail. These new classes, together with the retained
+p-free classes, cover every output point: outside A_q, use whichever
+old class covers that point's single witness y.
+
+The map p^alpha*u -> q*p^(alpha-1)*u is injective. As in IC1, a collision
+with an unchanged p-free modulus can occur only at alpha=1 and an old
+pair p*u,q*u; T has excluded the p-root of that class. Higher q digits
+of every unchanged class are preserved and cannot create a collision
+with the new q-height-one labels. All output moduli remain odd nonunits.
+Since 0 is in T, A_p contributes no class. Thus there are at most n-1
+distinct classes covering all integers, contrary to EB1.
+
+### The existing Hall rectangle gives the joint charge
+
+Consequently this graph has no matching of all q-1 left roots. If
+d0<q-1, then p-h0<=d0<=q-2, giving h0>=p-q+2. Otherwise reuse IC2--IC3
+with its left set restricted to B. There is a nonempty I subset B,
+with t=|I|<=q-1, such that
+
+    W = D0 intersect intersection_(b in I) F_b,
+    |W|>=d0-t+1,
+    h1>=t*|W|>=t*(d0-t+1)>=d0.
+
+The last inequality uses d0>=q-1>=t. Each actual p*q-bearing original
+has only one first-root pair, even at higher exponents, so different
+points of I times W require different original labels. Since
+d0=p-|T|>=p-h0, the second alternative is h0+h1>=p. Both counts are
+disjoint parts of N_q, proving NF66. Separate pairs p,q do not supply
+disjoint inventories; their inequalities cannot be added without a
+further joint counting argument.
+
+### Reuse the known support bounds
+
+Let P be the largest original support prime. EB3 makes the support an
+initial segment of the odd primes, in particular containing three.
+Taking q=3 and p=P gives
+
+    N_3>=P-1.                                        (NF67)
+
+The existing ordinary seven-prime noncoverage result in
+[problem detail33, sections1--2](../../../problem-details/33-seven-small-primes-with-an-unrestricted-large-prime-tail.md#1-the-inherited-seven-coordinate-measure-and-its-joint-density)
+already forces at least eight support primes. Hence P>=23 and N_3>=22.
+This alone excludes N_3=19, without requiring the squarefree
+classification or a new case analysis of its phases.
+
+For the stronger numerical consequence, directly reuse Schroeder's
+*Nine Prime Divisors in Odd Distinct Covering Systems*, edition1.0.1,
+Theorem1.1 (`thm:main`), as recorded in the
+[existing source entry](../../../../../../Library/Arith/schroeder2026nine.md).
+It requires at least nine support primes in every finite distinct odd
+whole cover, with arbitrary original exponents and residues. Therefore
+
+    P>=29,
+    N_3>=28.                                         (NF68)
+
+This application uses the attributed ordinary source theorem. The source
+entry records its archive identity and the completed finite-geometry
+verification; no complete local kernel replay of its arbitrary-height
+reduction is asserted. The conclusion concerns the EB1-selected cover.
+It does not exclude covers with sufficiently many three-bearing labels,
+bound their number from above, or settle unrestricted Erdős #7. These
+are ordinary mathematical deductions with no new Lean verification.
