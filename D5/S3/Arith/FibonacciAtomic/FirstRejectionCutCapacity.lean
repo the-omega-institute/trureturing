@@ -21,42 +21,31 @@ abbrev Side (k : ℕ) (A : Finset (Fin (k + 1))) := {r // r ∈ A} → Window
 abbrev Label (k : ℕ) := WithTop (Fin (k + 1))
 def left {k : ℕ} (i : Fin k) : Fin (k + 1) := i.castSucc
 def right {k : ℕ} (i : Fin k) : Fin (k + 1) := i.succ
-def Cross {k : ℕ} (A : Finset (Fin (k + 1))) (i : Fin k) : Prop :=
-  (left i ∈ A ∧ right i ∉ A) ∨ (left i ∉ A ∧ right i ∈ A)
-def Internal {k : ℕ} (A : Finset (Fin (k + 1))) (i : Fin k) : Prop :=
-  left i ∈ A ∧ right i ∈ A
-def bad {k : ℕ} (w : Word k) (j : Fin (k + 1)) : Prop :=
-  if h : j.val < k then last (w j) = true ∧
+def Cross {k : ℕ} (A : Finset (Fin (k + 1))) (i : Fin k) : Prop := (left i ∈ A ∧ right i ∉ A) ∨ (left i ∉ A ∧ right i ∈ A)
+def Internal {k : ℕ} (A : Finset (Fin (k + 1))) (i : Fin k) : Prop := left i ∈ A ∧ right i ∈ A
+def bad {k : ℕ} (w : Word k) (j : Fin (k + 1)) : Prop := if h : j.val < k then last (w j) = true ∧
     first (w ⟨j.val+1, by omega⟩) = true else w j = .zero
 noncomputable def task {k : ℕ} (w : Word k) : Label k := by
   classical
   exact Finset.univ.inf (fun j => if bad w j then (j : Label k) else ⊤)
-def boolean {k : ℕ} (w : Word k) : Bool :=
-  endable (run (some (false,false)) (List.ofFn w))
-noncomputable def extend {k : ℕ} (A : Finset (Fin (k + 1))) (a : Side k A) : Word k :=
-  fun r => if h : r ∈ A then a ⟨r,h⟩ else .middle
-noncomputable def closed {k : ℕ} (A : Finset (Fin (k + 1))) (a : Side k A) : Label k :=
-  task (extend A a)
+def boolean {k : ℕ} (w : Word k) : Bool := endable (run (some (false,false)) (List.ofFn w))
+noncomputable def extend {k : ℕ} (A : Finset (Fin (k + 1))) (a : Side k A) : Word k := fun r => if h : r ∈ A then a ⟨r,h⟩ else .middle
+noncomputable def closed {k : ℕ} (A : Finset (Fin (k + 1))) (a : Side k A) : Label k := task (extend A a)
 noncomputable def port {k : ℕ} (A : Finset (Fin (k + 1))) (a : Side k A) (i : Fin k) : Bool :=
   if left i ∈ A then last (extend A a (left i)) else first (extend A a (right i))
-noncomputable def code {k : ℕ} (A : Finset (Fin (k + 1))) (a : Side k A) :
-    Label k × (Fin k → Bool) := by
+noncomputable def code {k : ℕ} (A : Finset (Fin (k + 1))) (a : Side k A) : Label k × (Fin k → Bool) := by
   classical
   exact (closed A a, fun i => if Cross A i ∧ (left i : Label k) < closed A a then port A a i else false)
-def Allowed {k : ℕ} (A : Finset (Fin (k + 1))) (t : Label k) : Prop :=
-  t = ⊤ ∨ (∃ i : Fin k, Internal A i ∧ t = (left i : Label k)) ∨
+def Allowed {k : ℕ} (A : Finset (Fin (k + 1))) (t : Label k) : Prop := t = ⊤ ∨ (∃ i : Fin k, Internal A i ∧ t = (left i : Label k)) ∨
     (Fin.last k ∈ A ∧ t = (Fin.last k : Label k))
-def Active {k : ℕ} (A : Finset (Fin (k + 1))) (t : Label k) (i : Fin k) : Prop :=
-  Cross A i ∧ (left i : Label k) < t ∧
+def Active {k : ℕ} (A : Finset (Fin (k + 1))) (t : Label k) (i : Fin k) : Prop := Cross A i ∧ (left i : Label k) < t ∧
     ¬ (t = (Fin.last k : Label k) ∧ right i = Fin.last k)
 noncomputable def Profile (k : ℕ) (A : Finset (Fin (k + 1))) :=
   (t : {t : Label k // Allowed A t}) × ({i : Fin k // Active A t.val i} → Bool)
-noncomputable def encode {k : ℕ} {A : Finset (Fin (k + 1))} (P : Profile k A) :
-    Label k × (Fin k → Bool) := by
+noncomputable def encode {k : ℕ} {A : Finset (Fin (k + 1))} (P : Profile k A) : Label k × (Fin k → Bool) := by
   classical
   exact (P.1.val, fun i => if h : Active A P.1.val i then P.2 ⟨i,h⟩ else false)
-def codec (lo hi : Bool) : Window :=
-  match lo, hi with
+def codec (lo hi : Bool) : Window := match lo, hi with
   | false, false => .middle
   | true, false => .low
   | false, true => .high
@@ -69,8 +58,7 @@ noncomputable def representative {k : ℕ} {A : Finset (Fin (k + 1))} (P : Profi
   exact fun r => if P.1.val = (Fin.last k : Label k) ∧ r.val = Fin.last k then .zero else
     codec (if h : 0 < r.val.val then desired P ⟨r.val.val-1, by omega⟩ else false)
       (if h : r.val.val < k then desired P ⟨r.val.val, h⟩ else false)
-noncomputable def merge {k : ℕ} (A : Finset (Fin (k + 1))) (a : Side k A)
-    (b : {r : Fin (k + 1) // r ∉ A} → Window) : Word k :=
+noncomputable def merge {k : ℕ} (A : Finset (Fin (k + 1))) (a : Side k A) (b : {r : Fin (k + 1) // r ∉ A} → Window) : Word k :=
   (Equiv.piEquivPiSubtypeProd (fun r => r ∈ A) (fun _ => Window)).symm (a,b)
 
 noncomputable def crossings {k : ℕ} (A : Finset (Fin (k + 1))) : Finset (Fin k) := by
@@ -80,8 +68,7 @@ noncomputable def internals {k : ℕ} (A : Finset (Fin (k + 1))) : Finset (Fin k
   classical
   exact Finset.univ.filter (Internal A)
 noncomputable def d {k : ℕ} (A : Finset (Fin (k + 1))) : ℕ := (crossings A).card
-noncomputable def c {k : ℕ} (A : Finset (Fin (k + 1))) (j : Fin k) : ℕ :=
-  ((crossings A).filter (fun i => i.val < j.val)).card
+noncomputable def c {k : ℕ} (A : Finset (Fin (k + 1))) (j : Fin k) : ℕ := ((crossings A).filter (fun i => i.val < j.val)).card
 noncomputable def delta {k : ℕ} (A : Finset (Fin (k + 1))) : ℕ := by
   classical
   exact if h : 0 < k then if Fin.last k ∈ A ∧ left (⟨k-1,by omega⟩ : Fin k) ∉ A then 1 else 0 else 0
@@ -97,64 +84,46 @@ def y (k : ℕ) : Word k := fun r => if r = Fin.last k then .zero else .middle
 set_option maxHeartbeats 2000000 in
 -- The representative, fiber, and endpoint arguments are elaborated in one proof.
 /-- Every positive length and cut has the stated actual profile fibers and capacities. -/
-theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
-    (∀ P : Profile k A, code A (representative P) = encode P) ∧
+theorem result (k : ℕ) (A : Finset (Fin (k + 1))) : (∀ P : Profile k A, code A (representative P) = encode P) ∧
     (∀ a : Side k A, ∃ P : Profile k A, code A a = encode P) ∧
-    (∀ a a' : Side k A,
-      D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.response (fun _ : Fin (k + 1) => Window)
-        task (fun r => r ∈ A) a =
-      D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.response (fun _ : Fin (k + 1) => Window)
+    (∀ a a' : Side k A, D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.response (fun _ : Fin (k + 1) => Window)
+        task (fun r => r ∈ A) a = D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.response (fun _ : Fin (k + 1) => Window)
         task (fun r => r ∈ A) a' ↔ code A a = code A a') ∧
-    delta A ≤ d A ∧
-    D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity (fun _ : Fin (k + 1) => Window)
-      task (fun r => r ∈ A) = 2 ^ d A + (∑ j ∈ internals A, 2 ^ c A j) +
-        (if Fin.last k ∈ A then 2 ^ (d A - delta A) else 0) ∧
+    delta A ≤ d A ∧ D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity (fun _ : Fin (k + 1) => Window)
+      task (fun r => r ∈ A) = 2 ^ d A + (∑ j ∈ internals A, 2 ^ c A j) + (if Fin.last k ∈ A then 2 ^ (d A - delta A) else 0) ∧
     (∀ w : Word k, boolean w = decide (task w = ⊤)) ∧
-    (∀ a : Side k A,
-      (∀ b, boolean (merge A a b) = false) ↔ closed A a ≠ ⊤) ∧
-    (∀ a a' : Side k A,
-      (∀ b, boolean (merge A a b) = boolean (merge A a' b)) ↔
-        (closed A a ≠ ⊤ ∧ closed A a' ≠ ⊤) ∨
+    (∀ a : Side k A, (∀ b, boolean (merge A a b) = false) ↔ closed A a ≠ ⊤) ∧
+    (∀ a a' : Side k A, (∀ b, boolean (merge A a b) = boolean (merge A a' b)) ↔ (closed A a ≠ ⊤ ∧ closed A a' ≠ ⊤) ∨
         (closed A a = ⊤ ∧ closed A a' = ⊤ ∧ ∀ i, Cross A i → port A a i = port A a' i)) ∧
     D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity (fun _ : Fin (k + 1) => Window)
       boolean (fun r => r ∈ A) = 2 ^ d A + epsilon A ∧
-    (A = ∅ → D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity
-      (fun _ : Fin (k + 1) => Window) task (fun r => r ∈ A) = 1) ∧
+    (A = ∅ → D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity (fun _ : Fin (k + 1) => Window) task (fun r => r ∈ A) = 1) ∧
     (A = Finset.univ → D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity
       (fun _ : Fin (k + 1) => Window) task (fun r => r ∈ A) = k + 2) ∧
-    (∀ m : ℕ, 1 ≤ m → m < k + 1 → A = interval k 0 m →
-      D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity
+    (∀ m : ℕ, 1 ≤ m → m < k + 1 → A = interval k 0 m → D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity
         (fun _ : Fin (k + 1) => Window) task (fun r => r ∈ A) = m+1) ∧
     (1 ≤ k → A = {Fin.last k} → D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity
       (fun _ : Fin (k + 1) => Window) task (fun r => r ∈ A) = 3) ∧
-    (∀ l : ℕ, 0 < l → l < k → A = interval k l (k + 1) →
-      D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity
+    (∀ l : ℕ, 0 < l → l < k → A = interval k l (k + 1) → D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity
         (fun _ : Fin (k + 1) => Window) task (fun r => r ∈ A) = 2*(k + 1-l)+2) ∧
-    (∀ l r : ℕ, 0 < l → l < r → r < k + 1 → A = interval k l r →
-      D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity
+    (∀ l r : ℕ, 0 < l → l < r → r < k + 1 → A = interval k l r → D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity
         (fun _ : Fin (k + 1) => Window) task (fun r => r ∈ A) = 2*(r-l)+2) ∧
     (A = {(0 : Fin (k + 1))} → D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity
       (fun _ : Fin (k + 1) => Window) task (fun r => r ∈ A) = 2) ∧
-    (∀ i : Fin (k + 1), 0 < i.val → i.val < k → A = {i} →
-      D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity
+    (∀ i : Fin (k + 1), 0 < i.val → i.val < k → A = {i} → D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity
         (fun _ : Fin (k + 1) => Window) task (fun r => r ∈ A) = 4) ∧
-    (∀ l r : ℕ, 0 < l → l+1 < r → r ≤ k + 1 → A = interval k l r →
-      D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity
+    (∀ l r : ℕ, 0 < l → l+1 < r → r ≤ k + 1 → A = interval k l r → D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity
         (fun _ : Fin (k + 1) => Window) task (fun r => r ∈ A) = 2*(r-l)+2) ∧
     (k = 0 → (A = ∅ → D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity
         (fun _ : Fin (k + 1) => Window) task (fun r => r ∈ A) = 1) ∧
       (A = Finset.univ → D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity
         (fun _ : Fin (k + 1) => Window) task (fun r => r ∈ A) = 2)) ∧
-    (1 ≤ k →
-      List.ofFn (x k) = .high :: .low :: List.replicate (k-1) .middle ∧
-      List.ofFn (y k) = List.replicate k .middle ++ [.zero] ∧
-      boolean (x k) = false ∧ boolean (y k) = false ∧
-      task (x k) = ((0 : Fin (k + 1)) : Label k) ∧
-      task (y k) = (Fin.last k : Label k) ∧
+    (1 ≤ k → List.ofFn (x k) = .high :: .low :: List.replicate (k-1) .middle ∧
+      List.ofFn (y k) = List.replicate k .middle ++ [.zero] ∧ boolean (x k) = false ∧ boolean (y k) = false ∧
+      task (x k) = ((0 : Fin (k + 1)) : Label k) ∧ task (y k) = (Fin.last k : Label k) ∧
       ¬ ∃ post : Bool → Label k, ∀ w : Word k, post (boolean w) = task w) := by
   classical
-  have spec (w : Word k) (j : Fin (k + 1)) :
-      task w ≤ (j : Label k) ↔ ∃ i, bad w i ∧ i ≤ j := by
+  have spec (w : Word k) (j : Fin (k + 1)) : task w ≤ (j : Label k) ↔ ∃ i, bad w i ∧ i ≤ j := by
     simp only [task, Finset.inf_le_iff (WithTop.coe_lt_top j), Finset.mem_univ, true_and]
     apply exists_congr
     intro i
@@ -167,8 +136,7 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
       exact WithTop.coe_le_coe.mp hle
     have he : i = j := le_antisymm hij hji
     simpa [he] using hi
-  have allowed_at (j : Fin (k + 1)) : Allowed A (j : Label k) ↔
-      if h : j.val < k then Internal A ⟨j.val,h⟩ else j ∈ A := by
+  have allowed_at (j : Fin (k + 1)) : Allowed A (j : Label k) ↔ if h : j.val < k then Internal A ⟨j.val,h⟩ else j ∈ A := by
     constructor
     · intro h
       rcases h with h | ⟨i,hi,he⟩ | ⟨ha,he⟩
@@ -187,16 +155,11 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
         have e : j = Fin.last k := Fin.ext (by simp; omega)
         exact Or.inr (Or.inr ⟨by simpa [e] using ha, by simp [e]⟩)
   have realizable : ∀ P : Profile k A, code A (representative P) = encode P := by
-    have codec_first (lo hi : Bool) : first (codec lo hi) = lo := by
-      cases lo <;> cases hi <;> rfl
-    have codec_last (lo hi : Bool) : last (codec lo hi) = hi := by
-      cases lo <;> cases hi <;> rfl
-    have codec_ne (lo hi : Bool) : codec lo hi ≠ .zero := by
-      cases lo <;> cases hi <;> decide
+    have codec_first (lo hi : Bool) : first (codec lo hi) = lo := by cases lo <;> cases hi <;> rfl
+    have codec_last (lo hi : Bool) : last (codec lo hi) = hi := by cases lo <;> cases hi <;> rfl
+    have codec_ne (lo hi : Bool) : codec lo hi ≠ .zero := by cases lo <;> cases hi <;> decide
     intro P
-    have terminal_desired (i : Fin k)
-        (ht : P.1.val = (Fin.last k : Label k)) (hr : right i = Fin.last k) :
-        desired P i = false := by
+    have terminal_desired (i : Fin k) (ht : P.1.val = (Fin.last k : Label k)) (hr : right i = Fin.last k) : desired P i = false := by
       have hn : P.1.val ≠ (left i : Label k) := by
         rw [ht]
         simp only [ne_eq, WithTop.coe_inj, left, Fin.ext_iff, Fin.val_last, Fin.val_castSucc]
@@ -205,9 +168,7 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
       · have hnact : ¬ Active A P.1.val i := by simp [Active,ht,hr]
         simp [desired,hc,encode,hnact]
       · simp [desired,hc,hn]
-    have rep_first (i : Fin k) :
-        first (extend A (representative P) (right i)) =
-          if right i ∈ A then desired P i else false := by
+    have rep_first (i : Fin k) : first (extend A (representative P) (right i)) = if right i ∈ A then desired P i else false := by
       by_cases ha : right i ∈ A
       · simp only [extend, dif_pos ha, if_pos ha, representative]
         by_cases hz : P.1.val = (Fin.last k : Label k) ∧ right i = Fin.last k
@@ -218,9 +179,7 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
           rw [dif_pos hp]
           congr 1 <;> apply Fin.ext <;> simp [right]
       · simp [extend,ha,first]
-    have rep_last (i : Fin k) :
-        last (extend A (representative P) (left i)) =
-          if left i ∈ A then desired P i else false := by
+    have rep_last (i : Fin k) : last (extend A (representative P) (left i)) = if left i ∈ A then desired P i else false := by
       by_cases ha : left i ∈ A
       · have hn : left i ≠ Fin.last k := by
           simp only [left, ne_eq, Fin.ext_iff, Fin.val_castSucc, Fin.val_last]
@@ -229,16 +188,14 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
         rw [codec_last]
         simp [left]
       · simp [extend,ha,last]
-    have rep_terminal : extend A (representative P) (Fin.last k) = .zero ↔
-        P.1.val = (Fin.last k : Label k) ∧ Fin.last k ∈ A := by
+    have rep_terminal : extend A (representative P) (Fin.last k) = .zero ↔ P.1.val = (Fin.last k : Label k) ∧ Fin.last k ∈ A := by
       by_cases ha : Fin.last k ∈ A
       · simp only [extend,dif_pos ha,representative,and_true,ha,eq_self_iff_true]
         by_cases ht : P.1.val = (Fin.last k : Label k)
         · simp [ht]
         · simp [codec_ne,ht]
       · simp [extend,ha]
-    have rep_bad (j : Fin (k + 1)) : bad (extend A (representative P)) j ↔
-        P.1.val = (j : Label k) := by
+    have rep_bad (j : Fin (k + 1)) : bad (extend A (representative P)) j ↔ P.1.val = (j : Label k) := by
       by_cases hj : j.val < k
       · let i : Fin k := ⟨j.val,hj⟩
         have hl : left i = j := by rfl
@@ -300,8 +257,7 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
           unfold port
           rw [rep_last,rep_first]
           rcases hc.1 with ⟨ha,hb⟩ | ⟨ha,hb⟩ <;> simp [ha,hb,desired,encode,hact,Cross]
-      · have hnact : ¬ Active A P.1.val i := by
-          exact fun h => hc ⟨h.1,h.2.1⟩
+      · have hnact : ¬ Active A P.1.val i := by exact fun h => hc ⟨h.1,h.2.1⟩
         simp [hc,hnact]
   have raw_profile (a : Side k A) : ∃ P : Profile k A, code A a = encode P := by
     have ha : Allowed A (closed A a) := by
@@ -313,8 +269,7 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
         by_cases hj : j.val < k
         · simp only [hj,↓reduceDIte,Internal]
           have hh : j ∈ A ∧ (⟨j.val+1,by omega⟩ : Fin (k + 1)) ∈ A := by
-            by_cases h1 : j ∈ A <;> by_cases h2 : (⟨j.val+1,by omega⟩ : Fin (k + 1)) ∈ A <;>
-              simp_all [bad,extend,first,last]
+            by_cases h1 : j ∈ A <;> by_cases h2 : (⟨j.val+1,by omega⟩ : Fin (k + 1)) ∈ A <;> simp_all [bad,extend,first,last]
           exact hh
         · simp only [hj,↓reduceDIte]
           by_cases h1 : j ∈ A
@@ -350,8 +305,7 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
     funext i
     have hb := congrFun (congrArg Prod.snd he) i.val
     simpa only [encode,dif_pos i.property] using hb
-  have eq_diag (u v : Word k) (h : ∀ j : Fin (k + 1), (task u ≤ (j : Label k)) ↔ task v ≤ (j : Label k)) :
-      task u = task v := by
+  have eq_diag (u v : Word k) (h : ∀ j : Fin (k + 1), (task u ≤ (j : Label k)) ↔ task v ≤ (j : Label k)) : task u = task v := by
     apply le_antisymm
     · cases hv : task v with
       | none => exact le_top
@@ -359,13 +313,11 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
     · cases hu : task u with
       | none => exact le_top
       | some j => exact (h j).mp (le_of_eq hu)
-  let outside (b : {r : Fin (k + 1) // r ∉ A} → Window) : Word k :=
-    fun r => if h : r ∉ A then b ⟨r,h⟩ else .middle
+  let outside (b : {r : Fin (k + 1) // r ∉ A} → Window) : Word k := fun r => if h : r ∉ A then b ⟨r,h⟩ else .middle
   let q (b : {r : Fin (k + 1) // r ∉ A} → Window) (i : Fin k) : Bool :=
     if left i ∈ A then first (outside b (right i)) else last (outside b (left i))
   have event (a : Side k A) (b : {r : Fin (k + 1) // r ∉ A} → Window) (j : Fin (k + 1)) :
-      bad (merge A a b) j ↔ bad (extend A a) j ∨ bad (outside b) j ∨
-        (if h : j.val < k then Cross A ⟨j.val,h⟩ ∧ port A a ⟨j.val,h⟩ = true ∧
+      bad (merge A a b) j ↔ bad (extend A a) j ∨ bad (outside b) j ∨ (if h : j.val < k then Cross A ⟨j.val,h⟩ ∧ port A a ⟨j.val,h⟩ = true ∧
           q b ⟨j.val,h⟩ = true else False) := by
     by_cases hj : j.val < k
     · let i : Fin k := ⟨j.val,hj⟩
@@ -373,15 +325,12 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
       simp only [bad,dif_pos hj]
       change last (merge A a b (left i)) = true ∧ first (merge A a b (right i)) = true ↔
         (last (extend A a (left i)) = true ∧ first (extend A a (right i)) = true) ∨
-        (last (outside b (left i)) = true ∧ first (outside b (right i)) = true) ∨
-        (Cross A i ∧ port A a i = true ∧ q b i = true)
+        (last (outside b (left i)) = true ∧ first (outside b (right i)) = true) ∨ (Cross A i ∧ port A a i = true ∧ q b i = true)
       by_cases ha : left i ∈ A <;> by_cases hb : right i ∈ A <;>
         simp [merge,Equiv.piEquivPiSubtypeProd,extend,outside,port,q,Cross,ha,hb,first,last] <;> tauto
     · simp only [bad,dif_neg hj]
-      by_cases ha : j ∈ A <;>
-        simp [merge,Equiv.piEquivPiSubtypeProd,extend,outside,ha]
-  have decomp (a : Side k A) (b : {r : Fin (k + 1) // r ∉ A} → Window) (j : Fin (k + 1)) :
-      task (merge A a b) ≤ (j : Label k) ↔
+      by_cases ha : j ∈ A <;> simp [merge,Equiv.piEquivPiSubtypeProd,extend,outside,ha]
+  have decomp (a : Side k A) (b : {r : Fin (k + 1) // r ∉ A} → Window) (j : Fin (k + 1)) : task (merge A a b) ≤ (j : Label k) ↔
         closed A a ≤ (j : Label k) ∨ task (outside b) ≤ (j : Label k) ∨
           ∃ i : Fin k, Cross A i ∧ left i ≤ j ∧ port A a i = true ∧ q b i = true := by
     rw [spec]
@@ -403,15 +352,12 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
   have neutral (a : Side k A) : merge A a (fun _ => .middle) = extend A a := by
     funext r
     simp [merge,Equiv.piEquivPiSubtypeProd,extend]
-  let test (i : Fin k) : {r : Fin (k + 1) // r ∉ A} → Window :=
-    fun r => if left i ∈ A then (if r.val = right i then .low else .middle)
+  let test (i : Fin k) : {r : Fin (k + 1) // r ∉ A} → Window := fun r => if left i ∈ A then (if r.val = right i then .low else .middle)
       else if r.val = left i then .high else .middle
-  have test_q (i j : Fin k) (hi : Cross A i) : q (test i) j =
-      if i = j then true else false := by
+  have test_q (i j : Fin k) (hi : Cross A i) : q (test i) j = if i = j then true else false := by
     by_cases he : i = j
     · subst j
-      rcases hi with ⟨hl,hr⟩ | ⟨hl,hr⟩ <;>
-        simp [q,outside,test,hl,hr,first,last]
+      rcases hi with ⟨hl,hr⟩ | ⟨hl,hr⟩ <;> simp [q,outside,test,hl,hr,first,last]
     · have hleft : left j ≠ left i := by
         intro h
         exact he (Fin.ext (congrArg Fin.val h).symm)
@@ -422,23 +368,19 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
         have hv := congrArg Fin.val h
         simp only [right,Fin.val_succ] at hv
         omega
-      rcases hi with ⟨hl,hr⟩ | ⟨hl,hr⟩ <;>
-        by_cases hja : left j ∈ A <;> by_cases hjr : right j ∈ A <;>
-        simp [q,outside,test,hl,hja,hjr,he,hleft,hright] <;>
-        (try split_ifs) <;> rfl
+      rcases hi with ⟨hl,hr⟩ | ⟨hl,hr⟩ <;> by_cases hja : left j ∈ A <;> by_cases hjr : right j ∈ A <;>
+        simp [q,outside,test,hl,hja,hjr,he,hleft,hright] <;> (try split_ifs) <;> rfl
   have test_live (i : Fin k) (hi : Cross A i) : task (outside (test i)) = ⊤ := by
     rw [eq_top_iff,task,Finset.le_inf_iff]
     intro j _
     have hn : ¬ bad (outside (test i)) j := by
       by_cases hj : j.val < k
       · simp only [bad,dif_pos hj]
-        rcases hi with ⟨hl,hr⟩ | ⟨hl,hr⟩ <;>
-          simp only [outside,test,hl,↓reduceIte] <;> split_ifs <;> simp [first,last]
+        rcases hi with ⟨hl,hr⟩ | ⟨hl,hr⟩ <;> simp only [outside,test,hl,↓reduceIte] <;> split_ifs <;> simp [first,last]
       · simp only [bad,dif_neg hj]
         rcases hi with ⟨hl,hr⟩ | ⟨hl,hr⟩ <;> simp only [outside,test,hl,↓reduceIte] <;> split_ifs <;> decide
     simp [hn]
-  have test_read (a : Side k A) (i : Fin k) (hi : Cross A i)
-      (hlt : (left i : Label k) < closed A a) :
+  have test_read (a : Side k A) (i : Fin k) (hi : Cross A i) (hlt : (left i : Label k) < closed A a) :
       task (merge A a (test i)) ≤ (left i : Label k) ↔ port A a i = true := by
     rw [decomp,test_live i hi]
     simp only [not_le_of_gt hlt,WithTop.top_le_iff,WithTop.coe_ne_top,false_or]
@@ -450,19 +392,16 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
       · simp [he] at hq
     · intro hp
       exact ⟨i,hi,le_rfl,hp,by simp [test_q i i hi]⟩
-  have fibers : ∀ a a' : Side k A,
-      (∀ b, task (merge A a b) = task (merge A a' b)) ↔ code A a = code A a' := by
+  have fibers : ∀ a a' : Side k A, (∀ b, task (merge A a b) = task (merge A a' b)) ↔ code A a = code A a' := by
     intro a a'
     constructor
     · intro he
-      have ht : closed A a = closed A a' := by
-        simpa only [neutral,closed] using he (fun _ => .middle)
+      have ht : closed A a = closed A a' := by simpa only [neutral,closed] using he (fun _ => .middle)
       apply Prod.ext ht
       funext i
       by_cases hi : Cross A i ∧ (left i : Label k) < closed A a
       · have hi' : (left i : Label k) < closed A a' := by simpa [ht] using hi.2
-        have hb : port A a i = true ↔ port A a' i = true := by
-          rw [← test_read a i hi.1 hi.2, ← test_read a' i hi.1 hi',he]
+        have hb : port A a i = true ↔ port A a' i = true := by rw [← test_read a i hi.1 hi.2, ← test_read a' i hi.1 hi',he]
         have hp : port A a i = port A a' i := Bool.eq_iff_iff.mpr hb
         simp [code,ht,hi,hp]
       · simp only [code,← ht,if_neg hi]
@@ -495,8 +434,7 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
     congr 1
     ext i
     simp [Active,hn,left,Fin.lt_def,-Fin.val_fin_lt,Finset.mem_filter,Finset.mem_univ]
-  have active_terminal (ha : Fin.last k ∈ A) :
-      Nat.card {i : Fin k // Active A (Fin.last k : Label k) i} = d A - delta A := by
+  have active_terminal (ha : Fin.last k ∈ A) : Nat.card {i : Fin k // Active A (Fin.last k : Label k) i} = d A - delta A := by
     by_cases hk : 0 < k
     · let e : Fin k := ⟨k-1,by omega⟩
       have hr : right e = Fin.last k := Fin.ext (by simp [right,e]; omega)
@@ -527,20 +465,17 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
         simpa only [delta,dif_pos hk,if_pos h,d] using (Nat.succ_le_of_lt hp)
       · simp [delta,hk,h]
     · simp [delta,hk]
-  have card_profile : Nat.card (Profile k A) = 2 ^ d A +
-      (∑ j ∈ internals A, 2 ^ c A j) +
+  have card_profile : Nat.card (Profile k A) = 2 ^ d A + (∑ j ∈ internals A, 2 ^ c A j) +
       (if Fin.last k ∈ A then 2 ^ (d A - delta A) else 0) := by
     letI : Fintype (Profile k A) := by unfold Profile; infer_instance
-    have hsum : Nat.card (Profile k A) = ∑ t : Label k,
-        if Allowed A t then 2 ^ Nat.card {i : Fin k // Active A t i} else 0 := by
+    have hsum : Nat.card (Profile k A) = ∑ t : Label k, if Allowed A t then 2 ^ Nat.card {i : Fin k // Active A t i} else 0 := by
       simp only [Nat.card_eq_fintype_card]
       unfold Profile
       rw [Fintype.card_sigma]
       simp only [Fintype.card_fun,Fintype.card_bool]
       rw [← Finset.sum_filter]
       exact (Finset.sum_subtype (p := Allowed A) (Finset.univ.filter (Allowed A))
-        (by intro t; simp only [Finset.mem_filter,Finset.mem_univ,true_and])
-        (fun t => 2 ^ Fintype.card {i : Fin k // Active A t i})).symm
+        (by intro t; simp only [Finset.mem_filter,Finset.mem_univ,true_and]) (fun t => 2 ^ Fintype.card {i : Fin k // Active A t i})).symm
     rw [hsum]
     let e : Option (Fin (k + 1)) ≃ Label k :=
       { toFun := fun t => match t with | none => ⊤ | some j => (j : Label k)
@@ -554,48 +489,38 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
     rw [Fin.sum_univ_castSucc]
     dsimp only [f]
     have ht : Allowed A (⊤ : Label k) := Or.inl rfl
-    have hlast : Allowed A (Fin.last k : Label k) ↔ Fin.last k ∈ A := by
-      simpa using allowed_at (Fin.last k)
-    have hseam (j : Fin k) : Allowed A (left j : Label k) ↔ Internal A j := by
-      simpa [left] using allowed_at (left j)
-    have hterm : (if Allowed A (Fin.last k : Label k) then
-        2 ^ Nat.card {i : Fin k // Active A (Fin.last k : Label k) i} else 0) =
+    have hlast : Allowed A (Fin.last k : Label k) ↔ Fin.last k ∈ A := by simpa using allowed_at (Fin.last k)
+    have hseam (j : Fin k) : Allowed A (left j : Label k) ↔ Internal A j := by simpa [left] using allowed_at (left j)
+    have hterm : (if Allowed A (Fin.last k : Label k) then 2 ^ Nat.card {i : Fin k // Active A (Fin.last k : Label k) i} else 0) =
         (if Fin.last k ∈ A then 2 ^ (d A - delta A) else 0) := by
       by_cases ha : Fin.last k ∈ A
       · rw [hlast,if_pos ha,active_terminal ha,if_pos ha]
       · simp [hlast,ha]
     simp only [ht,if_pos,active_top,hterm]
     have hsumj : (∑ j : Fin k, if Allowed A (j.castSucc : Label k) then
-        2 ^ Nat.card {i : Fin k // Active A (j.castSucc : Label k) i} else 0) =
-        ∑ j ∈ internals A, 2 ^ c A j := by
-      change (∑ j : Fin k, if Allowed A (left j : Label k) then
-        2 ^ Nat.card {i : Fin k // Active A (left j : Label k) i} else 0) = _
+        2 ^ Nat.card {i : Fin k // Active A (j.castSucc : Label k) i} else 0) = ∑ j ∈ internals A, 2 ^ c A j := by
+      change (∑ j : Fin k, if Allowed A (left j : Label k) then 2 ^ Nat.card {i : Fin k // Active A (left j : Label k) i} else 0) = _
       simp only [hseam,active_seam]
       rw [← Finset.sum_filter]
       rfl
     rw [hsumj]
     omega
-  have response_apply {O : Type} (F : Word k → O) (a : Side k A)
-      (b : {r : Fin (k + 1) // r ∉ A} → Window) :
+  have response_apply {O : Type} (F : Word k → O) (a : Side k A) (b : {r : Fin (k + 1) // r ∉ A} → Window) :
       D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.response (fun _ : Fin (k + 1) => Window)
         F (fun r => r ∈ A) a b = F (merge A a b) := by
     unfold D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.response merge
     congr 1
     funext r
     by_cases ha : r ∈ A <;> simp [Equiv.piEquivPiSubtypeProd,ha]
-  have response_eq (a a' : Side k A) :
-      D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.response (fun _ : Fin (k + 1) => Window)
-        task (fun r => r ∈ A) a =
-      D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.response (fun _ : Fin (k + 1) => Window)
+  have response_eq (a a' : Side k A) : D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.response (fun _ : Fin (k + 1) => Window)
+        task (fun r => r ∈ A) a = D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.response (fun _ : Fin (k + 1) => Window)
         task (fun r => r ∈ A) a' ↔ code A a = code A a' := by
     rw [funext_iff]
     simpa only [response_apply] using fibers a a'
 
-  have capacity_exact :
-      D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity (fun _ : Fin (k + 1) => Window)
+  have capacity_exact : D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity (fun _ : Fin (k + 1) => Window)
         task (fun r => r ∈ A) = Nat.card (Profile k A) := by
-    let resp := D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.response
-      (fun _ : Fin (k + 1) => Window) task (fun r => r ∈ A)
+    let resp := D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.response (fun _ : Fin (k + 1) => Window) task (fun r => r ∈ A)
     let f (P : Profile k A) : Set.range resp := ⟨resp (representative P),⟨representative P,rfl⟩⟩
     have hf : Function.Bijective f := by
       constructor
@@ -614,16 +539,11 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
   have projection : ∀ w : Word k, boolean w = decide (task w = ⊤) := by
     intro w
     classical
-    have guard (s : Bool) (b : Window) (v : List Window) :
-        D5.S3.Arith.ZeckendorfFutureKernel.legal s (LiteralWindowEnd.flatten (b :: v)) ↔
-          ¬ (s = true ∧ first b = true) ∧
-          D5.S3.Arith.ZeckendorfFutureKernel.legal (last b) (LiteralWindowEnd.flatten v) := by
-      cases s <;> cases b <;>
-        simp [LiteralWindowEnd.flatten,LiteralWindowEnd.bits,D5.S3.Arith.ZeckendorfFutureKernel.legal,first,last]
-    have chain (v : List Window) (b : Window) (s : Bool) :
-        D5.S3.Arith.ZeckendorfFutureKernel.legal s (LiteralWindowEnd.flatten (b :: v)) ↔
-          ¬ (s = true ∧ first b = true) ∧
-          (b :: v).IsChain (fun a b => ¬ (last a = true ∧ first b = true)) := by
+    have guard (s : Bool) (b : Window) (v : List Window) : D5.S3.Arith.ZeckendorfFutureKernel.legal s (LiteralWindowEnd.flatten (b :: v)) ↔
+          ¬ (s = true ∧ first b = true) ∧ D5.S3.Arith.ZeckendorfFutureKernel.legal (last b) (LiteralWindowEnd.flatten v) := by
+      cases s <;> cases b <;> simp [LiteralWindowEnd.flatten,LiteralWindowEnd.bits,D5.S3.Arith.ZeckendorfFutureKernel.legal,first,last]
+    have chain (v : List Window) (b : Window) (s : Bool) : D5.S3.Arith.ZeckendorfFutureKernel.legal s (LiteralWindowEnd.flatten (b :: v)) ↔
+          ¬ (s = true ∧ first b = true) ∧ (b :: v).IsChain (fun a b => ¬ (last a = true ∧ first b = true)) := by
       induction v generalizing b s with
       | nil => rw [guard]; simp [LiteralWindowEnd.flatten,D5.S3.Arith.ZeckendorfFutureKernel.legal]
       | cons c v ih =>
@@ -641,12 +561,9 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
     have fold_end : (List.ofFn w).foldl (fun _ b => nonzero b) false = nonzero (w (Fin.last k)) := by
       rw [List.ofFn_succ']
       simp [List.concat_eq_append,List.foldl_append]
-    have no_bad : (∀ j, ¬ bad w j) ↔
-        (∀ i : Fin k, ¬ (last (w (left i)) = true ∧ first (w (right i)) = true)) ∧
-          w (Fin.last k) ≠ .zero := by
+    have no_bad : (∀ j, ¬ bad w j) ↔ (∀ i : Fin k, ¬ (last (w (left i)) = true ∧ first (w (right i)) = true)) ∧ w (Fin.last k) ≠ .zero := by
       rw [Fin.forall_fin_succ']
-      have hs (i : Fin k) : ¬ bad w i.castSucc ↔
-          ¬ (last (w (left i)) = true ∧ first (w (right i)) = true) := by
+      have hs (i : Fin k) : ¬ bad w i.castSucc ↔ ¬ (last (w (left i)) = true ∧ first (w (right i)) = true) := by
         simp only [bad,Fin.val_castSucc,i.isLt,↓reduceDIte]
         rfl
       simp_rw [hs]
@@ -665,13 +582,11 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
       simp only [hl,true_and,nonzero,bne_iff_ne,decide_eq_true_eq]
     · rw [(execution false false (List.ofFn w)).2.mpr hl]
       simp only [endable,Option.any_none,hl,false_and,Bool.false_eq_true,iff_false,not_false_eq_true]
-  have task_le_closed (a : Side k A) (b : {r : Fin (k + 1) // r ∉ A} → Window) :
-      task (merge A a b) ≤ closed A a := by
+  have task_le_closed (a : Side k A) (b : {r : Fin (k + 1) // r ∉ A} → Window) : task (merge A a b) ≤ closed A a := by
     cases h : closed A a with
     | none => exact le_top
     | some j => exact (decomp a b j).mpr (Or.inl (le_of_eq h))
-  have closed_false (a : Side k A) (ha : closed A a ≠ ⊤)
-      (b : {r : Fin (k + 1) // r ∉ A} → Window) : boolean (merge A a b) = false := by
+  have closed_false (a : Side k A) (ha : closed A a ≠ ⊤) (b : {r : Fin (k + 1) // r ∉ A} → Window) : boolean (merge A a b) = false := by
     have hn : task (merge A a b) ≠ ⊤ := by
       intro ht
       have hle := task_le_closed a b
@@ -704,20 +619,15 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
           · simp [test_q i qj hi,he] at hq
         subst qj
         simp [hp] at hp'
-  have boolean_fibers (a a' : Side k A) :
-      (∀ b, boolean (merge A a b) = boolean (merge A a' b)) ↔
-        (closed A a ≠ ⊤ ∧ closed A a' ≠ ⊤) ∨
-        (closed A a = ⊤ ∧ closed A a' = ⊤ ∧
-          ∀ i, Cross A i → port A a i = port A a' i) := by
+  have boolean_fibers (a a' : Side k A) : (∀ b, boolean (merge A a b) = boolean (merge A a' b)) ↔ (closed A a ≠ ⊤ ∧ closed A a' ≠ ⊤) ∨
+        (closed A a = ⊤ ∧ closed A a' = ⊤ ∧ ∀ i, Cross A i → port A a i = port A a' i) := by
     constructor
     · intro he
       by_cases ha : closed A a = ⊤ <;> by_cases hb : closed A a' = ⊤
       · refine Or.inr ⟨ha,hb,?_⟩
         intro i hi
-        have hp : port A a i = false ↔ port A a' i = false := by
-          rw [← live_test a ha i hi, ← live_test a' hb i hi,he]
-        cases hpa : port A a i <;> cases hpb : port A a' i <;>
-          simp [hpa,hpb] at hp <;> rfl
+        have hp : port A a i = false ↔ port A a' i = false := by rw [← live_test a ha i hi, ← live_test a' hb i hi,he]
+        cases hpa : port A a i <;> cases hpb : port A a' i <;> simp [hpa,hpb] at hp <;> rfl
       · have hn := he (fun _ => .middle)
         rw [closed_false a' hb,neutral,projection] at hn
         change decide (closed A a = ⊤) = false at hn
@@ -736,8 +646,7 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
           · simp only [code,ha,hb,WithTop.coe_lt_top,and_true,if_pos hi,hp i hi]
           · simp only [code,ha,hb,hi,false_and,if_false]
         rw [projection,projection,(fibers a a').mpr hc b]
-  have zero_iff (a : Side k A) :
-      (∀ b, boolean (merge A a b) = false) ↔ closed A a ≠ ⊤ := by
+  have zero_iff (a : Side k A) : (∀ b, boolean (merge A a b) = false) ↔ closed A a ≠ ⊤ := by
     constructor
     · intro h ha
       have hn := h (fun _ => .middle)
@@ -745,8 +654,7 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
       change decide (closed A a = ⊤) = false at hn
       simp [ha] at hn
     · exact closed_false a
-  have closed_exists_iff : (∃ a : Side k A, closed A a ≠ ⊤) ↔
-      Fin.last k ∈ A ∨ (internals A).Nonempty := by
+  have closed_exists_iff : (∃ a : Side k A, closed A a ≠ ⊤) ↔ Fin.last k ∈ A ∨ (internals A).Nonempty := by
     constructor
     · rintro ⟨a,ha⟩
       obtain ⟨P,hP⟩ := raw_profile a
@@ -760,16 +668,14 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
         rcases h with h | ⟨j,hj⟩
         · refine ⟨⟨⟨(Fin.last k : Label k),Or.inr (Or.inr ⟨h,rfl⟩)⟩,fun _ => false⟩,?_⟩
           exact WithTop.coe_ne_top
-        · refine ⟨⟨⟨(left j : Label k),Or.inr (Or.inl ⟨j,by simpa [internals] using hj,rfl⟩)⟩,
-            fun _ => false⟩,?_⟩
+        · refine ⟨⟨⟨(left j : Label k),Or.inr (Or.inl ⟨j,by simpa [internals] using hj,rfl⟩)⟩, fun _ => false⟩,?_⟩
           exact WithTop.coe_ne_top
       obtain ⟨P,hP⟩ := hex
       refine ⟨representative P,?_⟩
       have ht : closed A (representative P) = P.1.val := congrArg Prod.fst (realizable P)
       exact fun h => hP (ht.symm.trans h)
   let Good := {i : Fin k // Cross A i} → Bool
-  let live (p : Good) : Profile k A :=
-    ⟨⟨⊤,Or.inl rfl⟩,fun i => p ⟨i.val,i.property.1⟩⟩
+  let live (p : Good) : Profile k A := ⟨⟨⊤,Or.inl rfl⟩,fun i => p ⟨i.val,i.property.1⟩⟩
   have live_ports (p : Good) : closed A (representative (live p)) = ⊤ ∧
       ∀ i (hi : Cross A i), port A (representative (live p)) i = p ⟨i,hi⟩ := by
     have he := realizable (live p)
@@ -779,24 +685,19 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
     have hp := congrFun (congrArg Prod.snd he) i
     have ha : Active A (⊤ : Label k) i := by simp [Active,hi]
     simpa only [code,encode,live,ht,WithTop.coe_lt_top,and_true,if_pos hi,dif_pos ha] using hp
-  have bool_capacity :
-      D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity (fun _ : Fin (k + 1) => Window)
+  have bool_capacity : D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity (fun _ : Fin (k + 1) => Window)
         boolean (fun r => r ∈ A) = 2 ^ d A + epsilon A := by
     let ClosedType := {u : Unit // Fin.last k ∈ A ∨ (internals A).Nonempty}
     let Types := Good ⊕ ClosedType
-    let resp := D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.response
-      (fun _ : Fin (k + 1) => Window) boolean (fun r => r ∈ A)
-    have req (a a' : Side k A) : resp a = resp a' ↔
-        (closed A a ≠ ⊤ ∧ closed A a' ≠ ⊤) ∨
+    let resp := D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.response (fun _ : Fin (k + 1) => Window) boolean (fun r => r ∈ A)
+    have req (a a' : Side k A) : resp a = resp a' ↔ (closed A a ≠ ⊤ ∧ closed A a' ≠ ⊤) ∨
         (closed A a = ⊤ ∧ closed A a' = ⊤ ∧ ∀ i, Cross A i → port A a i = port A a' i) := by
       rw [funext_iff]
       simpa only [resp,response_apply] using boolean_fibers a a'
 
     let pickClosed (u : ClosedType) : Side k A := Classical.choose (closed_exists_iff.mpr u.property)
-    have pick_bad (u : ClosedType) : closed A (pickClosed u) ≠ ⊤ :=
-      Classical.choose_spec (closed_exists_iff.mpr u.property)
-    let assign : Types → Side k A := fun t =>
-      match t with
+    have pick_bad (u : ClosedType) : closed A (pickClosed u) ≠ ⊤ := Classical.choose_spec (closed_exists_iff.mpr u.property)
+    let assign : Types → Side k A := fun t => match t with
       | .inl p => representative (live p)
       | .inr u => pickClosed u
     let f (t : Types) : Set.range resp := ⟨resp (assign t),⟨assign t,rfl⟩⟩
@@ -836,31 +737,22 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
         · have h := closed_exists_iff.mp ⟨a,ha⟩
           let u : ClosedType := ⟨(),h⟩
           exact ⟨.inr u,Subtype.ext ((req _ _).mpr (Or.inl ⟨pick_bad u,ha⟩))⟩
-    have hc : Nat.card (Set.range resp) = Nat.card Types :=
-      Nat.card_congr (Equiv.ofBijective f hf).symm
+    have hc : Nat.card (Set.range resp) = Nat.card Types := Nat.card_congr (Equiv.ofBijective f hf).symm
     change Nat.card (Set.range resp) = _
     rw [hc]
-    have hgood : Nat.card Good = 2 ^ d A := by
-      simp [Good,Nat.card_eq_fintype_card,Fintype.card_fun,Fintype.card_subtype,d,crossings]
+    have hgood : Nat.card Good = 2 ^ d A := by simp [Good,Nat.card_eq_fintype_card,Fintype.card_fun,Fintype.card_subtype,d,crossings]
     have hclosed : Nat.card ClosedType = epsilon A := by
-      by_cases h : Fin.last k ∈ A ∨ (internals A).Nonempty <;>
-        simp [ClosedType,Nat.card_eq_fintype_card,Fintype.card_subtype,epsilon,h]
+      by_cases h : Fin.last k ∈ A ∨ (internals A).Nonempty <;> simp [ClosedType,Nat.card_eq_fintype_card,Fintype.card_subtype,epsilon,h]
     simpa only [Types,Nat.card_sum,hgood,hclosed]
   have interval_data (l r : ℕ) (hlr : l < r) (hr : r ≤ k + 1) :
-      d (interval k l r) = (if l = 0 then 0 else 1) + (if r = k + 1 then 0 else 1) ∧
-      (internals (interval k l r)).card = r-l-1 ∧
+      d (interval k l r) = (if l = 0 then 0 else 1) + (if r = k + 1 then 0 else 1) ∧ (internals (interval k l r)).card = r-l-1 ∧
       (∀ j ∈ internals (interval k l r), c (interval k l r) j = if l = 0 then 0 else 1) ∧
-      (Fin.last k ∈ interval k l r ↔ r = k + 1) ∧
-      delta (interval k l r) = if 0 < l ∧ r = k + 1 ∧ r-l = 1 then 1 else 0 := by
-    have cross_iff (i : Fin k) : Cross (interval k l r) i ↔
-        (0 < l ∧ i.val+1 = l) ∨ (r < k + 1 ∧ i.val+1 = r) := by
-      simp only [Cross,interval,Finset.mem_filter,Finset.mem_univ,true_and,left,right,
-        Fin.val_castSucc,Fin.val_succ]
+      (Fin.last k ∈ interval k l r ↔ r = k + 1) ∧ delta (interval k l r) = if 0 < l ∧ r = k + 1 ∧ r-l = 1 then 1 else 0 := by
+    have cross_iff (i : Fin k) : Cross (interval k l r) i ↔ (0 < l ∧ i.val+1 = l) ∨ (r < k + 1 ∧ i.val+1 = r) := by
+      simp only [Cross,interval,Finset.mem_filter,Finset.mem_univ,true_and,left,right, Fin.val_castSucc,Fin.val_succ]
       omega
-    have internal_iff (i : Fin k) : Internal (interval k l r) i ↔
-        l ≤ i.val ∧ i.val+1 < r := by
-      simp only [Internal,interval,Finset.mem_filter,Finset.mem_univ,true_and,left,right,
-        Fin.val_castSucc,Fin.val_succ]
+    have internal_iff (i : Fin k) : Internal (interval k l r) i ↔ l ≤ i.val ∧ i.val+1 < r := by
+      simp only [Internal,interval,Finset.mem_filter,Finset.mem_univ,true_and,left,right, Fin.val_castSucc,Fin.val_succ]
       omega
     have dc : d (interval k l r) = (if l = 0 then 0 else 1) + (if r = k + 1 then 0 else 1) := by
       unfold d
@@ -875,8 +767,7 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
         · let e : Fin k := ⟨r-1,by omega⟩
           have he : crossings (interval k l r) = {e} := by
             ext i
-            simp only [crossings,Finset.mem_filter,Finset.mem_univ,true_and,cross_iff,
-              Finset.mem_singleton,Fin.ext_iff]
+            simp only [crossings,Finset.mem_filter,Finset.mem_univ,true_and,cross_iff, Finset.mem_singleton,Fin.ext_iff]
             dsimp [e]
             omega
           rw [he]
@@ -885,8 +776,7 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
         by_cases hrt : r = k + 1
         · have he : crossings (interval k l r) = {e} := by
             ext i
-            simp only [crossings,Finset.mem_filter,Finset.mem_univ,true_and,cross_iff,
-              Finset.mem_singleton,Fin.ext_iff]
+            simp only [crossings,Finset.mem_filter,Finset.mem_univ,true_and,cross_iff, Finset.mem_singleton,Fin.ext_iff]
             dsimp [e]
             omega
           rw [he]
@@ -898,8 +788,7 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
             omega
           have he : crossings (interval k l r) = {e,f} := by
             ext i
-            simp only [crossings,Finset.mem_filter,Finset.mem_univ,true_and,cross_iff,
-              Finset.mem_insert,Finset.mem_singleton,Fin.ext_iff]
+            simp only [crossings,Finset.mem_filter,Finset.mem_univ,true_and,cross_iff, Finset.mem_insert,Finset.mem_singleton,Fin.ext_iff]
             dsimp [e,f]
             omega
           rw [he]
@@ -920,31 +809,26 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
         · intro a
           have hbound := a.isLt
           let j : Fin k := ⟨a.val+l,by omega⟩
-          have hj : Internal (interval k l r) j := (internal_iff j).mpr
-            ⟨by dsimp [j]; omega,by dsimp [j]; omega⟩
+          have hj : Internal (interval k l r) j := (internal_iff j).mpr ⟨by dsimp [j]; omega,by dsimp [j]; omega⟩
           refine ⟨⟨j,hj⟩,?_⟩
           apply Fin.ext
           simp [f,j]
       have hc := Fintype.card_congr (Equiv.ofBijective f hf)
       simpa [Fintype.card_subtype,internals] using hc
-    have pc (j : Fin k) (hj : j ∈ internals (interval k l r)) :
-        c (interval k l r) j = if l = 0 then 0 else 1 := by
-      have hint : l ≤ j.val ∧ j.val+1 < r :=
-        (internal_iff j).mp (by simpa [internals] using hj)
+    have pc (j : Fin k) (hj : j ∈ internals (interval k l r)) : c (interval k l r) j = if l = 0 then 0 else 1 := by
+      have hint : l ≤ j.val ∧ j.val+1 < r := (internal_iff j).mp (by simpa [internals] using hj)
       unfold c
       by_cases hl : l = 0
       · have he : (crossings (interval k l r)).filter (fun i => i.val < j.val) = ∅ := by
           ext i
-          simp only [Finset.mem_filter,crossings,Finset.mem_univ,true_and,cross_iff,
-            Finset.notMem_empty,iff_false]
+          simp only [Finset.mem_filter,crossings,Finset.mem_univ,true_and,cross_iff, Finset.notMem_empty,iff_false]
           omega
         rw [he]
         simp [hl]
       · let e : Fin k := ⟨l-1,by omega⟩
         have he : (crossings (interval k l r)).filter (fun i => i.val < j.val) = {e} := by
           ext i
-          simp only [Finset.mem_filter,crossings,Finset.mem_univ,true_and,cross_iff,
-            Finset.mem_singleton,Fin.ext_iff]
+          simp only [Finset.mem_filter,crossings,Finset.mem_univ,true_and,cross_iff, Finset.mem_singleton,Fin.ext_iff]
           dsimp [e]
           omega
         rw [he]
@@ -954,8 +838,7 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
       omega
     have del : delta (interval k l r) = if 0 < l ∧ r = k + 1 ∧ r-l = 1 then 1 else 0 := by
       by_cases hk : 0 < k
-      · simp only [delta,dif_pos hk,terminal_iff,interval,Finset.mem_filter,
-          Finset.mem_univ,true_and,left,Fin.val_castSucc,Fin.val_last]
+      · simp only [delta,dif_pos hk,terminal_iff,interval,Finset.mem_filter, Finset.mem_univ,true_and,left,Fin.val_castSucc,Fin.val_last]
         congr 1
         apply propext
         omega
@@ -964,23 +847,18 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
         simp [delta,hk,hl0]
     exact ⟨dc,jc,pc,terminal_iff,del⟩
   have interval_formula (l r : ℕ) (hlr : l < r) (hr : r ≤ k + 1) :
-      2 ^ d (interval k l r) + (∑ j ∈ internals (interval k l r),2 ^ c (interval k l r) j) +
-        (if Fin.last k ∈ interval k l r then
-          2 ^ (d (interval k l r) - delta (interval k l r)) else 0) =
-      2 ^ ((if l = 0 then 0 else 1) + (if r = k + 1 then 0 else 1)) +
-        (r-l-1) * 2 ^ (if l = 0 then 0 else 1) +
-        (if r = k + 1 then 2 ^ (((if l = 0 then 0 else 1) + (if r = k + 1 then 0 else 1)) -
+      2 ^ d (interval k l r) + (∑ j ∈ internals (interval k l r),2 ^ c (interval k l r) j) + (if Fin.last k ∈ interval k l r then
+          2 ^ (d (interval k l r) - delta (interval k l r)) else 0) = 2 ^ ((if l = 0 then 0 else 1) + (if r = k + 1 then 0 else 1)) +
+        (r-l-1) * 2 ^ (if l = 0 then 0 else 1) + (if r = k + 1 then 2 ^ (((if l = 0 then 0 else 1) + (if r = k + 1 then 0 else 1)) -
           (if 0 < l ∧ r = k + 1 ∧ r-l = 1 then 1 else 0)) else 0) := by
     obtain ⟨hd,hj,hc,ht,hdel⟩ := interval_data l r hlr hr
     simp only [hd,hdel,ht]
     congr 2
     calc
-      (∑ j ∈ internals (interval k l r),2 ^ c (interval k l r) j) =
-          ∑ _j ∈ internals (interval k l r), 2 ^ (if l = 0 then 0 else 1) :=
+      (∑ j ∈ internals (interval k l r),2 ^ c (interval k l r) j) = ∑ _j ∈ internals (interval k l r), 2 ^ (if l = 0 then 0 else 1) :=
         Finset.sum_congr rfl (fun j hj => by rw [hc j hj])
       _ = _ := by simp [hj]
-  let cap := D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity
-    (fun _ : Fin (k + 1) => Window) task (fun r => r ∈ A)
+  let cap := D5.S3.Observer.Separation.SurjectiveColumnSharpWidth.capacity (fun _ : Fin (k + 1) => Window) task (fun r => r ∈ A)
   have hcap : cap = 2 ^ d A + (∑ j ∈ internals A,2 ^ c A j) +
       (if Fin.last k ∈ A then 2 ^ (d A - delta A) else 0) := capacity_exact.trans card_profile
   have empty_cap (he : A = ∅) : cap = 1 := by
@@ -1007,11 +885,9 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
     simp [hp]
     omega
   have int_cap (l r : ℕ) (hlr : l < r) (hr : r ≤ k + 1) (he : A = interval k l r) :
-      cap = 2 ^ ((if l = 0 then 0 else 1) + (if r = k + 1 then 0 else 1)) +
-        (r-l-1) * 2 ^ (if l = 0 then 0 else 1) +
+      cap = 2 ^ ((if l = 0 then 0 else 1) + (if r = k + 1 then 0 else 1)) + (r-l-1) * 2 ^ (if l = 0 then 0 else 1) +
         (if r = k + 1 then 2 ^ (((if l = 0 then 0 else 1) + (if r = k + 1 then 0 else 1)) -
-          (if 0 < l ∧ r = k + 1 ∧ r-l = 1 then 1 else 0)) else 0) := by
-    rw [hcap,he,interval_formula l r hlr hr]
+          (if 0 < l ∧ r = k + 1 ∧ r-l = 1 then 1 else 0)) else 0) := by rw [hcap,he,interval_formula l r hlr hr]
   have prefix_cap (m : ℕ) (hm : 1 ≤ m) (hmn : m < k + 1) (he : A = interval k 0 m) : cap = m+1 := by
     have h := int_cap 0 m (by omega) (by omega) he
     have hn : m ≠ k + 1 := by omega
@@ -1026,8 +902,7 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
     have hk0 : k ≠ 0 := by omega
     simp [hk0,show 0 < k by omega] at h
     exact h
-  have nonprefix_cap (l r : ℕ) (hl : 0 < l) (hlr : l+1 < r) (hr : r ≤ k + 1)
-      (he : A = interval k l r) : cap = 2*(r-l)+2 := by
+  have nonprefix_cap (l r : ℕ) (hl : 0 < l) (hlr : l+1 < r) (hr : r ≤ k + 1) (he : A = interval k l r) : cap = 2*(r-l)+2 := by
     have h := int_cap l r (by omega) hr he
     have hl0 : l ≠ 0 := by omega
     have hdiff : r-l ≠ 1 := by omega
@@ -1037,11 +912,9 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
       omega
     · simp [hl0,hrt] at h
       omega
-  have suffix_cap (l : ℕ) (hl : 0 < l) (hlk : l < k)
-      (he : A = interval k l (k + 1)) : cap = 2*(k + 1-l)+2 :=
+  have suffix_cap (l : ℕ) (hl : 0 < l) (hlk : l < k) (he : A = interval k l (k + 1)) : cap = 2*(k + 1-l)+2 :=
     nonprefix_cap l (k + 1) hl (by omega) le_rfl he
-  have internal_cap (l r : ℕ) (hl : 0 < l) (hlr : l < r) (hr : r < k + 1)
-      (he : A = interval k l r) : cap = 2*(r-l)+2 := by
+  have internal_cap (l r : ℕ) (hl : 0 < l) (hlr : l < r) (hr : r < k + 1) (he : A = interval k l r) : cap = 2*(r-l)+2 := by
     have h := int_cap l r hlr (by omega) he
     have hl0 : l ≠ 0 := by omega
     have hrt : r ≠ k + 1 := by omega
@@ -1061,22 +934,17 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
         simp only [Finset.mem_singleton,interval,Finset.mem_filter,Finset.mem_univ,true_and,Fin.ext_iff,Fin.val_zero]
         omega
       exact prefix_cap 1 le_rfl (by omega) (he.trans hI)
-  have singleton_cap (i : Fin (k + 1)) (hi0 : 0 < i.val) (hik : i.val < k)
-      (he : A = {i}) : cap = 4 := by
+  have singleton_cap (i : Fin (k + 1)) (hi0 : 0 < i.val) (hik : i.val < k) (he : A = {i}) : cap = 4 := by
     have hI : ({i} : Finset (Fin (k + 1))) = interval k i.val (i.val+1) := by
       ext j
       simp only [Finset.mem_singleton,interval,Finset.mem_filter,Finset.mem_univ,true_and,Fin.ext_iff]
       omega
     have h := internal_cap i.val (i.val+1) hi0 (by omega) (by omega) (he.trans hI)
     simpa using h
-  have n1_cap (hk : k = 0) : (A = ∅ → cap = 1) ∧ (A = Finset.univ → cap = 2) :=
-    ⟨empty_cap, fun he => by simpa [hk] using full_cap he⟩
-  have words (hk : 1 ≤ k) :
-      List.ofFn (x k) = .high :: .low :: List.replicate (k-1) .middle ∧
-      List.ofFn (y k) = List.replicate k .middle ++ [.zero] ∧
-      boolean (x k) = false ∧ boolean (y k) = false ∧
-      task (x k) = ((0 : Fin (k + 1)) : Label k) ∧
-      task (y k) = (Fin.last k : Label k) ∧
+  have n1_cap (hk : k = 0) : (A = ∅ → cap = 1) ∧ (A = Finset.univ → cap = 2) := ⟨empty_cap, fun he => by simpa [hk] using full_cap he⟩
+  have words (hk : 1 ≤ k) : List.ofFn (x k) = .high :: .low :: List.replicate (k-1) .middle ∧
+      List.ofFn (y k) = List.replicate k .middle ++ [.zero] ∧ boolean (x k) = false ∧ boolean (y k) = false ∧
+      task (x k) = ((0 : Fin (k + 1)) : Label k) ∧ task (y k) = (Fin.last k : Label k) ∧
       ¬ ∃ post : Bool → Label k, ∀ w : Word k, post (boolean w) = task w := by
     have hxlist : List.ofFn (x k) = .high :: .low :: List.replicate (k-1) .middle := by
       obtain ⟨m,rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : k ≠ 0)
@@ -1085,8 +953,7 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) :
         funext i
         simp only [x,Fin.val_succ]
         split_ifs <;> (first | rfl | omega)
-      change (.high :: .low :: List.ofFn (fun i : Fin m => x (m+1) i.succ.succ)) =
-        .high :: .low :: List.replicate m .middle
+      change (.high :: .low :: List.ofFn (fun i : Fin m => x (m+1) i.succ.succ)) = .high :: .low :: List.replicate m .middle
       rw [hconst]
       simp [List.ofFn_const]
     have hylist : List.ofFn (y k) = List.replicate k .middle ++ [.zero] := by
