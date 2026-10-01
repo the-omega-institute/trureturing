@@ -1,0 +1,74 @@
+**命题 232.2（全部除数过滤的剩余矩）。** 对上述任意有限约化剩余类窗口，
+
+$$
+\boxed{
+\sum_{g\in I\setminus E^*}\left(\frac{Z(N_g)}t\right)^s
+\le \Lambda\left(1+\frac{T_I}{X}\right)\mu_s\{J_s>J_0\}.
+}
+\tag{232.6}
+$$
+
+并且
+
+$$
+\boxed{
+\sum_{g\in I\setminus E^*}\left(\frac{Z(N_g)}t\right)^s
+\le\frac{(T_I+X)e^{-(1-q)J_0}M^{1-q}W_q}{t^s}.
+}
+\tag{232.7}
+$$
+
+这两条有限上界不要求式（232.2），也不要求任何大除数阈值或 $D>T_I$。
+
+证明。每个实际整数都满足有限恒等式
+
+$$
+Z(N)^s=\sum_{d\mid N}b_s(d).
+\tag{232.8}
+$$
+
+若 $(d,m)>1$，则 $d$ 不能整除任何 $N_g$。若 $(d,m)=1$，命中的乘子只占模 $d$ 的一个余数类，故在连续整数区间 $I$ 中命中数至多 $T_I/d+1$。对 $g\notin E^*$，其每个实际除数均满足 $J_s(d)>J_0$。由非负性以及实际 $d\le X$，
+
+$$
+\begin{aligned}
+\sum_{g\in I\setminus E^*}Z(N_g)^s
+&\le\sum_{\substack{d\le X\\J_s(d)>J_0}}b_s(d)(T_I/d+1)\\
+&\le(T_I+X)\sum_{J_s(d)>J_0}w(d)\\
+&=(T_I+X)U\mu_s\{J_s>J_0\}.
+\end{aligned}
+\tag{232.9}
+$$
+
+除以 $t^s$ 即得式（232.6）。在高亏损集合上，$w(d)<Me^{-J_0}$，从而
+
+$$
+\begin{aligned}
+\sum_{J_s(d)>J_0}w(d)
+&=\sum_{J_s(d)>J_0}w(d)^q w(d)^{1-q}\\
+&\le e^{-(1-q)J_0}M^{1-q}W_q.
+\end{aligned}
+\tag{232.10}
+$$
+
+代回式（232.9）便得到式（232.7）。$W_q$ 是未归一化权重的幂和，所以这里无需另乘一个 $U$。$\square$
+
+当式（232.2）也成立时，若 $E^*$ 非空，将其唯一整数记作 $N_*$，并定义
+
+$$
+C_*:=t^{-s}\sum_{\substack{d\mid N_*\\J_s(d)\le J_0}}b_s(d);
+$$
+
+若 $E^*$ 为空则取 $C_*=0$。于是完整实际矩具有精确分解
+
+$$
+\boxed{
+\sum_{g\in I}\left(\frac{Z(N_g)}t\right)^s=C_*+R_{\mathrm{high}},
+\qquad
+0\le R_{\mathrm{high}}
+\le\Lambda(1+T_I/X)\mu_s\{J_s>J_0\}.
+}
+\tag{232.11}
+$$
+
+其中 $R_{\mathrm{high}}$ 保留所有实际整数的全部高亏损除数，包括 $N_*$ 本身的高亏损除数。它的上界仍按式（232.9）对完整 $I$ 上的高亏损命中计数得到。同一个 $N_*$ 可以承载许多低亏损除数；式（232.11）没有把 $C_*$ 当成单个源原子，也没有证明 $C_*<1$。
+

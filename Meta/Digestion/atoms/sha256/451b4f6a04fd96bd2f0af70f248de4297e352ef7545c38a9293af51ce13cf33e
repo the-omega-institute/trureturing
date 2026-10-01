@@ -1,0 +1,38 @@
+**定义 3.1（Top-first capacities and the literal scan）。** Lists in this section are ordered from top to bottom. For a natural brick width $n$, define the transfer $F_n(c)=(d,b)$, where $b$ is a Boolean carry, by
+
+$$
+\begin{aligned}
+F_n([])&=([],\mathrm{true}),\\
+F_n(a::c)&=((a-n)::c,\mathrm{true}) &&(n\le a),\\
+F_n(a::c)&=((a+n)::d,\mathrm{false}) &&(n>a,\ F_n(c)=(d,\mathrm{true})),\\
+F_n(a::c)&=(a::d,\mathrm{false}) &&(n>a,\ F_n(c)=(d,\mathrm{false})).
+\end{aligned}
+$$
+
+Put $S_n(c)=n::d$ if $F_n(c)=(d,\mathrm{true})$, and $S_n(c)=d$ otherwise. Define the literal trajectory by $C_0=[]$ and $C_{N+1}=S_{N+1}(C_N)$. Its weighted area and reconstructed widths are
+
+$$
+A([])=0,\qquad A(a::c)=(|c|+1)a+A(c),\qquad
+W([])=[],\qquad W(a::c)=a::(a+W(c)),
+$$
+
+where addition to a list acts entrywise. The inverse gap map is $G([])=[]$ and $G(w::v)=w::G(v-w)$, with entrywise natural subtraction.
+
+Define the existing-row scan $E_n([])=[n]$, $E_n([w])=[w+n]$, and
+
+$$
+E_n(w::v::u)=
+\begin{cases}
+(w+n)::v::u,&w+n\le v,\\
+w::E_n(v::u),&w+n>v.
+\end{cases}
+$$
+
+The complete row scan is $P_n([])=[n]$ and
+
+$$
+P_n(w::u)=\begin{cases}n::w::u,&n\le w,\\E_n(w::u),&n>w.\end{cases}
+$$
+
+It tests a supported new top row first, and otherwise extends the first supported existing row while scanning downwards; the floor is always available. Zero gaps are permitted. There is no floor capacity and no assigned birth time for an absent row.
+

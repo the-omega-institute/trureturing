@@ -1,6 +1,9 @@
 import LeanInformationAudit.Tests.Occurrence.ImportedArenaProvenance
 import LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Elab.Command LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape
@@ -53,21 +56,21 @@ local instance : DecidableEq lawArena.State := lawArena.toArena.stateDecidableEq
 theorem bridge : LegacyPrimitiveRealization lawArena True fixtureRealization where
   equivalence := Iff.rfl
 
-register_information_theorem importedTheorem
+test_assess in register_information_theorem importedTheorem
   in lawArena object_arena ProvenanceProbe.live catalog copy
   primitives fixtureRealization.toPrimitiveBundle realization bridge
 
-register_information_theorem importedTheorem
+test_assess in register_information_theorem importedTheorem
   in lawArena object_arena ProvenanceProbe.localFunctionCopy catalog localCopy
   primitives fixtureRealization.toPrimitiveBundle realization bridge
 
-expect_information_occurrence importedTheorem in objectArena
+test_assess in expect_information_occurrence importedTheorem in objectArena
   from "LeanInformationAudit.Tests.Occurrence.ImportClosureProducer"
-expect_information_occurrence importedTheorem in ProvenanceProbe.copyArena
+test_assess in expect_information_occurrence importedTheorem in ProvenanceProbe.copyArena
   from "LeanInformationAudit.Tests.Occurrence.ImportedArenaEvidence"
-expect_information_occurrence importedTheorem in ProvenanceProbe.localFunctionCopy
+test_assess in expect_information_occurrence importedTheorem in ProvenanceProbe.localFunctionCopy
   from "LeanInformationAudit.Tests.Occurrence.ImportedArenaEvidence"
 
-#seal_information_theory
+test_assess in #seal_information_theory
 
 end ImportedArenaEvidence

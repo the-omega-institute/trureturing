@@ -1,6 +1,6 @@
 """Execute native Lake facets in private pinned-toolchain fixture packages."""
+from contextlib import contextmanager
 import hashlib
-import io
 import json
 import os
 from pathlib import Path
@@ -28,103 +28,73 @@ import native
 from test_native_support import *
 
 class NativePublicationConsumerTests:
-    def test_native_module_validation_uses_lake_trace(self):
+    def test_traced_artifacts_are_reused_without_validation(self):
+        # Like a restored olean, a traced artifact is reused as is: only
+        # production validates, and Lake's trace alone decides reuse.
         self.build()
-        state = native.state(self.root)
-        artifact = state / 'modules/Fixture.zip'
-        trace = Path(str(artifact) + '.trace')
-        trace_bytes = trace.read_bytes()
-        utility = state / 'inputs/Fixture.json'
-        template_inputs = publication.selection.Selection(self.root)
-        paths = [self.root / p for p in ['Fixture.lean', 'External.lean', 'ClaimSupport.lean']]
-        originals = [p.read_bytes() for p in paths]
-        digest = publication.digest
-        def artifact_digest(path):
-            self.assertNotEqual(Path(path).suffix, '.lean',
-                '[FAIL] native_validation_does_not_hash_repository_sources')
-            return digest(path)
-        for damage in ['changed', 'deleted']:
-            with self.subTest(damage=damage):
-                try:
-                    for path, original in zip(paths, originals):
-                        if damage == 'changed':
-                            path.write_bytes(original + b'\n-- modified after extraction\n')
-                        else:
-                            path.unlink()
-                    # Deliberately force the retained trace precondition. Normal
-                    # Lake would invalidate these sources before this validator.
-                    trace.write_bytes(trace_bytes)
-                    with patch.object(publication, 'digest', side_effect=artifact_digest):
-                        native.validate('module', self.root, 'Fixture', utility, artifact, template_inputs=template_inputs)
-                    self.assertEqual(trace.read_bytes(), trace_bytes)
-                finally:
-                    for path, original in zip(paths, originals):
-                        path.write_bytes(original)
+        artifact = native.state(self.root) / 'modules/D5.Alone.zip'
+        with zipfile.ZipFile(artifact) as archive:
+            entries = {entry.filename: archive.read(entry) for entry in archive.infolist()}
+        key = publication.RAW + '.provenance.json'
+        origin = json.loads(entries[key])
+        origin['report_sha256'] = '0' * 64
+        entries[key] = materials.canonical_json(origin)
+        artifact.unlink()  # Never write through a Lake cache hard link.
+        with zipfile.ZipFile(artifact, 'w') as archive:
+            for name, data in entries.items():
+                archive.writestr(name, data)
+        tampered = artifact.read_bytes()
+        self.write('D5/B.lean', (self.root / 'D5/B.lean').read_text() + '-- aggregate again\n')
+        self.build()
+        records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+        self.assertEqual(records, [dict(kind='extract', count=1), dict(kind='aggregate', count=1)],
+                         '[FAIL] only_changed_module_reanalyzed')
+        self.assertEqual(artifact.read_bytes(), tampered, '[FAIL] traced_artifact_reused_as_is')
+        self.assertEqual(self.origins()['D5.Alone']['report_sha256'], '0' * 64,
+                         '[FAIL] traced_artifact_not_revalidated')
 
 
-    def test_aggregation_validates_each_row_once_and_preserves_rejection_statuses(self):
+    def test_aggregation_concatenates_without_revalidation(self):
         self.build()
         state = native.state(self.root)
         config = publication.read_json((state / 'inputs.json').read_bytes())
         artifacts = [str(state / 'modules' / (name + '.zip')) for name in config['modules']]
-        requests = [['validate', [str(self.root), 'module', str(self.root), name,
-            str(state / 'inputs' / (name + '.json')), artifact]]
-            for name, artifact in zip(config['modules'], artifacts)]
-        output, request, result = (self.root / name for name in ['aggregate.zip', 'requests.json', 'statuses.json'])
-        requests.append(['aggregate', [str(self.root), str(output), *artifacts]])
-        # Lake's FilePath.join preserves the root package's /./ component.
-        # These must take the same complete shared validation boundary.
-        requests = [[kind, [arg.replace(str(self.root) + '/', str(self.root) + '/./')
-            if arg.startswith(str(self.root) + '/') else
-            str(self.root) + '/.' if arg == str(self.root) else arg for arg in args]]
-            for kind, args in requests]
-        request.write_text(json.dumps(requests))
-        declarations = sum(len(row['declarations']) for row in self.report()[0])
+        output, request = self.root / 'aggregate.zip', self.root / 'requests.json'
+        request.write_text(json.dumps([['aggregate', [str(self.root), str(output), *artifacts]]]))
         with patch.object(publication, 'validate_rows', wraps=publication.validate_rows) as validations, \
-                patch.object(materials, 'material_identities', wraps=materials.material_identities) as identities:
-            native.batch(request, result)
-            self.assertEqual(json.loads(result.read_text()), [0] * len(requests))
-            # One validation per row, then one complete-bundle validation in the same process.
-            self.assertEqual(validations.call_count, len(artifacts) + 1, '[FAIL] aggregate_row_validated_once')
-            self.assertEqual(identities.call_count, declarations, '[FAIL] aggregate_identity_computed_once')
+                patch.object(zlib, 'compressobj', wraps=zlib.compressobj) as compressors:
+            native.batch(request)
+            self.assertEqual(validations.call_count, 0, '[FAIL] aggregate_rows_not_revalidated')
+            self.assertEqual(compressors.call_count, 0, '[FAIL] aggregate_materials_not_recompressed')
         self.assertEqual(output.read_bytes(), (state / 'report.zip').read_bytes())
-        original = output.read_bytes()
-        alone_index = config['modules'].index('D5.Alone')
-        artifact = Path(artifacts[alone_index])
-        good_artifact = artifact.read_bytes()
-        source = self.root / 'D5/Alone.lean'
-        good_source = source.read_bytes()
-        for damage in ['artifact', 'source']:
+
+    def test_aggregation_rejects_a_malformed_module_artifact(self):
+        self.build()
+        state = native.state(self.root)
+        config = publication.read_json((state / 'inputs.json').read_bytes())
+        artifacts = [state / 'modules' / (name + '.zip') for name in config['modules']]
+        def entries(artifact):
+            with zipfile.ZipFile(artifact) as archive:
+                return {entry.filename: archive.read(entry) for entry in archive.infolist()}
+        original, provenance = entries(artifacts[0]), publication.RAW + '.provenance.json'
+        origin = json.loads(original[provenance])
+        cases = {
+            'extra_member': (dict(original, extra=b''), 'invalid native artifact members'),
+            'missing_materials': ({key: value for key, value in original.items()
+                                   if not key.endswith('.materials.zip')}, 'invalid native artifact members'),
+            'other_module': (entries(artifacts[1]), 'membership mismatch'),
+            'compatibility': (dict(original, **{provenance: materials.canonical_json(
+                dict(origin, compatibility_sha256='0' * 64))}), 'compatibility mismatch')}
+        for damage, (members, message) in cases.items():
             with self.subTest(damage=damage):
-                if damage == 'artifact':
-                    artifact.unlink()  # Never write through Lake's cache hard link.
-                    artifact.write_bytes(b'not a ZIP')
-                else:
-                    source.write_bytes(good_source + b'\n-- changed after prior validation\n')
-                try:
-                    native.batch(request, result)
-                    expected = [0] * len(requests)
-                    if damage == 'artifact':
-                        expected[alone_index] = expected[-1] = 1
-                    self.assertEqual(json.loads(result.read_text()), expected,
-                                     '[FAIL] aggregate_exact_row_rejection')
-                    self.assertEqual(output.read_bytes(), original)
-                finally:
-                    artifact.unlink()
-                    artifact.write_bytes(good_artifact)
-                    source.write_bytes(good_source)
-        driver = self.root / 'LeanInformationAudit/Registry.lean'
-        good_driver = driver.read_bytes()
-        driver.write_bytes(good_driver + b'\n-- changed shared driver\n')
-        try:
-            native.batch(request, result)
-            self.assertEqual(json.loads(result.read_text()), [0] * len(requests),
-                             '[FAIL] aggregate_compatible_judge_reuse')
-            self.assertEqual(output.read_bytes(), original)
-        finally:
-            driver.write_bytes(good_driver)
-        native.batch(request, result)
-        self.assertEqual(json.loads(result.read_text()), [0] * len(requests))
+                candidate = self.root / (damage + '.zip')
+                with zipfile.ZipFile(candidate, 'w') as archive:
+                    for name, data in members.items():
+                        archive.writestr(name, data)
+                output = self.root / 'rejected' / damage / 'report.zip'
+                with self.assertRaisesRegex(ValueError, message, msg='[FAIL] aggregate_rejects_' + damage):
+                    native.aggregate(self.root, output, candidate, *artifacts[1:])
+                self.assertFalse(output.exists())
 
 
     def test_coordinates_reuse_warm_tree_memo(self):
@@ -251,10 +221,12 @@ class NativePublicationConsumerTests:
         self.assertEqual(declarations, 6)
         destination = self.root / 'public.json'
         with patch.dict(os.environ, self.env), patch.object(materials, 'material_identities',
-                wraps=materials.material_identities) as identities:
+                wraps=materials.material_identities) as identities, \
+                patch.object(publication, 'validate_rows', wraps=publication.validate_rows) as validations:
             native.publish(self.root, destination)
-            # Lake accepted this bundle in the same invocation; publication re-hashes materials only.
+            # Lake recorded acceptance of these bundle bytes; publication checks only the envelope.
             self.assertEqual(identities.call_count, 0, '[FAIL] post_lake_publish_skips_identity_replay')
+            self.assertEqual(validations.call_count, 0, '[FAIL] post_lake_publish_skips_row_replay')
         self.assertEqual(destination.read_bytes(), raw)
         self.assertEqual(publication.member(destination, '.materials.zip').read_bytes(), material_bytes)
         staged = self.root / 'stage' / publication.RAW
@@ -295,7 +267,7 @@ class NativePublicationConsumerTests:
         artifact = self.root / '.lake/build/lean-inspector/report.zip'
         with zipfile.ZipFile(artifact) as archive:
             original = [(info, archive.read(info)) for info in archive.infolist()]
-        for damage in ['sha256', 'mode', 'provenance', 'identity']:
+        for damage in ['sha256', 'mode', 'provenance']:
             with self.subTest(damage=damage):
                 entries = []
                 for info, data in original:
@@ -306,12 +278,6 @@ class NativePublicationConsumerTests:
                         if damage == 'mode': value['mode'] = 'illegal'
                         else: value.pop('module_origins')
                         data = json.dumps(value).encode()
-                    elif damage == 'identity' and info.filename.endswith('.materials.zip'):
-                        output = io.BytesIO()
-                        with zipfile.ZipFile(io.BytesIO(data)) as materials_zip, zipfile.ZipFile(output, 'w') as changed:
-                            for index, entry in enumerate(materials_zip.infolist()):
-                                changed.writestr(entry, b'corrupt material' if index == 0 else materials_zip.read(entry))
-                        data = output.getvalue()
                     entries.append((info, data))
                 artifact.unlink()
                 with zipfile.ZipFile(artifact, 'w') as archive:
@@ -481,27 +447,6 @@ class NativeArtifactConsumerTests:
                          [dict(kind='extract', count=1), dict(kind='aggregate', count=1)])
         self.assertIn('D5.Extra', {row['module'] for row in self.report()[0]})
 
-    def test_native_repair_recreates_its_missing_production_sources(self):
-        self.build()
-        before, expected = self.stamps(), self.report()
-        state = native.state(self.root)
-        inputs = state / 'inputs'
-        original_sources = (inputs / 'Fixture.json.sources.json').read_bytes()
-        for path in inputs.glob('*.sources.json'):
-            path.unlink()
-        artifact = state / 'modules/Fixture.zip'
-        artifact.unlink()  # Never mutate a possible hard link into Lake's cache.
-        artifact.write_bytes(b'corrupt optional artifact')
-        repaired = self.build()
-        self.assertIn('inspector artifact rejected; rebuilding privately', repaired.stdout + repaired.stderr)
-        self.assertEqual([path.name for path in inputs.glob('*.sources.json')],
-                         ['Fixture.json.sources.json'])
-        self.assertEqual((inputs / 'Fixture.json.sources.json').read_bytes(), original_sources)
-        self.assertEqual({name: stamp for name, stamp in self.stamps().items() if name != 'Fixture'},
-                         {name: stamp for name, stamp in before.items() if name != 'Fixture'})
-        self.assertEqual([json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()],
-                         [dict(kind='extract', count=1)])
-        self.assertEqual(self.report(), expected)
 
     def test_native_module_integrity_rejections(self):
         self.build()
@@ -526,8 +471,48 @@ class NativeArtifactConsumerTests:
                 with zipfile.ZipFile(candidate, 'w') as archive:
                     for name, data in entries.items():
                         archive.writestr(name, data)
-                with self.assertRaises(ValueError, msg='[FAIL] native_module_integrity_' + damage):
-                    native.validate('module', self.root, 'D5.Alone', utility, candidate)
+                # Production validates every artifact before writing it.
+                with self.assertRaises(ValueError, msg='[FAIL] native_module_integrity_' + damage), \
+                        tempfile.TemporaryDirectory(dir=self.root) as directory:
+                    report = publication.unpack(candidate, directory, native.ROW_SUFFIXES)
+                    native.validate_module(report, self.root, 'D5.Alone', utility)
+
+    @contextmanager
+    def damaged_production(self):
+        """Real production of D5.Alone whose written origin misstates its report digest."""
+        self.build()
+        environment = dict(self.env)
+        for line in self.run_lake('env').stdout.splitlines():
+            name, _, value = line.partition('=')
+            if value: environment[name] = value
+            else: environment.pop(name, None)
+        state = native.state(self.root)
+        write_origin = publication.write_origin
+        def damaged(report, name, origin):
+            write_origin(report, name, origin)
+            provenance = publication.member(report, '.provenance.json')
+            provenance.write_bytes(materials.canonical_json(
+                dict(json.loads(provenance.read_bytes()), report_sha256='0' * 64)))
+        with patch.dict(os.environ, environment, clear=True), \
+                patch.object(publication, 'write_origin', side_effect=damaged):
+            yield [str(self.root), 'D5.Alone', str(self.root / 'D5/Alone.lean'),
+                   str(state / 'inputs/D5.Alone.json'), str(state / 'producer/bin/reportInspector')]
+
+    def test_production_rejects_an_invalid_module_before_writing_it(self):
+        output = self.root / 'produced/D5.Alone.zip'
+        # The subtest keeps the artifact pin observable when rejection is missing.
+        with self.damaged_production() as arguments, self.subTest(pin='rejection'), self.assertRaisesRegex(
+                ValueError, 'module production origin', msg='[FAIL] production_rejects_invalid_module'):
+            native.module(*arguments, str(output))
+        self.assertFalse(output.exists(), '[FAIL] production_writes_no_invalid_artifact')
+
+    def test_batch_production_rejects_an_invalid_module_before_writing_it(self):
+        output, request = self.root / 'produced/D5.Alone.zip', self.root / 'batch-request.json'
+        with self.damaged_production() as arguments, self.subTest(pin='rejection'), self.assertRaisesRegex(
+                ValueError, 'module production origin', msg='[FAIL] batch_production_rejects_invalid_module'):
+            request.write_text(json.dumps([['produce', [*arguments, str(output)]]]))
+            native.batch(request)
+        self.assertFalse(output.exists(), '[FAIL] batch_production_writes_no_invalid_artifact')
 
     def test_native_producer_inputs(self):
         self.build()
@@ -596,9 +581,7 @@ class NativeArtifactConsumerTests:
         self.assertEqual(mixed, self.origins())
         self.publish()
         before = self.stamps()
-        damaged = self.root / '.lake/build/lean-inspector/modules/D5.B.zip'
-        damaged.unlink()
-        damaged.write_bytes(b'corrupt row after compatible producer changes')
+        self.write('D5/B.lean', (self.root / 'D5/B.lean').read_text() + '-- content after producer changes\n')
         self.write('activity.jsonl', '')
         self.run_lake('build', 'D5.B:report', ':report')
         records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
@@ -611,42 +594,10 @@ class NativeArtifactConsumerTests:
             if name != 'D5.B': self.assertEqual(mixed[name], recovered[name])
         self.publish()
 
-    def test_native_recovers_only_row_with_encrypted_member(self):
-        self.check_row_decoder_recovery(self.encrypted_member, ValueError)
 
-    def test_native_no_build_rejects_corruption_without_production(self):
-        cases = [('modules/D5.Alone.zip', targets) for targets in [(':report',),
-            ('D5.Alone:report',), (':report', 'D5.Alone:report'), ('D5.Alone:report', ':report')]]
-        cases.append(('report.zip', (':report',)))
-        for artifact, targets in cases:
-            with self.subTest(artifact=artifact, targets=targets):
-                self.build()
-                path = self.root / '.lake/build/lean-inspector' / artifact
-                expected = path.read_bytes()
-                path.unlink()  # Never mutate a Lake cache hard link.
-                path.write_bytes(b'corrupt optional artifact')
-                self.write('activity.jsonl', '')
-                rejected = self.run_lake('--no-build', 'build', *targets, success=False)
-                self.assertIn('needs to be rebuilt', rejected.stdout + rejected.stderr)
-                self.assertEqual((self.root / 'activity.jsonl').read_text(), '',
-                                 'no-build must reject before repair extraction or aggregation')
-                self.assertTrue(path.is_file(), 'no-build must not remove the rejected artifact')
-                self.assertEqual(path.read_bytes(), b'corrupt optional artifact',
-                                 'no-build must not start private reconstruction')
-                recovered = self.build() if targets == (':report',) else self.run_lake('build', *targets)
-                self.assertIn('inspector artifact rejected; rebuilding privately', recovered.stdout + recovered.stderr)
-                self.assertEqual(path.read_bytes(), expected)
-                self.assertEqual(path.stat().st_nlink, 1)
-                records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
-                self.assertEqual(sum(row['count'] for row in records if row['kind'] == 'extract'),
-                                 0 if artifact == 'report.zip' else 1)
-                aggregates = sum(row['count'] for row in records if row['kind'] == 'aggregate')
-                if artifact == 'report.zip':
-                    self.assertEqual(aggregates, 1)
-                else:
-                    self.assertLessEqual(aggregates, int(':report' in targets))
-                self.build()
-                self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+    def test_native_no_build_rejects_a_miss_without_production(self):
+        self.build()
+        self.write('activity.jsonl', '')
         self.write('D5/Alone.lean', (self.root / 'D5/Alone.lean').read_text() + '-- native miss\n')
         rejected = self.run_lake('--no-build', 'build', ':report', success=False)
         self.assertIn('needs to be rebuilt', rejected.stdout + rejected.stderr)

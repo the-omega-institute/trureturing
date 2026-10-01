@@ -1,0 +1,28 @@
+### 199.2 固定奇窗口的实际素因子桥
+
+以下先假设 $\rho\notin R^\times$，固定引理199.1中的 $\mathfrak p,p_0,e$。选择一个奇平方自由整数 $k>1$，满足
+
+$$
+\gcd(k,5p_0e)=1.
+\tag{199.3}
+$$
+
+对每个余类 $r\in\{0,\ldots,k-1\}$，置
+
+$$
+\rho_r=\tau^{-r-3}\rho,
+\qquad A_r=\operatorname{Tr}(v^2\tau^{r+3}),
+\qquad P_{r,k}(X)=Q\mathcal D_k(X)-A_r.
+\tag{199.4}
+$$
+
+$\mathcal D_k$ 是 §196 的 Dickson 迹多项式。$A_r\in\mathbb Z$、$\operatorname N(\rho_r)=1$，且
+
+$$
+\rho_r+\rho_r^{-1}=A_r/Q,
+\qquad v_{\mathfrak p}(\rho_r)=e.
+\tag{199.5}
+$$
+
+后一等式使用 $\tau$ 为单位，因此选择递推指标余类不会改变非零赋值。
+

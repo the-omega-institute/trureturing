@@ -309,13 +309,14 @@ def closedExpression (expression : Expr) : Bool :=
 
 /-- Render deferred errors while their Meta context still exists. In particular,
 heartbeat failures must retain the operation that exhausted the unchanged limit. -/
-def runReportMeta (env : Environment) (phase : String) (action : MetaM α) : IO α := do
+def runReportMeta (env : Environment) (phase : String) (action : MetaM α) : IO (α × Environment) := do
   let action : MetaM α := tryCatchRuntimeEx action fun error => do
     let message ← addMessageContextFull error.toMessageData
     throw <| Exception.error Syntax.missing m!"{phase}: {message}"
-  return (← action.run' |>.toIO
+  let (result, state) ← action.run' |>.toIO
     { fileName := phase, fileMap := default,
-      options := ({} : Options).setBool `debug.moduleNameAtTimeout true } { env }).1
+      options := ({} : Options).setBool `debug.moduleNameAtTimeout true } { env }
+  return (result, state.env)
 
 /-- This checks one declared relationship, not the usefulness or classification of a module. -/
 def closedNegation (env : Environment) (input : ModuleInput) (utility : UtilityInput) : IO Bool := do
@@ -332,7 +333,7 @@ def closedNegation (env : Environment) (input : ModuleInput) (utility : UtilityI
     let expected := mkApp (mkConst ``Not) (mkConst claim.name)
     if !(← Meta.isDefEq result.type expected) then return false
     return ← Meta.isDefEq (← Meta.inferType result.value) expected
-  runReportMeta env s!"utility-refutation:{utility.resultModule}.{utility.resultSelector}" check
+  return (← runReportMeta env s!"utility-refutation:{utility.resultModule}.{utility.resultSelector}" check).1
 
 elab "informationMaterialWriterProgram" : term => do
   let path := (System.FilePath.mk (← getFileName)).parent.getD "." / "materials.py"
@@ -357,7 +358,7 @@ def writeMaterial (writer : MaterialWriter) (info : ConstantInfo) : IO Unit := d
 def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
     (writer : MaterialWriter) (materialCounter : IO.Ref Nat)
     (utilities : Array UtilityInput)
-    (informationTemplates : Json)
+    (generatedNames : Array Name) (informationTemplates : Json)
     (input : ModuleInput) : IO ModuleReport := do
   let profiling := (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1"
   let enumerationStart ← if profiling then IO.monoNanosNow else pure 0
@@ -366,7 +367,8 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
     | throw <| IO.userError s!"module not loaded: {input.moduleName}"
   let moduleData := env.header.moduleData[moduleIdx]!
   let environment := env.setExporting false
-  let metadata := moduleData.constNames.filter fun name =>
+  let allNames := moduleData.constNames ++ generatedNames
+  let metadata := allNames.filter fun name =>
     match name with
     | .str _ suffix => suffix == "__information_registration_diagnostic"
     | _ => false
@@ -380,7 +382,7 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
       | _, _ => throw <| IO.userError s!"invalid registration diagnostic: {name}"
     | _ => throw <| IO.userError s!"invalid registration diagnostic: {name}"
   informationRegistrationErrors := sortedUnique informationRegistrationErrors
-  let names := (moduleData.constNames.filter (!metadata.contains ·)).qsort fun left right =>
+  let names := (allNames.filter (!metadata.contains ·)).qsort fun left right =>
     encodeName left < encodeName right
   let enumerationEnd ← if profiling then IO.monoNanosNow else pure 0
   let sccNanos ← IO.mkRef 0
@@ -589,13 +591,13 @@ private unsafe def dependencies (manifest destination mode : String) : IO Unit :
 source modules. Even an empty inventory requires its source/native verifier.
 The two producer identities are fixed judge APIs, never content callbacks. -/
 private unsafe def templateBindings (env : Environment) (inputs : Array ModuleInput) :
-    IO (Array Json) := do
+    IO (Array (Json × Array Name × Environment)) := do
   let selected := if env.header.moduleNames.contains `LeanInformationAudit.DispositionEvidence then
       some (`LeanInformationAudit.informationTemplateReportDriver,
         `LeanInformationAudit.DispositionEvidence)
-    else if env.header.moduleNames.contains `LeanInformationAudit.Registry then
+    else if env.header.moduleNames.contains `LeanInformationAudit.SealCommand then
       some (`LeanInformationAudit.finiteInformationTemplateReportDriver,
-        `LeanInformationAudit.Registry)
+        `LeanInformationAudit.SealCommand)
     else none
   if let some (producerName, producerOwner) := selected then
     let some owner := env.getModuleIdxFor? producerName
@@ -607,11 +609,12 @@ private unsafe def templateBindings (env : Environment) (inputs : Array ModuleIn
       | throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer_type"
     unless env.header.moduleNames[typeOwner.toNat]! == `LeanInformationAudit.RegistryTypes do
       throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer_type"
-    let driver ← IO.ofExcept <| env.evalConstCheck (Array Name → MetaM (Array Json)) {}
+    let driver ← IO.ofExcept <| env.evalConstCheck (Array Name → MetaM (Array (Json × Array Name × Environment))) {}
       typeName producerName
-    let bindings ← runReportMeta env "information-template-join"
-      (driver (inputs.map (·.moduleName.toName)))
-    return bindings
+    -- Each target row, its generated declarations and their environment come
+    -- from that target's own assessment; peers in the batch are inert.
+    return (← runReportMeta env "information-template-join"
+      (driver (inputs.map (·.moduleName.toName)))).1
   throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
 
 unsafe def main (args : List String) : IO Unit := do
@@ -647,7 +650,7 @@ unsafe def main (args : List String) : IO Unit := do
   -- judge driver is loaded independently of the source's old native imports.
   let moduleNames := sortedUnique (inputs.map (·.moduleName) ++
     selectedUtilities.map (·.claimModule) ++
-    (if statementOnly then #[] else #["LeanInformationAudit.Registry"]))
+    (if statementOnly then #[] else #["LeanInformationAudit.SealCommand"]))
   let imports := moduleNames.map fun moduleName => { module := moduleName.toName }
   let profiling := (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1"
   let importStart ← if profiling then IO.monoNanosNow else pure 0
@@ -660,9 +663,10 @@ unsafe def main (args : List String) : IO Unit := do
       (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE import_ns={(← IO.monoNanosNow) - importStart} imported_modules={env.header.moduleNames.size}"
     let cache ← IO.mkRef ({} : AxiomClosureState)
     let materialCounter ← IO.mkRef 0
-    let bindings ← if statementOnly then pure (inputs.map fun _ => Json.null) else
-      templateBindings env inputs
-    unless bindings.size == inputs.size do
+    let targets ← if statementOnly then
+        pure (inputs.map fun _ => (Json.null, #[], env))
+      else templateBindings env inputs
+    unless targets.size == inputs.size do
       throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_partition"
     -- Compiled executables can move between private build trees. Prefer the
     -- current repository's writer; a standalone statement probe can instead
@@ -674,8 +678,8 @@ unsafe def main (args : List String) : IO Unit := do
       cmd := "python3", args := #["-I", writerProgram, "stream",
         materialSpool.toString], stdin := .piped, stdout := .piped, stderr := .inherit }
     try
-      let reports ← (inputs.zip bindings).mapM fun (input, binding) =>
-        inspectModule env cache writer materialCounter utilities binding input
+      let reports ← (inputs.zip targets).mapM fun (input, binding, generated, environment) =>
+        inspectModule environment cache writer materialCounter utilities generated binding input
       writer.stdin.putStr "done\n"
       writer.stdin.flush
       unless (← writer.stdout.getLine) == "done\n" && (← writer.wait) == 0 do

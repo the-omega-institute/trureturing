@@ -1,0 +1,18 @@
+**定理 12.4（四相探针恢复一对模式的相干）。** 设 $u,v$ 是正交单位模式，$\zeta\in\{1,i,-1,-i\}$，令
+
+$$
+|w_\zeta\rangle=\frac{|u\rangle+\zeta|v\rangle}{\sqrt2},\qquad
+p_\zeta=\langle w_\zeta|\rho|w_\zeta\rangle.
+$$
+
+则
+
+$$
+\langle u|\rho|v\rangle
+=\frac{p_1-p_{-1}}2+\frac{i(p_{-i}-p_i)}2.
+$$
+
+证明。记 $c=\langle u|\rho|v\rangle$、$a=(\rho_{uu}+\rho_{vv})/2$，由 Hermitian 性，展开秩一投影给 $p_\zeta=a+\operatorname{Re}(\zeta c)$。于是 $p_1-p_{-1}=2\operatorname{Re}c$，$p_{-i}-p_i=2\operatorname{Im}c$，代回即得。例 $\rho=|w_i\rangle\langle w_i|$ 时 $c=-i/2$，$p_i=1,p_{-i}=0$，也确定了虚部的符号。
+
+这使用四种不同测量设置的概率函数，精确概率须由模型给出或由重复制备与采样估计；一份未知态的一次测量不交出四个精确概率。五模式划分来源、四相探针读相干，二者的形式组合不证明只有二十个量子状态，也不证明经典边界就是物理相干边界。
+

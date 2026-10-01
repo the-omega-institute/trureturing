@@ -1,0 +1,62 @@
+### 199.5 单位比的 Fibonacci 与 Lucas 桥
+
+引理199.1剩下的 $|Q|\in\{1,5\}$ 可以用仓内既有单位分类与 Fibonacci 大素数尾界处理。
+
+既有声明 [`golden_units_eq_signed_phi_pow`](../../../D5/S1/Scale/Units.lean) 给出 $R^\times=\{\pm\phi^s:s\in\mathbb Z\}$。如果 $|Q|=1$，则 $v$ 为单位，且主实嵌入 $v>0$，故
+
+$$
+v=\phi^s,
+\qquad V_j=F_{j+s+3}
+$$
+
+对某个固定整数 $s$ 成立。以下只使用 $j$ 充分大，序列指标为正。
+
+若 $|Q|=5$，由
+
+$$
+(2a+b)^2=5b^2+4Q
+$$
+
+得到 $5\mid2a+b$，继而 $5\mid2b-a$。所以
+
+$$
+\frac v{\sqrt5}
+=\frac{(2b-a)+(2a+b)\phi}{5}\in R,
+\qquad
+\operatorname N\!\left(\frac v{\sqrt5}\right)=-Q/5\in\{1,-1\}.
+$$
+
+再用单位分类与正实嵌入，得到
+
+$$
+v=\sqrt5\,\phi^s,
+\qquad V_j=L_{j+s+3},
+\tag{199.12}
+$$
+
+其中 $L_n=\phi^n+\psi^n$。数量桥来自
+
+$$
+[\phi](\sqrt5\,\phi^n)
+=\frac{\sqrt5\,\phi^n-(-\sqrt5)\psi^n}{\sqrt5}
+=L_n.
+$$
+
+该 Lucas 读数与仓内 [`goldenLucas`](../../../D5/S1/Scale/Lucas.lean) 的迹定义一致。既有 [`golden_fib_two_mul_eq_fib_mul_lucas`](../../../D5/S1/Scale/FibLucasDouble.lean) 给
+
+$$
+F_{2n}=F_nL_n,
+\qquad L_n\mid F_{2n}.
+$$
+
+于是令 $n_j=j+s+3$，两个例外类的实际素因子分别包含于 $F_{n_j}$ 或 $F_{2n_j}$ 的素因子中。取 $y=\lceil j^{5/6}\rceil$，引理184.1对这两个同阶指标给
+
+$$
+T_j(y):=\sum_{\substack{p\mid V_j\\p>y}}\log\frac p{p-1}
+=O_v(j^{-1/12}),
+\qquad (\log j)T_j(y)\longrightarrow0.
+\tag{199.13}
+$$
+
+这没有把 $V_j$ 替换为更大的 Fibonacci 数来比较 Robin 预算；较大 Fibonacci 数只用于上包络同一 $V_j$ 的大素数尾。
+

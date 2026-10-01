@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:323b074aec4c465bc0f59303a7f7daa37f8e0705c5daca197f7afeb402a80057
+  normalized_sha256: sha256:323b074aec4c465bc0f59303a7f7daa37f8e0705c5daca197f7afeb402a80057
+cas_ref: sha256:323b074aec4c465bc0f59303a7f7daa37f8e0705c5daca197f7afeb402a80057
+coverage_gids:
+  - gid: D5/S1/Recurrence/Invariants/CloitreActualSpineCarry.full22_2
+    target_statement_id: sha256:652eb050e4c4137c97856372fc4714eef990abdeadf6cd14570f41bceaf71c8f
+receipts:
+  unresolved_subitems: []

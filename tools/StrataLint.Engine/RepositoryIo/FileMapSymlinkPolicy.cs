@@ -145,6 +145,20 @@ internal static class FileMapSymlinkPolicy
         }
     }
 
+    // The repository path a link's own bytes name, or null when they name none;
+    // only the declaration check decides whether the link is accepted.
+    internal static string? Referent(string path, ReadOnlySpan<byte> target)
+    {
+        try
+        {
+            return Resolve(path, StrictUtf8.GetString(target), path);
+        }
+        catch (Exception exception) when (exception is FileMapParseException or DecoderFallbackException)
+        {
+            return null;
+        }
+    }
+
     private static string Resolve(string path, string target, string location)
     {
         var parts = path.Split('/').SkipLast(1).ToList();

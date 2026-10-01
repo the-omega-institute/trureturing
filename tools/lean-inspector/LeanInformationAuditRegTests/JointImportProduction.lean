@@ -1,6 +1,9 @@
 import Reg.Catalogs.InformationRoot
 import Reg.Catalogs.TemplateShadow
 import LeanInformationAuditRegTests.ProductionInputs
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit
 
@@ -23,8 +26,8 @@ run_cmd do
       for name in #[record.catalog.catalogName, record.verdict.name] ++
           record.theorems.flatMap (fun row =>
             #[row.unitName, row.realizationName, row.certificateName]) do
-        unless (env.getModuleIdxFor? name).map (env.header.moduleNames[·.toNat]!) == some root do
-          throwError "production companion has the wrong module owner: {name}"
+        unless GeneratedDeclarations.ownerOf env name == root do
+          throwError "production companion has the wrong report owner: {name}"
     let artifact ← Lean.Elab.Command.liftTermElabM <| serializeSealArtifact records
     unless Sha256.hex artifact.toUTF8 == digest do
       throwError "production joint seal digest mismatch: {root}; expected={digest}; actual={Sha256.hex artifact.toUTF8}"

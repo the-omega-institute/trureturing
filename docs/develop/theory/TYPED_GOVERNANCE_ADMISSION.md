@@ -187,3 +187,36 @@ For if such a `T` characterized liveness, equal shape would force equal
 `T`-values and hence equal liveness for `j₁` and `j₂`, contradicting the
 witnesses. This quantifies over all shape-only test families; it is stronger
 than merely exhibiting one same-shape pair with different liveness.
+## Theorem 6. Seeded edge updates preserve forward closure
+
+Let $V$ be any type, let $R,T\subseteq V\times V$ be directed relations,
+and let $S\subseteq V$. Write
+$C_R(S)=\{v\mid\exists s\in S,\ R^*(s,v)\}$, where $R^*$ denotes
+finite reflexive-transitive reachability. Suppose every edge present in
+exactly one relation has its target in $S$:
+
+$$
+\forall u,v\in V,\quad
+\neg(R(u,v)\leftrightarrow T(u,v))\Longrightarrow v\in S.
+$$
+
+Then
+
+$$
+C_{R\cup T}(S)=C_R(S)
+\quad\text{and}\quad
+C_{R\cup T}(S)=C_T(S).
+$$
+
+Proof. Induct along a finite $(R\cup T)$-path starting in $S$, maintaining
+that its current endpoint belongs to both $C_R(S)$ and $C_T(S)$.
+The initial endpoint lies in both closures by a path of length zero.
+For the $R$ component, an edge present in $R$ extends the inductively
+constructed $R$-path. Otherwise it is present in $T$ and absent from $R$,
+so its target lies in $S$; the path of length zero at that target restarts
+the construction. The $T$ component follows by the symmetric case split.
+This proves both inclusions from the union closure. The reverse inclusions
+follow by viewing an $R$-path or a $T$-path as a union path. No restriction
+on cycles or the cardinality of $V$ was used.
+
+## Append boundary
