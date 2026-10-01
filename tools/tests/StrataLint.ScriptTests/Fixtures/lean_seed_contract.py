@@ -15,7 +15,7 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransp
     def test_publication_requires_current_report_before_transport(self):
         result = self.transport("publish")
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-        self.assertEqual(["lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], (self.root / "build-runs").read_text().splitlines())
+        self.assertEqual(["--repository " + str(self.root) + " --output .lake/build/stratalint/raw-lean-report.json"], (self.root / "build-runs").read_text().splitlines())
 
     def test_fetch_cannot_widen_partition_compatibility(self):
         self.assertEqual(0, self.transport("publish").returncode)
@@ -35,7 +35,7 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransp
 
     def test_malformed_cleanup_metadata_cannot_fail_or_repeat_the_build(self):
         calls = self.root / "build-calls"
-        write(self.bin / "make", '#!/bin/sh\necho build >> "$FAKE_BUILD_CALLS"\nexit 0\n')
+        write(self.root / "tools/lean-inspector/inspect.sh", '#!/bin/sh\necho build >> "$FAKE_BUILD_CALLS"\nexit 0\n')
         malformed = [("FAKE_LIST_JSON", '["invalid"]'),
                      ("FAKE_LIST_JSON", '[{"tagName":12,"createdAt":"today","isDraft":false}]'),
                      ("FAKE_FAIL", "list")]
@@ -47,7 +47,7 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransp
         self.assertEqual(["build"] * len(malformed), calls.read_text().splitlines())
 
     def test_publication_requires_a_current_inspector_report(self):
-        write(self.bin / "make", '#!/bin/sh\nexit 0\n')
+        write(self.root / "tools/lean-inspector/inspect.sh", '#!/bin/sh\nexit 0\n')
         report = self.root / ".lake/build/stratalint/raw-lean-report.json"
         report.unlink()
         missing = self.transport("publish")
@@ -56,7 +56,7 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransp
         self.assertIn("current Inspector report is missing", missing.stdout)
         self.assertEqual([], list(self.remote.iterdir()))
 
-        write(self.bin / "make", '#!/bin/sh\nmkdir -p .lake/build/stratalint\nprintf \'%s\\n\' \'{"modules":[],"schema":"wrong"}\' > .lake/build/stratalint/raw-lean-report.json\nexit 0\n')
+        write(self.root / "tools/lean-inspector/inspect.sh", '#!/bin/sh\nmkdir -p .lake/build/stratalint\nprintf \'%s\\n\' \'{"modules":[],"schema":"wrong"}\' > .lake/build/stratalint/raw-lean-report.json\nexit 0\n')
         malformed = self.transport("publish")
         self.assertEqual(0, malformed.returncode, malformed.stdout + malformed.stderr)
         self.assertIn('"status":"failed"', malformed.stdout.replace(" ", ""))
