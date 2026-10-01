@@ -15,6 +15,10 @@ on:
         description: Command executed from the repository root when the whitelist is hit
         required: true
         type: string
+      dotnet:
+        description: Install the .NET SDK and its NuGet package cache
+        type: boolean
+        default: true
       lean:
         description: none | toolchain | build (toolchain plus the dependency and project build layers)
         type: string
@@ -51,7 +55,7 @@ jobs:
         run: |
           case "$HIT" in true|false) ;; *) echo "CI_ENTRY_ERROR hit output is '$HIT'" >&2; exit 2 ;; esac
           [[ -n "${COMMAND//[[:space:]]/}" ]] || { echo "CI_ENTRY_ERROR command input is empty" >&2; exit 2; }
-      - if: steps.entry.outputs.hit == 'true'
+      - if: steps.entry.outputs.hit == 'true' && inputs.dotnet
         uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json

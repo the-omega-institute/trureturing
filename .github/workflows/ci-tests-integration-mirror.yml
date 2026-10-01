@@ -19,6 +19,7 @@ jobs:
   tests-integration-mirror:
     uses: ./.github/workflows/ci-unit.yml
     with:
+      dotnet: false
       command: bash tools/scripts/agent/integration-mirror-test.sh
       paths: |
         .github/workflows/ci-tests-integration-mirror.yml
