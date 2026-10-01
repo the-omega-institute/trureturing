@@ -121,6 +121,8 @@ public sealed class ScribeResourcePack
             expectedSourcePath: "Blueprint/" + gid + ".scribe.cs");
     }
 
+    internal ReadOnlySpan<byte> EncodedBytes(string gid) => resources[gid];
+
     public IEnumerable<DocumentDefinition> ReadAll() => Manifest.Entries.Select(entry => Read(entry.Gid));
 
     internal static string ResourcePath(string gid)
