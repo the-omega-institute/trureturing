@@ -19,12 +19,18 @@ adjacency matrix `A`. The walk has universal perfect state transfer if for all
 vertices `u, v` some time gives `|U(t)_{v,u}| = 1`. A graph has property `𝕋`
 if every nonzero entry of `A` has modulus `1`. The paper states:
 
-> \begin{conjecture} $\Circ(0,-\ii,\ii)$ is the only circulant with property
-> $\TT$ which has universal perfect state transfer. \end{conjecture}
+```latex
+\begin{conjecture} $\Circ(0,-\ii,\ii)$ is the only circulant with property
+$\TT$ which has universal perfect state transfer. \end{conjecture}
+```
 
-and, in its introduction, "The only known examples of complex unit gain graphs
+and, in its introduction,
+
+```latex
+The only known examples of complex unit gain graphs
 with the universal property are the circulants $K_{2}$ and $\Circ(0,-\ii,\ii)$.
-We conjecture that this set is unique."
+We conjecture that this set is unique.
+```
 
 Issue #11528 fixes the reading. `Circ(a)` has entries `C_{jk} = a_{k−j}`
 over `ℤ/nℤ`, "the only" is read up to the paper's switching equivalence
@@ -131,9 +137,9 @@ other than `±i` and does not bear on it.
 **Bounded source consequences:** the witness is a Hermitian graph on 3 vertices
 with unit weights and universal perfect state transfer that is not switching
 equivalent to `Circ(0, −i, i)`, so it also contradicts Fact 5 of
-arXiv:1701.04145v2 §8 (l. 1117–1119: "$\Circ(0,-\ii,\ii)$ is the only graph on
-$3$ vertices with universal perfect state transfer, up to switching
-equivalence") when graphs carry unit gains. The Fact's proof shows that such a
+arXiv:1701.04145v2 §8 (l. 1117–1119:
+`$\Circ(0,-\ii,\ii)$ is the only graph on $3$ vertices with universal perfect state transfer, up to switching equivalence`)
+when graphs carry unit gains. The Fact's proof shows that such a
 graph is a circulant diagonalized by the Fourier matrix, but it does not fix the
 eigenvalues. This consequence follows by inspection of the checked witness and
 is not a separate formal theorem.
