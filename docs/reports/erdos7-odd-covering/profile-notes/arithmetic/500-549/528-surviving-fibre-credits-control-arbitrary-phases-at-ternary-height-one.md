@@ -30866,6 +30866,24 @@ height constraints on the same minimum whole cover, not a payment
 for every dense continuation or an exclusion of all height-two
 profiles.
 
+[Report385, section25](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#25-fixed-repair-budgets-have-finite-modulus-palettes)
+applies the existing Lettl--Sun essential-coset bound to complete
+repair fibres. With budget k, every indispensable repair modulus m
+satisfies f(m/gcd(m,Q))<=k-1, giving a finite numerical palette;
+this is reuse of the published bound. For the same minimum whole
+cover, the complete pure3 private hull is exactly3. If H_3>=2,
+at most six moduli not dividing Q cannot repair that private
+region; in any legal four-class repair with parent3 still occupied,
+all such outside classes are removable. At H_3=1, outside repairs
+of size at most six reduce to simultaneous cofactor-union buckets
+over the same R_3. When moving3 while retaining every original
+3-free class, a four-class mixed repair can survive only with an
+available3e label whose cofactor parent e remains occupied,
+and with the actual remainder hull K satisfying gcd(e,K)=1 and
+tau(K)>=3. The remaining coprime unions and larger replacement
+budgets are not excluded. These restrictions test full repair
+obligations; a pair in one top shadow does not supply them.
+
 The new restrictions remove actual possible activations and height
 profiles which the specified earlier tests miss. They do not force
 useful vacancies in every hypothetical cover: densely occupied
