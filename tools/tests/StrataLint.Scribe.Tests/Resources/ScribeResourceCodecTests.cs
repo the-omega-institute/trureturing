@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json.Nodes;
 using StrataLint.Scribe;
 
 namespace StrataLint.Scribe.Tests;
@@ -77,30 +78,63 @@ public sealed class ScribeResourceCodecTests
     [Fact]
     public void ClaimMembersSurviveRoundTrip()
     {
-        var claim = new OpenProblemResolutionClaim(
-            ProblemSlugRef.Create("batch-problem"),
-            ResolutionKind.Proved,
-            [DeclarationHandle.Create("D5/S1/Scale/Other.member")]);
-        var document = ScribeNode.Create(
-            "resource-digest",
-            DefinitionDsl.H("Claim"),
-            DefinitionDsl.Blocks(DocumentBlock.Describe.Restore(
-                DescribeId.Create("claim"),
-                DefinitionDsl.H("Claim"),
-                DescribeStatement.FromFormula(DefinitionDsl.Equal(DefinitionDsl.Num(1), DefinitionDsl.Num(1))),
-                AssessedProvenance.FromRepo(),
-                DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("claim"))),
-                null,
-                null,
-                claim,
-                new DescribeKindSource.Authored(DescribeKind.Remark))),
-            sourcePath: "Blueprint/D5/S1/Scale/Claim.scribe.cs");
-
-        var encoded = ScribeResourceCodec.Encode(DocumentDefinition.Create(document, "Blueprint/D5/S1/Scale/Claim.scribe.cs"));
+        var encoded = ScribeResourceCodec.Encode(ClaimDefinition());
         var decoded = ScribeResourceCodec.Decode(encoded);
 
         Assert.Equal(encoded, ScribeResourceCodec.Encode(decoded));
-        Assert.Contains("\"additionalMembers\":[\"D5/S1/Scale/Other.member\"]", Encoding.UTF8.GetString(encoded), StringComparison.Ordinal);
+        Assert.Contains("\"additionalMembers\":[\"D5/S1/Scale/Other.additional\"]", Encoding.UTF8.GetString(encoded), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("formula")]
+    [InlineData("remark")]
+    [InlineData("handle")]
+    public void CodecRejectsResolutionClaimOutsideItsLeanDeclarationFactory(string invalidHost)
+    {
+        var resource = JsonNode.Parse(ScribeResourceCodec.Encode(Definition()))!.AsObject();
+        var block = JsonNode.Parse(ScribeResourceCodec.Encode(ClaimDefinition()))!
+            ["document"]!["content"]![0]!.AsObject();
+        if (invalidHost == "formula")
+        {
+            block["statement"] = new JsonObject
+            {
+                ["type"] = "FormulaAst",
+                ["value"] = block["statementFormula"]!.DeepClone(),
+            };
+        }
+        else if (invalidHost == "remark")
+        {
+            block["kindSource"]!["role"] = "Remark";
+        }
+        else
+        {
+            block["kindSource"]!["handle"] = "D5/S1/Scale/Other.different";
+        }
+        resource["document"]!["content"] = new JsonArray(block.DeepClone());
+
+        var error = Assert.Throws<ScribeResourceException>(() =>
+            ScribeResourceCodec.Decode(Encoding.UTF8.GetBytes(resource.ToJsonString())));
+
+        Assert.Equal(ScribeResourceErrorCode.InvalidValue, error.ReasonCode);
+    }
+
+    private static DocumentDefinition ClaimDefinition()
+    {
+        var formula = DefinitionDsl.Equal(DefinitionDsl.Num(1), DefinitionDsl.Num(1));
+        var source = new StatementSource.Authored(formula, null);
+        var describe = DocumentBlock.Describe.ReportDerived(
+            DescribeId.Create("claim"), DefinitionDsl.H("Claim"),
+            DeclarationHandle.Create("D5/S1/Scale/Other.member"), source,
+            AssessedProvenance.FromRepo(),
+            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("claim"))),
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("batch-problem"), ResolutionKind.Proved,
+                [DeclarationHandle.Create("D5/S1/Scale/Other.additional")]),
+            restoredStatement: (source, formula));
+        return DocumentDefinition.Create(
+            ScribeNode.Create("resource-digest", DefinitionDsl.H("Claim"), DefinitionDsl.Blocks(describe),
+                sourcePath: "Blueprint/D5/S1/Scale/Claim.scribe.cs"),
+            "Blueprint/D5/S1/Scale/Claim.scribe.cs");
     }
 
     [Fact]
@@ -116,7 +150,6 @@ public sealed class ScribeResourceCodecTests
             AssessedProvenance.FromRepo(),
             DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("derived"))),
             formula,
-            null,
             null,
             new DescribeKindSource.Authored(DescribeKind.Remark));
         var definition = DocumentDefinition.Create(

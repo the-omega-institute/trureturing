@@ -274,10 +274,11 @@ public abstract record DocumentBlock
             AssessedProvenance provenance,
             BlockSequence content,
             DescribeRole? role,
-            OpenProblemResolutionClaim? openProblemResolutionClaim)
+            OpenProblemResolutionClaim? openProblemResolutionClaim,
+            (StatementSource Source, Formula? Formula)? restoredStatement = null)
         {
             var declaration = LeanDeclarationRef.Create(handle.Value);
-            var materialized = StatementSource.Materialize(statementSource, declaration);
+            var materialized = restoredStatement ?? StatementSource.Materialize(statementSource, declaration);
             return new(
                 id,
                 role switch
@@ -307,7 +308,6 @@ public abstract record DocumentBlock
             BlockSequence content,
             Formula? statementFormula,
             StatementSource? statementSource,
-            OpenProblemResolutionClaim? openProblemResolutionClaim,
             DescribeKindSource kindSource) =>
             new(
                 id,
@@ -329,8 +329,7 @@ public abstract record DocumentBlock
                 content,
                 statementFormula,
                 kindSource,
-                statementSource,
-                openProblemResolutionClaim);
+                statementSource);
 
     }
 

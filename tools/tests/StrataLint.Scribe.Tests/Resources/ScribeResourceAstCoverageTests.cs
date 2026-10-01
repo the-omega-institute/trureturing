@@ -77,7 +77,6 @@ public sealed class ScribeResourceAstCoverageTests
             DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative"))),
             null,
             null,
-            null,
             new DescribeKindSource.Authored(DescribeKind.Remark));
         var declarationRemark = Describe.Remark(
             DescribeId.Create("remark"),
@@ -196,10 +195,6 @@ public sealed class ScribeResourceAstCoverageTests
             DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative"))),
             null,
             null,
-            new OpenProblemResolutionClaim(
-                ProblemSlugRef.Create("batch-problem"),
-                ResolutionKind.Proved,
-                [DeclarationHandle.Create("D5/S1/Scale/Other.member")]),
             new DescribeKindSource.Authored(DescribeKind.Remark)));
         blocks.Add(DocumentBlock.Describe.Restore(
             DescribeId.Create("lean"),
@@ -209,7 +204,6 @@ public sealed class ScribeResourceAstCoverageTests
             DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative"))),
             atom,
             StatementSource.FromLean(),
-            null,
             new DescribeKindSource.ReportDerived(
                 DeclarationHandle.Create("D5/S1/Scale/Other.member"),
                 DescribeRole.Theorem)));
@@ -221,7 +215,6 @@ public sealed class ScribeResourceAstCoverageTests
             DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative"))),
             atom,
             new StatementSource.Authored(atom, null),
-            null,
             new DescribeKindSource.ReportDerived(
                 DeclarationHandle.Create("D5/S1/Scale/Other.member"),
                 DescribeRole.Lemma)));
@@ -233,10 +226,20 @@ public sealed class ScribeResourceAstCoverageTests
             DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative"))),
             null,
             new StatementSource.NoFormula(null),
-            null,
             new DescribeKindSource.ReportDerived(
                 DeclarationHandle.Create("D5/S1/Scale/Other.member"),
                 DescribeRole.Proposition)));
+
+        var claimSource = new StatementSource.Authored(atom, null);
+        blocks.Add(DocumentBlock.Describe.ReportDerived(
+            DescribeId.Create("claim"), DefinitionDsl.H("Claim"),
+            DeclarationHandle.Create("D5/S1/Scale/Other.member"), claimSource,
+            AssessedProvenance.FromRepo(),
+            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("claim"))),
+            DescribeRole.Theorem,
+            new OpenProblemResolutionClaim(ProblemSlugRef.Create("batch-problem"), ResolutionKind.Proved,
+                [DeclarationHandle.Create("D5/S1/Scale/Other.additional")]),
+            restoredStatement: (claimSource, atom)));
 
         DocumentEdge[] edges =
         [
