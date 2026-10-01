@@ -1,0 +1,4 @@
+**定理 3.4（Positive reconstructed rows and inverse gaps）。** For every positive $N\in\mathbb N$, the list $W(C_N)$ has length $|C_N|$, is pairwise nondecreasing from top to bottom, has sum $A(C_N)$, satisfies $G(W(C_N))=C_N$, and every one of its entries is positive.
+
+证明。Induction on an arbitrary capacity list proves length preservation, pairwise order and the area identity: adding a top capacity $a$ adds $a$ to every lower reconstructed width, so its contribution is $(|c|+1)a$. Another list induction proves the inverse, since subtracting the initial $a$ from every lower width recovers exactly $W(c)$. The top capacity of $C_1$ is one. At a later step it either becomes the positive new label, remains a previous positive top capacity, or increases by the new label. Hence it stays positive. Every lower reconstructed width includes that positive top capacity, proving positivity of all widths. $\square$
+
