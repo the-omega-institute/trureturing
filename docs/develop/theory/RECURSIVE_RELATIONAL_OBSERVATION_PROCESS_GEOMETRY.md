@@ -8611,3 +8611,252 @@ $$
 所以仅验证 $\alpha,\beta$ 两个叶子的替换方程，不能推出整个过程上的替换交织；必须另证复合器的自然性。这个反例也说明，Fibonacci 两原子层是生成语法的基础，但过程层的动态闭合还承担一项独立的相容性义务。
 
 ## 54.99 追加锚
+
+## 55. 选择器—事件—路径的规范最大不动点核
+
+本节是本卷 §§19、29、45、53 及边界动力学卷 §§26、27、116 的有限确定性统一
+封装。记号 $J$ 指同一任务合同下既有完整行为核的最大不动点表述，不另立一份
+与该规范核竞争的对象或所有权。本节是普通理论组织，不是新增 Lean 声明；`CompletionKernelGreatestFixedPoint`、
+`BehaviorUpdateWordAction`、`ControlledBehaviorUniversality` 和
+`FiniteFutureCongruence` 是仓内可复用的形式化支点。这里的有限性只用于
+说明最大不动点的有限迭代稳定；任务若改成无限活性或实际取得成本，需另加条件。
+
+### 定义 55.1（有限确定性实际配置与完整一步事件）
+
+固定有限的实际配置集 $S$ 和请求集 $A$。配置已经包含共同来源、类型、档案、
+控制、参考、权限以及所有会影响读数或后继的内部状态。取零步报告
+
+$$
+r_0:S\longrightarrow R_0.
+$$
+
+令 $\pi:S\to A_\bot$ 为配置中的内部选择器，$\bot$ 表示无下一动作报告。
+只有任务要求重现内部控制时，才把 $\pi(s)$ 放入 $r_0(s)$；否则不把其报告
+当作可访问输入。下文策略是只按已观察 transcript 选择的外部测试，不能读取隐藏
+配置 $s$；内部选择与外部测试的角色不混用。对每个 $a\in A$，令 $D_a\subseteq S$ 为成功合法域，
+$T_a:D_a\to S$ 为成功后继。另给出失败分支的声明后继
+$C_a:S\setminus D_a\to\operatorname{Option}(S)$，它可为 none，也可为失败后继续
+的实际配置；统一定义总的后继函数
+
+$$
+\operatorname{next}_a(s)=\begin{cases}
+\mathrm{some}(T_a(s)),&s\in D_a,\\
+C_a(s),&s\notin D_a.
+\end{cases}
+$$
+
+并令
+
+$$
+\mathsf E_a(s)=\bigl(\ell_a(s),f_a(s),\chi_a(s),y_a(s),w_a(s),h_a(s),
+ \gamma_a(s),\delta_a(s),p_a(s),\rho_a(s),\vartheta_a(s)\bigr)
+$$
+
+为完整事件，其中 $\chi_a(s)=\mathrm{continue}$ 当且仅当
+$\operatorname{next}_a(s)=\mathrm{some}(s')$ 对某个 $s'$ 成立；其余情形
+$\chi_a(s)=\mathrm{terminal}$。其字段依次可表示合法性、
+失败标签、终止/继续标记、输出、writer/事件历史、保留档案、费用、历时、权限、
+参考和来源/类型；合同要求
+$\ell_a(s)=\mathrm{success}\Longleftrightarrow s\in D_a$，任务不需要的字段必须在两边
+同时删去，不能默认为相等。因而
+失败、终止和失败后继续都由 $(\mathsf E_a,\operatorname{next}_a)$ 共同决定。
+
+### 定义 55.2（一步关系算子与规范核）
+
+令 $R_0^\ker=\ker r_0$。在关系格 $\mathcal P(S\times S)$ 上定义
+
+$$
+\begin{aligned}
+(s,t)\in\Phi(R)\iff{}&
+ r_0(s)=r_0(t)\ \land\\
+&\forall a\in A,\quad
+ \mathsf E_a(s)=\mathsf E_a(t)\ \land\
+ \operatorname{OptRel}(R)(\operatorname{next}_a(s),\operatorname{next}_a(t)),
+\end{aligned}
+\tag{55.1}
+$$
+
+其中 $\operatorname{OptRel}(R)(\mathrm{none},\mathrm{none})$ 成立，
+$\operatorname{OptRel}(R)(\mathrm{some}(s'),\mathrm{some}(t'))\iff(s',t')\in R$，
+none/some 混合情形不成立。这就是 $R_0^\ker$ 与完整一步条件的交。
+
+事件中的合法/失败/终止标记已经使不一致的分支无法混合；统一的
+$\operatorname{next}_a$ 同时覆盖成功后继和失败后继续。若 $R\subseteq R'$，式(55.1)的最后一项只会放宽，故
+$\Phi(R)\subseteq\Phi(R')$；$\Phi$ 单调。定义
+
+$$
+J=\nu\Phi,
+\qquad
+R^{[0]}=S\times S,
+\qquad R^{[n+1]}=\Phi(R^{[n]}).
+\tag{55.2}
+$$
+
+由于 $S$ 有限，下降链 $R^{[n]}$ 稳定，并且稳定值就是 $J$。等价地，$J$ 是满足
+$R\subseteq\Phi(R)$ 的最大关系；它同时保留零步报告、每个请求的一步完整事件和所有
+成功后继以及失败后允许的继续后继。每个 $R^{[n]}$ 都是等价关系：全关系是等价
+关系；若 $R$ 等价，则 Option 提升、各报告的等值关系及其交仍自反、对称、传递，
+故 $\Phi(R)$ 也等价。因此稳定值 $J$ 是等价关系，可以形成商 $S/J$。
+
+### 定义 55.3（有限前缀闭合策略与 Trace）
+
+设 $\mathfrak S$ 是非空的确定性测试策略族。每个策略仅按已观察的零步报告、
+请求和事件前缀选取 $a\in A$，不以隐藏状态身份作输入。要求以下两种闭合：
+每个可继续 transcript 前缀 $u$ 的残余策略 $\sigma|_u$ 仍在 $\mathfrak S$；
+对任意 $a\in A$ 与 $\tau\in\mathfrak S$，首请求恒为 $a$、随后重启尾策略
+$\tau$ 的 $\operatorname{graft}(a,\tau)$ 也在 $\mathfrak S$。此处全部请求都可被
+尝试，实际合法性及拒绝由 $\mathsf E_a$ 记录；即使 $\pi$ 可见，也不擅自增加
+“请求必须等于 $\pi$”的守卫。若实际合同有该守卫，应将其写入 $D_a$ 和事件。
+
+本节每个测试在非终止前缀上只选 $A$ 中的请求；若需主动停止，把
+$\mathsf{stop}\in A$ 作为显式终止请求，规定
+$\operatorname{next}_{\mathsf{stop}}(s)=\mathrm{none}$ 并产生终止事件。
+它不属于上述“有成功后继”的 $D_{\mathsf{stop}}$，其事件应标记协议完成，
+不把它误记为非法失败。内部 $\pi(s)=\bot$ 只是选择器报告；是否阻止后续请求
+由合同逐项规定，不自动等于所有外部测试停止。
+
+对 $\sigma\in\mathfrak S$ 递归定义有限 Trace。空前缀为
+
+$$
+\operatorname{Trace}_0(s,\sigma)=r_0(s).
+$$
+
+若策略在当前报告 $r_0(s)$ 后选择 $a$，记一步 transcript
+$u=(r_0(s),a,\mathsf E_a(s))$，则统一按 $\operatorname{next}_a$ 递归：
+
+$$
+\operatorname{Trace}_{n+1}(s,\sigma)=
+\begin{cases}
+\bigl(r_0(s),a,\mathsf E_a(s),
+\operatorname{Trace}_{n}(s',\sigma|_u)\bigr),
+&\operatorname{next}_a(s)=\mathrm{some}(s'),\\
+\bigl(r_0(s),a,\mathsf E_a(s),\mathrm{terminal}\bigr),
+&\operatorname{next}_a(s)=\mathrm{none}.
+\end{cases}
+\tag{55.3}
+$$
+
+记
+
+$$
+ s\equiv_{\rm fin}t
+\iff
+\forall\sigma\in\mathfrak S\ \forall n\in\mathbb N,
+\quad\operatorname{Trace}_n(s,\sigma)=\operatorname{Trace}_n(t,\sigma).
+\tag{55.4}
+$$
+
+### 定理 55.4（最大不动点即全部有限策略事件响应等价）
+
+在定义55.1—55.3的状态盲、前缀闭合及 graft 闭合合同下，
+
+$$
+\boxed{\qquad J=\equiv_{\rm fin}.\qquad}
+\tag{55.5}
+$$
+
+证明。若 $(s,t)\in J$，则 $r_0$ 与每个首事件相同；策略在相同前缀上选出相同
+请求，且每个 $\operatorname{next}_a$ 的非空后继仍在 $J$，归纳 $n$ 即得 Trace 相同。反向地，若
+$s\equiv_{\rm fin}t$，取 $n=0$ 得 $(s,t)\in R_0^\ker$；用任一尾策略的
+$\operatorname{graft}(a,\tau)$ 和 $n=1$ 得相同事件及相同 none/some 分支。
+若两者有后继，任取 $\tau\in\mathfrak S$ 并使用
+$\operatorname{graft}(a,\tau)$；对所有 $n+1$ 的 Trace 相等说明
+$(s',t')\in\equiv_{\rm fin}$，其中 $\operatorname{next}_a(s)=\mathrm{some}(s')$ 且
+$\operatorname{next}_a(t)=\mathrm{some}(t')$。故
+$\equiv_{\rm fin}\subseteq\Phi(\equiv_{\rm fin})$，由最大性得
+$\equiv_{\rm fin}\subseteq J$。证毕。
+
+这一定理是 `ControlledBehaviorUniversality` 的多请求事件版本；
+`BehaviorUpdateWordAction` 对有限词的更新与串接给出其无 writer 特例，
+`FiniteFutureCongruence` 给单动作有限视界的递减核，
+`CompletionKernelGreatestFixedPoint` 则给同类最大不动点的规范形式。
+
+### 命题 55.5（精确边界、最小性与动态下降）
+
+令 $\eta:S\to B$ 为边界摘要，$K_\eta=\ker\eta$。
+
+1. 若
+   $$
+   K_\eta\subseteq J,
+   \tag{55.6}
+   $$
+   则每个有限策略事件响应都唯一地由 $\eta(s)$ 解码；边界可以比最小边界更细，
+   但不能把 $J$ 仍能区分的两份实际配置合并。
+2. 在“无任务无关冗余”的最小充分意义下，
+   $$
+   K_\eta=J.
+   \tag{55.7}
+   $$
+   这时 $B$ 与规范商 $S/J$ 在实际像上同构。
+3. 若要让边界成为自治的动态状态，还需在实际像 $\eta[S]$ 上存在
+   $\bar r_0$、$\overline{\mathsf E}_a$ 和
+   $\overline{\operatorname{next}}_a:\eta[S]\to\operatorname{Option}(\eta[S])$，满足
+   $$
+   r_0=\bar r_0\eta,
+   \quad
+   \mathsf E_a=\bar{\mathsf E}_a\eta,
+   \quad
+   \operatorname{Option.map}(\eta)\circ\operatorname{next}_a
+      =\overline{\operatorname{next}}_a\circ\eta.
+   \tag{55.8}
+   $$
+   事件保留成功标记，故 $D_a$ 对 $K_\eta$ 纤维饱和；最后一式覆盖其成功
+   后继和全部失败 continuation。选择器需要重现时，另定义
+   $\bar\pi:\eta[S]\to A_\bot$ 并要求 $\pi=\bar\pi\circ\eta$，这已由其进入
+   $r_0$ 的下降保证。式(55.8)是完整下降条件；
+   (55.6)本身只保证未来响应可解码，不保证摘要的后继是单值函数。
+
+### 推论 55.6（四表达恢复的核判据）
+
+对空间、时间、边界、记忆四个表达 $\eta_i:S\to V_i$，写
+$K_i=\ker\eta_i$。若“互恢复”同时要求每个表达都是全部有限策略事件的最小
+充分边界，并满足式(55.8)，则
+
+$$
+K_X=K_T=K_B=K_M=J
+\tag{55.9}
+$$
+
+是其实际像上两两恢复的规范条件。若只要求静态的源对齐坐标互逆，则四核
+等于任一共同 $K$ 就足够，不要求它与 $J$ 有固定包含方向；$K\supsetneq J$
+也可满足静态恢复，却不能解码全部任务事件。有限事件充分仍要求 $K\subseteq J$，
+自治更新另需(55.8)。另一方面，
+
+$$
+\ker(\eta_X,\eta_T,\eta_B,\eta_M)=
+K_X\cap K_T\cap K_B\cap K_M=J
+\tag{55.10}
+$$
+
+只说明四元组联合充分，不能推出任意单个表达或任意一对表达互相恢复。
+
+### 55.7 接回 Fibonacci 二叶层
+
+FIB 卷的 $\operatorname{Eval}:\mathcal T\to X$ 解释两个叶原子及有序二元接法；
+$c:\mathcal T\to\mathbb N^2$ 保留两类叶组成，$H_{2,3}$ 以行列式 $1$ 把组成
+换成当前及一次替换后的数量。要接到本节，先给实际项域
+$\mathcal T_{\rm act}$ 以及一个明确的实际来源满射
+$e:\mathcal T_{\rm act}\twoheadrightarrow S$；若过程先经过抽象解释
+$\operatorname{Eval}:\mathcal T_{\rm act}\to I$，则可另写 $e=\chi\circ\operatorname{Eval}$，
+但 $e$ 的满射性和共同来源语义必须单独声明。并要求组成下降为
+$\hat c:S\to C$，即 $c=\hat c\circ e$。实际解释像与声明后继须闭合。
+
+组成边界成为自治充分表示的合同是：$r_0$、每个完整事件、可见的选择器均在
+$\ker\hat c$ 上常值，终止标记一致，而且
+$\operatorname{Option.map}(\hat c)\operatorname{next}_a(s)$ 也在这些纤维上常值。
+Fibonacci 请求须满足 $\hat c(T_\rho s)=M\hat c(s)$。这些条件给
+$\ker\hat c\subseteq J$；要有等号，还须全部声明响应分离不同组成。
+例如允许当前数量 $q_{2,3}\hat c$ 及一次替换后的数量，二者组成
+$H_{2,3}\hat c$，其可逆性给反向包含。故在该合同及分离条件下，
+$\ker\hat c=\ker(H_{2,3}\hat c)=J$；仅有纤维常值不保证最小性。
+反过来，若该核等于 $J$，不动点性质给上述完整下降，且行为商本身保证分离。
+
+未截断的树和整数组成载体无限，只能复用这里的单调算子、有限 Trace 及核下降
+论证，不能援用有限稳定断言；有限实例需明确后继闭合的实际商。若实际合同还允许
+left-read 并输出左叶标签，则
+$\langle\alpha,\beta\rangle$ 与 $\langle\beta,\alpha\rangle$ 的组成相同、一步
+事件不同，从而 $\ker c\nsubseteq J$。这正是组成边界不再充分的具体见证；
+不能仅因某字段名为“来源”或“顺序”就断言它实际分开该对。
+随机/量子过程、无限 liveness、逆时权限和实际取得成本未由本节处理，仍为 open。
+
+## 55.99 追加锚
