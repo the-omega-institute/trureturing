@@ -3004,3 +3004,18 @@ $$
 证明。指数函数的解析性给出被积函数 $f(t)=(Ce^{tB})^*(Ce^{tB})$ 在零点可微且 $f(0)=H$。因而在零点附近有 $\|f(t)-H\|\le R|t|$，对实际区间积分得到 $\|G(T)-TH\|\le RT^2$。$G(T)$ 为半正定自伴随算子；在其实际正交特征基中，$\log\det(I+sG(T))$ 是 $\sum_i\log(1+s\lambda_i)$。对 $x\ge0$ 有 $|\log(1+x)-x|\le x^2/2$，且 $0\le\lambda_i\le\|G(T)\|$。这给出对数余项的二次界。再用 $|\operatorname{tr}(L)|\le\dim(V)\|L\|$ 控制 $G(T)-TH$ 的迹，即得结论。
 
 ## 追加锚（本行以下为增补区）
+### 追加定理 18.1：平移的最大弱导数域
+
+**定理 18.1（光滑紧支测试与实际 L² 平移轨道）。** 设 $f,h:\mathbb R\to\mathbb C$ 均对 Lebesgue 测度 $dx$ 平方可积，记 $[f],[h]\in L^2(\mathbb R;\mathbb C)$ 为它们的几乎处处等价类，并令 $V(t)[f]=[x\mapsto f(x+t)]$。则
+\[
+ \bigl(\forall\varphi\in C_c^\infty(\mathbb R;\mathbb R),\quad
+ \int_{\mathbb R}\varphi'(x)f(x)\,dx
+ =-\int_{\mathbb R}\varphi(x)h(x)\,dx\bigr)
+ \quad\Longleftrightarrow\quad
+ \left.\frac{d}{dt}V(t)[f]\right|_{t=0}=[h]
+ \quad\text{在 }L^2\text{ 范数中}.
+\]
+
+证明。紧支测试导数的支撑在有界平移下落入同一个紧集。其一致有界性与该集的有限测度使测试配对的差商可在平方可积假设下控制；不需要 $f$ 全局可积。对每个平移后的测试应用弱等式与标量微积分基本定理，再将连续线性配对与 Bochner 区间积分交换。紧支光滑测试分离局部可积函数的几乎处处类，故 $V(t)[f]-[f]=\int_0^t V(r)[h]\,dr$，向量微积分基本定理给强导数。反向把同一测试配对的导数分别由强轨道导数和移位测试微分计算，并用导数唯一性得到所示负号。
+
+此结论只识别一维平移的最大一阶弱导数域。定理 2.4 的多维振子闭图、张量算子域、一般辛实现与 Gibbs 迹公式仍需各自的解析桥梁。
