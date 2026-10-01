@@ -37828,3 +37828,26 @@ $e\ge20$ 给上界；当 $t$ 的二赋值趋于无穷时，修正趋于 $2/3$。
 §265 的同整数渐近乘法预算仍可用于全部充分大指标；
 本节没有给它的统一显式入口，也没有控制一般来源的全部新素方向或证明 RH。
 
+## 278. Fibonacci 加法测试的乘法不可识别性
+
+Park 的 2026 年预印本 [*The Fibonacci numbers are not an additive uniqueness set for multiplicative functions*](../../../Library/Arith/park2026fibonacciadditiveuniqueness.md) 给出了一条与本卷来源接口直接相关的负边界。它构造正整数值的乘法函数 $f\ne\operatorname{id}$，却满足
+
+$$
+f(F_n+F_m)=f(F_n)+f(F_m)\qquad(n,m\ge1).
+$$
+
+最小展示来自
+
+$$
+F_{31}=557\cdot2417,
+$$
+
+并交换这两个素数的贡献：
+
+$$
+f(N)=N\left(\frac{2417}{557}\right)^{\mathbf 1_{557\mid N}-\mathbf 1_{2417\mid N}}.
+$$
+
+关键条件是 $557$ 与 $2417$ 在全部 Fibonacci 数及全部两项 Fibonacci 和上的整除签名相同；论文还给出由共同出现秩和四次剩余构造更多素数对的有限判据。
+
+这项结果不能推出 $Z(n)=\sigma(n)/n$ 在任何 FIB 族上失控，也不是 Robin 反例。它排除的是一种过强的识别路线：只用 Fibonacci 数值或两项 Fibonacci 和的加法测试，不能恢复任意乘法函数的完整素数贡献。因而本卷的 `GraftAffineClosure` 或五窗口地址若要进入 Robin 点值估计，仍须保留同一个候选的素数幂赋值、完整约数探针，或证明专门针对 $\sigma(n)/n$ 的联合估计；有限 FIB 测试签名本身不足以承担这项义务。
