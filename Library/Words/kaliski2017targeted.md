@@ -16,7 +16,8 @@ triage: anchor
 ## Verified locator
 
 Burton S. Kaliski Jr., *Targeted Fibonacci Exponentiation*,
-arXiv:1711.02491v1, https://arxiv.org/pdf/1711.02491v1.
+arXiv:1711.02491v1, https://arxiv.org/abs/1711.02491v1.
+The versioned PDF is https://arxiv.org/pdf/1711.02491v1.
 Appendix B, printed pages 19–22, defines the modular Hofstadter G problem.
 Lemma 5 supplies the golden-ratio interval construction on pages 19–20.
 Theorem 2 on pages 20–21 gives a solution with the bound
