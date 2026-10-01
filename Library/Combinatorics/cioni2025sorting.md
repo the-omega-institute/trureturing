@@ -36,6 +36,9 @@ The numbers of simple permutations in the class for n = 0, …, 11 are 1, 1, 2, 
 
 ## Bounded prior-resolution evidence
 
-Read on 2026-10-01: arXiv lists only version 1 of the preprint; searches of arXiv, the citation index and
-GitHub located no later treatment of the conjecture. The published version (Discrete Math., 2026) was not
-read in full. This is a bounded negative finding.
+Read on 2026-10-01 and 2026-10-02: arXiv lists only version 1 of the preprint. The statement appears again as
+Conjecture 8 in the authors' contribution to the Permutation Patterns 2025 booklet (July 2025). The abstract
+of the published version (Discrete Math. 349(5), 2026) coincides with that of arXiv version 1 and does not
+announce an enumeration of the simple sortable permutations; the full text of the published version was not
+read. Searches of arXiv, the citation index and GitHub located no later treatment of the conjecture. This is a
+bounded negative finding.

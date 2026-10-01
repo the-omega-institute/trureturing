@@ -30,7 +30,9 @@ the simple permutations of length n in C number 1, 1, 2 for n = 0, 1, 2 and F_{2
 ## Gap
 
 Pre-registration issue 11689 records the literature screen: no later paper, citing record or public
-repository treats the conjecture. This is a bounded negative finding.
+repository treats the conjecture. The authors restate it as Conjecture 8 in the Permutation Patterns 2025
+booklet, and the abstract of the published version is unchanged from arXiv version 1. This is a bounded
+negative finding.
 
 ## Route
 
