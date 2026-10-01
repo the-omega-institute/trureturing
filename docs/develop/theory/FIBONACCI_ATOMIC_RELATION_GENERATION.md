@@ -35944,3 +35944,37 @@ $w(y)\Phi(y)\ge-K-1$，§92.3 遂推出 RH。
 可使较宽实际价格胞腔的误差一致趋零，而无须先估计起点的绝对 $\Psi(a)-a$。
 尚未取得全部五窗来源到式（260.14）的价格映射或共同端点预算；
 这些价格胞腔不增加 Robin 的整数认证覆盖范围。
+
+## 261. 2026 解析前沿：Fibonacci zeta 与 Möbius 平均不能替代点值桥
+
+本节补入两项 2026 年与当前 FIB/RH 接口直接相关的来源。它们分别给出 Fibonacci Dirichlet 级数的零点边界和 Möbius 部分和的平均振荡；两者都没有把 FIB 递归输送到 Riemann zeta 的点态判据。
+
+### 261.1 Fibonacci zeta 的零点边界不是 Riemann zeta 的临界线
+
+[Mantovanelli 的 Fibonacci zeta 预印本](../../../Library/Weil/mantovanelli2026fibonaccizeta.md)确定
+
+$$
+Z_F(s)=\sum_{n\ge1}F_n^{-s}
+$$
+
+在绝对收敛半平面内的零点右边界
+
+$$
+\sigma_F=0.743163398726901648\ldots.
+$$
+
+这里的 Fibonacci 增长与项目的 $M$ 递归有直接的尺度联系，但该级数没有因此获得 Riemann zeta 的 Euler 乘积、von Mangoldt 系数或 Robin 的约数和。它证明的是另一份几乎周期 Dirichlet 级数的零点几何；把 $\sigma_F$ 当作 $\zeta$ 的临界线证据会丢失系数与检验集合的桥接。
+
+### 261.2 Möbius 平均振荡仍不是指定 FIB 来源的符号界
+
+[Pintz 的 Möbius 振荡预印本](../../../Library/Analytic/pintz2026mobiusoscillation.md)把 $|M(x)|$ 的长区间平均与素数计数公式的最大误差联系起来。这为项目的有符号残差提供了新的历史接口，但当前目标需要在同一
+
+$$
+N_g=1+F_rg
+$$
+
+上控制完整的 $\mu$/$\Phi$ 残差。平均量不能自动限制这个稀疏仿射族的最大值；仍需从平均域到指定 FIB 来源的统一输送或点态误差估计。
+
+### 261.3 去重后的结论
+
+这两项来源把“FIB 谱边界”和“Riemann 点态符号”清楚分开：前者缺 Euler/约数和接口，后者缺指定 FIB 族的输送界。因此下一步应继续处理 §233.5 的同一候选完整权重，或证明一个真正保留约数和与显式公式系数的 FIB 映射；再造一个 FIB zeta 零点判据或重复平均 Möbius 估计不会缩小该缺口。
