@@ -11255,3 +11255,125 @@ original classes with actual private obligations. The next section
 uses explicit whole-cover transports to turn this minimum-column
 case into further exclusions; FC1--FC5 by themselves do not prove
 unrestricted noncoverage or any new Lean result.
+
+## 81. Minimum shared-prime columns force a narrow p=5 phase layout
+
+Keep H_3=H_p=1, R={p} and section80's MINIMUM total nonpure column
+count u=p-1. Let j own original3p and let k be the other color.
+Put h=(p-1)/2. The established counts give u_j=u_k=h,
+g_k=0 and g_j<=1. All other original prime heights are unrestricted.
+
+### For p at least7 the minimum inventory gives strict descent
+
+The actual number of3p-bearing originals in color i is
+u_i-g_i+e_i, with e_j=1 and e_k=0. Each blocks at most one root,
+so section78's clean sets satisfy
+
+    |B_i|<=h-g_i+e_i,  |W_i|>=h+g_i-e_i.
+
+Consequently |W_k|>=h and |W_j|>=h-1. For p>=7 these bounds
+supply at least three and two clean roots, respectively. Section78's
+complete six-leaf replacement contradicts EB1. Thus
+
+    H_3=H_p=1, R={p}, p in {7,11,13} ==> u>=p.     (FL2)
+
+This uses an actual whole-cover descent beyond FC5's zero inventory
+deficit. It does not impose a bound on any other prime's height.
+
+### For p=5 a two-depth frontier eliminates another minimum case
+
+Now p=5 and u=4, so u_j=u_k=2. Section80's equality phases give
+exactly two clean roots in color k. Each contains ONE original pm;
+call the two cofactors a,b. The other two nonzero roots contain
+their original3pm partners. Both cofactor APs contain the same
+nonempty residual E_k that avoids all color-k p-free quotient classes.
+
+Suppose |W_j|>=2. Retain every original p-free AP and use this
+complete ternary frontier for the replacement of the p-bearing classes:
+
+- Root j has three depth-two leaves, assigned p-root0 and two
+  distinct clean nonzero roots of color j.
+- Two depth-two leaves of root k are assigned its two clean roots.
+  Its third depth-two cylinder is internal.
+- The three depth-three children of that cylinder are assigned
+  p-root0 and the same two clean roots of color k.
+
+At each nonzero receiving leaf use its own color's original pm
+subbatch, with the complete original cofactor phases. Section78's
+same-source proof supplies RS1 at every such leaf; old p-height one
+and old ternary height one mean no hidden old tail is dropped.
+Each root0 leaf is covered by one pure guard from original p.
+
+The two color-k originals are each used once at depth two and once
+at depth three, giving9a,9b,27a,27b. At most two color-j originals
+are used, each once. The two pure guards have moduli9 and27. Thus
+at most EIGHT classes replace the entire p-bearing inventory.
+At a fixed depth an original is used once. Different depths cannot
+collide since every cofactor is3-free; cofactors from opposite colors
+have disjoint nonempty prime supports. The pure guards are unique,
+and every retained original has ternary height at most one. These
+are actual distinct odd output labels, with no retained collision.
+
+The original p-bearing count is
+
+    1+4+(4-g_j+1)=10-g_j>=9.
+
+The replacement therefore strictly decreases the total class count.
+An EB1 source at p=5,u=4 must instead satisfy
+
+    g_j=g_k=0,
+    |B_j|=3, |W_j|=1, |B_k|=2, |W_k|=2.           (FL3)
+
+Indeed |W_j|>=1, and its being exactly one requires
+3=|B_j|<=3-g_j. No equal-count weight comparison is needed.
+
+### Original privacy determines the remaining doubled cell
+
+Let E_j be the nonempty region of X_j avoiding ALL p-free quotient
+classes. It is independent of p. In FL3, original3p and the two
+original3pm labels occupy three distinct nonzero p-roots in color j.
+Its fourth root is the only clean root and must contain a3-free pm.
+
+It cannot contain BOTH such originals. If it did, each of the two
+nonpure3pm roots would be singleton. Whole coverage forces E_j into
+both of their cofactor APs. A pm cofactor phase of the SAME modulus
+as its own3pm partner then either misses E_j or contains all of it.
+Coverage at the clean root forces one to contain E_j, preventing
+the other's privacy at ternary root j. That other's only possible
+private color is j by the original reset, a contradiction.
+
+Name the single clean-root original pu and the other3-free original
+pv. The latter cannot occupy the original3p root, since original3p
+covers its entire possible private region at root j. Nor can pv
+occupy the root of3pu. In that case its own3pv root is singleton,
+forcing E_j into the3pv cofactor AP. The pv phase then either misses
+E_j, destroying its own privacy, or contains E_j, destroying the
+privacy of3pu at their shared root. Both contradict original
+irredundancy.
+
+Thus the only remaining p-root layout in color j is
+
+    pu and3pu: different singleton roots, equal u-cofactor phase;
+    3p:        a third singleton root;
+    pv and3pv: the fourth root, distinct v-cofactor phases.
+
+The singleton roots force E_j into the common u phase. Privacy of
+pv and3pv supplies points of E_j in EACH of their two v phases;
+coverage at the shared root gives
+
+    nonempty E_j subset (alpha mod u)
+                     intersect ((beta mod v) union (gamma mod v)),
+    beta!=gamma mod v,  E_j meets both v classes.   (FL4)
+
+In particular v does not divide u: otherwise the one u phase fixes
+one v phase and cannot meet both. The two nonunit cofactors are a
+divisor-closed numerical set, by original divisor closure. Hence
+either u,v are distinct primes, or u=q and v=q^2 for one prime q.
+The statement concerns these two p-bearing columns; it does not
+truncate the full color carrier or bound p-free original heights.
+
+FL4 is a necessary actual-source layout, not an uncovered point.
+Larger column inventories and higher p or ternary heights remain
+outside these minimum-column descents. These constructions use the
+existing PH/RS interfaces and FC5; no new enumeration, generic
+covering theorem or Lean verification is asserted.
