@@ -694,3 +694,81 @@ If $T_s(X)<b_s(r)$, this index-prime obstruction never activates in
 that window. If $T_s(X)<0$, the window is already paid by the nonnegative
 benefit. Any claim of obstruction on the residual set requires an actual
 source there, retaining its low-loss divisor and cofactor.
+
+## Charge the actual index block before reading the remaining sign
+
+On the same two negative-index classes, retain
+
+$$
+e=v_r(N)=v_r(u),\qquad u_0=u/r^e,\qquad
+L_r=W_r(e)=e\log r-s\log Z(r^e),\qquad W_r(0)=0.
+$$
+
+This is the exact cost of all additions at $r$, since $a_r=0$.
+The remaining factor has neither $r$ nor any prime dividing $vV$.
+For every $j\ge1$, its required source resolution can be read as
+
+$$
+r^j\mid N
+\quad\Longleftrightarrow\quad
+k\equiv-F_r^{-1}\pmod{r^j}.
+$$
+
+The inverse exists because $r\nmid V$; $F_r\bmod r^j$ is the same
+modular $M^r\alpha$ readout used above. These are actual valuation probes,
+not a factorization of $V$ or an assumption about the unseen additions.
+
+Multiplicativity transports the endpoint after charging that block:
+
+$$
+\chi_V(u_0)=\chi_V(g)(-1)^e.
+$$
+
+If this remaining sign is negative, the actual $u_0$ contains a distinct
+eligible negative-character prime. Define, only in that branch,
+
+$$
+m_s^{[r]}(V,v)=
+\min_{\substack{p\nmid vrV\\\chi_V(p)=-1}}b_s(p)>0.
+$$
+
+The actual factor ensures nonemptiness, and the same finite-tail argument
+as above ensures attainment. The paper-level certificate is
+
+$$
+\begin{cases}
+D_s(N)\ge R_s(v)+L_r+m_s^{[r]}(V,v),
+ &\chi_V(g)(-1)^e=-1,\\
+D_s(N)\ge R_s(v)+L_r,
+ &\chi_V(g)(-1)^e=1.
+\end{cases}
+$$
+
+The index block and the distinct residual prime pay disjoint costs.
+If $\chi_V(g)=1$ and $e$ is odd, a second negative prime is forced,
+although the original negative-gcd test was inactive. If $e=0$ and
+$\chi_V(g)=-1$, the unused index prime disappears from the minimum.
+For an originally negative gcd, this bound is never weaker than
+$R_s(v)+m_s(V,v)$: when $e\ge1$, $L_r\ge b_s(r)\ge m_s(V,v)$;
+when $e=0$, the new minimum ranges over a subset of the old one.
+
+Put $B_r=T_s(N)-R_s(v)-L_r$. A negative $B_r$ is already paid.
+Otherwise, in the negative remaining-sign branch, $m_s^{[r]}(V,v)>B_r$
+is sufficient. The same cutoff $P_r=\max\{s,e^{B_r+1}\}$ applies to
+its cheap-prime test. Further actual probes may discard primes with
+even $v_p(u_0)$, including zero: a negative remaining sign must be
+carried by an odd exponent. It is therefore also sufficient that every
+eligible $p\le P_r$ with $b_s(p)\le B_r$ and odd $v_p(u_0)$ has
+$\chi_V(p)=1$. No efficiency or uniform source correlation is asserted
+for this finite test.
+
+When $y\ge6$ and $0<h_0\le1/3$, the previously established capacity
+bound still applies to all additions. It can be combined with the new
+bound by taking a maximum of their addition contributions. Summing that
+full capacity bound with $L_r+m_s^{[r]}$ would count the same additions
+twice. These are applications of the existing block decomposition,
+reciprocity and modular readout, with no new analytic theorem or Lean
+verification. A uniform estimate of the same actual remaining cost
+against $B_r$, with the original low-loss incidence and window retained,
+is still missing; existence of a second negative prime alone supplies
+neither its required cost nor a proof of RH.
