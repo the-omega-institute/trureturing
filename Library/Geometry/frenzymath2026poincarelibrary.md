@@ -1896,3 +1896,65 @@ original-H3 geometric inputs of the complete-target constructor remain
 explicit. The present result supplies the actual lift/deck-isomorphism
 connection; it does not obtain an ambient isometry from an abstract lattice
 isomorphism.
+
+
+### A supplied conjugator yields the prescribed homotopic isometry
+
+For an actual group isomorphism and isometric representations, the existing
+conjugator-induced orbit map is continuous in the quotient topologies:
+its composition with the source quotient projection is the target
+projection composed with the same ambient isometry. Transporting that map
+through the same supplied quotient homeomorphisms gives a continuous base
+map `ψ`, with the all-point identity `FN(a(x))=ψ(FM(x))`.
+
+For the same actual original-H3 full-deck quotient coverings, prescribed
+homotopy equivalence `h`, continuous lift `L`, equivariant homomorphism `τ`
+and deck isomorphism `d` with `d.toMonoidHom=τ`, suppose the actual
+representations evaluate to those same deck actions and the supplied ambient
+isometry `a` implements their conjugacy through that same `d`. The maps `L`
+and `a` are then equivariant for the same source action and representation
+`ρN∘d`. The target covering is invariant under that representation. The
+already proved original-H3 interpolation descent therefore constructs a
+homotopy from `h.toFun` to this same projected `ψ`. No desired base-map
+homotopy is assumed, and no different deck isomorphism is substituted.
+
+With properly discontinuous representations, the same ambient conjugator
+maps each whole source orbit onto the corresponding target orbit; reverse
+inclusion uses surjectivity of the same group isomorphism. Preservation of
+point-to-set distance proves the existing orbit equivalence is an isometry
+for the same orbit metrics. For metric bases with supplied quotient
+isometries `eM,eN` satisfying `eM(qM(x))=FM(x)` and
+`eN(qN(x))=FN(x)` at every actual H3 point, composition transports that very
+orbit isometry to `e:M≃ᵢN`. Its all-point projection is
+`FN(a(x))=e(FM(x))`, and its continuous map is homotopic to the prescribed
+`h.toFun`. These quotient-to-base isometries remain supplied; no new target
+metric or automatic geometric compatibility is asserted.
+
+An exact application first selects the original-H3 lift, target fiber
+point and fundamental-group-bound deck isomorphism from the previously
+proved same-cover constructor, retaining its basepoint, all-point
+projection, equivariance and fundamental-group binding. For those same
+selected objects, every supplied pair of actual deck representations,
+proper-action witnesses, compatible quotient isometries and ambient
+conjugator has the stated homotopic isometry representative. A compatible
+H3 chart remains supplied to the lift constructor.
+
+Three serial scoped transient cache-guarded checks exited zero and printed
+five axiom closures using only `propext`, `Classical.choice` and `Quot.sound`.
+Two rejected orbit-isometry source/log pairs are preserved and excluded.
+Repairs restore the existing metric/covering namespaces and explicitly
+normalize the reverse orbit-image application before applying conjugacy;
+statements, original-H3 metric, actions and resource limits are retained.
+Five `haveILetI` style warnings and one unused-variable-name warning remain;
+they are not proof exceptions. The latter names a conjugacy premise that
+is used in the proof; the proposition does not explicitly reference the
+name of that proof. These are classical compositions with no tracked Lean
+or novelty claim. The linked escape audit remains unfinished.
+
+This closes the conditional connection from the actual lift-induced deck
+isomorphism and a supplied ambient conjugator to the prescribed homotopic
+isometry. Ambient lattice conjugator existence and global target uniqueness
+remain unfinished, as does the full Mostow–Prasad endpoint including cusps
+and nonorientable manifolds. Compatible original-H3 geometric inputs of
+the complete-target constructor remain explicit supplied premises. The
+conditional construction does not prove the ambient conjugator exists.
