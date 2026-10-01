@@ -10968,3 +10968,102 @@ The operation reuses section73's retained whole-branch cover and
 section75's color support and occupancy. Its new consequence is the
 full original private p-projection of3. No new numerical experiment,
 sieve estimate or Lean verification is asserted.
+
+## 78. Six receiving leaves exclude two sufficiently clean color roots
+
+Keep H_3=H_p=1 and R={p}, with the complete original color carriers
+X_i from section75. Define actual blocked and clean root sets
+
+    B_i={r in F_p minus {0}: some ORIGINAL3p-bearing d
+          has a_d=i mod3 and a_d=r modp},
+    W_i=(F_p minus {0}) minus B_i.
+
+The pure original3p, when present, blocks its actual cell. Every
+3p-bearing original has height one at both primes, and comparable
+disjointness excludes either zero root. These are actual incidence
+sets, not independently selected phases. Then EB1 requires
+
+    min(|W_1|,|W_2|)<=1 OR |W_1|=|W_2|=2.          (FL1)
+
+Equivalently, some |B_i|>=p-2, or both |B_i|=p-3.
+
+### Three clean roots per color give a complete count-saving transport
+
+First suppose |W_i|>=3 for both colors. Choose three distinct clean
+roots r_(i,0),r_(i,1),r_(i,2) within each color. The two colors may
+reuse p-roots. Retain every original p-free AP unchanged. For every
+original pm with m>1 supported in S_i, whose p-root is r_(i,j),
+insert the complete CRT class
+
+    x=i+3j mod9,  x=a_(pm) mod m,
+
+of modulus9m. Delete every other p-bearing original, including p
+and all3p-bearing originals. Original3 covers root0; the six receiving
+leaves partition both remaining ternary roots.
+
+Take an output point missed by all retained p-free originals and
+read its receiving leaf i+3j mod9. Choose ONE original source with
+ternary root i, p-root r_(i,j), the output's complete X_i coordinate,
+and the opposite-color singleton-root choices from section73. Every
+opposite-color original disappears at that source. All retained
+originals supported on S_i, with or without3, test the same retained
+coordinates as at the output and hence are absent. Pure3 and p are
+absent at the chosen nonzero roots, and all3p-bearing originals are
+absent by the clean-root condition. Whole original coverage therefore
+supplies an original pm with m>1 in the selected color and p-root.
+Its complete cofactor phase matches the output, so its inserted9m
+class covers that point.
+
+This is the required JOINT residual coverage RS1, not separate
+redundancy tests for omitted originals. The source changes the
+opposite-color coordinates only through their proved simultaneous
+elimination; it keeps every tested full coordinate unchanged.
+
+No retained modulus has ternary height two. Two inserted9m labels
+coincide only when their original pm labels coincide. Each original
+is used once, at its one actual p-root and its unique concentrated
+color. Nonunit cofactors from the two disjoint colors cannot be equal.
+Thus RS2--RS3 hold, and the output is a whole distinct odd cover.
+
+Let n_0 count p-free originals, n_p count3-free p-bearing originals
+INCLUDING p, and t count3p-bearing originals. Its count satisfies
+
+    n_new<=n_0+n_p-1 < n_0+n_p+t=n_old.
+
+This contradicts EB1. The output carrier can be9 times the product
+of the original complete color carriers: p is removed, every other
+original nonternary height is retained, and the ternary height grows
+from one to two.
+
+### One use of p covers the case of three and two clean roots
+
+If one color has at least three clean roots and the other has exactly
+two, use three clean roots for the first color. In the second color,
+assign its two clean roots and original p-root0 to its three leaves.
+Transport the nonzero-root classes exactly as above. At the root0
+leaf insert ONE pure9 class: original p supplies its whole old source,
+independently of all cofactor coordinates.
+
+The pure9 label is distinct from all9m with m>1 and all retained
+originals. Every nonpure original pm is still used at most once, so
+
+    n_new<=n_0+n_p=n_old-t.
+
+The color with exactly two clean roots has p-3 blocked roots. Thus
+t>=p-3>=2, since p is in {5,7,11,13}, and the descent is strict.
+Together with the preceding case this proves FL1.
+
+Two clean roots in each color would use pure p twice at the SAME
+receiving depth and create two numerical9 labels. That arrangement
+is illegal. Different receiving depths can avoid this collision but
+repeat other source classes; RS4--RS6 must charge their actual cost.
+If one color has at most one clean root, the six-leaf construction
+above is unavailable. FL1 does not exclude all flat shared-prime
+sources or any arbitrary-height branch.
+
+The construction reuses the transport in section67 and source
+elimination in section73. Fixing both old3 and p coordinates can
+instead merge m,3m,pm,3pm into FOUR quotient classes of modulus m;
+it does not preserve SO1's multiplicity-two hypothesis. The present
+replacement retains the p-free labels and checks the fresh9m labels
+directly. No numerical search or Lean verification is asserted.
