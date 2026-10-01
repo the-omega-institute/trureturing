@@ -9193,3 +9193,276 @@ A general contradiction still requires controlling the actual guard,
 collision and mixed-prefix incidence together. These are ordinary
 mathematical arguments, with no new Lean verification or literature
 priority claim; unrestricted Erdős #7 remains unresolved.
+
+## 62. Weighted root reuse retains exact original-label budgets
+
+Section61's transport can reuse a first-p root at different q-prefix depths. The resulting copies must be charged by the actual number and numerical sizes of original labels at that root. This section reuses the common-witness construction NF86--NF87 and the lexicographic replacement rule PH2. The fixed-frontier optimization is ordinary weighted assignment, not a new matching theorem.
+
+### Actual root workloads and the distinctness contract
+
+Keep section61's one EB1-selected original whole cover, support primes p>q, selected actual pure-q guards G, live finite q-prefix frontier B, and literal forbidden lists F_b,T_b. Let n_0 be the number of p-free original classes, let t be the number of mixed p*q-bearing original classes, and put
+
+    D_mix = sum_{d:p*q divides d} d.
+
+Partition the remaining original labels, which are q-free and p-bearing, by their actual first-p root a. For d=p^alpha*u, with alpha>=1 and gcd(u,p*q)=1, define
+
+    R_a = number of these original labels at root a,
+    S_a = sum of d/p over these same original labels.   (NF91)
+
+Both quantities refer to the same original family; no branch separately chooses an inventory. They are nonnegative integers, and R_a=0 iff S_a=0. The normalized pure-p class gives R_0=S_0=1. Indeed, any other original p-bearing class at root0 would lie inside that pure-p class and contradict minimum cardinality.
+
+For each leaf b, choose
+
+    sigma(b) in (Z/pZ) minus (F_b union T_b).
+
+Unlike NF85, this weighted interface permits root0 whenever its actual
+collision list allows it. For h(b)<=H, divisor closure supplies the
+original pure-q modulus q^h(b); the pair p,q^h(b) puts root0 in T_b.
+For h(b)>H, T_b is empty. Also F_b never contains root0: an original
+mixed class at that root would lie inside the pure-p class and be
+redundant. Thus root0 is an additional allowed positive-workload
+resource at fresh depths. Its transported pure-p class is the whole
+leaf AP of modulus q^h(b), still an odd nonunit.
+
+Require only the following capacity condition:
+
+    for every a with R_a>0 and every depth h,
+    at most one depth-h leaf is assigned root a.        (NF92)
+
+The same positive-workload root may occur at different depths. Roots with R_a=0 may be reused at the same depth without limit: they copy no original labels. This distinction is necessary for the stated workload accounting.
+
+### Coverage and numerical distinctness use the same witness
+
+On a point z in the live q-domain U, use its unique leaf b and the one original witness NF86, with first-p root sigma(b). Retain all p-free original classes unchanged. The selected guards cover the complement of U; mixed originals have empty pullback by F_b. The old p-tail and complete cofactor residues remain exactly those in NF87.
+
+Each q-free p-bearing original d at root a therefore supplies one whole AP for every leaf assigned a, with numerical modulus
+
+    q^h(b)*d/p.
+
+No other original supplies a transported AP. A zero-workload assignment supplies none, but the witness is still covered: if the old covering class were mixed it would violate F_b, and if it were q-free p-bearing it would belong to that empty workload. Hence an unchanged p-free class covers this witness and the corresponding output point.
+
+Equality of two transported numerical moduli forces equal q-depth and equal quotient d/p, because each quotient is q-free. Thus it forces the same original d. Repeated copies of this same d at the same depth are ruled out by NF92; different depths have different numerical moduli. A transported/retained collision can occur only when alpha=1 and the original family contains the pair p*u,q^h(b)*u. Its first-p root is excluded by T_b. Consequently the output classes have pairwise distinct odd nonunit moduli and cover all integers. The output carrier may use q-height max(H,max_b h(b)); all original q-digits and cofactor coordinates remain literal.
+
+These statements use strict collision reservation, without pruning or merging classes. Section57's compatible-full-phase relaxation can be treated separately; it is not included in the following exact unpruned count.
+
+### Exact class and modulus-sum budgets
+
+Let S_free be the sum of the original p-free moduli. The exact inventories are
+
+    n_new = n_0 + sum_b R_sigma(b),
+    n_old = n_0 + t + sum_a R_a,
+
+    sum_new = S_free + sum_b q^h(b)*S_sigma(b),
+    sum_old = S_free + D_mix + p*sum_a S_a.           (NF93)
+
+All root sums include root0, and leaf assignments may use it subject to
+the actual allowed list. In particular, if k_a is the number of leaves
+assigned a, the new class-count difference is
+
+    n_new-n_old = sum_a (k_a-1)*R_a - t,
+
+Unused roots retain their negative credits. The nonzero-root restriction
+of section61 is the special case k_0=0.
+
+Apply PH2 to the changed original classes, or directly use EB1's two ordered objectives. Every feasible frontier and allocation must satisfy
+
+    lex(sum_b R_sigma(b), sum_b q^h(b)*S_sigma(b))
+      >= lex(t+sum_a R_a, D_mix+p*sum_a S_a).        (NF94)
+
+Here lex first compares class count, then numerical modulus sum. Thus a strict improvement in the first coordinate alone contradicts EB1. At equal counts a strictly smaller second coordinate also contradicts EB1. A smaller modulus sum with a larger class count gives no contradiction to the stated objectives.
+
+This recovers the already proved NF85 without a separate replacement
+argument: a globally injective allocation restricted to nonzero roots
+obeys
+
+    sum_b R_sigma(b) <= sum_{a!=0} R_a
+                       = sum_a R_a - 1
+                       < t+sum_a R_a.
+
+The additional interface is root reuse charged by its actual workload, rather than a second proof of the injection obstruction. Large q-depth can lower no class charge and increases the numerical charge of every positive-workload copy; neither charge is replaced by an unproved uniform scalar price bound.
+
+### Fixed-frontier optimization separates by depth
+
+Fix B and all its actual allowed lists. A leaf whose list contains a zero-workload root can be assigned such a root at price (0,0). Do this for every such leaf and remove it from the positive-workload assignment problem. These choices consume no positive-root capacity and impose no capacity on other zero-root choices.
+
+For each depth h separately, match the remaining leaves at that depth injectively to allowed roots a with R_a>0, giving an edge the ordered price
+
+    (R_a, q^h*S_a).
+
+If one depth has no such matching, this fixed-frontier construction is infeasible. Otherwise the lexicographic minimum of the total two-coordinate price is
+
+    sum_h [the lexicographic minimum matching price
+           among remaining depth-h leaves].         (NF95)
+
+This is a direct use of standard minimum-cost assignment with lexicographic costs. No root capacity links two different depths, so the feasible choices form a product of the per-depth matching choices. Addition preserves lexicographic comparison, which gives NF95. Conversely, any NF92 allocation gives one such matching at each depth after free leaves are removed. Hence the optimizer is exact for the declared unpruned fixed-frontier transport.
+
+If the resulting minimum is below the old budget in NF94, its attaining matchings construct a forbidden distinct odd whole cover. If it is not below that budget, this transport supplies no extremal contradiction; no conclusion about alternative transports follows. Searching over variable frontiers remains a separate problem. NF88's H+1 cutoff was proved for global injection and is not transferred to repeated positive-workload roots.
+
+The counts, weights, forbidden prefixes and phases all belong to the one actual original family. The arithmetic accounting adds a weighted noninjective interface to the earlier common-witness transport; weighted assignment is reused directly. These are ordinary mathematical arguments, not new Lean verification or a literature-priority claim. A uniform condition forcing NF94 to fail for every admissible extremal whole cover has not been proved, and unrestricted Erdős #7 remains unresolved.
+
+## 63. Finite depth bounds retain the weighted replacement budget
+
+Keep section62's actual batches (R_a,S_a), selected pure guards and
+fixed original lexicographic budget, whose first coordinate is C_old.
+Let H be the maximum q-height of the ENTIRE original family and put
+D=H+1. The allowed root pool may be any declared subset of Z/pZ,
+including literal residue zero. Each R_a is a nonnegative integer;
+R_a=0 implies S_a=0, and all S_a are nonnegative. A positive-workload
+root may occur at most once at each leaf depth. A zero-workload root
+may occur repeatedly, even at the same depth. Zero workload is not
+the same condition as literal p-root zero.
+
+After the unchanged originals cancel, a frontier's replacement cost is
+
+    (sum_b R_(a_b), sum_b q^h(b)*S_(a_b)).
+
+The following bounds preserve strict improvement of this pair against
+the same fixed original budget. They do not change the root lists or
+the actual batches. In particular literal root zero, when admitted,
+is treated with its positive batch (R_0,S_0)=(1,1).
+
+### Remove free deep subtrees before counting leaves
+
+Above H every numerical collision list is empty. The allowed root
+list on descendants of a live H-prefix is therefore constant from
+depth D onward: all original mixed q-conditions have depth at most H.
+Use these DEEP lists, without the possible depth-H collisions.
+
+Start with any successful finite frontier and keep its leaves of
+depth at most H. Every remaining live H-prefix is subdivided. If its
+deep list contains a zero-workload root, replace its descendant
+frontier by its q children at depth D, all assigned that root. This
+preserves the complete domain and cannot increase either cost.
+Unlimited reuse of that root imposes no positive-root capacity demand.
+
+The remaining hard forest begins at depth D. Each remaining H-prefix
+contributes q roots of the same type A, its nonempty set of allowed
+positive-workload roots. A successful candidate cannot leave such a
+deep allowed list empty. If the hard forest is empty, depth D suffices.
+
+### The original class budget already bounds the required depth
+
+A successful strict lexicographic improvement has first cost at most
+C_old, where C_old>=1. Each hard leaf contributes an integer R_a>=1,
+so the number L of hard leaves is at most C_old. If the hard forest
+has r>=1 roots at depth D and I internal nodes, directly reuse the
+complete q-ary forest identity from sections13 and20:
+
+    L=r+(q-1)*I.
+
+Every path below D has length at most I. Thus the same folded
+successful candidate satisfies
+
+    max leaf depth <= D+floor((C_old-r)/(q-1))
+                   <= H+1+floor((C_old-1)/(q-1)).     (NF96)
+
+Together with the empty-forest case, this makes the strict replacement
+test finite for one fixed original inventory. The additional bound
+below depends on root resources instead of C_old.
+
+### Actual deep types have bounded simultaneous width
+
+Let k be the number of positive-workload roots in the declared pool,
+so k<=p. If k=0, every successful candidate folds to depth D. Assume
+k>=1 for the following bounds.
+
+At a deep level let n be the number of hard nodes awaiting their
+complete descendant cut. The finite forest Kraft identity gives
+
+    n=sum_{j>=0} m_j*q^(-j),
+
+where m_j counts leaves at relative depth j. Positive-root uniqueness
+at each absolute depth gives m_j<=k. Since the sum is finite,
+
+    n<k*q/(q-1).
+
+Let n_A count the current nodes of type A and let m_A be the number
+chosen as leaves there. Initially each n_A is a multiple of q, and
+the next count is n'_A=q*(n_A-m_A), preserving that divisibility.
+Writing z_A=n_A/q gives
+
+    sum_A z_A<=B:=floor((k-1)/(q-1)),
+    z'_A=q*z_A-m_A.                                 (NF97)
+
+The chosen leaves must receive distinct roots at that level, each
+in its own actual type A. No type is created by splitting a node.
+If m_used types occur initially, each contributes at least one to
+sum_A z_A, so m_used<=B. The number of possible count vectors,
+including the terminal zero vector, is at most
+
+    N=binomial(B+m_used,m_used)<=binomial(2B,B).
+
+If B=0, a nonempty hard forest cannot have a successful finite cut.
+These vectors count nodes of actual allowed-list types; they are not
+independently chosen phase configurations.
+
+### Equal count states can be removed without changing the source
+
+Suppose a successful hard forest has the same type-count vector at
+two depths d1<d2. Pair all live nodes at those depths within each
+type. At every d1 node, replace the remaining subtree by the labelled
+suffix subtree of its paired d2 node, copying only relative digits.
+
+The replacement still partitions each receiving cylinder completely.
+Its first H q-digits remain those of the receiving node. All new
+depths are at least D, so the type's mixed exclusions are unchanged
+and numerical collision lists remain empty. Every root copied into
+a receiving node is therefore allowed there. At each new absolute
+depth the labels come from one complete later level of the old
+suffix, preserving positive-root uniqueness. Leaves at depths less
+than d1 are unchanged and cannot collide at those new depths.
+
+Apply section62's weighted transport to this admissible frontier.
+Its single old witness still copies the receiving output point's
+complete original q-coordinate and cofactor coordinates, with the
+assigned p-root and literal divided p-tail. No donor source point
+is substituted. Output q-heights exceed H, and the per-depth root
+capacity still excludes numerical collisions. Each assigned root
+uses the same original batch, so its R_a and S_a are unchanged.
+
+The intervening leaves are removed. The first cost consequently
+cannot increase. Each suffix leaf moves shallower by d2-d1, multiplying
+its second cost by q^(-(d2-d1)); removed costs are nonnegative. Both
+coordinates therefore decrease or stay fixed, preserving strict
+lexicographic improvement against the original budget.
+
+Repeating this deletion leaves no repeated count state. There are
+at most N states, so the conservative depth bound D+N suffices.
+Together with NF96, every successful candidate with k>=1 has a
+successful representative satisfying
+
+    max leaf depth <= H+1+
+      min(floor((C_old-1)/(q-1)), binomial(2B,B)).     (NF98)
+
+The candidate-specific binomial(B+m_used,m_used) may replace the
+central binomial term. For odd primes p>q>=3, k<=p gives
+B<=floor((p-1)/2)=(p-1)/2, yielding a bound in H and p alone for
+the root-resource term. The k=0 case uses the direct depth D bound.
+
+### Per-depth reuse does not inherit the injective H+1 cutoff
+
+For an abstract allowed-list control, take q=3,H=1,p=7. The pure
+guard is first root0, leaving roots1 and2. No leaf may stop at
+depth1. At every greater depth allow positive-workload roots
+{0,1,2,3,4}, each with R_a=S_a=1. Roots5,6 have zero workload but
+are forbidden. Literal root0 is thus allowed at every deep node.
+
+Depth2 has six live nodes and only five available positive roots,
+so no frontier of maximum depth2 exists. At depth2 stop five nodes
+with the five different roots; split the sixth into three depth3
+leaves assigned roots0,1,2. The resulting cost is (8,126), strictly
+better than any fixed abstract budget with first coordinate9.
+
+No actual AP family realizing these lists and prices is asserted;
+in particular unit prices on the nonzero roots are abstract. The
+control shows that constant deep lists and per-depth capacities
+alone do not imply the injective H+1 cutoff. It does not construct
+an extremal odd cover or refute any stronger arithmetic condition.
+
+NF96 already gives finite decision for a fixed original inventory;
+the state argument adds a bound independent of that inventory's
+class count. Neither supplies efficient search or a successful
+replacement for every hypothetical cover. Additional absolute-depth
+restrictions or costs that grow when leaves move shallower would
+require another argument. These are ordinary mathematical results,
+with no new Lean verification; unrestricted Erdős #7 remains open.
