@@ -12623,3 +12623,250 @@ with one initial product block. The paper is not claimed to state this
 model extension as a separate theorem. No new continuation table or
 Lean verification is asserted. Arbitrary-height common support between
 the two roots, and unrestricted Erdos7, remain unresolved.
+
+## 94. A finite exact obstruction to the uniform prefix-supremum envelope
+
+Keep the actual single-root initial-block construction of section93.
+One possible refinement replaces conditioned Haar measure by an arbitrary
+probability lambda supported on the complete pure-guard complement, and
+then bounds every compatible pair of original ternary prefixes by the
+largest lambda mass of a cylinder at its intersection depth. This refinement
+has an exact finite limitation, even when lambda is allowed to vanish on
+any of the surviving leaves.
+
+Fix ternary height H=4. Inside one nonzero first-three root, represent the
+remaining three ternary digits as words over {0,1,2}. Take the actual local
+pure-three guard prefixes to be
+
+    1, 01, 001.                                      (PE1)
+
+They have relative depths1,2,3 and represent the original pure labels
+9,27,81, respectively. They are pairwise disjoint, as required by
+comparable-class disjointness. Their complement contains14 of the27
+complete relative-depth-three words:
+
+    {2ab : a,b in {0,1,2}}
+      union {02b : b in {0,1,2}}
+      union {000,002}.
+
+This is a locally admissible guard configuration. Its occurrence in an
+entire EB1 covering family is not asserted or required for the finite
+optimization below.
+
+Let lambda be ANY probability supported on this complement. Full support
+on all14 leaves is not an assumption. For h=1,2,3 define
+
+    M_h(lambda)=max_(word w of length h) lambda([w]).
+
+The depth-zero bound is exactly one. The same ordered-height-pair count
+used in section93 therefore gives the prefix-supremum envelope
+
+    E(lambda)=4+5*M_1(lambda)+7*M_2(lambda)+9*M_3(lambda).
+
+Its exact optimum is
+
+    min_lambda E(lambda)=93/10.                     (PE2)
+
+### Exact lower bound for every probability
+
+Write
+
+    x=lambda([2]),  y=lambda([02]),  z=lambda([00]).
+
+These are nonnegative and x+y+z=1. Five immediate prefix constraints are
+
+    x<=M_1,
+    x<=3*M_2,
+    y<=M_2,
+    z<=M_2,
+    z<=2*M_3.
+
+The second constraint splits [2] into its three depth-two children. The
+last uses the exclusion of001, so [00] has only000 and002 in the allowed
+support. Multiply these five inequalities, in order, by50,3,53,8,45 and
+add. This gives
+
+    53=53*(x+y+z)<=50*M_1+70*M_2+90*M_3,
+
+and hence
+
+    E(lambda)>=4+53/10=93/10.
+
+The argument uses no positivity assumption on individual surviving leaves
+and no numerical optimization.
+
+### A probability attaining the bound
+
+Assign mass1/15 to each of the nine words2ab and each of the three
+words02b. Assign mass1/10 to each of000 and002. The total mass is
+
+    12/15+2/10=1,
+
+and the three maximal prefix masses are
+
+    (M_1,M_2,M_3)=(3/5,1/5,1/10).
+
+They give E=93/10, proving attainment in PE2. Conditioned Haar measure on
+the same guard complement instead gives
+
+    (M_1,M_2,M_3)=(9/14,3/14,1/14),
+    E=131/14=93/10+2/35.
+
+Thus choosing a different initial law strictly improves this particular
+envelope, but its exact optimum remains9.3.
+
+### Scope of the obstruction
+
+The currently reused BBMST Table1 certificate is
+
+    g_5>=9.032082,
+
+and93/10 exceeds that certified lower threshold by0.267918. Consequently,
+a method that uses only local pure-guard legality, chooses any initial
+lambda, and then replaces each prefix intersection by the separate
+depth-wise supremum cannot uniformly supply an initial scalar at most
+9.032082 for every such guard configuration. PE1 already obstructs that
+specific sufficient route to the five-prime checkpoint.
+
+PE2 is the optimum of the stated envelope, not a lower bound for the
+actual original-family second moment. Actual prefixes, cofactor phases,
+shared numerical-label ownership and private-point relations may prevent
+the separate maxima from being realized jointly. A restriction supplied
+by a whole covering family may also exclude PE1; no such restriction is
+proved here. The local guard configuration is not a covering counterexample.
+
+Nor does PE2 give an upper bound on the true continuation threshold g_5.
+The published number9.032082 is a lower bound for g_5, so PE2 does not
+exclude a stronger continuation certificate reaching9.3. The conclusion
+only identifies the exact limitation of this prefix-supremum envelope
+when paired with the currently cited numerical certificate. No Lean
+verification or new continuation table is asserted.
+
+## 95. The standard sieve at three forces global five-or-seven support
+
+Directly reuse the published BBMST distortion sieve for a finite family
+of APs with distinct odd moduli greater than one. If this family covers
+the integers, its period Q must satisfy
+
+    5 divides Q or7 divides Q.                       (GS1)
+
+All original prime-power heights and phases are unrestricted. This is
+a direct application of the published tools, not a new initial-block
+theorem or an assertion about shared support between two roots.
+
+Suppose instead that5 and7 do not divide Q. If3 does not divide Q,
+BBMST Theorem7.1 already gives noncoverage. Otherwise number all ordinary
+primes as in its section6, so p_2=3 and p_4=7, and choose
+
+    delta_2=1/2,  delta_1=delta_3=delta_4=0.
+
+At the3 stage, the only new originals have pure-three moduli. Numerical
+distinctness alone gives, for H=v_3(Q),
+
+    alpha_2<=sum_(a=1..H)3^(-a)<1/2=delta_2.
+
+The positive-part loss formula in the proof of BBMST Lemma3.3 therefore
+gives P_2(B_2)=0. The2,5,7 bad sets are empty, so the original accounting
+masses satisfy mu_2=mu_3=mu_4=1. No auxiliary reserve or reset is used.
+
+BBMST Lemma3.4 has the ordinary cylinder factor nu(3)=2. Its resulting
+Euler estimate in Theorem3.2, equivalently section6 equation(21), permits
+the checkpoint i_0=4 with
+
+    kappa=1+(3*3-1)/[(1-1/2)*(3-1)^2]=5.
+
+Only3 occurs in that initial Euler product; absent primes contribute
+no factor. Thus section6 equation(19) gives f_4=kappa/mu_4=5. The published
+Table1 bound g_4>=5.860938 and Corollary6.3 imply noncoverage, proving GS1.
+The referenced source is arXiv:1811.03547v1, Lemmas3.3--3.4, Theorem3.2,
+section6 equations(19)--(21), Table1 and Corollary6.3.
+
+For the actual EB1 source partition used here, GS1 says precisely
+
+    (R union S_1 union S_2) intersects {5,7}.          (GS2)
+
+It does not assert that R intersects this set, that each P_i=R union S_i
+does, or that the two pruned roots share a prime. Shared support still
+requires a relation using the actual common source. No Lean verification
+is asserted.
+
+## 96. Different concentrated colors force ternary height at least twelve
+
+Keep the one EB1 original cover in the all-concentrated branch R=empty.
+Write H=H_3 and retain the disjoint nonempty color supports S_1,S_2.
+Every original prime-power height and every actual phase remains
+unrestricted. The combined necessary condition is
+
+    R=empty ==> H_3>=12.                            (CG1)
+
+### Reuse the existing complete-tree collision reservation
+
+For opposite-color support primes p<q, use the single-source construction
+proved in BC12 with retained smaller coordinate p, selected chain {q},
+and no repeated bases. Apply this construction to the original family
+itself; the strict class saving here comes from its reserved originals.
+CP1 gives no original divisible by pq, so every mixed-root blacklist is
+empty. The only possible cross-group numerical collision is between
+
+    3^c*q^a and3^c*p^a, with0<=c<=H and a>=1.
+
+Indeed a common nonternary cofactor would have to belong to both colors.
+Reserve the actual complete q-prefix of the first original in every
+such pair, exactly as in BC12. With r=q-p+1, the antichain reservation
+cost of BC14 satisfies
+
+    Delta <= (H+1)*sum_(a=1..min(H_p,H_q))r^(-a)
+          < (H+1)/(q-p).
+
+Thus q-p>=H+1 gives Delta<1. BC14 supplies at least p good q-roots,
+and the empty blacklists permit the BC12 matching and full-depth tree.
+Its source-map construction gives a whole distinct odd cover with no
+increase in classes. Original p,q,3p,3q are all present: divisor closure
+supplies the primes, and DP9 supplies the concentrated primes' mixed
+children. The reserved q and3q classes have empty pullbacks, so at
+least these two originals disappear. This contradicts EB1. Consequently
+
+    |p-q|<=H for every p in S_1 and q in S_2.        (CG2)
+
+Only the established tree construction and capacity bound are reused;
+no fresh-coordinate independence or bounded-height substitution is made.
+
+### The two colors cannot fit when H is at most eleven
+
+The existing height-one exclusion permits H>=2. Reuse CM3 and its
+two-prime-support consequence: each S_i has at least two primes, and
+if it has exactly two, it is one of
+
+    {5,7}, {5,11}, {5,13}.
+
+Since the supports are disjoint, they cannot both have exactly two.
+Suppose H<=11. All support primes exceed3 and are odd, so CG2 sharpens
+to an opposite-color gap at most10.
+
+If one color is {5,t}, the other has at least three primes. Their
+distance from5 puts every one in {7,11,13}; exclusion of the same-color
+prime t leaves at most two choices, a contradiction.
+
+It remains to consider two colors each having at least three primes.
+Let r be the smallest prime in their union and name its color S_1.
+Every prime of S_2 lies in (r,r+10]. Because r>3, there are two cases.
+
+If r=2 modulo3, the only possible offsets of S_2 from r are2,6,8:
+the other positive even offsets at most10 yield multiples of3.
+All three offsets must occur. Hence min(S_2)=r+2, and the opposite-color
+gap puts S_1 below or equal to r+12. The only even offsets from r in
+that range which avoid multiples of3 are0,2,6,8,12. Removing the three
+offsets already in S_2 leaves only0 and12 for S_1, a contradiction.
+
+If r=1 modulo3, the only possible offsets of S_2 are4,6,10, so all
+three occur and min(S_2)=r+4. Now S_1 is at most r+14. Its possible
+even offsets avoiding multiples of3 are0,4,6,10,12. Removing S_2 again
+leaves only0 and12, the same contradiction. Composite candidates among
+these lists only decrease the number of available primes.
+
+This excludes every H<=11 and proves CG1. The argument uses the same
+original source throughout and imposes no restriction on nonternary
+heights, total prime support, or phases. It does not exclude the
+remaining all-concentrated configurations with H_3>=12 or settle the
+branches with nonconcentrated support. Unrestricted Erdos7 remains
+unresolved. No new Lean verification is asserted.
