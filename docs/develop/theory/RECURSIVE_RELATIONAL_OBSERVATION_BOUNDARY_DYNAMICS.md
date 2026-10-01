@@ -16161,3 +16161,264 @@ $$
 [^boundary79-presentation]: [Pauly 的表示空间来源条目](../../../Library/ConceptDynamics/pauly2016represented.md)说明有效内容必须绑定表示。本节对有限显式表给出了直接枚举算法；该算法不需要用无限表示空间定理充当证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 80. 二叶原子词项的联合事件下降
+
+第79节给出了重叠端口在一个指定任务下的联合拼接。本节把同一判据
+专门接到 FIB 卷的二叶自由项上。关键对象不是叶数的单独边缘，也不是
+当前读数的单独边缘，而是**事件、后继和 writer 记录的联合核**。
+
+### 80.1 有限实际来源与一步联合核
+
+沿用 [FIB 卷第2节的源语法](FIBONACCI_ATOMIC_RELATION_GENERATION.md#2-原始语法与结构解释)，
+令 $\mathcal T$ 是由 $\alpha,\beta,\langle-,-\rangle$ 生成的二叶自由项，
+令 $X_{\mathrm{ord}}\subseteq\mathcal T$ 是同一实际来源上的非空有限普通状态集，
+令 $X_{\mathrm{term}}$ 是有限个带类型终止点，置
+$X=X_{\mathrm{ord}}\sqcup X_{\mathrm{term}}$。可见类型映射 $\tau$ 在普通态取
+$\mathrm{ord}$，在终止态取 $\mathrm{term}(\theta)$，其中 $\theta\in\Theta$ 是其声明的终止类型。
+固定有限的外部可声明且动作标签可见的动作族 $\mathcal A$。对每个 $a\in\mathcal A$，给出
+合法性指标 $L_a:X\to\{0,1\}$、有限可见事件集 $E_a$、有限记录集 $R_a$，置
+$D_a=\{t\in X\mid L_a(t)=1\}$，仅在 $D_a$ 上定义联合核
+
+$$
+J_a(t;\eta,v,r)\ge0,\qquad
+\sum_{\eta\in E_a,\;v\in X,\;r\in R_a}J_a(t;\eta,v,r)=1
+\quad(t\in D_a).
+\tag{80.1}
+$$
+
+这里 $\eta$ 是本步对外事件，$v\in X$ 是同一来源中的后继状态，$r$ 是本步
+实际写入的记录。合法执行的终止或失败结果只能落在 $X_{\mathrm{term}}$ 中，不能伪装成普通的
+零计数项。所有这些对象必须来自一个声明过的实际联合来源。
+给定当前状态和动作，$J_a$ 是本步的完整条件律；影响它的内部记忆须已纳入状态。
+本合同允许观察不合法尝试：为明确字母表边界，置
+$\widetilde E_a:=E_a\sqcup\{\mathrm{illegal}_a\}$ 和
+$\widetilde R_a:=R_a\sqcup\{r_a^{\mathrm{ill}}\}$，其中
+$\mathrm{illegal}_a\notin E_a$、$r_a^{\mathrm{ill}}\notin R_a$ 是新鲜符号。
+合法核 $J_a$ 仍只定义在 $E_a\times X\times R_a$ 上；当 $t\notin D_a$ 时，
+唯一的拒绝输出是 $(\mathrm{illegal}_a,t,r_a^{\mathrm{ill}})$，状态保持 $t$。
+该拒绝分支不是 $J_a$ 的非法状态核行；其他拒绝更新合同须另验其联合下降。
+
+给定摘要 $q$，以下将余域限制为实际像 $Q_0:=q[X]$，即 $q:X\twoheadrightarrow Q_0$。
+要求可见类型有因子化 $\tau=\overline\tau\circ q$，以保留零步普通/终止类型及终止类型标签。
+对 $t\in D_a$、$q'\in Q_0$，定义把内部后继消去后的联合核
+
+$$
+J^{q}_a(t;\eta,q',r)
+ =
+\sum_{\substack{v\in X\\q(v)=q'}}
+J_a(t;\eta,v,r).
+\tag{80.2}
+$$
+
+它保留事件与 writer 记录同后继摘要之间的相关性。只分别比较
+$\sum_{v,r}J_a(t;\eta,v,r)$ 和 $\sum_{\eta,r}J_a(t;\eta,v,r)$，
+不足以保证式（80.2）相同。
+
+### 80.2 动态 FIB-下降条件
+
+称 $q$ 对动作族 $\mathcal A$ 是联合动态可下降的，如果对任意
+$q(t)=q(u)$、任意 $a\in\mathcal A$，都有：
+
+$$
+\begin{aligned}
+L_a(t)&=L_a(u),\\
+J^{q}_a(t;\eta,q',r)&=J^{q}_a(u;\eta,q',r)
+\quad
+(\eta,q',r\text{ 任意，且 }L_a(t)=L_a(u)=1).
+\end{aligned}
+\tag{80.3}
+$$
+
+若这些外显动作由内部 **memoryless selector** 选择（给定当前完整状态 $t$
+即确定分布，不读取已见前缀），取其在整个声明动作集上的概率分布
+$\pi_t\in\Delta(\mathcal A)$，还要有选择器因子化：
+
+$$
+\pi_t(a)=\pi_u(a)
+\quad(q(t)=q(u),\ a\in\mathcal A).
+\tag{80.4}
+$$
+
+等式（80.4）对固定的整个声明动作集要求，包括概率为零的动作，不扩及合同外的动作。
+定理80.1中的外显 selector 专指上述 memoryless 情形。若 selector 读取可见前缀
+$h$，应改用逐前缀的 $\pi_{t,h}$ 与 $\overline\pi_h:Q_0\to\Delta(\mathcal A)$，并逐前缀要求
+$\pi_{t,h}(a)=\pi_{u,h}(a)$（$q(t)=q(u)$、$a\in\mathcal A$）；该历史依赖版本不纳入
+下文静态唯一性结论。
+仅由一个固定 selector 的运行轨迹，不能推出它从未选择的动作核行下降；本节逐动作的必要性使用
+全部声明动作均可被外部 probe 的合同。若动作选择隐藏且不可外部 probe，需改为
+要求 selector 加权的混合联合核（含拒绝分支）下降；这种合同不推出 selector 或
+各个隐藏动作核行下降，不属于以下外显动作定理。
+
+### 定理 80.1（联合核下降给出全部有限轨迹下降）
+
+设 $q:X\twoheadrightarrow Q_0$ 保留上述可见类型并满足（80.3）；若使用外显
+memoryless selector，再要求（80.4）。则在 $Q_0$ 上存在唯一的边界合法性 $\overline L_a$，
+在 $\overline D_a=\{z\in Q_0\mid\overline L_a(z)=1\}$ 上存在唯一的归一化
+边界联合核 $\overline J_a$；使用外显 memoryless selector 时还存在唯一的
+$\overline\pi:Q_0\to\Delta(\mathcal A)$，使得
+
+$$
+\begin{aligned}
+L_a&=\overline L_a\circ q,\\
+\pi&=\overline\pi\circ q\quad\text{（使用外显 memoryless selector 时）},\\
+J^{q}_a(t;\eta,q',r)
+&=\overline J_a(q(t);\eta,q',r)\quad(t\in D_a).
+\end{aligned}
+\tag{80.5}
+$$
+
+从而，任意只根据初始摘要和已见动作、事件、后继摘要及记录选择下一动作的有限
+自适应策略，在 $q(t)=q(u)$ 时产生相同的有限联合轨迹律；符合（80.4）的外显
+memoryless selector 运行也如此。历史依赖 selector 采用上段的逐前缀对象，
+不由本定理的静态 $\overline\pi$ 结论覆盖。
+
+反之，若一个摘要对所声明的外部动作族支持所有这些有限轨迹律，并且这些动作
+均可被外部 probe，零步类型、合法性、事件、writer 记录和后继摘要都属于
+可观察合同，则类型因子化与（80.3）是必要的；若 selector 的运行轨迹也下降且
+所选动作标签可见，且 selector 为 memoryless，则（80.4）也是必要的。
+
+**证明。** 在 $q$ 的纤维上，式（80.3）使 $\overline L_a$ 与
+$\overline J_a$ 的定义与代表元无关，后者只在共同合法纤维上定义。
+式（80.4）在全部 $\mathcal A$ 上使边界 selector 良定义；$q$ 对 $Q_0$ 满射给出
+这些因子的唯一性，合法核的归一化由（80.1）对后继纤维求和得到。
+对轨迹长度作归纳：零步类型由 $\tau=\overline\tau\circ q$ 保留；假设已见前缀
+相同，则策略或边界 selector 给出同一动作分布，合法分支由（80.5）给出下一
+事件、记录和后继摘要的相同联合条件律，非法分支给出同一拒绝及不变摘要。
+对后继状态求和即得下一长度的轨迹律。反向地，零步测试给出类型因子化，
+逐动作拒绝测试给出合法性相等；在共同合法态上，一步完整的事件—后继摘要—
+记录测试给出（80.3）的第二行。外显 selector 的动作标签边缘直接给出整个
+$\mathcal A$ 上的（80.4），包括零概率项。对隐藏动作没有这种读取，故不能作同样
+推论。证毕。
+
+### 80.3 FIB 计数商何时确实是动态边界
+
+沿用 FIB 卷的
+
+$$
+c(\alpha)=(1,0),\qquad c(\beta)=(0,1),\qquad
+c(\langle s,t\rangle)=c(s)+c(t),
+$$
+
+以及
+
+$$
+c(\rho t)=M c(t),\qquad M(a,b)=(b,a+b).
+\tag{80.6}
+$$
+
+计数 $c$ 只定义在普通项上。定义带类型摘要 $q_c:X\to q_c[X]$：
+
+$$
+q_c(x)=
+\begin{cases}
+(\mathrm{ord},c(x)),&x\in X_{\mathrm{ord}},\\
+(\mathrm{term},\theta(x)),&x\in X_{\mathrm{term}}.
+\end{cases}
+$$
+
+考虑动作族 $\mathcal A=\{\mathrm{read},\mathrm{rho}\}$ 的**计数盲**有限合同，明确要求：
+
+1. read 在普通态总合法，只均匀抽取一个叶出现并报告 $\alpha$ 或 $\beta$ 标签；给定正概率标签 $\eta$，后继 $q_c(v)$ 的条件律只依赖 $c(t)$ 和 $\eta$，在计数纤维上不变。
+2. rho 在普通态的合法性及 replacement/cutoff 决策（含 cutoff 类型）只依赖 $c(t)$；合法 replacement 分支的后继为 $\rho t\in X_{\mathrm{ord}}$，要求这项替换闭合；cutoff 分支进入指定类型的 $X_{\mathrm{term}}$。终止态上 read/rho 均不合法，后续尝试按第80.1节的固定拒绝合同保持原终止态，故同终止类型的后续行为相同。除此之外，$\rho$ 的完整事件—后继摘要—writer 记录联合核 $J_\rho^{q_c}(t;\eta,q',r)$ 也必须只依赖 $c(t)$：对同一计数纤维中的共同合法普通态，对全部 $(\eta,q',r)\in E_\rho\times q_c[X]\times R_\rho$ 都相等，包括概率为零的三元组。若合同把 $\rho$ 限定为确定事件，则等价地要求该确定的 $(\eta,q_c(v),r)$ 三元组在每个计数纤维上恒定。
+3. 时钟增量和 writer 记录是已报事件与后继可见类型的固定函数，并共同纳入 $r$。
+4. 若使用定理80.1意义下的外显 memoryless selector，其在全部 $\mathcal A$ 上的分布只读取
+$q_c(t)$（包括终止类型，并保留零概率项），不读取已见轨迹。若允许历史依赖，须改用
+第80.2节所述的逐前缀 $\pi_{t,h},\overline\pi_h$ 合同，不能直接套用定理80.1的静态
+$\overline\pi$ 结论。
+
+若 $c(t)=(a,b)$、$a+b>0$，则 read 的事件边缘为
+
+$$
+\Pr(\eta=\alpha\mid t)=\frac a{a+b},\qquad
+\Pr(\eta=\beta\mid t)=\frac b{a+b},
+\tag{80.7}
+$$
+
+第一项的条件后继律与（80.7）相乘，第三项再确定记录，故 read 的完整联合核
+在 $q_c$ 纤维上恒定。rho 的 replacement 边界后继为 $(\mathrm{ord},M(a,b))$；
+cutoff 时改为 $(\mathrm{term},\theta)$，第二项保证分支、合法性与终止类型均在
+计数纤维上不变，并保证后继仍在实际状态集内。第二项的完整联合核条件（包括概率为零的
+事件—后继摘要—记录三元组）同时保证 writer 记录在计数纤维上不变。终止态的拒绝分支也由 $q_c$
+确定。因此（80.3）成立，使用外显 selector 时（80.4）也成立，$q_c$ 是该合同的
+动态边界。是否还是**最小**边界，要另证读数和连续 replacement 在该 cutoff
+合同下能否分离不同的 $(a,b)$；这一具体分离测试是独立的合同应用，不能由下降
+本身推出。[过程卷第29节](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md#29-联合标签核的稳定细化与路径恢复的分离)
+提供的是一般联合轨迹与稳定细化材料。
+
+这一定理只说明 $q_c$ 在声明合同下可以运行。它不把数量商提升为原始树的身份
+判定，也不把 $\rho$ 的计数更新推广到带位置、括号、共享来源或根票事件的合同。
+
+### 80.4 位置事件反例：相同计数不等于相同原子关系
+
+令
+
+$$
+t_1=\langle\alpha,\beta\rangle,\qquad
+t_2=\langle\beta,\alpha\rangle.
+$$
+
+则 $c(t_1)=c(t_2)=(1,1)$，并且所有数量未来
+$c(\rho^j(t_1))=c(\rho^j(t_2))$。若把 read 改成读取左端叶子，
+则
+
+$$
+\Pr(\eta=\alpha\mid t_1)=1,\qquad
+\Pr(\eta=\alpha\mid t_2)=0.
+\tag{80.8}
+$$
+
+此时计数映射 $c$ 不满足（80.3），所以不能在这个位置敏感合同上作为动态边界。
+需要保留有序项的相应关系，或改用包含位置事件的更细行为商。
+
+### 80.5 相同边缘不保证联合下降
+
+即使两个摘要相同的状态给出相同事件边缘和相同后继边缘，联合核仍可能不同。
+取两个当前代表 $t,u$，共同摘要为 $q_0$，后继摘要为 $q_0,q_1$，事件为
+$0,1$，令
+
+$$
+\begin{array}{c|cc}
+&(\eta=0,q_0)&(\eta=1,q_1)\\ \hline
+t&1/2&1/2
+\end{array}
+\qquad
+\begin{array}{c|cc}
+&(\eta=0,q_1)&(\eta=1,q_0)\\ \hline
+u&1/2&1/2 .
+\end{array}
+\tag{80.9}
+$$
+
+两行的事件边缘都是 $(1/2,1/2)$，后继边缘也都是 $(1/2,1/2)$；
+但记录事件后再读取后继摘要，可以区分两种相关结构。于是只检查事件商或
+后继商的任一边缘，都不能替代（80.2）的联合纤维相等。
+
+### 80.6 与空间、时间、边界和记忆的回接
+
+设 $r_{\mathrm{space}},r_{\mathrm{time}},r_{\mathrm{boundary}},
+r_{\mathrm{memory}}$ 是同一实际 FIB 来源上的四个表示。它们只有在
+各自保留第80.1节的可见类型，并且
+
+$$
+\ker r_i=\ker q
+\quad\text{且每个 }r_i\text{ 都满足把 }q\text{ 换成 }r_i\text{ 的同类联合下降条件，}
+\\[-2pt]
+\text{并共享同一任务的 }L_a,J_a\text{ 及 selector；使用外显 selector 时另满足相应的（80.4）}
+\tag{80.10}
+$$
+
+时，才是同一指定任务下 $q$ 的不同完整编码。若只知道当前读出相同，不能推出
+未来事件、writer 记录或 selector 也相同；这些都必须落在联合核的纤维上。
+因此“二叶原子是基础”给出的是源语法层，而“空间/时间/边界/记忆互相恢复”
+仍是一个带动作合同的行为商命题。
+
+### 80.7 来源与未决边界
+
+本节是 repo-derived 的有限经典综合，使用 FIB 卷的自由二叶语法与计数递归，
+以及本卷第16、19、26、79节的双侧行为商、动态下降和重叠拼接条件。它没有新增
+Lean 声明，也不把边缘核相等误报为联合核相等。若扩展到无限项集、近似核、量子
+通道、未知 selector 或实际抽样成本，必须重新声明来源、事件空间和下降合同；
+这些问题仍为 open。
+
+## 80.99 追加锚
