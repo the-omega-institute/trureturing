@@ -1143,3 +1143,112 @@ quadratic bit bound must not be attributed to it. Its code license has
 not been verified, and no upstream code is vendored here. These controls
 support reuse of the published arithmetic interface, not a new algorithm,
 a Lean result, or a strict Robin budget.
+
+## Price the resource and retain the residual phase
+
+The optimization input is classical weak duality, not an independence
+assumption between size and character. Boyd–Vandenberghe,
+*Convex Optimization* (2004),
+[§5.1.3, printed p.216, equation (5.2), and §5.2.2, p.225,
+equation (5.23)](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf),
+gives a lower bound by pricing a constraint, including for nonconvex
+problems. The repository's
+[fractional-knapsack note](../../Blueprint/D5/S3/Analytic/Knapsack/FractionalKnapsackDual.md)
+already records the box-price model; its continuous fill has no character
+endpoint. The following is a paper application to the same existing
+benefit and quartic interface, not a new duality theorem, a claim of
+novelty, or a Lean-verified bridge.
+
+Keep the same actual $N,C_s,g,u,v,e,u_0,R_s(v),L_r$ and phase
+$\psi_V(u_0)=i^j$. Set $E_0=\log u_0$ and retain the eligible prime set
+
+$$
+\mathcal P=\{p\text{ prime}:p\nmid vrV\}.
+$$
+
+The actual residual exponent is $\nu_p=v_p(u_0)$. Its $k$-th
+post-reference layer has resource $\log p$ and cost
+
+$$
+d_{p,k}=\log p-s\ell_{p,a_p+k}>0,
+\qquad d_{p,1}=b_s(p),\qquad d_{p,k}\ge b_s(p).
+$$
+
+Every actual layer occurs once, so the residual addition cost and resource
+are
+
+$$
+\mathcal A_s^{[r]}(N)=\sum_{p\mid u_0}\sum_{k=1}^{\nu_p}d_{p,k},
+\qquad E_0=\sum_{p\mid u_0}\nu_p\log p.
+$$
+
+For a resource price $0\le h\le h_0<1$, define the complete eligible
+weak-layer deficit
+
+$$
+K_{\mathcal P}(h)=
+\sum_{p\in\mathcal P}\sum_{k\ge1}(h\log p-d_{p,k})_+.
+$$
+
+This sum is finite uniformly on the specified price interval. A nonzero
+term requires
+
+$$
+(1-h_0)p\log p<s,
+$$
+
+by $\ell_{p,a_p+k}\le p^{-(a_p+k)}\le p^{-1}$. There are only
+finitely many such primes, and for each one $d_{p,k}\to\log p$ makes
+the contributing layers finite. The case $h_0=1$ is not covered.
+
+For a nonzero phase $z$, define the residual edge minimum
+
+$$
+\beta_z(h)=
+\min_{\substack{p\in\mathcal P\\\psi_V(p)=i^z}}
+(b_s(p)-h\log p)_+,
+$$
+
+with $+\infty$ for an empty class. Let $c_j(h)$ be the nonnegative
+phase-word cost from the preceding four-state formulas, replacing each
+$\beta_z$ by $\beta_z(h)$; in particular $c_0(h)=0$. The residual
+edges can be zero even for nonzero phases. No positive gap or four
+nonempty classes is presumed. A nonempty class has an attained minimum,
+since the residual first-layer cost tends to infinity with $p$ at fixed
+$h<1$.
+
+Split each actual layer by the exact identity
+
+$$
+d_{p,k}=h\log p-(h\log p-d_{p,k})_+
+                   +(d_{p,k}-h\log p)_+.
+$$
+
+The sum of actual deficits is at most $K_{\mathcal P}(h)$. The sum of
+actual positive residuals is at least $c_j(h)$: each occurrence has
+residual cost at least $(b_s(p)-h\log p)_+$, and the same actual
+prime-power word has endpoint $j$. Hence the paper-level certificate is
+
+$$
+\mathcal A_s^{[r]}(N)
+\ge hE_0-K_{\mathcal P}(h)+c_j(h),
+$$
+
+$$
+\boxed{
+D_s(N)\ge R_s(v)+L_r+
+\sup_{0\le h\le h_0}
+\{h\log u_0-K_{\mathcal P}(h)+c_j(h)\}.
+}
+$$
+
+The phase term prices only the positive residual cost. Adding the raw
+$c_j(0)$ to an already complete capacity bound would still charge the
+same layers twice. Likewise, negative raw edges $b_s(p)-h\log p$ do not
+permit the nonnegative cycle-deletion argument used for the four-state
+formulas. The actual layered supply, including the entire weak deficit,
+is essential; a first-layer-only deficit need not pay repeated additions.
+
+This allocation supplies a lower certificate for the same host. It does
+not yet compare that certificate with its signed Robin budget, exclude
+the original low-loss candidate, or control all five-window sources.
