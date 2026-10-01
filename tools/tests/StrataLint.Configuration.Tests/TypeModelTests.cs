@@ -430,7 +430,7 @@ public sealed class TypeModelTests
     [Fact]
     public void HarnessGateScriptIsClosedWorldRegisteredAndBootstrapProtected()
     {
-        const string value = "tools/scripts/ci-stage.sh";
+        const string value = "tools/scripts/local-harness-gate.sh";
         var path = RepoPath.CreateKnown(value);
 
         Assert.Null(RepositoryPathPolicy.Validate(path, Policy()));

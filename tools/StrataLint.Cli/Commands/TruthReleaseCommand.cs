@@ -251,7 +251,7 @@ internal static class TruthReleaseCommand
             || producerPackageCommit is null
             || producedAt is null
             || commitOnProtectedDev is null
-            || requiredChecks.Count != TruthReleaseManifestReader.RequiredCheckNames.Length)
+            || requiredChecks.Count == 0)
         {
             return false;
         }
@@ -292,7 +292,7 @@ internal static class TruthReleaseCommand
             + "--producer-package-commit COMMIT --produced-at TIMESTAMP "
             + "--commit-on-protected-dev true|false "
             + "--required-check NAME=CONCLUSION (required: "
-            + string.Join(", ", TruthReleaseManifestReader.RequiredCheckNames) + ")\n");
+            + "every required check supplied by the caller" + ")\n");
 
     private readonly record struct TruthReleaseArguments(
         string OutDirectory,

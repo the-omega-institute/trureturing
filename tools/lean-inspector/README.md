@@ -16,13 +16,11 @@ make lean-report LEAN_REPORT=.lake/build/stratalint/custom-report.json
 和 Python 3。[入口](inspect.sh)负责输入验证、utility 输入工具构建、Lean-cache
 ensure、原生 Lake 报告构建和发布。
 
-[CI](../../.github/workflows/ci-push.yml) 与本地 `make current` 共用入口，
-经 `make lean-report` 调用同一个 `inspect.sh`。工程阶段已验证的候选 Lean DLL
-通过 `STRATALINT_LEAN_PRODUCER_DLL` 传入，独立调用才构建 utility 输入工具。
-下游 Pages 发布只消费上游成功 CI 的报告工件，校验候选、轮次和完整材料后使用。
-缺少该源码的合格报告工件时不能发布，不在消费者中重产报告。
-上游独立 truth release 发布 workflow 及其 Mac 验证作业已退役；
-可复用的 truth/export、来源验证与 bundle 验证工具继续保留。
+[CI](../../.github/workflows/ci-current.yml) 和本地数学门通过 `make lean-report`
+调用同一个 `inspect.sh`。入口可独立构建 utility 输入工具,也可接收显式的
+`STRATALINT_LEAN_PRODUCER_DLL`。生成的报告交给 check-current/check-delta;
+这些检查器不生成报告。离线 truth/export 与 bundle 验证工具保留,不提供
+自动选择 CI 来源或发布资格的链路。
 
 输出采用 `stratalint-raw-lean-report-v2`，同一文件名后附
 `.sha256`、`.input.attestation`、`.provenance.json`、`.materials.zip`。
@@ -62,10 +60,12 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 报告是否可复用由 Lake trace 和 `report_cache_release_semantic_version` 决定。正常入口在 ensure 前不创建
 默认输出或日志目录，以保留新工作树的 donor 播种条件。
 
-程序编译义务由 FILEMAP 及其登记的 [ci-resources.json](../../Meta/ci-resources.json) 中 `lean_targets` 显式选择。
+程序编译义务由 `inspect.sh` 的默认目标选择；直接调用可用排序后的 JSON 列表通过
+`STRATALINT_LEAN_BUILD_TARGETS` 覆盖。报告、materials 与这些构建产物随项目
+`.lake/build` 缓存运输，不另建报告缓存。
 正常入口校验可选 `.reuse.json`：报告语义版本号、登记的报告模块与配置输入及其 mode、显式工具/环境/平台与上轮成功调用
 一致，并且报告五件套与收据逐字节相符、信封和输入坐标仍为当前时，复用报告数据。选中的程序目标仍须通过 Lake 增量编译；未选程序目标的命中不恢复 Lean 重缓存。
-缺失、损坏或不匹配时，同一次 Lake 调用构建 `:report` 和选中的程序目标。生产程序（含 Lean Inspector/audit、C#、脚本、构建属性）的字节不进入该收据，其兼容性只由 `report_cache_release_semantic_version` 表达；实际构建或检查失败仍失败，缓存命中不能代替判词。无 scope 的直接调用消费登记的全部程序目标。
+缺失、损坏或不匹配时，同一次 Lake 调用构建 `:report` 和选中的程序目标。生产程序（含 Lean Inspector/audit、C#、脚本、构建属性）的字节不进入该收据，其兼容性只由 `report_cache_release_semantic_version` 表达；实际构建或检查失败仍失败，缓存命中不能代替判词。未提供覆盖值的直接调用使用 Inspector 默认程序目标。
 `:report` 只构建登记报告模块及实际依赖，不隐式追加包的默认目标；选中的程序目标在报告命中与未命中时均须执行。
 程序构建义务独立于模块报告失效；只影响这些构建义务、未改变报告依赖的编辑，不会因此重提取无关模块报告。实际缺失或失效的模块
 提取会合批以共享加载工作，失效选择仍由 Lake 决定。输出
