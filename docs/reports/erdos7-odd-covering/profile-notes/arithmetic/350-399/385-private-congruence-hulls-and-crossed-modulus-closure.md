@@ -13774,3 +13774,103 @@ classes repair E*. Deleting or changing more retained classes changes
 the joint obligation and needs its own budget. Terminal singularity and
 unrestricted Erdős#7 remain unresolved. No new enumeration or Lean
 verification is asserted.
+
+## 106. The colorwise reciprocal threshold raises ternary height to nineteen
+
+Keep one EB1 original whole cover with R=empty. Let P be its largest
+support prime, H=H_3, and
+
+    G=max{|p-q|:p in S_1, q in S_2}.
+
+Reuse the initial-segment support property in Report350 section1,
+NF68's attributed nine-prime-support theorem, and CM3's actual
+colorwise reciprocal threshold. They give original primes5 and P,
+P>=29, and, for each color's finite original cofactor carrier Q_i,
+
+    1/3<R_i=sum_(m|Q_i,m>1)1/m
+       < product_(p in S_i)p/(p-1)-1.
+
+The last strict Euler upper bound is the one already used in section84.
+The established exclusion of H=1 supplies its H>=2 premise. SG1 gives
+H>=G+1, without bounding any nonternary height.
+
+### One color is confined between two endpoint constraints
+
+If5 and P have opposite colors, then G>=P-5. Otherwise they have the
+same color A. Every prime of the other color B has distance at most G
+from each endpoint, whence
+
+    B subset {prime r:P-G<=r<=5+G}.
+
+The reciprocal bound on that ONE actual color therefore requires
+
+    product_(prime r in [P-G,5+G]) r/(r-1)>4/3.    (IG1)
+
+Enlarging its support to this interval gives an upper bound. No two
+independently optimized color inventories are combined.
+
+Suppose G<=16. Since P>=29, the endpoints5 and P have the same color.
+The other color is contained in [13,21], whose only primes are13,17,19.
+Thus
+
+    R_B<13*17*19/(12*16*18)-1=743/3456<1/3,
+
+contradicting CM3. All opposite gaps are even, so
+
+    R=empty ==> G>=18 and H_3>=19.                 (IG2)
+
+This strengthens SG4 using existing reciprocal information, with no
+new sieve certificate or enumeration of two-color assignments.
+
+### Only two support layouts remain at gap eighteen
+
+Suppose G=18. Again5 and P have the same color A. If P>=31, the other
+color B lies in [13,23]. Its Euler upper bound is
+
+    R_B<13*17*19*23/(12*16*18*22)-1
+       =20545/76032<1/3.
+
+Hence P=29. The initial-segment property gives exactly the nonternary
+support{5,7,11,13,17,19,23,29}, and B is a subset of
+{11,13,17,19,23}. It must contain all of11,13,17,19: omitting any of
+these four has largest possible Euler product when19 is omitted,
+because r/(r-1) decreases with r. Even that upper bound gives
+
+    R_B<11*13*17*23/(10*12*16*22)-1
+       =1243/3840<1/3.
+
+Consequently, up to exchanging color names, the only possible supports
+at G=18 are
+
+    A={5,7,29},    B={11,13,17,19,23};
+    A={5,7,23,29}, B={11,13,17,19}.                (IG3)
+
+In the second layout, B must own original9. Otherwise CM4 requires
+R_B>5/13, whereas
+
+    R_B<11*13*17*19/(10*12*16*18)-1
+       =11629/34560<5/13.
+
+These are necessary support and ownership restrictions, not covering
+realizations. They leave actual phases and prime-power heights open.
+
+### Terminal singularity needs one further ternary layer
+
+Under the additional global TS hypothesis of section98, every top
+mixed parent has the same lower ternary prefix and hence the same
+color i. Every prime r of the other color has t_r<=H-1; otherwise
+its original3^H r would be a top parent in a different first-three
+root. Applying SG1 to each opposite pair then gives
+
+    R=empty and TS ==> H>=G+2>=20.                 (IG4)
+
+This does not assert that TS occurs in a general cover. In particular
+the remaining height-nineteen all-concentrated case must be globally
+nonsingular, with one of IG3's support layouts.
+
+IG2--IG4 use NF68's ordinary attributed Schroeder result, edition1.0.1,
+Theorem1.1. Its source entry retains the finite-geometry verification
+and the absence of a complete local kernel replay of its arbitrary-height
+reduction. No new source replay, numerical optimization or Lean
+verification is asserted here. The all-concentrated cases at larger
+height and all branches with R nonempty remain unresolved.
