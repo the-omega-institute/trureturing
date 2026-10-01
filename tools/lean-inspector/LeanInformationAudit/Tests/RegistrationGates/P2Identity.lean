@@ -1,5 +1,8 @@
 import LeanInformationAudit.RegistrationGates
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 open LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape
 namespace P2Identity
@@ -24,7 +27,7 @@ def readouts : PrimitiveRealization arena.signature where
 theorem source : (1 + 1 : Nat) = 2 := by decide
 theorem bridge : LegacyPrimitiveRealization arena ((1 + 1 : Nat) = 2) readouts where
   equivalence := Iff.rfl
-register_information_theorem source in arena
+test_assess in register_information_theorem source in arena
   primitives readouts.toPrimitiveBundle realization bridge
 def cat : Catalog arena.toArena := Catalog.ofVector ![source.__information_unit]
 example : arena.toArena.Nondegenerate := by decide

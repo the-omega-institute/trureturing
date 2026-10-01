@@ -1,6 +1,9 @@
 import Reg.Support.LegacyRelations.Preemption
 import Reg.Support.LegacyRelations.Completion
 import Reg.Support.LegacyRelations.System
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 /- Implicit abstraction and Boolean reification still reject. The positive
 production registrations use explicit checked selectors; these probes preserve

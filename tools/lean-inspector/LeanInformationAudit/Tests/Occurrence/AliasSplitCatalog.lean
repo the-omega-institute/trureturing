@@ -1,4 +1,7 @@
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape
@@ -38,35 +41,37 @@ def sndRealization : PrimitiveRealization lawArena.signature where
   readout := fun _ state => state.2
   anchor := Fin.elim0
 
-information_theorem fstTheorem
+test_assess in information_theorem fstTheorem
   in lawArena
   object_arena objectArena
   catalog left
   primitives fstRealization
   : lawArena.Law fstRealization := by trivial
 
-information_theorem sndTheorem
+test_assess in information_theorem sndTheorem
   in lawArena
   object_arena chainedArena
   catalog right
   primitives sndRealization
   : lawArena.Law sndRealization := by trivial
 
-expect_information_occurrence fstTheorem
+test_assess in expect_information_occurrence fstTheorem
   in objectArena
   from "LeanInformationAudit.Tests.Occurrence.AliasSplitCatalog"
 
-expect_information_occurrence sndTheorem
+test_assess in expect_information_occurrence sndTheorem
   in chainedArena
   from "LeanInformationAudit.Tests.Occurrence.AliasSplitCatalog"
 
 /-- error: IE-C024 SplitCanonicalArenaCatalog root=LeanInformationAudit.Tests.Occurrence.AliasSplitCatalog arena=LeanInformationAudit.Tests.AliasSplitCatalog.objectArena catalogs=["left","right"] -/
 #guard_msgs (error) in
-#seal_information_theory
+test_assess in #seal_information_theory
 
-/-- error: IE-C002 DuplicateRegistration object_arena=LeanInformationAudit.Tests.AliasSplitCatalog.objectArena theorem_name=LeanInformationAudit.Tests.AliasSplitCatalog.fstTheorem registration_modules=["LeanInformationAudit.Tests.Occurrence.AliasSplitCatalog"] count=2 -/
+-- A native registration declares its theorem, so a second native occurrence of
+-- the same theorem is rejected when the recorder elaborates the declaration.
+/-- error: `LeanInformationAudit.Tests.AliasSplitCatalog.fstTheorem` has already been declared -/
 #guard_msgs (error) in
-information_theorem fstTheorem
+test_assess in information_theorem fstTheorem
   in lawArena
   object_arena chainedArena
   catalog duplicate
