@@ -6,7 +6,6 @@
    utility: none
    digest: The two consecutive window readouts have the exact even-modulus kernel. -/
 
-import D5.S3.Arith.FibonacciAtomic.GraftAffineClosure
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -20,6 +19,15 @@ namespace D5.S3.Arith.FibonacciAtomic.ImmediateWindowStateCapacity
 def windowObserve {m : ℕ} (x : ZMod m × ZMod m) : ZMod m × ZMod m :=
   (2 * x.1 + 3 * x.2, 8 * x.1 + 13 * x.2)
 
+/-
+proof_shape: window_observe_kernel: content
+escape_witness: the active path of `window_observe_kernel` derives the second
+  coordinate by the nontrivial integer combination `h₂ - 4 * h₁`, then derives
+  the remaining two-torsion condition.  This determinant-two kernel computation
+  is not an instance, projection, or normalization of a pinned declaration.
+admission_basis: escape-witness
+Direct frozen dependencies: none (pinned Mathlib only)
+-/
 /- This is the actual escape witness for the proposed capacity theorem: the
    determinant-two observation loses exactly the 2-torsion in the first
    composition coordinate. -/
@@ -48,13 +56,6 @@ theorem window_observe_kernel (m : ℕ) (x : ZMod m × ZMod m) :
     · simp [windowObserve]
       linear_combination 4 * ha
 
-theorem window_observe_kernel_shape (m : ℕ) :
-    {x : ZMod m × ZMod m | windowObserve x = 0} =
-      {x | ∃ a : ZMod m, x = (a, 0) ∧ (2 : ZMod m) * a = 0} := by
-  ext x
-  exact window_observe_kernel m x
-
 #print axioms window_observe_kernel
-#print axioms window_observe_kernel_shape
 
 end D5.S3.Arith.FibonacciAtomic.ImmediateWindowStateCapacity

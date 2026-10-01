@@ -46,15 +46,17 @@ internal sealed class ImmediateWindowStateCapacityDocument : IScribeDocumentDefi
     private static Formula Pair(Formula a, Formula b) =>
         Seq(Open, a, Comma, Sp, b, Close);
 
+    private static Formula Par(Formula body) => Seq(Open, body, Close);
+
     private static Formula KernelFormula() => Disp(Seq(
         Forall, Sp, V("m"), Sp, InMacro, Sp, Call("N"), Comma, Sp,
         Forall, Sp, V("x"), Sp, InMacro, Sp,
         Call("ZMod", V("m")), Times, Call("ZMod", V("m")), Comma, Sp,
         RowBreak,
-        Par(Seq(Call("windowObserve", V("x")), Sp, Eq, Sp, V("0"))),
+        Par(Seq(Call("windowObserve", V("x")), Sp, Eq, Sp, D(0))),
         Sp, Leftrightarrow, Sp,
         Exists, Sp, V("a"), Sp, InMacro, Sp, Call("ZMod", V("m")), Comma, Sp,
-        Par(Seq(V("x"), Sp, Eq, Sp, Pair(V("a"), V("0")))),
+        Par(Seq(V("x"), Sp, Eq, Sp, Pair(V("a"), D(0)))),
         Sp, Land, Sp,
-        Par(Seq(D(2), V("a"), Sp, Eq, Sp, V("0"))), Dot));
+        Par(Seq(D(2), V("a"), Sp, Eq, Sp, D(0))), Dot));
 }
