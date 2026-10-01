@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Dynamics/ClauseHamiltonian
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: ["mathlib/module/Mathlib.Analysis.Normed.Algebra.MatrixExponential"]
+   anchors: [mathlib/module/Mathlib.Analysis.Normed.Algebra.MatrixExponential]
    utility: none
    digest: Local raw clause projectors encode a Boolean count in a centered full complex trace. -/
 

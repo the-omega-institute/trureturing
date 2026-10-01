@@ -3,7 +3,7 @@ fingerprints:
   normalized_sha256: sha256:84cd0e30ae51fb98b982b6ded31b01c04b2a3c244515b4b758e9100146e98695
 cas_ref: sha256:84cd0e30ae51fb98b982b6ded31b01c04b2a3c244515b4b758e9100146e98695
 coverage_gids:
-  - gid: D5/S0/Computability/PhysicalRationalResponse.physical_reply_run
-    target_statement_id: sha256:04dcf2bbd6172aa156418771e17707ee1d54ecddcbfb3756ac6ce74f6aca275e
+  - gid: D5/S3/Quantum/Dynamics/PhysicalProtocol/PhysicalRationalResponse.physical_reply_run
+    target_statement_id: sha256:7f2777c939c86ab48a3ff1bfc0660cbac904275d5c781053b4af8d274de3e3a5
 receipts:
   unresolved_subitems: []

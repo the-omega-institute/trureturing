@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S0.Computability;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Dynamics.PhysicalProtocol;
 
 internal sealed class ClauseOracleProtocolDocument : IScribeDocumentDefinition
 {
@@ -9,7 +9,7 @@ internal sealed class ClauseOracleProtocolDocument : IScribeDocumentDefinition
         H("One Query Operational Protocol"),
         Blocks(Describe.Lean(
             DescribeId.Create("one-query-run"),
-            DeclarationHandle.Create("D5/S0/Computability/ClauseOracleProtocol.one_query_run"),
+            DeclarationHandle.Create("D5/S3/Quantum/Dynamics/PhysicalProtocol/ClauseOracleProtocol.one_query_run"),
             H("All-input execution with exactly one ask and a direct quadratic clock"),
             StatementSource.FromAuthor(Presentation()),
             AssessedProvenance.FromRepo(),
@@ -36,7 +36,7 @@ internal sealed class ClauseOracleProtocolDocument : IScribeDocumentDefinition
                 + "conventional appearing-name word conversion is separate."))),
             DescribeRole.Theorem)),
         [DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Computability/ClausePreprocessorRefinement")),
-         DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Computability/PhysicalRationalResponse"))]));
+         DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Quantum/Dynamics/PhysicalProtocol/PhysicalRationalResponse"))]));
 
     private static Formula All(string name, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), domain, body);

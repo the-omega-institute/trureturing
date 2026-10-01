@@ -1,6 +1,6 @@
-/- GID: D5/S0/Computability/ClauseOracleProtocol
+/- GID: D5/S3/Quantum/Dynamics/PhysicalProtocol/ClauseOracleProtocol
    generality: G
-   mirror-B: D5/B/S0/Computability/ClauseOracleProtocol
+   mirror-B: D5/B/S3/Quantum/Dynamics/PhysicalProtocol/ClauseOracleProtocol
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -14,7 +14,7 @@
    are not applicable for kind none. -/
 
 import D5.S0.Computability.ClausePreprocessorRefinement
-import D5.S0.Computability.PhysicalRationalResponse
+import D5.S3.Quantum.Dynamics.PhysicalProtocol.PhysicalRationalResponse
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

@@ -8,7 +8,7 @@ The full complex partition has one reduced positive binary rational response.
 
 $$\forall n \in \mathit{Nat},\; \forall F \in \operatorname{Formula}\left(n\right),\; \exists w \in \operatorname{List}\left(\mathit{ResponseSymbol}\right),\; \operatorname{PhysicalReply}\left(F, w\right) \land \left(\left(\forall v \in \operatorname{List}\left(\mathit{ResponseSymbol}\right),\; \operatorname{PhysicalReply}\left(F, v\right) \Rightarrow v = w\right) \land \left(\operatorname{length}\left(w\right) \le n + 2 \cdot \left(n + 1\right) \cdot \operatorname{length}\left(F\right) + 5 \land \left(\operatorname{suitableResponse}\left(w\right) \land \left(\operatorname{Nonempty}\left(\operatorname{TM2OutputsInTime}\left(\mathit{postMachine}, w, \operatorname{some}\left(\operatorname{binaryWord}\left(\operatorname{totalPostOutput}\left(w\right)\right)\right), 3 \cdot \operatorname{length}\left(w\right) + 10\right)\right) \land \operatorname{msbValue}\left(\operatorname{totalPostOutput}\left(w\right)\right) = \operatorname{satisfyingCount}\left(F\right)\right)\right)\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S0/Computability/PhysicalRationalResponse.physical_reply_run` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/PhysicalProtocol/PhysicalRationalResponse.physical_reply_run` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,6 +22,6 @@ The construction includes zero variables, empty formulas and clauses, unused var
 
 ## References
 
-- Truth anchor: `D5/S0/Computability/PhysicalRationalResponse.physical_reply_run`
-- Dependency: [D5/S0/Computability/RationalResponseRefinement](RationalResponseRefinement.md)
-- Dependency: [D5/S3/Quantum/Dynamics/ClauseHamiltonian](../../S3/Quantum/Dynamics/ClauseHamiltonian.md)
+- Truth anchor: `D5/S3/Quantum/Dynamics/PhysicalProtocol/PhysicalRationalResponse.physical_reply_run`
+- Dependency: [D5/S0/Computability/RationalResponseRefinement](../../../../S0/Computability/RationalResponseRefinement.md)
+- Dependency: [D5/S3/Quantum/Dynamics/ClauseHamiltonian](../ClauseHamiltonian.md)

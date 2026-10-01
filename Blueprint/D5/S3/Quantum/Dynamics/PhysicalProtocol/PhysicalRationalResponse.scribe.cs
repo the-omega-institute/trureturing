@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S0.Computability;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Dynamics.PhysicalProtocol;
 
 internal sealed class PhysicalRationalResponseDocument : IScribeDocumentDefinition
 {
@@ -9,7 +9,7 @@ internal sealed class PhysicalRationalResponseDocument : IScribeDocumentDefiniti
         H("Physical Rational Responses"),
         Blocks(Describe.Lean(
             DescribeId.Create("physical-reply-run"),
-            DeclarationHandle.Create("D5/S0/Computability/PhysicalRationalResponse.physical_reply_run"),
+            DeclarationHandle.Create("D5/S3/Quantum/Dynamics/PhysicalProtocol/PhysicalRationalResponse.physical_reply_run"),
             H("Unique ordinary response, length and actual count recovery"),
             StatementSource.FromAuthor(Presentation()),
             AssessedProvenance.FromRepo(),

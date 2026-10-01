@@ -1,4 +1,4 @@
-import D5.S0.Computability.ClauseOracleProtocol
+import D5.S3.Quantum.Dynamics.PhysicalProtocol.ClauseOracleProtocol
 import Reg.Support.BoundedRunSpace
 
 set_option autoImplicit false

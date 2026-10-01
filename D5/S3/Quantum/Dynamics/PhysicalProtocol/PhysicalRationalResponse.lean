@@ -1,6 +1,6 @@
-/- GID: D5/S0/Computability/PhysicalRationalResponse
+/- GID: D5/S3/Quantum/Dynamics/PhysicalProtocol/PhysicalRationalResponse
    generality: G
-   mirror-B: D5/B/S0/Computability/PhysicalRationalResponse
+   mirror-B: D5/B/S3/Quantum/Dynamics/PhysicalProtocol/PhysicalRationalResponse
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none

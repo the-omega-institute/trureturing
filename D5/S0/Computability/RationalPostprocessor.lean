@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Computability/RationalPostprocessor
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: ["mathlib/module/Mathlib.Computability.TuringMachine.Computable"]
+   anchors: [mathlib/module/Mathlib.Computability.TuringMachine.Computable]
    utility: none
    digest: A fixed finite stack program reading ordinary dyadic rational responses. -/
 
