@@ -134,10 +134,15 @@ public sealed class ScribeResourceAstCoverageTests
     [Fact]
     public void EveryAstAbstractFamilyHasAnEncodedConcreteBranch()
     {
-        var encoded = string.Join(
-            "\n",
-            CoverageDefinitions().Select(static definition =>
-                Encoding.UTF8.GetString(ScribeResourceCodec.Encode(definition))));
+        var roundTripped = CoverageDefinitions()
+            .Select(static definition => ScribeResourceCodec.Decode(ScribeResourceCodec.Encode(definition)))
+            .ToArray();
+        var roundTrippedTypes = new HashSet<Type>();
+        foreach (var definition in roundTripped)
+        {
+            CollectAstTypes(definition, roundTrippedTypes, new HashSet<object>(ReferenceEqualityComparer.Instance));
+        }
+
         var abstractFamilies = new[]
         {
             typeof(Inline),
@@ -159,9 +164,68 @@ public sealed class ScribeResourceAstCoverageTests
                 .Where(type => !type.IsAbstract && family.IsAssignableFrom(type));
             foreach (var concreteType in concreteTypes)
             {
-                Assert.Contains($"\"type\":\"{concreteType.Name}\"", encoded);
+                Assert.Contains(concreteType, roundTrippedTypes);
             }
         }
+    }
+
+    [Fact]
+    public void CoverageDoesNotCrossSatisfySameNamedConcreteTypes()
+    {
+        var familyA = typeof(SyntheticFamilyA);
+        var familyB = typeof(SyntheticFamilyB);
+        var sharedA = familyA.GetNestedType(nameof(SyntheticFamilyA.Shared), BindingFlags.Public | BindingFlags.NonPublic)!;
+        var sharedB = familyB.GetNestedType(nameof(SyntheticFamilyB.Shared), BindingFlags.Public | BindingFlags.NonPublic)!;
+        Assert.Equal(sharedA.Name, sharedB.Name);
+
+        var actual = new HashSet<Type> { sharedA };
+        Assert.Contains(sharedA, actual);
+        Assert.DoesNotContain(sharedB, actual);
+    }
+
+    private static void CollectAstTypes(object? value, ISet<Type> types, ISet<object> visited)
+    {
+        if (value is null || value is string || value.GetType().IsPrimitive || value.GetType().IsEnum)
+        {
+            return;
+        }
+
+        if (value is System.Collections.IEnumerable sequence)
+        {
+            foreach (var item in sequence)
+            {
+                CollectAstTypes(item, types, visited);
+            }
+
+            return;
+        }
+
+        var type = value.GetType();
+        if (type.Namespace != typeof(Formula).Namespace || !visited.Add(value))
+        {
+            return;
+        }
+
+        types.Add(type);
+        foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+        {
+            if (property.GetIndexParameters().Length != 0 || property.GetMethod is null)
+            {
+                continue;
+            }
+
+            CollectAstTypes(property.GetValue(value), types, visited);
+        }
+    }
+
+    private abstract class SyntheticFamilyA
+    {
+        public sealed class Shared : SyntheticFamilyA;
+    }
+
+    private abstract class SyntheticFamilyB
+    {
+        public sealed class Shared : SyntheticFamilyB;
     }
 
     private static DocumentDefinition Definition(Formula formula) => DocumentDefinition.Create(
