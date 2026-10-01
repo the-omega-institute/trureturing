@@ -397,3 +397,92 @@ provides no positive loss: a source-preserving exclusion or a favourable
 signed budget remains necessary. The [fixed-price screening application](axler2024primorialcounting.md)
 keeps these ties when its endpoint budget is zero. Neither the finite
 branch list nor the gcd determines a uniform Robin margin.
+
+## Condition addition capacity on the actual removals
+
+Keep the same $g=\gcd(N,C_s)$, $u=N/g$, $v=C_s/g$ and exact removal
+cost $R_s(v)$. Since $(u,v)=1$, no prime dividing $v$ can occur among
+the actual additions. The capacity calculation above can therefore
+exclude these primes before integration. Define, for $0\le h\le h_0\le1/3$,
+
+$$
+\Delta_v(h)=
+\sum_{p\mid v}\sum_{\substack{j>a_p\\-c_{p,j}\le h\log p}}\log p,
+\qquad A_{+,v}(h)=A_+(h)-\Delta_v(h).
+$$
+
+Both sums defining $\Delta_v$ are determined by the known factorization
+of $C_s$ and the actual gcd; factoring $u$ is unnecessary. Reuse
+$A_+(h)\le U_y(h):=yh/(1-h)+B_y$ at $s=y\log y$, $y\ge6$.
+The addition-only layer-cake bound gives the paper-level refinement
+
+$$
+\begin{aligned}
+D_s(N)&\ge R_s(v)+I_v(E_+),\\
+I_v(E)&:=\int_0^{h_0}(E-U_y(h)+\Delta_v(h))_+\,dh,\\
+I_v(E_+)&\ge G_+((E_+-B_y)_+),\qquad E_+=\log u.
+\end{aligned}
+$$
+
+The subtraction is valid because $A_{+,v}$ is exactly the weak-layer
+capacity over primes eligible for the same host. It never removes a layer
+actually used by $u$. Exact removals and this addition integral still pay
+disjoint costs. This is an application of the existing finite layer-cake
+bound, not a new benefit theorem or a Lean-verified estimate.
+
+The gain has a useful ceiling. Write
+
+$$
+\tau_p=\frac{-c_{p,a_p+1}}{\log p}>0\qquad(p\mid v).
+$$
+
+The marginal separation $\ell_{p,j}/\ell_{p,j+1}>p$ proved above implies
+that every layer after $a_p+1$ has normalized cost greater than $1/2$.
+Thus only that first post-reference layer can contribute, and
+
+$$
+\int_0^{h_0}\Delta_v(h)\,dh
+=\sum_{p\mid v}(h_0-\tau_p)_+\log p.
+$$
+
+For each nonzero summand, $a_p\ge1$ and the same marginal separation gives
+
+$$
+c_{p,a_p}>
+\bigl(p(1-\tau_p)-1\bigr)\log p
+\ge(1-2\tau_p)\log p.
+$$
+
+Since $h_0-\tau_p\le h_0(1-2\tau_p)$ for $h_0\le1/2$, and the
+last accepted layer at every $p\mid v$ is actually removed, it follows that
+
+$$
+\boxed{
+0\le I_v(E_+)-G_+((E_+-B_y)_+)
+\le\int_0^{h_0}\Delta_v(h)\,dh
+\le h_0R_s(v).
+}
+$$
+
+The first upper bound uses the one-Lipschitz property of the positive part.
+A tied removed layer has $c_{p,a_p}=0$ and forces
+$\tau_p>1-1/p\ge1/2$, so it contributes nothing to this refinement.
+Excluding an exactly free removal cannot create an artificial positive
+gain.
+
+Every contributing prime also satisfies
+$p^2\log p\le s/(1-h_0)\le3s/2$, because $a_p+1\ge2$.
+Consequently
+
+$$
+\Delta_v(h)\le\vartheta(P_2),\qquad
+I_v(E_+)-G_+((E_+-B_y)_+)
+\le h_0\vartheta(P_2)=O(\sqrt y).
+$$
+
+This removes part of the higher-layer allowance for the actual gcd. The
+prime-error allowance $2\eta_y$ in $B_y$ is unaffected. The size bound
+does not give a positive lower bound for the gain or rule out payment of
+a smaller residual budget at a particular host. The remaining sufficient
+test is $R_s(v)+I_v(\log u)>T_s(N)$ for that same $N$; no uniform
+comparison on the original FIB residual sources has been established.
