@@ -1743,3 +1743,54 @@ Lean or novelty claim. General lattice conjugacy, homotopic-isometry
 existence, global target uniqueness and the full Mostow–Prasad endpoint,
 including cusps and nonorientable manifolds, remain unproved by this check.
 The existing escape audit remains unfinished at the linked issue.
+
+
+## Continuous interpolation equivariant under the full original H3 group
+
+The original H3 Lorentz coordinates have light difference
+`v₀-v₃=1/height>0`. Every real four-vector with Lorentz self-kernel `1`
+and positive light difference has an explicit original-H3 inverse: its
+horizontal real and imaginary coordinates are `v₁/(v₀-v₃)` and
+`v₂/(v₀-v₃)`, and its height is `1/(v₀-v₃)`. This recovers every actual
+original H3 point. It is a point-coordinate inverse; no surjectivity claim
+for the matrix representation of the isometry group is made.
+
+For `r∈[0,1]` and actual points `p,q`, form the Lorentz vector
+`v=(1-r)L(p)+rL(q)`. Its self-kernel is
+`(1-r)²+r²+2r(1-r)cosh(dist(p,q))`, hence at least `1`; its light difference
+is positive. Dividing by the square root of that self-kernel and applying
+the explicit future-unit-vector inverse gives an actual original H3 point.
+The resulting interpolation has endpoints `p,q`. Every actual full H3
+isometry preserves this interpolation: the existing exact linear extension
+preserves the Lorentz kernel and agrees on every actual H3 point. No affine
+shape, orientation restriction or substituted metric is used.
+
+The interpolation is jointly continuous in the closed-interval parameter
+and both points, using the same original H3 coordinate homeomorphism and
+continuous Lorentz coordinate map. The proof keeps every reciprocal away
+from zero through the proved positive-light and positive-kernel bounds.
+For any topological source space and two continuous maps into original H3,
+the construction supplies an actual continuous homotopy with the stated
+endpoints. If both maps are equivariant for the same group action on the
+source and the same representation into the actual full H3 isometry group,
+that very homotopy is equivariant for every group element and every time.
+Continuity here is joint in time and the source point; no joint continuity
+in the group variable is asserted or required.
+
+Three scoped transient cache-guarded checks exited zero and printed nineteen
+axiom closures using only `propext`, `Classical.choice` and `Quot.sound`.
+One rejected algebra source/log pair and two rejected continuity/homotopy
+pairs are excluded. The repaired composition uses explicitly typed maps
+and a local irreducibility annotation for the already proved interpolation
+operator; the original statements, metric, actions and resource limits are
+retained. These are classical compositions, with no new tracked Lean or
+novelty claim. The existing escape audit remains unfinished at the linked
+issue.
+
+This check constructs the original-H3 equivariant homotopy. It does not yet
+descend that homotopy through the actual target coverings, construct an
+equivariant lift of an arbitrary prescribed homotopy equivalence, or obtain
+an ambient conjugator from an abstract lattice isomorphism. General
+homotopic-isometry existence, global target uniqueness and the full
+Mostow–Prasad endpoint remain unfinished, including cusps and nonorientable
+manifolds.
