@@ -433,3 +433,46 @@ bijective differential do not supply the still-unproved covering structure,
 arbitrary-manifold realization as a hyperbolic quotient, cusp classification
 or full Mostow-Prasad existence and uniqueness. The noncompact and
 nonorientable cases remain part of the rigidity target.
+
+
+## Complete pullback of the same global negative exponential
+
+The everywhere bijective differential and global smoothness of the same `e`
+provide local smooth inverse branches through
+`Comparison/Injectivity/LocalInverse.lean`. Packaging those branches gives
+`IsLocalDiffeomorph e`. `Metric/LocalDiffeomorph.lean` then supplies the actual
+smooth differential pullback `gE = g.pullbackOfLocalDiffeomorph e hlocal`;
+its tangent inner product is exactly the target inner product of the two
+images under `mfderiv e`.
+
+For every tangent-space point `x` and vector `w`, the negative polar identity
+implies `inner w w ≤ gE.inner x w w`. At `x = 0` this is the normalized
+initial-frame identity. Away from zero, write `x = ‖x‖ • θ` with `θ` unit;
+`sinh(‖x‖) ≥ ‖x‖` and Cauchy-Schwarz show that the angular correction is
+nonnegative. This estimate applies over the entire tangent space.
+
+`Distance/TangentBound.lean`, specifically
+`RiemannianMetric.edist_le_mul_of_inner_mfderiv_le`, applied to the identity
+map and the Euclidean metric from
+`Comparison/Injectivity/PullbackGeodesics.lean`, gives Euclidean extended
+distance at most `gE.edist`. A sequence Cauchy for the intrinsic pullback
+distance is therefore Euclidean Cauchy and has a Euclidean limit. The smooth
+intrinsic metric has the original topology, so that same limit establishes
+`MetricComplete gE`. The check keeps the source and target uniform-space
+instances explicit during the Cauchy transfer.
+
+The combined application retains the same selected `e`, its surjectivity,
+normalization, radial geodesics at every real time, everywhere bijective
+differential and negative polar identity for all `t ≥ 0`. Its actual
+pullback completeness and Euclidean inner lower bound are checked for the
+same constructed `g` and descended `gQ`; all preceding source, volume,
+curvature, conditional core/tail and quotient clauses remain. The original
+free, compact-set proper isometric-action hypotheses and uniqueness within
+the chosen smooth quotient structure are retained. No compactness,
+orientability or finite-volume premise is added.
+
+These are scoped transient classical applications under the unchanged pins,
+with only `propext`, `Classical.choice` and `Quot.sound`. This increment does
+not establish that `e` is a covering map or injective. Arbitrary-manifold
+hyperbolic quotient realization and full Mostow-Prasad rigidity, including
+cusps and nonorientable manifolds, remain unfinished.
