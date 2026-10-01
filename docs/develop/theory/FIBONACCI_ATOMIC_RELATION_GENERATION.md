@@ -35428,3 +35428,69 @@ $$
 3. 在同一整数上控制有符号 $\Phi$ 尾项，足以验证 §250.2 的点值条件。
 
 因此，下一步应优先证明一项真实的“来源保持”或构造一对具有相同 FIB 观察而不同价格源的反例；继续重复 CA 支撑线、Robin 等价式或有限安全类的证明不会缩小当前缺口。上述三项新来源的精确陈述与适用边界分别见 [Mishra--Sarkar](../../../Library/ArithSums/mishra2026finite_robin.md)、[Zimov](../../../Library/ArithSums/zimov2025least_ca.md) 和 [Assani--Chester--Paschal](../../../Library/ArithSums/assani2025robin_kaneko.md)。
+
+## 253. 最新来源的去重审计：平滑、有限 CA 证书与有符号障碍
+
+截至 2026 年 10 月 1 日，针对本项目缺口新增核对了四份来源。它们覆盖不同历史层次，但没有一份提供从五窗地址到同一 Robin 候选的点值桥接。
+
+### 253.1 Ramanujan 变换只给平滑控制
+
+[Danesh 的工作论文](../../../Library/Analytic/danesh2026ramanujan_robin.md)用约数 Lambert 级数
+
+$$
+S(x)=\sum_{n\ge1}\sigma(n)e^{-nx}
+$$
+
+及 Ramanujan 变换研究 Robin 缺陷的 Laplace 表达。它明确区分平滑后的正性与每个整数的系数正性，并把潜在问题集中到 CA 或最高丰数等除数丰富整数。这个区分与 §250 的点值条件完全同向：对 FIB 家族证明某种平滑平均为正，不会自动给出同一整数上的
+
+$$
+\Phi(x)+R(x)>0.
+$$
+
+五窗递归没有给出 Lambert 系数的逐项正下界，也没有把 FIB 整数识别成其极值检验集合。因此这里是障碍的独立文献确认，不是新的 Robin 估计。
+
+### 253.2 有限 CA 证书扩大了边界，但不改变无限义务
+
+[Polak 的有限计算机辅助证书](../../../Library/Analytic/polak2026finite_robin_ca.md)报告了
+
+$$
+5041\le n\le10^{7.1\times10^{22}}
+$$
+
+范围内的 Robin 验证，并在同一来源中保留了精确的 prime-power cell 与 signed-triangular residual。有限证书按 CA 指数剖面和相邻 CA 插值组织；FIB 地址按加法窗口和接缝组织。两者之间没有来源保持映射，且该文明确把无限事件上的统一目标留为未证。故重复该有限计算不会推进 FIB 到 §250.2 的点值条件。
+
+### 253.3 Möbius 取消诊断确认了真正的符号缺口
+
+[Estrada 的诊断论文](../../../Library/Analytic/estrada2026mobius_cancellation_barrier.md)把路线写成
+
+$$
+\text{素性/CA 正结构}\to\Lambda\to\mu\to\text{带符号抵消}.
+$$
+
+其 Nyman--Beurling 分析要求有限残差之外还要有斜率和系数质量控制；CA-active 加权变体没有消除残差衰减义务。FIB 的五模式同样首先提供正的局部源数据；除非另建到 Möbius 或 $\Phi$ 的带符号运输，并证明平方根尺度的共同误差界，否则不能把它解释成 RH 级抵消。这个来源因此排除了“再加一层正 CA 几何就自动完成”的重复路线。
+
+### 253.4 分拆分支是另一种 Robin 分解，不是 FIB 分解
+
+[Segovia 的分拆预印本](../../../Library/ArithSums/segovia2026partitions.md)研究 Espinosa 分支，证明首支并报告若干依赖 Alaoglu--Erdős 猜想的高支实现。分支索引、钩形分拆及其 cutoff divisors 不等于 Fibonacci 秩、五窗包含状态或 $\omega(n)$。当前没有从 FIB 地址到其具体除数子集的保源映射，故不重复移植其渐近常数。
+
+### 253.5 去重后的唯一实质缺口
+
+这四份来源与 §§233--252 的历史接口共同把可复用结果分成三层：
+
+1. **经典结构层**：CA/SA 极值、Robin 等价、Lagarias 与 Nicolas 判据、分族安全性；仓内已有，不再重证。
+2. **有限证书层**：更大有限区间和 CA profile 枚举；可作外部边界，不提供无限证明。
+3. **符号点值层**：同一实际 FIB 候选上的有符号 $\Phi$ 或 Möbius 尾项界；这仍未得到。
+
+因此当前可检验的下一步只有两类：
+
+$$
+\text{(a) 证明 FIB 地址保持 CA/价格源/检验集合；}
+$$
+
+或
+
+$$
+\text{(b) 构造同一 FIB 观察下价格源不同的成对实例，证明现有切面不充分。}
+$$
+
+在获得 (a) 或 (b) 之前，继续添加等价判据、正的 CA 权重、平滑恒等式或有限枚举，都不会缩小 §250.2 的量词缺口。上述判断仅把来源已公开的陈述与仓内纸面推导分开；它不声称四份来源的外部证明已经由 Lean 验证，也不改变 Robin/RH 的 open 状态。
