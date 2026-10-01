@@ -13404,3 +13404,106 @@ single-AP source after the old prime's zero column has been absorbed.
 It does not rule out further retained coverage on nonzero columns,
 RS subbatch deletion, several output APs per original, or another source
 map. No enumeration or Lean verification is claimed.
+
+## 102. A three-class terminal color forces all opposite five-roots
+
+Keep one EB1 original cover with R=empty and H=H_3. Let i be a
+nonzero first-three root, and suppose exactly THREE originals of
+ternary height H lie in that root. Include the original pure3^H
+in this count if its root is i. Suppose5 belongs to the opposite
+color, denoted j. All original nonternary heights remain unrestricted.
+
+Let C_j be the union on the full original color-j carrier X_j of
+its actual3-free original classes, and put
+
+    R_j=X_j minus C_j.
+
+The actual source CP4 makes R_j nonempty. With the prime class
+normalized to A_5=0 mod5, the new conclusion is
+
+    projection_mod5(R_j)={1,2,3,4}.                 (FP1)
+
+Each of these four first roots must occur in the SAME original
+cofactor remainder. The conclusion asserts neither complete fibres
+nor uniform mass on these roots, and does not assume global terminal
+singularity.
+
+### The three top classes have one common lower prefix
+
+Take an original private point of any of these three top classes.
+Hold every nonternary coordinate and all first H-1 ternary digits
+fixed, and vary the highest ternary digit through its three values.
+Every lower-height original remains absent. Any top original covering
+a sibling must lie in root i and have this same lower ternary prefix
+u modulo3^(H-1). Its fixed highest digit covers only one sibling.
+
+All three siblings require coverage, and there are only three top
+originals in root i. Consequently these are precisely three classes
+with common lower prefix u, one at each highest-digit value. This
+deduces the common prefix from the original private point and whole
+coverage; it is not inferred merely from three global digit counts.
+
+At most one class has pure-three modulus. Choose a nonpure member
+with original label3^H*m and actual cofactor phase b modm. Here m>1,
+3 does not divide m, and every prime of m belongs to color i.
+
+### Keep the opposite remainder in the joint deletion obligation
+
+Delete ALL three top classes of root i and retain every other
+original. Outside prefix u, no removed original was active. Inside
+u, retained positive-three-height classes of color j are inactive.
+Its retained3-free classes have the same union C_j at every highest
+digit. All remaining retained predicates depend only on the actual
+color-i coordinates and the fixed lower prefix.
+
+Thus the exact deletion remainder inside u has the product form
+
+    U_i(u) times R_j times {0,1,2},
+
+where U_i(u) is the complement of the retained color-i predicates
+on that fixed prefix. It is nonempty because an original private
+point of a removed class survives the deletion. At the highest digit
+of the selected3^H*m original, that original is the sole removed
+class available. Whole original coverage therefore gives
+
+    U_i(u) subset (b modm).                         (FP2)
+
+Both factors refer to this one original source. In particular, every
+point requiring repair has cofactor phase b and its5-root in the
+actual set L=projection_mod5(R_j).
+
+### A missing nonzero five-root supplies a strict replacement
+
+Because A_5 is retained, L is a nonempty subset of{1,2,3,4}.
+Suppose |L|=ell<=3, and list its distinct elements as r_0,...,r_(ell-1).
+For a=0,...,ell-1 add the single AP
+
+    B_a={x:x=u mod3^a, x=b modm, x=r_a mod5},
+    modulus(B_a)=3^a*5*m.                           (FP3)
+
+At a=0 the ternary condition is empty. CG1 gives H>=12, so
+a<=2<=H-1 and every point requiring repair has the necessary shorter
+ternary prefix. Its5-root selects one B_a, while FP2 supplies its
+cofactor condition. Hence these APs cover the ENTIRE joint remainder.
+
+The new labels are pairwise distinct and divide the original period.
+Each contains5 and a prime from the opposite color i, so CP1 makes
+it absent from the entire original palette. Every retained class,
+including every occupied lower ancestor, is unchanged.
+
+If ell<3, the replacement strictly lowers class count. If ell=3,
+its added modulus sum is
+
+    5*m*(1+3+9)=65*m<3^H*m,
+
+which is already less than the modulus of the selected removed
+class alone. The three-for-three replacement therefore strictly
+lowers modulus sum. Both contradict EB1, proving FP1.
+
+This tightens the existing q-2 projection bound to all four nonzero
+five-roots under the stated three-class terminal-color premise. It
+applies to the remaining three-class singular batch when5 lies in
+the opposite color, and also to a local three-class color batch in
+a globally nonsingular source. The opposite remainder may indeed
+have all four roots, so FP1 does not exclude that remaining case or
+settle unrestricted Erdos7. No Lean verification is asserted.
