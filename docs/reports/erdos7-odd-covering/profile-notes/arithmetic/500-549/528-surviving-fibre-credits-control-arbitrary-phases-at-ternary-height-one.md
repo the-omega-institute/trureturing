@@ -27534,7 +27534,8 @@ comparison concerns the same partition and source construction.
 
 There is an essential quantifier distinction: a_tail takes a
 MAXIMUM over suffixes, while b_tail uses their UNION. Small
-separate suffix inventories do not alone bound that union.
+separate set sizes do not bound an arbitrary union; a bound for
+these actual inventories must also use their arithmetic structure.
 The argument V_P/W_P=O(c+1) used in FC1186 therefore cannot be
 applied to b_tail/a_tail without another hypothesis. FC1191
 retains both costs. For an asymptotic sufficient condition one
@@ -27623,3 +27624,283 @@ The new consumer FC1188--1191 still needs a jointly passing cut.
 Its deductions are ordinary symbolic mathematics, reuse the
 existing maximal-divisor and continuation proofs, and introduce
 no new Lean verification or unrestricted resolution.
+
+## Actual query inventories bound the absolute size of used interfaces
+
+Keep the present-P hypotheses and the IMMUTABLE partition of
+FC1178--1191. For each proper T put l_T=k+|T| and define
+
+    L_T=max_(nu in N_B)|J_(T,nu)|,
+    L_A=max_(nu in N_B)|J_(A,nu)|.               (FC1193)
+
+Empty maxima are zero. These are inventories in the ONE actual
+family. Neither the global mixed inventory s=|J| nor the number
+of different suffixes is assumed bounded.
+
+The quotient bound tau(z/j) in FC1180--1181 does not by itself
+bound tau(z). Original divisor closure supplies the missing
+information when the interface has an actual future extension.
+
+### Original and vacant divisors exhaust one actual lower interval
+
+Let A_T*z*nu be an actual LIGHT original with proper T. Every
+g in J dividing z satisfies A_T*g*nu|A_T*z*nu, so its nonunit
+label belongs to D and g belongs to J_(T,nu). The exact identity
+
+    tau(z)=E_T(z)+|J intersect Div(z)|
+
+therefore gives
+
+    tau(z)<=R_T-1+|J_(T,nu)|.                   (FC1194)
+
+This includes the unit old part: T is empty, z=1, and the
+ancestor nu is nonunit. No ancestor's OWN literal phase is
+used to infer its descendant's head activation.
+
+Now let h=A_T*z be a USED divisibility-minimal high interface,
+assigned at least one actual original u=d*nu. Then h|d.
+Since E_T(1)=0, z>1. For ANY prime q|z, A_T*(z/q) is a proper
+divisor of h in the same T carrier. In particular, decrementing
+an anchor exponent in z leaves its required copy in A_T.
+Minimality gives E_T(z/q)<=R_T-1. Every g in J dividing z/q
+also satisfies A_T*g*nu|u and belongs to the SAME J_(T,nu).
+Consequently
+
+    tau(z/q)<=R_T-1+|J_(T,nu)|,
+    tau(z)<=2tau(z/q)<=2(L_T+R_T-1).             (FC1195)
+
+The elementary divisor-count ratio is at most two, including
+when q has exponent one. Thus an actual query controls the
+absolute divisor count of its used interface, at every height.
+It is not necessary to count all maximal J-divisors first.
+If L_T=0, no actual proper-T old part can occur: any such
+original would put1 in J_(T,nu). In particular there is no
+used interface in that row.
+
+Minimality sharpens the top support coefficient of this count.
+For integers R>=1,L>=1 put N=2(L+R-1) and
+t=ceil(log_2(L+R))=floor(log_2 N). Suppose a used interface
+has threshold R and its assigned suffix inventory is at most L.
+FC1195 bounds its support by t. If its support has exactly t
+primes, let w be its squarefree radical. All J-divisors of w
+belong to that same actual suffix inventory, and therefore
+
+    E_T(w)>=tau(w)-L=2^t-L>=R.
+
+Since w|z stays in the same T carrier, minimality forces z=w.
+Thus every top-support interface is squarefree. Write the
+existing divisor polynomial as
+
+    D_N(l)=sum_(i=0,...,t)d_(N,i)binom(l,i),
+    F_(R,L)(l)=binom(l,t)
+                       +sum_(i=0,...,t-1)d_(N,i)binom(l,i).
+
+Here d_(N,i) counts the ordered positive exponent patterns on
+i named prime directions whose divisor product is at most N;
+d_(N,0)=1. Since the squarefree pattern is permitted at size t,
+d_(N,t)>=1. Consequently F_(R,L)<=D_N, and the number of used
+interfaces is at most F_(R,L)(l). Its leading binomial
+coefficient is one. Lower-support terms deliberately count
+all patterns allowed by FC1195, whether or not minimal high.
+
+### Count the shared interfaces without multiplying suffix budgets
+
+Use the existing all-height polynomial D_R(l). For each actual
+suffix define
+
+    a_nu^*=|J_(A,nu)|
+       +sum_(T proper: J_(T,nu) nonempty)
+          min{|J_(T,nu)|D_(R_T)(l_T),
+              D_(|J_(T,nu)|+R_T-1)(l_T)},
+    a^*=max_nu a_nu^*,
+    b^*=sum_(T proper: L_T>0)(R_T-1)
+          min{|J_T^tail|D_(2R_T)(l_T),
+              F_(R_T,L_T)(l_T)}.               (FC1196)
+
+The first terms of the minima are FC1189--1190. The second
+terms follow from FC1194--1195 and the top-support restriction
+by counting z on the l_T named prime directions. Different
+interfaces have different z.
+Each used interface retains the same all-phase capacity R_T-1
+and pays all originals assigned to it across ALL suffixes once.
+The full-anchor slots remain light and are paid explicitly.
+
+It follows that a^* bounds every light core section, and b^*
+bounds the pointwise activation of the entire selected family.
+In particular a^*<=a_tail and b^*<=b_tail. Taking these rowwise
+minima changes no partition or source. They can be inserted
+directly in FC1191, with its two finite conditions unchanged.
+
+This is a structural control of the max/union distinction: a
+bound on each ACTUAL suffix inventory limits which arithmetic
+interfaces can occur in their union. It asserts no corresponding
+bound for arbitrary sets and uses no number of suffixes as a
+multiplier. Even the ancestor union itself is finite under such
+a restriction: every j in J_T^tail has all its divisors in one
+J_(T,nu), hence tau(j)<=L_T. The sharper direct interface bound
+FC1195 avoids then multiplying that ancestor count by D_(2R_T).
+
+For a convenient uniform consequence, suppose every inventory
+in FC1193, including L_A, is at most a fixed integer M>=1. Put
+
+    b_M=sum_(T proper)(R_T-1)F_(R_T,M)(l_T).
+
+Applying the same count with L=M gives a light bound M W_P(c)
+and a selected bound b_M. These bound the actual loads; one
+may take their minima with a^*,b^*. For15, M<=24 makes the largest
+divisor threshold 2(M+7)<=62<64, so b_M=O_M(c^5). For105,
+M<=464 makes it2(M+47)<=1022<1024, so b_M=O_M(c^9).
+The degree bound is floor(log_2 R) for D_R. FC1183--1184 and
+the same complete BBMST endpoint therefore exclude, at all
+sufficiently large proper cuts, respectively
+
+    P=15,  M<=24,
+       c<=gamma(B log B)^(1/6),
+                        0<gamma<(6/M)^(1/3);
+    P=105, M<=464,
+       c<=gamma(B log B)^(1/10),
+                        0<gamma<(20/M)^(1/5).  (FC1197)
+
+Indeed b_M/B tends to zero in these ranges, while the leading
+light-square ratios are at most M^2 gamma^6/36<1 and
+M^2 gamma^10/400<1. The uniform companion term is unchanged.
+This permits unbounded global s, since only actual continuation
+inventories are bounded. The thresholds24 and464 are sufficient
+degree cutoffs, not claimed optimal: at25 or465 this particular
+bound has degree6 or10 and does not yield the same vanishing
+selected debit. The finite criterion may still pass.
+
+## The actual last prime gives a nested-inventory first-moment test
+
+Let p be the largest support prime of the same minimum whole
+cover. Take the full-height proper head immediately before p,
+so all other support primes are old. Assume as above that the
+old core C contains the anchors and that P is original. Every
+future suffix is p^e, 1<=e<=H_p. Arbitrary original exponents
+and literal phases are retained.
+
+The source construction is the existing one: choose the core
+projection of an actual future private point, take its Dirac
+law, and tensor it with the normalized companion source mu_O
+of FC1132. This ONE law is supported on all head survivors.
+Every head original lies in one old component. Append the
+complete Haar coordinate modulo p^H_p, without pre-deleting
+pure powers and without applying a BBMST row.
+
+This is the final-coordinate averaging already used in
+Library/Arith/lettlsun2008cosets.md, MF3, and Report725, US12.
+Its application here uses the new shared-interface inventories.
+If b is any of their valid global selected activation bounds,
+each selected original costs p^-e times its actual head
+activation, at most1/p times that activation. If a_e bounds
+the actual light core section for p^e, FC1132 bounds its
+companion mean on the same law by5(K_1-1). Thus the probability
+of the ENTIRE future forbidden union is at most
+
+    b/p+sum_(e=1,...,H_p)p^(-e)[a_e+5(K_1-1)]. (FC1198)
+
+All head originals already have zero probability. A right
+side strictly below1 consequently gives a complete uncovered
+point. Pure future powers belong to the core unit slots; the
+companion has no unit slot. The selected group is paid once,
+not once per height. The factor two of FC1144 is absent because
+the new coordinate is Haar on this explicitly different full
+law; no estimate from a BBMST-conditioned law is substituted.
+
+### The first suffix contains every later ancestor inventory
+
+Original divisor closure gives, for every T including A,
+
+    J_(T,p^(e+1)) subset J_(T,p^e),
+    union_(e=1,...,H_p)J_(T,p^e)=J_(T,p),
+    max_e|J_(T,p^e)|=|J_(T,p)|.                 (FC1199)
+
+For proper T this follows by dividing the original A_T*j*p^(e+1)
+by p; for T=A divide P*j*p^(e+1). The maximum and union now
+refer to the same FIRST inventory. Define
+
+    M=max_(T subset A)|J_(T,p)|>=1.
+
+The inequality M>=1 follows from the pure p label and T empty.
+The old bounds FC1189--1190 already give a_e<=M W_P(c) and
+b<=M V_P(c), without restricting s. Substituting these bounds
+in FC1198 and summing the geometric series gives the finite
+sufficient noncoverage test
+
+    M V_P(c)/p+[M W_P(c)+5(K_1-1)]/(p-1)<1.     (FC1200)
+
+This is also valid with the finer a_e and b^* of FC1196.
+All these quantities refer to the fixed partition at this
+last cut. By FC1134, K_1=O((log p)^2) uniformly in old heights
+and the companion subset. For a fixed bound M<=M_0, the
+leading coefficients in FC1183--1184 therefore exclude, for
+all sufficiently large p,
+
+    P=15:  c<=gamma p^(1/4),
+                          0<gamma<(24/(7M_0))^(1/4);
+    P=105: c<=gamma p^(1/6),
+                          0<gamma<(720/(329M_0))^(1/6).
+                                                     (FC1201)
+
+The light term has degree three or five, one less than the
+selected term, and tends to zero after division by p-1 in
+these ranges. This last-prime application uses a fixed actual
+cut, not an unproved search for some favorable intermediate
+cut. Its inventory and core-size premises are still necessary
+inputs to this sufficient test; they are not forced here.
+
+### Small query inventories remove their multiplier from the leading debit
+
+FC1195 and minimality improve the leading selected coefficient
+in a bounded inventory range. Only the empty-T row needs its
+new F bound; retain the incidence bounds in every other row.
+
+For P=15 and M<=8, the empty-row threshold2(M+7) is at most30,
+so its support size is at most four. On four primes only a
+squarefree z can be minimal high: its radical w has16 divisors
+and at least16-M>=8 vacancies. If z were not squarefree, w
+would already be a proper high divisor. Thus the row is at most
+
+    7F_(8,M)(k)=7binom(k,4)+O(k^3).
+
+The other rows have degree at most three under their incidence
+bounds. Consequently b^*<=7c^4/24+O(c^3), with constants uniform
+over1<=M<=8. The leading coefficient no longer carries M.
+
+For P=105 and M<=16, the empty-row threshold2(M+47) is at
+most126, so support size is at most six. Its six-prime radical
+has64 divisors and at least64-M>=48 vacancies. Again minimality
+forces a top-support z to be squarefree. In particular the six
+one-exponent-two patterns counted by D_96 or D_126 are NOT used
+minimal high interfaces in this range. The empty row is at most
+
+    47F_(48,M)(k)=47binom(k,6)+O(k^5).
+
+All remaining rows retain their degree at most five under the
+incidence bound. Thus b^*<=47c^6/720+O(c^5), uniformly for
+1<=M<=16. In both cases a_e<=M W_P(c) still pays every light
+original, including all full-anchor originals with that suffix.
+Using these bounds in FC1198 excludes
+
+    P=15,  M<=8,
+       c<=gamma p^(1/4), 0<gamma<(24/7)^(1/4);
+    P=105, M<=16,
+       c<=gamma p^(1/6), 0<gamma<(720/47)^(1/6)
+                                                     (FC1202)
+
+for all sufficiently large largest support primes p. These
+ranges allow arbitrary global mixed inventory s, all original
+heights and all original phases. They require the stated
+FIRST-suffix inventories for EVERY T, including full support.
+Neither the numeric cutoffs8 and16 nor the resulting constants
+are asserted optimal for all possible counting refinements.
+
+FC1193--1202 supply an arithmetic interface restriction and its
+applications to existing same-source continuation principles.
+They are ordinary symbolic deductions, not new Lean results.
+The unrestricted obstruction remains: no argument here forces
+the actual inventories and core size of a minimum whole cover
+to satisfy these joint tests. A large core or large actual
+first-suffix inventory is not excluded merely by a small global
+height in one coordinate, and no bound for the missing cases
+has been substituted into the original quantifiers.
