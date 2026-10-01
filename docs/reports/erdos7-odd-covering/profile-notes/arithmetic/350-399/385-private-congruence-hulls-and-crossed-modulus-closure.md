@@ -11719,3 +11719,400 @@ product structure, uniform density lower bound or exclusion of
 the remaining layout. The arguments reuse PH3--PH4 and the actual
 repairs of sections82--83; no Lean verification or priority claim
 is asserted.
+
+## 86. Irredundancy makes the square residuals exact products
+
+Keep FL6's actual minimum-column source. Split the full color carriers as
+
+    X_j=(Z/q^H_q) times Y_j,
+    Y_j=product_(s in S_j, s!=q) Z/s^H_s,
+
+and analogously X_k=(Z/r^H_r) times Y_k. Let C_beta,C_gamma be the
+complete q-coordinate cylinders at the two original q^2 phases B,C,
+and let C_delta be the complete original r^2 cylinder of E_k. All
+higher q- and r-digits remain in these cylinders. There are nonempty
+actual auxiliary residuals F_j in Y_j and F_k in Y_k such that
+
+    E_j=(C_beta union C_gamma) times F_j,
+    E_k=C_delta times F_k.                         (FL8)
+
+In particular, the two guarded square pieces have the SAME auxiliary
+residual. This strengthens their common first-q phase and separate
+congruence-hull constraints.
+
+### An active high-depth original cannot meet a filled square cylinder
+
+On either C_beta or C_gamma, the original5-bearing classes in the
+root-j quotient already cover every5 root, independently of all
+auxiliary coordinates. The original5 covers root0;5q and15q cover
+their two singleton roots;15 covers the third nonzero root; and
+the corresponding5q^2 or15q^2 covers the remaining root. The
+root-k cylinder C_delta similarly fills all five roots using5
+and the four nonpure originals.
+
+Section75 preserves original privacy in these actual quotients.
+If an active5-free original had q-depth at least two and met
+C_beta or C_gamma, its whole quotient AP would lie inside that
+cylinder. It would already be covered by the5-bearing originals,
+contradicting its private point. Thus its q^2 phase avoids BOTH
+beta and gamma. The analogous r-depth condition excludes delta
+for every active5-free original in the other quotient.
+
+The5-free originals that can meet the square cylinders therefore
+have q-depth zero or one, or r-depth zero or one respectively.
+In color j their membership predicates are identical on C_beta
+and C_gamma, since both have the same first-q coordinate alpha.
+They also ignore all higher q-digits. Define F_j as the complement
+of this actual common trace on Y_j. The existing containment of
+E_j in the two square cylinders now gives the first equality in
+FL8. The same argument gives F_k and the second equality.
+Nonemptiness follows from the already nonempty original residuals.
+
+Each F_i is the complement of an actual auxiliary AP family with
+numerical multiplicity at most FOUR. For a fixed auxiliary modulus
+m, only the original labels m,3m,qm,3qm can contribute to the
+root-j trace; use r instead of q in root k. A modulus-one trace
+cannot occur, since it would make F_i empty. The relevant phases
+come from the original source. This family need not be a whole
+cover and need not have multiplicity at most two.
+
+### Reuse singular elimination with its exact numerical collisions
+
+[Report343, section4](../../321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md#4-奇异-dp-保真到哪一层)
+already supplies Kullmann's generalized singular Davis--Putnam
+elimination, arXiv:1103.3693v1, Lemma1.6.1. Apply it to the sole5
+digit in each actual irredundant quotient. Its value-occurrence
+counts are(1,1,1,1,2) in color j and(1,1,1,1,1) in color k.
+All other prime digits remain untouched, so the actual resolvents
+are respectively the two q^2 phases beta,gamma and the single
+r^2 phase delta. Thus
+
+    G_j=(actual5-free quotient classes) union {beta modq^2,gamma modq^2},
+    G_k=(actual5-free quotient classes) union {delta modr^2}
+
+are irredundant whole AP covers on the disjoint supports S_j,S_k.
+Each quotient loses exactly four labels. This is a direct use of
+the published theorem, not a new general elimination result.
+
+The numerical collision is explicit. Original q^2 and3q^2 both
+exist by divisor closure and contribute different q^2 phases to
+the root-j quotient. The high-depth exclusion above makes both
+different from beta,gamma. Thus G_j has exactly FOUR classes of
+modulus q^2, while every other numerical modulus has at most two.
+Likewise G_k has exactly THREE classes of modulus r^2 and at most
+two at every other modulus. All moduli are greater than one and
+coprime to30; all other original heights are retained.
+
+These are actual whole covers, but their exceptional numerical
+repetitions prevent direct use of SO1's multiplicity-two premise.
+The two quotient count decreases cannot be added as a decrease of
+the original family, because original5 belongs to both quotients.
+No distinct-modulus descent or Lean verification follows from this
+elimination alone.
+
+## 87. Shared ternary labels impose a joint reciprocal constraint at every height
+
+Return to section84's arbitrary-height source, with nonternary support
+R,S_1,S_2 and the same retained root families. Keep every original
+height, and set
+
+    Q_R=product_(p in R)p^H_p,
+    rho=sum_(m|Q_R,m>1)1/m,
+    Rex_i=Rhat_i-rho,
+    theta=theta_H, tau_i=1-beta_i,
+    s_i=(2*tau_i+theta)*Rhat_i-tau_i.
+
+Here Rex_i is the reciprocal divisor inventory whose support meets
+S_i, not an actual residual measure. CM1 gives beta_1+beta_2=theta,
+including theta=0 at H=1, and CM6 gives s_i>=0. Original numerical
+label ownership additionally requires, for ALL nonnegative real
+lambda_1,lambda_2,
+
+    lambda_1*s_1+lambda_2*s_2
+      >=rho*[min(lambda_1*tau_1,lambda_2*tau_2)
+             +theta*min(lambda_1,lambda_2)].         (CM7)
+
+In particular,
+
+    s_1+s_2>=(1+min(beta_1,beta_2))*rho.            (CM8)
+
+If R is nonempty, simultaneous equality in the two separate CM6
+thresholds is impossible. The correction comes from labels that
+cannot belong to both ternary roots.
+
+### Count the same shared originals once where they have one owner
+
+Let ell_i be the SUM of cofactor reciprocal weights of the actual
+low originals m,3m in root i, with m>1. Let h_i be the sum of
+3^(1-a)/m over its actual retained high originals3^a m, a>=2,m>1.
+Section84's complement inequality and the low union bound give
+
+    tau_i<=tau_i*ell_i+h_i.                         (CM9)
+
+This remains valid when the low reciprocal sum exceeds one; no
+assumption that Rhat_i<1/2 is needed.
+
+Separate the shared and exclusive numerical inventories. Let f be
+the reciprocal sum of actual3-free originals m>1 supported only
+on R. Let a_i be the reciprocal sum of actual3m supported only
+on R and owned by first-three root i. Let b_i be the high sum
+of3^(1-a)/m for actual3^a m supported only on R and owned by i.
+Write ell_i^ex,h_i^ex for the corresponding inventories whose
+cofactor support meets S_i. Then exactly
+
+    ell_i=ell_i^ex+f+a_i,
+    h_i=h_i^ex+b_i.
+
+A3-free shared original really occurs in both retained families.
+A3-bearing shared original has only ONE first-three root. The
+retained original3 and comparable-class disjointness exclude root0
+for every other3-bearing original. Numerical distinctness therefore
+gives the joint bounds
+
+    f<=rho, a_1+a_2<=rho, b_1+b_2<=theta*rho,
+    ell_i^ex<=2*Rex_i, h_i^ex<=theta*Rex_i.          (CM10)
+
+The divisor inventories permit every possible label and height
+pair. Missing original labels only improve these upper bounds;
+no saturated inventory or maximizing root allocation is asserted
+to be realizable.
+
+Multiply CM9 by lambda_i and sum. CM10 gives
+
+    sum_i lambda_i*tau_i
+      <=sum_i lambda_i*(2*tau_i+theta)*Rex_i
+        +rho*[lambda_1*tau_1+lambda_2*tau_2
+               +max(lambda_1*tau_1,lambda_2*tau_2)
+               +theta*max(lambda_1,lambda_2)].
+
+For example, the shared low mixed contribution is at most
+rho*max(lambda_1*tau_1,lambda_2*tau_2), because there is one
+shared3m pool. The high shared pool similarly pays only the
+maximum weight. Substitute Rex_i=Rhat_i-rho and rearrange to
+obtain CM7. Equal weights and beta_1+beta_2=theta give CM8.
+
+Each inequality concerns the same original family. The two
+normalized retained carriers can differ: the same numerical
+cofactor m has weight1/m in either full carrier. This accounting
+does not combine unrelated phase choices or conditional laws.
+
+### Two breakpoints suffice for the weighted condition
+
+Exchange the root names if necessary so tau_1>=tau_2>0. CM7 is
+equivalent to s_1,s_2>=0 together with
+
+    s_1+s_2>=rho*(tau_2+theta),
+    tau_2*s_1+tau_1*s_2>=rho*tau_2*(tau_1+theta).   (CM11)
+
+For lambda_2>0 set x=lambda_1/lambda_2. The difference between
+the two sides of CM7 is affine between its only two breakpoints
+x=tau_2/tau_1 and x=1. CM11 checks those points; the individual
+nonnegative slacks control the end directions. Zero weights add
+only those individual inequalities.
+
+At H=1, tau_1=tau_2=1 and theta=0. Alongside CM6, this reduces to
+
+    Rhat_1+Rhat_2>=1+rho/2.                         (CM12)
+
+SO1 remains a separate support constraint at height one; no sieve
+calculation is repeated here. At higher heights the argument uses
+the actual root complement and full inventory, without assuming
+multiplicity two after removal of the ternary coordinate.
+
+These are necessary joint inventory bounds, not phase-realization
+criteria or strict EB1 descents. Larger reciprocal inventories can
+satisfy them. No unrestricted noncoverage or Lean verification is
+asserted.
+
+## 88. A reserved distortion margin excludes the remaining flat-five minimum
+
+The exceptional square multiplicities in section86 can be paid from
+the existing distortion continuation margin. The reusable input is
+[Report348, SO1](../../321-384/348-fresh-prime-root-transport-and-two-copy-reduction.md#two-multiplicity-two-covers-share-a-small-prime):
+the KKL repeated-label moment bound and the BBMST continuation
+criterion, with arbitrary finite prime heights. No sieve table is
+recomputed.
+
+### Two additional prime-square classes cannot fill the reserved mass
+
+Let B be any finite labelled AP family whose moduli are greater
+than one and coprime to210, each used at most twice. Include any
+additional square moduli in one complete ambient period. Construct
+the actual BBMST distortion measures P_i from B; unused coordinates
+are uniform. Number all ordinary primes, including absent primes,
+so p_4=7 and the first four bad sets B_i are empty. Put
+
+    a_i=(3*p_i-1)/(p_i-1)^2,
+    b_i=1/[4*(p_i-1)^2],
+    C_i=product_(4<j<=i)[1+a_j/(1-delta_j)].
+
+The existing labelled second-moment estimate gives, for every later
+allowed distortion sequence,
+
+    M_i^(2)<=4*C_(i-1)/(p_i-1)^2.
+
+Absent-prime factors in C_i only enlarge this bound. Reserve one
+fifth by defining the SCALAR accounting quantities
+
+    nu_i=4/5-sum_(4<j<=i)P_j(B_j),
+    F_i=4*C_i/nu_i when nu_i>0.
+
+The probability measures are unchanged; no conditioning or
+renormalization is performed. Initially nu_4=4/5 and F_4=5.
+BBMST Lemma3.3 and the moment estimate imply
+
+    nu_(i-1)-nu_i=P_i(B_i)
+      <=nu_(i-1)*b_i*F_(i-1)/[delta_i*(1-delta_i)].
+
+Whenever b_i*F_(i-1)<delta_i*(1-delta_i), this proves nu_i>0 and
+
+    F_i<=[1+a_i/(1-delta_i)]
+          *[1-b_i*F_(i-1)/(delta_i*(1-delta_i))]^(-1)*F_(i-1).
+
+This is precisely BBMST Lemma6.2's recurrence(23). Its proof uses
+the displayed loss difference, moment bound and nu_i*F_i=4*C_i;
+it does not require the initial accounting mass to equal one.
+The positive-denominator induction in Theorem6.1 uses the same
+scalar recurrence. Table1 of arXiv:1811.03547v1, p.19, gives
+g_4>=5.860938>5. The definition of g_4 before Corollary6.3
+therefore supplies a successful scalar continuation from F_4=5,
+followed by that analytic tail. Monotonicity of the recurrence
+on its positive-denominator domain bounds the actual F_i by this
+continuation, proving nu_n>0 at every finite final stage.
+
+This uses the PROOF of the continuation criterion with a reserved
+accounting mass. Corollary6.3's noncoverage statement by itself
+would not supply the quantitative margin. All measures still
+belong to the one actual base family B.
+
+BBMST Lemma2.1 preserves earlier-coordinate marginals. Thus under
+the SAME final probability P_n,
+
+    P_n(union of the base classes)<=sum_i P_i(B_i)<4/5,
+    P_n(R_base)>1/5.                               (RM1)
+
+Lemma3.4, equation(11), applies to every residue class whose modulus
+divides the ambient period, including omitted classes. An extra
+pure-square class A=(c modq^2) therefore satisfies
+
+    P_n(A)<=1/[q^2*(1-delta_q)]<=2/q^2.
+
+The whole q-primary coordinate is processed once; the square does
+not create a second distortion factor. Hence adding at most two
+prime-square classes, with their primes at least11, gives
+
+    P_n(R_base minus the extra classes)
+      >1/5-4/121=101/605>0.                        (RM2)
+
+This is a bound in the actual distorted probability, not in uniform
+counting measure. Its positivity proves that the augmented family
+cannot cover. More generally the same argument allows any finite
+list of extra pure-square classes with sum_A 2/q_A^2<1/5.
+
+### Apply the margin to the actual singular-elimination outputs
+
+The two whole covers G_j,G_k of section86 have disjoint supports
+S_j,S_k and all moduli coprime to30. At least one omits7. In that
+cover remove enough occurrences of its exceptional square modulus
+to leave numerical multiplicity at most two: two removals suffice
+for G_j, and one suffices for G_k. The resulting base is coprime
+to210. Its exceptional prime is at least11, so RM2 contradicts
+whole coverage after the removed classes are restored.
+
+Thus FL6 is impossible. Combining this with sections81--83 excludes
+ALL minimum-column configurations at p=5. Together with FL2 and
+CP17, the flat unique-nonconcentrated-prime branch satisfies
+
+    H_3=H_p=1, R={p}
+      ==> p in {5,7,11,13} and |U_1|+|U_2|>=p.    (FL9)
+
+This retains every other original prime height. The argument
+closes the minimum |U_1|+|U_2|=p-1 case; it does not exclude larger
+column inventories, larger p or ternary heights, or several
+nonconcentrated primes. Unrestricted Erdos7 remains unresolved.
+The deductions reuse published moments, AP-mass bounds and the
+published continuation threshold; no Lean verification is asserted.
+
+## 89. Actual root capacity requires at least six flat-five columns
+
+Keep H_3=H_5=1 and R={5}, but impose NO minimum-column equality.
+Retain the complete original color supports and all their prime
+heights. Let j own the original15, let k be the other color, and
+write u_i=|U_i| as in section80. For every color i with7 not in S_i,
+
+    u_i>=5-e_i, where e_i=1 if i=j and e_i=0 if i=k. (FL10)
+
+In particular,
+
+    u_j+u_k>=6.                                    (FL11)
+
+If7 is in S_j the stronger total is at least7. If7 is in neither
+color, it is at least9. These are original nonpure5-column counts,
+not counts of independent optimized quotient sources.
+
+### Reserve mass for the actual5-free cofactor remainder
+
+Fix a color omitting7. Its retained5-free cofactor classes have
+moduli coprime to210, with numerical multiplicity at most two:
+only original m and3m can contribute to the same cofactor m.
+Construct section88's distortion law for this actual family.
+Use reserve3/10, so the initial accounting mass is7/10 and
+the initial scalar is40/7<5.860938. The same published threshold
+and reserved-mass proof give, under the resulting full-cofactor
+probability P,
+
+    P(E_i)>3/10,                                   (FL12)
+
+where E_i avoids exactly this actual5-free family. No measure is
+conditioned on E_i. For ANY original mixed cofactor phase modulo m,
+BBMST Lemma3.4 in this same law gives
+
+    P(a modm)<=2^omega(m)/m.
+
+All prime factors of m are at least11. Hence every such bound is
+at most2/11. Except for m=11 or m=13, it is at most2/17. Indeed
+a different prime is at least17; a prime power of exponent at
+least two gives at most2/121; and a cofactor with two distinct
+prime factors gives at most4/(11*13)<2/17. Further factors only
+decrease the product.
+
+### Every required5 root spends its own original labels
+
+There are t_i=4-e_i nonzero5 roots not covered by the possible
+original15 at root i. The original5 occupies root0, and no other
+pure5 power is present since H_5=1. At each of these t_i roots,
+the actual mixed originals5m,15m of color i must cover EVERY
+point of E_i. This follows from section73's whole-root pruning:
+opposite-color originals have been removed by the same legal
+source assignment, and the5-free originals all miss E_i.
+
+A single mixed original covers P-mass at most2/11<3/10, so each
+required root needs at least two such originals. Every original
+has one fixed5 root. There are at most2u_i mixed originals in
+total, since each column offers only5m and15m.
+
+Suppose u_i<=t_i. The root demands force equality throughout:
+exactly2t_i mixed originals, with exactly two at every required
+root. A pair involving any cofactor other than11,13 has total
+P-mass at most
+
+    2/11+2/17=56/187<3/10,
+    3/10-56/187=1/1870>0.
+
+It cannot cover E_i. Thus all2t_i required originals would have
+cofactor11 or13. Only four numerical original labels are available
+with these cofactors:55,165,65,195. But2t_i>=6. This contradiction
+proves u_i>=t_i+1=5-e_i, without assumptions on the other columns'
+phases or on whether every potential original actually occurs.
+
+The supports S_j,S_k are disjoint, so at least one omits7. FC5
+already supplies u_i>=2 for either color. If j omits7, FL10 gives
+u_j>=4 and hence the total at least6. If k omits7, it gives
+u_k>=5 and hence the total at least7. Applying both when both
+omit7 gives the stated total9.
+
+This closes the four- and five-column cases under the stated flat
+unique-shared-five hypotheses. It does not rule out six or more
+columns, nonflat5 or3 heights, or more than one nonconcentrated
+prime. The proof reuses the same continuation and actual AP-mass
+interface; no new sieve computation or Lean verification is claimed.
