@@ -20,7 +20,7 @@ A(H) consists of finite budgets K for deterministic history selectors whose exec
 
 Write B(H)=max over prime divisors p of H of v_p(H)(p-1), with the empty maximum zero. For H>1, Chinese remaindering identifies ZMod H with the product of ZMod(p^e) over p^e exactly dividing H. Fix one common k for a scalar stage, recovering y=qM^k v, where q=(2,3) and M sends (a,b) to (b,a+b). Only local shifts are combined; local row vectors are never selected independently.
 
-Each prime axis uses the ordered digit tests with center r+a p^s, a=0 through p-2, and keeps the decoded residue when finished. Padding then repeats that decoded center, so every subsequent response on a finished axis is its known saturated depth e. One simultaneous round combines these centers by CRT and uses one actual word. Consequently B(H) rounds suffice for the scalar, regardless of the different axis completion times.
+Each prime axis has an identifying residue protocol with at most e(p-1) queries on every target, obtained from the complete depth-zero residue node. In each simultaneous round an active axis supplies its next center. A stopped axis supplies center zero and remains stopped, discarding that round's response. Equality of synchronized histories implies equality of every local history, including axes that stop early. Combining the centers by CRT uses one actual word per round, so B(H) rounds identify the scalar on all axes.
 
 For L=(H^2)!, the positive word W(k,c) is R^k, then G^((-c).val), R^(L-1), G^(c.val), and R. Since M^L is the identity modulo H, its terminal quantity is qM^k v+c modulo H. Its length is at most L+k+2(H-1). Every intermediate pair is nonnegative. Negative shifts only select residue representatives; no inverse move or additional read is used.
 
@@ -34,5 +34,5 @@ Thus one affine-depth query reconstructs the original whole response and preserv
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/TerminalGcdAcquisitionCost.terminal_gcd_acquisition_cost`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/AffineValuationQueryLowerBound](AffineValuationQueryLowerBound.md)
-- Dependency: [D5/S3/Arith/FibonacciAtomic/ScalarPrefixAcquisition](ScalarPrefixAcquisition.md)
 - Dependency: [D5/S3/ConceptDynamics/Experiment/PassivePolicyNormalization](../../ConceptDynamics/Experiment/PassivePolicyNormalization.md)
+- Dependency: [D5/S3/Observer/Budget/ResidueHeightUpperBound](../../Observer/Budget/ResidueHeightUpperBound.md)

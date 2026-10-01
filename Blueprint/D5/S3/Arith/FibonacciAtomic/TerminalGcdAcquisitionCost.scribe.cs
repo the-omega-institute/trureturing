@@ -45,13 +45,15 @@ internal sealed class TerminalGcdAcquisitionCostDocument : IScribeDocumentDefini
                             + "where q=(2,3) and M sends (a,b) to (b,a+b). Only local shifts "
                             + "are combined; local row vectors are never selected independently.")),
                     Paragraph(Text(
-                        "Each prime axis uses the ordered digit tests with center r+a p^s, "
-                            + "a=0 through p-2, and keeps the decoded residue when finished. "
-                            + "Padding then repeats that decoded center, so every subsequent "
-                            + "response on a finished axis is its known saturated depth e. "
-                            + "One simultaneous round combines these centers by CRT and "
-                            + "uses one actual word. Consequently B(H) rounds suffice for "
-                            + "the scalar, regardless of the different axis completion times.")),
+                        "Each prime axis has an identifying residue protocol with at most "
+                            + "e(p-1) queries on every target, obtained from the complete "
+                            + "depth-zero residue node. In each simultaneous round an active "
+                            + "axis supplies its next center. A stopped axis supplies center "
+                            + "zero and remains stopped, discarding that round's response. "
+                            + "Equality of synchronized histories implies equality of every "
+                            + "local history, including axes that stop early. Combining the "
+                            + "centers by CRT uses one actual word per round, so B(H) rounds "
+                            + "identify the scalar on all axes.")),
                     Paragraph(Text(
                         "For L=(H^2)!, the positive word W(k,c) is R^k, then "
                             + "G^((-c).val), R^(L-1), G^(c.val), and R. Since M^L is the "
@@ -90,7 +92,7 @@ internal sealed class TerminalGcdAcquisitionCostDocument : IScribeDocumentDefini
             DocumentEdge.Dependency.Create(GidRef.Create(
                 "D5/S3/Arith/FibonacciAtomic/AffineValuationQueryLowerBound")),
             DocumentEdge.Dependency.Create(GidRef.Create(
-                "D5/S3/Arith/FibonacciAtomic/ScalarPrefixAcquisition")),
+                "D5/S3/Observer/Budget/ResidueHeightUpperBound")),
         ]));
 
     private static Formula V(string s) => F.Id(s);

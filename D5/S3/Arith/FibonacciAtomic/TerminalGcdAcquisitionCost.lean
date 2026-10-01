@@ -6,7 +6,7 @@
    utility: none
    digest: Same-source positive-word terminal gcd identification has the exact prime-axis budget. -/
 
-import D5.S3.Arith.FibonacciAtomic.ScalarPrefixAcquisition
+import D5.S3.Observer.Budget.ResidueHeightUpperBound
 import D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound
 import D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization
 import Mathlib.Data.Nat.Factorization.Basic
@@ -17,7 +17,7 @@ import Mathlib.Tactic
 
 set_option autoImplicit false
 open D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound
-open D5.S3.Arith.FibonacciAtomic.ScalarPrefixAcquisition
+open D5.S3.Observer.Budget.ResidueHeightUpperBound
 open D5.S3.Observer.Budget.ResiduePosteriorClosure
 open D5.S3.Observer.Budget.ResidueLeafOptimality
 open D5.S3.Factorization.PrimePowers.PrimeBudgetReadoutDichotomy
@@ -428,79 +428,29 @@ theorem terminal_gcd_acquisition_cost (H : ℕ) (hH : 1 ≤ H) :
       exact RingHom.congr_fun
         (Subsingleton.elim ((Pi.evalRingHom X p).comp crt.toRingHom)
           (localProjection H p)) y
-    have padding (p e : ℕ) :
-        (∀ rounds : ℕ, ∀ T : PrefixProgram (p ^ e), ∀ y : ZMod (p ^ e),
-          (runPassiveProtocol (residueReadout p e) (padPrefix rounds T) y).length = rounds) ∧
-        (∀ rounds : ℕ, ∀ T : PrefixProgram (p ^ e), ∀ y z : ZMod (p ^ e),
-          (runPassiveProtocol (residueReadout p e) (forgetPrefix T) y).length ≤ rounds →
-          (runPassiveProtocol (residueReadout p e) (forgetPrefix T) z).length ≤ rounds →
-          runPassiveProtocol (residueReadout p e) (padPrefix rounds T) y =
-            runPassiveProtocol (residueReadout p e) (padPrefix rounds T) z →
-          evaluatePrefix p e T y = evaluatePrefix p e T z) := by
-      constructor
-      · intro rounds
-        induction rounds with
-        | zero => intros; rfl
-        | succ rounds ih =>
-          intro T y
-          simp only [padPrefix, runPassiveProtocol, List.length_cons, ih]
-      · intro rounds
-        induction rounds with
-        | zero =>
-          intro T y z hy hz same
-          cases T with
-          | done r => rfl
-          | query s r c next =>
-            simp only [forgetPrefix, runPassiveProtocol, List.length_cons] at hy
-            omega
-        | succ rounds ih =>
-          intro T y z hy hz same
-          cases T with
-          | done r => rfl
-          | query s r c next =>
-            simp only [padPrefix, prefixCenter, prefixDescend, runPassiveProtocol,
-              List.cons.injEq] at same
-            have answers : residueReadout p e c y = residueReadout p e c z := congrArg
-              (fun t : Sigma (fun _ : ZMod (p ^ e) => ℕ) => t.2) same.1
-            have hy' :
-                (runPassiveProtocol (residueReadout p e)
-                  (forgetPrefix (next (residueReadout p e c y))) y).length ≤ rounds := by
-              simp only [forgetPrefix, runPassiveProtocol, List.length_cons] at hy
-              omega
-            have hz' :
-                (runPassiveProtocol (residueReadout p e)
-                  (forgetPrefix (next (residueReadout p e c y))) z).length ≤ rounds := by
-              simp only [forgetPrefix, runPassiveProtocol, List.length_cons, ← answers] at hz
-              omega
-            have reflected := ih (next (residueReadout p e c y)) y z hy' hz'
-              (by simpa only [← answers] using same.2)
-            simpa only [evaluatePrefix, ← answers] using reflected
-    let programs (p : H.primeFactors) :=
-      prefixProgram p.val (H.factorization p.val) (H.factorization p.val) 0 0
-    let localTrees (p : H.primeFactors) := padPrefix (costBound H) (programs p)
-    have program_correct (p : H.primeFactors) (y : X p) :
-        evaluatePrefix p.val (H.factorization p.val) (programs p) y = y ∧
-          (runPassiveProtocol (residueReadout p.val (H.factorization p.val))
-            (forgetPrefix (programs p)) y).length ≤ costBound H ∧
-          legalPrefixRun p.val (H.factorization p.val) (programs p) y := by
-      have hp : p.val.Prime := Nat.prime_of_mem_primeFactors p.property
-      have he : 1 ≤ H.factorization p.val := hp.factorization_pos_of_dvd
-        (by omega) (Nat.mem_primeFactors.mp p.property).2.1
-      have correct := scalar_prefix_acquisition p.val (H.factorization p.val) hp he
-        (H.factorization p.val) 0 0 (by omega) y
-        (by simpa only [pow_zero] using Nat.mod_one y.val)
-      exact ⟨correct.1, correct.2.1.trans
-        (Finset.le_sup (f := fun q => H.factorization q * (q - 1)) p.property), correct.2.2⟩
-    have localIdentifies (p : H.primeFactors) : Function.Injective
-        (runPassiveProtocol (residueReadout p.val (H.factorization p.val)) (localTrees p)) := by
-      intro y z same
-      have decoded := (padding p.val (H.factorization p.val)).2 (costBound H)
-        (programs p) y z (program_correct p y).2.1 (program_correct p z).2.1 same
-      exact (program_correct p y).1.symm.trans (decoded.trans (program_correct p z).1)
-    have localBounds (p : H.primeFactors) (y : X p) :
-        (runPassiveProtocol (residueReadout p.val (H.factorization p.val))
-          (localTrees p) y).length ≤ costBound H :=
-      ((padding p.val (H.factorization p.val)).1 (costBound H) (programs p) y).le
+    have local_protocol (p : H.primeFactors) :
+        ∃ T : PassiveProtocol (X p) (fun _ => ℕ),
+          Function.Injective
+            (runPassiveProtocol (residueReadout p.val (H.factorization p.val)) T) ∧
+          ∀ y : X p,
+            (runPassiveProtocol (residueReadout p.val (H.factorization p.val)) T y).length ≤
+              costBound H := by
+      letI : Fact p.val.Prime := ⟨Nat.prime_of_mem_primeFactors p.property⟩
+      obtain ⟨T, identifies, lengths⟩ :=
+        residue_height_upper_bound p.val (H.factorization p.val) 0 (Nat.zero_le _) 0
+      have member (y : X p) :
+          y ∈ node p.val (H.factorization p.val) 0 (Nat.zero_le _) 0 := by
+        simp only [node, Finset.mem_filter, Finset.mem_univ, true_and]
+        have singleton : Subsingleton (ZMod (p.val ^ 0)) := by
+          simpa only [pow_zero] using (inferInstance : Subsingleton (ZMod 1))
+        exact singleton.elim _ _
+      refine ⟨T, fun y z same => identifies (member y) (member z) same, ?_⟩
+      intro y
+      have bound := lengths y (member y)
+      simp only [Nat.sub_zero] at bound
+      exact bound.trans
+        (Finset.le_sup (f := fun q => H.factorization q * (q - 1)) p.property)
+    choose localTrees localIdentifies localBounds using local_protocol
     let joint := synchronize X (costBound H) localTrees
     have joint_identifies : Function.Injective (runPassiveProtocol readout joint) := by
       intro y z same

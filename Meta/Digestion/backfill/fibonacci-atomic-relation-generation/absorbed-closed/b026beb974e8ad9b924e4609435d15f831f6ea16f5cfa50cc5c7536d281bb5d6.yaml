@@ -3,7 +3,7 @@ fingerprints:
   normalized_sha256: sha256:b026beb974e8ad9b924e4609435d15f831f6ea16f5cfa50cc5c7536d281bb5d6
 cas_ref: sha256:b026beb974e8ad9b924e4609435d15f831f6ea16f5cfa50cc5c7536d281bb5d6
 coverage_gids:
-  - gid: D5/S3/Arith/FibonacciAtomic/ScalarPrefixAcquisition.scalar_prefix_acquisition
-    target_statement_id: sha256:72f202b14ceb7bf375c186d6afeceac6253e8d2be470009edbee45acb5a2f9fe
+  - gid: D5/S3/Observer/Budget/ResidueHeightUpperBound.residue_height_upper_bound
+    target_statement_id: sha256:a7755dec432eae96128899d01327f883d92cf2e2f41b536a44bbb5dfb4366bda
 receipts:
   unresolved_subitems: []
