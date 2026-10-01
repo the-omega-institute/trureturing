@@ -13705,3 +13705,72 @@ H_3 remains an implication, but SG1 excludes its antecedent in this
 extremal branch. In particular the height-twelve branch is excluded.
 These are ordinary arithmetic deductions from the existing transport;
 no new Lean verification or unrestricted noncoverage is asserted.
+
+## 105. A three-class terminal repair must use a hole in the original divisor ideal
+
+Work in section98's GLOBAL terminal-singular case with t=1. Keep the
+original distinct whole cover, numerical palette D and period Q=3^H M,
+H>=2, gcd(M,3)=1. Its three top labels are
+
+    3^H, 3^H p, 3^H m, p>3 prime, m>1, m!=p.
+
+Put n0=3^(H-1)p and delete exactly those three top originals and the
+old A_(n0). Let B be the retained original family and E* its exact
+uncovered set. The following is a necessary condition on a successful
+repair by at most three distinct odd nonunit APs, with numerical labels
+absent from B:
+
+    some indispensable repair label d satisfies
+    d divides Q and d notin D.                      (TH1)
+
+Thus rephasing only the four freed original labels cannot meet this
+strict repair budget. TH1 uses the existing periodic-obligation palette
+and three-fiber classification of section25, rather than a new repair
+theorem. It does not require R=empty or an opposite prime five.
+
+### The deletion retains two distinct actual phase liabilities
+
+Every retained modulus divides P=Q/3, so E* is P-periodic. Section98
+supplies two actual witnesses. An original private point of A_(n0)
+belongs to E* in the old n0 phase. The nonempty full-top-deletion
+remainder supplies a point of E* in the coarsening class C0. The
+classes A_(n0) and C0 have the same modulus n0 and different phases.
+In particular E* is not contained in ANY single AP modulo n0, including
+one assigned a new phase.
+
+Prune a proposed repair to an inclusion-minimal subfamily covering E*,
+without changing any retained original. Apply NF1 and its Lettl--Sun
+input NF9 with periodicity P, not Q. At a budget of at most three,
+each indispensable repair modulus is either a divisor of P or
+
+    3^H e, e divides M.
+
+Consequently every indispensable label divides Q. This conclusion
+concerns the irredundant subrepair. A redundant additional AP outside
+Q in an unpruned proposal need not satisfy it.
+
+### The four freed labels cannot repair both liabilities
+
+Suppose every label of this subrepair belongs to D. Availability then
+restricts them to
+
+    n0, 3^H, 3^H p, 3^H m.
+
+If a modulus dividing P occurs, it must be n0. There are at most two
+remaining off-period classes. NF2 says they cannot cover a complete
+P-fiber left uncovered by the period-dividing classes, so the single
+newly phased n0 class would have to cover E*. The two liabilities above
+rule this out.
+
+If no modulus dividing P occurs, NF2 requires exactly three repair
+classes. They use all three top labels. NF4 requires the projection of
+each of these classes modulo its gcd with P to contain all of E*.
+For the label3^H p that gcd is n0, again contradicting the two
+liabilities. This proves TH1.
+
+An unused divisor is only a necessary numerical resource; the argument
+neither constructs its covering phase nor proves that three such
+classes repair E*. Deleting or changing more retained classes changes
+the joint obligation and needs its own budget. Terminal singularity and
+unrestricted Erdős#7 remain unresolved. No new enumeration or Lean
+verification is asserted.
