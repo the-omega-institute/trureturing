@@ -12479,3 +12479,147 @@ Finite A gives beta_i<1/2. Each finite column coefficient c_m, including its mis
 a contradiction. Every p-prefix and cofactor phase remains the original one; their possible overlaps can only lower the upper capacity. No phase realization, additional Hall matching, or private-region reassignment is assumed.
 
 This excludes the entire two-column no7 case at arbitrary five-height, and hence the previously minimal total u=4 inventory at all those heights. Larger original inventories remain open. It is an ordinary consumer of the established full-height source, BBMST cylinder bound and published continuation, with no new Lean verification.
+
+## 93. Every root retains a small prime at arbitrary ternary height
+
+Keep the full-height source and actual root pruning of the initial-block
+argument. For a nonzero first-three root i, write
+
+    P_i=R union S_i,
+    Omega_i=the complete root i in Z/3^H,
+    X_i=the complete retained nonternary carrier.
+
+The retained ORIGINAL family covers Omega_i times X_i. Its pure-three
+guards form the actual set G_i subset Omega_i. With normalized counting
+measure lambda on Omega_i, retain
+
+    beta_i=lambda(G_i),  tau_i=1-beta_i,
+    beta_i<=theta_H=(1-3^(1-H))/2<1/2.
+
+For H=1 the guard set is empty. All nonternary prime-power heights and
+all original phases remain unchanged.
+
+The new conclusion is
+
+    P_i intersects {5,7,11,13}, for BOTH roots i,
+    at every finite ternary height H>=1.                 (GM1)
+
+The statement concerns P_i, not S_i. It does not assert that the two
+intersections contain the same prime or that R meets this set.
+
+### One actual conditioned initial block
+
+Define a probability on the complete original ternary block ONCE,
+before starting the distortion process:
+
+    lambda_i(Z)=lambda(Z minus G_i)/tau_i.
+
+Start the nonternary-prime distortion construction from
+
+    P_0^G=lambda_i times Haar_X_i.
+
+Thus the initial law is supported on the actual pure-guard complement.
+No assertion of uniformity on Omega_i is made for lambda_i. The guards
+have zero mass from the start, and every point in this initial support
+still has to be covered by an original non-pure-three class.
+
+Expose nonternary prime coordinates in increasing prime order, using
+the original APs and the complete original ternary prefixes as before.
+There is one law at every stage on the whole product. No later law is
+conditioned, and no separately optimized laws are selected on ternary
+tails.
+
+The initial-block proof applies with lambda_i in place of the old
+uniform lambda: its induction only needs the product between the
+already read block and the unexposed prime coordinates. For every
+Z subset Omega_i and every cofactor cylinder using exposed primes,
+
+    P_l^G(Z intersect [c mod u])
+      <=lambda_i(Z)*nu_l(u)/u,
+
+    nu_l(u)=product_(p|u)(1-delta_p)^(-1).              (GM2)
+
+This is the same conditional row-density argument and old-marginal
+preservation as TB1. All subsequent moment and loss estimates refer to
+this SAME distortion process. Its final ternary marginal is lambda_i,
+so the pure-three guards remain null exactly.
+
+### The four low-prefix pairs do not pay a conditioning factor
+
+As before, original d=3^a m with m>1 contributes at most one numerical
+label for each (a,m). At a=0 its ternary event is the whole block. At
+a=1 an active original has root i and also contributes the whole block.
+Classes at another first root are absent. Consequently the four ordered
+height pairs in {0,1} squared have intersection probability exactly one
+under lambda_i.
+
+For any remaining height pair a,b, put h=max(a,b)-1>=1. Incompatible
+ternary prefixes give zero. A compatible intersection is one complete
+relative-depth-h cylinder, so
+
+    lambda_i(T_a intersect T_b)
+      =lambda((T_a intersect T_b) minus G_i)/tau_i
+      <=3^(-h)/tau_i.
+
+Combining this with GM2 bounds the ACTUAL distorted old-law intersection
+by the same quantity times nu_l(u)/u. No Haar expectation is substituted
+for a distorted expectation.
+
+Reuse the already established finite pair count
+
+    K_H=4+sum_(h=1..H-1)(2h+3)/3^h
+       =7-(H+2)*3^(1-H).
+
+The conditioned process therefore has leading moment constant
+
+    L_i=4+(K_H-4)/tau_i<10.                          (GM3)
+
+Indeed K_H<7 and tau_i>1/2. The old unconditioned guard-reserve cost
+was K_H/tau_i; GM3 lowers this by exactly4*beta_i/tau_i. This reduction
+comes from retaining the exact unit probability of the four low-prefix
+pairs. There is no additional reserve for G_i, whose mass is already
+zero under the initial law.
+
+The sharper finite bound from beta_i<=theta_H is
+
+    L_i<=10-2*(H+5)*3^(1-H)/(1+3^(1-H))<10.
+
+The displayed expression also gives L_i=4 at H=1. No bound on the
+number of high originals or on any nonternary exponent is imposed.
+
+### Reuse the same published continuation
+
+Expanding the actual nonternary fibre fraction over ordered original
+labels, applying GM2, and summing the ternary height pairs as above
+gives exactly the previous cofactor Euler estimate with L_i replacing
+K_H:
+
+    M_p^(2)<=L_i*C_previous/(p-1)^2.
+
+The factors C_previous, numerical-label injection, prime-power sums,
+and checkpoint continuation are unchanged from TB4. Only the declared
+initial block law and the prefix-pair constant changed.
+
+Suppose P_i avoids {5,7,11,13}. Every nonternary prime in this actual
+retained family then exceeds p_6=13. Initially the accounting mass is
+ONE, the cofactor Euler product is one, and the scalar continuation
+state is f_6=L_i<10. The published lower bound
+
+    g_6>=13.30344>10
+
+therefore gives positive final uncovered probability for all the
+non-pure-three originals in this same process. Pure-three originals
+have zero mass because the final law preserves lambda_i. This
+contradicts whole coverage of the original retained root and proves
+GM1.
+
+GM1 removes the earlier large-H alternative for a root avoiding these
+four primes. Such a root cannot occur, including the previous case
+where9,27,81 were all assigned to it. The earlier non9-root consequence
+requiring a prime in {5,7,11} remains valid.
+
+These are ordinary deductions using the published distortion proof
+with one initial product block. The paper is not claimed to state this
+model extension as a separate theorem. No new continuation table or
+Lean verification is asserted. Arbitrary-height common support between
+the two roots, and unrestricted Erdos7, remain unresolved.
