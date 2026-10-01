@@ -24,12 +24,14 @@ qubit states by tensor products of binary operators
 `A_{θ,φ} = cos θ σ_Z + sin θ (cos φ σ_X + sin φ σ_Y)` exhaustively for two and
 three qubits. It then states:
 
-> \begin{conj} All states stabilized by the set $\mathcal A$ composed of binary
-> operators and the identity {\it i.e.}, $\mathcal{A}=\{A_{\theta,\phi},\1_2\}$,
-> are locally equivalent to standard stabilizer states (\textit{i.e.},
-> stabilized by the Pauli group
-> $\mathcal{P}=\{\pm 1,\pm i\}\cdot\{\1,\sigma_X,\sigma_Y,\sigma_Z\}$).
-> \end{conj}
+```latex
+\begin{conj} All states stabilized by the set $\mathcal A$ composed of binary
+operators and the identity {\it i.e.}, $\mathcal{A}=\{A_{\theta,\phi},\1_2\}$,
+are locally equivalent to standard stabilizer states (\textit{i.e.},
+stabilized by the Pauli group
+$\mathcal{P}=\{\pm 1,\pm i\}\cdot\{\1,\sigma_X,\sigma_Y,\sigma_Z\}$).
+\end{conj}
+```
 
 ## Verified locator
 
