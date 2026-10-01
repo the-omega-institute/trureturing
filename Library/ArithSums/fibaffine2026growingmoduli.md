@@ -363,6 +363,62 @@ $$
 
 当前 $V=F_r$ 不假设为素数，且 $Y=V^{o(1)}$，相当于光滑度指数趋于0，超出该固定 $\beta$ 范围。它给存在性下界，本来也不是排除 Robin 反例的上界。不能因目标中出现逆元、素指标、光滑核心等相同术语就转移其结论。
 
+## 素数乘积覆盖与小子群：保持结论方向和实际尺度
+
+Kaisa Matomäki, Joni Teräväinen,
+*Products of primes in arithmetic progressions*,
+[arXiv:2301.07679v3](https://arxiv.org/pdf/2301.07679v3)，
+版本 2024-02-15，Theorem 1.1，第1—2页。记
+
+$$
+E_3(Q)=\{a\in(\mathbb Z/q\mathbb Z)^\times:
+a\equiv p_1p_2p_3\pmod q,\ p_1,p_2,p_3\le Q\text{ 为素数}\}.
+$$
+
+该定理给充分大的无立方因子模数 $q$ 上
+$E_3(q)=(\mathbb Z/q\mathbb Z)^\times$；对任意固定
+$\varepsilon>0$，充分大的任意模数则有
+$E_3(q^{1+\varepsilon})=(\mathbb Z/q\mathbb Z)^\times$。
+后一结论直接覆盖可能有重复素因子的 $V=F_r$。它强于
+[Szabó 的 arXiv:2208.05762v1](https://arxiv.org/pdf/2208.05762v1)
+Theorem 3 的 $q^{6/5+\varepsilon}$ 三素数覆盖界；该旧界不作为
+额外可推进目标的结果重做。
+
+这里覆盖的是每个单位余类中存在某个素数乘积。实际来源需要
+$N=1+Vk$ 的固定实大小窗口、同价参考的可移除层库存和真实低亏损
+约数权重。定理没有保证这些条件，也没有给价格约为
+$s=y\log y$ 的添加成本下界。尤其所允许的素数上限是
+$V^{1+\varepsilon}$（无立方因子分支是 $V$），而核心光滑界
+$Y\asymp\log X=V^{o(1)}$。不能把所有余类的存在覆盖反向用成
+某个实际低成本来源的排除或严格预算。
+
+Marc Munsch, Igor E. Shparlinski,
+*On smooth square-free numbers in arithmetic progressions*,
+[arXiv:1710.04705v3](https://arxiv.org/pdf/1710.04705v3)，
+版本 2018-06-11，Theorem 1.1，第3页，给素数模数 $p$ 上、每个固定
+$\alpha>1/(4\sqrt e)$ 的单位余类一个 $p^\alpha$-光滑平方自由代表，
+其大小不超过 $p^{2+o(1)}$。Theorem 1.3 的更小固定
+$\alpha>0$ 版本允许在 $[Q,2Q]$ 中有 $Q^{o(1)}$ 个例外素数。
+即使另有 $V$ 为素数的条件，当前 $Y=V^{o(1)}$ 也不满足第一项
+固定正指数光滑度；例外计数没有保证特殊 Fibonacci 模数不在其中。
+二者仍是存在方向，没有实际成本权重或指定窗口的排除结论。
+
+Jean Bourgain, Sergei Konyagin, Igor Shparlinski,
+*Distribution of elements of cosets of small subgroups and applications*,
+[arXiv:1103.0567v1](https://arxiv.org/pdf/1103.0567v1)，
+Theorems 1—5，第3—4页，给素数模数 $p$ 中某子群陪集内小整数
+及低有理高度元素的计数上界；Theorem 4 的参数还保留
+$K\le\sqrt{p/2}$。应用时须指定实际素数 $p\mid V$、子群阶和
+该高度范围，不能直接用整个复合 $V$ 代替素数模数。
+
+[四次特征成本应用](erdosnicolas1975repartition.md)中的四个相位值
+不是一个四元素核。在素数模数 $p$ 上，阶四特征的核有
+$(p-1)/4$ 个元素；$t^2=-1$ 的四元素根群与这个核是两个不同对象。
+这篇论文的“小子群”条件及计数强度因而不能由“有四相”自动取得。
+即使某个实际参数满足其计数界，一个不小于1的上界也不排除指定点，
+而无权计数并不控制 §233.5 的完整加权贡献。上述来源条件可直接复用，
+尚未提供当前共同来源的统一严格预算；这不是完整文献搜索或原创性结论。
+
 ## 全部低亏损除数的范围与退化端点
 
 上面的完整赋值光滑核心 $C$ 及其粗余因子 $H$，与 [FIB §232—233](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md) 的任意低亏损除数 $d$ 及其补因子 $h=N/d$ 是不同分解；同价 CA 参考 $C_s$ 也不是这个 $C$。它们不能共用未证的素数下界或余因子阈值。
