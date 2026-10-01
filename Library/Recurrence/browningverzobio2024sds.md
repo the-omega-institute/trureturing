@@ -35,14 +35,27 @@ also gives a lower bound for the associated Eratosthenes--Legendre sieve
 product.
 
 These are aggregate statements over indices. They do not imply the pointwise
-estimate required in the FIB Robin interface,
+estimate displayed as a sufficient condition in FIB §195.4,
 
 \[
 (\log j)\sum_{\substack{p>j^{5/6}\\p\mid V_j}}\frac1{p-1}\longrightarrow0
 \]
 
-on a specified parity class, and they do not control the complete divisor
-weight of the same candidate \(gV_j\). A sparse exceptional set of indices is
-compatible with the quoted density bounds. The paper is therefore a useful
-historical sieve input for the Fibonacci source map, but it does not close
-§195.4 or §233.5 of the FIB Robin theory.
+on a specified parity class. A sparse exceptional set of indices is
+compatible with the quoted density bounds.
+
+The current [FIB theory](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)
+already supplies a different route beyond that older interface: §§199–201
+contain paper conclusions for every fixed primitive seed and for explicit
+slowly growing norm families. Those results retain their stated analytic
+inputs and seed-dependent or restricted-uniform thresholds; they are not
+Lean verification. Section 195.4 must therefore not be described as an
+unresolved fixed-seed Robin theorem.
+
+The remaining broad bridges include unrestricted changing seeds and the
+same actual candidate's full divisor weight. In §233.5 the candidate is
+the unique remaining integer in the specified affine residue class, not
+automatically a product \(gV_j\). The sieve-density theorem supplies
+neither that joint weight nor a transport between the two families.
+It is retained as a historical and reusable sieve input, rather than as
+a reason to repeat the fixed-seed proofs.

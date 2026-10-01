@@ -94,7 +94,7 @@ statement identity
 The result declaration has statement identity
 `sha256:1728416a009c8e60a1ff43fe1a0335498101aaec112556e56c78cb36403ce42d`.
 The Freeze event is
-`sha256:c83def4626e900f66ec9bc6a27f2f58482bcc26454dbd84d6bdfa01f6f814934`.
+`sha256:3597dfb3ff597a4baa96049fd1a88b9a9b04418f8c336198b9d98d0d3de68b1c`.
 Its project-level frozen prerequisite is the module providing `Pauli`,
 `pauliMatrix`, `tensorOp` and `wordOp`, which itself builds on `qubitX` and
 `qubitZ`. The proof uses only
