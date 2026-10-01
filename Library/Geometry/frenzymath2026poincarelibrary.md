@@ -997,3 +997,44 @@ remain unfinished, including noncompact cusps and nonorientable manifolds.
 The existing escape audit remains unfinished:
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
 Neither these compilation checks nor CI closes that audit.
+
+## Proper evaluation, transitivity and pushed Haar measure on H3
+
+For every supplied actual original-H3 point `p`, evaluation `e ↦ e p` from
+the same compact-open isometry group to original H3 is proper. A compact
+H3 set is bounded inside some closed ball centered at `p`; its evaluation
+preimage is a closed subset of the previously checked compact displacement
+sublevel. The existing Hausdorff compact-coherence criterion gives
+`IsProperMap`. In particular, the actual stabilizer set `{e | e p = p}` is
+compact as the preimage of the singleton `{p}`.
+
+The actual isometry group acts transitively on original H3. For supplied
+points `p,q`, compose the project's positive dilation by the ratio of
+their positive coordinate heights with a horizontal translation correcting
+the horizontal coordinate. This is an actual `IsometryEquiv` carrying `p`
+to `q`, using the existing dilation and translation constructions. Proper
+evaluation is therefore a continuous closed surjection and, by the existing
+closed-surjection theorem, a quotient map to the original H3 topology.
+
+For any supplied left Haar measure `μ` on the same group's Borel structure,
+its pushforward by evaluation at `p` is a measure on the original H3 Borel
+structure. It is finite on compact sets by properness, positive on nonempty
+open sets by continuous surjectivity, sigma-finite and regular by the
+existing original-H3 topology and measure instances. It is invariant under
+each actual H3 isometry: composition with such an isometry corresponds to
+left multiplication on the group, and measure-map composition and left Haar
+invariance give the equality. This is a pushed measure on H3, not a Haar
+measure on a group structure imposed on H3.
+
+These are three scoped transient classical composition checks under the
+same pins and standard three axioms. They establish properties of the
+actual evaluation pushforward. They do not prove uniqueness of invariant
+measures on H3, equality or proportionality to normalized intrinsic
+Hausdorff3, a normalization scalar, unimodularity, a fundamental domain,
+finite Haar covolume or lattice realization. Cusp classification, lattice
+conjugacy and full Mostow-Prasad existence, homotopy and uniqueness remain
+unfinished, including noncompact cusps and nonorientable manifolds. No new
+tracked Lean declaration or mathematical novelty is claimed. The existing
+escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these checks nor CI closes that audit or the remaining mathematics.
