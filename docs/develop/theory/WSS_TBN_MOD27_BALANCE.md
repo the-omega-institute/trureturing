@@ -364,3 +364,106 @@ Lucas, and rank interfaces, but no formal block-factorization/depth-vector
 API exists; adding a bind-only wrapper would overstate the formal status.
 The only arithmetic input about prime depths is the already-recorded TBN.3
 identity.
+
+
+## The coefficient hierarchy and the E2 boundary
+
+The first-order statistic \(S_j\) is only the first coefficient of an exact
+finite polynomial. Define
+\[
+ \Phi_j(X):=\prod_{p\mid B_j}(1+b_{p,j}X)^{h_p}
+       =\sum_{q=0}^{H_j}E_{q,j}X^q,
+ \qquad H_j:=\sum_{p\mid B_j}h_p.
+ \tag{E2.1}
+\]
+Here \(E_{0,j}=1\), \(E_{1,j}=S_j\), and
+\[
+ E_{2,j}=T_j
+ =\sum_{p\mid B_j}\binom{h_p}{2}b_{p,j}^2
+  +\sum_{p<q}h_ph_qb_{p,j}b_{q,j}.
+ \tag{E2.2}
+\]
+Evaluating at \(X=m_j\) and using \(B_j=1+m_ju_j\) gives the exact hierarchy
+\[
+ u_j=\sum_{q=1}^{H_j}m_j^{q-1}E_{q,j}.
+ \tag{E2.3}
+\]
+For \(Q\ge1\), write
+\[
+ U_{j,Q}:=\sum_{q=1}^{Q}m_j^{q-1}E_{q,j}
+ \quad (Q\le H_j).
+\]
+Then
+\[
+ \boxed{u_j\equiv U_{j,Q}\pmod {m_j^Q}}.
+ \tag{E2.4}
+\]
+Thus the second-order corrected depth statistic
+\[
+ \widehat S_j:=U_{j,2}=S_j+m_jT_j
+\]
+satisfies \(\widehat S_j\equiv u_j\pmod {m_j^2}\). This is an exact
+coefficient identity, not a new recurrence for the factorization data.
+
+### Why E2 gives no stronger uniform limit
+
+Let \(C\) be the 3-adic limit from (L3.3), and put
+\(\widehat c_j=(-1)^{j+1}\widehat S_j\). Since
+\(v_3(m_j^2)=2j+2\), (E2.4) with \(Q=2\) and the sharp identity (L3.3)
+give
+\[
+ \boxed{v_3(C-\widehat c_j)=2j+1.}
+ \tag{E2.5}
+\]
+Therefore adding \(m_jE_{2,j}\) improves the reconstruction of \(u_j\) from
+\(S_j\), but does not improve the sharp 3-adic approximation to \(C\), and
+cannot produce a second limit by this correction. The same argument applies to
+all \(U_{j,Q}\) with \(Q\ge2\): the intrinsic \(2j+1\) error in the Lucas
+recurrence remains the first nonzero term.
+
+Nor does TBN.3 supply a cross-\(j\) recurrence for \(E_{2,j}\). It specifies,
+for each block separately, only \(p=1+m_jb_{p,j}\) and the exponent \(h_p\).
+It gives no relation between the multisets
+\(\{(b_{p,j},h_p):p\mid B_j\}\) and
+\(\{(b_{p,j+1},h_p):p\mid B_{j+1}\}\). At the coefficient level this is a
+real underdetermination: the multisets \(\{(a,1)\}\) and
+\(\{(1,1),(a-1,1)\}\) have the same \(E_1=a\), while their \(E_2\) values
+are \(0\) and \(a-1\), respectively. The local congruence \(p\equiv1\pmod{m_j}\)
+does not remove this freedom modulo 3. Hence no stable \(E_{2,j}\pmod3\), nor
+an \(E_2\) recurrence, follows from TBN.3 alone; proving one would require a
+new theorem relating the prime-depth vectors of consecutive Lucas blocks.
+
+### Exact j=3,4,5 obstruction checks
+
+The first blocks already disprove a uniform lift of the \(S_j\)-only congruence
+to \(3^{j+2}\). Exact factorizations and integer arithmetic give
+\[
+\begin{array}{c|c|c|c|c|c}
+ j&\#\{p\mid B_j\}&(b_{p,j}\bmod27)_{p\mid B_j}
+   &T_j\bmod27&v_3(u_j-S_j)&v_3(u_j-\widehat S_j)\\ \hline
+ 3&2&(19,9)&9&6&\infty\\
+ 4&2&(15,11)&3&6&\infty\\
+ 5&4&(1,13,3,11)&26&6&12
+\end{array}
+\]
+Here \(v_3(0)=\infty\). For \(j=5\), the exact squarefree factorization used for
+this row is
+\[
+\begin{aligned}
+ B_5={}&1459\cdot58321\cdot67234945243909760461\\
+ &\cdot64642456533364216165903625998192510598323380531684784427098565775883411861.
+\end{aligned}
+\]
+All four factors are prime and have \(h_p=1\), so the displayed residues give
+\(T_5\equiv2\pmod3\). Since \(v_3(m_5)=6\), this forces
+\(v_3(u_5-S_5)=6\), and therefore \(S_5\not\equiv u_5\pmod{3^7}\). This is
+a concrete sharp obstruction to any universal one-digit lift of (L3.6). The
+\(j=3,4\) rows happen to have only two depth-one factors, so \(E_{q,j}=0\) for
+\(q\ge3\) and \(\widehat S_j=u_j\) exactly; that accidental equality does not
+persist at \(j=5\).
+
+The coefficient identities (E2.1)--(E2.4) are elementary consequences of the
+TBN.3 factorization and are paper-first. The no-go statement concerns what can
+be inferred from TBN.3 alone; it neither asserts that the actual \(E_{2,j}\)
+sequence has no deeper law nor changes the open status of Wall--Sun--Sun primes.
+
