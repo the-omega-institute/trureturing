@@ -31645,3 +31645,19 @@ finite deep cuts, with the correct exponential modulus-sum cost.
 The remaining whole-cover obligation is to force that minimum,
 after some legal shallow choice, below the same original inventory.
 No such uniform price inequality or new Lean verification is claimed.
+
+[Report385, section67](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#67-residual-subbatches-use-original-label-capacity-instead-of-whole-root-capacity)
+applies the existing exact joint-residual replacement rule to selected
+subsets of each actual root batch. Each leaf must cover the full
+prime-tail product with the existential cofactor projection of its
+retained residual. Distinctness then requires capacity for each
+original label at each depth, and collision checks only for selected
+labels. Two leaves can use disjoint subsets of the same root batch.
+An explicit 18-label noncover separates these local interfaces:
+for two fixed leaves the minimum copied class count falls from3 to2,
+and an omitted label no longer reserves its conflicting output modulus.
+The family has private points and divisor closure but is not a whole
+cover or a counterexample to unrestricted #7. The original count-budget
+depth bound still applies; the sharper whole-batch normalization has
+not been transferred. The unresolved requirement is a jointly feasible
+complete frontier whose selected-label costs beat its original budget.
