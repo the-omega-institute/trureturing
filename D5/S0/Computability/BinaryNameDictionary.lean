@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Computability/BinaryNameDictionary
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S0/Computability/BinaryNameComparison]
+   anchors: []
    utility: kind=checker; basis=consumer=D5/S0/Computability/BinaryNameDeduplication.dictionary_build_run; instance=D5/S0/Computability/ConventionalClauseWords.comparisonSource
    digest: A fixed finite dictionary scan with paid name comparison and restoration. -/
 

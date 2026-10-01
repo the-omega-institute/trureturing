@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Dynamics/PhysicalProtocol/BinaryClauseOracleProtocol
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S0/Computability/DenseQueryCompiler, D5/S3/Quantum/Dynamics/PhysicalProtocol/ClauseOracleProtocol]
+   anchors: []
    utility: none
    digest: Paid conventional words execute one physical query and return the independent clause count. -/
 

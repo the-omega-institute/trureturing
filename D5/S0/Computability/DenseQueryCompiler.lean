@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Computability/DenseQueryCompiler
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S0/Computability/DenseClauseConversion, D5/S0/Computability/ClausePreprocessorRefinement]
+   anchors: []
    utility: kind=checker; basis=consumer=D5/S3/Quantum/Dynamics/PhysicalProtocol/BinaryClauseOracleProtocol.conventional_one_query_run; instance=D5/S0/Computability/ConventionalClauseWords.comparisonSource
    digest: A fixed finite compiler pays for dense conversion and physical query construction. -/
 

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Computability/BinaryNameDeduplication
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S0/Computability/BinaryNameDictionary]
+   anchors: []
    utility: kind=checker; basis=consumer=D5/S0/Computability/DenseClauseConversion.dense_word_run; instance=D5/S0/Computability/ConventionalClauseWords.comparisonSource
    digest: A finite occurrence-stream dictionary builder with actual paid lookup and writing. -/
 

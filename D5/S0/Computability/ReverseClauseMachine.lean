@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Computability/ReverseClauseMachine
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S0/Computability/ClausePreprocessorRefinement, D5/S0/Computability/ConventionalClauseWords]
+   anchors: []
    utility: kind=checker; basis=consumer=D5/S0/Computability/ReverseClauseConversion.reverse_word_run; instance=D5/S0/Computability/ClauseQueryPreprocessor.dummySource
    digest: Actual binary name writing and declared-variable tautology execution. -/
 

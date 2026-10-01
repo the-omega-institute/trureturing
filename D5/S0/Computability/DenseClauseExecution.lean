@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Computability/DenseClauseExecution
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S0/Computability/DenseClauseMachine]
+   anchors: []
    utility: kind=checker; basis=consumer=D5/S0/Computability/DenseClauseConversion.dense_word_run; instance=D5/S0/Computability/ConventionalClauseWords.comparisonSource
    digest: Actual restored dictionary lookup and clean dense word execution. -/
 

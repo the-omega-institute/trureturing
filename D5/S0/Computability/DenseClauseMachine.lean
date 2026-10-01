@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Computability/DenseClauseMachine
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S0/Computability/BinaryNameDeduplication, D5/S0/Computability/ClauseWordCodec]
+   anchors: []
    utility: kind=checker; basis=consumer=D5/S0/Computability/DenseClauseExecution.denseExecution; instance=D5/S0/Computability/ConventionalClauseWords.comparisonSource
    digest: Actual finite parser translation and whole-word grammar refinement. -/
 

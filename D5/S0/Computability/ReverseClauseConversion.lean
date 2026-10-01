@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Computability/ReverseClauseConversion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S0/Computability/DenseClauseConversion, D5/S0/Computability/ReverseClauseMachine]
+   anchors: []
    utility: kind=checker; basis=consumer=D5/S0/Computability/ReverseClauseConversion.reverse_word_run; instance=D5/S0/Computability/ClauseQueryPreprocessor.dummySource
    digest: Paid finite reverse conversion preserves the complete explicitly declared universe. -/
 
