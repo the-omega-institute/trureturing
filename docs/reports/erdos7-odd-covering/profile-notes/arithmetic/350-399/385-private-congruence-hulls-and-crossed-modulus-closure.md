@@ -12243,3 +12243,183 @@ No new proof of u_i>= (p-1)/2 is needed. In section80, apply FC1 and its exact c
 Integer parity gives u_i>=(p-1)/2, at every full original height A; A_i need not equal A. Consequently, at p=7, the preceding no5 color bound gives total u>=8, strengthened to u>=10 if that color does not own21. At p=5, a no7 color not owning15 gives total u>=5. The separately proved flat-five result remains stronger when A=1.
 
 The main new bridge is MS plus the exact shared-owner relation PS, not these few numerical consumers. Arbitrary A, actual I_0, original phases and the finite column coefficients remain visible. No proof that the coupled capacities are jointly attainable, no unrestricted noncoverage result, and no new Lean verification is asserted.
+
+## 91. A complete initial ternary block gives finite-height distortion bounds
+
+Keep section74's one EB1 original family, its complete ternary height H>=1,
+and its actual retained family on a nonzero first-three root i. Its
+nonternary support is P_i=R union S_i. Every original coordinate keeps its
+full height. Section74's singleton-root elimination gives a whole cover
+of this root by these retained originals, including its actual pure-three
+guards. No multiplicity-two assertion is made after forgetting ternary
+digits.
+
+Write Omega_i for the complete root i in Z/3^H, with normalized counting
+law lambda, and X_i for the full retained nonternary carrier. Let G_i be
+the union of the actual pure-three guards in this root and put
+
+    beta_i=lambda(G_i),  tau_i=1-beta_i,
+    theta_H=(1-3^(1-H))/2.
+
+The original pure-three classes are comparable and disjoint. Thus
+beta_1+beta_2=theta_H and tau_i>0, as in CM1. Pure-three guards will not
+participate in the nonternary bad sets below.
+
+For the remaining originals, write d=3^a m with m>1 and 3 not dividing m.
+At a=0 the class imposes no ternary restriction. At a>=1 it is retained
+only if its actual first-three root is i. Its remaining ternary prefix
+has relative depth a-1 in Omega_i. In particular an active a=1 class
+also imposes no restriction within Omega_i. For every numerical pair
+(a,m), there is at most one original label. Classes at the wrong first
+root are absent; this only improves every upper bound below.
+
+### Preserve the initial block in the actual distortion process
+
+Start the BBMST distortion construction with the initial product law
+
+    P_0=lambda times Haar_X_i.
+
+Treat the ENTIRE finite block Omega_i as already read. Expose the
+nonternary prime-power coordinates in increasing prime order. At a
+nonternary prime p, its actual bad set is the union of the retained
+non-pure-three originals whose largest nonternary prime is p, with their
+original ternary prefixes and complete other phases. This is one process
+on Omega_i times X_i, not separate choices of a law on individual tails.
+
+The proofs of BBMST marginal preservation and cylinder domination work
+with this initial product block. The row distortion is performed only
+on the newly exposed prime coordinate and preserves the complete old
+marginal, including Omega_i. In particular, if u uses already exposed
+nonternary primes, then for every Z subset Omega_i,
+
+    P_l(Z intersect [c mod u])
+      <=lambda(Z)*nu_l(u)/u,
+
+    nu_l(u)=product_(p|u)(1-delta_p)^(-1).             (TB1)
+
+Here the event on the left means Z times the cofactor cylinder, with all
+remaining coordinates free. To check TB1 directly, begin with product
+Haar on the unexposed coordinates. At each exposed prime dividing u,
+the same conditional row-density bound used in BBMST Lemma3.4 costs at
+most (1-delta_p)^(-1); expose coordinates not dividing u using marginal
+preservation. The initial event Z contributes exactly lambda(Z).
+This is the published proof applied to an initial product block, not a
+claim that the paper separately states a theorem for this new model.
+
+Consequently, if T_a,T_b are two actual ternary prefixes from original
+heights a,b, then under the SAME current distorted law,
+
+    P_l(T_a intersect T_b intersect [c mod u])
+      <=w(a,b)*nu_l(u)/u,
+
+    w(a,b)=3^(-max((a-1)_+,(b-1)_+)).                 (TB2)
+
+Incompatible prefixes give zero. Compatible prefixes have the indicated
+relative intersection mass, with heights zero and one both contributing
+the complete initial block. For max(a,b)>=1 this is
+3^(1-max(a,b)); the a=b=0 contribution is one. Thus TB2 does not replace
+a distorted expectation by a Haar expectation.
+
+### One finite prefix-pair constant pays every original height
+
+Summing TB2 over the allowed height pairs gives exactly
+
+    K_H=sum_(0<=a,b<=H) w(a,b)
+       =4+sum_(h=1..H-1)(2h+3)/3^h
+       =7-(H+2)*3^(1-H)<7.                          (TB3)
+
+The four height pairs in {0,1} squared contribute four. For maximum
+relative depth h>=1, there are (h+2)^2-(h+1)^2=2h+3 ordered height
+pairs. In particular K_1=4. The constant remains finite independently
+of H; it does not bound the actual multiplicity at any selected tail.
+
+For a stage prime p, decompose an original nonternary cofactor as p^e u,
+with e>=1 and u supported on earlier primes. The usual union bound for
+the actual fibre fraction alpha_p is
+
+    alpha_p <=sum_(actual (a,e,u))
+                    p^(-e)*1_(T_a intersect actual u-phase).
+
+Expand the square over ordered ORIGINAL labels. For each fixed
+(a,e,u), numerical distinctness permits at most one label. Each compatible
+pair uses TB2 for the same distorted old law and the actual intersection
+modulo lcm(u,v). Summing a,b costs K_H. Extending the finite e,f sums
+costs at most (p-1)^(-2). The remaining cofactor-pair Euler sum is the
+existing BBMST/KKL sum. Hence
+
+    M_p^(2)<=K_H*C_previous/(p-1)^2,
+
+    C_previous=product_(earlier allowed primes s)
+        [1+(3s-1)/((1-delta_s)*(s-1)^2)].            (TB4)
+
+Absent-prime factors may be padded into C_previous as usual. No higher
+digit, original phase, or projected numerical repetition was deleted.
+
+### Reserve the actual pure-guard mass
+
+Number all ordinary primes, including absent primes, and suppose every
+prime in P_i exceeds p_k. Use the published continuation threshold g_k.
+Define the scalar accounting mass and scalar ratio by
+
+    eta_l=tau_i-sum_(k<t<=l)P_t(B_t),
+    F_l=K_H*C_l/eta_l,
+    eta_k=tau_i, F_k=K_H/tau_i.
+
+The probability laws are unchanged. BBMST Lemma3.3 and TB4 give precisely
+the loss estimate and scalar recurrence used in section88, now with
+K_H in place of its leading constant four. Thus the published successful
+continuation applies whenever
+
+    K_H/(1-beta_i)<=g_k.                            (TB5)
+
+It gives eta_n>0 at every finite final stage. The final law preserves
+the initial ternary marginal, so P_n(G_i)=beta_i EXACTLY. It also
+preserves each earlier bad-set marginal. Therefore
+
+    P_n(G_i union union_t B_t)
+      <=beta_i+sum_t P_t(B_t)<1.
+
+This contradicts the actual whole-root cover supplied by section74.
+Consequently TB5 is impossible when all primes of P_i exceed p_k.
+This is a test on P_i=R union S_i, not on S_i alone.
+
+### Two consequences at arbitrary ternary height
+
+The source record for BBMST Table1 gives the downward-rounded bounds
+
+    g_5>=9.032082,   g_6>=13.30344.
+
+First assume H>=2 and let kappa be the nonzero root NOT owning original9.
+Its guard mass satisfies beta_kappa<=theta_H-1/3<1/6. If P_kappa avoided
+{5,7,11}, all its primes would exceed p_5=11, but
+
+    K_H/(1-beta_kappa)<42/5=8.4<9.032082.
+
+TB5 would contradict its whole-root coverage. Therefore
+
+    P_kappa intersects {5,7,11}.                   (TB6)
+
+Second, suppose one P_i avoids {5,7,11,13}. Then
+
+    H>=5, and original9,27,81 all have root i.       (TB7)
+
+Indeed, if H<=4, then K_H<=K_4=61/9 and beta_i<=theta_4=13/27,
+so
+
+    K_H/(1-beta_i)<=183/14<13.30344,
+
+contradicting TB5 at k=6. Thus H>=5 and all three named pure labels
+exist. If any one of9,27,81 were owned by the opposite root, then
+
+    beta_i<=theta_H-1/27<25/54,
+    K_H/(1-beta_i)<378/29<13.30344,
+
+giving the same contradiction. Their first-root ownership is necessary;
+no common deeper path or additional phase alignment is inferred.
+
+These conclusions retain all other original heights and use the full
+original source. They do not require a bound on the deep inventory.
+They do not exclude R={5}, where each P_i already contains5, and do not
+give unrestricted noncoverage. They are ordinary deductions from the
+published distortion proof and thresholds; no new sieve table or Lean
+verification is asserted.
