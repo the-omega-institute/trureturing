@@ -1,0 +1,5 @@
+source_id = "fib-relational-continuation-geometry"
+path = "docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
