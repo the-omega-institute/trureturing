@@ -11719,3 +11719,93 @@ product structure, uniform density lower bound or exclusion of
 the remaining layout. The arguments reuse PH3--PH4 and the actual
 repairs of sections82--83; no Lean verification or priority claim
 is asserted.
+
+## 86. Irredundancy makes the square residuals exact products
+
+Keep FL6's actual minimum-column source. Split the full color carriers as
+
+    X_j=(Z/q^H_q) times Y_j,
+    Y_j=product_(s in S_j, s!=q) Z/s^H_s,
+
+and analogously X_k=(Z/r^H_r) times Y_k. Let C_beta,C_gamma be the
+complete q-coordinate cylinders at the two original q^2 phases B,C,
+and let C_delta be the complete original r^2 cylinder of E_k. All
+higher q- and r-digits remain in these cylinders. There are nonempty
+actual auxiliary residuals F_j in Y_j and F_k in Y_k such that
+
+    E_j=(C_beta union C_gamma) times F_j,
+    E_k=C_delta times F_k.                         (FL8)
+
+In particular, the two guarded square pieces have the SAME auxiliary
+residual. This strengthens their common first-q phase and separate
+congruence-hull constraints.
+
+### An active high-depth original cannot meet a filled square cylinder
+
+On either C_beta or C_gamma, the original5-bearing classes in the
+root-j quotient already cover every5 root, independently of all
+auxiliary coordinates. The original5 covers root0;5q and15q cover
+their two singleton roots;15 covers the third nonzero root; and
+the corresponding5q^2 or15q^2 covers the remaining root. The
+root-k cylinder C_delta similarly fills all five roots using5
+and the four nonpure originals.
+
+Section75 preserves original privacy in these actual quotients.
+If an active5-free original had q-depth at least two and met
+C_beta or C_gamma, its whole quotient AP would lie inside that
+cylinder. It would already be covered by the5-bearing originals,
+contradicting its private point. Thus its q^2 phase avoids BOTH
+beta and gamma. The analogous r-depth condition excludes delta
+for every active5-free original in the other quotient.
+
+The5-free originals that can meet the square cylinders therefore
+have q-depth zero or one, or r-depth zero or one respectively.
+In color j their membership predicates are identical on C_beta
+and C_gamma, since both have the same first-q coordinate alpha.
+They also ignore all higher q-digits. Define F_j as the complement
+of this actual common trace on Y_j. The existing containment of
+E_j in the two square cylinders now gives the first equality in
+FL8. The same argument gives F_k and the second equality.
+Nonemptiness follows from the already nonempty original residuals.
+
+Each F_i is the complement of an actual auxiliary AP family with
+numerical multiplicity at most FOUR. For a fixed auxiliary modulus
+m, only the original labels m,3m,qm,3qm can contribute to the
+root-j trace; use r instead of q in root k. A modulus-one trace
+cannot occur, since it would make F_i empty. The relevant phases
+come from the original source. This family need not be a whole
+cover and need not have multiplicity at most two.
+
+### Reuse singular elimination with its exact numerical collisions
+
+[Report343, section4](../../321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md#4-奇异-dp-保真到哪一层)
+already supplies Kullmann's generalized singular Davis--Putnam
+elimination, arXiv:1103.3693v1, Lemma1.6.1. Apply it to the sole5
+digit in each actual irredundant quotient. Its value-occurrence
+counts are(1,1,1,1,2) in color j and(1,1,1,1,1) in color k.
+All other prime digits remain untouched, so the actual resolvents
+are respectively the two q^2 phases beta,gamma and the single
+r^2 phase delta. Thus
+
+    G_j=(actual5-free quotient classes) union {beta modq^2,gamma modq^2},
+    G_k=(actual5-free quotient classes) union {delta modr^2}
+
+are irredundant whole AP covers on the disjoint supports S_j,S_k.
+Each quotient loses exactly four labels. This is a direct use of
+the published theorem, not a new general elimination result.
+
+The numerical collision is explicit. Original q^2 and3q^2 both
+exist by divisor closure and contribute different q^2 phases to
+the root-j quotient. The high-depth exclusion above makes both
+different from beta,gamma. Thus G_j has exactly FOUR classes of
+modulus q^2, while every other numerical modulus has at most two.
+Likewise G_k has exactly THREE classes of modulus r^2 and at most
+two at every other modulus. All moduli are greater than one and
+coprime to30; all other original heights are retained.
+
+These are actual whole covers, but their exceptional numerical
+repetitions prevent direct use of SO1's multiplicity-two premise.
+The two quotient count decreases cannot be added as a decrease of
+the original family, because original5 belongs to both quotients.
+No distinct-modulus descent or Lean verification follows from this
+elimination alone.
