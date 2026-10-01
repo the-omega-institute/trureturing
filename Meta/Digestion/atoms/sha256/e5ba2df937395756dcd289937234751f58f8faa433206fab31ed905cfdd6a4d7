@@ -1,0 +1,21 @@
+## 204. 固定乘子单位位一来源的全指标 Robin 尾段
+
+§202 的仿射判别式筛在判别式为平方时失去非主字符信息。本节保持实际整数为 $N_j=gV_j+1$，分别处理平方判别式的两个黄金目标根，补齐每个固定乘子、固定种子的全指标尾段。输入为 §199 的固定域 Kummer 与 Chebotarev 论证、§184.1 的 Fibonacci 秩尾界和经典 Mertens 公式；以下新增结论为纸面推导，尚未新增 Lean 声明或核验。
+
+固定
+
+$$
+g\in\mathbb Z_{\ge1},\qquad
+v=a+b\phi,\qquad a,b\in\mathbb Z_{\ge0},\qquad
+\gcd(a,b)=1,\qquad (a,b)\ne(0,0).
+$$
+
+沿用 $K=\mathbb Q(\sqrt5)$、$R=\mathbb Z[\phi]$、$\psi=-\phi^{-1}$，记
+
+$$
+Q=\operatorname N(v)=a^2+ab-b^2\ne0,\qquad
+V_j=aF_{j+3}+bF_{j+4},\qquad N_j=gV_j+1.
+$$
+
+本节先固定 $g,v$，再令 $j\to\infty$；不允许把它们随 $j$ 变化后仍使用同一阈值。
+

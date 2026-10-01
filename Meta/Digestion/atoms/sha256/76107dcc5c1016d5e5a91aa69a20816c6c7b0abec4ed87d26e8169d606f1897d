@@ -1,0 +1,20 @@
+**定理 2.3。** Gibbs 概率在这些坐标中精确分解为
+$$
+\gamma_r\otimes\gamma_h,
+\quad\gamma_r=N(0,\beta^{-1}P),\quad
+\gamma_h=N(0,\beta^{-1}C_h^{-1}).
+$$
+Lebesgue 配分函数为
+$$
+Z=\kappa Z_rZ_h,\quad\kappa=|\det[L\ R]|,
+\quad Z_r=(2\pi/\beta)^{r/2}\sqrt{\det P},
+\quad Z_h=(2\pi/\beta)^{(2n-r)/2}/\sqrt{\det C_h}.
+$$
+两因子各由自身流保持。若 $D(\mu\Vert\pi_\beta)<\infty$，$\nu$ 为 $y$ 边缘，则恢复 $\mathcal R\nu=\nu\otimes\gamma_h$ 满足
+$$
+D(\mu\Vert\pi_\beta)-D(\nu\Vert\gamma_r)
+=\int D(\mu(\cdot|y)\Vert\gamma_h)d\nu(y)
+=D(\mu\Vert\mathcal R\nu).
+$$
+这是给定可见边缘的唯一最小超额自由能提升；该缺陷沿本节解耦可逆流守恒。
+

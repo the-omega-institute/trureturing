@@ -1,0 +1,54 @@
+**命题 24.2（$\pi$ 读出与固定差 $1/9$）。** 对同一输入对，已知失谐 $0<|\delta|\le1/54$ 时，达到事件差至少 $1/9$ 的最少最坏分支调用数 $Q_{\min}(\delta;p,q)$ 满足
+
+$$
+\frac1{36|\delta|}\le Q_{\min}(\delta;p,q)
+\le n_\delta
+:=3\left\lfloor\frac{\pi}{3|\delta|}+\frac12\right\rfloor
+\le\frac\pi{|\delta|}+\frac32.
+\tag{24.9}
+$$
+
+证明。在 $U$ 的六次单位根谱上逐点求值，得
+
+$$
+W_\pi=-I/3+2(U^2+U^4)/3.
+$$
+
+$U^2$ 的 $10\to11$ 路径无 carry，而 $U^4$ 的低层终点为 $01$，所以所需两个角恰为
+
+$$
+(W_\pi)_{10,10}=-I_H/3,\qquad
+(W_\pi)_{11,10}=2V^2/3.
+$$
+
+取实读出 $r_0$，实际高层 Kraus 及效果为
+
+$$
+K_0=\frac{-I+2V^2}{3\sqrt2},\qquad
+K_0^\dagger K_0=\frac{5I-2(V+V^2)}{18}.
+$$
+
+$V+V^2$ 在非零标签基上对角为零、全部非对角为 $1$，在 $\psi_\pm$ 上期望为 $\pm1$。因此实际未条件化概率为
+
+$$
+p_+(\pi)=1/6,\qquad p_-(\pi)=7/18,\qquad
+p_-(\pi)-p_+(\pi)=2/9,
+\tag{24.10}
+$$
+
+即约定 $D=p_+-p_-$ 下 $D(\pi)=-2/9$。
+
+$n_\delta$ 为正的三倍整数，最近整数界给
+$\bigl|n_\delta|\delta|-\pi\bigr|\le3|\delta|/2$。置
+$h=\operatorname{sgn}(\delta)(n_\delta|\delta|-\pi)$，
+则 $n_\delta\Delta_*\in2\pi\mathbb Z$ 且
+
+$$
+W_\Delta^{n_\delta}=W_{\pi+h},\qquad |h|\le3|\delta|/2.
+$$
+
+$\delta<0$ 时使用 $-\pi\equiv\pi\pmod{2\pi}$，仍只作正向原始调用。实际连续调用 $n_\delta$ 次，中间作恒等控制，再测 $r_0$。由中心化谱给每个输入的事件变化至多 $2|h|$，两输入的有符号差故至少
+$2/9-4|h|\ge2/9-6|\delta|\ge1/9$。下界对任意允许自适应协议由 (23.2) 给 $1/9\le4N|\delta|$。$\square$
+
+若初始低层为任意共同 $\tau$，可先用低层 CPTP 重置为 $|10\rangle$，不增加时钟调用；对 (23.3) 的共同辅助扩张同样适用。已知 $\delta$ 的固定差任务因此具有 $\Theta(1/|\delta|)$ 调用复杂度，一致于三个共振与全部不同非零标签对。这不计最优常数、重复 shot 数、参数取得及控制精度，也不表示完美区分。九次张成给每个非共振的非零见证，但 (23.2) 把其幅度压在 $36|\delta|$ 内；代数存在性与统一正信号是不同量词的结论。
+

@@ -1,0 +1,11 @@
+**定理 10.1（相关曲率的非线性分解）。**
+\[
+D^T=-D,\quad F''(0)=-\mathbb E[vv^T],\qquad
+\boxed{M:=D^2-F''(0)=N+E_{\rm expr}\succeq0.}
+\]
+对任意平方可积当前漂移拟合器 $g(u)$，
+\[
+\mathbb E\|v-g(u)\|^2=\operatorname{tr}N+\mathbb E\|b(u)-g(u)\|^2.
+\]
+固定 $t$，最佳线性预测为 $F(t)u$，最佳任意可测预测为 $\mathsf P\mathsf U_tu$，两者的风险差恰为 $\|\mathsf P\mathsf U_tu-F(t)u\|_{L^2}^2$。
+

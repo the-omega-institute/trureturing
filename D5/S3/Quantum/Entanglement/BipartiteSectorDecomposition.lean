@@ -144,7 +144,7 @@ theorem hermitian_space_finrank (d : Nat) :
       _ = d ^ 2 * 2 := by ring
   exact Nat.eq_of_mul_eq_mul_right (by norm_num) hcancel
 
-private theorem identityHermitian_ne_zero (d : Nat) [NeZero d] :
+theorem identityHermitian_ne_zero (d : Nat) [NeZero d] :
     identityHermitian d ≠ 0 := by
   intro h
   have hval : (1 : Matrix (Fin d) (Fin d) ℂ) = 0 := congrArg Subtype.val h
@@ -172,7 +172,7 @@ private theorem hermitian_inner_identity {d : Nat} (A : HermitianSpace d) :
   change (Matrix.trace ((1 : Matrix (Fin d) (Fin d) ℂ) * 1 * A.1ᴴ)).re = _
   rw [one_mul, one_mul, hA]
 
-private theorem traceZeroHermitian_eq_orthogonal (d : Nat) :
+theorem traceZeroHermitian_eq_orthogonal (d : Nat) :
     traceZeroHermitian d = (scalarHermitian d)ᗮ := by
   ext A
   change Matrix.trace A.1 = 0 ↔ A ∈ (scalarHermitian d)ᗮ

@@ -148,11 +148,11 @@ public sealed class RuleCatalog
         .Where(item => item.Descriptor.Lifecycle is RuleLifecycle.Active && item.Rule.HasCurrentPredicate)
         .Select(item => item.Descriptor.Id);
 
-    internal RuleExecutionOutcome ExecuteCurrent(CurrentRuleContext current) =>
-        ExecuteInOrder(current, null, ExecutionOrder, null, null, includeCurrent: true);
+    internal RuleExecutionOutcome ExecuteCurrent(CurrentRuleContext current, RuleEvaluationMeasure? measureRule = null) =>
+        ExecuteInOrder(current, null, ExecutionOrder, measureRule, null, includeCurrent: true);
 
-    internal RuleExecutionOutcome ExecuteDelta(DeltaRuleContext delta) =>
-        ExecuteInOrder(delta.CurrentFacts, delta, ExecutionOrder, null, null, includeCurrent: false);
+    internal RuleExecutionOutcome ExecuteDelta(DeltaRuleContext delta, RuleEvaluationMeasure? measureRule = null) =>
+        ExecuteInOrder(delta.CurrentFacts, delta, ExecutionOrder, measureRule, null, includeCurrent: false);
 
     internal ImmutableArray<RuleDescriptor> ApplicableTo(
         RepositoryFile artifact,

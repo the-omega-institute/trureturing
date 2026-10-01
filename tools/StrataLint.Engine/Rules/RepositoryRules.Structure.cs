@@ -85,7 +85,69 @@ internal static partial class RepositoryRules
             }
         }
 
+        findings.AddRange(RegImplementationBoundary.Evaluate(context));
+        findings.AddRange(RegistrationSelfAssessment(context));
         return findings.ToImmutable();
+    }
+
+    private static readonly Regex RegistrationAssessmentToken = new(
+        @"(?<![\w'])(?:run_meta(?![\w'])|#eval(?![\w'])|TemplateBinding[\w']*|InformationRegistry[\w']*)",
+        RegexOptions.CultureInvariant);
+
+    internal static ImmutableArray<RuleFinding> RegistrationSelfAssessment(DeltaRuleContext context)
+    {
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        foreach (var (path, file) in context.Current.Files
+            .Where(item => item.Key.Value.StartsWith("Reg/", StringComparison.Ordinal)
+                && item.Key.Value.EndsWith(".lean", StringComparison.Ordinal))
+            .OrderBy(item => item.Key.Value, StringComparer.Ordinal))
+        {
+            // Blob ratchet: unchanged historical self-checks and deletions are exempt.
+            // Read candidate source directly; Reg may be absent from the Lean report.
+            if (context.Baseline.Files.TryGetValue(path, out var baseline)
+                && file.RawBytes.AsSpan().SequenceEqual(baseline.RawBytes.AsSpan())) continue;
+
+            foreach (var token in RegistrationAssessmentToken.Matches(RegistrationCode(file.Text))
+                .Select(match => match.Value).Distinct(StringComparer.Ordinal))
+                findings.Add(new RuleFinding(path.Value,
+                    $"REG-SELF-ASSESSMENT: Reg module may not read or assert registration assessment at compile time ({token}); move the check to LeanInformationAuditRegTests",
+                    AdmissionEffect.Block));
+        }
+
+        return findings.ToImmutable();
+    }
+
+    private static string RegistrationCode(string source)
+    {
+        var code = new StringBuilder();
+        var line = 1;
+        var column = 0;
+        foreach (var token in LeanSourceTokenizer.ReadTokens(source))
+        {
+            // The shared tokenizer removes comments and preserves whole strings.
+            // Scan string literals too, including interpolation expressions.
+            while (line < token.Line)
+            {
+                code.Append('\n');
+                line++;
+                column = 0;
+            }
+
+            code.Append(' ', token.Column - column);
+            code.Append(token.Text);
+            column = token.Column;
+            foreach (var value in token.Text)
+            {
+                if (value == '\n')
+                {
+                    line++;
+                    column = 0;
+                }
+                else column++;
+            }
+        }
+
+        return code.ToString();
     }
 
     private static bool IsRegistrationImport(string module) =>

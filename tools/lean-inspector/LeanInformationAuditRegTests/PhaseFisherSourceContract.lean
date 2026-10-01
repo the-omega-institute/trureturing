@@ -1,5 +1,8 @@
 import Reg.D5.S3.Quantum.Entanglement.PhaseHistoryBound
 import Reg.D5.S3.Quantum.Information.FixedSupportFisherGap
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 namespace LeanInformationAuditRegTests.PhaseFisherSourceContract

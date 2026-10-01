@@ -1,0 +1,90 @@
+### 339.3 一般地板序列与准确无限层实现
+
+取正数序列 $\eta_k$，满足
+
+$$
+0<\eta_{k+1}\le\eta_k\le1,\qquad
+\eta_k/\eta_{k+1}\le R_\eta<\infty.
+\tag{339.8}
+$$
+
+后面的具体族有同一个 $R_\eta$ 上界。令
+
+$$
+\delta_k=\frac14 b^{-ak}\eta_k,\qquad
+m_k=\left\lceil M n_k\eta_k^{-1/a}\right\rceil,
+\tag{339.9}
+$$
+
+其中充分大的固定 $M\ge1$ 只依模型与式（339.7）的常数。取 $MN\ge4$。则
+
+$$
+m_k^a\asymp n_k^a\eta_k^{-1},\qquad
+4/3\le m_{k+1}/m_k\le C_b.
+\tag{339.10}
+$$
+
+下界使用 $MN\ge4$、$b\ge2$，也容纳第339.7节至多加二的有效取整；以下只需要严格递增和固定上界。常数对后面的所有地板族一致。
+
+按第338节定义数组
+
+$$
+A_{k,s,t}=(1-\delta_k)\bar\ell_{k,t}(s/m_k),\qquad
+B_{k,s,t}=(1-\delta_k)\bar u_{k,t}(s/m_k)+\delta_k.
+\tag{339.11}
+$$
+
+参考升阶与任务升阶构成乘积算子 $\mathsf E_k$。式（339.7）给
+
+$$
+A_k-\mathsf E_kA_{k-1}
+\ge c_0(\delta_{k-1}-\delta_k)-C_3m_{k-1}^{-a}
+\tag{339.12}
+$$
+
+（逐系数）；上数组用 $1-\bar u$ 得相反方向。因为 $\eta_k\le\eta_{k-1}$，
+
+$$
+\delta_{k-1}-\delta_k
+\ge(1-b^{-a})\delta_{k-1},\qquad
+m_{k-1}^{-a}\le M^{-a}n_{k-1}^{-a}\eta_{k-1}.
+$$
+
+选同一个充分大的 $M$，便使
+$\mathsf E_kA_{k-1}\le A_k\le B_k\le\mathsf E_kB_{k-1}$
+在所有层、所有地板族成立。没有逐层搜索相容性。
+
+每层在已读取的两条来源前缀上仅实施一次三分类，其概率为
+
+$$
+\frac{A_k-\mathsf E_kA_{k-1}}{D_k},\qquad
+\frac{\mathsf E_kB_{k-1}-B_k}{D_k},\qquad
+\frac{B_k-A_k}{D_k},
+\quad
+D_k=\mathsf E_k(B_{k-1}-A_{k-1})\ge\delta_{k-1}>0.
+\tag{339.13}
+$$
+
+初始层用 $A_0,1-B_0,B_0-A_0$。升阶权重直接作有限求和；不需要在实现中随机采一份超几何变量。超几何分布用于证明实际前缀的条件计数规律。
+
+第338节的乘积超几何归纳逐有限层适用，得到共同未决概率
+
+$$
+G_k(p,q)=\mathcal U_k(p,q)-\mathcal L_k(p,q)
+\le \delta_k+C_4m_k^{-a}+\Gamma_k(x,q).
+\tag{339.14}
+$$
+
+两个实际核心计数满足
+
+$$
+\Pr(R_T>m_k)=\Pr(R_H>d_k)=G_k(p,q).
+\tag{339.15}
+$$
+
+$\eta_k\le1$ 给 $G_k\le Cn_k^{-a}\to0$，故访问层数几乎必有限。每个访问层只读取有限新增来源，并执行一次有限三分类，所以完整实概率核心逐世界几乎必经有限总调用及有限抽象内部执行返回。随着 $k\to\infty$，$\delta_k\to0$、$m_k\to\infty$，原参考包络收敛和式（339.7）给
+$\mathcal L_k,\mathcal U_k\to F_x(q)$；
+因此输出准确。
+
+此处没有截断外层，也没有输出误差参数。它是同一无限规则的一次有限随机执行。
+

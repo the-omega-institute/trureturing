@@ -1,0 +1,10 @@
+**定义 10.3（跨载体及读出自身的预见条件）。** 对两个有限满射塔 $q_r^X:X\twoheadrightarrow B_r$、$q_r^Y:Y\twoheadrightarrow C_r$ 和映射 $F:X\to Y$，相应条件为
+
+$$
+\forall r\ \exists s\ \forall x,x',\quad
+q_s^Xx=q_s^Xx'\Longrightarrow q_r^YFx=q_r^YFx'.
+\tag{10.2}
+$$
+
+同一逐层代表构造及紧致有限柱证明给唯一连续延拓 $\widehat F$，充要性完全相同。有限离散读出可以取常值塔 $C_r=Y$，于是它自身须被某个统一有限层决定。预测边界映射、框架映射、指令解释及二元拼接各是不同箭头，各自须满足条件。二元映射的源若是完整乘积，可用成对观察的乘积塔；若仅有实际联合来源 $J\subseteq X\times Y$，须用 $J$ 的实际有限观察像，不能默认每对边缘档案都能联合实现。
+

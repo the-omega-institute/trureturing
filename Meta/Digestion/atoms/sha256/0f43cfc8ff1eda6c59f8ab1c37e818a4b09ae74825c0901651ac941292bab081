@@ -1,0 +1,18 @@
+**证明。** $P_t=e^{-t\Omega}\Pi e^{t\Omega}$ 是秩 $r$ 正交投影，故 $0\preceq G_T\preceq TI$、$\operatorname{tr}G_T=rT$。对每个特征值在 $[0,T]$ 使用严格凹函数 $\log(1+x/s)$ 的弦下界，以及严格凸函数 $(1+x/s)^{-1}$ 的弦上界，求和得对应端点界；Jensen 给另一端界。
+
+端点取等要求 $G_T$ 的特征值仅为零或 $T$。由
+$$
+rT^2-\operatorname{tr}G_T^2
+=\tfrac12\int_0^T\int_0^T\|P_t-P_u\|_F^2dtdu
+$$
+知这当且仅当所有 $P_t$ 相同，即 $[\Omega,\Pi]=0$，等价于 $M=0$。
+
+又
+$$
+\operatorname{tr}G_T^2=\int_0^T\int_0^T\|F(t-u)\|_F^2dtdu
+=rT^2-\tfrac16\operatorname{tr}M\,T^4+O(T^6).
+$$
+这里 $\int\int(t-u)^2=T^4/6$。对 $k\ge3$，$G_T/T=\Pi+(T/2)[\Pi,\Omega]+O(T^2)$；对迹幂的一阶项为零，因此 $\operatorname{tr}G_T^k=rT^k+O(T^{k+2})$。分别展开 $\tfrac12\operatorname{tr}\log(I+G_T/s)$ 和 $\tfrac12\operatorname{tr}(I+G_T/s)^{-1}$，最早差异来自平方项，得到两个四阶常数。证毕。
+
+与定理 8.1 合并可见：隐藏条件信息以三阶出现，而总信息相对固定子空间的净增益以四阶出现。信息既向隐藏方向重新分配，也影响当前可见边缘的精度；不能把条件信息全部当作净增益。该结论在指定 Gaussian 观测中证明，不从一般 I-MMSE 关系自动移植到任意场或量子测量 [GSV05]。
+

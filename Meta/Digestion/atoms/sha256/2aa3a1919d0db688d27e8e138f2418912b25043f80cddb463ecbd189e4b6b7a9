@@ -1,0 +1,30 @@
+**定理 2.3（Realization of all event laws）。** For every initialized unbounded rest trace $T$, the event sequence $E_T$ of Definition 1.6 satisfies the complete predicate $\mathcal L(E_T)$ of Assumption 1.5.
+
+证明。Positive labels, labels bounded by current height, nondecreasing heights and the endpoint increment law follow from initialization and the transition relation. Leastness of $\beta(h)$ and height monotonicity give the strict birth cut. At a positive birth $\beta(h)$, the height is exactly $h$ and the label is $h$: if the birth index is zero, initialization forces $h=1$; otherwise the preceding height is below $h$, and the next height can rise by at most one, only by selecting the new label. For a renewal $f$, the birth of its label occurs no later than $f$, and differs from $f$, so it is strictly earlier. The greatest earlier same-bin index therefore exists, is less than $f$, has label $k_f$, and has no intervening event of that label. This establishes every chronological law.
+
+It remains to derive reset balance rather than assume it. Define
+
+$$
+A_i(t)=|\{g:g<t,\ i<k_g\}|.
+$$
+
+For every event $t$ of label $i$, higher events strictly before $t$ split into births and renewals. There is exactly one higher birth at each label $i+1,\ldots,H_t$. Indeed the strict cut puts its birth no later than $t$; equality is excluded because $k_t=i$. Conversely every higher birth before $t$ has label at most $H_t$. Distinct births have distinct labels. Consequently
+
+$$
+A_i(t)=H_t-i+\rho_i(t).
+$$
+
+Now fix a renewal $f$, and set $e=p_f$, $i=k_f$. Immediately after $e$, coordinate $i$ has capacity $n_e$: for $e=0$ this is initialization, and otherwise it is the reset clause of the transition ending at $e$. Immediately before $f$, that coordinate exists and is zero by monotonicity of height and the first-zero clause. There is no reset of it between these two times. Theorem 2.1 on the interval ending at $f-1$ therefore shows that precisely $n_e$ higher events occur strictly between $e$ and $f$. Since both endpoints have label $i$,
+
+$$
+A_i(f)=A_i(e)+n_e.
+$$
+
+Substitute the birth-renewal decomposition at $e$ and $f$. Since $i\le H_e\le H_f$, the truncated subtractions can be canceled to give
+
+$$
+n_e+H_e+\rho_i(e)=H_f+\rho_i(f).
+$$
+
+This is the final field of $\mathcal L(E_T)$. $\square$
+

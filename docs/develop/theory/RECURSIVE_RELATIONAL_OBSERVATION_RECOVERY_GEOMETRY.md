@@ -5024,6 +5024,17 @@ v_t+(v\cdot\nabla_z)v=(\nu/c^2)\Delta_zv-\nabla_zq.
 $$
 时间导数、对流与压力梯度各为原式的 $1/c$ 倍，$\Delta_zv=c\Delta_Xu$，故黏性须变为 $\nu/c^2$。此可逆换元保留寿命与有界性。原文 Theorem 37 的温和解类还要求 $L^2_tH^{s+1}_x$；这里所用 $C_tH^2$ 唯一性已直接证明，不将不同函数类混同。原文 Exercise 43 的定性依赖也不替代（25.106）的明确常数。$\square$
 
+**可复用支撑结果 25.4A（全模行散度热核的 Bochner 路径）。** 固定 $\nu>0$ 与 $\tau>0$。令 $K=\mathbb Z^2$，输出纤维为 $\mathbb C^2$，张量纤维为 $2\times2$ 复矩阵，并令 $H=\ell^2(K;\mathbb C^2)$、$G=\ell^2(K;\mathbb C^{2\times2})$。对 $k=(k_1,k_2)$ 置 $\rho(k)=k_1^2+k_2^2$、$\kappa(k)=(k_1,k_2)$，令 $P_k$ 为去除 $\mathbb C\kappa(k)$ 的正交投影（$k=0$ 时为恒等投影）。若 $q:\mathbb R\to G$ 在全实时间上连续，且存在 $C\ge0$ 使 $\|q(s)\|\le C$ 对全部 $s$ 成立，则存在连续 $D:\mathbb R\to H$，满足
+$$
+D(0)=0,\qquad \|D(t)\|\le 2C\sqrt{t/\nu}\quad(0\le t\le\tau),
+$$
+并且对全部 $k\in K$ 与 $t\in[0,\tau]$，
+$$
+D(t,k)=\int_0^t e^{-\nu(t-s)\rho(k)}\,iP_k
+\left(\sum_{j=1}^2\kappa_j(k)q(s,k)_{\bullet j}\right)\,ds.
+$$
+这里的行指标是输出分量，求和指标 $j$ 是导数频率指标；$k=0$ 时行散度本身为零。该支撑结果只构造任意给定全模张量路径的连续 Bochner 路径及其定量界；它不构造非线性张量积路径，也不单独给出不动点、唯一性、压力、光滑性或最大延拓。
+
 **引理 25.5（两个端口的共同二次泛函）。** 对任意实 $\phi\in L^\infty(\mathbb T^2)$、$\|\phi\|_\infty\le1$，在实 Banach 空间 $L^2(\mathbb T^2;\mathbb R^2)$ 上定义
 $$
 Q_\phi(u)=\int u_1u_2\phi\,d\mu.
@@ -7572,3 +7583,164 @@ $$
 空间切面、时间切面和记忆恢复器可以互相运输，只有在 (34.2)—(34.4) 的共同来源、分离性和自然性同时成立时，才可称为同一完成对象的不同表达。缺少任何一项时，最多得到形式 completion、近似恢复或任务相对的可识别性。本文新增的是恢复器接口的普通数学组织，Claim status: open；没有新增 Lean 声明。
 
 ## 34.99 追加锚
+
+## 35. 周期梯度支持估计
+
+本节记录两个在物理振幅下的周期梯度估计。它们使用原始实变量与区间测度；本节不把纯二阶导能量改写成 normalizedFourierH2，也不主张实际 25.3 温和解、时间导数、压力、闭区间光滑性或物理速度的最大延拓。
+
+**定理 35.1（标量周期导数四阶矩）。** 设 $a,b,M\in\mathbb R$，$a\le b$，$0\le M$，且 $f, f_p, f_{pp}:\mathbb R\to\mathbb R$。假设对每个 $x\in\mathbb R$，
+
+$$
+\operatorname{HasDerivAt} f (f_p x) x,
+\qquad
+\operatorname{HasDerivAt} f_p (f_{pp} x) x,
+$$
+
+$f_{pp}$ 在全体 $\mathbb R$ 上连续，端点满足 $f(b)=f(a)$、$f_p(b)=f_p(a)$，并且对每个 $x\in\operatorname{Icc}(a,b)$ 有幅度条件 $|f(x)|\le M$。则
+
+$$
+\int_a^b f_p(x)^4\,dx
+\le
+9M^2\int_a^b f_{pp}(x)^2\,dx,
+$$
+
+其中积分按定向区间积分理解，等价于在 $\operatorname{Ioc}(a,b)$ 上使用 Lebesgue 限制测度。结论的常数是 $9$。
+
+**证明。** 连续性和导数假设使分部积分合法。对 $f f_p^3$ 分部积分，并用两个端点等式消去边界项，得到
+
+$$
+\int_a^b f_p^4\,dx
+=-\int_a^b3f f_p^2f_{pp}\,dx.
+$$
+
+对每个 $x\in[a,b]$，由 $|f(x)|\le M$ 以及两个平方非负式
+
+$$
+(f_p^2+3ff_{pp})^2\ge0,
+\qquad
+9(M^2-f^2)f_{pp}^2\ge0
+$$
+
+相加并整理，得到
+
+$$
+-3f f_p^2f_{pp}
+\le\frac{f_p^4+9M^2f_{pp}^2}{2}.
+$$
+
+两边积分并移项即得所述 $9M^2$ 界。
+
+**定理 35.2（二维物理振幅周期梯度四阶矩）。** 设 $a,b,M\in\mathbb R$，$a\le b$，$0\le M$，并令
+
+$$
+\mu=\operatorname{volume}.\operatorname{restrict}(\operatorname{Ioc}(a,b)).
+$$
+
+令 $u,u_x,u_y,u_{xx},u_{yy}:\operatorname{Fin}2\to\mathbb R\to\mathbb R\to\mathbb R$，所有坐标及横向变量均遍历全体 $\mathbb R$。假设对每个 $i\in\operatorname{Fin}2$ 及所有 $x,y\in\mathbb R$，
+
+$$
+\begin{aligned}
+&\operatorname{HasDerivAt}(z\mapsto u\ i\ z\ y)\,(u_x\ i\ x\ y)\ x,\\
+&\operatorname{HasDerivAt}(z\mapsto u_x\ i\ z\ y)\,(u_{xx}\ i\ x\ y)\ x,\\
+&\operatorname{HasDerivAt}(z\mapsto u\ i\ x\ z)\,(u_y\ i\ x\ y)\ y,\\
+&\operatorname{HasDerivAt}(z\mapsto u_y\ i\ x\ z)\,(u_{yy}\ i\ x\ y)\ y.
+\end{aligned}
+$$
+
+再假设对每个 $i$ 及每个实横向坐标，$x\mapsto u_{xx}\ i\ x\ y$ 与 $y\mapsto u_{yy}\ i\ x\ y$ 分别连续；对每个实横向坐标有所有端点匹配
+
+$$
+u\ i\ b\ y=u\ i\ a\ y,\quad u_x\ i\ b\ y=u_x\ i\ a\ y,\qquad
+u\ i\ x\ b=u\ i\ x\ a,\quad u_y\ i\ x\ b=u_y\ i\ x\ a.
+$$
+
+并且对所有 $x,y\in\operatorname{Icc}(a,b)$ 有物理振幅条件
+
+$$
+(u\ 0\ x\ y)^2+(u\ 1\ x\ y)^2\le M^2.
+$$
+
+假设对每个 $i$，函数 $(x,y)\mapsto(u_x\ i\ x\ y)^4$、$(x,y)\mapsto(u_y\ i\ x\ y)^4$、$(x,y)\mapsto(u_{xx}\ i\ x\ y)^2$、$(x,y)\mapsto(u_{yy}\ i\ x\ y)^2$ 都在 $\mu\times\mu$ 下可积，并且
+
+$$
+\bigl((u_x\ 0\ x\ y)^2+(u_x\ 1\ x\ y)^2+(u_y\ 0\ x\ y)^2+(u_y\ 1\ x\ y)^2\bigr)^2
+$$
+
+也在 $\mu\times\mu$ 下可积（变量依次为 $(x,y)$）。则
+
+$$
+\begin{aligned}
+&\int_{\mathbb R^2}
+\bigl((u_x\ 0\ x\ y)^2+(u_x\ 1\ x\ y)^2+(u_y\ 0\ x\ y)^2+(u_y\ 1\ x\ y)^2\bigr)^2\,d(\mu\times\mu)\\
+&\quad\le36M^2\int_{\mathbb R^2}
+\bigl((u_{xx}\ 0\ x\ y)^2+(u_{xx}\ 1\ x\ y)^2+(u_{yy}\ 0\ x\ y)^2+(u_{yy}\ 1\ x\ y)^2\bigr)\,d(\mu\times\mu).
+\end{aligned}
+$$
+
+结论的常数是 $36$，测度严格是每个坐标的 $(a,b]$ 限制测度；它没有额外的归一化因子或 normalizedFourierH2 边界。
+
+**证明。** 固定 $i$ 和 $y\in\operatorname{Icc}(a,b)$，把定理 35.1 应用于 $x\mapsto u\ i\ x\ y$。振幅条件给出该切片的 $|u\ i\ x\ y|\le M$：由 $u0^2+u1^2\le M^2$、$M\ge0$ 和平方非负性逐分量推出。端点和连续性假设正好给出切片所需条件，因此
+
+$$
+\int u_xi^4\,d\mu\le9M^2\int u_{xx}i^2\,d\mu.
+$$
+
+对 $y$ 积分并用乘积测度的 Fubini 等式，得到每个 $i$ 的 $x$ 方向乘积积分界。固定 $i$ 和 $x\in\operatorname{Icc}(a,b)$，沿 $y$ 方向同理得到
+
+$$
+\int u_yi^4\,d(\mu\times\mu)\le9M^2\int u_{yy}i^2\,d(\mu\times\mu).
+$$
+
+对每个点 $(x,y)$ 令 $A=(u_x\ 0\ x\ y)^2$、$B=(u_x\ 1\ x\ y)^2$、$C=(u_y\ 0\ x\ y)^2$、$D=(u_y\ 1\ x\ y)^2$。平方差恒等式给出
+
+$$
+(A+B+C+D)^2\le4(A^2+B^2+C^2+D^2).
+$$
+
+积分后使用上述四个 $9M^2$ 界，并用可积性假设合法地拆分和重组积分，得到 $4\cdot9M^2=36M^2$ 的结论。证毕。
+
+**定理 35.3（连续加权全频张量路径与实际 Duhamel 积分）。** 固定 $\nu,\tau>0$。令 $K=\mathbb Z^2$、$V=\mathbb C^2$、$TV=\mathbb C^{2\times2}$、$H=\ell^2(K;V)$、$G=\ell^2(K;TV)$，$W(k)=1+|k|^2$。给定 $x,y:\mathbb R\to H$，它们在 $[0,\tau]$ 上连续，且在该区间上分别满足 $\|x(t)\|\le M_x$、$\|y(t)\|\le M_y$，其中 $M_x,M_y\ge0$。置
+
+$$
+a_x(t,k)=W(k)^{-1}x(t,k),\qquad
+a_y(t,k)=W(k)^{-1}y(t,k),
+$$
+$$
+q(t,k)_{ij}=W(k)\sum_{p\in\mathbb Z^2}a_x(t,p)_i a_y(t,k-p)_j.
+$$
+
+则上式对每个系数绝对收敛，定义 $[0,\tau]$ 上连续的 $G$ 值路径，且 $\|q(t)\|_G\le16M_xM_y$。对任意 $z,w\in H$，将同一张量公式作用于 $z,w$ 得 $r\in G$，并有
+$$
+\|q(t)-r\|_G\le16\|x(t)-z\|_H\|y(t)\|_H+16\|z\|_H\|y(t)-w\|_H.
+$$
+令 $\rho(k)=|k|^2$、$\kappa(k)=(k_1,k_2)$，$P_k$ 是 $\mathbb C\kappa(k)$ 正交补上的投影。存在同一连续 $D:\mathbb R\to H$，在闭区间上满足
+
+$$
+D(0)=0,\qquad \|D(t)\|_H\le32M_xM_y\sqrt{t/\nu},\qquad P_kD(t,k)=D(t,k),\qquad D(t,0)=0,
+$$
+$$
+D(t,k)_i=\int_0^t e^{-\nu(t-s)\rho(k)}
+\left[iP_k\left(\sum_{j=1}^2\kappa_j(k)q(s,k)_{\bullet j}\right)\right]_i\,ds.
+$$
+
+这里 $i$ 是张量行即速度输出分量，$j$ 是散度的导数指标；积分是全频 $H$ 中同一 Bochner 路径的逐模值，不是假定的形式级数。输出逐模固定于横向投影且空间零模为零；该结论不预设输入的实对称、零均值或横向条件，也未断言输出的实对称；实际准备解、不动点、唯一性、压力与光滑延拓仍须另证。
+
+**证明。** 对每个时间，以 $W^{-1}x$ 和 $W^{-1}y$ 应用全频加权张量卷积估计。$\sum_k W(k)^2|a_x(k)|^2=\|x\|_H^2$，$y$ 同理，因而得到系数的绝对收敛、$q(t)\in G$ 与常数 $16$。逐坐标的张量乘积分配律和绝对收敛给出 $H\times H\to G$ 的实双线性映射；上述范数界使它连续，并由 $Q(x,y)-Q(z,w)=Q(x-z,y)+Q(z,y-w)$ 得显示的差界。因此两条闭区间路径的张量积路径连续。把它沿 $[0,\tau]$ 的最近点投影延伸到整条实轴，连续性与 $16M_xM_y$ 的统一界均保留。将此实际延伸路径代入定理 25.4A 的全频 Bochner 构造，得 $D(0)=0$、$2(16M_xM_y)\sqrt{t/\nu}$ 及逐模行散度公式。积分区间内的延伸路径与原始 $q$ 完全相同，故显示式保留原系数方向。逐频被积函数连续；$P_k$ 作为连续线性映射与积分交换，再由 $P_k^2=P_k$ 得同一 $D$ 的横向投影等式。$k=0$ 时 $\kappa(0)=0$，行收缩和积分都为零。证毕。
+
+**定理 35.4（两条实际全频 Duhamel 路径的差界）。** 沿用定理35.3的 $K,V,TV,H,G,W,\rho,\kappa,P_k$，固定 $\nu,\tau>0$。令 $x,y,z,w:\mathbb R\to H$ 在 $[0,\tau]$ 上连续，分别有非负统一界 $M_x,M_y,M_z,M_w$，并有非负常数 $D_x,D_y$ 使区间上 $\|x(t)-z(t)\|_H\le D_x$、$\|y(t)-w(t)\|_H\le D_y$。则存在连续的 $D_{xy},D_{zw}:\mathbb R\to H$，均在零点为零，分别满足定理35.3所给的完整加权卷积、正 $i$ 投影行散度 Bochner 逐模公式及
+
+$$
+\|D_{xy}(t)\|_H\le32M_xM_y\sqrt{t/\nu},\qquad
+\|D_{zw}(t)\|_H\le32M_zM_w\sqrt{t/\nu},
+$$
+
+且对所有 $t\in[0,\tau]$ 有同一对实际积分路径的差界
+
+$$
+\|D_{xy}(t)-D_{zw}(t)\|_H
+\le32(D_xM_y+M_zD_y)\sqrt{t/\nu}.
+$$
+
+**证明。** 定理35.3分别构造两条实际张量路径及其 Duhamel 积分。其张量比较界用于 $z(t),w(t)$ 给 $\|q_{xy}(t)-q_{zw}(t)\|_G\le16D_xM_y+16M_zD_y$。将这一差路径沿闭区间投影夹紧后，定理25.4A对它构造第三条 Bochner 路径，其范数不超过 $2(16D_xM_y+16M_zD_y)\sqrt{t/\nu}$。在任意固定频率，两个原积分的被积函数连续，行收缩、$P_k$ 与复数 $i$ 对张量差均线性；区间积分的减法式遂证明第三路径在 $[0,\tau]$ 恰为 $D_{xy}-D_{zw}$。此等式在全部频率成立，故给所列 $H$ 范数界。这里尚未构造定理25.3的准备温和解，也未证明实对称、闭球收缩、无球限制唯一性或定理25.4。证毕。
+
+## 35.99 追加锚

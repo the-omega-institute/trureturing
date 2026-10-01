@@ -1,6 +1,9 @@
 import LeanInformationAuditRegTests.ProductionInputs
 import LeanInformationAudit.Census.Query
 import Reg.Catalogs.InformationRoot
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Meta Lean.Elab.Command LeanInformationAudit DispositionCensus
 open D5.S3.ConceptDynamics.InformationEscape
@@ -20,7 +23,7 @@ run_cmd do
   for registration in registrations do
     let proofName := (← getCurrNamespace) ++ registration.arenaName.str "nondegenerate"
     liftTermElabM do
-      let arenaExpr := (← RegistrationGates.normalizeArena
+      let arenaExpr := (← RegistrationElaboration.normalizeArena
         (← mkConstWithFreshMVarLevels registration.arenaName)).finite
       let proposition ← mkAppM ``Arena.Nondegenerate #[arenaExpr]
       let proof ← mkDecideProof proposition

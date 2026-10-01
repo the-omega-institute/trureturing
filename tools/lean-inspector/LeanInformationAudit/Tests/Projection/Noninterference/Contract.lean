@@ -1,4 +1,7 @@
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 /-!
 The seal publication closure receives no syntax, destination, or artifact selector.
@@ -13,7 +16,7 @@ commands and verifies rejection before any declaration or artifact escapes.
 
 open Lean Lean.Elab.Command LeanInformationAudit
 
-example : CommandElabM Unit := @prepareSealPublication
+example : ValidatedSourceSnapshot → CommandElabM Unit := @prepareSealPublication
 
 example : Name -> CommandElabM Unit := @prepareInformationAnalysisStage
 

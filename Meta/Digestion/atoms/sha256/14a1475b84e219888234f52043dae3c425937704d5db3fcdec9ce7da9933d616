@@ -1,0 +1,25 @@
+### theorem 19.2 递归与共轭的操作格有指数五缺口
+
+$$
+M^2=M+I,
+\qquad J^2=I,
+\qquad JM=(I-M)J.
+$$
+
+因此，由 (M,J) 的加法、取负与复合生成的整数操作环为
+
+$$
+\boxed{
+\mathbb Z\langle M,J\rangle
+=\mathbb ZI+\mathbb ZM+\mathbb ZJ+\mathbb ZMJ.
+}
+$$
+
+并且它作为 $\operatorname{Mat}_2(\mathbb Z)$ 中的整数格具有指数5：
+
+$$
+\boxed{
+[\operatorname{Mat}_2(\mathbb Z):\mathbb Z\langle M,J\rangle]=5.
+}
+$$
+

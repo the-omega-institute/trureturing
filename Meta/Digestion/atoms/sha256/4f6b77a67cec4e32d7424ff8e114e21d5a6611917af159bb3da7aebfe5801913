@@ -1,0 +1,8 @@
+### theorem 51.2 固定局部码的最小补充记录
+
+允许记录 $\eta:D\to R$ 访问共同来源。使 $F(x,y)$ 可由 $(\alpha(x),\beta(y),\eta(x,y))$ 恢复的最小记录字母数为
+
+$$
+\boxed{|R|_{\min}=\max_{D_{a,b}\ne\varnothing}|F(D_{a,b})|.}
+$$
+

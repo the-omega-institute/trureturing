@@ -1,0 +1,485 @@
+{
+  "additional_actual_global_phase_layouts": 1024,
+  "all_coherent_phase_layouts": 315,
+  "complete_anchor_cofactor_phase_checks": 97020,
+  "examples": [
+    {
+      "actual_originals": [
+        {
+          "a": 12,
+          "m": 33
+        },
+        {
+          "a": 35,
+          "m": 55
+        },
+        {
+          "a": 14,
+          "m": 77
+        },
+        {
+          "a": 81,
+          "m": 99
+        },
+        {
+          "a": 60,
+          "m": 165
+        },
+        {
+          "a": 105,
+          "m": 231
+        },
+        {
+          "a": 315,
+          "m": 385
+        },
+        {
+          "a": 360,
+          "m": 495
+        },
+        {
+          "a": 504,
+          "m": 693
+        },
+        {
+          "a": 945,
+          "m": 1155
+        },
+        {
+          "a": 2520,
+          "m": 3465
+        }
+      ],
+      "dead_rows": [
+        0
+      ],
+      "duplicate_cofactor": 3,
+      "head_phases": {
+        "105": 0,
+        "15": 0,
+        "21": 0,
+        "3": 0,
+        "315": 0,
+        "35": 0,
+        "45": 0,
+        "5": 0,
+        "63": 0,
+        "7": 0,
+        "9": 0
+      },
+      "kind": "coherent",
+      "maximum_n": 11,
+      "maximum_r": 10,
+      "prime": 11
+    },
+    {
+      "actual_originals": [
+        {
+          "a": 1,
+          "m": 33
+        },
+        {
+          "a": 24,
+          "m": 55
+        },
+        {
+          "a": 25,
+          "m": 77
+        },
+        {
+          "a": 4,
+          "m": 99
+        },
+        {
+          "a": 49,
+          "m": 165
+        },
+        {
+          "a": 193,
+          "m": 231
+        },
+        {
+          "a": 249,
+          "m": 385
+        },
+        {
+          "a": 184,
+          "m": 495
+        },
+        {
+          "a": 130,
+          "m": 693
+        },
+        {
+          "a": 109,
+          "m": 1155
+        },
+        {
+          "a": 2839,
+          "m": 3465
+        }
+      ],
+      "dead_rows": [
+        4
+      ],
+      "duplicate_cofactor": 3,
+      "head_phases": {
+        "105": 4,
+        "15": 4,
+        "21": 4,
+        "3": 1,
+        "315": 4,
+        "35": 4,
+        "45": 4,
+        "5": 4,
+        "63": 4,
+        "7": 4,
+        "9": 4
+      },
+      "kind": "coherent",
+      "maximum_n": 11,
+      "maximum_r": 10,
+      "prime": 11
+    },
+    {
+      "actual_originals": [
+        {
+          "a": 1,
+          "m": 33
+        },
+        {
+          "a": 24,
+          "m": 55
+        },
+        {
+          "a": 25,
+          "m": 77
+        },
+        {
+          "a": 70,
+          "m": 99
+        },
+        {
+          "a": 49,
+          "m": 165
+        },
+        {
+          "a": 193,
+          "m": 231
+        },
+        {
+          "a": 249,
+          "m": 385
+        },
+        {
+          "a": 349,
+          "m": 495
+        },
+        {
+          "a": 592,
+          "m": 693
+        },
+        {
+          "a": 109,
+          "m": 1155
+        },
+        {
+          "a": 529,
+          "m": 3465
+        }
+      ],
+      "dead_rows": [
+        214
+      ],
+      "duplicate_cofactor": 3,
+      "head_phases": {
+        "105": 4,
+        "15": 4,
+        "21": 4,
+        "3": 1,
+        "315": 214,
+        "35": 4,
+        "45": 34,
+        "5": 4,
+        "63": 25,
+        "7": 4,
+        "9": 7
+      },
+      "kind": "coherent",
+      "maximum_n": 11,
+      "maximum_r": 10,
+      "prime": 11
+    },
+    {
+      "actual_originals": [
+        {
+          "a": 23,
+          "m": 33
+        },
+        {
+          "a": 2,
+          "m": 55
+        },
+        {
+          "a": 3,
+          "m": 77
+        },
+        {
+          "a": 81,
+          "m": 99
+        },
+        {
+          "a": 71,
+          "m": 165
+        },
+        {
+          "a": 215,
+          "m": 231
+        },
+        {
+          "a": 238,
+          "m": 385
+        },
+        {
+          "a": 360,
+          "m": 495
+        },
+        {
+          "a": 504,
+          "m": 693
+        },
+        {
+          "a": 32,
+          "m": 1155
+        },
+        {
+          "a": 1266,
+          "m": 3465
+        }
+      ],
+      "dead_rows": [],
+      "duplicate_cofactor": 3,
+      "head_phases": {
+        "105": 32,
+        "15": 11,
+        "21": 5,
+        "3": 2,
+        "315": 6,
+        "35": 28,
+        "45": 0,
+        "5": 2,
+        "63": 0,
+        "7": 3,
+        "9": 0
+      },
+      "kind": "incoherent",
+      "maximum_n": 3,
+      "maximum_r": 3,
+      "prime": 11
+    },
+    {
+      "actual_originals": [
+        {
+          "a": 14,
+          "m": 39
+        },
+        {
+          "a": 2,
+          "m": 65
+        },
+        {
+          "a": 3,
+          "m": 91
+        },
+        {
+          "a": 108,
+          "m": 117
+        },
+        {
+          "a": 161,
+          "m": 195
+        },
+        {
+          "a": 110,
+          "m": 273
+        },
+        {
+          "a": 98,
+          "m": 455
+        },
+        {
+          "a": 450,
+          "m": 585
+        },
+        {
+          "a": 126,
+          "m": 819
+        },
+        {
+          "a": 452,
+          "m": 1365
+        },
+        {
+          "a": 1896,
+          "m": 4095
+        }
+      ],
+      "dead_rows": [],
+      "duplicate_cofactor": null,
+      "head_phases": {
+        "105": 32,
+        "15": 11,
+        "21": 5,
+        "3": 2,
+        "315": 6,
+        "35": 28,
+        "45": 0,
+        "5": 2,
+        "63": 0,
+        "7": 3,
+        "9": 0
+      },
+      "kind": "incoherent",
+      "maximum_n": 3,
+      "maximum_r": 3,
+      "prime": 13
+    },
+    {
+      "actual_originals": [
+        {
+          "a": 35,
+          "m": 51
+        },
+        {
+          "a": 2,
+          "m": 85
+        },
+        {
+          "a": 3,
+          "m": 119
+        },
+        {
+          "a": 72,
+          "m": 153
+        },
+        {
+          "a": 56,
+          "m": 255
+        },
+        {
+          "a": 278,
+          "m": 357
+        },
+        {
+          "a": 483,
+          "m": 595
+        },
+        {
+          "a": 450,
+          "m": 765
+        },
+        {
+          "a": 315,
+          "m": 1071
+        },
+        {
+          "a": 452,
+          "m": 1785
+        },
+        {
+          "a": 3156,
+          "m": 5355
+        }
+      ],
+      "dead_rows": [],
+      "duplicate_cofactor": null,
+      "head_phases": {
+        "105": 32,
+        "15": 11,
+        "21": 5,
+        "3": 2,
+        "315": 6,
+        "35": 28,
+        "45": 0,
+        "5": 2,
+        "63": 0,
+        "7": 3,
+        "9": 0
+      },
+      "kind": "incoherent",
+      "maximum_n": 3,
+      "maximum_r": 3,
+      "prime": 17
+    },
+    {
+      "actual_originals": [
+        {
+          "a": 20,
+          "m": 57
+        },
+        {
+          "a": 2,
+          "m": 95
+        },
+        {
+          "a": 3,
+          "m": 133
+        },
+        {
+          "a": 99,
+          "m": 171
+        },
+        {
+          "a": 176,
+          "m": 285
+        },
+        {
+          "a": 215,
+          "m": 399
+        },
+        {
+          "a": 273,
+          "m": 665
+        },
+        {
+          "a": 540,
+          "m": 855
+        },
+        {
+          "a": 693,
+          "m": 1197
+        },
+        {
+          "a": 1397,
+          "m": 1995
+        },
+        {
+          "a": 5046,
+          "m": 5985
+        }
+      ],
+      "dead_rows": [],
+      "duplicate_cofactor": null,
+      "head_phases": {
+        "105": 32,
+        "15": 11,
+        "21": 5,
+        "3": 2,
+        "315": 6,
+        "35": 28,
+        "45": 0,
+        "5": 2,
+        "63": 0,
+        "7": 3,
+        "9": 0
+      },
+      "kind": "incoherent",
+      "maximum_n": 3,
+      "maximum_r": 3,
+      "prime": 19
+    }
+  ],
+  "passed": true,
+  "root_indicator_checks": 2048,
+  "scope": "For every global eleven-cofactor head phase inventory, the proved construction realizesr_q(u)=min(n_q(u),q-1) simultaneously at all315 head rows using one full numerical phase per original. This is a count-profile statement; it does not assert simultaneous equality of query-cylinder caps that discarded live-root indicators."
+}

@@ -1,0 +1,4 @@
+### theorem 5.1 单个数量读数不承载替换动力学
+
+不存在 $F:\mathbb Z\to\mathbb Z$ 使 $q(Mv)=F(q(v))$ 对所有 $v\in\mathcal G$ 成立。
+

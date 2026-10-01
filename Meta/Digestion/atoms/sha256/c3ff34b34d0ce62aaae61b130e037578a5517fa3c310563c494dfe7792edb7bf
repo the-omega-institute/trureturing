@@ -1,0 +1,9 @@
+**定理 6.2。** 对包括相关初态在内的任意联合态，
+$$
+\|\operatorname{Tr}_B(U_t\rho U_t^\dagger)-e^{-itH_A}\rho_Ae^{itH_A}\|_1
+\le\min(2,2|t|\delta(H)),
+$$
+$$
+|f_\beta(H)-f_\beta(H_0)|\le\delta(H),
+\qquad |G_H(\rho)-G_{H_0}(\rho)|\le2\delta(H).
+$$

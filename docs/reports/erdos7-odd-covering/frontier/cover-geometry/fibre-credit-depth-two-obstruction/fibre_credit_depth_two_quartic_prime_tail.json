@@ -1,0 +1,210 @@
+{
+  "actual_CRT_stages": [
+    {
+      "absolute_loss_upper": "256/243",
+      "absolute_old_fourth_moment": "3",
+      "actual_loss": "31/180",
+      "actual_maximum_fourth_moment": "767/15",
+      "actual_union_load_fourth_moment": "1897/21870",
+      "complete_queries_checked": 91125,
+      "delta": "1/4",
+      "new_mass": "26/45",
+      "old_mass": "3/4",
+      "originals": [
+        [
+          3,
+          0
+        ],
+        [
+          9,
+          3
+        ],
+        [
+          15,
+          7
+        ],
+        [
+          45,
+          14
+        ]
+      ],
+      "propagated_fourth_moment_upper": "467/9"
+    },
+    {
+      "absolute_loss_upper": "625/1944",
+      "absolute_old_fourth_moment": "3",
+      "actual_loss": "7/90",
+      "actual_maximum_fourth_moment": "617/10",
+      "actual_union_load_fourth_moment": "1897/21870",
+      "complete_queries_checked": 91125,
+      "delta": "2/5",
+      "new_mass": "121/180",
+      "old_mass": "3/4",
+      "originals": [
+        [
+          3,
+          0
+        ],
+        [
+          9,
+          3
+        ],
+        [
+          15,
+          7
+        ],
+        [
+          45,
+          14
+        ]
+      ],
+      "propagated_fourth_moment_upper": "577/9"
+    }
+  ],
+  "analytic_prime_product_theorem_reproved": false,
+  "eight_prime_density": {
+    "archive_sha256": "9e674cf1665695945dc4d6d269ec27ad1567e9c5c236c2708b451de2a2a5196c",
+    "attributed_ordinary_source_premise": true,
+    "attribution": "Michael Schroeder, Nine Prime Divisors in Odd Distinct Covering Systems, edition1.0.1, cor:uncovered-density",
+    "whole_arbitrary_height_theorem_locally_kernel_replayed": false
+  },
+  "exact_checks_passed": true,
+  "inherited_head_geometry_reexecuted": false,
+  "kernel_rows_checked": 1024,
+  "prefix_caps_checked": 13312,
+  "quadruple_exponent_checks": 16,
+  "quartic_eight": {
+    "Haar_lower_prefactor": "1/20000000",
+    "Haar_tail_factor_per_actual_prime": "3/5",
+    "absolute_moment_potential": "16379878645983125/190768545792",
+    "coefficient_slacks": [
+      "0",
+      "0",
+      "650/3",
+      "2200",
+      "12610",
+      "53130",
+      "177100",
+      "480700",
+      "1081575",
+      "2042975",
+      "3268760",
+      "4457400",
+      "5200300",
+      "5200300",
+      "4457400",
+      "3268760",
+      "2042975",
+      "1081575",
+      "480700",
+      "177100",
+      "53130",
+      "12650",
+      "2300",
+      "300",
+      "25",
+      "1"
+    ],
+    "cutoff_exclusive": 10000,
+    "delta": "2/5",
+    "ell": 8,
+    "growth_degree": 25,
+    "head_joint_Haar_density_upper": "1",
+    "head_mass_lower": "1/1002375",
+    "head_primes": [
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23
+    ],
+    "integral_polynomial": "1048319656581745613834719/129243464436747803295744",
+    "local_all_height_Haar_moments": [
+      "30",
+      "285/32",
+      "140/27",
+      "1914/625",
+      "2275/864",
+      "17595/8192",
+      "4370/2187",
+      "26220/14641"
+    ],
+    "moment_order": 4,
+    "prime_product_constant": "129/127",
+    "remaining_absolute_mass_lower": "30177406356618807209787690893946597674269548750879567777789856559187551812644139544064547/549597219542616353398799202152358762852583124841354657087576279558712400552761662550988292096000",
+    "remaining_decimal": 5.490822239190535e-08,
+    "scalar_loss_constant": "5625/2048",
+    "strict_simple_lower": "1/20000000",
+    "tail_coefficient": "759152309314429006058954865289755720077263627442133449357143798421484375/69143124272722413737416874315534806068570835878023862658841013247792056709427494912",
+    "tail_debit": "460548988903266365955866608354082646611042938276873980151641338124351800743955322265625/488530861815658980798932624135430011424518333192315250744512248496633244935788144489767370752",
+    "tail_debit_decimal": 9.427224048683515e-07
+  },
+  "quartic_seven": {
+    "Haar_lower_prefactor": "1/2250",
+    "Haar_tail_factor_per_actual_prime": "3/4",
+    "absolute_moment_potential": "82461631627375/127401984",
+    "coefficient_slacks": [
+      "0",
+      "0",
+      "370/3",
+      "1060",
+      "4813",
+      "15504",
+      "38760",
+      "77520",
+      "125970",
+      "167960",
+      "184756",
+      "167960",
+      "125970",
+      "77520",
+      "38760",
+      "15504",
+      "4845",
+      "1140",
+      "190",
+      "20",
+      "1"
+    ],
+    "cutoff_exclusive": 1500,
+    "delta": "1/4",
+    "ell": 6,
+    "growth_degree": 20,
+    "head_joint_Haar_density_upper": "27/2",
+    "head_mass_lower": "7235955529/450000000000",
+    "head_primes": [
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19
+    ],
+    "integral_polynomial": "67868213635409119/7412080755407364",
+    "local_all_height_Haar_moments": [
+      "30",
+      "285/32",
+      "140/27",
+      "1914/625",
+      "2275/864",
+      "17595/8192",
+      "4370/2187"
+    ],
+    "moment_order": 4,
+    "prime_product_constant": "73/71",
+    "remaining_absolute_mass_lower": "471003544052583373007391284891457130292536422383783831200331204936929616193479/68526316262097355645610213612486715706419960038678065427080605555379200000000000",
+    "remaining_decimal": 0.0068733235601210994,
+    "scalar_loss_constant": "9",
+    "strict_simple_lower": "3/500",
+    "tail_coefficient": "156687241084651398719666908806323500291655954335333239875/11015675839457522448175510161472272972354031642020007945454058249",
+    "tail_debit": "12920685555032221280338216348648725860046131680830754239736427491578125/1403418957047753843622097174783727937667480781592126779946610801774166016",
+    "tail_debit_decimal": 0.009206577615434456
+  },
+  "scalar_identity_controls": 12,
+  "scope": "Same-source complete-query higher-moment tail; all original heights unrestricted. Ordinary proof with exact controls, not new Lean verification or a complete odd-cover resolution.",
+  "source_certificate_sha256": "b6c47c2e710cdb27e599b92ccfe7d1b5c4e55b4b4082ad8058d196c1e964b9b2"
+}

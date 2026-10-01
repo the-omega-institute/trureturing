@@ -1,0 +1,8 @@
+**定理 2146.1（$L_0$ 的非负整数本征空间与有限维能级）。** 沿用问题 2145.1 的同一个复多项式空间 $F_{\mathbb C}=\mathbb C[X_0,X_1,\ldots]$、模式 $a_r$ 与逐态有限的正规序算子 $L_0$。对有限支撑指数向量 $d=(d_i)_{i\geq0}$ 定义 $E(d)=\sum_{i\geq0}(i+1)d_i$，并令 $P_N=\{d:E(d)=N\}$、$F_N=\ker(L_0-N\,\mathrm{id})$。则每个 $P_N$ 都是有限集，且对所有 $N\geq0$ 有
+
+$$
+F_N=\operatorname{span}_{\mathbb C}\{X^d:d\in P_N\},\qquad
+\dim_{\mathbb C}F_N=|P_N|.
+\tag{2146.1}
+$$
+

@@ -1,0 +1,30 @@
+**定理 13.2（统计收益与更新不相容性的权衡）。** 任意秩 $2k$ 正交投影均满足
+\[
+\boxed{\mathcal R(P)\ge R_{\rm cl}(k)
+-\tfrac12\|[P,\Omega]\|_F\|K\|_F.}
+\]
+因而任何超过精确自治最优值的收益，都需要非零的更新组合缺陷；带宽或单次重建损失本身不决定这个缺陷。
+
+**证明。** 迹循环给
+\[
+\operatorname{tr}(PB)=\operatorname{tr}(P\overline B)+\operatorname{tr}([P,\Omega]K).
+\]
+第一项对任意秩 $2k$ 投影都不超过 $2\sum_{j\le k}\nu_j$，第二项用 Frobenius Cauchy–Schwarz，代入风险即得。谱间解的范数界由正交特征基中的逐元素平方和得到。证毕。
+
+令 $\delta=\|(I-P)\Omega P\|$，则第 2 节的预测界为
+\[
+\|Qe^{t\Omega}x-e^{tD}Qx\|\le t\delta\|x\|,
+\quad D=Q\Omega Q^T,
+\quad\|[P,\Omega]\|_F=\sqrt2\|(I-P)\Omega P\|_F.
+\]
+若 $\delta<\sigma_{\min}(\Omega)$，已有非退化性结论适用；还可明确比较两种提升。$D$ 可逆时，
+\[
+L_s=\Omega Q^TD^{-1},\quad QL_s=I,\quad
+L_s^T(-\Omega^{-1})L_s=-D^{-1},
+\]
+\[
+\boxed{L_s-Q^T=(I-P)\Omega Q^TD^{-1},\quad
+\|L_s-Q^T\|\le\delta/\sigma_{\min}(D).}
+\]
+这些式子直接相乘可证。$L_s$ 是辛提升，$Q^T$ 是最小能量提升；精确自治时两者相同，近自治时由同一个残差控制差异。不能把任意正交解码器自动称为辛解码器。
+

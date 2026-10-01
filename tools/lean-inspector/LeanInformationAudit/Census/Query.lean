@@ -46,7 +46,7 @@ def prepareBindingSnapshot (evidenceModules : Array Name) :
     for moduleName in evidenceModules do
       unless moduleName == env.header.mainModule || (env.getModuleIdx? moduleName).isSome do
         throwError "incomplete_closure:dtr.census_registration:{moduleName}"
-    return .ok (← TemplateBinding.exportSnapshot)
+    return .ok (← (TemplateBinding.exportSnapshot (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule)))
   catch error => return .error (← error.toMessageData.toString)
 
 def incompleteBindingEvidence (diagnostic : String) : Json := Json.mkObj [
@@ -150,7 +150,7 @@ def assess (index : Index) (head : String) (key : StatementKey)
   for entry in index.finite do
     if entry.theoremName != key.theoremName then continue
     candidates := candidates ++ #[entry.unitName, entry.realizationName]
-    let arena := (← RegistrationGates.normalizeArena (← mkConstWithFreshMVarLevels entry.arenaName)).finite
+    let arena := (← RegistrationElaboration.normalizeArena (← mkConstWithFreshMVarLevels entry.arenaName)).finite
     let nondegenerate ← matching index ``Arena.Nondegenerate
       (← mkAppM ``Arena.Nondegenerate #[arena])
     let enumerations ← matching index ``Arena.StateEnumeration

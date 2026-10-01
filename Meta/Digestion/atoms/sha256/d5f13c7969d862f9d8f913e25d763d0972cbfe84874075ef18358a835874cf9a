@@ -1,0 +1,55 @@
+**定理321.2（同一容差的有效与抽象费用）。** 固定 $\delta>0$。若同一合同内存在抽象策略 $\pi_0$，满足
+$$
+e=\operatorname{err}(\pi_0)<\delta,
+\qquad
+K_0=\mathcal K_s(\pi_0)<\infty,
+\tag{321.7}
+$$
+则
+$$
+\boxed{
+\mathcal C_s^{\mathrm{alg}}(\delta)
+=\mathcal C_s^{\mathrm{pol}}(\delta)<\infty.}
+\tag{321.8}
+$$
+
+**证明。** 令 $L=\mathcal C_s^{\mathrm{pol}}(\delta)$。由于 $\pi_0$ 可行，$L\le K_0<\infty$。给定任意 $\epsilon>0$，选一份抽象策略 $\pi$，使
+$$
+\operatorname{err}(\pi)\le\delta,\qquad
+\mathcal K_s(\pi)\le L+\epsilon/3.
+$$
+取足够小的有理数 $0<\lambda<1$，使 $\lambda K_0\le\epsilon/3$。以概率 $1-\lambda$ 运行 $\pi$，以概率 $\lambda$ 运行 $\pi_0$。引理321.1给
+$$
+\operatorname{err}(\pi^\lambda)
+\le\delta-\lambda(\delta-e),
+\qquad
+\mathcal K_s(\pi^\lambda)\le L+2\epsilon/3.
+\tag{321.9}
+$$
+
+对该混合的行为表应用定理319.3；首步身份类则应用命题319.4。取输出逼近容差 $\eta=\lambda(\delta-e)/2$，费用余量 $\xi=\epsilon/3$，得到有限有理有效策略 $\rho$，满足
+$$
+\operatorname{err}(\rho)
+\le\delta-\lambda(\delta-e)+\eta<\delta,
+\qquad
+\mathcal K_s(\rho)\le L+\epsilon.
+$$
+因此 $\mathcal C_s^{\mathrm{alg}}(\delta)\le L$。反向由引理319.2将每个有效程序映入保持输出律与费用的抽象策略，故两者相等。证毕。
+
+两份被混合的抽象策略不必有效；证明先在抽象类中获得严格余量，再逼近整个混合表。它只给每个费用精度各存在一份有效代码，没有给统一选择器，也不说明有效费用下确界达到。
+
+一个直接可用的定量形式是：若候选策略误差至多 $\delta$、费用至多 $K$，较准策略误差至多 $e<\delta$、费用至多 $K_0$，则对
+$$
+0<\eta<\delta-e,\qquad
+\lambda=\frac{\eta}{\delta-e}
+$$
+有
+$$
+\operatorname{err}(\pi^\lambda)\le\delta-\eta,
+\qquad
+\mathcal K_s(\pi^\lambda)
+\le K+\frac{\eta(K_0-K)}{\delta-e}.
+\tag{321.10}
+$$
+再以输出容差不超过 $\eta$、费用余量 $\xi>0$ 作有限有理逼近，就获得同一 $\delta$ 下费用至多式（321.10）右侧加 $\xi$ 的有效策略。若 $K_0<K$，负的改进项仍合法，因为右侧是两个非负费用上界的凸组合。
+

@@ -1,0 +1,429 @@
+{
+  "complete_shallow_bounds": [
+    {
+      "complete_shallow_labels": 191,
+      "multi_coefficient": 1213,
+      "multi_support_labels": 132,
+      "nonunit_head_labels": 11,
+      "other_singleton_labels": 44,
+      "outside_period": 46189,
+      "outside_primes": [
+        11,
+        13,
+        17,
+        19
+      ],
+      "period": 14549535,
+      "pure_live_root_product": 34560,
+      "pure_outside_labels": 4,
+      "shape_bounds": [
+        {
+          "argmin_N": 77,
+          "continuous_gate": "716477/2972160",
+          "density_lower": "4538/101745",
+          "integer_N_values_checked": 26,
+          "minimum_lower_bound": 648934,
+          "shape": "root1_same_other_column"
+        },
+        {
+          "argmin_N": 78,
+          "continuous_gate": "764533/2937600",
+          "density_lower": "705539/14549535",
+          "integer_N_values_checked": 25,
+          "minimum_lower_bound": 705539,
+          "shape": "root1_other_same_column"
+        },
+        {
+          "argmin_N": 78,
+          "continuous_gate": "764533/2937600",
+          "density_lower": "705539/14549535",
+          "integer_N_values_checked": 25,
+          "minimum_lower_bound": 705539,
+          "shape": "root1_other_other_column"
+        },
+        {
+          "argmin_N": 75,
+          "continuous_gate": "1121/3840",
+          "density_lower": "885/17017",
+          "integer_N_values_checked": 22,
+          "minimum_lower_bound": 756675,
+          "shape": "root2_same_other_column"
+        },
+        {
+          "argmin_N": 74,
+          "continuous_gate": "123661/443520",
+          "density_lower": "723328/14549535",
+          "integer_N_values_checked": 23,
+          "minimum_lower_bound": 723328,
+          "shape": "root2_other_same_column"
+        },
+        {
+          "argmin_N": 74,
+          "continuous_gate": "123661/443520",
+          "density_lower": "723328/14549535",
+          "integer_N_values_checked": 23,
+          "minimum_lower_bound": 723328,
+          "shape": "root2_other_other_column"
+        }
+      ],
+      "single_coefficient": 10416,
+      "uniform_density_lower_if_positive": "4538/101745",
+      "uniform_signed_lower": 648934
+    },
+    {
+      "complete_shallow_labels": 383,
+      "multi_coefficient": 38315,
+      "multi_support_labels": 312,
+      "nonunit_head_labels": 11,
+      "other_singleton_labels": 55,
+      "outside_period": 1062347,
+      "outside_primes": [
+        11,
+        13,
+        17,
+        19,
+        23
+      ],
+      "period": 334639305,
+      "pure_live_root_product": 760320,
+      "pure_outside_labels": 5,
+      "shape_bounds": [
+        {
+          "argmin_N": 77,
+          "continuous_gate": "1243487/13077504",
+          "density_lower": "104726/6084351",
+          "integer_N_values_checked": 26,
+          "minimum_lower_bound": 5759930,
+          "shape": "root1_same_other_column"
+        },
+        {
+          "argmin_N": 78,
+          "continuous_gate": "7609619/64627200",
+          "density_lower": "7085989/334639305",
+          "integer_N_values_checked": 25,
+          "minimum_lower_bound": 7085989,
+          "shape": "root1_other_same_column"
+        },
+        {
+          "argmin_N": 78,
+          "continuous_gate": "7609619/64627200",
+          "density_lower": "7085989/334639305",
+          "integer_N_values_checked": 25,
+          "minimum_lower_bound": 7085989,
+          "shape": "root1_other_other_column"
+        },
+        {
+          "argmin_N": 75,
+          "continuous_gate": "39317/253440",
+          "density_lower": "196585/7436429",
+          "integer_N_values_checked": 22,
+          "minimum_lower_bound": 8846325,
+          "shape": "root2_same_other_column"
+        },
+        {
+          "argmin_N": 74,
+          "continuous_gate": "123881/887040",
+          "density_lower": "1624864/66927861",
+          "integer_N_values_checked": 23,
+          "minimum_lower_bound": 8124320,
+          "shape": "root2_other_same_column"
+        },
+        {
+          "argmin_N": 74,
+          "continuous_gate": "123881/887040",
+          "density_lower": "1624864/66927861",
+          "integer_N_values_checked": 23,
+          "minimum_lower_bound": 8124320,
+          "shape": "root2_other_other_column"
+        }
+      ],
+      "single_coefficient": 263712,
+      "uniform_density_lower_if_positive": "104726/6084351",
+      "uniform_signed_lower": 5759930
+    },
+    {
+      "complete_shallow_labels": 767,
+      "multi_coefficient": 1374847,
+      "multi_support_labels": 684,
+      "nonunit_head_labels": 11,
+      "other_singleton_labels": 66,
+      "outside_period": 30808063,
+      "outside_primes": [
+        11,
+        13,
+        17,
+        19,
+        23,
+        29
+      ],
+      "period": 9704539845,
+      "pure_live_root_product": 21288960,
+      "pure_outside_labels": 6,
+      "shape_bounds": [
+        {
+          "argmin_N": 100,
+          "continuous_gate": "-6917191/261550080",
+          "density_lower": "-126887/22309287",
+          "integer_N_values_checked": 26,
+          "minimum_lower_bound": -55195845,
+          "shape": "root1_same_other_column"
+        },
+        {
+          "argmin_N": 85,
+          "continuous_gate": "-1700729/1809561600",
+          "density_lower": "-1700729/9704539845",
+          "integer_N_values_checked": 25,
+          "minimum_lower_bound": -1700729,
+          "shape": "root1_other_same_column"
+        },
+        {
+          "argmin_N": 85,
+          "continuous_gate": "-1700729/1809561600",
+          "density_lower": "-1700729/9704539845",
+          "integer_N_values_checked": 25,
+          "minimum_lower_bound": -1700729,
+          "shape": "root1_other_other_column"
+        },
+        {
+          "argmin_N": 75,
+          "continuous_gate": "32441/788480",
+          "density_lower": "1459845/215656441",
+          "integer_N_values_checked": 22,
+          "minimum_lower_bound": 65693025,
+          "shape": "root2_same_other_column"
+        },
+        {
+          "argmin_N": 77,
+          "continuous_gate": "117841/4967424",
+          "density_lower": "235682/58815393",
+          "integer_N_values_checked": 23,
+          "minimum_lower_bound": 38887530,
+          "shape": "root2_other_same_column"
+        },
+        {
+          "argmin_N": 77,
+          "continuous_gate": "117841/4967424",
+          "density_lower": "235682/58815393",
+          "integer_N_values_checked": 23,
+          "minimum_lower_bound": 38887530,
+          "shape": "root2_other_other_column"
+        }
+      ],
+      "single_coefficient": 8144256,
+      "uniform_density_lower_if_positive": null,
+      "uniform_signed_lower": -55195845
+    }
+  ],
+  "pruning": {
+    "assignments_by_final_shape": {
+      "root1_other_other_column": 23247,
+      "root1_other_same_column": 5229,
+      "root1_same_other_column": 9054,
+      "root2_other_other_column": 24562,
+      "root2_other_same_column": 3782,
+      "root2_same_other_column": 25251
+    },
+    "complete45_original_assignments": 91125,
+    "distinct_pruned_normalizations": 12600,
+    "redundant_replacements_by_numerical_modulus": {
+      "15": 42525,
+      "45": 55866,
+      "9": 30375
+    },
+    "scope": "Every complete45 family; missing slots first padded. All7-containing originals and all outside projections remain actual and are transported by this one common permutation."
+  },
+  "rechecked_existing_mean_column": [
+    {
+      "Nmin": 77,
+      "c1": "185/86",
+      "cylinder_maxima_in_3_5_9_15_45_order": [
+        12,
+        5,
+        4,
+        3,
+        1
+      ],
+      "layouts_checked": 4760,
+      "minimum_scaled_slack": 0,
+      "old_survivors": 17,
+      "shape": "root1_same_other_column",
+      "square_bound": "1091/82",
+      "square_minimum_scaled_slack": 0
+    },
+    {
+      "Nmin": 78,
+      "c1": "178/85",
+      "cylinder_maxima_in_3_5_9_15_45_order": [
+        11,
+        5,
+        4,
+        3,
+        1
+      ],
+      "layouts_checked": 4760,
+      "minimum_scaled_slack": 0,
+      "old_survivors": 17,
+      "shape": "root1_other_same_column",
+      "square_bound": "1103/85",
+      "square_minimum_scaled_slack": 0
+    },
+    {
+      "Nmin": 78,
+      "c1": "178/85",
+      "cylinder_maxima_in_3_5_9_15_45_order": [
+        11,
+        5,
+        4,
+        3,
+        1
+      ],
+      "layouts_checked": 4760,
+      "minimum_scaled_slack": 0,
+      "old_survivors": 17,
+      "shape": "root1_other_other_column",
+      "square_bound": "1103/85",
+      "square_minimum_scaled_slack": 0
+    },
+    {
+      "Nmin": 75,
+      "c1": "2",
+      "cylinder_maxima_in_3_5_9_15_45_order": [
+        8,
+        5,
+        4,
+        3,
+        1
+      ],
+      "layouts_checked": 4480,
+      "minimum_scaled_slack": 0,
+      "old_survivors": 16,
+      "shape": "root2_same_other_column",
+      "square_bound": "965/76",
+      "square_minimum_scaled_slack": 0
+    },
+    {
+      "Nmin": 74,
+      "c1": "157/77",
+      "cylinder_maxima_in_3_5_9_15_45_order": [
+        9,
+        5,
+        4,
+        3,
+        1
+      ],
+      "layouts_checked": 4480,
+      "minimum_scaled_slack": 0,
+      "old_survivors": 16,
+      "shape": "root2_other_same_column",
+      "square_bound": "993/77",
+      "square_minimum_scaled_slack": 0
+    },
+    {
+      "Nmin": 74,
+      "c1": "157/77",
+      "cylinder_maxima_in_3_5_9_15_45_order": [
+        9,
+        5,
+        4,
+        3,
+        1
+      ],
+      "layouts_checked": 4480,
+      "minimum_scaled_slack": 0,
+      "old_survivors": 16,
+      "shape": "root2_other_other_column",
+      "square_bound": "993/77",
+      "square_minimum_scaled_slack": 0
+    }
+  ],
+  "scope": "Ordinary proof plus exact finite checks. No Lean verification. All original phases are simultaneous and arbitrary. Core through23:3-exponent at most2 and all other exponents at most1. One last prime q>=29 may have arbitrary finite height. For shallow29 the explicit767-label count also holds. Negative direct union bounds are not covering examples.",
+  "square_moment29_extension": {
+    "all_height_last_prime_at_least29_density_lower": "52363/9464546",
+    "finite_new_prime_set_criterion": "t_i*(product_(p in new primes) p/(p-1)-1)<1",
+    "period": 9704539845,
+    "product_square_factor_through23": "43225/16896",
+    "rows": [
+      {
+        "Gamma23_upper": "2607189975/7283281",
+        "all_height29_density_lower": "52363/9464546",
+        "all_height29_mass_lower": "9/28",
+        "density29_lower": "1047260/176446179",
+        "mass23_lower": "1243487/13077504",
+        "mean23_upper_integer": 19,
+        "nonunit29_deletion_load_upper": 18,
+        "remaining29_roots_per_carrier_point_lower": 10,
+        "shape": "root1_same_other_column",
+        "survivor29_count_lower": 57599300
+      },
+      {
+        "Gamma23_upper": "2145472875/7609619",
+        "all_height29_density_lower": "7085989/851809140",
+        "all_height29_mass_lower": "11/28",
+        "density29_lower": "28343956/3234846615",
+        "mass23_lower": "7609619/64627200",
+        "mean23_upper_integer": 17,
+        "nonunit29_deletion_load_upper": 16,
+        "remaining29_roots_per_carrier_point_lower": 12,
+        "shape": "root1_other_same_column",
+        "survivor29_count_lower": 85031868
+      },
+      {
+        "Gamma23_upper": "2145472875/7609619",
+        "all_height29_density_lower": "7085989/851809140",
+        "all_height29_mass_lower": "11/28",
+        "density29_lower": "28343956/3234846615",
+        "mass23_lower": "7609619/64627200",
+        "mean23_upper_integer": 17,
+        "nonunit29_deletion_load_upper": 16,
+        "remaining29_roots_per_carrier_point_lower": 12,
+        "shape": "root1_other_other_column",
+        "survivor29_count_lower": 85031868
+      },
+      {
+        "Gamma23_upper": "32930625/157268",
+        "all_height29_density_lower": "196585/16016924",
+        "all_height29_mass_lower": "13/28",
+        "density29_lower": "393170/30808063",
+        "mass23_lower": "39317/253440",
+        "mean23_upper_integer": 15,
+        "nonunit29_deletion_load_upper": 14,
+        "remaining29_roots_per_carrier_point_lower": 14,
+        "shape": "root2_same_other_column",
+        "survivor29_count_lower": 123848550
+      },
+      {
+        "Gamma23_upper": "643836375/2725382",
+        "all_height29_density_lower": "1624864/156165009",
+        "all_height29_mass_lower": "3/7",
+        "density29_lower": "1624864/149300613",
+        "mass23_lower": "123881/887040",
+        "mean23_upper_integer": 16,
+        "nonunit29_deletion_load_upper": 15,
+        "remaining29_roots_per_carrier_point_lower": 13,
+        "shape": "root2_other_same_column",
+        "survivor29_count_lower": 105616160
+      },
+      {
+        "Gamma23_upper": "643836375/2725382",
+        "all_height29_density_lower": "1624864/156165009",
+        "all_height29_mass_lower": "3/7",
+        "density29_lower": "1624864/149300613",
+        "mass23_lower": "123881/887040",
+        "mean23_upper_integer": 16,
+        "nonunit29_deletion_load_upper": 15,
+        "remaining29_roots_per_carrier_point_lower": 13,
+        "shape": "root2_other_other_column",
+        "survivor29_count_lower": 105616160
+      }
+    ],
+    "two_prime_29_31_worst_mean_gate": "-281/840",
+    "uniform_density_lower": "1047260/176446179",
+    "uniform_survivor_count": 57599300
+  },
+  "weaker_191_via_59_and_unconditional_Haar132": {
+    "191_density_lower": "24832/4849845",
+    "59_density_lower": "16/247",
+    "Haar132_upper": "22256/373065",
+    "survivor_count": 74496
+  }
+}

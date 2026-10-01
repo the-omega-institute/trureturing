@@ -1,0 +1,33 @@
+### definition 25.1 两层数字分解与进位
+
+令 $D=de$，把 $x\in\mathbb Z/D\mathbb Z$ 写成
+
+$$
+x=a+db,
+\qquad 0\le a<d,\quad 0\le b<e.
+$$
+
+这是集合双射
+
+$$
+\mathbb Z/D\mathbb Z
+\longleftrightarrow
+\{0,\ldots,d-1\}\times\{0,\ldots,e-1\}.
+$$
+
+对 $y=c+df$，定义低位进位
+
+$$
+\boxed{
+\kappa_d(a,c)=\frac{a+c-[a+c]_d}{d}.
+}
+$$
+
+于是
+
+$$
+x+y=[a+c]_d+d\bigl(b+f+\kappa_d(a,c)\bigr),
+$$
+
+其中高位结果再模 $e$。高层后继因此等于高层自己的加法和低层共同关系产生的进位。
+

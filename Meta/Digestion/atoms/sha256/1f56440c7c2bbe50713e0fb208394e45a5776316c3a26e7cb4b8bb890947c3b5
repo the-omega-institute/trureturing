@@ -1,0 +1,21 @@
+**定义 31.2（相对于声明 pinching 的相干响应）。** 先指定正交分块 $\{P_y\}$ 与自伴迹对偶 pinching $\mathcal D(X)=\sum_yP_yXP_y$。对实际 Hermitian 响应空间 $\mathcal O$，相干响应为
+
+$$
+\mathcal C_{\mathcal D}(\mathcal O)=(I-\mathcal D)\mathcal O
+\cong\mathcal O/(\mathcal O\cap\operatorname{ran}\mathcal D).
+\tag{31.3}
+$$
+
+新增相干响应可再取 $(I-\mathcal D)\mathcal O_\infty/(I-\mathcal D)\mathcal O_0$。
+
+证明这个识别只需两事实：$\operatorname{Tr}[E(\rho-\mathcal D\rho)]=\operatorname{Tr}[(E-\mathcal DE)\rho]$，以及 $I-\mathcal D$ 限制到 $\mathcal O$ 的核为 $\mathcal O\cap\operatorname{ran}\mathcal D$。第一式由 pinching 自伴性，第二式由 $\mathcal D^2=\mathcal D$；线性第一同构定理给 (31.3)。这是带基准的线性商，不自动成为可执行效果空间或 quantum quotient。
+
+在标准 $d=e=2$ 非共振合同中，沿用定理 14.1 的轨道代数，取完整高 Fourier pinching、保留所有低矩阵，则
+
+$$
+160=64+96,\qquad 160-16=48+96.
+\tag{31.4}
+$$
+
+其中 $64=16\cdot4$ 是完整条件对角矩阵，$96=16(3^2-3)$ 是非零三标签轨道内的高相干；初始十六维包含在前者。共振处高相干部分为零。换成整个 $AH$ 计算基细 pinching 就是另一基准，不能沿用这个分解。
+

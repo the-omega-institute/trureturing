@@ -1,0 +1,1537 @@
+{
+  "all_five_full_Haar_lower": "2719/3194470",
+  "dependency_hashes": {
+    "fibre_credit_depth_two_old23_full_height.json": "ca998ef3ce5e1043cbd1a78a4f9cd4306b12cfb781b219729aa916f0ba016ede",
+    "fibre_credit_depth_two_two_fresh_heights.json": "eadf7f37075a16e55573ba31a7189578b56387a3aacafa4280295bcf94f94ae0"
+  },
+  "head_D2_replayed": false,
+  "number_source_cases": 192,
+  "old_core_caps": {
+    "3": 2,
+    "5": 1,
+    "7": 1
+  },
+  "outside_old_axes": [
+    11,
+    13,
+    17,
+    19,
+    23
+  ],
+  "scope": "Actual root-balanced sources for every subset of five full old heights, with a two-fresh continuation for old19/23. Ordinary arithmetic, not Lean.",
+  "subsets": [
+    {
+      "full_height_axes": [],
+      "min_Haar_factor": "1243487/74750598",
+      "shapes": [
+        {
+          "Haar_factor": "1243487/74750598",
+          "density_cap": "96577/16896",
+          "retention": "1243487/13077504",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "661706/31710525",
+          "density_cap": "52003/9216",
+          "retention": "7609619/64627200",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "661706/31710525",
+          "density_cap": "52003/9216",
+          "retention": "7609619/64627200",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "196585/7436429",
+          "density_cap": "676039/115200",
+          "retention": "39317/253440",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "18334388/780825045",
+          "density_cap": "676039/113664",
+          "retention": "123881/887040",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "18334388/780825045",
+          "density_cap": "676039/113664",
+          "retention": "123881/887040",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        11
+      ],
+      "min_Haar_factor": "27941/2875023",
+      "shapes": [
+        {
+          "Haar_factor": "27941/2875023",
+          "density_cap": "482885/76032",
+          "retention": "1816165/29424384",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "9909908/729342075",
+          "density_cap": "260015/41472",
+          "retention": "2477477/29082240",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "9909908/729342075",
+          "density_cap": "260015/41472",
+          "retention": "2477477/29082240",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "10870/572033",
+          "density_cap": "676039/103680",
+          "retention": "14131/114048",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "46735736/2863025165",
+          "density_cap": "3380195/511488",
+          "retention": "157891/1463616",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "46735736/2863025165",
+          "density_cap": "3380195/511488",
+          "retention": "157891/1463616",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        13
+      ],
+      "min_Haar_factor": "113366/9835605",
+      "shapes": [
+        {
+          "Haar_factor": "113366/9835605",
+          "density_cap": "96577/15488",
+          "retention": "97907/1362240",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "1024232/66303825",
+          "density_cap": "52003/8448",
+          "retention": "11639/122400",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "1024232/66303825",
+          "density_cap": "52003/8448",
+          "retention": "11639/122400",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "42260/2028117",
+          "density_cap": "676039/105600",
+          "retention": "2113/15840",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "1212416/66927861",
+          "density_cap": "676039/104192",
+          "retention": "128/1089",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "1212416/66927861",
+          "density_cap": "676039/104192",
+          "retention": "128/1089",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        17
+      ],
+      "min_Haar_factor": "2512912/186876495",
+      "shapes": [
+        {
+          "Haar_factor": "2512912/186876495",
+          "density_cap": "96577/15840",
+          "retention": "157057/1915650",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "12718544/729342075",
+          "density_cap": "52003/8640",
+          "retention": "794909/7573500",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "12718544/729342075",
+          "density_cap": "52003/8640",
+          "retention": "794909/7573500",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "169720/7436429",
+          "density_cap": "676039/108000",
+          "retention": "4243/29700",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "745328/37182145",
+          "density_cap": "676039/106560",
+          "retention": "1259/9900",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "745328/37182145",
+          "density_cap": "676039/106560",
+          "retention": "1259/9900",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        19
+      ],
+      "min_Haar_factor": "2616017/186876495",
+      "shapes": [
+        {
+          "Haar_factor": "2616017/186876495",
+          "density_cap": "17043/2816",
+          "retention": "2616017/30877440",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "772868/42902475",
+          "density_cap": "3059/512",
+          "retention": "193217/1795200",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "772868/42902475",
+          "density_cap": "3059/512",
+          "retention": "193217/1795200",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "74590/3187041",
+          "density_cap": "39767/6400",
+          "retention": "52213/359040",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "742664/36038079",
+          "density_cap": "119301/18944",
+          "retention": "32617/251328",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "742664/36038079",
+          "density_cap": "119301/18944",
+          "retention": "32617/251328",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        23
+      ],
+      "min_Haar_factor": "2750479/186876495",
+      "shapes": [
+        {
+          "Haar_factor": "2750479/186876495",
+          "density_cap": "96577/16128",
+          "retention": "2750479/31207680",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "13690172/729342075",
+          "density_cap": "81719/13824",
+          "retention": "3422543/30844800",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "13690172/729342075",
+          "density_cap": "81719/13824",
+          "retention": "3422543/30844800",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "179770/7436429",
+          "density_cap": "1062347/172800",
+          "retention": "17977/120960",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "940392/44046541",
+          "density_cap": "1062347/170496",
+          "retention": "4589/34496",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "940392/44046541",
+          "density_cap": "1062347/170496",
+          "retention": "4589/34496",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        11,
+        13
+      ],
+      "min_Haar_factor": "343432/62292165",
+      "shapes": [
+        {
+          "Haar_factor": "343432/62292165",
+          "density_cap": "482885/69696",
+          "retention": "42929/1123848",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "2211848/243114025",
+          "density_cap": "260015/38016",
+          "retention": "276481/4443120",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "2211848/243114025",
+          "density_cap": "260015/38016",
+          "retention": "276481/4443120",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "106500/7436429",
+          "density_cap": "676039/95040",
+          "retention": "1775/17424",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "33938472/2863025165",
+          "density_cap": "3380195/468864",
+          "retention": "38219/447216",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "33938472/2863025165",
+          "density_cap": "3380195/468864",
+          "retention": "38219/447216",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        11,
+        17
+      ],
+      "min_Haar_factor": "58108/8125065",
+      "shapes": [
+        {
+          "Haar_factor": "58108/8125065",
+          "density_cap": "96577/14256",
+          "retention": "334121/6896340",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "143224/13260765",
+          "density_cap": "52003/7776",
+          "retention": "17903/247860",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "143224/13260765",
+          "density_cap": "52003/7776",
+          "retention": "17903/247860",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "119180/7436429",
+          "density_cap": "676039/97200",
+          "retention": "5959/53460",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "38675656/2863025165",
+          "density_cap": "676039/95904",
+          "retention": "130661/1372140",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "38675656/2863025165",
+          "density_cap": "676039/95904",
+          "retention": "130661/1372140",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        11,
+        19
+      ],
+      "min_Haar_factor": "474482/62292165",
+      "shapes": [
+        {
+          "Haar_factor": "474482/62292165",
+          "density_cap": "28405/4224",
+          "retention": "237241/4631616",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "9496/841225",
+          "density_cap": "15295/2304",
+          "retention": "1187/15840",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "9496/841225",
+          "density_cap": "15295/2304",
+          "retention": "1187/15840",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "122860/7436429",
+          "density_cap": "39767/5760",
+          "retention": "6143/53856",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "120129824/8589075495",
+          "density_cap": "198835/28416",
+          "retention": "101461/1036728",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "120129824/8589075495",
+          "density_cap": "198835/28416",
+          "retention": "101461/1036728",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        11,
+        23
+      ],
+      "min_Haar_factor": "1535786/186876495",
+      "shapes": [
+        {
+          "Haar_factor": "1535786/186876495",
+          "density_cap": "482885/72576",
+          "retention": "109699/2006208",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "8695864/729342075",
+          "density_cap": "408595/62208",
+          "retention": "1086983/13880160",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "8695864/729342075",
+          "density_cap": "408595/62208",
+          "retention": "1086983/13880160",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "127700/7436429",
+          "density_cap": "1062347/155520",
+          "retention": "6385/54432",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "41834272/2863025165",
+          "density_cap": "5311735/767232",
+          "retention": "35333/349272",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "41834272/2863025165",
+          "density_cap": "5311735/767232",
+          "retention": "35333/349272",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        13,
+        17
+      ],
+      "min_Haar_factor": "549296/62292165",
+      "shapes": [
+        {
+          "Haar_factor": "549296/62292165",
+          "density_cap": "96577/14520",
+          "retention": "6242/106425",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "276632/22101275",
+          "density_cap": "52003/7920",
+          "retention": "34579/420750",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "276632/22101275",
+          "density_cap": "52003/7920",
+          "retention": "34579/420750",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "11980/676039",
+          "density_cap": "676039/99000",
+          "retention": "599/4950",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "514744/33948915",
+          "density_cap": "676039/97680",
+          "retention": "39997/381150",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "514744/33948915",
+          "density_cap": "676039/97680",
+          "retention": "39997/381150",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        13,
+        19
+      ],
+      "min_Haar_factor": "1738264/186876495",
+      "shapes": [
+        {
+          "Haar_factor": "1738264/186876495",
+          "density_cap": "51129/7744",
+          "retention": "19753/321640",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "7256/557175",
+          "density_cap": "9177/1408",
+          "retention": "6349/74800",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "7256/557175",
+          "density_cap": "9177/1408",
+          "retention": "6349/74800",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "36980/2028117",
+          "density_cap": "119301/17600",
+          "retention": "1849/14960",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "36677656/2342475135",
+          "density_cap": "357903/52096",
+          "retention": "123911/1151920",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "36677656/2342475135",
+          "density_cap": "357903/52096",
+          "retention": "123911/1151920",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        13,
+        23
+      ],
+      "min_Haar_factor": "206152/20764055",
+      "shapes": [
+        {
+          "Haar_factor": "206152/20764055",
+          "density_cap": "96577/14784",
+          "retention": "25769/397320",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "3326616/243114025",
+          "density_cap": "7429/1152",
+          "retention": "46203/523600",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "3326616/243114025",
+          "density_cap": "7429/1152",
+          "retention": "46203/523600",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "140620/7436429",
+          "density_cap": "96577/14400",
+          "retention": "7031/55440",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "12733624/780825045",
+          "density_cap": "96577/14208",
+          "retention": "43019/388080",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "12733624/780825045",
+          "density_cap": "96577/14208",
+          "retention": "43019/388080",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        17,
+        19
+      ],
+      "min_Haar_factor": "230196/20764055",
+      "shapes": [
+        {
+          "Haar_factor": "230196/20764055",
+          "density_cap": "5681/880",
+          "retention": "57549/804100",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "3616056/243114025",
+          "density_cap": "3059/480",
+          "retention": "150669/1589500",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "3616056/243114025",
+          "density_cap": "3059/480",
+          "retention": "150669/1589500",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "7860/391391",
+          "density_cap": "39767/6000",
+          "retention": "2489/18700",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "4542712/260275015",
+          "density_cap": "39767/5920",
+          "retention": "15347/130900",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "4542712/260275015",
+          "density_cap": "39767/5920",
+          "retention": "15347/130900",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        17,
+        23
+      ],
+      "min_Haar_factor": "2194268/186876495",
+      "shapes": [
+        {
+          "Haar_factor": "2194268/186876495",
+          "density_cap": "96577/15120",
+          "retention": "548567/7314300",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "11351416/729342075",
+          "density_cap": "81719/12960",
+          "retention": "1418927/14458500",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "11351416/729342075",
+          "density_cap": "81719/12960",
+          "retention": "1418927/14458500",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "154580/7436429",
+          "density_cap": "1062347/162000",
+          "retention": "7729/56700",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "51912184/2863025165",
+          "density_cap": "1062347/159840",
+          "retention": "175379/1455300",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "51912184/2863025165",
+          "density_cap": "1062347/159840",
+          "retention": "175379/1455300",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        19,
+        23
+      ],
+      "min_Haar_factor": "763798/62292165",
+      "shapes": [
+        {
+          "Haar_factor": "763798/62292165",
+          "density_cap": "5681/896",
+          "retention": "54557/701760",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "230344/14300825",
+          "density_cap": "4807/768",
+          "retention": "28793/285600",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "230344/14300825",
+          "density_cap": "4807/768",
+          "retention": "28793/285600",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "158660/7436429",
+          "density_cap": "62491/9600",
+          "retention": "7933/57120",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "160293472/8589075495",
+          "density_cap": "62491/9472",
+          "retention": "135383/1099560",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "160293472/8589075495",
+          "density_cap": "62491/9472",
+          "retention": "135383/1099560",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17
+      ],
+      "min_Haar_factor": "209054/62292165",
+      "shapes": [
+        {
+          "Haar_factor": "209054/62292165",
+          "density_cap": "96577/13068",
+          "retention": "104527/4214430",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "3448/511819",
+          "density_cap": "52003/7128",
+          "retention": "8189/166617",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "3448/511819",
+          "density_cap": "52003/7128",
+          "retention": "8189/166617",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "87540/7436429",
+          "density_cap": "676039/89100",
+          "retention": "1459/16335",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "1424352/150685535",
+          "density_cap": "676039/87912",
+          "retention": "30476/419265",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "1424352/150685535",
+          "density_cap": "676039/87912",
+          "retention": "30476/419265",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        19
+      ],
+      "min_Haar_factor": "703102/186876495",
+      "shapes": [
+        {
+          "Haar_factor": "703102/186876495",
+          "density_cap": "28405/3872",
+          "retention": "351551/12736944",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "307348/42902475",
+          "density_cap": "15295/2112",
+          "retention": "76837/1481040",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "307348/42902475",
+          "density_cap": "15295/2112",
+          "retention": "76837/1481040",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "272330/22309287",
+          "density_cap": "39767/5280",
+          "retention": "27233/296208",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "50874260/5153445297",
+          "density_cap": "198835/26048",
+          "retention": "1718725/22808016",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "50874260/5153445297",
+          "density_cap": "198835/26048",
+          "retention": "1718725/22808016",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        23
+      ],
+      "min_Haar_factor": "266822/62292165",
+      "shapes": [
+        {
+          "Haar_factor": "266822/62292165",
+          "density_cap": "482885/66528",
+          "retention": "133411/4291056",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "1875844/243114025",
+          "density_cap": "37145/5184",
+          "retention": "468961/8482320",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "1875844/243114025",
+          "density_cap": "37145/5184",
+          "retention": "468961/8482320",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "95010/7436429",
+          "density_cap": "96577/12960",
+          "retention": "3167/33264",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "2711508/260275015",
+          "density_cap": "482885/63936",
+          "retention": "6107/77616",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "2711508/260275015",
+          "density_cap": "482885/63936",
+          "retention": "6107/77616",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        11,
+        17,
+        19
+      ],
+      "min_Haar_factor": "8438/1597235",
+      "shapes": [
+        {
+          "Haar_factor": "8438/1597235",
+          "density_cap": "5681/792",
+          "retention": "54847/1447380",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "4476/511819",
+          "density_cap": "3059/432",
+          "retention": "7087/114444",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "4476/511819",
+          "density_cap": "3059/432",
+          "retention": "7087/114444",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "7890/572033",
+          "density_cap": "39767/5400",
+          "retention": "3419/33660",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "1719316/150685535",
+          "density_cap": "39767/5328",
+          "retention": "220723/2591820",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "1719316/150685535",
+          "density_cap": "39767/5328",
+          "retention": "220723/2591820",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        11,
+        17,
+        23
+      ],
+      "min_Haar_factor": "83794/14375115",
+      "shapes": [
+        {
+          "Haar_factor": "83794/14375115",
+          "density_cap": "96577/13608",
+          "retention": "544661/13165740",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "271988/29173683",
+          "density_cap": "81719/11664",
+          "retention": "67997/1041012",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "271988/29173683",
+          "density_cap": "81719/11664",
+          "retention": "67997/1041012",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "8230/572033",
+          "density_cap": "1062347/145800",
+          "retention": "10699/102060",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "2017684/168413245",
+          "density_cap": "1062347/143856",
+          "retention": "231761/2619540",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "2017684/168413245",
+          "density_cap": "1062347/143856",
+          "retention": "231761/2619540",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        11,
+        19,
+        23
+      ],
+      "min_Haar_factor": "130128/20764055",
+      "shapes": [
+        {
+          "Haar_factor": "130128/20764055",
+          "density_cap": "28405/4032",
+          "retention": "2711/61404",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "139896/14300825",
+          "density_cap": "24035/3456",
+          "retention": "1943/28560",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "139896/14300825",
+          "density_cap": "24035/3456",
+          "retention": "1943/28560",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "15780/1062347",
+          "density_cap": "62491/8640",
+          "retention": "263/2448",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "7117912/572605033",
+          "density_cap": "312455/42624",
+          "retention": "120235/1319472",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "7117912/572605033",
+          "density_cap": "312455/42624",
+          "retention": "120235/1319472",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        13,
+        17,
+        19
+      ],
+      "min_Haar_factor": "1277386/186876495",
+      "shapes": [
+        {
+          "Haar_factor": "1277386/186876495",
+          "density_cap": "17043/2420",
+          "retention": "58063/1206150",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "685912/66303825",
+          "density_cap": "3059/440",
+          "retention": "85739/1192125",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "685912/66303825",
+          "density_cap": "3059/440",
+          "retention": "85739/1192125",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "31180/2028117",
+          "density_cap": "39767/5500",
+          "retention": "1559/14025",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "30340592/2342475135",
+          "density_cap": "119301/16280",
+          "retention": "102502/1079925",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "30340592/2342475135",
+          "density_cap": "119301/16280",
+          "retention": "102502/1079925",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        13,
+        17,
+        23
+      ],
+      "min_Haar_factor": "461294/62292165",
+      "shapes": [
+        {
+          "Haar_factor": "461294/62292165",
+          "density_cap": "96577/13860",
+          "retention": "230647/4469850",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "2661328/243114025",
+          "density_cap": "7429/1080",
+          "retention": "332666/4417875",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "2661328/243114025",
+          "density_cap": "7429/1080",
+          "retention": "332666/4417875",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "118920/7436429",
+          "density_cap": "96577/13500",
+          "retention": "1982/17325",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "3525656/260275015",
+          "density_cap": "96577/13320",
+          "retention": "11911/121275",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "3525656/260275015",
+          "density_cap": "96577/13320",
+          "retention": "11911/121275",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        13,
+        19,
+        23
+      ],
+      "min_Haar_factor": "1468954/186876495",
+      "shapes": [
+        {
+          "Haar_factor": "1468954/186876495",
+          "density_cap": "17043/2464",
+          "retention": "734477/13508880",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "490108/42902475",
+          "density_cap": "437/64",
+          "retention": "122527/1570800",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "490108/42902475",
+          "density_cap": "437/64",
+          "retention": "122527/1570800",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "367550/22309287",
+          "density_cap": "5681/800",
+          "retention": "7351/62832",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "1427164/101846745",
+          "density_cap": "17043/2368",
+          "retention": "221789/2199120",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "1427164/101846745",
+          "density_cap": "17043/2368",
+          "retention": "221789/2199120",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        17,
+        19,
+        23
+      ],
+      "min_Haar_factor": "198194/20764055",
+      "shapes": [
+        {
+          "Haar_factor": "198194/20764055",
+          "density_cap": "5681/840",
+          "retention": "99097/1535100",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "3202284/243114025",
+          "density_cap": "4807/720",
+          "retention": "266857/3034500",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "3202284/243114025",
+          "density_cap": "4807/720",
+          "retention": "266857/3034500",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "135510/7436429",
+          "density_cap": "62491/9000",
+          "retention": "4517/35700",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "3459796/220232705",
+          "density_cap": "62491/8880",
+          "retention": "303901/2748900",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "3459796/220232705",
+          "density_cap": "62491/8880",
+          "retention": "303901/2748900",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17,
+        19
+      ],
+      "min_Haar_factor": "112646/62292165",
+      "shapes": [
+        {
+          "Haar_factor": "112646/62292165",
+          "density_cap": "5681/726",
+          "retention": "56323/3980295",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "243902/48622805",
+          "density_cap": "3059/396",
+          "retention": "121951/3147210",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "243902/48622805",
+          "density_cap": "3059/396",
+          "retention": "121951/3147210",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "3865/391391",
+          "density_cap": "39767/4950",
+          "retention": "14687/185130",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "65964266/8589075495",
+          "density_cap": "39767/4884",
+          "retention": "891409/14255010",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "65964266/8589075495",
+          "density_cap": "39767/4884",
+          "retention": "891409/14255010",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17,
+        23
+      ],
+      "min_Haar_factor": "3304/1448655",
+      "shapes": [
+        {
+          "Haar_factor": "3304/1448655",
+          "density_cap": "96577/12474",
+          "retention": "236/13365",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "15782/2860165",
+          "density_cap": "7429/972",
+          "retention": "7891/187110",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "15782/2860165",
+          "density_cap": "7429/972",
+          "retention": "7891/187110",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "77295/7436429",
+          "density_cap": "96577/12150",
+          "retention": "5153/62370",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "2128314/260275015",
+          "density_cap": "96577/11988",
+          "retention": "9587/145530",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "2128314/260275015",
+          "density_cap": "96577/11988",
+          "retention": "9587/145530",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        19,
+        23
+      ],
+      "min_Haar_factor": "165871/62292165",
+      "shapes": [
+        {
+          "Haar_factor": "165871/62292165",
+          "density_cap": "28405/3696",
+          "retention": "165871/8105328",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "12094/2042975",
+          "density_cap": "2185/288",
+          "retention": "6047/134640",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "12094/2042975",
+          "density_cap": "2185/288",
+          "retention": "6047/134640",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "80345/7436429",
+          "density_cap": "5681/720",
+          "retention": "16069/188496",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "6693374/780825045",
+          "density_cap": "28405/3552",
+          "retention": "90451/1319472",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "6693374/780825045",
+          "density_cap": "28405/3552",
+          "retention": "90451/1319472",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        11,
+        17,
+        19,
+        23
+      ],
+      "min_Haar_factor": "85067/20764055",
+      "shapes": [
+        {
+          "Haar_factor": "85067/20764055",
+          "density_cap": "5681/756",
+          "retention": "85067/2763180",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "51486/6946115",
+          "density_cap": "4807/648",
+          "retention": "8581/156060",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "51486/6946115",
+          "density_cap": "4807/648",
+          "retention": "8581/156060",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "4815/391391",
+          "density_cap": "62491/8100",
+          "retention": "2033/21420",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "28700382/2863025165",
+          "density_cap": "62491/7992",
+          "retention": "129281/1649340",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "28700382/2863025165",
+          "density_cap": "62491/7992",
+          "retention": "129281/1649340",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        13,
+        17,
+        19,
+        23
+      ],
+      "min_Haar_factor": "115556/20764055",
+      "shapes": [
+        {
+          "Haar_factor": "115556/20764055",
+          "density_cap": "5681/770",
+          "retention": "8254/201025",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "2169966/243114025",
+          "density_cap": "437/60",
+          "retention": "361661/5563250",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "2169966/243114025",
+          "density_cap": "437/60",
+          "retention": "361661/5563250",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "102615/7436429",
+          "density_cap": "5681/750",
+          "retention": "6841/65450",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "2989082/260275015",
+          "density_cap": "5681/740",
+          "retention": "40393/458150",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "2989082/260275015",
+          "density_cap": "5681/740",
+          "retention": "40393/458150",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    },
+    {
+      "full_height_axes": [
+        11,
+        13,
+        17,
+        19,
+        23
+      ],
+      "min_Haar_factor": "2719/3194470",
+      "shapes": [
+        {
+          "Haar_factor": "2719/3194470",
+          "density_cap": "5681/693",
+          "retention": "35347/5065830",
+          "shape": "root1_same_other_column"
+        },
+        {
+          "Haar_factor": "190734/48622805",
+          "density_cap": "437/54",
+          "retention": "31789/1001385",
+          "shape": "root1_other_same_column"
+        },
+        {
+          "Haar_factor": "190734/48622805",
+          "density_cap": "437/54",
+          "retention": "31789/1001385",
+          "shape": "root1_other_other_column"
+        },
+        {
+          "Haar_factor": "705/81719",
+          "density_cap": "5681/675",
+          "retention": "611/8415",
+          "shape": "root2_same_other_column"
+        },
+        {
+          "Haar_factor": "1699336/260275015",
+          "density_cap": "5681/666",
+          "retention": "22964/412335",
+          "shape": "root2_other_same_column"
+        },
+        {
+          "Haar_factor": "1699336/260275015",
+          "density_cap": "5681/666",
+          "retention": "22964/412335",
+          "shape": "root2_other_other_column"
+        }
+      ]
+    }
+  ],
+  "two_direction_enclosure_replayed": false,
+  "two_fresh_density": "12493553/7475059800",
+  "two_fresh_heights": "arbitrary finite",
+  "two_fresh_minima": [
+    29,
+    31
+  ],
+  "two_full_axis_Haar_factor": "763798/62292165",
+  "two_full_axis_rows": [
+    {
+      "P_Z_ge8": "4434525533281761762532459879/28531777238246576972881082880",
+      "P_Z_gt8": "1030090147849559998354427268287/14962063983736504964578839862272",
+      "raw_second_moment": "40769516386669/1153553550336",
+      "second_moment_decimal": 259.17264267700557,
+      "shape": "root1_same_other_column",
+      "upper_tail_second_moment": "89435449191715912016607242030837/345080592874052005244246375832"
+    },
+    {
+      "P_Z_ge8": "253567425201154640176759011769/1691478520746739091147449468800",
+      "P_Z_gt8": "8411264030145870161771029198001587/124181587079142597115681150201420800",
+      "raw_second_moment": "859064521572817/24868107095040",
+      "second_moment_decimal": 211.56482346446333,
+      "shape": "root1_other_same_column",
+      "upper_tail_second_moment": "1098981786673765648453520658749849/5194539284354907354545833595088"
+    },
+    {
+      "P_Z_ge8": "253567425201154640176759011769/1691478520746739091147449468800",
+      "P_Z_gt8": "8411264030145870161771029198001587/124181587079142597115681150201420800",
+      "raw_second_moment": "859064521572817/24868107095040",
+      "second_moment_decimal": 211.56482346446333,
+      "shape": "root1_other_other_column",
+      "upper_tail_second_moment": "1098981786673765648453520658749849/5194539284354907354545833595088"
+    },
+    {
+      "P_Z_ge8": "3535716708674723958459391/23629975185720679265952000",
+      "P_Z_gt8": "812389809373879312703516267/12391558987391924207065228800",
+      "raw_second_moment": "38142035659/1129075200",
+      "second_moment_decimal": 170.43005163260534,
+      "shape": "root2_same_other_column",
+      "upper_tail_second_moment": "55372469328868042331410473761/324898507032281034892558200"
+    },
+    {
+      "P_Z_ge8": "960266510665199682457221187/6316613268040721428865420800",
+      "P_Z_gt8": "9850988790440921416681209018553/149059439899224944278366200038400",
+      "raw_second_moment": "1256837772463/36762688512",
+      "second_moment_decimal": 184.89107499772976,
+      "shape": "root2_other_same_column",
+      "upper_tail_second_moment": "1153096490039604877579516869209491/6236626024559398210582028967360"
+    },
+    {
+      "P_Z_ge8": "960266510665199682457221187/6316613268040721428865420800",
+      "P_Z_gt8": "9850988790440921416681209018553/149059439899224944278366200038400",
+      "raw_second_moment": "1256837772463/36762688512",
+      "second_moment_decimal": 184.89107499772976,
+      "shape": "root2_other_other_column",
+      "upper_tail_second_moment": "1153096490039604877579516869209491/6236626024559398210582028967360"
+    }
+  ]
+}

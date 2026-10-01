@@ -1,0 +1,44 @@
+**证明。** 总均值不超过 $A=\sum_ja_j$，所以
+
+$$
+0\le g(p)-g_n(p)\le\Pr_p(M>n)\le\frac A{n+1}.
+\tag{312.12}
+$$
+
+因此 $g_n\to g$ 一致，且 $C_n\preceq D_a$。在任意局部紧邻域内，$D_a$ 连续有界，有限叶Hessian的算子范数也一致有界。
+
+固定 $p,v$，取足够小 $t>0$ 使线段 $p+sv$、$|s|\le t$ 留在 $\mathcal U$ 内。有限差分积分式给
+
+$$
+\begin{aligned}
+&g_n(p+tv)-2g_n(p)+g_n(p-tv)\\
+&\quad=\int_{-t}^{t}(t-|s|)
+ v^{\mathsf T}\operatorname{Hess}g_n(p+sv)v\,ds.
+\end{aligned}
+\tag{312.13}
+$$
+
+其绝对值至多是将被积Hessian替换成 $D_a$ 后的积分。先固定 $t$ 令 $n\to\infty$，再除以 $t^2$ 并令 $t\downarrow0$；右侧由 $D_a$ 的连续性收敛，左侧由目标的 $C^2$ 性收敛。这得到式（312.10），不需要有限叶Hessian逐点收敛。
+
+为传递一阶不等式，在稍大的紧邻域内取共同Hessian界 $L$。令 $\epsilon_n=\sup_{\mathcal U}|g_n-g|$。对单位方向 $v$，Taylor积分式给
+
+$$
+|v^{\mathsf T}(\nabla g_n(p)-\nabla g(p))|
+\le\frac{2\epsilon_n}{t}+Lt.
+\tag{312.14}
+$$
+
+先令 $n\to\infty$，再令 $t\downarrow0$，得到局部一致的梯度收敛。把它代入式（312.6）并用 $C_n\preceq D_a$ 即得式（312.11）。证毕。
+
+上述 $C^2$ 是目标的明确假设，不由统一有限均值自动推出。第309节的一元一般必要性为 $C^{1,1}$，没有宣称二阶经典导数处处连续。
+
+一阶还可进一步使用实际点态预算
+
+$$
+C(p)=\operatorname{diag}\left(
+\frac{\mathbb E_pN_j}{p_j(1-p_j)}\right),
+\tag{312.15}
+$$
+
+因为 $C_n(p)\to C(p)$ 单调，而梯度已经收敛。二阶不能照此偷换：证明式（312.10）先在邻域积分，未证明Hessian逐点收敛。若另外假设各 $p\mapsto\mathbb E_pN_j$ 在该点连续，则直接用 $C_n\preceq C$ 重复式（312.13）的论证，才可在该点以 $C$ 替代 $D_a$。
+

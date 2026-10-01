@@ -1,0 +1,58 @@
+### 314.7 参考费用必须沿实际任务纤维证明
+
+总费用下界不能直接分配给参考来源。固定
+
+$$
+c_0\in(l,1),\qquad1<\lambda<c_0/l,
+\qquad\theta=(\lambda-1)/R>0.
+\tag{314.26}
+$$
+
+对小的正基准 $h$，令实际增益 $v\in[h,\lambda h]$，并取
+
+$$
+j=0,\qquad c(v)=r(v)=c_0h/v,
+\qquad p_h=\frac{1-c_0h/C}{B},\quad q(v)=\frac{1-v/C}{B}.
+\tag{314.27}
+$$
+
+当 $\lambda h\le1/4$ 时，$r(v)\in[c_0/\lambda,c_0]\Subset(l,1)$，整条曲线实际合法，旧任务流的成功率固定为 $p_h$。取目标任务请求的事件 $A=(1,0)$，目标概率为
+
+$$
+G^{[h]}(v)=p_h/2-\varepsilon v^\beta.
+\tag{314.28}
+$$
+
+上标 $[h]$ 只标记数学比较使用哪条固定任务律曲线，不向程序公开未知增益。
+
+若近似程序的统一参考矩为 $K_H<\infty$，式（314.16）、仿射 $q(v)$ 及引理314.3给
+
+$$
+|\Delta_{\theta h}^R F^{[h]}(h)|
+\le D_{I,m}(BC)^{-R}K_H(\theta h)^R.
+\tag{314.29}
+$$
+
+这里仍按总调用数截断，最后只在有限个合法参数点取极限；任务矩可以无穷。
+
+对非整数 $0<\beta<R$，令
+
+$$
+d_{\beta,R,\theta}
+=|(\beta)_R|\theta^R
+\int_{[0,1]^R}(1+\theta\textstyle\sum_i s_i)^{\beta-R}\,ds>0.
+\tag{314.30}
+$$
+
+目标差分绝对值为 $\varepsilon d_{\beta,R,\theta}h^\beta$，近似误差差分至多 $2^R\delta$。选择 $h^\beta=2^{R+1}\delta/(\varepsilon d_{\beta,R,\theta})$，对足够小 $\delta$ 仍有 $\lambda h\le1/4$。同总费用的计算得到
+
+$$
+\boxed{
+K_H\ge\frac{(BC)^R2^R}{D_{I,m}\theta^R}
+\left(\frac{\varepsilon d_{\beta,R,\theta}}{2^{R+1}}\right)^{R/\beta}
+\delta^{\,1-R/\beta}.}
+\tag{314.31}
+$$
+
+$K_H=\infty$ 时下界自动成立。$p_h$ 可随基准 $h$ 改变，因为每条差分曲线上它固定，预算常数又不依 $p_h$。没有把两个来源补成任意自由乘积。
+

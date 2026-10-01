@@ -1,0 +1,11 @@
+## 25. 未知失谐的随机正调用读出
+
+继续使用第 24 节的输入与 Fourier 约定，已知区间
+
+$$
+0<\delta_{\min}\le|\delta|\le\delta_{\max}\le1/54,\qquad
+\Delta>0,\quad\Delta\equiv\Delta_*+\delta\pmod{2\pi}.
+$$
+
+实际 $\delta$、符号及共振代表均可未知。每次实验只使用一份输入，随机选择整数个正向 $W_\Delta$ 调用，并使用免费低层操作与有限经典记录。
+

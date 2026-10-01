@@ -1,0 +1,86 @@
+### 345.2 全任务区间的高阶相容延拓
+
+选固定非整数有理数 \(\rho>\max(\beta,2)\)，记 \(r_\rho=\lfloor\rho\rfloor\)。先固定一个对参考 \(\rho\) 阶及任务 \(\beta\) 阶 HNP 构造均充分的二幂整数 \(b\ge2\)，再固定参考起点 \(N\)，令
+
+\[
+n_k=Nb^k,\qquad d_k=n_k+r_\rho.
+\tag{345.5}
+\]
+
+第330节给未膨胀参考系数 \(\ell_{k,t}(x),u_{k,t}(x)\)。记参考次数提升为 \(E^H_k\)。完整系数有共同概率余量和正则界，小量满足
+
+\[
+\begin{gathered}
+c_0\le\ell_{k,t}\le u_{k,t}\le1-c_0,\\
+\Gamma_k=u_k-\ell_k\ge0,\qquad
+\Lambda_k=\ell_k-E^H_k\ell_{k-1}\ge0,\qquad
+\Upsilon_k=E^H_ku_{k-1}-u_k\ge0,\\
+\|g^{(j)}\|_\infty\le C_j n_k^{j/2-a}
+\quad(0\le j\le r),\qquad
+[g^{(r)}]_{C^\theta}\le C ,
+\end{gathered}
+\tag{345.6}
+\]
+
+其中 \(g\) 是任一小量的固定系数函数；升阶后的旧同级差也有同型界。所有完整上下系数的 \(C^\beta\) 范数共同有界。
+
+取第330节的固定光滑截平函数 \(\zeta\)，在 \([0,1/4]\) 上为恒等，正侧取值位于参考构造区间，并最终成为常数。定义
+
+\[
+\bar\ell_{k,t}(p)=
+\begin{cases}
+\ell_{k,t}(\zeta(C(1-Bp))),&C(1-Bp)\ge0,\\
+1/2,&C(1-Bp)<0,
+\end{cases}
+\tag{345.7}
+\]
+
+并同样定义 \(\bar u\)。
+
+这里需要任意非整数高阶的零端拼接。第330节式（330.19）给
+
+\[
+|\partial_x^j(\ell_{k,t}-1/2)|
++|\partial_x^j(u_{k,t}-1/2)|
+\le C_jx^{\beta-j}
+\quad(0\le j\le r+1,\ x>0).
+\tag{345.8}
+\]
+
+因 \(\beta-j>0\) 对 \(j\le r\) 成立，减去 \(1/2\) 后的全部这些导数在零端连续接零。第 \(r\) 阶导数为 \(O(x^\theta)\)，所以跨零点的 Hölder 商也共同有界：若 \(x\ge0\ge y\)，则其差至多 \(Cx^\theta\le C|x-y|^\theta\)。正侧已有共同 Hölder 界；固定截平与仿射复合只用有限链式法则。因此完整延拓有共同 \(C^\beta([0,1])\) 范数。
+
+同级差和相邻增量在负侧接零，其零端导数由式（345.8）同样消失。复合的 \(j\) 阶导数只引入原函数 \(\ell\le j\) 阶导数，而
+
+\[
+n_k^{\ell/2-a}\le n_k^{j/2-a}
+\qquad(n_k\ge1,\ \ell\le j).
+\]
+
+最高 Hölder 项由原有 Hölder 界及固定光滑复合控制。所以式（345.6）的小量尺度也保留。
+
+参考提升权重不依任务参数，与共同复合及常值延拓交换。故对全部 \(p\in[0,1]\)，
+
+\[
+\begin{gathered}
+c_0\le\bar\ell_{k,t}\le\bar u_{k,t}\le1-c_0,\\
+E^H_k\bar\ell_{k-1}\le\bar\ell_k,\qquad
+\bar u_k\le E^H_k\bar u_{k-1},\\
+\sup_{k,t}
+\bigl(\|\bar\ell_{k,t}\|_{C^\beta}
++\|\bar u_{k,t}\|_{C^\beta}\bigr)<\infty .
+\end{gathered}
+\tag{345.9}
+\]
+
+真实域上 \(\zeta(x)=x\)，原参考目标保持。记原参考上下多项式的差为 \(\Gamma_k(x,q)\)。第330节还给
+
+\[
+\Gamma_k(x,q)
+\le Cx^\beta\min\{1,(n_kx^2)^{-\rho/2}\},\qquad
+\sum_{k\ge0}n_k^a\Gamma_k(x,q)\le C.
+\tag{345.10}
+\]
+
+第二式始终在同一个实际世界中求和。置 \(z_k=n_kx^2\)，求和项由
+\(\min(z_k^a,z_k^{a-\rho/2})\) 控制；\(z_{k+1}=bz_k\) 且 \(\rho/2>a\)，故两侧几何和共同有界。特别有 \(\Gamma_k(x,q)\le Cn_k^{-a}\)。
+

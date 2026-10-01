@@ -1,0 +1,27 @@
+### definition 26.1 整数操作的进位函数
+
+令 $T$ 为整数矩阵，低层代表为 $a$。定义
+
+$$
+\boxed{
+c_T(a)=\frac{Ta-[Ta]_d}{d}\pmod e.
+}
+$$
+
+则
+
+$$
+\boxed{
+T(a+db)\longleftrightarrow
+\bigl([Ta]_d,\,Tb+c_T(a)\bigr).
+}
+$$
+
+对 Fibonacci 更新 $M(a_0,a_1)=(a_1,a_0+a_1)$，其低层进位为
+
+$$
+\boxed{
+c_M(a_0,a_1)=left(0,\left\lfloor\frac{a_0+a_1}{d}\right\rfloor\right).
+}
+$$
+

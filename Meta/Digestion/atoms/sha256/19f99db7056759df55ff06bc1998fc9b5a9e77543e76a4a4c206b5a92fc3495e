@@ -1,0 +1,52 @@
+### 341.1 程序类、实际输出与结论
+
+固定非整数 $0<\beta<2$，令 $a=\beta/2\in(0,1)$，沿用第340节原双来源合同、参考系数与公共有理扩域
+
+$$
+n_k=Nb^k,\qquad d_k=n_k+\lfloor\rho\rfloor,\qquad
+\rho>\max(\beta,2),\qquad
+\underline c=3/5,\qquad x^\dagger=11/40.
+\tag{341.1}
+$$
+
+固定一组模型、网格及批量常数。程序先保留请求来源的第一实际 $X$，执行准确、未截断的倒数门控；触发后运行第340节的相容张量核心，只在第 $J$ 层把仍未决的核心币置零，再使用既定的 $X$ 与核心币映射输出 $Z$。
+
+各次程序允许选择不同的 $J\ge1$ 及有限地板，但到第 $J$ 层均须满足共同的
+
+$$
+0<\eta_{k+1}\le\eta_k\le1,\qquad
+\eta_k/\eta_{k+1}\le R_\eta,
+\tag{341.2}
+$$
+
+$$
+c_m n_k^a\eta_k^{-1}\le m_k^a
+ \le C_m n_k^a\eta_k^{-1},\qquad
+1<m_{k+1}/m_k\le R_m.
+\tag{341.3}
+$$
+
+地板数组仍为
+
+$$
+\delta_k=\frac14b^{-ak}\eta_k,\qquad
+A_{k,s,t}=(1-\delta_k)\bar\ell_{k,t}(s/m_k),\qquad
+B_{k,s,t}=(1-\delta_k)\bar u_{k,t}(s/m_k)+\delta_k,
+\tag{341.4}
+$$
+
+且满足到第 $J$ 层的乘积次数提升相容性。这里 $\delta_k$ 是系数地板；不把它等同于输出精度。固定门控包装具有共同有限的 $a$ 矩。
+
+记这个程序类为 $\mathfrak G$，每份程序为 $A^{[J]}$。它不包括随后对门控的截断、整棵执行树的有理化或其他扰动。核心层数有限，但门控不要求有确定的来源调用硬上限。也不要求这段有限网格已有一份无限相容延续。
+
+对世界 $w$ 与请求 $S$，令 $P_{w,S}$ 为原四格目标，$P^{A^{[J]}}_{w,S}$ 为实际输出律，定义
+
+$$
+e(A^{[J]})=
+ \sup_{w,S}\operatorname{TV}
+ (P^{A^{[J]}}_{w,S},P_{w,S}),\qquad
+T_a(A^{[J]})=\sup_{w,S}\mathbb E N_T^a,\qquad
+H_a(A^{[J]})=\sup_{w,S}\mathbb E N_H^a.
+\tag{341.5}
+$$
+

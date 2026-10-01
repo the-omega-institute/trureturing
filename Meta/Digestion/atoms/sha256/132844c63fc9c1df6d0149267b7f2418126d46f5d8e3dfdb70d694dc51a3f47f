@@ -1,0 +1,66 @@
+**定理 11.3（仅非负时间行走已生成全部轨道响应）。** 对定义 11.1 中没有离散 $U$ 原语的 $\Sigma_W$，任意 $d,e\ge2$ 都有
+
+$$
+S_W=\mathcal A_{\mathrm{orb}}.
+$$
+
+因此其全部允许历史统计相同，当且仅当全部 $\tau_O$ 相同；加入离散 $U$ 不增加效果空间的方向。
+
+证明。将定理 11.2 的过滤、极化及乘子构造用于 $S_W$，记所得代数为 $\mathfrak D_W$。它包含低层全矩阵代数，满足 $\mathfrak D_W\subseteq S_W$，并被每个非负时间拉回
+
+$$
+\alpha_t(X)=W(t)^\dagger XW(t)
+$$
+
+规范化。以下交换子也可由有限个非负时间精确取得。令 $\Lambda=\operatorname{spec}L$、$\Omega=\Lambda-\Lambda$、$s=|\Omega|$。由于 $\Lambda\subseteq[0,4]$，不同 $\nu\in\Omega$ 的数 $z_\nu=\exp(i\pi\nu/8)$ 两两不同。Vandermonde 矩阵可逆，故存在 $b_0,\ldots,b_{s-1}\in\mathbb C$ 满足 $\sum_k b_kz_\nu^k=i\nu$。在 $L$ 的各谱角上比较，得到对所有 $X$ 的恒等式
+
+$$
+i[L,X]=\sum_{k=0}^{s-1}b_k\alpha_{k\pi/8}(X).
+$$
+
+于是 $[L,X]\in\mathfrak D_W$ 对每个 $X\in\mathfrak D_W$ 成立，没有使用无限协议或近似闭包。
+
+记高层置换 $V=U_e$，则 $U=\sum_aE_{f(a),a}\otimes T_{c(a)}V$。矩阵恒等式
+
+$$
+M-I=M^{-1},\qquad M^2-I=M
+$$
+
+使两者在模 $d$ 上都可逆。因此对任何 $a\ne0$，有 $f(a)\ne a$、$f^2(a)\ne a$。置 $P_a=E_{aa}\otimes I_H$、$b=f(a)$，得到
+
+$$
+P_b[L,P_a]P_a=P_bLP_a
+=-E_{ba}\otimes T_{c(a)}V\in\mathfrak D_W.
+$$
+
+这个低层非对角角中的 $2I$ 项为零；$U^\dagger$ 项要求 $f(b)=a$，已被排除。用低层矩阵单位左右夹乘并对低层对角求和，便有 $I_A\otimes T_{c(a)}V\in\mathfrak D_W$。
+
+特别取两个明确的非零低层标签
+
+$$
+a^{(0)}=(1,0),\qquad a^{(1)}=(d-1,1).
+$$
+
+它们在所有 $d\ge2$ 时有效，包括 $d=2$，且进位分别为 $0$ 与 $(0,1)$。所以 $I_A\otimes V$、$I_A\otimes T_{(0,1)}V$ 都是乘子。在已经成立的乘子代数内取乘积和伴随，得到
+
+$$
+I_A\otimes T_{(0,1)}\in\mathfrak D_W,\qquad
+I_A\otimes V^\dagger T_{(0,1)}V
+=I_A\otimes T_{(1,0)}\in\mathfrak D_W.
+$$
+
+这两个方向生成全部高层平移。Fourier 反演给出
+
+$$
+\Pi_p:=I_A\otimes|p\rangle\langle p|
+=\frac1{e^2}\sum_{v\in H}\omega^{-p\cdot v}(I_A\otimes T_v)
+\in\mathfrak D_W,
+\qquad
+\Pi_{gp}(I_A\otimes V)\Pi_p
+=I_A\otimes|gp\rangle\langle p|\in\mathfrak D_W.
+$$
+
+沿每条 $g$ 轨道相乘并取伴随，得到轨道内的全部矩阵单位；零轨道所需的对角投影也已在其中。再乘低层矩阵，得到 $\mathcal A_{\mathrm{orb}}\subseteq\mathfrak D_W\subseteq S_W$。这些乘积是乘子代数中的运算，不是把高层算子提升为可执行原语。
+
+反向包含由定理 8.5 的逐块不变性得到：每个 $W(t)$ 和低层 Kraus 算子都保持 $g$ 轨道块，故全部实际历史效果属于 $\mathcal A_{\mathrm{orb}}$。最后使用定理 11.2 的迹配对论证即得统计等价。$\square$
+

@@ -1,0 +1,5 @@
+source_id = "predictive-thermodynamic-finite-transducers"
+path = "docs/develop/theory/PREDICTIVE_THERMODYNAMIC_FINITE_TRANSDUCERS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

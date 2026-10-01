@@ -1,0 +1,25 @@
+### theorem 15.11 Fibonacci 整除是模观察中的标量回返
+
+对 $m\ge1$，
+
+$$
+\theta^m=F_{m-1}+F_m\theta.
+$$
+
+因此对 $d\ge2$，
+
+$$
+ d\mid F_m
+\iff
+\theta^m\bmod dR\text{ 属于标量子环},
+$$
+
+等价地
+
+$$
+ d\mid F_m
+\iff
+M^m\equiv\lambda I\pmod d
+\quad\text{对某个 }\lambda.
+$$
+

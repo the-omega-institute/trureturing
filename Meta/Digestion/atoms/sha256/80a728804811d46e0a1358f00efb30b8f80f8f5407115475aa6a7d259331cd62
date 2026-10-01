@@ -1,0 +1,31 @@
+**证明。** 第349.4节的终止与收敛给
+
+\[
+\begin{aligned}
+a_E(\theta)
+&=\gamma_E+
+\sum_{n\ge0}\operatorname{tr}
+   (F_{E,\theta}T_\theta^n(\rho))\\
+&=\gamma_E+
+\ell_{E,\theta}\left(\sum_{n\ge0}M_\theta^n\right)\rho_V,
+\end{aligned}
+\tag{349.34}
+\]
+
+即式（349.33）。沿仿射参数线以 \(t\) 作变量时，\(M(t)\) 和返回行 \(\ell_E(t)\) 的条目次数至多一，\(\rho_V\) 固定。伴随矩阵公式给
+
+\[
+\Delta(t)=\det(I-M(t)),\qquad \deg\Delta\le D,
+\]
+
+\[
+P_E(t)=\gamma_E\Delta(t)
++\ell_E(t)\operatorname{adj}(I-M(t))\rho_V,
+\qquad \deg P_E\le D.
+\tag{349.35}
+\]
+
+因为伴随矩阵次数至多 \(D-1\)，乘仿射返回行后至多为 \(D\)。物理内部段上 \(\Delta\ne0\)，所以响应解析。事件由多个终端格组成时只需相加返回行，不增加次数。若 \(\rho=0\)，取 \(V=\{0\},D=0\)，响应是固定常数，同样成立。证毕。
+
+有限量子循环的 CP 响应可由最小不动点和矩阵求和表示，已有成熟文献。[^quantum_affine_resolvent] 当前次数界还需要保留这份世界无关的 \(V\) 和固定实基，以及原始仿射 \(M_\theta\)。不能仅在每个参数点各作一次谱分解，就把所得随参数变化的谱投影当作同一仿射表示。
+

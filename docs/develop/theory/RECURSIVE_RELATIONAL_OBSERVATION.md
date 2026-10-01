@@ -54857,3 +54857,134 @@ $$
 Parry 来源的经典出处为 W. Parry，[*Intrinsic Markov chains*](https://doi.org/10.1090/S0002-9947-1964-0161372-1)，*Transactions of the American Mathematical Society* **112** (1964), 55–66。本文的有限 $k$ 密度由（143.10）–（143.17）的显式有限和给出；一般公平提升与 $k=2$ 相关的归属在第66节，完整编码与有限窗口极限的归属在有效分辨率卷所引各节，扩展混合及初始化合同分别由第139–142节承担。
 
 ## 143.99 追加锚
+
+## 144. 整数端点边界与全幺模性
+
+### 144.1 任意端点表示
+
+**定义 144.1（有向端点的整数边界矩阵）。** 令 $V,E$ 为任意类型，令
+$\operatorname{tail},\operatorname{head}:E\to V$。不要求 $V,E$ 有限，不要求边简单、无环、连通，
+也不要求不同边标签给出不同的端点对。定义
+$$
+\partial_{\operatorname{tail},\operatorname{head}}(v,e)
+=\mathbf 1_{\{v=\operatorname{head}(e)\}}
+-\mathbf 1_{\{v=\operatorname{tail}(e)\}}
+\in\mathbb Z.
+\tag{144.1}
+$$
+这里的等式判定只用于定义中的两个指示项。若 $\operatorname{tail}(e)=\operatorname{head}(e)$，
+整列为零；若多个标签有相同端点，它们仍是矩阵中的平行列。
+
+**定义 144.2（逐方阵全幺模判据）。** 对任意 $k\in\mathbb N$、任意单射
+$f:\operatorname{Fin}(k)\to V$ 与 $g:\operatorname{Fin}(k)\to E$，取子矩阵
+$$
+\partial[f,g](i,j)=\partial_{\operatorname{tail},\operatorname{head}}(f(i),g(j)).
+\tag{144.2}
+$$
+称该端点矩阵全幺模，是指所有这些有限方阵满足
+$$
+\det(\partial[f,g])\in\{-1,0,1\}.
+\tag{144.3}
+$$
+当 $k=0$ 时，空矩阵行列式按约定为 $1$。因此全幺模性只在每个有限 minor 上使用有限性，而不把全局有限性假装成假设。
+
+### 144.2 全幺模定理
+
+**定理 144.3（整数端点边界全幺模）。** 对任意上述 $V,E,\operatorname{tail},\operatorname{head}$，
+矩阵 $\partial_{\operatorname{tail},\operatorname{head}}$ 是全幺模的；等价地，对所有 $k,f,g$，
+式（144.3）成立。
+
+**证明。** 对 $k$ 归纳。$k=0$ 时行列式为 $1$。设 $k+1$ 阶 minor 已给定。
+若存在所选列是环，或者该列的一个端点没有出现在所选行中，则该列全为零或至多只有一个非零项。
+沿该列作 Laplace 展开，零列立即给出零行列式；单非零项只留下一个 $k$ 阶 minor，行、列选取分别变为
+$f\circ\operatorname{succAbove}$ 与 $g\circ\operatorname{succAbove}$，仍为单射。归纳假设给出剩余行列式属于
+$\{-1,0,1\}$，再乘 Laplace 符号与该项的 $+1$ 或 $-1$，结果仍在同一集合中。
+
+否则每一所选列都有两个不同的所选端点：一个位置取 $+1$，另一个位置取 $-1$。因此所选矩阵的所有行之和是零行，
+行族线性相关，行列式为零。两种情形覆盖所有有限 minor，故定理成立。Lean 内核核验的声明为
+`D5.S3.Fourier.CharacterSelection.SignedIncidenceTotalUnimodularity.signed_incidence_is_totally_unimodular`。
+证毕。
+
+### 144.3 与二元图微分的关系及边界
+
+对简单图取 $E=G.\operatorname{Dart}$，以 dart 的尾、头作为上述端点映射。整数边界取模 $2$ 后，$+1$ 与 $-1$
+相同；因此其转置作用于顶点函数时，在 dart 上给出两个端点值的和。令
+$q(d)=\langle d.\operatorname{edge},d.\operatorname{edge\_mem}\rangle:G.\operatorname{Dart}\to G.\operatorname{edgeSet}$。
+对顶点函数 $x:V\to\mathbb Z/2\mathbb Z$，dart 上的端点和等于无向边函数
+`edgeDifferential G x` 沿 $q$ 的拉回，即
+$$
+\bigl((\operatorname{edgeDifferential}\ G\ x)\circ q\bigr)(d)
+=x(d.\operatorname{fst})+x(d.\operatorname{snd}).
+$$
+所以方向是先得到无向边上的 `edgeDifferential`，再沿
+$d\mapsto\langle d.\operatorname{edge},d.\operatorname{edge\_mem}\rangle$ 拉回到 dart；不是把 dart 值拉回到无向边。
+这里载体、方向和取模映射不同，关系用于解释连接，不另造纯包装声明。
+
+定理 144.3 只证明端点边界矩阵的全幺模性；它不单独证明流的整数性、矩阵树定理，也不改判既有二元循环空间的声明。
+
+### 144.4 文献锚
+
+Jan Vondrák，Richard Pang（scribe）的 *MATH233B: Polyhedral techniques in combinatorial optimization* Lecture 3，
+2017 年 1 月 17 日，印刷第 3 页 Lemma 10 给出有向图 signed incidence matrix 的全幺模性及稀疏列/行和归纳。
+本节把图结构改写为任意端点表示，并显式保留平行标签与环列；这是文献已知定理的诚实形式化，不声称原创。
+Kevin Cheung 的 MATH5801 Proposition 7.1 给出每列至多一个正项、至多一个负项的同一类判据与归纳说明。
+
+## 144.99 追加锚
+
+## 145. 单位极大子式的整数全局重构
+
+**定理 145.1（有限全幺模整数矩阵的内逆）。** 令 $m,n$ 为任意有限类型，
+$A\in\mathbb Z^{m\times n}$。假设对每个 $k\in\mathbb N$ 及单射
+$r:\operatorname{Fin}(k)\to m$、$c:\operatorname{Fin}(k)\to n$，
+$\det A[r,c]\in\{-1,0,1\}$。则存在 $B\in\mathbb Z^{n\times m}$ 使
+$$
+ABA=A.
+$$
+类型可以为空，矩阵可以为零、非方阵或秩亏；不假设存在非零项。
+
+**证明。** 在有非零子式的阶数中取最大值 $k$。空子式的行列式为 $1$，
+故候选集合非空；单射行选取保证阶数至多为 $|m|$，故最大值存在。
+取达到最大值的子式 $U=A[r,c]$。全幺模性及非零性给出
+$\det U=\pm1$，所以 $U$ 在整数矩阵环内可逆。
+将所选行、列分别排在其补集之前，写成
+$$
+M=\begin{pmatrix}U&R\\ C&D\end{pmatrix}.
+$$
+对补集中的任意一行 $i$、一列 $j$，把它们添加到所选坐标，得到
+$(k+1)$ 阶子式。它的行、列选取仍为单射；最大性使其行列式为零。
+带边子式的 Schur 行列式恒等式给出
+$$
+0=\det U\,\bigl(D_{ij}-(CU^{-1}R)_{ij}\bigr).
+$$
+消去单位 $\det U$，得到所有余项为零，因而 $D=CU^{-1}R$。
+置
+$$
+G=\begin{pmatrix}U^{-1}&0\\0&0\end{pmatrix},
+\qquad
+MGM=\begin{pmatrix}U&R\\C&CU^{-1}R\end{pmatrix}=M.
+$$
+将 $G$ 的行、列按相反方向运回原坐标，即得整数 $B$。
+这个推导在 $k=0$ 时仍成立：$U$ 为空可逆矩阵，带边子式为一阶子式，
+最大性使所有项为零。若行或列补集为空，对相应坐标的重构条件为空，
+同一分块乘法仍有效。证毕。
+
+Fampa 与 Lee，*On Sparse Reflexive Generalized Inverses*，
+arXiv:1807.03074v1（2018 年 7 月 9 日），印刷第2页 Theorem 5，
+证明实矩阵中任意秩阶非奇异子式的逆嵌入零块后给出 reflexive generalized inverse。
+上面的整数结论是将单位子式与极大阶带边消去结合的推导，不是该实数定理的逐字转录；
+不主张稀疏最优、范数最优或原创性。
+Sontag，*On generalized inverses of polynomial and other matrices*，
+IEEE Transactions on Automatic Control **25**(3)（1980），514–517，
+印刷第515页 Theorem 2 与 Remark 1，在整域上的固定投射模间讨论
+弱广义逆、像的分裂与最大子式理想的关系；这里只用它说明结构背景，
+不声称证明了该一般等价定理。
+
+本定理只给出整数内逆，不给出 Moore–Penrose 逆或全幺模性逆命题。
+例如 $[1\ 1]$ 可取整数内逆 $[1\ 0]^{\mathsf T}$，其 Moore–Penrose 逆
+却是 $[\tfrac12\ \tfrac12]^{\mathsf T}$；整数可逆矩阵
+$\begin{pmatrix}1&2\\0&1\end{pmatrix}$ 有整数内逆而非全幺模。
+矩阵 $[2]$ 的像作为抽象群自由，但 $[2]B[2]=[2]$ 要求 $4B=2$，
+没有整数解。因此不能用抽象像自由替代嵌入像的分裂，也不能从本定理
+推得完整的相对同调判据或链复形可缩性。
+
+## 145.99 追加锚

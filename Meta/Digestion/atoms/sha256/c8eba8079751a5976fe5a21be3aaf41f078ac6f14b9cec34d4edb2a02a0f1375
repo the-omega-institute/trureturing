@@ -1,0 +1,8 @@
+**定理 6.1。**
+$$
+R_{ab}=[V,W_{ab}\otimes I],\quad
+\|V\|\le\delta(H)\le2\|V\|,
+\quad\frac1{2d^2}\sum_{a,b}\|R_{ab}\|_{2,n}^2=\|V\|_{2,n}^2.
+$$
+完整可见矩阵代数对 $[H,\cdot]$ 闭合，当且仅当 $V=0$，亦当且仅当 $\delta(H)=0$。
+

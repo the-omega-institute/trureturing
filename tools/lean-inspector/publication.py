@@ -152,7 +152,13 @@ def write_sidecars(report, inputs, origins, mode='produced'):
     member(report, '.provenance.json').write_text(json.dumps(provenance, separators=(',', ':')) + '\n', encoding='utf-8')
 
 
-def validate_rows(report, archive_path, verified_materials=None, *, manifest):
+def validate_rows(report, archive_path, verified_materials=None, *, manifest, identities=True):
+    """Validate a raw report and its material archive.
+
+    identities=False checks every material against its content address and
+    accepts the recorded statement_id: for a bundle already accepted in this
+    invocation, recomputing the canonical declaration encoding is a replay.
+    """
     materials.read_manifest_version(manifest)
     data = Path(report).read_bytes()
     root = read_json(data)
@@ -214,7 +220,10 @@ def validate_rows(report, archive_path, verified_materials=None, *, manifest):
             for row, decl in references[name]:
                 key = (row['source_path'], decl['kind'], decl['name_key'], decl['type_sha256'])
                 with open_zip_member(archive, info) as source:
-                    if verified_materials is not None and key in verified_materials:
+                    if not identities:
+                        materials.verify_material(source, decl['type_sha256'])
+                        actual = (decl['type_sha256'], decl['statement_id'])
+                    elif verified_materials is not None and key in verified_materials:
                         # Invocation-local reuse of the expensive canonical
                         # statement encoding. Always read/CRC-check/hash the
                         # actual bytes again; an archive address is no proof.
@@ -224,7 +233,7 @@ def validate_rows(report, archive_path, verified_materials=None, *, manifest):
                         actual = materials.material_identities(source, row['source_path'], decl['kind'], decl['name_key'])
                 if actual != (decl['type_sha256'], decl['statement_id']):
                     raise ValueError('material or declaration identity mismatch')
-                if verified_materials is not None:
+                if identities and verified_materials is not None:
                     verified_materials[key] = actual[1]
     return root['modules']
 
@@ -287,7 +296,9 @@ def _require_bundle_files(report):
             raise ValueError(f'missing bundle member: {path.name}')
 
 
-def validate_bundle(report, expected=None, repository=None, verified_materials=None, *, manifest=None):
+def validate_bundle(report, expected=None, repository=None, verified_materials=None, *, manifest=None, identities=True,
+                    check_rows=True):
+    """check_rows=False checks the bundle envelope and currency, not the accepted rows."""
     report = Path(report)
     _require_bundle_files(report)
     sha = digest(report)
@@ -319,8 +330,11 @@ def validate_bundle(report, expected=None, repository=None, verified_materials=N
             'lean_config_sha256': expected['config']}
         if any(provenance[k] != v for k, v in wanted.items()) or lines[1] != 'repository_input_sha256=' + expected['repository']:
             raise ValueError('stale input/provenance')
+    if not check_rows:
+        return None
     rows = validate_rows(report, member(report, '.materials.zip'), verified_materials,
-        manifest=Path(repository) / 'lean-report-inputs.json' if repository is not None else manifest)
+        manifest=Path(repository) / 'lean-report-inputs.json' if repository is not None else manifest,
+        identities=identities)
     origins = provenance['module_origins']
     materials.require_keys(origins, {row['module'] for row in rows}, 'aggregate production origins')
     for row in rows:
@@ -341,23 +355,38 @@ def zip_files(destination, paths):
                 shutil.copyfileobj(reader, writer, materials.BUFFER_BYTES)
 
 
-def unpack(artifact, directory, suffixes=SUFFIXES):
+def bundle_members(archive, suffixes=SUFFIXES):
+    """The exact regular, unencrypted members of an open bundle, by name."""
     expected = {RAW + suffix for suffix in suffixes}
+    if len(archive.namelist()) != len(expected) or set(archive.namelist()) != expected:
+        raise ValueError('invalid native artifact members')
+    members = {}
+    for name in sorted(expected):
+        info = archive.getinfo(name)
+        if info.is_dir() or stat.S_IFMT(info.external_attr >> 16) not in (0, stat.S_IFREG):
+            raise ValueError('nonregular native artifact member')
+        if info.flag_bits & 1:
+            raise ValueError('encrypted native artifact member')
+        members[name] = info
+    return members
+
+
+def unpack(artifact, directory, suffixes=SUFFIXES):
     with zipfile.ZipFile(artifact) as archive:
-        if len(archive.namelist()) != len(expected) or set(archive.namelist()) != expected:
-            raise ValueError('invalid native artifact members')
-        for name in sorted(expected):
-            info = archive.getinfo(name)
-            if info.is_dir() or stat.S_IFMT(info.external_attr >> 16) not in (0, stat.S_IFREG):
-                raise ValueError('nonregular native artifact member')
-            if info.flag_bits & 1:
-                raise ValueError('encrypted native artifact member')
+        for name, info in bundle_members(archive, suffixes).items():
             with open_zip_member(archive, info) as reader, (Path(directory) / name).open('wb') as writer:
                 shutil.copyfileobj(reader, writer, materials.BUFFER_BYTES)
     return Path(directory) / RAW
 
 
-def publish(report, destination, expected, repository=None, *, mode=None, manifest=None, expected_hashes=None):
+def publish(report, destination, expected, repository=None, *, mode=None, manifest=None, expected_hashes=None,
+            validate=True):
+    """Stage, validate and atomically publish a bundle.
+
+    validate=False is only for bundle bytes whose acceptance is already
+    recorded by content address: the envelope and input currency are still
+    checked, the accepted rows are not replayed.
+    """
     report, destination = Path(report), Path(destination)
     _require_bundle_files(report)
     # Optional report reuse precedes ensure. A rejected seed must not create a
@@ -375,7 +404,7 @@ def publish(report, destination, expected, repository=None, *, mode=None, manife
         accepted = {suffix: digest(member(staged, suffix)) for suffix in SUFFIXES}
         if expected_hashes is not None and accepted != expected_hashes:
             raise ValueError('publication snapshot differs from sealed bundle')
-        validate_bundle(staged, expected, repository, manifest=manifest)
+        validate_bundle(staged, expected, repository, manifest=manifest, check_rows=validate)
         if any(digest(member(staged, suffix)) != sha for suffix, sha in accepted.items()):
             raise ValueError('publication snapshot changed during validation')
 

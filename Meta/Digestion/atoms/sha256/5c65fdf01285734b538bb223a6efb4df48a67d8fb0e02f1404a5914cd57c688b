@@ -1,0 +1,30 @@
+### 234.3 素幂资源限制何时不能改善经典支撑界
+
+记 $F_s(n)=\log Z(n)-s^{-1}\log n$，其全局最大值为 $s^{-1}\log \mathcal Q_s$。对任意候选集合 $\mathcal A$，若它仍包含一个同价极值整数 $C$，则
+
+$$
+\sup_{n\in\mathcal A}F_s(n)=\frac1s\log \mathcal Q_s.
+\tag{234.9}
+$$
+
+这是使用资源松弛前可直接核对的饱和条件。例如，若仅保留
+
+$$
+q\mid n,\qquad n/q\le H,\qquad
+p^{v_p(n)}\le B\ \ (p\mid n),\qquad A\le n\le X,
+$$
+
+而某个同价 $C$ 同时满足这些条件，则这些限制没有使该价格包络降低。若任务保留的是准确截断核心 $\gcd(n,n_y)=q$，须检查 $\gcd(C,n_y)=q$，不能只检查 $q\mid C$。若再保留 $n\equiv1\pmod{F_r}$，还须检查该同余；不能从资源条件的饱和推出指定余类也饱和。
+
+对实际整数 $n>5040$，仍有经典的精确预算
+
+$$
+\log\frac{e^\gamma\log\log n}{Z(n)}
+=\operatorname{Ben}_{C,1/s}(n)
+-\left[\frac{\log \mathcal Q_s+\log n}{s}
+-\log(e^\gamma\log\log n)\right].
+\tag{234.10}
+$$
+
+式（234.6）给低亏损候选的 benefit **上界**，而式（234.10）需要足够的 benefit **下界**，或对括号内支撑线过量的上界。两者不能交换方向。所需附加信息必须作用于同一个实际候选，例如指定同余强制的素幂损失，或排除所有同时满足窗口和余类的近极值配置。
+

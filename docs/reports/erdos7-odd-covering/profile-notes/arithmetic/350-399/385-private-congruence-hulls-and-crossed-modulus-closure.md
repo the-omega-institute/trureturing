@@ -1811,3 +1811,501 @@ the available joint-replacement tests to some interfaces failing ML2;
 a whole-cover forcing theorem is still missing. These are ordinary
 proofs and exact finite computations, not new Lean verification, a
 literature-priority claim, or a solution of unrestricted Erdős#7.
+
+## 16. Retained pure powers turn private-point demand into height bounds
+
+Assume that a finite distinct odd nonunit whole cover exists, and choose
+ONE cover globally minimizing first the number of classes and then their
+modulus sum, as in [Report350, EB1](../../321-384/350-extremal-paired-branch-and-source-support.md#1-extremality-supplies-the-divisor-structure). Let its original numerical labels be D,
+its full period be Q, and H_p=v_p(Q). Irredundancy, divisor closure,
+comparable-class disjointness and initial odd-prime support refer to this
+same chosen family. The bounds below are for this globally extremal cover;
+they are not height bounds on every arbitrary irredundant odd cover.
+
+The supplier lower bound is existing mathematics: use the original-shell
+identity and [QC1--QC2](../../../../../../Library/Arith/lettlsun2008cosets.md#arbitrary-quotient-cuts-collapse-to-the-same-depth-suffixes). The top-only
+private fan is also already [Report371, section2](371-private-top-fans-and-ancestor-cuts.md). Neither is a new theorem
+here. The purpose is to connect that retained all-depth information to
+section15's actual repair capacity RP1--RP4. These are ordinary deductions,
+not new Lean declarations or claims of literature priority.
+
+### The existing demand in the exact phase needed by repair
+
+Fix p in the original support and a private point x of the original pure
+class p^H, where H=H_p. For 1<=a<H, put c=x mod p^a. QC1--QC2 give
+
+    S_a(x,p) >= (H-a)(p-1).
+
+Every contributing original label M has p-height h_M>a, agrees with x
+modulo p^a, agrees with x at its entire p-free cofactor, and has weight
+p^(1-h_M+b_M)<=1. The pure owner p^H is not among these suppliers.
+Consequently the actual phase packet
+
+    P_a(c)={M in D:p^a|M,a_M=c mod p^a}
+
+has at least
+
+    1+(H-a)(p-1)                                    (HC1)
+
+original labels. This count directly reuses QC2; it is not a separately
+introduced private-prefix theorem. The original p^a class has a different
+phase, by comparable disjointness. Every supplier's complete p-free
+congruence contains the SAME x, not a source selected separately per label.
+
+### Repair with another prime gives a finite height optimization
+
+Let q!=p be any odd prime, including a prime absent from Q, and put
+K=H_q. For the target h=p^a, all original pure q-powers are retained:
+none can be a parent or deleted descendant whose modulus is divisible
+by p^a. Since h has q-height zero, every pure q-power is compatible
+with its old target phase at the q-coordinate. Their actual disjoint
+classes remove exactly
+
+    sum_(i=1..K) q^(K+1-i)
+
+first-fresh q-roots, independently of c. Thus RP1 gives
+
+    R=R_q(K)=q^(K+1)-sum_(i=1..K)q^(K+1-i)
+            =q*((q-2)q^K+1)/(q-1),
+    t=tau(p^a)=a+1.                                 (HC2)
+
+No favorable phase is substituted: because the target has q-height zero,
+these retained-pure savings are phase-independent in this particular
+consumer. Relative-height-positive consumers must still use their actual
+compatible pure powers, as required by RP1.
+
+Define A_q(K)=(q-2)q^K+1. Within this specified fresh-q palette, the RP2 criterion is t>A_q(K), equivalently
+
+    a>=A_q(K).                                      (HC3)
+
+Let N_q(R,t) be the exact RP3 forest count: it is R when t>=R; otherwise
+
+    delta=q*t-(q-1)*R,
+    J=min{j>=0:q^j*delta>=t},
+    s=(q*t-q^J*delta)/(q-1),
+    N=t*J+s.                                        (HC4)
+
+The final layer may have s=t. RP4's strict modulus-sum estimate gives
+the actual phase occupancy cap |P_a(c)|<=N-1. Combining it with HC1 gives,
+whenever H>a,
+
+    (H-a)(p-1)<=N-2.
+
+If H<=a, the following bound holds automatically. Hence in all cases
+
+    H_p <= B_(p;q,K)
+        := min_(A_q(K)<=a<=R_q(K)-1)
+                  [a+floor((N_q(R_q(K),a+1)-2)/(p-1))].     (HC5)
+
+This minimum is genuinely finite. At a>=R-1, t>=R and N=R, so its
+objective increases with a; none of the a>R-1 can improve the value
+at R-1. The first feasible index A_q(K) is at most R-1. All selected
+repair moduli have q-height above K and are fresh relative to the ENTIRE
+original family.
+
+One must optimize a rather than always choose its first feasible value.
+For example q=5,K=1,p=3 attains the displayed minimum28 at a=19,N=20.
+For q=3,K=3,p=5, the optimum46 occurs at a=30,N=68; the first feasible
+a=28 would give50. (At that first index N=90, so the bound is28+22=50.)
+
+### An absent odd prime bounds every height at fixed support
+
+For an absent odd prime ell, K=0, R=ell and A=ell-1. The optimization
+has just one index a=ell-1 and N=ell. Thus
+
+    H_p <= ell-1+floor((ell-2)/(p-1))                 (HC6)
+
+for every present p. Taking ell to be the smallest absent odd prime
+uses the existing initial-support conclusion of report350. For each
+fixed finite support, all exponents of a globally extremal putative
+cover now have explicit finite bounds. Support itself is still unbounded;
+this does not reduce the unrestricted problem to one finite search.
+
+This is an added consequence of the repair constraints, not a new
+private-point lower bound. The classical aggregate s-number bound
+n>=1+sum_p H_p(p-1) already bounds heights when n is fixed. HC6 does
+not require a numerical bound on that unknown minimum n.
+
+### Exact finite parameter values
+
+Entries are the optimized upper bounds B_(p;q,K). A dash means q=p,
+which is not this consumer's domain. These are exact integer parameter
+calculations of HC5, conditional on the stated global extremality and
+actual heights. They do not assert existence of a cover with those
+parameters.
+
+| q | K | R | Candidate a range | p=3 | p=5 | p=7 | p=11 | p=13 | p=17 | p=19 |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+|3|1|6|4..5|—|5|5|4|4|4|4|
+|3|2|15|10..14|—|15|13|12|11|11|11|
+|3|3|42|28..41|—|46|41|36|35|33|32|
+|5|1|20|16..19|28|—|21|19|18|17|17|
+|5|2|95|76..94|140|—|104|94|91|88|86|
+|7|1|42|36..41|61|51|—|43|41|40|39|
+|7|2|287|246..286|428|357|—|300|292|281|278|
+
+For H_3=1, choosing a=4 uses R=6,t=5 and layer counts(5,3), so N=8.
+Consequently
+
+    H_5<=5, H_7<=5,
+    H_p<=4 for every present p>=11.                  (HC7)
+
+The same suffix-demand consumer without retained pure3 has R=9 and
+first feasible a=6. Its optimized bounds for p=5,7,11 are8,7,7,
+respectively. Thus the retained-pure contribution yields a strict
+parameter improvement; it is not merely a renaming of ML2's forest.
+
+For a concrete aggregate-count comparison, the initial-support profile
+(H3,H5,H7,H11)=(1,6,1,1) permits43<=n<=55 under just the classical
+s-number lower bound and n<=tau(Q)-1. HC7 excludes that profile for
+the chosen globally extremal cover. This is a parameter comparison,
+not an actual covering family or an independence result against all
+classical or repository constraints.
+
+### Keeping the common cofactor source gives a stronger H3=1 bound
+
+Assume H3=1 and let s be the number of original support primes. Fix
+p>3 and H_p>2. Use HC1 at a=2, retaining its specific QC1 suppliers and the pure owner.
+This actual subset contains at least
+
+    1+(H_p-2)(p-1)
+
+labels. At most H_p-2 of these are pure p-powers, so at least
+
+    1+(H_p-2)(p-2)                                  (HC8)
+
+are mixed suppliers. All have p-height>2 and their full p-free
+cofactor congruences contain the SAME private point x.
+
+Partition these actual labels into disjoint buckets. First put every
+supplier whose cofactor contains3 into the3-bucket. Assign each remaining
+mixed supplier to one chosen prime q!=3,p dividing its cofactor, using
+one fixed rule. No label appears in two buckets.
+
+All3-bucket labels are proper descendants of h=3*p^2 in one actual
+phase determined by x mod3 and x mod p^2. Repair at3 uses the full
+original3-height: R=3,t=tau(p^2)=3,N=3. Its exact phase capacity is2.
+
+Every q-bucket has the same original interface h=p^2*q and actual
+phase given by x. Repair at3 retains the pure3 class: R=6,
+t=tau(p^2*q)=6,N=6. Each such bucket has capacity5. There are at most
+s-2 such q-buckets. Therefore
+
+    1+(H_p-2)(p-2) <= 2+5*(s-2)=5s-8,
+    H_p <= 2+floor((5s-9)/(p-2)).                    (HC9)
+
+For H_p<=2 the second inequality is automatic because s>=2. The
+bounds use the same actual source in every bucket. They sum disjoint
+sets of labels; they do not sum separately optimized physical repairs
+or execute all repairs simultaneously.
+
+Examples within initial odd-prime support:
+
+* s=4: H5<=5, H7<=4 and H11<=3.
+* s=9: H23<=3 and H29<=3.
+* s=11: H29<=3, H31<=3 and H37<=3.
+* For any present p>5s-7, HC9 forces H_p<=2.
+
+HC9 and HC7 can be imposed together. The existing
+[Report528, FC13--FC14](../500-549/528-surviving-fibre-credits-control-arbitrary-phases-at-ternary-height-one.md#eight-old-primes-and-arbitrary2931-originals)
+already excludes H3=1 with initial support size at most10, even allowing
+unrestricted ternary heights on the later29/31 originals. Thus the s=4
+and s=9 rows above illustrate the parameter bounds; they are not new
+exclusions of unresolved branches. The unrestricted H3=1 branch still
+allows s>=11, and no upper bound on support size has been obtained.
+
+### A local common-source star still does not ensure a cheap common divisor
+
+The actual family
+
+    0 mod3, 0 mod5, 6 mod25, 7 mod125, 8 mod625,
+    1 mod15, 52 mod75, 253 mod375, 4 mod1875
+
+is divisor-closed, comparable-disjoint and irredundant. On the complete
+period1875 it has807 holes, including2. Private witnesses in the listed
+order are3,5,56,7,8,1,52,253,4. No whole-cover or global-minimum premise
+is claimed.
+
+Fix the cofactor source1 mod3 and the5-adic tail zero. The four nonzero
+first5 digits correspond to actual CRT points1,1252,628,4. They are
+covered by the original labels15,75,375,1875 respectively. All have
+cofactor3 at the same actual phase. Nevertheless h=3 has no repair
+in the stated fresh-prime forest palette: with repair prime3 its
+retained-root count is3 and t=1; with any other odd repair prime q,
+t=2<=q-1<=R(q-1)/q. This finite noncover refutes only the inference
+from those local star and divisor conditions to a feasible common
+cofactor repair. It does not refute any theorem using whole coverage.
+
+### Verification and unresolved interface
+
+The [portable exact consumer](../../../frontier/cover-geometry/composite-parent-contraction/repair_height_bounds.py)
+compares the exposed-root recurrence with the closed RP3 count, retains
+the minimizing a and N, compares the unreduced forests, and checks the
+complete period of the finite noncover. Its [exact output](../../../frontier/cover-geometry/composite-parent-contraction/repair_height_bounds.json)
+includes q in{3,5,7}, K in{0,1,2}, plus q3K3, with11 target primes
+before excluding q=p. The K0 rows apply only when q is actually absent;
+initial-support compatibility is recorded explicitly. From the repository root:
+
+```sh
+python3 -I -S -B docs/reports/erdos7-odd-covering/frontier/cover-geometry/composite-parent-contraction/repair_height_bounds.py
+```
+
+The program uses the standard library, reads no external input, and writes
+JSON to stdout unless an explicit `--output PATH` is provided. Its checks
+remain active under `-O`; normal and optimized outputs agree. The general
+height consequences rest on the ordinary proofs above, not extrapolation
+from this parameter grid. They are not new Lean verification.
+
+A two-coordinate or arbitrary-interface concentration does not follow
+merely by combining separately changed prime digits: each supplier is
+forced to contain its changed prime power, not the other target factors.
+HC8--HC9 state exactly how their additional factors arise from the SAME
+source. What remains is a whole-cover theorem forcing violation of these
+joint height/phase capacities, or another improving replacement. The bounds
+allow unbounded support and many feasible height profiles.
+
+## 17. Small interfaces bound whole-cover numerical inventories
+
+Retain ONE hypothetical whole distinct odd cover globally minimizing
+first the number of classes and then their modulus sum, and assume H3=1.
+All numerical labels and actual phases below belong to that family.
+The following inventory bounds consume the existing fresh-repair and
+same-phase occupancy principles of sections13--15; they are ordinary
+deductions, not new Lean results or an unrestricted noncoverage theorem.
+
+### Two distinct nonternary primes
+
+Let p,q>=5 be distinct support primes and h=3pq. Three original multiples
+of h cannot have the same phase c modulo h. To see the section15 repair
+explicitly, delete those three originals and cover all of c modulo h
+with the fresh labels9,9p,9q. Assign them the three different modulo9
+roots above c modulo3; for their respective cofactors1,p,q retain c's
+actual phase. Every point in the target meets one new class. H3=1 makes
+all three numerical labels fresh relative to the entire original family.
+
+Their modulus sum is `9(1+p+q)<9pq=3h`, below the sum of the three
+removed moduli. Cardinality stays unchanged and the sum decreases, a
+contradiction. Thus every actual h-phase contains at most two original
+labels. This is the R=N=3 instance of the existing repair; the cofactor
+palette has `tau(pq)=4>=3`.
+
+If any multiple of h occurs, divisor closure includes h and all its
+nonunit divisors. Its own phase contains only h by comparable
+disjointness. If h is absent, its entire multiple inventory is empty.
+
+Normalize the pure3,p,q phases to zero by one CRT translation and put
+`a=p-1`, `b=q-1`. The two retained ternary roots initially have ab
+possible(p,q) root pairs each. Original3p removes one p-root on its
+actual ternary root; original3q similarly removes one q-root. Original
+pq removes one actual(p,q) pair on both roots.
+
+If3p and3q occupy the same ternary root, their union removes a+b-1
+cells there, and pq removes at least one more cell in the other root.
+If they occupy different roots, they already remove a+b cells. Hence
+the number M of phases avoiding all proper original divisors of h obeys
+
+    M<=2ab-a-b=2(p-1)(q-1)-p-q+2.
+
+This proper-divisor bound is attained by putting3p and3q on the same
+root and choosing pq's pair inside their blocked union on that root;
+it removes exactly one additional cell on the other root. This is
+attainment of the finite phase bound, not existence of a whole cover.
+
+Every original multiple of h must use one of these M phases. The phase
+of h itself has one occupant and every other phase at most two. Therefore
+
+    # {d original:3pq|d} <=4pq-6p-6q+7.                 (PI1)
+
+Either retained ternary root has at most ab-1 allowed phases: an
+unaffected root still loses pq's one cell; a root containing a3p or3q
+deletion loses at least as many. Its uniform label capacity is therefore
+
+    # {d original:3pq|d, a_d mod3=r} <=2(p-1)(q-1)-2.  (PI2)
+
+The root containing original h loses one additional label slot. The
+total and root capacities are simultaneous constraints on the same
+actual inventory; their separate maxima need not be attained together.
+
+At(p,q)=(5,7), there are at most38 allowed105 phases, at most75 original
+105-multiples in total, and at most46 on either retained ternary root.
+The weaker use of only the pure prime exclusions would give95 in total.
+
+### A shared four-label repair couples two different phases
+
+The independent phase capacities above omit a further consequence of
+the same PH2 joint replacement rule. Continue to assume H3=1 in ONE
+globally cardinality-then-sum-minimal whole distinct odd cover. Put
+`h=3pq`, `a=p-1`, `b=q-1`, with distinct primes p,q>=5.
+
+Fix one actual ternary root r, one actual p-root u, and two distinct
+actual q-roots v,w. Let C_v,C_w be the corresponding two classes
+modulo h. Their union has a common repair using the four fresh
+numerical labels
+
+    9, 9p, 9q, 9pq.
+
+Choose a lift rho of r modulo9. Assign the classes by CRT as follows:
+
+    label9:   x=rho mod9;
+    label9p:  x=rho+3 mod9, x=u modp;
+    label9q:  x=rho+6 mod9, x=v modq;
+    label9pq: x=rho+6 mod9, x=u modp, x=w modq.
+
+Every point of C_v union C_w meets one of these four classes: its next
+ternary digit selects one of the three displayed roots; the third
+root is split according to the two original q-phases. This covers
+the entire two congruence classes, including all higher lifts and all
+other coordinates. It does not assume the two phases have a common
+q-root or independently choose their original source.
+
+The four labels are pairwise distinct and absent from the whole
+original palette because their ternary height is2. If four original
+h-multiples occupied these two phases, delete those originals and
+insert this repair. Their old classes lie in the repaired union, so
+all previously covered integers remain covered. Four distinct odd
+quotients by h have sum at least1+3+5+7=16, whereas
+
+    9(1+p+q+pq)=9(p+1)(q+1)<16h.
+
+For example, `(p+1)(q+1)<=36pq/25` already gives the strict inequality.
+The number of classes stays unchanged and the sum of moduli falls,
+contradicting PH2. A larger removed inventory would reduce the number
+of classes. Consequently
+
+    occupants(C_v)+occupants(C_w)<=3.                (JP1)
+
+Interchanging p,q gives the corresponding statement for two cells
+in the same q-column. These are constraints on several ACTUAL phases
+of the same family. They are a new explicit finite consumer of the
+existing PH2 exchange principle, not a new general exchange theorem.
+Sections9 and11--15 provide other joint repairs; their displayed
+single common-phase capacities do not themselves give JP1.
+
+### The double-occupied cells must form a matching
+
+The previous single-phase repair gives at most two original labels
+per h-phase. By JP1, any two cells occupied twice cannot share a
+p-root or a q-root within one ternary root. Thus the double-occupied
+cells form a matching in that root's bipartite p-root/q-root table.
+
+Let M be the number of h-phases left after excluding all proper
+original divisors, and K the number of double-occupied cells across
+both retained ternary roots. The original h-multiple inventory obeys
+
+    # {d original:h|d} <= M+K.
+
+Assume p<q; then a<b. Each root's matching has size at most a.
+Original3p removes an entire p-row on its actual ternary root, so
+that root's matching has size at most a-1. These are simultaneous
+facts about the same pair of physical tables. Hence
+
+    K<=2a-1=2min(a,b)-1.
+
+Combining this with the earlier proper-divisor bound
+`M<=2ab-a-b` yields the stronger uniform inventory capacity
+
+    # {d original:3pq|d}
+       <=2(p-1)(q-1)-|p-q|-1.                      (JP2)
+
+Either retained ternary root has at most ab-1 allowed cells and a
+matching of size at most min(a,b). Therefore its uniform capacity is
+
+    # {d original:3pq|d, a_d mod3=r}
+       <=(p-1)(q-1)+min(p-1,q-1)-1.                (JP3)
+
+For h=105 these give45 original multiples in total and at most27 on
+either retained ternary root, strengthening75 and46 above. All bounds
+remain necessary conditions; no claim is made that their separate
+maxima can occur simultaneously in a whole cover.
+
+If h is absent, divisor closure makes the counted inventory empty.
+If h is present, its own phase has only the original h by comparable
+disjointness. The count M+K already respects this: that phase can
+contribute a single occupant but cannot contribute to K. The matching
+upper bound above need not be attained through that phase, so this
+observation does not justify subtracting one more from JP2 or JP3.
+
+The deductions use arbitrary original cofactor heights and support
+size. They constrain an actual numerical deletion inventory and can
+be imposed jointly with the earlier root capacities; they do not
+force any forbidden packet to exist, prove noncoverage, or constitute
+new Lean verification. No additional numerical cap-grid is used.
+
+### Divisor closure also restricts each actual label
+
+Let m be an actual original divisible by3pq, with
+`a=v_p(m)>=1`, `b=v_q(m)>=1`. Since H3=1, its nonunit divisors
+include exactly
+
+    a*b*product_(r|m, r notin {3,p,q})(v_r(m)+1)
+
+distinct multiples of3pq. Every one is an original by divisor
+closure, so JP2 implies the labelwise restriction
+
+    a*b*product_(r|m, r notin {3,p,q})(v_r(m)+1)
+        <=2(p-1)(q-1)-|p-q|-1.                      (JP4)
+
+In particular, an actual label containing3,5,7 has this product at
+most45. If it has k distinct nonternary prime factors, the product
+is at least `2^(k-2)`, so k<=7 and `omega(m)<=8`. This concerns
+only originals containing those three primes. It neither bounds
+the union of support primes across the whole family nor imposes
+the same8-prime bound on originals missing5 or7. This is a direct
+consumer of JP2 and divisor closure, not a separate general result.
+
+### A nonternary square
+
+For h=3q^2 with q>=5, the same existing repair has R=3 and
+`tau(q^2)=3`. Use the fresh labels9,9q,9q^2. Their sum is below
+`27q^2=9h`, while three distinct odd multiples of h have sum at least9h.
+The resulting strict sum descent again gives at most two labels per
+actual h-phase.
+
+Whenever this inventory is nonempty, proper originals3,q,q^2,3q are
+present. After3 andq are removed, the two retained ternary roots have
+`2q(q-1)` q^2 cells. Pure q^2 removes one cell on each root. Original
+3q removes q cells on one root, with overlap at most one with that
+root's already removed pure q^2 cell. Thus `M<=2q^2-3q-1`, and
+
+    # {d original:3q^2|d} <=4q^2-6q-3.                (PI3)
+
+Each root has at most `q(q-1)-1` allowed cells, giving its uniform
+label bound `2q(q-1)-2`. At q5 the total/root bounds are67/38;
+at q7 they are151/82.
+
+When counting only originals with at least two distinct nonternary
+primes, original3q^2 itself is outside that counted set but consumes
+one of PI3's slots. Consequently that restricted inventory has at most
+`4q^2-6q-4` labels, namely66 at q5 and150 at q7. Further known star
+labels may consume more slots, but a global q-height does not by
+itself imply the presence of every3q^e label.
+
+### Fixed controls and consumer boundary
+
+The [fixed phase control](../../../frontier/cover-geometry/composite-parent-contraction/h3_phase_capacity.py)
+and [exact result](../../../frontier/cover-geometry/composite-parent-contraction/h3_phase_capacity.json)
+check all2304 actual15/21/35 phase assignments outside their pure
+divisors, the maximum38 cells and maximum23 cells on one root, and
+all105 target phases of the9/45/63 repair on joint period315. They
+also check all525 same-row or same-column two-phase unions for the
+9/45/63/315 repair on that joint period, and exact bipartite matching
+capacities on the same2304 proper-phase tables. The combined
+phase-plus-matching bounds are45 in total and27 on either root.
+The finite matching witness reserves an unmatched phase for the
+original105 singleton; it is only an occupancy relaxation, not a
+whole-cover construction. The controls also check the three literal
+overfull-comb labels displayed in
+[Report529](../500-549/529-an-irredundant-comb-separates-fibre-credits-from-supported-query-laws.md#actual-ternary-height-one-families-realize-the-single-class-fibre-charges).
+The latter form a noncover witness, not a globally minimal cover.
+
+The program uses only Python's standard library, reads no external
+input and runs no geometry producer. Default output is stdout;
+`--output PATH` explicitly writes the result. Normal and optimized
+Python agree. The general p,q proofs above, rather than the finite
+control, justify PI1--PI3 and JP1--JP4 at arbitrary primes and original heights.
+
+[Report528](../500-549/528-surviving-fibre-credits-control-arbitrary-phases-at-ternary-height-one.md#fixed-label-capacities-preserve-the-partition-reduction)
+describes how these capacities can constrain its actual numerical
+deletion inventory without changing the common source. Neither the
+capacity formulas nor their finite control close that comparison or
+bound the number of support primes.

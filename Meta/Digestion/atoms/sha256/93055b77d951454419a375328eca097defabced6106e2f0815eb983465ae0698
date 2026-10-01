@@ -1,0 +1,31 @@
+**定理 23.2（完全输出合同与四维重构）。** 对每个有限 $B$ 及每个上述至多 $N$ 调用协议 $P$，令 $\Phi_{\Delta,B}^P$ 是从 $AHB$ 到最终低层、保留的 $B$ 和全部经典记录的 CPTP 通道，输出丢弃 $H$。重构只作用于 $AH$，不接触受保护的 $B,R$。存在一个共同输入无关重构 $\mathcal R_*$，经 $q=4$ 量子端口和有限免费经典 flags 实现，使
+
+$$
+\frac12\left\|\Phi_{\Delta,B}^P-
+\Phi_{\Delta,B}^P\circ(\mathcal R_*\otimes\operatorname{id}_B)\right\|_\diamond
+\le\epsilon_N:=\min\{1,2N\eta(\delta)\}.
+\tag{23.4}
+$$
+
+该式对所有 $AHBR$ 纠缠输入成立，且对全部 $\le N$ 历史使用同一个编解码器；$N=0$ 包含在内。
+
+证明。非零共振取
+
+$$
+\mathcal R_*(\rho)=
+\sum_{p\in\mathbb F_2^2}(I_A\otimes|p\rangle\langle p|)\rho
+(I_A\otimes|p\rangle\langle p|);
+$$
+
+零共振取 $\mathcal R_*(\rho)=\operatorname{Tr}_H\rho\otimes|h_0\rangle\langle h_0|$，其中 $h_0$ 固定。在非零共振，每条完全正分支均按 $H$ 的 Fourier 单点块对角；演化后对 $H$ 取迹删除所有块间项，因此任意输入包括与 $BR$ 纠缠的输入只通过初始对角条件算子影响可访问输出。零共振没有 $AH$ 耦合，故只通过初始 $ABR$ 边缘影响输出。于是完整通道恒等式为
+
+$$
+\Phi_{\Delta_*,B}^P
+=\Phi_{\Delta_*,B}^P\circ(\mathcal R_*\otimes\operatorname{id}_B).
+\tag{23.5}
+$$
+
+用 (23.5) 插入 (23.4) 的两通道之间，两条混合边分别至多 $N\eta$；第二条还使用预合成 CPTP 重构的 diamond 收缩。这证明 (23.4)。它是丢弃 $H$ 的输出恒等式及近似，一般不是保留全 $AHBR$ 输出的等式。
+
+非零共振的编码测出 Fourier 标签，把对应低层条件态存入四维量子端口，标签存入四值经典 flag；解码把低层态和该 Fourier 基态重新组合。其定义在全部带 flag 的量子记忆态上 CPTP。零共振仅存低层态并附回固定 $H$，不需要 flag。编解码器可为任意 CPTP 状态编码，不要求属于低层实验仪器；特别未将其 Fourier 测量增加为实验原语。所有量子信息只通过该端口，$B,R$ 不得由编解码器用作存储旁路。$\square$
+

@@ -1,0 +1,1206 @@
+{
+  "B_high_core_Haar_lower": "9226681/240940299600",
+  "all_nonzero_two_outside_slots": [
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 480,
+          "minimizing_phase": 2
+        },
+        "B": {
+          "debit_reduction": 480,
+          "minimizing_phase": 2
+        }
+      },
+      "cylinder_maxima": {
+        "A": 2400,
+        "B": 2400,
+        "background": 2400,
+        "prior": 2880
+      },
+      "kappa": "1/4",
+      "numerical_query_modulus": 5,
+      "old_divisor": 5,
+      "outside_support": []
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 240,
+          "minimizing_phase": 3
+        },
+        "B": {
+          "debit_reduction": 240,
+          "minimizing_phase": 3
+        }
+      },
+      "cylinder_maxima": {
+        "A": 240,
+        "B": 240,
+        "background": 240,
+        "prior": 480
+      },
+      "kappa": "1/4",
+      "numerical_query_modulus": 65,
+      "old_divisor": 5,
+      "outside_support": [
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 180,
+          "minimizing_phase": 3
+        },
+        "B": {
+          "debit_reduction": 180,
+          "minimizing_phase": 3
+        }
+      },
+      "cylinder_maxima": {
+        "A": 300,
+        "B": 300,
+        "background": 300,
+        "prior": 480
+      },
+      "kappa": "1/4",
+      "numerical_query_modulus": 55,
+      "old_divisor": 5,
+      "outside_support": [
+        11
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 0,
+          "minimizing_phase": 287
+        },
+        "B": {
+          "debit_reduction": 120,
+          "minimizing_phase": 287
+        }
+      },
+      "cylinder_maxima": {
+        "A": 240,
+        "B": 120,
+        "background": 30,
+        "prior": 240
+      },
+      "kappa": "1/4",
+      "numerical_query_modulus": 715,
+      "old_divisor": 5,
+      "outside_support": [
+        11,
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 240,
+          "minimizing_phase": 2
+        },
+        "B": {
+          "debit_reduction": 240,
+          "minimizing_phase": 2
+        }
+      },
+      "cylinder_maxima": {
+        "A": 1600,
+        "B": 1600,
+        "background": 1360,
+        "prior": 1840
+      },
+      "kappa": "1/6",
+      "numerical_query_modulus": 7,
+      "old_divisor": 7,
+      "outside_support": []
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 104,
+          "minimizing_phase": 16
+        },
+        "B": {
+          "debit_reduction": 104,
+          "minimizing_phase": 16
+        }
+      },
+      "cylinder_maxima": {
+        "A": 136,
+        "B": 136,
+        "background": 136,
+        "prior": 240
+      },
+      "kappa": "1/6",
+      "numerical_query_modulus": 91,
+      "old_divisor": 7,
+      "outside_support": [
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 70,
+          "minimizing_phase": 58
+        },
+        "B": {
+          "debit_reduction": 70,
+          "minimizing_phase": 58
+        }
+      },
+      "cylinder_maxima": {
+        "A": 170,
+        "B": 170,
+        "background": 170,
+        "prior": 240
+      },
+      "kappa": "1/6",
+      "numerical_query_modulus": 77,
+      "old_divisor": 7,
+      "outside_support": [
+        11
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 0,
+          "minimizing_phase": 716
+        },
+        "B": {
+          "debit_reduction": 0,
+          "minimizing_phase": 716
+        }
+      },
+      "cylinder_maxima": {
+        "A": 120,
+        "B": 120,
+        "background": 17,
+        "prior": 120
+      },
+      "kappa": "1/6",
+      "numerical_query_modulus": 1001,
+      "old_divisor": 7,
+      "outside_support": [
+        11,
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 480,
+          "minimizing_phase": 2
+        },
+        "B": {
+          "debit_reduction": 480,
+          "minimizing_phase": 2
+        }
+      },
+      "cylinder_maxima": {
+        "A": 2400,
+        "B": 2400,
+        "background": 1920,
+        "prior": 2880
+      },
+      "kappa": "1/2",
+      "numerical_query_modulus": 9,
+      "old_divisor": 9,
+      "outside_support": []
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 240,
+          "minimizing_phase": 92
+        },
+        "B": {
+          "debit_reduction": 240,
+          "minimizing_phase": 92
+        }
+      },
+      "cylinder_maxima": {
+        "A": 240,
+        "B": 240,
+        "background": 192,
+        "prior": 480
+      },
+      "kappa": "1/2",
+      "numerical_query_modulus": 117,
+      "old_divisor": 9,
+      "outside_support": [
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 240,
+          "minimizing_phase": 47
+        },
+        "B": {
+          "debit_reduction": 240,
+          "minimizing_phase": 47
+        }
+      },
+      "cylinder_maxima": {
+        "A": 240,
+        "B": 240,
+        "background": 240,
+        "prior": 480
+      },
+      "kappa": "1/2",
+      "numerical_query_modulus": 99,
+      "old_divisor": 9,
+      "outside_support": [
+        11
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 0,
+          "minimizing_phase": 1145
+        },
+        "B": {
+          "debit_reduction": 120,
+          "minimizing_phase": 1145
+        }
+      },
+      "cylinder_maxima": {
+        "A": 240,
+        "B": 120,
+        "background": 24,
+        "prior": 240
+      },
+      "kappa": "1/2",
+      "numerical_query_modulus": 1287,
+      "old_divisor": 9,
+      "outside_support": [
+        11,
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 480,
+          "minimizing_phase": 2
+        },
+        "B": {
+          "debit_reduction": 480,
+          "minimizing_phase": 2
+        }
+      },
+      "cylinder_maxima": {
+        "A": 1920,
+        "B": 1920,
+        "background": 1440,
+        "prior": 2400
+      },
+      "kappa": "1/4",
+      "numerical_query_modulus": 15,
+      "old_divisor": 15,
+      "outside_support": []
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 240,
+          "minimizing_phase": 92
+        },
+        "B": {
+          "debit_reduction": 240,
+          "minimizing_phase": 92
+        }
+      },
+      "cylinder_maxima": {
+        "A": 240,
+        "B": 240,
+        "background": 144,
+        "prior": 480
+      },
+      "kappa": "1/4",
+      "numerical_query_modulus": 195,
+      "old_divisor": 15,
+      "outside_support": [
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 240,
+          "minimizing_phase": 122
+        },
+        "B": {
+          "debit_reduction": 240,
+          "minimizing_phase": 122
+        }
+      },
+      "cylinder_maxima": {
+        "A": 240,
+        "B": 240,
+        "background": 180,
+        "prior": 480
+      },
+      "kappa": "1/4",
+      "numerical_query_modulus": 165,
+      "old_divisor": 15,
+      "outside_support": [
+        11
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 0,
+          "minimizing_phase": 287
+        },
+        "B": {
+          "debit_reduction": 120,
+          "minimizing_phase": 287
+        }
+      },
+      "cylinder_maxima": {
+        "A": 240,
+        "B": 120,
+        "background": 18,
+        "prior": 240
+      },
+      "kappa": "1/4",
+      "numerical_query_modulus": 2145,
+      "old_divisor": 15,
+      "outside_support": [
+        11,
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 240,
+          "minimizing_phase": 2
+        },
+        "B": {
+          "debit_reduction": 240,
+          "minimizing_phase": 2
+        }
+      },
+      "cylinder_maxima": {
+        "A": 1200,
+        "B": 1200,
+        "background": 960,
+        "prior": 1440
+      },
+      "kappa": "1/6",
+      "numerical_query_modulus": 21,
+      "old_divisor": 21,
+      "outside_support": []
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 120,
+          "minimizing_phase": 170
+        },
+        "B": {
+          "debit_reduction": 120,
+          "minimizing_phase": 170
+        }
+      },
+      "cylinder_maxima": {
+        "A": 120,
+        "B": 120,
+        "background": 96,
+        "prior": 240
+      },
+      "kappa": "1/6",
+      "numerical_query_modulus": 273,
+      "old_divisor": 21,
+      "outside_support": [
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 120,
+          "minimizing_phase": 212
+        },
+        "B": {
+          "debit_reduction": 120,
+          "minimizing_phase": 212
+        }
+      },
+      "cylinder_maxima": {
+        "A": 120,
+        "B": 120,
+        "background": 120,
+        "prior": 240
+      },
+      "kappa": "1/6",
+      "numerical_query_modulus": 231,
+      "old_divisor": 21,
+      "outside_support": [
+        11
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 0,
+          "minimizing_phase": 716
+        },
+        "B": {
+          "debit_reduction": 0,
+          "minimizing_phase": 716
+        }
+      },
+      "cylinder_maxima": {
+        "A": 120,
+        "B": 120,
+        "background": 12,
+        "prior": 120
+      },
+      "kappa": "1/6",
+      "numerical_query_modulus": 3003,
+      "old_divisor": 21,
+      "outside_support": [
+        11,
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 240,
+          "minimizing_phase": 2
+        },
+        "B": {
+          "debit_reduction": 240,
+          "minimizing_phase": 2
+        }
+      },
+      "cylinder_maxima": {
+        "A": 560,
+        "B": 560,
+        "background": 400,
+        "prior": 800
+      },
+      "kappa": "11/24",
+      "numerical_query_modulus": 35,
+      "old_divisor": 35,
+      "outside_support": []
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 120,
+          "minimizing_phase": 352
+        },
+        "B": {
+          "debit_reduction": 120,
+          "minimizing_phase": 352
+        }
+      },
+      "cylinder_maxima": {
+        "A": 120,
+        "B": 120,
+        "background": 40,
+        "prior": 240
+      },
+      "kappa": "11/24",
+      "numerical_query_modulus": 455,
+      "old_divisor": 35,
+      "outside_support": [
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 120,
+          "minimizing_phase": 177
+        },
+        "B": {
+          "debit_reduction": 120,
+          "minimizing_phase": 177
+        }
+      },
+      "cylinder_maxima": {
+        "A": 120,
+        "B": 120,
+        "background": 50,
+        "prior": 240
+      },
+      "kappa": "11/24",
+      "numerical_query_modulus": 385,
+      "old_divisor": 35,
+      "outside_support": [
+        11
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 0,
+          "minimizing_phase": 1717
+        },
+        "B": {
+          "debit_reduction": 0,
+          "minimizing_phase": 1717
+        }
+      },
+      "cylinder_maxima": {
+        "A": 120,
+        "B": 120,
+        "background": 5,
+        "prior": 120
+      },
+      "kappa": "11/24",
+      "numerical_query_modulus": 5005,
+      "old_divisor": 35,
+      "outside_support": [
+        11,
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 480,
+          "minimizing_phase": 2
+        },
+        "B": {
+          "debit_reduction": 480,
+          "minimizing_phase": 2
+        }
+      },
+      "cylinder_maxima": {
+        "A": 960,
+        "B": 960,
+        "background": 480,
+        "prior": 1440
+      },
+      "kappa": "7/8",
+      "numerical_query_modulus": 45,
+      "old_divisor": 45,
+      "outside_support": []
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 240,
+          "minimizing_phase": 92
+        },
+        "B": {
+          "debit_reduction": 240,
+          "minimizing_phase": 92
+        }
+      },
+      "cylinder_maxima": {
+        "A": 240,
+        "B": 240,
+        "background": 48,
+        "prior": 480
+      },
+      "kappa": "7/8",
+      "numerical_query_modulus": 585,
+      "old_divisor": 45,
+      "outside_support": [
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 240,
+          "minimizing_phase": 452
+        },
+        "B": {
+          "debit_reduction": 240,
+          "minimizing_phase": 452
+        }
+      },
+      "cylinder_maxima": {
+        "A": 240,
+        "B": 240,
+        "background": 60,
+        "prior": 480
+      },
+      "kappa": "7/8",
+      "numerical_query_modulus": 495,
+      "old_divisor": 45,
+      "outside_support": [
+        11
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 0,
+          "minimizing_phase": 2432
+        },
+        "B": {
+          "debit_reduction": 120,
+          "minimizing_phase": 2432
+        }
+      },
+      "cylinder_maxima": {
+        "A": 240,
+        "B": 120,
+        "background": 6,
+        "prior": 240
+      },
+      "kappa": "7/8",
+      "numerical_query_modulus": 6435,
+      "old_divisor": 45,
+      "outside_support": [
+        11,
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 240,
+          "minimizing_phase": 2
+        },
+        "B": {
+          "debit_reduction": 240,
+          "minimizing_phase": 2
+        }
+      },
+      "cylinder_maxima": {
+        "A": 560,
+        "B": 560,
+        "background": 320,
+        "prior": 800
+      },
+      "kappa": "3/4",
+      "numerical_query_modulus": 63,
+      "old_divisor": 63,
+      "outside_support": []
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 120,
+          "minimizing_phase": 443
+        },
+        "B": {
+          "debit_reduction": 120,
+          "minimizing_phase": 443
+        }
+      },
+      "cylinder_maxima": {
+        "A": 120,
+        "B": 120,
+        "background": 32,
+        "prior": 240
+      },
+      "kappa": "3/4",
+      "numerical_query_modulus": 819,
+      "old_divisor": 63,
+      "outside_support": [
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 120,
+          "minimizing_phase": 254
+        },
+        "B": {
+          "debit_reduction": 120,
+          "minimizing_phase": 254
+        }
+      },
+      "cylinder_maxima": {
+        "A": 120,
+        "B": 120,
+        "background": 40,
+        "prior": 240
+      },
+      "kappa": "3/4",
+      "numerical_query_modulus": 693,
+      "old_divisor": 63,
+      "outside_support": [
+        11
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 0,
+          "minimizing_phase": 3719
+        },
+        "B": {
+          "debit_reduction": 0,
+          "minimizing_phase": 3719
+        }
+      },
+      "cylinder_maxima": {
+        "A": 120,
+        "B": 120,
+        "background": 4,
+        "prior": 120
+      },
+      "kappa": "3/4",
+      "numerical_query_modulus": 9009,
+      "old_divisor": 63,
+      "outside_support": [
+        11,
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 240,
+          "minimizing_phase": 2
+        },
+        "B": {
+          "debit_reduction": 240,
+          "minimizing_phase": 2
+        }
+      },
+      "cylinder_maxima": {
+        "A": 480,
+        "B": 480,
+        "background": 240,
+        "prior": 720
+      },
+      "kappa": "11/24",
+      "numerical_query_modulus": 105,
+      "old_divisor": 105,
+      "outside_support": []
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 120,
+          "minimizing_phase": 1262
+        },
+        "B": {
+          "debit_reduction": 120,
+          "minimizing_phase": 1262
+        }
+      },
+      "cylinder_maxima": {
+        "A": 120,
+        "B": 120,
+        "background": 24,
+        "prior": 240
+      },
+      "kappa": "11/24",
+      "numerical_query_modulus": 1365,
+      "old_divisor": 105,
+      "outside_support": [
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 120,
+          "minimizing_phase": 947
+        },
+        "B": {
+          "debit_reduction": 120,
+          "minimizing_phase": 947
+        }
+      },
+      "cylinder_maxima": {
+        "A": 120,
+        "B": 120,
+        "background": 30,
+        "prior": 240
+      },
+      "kappa": "11/24",
+      "numerical_query_modulus": 1155,
+      "old_divisor": 105,
+      "outside_support": [
+        11
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 0,
+          "minimizing_phase": 6722
+        },
+        "B": {
+          "debit_reduction": 0,
+          "minimizing_phase": 6722
+        }
+      },
+      "cylinder_maxima": {
+        "A": 120,
+        "B": 120,
+        "background": 3,
+        "prior": 120
+      },
+      "kappa": "11/24",
+      "numerical_query_modulus": 15015,
+      "old_divisor": 105,
+      "outside_support": [
+        11,
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 240,
+          "minimizing_phase": 2
+        },
+        "B": {
+          "debit_reduction": 240,
+          "minimizing_phase": 2
+        }
+      },
+      "cylinder_maxima": {
+        "A": 320,
+        "B": 320,
+        "background": 80,
+        "prior": 560
+      },
+      "kappa": "19/16",
+      "numerical_query_modulus": 315,
+      "old_divisor": 315,
+      "outside_support": []
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 120,
+          "minimizing_phase": 1262
+        },
+        "B": {
+          "debit_reduction": 120,
+          "minimizing_phase": 1262
+        }
+      },
+      "cylinder_maxima": {
+        "A": 120,
+        "B": 120,
+        "background": 8,
+        "prior": 240
+      },
+      "kappa": "19/16",
+      "numerical_query_modulus": 4095,
+      "old_divisor": 315,
+      "outside_support": [
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 120,
+          "minimizing_phase": 947
+        },
+        "B": {
+          "debit_reduction": 120,
+          "minimizing_phase": 947
+        }
+      },
+      "cylinder_maxima": {
+        "A": 120,
+        "B": 120,
+        "background": 10,
+        "prior": 240
+      },
+      "kappa": "19/16",
+      "numerical_query_modulus": 3465,
+      "old_divisor": 315,
+      "outside_support": [
+        11
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 0,
+          "minimizing_phase": 21737
+        },
+        "B": {
+          "debit_reduction": 0,
+          "minimizing_phase": 21737
+        }
+      },
+      "cylinder_maxima": {
+        "A": 120,
+        "B": 120,
+        "background": 1,
+        "prior": 120
+      },
+      "kappa": "19/16",
+      "numerical_query_modulus": 45045,
+      "old_divisor": 315,
+      "outside_support": [
+        11,
+        13
+      ]
+    }
+  ],
+  "base_carrier": 45045,
+  "changed_joint_slots": [
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 0,
+          "minimizing_phase": 287
+        },
+        "B": {
+          "debit_reduction": 120,
+          "minimizing_phase": 287
+        }
+      },
+      "cylinder_maxima": {
+        "A": 240,
+        "B": 120,
+        "background": 30,
+        "prior": 240
+      },
+      "kappa": "1/4",
+      "numerical_query_modulus": 715,
+      "old_divisor": 5,
+      "outside_support": [
+        11,
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 0,
+          "minimizing_phase": 1145
+        },
+        "B": {
+          "debit_reduction": 120,
+          "minimizing_phase": 1145
+        }
+      },
+      "cylinder_maxima": {
+        "A": 240,
+        "B": 120,
+        "background": 24,
+        "prior": 240
+      },
+      "kappa": "1/2",
+      "numerical_query_modulus": 1287,
+      "old_divisor": 9,
+      "outside_support": [
+        11,
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 0,
+          "minimizing_phase": 287
+        },
+        "B": {
+          "debit_reduction": 120,
+          "minimizing_phase": 287
+        }
+      },
+      "cylinder_maxima": {
+        "A": 240,
+        "B": 120,
+        "background": 18,
+        "prior": 240
+      },
+      "kappa": "1/4",
+      "numerical_query_modulus": 2145,
+      "old_divisor": 15,
+      "outside_support": [
+        11,
+        13
+      ]
+    },
+    {
+      "credits": {
+        "A": {
+          "debit_reduction": 0,
+          "minimizing_phase": 2432
+        },
+        "B": {
+          "debit_reduction": 120,
+          "minimizing_phase": 2432
+        }
+      },
+      "cylinder_maxima": {
+        "A": 240,
+        "B": 120,
+        "background": 6,
+        "prior": 240
+      },
+      "kappa": "7/8",
+      "numerical_query_modulus": 6435,
+      "old_divisor": 45,
+      "outside_support": [
+        11,
+        13
+      ]
+    }
+  ],
+  "common_background_J": "3370981/1024",
+  "common_prior": {
+    "background_cells": 8160,
+    "background_each_weight": 1,
+    "extra_outside_law": "Independent uniform nonzero roots at17,19,23.",
+    "old_support_count": 102,
+    "special_cells": 8,
+    "special_each_weight": 120,
+    "special_old_rows": [
+      2,
+      47
+    ],
+    "special_outside_roots": [
+      1,
+      2
+    ],
+    "total_mass": 9120
+  },
+  "conclusion": "Identical retention and all conditional singleton marginals do not determine the sign of the current common-source high-core margin. Both families have another feasible source; this is not a universal source-selection obstruction or a covering.",
+  "full_five_axis_query_multiplier": "7429/6336",
+  "new_originals_A": [
+    [
+      1001,
+      639
+    ],
+    [
+      3003,
+      2081
+    ],
+    [
+      5005,
+      782
+    ],
+    [
+      9009,
+      7229
+    ]
+  ],
+  "new_originals_B": [
+    [
+      1001,
+      639
+    ],
+    [
+      3003,
+      2081
+    ],
+    [
+      5005,
+      3862
+    ],
+    [
+      9009,
+      5150
+    ]
+  ],
+  "old_originals": [
+    [
+      3,
+      0
+    ],
+    [
+      9,
+      4
+    ],
+    [
+      5,
+      0
+    ],
+    [
+      15,
+      1
+    ],
+    [
+      45,
+      37
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      21,
+      0
+    ],
+    [
+      35,
+      0
+    ],
+    [
+      63,
+      0
+    ],
+    [
+      105,
+      0
+    ],
+    [
+      315,
+      0
+    ]
+  ],
+  "original_count_in_five_axis_carrier": 20,
+  "outside_pure_originals": [
+    [
+      11,
+      0
+    ],
+    [
+      13,
+      0
+    ],
+    [
+      17,
+      0
+    ],
+    [
+      19,
+      0
+    ],
+    [
+      23,
+      0
+    ]
+  ],
+  "prior_J": "-129827285/38016",
+  "prior_weighted_query_debit": "476533205/38016",
+  "raw_measure_Haar_cap": "50702925/8",
+  "results": {
+    "A": {
+      "J": "-802469/38016",
+      "deletion_credit": "3068177/792",
+      "mass": "8640",
+      "normalized_higher_core_debit": "329260709/328458240",
+      "retention_of_prior": "18/19",
+      "weighted_query_debit": "329260709/38016"
+    },
+    "B": {
+      "J": "9226681/38016",
+      "deletion_credit": "26216941/6336",
+      "mass": "8640",
+      "normalized_higher_core_debit": "319231559/328458240",
+      "retention_of_prior": "18/19",
+      "weighted_query_debit": "319231559/38016"
+    }
+  },
+  "same_old_and_conditional_singleton_marginals": true,
+  "scope": "Literal CRT verification of a same-marginals/different-credit pair.\nAll new originals are actual distinct odd numerical moduli. The common\nprior is explicitly weighted and supported; no optimality/covering claim.\n"
+}

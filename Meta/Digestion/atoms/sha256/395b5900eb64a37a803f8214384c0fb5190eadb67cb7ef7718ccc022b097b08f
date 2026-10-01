@@ -1,0 +1,51 @@
+### 346.9 任意本类地板的同世界价格下界
+
+式（346.15）、（346.17）的两个来源下界本来就在每个同一世界、同一请求中成立。对 \(a>1\)，逐路径有
+
+\[
+(x+y)^a\ge x^a+y^a\qquad(x,y\ge0).
+\]
+
+因此任意 \(A^{[J]}\in\mathfrak G_J\) 均满足
+
+\[
+\mathbb E^{A^{[J]},w,S}(N_H+\lambda N_T)^a
+\ge
+c\left[
+1+\sum_{k<J}
+\left(\eta_k+\lambda^a\eta_k^{1-a}\right)
+\right].
+\tag{346.47}
+\]
+
+这里没有分别挑选参考矩与任务矩的最坏世界。准确包装也可以直接用触发概率 \(1/3\) 把核心的同世界加权下界传到完整计数。
+
+对任意 \(t>0\)，置 \(v=t/\lambda\)，则
+
+\[
+t+\lambda^at^{1-a}
+=\lambda(v+v^{1-a})\ge c_a\lambda,
+\]
+
+\[
+c_a=\inf_{v>0}(v+v^{1-a})
+=a(a-1)^{-(a-1)/a}>0.
+\tag{346.48}
+\]
+
+极小点为 \(v=(a-1)^{1/a}\)；限制到 \(0<t\le1\) 仍保留同一下界。将其逐项用于式（346.47），得到每个世界和请求中的
+
+\[
+\boxed{
+\mathbb E^{A^{[J]},w,S}(N_H+\lambda N_T)^a
+\ge c(1+\lambda J).}
+\tag{346.49}
+\]
+
+定义
+
+\[
+\Pi_J(\lambda)=\inf_{A\in\mathfrak G_J}\mathcal C_\lambda(A).
+\tag{346.50}
+\]
+

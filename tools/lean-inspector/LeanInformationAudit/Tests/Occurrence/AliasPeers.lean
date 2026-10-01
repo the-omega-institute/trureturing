@@ -1,4 +1,7 @@
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 open Lean
 open LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape
@@ -28,7 +31,7 @@ def sndRealization : PrimitiveRealization arena.signature where
   readout := fun _ state => state.2
   anchor := Fin.elim0
 
-information_theorem fstTheorem
+test_assess in information_theorem fstTheorem
   in arena
   primitives fstRealization
   : arena.Law fstRealization := by trivial
@@ -38,14 +41,14 @@ abbrev abbreviatedArena := cloneArena
 @[reducible] def chainedArena := id abbreviatedArena
 local instance : DecidableEq chainedArena.State := chainedArena.toArena.stateDecidableEq
 
-information_theorem sndTheorem
+test_assess in information_theorem sndTheorem
   in chainedArena
   primitives sndRealization
   : arena.Law sndRealization := by trivial
 
-expect_information_occurrence fstTheorem in arena
+test_assess in expect_information_occurrence fstTheorem in arena
   from "LeanInformationAudit.Tests.Occurrence.AliasPeers"
-expect_information_occurrence sndTheorem in chainedArena
+test_assess in expect_information_occurrence sndTheorem in chainedArena
   from "LeanInformationAudit.Tests.Occurrence.AliasPeers"
 run_cmd do
   let some entry := InformationRegistry.find? (← getEnv) `AliasPeers.sndTheorem
@@ -53,7 +56,7 @@ run_cmd do
   unless entry.arenaName == `AliasPeers.chainedArena &&
       entry.canonicalObjectArenaName == `AliasPeers.arena do
     throwError "AliasPeers: registration must retain spelling and resolved owner"
-#seal_information_theory
+test_assess in #seal_information_theory
 run_cmd do
   let records := SealRecords.forRoot (← getEnv) (← getEnv).header.mainModule
   let [record] := records.toList

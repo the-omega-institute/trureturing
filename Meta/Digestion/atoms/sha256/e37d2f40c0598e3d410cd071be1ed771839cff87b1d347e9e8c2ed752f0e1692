@@ -1,0 +1,18 @@
+## 44. 时间采样边界与共同步长
+
+在组成状态 $x=(a,b)^{\mathsf T}\in(\mathbb Z/n\mathbb Z)^2$ 上，令
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},
+\qquad \varepsilon(a,b)=b,
+\qquad r_t(x)=\varepsilon(M^tx)=F_ta+F_{t+1}b.
+$$
+
+固定同一来源的时刻集合
+
+$$
+\mathcal T=\{t_0<t_1<\cdots<t_{m-1}\},\qquad m\ge2,
+$$
+
+定义采样边界 $O_{\mathcal T}(x)=(r_{t_0}(x),\ldots,r_{t_{m-1}}(x))$。时刻标签属于边界数据；不带来源和时刻的边缘读数不能直接视为同一编码。
+

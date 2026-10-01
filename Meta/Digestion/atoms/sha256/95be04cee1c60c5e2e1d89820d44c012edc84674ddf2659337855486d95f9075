@@ -1,0 +1,15 @@
+**定理349.3（全内部域吸收与紧集几何尾）。** 在引理349.2的前提下，控制器从 \(S\) 上每个初态在全部 \(\theta\in U\) 几乎必返回。对式（349.21）的任意紧集 \(K\)，置
+
+\[
+\eta_K:=\frac{\gamma_K^N}{2}>0.
+\tag{349.23}
+\]
+
+则对任意单位迹正态 \(\sigma\) 和任意整数 \(n\ge0\)，
+
+\[
+\sup_{\theta\in K}\operatorname{tr}T_\theta^n(\sigma)
+\le(1-\eta_K)^{\lfloor n/N\rfloor}.
+\tag{349.24}
+\]
+

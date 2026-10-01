@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:edb4df819cac81d67d1213dd80bcb71786c7d4fbf1e1e958d4450a689c9f1a0d
+  normalized_sha256: sha256:edb4df819cac81d67d1213dd80bcb71786c7d4fbf1e1e958d4450a689c9f1a0d
+cas_ref: sha256:edb4df819cac81d67d1213dd80bcb71786c7d4fbf1e1e958d4450a689c9f1a0d
+coverage_gids:
+  - gid: D5/S3/Observer/Budget/DyadicDeadlineStaircase.deadline_family_closed_staircase
+    target_statement_id: sha256:befaed2cc2202c235e92271fad48b228f5d9622bfbb05252d2eaa3169afe8efc
+receipts:
+  unresolved_subitems: []

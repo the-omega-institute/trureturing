@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:877402cd18943b6e3b656002a30e533c347db8dc1cbe89733129947d30c53e28
+  normalized_sha256: sha256:877402cd18943b6e3b656002a30e533c347db8dc1cbe89733129947d30c53e28
+cas_ref: sha256:877402cd18943b6e3b656002a30e533c347db8dc1cbe89733129947d30c53e28
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurement/EventualClickDoobInstrument.eventual_click_doob_instrument
+    target_statement_id: sha256:cd37f80264b1d323ca986f2616e59d46887593c406f18a7a5e3786e703677802
+receipts:
+  unresolved_subitems: []
