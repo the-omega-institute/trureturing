@@ -9623,3 +9623,78 @@ charge; no new phase enumeration or height truncation is used.
 These are ordinary mathematical deductions with no new Lean
 verification. They do not bound the full mixed inventory from above,
 and unrestricted Erdős #7 remains unresolved.
+
+## 66. Promoting unused roots bounds the depth without increasing either replacement cost
+
+Fix the actual family and weighted all-root interface of sections62--65. Let H be the maximum original q-height and D=H+1. Keep one chosen shallow frontier at depths at most H. Apply the existing free-folding rule to every remaining live H-prefix whose constant deep allowed list contains a zero-workload root. The other actual live H-prefixes form r hard parent jobs, with type counts r_A. All roots allowed in a hard type have positive integer workload R_a>=1 and nonnegative divided-modulus weight S_a. In the arithmetic interface these are the literal original root-batch count and weight.
+
+For depths at least D, each hard job's allowed list is constant and every original same-depth collision list is empty. Roots may recur at different depths but each positive root occurs at most once at any one depth. The following normalization uses precisely these conditions. It does not require the distinguished root0 to belong to every list; that common-root property is needed for the separate static feasibility criterion NF99.
+
+Every finite feasible hard frontier has another feasible frontier whose two costs are individually no greater and, when r>=1, whose maximum leaf depth is at most
+
+    D+r-1=H+r.                                          (NF107)
+
+Thus the short depth bound preserves an actual strict lexicographic budget improvement. It concerns general frontiers, not only the comb construction. When r=0 there is no hard cost and the free folds have depth at most D.
+
+### A future root absent from the present layer can be promoted
+
+Take a finite feasible hard frontier. Suppose a root a labels a leaf at depth e>d>=D but labels no leaf at depth d. The ancestor v of that leaf at depth d has not already stopped: otherwise the original frontier antichain could not contain the deeper leaf. The descendant frontier inside v partitions its entire actual cylinder.
+
+Replace that whole descendant frontier by the single leaf v labelled a. Its constant allowed list contains a because the old deeper leaf used a in that same subtree. No other depth-d leaf uses a, so the new same-depth assignment is injective. At deeper levels this operation only deletes leaves; it creates no new capacity conflict. It preserves the complete partition and changes no shallow leaf.
+
+The deleted cut contains the old a-labelled leaf and at least q-1 other leaves: a nontrivial complete q-ary subtree has at least q leaves. Its old count cost is therefore strictly larger than R_a. The new modulus-sum contribution is q^d*S_a, whereas the deleted old a-leaf alone contributed q^e*S_a. All other deleted contributions are nonnegative. Consequently this promotion strictly reduces the class-count cost and does not increase the modulus-sum cost.                      (NF108)
+
+This change preserves the receiving node's actual q-prefix. Applying the established transport to the modified frontier still copies the output point's full original q-coordinate and cofactor coordinates into its one old witness and retains the literal divided p-tail. The promoted root is checked against the actual constant list at v, not against a different source. All new output q-heights are greater than H; original-label collisions remain absent. Same-depth root uniqueness retains the existing injectivity argument for transported numerical labels.
+
+Repeat promotions while possible. The finite leaf count decreases at every step, so the procedure stops. Both accumulated costs never increase. In the resulting frontier, every root used at any later layer must already be used at each earlier active layer. In particular, if U_j is the set of roots used at depth D+j, then
+
+    U_(j+1) subset U_j.
+
+No optimal frontier has to be selected abstractly for this conclusion: the normalization starts from the supplied finite candidate.
+
+### Nested root use forces the complete forest width to decrease
+
+Let n_j be the number of hard nodes awaiting a stopping decision at depth D+j, and u_j=|U_j|. Since all remaining workloads are positive and same-depth labels are injective, u_j is exactly the number of leaves selected at that layer. The actual full q-ary expansion gives
+
+    n_0=q*r, n_(j+1)=q*(n_j-u_j).
+
+Every positive n_j is a multiple of q. The preceding normalization makes u_j nonincreasing. If at any nonterminal layer n_(j+1)>=n_j, then
+
+    q*u_j <= (q-1)*n_j.
+
+At every subsequent layer, the available selected-leaf count is at most u_j. Inductively the live-node count stays at least n_j and never decreases, so the finite frontier could not terminate. This contradiction shows that n_(j+1)<n_j at every active layer of the normalized frontier. Starting at q*r and decreasing in positive multiples of q, the forest completes in at most r layers. This proves NF107.
+
+Reuse the earlier complete-forest Kraft bound. If k is the number of positive-workload roots, finite feasibility gives
+
+    (q-1)*r<k,
+    r<=floor((k-1)/(q-1)).
+
+For the actual all-root interface, k<=p. Because p>q, floor((p-1)/(q-1))>=1 also accommodates the r=0 free-fold case. Every finite feasible candidate therefore has a cost-dominating representative with maximum depth
+
+    H+floor((p-1)/(q-1)).                              (NF109)
+
+At q=3 and odd p this is H+(p-1)/2. The bound is independent of the original class-count budget and is substantially smaller than the earlier general loop-erasure horizon. It preserves both costs, rather than merely asserting the existence of some feasible shallow replacement.
+
+### The exact deep minimum uses a strictly decreasing count-state recurrence
+
+For the fixed shallow choice and fixed free folds, collect hard nodes by their actual constant allowed-root type A. A state z=(z_A) means that the current layer has q*z_A pending nodes of type A. Initially z_A=r_A. An admissible stage chooses a subset of positive roots and injectively assigns each chosen root a to one pending node of a type A containing a. Write m_A for the number assigned to type A, so
+
+    0<=m_A<=q*z_A,
+    z'_A=q*z_A-m_A.
+
+Restrict to assignments satisfying |z'|<|z|, where |z|=sum_A z_A. This restriction includes every stage of a normalized frontier. The layer costs are
+
+    c=sum_(used roots a)R_a,
+    s=sum_(used roots a)S_a.
+
+The state retains all future constraints needed in this deep regime: actual nodes within one type have the same allowed list, original collision labels are absent, and root capacity resets at the next depth. Actual cylinders are still retained for reconstruction; the count state does not replace their source coordinates.
+
+Let V(z) be the lexicographically minimum pair of remaining costs, with its second coordinate measured relative to the current depth. Use V(0)=(0,0), and the usual infeasible value if no completion exists. The standard finite-horizon Bellman principle gives the exact recurrence
+
+    V(z)=min_lex [ c+V_C(z'), s+q*V_S(z') ],              (NF110)
+
+over all admissible strict-width-decreasing assignments with a feasible successor. Its actual initial deep modulus-sum cost is q^D*V_S((r_A)); its deep class-count cost is V_C((r_A)). Add the previously fixed shallow costs before making the original lexicographic comparison. Free folds contribute zero.
+
+Every recurrence path constructs an actual complete prefix cut: assign its roots to distinct literal pending nodes of their indicated types, stop those nodes, and split all others into their q children. When r>=1 its depth is at most D+r-1; for r=0 the hard cut is empty. Conversely, NF107 normalizes every arbitrary finite feasible candidate to such a path while increasing neither coordinate. The restricted recurrence therefore attains the same global minimum as the unrestricted finite deep-cut problem; it is not merely the minimum over combs or a newly imposed approximation. The multiplication by q in the second coordinate accounts for moving the remaining decisions one depth later.
+
+NF110 is an application of the ordinary Bellman principle. The additional arithmetic interface is the proved cost-preserving normalization and the sufficiency of these actual deep type counts. No new generic dynamic-programming theorem, literature-priority claim or Lean verification is asserted. A hypothetical extremal odd cover must still be shown to admit some shallow choice and resulting minimum satisfying the strict original budget. This section makes that remaining price comparison a finite exact search with the stated depth bound for each fixed original family; it does not supply the missing uniform inequality or resolve unrestricted Erdős#7.

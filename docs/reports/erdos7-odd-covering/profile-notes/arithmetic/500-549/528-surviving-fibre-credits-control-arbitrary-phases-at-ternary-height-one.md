@@ -31628,3 +31628,20 @@ t>=P-2 and N_3>=P+s-4>=57 under the existing thirteen-prime source
 premise. All counts use one actual original family. This is an
 ordinary consequence of the weighted interface, without new Lean
 verification or a resolution of unrestricted Erdős #7.
+
+[Report385, section66](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#66-promoting-unused-roots-bounds-the-depth-without-increasing-either-replacement-cost)
+normalizes every finite deep frontier without increasing either of
+its original-batch costs. A root used at a later depth but absent at
+an earlier depth can replace the complete descendant cut of its
+actual ancestor. The resulting nested root-use sets force the
+pending forest width to decrease at each layer. For r hard parents
+at the full original height H, all hard leaves then have depth at
+most H+r; Kraft gives the uniform bound
+H+floor((p-1)/(q-1)), including the free-fold case. This bound
+preserves strict budget improvement and needs no bound on original
+heights or class count. A Bellman recurrence on the counts of actual
+constant-list types attains the same lexicographic minimum as all
+finite deep cuts, with the correct exponential modulus-sum cost.
+The remaining whole-cover obligation is to force that minimum,
+after some legal shallow choice, below the same original inventory.
+No such uniform price inequality or new Lean verification is claimed.
