@@ -31460,6 +31460,22 @@ local kernel verification of that external theorem is claimed.
 Thus the nineteen-label case is excluded. The unrestricted problem
 still permits larger original inventories and is not settled.
 
+[Report385, section57](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#57-equal-full-residue-classes-may-be-merged-after-transport)
+retains more actual phase information in that matching problem.
+A potential numerical collision is permitted exactly when the
+transported and retained classes agree in their complete residues;
+equal copies may be merged. Every selected root must satisfy all its
+collision obligations and still avoid mixed p*q originals. A matching
+of all nonzero q roots in this larger graph remains impossible.
+
+If N_q=p-q+2, all q-bearing originals must have q-height one, no p
+factor, and a paired p*u original, with different first-p roots for
+the different pairs. Each non-pure pair must have DIFFERENT residues
+on its complete common cofactor u; agreement would provide the one
+extra admissible root needed for a smaller cover. Thus N_3=28 forces
+P=29 and 27 actual unequal cofactor-residue pairs. This records a
+joint phase obstruction, not an exclusion of the remaining case.
+
 [Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
 keeps the residual cover's entire old q coordinate unchanged.
 It excludes one endpoint per repeated pair and reserves the

@@ -8453,3 +8453,153 @@ reduction is asserted. The conclusion concerns the EB1-selected cover.
 It does not exclude covers with sufficiently many three-bearing labels,
 bound their number from above, or settle unrestricted Erdős #7. These
 are ordinary mathematical deductions with no new Lean verification.
+
+## 57. Equal full residue classes may be merged after transport
+
+The root reservation in NF66 forbids every possible numerical collision.
+The same IC1 interface can retain a collision when the two output APs
+are actually equal. This uses their full cofactor residues, not only
+their common numerical label or first roots.
+
+Use the same original extremal cover and support primes p>q. Let
+
+    U={u>=1: gcd(u,p*q)=1 and p*u,q*u are original moduli}.
+
+For u in U write c_u and e_u for the actual original residues of the
+classes modulo p*u and q*u, respectively, and alpha_u=c_u mod p.
+Let F_b retain its section56 meaning. For each nonzero first-q root b
+define the incompatible-collision roots
+
+    G_b={alpha_u: u in U and
+                    (c_u != e_u mod u OR e_u != b mod q)}.
+
+Take left vertices (Z/qZ) minus {0}, right vertices (Z/pZ) minus {0},
+and allow the edge b--a precisely when a is in neither F_b nor G_b.
+This graph cannot have a matching of every left vertex. Equivalently,
+there is a nonempty I of size t<=q-1 for which
+
+    W=((Z/pZ) minus {0}) intersect
+                     intersection_(b in I)(F_b union G_b),
+    |W|>=p-t.                                        (NF69)
+
+All pairs sharing the same first-p root must pass the compatibility
+test for an edge. It is not enough that one pair at that root passes.
+The definition of G_b enforces this by excluding any root with even
+one incompatible pair. F_b continues to exclude every mixed p*q
+original with the specified first-q root.
+
+To prove the assertion, suppose a matching sigma exists and apply the
+restricted IC1 map of section56. Keep every p-free original whole class,
+so A_q still covers the untransported zero root. The other output
+moduli are q*p^(alpha-1)*u, injectively indexed by the original q-free
+p-bearing moduli. The only possible numerical collision with an
+unchanged p-free class is again at alpha=1, with original pair p*u,q*u.
+
+For a transported p*u on branch b, its new complete residue is specified
+by b modulo q and c_u modulo u. Since the edge avoids G_b, these are
+exactly the two CRT coordinates of e_u modulo q*u. Thus the new AP and
+the retained AP are the same set and can be identified. There is at
+most one transported class and one unchanged class at that numerical
+modulus. No collision between transported numerical labels is possible.
+Merging equal copies preserves coverage and creates no repeated label.
+The pure-p class still disappears because zero is not a right vertex.
+The result is therefore a distinct odd whole cover with at most n-1
+classes, contradicting EB1. Hall's theorem gives NF69 on a right set
+of size p-1, since a failing t-element left set has at most t-1
+neighbours.
+
+### Equality in the label bound forces different cofactor phases
+
+Suppose the lower bound in NF66 is attained:
+
+    N_q=p-q+2.
+
+The second NF66 branch is impossible because h0+h1<=N_q<p. Hence
+h0=N_q: every original q-bearing modulus has q-height one and is
+p-free; in particular h1=0. In the more restrictive graph of section56,
+every F_b is empty. Failure to inject q-1 roots into the complement
+of T gives
+
+    |T|>=p-q+2=N_q.
+
+But |T|<=|U|<=h0=N_q, so equality holds throughout. Thus every original
+q*u has its paired original p*u, and their |U| first-p roots alpha_u
+are all different. The pure pair u=1 has root zero. Exactly q-2 roots
+lie outside T.
+
+If any non-pure pair u>1 had c_u=e_u modulo u, its first-q root
+b=e_u mod q would be nonzero, by disjointness from A_q. Its unique
+first-p root alpha_u would be a right neighbour of b in the relaxed
+graph: no other pair uses that root and F_b is empty. Match b there,
+and match the other q-2 left roots to the q-2 roots outside T. All the
+latter roots have no collision obligation at any branch. This is a
+forbidden complete matching. Consequently equality forces
+
+    every q-bearing original is q*u, with gcd(u,p*q)=1;
+    each has a paired original p*u, with pairwise different p-roots;
+    c_u != e_u mod u for every u in U minus {1}.       (NF70)
+
+There are p-q+1 non-pure pairs. Their cofactor APs of modulus u are
+disjoint for each individual pair. This is a statement about their
+actual common cofactor coordinates; different pairs need not be
+disjoint from one another.
+
+As a consumer, N_3=28 and NF67--NF68 force P=29, so the original support
+is exactly the first nine odd primes. NF70 then requires all 28
+three-bearing originals to have three-height one and no factor29,
+all their paired 29*u labels to exist with different first-29 roots,
+and all 27 non-pure paired cofactor residues to differ. Other original
+heights remain unrestricted. No argument here forces one of those
+cofactor residues to agree: NF69 and NF70 are necessary joint phase
+conditions, not an exclusion of that whole-cover configuration or
+a resolution of unrestricted Erdős #7. No new Lean verification is claimed.
+
+### The missing paired phases must be paid on the same cofactor fibre
+
+There is an exact whole-cover consumer of NF70. Write the full carrier
+as q*p^A*M and k=|U|=p-q+2; here gcd(M,p*q)=1 and every original
+q-bearing label has height one and no p factor. Fix one complete
+cofactor point z modulo M which avoids all originals containing neither
+p nor q. Let
+
+    A(z)=#{u in U minus {1}: z=e_u mod u}.
+
+Suppose the q-coordinate family leaves some first-q root uncovered at
+this same z. Since no original contains both p and q, whole coverage
+then requires the p-coordinate family to cover its ENTIRE p^A fibre.
+Such a z exists: project an original private point of A_p to M. It
+avoids all p,q-free classes, and its q word is uncovered by the
+q-bearing originals. This nonemptiness alone gives no uniform lower
+bound for the cofactor domain's measure.
+For each of the A(z) active q*u cofactors, NF70 says that the paired
+p*u is inactive at z. Every other paired p*u occupies at most 1/p
+of the p fibre. Thus the total contribution of all k paired classes,
+including pure p, is at most (k-A(z))/p.
+
+Let D_rest be the original p-bearing labels other than these k labels
+p*u. Each d in D_rest is q-free. Applying the ordinary union bound
+on this one complete p fibre gives the necessary pointwise charge
+
+    sum_(d in D_rest) p^(-v_p(d)) *
+           1_[z=a_d mod (d/p^v_p(d))]
+        >= 1-(k-A(z))/p
+         = (q-2+A(z))/p.                            (NF71)
+
+All cofactor events in NF71 use the original residues at the same z.
+It can be integrated against any one common measure on the specified
+cofactor domain. For q=3,p=29 the right side is (1+A(z))/29. Separate
+optimizations of the two coordinate families cannot pay this charge.
+
+This is also the exact-separator issue already handled algebraically in
+[problem detail17, section3](../../../problem-details/17-two-prime-separator-interfaces-and-exact-count-probes.md#3-the-exact-joint-kernel).
+Assign common p,q-free labels once, let L0(z) indicate their avoidance,
+and let V_q(z),V_p(z) count the surviving q and p^A words respectively.
+The number of complete survivors is exactly
+
+    sum_(z mod M) L0(z)*V_q(z)*V_p(z).
+
+The existing separator identity is reused without a new declaration.
+Noncoverage of each smaller-support side separately
+does not imply that the two positive supports meet at the same z.
+Neither a uniform upper bound violating NF71 on that domain nor a
+positive common separator word has been established here.
