@@ -78,9 +78,11 @@ def verifyTemplate (oldEnv newEnv : Environment) (prefixes : NameMapping)
     (oldName newName : Name) : MetaM Json := do
   let oldPlan ← result (selectedPlan oldEnv oldName)
   let newPlan ← result (selectedPlan newEnv newName)
-  let mapping := prefixes ++ #[(oldName, newName),
-    (oldPlan.definitionOwner, newPlan.definitionOwner),
-    (oldPlan.enrollmentOwner, newPlan.enrollmentOwner)]
+  let mapping ← privateMapping oldEnv newEnv prefixes
+  require (renameName mapping oldName == newName &&
+    renameName mapping oldPlan.definitionOwner == newPlan.definitionOwner &&
+    renameName mapping oldPlan.enrollmentOwner == newPlan.enrollmentOwner)
+    "template.unauthorized_template_or_owner"
   let oldInfo ← inEnvironment oldEnv <| getConstInfo oldName
   let newInfo ← inEnvironment newEnv <| getConstInfo newName
   require (renameExpr mapping oldInfo.type == newInfo.type) "template.raw_type"
@@ -166,6 +168,7 @@ private def verifyRows (oldEnv newEnv : Environment) (mapping : NameMapping)
 raw type. Retained extra captures are checked against the actual theorem type. -/
 def verifyRoot (oldEnv newEnv : Environment) (mapping : NameMapping)
     (oldRoot newRoot : Name) : MetaM Json := do
+  validatePrefixes mapping
   let some a := RootCatalogs.find? oldEnv oldRoot
     | throwError "contract.catalog_equivalence:root.original_missing"
   let some b := RootCatalogs.find? newEnv newRoot
@@ -190,13 +193,38 @@ private def kernelAddress (env : Environment) (record : SealArenaRecord)
     #[← mkConstWithFreshMVarLevels row.unitName]
   primitiveKernelAddress stateFintype bundle
 
-private partial def renameJson (mapping : NameMapping) : Json → Json
-  | .str value => .str ((mapping.find? (·.1.toString == value)).map
-      (·.2.toString) |>.getD value)
-  | .arr values => .arr (values.map (renameJson mapping))
+private def renameFields (mapping : NameMapping) (names : Array String) : Json → Json
   | .obj fields => Json.mkObj (fields.toArray.toList.map fun (key, value) =>
-      (key, renameJson mapping value))
+    (key, if names.contains key then renameNameText mapping value else value))
   | value => value
+
+private def renameSealJson (mapping : NameMapping) : Json → Json
+  | .obj fields => Json.mkObj (fields.toArray.toList.map fun (key, value) =>
+    (key, if key == "arenas" then
+      match value with
+      | .arr arenas => .arr (arenas.map fun arena =>
+        match renameFields mapping #["arena", "catalog", "verdict_certificate"] arena with
+        | .obj fs => Json.mkObj (fs.toArray.toList.map fun (field, body) =>
+          (field, if field == "theorems" then
+            match body with
+            | .arr rows => .arr (rows.map (renameFields mapping #["theorem", "unit", "certificate"]))
+            | other => other
+            else body))
+        | other => other)
+      | other => other
+      else value))
+  | value => value
+
+private def sealName (env : Environment) (catalog : CatalogRecord)
+    (name : Name) (suffix : String) : Name :=
+  if catalog.localSealNames then localCompanionName env catalog.rootId name suffix
+  else catalogQualifiedName catalog.rootId catalog.arenaName catalog.catalogId name suffix
+
+private def mappedCatalog (mapping : NameMapping) (catalog : CatalogRecord) : CatalogRecord := {
+  catalog with
+  rootId := renameName mapping catalog.rootId
+  arenaName := renameName mapping catalog.arenaName
+  catalogId := renameName mapping catalog.catalogId }
 
 /-- Both complete artifacts are serialized through the production validator.
 Every primitive-kernel hash is independently recomputed from the typed unit. -/
@@ -205,7 +233,7 @@ def verifySeal (oldEnv newEnv : Environment) (prefixes : NameMapping)
   let oldRecords := SealRecords.forRoot oldEnv oldRoot
   let newRecords := SealRecords.forRoot newEnv newRoot
   require (!oldRecords.isEmpty && oldRecords.size == newRecords.size) "seal.arena_count"
-  let mut mapping := prefixes
+  let mut mapping ← privateMapping oldEnv newEnv prefixes
   let mut kernelChecks := 0
   for index in [:oldRecords.size] do
     let a := oldRecords[index]!
@@ -215,26 +243,42 @@ def verifySeal (oldEnv newEnv : Environment) (prefixes : NameMapping)
       renameName mapping a.catalog.arenaName == b.catalog.arenaName)
       s!"seal.catalog_identity:{index}"
     require (a.theorems.size == b.theorems.size) s!"seal.theorem_count:{index}"
-    mapping := mapping ++ #[(a.catalog.catalogName, b.catalog.catalogName),
-      (a.verdict.name, b.verdict.name)]
+    let targetCatalog := mappedCatalog mapping a.catalog
+    let oldCatalog := sealName oldEnv a.catalog a.catalog.arenaName "__information_catalog"
+    let newCatalog := sealName newEnv targetCatalog targetCatalog.arenaName "__information_catalog"
+    let oldVerdict := sealName oldEnv a.catalog a.catalog.arenaName a.verdict.suffix
+    let newVerdict := sealName newEnv targetCatalog targetCatalog.arenaName a.verdict.suffix
+    require (a.catalog.catalogName == oldCatalog && b.catalog.catalogName == newCatalog &&
+      a.verdict.name == oldVerdict && b.verdict.name == newVerdict &&
+      a.catalog.localSealNames == b.catalog.localSealNames) "seal.naming_algorithm"
+    mapping := mapping ++ #[(oldCatalog, newCatalog), (oldVerdict, newVerdict)]
     for rowIndex in [:a.theorems.size] do
       let oldRow := a.theorems[rowIndex]!
       let newRow := b.theorems[rowIndex]!
       require (renameName mapping oldRow.theoremName == newRow.theoremName &&
         renameName mapping oldRow.registrationModuleName == newRow.registrationModuleName &&
         oldRow.index == newRow.index) s!"seal.occurrence_identity:{index}:{rowIndex}"
-      mapping := mapping ++ #[(oldRow.unitName, newRow.unitName),
-        (oldRow.realizationName, newRow.realizationName),
-        (oldRow.certificateName, newRow.certificateName)]
+      for (name, suffix) in #[(oldRow.unitName, theoremUnitSuffix),
+          (oldRow.realizationName, primitiveRealizationSuffix),
+          (oldRow.certificateName, oldRow.certificate.suffix)] do
+        let expected := sealName oldEnv a.catalog oldRow.theoremName suffix
+        if name == expected then
+          mapping := mapping.push (expected, sealName newEnv targetCatalog
+            (renameName prefixes oldRow.theoremName) suffix)
+      require (renameName mapping oldRow.unitName == newRow.unitName &&
+        renameName mapping oldRow.realizationName == newRow.realizationName &&
+        renameName mapping oldRow.certificateName == newRow.certificateName)
+        "seal.theorem_naming_algorithm"
       let oldAddress ← kernelAddress oldEnv a oldRow
       let newAddress ← kernelAddress newEnv b newRow
       require (oldAddress == oldRow.primitiveKernelAddress &&
         newAddress == newRow.primitiveKernelAddress && oldAddress == newAddress)
         s!"seal.primitive_kernel_address:{index}:{rowIndex}"
       kernelChecks := kernelChecks + 2
+  validateInjection mapping
   let oldJson ← result <| Json.parse (← inEnvironment oldEnv <| serializeSealArtifact oldRecords)
   let newJson ← result <| Json.parse (← inEnvironment newEnv <| serializeSealArtifact newRecords)
-  require (renameJson mapping oldJson == newJson) "seal.complete_production_json"
+  require (renameSealJson mapping oldJson == newJson) "seal.complete_production_json"
   return Json.mkObj [("status", toJson "equal"), ("complete_production_json", toJson true),
     ("arenas", toJson oldRecords.size), ("primitive_kernel_hash_recomputations", toJson kernelChecks),
     ("name_mapping", mappingJson mapping)]

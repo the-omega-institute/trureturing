@@ -1,32 +1,8 @@
-import LeanInformationAudit.ContractPrototype.Replay
+import LeanInformationAudit.ContractPrototype.NameMapping
 
 /- L0 原型 -/
 namespace LeanInformationAudit.ContractPrototype.Equivalence
 open Lean Meta TemplateAudit
-
-abbrev NameMapping := Array (Name × Name)
-
-/-- Explicit mappings take priority; namespace prefixes extend componentwise. -/
-partial def renameName (mapping : NameMapping) (name : Name) : Name :=
-  match mapping.find? (·.1 == name) with
-  | some (_, replacement) => replacement
-  | none => match name with
-    | .str parent component => .str (renameName mapping parent) component
-    | .num parent index => .num (renameName mapping parent) index
-    | .anonymous => .anonymous
-
-/-- Preserve universes, binders, application shape and metadata. Only declaration
-references and projection type names change. No normalization is performed. -/
-partial def renameExpr (mapping : NameMapping) : Expr → Expr
-  | .const name levels => .const (renameName mapping name) levels
-  | .app fn argument => .app (renameExpr mapping fn) (renameExpr mapping argument)
-  | .lam name domain body info => .lam name (renameExpr mapping domain) (renameExpr mapping body) info
-  | .forallE name domain body info => .forallE name (renameExpr mapping domain) (renameExpr mapping body) info
-  | .letE name type value body nondep => .letE name (renameExpr mapping type)
-      (renameExpr mapping value) (renameExpr mapping body) nondep
-  | .mdata data body => .mdata data (renameExpr mapping body)
-  | .proj name index body => .proj (renameName mapping name) index (renameExpr mapping body)
-  | other => other
 
 def inEnvironment (env : Environment) (action : MetaM α) : MetaM α := do
   let saved ← getEnv
@@ -45,49 +21,12 @@ private def check (label : String) (actual expected : String) : MetaM Unit := do
   unless actual == expected do
     throwError "contract.equivalence:{label}: recomputed={actual} reported={expected}"
 
-private partial def renameJson (mapping : NameMapping) : Json → Json
-  | .str value => .str (Id.run do
-      if let some (_, target) := mapping.find? (·.1.toString == value) then
-        return target.toString
-      let prefixes := mapping.filter fun (source, _) => value.startsWith (source.toString ++ ".")
-      let ordered := prefixes.qsort fun a b => a.1.toString.length > b.1.toString.length
-      if let some (source, target) := ordered[0]? then
-        return target.toString ++ (value.drop source.toString.length).toString
-      return value)
-  | .arr values => .arr (values.map (renameJson mapping))
-  | .obj fields => Json.mkObj (fields.toArray.toList.map fun (key, value) =>
-      (key, renameJson mapping value))
-  | value => value
-
 private def setJsonField (json : Json) (key : String) (value : Json) : MetaM Json := do
   let fields ← result json.getObj?
   unless (fields.toArray.any (·.1 == key)) do
     throwError "contract.equivalence:source_field_missing:{key}"
   return Json.mkObj (fields.toArray.toList.map fun (name, old) =>
     (name, if name == key then value else old))
-
-/-- Resolve copied private declarations by actual module and unique user name;
-private spellings and generated companions are never guessed from strings. -/
-def completeMapping (oldEnv newEnv : Environment) (prefixes : NameMapping)
-    (oldRecord newRecord : BindingRecord) : MetaM NameMapping := do
-  let mut mapping := prefixes ++ #[
-    (oldRecord.occurrence.unitName, newRecord.occurrence.unitName),
-    (oldRecord.occurrence.realizationName, newRecord.occurrence.realizationName)]
-  for idx in [:oldEnv.header.moduleNames.size] do
-    let owner := oldEnv.header.moduleNames[idx]!
-    let newOwner := renameName prefixes owner
-    if owner == newOwner then continue
-    let some newIdx := newEnv.getModuleIdx? newOwner
-      | throwError "contract.equivalence:mapped_owner_missing:{newOwner}"
-    for name in oldEnv.header.moduleData[idx]!.constNames do
-      unless isPrivateName name do continue
-      let user := renameName prefixes (privateToUserName name)
-      let candidates := newEnv.header.moduleData[newIdx.toNat]!.constNames.filter
-        (fun candidate => privateToUserName candidate == user)
-      if candidates.isEmpty then continue
-      unless candidates.size == 1 do throwError "contract.equivalence:private_ambiguity:{name}"
-      mapping := mapping.push (name, candidates[0]!)
-  return mapping
 
 def dependency (oldEnv newEnv : Environment) (mapping : NameMapping)
     (source : Bool) (input : DependencyIdentity) (rawDefinition : Bool := false) :
@@ -251,8 +190,10 @@ def verifyRecord (oldEnv newEnv : Environment) (prefixes : NameMapping)
   let some newTemplate := newDescriptor.getAppFn.constName? | throwError "contract.equivalence:prototype_descriptor_head"
   let oldPlan ← result (selectedPlan oldEnv oldTemplate)
   let newPlan ← result (selectedPlan newEnv newTemplate)
-  let mapping := mapping ++ #[(oldPlan.enrollmentOwner, newPlan.enrollmentOwner),
-    (oldPlan.definitionOwner, newPlan.definitionOwner), (oldTemplate, newTemplate)]
+  unless renameName mapping oldTemplate == newTemplate &&
+      renameName mapping oldPlan.enrollmentOwner == newPlan.enrollmentOwner &&
+      renameName mapping oldPlan.definitionOwner == newPlan.definitionOwner do
+    throwError "contract.equivalence:unauthorized_template_or_owner"
   let source := oldCert.sourceBinding.isSome
   unless source == newCert.sourceBinding.isSome do throwError "contract.equivalence:source_kind"
   unless (renameExpr mapping oldRecord.occurrence.statement).equal newRecord.occurrence.statement do
@@ -290,7 +231,7 @@ def verifyRecord (oldEnv newEnv : Environment) (prefixes : NameMapping)
     check "source.registration.old" oldRegistration (← result (binding.getObjValAs? String "registration_identity"))
     let registrationIdentity ← inEnvironment newEnv <| identity true oldRecord.occurrence.levelParams
       (renameExpr mapping recordExpr)
-    let binding ← setJsonField (renameJson mapping binding) "registration_identity" (toJson registrationIdentity)
+    let binding ← setJsonField (renameSourceBinding mapping binding) "registration_identity" (toJson registrationIdentity)
     unless some binding == newCert.sourceBinding do throwError "contract.equivalence:source_binding_mapping"
     return binding
   if source then
@@ -328,5 +269,37 @@ def verifyRecord (oldEnv newEnv : Environment) (prefixes : NameMapping)
     ("plan_identity", toJson planIdentity), ("evidence_ref", toJson mappedEvidence.1),
     ("argument_inputs", toJson argumentInputs.size), ("extraction_inputs", toJson extractionInputs.size),
     ("name_mapping", toJson (mapping.map fun (a, b) => (a.toString, b.toString)))]
+
+/-- Missing readout evidence stays undeclared. No certificate or diagnostic
+normalization can make it look like a validated registration. -/
+def verifyMissingRecord (oldEnv newEnv : Environment) (prefixes : NameMapping)
+    (oldRecord newRecord : BindingRecord) : MetaM Json := do
+  unless (oldRecord.result matches .undeclared) && (newRecord.result matches .undeclared) &&
+      oldRecord.descriptor.isNone && newRecord.descriptor.isNone do
+    throwError "contract.equivalence:missing_record_state"
+  let mapping ← completeMapping oldEnv newEnv prefixes oldRecord newRecord
+  let occurrence := oldRecord.occurrence
+  let key := occurrence.key
+  let key : TemplateOccurrenceKey := {
+    root := renameName mapping key.root, registrationModule := renameName mapping key.registrationModule
+    theoremName := renameName mapping key.theoremName, objectArena := renameName mapping key.objectArena
+    catalog := renameName mapping key.catalog }
+  unless renameExpr mapping occurrence.statement == newRecord.occurrence.statement &&
+      renameExpr mapping occurrence.arena == newRecord.occurrence.arena &&
+      occurrence.levelParams == newRecord.occurrence.levelParams do
+    throwError "contract.equivalence:missing_record_expressions"
+  let mapped := { oldRecord with
+    occurrence := { occurrence with
+      key
+      unitName := renameName mapping occurrence.unitName
+      realizationName := renameName mapping occurrence.realizationName
+      registrationSource := TemplateAudit.sourcePath key.registrationModule }
+    bindingOwner := oldRecord.bindingOwner.map (renameName mapping)
+    escape := ← mapEscape oldEnv newEnv mapping oldRecord }
+  unless (← inEnvironment newEnv <| TemplateBinding.recordJson mapped) ==
+      (← inEnvironment newEnv <| TemplateBinding.recordJson newRecord) do
+    throwError "contract.equivalence:complete_missing_record"
+  return Json.mkObj [("verified", toJson true), ("state", toJson "undeclared"),
+    ("theorem", toJson key.theoremName.toString)]
 
 end LeanInformationAudit.ContractPrototype.Equivalence

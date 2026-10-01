@@ -98,8 +98,10 @@ def verifyRecord (oldEnv newEnv : Environment) (prefixes : NameMapping)
   let oldPlan ← result (selectedPlan oldEnv template)
   let newPlan ← result (selectedPlan newEnv newTemplate)
   let mapping ← completeMapping oldEnv newEnv prefixes oldRecord newRecord
-  let mapping := mapping ++ #[(oldPlan.enrollmentOwner, newPlan.enrollmentOwner),
-    (oldPlan.definitionOwner, newPlan.definitionOwner), (template, newTemplate)]
+  unless renameName mapping template == newTemplate &&
+      renameName mapping oldPlan.enrollmentOwner == newPlan.enrollmentOwner &&
+      renameName mapping oldPlan.definitionOwner == newPlan.definitionOwner do
+    throwError "contract.unresolved_equivalence:unauthorized_template_or_owner"
   unless (renameExpr mapping descriptor).equal newDescriptor &&
       (renameExpr mapping oldRecord.occurrence.statement).equal newRecord.occurrence.statement &&
       (renameExpr mapping oldRecord.occurrence.arena).equal newRecord.occurrence.arena &&
