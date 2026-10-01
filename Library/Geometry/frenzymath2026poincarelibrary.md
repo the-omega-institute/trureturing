@@ -804,3 +804,64 @@ cusps and nonorientable manifolds. The existing escape audit remains
 unfinished:
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
 Neither these compilation checks nor CI closes that audit.
+
+
+## Intrinsic volume transfer for the selected target realization
+
+For a preconnected smooth three-manifold with `T3Space` topology, a smooth
+Riemannian metric that is `MetricComplete` and has sectional curvature `-1`,
+and supplied Levi-Civita data, the same actual H3 construction now also
+transfers intrinsic volume through its selected isometric orbit realization.
+Here `gM.volumeMeasure` and a supplied quotient metric's `gQ.volumeMeasure`
+mean the pinned library's normalized three-dimensional Hausdorff measures of
+their respective intrinsic extended metrics. This increment does not check
+identification with coordinate volume density for the arbitrary target.
+
+The original target and orbit topologies supply their Borel structures.
+For the selected full deck representation, the existing `orbitMetricSpace`
+supplies the source metric. The intrinsic-isometry clause supplies finite
+pairwise target distances and an `IsometryEquiv` whose underlying function
+is exactly the selected quotient-to-target homeomorphism `j`. Mathlib's
+`IsometryEquiv.measurePreserving_euclideanHausdorffMeasure` then proves that
+`j` preserves the normalized orbit Hausdorff measure into the target's
+actual `gM.volumeMeasure`. The target Riemannian bundle and intrinsic metric
+are installed from that same `gM`; the finite-distance conversion retains
+its extended distance, uniformity and original topology.
+
+Applying this measure-preservation identity to the whole target gives
+exact equality of extended-valued total measures. The normalized orbit
+Hausdorff total measure is finite if and only if the target intrinsic total
+volume is finite. This is an equivalence; no unconditional finite-volume
+conclusion or finite-volume premise is introduced. The finite pairwise
+distance proof used to construct the target metric is a separate fact from
+finiteness of its total volume.
+
+A separate scoped check takes a supplied quotient Riemannian metric `gQ`
+whose intrinsic distance equals `ENNReal.ofReal` of the same orbit distance,
+under its smooth-manifold, `T3Space` and Borel conditions. The previously
+checked intrinsic-metric/Hausdorff-volume identification derives that
+`gQ.volumeMeasure` equals the normalized orbit Hausdorff measure. Thus the
+same `j` preserves `gQ.volumeMeasure` into `gM.volumeMeasure`, their total
+measures are equal, and their finiteness is equivalent. Volume equality is
+derived, not assumed. This supplied-metric check does not identify `gQ`
+with separately quantified older quotient-metric witnesses.
+
+The universal target clause selects the covering, full deck representation,
+basepoint fundamental-group equivalence, homeomorphism, intrinsic isometry
+and intrinsic-volume preservation together. It is bound to the same actual
+H3 metric `g`. Removing the one added clause and application and reversing
+names/import restores the preceding entire constructor byte-for-byte. All
+previous source, exponential, volume, curvature, completeness, conditional
+core/tail and quotient clauses remain. The new clause adds no compactness,
+orientability, finite-volume or target-simple-connectedness premise.
+
+These are six scoped transient classical applications under unchanged pins,
+with only `propext`, `Classical.choice` and `Quot.sound`, with no new tracked
+project Lean declaration or novelty claim. Transfer of intrinsic quotient
+volume does not identify Haar covolume in an ambient isometry group or
+establish a lattice-conjugacy theorem. Ambient discreteness, finite-volume
+cusp classification, Haar covolume and full Mostow-Prasad existence, homotopy
+and uniqueness remain unfinished, including noncompact cusps and
+nonorientable manifolds. The existing escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these compilation checks nor CI closes that audit.
