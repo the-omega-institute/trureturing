@@ -262,3 +262,4 @@ The four-dimensional representation attains this lower bound. On [3], the parity
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.wordBehavior`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ParityLiftRationalMinimum.wordMap`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/ImmediateWindowStateCapacity](ImmediateWindowStateCapacity.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/CommonNilpotencyForgettingBound](../../ConceptDynamics/Coding/CommonNilpotencyForgettingBound.md)
