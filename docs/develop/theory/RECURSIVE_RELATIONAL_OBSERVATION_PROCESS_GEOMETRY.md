@@ -8615,8 +8615,9 @@ $$
 ## 55. 选择器—事件—路径的规范最大不动点核
 
 本节是本卷 §§19、29、45、53 及边界动力学卷 §§26、27、116 的有限确定性统一
-封装。记号 $J$ 指同一任务合同下既有完整行为核的最大不动点表述，不另立一份
-与该规范核竞争的对象或所有权。本节是普通理论组织，不是新增 Lean 声明；`CompletionKernelGreatestFixedPoint`、
+封装。相对 §116，本节新增的只是有限实际配置、单步完整事件、失败 continuation、
+selector 可见性和 $\nu\Phi$ 与自适应有限 Trace 的规范桥；它不另立一份与既有核竞争的
+对象或所有权。记号 $J$ 指同一任务合同下既有完整行为核的最大不动点表述。本节是普通理论组织，不是新增 Lean 声明；`CompletionKernelGreatestFixedPoint`、
 `BehaviorUpdateWordAction`、`ControlledBehaviorUniversality` 和
 `FiniteFutureCongruence` 是仓内可复用的形式化支点。这里的有限性只用于
 说明最大不动点的有限迭代稳定；任务若改成无限活性或实际取得成本，需另加条件。
@@ -8704,7 +8705,9 @@ $R\subseteq\Phi(R)$ 的最大关系；它同时保留零步报告、每个请求
 请求和事件前缀选取 $a\in A$，不以隐藏状态身份作输入。要求以下两种闭合：
 每个可继续 transcript 前缀 $u$ 的残余策略 $\sigma|_u$ 仍在 $\mathfrak S$；
 对任意 $a\in A$ 与 $\tau\in\mathfrak S$，首请求恒为 $a$、随后重启尾策略
-$\tau$ 的 $\operatorname{graft}(a,\tau)$ 也在 $\mathfrak S$。此处全部请求都可被
+$\tau$ 的 $\operatorname{graft}(a,\tau)$ 也在 $\mathfrak S$；并且在任一与首步匹配的
+可继续 transcript 前缀 $u$ 上满足余策略律
+$\operatorname{graft}(a,\tau)|_u=\tau$。此处全部请求都可被
 尝试，实际合法性及拒绝由 $\mathsf E_a$ 记录；即使 $\pi$ 可见，也不擅自增加
 “请求必须等于 $\pi$”的守卫。若实际合同有该守卫，应将其写入 $D_a$ 和事件。
 
@@ -8712,7 +8715,10 @@ $\tau$ 的 $\operatorname{graft}(a,\tau)$ 也在 $\mathfrak S$。此处全部请
 $\mathsf{stop}\in A$ 作为显式终止请求，规定
 $\operatorname{next}_{\mathsf{stop}}(s)=\mathrm{none}$ 并产生终止事件。
 它不属于上述“有成功后继”的 $D_{\mathsf{stop}}$，其事件应标记协议完成，
-不把它误记为非法失败。内部 $\pi(s)=\bot$ 只是选择器报告；是否阻止后续请求
+不把它误记为非法失败；可用与普通失败标签不相交的 tagged outcome（例如
+$f_{\mathsf{stop}}=\mathrm{stop}$）表达这一点。$\mathrm{terminal}$ 是与 $R_0$、
+事件和递归 Trace 构造不相交的标记，且终止分支对所有 $n\ge1$ 都固定为该标记。
+内部 $\pi(s)=\bot$ 只是选择器报告；是否阻止后续请求
 由合同逐项规定，不自动等于所有外部测试停止。
 
 对 $\sigma\in\mathfrak S$ 递归定义有限 Trace。空前缀为
@@ -8760,7 +8766,8 @@ $$
 $s\equiv_{\rm fin}t$，取 $n=0$ 得 $(s,t)\in R_0^\ker$；用任一尾策略的
 $\operatorname{graft}(a,\tau)$ 和 $n=1$ 得相同事件及相同 none/some 分支。
 若两者有后继，任取 $\tau\in\mathfrak S$ 并使用
-$\operatorname{graft}(a,\tau)$；对所有 $n+1$ 的 Trace 相等说明
+$\operatorname{graft}(a,\tau)$；由其余策略律把首步后的 Trace 化为同一个
+$\tau$ 的 Trace，对所有 $n+1$ 的 Trace 相等说明
 $(s',t')\in\equiv_{\rm fin}$，其中 $\operatorname{next}_a(s)=\mathrm{some}(s')$ 且
 $\operatorname{next}_a(t)=\mathrm{some}(t')$。故
 $\equiv_{\rm fin}\subseteq\Phi(\equiv_{\rm fin})$，由最大性得
@@ -8835,16 +8842,25 @@ $$
 FIB 卷的 $\operatorname{Eval}:\mathcal T\to X$ 解释两个叶原子及有序二元接法；
 $c:\mathcal T\to\mathbb N^2$ 保留两类叶组成，$H_{2,3}$ 以行列式 $1$ 把组成
 换成当前及一次替换后的数量。要接到本节，先给实际项域
-$\mathcal T_{\rm act}$ 以及一个明确的实际来源满射
-$e:\mathcal T_{\rm act}\twoheadrightarrow S$；若过程先经过抽象解释
+$\mathcal T_{\rm act}$ 以及一个明确的**强状态覆盖合同**：实际来源满射
+$e:\mathcal T_{\rm act}\twoheadrightarrow S$。它要求 $S$ 中含有的 writer、权限、
+历史等实际配置都由某个 FIB 项代表；若只需行为层覆盖，应改取
+$S_{\rm F}:=\operatorname{im}(e)$，再另给 $S_{\rm F}/J\twoheadrightarrow Q_{\rm decl}$，
+不能把两种满射混为一谈。若过程先经过抽象解释
 $\operatorname{Eval}:\mathcal T_{\rm act}\to I$，则可另写 $e=\chi\circ\operatorname{Eval}$，
 但 $e$ 的满射性和共同来源语义必须单独声明。并要求组成下降为
-$\hat c:S\to C$，即 $c=\hat c\circ e$。实际解释像与声明后继须闭合。
+$\hat c:S\to\mathbb Z^2$（自然数计数经 $\mathbb N^2\hookrightarrow\mathbb Z^2$ 嵌入），
+即 $c_{\rm act}:=c|_{\mathcal T_{\rm act}}=\hat c\circ e$。若实际项域在替换下闭合，
+另给 $\rho_{\rm act}:\mathcal T_{\rm act}\to\mathcal T_{\rm act}$、$T_\rho:S\to S$ 及
+$e\circ\rho_{\rm act}=T_\rho\circ e$；若不闭合，这就是必须显式登记的生成覆盖缺口。
+实际解释像与声明后继须闭合。Fibonacci 请求还须满足
+$\hat c(T_\rho s)=M\hat c(s)$；若当前及一次替换后的数量属于任务响应，
+则 $\hat c$ 与 $M\hat c$ 必须作为零步报告或完整事件的声明读数，而不是未声明的旁观量。
 
 组成边界成为自治充分表示的合同是：$r_0$、每个完整事件、可见的选择器均在
 $\ker\hat c$ 上常值，终止标记一致，而且
 $\operatorname{Option.map}(\hat c)\operatorname{next}_a(s)$ 也在这些纤维上常值。
-Fibonacci 请求须满足 $\hat c(T_\rho s)=M\hat c(s)$。这些条件给
+这些条件给
 $\ker\hat c\subseteq J$；要有等号，还须全部声明响应分离不同组成。
 例如允许当前数量 $q_{2,3}\hat c$ 及一次替换后的数量，二者组成
 $H_{2,3}\hat c$，其可逆性给反向包含。故在该合同及分离条件下，
