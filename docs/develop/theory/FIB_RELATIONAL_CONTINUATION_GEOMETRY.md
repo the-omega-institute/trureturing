@@ -2261,3 +2261,310 @@ $$
 保留的全局边界是实际 Cloitre 五窗图及实际全域选择器图的正则性、实际周期是否存在无界长度族、以及 $C(n)/n$ 的全局黄金收敛；定理 21.5 的条件互斥关系保持原范围。这里即使选中振幅无界，所选周期长度仍为二，且根缺陷经零进位脊线传给未受端点阈值控制的终端子树，不能把这一局部传递当作全局缺陷估计。下一步有用的联合缺口是：在 Fibonacci 块中心及这些终端子树上，能否同时控制实际入口相位、规定深度与树总进位，并将这种控制表达为所有合法共同词长上的有限同步关系。仅有根轮廓、周期长度界、六种同余步长或固定宽度的逐一正则性，都还没有给出该联合关系。
 
 ## 追加锚（本行以下为增补区）
+## 23. 实际锚点奇数瞬态的缺陷预算与同点阻碍
+
+**假设 23.1（同一实际递归与锚前值）。** 全节使用定义 15.1 的实际 $C$，并条件于假设 21.1 的全局下界、上限函数 $U$、锚值、有限捕获及规定深度入周期前提。仍取 $F_0=0$、$F_1=1$、$\alpha=\varphi^{-1}$、$G(n)=\lfloor\alpha(n+1)\rfloor$、$E(n)=C(n)-G(n)\ge0$，不假设 $C$ 单调。另显式使用假设 21.1 未列出的锚前恒等式
+
+$$
+C(F_j-1)=F_{j-1}\qquad(j\ge5),
+$$
+
+其出处为 [Cloitre 黄金结构，主陈述 4 及 §6](https://github.com/the-omega-institute/nested-recurrences/blob/645fe1c19cb00fc7964500eef114fcdca94cebae/cloitre-conway/golden-proof.md)。这些来源前提承继假设 21.1 所列的计算辅助基础；本节不提供对那些有限基础的独立核验，也不宣称 Lean 核验证明。
+
+对整数 $k\ge6$，固定同一个外部参数及其实际轨道
+
+$$
+\begin{aligned}
+N&=F_k,&A&=F_{k-1},&B&=F_{k-2},\\
+x_0&=N-1,&x_{i+1}&=N-C(x_i),&
+\mu_k&=\min\{i\ge0:x_i=A\}.
+\end{aligned}
+$$
+
+来源捕获在偏移零时把全部周期限定为固定点 $A$，所以 $\mu_k$ 存在且等于这条实际轨道的最短前周期。规定深度仍是 $d_N=C(N-1)$，所选点仍是 $g_N=x_{d_N}$。时间下标的奇偶表示迭代次数，不表示自变量 $x_i$ 的奇偶。
+
+这里直接复用 [Fibonacci collars，§1 的定量捕获](https://github.com/the-omega-institute/nested-recurrences/blob/645fe1c19cb00fc7964500eef114fcdca94cebae/cloitre-conway/fibonacci-collars.md)：到捕获区间的整数距离每两步至多缩为原距离的 $2/3$ 向下取整。其整数预算为 $Q(0)=0$、$Q(d)=1+Q(\lfloor2d/3\rfloor)$，$d\ge1$。在当前锚点和实际起点上，该已证结果给
+
+$$
+\mu_k\le2Q(B-1),\qquad
+Q(d)\le1+\lfloor\log_{3/2}d\rfloor\quad(d\ge1),
+$$
+
+从而 $\mu_k=O(k)$。这是来源的上界应用；以下承重结论研究同一实际瞬态所迫使的规范缺陷下界。
+
+**定理 23.2（实际奇数瞬态的迫使预算与同一见证的阻碍）。** 在假设 23.1 下，对每个整数 $k\ge6$，有 $\mu_k=2R_k\ge4$，并且
+
+$$
+\begin{aligned}
+d_N&=A\ge\mu_k,&g_N&=A,&E(N)&=0,\\
+B&\le x_{2r+1}\le A-1&&&(0\le r<R_k).
+\end{aligned}
+\tag{23.1}
+$$
+
+所选周期长度为一。定义这一条实际轨道上奇数时间的最大规范缺陷
+
+$$
+M_k=\max_{0\le r<R_k}E(x_{2r+1}).
+$$
+
+则
+
+$$
+\begin{aligned}
+M_k&\ge
+\frac{\alpha^{\mu_k+3}F_k}{1-\alpha^{\mu_k-2}}-1,\\
+\mu_k&\ge
+2+\log_\varphi\left(1+\frac{\alpha^5F_k}{M_k+1}\right).
+\end{aligned}
+\tag{23.2}
+$$
+
+进一步，固定偶数 $m\ge4$。若存在无限集合 $\mathcal K\subseteq\{6,7,\ldots\}$，使每个 $k\in\mathcal K$ 都满足实际前周期 $\mu_k\le m$，令
+
+$$
+c_m=\frac{\alpha^{m+3}}{1-\alpha^{m-2}},\qquad
+0<c_m\le c_4=\alpha^6<\alpha^2.
+$$
+
+对每个 $k\in\mathcal K$，从同一轨道的奇数时间中选取一个达到 $M_k$ 的实际自变量 $y_k$。这些同一见证满足
+
+$$
+y_k\longrightarrow\infty,\qquad
+B\le y_k\le A-1,\qquad
+E(y_k)=M_k\ge c_mF_k-1,
+\tag{23.3}
+$$
+
+以及
+
+$$
+\begin{aligned}
+\liminf_{\substack{k\to\infty\\k\in\mathcal K}}
+\frac{y_k-F_{k-2}}{F_k}&\ge\frac{c_m}{\alpha^2},\\
+\liminf_{\substack{k\to\infty\\k\in\mathcal K}}
+\frac{F_{k-1}-y_k}{F_k}&\ge\frac{c_m}{\alpha},\\
+\limsup_{n\to\infty}\frac{C(n)}n
+&\ge\alpha+\frac{\alpha c_m}{\alpha^2-c_m}
+=\frac{\alpha^3}{\alpha^2-c_m}>\alpha.
+\end{aligned}
+\tag{23.4}
+$$
+
+式 (23.3)–(23.4) 全部条件于这个无限有界前周期子列的存在；它们没有建立该子列的存在。
+
+作为式 (23.2)–(23.4) 的必要条件应用，若实际 $C(n)/n\to\alpha$，则 $\mu_k\to\infty$。若更具体地存在常数 $K\ge0$、$0\le\gamma<1$ 和正整数 $n_0$，使所有整数 $n\ge n_0$ 都有 $E(n)\le K n^\gamma$，则对所有充分大的 $k$，
+
+$$
+\mu_k\ge(1-\gamma)\log_\varphi F_k-3-\log_\varphi(K+1).
+\tag{23.5}
+$$
+
+这些必要条件不含逆向蕴含，也不把锚点前周期增长转成周期长度增长。
+
+证明。锚前恒等式及锚值给
+
+$$
+x_1=N-A=B,\qquad
+x_2=N-C(B)=2B>A,\qquad
+2B-A=F_{k-4}>0.
+$$
+
+若实际域内的 $x>A$，则 $G(x)\ge G(A+1)=B+1$，所以 $N-C(x)\le A-1$。同时 $C(x)\le U(x)\le U(N-1)=A$，所以 $N-C(x)\ge B$。若 $x<A$，则 $C(x)\le U(x)\le U(A)=B$，所以 $N-C(x)\ge A$；尚未到达 $A$ 时该不等式严格。$A$ 自身固定，因为 $C(A)=B$。因此落点前的偶数时间严格在 $A$ 之上，奇数时间在 $[B,A-1]$ 中；首次落到 $A$ 只能发生于偶数时间。$x_0,x_1,x_2$ 均不等于 $A$，故 $\mu_k=2R_k\ge4$。规定深度入周期的来源前提再给 $d_N\ge\mu_k$，而 $d_N=C(N-1)=A$，所以 $g_N=A$。锚值给 $C(N)=G(N)=A$，证明式 (23.1)。这里使用的是 $G$ 与 $U$ 的单调性，没有使用 $C$ 的单调性。
+
+为估计这条瞬态，定义单变量的舍入量与仿射误差
+
+$$
+\begin{aligned}
+\rho(n)&=G(n)-\alpha n
+=\alpha-\{\alpha(n+1)\},\\
+\eta(n)&=E(n)+\rho(n)=C(n)-\alpha n,\\
+s_k&=\alpha N-A=(-1)^{k-1}\alpha^k,\qquad
+z_i=x_i-\alpha N.
+\end{aligned}
+$$
+
+本节的单变量 $\eta(n)$ 与定义 14.1 的双变量单位进位 $\eta(x,y)$ 分开使用。对正整数 $n$，无理性给 $-\alpha^2<\rho(n)<\alpha$。由 $\alpha^2+\alpha=1$，实际内步满足
+
+$$
+z_{i+1}=-\alpha z_i-\eta(x_i),\qquad
+z_{2r+2}=\alpha^2z_{2r}+\alpha\eta(x_{2r})-\eta(x_{2r+1}).
+\tag{23.6}
+$$
+
+其实际两端为
+
+$$
+z_2=\alpha^4N+2s_k,\qquad z_{\mu_k}=-s_k.
+\tag{23.7}
+$$
+
+第一式使用 $x_2=2B$ 及 $\alpha^4=2-3\alpha$，第二式使用 $x_{\mu_k}=A$。把式 (23.6) 从 $r=1$ 到 $R_k-1$ 沿这条实际轨道展开，得到辅助望远镜恒等式
+
+$$
+\begin{aligned}
+&\sum_{r=1}^{R_k-1}\alpha^{\mu_k-2r-2}
+\bigl[\eta(x_{2r+1})-\alpha\eta(x_{2r})\bigr]\\
+&\qquad=\alpha^{\mu_k-2}z_2-z_{\mu_k}\\
+&\qquad=\alpha^{\mu_k+2}N+
+(1+2\alpha^{\mu_k-2})s_k.
+\end{aligned}
+\tag{23.8}
+$$
+
+这一步只是迫使预算的仿射计算，没有另外给出一个递归族或独立闭合定理。
+
+每个括号中，奇数时间缺陷至多为 $M_k$，偶数时间缺陷非负，且 $\rho$ 的严格界给
+
+$$
+\eta(x_{2r+1})-\alpha\eta(x_{2r})
+<M_k+\alpha+\alpha^3.
+$$
+
+权重和为
+
+$$
+\sum_{r=1}^{R_k-1}\alpha^{\mu_k-2r-2}
+=\frac{1-\alpha^{\mu_k-2}}{\alpha}.
+$$
+
+因此式 (23.8) 蕴含
+
+$$
+M_k>
+\frac{\alpha^{\mu_k+3}N}{1-\alpha^{\mu_k-2}}
+-\alpha-\alpha^3
+-\frac{\alpha^{k+1}(1+2\alpha^{\mu_k-2})}
+ {1-\alpha^{\mu_k-2}}.
+$$
+
+因为 $k\ge6$、$\mu_k\ge4$，分母至少为 $1-\alpha^2=\alpha$，最后一项至多为 $\alpha^6(1+2\alpha^2)$。端点误差与舍入的总扣减满足
+
+$$
+\alpha+\alpha^3+\alpha^6(1+2\alpha^2)
+=30-47\alpha<1.
+\tag{23.9}
+$$
+
+最后的严格不等式等价于 $47\sqrt5>105$，平方后为 $11045>11025$。于是得到式 (23.2) 的第一式。令 $q=\alpha^{\mu_k-2}$，则它给
+
+$$
+M_k+1\ge\frac{\alpha^5Nq}{1-q},\qquad
+q\le\frac1{1+\alpha^5N/(M_k+1)}.
+$$
+
+取以 $\varphi$ 为底的对数，得到式 (23.2) 的第二式。$\mu_k\ge4$ 保证加权和非空、$1-\alpha^{\mu_k-2}>0$，所以没有空和或零分母的边界遗漏。
+
+现固定满足定理前提的 $m$ 与无限 $\mathcal K$。函数 $q/(1-q)$ 在 $0<q<1$ 上递增，所以 $\mu_k\le m$ 使式 (23.2) 的系数至少为 $c_m$。达到最大值的实际奇数时间点遂满足式 (23.3)；$y_k\ge B\to\infty$。$c_m$ 随 $m$ 增大而减小，且 $c_4=\alpha^7/(1-\alpha^2)=\alpha^6<\alpha^2$。
+
+接下来始终在这个同一 $y=y_k$ 上使用上限函数。由 $B\le y<A$，其实际 Fibonacci 块是 $[F_{k-2},F_{k-1})$，因而
+
+$$
+U(y)=\min\{y-F_{k-4},B\}.
+$$
+
+又有 $E(y)=C(y)-\alpha y-\rho(y)<U(y)-\alpha y+\alpha^2$。分别使用上述最小值的两个分支，以及
+
+$$
+\left|F_{k-4}-\alpha^2B\right|=\alpha^{k-2},\qquad
+\left|B-\alpha A\right|=\alpha^{k-1},
+$$
+
+得到在同一实际点同时成立的两个界
+
+$$
+\begin{aligned}
+E(y)&<\alpha^2(y-B)+\alpha^2+\alpha^{k-2},\\
+E(y)&<\alpha(A-y)+\alpha^2+\alpha^{k-1}.
+\end{aligned}
+\tag{23.10}
+$$
+
+将它们各与 $E(y)\ge c_mN-1$ 联合，除以 $N$ 并令 $k\in\mathcal K$ 趋于无穷，证明式 (23.4) 的两个位置下界。它们把被迫的大缺陷限定在实际块的内部，不能把任意一个靠锚的小缺陷点换成这个见证。
+
+比只用 $y\le A$ 更强的比值估计，使用同一见证的 $C(y)\le B$ 和式 (23.3)：
+
+$$
+\alpha y\le B-c_mN+1+\alpha^2,\qquad
+\eta(y)\ge c_mN-1-\alpha^2.
+\tag{23.11}
+$$
+
+当 $k\in\mathcal K$ 充分大时，第二式的右端正，第一式右端也正；后者除以 $N$ 趋于 $\alpha^2-c_m>0$。因此
+
+$$
+\frac{C(y)}y
+=\alpha+\frac{\eta(y)}y
+\ge\alpha+
+\frac{\alpha(c_mN-1-\alpha^2)}{B-c_mN+1+\alpha^2}.
+\tag{23.12}
+$$
+
+沿同一 $\mathcal K$ 取下极限，用 $B/N\to\alpha^2$，再用 $y_k\to\infty$，就得到式 (23.4) 的全局上极限下界。其增量 $\alpha c_m/(\alpha^2-c_m)$ 严格大于仅由 $y\le A$ 得到的 $c_m/\alpha$。这里联合了同一个实际点的缺陷、位置和上限，没有把分别可达的最优值当作同时可达的事实。
+
+若实际黄金收敛成立而 $\mu_k$ 不趋于无穷，整数偶数序列 $\mu_k\ge4$ 就存在一个有界无限子列，与式 (23.4) 矛盾。这只证明收敛的必要条件。对于幂次缺陷前提，所有奇数时间点都至少为 $B$，故当 $B\ge n_0$ 时，$M_k\le K N^\gamma$。于是 $M_k+1\le(K+1)N^\gamma$，式 (23.2) 给
+
+$$
+\begin{aligned}
+\mu_k
+&\ge2+\log_\varphi\frac{\alpha^5N}{M_k+1}\\
+&\ge(1-\gamma)\log_\varphi N-3-\log_\varphi(K+1),
+\end{aligned}
+$$
+
+证明式 (23.5)。该幂次假设没有在这里被证明，来源的 $\mu_k=O(k)$ 上界也不提供它。
+
+树与词长资源仍取实际对象。对每一个轨道自变量 $x_i$，分别调用定理 15.3 得
+
+$$
+E(x_i)=\sum_{u\in I_{x_i}}
+\delta(g_{m_u},m_u-g_{m_u}).
+\tag{23.13}
+$$
+
+每个和式属于它自己的实际树 $\mathcal T_{x_i}$；式 (23.8) 的不同自变量没有被宣称为一棵共同父树的节点，也没有树间独立性前提。单个有符号进位可以为负，来源下界只保证这些整树总量 $E(x_i)$ 非负。因此本定理迫使的是某个实际奇数时间自变量自己的整树总量，不能替换为该树中每一个节点的正进位要求。
+
+在定义 20.1 的全部共同补零合同中，令 $H=L(N)$。实际整数 $N,A,B,x_i,y_k,\mu_k,d_N,g_N,E(x_i),M_k$ 全都在 $[0,N]$ 中：时钟用 $\mu_k\le d_N=A<N$，缺陷用 $0\le E(x_i)\le C(x_i)\le x_i<N$。所以式 (20.7) 直接保证它们均能使用同一个 $H$，也能使用每一个更大的共同高端补零长度。这里的 $\alpha^j$、$\rho$、$\eta$ 和仿射位移是分析量，不是新增整数轨道。随 $k$ 变化的轨道字段数没有给出固定轨数的同步自动机；共同长度能容纳每个字段，也不等于能够以有限状态取得所有字段。
+
+在这些锚点上 $g_N=A$ 已是简单的选择公式，尽管分析瞬态使用了精确 $\mu_k$。精确时钟不是选择器必须输出的字段；本定理没有从时钟的增长推出选择器的非正则性。锚点周期始终为一，也没有从这里推出实际周期长度无界。
+
+**问题 23.3（实际左侧亏量的缺失下屏障）。** 对上述同一实际轨道，写 $R=R_k$，并在落点前定义
+
+$$
+a_r=x_{2r}-A,\qquad b_r=A-x_{2r+1}\quad(1\le r<R),
+$$
+
+另令 $a_R=0$。这些量满足 $1\le a_r\le B-1$、$1\le b_r\le A-B$。在 $1\le b\le A-B$ 上定义实际左侧亏量
+
+$$
+L_k(b)=B-C(A-b)\ge0.
+$$
+
+由原内步直接得到
+
+$$
+\begin{aligned}
+a_1&=F_{k-4},\\
+b_r&=C(A+a_r)-B,\\
+a_{r+1}&=L_k(b_r)\qquad(1\le r<R),\\
+a_R&=0.
+\end{aligned}
+\tag{23.14}
+$$
+
+当前未证的问题是：是否存在统一常数 $0<\kappa\le\alpha$、$K\ge0$ 和整数 $k_0\ge6$，使所有整数 $k\ge k_0$ 及其所有实际落点前时间 $1\le r<R_k$ 都满足
+
+$$
+L_k(b_r)\ge\kappa b_r-Kk?
+\tag{23.15}
+$$
+
+这要求的是在实际访问点上的左亏量下屏障。已引用的 $G$ 下界、$U$ 上限与定量捕获控制左亏量的上界，没有给出式 (23.15) 的下界。若存在趋于无穷的实际阶数和被这条实际轨道访问的左平台点，满足 $b_r/k\to\infty$ 且 $C(A-b_r)=B$，则 $L_k(b_r)=0$ 会否定任意这样的统一正 $\kappa$ 与有限 $K$。这里只给出可推翻判据，没有建立这些宽平台的实际存在；未被实际轨道访问的平台或比较轮廓不能替代这个判据。
+
+供应源 [Fibonacci collars，§§8–9](https://github.com/the-omega-institute/nested-recurrences/blob/645fe1c19cb00fc7964500eef114fcdca94cebae/cloitre-conway/fibonacci-collars.md) 的共同闭合与重构接口，已经区分同尺度缺陷词、跨尺度实际子拆分见证、以及规定起点的盆地和入口对齐相位。本节直接保留这些接口及其范围，不重新证明一般闭合或重构结果；它们没有给出式 (23.15) 的实际左侧下屏障，也没有给出全部阶数上的统一缺陷或分支预算。这里的 $E$ 是规范黄金缺陷，不与那些接口中的轮廓亏量混同。
+
+定理 23.2 的承重推导是实际锚点奇数瞬态的迫使下界，以及同一实际见证的上限与位置所加强的收敛阻碍。仿射展开、上限函数应用、树总量解释及共同词长资源是这一推导的支撑；捕获上界和来源闭合接口保留其原出处。本节不作未经文献尽调的世界原创性判断。
+
+完整的未证边界仍包括实际 Cloitre 全域五窗图及全域选择器图的有限状态闭合、块中心与终端实际子树的联合缺陷估计、真实周期是否存在无界长度族，以及 $C(n)/n$ 的全局黄金收敛。无限有界时钟族、无条件时钟发散和无条件线性缺陷族均未由本节建立；式 (23.5) 的幂次衰减前提和式 (23.15) 的实际下屏障也仍未证。来源的固定宽度种子、实际 Campbell 相位公式和本节锚点族均没有被推广到任意宽度或全局递归图。
+
+## 追加锚（本行以下为增补区）

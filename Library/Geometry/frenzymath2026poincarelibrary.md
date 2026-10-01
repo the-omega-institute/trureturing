@@ -68,6 +68,7 @@ does not supply that existence or uniqueness theorem.
 | `Geometry/Riemannian/Measure/Basic.lean` | `PoincareMT.RiemannianMetric.volumeMeasure` | Defines intrinsic volume as normalized Hausdorff measure for the specified metric's induced Riemannian distance. |
 | `Geometry/Riemannian/Measure/Density.lean` | `PoincareMT.RiemannianMetric.pullbackVolumeDensity` | Defines coordinate density as the square root of the Gram determinant of the parametrization differential in the same metric. |
 | `Geometry/Riemannian/Measure/HausdorffDensity.lean` | `PoincareMT.RiemannianMetric.volumeMeasure_image_eq_lintegral_pullbackVolumeDensity` | Computes the volume of a smooth coordinate image as the Lebesgue integral of this density, for a measurable subset of the parametrization source and a smooth inverse. |
+| `Geometry/Riemannian/Measure/LocalFinite.lean` | `PoincareMT.RiemannianMetric.volumeMeasure_lt_top_of_isCompact` | Compact subsets have finite intrinsic volume for a smooth Riemannian manifold with Borel measurable structure and `T3Space`; completeness and curvature are not required. |
 
 The `Geometry/` paths in this table have the prefix `PoincareLib/`.
 `MetricComplete` means completeness of the emetric obtained from the specified
@@ -279,6 +280,51 @@ it supplies no finite total volume conclusion. All earlier source and
 quotient distance, completeness, curvature and chosen-structure metric
 uniqueness clauses remain in the combined construction.
 
+For the same source and quotient metrics, a further checked application
+shows that the global orbit projection contracts outer volume:
+$\operatorname{vol}_{g_Q}(q(A)) \le \operatorname{vol}_{g}(A)$ for every
+source subset $A$. Its canonical orbit distance is bounded by source distance
+using the identity group element in the orbit infimum, so the projection is
+1-Lipschitz. The Hausdorff image inequality and the previously established
+volume identities give the result. No measurability or injectivity premise
+on $A$ is required for this outer evaluation.
+
+Consequently, if a source region $A$ has finite volume and $q(A)$ is the
+whole quotient, then this same descended metric has finite total volume.
+This is a conditional criterion: a finite-volume covering region is still
+to be constructed for the actions relevant to rigidity. Freeness and
+compact-set proper discontinuity alone do not supply such a region.
+The criterion retains the previous construction, local volume equality,
+coordinate-density, completeness and curvature clauses, with metric
+uniqueness confined to the chosen quotient smooth structure.
+
+For this same constructed source metric, let $K$ be a measurable horizontal
+subset of $\mathbb{C}$ and let $H>0$. The source region with horizontal
+coordinate in $K$ and height greater than $H$ has volume
+$\operatorname{area}(K)/(2H^2)$, with the equality interpreted in the
+extended nonnegative reals. The argument identifies the inverse-chart image
+with this actual coordinate region, uses the same orthonormal map and the
+measure-preserving `WithLp` product coordinates, and integrates the derived
+height density $h^{-3}$. Finite horizontal area therefore gives finite source
+tail volume. This does not identify a cusp quotient or provide a region
+covering an entire quotient; cusp geometry and core coverage remain open.
+
+For the same constructed source and descended quotient metrics, suppose a
+compact quotient subset $C$ together with finitely many projected source
+tails $q(T(K_i,H_i))$ covers the whole quotient, where every $K_i$ is
+measurable with finite horizontal area and every $H_i>0$. Then
+$\operatorname{vol}_{g_Q}(Q)\le
+\operatorname{vol}_{g_Q}(C)+\sum_i\operatorname{area}(K_i)/(2H_i^2)<\infty$.
+The cited compact-volume theorem makes the core contribution finite;
+projection contraction, the same-source tail formula and finite
+subadditivity bound the remaining contributions. Neither disjointness,
+projection injectivity nor measurability of the projected tails is needed.
+The empty tail family includes the compact case. The check supplies this
+conditional estimate within the same metric construction and chosen smooth
+quotient structure; it does not construct the core, classify cusps or prove
+the covering condition. No orientability premise is introduced; the
+noncompact and nonorientable rigidity cases remain in scope.
+
 These checks compiled under the project pins using the unchanged cited
 external sources and only `propext`, `Classical.choice` and `Quot.sound`.
 They are temporary applications of existing results; no new named project
@@ -296,3 +342,94 @@ sphere covering results cannot replace them.
 - Endpoint supplier and audit: `PoincareConjecture/PoincareLib/Topology/Manifold/Poincare.lean` and `PoincareConjecture/scripts/check_poincare_endpoints.lean`.
 - Generic prerequisites: the exact module paths and declaration names in the table above.
 - Verification claims: `PoincareConjecture/verification.md`; complete upstream proof checks are reported there and were not reproduced here.
+
+## Negative curvature and finite-radius exponential geometry
+
+The unchanged `SpaceForm/Curvature.lean` radial curvature formula supports
+arbitrary constant sectional curvature, and
+`Connection/AlongCurve/Manifold.lean` constructs isometric parallel transport
+from the smooth metric. `SpaceForm/ParallelJacobi.lean`,
+`SpaceForm/GeodesicJacobi.lean` and `SpaceForm/ExponentialMetric.lean` give
+positive-curvature sine formulas; their conclusions are not negative-curvature
+formulas. `Analysis/ODE/Jacobi/Basic.lean` and `Analysis/ODE/Linear.lean`
+supply the Jacobi predicate and linear ODE uniqueness used for the adaptation.
+
+A transient negative-curvature application checks the following for any
+complete smooth Riemannian manifold with a `T3Space` topology and supplied
+Levi-Civita data of constant sectional curvature `-1`. For each point `p` and
+each finite `R > 0`, the precompact-ball exponential constructor selects an
+actual smooth normalized radial geodesic map `e` on the Euclidean ball of
+radius `R`, with `e(0) = p`. Writing `De` for its manifold differential, for
+`inner(θ,θ) = 1` and `0 ≤ t < R` the same selected map satisfies
+
+```text
+t² g[e(tθ)](De[tθ]w, De[tθ]z)
+  = sinh(t)² inner(w,z)
+    + (t² - sinh(t)²) inner(w,θ) inner(z,θ).
+```
+
+The application constructs parallel transport and derives the normal Jacobi
+`sinh/cosh` formulas by linear ODE uniqueness; it supplies the compact intrinsic
+ball input from metric completeness. These scoped applications compile with
+only `propext`, `Classical.choice` and `Quot.sound`. They require no global
+compactness, orientability or finite-volume hypothesis. This finite-radius constructor selects `e` separately for each `R`. The
+global construction below uses one initial frame and one map over all radii.
+Global injectivity, covering-map structure, abstract hyperbolic-manifold
+realization, cusp classification and full Mostow-Prasad rigidity remain
+separate obligations. The same finite-radius
+exponential conclusion is also checked for the previously constructed
+upper-half-space metric `g` and for its unique descended metric `gQ`, under the
+same free, compact-set proper isometric-action hypotheses. Their already
+constructed Levi-Civita data, completeness and curvature `-1` discharge the
+application inputs; no replacement metric or supplied exponential is used.
+All prior source, volume and quotient clauses are retained, with metric
+uniqueness still within the chosen smooth quotient structure. These are
+classical prerequisite applications, with no novelty claim.
+
+## Global normalized exponentials and surjectivity
+
+`Geodesic/Complete.lean` supplies global geodesics for every initial coordinate
+velocity. `Coordinates/Exponential/SmoothExtension.lean` supplies smooth
+endpoint dependence without requiring smoothness of a chosen geodesic family;
+`EndpointAgreement.lean` identifies the zero endpoint and its derivative.
+Together with one orthonormal coordinate frame and `RadialCurve.lean`, these
+results construct one globally smooth normalized map `e` at each base point of
+any complete smooth Riemannian manifold with `T3Space` topology. Every radial
+curve is a geodesic on all of `ℝ`. The map is fixed over the whole tangent
+space; it is not selected again when a radius changes.
+
+When the manifold is also preconnected, the same selected `e` is surjective.
+`Comparison/Laplacian/Branch/Complete.lean` supplies a minimizing geodesic
+from the base point to any target point. The inverse initial frame specifies
+a velocity for `e`, and `Coordinates/Exponential/Uniqueness.lean` identifies
+the radial curve with that geodesic by their initial position and coordinate
+velocity. This surjectivity application requires no curvature hypothesis.
+
+With supplied Levi-Civita data of constant sectional curvature `-1`, the
+same global `e` has a bijective manifold differential at every tangent-space
+point and satisfies the negative polar metric formula above for every unit
+`θ` and every `t ≥ 0`. The finite-radius formula is applied with `R = t + 1`
+and differential nonsingularity with `R = ‖x‖ + 1`; neither application changes
+`e`. The estimate `sinh(t) ≥ t` and Cauchy-Schwarz give the positivity used for
+nonsingularity. These constructions require no global compactness,
+orientability or finite-volume premise.
+
+The combined global surjectivity, nonsingularity and metric formula are also
+checked for the same constructed upper-half-space metric `g` and its unique
+descended metric `gQ` under the original free, compact-set proper isometric
+group-action hypotheses. Source connectedness follows from the coordinate
+homeomorphism to the convex positive-height region, and quotient connectedness
+from the existing quotient topology. All earlier source, curvature,
+completeness, volume, conditional core/tail bound and quotient clauses remain
+in the application; metric uniqueness is still within the chosen smooth
+quotient structure. Smooth local tangent-metric isometries through arbitrary
+prescribed source and quotient points are checked in the same construction.
+
+These scoped classical applications compile under the unchanged project pins
+and cited external revision with only `propext`, `Classical.choice` and
+`Quot.sound`. They are temporary applications, with no retained named project
+Lean declaration, new dependency or novelty claim. Surjectivity and a
+bijective differential do not supply the still-unproved covering structure,
+arbitrary-manifold realization as a hyperbolic quotient, cusp classification
+or full Mostow-Prasad existence and uniqueness. The noncompact and
+nonorientable cases remain part of the rigidity target.
