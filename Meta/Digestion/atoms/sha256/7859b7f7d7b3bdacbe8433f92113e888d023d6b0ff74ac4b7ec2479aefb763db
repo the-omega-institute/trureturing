@@ -1,0 +1,18 @@
+**命题 34.3（稳定坐标仅在尾类内注入）。** 置 $\phi=(1+\sqrt5)/2$、$q=2-\sqrt5$、$\ell(a,b)=a-\phi^{-1}b$。$\ell S=q\ell$、$|q|<1$，故无限合法地址有连续编码
+
+$$
+\pi(x)=\sum_{j\ge0}q^j\ell(d_{x_j}).
+$$
+
+同尾 $x=uz,y=vz$ 满足
+
+$$
+\pi(x)-\pi(y)=\ell(D_u-D_v)=\ell(c(x,y)),
+$$
+
+所以 $\pi$ 在每个尾等价类内单射。
+
+证明。直接行向量乘法给 $\ell S=q\ell$；有限 digit 集与 $|q|<1$ 给一致收敛及连续性。共同尾以同一 $q^L$ 系数出现并相消。$\phi^{-1}$ 无理，使 $\ell$ 在 $\mathbb Z^2$ 上零核；再用 (34.2) 得单射。这个单射不能升级到全部无限地址：母卷 §§150–151 的同一收缩编码像为 $[-1,\phi]$，而 $\Omega_0$ 有非平凡 clopen cylinder，compact 且不连通。若连续 $\pi$ 全局单射，compact-to-Hausdorff 双射会给到该区间的 homeomorphism，与连通性矛盾。故全局碰撞存在，并由刚证结论必须跨尾类。$\square$
+
+以上桥只处理 equal-depth extension。尺度差、unequal-depth graph-groupoid 和其 cocycle 不在本合同中；本节也不以稳定坐标完成来授予 $J,C$ 的全局连续执行权限。
+

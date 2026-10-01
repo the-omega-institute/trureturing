@@ -1,0 +1,18 @@
+**命题 14.3（固定时钟的共同状态解码成本）。** 在[定义 11.7 的单份、精确、共同 CPTP 编解码合同](https://github.com/the-omega-institute/trureturing/blob/fecb0ec51a883ebb079d477888ecfdc4d27a97eb/docs/develop/theory/FIBONACCI_COHERENT_TRANSPORT_BOUNDARY.md#L1114)下，要求保持定理 14.1 的全部实际历史统计。免费经典 flag 为任意有限集合，其概率可依赖输入，编码与同一个状态解码均固定，无隐藏量子旁路或预共享纠缠。则成本为
+
+| 固定时钟条件 | 最小公共量子端口 $q$，有限经典 flag 免费 | 最小全计费 Hilbert 维数 |
+| --- | ---: | ---: |
+| $x=1$ | $4$ | $4$ |
+| $x^3=1, x\ne1$ | $4$ | $16$ |
+| $x^3\ne1$ | $12$ | $16$ |
+
+证明。第一行的高层是不可读重数因子。令 $T=\mathrm{Dec}\circ\mathrm{Enc}$；效果线性张成给出的准确要求为
+
+$$
+\operatorname{Tr}_H\circ T=\operatorname{Tr}_H.
+$$
+
+取 $\mathrm{Enc}=\operatorname{Tr}_H$，$\mathrm{Dec}(\sigma)=\sigma\otimes\eta_H$，其中 $\eta_H$ 为固定密度算子，即用四维记忆达到上界。下界须单独处理：将输入高层固定为 $\eta_H$，解码后取低层偏迹，便得到通过同一存储资源实现的四维恒等通道。若量子端口为 $q$ 维，每个 flag 分支的复合 Kraus 算子秩至多为 $q$。恒等通道的 Choi 算子秩一，正算子之和等于此 Choi 算子迫使每个非零复合 Kraus 算子都是 $I_4$ 的标量倍数，故 $q\ge4$，即使 flag 的分布任意依赖输入仍成立。全计费时，四个低层正交基态必须仍可完美区分，编码支撑两两正交，故记忆维数至少为 $4$。此行不要求恢复原来的完整 $AH$ 态。
+
+第二行有四个可读的四维 Fourier 块，第三行有四维与十二维两个可读轨道块。实际效果张成的等号给 $\mathcal E_{\mathcal P}\circ T=\mathcal E_{\mathcal P}$；在解码后加同一 pinching 不增加资源，便转为精确块恢复。因此可直接应用[命题 11.8 的块编码及 Choi 下界](https://github.com/the-omega-institute/trureturing/blob/fecb0ec51a883ebb079d477888ecfdc4d27a97eb/docs/develop/theory/FIBONACCI_COHERENT_TRANSPORT_BOUNDARY.md#L1133)，得到最大块维数 $4,12$。块标签可作免费有限 flag，各块等距嵌入公共端口达到上界。全计费时，两者均有十六个块内正交基态；拉回这些基投影得到完美区分编码态的 POVM，故十六个非零编码支撑两两正交，下界为 $16$。直接保存 pinching 的十六维输出达到它。此处使用实际效果线性张成与共同状态解码，而不只使用生成的 $C^*$ 代数；压缩工具的文献合同同命题 11.8 所引 Bluhm–Rauber–Wolf 与 Nayak–Sen。$\square$
+

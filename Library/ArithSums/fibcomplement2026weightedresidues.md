@@ -292,3 +292,87 @@ $$
 This is a fixed-modulus, fixed-product result, and for $M<p^{1/4}$ it is $M^{o(1)}$. In the present problem only the complementary factor is known to lie in a short interval. The core residues need not occupy a single short interval, and $V$ need not be prime. Cutting all core residues into short intervals introduces their number as a loss. Using this interface requires an additional common-source concentration or weighted covering estimate and a suitable prime-modulus or composite-modulus bridge.
 
 The remaining objective is a joint bound for the actual weighted relation $CH-gV=1$, with the core, the cofactor, and the source interval kept together. The cited local estimates refine its comparison models; they do not yet prove that the fixed Fibonacci residue contains no Robin violation.
+
+## Complete support and ordered exponents do not fix the canonical window
+
+The [weighted Beatty note](guloglunevans2008beatty.md) identifies the
+actual canonical rotation $r_n=\{n\varphi\}$ and residual $E$ for the
+same integer. A classical density theorem supplies a useful restriction
+on attempts to control that window using prime support alone.
+Frantzikinakis–Host–Kra, *Bohr recurrence and density of non-lacunary
+semigroups of $\mathbb N$*, Proc. AMS **153** (2025), 181–192,
+[DOI:10.1090/proc/17006](https://doi.org/10.1090/proc/17006),
+[arXiv:2406.01353v3](https://arxiv.org/pdf/2406.01353v3), updated
+2024-11-02, defines non-lacunarity on printed p.3 as containing two
+multiplicatively independent integers. On p.4 it recalls Furstenberg's
+irrational linear-orbit density theorem before stating the polynomial
+extension in Theorem 3. The classical linear theorem is sufficient
+here; the polynomial extension is not required.
+
+Fix $P\ge3$, put $R=P\#$, and consider the actual integers
+
+$$
+n=R\,2^u6^v,\qquad u,v\in\mathbb Z_{\ge0}.
+$$
+
+They retain every prime through $P$ and have nonincreasing exponents:
+$v_2(n)=1+u+v$, $v_3(n)=1+v$, and $v_p(n)=1$ for $5\le p\le P$.
+The generators 2 and 6 are multiplicatively independent, even though
+they are not coprime. For each integer $U\ge0$, the subfamily $u,v\ge U$ is
+$R12^U\langle2,6\rangle$. Applying the recalled theorem with the
+irrational coefficient $R12^U\varphi$ proves density of its rotations
+in $\mathbb R/\mathbb Z$. This separate application controls arbitrarily
+large exponent tails; deleting infinite edges from one dense orbit
+would not justify it.
+
+Choose an open arc strictly inside a canonical rotation branch where
+$|E|$ is bounded below by a fixed positive constant. For arbitrarily
+large members of the same fixed-$P$ family, the exact canonical
+certificate
+
+$$
+D=5h^2+E\bigl(2\sqrt5(n-h)+E\bigr)
+$$
+
+then has $|D|\asymp n$. Consequently complete initial support and
+ordered exponents **alone** do not force every canonical source into
+the small-discriminant windows used by the nonresidue estimate.
+
+The fixed-$P$ quantifier is essential. Here
+$Z(n)\le\prod_{p\le P}(1-1/p)^{-1}$, so the Robin ratio tends to zero;
+these are not asymptotic SA/CA candidates or a near-boundary family.
+The density theorem provides no hitting-rate bound when $P$ grows,
+and no assertion about the squarefree kernel or conductor of the
+actual $D$. The extremal exponent heights and their size budget are
+therefore additional joint conditions to retain, rather than optional
+labels on the support. This is a classical-source application without
+Lean verification or an originality claim.
+
+## Support-conditioned discriminants and already covered norm branches
+
+The [Baier square-sieve note](../Fourier/baier2016squaresieve.md) records a
+different joint obstruction on the **same actual integer**. Its canonical
+certificate $c^2-D=5n(n-2h)$ forces $(D/p)\in\{0,1\}$ at every odd support
+prime. For a finite weighted population sharing $L$ such primes, the
+ordered-pair correlation term is exactly
+
+$$
+\sum_n a_n\frac{k(n)(k(n)-1)}{L^2},
+\qquad k(n)=\#\{p\text{ selected}:p\nmid D(n)\}.
+$$
+
+Thus preselecting full prime support does not leave independent quadratic
+signs for a square sieve to cancel. Zeros retain the joint incidence of
+the canonical lift and the support. For unit bit zero they are precisely
+the selected odd primes dividing the composition gcd; for unit bit one
+the zero locus is affine and this gcd identification fails. Neither a
+support-only phase average nor the unconditional square-sieve statement
+controls the remaining weighted incidence or the extremal exponent cost.
+
+The primitive norm $\pm1$ branch with unit bit zero already has a uniform
+Robin tail bound in [the FIB theory, §199.6 and §201.6](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md).
+Those paper results allow the actual canonical composition gcd to grow;
+they are not merely fixed-multiplier statements. A new safety proof for
+this branch would not expand the covered Robin family. Remaining norm
+and affine-unit branches still require estimates with their own actual
+support, gcd, discriminant and price budget kept together.

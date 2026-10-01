@@ -299,3 +299,150 @@ without a numerical onset or Lean verification of the analytic chain.
 General candidates need not have nonsquare $D$ or satisfy this joint
 modulus/cutoff restriction. These applications do not replace that missing
 all-candidate estimate, and do not prove general Robin or RH.
+
+## Prime-power exceptions for the actual unit bit one
+
+The conservative induction above retains every raw square-part zero.
+For an actual canonical source with **unit bit $h=1$**, a smaller faithful
+exception set can be read from the same prime-power exponents and the
+same five-window lift. The following is a paper-level local refinement;
+it supplies no new analytic nonresidue estimate or Lean verification.
+
+Let $n>2$, $n=1+2A+3B$, $c=4A+7B$, and
+$D=5-4(A^2+AB-B^2)$ be nonsquare. Write
+
+$$
+D=\delta s^2,\qquad s\ge1,\qquad
+\delta\text{ signed squarefree},\qquad q=|\delta|.
+$$
+
+Positive and negative discriminants are admitted. Since $D\equiv1\pmod4$,
+$s$ is odd and $\delta\equiv1\pmod4$, so $\delta$ itself is the fundamental
+discriminant. Let $\chi$ be its primitive nonprincipal quadratic character
+of conductor $q$. The existing FIB identity is
+
+$$
+c^2-\delta s^2=5n(n-2).
+\tag{P1}
+$$
+
+If an odd prime has $\chi(p)=-1$, then
+
+$$
+v_p(c^2-\delta s^2)=2\min\{v_p(c),v_p(s)\}.
+\tag{P2}
+$$
+
+Unequal valuations cannot cancel; equal valuations could cancel only if
+$\delta$ became a nonzero square modulo $p$. In particular, writing
+$e_p=v_p(n)>0$, a negative-character support prime $p\ne2,5$ must have
+$e_p$ even and $v_p(c),v_p(s)\ge e_p/2$, since $p\nmid n-2$.
+For $p=5$, negativity instead forces $e_5$ odd and both valuations at least
+$(e_5+1)/2$. An odd-exponent support prime other than five cannot be a
+hidden negative prime after removal of the raw square part.
+
+Define the potential-exception set and required depths by
+
+$$
+\mathcal P_1=
+\{p\mid n:p\ne2,5,\ e_p\text{ even}\}
+\cup\{5:5\mid n,\ e_5\text{ odd}\},\qquad
+b_p=\begin{cases}e_p/2,&p\ne5,\\(e_5+1)/2,&p=5.\end{cases}
+$$
+
+Use the actual lift, rather than a free residue, to set
+
+$$
+H_1=\prod_{p\in\mathcal P_1}p^{b_p},\qquad
+\mathcal E_1=\{p\in\mathcal P_1:p^{b_p}\mid c\},\qquad
+T_1=\prod_{p\in\mathcal E_1}p^{b_p},\qquad
+R_1=\operatorname{rad}(T_1).
+$$
+
+The set $\mathcal E_1$ contains every negative-character support prime;
+its other members need not be negative. All its membership tests are
+determined by $c\bmod H_1$. The same-object divisibility relations are
+
+$$
+H_1\mid5\frac n{\operatorname{rad}(n)},\qquad
+T_1\mid\gcd(c,s),\qquad qT_1^2\mid|D|.
+\tag{P3}
+$$
+
+For $p\ne5$, $b_p=e_p/2\le e_p-1$. For five this inequality holds when
+$e_5\ge3$; $e_5=1$ is paid by the displayed extra factor five.
+For each $p\in\mathcal E_1$, both $c^2$ and $5n(n-2)$ are divisible by
+$p^{2b_p}$. Thus $p^{2b_p}\mid D$, so $p^{b_p}\mid s$, proving the
+remaining relations in (P3).
+
+Set $m_1=\operatorname{lcm}(q,R_1)$ and induce the character by
+$\widetilde\chi_1(k)=\chi(k)\mathbf1_{(k,m_1)=1}$. Then
+
+$$
+\widetilde\chi_1(p)=-1\Longrightarrow p\nmid n,\qquad
+m_1\mid\operatorname{rad}|D|,\qquad
+m_1\le qR_1\le |D|\frac{R_1}{T_1^2}.
+\tag{P4}
+$$
+
+For odd support primes the first statement follows from (P2) and the mask.
+If $n$ is even, $c$ is odd and $8\mid n(n-2)$, so $D\equiv1\pmod8$ and
+$\chi(2)=1$; if $n$ is odd, two is already missing. This handles the prime
+two without transporting an odd-prime argument to it. The second
+statement holds because $q$ and $R_1$ are squarefree divisors of $|D|$.
+
+The extra factor five is necessary in this construction. The canonical
+source $n=95$ has $(A,B)=(14,22)$, $c=210$, $D=-75=-3\cdot5^2$ and
+$\chi(5)=-1$. Here $H_1=T_1=R_1=5$, $m_1=15$, while
+$n/\operatorname{rad}(n)=1$.
+
+The exponent excess is exactly
+
+$$
+B_{\rm exp}(n)=\log\frac n{\operatorname{rad}(n)}
+=\sum_{p\mid n}(e_p-1)\log p,\qquad
+\log H_1\le\log5+B_{\rm exp}(n).
+$$
+
+Under the additional SA support asymptotic
+$\operatorname{rad}(n)=n^{1-o(1)}$, this gives $H_1=n^{o(1)}$.
+It does not bound the primitive conductor $q$ or guarantee
+$m_1^b\le\log n$. Whenever the existing weighted supply can actually
+reach the cutoff for $m_1$, (P4) lets that supplied negative-prime weight
+contribute to $J_{\rm miss}$ without deleting the listed exceptions again.
+The missing estimate must still cross the full same-integer Euler budget;
+$D$ square, unit bit zero and uncontrolled $q$ remain separate branches.
+
+## A canonical family outside the sufficient conductor cutoff
+
+The [canonical local-residue construction](grahamringrose1990least.md#a-canonical-source-with-vanishing-logarithmic-character-weight)
+uses the same actual unit-one source and has $D\asymp n$,
+$Y=\log n\sim2z$, no negative primitive-character prime up to $z$,
+and $W_\delta^{\log}(Y)\to0$. It retains the ramified zero at three.
+Its primitive conductor $q=\delta$ satisfies $q>z$: choose
+$1\le a<q$ with $\chi_\delta(a)=-1$. Its prime factors have nonzero
+character, and at least one has value $-1$, hence lies strictly between
+$z$ and $q$. In particular $q\to\infty$.
+
+For each preassigned $\beta_0<b<1/4$, choose
+$0<c<\log(4\sqrt e\,b)$. The weighted consequence above gives
+$W_{\chi_\delta}(q^b)\ge c$ once $q$ reaches its stated threshold.
+If $q^b\le Y$, then
+
+$$
+c\le W_{\chi_\delta}(q^b)
+\le W_\delta^{\log}(Y),
+$$
+
+which contradicts the latter's convergence to zero. Thus this canonical
+family eventually has
+
+$$
+q^b>\log n,\qquad m_1^b\ge q^b>\log n.
+$$
+
+The actual primitive conductor already exceeds this sufficient cutoff;
+an improved upper certificate for $m_1$ cannot change that fact on this
+family. The onset may depend on the fixed $b,c$. This is a paper-level
+application of the existing weighted estimate, not a new analytic theorem,
+an assertion $q\asymp n$, or an obstruction proved on SA/CA candidates.

@@ -1,0 +1,5 @@
+source_id = "greedy-brick-rest-events"
+path = "docs/develop/theory/GREEDY_BRICK_REST_EVENTS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

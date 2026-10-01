@@ -5,7 +5,7 @@ year: 2026
 title: Poincare-Conjecture library prerequisites for hyperbolic rigidity
 doi: null
 url: https://github.com/frenzymath/Poincare-Conjecture/tree/432c38f2aa5a30efb13871292d17b4a3309a496a
-claim: Generic smooth gluing, metric pullback, covering completeness and curvature transport provide prerequisites for a Mostow-Prasad formalization; the Poincare endpoints do not supply hyperbolic rigidity.
+claim: Generic smooth gluing, metric pullback, covering completeness, curvature transport and coordinate volume provide prerequisites for a Mostow-Prasad formalization; the Poincare endpoints do not supply hyperbolic rigidity.
 strata_touched:
   - D5/S3/Geometry/MostowPrasadCovering
   - D5/S3/Geometry/IsometricOrbitMetric
@@ -56,6 +56,7 @@ does not supply that existence or uniqueness theorem.
 | `Geometry/Riemannian/Covering/Completeness.lean` | `PoincareMT.RiemannianMetric.metricComplete_of_isCoveringMap` | A smooth covering preserving tangent inner products pulls completeness from the base to the covering space, with arbitrary sheet count; it does not prove completeness downstairs from completeness upstairs. |
 | `Geometry/Riemannian/Covering/Completeness.lean` | `PoincareMT.RiemannianMetric.metricComplete_pullbackOfLocalDiffeomorph` | The same upward completeness transfer for the actual local-diffeomorphism pullback metric. |
 | `Geometry/RicciFlow/Local/Connection/Existence.lean` | `PoincareMT.exists_leviCivitaData` | Constructs Levi-Civita data for a supplied smooth metric on a Hausdorff, second-countable manifold. |
+| `Geometry/RicciFlow/Curvature/Calculus/Fields/CurvaturePointwise.lean` | `PoincareMT.RicciFlowAnalysis.curvatureOnFields_eq_curvature` | Identifies the connection commutator on smooth vector fields with retained pointwise curvature on an open neighborhood; it supplies extension independence, not the value of curvature. |
 | `Geometry/Riemannian/Curvature/LocalIsometrySectional.lean` | `PoincareMT.LeviCivitaData.sectionalCurvature_eq_of_local_isometry` | Transports sectional curvature on an open set for a smooth map preserving tangent inner products, given both Levi-Civita data; no separate invertible-differential premise is required, and it does not compute the source curvature. |
 | `Geometry/Riemannian/Curvature/LocalIsometry.lean` | `PoincareMT.LeviCivitaData.curvatureTensor_eq_of_local_isometry` | A smooth map preserving tangent inner products on an open set transports the four-covariant curvature tensor; it needs the two metrics and Levi-Civita data. |
 | `Geometry/Riemannian/Curvature/LocalIsometry.lean` | `PoincareMT.LeviCivitaData.curvatureTensorNorm_eq_of_local_isometry` | Transports the retained Hilbert-Schmidt curvature norm under the same hypotheses. |
@@ -64,6 +65,10 @@ does not supply that existence or uniqueness theorem.
 | `Geometry/Riemannian/Metric/Induced/Complete.lean` | `PoincareMT.RiemannianMetric.pathELength_map_of_metric_pullback` | Preserves the length of a continuously differentiable curve under a smooth map preserving tangent inner products. |
 | `Geometry/Riemannian/Metric/Induced/Complete.lean` | `PoincareMT.RiemannianMetric.edist_map_le_of_metric_pullback` | A smooth map preserving tangent inner products contracts the induced path distance; an inverse with the same properties gives distance equality. |
 | `Geometry/Riemannian/Metric/Gluing/Descent.lean` | `Poincare.Gluing.exists_unique_metric_of_covering_local_diffeomorphisms` | Descends metrics through a family of local diffeomorphisms covering the target, provided equal projected tangent vectors have equal source inner products; the target smooth structure is input. |
+| `Geometry/Riemannian/Measure/Basic.lean` | `PoincareMT.RiemannianMetric.volumeMeasure` | Defines intrinsic volume as normalized Hausdorff measure for the specified metric's induced Riemannian distance. |
+| `Geometry/Riemannian/Measure/Density.lean` | `PoincareMT.RiemannianMetric.pullbackVolumeDensity` | Defines coordinate density as the square root of the Gram determinant of the parametrization differential in the same metric. |
+| `Geometry/Riemannian/Measure/HausdorffDensity.lean` | `PoincareMT.RiemannianMetric.volumeMeasure_image_eq_lintegral_pullbackVolumeDensity` | Computes the volume of a smooth coordinate image as the Lebesgue integral of this density, for a measurable subset of the parametrization source and a smooth inverse. |
+| `Geometry/Riemannian/Measure/LocalFinite.lean` | `PoincareMT.RiemannianMetric.volumeMeasure_lt_top_of_isCompact` | Compact subsets have finite intrinsic volume for a smooth Riemannian manifold with Borel measurable structure and `T3Space`; completeness and curvature are not required. |
 
 The `Geometry/` paths in this table have the prefix `PoincareLib/`.
 `MetricComplete` means completeness of the emetric obtained from the specified
@@ -90,7 +95,19 @@ also checked separately. Five additional external modules compiled unchanged:
 `RicciFlow/Local/Connection/{Koszul,Coordinates,Construction,Existence}` and
 `Riemannian/Curvature/LocalIsometrySectional`. Both cited declarations have
 recursive axiom closures consisting only of the same three standard axioms.
-These modules are outside the 47-module count. This establishes source
+These modules are outside the 47-module count. The extension-independence
+closure was checked separately: 13 external modules, 76,771 bytes excluding
+Mathlib, with unchanged sources; ten required new compilation and three reused
+source-identical cached modules. Its cited declaration has the same three
+standard axioms. This separate closure count is not added to the union above.
+The volume definition closure was checked separately: two external modules,
+3,780 bytes, with one newly compiled and one source-identical cached module.
+The coordinate-volume closure comprises 14 external modules, 76,343 bytes;
+eleven newly compiled and three reused source-identical cached modules.
+All copied sources are unchanged, and the cited coordinate image integral
+theorem has the same three standard axioms. These separate counts are not
+added to the 47-module union above.
+This establishes source
 compatibility for the checked closures, not installation of an external
 dependency or independent verification of the complete Poincare proof.
 
@@ -209,16 +226,111 @@ have zero Lie bracket. Differentiating the metric pairing
 `h^(-2) inner(v,w)` and applying Koszul gives this formula for the actual
 connection; the formula is derived, rather than supplied as a premise.
 The check retains all earlier source and quotient distance and completeness
-clauses in the same construction. It does not compute curvature.
+clauses in the same construction.
+
+For every Levi-Civita datum of that same source metric, the retained pointwise
+curvature has now been computed as
+`R(u,v)w = g(u,w) v - g(v,w) u`.
+The calculation differentiates inverse height, applies the scalar Leibniz
+rule to the connection formula, and uses the zero brackets of the constant
+fields. The extension-independence theorem above identifies this field
+calculation with the retained pointwise curvature. In the upstream tensor
+convention, the sectional numerator is the negative Gram determinant, so
+sectional curvature is minus one whenever that determinant is nonzero.
+At zero Gram determinant the totalized sectional curvature is zero.
+
+Every Levi-Civita datum of each same descended quotient metric also has
+sectional curvature minus one on nondegenerate planes. Surjectivity of the
+actual orbit covering selects a source point, and the invertible projection
+differential lifts any two target tangent vectors. Preservation of tangent
+inner products preserves their Gram determinant; sectional-curvature
+transport then gives the quotient value. The combined check constructs the
+source and quotient metrics and Levi-Civita data while retaining all earlier
+distance, completeness, local-diffeomorphism and metric-uniqueness clauses.
+It assumes neither source curvature nor a supplied quotient metric, and
+metric uniqueness remains within the chosen smooth quotient structure.
+
+Canonical Borel measurable structures are chosen for the source and each
+actual orbit quotient. For the same constructed source metric, its intrinsic
+volume equals normalized three-dimensional Hausdorff measure for the
+original hyperbolic distance, and every isometry of that distance preserves
+volume on every set. For the same descended quotient metric, its intrinsic
+volume equals normalized Hausdorff measure for the canonical orbit distance.
+The already established all-pair distance identities identify the metrics
+used by these volume definitions; neither volume identity is assumed.
+
+At every source point there is a positive-radius ball on which the actual
+orbit projection is isometric and preserves the volume of every subset.
+No measurability premise is needed for this local image equality: it uses
+the measure's outer evaluation on arbitrary sets. This does not assert that
+the projection preserves volumes of sets extending beyond such a ball.
+
+In the same chosen source chart, the inverse parametrization has identity
+differential on the chart target. The forward differential is identity,
+and the chart inverse chain rule gives the inverse differential. Thus the
+pullback Gram matrix of this same metric is $h^{-2}I_3$, its determinant is
+$h^{-6}$, and its positive square root is $h^{-3}$, where $h$ is the positive
+height of the parametrized point. For every measurable coordinate subset
+$S$ contained in that chart target, the same source metric's volume of the
+inverse-chart image is the Lebesgue integral over $S$ of this density.
+The coordinate-volume theorem above supplies the integral identity after
+smoothness of the chart and its inverse is checked. This relates hyperbolic
+Hausdorff volume to Euclidean coordinate volume with the derived weight;
+it supplies no finite total volume conclusion. All earlier source and
+quotient distance, completeness, curvature and chosen-structure metric
+uniqueness clauses remain in the combined construction.
+
+For the same source and quotient metrics, a further checked application
+shows that the global orbit projection contracts outer volume:
+$\operatorname{vol}_{g_Q}(q(A)) \le \operatorname{vol}_{g}(A)$ for every
+source subset $A$. Its canonical orbit distance is bounded by source distance
+using the identity group element in the orbit infimum, so the projection is
+1-Lipschitz. The Hausdorff image inequality and the previously established
+volume identities give the result. No measurability or injectivity premise
+on $A$ is required for this outer evaluation.
+
+Consequently, if a source region $A$ has finite volume and $q(A)$ is the
+whole quotient, then this same descended metric has finite total volume.
+This is a conditional criterion: a finite-volume covering region is still
+to be constructed for the actions relevant to rigidity. Freeness and
+compact-set proper discontinuity alone do not supply such a region.
+The criterion retains the previous construction, local volume equality,
+coordinate-density, completeness and curvature clauses, with metric
+uniqueness confined to the chosen quotient smooth structure.
+
+For this same constructed source metric, let $K$ be a measurable horizontal
+subset of $\mathbb{C}$ and let $H>0$. The source region with horizontal
+coordinate in $K$ and height greater than $H$ has volume
+$\operatorname{area}(K)/(2H^2)$, with the equality interpreted in the
+extended nonnegative reals. The argument identifies the inverse-chart image
+with this actual coordinate region, uses the same orthonormal map and the
+measure-preserving `WithLp` product coordinates, and integrates the derived
+height density $h^{-3}$. Finite horizontal area therefore gives finite source
+tail volume. This does not identify a cusp quotient or provide a region
+covering an entire quotient; cusp geometry and core coverage remain open.
+
+For the same constructed source and descended quotient metrics, suppose a
+compact quotient subset $C$ together with finitely many projected source
+tails $q(T(K_i,H_i))$ covers the whole quotient, where every $K_i$ is
+measurable with finite horizontal area and every $H_i>0$. Then
+$\operatorname{vol}_{g_Q}(Q)\le
+\operatorname{vol}_{g_Q}(C)+\sum_i\operatorname{area}(K_i)/(2H_i^2)<\infty$.
+The cited compact-volume theorem makes the core contribution finite;
+projection contraction, the same-source tail formula and finite
+subadditivity bound the remaining contributions. Neither disjointness,
+projection injectivity nor measurability of the projected tails is needed.
+The empty tail family includes the compact case. The check supplies this
+conditional estimate within the same metric construction and chosen smooth
+quotient structure; it does not construct the core, classify cusps or prove
+the covering condition. No orientability premise is introduced; the
+noncompact and nonorientable rigidity cases remain in scope.
 
 These checks compiled under the project pins using the unchanged cited
 external sources and only `propext`, `Classical.choice` and `Quot.sound`.
 They are temporary applications of existing results; no new named project
 declaration or external dependency is installed by this note.
 
-The model's curvature of minus one remains to be computed before applying
-curvature transport. Sectional curvature is totalized as zero for pairs with
-zero Gram determinant; minus one must be stated for nondegenerate planes. Finite covolume,
+Finite covolume,
 noncompact cusp analysis, and the global Mostow-Prasad existence and
 uniqueness argument remain separate obligations. Compact positive-curvature
 sphere covering results cannot replace them.
@@ -230,3 +342,45 @@ sphere covering results cannot replace them.
 - Endpoint supplier and audit: `PoincareConjecture/PoincareLib/Topology/Manifold/Poincare.lean` and `PoincareConjecture/scripts/check_poincare_endpoints.lean`.
 - Generic prerequisites: the exact module paths and declaration names in the table above.
 - Verification claims: `PoincareConjecture/verification.md`; complete upstream proof checks are reported there and were not reproduced here.
+
+## Negative curvature and finite-radius exponential geometry
+
+The unchanged `SpaceForm/Curvature.lean` radial curvature formula supports
+arbitrary constant sectional curvature, and
+`Connection/AlongCurve/Manifold.lean` constructs isometric parallel transport
+from the smooth metric. `SpaceForm/ParallelJacobi.lean`,
+`SpaceForm/GeodesicJacobi.lean` and `SpaceForm/ExponentialMetric.lean` give
+positive-curvature sine formulas; their conclusions are not negative-curvature
+formulas. `Analysis/ODE/Jacobi/Basic.lean` and `Analysis/ODE/Linear.lean`
+supply the Jacobi predicate and linear ODE uniqueness used for the adaptation.
+
+A transient negative-curvature application checks the following for any
+complete smooth Riemannian manifold with a `T3Space` topology and supplied
+Levi-Civita data of constant sectional curvature `-1`. For each point `p` and
+each finite `R > 0`, the precompact-ball exponential constructor selects an
+actual smooth normalized radial geodesic map `e` on the Euclidean ball of
+radius `R`, with `e(0) = p`. Writing `De` for its manifold differential, for
+`inner(θ,θ) = 1` and `0 ≤ t < R` the same selected map satisfies
+
+```text
+t² g[e(tθ)](De[tθ]w, De[tθ]z)
+  = sinh(t)² inner(w,z)
+    + (t² - sinh(t)²) inner(w,θ) inner(z,θ).
+```
+
+The application constructs parallel transport and derives the normal Jacobi
+`sinh/cosh` formulas by linear ODE uniqueness; it supplies the compact intrinsic
+ball input from metric completeness. These scoped applications compile with
+only `propext`, `Classical.choice` and `Quot.sound`. They require no global
+compactness, orientability or finite-volume hypothesis. The selected `e` may
+depend on `R`: compatibility between radii, global injectivity or surjectivity,
+abstract hyperbolic-manifold realization, cusp classification and full
+Mostow-Prasad rigidity have not been established. The same finite-radius
+exponential conclusion is also checked for the previously constructed
+upper-half-space metric `g` and for its unique descended metric `gQ`, under the
+same free, compact-set proper isometric-action hypotheses. Their already
+constructed Levi-Civita data, completeness and curvature `-1` discharge the
+application inputs; no replacement metric or supplied exponential is used.
+All prior source, volume and quotient clauses are retained, with metric
+uniqueness still within the chosen smooth quotient structure. These are
+classical prerequisite applications, with no novelty claim.
