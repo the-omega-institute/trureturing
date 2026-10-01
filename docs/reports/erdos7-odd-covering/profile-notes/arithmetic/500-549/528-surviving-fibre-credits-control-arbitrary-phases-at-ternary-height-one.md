@@ -31565,3 +31565,39 @@ mixed columns remain, and the complementary same-source charge Q_L
 is still unpaid in general. The unrestricted #7 objective is
 unchanged and unresolved. These are ordinary symbolic results;
 no new Lean verification or new finite producer is claimed.
+
+[Report385, section61](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#61-variable-depth-guarded-frontiers-retain-one-common-witness)
+permits a prefix antichain of different depths outside any selected
+actual pure-q guards containing A_q. Each leaf uses its own collision
+depth while retaining every old q digit and the literal divided p-tail.
+The interface contains every uniform-depth guarded graph, and a finite
+noncover with private points admits a variable-depth matching although
+all its uniform-depth graphs fail. For the full original q-height H,
+every successful finite frontier has a successful representative of
+depth at most H+1; an exact tree recurrence retains disjoint sets of
+assigned p-roots across child subtrees. These results concern the same
+actual source and give a finite joint interface, without asserting
+that every hypothetical cover admits a matching or adding Lean
+verification.
+
+[Report385, section62](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#62-weighted-root-reuse-retains-exact-original-label-budgets)
+allows a first-p root to be reused at different q-depths. Each use
+copies its actual q-free p-bearing original batch, charging its class
+count R_a and divided-modulus sum S_a. Positive batches are used at
+most once per depth; empty batches have no such capacity restriction.
+At fresh depths even the normalized pure-p root0 is available, with
+R_0=S_0=1 and output modulus q^h. The existing PH2 replacement rule
+compares the resulting count and modulus sum with the SAME removed
+original inventory. For a fixed frontier, ordinary minimum-cost
+assignment applies independently at each depth.
+
+[Report385, section63](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#63-finite-depth-bounds-retain-the-weighted-replacement-budget)
+makes the weighted strict-improvement search finite. After folding
+empty-workload branches at depth H+1, the existing full-tree leaf
+identity bounds the remaining depth by the actual removed class
+budget. A separate bound depends only on H, q and the number of
+positive root batches, using constant deep allowed lists and loop
+erasure that does not increase either cost. This extends the transport
+interface without proving that an improving allocation exists for
+every whole cover. Original labels, common witnesses and arbitrary
+original heights remain in scope; unrestricted Erdős #7 remains open.
