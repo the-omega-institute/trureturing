@@ -372,10 +372,11 @@ The application constructs parallel transport and derives the normal Jacobi
 `sinh/cosh` formulas by linear ODE uniqueness; it supplies the compact intrinsic
 ball input from metric completeness. These scoped applications compile with
 only `propext`, `Classical.choice` and `Quot.sound`. They require no global
-compactness, orientability or finite-volume hypothesis. The selected `e` may
-depend on `R`: compatibility between radii, global injectivity or surjectivity,
-abstract hyperbolic-manifold realization, cusp classification and full
-Mostow-Prasad rigidity have not been established. The same finite-radius
+compactness, orientability or finite-volume hypothesis. This finite-radius constructor selects `e` separately for each `R`. The
+global construction below uses one initial frame and one map over all radii.
+Global injectivity, abstract hyperbolic-manifold realization, cusp
+classification and full Mostow-Prasad rigidity remain separate obligations.
+The global covering construction is checked below. The same finite-radius
 exponential conclusion is also checked for the previously constructed
 upper-half-space metric `g` and for its unique descended metric `gQ`, under the
 same free, compact-set proper isometric-action hypotheses. Their already
@@ -384,3 +385,144 @@ application inputs; no replacement metric or supplied exponential is used.
 All prior source, volume and quotient clauses are retained, with metric
 uniqueness still within the chosen smooth quotient structure. These are
 classical prerequisite applications, with no novelty claim.
+
+## Global normalized exponentials and surjectivity
+
+`Geodesic/Complete.lean` supplies global geodesics for every initial coordinate
+velocity. `Coordinates/Exponential/SmoothExtension.lean` supplies smooth
+endpoint dependence without requiring smoothness of a chosen geodesic family;
+`EndpointAgreement.lean` identifies the zero endpoint and its derivative.
+Together with one orthonormal coordinate frame and `RadialCurve.lean`, these
+results construct one globally smooth normalized map `e` at each base point of
+any complete smooth Riemannian manifold with `T3Space` topology. Every radial
+curve is a geodesic on all of `ℝ`. The map is fixed over the whole tangent
+space; it is not selected again when a radius changes.
+
+When the manifold is also preconnected, the same selected `e` is surjective.
+`Comparison/Laplacian/Branch/Complete.lean` supplies a minimizing geodesic
+from the base point to any target point. The inverse initial frame specifies
+a velocity for `e`, and `Coordinates/Exponential/Uniqueness.lean` identifies
+the radial curve with that geodesic by their initial position and coordinate
+velocity. This surjectivity application requires no curvature hypothesis.
+
+With supplied Levi-Civita data of constant sectional curvature `-1`, the
+same global `e` has a bijective manifold differential at every tangent-space
+point and satisfies the negative polar metric formula above for every unit
+`θ` and every `t ≥ 0`. The finite-radius formula is applied with `R = t + 1`
+and differential nonsingularity with `R = ‖x‖ + 1`; neither application changes
+`e`. The estimate `sinh(t) ≥ t` and Cauchy-Schwarz give the positivity used for
+nonsingularity. These constructions require no global compactness,
+orientability or finite-volume premise.
+
+The combined global surjectivity, nonsingularity and metric formula are also
+checked for the same constructed upper-half-space metric `g` and its unique
+descended metric `gQ` under the original free, compact-set proper isometric
+group-action hypotheses. Source connectedness follows from the coordinate
+homeomorphism to the convex positive-height region, and quotient connectedness
+from the existing quotient topology. All earlier source, curvature,
+completeness, volume, conditional core/tail bound and quotient clauses remain
+in the application; metric uniqueness is still within the chosen smooth
+quotient structure. Smooth local tangent-metric isometries through arbitrary
+prescribed source and quotient points are checked in the same construction.
+
+These scoped classical applications compile under the unchanged project pins
+and cited external revision with only `propext`, `Classical.choice` and
+`Quot.sound`. They are temporary applications, with no retained named project
+Lean declaration, new dependency or novelty claim. Surjectivity and a
+bijective differential alone do not establish covering-map structure; the
+checked covering construction is given below. Arbitrary-manifold realization
+as a hyperbolic quotient, cusp classification and full Mostow-Prasad
+existence and uniqueness remain unfinished. The noncompact and
+nonorientable cases remain part of the rigidity target.
+
+
+## Complete pullback of the same global negative exponential
+
+The everywhere bijective differential and global smoothness of the same `e`
+provide local smooth inverse branches through
+`Comparison/Injectivity/LocalInverse.lean`. Packaging those branches gives
+`IsLocalDiffeomorph e`. `Metric/LocalDiffeomorph.lean` then supplies the actual
+smooth differential pullback `gE = g.pullbackOfLocalDiffeomorph e hlocal`;
+its tangent inner product is exactly the target inner product of the two
+images under `mfderiv e`.
+
+For every tangent-space point `x` and vector `w`, the negative polar identity
+implies `inner w w ≤ gE.inner x w w`. At `x = 0` this is the normalized
+initial-frame identity. Away from zero, write `x = ‖x‖ • θ` with `θ` unit;
+`sinh(‖x‖) ≥ ‖x‖` and Cauchy-Schwarz show that the angular correction is
+nonnegative. This estimate applies over the entire tangent space.
+
+`Distance/TangentBound.lean`, specifically
+`RiemannianMetric.edist_le_mul_of_inner_mfderiv_le`, applied to the identity
+map and the Euclidean metric from
+`Comparison/Injectivity/PullbackGeodesics.lean`, gives Euclidean extended
+distance at most `gE.edist`. A sequence Cauchy for the intrinsic pullback
+distance is therefore Euclidean Cauchy and has a Euclidean limit. The smooth
+intrinsic metric has the original topology, so that same limit establishes
+`MetricComplete gE`. The check keeps the source and target uniform-space
+instances explicit during the Cauchy transfer.
+
+The combined application retains the same selected `e`, its surjectivity,
+normalization, radial geodesics at every real time, everywhere bijective
+differential and negative polar identity for all `t ≥ 0`. Its actual
+pullback completeness and Euclidean inner lower bound are checked for the
+same constructed `g` and descended `gQ`; all preceding source, volume,
+curvature, conditional core/tail and quotient clauses remain. The original
+free, compact-set proper isometric-action hypotheses and uniqueness within
+the chosen smooth quotient structure are retained. No compactness,
+orientability or finite-volume premise is added.
+
+These are scoped transient classical applications under the unchanged pins,
+with only `propext`, `Classical.choice` and `Quot.sound`. This increment does
+not by itself establish that `e` is a covering map or injective. The next
+section supplies the covering construction. Arbitrary-manifold
+hyperbolic quotient realization and full Mostow-Prasad rigidity, including
+cusps and nonorientable manifolds, remain unfinished.
+
+
+## Covering structure of the same global negative exponential
+
+The next checked composition establishes `IsCoveringMap e` for the same
+selected global exponential and its complete actual pullback metric. The
+source map is retained throughout; its normalization, radial geodesics at
+all real times, surjectivity, everywhere bijective differential, full
+negative polar identity and Euclidean inner lower bound remain.
+
+The generic covering check uses a complete smooth Riemannian metric on
+Euclidean space and a smooth map preserving its actual tangent inner
+products into a complete, preconnected smooth manifold of sectional
+curvature `-1`. No covering, source compactness, finite fiber count,
+orientability or finite-volume hypothesis is assumed.
+
+`SpaceForm/LocalIsometry/Geodesic.lean` transports affine geodesics through
+local metric isometries. Global source geodesics and initial-data uniqueness
+lift target geodesics. Smooth endpoint dependence supplies, for every target
+point `y`, one fixed global target exponential `eY` and smooth maps `Sx` for
+every source fiber point `x`, with `Sx 0 = x` and `F ∘ Sx = eY`. The same `eY`
+is used for all points in the fiber. Differentiating that identity shows
+that each `Sx` is a local diffeomorphism and hence an open map.
+
+Choose one inverse branch of `eY` near zero. Its open source `U` maps to one
+open target neighborhood `V`, shared by all the source sheets `Sx '' U`.
+Injectivity of `eY` on `U` and uniqueness of continuous lifts through a
+locally injective separated map make those sheets pairwise disjoint. To
+cover the entire preimage of `V`, lift a reversed target radial geodesic
+from any source point over `V` back to a point over `y`; lift uniqueness
+identifies the original point with its sheet endpoint. Each sheet maps
+homeomorphically onto `V`. Mathlib's `IsOpen.trivializationDiscrete` and
+`IsEvenlyCovered.of_trivialization` then provide the actual covering
+structure, including fibers with infinitely many points.
+
+The complete construction is checked for the same actually constructed
+upper-half-space metric `g` and descended quotient metric `gQ`, retaining
+all earlier source, curvature, completeness, volume, conditional core/tail,
+quotient and local tangent-isometry clauses. The original free, compact-set
+proper isometric-action conditions are retained; quotient metric uniqueness
+is within the chosen smooth structure. These scoped transient classical
+applications compile with only `propext`, `Classical.choice` and `Quot.sound`.
+
+This covering result does not yet establish global injectivity, an inverse
+on hyperbolic three-space, realization of every hyperbolic manifold as an
+isometric quotient, cusp classification or full Mostow-Prasad rigidity.
+The full rigidity target still includes noncompact cusps and nonorientable
+manifolds. No new project Lean declaration or novelty claim is retained.
