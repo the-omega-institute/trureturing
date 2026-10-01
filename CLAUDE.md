@@ -764,6 +764,8 @@ CI/权限/门控改动的独立 PR 开前评审归位;交付 PR 开出前完成�
 
 CI 选工的唯一权威是 FILEMAP 登记的 `Meta/ci-units.json`。workflow 传 unit id,`ci_units.py` 展开 shared_inputs、workflow、工程登记的 include 与 references 递归闭包、unit.inputs;不从 exclude 收窄,闭包不进入 `closure_excludes` 前缀(Blueprint 内容由 current 判定),单元需要时在 inputs 中显式列出。每个 workflow 的入口通过 `CI_HIT_PATHS_FILE` 消费展开模式,`ci-entry.sh` 核对候选与事件身份并判断 hit;未命中不启动程序。独立 workflow 并行,文件内部可以串行。
 
+每个单元的 `check` 登记必需检查名或 `null`；非 null 名称唯一，`ci_units.py contexts` 按单元顺序输出名单，供 ruleset 配置使用。`TOWER.yaml` 的 `engineering-ci` 只声明 `members_from: ci-units`，成员由 `Meta/ci-units.json` 中 check 以 ` / unit` 结尾的单元 id 推导；每个成员须在其登记 workflow 有同名 job，每个 `ci-*.yml`（`ci-unit.yml` 除外）须被登记。`report-ci` 与 `dev-baseline` 保持显式 members。gate 根合并 `Golden/gate-authority-roots.toml` 的非 CI 静态根与登记中每个非 null check 的 `<workflow 文件名>/<单元 id>` 根，绑定其 workflow 路径；合并集合须 root_id 唯一并按 UTF-8 排序。C# 读取所需字段并对缺失或畸形登记失败关闭，完整登记准入由 `ci_units.py` 校验。
+
 FILEMAP 管路径归属、custody、准入面、symlink 与 Evidence 格式;其登记的 manifest 声明 CI 选工。工程登记管程序集、项目引用与测试归属;Lean/Lake 按原生依赖执行增量。SL-003/SL-015 的检查材料仍在 `Meta/ci-checks.json` 显式声明。不得重建跨 workflow 的分析、阶段计划、公共执行证据或 transport 体系。
 
 登记缺失与冲突具名失败,只修对应登记;不得通过 MSBuild、目录/名称启发式、反射、调用图或 IO 效果推导 CI 影响范围。缓存只复用增量工作,命中不构成检查成功。实际 required set、事件、覆盖、性能及稳定验证依 §8.12;workflow 测试禁令依 §8.13。

@@ -41,13 +41,15 @@ public static class TowerManifestParser
     {
         var label = $"components[{index}]";
         var mapping = Mapping(value, label);
-        RequireKeys(mapping, label, "id", "kind", "members", "judged_by", "verification");
+        var derived = mapping.ContainsKey("members_from");
+        RequireKeys(mapping, label, "id", "kind", derived ? "members_from" : "members", "judged_by", "verification");
         return new TowerComponentSyntax(
             String(mapping, "id", label),
             String(mapping, "kind", label),
-            Strings(mapping, "members", label),
+            derived ? default : Strings(mapping, "members", label),
             Strings(mapping, "judged_by", label),
-            String(mapping, "verification", label));
+            String(mapping, "verification", label),
+            derived ? String(mapping, "members_from", label) : null);
     }
 
     private static TowerBootstrapSyntax ParseBootstrap(object? value)

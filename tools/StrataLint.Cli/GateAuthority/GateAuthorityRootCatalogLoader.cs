@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
+using StrataLint.Engine;
 using Tomlyn;
 using Tomlyn.Model;
 
@@ -14,7 +15,17 @@ internal static class GateAuthorityRootCatalogLoader
     internal static ImmutableArray<GateAuthorityRootDefinition> LoadRepository(string repositoryRoot)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
-        return Parse(File.ReadAllBytes(Path.Combine(repositoryRoot, RelativePath)));
+        var staticRoots = Parse(File.ReadAllBytes(Path.Combine(repositoryRoot, RelativePath)));
+        var units = CiUnitInventory.Parse(File.ReadAllText(
+            Path.Combine(repositoryRoot, CiUnitInventory.RelativePath), StrictUtf8));
+        var roots = staticRoots.Concat(units.Where(static unit => unit.Check is not null)
+            .Select(static unit => new GateAuthorityRootDefinition(
+                $"{Path.GetFileName(unit.Workflow)}/{unit.Id}", unit.Workflow)))
+            .OrderBy(static root => Encoding.UTF8.GetBytes(root.RootId), ByteArrayComparer.Instance)
+            .ToImmutableArray();
+        if (roots.Select(static root => root.RootId).Distinct(StringComparer.Ordinal).Count() != roots.Length)
+            throw new FormatException("static and derived gate authority roots must have unique root_id values");
+        return roots;
     }
 
     internal static ImmutableArray<GateAuthorityRootDefinition> Parse(ReadOnlySpan<byte> bytes)

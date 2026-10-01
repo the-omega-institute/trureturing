@@ -140,14 +140,22 @@ def load_units(root):
     if not isinstance(manifest["units"], list) or not manifest["units"]:
         raise RegistrationError("units must be a nonempty list")
     projects = project_registry(root)
-    units, closures = {}, {}
+    units, closures, checks = {}, {}, set()
     for unit in manifest["units"]:
-        exact_keys(unit, ("id", "workflow", "project", "test", "lean", "dotnet", "inputs"), "unit")
+        exact_keys(unit, ("id", "workflow", "check", "project", "test", "lean", "dotnet", "inputs"), "unit")
         unit_id = unit["id"]
         if not isinstance(unit_id, str) or not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", unit_id):
             raise RegistrationError(f"invalid unit id: {unit_id!r}")
         if unit_id in units:
             raise RegistrationError(f"duplicate unit id: {unit_id}")
+        check = unit["check"]
+        if check is not None:
+            if (not isinstance(check, str) or not check or check != check.strip()
+                    or any(ord(char) < 32 or ord(char) == 127 for char in check)):
+                raise RegistrationError(f"{unit_id}: check must be a nonempty string or null")
+            if check in checks:
+                raise RegistrationError(f"duplicate check: {check}")
+            checks.add(check)
         workflow = repo_path(unit["workflow"], "workflow", ".yml")
         workflow_path = root / workflow
         if (not workflow.startswith(".github/workflows/") or not workflow_path.is_file()
@@ -228,6 +236,7 @@ def fingerprint(root, inputs):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
+    commands.add_parser("contexts")
     resolve = commands.add_parser("resolve")
     resolve.add_argument("unit")
     resolve.add_argument("--paths-file", type=Path, required=True)
@@ -239,6 +248,11 @@ def main():
     try:
         root = Path(__file__).resolve().parents[3]
         units, caches = load_units(root)
+        if args.command == "contexts":
+            for unit, _ in units.values():
+                if unit["check"] is not None:
+                    print(unit["check"])
+            return 0
         if args.command == "fingerprint":
             if args.name not in caches:
                 raise RegistrationError(f"unknown cache: {args.name}")

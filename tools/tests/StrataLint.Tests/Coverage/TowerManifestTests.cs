@@ -7,6 +7,121 @@ namespace StrataLint.Tests;
 public sealed class TowerManifestTests
 {
     [Fact]
+    public void EngineeringMembersComeFromChecksAndExcludeNullAndDirectChecks()
+    {
+        var syntax = RegisteredSyntax();
+        var snapshot = Snapshot(
+            ("Meta/ci-units.json", Registration),
+            (".github/workflows/ci-fixture.yml", UnitWorkflow),
+            (".github/workflows/ci-current.yml", "opaque direct workflow"),
+            (".github/workflows/ci-skipped.yml", "opaque optional workflow"),
+            (".github/workflows/ci-unit.yml", "opaque reusable workflow"),
+            LedgerAnchorFile());
+
+        var accepted = Assert.IsType<TowerValidationOutcome.Accepted>(
+            TowerManifestValidator.Validate(syntax, snapshot, Catalog()));
+        var check = Assert.Single(accepted.Manifest.Checks.Where(item => item.Subject == "engineering-ci"));
+        Assert.Contains("fixture workflow=.github/workflows/ci-fixture.yml", check.Detail, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("missing-job")]
+    [InlineData("wrong-workflow")]
+    [InlineData("name-only")]
+    [InlineData("missing-workflow")]
+    [InlineData("unregistered-workflow")]
+    [InlineData("malformed-workflow")]
+    public void RegisteredMembersAndWorkflowInventoryAreCheckedBothWays(string defect)
+    {
+        var files = new List<(string Path, string Text)>
+        {
+            ("Meta/ci-units.json", Registration),
+            (".github/workflows/ci-fixture.yml", UnitWorkflow),
+            (".github/workflows/ci-current.yml", UnitWorkflow),
+            (".github/workflows/ci-skipped.yml", "opaque optional workflow"),
+            LedgerAnchorFile(),
+        };
+        switch (defect)
+        {
+            case "missing-job": files[1] = (files[1].Path, UnitWorkflow.Replace("fixture:", "other:", StringComparison.Ordinal)); break;
+            case "name-only": files[1] = (files[1].Path, UnitWorkflow.Replace("fixture: {", "other: {name: fixture, ", StringComparison.Ordinal)); break;
+            case "wrong-workflow": files[0] = (files[0].Path, Registration.Replace("ci-fixture.yml", "ci-wrong.yml", StringComparison.Ordinal)); break;
+            case "missing-workflow": files.RemoveAt(1); break;
+            case "unregistered-workflow": files.Add((".github/workflows/ci-new.yml", UnitWorkflow)); break;
+            case "malformed-workflow": files[1] = (files[1].Path, "jobs: ["); break;
+        }
+
+        var rejected = Assert.IsType<TowerValidationOutcome.Rejected>(
+            TowerManifestValidator.Validate(RegisteredSyntax(), Snapshot(files.ToArray()), Catalog()));
+        Assert.Contains(rejected.Findings, item => item.Component == "engineering-ci"
+            && item.Code == (defect == "unregistered-workflow" ? "TOWER-CI-WORKFLOW" : "TOWER-CI-JOB"));
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("{")]
+    [InlineData("{\"schema\":\"other\",\"units\":[]}")]
+    [InlineData("{\"schema\":\"ci-units-v1\",\"units\":{}}")]
+    [InlineData("{\"schema\":\"ci-units-v1\",\"units\":[]}")]
+    [InlineData("{\"schema\":\"ci-units-v1\",\"units\":[{\"id\":\"fixture\",\"workflow\":\".github/workflows/ci-fixture.yml\"}]}")]
+    [InlineData("{\"schema\":\"ci-units-v1\",\"units\":[{\"id\":\"fixture\",\"workflow\":\"../ci-fixture.yml\",\"check\":\"fixture / unit\"}]}")]
+    [InlineData("{\"schema\":\"ci-units-v1\",\"units\":[{\"id\":\"fixture\",\"workflow\":\".github/workflows/ci-fixture.yml\",\"check\":false}]}")]
+    [InlineData("{\"schema\":\"ci-units-v1\",\"units\":[{\"id\":\"fixture\",\"workflow\":\".github/workflows/ci-fixture.yml\",\"check\":null}]}")]
+    public void MissingMalformedOrEmptyMemberRegistrationFailsClosed(string? registration)
+    {
+        var files = new List<(string Path, string Text)> { LedgerAnchorFile() };
+        if (registration is not null) files.Add(("Meta/ci-units.json", registration));
+        var rejected = Assert.IsType<TowerValidationOutcome.Rejected>(
+            TowerManifestValidator.Validate(RegisteredSyntax(), Snapshot(files.ToArray()), Catalog()));
+        Assert.Contains(rejected.Findings, item => item.Code == "TOWER-CI-UNITS");
+    }
+
+    [Theory]
+    [InlineData("engineering-ci", "members: [fixture]")]
+    [InlineData("engineering-ci", "members_from: other")]
+    [InlineData("engineering-ci", "members_from: ci-units\n    members: [fixture]")]
+    [InlineData("report-ci", "members_from: ci-units")]
+    public void MemberSourceIsClosedAndEngineeringCannotHandListMembers(string id, string members)
+    {
+        var parsed = TowerManifestParser.Parse(Encoding.UTF8.GetBytes(RegisteredYaml(id, members)));
+        if (parsed is TowerManifestParseOutcome.Loaded loaded)
+            Assert.IsType<TowerValidationOutcome.Rejected>(TowerManifestValidator.ValidateStructure(loaded.Syntax));
+        else
+            Assert.IsType<TowerManifestParseOutcome.Invalid>(parsed);
+    }
+
+    private const string UnitWorkflow = "on: {pull_request: {branches: [dev]}, push: {branches: [dev]}}\njobs: {fixture: {uses: ./unit.yml}}";
+    private const string Registration = """
+        {"schema":"ci-units-v1","units":[
+          {"id":"current","workflow":".github/workflows/ci-current.yml","check":"current"},
+          {"id":"fixture","workflow":".github/workflows/ci-fixture.yml","check":"fixture / unit"},
+          {"id":"skipped","workflow":".github/workflows/ci-skipped.yml","check":null}]}
+        """;
+
+    private static TowerManifestSyntax RegisteredSyntax() =>
+        Assert.IsType<TowerManifestParseOutcome.Loaded>(TowerManifestParser.Parse(
+            Encoding.UTF8.GetBytes(RegisteredYaml("engineering-ci", "members_from: ci-units")))).Syntax;
+
+    private static string RegisteredYaml(string id, string members) => $$"""
+        schema_version: 1
+        components:
+          - id: {{id}}
+            kind: ci-jobs
+            {{members}}
+            judged_by:
+              - bootstrap-pr-1
+            verification: verified
+        bootstrap:
+          id: bootstrap-pr-1
+          judge: open
+          reason: "Godel boundary"
+          genesis_event: sha256:fc2ee6be0dd3cabb9b6a9118592671c9d5a81f691b7b4ad07674d9c3037ce262
+          commit: f3f471846dd81cfcc39ecaa386966fcf0b058464
+          pull_request: 1
+          verification: ASSUMED-UNVERIFIED
+        """;
+
+    [Fact]
     public void ActualCrossChecksRejectCatalogAndCiDrift()
     {
         var syntax = Syntax(

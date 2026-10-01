@@ -57,9 +57,12 @@ public static class CoverageCanonicalWriter
         foreach (var component in tower.Syntax.Components.OrderBy(static item => item.Id, StringComparer.Ordinal))
         {
             builder.Append("TOWER_COMPONENT id=").Append(component.Id)
-                .Append(" kind=").Append(component.Kind)
-                .Append(" members=").Append(Join(component.Members))
-                .Append(" judged_by=").Append(Join(component.JudgedBy))
+                .Append(" kind=").Append(component.Kind);
+            if (component.MembersFrom is { } source)
+                builder.Append(" members_from=").Append(source);
+            else
+                builder.Append(" members=").Append(Join(component.Members));
+            builder.Append(" judged_by=").Append(Join(component.JudgedBy))
                 .Append(" verification=").Append(component.Verification).Append('\n');
         }
 
@@ -167,13 +170,14 @@ public static class CoverageCanonicalWriter
                     subject = item.Subject,
                 }),
                 components = tower.Syntax.Components.OrderBy(static item => item.Id, StringComparer.Ordinal)
-                    .Select(static item => new
+                    .Select(static item => new Dictionary<string, object?>
                     {
-                        id = item.Id,
-                        judged_by = item.JudgedBy.Order(StringComparer.Ordinal),
-                        kind = item.Kind,
-                        members = item.Members.Order(StringComparer.Ordinal),
-                        verification = item.Verification,
+                        ["id"] = item.Id,
+                        ["judged_by"] = item.JudgedBy.Order(StringComparer.Ordinal),
+                        ["kind"] = item.Kind,
+                        [item.MembersFrom is null ? "members" : "members_from"] = item.MembersFrom is null
+                            ? item.Members.Order(StringComparer.Ordinal) : item.MembersFrom,
+                        ["verification"] = item.Verification,
                     }),
                 manifest_path = RepositoryRules.TowerManifestPath,
                 status = "valid",
