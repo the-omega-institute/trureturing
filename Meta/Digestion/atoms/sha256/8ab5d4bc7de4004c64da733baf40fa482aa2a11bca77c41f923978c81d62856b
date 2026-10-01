@@ -1,0 +1,50 @@
+**Theorem 58.1 (primary cubic reciprocity at distinct rational norms).**
+Let $p,q$ be distinct rational primes, both congruent to one modulo
+three. Let $P,Q$ be maximal ideals of $\mathcal E$ whose residue
+fields have cardinalities $p,q$. Suppose that $\pi,\rho\in\mathcal E$
+satisfy
+
+$$
+P=(\pi),\qquad Q=(\rho),\qquad
+N(\pi)=p,\qquad N(\rho)=q,\qquad
+3\mid\pi-1,\qquad3\mid\rho-1.
+$$
+
+Then
+
+$$
+\chi_Q(\pi)=\chi_P(\rho).
+$$
+
+Proof. The primary normalization of the cubic Jacobi sum is
+$J=-\pi$. In a finite extension of the residue field at $Q$
+containing the additive character values, the Gauss cube identity
+and the $q$-power Frobenius computation give
+
+$$
+\chi_P(q)=\chi_Q(\pi)\chi_Q(\bar\pi)^2.
+$$
+
+Apply the same computation after exchanging $p$ and $q$.
+The norm identities and distinct rational characteristics ensure
+that all four arguments are nonzero in the relevant residue
+fields, so these characters multiply and take values in
+$\{1,\omega,\omega^2\}$. With
+
+$$
+A=\chi_Q(\pi),\quad B=\chi_Q(\bar\pi),\quad
+C=\chi_P(\rho),\quad D=\chi_P(\bar\rho),
+$$
+
+the two computations read $CD=AB^2$ and $AB=CD^2$.
+Since $B^3=D^3=1$, their quotient gives $BD=1$ and then $A=C$.
+The assertion applies to the disjoint supports of different
+actual Lucas blocks in Section 55. It does not address two
+conjugate prime factors with equal rational norm.
+
+The classical primary reciprocity statement and its normalization
+are described in Dunn--Radziwill, arXiv:2109.07463v3,
+equations (1.4)--(1.5). The argument above uses the Gauss and
+Jacobi sum identities in the pinned Mathlib library and retains
+both Frobenius directions.
+

@@ -1,0 +1,23 @@
+## 56. Common golden cubic fields and independent fixed-curve points
+
+This section continues Library/ArithUnits/dunn2024cubicreciprocity.md,
+GIR.3--GIR.5, using the actual blocks and positive roots of
+Sections 11--13. For $j\geq1$, let
+$\theta_j=\sqrt[3]{B_j}>0$, $k_j=\mathbb Q(\theta_j)$,
+$x_j=L_{3^j}$, and $f_j=F_{3^j}$. Write
+$B_j=d_jc_j^3$ uniquely with positive $c_j$ and cubefree
+$d_j=\prod_{p\mid B_j}p^{e_p}$, where
+$e_p\equiv h_p\pmod3$ and $e_p\in\{0,1,2\}$.
+Let $R_j=\operatorname{rad}(d_j)>1$.
+Theorem 11.1 gives the original-depth index and field discriminant;
+Theorem 12.1 supplies actual infinite-order points on both rational
+twists. For $J\geq1$, define
+
+$$
+F_J=\mathbb Q(\theta_1,\ldots,\theta_J),\qquad
+N_J=F_J(\omega),\qquad
+R^{(J)}=\prod_{j=1}^J R_j.
+$$
+
+The conclusions below continue the named Library source.
+

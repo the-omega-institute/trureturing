@@ -1,0 +1,8 @@
+## 58. Cubic reciprocity at distinct oriented rational primes
+
+Write $\mathcal E=\mathbb Z[\omega]$, with
+$\omega^2+\omega+1=0$. For a maximal ideal $P$ with finite residue
+field of cardinality $p\equiv1\pmod3$, let $\chi_P(a)$ be the
+cube root of unity selected by the Euler criterion in
+$\mathcal E/P$, as in Section 8.
+

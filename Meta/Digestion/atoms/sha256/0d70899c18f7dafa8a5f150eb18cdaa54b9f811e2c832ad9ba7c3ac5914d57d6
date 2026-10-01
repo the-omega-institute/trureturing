@@ -1,0 +1,41 @@
+**Theorem 55.3 (GCR3a, oriented Kummer vector).** For every
+$j\geq1$, independently of any Wall--Sun--Sun assumption,
+
+$$
+[\mathcal M_j:E]=3^{t_j},\qquad
+\operatorname{Gal}(\mathcal M_j/E)
+\simeq(\mathbb Z/3\mathbb Z)^{t_j}.
+$$
+
+In coordinates acting on the specified cube roots, the weighted
+product of arithmetic Frobenius elements at the current oriented
+prime ideals is
+
+$$
+\prod_{q\mid B_j}\operatorname{Frob}_{(\varpi_{j,q})}^{h_q}
+=(\kappa_p)_{p\in S_j}.
+$$
+
+For comparison, with
+$E_j=\mathbb Q(\sqrt p:p\in S_j)$, one has
+$[E_jE:E]=2^{t_j}$ and
+$[E_jE\mathcal M_j:E]=6^{t_j}$. This compares fields; it gives
+neither statistical independence on the actual Fibonacci support
+nor a lower bound $6^{t_j}$ for a block factor. At $j=1$, the support
+is empty and all group and product assertions have their trivial
+meaning.
+
+Proof. If $\prod_{p\in S_j}\varpi_p^{a_p}$ is a cube in $E$,
+valuation at each selected prime ideal gives $3\mid a_p$.
+Kummer theory over $E$, which contains the cube roots of unity,
+therefore gives degree $3^{t_j}$ and the stated Galois group;
+see Milne, Fields and Galois Theory, Theorem 5.30 and Remark 5.32.
+Current block primes avoid three and every earlier support, so the
+specified current ideals are unramified. Frobenius on
+$\sqrt[3]{\varpi_p}$ multiplies it by
+$(\varpi_p/\varpi_{j,q})_3$, and Theorem 55.2 gives each coordinate
+of the weighted product. Independent rational-prime square classes
+give $[E_j:\mathbb Q]=2^{t_j}$. This totally real field meets $E$
+in $\mathbb Q$; the two Galois extensions over $E$ have coprime
+degrees, giving the final degree.
+

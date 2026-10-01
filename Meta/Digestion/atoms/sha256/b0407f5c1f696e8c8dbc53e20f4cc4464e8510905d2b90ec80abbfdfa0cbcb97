@@ -1,0 +1,72 @@
+**Theorem 55.9 (GCC5, exact cubic Thue descent).** Suppose
+$j\geq1$ and $B_j=P^2Q^3$ for distinct rational primes $P,Q$.
+Write the oriented primary generators
+$\pi=\varpi_{j,P}=a+b\omega$ and
+$\gamma=\varpi_{j,Q}=u+v\omega$, and put
+
+$$
+\begin{aligned}
+A&=a^2-b^2,&D&=2ab-b^2,\\
+U&=u^3-3uv^2+v^3,&V&=3uv(u-v).
+\end{aligned}
+$$
+
+Then $\eta_j=\pi^2\gamma^3$ gives the exact integer system
+
+$$
+\begin{aligned}
+f_\pi(u,v)
+&:=Au^3-3Du^2v+3(D-A)uv^2+Av^3=-2,\\
+g_\pi(u,v)&:=DU+(A-D)V=L_{3^j}-1,\\
+u^2-uv+v^2&=Q.
+\end{aligned}
+$$
+
+The generators satisfy their primary congruences. The cubic form
+$f_\pi$ is irreducible over $\mathbb Q$, has discriminant
+$81P^4$, and has a totally real cyclic cubic splitting field.
+For each fixed $\pi$, $f_\pi(u,v)=-2$ has only finitely many
+integer solutions. Conversely, fix a primary $\pi$ of prime norm
+$P$ and integers $u,v$ whose norm $Q=u^2-uv+v^2$ is a distinct
+prime. If $f_\pi(u,v)=-2$ and
+$g_\pi(u,v)+1=L_{3^j}$ exactly, then $B_j=P^2Q^3$.
+
+Proof. Eisenstein multiplication gives
+$\pi^2=A+D\omega$, $\gamma^3=U+V\omega$, and their product
+has coefficients $AU-DV$ and $DU+(A-D)V$. Compare with
+$\eta_j=-2+(L_{3^j}-1)\omega$. For all integer
+$a,b,u,v$, the norm identity is
+
+$$
+f_\pi(u,v)^2-f_\pi(u,v)g_\pi(u,v)+g_\pi(u,v)^2
+=(a^2-ab+b^2)^2(u^2-uv+v^2)^3.
+$$
+
+The binary-cubic discriminant calculation for coefficients
+$(A,-3D,3(D-A),A)$ gives
+$81(A^2-AD+D^2)^2=81(a^2-ab+b^2)^4=81P^4$.
+Its Hessian, in the standard binary-cubic normalization, is
+$9P^2(u^2-uv+v^2)$. Also $A\ne0$: either $a=b$ or
+$a=-b$ would contradict primality of $P$. If $f_\pi$ had a
+rational projective zero, take nonzero $z=u+v\omega$.
+The resulting rational multiple relation for $\pi^2z^3$,
+divided by its conjugate, gives
+
+$$
+(z/\overline z)^3
+=\omega^2(\overline\pi/\pi)^2.
+$$
+
+At $(\pi)$, the valuation on the left is divisible by three
+and that on the right is $-2$, a contradiction. A reducible
+rational cubic has a rational projective zero, so $f_\pi$ is
+irreducible. Its positive square discriminant gives Galois group
+$A_3$ and a totally real cyclic splitting field. Classical
+Thue finiteness applies for each fixed irreducible form and
+nonzero right-hand side. The converse follows from the norm
+identity with the prime norms and exact Lucas coordinate.
+Dropping that coordinate produces a different Diophantine problem.
+The fixed-input Thue framework is described by von Kaenel--Matschke,
+arXiv:1605.06079, Sections 5.1--5.3; no complete solution list
+or uniform bound as $P$ varies follows here.
+

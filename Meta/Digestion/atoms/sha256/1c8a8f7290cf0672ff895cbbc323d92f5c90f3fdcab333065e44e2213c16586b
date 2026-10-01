@@ -1,0 +1,61 @@
+**Theorem 55.6 (GCC2, the inert-prime-two balance).** For every
+$j\geq1$,
+
+$$
+\left(\frac2{\eta_j}\right)_3
+=\prod_{q\mid B_j}
+\left(\frac2{\varpi_{j,q}}\right)_3^{h_q}
+=\omega.
+$$
+
+If $B_j=P^2Q^3$ for distinct primes, then in the direction selected
+by $\eta_j$,
+
+$$
+\left(\frac2{\varpi_{j,P}}\right)_3
+=\left(\frac3{\varpi_{j,P}}\right)_3=\omega^2,
+$$
+
+so two and three are noncubes modulo $P$, while twelve and eighteen
+are cubes. Their multiplicative orders satisfy
+
+$$
+v_3(\operatorname{ord}_P(2))
+=v_3(\operatorname{ord}_P(3))
+=v_3(P-1)=j+1.
+$$
+
+Proof. The primary element $-2$ generates the inert prime ideal
+above two, and its residue field has four elements. Since $x_j$ is
+even, $\eta_j\equiv\omega\pmod2$. Reciprocity for $-2$ and
+$\eta_j$, and the exponent $(4-1)/3=1$ at that prime, give
+$(2/\eta_j)_3=(-2/\eta_j)_3=(\eta_j/-2)_3=\omega$.
+Factor $\eta_j$ to obtain the first product. In the two-factor case,
+the depth-three contribution is one; invert squaring on cube roots
+of unity and use Theorem 55.4 for the value at three.
+Multiplicativity gives the cube claims for twelve and eighteen.
+
+To compute the exact ternary order, put $r_j=3^{j+1}$ and temporarily
+$B_0=4$. The recurrence yields
+$B_{j+1}-1=(B_j-1)((B_j-1)^2-3)$.
+Starting from $B_0-1=3$ gives
+$v_3(B_j-1)=j+1$ and
+$(B_j-1)/r_j\equiv(-1)^j\pmod3$.
+Every current block prime is $1\pmod{2r_j}$.
+Expanding $P^2Q^3$ modulo $3r_j$ gives
+$2(P-1)/r_j\equiv(-1)^j\pmod3$, hence
+$v_3(P-1)=j+1$. A noncube in the cyclic group
+$\mathbb F_P^\times$ retains its full three-primary order.
+The general balances at two and three need not have the same
+witnessing prime; this shared-prime conclusion uses $P^2Q^3$.
+
+Set $t=t_j=|S_j|$ and define
+
+$$
+\widehat{\mathcal M}_j
+=E\bigl(\sqrt[3]{\varpi_p},\sqrt[3]{\overline{\varpi_p}}
+:p\in S_j\bigr),\qquad
+\mathcal L_j=\widehat{\mathcal M}_j
+\bigl(\sqrt[3]2,\sqrt[3]3\bigr).
+$$
+

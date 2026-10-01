@@ -1,0 +1,48 @@
+**Theorem 55.8 (GCC4, compatibility density).** Fix $j\geq1$ and
+its actual earlier support. Let
+$m_j=80\cdot3^{j+2}$. For every fixed unit residue $a\bmod m_j$
+with $a\equiv1\pmod3$, the unrestricted rational primes
+$P\equiv a\pmod{m_j}$ for which one prime of $E$ above $P$
+has Frobenius $g_j$ in $\mathcal L_j/E$ have Dirichlet density
+
+$$
+\frac{2}{\varphi(m_j)3^{2t+2}}>0.
+$$
+
+This does not impose $P\mid B_j$, $h_P=2$, or a second prime $Q$.
+It is compatibility of necessary character conditions among
+unrestricted primes, not realization of the actual factorization.
+
+Proof. Put $C=\mathbb Q(\zeta_{m_j})$, which contains $E$.
+First $\mathcal L_j\cap C=E$. Any nontrivial intersection would
+contain an elementary abelian cubic extension over $E$.
+The three-Sylow subgroup of $\operatorname{Gal}(C/E)$ is cyclic, so
+this would contain its unique degree-three subextension
+$E(\zeta_9)=E(\sqrt[3]\omega)$. Kummer correspondence would place
+the class of $\omega$ in the span of the radicands defining
+$\mathcal L_j$. Valuations at each earlier oriented and conjugate
+prime, at two, and at $\lambda$ force every such radicand exponent
+to vanish modulo three. The remaining assertion that $\omega$
+is a cube in $E$ is false: its cube root would have order nine,
+while $E$ has only six roots of unity.
+
+The residue $a$ specifies an automorphism $\sigma_a$ of $C$
+fixing $E$ and combines with $g_j$ to an element of
+$\operatorname{Gal}(\mathcal L_jC/\mathbb Q)$.
+Elements fixing $E$ commute with $g_j$. Complex conjugation takes
+$g_j$ to $(1,1,(2k_p,-2k_p)_p)$, a different element, and fixes
+$\sigma_a$ under conjugation because $C/\mathbb Q$ is abelian.
+This conjugacy class has two elements; the group has order
+$\varphi(m_j)3^{2t+2}$. The Chebotarev density theorem yields
+the displayed density. Sutherland, MIT 18.785 Lecture 28,
+Theorem 28.9, is a classical locator. The proof uses neither GRH
+nor an effective least-prime bound.
+
+Compatible unit classes also satisfy $(5/a)=1$ and
+$a\equiv1+2(-1)^j r_j\pmod{6r_j}$, where $r_j=3^{j+1}$:
+choose an odd compatible class modulo sixteen, a nonzero square
+class modulo five, and apply CRT. For fixed $j$, the primes with
+the exact Fibonacci period required here form the finite support
+of $B_j$; the positive density among unrestricted primes supplies
+no prime in that finite support.
+

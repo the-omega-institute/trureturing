@@ -1,0 +1,16 @@
+## 57. Trace and norm denominators on a smooth Weierstrass curve
+
+Let $F$ be a field and let $W$ be a smooth Weierstrass curve over $F$,
+with coefficients $a_1,a_2,a_3,a_4,a_6$. Write
+
+$$
+A(X)=a_1X+a_3,\qquad
+B(X)=X^3+a_2X^2+a_4X+a_6.
+$$
+
+The quadratic coordinate relation is $Y^2+A(X)Y-B(X)=0$.
+The expressions $2p-qA$ and $p^2-pqA-q^2B$ are respectively
+the trace and norm numerators of $p+qY$. Their denominator
+criterion supplies the coordinate divisibility needed in the
+integral-closure construction for the actual curves of Section 56.
+

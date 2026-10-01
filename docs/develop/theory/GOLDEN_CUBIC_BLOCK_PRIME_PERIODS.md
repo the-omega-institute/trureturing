@@ -2462,3 +2462,863 @@ not provide an effective numerical cutoff, an explicit decay constant, or a
 stronger logarithmic exponent.
 
 ## 追加锚（本行以下为增补区）
+
+## 54. Inert Eisenstein quotients and conjugation Frobenius
+
+Let $E=\mathbb Z[\omega]$, with $\omega^2+\omega+1=0$. Every element
+$z\in E$ has unique integer coordinates
+$z=\operatorname{re}(z)+\operatorname{im}(z)\omega$. Quadratic
+conjugation is determined by $\overline\omega=\omega^2=-1-\omega$, so
+
+$$
+\overline{a+b\omega}=(a-b)-b\omega
+\qquad(a,b\in\mathbb Z).
+$$
+
+For a rational prime $\ell$, put $\mathbb F_\ell=\mathbb Z/\ell\mathbb Z$
+and let
+
+$$
+K_\ell=\mathbb F_\ell\oplus\mathbb F_\ell u_\ell,
+\qquad u_\ell^2+u_\ell+1=0,
+$$
+
+where multiplication is extended from the displayed relation. Write
+$\operatorname{re}_\ell$ and $\operatorname{im}_\ell$ for the two
+$\mathbb F_\ell$ coordinates in this quadratic algebra. For an integer
+$a$, write $[a]_\ell$ for its residue in $\mathbb F_\ell$. Let
+$I_\ell=(\ell)\subset E$, and denote the actual quotient map by
+$q_\ell:E\to E/I_\ell$.
+
+**Theorem 54.1 (the actual inert quotient and its Frobenius action).**
+For every rational prime $\ell$ satisfying $\ell\equiv2\pmod3$, the
+ideal $I_\ell$ is maximal, and
+
+$$
+\#(E/I_\ell)=\ell^2,
+\qquad \operatorname{char}(E/I_\ell)=\ell.
+$$
+
+There exists a ring equivalence
+
+$$
+e_\ell:E/I_\ell\xrightarrow{\ \sim\ }K_\ell
+$$
+
+such that, for every $z\in E$, both coordinate identities hold:
+
+$$
+\begin{aligned}
+\operatorname{re}_\ell\bigl(e_\ell(q_\ell(z))\bigr)
+  &=[\operatorname{re}(z)]_\ell,\\
+\operatorname{im}_\ell\bigl(e_\ell(q_\ell(z))\bigr)
+  &=[\operatorname{im}(z)]_\ell.
+\end{aligned}
+$$
+
+For every $z\in E$, Frobenius on this actual quotient is quadratic
+conjugation:
+
+$$
+q_\ell(z)^\ell=q_\ell(\overline z).
+$$
+
+The one equivalence $e_\ell$ satisfies the coordinate conditions for
+all $z$ simultaneously. The prime $\ell=2$ is included: $E/(2)$ has
+four elements, and $q_2(z)^2=q_2(\overline z)$ for every $z\in E$.
+
+Proof. First, the polynomial $X^2+X+1$ has no root in
+$\mathbb F_\ell$. At $\ell=2$, its values at both $0$ and $1$ are
+$1$. For an odd prime $\ell\equiv2\pmod3$, one has $\ell\ne3$.
+If $r^2+r+1=0$, then $(2r+1)^2=-3$. The discriminant splitting
+criterion states that, for an odd prime different from three,
+$-3$ is a square in $\mathbb F_\ell$ exactly when
+$\ell\equiv1\pmod3$. This excludes the proposed root. Consequently
+$K_\ell$ is a field.
+
+Define coordinate reduction by
+
+$$
+\rho_\ell:E\longrightarrow K_\ell,
+\qquad a+b\omega\longmapsto[a]_\ell+[b]_\ell u_\ell.
+$$
+
+The defining quadratic relation makes $\rho_\ell$ a ring
+homomorphism. It is surjective because both residue coordinates have
+integer representatives. Its kernel is exactly $I_\ell$: the two
+coordinates of its image vanish precisely when $\ell\mid a$ and
+$\ell\mid b$, which is equivalent to
+$a+b\omega=\ell(c+d\omega)$ for integers $c,d$. The quotient
+isomorphism theorem therefore gives $e_\ell$, with the asserted
+coordinate formulas. Since the target is a field, the kernel is
+maximal. The two coordinates give $\#K_\ell=\ell^2$, and the scalar
+inclusion $\mathbb F_\ell\hookrightarrow K_\ell$ gives
+characteristic $\ell$.
+
+The relation in $K_\ell$ implies $u_\ell^3=1$. Since
+$\ell\equiv2\pmod3$, it follows that
+$u_\ell^\ell=u_\ell^2=-1-u_\ell$. For all
+$A,B\in\mathbb F_\ell$, the characteristic-$\ell$ power identity
+and $A^\ell=A$, $B^\ell=B$ yield
+
+$$
+\begin{aligned}
+(A+B u_\ell)^\ell
+  &=A+B u_\ell^\ell\\
+  &=(A-B)-B u_\ell.
+\end{aligned}
+$$
+
+For $z=a+b\omega$, the right-hand side is
+$e_\ell(q_\ell(\overline z))$. As $e_\ell$ preserves powers and is
+injective, the displayed identity proves
+$q_\ell(z)^\ell=q_\ell(\overline z)$. The argument uses no oddness
+assumption in its Frobenius step and includes $\ell=2$.
+
+The ring $E$ is the Eisenstein quadratic model used in Sections 9 and
+17; this statement supplies its actual rational-prime quotient model.
+The discriminant input is
+`D5.S3.PrimeForms.Splitting.EisensteinCriterion.neg_three_isSquare_iff`.
+The quadratic algebra, quotient isomorphism theorem, and finite-field
+power laws are the classical results provided by the pinned Mathlib
+modules `Mathlib.Algebra.QuadraticAlgebra.Basic`,
+`Mathlib.RingTheory.Ideal.Quotient.Operations`,
+`Mathlib.RingTheory.Ideal.Maps`, `Mathlib.Algebra.CharP.CharAndCard`,
+and `Mathlib.FieldTheory.Finite.Basic`. Coordinate reduction,
+identification of its kernel with $(\ell)$, and the resulting
+conjugation transport give the concrete Eisenstein specialization.
+The prime and congruence hypotheses are part of the statement; it does
+not assert this maximality or Frobenius formula for other rational
+primes or for a composite modulus.
+
+## 追加锚（本行以下为增补区）
+
+## 55. Interlevel cubic characters and conjugate-complete constraints
+
+This section continues the actual golden block family of Sections 4 and 8.
+For every $j\geq1$, put $x_j=L_{3^j}$ and $B_j=x_j^2+3$. For a prime
+$p\mid B_j$, retain its original Fibonacci depth
+$h_p=v_p(F_{\rho(p)})=v_p(B_j)$. In
+$E=\mathbb Q(\omega)$, with $\omega^2+\omega+1=0$ and
+$\lambda=1+2\omega$, retain the primary factor
+$\eta_j=-2+(x_j-1)\omega=\omega(x_j+\lambda)$ and its unique oriented
+primary factors $\varpi_{j,p}$ from Theorem 8.1. Thus
+$\eta_j=\prod_{p\mid B_j}\varpi_{j,p}^{h_p}$ and
+$N(\varpi_{j,p})=p$. The symbols $(a/\mathfrak p)_3$ use that same
+orientation and the multiplicative extension to coprime denominators.
+Theorem 8.2 gives the weighted original-depth value
+$\prod_{p\mid B_j}(3/\varpi_{j,p})_3^{h_p}=\omega$.
+For $i<j$, the block product and congruences of Section 4 give
+$B_i\mid x_j$, $B_j\equiv3\pmod{B_i^2}$, and disjoint prime supports.
+Every block prime is greater than five and is congruent to
+$1\pmod{2\cdot3^{j+1}}$ at level $j$. Classical cubic reciprocity
+for coprime primary elements and the supplementary values of
+Dunn--Radziwill, arXiv:2109.07463v3, equations (1.4)--(1.5), are
+the arithmetic inputs. The conclusions below continue
+Problems/wall-sun-sun-golden-unit-lift.md, GCR.3--GCR.11.
+
+**Theorem 55.1 (GCR2, interlevel phase).** For every $1\leq i<j$,
+
+$$
+\left(\frac{\eta_j}{\eta_i}\right)_3
+=\left(\frac{\eta_i}{\eta_j}\right)_3=\omega^2.
+$$
+
+If
+$(\varpi_{i,p}/\varpi_{j,q})_3=\omega^{e_{p,q}}$, with exponents read
+modulo three, then the actual cross-support depth balance is
+
+$$
+\sum_{p\mid B_i}\sum_{q\mid B_j}h_p h_q e_{p,q}
+\equiv2\pmod3.
+$$
+
+Proof. Since $B_i\mid x_j$ and $\eta_i\mid B_i$,
+$\eta_j\equiv-2-\omega=\omega\lambda\pmod{\eta_i}$.
+The supplementary laws and the Section 8 normalization evaluate the
+first symbol as $\omega^2$. The two primary factors are coprime, so
+cubic reciprocity gives the second. Expanding each denominator and
+numerator by Theorem 8.1, with its original exponents $h_p,h_q$,
+gives the displayed double sum.
+
+**Theorem 55.2 (GCR3, each earlier oriented prime).** For every
+$1\leq i<j$ and each individual prime $p\mid B_i$, define
+$\kappa_{i,p}=(\lambda/\varpi_{i,p})_3$. Then
+
+$$
+\prod_{q\mid B_j}
+\left(\frac{\varpi_{i,p}}{\varpi_{j,q}}\right)_3^{h_q}
+=\kappa_{i,p}.
+$$
+
+Proof. Since $p\equiv1\pmod9$, the exponent $(p-1)/3$ is divisible by
+three, so $(\omega/\varpi_{i,p})_3=1$. The interlevel congruence
+$\eta_j\equiv\omega\lambda\pmod{\varpi_{i,p}}$ therefore yields
+$(\eta_j/\varpi_{i,p})_3=\kappa_{i,p}$. Cubic reciprocity and the
+oriented factorization of $\eta_j$ yield the product. The assertion
+retains every earlier prime, including primes with $3\mid h_p$.
+
+For $j\geq1$, let $S_j$ be the set of distinct rational primes
+dividing $B_i$ for some $1\leq i<j$, put $t_j=|S_j|$, and write
+$\varpi_p=\varpi_{i,p}$ for the unique earlier level containing $p$.
+Let $\kappa_p=(\lambda/\varpi_p)_3$. Set
+
+$$
+\mathcal M_j=E\bigl(\sqrt[3]{\varpi_p}:p\in S_j\bigr).
+$$
+
+**Theorem 55.3 (GCR3a, oriented Kummer vector).** For every
+$j\geq1$, independently of any Wall--Sun--Sun assumption,
+
+$$
+[\mathcal M_j:E]=3^{t_j},\qquad
+\operatorname{Gal}(\mathcal M_j/E)
+\simeq(\mathbb Z/3\mathbb Z)^{t_j}.
+$$
+
+In coordinates acting on the specified cube roots, the weighted
+product of arithmetic Frobenius elements at the current oriented
+prime ideals is
+
+$$
+\prod_{q\mid B_j}\operatorname{Frob}_{(\varpi_{j,q})}^{h_q}
+=(\kappa_p)_{p\in S_j}.
+$$
+
+For comparison, with
+$E_j=\mathbb Q(\sqrt p:p\in S_j)$, one has
+$[E_jE:E]=2^{t_j}$ and
+$[E_jE\mathcal M_j:E]=6^{t_j}$. This compares fields; it gives
+neither statistical independence on the actual Fibonacci support
+nor a lower bound $6^{t_j}$ for a block factor. At $j=1$, the support
+is empty and all group and product assertions have their trivial
+meaning.
+
+Proof. If $\prod_{p\in S_j}\varpi_p^{a_p}$ is a cube in $E$,
+valuation at each selected prime ideal gives $3\mid a_p$.
+Kummer theory over $E$, which contains the cube roots of unity,
+therefore gives degree $3^{t_j}$ and the stated Galois group;
+see Milne, Fields and Galois Theory, Theorem 5.30 and Remark 5.32.
+Current block primes avoid three and every earlier support, so the
+specified current ideals are unramified. Frobenius on
+$\sqrt[3]{\varpi_p}$ multiplies it by
+$(\varpi_p/\varpi_{j,q})_3$, and Theorem 55.2 gives each coordinate
+of the weighted product. Independent rational-prime square classes
+give $[E_j:\mathbb Q]=2^{t_j}$. This totally real field meets $E$
+in $\mathbb Q$; the two Galois extensions over $E$ have coprime
+degrees, giving the final degree.
+
+**Theorem 55.4 (GCR4, the conditional two-factor block).** Suppose
+$j\geq1$ and the actual integer $B_j=P^2Q^3$ for distinct rational
+primes $P,Q$. Then $h_P=2$, $h_Q=3$, and
+
+$$
+\left(\frac3{\varpi_{j,P}}\right)_3=\omega^2,\qquad
+\left(\frac{\varpi_p}{\varpi_{j,P}}\right)_3=\kappa_p^2
+\quad(p\in S_j),\qquad
+\left(\frac{\eta_i}{\varpi_{j,P}}\right)_3=\omega
+\quad(1\leq i<j).
+$$
+
+In particular, three is not a cube modulo $P$. The older quadratic
+conditions also give $(p/Q)=1$ for every $p\in S_j$ and
+$Q\equiv19\pmod{40}$. When $j\geq2$, the integer congruence further
+requires
+
+$$
+P^6\equiv11\pmod{19},\qquad
+P\bmod19\in\{4,6,9,10,13,15\}.
+$$
+
+Proof. The depth-three factor contributes one to any cubic character.
+Theorem 8.2 therefore gives
+$(3/\varpi_{j,P})_3^2=\omega$. Squaring is its own inverse on the
+group of cube roots of unity, giving the first value. The same
+operation applied to Theorems 55.2 and 55.1 gives the remaining two.
+The rational noncube assertion is the residue-field interpretation
+of the first value. For $j\geq2$, $B_1=19$ and
+$B_j\equiv3\pmod{B_1^2}$ imply
+$P^2Q^3\equiv3\pmod{19}$; taking sixth powers and using the
+cube-root-of-unity condition yields $P^6\equiv11\pmod{19}$.
+Checking the eighteen nonzero residues gives the listed classes.
+These are necessary conditions; they do not exclude or construct
+such a block.
+
+For each $p\in S_j$, retain the primary generator $\varpi_p$ and
+its conjugate $\overline{\varpi_p}$. Their product is the rational
+prime $p$, both factors are primary, and $p\equiv1\pmod9$.
+
+**Theorem 55.5 (GCC1, conjugate and rational balances).** For every
+$j\geq1$ and every $p\in S_j$,
+
+$$
+\prod_{q\mid B_j}
+\left(\frac{\overline{\varpi_p}}{\varpi_{j,q}}\right)_3^{h_q}
+=\kappa_p^{-1},\qquad
+\prod_{q\mid B_j}
+\left(\frac{p}{\varpi_{j,q}}\right)_3^{h_q}=1.
+$$
+
+If exactly one current prime $P\mid B_j$ has $3\nmid h_P$, then
+for every $p\in S_j$,
+
+$$
+p^{(P-1)/3}\equiv1\pmod P.
+$$
+
+This applies when $B_j=P^2Q^3$. No individual cubic-residuosity
+conclusion is made when two or more current depths are nonzero
+modulo three.
+
+Proof. The defining residue-field exponent gives
+$(\overline a/\overline b)_3
+=\overline{(a/b)_3}$. Since
+$\overline\lambda=-\lambda$ and $-1$ is a cube,
+$(\lambda/\overline{\varpi_p})_3=\kappa_p^{-1}$.
+Also $(\omega/\overline{\varpi_p})_3=1$ because
+$p\equiv1\pmod9$. As $p\mid x_j$, both prime factors of $p$
+divide $x_j$, and
+$\eta_j\equiv\omega\lambda\pmod{\overline{\varpi_p}}$.
+Cubic reciprocity and Theorem 8.1 give the first product.
+Multiplying it by Theorem 55.2 and using
+$\varpi_p\overline{\varpi_p}=p$ gives the second.
+If only $P$ has depth nonzero modulo three, the other terms are
+one, and exponentiation by $h_P$ is invertible on cube roots of
+unity. The residue field at $\varpi_{j,P}$ is $\mathbb F_P$.
+
+**Theorem 55.6 (GCC2, the inert-prime-two balance).** For every
+$j\geq1$,
+
+$$
+\left(\frac2{\eta_j}\right)_3
+=\prod_{q\mid B_j}
+\left(\frac2{\varpi_{j,q}}\right)_3^{h_q}
+=\omega.
+$$
+
+If $B_j=P^2Q^3$ for distinct primes, then in the direction selected
+by $\eta_j$,
+
+$$
+\left(\frac2{\varpi_{j,P}}\right)_3
+=\left(\frac3{\varpi_{j,P}}\right)_3=\omega^2,
+$$
+
+so two and three are noncubes modulo $P$, while twelve and eighteen
+are cubes. Their multiplicative orders satisfy
+
+$$
+v_3(\operatorname{ord}_P(2))
+=v_3(\operatorname{ord}_P(3))
+=v_3(P-1)=j+1.
+$$
+
+Proof. The primary element $-2$ generates the inert prime ideal
+above two, and its residue field has four elements. Since $x_j$ is
+even, $\eta_j\equiv\omega\pmod2$. Reciprocity for $-2$ and
+$\eta_j$, and the exponent $(4-1)/3=1$ at that prime, give
+$(2/\eta_j)_3=(-2/\eta_j)_3=(\eta_j/-2)_3=\omega$.
+Factor $\eta_j$ to obtain the first product. In the two-factor case,
+the depth-three contribution is one; invert squaring on cube roots
+of unity and use Theorem 55.4 for the value at three.
+Multiplicativity gives the cube claims for twelve and eighteen.
+
+To compute the exact ternary order, put $r_j=3^{j+1}$ and temporarily
+$B_0=4$. The recurrence yields
+$B_{j+1}-1=(B_j-1)((B_j-1)^2-3)$.
+Starting from $B_0-1=3$ gives
+$v_3(B_j-1)=j+1$ and
+$(B_j-1)/r_j\equiv(-1)^j\pmod3$.
+Every current block prime is $1\pmod{2r_j}$.
+Expanding $P^2Q^3$ modulo $3r_j$ gives
+$2(P-1)/r_j\equiv(-1)^j\pmod3$, hence
+$v_3(P-1)=j+1$. A noncube in the cyclic group
+$\mathbb F_P^\times$ retains its full three-primary order.
+The general balances at two and three need not have the same
+witnessing prime; this shared-prime conclusion uses $P^2Q^3$.
+
+Set $t=t_j=|S_j|$ and define
+
+$$
+\widehat{\mathcal M}_j
+=E\bigl(\sqrt[3]{\varpi_p},\sqrt[3]{\overline{\varpi_p}}
+:p\in S_j\bigr),\qquad
+\mathcal L_j=\widehat{\mathcal M}_j
+\bigl(\sqrt[3]2,\sqrt[3]3\bigr).
+$$
+
+**Theorem 55.7 (GCC3, the conjugate-complete Kummer field).** For
+every $j\geq1$, without a Wall--Sun--Sun assumption,
+
+$$
+[\widehat{\mathcal M}_j:E]=3^{2t},\qquad
+[\mathcal L_j:E]=3^{2t+2}.
+$$
+
+The first field is the normal closure over $\mathbb Q$ of
+$\mathcal M_j$; both fields are Galois over $\mathbb Q$.
+Choose conjugate pairs of cube roots and real cube roots of two
+and three. In additive coordinates
+$(u,v,(a_p,b_p)_{p\in S_j})$ for
+$\operatorname{Gal}(\mathcal L_j/E)$, complex conjugation acts by
+
+$$
+c(u,v,(a_p,b_p)_p)c^{-1}
+=(-u,-v,(-b_p,-a_p)_p).
+$$
+
+For each $p\in S_j$, choose $k_p\in\mathbb Z/3\mathbb Z$ with
+$\kappa_p=\omega^{k_p}$, and define the coordinate tuple
+$g_j=(2,2,(2k_p,-2k_p)_{p\in S_j})$ independently of any
+factorization hypothesis on $B_j$. The weighted current
+Frobenius product is
+
+$$
+\prod_{q\mid B_j}\operatorname{Frob}_{(\varpi_{j,q})}^{h_q}
+=(1,1,(k_p,-k_p)_{p\in S_j}).
+$$
+
+Under $B_j=P^2Q^3$, the oriented Frobenius at $P$ is $g_j$.
+
+Proof. The earlier factors $\varpi_p,\overline{\varpi_p}$ have
+valuation one at their separate prime ideals and zero at the other
+listed ideals. Valuation above two detects the exponent of two;
+valuation at $\lambda$ detects twice the exponent of three.
+Thus these $2t+2$ classes are independent in
+$E^\times/(E^\times)^3$. Kummer theory gives both degrees and the
+elementary abelian groups. Conjugation exchanges paired radicands,
+fixes the real radicands, and inverts $\omega$, yielding the action
+and normality over $\mathbb Q$. Current oriented ideals avoid two,
+three, and earlier supports, so their Frobenius coordinates are the
+cubic symbols. Theorems 55.2, 55.5, and 55.6 and the Section 8
+three-balance give the displayed vector. Under $P^2Q^3$, cubing
+kills the $Q$ contribution and squaring is invertible.
+For rational $p=\varpi_p\overline{\varpi_p}$, the coordinate
+$a_p+b_p$ at $g_j$ is zero, so this is complete splitting at $P$
+in every $T^3-p$. The one-direction degree $3^t$ of Theorem 55.3
+cannot replace the conjugate-complete degree $3^{2t}$.
+
+**Theorem 55.8 (GCC4, compatibility density).** Fix $j\geq1$ and
+its actual earlier support. Let
+$m_j=80\cdot3^{j+2}$. For every fixed unit residue $a\bmod m_j$
+with $a\equiv1\pmod3$, the unrestricted rational primes
+$P\equiv a\pmod{m_j}$ for which one prime of $E$ above $P$
+has Frobenius $g_j$ in $\mathcal L_j/E$ have Dirichlet density
+
+$$
+\frac{2}{\varphi(m_j)3^{2t+2}}>0.
+$$
+
+This does not impose $P\mid B_j$, $h_P=2$, or a second prime $Q$.
+It is compatibility of necessary character conditions among
+unrestricted primes, not realization of the actual factorization.
+
+Proof. Put $C=\mathbb Q(\zeta_{m_j})$, which contains $E$.
+First $\mathcal L_j\cap C=E$. Any nontrivial intersection would
+contain an elementary abelian cubic extension over $E$.
+The three-Sylow subgroup of $\operatorname{Gal}(C/E)$ is cyclic, so
+this would contain its unique degree-three subextension
+$E(\zeta_9)=E(\sqrt[3]\omega)$. Kummer correspondence would place
+the class of $\omega$ in the span of the radicands defining
+$\mathcal L_j$. Valuations at each earlier oriented and conjugate
+prime, at two, and at $\lambda$ force every such radicand exponent
+to vanish modulo three. The remaining assertion that $\omega$
+is a cube in $E$ is false: its cube root would have order nine,
+while $E$ has only six roots of unity.
+
+The residue $a$ specifies an automorphism $\sigma_a$ of $C$
+fixing $E$ and combines with $g_j$ to an element of
+$\operatorname{Gal}(\mathcal L_jC/\mathbb Q)$.
+Elements fixing $E$ commute with $g_j$. Complex conjugation takes
+$g_j$ to $(1,1,(2k_p,-2k_p)_p)$, a different element, and fixes
+$\sigma_a$ under conjugation because $C/\mathbb Q$ is abelian.
+This conjugacy class has two elements; the group has order
+$\varphi(m_j)3^{2t+2}$. The Chebotarev density theorem yields
+the displayed density. Sutherland, MIT 18.785 Lecture 28,
+Theorem 28.9, is a classical locator. The proof uses neither GRH
+nor an effective least-prime bound.
+
+Compatible unit classes also satisfy $(5/a)=1$ and
+$a\equiv1+2(-1)^j r_j\pmod{6r_j}$, where $r_j=3^{j+1}$:
+choose an odd compatible class modulo sixteen, a nonzero square
+class modulo five, and apply CRT. For fixed $j$, the primes with
+the exact Fibonacci period required here form the finite support
+of $B_j$; the positive density among unrestricted primes supplies
+no prime in that finite support.
+
+**Theorem 55.9 (GCC5, exact cubic Thue descent).** Suppose
+$j\geq1$ and $B_j=P^2Q^3$ for distinct rational primes $P,Q$.
+Write the oriented primary generators
+$\pi=\varpi_{j,P}=a+b\omega$ and
+$\gamma=\varpi_{j,Q}=u+v\omega$, and put
+
+$$
+\begin{aligned}
+A&=a^2-b^2,&D&=2ab-b^2,\\
+U&=u^3-3uv^2+v^3,&V&=3uv(u-v).
+\end{aligned}
+$$
+
+Then $\eta_j=\pi^2\gamma^3$ gives the exact integer system
+
+$$
+\begin{aligned}
+f_\pi(u,v)
+&:=Au^3-3Du^2v+3(D-A)uv^2+Av^3=-2,\\
+g_\pi(u,v)&:=DU+(A-D)V=L_{3^j}-1,\\
+u^2-uv+v^2&=Q.
+\end{aligned}
+$$
+
+The generators satisfy their primary congruences. The cubic form
+$f_\pi$ is irreducible over $\mathbb Q$, has discriminant
+$81P^4$, and has a totally real cyclic cubic splitting field.
+For each fixed $\pi$, $f_\pi(u,v)=-2$ has only finitely many
+integer solutions. Conversely, fix a primary $\pi$ of prime norm
+$P$ and integers $u,v$ whose norm $Q=u^2-uv+v^2$ is a distinct
+prime. If $f_\pi(u,v)=-2$ and
+$g_\pi(u,v)+1=L_{3^j}$ exactly, then $B_j=P^2Q^3$.
+
+Proof. Eisenstein multiplication gives
+$\pi^2=A+D\omega$, $\gamma^3=U+V\omega$, and their product
+has coefficients $AU-DV$ and $DU+(A-D)V$. Compare with
+$\eta_j=-2+(L_{3^j}-1)\omega$. For all integer
+$a,b,u,v$, the norm identity is
+
+$$
+f_\pi(u,v)^2-f_\pi(u,v)g_\pi(u,v)+g_\pi(u,v)^2
+=(a^2-ab+b^2)^2(u^2-uv+v^2)^3.
+$$
+
+The binary-cubic discriminant calculation for coefficients
+$(A,-3D,3(D-A),A)$ gives
+$81(A^2-AD+D^2)^2=81(a^2-ab+b^2)^4=81P^4$.
+Its Hessian, in the standard binary-cubic normalization, is
+$9P^2(u^2-uv+v^2)$. Also $A\ne0$: either $a=b$ or
+$a=-b$ would contradict primality of $P$. If $f_\pi$ had a
+rational projective zero, take nonzero $z=u+v\omega$.
+The resulting rational multiple relation for $\pi^2z^3$,
+divided by its conjugate, gives
+
+$$
+(z/\overline z)^3
+=\omega^2(\overline\pi/\pi)^2.
+$$
+
+At $(\pi)$, the valuation on the left is divisible by three
+and that on the right is $-2$, a contradiction. A reducible
+rational cubic has a rational projective zero, so $f_\pi$ is
+irreducible. Its positive square discriminant gives Galois group
+$A_3$ and a totally real cyclic splitting field. Classical
+Thue finiteness applies for each fixed irreducible form and
+nonzero right-hand side. The converse follows from the norm
+identity with the prime norms and exact Lucas coordinate.
+Dropping that coordinate produces a different Diophantine problem.
+The fixed-input Thue framework is described by von Kaenel--Matschke,
+arXiv:1605.06079, Sections 5.1--5.3; no complete solution list
+or uniform bound as $P$ varies follows here.
+
+## 56. Common golden cubic fields and independent fixed-curve points
+
+This section continues Library/ArithUnits/dunn2024cubicreciprocity.md,
+GIR.3--GIR.5, using the actual blocks and positive roots of
+Sections 11--13. For $j\geq1$, let
+$\theta_j=\sqrt[3]{B_j}>0$, $k_j=\mathbb Q(\theta_j)$,
+$x_j=L_{3^j}$, and $f_j=F_{3^j}$. Write
+$B_j=d_jc_j^3$ uniquely with positive $c_j$ and cubefree
+$d_j=\prod_{p\mid B_j}p^{e_p}$, where
+$e_p\equiv h_p\pmod3$ and $e_p\in\{0,1,2\}$.
+Let $R_j=\operatorname{rad}(d_j)>1$.
+Theorem 11.1 gives the original-depth index and field discriminant;
+Theorem 12.1 supplies actual infinite-order points on both rational
+twists. For $J\geq1$, define
+
+$$
+F_J=\mathbb Q(\theta_1,\ldots,\theta_J),\qquad
+N_J=F_J(\omega),\qquad
+R^{(J)}=\prod_{j=1}^J R_j.
+$$
+
+The conclusions below continue the named Library source.
+
+**Theorem 56.1 (GIR3, common field and discriminants).** For every
+$J\geq1$,
+
+$$
+[F_J:\mathbb Q]=3^J,\qquad
+[N_J:\mathbb Q]=2\cdot3^J,\qquad
+\operatorname{Gal}(N_J/\mathbb Q)
+\simeq(\mathbb Z/3\mathbb Z)^J\rtimes C_2.
+$$
+
+Complex conjugation acts by inversion on the cubic coordinates.
+$F_J$ has signature $(1,(3^J-1)/2)$: its designated embedding lies
+in $\mathbb R$, but it is not totally real. The exact absolute
+discriminants and root discriminant are
+
+$$
+\begin{aligned}
+|\Delta(F_J)|
+&=3^{(3^J-1)/2}(R^{(J)})^{2\cdot3^{J-1}},\\
+|\Delta(N_J)|
+&=3^{3^J}(R^{(J)})^{4\cdot3^{J-1}},\\
+\operatorname{rd}(N_J)
+&=\sqrt3\,(R^{(J)})^{2/3}.
+\end{aligned}
+$$
+
+Proof. Suppose $\prod_{j=1}^J B_j^{a_j}$ is a cube in $E$.
+For each $j$, choose a prime $p\mid B_j$ with
+$3\nmid h_p$. The block supports are disjoint. Valuation at either
+prime of $E$ over $p$ gives $3\mid a_jh_p$ and hence $3\mid a_j$.
+Thus the block classes are independent in
+$E^\times/(E^\times)^3$. Kummer theory gives degree $3^J$
+over $E$. Positive cube roots are fixed by conjugation, which
+inverts $\omega$, yielding the semidirect action. Since $F_J$
+lies in $\mathbb R$ in the chosen embedding, $F_J\cap E=\mathbb Q$.
+An embedding is real exactly when all positive cube roots map to
+their unique real conjugates; precisely one does, giving the
+signature.
+
+At a rational prime $p\mid R^{(J)}$, exactly one radicand has
+valuation nonzero modulo three. Over the maximal unramified
+local extension, units have cube roots because $p\ne3$, so
+inertia in $N_J$ has order three and translates one coordinate.
+No other prime away from three ramifies. At three, each actual
+$B_j\equiv1\pmod9$ is a cube in $\mathbb Q_3$ by the Hensel
+calculation in Theorem 11.1; a completion of $N_J$ is
+$\mathbb Q_3(\omega)$, with inertia order two and residue
+degree one.
+
+All these ramification steps are tame. The tame discriminant
+exponent is the extension degree minus the number of inertia
+orbits on embeddings. On the $3^J$ embeddings of $F_J$, a
+nonzero coordinate translation has $3^{J-1}$ orbits;
+inversion has one fixed point and $(3^J-1)/2$ two-cycles.
+This gives the first discriminant formula. On the regular
+action for $N_J$, inertia orders three and two give exponents
+$4\cdot3^{J-1}$ and $3^J$, respectively. Taking the
+$(2\cdot3^J)$-th root gives the root discriminant.
+No bounded-root-discriminant claim is made as $J$ increases.
+
+Fix the two curves over $\mathbb Q$,
+
+$$
+\mathcal E^-:y^2=x^3-3,\qquad
+\mathcal E^+:y^2=x^3+125.
+$$
+
+**Theorem 56.2 (GIR4, independent points on both fixed curves).**
+For every $J\geq1$ and $1\leq j\leq J$, the actual points
+
+$$
+P_j^-=(\theta_j,x_j),\qquad
+P_j^+=(5\theta_j,25f_j)
+$$
+
+belong to $\mathcal E^-(F_J)$ and $\mathcal E^+(F_J)$,
+respectively. For each sign, these $J$ points are
+$\mathbb Z$-linearly independent even modulo the
+$\mathbb Q$-rational points. Over $N_J$, let
+$\iota(x,y)=(\omega x,y)$. Then the $2J$ points
+$P_j^\pm,\iota(P_j^\pm)$ are
+$\mathbb Z$-linearly independent even modulo the
+$E$-rational points. Consequently
+
+$$
+\operatorname{rank}\mathcal E^\pm(F_J)
+\geq\operatorname{rank}\mathcal E^\pm(\mathbb Q)+J,\qquad
+\operatorname{rank}\mathcal E^\pm(N_J)
+\geq\operatorname{rank}\mathcal E^\pm(E)+2J.
+$$
+
+Both fixed curves therefore have infinite rank over the
+explicit union of the $F_J$. The field degree is $3^J$;
+this is not a fixed-number-field or uniformly bounded-degree
+construction.
+
+Proof. The curve equations are
+$x_j^2=B_j-3$ and $625f_j^2=125(B_j+1)$.
+Over $k_j$, dividing the raw $B_j$-twist point coordinates
+of Theorem 12.1 by $\theta_j^2$ and
+$\theta_j^3=B_j$ identifies them with the displayed fixed-curve
+points. Their infinite order follows from that theorem.
+For each $j$, the automorphism
+$\sigma_j\in\operatorname{Gal}(N_J/E)$ multiplies
+$\theta_j$ by $\omega$ and fixes the other roots. It sends
+$P_j$ to $\iota P_j$ and fixes $P_i$ for $i\ne j$.
+The three CM rotations lie on one horizontal line, giving
+$1+\iota+\iota^2=0$, and
+
+$$
+(\iota-1)(\iota^2-1)=[3],\qquad
+(a+b\iota)(a+b\iota^2)=[a^2-ab+b^2].
+$$
+
+Apply $\sigma_j-1$ and then $\iota^2-1$ to a relation
+$\sum_i a_iP_i$ equal to a $\mathbb Q$-rational point.
+It follows that $[3a_j]P_j=O$, hence $a_j=0$.
+For a relation
+$\sum_i(a_i+b_i\iota)P_i$ equal to an $E$-rational
+point, apply $\sigma_j-1$, then $\iota^2-1$, then
+$a_j+b_j\iota^2$. This yields
+$[3(a_j^2-a_jb_j+b_j^2)]P_j=O$.
+The positive quadratic norm and infinite order force
+$a_j=b_j=0$. The same reasoning after multiplying a
+torsion relation by its order gives independence modulo the
+indicated base-field point groups.
+
+Choose one fixed absolute normalization of canonical height
+$\widehat h$ and write
+$H_j^\pm=\widehat h(P_j^\pm)>0$.
+
+**Theorem 56.3 (GIR5, the constructed height lattice).**
+For each sign and every $J\geq1$, different layers,
+including their CM rotations, are orthogonal under the
+canonical-height pairing. On
+$(P_1^\pm,\iota P_1^\pm,\ldots,
+P_J^\pm,\iota P_J^\pm)$ the Gram matrix is block diagonal,
+with $j$-th block
+
+$$
+H_j^\pm
+\begin{pmatrix}1&-1/2\\-1/2&1\end{pmatrix}.
+$$
+
+Its determinant is
+
+$$
+(3/4)^J\prod_{j=1}^J(H_j^\pm)^2>0.
+$$
+
+On the $J$ real points alone the matrix is diagonal with
+entries $H_j^\pm$. This determinant belongs to the constructed
+subgroup; it is not the full Mordell--Weil regulator.
+
+Proof. Canonical height and its bilinear pairing are Galois
+invariant. The automorphism $\iota$ preserves height because
+its multiplier on the $x$ coordinate is a root of unity.
+For $i\ne j$, $\sigma_j$ fixes the $i$-th point and cycles
+the three rotations of the $j$-th point. All three pairings
+with the fixed point are equal, and their sum is zero by
+$1+\iota+\iota^2=0$, so each vanishes. Within one layer,
+$P+\iota P=-\iota^2P$ has height $H$.
+Bilinearity gives $H=2H+2\langle P,\iota P\rangle$,
+so the off-diagonal entry is $-H/2$. Each block has
+determinant $3H^2/4$, and multiplying proves the formula.
+Neither saturation nor a basis of all rational points is
+established, and no numerical height value is used.
+
+## 追加锚（本行以下为增补区）
+
+
+## 57. Trace and norm denominators on a smooth Weierstrass curve
+
+Let $F$ be a field and let $W$ be a smooth Weierstrass curve over $F$,
+with coefficients $a_1,a_2,a_3,a_4,a_6$. Write
+
+$$
+A(X)=a_1X+a_3,\qquad
+B(X)=X^3+a_2X^2+a_4X+a_6.
+$$
+
+The quadratic coordinate relation is $Y^2+A(X)Y-B(X)=0$.
+The expressions $2p-qA$ and $p^2-pqA-q^2B$ are respectively
+the trace and norm numerators of $p+qY$. Their denominator
+criterion supplies the coordinate divisibility needed in the
+integral-closure construction for the actual curves of Section 56.
+
+**Theorem 57.1 (trace and norm denominator criterion).** For all
+$p,q,d\in F[X]$ with $d\ne0$, if
+
+$$
+d\mid 2p-qA,\qquad d^2\mid p^2-pqA-q^2B,
+$$
+
+then $d\mid p$ and $d\mid q$. This assertion includes fields of
+characteristic two and three.
+
+Proof. Fix a prime polynomial $\pi$ dividing $d$. If
+$\pi\nmid q$, division in $F[X]/(\pi)$ supplies a polynomial $g$
+with $p\equiv gq\pmod\pi$. The trace and norm divisibilities then
+give $\pi\mid2g-A$ and $\pi^2\mid g^2-gA-B$.
+Differentiating the latter relation and using the former gives
+$\pi\mid a_1g+B'$. Over the residue field at $\pi$, the point
+$(X,-g)$ therefore lies on $W$ and both partial derivatives
+vanish. This contradicts smoothness. Thus $\pi\mid q$; the norm
+relation also gives $\pi\mid p$. Divide $p,q$ by $\pi$ and
+cancel $\pi$ and $\pi^2$ from the trace and norm divisibilities.
+Factorization induction on $d$ finishes the argument; units divide
+both coordinates.
+
+The source of this denominator criterion is
+TauCetiProject/TauCeti, commit
+`33c2099c678ea391f7ea3e0ddaf945a76a625e5d`,
+`TauCeti/AlgebraicGeometry/EllipticCurve/Affine/CoordinateRing.lean`;
+the same source appears at commit
+`65482a19dabd31843aab0cf8469c5e7613988eba` under Apache-2.0.
+The criterion alone does not construct the global point map,
+the Galois action on the common fields, or the canonical height.
+
+## 追加锚（本行以下为增补区）
+
+
+## 58. Cubic reciprocity at distinct oriented rational primes
+
+Write $\mathcal E=\mathbb Z[\omega]$, with
+$\omega^2+\omega+1=0$. For a maximal ideal $P$ with finite residue
+field of cardinality $p\equiv1\pmod3$, let $\chi_P(a)$ be the
+cube root of unity selected by the Euler criterion in
+$\mathcal E/P$, as in Section 8.
+
+**Theorem 58.1 (primary cubic reciprocity at distinct rational norms).**
+Let $p,q$ be distinct rational primes, both congruent to one modulo
+three. Let $P,Q$ be maximal ideals of $\mathcal E$ whose residue
+fields have cardinalities $p,q$. Suppose that $\pi,\rho\in\mathcal E$
+satisfy
+
+$$
+P=(\pi),\qquad Q=(\rho),\qquad
+N(\pi)=p,\qquad N(\rho)=q,\qquad
+3\mid\pi-1,\qquad3\mid\rho-1.
+$$
+
+Then
+
+$$
+\chi_Q(\pi)=\chi_P(\rho).
+$$
+
+Proof. The primary normalization of the cubic Jacobi sum is
+$J=-\pi$. In a finite extension of the residue field at $Q$
+containing the additive character values, the Gauss cube identity
+and the $q$-power Frobenius computation give
+
+$$
+\chi_P(q)=\chi_Q(\pi)\chi_Q(\bar\pi)^2.
+$$
+
+Apply the same computation after exchanging $p$ and $q$.
+The norm identities and distinct rational characteristics ensure
+that all four arguments are nonzero in the relevant residue
+fields, so these characters multiply and take values in
+$\{1,\omega,\omega^2\}$. With
+
+$$
+A=\chi_Q(\pi),\quad B=\chi_Q(\bar\pi),\quad
+C=\chi_P(\rho),\quad D=\chi_P(\bar\rho),
+$$
+
+the two computations read $CD=AB^2$ and $AB=CD^2$.
+Since $B^3=D^3=1$, their quotient gives $BD=1$ and then $A=C$.
+The assertion applies to the disjoint supports of different
+actual Lucas blocks in Section 55. It does not address two
+conjugate prime factors with equal rational norm.
+
+The classical primary reciprocity statement and its normalization
+are described in Dunn--Radziwill, arXiv:2109.07463v3,
+equations (1.4)--(1.5). The argument above uses the Gauss and
+Jacobi sum identities in the pinned Mathlib library and retains
+both Frobenius directions.
+
+## 追加锚（本行以下为增补区）

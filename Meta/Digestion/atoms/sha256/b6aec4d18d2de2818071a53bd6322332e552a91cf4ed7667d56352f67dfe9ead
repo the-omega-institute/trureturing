@@ -1,0 +1,8 @@
+It is stated in Ribenboim, *FFF: (Favorite Fibonacci Flowers)* (2005),
+(3.4), with attribution to his earlier paper. In particular, distinct
+indices whose ratio is $25$ never have square-equivalent Fibonacci
+values. These classical results are inputs, not new proofs of square-class
+rigidity or consequences of the coordinate-ring formalization.
+The source scopes are recorded in
+`Library/Recurrence/ribenboim2005squareclasses.md`.
+

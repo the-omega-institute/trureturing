@@ -1,0 +1,27 @@
+## 54. Inert Eisenstein quotients and conjugation Frobenius
+
+Let $E=\mathbb Z[\omega]$, with $\omega^2+\omega+1=0$. Every element
+$z\in E$ has unique integer coordinates
+$z=\operatorname{re}(z)+\operatorname{im}(z)\omega$. Quadratic
+conjugation is determined by $\overline\omega=\omega^2=-1-\omega$, so
+
+$$
+\overline{a+b\omega}=(a-b)-b\omega
+\qquad(a,b\in\mathbb Z).
+$$
+
+For a rational prime $\ell$, put $\mathbb F_\ell=\mathbb Z/\ell\mathbb Z$
+and let
+
+$$
+K_\ell=\mathbb F_\ell\oplus\mathbb F_\ell u_\ell,
+\qquad u_\ell^2+u_\ell+1=0,
+$$
+
+where multiplication is extended from the displayed relation. Write
+$\operatorname{re}_\ell$ and $\operatorname{im}_\ell$ for the two
+$\mathbb F_\ell$ coordinates in this quadratic algebra. For an integer
+$a$, write $[a]_\ell$ for its residue in $\mathbb F_\ell$. Let
+$I_\ell=(\ell)\subset E$, and denote the actual quotient map by
+$q_\ell:E\to E/I_\ell$.
+

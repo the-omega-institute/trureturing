@@ -1,0 +1,51 @@
+**Theorem 55.7 (GCC3, the conjugate-complete Kummer field).** For
+every $j\geq1$, without a Wall--Sun--Sun assumption,
+
+$$
+[\widehat{\mathcal M}_j:E]=3^{2t},\qquad
+[\mathcal L_j:E]=3^{2t+2}.
+$$
+
+The first field is the normal closure over $\mathbb Q$ of
+$\mathcal M_j$; both fields are Galois over $\mathbb Q$.
+Choose conjugate pairs of cube roots and real cube roots of two
+and three. In additive coordinates
+$(u,v,(a_p,b_p)_{p\in S_j})$ for
+$\operatorname{Gal}(\mathcal L_j/E)$, complex conjugation acts by
+
+$$
+c(u,v,(a_p,b_p)_p)c^{-1}
+=(-u,-v,(-b_p,-a_p)_p).
+$$
+
+For each $p\in S_j$, choose $k_p\in\mathbb Z/3\mathbb Z$ with
+$\kappa_p=\omega^{k_p}$, and define the coordinate tuple
+$g_j=(2,2,(2k_p,-2k_p)_{p\in S_j})$ independently of any
+factorization hypothesis on $B_j$. The weighted current
+Frobenius product is
+
+$$
+\prod_{q\mid B_j}\operatorname{Frob}_{(\varpi_{j,q})}^{h_q}
+=(1,1,(k_p,-k_p)_{p\in S_j}).
+$$
+
+Under $B_j=P^2Q^3$, the oriented Frobenius at $P$ is $g_j$.
+
+Proof. The earlier factors $\varpi_p,\overline{\varpi_p}$ have
+valuation one at their separate prime ideals and zero at the other
+listed ideals. Valuation above two detects the exponent of two;
+valuation at $\lambda$ detects twice the exponent of three.
+Thus these $2t+2$ classes are independent in
+$E^\times/(E^\times)^3$. Kummer theory gives both degrees and the
+elementary abelian groups. Conjugation exchanges paired radicands,
+fixes the real radicands, and inverts $\omega$, yielding the action
+and normality over $\mathbb Q$. Current oriented ideals avoid two,
+three, and earlier supports, so their Frobenius coordinates are the
+cubic symbols. Theorems 55.2, 55.5, and 55.6 and the Section 8
+three-balance give the displayed vector. Under $P^2Q^3$, cubing
+kills the $Q$ contribution and squaring is invertible.
+For rational $p=\varpi_p\overline{\varpi_p}$, the coordinate
+$a_p+b_p$ at $g_j$ is zero, so this is complete splitting at $P$
+in every $T^3-p$. The one-direction degree $3^t$ of Theorem 55.3
+cannot replace the conjugate-complete degree $3^{2t}$.
+

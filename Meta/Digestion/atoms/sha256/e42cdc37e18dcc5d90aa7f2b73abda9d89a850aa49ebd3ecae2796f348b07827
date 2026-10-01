@@ -1,0 +1,24 @@
+## 55. Interlevel cubic characters and conjugate-complete constraints
+
+This section continues the actual golden block family of Sections 4 and 8.
+For every $j\geq1$, put $x_j=L_{3^j}$ and $B_j=x_j^2+3$. For a prime
+$p\mid B_j$, retain its original Fibonacci depth
+$h_p=v_p(F_{\rho(p)})=v_p(B_j)$. In
+$E=\mathbb Q(\omega)$, with $\omega^2+\omega+1=0$ and
+$\lambda=1+2\omega$, retain the primary factor
+$\eta_j=-2+(x_j-1)\omega=\omega(x_j+\lambda)$ and its unique oriented
+primary factors $\varpi_{j,p}$ from Theorem 8.1. Thus
+$\eta_j=\prod_{p\mid B_j}\varpi_{j,p}^{h_p}$ and
+$N(\varpi_{j,p})=p$. The symbols $(a/\mathfrak p)_3$ use that same
+orientation and the multiplicative extension to coprime denominators.
+Theorem 8.2 gives the weighted original-depth value
+$\prod_{p\mid B_j}(3/\varpi_{j,p})_3^{h_p}=\omega$.
+For $i<j$, the block product and congruences of Section 4 give
+$B_i\mid x_j$, $B_j\equiv3\pmod{B_i^2}$, and disjoint prime supports.
+Every block prime is greater than five and is congruent to
+$1\pmod{2\cdot3^{j+1}}$ at level $j$. Classical cubic reciprocity
+for coprime primary elements and the supplementary values of
+Dunn--Radziwill, arXiv:2109.07463v3, equations (1.4)--(1.5), are
+the arithmetic inputs. The conclusions below continue
+Problems/wall-sun-sun-golden-unit-lift.md, GCR.3--GCR.11.
+

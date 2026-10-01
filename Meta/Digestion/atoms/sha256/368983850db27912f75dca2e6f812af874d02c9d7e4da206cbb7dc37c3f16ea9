@@ -1,0 +1,37 @@
+**Theorem 56.3 (GIR5, the constructed height lattice).**
+For each sign and every $J\geq1$, different layers,
+including their CM rotations, are orthogonal under the
+canonical-height pairing. On
+$(P_1^\pm,\iota P_1^\pm,\ldots,
+P_J^\pm,\iota P_J^\pm)$ the Gram matrix is block diagonal,
+with $j$-th block
+
+$$
+H_j^\pm
+\begin{pmatrix}1&-1/2\\-1/2&1\end{pmatrix}.
+$$
+
+Its determinant is
+
+$$
+(3/4)^J\prod_{j=1}^J(H_j^\pm)^2>0.
+$$
+
+On the $J$ real points alone the matrix is diagonal with
+entries $H_j^\pm$. This determinant belongs to the constructed
+subgroup; it is not the full Mordell--Weil regulator.
+
+Proof. Canonical height and its bilinear pairing are Galois
+invariant. The automorphism $\iota$ preserves height because
+its multiplier on the $x$ coordinate is a root of unity.
+For $i\ne j$, $\sigma_j$ fixes the $i$-th point and cycles
+the three rotations of the $j$-th point. All three pairings
+with the fixed point are equal, and their sum is zero by
+$1+\iota+\iota^2=0$, so each vanishes. Within one layer,
+$P+\iota P=-\iota^2P$ has height $H$.
+Bilinearity gives $H=2H+2\langle P,\iota P\rangle$,
+so the off-diagonal entry is $-H/2$. Each block has
+determinant $3H^2/4$, and multiplying proves the formula.
+Neither saturation nor a basis of all rational points is
+established, and no numerical height value is used.
+

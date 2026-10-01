@@ -1,0 +1,101 @@
+**Theorem 54.1 (the actual inert quotient and its Frobenius action).**
+For every rational prime $\ell$ satisfying $\ell\equiv2\pmod3$, the
+ideal $I_\ell$ is maximal, and
+
+$$
+\#(E/I_\ell)=\ell^2,
+\qquad \operatorname{char}(E/I_\ell)=\ell.
+$$
+
+There exists a ring equivalence
+
+$$
+e_\ell:E/I_\ell\xrightarrow{\ \sim\ }K_\ell
+$$
+
+such that, for every $z\in E$, both coordinate identities hold:
+
+$$
+\begin{aligned}
+\operatorname{re}_\ell\bigl(e_\ell(q_\ell(z))\bigr)
+  &=[\operatorname{re}(z)]_\ell,\\
+\operatorname{im}_\ell\bigl(e_\ell(q_\ell(z))\bigr)
+  &=[\operatorname{im}(z)]_\ell.
+\end{aligned}
+$$
+
+For every $z\in E$, Frobenius on this actual quotient is quadratic
+conjugation:
+
+$$
+q_\ell(z)^\ell=q_\ell(\overline z).
+$$
+
+The one equivalence $e_\ell$ satisfies the coordinate conditions for
+all $z$ simultaneously. The prime $\ell=2$ is included: $E/(2)$ has
+four elements, and $q_2(z)^2=q_2(\overline z)$ for every $z\in E$.
+
+Proof. First, the polynomial $X^2+X+1$ has no root in
+$\mathbb F_\ell$. At $\ell=2$, its values at both $0$ and $1$ are
+$1$. For an odd prime $\ell\equiv2\pmod3$, one has $\ell\ne3$.
+If $r^2+r+1=0$, then $(2r+1)^2=-3$. The discriminant splitting
+criterion states that, for an odd prime different from three,
+$-3$ is a square in $\mathbb F_\ell$ exactly when
+$\ell\equiv1\pmod3$. This excludes the proposed root. Consequently
+$K_\ell$ is a field.
+
+Define coordinate reduction by
+
+$$
+\rho_\ell:E\longrightarrow K_\ell,
+\qquad a+b\omega\longmapsto[a]_\ell+[b]_\ell u_\ell.
+$$
+
+The defining quadratic relation makes $\rho_\ell$ a ring
+homomorphism. It is surjective because both residue coordinates have
+integer representatives. Its kernel is exactly $I_\ell$: the two
+coordinates of its image vanish precisely when $\ell\mid a$ and
+$\ell\mid b$, which is equivalent to
+$a+b\omega=\ell(c+d\omega)$ for integers $c,d$. The quotient
+isomorphism theorem therefore gives $e_\ell$, with the asserted
+coordinate formulas. Since the target is a field, the kernel is
+maximal. The two coordinates give $\#K_\ell=\ell^2$, and the scalar
+inclusion $\mathbb F_\ell\hookrightarrow K_\ell$ gives
+characteristic $\ell$.
+
+The relation in $K_\ell$ implies $u_\ell^3=1$. Since
+$\ell\equiv2\pmod3$, it follows that
+$u_\ell^\ell=u_\ell^2=-1-u_\ell$. For all
+$A,B\in\mathbb F_\ell$, the characteristic-$\ell$ power identity
+and $A^\ell=A$, $B^\ell=B$ yield
+
+$$
+\begin{aligned}
+(A+B u_\ell)^\ell
+  &=A+B u_\ell^\ell\\
+  &=(A-B)-B u_\ell.
+\end{aligned}
+$$
+
+For $z=a+b\omega$, the right-hand side is
+$e_\ell(q_\ell(\overline z))$. As $e_\ell$ preserves powers and is
+injective, the displayed identity proves
+$q_\ell(z)^\ell=q_\ell(\overline z)$. The argument uses no oddness
+assumption in its Frobenius step and includes $\ell=2$.
+
+The ring $E$ is the Eisenstein quadratic model used in Sections 9 and
+17; this statement supplies its actual rational-prime quotient model.
+The discriminant input is
+`D5.S3.PrimeForms.Splitting.EisensteinCriterion.neg_three_isSquare_iff`.
+The quadratic algebra, quotient isomorphism theorem, and finite-field
+power laws are the classical results provided by the pinned Mathlib
+modules `Mathlib.Algebra.QuadraticAlgebra.Basic`,
+`Mathlib.RingTheory.Ideal.Quotient.Operations`,
+`Mathlib.RingTheory.Ideal.Maps`, `Mathlib.Algebra.CharP.CharAndCard`,
+and `Mathlib.FieldTheory.Finite.Basic`. Coordinate reduction,
+identification of its kernel with $(\ell)$, and the resulting
+conjugation transport give the concrete Eisenstein specialization.
+The prime and congruence hypotheses are part of the statement; it does
+not assert this maximality or Frobenius formula for other rational
+primes or for a composite modulus.
+
