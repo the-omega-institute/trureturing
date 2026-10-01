@@ -12789,3 +12789,84 @@ It does not assert that R intersects this set, that each P_i=R union S_i
 does, or that the two pruned roots share a prime. Shared support still
 requires a relation using the actual common source. No Lean verification
 is asserted.
+
+## 96. Different concentrated colors force ternary height at least twelve
+
+Keep the one EB1 original cover in the all-concentrated branch R=empty.
+Write H=H_3 and retain the disjoint nonempty color supports S_1,S_2.
+Every original prime-power height and every actual phase remains
+unrestricted. The combined necessary condition is
+
+    R=empty ==> H_3>=12.                            (CG1)
+
+### Reuse the existing complete-tree collision reservation
+
+For opposite-color support primes p<q, use the single-source construction
+proved in BC12 with retained smaller coordinate p, selected chain {q},
+and no repeated bases. Apply this construction to the original family
+itself; the strict class saving here comes from its reserved originals.
+CP1 gives no original divisible by pq, so every mixed-root blacklist is
+empty. The only possible cross-group numerical collision is between
+
+    3^c*q^a and3^c*p^a, with0<=c<=H and a>=1.
+
+Indeed a common nonternary cofactor would have to belong to both colors.
+Reserve the actual complete q-prefix of the first original in every
+such pair, exactly as in BC12. With r=q-p+1, the antichain reservation
+cost of BC14 satisfies
+
+    Delta <= (H+1)*sum_(a=1..min(H_p,H_q))r^(-a)
+          < (H+1)/(q-p).
+
+Thus q-p>=H+1 gives Delta<1. BC14 supplies at least p good q-roots,
+and the empty blacklists permit the BC12 matching and full-depth tree.
+Its source-map construction gives a whole distinct odd cover with no
+increase in classes. Original p,q,3p,3q are all present: divisor closure
+supplies the primes, and DP9 supplies the concentrated primes' mixed
+children. The reserved q and3q classes have empty pullbacks, so at
+least these two originals disappear. This contradicts EB1. Consequently
+
+    |p-q|<=H for every p in S_1 and q in S_2.        (CG2)
+
+Only the established tree construction and capacity bound are reused;
+no fresh-coordinate independence or bounded-height substitution is made.
+
+### The two colors cannot fit when H is at most eleven
+
+The existing height-one exclusion permits H>=2. Reuse CM3 and its
+two-prime-support consequence: each S_i has at least two primes, and
+if it has exactly two, it is one of
+
+    {5,7}, {5,11}, {5,13}.
+
+Since the supports are disjoint, they cannot both have exactly two.
+Suppose H<=11. All support primes exceed3 and are odd, so CG2 sharpens
+to an opposite-color gap at most10.
+
+If one color is {5,t}, the other has at least three primes. Their
+distance from5 puts every one in {7,11,13}; exclusion of the same-color
+prime t leaves at most two choices, a contradiction.
+
+It remains to consider two colors each having at least three primes.
+Let r be the smallest prime in their union and name its color S_1.
+Every prime of S_2 lies in (r,r+10]. Because r>3, there are two cases.
+
+If r=2 modulo3, the only possible offsets of S_2 from r are2,6,8:
+the other positive even offsets at most10 yield multiples of3.
+All three offsets must occur. Hence min(S_2)=r+2, and the opposite-color
+gap puts S_1 below or equal to r+12. The only even offsets from r in
+that range which avoid multiples of3 are0,2,6,8,12. Removing the three
+offsets already in S_2 leaves only0 and12 for S_1, a contradiction.
+
+If r=1 modulo3, the only possible offsets of S_2 are4,6,10, so all
+three occur and min(S_2)=r+4. Now S_1 is at most r+14. Its possible
+even offsets avoiding multiples of3 are0,4,6,10,12. Removing S_2 again
+leaves only0 and12, the same contradiction. Composite candidates among
+these lists only decrease the number of available primes.
+
+This excludes every H<=11 and proves CG1. The argument uses the same
+original source throughout and imposes no restriction on nonternary
+heights, total prime support, or phases. It does not exclude the
+remaining all-concentrated configurations with H_3>=12 or settle the
+branches with nonconcentrated support. Unrestricted Erdos7 remains
+unresolved. No new Lean verification is asserted.
