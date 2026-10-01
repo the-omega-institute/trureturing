@@ -14048,3 +14048,101 @@ content is NS1--NS3's next-row numerical height and actual supplier
 coverage, not another proof that the top color has at least three
 primes. More complex next-row incidence is not excluded. No new
 Lean verification or unrestricted noncoverage is asserted.
+
+## 109. A local nonpure singleton gives a two-level terminal descent
+
+Keep section108's original source and notation. Form the intermediate
+whole cover
+
+    F=(C minus T) union {R}, R=C_M.
+
+The one resolvent R covers the exact top-deletion obligation. F has
+N-2 classes; its occupied numerical label is permitted only for this
+intermediate argument. No minimality or divisor closure of F is assumed.
+
+Put w=u mod3^(H-2). Let O_w contain ALL original classes of height
+H-1 whose lower ternary prefix modulo3^(H-2) is w, and define
+
+    G_w=O_w union {R}, k=|G_w|=|O_w|+1.
+
+Count this local batch by its (H-1)-st ternary digit. The following
+necessary condition is stronger than excluding global singularity
+of that digit:
+
+    no local digit branch of G_w has a nonpure
+    class as its unique member.                    (LB1)
+
+Here nonpure means cofactor greater than one. This includes the
+resolvent R, whose cofactor is M.
+
+### The simultaneous deletion has full sibling fibers
+
+Take a point of the nonempty E_T. It is private to R in F. Changing
+its (H-1)-st digit while keeping all other coordinates makes every
+class of height at most H-2 remain absent, and every retained class
+of height H-1 outside O_w is disjoint from the lower prefix w.
+Whole coverage by F therefore shows that all three local branches
+of G_w are nonempty. In particular k>=3.
+
+Suppose a branch has the unique nonpure member S, of cofactor d>1
+and actual cofactor phase c modd. Remove G_w from F. The retained
+family is exactly C minus (T union O_w). Every removed class lies
+over w, so the exact uncovered set E is supported over w. Within
+that lower prefix, every retained original is independent of the
+(H-1)-st digit: a height-H-1 original outside O_w is disjoint,
+and all others have height at most H-2. Thus E is a union of full
+three-sibling fibers.
+
+At S's singleton digit, whole coverage by F forces every such
+fiber's nonternary coordinates to satisfy c modd. Consequently
+
+    E subset K_d={x:x=w mod3^(H-2),x=c modd}.        (LB2)
+
+This is the complete joint deletion region, including every old
+class in O_w, not a union of separately selected private points.
+
+### Four fresh classes replace at least five originals
+
+The support of d lies in the old top color: if S is original this
+follows from its first ternary root; if S=R it follows from d=M.
+For j=0,1,2,3 add the complete CRT AP
+
+    x=w mod3^j, x=c modd, x=j+1 mod5,
+    numerical modulus5*3^j*d.
+
+Because H-2>=3, the four APs together with retained A_5 cover all
+of K_d and hence E. Each new label contains5 and a prime of the
+opposite color, so CP1 makes it absent from the entire old palette.
+The four labels are distinct odd nonunits.
+
+The deleted ORIGINAL family is T union O_w, of size3+(k-1)=k+2.
+It contains at least five classes. Therefore the resulting whole
+distinct cover has
+
+    N_new=N-(k+2)+4=N+2-k<N.                       (LB3)
+
+This contradicts EB1 and proves LB1. The cardinality decrease
+already settles the comparison; no modulus-sum estimate or extra
+gap bound is needed to pay for the four new moduli.
+
+### The surviving local incidence
+
+If the original pure3^(H-1) guard belongs to O_w, it is alone in
+its local branch. Any original mixed member there would be
+contained in that comparable guard, and R cannot be contained in
+a retained guard because E_T is nonempty. LB1 then requires the
+local counts, up to digit permutation, to have the form
+
+    (1,a,b), a,b>=2, with the singleton pure.       (LB4)
+
+If that pure guard lies outside O_w, all members of G_w are
+nonpure and each branch has at least two members. Thus k>=5 in
+the first case and k>=6 in the second. These are counts in ONE
+actual lower prefix; no claim of global next-digit singularity
+was needed for the descent.
+
+The cases in LB4 and the three nonsingleton-branch case are not
+excluded. Their supplier intersections and occupied original
+labels remain part of the unresolved repair problem. This is an
+ordinary two-level consumer of the existing coarsening and
+cross-color repair; no Lean verification is asserted.
