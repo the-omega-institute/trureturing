@@ -5021,3 +5021,247 @@ no argument here forces a successful assignment for every one.
 The unrestricted #7 objective and that joint existence problem
 remain unresolved. The result is an ordinary consumer of the
 existing tree transport and Hall argument, not new Lean evidence.
+
+## 37. Pruned reservations charge actual depths and disjoint repair labels
+
+Fix ONE endpoint selection, assignment and selected prime chain in
+BC12. Remove the selected endpoint of every repeated base from the
+inventory C, and call the remaining inventory C-minus. Its numerical
+labels are distinct. This deletion alone is not asserted to preserve
+whole coverage. The common source map below avoids every removed
+endpoint through S_i, so coverage is preserved on its image.
+
+Construct T-minus from the numerical pairs p_1^a*u and q^a*u
+which BOTH remain in C-minus, with a>=1 and gcd(u,q*p_1)=1.
+Reserve the actual complete p_1 prefix of the former class. This
+is sufficient for BC12: a removed endpoint already has empty
+pullback and cannot create an output collision. Every remaining
+q-bearing p_1-free counterpart is charged at most once, because
+C-minus has at most one class of each numerical modulus.
+
+Put p=p_1, H=H_1 and r=p-q+1. Deduplicate S_1 union T-minus
+and discard descendants of retained ancestors to obtain an
+antichain D. Define its actual prefix cost and its good roots by
+
+    Delta=sum_(xi in D) r^(-depth(xi)),
+    G={first-p roots with a complete q-ary tail avoiding D}.
+
+Report375's complete-tree duality and LA4 apply inside each
+bad root. Its forbidden prefixes have relative tail cost at
+least one, hence global cost at least1/r. A forbidden root
+itself has this same cost. Costs in different first roots are
+disjoint. Consequently
+
+    p-|G|<=floor(r*Delta).                         (BC14)
+
+This reuses the existing blocked-tree bound; it does not identify
+the cost condition with an exact characterization of good roots.
+In particular, if Delta<1, then |G|>=q. Assuming the other
+selected-coordinate trees exist, BC13 forces at least
+
+    h>=p-floor(r*Delta)
+
+actual q*p-bearing residual classes. Thus every fixed assignment
+with those other trees obeys Delta>=1 OR h+r*Delta>=p. The
+floor and real-inequality versions are equivalent because h,p
+are integers; neither strengthens the other.
+
+### Charge each reservation to its actual high-q repair
+
+Retain the unmerged upper costs
+
+    s=sum_(m in E assigned to p) r^(-v_p(m)),
+    t0=sum_(q^a*u,p^a*u both in C-minus) r^(-a),
+    tau=#{q^a*u counterparts occurring in the latter sum}.
+
+The same gcd and positive-a restrictions as T-minus apply to
+the latter two expressions. Thus Delta<=s+t0 and t0<=tau/r.
+If A=s+t0<1, a directly usable form of BC14 is
+
+    h>=p-floor(r*A).
+
+In BC2 the k original repair labels contain three disjoint groups:
+the |E| first-level repairs q*m; the tau p-free repairs q^(a+1)*u
+which produce the reserved q-bearing counterparts; and the h
+repairs whose residual labels are divisible by q*p. Hence
+
+    k>=|E|+tau+h.
+
+Suppose s<1 and put c=ceil(r*(1-s))=r-floor(r*s)>0.
+If tau<c, then s+tau/r<1, so BC14--BC13 give
+
+    h>=p-floor(r*s+tau)=p-tau-floor(r*s).
+
+The necessary alternative and its repair-budget consequence are
+
+    tau>=c OR tau+h>=c+q-1,                       (BC15)
+    k>=|E|+c;
+    tau<c ==> k>=|E|+c+q-1.                       (BC16)
+
+These are costs for one fixed common assignment, not sums of
+separately optimized chains. If there are no reserved counterparts,
+tau=0, the sharper branch reads k>=|E|+p-floor(r*s).
+Deep prefixes pay their actual depth even when several first
+roots are involved. For example, at q=3,p=5, three repeated
+bases assigned at p-depth at least two give s<=1/3; with no
+reserved counterparts and all other required trees present,
+at least four actual15-bearing residual classes are necessary.
+This is a conditional inventory consequence, not a covering example.
+
+## 38. Coherent high-q rows need not enter the mixed blacklist
+
+The shared source map in BC12 has single-AP pullbacks even
+before all mixed q*p classes are killed. For an input numerical
+label q^beta*p^alpha*u with gcd(u,q*p)=1, its old q-prefix and
+the inverse of its p-prefix impose two prefixes on the SAME q
+coordinate. They are either incompatible or one extends the
+other. A nonempty pullback therefore has numerical modulus
+
+    q^max(alpha,beta)*transport(u),
+
+where transport sends each other selected p_i exponent to the
+same exponent at p_(i-1), retaining every unselected prime.
+This map is injective on the full p*q-free cofactor u. The
+remaining obstruction is equality of numerical output labels
+with different output phases, not splitting into several APs.
+
+### Keep an entire high row when its complete common phase agrees
+
+In the SAME C-minus and chain, fix beta>H and a full cofactor u.
+Collect ALL actual classes with numerical labels
+
+    q^beta*p^a*u, 0<=a<=H.
+
+Call this row coherent when their residues modulo q^beta*u
+are identical. Include the a=0 member if it exists; checking
+only selected mixed members would miss a possible collision.
+All cofactors and phases here are complete, including other
+selected primes. A row with one member is coherent.
+
+For a coherent row, its common q^beta prefix fixes all H input
+digits of the p tree. Each member's p-prefix condition is thus
+constant on that q-prefix cylinder. Its other coordinate
+conditions pull back identically, because the full u phase is
+common. Every nonempty output in the row is consequently the
+SAME AP modulo q^beta*transport(u). Keep that AP once; if all
+pullbacks are empty, the row contributes nothing.
+
+Distinct rows have different output numerical labels: beta and
+the full u are recoverable. Their output q-height exceeds H,
+whereas every q-free input has output q-height at most H.
+The remaining p-free q-bearing classes have unique labels, and
+the low cross-family collisions are still removed by T-minus.
+The strict beta>H condition matters. At beta=H a q-free label
+p^H*u may collide with the row even if q^H*u is absent, in
+which case the current T-minus rule need not reserve it.
+
+Define safe mixed classes to be all actual mixed members a>=1
+of these coherent high rows; call the other q*p-bearing classes
+unsafe. In BC12, replace F_b by the p first roots of the unsafe
+classes at q root b. With this smaller blacklist and the SAME
+S_i, T-minus and other trees, a full root matching still produces
+a distinct odd whole cover of size at most L-|E|<n.     (BC17)
+
+Indeed, unsafe mixed classes have empty pullback by the matching;
+safe rows produce the single AP just proved; and the remaining
+cross-family conflicts are reserved. Every covered output point
+uses the same old witness as in BC12. Removed endpoints have
+empty preimage, and merging identical APs preserves their union.
+The general rule to merge only equal complete phases is already
+used in [Report450, sections9--10](../450-499/450-weighted-original-depths-and-the-uniform-lift-boundary.md#9-whole-coverage-needs-weighted-excess-of-distinct-projected-phases);
+its separate probability estimates are not used here.
+
+### The unsafe inventory pays the matching obstruction
+
+Let h count only unsafe mixed residual classes and let v count
+the safe mixed classes BEFORE any output merging. BC13--BC16
+apply with this h. Moreover all v classes come from distinct
+effective original repairs of q-height at least two with a p
+factor. They are disjoint from the |E| first-level repairs, the
+tau p-free counterparts and the h unsafe repairs. Therefore,
+under the same s<1 and other-tree conditions,
+
+    k>=|E|+v+tau+h,
+    k>=|E|+v+c;
+    tau<c ==> k>=|E|+v+c+q-1,
+    c=ceil(r*(1-s)).                              (BC18)
+
+Safe classes cannot pay for blocking the source tree even though
+they still consume original repair labels. This distinction
+strengthens the actual repair constraint; v is not a number of
+output rows or a count of surviving merged APs.
+
+There is also an exact unused charge in the first bucket. Let
+kappa count ALL effective original repairs whose BC2 branch-
+restriction residual modulus is q-free, before any endpoint
+deletion. Let e_new count bases in E whose
+numerical label does not occur in retained C0. Each such base
+requires both repairs m and q*m, whereas every other repeated
+base requires its q*m repair. Consequently
+
+    kappa>=|E|+e_new,
+    k>=kappa+v+tau+h.
+
+In every BC18 bound, |E| can therefore be replaced by kappa,
+or by the weaker |E|+e_new. This counts original input repairs,
+including a repair whose residual endpoint was selected for
+deletion; no output survival is presumed. These q-free residual
+repairs are disjoint from all three q-bearing residual buckets.
+
+For a single repeated base m, select just one prime p>q dividing
+m; there are no other selected-tree obligations. Put a=v_p(m). Then
+s=r^(-a), and BC18 gives
+
+    a=1 ==> k>=v+p-q+1,
+    a>=2 ==> k>=v+p-q+2.                          (BC19)
+
+For instance, at q=3 a single repeated base divisible by11^2
+forces k>=10 even if v=0; the root-only bound k>=9 in section27
+does not give this exclusion of nine-class repairs. At p=7 and
+a>=2, a seven-class repair must have v<=1. If tau<=4 instead,
+the sharper branch already gives k>=8+v. All counts refer to
+the SAME selected prime and its complete residual height H;
+none of these conditional cases excludes arbitrary larger repairs.
+
+### A partial family separates coherent rows from singleton rows
+
+This exact control is a partial congruence family, not a whole
+cover or a claimed realization of all BC2 assumptions. Take
+q=3,p=5,H=3,B=4. Include0 mod5 and1 mod5. Put ell_0=7,
+ell_1=11. For b in{0,1} and a in{1,2,3}, add the class A_(b,a)
+of numerical modulus81*5^a*ell_b with CRT conditions
+
+    x=b mod(81*ell_b),
+    x=a+1 mod5^a.
+
+These eight nonempty events are pairwise disjoint: the six
+mixed events use first5 roots2,3,4; within a row those roots
+are different, and the two rows have different mod81 phases.
+Thus every event has a private integer. The only repeated
+numerical base is5. Select0 mod5 for deletion, giving
+S_1={0}, T-minus empty and G={1,2,3,4}.
+
+The original blacklist has F_0=F_1={2,3,4}, so two q roots
+have only the neighbor1 and cannot both be matched. Merely
+exempting singleton high rows also fails: each high row here
+has three members. Both rows are coherent, however, so the
+unsafe blacklist is empty. Choose sigma(0,1,2)=(2,3,4) and
+complete each tail tree so a zero input digit maps to zero.
+
+On the shared source, z=0 mod81 gives theta_1(z mod27)=2,
+while z=1 mod81 gives theta_1(z mod27)=3. Exactly A_(0,1)
+and A_(1,2) have nonempty pullbacks, respectively
+
+    0 mod567,    1 mod891.
+
+Both pure5 events miss the selected first-root image. The
+calculation proves a strict enlargement of the local transport
+interface, not an odd covering counterexample.
+
+BC14--BC19 reuse finite-tree duality, capacity counting and the
+same-source Hall transport. They supply symbolic conditional
+exclusions, not new Lean evidence. The unrestricted obligation
+remains to force a simultaneous successful assignment or a
+contradiction to its actual inventory costs for EVERY BC2
+residual, including incoherent mixed rows and large repeated
+base families. These conditional bounds do not establish that.

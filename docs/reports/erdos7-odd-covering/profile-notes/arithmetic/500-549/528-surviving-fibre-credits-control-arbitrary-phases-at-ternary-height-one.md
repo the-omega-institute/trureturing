@@ -31026,6 +31026,41 @@ collision reservation and a simultaneous successful assignment
 remain genuine conditions; this does not assert that every
 mixed residual can be transported.
 
+[Report385, sections37--38](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#37-pruned-reservations-charge-actual-depths-and-disjoint-repair-labels)
+charges the first-tree reservations by their actual prefix depths.
+After choosing duplicate endpoints, reserve cross-family collisions
+only between remaining labels; the deleted endpoints still have
+empty pullback through the same S_i. For p=p_1,r=p-q+1 and
+antichain cost Delta, tree duality bounds bad first roots by
+floor(r*Delta). If Delta<1 and the other selected trees exist,
+matching failure needs at least p-floor(r*Delta) mixed blockers.
+
+Only unsafe mixed classes need supply those blockers. An entire
+row q^beta*p^a*u with beta>H_1 may remain when all its actual
+members, including a=0 if present, have the same full phase
+modulo q^beta*u. Its nonempty pullbacks are identical and can
+be merged. Different rows have different numerical images, and
+their q-heights exceed every q-free output height. A partial
+eight-class example verifies that this admits a source map
+which fails the earlier blacklist and singleton-row tests; it
+is neither a whole cover nor a #7 counterexample.
+
+For one fixed assignment let s sum r^(-v_p(m)) over repeated
+bases assigned to p, tau count remaining p-free q-bearing
+collision counterparts, and v count the safe mixed INPUT classes.
+If s<1 and all other selected trees exist, put
+c=ceil(r*(1-s)). The original repair inventory must satisfy
+k>=|E|+v+c; when tau<c it must satisfy k>=|E|+v+c+q-1.
+These costs come from disjoint original repair labels. The |E|
+term can be replaced by the total number of effective repairs
+with q-free residuals; it is at least |E| plus the number of
+repeated bases absent from retained C0. For a
+single repeated base m and p>q dividing m, they imply k>=v+p-q+1 at
+v_p(m)=1 and k>=v+p-q+2 at v_p(m)>=2. In particular q=3
+and11^2|m exclude nine-class repairs with just that repeated
+base. No successful joint assignment is supplied for arbitrary
+residuals, and incoherent high rows remain in the blacklist.
+
 [Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
 keeps the residual cover's entire old q coordinate unchanged.
 It excludes one endpoint per repeated pair and reserves the
