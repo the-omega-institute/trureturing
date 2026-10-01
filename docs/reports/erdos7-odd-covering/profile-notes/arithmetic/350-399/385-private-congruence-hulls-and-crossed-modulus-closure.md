@@ -3431,7 +3431,7 @@ Moving the original3 class cannot be paid for in that palette
 by deleting a group of at most four descendants. This does not
 exclude a repair using unused divisors of Q or a larger budget.
 
-### Six outside classes still cannot repair the higher-ternary case
+### Six outside classes cannot repair the complete private region
 
 NF9 restricts any irredundant outside repair of size at most six
 to relative indices3,5,9. In one complete Q-fibre, the induced
@@ -3458,53 +3458,30 @@ nonempty and at least four are singletons. Each singleton's
 cofactor class contains all of P_3, so its e_i divides Gamma_3=3.
 Only two distinct cofactors,1 and3, are available, not four.
 
-All remaining classes therefore have relative index3 or9, and
-each fixes one residue modulo3^H. P_3 has all3^(H-1) lower
-ternary residues above its original first root. Each needs at
-least three repair labels by NF2, and a label cannot serve two
-different lower residues. Hence
+All remaining classes have relative index3 or9, hence moduli
+divisible by3^(H+1) and therefore by9. Their number is at least
+N_3 by the existing branch-restriction consumer BC1 in section26,
+whose proof is independent of this budget argument.
 
-    H>=2 ==> P_3 has no outside repair of size<=6.   (NF10)
+The retained tail-incidence bound
+[Report378, SF12](378-saturated-prime-fibres-and-mixed-tail-incidence.md#5-a-nonvanishing-tail-incidence-requirement)
+already gives N_3>=9 at every height. Indeed, let M_mix count
+the mixed3-bearing originals. Each has incidence weight at most
+one, so M_mix>=I_3. Divisor closure supplies all H pure3 powers,
+and N_3=H+M_mix. At H=1, SF12 gives I_3>=8. At H=2 it gives
+I_3>=20/3, requiring at least seven mixed originals. At H>=3
+it gives I_3>35/6, requiring at least six. In every case N_3>=9.
+These are direct uses of the existing incidence and restriction
+results, not new bounds on those source objects. Consequently
 
-This uses the complete private product, not its projection alone.
-The claim concerns moduli not dividing Q, with no restriction on
-the original support size or on its other heights.
+    H>=1 ==> P_3 has no outside repair of size<=6.   (NF10)
 
-For H=1, write Q=3B and retain the same R_3 modulo B. The
-preceding quinary exclusion still applies. The remaining classes
-have moduli9e or27e, e|B. Sort them by the first new ternary
-digit, that is, their original residue modulo9 above a_3 mod3.
-A singleton bucket can only consist of9e and must contain all
-of R_3 in its cofactor class. NF8 forces e=1. Thus at most one
-of the three buckets is a singleton.
+This concerns the complete private region and moduli not dividing
+Q, with no restriction on the original support size or other
+heights. It does not exclude larger outside repairs or claim
+that every repair modulus is divisible by9 at a larger budget.
 
-Any bucket containing an essential27e class needs at least four
-classes. Indeed, with at most three classes and at least one9e
-class, one of the three next child digits has no27e class; the
-9e cofactor classes must already cover all of R_3, making every
-27e redundant. If all three are27e, each child needs a singleton
-cofactor containing R_3, forcing e=1 three times, against distinct
-numerical labels. The other two first-digit buckets need at least
-one and two classes, so an essential27e requires total size at
-least seven.
-
-Consequently, for H=1, every irredundant outside repair of size
-five or six consists entirely of9e classes, with bucket sizes
-
-    five: (1,2,2);
-    six:  (1,2,3) or (2,2,2).                       (NF11)
-
-In each bucket its cofactor classes must jointly cover the SAME
-R_3. All e's are distinct across the entire repair; a singleton
-uses e=1. Conversely these simultaneous cofactor covers, assigned
-the three different new ternary digits, supply the stated repair.
-In any two-class bucket the two cofactors are coprime: otherwise
-their shared prime would see at most two first roots of R_3,
-contrary to EP5. Coprimality is necessary, not a proof of the
-required union. The existing projection bound does not exclude
-these coprime cofactor unions.
-
-### A short mixed repair must use an occupied cofactor parent
+### Four repair classes cannot need an outside modulus
 
 Now allow moduli dividing Q as well, and keep the moved parent
 label3 occupied, as in DR1. NF1 leaves only one genuinely mixed
@@ -3518,15 +3495,7 @@ inside class leaves every higher ternary digit in P'. Thus P'
 cannot lie in one residue modulo3^H. If e=1, then v>=2, and
 the inside class removes at most one ternary prefix of depth v
 from P_3. At least two different residues modulo3^H remain.
-Both cases contradict NF4 for the three outside classes. Together
-with the all-outside exclusion this proves
-
-    H>=2, label3 unavailable, repair size<=4
-      ==> all outside classes can be discarded.    (NF12)
-
-Any resulting repair uses only available divisors of Q. This
-does not assert that such an inside repair exists or that the
-original private region is unrepairable at larger budgets.
+Both cases contradict NF4 for the three outside classes.
 
 For H=1, the inside modulus has form d=e or3e with e>1,e|B.
 When d=3e its first ternary phase must agree with the original
@@ -3537,48 +3506,31 @@ cofactor class and set
     R'=R_3 minus C_e,
     K=gcd(B,{z-w:z in R'}), w in R'.
 
-R' is nonempty by NF8. NF4--NF5 give the exact condition for
-three outside classes to finish this particular inside choice:
+R' is nonempty by NF8. In fact K=1 by the existing joint
+transport constraint
+[Report376, PC5](376-complete-prime-chain-transport-and-joint-prefix-laws.md#2-a-genuine-joint-exclusion-including-the-cross-obstruction).
+If a prime p divided K and e, the containment
+R_3 subset C_e union (w mod K) would give at most two first-p
+roots, violating EP5. If p divided K but not e, choose a prime
+s dividing e. These are different support primes greater than3;
+the same containment puts R_3 in one first-p cylinder and one
+first-s cylinder. Order p,s and apply PC5: each single-root set
+is smaller than the required prime-gap threshold, a contradiction.
+Thus no prime divides K.
 
-    tau(K)>=3.                                     (NF13)
+NF4 would require at least three distinct divisors of K to
+complete this inside class by three outside classes. Since K=1,
+that is impossible. Together with the H>=2 case and NF10,
 
-The completing moduli are9f_i with three different divisors
-f_i of K, inheriting w's cofactor residues and using the three
-different next ternary digits. EP5 further requires gcd(e,K)=1:
-if a prime p divided both, the actual containment
-R_3 subset C_e union (w mod K) would limit its first-p projection
-to two roots, contrary to p-2>=3.
+    label3 unavailable, repair size<=4
+      ==> all outside classes can be discarded.    (NF12)
 
-Global minimum class count also rules out this mixed repair
-whenever e is absent from the original3-free numerical inventory.
-Let C0 contain all original3-free classes. C0 together with P_3
-covers the entire old a_3 mod3 class, because R_3 is exactly the
-cofactor region avoiding C0. Pull C0 and the four repair classes
-back along x=a_3+3n. This gives an ordinary cover of all integers n.
-The C0 moduli stay unchanged and3-free; the inside class becomes
-one class modulo e; the outside classes become three classes of
-distinct moduli3f_i. They are all odd nonunits, and the absence
-of e from C0 makes every numerical output label distinct.
-
-At H=1, each of the two other original first3 roots has at least
-two3-bearing original classes. Otherwise its sole cofactor class
-would contain all of R_3, contrary to NF8; only the original
-modulus3 has unit cofactor, and it occupies the a_3 root. The
-original cover thus has at least |C0|+5 classes, whereas the
-pullback has at most |C0|+4. This contradicts global minimality.
-
-In a move of3 deleting only its descendants, every original
-3-free label is retained. Availability and the last contradiction
-therefore restrict a possible four-class mixed repair to
-
-    d=3e available, e in the retained original inventory,
-    gcd(e,K)=1, tau(K)>=3.                          (NF14)
-
-The available label3e can be missing or just freed; its parent e
-is an actual occupied label. That collision prevents the preceding
-pullback from proving a distinct-modulus cover in this remaining
-case. The complete remainder R', not just its coordinate sizes,
-must satisfy NF13. This coprime branch remains unresolved.
+The source is the same complete old P_3. This statement needs
+neither a height restriction nor retention of every old3-free
+label by a proposed exchange: it constrains covers of P_3 itself.
+The remaining repair uses only available divisors of Q. It does
+not assert that an inside repair exists, and it does not apply
+to a proper subset of P_3 or to a composite parent's private set.
 
 ### A parallel pair alone supplies no new-period repair budget
 
@@ -3659,12 +3611,12 @@ exchange whose repairs all have moduli divisible by q^2, regardless
 of their modulus sum. It applies to the complete P_q; it does not
 apply to a proper subset of that private region or a composite parent.
 
-In particular, even if the H_3=1 cofactor buckets in NF11 exist,
-their9e classes cannot pay for moving the original3 class and
-deleting one descendant phase group. Their existence remains a
-separate question, but resolving it affirmatively would not provide
-this descent. NF10 remains the stronger nonexistence statement for
-its stated height and six-class budget.
+For q=3 the bound applies to every repair using only9-divisible
+moduli, at every budget. NF10 separately excludes all outside
+repairs of size at most six, even before asking whether they can
+pay a descendant deletion. The small-budget argument uses BC1;
+the proof of BC1 uses only the branch restriction and minimum
+cardinality, so it does not depend on NF10.
 
 More generally, consider ANY legal repair B of P_q with k<N_q,
 retaining all of C0 and the moved parent label q. Remove classes
