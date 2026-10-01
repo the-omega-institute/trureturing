@@ -112,6 +112,33 @@ public sealed class ScribeResourceCodecTests
         Assert.Equal(ScribeResourceErrorCode.InvalidValue, error.ReasonCode);
     }
 
+    [Fact]
+    public void CodecRejectsDuplicateTopLevelField()
+    {
+        var valid = Encoding.UTF8.GetString(ScribeResourceCodec.Encode(Definition()));
+        var duplicate = valid.Replace("\"version\":1", "\"version\":1,\"version\":1", StringComparison.Ordinal);
+
+        var error = Assert.Throws<ScribeResourceException>(() =>
+            ScribeResourceCodec.Decode(Encoding.UTF8.GetBytes(duplicate)));
+
+        Assert.Equal(ScribeResourceErrorCode.DuplicateField, error.ReasonCode);
+    }
+
+    [Fact]
+    public void CodecRejectsDuplicateNestedField()
+    {
+        var valid = Encoding.UTF8.GetString(ScribeResourceCodec.Encode(ClaimDefinition()));
+        var duplicate = valid.Replace(
+            "\"handle\":\"D5/S1/Scale/Other.member\"",
+            "\"handle\":\"D5/S1/Scale/Other.member\",\"handle\":\"D5/S1/Scale/Other.member\"",
+            StringComparison.Ordinal);
+
+        var error = Assert.Throws<ScribeResourceException>(() =>
+            ScribeResourceCodec.Decode(Encoding.UTF8.GetBytes(duplicate)));
+
+        Assert.Equal(ScribeResourceErrorCode.DuplicateField, error.ReasonCode);
+    }
+
     [Theory]
     [InlineData("formula")]
     [InlineData("remark")]

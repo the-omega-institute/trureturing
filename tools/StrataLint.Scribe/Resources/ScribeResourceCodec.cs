@@ -19,6 +19,7 @@ public enum ScribeResourceErrorCode
     TypeMismatch,
     InvalidValue,
     ExpectationMismatch,
+    DuplicateField,
 }
 
 public sealed class ScribeResourceException : FormatException
@@ -579,8 +580,24 @@ public static partial class ScribeResourceCodec
     };
 
     private static JsonObject RequireObject(JsonElement value) => value.ValueKind is JsonValueKind.Object
-        ? value.Deserialize<JsonObject>(JsonOptions) ?? throw Invalid("Object is null.")
+        ? UniqueObject(value).Deserialize<JsonObject>(JsonOptions) ?? throw Invalid("Object is null.")
         : throw InvalidType("Expected an object.");
+
+    private static JsonElement UniqueObject(JsonElement value)
+    {
+        var names = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var property in value.EnumerateObject())
+        {
+            if (!names.Add(property.Name))
+            {
+                throw new ScribeResourceException(
+                    ScribeResourceErrorCode.DuplicateField,
+                    $"Duplicate field '{property.Name}'.");
+            }
+        }
+
+        return value;
+    }
 
     private static JsonElement Element(JsonObject value)
     {
@@ -639,8 +656,16 @@ public static partial class ScribeResourceCodec
         }
 
         var expected = fields.ToHashSet(StringComparer.Ordinal);
+        var seen = new HashSet<string>(StringComparer.Ordinal);
         foreach (var property in value.EnumerateObject())
         {
+            if (!seen.Add(property.Name))
+            {
+                throw new ScribeResourceException(
+                    ScribeResourceErrorCode.DuplicateField,
+                    $"Duplicate field '{property.Name}'.");
+            }
+
             if (!expected.Contains(property.Name))
             {
                 throw new ScribeResourceException(ScribeResourceErrorCode.ExtraField, $"Unexpected field '{property.Name}'.");
