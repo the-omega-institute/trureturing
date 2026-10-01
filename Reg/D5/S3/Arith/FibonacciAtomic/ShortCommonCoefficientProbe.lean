@@ -38,7 +38,8 @@ abbrev arena : Arena where
       (∀ (epsilon : Bool) (p : List Window), legal epsilon (flatten p) →
         ∃ N : Nat, 0 < N ∧ initialized epsilon (p ++ w) = some N)) ∧
     D H ≤ D00 H ∧ D00 H ≤ (lengthBound H : WithTop Nat) ∧
-    lengthBound H ≤ 2 * Nat.log 2 H + 5
+    lengthBound H ≤ 2 * Nat.log 2 H + 5 ∧
+    (lengthBound H : Real) ≤ (7 / Real.log 2) * Real.log (H : Real)
 
 theorem actual_law : arena.Law actual := by
   intro H hH
@@ -63,7 +64,8 @@ def registration : Registration arena (arena.Law actual) where
     change windowCoefficients 2 [.high] ≠ windowCoefficients 2 [.zero, .middle]
     decide
 
-register_information_theorem _root_.D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe.result in arena
+register_information_theorem
+  _root_.D5.S3.Arith.FibonacciAtomic.ShortCommonCoefficientProbe.result in arena
   readout via (realize signature
     (fun _ H w => windowCoefficients H w) (fun e => nomatch e))
   realizes registration
