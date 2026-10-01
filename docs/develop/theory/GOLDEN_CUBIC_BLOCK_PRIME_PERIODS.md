@@ -4000,3 +4000,49 @@ the intersection, its Frobenius identification and its rational-prime
 density require their own proofs.
 
 ## 追加锚（本行以下为增补区）
+
+## 67. Finite diagonal valuations and a retained noncube
+
+**Theorem 67.1 (finite valuation degree and unit obstruction).**
+Let $K$ be a field containing a primitive cube root of unity,
+$L/K$ a field extension and $I$ a finite set. For each $i\in I$,
+choose $a_i\in K\setminus\{0\}$ and $b_i\in L$ with $b_i^3=a_i$,
+where base-field elements are identified with their images in $L$.
+Choose multiplicative valuations $\nu_i$ with values in the
+zero-extended multiplicative group of integers. Write
+$v_i(x)=\log(\nu_i(x))$ for $x\ne0$, and suppose
+
+$$
+3\nmid v_i(a_i),\qquad \nu_i(a_k)=1\quad(i\ne k).
+$$
+
+Let $u\in K\setminus\{0\}$ be a noncube such that $v_i(u)=0$
+for every $i\in I$. For the field $M=K(b_i:i\in I)$,
+
+$$
+[M:K]=3^{|I|},\qquad \forall x\in M,\quad x^3\ne u.
+$$
+
+The statement includes $I=\varnothing$, when $M=K$.
+
+Proof. Order the finite set and construct the radical tower of
+Section 66. At every nonterminal stage, the valuation of the next
+radicand has logarithm not divisible by three and vanishes on all
+preceding radicands. It therefore excludes a cube and remains
+unchanged after multiplication by powers of preceding radicands.
+For the terminal test, use the elements
+$u\prod_{i\in I}a_i^{e_i}$ with $e_i\in\mathbb N$.
+If such an element were $c^3$ in $K$, applying $v_i$ gives
+$3v_i(c)=e_i v_i(a_i)$. Since three does not divide $v_i(a_i)$,
+it divides every $e_i$. Dividing $c$ by
+$\prod_i a_i^{e_i/3}$ would then give a cube root of $u$ in $K$,
+contrary to the hypothesis. Multiplication by any radicand power
+preserves this terminal set by increasing the corresponding
+exponent. Theorem 66.1 now gives the full degree and the noncube
+obstruction in the same generated field.
+
+The actual valuations and unit in Theorem 66.2 satisfy these
+conditions. This assertion does not identify any cyclotomic
+intersection or prime-density event.
+
+## 追加锚（本行以下为增补区）
