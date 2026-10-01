@@ -1,0 +1,60 @@
+**定理 64.2（Different divisibility at a coprime prime power）。**
+Let $A$ and $B$ be Dedekind domains, with $B$ a module-finite,
+torsion-free $A$-algebra and $\operatorname{Frac}(B)$ separable over
+$\operatorname{Frac}(A)$. Let $p\ne0$ be a maximal ideal of $A$,
+let $P$ be a maximal ideal of $B$ lying over $p$, and let $e\geq0$.
+Suppose an ideal $Q$ of $B$ satisfies
+
+$$
+pB=P^eQ,\qquad P^e+Q=B.
+$$
+
+Then, writing $\mathfrak D_{B/A}$ for the different ideal,
+
+$$
+P^e\mid\mathfrak D_{B/A}
+\quad\Longleftrightarrow\quad
+(B/P)/(A/p)\text{ is inseparable}
+\ \lor\ e\cdot1_{A/p}=0.
+$$
+
+The residue algebra structures are the natural structures induced by
+the lying-over relation. Separability on the right refers to the
+residue-field extension, distinct from fraction-field separability.
+
+Proof. The trace-dual definition of the different and the fractional
+ideal identity $I^{-1}=Q/(pB)$, for $IQ=pB$, give
+
+$$
+I\mid\mathfrak D_{B/A}
+\quad\Longleftrightarrow\quad
+\operatorname{Tr}_{B/A}(Q)\subseteq p.
+$$
+
+Apply this with $I=P^e$. The Chinese remainder isomorphism
+$B/pB\simeq(B/P^e)\times(B/Q)$ and Theorem 64.1 show that for
+$x\in Q$ the reduction of its integral trace is
+$e\operatorname{Tr}_{(B/P)/(A/p)}(\bar x)$. If the residue extension
+is inseparable, its trace vanishes; if $e$ vanishes in $A/p$, the
+same product vanishes. Conversely, in the separable case choose a
+residue with nonzero trace. Chinese remaindering lifts it to an
+element of $Q$ with the same residue modulo $P$. When $e$ is nonzero
+in $A/p$, this element has nonzero reduced integral trace, excluding
+$P^e\mid\mathfrak D_{B/A}$.
+
+For the ramification index $e=e(P/p)$, the pinned universal lower
+bound $P^{e-1}\mid\mathfrak D_{B/A}$ and the criterion above give
+different exponent $e-1$ whenever the residue extension is separable
+and its characteristic does not divide $e$. This is an application
+of the two bounds, with no additional theorem declaration.
+
+For GIR3, the remaining inputs are the actual inertia order three
+at primes dividing the cubefree block radical, absence of other
+ramification away from three, the actual comparison of completions
+above three with the cubic cyclotomic base, and its ramification
+index two. The first discriminant also needs the inertia action on
+the embeddings of the non-Galois positive-root field, or an equivalent
+tower calculation. The global different norm and discriminant
+identity then supply the two exponents in Theorem 56.1. These actual
+arithmetic inputs are not assumptions hidden in Theorems 64.1–64.2.
+

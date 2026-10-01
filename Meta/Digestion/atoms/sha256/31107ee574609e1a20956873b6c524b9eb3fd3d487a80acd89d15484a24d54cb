@@ -1,0 +1,10 @@
+## 64. Prime-power quotient traces and the tame different
+
+The two statements below are licensed ports of Tau Ceti's quotient-trace
+and different results at immutable revision
+`33c2099c678ea391f7ea3e0ddaf945a76a625e5d`, as identified in
+Library/ArithUnits/tauceti2026tamedifferent.md. Their scope is general
+Dedekind-domain algebra; identifying the actual golden-block inertia
+and converting the different into the discriminants in Theorem 56.1
+requires separate arithmetic bridges.
+
