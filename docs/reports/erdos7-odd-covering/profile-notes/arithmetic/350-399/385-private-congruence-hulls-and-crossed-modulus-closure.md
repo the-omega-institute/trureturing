@@ -9698,3 +9698,175 @@ over all admissible strict-width-decreasing assignments with a feasible successo
 Every recurrence path constructs an actual complete prefix cut: assign its roots to distinct literal pending nodes of their indicated types, stop those nodes, and split all others into their q children. When r>=1 its depth is at most D+r-1; for r=0 the hard cut is empty. Conversely, NF107 normalizes every arbitrary finite feasible candidate to such a path while increasing neither coordinate. The restricted recurrence therefore attains the same global minimum as the unrestricted finite deep-cut problem; it is not merely the minimum over combs or a newly imposed approximation. The multiplication by q in the second coordinate accounts for moving the remaining decisions one depth later.
 
 NF110 is an application of the ordinary Bellman principle. The additional arithmetic interface is the proved cost-preserving normalization and the sufficiency of these actual deep type counts. No new generic dynamic-programming theorem, literature-priority claim or Lean verification is asserted. A hypothetical extremal odd cover must still be shown to admit some shallow choice and resulting minimum satisfying the strict original budget. This section makes that remaining price comparison a finite exact search with the stated depth bound for each fixed original family; it does not supply the missing uniform inequality or resolve unrestricted Erdős#7.
+
+## 67. Residual subbatches use original-label capacity instead of whole-root capacity
+
+These ordinary deductions and the finite local control carry no Lean verification or priority claim. They apply PH1–PH2 of report385 §1 to the exact original-label transport in §§61–62. Report350 §3 already supplies the relevant private-point indispensability principle; report354 SM3–SM5 retains the full prime tail on one common cofactor source. Reports378–379 supply actual residual laws and root-sensitive reciprocal prices, not upper bounds for the output-label inventories below. No generic set-cover or dynamic-programming theorem is proposed as new content.
+
+### Exact residual and selected original labels
+
+Keep one actual original family of distinct odd APs A_d=c_d mod d, with complete period p^A q^H M, p>q odd primes, A,H≥1 and gcd(M,pq)=1. Retain every p-free original unchanged. Select actual pure-q guards G including A_q and a finite q-prefix frontier B partitioning their complement U, exactly as in report385 §61. Write h_b for the depth of b. Put T=Z/p^(A−1) and X=T×Z/M. A larger output q-height is used when B extends past H; membership in retained originals always reads the original q digits.
+
+For each leaf b define
+
+    E_b={m mod M : some actual q-coordinate z_q in [b]
+                     makes (z_q,m) miss every retained p-free original}.
+
+This is an existential projection in the actual finite common carrier. In particular it is not the residual at one conveniently chosen q point, the intersection of all residual sections, or a residual recomputed with different phases. Every retained original is independent of the p coordinate, so the exact projected demand is T×E_b.
+
+For each q-free p-bearing original d=p^alpha u, gcd(u,pq)=1, let a_d=c_d mod p, represented in {0,...,p−1}, and let C_d be the literal divided-tail AP on X:
+
+    t=(c_d−a_d)/p mod p^(alpha−1),   m=c_d mod u.
+
+Let D_a={d:q∤d, p|d, a_d=a}. For each leaf fix ONE root a_b, and select a subset J_b⊆D_(a_b). The exact local requirement is
+
+    T×E_b ⊆ union_(d in J_b) C_d.                    (RS1)
+
+Every selected pair (b,d) supplies the complete CRT AP
+
+    z_q=b mod q^h_b,
+    z_p=(c_d−a_b)/p mod p^(alpha−1),
+    z_M=c_d mod u,
+
+of numerical modulus q^h_b d/p. It is an entire AP, not its intersection with an uncovered set. All these residues come from that same original d.
+
+For the declared frontier and selected subsets, RS1 at every leaf is NECESSARY AND SUFFICIENT for the retained originals plus these transported APs to cover the entire output carrier. Sufficiency takes an output point not covered by a retained original, reads its unique leaf, and applies RS1 to its actual (t,m). Necessity fixes any (t,m) in T×E_b, uses the q point in the definition of E_b, and notes that no transported AP attached to a different leaf can cover this point.
+
+The same witness as NF86 is available: first-p root a_b, literal divided p-tail t, and unchanged q and M coordinates. RS1 says that at least one selected q-free original covers this witness. It is not enough merely to exclude mixed originals if some of the q-free originals are then omitted.
+
+If a_b avoids the original mixed forbidden list F_b, whole original coverage supplies RS1 for J_b=D_(a_b), as in §62. One may keep this old cleanliness requirement and obtain a smaller-interface extension already. RS1 itself also permits a root meeting F_b when the chosen q-free originals nevertheless cover the complete projected demand; no claim is made that this additional possibility is always present.
+
+### Numerical distinctness and the exact price
+
+For strict collision reservation impose only these conditions:
+
+    For every original d and depth h,
+    #{b:h_b=h and d in J_b} ≤ 1.                     (RS2)
+
+    For every selected (b,d), q^h_b d/p is not
+    a numerical modulus of a retained p-free original. (RS3)
+
+Equality of two transported numerical moduli first forces equal q-height because d/p is q-free, and then forces the same original numerical d. Thus RS2 is the exact transported-label distinctness condition. It is weaker than allowing a positive-workload root only once per depth: two same-depth leaves may use the same root if their selected subsets are disjoint. Original distinctness ensures that the same d has only one original phase and one original first-p root.
+
+RS3 needs to be checked only for selected d. It can occur only at alpha=1 and an existing original label q^h_b u. A numerical collision arising from an OMITTED d is immaterial. Equal-complete-AP merging from §57 may be added separately; the formulas here use strict reservation and no merging.
+
+Let P be all original q-free p-bearing labels, let t_mix be the number of original p*q-bearing labels, and let D_mix be their modulus sum. After the unchanged p-free originals cancel, the exact new cost is
+
+    C_new=sum_b |J_b|,
+    W_new=sum_b q^h_b sum_(d in J_b) d/p.              (RS4)
+
+The exact old cost is
+
+    C_old=t_mix+|P|,
+    W_old=D_mix+sum_(d in P) d.                       (RS5)
+
+For an EB1 extremal whole cover, PH2 therefore forces
+
+    (C_new,W_new) ≥_lex (C_old,W_old)                 (RS6)
+
+whenever RS1–RS3 hold. A strict reverse inequality supplies a legal distinct odd whole-cover descent. This is PH2's existing replacement argument applied to a more selective actual output family, not a newly forced arithmetic inequality.
+
+The full-batch interface is the special case J_b=D_(a_b), with its old mixed exclusions and whole-root collision reservations. On a whole-cover input, every one of its feasible frontiers remains feasible here at exactly the same price. The new admissible choices include finer collision reservations and same-depth reuse with disjoint original subsets. The example below only separates these LOCAL choices; it does not compare the global optima of two complete frontiers on a whole-cover input.
+
+### What the original private points do and do not force
+
+Assume whole coverage and that a avoids F_b. For d∈D_a let P_d be its complete original private region, lifted to the common q-height used by the frontier. Then
+
+    d is indispensable in D_a for demand T×E_b
+    iff the q-projection of P_d meets [b].            (RS7)
+
+Indeed, indispensability is exactly the nonemptiness of
+
+    (T×E_b) intersect
+      (C_d minus union_(e in D_a, e≠d) C_e).
+
+Choose the q witness in E_b. The associated original point at root a misses every p-free original, every other q-free original at that root, every p-bearing original at another root, and every mixed original by the F_b hypothesis. It is private to d. The converse uses any such original private point and the same coordinate map.
+
+Thus original irredundancy does not authorize deleting a label from every cylinder at its root: it forces a nonempty private q-projection somewhere. It also does not force that label into EVERY copy of the root batch. A label can be redundant on one actual q-cylinder and indispensable on another. This localizes the same private-point obstruction used in report350 §3 to a cylinder avoiding the actual mixed originals.
+
+RS7 tests deleting ONE member of a complete root batch. Multiple deletions must satisfy RS1 jointly. Empty individual private regions do not justify deleting all those labels simultaneously: points covered only by two deleted labels are a joint obligation. This is exactly the distinction already present in PH1.
+
+No estimate forcing the savings in RS4 to exceed the full-batch budget deficit follows here. Equivalently, with k_d=#{b:d∈J_b}, the count comparison is
+
+    C_new−C_old=sum_(d in P)(k_d−1)−t_mix.
+
+The missing result is an upper bound for these jointly feasible, phase-sensitive multiplicities for some complete actual frontier. Private-point existence alone provides indispensability constraints, not that upper bound.
+
+### An 18-label actual local control
+
+Take q=3, p=11, A=1, H=5 and M=35. Write a full CRT point as (z,r,s,a) modulo (243,5,7,11). The numerical palette is
+
+    {3^j:1≤j≤5} union {5,7,11}
+    union {3^j·5:1≤j≤3}
+    union {3^j·7:1≤j≤5} union {55,77}.                (RS8)
+
+It consists of 18 distinct odd nonunit labels, is divisor-closed above one, and has the initial odd-prime segment {3,5,7,11}. Its full period is 93555. Specify its actual phases as follows:
+
+| Original label | Literal phase |
+| --- | --- |
+| 3,5,7,11 | zero modulo its prime |
+| 3^j, 2≤j≤5 | 1+3^(j−1) modulo 3^j |
+| 3^j·5, 1≤j≤3 | z=1 mod3^j, r=j mod5 |
+| 3^j·7, 1≤j≤5 | z=2 mod3^j, s=j mod7 |
+| 55 | a=1 mod11, r=4 mod5 |
+| 77 | a=1 mod11, s=6 mod7 |
+
+Every comparable pair of these original APs is disjoint. Their irredundancy can be verified without enumerating the full period. The following full CRT points are private witnesses; unspecified prime powers are read in the indicated full coordinates:
+
+| Original label | Private point (z,r,s,a) |
+| --- | --- |
+| 3 | (0,1,1,2) |
+| 3^j, j≥2 | (1+3^(j−1),4,6,2) |
+| 5 | (1,0,6,2) |
+| 7 | (2,4,0,2) |
+| 11 | (1,4,6,0) |
+| 3^j·5 | (1,j,6,2) |
+| 3^j·7 | (2,4,j,2) |
+| 55 | (1,4,1,1) |
+| 77 | (2,1,6,1) |
+
+The integer244 has coordinates (1,4,6,2) and is uncovered. This family is therefore a NONCOVER. It does not satisfy whole-cover EB1, the EB8 requirement of an exponent-one child at every nonzero p-root, or the known at-least-nine-primes whole-cover condition. Here only root1 has nonpure 11-bearing originals. The control tests local interface distinctions under the listed, verified structural conditions; it cannot refute a claim restricted to whole covers.
+
+Retain all 11-free originals and select all five actual pure3 guards. The actual live cylinders
+
+    b_1=1 mod3^6,   b_2=2 mod3^6
+
+miss all these guards. Their retained residual projections are exactly
+
+    E_(b_1)={(r,s):r=4, s≠0},
+    E_(b_2)={(r,s):r≠0, s=6}.                        (RS9)
+
+At b_1 the pure5 class and the three active 3^j·5 classes cover r=0,1,2,3, while pure7 removes s=0. At b_2, pure7 and the five active 3^j·7 classes cover s=0,1,...,5, while pure5 removes r=0. The other mixed row has the different first3 digit and is inactive.
+
+Both 55 and77 have first11 root1. The selections
+
+    a_(b_1)=a_(b_2)=1,
+    J_(b_1)={55}, J_(b_2)={77}
+
+satisfy RS1 locally, and RS2 because the subsets are disjoint. They produce the distinct fresh APs
+
+    1459 mod3645,   2918 mod5103.
+
+The old positive-root-per-depth condition rejects this fixed pair of root assignments. Copying both complete batches would instead repeat each numerical label3645 and5103 on two different, disjoint q cylinders. Thus original-label capacity is strictly less restrictive than root capacity on this actual local input. The union of b_1 and b_2 is only a small part of U; these two repairs are not a complete replacement frontier.
+
+There is also a strict minimum-count comparison for this FIXED TWO-LEAF local problem, with one root per leaf, no further splitting, and coverage required only on these two actual residuals. Only roots0 and1 have nonempty batches; their full batches are{11} and{55,77}. Both cover either local residual. The old same-depth root capacity forces one use of each, giving minimum local class count3 and modulus sum9477. The selected-subset interface has minimum local class count2: each nonempty leaf requires a class, and the displayed split attains2. The split has sum8748, but it is not the smallest modulus sum at count2. Taking{55} at b_1 and{11} at b_2 instead gives(2,4374). This local minimum-count separation says nothing about optimizing a complete frontier on a whole-cover input.
+
+The same family also separates selected-label collision checks. For this separate shallow comparison choose G to contain just the original pure3^j guards with1≤j≤4; every p-free original, including pure3^5, is still retained. The cylinder b=1 mod3^4 is then a live leaf. Its existential projected demand is still {(4,s):s≠0}; one old q lift is covered by the retained pure3^5 class but the other lifts retain that demand. Selecting only55 gives the fresh AP244 mod405. Copying77 as well would create modulus567, already occupied by the original3^4·7 with a different complete phase. Thus the whole-root collision list forbids root1 there, whereas the selected subset{55} legally covers the actual local demand.
+
+For a local price comparison with the old root-reuse capacity satisfied, instead use b_1=1 mod3^6 and b_2=2 mod3^7. The two complete root1 batches have local cost(4,34992), while subsets{55} and{77} have local cost(2,18954). All four unpruned numerical labels are then distinct and fresh. This compares the displayed local assignment only, not full-frontier minima.
+
+### Finite scope and the boundary of the existing normalization
+
+Beyond original height H, every H-prefix has a constant retained residual projection; its selected-subset menus are therefore constant. At depths at least D=H+1 all numerical output labels are fresh relative to the retained originals. This supplies an actual finite type description, but not by itself a uniform depth bound.
+
+The earlier count-budget horizon argument in §63 DOES reuse directly. Collapse every residual-empty depth-D subtree to a single empty-subset leaf at depth D. For a lexicographically successful candidate C_new≤C_old. In a nonempty residual type every remaining leaf has |J_b|≥1. A leaf of depth D+e forces at least1+(q−1)e leaves below its depth-D ancestor, hence
+
+    maximum depth ≤ H+1+floor((C_old−1)/(q−1)).        (RS10)
+
+This follows from the existing complete q-ary cut count. Deleting an empty subtree creates no label collision, and no assumption about root batch weights is needed. It is an existence-preserving finite bound under the same count budget, not a proposal to enumerate all candidates.
+
+The sharper §66 bound H+floor((p−1)/(q−1)) is NOT established for these selected-subset interfaces. Its proof promotes an entire future root batch whenever that root is unused in the present layer, then obtains nested root use. Here promotion is valid when every original label in the future selected subset is unused in the present layer, but a future subset may partly intersect labels already used there. The old nesting proof consequently does not transfer merely by changing R_a to a local price. No failure or replacement sharp bound is claimed.
+
+### The unresolved whole-cover comparison
+
+The useful refinement is exact retained-residual demand with selected original-label capacities and selected-only numerical collision checks. The general replacement and single-private-point logic are existing results. The missing global step remains to force a complete frontier satisfying RS1–RS3 below the original two-coordinate budget on a hypothetical extremal whole cover. The local control and finite bound do not supply that inequality or resolve unrestricted Erdős#7.
