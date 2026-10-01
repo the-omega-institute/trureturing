@@ -128,22 +128,26 @@ automata, so `CA(G, A) ≠ ⟨ICA(G, A) ∪ L(G, A)⟩` there.
 constant configurations or moves a configuration of odd weight by at most one
 cell; in the Klein group a single cell change of an odd-weight configuration
 creates a nontrivial stabilizer, which no later cellular automaton can remove.
-Hence the generated submonoid cannot merge two orbits of configurations with
-trivial stabilizer while keeping the constants apart.
+Hence every element of the generated submonoid that keeps the two constants
+apart is injective on the configurations of odd weight (trivial stabilizer)
+whose image also has odd weight; `F` merges two such configurations.
 
 **Computed (Python, not formalized):** among the groups of order at most four
 with the binary alphabet, the Klein four-group is the only one where the
 equality fails; `⟨ICA ∪ L⟩` misses 5 824 of the 65 536 cellular automata.
 
 **Argument (not formalized):** the equality also fails for `G = ℤ` and every
-finite alphabet. Under the uniform Bernoulli measure the cylinder
+finite alphabet `A` with at least two symbols. Under the uniform Bernoulli measure the cylinder
 `{x : τ(x)(0) = p(e)}` of a lazy automaton `τ` has measure
 `1/|A| − |A|^{−|S|} < 1/|A|`, while surjective cellular automata on `A^ℤ`
 preserve the uniform measure (Hedlund, Math. Systems Theory 3 (1969) 320–375),
 so no lazy automaton is surjective. If a surjective `T = T_m ⋯ T_1` with
 invertible or lazy factors, then `T_m` is surjective, hence invertible, and
-induction makes `T` injective. So the surjective non-injective automaton
-`x ↦ (x(g) + x(g + 1) mod 2)` over `{0, 1}^ℤ` is not generated.
+induction makes `T` injective. Identifying `A` with `ℤ/|A|ℤ`, the automaton
+`x ↦ (g ↦ x(g) + x(g + 1))` is surjective, since a preimage of `y` is obtained
+from any value of `x(0)` by solving `x(g + 1) = y(g) − x(g)` forward and
+`x(g) = y(g) − x(g + 1)` backward, and not injective, since the `|A|` choices of
+`x(0)` give distinct preimages; so it is not generated.
 
 **Open:** the follow-up of Problem 2, a description of `⟨ICA ∪ L⟩` and of
 `⟨L⟩`; and which finite groups satisfy the equality.

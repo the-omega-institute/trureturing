@@ -15,10 +15,10 @@ internal sealed class LazyInvertibleGenerationDocument : IScribeDocumentDefiniti
         H("Lazy and invertible cellular automata do not generate all cellular automata"),
         Blocks(
             Node("ca", "Cellular automata", CaFormula(),
-                "For a group G and an alphabet A, a map T from A^G to itself is a cellular automaton when there are a finite neighborhood S of G and a local map mu from A^S to A with T(x)(g) = mu(s -> x(s g)) for every configuration x and every g in G, that is, mu applied to the restriction to S of the shifted configuration (g . x)(h) = x(h g).",
+                "For a group G and an alphabet A, a map T from A^G to itself is a cellular automaton when there are a finite neighborhood S of G (an element of Finset(G)) and a local map mu from A^S to A with T(x)(g) = mu(s -> x(s g)) for every configuration x and every g in G, that is, mu applied to the restriction to S of the shifted configuration (g . x)(h) = x(h g).",
                 "IsCA", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("lazy", "Lazy cellular automata", LazyFormula(),
-                "A cellular automaton is lazy when it has a local map mu on a neighborhood S containing the identity e and a pattern p in A^S such that mu(z) = z(e) holds exactly for the patterns z different from p: the automaton keeps every cell except where the pattern p occurs, and there it writes the symbol mu(p), which differs from p(e).",
+                "A cellular automaton is lazy when it has a local map mu on a finite neighborhood S containing the identity e and a pattern p in A^S such that mu(z) = z(e) holds exactly for the patterns z different from p: the automaton keeps every cell except where the pattern p occurs, and there it writes the symbol mu(p), which differs from p(e).",
                 "IsLazy", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("invertible", "Invertible cellular automata", InvertibleFormula(),
                 "A cellular automaton T is invertible when some cellular automaton T' satisfies T' T = 1 and T T' = 1 in the monoid of maps of A^G under composition.",
@@ -79,7 +79,7 @@ internal sealed class LazyInvertibleGenerationDocument : IScribeDocumentDefiniti
 
     private static Formula CaFormula() =>
         Disp(Iff(Call(F.Id("IsCA"), F.Id("T")),
-            SomeOf(Seq(F.Id("S"), Sp, Subseteq, Sp, F.Id("G"), Comma, Sp,
+            SomeOf(Seq(Member(F.Id("S"), Call(F.Id("Finset"), F.Id("G"))), Comma, Sp,
                     F.Id("mu"), Colon, Patterns(), To, Sp, F.Id("A")),
                 LocalRule())));
 
@@ -91,7 +91,7 @@ internal sealed class LazyInvertibleGenerationDocument : IScribeDocumentDefiniti
                 FormulaLogicOperator.Iff,
                 Rel(z, FormulaRelationOperator.NotEqual, F.Id("p"))));
         return Disp(Iff(Call(F.Id("IsLazy"), F.Id("T")),
-            SomeOf(Seq(F.Id("S"), Sp, Subseteq, Sp, F.Id("G"), Comma, Sp,
+            SomeOf(Seq(Member(F.Id("S"), Call(F.Id("Finset"), F.Id("G"))), Comma, Sp,
                     Member(e, F.Id("S")), Comma, Sp, F.Id("mu"), Comma, Sp, Member(F.Id("p"), Patterns())),
                 And(active, LocalRule()))));
     }
@@ -112,7 +112,8 @@ internal sealed class LazyInvertibleGenerationDocument : IScribeDocumentDefiniti
         Formula closure = Seq(Langle, Sp, generators, Rangle);
         return Disp(Iff(F.Id("claim"),
             AllOf(Seq(F.Id("G"), Comma, Sp, F.Id("A")),
-                Implies(Rel(new Formula.Absolute(F.Id("A")), FormulaRelationOperator.GreaterThanOrEqual, D(2)),
+                Implies(And(And(Call(F.Id("Group"), F.Id("G")), Call(F.Id("Finite"), F.Id("A"))),
+                        Rel(new Formula.Absolute(F.Id("A")), FormulaRelationOperator.GreaterThanOrEqual, D(2))),
                     AllOf(F.Id("T"), Implies(Call(F.Id("IsCA"), F.Id("T")), Member(F.Id("T"), closure)))))));
     }
 }

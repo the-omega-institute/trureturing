@@ -6,7 +6,7 @@ Over the Klein four-group with the binary alphabet, the cellular automaton that 
 
 **Definition 1.1 (Cellular automata).**
 
-$$\operatorname{IsCA}\left(T\right) \Leftrightarrow (\exists S \subseteq G, mu:A^{S}\to A, \forall x \in A^{G}, g \in G, T\left(x\right)\left(g\right) = mu\left(s \mapsto x\left(s \cdot g\right)\right))$$
+$$\operatorname{IsCA}\left(T\right) \Leftrightarrow (\exists S \in \operatorname{Finset}\left(G\right), mu:A^{S}\to A, \forall x \in A^{G}, g \in G, T\left(x\right)\left(g\right) = mu\left(s \mapsto x\left(s \cdot g\right)\right))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/CellularAutomata/LazyInvertibleGeneration.IsCA` (`✓ std3`).
 
@@ -14,11 +14,11 @@ $$\operatorname{IsCA}\left(T\right) \Leftrightarrow (\exists S \subseteq G, mu:A
 
 *Commentary.*
 
-For a group G and an alphabet A, a map T from A^G to itself is a cellular automaton when there are a finite neighborhood S of G and a local map mu from A^S to A with T(x)(g) = mu(s -> x(s g)) for every configuration x and every g in G, that is, mu applied to the restriction to S of the shifted configuration (g . x)(h) = x(h g).
+For a group G and an alphabet A, a map T from A^G to itself is a cellular automaton when there are a finite neighborhood S of G (an element of Finset(G)) and a local map mu from A^S to A with T(x)(g) = mu(s -> x(s g)) for every configuration x and every g in G, that is, mu applied to the restriction to S of the shifted configuration (g . x)(h) = x(h g).
 
 **Definition 1.2 (Lazy cellular automata).**
 
-$$\operatorname{IsLazy}\left(T\right) \Leftrightarrow (\exists S \subseteq G, e \in S, mu, p \in A^{S}, (\forall z \in A^{S}, mu\left(z\right) = z\left(e\right) \Leftrightarrow z \ne p) \land (\forall x \in A^{G}, g \in G, T\left(x\right)\left(g\right) = mu\left(s \mapsto x\left(s \cdot g\right)\right)))$$
+$$\operatorname{IsLazy}\left(T\right) \Leftrightarrow (\exists S \in \operatorname{Finset}\left(G\right), e \in S, mu, p \in A^{S}, (\forall z \in A^{S}, mu\left(z\right) = z\left(e\right) \Leftrightarrow z \ne p) \land (\forall x \in A^{G}, g \in G, T\left(x\right)\left(g\right) = mu\left(s \mapsto x\left(s \cdot g\right)\right)))$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/CellularAutomata/LazyInvertibleGeneration.IsLazy` (`✓ std3`).
 
@@ -26,7 +26,7 @@ $$\operatorname{IsLazy}\left(T\right) \Leftrightarrow (\exists S \subseteq G, e 
 
 *Commentary.*
 
-A cellular automaton is lazy when it has a local map mu on a neighborhood S containing the identity e and a pattern p in A^S such that mu(z) = z(e) holds exactly for the patterns z different from p: the automaton keeps every cell except where the pattern p occurs, and there it writes the symbol mu(p), which differs from p(e).
+A cellular automaton is lazy when it has a local map mu on a finite neighborhood S containing the identity e and a pattern p in A^S such that mu(z) = z(e) holds exactly for the patterns z different from p: the automaton keeps every cell except where the pattern p occurs, and there it writes the symbol mu(p), which differs from p(e).
 
 **Definition 1.3 (Invertible cellular automata).**
 
@@ -42,7 +42,7 @@ A cellular automaton T is invertible when some cellular automaton T' satisfies T
 
 **Definition 1.4 (Problem 2).**
 
-$$claim \Leftrightarrow (\forall G, A, (\left|A\right| \ge 2) \Rightarrow \forall T, (\operatorname{IsCA}\left(T\right)) \Rightarrow T \in \langle ICA \cup L\rangle)$$
+$$claim \Leftrightarrow (\forall G, A, (((\operatorname{Group}\left(G\right)) \land (\operatorname{Finite}\left(A\right))) \land (\left|A\right| \ge 2)) \Rightarrow \forall T, (\operatorname{IsCA}\left(T\right)) \Rightarrow T \in \langle ICA \cup L\rangle)$$
 
 *Formalization.* `D5/S3/StatisticalMechanics/CellularAutomata/LazyInvertibleGeneration.claim` (`✓ std3`).
 
