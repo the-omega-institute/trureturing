@@ -111,8 +111,10 @@ admission basis is `open-problem-resolution`. Utility `none`.
 
 ### What the settlement shows
 
-**Proved (Lean):** for every `k ≥ 2` the coefficients `c_n^{(kk)}` exist, are
-unique and are non-negative for all `n ≥ 0`.
+**Proved (Lean):** for every `k ≥ 2` a sequence satisfying the expansion
+exists, and every such sequence is non-negative for all `n ≥ 0`. That the
+expansion determines the sequence is a step inside `result`, not a conjunct of
+`claim`.
 
 **Source consequences (paper's derivation, not formalized):** the matrix `D`
 is column stochastic for every `k ≥ 2` and every `0 < λ < 1`, so
@@ -123,12 +125,17 @@ is column stochastic for every `k ≥ 2` and every `0 < λ < 1`, so
 with non-negative coefficients. Not formalized (classical identity):
 `N_k / N_1 = P_k(x) / ((1−x²)(1−x)^{2k−3})`.
 
-**Not formalized (argument, with computed check):** the poles of `N_k/N_1`
-are at `x = 1` (order `2k−2`) and `x = −1` (order `1`), so `c_n^{(kk)}` is a
-polynomial of degree `2k−3` in `n` plus a multiple of `(−1)ⁿ`, with leading
-term `C(2k,k) n^{2k−3} / (2 (2k−3)!)`. This matches the paper's closed forms
-(`3n`, `5n³/3`, `7n⁵/24`); at `n = 598` the ratio of `c_n^{(kk)}` to the
-leading term is `1.003, 1.010, 1.021, 1.036` for `k = 2, 3, 4, 5`.
+**Not formalized (argument, with computed check):** in
+`N_k/N_1 = P_k(x)/((1−x)^{2k−2}(1+x))` the pole at `x = 1` has order `2k−2`.
+At `x = −1` there is a simple pole for even `k` and none for odd `k`: the value
+`P_k(−1) = Σ_j (−1)^j C(k,j)²` is `0` for odd `k`, where the terms `j` and
+`k − j` cancel, and `(−1)^{k/2} C(k,k/2)` for even `k` (computed for
+`k ≤ 11`). So `c_n^{(kk)}` is a polynomial of degree `2k−3` in `n`, plus a
+multiple of `(−1)ⁿ` for even `k` only, with leading term
+`C(2k,k) n^{2k−3} / (2 (2k−3)!)`. This matches the paper's closed forms: the
+leading terms `3n`, `5n³/3`, `7n⁵/24`, and an alternating term for `k = 2, 4`
+but not for `k = 3`. At `n = 598` the ratio of `c_n^{(kk)}` to the leading
+term is `1.003, 1.010, 1.021, 1.036` for `k = 2, 3, 4, 5`.
 
 **Computed, not formalized:** the same column-stochastic route does not
 compare `σ^{k,k}` with `σ^{l,l}` for `l ≥ 2`. The quotient `N_k/N_l` has a
