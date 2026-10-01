@@ -12985,3 +12985,124 @@ force a contradiction for arbitrary nonflat profiles, or settle
 R!=empty or unrestricted Erdos7. They are ordinary deductions from
 the already established source-map construction; no Lean verification
 or literature-priority claim is asserted.
+
+## 98. Terminal singularity forces a prime singleton and one occupied ancestor
+
+Reuse [Report343, section4](../../321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md#4-奇异-dp-保真到哪一层)
+(Kullmann, arXiv:1103.3693v1, Lemma1.6.1), section79
+(joint singleton-branch coarsening and occupied-ancestor liability),
+and section86 (numerical collision accounting).
+The additional arithmetic bridge is the prime singleton classification
+at arbitrary GLOBAL terminal ternary height. No Lean claim is made.
+
+Let C be one EB1 original whole cover with N distinct odd labels, full
+period Q=3^H M, H>=2, and gcd(M,3)=1. Let T contain ALL original labels
+of ternary height H. Assume the global last-digit occurrence counts are
+
+    (1,1,t), t>=1.                                  (TS)
+
+This counts every original involving X_(3,H). Selecting one covering
+supplier at each sibling of a private point does not establish TS.
+
+### Prime singleton: the new arithmetic part
+
+Original private points make the full clause family minimally
+unsatisfiable. Report343 section4 therefore gives nondegenerate singular
+elimination and a minimally unsatisfiable output. Exactly t parent
+tuples exist and all t yield distinct compatible resolvents.
+
+Each parent specifies its complete lower ternary prefix. Compatibility
+of every tuple forces ONE common u mod3^(H-1) for all top parents.
+Divisor closure supplies original G=A_(3^H). No other top parent can
+share its final digit: it would lie inside G. Hence G occupies a
+singleton branch. Write the other singleton initially as A_(3^H c),
+with c>1 and gcd(c,3)=1.
+
+If c is composite, choose a prime p|c with p<c. The original 3^H p
+exists by divisor closure and must lie in the remaining branch.
+Compatibility with the c-parent makes its p-phase agree. Its resolvent
+is therefore the entire projection of the c-parent after erasing the
+last ternary digit. Every other resolvent is contained in that AP.
+Minimality of the eliminated cover forces t=1. The top cofactor palette
+is now exactly{1,p,c}; divisor closure implies c=p^2. Exchange the
+two nonpure singleton roles and take p as the singleton cofactor.
+If c was prime already, take p=c directly. Consequently the top batch is
+
+    A_(3^H), A_(3^H p), {A_(3^H m):m in Mtop},
+    |Mtop|=t, 1,p notin Mtop,
+
+with the first two parents singleton and all remaining parents in the
+third final-digit branch. The symbol Mtop is a set of actual cofactors,
+not the full nonternary period M.
+
+### Coarsen the entire top batch on its exact joint obligation
+
+Put n0=3^(H-1)p. Let b modp be the actual singleton parent's p-phase.
+Let C0 be the single AP with prefix u mod3^(H-1) and p-phase b.
+Retain every original of ternary height less than H, unchanged.
+
+Their exact complement in the full digit carrier is U times{0,1,2},
+with U nonempty because original top parents have private points.
+At the final digit of A_(3^H p), its singleton status and whole
+coverage imply U subset C0. Thus the retained originals plus C0 form
+a WHOLE cover. This covers the simultaneous deletion region, not just
+a union of individually selected private witnesses.
+
+The output has exactly N-(t+2)+1=N-t-1 classes. Original A_(n0)
+is retained by divisor closure. It is disjoint from C0: an intersection
+would lift at the singleton's final digit to an intersection with
+A_(3^H p), contrary to comparable-class disjointness. Thus precisely
+one numerical modulus, n0, occurs twice, in two distinct phases.
+Both phases have actual liabilities: an old private point of A_(n0)
+survives outside C0, and every point of U requires C0.
+
+The output period is exactly Q/3. Original pure3^(H-1) remains, as
+does each original nonternary pure prime power at its maximum height.
+Neither divisor closure of the output nor privacy of all its other
+retained members is asserted. The coarsening is not exact DP elimination.
+
+### Exact DP has a different, localized multiplicity profile
+
+Each m in Mtop instead produces an actual compatible resolvent R_m,
+with numerical modulus 3^(H-1)lcm(p,m). For each 3-free k, its multiplicity is
+
+    s(3^(H-1)k)=1_[3^(H-1)k original]
+                + #{m in Mtop:lcm(p,m)=k}.
+
+If v_p(k)>=2, only m=k is possible. If k=pv with p notdividing v,
+only m=v or m=pv is possible. Multiplicity is therefore at most three,
+and is exactly three precisely when v,pv both belong to Mtop; their
+retained lower ancestor is then forced by divisor closure. All three
+phases differ by nondegeneracy of the eliminated minimal cover.
+
+Equivalently, a triple occurs somewhere iff some original top label
+contains p and a different nonternary prime. For the nontrivial forward
+direction v>1 because1,p are excluded; for the reverse direction use
+divisor closure to obtain top labels3^H v and3^H pv with p notdividing v.
+High pure p-powers alone do not produce triples. Exact DP has N-2
+classes and remains irredundant, unlike the possibly redundant coarsening.
+
+### The occupied ancestor has an exact remaining repair budget
+
+Delete the original top batch AND its old ancestor A_(n0). The retained
+family B has N-t-3 classes. Its actual complement E* satisfies
+
+    E* subset A_(n0) union C0, A_(n0) intersect C0=empty.
+
+A repair by at most t+2 odd nonunit APs with distinct numerical moduli
+absent from B would give at most N-1 classes, contradicting EB1.
+The t+3 deleted original classes supply only the old budget, not this
+strict saving. Reassigning the occupied ancestor loses its old private
+point and is not a repair. No repair of size t+2 is supplied here.
+
+Under R=empty, the shared prefix u places every top mixed parent and
+both ancestor phases in one actual nonzero ternary root. The opposite
+color is untouched. Neither terminal singularity nor its affordable
+repair follows from the all-concentrated hypothesis. Counts |T|<=4
+would imply TS, because every terminal value must occur; no bound
+|T|<=4 for the remaining EB1 sources has been proved.
+
+Section97 excludes TS in the remaining R=empty, H=12 branch: each
+terminal digit occurs at least twice there. At larger H, neither TS
+nor an affordable occupied-ancestor repair is established. These
+conditional reductions do not settle unrestricted Erdos7.
