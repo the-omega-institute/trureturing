@@ -12,8 +12,7 @@ internal sealed class InversionSeqClass152Document : IScribeDocumentDefinition
         H("Equinumerosity of Inversion Sequences in Class 152"),
         Blocks(
             Node("inversionseq-inversionseqclass152-result", "The Class 152 equinumerosity", "result",
-                "For every nonnegative n, the number of inversion sequences of length n avoiding 010, 100, 102 and 210 equals the number of inversion sequences of length n avoiding 011, 201 and 210.", DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(ProblemSlugRef.Create("callan-mansour-inversion-class-152"), ResolutionKind.Proved))),
+                "For every nonnegative n, the number of inversion sequences of length n avoiding 010, 100, 102 and 210 equals the number of inversion sequences of length n avoiding 011, 201 and 210.", DescribeRole.Theorem)),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,
