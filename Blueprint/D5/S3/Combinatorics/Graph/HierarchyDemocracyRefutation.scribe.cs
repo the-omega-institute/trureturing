@@ -20,11 +20,11 @@ internal sealed class HierarchyDemocracyRefutationDocument : IScribeDocumentDefi
             Node("lap", "The transposed in-degree Laplacian", LapFormula(),
                 "M is the transpose of the in-degree Laplacian L = diag(d) - A.",
                 "lapT", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("residual", "The squared residual", ResidualFormula(),
-                "For a vector x in R^n, the squared residual is the squared Euclidean norm of M x - d.",
+            Node("residual", "The residual", ResidualFormula(),
+                "For a vector x in R^n, the residual is the Euclidean norm of M x - d.",
                 "residual", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("levels", "Forward hierarchical levels", LevelsFormula(),
-                "A vector g is a vector of forward hierarchical levels when it minimizes the residual and, among all minimizers of the residual, has the least Euclidean norm.",
+                "A vector g is a vector of forward hierarchical levels (Definition 3.1 of the paper) when it minimizes the residual and, among all minimizers of the residual, has the least Euclidean norm.",
                 "IsForwardLevels", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("democracy", "The forward democracy coefficient", DemocracyFormula(),
                 "The forward democracy coefficient is 1 minus the mean of the differences g_j - g_i over the arcs from i to j, the mean being weighted by a_ij.",
@@ -36,7 +36,7 @@ internal sealed class HierarchyDemocracyRefutationDocument : IScribeDocumentDefi
                 "The forward half of the first bullet of Conjecture 3.6: for every n and every matrix A of non-negative weights with zero diagonal whose arcs form a weakly connected graph, every vector g of forward hierarchical levels gives a forward democracy coefficient at most 1.",
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "A graph with coefficient 901/898", Disp(new Formula.Not(F.Id("claim"))),
-                "Take n = 6 and the unweighted arcs 1 -> 4, 1 -> 5, 2 -> 6, 3 -> 6, 4 -> 5, 4 -> 6, 5 -> 1, 5 -> 2, 5 -> 3, 5 -> 4, 6 -> 1, 6 -> 5; the adjacencies 1-4, 1-5, 5-2, 5-3, 5-6 make the graph weakly connected, and the in-degree vector is d = (2, 1, 1, 2, 3, 3). Let g = (227, -991, -991, 329, 767, 659)/2694. The six coordinates of the transpose of M applied to M g - d vanish, so for every x the squared residual of x is the squared residual of g plus the squared norm of M (x - g); hence g minimizes the residual. A minimizer x then has M (x - g) = 0, and the six coordinate equations of this system force all coordinates of x - g to be equal; since the coordinates of g sum to 0, the squared norm of x exceeds that of g by six times the square of the common difference, so g has the least norm among the minimizers. The sum of g_j - g_i over the twelve arcs is -18/449, so the forward democracy coefficient of g is 1 + 18/(449 * 12) = 901/898 > 1.",
+                "Take n = 6 and the unweighted arcs 1 -> 4, 1 -> 5, 2 -> 6, 3 -> 6, 4 -> 5, 4 -> 6, 5 -> 1, 5 -> 2, 5 -> 3, 5 -> 4, 6 -> 1, 6 -> 5; the adjacencies 1-4, 1-5, 5-2, 5-3, 5-6 make the graph weakly connected, and the in-degree vector is d = (2, 1, 1, 2, 3, 3). Let g = (227, -991, -991, 329, 767, 659)/2694. The six coordinates of the transpose of M applied to M g - d vanish, so for every x the square of the residual of x is the square of the residual of g plus the squared norm of M (x - g); hence g minimizes the residual. A minimizer x then has M (x - g) = 0, and the six coordinate equations of this system force all coordinates of x - g to be equal; since the coordinates of g sum to 0, the squared norm of x exceeds that of g by six times the square of the common difference, so g has the least norm among the minimizers. The sum of g_j - g_i over the twelve arcs is -18/449, so the forward democracy coefficient of g is 1 + 18/(449 * 12) = 901/898 > 1.",
                 "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("moutsinas-2021-democracy-coefficient-bound"),
@@ -94,22 +94,20 @@ internal sealed class HierarchyDemocracyRefutationDocument : IScribeDocumentDefi
 
     private static Formula ResidualFormula()
     {
-        Formula i = F.Id("i"), x = F.Id("x");
-        Formula mx = Coord(Parenthesized(new Formula.Binary(Call(F.Id("lapT"), F.Id("A")),
-            FormulaBinaryOperator.Multiply, x)), i);
-        Formula diff = new Formula.Binary(mx, FormulaBinaryOperator.Subtract,
-            Call(F.Id("indeg"), F.Id("A"), i));
-        return Disp(Equal(Residual(x), SumOver(i, new Formula.Power(Parenthesized(diff), D(2)))));
+        Formula x = F.Id("x");
+        Formula mx = new Formula.Binary(Call(F.Id("lapT"), F.Id("A")), FormulaBinaryOperator.Multiply, x);
+        Formula diff = new Formula.Binary(mx, FormulaBinaryOperator.Subtract, Call(F.Id("indeg"), F.Id("A")));
+        return Disp(Equal(Residual(x), new Formula.Subscript(new Formula.Norm(diff), D(2))));
     }
 
     private static Formula LevelsFormula()
     {
-        Formula g = F.Id("g"), x = F.Id("x"), y = F.Id("y"), i = F.Id("i");
+        Formula g = F.Id("g"), x = F.Id("x"), y = F.Id("y");
         Formula minimizes = AllIn(x, Vectors(), Leq(Residual(g), Residual(x)));
         Formula leastNorm = AllIn(x, Vectors(),
             Implies(AllIn(y, Vectors(), Leq(Residual(x), Residual(y))),
-                Leq(SumOver(i, new Formula.Power(Coord(g, i), D(2))),
-                    SumOver(i, new Formula.Power(Coord(x, i), D(2))))));
+                Leq(new Formula.Subscript(new Formula.Norm(g), D(2)),
+                    new Formula.Subscript(new Formula.Norm(x), D(2)))));
         return Disp(Iff(Call(F.Id("IsForwardLevels"), F.Id("A"), g), And(minimizes, leastNorm)));
     }
 

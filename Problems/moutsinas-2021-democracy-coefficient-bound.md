@@ -92,11 +92,11 @@ The canonical source is
 declarations are `indeg`, `lapT`, `residual`, `IsForwardLevels`,
 `forwardDemocracy`, `WeaklyConnected`, `claim` and `result`. The frozen module
 state has statement identity
-`sha256:d5ee374c5f7f981d431a82496ea55ed0643fb689591a9336249e9995a2a8ae7a`.
+`sha256:f0dfd18e704c2ba10a0e888b1dc04f0579389f98a2de26f8f63b891a956724b8`.
 The result declaration has statement identity
 `sha256:8d5e2a65d9febea4853d483e6cb4a35ec11730128f013b174d4d20cd9c8d7821`.
 The Freeze event is
-`sha256:2e459ea9f2bd5b103e5efce75ebcf6f350b5ec2f2c33203e3cf35fab3fd59a3c`.
+`sha256:84ff169d89d87dcf940fbde5a069b7a791df552658fafd8b790dc8738cb57e98`.
 It has no project-level frozen prerequisites (pinned Mathlib only). The proof
 uses only the standard axioms `propext`, `Classical.choice` and `Quot.sound`;
 no `sorry`, `native_decide`, or new axiom.
@@ -133,7 +133,8 @@ counterexample has `η_b = 901/898`, so the backward inequality fails as well.
 
 **Computed (scout readings, not recomputed here):** no counterexample exists
 on five or fewer vertices; on six vertices there are 54 among the 1,530,843
-weakly connected unweighted graphs, all strongly connected and all with an
+isomorphism classes of weakly connected unweighted directed graphs (generated
+with nauty `geng -c | directg`), all strongly connected and all with an
 antiparallel pair, the largest coefficient being `103/102`. The graph `G₆′`
 with arcs `1→3, 1→4, 1→6, 2→5, 3→4, 3→5, 3→6, 4→1, 4→3, 4→6, 5→1, 5→6, 6→1,
 6→2, 6→3, 6→4, 6→5` has all arc differences distinct and `η_f = 103/102`. For

@@ -28,9 +28,9 @@ $$\operatorname{lapT}\left(A\right) = (\operatorname{diag}\left(\operatorname{in
 
 M is the transpose of the in-degree Laplacian L = diag(d) - A.
 
-**Definition 1.3 (The squared residual).**
+**Definition 1.3 (The residual).**
 
-$$\operatorname{residual}\left(A, x\right) = \sum_{i} ((\operatorname{lapT}\left(A\right) \cdot x)_{i} - \operatorname{indeg}\left(A, i\right))^{2}$$
+$$\operatorname{residual}\left(A, x\right) = \left\lVert \operatorname{lapT}\left(A\right) \cdot x - \operatorname{indeg}\left(A\right) \right\rVert_{2}$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/HierarchyDemocracyRefutation.residual` (`✓ std3`).
 
@@ -38,11 +38,11 @@ $$\operatorname{residual}\left(A, x\right) = \sum_{i} ((\operatorname{lapT}\left
 
 *Commentary.*
 
-For a vector x in R^n, the squared residual is the squared Euclidean norm of M x - d.
+For a vector x in R^n, the residual is the Euclidean norm of M x - d.
 
 **Definition 1.4 (Forward hierarchical levels).**
 
-$$\operatorname{IsForwardLevels}\left(A, g\right) \Leftrightarrow ((\forall x \in \mathbb{R}^{n}, \operatorname{residual}\left(A, g\right) \le \operatorname{residual}\left(A, x\right)) \land (\forall x \in \mathbb{R}^{n}, (\forall y \in \mathbb{R}^{n}, \operatorname{residual}\left(A, x\right) \le \operatorname{residual}\left(A, y\right)) \Rightarrow \sum_{i} \left(g_{i}\right)^{2} \le \sum_{i} \left(x_{i}\right)^{2}))$$
+$$\operatorname{IsForwardLevels}\left(A, g\right) \Leftrightarrow ((\forall x \in \mathbb{R}^{n}, \operatorname{residual}\left(A, g\right) \le \operatorname{residual}\left(A, x\right)) \land (\forall x \in \mathbb{R}^{n}, (\forall y \in \mathbb{R}^{n}, \operatorname{residual}\left(A, x\right) \le \operatorname{residual}\left(A, y\right)) \Rightarrow \left\lVert g \right\rVert_{2} \le \left\lVert x \right\rVert_{2}))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/HierarchyDemocracyRefutation.IsForwardLevels` (`✓ std3`).
 
@@ -50,7 +50,7 @@ $$\operatorname{IsForwardLevels}\left(A, g\right) \Leftrightarrow ((\forall x \i
 
 *Commentary.*
 
-A vector g is a vector of forward hierarchical levels when it minimizes the residual and, among all minimizers of the residual, has the least Euclidean norm.
+A vector g is a vector of forward hierarchical levels (Definition 3.1 of the paper) when it minimizes the residual and, among all minimizers of the residual, has the least Euclidean norm.
 
 **Definition 1.5 (The forward democracy coefficient).**
 
@@ -104,7 +104,7 @@ $$\neg claim$$
 
 *Commentary.*
 
-Take n = 6 and the unweighted arcs 1 -> 4, 1 -> 5, 2 -> 6, 3 -> 6, 4 -> 5, 4 -> 6, 5 -> 1, 5 -> 2, 5 -> 3, 5 -> 4, 6 -> 1, 6 -> 5; the adjacencies 1-4, 1-5, 5-2, 5-3, 5-6 make the graph weakly connected, and the in-degree vector is d = (2, 1, 1, 2, 3, 3). Let g = (227, -991, -991, 329, 767, 659)/2694. The six coordinates of the transpose of M applied to M g - d vanish, so for every x the squared residual of x is the squared residual of g plus the squared norm of M (x - g); hence g minimizes the residual. A minimizer x then has M (x - g) = 0, and the six coordinate equations of this system force all coordinates of x - g to be equal; since the coordinates of g sum to 0, the squared norm of x exceeds that of g by six times the square of the common difference, so g has the least norm among the minimizers. The sum of g_j - g_i over the twelve arcs is -18/449, so the forward democracy coefficient of g is 1 + 18/(449 * 12) = 901/898 > 1.
+Take n = 6 and the unweighted arcs 1 -> 4, 1 -> 5, 2 -> 6, 3 -> 6, 4 -> 5, 4 -> 6, 5 -> 1, 5 -> 2, 5 -> 3, 5 -> 4, 6 -> 1, 6 -> 5; the adjacencies 1-4, 1-5, 5-2, 5-3, 5-6 make the graph weakly connected, and the in-degree vector is d = (2, 1, 1, 2, 3, 3). Let g = (227, -991, -991, 329, 767, 659)/2694. The six coordinates of the transpose of M applied to M g - d vanish, so for every x the square of the residual of x is the square of the residual of g plus the squared norm of M (x - g); hence g minimizes the residual. A minimizer x then has M (x - g) = 0, and the six coordinate equations of this system force all coordinates of x - g to be equal; since the coordinates of g sum to 0, the squared norm of x exceeds that of g by six times the square of the common difference, so g has the least norm among the minimizers. The sum of g_j - g_i over the twelve arcs is -18/449, so the forward democracy coefficient of g is 1 + 18/(449 * 12) = 901/898 > 1.
 
 ## References
 
