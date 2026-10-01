@@ -12423,3 +12423,59 @@ They do not exclude R={5}, where each P_i already contains5, and do not
 give unrestricted noncoverage. They are ordinary deductions from the
 published distortion proof and thresholds; no new sieve table or Lean
 verification is asserted.
+
+## 92. One controlled distortion step excludes two no-seven columns at every five-height
+
+Keep the actual source and notation of the full-height column budget: H_3=1, R={5}, arbitrary finite A=H_5, and a concentrated color i with7 absent from S_i. All other original heights remain arbitrary. The previously established column-budget consumer already shows that u_i<=2 could only occur when i owns original15 and
+
+    U_i={11,13}.
+
+That last case is impossible. Consequently every such no7 color satisfies u_i>=3 at every A, and the total original nonpure5-column count is at least5 by the existing other-color bound u_(3-i)>=2. This statement does not replace the stronger flat-height result when A=1.
+
+### Choose the first distortion parameter and reuse the existing continuation
+
+Construct one BBMST law for the actual5-free color-i cofactor base, with reserve3/10. This base has numerical multiplicity at most two, is coprime to210, and retains every original cofactor height. Its first four ordinary-prime stages are empty, so
+
+    eta_4=7/10,  K_4=4,  F_4=40/7.
+
+At prime11 choose delta_11=1/5. The existing SO2 recurrence has
+
+    a_11=8/25, b_11=1/400,
+    1-b_11*F_4/[delta_11(1-delta_11)]=51/56>0,
+    1+a_11/(1-delta_11)=7/5,
+    F_5<=T_(11,1/5)(40/7)=448/51<9<=g_5.
+
+Use the published continuation from this checkpoint. Its input is the actual ratio K_5/eta_5; the accounting mass is NEVER reset to one:
+
+    eta_t=7/10-sum_(s<=t)P_s(B_s).
+
+The previously proved reserve argument gives P(E_i)>3/10 under the resulting SAME final probability P. This is one specified finite step followed by an existing successful continuation; no published threshold is recomputed.
+
+### The same law gives a cheaper eleven-class price
+
+BBMST Lemma3.4 and preservation of earlier marginals give, for every actual or potential cofactor phase,
+
+    P(c mod11)<=1/[11(1-delta_11)]=5/44,
+    P(c mod13)<=2/13.
+
+The second bound uses the continuation's delta_13<=1/2. Later stages preserve the11 marginal, so no later distortion factor is paid on the first bound. These are prices in the law constructed above, not a combination with a different law giving the surviving mass.
+
+For the two-column palette their total price is
+
+    W=5/44+2/13=153/572<3/10,
+    3/10-W=93/2860>0.
+
+Reuse the established actual full-height source inequality
+
+    (1-beta_i)P(E_i)<=C_i.
+
+Finite A gives beta_i<1/2. Each finite column coefficient c_m, including its missing-top correction, is strictly below1/2. Therefore
+
+    3/20 < (1-beta_i)P(E_i)
+           <=C_i
+           <(1/2)(5/44+2/13)
+           <3/20,
+
+a contradiction. Every p-prefix and cofactor phase remains the original one; their possible overlaps can only lower the upper capacity. No phase realization, additional Hall matching, or private-region reassignment is assumed.
+
+This excludes the entire two-column no7 case at arbitrary five-height, and hence the previously minimal total u=4 inventory at all those heights. Larger original inventories remain open. It is an ordinary consumer of the established full-height source, BBMST cylinder bound and published continuation, with no new Lean verification.
