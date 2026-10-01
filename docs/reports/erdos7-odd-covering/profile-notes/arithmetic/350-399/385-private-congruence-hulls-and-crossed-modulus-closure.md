@@ -11140,3 +11140,118 @@ excludes all tight-cut configurations. The argument reuses PH1--PH2,
 CP5, SC1 and the elimination interface in
 [Report343, section4](../../321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md).
 No new cut theorem, enumeration or Lean verification is asserted.
+
+## 80. Existing Simpson cuts control the shared-prime column deficit
+
+Keep H_3=1 and R={p}, but allow arbitrary original p-height A.
+Use section75's irredundant whole quotient C_i with original label
+set D_i={d:i in V_d}. Its pruning and original private witnesses
+are already established there. Section71 gives the exact overlap
+
+    D_1 union D_2=D minus {3},
+    D_1 intersect D_2={p^a:a in I_0}.
+
+This counts original labels, not equality of quotient moduli.
+Put A_i=max_(d in D_i)v_p(d). Each quotient keeps the full original
+height H_q of every q in S_i, since original q^H_q has private color
+i. Its period is p^A_i product_(q in S_i)q^H_q, and
+
+    max(A_1,A_2)=A,  I_0 subset [1,min(A_1,A_2)].
+
+### The published cut applies to each actual irredundant quotient
+
+Reuse [Report343, section2](../../321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md)
+and the geometric form in Balister--Bollobas--Morris--Sahasrabudhe--Tiba,
+[*The structure and number of Erdős covering systems*, Appendix
+Theorem A.1](https://arxiv.org/pdf/1904.04806v2), page31. In a minimal
+coordinate-hyperplane cover, the number of members touching a nonempty
+selected coordinate set is at least one plus the sum of its coordinate
+alphabet sizes minus one. Numerical multiplicity one and disjointness
+are not hypotheses.
+
+Select exactly the p-digits h,...,A_i in the quotient's prime-digit
+coordinates. An AP touches them exactly when its original label is
+divisible by p^h. Consequently
+
+    N_i(h):=#{d in D_i:p^h divides d}
+           >=1+(p-1)(A_i-h+1),  1<=h<=A_i.          (FC1)
+
+Let Theta_i(h) be that right side for h<=A_i and zero otherwise.
+With N(h)=#{d in D:p^h divides d} and I(h)=|I_0 intersect [h,A]|,
+the original-label intersection gives
+
+    N(h)+I(h)=N_1(h)+N_2(h)>=Theta_1(h)+Theta_2(h). (FC2)
+
+Using every coordinate in each quotient gives, by the same exact
+overlap accounting,
+
+    |D|>=3+(p-1)(A_1+A_2)
+           +sum_(q in S_1 union S_2)H_q(q-1)-|I_0|. (FC3)
+
+Compared with the original cover's aggregate Simpson bound, this
+adds (p-1)min(A_1,A_2)-|I_0|, at least (p-2)min(A_1,A_2). These
+are applications of the existing theorem to the proved quotients.
+
+For the actual nonpure columns let
+
+    U_i={u>1:gcd(u,3p)=1, pu in D, supp(u) subset S_i},
+    a_u=max{b:p^b u in D},
+    T_i(h)=sum_(u in U_i)(a_u-h+1)_+,
+    g_i(h)=#{u in U_i:p^a_u u in G, a_u>=h},
+    c_i(h)=#{b>=h:i in V_(p^b)},
+    j_i(h)=#{b>=h:3p^b in D, a_(3p^b)=i mod3}.
+
+Here G is section69's set of globally maximal concentrated3-free
+p-bearing originals. PI6 supplies the original3-child of every
+column level below a_u. Its top has that child exactly when it is
+not globally maximal. Thus the count is exact:
+
+    N_i(h)=c_i(h)+j_i(h)+2T_i(h)-g_i(h).
+
+Together with FC1 this gives
+
+    g_i(h)<=c_i(h)+j_i(h)+2T_i(h)
+                  -1-(p-1)(A_i-h+1), h<=A_i.      (FC4)
+
+These are tail-height constraints. The Hall deficit of section71
+uses prefix demands; FC4 alone does not make it vanish.
+
+### At p-height one the minimum inventory has rigid actual phases
+
+Now set H_p=1. Section75 supplies a nonpure p-bearing original in
+each color. Divisor closure supplies a concentrated original pu,
+and the proper-divisor payer DP1 supplies original3p. Let j be its
+actual ternary color, k the other color, and e_i=1_(i=j). Write
+u_i=|U_i|, u=u_1+u_2 and g_i=|G intersect {pu:u in U_i}|.
+Here I_0={1}, A_1=A_2=1, and
+
+    N_i(1)=1+e_i+2u_i-g_i>=p,
+    2u_i-g_i>=p-1-e_i.
+
+Since p is odd, these imply
+
+    u_i>=(p-1)/2,  u>=p-1,
+    |G|<=2u-2p+3,
+    delta=max(|G|-1,0)<=2(u-p+1).                  (FC5)
+
+The deficit formula is the existing specialization from section71.
+If u=p-1, put h=(p-1)/2. Then
+
+    u_1=u_2=h,  g_k=0,  g_j<=1,  delta=0.
+
+The quotient C_k has exactly p p-bearing originals: p and p-1
+nonpure labels. Let E_k be its cofactor region avoiding all p-free
+quotient classes. It is nonempty because p retains a private point.
+At each point of E_k the p-bearing originals cover every p-root.
+Original p occupies0, and all others avoid0 by comparable
+disjointness. The p-1 other labels therefore occupy the nonzero
+roots bijectively, and EVERY one of their cofactor APs contains
+E_k. In particular each original pair pu,3pu has the SAME cofactor
+phase modulo u and different actual p-roots. This phase conclusion
+uses one nonempty E_k and all its actual coverage requirements.
+
+Zero Hall deficit is an inventory statement. Its payers are occupied
+original classes with actual private obligations. The next section
+uses explicit whole-cover transports to turn this minimum-column
+case into further exclusions; FC1--FC5 by themselves do not prove
+unrestricted noncoverage or any new Lean result.
