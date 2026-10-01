@@ -5265,3 +5265,164 @@ remains to force a simultaneous successful assignment or a
 contradiction to its actual inventory costs for EVERY BC2
 residual, including incoherent mixed rows and large repeated
 base families. These conditional bounds do not establish that.
+
+## 39. Seven-class repairs need three low labels and exclude a squared-seven collision
+
+Consider a repair of the complete P_3 by at most seven distinct
+odd nonunit moduli, excluding3 and retaining every original C0
+label. Discard unnecessary classes. Let k be the remaining count
+and let kappa count its low classes, whose original repair
+moduli have3-height zero or one. These are precisely the repairs
+counted by kappa in section38. Their cofactor moduli are all
+greater than one. The repair need not divide the old period Q.
+
+### Extend the existing common-source theorem to the repair period
+
+Write Q=3^H*B and let B-star be the LCM of B and the non3
+parts of ALL repair moduli. On this full finite cofactor carrier,
+take the actual preimage
+
+    R-star={x mod B-star: x mod B belongs to R_3}.
+
+This preserves every old constraint; only additional prime
+digits and new prime coordinates are free. List all primes of
+B-star as3<p_1<...<p_t, at their full B-star heights, and set
+lambda_1=3, lambda_i=p_(i-1), r_i=p_i-lambda_i+1>=3.
+
+R-star meets every product of complete lambda_i-ary trees in
+these coordinates. To check the precise bridge to Report376,
+truncate each old-prime tree at its old height. Its required
+branching is at least that of the chain containing only old
+primes, since inserting new primes can only increase the
+predecessor of an old prime. Prune to that old branching.
+PC1--PC4 supplies ONE common point of old R_3 in the resulting
+tree product. In each original expanded tree, extend that
+point's old prefix to a leaf; choose leaves in all new prime
+trees as well. CRT gives one R-star point in the original
+expanded product. All high digits are permitted by the full
+preimage definition.
+
+This is the missing carrier check for directly reusing PC6 and
+RC5. Their weighted-tree and finite-duality arguments now apply
+on R-star with the same capacities r_i^(-j) at every expanded
+height. In particular, for one fixed assignment of actual low
+repair cofactor prefixes with costs delta_i<1, ONE law nu on
+R-star avoids all those classes and simultaneously satisfies
+
+    nu(x=a mod p_i^j)<=min(1,r_i^(-j)/(1-delta_i)). (NF20)
+
+Use the cofactor phases of the low REPAIR classes here, not
+an arbitrarily chosen duplicate endpoint from BC12: that
+endpoint might belong to C0. The new law is constructed on
+the actual extended source, not by separately conditioning or
+optimizing one law per query. Cofactor queries with several
+prime factors use the minimum of the coordinate bounds.
+
+Finally let J be the maximum3-height needed by Q and every
+repair modulus. Keep the original first3 root fixed and attach
+uniform remaining3 digits through height J, independently of
+nu. This is one law on the complete P_3 in the common repair
+period. A high repair with modulus3^beta*e, beta>=2 and
+gcd(e,3)=1, has mass zero if its first root disagrees, and
+otherwise has mass
+
+    3^(-(beta-1))*nu(x=a mod e).                   (NF21)
+
+Both old and new higher3 digits are included. NF20--NF21 do
+not use NF13's six-class restriction or assume an inside repair.
+
+### One or two low classes leave too little high-class mass
+
+If kappa=0, BC1 already requires k>=N_3>=9, contrary to k<=7.
+This uses the independent original-cover bound already used in NF10.
+
+If kappa=1, assign its cofactor to one prime root p. All bases
+are at least3, so NF20 gives p-root capacity at most1/2,
+p-depth-two capacity at most1/6, and all other prime-root
+capacities at most1/3. Among high numerical labels, only9
+and9p can have mass greater than1/9, with respective bounds
+1/3 and1/6. A mixed cofactor involving another prime receives
+that other prime's cap, not a product of two caps. The at most
+six high classes therefore have total mass at most
+
+    1/3+1/6+4/9=17/18<1.
+
+All low classes have mass zero, so coverage is impossible.
+
+Suppose kappa=2. If the two cofactors admit assignments to
+different primes p,j, delete one actual root in each. Their
+root caps are at most1/2 and their depth-two caps at most1/6;
+other prime roots retain cap at most1/3. Only numerical labels
+9,9p,9j,9pj can exceed1/9: their bounds are1/3 for9 and1/6
+for each of the other three. The at most five high classes have
+total mass at most
+
+    1/3+3/6+1/9=17/18<1.
+
+If no such different-prime assignment exists, both cofactors
+are powers of one prime p. If either exponent is at least two,
+assign its complete prefix at p and the other class's first
+root. Their combined cost is at most1/9+1/3=4/9. Thus the
+p-root cap is at most3/5 and its depth-two cap at most1/5.
+Only9 and9p can exceed1/9, with bounds1/3 and1/5. The high
+total is at most
+
+    1/3+1/5+3/9=13/15<1.
+
+The remaining case has both cofactors equal to p. Distinct low
+moduli then force the repair labels p and3p. If p is an old
+support prime, divisor closure puts the original pure label p
+in retained C0, contradicting availability of the repair p.
+If p is a new prime, its coordinate in R-star is wholly free.
+Use the original full-chain PC7 law on R_3 and extend it
+uniformly through all added old digits and other new primes.
+In the independent new p coordinate use the uniform law on
+the full p-power carrier avoiding the at most two actual first
+roots of these low classes. At least p-2>=3 roots remain.
+Every prime-root query then has mass at most1/3 under this
+SAME law; old bounds hold after uniform extension. NF21 bounds
+the five high classes by
+
+    1/3+4/9=7/9<1.
+
+These cases exhaust kappa<=2. Consequently every such legal
+repair with at most seven classes must satisfy
+
+    kappa>=3.                                     (NF22)
+
+The inequalities use distinct numerical high labels to count
+each exceptional label only once. Pure higher3 powers have
+mass at most1/9. These are ordinary applications of the common
+source bounds after the carrier bridge, not separate marginal
+optimizations or new general probability theorems.
+
+### A single repeated base cannot contain49 at this budget
+
+Now suppose the BC2 residual has E={m} with49 dividing m.
+Select the single prime p=7 for BC18. Then q=3,r=5 and the
+one endpoint's cost is s=5^(-v_7(m))<=1/25. There are no
+other selected trees to require, and
+
+    c=ceil(5*(1-s))=5.
+
+The strengthened kappa form of BC18 gives k>=kappa+v+5.
+If k<=7, NF22 gives kappa>=3, so k>=8+v, a contradiction.
+Thus
+
+    k<=7 ==> NOT(E={m} and49 divides m).           (NF23)
+
+This exclusion permits arbitrary other prime factors, arbitrary
+phases and original heights, and moduli beyond the old period.
+It concerns the complete P_3 repair retaining C0 and the parent
+label3, within the hypothetical minimum whole cover. It does
+not exclude multiple repeated bases or every seven-class repair.
+In a minimal repair with any high class, the complete B-star
+cofactor of its private point leaves the entire higher3 tail
+uncovered by all low classes,
+so at least three high classes are required. Combining NF22
+with section31's exclusion of high-containing six-class repairs
+leaves only the mixed counts(3 low,4 high) or(4 low,3 high)
+at budget seven, before using other restrictions. All-low repairs
+remain possible at the level of these necessary conditions.
+Unrestricted #7 and those remaining joint repair branches are
+unresolved; no new Lean verification is claimed.

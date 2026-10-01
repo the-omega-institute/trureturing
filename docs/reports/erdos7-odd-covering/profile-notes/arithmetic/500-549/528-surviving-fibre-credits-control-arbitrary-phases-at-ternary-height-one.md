@@ -31061,6 +31061,27 @@ and11^2|m exclude nine-class repairs with just that repeated
 base. No successful joint assignment is supplied for arbitrary
 residuals, and incoherent high rows remain in the blacklist.
 
+[Report385, section39](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#39-seven-class-repairs-need-three-low-labels-and-exclude-a-squared-seven-collision)
+extends the actual cofactor source to the complete repair period.
+Every product of expanded trees contains one common old R_3
+point and free extensions of its digits, so the existing RC5
+law applies to outside repair moduli as well. Uniform complete
+higher3 tails then give one probability avoiding the assigned
+actual low repair classes. For at most seven repair labels,
+one low class leaves high mass at most17/18. Two low classes
+give at most17/18 if assigned to different primes, at most13/15
+for a common prime with a deep prefix, and at most7/9 for the
+remaining free new-prime case. An old-prime pair p,3p is illegal
+because C0 retains p. Together with BC1 this forces at least
+three low repair labels, with no old-period divisibility premise.
+
+If the residual has exactly one repeated base m divisible by49,
+the single p=7 cost in BC18 is c=5. The same repair must then
+have k>=kappa+v+5>=8, excluding this entire seven-class branch.
+This is a joint exclusion under the stated repair contract;
+multiple collision bases, remaining mixed low/high inventories,
+all-low repairs and the unrestricted covering question remain.
+
 [Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
 keeps the residual cover's entire old q coordinate unchanged.
 It excludes one endpoint per repeated pair and reserves the
