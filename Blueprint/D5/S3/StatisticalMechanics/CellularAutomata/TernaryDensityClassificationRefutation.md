@@ -26,7 +26,7 @@ $$\operatorname{ruleF} = \operatorname{wolfram}\left(6478767664173\right)$$
 
 *Commentary.*
 
-F is the rule with Wolfram number 6478767664173; it conserves the number of each value weighted by the value, and its restriction to the values 1 and 2 is elementary rule 184.
+F is the rule with Wolfram number 6478767664173; it preserves the sum of the cell values, and its restriction to the values 1 and 2 is elementary rule 184.
 
 **Definition 1.3 (The rule G).**
 

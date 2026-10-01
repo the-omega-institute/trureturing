@@ -18,7 +18,7 @@ internal sealed class TernaryDensityClassificationRefutationDocument : IScribeDo
                 "A ternary nearest-neighbour local rule is a map from {0,1,2}^3 to {0,1,2}. The rule with Wolfram number N has f(a,b,c) equal to the base-3 digit of N at the position 9a + 3b + c, that is, the integer part of N divided by 3^(9a+3b+c), reduced modulo 3; the paper indexes the coefficients as a_(9x_0+3x_1+x_2) = f(x_0,x_1,x_2). Here a, b, c lie in Fin 3, the division is division of natural numbers with remainder discarded, and the result is the element of Fin 3 with that value.",
                 "wolfram", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("rulef", "The rule F", RuleFormula("ruleF", D(6, 4, 7, 8, 7, 6, 7, 6, 6, 4, 1, 7, 3)),
-                "F is the rule with Wolfram number 6478767664173; it conserves the number of each value weighted by the value, and its restriction to the values 1 and 2 is elementary rule 184.",
+                "F is the rule with Wolfram number 6478767664173; it preserves the sum of the cell values, and its restriction to the values 1 and 2 is elementary rule 184.",
                 "ruleF", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("ruleg", "The rule G", RuleFormula("ruleG", D(7, 5, 8, 0, 6, 0, 6, 2, 3, 4, 4, 9, 0)),
                 "G is the rule with Wolfram number 7580606234490.",

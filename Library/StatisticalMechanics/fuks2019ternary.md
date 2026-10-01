@@ -18,7 +18,7 @@ Henryk Fukś and Roman Procyk, arXiv:2002.08924v1 [nlin.CG] (2020); Acta
 Physica Polonica B Proceedings Supplement 12(1) (2019) 75–89. Quotations
 are from the arXiv source.
 
-The setting (Section 2):
+The setting (Section 1, Introduction):
 
 > We will impose periodic boundary conditions on configurations $\mathbf{x} \in S$, so that for $\mathbf{x}=(x_0, x_1, \ldots x_{L-1})$, the index $i$ in $x_i$ is to be always taken modulo $L$, i.e., $i\in \mathbb{Z}/L$.
 
@@ -55,6 +55,6 @@ listed there (192, 232, 232) identify $G$ as 7580606234490.
   Crossref record gives the title, authors, volume 12, issue 1 and first page
   75).
 - URL: https://arxiv.org/abs/2002.08924v1 (source `hfrprevised.tex` retrieved
-  2026-10-01): the periodic configurations and the global map (Section 2),
-  the coefficient indexing of the rule tables, Conjecture 1, and the remarks
-  and the sketch of a proof that follow it.
+  2026-10-01): the periodic configurations and the global map (Section 1),
+  the coefficient indexing of the rule tables (Section 3), Conjecture 1
+  (Section 7), and the remarks and the sketch of a proof that follow it.
