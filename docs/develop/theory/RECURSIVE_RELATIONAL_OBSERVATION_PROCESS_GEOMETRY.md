@@ -3493,3 +3493,210 @@ $$
 \(\operatorname{Reach}(R)\) 上的同构。
 
 ## 32.99 追加锚
+
+## 33. 根标记历史的端点核与展开图拼接
+
+第32节的行为核给出了动态上最小的可执行商，但它没有自动说明两条成功的有类型历史是否在同一个实际可达配置结束。下面只补入这一条端点关系；它把行为响应与端点的图拼接分开。根、类型、合法性和共同来源仍取前文已经声明的范围。本节只讨论（TG.3202）的确定性部分 step 函数，不主张概率或非确定性系统的相应提升。
+
+### 33.1 成功历史、端点映射与两个核
+
+固定一组带来源标签的根 \(R\)。实际配置载体取为不交并 \(\mathsf C=\coprod_{(\xi,\nu,i)}S_{\xi,\nu,i}\)，其中 \(\xi\) 是来源身份，\(i\) 是当前类型，\(\nu\) 是使用时声明的 epoch；不使用纪元时略去该索引。根 \(r\in R\subseteq\mathsf C\) 的标签保留在其配置身份中，不能仅因内部状态值相同而抹去来源、类型或纪元。第32节的 \(\operatorname{step}_e\) 与 \(q_i\) 在此按标签提升为 \(\operatorname{step}_{\xi,\nu,e}:S_{\xi,\nu,i}\to\operatorname{Option}(L_e\times S_{\xi,\nu,j})\)（\(e\in E_{ij}\)）及 \(q_{\xi,\nu,i}:S_{\xi,\nu,i}\to O_i\)，其中 step 保持来源及声明的固定 epoch，返回的后继仍带这些标签。本节在标签由输入确定时，用 \(\operatorname{step}_e\) 和 \(q_i\) 或 \(q\) 简记这些带标签的提升；\(\operatorname{Reach}(R)\) 是此带标签载体中的可达闭包。根标记是指定映射 \(R\to\operatorname{Reach}(R),\ r\mapsto r\)，不额外把出发根写成每个后继顶点的路径属性。同源的不同根可以到达同一配置；跨根的 \(\operatorname{EqEnd}\) 只在显式共同 source identity 合同及同一声明的 epoch 范围内有意义。
+
+令 \(H_R\) 为所有从 \(R\) 出发的成功有类型历史。历史允许长度为零，并以 \(\varepsilon_r\) 表示根 \(r\) 的空历史。若 \(h\) 的端点上有合法 typed edge \(e\)，且该步返回事件 \(\ell\) 与带标签后继 \(s'\)，则把扩展记为 \(he\)，并要求 \(he\in H_R\)。端点求值 \(\eta:H_R\to\operatorname{Reach}(R)\) 递归定义为
+
+$$
+\eta(\varepsilon_r)=r,
+\qquad
+\operatorname{step}_e(\eta(h))=\operatorname{some}(\ell,s')
+\Longrightarrow
+\eta(he)=s'.
+\tag{EG.3301}
+$$
+
+这里的 \(\operatorname{Reach}(R)\) 只包括从声明根反复执行成功 typed edge 得到的实际配置。令 \(U_R\) 为 \(H_R\) 的有类型前缀展开：其顶点是历史，其边为
+
+$$
+h\xrightarrow{e}_{U_R}he
+\quad\Longleftrightarrow\quad
+he\in H_R.
+\tag{EG.3302}
+$$
+
+给每个可达配置 \(s\) 的完整未来响应记为 \(\beta(s)\)。它对每个允许的有限 typed continuation 返回当前读出、合法或失败、事件与标签以及该 continuation 的单步 grade 序列；若要把 grade 纳入某次任务响应，就按该任务的声明合同纳入，而不把端点本身偷偷加入响应。令 \(H_{R;\xi,\nu,i}=\{h\in H_R:\eta(h)\in S_{\xi,\nu,i}\}\)，这些纤维按端点的来源、声明的 epoch 与当前类型划分 \(H_R\)。以 \(\beta_{\xi,\nu,i}\) 表示 \(\beta\) 在 \(\operatorname{Reach}(R)\cap S_{\xi,\nu,i}\) 上的限制，只在同一纤维内比较响应。定义端点核及这些纤维内行为核的并
+
+$$
+K_{\mathrm{end}}
+ :=\{(h,k)\in H_R^2:\eta(h)=\eta(k)\},
+\qquad
+K_{\mathrm{beh}}
+ :=\bigcup_{(\xi,\nu,i)}
+ \{(h,k)\in H_{R;\xi,\nu,i}^{\,2}:\beta_{\xi,\nu,i}(\eta(h))=\beta_{\xi,\nu,i}(\eta(k))\}.
+\tag{EG.3303}
+$$
+
+后文的 \(H_R/K_{\mathrm{beh}}\) 及 \(\beta\) 在商上的诱导映射均使用这个保留标签的关系。
+
+于是历史相等的对角关系、端点核和行为核满足
+
+$$
+\Delta_{H_R}\subseteq K_{\mathrm{end}}\subseteq K_{\mathrm{beh}}.
+\tag{EG.3304}
+$$
+
+第二个包含关系只使用“同一实际端点产生同一未来响应”：若 \(\eta(h)=\eta(k)\)，则两边的所有后缀执行完全相同。它不反向断言未来响应能够识别端点。
+
+### 33.2 端点商就是可达根图
+
+定义实际的可达根标记 decorated typed transition graph \(\mathcal G_R\)。其签名包含顶点集 \(V_R=\operatorname{Reach}(R)\)、根标记 \(R\to V_R\) 的指定映射，以及顶点的来源/epoch/类型标签、当前读出 \(q_{\xi,\nu,i}\) 和所有已供应且声明为端点不变量的 support 字段。其边关系 \(\mathcal E_R\) 由带标签的 step 在 \(V_R\) 上诱导；边装饰保留动作 \(a(e)\)、原子标识 \(\iota(e)\)、原子标签 \(\lambda(e)\)、返回事件 \(\ell\) 及已供应的单步 grade \(\delta_1(e)\)。这些装饰是图签名的输入，未供应的字段不由端点商恢复。对 \(s\in V_R\cap S_{\xi,\nu,i}\)、\(s'\in V_R\cap S_{\xi,\nu,j}\) 和 \(e\in E_{ij}\)，令
+
+$$
+s\xrightarrow{e,\ell}_{\mathcal G_R}s'
+\quad\Longleftrightarrow\quad
+\operatorname{step}_{\xi,\nu,e}(s)=\operatorname{some}(\ell,s').
+\tag{EG.3305}
+$$
+
+端点映射先诱导顶点集之间唯一的良定义双射
+
+$$
+\overline\eta:H_R/K_{\mathrm{end}}\;\longrightarrow\;V_R,
+\qquad
+\overline\eta([h])=\eta(h).
+\tag{EG.3306}
+$$
+
+其理由是：\(\eta\) 按可达性的定义满射；两个历史落在同一端点类当且仅当它们的 \(\eta\) 值相等，所以商后单射；每个根的空历史保留根的类型与来源标签。商上的边只在扩展合法时定义：
+
+$$
+[h]\xrightarrow{e,\ell}_{H_R/K_{\mathrm{end}}}[he]
+\quad\Longleftrightarrow\quad
+he\in H_R\ \land\
+\operatorname{step}_e(\eta(h))=\operatorname{some}(\ell,\eta(he)).
+\tag{EG.3307}
+$$
+
+该定义与代表无关。若 \([h]=[h']\)，则 \(\eta(h)=\eta(h')\)；同一实际配置给出相同的 typed edge 合法性、事件和标签，并给出端点相同的后继，于是 \(he\) 与 \(h'e\) 仍属于同一 \(K_{\mathrm{end}}\)-类。配上上述诱导边关系及装饰后，\(\overline\eta\) 才成为根标记 decorated typed graph 的同构：它保持并反映类型、边的合法性、事件/标签、当前读出 \(q\) 和已供应的单步 grade。商边的 grade 读出 \(\overline\delta_1\) 定义为沿用原子边的 \(\delta_1(e)\)：
+
+$$
+q([h])=q(\eta(h)),
+\qquad
+\operatorname{lab}([h],e)=\operatorname{lab}(\eta(h),e),
+\qquad
+\overline\delta_1\bigl([h]\xrightarrow{e,\ell}[he]\bigr):=\delta_1(e).
+\tag{EG.3308}
+$$
+
+任何已供应且声明为端点不变量的 support 字段也同样下降到商。在 §32 的加法幺半群约定下，历史的累计 grade 是按执行次序累加的路径数据；若还声明了序，则沿用该序：
+
+$$
+\operatorname{Grade}(\varepsilon_r)=0,
+\qquad
+\operatorname{Grade}(h e)
+ =\operatorname{Grade}(h)+\delta_1(e),
+\tag{EG.3309}
+$$
+
+不同长度或不同绕行历史可以到达同一顶点而具有不同的累计值，因此累计 grade 一般不下降为顶点坐标。这一商是“根标记可达图”的规范实现；它不把不可达配置加入图，也不把路径记忆误写成顶点属性。
+
+### 33.3 端点观察的必要性与充分性
+
+对 \(h,k\in H_R\)，写精确端点比较观察为
+
+$$
+\operatorname{EqEnd}(h,k)\;:\Longleftrightarrow\;\eta(h)=\eta(k).
+\tag{EG.3310}
+$$
+
+相对于已知且带完整响应装饰的前缀展开 \(U_R\)、已供应的根/类型、标签、读出及可选 grade/support 字段，全部成对的 \(\operatorname{EqEnd}\) 恰好给出 \(K_{\mathrm{end}}\)。这里“必要且充分”只指：由这些输入与端点比较可构造端点商图；反过来，由该图连同历史求值映射可恢复端点比较，因而在式（EG.3306）的规范对应下互相可恢复。它不是比特数或查询次数的下界，也不能恢复输入中遗漏的装饰。充分性来自先取端点类再按（EG.3307）接边；必要性指任何连同历史求值精确恢复端点身份的重建，都必须能判定这同一端点核，否则无法确定哪些历史指向同一顶点。等价地，可以使用一个端点代码 \(c\) 代替成对比较，只要
+
+$$
+c(h)=c(k)\quad\Longleftrightarrow\quad\operatorname{EqEnd}(h,k).
+\tag{EG.3311}
+$$
+
+行为观察只给出 \(K_{\mathrm{beh}}\)。用 §32 的动态同余（TG.3208）定义该商的转移：若 \(\operatorname{step}_e(\eta(h))=\operatorname{none}\)，则 \(\operatorname{step}^{\mathrm{beh}}_e([h])=\operatorname{none}\)；若 \(he\in H_R\) 且该步返回 \(\ell\)，则 \(\operatorname{step}^{\mathrm{beh}}_e([h])=\operatorname{some}(\ell,[he])\)。同余保证合法性、事件及后继行为类与代表无关，商边沿用动作/原子标签及已供应的 \(\delta_1(e)\)，当前读出由空路径响应下降。以 \([\varepsilon_r]\) 标记根，便得到行为商 typed graph \(\mathcal G_{\mathrm{beh}}\)，其顶点集为 \(H_R/K_{\mathrm{beh}}\)。因此
+
+$$
+\overline\eta_{\mathrm{beh}}:\mathcal G_{\mathrm{beh}}\longrightarrow\mathcal G_R,
+\qquad
+\overline\eta_{\mathrm{beh}}([h])=\eta(h)
+\quad\text{为良定义的规范同构}
+\quad\Longleftrightarrow\quad
+K_{\mathrm{end}}=K_{\mathrm{beh}},
+\tag{EG.3312}
+$$
+
+这里 \(\overline\eta_{\mathrm{beh}}\) 的公式先是顶点映射候选；两核相等时它良定义且为双射，再由上述商转移成为同构，仍保留根标记、typed edge、合法性、标签、读出和已供应的单步 grade。其他已供应的端点不变量也在两核相等时下降；不额外宣称它们在一般行为类上不变。若包含关系严格，则行为商只恢复行为核心，不能恢复端点图的全部 gluing。仅测试“是否回到根”更弱：它只回答某条历史的端点是否等于指定根，不能比较两个非根端点，也不能区分两个都不回根但彼此不同的端点。
+
+### 33.4 反例 A：相同被动响应而不同循环端点
+
+这里的 \(C_m\) 与 \(C_n\) 是在同一个外部被动响应合同下比较的独立模型；它们的响应相等是跨模型见证，不是同一个来源标记 \(H_R\) 内的 \(K_{\mathrm{beh}}\) 配对。
+
+对 \(m\ge2\)，令 \(C_m\) 的状态为 \(\mathbb Z/m\mathbb Z\)，根为 \(0\)，唯一总动作为 \(a\)，并令
+
+$$
+\operatorname{step}_a(x)=\operatorname{some}(\lambda_0,x+1\!\!\pmod m),
+\qquad
+q(x)=q_0,
+\qquad
+\delta_1(a)=1,
+\tag{EG.3313}
+$$
+
+事件和其他支持字段均为常量。根历史 \(a^k\) 的有限响应都是同一个常量事件词、终端读出 \(q_0\) 和累计 grade \(k\)；因此对每个固定 \(k\)，\(C_2\) 与 \(C_3\) 的被动响应完全相同，包括 grade \(k\)。然而
+
+$$
+(a^i,a^j)\in K_{\mathrm{end}}^{(m)}
+\quad\Longleftrightarrow\quad
+i\equiv j\pmod m,
+\tag{EG.3314}
+$$
+
+而可达图的顶点数分别为 \(2\) 与 \(3\)。从任一端点开始的未来行为在两个系统内都只看到同一常量响应，故行为核没有提供这一个模 \(m\) 的端点拼接信息。该例把“响应长度和 grade”与“循环端点数”明确分开。
+
+### 33.5 反例 B：分支汇点与根回返不足
+
+这里的 \(B_1\) 与 \(B_2\) 是在同一个外部被动响应合同下比较的独立模型；它们的响应相等是跨模型见证，不是同一个来源标记 \(H_R\) 内的 \(K_{\mathrm{beh}}\) 配对。
+
+取相同的根 \(r\)、动作 \(a,b\)、常量读出 \(q_0\)、常量事件 \(\lambda_0\) 和单步 grade \(\delta_1(a)=\delta_1(b)=1\)。用 \(T_j\) 表示 \(B_j\) 的总后继函数，即 \(\operatorname{step}_e(x)=\operatorname{some}(\lambda_0,T_j(x,e))\)。系统 \(B_1\) 有状态 \(\{r,s\}\)，其全部转移为
+
+$$
+T_1(r,a)=T_1(r,b)=s,
+\qquad
+T_1(s,a)=T_1(s,b)=s.
+\tag{EG.3315}
+$$
+
+系统 \(B_2\) 有状态 \(\{r,s_a,s_b\}\)，其全部转移为
+
+$$
+T_2(r,a)=s_a,
+\quad
+T_2(r,b)=s_b,
+\qquad
+T_2(s_a,a)=T_2(s_a,b)=s_a,
+\quad
+T_2(s_b,a)=T_2(s_b,b)=s_b.
+\tag{EG.3316}
+$$
+
+两者对每个有限动作词都给出相同的常量输出、事件和 grade 长度；所有非空词都不回到根，所以任意被动响应与根回返测试均一致。但在 \(B_1\) 中
+
+$$
+\operatorname{EqEnd}(a,b)\text{ 为真},
+\tag{EG.3317}
+$$
+
+在 \(B_2\) 中 \(\operatorname{EqEnd}(a,b)\) 为假。于是分支是否在一个实际汇点粘合，不能由根回返或被动响应单独决定。
+
+### 33.6 解释、取得合同与来源边界
+
+在这一层，\(K_{\mathrm{end}}\) 是边界/空间的 incidence glue：它说明哪些前缀历史指向同一个实际配置；grade 与 writer 历史仍是路径时间和历史记录；\(K_{\mathrm{beh}}\) 是面向任务的记忆抽象。这里的“空间”和“时间”是这些关系的结构名称，不推出空间度量、物理时间或物理时空完成。
+
+多个根之间的比较必须携带显式 source identity；只有在共同来源合同已经声明时，跨根的 \(\operatorname{EqEnd}\) 才有意义。取得端点比较还需要合法 replay、reference stability、固定 epoch 以及相应 permission；被动响应语义本身只授予输出和后缀行为，不授予端点相等的权限。若这些条件缺失，\(\operatorname{EqEnd}\) 应保持为未取得的接口观测，而不能从相同响应推断。
+
+下一迭代问题是：对选定 carrier，哪一个具体的 FIB cursor/archive/permission 合同能够提供精确的端点比较？
+
+来源边界：本节复用本卷 §§3.3、4.4 的精确纤维与来源/行为分离条件，以及 §30–§32 的四视图、有类型生成器和行为核；它也复用仓内既有 ReachableBehavior* 与 contextual-congruence 结果所承载的可达行为最小性和同余事实。上述结果在此只作接口前提，不在本节重复证明，也不声称本节已有 Lean 验证。本文是理论层追加；端点 acquisition contract 仍由接口所有者给出，长期的物理时空解释仍未解决。
+
+## 33.99 追加锚
