@@ -34,6 +34,22 @@ uses the actual3q root to repair a movedq^2 parent. Under the same
 whole-family H3=1 condition it sharpens the3q^2-multiple bound to
 4q^2-6q-5 and retains stronger root-specific constraints.
 
+[Section68](#68-private-prefix-concentration-forces-distinct-mixed-inventory-at-all-heights)
+combines the existing private-hull closures into one injective mixed-label
+inventory bound. At arbitrary original ternary height, all3-free
+p-bearing labels whose complete private regions lie in one first-three
+root receive distinct mixed labels, except for one explicit maximal top
+per fully concentrated p-column. The injection uses only original mixed
+labels of ternary height one. It does not yet supply a complete legal
+transport below the original budget.
+
+[Section69](#69-cross-cofactor-divisor-payment-reduces-exactly-to-nonconcentrated-ancestors)
+allows payers from other cofactor columns. Its exact matching deficit
+depends on whether concentrated maximal labels have enough distinct
+nonconcentrated original divisors. The existing private-point reset
+identifies a concentrated-prime branch where this enlargement supplies
+no improvement; a whole-cover condition excluding the deficit is missing.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -9698,3 +9714,416 @@ over all admissible strict-width-decreasing assignments with a feasible successo
 Every recurrence path constructs an actual complete prefix cut: assign its roots to distinct literal pending nodes of their indicated types, stop those nodes, and split all others into their q children. When r>=1 its depth is at most D+r-1; for r=0 the hard cut is empty. Conversely, NF107 normalizes every arbitrary finite feasible candidate to such a path while increasing neither coordinate. The restricted recurrence therefore attains the same global minimum as the unrestricted finite deep-cut problem; it is not merely the minimum over combs or a newly imposed approximation. The multiplication by q in the second coordinate accounts for moving the remaining decisions one depth later.
 
 NF110 is an application of the ordinary Bellman principle. The additional arithmetic interface is the proved cost-preserving normalization and the sufficiency of these actual deep type counts. No new generic dynamic-programming theorem, literature-priority claim or Lean verification is asserted. A hypothetical extremal odd cover must still be shown to admit some shallow choice and resulting minimum satisfying the strict original budget. This section makes that remaining price comparison a finite exact search with the stated depth bound for each fixed original family; it does not supply the missing uniform inequality or resolve unrestricted Erdős#7.
+
+## 67. Residual subbatches use original-label capacity instead of whole-root capacity
+
+These ordinary deductions and the finite local control carry no Lean verification or priority claim. They apply PH1–PH2 of report385 §1 to the exact original-label transport in §§61–62. Report350 §3 already supplies the relevant private-point indispensability principle; report354 SM3–SM5 retains the full prime tail on one common cofactor source. Reports378–379 supply actual residual laws and root-sensitive reciprocal prices, not upper bounds for the output-label inventories below. No generic set-cover or dynamic-programming theorem is proposed as new content.
+
+### Exact residual and selected original labels
+
+Keep one actual original family of distinct odd APs A_d=c_d mod d, with complete period p^A q^H M, p>q odd primes, A,H≥1 and gcd(M,pq)=1. Retain every p-free original unchanged. Select actual pure-q guards G including A_q and a finite q-prefix frontier B partitioning their complement U, exactly as in report385 §61. Write h_b for the depth of b. Put T=Z/p^(A−1) and X=T×Z/M. A larger output q-height is used when B extends past H; membership in retained originals always reads the original q digits.
+
+For each leaf b define
+
+    E_b={m mod M : some actual q-coordinate z_q in [b]
+                     makes (z_q,m) miss every retained p-free original}.
+
+This is an existential projection in the actual finite common carrier. In particular it is not the residual at one conveniently chosen q point, the intersection of all residual sections, or a residual recomputed with different phases. Every retained original is independent of the p coordinate, so the exact projected demand is T×E_b.
+
+For each q-free p-bearing original d=p^alpha u, gcd(u,pq)=1, let a_d=c_d mod p, represented in {0,...,p−1}, and let C_d be the literal divided-tail AP on X:
+
+    t=(c_d−a_d)/p mod p^(alpha−1),   m=c_d mod u.
+
+Let D_a={d:q∤d, p|d, a_d=a}. For each leaf fix ONE root a_b, and select a subset J_b⊆D_(a_b). The exact local requirement is
+
+    T×E_b ⊆ union_(d in J_b) C_d.                    (RS1)
+
+Every selected pair (b,d) supplies the complete CRT AP
+
+    z_q=b mod q^h_b,
+    z_p=(c_d−a_b)/p mod p^(alpha−1),
+    z_M=c_d mod u,
+
+of numerical modulus q^h_b d/p. It is an entire AP, not its intersection with an uncovered set. All these residues come from that same original d.
+
+For the declared frontier and selected subsets, RS1 at every leaf is NECESSARY AND SUFFICIENT for the retained originals plus these transported APs to cover the entire output carrier. Sufficiency takes an output point not covered by a retained original, reads its unique leaf, and applies RS1 to its actual (t,m). Necessity fixes any (t,m) in T×E_b, uses the q point in the definition of E_b, and notes that no transported AP attached to a different leaf can cover this point.
+
+The same witness as NF86 is available: first-p root a_b, literal divided p-tail t, and unchanged q and M coordinates. RS1 says that at least one selected q-free original covers this witness. It is not enough merely to exclude mixed originals if some of the q-free originals are then omitted.
+
+If a_b avoids the original mixed forbidden list F_b, whole original coverage supplies RS1 for J_b=D_(a_b), as in §62. One may keep this old cleanliness requirement and obtain a smaller-interface extension already. RS1 itself also permits a root meeting F_b when the chosen q-free originals nevertheless cover the complete projected demand; no claim is made that this additional possibility is always present.
+
+### Numerical distinctness and the exact price
+
+For strict collision reservation impose only these conditions:
+
+    For every original d and depth h,
+    #{b:h_b=h and d in J_b} ≤ 1.                     (RS2)
+
+    For every selected (b,d), q^h_b d/p is not
+    a numerical modulus of a retained p-free original. (RS3)
+
+Equality of two transported numerical moduli first forces equal q-height because d/p is q-free, and then forces the same original numerical d. Thus RS2 is the exact transported-label distinctness condition. It is weaker than allowing a positive-workload root only once per depth: two same-depth leaves may use the same root if their selected subsets are disjoint. Original distinctness ensures that the same d has only one original phase and one original first-p root.
+
+RS3 needs to be checked only for selected d. It can occur only at alpha=1 and an existing original label q^h_b u. A numerical collision arising from an OMITTED d is immaterial. Equal-complete-AP merging from §57 may be added separately; the formulas here use strict reservation and no merging.
+
+Let P be all original q-free p-bearing labels, let t_mix be the number of original p*q-bearing labels, and let D_mix be their modulus sum. After the unchanged p-free originals cancel, the exact new cost is
+
+    C_new=sum_b |J_b|,
+    W_new=sum_b q^h_b sum_(d in J_b) d/p.              (RS4)
+
+The exact old cost is
+
+    C_old=t_mix+|P|,
+    W_old=D_mix+sum_(d in P) d.                       (RS5)
+
+For an EB1 extremal whole cover, PH2 therefore forces
+
+    (C_new,W_new) ≥_lex (C_old,W_old)                 (RS6)
+
+whenever RS1–RS3 hold. A strict reverse inequality supplies a legal distinct odd whole-cover descent. This is PH2's existing replacement argument applied to a more selective actual output family, not a newly forced arithmetic inequality.
+
+The full-batch interface is the special case J_b=D_(a_b), with its old mixed exclusions and whole-root collision reservations. On a whole-cover input, every one of its feasible frontiers remains feasible here at exactly the same price. The new admissible choices include finer collision reservations and same-depth reuse with disjoint original subsets. The example below only separates these LOCAL choices; it does not compare the global optima of two complete frontiers on a whole-cover input.
+
+### What the original private points do and do not force
+
+Assume whole coverage and that a avoids F_b. For d∈D_a let P_d be its complete original private region, lifted to the common q-height used by the frontier. Then
+
+    d is indispensable in D_a for demand T×E_b
+    iff the q-projection of P_d meets [b].            (RS7)
+
+Indeed, indispensability is exactly the nonemptiness of
+
+    (T×E_b) intersect
+      (C_d minus union_(e in D_a, e≠d) C_e).
+
+Choose the q witness in E_b. The associated original point at root a misses every p-free original, every other q-free original at that root, every p-bearing original at another root, and every mixed original by the F_b hypothesis. It is private to d. The converse uses any such original private point and the same coordinate map.
+
+Thus original irredundancy does not authorize deleting a label from every cylinder at its root: it forces a nonempty private q-projection somewhere. It also does not force that label into EVERY copy of the root batch. A label can be redundant on one actual q-cylinder and indispensable on another. This localizes the same private-point obstruction used in report350 §3 to a cylinder avoiding the actual mixed originals.
+
+RS7 tests deleting ONE member of a complete root batch. Multiple deletions must satisfy RS1 jointly. Empty individual private regions do not justify deleting all those labels simultaneously: points covered only by two deleted labels are a joint obligation. This is exactly the distinction already present in PH1.
+
+No estimate forcing the savings in RS4 to exceed the full-batch budget deficit follows here. Equivalently, with k_d=#{b:d∈J_b}, the count comparison is
+
+    C_new−C_old=sum_(d in P)(k_d−1)−t_mix.
+
+The missing result is an upper bound for these jointly feasible, phase-sensitive multiplicities for some complete actual frontier. Private-point existence alone provides indispensability constraints, not that upper bound.
+
+### An 18-label actual local control
+
+Take q=3, p=11, A=1, H=5 and M=35. Write a full CRT point as (z,r,s,a) modulo (243,5,7,11). The numerical palette is
+
+    {3^j:1≤j≤5} union {5,7,11}
+    union {3^j·5:1≤j≤3}
+    union {3^j·7:1≤j≤5} union {55,77}.                (RS8)
+
+It consists of 18 distinct odd nonunit labels, is divisor-closed above one, and has the initial odd-prime segment {3,5,7,11}. Its full period is 93555. Specify its actual phases as follows:
+
+| Original label | Literal phase |
+| --- | --- |
+| 3,5,7,11 | zero modulo its prime |
+| 3^j, 2≤j≤5 | 1+3^(j−1) modulo 3^j |
+| 3^j·5, 1≤j≤3 | z=1 mod3^j, r=j mod5 |
+| 3^j·7, 1≤j≤5 | z=2 mod3^j, s=j mod7 |
+| 55 | a=1 mod11, r=4 mod5 |
+| 77 | a=1 mod11, s=6 mod7 |
+
+Every comparable pair of these original APs is disjoint. Their irredundancy can be verified without enumerating the full period. The following full CRT points are private witnesses; unspecified prime powers are read in the indicated full coordinates:
+
+| Original label | Private point (z,r,s,a) |
+| --- | --- |
+| 3 | (0,1,1,2) |
+| 3^j, j≥2 | (1+3^(j−1),4,6,2) |
+| 5 | (1,0,6,2) |
+| 7 | (2,4,0,2) |
+| 11 | (1,4,6,0) |
+| 3^j·5 | (1,j,6,2) |
+| 3^j·7 | (2,4,j,2) |
+| 55 | (1,4,1,1) |
+| 77 | (2,1,6,1) |
+
+The integer244 has coordinates (1,4,6,2) and is uncovered. This family is therefore a NONCOVER. It does not satisfy whole-cover EB1, the EB8 requirement of an exponent-one child at every nonzero p-root, or the known at-least-nine-primes whole-cover condition. Here only root1 has nonpure 11-bearing originals. The control tests local interface distinctions under the listed, verified structural conditions; it cannot refute a claim restricted to whole covers.
+
+Retain all 11-free originals and select all five actual pure3 guards. The actual live cylinders
+
+    b_1=1 mod3^6,   b_2=2 mod3^6
+
+miss all these guards. Their retained residual projections are exactly
+
+    E_(b_1)={(r,s):r=4, s≠0},
+    E_(b_2)={(r,s):r≠0, s=6}.                        (RS9)
+
+At b_1 the pure5 class and the three active 3^j·5 classes cover r=0,1,2,3, while pure7 removes s=0. At b_2, pure7 and the five active 3^j·7 classes cover s=0,1,...,5, while pure5 removes r=0. The other mixed row has the different first3 digit and is inactive.
+
+Both 55 and77 have first11 root1. The selections
+
+    a_(b_1)=a_(b_2)=1,
+    J_(b_1)={55}, J_(b_2)={77}
+
+satisfy RS1 locally, and RS2 because the subsets are disjoint. They produce the distinct fresh APs
+
+    1459 mod3645,   2918 mod5103.
+
+The old positive-root-per-depth condition rejects this fixed pair of root assignments. Copying both complete batches would instead repeat each numerical label3645 and5103 on two different, disjoint q cylinders. Thus original-label capacity is strictly less restrictive than root capacity on this actual local input. The union of b_1 and b_2 is only a small part of U; these two repairs are not a complete replacement frontier.
+
+There is also a strict minimum-count comparison for this FIXED TWO-LEAF local problem, with one root per leaf, no further splitting, and coverage required only on these two actual residuals. Only roots0 and1 have nonempty batches; their full batches are{11} and{55,77}. Both cover either local residual. The old same-depth root capacity forces one use of each, giving minimum local class count3 and modulus sum9477. The selected-subset interface has minimum local class count2: each nonempty leaf requires a class, and the displayed split attains2. The split has sum8748, but it is not the smallest modulus sum at count2. Taking{55} at b_1 and{11} at b_2 instead gives(2,4374). This local minimum-count separation says nothing about optimizing a complete frontier on a whole-cover input.
+
+The same family also separates selected-label collision checks. For this separate shallow comparison choose G to contain just the original pure3^j guards with1≤j≤4; every p-free original, including pure3^5, is still retained. The cylinder b=1 mod3^4 is then a live leaf. Its existential projected demand is still {(4,s):s≠0}; one old q lift is covered by the retained pure3^5 class but the other lifts retain that demand. Selecting only55 gives the fresh AP244 mod405. Copying77 as well would create modulus567, already occupied by the original3^4·7 with a different complete phase. Thus the whole-root collision list forbids root1 there, whereas the selected subset{55} legally covers the actual local demand.
+
+For a local price comparison with the old root-reuse capacity satisfied, instead use b_1=1 mod3^6 and b_2=2 mod3^7. The two complete root1 batches have local cost(4,34992), while subsets{55} and{77} have local cost(2,18954). All four unpruned numerical labels are then distinct and fresh. This compares the displayed local assignment only, not full-frontier minima.
+
+### Finite scope and the boundary of the existing normalization
+
+Beyond original height H, every H-prefix has a constant retained residual projection; its selected-subset menus are therefore constant. At depths at least D=H+1 all numerical output labels are fresh relative to the retained originals. This supplies an actual finite type description, but not by itself a uniform depth bound.
+
+The earlier count-budget horizon argument in §63 DOES reuse directly. Collapse every residual-empty depth-D subtree to a single empty-subset leaf at depth D. For a lexicographically successful candidate C_new≤C_old. In a nonempty residual type every remaining leaf has |J_b|≥1. A leaf of depth D+e forces at least1+(q−1)e leaves below its depth-D ancestor, hence
+
+    maximum depth ≤ H+1+floor((C_old−1)/(q−1)).        (RS10)
+
+This follows from the existing complete q-ary cut count. Deleting an empty subtree creates no label collision, and no assumption about root batch weights is needed. It is an existence-preserving finite bound under the same count budget, not a proposal to enumerate all candidates.
+
+The sharper §66 bound H+floor((p−1)/(q−1)) is NOT established for these selected-subset interfaces. Its proof promotes an entire future root batch whenever that root is unused in the present layer, then obtains nested root use. Here promotion is valid when every original label in the future selected subset is unused in the present layer, but a future subset may partly intersect labels already used there. The old nesting proof consequently does not transfer merely by changing R_a to a local price. No failure or replacement sharp bound is claimed.
+
+### The unresolved whole-cover comparison
+
+The useful refinement is exact retained-residual demand with selected original-label capacities and selected-only numerical collision checks. The general replacement and single-private-point logic are existing results. The missing global step remains to force a complete frontier satisfying RS1–RS3 below the original two-coordinate budget on a hypothetical extremal whole cover. The local control and finite bound do not supply that inequality or resolve unrestricted Erdős#7.
+
+## 68. Private-prefix concentration forces distinct mixed inventory at all heights
+
+This is an ordinary consumer of Report385 PH3–PH5, its stronger descendant-assisted DR3–DR4, and the original private-point map in Report350. It does not supply the unrestricted price-descent theorem, new generic set-cover mathematics, Lean verification, or a literature-priority claim.
+
+Fix one EB1-selected whole distinct odd cover with original numerical set D, complete period Q=p^A q^H M, p>q, A,H≥1 and gcd(M,pq)=1. Keep the actual original phases, with the prime classes simultaneously normalized to residue zero. Let P_d be the complete original private region of d and let W_d be its projection to Z/q^H. Every W_d is nonempty. For a q-free p-bearing original write d=p^alpha u, gcd(u,pq)=1. All inventory counts below refer to this one original family.
+
+### At original q-height one the mixed-root obstruction is exact
+
+First suppose H=1. For each nonzero original q-root j, every receiving leaf b contained in j has the same actual residual Γ_j=T×E_j, whatever its new depth. For a fixed original p-root a let D_a be its q-free p-bearing batch. Then
+
+    union_(d∈D_a) C_d covers Γ_j
+      iff no original p*q-bearing label has roots(a,j). (PI0)
+
+This ignores numerical output collisions, which remain a separate condition. For the forward implication, a mixed original in cell(a,j) has an original private point. Its divided p-tail and cofactor belong to Γ_j, and no q-free original at root a covers them. At H=1 the q coordinate j is complete, so this same obstruction persists in every new receiving descendant of j. For the reverse implication, whole coverage of the common original witness supplies a q-free p-bearing owner at root a whenever the retained originals miss the output. Thus its entire batch covers Γ_j. This reuses the original private-point witness and the existing common source; it does not extend to a lower-height mixed prefix inside an arbitrary larger original H without checking its actual private projection.
+
+### A common injective charge at all original heights
+
+Let M_d be the largest original numerical multiple of d. Say d has a crowded descendant phase when some actual proper-descendant residue group J_c from §10 contains at least two labels. Define
+
+    L_d={h:1≤h≤H, W_d is contained in one actual
+             residue class modulo q^h, and
+             [q^h d/p<M_d or d has a crowded descendant phase]}.
+
+The residues witnessing containment are coherent prefixes because they concern the same nonempty W_d. Thus L_d is an initial segment, possibly empty. No private witness is chosen separately for different h.
+
+For every h∈L_d, DR3 or DR4 forces the original numerical label
+
+    g(d,h)=q^h d/p                                    (PI1)
+
+to be present. Indeed all of P_d has the original residue modulo d and one residue modulo q^h. Since gcd(d,q)=1, it lies in a single AP modulo q^h d, so g(d,h) divides its complete private congruence hull Γ_d. Also g(d,h)|Q and g(d,h)>1. DR3 applies below M_d, and DR4 applies without a size threshold when its actual crowded-group premise holds. The simpler sufficient condition q^h<p gives g(d,h)<d≤M_d and is exactly the old PH5 route. No new private-hull closure theorem is asserted.
+
+The map (d,h)↦g(d,h) is injective: q valuation recovers h and multiplying the remaining q-free quotient by p recovers d. This is a count of actual labels in this one original family, rather than one independently selected repair for each pair.
+
+If alpha≥2, every image is a p*q-bearing original, so the SAME mixed inventory supplies both bounds
+
+    sum_(d:q∤d, v_p(d)≥2) |L_d| ≤ t_mix,
+
+    sum_(d:q∤d, v_p(d)≥2) (d/p) sum_(h∈L_d) q^h
+           ≤ D_mix.                                  (PI2)
+
+For L_d={1,...,ell_d}, the inner weight is q(q^ell_d−1)/(q−1). All terms are simultaneously realized by the injective map PI1; count and weight are not obtained from separate optimizers. Original g phases need not agree with the hull phase and are not used as replacement covers.
+
+If alpha=1, the image q^h u is p-free and therefore belongs to the RETAINED inventory. It cannot be charged to t_mix or D_mix. Moreover it creates a strict numerical collision for any attempted depth-h copy of that same original d, irrespective of the copied residue. Thus a selected collision-safe depth-h exponent-one copy, whenever the stated DR3 or DR4 threshold applies, requires W_d to meet at least two q^h prefixes. This conclusion concerns the complete original private region, not only an individual private witness or the private region of a selected subcover.
+
+### Ternary height-one consequence for the current subbatch interface
+
+Suppose q=3,H=1. Every W_d for q-free d misses root0 because the original pure3 class is retained and disjoint from every original private point. Hence W_d is one of {1},{2},{1,2}.
+
+For d=pu, if original label3u is absent, PI1 excludes the singleton cases, so
+
+    W_(pu)={1,2}.                                    (PI3)
+
+Every valid q-free subbatch at the first-p root of d, on ANY descendant of either original nonzero3-root, must then include d. The original private point at that3-root gives an element of the constant demand Γ_j=T×E_j covered by no other q-free label at that p-root. This necessity does not require excluding mixed originals; if mixed originals block the entire demand, no valid subbatch exists in the first place.
+
+Consequently every strict-collision-safe exponent-one label available to a depth-one subbatch is compulsory at BOTH original3-roots whenever that same p-root is used. All such selected shallow labels therefore remain compulsory if that root is reused at deeper leaves elsewhere. This is stronger than treating the shallow copy as an arbitrary freely replaceable set-cover column.
+
+More generally, whenever original3d/p is ABSENT for a q-free p-bearing d of any p-height, PH5 excludes a singleton W_d, so that d is compulsory in every valid subbatch at its p-root on either ternary branch. Thus any same-depth reuse of a positive-demand p-root, even across the two different original ternary branches, requires3d/p∈D for every d of that root batch. This is a necessary condition, not a sufficiency test: an already present crossed label does not imply absence of private demand.
+
+There is a second consequence for same-depth root reuse. If one p-root a is assigned at least two receiving leaves at the same depth, even in DIFFERENT original ternary branches, then
+
+    W_d is a singleton for every d∈D_a.               (PI4a)
+
+For otherwise a d whose W_d={1,2} is compulsory at both leaves, violating RS2. If the two leaves are in the SAME original3-root j, the stronger conclusion is that no d∈D_a can have a private q-projection meeting j, and hence
+
+    W_d={other root} for every d∈D_a.                 (PI4)
+
+Either PI4a or PI4 supplies original3d/p for EVERY d in that actual root batch, using PI1 at h=1. Its exponent-one members have retained collision labels, and its higher-p members have pairwise distinct mixed labels. In particular
+
+    #{d∈D_a:v_p(d)≥2} ≤ t_mix,
+    3 sum_(d∈D_a:v_p(d)≥2) d/p ≤ D_mix.              (PI5)
+
+If several roots admit such same-depth reuse, their original D_a are disjoint, so PI5 holds with their UNION in place of a single D_a. The injective map gives one shared budget; it is not legitimate to add separate copies of t_mix for those roots.
+
+If this same p-root were also used in the other original3-root, every member of D_a would be compulsory there by PI4. A strict-collision-safe depth-one subbatch in that other root therefore cannot coexist with even one exponent-one member of D_a. This last condition becomes useful only after independently checking that such a member exists; EB8 alone may supply a mixed exponent-one child instead of a q-free one, so it must not be silently upgraded.
+
+### Nonmaximal concentrated labels also have full mixed children
+
+Now take q=3 and allow ANY original height H≥1. Write V_d for the projection of the complete P_d modulo3, equivalently the first-root projection of W_d. If a3-free original d has singleton V_d and ANY proper original multiple, then
+
+    3d∈D.                                            (PI6)
+
+Here d may have p exponent one. Since P_d is concentrated in one ternary root,3d divides Γ_d. The largest original multiple M_d has odd quotient M_d/d≥3. If M_d=3d then the claimed label is already present. If M_d>3d, apply the existing DR3 with e=3d. This proof uses the smallest odd prime3; a proper multiple at ratio3 would not imply the analogous q-child statement for an arbitrary larger q.
+
+The map d↦3d is injective. Therefore for the single set N of ALL3-free p-bearing originals with singleton V_d and a proper original multiple,
+
+    |N|≤t_mix,       3 sum_(d∈N)d≤D_mix.              (PI7)
+
+This supplies actual mixed payers for concentrated exponent-one labels as well, provided the original descendant exists. In particular, if pu is concentrated and p^2u is original, its mixed child3pu is forced. More generally the proper multiple can have any odd composite ratio and any original phases.
+
+PI2/PI5 and PI7 are TWO separately valid injections into the same inventory. Their right-hand sides cannot simply be added. For example the payer3d from PI7 coincides with the PI1 payer3d'/p when d'=pd. Both are actual original q-free labels in such a case; phase or root distinction does not make their common numerical payer two labels.
+
+Every concentrated q-free p-bearing label is therefore in one of these classes: nonmaximal labels have the PI7 mixed payer; divisibility-maximal labels of p-height at least two have the PI1 mixed payer; divisibility-maximal exponent-one labels pu have only the proved retained payer3u. This classification provides actual possible payers, not a collision-free joint allocation between the two mixed-payer maps.
+
+### The two mixed-payer maps can be combined column by column
+
+The preceding collision can be resolved except for one explicit case per actual p-column. Keep q=3, ANY H≥1, and FIX the same p throughout. Concentration in this section means singleton V_d modulo3; W_d need not be a singleton modulo3^H. For each u with gcd(u,3p)=1 for which p*u is original, define
+
+    A_u=max{alpha≥1:p^alpha*u∈D},
+    S_u={alpha:1≤alpha≤A_u, V_(p^alpha*u) is a singleton}.
+
+Divisor closure supplies every actual q-free level1,...,A_u. A label at level alpha in S_u has the following proved mixed-payer choices:
+
+    alpha≥2:        3*p^(alpha−1)*u;
+    nonmaximal d:   3*p^alpha*u.                     (PI8)
+
+Here nonmaximal means that d has a proper ORIGINAL numerical multiple, which may have another cofactor. Every level alpha<A_u is nonmaximal. The right-hand levels are numbered by the p exponent of the mixed payer, and are at least one.
+
+Choose the payers simultaneously by this explicit rule.
+
+- If1∉S_u, give every alpha∈S_u its lower payer at level alpha−1.
+- If1∈S_u and the initial consecutive run is1,...,r with r<A_u, give this initial run the same-level payers1,...,r. Those originals are nonmaximal because their next q-free p-level exists. Give every remaining alpha∈S_u its lower payer at alpha−1; since alpha≥r+2, these right-hand levels exceed r.
+- If S_u is the whole column and the top p^A_u*u is nonmaximal, give every level its same-level payer.
+- If S_u is the whole column and its top is divisibility-maximal in D, give alpha<A_u their same-level payers and leave precisely the top unpaid.
+
+Within each case the payer levels are different. Between different u, their numerical3-free and p-free parts recover u, so their mixed labels cannot collide. Every payer exists by PI8. Thus there is one common injection from all concentrated q-free p-bearing originals EXCEPT those declared unpaid top labels into the original mixed inventory.
+
+More precisely, let L be the set of all3-free p-bearing originals with singleton V_d and let K be the set of columns satisfying the last case. Let U_top={p^A_u*u:u∈K}. Write t_mix,1 and D_mix,1 for the count and modulus sum of original p*3-bearing labels with v_3=1. The explicit payer map χ obeys
+
+    χ:L minus U_top → {d∈D:p divides d, v_3(d)=1} injectively,
+
+    |L|−|K|≤t_mix,1≤t_mix,
+    sum_(d∈L minus U_top) χ(d)≤D_mix,1≤D_mix.                (PI9)
+
+These count and weight statements use the SAME payer map. In a bad column, its mixed levels1,...,A_u−1 are all forced by the lower map. A mixed level A_u or greater with this same u cannot occur: it would be a proper original multiple of the declared maximal top. Consequently the column has exactly A_u−1 possible mixed payers of3-height one with this cofactor for its A_u concentrated labels. The one-label shortage is exact for these same-cofactor,3-height-one inventory payers; it is not a proof that another global payment or cover transformation cannot handle the top.
+
+When H=1, the union of root batches admitting the same-depth reuse in PI4a is a subset of L. Restricting this one χ pays that union except for the bad top labels actually belonging to it; no second inventory budget is created.
+
+When u>1, the original divisor u is p-free and retained, so it cannot be counted as an unused DELETED label. When u=1, it is not an admissible nonunit label. The one pure-p label also supplies at most one actual credit if it is unused, not one credit for each bad column. No argument here shows that U_top is unused in a constructed frontier.
+
+### Full mixed children have separate actual private obligations
+
+Keep q=3 and arbitrary original height H. Fix one p-column x_alpha=p^alpha*u, 1≤alpha≤A_u, from PI8. Select any set I of levels for which V_(x_alpha) is a singleton and the full mixed child y_alpha=3*x_alpha is original. PI6 supplies that child whenever the parent has a proper original multiple. Then all the actual original classes
+
+    {A_(x_beta):1≤beta≤A_u}
+       union {A_(y_alpha):alpha∈I}
+
+are pairwise disjoint. This is an application of the existing crowded-phase prohibition DR5, with the original phases unchanged; the selected parents need not have the SAME private ternary root.
+
+For beta≤alpha, x_beta divides y_alpha, so original comparable-class disjointness applies. If beta>alpha and A_(y_alpha) meets A_(x_beta), the two proper original multiples y_alpha and x_beta belong to the same residue group modulo x_alpha. That group has at least two members. But concentration gives y_alpha|Γ_(x_alpha), and DR5 forbids a member of such a crowded group from dividing the parent's complete private hull. This contradiction handles every cross pair. The x labels form one divisibility chain and the y labels form another, so all pairs within each chain are already disjoint.
+
+For a bad column in PI9, take I={1,...,A_u−1}. The resulting2*A_u−1 original classes are therefore pairwise disjoint, at arbitrary ternary height and even when their private roots differ. For ANY subset J of these labels, PH1 simplifies exactly to
+
+    E_J = union_(d∈J) P_d.                           (PI10)
+
+Indeed, whole original coverage ensures that a point missing every retained class lies in some removed class; disjointness means it belongs to exactly one removed class and hence to that class's COMPLETE original private region. The converse follows from privacy. This equality concerns this proved disjoint subfamily; it does not replace PH1 by a union of private regions for general deletion sets.
+
+When A_u≥2, moving the parent x_(A_u−1) to the top x_(A_u)'s residue does not free the already matched child y_(A_u−1). Their original APs are disjoint and their gcd is x_(A_u−1), so their residues modulo that parent differ. In DR2's notation, y_(A_u−1) is not in the removed phase group J_c. The lower y levels are not multiples of this adjacent parent, so that group frees none of the matched ternary-height-one y labels from this column. Higher ternary-height mixed originals are not excluded by this argument. The top itself has no proper original multiple and cannot directly serve as a DR2 parent.
+
+Deleting an additional matched mixed original is legal only with its own nonempty private region included in the joint repair obligation. PI10 makes that extra obligation exact; it does not prove that no different global replacement can repair it. Thus these original mixed labels are inventory witnesses, not unoccupied labels whose phases can be reassigned without paying for their old private points. No free elimination of the exceptional top follows.
+
+### Boundary of the payment
+
+PI2, PI5 and the deduplicated PI9 are actual original-inventory bounds and may pay for suitably identified copies. They do not yet prove the count-saving inequality
+
+    sum_d(k_d−1)<t_mix
+
+for a complete feasible frontier. Existence is itself unresolved: no result here forces the §64 Hall criterion for every whole cover or guarantees a complete frontier satisfying RS1–RS3. In particular, at original ternary height one, a required deep branch with at most two allowed roots has no finite complete frontier under the original per-depth root capacity; the broader subbatch capacity requires its own existence argument. No argument here puts EVERY repeated label into the concentrated class above, or bounds each such label to one extra occurrence. In particular a label whose private projection meets both ternary roots may recur at different depths; PI1 supplies no mixed payer for that recurrence. Concentrated divisibility-maximal exponent-one labels have only the proved retained payer unless another global argument supplies a distinct credit. A payer cannot be charged once for each appearance of the same original label. Nor are the payer sets for different observing primes p automatically disjoint.
+
+The old theorem interface is PH5 or the stronger DR3–DR4 on the actual complete private hull, followed by an injective numerical map into the same deleted or retained inventory. Depths with q^h≥p are available when the verified descendant threshold or crowded phase permits them; they are not an absolute exclusion. The remaining bridge is to construct a complete source-preserving frontier satisfying RS1–RS3 whose extra occurrences can be injected into a properly deduplicated choice of the PI2/PI9 payers plus unused original labels, with an unspent class credit or a strict common weight saving. That global construction has not been obtained.
+
+## 69. Cross-cofactor divisor payment reduces exactly to nonconcentrated ancestors
+
+Keep section68's one EB1-selected original whole cover, a fixed support prime p>3, and arbitrary original ternary height H≥1. Let V_d be the projection of the COMPLETE original private region P_d modulo3. Define
+
+    P={d∈D: p divides d and 3 does not divide d},
+    L={d∈P: V_d is a singleton},
+    G={d∈L: d has no proper numerical multiple in D}.
+
+All sets retain the original numerical labels and actual private regions. This section reuses PH5, PI6, finite Hall matching, and Report357's actual first-prime reset. It supplies an exact reduction of the inventory-payment deficit, not a new Hall theorem, a legal replacement cover, or new Lean verification.
+
+### Proper divisors supply actual payers across cofactor columns
+
+If d∈L and e is a proper p-bearing divisor of d, then3e divides Γ_d. Since d is odd and3-free, d/e≥5, so3e<d. PH5 therefore supplies the ORIGINAL label3e. If d∈L\G, PI6 also supplies3d. Thus the available divisor-payment relation is
+
+    d → 3e  when e∈P, e|d, and [e<d or d∉G].       (DP1)
+
+Every right label has ternary height exactly one and still contains p. In particular, removing a prime from the cofactor of d does not turn this payer into a retained p-free label when the divisor e still contains p. The crossed-divisor closure itself is already PH5/PH7; its simultaneous inventory matching is the present consumer. Actual payer phases are not prescribed and these labels are not asserted to cover any transported demand.
+
+For S⊆L write
+
+    down_p(S)={e∈P: e divides some d∈S}.
+
+Identify a right label3e by its unique index e. The EXACT neighbor set is
+
+    N(S)=down_p(S) minus (S∩G).                     (DP2)
+
+Every proper divisor is supplied by DP1; each nonglobal-maximal member has its self index. A globally maximal member of S can be neither its own neighbor nor a proper divisor of another member. This proves both inclusions without adding hypothetical numerical labels.
+
+### Only maximal concentrated labels need nonconcentrated ancestors
+
+Finite Hall deficiency, applied to this one graph, now becomes
+
+    δ=max_(T⊆G) [ |T|−|down_p(T)\L| ],             (DP3)
+
+with T=empty contributing zero. To obtain this exact reduction, start with S⊆L and add all its concentrated ancestors, replacing it by L∩down_p(S). This keeps down_p(S) and S∩G unchanged and cannot reduce its deficiency. Put T=S∩G after this completion. Deleting the elements outside down_p(T) leaves the same globally maximal labels and can only shrink the nonconcentrated ancestor set. The resulting deficiency is precisely the expression in DP3. Conversely each T realizes that expression with S=L∩down_p(T).
+
+Consequently the maximum number of concentrated labels receiving DISTINCT DP1 payers is exactly |L|−δ. Equivalently, all of L can be paid if and only if the globally maximal labels G can be matched injectively to NONconcentrated proper p-bearing divisors:
+
+    d∈G → e_d∈P\L,  e_d|d,  e_d different.        (DP4)
+
+Indeed, match as many elements of G as possible by DP4, and pay every d∈L\G by its self label3d. These images are disjoint because their indices lie respectively outside and inside L. The Hall deficits of the two graphs agree by DP3, so this construction attains |L|−δ, not merely a sufficient submatching.
+
+For the resulting single matching χ, let L_paid be its domain. With section68's actual ternary-height-one inventory,
+
+    |L_paid|=|L|−δ≤t_mix,1,
+    sum_(d∈L_paid) χ(d)≤D_mix,1.                   (DP5)
+
+Count and weight use the SAME actual labels. The earlier column matching is contained in DP1, so δ≤|K| for section68's bad-column set K. Cross-cofactor divisors can remove an earlier column deficit only through these shared nonconcentrated ancestor slots; neither a retained cofactor nor repeated use of one slot supplies another credit. DP3 restricts deficient sets to ideals generated by selected maximal labels. It does not identify each such ideal with the entire original p-bearing palette.
+
+### The actual private reset gives two different whole-cover branches
+
+Report357's first-p reset sends every original P_d with p|d, d≠p into P_p while preserving ALL other prime coordinates, including the full ternary coordinate. Hence
+
+    V_d⊆V_p  for every original p-bearing d.         (DP6)
+
+The case d=p is the identity. This is a direct consumer of that existing map; it is not an inference from a marginal bound.
+
+If p∈L, DP6 gives L=P. There are then NO nonconcentrated ancestors and
+
+    p∈L ==> δ=|G|.                                 (DP7)
+
+In this branch every q-free p-column is concentrated. Its unpaid top in section68 is precisely a member of G, so DP7 equals the old column deficit: the enlarged divisor graph gives no improvement here.
+
+The whole-cover condition used in the other branch is explicit. EB8 supplies an original exponent-one child pm with m>1 on every nonzero first-p branch. Thus p has a proper original multiple and is never in G. Consequently if p∉L, the numerical label p is a nonconcentrated PROPER divisor of every member of G. Every nonempty T⊆G has at least this one common neighbor, giving
+
+    p∉L ==> δ≤max(|G|−1,0).                        (DP8)
+
+This is only one shared slot, represented by the actual deleted mixed label3p whenever G is nonempty. It cannot be counted once per top or once per cofactor column. Other nonconcentrated divisors may strengthen DP8 through DP3, but their required simultaneous abundance has not been proved.
+
+The p∈L branch also has an exact existing source interpretation. Write R_p for the actual cofactor region avoiding ALL p-free originals. Then P_p={0}×T_p×R_p, so p∈L means that R_p lies in one nonzero ternary first-root class. EB8 and PI6 supply3p; its actual private witness fixes that same ternary residue. Report364 SI1 therefore identifies
+
+    p∈L iff 3 is an original singleton cofactor color in F_p. (DP9)
+
+Report364's singleton-root capacities allow this color; the associated prime-parent swap is a whole-family first-p-root permutation and preserves the numerical inventory, class count and modulus sum. Those existing results do not exclude DP7 or produce an extra payment.
+
+### The remaining bridge is a source constraint on ancestor expansion
+
+The exact unpaid amount for this divisor relation is DP3. Closing it requires enough DISTINCT nonconcentrated ancestors for every selected set of concentrated maximal labels, or a different actual inventory payment or legal whole-family transformation. PH5 supplies the candidate labels and the private reset supplies DP7–DP9, but neither forces that expansion. In particular the concentrated-prime branch has no such ancestor at all unless G is empty; G=empty has not been proved in that branch.
+
+Even δ=0 would only settle this inventory payment for one copy of each concentrated label. It would not construct a complete frontier satisfying RS1–RS3, put every repeated label in L, control multiple extra occurrences of one label, or establish the required strict joint count/weight descent. These remain separate obligations for the same actual original family.
