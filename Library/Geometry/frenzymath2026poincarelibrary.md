@@ -1658,3 +1658,46 @@ noncompact cusps and nonorientable manifolds. The existing escape audit
 remains unfinished:
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
 Neither these checks nor CI closes that audit or the remaining mathematics.
+
+
+## Actual H3 centralizer identity from translations and dilation
+
+The same original H3 horizontal translations satisfy
+`dₐ Tᵤ dₐ⁻¹ = Tₐᵤ` for every positive real scale. In particular,
+`Tᵤ d₂ Tᵤ⁻¹ d₂⁻¹ = T₋ᵤ`. The group conjugation identity and
+these actual action formulas show that if every ambient conjugate of `z`
+commutes with `d₂`, then `z` commutes with every horizontal translation.
+No supplied translation relation or classification is used.
+
+For an actual full H3 isometry commuting with `d₂`, `T₁` and `Tᵢ`, write
+its image of `(0,1)` as `(u,t)` with `t>0`. Commutation identifies the
+images of the other three accepted frame points as `(2u,2t)`, `(u+1,t)`
+and `(u+i,t)`. The original rational cosh-distance identity for the first
+horizontal pair gives `t=1`; the doubled-height pair then gives `u=0`.
+The four actual frame values and the previously checked determination
+lemma imply that the isometry is the identity. This uses the original
+metric and full isometry group, with no orientation restriction.
+
+Under the same supplied compatible smooth original-H3 geometry and exact
+original-distance identity, actual target smooth geometry and Borel
+structure, full-deck quotient covering, local diffeomorphism and tangent
+metric pullback, faithful all-point actual deck action and finite actual
+target volume, the selected Haar and coset measures from the preceding
+construction now give `z=1` for every element centralizing the actual deck
+image. The same witnesses retain right Haar invariance, covolume and coset
+mass equal to actual target volume, the inverse-Haar quotient relation,
+and a finite nonzero ambient-left-invariant open-positive coset measure.
+The all-conjugates dilation constraint and centralizer identity are derived;
+centralizer triviality is no longer an extra premise of this conditional
+finite-target result. Compactness, orientability and subgroup normality
+are not added.
+
+The three scoped checks contain ten accepted axiom closures using only
+`propext`, `Classical.choice` and `Quot.sound`. Two rejected frame-identity
+source/log pairs are excluded from the accepted evidence. This is transient
+classical reuse and composition; no tracked Lean declaration or mathematical
+novelty is claimed. The existing escape audit remains unfinished at the
+linked issue. The compatible original-H3 smooth geometry and the full
+covering/action/metric inputs remain supplied. Lattice conjugacy, general
+homotopic-isometry existence and the full Mostow–Prasad endpoint, including
+cusps and nonorientable manifolds, remain unproved by these checks.
