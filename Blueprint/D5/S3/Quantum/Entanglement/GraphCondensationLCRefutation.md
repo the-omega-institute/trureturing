@@ -46,6 +46,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GraphCondensationLCRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/vandre-2024-graph-condensation-lc-equivalence-refutation` (refuted) by `D5/S3/Quantum/Entanglement/GraphCondensationLCRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"vandre-2024-graph-condensation-lc-equivalence-refutation","declaration_gid":"D5/S3/Quantum/Entanglement/GraphCondensationLCRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Lina Vandré; Jarn de Jong; Frederik Hahn; Adam Burchardt; Otfried Gühne; Anna Pappa (2024). *Distinguishing Graph States by the Properties of Their Marginals*. DOI: [10.48550/arXiv.2406.09956](https://doi.org/10.48550/arXiv.2406.09956). URL: <https://arxiv.org/abs/2406.09956v2>.

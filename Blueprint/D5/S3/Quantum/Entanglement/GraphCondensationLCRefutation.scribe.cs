@@ -25,7 +25,10 @@ internal sealed class GraphCondensationLCRefutationDocument : IScribeDocumentDef
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Six vertices refute the conjecture", Disp(new Formula.Not(F.Id("claim"))),
                 "On Fin(6), take C = {0, 1, 2}, E(G) = {01, 02, 05, 14, 23} and E(H) = {05, 14, 23, 35, 45}. Both graphs are connected and each vertex of C has exactly one outside neighbour. Complementing at 0, 1, 2, 3, 4, 5 in order maps G to H. Condensation gives Mathlib's star graph with centre none and leaves 3, 4, 5, and the diamond with edges {c3, c4, c5, 35, 45}. The family consisting of the complete graph and every star is closed under local complementation: at a star's centre it gives the complete graph, at a leaf it preserves the star, and at a vertex of the complete graph it gives the star centred there. Induction over the list of operations keeps the condensed first graph in this family. The diamond is neither complete nor any of the four stars, as specific adjacency comparisons show, so it cannot be reached. On four vertices the family's graphs have three or six edges, while the diamond has five.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("vandre-2024-graph-condensation-lc-equivalence-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
