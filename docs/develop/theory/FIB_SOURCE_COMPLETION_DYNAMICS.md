@@ -15416,3 +15416,1075 @@ $$
 对迭代问题，本章给出的可复用条件是这个固定族的完整来源合同与全族轨道可行性。局部端点可行性本身不足以供应该证书：实际周期三的 guard 强迫排除目标第一不相干 SCC，负斜率加 active 槽只留下周期点或空集，未拥有的原 singleton 端点在终尾限片时也失败。经济的接口是只增加方向与周期结果，hull、轨道和记忆判据分别复用第 39、38 章；更一般的折叠边界、较小 recurrent quotient 和全局 $R$ 的义务保持开放。
 
 ## 42.99 追加锚（本行以下为增补区）
+
+## 43. 固定实际尾、有限返回树与预算缺口容量
+
+**约定 43.0（周期见证、实际尾与实预算引用的范围）。** 第42.10节中“A 单独则还须 $y_q\in\kappa_{r_q}(D_{r_q})$”限定的是把 A 所用的未扰动周期见证本身选作 $D$ 尾。存在某条可用 $D$ rival 的一般条件仍为 $K_\omega\cap\kappa_{r_q}(D_{r_q})\ne\varnothing$，不能把中心的 $D$ 成员性提升为该存在性的必要条件。只有另已证明 $K_\omega=\{y_q\}$，例如第42.7节的负斜率且存在 active 槽情形，或明确限制终尾留在原 singleton piece 时，才可作这种简化。
+
+第42.8—42.9节对实数 $0<\beta<\lambda$ 使用的是引理36.16证明中的最后不同标签与严格标量宽度论证；该论证只需原分支、guard 和宽度不等式。它不把原先在 $\mathbb Q(t)$ 预算下给出的有限端点图构造推广到任意实预算；涉及有限图的结论仍要求实际提供满足原完整包含规则的图。
+
+**命题 43.1（固定证书的范围）。** 固定同一个 guarded FIB 来源：两个合法 stem、同一组来源标签、同一共同颜色历史、一对固定实际 $D/D$ 终尾，以及一个正闭预算 $\beta$. 观察只发生在 departure 位置，未观察的终端不附加颜色。以下分别刻画共同等幅扰动的实际性、不等幅 active seed 的精确等号预算，以及深度不超过 $n$ 的整棵二返回树的闭成本；第43.22—43.24节再给出负斜率的奇偶尾式、实际相邻平台和 H+ 下的条件容量代入。区间编码、前接仿射式、完成地址满像、有限来源唯一性和两返回规范 hull 使用[定义14.5](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L1854)、[命题14.6](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L1894)、[定理14.7](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L1921)、[定理17.2](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L3305)、[定理34.3](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L9847)、[命题35.9](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L10708)、[定理36.11](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L11299)、[定理39.2.1](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13238)、[推论39.2.2](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13295)、[定理39.3.2](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13336)及[定理39.4.1](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13358)的已发表结论；这里只把它们应用到同时固定的实际来源。
+
+环陪集只说明环成员相容；实际 $D$ 尾还必须满足 incoming guard、严格物理条带和 $Q\ge0$. 精确等号预算只看当前前缀中已经出现的 active 槽。整树最大值由逐个实际端点取得的有限清单给出，且其阈值属于这个固定有限族；没有选定 tight 锁时，中心只能写成该族的 $B_*$. 这些量词不推出全局阈值、统一跨预算常数或任何物理生成结论。
+
+本章的来源与观察记号沿用[定义39.1.1](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13123)及[式(28.1)](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L7138)，引用均指本卷[固定修订 `cfe06a9af05aff5b3d2ffa4d478cea124842a1a3`](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md)。$I_0=X=[-1,\phi]$、$I_1=[-1,t]$ 是闭 guard 支撑；$A_0=\Omega$、$D_0=D$，$D_s\subset A_s$ 是最终空尾地址。来源标签为 $\Lambda=\{3,0,5,2,25\}$，其中 $0$ 是空窗、$25$ 是一个窗口标签；它们与观察颜色 $0,\ldots,5$ 分开。实际合法边、平移量和前接次序为
+
+$$
+\begin{gathered}
+0\to0:3,0,2;\qquad 0\to1:5,25;\qquad
+1\to0:3,0;\qquad 1\to1:5,\\
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})
+=(-t,0,t^2,1,2-t),\qquad f_\ell(x)=\Delta_\ell-gx,\\
+f_w=f_{w_0}\circ\cdots\circ f_{w_{|w|-1}},\qquad f_\varnothing=\mathrm{id}.
+\end{gathered}
+$$
+
+两个 guard 的编码都是 $\kappa_s(\xi)=\sum_{j\ge0}(-g)^j\Delta_{\xi_j}$。一次固定合法切点归属，令 $\lambda=t^2/10$，颜色切点与闭包为
+
+$$
+\begin{gathered}
+q_1=-t^2-\lambda,\quad q_2=g-3\lambda,\quad q_3=t-5\lambda,
+\quad q_4=2t-7\lambda,\quad q_5=2t+\lambda,\\
+J_0=[-1,q_1],\quad J_1=[q_1,q_2],\quad J_2=[q_2,q_3],\\
+J_3=[q_3,q_4],\quad J_4=[q_4,q_5],\quad J_5=[q_5,\phi].
+\end{gathered}
+$$
+
+实际拥有格 $C_c$ 是闭包 $J_c$ 的内部加上归属于它的端点，观察为 $\mathcal Q(\operatorname{clip}_X(x+e))$。对 $b\ge0$，沿用
+
+$$
+E_c^b=\{x\in X:\operatorname{dist}(x,J_c)\le b\},\qquad
+O_c^b=\{x\in X:\exists v\in C_c,\ |x-v|\le b\}.
+$$
+
+裁剪非扩张且固定 $x\in X$，反向取 $e=v-x$ 即可，故 $O_c^b$ 恰为实际可取得区间。对 $x\in E_c^b$，实际取得的充要条件是距离严格小于 $b$，或距离等于 $b$ 且唯一最近点 $\operatorname{proj}_{J_c}(x)$ 被 $C_c$ 拥有；$b=0$ 时仍须 $x\in C_c$。以下把严格 guard 条带记为 $J_s^{\mathrm{fin}}$，与颜色闭包 $J_c$ 区分。
+
+### 43.2 实际有限尾的精确条带
+
+**命题 43.2（两种 incoming guard 的有限尾集合）。** 令
+
+$$
+ t=\frac{\sqrt5-1}{2},\qquad \phi=1+t,\qquad g=t^3,\qquad R=\mathbb Z[t],\qquad t'=-\phi,\qquad g'=-g^{-1}.
+$$
+
+置
+
+$$
+ J_0^{\mathrm{fin}}=(-1,\phi),\qquad J_1^{\mathrm{fin}}=(-1,t).
+$$
+
+若 $x=A+Bt\in R$，定义
+
+$$
+ Q(x)=2A-3B=\frac{gx+g^{-1}x'}{\sqrt5}.
+$$
+
+对 guard $s=0,1$，实际最终空窗地址的标量集合恰为
+
+$$\boxed{T_s=\{x\in R\cap J_s^{\mathrm{fin}}:Q(x)\ge0\}.}$$
+
+其中 $Q(x)>0$ 是非零有限来源的严格数量条件；$Q(x)=0$ 在 $J_0^{\mathrm{fin}}$ 中只给 $x=0$，它是零来源例外。guard 一的集合也可写为 $T_1=-tT_0$。同一 guard 下，每个标量 $x\in I_s$ 在全部完成地址域 $A_s$ 中至多有两个编码；若有编码属于 $D_s$，该标量在全部 $A_s$ 中即只有这一条编码。由于 $A_s\subseteq\Omega$ 且有限地址避开 guard 零的全部双编码点，每个实际有限地址的标量在整个 $\Omega$ 中也只有这一条编码。
+
+**证明。** [约定1.3](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L34)把母卷的正数量条件翻译为 $R$ 中的整数条带；定理34.3及命题35.9把同一条件写成当前 guard、支持和 $Q$ 的坐标形式。于是已发表的有限来源数量条件对 guard 零给出
+
+$$
+ x\in R,\quad -1<x<\phi,\quad Q(x)>0
+ \Longrightarrow x\in T_0,
+$$
+
+而 $Q(x)=0$ 时，写 $A=3m,B=2m$ 得 $x=m/g$。在 $(-1,\phi)$ 内只有 $m=0$，[命题1.2](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L30)的零来源正好给出 $x=0$。反向方向由任何有限位串的实际展开直接得到 $x\in R\cap J_0^{\mathrm{fin}}$ 和 $Q(x)\ge0$。
+
+guard 一的首位必须为零。删去这个首位得到 guard 零地址，标量乘以 $-t$，所以 $T_1=-tT_0$。若首位为一，则下一位受 no-$11$ 约束为零，标量为 $1+t^2z>1-t^2=t$, $z\in(-1,\phi)$，仍在 guard 零条带，却位于 guard 一条带的另一侧，因而不属于 incoming guard 一。于是两个 guard 都满足所写集合等式。
+
+命题14.6给出每个根分支的实际极值尾，定理14.7给出每个标量 $x\in I_s$ 在固定 guard 的全部 $A_s$ 中至多两个编码，并说明双编码只能在有限前缀后接非零周期极值尾。根极值和这些双编码尾都不是 eventually-null；因此 $D_s$ 避开双编码点，定理14.7之后的限制 $\kappa_s|_{D_s}$ 在每个 guard 上单射。证毕。
+
+**命题 43.3（数量的两个用途）。** 命题43.2中的 $Q$ 是实际有限来源的整数数量，不是把共轭 $x'$ 非负当作充分条件。
+
+**证明。** 有限位串给出
+
+$$
+ x'=\sum_j b_j\phi^j\ge0,\qquad b_j\in\{0,1\},
+$$
+
+因此共轭非负是必要条件；只有结合 $R$、$J_s^{\mathrm{fin}}$ 和 $Q\ge0$ 才得到实际尾。特别地，$t\in R\cap J_0^{\mathrm{fin}}$ 而 $Q(t)=-3$，所以环条带本身不是有限来源集合。证毕。
+
+### 43.4 等幅扰动的陪集与实际性
+
+**命题 43.4（共同等幅的环必要条件）。** 设两个纯周期参考为
+
+$$
+ h=\frac{A_U}{1-(-g)^{L_U}},\qquad y=\frac{A_V}{1-(-g)^{L_V}},\qquad A_U,A_V\in R,
+$$
+
+其中 $U,V$ 是实际合法返回词。给定 $\varepsilon_1\in\{-1,0,1\}$、$\varepsilon_2\in\{-1,+1\}$，若存在 $\kappa>0$ 使
+
+$$
+ x_1=h+\varepsilon_1\kappa\in T_{s_1},\qquad x_2=y+\varepsilon_2\kappa\in T_{s_2},
+$$
+
+且两个方向均非零，则必有
+
+$$\boxed{h-\varepsilon_1\varepsilon_2y\in R.}$$
+
+当这个条件成立时，两个允许幅度的环陪集相交；它本身不保证实际 $D/D$ 尾。
+
+**证明。** 两个 $x_i$ 都在 $R$，故
+
+$$
+ \varepsilon_2x_1-\varepsilon_1x_2
+ =\varepsilon_2h-\varepsilon_1y\in R.
+$$
+
+将这个等式乘以单位 $\varepsilon_2$，得到
+
+$$
+ x_1-\varepsilon_1\varepsilon_2x_2
+ =h-\varepsilon_1\varepsilon_2y\in R,
+$$
+
+即得所写条件。反过来，该条件使
+
+$$
+\varepsilon_1(R-h)=\varepsilon_2(R-y)
+$$
+
+成为同一个 $R$ 陪集，故只在环成员层面存在共同幅度。要得到实际尾，还必须同时检查 $J_{s_i}^{\mathrm{fin}}$ 和 $Q(x_i)\ge0$；命题43.2给出这个检查的充要性。证毕。
+
+**命题 43.5（同号时的共同实际 $D/D$ 充分性）。** 假设 $\varepsilon_1=\varepsilon_2=\varepsilon\in\{-1,+1\}$，并且参考点各自沿该方向有一个共同的非空开幅度区间：存在 $\eta>0$，使每个 $0<\kappa<\eta$ 都满足
+
+$$
+ h+\varepsilon\kappa\in J_{s_1}^{\mathrm{fin}},\qquad y+\varepsilon\kappa\in J_{s_2}^{\mathrm{fin}}.
+$$
+
+则对任意 $\eta_0\in(0,\eta)$，存在 $0<\kappa<\eta_0$ 使两个点同时属于 $T_{s_1},T_{s_2}$，当且仅当
+
+$$\boxed{h-y\in R.}$$
+
+选定一次这样的 $\kappa$ 后，两个有限尾字面量可以固定用于所有后续历史。
+
+**证明。** 必要性是命题43.4。设 $h-y=C\in R$。由于 $R=\mathbb Z+\mathbb Zt$ 在实轴稠密，可在 $(0,\eta_0)$ 内取 $\kappa_0$，使
+
+$$
+ u=h+\varepsilon\kappa_0\in R,\qquad v=y+\varepsilon\kappa_0=u-C\in R.
+$$
+
+再取充分大的整数 $m$，置
+
+$$
+ u_m=u+t^{2m},\qquad v_m=v+t^{2m},\qquad
+ \kappa_m=\kappa_0+\varepsilon t^{2m}.
+$$
+
+于是
+
+$$
+ u_m=h+\varepsilon\kappa_m,\qquad v_m=y+\varepsilon\kappa_m,\qquad u_m-v_m=C.
+$$
+
+当 $m$ 足够大时，$\kappa_m\in(0,\eta_0)$ 且两个点仍在各自的开条带内。由已发表的单占位数量式，
+
+$$
+ Q(t^{2m})=\frac{g t^{2m}+g^{-1}\phi^{2m}}{\sqrt5}
+=F_{2m+3}\longrightarrow+\infty.
+$$
+
+所以同一个 $m$ 可使 $Q(u_m)>0$ 和 $Q(v_m)>0$ 同时成立。命题43.2遂给出两个实际有限尾。共同加入的 $t^{2m}$ 保留差值、同号方向和两个 guard，故这是实际 $D/D$ 的充分性。由于每个任意小的 $\eta_0$ 都可这样处理，得到任意小的合法共同幅度。证毕。
+
+**命题 43.6（相反号的纯周期共轭障碍）。** 任一实际合法纯周期标量 $z$ 满足
+
+$$
+ z'\le0,
+$$
+
+且只要周期词含有非零来源标签，就有 $z'<0$。因此若 $\varepsilon_1=-\varepsilon_2$ 且 $h,y$ 中至少一个是非零纯周期参考，则不存在 $\kappa>0$ 使两个扰动点同时属于相应的 $T_s$。即使 $h+y\in R$，环陪集条件也不足。
+
+**证明。** 对长度 $L$ 的实际返回词，写
+
+$$
+ z=\frac{A_U}{1-(-g)^L},\qquad
+ A_U=\sum_{r=0}^{L-1}(-g)^r\Delta_{U_r}.
+$$
+
+代数共轭把 $(-g)$ 变为 $g^{-1}$，而各非零窗口的共轭平移严格为正，零窗口的共轭平移为零。因此 $A_U'\ge0$，非零词时 $A_U'>0$，同时
+
+$$
+ (1-(-g)^L)'=1-g^{-L}<0.
+$$
+
+从而 $z'=A_U'/(1-g^{-L})\le0$，严格性如上。若相反号共同幅度存在，则
+
+$$
+ x_1+x_2=h+y.
+$$
+
+每个有限尾的共轭是位和，故 $x_1',x_2'\ge0$。但 $h'+y'<0$，矛盾。若 $h=y=0$，则 $x_1+x_2=0$；两个共轭均非负且和为零，遂只能 $x_1=x_2=0$，这又迫使 $\kappa=0$，不符合正幅度。证毕。
+
+**命题 43.7（零方向及其他退化情形）。** 若 $\varepsilon_1=0$，则共同等幅构造的第一分量必要且充分地要求 $h\in T_{s_1}$；第二分量还必须在其指定单侧区间内实际找到 $y+\varepsilon_2\kappa\in T_{s_2}$。若 $h$ 是非零纯周期参考，则该条件失败；若 $h=0$，它是零尾例外，不能被非有限性结论替代。若两个方向均非零而参考之一为零，则命题43.6仍排除相反号正幅度；同号情形仍按命题43.5检查共同条带和 $h-y\in R$。
+
+**证明。** 第一坐标不随 $\kappa$ 变化，所以它必须本身属于命题43.2的实际集合；这也显然是充分的第一坐标条件。第二坐标是单独的单侧实际尾问题，需由其开条带和数量条件解决。命题43.6的共轭证明覆盖一个参考为零、另一个非零的相反号情形；全零情形已在该命题末尾处理。证毕。
+
+**命题 43.8（实际六周期例与非整陪集）。** 已发表六周期参考
+
+$$
+ P_A=(3,3,5,0,3,0),\qquad P_B=(0,3,0,3,3,5)
+$$
+
+分别回到 guard 零和 guard 一，并在共同颜色流 $(1,0,2)^\infty$ 下有相位零与相位三的周期标量
+
+$$
+ \alpha=-\frac{33+6g}{76},\qquad z_3=\frac{8+15g}{76}.
+$$
+
+在偶数个六步检查点，A 的向内改善方向是 $+1$，B 的向内改善方向是 $-1$。相反号等幅所需的环条件为 $\alpha+z_3\in R$，但
+
+$$
+ \alpha+z_3=\frac{-25+9g}{76}=\frac{-17+9t}{38}\notin\mathbb Z[t].
+$$
+
+所以这一个实际周期参考甚至没有相应的环陪集兼容，当然不存在共同等幅 $D/D$ 尾。这个例子只说明实际 PA/PB 参考的代数障碍；它不宣称一个不相干 paired SCC，也不提供任何分支存在性结论。
+
+**证明。** 方向由六周期中 active 相位相对检查点的运输符号直接给出：A 的 active 相位是 $r\equiv0\pmod6$，B 的 active 相位是 $r\equiv3\pmod6$，负斜率运输使两者所需方向相反。相反号的命题43.4条件变成 $\alpha+z_3\in R$。用 $g=2t-1$ 化简得到所写式；其在基底 $1,t$ 下两个系数均为非整数，故不在 $R$。证毕。
+
+### 43.9 不等幅的单一实际种子
+
+**命题 43.9（固定历史的所有 active 槽与精确等号预算）。** 固定同一来源、共同颜色历史、同一对参考周期点 $h_i$、合法 stem 和合法返回。返回长度 $L$ 为正偶数，因而重复返回的运输因子为正 $g^L$. 令原有限历史为
+
+$$
+ H_n=H_{\rm pre}W^n,\qquad M_n=d+nL,
+$$
+
+其中只观察 departure 位置 $r<M_n$，终端位置 $M_n$ 不观察。active 指参考历史中到指定闭格的距离恰为 $\beta$ 的槽；假设至少一个这样的槽在某个有限前缀中实际出现。对每个会实际出现的 active 槽 $(i,r)$，选定原来向内的方向 $\varepsilon_i$ 和一次固定的正幅度 $\eta_i$，并取同一对固定实际尾
+
+$$
+ x_i=h_i+\varepsilon_i\eta_i\in T_{s_i}.
+$$
+
+假设 $\beta>0$；每个 active 槽的 signed transport 都沿 $\varepsilon_i$ 指向其闭格内部，并在所有 $n$ 中保留同一个单侧距离段；所有非 active 槽在参考值处有共同严格余量 $\Delta>0$. 若没有非 active 槽，约定 $\Delta=+\infty$ 并删除下述关于 $\Delta$ 的限制。幅度在假设中一次选定并满足
+
+$$
+\eta_{\max}:=\max_i\eta_i<\min\{\beta/2,\Delta/3\},
+$$
+
+其中 $\min\{\beta/2,+\infty\}=\beta/2$. 令
+
+$$
+ \mathcal A_n=\{(i,r):r<M_n\text{ 且该槽在 }H_n\text{ 中 active}\}.
+$$
+
+$\mathcal A_n$ 在每个深度都定义。只在 $\mathcal A_n\ne\varnothing$ 时定义
+
+$$
+\gamma_n=\min_{(i,r)\in\mathcal A_n}\eta_i g^{-r},\qquad
+\widehat b_n=\beta-g^{M_n}\gamma_n.
+$$
+
+在这些深度，同一对固定实际尾承担 $H_n$ 的最大闭距离恰为
+
+$$\boxed{\widehat b_n=\beta-g^{M_n}\gamma_n.}$$
+
+其等号槽为
+
+$$\boxed{\mathcal E_n=\{(i,j_i):j_i<M_n,\ \eta_i g^{-j_i}=\gamma_n\},}$$
+
+其中 $j_i$ 是分量 $i$ 在当前前缀中已经出现的第一次 active 时间；不存在于当前前缀的分量不计入。精确预算 $\widehat b_n$ 下，给定归属可实现当且仅当 $\mathcal E_n$ 中每一个实际等距目标的端点归属于指定颜色；所有最小者和 ties 都必须检查。
+
+**证明。** 对 active 槽，前缀到终端的长度为 $M_n-r$，固定尾的仿射运输给出准确距离
+
+$$
+ \operatorname{dist}_{i,r}=\beta-\eta_i g^{M_n-r}
+ =\beta-g^{M_n}(\eta_i g^{-r}).
+$$
+
+同一分量的 $\eta_i g^{-r}$ 随 $r$ 严格增加，所以它在当前前缀中的最小值只能由已经出现的第一次 active 时间 $j_i$ 取得。不能用一次尚未出现的 eventual return occurrence 代替 $j_i$。
+
+由假设，所有 guard、来源接缝和 active 单侧方向对这一次固定的 $\eta_i$ 同时成立。每个非 active 槽的扰动后距离至多 $\beta-\Delta+\eta_{\max}$。另一方面，active 的预算下降量满足
+
+$$
+ 0<g^{M_n}\gamma_n\le\eta_{\max},
+$$
+
+所以
+
+$$
+\beta-\Delta+\eta_{\max}<\beta-g^{M_n}\gamma_n.
+$$
+
+最大值确实由 $\mathcal A_n$ 给出，得到公式。其等号集合正是所有当前分量的第一次 active 槽中达到最小权重的那些槽。
+
+若等号槽的最近闭格点属于指定的实际颜色区间，取该点即可；若不等号槽距离严格小于 $\widehat b_n$，可把目标略移入其指定颜色的内部而仍留在预算内。反之，等号槽的距离已经是全局最大值，若其唯一最近端点不属于指定归属，就没有另一个距离不增的实际目标可取。因此这些端点旗标是精确归属条件。证毕。
+
+**命题 43.10（稳定的分量权重与任意归属的严格放松）。** 只对 $\mathcal A_n\ne\varnothing$ 的深度定义 $\gamma_n$；若某个最早 active 时间尚未进入前缀，则该较早历史保留其实际成本和端点旗标，不用未出现的槽补入最小值。令 $I_n$ 为当前前缀中已经出现 active 槽的分量集合，令 $I_\infty=\bigcup_n I_n$；对每个 $i\in I_\infty$，令 $j_i$ 为其在完整历史中的第一次 active 时间。存在 $n_0$ 使得
+
+$$
+ \gamma_n=\gamma_*:=\min_{i\in I_n}\eta_i g^{-j_i}
+ =\min_{i\in I_\infty}\eta_i g^{-j_i}\qquad(n\ge n_0),
+$$
+
+并且
+
+$$
+ \widehat b_n=\beta-\gamma_*g^{d+nL}\quad(n\ge n_0).
+$$
+
+在相邻两层均有定义时，$\gamma_{n+1}\le\gamma_n$，故 $\widehat b_n$ 严格递增。若 $0<\theta<1$，则
+
+$$\boxed{\widetilde b_n=\beta-\theta g^{M_n}\gamma_n}$$
+
+满足 $\widehat b_n<\widetilde b_n<\beta$，并对每个当前历史、每个所有权归属都可由同一对固定实际尾实现。
+
+若要求同一个分量在所有深度（包括 $n=0$）控制等号，必须有 $j_i<d$，即它的第一次 active 槽已经在 stem 前缀中；若 $j_i\ge d$，由此分量得到的断言只从其首次出现的深度起成立。
+
+**证明。** 每个分量只有一个第一次 active 时间；一旦该时间进入前缀，后来的同分量槽权重更大。有限个分量的最小值遂在某个固定 $n_0$ 后稳定。加入返回块只增加候选槽，所以 $\gamma_{n+1}\le\gamma_n$，而
+
+$$
+ g^{M_{n+1}}\gamma_{n+1}\le g^L g^{M_n}\gamma_n<g^{M_n}\gamma_n.
+$$
+
+这给出严格递增。严格放松的预算比精确最大距离大，所有观察坐标距其闭格严格小于 $\widetilde b_n$；按实际颜色区间内部取目标，端点是否归属不再影响可行性。固定尾和原来源历史没有改变。证毕。
+
+### 43.11 一对固定 D/D 尾承载整棵二返回树
+
+**命题 43.11（树的 guarded 证书）。** 令 $0<\beta$，并固定两个同长、实际合法的 stem $P,Q$，其来源 guard 都从 $0$ 出发，分别到达 $s_1,s_2$，且 $d=|P|=|Q|$. 固定两个实际合法的正偶长度返回 $U_0,U_1:s_1\to s_1$，令 $L=|U_i|$，以及一个实际合法的正偶长度返回 $V:s_2\to s_2$，三者长度同为 $L$. 要求
+
+$$
+ U_0\ne U_1,\qquad a=g^L\in(0,1).
+$$
+
+所有 stem、return 和接缝的来源标签、incoming guard 与 outgoing guard 均取自实际合法边；这些是证书的一部分。第一分量返回映射写成
+
+$$
+ G_i(x)=A_i+ax,\qquad A_0\ne A_1,\qquad i=0,1.
+$$
+
+第二分量使用同一个返回词 $V$，其映射为
+
+$$
+ F(x)=y+a(x-y).
+$$
+
+以下 $J_c$ 是固定六格仪器的闭颜色区间，$E_c^\beta=J_c+[-\beta,\beta]$ 与物理支撑的交按已发表闭合同理解。记 stem 颜色块为 $H=(H_r)_{0\le r<d}$，第一返回颜色块为 $W_i=((W_i)_r)_{0\le r<L}$；同一 $W_i$ 也标在 rival 的共同返回 $V$ 上。所谓固定实际 $D/D$ 尾，是一次选定的两个实际地址 $\xi\in D_{s_1}$、$\eta\in D_{s_2}$；它们的来源标签、guard 接缝和尾字面量在所有 $z$ 中均不变。
+
+令 $H_1=[u,v]$ 是第一分量两映射的规范最小不变区间，取一个固定实际尾标量
+
+$$
+ x_1\in T_{s_1}\cap(u,v),
+$$
+
+并取一个固定实际尾标量 $x_2=y+h\in T_{s_2}$. 对第一分量的每个实际 stem/return departure suffix $\alpha$，令 $f_\alpha$ 为该 departure 到所在 stem 或返回块末端的固定后缀映射，即 $f_{P[r:]}$ 或 $f_{U_i[r:]}$；完整历史的后缀再复合其后所有返回，$c_\alpha$ 为 $H_r$ 或 $(W_i)_r$，并要求有限证书
+
+$$
+ f_\alpha(H_1)\subseteq E_{c_\alpha}^{\beta}
+ \qquad\text{for every such actual }\alpha.
+$$
+
+单独记 rival 的有限槽：对 stem $Q$ 的每个位置使用同一个 $H_r$，对共同返回 $V$ 的每个位置分别使用 $(W_0)_r$ 和 $(W_1)_r$. 对所得每一个实际槽 $\alpha$，令 $r_\alpha$ 为固定后缀 $f_{Q[r:]}$ 或 $f_{V[r:]}$，并要求
+
+$$
+ q_\alpha(0):=\beta-\operatorname{dist}(r_\alpha(y),J_{c_\alpha})\ge0,
+ \qquad
+ q_\alpha(1):=\beta-\operatorname{dist}(r_\alpha(x_2),J_{c_\alpha})>0.
+$$
+
+这里的 rival 清单分别包含两种 $W_i$ 发生，不能用一个颜色块代替；清单有限且每一项都来自实际 guard/source 词。对每个二进制词 $z=z_1\cdots z_k$（包括空词）固定来源
+
+$$
+ \alpha_z=PU_{z_1}\cdots U_{z_k}\xi,\qquad
+ \beta_z=QV^k\eta,\qquad |z|=k,
+$$
+
+以及共同指定颜色历史 $H W_{z_1}\cdots W_{z_k}$. 每个观察都是 departure observation，位置为 $0\le r<d+kL$；终端坐标 $d+kL$ 没有额外颜色。
+
+**证明。** 定理39.2.1和推论39.2.2给出 $H_1$、两返回的规范 hull 和 $A_0\ne A_1$；命题43.2给出所选 $\xi,\eta$ 的实际 $D$ 性。第一分量的有限证书逐一覆盖 $P$ 与 $U_i$ 的所有 departure suffix，rival 清单逐一覆盖 $Q$ 与 $V$ 的两种 $W_i$ 颜色，因此同一对尾对每个 $z$ 和每个 $k$ 都保留同一来源、guard、颜色和正 seed margin。$V$ 相同使 rival 轨道只由 $F^k(x_2)$ 决定；$U_0,U_1,V$ 本身都是回到声明 guard 的实际返回，所以每个拼接词的 guard 合法性来自来源证书，而不是由 hull 定理给任意词补出返回 guard。观察范围在终端之前，故未观察终端没有额外颜色。证毕。
+
+**命题 43.12（第一分量的统一 margin，含物理裁剪）。** 在命题43.11的条件下，置
+
+$$
+ d_1=\min\{x_1-u,v-x_1\}>0.
+$$
+
+对第一分量任意 departure 槽，其完整后缀仿射映射 $f$ 的斜率绝对值为 $g^D$，其中 $D\ge1$ 是该 departure 到未观察终端的来源长度。若该槽在闭预算 $\beta$ 下有
+
+$$
+ f(H_1)\subseteq (J_{c}+[-\beta,\beta])\cap X,\qquad
+ X=[-1,\phi],
+$$
+
+则
+
+$$\boxed{\beta-\operatorname{dist}(f(x_1),J_c)\ge\min\{\beta,d_1\}g^D.}$$
+
+因此对深度不超过 $n$ 的所有第一分量观察，统一有
+
+$$
+\beta-\operatorname{dist}(f(x_1),J_c)\ge c_1a^n,\qquad c_1=\min\{\beta,d_1\}g^d>0.
+$$
+
+**证明。** $f(H_1)$ 是一个闭区间，$f(x_1)$ 到它的两个端点均至少为 $d_1g^D$。若 $J_c=[l,r]$，在未裁剪扩张内有
+
+$$
+ \beta-\operatorname{dist}(q,J_c)=\min\{\beta,\ q-(l-\beta),\ (r+\beta)-q\}.
+$$
+
+物理支撑把扩张区间与 $X$ 相交。由于 $J_c\subseteq X$ 且 $f(x_1)\in f(H_1)\subseteq X$，到 $J_c$ 的距离仍是实轴上的距离；被裁剪的边界不会成为 $J_c$ 的新点，也不会减少 $f(x_1)$ 到原扩张两端的有效单侧距离。因此
+
+$$
+\beta-\operatorname{dist}(f(x_1),J_c)\ge\min\{\beta,d_1g^D\}\ge\min\{\beta,d_1\}g^D.
+$$
+
+一条深度 $k\le n$ 的历史的 departure 到终端长度满足 $D\le d+nL$；因 $g^D\ge g^{d+nL}=g^da^n$，得到结论。这个证明处理了物理支撑裁剪，没有把未裁剪端点当成实际目标。证毕。
+
+**命题 43.13（rival 的凹余量，允许进入或穿过颜色格）。** 对命题43.11的每个第二分量槽 $\alpha$，令其后缀斜率为 $\gamma_\alpha=(-g)^{s_\alpha}$，并置
+
+$$
+ q_\alpha(t)=\beta-\operatorname{dist}\bigl(r_\alpha(y)+t\gamma_\alpha h,J_{c_\alpha}\bigr),\qquad 0\le t\le1.
+$$
+
+由于 $r_\alpha(y+t h)=r_\alpha(y)+t\gamma_\alpha h$ 沿同一合法 guard 区间的仿射像且位于物理支撑 $X$，而 $J_{c_\alpha}\subseteq X$，物理裁剪不改变到 $J_{c_\alpha}$ 的距离表达式。函数 $q_\alpha$ 在整个 $[0,1]$ 上都是凹函数；即使扰动进入或穿过颜色格，下列界仍成立。若 $q_\alpha(0)=0$，则
+
+$$
+ t q_\alpha(1)\le q_\alpha(t)\le|\gamma_\alpha h|t;
+$$
+
+若 $q_\alpha(0)>0$，则
+
+$$
+ q_\alpha(t)\ge\min\{q_\alpha(0),q_\alpha(1)\}>0.
+$$
+
+所以命题43.11的有限槽清单给出 $c_2>0$，使所有深度不超过 $n$ 的 rival departure 均满足
+
+$$
+\beta-\operatorname{dist}(r_\alpha(F^k(x_2)),J_{c_\alpha})\ge c_2a^n.
+$$
+
+**证明。** 到闭区间的距离是凸函数，故其负值加常数 $q_\alpha$ 凹；距离还是 1-Lipschitz，给出上界。由于 $F^k(x_2)=y+a^kh$，实际取值是 $q_\alpha(a^k)$。凹函数位于端点弦之上，分别得到两种下界。若 reference 值或固定尾值进入或穿过颜色格内部，公式仍只使用距离函数的凸性，不要求扰动停留在同一个外部侧；两端和整条线段均在 $X$ 内，所以物理裁剪不会改变所用距离。
+
+槽数有限，取
+
+$$
+ c_2=\min_\alpha\begin{cases}
+ q_\alpha(1),&q_\alpha(0)=0,\\
+ \min\{q_\alpha(0),q_\alpha(1)\},&q_\alpha(0)>0
+ \end{cases}>0.
+$$
+
+因 $k\le n$ 且 $a^k\ge a^n$，即得统一下界。证毕。
+
+### 43.14 精确有限树成本及端点实现
+
+**命题 43.14（所有长度不超过 $n$ 的精确闭成本）。** 令 $B_n$ 是命题43.11整棵树中所有实际来源、所有 departure 观察坐标到各自指定闭格的最大距离。若
+
+$$
+ c=\min\{c_1,c_2\}>0,
+$$
+
+则
+
+$$
+ B_n\le\beta-ca^n<\beta.
+$$
+
+$B_n$ 可由固定有限个实际端点公式精确取得。具体地，令
+
+$$
+ A_-=\min\{A_0,A_1\},\quad A_+=\max\{A_0,A_1\},\quad
+ p_-=\frac{A_-}{1-a},\quad p_+=\frac{A_+}{1-a}.
+$$
+
+第一分量在所有至多 $N$ 个返回后的终端值的区间包络为
+
+$$
+ K_N^{(1)}=[\ell_N,u_N],
+$$
+
+$$
+ \ell_N=\min\{x_1,p_-+a^N(x_1-p_-)\},\qquad
+ u_N=\max\{x_1,p_++a^N(x_1-p_+)\}.
+$$
+
+第二分量包络为
+
+$$
+ K_N^{(2)}=[\ell_N^{(2)},u_N^{(2)}],\qquad
+ \ell_N^{(2)}=\min\{x_2,y+a^N(x_2-y)\},\quad
+ u_N^{(2)}=\max\{x_2,y+a^N(x_2-y)\}.
+$$
+
+令 $\mathscr F_{\rm st}$ 为第一分量的 stem 槽，$\mathscr F_{\rm ret}$ 为其两种返回槽，令 $\mathscr R_{\rm st}$ 为 rival 的 stem 槽，$\mathscr R_{\rm ret}$ 为 rival 的共同返回槽（各自带上 $W_0,W_1$ 两种颜色副本）。对 $\alpha\in\mathscr F_{\rm st}\cup\mathscr R_{\rm st}$ 取 $N_\alpha=n$；对 $\alpha\in\mathscr F_{\rm ret}\cup\mathscr R_{\rm ret}$ 在 $n\ge1$ 时取 $N_\alpha=n-1$，在 $n=0$ 时删去这些返回槽。若 $f_\alpha$ 是第一分量槽的固定后缀，$r_\alpha$ 是 rival 槽的固定后缀，则
+
+$$
+\begin{aligned}
+ B_n=\max\Bigl(\{\operatorname{dist}(f_\alpha(\ell_{N_\alpha}),J_{c_\alpha}),
+ \operatorname{dist}(f_\alpha(u_{N_\alpha}),J_{c_\alpha}):
+ \alpha\in\mathscr F_{\rm st}\cup\mathscr F_{\rm ret}\text{ 当前存在}\}
+ \\cup\{\operatorname{dist}(r_\alpha(\ell_{N_\alpha}^{(2)}),J_{c_\alpha}),
+ \operatorname{dist}(r_\alpha(u_{N_\alpha}^{(2)}),J_{c_\alpha}):
+ \alpha\in\mathscr R_{\rm st}\cup\mathscr R_{\rm ret}\text{ 当前存在}\}\Bigr).
+\end{aligned}
+$$
+
+若这些有限槽在 $n=0$ 均为空，则约定 $B_0=0$；否则上式只取实际存在的槽。
+
+每个列出的端点分别由一个实际词实现；该最大值不是把不同词的独立极值拼接成一条来源。
+
+**证明。** 由于 $a>0$，固定长度 $k$ 的第一返回组合在 $x_1$ 上的最小值和最大值分别由全取 $A_-$ 和全取 $A_+$ 的词取得，所得值为
+
+$$
+ p_-+a^k(x_1-p_-),\qquad p_++a^k(x_1-p_+).
+$$
+
+对 $0\le k\le N$，每个序列单调趋向其固定点，所以全部实际点的最小值、最大值就是 $\ell_N,u_N$；若极值为 $x_1$，由空词取得，若为迭代值，使用重复极值返回取得。第二分量只有一个返回映射，故其两个端点由空词或重复 $V$ 取得。
+
+任一第一分量 departure 坐标是其终端值经 $f_\alpha$ 得到，任一 rival 坐标是其终端值经 $r_\alpha$ 得到。距离到闭区间是凸函数，在相应闭区间 hull 上的最大值出现在端点，因此上述分量特定的有限清单给出上界。反过来每个端点都由实际词取得，清单中的每一项都是一个真实历史的成本；其中最大的那一项也被实际取得，故等式成立。stem 槽的 $N=n$、返回槽的 $N=n-1$ 正是因为观察发生在当前返回块离开时，当前块之后还剩这些返回；终端本身未观察，所以没有额外颜色项。命题43.12和43.13给出每个项的统一 margin，因而 $B_n\le\beta-ca^n$；若没有观察项则 $B_0=0$。证毕。
+
+**命题 43.15（边界层、$n=0$ 和单支 tight）。** 命题43.14同时包括以下情形：
+
+1. $n=0$ 时只有 stem departure 槽；没有人为加入终端颜色，若没有任何 departure，则 $B_0=0$。
+2. 若周期参考的 tight 值只在 stem 槽中出现，该 stem 槽在 $n=0$ 已存在，但其有限层成本仍由 $N=0$ 的实际端点词计算；周期 tight 参考通常只在返回次数趋于无穷时达到，不能说空词已经取得 $\beta$. 命题43.11的严格 seed margin 也排除了把有限 $D$ 尾直接当作该周期等号。
+3. 若周期参考的 tight 值只在一条返回中，该返回槽从 $n=1$ 起才出现；“首取该返回”只实现其第一次有限层端点，参考 tight 值要在其后接更多返回时逼近。$n=0$ 不包含该槽，不能把参考等号反向计入 $B_0$。
+4. 一个被选作极限锁的 rival 槽必须是清单中确实观察到的槽；别的颜色的 tight 端点或规范包络的任意端点不提供这个锁。
+
+**证明。** 这些都是命题43.14中当前槽集合和端点实际词的直接分情况。返回槽的第一次出现需要一次返回，故其后缀返回数为 $n-1$；stem 槽从空词开始，故为 $n$。任何未观察终端都不产生颜色条件。证毕。
+
+### 43.16 指数尾与实际阈值
+
+**命题 43.16（选定 rival tight 锁下的双侧指数界）。** 假设命题43.11的槽清单中选定一个实际 rival 槽 $\alpha_\star$，满足
+
+$$
+ q_{\alpha_\star}(0)=0,\qquad q_{\alpha_\star}(1)>0.
+$$
+
+也就是该选定观察槽的周期极限成本恰为 $\beta$，而同一固定实际尾在该槽留下严格 seed margin。则存在常数 $C\ge c>0$，对所有 $n\ge0$ 有
+
+$$\boxed{c\,g^{Ln}=c\,a^n\le\beta-B_n\le C\,a^n=C\,g^{Ln},}$$
+
+并且 $B_n\uparrow\beta$。存在 $n_0$ 和 $\kappa>0$ 使
+
+$$\boxed{B_n=\beta-\kappa a^n\qquad(n\ge n_0).}$$
+
+**证明。** 下界已由命题43.14给出。对上界，若 $\alpha_\star$ 是 stem 槽，取恰有 $n$ 个返回的实际 stem 词。由距离的 1-Lipschitz 性质和 $q_{\alpha_\star}(0)=0$，
+
+$$
+ 0\le q_{\alpha_\star}(a^n)\le|\gamma_{\alpha_\star}h|a^n,
+$$
+
+所以该实际槽给出
+
+$$
+ \beta-B_n\le|\gamma_{\alpha_\star}h|a^n.
+$$
+
+若它只在一个返回内部出现，则对 $n\ge1$ 取以该返回开头、其后接 $n-1$ 个返回的实际词，得到
+
+$$
+ \beta-B_n\le|\gamma_{\alpha_\star}h|a^{n-1}
+ =a^{-1}|\gamma_{\alpha_\star}h|a^n.
+$$
+
+$n=0$ 的返回槽不存在，但 $\beta-B_0\le\beta$；把 $\beta$ 加入 $C$ 即得所有 $n$ 的上界。于是 $B_n\to\beta$，而嵌套历史给出单调非降。
+
+为得到最终精确式，把命题43.14中的 $\ell_N,u_N$ 按固定符号分支展开。对 $n\ge1$ 置 $z=a^n$；stem 端点是 $z$ 的仿射函数，返回端点是 $z/a$ 的仿射函数。对闭格 $J=[l,r]$，
+
+$$
+ \operatorname{dist}(x,J)=\max\{l-x,0,x-r\}.
+$$
+
+所以存在一个固定有限集 $\mathcal F$ 和域内常数 $b_j,k_j$，使
+
+$$
+ B_n=\max_{j\in\mathcal F}(b_j+k_j a^n),\qquad n\ge1.
+$$
+
+令 $B_*=\max_jb_j=\sup_nB_n$。选定的 rival tight 槽和上界已经给 $B_*=\beta$。令
+
+$$
+ k_*=\max\{k_j:b_j=\beta\}.
+$$
+
+单调性和 $B_n<\beta$ 强迫 $k_*<0$：若 $k_*>0$，最终会超过 $\beta$；若 $k_*=0$，最终最大值会等于 $\beta$，也与命题43.14的严格 margin 矛盾。有限个截距小于 $\beta$ 的直线最终低于截距为 $\beta$、斜率为 $k_*$ 的直线，因此某个 $n_0$ 后
+
+$$
+ B_n=\beta+k_*a^n=\beta-\kappa a^n,\qquad\kappa=-k_*>0.
+$$
+
+这条上界锁来自 $\alpha_\star$ 的实际周期极限，未使用无关颜色或任意扩大后的 hull 端点。证毕。
+
+**命题 43.17（没有选定 tight 锁时的正确中心）。** 若不具备命题43.16的选定 tight 槽，则有限仿射包络仍给出
+
+$$
+ B_n=\max_{j\in\mathcal F}(b_j+k_ja^n)\quad(n\ge1),\qquad
+ B_*=\sup_nB_n=\max_jb_j,
+$$
+
+并且存在 $n_0$ 及 $k_*\le0$ 使
+
+$$
+ B_n=B_*+k_*a^n\quad(n\ge n_0).
+$$
+
+此时只能以实际族阈值 $B_*$ 为中心；若写 $\kappa=-k_*$，它可以为零。不能把 $B_*$ 替换成给定的 $\beta$，也不能由没有 tight 锁的 margin 证明 $\beta-B_n=\Theta(a^n)$。
+
+这里仍须保留命题43.11的逐槽严格 seed margin；删去它，命题43.14的正下界 $c a^n$ 以及任意归属下的严格放松都不再成立。
+
+**证明。** 有限直线最大值的最终支配项证明与命题43.16相同。因 $B_n\le B_*$，最终斜率不能为正；斜率为零允许 $\kappa=0$。没有任何步骤把 $B_*$ 识别为外加预算 $\beta$。证毕。
+
+### 43.18 精确闭成本的 owned 实现
+
+**命题 43.18（精确 $B_n$ 的端点归属条件）。** 固定一个具体归属 $\omega$，令 $C_{c,\omega}$ 是颜色 $c$ 的实际拥有区间，$J_c=\overline{C_{c,\omega}}$。在预算恰为 $B_n$ 时，整棵深度不超过 $n$ 的树可实际取得，当且仅当每一个达到最大值的实际三元组
+
+$$
+ (\text{word},\text{component},\text{departure slot})
+$$
+
+的最近点投影 $\operatorname{proj}_{J_c}(x)$ 属于 $C_{c,\omega}$。最大值相等的所有三元组都必须满足这个 endpoint flag；只检查一个周期词或一个 tight 颜色不够。
+
+等价地，只需检查命题43.14的有限清单中每个现存槽的两个实际极端坐标都属于 $O_{c,\omega}^{B_n}$；其中 $O_{c,\omega}^{B_n}$ 按本章开头的拥有格定义。正距离等号处使用最近端点旗标，零距离等号处检查实际坐标归属。这个条件包括 $B_n=0$；若没有观察，条件为空。
+
+当 $B_n=0$ 时，这一条件退化为每个实际观察坐标本身属于其被指定归属的颜色区间；不能因坐标落在闭格端点就自动取得。
+
+**证明。** 命题43.14说明每个端点极值由实际词取得，故逐槽两端属于 $O_{c,\omega}^{B_n}$ 是必要条件。该拥有扩张仍是区间；两端均属于它时，它包含整个两端之间的线段，因而包含该槽的每个实际坐标，给出充分性。不同槽的端点见证可以来自不同词，未把它们拼成独立来源。若某一实际坐标的距离严格小于 $B_n$，则由 $O_c^{B_n}$ 的开端点性质，可以把最近目标略移入其拥有的颜色区间而仍不超过预算。若距离等于 $B_n$，最近闭格点是唯一不增距离的候选；它不属于 $C_{c,\omega}$ 时，任何拥有目标都要增加距离，故不能在精确预算取得。逐个应用于所有实际达到 $B_n$ 的三元组即得充要性。$B_n=0$ 时没有严格余量，所有坐标都属于等号情形。证毕。
+
+**命题 43.19（严格更大但仍低于 $\beta$ 的预算）。** 在命题43.14的严格 margin 条件下，任意
+
+$$
+ B_n<b<\beta
+$$
+
+都允许同一对固定实际 $D/D$ 尾承担整棵深度不超过 $n$ 的树，并且对每一种端点归属都可逐槽选择拥有区间内部的目标。一个明确选择是
+
+$$
+ b=\frac{\beta+B_n}{2}.
+$$
+
+若命题43.16成立，则任意固定 $b<\beta$ 都不能承担所有深度的同一无界二返回族。
+
+**证明。** $B_n<b$ 使每个实际观察坐标严格落在相应闭格的预算扩张内部；实际颜色区间的内部目标遂可在距离 $b$ 内选取。来源、stem、返回和两个尾均没有改变。若固定 $b<\beta$ 支持全部深度，则必须有 $B_n\le b$ 对所有 $n$；命题43.16给出的 $B_n\uparrow\beta$ 与此矛盾。证毕。
+
+### 43.20 量词和观察历史的边界
+
+**命题 43.20（来源词、观察词与已证明的树族）。** 命题43.11—43.19证明的是：对每个 $n$ 和每个 $|z|\le n$，同一对固定实际 $D/D$ 尾使指定的来源词和 departure 颜色历史满足相应预算。它没有把 $2^n$ 个来源词自动识别成 $2^n$ 个不同观察历史。
+
+若另要推出不同历史，必须额外同时满足预算处于已发表有限来源唯一性合同的适用范围、两条来源的完整未来满足该合同的共同未来要求，以及来源词确实不同；本章的两条固定尾本身不替代这些假设。
+
+**证明。** 来源词由 $U_0\ne U_1$ 的字面分支区分，但颜色投影可能在有限前缀上相同。已发表[定理28.1](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L7165)和[推论29.3](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L7632)在其完整闭关系、实际有限来源和共同完整记录前提下才给单点纤维；没有这些前提，来源词计数只说明构造了多少来源实例，不说明观察历史的基数。故本章保留两种量词，不作未经证明的历史计数。证毕。
+
+### 43.21 新增内容与既有算术的分界
+
+**命题 43.21（本章新增桥接的闭合范围）。** 条带、guard 满像和 $D$ 单射性作为已发表前提；本章的新增桥接仅为：
+
+1. 复用约定1.3、定理34.3和命题35.9的 strip arithmetic、定义14.5、命题14.6及定理14.7的实际 guard 与 $D$ 单射性；新的内容只是把这些已发表条件应用为两个同时满足的 $T_s$ 尾判据；
+2. 给出等号相同幅度的同号共同证书、相反号纯周期共轭障碍、零方向条件及 PA/PB 实例；
+3. 用当前出现的 active 槽定义 $\gamma_n$，并逐槽确定精确等号的 ownership flags；
+4. 对固定 stem、固定等长偶返回、同一 rival 返回和固定 D/D 尾，给出全树的逐端点 $B_n$、指数界和最终有限仿射式；
+5. 对双非退化负斜率包络给出全槽奇偶成本尾式及实际平台例，并在另加 H+、真正分歧词干和完整恢复合同后代入既有配置计数。
+
+规范 hull 的最小性、guard 满像、有限来源唯一性、六周期观察数据和闭格端点定义仍是已发表输入。上述结论不扩展为全局 $R$ 的取得性、不扩展为所有归属的统一记忆常数，也不把有限来源数量当作执行、枚举或形式验证。
+
+**证明。** 第一项的条带和有限来源部分是已发表命题的复用，新增部分是它在 simultaneous-tail 问题中的合取应用。第二、三项由命题43.4—43.10证明，第四项由命题43.11—43.19证明，第五项由推论43.22、例及推论43.23和推论43.24证明；其余输入只在所标出的已有命题处使用。每次使用都保留了实际 guard、来源标签、共同历史、固定尾和未观察终端的量词，因此没有引入超出本章范围的对象。证毕。
+
+### 43.22 负返回的余量交换与奇偶预算尾式
+
+固定[定义39.1.2](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13209)中的合法来源数据：$P,Q$ 从 guard 零进入 $s_1,s_2$，共同颜色词为 $h$，且 $|P|=|Q|=|h|=m\ge0$；$U_i,V_i$ 分别合法返回各自 guard，$W_i$ 为指定共同颜色词，且
+
+$$
+|U_i|=|V_i|=|W_i|=L\ge1,\qquad U_0\ne U_1.
+$$
+
+一次固定实际尾 $\xi_1\in D_{s_1}$、$\xi_2\in D_{s_2}$。每个二进制词 $z=z_1\cdots z_k$ 同时指定
+
+$$
+\alpha_z=PU_{z_1}\cdots U_{z_k}\xi_1,\qquad
+\beta_z=QV_{z_1}\cdots V_{z_k}\xi_2,\qquad
+h_z=hW_{z_1}\cdots W_{z_k}.
+$$
+
+两来源都在 $D$ 中。历史长 $m+kL$，只观察各条来源的出发坐标 $0,\ldots,m+kL-1$；终端坐标未观察。两个分量始终使用同一个 $z$，不逐坐标另选来源。
+
+**推论 43.22（双内部尾的负斜率有限预算）。** 设 $L$ 为奇数，$a=(-g)^L=-r$，$0<r=g^L<1$。两个分量的返回映射为
+
+$$
+G_{ji}(x)=A_{ji}-rx,\qquad
+A_j^-:=\min_iA_{ji}<\max_iA_{ji}=:A_j^+\quad(j=1,2).
+$$
+
+使用定理39.2.1的两个非退化规范包络
+
+$$
+H_j=[m_j,M_j],\qquad
+m_j=\frac{A_j^- -rA_j^+}{1-r^2},\qquad
+M_j=\frac{A_j^+ -rA_j^-}{1-r^2},
+$$
+
+并假定固定尾标量 $x_j=\kappa_{s_j}(\xi_j)$ 满足 $m_j<x_j<M_j$。
+
+完整槽清单保留每个分量、每个位置和两种返回：stem 条目为 $(f_{P[\rho:]},h_\rho)$、$(f_{Q[\rho:]},h_\rho)$，$0\le\rho<m$；返回条目为 $(f_{U_i[\rho:]},(W_i)_\rho)$、$(f_{V_i[\rho:]},(W_i)_\rho)$，$i=0,1$、$0\le\rho<L$。以 $\alpha$ 索引这 $2m+4L$ 个条目，记它的分量为 $j(\alpha)$、颜色为 $c_\alpha$、非空后缀映射为 $f_\alpha$，其斜率为
+
+$$
+\gamma_\alpha=(-g)^{s_\alpha}\ne0,\qquad s_\alpha\ge1.
+$$
+
+stem 槽置 $d_\alpha=0$，返回槽置 $d_\alpha=1$。假定完整规范闭阈值
+
+$$
+\theta=\max_\alpha\max\{
+\operatorname{dist}(f_\alpha(m_{j(\alpha)}),J_{c_\alpha}),
+\operatorname{dist}(f_\alpha(M_{j(\alpha)}),J_{c_\alpha})\}>0.
+\tag{43.22.1}
+$$
+
+令 $B_n$ 为全部 $|z|\le n$ 的两分量、全部指定出发观察到相应闭格的最大距离；没有观察时定义 $B_n=0$。则 $B_n$ 是该有限族的精确闭成本，
+
+$$
+B_n<\theta\quad(n\ge0),\qquad B_n\uparrow\theta.
+\tag{43.22.2}
+$$
+
+存在 $n_0\ge2$ 及 $\kappa_0,\kappa_1>0$，使
+
+$$
+B_n=\theta-\kappa_{n\bmod2}r^n\quad(n\ge n_0),\qquad
+r\kappa_0\le\kappa_1\le\kappa_0/r.
+\tag{43.22.3}
+$$
+
+因而最终 $B_{n+2}>B_n$；相邻层允许平台。两个系数由下面的完整临界端点公式确定。
+
+**证明。** 先固定一个分量，省略下标。规范端点满足 $m=A^- -rM$、$M=A^+ -rm$。记固定长度 $k$ 的实际最小值、最大值为 $m_k,M_k$，从 $m_0=M_0=x$ 出发。负斜率使
+
+$$
+m_k=A^- -rM_{k-1},\qquad M_k=A^+ -rm_{k-1}.
+\tag{43.22.4}
+$$
+
+两极值都由实际词取得：最小值的外层用最小平移返回，内层用最大值的见证；最大值反之。递归得到交替使用极小、极大平移的长度 $k$ 词。这个构造不要求吸引子填满 $H$。
+
+置 $D^-=x-m>0$、$D^+=M-x>0$。从(43.22.4)减去规范端点等式，左右余量每步交换并同乘 $r$，故
+
+$$
+\begin{array}{c|cc}
+ &m_k-m&M-M_k\\ \hline
+k\text{ 偶}&r^kD^-&r^kD^+\\
+k\text{ 奇}&r^kD^+&r^kD^-
+\end{array}.
+\tag{43.22.5}
+$$
+
+同一奇偶类的余量随长度严格减小。因此深度不超过 $N\ge1$ 时，两端分别比较长度 $N$ 和 $N-1$；两个候选长度的极值均实际取得。定义
+
+$$
+p_j=\min\{D_j^-,D_j^+/r\},\qquad
+q_j=\min\{D_j^+,D_j^-/r\}>0.
+$$
+
+由 $rp_j=\min\{rD_j^-,D_j^+\}\le q_j$ 及 $rq_j=\min\{rD_j^+,D_j^-\}\le p_j$，有 $rp_j\le q_j\le p_j/r$。该分量全部 $|z|\le N$ 的标量凸包恰为
+
+$$
+K_{j,N}=\begin{cases}
+[m_j+r^Np_j, M_j-r^Nq_j],&N\ge1\text{ 偶},\\
+[m_j+r^Nq_j, M_j-r^Np_j],&N\text{ 奇},\\
+\{x_j\},&N=0.
+\end{cases}
+\tag{43.22.6}
+$$
+
+前两行的每个端点由某个长度 $N$ 或 $N-1$ 的交替极值词取得；$N=1$ 时包括空词。$N=0$ 只有固定尾，必须单列，不能把裁掉另一奇偶类余量后的 $p_j,q_j$ 公式代入零层。
+
+对于深度 $n$，stem 槽的全部后续词为 $|w|\le n$；返回槽的全部后续词为 $|w|\le n-1$，它们由词 $iw$ 实现。更早的块不改变当前出发坐标的后缀值。因此置
+
+$$
+N_\alpha(n)=n-d_\alpha,
+$$
+
+其中返回槽只在 $n\ge1$ 存在；$n=0$ 删除全部返回槽。记 $K_{j,N}=[\ell_{j,N},u_{j,N}]$，允许两端相等，得到精确式
+
+$$
+B_n=\max_{\alpha\ \mathrm{现存}}\max\{
+\operatorname{dist}(f_\alpha(\ell_{j(\alpha),N_\alpha(n)}),J_{c_\alpha}),
+\operatorname{dist}(f_\alpha(u_{j(\alpha),N_\alpha(n)}),J_{c_\alpha})\}.
+\tag{43.22.7}
+$$
+
+空最大值按最小非负成本取零，故空 stems 时 $B_0=0$。终端未观察，没有额外末端颜色槽。距离闭区间是凸函数，给出(43.22.7)的上界；两端实际取得，给出必要下界，负后缀斜率也已由同时测两端处理。不同分量或槽的最大值见证可以是不同的词，但每个见证都使用同一 $z$ 指定的两条完整来源。这里没有把边际最优坐标拼成一个联合来源。
+
+每个有限返回复合把内部尾送进 $\operatorname{int}H_j$，由(43.22.5)也可见两端余量严格为正。每个 $f_\alpha(H_j)$ 非退化，且由(43.22.1)包含于未裁剪扩张 $J_{c_\alpha}+[-\theta,\theta]$。内部点的像严格位于该扩张两端之间，$\theta>0$ 因而使距离严格小于 $\theta$。物理裁剪的区间包含同样蕴含这个未裁剪包含，不增加成本。有限族给 $B_n<\theta$。族包含给单调非降；(43.22.6)的两端趋于规范两端，(43.22.7)遂给 $B_n\to\theta$。这也直接核对了(43.22.1)作为该固定尾族的真实全深度闭阈值，与定理39.3.2一致。
+
+为计算尾式，记 $e_j^-=m_j,e_j^+=M_j$，并定义
+
+$$
+\eta_{j,-,0}=p_j,\quad\eta_{j,+,0}=q_j,\qquad
+\eta_{j,-,1}=q_j,\quad\eta_{j,+,1}=p_j.
+$$
+
+完整临界端点集为
+
+$$
+\mathcal A=\{(\alpha,e):e\in\{-,+\},
+\ \operatorname{dist}(f_\alpha(e_{j(\alpha)}^e),J_{c_\alpha})=\theta\}.
+$$
+
+它非空。固定 $\sigma=n\bmod2$，$n\ge2$ 时槽端点的规范余量恰为
+
+$$
+r^n r^{-d_\alpha}\eta_{j(\alpha),e,\,\sigma\oplus d_\alpha},
+$$
+
+其中 $\oplus$ 是模二加法。临界端点的像距闭格为正，且必为像区间在该侧的最外端；否则另一个端点的距离会大于 $\theta$，违背(43.22.1)。因此向像区间内部移动充分小的距离，格外距离恰减少同样大小。故其临界距离线性支的系数为负，绝对值为 $|\gamma_\alpha|r^{-d_\alpha}\eta_{j(\alpha),e,\sigma\oplus d_\alpha}$。于是最终系数的完整公式为
+
+$$
+\boxed{\displaystyle
+\kappa_\sigma=
+\min_{(\alpha,e)\in\mathcal A}
+|\gamma_\alpha|\,r^{-d_\alpha}
+\eta_{j(\alpha),e,\,\sigma\oplus d_\alpha}>0.}
+\tag{43.22.8}
+$$
+
+这里每个候选均正，直接证明两个系数正。还需排除非临界端点在任意晚层重新支配：(43.22.6)—(43.22.7)及
+$\operatorname{dist}(y,[l,u])=\max\{l-y,0,y-u\}$ 把每种奇偶的 $B_n$ 写成固定有限条 $b_h+s_hr^n$ 的最大值。最大截距为 $\theta$；截距等于 $\theta$ 的支恰来自上述临界端点，最大斜率为 $-\kappa_\sigma$。对于 $b_h<\theta$ 且 $s_h> -\kappa_\sigma$ 的支，只需令
+
+$$
+r^n\le\frac{\theta-b_h}{s_h+\kappa_\sigma};
+$$
+
+其他较低截距支自动不超过临界最大支。有限个正右端允许选择共同 $n_0\ge2$，证明(43.22.3)的精确尾式。
+
+把尾式代入 $B_{n+1}\ge B_n$，偶层到奇层给 $\kappa_0\ge r\kappa_1$，奇层到偶层给 $\kappa_1\ge r\kappa_0$，即所列兼容不等式。两层之差始终为
+
+$$
+B_{n+2}-B_n=\kappa_{n\bmod2}r^n(1-r^2)>0\quad(n\ge n_0).
+$$
+
+若 $\kappa_0=r\kappa_1$，最终偶层到奇层为平台；若 $\kappa_1=r\kappa_0$，最终奇层到偶层为平台。两等号不能同时成立；两不等式都严格时才有最终逐相邻层严格增长。例及推论43.23给出实际平台。$\square$
+
+**精确归属与较大预算。** 对任一固定合法归属，预算恰为 $B_n$ 时的充要条件是(43.22.7)中每个现存槽的两端实际坐标都属于 $O_{c_\alpha}^{B_n}$。必要性来自端点见证；充分性来自 $O_{c_\alpha}^{B_n}$ 的区间性。按开头的投影规则检查等号端点即可；$B_n=0$ 时仍保留实际坐标归属，空观察则无约束。闭格最短距离在 $J_i\subset X$ 中取得，裁剪不改变闭成本。
+
+任意 $b>B_n$ 都可把这有限族的全部目标选在指定格内部，并保持每个误差严格小于 $b$，因此适用于每一种固定合法归属，且来源、共同词和两条实际尾不变。例如 $b_n=(\theta+B_n)/2<\theta$ 实现全部 $|z|\le n$，包括空词。由于 $B_n\uparrow\theta$，任何一个固定 $b<\theta$ 都不能覆盖这个同一无界族。在 $\theta$ 的全族内部尾归属结论与定理39.4.1一致。本推论要求两个非退化包络，不转移到单点竞争包络；后者应使用[定理39.5.2](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13415)的旗标轨道判据。
+
+### 43.23 实际六格中的永久相邻平台
+
+**例及推论 43.23（固定合法尾的次临界平台）。** 取空且相同的 stems、guard 零，并取窗口标签词
+
+$$
+L=3,\quad r=g^3,\qquad
+U_0=V_0=000,\quad U_1=V_1=200,\qquad
+W_0=111,\quad W_1=311.
+$$
+
+此处 $000,200$ 分别表示三个来源窗口标签，$111,311$ 表示三个颜色。所有来源标签 $0,2$ 都是实际 $0\to0$ 边。一次固定两条相同的最终空尾
+
+$$
+\xi_1=\xi_2=(0,0,0,2)0^\infty\in D_0,
+\qquad x_1=x_2=(-g)^3=-r.
+$$
+
+所以每个共同选择词给出的两来源完全相同且合法，$G_0(x)=-rx$、$G_1(x)=1-rx$，两个非退化包络相同：
+
+$$
+H=[m,M]=\left[-\frac r{1-r^2},\frac1{1-r^2}\right],\qquad m<-r<M.
+\tag{43.23.1}
+$$
+
+其完整阈值与全部有限深度成本为
+
+$$
+\theta=M-q_4\in(0,\lambda),\qquad B_0=0,
+\qquad
+\boxed{B_{2j+1}=B_{2j+2}
+=\theta-\frac{r^{2j+4}}{1-r^2}\quad(j\ge0).}
+\tag{43.23.2}
+$$
+
+每一对平台的最大值由实际选择词 $1(01)^j$ 取得。对于每个 $n\ge1$，在恰好成本 $B_n$ 下实际取得全部指定颜色，当且仅当切点 $q_4$ 属于颜色3；$n=0$ 无观察，不需要该条件。
+
+**证明。** 所需常数界可以完全用有理数证明。$g>0$ 且 $g^2+4g-1=0$；多项式 $F(u)=u^2+4u-1$ 在 $u\ge0$ 上严格递增，而
+
+$$
+F(72/305)=-\frac1{93025}<0,
+\qquad F(17/72)=\frac1{5184}>0.
+$$
+
+又 $72\cdot72=5184<5185=17\cdot305$，故
+
+$$
+\frac{72}{305}<g<\frac{17}{72}<\frac14,
+\qquad r<\frac1{64},\qquad
+M<\frac{4096}{4095}<\frac{65}{64}.
+\tag{43.23.3}
+$$
+
+两个返回的全部非临界出发后缀只有 $0,00,000$，指定颜色均为1。其包络像分别为
+
+$$
+f_0(H)=[-gM,grM],\qquad
+f_{00}(H)=[-g^2rM,g^2M],\qquad
+f_{000}(H)=[-rM,r^2M].
+$$
+
+所有这些像的下端大于 $-65/256$，上端小于 $65/1024$。由 $t^2=(1-g)/2$ 得
+
+$$
+q_1=-\frac{11(1-g)}{20}< -\frac{33}{80}< -\frac{65}{256},
+\qquad
+q_2=\frac{23g-3}{20}>\frac{741}{6100}>\frac{65}{1024}.
+$$
+
+最后两个比较分别由 $33\cdot256>65\cdot80$ 与 $741\cdot1024>65\cdot6100$ 得到。因此每个非临界后缀的整个像都在 $\operatorname{int}J_1$，其所有有限来源坐标均有零成本，并实际属于颜色1。这覆盖返回0的三个位置及返回1的后两个位置，两个分量均如此；空 stems 没有其他槽。
+
+唯一正成本类型是返回1的首位置、颜色3。该后缀为 $200$，所以
+
+$$
+G_1(H)=[1-rM,M],\qquad
+1-rM>\frac{4031}{4096}>\frac{31}{32},
+\qquad q_4=\frac{13+27g}{20}<\frac{31}{32}.
+$$
+
+其中 $q_4$ 的上界使用 $g<17/72$，因为 $(13+27\cdot17/72)/20=31/32$。整个像严格在 $J_3$ 上方，最大闭距离遂为 $\theta=M-q_4>0$。另一方面 $\lambda=(1-g)/20$，所以
+
+$$
+q_4+\lambda=\frac{7+13g}{10}
+>1+\frac{21}{3050}
+>\frac{4096}{4095}>M.
+$$
+
+第一个不等式用 $g>72/305$，第二个等价于 $21\cdot4095>3050$。于是 $\theta<\lambda$，没有借助小数近似。
+
+固定尾余量及不超过深度的系数为
+
+$$
+D^-=(-r)-m=\frac{r^3}{1-r^2},\qquad D^+=M+r,
+\qquad
+p=\frac{r^3}{1-r^2},\quad q=\frac{r^2}{1-r^2},\quad p=rq.
+$$
+
+这些最小值选择确实成立：$D^-<D^+/r$ 等价于 $1+r-r^3-r^4=(1+r)(1-r^3)>0$；$D^-/r<D^+$ 等价于 $1+r-r^2-r^3=(1+r)(1-r^2)>0$。唯一临界规范端点是返回1的下端 $m$，它经 $G_1$ 反向映成 $M$。在(43.22.8)中 $d_\alpha=1$、$|\gamma_\alpha|=r$，因此
+
+$$
+\kappa_0=q=\frac{r^2}{1-r^2},\qquad
+\kappa_1=p=\frac{r^3}{1-r^2}=r\kappa_0.
+$$
+
+还须证明(43.23.2)对全部深度成立。$n=1$ 的返回后续深度为零，$G_1(x)=1+r^2=M-r^4/(1-r^2)$，故直接给所列 $B_1$。若 $n=2j+1$、$j\ge1$，返回槽后续深度 $N=2j$，(43.22.6)给最低标量 $m+r^{2j+3}/(1-r^2)$。若 $n=2j+2$、$j\ge0$，$N=2j+1$ 给相同最低标量。经 $G_1$ 后最高坐标均为
+
+$$
+M-\frac{r^{2j+4}}{1-r^2}.
+$$
+
+所有颜色3坐标在 $J_3$ 上方，其他槽零成本，所以这恰为最大成本坐标。交替词 $(01)^j$ 在长度 $2j$ 取得固定长度最小值
+
+$$
+G_{(01)^j}(x)=m+r^{2j}D^-.
+$$
+
+前接返回1便得见证词 $1(01)^j$，长度 $2j+1$，同时属于深度 $2j+1$ 和 $2j+2$ 的树。$j=0$ 就是词1。因而最大值确实取得，偶数平台没有漏掉别的槽。
+
+对 $n\ge1$，$B_n>0$。在达到最大值的颜色3槽，预算 $B_n$ 只能使用唯一最近目标 $q_4$，故必须 $q_4\in C_3$。反向，若该端点归属颜色3，所有最大槽都可用它；其他颜色3槽距离小于 $B_n$，可用格内部目标；所有颜色1槽已在内部，误差可取零。于是条件充分。深度零的空历史成本为零且无归属检查。$\square$
+
+此例证明永久相邻平台在实际 FIB 六格和固定内部 D/D 尾中发生。两条 stems 空且相同，不能从这里推出分歧 SCC、来源竞争或完整记忆下界。
+
+### 43.24 条件正尾式的预算缺口与配置容量
+
+这里使用[定义36.9](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L11179)的完整记忆合同，并复用[定理36.25](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L11832)的联合配置计数及[第38.6节](https://github.com/the-omega-institute/trureturing/blob/cfe06a9af05aff5b3d2ffa4d478cea124842a1a3/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L13043)的共同第一未来论证。不另假定或构造 SCC。
+
+**推论 43.24（H+ 下的有限视界容量代入）。** 固定合法入口词 $P,Q$，分别从 guard 零进入 $s_1,s_2$，共同颜色词为 $h$，$|P|=|Q|=|h|=m$。固定实际尾 $\xi_j\in D_{s_j}$，以及合法自返回 $U_i,V_i$ 和共同颜色块 $W_i$，$|U_i|=|V_i|=|W_i|=L$，其中 $L$ 为偶数、$a=g^L\in(0,1)$、$U_0\ne U_1$。要求 stems 真正分歧：其首次不同位置为固定 $k<m$。共同二进制词定义
+
+$$
+\alpha_z=PU_{z_1}\cdots U_{z_{|z|}}\xi_1,\qquad
+\beta_z=QV_{z_1}\cdots V_{z_{|z|}}\xi_2,\qquad
+h_z=hW_{z_1}\cdots W_{z_{|z|}}.
+$$
+
+两来源经过 $m+|z|L$ 个指定出发观察及来源边后终端未观察；第一来源都接同一固定实际尾 $\xi_1$ 的零误差完整未来 $S_{\xi_1}$。以全部 $|z|\le n$ 的两分量、全部指定出发槽到相应闭格的最大距离定义精确成本 $B_n$，没有观察时成本为零，并包括空词。
+
+明确采用以下附加假设 **H+**：上述一个固定实际族的全部 $|z|\le n$ 的精确闭成本为 $B_n$；存在固定 $\beta,\kappa>0$ 及整数 $n_0\ge1$，使
+
+$$
+B_n=\beta-\kappa a^n\qquad(n\ge n_0).
+\tag{43.24.1}
+$$
+
+H+ 包括字面固定尾与全槽成本，不由一条形式上的正斜率映射或供应构造的名称自动保证。它在这里是显式条件，没有证明这类实际族存在。命题43.16只有在命题43.11的全部实际证书、逐槽严格种子余量和所选 rival tight 锁均成立时才供应这条尾式；要用于本推论，还须另有真正分歧词干及下述实际共同第一未来和恢复合同。例及推论43.23的相同空词干不满足这些分歧条件。
+
+固定预算 $b=\beta-\delta$，满足
+
+$$
+0<\delta<\min\{\beta,\kappa a^{n_0}\}.
+\tag{43.24.2}
+$$
+
+并要求 $b$ 属于所采用恢复合同的预算范围；在亚临界应用中明确保留 $0<b<\lambda$。固定一次合法归属，并取在这个预算与归属下满足完整恢复合同的解码器 $\mathcal A$：它确定、因果、从固定初态出发，每次取得允许有限计算和有限输出批次；输出按序只追加且不可回读；它在全部实际 $\Omega$ 记录上安全，在全部实际 $D$ 记录上逐位置最终生效，包括无限空窗补齐。没有 End、支持上界或免费重放。
+
+完整配置计入所有能影响未来的可读控制、持久与临时数据、计数器、输入及输出位置、时序、可读时钟和输出侧信息。记 $\mathcal C_{b,\mathcal A}(M)$ 为处理完恰好 $M$ 次取得后，在全部实际记录上可能出现的完整配置数。配置可分布在不同记录上。
+
+置
+
+$$
+T=\frac{\log(\kappa/\delta)}{\log(1/a)},\qquad
+n=\lceil T\rceil-1,\qquad M_n=m+nL,\qquad
+\rho=\frac{\log2}{\log(1/a)}.
+$$
+
+则 $n\ge n_0$、$B_n<b$，并有
+
+$$
+\boxed{\displaystyle
+\mathcal C_{b,\mathcal A}(M_n)\ge\frac{2^n}{k+1}
+\ge\frac{1}{2(k+1)}
+\left(\frac{\kappa}{\delta}\right)^\rho.}
+\tag{43.24.3}
+$$
+
+**证明。** 条件(43.24.2)给 $T>n_0$。若 $T=q$ 为整数，则 $n=q-1$，且 $\kappa a^n=\delta/a>\delta$；取 $q$ 只会得到等号成本。若 $q<T<q+1$，则 $n=q<T$，仍有 $\kappa a^n>\delta$。两种情形均有
+
+$$
+n\ge n_0,\qquad T-1\le n<T,\qquad
+B_n=\beta-\kappa a^n<\beta-\delta=b.
+\tag{43.24.4}
+$$
+
+所以这是尾式范围内满足严格成本不等式的最大整数深度。每个指定坐标到闭格的距离小于 $b$，可把最近目标略移入指定格内部而保持误差小于 $b$。深度 $n$ 的树有限，因此两分量可选一个共同的严格误差上界小于 $b$，两条固定尾保持不变。分别接各自零误差未来得到完整实际记录，适用于任意固定合法归属，也适用于正开及逐记录严格余量合同。
+
+现对 $|z|=n$ 的 $2^n$ 个历史使用既有计数。等长且不同的第一返回使 $z\mapsto\alpha_z$ 单射。若两个历史相同，第一来源接同一个 $S_{\xi_1}$ 会有相同完整实际记录，安全性与 $D$ 上逐位置生效将迫使两个来源相同，矛盾；所以历史也不同。每个历史都有第二来源的实际延续，安全性把此刻旧输出限制为两 stems 的共同前 $k$ 标签的某个前缀，至多 $k+1$ 个值。旧输出不可回读，仅作为这个有限集合参与计数。
+
+记此刻完整配置为 $c_z$、旧输出为 $o_z$。若不同 $z,z'$ 的 $(c_z,o_z)$ 相同，继续读取同一个第一来源未来 $S_{\xi_1}$，确定性给相同未来输出；加上相同旧输出，与两个不同 $D$ 来源的逐位置生效矛盾。因此 $2^n$ 个联合对两两不同，配置数至少 $2^n/(k+1)$。同一取得长度比较已计入所有可读时钟、阶段号和输出侧信息，不能另外用它们免费区分配置。最后 $n\ge T-1$ 给
+
+$$
+2^n\ge2^{T-1}=\frac12(\kappa/\delta)^\rho,
+$$
+
+即(43.24.3)。这是定理36.25和第38.6节的计数在本固定有限深度族上的代入。$\square$
+
+**位数与视界。** 若完整配置采用固定宽度二进制表示，截至 $M_n$ 次取得的最坏完整峰值 $H^{\mathrm{fix}}_{b,\mathcal A}(M_n)$ 满足
+
+$$
+H^{\mathrm{fix}}_{b,\mathcal A}(M_n)
+\ge\left\lceil\log_2\mathcal C_{b,\mathcal A}(M_n)\right\rceil
+\ge n-\log_2(k+1)\ge T-1-\log_2(k+1).
+\tag{43.24.5}
+$$
+
+若配置表示为最大长度 $H^{\mathrm{var}}$ 的变长完整二进制串，允许空串，长度至多 $H$ 的串共有 $2^{H+1}-1$ 个，故
+
+$$
+\begin{aligned}
+H^{\mathrm{var}}_{b,\mathcal A}(M_n)
+&\ge\left\lceil\log_2(\mathcal C_{b,\mathcal A}(M_n)+1)\right\rceil-1\\
+&\ge n-1-\log_2(k+1)\ge T-2-\log_2(k+1).
+\end{aligned}
+\tag{43.24.6}
+$$
+
+控制与所有可读辅助信息均已在表示内。若可能配置数无限，任何有限位容量都不够，相应下界自动成立。精确观察视界为
+
+$$
+M_n=m+L(\lceil T\rceil-1),\qquad
+m+L(T-1)\le M_n<m+LT.
+\tag{43.24.7}
+$$
+
+因 $a=g^L$，这也给 $M_n=\log(\kappa/\delta)/\log(1/g)+O(1)$，误差仅由固定 $m,L$ 控制。计数对象是出发观察次数；终端未来的首色尚未取得，不能多算一个终端颜色，也不把该视界解释为物理运行时间。
+
+准确量词是：固定满足 H+ 及分歧、实际延续条件的一族数据后，对每个满足(43.24.2)及合同范围的预算、每个固定合法归属、每个在该预算与归属下满足合同的解码器，都有相应视界的记录族给出下界。解码器可随预算改变；下界是跨记录的最坏容量，不要求一条轨迹经历全部配置，也不给跨预算统一解码器定理。族包含与 H+ 给 $B_n\uparrow\beta$，所以一个固定 $b<\beta$ 不能覆盖这个同一无界族。严格取整提供的余量也不保证一个与预算无关的正比例噪声余量。
+
+本章仅涉及已指定实际族的共同有限尾、有限深度成本、实际端点归属及既有配置计数的条件代入。在命题43.11—43.19的单一 rival 返回供应路线中，命题43.16依据全部实际证书、逐槽严格种子余量和所选 rival tight 锁，把实际中心识别为 $\beta$；没有这一识别时，命题43.17只给实际中心 $B_*$。推论43.24则独立以 H+ 假定其固定族的正尾式，H+ 本身给出 $B_*=\beta$，不额外要求命题43.16的单一 rival 证书。负斜率结果要求两个非退化包络和内部固定 $D/D$ 尾，不能移用于单点竞争包络。平台例的相同空词干与 H+ 容量桥接要求的真正分歧词干分开；H+ 始终是附加条件，不供应实际分支存在性。上述结论不裁定全局转变半径及其取得，不给统一记忆分类、数值实验或物理时空起源结论；配置代入只复用既有计数。
+
+## 43.99 追加锚（本行以下为增补区）
