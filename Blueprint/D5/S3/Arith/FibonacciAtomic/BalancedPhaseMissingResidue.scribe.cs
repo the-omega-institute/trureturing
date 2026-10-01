@@ -44,7 +44,7 @@ internal sealed class BalancedPhaseMissingResidueDocument : IScribeDocumentDefin
                         + "same live seam and End tag on both sources. The two "
                         + "unit initializations remain available.")),
                     Paragraph(Text(
-                        "A zero-window prefix followed by 001 reaches the "
+                        "A prefix consisting of j−1 all-zero windows, followed by 001, reaches the "
                         + "balanced modular phase through a positive return "
                         + "period of the actual row update. The proof encloses "
                         + "every integer bit contribution between sums of "

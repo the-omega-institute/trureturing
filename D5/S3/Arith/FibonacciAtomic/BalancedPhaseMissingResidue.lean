@@ -339,34 +339,20 @@ theorem result (H p a L : Nat) (hH : 2 ≤ H) (hp : p.Prime)
     fun h => not_blocks ((criterion available).mp h)
   let Q := (↑available : Type)
   let read (w : Q) (source : KnownRowFiber H u v) := rawGcd H source.val w.val.val
-  let scan : List Q → PassiveProtocol Q (fun _ => Option Nat) :=
-    fun l => l.foldr (fun i rest => .query i (fun _ => rest)) .stop
-  have scan_reads (l : List Q) (x y : KnownRowFiber H u v)
-      (h : runPassiveProtocol read (scan l) x = runPassiveProtocol read (scan l) y) :
-      ∀ i ∈ l, read i x = read i y := by
-    induction l with
-    | nil => simp
-    | cons b bs ih =>
-      intro i hi
-      simp only [scan, List.foldr_cons, runPassiveProtocol] at h
-      obtain ⟨head, tail⟩ := List.cons.inj h
-      have hb : read b x = read b y :=
-        eq_of_heq (by simpa only [Sigma.mk.inj_iff, true_and] using head)
-      rcases List.mem_cons.mp hi with rfl | hi
-      · exact hb
-      · exact ih tail i hi
+  obtain ⟨protocol, scans⟩ :=
+    D5.S3.Arith.FibonacciAtomic.BottomSiblingBlockResolution.probe_finite_scan read
   have collision : ∃ x y : KnownRowFiber H u v,
       (∀ w : SuccessfulWord L, rawGcd H x.val w.val = rawGcd H y.val w.val) ∧
       (sourceNumber x.val : ZMod H) ≠ (sourceNumber y.val : ZMod H) := by
     by_contra hc
     apply not_identifiable
-    refine ⟨scan Finset.univ.toList, ?_⟩
+    refine ⟨protocol, ?_⟩
     intro x y htrace
     by_contra hne
     apply hc
     refine ⟨x, y, ?_, hne⟩
     intro w
-    exact scan_reads _ x y htrace ⟨w, Finset.mem_univ _⟩ (by simp)
+    exact scans x y htrace ⟨w, Finset.mem_univ _⟩
   obtain ⟨x, y, hshort, hne⟩ := collision
   obtain ⟨j, full⟩ := actual_common_depth_fullness H hH u v hrow
   obtain ⟨x', hxlen, hxres⟩ := full (sourceNumber x.val)
