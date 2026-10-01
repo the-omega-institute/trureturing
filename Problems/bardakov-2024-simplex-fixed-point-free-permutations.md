@@ -63,7 +63,8 @@ equations to A. Dimakis and I. G. Korepanov, J. Math. Phys. 62 (2021) 051701.
 The identity maps satisfy the polygon equation, its dual and the mixed
 relation, so the product of the transpositions of adjacent factors solves the
 linear $2k$-simplex equation; restricted to the basis tensors of $V$ with basis
-$X$, it is the simple map of the fixed-point-free involution on $X$.
+$X$, it is the simple map on $X^{2k}$ of the fixed-point-free involution of
+the $2k$ coordinate positions.
 Mihalache and Mochida cite the paper of Bardakov et al. only for general
 properties of simplex equations; they do not state this specialization or
 mention Question 2. The new content of
