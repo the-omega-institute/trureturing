@@ -27,7 +27,7 @@ of TauCeti. The selected source closure is:
 Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.
 The donor distribution has no `NOTICE` file.
 
-The retained source has two declarations. The first constructs the prime-power
+The adapted source has two authored theorem declarations. The first constructs the prime-power
 quotient filtration, proves exactness and computes its trace by a split block
 presentation. The second constructs the trace-dual criterion and a Chinese
 remainder lift with nonzero residue trace. Intermediate helpers are local proof
