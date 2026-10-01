@@ -12116,3 +12116,130 @@ unique-shared-five hypotheses. It does not rule out six or more
 columns, nonflat5 or3 heights, or more than one nonconcentrated
 prime. The proof reuses the same continuation and actual AP-mass
 interface; no new sieve computation or Lean verification is claimed.
+
+## 90. A distorted actual-source budget retains every shared-prime height
+
+Scope: one original EB1 source, H_3=1, R={p}, full shared-prime height A=H_p, and disjoint concentrated supports S_1,S_2. Nothing bounds A or the other original prime heights. Use the actual pruned whole quotients of Report385 section75 and the actual column data of section80. This is a consumer of existing source integration and the reserved distortion measure, not another moment theorem or a new sieve table.
+
+### Existing suppliers and the new interface
+
+The closest existing integration interfaces are Report378 SF8--SF9/NS10 and Report379 RF7--RF9. Report385 sections75/80 supply the actual own-color quotient, the pure-power deletions, original-private witnesses and exact column counts. Section89 supplies the cofactor distortion price. The additional interface puts the unconditioned cofactor law on the actual full product with the p-coordinate and retains the common original pure-power ownership when the two color inequalities are combined.
+
+Let X_i be the full S_i carrier. Let E_i avoid ALL actual p-free quotient classes in color i, both original m and active3m. It is nonempty by section75. For any probability P_i on X_i with mu_i=P_i(E_i)>0, work on
+
+    Haar_(Z/p^A) times P_i.
+
+The probability is not conditioned on E_i.
+
+Put
+
+    S_A=sum_(a=1..A)p^(-a),
+    I_i={a:i belongs to V_(p^a)},
+    I_0=I_1 intersect I_2,
+    J_i={a:original3p^a has ternary root i}.
+
+All these sets describe one fixed original source. I_0 is not assumed to be an initial segment.
+
+### Pure-power mass is exact after the established private-preserving pruning
+
+In color i, section75 retains exactly the original pure p^a with a in I_i and the active original3p^a with a in J_i. Each retained class has a private point in that whole quotient. After fixing the ternary root, they are pure p-power cylinders on the full p-coordinate. Two such cylinders either are disjoint or one contains the other; containment would destroy privacy of the contained quotient class. Thus they are pairwise disjoint, including a p^a original against a3p^b original with a>b. This last case uses quotient privacy, not an incorrect claim that the two original numerical moduli are comparable.
+
+Consequently their union mass is EXACTLY
+
+    beta_i=sum_(a in I_i)p^(-a)+sum_(a in J_i)p^(-a).
+
+Every original3p^a, 1<=a<=A, is present in this branch. For A>=2, reuse Report371 section2's actual top fan of a private point of p^A: it supplies a proper original multiple p^A m, m>1. For A=1, Report350 EB8 supplies an actual exponent-one child. If this child contains3, divisor closure supplies3p^A. Otherwise m contains a concentrated prime because R={p}; its original p^A m is concentrated, and DP1 with proper divisor e=p^A supplies3p^A. Divisor closure supplies all lower3p^a. This argument does not infer a proper multiple from the weaker statement p^A not in G.
+
+Hence J_1 and J_2 partition{1,...,A}. Since I_1 union I_2 is the same full set,
+
+    beta_1+beta_2=2S_A+sum_(a in I_0)p^(-a).        (PS)
+
+There is no proved requirement that a singleton V_(p^a) agrees with the owner of3p^a; no such simplification is used. Individually,
+
+    beta_i<=2S_A,
+    1 not in J_i ==> beta_i<=2S_A-1/p.
+
+These are inventory bounds on the exact masses, not claims that maximizing assignments are realizable.
+
+### Actual mixed mass and a finite column upper bound
+
+Write
+
+    U_i={m>1:gcd(m,3p)=1, pm original, supp(m) subset S_i},
+    a_m=max{a:p^a m is original},
+    epsilon_m=1 if p^a_m m belongs to G, and0 otherwise.
+
+Section80 already supplies the exact list of mixed labels: p^a m for every1<=a<=a_m and its3-child at all those heights except the globally maximal top when epsilon_m=1. Let
+
+    c_m=2 sum_(a=1..a_m)p^(-a)-epsilon_m p^(-a_m).
+
+For any cofactor prices w_i(m) bounding P_i of every residue class modulo m, define
+
+    C_i=sum_(m in U_i)c_m w_i(m).
+
+The actual mixed union on E_i times the full p-coordinate must cover the complement of the pure cylinders. Summing its actual original class masses gives
+
+    (1-beta_i)mu_i
+      <=sum_(actual mixed d=p^a m or3p^a m in color i)
+           p^(-a) P_i(actual cofactor AP of d)
+      <=C_i.                                      (MS)
+
+Each summand uses its own actual phase in one product law. The final bound forgets those phases only in the upper direction. It retains every original p-height, and retains the missing-top correction. It neither changes the source nor asserts that the class bounds can be attained jointly.
+
+### Coupling the same original pure-power inventory
+
+Set
+
+    L=2-2S_A-C_1/mu_1-C_2/mu_2.
+
+Combining MS with the exact PS gives
+
+    sum_(a in I_0)p^(-a)>=L.                       (CS)
+
+No common probability on unrelated quotient candidates is introduced: both inequalities concern the two actual quotients of the same original source, and their pure-power terms share the exact original inventory.
+
+This can feed the existing DP12 threshold, rather than only producing a scalar display. For1<=h<=A and0<=k<h, if
+
+    L>sum_(a=1..k)p^(-a)+sum_(a=h+1..A)p^(-a),
+
+then at least k+1 members of I_0 lie at depths at most h. Indeed the right side is an upper bound for any subset with at most k members in the first h positions, even after granting it every deeper position. This does not assume that I_0 itself is an initial segment. Such a consequence supplies actual pure-power ancestors to the already proved DP12 matching criterion; it does not show that all its inequalities hold or that a legal strict descent follows.
+
+### Distortion consumers without a shared-prime height restriction
+
+If S_i avoids5 and7, the actual p-free cofactor base has numerical multiplicity at most two and moduli coprime to210. Reuse section89's reserve3/10 with initial value40/7<5.860938. It gives
+
+    mu_i>3/10,
+    w_i(m)=2^omega(m)/m.
+
+Let W_i=sum_(m in U_i)w_i(m). Since c_m<2/(p-1), MS yields the height-independent necessary tests
+
+    W_i>3(p-3)/20,
+    1 not in J_i ==> W_i>3(p^2-2p-1)/(20p).        (DT)
+
+For p=5, choose a color without7; for p=7, choose a color without5. At least one exists because S_1,S_2 are disjoint. No reserve is granted to the other color unless its own support permits it. If both supports avoid5,7, both laws are available and CS also has the explicit strict lower bound
+
+    sum_(a in I_0)p^(-a)
+       >2-2S_A-(10/3)(C_1+C_2).
+
+For p=5, DT is W_i>3/10, or W_i>21/50 when i does not own15. If U_i has two members, divisor closure makes it either{q,q^2} or two primes. The first has W_i<=24/121<3/10. Any pair of primes other than{11,13} has W_i<=2/11+2/17=56/187<3/10. Thus a no7 color with only two columns must own15 and have EXACTLY U_i={11,13}. A no7 color not owning15 has at least three columns, since the largest two-column weight is48/143<21/50.
+
+For p=7, DT is W_i>3/5, or W_i>51/70 when i does not own21. All cofactor primes are at least11. The four largest possible distinct weights occur at11,13,17,19, and
+
+    2/11+2/13+2/17+2/19=25800/46189<3/5.
+
+Thus the no5 color has at least five columns. In the non-owning case, the six largest weights occur at11,13,17,19,23,29, and
+
+    sum 2/q=22012256/30808063<51/70.
+
+It therefore has at least seven columns. Composite weights are at most4/(11*13), below even2/29, so no composite displaces a displayed maximizer. These are a few exact rational comparisons, not a rerun of the published continuation or an enumeration of cover candidates.
+
+### The general per-color column lower bound is already available
+
+No new proof of u_i>= (p-1)/2 is needed. In section80, apply FC1 and its exact column identity at the actual quotient height A_i:
+
+    p<=N_i(A_i)=c_i(A_i)+j_i(A_i)+2T_i(A_i)-g_i(A_i)
+      <=2+2u_i.
+
+Integer parity gives u_i>=(p-1)/2, at every full original height A; A_i need not equal A. Consequently, at p=7, the preceding no5 color bound gives total u>=8, strengthened to u>=10 if that color does not own21. At p=5, a no7 color not owning15 gives total u>=5. The separately proved flat-five result remains stronger when A=1.
+
+The main new bridge is MS plus the exact shared-owner relation PS, not these few numerical consumers. Arbitrary A, actual I_0, original phases and the finite column coefficients remain visible. No proof that the coupled capacities are jointly attainable, no unrestricted noncoverage result, and no new Lean verification is asserted.
