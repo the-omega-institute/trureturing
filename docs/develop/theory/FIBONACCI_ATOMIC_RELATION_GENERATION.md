@@ -35459,6 +35459,29 @@ $$
 
 范围内的 Robin 验证，并在同一来源中保留了精确的 prime-power cell 与 signed-triangular residual。有限证书按 CA 指数剖面和相邻 CA 插值组织；FIB 地址按加法窗口和接缝组织。两者之间没有来源保持映射，且该文明确把无限事件上的统一目标留为未证。故重复该有限计算不会推进 FIB 到 §250.2 的点值条件。
 
+它仍然给当前 FIB 窗口一个可复用的有限推论。若沿用
+
+$$
+V=F_r,\qquad \lceil V/10\rceil\le g\le\lfloor V/5\rfloor,
+\qquad N_g=1+Vg,
+$$
+
+则 $F_r\ge2$ 时 $N_g\le F_r^2$。由 $F_r<\varphi^{r-1}$，只要
+
+$$
+r\le169866504820749141983216,
+$$
+
+便有
+
+$$
+\log_{10}N_g
+<2(r-1)\log_{10}\varphi
+<7.1\times10^{22}.
+$$
+
+因此 Polak 预印本所声称的有限定理，若其外部证书被接受，可覆盖该窗口中所有 $N_g>5040$。这是对已有有限验证的范围更新，不是新的 FIB 估计：它没有处理 $g>F_r/5$、更高秩的整数，或 §250 的无限点值条件。
+
 ### 253.3 Möbius 取消诊断确认了真正的符号缺口
 
 [Estrada 的诊断论文](../../../Library/Analytic/estrada2026mobius_cancellation_barrier.md)把路线写成
