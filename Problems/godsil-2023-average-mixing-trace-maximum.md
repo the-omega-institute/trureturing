@@ -98,18 +98,18 @@ theorem is `result : claim`. The public definitions are the spectral
 idempotent `idempotent`, the average mixing matrix `avgMixing` and
 `claim`.
 
-- Module statement identity: `sha256:a18694125f930068533859174221c8ff2eac41b22497caacd9d36e917f49eed3`.
+- Module statement identity: `sha256:e9ed4aafa0539ad392a8da26418ae5af60eaf51671d3d661f56e05577edd7ac5`.
 - `result`: `sha256:543de5ce995d1f90520172a150daffb22fe40d8024fbab20b31098cb15fd7dd0`.
 - `claim`: `sha256:6886baf6f8f18b6815d1b15135636c68dd967e4517343a3140921b3dd9f47e86`.
 - `avgMixing`: `sha256:7611a60f0f8b9b05283e0dfe4e1ecda2ba69c0aa90a6b731bbba19c013596049`.
 - `idempotent`: `sha256:64ed2f0892f8f978123e3bf15ad51c0d5ff7dc5b38413a148671ba2d3f512d5a`.
-- Freeze event: `sha256:3f1732e065aa4a6d75d6a24e34efc6f66ea3bda553d3ea7de22fd90c77acad61`.
+- Freeze event: `sha256:4219620e5a540f5ea48ae5ee766904b8e95a474f3e74c4ec82c1208c48408599`.
 
 The proof uses only `propext`, `Classical.choice` and `Quot.sound`, with
-no `native_decide`, `sorry` or new axiom. The private theorem
+no `native_decide`, `sorry` or new axiom. Inside `result`, the local fact
 `vertex_bound` proves steps 1–3 for any vector $u$ with $Au=\theta u$ and
-$\|u\|^2=u_a$; `simplex_bound` proves step 4; `complete_diag` proves
-step 5.
+$\|u\|^2=u_a$; the local fact `simplex_bound` proves step 4; the local fact
+`complete_diag` proves step 5.
 
 ## Triage
 
@@ -120,12 +120,12 @@ Tier 1 published conjecture; resolution `Proved` by
 
 ### What the settlement shows
 
-- **Proved in the private lemmas:** `vertex_bound` gives
+- **Proved inside `result`, as local facts:** `vertex_bound` gives
   $(E_\theta)_{aa}\le1-1/n$ at every vertex $a$ with a neighbour, for
   every simple graph on $n$ vertices, and `simplex_bound` turns it into
   $(\widehat M_A)_{aa}\le1-2/n+2/n^2$; neither assumes connectivity,
   which `result` uses only to give every vertex a neighbour.
-- **Follows from those lemmas, not stated as a declaration:** the trace
+- **Follows from those local facts, not stated as a declaration:** the trace
   bound $n-2+2/n$ holds for every graph on $n\ge2$ vertices without
   isolated vertices. Isolated vertices are exactly where the literal
   all-graphs reading fails, each contributing $1$ to the trace.
