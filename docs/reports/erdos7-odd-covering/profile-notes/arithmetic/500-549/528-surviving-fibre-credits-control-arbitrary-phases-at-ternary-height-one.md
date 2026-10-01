@@ -28332,3 +28332,189 @@ conditions in an arbitrary minimum whole cover. Larger actual
 boundary complexity and volume remain unresolved. These are
 ordinary symbolic applications and deductions, not new Lean
 verification or a resolution of unrestricted Erdős#7.
+
+## A sparse set of prime directions permits unrestricted higher-order interactions
+
+The actual source need not collapse to a private-point Dirac
+as soon as one original has four prime factors. The published
+three-factor source reused at FC1099 can pay additional actual
+classes from its positive reserve. The following application
+allows arbitrarily large supports and heights in those classes.
+It does not replace their actual probabilities by Haar masses.
+
+### Pay the exceptional originals on the same raw source
+
+Start with ANY finite family of distinct odd nonunit moduli,
+with their literal original residues. Split it into F_3, whose
+moduli have at most three distinct prime factors, and E, the
+remaining originals. Numerical labels and residues are unchanged.
+Run the source of
+[Schroeder, version1.0](../../../../../../Library/Arith/schroeder2026noncoverage.md)
+on F_3. Use its fixed schedule and the complete coordinate
+heights of the whole family. Equivalently, lift unused upper
+digits and absent coordinates uniformly as in FC1099. Write P_3
+for this ONE raw probability and R_3 for its F_3-survivor set.
+The reused conclusions are
+
+    P_3(R_3)>1/16,
+    P_3(X_p in a depth-e prefix | complete earlier coordinates)
+          <=min(1,C_p/p^e),
+    C_p=(p-1)/[(p-2)(1-delta_p)].
+
+The prefix bound is for arbitrary prefixes, including those
+specified by E. It is not restricted to prefixes appearing in
+the source-generating subfamily. Uniform lifting preserves it
+at every depth needed by the complete original family.
+
+For a numerical nonunit m define the raw upper weight
+
+    w(m)=product_(p^e exactly dividing m) C_p/p^e,
+    epsilon(E)=sum_(m an original label in E)w(m).
+
+Iterated conditioning, without independence of the actual
+coordinates, bounds the P_3-probability of the original m-class
+by w(m). Therefore, for the FULL survivor set R,
+
+    xi=P_3 restricted to R,
+    xi(1)>1/16-epsilon(E).                      (FC1217)
+
+This is a direct use of the existing cylinder caps and the
+nonnegative deletion estimate, also used in Report785's
+additional-label budget. No general perturbation theorem is
+being introduced. In particular epsilon(E)<1/16 suffices for
+noncoverage of the entire finite family. Bounds below are all
+taken on raw P_3; neither xi nor its normalization is asserted
+to preserve P_3's conditional caps.
+
+### Sum all exceptional heights and supports before conditioning
+
+Suppose there is a finite set Lambda of primes at least67 such
+that EVERY original in E has its ENTIRE prime support in Lambda.
+Impose the numerical condition
+
+    W_Lambda=sum_(p in Lambda)2/(p-2)<=1.        (FC1218)
+
+For these primes the reused schedule has delta_p=1/2 and hence
+C_p=2(p-1)/(p-2). For one fixed support A subset Lambda,
+numerical distinctness allows at most one original for each
+positive exponent vector on A. Completing to all such vectors
+gives the convergent upper bound
+
+    sum_(m in E, supp(m)=A)w(m)
+       <=product_(p in A)sum_(e>=1)C_p/p^e
+        =product_(p in A)2/(p-2).
+
+This completion is solely a numerical upper bound. It adds no
+original class or new phase to the actual probability space.
+Set w_p=2/(p-2) and let e_k(w) be the elementary symmetric sum
+on k distinct elements of Lambda. Since every exceptional
+support has size at least four,
+
+    epsilon(E)<=sum_(k>=4)e_k(w)
+              <=sum_(k>=4)W_Lambda^k/k!
+              <=sum_(k>=4)1/k!<=5/96.
+
+The middle inequality uses the distinct-index terms in the
+nonnegative expansion of W_Lambda^k. For the final rational
+bound, 1/(4+j)!<=(1/24)5^(-j) for j>=0, and sum_j5^(-j)=5/4.
+Combining with FC1217 yields the complete-family conclusion
+
+    P_3(R)>1/96>0.                             (FC1219)
+
+Thus any family satisfying FC1218 and the stated entire-support
+condition is noncovering. The number of primes in Lambda, the
+support size of an exceptional modulus, all exponents, the
+number of originals and all their residues remain unrestricted.
+Every other original may be an arbitrary member of F_3; in
+particular its prime factors need not lie in Lambda. No
+divisor-closure, irredundancy, minimum-cover or phase-alignment
+assumption is used. The probability lower bound is under P_3,
+not a claimed uniform Haar-density bound.
+
+### The same source also permits a completely unrestricted later tail
+
+Instead impose the exceptional-support condition only on the
+actual head component C containing3 at a cutoff B>=1000. Here
+F_3 consists of that component's actual head originals with at
+most three prime factors; E contains all its other head originals.
+The finite Lambda lies in C. Every companion head original and
+every original ending after B can be arbitrary.
+
+Construct xi_C by FC1217 on this actual C-carrier, resolved to
+the whole family's heights. Under FC1218 its mass m_C>1/96.
+Nonnegative restriction and the raw prefix caps give exactly
+the ordered-pair supplier already used at FC1100:
+
+    G_C=Gamma_(Q_C)(xi_C)
+         <=product_(p in C)[1+C_p(3p-1)/(p-1)^2].
+
+Tensor this ONE measure with the actual companion survivor
+measure eta_O of FC1093, whose mass r_O>1/5, then normalize.
+Every head class lies entirely in one of these disjoint
+coordinate blocks, so this is an actual full-head survivor law.
+FC1094--1095 and the same finite product/Euler-six estimates
+FC1101--1102 give
+
+    Gamma((xi_C tensor eta_O)/(m_C r_O))
+       <13848480 product_(3<=p<=B)(p/(p-1))^6.   (FC1220)
+
+The product is over primes; 13848480=96*5*28851. The finite
+28851 product is reused from the published source certificate,
+not recomputed. For a general exceptional budget epsilon<1/16,
+the same formula uses 5*28851/(1/16-epsilon) instead.
+
+Consequently the existing complete-tail endpoint FC1096 applies
+whenever
+
+    13848480 product_(3<=p<=B)(p/(p-1))^6
+        <=pi(B)(log pi(B)+loglog pi(B)-3)^2.
+
+The reused prime-product and prime-counting estimates ensure this
+for every sufficiently large B, uniformly over the present
+families. This supplies a noncoverage theorem with arbitrary
+later original supports, heights and phases. An empty tail is
+already handled by the positive head mass. No core-size,
+inventory-volume or maximal-element-count restriction is needed
+in this source application; it pays every actual exception once.
+
+### Unbounded high-support cores occur within the admitted class
+
+The condition is not a bound on the total interaction-graph
+size or on the number of factors per original. Fix
+Lambda_0={67,71,73,79}. For any r choose distinct primes
+q_i>79 with q_i>2^(i+4)+2, 1<=i<=r, and set
+Lambda=Lambda_0 union {q_1,...,q_r}. Then
+
+    W_Lambda<8/65+1/8=129/520<1.               (FC1221)
+
+Let P be any finite odd-prime set containing3 and Lambda,
+and choose arbitrary positive finite
+heights H_p. On Q=product_(p in P)p^H_p take the numerical family
+
+    {m|Q: m>1, m has at most three prime factors}
+       union {m|Q_Lambda: m>1},
+    Q_Lambda=product_(p in Lambda)p^H_p.
+
+Here prime-factor counts are DISTINCT counts. This union is
+divisor-closed and numerical duplicates are included only once.
+It contains3q for every q in P other than3, so its entire head
+interaction graph is connected. It also contains Q_Lambda,
+whose support has size r+4, with no bound on its heights.
+Every literal phase assignment to this finite family is covered
+by FC1219. The four-factor label67*71*73*79 is always present,
+so the family is outside both the source's three-factor theorem
+and its separate extension requiring every original with
+largest prime at most10^9 to have at most three factors.
+This example demonstrates the admitted geometric
+scope; it asserts neither irredundancy for arbitrary assignments
+nor the existence of a minimum covering system.
+
+FC1217--1221 reuse the published three-factor source and existing
+deletion/tail interfaces to cover an additional class with
+unbounded higher-order interactions. They are ordinary symbolic
+applications, not new Lean verification or a new general
+probability theorem. The unrestricted gap remains: arbitrary
+minimum whole covers need not satisfy the exceptional cap-sum
+condition or have their higher-order supports confined to a
+Lambda obeying FC1218. No argument here forces such a set or
+a cutoff meeting these hypotheses.
