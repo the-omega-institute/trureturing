@@ -58,6 +58,18 @@ internal sealed class CloitreActualRightProfileDocument : IScribeDocumentDefinit
                 + "all its periodic points. DepthEntry holds for every N at least three. "
                 + "No monotonicity of C or arbitrary-width seed is assumed."),
             Describe.Lean(
+                DescribeId.Create("cloitre-actual-foundations"),
+                DeclarationHandle.Create(Prefix + "actual_foundations"),
+                H("Unconditional actual finite-prefix foundations"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For N at least three, every actual iterate X(N,i) lies in D(N), "
+                    + "and C(N)=C(g(N))+C(N-g(N)). Both conclusions follow from "
+                    + "the immutable finite-prefix construction without Hyp21_1. "
+                    + "The conditional profile theorem consumes this shared proof."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("cloitre-actual-full21-3"),
                 DeclarationHandle.Create(Prefix + "full21_3"),
                 H("Every fixed right width"),
