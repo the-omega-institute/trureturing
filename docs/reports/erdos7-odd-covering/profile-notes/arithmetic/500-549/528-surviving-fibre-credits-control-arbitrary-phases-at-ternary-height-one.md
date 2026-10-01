@@ -27904,3 +27904,291 @@ to satisfy these joint tests. A large core or large actual
 first-suffix inventory is not excluded merely by a small global
 height in one coordinate, and no bound for the missing cases
 has been substituted into the original quantifiers.
+
+## Missing-divisor generators separate inventory volume from its boundary
+
+Keep the last-prime setting of FC1198--1202, with the same
+minimum whole cover, present P, old core, actual phases and
+fixed selected/light partition. Write
+
+    K_T=J_(T,p), K_A=J_(A,p),
+    S=|K_A|+sum_(T proper subset A)|K_T|.         (FC1203)
+
+For a proper T, the z carrier is the finite divisor box on the
+l_T=k+|T| allowed directions inside Q_C/P. Each nonempty K_T
+is a divisor downset containing1. Let G_T be the divisibility-
+minimal elements of this carrier outside K_T. Both K_T and G_T
+refer to the actual first suffix; no new labels or phases are
+chosen. If K_T is empty, the entire actual proper-T future row
+is absent, as in FC1195, and all its terms below are omitted.
+
+Suppose z is an actual future old part in this row, or a used
+interface dividing such an old part. There is an original
+A_T*z'*p^e with z|z'. Every j in J dividing any t|z gives
+A_T*j*p|A_T*z'*p^e, so j belongs to K_T by divisor closure.
+Since K_T is a subset of J, on this entire actual interval
+
+    J intersect Div(t)=K_T intersect Div(t),
+    E_T(t)=E_(K_T)(t):=|Div(t) without K_T|,
+                                     for all t|z. (FC1204)
+
+This statement does not identify J and K_T outside the actual
+interval. It uses numerical labels and does not impose an
+ancestor's own phase on its descendant.
+
+### One minimal missing divisor carries the residual quotient
+
+Fix a nonempty proper row and write R=R_T>=2. If z is outside
+K_T, choose one g in G_T dividing z by a fixed numerical rule,
+and put v=z/g. Every proper divisor of g belongs to K_T, so
+E_(K_T)(g)=1. Every multiple of g in the carrier is outside
+K_T, since a divisor downset cannot contain such a multiple.
+
+If z is LIGHT, the distinct divisors g*t with t|v are missing.
+If z is minimal high, g itself is low because R>=2, hence v>1;
+for each q|v the same argument applies to the low divisor z/q.
+Using FC1204 and the existing minimality rule gives
+
+    light z outside K_T ==> tau(v)<=R-1;
+    used minimal-high z ==> tau(v/q)<=R-1 for every q|v,
+                            tau(v)<=2(R-1).    (FC1205)
+
+The map z maps to(g,v) is injective. Any chosen g divides an
+actual z, hence lies within the declared finite carrier.
+The argument requires neither a bound on |K_T| nor a bounded
+height. Counting quotients with the existing polynomials D_R
+gives the simultaneous suppliers
+
+    a_gen=|K_A|+sum_(T proper:K_T nonempty)
+                   [|K_T|+|G_T|D_(R_T-1)(l_T)],
+    b_gen=sum_(T proper:K_T nonempty)
+                   (R_T-1)|G_T|D_(2(R_T-1))(l_T). (FC1206)
+
+Here a_gen bounds EVERY actual light core section at p^e,
+including the full-anchor section, and b_gen bounds the
+activation of the ENTIRE selected family across all heights.
+The latter counts each interface once with its unchanged cap.
+FC1204 holds for every actual p^e descendant, so the formulas
+do not replace higher-suffix phases by first-suffix phases.
+
+In contrast to multiplying |K_T| by a divisor polynomial,
+FC1206 pays the inventory volume once and charges its missing
+boundary separately. It can be inserted directly in FC1198.
+For example, if K_T=Div(j_T) within its carrier, its minimal
+missing elements are the available pure powers
+q^(v_q(j_T)+1), at most l_T of them, regardless of the heights
+of j_T. The full-anchor volume remains in a_gen and has not
+been absorbed into this boundary count.
+
+## Principal inventory boxes allow volume growing with the last prime
+
+Assume that each NONEMPTY proper row has the additional shape
+K_T=Div(j_T), with j_T in its finite carrier. The full-anchor
+K_A may have arbitrary shape. The following split improves the
+uniform size range supplied by this shape; it does not assert
+pointwise dominance over every finite bound in FC1206.
+
+Fix a proper row, abbreviate R=R_T, and let t be the number of
+prime directions with positive exponent in j_T. Call these
+the active directions, and put n=l_T-t. Write z=x*y, where x
+uses the other n directions and y uses the active directions.
+The supports are disjoint, and the exact missing-divisor count is
+
+    E_(K_T)(xy)=tau(x)tau(y)-tau(gcd(y,j_T)).     (FC1207)
+
+In particular y in K_T gives (tau(x)-1)tau(y). All uses of
+this formula on an actual interval are justified by FC1204.
+
+### Light parts outside the box have only bounded divisor patterns
+
+If a light z is outside K_T and y belongs to K_T, then x>1.
+FC1207 implies tau(x)<=R and tau(y)<=R-1. These possibilities
+are counted by D_R(n)D_(R-1)(t).
+
+If y is outside K_T, it is divisible by a boundary generator
+g=q^(v_q(j_T)+1) on an active direction. Fix one such g; there
+are at most t choices. FC1205 gives tau(z/g)<=R-1, hence both
+x and y/g have at most R-1 divisors. Their count is at most
+t D_R(n)D_(R-1)(t), using the weaker threshold R for x to
+combine the two cases. The encoding(g,x,y/g) is injective.
+Including every z already in K_T yields the uniform light bound
+
+    A_T^box=|K_T|+(t+1)D_R(n)D_(R-1)(t).        (FC1208)
+
+No bound on the exponents inside j_T is used to count its
+volume; all |K_T| slots are paid in the first term.
+
+### Minimal high parts with active factors have lower outside degree
+
+For a used minimal-high z with y=1, its missing count is
+tau(x)-1. Its inventory is therefore bounded by F_(R,1)(n)
+from FC1195. This use of F has internal threshold2R, and top
+support ceil(log_2(R+1)); it is distinct from the quotient
+threshold2(R-1) in FC1205.
+
+Suppose instead y>1. Then x is a PROPER divisor of z in the
+same T carrier. Minimality gives tau(x)-1<R, so tau(x)<=R.
+The baseline factor A_T retains every required anchor even
+when x omits active anchor directions from z.
+
+If y belongs to K_T, z outside K_T forces x>1. Choose a prime
+q|x. Since q is a minimal missing generator on a zero direction,
+FC1205 applied with g=q gives tau(y)<=2(R-1). Directly count
+the pair(x,y) by D_R(n)D_(2(R-1))(t), without multiplying by
+the number of possible q.
+
+If y is outside K_T, choose an active generator g as in the
+light case. The pair of quotient components has the threshold
+2(R-1) by FC1205, while the separate minimality argument still
+gives tau(x)<=R. At most t choices of g therefore give the
+used-interface bound
+
+    B_T^box=F_(R,1)(n)
+                  +(t+1)D_R(n)D_(2(R-1))(t).   (FC1209)
+
+These are counts of interfaces, not probabilities. Multiply
+each by its capacity R_T-1 when paying selected originals.
+
+### One complete budget pays all inventory volume and all boundaries
+
+Define, omitting empty proper rows,
+
+    a_box=|K_A|+sum_T A_T^box,
+    b_box=sum_T(R_T-1)B_T^box.
+
+The SAME partition and full head source used in FC1198 now
+give the finite sufficient test
+
+    b_box/p+[a_box+5(K_1-1)]/(p-1)<1.           (FC1210)
+
+One may also use FC1206 or valid rowwise minima of its counts
+with FC1208--1209. All full-anchor originals, pure powers,
+companion originals and all terminal heights remain included.
+
+Here is an explicit range allowing unbounded first-suffix
+inventories. Fix0<rho<1 and assume S<=rho*p. Since every active
+direction contributes a factor of at least two to |K_T|,
+
+    2^t<=|K_T|<=S<=rho*p, so t<=log_2 p.
+
+The powers inside each box can still be arbitrarily large
+subject to this actual volume bound. Only proper rows need
+the box shape; every element of K_A contributes to S.
+
+For15, the largest proper threshold is8 in the empty-T row.
+The F_(8,1) term has leading coefficient binom(n,4). The other
+rows have degrees at most three. For105, the largest threshold
+is48, whose F_(48,1) term has leading coefficient binom(n,6);
+the other rows have degrees at most five. Using n<=l_T<=c,
+the fixed divisor polynomials give uniform upper bounds
+
+    P=15:
+      a_box<=S+O((c+1)^3(log p)^3),
+      b_box<=7c^4/24+O((c+1)^3(log p)^4);
+    P=105:
+      a_box<=S+O((c+1)^5(log p)^6),
+      b_box<=47c^6/720+O((c+1)^5(log p)^7).
+
+These are upper bounds, not asymptotic equalities for actual
+loads. No assertion n asymptotic to c is needed. Substitution
+in FC1210, with the unchanged companion K_1=O((log p)^2),
+excludes for all sufficiently large largest support primes p
+
+    P=15,  S<=rho*p,
+      c<=gamma p^(1/4),
+                    0<gamma<(24(1-rho)/7)^(1/4);
+    P=105, S<=rho*p,
+      c<=gamma p^(1/6),
+                    0<gamma<(720(1-rho)/47)^(1/6), (FC1211)
+
+under the proper-row principal-box assumption. The displayed
+error terms divided by p tend to zero uniformly in these
+ranges. The main light charge is at most rho+o(1); the strict
+gamma bounds leave positive room for it and the selected
+charge on one complete probability law. Neither bounded M
+nor bounded global s is assumed.
+
+## An actual growing inventory separates the two complete suppliers
+
+The following irredundant NONCOVER witnesses strict separation
+of the sufficient numerical tests. It is not a minimum whole
+cover, a new restricted noncoverage theorem, or a #7 counterexample.
+Its complete joint realization prevents treating independently
+chosen inventory values as an actual family.
+
+Take a sufficiently large prime p, let H=floor(p/8)-1>=1, and
+take all old primes below p. The core head moduli are the
+nonunit elements of
+
+    D_0=Div(15*7^H) union Div(3*7^(H+4)).
+
+Add each pure old prime from11 to p, excluding p itself.
+The future moduli are exactly d*p for d in D_0, including
+the pure p label. Thus the old core is C={3,5,7}, c=3, P=15,
+and the numerical family is distinct, odd and divisor-closed.
+Its inventories satisfy
+
+    J=Div(7^H),
+    K_T=Div(7^H) for all T subset {3,5},
+    G_T={7^(H+1)} for each proper T,
+    S=4(H+1), M=H+1.
+
+The allowed dimensions in the three proper rows are1,2,2,
+with thresholds8,4,2. Direct substitution into FC1206 gives
+
+    a_gen=4(H+1)+D_7(1)+D_3(2)+D_1(2)
+         =4(H+1)+13,
+    b_gen=7D_14(1)+3D_6(2)+D_2(2)=143.
+
+By comparison FC1183 gives W_15(3)=20 and V_15(3)=180.
+Therefore the two complete first-moment expressions satisfy
+
+    143/p+[4(H+1)+13+5(K_1-1)]/(p-1) -->1/2,
+    180(H+1)/p+[20(H+1)+5(K_1-1)]/(p-1) -->25. (FC1212)
+
+The first is below1 for all sufficiently large p; the old
+FC1200 majorant fails. The companion term tends to zero by
+FC1134. In fact exactly one future label,3*7^(H+4)*p, is
+selected, and the light section has4(H+1)+7 labels. Thus the
+stated bounds hold for this example without invoking minimum-
+whole-cover capacities. Exact used-label counts could improve
+both selected majorants further. FC1212 compares the stated
+uniform inventory suppliers, not their optimal refinements.
+
+Here is one literal phase assignment. Give3 and5 residue zero,
+and15 the phase(1,1). Put v=(2,2) on the3,5 coordinates.
+For each a|15 and1<=i<=H, give a*7^i the phase v modulo a
+and7-residue r_a*7^(i-1), with the four r_a distinct in{1,2,3,4}.
+For H<i<=H+4, the extra a*7^i labels have a in{1,3}; use
+distinct r_a=1,2 there and the same anchor projection.
+These first-nonzero-digit7-cylinders are mutually disjoint.
+All added old pure primes have residue zero.
+
+For every future d*p, take the old projection of the same
+point with anchor v and7-coordinate zero. Assign pairwise
+distinct p-roots to these labels, giving pure p root zero.
+There are4(H+1)+8 future labels, fewer than p for sufficiently
+large p, so reserve one unused root r_*.
+
+Each head tower has a private point in its own7-cylinder with
+anchor v, p-root r_*, and all extra old prime coordinates2.
+For head3 or5 use zero in its own coordinate,2 in the other,
+and7-coordinate zero; for15 use(1,1). Again use r_* and the
+extra coordinates2. Each extra pure prime has a private point
+at its own zero, all other extra coordinates2, anchor v,
+7-coordinate zero and p-root r_*.
+
+Every future label has a private point at its assigned p-root,
+anchor v,7-coordinate zero and all extra coordinates2. The
+same point with p-root r_* avoids the entire family. Thus the
+phases, private points, inventory and uncovered point belong
+to one actual finite model. They are not a source for a
+minimum-cover conclusion beyond the supplier comparison.
+
+FC1203--1212 are ordinary symbolic deductions. They reuse the
+existing whole-class capacities and complete same-source
+last-prime averaging; they add no Lean verification. The
+unrestricted missing step remains a structural one: no result
+here forces every minimum whole cover to have principal
+proper-row inventories, S<=rho*p and the required core size.
+The non-principal and larger-volume cases remain unexcluded.
