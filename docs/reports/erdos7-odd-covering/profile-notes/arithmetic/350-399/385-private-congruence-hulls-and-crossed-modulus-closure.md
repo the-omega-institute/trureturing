@@ -10482,3 +10482,78 @@ retains their joint source instead of optimizing a different cofactor
 at each ternary word. CP16 supplies a necessary high-level coverage
 obligation. It does not show that the available originals violate it,
 resolve their copied-label collisions, or force the CP11--CP12 descent.
+
+## 73. A nonconcentrated small prime is forced at ternary height one
+
+Keep one EB1-selected original whole distinct odd cover with ternary
+height H=1. Normalize its prime classes by the existing common
+translation, retaining all original nonternary heights and phases. Put
+
+    R={q>3: V_q={1,2}},
+    S_i={q>3: V_q={i}} for i=1,2.
+
+These sets partition the nonternary support; either S_i may be empty.
+No all-concentrated hypothesis is imposed. Then
+
+    R intersect {5,7,11,13} is nonempty.               (CP17)
+
+### One common root assignment removes the opposite concentrated primes
+
+DP9 and [Report364, SI1](../../321-384/364-singleton-cofactor-ideal-and-forced-colors.md#1-actual-singleton-roots-and-a-common-cofactor-ideal)
+supply the needed source statement. For each q in S_j, the ORIGINAL
+class A_(3q) exists, has first-three root j, and is the unique q-bearing
+original at its own first-q root r_q=a_(3q) mod q. Every other original
+divisible by q has a different first-q residue. This quantifies over
+actual original classes at arbitrary q-height, not only their private
+projections.
+
+Fix i in {1,2}. Simultaneously set the first-q coordinate to r_q for
+every q in S_(3-i), and the ternary coordinate to i. CRT permits these
+choices at the SAME source point, independently of all full coordinates
+at primes in R union S_i. The higher digits at the fixed primes are
+arbitrary. An original containing any q in S_(3-i) cannot cover this
+point: its only possible representative at r_q is A_(3q), whose ternary
+root is the opposite one. All originals involving those primes vanish
+simultaneously.
+
+Consequently the actual subfamily with nonternary support contained in
+R union S_i covers the WHOLE ternary branch i. Indeed, prescribe any
+full coordinates at R union S_i, complete them with the preceding
+common root assignment, and apply original whole coverage. Every
+surviving original is independent of the discarded coordinates, so
+these same surviving classes cover every extension of the prescribed
+retained coordinates. No phase or numerical label is reassigned.
+
+### The surviving two covers share a nonconcentrated small prime
+
+Restrict this retained subfamily by the ONE affine map x=i+3t,
+discarding originals incompatible with that branch. The pure3 class
+at root0 is inactive. Every surviving quotient modulus m is greater
+than one and coprime to6. Since H=1, only original labels m and3m can
+map to m; numerical multiplicity is at most two. Their actual image
+phases are
+
+    t = 3^(-1)(a_d-i) mod m.
+
+All retained nonternary exponents are unchanged. This gives a whole
+AP cover B_i with support contained in R union S_i. The common support
+of B_1 and B_2 is therefore contained in
+
+    (R union S_1) intersect (R union S_2) = R.
+
+Apply the already established Report348 SO1: those two whole covers
+share a prime in {5,7,11,13}. That prime lies in R, proving CP17.
+Empty S_i cause no exception; the argument uses no witness from S_i.
+
+If p is the only nonconcentrated prime, CP17 forces
+p in {5,7,11,13}, with arbitrary original p-height and arbitrary other
+nonternary heights. If a nonconcentrated prime p>=17 occurs, some
+different prime among5,7,11,13 must also be nonconcentrated.
+
+CP17 strengthens CP14 by reusing the same arithmetic input and the
+existing singleton-root theorem. It does not force two nonconcentrated
+primes when the unique one is in {5,7,11,13}, establish monotonicity of
+pure-power private colors, create additional Hall slots, or supply
+strict descent in those remaining cases. Section71 retains the full
+ancestor deficit there. No new sieve computation, squarefree-shadow
+argument or Lean verification is asserted.
