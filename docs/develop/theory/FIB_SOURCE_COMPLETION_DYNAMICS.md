@@ -10432,10 +10432,10 @@ $$
 
 兄弟 $p0,p1$ 的尾分别为 $y_0\in T_{0,K},y_1\in T_{1,K}$；其尾差 $h=y_1-y_0$ 与当前差分别为 $h$ 和 $s(qh-\delta)$，给出 $F(h)$。反向，对 $H_K$ 的每一个差值，分别将其两个实际尾接到窗口前缀 $0^n$ 与 $0^{n-1}5$，两条接缝合法，支持均低于 $3(n+K)$。故每一个差值都由一对实际来源共同端点实现，而不是独立选择标量坐标。
 
-零属于 $H_K$，$F(0)=\delta$；若 $h<0$，则 $F(h)=\delta-qh>\delta$。对 $0\le h\le d$，有 $\delta-qh\ge h$，所以 $F(h)=\delta-qh$；对 $h\ge d$，两式 $\delta-qh\le h$ 与 $qh-\delta<h$ 给出 $F(h)=h$。这证明分段式。负轴上
+零属于 $H_K$，$F(0)=\delta$；若 $h<0$，则 $F(h)\ge\delta-qh>\delta$。对 $0\le h\le d$，有 $\delta-qh\ge h$，所以 $F(h)=\delta-qh$；对 $h\ge d$，两式 $\delta-qh\le h$ 与 $qh-\delta<h$ 给出 $F(h)=h$。这证明分段式。负轴上
 
 $$
-F(h)-d=q(d-h)=q|h-d|,
+F(h)-d\ge q(d-h)=q|h-d|,
 $$
 
 非负轴上的分段式同样给出所述全轴下界。$\square$
