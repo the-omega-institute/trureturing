@@ -297,6 +297,17 @@ The criterion retains the previous construction, local volume equality,
 coordinate-density, completeness and curvature clauses, with metric
 uniqueness confined to the chosen quotient smooth structure.
 
+For this same constructed source metric, let $K$ be a measurable horizontal
+subset of $\mathbb{C}$ and let $H>0$. The source region with horizontal
+coordinate in $K$ and height greater than $H$ has volume
+$\operatorname{area}(K)/(2H^2)$, with the equality interpreted in the
+extended nonnegative reals. The argument identifies the inverse-chart image
+with this actual coordinate region, uses the same orthonormal map and the
+measure-preserving `WithLp` product coordinates, and integrates the derived
+height density $h^{-3}$. Finite horizontal area therefore gives finite source
+tail volume. This does not identify a cusp quotient or provide a region
+covering an entire quotient; cusp geometry and core coverage remain open.
+
 These checks compiled under the project pins using the unchanged cited
 external sources and only `propext`, `Classical.choice` and `Quot.sound`.
 They are temporary applications of existing results; no new named project
