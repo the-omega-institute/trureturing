@@ -98,18 +98,18 @@ theorem is `result : claim`. The public definitions are the spectral
 idempotent `idempotent`, the average mixing matrix `avgMixing` and
 `claim`.
 
-- Module statement identity: `sha256:f3ad8da0a10efb8e839077b995e914932eb32b242fa4bb9c270995b8f23c9110`.
+- Module statement identity: `sha256:a18694125f930068533859174221c8ff2eac41b22497caacd9d36e917f49eed3`.
 - `result`: `sha256:543de5ce995d1f90520172a150daffb22fe40d8024fbab20b31098cb15fd7dd0`.
 - `claim`: `sha256:6886baf6f8f18b6815d1b15135636c68dd967e4517343a3140921b3dd9f47e86`.
 - `avgMixing`: `sha256:7611a60f0f8b9b05283e0dfe4e1ecda2ba69c0aa90a6b731bbba19c013596049`.
 - `idempotent`: `sha256:64ed2f0892f8f978123e3bf15ad51c0d5ff7dc5b38413a148671ba2d3f512d5a`.
-- Freeze event: `sha256:3e9439b1a900462ce82edb57e9cf2d0f84b28e0df68e6afbb321cbd1e31c03e6`.
+- Freeze event: `sha256:3f1732e065aa4a6d75d6a24e34efc6f66ea3bda553d3ea7de22fd90c77acad61`.
 
 The proof uses only `propext`, `Classical.choice` and `Quot.sound`, with
 no `native_decide`, `sorry` or new axiom. The private theorem
 `vertex_bound` proves steps 1–3 for any vector $u$ with $Au=\theta u$ and
-$\|u\|^2=u_a$; `simplex_bound` proves step 4; `complete_eigen` and
-`complete_diag` prove step 5.
+$\|u\|^2=u_a$; `simplex_bound` proves step 4; `complete_diag` proves
+step 5.
 
 ## Triage
 
