@@ -96,7 +96,8 @@ private theorem kernel_iff (f : E → E → F) (hf : IsSignTable f) (c : Coeff) 
     rw [hc, ht6, hline]
     apply Prod.ext <;> funext i <;> exact CharTwo.add_self_eq_zero _
 
-private def weight (c : Coeff) : Nat := (Finset.univ.filter (fun i => c i = 1)).card
+/-- Hamming support weight of a seven-section coefficient vector. -/
+def weight (c : Coeff) : Nat := (Finset.univ.filter (fun i => c i = 1)).card
 
 private theorem weight_complement (c : Coeff) :
     weight c + weight (fun i => c i + 1) = 7 := by
