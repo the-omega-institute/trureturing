@@ -1252,3 +1252,144 @@ is essential; a first-layer-only deficit need not pay repeated additions.
 This allocation supplies a lower certificate for the same host. It does
 not yet compare that certificate with its signed Robin budget, exclude
 the original low-loss candidate, or control all five-window sources.
+
+## Compare the joint certificate with the separate bounds
+
+Write
+
+$$
+\mathcal L_s(N)=L_r+
+\sup_{0\le h\le h_0}
+\{h\log u_0-K_{\mathcal P}(h)+c_j(h)\}.
+$$
+
+At $h=0$, the deficit vanishes and the preceding phase certificate is
+recovered: $\mathcal L_s(N)\ge L_r+c_j(0)$.
+
+For the capacity comparison, let $K_v(h)$ be the same complete deficit
+over all primes $p\nmid v$, and let $K_r(h)$ be its part at $r$. Their
+exact weak-layer capacity is $A_{+,v}(h)$ from above, so finite
+layer-cake summation gives
+
+$$
+K_v(h)=\int_0^h A_{+,v}(t)\,dt,
+$$
+
+$$
+\sup_{0\le h\le h_0}\{hE-K_v(h)\}
+=\int_0^{h_0}(E-A_{+,v}(t))_+\,dt.
+$$
+
+For the second equality, the integrand before taking its positive part
+is nonincreasing. Choosing the price where it changes sign, or an
+interval endpoint if there is no crossing, attains its positive-area
+integral. Threshold ties change neither integral.
+
+The exact index block already paid satisfies
+$L_r\ge he\log r-K_r(h)$. Also
+$K_v(h)\ge K_{\mathcal P}(h)+K_r(h)$: primes dividing $V$ cannot
+occur among the actual additions, and $r\nmid vV$. Consequently
+
+$$
+L_r+h\log u_0-K_{\mathcal P}(h)+c_j(h)
+\ge h\log u-K_v(h).
+$$
+
+When $y\ge6$ and $h_0\le1/3$, the already cited envelope
+$A_{+,v}(t)\le U_y(t)-\Delta_v(t)$ therefore gives
+
+$$
+\boxed{
+\mathcal L_s(N)\ge
+\max\{I_v(\log u),\ L_r+c_j(0)\}.
+}
+$$
+
+This comparison uses the complete exact eligible deficit. An upper
+approximation to that deficit still yields a valid lower certificate,
+but its resulting value need not retain this dominance comparison.
+Exact deficits do not require factoring $u_0$: the finite prime prefix,
+known reference exponents, and eligibility probes suffice. No bound on
+the computational cost at the growing source scale is asserted.
+
+For the same actual host and a chosen price $h$, put
+
+$$
+B_h=B_r-h\log u_0+K_{\mathcal P}(h),
+\qquad B_r=T_s(N)-R_s(v)-L_r.
+$$
+
+Then $c_j(h)>B_h$ is sufficient for strict Robin at that host. If
+$B_h<0$, nonnegativity already pays it. If $B_h\ge0$, every prime
+capable of an edge of residual cost at most $B_h$ lies below the finite
+cutoff
+
+$$
+P_h=\max\{s,\exp((B_h+1)/(1-h))\}.
+$$
+
+Indeed $p>P_h$ implies $\log p>1$, $a_p=0$, and
+
+$$
+b_s(p)-h\log p
+\ge(1-h)\log p-s/p>B_h.
+$$
+
+Checking eligible prime phases and their residual costs in that prefix
+can exclude every phase word costing at most $B_h$. Nonnegative edges
+allow a cheapest path with at most three edges, including zero-cost
+edges; an absent phase class is never presumed nonempty. For $j=0$
+and $B_h\ge0$, the empty word remains an obstruction to this particular
+strict test. The parameter $h$ here is a resource price, not the cofactor
+in $N=dh$.
+
+## A strict allocation gain and the remaining arithmetic obligation
+
+A finite layered allocation illustrates the distinction from taking a
+maximum. It is not an exhibited FIB residual candidate. Take three
+available layers, each with resource one, with phases $0,0,1$ and costs
+$1/20,1/20,4/5$, and consume all three. At $h_0=1/3$, the capacity
+optimum, raw phase cost and residual phase cost are respectively
+
+$$
+K(h_0)=\frac{17}{30},\qquad
+\sup_{0\le h\le h_0}\{3h-K(h)\}=\frac{13}{30},\qquad
+c_1(0)=\frac45,\qquad c_1(h_0)=\frac7{15}.
+$$
+
+Thus the joint certificate gives
+
+$$
+\frac{13}{30}+\frac7{15}=\frac9{10}
+>\max\left\{\frac{13}{30},\frac45\right\}=\frac45,
+$$
+
+equal to this allocation's actual cost. The separate capacity optimum
+is attained at $h_0$: before $h=1/20$ its slope is three, and afterwards
+its slope is one. Naively adding the raw phase cost instead would give
+$37/30$, exceeding the actual $9/10$. This example shows a genuine
+gain in the allocation model and why the positive residual is needed;
+it establishes no gain on the qualifying low-loss arithmetic hosts.
+
+For the original actual sources, the sufficient comparison is now
+
+$$
+\mathcal L_s(N)>T_s(N)-R_s(v),
+$$
+
+or a source-preserving exclusion of any candidate where it fails. Every
+term still belongs to the same host: the resource is $\log u_0$, the
+endpoint uses its actual gcd and index-prime valuation, and eligibility
+comes from that same $v,r,V$. If $u_0=1$, its endpoint is zero and the
+supremum contributes zero; restoration-only hosts do not acquire a
+spurious phase loss. Tied removed layers stay in the exact removal cost.
+For $N=dh$, valuations are $v_p(d)+v_p(h)$, including common primes;
+this allocation never optimizes those two factors independently.
+
+The exact deficit and finite phase-prefix certificate provide an
+additional interface for the missing comparison. No uniform lower bound
+paying that signed budget has been established. The original window,
+residue, low-loss divisor incidence, cofactor $h=1$, small-prime cofactors
+and all-candidate scope of FIB §233.5 remain obligations. A larger finite
+search, a positive phase cost, or the abstract strict-gain example is not
+a proof of the complete weighted Robin inequality or RH.
