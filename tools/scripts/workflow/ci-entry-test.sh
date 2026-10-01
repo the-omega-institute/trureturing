@@ -129,6 +129,30 @@ run_entry push "$AFTER" $'\n# comment\n' CI_PUSH_BEFORE="$BEFORE"; expect_error
 case_name=exclusions-only; new_repo "$case_name"; at_commit "$AFTER"
 run_entry push "$AFTER" '!tools/*' CI_PUSH_BEFORE="$BEFORE"; expect_error
 
+# CI_CHANGED_PATHS_FILE receives the NUL-separated changed paths whenever a base exists.
+expect_paths() {
+  local want="$1" file="$2"
+  [[ $RC -eq 0 ]] || { fail "exit $RC, want 0; log: $LOG"; return; }
+  [[ -f "$file" ]] || { fail "no changed-paths file"; return; }
+  [[ "$(tail -c 1 "$file" | od -An -tx1 | tr -d ' \n')" == 00 ]] || { fail "changed paths are not NUL-terminated"; return; }
+  local got; got="$(tr '\0' '\n' < "$file")"
+  [[ "$got" == "$want" ]] || { fail "changed paths '$got', want '$want'"; return; }
+  passed=$((passed + 1)); echo "PASS $case_name"
+}
+
+case_name=push-paths; new_repo "$case_name"; at_commit "$AFTER"; out="$WORK/paths-$case_name"
+run_entry push "$AFTER" 'docs/*' CI_PUSH_BEFORE="$BEFORE" CI_CHANGED_PATHS_FILE="$out"; expect_paths tools/a.txt "$out"
+
+case_name=pr-paths; new_repo "$case_name"; at_commit "$MERGE"; out="$WORK/paths-$case_name"
+run_entry pull_request "$MERGE" 'tools/*' CI_PR_HEAD="$PR_HEAD" CI_CHANGED_PATHS_FILE="$out"; expect_paths tools/b.txt "$out"
+
+case_name=new-branch-no-paths; new_repo "$case_name"; at_commit "$AFTER"; out="$WORK/paths-$case_name"
+printf 'stale\0' > "$out"
+run_entry push "$AFTER" 'docs/*' CI_PUSH_BEFORE=0000000000000000000000000000000000000000 CI_CHANGED_PATHS_FILE="$out"
+if [[ $RC -ne 0 ]]; then fail "exit $RC, want 0; log: $LOG"
+elif [[ -e "$out" ]]; then fail "changed-paths file left without a base"
+else passed=$((passed + 1)); echo "PASS $case_name"; fi
+
 for step in remote-list remote-remove ref-list ref-delete; do
   for polarity in hit miss; do
     case_name="cleanup-$step-$polarity"; new_repo "$case_name"; at_commit "$AFTER"

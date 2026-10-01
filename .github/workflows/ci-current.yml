@@ -25,6 +25,7 @@ env:
   CACHE_WRITES: ${{ (github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-'))) || github.event_name == 'pull_request' }}
   REPORT: .lake/build/stratalint/raw-lean-report.json
   CLI: tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll
+  SCRIBE: tools/StrataLint.Scribe.Documents/bin/Release/net10.0/StrataLint.Scribe.Documents.dll
 
 jobs:
   current:
@@ -41,6 +42,7 @@ jobs:
         env:
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
           CI_PUSH_BEFORE: ${{ github.event.before }}
+          CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
           CI_HIT_PATHS: |
             *
             !README.md
@@ -96,6 +98,21 @@ jobs:
           if [[ "$DELTA_OUTCOME" == success ]]; then
             case "$DELTA_HIT" in true|false) ;; *) echo "CI_ENTRY_ERROR delta hit output is '$DELTA_HIT'" >&2; exit 2 ;; esac
           fi
+      # The judge build reads tools/, the Blueprint definitions compiled into
+      # StrataLint.Scribe.Documents and the root build configuration. The key is
+      # taken before anything is built, and an exact hit skips the build.
+      - id: judge_key
+        if: steps.entry.outputs.hit == 'true'
+        run: echo "key=judge-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('tools/**', '!tools/**/bin/**', '!tools/**/obj/**', '!tools/**/.lake/**', 'Blueprint/**/*.scribe.cs', 'Directory.Build.props', 'Directory.Packages.props', 'global.json', '.editorconfig') }}" >> "$GITHUB_OUTPUT"
+      - id: judge
+        if: steps.entry.outputs.hit == 'true'
+        continue-on-error: true
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            tools/StrataLint.Cli/bin/Release/net10.0
+            tools/StrataLint.Scribe.Documents/bin/Release/net10.0
+          key: ${{ steps.judge_key.outputs.key }}
       - if: steps.entry.outputs.hit == 'true'
         uses: actions/setup-dotnet@v5
         with:
@@ -146,14 +163,34 @@ jobs:
           STRATALINT_ACCEPT_COLD_BUILD: '1'
         run: make lean-report
       - name: Build the judge
-        if: steps.entry.outputs.hit == 'true'
+        if: steps.entry.outputs.hit == 'true' && steps.judge.outputs.cache-hit != 'true'
         run: dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -p:RestoreLockedMode=true -nologo
+      # The judge outputs are a function of the keyed sources, so they are saved
+      # as soon as the build succeeds.
+      - if: ${{ success() && steps.entry.outputs.hit == 'true' && env.CACHE_WRITES == 'true' && steps.judge.outputs.cache-hit != 'true' }}
+        continue-on-error: true
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            tools/StrataLint.Cli/bin/Release/net10.0
+            tools/StrataLint.Scribe.Documents/bin/Release/net10.0
+          key: ${{ steps.judge_key.outputs.key }}
       - name: Current-tree rules
         if: steps.entry.outputs.hit == 'true'
         run: dotnet "$CLI" check-current --candidate-lean-report "$REPORT"
       - name: Scribe content
         if: ${{ !cancelled() && steps.entry.outputs.hit == 'true' }}
-        run: tools/scripts/workflow/scribe-content-checks.sh "$REPORT"
+        env:
+          CHANGED_PATHS: ${{ runner.temp }}/changed-paths
+        # Markdown formulas are judged for the documents this change touches;
+        # without a base commit the entry writes no path list and every document
+        # is judged.
+        run: |
+          if [[ -f "$CHANGED_PATHS" ]]; then
+            tools/scripts/workflow/scribe-content-checks.sh "$REPORT" "$SCRIBE" "$CHANGED_PATHS"
+          else
+            tools/scripts/workflow/scribe-content-checks.sh "$REPORT"
+          fi
       - name: Delta rules
         if: ${{ !cancelled() && steps.delta_entry.outputs.hit == 'true' }}
         run: |

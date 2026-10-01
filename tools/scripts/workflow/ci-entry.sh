@@ -4,7 +4,9 @@
 # Environment: CI_HIT_PATHS (one bash pattern per line; `*` also matches `/`;
 # a leading `!` excludes; blank lines and `#` lines are ignored; a path hits
 # when it matches an including pattern and no excluding one), GITHUB_EVENT_NAME, GITHUB_SHA,
-# GITHUB_OUTPUT, CI_PR_HEAD (pull_request), CI_PUSH_BEFORE (push).
+# GITHUB_OUTPUT, CI_PR_HEAD (pull_request), CI_PUSH_BEFORE (push), and optionally
+# CI_CHANGED_PATHS_FILE, which receives the NUL-separated changed paths whenever
+# a base commit exists and is removed otherwise.
 # Output: hit=true|false in GITHUB_OUTPUT. Pull requests compare the event's
 # merge commit M with its first parent B; pushes compare event.before with the
 # pushed commit. A push range that cannot be read hits. Any other failure
@@ -34,6 +36,9 @@ finish() {
 }
 
 [[ -n "${CI_HIT_PATHS:-}" ]] || fail "CI_HIT_PATHS is empty"
+if [[ -n "${CI_CHANGED_PATHS_FILE:-}" ]]; then
+  rm -f -- "$CI_CHANGED_PATHS_FILE" || fail "cannot clear $CI_CHANGED_PATHS_FILE"
+fi
 [[ "${GITHUB_SHA:-}" =~ ^[0-9a-f]{40}$ ]] || fail "GITHUB_SHA must be a 40-hex commit"
 head="$(git rev-parse --verify HEAD)"
 [[ "$head" == "$GITHUB_SHA" ]] || fail "checkout $head differs from event commit $GITHUB_SHA"
@@ -74,6 +79,9 @@ excluded() {
 
 changes="$(mktemp)"
 git diff --name-only --no-renames -z "$base" "$head" > "$changes" || fail "cannot diff $base..$head"
+if [[ -n "${CI_CHANGED_PATHS_FILE:-}" ]]; then
+  cp -- "$changes" "$CI_CHANGED_PATHS_FILE" || fail "cannot write $CI_CHANGED_PATHS_FILE"
+fi
 changed=0 matched=0
 while IFS= read -r -d '' path; do
   changed=$((changed + 1))
