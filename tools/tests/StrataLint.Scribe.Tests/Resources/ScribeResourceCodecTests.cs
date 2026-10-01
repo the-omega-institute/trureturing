@@ -1,7 +1,7 @@
 using System.Text;
 using StrataLint.Scribe;
 
-namespace StrataLint.Scribe.Tests.Resources;
+namespace StrataLint.Scribe.Tests;
 
 public sealed class ScribeResourceCodecTests
 {
@@ -101,6 +101,36 @@ public sealed class ScribeResourceCodecTests
 
         Assert.Equal(encoded, ScribeResourceCodec.Encode(decoded));
         Assert.Contains("\"additionalMembers\":[\"D5/S1/Scale/Other.member\"]", Encoding.UTF8.GetString(encoded), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void LeanDerivedFormulaMarkerSurvivesRoundTripWhenSourceIsImplicit()
+    {
+        var declaration = LeanDeclarationRef.Create("D5/S1/Scale/Other.member");
+        var formula = DefinitionDsl.Equal(DefinitionDsl.Num(1), DefinitionDsl.Num(1));
+        StatementProjectionFixtureLoader.RestoreDerived(formula, declaration);
+        var describe = DocumentBlock.Describe.Restore(
+            DescribeId.Create("derived"),
+            DefinitionDsl.H("Derived"),
+            DescribeStatement.FromLean(declaration),
+            AssessedProvenance.FromRepo(),
+            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("derived"))),
+            formula,
+            null,
+            null,
+            new DescribeKindSource.Authored(DescribeKind.Remark));
+        var definition = DocumentDefinition.Create(
+            ScribeNode.Create(
+                "resource-digest",
+                DefinitionDsl.H("Derived"),
+                DefinitionDsl.Blocks(describe),
+                sourcePath: "Blueprint/D5/S1/Scale/Derived.scribe.cs"),
+            "Blueprint/D5/S1/Scale/Derived.scribe.cs");
+
+        var decoded = ScribeResourceCodec.Decode(ScribeResourceCodec.Encode(definition));
+        var restored = Assert.IsType<DocumentBlock.Describe>(decoded.Document.Content.Items[0]);
+        Assert.Equal(StatementFormulaProvenance.LeanDerived, restored.FormulaProvenance);
+        Assert.True(StatementProjectionFixtureLoader.IsDerivedFrom(restored.StatementFormula!, declaration));
     }
 
     private static DocumentDefinition Definition() => DocumentDefinition.Create(

@@ -286,24 +286,49 @@ public static class ScribeResourceCodec
         "provenance", WriteProvenance(value.AssessedProvenance),
         "content", WriteBlocks(value.Content),
         "statementFormula", value.StatementFormula is null ? null : WriteFormula(value.StatementFormula),
+        "statementFormulaProvenance", value.FormulaProvenance.ToString(),
         "statementSource", value.StatementSource is null ? null : WriteStatementSource(value.StatementSource),
         "claim", value.OpenProblemResolutionClaim is null ? null : WriteClaim(value.OpenProblemResolutionClaim));
 
     private static DocumentBlock.Describe ReadDescribe(JsonElement value)
     {
-        var obj = Typed(value, "Describe", "id", "title", "statement", "kindSource", "provenance", "content", "statementFormula", "statementSource", "claim");
+        var obj = Typed(value, "Describe", "id", "title", "statement", "kindSource", "provenance", "content", "statementFormula", "statementFormulaProvenance", "statementSource", "claim");
         var statement = ReadStatement(obj, "statement");
         var kindSource = ReadKindSource(obj, "kindSource");
-        return DocumentBlock.Describe.Restore(
+        var statementFormula = ReadNullableFormula(obj, "statementFormula");
+        var statementSource = ReadNullableStatementSource(obj, "statementSource");
+        var expectedProvenance = ParseEnum<StatementFormulaProvenance>(obj, "statementFormulaProvenance");
+        if (expectedProvenance == StatementFormulaProvenance.LeanDerived
+            && statementSource is null)
+        {
+            if (statementFormula is null || statement is not DescribeStatement.LeanDeclaration lean)
+            {
+                throw new ScribeResourceException(
+                    ScribeResourceErrorCode.InvalidValue,
+                    "Lean-derived formula provenance requires a Lean declaration and formula.");
+            }
+
+            StatementProjectionFixtureLoader.RestoreDerived(statementFormula, lean.Value);
+        }
+
+        var restored = DocumentBlock.Describe.Restore(
             DescribeId.Create(ReadString(obj, "id")),
             Heading.Create(ReadString(obj, "title")),
             statement,
             ReadProvenance(obj, "provenance"),
             ReadBlocks(obj, "content"),
-            ReadNullableFormula(obj, "statementFormula"),
-            ReadNullableStatementSource(obj, "statementSource"),
+            statementFormula,
+            statementSource,
             ReadNullableClaim(obj, "claim"),
             kindSource);
+        if (restored.FormulaProvenance != expectedProvenance)
+        {
+            throw new ScribeResourceException(
+                ScribeResourceErrorCode.InvalidValue,
+                "Statement formula provenance does not match the decoded statement source.");
+        }
+
+        return restored;
     }
 
     private static DocumentBlock.Describe ReadDescribe(JsonObject value) => ReadDescribe(Element(value));

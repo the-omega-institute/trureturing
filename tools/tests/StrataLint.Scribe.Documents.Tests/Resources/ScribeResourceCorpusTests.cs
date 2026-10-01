@@ -3,11 +3,16 @@ using StrataLint.Engine;
 using StrataLint.Scribe;
 using StrataLint.Scribe.Documents;
 using Xunit;
+using Xunit.Abstractions;
 
-namespace StrataLint.Scribe.Documents.Tests.Resources;
+namespace StrataLint.Scribe.Documents.Tests;
 
 public sealed class ScribeResourceCorpusTests
 {
+    private readonly ITestOutputHelper output;
+
+    public ScribeResourceCorpusTests(ITestOutputHelper output) => this.output = output;
+
     [Fact]
     public void EveryDocumentDefinitionSurvivesResourceRoundTrip()
     {
@@ -57,7 +62,12 @@ public sealed class ScribeResourceCorpusTests
             failures.Count == 0,
             $"Resource round-trip failures ({failures.Count}):{Environment.NewLine}{string.Join(Environment.NewLine, failures.Take(8))}");
         Assert.NotEmpty(sizes);
-        _ = totalBytes;
+        var ordered = sizes.OrderBy(static size => size).ToArray();
+        var median = ordered.Length % 2 == 1
+            ? ordered[ordered.Length / 2]
+            : (ordered[(ordered.Length / 2) - 1] + ordered[ordered.Length / 2]) / 2m;
+        output.WriteLine(
+            $"corpus definitions={ordered.Length}; totalBytes={totalBytes}; medianBytesPerDefinition={median.ToString(System.Globalization.CultureInfo.InvariantCulture)}");
     }
 
     private static DeclarationCatalog FixtureCatalog(IEnumerable<ScribeDocument> documents)

@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Text;
 using StrataLint.Engine;
 
-namespace StrataLint.Scribe.Tests.Resources;
+namespace StrataLint.Scribe.Tests;
 
 public sealed class ScribeResourceAstCoverageTests
 {
