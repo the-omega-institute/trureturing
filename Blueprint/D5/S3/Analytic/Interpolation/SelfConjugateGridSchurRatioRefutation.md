@@ -90,6 +90,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Interpolation/SelfConjugateGridSchurRatioRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ostrovskii-shcherbakov-conjecture-62-refutation` (refuted) by `D5/S3/Analytic/Interpolation/SelfConjugateGridSchurRatioRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ostrovskii-shcherbakov-conjecture-62-refutation","declaration_gid":"D5/S3/Analytic/Interpolation/SelfConjugateGridSchurRatioRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Dmitrii M. Ostrovskii and Pavel S. Shcherbakov (2025). *Amplitude maximization in stable systems, Schur positivity, and some conjectures on polynomial interpolation*. DOI: [10.48550/arXiv.2508.13554](https://doi.org/10.48550/arXiv.2508.13554). URL: <https://arxiv.org/abs/2508.13554v2>.

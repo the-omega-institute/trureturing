@@ -34,16 +34,21 @@ internal sealed class SelfConjugateGridSchurRatioRefutationDocument : IScribeDoc
                 "claim", DescribeRole.Definition, true, ClaimQuote()),
             Node("result", "Refutation by a conjugate pair", Disp(new Formula.Not(F.Id("claim"))),
                 "Take z = (-9/10 + (2/5)i, -9/10 - (2/5)i). Each entry has squared norm 97/100; the entries are nonreal conjugates, so each real multiplicity is zero. For w = z plus the pointwise numeral 1 on Fin 2, the finite sums give e_1(w) = 1/5, schurHook(0,0,w) = 1/5 and schurHook(1,0,w) = -13/100. Hence Q(3,2,1,w) = 73/60, whose norm exceeds one. The first conjunct fails, refuting the whole universal conjunction.",
-                "result", DescribeRole.Theorem, false)),
+                "result", DescribeRole.Theorem, false, null,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("ostrovskii-shcherbakov-conjecture-62-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        string declaration, DescribeRole role, bool literature, DocumentBlock? quote = null) =>
+        string declaration, DescribeRole role, bool literature, DocumentBlock? quote = null,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("self-conjugate-schur-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(formula),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            quote is null ? Blocks(Paragraph(Text(prose))) : Blocks(quote, Paragraph(Text(prose))), role);
+            quote is null ? Blocks(Paragraph(Text(prose))) : Blocks(quote, Paragraph(Text(prose))), role,
+            resolution);
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Call(string name, params Formula[] arguments)
