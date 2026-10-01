@@ -5426,3 +5426,112 @@ at budget seven, before using other restrictions. All-low repairs
 remain possible at the level of these necessary conditions.
 Unrestricted #7 and those remaining joint repair branches are
 unresolved; no new Lean verification is claimed.
+
+## 40. Three low classes cannot leave a cofactor confined to one nonunit AP
+
+Use section39's same full cofactor carrier B-star and actual
+R-star. Take three low classes from a repair retaining C0 and
+excluding label3. Let their actual nonunit cofactor APs be
+C_1,C_2,C_3, and put
+
+    R-low=R-star minus (C_1 union C_2 union C_3).
+
+For EVERY cofactor AP A of modulus e>1 dividing B-star,
+
+    R-low not subset A.                            (NF24)
+
+The extra AP is an arbitrary query, not a fourth legal low
+repair. Its modulus and phase may repeat those of a low class.
+The proof reuses capacity-two Hall, PC6 and the extended tree
+bridge in section39, with a separate treatment of genuinely
+free new coordinates.
+
+### Four actual APs admit one simultaneous avoidance point
+
+Consider the four labelled cofactor items C_1,C_2,C_3,A. If
+they can be assigned to dividing primes with at most two items
+per prime, their full-prefix cost on every assigned axis is
+at most2/3<1. PC6 supplies complete avoiding trees, and the
+expanded product-tree property supplies one R-star point
+avoiding all four actual APs. This proves NF24 in that case.
+
+If no such assignment exists, the existing capacitated Hall
+criterion supplies at least three items supported on just
+one prime p. Indeed, any set of at most four items with two
+or more neighboring primes has capacity at least four. Take
+ALL pure p-power items as one group, of size three or four.
+
+If p is an old support prime, at most one of the three low
+cofactors equals p: the original label p belongs to retained
+C0, leaving only3p as a possible low repair with that cofactor.
+The additional arbitrary AP contributes at most one more
+depth-one item. Every other item in this pure group has depth
+at least two. Its full-prefix cost is therefore at most
+
+    2/3+2/9=8/9<1.
+
+If there is a fourth item outside the group, choose one of
+its prime factors other than p. Its cost on that other axis
+is at most1/3. PC6 and the same expanded source give a
+point avoiding the entire four-item collection.
+
+If p is a new prime, its full coordinate in R-star is free.
+When all four items are pure p powers, avoid all of their
+at most four actual first roots; p>=5 leaves a choice. When
+only three items are pure p powers, assign the remaining item
+to a dividing prime j different from p. If j is old, the old
+tree obstruction supplies an actual R_3 point outside that
+one j-root. If j is new, choose a different j-root in its free
+coordinate. Independently set the free p coordinate outside
+the at most three pure-item roots and complete all other free
+digits. CRT gives one actual R-star point avoiding all four
+items. No product assumption on the old coordinates is used,
+and the new p roots need not support the chain's tree branching.
+
+This exhausts the Hall failure and proves NF24 for all original
+heights and all cofactor moduli in the repair period. The point
+constructed also proves R-low is nonempty.
+
+### Four high classes would force precisely the forbidden confinement
+
+Suppose a repair with exactly these three low classes has at most four
+high classes. At every cofactor z in the SAME nonempty R-low,
+the entire higher3 tail must be covered by high classes. Divide
+them by the second3 digit of their actual phase. Each of the
+three next roots needs at least one class. With at most four
+classes, at least two roots have exactly one high class each.
+
+A singleton class must have original3-height exactly two:
+a deeper prefix misses part of that root's complete remaining
+tail. Moreover its cofactor AP must contain every z in R-low,
+since no other high class is available at that root and all
+low classes miss z. The two singleton numerical labels are
+9e_1 and9e_2. Distinctness gives e_1!=e_2, so at least one
+e_i is greater than one. Its AP contains all of R-low,
+contradicting NF24. Therefore
+
+    exactly three low classes ==> at least five high classes
+      in any such complete repair.                (NF25)
+
+Combining NF25 with NF22 and the complete-tail requirement of
+at least three high classes, an inclusion-minimal legal repair
+with seven classes has only these possibilities:
+
+    seven low classes;
+    four low classes and three high classes.
+
+In the second case, the three high classes occupy different
+second3 roots and all have3-height exactly two. Write their
+distinct numerical labels as9e_1,9e_2,9e_3. Their cofactor
+APs each contain the whole nonempty remainder after the four
+low classes. They are jointly compatible, and their intersection
+is one AP of modulus K=lcm(e_1,e_2,e_3). Since three distinct
+positive e_i divide K, the number of divisors of K is at
+least three; in particular K is composite.             (NF26)
+
+This is a condition on one actual intersection and the same
+remaining cofactor set. Three separately live cofactor phases
+would not suffice. Excluding every such four-low remainder,
+and the all-low seven-class branch, remain open here. These
+ordinary deductions do not settle unrestricted Erdős #7 or
+claim new Lean verification.

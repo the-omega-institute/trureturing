@@ -31082,6 +31082,24 @@ This is a joint exclusion under the stated repair contract;
 multiple collision bases, remaining mixed low/high inventories,
 all-low repairs and the unrestricted covering question remain.
 
+[Report385, section40](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#40-three-low-classes-cannot-leave-a-cofactor-confined-to-one-nonunit-ap)
+also excludes the mixed count(3 low,4 high). Three legal low
+cofactor APs together with any nonunit cofactor AP cannot cover
+the actual enlarged source. Capacity-two Hall handles four
+items except three pure powers on one axis. An old prime then
+has at most two depth-one items, with prefix cost at most8/9;
+a new prime has a genuinely free coordinate and at most four
+excluded roots. Each case gives one simultaneous avoidance point.
+But four high classes covering all three next3 roots have two
+singleton roots. Their distinct labels9e force the entire low
+remainder into at least one nonunit cofactor AP, a contradiction.
+An inclusion-minimal seven-class repair therefore remains either
+all low or(4 low,3 high). In the latter case the three high
+classes have3-height exactly two and different next3 roots;
+their cofactor APs have one common intersection containing the
+whole low remainder, with composite LCM. Neither surviving
+branch is excluded in general.
+
 [Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
 keeps the residual cover's entire old q coordinate unchanged.
 It excludes one endpoint per repeated pair and reserves the
