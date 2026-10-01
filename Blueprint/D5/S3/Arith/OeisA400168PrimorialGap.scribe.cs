@@ -76,7 +76,10 @@ internal sealed class OeisA400168PrimorialGapDocument : IScribeDocumentDefinitio
                     + "Consequently a(n) = 15 - 13 = 2 > 1. The universal negative answer "
                     + "is false and the original existence question is answered yes. "
                     + "No least-index or infinite-family assertion is made.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a400168-primorial-gap"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
         string declaration, DescribeRole role, AssessedProvenance provenance,

@@ -5,7 +5,7 @@ doi: null
 url: https://oeis.org/A400168
 triage: theorem
 motivation_gids:
-  - D5/S0/Certificates/BradshawConjectureTwentyRefutation.result
+  - D5/S3/Arith/OeisA400168PrimorialGap.result
 ---
 
 # A400168 has a term greater than one
@@ -33,10 +33,10 @@ Karttunen asked the existence question; he did not assert this bound.
 
 ## Motivation
 
-The frozen Bradshaw arithmetic-derivative refutation constructs the same
-factorization sum locally and relates it to the defining product rule.
-The present question concerns its primorial length and an independent
-maximum over all prime-power divisors, rather than a Collatz commutation.
+The frozen `OeisA400168PrimorialGap.result : Not claim` gives the exact
+positive answer to the source existence question at $n=2^{49}$. The
+factorization sum and maximum over all prime-power divisors retain the
+original component sequences, including their zero and one conventions.
 
 ## Gap
 
@@ -99,7 +99,10 @@ The compiled claim and result have only the standard axiom closure
 `propext`, `Classical.choice`, and `Quot.sound`, with no `sorry` or additional
 axiom. The scoped inspector confirms the closed `Not claim` typing.
 The indexed threshold definition is unbounded, and the maximum retains
-all prime-power divisors. The Reg mirror reconstructs the complete
+all prime-power divisors. The Scribe result carries `OpenProblemResolutionClaim(Refuted)`: its
+refuted statement is the universal negative answer, while Karttunen's
+original existence question is answered yes.
+The Reg mirror reconstructs the complete
 negated universal claim and audits its derivative-length readout over
 all natural inputs. Source locators and complete equivalence are in
 `Library/Arith/karttunen2026a400168.md` and the six Describe nodes.
@@ -129,6 +132,4 @@ to kernel verification. Literature completeness and exclusive priority
 are unverified: the specified bounded searches do not cover all sources.
 The dossier concerns exactly the A400168 existence question and the
 logically equivalent universal negative answer; it makes no claim about
-A400171 or least indices. Canonical report assessment, final resolution
-binding, freezing, emission and independent delivery review belong to the
-publication boundary and are not supplied by source compilation alone.
+A400171 or least indices.
