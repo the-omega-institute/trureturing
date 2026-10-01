@@ -13865,8 +13865,9 @@ root. Applying SG1 to each opposite pair then gives
     R=empty and TS ==> H>=G+2>=20.                 (IG4)
 
 This does not assert that TS occurs in a general cover. In particular
-the remaining height-nineteen all-concentrated case must be globally
-nonsingular, with one of IG3's support layouts.
+the global highest ternary digit of a remaining height-nineteen
+all-concentrated cover must be nonsingular, with one of IG3's support
+layouts. No nonsingularity claim is made about its other coordinates.
 
 IG2--IG4 use NF68's ordinary attributed Schroeder result, edition1.0.1,
 Theorem1.1. Its source entry retains the finite-geometry verification
