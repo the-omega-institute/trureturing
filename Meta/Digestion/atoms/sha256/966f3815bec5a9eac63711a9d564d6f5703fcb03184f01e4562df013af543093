@@ -1,0 +1,70 @@
+**Theorem 68.1 (complete roots and the actual cyclotomic intersection).**
+For every $j\in\mathbb N$, let $E=\mathbb Q(\zeta_3)$ and let
+$\Omega$ be an algebraic closure of $E$. Put $m_j=80\cdot3^{j+2}$
+and let $S_j$ be the earlier support of Theorem 66.2. There are
+primary factors $\pi_p$ and cube roots $r_v\in\Omega$, with
+
+$$
+I_j=(S_j\times\{0,1\})\sqcup\{0,1\},
+$$
+
+satisfying all the primary-prime, norm, congruence, pairwise
+coprimality and oriented-product conditions of Theorem 66.2.
+The roots at $(p,0)$ and $(p,1)$ cube to $\pi_p$ and
+$\overline{\pi_p}$, respectively; the last two roots cube to
+$2$ and $3$. For the field $M_j=E(r_v:v\in I_j)$,
+
+$$
+[M_j:E]=3^{2|S_j|+2},\qquad
+\forall x\in M_j,\quad x^3\ne\zeta_3.
+$$
+
+Moreover $M_j/E$ is Galois, and there is a group isomorphism
+
+$$
+e:\operatorname{Gal}(M_j/E)\longrightarrow
+(\mathbb Z/3\mathbb Z)^{I_j}
+$$
+
+such that $\sigma(r_v)=\zeta_3^{e(\sigma)_v}r_v$ for every
+$\sigma$ and every $v$. There is a primitive $m_j$-th root
+$\zeta\in\Omega$ for which, in this same ambient field,
+
+$$
+M_j\cap E(\zeta)=E.
+$$
+
+The same primary factors and the same root family supply every
+condition and the intersection. The statement includes $j\le1$,
+when the earlier support is empty and the two rational radicands
+remain.
+
+Proof. Take the complete root family and its retained unit
+obstruction from Theorem 66.2; Kummer theory gives its coordinate
+Galois action. Choose a primitive $m_j$-th root in $\Omega$ and
+write $C=E(\zeta)$. This is the actual rational $m_j$-th
+cyclotomic field, because three divides $m_j$ and $C$ contains
+the embedded third cyclotomic field. Write
+$Q=E(\zeta^{m_j/9})\subseteq C$. Its relative degree over $E$
+is three, and it contains a cube root of the distinguished
+$\zeta_3$; primitive-root comparison supplies this assertion
+without assuming compatible choices of primitive roots.
+
+The Galois group of $C/E$ is the kernel of restriction of
+$(\mathbb Z/m_j\mathbb Z)^\times$ to the third roots of unity.
+The Chinese remainder decomposition at $80$ and $3^{j+2}$
+shows that the subgroup of cubes has index three. Every
+nontrivial quotient of exponent three therefore has order three
+and has this same kernel. Now $T=M_j\cap C$ is Galois over
+$E$, and its Galois group has exponent three as a quotient of
+the coordinate group of $M_j/E$. If $T\ne E$, the restriction
+maps onto $\operatorname{Gal}(T/E)$ and onto
+$\operatorname{Gal}(Q/E)$ have the same kernel. Galois
+correspondence gives $T=Q$. The cube root of $\zeta_3$ in
+$Q\subseteq M_j$ contradicts the retained unit obstruction.
+Thus $T=E$.
+
+The assertion supplies the intersection used in Theorem 55.8.
+It does not identify a Frobenius event, compute a prime density,
+or produce a prime in the finite support of the current block.
+
