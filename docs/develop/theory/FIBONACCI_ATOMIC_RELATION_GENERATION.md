@@ -37488,3 +37488,44 @@ $$
 或其同一素数幂合同下的严格上包络，而不能先展开全部 $H$ 个接枝词。当前 `GraftAffineClosure` 提供了探针的可实现性与来源保持，也提供了 Robin 权重的精确观测表示；它没有提供这个平均的非平凡统一上界。
 
 因此两种结论应分开保存：固定模行为不足以决定 Robin 价格；目标锁模后可以实现完整 gcd 观察，但从完整观察到 $\sigma(H)/H$ 的低成本统一预算仍是开放义务。这把“FIB 操作是否能看见约数”与“能否证明 Robin 上界”严格分成了可实现性和估计强度两个问题。
+
+## 274. 秩为 60 的倍数时，FIB 仿射窗口落入已知 Robin 安全类
+
+这里把 Assani--Chester--Paschal 预印本的外部输入与 Fibonacci 的整除秩接起来。该来源声称：对 $n>5040$ 且 $2\nmid n$、$3\nmid n$、$5\nmid n$，Robin 严格不等式成立；这项外部证明没有在本项目中独立复核或 Lean 形式化。
+
+对本卷的窗口族
+
+$$
+V=F_r,\qquad
+I_r=\left[\left\lceil\frac{F_r}{10}\right\rceil,
+\left\lfloor\frac{F_r}{5}\right\rfloor\right]\cap\mathbb Z,
+\qquad
+N_{r,g}=1+F_rg,
+$$
+
+若 $60\mid r$，则
+
+$$
+F_3=2\mid F_r,\qquad F_4=3\mid F_r,\qquad F_5=5\mid F_r,
+$$
+
+因为 Fibonacci 强整除性给出 $F_a\mid F_b$ 当且仅当 $a\mid b$（在这里 $a\in\{3,4,5\}$）。于是对每个 $g\in I_r$，
+
+$$
+N_{r,g}\equiv1\pmod 2,\qquad
+N_{r,g}\equiv1\pmod 3,\qquad
+N_{r,g}\equiv1\pmod 5.
+$$
+
+当 $60\mid r$ 时 $r\ge60$，而 $g\ge F_r/10$，故 $N_{r,g}>5040$。因此，在接受上述外部安全类定理的前提下，得到
+
+$$
+\boxed{
+60\mid r\quad\Longrightarrow\quad
+\frac{\sigma(N_{r,g})}{N_{r,g}}
+<e^\gamma\log\log N_{r,g}
+\quad(g\in I_r).
+}
+$$
+
+这是真正投影到同一 FIB 整数上的新筛选：它比单独由 $3\mid r$ 得到的奇性条件更强，直接同时排除 $2,3,5$ 三个小素因子。它只处理秩为 $60$ 的倍数，不能覆盖其余秩，也没有把 FIB 地址变成 CA/SA 来源；因此剩余任务仍是对 $60\nmid r$ 的窗口建立同一 Robin 价格源的统一点值界。
