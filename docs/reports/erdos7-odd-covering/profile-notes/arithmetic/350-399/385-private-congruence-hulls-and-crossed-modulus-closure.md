@@ -59,6 +59,16 @@ uses the stronger two-cover support-intersection consequence of published
 distortion bounds to exclude this entire height-one concentrated branch.
 The arbitrary-height branch and unrestricted Erdős#7 remain unresolved.
 
+[Sections77--83](#77-independent-color-permutations-force-every-nonzero-private-p-root-of3)
+give actual source permutations and count-saving replacements when
+the ternary height and the unique nonconcentrated prime's height are
+both one. Existing Simpson cuts force at least p-1 nonpure p-cofactor
+columns; explicit replacements exclude equality for p=7,11,13. At
+p=5, equality requires two prime-power columns in EACH concentrated
+color. Other primes and heights in the p-free inventory remain
+unrestricted. This final layout, larger inventories and higher shared
+heights have not been excluded.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -11446,3 +11456,58 @@ original phase; the exact refinement would require all q lifts.
 The remaining power-column case, larger inventories and arbitrary
 heights are unresolved. No finite search, priority claim or Lean
 verification is asserted.
+
+## 83. A distinct-prime opposite palette also gives nine-for-ten descent
+
+Keep section82's surviving guarded palette u=q,v=q^2, together with
+the SAME original phases and residual sets. Thus
+
+    E_j subset A_q intersect (B_(q^2) union C_(q^2)),
+    E_k subset A_a intersect A_b.
+
+Suppose the opposite cofactors a,b are distinct primes. Their
+intersection is one complete actual AP modulo ab. Retain all
+original5-free classes and replace the ten5-bearing classes by:
+
+| Receiving ternary residue | Cofactor condition | Modulus |
+| --- | --- | --- |
+| k mod9 | A_a | 9a |
+| k+3 mod9 | A_b | 9b |
+| k+6 mod9 | A_a and A_b | 9ab |
+| j mod9 | none | 9 |
+| j+3 mod9 | A_q | 9q |
+| j+6 mod9 | B_(q^2) | 9q^2 |
+| j+6 mod27 | none | 27 |
+| j+15 mod27 | A_q | 27q |
+| j+24 mod27 | C_(q^2) | 27q^2 |
+
+The first three classes cover E_k at all three root-k leaves. In
+root j, the first two depth-two leaves are covered outright. On
+its third leaf the9q^2 class already covers the B phase. Any
+remaining demand belongs to C and also to A_q. Its three depth-three
+children are covered respectively by pure27,27q and27q^2. This
+checks the entire retained complement, because a point missed by
+all retained originals has its own color coordinate in E_i.
+
+The height-two cofactor list is1,q,q^2,a,b,ab, all distinct;
+the height-three list is1,q,q^2. The two colors have disjoint
+nonempty supports and all cofactors are3-free. None of these
+labels collides with a retained original of ternary height at
+most one. All added conditions are complete APs with phases from
+the actual common source, and every original non-5 height can
+remain in the output carrier. Nine classes replace ten, yielding
+a strict EB1 count descent.
+
+Each original two-column palette is divisor-closed. Having excluded
+distinct-prime palettes in either color, the minimum u=4 source at
+p=5 must therefore have
+
+    U_j={q,q^2}, U_k={r,r^2}, q!=r.                (FL6)
+
+The primes q,r are concentrated in opposite colors. This does NOT
+say S_j={q} or S_k={r}: other primes and arbitrary larger heights
+can occur in the retained5-free inventory. For the remaining
+prime-power palette, A_r intersect A_(r^2) still has modulus r^2,
+so the third row above would repeat the second row's label.
+FL6 remains an unexcluded layout, not a full covering example.
+No additional experiment or Lean verification is asserted.
