@@ -30965,11 +30965,41 @@ is excluded in a selected full-height prime chain. Report376's
 single-witness transport then gives distinct odd nonunit labels
 and a smaller whole cover, without adding a closing class. At
 q=3, at most six repeated bases automatically admit this assignment,
-regardless of total repair count. Thus an entirely3-free residual
-needs at least seven repeated bases. Mixed3-bearing residuals and
+regardless of total repair count.
+[Report385, section34](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#34-seven-distinct-collision-bases-fit-and-numerical-capacity-has-a-sharp-boundary)
+uses distinctness of the repeated bases to handle seven of them:
+full prefix depths resolve the one- and two-prime Hall obstructions,
+and the actual prime gaps resolve the remaining three-prime case.
+An entirely3-free residual therefore needs at least eight repeated
+bases. Eight distinct values5,7,13,35,65,91,455,11 already defeat
+the numerical assignment criterion; actual prefix merging can
+still satisfy BC5. Mixed3-bearing residuals and
 larger collision families failing the capacity condition remain
 unresolved; the output is a whole-cover descent, not a repair
 retaining the original numerical labels.
+
+[Report385, section35](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#35-the-seven-item-failure-forces-four-actual-roots-and-a-sectional-constraint)
+also constrains the seven-cofactor numerical obstruction
+{5,25,7,35,35,175,175}. When175 divides the original cofactor
+period B, a cover of actual R_3 by those classes forces three
+different5 roots for5 and the two35 classes, and
+three different depth-two prefixes under a fourth root for25
+and the two175 classes. The original5 forbidden root is the
+fifth, so the actual projection has exactly four roots. In a
+legal low repair retaining C0, the doubled35 cofactor makes
+original35 absent, hence no original modulus contains both5
+and7. Each nonempty section at a fixed full remaining cofactor
+u is therefore A_u times B_u. If A_u escapes the pure5 and25
+repair columns, B_u has at most two first7 roots. A same-u
+violation would exclude this repair; global witnesses from
+different u do not establish it. The actual original mixed5
+and mixed7 suppliers must consequently satisfy, at every live u,
+L5(u)>51/100 or L7(u)>23/42. Here L5,L7 sum the corresponding
+conditional reciprocal costs only over classes active at that
+same u; the pure-power totals are bounded separately. No cited
+global bound yet provides a live u where both costs are small.
+No actual covering example or general contradiction is supplied
+by this necessary shape.
 
 [Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
 keeps the residual cover's entire old q coordinate unchanged.

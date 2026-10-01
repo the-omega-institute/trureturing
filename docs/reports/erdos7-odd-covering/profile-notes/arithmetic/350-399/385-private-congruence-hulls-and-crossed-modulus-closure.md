@@ -4586,3 +4586,271 @@ strict prefix assignment. The transported cover supplies a
 cardinality contradiction, not a replacement repair retaining the
 old labels. Neither this consumer nor NF19 is an unrestricted
 noncoverage proof.
+
+## 34. Seven distinct collision bases fit, and numerical capacity has a sharp boundary
+
+The repeated-base set E in BC5 has distinct numerical values,
+although the residual cover has two actual classes at each base.
+That extra distinction improves its automatic assignment threshold.
+For any at most seven pairwise distinct integers m>1 coprime to6,
+take ALL their prime factors as the increasing chain
+3<p_1<...<p_t. There is an assignment to dividing primes with
+
+    sum_(m assigned to p_i) r_i^(-v_(p_i)(m))<1,
+    r_1=p_1-2, r_i=p_i-p_(i-1)+1 for i>1.        (BC6)
+
+This is a numerical sufficient certificate, before any actual
+endpoint prefixes are merged. NF17 still has only its six-item
+guarantee when non-pure numerical values may occur twice.
+
+### Resolve the small Hall obstructions at their full depths
+
+Try capacity two at each prime. A successful assignment has cost
+at most2/3 at every axis. In a list of at most seven items, Hall
+can fail only through at least three pure powers of one prime,
+at least five items supported within two primes, or all seven
+items supported within three primes.
+
+First suppose at least three items are pure p-powers. Assign all
+of them to p, at total cost less than1/2 using the conservative
+base3. At most four items remain. Try capacity two for these on
+primes other than p. Failure supplies a prime q for which three
+or four remaining items have singleton support {q} after removing
+p; let T contain ALL such remaining items. Each is p^a*q^b,
+a>=0,b>=1. Any remaining item outside T has a prime outside
+{p,q}, and there is at most one such item.
+
+If at most two T items have b=1, put all of T at q, with cost
+at most2/3+2/9=8/9. Otherwise move all T items with b=1,a>=2
+to p. Their a values are distinct, so their added cost is less
+than sum_(a>=2)3^(-a)=1/6; the total p cost is below2/3.
+The q axis now has at most two b=1 items, with a=0 or1, and
+at most one b>=2 item, costing at most7/9. This deals with the
+first obstruction at conservative base3 on all axes.
+
+Next suppose every prime has at most two pure-power items but
+at least five items are supported within a pair {p,q}. Collect
+all items supported there; at most two outside items remain and
+can be assigned outside the pair, at cost at most2/3 on any axis.
+At p or q the pure cost is at most0,3/9 or4/9. There is at most
+ONE shallow mixed item pq. Every other mixed item has depth at
+least two at one axis; initially assign it to such an axis at
+cost at most1/9.
+
+If pq is present, each axis's base cost is at most8/9. With P
+pure items across the pair, P=0,1,2,3,4, their combined cost is
+at most(0,3,6,7,8)/9, and there are at most6-P deep items.
+Thus the combined base cost is at most10/9. The lighter axis
+costs at most5/9, so adding pq there leaves it at most8/9.
+
+If pq is absent, each axis costs at most one: the bounds for
+zero, one and two pure items are7/9, (3+6)/9 and(4+5)/9.
+Equality on an axis requires exactly one or two pure items there
+and all six or five remaining mixed items assigned to it; the
+other axis then has cost zero. Move any one mixed item to the
+other axis. Its cost there is at most1/3, and the first axis's
+cost becomes strictly below one. Both costs are now strict.
+
+It remains that no prime has three pure items and no pair
+contains five items. If capacity-two Hall still fails, all seven
+items have support in exactly three primes. These are the entire
+prime support of the list. Instead use integer capacities
+
+    p_1-3, p_2-p_1, p_3-p_2.
+
+Each is at least two, and their sum p_3-3 is at least eight,
+since p_3>=11. Singleton-supported lists have size at most two,
+pair-supported lists at most four, and the entire list has seven
+items. Hall therefore holds with these capacities. Each assigned
+item costs at most1/r_i, and no axis receives more than r_i-1
+items. This proves BC6. All previous branches work with base3,
+so including every prime in the list does not spoil them.
+
+Choosing either endpoint of each repeated pair and applying BC6
+in BC5 gives the arbitrary-budget consequence
+
+    C entirely3-free in BC2 ==> |E|>=8.             (BC7)
+
+The certificate uses the selected coordinates' complete heights
+in C even if an exponent in E is smaller. New repair primes are
+permitted; no original pure class at those primes is assumed.
+
+### Exact boundaries of the numerical certificate
+
+The pure-unique, mixed-at-most-two hypothesis in NF17 cannot
+guarantee seven items. Consider
+
+    {5,25,7,35,35,175,175}.
+
+The pure items force both5 and7 into the chain, giving bases3
+and3. The5 axis already pays4/9 and the7 axis1/3. Every mixed
+item costs1/3 at7, so at most one of them can be assigned there.
+Assigning a35 there is the best possible saving at5, but still
+leaves5 cost at least4/9+1/3+2/9=1. Assigning fewer items to7,
+or assigning a175 instead, only raises the5 cost. No permitted
+chain changes these two bases.
+
+Even with all numerical values distinct, BC6 cannot guarantee
+eight items. Use
+
+    {5,7,13,35,65,91,455,11}.
+
+The four pure primes force chain3<5<7<11<13, with bases
+3,3,5,3. The first seven items are the seven nonempty squarefree
+products of5,7,13. Every choice of a dividing prime costs1/3;
+strict cost below one allows at most two items at each of these
+three axes, only six in total. The11 axis cannot receive any of
+those seven items. Inserting extra chain primes cannot improve a
+preceding gap, and omitting11 is forbidden by its pure item.
+
+These are failures of the numerical sum criterion, not families
+of classes asserted to cover actual R_3 or the integers. Actual
+endpoint prefixes can coincide or contain each other, making the
+antichain cost in BC5 smaller than the numerical sum. Nor does
+failure of this particular transport imply failure of every
+legal exchange. The boundary directs further work to actual
+phases, label availability and their common realization.
+
+## 35. The seven-item failure forces four actual roots and a sectional constraint
+
+The numerical failure in section34 does not supply an actual
+repair. Suppose175 divides the original cofactor period B and
+seven cofactor APs with numerical list
+
+    {5,25,7,35,35,175,175}
+
+cover the actual R_3. Denote their5-coordinate data by
+
+    a: the root of the5 class;
+    d1,d2: the roots of the two35 classes;
+    b: the depth-two prefix of the25 class;
+    f1,f2: the depth-two prefixes of the two175 classes.
+
+Then a,d1,d2 are three different roots. The prefixes b,f1,f2
+are three different children under a fourth root r, different
+from a,d1,d2. The root alpha forbidden by the original pure5
+class is the fifth root. In particular the first5 projection
+of actual R_3 is exactly {a,d1,d2,r}.                 (BC8)
+
+### The complete-tree obstruction determines the phases
+
+Assign the7 class and either175 class to their7 roots. There
+are at most two forbidden7 roots, so a complete5-ary7 tree can
+avoid them. On the5 axis the remaining assigned prefixes are
+the three whole roots a,d1,d2 and two depth-two prefixes. If
+there were at most two different whole roots, these extra two
+prefixes could not prevent a complete3-ary5 tree: every other
+first root still has at least three available second children.
+Continuing freely through every remaining original height gives
+trees whose product avoids all seven APs, contrary to PC1--PC4.
+Hence a,d1,d2 are distinct.
+
+Now assign the7 class and the first35 class to7. At5 the
+forbidden prefixes are two whole roots a,d2 and the three
+depth-two prefixes b,f1,f2. To prevent a complete3-ary tree,
+those three prefixes must be different children of ONE further
+root r outside {a,d2}. Otherwise at least three first roots
+have at least three available children. Assigning the other35
+class to7 gives the same conclusion with {a,d1} excluded.
+The common parent of b,f1,f2 is therefore outside all three
+whole roots, proving the asserted phase shape. This is the
+depth-two case of the complete-tree obstruction used in
+[Report375](375-deep-prime-prefix-projections-and-tree-contraction.md),
+with full higher digits continued, not a flatness assumption.
+
+Removing any one of the seven APs leaves a list satisfying NF17,
+which cannot cover R_3 by PC1--PC6. Every AP therefore has a
+private actual cofactor point. Its stated5 root occurs in R_3
+and differs from alpha. All four roots in BC8 occur, and no
+fifth root can occur because the original5 class excludes it.
+
+### Label availability gives a genuine product only after conditioning
+
+Suppose this list comes from a legal low inside repair retaining
+C0. Two copies of the cofactor35 require numerical repair labels
+35 and105. Since35 is occupied by a repair, it is absent from
+original C0 and hence from the original cover. Original divisor
+closure then excludes EVERY original modulus divisible by35.
+Thus no original class contains both5 and7 as factors.
+
+Write B=5^A*7^D*M, with gcd(M,35)=1, and fix one complete
+remaining cofactor value u modM. If the actual section is
+nonempty, it has the exact form
+
+    R_3(u)=A_u times B_u,
+    A_u subset Z/5^A, B_u subset Z/7^D.             (BC9)
+
+Indeed, a C0 class involving neither5 nor7 either kills this
+whole section or misses it. Every other C0 class, after u is
+fixed, forbids only a5 prefix or only a7 prefix. Taking the
+complement therefore gives the displayed product. This is a
+conditional decomposition at the SAME u; the unconditioned
+source remains a union of such products and need not be a product.
+
+Let c be the first7 root of the repair's7 class. At a fixed
+5-coordinate x outside the two pure repair columns
+
+    x=a mod5 OR x=b mod25,
+
+at most one of the four mixed repair classes can be active:
+the35 classes use distinct roots d1,d2, while the175 classes
+use distinct second prefixes f1,f2 under r. If one is active,
+the repair can cover at most its single first7 root together
+with c. If none is active, only c is available. Consequently
+the SAME nonempty section must satisfy
+
+    A_u not subset ({a mod5} union {b mod25})
+       ==> |projection_mod7(B_u)|<=2.              (BC10)
+
+An actual u with a5 point outside those columns and at least
+three first7 roots would refute this repair. Global projection
+sizes do not supply that witness: the5 escape point and the
+three7 roots may occur at different u. The live-cofactor
+qualification in
+[Report375, section7](375-deep-prime-prefix-projections-and-tree-contraction.md#7-live-cofactors-obstruct-absorbing-a-larger-prime-into-new-higher-digits)
+likewise does not assert that separately live original labels
+have witnesses in one common remaining cofactor section.
+
+### Actual suppliers must pay one of two conditional costs
+
+At the same live u, define L5(u) by summing5^(-j) over original
+C0 classes with modulus5^j*d, j>=1,d>1,d|M, whose actual residue
+modulo d agrees with u. Define L7(u) similarly, summing7^(-j)
+over active original moduli7^j*d. These sums keep numerical
+labels, full heights and actual cofactor phases. No class occurs
+in both groups, since original35 is absent. The remaining d
+factors, when present, are all at least11.
+
+Every live u must obey
+
+    L5(u)>51/100 OR L7(u)>23/42.                    (BC11)
+
+If B_u has at most two first7 roots, its uniform coordinate mass
+is at most2/7. Active original7-bearing C0 classes cover its
+complement, so their total conditional reciprocal cost is at
+least5/7. The distinct pure7-power classes have finite total
+cost strictly below sum_(j>=1)7^(-j)=1/6. The active mixed
+classes must therefore pay L7(u)>5/7-1/6=23/42.
+
+Otherwise BC10 puts A_u in the two pure repair columns. Their
+uniform5-coordinate mass is1/5+1/25=6/25, since they have
+different first roots. Active original5-bearing C0 classes must
+cover mass at least19/25. The distinct pure5-power total is
+strictly below1/4, giving L5(u)>19/25-1/4=51/100.
+
+The assertion is pointwise on actual live sections, not a bound
+on two separately optimized laws. Finding one live u with BOTH
+L5(u)<=51/100 and L7(u)<=23/42 would exclude the repair. No
+existing global budget cited here supplies such a common u.
+Simultaneously moving5 and7 to a new3 coordinate is not an
+alternative proof: separate originals5^j*d and7^j*d can then
+collide at numerical label3^j*d, even though no single original
+modulus contains both5 and7. Report376's injective full chain
+avoids that collision but supplies precisely its stated joint
+tree test, not two independently optimized coordinate bounds.
+
+BC8--BC11 turn the numerical certificate's failure into phase,
+original-label and same-section requirements. They do not prove
+that these requirements are inconsistent. The existence of the
+required common section, arbitrary mixed residual repairs, and
+unrestricted odd-cover nonexistence remain unresolved.
