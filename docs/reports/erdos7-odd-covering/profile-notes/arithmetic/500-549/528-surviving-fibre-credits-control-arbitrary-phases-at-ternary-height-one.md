@@ -29612,3 +29612,223 @@ remain possible routes. No such uniform input is supplied
 here. These results reuse the published comparison and
 unchanged certificate; they are ordinary mathematics, with
 no new Lean verification or resolution of unrestricted Erdos#7.
+
+## Joint continuation costs retain the single-label threshold obstruction
+
+The threshold boundary can include the changed23 and29 fees,
+and can extend above11 while retaining the original31-and-later
+certificate. For the single additional original1995, the
+combined19,23,29 auxiliary fee still has its unique minimum
+at t_19=11. Even returning all three old rounding slacks
+leaves the conservative final mass bound negative.
+
+The ingredients are the same actual source and original
+labels. The new comparison below reuses the discrete
+supermodular tail expansion in
+[Report688, section4](../650-699/688-support-aware-pair-exchanges-control-all-four-and-five-parent-branches.md).
+It compensates a larger19 cap by the already available
+improvement at13. This is an order between auxiliary
+expectations, not a rearrangement of actual prime coordinates.
+
+### A pair of auxiliary caps can preserve the old certificate
+
+Let p<q, and let independent auxiliary heights have tails
+c/p^a and d/q^a. Suppose F(x,y) is symmetric, increasing
+and supermodular, with finite expectation. The cited tail
+expansion gives
+
+    E F=F(0,0)+c*A_p+d*A_q+c*d*B,
+    A_p=sum_(a>=1)p^-a*Delta_1 F(a-1,0),
+    A_q=sum_(a>=1)q^-a*Delta_2 F(0,a-1), B>=0.
+
+Symmetry gives the same nonnegative increment sequence in
+the two single-coordinate sums. Since(q/p)^a>=q/p,
+A_p>=(q/p)*A_q. Therefore changing(c,d) to(c',d'), with
+c'<=c and d'>=d, does not increase E F whenever
+
+    d'-d<=(c-c')*q/p, c'*d'<=c*d.                         (FC1257)
+
+Indeed the expectation difference is
+-(c-c')A_p+(d'-d)A_q+(c'd'-cd)B<=0. The auxiliary tail
+probabilities must remain in[0,1]. Nonnegative truncation of
+the tail expansion handles the unbounded heights. The hinges
+and square moments used here are integrable.
+
+Apply this with p=13,q=19, old source caps c=12/5,d=3,
+and new caps c'=3/2,d'=c_19. Both inequalities hold for
+
+    3<=c_19<=561/130.
+
+The linear condition at the upper endpoint is
+561/130-3=171/130=(9/10)*(19/13); the product condition
+is(3/2)*(561/130)=1683/260<36/5. The decrease of the17
+cap from160/63 to2 is a separate stochastic decrease.
+
+For every later three-factor row, conditional on all other
+AUXILIARY heights, its completed load has the form
+
+    N_q=C+(1+sum K_other)*(x+y)+x*y,
+
+with x=K_13,y=K_19. Its positive-part payoff is symmetric,
+increasing and supermodular in(x,y). For the far tail the
+square-product payoff product_p(1+K_p)^2 has these same
+properties. Thus the old R_31 certificate and the old S(B)
+bound of FC1238 remain valid after this pair comparison.
+The source's later tail growth parameters are unchanged.
+
+Writing t=t_19 and c_19=18/(17-t), the resulting interval is
+
+    0<=t<=2399/187, approximately12.8289.                 (FC1258)
+
+Up to11, ordinary coordinatewise domination suffices. Above11,
+use FC1257 and then the17 decrease. The actual19 kernel still
+uses the complete original inventory. Its normalized
+conditional cap and common domination are those of the
+source construction, regardless of support size. The pair
+comparison is applied only after that source comparison.
+It does not apply to arbitrary asymmetric finite-inventory
+payoffs, or justify leaving the improved23 and29 rows unchanged.
+
+### Retain the exact response of the next two rows
+
+For q=23,29 let b_q(c) be its completed normalized auxiliary
+charge with19 cap c and all other caps as in FC1235. In
+particular c_23=550/189 stays fixed in the29 row. The law of
+K_19 is affine in c, and the hinge is increasing. Hence
+
+    b_q(c)=b_q(3)+(c-3)*D_q,
+    D_q=[b_q(3)-b_q(0)]/3>=0.                            (FC1259)
+
+The value at zero means K_19=0 in this auxiliary expectation;
+it does not delete a prime or any original from the actual
+family. The two values b_q(3) are the existing exact FC1235
+values. Only the following zero-cap rows are new.
+
+Use FC1234 on A for q=23, and on A union{23} for q=29,
+with the same respective thresholds336/25 and19. Omitting
+the19 coordinate gives complete means1949/576 and5081/1344.
+Thus each new row is explicitly
+
+    b_q(0)=[M_q(0)-t_q
+       +P0_without19*sum_(S,n:nu(n)<t_q)
+          (t_q-nu(n))*product_(p in S)h_p*r_p^(n_p-1)]
+          /(q-2-t_q).
+
+The domains are the existing complete low-state table;
+the full means include every high state. These new rational
+expressions give
+
+    b_23(0)=0.01489483814052087...,
+    b_29(0)=0.006486753181180311...,
+    D_23=0.0026311992694886396...,
+    D_29=0.0012207220223346880...,
+    3851/1000000<D:=D_23+D_29<3852/1000000.              (FC1260)
+
+The rational interval, obtained from the displayed finite
+formulas, is used below. The decimal displays are not rounding
+premises. No unchanged source recurrence or old row is
+recomputed to obtain these two responses.
+
+### The combined fee has a strict minimum at eleven
+
+For the single1995 inventory keep L=N+(18/19)*I of FC1254,
+and write H_L(t)=E(L-t)_+. The sum of the three NORMALIZED
+auxiliary fees is exactly
+
+    F(t)=[H_L(t)+18*D]/(17-t)
+                         +b_23(3)+b_29(3)-3*D.          (FC1261)
+
+All three raw fees have the common multiplier3/8. The19
+head variables in L do not depend on c_19. Formula FC1261
+does include the actual change of both later auxiliary rows;
+it is not the fixed-later-budget comparison of FC1256.
+
+Away from its finitely many breakpoints in FC1258,
+
+    F'(t)=[G(t)+18*D]/(17-t)^2,
+    G(t)=E[(L-17)*1_{L>t}].
+
+On t<17, G(t) is nondecreasing: increasing t removes only
+negative summands. It remains to check its jump at11.
+The new probability expression FC1255 satisfies
+
+    47/1000<p11<9443/200000.
+
+Equation FC1254 gives Pr(I,N>=11)<141/10000 and
+Phi>13314/1000000. Reusing the exact old19 bound gives
+33028/1000000<b_19<3303/100000. Here b_19=E(N-11)_+/6
+is the unchanged old19 row. Consequently
+
+    211482/1000000<H_L(11)<0.19818+0.0141.
+
+The decimal numbers in this last display are terminating
+rationals. On I the value N=11 is impossible, by the low-state
+classification; it has at most two positive coordinates.
+Since0<18/19<1, this proves both
+{L>=11}={N>=11} and {L=11}={N=11}.
+
+The left derivative numerator at11 is
+H_L(11)+18*D-6*p11. Its upper bound is
+
+    0.19818+0.0141+0.069336-0.282
+       =-48/125000<0,
+
+and its lower bound is
+
+    0.211482+0.069318-0.28329=-249/100000.
+
+There is a strictly positive jump to the right numerator.
+The single auxiliary atom
+
+    K_3=5, K_5=1, K_p=0 for p in A minus{3,5}
+
+has N=L=11 and probability
+
+    (4/729)*(16/75)*(11/14)*(28/33)*(23/26)*(15/17)
+       =1472/2416635>3/5000.
+
+The right numerator therefore exceeds
+
+    -249/100000+6*(3/5000)=111/100000>0.                 (FC1262)
+
+Monotonicity of G now proves that F strictly decreases before11
+and strictly increases after11 throughout FC1258. Continuity
+across the finitely many breakpoints gives its unique minimum
+at11. No parameter scan or optimizer is used for this conclusion.
+
+### Returning all three rounding slacks still leaves a negative bound
+
+The three exact old values from FC1235 respectively exceed
+33028/1000000,22788/1000000,10148/1000000. Equation FC1254
+also gives Phi/6>2219/1000000. At the unique minimum,
+
+    F(11)=b_19+b_23(3)+b_29(3)+Phi/6
+          >68183/1000000.                               (FC1263)
+
+The old upward three-row budget was65970/1000000. Retaining
+the same other budgets, but replacing all three rounded rows
+by their exact new expressions, gives the conservative bound
+
+    mass >6247/8000000
+                 -(3/8)*[F(t)-65970/1000000].
+
+For every t in FC1258 the right-hand side is strictly below
+
+    6247/8000000-6639/8000000=-49/1000000.               (FC1264)
+
+This says that this certificate supplies no positive mass
+bound. It does not assert that actual mass is below that
+negative number. The19 kernel,23/29 response, original later
+certificate and far tail all belong to one legitimate
+construction for each chosen t.
+
+Thus the single1995 obstruction persists even when the two
+next fees respond to the changed cap and when the13 improvement
+permits thresholds above11. It is not caused solely by keeping
+those two future fees fixed or by their old rounding slack.
+Other source choices, changes to other physical thresholds,
+sharper later estimates and actual phase-incidence information
+remain outside this obstruction. Arbitrary higher-support
+originals at other middle-window primes also remain untreated.
+The comparison and these deductions do not resolve unrestricted
+Erdos#7 and do not claim new Lean verification.
