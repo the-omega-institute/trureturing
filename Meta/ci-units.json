@@ -20,6 +20,9 @@
     "tools/scripts/workflow/ci_units.py",
     "tools/tests/Directory.Build.props"
   ],
+  "closure_excludes": [
+    "Blueprint/"
+  ],
   "units": [
     {
       "id": "banned-api-proof",
@@ -2325,6 +2328,7 @@
       "inputs": [
         ".github/*",
         "Blueprint/D5/S3/Midline/GoldenSpectralMarker.md",
+        "Blueprint/D5/S3/Midline/GoldenSpectralMarker.scribe.cs",
         "D5/S3/Midline/GoldenSpectralMarker.lean",
         "Golden/Projection/*",
         "Golden/gate-authority-roots.toml",

@@ -87,7 +87,7 @@ def project_registry(root):
     return projects
 
 
-def project_closure(projects, path):
+def project_closure(projects, path, closure_excludes=()):
     inputs, visited, active = set(), set(), set()
 
     def visit(current):
@@ -101,7 +101,8 @@ def project_closure(projects, path):
         project = projects[current]
         inputs.add(current)
         inputs.add(str(PurePosixPath(current).parent / "packages.lock.json"))
-        inputs.update(pattern.replace("**/", "*").replace("**", "*") for pattern in project["include"])
+        inputs.update(pattern.replace("**/", "*").replace("**", "*") for pattern in project["include"]
+                      if not pattern.startswith(tuple(closure_excludes)))
         # Exclude does not narrow CI inputs: linked and removed sources remain in scope.
         for reference in project["references"]:
             visit(reference)
@@ -115,10 +116,18 @@ def project_closure(projects, path):
 
 def load_units(root):
     manifest = read_json(root / "Meta/ci-units.json")
-    exact_keys(manifest, ("schema", "shared_inputs", "units"), "CI manifest")
+    exact_keys(manifest, ("schema", "shared_inputs", "closure_excludes", "units"), "CI manifest")
     if manifest["schema"] != "ci-units-v1":
         raise RegistrationError("invalid CI unit schema")
     shared = patterns(manifest["shared_inputs"], "shared_inputs")
+    # Registered includes under these prefixes are content that units do not
+    # re-run for; a unit lists such paths in its own inputs when it needs them.
+    closure_excludes = manifest["closure_excludes"]
+    if (not isinstance(closure_excludes, list)
+            or any(not isinstance(prefix, str) or prefix in ("", "/") or not prefix.endswith("/")
+                   or "*" in prefix or prefix.startswith("/") for prefix in closure_excludes)
+            or closure_excludes != sorted(set(closure_excludes))):
+        raise RegistrationError("closure_excludes must be a sorted unique list of directory prefixes ending in /")
     if not isinstance(manifest["units"], list) or not manifest["units"]:
         raise RegistrationError("units must be a nonempty list")
     projects = project_registry(root)
@@ -151,7 +160,7 @@ def load_units(root):
             raise RegistrationError(f"{unit_id}: project requires a test role: {project}")
         patterns(unit["inputs"], f"{unit_id} inputs")
         if project not in closures:
-            closures[project] = project_closure(projects, project)
+            closures[project] = project_closure(projects, project, closure_excludes)
         units[unit_id] = (unit, set(shared) | {workflow} | closures[project] | set(unit["inputs"]))
     if list(units) != sorted(units):
         raise RegistrationError("units must be sorted by id")

@@ -32,7 +32,7 @@ class CiUnitsTests(unittest.TestCase):
              "include": ["shared/Exact.cs"], "exclude": [], "references": []},
         ]}
         self.manifest = {"schema": "ci-units-v1", "shared_inputs": ["global.json"],
-                         "units": [self.unit()]}
+                         "closure_excludes": [], "units": [self.unit()]}
 
     @staticmethod
     def unit():
@@ -152,6 +152,28 @@ class CiUnitsTests(unittest.TestCase):
         result = self.resolve()
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("shared/Exact.cs", self.paths.read_text().splitlines())
+
+    def test_closure_excludes_drop_registered_includes_under_a_prefix(self):
+        self.manifest["closure_excludes"] = ["shared/"]
+        result = self.resolve()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        lines = self.paths.read_text().splitlines()
+        self.assertNotIn("shared/Exact.cs", lines)
+        self.assertIn("src/D/D.csproj", lines)
+        self.assertIn("src/P/*Nested/*.cs", lines)
+
+    def test_closure_excludes_do_not_drop_explicit_unit_inputs(self):
+        self.manifest["closure_excludes"] = ["shared/"]
+        self.manifest["units"][0]["inputs"] = ["!linked/Omit.cs", "assets/*", "global.json", "shared/Exact.cs"]
+        result = self.resolve()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("shared/Exact.cs", self.paths.read_text().splitlines())
+
+    def test_invalid_closure_excludes(self):
+        for value in ("shared/", ["shared"], [""], ["b/", "a/"], ["a/", "a/"], [1]):
+            with self.subTest(value=value):
+                self.manifest["closure_excludes"] = value
+                self.assert_error(self.resolve(), "closure_excludes")
 
     def test_diamond_references_are_deduplicated(self):
         self.projects["projects"][0]["references"].append("src/D/D.csproj")
