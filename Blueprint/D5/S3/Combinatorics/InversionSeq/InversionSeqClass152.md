@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/InversionSeq/InversionSeqClass152.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/InversionSeq/InversionSeqClass152.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/callan-mansour-inversion-class-152` (proved) by `D5/S3/Combinatorics/InversionSeq/InversionSeqClass152.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"callan-mansour-inversion-class-152","declaration_gid":"D5/S3/Combinatorics/InversionSeq/InversionSeqClass152.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* David Callan, Toufik Mansour (2023). *Inversion Sequences Avoiding Quadruple Length-3 Patterns*. DOI: [10.5281/zenodo.8399694](https://doi.org/10.5281/zenodo.8399694). URL: <https://math.colgate.edu/~integers/x78/x78.pdf>.
