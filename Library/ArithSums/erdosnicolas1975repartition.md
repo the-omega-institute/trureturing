@@ -1555,3 +1555,106 @@ exclude the cases where they do not. They retain, rather than discharge,
 the full window, residue, weighted divisor incidence, tied removals,
 merged valuations and cofactor-$h=1$ obligations. The cited optimization
 results supply no uniform weighted Robin estimate or proof of RH.
+
+## The low-loss divisor condition can already be saturated
+
+Before enlarging the residue graph with another constraint, check whether
+that constraint removes any of the hypothesized low-cost hosts. Reuse
+the actual increment source and finite comparison in FIB §234.1–§234.2;
+no new source, benefit theorem or optimization algorithm is introduced.
+This section is a paper application, with no Lean verification.
+
+For $s\ge1$, keep the maximal tied-layer reference $C_s$ and put
+$g=\gcd(N,C_s)$. Every exponent of $g$ is an accepted reference exponent.
+The same local comparison used at $C_s$ therefore gives
+
+$$
+r_s(g)=\frac{b_s(g)}{Z(g)^s}\ge\frac{\varphi(g)}g,
+\qquad D_s(g)=R_s(v),\qquad v=C_s/g.
+$$
+
+In particular, the existing identity
+$J_s(g)=D_s(g)-\log r_s(g)-\delta_s$, with
+$\delta_s=\log(\mathcal Q_s/M_s)\ge0$, supplies
+
+$$
+\boxed{
+J_s(g)\le R_s(v)+\log\frac g{\varphi(g)}-\delta_s
+\le R_s(v)+\log\frac{C_s}{\varphi(C_s)}.
+}
+$$
+
+Thus whenever the last expression is at most $J_0$, the particular
+divisor $g\mid N$ already witnesses the required low-loss incidence.
+This holds for every host with that same gcd, regardless of its added
+prime powers. It does not say $J_s(N)\le J_0$, and does not replace the
+complete weighted sum over divisors by the weight of $g$.
+
+For a hypothesized unpaid Robin budget, $D_s(N)\le T_s(N)$ and
+$R_s(v)\le D_s(N)$. Hence the sufficient saturation condition is
+
+$$
+T_s(N)+\log\frac{C_s}{\varphi(C_s)}\le J_0.
+$$
+
+Under it, imposing existence of a low-loss divisor cannot exclude any
+of those hypothesized hosts. In a fixed-gcd branch satisfying the sharper
+$R_s(v)+\log(g/\varphi(g))-\delta_s\le J_0$, that incidence constraint
+is redundant for the entire branch, including its relaxed residual words.
+An extra multiplier for it cannot raise the exact constrained optimum
+above the one without it; setting the multiplier to zero remains allowed.
+
+### A finite condition in the original growing-price window
+
+Keep $y=\log A$, $\ell=\log y$, $s=y\ell$, and $A\le N\le C_0A$
+with fixed $C_0>1$. Write
+
+$$
+L_y=\sum_{p\le y}\log(1-1/p)^{-1},\qquad
+\mathcal E_y=s(L_y-\gamma-\log\ell)+y-\vartheta(y-1).
+$$
+
+The reference first-prime threshold $x_s$, already defined by
+$s\log(1+1/x_s)=\log x_s$, lies in $(y-1,y)$ for $y>2$.
+For the lower endpoint use
+$\log(1+1/(y-1))>1/y$ and $\log(y-1)<\log y$;
+the upper endpoint follows from $\log(1+1/y)<1/y$.
+Therefore $\log C_s\ge\vartheta(y-1)$, while every prime of $C_s$
+is at most $y$ and $\log Z(C_s)\le L_y$. The actual Robin threshold
+also satisfies $\log(e^\gamma\log\log N)\ge\gamma+\log\ell$.
+Together these give the finite, signed upper bounds
+
+$$
+T_s(N)\le\mathcal E_y+\log C_0,\qquad
+\log\frac{C_s}{\varphi(C_s)}\le L_y.
+$$
+
+Consequently
+
+$$
+\boxed{\mathcal E_y+\log C_0+L_y\le J_0}
+$$
+
+is a sufficient window-wide condition for the saturation above. A negative
+$T_s(N)$ already makes $D_s(N)\le T_s(N)$ impossible; saturation never
+requires manufacturing a positive remaining budget in that case.
+
+The strong Mertens and prime-number inputs already used in
+[Weingartner's pinned author text, equation (9), PDF p.6](https://arxiv.org/pdf/1011.4262v1)
+give, for every fixed $K$, the classical remainders
+
+$$
+L_y=\gamma+\log\ell+O_K(\ell^{-K}),\qquad
+\vartheta(y-1)=y-1+O_K(y\ell^{-K}).
+$$
+
+Taking $K>3$ shows $\mathcal E_y=o(y/\ell^2)$ and
+$L_y=O(\log\ell)$. Thus the displayed condition holds eventually for
+the original $J_0=8(\pi^2/6)y/\ell^2$. This uses the stronger classical
+inputs, not only Dusart's previously quoted $O(\ell^{-2})$ Mertens
+remainder. No effective onset follows here.
+
+This identifies a redundant source filter in the dangerous budget range.
+It leaves the actual congruence and strict signed budget untouched.
+Existence of a low-loss divisor, including this explicit gcd witness,
+does not establish FIB §233.5 or RH.
