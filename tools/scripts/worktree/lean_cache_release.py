@@ -268,11 +268,9 @@ def publish(root, partition, verification=None):
     # Build failures keep their status. Production transport is optional;
     # explicit verification succeeds only after the uploaded bytes restore.
     # A caller's LEAN_REPORT override must not move publication outside buildDir.
-    command = ["/bin/bash", str(root / "tools/lean-inspector/inspect.sh"),
-        "--repository", str(root), "--output", ".lake/build/stratalint/raw-lean-report.json"]
-    if os.environ.get("STRATALINT_LEAN_REPORT_LOG_DIR"):
-        command += ["--log-dir", os.environ["STRATALINT_LEAN_REPORT_LOG_DIR"]]
-    build = subprocess.run(command, cwd=root)
+    build = subprocess.run(["make", "lean-report",
+        "LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], cwd=root,
+        env={**os.environ, "LEAN_REPORT_CACHE_MISS_POLICY": "build"})
     if build.returncode:
         return build.returncode
     report = root / ".lake/build/stratalint/raw-lean-report.json"

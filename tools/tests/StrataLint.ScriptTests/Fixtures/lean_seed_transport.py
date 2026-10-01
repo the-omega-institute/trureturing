@@ -22,17 +22,15 @@ class ReleaseTransportCases(PartitionFixture):
         write(self.root / ".lake/build/lib/lean/D5/A.olean", "locally-produced-olean")
         write(self.root / ".lake/build/stratalint/raw-lean-report.json",
               '{"modules":[],"schema":"stratalint-raw-lean-report-v2"}\n')
-        build_stub = '''#!/bin/sh
+        write(self.bin / "make", '''#!/bin/sh
 printf "%s\\n" "$*" >> "$FAKE_BUILD_LOG"
-if [ "${FAKE_BUILD_EXIT:-0}" = "0" ] && { [ "$1" = "lean-report" ] || [ "$1" = "--repository" ]; }; then
+if [ "$1" = "lean-report" ] && [ "${FAKE_BUILD_EXIT:-0}" = "0" ]; then
     mkdir -p .lake/build/stratalint
     printf '%s\\n' '{"modules":[],"schema":"stratalint-raw-lean-report-v2"}' > .lake/report-fixture-$$
     mv .lake/report-fixture-$$ .lake/build/stratalint/raw-lean-report.json
 fi
 exit "${FAKE_BUILD_EXIT:-0}"
-'''
-        write(self.bin / "make", build_stub)
-        write(self.root / "tools/lean-inspector/inspect.sh", build_stub)
+''')
         write(self.bin / "gh", FAKE_GH)
         helper_dir = self.root / "tools/scripts/worktree"
         helper_dir.mkdir(parents=True, exist_ok=True)
@@ -50,7 +48,7 @@ exit "${FAKE_BUILD_EXIT:-0}"
             "HOME": str(self.root), "FAKE_BUILD_LOG": str(self.root / "build-runs"),
             "FAKE_REMOTE": str(self.remote), "GITHUB_SHA": "d" * 40, "GITHUB_RUN_ID": run,
             "GITHUB_RUN_ATTEMPT": "1", "GITHUB_EVENT_NAME": "schedule", "GITHUB_REF": "refs/heads/dev",
-            "STRATALINT_LEAN_REPORT_LOG_DIR": "", "STRATALINT_CHECK_SUCCEEDED": "true", "STRATALINT_ACTIONS_CACHE_SEEDED": "", **extra}
+            "STRATALINT_CHECK_SUCCEEDED": "true", "STRATALINT_ACTIONS_CACHE_SEEDED": "", **extra}
 
     def transport(self, verb, run="123", arguments=(), **extra):
         return subprocess.run(["bash", str(self.publisher), verb, "--repository", str(self.root), *arguments],
@@ -352,7 +350,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
                     self.assertEqual([1] * len(self.gh_budgets()),
                                      [call["timeout"] for call in self.gh_budgets()])
                     self.assertFalse((self.root / ".lake/build").exists())
-        self.assertEqual(["--repository " + str(self.root) + " --output .lake/build/stratalint/raw-lean-report.json"] + ["-C " + str(self.root) + " lean"] * 6,
+        self.assertEqual(["lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"] + ["-C " + str(self.root) + " lean"] * 6,
                          (self.root / "build-runs").read_text().splitlines())
 
     def test_fetch_deadline_is_shared_across_snapshots(self):
@@ -444,7 +442,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
                     self.assertEqual(build_exit, result.returncode, result.stdout + result.stderr)
                     self.assertIn('"status":"miss"', result.stdout)
                     self.assertFalse((self.root / ".lake/build").exists())
-        self.assertEqual(["--repository " + str(self.root) + " --output .lake/build/stratalint/raw-lean-report.json"] + ["-C " + str(self.root) + " lean"] * 4,
+        self.assertEqual(["lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"] + ["-C " + str(self.root) + " lean"] * 4,
                          (self.root / "build-runs").read_text().splitlines())
 
     def test_optional_fetch_valid_seed_still_reaches_build(self):
@@ -453,7 +451,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         result = self.fetch_then_build()
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertIn('"status":"unpacked"', result.stdout)
-        self.assertEqual(["--repository " + str(self.root) + " --output .lake/build/stratalint/raw-lean-report.json", "-C " + str(self.root) + " lean"],
+        self.assertEqual(["lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json", "-C " + str(self.root) + " lean"],
                          (self.root / "build-runs").read_text().splitlines())
 
     def test_unavailable_lock_is_an_explicit_fetch_miss(self):
@@ -476,7 +474,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         failed = self.transport("publish", PYTHONPATH=str(self.bin), FAKE_BUILD_EXIT="19")
         self.assertEqual(19, failed.returncode, failed.stdout + failed.stderr)
         self.assertEqual([], list(self.remote.iterdir()))
-        self.assertEqual(["--repository " + str(self.root) + " --output .lake/build/stratalint/raw-lean-report.json", "--repository " + str(self.root) + " --output .lake/build/stratalint/raw-lean-report.json"], (self.root / "build-runs").read_text().splitlines())
+        self.assertEqual(["lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json", "lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], (self.root / "build-runs").read_text().splitlines())
 
     def test_fetch_cannot_enable_cross_partition_selection(self):
         self.assertEqual(0, self.transport("publish").returncode)
