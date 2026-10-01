@@ -3302,3 +3302,194 @@ $$
 其中最后一项是指定未来任务的稳定行为类；只保存 \(\alpha,\beta\) 计数、当前端点或来源边缘后验，不能保证下一次 DownL/DownR 的合法性和读出。
 
 ## 31.99 追加锚
+
+## 32. 依赖类型生成器与可达行为核心
+
+第30节的过程元组保留了所有接口字段，第31节的联合核给出了有限商的算法。本节再向下收缩一次：把类型、原子边、合法性、后继和当前读出作为生成器的原语，把路径、复合、时间响应和动态边界全部递归导出。结论只针对给定根集合生成的可达子关系。
+
+### 32.1 最小的有类型生成数据
+
+取类型集 \(I\)，每个类型 \(i\) 的配置纤维为 \(S_i\)，每对类型的原子边集合为 \(E_{ij}\)。一条边 \(e\in E_{ij}\) 的动作标签、事件标签和原子标识记为
+
+$$
+a(e)\in A,\qquad
+\lambda(e)\in L,\qquad
+\iota(e)\in J .
+\tag{TG.3201}
+$$
+
+每个类型有当前读出 \(q_i:S_i\to O_i\)。边的单步语义是部分函数
+
+$$
+\operatorname{step}_e:S_i\longrightarrow
+\operatorname{Option}\bigl(L_e\times S_j\bigr),
+\qquad e\in E_{ij}.
+\tag{TG.3202}
+$$
+
+返回 \(\operatorname{none}\) 表示该边在当前配置不合法；返回 \(\operatorname{some}(\ell,s')\) 同时给出事件标签和后继。若过程具有随机性，把右侧换成有限次概率分布，并保留每个输出标签到后继类的质量；本节先写确定性版本。
+
+从这些数据导出有限 typed path。空路径 \(1_i:i\to i\) 是每个类型的单位；若 \(e:i\to j\) 且 \(p:j\to k\)，则 \(p\circ e:i\to k\)。只有索引相等的边才能接续，因此不需要另把“接口类型相容”作为一个无类型布尔条件附加在路径外。
+
+若每条边还有单步 grade \(\delta_1(e)\in G\)，其中 \(G\) 是加法幺半群，则路径 grade 由
+
+$$
+\operatorname{grade}(1_i)=0,\qquad
+\operatorname{grade}(p\circ e)
+=\delta_1(e)+\operatorname{grade}(p)
+\tag{TG.3203}
+$$
+
+导出。空间支持 \(\sigma(e)\) 若不由边类型和 step 定义，也必须作为独立字段加入；它不是生成器可以免费推出来的坐标。
+
+### 32.2 完整有限路径响应与行为核
+
+对 \(p:i\to k\) 和 \(s\in S_i\)，递归定义响应
+
+$$
+\operatorname{Resp}_{1_i}(s)=\operatorname{ok}(q_i(s)),
+\tag{TG.3204}
+$$
+
+若 \(p\) 以 \(e:i\to j\) 开始，则
+
+$$
+\operatorname{Resp}_{p\circ e}(s)=
+\begin{cases}
+\operatorname{fail}(e),&
+\operatorname{step}_e(s)=\operatorname{none},\\
+\operatorname{event}\bigl(e,\ell,
+\operatorname{Resp}_p(s')\bigr),&
+\operatorname{step}_e(s)=\operatorname{some}(\ell,s').
+\end{cases}
+\tag{TG.3205}
+$$
+
+这里的响应保留动作、原子标识、事件、失败、终端读出和路径顺序。定义完整行为
+
+$$
+\beta_i(s):
+\bigl\{p:i\to k\text{ 的有限 typed path}\bigr\}
+\longrightarrow
+\operatorname{Response},
+\qquad
+\beta_i(s)(p)=\operatorname{Resp}_p(s).
+\tag{TG.3206}
+$$
+
+在实际根集合 \(R_i\subseteq S_i\) 上，只取由（TG.3202）反复产生的可达闭包
+\(\operatorname{Reach}(R)\)。所有后续等价和最小性都在这个闭包上判断；未从声明根可达的状态和边不被当前观察自动恢复。
+
+### 32.3 最小可执行行为商
+
+在同一类型纤维上定义
+
+$$
+s\mathrel{\approx_i}t
+\iff
+\beta_i(s)=\beta_i(t).
+\tag{TG.3207}
+$$
+
+**定理 32.1（有类型行为核的动态充分性与最小性）。** 在可达闭包上，\(\approx_i\) 是等价关系，并满足：
+
+1. \(s\approx_i t\) 时，当前读出相同：\(q_i(s)=q_i(t)\)；
+2. 对每条 \(e:i\to j\)，若 \(\operatorname{step}_e(s)=\operatorname{none}\)，则 \(\operatorname{step}_e(t)=\operatorname{none}\)；若
+   \[
+   \operatorname{step}_e(s)=\operatorname{some}(\ell,s'),
+   \]
+   则存在 \(t'\) 使
+   \[
+   \operatorname{step}_e(t)=\operatorname{some}(\ell,t')
+   \quad\text{且}\quad s'\approx_j t' ;
+   \tag{TG.3208}
+   \]
+3. 因而 \(q_i\)、每条 \(\operatorname{step}_e\) 以及所有有限路径响应都下降到商
+   \[
+   \mathsf S_{\mathrm{beh}}=\operatorname{Reach}(R)/{\approx};
+   \tag{TG.3209}
+   \]
+4. 若 \(r\) 是另一个实际可达摘要，并且
+   \[
+   r(s)=r(t)
+   \Longrightarrow
+   \bigl(q_i(s)=q_i(t)\ \land\
+   \text{每条 }e\text{ 的合法性、标签与 }r\text{-后继相同}\bigr),
+   \tag{TG.3210}
+   \]
+   则在 \(\operatorname{im}r\) 上存在唯一映射
+   \[
+   \overline\beta(r(s))=[s]_{\approx}
+   \quad\text{且}\quad
+   \overline\beta\circ r=q_{\mathrm{beh}} .
+   \tag{TG.3211}
+   \]
+   所以任何这样的精确摘要的实际状态数都不小于行为商的类数。
+
+**证明。** 等价关系由函数 \(\beta_i\) 的相等得到。取空路径，立即得到当前读出相等。若一步在 \(s\) 上失败而在 \(t\) 上成功，长度一响应已经不同；若两边都成功但事件标签不同，同样由长度一响应矛盾。因此成功状态具有相同标签。对成功后继 \(s',t'\)，任意后续路径 \(p\) 的响应由 \(p\circ e\) 的响应给出；\(\beta_i(s)=\beta_i(t)\) 遂推出 \(\beta_j(s')=\beta_j(t')\)。这给出（TG.3208），并按路径长度归纳得到商上的全部响应。若 \(r(s)=r(t)\)，条件（TG.3210）沿任意路径归纳给出 \(\beta_i(s)=\beta_i(t)\)，故（TG.3211）在实际像上良定义且唯一。证毕。
+
+这里的唯一性只在 \(\operatorname{im}r\) 上成立；若给摘要值域加入从未由实际来源取得的点，因子在那些点上的延拓没有意义，也不能被称作观察者的最小实现。
+
+### 32.4 四视图恢复的方向性
+
+令 \(\Phi\) 是第30节的联合视图，限制在 \(\operatorname{Reach}(R)\) 上。由（TG.3207）得到
+
+$$
+\ker\Phi\subseteq\approx
+\quad\Longleftrightarrow\quad
+\text{\(\Phi\) 足以决定指定的全部有限路径响应}.
+\tag{TG.3212}
+$$
+
+若还要求 \(\Phi\) 本身就是最小动态边界，则必须有
+
+$$
+\ker\Phi=\approx .
+\tag{TG.3213}
+$$
+
+只有当联合视图含有空路径读出、全部声明动作及其失败响应、原子标识和所有允许的有限 typed continuation 时，\(\ker\Phi\) 才有机会达到（TG.3213）。遗漏空路径会遗漏当前边界读数；遗漏某个动作会把不同的合法性合并；遗漏某个后缀会把未来才出现的区别推到视图核中。
+
+这也给出一个更精简的生成层—视图层分界：
+
+* \(I,S_i,E_{ij},\operatorname{step}_e,q_i\) 决定可达过程和完整行为核；
+* \(\delta_1\) 是可选的路径时间读出，只有在进入响应或另有同步合同后才可由行为恢复；
+* \(\sigma\) 是可选的空间读出，不能仅由 \(\operatorname{step}\) 的数值响应推出；
+* \(\Phi\) 的最小充分边界是行为商 \(\operatorname{Reach}(R)/{\approx}\)，而不是任意单个坐标、总 grade 或当前后验。
+
+### 32.5 FIB 的依赖类型特化
+
+对 Fibonacci 生成层，可以令一个源类型承载自由树项，另设游标、纪元和权限的配置类型。叶常元是
+
+$$
+\alpha,\beta:\mathsf{Tree},
+\qquad
+\langle-,-\rangle:\mathsf{Tree}\times\mathsf{Tree}\to\mathsf{Tree},
+\qquad
+\rho:\mathsf{Tree}\to\mathsf{Tree}.
+\tag{TG.3214}
+$$
+
+它们分别是叶生成元、构造器和替换；真正的 \(E_{ij}\) 是带源/靶索引的
+ReadTag、DownL、DownR、Up、ApplyRho 等游标动作。把动作的失败、事件、绝对纪元和
+writer 收据放入 \(\operatorname{step}_e\) 的标签，行为核便同时决定：
+
+$$
+\text{当前读数},\quad
+\text{下一动作是否合法},\quad
+\text{后缀上下文怎样变化},\quad
+\text{未来读数怎样继续}.
+\tag{TG.3215}
+$$
+
+若任务只读取组成，\(\approx\) 可以把不同括号和左右次序合并；若任务包含路径读取，
+（TG.3208）会把这些后继差异保留下来。故“两个不可约关系”准确地说是
+自由语法的两个叶生成元；最小运行边界还必须包含类型化动作和其行为商。
+
+**例 32.2（空路径与不可达边）。** 若观察只记录非空动作的输出而不记录
+\(q_i(s)\)，两个当前读数不同但每个非空动作都失败的状态会被错误合并。反过来，
+若一条边从任何声明根都不可达，改变它的动作标签或 grade 不会改变任何
+\(\operatorname{Resp}_p\)；因此完整过程的全局同构不能由可达观察推出，最多得到
+\(\operatorname{Reach}(R)\) 上的同构。
+
+## 32.99 追加锚
