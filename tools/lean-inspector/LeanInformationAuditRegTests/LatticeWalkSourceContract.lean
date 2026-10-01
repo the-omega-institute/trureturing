@@ -1,4 +1,7 @@
 import Reg.D5.S3.Combinatorics.LatticeWalkNearMaximalArea
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 namespace LeanInformationAuditRegTests.LatticeWalkSourceContract

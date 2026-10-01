@@ -1,0 +1,9 @@
+**假设 18.1（外部黄金界及 Fibonacci 等号）。** 对定义 15.1 的 Cloitre 序列，使用下列全局关系作为本节的显式前提：
+
+$$
+1\leq C(n)\leq n,\qquad C(n)\geq G(n)\quad(n\geq1),
+\qquad C(F_j)=F_{j-1}\quad(j\geq2).
+$$
+
+下界与 Fibonacci 等号取自 [Cloitre 黄金结构，§§4、6](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/golden-proof.md)，其论证含明确的有限归纳基。这里只使用所列关系，不假设 $C(n)/n$ 的全局极限存在。
+

@@ -1,0 +1,16 @@
+**命题 32.3（reducing、单向支持与中心的条件）。** 对全部声明 primitives 生成的含幺星代数 $\mathfrak A$，双向逐分支稳定投影属于 $\mathfrak A'$。对酉 $U$ 条件为 $[P,U]=0$，对全部时间 $e^{-itH}$ 为 $[P,H]=0$。对 Kraus $K_\mu$，仅从 $P$ 不泄漏的单向条件是 $(I-P)K_\mu P=0$；若 $P$ 与补空间都不混合，则为 $[P,K_\mu]=0$。若此外已证实际效果代数恰等于 $\mathfrak A$，可观测的 reducing 投影恰位于 $Z(\mathfrak A)=\mathfrak A\cap\mathfrak A'$。
+
+证明。把 $K_\mu$ 写成 $P\mathcal H\oplus(I-P)\mathcal H$ 的四角，单向条件消一个角，reducing 消两个角，后者等价交换。与全部 generators 及其伴随交换等价于与生成星代数交换。可观测条件再取交即中心；未证明实际效果等于 primitive 代数时只能取实际效果空间与 commutant 的交，不能先宣称中心。$\square$
+
+在标准 $d=e=2$ 固定时钟、完整低仪器合同中，全部低矩阵迫使 commutant 元素形如 $I_A\otimes Q$。定理 14.1 的实际效果代数也等于 primitive 星代数：实际历史效果在后者中，而每个 $W(\Delta)$ 和低 primitive 都在该定理列出的代数中，给两边包含。于是稳定高投影精确分类为：
+
+| 本章时钟类，模 $2\pi$ | commutant 的高层部分 | 稳定 $Q$ |
+| --- | --- | --- |
+| 32 · $0$ | $B(\mathbb C^4)$ | 任意高层正交投影 |
+| 32 · $\pm2\pi/3$ | 完整 Fourier 对角代数 $\mathcal D_F$ | 任意完整 Fourier 标签子集 |
+| 32 · 其余 | $\mathbb CP_{00}\oplus\mathbb CI_{\mathrm{nonzero}}$ | 零标签与非零三标签这两个整块的任意并 |
+
+这是对三种代数直接取 commutant：全低矩阵移除低层重数，$\mathcal D_F$ 在高层的 commutant 仍为 $\mathcal D_F$，$\mathbb C\oplus M_3$ 的 commutant 是两个标量块。
+
+可观测 membership 不保证稳定。在 $\Delta=\pi$，$I_A\otimes P_{10}$ 属于轨道效果代数，但初态 $|10,p_{10}\rangle=u$ 在三循环上受 $W(\pi)=2J_3/3-I$ 作用，原标签幅为 $-1/3$，另两标签幅为 $2/3$，所以该 projection 权重从一降为 $1/9$。反向在 $\Delta=2\pi$，$W=I$，任意 $I_A\otimes Q$ 稳定，但非标量高投影不在 $B_4\otimes I_4$ 的效果空间中。稳定且不可读、可读且不稳定都存在；这些是操作合同的代数结论，不识别物理粒子。
+

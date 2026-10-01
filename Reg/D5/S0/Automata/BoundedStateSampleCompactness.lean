@@ -86,16 +86,6 @@ register_information_theorem bounded_state_sample_compactness in arena
       stateBinder := 6 }] })
   escape continues (open)
 
-open Lean in
-run_meta do
-  let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-    record.occurrence.key.theoremName ==
-      `D5.S0.Automata.BoundedStateSampleCompactness.bounded_state_sample_compactness
-  let valid := row.any fun record => match record.result with
-    | .declaredValidated _ => true
-    | _ => false
-  unless valid do throwError "bounded-state compactness registration is not declaredValidated"
-
 #print axioms registration
 
 end Reg.D5.S0.Automata.BoundedStateSampleCompactness

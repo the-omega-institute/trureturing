@@ -1,5 +1,8 @@
 import Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution
 import LeanInformationAuditRegTests.CompiledTorusWire
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 namespace LeanInformationAuditRegTests.TorusSourceContract

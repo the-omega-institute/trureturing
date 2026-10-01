@@ -1,72 +1,231 @@
 import LeanInformationAuditInterface.Records
+import LeanInformationAuditInterface.RootContract
+
+namespace LeanInformationAudit
+open Lean
+
+
+namespace TemplateBinding
+
+structure ResolvedDeclaration where
+  theoremName : Name
+  arena : Name
+  descriptor : Option Expr
+  sourceRecord : Option Name := none
+  diagnostic : Option String := none
+  escapeInput : EscapeRecordInput := {}
+
+end TemplateBinding
+
+/-- Resolved and elaborated source input. No assessment result is stored. -/
+structure RegistrationInput where
+  entry : InformationRegistryEntry
+  sourceText : String
+  options : Options
+  suppliedPrimitives : Option Expr := none
+  viaDescriptor : Option Expr := none
+  outputEvidence : Option Expr := none
+  /-- Author-supplied bridge before an occurrence companion aliases it. -/
+  realizationSource : Option Name := none
+  declaration : Option TemplateBinding.ResolvedDeclaration := none
+
+structure TemplateEnrollmentInput where
+  owner : Name
+  name : Name
+  version : Nat
+  constructors : Array Name
+  sourceText : String
+  options : Options
+
+structure SealInput where
+  rootId : Name
+  options : Options
+
+private initialize registrationInputs :
+    SimplePersistentEnvExtension RegistrationInput (Array RegistrationInput) ←
+  registerSimplePersistentEnvExtension {
+    addEntryFn := Array.push
+    addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
+private initialize templateInputs :
+    SimplePersistentEnvExtension TemplateEnrollmentInput (Array TemplateEnrollmentInput) ←
+  registerSimplePersistentEnvExtension {
+    addEntryFn := Array.push
+    addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
+private initialize sealInputs :
+    SimplePersistentEnvExtension SealInput (Array SealInput) ←
+  registerSimplePersistentEnvExtension {
+    addEntryFn := Array.push
+    addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
+
+namespace RegistrationInputs
+def add (env : Environment) (input : RegistrationInput) : Environment :=
+  registrationInputs.addEntry env input
+def owned (env : Environment) : Array (Name × RegistrationInput) := Id.run do
+  let mut result := #[]
+  for index in [:env.header.moduleNames.size] do
+    for input in registrationInputs.getModuleEntries env index do
+      result := result.push (env.header.moduleNames[index]!, input)
+  for input in (registrationInputs.getEntries env).reverse do
+    result := result.push (env.header.mainModule, input)
+  return result
+end RegistrationInputs
+
+namespace TemplateEnrollmentInputs
+def add (env : Environment) (input : TemplateEnrollmentInput) : Environment :=
+  templateInputs.addEntry env input
+def owned (env : Environment) : Array (Name × TemplateEnrollmentInput) := Id.run do
+  let mut result := #[]
+  for index in [:env.header.moduleNames.size] do
+    for input in templateInputs.getModuleEntries env index do
+      result := result.push (env.header.moduleNames[index]!, input)
+  for input in (templateInputs.getEntries env).reverse do
+    result := result.push (env.header.mainModule, input)
+  return result
+end TemplateEnrollmentInputs
+
+namespace SealInputs
+def add (env : Environment) (input : SealInput) : Environment := sealInputs.addEntry env input
+def owned (env : Environment) : Array (Name × SealInput) := Id.run do
+  let mut result := #[]
+  for index in [:env.header.moduleNames.size] do
+    for input in sealInputs.getModuleEntries env index do
+      result := result.push (env.header.moduleNames[index]!, input)
+  for input in (sealInputs.getEntries env).reverse do
+    result := result.push (env.header.mainModule, input)
+  return result
+end SealInputs
+
+private initialize rootCatalogInputs :
+    SimplePersistentEnvExtension RootCatalogContract (Array RootCatalogContract) ←
+  registerSimplePersistentEnvExtension {
+    addEntryFn := Array.push, addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
+
+namespace RootCatalogs
+def find? (env : Environment) (rootId : Name) : Option RootCatalogContract :=
+  (rootCatalogInputs.getState env).find? (·.rootId == rootId)
+def owned (env : Environment) : Array (Name × RootCatalogContract) := Id.run do
+  let mut result := #[]
+  for index in [:env.header.moduleNames.size] do
+    for input in rootCatalogInputs.getModuleEntries env index do
+      result := result.push (env.header.moduleNames[index]!, input)
+  for input in (rootCatalogInputs.getEntries env).reverse do
+    result := result.push (env.header.mainModule, input)
+  return result
+def declare (contract : RootCatalogContract) : Elab.Command.CommandElabM Unit :=
+  modifyEnv fun env =>
+    let env := match contract.companionPrefix with
+      | some companion => env.registerNamespace companion
+      | none => env
+    rootCatalogInputs.addEntry env contract
+end RootCatalogs
+
+structure ExpectedOccurrence where
+  rootId : Name
+  objectArenaName : Name
+  theoremName : Name
+  statementIdentity : String := ""
+  capturedStatement : Option Expr := none
+  registrationModuleName : Name
+  deriving Inhabited, Repr
+
+private initialize expectedOccurrenceInputs :
+    SimplePersistentEnvExtension ExpectedOccurrence (Array ExpectedOccurrence) ←
+  registerSimplePersistentEnvExtension {
+    addEntryFn := Array.push, addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
+
+namespace ExpectedOccurrenceManifest
+def declaredEntries (env : Environment) (rootId : Name) : Array ExpectedOccurrence :=
+  (expectedOccurrenceInputs.getState env).filter (·.rootId == rootId)
+def owned (env : Environment) : Array (Name × ExpectedOccurrence) := Id.run do
+  let mut result := #[]
+  for index in [:env.header.moduleNames.size] do
+    for input in expectedOccurrenceInputs.getModuleEntries env index do
+      result := result.push (env.header.moduleNames[index]!, input)
+  for input in (expectedOccurrenceInputs.getEntries env).reverse do
+    result := result.push (env.header.mainModule, input)
+  return result
+def addEntry (env : Environment) (entry : ExpectedOccurrence) : Environment :=
+  expectedOccurrenceInputs.addEntry env entry
+end ExpectedOccurrenceManifest
+
+/-- Name components of the companions the recorder itself publishes. Which
+names are reserved judge output is decided by the report, not here. -/
+def theoremUnitSuffix := "__information_unit"
+def primitiveRealizationSuffix := "__primitive_realization"
+def arenaConstructionMarker : Name := `LeanInformationAudit.arenaConstruction
+
+def catalogQualifiedName (rootId objectArenaName : Name) (catalogId : CatalogId)
+    (theoremName : Name) (suffix : String) : Name :=
+  theoremName
+    |>.str (rootId.toString ++ "/" ++ objectArenaName.toString ++ "/" ++ catalogId.toString)
+    |>.str suffix
+
+def localCompanionName (env : Environment) (rootId owner : Name) (suffix : String) : Name :=
+  let name := owner.str suffix
+  let declaringModule := (env.getModuleIdxFor? owner).map fun index =>
+    env.header.moduleNames[index.toNat]!
+  if declaringModule.getD env.header.mainModule == rootId then name
+  else match (RootCatalogs.find? env rootId).bind (·.companionPrefix) with
+    | some companion => companion ++ name
+    | none => mkPrivateNameCore rootId (privateToUserName name)
+
+end LeanInformationAudit
+
 
 namespace LeanInformationAudit.TemplateBinding
 open Lean
 
-private initialize occurrenceInventory : SimplePersistentEnvExtension TemplateOccurrenceEvent (Array TemplateOccurrenceEvent) ←
-  registerSimplePersistentEnvExtension { addEntryFn := Array.push, addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
-private initialize bindingClaims : SimplePersistentEnvExtension TemplateBindingClaim (Array TemplateBindingClaim) ←
-  registerSimplePersistentEnvExtension { addEntryFn := Array.push, addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
+private initialize pendingDeclaration : EnvExtension (Option ResolvedDeclaration) ←
+  registerEnvExtension (pure none)
 
-private initialize bindingRecords : SimplePersistentEnvExtension BindingRecord (Array BindingRecord) ←
-  registerSimplePersistentEnvExtension { addEntryFn := Array.push, addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
+def withDeclaration (declaration : ResolvedDeclaration)
+    (action : Elab.Command.CommandElabM Unit) : Elab.Command.CommandElabM Unit := do
+  let previous := pendingDeclaration.getState (← getEnv)
+  if previous.isSome then throwError "unclassified_form:dtr.nested_declaration"
+  modifyEnv (pendingDeclaration.setState · (some declaration))
+  try action finally modifyEnv (pendingDeclaration.setState · previous)
 
-/-- Store declaration data without assessment or elaboration. -/
-def addOccurrence (env : Environment) (event : TemplateOccurrenceEvent) : Environment :=
-  occurrenceInventory.addEntry env event
-
-def addClaim (env : Environment) (claim : TemplateBindingClaim) : Environment :=
-  bindingClaims.addEntry env claim
-
-/-- Retain a result-shaped payload as data. Insertion performs no assessment
-and grants no certification; consumers still validate ownership and semantics. -/
-def addRecord (env : Environment) (record : BindingRecord) : Environment :=
-  bindingRecords.addEntry env record
-
-def records (env : Environment) : Array BindingRecord := bindingRecords.getState env
-
-def inventory (env : Environment) : Array TemplateOccurrenceEvent := occurrenceInventory.getState env
-
-def claims (env : Environment) : Array TemplateBindingClaim := bindingClaims.getState env
-
-/-- Origin labels come from the native extension container, separately from
-the owner asserted in a claim. Local claims have the current module as origin. -/
-def ownedClaims (env : Environment) : Array (Name × TemplateBindingClaim) := Id.run do
-  let mut result := #[]
-  for index in [:env.header.moduleNames.size] do
-    let owner := env.header.moduleNames[index]!
-    for claim in bindingClaims.getModuleEntries env index do
-      result := result.push (owner, claim)
-  for claim in bindingClaims.getEntries env do
-    result := result.push (env.header.mainModule, claim)
-  return result
-
-def ownedEvents (env : Environment) : Array (Name × TemplateOccurrenceEvent) := Id.run do
-  let mut result := #[]
-  for index in [:env.header.moduleNames.size] do
-    let owner := env.header.moduleNames[index]!
-    for event in occurrenceInventory.getModuleEntries env index do
-      result := result.push (owner, event)
-  for event in (occurrenceInventory.getEntries env).reverse do
-    result := result.push (env.header.mainModule, event)
-  return result
-
-/-- Imported records in module/entry order, labeled by their actual extension
-container, independently of the owners asserted in their payloads. -/
-def importedRecords (env : Environment) : Array (Name × BindingRecord) := Id.run do
-  let mut result := #[]
-  for index in [:env.header.moduleNames.size] do
-    let owner := env.header.moduleNames[index]!
-    for record in bindingRecords.getModuleEntries env index do
-      result := result.push (owner, record)
-  return result
-
-/-- Imported records followed by local records in insertion order. Local
-producer labels come from the current module, not the record payload. -/
-def ownedRecords (env : Environment) : Array (Name × BindingRecord) := Id.run do
-  let mut result := importedRecords env
-  for record in (bindingRecords.getEntries env).reverse do
-    result := result.push (env.header.mainModule, record)
-  return result
+def currentDeclaration (env : Environment) : Option ResolvedDeclaration :=
+  pendingDeclaration.getState env
 
 end LeanInformationAudit.TemplateBinding
+
+namespace LeanInformationAudit.RegistrationElaboration
+open Lean Meta
+
+def witnessArenaName : Name :=
+  `D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord.WitnessArena
+
+def objectDomainArenaName : Name :=
+  `D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
+
+def witnessBridgeName : Name :=
+  `D5.S3.ConceptDynamics.InformationEscape.CounterexampleRecord.WitnessPrimitiveRealization
+
+/-- Keep the author's arena for ownership and bridge identity. Only the derived
+law arena and its finite carrier are used for signature and catalog checks. -/
+structure NormalizedArena where
+  original : Expr
+  law : Expr
+  finite : Expr
+  witness : Bool
+  domain : Option Expr
+
+def normalizeArena (arena : Expr) : MetaM NormalizedArena := do
+  let type ← whnfR (← inferType arena)
+  let witness := type.isConstOf witnessArenaName
+  let objectDomain := type.isConstOf objectDomainArenaName
+  let law ← if witness then mkAppM (witnessArenaName.str "toPrimitiveLawArena") #[arena]
+    else if objectDomain then mkAppM (objectDomainArenaName.str "toPrimitiveLawArena") #[arena]
+    else pure arena
+  let finite ← if witness || type.isConstOf `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena then
+      mkAppM `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena #[law]
+    else if objectDomain then mkAppM `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena #[law]
+    else if type.isConstOf `D5.S3.ConceptDynamics.InformationEscape.Arena then pure arena
+    else throwError "IE-C003 ArenaResolutionFailed: {arena}"
+  let domain ← if objectDomain then
+      some <$> mkAppM (objectDomainArenaName.str "Domain") #[arena]
+    else pure none
+  return { original := arena, law, finite, witness, domain }
+
+end LeanInformationAudit.RegistrationElaboration

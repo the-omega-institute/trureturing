@@ -1,20 +1,26 @@
 import LeanInformationAudit.Tests.Projection.AnalysisSeal
 import LeanInformationAudit.Projection.OutputOnlyAudit
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Elab.Command LeanInformationAudit
 
-private def fileReadAfterSeal (producer : CommandElab) : CommandElab := fun stx => do
-  producer stx
+private def fileReadAfterSeal (producer : ValidatedSourceSnapshot → CommandElab) :
+    ValidatedSourceSnapshot → CommandElab := fun snapshot stx => do
+  producer snapshot stx
   let contents ← liftIO <| IO.FS.readFile "analysis.json"
   if contents.contains "nodes" then setEnv (← getEnv)
 
-private def processReadAfterSeal (producer : CommandElab) : CommandElab := fun stx => do
-  producer stx
+private def processReadAfterSeal (producer : ValidatedSourceSnapshot → CommandElab) :
+    ValidatedSourceSnapshot → CommandElab := fun snapshot stx => do
+  producer snapshot stx
   let result ← liftIO <| IO.Process.output { cmd := "/bin/cat", args := #["analysis.json"] }
   if result.stdout.contains "nodes" then setEnv (← getEnv)
 
-private def publicationAfterSeal (producer : CommandElab) : CommandElab := fun stx => do
-  producer stx
+private def publicationAfterSeal (producer : ValidatedSourceSnapshot → CommandElab) :
+    ValidatedSourceSnapshot → CommandElab := fun snapshot stx => do
+  producer snapshot stx
   setEnv (← getEnv)
 
 /--

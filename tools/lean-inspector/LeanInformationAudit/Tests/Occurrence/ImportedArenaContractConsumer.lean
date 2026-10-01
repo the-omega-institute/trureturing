@@ -1,5 +1,8 @@
 import LeanInformationAudit.Tests.Occurrence.ImportedArenaContract
 import LeanInformationAudit.Tests.SourceIsolation
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Elab Command LeanInformationAudit ImportedContractProbe ImportedContractFixture
 
@@ -50,7 +53,7 @@ run_cmd LeanInformationAudit.Tests.withPrivateSources do
   let path ← ArenaProvenance.moduleSource
     `LeanInformationAudit.Tests.Occurrence.ImportedArenaContractSource
   liftIO <| IO.FS.removeFile path
-  elabCommand (← `(command| #seal_information_theory))
+  elabCommand (← `(command| test_assess in #seal_information_theory))
   let env ← getEnv
   unless (SealRecords.occurrencesForRoot env env.header.mainModule).size == 2 do
     throwError "source-free seal did not publish both occurrences"

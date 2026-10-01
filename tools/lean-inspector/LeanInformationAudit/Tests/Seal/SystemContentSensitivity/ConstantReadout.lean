@@ -1,5 +1,8 @@
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open D5.S3.ConceptDynamics.InformationEscape
 
@@ -26,7 +29,7 @@ def constantRealization : PrimitiveRealization arena.signature where
   readout := fun _ _ => (0 : Nat)
   anchor := Fin.elim0
 
-information_theorem systemTheorem
+test_assess in information_theorem systemTheorem
   in arena
   primitives constantRealization
   : arena.Law constantRealization := by trivial
@@ -36,11 +39,11 @@ private def fixtureCatalog : Catalog arena.toArena :=
 
 example : fixtureCatalog.uniqueCaptureCount (0 : Fin 1) = 0 := by decide
 
-expect_information_occurrence systemTheorem
+test_assess in expect_information_occurrence systemTheorem
   in arena
   from "LeanInformationAudit.Tests.Seal.SystemContentSensitivity.ConstantReadout"
 
 #guard_msgs (error) in
-#seal_information_theory
+test_assess in #seal_information_theory
 
 end LeanInformationAudit.Tests.Seal.T013Constant

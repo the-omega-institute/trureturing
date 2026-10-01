@@ -2,6 +2,9 @@ import LeanInformationAudit.Tests.RegistrationGates.InlineProvenanceWire
 import LeanInformationAudit.Tests.RegistrationGates.InlineRealizationSource
 import LeanInformationAudit.Tests.RegistrationGates.Positive
 import LeanInformationAudit.Tests.SourceIsolation
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.InlineRealization
 
@@ -13,20 +16,20 @@ open LeanInformationAudit.Tests.InlineRealizationSource
 
 local instance : DecidableEq arena.State := arena.toArena.stateDecidableEq
 
-register_information_theorem quantified in arena
+test_assess in register_information_theorem quantified in arena
   primitives good.toPrimitiveBundle
   realization inline good := by
     exact ⟨fun _ => rfl, fun _ _ _ x => InlineProofHelper.witness_self x⟩
   variation lawVariation sensitivity slotSensitivity
 
-register_information_theorem readoutQuantified in arena
+test_assess in register_information_theorem readoutQuantified in arena
   readout via (missingInlineTemplate good)
   primitives good.toPrimitiveBundle
   realization inline good := by
     exact ⟨fun _ => rfl, fun _ _ _ x => InlineProofHelper.witness_self x⟩
   variation lawVariation sensitivity slotSensitivity
 
-register_information_theorem occurrenceQuantified in arena
+test_assess in register_information_theorem occurrenceQuantified in arena
   object_arena objectArena catalog inline
   readout via (missingInlineOccurrenceTemplate good)
   primitives good.toPrimitiveBundle
@@ -34,7 +37,7 @@ register_information_theorem occurrenceQuantified in arena
     exact ⟨fun _ => rfl, fun _ _ _ x => InlineProofHelper.witness_self x⟩
   variation lawVariation sensitivity slotSensitivity
 
-register_information_theorem twoUniverses in arena
+test_assess in register_information_theorem twoUniverses in arena
   primitives good.toPrimitiveBundle
   realization inline good := by
     exact ⟨fun _ => rfl, fun _ _ _ _ _ x => InlineProofHelper.witness_self x⟩
@@ -42,7 +45,7 @@ register_information_theorem twoUniverses in arena
 
 theorem namedTarget : arena.Law good := rfl
 theorem namedBridge : LegacyPrimitiveRealization arena (arena.Law good) good := ⟨Iff.rfl⟩
-register_information_theorem namedTarget in arena primitives good.toPrimitiveBundle
+test_assess in register_information_theorem namedTarget in arena primitives good.toPrimitiveBundle
   realization namedBridge variation lawVariation sensitivity slotSensitivity
 
 run_meta do
@@ -87,12 +90,12 @@ elab "reject_inline " label:str " in " command:command : command => do
   let before ← getEnv
   let previousMessages := (← get).messages
   modify fun state => { state with messages := {} }
-  elabCommand command
+  elabCommand (← `(command| test_assess in $command))
   let errors := (← get).messages.toList.filter (·.severity == .error)
   modify fun state => { state with messages := previousMessages }
   let theoremName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo command.raw[1]
-  let unitName := localCompanionName before theoremName theoremUnitSuffix
-  let realizationName := localCompanionName before theoremName primitiveRealizationSuffix
+  let unitName := localCompanionName before before.header.mainModule theoremName theoremUnitSuffix
+  let realizationName := localCompanionName before before.header.mainModule theoremName primitiveRealizationSuffix
   let after ← getEnv
   unless !errors.isEmpty && before.contains unitName == after.contains unitName &&
       before.contains realizationName == after.contains realizationName &&
@@ -154,7 +157,7 @@ run_meta do
     let inputs ← TemplateBinding.moduleInputs env root
     unless inputs.any (·.path == helperPath) do
       throwError "inline proof helper absent from module inputs"
-    let snapshot ← TemplateBinding.exportSnapshot
+    let snapshot ← (TemplateBinding.exportSnapshot (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
     let registered := snapshot.originals.filter (·.occurrence.key.registrationModule == root)
       |>.map (·.occurrence.key)
     let wires ← TemplateBinding.reportJson #[(root, registered)]

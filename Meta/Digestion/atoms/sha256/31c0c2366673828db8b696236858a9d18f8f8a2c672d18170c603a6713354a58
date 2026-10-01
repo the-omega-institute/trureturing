@@ -1,0 +1,8 @@
+**定义 1.2（Rest history and initialized unbounded trace）。** A rest history $T$ consists of states $s_t$ and labels $k_t$, indexed by all $t\in\mathbb N$, with $R(s_t,s_{t+1},k_{t+1})$ for every $t$. A bare history imposes no condition on $s_0$ or $k_0$. An initialized unbounded rest trace is a rest history with $s_0=(1,[1])$, $k_0=1$, and
+
+$$
+\forall h\in\mathbb N\quad\exists t\in\mathbb N\quad h\le\ell(s_t).
+$$
+
+Unbounded height and initialization are hypotheses on the supplied trace. They do not assert the existence of such a trace from any particular brick-placement rule. The motivating rule is the highest-eligible-row process in [OEIS A395531](https://oeis.org/A395531), with row conventions related to [A233380](https://oeis.org/A233380); no identification of its sequence with the endpoints below is assumed or concluded here.
+

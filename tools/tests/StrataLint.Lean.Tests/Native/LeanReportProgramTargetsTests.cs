@@ -57,7 +57,7 @@ public sealed class LeanReportProgramTargetsTests
                         else ['FixtureAudit'])
                 print(json.dumps(dict(exit=process.returncode, stdout=process.stdout,
                     stderr=process.stderr, calls=calls, lake=str(fixture.lake),
-                    workspace=str((fixture.root / 'Reg').resolve()),
+                    workspace=str((fixture.root / 'tools/lean-inspector-reg').resolve()),
                     receipt_exists=publication.member(fixture.output, '.reuse.json').is_file(),
                     seed_unchanged=all(path.read_bytes() == before
                         for path, before in fixture.seed_before.items()),
