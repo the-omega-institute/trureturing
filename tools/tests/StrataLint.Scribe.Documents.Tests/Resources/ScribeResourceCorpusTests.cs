@@ -70,6 +70,38 @@ public sealed class ScribeResourceCorpusTests
             $"corpus definitions={ordered.Length}; totalBytes={totalBytes}; medianBytesPerDefinition={median.ToString(System.Globalization.CultureInfo.InvariantCulture)}");
     }
 
+    [Fact]
+    public void EveryDocumentDefinitionSurvivesPackFileRoundTrip()
+    {
+        var directory = Directory.CreateTempSubdirectory("scribe-resource-pack-");
+        try
+        {
+            var path = Path.Combine(directory.FullName, "resources.zip");
+            var definitions = DocumentAssembly.Definitions;
+            var written = ScribeResourcePack.Write(path, definitions);
+            var pack = ScribeResourcePack.Open(path);
+            Assert.Equal(definitions.Length, pack.Manifest.EntryCount);
+            Assert.Equal(written.TotalSha256, pack.Manifest.TotalSha256);
+            var sizes = new List<int>();
+            foreach (var definition in definitions)
+            {
+                var bytes = ScribeResourceCodec.Encode(definition);
+                Assert.Equal(bytes, ScribeResourceCodec.Encode(pack.Read(definition.Document.Header.Gid.Value)));
+                sizes.Add(bytes.Length);
+            }
+            var ordered = sizes.Order().ToArray();
+            var median = ordered.Length % 2 == 1 ? ordered[ordered.Length / 2]
+                : (ordered[ordered.Length / 2 - 1] + ordered[ordered.Length / 2]) / 2m;
+            Assert.Equal(sizes.Sum(size => (long)size), pack.TotalUncompressedBytes);
+            output.WriteLine(FormattableString.Invariant(
+                $"pack corpus definitions={definitions.Length}; totalBytes={pack.TotalUncompressedBytes}; medianBytesPerDefinition={median}; packFileBytes={new FileInfo(path).Length}; totalSha256={pack.Manifest.TotalSha256}"));
+        }
+        finally
+        {
+            directory.Delete(recursive: true);
+        }
+    }
+
     private static DeclarationCatalog FixtureCatalog(IEnumerable<ScribeDocument> documents)
     {
         var declarations = documents
