@@ -10128,6 +10128,41 @@ The p∈L branch also has an exact existing source interpretation. Write R_p for
 
 Report364's singleton-root capacities allow this color; the associated prime-parent swap is a whole-family first-p-root permutation and preserves the numerical inventory, class count and modulus sum. Those existing results do not exclude DP7 or produce an extra payment.
 
+### Nonconcentrated pure powers pay additional bad columns without collisions
+
+The original pure p-powers cannot be globally maximal numerical labels. This reuses the existing original top-fan argument, not a new essential-modulus theorem. Write A_*=v_p(Q). If a<A_*, divisor closure supplies the proper original multiple p^(a+1). For a=A_*≥2, [Report371, section2](371-private-top-fans-and-ancestor-cuts.md#2-the-private-top-fan-has-an-escaping-first-ancestor) supplies actual top mixed labels p^A_*u with u>1 from the pure top's private point. For A_*=1, Report350 EB8 supplies an original child pu with u>1. Consequently
+
+    p^a∉G for every original pure p-power.            (DP10)
+
+Let B=U_top be section68's set of bad column tops, so |B|=|K| and B⊆G. For each t=p^A_u*u in G\B, its p-column is not entirely concentrated. Choose a nonconcentrated original layer e_t=p^beta*u in that same column. Since t is concentrated, beta<A_u. Different tops here have different u, and DP10 ensures u>1. Hence these chosen e_t are distinct NONPURE members of P\L, and DP1 supplies their actual mixed payers3e_t.
+
+Pay every nonmaximal d∈L\G by its self label3d. Those payer indices are in L, while all e_t are outside L, so this assignment has no collision. It pays every concentrated label except B without using any nonconcentrated PURE p-power as a payer index.
+
+If L≠P, DP6 gives p∉L. For any t∈B, DP10 ensures p is a proper divisor of t. Give one such top the additional payer3p. It is supplied by DP1, differs from all nonpure3e_t, and cannot equal a self payer since p∉L. Thus the same original family satisfies the sharper bound
+
+    L≠P ==> δ≤max(|K|−1,0).                         (DP11)
+
+Unlike DP8, this retains section68's bad-column count |K| rather than the potentially larger |G|. In particular a solitary bad column is fully paid whenever p is nonconcentrated. There is one3p slot in this injection, not one per bad column.
+
+More generally retain the full set of nonconcentrated pure-power indices
+
+    I_0={a:1≤a≤A_*, p^a∈P\L}.
+
+After paying G\B and L\G as above, a bad top t can use a slot a∈I_0 precisely when a≤v_p(t). Its actual payer is3p^a; DP10 makes p^a a proper divisor of t, so DP1 supplies it. Slots which neighbor no top need not give original mixed labels and are not used. All used pure-power payers are distinct and disjoint from both earlier image groups.
+
+These remaining neighborhoods are nested initial segments. The existing finite Hall deficiency formula therefore gives their exact unmatched count
+
+    ε_0=max_(0≤h≤A_*)
+        [ #{t∈B:v_p(t)≤h} − #{a∈I_0:a≤h} ],
+
+    δ≤ε_0.                                           (DP12)
+
+The h=0 term is zero. Indeed any nonempty set of bad tops has a largest p-height h and has exactly the eligible slots I_0∩[1,h]; including all bad tops of height at most h can only increase its deficiency. Conversely, if a threshold h contains no top of height exactly h, lowering it to the largest present top height preserves its top set and can only remove slots. Thus the threshold maximum is the exact deficiency of this restricted pure-power assignment. A matching can be obtained by processing tops in increasing p-height and using the smallest unused eligible exponent.
+
+DP12 is an upper bound for the FULL divisor-graph deficit δ; other nonconcentrated cofactors can improve it further. The formula also applies when L=P: then I_0 is empty, B=G, and it recovers ε_0=|K|=δ. If L≠P, the available index1 pays at least one nonempty bad-top set and recovers DP11.
+
+This constructs one common injection paying |L|−ε_0 labels, so its actual count and modulus-sum bounds are those of DP5 restricted to this injection. It does not pay repeated occurrences of a label repeatedly. In particular, a depth-h transported copy of d costs3^h*d/p, whereas a payer3e dominates it termwise only if d/e≤p/3^(h−1). The divisor edge alone supplies no such price comparison. Numerical inventory payment also leaves each occupied payer's original private liability intact.
+
 ### The remaining bridge is a source constraint on ancestor expansion
 
 The exact unpaid amount for this divisor relation is DP3. Closing it requires enough DISTINCT nonconcentrated ancestors for every selected set of concentrated maximal labels, or a different actual inventory payment or legal whole-family transformation. PH5 supplies the candidate labels and the private reset supplies DP7–DP9, but neither forces that expansion. In particular the concentrated-prime branch has no such ancestor at all unless G is empty; G=empty has not been proved in that branch.
