@@ -299,11 +299,8 @@ theorem result (H p a L : Nat) (hH : 2 ≤ H) (hp : p.Prime)
   have hrow : ∃ source : ActualPrefix,
       ((nextRow source).1 : ZMod H) = u ∧ ((nextRow source).2 : ZMod H) = v :=
     row_reachable H (L / 2) hH
-  have facts := BottomSiblingBlockResolution.result H L hH u v hrow
-  have positive := facts.2.1
-  have future := facts.2.2.1
-  have index_future := facts.2.2.2.1
-  have criterion := facts.2.2.2.2.1
+  obtain ⟨_, positive, future, index_future, criterion, _, _⟩ :=
+    BottomSiblingBlockResolution.result H L hH u v hrow
   let available : Finset (SuccessfulWord L) := Finset.univ
   have centers_bound : (centers L H u v available).card ≤ envelope L + 1 :=
     contribution_bound H L hH hL

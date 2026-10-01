@@ -15,7 +15,7 @@ namespace Reg.D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue
 noncomputable section
 
 abbrev responseSignature : Signature where
-  Params := Nat × List Window
+  Params := Σ _H : Nat, List Window
   State _ := ActualPrefix
   Role := Unit
   finiteRole := inferInstance
