@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.Occurrence.ImportClosureProducer
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit D5.S3.ConceptDynamics.InformationEscape
 open LeanInformationAudit.Tests.ImportClosureProducer
@@ -30,13 +33,13 @@ run_cmd do
 theorem legacy : LegacyPrimitiveRealization lawArena True fixtureRealization where
   equivalence := Iff.rfl
 
-register_information_theorem importedTheorem
+test_assess in register_information_theorem importedTheorem
   in lawArena object_arena fieldCopy catalog copy
   primitives fixtureRealization.toPrimitiveBundle realization legacy
-register_information_theorem importedTheorem
+test_assess in register_information_theorem importedTheorem
   in lawArena object_arena explicitMk catalog mk
   primitives fixtureRealization.toPrimitiveBundle realization legacy
-register_information_theorem importedTheorem
+test_assess in register_information_theorem importedTheorem
   in lawArena object_arena secondFactory catalog factory
   primitives fixtureRealization.toPrimitiveBundle realization legacy
 

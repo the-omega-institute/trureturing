@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f6f7a38cff447278197dcf812147c74f25da1c3642614ecfcd4473191db3d8a5
+  normalized_sha256: sha256:f6f7a38cff447278197dcf812147c74f25da1c3642614ecfcd4473191db3d8a5
+cas_ref: sha256:f6f7a38cff447278197dcf812147c74f25da1c3642614ecfcd4473191db3d8a5
+coverage_gids:
+  - gid: D5/S3/Analytic/Dilation/FiniteBoxDeterminantTrace.finite_box_trace_formula
+    target_statement_id: sha256:9ea9504afbae28e7c4ca2effd3d31d308dce1944d4ef3e67299a7b6485a43a7a
+receipts:
+  unresolved_subitems: []

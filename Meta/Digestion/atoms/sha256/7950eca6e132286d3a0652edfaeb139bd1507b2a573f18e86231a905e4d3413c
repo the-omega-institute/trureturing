@@ -1,0 +1,37 @@
+**定义 131.1（秩、命中与保留精度）。** 固定素数 $p$、指数 $h\ge1$ 和 $0\le e\le h$。本节的 $e$ 是接枝理想指数，$h$ 才是模数指数。沿用定理 120.3–120.4 的局部环射影点：$\mathbb P^1(\mathbb Z/p^j\mathbb Z)$ 是至少一坐标为单位的二元组模共同单位倍数。令
+
+$$
+\begin{gathered}
+F_0=0,\quad F_1=1,\quad F_{r+2}=F_{r+1}+F_r,\\
+r_j=\min\{r\ge1:p^j\mid F_r\},\qquad
+O_j=\{M^t[1:0]:t\in\mathbb Z\},\qquad
+c_j=\nu_p(F_{r_j}),\\
+\chi_p=\mathbf1_{\{r_1<p+1\}}.
+\end{gathered}
+$$
+
+$r_j$ 是 $O_j$ 的长度，也是此矩阵的射影阶，不必是矩阵周期。$F_1=F_2=1$，所以 $r_j\ge3$，$c_j$ 是有限整数且 $c_j\ge j$。这些事实及 $r_{j+1}/r_j\in\{1,p\}$ 正是定理 120.3–120.4 对这个 $M$、本原二元组及所有素数的结论；特别不排除 $p=2$ 或轨道提升停滞。令 $\varphi$ 表示 Euler 函数，约定 $\varphi(1)=1$。
+
+对 $x=(n,z)\bmod p^h$，若两坐标均被 $p^e$ 整除，定义标签 $\mathsf{High}(x)$，保留完整二元组，包括零对。否则令
+
+$$
+s=\min\{\nu_{p,h}(n),\nu_{p,h}(z)\}<e,\qquad m=e-s,\qquad u=x/p^s.
+$$
+
+$u$ 定义在模 $p^{h-s}$ 上且为本原对，往下约化到每个所用精度。若 $[u\bmod p^m]\notin O_m$，令
+
+$$
+j=\max\bigl(\{0\}\cup\{i:1\le i<m,\ [u\bmod p^i]\in O_i\}\bigr).
+$$
+
+标签为 $\mathsf{NoHit}(s,j,P)$，其中 $j\ge1$ 时 $P=[u\bmod p^j]$，$j=0$ 时 $P=*$。
+
+若 $[u\bmod p^m]\in O_m$，令 $t$ 为 $0,\ldots,r_m-1$ 中唯一满足 $(M^tu)_1=0\pmod {p^m}$ 的整数，写
+
+$$
+(A,B)=M^t x\pmod {p^h},\qquad
+\ell=\max(h-s-c_m,0),\qquad U=(B/p^s)\bmod p^\ell.
+$$
+
+标签为 $\mathsf{Hit}(s,t,A,U)$。这里 $p^e\mid A$、$\nu_{p,h}(B)=s$；$\ell>0$ 时 $U$ 为单位类，$\ell=0$ 时取模一的唯一类。除法先在模 $p^{h-s}$ 上定义再约化，不给零向量赋射影方向。
+

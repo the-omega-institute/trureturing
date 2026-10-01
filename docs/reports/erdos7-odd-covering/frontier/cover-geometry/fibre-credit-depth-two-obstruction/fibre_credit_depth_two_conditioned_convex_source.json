@@ -1,0 +1,279 @@
+{
+  "X": [
+    {
+      "probability": "581/6966",
+      "value": 1
+    },
+    {
+      "probability": "3031/6966",
+      "value": 2
+    },
+    {
+      "probability": "146/1053",
+      "value": 3
+    },
+    {
+      "probability": "425/2106",
+      "value": 4
+    },
+    {
+      "probability": "10/1443",
+      "value": 5
+    },
+    {
+      "probability": "45/481",
+      "value": 6
+    },
+    {
+      "probability": "1/37",
+      "value": 8
+    },
+    {
+      "probability": "1/74",
+      "value": 12
+    }
+  ],
+  "Y": [
+    {
+      "probability": "70591716887/242237485035",
+      "probability_numerator": 70591716887,
+      "value": 8
+    },
+    {
+      "probability": "11402052/598117247",
+      "probability_numerator": 4617831060,
+      "value": 10
+    },
+    {
+      "probability": "11098190221/26915276115",
+      "probability_numerator": 99883711989,
+      "value": 12
+    },
+    {
+      "probability": "647241841/3845039445",
+      "probability_numerator": 40776235983,
+      "value": 16
+    },
+    {
+      "probability": "1670808/598117247",
+      "probability_numerator": 676677240,
+      "value": 20
+    },
+    {
+      "probability": "19109010499/242237485035",
+      "probability_numerator": 19109010499,
+      "value": 24
+    },
+    {
+      "probability": "831249850/48447497007",
+      "probability_numerator": 4156249250,
+      "value": 32
+    },
+    {
+      "probability": "51256/256335963",
+      "probability_numerator": 48436920,
+      "value": 40
+    },
+    {
+      "probability": "2007332794/242237485035",
+      "probability_numerator": 2007332794,
+      "value": 48
+    },
+    {
+      "probability": "79907558/80745828345",
+      "probability_numerator": 239722674,
+      "value": 64
+    },
+    {
+      "probability": "12556/1794351741",
+      "probability_numerator": 1695060,
+      "value": 80
+    },
+    {
+      "probability": "117799876/242237485035",
+      "probability_numerator": 117799876,
+      "value": 96
+    },
+    {
+      "probability": "1040987/34605355005",
+      "probability_numerator": 7286909,
+      "value": 128
+    },
+    {
+      "probability": "172/1794351741",
+      "probability_numerator": 23220,
+      "value": 160
+    },
+    {
+      "probability": "44677/2990586235",
+      "probability_numerator": 3618837,
+      "value": 192
+    },
+    {
+      "probability": "86/230045095",
+      "probability_numerator": 90558,
+      "value": 256
+    },
+    {
+      "probability": "43/230045095",
+      "probability_numerator": 45279,
+      "value": 384
+    }
+  ],
+  "Y_probability_denominator": 242237485035,
+  "Z": [
+    {
+      "probability": "69139/1188864",
+      "value": 1
+    },
+    {
+      "probability": "1112671/3421440",
+      "value": 2
+    },
+    {
+      "probability": "8687/89856",
+      "value": 3
+    },
+    {
+      "probability": "98581679/382516992",
+      "value": 4
+    },
+    {
+      "probability": "595/123136",
+      "value": 5
+    },
+    {
+      "probability": "334076719/3291425280",
+      "value": 6
+    },
+    {
+      "probability": "225551219693/2547563166720",
+      "value": 8
+    },
+    {
+      "probability": "22097/12190464",
+      "value": 10
+    },
+    {
+      "probability": "258097447/6582850560",
+      "value": 12
+    },
+    {
+      "probability": "4530692887/283062574080",
+      "value": 16
+    },
+    {
+      "probability": "1619/6095232",
+      "value": 20
+    },
+    {
+      "probability": "444395593/59245655040",
+      "value": 24
+    },
+    {
+      "probability": "415624925/254756316672",
+      "value": 32
+    },
+    {
+      "probability": "1043/54857088",
+      "value": 40
+    },
+    {
+      "probability": "23341079/29622827520",
+      "value": 48
+    },
+    {
+      "probability": "39953779/424593861120",
+      "value": 64
+    },
+    {
+      "probability": "73/109714176",
+      "value": 80
+    },
+    {
+      "probability": "684883/14811413760",
+      "value": 96
+    },
+    {
+      "probability": "169463/59245655040",
+      "value": 128
+    },
+    {
+      "probability": "1/109714176",
+      "value": 160
+    },
+    {
+      "probability": "1039/731427840",
+      "value": 192
+    },
+    {
+      "probability": "1/28131840",
+      "value": 256
+    },
+    {
+      "probability": "1/56263680",
+      "value": 384
+    }
+  ],
+  "actual_source_changed": false,
+  "combined_first_four_caps": [
+    "354870451028/26915276115",
+    "1940069387744/8971758705",
+    "31390970044192/6211217565",
+    "4005807477705/19895792"
+  ],
+  "common_Y_moments_decimal": [
+    13.184722664993549,
+    216.2418151819878,
+    5053.915712287885,
+    202380.22062570692
+  ],
+  "common_Y_moments_one_through_four": [
+    "354870451028/26915276115",
+    "1940069387744/8971758705",
+    "31390970044192/6211217565",
+    "1089423903671104/5383055223"
+  ],
+  "common_retention_lower": "1243487/13077504",
+  "complete_ICX_source_theorem_reproved": false,
+  "exact_checks_passed": true,
+  "head_source_sha256": "603a91b3d6f91d59b835deb9e0f0a8bd26148852f4e038dbacea6e5423634a5c",
+  "hinge_thresholds_checked": 385,
+  "primes": [
+    11,
+    13,
+    17,
+    19,
+    23
+  ],
+  "retention_source_sha256": "afc7b9a8167cf22e67885e427c865c5daa844eb3664b6ff7b684be56e3168591",
+  "scalar_negative_control": {
+    "load": "17",
+    "moments": [
+      "17",
+      "289",
+      "4913",
+      "83521"
+    ],
+    "rejected_by": [
+      "mean",
+      "square"
+    ],
+    "scope": "Selected scalar model only, no congruence realization."
+  },
+  "scope": "A single common increasing-convex comparator on the existing actual shallow mu23 source. The head geometry, full ICX theorem and actual retention theorem are inherited; no new Lean verification or five-direction positivity conclusion.",
+  "shape_retention_lower_bounds": [
+    "1243487/13077504",
+    "7609619/64627200",
+    "7609619/64627200",
+    "39317/253440",
+    "123881/887040",
+    "123881/887040"
+  ],
+  "source_geometry_reexecuted": false,
+  "source_outcomes_checked": 256,
+  "stronger_same_source_D2_fourth": "4005807477705/19895792",
+  "tail_mass_at_least": "44132998649/283062574080",
+  "tail_mass_strictly_above": "42911442037/636890791680",
+  "threshold": 8
+}

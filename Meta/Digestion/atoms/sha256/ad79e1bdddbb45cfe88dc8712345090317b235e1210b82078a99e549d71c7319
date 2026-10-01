@@ -1,0 +1,76 @@
+**引理 216.4（全域权重下的局部指数尾）。** 设 $s\ge4$。在概率分布 $\mu_s$ 下，对每个素数 $p$、整数 $a\ge1$，
+
+$$
+\mu_s\{d:v_p(d)=a\}
+=\frac{b_s(p^a)}{p^aU_p(s)}
+\le2e^2s^2p^{-2a}.
+\tag{216.16}
+$$
+
+因此对实数 $L\ge2$，
+
+$$
+\boxed{\mu_s\{d:B(d)>L\}\le\frac{4e^2s^2}{L}.}
+\tag{216.17}
+$$
+
+证明。记 $P_p=(1-p^{-1})^{-s}$，取
+
+$$
+k_p=\left\lceil\frac{\log s}{\log p}\right\rceil-1\ge0,
+\qquad p^{k_p}<s\le p^{k_p+1}.
+$$
+
+§210 的几何级数表达式为
+
+$$
+U_p(s)=(1-p^{-1})\sum_{j\ge0}\frac{Z(p^j)^s}{p^j}.
+$$
+
+保留 $j=k_p$ 项。由于 $p^{-k_p-1}\le1/s$，
+
+$$
+(1-p^{-k_p-1})^s\ge(1-1/s)^s
+\ge\exp\left(-\frac{s}{s-1}\right)\ge e^{-2},
+$$
+
+从而
+
+$$
+U_p(s)\ge\frac{1-p^{-1}}{p^{k_p}}P_p(1-p^{-k_p-1})^s
+\ge\frac{P_p}{2e^2s}.
+\tag{216.18}
+$$
+
+对 $a\ge1$，均值定理和 $Z(p^a)-Z(p^{a-1})=p^{-a}$ 给
+
+$$
+b_s(p^a)\le s p^{-a}Z(p^a)^{s-1}\le s p^{-a}P_p.
+\tag{216.19}
+$$
+
+非负乘法级数的 Tonelli 分解给局部边缘概率
+
+$$
+\sum_{\substack{d\ge1\\v_p(d)=a}}\frac{b_s(d)}{dU(s)}
+=\frac{b_s(p^a)}{p^aU_p(s)}.
+$$
+
+代入式（216.18）—（216.19），得到式（216.16）。事件 $B(d)>L$ 是可数个事件
+$v_p(d)=a,\ p^a>L$ 的并，联合上界给
+
+$$
+\mu_s\{B(d)>L\}
+\le2e^2s^2\sum_{\substack{p\text{ 素},\ a\ge1\\p^a>L}}p^{-2a}.
+$$
+
+每个素数幂 $p^a$ 唯一对应一个整数，故
+
+$$
+\sum_{\substack{p\text{ 素},\ a\ge1\\p^a>L}}p^{-2a}
+\le\sum_{m>L}m^{-2}
+\le\frac1{\lfloor L\rfloor}\le\frac2L.
+$$
+
+这证明式（216.17）。无限联合上界只作用于一份已经由绝对收敛 Euler 级数归一化的概率测度，没有假设实际 FIB 剩余类独立。$\square$
+

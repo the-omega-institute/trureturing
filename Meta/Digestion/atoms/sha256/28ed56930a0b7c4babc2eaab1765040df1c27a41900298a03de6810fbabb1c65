@@ -1,0 +1,8 @@
+**定义 86.1（五方向停止观测）。** 对 $n>5040$，只观测下列任意一个模数的非零余数，就足以应用已有文献中的 Robin 定理：
+
+$$
+2^{21},\qquad3^{13},\qquad5^9,\qquad7^7,\qquad11^6.
+$$
+
+具体对应的指数条件分别为 $v_2(n)\le20$、$v_3(n)\le12$、$v_5(n)\le8$、$v_7(n)\le6$、$v_{11}(n)\le5$。$2,5$ 两项引自 Christian Axler, *On Robin's inequality*, The Ramanujan Journal 61 (2023), 909–919, [Theorem 3](https://link.springer.com/article/10.1007/s11139-022-00683-0)；$3,7,11$ 三项引自 Alexander Hertlein, *Robin's inequality for new families of integers*, Integers 18 (2018), A71, [作者版本 v2 的 Theorem 2](https://arxiv.org/pdf/1612.05186v2)。这些是已发表结论的条件匹配，不在此重证其解析定理，也不作为新发现。
+

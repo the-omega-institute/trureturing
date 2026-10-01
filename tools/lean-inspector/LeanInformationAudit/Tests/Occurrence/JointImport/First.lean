@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.Occurrence.JointImport.Shared
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean LeanInformationAudit LeanInformationAudit.Tests.Occurrence.JointImport
 
@@ -13,10 +16,10 @@ run_cmd do
     rootId := root, expected := rows, source := rows, baseline := rows
     companionPrefix := some root }
 
-register_information_theorem shared in arena
+test_assess in register_information_theorem shared in arena
   primitives readout.toPrimitiveBundle realization bridge
 
-#seal_information_theory
+test_assess in #seal_information_theory
 
 -- Source-level companion references must resolve in their own sealing module.
 open LeanInformationAudit.Tests.Occurrence.JointImport.First in

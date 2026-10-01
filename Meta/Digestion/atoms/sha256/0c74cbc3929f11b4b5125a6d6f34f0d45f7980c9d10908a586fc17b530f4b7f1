@@ -1,0 +1,28 @@
+### theorem 20.2 全部封闭子结构恰为因子倍子结构
+
+$$
+\boxed{
+W\text{ 封闭}
+\iff
+W=dV_n\text{ 对某个唯一 }d\mid n.
+}
+$$
+
+**证明。**
+
+若 $(a,b)\in W$，则
+
+$$
+\partial(a,b)=(b,0)\in W,
+\qquad
+M(b,0)=(0,b)\in W.
+$$
+
+相减得到 $(a,0)\in W$，所以 $W=H\times H$，其中
+
+$$
+H=\{t\in\mathbb Z/n\mathbb Z:(t,0)\in W\}
+$$
+
+是循环群 $\mathbb Z/n\mathbb Z$ 的子群。循环群的子群唯一写成 $d(\mathbb Z/n\mathbb Z)$，其中 $d\mid n$，故 $W=dV_n$。反向包含显然成立，因为任何整数矩阵都保持 $dV_n$。证毕。 $\square$
+

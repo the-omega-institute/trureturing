@@ -1,0 +1,8 @@
+**引理 35.2（二来源平面上的进位盲性）。** 固定任意 $m,g,h\in E$，对任意 $a,b,c,d,e,f\in\mathbb F_2$，写 $x=ag+bh$、$y=cg+dh$、$z=eg+fh$。则
+
+$$
+\langle\ell_m(x)+\ell_m(y)-\ell_m(x+y),z\rangle=0.
+$$
+
+证明。引理 35.1 把左边化为 $\det(x,y,z)$。三个向量都位于 $\langle g,h\rangle$，故行列式为零。任意二元标签组成仍留在该平面；此结论不包含辅助八元数的乘法系数、三周期或实际 OPE。
+

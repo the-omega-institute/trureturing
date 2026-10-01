@@ -1,0 +1,8 @@
+### 11.1 条件预测算子的组合缺陷与过去、未来的残差相关
+
+沿用第 10 节保持概率的完整流。令 $\mathcal H=L^2(\mu)$，$\mathsf U_t$ 为 Koopman 酉群，生成元为 $\mathscr L$；$\mathsf P f=\mathbb E[f\mid u]$、$\mathsf Q=I-\mathsf P$。这里 $\mathsf Q$ 是函数空间投影，不是第 5 节的观测矩阵。将当前可见函数空间 $\mathcal H_u=\operatorname{Ran}\mathsf P$ 与其在完整空间中的提升等同，定义
+\[
+ \mathsf T_t=\mathsf P\mathsf U_t\mathsf P\big|_{\mathcal H_u}.
+\]
+每个 $\mathsf T_t$ 单独保持正性、常数和可见参考概率，并是 $L^2$ 压缩算子。一般不满足时间齐次 Markov 半群的组合律。
+

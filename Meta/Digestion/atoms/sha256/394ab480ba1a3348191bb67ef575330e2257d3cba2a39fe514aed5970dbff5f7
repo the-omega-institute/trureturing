@@ -1,0 +1,20 @@
+### theorem 15.2 相容操作环就是黄金整数环
+
+$$
+\mathscr A_M=\{aI+bM:a,b\in\mathbb Z\},
+$$
+
+并且
+
+$$
+\mathscr A_M\cong\mathbb Z[\theta]/(\theta^2-\theta-1).
+$$
+
+在坐标 $(a,b)$ 下，乘法为
+
+$$
+(a,b)(c,d)=(ac+bd,\ ad+bc+bd),
+$$
+
+与仓内 `GoldenInt` 的乘法逐项一致。
+

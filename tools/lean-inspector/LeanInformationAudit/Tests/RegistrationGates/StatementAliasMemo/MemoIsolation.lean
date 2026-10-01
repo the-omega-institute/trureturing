@@ -1,5 +1,7 @@
-import LeanInformationAudit.Syntax
+import LeanInformationAudit.Tests.Assessment
 import D5.S3.ConceptDynamics.InterventionLaws.ObservationInterventionKernelStrictness
+
+test_imported_assessment
 
 open Lean Meta Elab Command LeanInformationAudit.RegistrationGates
 

@@ -5,6 +5,9 @@ import Reg.D5.S1.Words.Patterns.CyclicStackPreimagesFinalLow
 import Reg.D5.S1.Words.Patterns.CyclicStackPreimagesInvariants
 import LeanInformationAuditRegTests.CyclicSourceInventory
 import LeanInformationAuditRegTests.CompiledCyclicWire
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -67,7 +70,7 @@ run_meta do
       measurements := measurements.push row
       logInfo m!"SOURCE_ASSESSMENT {row.compress}"
   unless originals.size == 26 do throwError "incorrect live original inventory"
-  let snapshot ← TemplateBinding.exportSnapshot
+  let snapshot ← (TemplateBinding.exportSnapshot (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   let records := snapshot.originals.filter (fun r => modules.contains r.occurrence.key.registrationModule)
   unless records.size == originals.size && records.all (fun r =>
       originals.contains (r.occurrence.key.theoremName, r.occurrence.key.registrationModule)) do

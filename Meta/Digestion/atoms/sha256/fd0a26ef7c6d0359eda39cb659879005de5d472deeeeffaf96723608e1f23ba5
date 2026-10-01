@@ -1,0 +1,10 @@
+### theorem 29.3 相容隐藏线程的逆极限为零
+
+$$
+\boxed{
+\operatorname{im}(K_{r+2}\to K_r)=\{0\},
+\qquad
+\varprojlim_rK_r=\{0\}.
+}
+$$
+

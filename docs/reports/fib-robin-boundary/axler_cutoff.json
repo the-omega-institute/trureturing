@@ -1,0 +1,64 @@
+{
+  "schema": "axler-joint-cutoff-v1",
+  "status": "RATIONAL_OVERLAP_VERIFIED",
+  "published_inputs": {
+    "source": "https://arxiv.org/pdf/2110.13478v3",
+    "finite_range": "Lemma 2.3: Robin for 5041 <= n <= N_K",
+    "K": 999999476056,
+    "p_K": 29996208012611,
+    "analytic_prime_endpoint": 29996161880813,
+    "totient_bound": "Equations (3.4)-(3.5): n/phi(n) < e^gamma*(L+a0/L^2)",
+    "theta_bound": "Equation (3.3), citing Broadbent et al., Table 15",
+    "a0": [
+      94243,
+      10000000
+    ],
+    "theta_error": [
+      33277,
+      100000000
+    ]
+  },
+  "log_p_K_lower": [
+    31032092090021,
+    1000000000000
+  ],
+  "log_theta_p_K_lower": [
+    31032091744463,
+    1000000000000
+  ],
+  "epsilon": [
+    315367,
+    1000000000000
+  ],
+  "epsilon_times_lower_cube_minus_a0": [
+    6425208945631353522122194072028119735849,
+    1000000000000000000000000000000000000000000000000
+  ],
+  "product_threshold": [
+    1000000000000,
+    1000000315367
+  ],
+  "joint_prime_pair": {
+    "primes": [
+      13,
+      23
+    ],
+    "positive_exponent_upper_bounds": [
+      5,
+      4
+    ],
+    "factor": [
+      31066987056336,
+      31066998319487
+    ],
+    "threshold_minus_factor": [
+      1465648493004484688,
+      31067008116993059021656729
+    ]
+  },
+  "sources_sha256": {
+    "axler_cutoff.py": "419436051f7bfc096c748b2de3bb5849830f272705fbd63f00cb45f61cfd2807",
+    "kernel_tail.py": "e94521843b87d43a051ec9ee0fa409f14510516d674da2356bee6613dfc0300a"
+  },
+  "scope": "Exact arithmetic at the published overlap endpoint; no revalidation of the published large computations and no Lean proof."
+}

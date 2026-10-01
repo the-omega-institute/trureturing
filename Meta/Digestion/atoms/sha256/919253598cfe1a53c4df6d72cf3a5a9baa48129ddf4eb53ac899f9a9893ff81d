@@ -1,0 +1,37 @@
+### 351.11 固定严格阻尼的有限计数近似上界
+
+除了精确多边形构造，还可直接截断已衰减的尾部。设 \(0<r<1\)、\(0<\varepsilon<1/2\)，取
+
+\[
+K=\left\lceil
+\frac{\log(1/(2\varepsilon))}{-\log r}
+\right\rceil.
+\tag{351.39}
+\]
+
+构造状态 \(0,\ldots,K\) 的计数器，初始为 0，每次 advance 加一，并在 \(K\) 吸收。状态 \(j<K\) 的终端成功率设置为 \(h_j^{r,\theta}\)，状态 \(K\) 的终端成功率设置为 \(1/2\)。
+
+在 \(k<K\) 时，该实现精确；在 \(k\ge K\) 时，
+
+\[
+|h_k^{r,\theta}-1/2|
+\le\frac{r^k}{2}
+\le\frac{r^K}{2}
+\le\varepsilon.
+\tag{351.40}
+\]
+
+所以
+
+\[
+d_\varepsilon(r,\theta)
+\le K+1,\qquad
+d_\varepsilon(r,\theta)\le
+\min\{m(r),K+1\}.
+\tag{351.41}
+\]
+
+对固定 \(r<1\)，计数器界是 \(O_r(\log(1/\varepsilon))\)；对固定 \(0<\varepsilon<1/2\)，当 \(r\uparrow1\) 时为 \(O_\varepsilon((1-r)^{-1})\)，因为 \(-\log r\sim1-r\)。它可能比精确多边形构造使用更多状态，因而不提供最优容量或匹配下界。
+
+\(r=0\) 时使用第351.8节的两态精确实现，不代入式（351.39）；\(\varepsilon=0\) 时使用精确构造，不以有限截断冒充准确尾部。\(\varepsilon\ge1/2\) 时一态公平输出已足够。这个计数器证明的是每个固定严格阻尼下的上界，不能用来否定上一节在 \(r\uparrow1\) 时的发散。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:659ca6814a1a062461b816b8705a29174697231f7e187b41228259531ab92370
+  normalized_sha256: sha256:659ca6814a1a062461b816b8705a29174697231f7e187b41228259531ab92370
+cas_ref: sha256:659ca6814a1a062461b816b8705a29174697231f7e187b41228259531ab92370
+coverage_gids:
+  - gid: D5/S3/HomologicalAlgebra/ElementaryTwoThirdCohomologyDetection.cyclic_restriction_detects_third_cohomology
+    target_statement_id: sha256:13ee291df199e19b340f217613454b55e79c20d3eac3ca6bb1f78ee5d80bf58c
+receipts:
+  unresolved_subitems: []

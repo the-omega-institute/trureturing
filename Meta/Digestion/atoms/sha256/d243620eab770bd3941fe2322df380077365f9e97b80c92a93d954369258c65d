@@ -1,0 +1,8 @@
+### theorem 6.2 无损条件
+
+$$
+H_{u,v}\in\operatorname{GL}_2(\mathbb Z)\iff|\Delta(u,v)|=1.
+$$
+
+固定模数 $m$ 时，模 $m$ 无损当且仅当 $\gcd(\Delta(u,v),m)=1$。
+

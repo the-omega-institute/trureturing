@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7a3ac0219743b90bf030a42a9ddad7192defa1bf0cf9b7ee17cde31ebd771c21
+  normalized_sha256: sha256:7a3ac0219743b90bf030a42a9ddad7192defa1bf0cf9b7ee17cde31ebd771c21
+cas_ref: sha256:7a3ac0219743b90bf030a42a9ddad7192defa1bf0cf9b7ee17cde31ebd771c21
+coverage_gids:
+  - gid: D5/S3/VertexAlgebra/MonsterFanoReconstruction.complement_symmDiff_mem
+    target_statement_id: sha256:43228912bfac65c455fb8b3e6ef95602f62f5a780aaef309a4ff6618a0e2eac9
+receipts:
+  unresolved_subitems: []

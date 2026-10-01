@@ -1,0 +1,38 @@
+**定理323.6（有界增量和共同条件漂移）。** 不要求世界空间紧。假设存在常数 $0<\mu\le C<\infty$，使所有实际世界、形式历史及来源动作满足
+
+$$
+0\le c(h,a,y)\le C,
+\qquad
+\sum_y\kappa_\theta(y\mid h,a)c(h,a,y)\ge\mu.
+\tag{323.12}
+$$
+
+置
+
+$$
+r=1-\frac{\mu}{C}(1-e^{-1}),
+\qquad a=-\frac C2\log r>0,
+\qquad \rho=\sqrt r\in(0,1).
+\tag{323.13}
+$$
+
+则对任意 $s>0$，令
+
+$$
+A_s=\sum_{n=1}^{\infty}
+\bigl(n^s-(n-1)^s\bigr)\rho^n<\infty.
+\tag{323.14}
+$$
+
+每份停止策略在每个实际世界满足扩展实数不等式
+
+$$
+\boxed{
+\mathbb E T^s\le C^s\mathbb E M^s,
+\qquad
+\mathbb E M^s\le a^{-s}\mathbb E T^s+A_s.}
+\tag{323.15}
+$$
+
+特别地，统一钟矩有限与统一调用矩有限等价。
+

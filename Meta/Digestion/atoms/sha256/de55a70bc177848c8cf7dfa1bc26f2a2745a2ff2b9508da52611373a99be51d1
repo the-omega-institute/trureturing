@@ -1,0 +1,66 @@
+### 346.1 固定程序类与费用量词
+
+固定非整数 \(\beta>2\)，记 \(a=\beta/2>1\)、\(r=\lfloor\beta\rfloor\)。采用第336节的公共参考扩域
+
+\[
+\underline c=3/5,\qquad x^\dagger=11/40,
+\tag{346.1}
+\]
+
+并固定第345节的一份参考构造、共同任务中心 \(S_m\)、起点 \(\tau\) 及全部充分常数。令
+
+\[
+n_k=Nb^k,\qquad d_k=n_k+r_\rho,\qquad D_k=m_k+r,
+\qquad
+c_\delta=N^a/4,
+\tag{346.2}
+\]
+
+其中 \(\rho>\beta\)、\(r_\rho=\lfloor\rho\rfloor\)，\(b,N,\tau,M\) 均固定。地板与实际任务批量满足
+
+\[
+\begin{gathered}
+0<\eta_{k+1}\le\eta_k\le1,\qquad
+\eta_k/\eta_{k+1}\le R_*,\\
+\delta_k=c_\delta n_k^{-a}\eta_k,\\
+Mn_k/\eta_k\le m_k\le L_bMn_k/\eta_k,\qquad
+m_k\in\{\tau b^j:j\ge0\},\\
+m_k\ge r,\qquad m_{k+1}\ge bm_k,
+\qquad L_b=5b/4 .
+\end{gathered}
+\tag{346.3}
+\]
+
+共同比界 \(R_*\) 选得足以包含第345.8节的逐阶地板族和全部有限平地板。第345节的抽象网格及有效安全网格都满足这些条件。
+
+相应数组固定为
+
+\[
+A_k=(1-\delta_k)c_{m_k}(\bar\ell_k),\qquad
+B_k=(1-\delta_k)c_{m_k}(\bar u_k)+\delta_k,
+\tag{346.4}
+\]
+
+并按第345.6节的乘积超几何方案执行：到达每一层时，实际累计取得 \(D_k\) 枚任务币和 \(d_k\) 枚参考币。
+
+记 \(\mathfrak G_J\) 为第 \(J\ge1\) 层后把未决核心币置零的程序类。每份程序均保留第345.9节固定、准确且未截断的首币门控：第一全局调用取得请求来源的真实 \(X\)，触发后运行新鲜双来源核心。有限地板只需定义到 \(J\)，不要求存在某个指定的无限延续。
+
+记 \(\mathfrak G_\infty\) 为同一数据和执行制度下的无限准确核心及其准确包装。第345节保证这些程序几乎必有限返回；这里允许它们的某些矩为无穷。
+
+对完整程序定义
+
+\[
+H_a(A)=\sup_{w,S}\mathbb E^{A,w,S}N_H^a,\qquad
+T_s(A)=\sup_{w,S}\mathbb E^{A,w,S}N_T^s,
+\]
+
+\[
+e(A)=\sup_{w,S}
+\operatorname{TV}(P^A_{w,S},P_{w,S}).
+\tag{346.5}
+\]
+
+\(w\) 遍历原合法世界，\(S\) 遍历两种请求。所有比较常数只依已固定的数据；除非明确写出，不依地板、截止、世界、价格或充分小的矩阶差 \(u\)。
+
+本类不包括另行截断门控、扰动系数表、改变末层回退或更换实际累计调用制度的程序。后面的有限代码近似只在另有扰动控制时继承上界。
+

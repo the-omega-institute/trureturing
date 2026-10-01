@@ -1,0 +1,22 @@
+**定理 12.3（Montague–Tuite 识别机制的严格输入版本）。** 定义 12.1 的候选若存在 B 型缺陷，则 $V\cong V^\natural$，从而 $\operatorname{Aut}(V)\cong\mathbb M$。
+
+证明。循环轨形 $W=V^{\operatorname{orb}(g)}=W^{(0,0)}\oplus W^{(1,0)}$ 是强有理全纯 VOA。原 $V_1=0$，整数权扭曲部分在权重一恰有二十四个态。对偶量子自同构 $z$ 在两个直和分量上分别为正、负，所以在 $W_1$ 上为 $-I$。任意 $u,v\in W_1$ 的括号 $u_0v\in W_1$ 同时满足
+
+$$
+z(u_0v)=(zu)_0(zv)=u_0v,\qquad z(u_0v)=-u_0v.
+$$
+
+故 $W_1$ 阿贝尔。[DM02, Theorem 3(b)] 识别 $W\cong V_\Lambda$ 为 Leech 格 VOA。
+
+还需识别真实逆自同构。令 $\theta$ 为格反射的标准提升。$z\theta^{-1}$ 固定全部 Heisenberg 流；它保每个动量 Fock 模，并在其一维最高权线上为标量 $\chi(\lambda)$。格 OPE 的非零首项使 $\chi(\lambda+\mu)=\chi(\lambda)\chi(\mu)$。于是 $z=s_\chi\theta$。自由阿贝尔格上逐基取平方根，得字符 $\psi^2=\chi^{-1}$。由 $\theta s_\psi\theta^{-1}=s_{\psi^{-1}}$，有 $s_\psi z s_\psi^{-1}=\theta$。逆轨形定理遂给
+
+$$
+V\cong W^{\operatorname{orb}(z)}
+\cong V_\Lambda^{\operatorname{orb}(\theta)}=V^\natural.
+\tag{MD.3}
+$$
+
+最后的场构造与完整自同构识别用 FLM 的已知定理。证毕。
+
+这一机制在 [T93, §3.6] 明确追溯 Montague，本批不认领其原创性。它选择完整 VOA，未以同一个 $J$ 函数替代同构。Leech 反射的扭曲最低权 $3/2$ 与本定理候选上的对偶 B 型最低权一，属于两个不同理论，不混同。
+

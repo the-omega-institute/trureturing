@@ -1,0 +1,59 @@
+**命题 12.4（模十一的两条特征线与低层完美区分）。** 取 $e=11$、任意 $d\ge2$，在 $\widehat H=\mathbb F_{11}^2$ 中置
+
+$$
+p=(1,4),\qquad q=(1,8),\qquad
+O_4=\mathbb F_{11}^{\times}p,\quad
+O_8=\mathbb F_{11}^{\times}q.
+$$
+
+$O_4,O_8$ 是两条互不相交、各有十点的 $N$ 轨道，$\Gamma$ 将它们合为一条二十点轨道。令
+
+$$
+\begin{aligned}
+a&=(0,1),\qquad b=(1,d-1),\qquad\omega=e^{2\pi i/11},\\
+u&=|a\rangle\otimes|p\rangle,\qquad
+v=U_Ju=\omega^3|b\rangle\otimes|q\rangle,\\
+|\psi_\pm\rangle&=\frac{u\pm iv}{\sqrt2},\qquad
+\rho_\pm=|\psi_\pm\rangle\langle\psi_\pm|.
+\end{aligned}
+$$
+
+两输入有相同 $N$ 边界，因而在 $\Sigma_{\mathrm{mix}}$ 的所有允许有限历史中不可区分。若增加 $W_J$ 的许可，施加一次 $W_J(t)$ 后仅测低层 $b$，则
+
+$$
+\Pr_\pm(b;t)=\frac{1\pm\sin4t}{2}.
+$$
+
+特别在 $t=\pi/8$，两概率分别为 $1$ 与 $0$。
+
+证明。矩阵作用给出
+
+$$
+gp=3p,\qquad gq=7q,\qquad jp=q,\qquad jq=p.
+$$
+
+模 $11$ 的 $3$ 次幂为 $3,9,5,4,1$，阶为 $5$；$7^2=5$、$7^5=-1$ 且 $7\ne-1$，故 $7$ 阶为 $10$。于是 $\langle3,-1\rangle=\langle7,-1\rangle=\mathbb F_{11}^{\times}$。两向量不是标量倍数，给出不交的两条十点 $N$ 轨道；$j$ 交换它们，定理 12.2 给出所述二十点 $\Gamma$ 轨道。这只描述两条特征线上的非零标签，不穷尽全部 $121$ 个 Fourier 标签。
+
+对低层 $a=(0,1)$，有 $Ja=(1,-1)$，故 $f_J(a)=b$、$c_J(a)=(0,-1)$。Fourier 运输相位是 $\omega^{q\cdot c_J(a)}=\omega^{-8}=\omega^3$，得到显示的 $v$。标准提升满足 $U_J^2=I$，所以 $U_Jv=u$。因为 $p,q$ 属于不同 $N$ 轨道，
+
+$$
+\mathcal E_N(\rho_+)=\mathcal E_N(\rho_-)
+=\frac12\bigl(|u\rangle\langle u|+|v\rangle\langle v|\bigr).
+$$
+
+定理 12.2 因而保证原混合合同的全部事件概率相同。在 $\operatorname{span}\{u,v\}$ 上，$U_J$ 交换 $u,v$，且
+
+$$
+W_J(t)=e^{-2it}\bigl(\cos(2t)I+i\sin(2t)U_J\bigr).
+$$
+
+写 $c=\cos(2t)$、$s=\sin(2t)$，得到
+
+$$
+W_J(t)|\psi_\pm\rangle
+=\frac{e^{-2it}}{\sqrt2}
+\bigl((c\mp s)u+i(s\pm c)v\bigr).
+$$
+
+$a\ne b$，且此不变子空间中只有 $v$ 带低层标签 $b$，故概率为 $(s\pm c)^2/2=(1\pm\sin4t)/2$。该事件只用 $E_{bb}\otimes I_H$，没有高层或联合读出。新增连续许可确实读取原 $N$ pinching 舍去的相干；在 $t=\pi/4$ 则 $W_J(\pi/4)=U_J$，那个已有的离散时刻本身不给出此严格区分。$\square$
+

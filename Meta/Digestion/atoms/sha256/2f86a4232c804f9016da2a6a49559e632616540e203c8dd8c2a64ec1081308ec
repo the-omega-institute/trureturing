@@ -1,0 +1,24 @@
+### 348.7 Stahl 定理给非整数状态数的对数平方界
+
+Stahl 的原定理使用实系数有理函数，并证明对每个固定 \(\alpha>0\)，
+
+\[
+\lim_{n\to\infty}
+e^{2\pi\sqrt{\alpha n}}
+E_{n,n}(x^\alpha,[0,1])
+=4^{1+\alpha}|\sin(\pi\alpha)|.
+\tag{348.35}
+\]
+
+这里引用其1993年原文 Theorem 1 及式（2.1）—（2.2）。[^finite_boundary_stahl] 对当前固定非整数 \(\beta\)，右侧常数严格为正，故
+
+\[
+E_{d,d}(x^\beta,[0,1])
+=A_\beta e^{-2\pi\sqrt{\beta d}}(1+o(1)),
+\qquad
+A_\beta=4^{1+\beta}|\sin(\pi\beta)|>0.
+\tag{348.36}
+\]
+
+把它代入式（348.34），精确必要下界的右侧具有渐近
+

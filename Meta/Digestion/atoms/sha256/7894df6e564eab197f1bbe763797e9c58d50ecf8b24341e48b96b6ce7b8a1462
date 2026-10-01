@@ -1,0 +1,105 @@
+**定理341.2（地板层数费用与精度费用）。** 存在只依固定类常数的 $c_{\rm lev}>0$、$C_{\rm lev}\ge0$，使每份 $A^{[J]}\in\mathfrak G$、每个合法世界及每一种请求都满足
+
+$$
+\boxed{\mathbb E^{A^{[J]},w,S}N_T^a
+ \ge c_{\rm lev}J-C_{\rm lev}.}
+\tag{341.31}
+$$
+
+因此存在共同 $c_T,\delta_0>0$，使任何 $0<\delta<\delta_0$ 及 $e(A^{[J]})\le\delta$ 的程序都在每个世界、每种请求满足
+$\mathbb E N_T^a\ge c_T\log(1/\delta)$。两项下界均不要求给定参考预算。
+
+**证明。** 固定任意合法世界。有限核心计数的离散尾和为
+
+$$
+\mathbb E R_T^a
+ =m_0^a+\sum_{k=0}^{J-1}
+    (m_{k+1}^a-m_k^a)G_k(p,q).
+\tag{341.32}
+$$
+
+由式（341.4）的逐系数非负差，$G_k(p,q)\ge\delta_k$ 在每个世界成立；同时
+
+$$
+m_k^a\delta_k
+ \ge\frac{c_mN^a}{4}
+ =:\gamma_{\rm floor}>0.
+\tag{341.33}
+$$
+
+令 $r_k=m_{k+1}^a/m_k^a>1$。利用 $r-1\ge\log r$，得到
+
+$$
+\begin{aligned}
+\mathbb E R_T^a
+&\ge m_0^a+
+  \gamma_{\rm floor}\sum_{k=0}^{J-1}(r_k-1)\\
+&\ge m_0^a+
+  \gamma_{\rm floor}\sum_{k=0}^{J-1}\log r_k\\
+&=m_0^a+
+  \gamma_{\rm floor}\log\frac{m_J^a}{m_0^a}.
+\end{aligned}
+\tag{341.34}
+$$
+
+这一步不需要相邻任务批量比具有大于一的共同下界。由共同双向比较和地板非增，
+
+$$
+\log\frac{m_J^a}{m_0^a}
+ \ge aJ\log b+
+       \log\frac{\eta_0}{\eta_J}
+       +\log\frac{c_m}{C_m}
+ \ge aJ\log b-\log\frac{C_m}{c_m}.
+\tag{341.35}
+$$
+
+非空类可取 $0<c_m\le C_m$。准确包装在每个世界、每种请求中都以 $1/3$ 概率触发新鲜核心，因此
+
+$$
+\begin{aligned}
+\mathbb E N_T^a
+&\ge\frac13\mathbb E R_T^a\\
+&\ge
+ \frac{\gamma_{\rm floor}a\log b}{3}J
+ -\frac{\gamma_{\rm floor}}3\log\frac{C_m}{c_m}.
+\end{aligned}
+\tag{341.36}
+$$
+
+可取
+$c_{\rm lev}=\gamma_{\rm floor}a\log b/3$、
+$C_{\rm lev}=(\gamma_{\rm floor}/3)\log(C_m/c_m)$。
+这给出逐世界的式（341.31），没有在不同层选择不同世界。
+
+若 $e(A^{[J]})\le\delta$，定理341.1的必要层数关系代入式（341.36）便得
+
+$$
+\mathbb E^{A^{[J]},w,S}N_T^a
+ \ge\frac{\gamma_{\rm floor}}3\log(1/\delta)-C_T,
+\tag{341.37}
+$$
+
+其中可取固定非负常数
+
+$$
+C_T=\max\left\{0,\,
+ C_{\rm lev}
+ -\frac{\gamma_{\rm floor}}3
+       (\log c_e-a\log N)\right\}.
+$$
+
+取 $\delta_0>0$ 足够小，使
+$\log(1/\delta)\ge6C_T/\gamma_{\rm floor}$，可得
+
+$$
+\boxed{
+\mathbb E^{A^{[J]},w,S}N_T^a
+ \ge c_T\log(1/\delta),\qquad
+c_T=\gamma_{\rm floor}/6.}
+\tag{341.38}
+$$
+
+证毕。
+
+这一费用来自指定安全地板与任务批量的共同关系。必要精度先迫使程序使用足够多层，而这些层在每一个世界都承担式（341.34）的费用。常数和小精度阈值不依参考预算 $K$。
+

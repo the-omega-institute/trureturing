@@ -1,0 +1,8 @@
+**证明正误差费用。** 对任意固定 \(\delta>0\)，由有理数稠密性，存在有理 \(q\in[0,1]\)，使 \(|q-\alpha|\le\delta\)。只用私公平位精确采样 \(\mathrm{Bernoulli}(q)\)，不调用任何旧来源。调用数逐路径为零，而两 Bernoulli 律的 TV 距离是
+$$
+\|\mathrm{Bernoulli}(q)-\mathrm{Bernoulli}(\alpha)\|_{\mathrm{TV}}
+=|q-\alpha|.
+\tag{319.18}
+$$
+因此每个正误差最优费用都为零。程序只编码有理 \(q\) 的有限分子分母，不读取 \(\alpha\) 的名字。
+

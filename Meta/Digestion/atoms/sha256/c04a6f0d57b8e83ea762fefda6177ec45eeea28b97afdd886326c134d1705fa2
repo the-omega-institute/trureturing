@@ -1,0 +1,13 @@
+### 328.5 误差与价格的两个极限
+
+由于单价降低使每份策略的费用不增，对 $\delta>0$ 定义
+
+$$
+v_{\mathcal C}(\delta)
+:=\lim_{\lambda\downarrow0}
+\mathcal V_a^{\mathcal C}(\delta,\lambda).
+\tag{328.13}
+$$
+
+此单调极限允许取扩展实值。
+

@@ -1,0 +1,32 @@
+### 78.1 递归素 Fib 原子块是主模型，逐素数 Fib 行是辅助索引
+
+本卷的主对象是前文的递归块语言：叶子是已认证的素 Fib 原子，同层允许的加法节点由当前合法窗口给出，块之间的乘法节点只组合完整块。结构配置保留加法节点的层级边界与同块关系，因此 $[2+5]$ 与 $[2][5]$ 是不同结构，值分别为 $7$ 与 $10$。
+
+设 $\mathscr B_{\mathrm{rec}}$ 为给定块语法和合法性规则下的规范结构配置。对乘法配置
+
+$$
+B=\prod_A A^{m_A}
+$$
+
+定义完整块子配置
+
+$$
+C\preceq_\times^{\mathrm{blk}}B
+\iff
+C=\prod_A A^{r_A},\quad 0\le r_A\le m_A.
+$$
+
+这里不能把已选块内部的叶子拆出后再当作独立子配置。令 $\operatorname{val}$ 按“块内求和、块间相乘”递归解释结构，$\mathcal E_{\mathrm{blk}}(C)=\log\operatorname{val}(C)$，并定义
+
+$$
+\boxed{
+\mathcal Z_{\mathrm{blk}}(B)
+=\sum_{C\preceq_\times^{\mathrm{blk}}B}e^{-\mathcal E_{\mathrm{blk}}(C)}.
+}
+$$
+
+只有当所考察的规范块域对整数及其约数代表无重复（或先经过 canonical value quotient）时，才可把这份结构求和识别为 $\sigma(\operatorname{val}B)/\operatorname{val}B$。四块域 $[2],[3],[5],[2+5]$ 的值为互异素数 $2,3,5,7$，所以在 $2^a3^b5^c7^d$ 子域中该条件成立。
+
+逐素数 Fibonacci 行（第 79–80 节）只为每个指数提供唯一的数值码，从而把全体正整数与 Robin 的全称量词接上；它不定义、替换或恢复递归块的层级和同块关系，也不能把行位支撑包含当作块子配置关系。
+
+

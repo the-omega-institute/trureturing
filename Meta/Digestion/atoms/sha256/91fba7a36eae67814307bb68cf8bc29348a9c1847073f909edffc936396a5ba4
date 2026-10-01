@@ -1,0 +1,13 @@
+### 2.1 固定具体的构造范围
+
+令 $\Lambda$ 为正定、偶、自对偶、无长度平方二向量的秩 24 格。这个条件唯一选出 Leech 格，是外部格分类输入。格 VOA 的状态由振子和动量格态组成，$c=24$。反射 $\lambda\mapsto-\lambda$ 提升为阶二自同构 $\theta$。
+
+只取固定点 $V_\Lambda^+$ 会遗漏扭曲局部化数据。标准 bosonic 反射 orbifold 使用扭曲模的整数权部分 $V_\Lambda^{T,\mathrm{int}}$，组成
+
+$$
+V^\natural=V_\Lambda^+\oplus V_\Lambda^{T,\mathrm{int}}.
+\tag{MC.2}
+$$
+
+扭曲模的存在、互相作用、VOA 的 Jacobi/局部性和这个和上的唯一扩展结构，是 FLM 构造的实质输入 [ALY, §1；GL11]。式（MC.2）作为向量空间直和不能独自承担这些结论。环面变换会交换时间方向插入与空间方向扭曲，说明完成化有物理意义；整个 Monster 的同时 gauging 则另受第 8 节的反常限制。
+

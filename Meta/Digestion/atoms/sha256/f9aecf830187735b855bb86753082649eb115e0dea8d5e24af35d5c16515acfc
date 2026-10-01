@@ -1,0 +1,2 @@
+**命题 13.3（坐标运输保持预测）。** 若 $W:H_T^c\to H_{T'}^c$ 为上述酉换基，令 $\rho'=W\rho W^\dagger$、$O'=WOW^\dagger$，则 $\operatorname{Tr}(\rho'O')=\operatorname{Tr}(\rho O)$。
+

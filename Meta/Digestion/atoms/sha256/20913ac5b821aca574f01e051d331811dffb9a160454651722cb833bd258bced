@@ -1,0 +1,18 @@
+**定义 107.1（完整未来的区分 horizon）。** 对 $H\ge2$，取定义 106.6 的固定读出
+
+$$
+\overline F_H(r)=\frac H{\gcd(\widetilde r,H)},\qquad r\in\mathbb Z/H\mathbb Z,
+$$
+
+其中 $\widetilde r$ 为任意整数代表；换代表不改变 gcd。在实际成功 End 上，它等于定义 104.2 的 $F_H(N)$。记相应观察为 $O_H(p,w)$。定义 $h(H)$ 为满足下式的最小非负整数 $L$：
+
+$$
+\forall p,p'\in\{0,1\}\times\mathcal B^*,\qquad
+\left[\forall w\in\mathcal B^*,\ |w|\le L
+\ \Longrightarrow\ O_H(p,w)=O_H(p',w)\right]
+\quad\Longrightarrow\quad
+\left[\forall w\in\mathcal B^*,\ O_H(p,w)=O_H(p',w)\right].
+$$
+
+定理 106.7 保证此最小值存在。每个前缀均按自己的实际单位初始化与字面词解释，允许两前缀长度不同，也允许错误前缀。后缀量词包含空词和全部产生错误输出的词，End 不消耗窗口。等价地，$h(H)$ 是使每对不同未来都存在一个长度至多 $h(H)$ 的共同区分后缀的最小界。
+

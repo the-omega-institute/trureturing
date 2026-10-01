@@ -1,0 +1,22 @@
+### definition 31.1 同一整体的跨尺度编码
+
+设 $\mathcal E_D$、$\mathcal E_d$ 是内部到边界的编码，$\mathcal Q_{D,d}$ 是内部粗化，$\mathcal R_{D,d}$ 是边界粗化。一个跨尺度编码系统要求对声明的全部输入满足
+
+$$
+\boxed{
+\mathcal R_{D,d}\circ\mathcal E_D
+=
+\mathcal E_d\circ\mathcal Q_{D,d}.
+}
+$$
+
+三个尺度还应满足
+
+$$
+\boxed{
+\mathcal R_{d,f}\circ\mathcal R_{D,d}=\mathcal R_{D,f}.
+}
+$$
+
+这两个等式把“属于同一个整体”写成交换图，而不是只比较每层状态数。对关系网络，首先还必须检查粗层状态的提升障碍是否为零。
+

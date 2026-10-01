@@ -1,0 +1,12 @@
+**定理 10.6（不依赖回归器的配对证书）。**
+\[
+N=\tfrac12\mathbb E[(v(Z)-v(Z'))(v(Z)-v(Z'))^T],
+\]
+\[
+N_h=\frac1{2h^2}\mathbb E[(u(\Phi_hZ)-u(\Phi_hZ'))(u(\Phi_hZ)-u(\Phi_hZ'))^T],
+\]
+\[
+\left|\sqrt{\operatorname{tr}N_h}-\sqrt{n_u}\right|\le hc_2/2,
+\quad\|N_h-N\|\le h\sqrt{n_u}c_2+h^2c_2^2/4.
+\]
+

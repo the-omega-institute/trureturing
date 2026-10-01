@@ -1,0 +1,18 @@
+**定理 8.3（非二特征的精确六秩）。** 若 $\operatorname{char}K\ne2$，则 $\operatorname{rank}H_{f_K}=6$，最小线性实现维数为六。
+
+证明。三个实际标量后缀测试为：$[5]$ 的合法性、$[5]$ 的数量、$[5]\mathrm{null}$ 的数量。它们丢弃接缝一块，在接缝零块的观察矩阵为
+
+$$
+R=\begin{pmatrix}0&0&1\\8&13&5\\34&55&21\end{pmatrix},\qquad
+\det R=8\cdot55-13\cdot34=-2.
+$$
+
+其中第二行来自 $q(Sx+d_5)$，第三行来自 $qS(Sx+d_5)$。再将 $\mathrm{null}$ 放在这三个测试之前，得到另外三个实际测试：$\mathrm{null}[5]$ 的合法性、$\mathrm{null}[5]$ 的数量、$\mathrm{null}[5]\mathrm{null}$ 的数量。因 $\mathrm{null}$ 把两接缝块经同一个 $A_0=\operatorname{diag}(S,1)$ 汇入接缝零，六测试的观察矩阵为
+
+$$
+O=\begin{pmatrix}R&0\\RA_0&RA_0\end{pmatrix},\qquad
+\det O=(\det R)^2\det A_0=-4.
+$$
+
+它在非二特征可逆。令 $P$ 为定理 8.2 的六个可达前缀列组成的矩阵；$P$ 也可逆。以测试为行、前缀为列的有限矩阵是 $OP$，即定义 6.1 中所选 Hankel 子矩阵的转置。其行列式是 $\det O\det P$，不能不计前缀基就直接把 $-4$ 当作该 Hankel 子矩阵的行列式；所需结论是乘积非零。因此联合 Hankel 秩至少六。六维实现给秩至多六，第六节的支撑推导给最小维数。
+

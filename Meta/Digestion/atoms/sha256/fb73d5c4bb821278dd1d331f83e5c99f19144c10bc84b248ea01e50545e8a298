@@ -1,0 +1,14 @@
+### theorem 36.2 加法记录的容量下界
+
+设 $UBV=\operatorname{diag}(s_1,\ldots,s_d)$，固定素数 $p$，令
+
+$$
+ b_p=\#\{i:p\mid s_i\}.
+$$
+
+若 $\eta:G_r\to H$ 是有限交换群上的加法同态，且 $x\mapsto(B_rx,\eta(x))$ 单射，则
+
+$$
+\boxed{|H|\ge p^{r b_p}.}
+$$
+

@@ -1,0 +1,21 @@
+**证明。** 对 \(|z-p|\le R\)，先证明
+\[
+|z|+|1-z|\le1+\frac{6R^2}{v+R}.
+\tag{344.11}
+\]
+若 \(v\ge2R\)，则 \(p,1-p\ge2R\)。写 \(z=p+w\)，对两项使用
+\(\sqrt{u^2+t^2}\le u+t^2/(2u)\)，可得
+\[
+|p+w|+|1-p-w|
+\le1+R^2\left(\frac1p+\frac1{1-p}\right)=1+R^2/v.
+\]
+由于 \(v+R\le3v/2\)，得到式（344.11）。若 \(v<2R\)，三角不等式给左侧至多 \(1+2R\)，而 \(6R^2/(v+R)>2R\)，同样成立。端点 \(p=0,1\) 属于后一情形。
+
+设 \(\varepsilon=\ell/d\)。当 \(v\ge\varepsilon\) 时，
+\(R_{d,\ell}=\sqrt{\varepsilon v}\)，所以
+\(R_{d,\ell}^2/(v+R_{d,\ell})\le\varepsilon\)；当 \(v\le\varepsilon\) 时，\(R_{d,\ell}=\varepsilon\)，仍有同一结论。由式（344.8）、（344.11），相应圆盘上
+\[
+|P(z)|\le B(1+6\ell/d)^d\le Be^{6\ell}.
+\]
+Cauchy 公式给式（344.9）。取 \(\ell=1\) 时半径为 \(\Delta_d(p)\)，其圆盘界再给式（344.10）。证毕。
+

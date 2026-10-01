@@ -1,0 +1,8 @@
+**定理 90.1（包含零指数的规范化）。** 固定整数 $y\ge1,B\ge1$，称 $n$ 为 $y$-rough，若每个素因子均严格大于 $y$，并允许 $n=1$。令 $q_0<q_1<\cdots$ 为所有大于 $y$ 的连续素数。则
+
+$$
+U_y(B)=\max_{\substack{1\le n\le B\\p\mid n\Rightarrow p>y}}Z(n)
+$$
+
+在某个 $n=\prod_{i=0}^{s-1}q_i^{a_i}$ 处取得，其中 $a_0\ge\cdots\ge a_{s-1}>0$；$s=0$ 表示 $1$。
+

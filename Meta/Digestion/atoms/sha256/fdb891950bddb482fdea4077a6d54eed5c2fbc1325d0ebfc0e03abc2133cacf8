@@ -1,0 +1,4 @@
+### 16.5 同一非对易热三态再要求精确未来更新
+
+仍取 $H_i=-\Delta\sigma_i$、$\Delta>0$。三个配分函数相同，可见 Gibbs 边缘为 $I_3/3$；要求逻辑 Hamiltonian 的同温 Gibbs 态等于该边缘时，逻辑生成元必为标量，可取 $K=0$。本节要求对全部输入和全部时间的 $e^{-itH}\mathcal R(\rho)e^{itH}=\mathcal R(\rho)$。
+

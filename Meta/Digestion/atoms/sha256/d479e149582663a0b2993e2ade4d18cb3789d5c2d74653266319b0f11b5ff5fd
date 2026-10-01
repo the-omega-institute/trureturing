@@ -1,0 +1,15 @@
+### theorem 19.4 递归与方向提取生成全部线性操作
+
+$$
+\boxed{
+\mathbb Z\langle M,\partial\rangle
+=\operatorname{Mat}_2(\mathbb Z).
+}
+$$
+
+因此对每个 $n\ge2$，模 $n$ 后的 $M,\partial$ 生成
+
+$$
+\operatorname{Mat}_2(\mathbb Z/n\mathbb Z).
+$$
+

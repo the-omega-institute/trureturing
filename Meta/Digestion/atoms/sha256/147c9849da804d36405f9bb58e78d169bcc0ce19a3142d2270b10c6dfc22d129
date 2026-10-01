@@ -1,0 +1,11 @@
+**定理 16.2（仅知分支概率的最优最坏误差）。** 只给定 $p=\operatorname{Tr}(P\rho)$ 时，预测第二对读数的精确范围是
+
+$$
+\operatorname{Tr}(Q\rho)\in
+\left[r+(r^2-r)p-2b\sqrt{p(1-p)},\ 
+      r+(r^2-r)p+2b\sqrt{p(1-p)}\right].
+\tag{FT.20}
+$$
+
+在这个固定 $p$ 的状态类上，任意预测值的最坏绝对误差至少为 $2b\sqrt{p(1-p)}$，区间中点达到该下界。$p=1/2$ 时该最优误差是 $b=\varphi^{-3/2}$。
+

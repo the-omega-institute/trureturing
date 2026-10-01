@@ -20,3 +20,4 @@ For every natural number N there is exactly one finitely supported integer-index
 
 - Truth anchor: `D5/S1/Words/Expansions/BasePhiCanonicalExpansion.canonical_two_sided_digits_unique`
 - Dependency: [D5/S1/Digit/Carry/Successor](../../Digit/Carry/Successor.md)
+- Dependency: [D5/S1/Scale/Fibonacci](../../Scale/Fibonacci.md)

@@ -1,0 +1,36 @@
+### 13.2 同一实现上的动力学、信息与损失
+
+设 $d=2n$、$\Omega\in\mathbb R^{d\times d}$ 可逆且反对称，$\dot x=\Omega x$。取 $x_0\sim N(0,I_d)$，实验为
+\[
+Y=Lx_0+\eta,\qquad \eta\sim N(0,R),\quad R\succ0,
+\]
+噪声与初态独立，$L,R,\Omega$ 已知。这个初态是能量 $|x|^2/2$ 的单位温度 Gibbs 参考，Poisson 矩阵为 $\Omega$；正定二次系统可先用第 2 节的能量坐标变换到此形式。这里可以把多时刻积分读数组合进同一个 $L$，但未把连续白噪声当作普通平方可积随机函数。
+
+记
+\[
+F=L^TR^{-1}L,\quad \Sigma=(I+F)^{-1},\quad
+m(Y)=\Sigma L^TR^{-1}Y,\quad B=I-\Sigma=\operatorname{Cov}(m(Y)).
+\]
+$B$ 对称且 $0\preceq B\prec I$，是数据实际支持的后验均值协方差。它区别于平衡状态协方差 $I$，后者在所有正交方向上相同。
+
+选择 $Q\in\mathbb R^{2k\times d}$、$QQ^T=I$，令 $P=Q^TQ$。编码为 $u=Qx$，正交重建为 $Q^Tu$。对每个固定 $P$，在所有取值于 $\operatorname{Ran}P$ 的可测估计器中，$\widehat x_P=Pm(Y)$ 最优，且
+\[
+\mathcal R(P):=\inf_{\widehat x(Y)\in\operatorname{Ran}P}
+\tfrac12\mathbb E\|x_0-\widehat x(Y)\|^2
+=n-\tfrac12\operatorname{tr}(PB),
+\]
+\[
+\mathcal R_{\rm full}=\tfrac12\operatorname{tr}\Sigma,\quad
+\mathcal E(P):=\mathcal R(P)-\mathcal R_{\rm full}
+=\tfrac12\operatorname{tr}((I-P)B).
+\]
+这些身份由条件期望正交分解与 $\operatorname{Cov}m=B$ 直接得到。损失明确为全状态的热归一二次能量风险；仅关心某个输出时须另给输出权重，不把本章的最优性自动外推。
+
+编码具有对全部初态成立的自治线性更新，当且仅当
+\[
+Q\Omega=DQ,\qquad D=Q\Omega Q^T,
+\]
+等价于 $[P,\Omega]=0$。反对称性保证不变子空间及其正交补同时不变。此时 $D$ 可逆且反对称，$\dot u=Du$ 是 Poisson 矩阵 $D$、能量 $|u|^2/2$ 的 Hamilton 系统；第 2 节的辛、能量和热分解适用。给定初始统计数据以后，$Qm(Y)$ 可按同一个 $e^{tD}$ 更新；本结论未添加后续观测时的滤波器。
+
+严格的实验无损性更强。Gaussian 似然族 $\{N(Lx,R):x\in\mathbb R^d\}$ 能仅由 $Qx$ 精确给出，当且仅当 $L(I-P)=0$。因为同一编码纤维上 Gaussian 均值必须相同，反向可用均值 $LQ^Tu$。其 KL 距离为 $(x-x')^TF(x-x')/2$，因而也被精确保留。再加自治条件，就必须包含 $\operatorname{span}_{j\ge0}\Omega^j\operatorname{Ran}L^T$；这是第 2 节预测完成的直接应用，不另计新增定理。该跨度为全空间时，没有严格更小的无损线性自治编码。
+

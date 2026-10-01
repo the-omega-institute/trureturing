@@ -1,0 +1,12 @@
+**计算 2145.4（具体模式的 Heisenberg 关系及其 Sugawara 作用）。** 对问题 2145.1 的复多项式 Fock 模式和定理 2145.3 的同一个 $L_m$，逐整数有
+
+$$
+[a_m,a_n]=m\delta_{m+n,0}\,\mathrm{id},\qquad
+[L_m,a_r]=-r\,a_{m+r}\qquad(m,n,r\in\mathbb Z).
+\tag{2145.4}
+$$
+
+第一式的混合符号情形来自 $\partial_{X_i}(X_jv)=\delta_{ij}v+X_j\partial_{X_i}v$，同号模式分别由偏导数和乘法的交换性处理。第二式逐态交换有限正规序和后仅有 $k=-r$ 与 $k=m+r$ 两个可能贡献，各给出 $-r a_{m+r}$，外侧系数 $1/2$ 消去两份之和。一般的局部截断 Heisenberg 表示上的第二式见 [Kytölä 2025, `Sugawara.lean`, `commutator_sugawaraGen_heiOper`, 固定提交 `5ff4245`](https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean) [文献注](../../../Library/VertexAlgebra/kytola2025virasoro.md)；这里还须履行第一式与本节具体模式、有限和之间的对应。
+
+式 (2145.4) 不结算问题 2145.1 的 $[L_m,L_n]$ 全称断言。尚缺的是在同一具体正规序约定下对每个整数 $m,n$ 证明非中心部分恰为 $(m-n)L_{m+n}$，并在 $m+n=0$ 时对每个整数 $m$ 求出正规序边界有限和 $\frac{m^3-m}{12}\,\mathrm{id}$；仅由与所有 $a_r$ 对易，或仅计算 $m=2$，均不能给出这个系数。一般边界项计算见 [Kytölä 2025, `Sugawara.lean`, `commutator_sugawaraGen` 与 `sugawaraGen_cc_sum`](https://github.com/kkytola/VirasoroProject/blob/5ff4245383b2cdd4eea7a0524bc1274c32041eb4/VirasoroProject/Sugawara.lean) [文献注](../../../Library/VertexAlgebra/kytola2025virasoro.md)。
+

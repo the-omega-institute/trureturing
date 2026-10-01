@@ -1,0 +1,26 @@
+**定理 91.2（强制后缀的精确剪枝）。** 写
+
+$$
+C_i=\prod_{j=i}^rp_j^{\ell_j}\ (i\le r),\qquad C_i=1\ (i>r).
+$$
+
+状态 $V_M(i,b,h)$ 不可行当且仅当 $h<\ell_i$ 或 $b<C_i$；不可行值记为独立符号 $\bot$，不是空后缀的 $1$。可行状态满足
+
+$$
+V_M(i,b,h)=\max\left(
+\{1:i>r\}\cup
+\left\{G_{p_i}(a)V_M\left(i+1,\left\lfloor b/p_i^a\right\rfloor,a\right):
+\max(1,\ell_i)\le a\le h,\ p_i^a\le b,
+\text{子状态可行}\right\}\right).
+$$
+
+根为 $(1,B,\lfloor\log_2B\rfloor)$。对允许的首指数 $a$，余核预算剪枝恰为
+
+$$
+p_i^aC_{i+1}>b
+\quad\Longleftrightarrow\quad
+\left\lfloor b/p_i^a\right\rfloor<C_{i+1}.
+$$
+
+**证明。** 不可行的两个条件显然必要。若均不成立，恰取剩余下界指数就能完成后缀：单调性保证后续每一项符合上一指数上限；核已结束时取空后缀。因此它们也充分。空分支只在强制核结束后允许，但结束后仍允许继续加入更大素数。每个非空可行后缀唯一分解为首幂和子状态。剪枝使用整数商等价式，没有浮点预算。按定理 90.2 同时归纳上界和见证即可；独立检查器重建每个允许分支及每次剪枝，不信任证书自报的可行性。 $\square$
+

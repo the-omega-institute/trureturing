@@ -1,0 +1,13 @@
+### theorem 5.4 两次数量读数恰好恢复组成
+
+令 $\mathcal O(v)=(q(v),q(Mv))$。写 $v=a\alpha+b\beta$，并令 $n=q(v)$、$n'=q(Mv)$，则
+
+$$
+\binom n{n'}=
+\begin{pmatrix}2&3\\3&5\end{pmatrix}\binom ab,
+\qquad
+a=5n-3n',\quad b=2n'-3n.
+$$
+
+因此 $\mathcal O:\mathbb Z^2\to\mathbb Z^2$ 是格同构，且 $\mathcal B_q(v)=\mathcal B_q(w)$ 当且仅当 $v=w$。
+

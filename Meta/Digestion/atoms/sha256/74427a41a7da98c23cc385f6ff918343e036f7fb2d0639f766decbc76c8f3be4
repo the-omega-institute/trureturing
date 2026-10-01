@@ -1,0 +1,19 @@
+### 339.10 边界与来源
+
+上述最优费用的增长指数为一，并未消除下界中的次幂损失，也未取得固定常数倍的 $\Theta(1/u)$。本节没有证明一份固定准确策略能达到 $C/u$，没有优化最小参考预算，也不将张量正平滑论证外推至 $\beta>2$。
+
+第337节的时间反例仍完整适用。该节取 $\beta=1/2$ 和可计算的 $C$，落在本节有效范围内；但在其指定的固定正世界，任何准确有效程序仍满足
+
+$$
+\forall r>0:\qquad \mathbb E T^r=\infty,
+\tag{339.39}
+$$
+
+其中 $T$ 包含确定性系数求值、来源请求与私位读取的全部机器步骤。本节的 $A_*$ 及每份选定的 $A_u$ 都有某个共同正阶的两来源矩，并有私位指数尾；若它们的确定性步骤数 $D$ 有任何有限正阶矩，取一个更小的共同正阶并使用幂和不等式，就会推出 $T$ 的有限正阶矩。因此在第337节该实例与世界中，这些资源受控实现也满足 $\mathbb E D^r=\infty$ 对全部 $r>0$。来源与私位预算没有提供完整执行钟的上界。
+
+本节使用第330节未归一化参考系数及同世界局部尾和、第338节全任务延拓与张量相容实现、第332、336节有效系数和参数门槛，以及第333节固定参考预算的逐策略下界。相容包络与超几何次数提升的原始接口来自 Nacu–Peres；高阶参考包络来自 Holtz–Nazarov–Peres。[^infinite_tensor_sources] 无限地板的预算求和、同一策略与逐阶策略的不同矩界，以及有效私位执行均已在本节按同一原来源合同推导。
+
+这些是纸面数学结论，不认领 Lean 核验、内部运行时间上界或没有逐步标定的物理钟结论。
+
+[^infinite_tensor_sources]: Şerban Nacu and Yuval Peres, *Fast Simulation of New Coins from Old*, Annals of Applied Probability 15(1A) (2005), 93–115, [DOI](https://doi.org/10.1214/105051604000000549), [arXiv:math/0309222v5](https://arxiv.org/pdf/math/0309222v5)，Proposition 3、式（7）—（11）及 Lemma 4。Olga Holtz, Fedor Nazarov and Yuval Peres, *New Coins from Old, Smoothly*, Constructive Approximation 33 (2011), 331–363, [DOI](https://doi.org/10.1007/s00365-010-9108-5), [arXiv:0808.1936v3](https://arxiv.org/pdf/0808.1936v3)，其相容 Bernstein 包络与第330节所保留的参数估计。
+

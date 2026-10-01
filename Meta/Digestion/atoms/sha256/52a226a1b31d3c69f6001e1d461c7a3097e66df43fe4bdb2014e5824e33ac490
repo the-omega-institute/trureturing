@@ -1,0 +1,76 @@
+**定理313.4（参考方向高阶响应预算）。** 对固定正整数 \(m\)，存在只依 \(I,m\) 的有限 \(D_{I,m}\)，使每个有限停止多项式满足
+$$
+\boxed{
+|\partial_q^{2m}f_n(p,q)|
+\le D_{I,m}\mathbb E_{p,q}R_n^m
+\le D_{I,m}\mathbb E_{p,q}N_H^m.}
+\tag{313.22}
+$$
+常数不依 \(p\)、任务调用次数、停止规则、输出事件或 \(n\)。
+
+证明。取 Bell 阶数 \(r=2m\)。一个单项令
+\(a=a_1\)、\(b=\sum_{j\ge2}a_j\)，则 \(a+2b\le2m\)，由式（313.20）其绝对值受常数乘 \(|S_n|^aR_n^b\) 控制。置
+$$
+\theta=\frac a{2m},\qquad
+\phi=\frac bm,\qquad
+\psi=1-\theta-\phi\ge0.
+$$
+正阶 Bell 多项式没有常数项，故 \(R_n=0\) 时每项均为零。插入 \(\mathbf1_{\{R_n>0\}}\)，广义 Hölder 给
+$$
+\mathbb E[|S_n|^aR_n^b]
+\le
+(\mathbb E|S_n|^{2m})^\theta
+(\mathbb ER_n^m)^\phi
+\Pr(R_n>0)^\psi.
+\tag{313.23}
+$$
+零权重因子省略。整数性保证
+\(\Pr(R_n>0)\le\mathcal B_n=\mathbb ER_n^m\)，引理313.3因而使右端至多
+$$
+C_{I,m}^{\theta}
+\mathcal B_n^{\theta+\phi+\psi}
+=C_{I,m}^{\theta}\mathcal B_n.
+\tag{313.24}
+$$
+\(\mathcal B_n=0\) 单独直接处理。保留剩余概率因子使证明也覆盖 \(0<\mathcal B_n<1\)；不能删掉它后把
+\(\mathcal B_n^{\theta+\phi}\) 误当成至多 \(\mathcal B_n\)。
+
+在事件 \(\{M\le n,A\}\) 上，\(L_{j,n}\) 与实际停止叶的参考对数似然导数完全相同。仅对式（313.10）的有限和求导，得到
+$$
+\partial_q^{2m}f_n(p,q)=
+\mathbb E_{p,q}\!\left[
+\mathbf1_{\{M\le n,A\}}
+B_{2m}(S_n,L_{2,n},\ldots,L_{2m,n})
+\right].
+\tag{313.25}
+$$
+取绝对值、放宽事件，再对有限个 Bell 单项应用式（313.24），即得式（313.22）。证毕。
+
+当 \(m=1\)，可以保留常数一的更明确形式。令
+$$
+Q_n=\sum_{i=1}^nJ_i
+\left(\frac{Y_i}{q^2}+
+\frac{1-Y_i}{(1-q)^2}\right).
+$$
+可预测性给
+$$
+\mathbb ES_n^2=\mathbb EQ_n
+=\frac{\mathbb ER_n}{q(1-q)},
+$$
+而有限叶二阶导数是输出事件上的两个非负期望之差：
+$$
+\partial_q^2f_n
+=\mathbb E[\mathbf1_{\{M\le n,A\}}S_n^2]
+-\mathbb E[\mathbf1_{\{M\le n,A\}}Q_n].
+$$
+每项都落在
+\([0,\mathbb ER_n/(q(1-q))]\)，于是
+$$
+\boxed{
+|\partial_q^2f_n(p,q)|
+\le\frac{\mathbb E_{p,q}R_n}{q(1-q)}
+\le\frac{\mathbb E_{p,q}N_H}{q(1-q)}.}
+\tag{313.26}
+$$
+这是参考计数的直接预算，不是先取得总成本界后丢掉任务成本。
+

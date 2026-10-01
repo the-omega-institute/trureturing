@@ -1,0 +1,20 @@
+**定理 2143.6（真实表示账本上的单共轭类碰撞）。** 设 $G$ 为有限群，$g\in G$ 的阶 $r>1$，$N=|G|$，$c=N/r\in\mathbb N_{>0}$。定义正双分次的有理 $G$-表示账本 $A,B$：$A_{1,1}=\mathbb Q[G]$ 为左正规表示，其余次数为零表示；$B_{r,r}=\mathbb Q^c$ 为 $c$ 份平凡表示，其余次数为零表示。令 $H^A_h=\sum_{m,n\geq1}\operatorname{tr}(h\mid A_{m,n})p^mq^n$，$H^B_h$ 同理。对每个与 $g$ 共轭的 $h$，有
+
+$$
+(\Phi H^A)_h=(\Phi H^B)_h,
+\qquad [p^rq^r]H^A_h=0\ne c=[p^rq^r]H^B_h.
+\tag{2143.4}
+$$
+
+**证明。** $h$ 的阶也是 $r$，左乘 $h$ 将 $G$ 分成 $c$ 个长度为 $r$ 的循环。故其在正规表示上的特征迹为 $\operatorname{tr}(h^k\mid\mathbb Q[G])=N$ 当 $r\mid k$，否则为 $0$。于是
+
+$$
+(\Phi H^A)_h=\sum_{j\geq1}\frac{N}{rj}(pq)^{rj}
+=\sum_{j\geq1}\frac{c}{j}(pq)^{rj}
+=(\Phi H^B)_h.
+$$
+
+$A$ 只在 $(1,1)$ 次有非零空间，而 $B$ 在 $(r,r)$ 次的迹为 $c>0$，故原始迹不同。等价的纸笔行列式计算为 $\det(1-z h\mid\mathbb Q[G])=(1-z^r)^c=\det(1-z^r h\mid\mathbb Q^c)$，取 $z=pq$ 可得相同的 twined 分母因子。迹级碰撞已有针对实际有限维表示的 Lean 草稿证明；行列式恒等式和行列式到形式对数的桥梁尚无入库形式化证明。正规表示与有限群行列式的标准背景见 [Etingof et al. 2009, §4.2](https://arxiv.org/html/0901.0827#S4.SS2) [文献注](../../../Library/Quantum/etingof2009representation.md)；Moonshine 的等变行列式与迹展开见 [Borcherds 1992, (8.2)–(8.3)](https://math.berkeley.edu/~reb/papers/monster/monster.tex) [文献注](../../../Library/VertexAlgebra/borcherds1992monstrous.md)。这里不主张该简单碰撞是文献原创结果。
+
+式 (2143.4) 只比较 $g$ 的共轭类（更一般地可比较阶同为 $r$ 的元素）；在单位元或全部幂上不成立。$A,B$ 是可实现的表示账本，但没有固定假设 2143.3 的 Monster 根空间、其维数 $c(mn)$ 或 VOA 来源。因此它把定义 2143.1 的无约束反例推进到真实表示域，却不证明 Monster 专属观察的不可识别性。
+

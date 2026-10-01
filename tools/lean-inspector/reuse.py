@@ -174,12 +174,13 @@ def reuse(repository, report, output):
     if not captured['eligible']:
         return miss(captured['reason'])
     try:
-        # The normal entry never trusts a prior probe. Full validation occurs
-        # in publication's private snapshot, with before/after material hashes.
+        # The receipt binds bundle bytes that were validated when produced; like
+        # a restored olean they are reused as is. Publication still stages a
+        # private snapshot that must match the receipt and current inputs.
         receipt = read_receipt(report, captured)
         coordinates = publication.coordinates(repository)
         publication.publish(report, output, coordinates, repository, mode='cached',
-                            expected_hashes=receipt['bundle'])
+                            expected_hashes=receipt['bundle'], validate=False)
         # Rebind source evidence after publication; a same-path republish may
         # only change publication mode, not the report or its material bytes.
         if Path(report).resolve() != Path(output).resolve():

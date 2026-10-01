@@ -1,0 +1,16 @@
+**定义 3.3（最小预测商及其方向）。** 对固定输出与动作合同，定义
+
+$$
+x\sim_\infty y\quad\Longleftrightarrow\quad
+\forall w\in A^*,\ B(x)(w)=B(y)(w),\qquad
+Q=X/{\sim_\infty},\qquad \beta(x)=[x].
+$$
+
+支撑推导。空词给相同行为类的当前读数相同。对任意 $a,v$，有 $B(T_ax)(v)=B(x)(av)$，故同类来源经过同一动作仍同类，商更新 $\bar T_a[x]=[T_ax]$ 良定义。它与商读出组成动态充分边界。反之，任一动态充分 $\eta$ 的相同摘要，经词长归纳在每个词之后仍有相同摘要及读数，因此 $\ker\eta\subseteq\sim_\infty$。于是唯一的满射
+
+$$
+\eta(X)\twoheadrightarrow Q,\qquad \eta(x)\longmapsto[x]
+$$
+
+保持读出与更新。此方向说明 $Q$ 是所声明实验的最粗充分商，不是恢复全部原始树的反演。经典行为最小性在此作为 FIB 边界的支撑结构；仓内对应讨论见 [关系观察过程几何](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md) 的行为商与实际像部分。
+

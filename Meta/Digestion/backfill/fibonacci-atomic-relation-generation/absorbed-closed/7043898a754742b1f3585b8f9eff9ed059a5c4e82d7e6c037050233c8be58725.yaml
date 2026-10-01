@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7043898a754742b1f3585b8f9eff9ed059a5c4e82d7e6c037050233c8be58725
+  normalized_sha256: sha256:7043898a754742b1f3585b8f9eff9ed059a5c4e82d7e6c037050233c8be58725
+cas_ref: sha256:7043898a754742b1f3585b8f9eff9ed059a5c4e82d7e6c037050233c8be58725
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/MertensBoundary.power_bounds_iff
+    target_statement_id: sha256:31d5d9ce949bff10bf5c452a1c8a73c75f845f4309e4a1012866be8cf7bb7c09
+receipts:
+  unresolved_subitems: []

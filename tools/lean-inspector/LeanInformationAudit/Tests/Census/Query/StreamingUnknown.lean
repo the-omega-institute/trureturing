@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.Census.Query.StreamingOutside
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open LeanInformationAudit
 

@@ -1,0 +1,163 @@
+**定理 178.1（异奇偶双项的字符预算）。** 保留命题 177.1 的实际双项来源，假设 $D=(-1)^bL_k$ 非平方，令 $Q=4|D|$。对任意正整数 $c$，取
+
+$$
+n=cV\ge8,\qquad \Lambda=\log\log n.
+$$
+
+则
+
+$$
+Z(n)<\frac{2c}{\varphi(c)}e^{8+2/\Lambda}
+\sqrt{(1+\Lambda)(2+\log Q)},
+\tag{178.1}
+$$
+
+从而
+
+$$
+\frac{Z(n)}{e^\gamma\log\log n}
+<\frac{2c}{\varphi(c)}e^{8-\gamma+2/\Lambda}
+\frac{\sqrt{(1+\Lambda)(2+\log Q)}}{\Lambda}.
+\tag{178.2}
+$$
+
+证明。对任意模 $m\ge2$ 的非主实字符 $\chi$ 和 $x\ge2$，先证明下面的统一乘积估计。所有级数与无限乘积只在绝对收敛半平面使用。
+
+$$
+P_\chi(x):=\prod_{\substack{p\le x\\\chi(p)=1}}(1-p^{-1})^{-1}
+\le e^8\sqrt{(1+\log x)(2+\log m)}.
+\tag{178.3}
+$$
+
+首先，以 $\vartheta(x)=\sum_{p\le x}\log p$ 表示 Chebyshev 函数。对每个 $j\ge1$，区间 $(2^{j-1},2^j]$ 中的每个素数都整除中央二项式系数，故
+
+$$
+\vartheta(2^j)-\vartheta(2^{j-1})
+\le\log\binom{2^j}{2^{j-1}}
+\le2^j\log2.
+$$
+
+累加得
+
+$$
+\vartheta(2^j)\le(2^{j+1}-2)\log2.
+$$
+
+对 $x\ge2$，选 $2^{j-1}<x\le2^j$，从而
+
+$$
+\vartheta(x)\le4(\log2)x.
+$$
+
+分部求和以及 $(p-1)^{-1}\le2/p$ 给
+
+$$
+\begin{aligned}
+\sum_{p\le x}\frac{\log p}{p-1}
+&\le2\sum_{p\le x}\frac{\log p}{p}\\
+&=2\left(\frac{\vartheta(x)}x+
+\int_2^x\frac{\vartheta(v)}{v^2}\,dv\right)\\
+&\le8\log2\,[1+\log(x/2)]\\
+&\le8\log x. \tag{178.4}
+\end{aligned}
+$$
+
+最后一步在端点 $x=2$ 也成立；两边差恰为
+
+$$
+8(1-\log2)(\log x-\log2)\ge0.
+$$
+
+其次，令 $s=1+1/\log x>1$，定义绝对收敛乘积
+
+$$
+\mathcal P_\chi(s)=\prod_{\chi(p)=1}(1-p^{-s})^{-1}.
+$$
+
+逐个 Euler 因子有
+
+$$
+\log\frac{1-p^{-s}}{1-p^{-1}}
+=\int_1^s\frac{\log p}{p^v-1}\,dv
+\le(s-1)\frac{\log p}{p-1}.
+$$
+
+由式（178.4），并在 $s$ 处补入 $p>x$ 的正因子，得到
+
+$$
+P_\chi(x)\le e^8\mathcal P_\chi(s). \tag{178.5}
+$$
+
+最后，实字符的 Euler 因子直接给
+
+$$
+\mathcal P_\chi(s)^2
+=\zeta(s)L(s,\chi)
+\prod_{\chi(p)=-1}(1-p^{-2s})
+\prod_{\chi(p)=0}(1-p^{-s})
+\le\zeta(s)L(s,\chi). \tag{178.6}
+$$
+
+这里 $L(s,\chi)>0$，由其正的实 Euler 因子可见。积分比较给
+
+$$
+\zeta(s)\le1+\frac1{s-1}=1+\log x.
+$$
+
+又因非主字符具有周期 $m$ 且一个完整周期和为零，若
+$A(t)=\sum_{m<n\le t}\chi(n)$，则 $|A(t)|\le m$。因此
+
+$$
+\left|\sum_{n>m}\frac{\chi(n)}{n^s}\right|
+=\left|s\int_m^\infty A(t)t^{-s-1}\,dt\right|
+\le m^{1-s}\le1.
+$$
+
+从而
+
+$$
+0<L(s,\chi)\le H_m+1\le\log m+2. \tag{178.7}
+$$
+
+将式（178.5）—式（178.7）合并即得式（178.3）。
+
+该证明只用二项式系数、分部求和、字符周期消去，以及 $s>1$ 时的 Euler 乘积；没有使用素数定理、GRH、零点无零区、Siegel 常数，或某个正密度渐近在变化模数下的一致性。
+
+再令 $x=\log n\ge2$，所以 $\log x=\Lambda>0$。来自乘子 $c$ 的素数先用 $c/\varphi(c)$ 支付；素数二再用至多二支付。其余 $p\mid V$、$p\le x$ 全在式（178.3）的 $\chi(p)=1$ 集合中。相交素支撑只会使这个上界多算，不影响方向。
+
+对同一个实际 $V$ 的大素因子集合
+
+$$
+\mathcal T=\{p:p\mid V,\ p>x\},
+$$
+
+有
+
+$$
+|\mathcal T|\log x
+\le\sum_{p\in\mathcal T}\log p
+\le\log V\le\log n=x.
+$$
+
+所以
+
+$$
+\begin{aligned}
+\log\prod_{p\in\mathcal T}(1-p^{-1})^{-1}
+&\le\sum_{p\in\mathcal T}\frac1{p-1}\\
+&\le\frac{x}{(x-1)\log x}
+\le\frac2\Lambda.
+\end{aligned}
+$$
+
+由 $n>1$ 及有限素数幂的真截断，
+
+$$
+Z(n)<\frac n{\varphi(n)}
+\le\frac{2c}{\varphi(c)}P_\chi(x)e^{2/\Lambda}.
+$$
+
+应用式（178.3）得到式（178.1），再除以正的 $e^\gamma\Lambda$ 得式（178.2）。$\square$
+
+式（178.2）的右端小于一就是一个明确、有效但常数保守的 Robin 充分条件。它按全部素数的 Euler 权重给上界，没有把单个缺素数证书冒充整体估计，也没有将不同来源的最优值拼接。
+

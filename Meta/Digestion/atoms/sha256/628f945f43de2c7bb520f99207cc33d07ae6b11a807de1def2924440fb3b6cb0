@@ -1,0 +1,27 @@
+### 7.1 最小耦合、Jacobi 与场约束
+
+带符号电荷 $e$、质量 $m>0$，光滑势给作用量
+$$
+L=m|\dot r|^2/2+eA\cdot\dot r-e\phi-U,
+\quad p=m\dot r+eA,
+\quad H=|p-eA|^2/(2m)+e\phi+U.
+$$
+Euler–Lagrange 的矢势偏导差给
+$$
+m\ddot r=-\nabla U+e(E+\dot r\times B),
+\quad E=-\nabla\phi-\partial_tA,\quad B=\nabla\times A.
+$$
+规范变换使 $L$ 增加全导数 $ed\chi/dt$。磁功率为零，物质能量导数为 $e\dot r\cdot E$。
+
+在静态动力学动量 $\pi=mv$ 中，令 $\mathcal B_{ij}=\varepsilon_{ijk}B_k$，即 $\mathcal Bv=v\times B$，Poisson 矩阵为
+$$
+J_B=\begin{pmatrix}0&I\\-I&e\mathcal B\end{pmatrix}.
+$$
+其坐标括号为 $\{r_i,\pi_j\}=\delta_{ij}$、$\{\pi_i,\pi_j\}=e\varepsilon_{ijk}B_k$。三个动量的 Jacobiator 为 $-e\nabla\cdot B$，其余坐标组合为零；一般函数的 Jacobiator 由坐标张量与一阶导数组合，因此 $e\ne0$ 时 Jacobi 当且仅当无散。处处可逆，辛形式
+$$
+\omega_B=\sum_i dr_i\wedge d\pi_i-\frac e2\sum_{ij}\mathcal B_{ij}dr_i\wedge dr_j
+$$
+的外微分正是 $-e(\nabla\cdot B)dr_1\wedge dr_2\wedge dr_3$。
+
+时空一形式 $a=A\cdot dr-\phi dt$ 的曲率 $\mathcal F=da$，由 $d^2=0$ 得 $\nabla\cdot B=0$ 和 $\partial_tB+\nabla\times E=0$；逆向势的存在先是局部 Poincaré 引理，全局需拓扑条件。源方程还需要场作用量、度量和电流 [Tong, GEMPIC]。
+
