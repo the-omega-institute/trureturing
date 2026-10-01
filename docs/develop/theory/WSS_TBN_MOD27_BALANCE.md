@@ -240,3 +240,127 @@ the existing M27 result is likewise not a Lean theorem. Adding a bind-only
 Lean wrapper would overstate the formal status, so no such wrapper is claimed
 here. The argument above is a complete elementary proof conditional only on
 the already-recorded TBN.2--TBN.3 identities.
+
+
+## Theorem (the sharp 3-adic limit)
+
+The recurrence has a complete 3-adic description, beyond any fixed modulus.
+Define
+\[
+ c_j=(-1)^{j+1}u_j\qquad(j\ge1).
+\]
+Then \(c_1=1\), and (M27.3) rewrites as
+\[
+ c_{j+1}=c_j\left(1-4\cdot3^{\,2j+1}c_j^2\right).
+ \tag{L3.1}
+\]
+Inductively \(3\nmid c_j\) for every \(j\). Consequently
+\[
+ c_{j+1}-c_j=-4\cdot3^{\,2j+1}c_j^3,
+ \qquad
+ v_3(c_{j+1}-c_j)=2j+1.
+ \tag{L3.2}
+\]
+
+There is a unique \(C\in\mathbb Z_3\) such that \(c_j\to C\), and the
+convergence order is exact:
+\[
+ \boxed{v_3(C-c_j)=2j+1\qquad(j\ge1).}
+ \tag{L3.3}
+\]
+Indeed, for \(n>j\),
+\[
+ c_n-c_j=\sum_{t=j}^{n-1}-4\cdot3^{\,2t+1}c_t^3.
+\]
+The summands have strictly increasing 3-adic valuations
+\(2j+1,2j+3,\ldots\), so the first summand is the unique lowest-order
+term. Passing to the limit proves (L3.3).
+
+Equivalently, for every integer \(K\ge1\),
+\[
+ \boxed{
+ u_j\equiv(-1)^{j+1}C\pmod {3^K}
+ \quad\Longleftrightarrow\quad
+ K\le2j+1.}
+ \tag{L3.4}
+\]
+Thus \(3^{\,2j+1}\) is the maximal stabilization modulus at index \(j\);
+the next modulus \(3^{\,2j+2}\) fails exactly. The first residues of \(C\)
+(which determine all lower congruences) are
+\[
+\begin{array}{c|rrrrrrrr}
+K&1&2&3&4&5&6&7&8\\ \hline
+C\bmod3^K&1&1&1&55&136&379&1108&3295 .
+\end{array}
+\]
+For \(K=3\), (L3.4) recovers M27; for \(K=4\), \(C\equiv55\pmod{81}\)
+gives \(u_j\equiv26(-1)^j\pmod{81}\), exactly the M81 residue.
+
+Two useful exact valuations follow immediately:
+\[
+ \boxed{v_3(B_j-1)=j+1,\qquad
+ v_3(u_{j+1}+u_j)=2j+1.}
+ \tag{L3.5}
+\]
+The first uses \(B_j-1=2\cdot3^{j+1}u_j\) and \(3\nmid u_j\); the second
+is (M27.3) with the sign changed.
+
+### Weighted-depth consequence at the natural growing modulus
+
+Set \(m_j=2\cdot3^{j+1}\) and
+\(S_j=\sum_{p\mid B_j}h_pb_{p,j}\), as above. TBN.3 gives the exact
+factorization \(B_j=\prod_{p\mid B_j}p^{h_p}\) and
+\(p=1+m_jb_{p,j}\). Since
+\[
+ (1+m_jb)^{h}\equiv1+m_jhb\pmod {m_j^2},
+\]
+multiplication over the finite support gives
+\[
+ B_j\equiv1+m_jS_j\pmod {m_j^2}.
+\]
+Comparing with \(B_j=1+m_ju_j\) and cancelling \(m_j\) yields the
+growing-modulus congruence
+\[
+ \boxed{S_j\equiv u_j\pmod {m_j}}
+ \quad\text{and hence}\quad
+ \boxed{S_j\equiv u_j\pmod {3^{\,j+1}}}
+ \qquad(j\ge1).
+ \tag{L3.6}
+\]
+The direct bases \(S_1=1\) and \(S_2=107\) agree exactly. M27 and M81 are
+fixed-modulus corollaries of (L3.6).
+
+The modulus \(3^{j+1}\) is the uniform order supplied by the first-order
+factorization argument. A higher S-only modulus would require control of
+the second-order coefficient
+\[
+ T_j=\sum_p\binom{h_p}{2}b_{p,j}^2+
+     \sum_{p<q}h_ph_qb_{p,j}b_{q,j},
+\]
+because \(u_j=S_j+m_jT_j+O(m_j^2)\). No 3-divisibility of \(T_j\) follows
+from TBN.3 or the existing parity/ternary balances, so (L3.6) is the
+maximal uniform conclusion from the current depth-factorization inputs.
+Higher-order corrected identities can be obtained by retaining further
+coefficients of \prod_p(1+b_{p,j}z)^{h_p}, but they are different
+weighted statistics. The algebraic premises alone cannot force a higher
+S-only modulus: the formal one-factor pattern \((1+m_j)^2\) has
+\(u_j-S_j=m_j\) exactly.
+
+### 3-adic provenance and formalization boundary
+
+The Lucas side is a classical 3-adic approximation problem: OEIS
+[A268924](https://oeis.org/A268924) records that the representatives
+\(L_{3^j}\) approximate the chosen 3-adic square root of \(-2\) and gives
+the recurrence \(x\mapsto x^3+3x\), with references to Nagell and Lang.
+OEIS [A271223](https://oeis.org/A271223) records the corresponding base-3
+digits and cites Nagell's Hensel-lifting formulas. In our notation
+\(L_{3^j}^2+2=B_j-1=2\cdot3^{j+1}u_j\), so (L3.5) is the exact error order
+for these approximants. The checked sources do not state the normalized
+limit \(C\) together with the WSS actual-depth congruence (L3.6); this is a
+bounded provenance audit, not an absolute priority claim.
+
+This theorem remains paper-first. Existing Lean modules cover Fibonacci,
+Lucas, and rank interfaces, but no formal block-factorization/depth-vector
+API exists; adding a bind-only wrapper would overstate the formal status.
+The only arithmetic input about prime depths is the already-recorded TBN.3
+identity.
