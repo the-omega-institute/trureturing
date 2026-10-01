@@ -1040,3 +1040,68 @@ The same evaluator labels eligible cheap primes for the existing
 $\beta_j$ minima. It supplies their phase labels, not their minimum cost,
 their occurrence in the same actual host, or $c_j>B_r$. The full weighted
 Robin budget in FIB §233.5 remains a separate unresolved estimate.
+
+## The half-index Fibonacci pair already gives the denominator
+
+For this particular modulus, even the generic Gaussian gcd preprocessing
+can be omitted. The Fibonacci doubling and Cassini identities are
+classical; the pinned Mathlib sources already contain
+[`Nat.fib_two_mul_add_one` and `Nat.fib_two_mul`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Nat/Fib/Basic.lean)
+and
+[`Int.fib_succ_mul_fib_pred_sub_fib_sq`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Int/Fib/Lemmas.lean).
+Their application here is a denominator recipe, not a new Fibonacci
+identity or a compiled Lean bridge.
+
+Write $r=2m+1$, $A=F_{m+1}$ and $B=F_m$. The same identities give
+
+$$
+V=A^2+B^2,\qquad t=B(2A-B),\qquad
+A^2-AB-B^2=(-1)^m,
+$$
+
+and hence the exact integer relation
+
+$$
+tB+(-1)^m A=(A-B)V.
+$$
+
+Thus the explicitly oriented Gaussian integer
+
+$$
+\eta_0=A+(-1)^m iB
+$$
+
+has norm $V$ and belongs to $I=(V,i-t)$. Its principal ideal is contained
+in $I$ and has the same index $V$, so $(\eta_0)=I$. Multiplying by the
+unique unit that makes it primary yields the same $\eta$ as above.
+No factorization or Gaussian gcd is needed for this Fibonacci recipe;
+computing the half-index pair and preserving its sign and primary unit
+are still necessary. Choosing an arbitrary sum-of-two-squares
+representation, or imposing a positive imaginary part, need not retain
+the prescribed root orientation.
+
+At the cheap prime two the supplementary law now needs only this pair
+modulo eight. Its pair recurrence returns to $(0,1)$ after twelve steps;
+the sign $(-1)^m$ has the same period. Primary normalization depends
+only on the coordinates modulo four, so $b\bmod8$ is determined by
+$m\bmod12$. For every prime $r>5$ this gives
+
+| $r\bmod24$ | $1$ | $5$ | $7$ | $11$ | $13$ | $17$ | $19$ | $23$ |
+|---|---|---|---|---|---|---|---|---|
+| $\psi_V(2)$ | $1$ | $-i$ | $i$ | $1$ | $1$ | $-i$ | $i$ | $1$ |
+
+For example, $r=7$ gives $\eta=3-2i$, $\psi_{13}(2)=i$ and
+$\psi_{13}(t)=\psi_{13}(8)=-i$. The root identifies $i$ with $t$ in
+the quotient but does not require the character value at $t$ to be $i$.
+For $r=19$ the modulus is composite, $V=4181=37\cdot113$; the same
+recipe gives $\eta=55-34i$ and $\psi_V(2)=i$, with no prime-modulus
+substitution in the evaluator.
+
+This resolves one eligible prime's arithmetic phase from a finite
+Fibonacci observation. It does not force two to occur in $u_0$: the
+actual valuation must still be probed, and two is eligible only when
+$2\nmid vrV$. In that case its known phase merely gives an upper bound
+$\beta_j\le b_s(2)$ for the corresponding nonzero class minimum, not
+the lower bound needed to pay $B_r$. A phase-zero label adds no cost
+to the phase-word relaxation. The cheap-prime and actual-support
+conditions therefore remain distinct, as does the full weighted budget.
