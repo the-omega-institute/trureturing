@@ -1844,3 +1844,55 @@ general homotopic-isometry existence, global target uniqueness and the full
 Mostow–Prasad endpoint remain unfinished, including cusps and nonorientable
 manifolds. All supplied compatible original-H3 geometric inputs of the
 complete-target constructor remain explicit in that earlier result.
+
+
+### The lift-induced deck homomorphism is the fundamental-group isomorphism
+
+For the same coverings `F:X→M`, `P:Y→N`, continuous maps `φ:M→N`,
+`L:X→Y` and all-point identity `P(L(x))=φ(F(x))`, mapping the actual lifted
+path by `L` proves monodromy naturality. For the same quotient-covering
+actions and a homomorphism `τ:G→H` satisfying `L(a•x)=τ(a)•L(x)`, this
+identifies the opposite-group map of `τ` with the map on fundamental groups
+through the two covering correspondences. When both covering spaces are
+simply connected and `φ` is the forward map of an actual homotopy
+equivalence, the existing induced fundamental-group equivalence and those
+same covering equivalences prove that this same `τ` is bijective. Neither
+bijectivity nor replacement by another deck homomorphism is assumed.
+
+For the same actual original-H3 full-deck quotient coverings `FM,FN`, an
+actual homotopy equivalence `h:M≃ₕN`, a supplied compatible H3 chart and any
+source point `pHM`, target-cover surjectivity selects `pHN` with
+`FN(pHN)=h(FM(pHM))`. The existing continuous lift constructor supplies
+`L,τ`; the proved bijectivity promotes that very `τ` to a deck-group
+isomorphism `d`, with `d.toMonoidHom=τ`. The same chosen lift retains its
+basepoint, all-point projection and equivariance identities. The same `d`
+implements `FundamentalGroup.map h.toFun (FM pHM)` through the two actual
+covering fundamental-group equivalences. It is unique among deck-group
+isomorphisms implementing that binding with those same chosen points.
+
+A separate exact check compares this with the earlier binding written using
+`FundamentalGroup.mapOfEq h.toFun rfl`: the reflexive endpoint cast equals
+the ordinary induced map. For the same actual covers, compatible basepoints,
+continuous lift, projection and equivariance, any deck isomorphism satisfying
+that earlier binding has underlying homomorphism exactly `τ`. This closes
+the previously recorded lift-induced deck-isomorphism binding gap; it does
+not assert uniqueness of isometries on the target manifold.
+
+Three serial scoped transient cache-guarded checks exited zero and printed
+six axiom closures using only `propext`, `Classical.choice` and `Quot.sound`.
+One rejected monodromy source/log pair and one rejected exact-binding pair
+are preserved and excluded. Typed heterogeneous path equalities and the
+existing reflexive-cast identity repair endpoint elaboration; explicit
+homomorphism extensionality compares deck elements. Statements, endpoints,
+actions and resource limits are retained. Two `haveILetI` style warnings
+are recorded, one in each actual-H3 check; they are not proof exceptions.
+These are classical compositions with no tracked Lean or novelty claim.
+The linked escape audit remains unfinished.
+
+An ambient lattice conjugator, general homotopic-isometry existence, global
+target uniqueness and the full Mostow–Prasad endpoint remain unfinished,
+including cusps and nonorientable manifolds. The supplied compatible
+original-H3 geometric inputs of the complete-target constructor remain
+explicit. The present result supplies the actual lift/deck-isomorphism
+connection; it does not obtain an ambient isometry from an abstract lattice
+isomorphism.
