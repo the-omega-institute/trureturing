@@ -85,6 +85,74 @@ NumPy on 400 000 times in `[0, 4000]` gives `min |U(t)_{1,1}| = 0.27785` for
 `n = 9`; as a positive control, the same code gives `0.200001` for `n = 5`,
 where the paper proves that the infimum is `1/5`.
 
+The rank statements in the Triage section are reproduced by the following
+exact program (run with Python 3.9.6 and SymPy 1.14.0). Each `2cos(mπ/N)` is written as
+`ζ^m + ζ^(−m)` with `ζ = e^{iπ/N}` and reduced modulo the cyclotomic polynomial
+`Φ_{2N}`; integer relations are found by integer row reduction of the
+coefficient vectors.
+
+```python
+# Exact Q-linear relations among the positive support eigenvalues 2cos((2k+1)π/(2n)) of P_n'.
+# Each 2cos(mπ/N) = ζ^m + ζ^(-m) with ζ = e^{iπ/N} is reduced modulo the cyclotomic polynomial
+# Φ_{2N}; the coefficient vectors are integer, and integer relations are found by exact
+# integer row reduction of [Vᵀ | I].
+from sympy import cyclotomic_poly, symbols, Poly, totient
+x = symbols('x')
+
+def vec(m, N):
+    phi = Poly(cyclotomic_poly(2 * N, x), x)
+    d = phi.degree()
+    p = Poly(x ** (m % (2 * N)) + x ** ((-m) % (2 * N)), x).rem(phi)
+    c = p.all_coeffs()[::-1]
+    return [int(c[i]) if i < len(c) else 0 for i in range(d)]
+
+def integer_relations(rows):
+    # rows: list of integer vectors v_k; returns a Z-basis of {c : Σ c_k v_k = 0}
+    m = len(rows)
+    A = [list(r) + [1 if j == i else 0 for j in range(m)] for i, r in enumerate(rows)]
+    d = len(rows[0])
+    r = 0
+    for col in range(d):
+        while True:
+            piv = [i for i in range(r, m) if A[i][col] != 0]
+            if not piv:
+                break
+            i0 = min(piv, key=lambda i: abs(A[i][col]))
+            A[r], A[i0] = A[i0], A[r]
+            done = True
+            for i in range(r + 1, m):
+                if A[i][col]:
+                    q = A[i][col] // A[r][col]
+                    A[i] = [a - q * b for a, b in zip(A[i], A[r])]
+                    if A[i][col]:
+                        done = False
+            if done:
+                r += 1
+                break
+    return [row[d:] for row in A[r:]]
+
+def analyse(n):
+    N = 2 * n
+    ms = [2 * k + 1 for k in range(n) if 2 * k + 1 < n]          # positive eigenvalues
+    rel = integer_relations([vec(m, N) for m in ms])
+    odd = any(sum(c) % 2 for c in rel)
+    return len(ms), len(ms) - len(rel), odd, rel
+
+for n in range(5, 41, 2):
+    m, rank, odd, rel = analyse(n)
+    print(n, 'positive eigenvalues', m, 'rank', rank,
+          'independent' if rank == m else ('relation with odd coefficient sum' if odd else 'relations, all even sums'))
+# n = 9: eigenvalues 2cos(π/18), 2cos(3π/18) = √3, 2cos(5π/18), 2cos(7π/18)
+m, rank, odd, rel = analyse(9)
+print('n=9 relations (coefficients of 2cos(π/18), √3, 2cos(5π/18), 2cos(7π/18)):', rel)
+```
+
+For odd `5 ≤ n ≤ 39` it prints the number of positive support eigenvalues,
+their rank over `ℚ`, and whether an integer relation with odd coefficient sum
+exists; for `n = 9` it prints the single relation `(−1, 0, 1, 1)` among
+`2cos(π/18)`, `√3`, `2cos(5π/18)`, `2cos(7π/18)`, that is `α = β + γ`. As a
+positive control, `n = 5` (the paper's sharp case) is reported independent.
+
 The canonical source is
 `D5/S3/Quantum/Dynamics/PathTwinSharpSedentariness.lean`. Its public
 declarations are `pathTwin`, `SharplySedentary`, `claim` and `result`. The
@@ -120,8 +188,8 @@ the same decomposition gives `1/2 + (1/(2n)) Σ_k e^{it λ_k}` with
 `λ_k = 2cos((2k + 1)π/(2n))` for every odd `n`, and the paper's sharpness
 argument uses that the positive `λ_k` are linearly independent over `ℚ`.
 
-**Computed (exact rational linear algebra in `ℚ(cos(π/(2n)))`, not
-formalized), with the paper's Lemma 9 (S = {0}, a = 1/2 + 1/(2n)):** an integer
+**Computed (exact linear algebra over `ℚ`, the program in the Evidence
+section; not formalized), with the paper's Lemma 9 (S = {0}, a = 1/2 + 1/(2n)):** an integer
 relation among the positive support eigenvalues with odd coefficient sum rules
 out the value `1/n`, and linear independence gives it. For odd `5 ≤ n ≤ 39`, the
 positive support eigenvalues are linearly independent over `ℚ` exactly for the
@@ -129,8 +197,9 @@ primes `5, 7, 11, 13, 17, 19, 23, 29, 31, 37`, so the conjecture holds there;
 for `9, 15, 21, 25, 27, 33, 35, 39` there is a relation with odd coefficient
 sum, so the conjecture fails there as well.
 
-**Computed, not formalized:** `α`, `β`, `γ`, `√3` have rank 3 over `ℚ` with the
-single relation `α = β + γ`, and `β`, `γ`, `√3` are independent. By Kronecker's
+**Computed (the program in the Evidence section), not formalized:** `α`, `β`,
+`γ`, `√3` have rank 3 over `ℚ` with the single relation `α = β + γ`, and `β`,
+`γ`, `√3` are independent. **Argument, not formalized:** by Kronecker's
 theorem the phases `(βt, γt, √3 t)` are dense modulo `2π`, so the infimum at
 `n = 9` equals `5/18` exactly: vertex `1` of `P_9'` is sharply
 `5/18`-sedentary.
