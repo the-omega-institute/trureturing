@@ -1,28 +1,21 @@
 name: CI unit
 
-# One independent CI unit. Each caller workflow file owns its path whitelist
-# and command; this file only runs them. When no whitelisted path changed, the
+# One independent CI unit. The manifest owns its inputs and tool requirements.
+# Callers supply commands for non-test units. When no registered path changed, the
 # remaining steps are skipped and the job succeeds.
 
 on:
   workflow_call:
     inputs:
-      paths:
-        description: Path whitelist, one bash pattern per line (`*` also matches `/`)
+      unit:
+        description: Unit id registered in Meta/ci-units.json
         required: true
         type: string
       command:
-        description: Command executed from the repository root when the whitelist is hit
-        required: true
+        description: Command for a non-test unit, executed from the repository root
+        required: false
         type: string
-      dotnet:
-        description: Install the .NET SDK and its NuGet package cache
-        type: boolean
-        default: true
-      lean:
-        description: none | toolchain | build (toolchain plus the dependency and project build layers)
-        type: string
-        default: none
+        default: ''
       timeout-minutes:
         type: number
         default: 30
@@ -41,40 +34,50 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 2
           persist-credentials: false
-      - id: entry
-        name: Check path whitelist
+      - id: unit
+        name: Resolve registered unit
         env:
-          CI_HIT_PATHS: ${{ inputs.paths }}
+          UNIT: ${{ inputs.unit }}
+        run: python3 tools/scripts/workflow/ci_units.py resolve "$UNIT" --paths-file "$RUNNER_TEMP/hit-paths" >> "$GITHUB_OUTPUT"
+      - id: entry
+        name: Check registered inputs
+        env:
+          CI_HIT_PATHS_FILE: ${{ runner.temp }}/hit-paths
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
           CI_PUSH_BEFORE: ${{ github.event.before }}
         run: bash tools/scripts/workflow/ci-entry.sh
-      - name: Validate whitelist result
+      - name: Validate entry result and command
         env:
           HIT: ${{ steps.entry.outputs.hit }}
           COMMAND: ${{ inputs.command }}
+          TEST: ${{ steps.unit.outputs.test }}
         run: |
           case "$HIT" in true|false) ;; *) echo "CI_ENTRY_ERROR hit output is '$HIT'" >&2; exit 2 ;; esac
-          [[ -n "${COMMAND//[[:space:]]/}" ]] || { echo "CI_ENTRY_ERROR command input is empty" >&2; exit 2; }
-      - if: steps.entry.outputs.hit == 'true' && inputs.dotnet
+          case "$TEST" in
+            true) [[ -z "$COMMAND" ]] || { echo "CI_ENTRY_ERROR test unit command must be empty" >&2; exit 2; } ;;
+            false) [[ -n "${COMMAND//[[:space:]]/}" ]] || { echo "CI_ENTRY_ERROR non-test unit command is empty" >&2; exit 2; } ;;
+            *) echo "CI_ENTRY_ERROR test output is '$TEST'" >&2; exit 2 ;;
+          esac
+      - if: steps.entry.outputs.hit == 'true' && steps.unit.outputs.dotnet == 'true'
         uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
           cache: true
           cache-dependency-path: '**/packages.lock.json'
       - id: keys
-        if: steps.entry.outputs.hit == 'true' && inputs.lean != 'none'
+        if: steps.entry.outputs.hit == 'true' && steps.unit.outputs.lean != 'none'
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
       - id: elan
-        if: steps.entry.outputs.hit == 'true' && inputs.lean != 'none' && steps.keys.outputs.elan_key != ''
+        if: steps.entry.outputs.hit == 'true' && steps.unit.outputs.lean != 'none' && steps.keys.outputs.elan_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
-      - if: steps.entry.outputs.hit == 'true' && inputs.lean != 'none'
+      - if: steps.entry.outputs.hit == 'true' && steps.unit.outputs.lean != 'none'
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - id: dependency
-        if: steps.entry.outputs.hit == 'true' && inputs.lean == 'build' && steps.keys.outputs.dependency_key != ''
+        if: steps.entry.outputs.hit == 'true' && steps.unit.outputs.lean == 'build' && steps.keys.outputs.dependency_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -82,7 +85,7 @@ jobs:
           key: ${{ steps.keys.outputs.dependency_key }}
           restore-keys: ${{ steps.keys.outputs.dependency_restore_prefix }}
       - id: project
-        if: steps.entry.outputs.hit == 'true' && inputs.lean == 'build' && steps.keys.outputs.project_key != ''
+        if: steps.entry.outputs.hit == 'true' && steps.unit.outputs.lean == 'build' && steps.keys.outputs.project_key != ''
         continue-on-error: true
         uses: actions/cache/restore@v5
         with:
@@ -90,7 +93,7 @@ jobs:
           key: ${{ steps.keys.outputs.project_key }}
           restore-keys: ${{ steps.keys.outputs.project_restore_prefix }}
       - name: Restore optional Lean build seeds
-        if: steps.entry.outputs.hit == 'true' && inputs.lean == 'build'
+        if: steps.entry.outputs.hit == 'true' && steps.unit.outputs.lean == 'build'
         env:
           DEPENDENCY_KEY: ${{ steps.dependency.outputs.cache-matched-key }}
           PROJECT_KEY: ${{ steps.project.outputs.cache-matched-key }}
@@ -102,4 +105,14 @@ jobs:
         env:
           CI: 'true'
           DOTNET_CLI_UI_LANGUAGE: en-US
-        run: ${{ inputs.command }}
+          TEST: ${{ steps.unit.outputs.test }}
+          PROJECT: ${{ steps.unit.outputs.project }}
+          COMMAND: ${{ inputs.command }}
+        run: |
+          if [[ "$TEST" == true ]]; then
+            [[ -z "$COMMAND" ]] || { echo "CI_ENTRY_ERROR test unit command must be empty" >&2; exit 2; }
+            make -C tools test TEST_PROJECT="$PROJECT"
+          else
+            [[ -n "${COMMAND//[[:space:]]/}" ]] || { echo "CI_ENTRY_ERROR non-test unit command is empty" >&2; exit 2; }
+            bash -e -o pipefail -c "$COMMAND"
+          fi

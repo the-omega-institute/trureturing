@@ -19,38 +19,4 @@ jobs:
   tests-worktree-contract:
     uses: ./.github/workflows/ci-unit.yml
     with:
-      command: make -C tools test TEST_PROJECT=tools/tests/StrataLint.WorktreeContract.Tests/StrataLint.WorktreeContract.Tests.csproj
-      paths: |
-        *.lean
-        .editorconfig
-        .github/*
-        .gitignore
-        Blueprint/*.scribe.cs
-        Directory.Build.props
-        Directory.Packages.props
-        Golden/gate-authority-roots.toml
-        Makefile
-        Meta/Digestion/atomizers.toml
-        Meta/FILEMAP.*.toml
-        Meta/FILEMAP.toml
-        Meta/ReportProducers/*
-        Meta/ci-checks.json
-        Meta/engineering-projects.json
-        Reg/lake-manifest.json
-        Reg/lakefile.toml
-        docs/CONTRIBUTING.md
-        docs/GOVERNANCE.md
-        docs/reports/*.c
-        docs/reports/*.cpp
-        docs/reports/*.h
-        docs/reports/*.mjs
-        docs/reports/*.py
-        global.json
-        lake-manifest.json
-        lakefile.toml
-        lean-report-inputs.json
-        lean-toolchain
-        tools/*
-        tools/StrataLint.Cli/Commands/TestEvidenceCommands.cs
-        tools/StrataLint.Cli/Commands/TestResultEvidence.cs
-        tools/scripts/dotnet-test.sh
+      unit: tests-worktree-contract

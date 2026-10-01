@@ -80,7 +80,7 @@ public sealed class RuleEngineCapacityBehaviorTests
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
             files[EngineeringRegistrationFixture.Path] = EngineeringRegistrationFixture.Append(
                 files[EngineeringRegistrationFixture.Path], new EngineeringProjectFixture(Project, "IoFixture",
-                    "cross-cutting-test", true, ["tools/tests/IoFixture/**/*.cs"]));
+                    "cross-cutting-test", ["tools/tests/IoFixture/**/*.cs"]));
         fixture.Files[Source] = IoSource;
         return fixture;
     }

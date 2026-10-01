@@ -131,11 +131,11 @@ internal sealed partial class RuleFixture
             [BannedApiCompileFailProofProjectPath] = "<Project Sdk=\"Microsoft.NET.Sdk\" />\n",
             [CompileFailProofProjectPath] = "<Project Sdk=\"Microsoft.NET.Sdk\" />\n",
             [EngineeringRegistrationFixture.Path] = EngineeringRegistrationFixture.Manifest(
-                new EngineeringProjectFixture(ScribeProjectPath, "StrataLint.Scribe", "production", false,
+                new EngineeringProjectFixture(ScribeProjectPath, "StrataLint.Scribe", "production",
                     ["Blueprint/**/*.scribe.cs", "tools/StrataLint.Scribe/**/*.cs", "tools/StrataLint.Engine/**/*.cs", "tools/StrataLint.Cli/**/*.cs"],
                     OwnedTestAssembly: "StrataLint.Scribe.Tests"),
-                new EngineeringProjectFixture(BannedApiCompileFailProofProjectPath, "BannedApiCompileFailProof", "compile-fail-proof", false, ["tools/tests/BannedApiCompileFailProof/**/*.cs"]),
-                new EngineeringProjectFixture(CompileFailProofProjectPath, "CompileFailProof", "compile-fail-proof", false, ["tools/tests/CompileFailProof/**/*.cs"])),
+                new EngineeringProjectFixture(BannedApiCompileFailProofProjectPath, "BannedApiCompileFailProof", "compile-fail-proof", ["tools/tests/BannedApiCompileFailProof/**/*.cs"]),
+                new EngineeringProjectFixture(CompileFailProofProjectPath, "CompileFailProof", "compile-fail-proof", ["tools/tests/CompileFailProof/**/*.cs"])),
         };
         foreach (var (path, text) in InformationTemplateFixture.PolicyFiles()) Files[path] = text;
         var registration = System.Text.Json.Nodes.JsonNode.Parse(Files[EngineeringRegistrationFixture.Path])!;

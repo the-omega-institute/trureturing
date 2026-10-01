@@ -4,8 +4,12 @@ Production harness projects, scripts, manifests, and architecture material live 
 `tools/`; all harness test and compile-fail projects live under `tools/tests/`.
 `Meta/` is the data side of this boundary and contains no harness program directory.
 
-Each `ci-*.yml` workflow is an independent required-check unit. Its `paths` input
-is a whitelist consumed by `tools/scripts/workflow/ci-entry.sh`; the entry verifies
+Each `ci-*.yml` workflow is an independent required-check unit.
+`Meta/ci-units.json`, registered in FILEMAP, is the authority for CI selection.
+`ci_units.py` expands shared inputs, the unit workflow, explicitly registered
+project includes and transitive references, and unit inputs into bash patterns.
+Project exclusions do not narrow this selection. `ci-entry.sh` consumes the
+resolved patterns through `CI_HIT_PATHS_FILE`; the entry verifies
 the checked-out `GITHUB_SHA`, the complete event range and the pull-request merge
 parents before deciding whether the unit is hit. A miss skips that unit and exits
 successfully. Workflows run in parallel; steps within one workflow may be serial.
@@ -13,7 +17,9 @@ The entry removes remote state after the fixed candidate and any required base d
 are available, and no workflow executes protected-base code.
 
 `ci-unit.yml` supplies the common checkout, path hit, .NET and optional Lean cache
-steps. Test projects, selftests, compile-fail proofs, FILEMAP and current each have
+steps. Test units run the fixed registered-project make command; non-test units
+supply their command in the caller workflow. Test projects, selftests,
+compile-fail proofs, FILEMAP and current each have
 their own workflow. `ci-current.yml` produces one Lean report and runs
 `check-current`, Scribe, and (for pull requests) `check-delta` against the first
 parent as data. `ci-filemap.yml` owns FILEMAP conformance. Every independent

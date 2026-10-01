@@ -5,7 +5,6 @@
       "path": "tools/StrataLint.Cli/StrataLint.Cli.csproj",
       "assembly": "StrataLint",
       "role": "production",
-      "ci": false,
       "include": [
         "tools/StrataLint.Cli/**/*.cs"
       ],
@@ -32,7 +31,6 @@
       "path": "tools/StrataLint.Engine/StrataLint.Engine.csproj",
       "assembly": "StrataLint.Engine",
       "role": "production",
-      "ci": false,
       "include": [
         "tools/StrataLint.Engine/**/*.cs"
       ],
@@ -53,7 +51,6 @@
       "path": "tools/StrataLint.Lean/StrataLint.Lean.csproj",
       "assembly": "StrataLint.Lean",
       "role": "production",
-      "ci": false,
       "include": [
         "tools/StrataLint.Lean/**/*.cs"
       ],
@@ -74,7 +71,6 @@
       "path": "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
       "assembly": "StrataLint.Scribe.Documents",
       "role": "production",
-      "ci": false,
       "include": [
         "tools/StrataLint.Scribe.Documents/**/*.cs",
         "Blueprint/**/*.scribe.cs"
@@ -96,7 +92,6 @@
       "path": "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
       "assembly": "StrataLint.Scribe",
       "role": "production",
-      "ci": false,
       "include": [
         "tools/StrataLint.Scribe/**/*.cs"
       ],
@@ -118,7 +113,6 @@
       "path": "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
       "assembly": "StrataLint.TestSupport",
       "role": "test-support",
-      "ci": false,
       "include": [
         "tools/TestSupport/StrataLint.TestSupport/**/*.cs"
       ],
@@ -137,7 +131,6 @@
       "path": "tools/Trureturing.Truth/Trureturing.Truth.csproj",
       "assembly": "Trureturing.Truth",
       "role": "production",
-      "ci": false,
       "include": [
         "tools/Trureturing.Truth/**/*.cs"
       ],
@@ -154,7 +147,6 @@
       "path": "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",
       "assembly": "StrataLint.BannedApiCompileFailProof",
       "role": "compile-fail-proof",
-      "ci": false,
       "include": [
         "tools/tests/BannedApiCompileFailProof/**/*.cs"
       ],
@@ -171,7 +163,6 @@
       "path": "tools/tests/CompileFailProof/CompileFailProof.csproj",
       "assembly": "StrataLint.CompileFailProof",
       "role": "compile-fail-proof",
-      "ci": false,
       "include": [
         "tools/tests/CompileFailProof/**/*.cs"
       ],
@@ -190,7 +181,6 @@
       "path": "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
       "assembly": "StrataLint.ArchitectureTests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.ArchitectureTests/**/*.cs"
       ],
@@ -220,7 +210,6 @@
       "path": "tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj",
       "assembly": "StrataLint.Cache.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.Cache.Tests/**/*.cs"
       ],
@@ -242,7 +231,6 @@
       "path": "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj",
       "assembly": "StrataLint.Engine.Tests",
       "role": "owned-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.Engine.Tests/**/*.cs"
       ],
@@ -269,7 +257,6 @@
       "path": "tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj",
       "assembly": "StrataLint.Lean.Tests",
       "role": "owned-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.Lean.Tests/**/*.cs"
       ],
@@ -295,7 +282,6 @@
       "path": "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
       "assembly": "StrataLint.Scribe.Documents.Tests",
       "role": "owned-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.Scribe.Documents.Tests/**/*.cs"
       ],
@@ -317,7 +303,6 @@
       "path": "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
       "assembly": "StrataLint.Scribe.Tests",
       "role": "owned-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.Scribe.Tests/**/*.cs"
       ],
@@ -343,7 +328,6 @@
       "path": "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj",
       "assembly": "StrataLint.ScriptTests",
       "role": "cross-cutting-test",
-      "ci": false,
       "include": [
         "tools/tests/StrataLint.ScriptTests/**/*.cs"
       ],
@@ -370,7 +354,6 @@
       "path": "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj",
       "assembly": "StrataLint.Tests",
       "role": "owned-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.Tests/**/*.cs"
       ],
@@ -406,7 +389,6 @@
       "path": "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj",
       "assembly": "Trureturing.Truth.Tests",
       "role": "owned-test",
-      "ci": true,
       "include": [
         "tools/tests/Trureturing.Truth.Tests/**/*.cs"
       ],
@@ -428,7 +410,6 @@
       "path": "tools/TestSupport/StrataLint.RegistrationTestSupport/StrataLint.RegistrationTestSupport.csproj",
       "assembly": "StrataLint.RegistrationTestSupport",
       "role": "test-support",
-      "ci": false,
       "include": [
         "tools/TestSupport/StrataLint.RegistrationTestSupport/**/*.cs"
       ],
@@ -449,7 +430,6 @@
       "path": "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
       "assembly": "StrataLint.ProcessTestSupport",
       "role": "test-support",
-      "ci": false,
       "include": [
         "tools/TestSupport/StrataLint.ProcessTestSupport/**/*.cs"
       ],
@@ -470,7 +450,6 @@
       "path": "tools/TestSupport/StrataLint.LeanTestSupport/StrataLint.LeanTestSupport.csproj",
       "assembly": "StrataLint.LeanTestSupport",
       "role": "test-support",
-      "ci": false,
       "include": [
         "tools/TestSupport/StrataLint.LeanTestSupport/**/*.cs"
       ],
@@ -491,7 +470,6 @@
       "path": "tools/TestSupport/StrataLint.AdmissionTestSupport/StrataLint.AdmissionTestSupport.csproj",
       "assembly": "StrataLint.AdmissionTestSupport",
       "role": "test-support",
-      "ci": false,
       "include": [
         "tools/TestSupport/StrataLint.AdmissionTestSupport/**/*.cs"
       ],
@@ -514,7 +492,6 @@
       "path": "tools/TestSupport/StrataLint.ScriptProcessTestSupport/StrataLint.ScriptProcessTestSupport.csproj",
       "assembly": "StrataLint.ScriptProcessTestSupport",
       "role": "test-support",
-      "ci": false,
       "include": [
         "tools/TestSupport/StrataLint.ScriptProcessTestSupport/**/*.cs"
       ],
@@ -535,7 +512,6 @@
       "path": "tools/TestSupport/StrataLint.CliTestSupport/StrataLint.CliTestSupport.csproj",
       "assembly": "StrataLint.CliTestSupport",
       "role": "test-support",
-      "ci": false,
       "include": [
         "tools/TestSupport/StrataLint.CliTestSupport/**/*.cs"
       ],
@@ -559,7 +535,6 @@
       "path": "tools/tests/StrataLint.CliIntegration.Tests/StrataLint.CliIntegration.Tests.csproj",
       "assembly": "StrataLint.CliIntegration.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.CliIntegration.Tests/**/*.cs"
       ],
@@ -592,7 +567,6 @@
       "path": "tools/tests/StrataLint.Cache.Native.Tests/StrataLint.Cache.Native.Tests.csproj",
       "assembly": "StrataLint.Cache.Native.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.Cache.Native.Tests/**/*.cs"
       ],
@@ -614,7 +588,6 @@
       "path": "tools/tests/StrataLint.Cache.Release.Tests/StrataLint.Cache.Release.Tests.csproj",
       "assembly": "StrataLint.Cache.Release.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.Cache.Release.Tests/**/*.cs"
       ],
@@ -636,7 +609,6 @@
       "path": "tools/tests/StrataLint.HeaderScript.Tests/StrataLint.HeaderScript.Tests.csproj",
       "assembly": "StrataLint.HeaderScript.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.HeaderScript.Tests/**/*.cs"
       ],
@@ -658,7 +630,6 @@
       "path": "tools/tests/StrataLint.RepositoryContract.Tests/StrataLint.RepositoryContract.Tests.csproj",
       "assembly": "StrataLint.RepositoryContract.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.RepositoryContract.Tests/**/*.cs"
       ],
@@ -681,7 +652,6 @@
       "path": "tools/StrataLint.Configuration/StrataLint.Configuration.csproj",
       "assembly": "StrataLint.Configuration",
       "role": "production",
-      "ci": false,
       "include": [
         "tools/StrataLint.Configuration/**/*.cs"
       ],
@@ -702,7 +672,6 @@
       "path": "tools/tests/StrataLint.Configuration.Tests/StrataLint.Configuration.Tests.csproj",
       "assembly": "StrataLint.Configuration.Tests",
       "role": "owned-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.Configuration.Tests/**/*.cs"
       ],
@@ -726,7 +695,6 @@
       "path": "tools/tests/StrataLint.RepositoryConfiguration.Tests/StrataLint.RepositoryConfiguration.Tests.csproj",
       "assembly": "StrataLint.RepositoryConfiguration.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.RepositoryConfiguration.Tests/**/*.cs"
       ],
@@ -748,7 +716,6 @@
       "path": "tools/TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj",
       "assembly": "StrataLint.ConfigurationTestSupport",
       "role": "test-support",
-      "ci": false,
       "include": [
         "tools/TestSupport/StrataLint.ConfigurationTestSupport/**/*.cs"
       ],
@@ -770,7 +737,6 @@
       "path": "tools/StrataLint.FileMap/StrataLint.FileMap.csproj",
       "assembly": "StrataLint.FileMap",
       "role": "production",
-      "ci": false,
       "include": [
         "tools/StrataLint.FileMap/**/*.cs"
       ],
@@ -793,7 +759,6 @@
       "path": "tools/tests/StrataLint.FileMap.Tests/StrataLint.FileMap.Tests.csproj",
       "assembly": "StrataLint.FileMap.Tests",
       "role": "owned-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.FileMap.Tests/**/*.cs"
       ],
@@ -819,7 +784,6 @@
       "path": "tools/tests/StrataLint.PrScript.Tests/StrataLint.PrScript.Tests.csproj",
       "assembly": "StrataLint.PrScript.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.PrScript.Tests/**/*.cs"
       ],
@@ -843,7 +807,6 @@
       "path": "tools/tests/StrataLint.ReportSupervisor.Tests/StrataLint.ReportSupervisor.Tests.csproj",
       "assembly": "StrataLint.ReportSupervisor.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.ReportSupervisor.Tests/**/*.cs"
       ],
@@ -867,7 +830,6 @@
       "path": "tools/TestSupport/StrataLint.RuleTestSupport/StrataLint.RuleTestSupport.csproj",
       "assembly": "StrataLint.RuleTestSupport",
       "role": "test-support",
-      "ci": false,
       "include": [
         "tools/TestSupport/StrataLint.RuleTestSupport/**/*.cs"
       ],
@@ -893,7 +855,6 @@
       "path": "tools/tests/StrataLint.Rules.Tests/StrataLint.Rules.Tests.csproj",
       "assembly": "StrataLint.Rules.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.Rules.Tests/**/*.cs"
       ],
@@ -921,7 +882,6 @@
       "path": "tools/tests/StrataLint.LeanReportScript.Tests/StrataLint.LeanReportScript.Tests.csproj",
       "assembly": "StrataLint.LeanReportScript.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.LeanReportScript.Tests/**/*.cs"
       ],
@@ -947,7 +907,6 @@
       "path": "tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj",
       "assembly": "StrataLint.WorkflowScript.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.WorkflowScript.Tests/**/*.cs"
       ],
@@ -971,7 +930,6 @@
       "path": "tools/tests/StrataLint.ResourceObservation.Tests/StrataLint.ResourceObservation.Tests.csproj",
       "assembly": "StrataLint.ResourceObservation.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.ResourceObservation.Tests/**/*.cs"
       ],
@@ -995,7 +953,6 @@
       "path": "tools/tests/StrataLint.Digestion.Tests/StrataLint.Digestion.Tests.csproj",
       "assembly": "StrataLint.Digestion.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.Digestion.Tests/**/*.cs"
       ],
@@ -1024,7 +981,6 @@
       "path": "tools/TestSupport/StrataLint.DigestionTestSupport/StrataLint.DigestionTestSupport.csproj",
       "assembly": "StrataLint.DigestionTestSupport",
       "role": "test-support",
-      "ci": false,
       "include": [
         "tools/TestSupport/StrataLint.DigestionTestSupport/**/*.cs"
       ],
@@ -1048,7 +1004,6 @@
       "path": "tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj",
       "assembly": "StrataLint.DeclaredTemplate.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.DeclaredTemplate.Tests/**/*.cs"
       ],
@@ -1074,7 +1029,6 @@
       "path": "tools/TestSupport/StrataLint.DeclaredTemplateTestSupport/StrataLint.DeclaredTemplateTestSupport.csproj",
       "assembly": "StrataLint.DeclaredTemplateTestSupport",
       "role": "test-support",
-      "ci": false,
       "include": [
         "tools/TestSupport/StrataLint.DeclaredTemplateTestSupport/**/*.cs"
       ],
@@ -1099,7 +1053,6 @@
       "path": "tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj",
       "assembly": "StrataLint.InstructionContract.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.InstructionContract.Tests/**/*.cs"
       ],
@@ -1122,7 +1075,6 @@
       "path": "tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj",
       "assembly": "StrataLint.RepositoryFileMap.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.RepositoryFileMap.Tests/**/*.cs"
       ],
@@ -1150,7 +1102,6 @@
       "path": "tools/tests/StrataLint.RepositoryTopology.Tests/StrataLint.RepositoryTopology.Tests.csproj",
       "assembly": "StrataLint.RepositoryTopology.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.RepositoryTopology.Tests/**/*.cs"
       ],
@@ -1177,7 +1128,6 @@
       "path": "tools/tests/StrataLint.LeanCacheScript.Tests/StrataLint.LeanCacheScript.Tests.csproj",
       "assembly": "StrataLint.LeanCacheScript.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.LeanCacheScript.Tests/**/*.cs"
       ],
@@ -1202,7 +1152,6 @@
       "path": "tools/tests/StrataLint.RepositoryDigestion.Tests/StrataLint.RepositoryDigestion.Tests.csproj",
       "assembly": "StrataLint.RepositoryDigestion.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.RepositoryDigestion.Tests/**/*.cs"
       ],
@@ -1225,7 +1174,6 @@
       "path": "tools/tests/StrataLint.SourceAtomizer.Tests/StrataLint.SourceAtomizer.Tests.csproj",
       "assembly": "StrataLint.SourceAtomizer.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.SourceAtomizer.Tests/**/*.cs"
       ],
@@ -1252,7 +1200,6 @@
       "path": "tools/tests/StrataLint.PlaybookScript.Tests/StrataLint.PlaybookScript.Tests.csproj",
       "assembly": "StrataLint.PlaybookScript.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.PlaybookScript.Tests/**/*.cs"
       ],
@@ -1277,7 +1224,6 @@
       "path": "tools/tests/StrataLint.CoverBatch.Tests/StrataLint.CoverBatch.Tests.csproj",
       "assembly": "StrataLint.CoverBatch.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.CoverBatch.Tests/**/*.cs"
       ],
@@ -1308,7 +1254,6 @@
       "path": "tools/TestSupport/StrataLint.CoverTestSupport/StrataLint.CoverTestSupport.csproj",
       "assembly": "StrataLint.CoverTestSupport",
       "role": "test-support",
-      "ci": false,
       "include": [
         "tools/TestSupport/StrataLint.CoverTestSupport/**/*.cs"
       ],
@@ -1337,7 +1282,6 @@
       "path": "tools/tests/StrataLint.WorktreeContract.Tests/StrataLint.WorktreeContract.Tests.csproj",
       "assembly": "StrataLint.WorktreeContract.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.WorktreeContract.Tests/**/*.cs"
       ],
@@ -1361,7 +1305,6 @@
       "path": "tools/tests/StrataLint.TruthRelease.Tests/StrataLint.TruthRelease.Tests.csproj",
       "assembly": "StrataLint.TruthRelease.Tests",
       "role": "cross-cutting-test",
-      "ci": true,
       "include": [
         "tools/tests/StrataLint.TruthRelease.Tests/**/*.cs"
       ],

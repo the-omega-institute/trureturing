@@ -567,7 +567,7 @@ public sealed partial class ProductionEnvironmentTests
             files[project] = "<Project />";
             files[EngineeringRegistrationFixture.Path] = EngineeringRegistrationFixture.Append(
                 files[EngineeringRegistrationFixture.Path],
-                new EngineeringProjectFixture(project, "Fixture", "test-support", false, ["tools/new-lib/**/*.cs"]));
+                new EngineeringProjectFixture(project, "Fixture", "test-support", ["tools/new-lib/**/*.cs"]));
         }
         var baselinePaths = fixture.Baseline.Keys
             .Append(FileMapPath)

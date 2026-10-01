@@ -8,6 +8,66 @@ public sealed partial class FileMapPolicyTests
     private const string EngineeringManifest = "Meta/engineering-projects.json";
     private const string GeneratedInput = "Generated/output.json";
 
+    [Fact]
+    public void CiSelectionPatternsDoNotCreateContentDependencies()
+    {
+        var document = CiSelection();
+        document["shared_inputs"]!.AsArray().Add(GeneratedInput);
+        document["units"]![0]!["inputs"]!.AsArray().Add(GeneratedInput);
+        Assert.Empty(InspectCiDependencies(document.ToJsonString()));
+    }
+
+    [Theory]
+    [InlineData("workflow")]
+    [InlineData("project")]
+    public void CiContentReferencesRemainDependencies(string field)
+    {
+        var document = CiSelection();
+        document["units"]![0]![field] = GeneratedInput;
+        Assert.Single(InspectCiDependencies(document.ToJsonString()));
+    }
+
+    [Theory]
+    [InlineData("schema")]
+    [InlineData("shared-type")]
+    [InlineData("input-type")]
+    [InlineData("unknown-field")]
+    [InlineData("duplicate-key")]
+    public void InvalidCiSelectionShapeCannotHideContentReferences(string defect)
+    {
+        var document = CiSelection();
+        switch (defect)
+        {
+            case "schema": document["schema"] = "unknown"; break;
+            case "shared-type": document["shared_inputs"] = GeneratedInput; break;
+            case "input-type": document["units"]![0]!["inputs"] = GeneratedInput; break;
+            case "unknown-field": document["units"]![0]!["unknown"] = GeneratedInput; break;
+        }
+        var text = document.ToJsonString();
+        if (defect == "duplicate-key") text = text.Replace("\"schema\":", "\"schema\":\"ci-units-v1\",\"schema\":", StringComparison.Ordinal);
+        Assert.Throws<InvalidDataException>(() => InspectCiDependencies(text));
+    }
+
+    private static JsonNode CiSelection() => JsonNode.Parse("""
+        {"schema":"ci-units-v1","shared_inputs":[],"units":[{
+          "id":"fixture","workflow":".github/workflows/ci-fixture.yml","project":null,
+          "test":false,"lean":"none","dotnet":false,"inputs":[]
+        }]}
+        """)!;
+
+    private static IReadOnlyList<FileMapFinding> InspectCiDependencies(string source)
+    {
+        const string input = "Meta/ci-units.json";
+        var manifest = Parse(
+            Entry(GeneratedInput, "generated", "JsonEmitter", "program", "JsonEmitter"),
+            Entry(input, "data", "none", "GitHub-Actions", "CiUnits"));
+        return FileMapPolicy.InspectDependencies(manifest, new Dictionary<string, string>
+        {
+            [input] = source,
+            [GeneratedInput] = "{}",
+        });
+    }
+
     [Theory]
     [InlineData("projects", "include")]
     [InlineData("historical_projects", "include")]
@@ -65,7 +125,7 @@ public sealed partial class FileMapPolicyTests
         var document = JsonNode.Parse($$"""
             {"version":1,"rule_build_inputs":[],"projects":[{
               "path":"tools/tests/Query/Query.csproj","assembly":"Query.Tests",
-              "role":"cross-cutting-test","ci":true,"include":[],"exclude":[],
+              "role":"cross-cutting-test","include":[],"exclude":[],
               "references":[],"owner":null,"owned_test_assembly":null,
               "test_partition":"query","root_namespace":"Query",
               "namespace_exclude":[],"global_namespace_exceptions":[]

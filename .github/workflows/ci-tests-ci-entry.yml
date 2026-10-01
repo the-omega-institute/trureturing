@@ -19,10 +19,5 @@ jobs:
   tests-ci-entry:
     uses: ./.github/workflows/ci-unit.yml
     with:
-      dotnet: false
-      command: bash tools/scripts/workflow/ci-entry-test.sh
-      paths: |
-        .github/workflows/ci-tests-ci-entry.yml
-        .github/workflows/ci-unit.yml
-        tools/scripts/workflow/ci-entry-test.sh
-        tools/scripts/workflow/ci-entry.sh
+      unit: tests-ci-entry
+      command: bash tools/scripts/workflow/ci-entry-test.sh && python3 -m unittest tools/scripts/workflow/test_ci_units.py

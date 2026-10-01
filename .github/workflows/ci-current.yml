@@ -37,58 +37,29 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 2
           persist-credentials: false
+      - id: current_unit
+        name: Resolve current inputs
+        run: python3 tools/scripts/workflow/ci_units.py resolve current --paths-file "$RUNNER_TEMP/current-hit-paths" >> "$GITHUB_OUTPUT"
       - id: entry
-        name: Check path whitelist
+        name: Check current inputs
         env:
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
           CI_PUSH_BEFORE: ${{ github.event.before }}
           CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
-          CI_HIT_PATHS: |
-            *
-            !README.md
-            !docs/VISION.md
-            !docs/assets/inquiry-cycle.svg
-            !docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md
-            !docs/develop/spec/trureturing_engineering_optimization_v1.md
-            !docs/develop/theory/*
-            !docs/reports/*
-            !tools/TestSupport/StrataLint.RuleTestSupport/*
-            !tools/lean-inspector/README.md
-            !tools/scripts/agent/openproblem/README.md
-            !tools/scripts/agent/openproblem/SCREENED-OUT*.md
-            !tools/scripts/agent/prime_slabs/CPU.md
+          CI_HIT_PATHS_FILE: ${{ runner.temp }}/current-hit-paths
         run: bash tools/scripts/workflow/ci-entry.sh
+      - id: delta_unit
+        name: Resolve delta inputs
+        if: github.event_name == 'pull_request' && steps.entry.outputs.hit == 'true'
+        run: python3 tools/scripts/workflow/ci_units.py resolve delta --paths-file "$RUNNER_TEMP/delta-hit-paths" >> "$GITHUB_OUTPUT"
       - id: delta_entry
-        name: Check delta path whitelist
+        name: Check delta inputs
         if: github.event_name == 'pull_request' && steps.entry.outputs.hit == 'true'
         env:
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
-          # The current whitelist plus paths whose change never needed delta.
-          CI_HIT_PATHS: |
-            *
-            !README.md
-            !docs/VISION.md
-            !docs/assets/inquiry-cycle.svg
-            !docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md
-            !docs/develop/spec/trureturing_engineering_optimization_v1.md
-            !docs/develop/theory/*
-            !docs/reports/*
-            !tools/TestSupport/StrataLint.RuleTestSupport/*
-            !tools/lean-inspector/README.md
-            !tools/scripts/agent/openproblem/README.md
-            !tools/scripts/agent/openproblem/SCREENED-OUT*.md
-            !tools/scripts/agent/prime_slabs/CPU.md
-            !.lake/*
-            !Blueprint/*
-            !Evidence/*
-            !Generated/*
-            !Golden/Projection/*.json
-            !Library/*/*.md
-            !Problems/*
-            !build/*
-            !tools/Generated/scribe-emissions.v1.json
+          CI_HIT_PATHS_FILE: ${{ runner.temp }}/delta-hit-paths
         run: bash tools/scripts/workflow/ci-entry.sh
-      - name: Validate whitelist results
+      - name: Validate entry results
         env:
           HIT: ${{ steps.entry.outputs.hit }}
           DELTA_OUTCOME: ${{ steps.delta_entry.outcome }}

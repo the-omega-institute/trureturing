@@ -19,20 +19,7 @@ jobs:
   filemap:
     uses: ./.github/workflows/ci-unit.yml
     with:
+      unit: filemap
       command: >-
         dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -p:RestoreLockedMode=true -nologo &&
         dotnet tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll filemap-conform
-      paths: |
-        *
-        !README.md
-        !docs/VISION.md
-        !docs/assets/inquiry-cycle.svg
-        !docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md
-        !docs/develop/spec/trureturing_engineering_optimization_v1.md
-        !docs/develop/theory/*
-        !docs/reports/*
-        !tools/TestSupport/StrataLint.RuleTestSupport/*
-        !tools/lean-inspector/README.md
-        !tools/scripts/agent/openproblem/README.md
-        !tools/scripts/agent/openproblem/SCREENED-OUT*.md
-        !tools/scripts/agent/prime_slabs/CPU.md

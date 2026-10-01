@@ -19,6 +19,4 @@ jobs:
   tests-repository-filemap:
     uses: ./.github/workflows/ci-unit.yml
     with:
-      command: make -C tools test TEST_PROJECT=tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj
-      paths: |
-        *
+      unit: tests-repository-filemap

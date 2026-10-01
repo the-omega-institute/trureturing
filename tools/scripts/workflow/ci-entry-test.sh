@@ -75,10 +75,12 @@ EOF
 run_entry() {
   local event="$1" sha="$2" paths="$3"; shift 3
   local output="$WORK/output-$case_name"
+  local paths_env=()
+  [[ "$paths" == __unset__ ]] || paths_env+=("CI_HIT_PATHS=$paths")
   : > "$output"
   RC=0
   LOG="$(env -i HOME="$HOME" PATH="${RUN_PATH:-$PATH}" GITHUB_EVENT_NAME="$event" GITHUB_SHA="$sha" \
-    GITHUB_OUTPUT="$output" CI_HIT_PATHS="$paths" "$@" \
+    GITHUB_OUTPUT="$output" ${paths_env[@]+"${paths_env[@]}"} "$@" \
     bash "$REPO/tools/scripts/workflow/ci-entry.sh" 2>&1)" || RC=$?
   OUT="$(cat "$output")"
 }
@@ -107,6 +109,36 @@ run_entry push "$AFTER" 'docs/*' CI_PUSH_BEFORE="$BEFORE"; expect_hit false
 
 case_name=push-excluded; new_repo "$case_name"; at_commit "$AFTER"
 run_entry push "$AFTER" $'*\n!tools/a.txt' CI_PUSH_BEFORE="$BEFORE"; expect_hit false
+
+for polarity in hit miss excluded; do
+  case_name="file-$polarity"; new_repo "$case_name"; at_commit "$AFTER"
+  paths_file="$WORK/paths with spaces"
+  case "$polarity" in
+    hit) printf 'tools/*\n' > "$paths_file"; want=true ;;
+    miss) printf 'docs/*\n' > "$paths_file"; want=false ;;
+    excluded) printf '*\n!tools/a.txt\n' > "$paths_file"; want=false ;;
+  esac
+  run_entry push "$AFTER" __unset__ CI_HIT_PATHS_FILE="$paths_file" CI_PUSH_BEFORE="$BEFORE"; expect_hit "$want"
+done
+
+case_name=paths-both; new_repo "$case_name"; at_commit "$AFTER"
+run_entry push "$AFTER" 'tools/*' CI_HIT_PATHS_FILE="$paths_file" CI_PUSH_BEFORE="$BEFORE"; expect_error
+
+case_name=paths-neither; new_repo "$case_name"; at_commit "$AFTER"
+run_entry push "$AFTER" __unset__ CI_PUSH_BEFORE="$BEFORE"; expect_error
+
+case_name=paths-empty-and-file; new_repo "$case_name"; at_commit "$AFTER"
+run_entry push "$AFTER" '' CI_HIT_PATHS_FILE="$paths_file" CI_PUSH_BEFORE="$BEFORE"; expect_error
+
+case_name=paths-missing-file; new_repo "$case_name"; at_commit "$AFTER"
+run_entry push "$AFTER" __unset__ CI_HIT_PATHS_FILE="$WORK/missing" CI_PUSH_BEFORE="$BEFORE"; expect_error
+
+case_name=paths-empty-file; new_repo "$case_name"; at_commit "$AFTER"
+: > "$paths_file"
+run_entry push "$AFTER" __unset__ CI_HIT_PATHS_FILE="$paths_file" CI_PUSH_BEFORE="$BEFORE"; expect_error
+
+case_name=new-branch-empty-file; new_repo "$case_name"; at_commit "$AFTER"
+run_entry push "$AFTER" __unset__ CI_HIT_PATHS_FILE="$paths_file" CI_PUSH_BEFORE=0000000000000000000000000000000000000000; expect_error
 
 case_name=push-new-branch; new_repo "$case_name"; at_commit "$AFTER"
 run_entry push "$AFTER" 'docs/*' CI_PUSH_BEFORE=0000000000000000000000000000000000000000; expect_hit true

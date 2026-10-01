@@ -19,6 +19,4 @@ jobs:
   tests-repository-topology:
     uses: ./.github/workflows/ci-unit.yml
     with:
-      command: make -C tools test TEST_PROJECT=tools/tests/StrataLint.RepositoryTopology.Tests/StrataLint.RepositoryTopology.Tests.csproj
-      paths: |
-        *
+      unit: tests-repository-topology

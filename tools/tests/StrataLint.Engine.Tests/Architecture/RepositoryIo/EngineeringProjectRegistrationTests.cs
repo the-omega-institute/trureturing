@@ -11,7 +11,7 @@ public sealed class EngineeringProjectRegistrationTests
     public void ExplicitClassificationWinsOverNameLocationAndMetadata()
     {
         var snapshot = Snapshot(EngineeringRegistrationFixture.Manifest(Test()), (Project, Misleading));
-        Assert.Equal([Project], CiProjects(RepositoryRules.ReadSnapshotProjects(snapshot)).ToArray());
+        Assert.Equal([Project], TestProjects(RepositoryRules.ReadSnapshotProjects(snapshot)).ToArray());
     }
 
     [Fact]
@@ -36,6 +36,24 @@ public sealed class EngineeringProjectRegistrationTests
         Assert.Throws<InvalidDataException>(() => RepositoryRules.ReadSnapshotProjects(
             Snapshot(EngineeringRegistrationFixture.Manifest(Test()))));
 
+    [Fact]
+    public void CandidateRegistrationDoesNotRequireCiExecutionFlag()
+    {
+        var manifest = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(Test()))!;
+        manifest["projects"]![0]!.AsObject().Remove("ci");
+        var topology = RepositoryRules.ReadSnapshotProjects(Snapshot(manifest.ToJsonString(), (Project, Misleading)));
+        Assert.True(Assert.Single(topology.Projects).Registration.IsTest);
+    }
+
+    [Fact]
+    public void CandidateRegistrationRejectsRetiredCiExecutionFlag()
+    {
+        var manifest = System.Text.Json.Nodes.JsonNode.Parse(EngineeringRegistrationFixture.Manifest(Test()))!;
+        manifest["projects"]![0]!["ci"] = true;
+        Assert.Throws<InvalidDataException>(() => RepositoryRules.ReadSnapshotProjects(
+            Snapshot(manifest.ToJsonString(), (Project, Misleading))));
+    }
+
     [Theory]
     [InlineData("{\"version\":1,\"version\":1,\"projects\":[],\"historical_projects\":[]}")]
     [InlineData("{\"version\":1,\"projects\":[],\"historical_projects\":[],\"discovery\":true}")]
@@ -46,16 +64,15 @@ public sealed class EngineeringProjectRegistrationTests
     [Fact]
     public void SupportAndProofRolesDoNotBecomeTestsFromXunitMetadata()
     {
-        var entries = new[] { Test() with { Role = "test-support", Ci = false },
-            Test() with { Path = "proof/p.csproj", Assembly = "Proof", Role = "compile-fail-proof", Ci = false } };
+        var entries = new[] { Test() with { Role = "test-support" },
+            Test() with { Path = "proof/p.csproj", Assembly = "Proof", Role = "compile-fail-proof" } };
         var snapshot = Snapshot(EngineeringRegistrationFixture.Manifest(entries),
             entries.Select(entry => (entry.Path, "<Project><ItemGroup><PackageReference Include=\"xunit\" /></ItemGroup></Project>")).ToArray());
-        Assert.Empty(CiProjects(RepositoryRules.ReadSnapshotProjects(snapshot)).ToArray());
+        Assert.Empty(TestProjects(RepositoryRules.ReadSnapshotProjects(snapshot)).ToArray());
         Assert.Empty(RepositoryRules.CalculateDebt(RepositoryRules.ReadSnapshotProjects(snapshot)));
     }
 
-    // Original version-1 row from 653216143592d41af04f03074f33d07668d8d257.
-    // Deliberately independent of the candidate fixture writer and its namespace policy.
+    // Legacy declaration fixture independent of the candidate writer and namespace policy.
     private const string PriorRegistration = """
         {"version":1,"projects":[{
           "path":"tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
@@ -74,7 +91,7 @@ public sealed class EngineeringProjectRegistrationTests
     public void HistoricalProjectionDoesNotRelaxCandidateRegistration()
     {
         var error = Assert.Throws<InvalidDataException>(() => RepositoryRules.ReadSnapshotProjects(Snapshot(PriorRegistration)));
-        Assert.Contains("root_namespace", error.Message);
+        Assert.Contains("ci", error.Message);
     }
 
     [Fact]
@@ -82,7 +99,7 @@ public sealed class EngineeringProjectRegistrationTests
     {
         const string production = "somewhere/Unexpected.Tests.csproj";
         var manifest = EngineeringRegistrationFixture.Manifest(
-            new EngineeringProjectFixture(production, "Unrelated.Library", "production", false, [], OwnedTestAssembly: "Explicit.Checks"),
+            new EngineeringProjectFixture(production, "Unrelated.Library", "production", [], OwnedTestAssembly: "Explicit.Checks"),
             Test() with { Role = "owned-test", Owner = new(production, "Unrelated.Library"), References = [production] });
         var snapshot = Snapshot(manifest, (production, Misleading), (Project, Misleading));
         Assert.Empty(RepositoryRules.CalculateDebt(RepositoryRules.ReadSnapshotProjects(snapshot)));
@@ -102,7 +119,7 @@ public sealed class EngineeringProjectRegistrationTests
         var topology = RepositoryRules.ReadTrackedProjects(repository.Path);
         Assert.Equal(Project, Assert.Single(topology.Projects).Path);
         Assert.Equal(Misleading, topology.Projects[0].Content);
-        Assert.Equal([Project], CiProjects(topology).ToArray());
+        Assert.Equal([Project], TestProjects(topology).ToArray());
 
         // An existing but untracked source cannot discharge a declared Compile input.
         Git("rm", "--cached", source);
@@ -221,13 +238,13 @@ public sealed class EngineeringProjectRegistrationTests
             .Order(StringComparer.Ordinal));
     }
 
-    private static EngineeringProjectFixture Test() => new(Project, "Explicit.Checks", "cross-cutting-test", true, []);
+    private static EngineeringProjectFixture Test() => new(Project, "Explicit.Checks", "cross-cutting-test", []);
 
     internal static RepositorySnapshot Snapshot(string? manifest, params (string Path, string Text)[] files) =>
         Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(RawRepositorySnapshot.Create(
             files.Select(file => RawRepositoryEntry.FromText(file.Path, file.Text)).Concat(manifest is null ? [] :
                 new[] { RawRepositoryEntry.FromText(EngineeringRegistrationFixture.Path, manifest) })))).Snapshot;
-    private static IEnumerable<string> CiProjects(TestProjectTopologySnapshot topology) =>
-        topology.Projects.Where(project => project.Registration.Ci).Select(project => project.Path).Order(StringComparer.Ordinal);
+    private static IEnumerable<string> TestProjects(TestProjectTopologySnapshot topology) =>
+        topology.Projects.Where(project => project.Registration.IsTest).Select(project => project.Path).Order(StringComparer.Ordinal);
 
 }

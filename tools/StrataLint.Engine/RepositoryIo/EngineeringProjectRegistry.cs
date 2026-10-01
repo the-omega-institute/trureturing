@@ -13,7 +13,6 @@ internal record EngineeringProjectDeclaration(
     string Path,
     string Assembly,
     string Role,
-    bool Ci,
     string[] References,
     EngineeringProjectOwner? Owner,
     string? OwnedTestAssembly,
@@ -26,7 +25,6 @@ internal sealed record EngineeringProjectRegistration(
     string Path,
     string Assembly,
     string Role,
-    bool Ci,
     string[] Include,
     string[] Exclude,
     string[] References,
@@ -36,7 +34,7 @@ internal sealed record EngineeringProjectRegistration(
     string RootNamespace,
     string[] NamespaceExclude,
     string[] GlobalNamespaceExceptions)
-    : EngineeringProjectDeclaration(Path, Assembly, Role, Ci, References, Owner, OwnedTestAssembly, TestPartition);
+    : EngineeringProjectDeclaration(Path, Assembly, Role, References, Owner, OwnedTestAssembly, TestPartition);
 
 internal sealed record EngineeringProjectManifest(
     int Version,
@@ -179,8 +177,6 @@ internal sealed class EngineeringProjectRegistry
             if (!IsAssembly(project.Assembly) || project.Role is not
                 ("production" or "owned-test" or "cross-cutting-test" or "test-support" or "compile-fail-proof"))
                 throw new InvalidDataException($"invalid engineering identity or role: {project.Path}");
-            if (project.Ci && !project.IsTest)
-                throw new InvalidDataException($"CI execution requires a registered test role: {project.Path}");
             if (project.Role == "production" ? !IsAssembly(project.OwnedTestAssembly) : project.OwnedTestAssembly is not null)
                 throw new InvalidDataException($"invalid registered owned test identity: {project.Path}");
             if (project.Role == "owned-test"
