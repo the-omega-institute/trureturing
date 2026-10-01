@@ -631,3 +631,164 @@ that comparison at the source price. Failure of this sufficient test does
 not imply failure of Robin. The original window, qualifying low-loss
 divisor, cofactor and all-candidate coverage remain required; no uniform
 strict-budget supplier or proof of RH is supplied here.
+
+## The Fibonacci index prime limits the unrefined sign test
+
+Use the actual family in FIB §§230–231, writing its multiplier as $k$
+to distinguish it from the gcd:
+
+$$
+V=F_r,\quad
+\lceil V/10\rceil\le k\le\lfloor V/5\rfloor,\quad N=1+Vk>5040,
+\quad A=1+V\lceil V/10\rceil,\quad y=\log A,\quad s=y\log y,
+$$
+
+where $r>5$ is prime. Keep the same $C_s,g,u,v$ and signed budget $B$.
+The ordinary Fibonacci bound $F_r<\varphi^{r-1}$, together with $A<V^2$
+and $2\log\varphi<1$, gives $1<y<r$. Hence
+
+$$
+s\ell_{r,1}=y\log y\,\log(1+1/r)
+<\frac{y\log y}{r}<\log r.
+$$
+
+Thus $a_r=0$, $r\nmid C_s$ and $r\nmid v$, with strictness unaffected
+by tied layers. The already existing
+`fibonacci_apparition_entry_point` in `D5/S3/Arith/GoldenApparition.lean`
+supplies the classical congruence
+
+$$
+F_r\equiv\left(\frac5r\right)\pmod r.
+$$
+
+In particular $r\nmid V$. Reciprocity and the supplementary law at
+minus one give
+
+$$
+\chi_V(r)=\left(\frac{F_r}{r}\right)
+=\left(\frac{(5/r)}r\right)=-1
+\quad\Longleftrightarrow\quad r\equiv3,7\pmod{20}.
+$$
+
+On these two classes the index prime is always eligible for the unrefined
+minimum, at exact cost
+
+$$
+b_s(r)=\log r-s\log(1+1/r)>0,\qquad m_s(V,v)\le b_s(r).
+$$
+
+Therefore $B\ge b_s(r)$ prevents the unrefined negative-gcd test
+$m_s(V,v)>B$ from succeeding. This is a limitation of that relaxation;
+it is not a Robin counterexample or an assertion that $r\mid u$.
+For the same actual host the congruence instead gives
+
+$$
+r\mid u\quad\Longleftrightarrow\quad r\mid N
+\quad\Longleftrightarrow\quad k\equiv1\pmod r.
+$$
+
+The conditional threshold does not exhibit a surviving actual source
+with $B\ge b_s(r)$. The [existing window budget](axler2024primorialcounting.md)
+gives $B\le T_s(N)\le T_s(X)$, where $X=1+V\lfloor V/5\rfloor$.
+If $T_s(X)<b_s(r)$, this index-prime obstruction never activates in
+that window. If $T_s(X)<0$, the window is already paid by the nonnegative
+benefit. Any claim of obstruction on the residual set requires an actual
+source there, retaining its low-loss divisor and cofactor.
+
+## Charge the actual index block before reading the remaining sign
+
+On the same two negative-index classes, retain
+
+$$
+e=v_r(N)=v_r(u),\qquad u_0=u/r^e,\qquad
+L_r=W_r(e)=e\log r-s\log Z(r^e),\qquad W_r(0)=0.
+$$
+
+This is the exact cost of all additions at $r$, since $a_r=0$.
+The remaining factor has neither $r$ nor any prime dividing $vV$.
+For every $j\ge1$, its required source resolution can be read as
+
+$$
+r^j\mid N
+\quad\Longleftrightarrow\quad
+k\equiv-F_r^{-1}\pmod{r^j}.
+$$
+
+The inverse exists because $r\nmid V$; $F_r\bmod r^j$ is the same
+modular $M^r\alpha$ readout used above. These are actual valuation probes,
+not a factorization of $V$ or an assumption about the unseen additions.
+
+Multiplicativity transports the endpoint after charging that block:
+
+$$
+\chi_V(u_0)=\chi_V(g)(-1)^e.
+$$
+
+If this remaining sign is negative, the actual $u_0$ contains a distinct
+eligible negative-character prime. Define, only in that branch,
+
+$$
+m_s^{[r]}(V,v)=
+\min_{\substack{p\nmid vrV\\\chi_V(p)=-1}}b_s(p)>0.
+$$
+
+The actual factor ensures nonemptiness, and the same finite-tail argument
+as above ensures attainment. The paper-level certificate is
+
+$$
+\begin{cases}
+D_s(N)\ge R_s(v)+L_r+m_s^{[r]}(V,v),
+ &\chi_V(g)(-1)^e=-1,\\
+D_s(N)\ge R_s(v)+L_r,
+ &\chi_V(g)(-1)^e=1.
+\end{cases}
+$$
+
+The index block and the distinct residual prime pay disjoint costs.
+If $\chi_V(g)=1$ and $e$ is odd, a second negative prime is forced,
+although the original negative-gcd test was inactive. If $e=0$ and
+$\chi_V(g)=-1$, the unused index prime disappears from the minimum.
+For an originally negative gcd, this bound is never weaker than
+$R_s(v)+m_s(V,v)$: when $e\ge1$, $L_r\ge b_s(r)\ge m_s(V,v)$;
+when $e=0$, the new minimum ranges over a subset of the old one.
+
+Put $B_r=T_s(N)-R_s(v)-L_r$. A negative $B_r$ is already paid.
+Otherwise, in the negative remaining-sign branch, $m_s^{[r]}(V,v)>B_r$
+is sufficient. The same cutoff $P_r=\max\{s,e^{B_r+1}\}$ applies to
+this unrestricted cheap-prime test.
+
+For pruning by the actual source, define a different minimum, only in
+the negative remaining-sign branch:
+
+$$
+m_{s,\mathrm{act}}^{[r]}(N)=
+\min_{\substack{p\nmid vrV,\ v_p(u_0)\ \mathrm{odd}\\
+\chi_V(p)=-1}}b_s(p).
+$$
+
+The negative endpoint supplies a nonempty subset of the finite actual
+prime support, so this minimum exists and is at least $m_s^{[r]}(V,v)$.
+The same disjoint-cost argument gives
+
+$$
+D_s(N)\ge R_s(v)+L_r+m_{s,\mathrm{act}}^{[r]}(N).
+$$
+
+With $B_r\ge0$, actual probes may discard even $v_p(u_0)$, including
+zero. If every eligible $p\le P_r$ with $b_s(p)\le B_r$ and odd
+$v_p(u_0)$ has $\chi_V(p)=1$, the finite cutoff gives
+$m_{s,\mathrm{act}}^{[r]}(N)>B_r$ and hence strict Robin for this host.
+This need not imply $m_s^{[r]}(V,v)>B_r$: a cheap negative prime absent
+from $u_0$ can keep that unrestricted minimum small. No efficiency or
+uniform source correlation is asserted for the actual-support test.
+
+When $y\ge6$ and $0<h_0\le1/3$, the previously established capacity
+bound still applies to all additions. It can be combined with the new
+bound by taking a maximum of their addition contributions. Summing that
+full capacity bound with $L_r+m_s^{[r]}$ would count the same additions
+twice. These are applications of the existing block decomposition,
+reciprocity and modular readout, with no new analytic theorem or Lean
+verification. A uniform estimate of the same actual remaining cost
+against $B_r$, with the original low-loss incidence and window retained,
+is still missing; existence of a second negative prime alone supplies
+neither its required cost nor a proof of RH.
