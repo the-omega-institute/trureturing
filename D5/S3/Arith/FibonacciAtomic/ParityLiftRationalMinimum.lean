@@ -60,7 +60,7 @@ theorem response_minor_le_finrank {K : Type*} [Field K] {Alphabet V Y : Type*}
     (R : WordRepresentation K Alphabet V Y) (f : List Alphabet → Y)
     (correct : ∀ w, wordBehavior R w = f w)
     (pre suf : Fin n → List Alphabet) (select : Fin n → Y →ₗ[K] K)
-    (det : (fun i j => select i (f (pre j ++ suf i)) : Matrix (Fin n) (Fin n) K).det ≠ 0) :
+    (det : Matrix.det (fun i j : Fin n => select i (f (pre j ++ suf i))) ≠ 0) :
     n ≤ Module.finrank K V := by
   classical
   let reach : Fin n → V := fun j => wordMap R.transition (pre j) R.initial
