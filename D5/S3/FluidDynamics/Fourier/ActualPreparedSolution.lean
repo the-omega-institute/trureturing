@@ -1,5 +1,5 @@
 /- GID: D5/S3/FluidDynamics/Fourier/ActualPreparedSolution
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/FluidDynamics/Fourier/ActualPreparedSolution
    mirror-E: none(waiver:universal-analytic-construction)
    anchors: []
