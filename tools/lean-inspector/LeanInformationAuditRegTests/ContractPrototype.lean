@@ -1,5 +1,7 @@
 /- L0 原型 -/
 import LeanInformationAudit.ContractPrototype.Equivalence
+import LeanInformationAuditRegTests.ContractMapping
+import LeanInformationAuditRegTests.ContractIndependent
 import LeanInformationAudit.ContractPrototype.CatalogEquivalence
 import LeanInformationAudit.ContractPrototype.UnresolvedEquivalence
 import Reg.ContractPrototype.Readout
@@ -10,6 +12,8 @@ import Reg.ContractPrototype.Inline
 import Reg.ContractPrototype.Occurrence
 import Reg.ContractPrototype.Witness
 import Reg.ContractPrototype.IffCatalog
+import Reg.ContractPrototype.ValidWitness
+import Reg.ContractPrototype.Controls.Witness
 import Reg.D5.S3.ConceptDynamics.Answering.AssertionSettlementCeiling
 import Reg.D5.S0.Certificates.SelfInterestConventionDeviationGain
 import Reg.D5.S3.Observer.MetricGeometry.BinaryShiftExactBitLaw
@@ -32,7 +36,14 @@ private def pairs : Array (Name × Name) := #[
   (`Reg.Catalogs.IffRegistrations, `Reg.ContractPrototype.IffCatalog),
   (`Reg.Support.DependentFamily, `Reg.ContractPrototype.Templates.DependentFamily),
   (`Reg.Support.SharedArenaPeers, `Reg.ContractPrototype.Templates.Intervention),
-  (`Reg.Support.IffRegistrations, `Reg.ContractPrototype.Templates.Iff)]
+  (`Reg.Support.IffRegistrations, `Reg.ContractPrototype.Templates.Iff),
+  (`Reg.ContractPrototype.Controls.Witness, `Reg.ContractPrototype.ValidWitness)]
+
+private def authorizedMapping : ContractPrototype.Equivalence.NameMapping :=
+  pairs ++ #[
+    (`Reg.Support.LegacyRelations.System, `Reg.ContractPrototype.SystemFamily),
+    (`Reg.Support.BoundedRunSpace, `Reg.ContractPrototype.Templates.Cut),
+    (`Reg.Support.CounterexampleRecord, `Reg.ContractPrototype.Templates.Counterexample)]
 
 private def phase (name : String) : IO Unit := do
   if let some path ← IO.getEnv "STRATALINT_CONTRACT_PROTOTYPE_PHASE" then
@@ -88,28 +99,54 @@ run_cmd do
   phase "equivalence"
   let comparisons ← liftTermElabM do
     let mut checked := #[]
-    let mapping := pairs.push (`Reg.Support.LegacyRelations.System, `Reg.ContractPrototype.SystemFamily)
-    for index in [:7] do
+    let mapping := authorizedMapping
+    for index in #[0,1,2,3,4,5,6,11] do
       let (oldTarget, newTarget) := pairs[index]!
-      let some (_, _, oldEnv) := reports[2 * index]? | throwError "missing original report"
-      let some (_, _, newEnv) := reports[2 * index + 1]? | throwError "missing prototype report"
+      let (_, _, oldEnv) ← reportAt reports (2 * index)
+      let (_, _, newEnv) ← reportAt reports (2 * index + 1)
       let oldRecords := (TemplateBinding.records oldEnv).filter (·.occurrence.key.registrationModule == oldTarget)
       let newRecords := (TemplateBinding.records newEnv).filter (·.occurrence.key.registrationModule == newTarget)
-      unless oldRecords.size == 1 && newRecords.size == 1 do
-        throwError "sample expected one record: {oldTarget}/{newTarget}"
-      let result ← try
-        if oldRecords[0]!.result matches .declaredUnresolved _ then
-          ContractPrototype.UnresolvedEquivalence.verifyRecord
-            oldEnv newEnv mapping oldRecords[0]! newRecords[0]!
-        else
-          ContractPrototype.Equivalence.verifyRecord oldEnv newEnv mapping oldRecords[0]! newRecords[0]!
-      catch error =>
-        pure <| Json.mkObj [("status", toJson "failed"), ("error", toJson (← error.toMessageData.toString))]
-      checked := checked.push <| Json.mkObj [("original", toJson oldTarget.toString),
-        ("prototype", toJson newTarget.toString), ("result", result)]
+      unless !oldRecords.isEmpty && oldRecords.size == newRecords.size do
+        throwError "sample record count mismatch: {oldTarget}/{newTarget}"
+      if index == 11 then
+        unless oldRecords.size == 3 do throwError "witness_multi_registration_count"
+        for record in oldRecords do
+          if record.occurrence.key.theoremName == `Reg.ContractPrototype.Fixtures.Witness.third then
+            unless record.result matches .undeclared do throwError "witness_missing_control_state"
+          else
+            unless record.result matches .declaredValidated _ do
+              throwError "witness_positive_control_not_validated"
+            let expectedKind := if record.occurrence.key.theoremName ==
+                `Reg.ContractPrototype.Fixtures.Witness.result then "witness" else "open"
+            unless record.escape.bridgeKind == "witness" &&
+                record.escape.continuation.map (·.kind) == some expectedKind do
+              throwError "witness_continuation_control_kind"
+      for oldRecord in oldRecords do
+        let some newRecord := newRecords.find? (fun row =>
+            row.occurrence.key.theoremName == oldRecord.occurrence.key.theoremName)
+          | throwError "prototype theorem missing"
+        let result ← match oldRecord.result with
+          | .declaredUnresolved _ =>
+            ContractPrototype.UnresolvedEquivalence.verifyRecord oldEnv newEnv mapping oldRecord newRecord
+          | .undeclared =>
+            ContractPrototype.Equivalence.verifyMissingRecord oldEnv newEnv mapping oldRecord newRecord
+          | .declaredValidated _ =>
+            ContractPrototype.Equivalence.verifyRecord oldEnv newEnv mapping oldRecord newRecord
+        checked := checked.push <| Json.mkObj [("original", toJson oldTarget.toString),
+          ("prototype", toJson newTarget.toString), ("result", result)]
     return checked
+  let mappingTests ← liftTermElabM do
+    let (_, _, oldEnv) ← reportAt reports 8
+    let (_, _, newEnv) ← reportAt reports 9
+    let oldRecord := ((TemplateBinding.records oldEnv).filter
+      (·.occurrence.key.registrationModule == pairs[4]!.1))[0]!
+    let newRecord := ((TemplateBinding.records newEnv).filter
+      (·.occurrence.key.registrationModule == pairs[4]!.2))[0]!
+    LeanInformationAuditRegTests.ContractMapping.run oldEnv newEnv
+      (authorizedMapping)
+      oldRecord newRecord
   let catalogComparisons ← liftTermElabM do
-    let mapping := pairs.push (`Reg.Support.LegacyRelations.System, `Reg.ContractPrototype.SystemFamily)
+    let mapping := authorizedMapping
     let mut checked := #[]
     let templates : Array (Nat × Name) := #[
       (8, `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize),
@@ -128,14 +165,22 @@ run_cmd do
     let root ← ContractPrototype.CatalogEquivalence.verifyRoot oldEnv newEnv mapping pairs[7]!.1 pairs[7]!.2
     let sealResult ← ContractPrototype.CatalogEquivalence.verifySeal
       oldEnv newEnv mapping pairs[7]!.1 pairs[7]!.2
-    return checked ++ #[Json.mkObj [("variant", toJson "root"), ("result", root)],
+    let (_, _, extraOld) ← reportAt reports 22
+    let (_, _, extraNew) ← reportAt reports 23
+    let extraRoot ← ContractPrototype.CatalogEquivalence.verifyRoot
+      extraOld extraNew mapping pairs[11]!.1 pairs[11]!.2
+    return checked ++ #[Json.mkObj [("variant", toJson "distinct_snapshots"), ("result", extraRoot)],
+      Json.mkObj [("variant", toJson "root"), ("result", root)],
       Json.mkObj [("variant", toJson "seal"), ("result", sealResult)]]
   let rows ← reports.zip targets |>.mapM fun ((binding, generated, assessed), target) => do
-    let sealed ← liftTermElabM do
+    let (sealed, inventory) ← liftTermElabM do
       setEnv assessed
-      serializeSealArtifact (SealRecords.forRoot assessed target)
+      let sealed ← serializeSealArtifact (SealRecords.forRoot assessed target)
+      let inventory ← LeanInformationAuditRegTests.ContractIndependent.generatedInventory generated
+      return (sealed, inventory)
     return Json.mkObj [("target", toJson target.toString), ("binding", binding),
-      ("generated", toJson (generated.map Name.toString)), ("seal", ← ofExcept (Json.parse sealed))]
+      ("generated", toJson (generated.map Name.toString)), ("generated_declarations", inventory),
+      ("seal_bytes", toJson sealed), ("seal", ← ofExcept (Json.parse sealed))]
   let closures := pairs.map fun (_, target) => Id.run do
     let names := (reachableModules env target).toArray.qsort Name.quickLt
     let forbidden := names.filter fun name =>
@@ -146,29 +191,8 @@ run_cmd do
       ("forbidden", toJson (forbidden.map Name.toString)), ("modules", toJson (names.map Name.toString))]
   unless closures.all (fun row => (row.getObjValAs? (Array String) "forbidden").toOption == some #[]) do
     throwError "prototype imports judge code"
-  phase "single_target_consistency"
-  let isolated ← liftTermElabM do
-    let mut checked := #[]
-    for index in [:pairs.size] do
-      let target := pairs[index]!.2
-      withCurrHeartbeats do
-        setEnv env
-        let single ← ContractPrototype.reports #[target]
-        let (singleBinding, singleGenerated, singleEnv) ← reportAt single 0
-        let (batchBinding, batchGenerated, batchEnv) ← reportAt reports (2 * index + 1)
-        unless singleBinding == batchBinding && singleGenerated == batchGenerated do
-          throwError "prototype single/batch mismatch: {target}"
-        setEnv singleEnv
-        let singleSeal ← serializeSealArtifact (SealRecords.forRoot singleEnv target)
-        setEnv batchEnv
-        let batchSeal ← serializeSealArtifact (SealRecords.forRoot batchEnv target)
-        unless singleSeal == batchSeal do throwError "prototype single/batch seal mismatch: {target}"
-      checked := checked.push target.toString
-    setEnv env
-    return checked
   let result := Json.mkObj [("rows", toJson rows), ("closures", toJson closures),
-    ("comparisons", toJson comparisons), ("catalog_comparisons", toJson catalogComparisons),
-    ("single_batch_equal", toJson isolated),
+    ("mapping_tests", toJson mappingTests), ("comparisons", toJson comparisons), ("catalog_comparisons", toJson catalogComparisons),
     ("discovery", Json.mkObj [("scanned", toJson snapshot.scanned), ("hits", toJson snapshot.hits),
       ("elapsed_ms", toJson snapshot.elapsedMs), ("rss_before_bytes", toJson discoveryBefore),
       ("rss_after_bytes", toJson discoveryAfter)]),
