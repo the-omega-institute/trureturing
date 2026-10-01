@@ -1,0 +1,4 @@
+## 3. Literal placements and finite capacities
+
+The placement convention in this section follows the brick rule and Python row generator of [OEIS A395531](https://oeis.org/A395531), with the row conventions of [OEIS A233380](https://oeis.org/A233380). The transfer, conjugacy, geometric correspondence and clock arguments below are deductions from that rule. Bricks have widths $1,2,3,\ldots$ and unit height. All natural-number subtractions are truncated at zero. None of these statements asserts the OEIS self-composition identity or weighted counting reciprocity.
+
