@@ -36502,3 +36502,199 @@ $a_j\to\infty$ 且 $\delta>0$ 给出显示极限。
 §241 的 $5040$ 首次越界仍只提供有限入口；
 五窗的合法转移尚未被映射为上述全部实际价格胞腔的共同端点预算。
 以上没有取得一般 Robin 不等式、实际统一尾项下界或 RH。
+
+## 263. 规范来源的约化核心与 Robin 候选的绝对深度亏损
+
+### definition 263.1 本原组成的逆递推核心
+
+沿用
+
+$$
+M(a,b)=(b,a+b),\qquad q(a,b)=2a+3b,\qquad
+Q(a,b)=a^2+ab-b^2,\qquad \varphi=(1+\sqrt5)/2.
+$$
+
+设单位位为零的实际规范五窗来源具有非零非负组成 $(A,B)$，令
+
+$$
+g=\gcd(A,B),\qquad x=(A/g,B/g),\qquad
+U=q(x),\qquad N=gU,\qquad D=|Q(x)|.
+\tag{263.1}
+$$
+
+在本原非负组成上，只要 $b\ge a$ 就执行
+$R(a,b)=(b-a,a)$；到达 $r>s\ge0$ 时停止。
+所得 $(r,s)$ 称为约化核心，执行次数记为 $j$。
+它是组成坐标的归约；$j$ 不按五窗地址的字面 null 数定义。
+广义 Pell 方程的单位轨道与基本代表是经典背景，参见
+[Robertson 的单位等价类与代表说明](../../../Library/notes/robertson2004generalizedpell.md)；
+这里采用非负组成锥的退出截面，并将其与实际来源及 §201 的预算连接。
+
+### theorem 263.2 同一来源的核心大小与推进深度
+
+定义 263.1 的核心与深度唯一，并且
+
+$$
+x=M^j(r,s),\qquad \gcd(r,s)=1,\qquad r>s\ge0,
+\qquad D=r^2+rs-s^2.
+\tag{263.2}
+$$
+
+定义同一来源的绝对深度亏损
+
+$$
+\mathcal L(x)=\frac{\log U}{\log\varphi}-j.
+$$
+
+则
+
+$$
+\boxed{\quad
+\frac{\log D-\log(5/4)}{2\log\varphi}+1
+\ \le\ \mathcal L(x)
+\ \le\ \frac{\log D}{2\log\varphi}+4.
+\quad}
+\tag{263.3}
+$$
+
+**证明。** 若 $b\ge a$，$R(a,b)$ 非负，且
+
+$$
+MR(a,b)=(a,b),\qquad
+q(a,b)-q(R(a,b))=a+b>0.
+$$
+
+因此非零组成在有限步后退出，终点满足 $r>s\ge0$。
+逆步保持公因子，$Q(Mz)=-Q(z)$ 保持绝对范数。
+$M$ 是单射，而任何至少推进一步的非负组成都满足第二坐标不小于第一坐标。
+若两个终点给出 $M^j(r,s)=M^k(u,v)$，不妨 $j\le k$，消去 $M^j$；
+当 $k-j>0$ 时，右侧处于该第二坐标较大的锥内，左侧核心却满足 $r>s$，矛盾。
+故深度相同，再由单射得到核心相同。
+
+核心满足两个恒等式
+
+$$
+D-r^2=s(r-s)\ge0,\qquad
+5r^2-4D=(r-2s)^2\ge0,
+$$
+
+所以
+
+$$
+r^2\le D\le\frac54r^2,\qquad r\ge1.
+\tag{263.4}
+$$
+
+Fibonacci 递推给同一组成的数量
+
+$$
+U=rF_{j+3}+sF_{j+4},\qquad
+rF_{j+3}\le U\le rF_{j+5}.
+\tag{263.5}
+$$
+
+由 $F_2=1,F_3=2$、$\varphi^2=\varphi+1$ 作二阶归纳，
+对 $n\ge2$ 有经典估计
+$\varphi^{n-2}\le F_n\le\varphi^{n-1}$。
+于是
+
+$$
+r\varphi^{j+1}\le U\le r\varphi^{j+4},
+\qquad
+\frac12\bigl(\log D-\log(5/4)\bigr)
+\le\log r\le\frac12\log D.
+$$
+
+取对数、除以正数 $\log\varphi$，得到式（263.3）。
+
+$5040$ 的具体来源也落在这套坐标中：
+
+$$
+5040=35F_{12},\qquad
+(A,B)=(735,1190)=35(21,34),\qquad
+(21,34)=M^9(1,0),\qquad D=1.
+\tag{263.6}
+$$
+
+确有 $q(735,1190)=5040$、$\gcd(735,1190)=35$。
+它的共轭读数为 $35\psi^9=-35\varphi^{-9}$。
+由于 $\varphi^3=2+\sqrt5>4$，有 $\varphi^9>64>35$，
+故该读数属于 $(-1,0)$；§182.1 识别它为实际单位位零的规范组成。
+完整范数为 $-1225$，除去公因子后的本原范数为 $-1$，两者不能混用。
+这个实例没有把所有 $n>5040$ 变成同一个固定核心的轨道。$\square$
+
+### theorem 263.3 依赖慢范数预算的 Robin 候选定位
+
+固定 $0<\omega<1/2$，假设 §201.6 的统一慢范数余量结论成立。
+则存在只依赖 $\omega$ 的 $T_\omega>\exp(e)$，使定义 263.1 中的来源若满足
+
+$$
+U\ge T_\omega,\qquad N>5040,\qquad
+\Delta(N):=e^\gamma\log\log N-\frac{\sigma(N)}N\le0,
+$$
+
+其同一约化核心必满足，记 $t=\log\log\log U$，
+
+$$
+\boxed{\quad
+D>\exp\!\bigl(\exp(t^\omega)\bigr)-2,
+\qquad
+r^2>\frac45\left(\exp\!\bigl(\exp(t^\omega)\bigr)-2\right).
+\quad}
+\tag{263.7}
+$$
+
+并且存在绝对常数 $C_0$，使这些来源满足
+
+$$
+\boxed{\quad
+\mathcal L(x)>\frac{\exp(t^\omega)}{2\log\varphi}-C_0.
+\quad}
+\tag{263.8}
+$$
+
+若只通过实际整数 $N$ 指定规模，充分条件可取
+$N\ge\max\{5041,T_\omega^2\}$。
+
+**证明。** §200.6 的严格规范条带与同一非负组成给
+
+$$
+g<\frac{\varphi^2}{3D}U<U.
+\tag{263.9}
+$$
+
+这里 $D$ 是当前本原组成的范数，$U$ 仍是当前同一组成的数量；
+因此全部这些乘子进入 §201.6 的 $C=1$ 范围。
+该结论的统一下极限至少为
+$c_\omega=e^\gamma(\log2-H(\omega))>0$。
+取足够大的共同阈值 $T_\omega$，所有满足
+
+$$
+U\ge T_\omega,\qquad
+\log\log(2+D)\le(\log\log\log U)^\omega
+$$
+
+的来源都有 $\Delta(gU)\ge c_\omega/2>0$。
+所以定理中的候选必须违反这个慢范数条件。
+$D\ge1$ 保证两层对数均处于严格单调的定义域，连续取指数得到式（263.7）的第一个不等式。
+再由式（263.4）的上界得到第二个不等式。
+
+令 $E=\exp(\exp(t^\omega))$。当 $U$ 充分大时，$E\ge4$，
+故 $D>E-2\ge E/2$，从而
+
+$$
+\log D>\exp(t^\omega)-\log2.
+$$
+
+代入式（263.3）的左端，得到式（263.8），例如可取
+$C_0=\log(5/2)/(2\log\varphi)$，并增大 $T_\omega$ 以满足 $E\ge4$。
+最后，式（263.9）给 $N=gU<U^2$，所以 $N\ge T_\omega^2$ 迫使 $U>T_\omega$。$\square$
+
+本节的解析结论以 §201.6 的统一预算为前提；
+新增关系把该预算读成同一真实来源的约化核心大小与绝对推进深度限制。
+它没有扩大 §201 的已覆盖整数族，也没有为单位位一的 $gU+1$ 提供对应结论。
+由于 $\exp(t^\omega)=o(\log U)$，式（263.8）不排除
+$j/(\log U/\log\varphi)\to1$。
+逆递推还不保证中间组成落在规范条带内，也不传递 $\Delta\le0$；
+因此这不是保持 Robin 违例性的最小反例下降。
+它给出的必要结构是：在上述预算前提下，无界的单位位零违例来源必须具有增长的本原核心与增长的绝对深度亏损。
