@@ -1,0 +1,35 @@
+### 245.2 同一核的矩预算在合法前沿上的精确组合
+
+设 $h:[0,\infty)\to[0,\infty]$ 可测，积分取 Lebesgue 测度；允许积分为无穷。
+对实数 $a$、非负实数 $r$，记
+
+$$
+L(s)=\int_0^\infty h(t)e^{-st}\,dt,
+\qquad M_{j,w}(a)=\int_{E_w}h(t)e^{-at}\frac{t^j}{j!}\,dt.
+\tag{245.3}
+$$
+
+正项指数展开与 Tonelli 定理给出下述中间恒等式；这是已有测度论的应用：
+
+$$
+L(a-r)=\sum_{j\ge0}r^j M_j(a),
+\qquad M_j(a)=\int_0^\infty h(t)e^{-at}\frac{t^j}{j!}\,dt.
+\tag{245.4}
+$$
+
+等式先在扩展非负实数中成立，不预设左边有限。
+约定 $r^0=1$，故 $r=0$ 的零阶项也被保留。
+将式（245.4）用于式（245.2）的同一个实际前沿，得到具体的五窗接口
+
+$$
+\boxed{L(a-r)=\sum_{w\in\mathcal A_k}\sum_{j\ge0}r^j M_{j,w}(a).}
+\tag{245.5}
+$$
+
+若 $w$ 为 live 标签且 $\operatorname{child}(w)$ 包含其全部实际合法后继，则
+
+$$
+M_{j,w}(a)=\sum_{v\in\operatorname{child}(w)}M_{j,v}(a).
+\tag{245.6}
+$$
+

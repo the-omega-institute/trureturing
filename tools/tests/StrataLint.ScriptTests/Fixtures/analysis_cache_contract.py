@@ -41,10 +41,14 @@ class AnalysisCacheTests(unittest.TestCase):
                          "configFile": config, "manifestFile": "lake-manifest.json", "inherited": False}
                         for name, directory, config in (
                             ("trureturing", "..", "lakefile.toml"),
-                            ("leanInspectorInterface", "../tools/lean-inspector-interface", "lakefile.toml"),
-                            ("leanInspector", "../tools/lean-inspector", "lakefile.lean")))
+                            ("leanInspectorInterface", "../tools/lean-inspector-interface", "lakefile.toml")))
         write(self.root / "Reg/lake-manifest.json",
               json.dumps({"packagesDir": "../.lake/packages", "packages": packages}))
+        host = json.loads((ROOT / "tools/lean-inspector-reg/lake-manifest.json").read_text())
+        host["packages"] = [p for p in host["packages"] if p["type"] == "path"] + [
+            dict(p, inherited=True) for p in self.transport.manifest["packages"]]
+        write(self.root / "tools/lean-inspector-reg/lakefile.toml", 'name = "regInspector"\n')
+        write(self.root / "tools/lean-inspector-reg/lake-manifest.json", json.dumps(host))
         for name in ("lean-cache-run.sh", "lean-cache-ensure.sh", "lean-cache-publish.sh", "lean_cache_release.py", "lean_cache.py"):
             target = self.root / "tools/scripts/worktree" / name
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -106,7 +110,7 @@ mkdir -p "$1/output"
         self.assertEqual(3, len(receipts), result.stdout)
         self.assertEqual(archive_status, receipts[0]["archive_status"])
         self.assertEqual([f"-d {self.root.resolve()}/tools/lean-inspector build LeanInformationAuditAnalysis",
-                          f"-d {self.root.resolve()}/Reg build @reg/LeanInformationAuditRegAnalysis"],
+                          f"-d {self.root.resolve()}/tools/lean-inspector-reg build @regInspector/LeanInformationAuditRegAnalysis"],
                          [line for line in (self.root / "lake-runs").read_text().splitlines()
                           if line != "exe cache get"])
         self.assertEqual(7, len(list(self.output.iterdir())))
@@ -142,8 +146,8 @@ mkdir -p "$1/output"
             {"args": ["exe", "cache", "get"], "budget": "300"},
             {"args": ["-d", str(self.root.resolve() / "tools/lean-inspector"), "build",
                       "LeanInformationAuditAnalysis"], "budget": production_budget},
-            {"args": ["-d", str(self.root.resolve() / "Reg"), "build",
-                      "@reg/LeanInformationAuditRegAnalysis"], "budget": production_budget},
+            {"args": ["-d", str(self.root.resolve() / "tools/lean-inspector-reg"), "build",
+                      "@regInspector/LeanInformationAuditRegAnalysis"], "budget": production_budget},
         ], lake_calls)
 
     def test_corrupt_seed_reaches_analysis(self):
@@ -202,7 +206,7 @@ mkdir -p "$1/output"
     def test_production_scope_uses_reg_and_only_clears_its_export_trace(self):
         self.prepare()
         generic = self.root / ".lake/build/lean-inspector/producer/lib/lean/LeanInformationAuditAnalysis/CausalProjection.trace"
-        production = self.root / ".lake/build/reg/lib/lean/LeanInformationAuditRegAnalysis/FrozenRootAnalysis.trace"
+        production = self.root / ".lake/build/lean-inspector/reg/lib/lean/LeanInformationAuditRegAnalysis/FrozenRootAnalysis.trace"
         write(generic, "generic trace")
         write(production, "production trace")
         result = self.run_analysis(scope="production")
@@ -210,7 +214,7 @@ mkdir -p "$1/output"
         self.assertEqual("generic trace", generic.read_text())
         self.assertFalse(production.exists())
         runs = (self.root / "lake-runs").read_text().splitlines()
-        self.assertEqual([f"-d {self.root.resolve()}/Reg build @reg/LeanInformationAuditRegAnalysis"],
+        self.assertEqual([f"-d {self.root.resolve()}/tools/lean-inspector-reg build @regInspector/LeanInformationAuditRegAnalysis"],
                          [line for line in runs if line != "exe cache get"])
         self.assertEqual({"frozen-seal.json", "frozen-analysis.json", "frozen-analysis.txt"},
                          {path.name for path in self.output.iterdir()})
@@ -226,7 +230,7 @@ mkdir -p "$1/output"
     def test_generic_scope_preserves_production_trace(self):
         self.prepare()
         generic = self.root / ".lake/build/lean-inspector/producer/lib/lean/LeanInformationAuditAnalysis/CausalProjection.trace"
-        production = self.root / ".lake/build/reg/lib/lean/LeanInformationAuditRegAnalysis/FrozenRootAnalysis.trace"
+        production = self.root / ".lake/build/lean-inspector/reg/lib/lean/LeanInformationAuditRegAnalysis/FrozenRootAnalysis.trace"
         write(generic, "generic trace")
         write(production, "production trace")
         result = self.run_analysis(scope="generic")
@@ -268,7 +272,7 @@ if args == ["exe", "cache", "get"]:
 if args == ["-d", str(root / "tools/lean-inspector"), "build", "LeanInformationAuditAnalysis"]:
     artifacts = ("causal-analysis.json", "causal-analysis.txt", "bounded-analysis.json", "bounded-analysis.txt")
 else:
-    assert args == ["-d", str(root / "Reg"), "build", "@reg/LeanInformationAuditRegAnalysis"], args
+    assert args == ["-d", str(root / "tools/lean-inspector-reg"), "build", "@regInspector/LeanInformationAuditRegAnalysis"], args
     artifacts = ("frozen-seal.json", "frozen-analysis.json", "frozen-analysis.txt")
 failure = int(os.environ.get("ANALYSIS_BUILD_EXIT", "0"))
 if failure: sys.exit(failure)

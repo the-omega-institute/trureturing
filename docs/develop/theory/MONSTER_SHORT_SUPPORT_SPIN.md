@@ -27,6 +27,9 @@ Q(g,\xi)=g_0\xi_0+g_1\xi_1+g_2\xi_2.
   `IsSignTable.opposite` 证明不同非零地面截面的极化配对为 1。这是二次律真正消耗的符号表几何。
 * `shortWeight` 将七段支持大小公开为可复用 API；唯一支持至多 3 的结论继续由
   `MonsterShortSupport.unique_short_support` 提供。
+* `labelQuadratic_fullMap` 将七段系数和的二次值形式化为
+  \(\binom{\operatorname{shortWeight}(c)+1}{2}\bmod 2\)。证明先对有限支持集合归纳，
+  再使用每个地面截面的二次值为 1、不同截面的极化值为 1，以及七段补集关系。
 
 这些声明的 `#print axioms` 只包含 Lean 的 `propext`、`Classical.choice` 和 `Quot.sound`，没有 `sorryAx`、自定义公理或 `native_decide`。
 
@@ -43,13 +46,29 @@ Q(\operatorname{fullMap}(f,c))
 
 因此，\(Q/2\) 作为共形自旋模 1 的解释仍然带条件：必须先给出满足 PR #10310 所列强有理、CFT 型、自对偶等前提的实际 VOA 及其模块族。
 
+## Fano 闭包的首个形式化关联前提
+
+PR #10310 §30.1 的 Fano 闭包论证首先需要不同块不能共含两个不同点。
+`MonsterFanoReconstruction.block_intersection_le_one` 将这一关联前提形式化：
+对七点集上的有限块族，若任意不同点对恰属于一个块，则任意不同的块
+$A,B$ 满足 $|A\cap B|\leq 1$。证明从交集中的两个不同点出发，分别以
+$A$、$B$ 见证经过该点对的唯一块，得到 $A=B$，与不同块的前提矛盾。
+这里不假设块有三个点，不假设标签加法或对称差补集闭包，也不枚举块族。
+
+该声明位于 `D5/S3/VertexAlgebra/MonsterFanoReconstruction.lean`；
+它只给出有限关联界，单独并不推出 Fano 闭包。三元性和七点条件参与后续
+闭包论证，不能从这个界删去其余义务。Basak 2017 提供八元数与扭群代数背景，
+van Ekeren–Möller–Scheithauer 2020 提供满足其假设时的 VOA 扩展接口；
+两者都不把此关联界变成模块存在、融合律、最低共形权、OPE 或完整 CFT 的证明。
+相关来源沿用本页参考文献；既有 VOA、融合与共形自旋的未解边界保持不变。
+
 ## 理论问卷（下一轮入口）
 
 | 问题 | 当前状态 | 需要的可审查证据 |
 | --- | --- | --- |
 | 七段系数是否有唯一短支持代表？ | **已形式化** | `MonsterShortSupport.unique_short_support`；支持界为 3。 |
 | 地面截面是否形成统一的有限二次数据？ | **已形式化** | `labelQuadratic_groundSection` 与 `labelQuadratic_groundSection_polar`。 |
-| 全 `fullMap` 二次律是否成立？ | **开放** | 完成七项极化展开并通过 Lean 编译。 |
+| 全 `fullMap` 二次律是否成立？ | **已形式化** | `MonsterShortSupportSpin.labelQuadratic_fullMap`；证明消耗七段支持集合归纳、单截面值和两两极化值。 |
 | 标签是否已经是 VOA 模的索引？ | **开放** | 具体模块构造及模块公理；有限标签本身不提供此证据。 |
 | 标签加法是否是 VOA 融合？ | **开放** | 实际 intertwiner、结合/编织相容性和非零 OPE 见证。 |
 | `Q/2` 是否是最低共形权模 1？ | **开放** | 真实 `L₀` 谱与标签到模块的识别；不能由有限二次函数推出。 |

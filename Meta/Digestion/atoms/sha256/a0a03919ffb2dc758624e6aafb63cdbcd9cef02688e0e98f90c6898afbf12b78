@@ -1,0 +1,37 @@
+### 定义 43：响应函数与固定赋值输运
+
+对任意 \(A\subseteq I\)，记剩余响应函数的像为
+
+$$
+\mathcal R_A(F)
+=
+\{R_A^F(a):a\in X_A\}
+\subseteq O^{X_{I\setminus A}}.
+$$
+
+由边界等价的定义，存在规范双射
+
+$$
+\bar\eta_A^F:\mathsf S_A(F)\longrightarrow\mathcal R_A(F),
+\qquad
+[a]_A\longmapsto R_A^F(a).
+$$
+
+取 \(A\subseteq C\subseteq I\)，令 \(E=C\setminus A\)、\(R=I\setminus C\)。对每个固定赋值 \(e\in X_E\)，定义响应限制
+
+$$
+\operatorname{res}_e:O^{X_{I\setminus A}}\to O^{X_R},
+\qquad
+(\operatorname{res}_e h)(u)=h(e\sqcup u).
+$$
+
+并定义边界输运
+
+$$
+\tau_{A,C;e}^F:\mathsf S_A(F)\to\mathsf S_C(F),
+\qquad
+\tau_{A,C;e}^F([a]_A)=[a\sqcup e]_C.
+$$
+
+这里的 \(e\) 是实际固定的坐标赋值，不是它在 \(\mathsf S_E(F)\) 中的类型。因此输运是一族映射，而不是在任意包含关系 \(A\subseteq C\) 上自动存在的单一映射。
+

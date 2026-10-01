@@ -1,4 +1,7 @@
 import Reg.D5.S3.Arith.Erdos699DenominatorGap
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -106,7 +109,7 @@ run_meta do
     unless axioms.all (#[`propext, `Classical.choice, `Quot.sound].contains ·) do
       throwError "[FAIL] nonstandard axiom closure: {name}: {axioms}"
     logInfo m!"[PASS] standard_axioms {name}: {axioms}"
-  let snapshot ← TemplateBinding.exportSnapshot
+  let snapshot ← (TemplateBinding.exportSnapshot (← RegistrationAssessmentInput.capture (← getEnv).header.mainModule))
   let originals := snapshot.originals.filter (·.occurrence.key.registrationModule == owner)
   unless originals.size == 1 && originals[0]!.occurrence.key == event.key do
     throwError "[FAIL] exported source inventory"

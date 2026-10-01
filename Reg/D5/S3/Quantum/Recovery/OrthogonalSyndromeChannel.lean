@@ -1,6 +1,9 @@
 import D5.S3.Quantum.Recovery.OrthogonalSyndromeChannel
 import Reg.Support.DependentFamily
-import LeanInformationAudit.SealCommand
+import LeanInformationAuditInterface.Syntax
+import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
+import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
+import D5.S3.ConceptDynamics.RegistrationWitnesses
 
 open _root_.D5.S3.Quantum.Recovery.OrthogonalSyndromeChannel
 open _root_.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding
@@ -72,7 +75,7 @@ run_cmd do
     pure {
       objectArenaName := root ++ arena
       theoremName := target
-      statementIdentity := LeanInformationAudit.theoremStatementIdentity (← Lean.getEnv) target
+      capturedStatement := LeanInformationAudit.captureStatement (← Lean.getEnv) target
       registrationModuleName := root : LeanInformationAudit.SnapshotOccurrence }
   LeanInformationAudit.RootCatalogs.declare {
     rootId := root, expected := rows, source := rows, companionPrefix := some root }
@@ -724,6 +727,5 @@ register_information_theorem logical_representation_on_copy in arena
 #print axioms registration
 end LogicalRepresentationOnCopy
 
-run_cmd LeanInformationAudit.validateRegistrySnapshot (← Lean.getEnv)
 
 end Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeChannel

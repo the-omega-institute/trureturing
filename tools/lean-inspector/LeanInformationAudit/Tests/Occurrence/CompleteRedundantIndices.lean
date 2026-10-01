@@ -1,5 +1,8 @@
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.StructuralCatalog
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open LeanInformationAudit
 open Lean
@@ -28,30 +31,30 @@ def constantRealization : PrimitiveRealization arena.signature where
   readout := fun _ _ => false
   anchor := Fin.elim0
 
-information_theorem firstTheorem
+test_assess in information_theorem firstTheorem
   in arena
   primitives constantRealization
   : arena.Law constantRealization := by trivial
 
-information_theorem secondTheorem
+test_assess in information_theorem secondTheorem
   in arena
   primitives constantRealization
   : arena.Law constantRealization := by trivial
 
-information_theorem thirdTheorem
+test_assess in information_theorem thirdTheorem
   in arena
   primitives constantRealization
   : arena.Law constantRealization := by trivial
 
-expect_information_occurrence firstTheorem
+test_assess in expect_information_occurrence firstTheorem
   in arena
   from "LeanInformationAudit.Tests.Occurrence.CompleteRedundantIndices"
 
-expect_information_occurrence secondTheorem
+test_assess in expect_information_occurrence secondTheorem
   in arena
   from "LeanInformationAudit.Tests.Occurrence.CompleteRedundantIndices"
 
-expect_information_occurrence thirdTheorem
+test_assess in expect_information_occurrence thirdTheorem
   in arena
   from "LeanInformationAudit.Tests.Occurrence.CompleteRedundantIndices"
 
@@ -73,7 +76,7 @@ run_cmd do
     Lean.Elab.Command.liftIO <| IO.FS.removeFile artifactPath
 
 #guard_msgs (error) in
-#seal_information_theory
+test_assess in #seal_information_theory
 
 run_cmd do
   let records := SealRecords.forRoot (← getEnv) (← getEnv).header.mainModule

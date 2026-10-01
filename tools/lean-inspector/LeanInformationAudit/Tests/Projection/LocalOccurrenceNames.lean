@@ -1,5 +1,8 @@
 import LeanInformationAudit.SealCommand
 import LeanInformationAudit.Tests.Projection.FixtureState
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Lean.Elab.Command LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape
@@ -27,11 +30,11 @@ local instance : DecidableEq lawArena.State := lawArena.toArena.stateDecidableEq
 def fixtureRealization : PrimitiveRealization lawArena.signature where
   readout := fun _ state => state
   anchor := Fin.elim0
-information_theorem localTheorem in lawArena primitives fixtureRealization
+test_assess in information_theorem localTheorem in lawArena primitives fixtureRealization
   : lawArena.Law fixtureRealization := by trivial
 run_cmd do
   let moduleName := Syntax.mkStrLit (← getEnv).header.mainModule.toString
-  elabCommand (← `(command| expect_information_occurrence localTheorem
+  elabCommand (← `(command| test_assess in expect_information_occurrence localTheorem
     in lawArena from $moduleName:str))
 
 set_option maxRecDepth 100000
@@ -39,7 +42,7 @@ set_option maxHeartbeats 16000000
 
 run_cmd do
   let path ← fixturePath "local-occurrence-analysis.json"
-  elabCommand (← `(command| #seal_information_theory))
+  elabCommand (← `(command| test_assess in #seal_information_theory))
   let rootId := mkIdent (`_root_ ++ (← getEnv).header.mainModule)
   elabCommand (← `(command| #stage_information_analysis root $rootId:ident))
   elabCommand (← `(command| #export_information_analysis root $rootId:ident

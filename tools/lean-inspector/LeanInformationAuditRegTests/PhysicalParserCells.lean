@@ -5,6 +5,9 @@ import Reg.D5.S0.Computability.Coding.PhysicalParserTally
 import Reg.D5.S0.Computability.Coding.PhysicalParserPadding
 import Reg.D5.S0.Computability.Coding.PhysicalParserField
 import Reg.D5.S0.Computability.Coding.PhysicalParserExecution
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Meta LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape RegistrationTemplates

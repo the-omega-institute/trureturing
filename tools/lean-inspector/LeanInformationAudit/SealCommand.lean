@@ -1,6 +1,6 @@
 import LeanInformationAudit.ProofBuilder
 import LeanInformationAudit.Projection.ProjectionSeal
-import LeanInformationAudit.Syntax
+import LeanInformationAuditInterface.Syntax
 import LeanInformationAudit.Projection.OutputOnlyAudit
 
 namespace LeanInformationAudit
@@ -101,19 +101,10 @@ structure StagedAnalysisState where
   declarationNames : Array Name
   deriving Inhabited
 
-private initialize sealRecordExt :
-    SimplePersistentEnvExtension SealArenaRecord (Array SealArenaRecord) ←
-  registerSimplePersistentEnvExtension {
-    addEntryFn := Array.push
-    addImportedFn := fun ess => ess.foldl (· ++ ·) #[]
-  }
-
-private initialize stagedAnalysisExt :
-    SimplePersistentEnvExtension StagedAnalysisState (Array StagedAnalysisState) ←
-  registerSimplePersistentEnvExtension {
-    addEntryFn := Array.push
-    addImportedFn := fun ess => ess.foldl (· ++ ·) #[]
-  }
+private initialize sealRecordExt : EnvExtension (Array SealArenaRecord) ←
+  registerEnvExtension (pure #[])
+private initialize stagedAnalysisExt : EnvExtension (Array StagedAnalysisState) ←
+  registerEnvExtension (pure #[])
 
 namespace SealRecords
 
@@ -249,7 +240,14 @@ private def preflightNames (env : Environment) (records : Array SealArenaRecord)
     CommandElabM Unit := do
   let mut seen : Array Name := #[]
   for name in declarationNames declarations do
-    if env.contains name || seen.contains name then
+    let reusable ← if seen.contains name then pure false else
+      match declarations.find? (·.getNames.contains name) with
+      | some declaration =>
+        let owner := (catalogForGeneratedName? records name).map (·.catalog.rootId)
+          |>.getD (GeneratedDeclarations.currentOwner env)
+        liftTermElabM <| verifyExistingDeclaration owner declaration
+      | none => pure false
+    if (env.contains name && !reusable) || seen.contains name then
       match catalogForGeneratedName? records name with
       | some record =>
           if record.catalog.localSealNames then
@@ -311,15 +309,14 @@ def validateFrozenBaselineInSnapshot (rootId : Name)
       baselineContributors retainedContributors
 
 /-- Compare the independent root manifest with the sealed import-closure registry. -/
-def validateRegistrySnapshot (env : Environment) : CommandElabM Unit := do
-  let rootId := env.header.mainModule
+def validateRegistrySnapshot (rootId : Name) (env : Environment) : CommandElabM Unit := do
   if let some contract := RootCatalogs.find? env rootId then
     validateFrozenBaselineInSnapshot rootId (snapshotExpectations rootId contract.source)
   let expectedEntries ← liftTermElabM <|
     (expectedOccurrencesForRoot env rootId).mapM fun entry => do
       let objectArenaName ← resolveCanonicalArenaNameFromEvidence entry.objectArenaName
       pure { entry with objectArenaName }
-  let actualEntries := InformationRegistry.entries env
+  let actualEntries := InformationRegistry.forRoot env rootId
   let expectedKeys := expectedEntries.map expectedKey |>.qsort (· < ·)
   let actualKeys := actualEntries.map actualKey |>.qsort (· < ·)
   unless expectedKeys == actualKeys do
@@ -342,10 +339,9 @@ private def rootQualifiedEntry (rootId : Name) (localSealNames : Bool)
       realizationName := catalogQualifiedName rootId entry.canonicalObjectArenaName
         entry.effectiveCatalogId entry.theoremName primitiveRealizationSuffix }
 
-private def prepareRootQualifiedEntries (env : Environment)
+private def prepareRootQualifiedEntries (rootId : Name) (env : Environment)
     (entries : Array InformationRegistryEntry) :
     CommandElabM (Array InformationRegistryEntry) := do
-  let rootId := env.header.mainModule
   let localSealNames := entries.all fun entry =>
     entry.localRegistrationNames && entry.registrationModuleName == rootId
   let qualified := entries.map (rootQualifiedEntry rootId localSealNames)
@@ -355,29 +351,28 @@ private def prepareRootQualifiedEntries (env : Environment)
       let sourceOwner := entries.any fun candidate =>
         (candidate.unitName == generatedName || candidate.realizationName == generatedName) &&
           candidate.occurrenceKey == entry.occurrenceKey
-      if owners.size > 1 || (env.contains generatedName && !sourceOwner) then
+      if owners.size > 1 || (env.contains generatedName && !sourceOwner &&
+          GeneratedDeclarations.ownerOf env generatedName != rootId) then
         throwError (qualifiedNameCollisionError rootId entry.effectiveCatalogId
           generatedName owners)
   pure qualified
 
 private def retainSealRecords (env : Environment) (records : Array SealArenaRecord) :
     Environment :=
-  records.foldl (init := env) fun current record => sealRecordExt.addEntry current record
+  records.foldl (init := env) fun current record => sealRecordExt.modifyState current (·.push record)
 
 private def retainAnalysisState (env : Environment) (state : StagedAnalysisState) : Environment :=
-  stagedAnalysisExt.addEntry env state
+  stagedAnalysisExt.modifyState env (·.push state)
 
 /-! Seal validates the registry, prepares catalogs and escape-count certificates,
 kernel-checks them locally, and publishes SealRecords. Analysis is staged separately.
 Neither publication command has an artifact selector or destination. -/
 
-def prepareSealPublication : CommandElabM Unit := do
+def prepareSealPublication (snapshot : ValidatedSourceSnapshot) : CommandElabM Unit := do
   let baseEnv ← getEnv
   try
-    validateRegistrySnapshot baseEnv
-    let sourceEntries := InformationRegistry.entries baseEnv
-    let snapshot ← validateSourceSnapshot sourceEntries
-    let catalogEntries ← prepareRootQualifiedEntries baseEnv sourceEntries
+    withEnv baseEnv <| validateRegistrySnapshot snapshot.rootId baseEnv
+    let catalogEntries ← prepareRootQualifiedEntries snapshot.rootId baseEnv snapshot.sourceEntries
     let snapshot ← snapshot.stageAliases catalogEntries
     let aliasEnv ← getEnv
     let catalogs ← prepareCatalogsFromSnapshot snapshot
@@ -392,8 +387,31 @@ def prepareSealPublication : CommandElabM Unit := do
     setEnv baseEnv
     throw error
 
+private def elabSealInformationTheory : ValidatedSourceSnapshot → CommandElab :=
+  terminalSealCommand prepareSealPublication
+
+/-- The report entry uses exactly the command assessment and kernel publisher.
+Every environment change, including assessment extensions, rolls back on failure. -/
+def assessAndSealRegistration (input : RegistrationAssessmentInput) : CoreM Unit := do
+  let saved ← getEnv
+  tryCatchRuntimeEx (do
+    unless sameRegistrationEnvironment saved input.environment do
+      throwError "IE-C050 ClosedTruthReadout reason=incomplete_closure rule=dtr.assessment_input"
+    withOptions (fun _ => input.options) <| GeneratedDeclarations.withOwner input.rootId do
+      let input := { input with environment := ← getEnv }
+      liftCommandElabM do
+        withEnv input.environment <| validateRegistrySnapshot input.rootId input.environment
+        let snapshot ← assessRegistrationInput input
+        match auditSealOutputOnly (← getEnv) ``elabSealInformationTheory input.rootId with
+        | .error message => throwError message
+        | .ok () => elabSealInformationTheory snapshot Syntax.missing
+  ) fun error => do
+    setEnv saved
+    throw error
+
 /-- Stage analysis for an already-sealed root, publishing only after all checks pass. -/
-def prepareInformationAnalysisStage (rootId : Name) : CommandElabM Unit := do
+def prepareInformationAnalysisStage (rootId : Name) : CommandElabM Unit :=
+    GeneratedDeclarations.withOwner rootId do
   let sealedEnv ← getEnv
   let sealed := SealRecords.forRoot sealedEnv rootId
   unless !sealed.isEmpty && sealed.all (fun record => sealedEnv.contains record.verdict.name) do
@@ -439,17 +457,6 @@ def prepareInformationAnalysisExport (rootId : Name) (requested : List ArtifactK
     artifacts := artifacts ++ [(.ascii, contents)]
   return { artifacts }
 
-private def elabSealInformationTheory : CommandElab :=
-  terminalSealCommand prepareSealPublication
-
-@[command_elab sealInformationTheoryCmd]
-private def elabAuditedSeal : CommandElab := fun stx => do
-  let currentEnv ← getEnv
-  match auditSealOutputOnly currentEnv ``elabSealInformationTheory
-      currentEnv.header.mainModule with
-  | .error message => throwError message
-  | .ok () => elabSealInformationTheory stx
-
 private def elabInformationAnalysisExport : CommandElab :=
   terminalInformationAnalysisExportCommand prepareInformationAnalysisExport
 
@@ -471,5 +478,85 @@ private def elabAuditedInformationAnalysisExport : CommandElab := fun stx => do
       (commandRoot stx) with
   | .error message => throwError message
   | .ok () => elabInformationAnalysisExport stx
+
+end LeanInformationAudit
+
+namespace LeanInformationAudit
+open Lean Meta
+
+/-- The report owns the only production assessment. All inputs are original
+native records; generated proofs remain in this kernel-checked environment. -/
+def assessRecordedRegistrations (rootId : Name) : MetaM Unit := do
+  replayRegistrationInputs (← RegistrationAssessmentInput.capture rootId)
+  let env ← getEnv
+  let mut seen : NameSet := {}
+  let reachable := reachableModules env rootId
+  for (owner, sealInput) in SealInputs.owned env do
+    unless reachable.contains owner do continue
+    unless owner == sealInput.rootId do throwError "incomplete_closure:dtr.seal_owner"
+    if seen.contains owner then throwError "incomplete_closure:dtr.duplicate_seal"
+    seen := seen.insert owner
+    withOptions (fun _ => sealInput.options) <| GeneratedDeclarations.withOwner owner do
+      assessAndSealRegistration (← RegistrationAssessmentInput.capture owner)
+
+/-- The registered occurrence keys a target owns after its own assessment. -/
+def registeredKeys (env : Environment) (target : Name) : Array TemplateOccurrenceKey :=
+  (InformationRegistry.entries env).filter (·.registrationModuleName == target) |>.map fun entry => {
+    root := target, registrationModule := target, theoremName := entry.theoremName,
+    objectArena := entry.canonicalObjectArenaName, «catalog» := entry.effectiveCatalogId }
+
+private def sameGenerated (left right : ConstantInfo) : Bool :=
+  left.levelParams == right.levelParams && left.type == right.type &&
+    left.value? (allowOpaque := true) == right.value? (allowOpaque := true) &&
+    left.isTheorem == right.isTheorem
+
+/-- Modules owning a recorded registration input of any kind. -/
+def recordedInputOwners (env : Environment) : Array Name :=
+  (RegistrationInputs.owned env).map Prod.fst ++ (TemplateEnrollmentInputs.owned env).map Prod.fst ++
+    (SealInputs.owned env).map Prod.fst ++ (RootCatalogs.owned env).map Prod.fst ++
+    (ExpectedOccurrenceManifest.owned env).map Prod.fst
+
+/-- A report batch loads several requested modules into one environment. Each
+target is assessed from the batch's validated base environment with fresh
+assessment state and rooted at itself, so loaded peers it does not import take
+no part in its replay, join, seals or generated declarations. A target that
+reaches no module of `inputOwners` has nothing to assess and gets the row its
+empty assessment would produce. A declaration name generated for two targets
+must denote the same declaration; the inspector reads each target's generated
+declarations in that target's own environment. -/
+def assessReportTargets (moduleNames : Array Name) (inputOwners : Array Name)
+    (assessTarget : Name → MetaM (Array TemplateOccurrenceKey)) :
+    MetaM (Array (Json × Array Name × Environment)) := do
+  let roots := TemplateBinding.reportRoots (← getEnv) moduleNames
+  TemplateAudit.NativeCoherence.validate roots
+  let base ← getEnv
+  let mut reports := #[]
+  let mut generated : Std.HashMap Name ConstantInfo := {}
+  for target in moduleNames do
+    setEnv base
+    let reachable := if inputOwners.isEmpty then {} else reachableModules base target
+    unless inputOwners.any reachable.contains do
+      reports := reports.push (← TemplateBinding.emptyTargetJson target, #[], base)
+      continue
+    let binding ← TemplateBinding.targetJson target (← assessTarget target)
+    let env ← getEnv
+    for (name, _) in GeneratedDeclarations.entries env do
+      let some info := env.find? name | throwError "incomplete_closure:dtr.generated_missing:{name}"
+      match generated[name]? with
+      | some previous =>
+        unless sameGenerated previous info do throwError "incomplete_closure:dtr.generated_target:{name}"
+      | none => generated := generated.insert name info
+    reports := reports.push (binding,
+      (GeneratedDeclarations.entries env).filter (·.2 == target) |>.map Prod.fst, env)
+  setEnv base
+  -- Compare the original snapshots after all records have been read.
+  TemplateAudit.NativeCoherence.validate roots
+  return reports
+
+/-- Fixed finite producer, independently loaded by the standalone inspector. -/
+def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun moduleNames => do
+  assessReportTargets moduleNames (recordedInputOwners (← getEnv)) fun target => do
+    assessRecordedRegistrations target
+    return registeredKeys (← getEnv) target
 
 end LeanInformationAudit

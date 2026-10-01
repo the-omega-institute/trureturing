@@ -1,5 +1,5 @@
 import LeanInformationAuditInterface.OutputSyntax
-import LeanInformationAudit.Registry.Repository
+import LeanInformationAudit.CatalogBuilder
 
 namespace LeanInformationAudit
 open Lean Lean.Elab.Command
@@ -8,7 +8,7 @@ open Lean Lean.Elab.Command
 T-041 is closed by destination-free publication and terminal export commands.
 
 `#seal_information_theory` has no output clause. Its fixed terminal combinator
-discards the command syntax and invokes a `CommandElabM Unit` publication closure.
+discards command syntax and passes only a validated snapshot to publication.
 The owned-definition audit rejects ambient command-reference access, direct
 runtime input capabilities, and the enumerated Lean-core module loaders before
 that closure runs. The seal may publish declarations and may log, but it cannot
@@ -43,8 +43,9 @@ structure AnalysisExportPlan where
   artifacts : List (ArtifactKind × String)
 
 /-- Seal syntax is deliberately discarded before publication. -/
-def terminalSealCommand (publication : CommandElabM Unit) : CommandElab :=
-  fun _ => publication
+def terminalSealCommand (publication : ValidatedSourceSnapshot → CommandElabM Unit) :
+    ValidatedSourceSnapshot → CommandElab :=
+  fun snapshot _ => publication snapshot
 
 private def absoluteName (name : Name) : Name :=
   if (`_root_).isPrefixOf name then name.replacePrefix `_root_ .anonymous else name
@@ -202,8 +203,9 @@ private def auditOwnedClosure (env : Environment) (entry rootId : Name)
 
 private def sealTerminalShape (value : Expr) : Bool := Id.run do
   let .lam _ _ terminal _ := value.consumeMData | return false
-  let .lam _ _ body _ := terminal.consumeMData | return false
-  return body.consumeMData == .bvar 1
+  let .lam _ _ syntaxBody _ := terminal.consumeMData | return false
+  let .lam _ _ body _ := syntaxBody.consumeMData | return false
+  return body.consumeMData == mkApp (.bvar 2) (.bvar 1)
 
 private def exportTerminalShape (value : Expr) : Bool := Id.run do
   let .lam _ _ (.lam _ _ body _) _ := value.consumeMData | return false
@@ -221,10 +223,12 @@ private def exportTerminalShape (value : Expr) : Bool := Id.run do
   return tail.appArg! == mkApp2 (mkConst ``writeAnalysisArtifacts) (.bvar 1) (.bvar 0)
 
 private def sealPublicationType : Expr :=
-  mkApp (mkConst ``Lean.Elab.Command.CommandElabM) (mkConst ``Unit)
+  .forallE `snapshot (mkConst ``ValidatedSourceSnapshot)
+    (mkApp (mkConst ``Lean.Elab.Command.CommandElabM) (mkConst ``Unit)) .default
 
 private def stagePublicationType : Expr :=
-  Expr.forallE `_rootId (mkConst ``Name) sealPublicationType .default
+  Expr.forallE `_rootId (mkConst ``Name)
+    (mkApp (mkConst ``Lean.Elab.Command.CommandElabM) (mkConst ``Unit)) .default
 
 private def stageTerminalShape (value : Expr) : Bool := Id.run do
   let .lam _ _ (.lam _ _ body _) _ := value.consumeMData | return false

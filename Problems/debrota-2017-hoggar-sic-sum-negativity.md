@@ -83,6 +83,7 @@ The canonical source is
 `D5/S3/Quantum/Measurement/HoggarSicSumNegativity.lean`; the only public
 theorem is `result : claim`. `claim` is an `IsGreatest` assertion with
 membership and a universal upper bound. Its public definitions specify
+the Gaussian-integer sign table and fiducial orbit (`bitSign`, `orbitG`),
 the vector, projector, Q-minus operator, real quasiprobability coordinate,
 negative part and sum negativity. The complex trace is real on the
 density-matrix domain, as proved inside the bound.
