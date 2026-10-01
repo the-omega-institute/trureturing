@@ -31473,8 +31473,33 @@ factor, and a paired p*u original, with different first-p roots for
 the different pairs. Each non-pure pair must have DIFFERENT residues
 on its complete common cofactor u; agreement would provide the one
 extra admissible root needed for a smaller cover. Thus N_3=28 forces
-P=29 and 27 actual unequal cofactor-residue pairs. This records a
-joint phase obstruction, not an exclusion of the remaining case.
+P=29 and 27 actual unequal cofactor-residue pairs. The configuration
+has ternary height one, so the existing Report707 SS4 already excludes
+it, with arbitrary remaining prime heights and actual phases.
+
+[Report385, sections58--59](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#58-reuse-the-height-one-source-before-resolving-individual-collision-phases)
+uses the original pure powers q^2,...,q^H_q, which lie outside both
+NF66 inventories, to give N_q>=p-q+1+H_q. Report708 TH3's existing
+thirteen-prime height-one theorem implies H_3=1 forces P>=47 and
+N_3>=46. No replay of either existing source certificate is needed.
+
+For arbitrary H_q, a guarded IC1 graph uses the q^h-prefixes left
+uncovered by the original pure-q classes. Its common witness retains
+every old q digit and every divided high-p digit. Collision reservations
+use the actual paired labels p*u,q^h*u, while mixed p*q originals
+forbid their p-root only at compatible q-prefixes. A full matching
+would delete the pure-p original and give a smaller distinct cover.
+When h exceeds the original q-height there are no paired-label
+collisions, but the same actual mixed-prefix restrictions remain.
+
+The equality N_3=29 forces P=29,H_3=2 and no mixed3*29 original.
+At h=3, pure3 and pure9 leave15 prefixes, which inject into the28
+nonzero29 roots. This contradicts minimum cardinality. Consequently
+the selected extremal whole cover must satisfy N_3>=30, while its
+height-one branch satisfies N_3>=46. More generally, absence of the
+pair3*29 forces H_3>=3 and N_3>=69 by three disjoint layer demands.
+These are ordinary proof consequences, with the source boundaries
+of the cited theorems; they do not settle unrestricted Erdős #7.
 
 [Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
 keeps the residual cover's entire old q coordinate unchanged.

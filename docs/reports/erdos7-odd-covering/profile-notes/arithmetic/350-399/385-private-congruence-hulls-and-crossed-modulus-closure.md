@@ -8549,10 +8549,11 @@ is exactly the first nine odd primes. NF70 then requires all 28
 three-bearing originals to have three-height one and no factor29,
 all their paired 29*u labels to exist with different first-29 roots,
 and all 27 non-pure paired cofactor residues to differ. Other original
-heights remain unrestricted. No argument here forces one of those
-cofactor residues to agree: NF69 and NF70 are necessary joint phase
-conditions, not an exclusion of that whole-cover configuration or
-a resolution of unrestricted Erdős #7. No new Lean verification is claimed.
+heights remain unrestricted. NF69 and NF70 supply necessary joint phase
+conditions; section58 excludes this equality configuration directly
+using an existing height-one theorem, without forcing one of those
+paired residues to agree. The unrestricted problem remains unresolved.
+No new Lean verification is claimed.
 
 ### The missing paired phases must be paid on the same cofactor fibre
 
@@ -8603,3 +8604,242 @@ Noncoverage of each smaller-support side separately
 does not imply that the two positive supports meet at the same z.
 Neither a uniform upper bound violating NF71 on that domain nor a
 positive common separator word has been established here.
+
+## 58. Reuse the height-one source before resolving individual collision phases
+
+Keep EB1's extremal original cover, let H_q be its maximum original
+q-height, and take support primes p>q. Divisor closure supplies the
+H_q-1 distinct original labels q^2,...,q^H_q. Each lies outside BOTH
+of section56's inventories h0 and h1. Therefore NF66 directly implies
+
+    N_q >= h0+h1+(H_q-1) >= p-q+1+H_q.              (NF72)
+
+This is a count of one actual original inventory. It does not add
+inequalities obtained from different choices of p or q. The second
+branch of NF66 gives the stronger p+H_q-1 for that branch; the displayed
+bound holds in either branch.
+
+The existing height-one theorem is already sufficient to exclude
+section57's N_3=28 consumer. Report707 SS4 gives positive survivor
+mass for every original family on the first nine odd primes with
+v3(m)<=1, arbitrary actual residues and arbitrary nonternary heights.
+NF70's equality configuration has exactly these properties. No further
+agreement of its paired cofactor phases, nor a new upper estimate for
+NF71, is needed to exclude that configuration.
+
+For the stronger general height-one consequence, directly use
+[Report708 TH3](../700-749/708-a-shared-support-sign-bridge-closes-thirteen-height-one-primes.md#arbitrary-actual-primes-including-the-no3-branch).
+It proves noncoverage for at most THIRTEEN actual support primes when
+every original has v3(m)<=1. Its other original prime heights and
+residues are unrestricted. Thus EB3's initial-segment support and NF67
+give
+
+    H_3=1  ==>  at least14 support primes,
+                 P>=47 and N_3>=P-1>=46.            (NF73)
+
+This uses the existing ordinary source proof and its retained exact
+arithmetic. Neither its phase optimization nor its finite checks are
+repeated here, and no additional Lean verification is claimed.
+
+When H_3>=2, NF72 and Schroeder's attributed nine-prime-support theorem
+give N_3>=P+H_3-2>=29. The remaining equality N_3=29 forces P=29 and
+H_3=2. The original pure9 label is outside h0 and h1, so h0+h1<=28.
+The second NF66 branch h0+h1>=29 is impossible; the first forces
+h0=28. Consequently equality requires
+
+    P=29, H_3=2, h0=28, h1=0;
+    the only three-bearing label outside h0 is9.    (NF74)
+
+In particular no original modulus contains both3 and29. This reduction
+still permits every other prime-power height. The next section excludes
+NF74 by transporting a complete surviving prefix, rather than by
+enumerating those other heights or residues.
+
+## 59. Pure-power guards permit depth-dependent original-cover transport
+
+Keep the same original extremal cover and support primes p>q. Set
+
+    c_h=#{d in D:p does not divide d, v_q(d)=h},
+    t=#{d in D:p*q divides d}.
+
+Thus c_1 and t are h0 and h1 of NF66. Every class, exponent and phase
+in the following graph belongs to this one actual original family.
+The new interface of IC1 uses complete surviving q-prefixes as its
+left vertices and keeps all old higher q digits unchanged.
+
+### The live q-prefixes and actual forbidden p-roots
+
+Fix an integer h>=1. Let L_h be the set of q^h-prefixes not covered by
+any actual pure-q original q^j with j<=min(h,H_q). These omitted
+prefixes are already covered by the retained pure classes. All other
+p-free original classes will also be retained whole.
+
+Let T_h consist of the actual first-p roots of A_(p*u) for the original
+pairs
+
+    p*u, q^h*u, with gcd(u,p*q)=1.
+
+Put R_h={0} union T_h. No hypothetical phase or nonexistent label is
+inserted into T_h. For each b in L_h, let F_b^(h) consist of the
+actual first-p roots of every original mixed label
+
+    d=p^alpha*q^beta*u, alpha,beta>=1, gcd(u,p*q)=1,
+
+whose actual q-coordinate is compatible with the prefix b:
+
+    b == a_d mod q^min(beta,h).
+
+Define a bipartite graph with left set L_h, right set (Z/pZ) minus R_h,
+and an edge b--a exactly when a is not in F_b^(h). This graph cannot
+have a matching covering its entire left set.                  (NF75)
+
+### The single common witness retains all higher coordinates
+
+To prove NF75, suppose such a matching gives an injection sigma. Write
+the full old period as p^A*q^B*M, with A,B>=1 and gcd(M,p*q)=1. Here
+B=H_q. Use the output carrier
+
+    p^(A-1)*q^max(B,h)*M.
+
+For any output point z whose prefix b=z mod q^h lies in L_h, choose
+one old witness y by the same IC1 coordinate rule:
+
+    y mod p^A = sigma(b)+p*(z mod p^(A-1)),
+    y mod q^B = z mod q^B,
+    y mod M = z mod M.                               (NF76)
+
+Represent sigma(b) in {0,...,p-1}. All old q digits and all cofactor
+coordinates are preserved. When h>B the additional q-prefix digits
+are coordinates of the new output carrier; they are not asserted to
+have existed in the old source. The formula still gives one witness
+for each transported point, not different witnesses for different
+original classes.
+
+Retain every p-free original whole AP with its original modulus and
+phase. On the transported subset, membership of y in such an original
+implies membership of z in that same whole AP. Every omitted prefix
+is covered by one of the retained pure-q guards. The restricted
+pullback of a retained class need not itself be a whole AP; only its
+containment in the retained AP is used.
+
+No mixed p*q-bearing original can contain the witness. Indeed, its
+q-condition would imply b == a_d mod q^min(beta,h), and its p-condition
+would put sigma(b) in F_b^(h), contrary to the matching.
+
+For a q-free p-bearing original d=p^alpha*u, let a=a_d mod p. If a
+does not occur in the image of sigma, its pullback is empty. Otherwise
+there is exactly one b in L_h with sigma(b)=a, and the pullback is the
+one whole CRT class given by
+
+    z == b mod q^h,
+    z == (a_d-a)/p mod p^(alpha-1),
+    z == a_d mod u.
+
+Its numerical modulus is
+
+    q^h*p^(alpha-1)*u.                               (NF77)
+
+The full divided old p-tail is retained, including alpha>1. When
+alpha=1 the p-tail condition is vacuous. Since b belongs to L_h,
+this whole AP already lies in the transported subset.
+
+The numerical map in NF77 is injective on all transported originals.
+A collision with an unchanged p-free modulus can occur only at
+alpha=1 and an actual pair p*u,q^h*u. That root lies in T_h and has
+been excluded. Thus every output modulus is distinct, odd and greater
+than one. Root zero is excluded by R_h, so the original pure class A_p
+has empty pullback. There are at most n-1 output classes.
+
+These classes cover the whole output carrier: pure guards cover the
+omitted prefixes, and elsewhere any old class containing the single
+witness in NF76 supplies either a retained or a transported class.
+All output moduli divide that carrier, so they cover all integers.
+This contradicts EB1 and proves NF75. The argument reuses the IC1
+tail and collision mechanics; its new interface is the guarded
+q^h-prefix domain, including h beyond the original q-height.
+
+For h>1, a mixed label with beta<h may forbid several live prefixes.
+Consequently the first-root rule “one original supplies at most one
+Hall-rectangle cell” used in NF66 cannot be reused on this graph
+without accounting for the multiplicity. NF75 retains the full
+prefix incidence and makes no such unit-cell assertion.
+
+### A direct layer bound that does not charge prefix cells
+
+The original pure q-powers are pairwise disjoint: an intersection
+between comparable original APs would make the finer AP redundant,
+contradicting minimum cardinality. Therefore, for 1<=h<=H_q,
+
+    ell_h=|L_h|=q^h-sum_{j=1}^h q^(h-j)
+                   =((q-2)*q^h+1)/(q-1).
+
+At h=H_q+1 there is no additional original pure guard, so
+
+    |L_(H_q+1)|=q*ell_(H_q).
+
+Let F be the union of the first-p roots of all t original mixed
+labels, regardless of their q-prefixes. This stronger global
+blacklist has size at most t. Avoiding F avoids every F_b^(h), so
+all remaining right roots connect to every live prefix.
+
+When h<=H_q, the pair p,q^h is present and puts root zero in T_h.
+Each pair counted by T_h uses its own original q^h*u label counted
+by c_h, giving |R_h|=|T_h|<=c_h. If p-c_h-t>=ell_h, there are enough
+right roots outside R_h union F to inject L_h, contrary to NF75.
+Hence the same original inventory satisfies
+
+    c_h+t>=p-ell_h+1       (1<=h<=H_q).              (NF78)
+
+At h=H_q+1, no original q^h*u exists, so T_h is empty and R_h={0}.
+If p-1-t>=q*ell_(H_q), the same complete-graph injection exists.
+Consequently
+
+    t>=p-q*ell_(H_q).                                (NF79)
+
+These inequalities can be vacuous when their right sides are
+nonpositive. The same t is used in each NF78 inequality: it cannot
+be treated as a different disjoint supply at every height. This
+coarse count avoids the mixed-prefix multiplicity issue by deleting
+each mixed first-p root globally rather than charging graph cells.
+
+In particular, if no original is divisible by p*q, then t=0 and
+
+    c_h>=p-ell_h+1   (1<=h<=H_q),
+    p-1<q*ell_(H_q).                                 (NF80)
+
+For q=3,p=29, the last condition excludes H_3=1 and H_3=2. If the
+pair3*29 is absent, H_3>=3 and the first three layer bounds are
+c_1>=28,c_2>=25,c_3>=16. These three c_h inventories are disjoint,
+so in this missing-pair case N_3>=69. This is a conditional
+consequence; no absence of the pair3*29 is inferred for general
+extremal covers.
+
+### The twenty-nine-label equality cannot cover
+
+Section58 reduced N_3=29 to NF74: P=29, H_3=2, c_1=28, t=0,
+with pure9 the sole original of ternary height two. Take h=3 in NF75.
+The actual pure3 and pure9 guards leave27-9-3=15 live prefixes.
+There is no original of ternary height three, so T_3 is empty, and
+there is no mixed3*29 original, so every F_b^(3) is empty. Inject the
+fifteen live prefixes into the twenty-eight nonzero29 roots. The
+single witness NF76 then gives the forbidden smaller distinct cover.
+Equivalently NF79 requires t>=29-15=14, contrary to t=0.
+
+Together with NF72--NF73, this proves for the EB1-selected cover
+
+    N_3>=30,
+    H_3=1 ==> N_3>=46.                              (NF81)
+
+The unrestricted lower bound uses the same attributed
+nine-prime-support premise as NF68. Its arbitrary-height reduction
+has not acquired a new local kernel replay here. Report708 and the
+guarded transport are ordinary mathematical arguments; no new Lean
+verification is claimed.
+
+These inequalities do not bound N_3 from above or exclude every
+extremal family. For example the crude counts alone still permit
+N_3=30,H_3=2,P=29 with c_1+t=29,c_2=1,t>=14; they do not assert
+that any such inventory has actual covering phases. The full graphs
+retain additional prefix and cofactor restrictions, which must be
+used on the same original family. Unrestricted Erdős #7 remains
+unresolved.
