@@ -81,7 +81,7 @@ The proof depends on `σ_y` in the time reversal: with the identity in its
 place, `ρ̃ = ρ̄`, and for the state of step 5 the overlap equals
 `Tr ρ_A² = 1/r`, so that state gives `2/r` instead of `1/r`. The trivial
 bipartitions are excluded by the reading; for them `max(1/r, 2/d)` is also
-the minimum (argument, not formalized): `1` for `k = N`, attained by a
+the minimum (argument, not formalized): `1` for `k = N ≥ 1`, attained by a
 configuration state, and `2` for `k = 0`, where the quantity is constant.
 
 ## Evidence
