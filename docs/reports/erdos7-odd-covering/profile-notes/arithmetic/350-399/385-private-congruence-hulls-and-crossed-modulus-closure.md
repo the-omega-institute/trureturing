@@ -10482,3 +10482,405 @@ retains their joint source instead of optimizing a different cofactor
 at each ternary word. CP16 supplies a necessary high-level coverage
 obligation. It does not show that the available originals violate it,
 resolve their copied-label collisions, or force the CP11--CP12 descent.
+
+## 73. A nonconcentrated small prime is forced at ternary height one
+
+Keep one EB1-selected original whole distinct odd cover with ternary
+height H=1. Normalize its prime classes by the existing common
+translation, retaining all original nonternary heights and phases. Put
+
+    R={q>3: V_q={1,2}},
+    S_i={q>3: V_q={i}} for i=1,2.
+
+These sets partition the nonternary support; either S_i may be empty.
+No all-concentrated hypothesis is imposed. Then
+
+    R intersect {5,7,11,13} is nonempty.               (CP17)
+
+### One common root assignment removes the opposite concentrated primes
+
+DP9 and [Report364, SI1](../../321-384/364-singleton-cofactor-ideal-and-forced-colors.md#1-actual-singleton-roots-and-a-common-cofactor-ideal)
+supply the needed source statement. For each q in S_j, the ORIGINAL
+class A_(3q) exists, has first-three root j, and is the unique q-bearing
+original at its own first-q root r_q=a_(3q) mod q. Every other original
+divisible by q has a different first-q residue. This quantifies over
+actual original classes at arbitrary q-height, not only their private
+projections.
+
+Fix i in {1,2}. Simultaneously set the first-q coordinate to r_q for
+every q in S_(3-i), and the ternary coordinate to i. CRT permits these
+choices at the SAME source point, independently of all full coordinates
+at primes in R union S_i. The higher digits at the fixed primes are
+arbitrary. An original containing any q in S_(3-i) cannot cover this
+point: its only possible representative at r_q is A_(3q), whose ternary
+root is the opposite one. All originals involving those primes vanish
+simultaneously.
+
+Consequently the actual subfamily with nonternary support contained in
+R union S_i covers the WHOLE ternary branch i. Indeed, prescribe any
+full coordinates at R union S_i, complete them with the preceding
+common root assignment, and apply original whole coverage. Every
+surviving original is independent of the discarded coordinates, so
+these same surviving classes cover every extension of the prescribed
+retained coordinates. No phase or numerical label is reassigned.
+
+### The surviving two covers share a nonconcentrated small prime
+
+Restrict this retained subfamily by the ONE affine map x=i+3t,
+discarding originals incompatible with that branch. The pure3 class
+at root0 is inactive. Every surviving quotient modulus m is greater
+than one and coprime to6. Since H=1, only original labels m and3m can
+map to m; numerical multiplicity is at most two. Their actual image
+phases are
+
+    t = 3^(-1)(a_d-i) mod m.
+
+All retained nonternary exponents are unchanged. This gives a whole
+AP cover B_i with support contained in R union S_i. The common support
+of B_1 and B_2 is therefore contained in
+
+    (R union S_1) intersect (R union S_2) = R.
+
+Apply the already established Report348 SO1: those two whole covers
+share a prime in {5,7,11,13}. That prime lies in R, proving CP17.
+Empty S_i cause no exception; the argument uses no witness from S_i.
+
+If p is the only nonconcentrated prime, CP17 forces
+p in {5,7,11,13}, with arbitrary original p-height and arbitrary other
+nonternary heights. If a nonconcentrated prime p>=17 occurs, some
+different prime among5,7,11,13 must also be nonconcentrated.
+
+CP17 strengthens CP14 by reusing the same arithmetic input and the
+existing singleton-root theorem. It does not force two nonconcentrated
+primes when the unique one is in {5,7,11,13}, establish monotonicity of
+pure-power private colors, create additional Hall slots, or supply
+strict descent in those remaining cases. Section71 retains the full
+ancestor deficit there. No new sieve computation, squarefree-shadow
+argument or Lean verification is asserted.
+
+## 74. At arbitrary height one root must retain actual prefix collisions
+
+Keep the one EB1 original cover, its full period Q=3^H M, and arbitrary
+H>=1. Let R,S_1,S_2 partition its original nonternary support primes as
+in section73, and put K={5,7,11,13}. Then either R intersects K, or
+one complete ternary root satisfies the actual prefix-cover and
+common-cofactor obligations below. No color is assumed flat.
+
+### Complete-word multiplicity is an actual prefix test
+
+The singleton-root CRT elimination in section73 does not use H=1.
+For root i, fix every q in S_(3-i) at its original singleton3q root.
+All originals involving any such prime disappear throughout the
+complete root i. The retained originals with nonternary support in
+R union S_i cover that WHOLE root, with every ternary tail retained.
+Keep its actual pure-three guards. At any complete ternary word z
+outside these guards, the active cofactor quotient B_i(z) is a whole
+cover with nonunit moduli coprime to6 and support in R union S_i.
+
+For each occurring retained nonunit cofactor m, divisor closure supplies
+the original m. Its exact quotient multiplicity at z is
+
+    1 + #{a>=1: 3^a m is original,
+                 z=a_(3^a m) mod3^a}.                (CP18)
+
+All the counted originals, including height zero m, have different
+actual mod-m phases. Their numerical labels are comparable; equality
+of both their cofactor phases and active ternary prefixes would make
+two original APs intersect. Thus identical-AP merging cannot reduce
+this multiplicity.
+
+Write G_i for the union of the actual pure-three prefixes of heights
+2,...,H in root i. Let C_i be the set of retained actual labels3^c m,
+with m>1, c>=2 and first-three root i, for which some ORIGINAL lower
+positive height3^b m, 1<=b<c, satisfies
+
+    a_(3^c m)=a_(3^b m) mod3^b.
+
+Let T_i be the union of the ternary prefixes of labels in C_i. By CP18,
+outside G_i, membership in T_i is equivalent to a quotient modulus
+having multiplicity at least three. This tests the original phases;
+it does not presume that every deep mixed prefix agrees with its3m
+ancestor. That agreement follows from the private reset when m contains
+a concentrated prime in S_i. For m supported only on R, the explicit
+lower-prefix test remains necessary.
+
+Suppose R intersects K trivially. If each root had a word outside
+G_i union T_i, the two whole quotients at those words would have
+multiplicity at most two. SO1 would give a common prime in K, while
+their common support is contained in R. This contradiction proves that
+for ONE i,
+
+    G_i union T_i = the complete ternary root i.       (CP19)
+
+This is an all-height phase condition, allowing arbitrary nonconcentrated
+primes outside K and preserving their full exponents. At H=1 both
+prefix families are empty, recovering CP17 by the existing input.
+
+### The same root admits one cofactor avoiding every low class
+
+For the root selected by CP19, let L_i consist of the actual cofactor
+phases of retained originals m and originals3m at root i. It cannot
+cover: otherwise these actual low originals cover the entire root,
+independently of its tail, and every original of ternary height at
+least two there has no private point. This excludes every guard and
+every member of C_i, contradicting CP19.
+
+Choose one full retained cofactor v avoiding ALL of L_i. The same CRT
+elimination preserves this v at every tail. Original coverage therefore
+requires, at every word outside G_i, an actual retained3^a m with
+a>=2, m>1 and v=a_(3^a m) mod m.
+
+Let beta_i be the exact relative root measure of G_i. The two necessary
+charges at this SAME root are
+
+    sum_(3^c m in C_i) 3^(1-c) >= 1-beta_i;            (CP20)
+
+    sum_(retained original3^a m at root i, a>=2, m>1,
+         v=a_(3^a m) mod m) 3^(1-a) >= 1-beta_i.       (CP21)
+
+The actual pure-three classes are comparable and disjoint, so
+
+    beta_i=sum_(original pure3^a at root i,a>=2)3^(1-a)
+          <= (1-3^(1-H))/2.
+
+Thus both right sides are at least (1+3^(1-H))/2. CP19 retains the
+complete prefix-cover condition, which is stronger than its union
+bound CP20. CP21 holds at one fixed v across every ternary tail,
+extending CP16 without requiring an opposite flat color. The labels
+in CP20 and CP21 need not coincide; these two inequalities cannot be
+charged against two copies of one inventory budget.
+
+At least two different cofactors occur among C_i. For one fixed m,
+numerical distinctness permits at most one label at each height c;
+their total prefix mass is at most (1-3^(1-H))/2. Even adding every
+pure guard gives at most1-3^(1-H)<1, contrary to CP19. This is a direct
+consumer of the original height inventory, not a new top-fan theorem.
+
+The remaining alternative is exact: R meets {5,7,11,13}, or one root
+has CP19 and the common-cofactor obligation CP21. Neither obligation
+has been shown impossible, and neither supplies an extra nonconcentrated
+ancestor or strict count/weight descent. The argument reuses SO1,
+DP9/SI1, comparable-class disjointness, divisor closure and irredundancy.
+No published sieve calculation, old experiment or Lean proof is repeated.
+
+## 75. One nonconcentrated prime gives a common two-root private source
+
+Keep one EB1 family with H=1 and R={p}; CP17 places p in {5,7,11,13}.
+Let X_i be the complete carrier of its concentrated support group S_i,
+and let A=v_p(Q). Every original p-height and phase is retained.
+The private reset excludes an original label involving primes from
+both S_1 and S_2, since its nonempty private projection would have to
+lie in both singleton colors.
+
+Choose an ORIGINAL private point w_i of A_p at ternary root i, for
+i=1,2; V_p={1,2} provides both. Its full X_i coordinate v_i avoids
+every p-free original cofactor phase supported in S_i, both the
+3-free phases and those of3m. Such an original3m has first-three root i
+by the private reset. Hence the one CRT combination
+
+    v=(v_1,v_2)
+
+simultaneously avoids ALL p-free originals at BOTH live ternary roots.
+A p-free non-pure-three label involves just one concentrated color:
+its 3-free phase is avoided by that color's v_i, while its 3-bearing
+phase is avoided there or has the wrong ternary root. The only pure
+three class is A_3 at root0.
+
+Thus the SAME nonternary, non-p cofactor v belongs to the actual R_p
+source at both roots. At first-p root0 and ANY higher p-tail, both
+lifts are private to A_p. This joint source uses the proved factor
+supports; it does not combine arbitrary unrelated private records.
+
+### Both colors occupy almost every nonzero p-root at that source
+
+Section73's pruning gives, for each i, whole coverage of root i by
+originals with nonternary support in {p} union S_i. This surviving
+union is independent of the other color's coordinates, so it remains
+a whole cover when they are set to the chosen v_(3-i). Both covering
+statements therefore hold at the common v.
+
+Fix a nonzero first-p root r. Originals in this surviving family that
+contain no S_i factor are pure p^a or3p^a. The original p is absent.
+Unless original3p has ternary root i AND first-p root r, every active
+class of those two types has a>=2. Their total relative p-tail measure
+over r is at most
+
+    2 sum_(a=2..A) p^(1-a)
+      =2(1-p^(1-A))/(p-1)<1.
+
+This includes the actual finite heights and allows overlaps. Whole
+coverage thus requires an actual original containing p and a prime
+of S_i, with first-p root r and its S_i cofactor phase equal to v_i.
+This holds simultaneously at the SAME v for both colors and every
+nonzero p-root, with at most one exceptional (i,r) cell supplied by
+the single original3p if present. In particular, both S_i are nonempty.
+
+The forced mixed original may have any actual p-exponent; exponent one
+has not been forced. Different roots require different originals, but
+no new numerical inventory or Hall slot is created. The shared pure-p
+classes have not been charged twice.
+
+The existing Report364 SI2 also gives F_p empty. A hypothetical m in F_p
+would satisfy V_(pm)=V_p={1,2}. A factor3 in m fixes a ternary root,
+and any concentrated prime factor forces a singleton private projection.
+Since p does not divide m and every other nonternary prime is
+concentrated, no such m>1 exists. This is a direct SI2/reset consumer,
+not another singleton-root theorem.
+
+### Pure-power private points survive exactly on their original colors
+
+Use the labelled surviving family in root i, before the affine
+coordinate change, keeping its original provenance. For every original
+pure p^a, its private set in this family equals
+
+    projection_(p,X_i)[P_(p^a) intersect {three root i}].
+
+Projection preserves absence of all retained originals. Conversely,
+lift a private point of the surviving family by setting every
+opposite-color q at its singleton3q root. All discarded originals
+vanish, while membership in retained originals is unchanged. The lift
+is an original private point of p^a at root i. Consequently
+
+    p^a is private in quotient i iff i belongs to V_(p^a).
+
+Every pure p^a concentrated only in the opposite color can be removed
+from this quotient SIMULTANEOUSLY. The removed APs are pairwise disjoint
+by comparable-original disjointness. A point losing coverage would
+therefore belong to exactly one removed class and be private to it,
+contrary to the displayed equivalence. The resulting quotient covers.
+
+This cannot delete original p, whose private points project to both
+quotients. An original3p^a active in root i also retains an original
+private point. Neither quotient becomes numerically distinct: S_i is
+nonempty, and for any q in S_i, DP9 supplies the actual q and3q pair;
+neither is a pure-p deletion, so their two quotient classes remain.
+Thus these certified deletions do not make the two supports disjoint
+or remove every repeated numerical modulus. Section71's exact deficit
+still uses the actual nonmonotone I_0, with no nonpure nonconcentrated
+ancestor in this branch. A further operation or estimate is required
+for strict descent. No experiment, new sieve bound or Lean verification
+is asserted.
+
+## 76. Existing Simpson cuts constrain each actual color seed
+
+Keep CP1--CP5's all-concentrated two-color EB1 family at arbitrary H.
+Let D_i consist of its original labels with nonempty nonternary support
+in S_i, and n_i=|D_i|. Define
+
+    Q_i=product_(p in S_i)p^H_p,
+    E_i=sum_(p in S_i)H_p(p-1),
+
+using every full ORIGINAL height H_p. Both S_i are nonempty by CP3.
+Let g_i count the owned original pure-three guards of height at least
+two, and h_i be the ternary height of CP9's actual seed: the maximum
+of1 and the ternary heights in D_i and its owned guards. Its exact
+period is3^h_i Q_i. In particular, every original pure p^H_p is
+retained, so no nonternary height has disappeared.
+
+### Both closing classes also satisfy the minimal-cover hypothesis
+
+CP9 gives whole coverage and a private point for every retained
+original. For either added modulus3 closing class, take the S_i
+projection of the cofactor of an original private point of A_3.
+It avoids every retained3-free original. At that closing root, all
+retained3-bearing originals, owned pure guards and the other closing
+class are inactive. Thus both added classes also have private points,
+and the whole seed is inclusion-minimal despite its repeated modulus3.
+
+Reuse Simpson's Theorem2 exactly as retained in
+[Report343, section2](../../321-384/343-original-prefix-sat-reductions-and-transport-obstructions.md)
+and [the existing divisor-cut citation](../../../../../../Library/Arith/mcnewsetty2026covering.md#4-lemma-31-is-already-supplied-by-the-existing-divisor-cut):
+
+    Dcut|Qseed, Dcut!=Qseed
+      ==> #{seed classes whose modulus does not divide Dcut}
+            >=1+f(Qseed/Dcut),
+    f(u)=sum_p v_p(u)(p-1).
+
+Numerical multiplicity one is not a hypothesis. For1<=a<=h_i and
+0<=c_p<=H_p, choose Dcut=3^a product_(p in S_i)p^c_p. Let K_i(a,c)
+count the UNION of actual d in D_i satisfying v_3(d)>a or v_p(d)>c_p
+for at least one p in S_i. A label crossing several thresholds is
+counted once. Let G_i(a) count owned pure guards above height a.
+The two closing classes divide Dcut since a>=1. Whenever
+
+    2(h_i-a)+sum_(p in S_i)(H_p-c_p)(p-1)>0,
+
+the cut is proper and gives
+
+    K_i(a,c)+G_i(a)
+      >=1+2(h_i-a)+sum_(p in S_i)(H_p-c_p)(p-1).      (SC1)
+
+Taking a=1 and all c_p=0 is proper because S_i is nonempty. Every
+label in D_i is counted, yielding
+
+    n_i+g_i >=2h_i+E_i-1.                            (SC2)
+
+The period here belongs to the actual minimal seed; no single
+original modulus is assumed to contain all of Q_i.
+
+### An existing cut gives an additional flat-construction budget test
+
+If color i is flat in CP10's sense, its opposite seed has h_op=H
+and g_op=H-1. SC2 gives
+
+    n_op >=H+E_op.                                  (SC3)
+
+This also follows DIRECTLY from the original family's Simpson cut
+Dcut=3Q_i. Its counted labels are exactly the n_op opposite nonpure
+originals and H-1 higher pure-three originals, and Q/Dcut=3^(H-1)Q_op.
+SC3 is a consumer of the retained full divisor-cut theorem, not a new
+Simpson inequality.
+
+For ell in S_op put B_ell=(ell-2)b_i+2ell-2, using CP11's actual flat
+count b_i. The unchanged HSW output has
+
+    n_old-n_new=n_op+H-1-B_ell.
+
+Together with the existing top-fan bound n_op>=2(H+1), SC3 supplies
+the necessary no-descent condition
+
+    max{3H+1, 2H+E_op-1} <= B_ell.                   (SC4)
+
+The second term is stronger exactly when E_op>H+2. If either lower
+bound exceeds B_ell, the already established HSW construction has
+strictly fewer classes than the original cover. If the ACTUAL counts
+satisfy n_op+H-1=B_ell, CP12's modulus-sum comparison remains necessary.
+Equality of a lower bound with B_ell alone does not imply equal actual
+counts or justify switching to the weight objective.
+
+### The two seeds count each shared pure guard once
+
+Write N for the original class count. Divisor closure and comparable
+disjointness give
+
+    N=H+n_1+n_2,
+    g_1+g_2=H-1,
+    max(h_1,h_2)=H.
+
+Every pure-three power through H is original, and no higher guard can
+lie at A_3's root0. Each belongs to exactly one seed. Adding the two
+SC2 inequalities therefore yields
+
+    N >=2(h_1+h_2)+E_1+E_2-1
+       =1+2H+E_1+E_2+2(min(h_1,h_2)-1).             (SC5)
+
+The first four terms on the second line are the original cover's
+aggregate Simpson bound. If both seeds reach height two or above,
+SC5 strengthens that aggregate bound by at least two classes. This
+does not assert independence from every other existing divisor cut.
+
+More generally, take1<=a<=min(h_1,h_2) with both cuts in SC1 proper.
+All pure guards above a are assigned once, so G_1(a)+G_2(a)=H-a.
+Adding SC1 gives
+
+    K_1(a,c_1)+K_2(a,c_2)
+      >=2+2(h_1+h_2-2a)
+         +sum_(p in S_1 union S_2)(H_p-c_p)(p-1)
+         -(H-a).                                   (SC6)
+
+The D_i are disjoint actual inventories. No independent optimization
+or duplicated guard budget enters these inequalities. They do not
+force their own violation, establish all-height support intersection,
+or prove unrestricted noncoverage. These are ordinary applications
+of the existing Simpson and source/HSW results, with no new numerical
+computation or Lean verification.
