@@ -1105,3 +1105,41 @@ $\beta_j\le b_s(2)$ for the corresponding nonzero class minimum, not
 the lower bound needed to pay $B_r$. A phase-zero label adds no cost
 to the phase-word relaxation. The cheap-prime and actual-support
 conditions therefore remain distinct, as does the full weighted budget.
+
+## A pinned implementation reference and its interface limits
+
+The archived MOVA arithmetic source contains an implementation attributed
+to Yvonne Anne Oswald:
+[`quarticb3` in `winter_04_05_oswald/tester/quartic2.c`](https://github.com/sduc/undeniable-signature/blob/c8277fa71be292890a6d6733aff392372e1be02f/winter_04_05_oswald/tester/quartic2.c#L489),
+at commit `c8277fa71be292890a6d6733aff392372e1be02f`.
+It returns a Gaussian fourth root, with zero for a common factor,
+rather than a Boolean quartic-residuosity flag. The finite controls
+below used this source unchanged, compiled with C/GMP and an external
+`stdlib.h` include for its `abs` declaration.
+
+| Input $V,t$ | Primary oriented denominator $\eta$ | Observed $(2/\eta)_4$ |
+|---|---|---|
+| $13,8$ | $3-2i$ | $i$ |
+| $233,144$ | $13+8i$ | $1$ |
+| $4181,2584$ | $55-34i$ | $i$ |
+| $25,7$ | $-3+4i$ | $-1$ |
+
+The last row is a generic repeated-denominator control, not a Fibonacci
+modulus: the selected prime above five occurs twice. Removing that
+multiplicity would change the phase at two. Unit associates leave each
+symbol unchanged, conjugation reverses it, and the rational Gaussian
+denominator $V$ gives one on the rational unit domain, as required by
+the preceding source translation.
+
+The upstream functions use mutable GMP storage inside structs passed
+by value; those copies are not independent copies of their integer
+buffers. In particular, `primaryExp` changes its inputs and returns the
+removed unit exponent in $z=i^j z_{\mathrm{primary}}$. The interface
+controls used fresh per-query processes, so they do not certify an
+ownership-safe persistent cache or general software correctness. A
+caller retaining $\eta$ must supply independently owned working inputs.
+The implementation uses exact-norm Euclidean division; the cited
+quadratic bit bound must not be attributed to it. Its code license has
+not been verified, and no upstream code is vendored here. These controls
+support reuse of the published arithmetic interface, not a new algorithm,
+a Lean result, or a strict Robin budget.
