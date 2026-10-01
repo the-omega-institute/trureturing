@@ -42,14 +42,12 @@ run_cmd do
     name != `LeanInformationAudit.Tests.Seal.M3 &&
       LeanInformationAudit.Repository.isModule name
   logInfo m!"DTR_M3_MODULE_SET {(toJson (inRepo.map Name.toString |>.qsort (· < ·))).compress}"
-  -- The source-bound contract adds Registry.SourceScope, SourceOperands and
+  -- The source-bound closure includes Registry.SourceScope, SourceOperands and
   -- SourceContract through Assessment, plus Interface.SourceSelection through Records.
-  -- The infinite-domain support adds one D5/Impl module, so the split closure's
-  -- 138 = 133 D5/Impl + 5 Interface becomes 143 = 137 D5/Impl + 6 Interface.
-  -- The retired `LeanInformationAudit.Syntax` left the closure; M3 now assesses
-  -- its recorded inputs through the explicit test helper
-  -- `LeanInformationAudit.Tests.Assessment`, which adds itself and
-  -- `D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates`: 144.
+  -- It also includes infinite-domain support, the test helper
+  -- `LeanInformationAudit.Tests.Assessment` used to assess M3's recorded inputs,
+  -- and `D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates`.
+  -- The repository closure is bounded by 144 modules and includes 6 Interface modules.
   let interface := inRepo.filter ((`LeanInformationAuditInterface).isPrefixOf ·)
   if inRepo.size > 144 || interface.size != 6 then
     throwError "ImportCost: M3 closure changed: modules={inRepo.size} interface={interface.size}"
