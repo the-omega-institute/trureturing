@@ -337,26 +337,6 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
     by_cases hnext : i + 1 ∈ Nat.zeckendorf n
     · exact False.elim (hno hnext)
     · simp [hnext]
-  have sum_toFinset_fib (l : List Nat) (f : Nat → Nat)
-      (hnodup : l.Nodup) :
-      (∑ j ∈ l.toFinset, f j) = (l.map f).sum := by
-    induction l with
-    | nil => simp
-    | cons a l ih =>
-        obtain ⟨ha, hl⟩ := List.nodup_cons.mp hnodup
-        simp [ha, ih hl]
-  have gap_nodup (l : List Nat) :
-      l.Pairwise (fun a b => b + 2 ≤ a) → l.Nodup := by
-    induction l with
-    | nil => simp
-    | cons a l ih =>
-        intro h
-        obtain ⟨ha, hl⟩ := List.pairwise_cons.mp h
-        apply List.nodup_cons.mpr
-        refine ⟨?_, ih hl⟩
-        intro hm
-        have hh := ha a hm
-        omega
   have support_offset (n r : Nat)
       (hbound : ∀ k ∈ Nat.zeckendorf n, k < 3 * (r + 1))
       (x : IndependentWord (r + 1))
@@ -366,7 +346,8 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
     have hp := Nat.isZeckendorfRep_zeckendorf n
     rw [List.IsZeckendorfRep, List.isChain_iff_pairwise] at hp
     have hlo := canonical_two_le n
-    have hnd := gap_nodup _ (List.pairwise_append.mp hp).1
+    have hnd : (Nat.zeckendorf n).Nodup :=
+      (List.pairwise_append.mp hp).1.imp (fun {a b} hab => (show a ≠ b by omega))
     have hs (f : Nat → Nat) :
         (∑ i : Fin (3 * (r + 1) - 1), if i.val + 1 ∈ Nat.zeckendorf n
           then f (i.val + 1) else 0) =
@@ -395,7 +376,8 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
     have hrewrite := hs (fun k => Nat.fib (k - 1) * u + Nat.fib k * v)
     simp only [Nat.add_sub_cancel] at hrewrite
     rw [hrewrite, Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.sum_mul,
-      sum_toFinset_fib _ _ hnd, sum_toFinset_fib _ _ hnd, Nat.sum_zeckendorf_fib]
+      List.sum_toFinset (fun k => Nat.fib (k - 1)) hnd,
+      List.sum_toFinset Nat.fib hnd, Nat.sum_zeckendorf_fib]
     rfl
   have value_linear (bs : List Bool) (a b c d u v : ZMod H) :
       value (a * u + b * v) (c * u + d * v) bs =
