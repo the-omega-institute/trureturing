@@ -13507,3 +13507,104 @@ the opposite color, and also to a local three-class color batch in
 a globally nonsingular source. The opposite remainder may indeed
 have all four roots, so FP1 does not exclude that remaining case or
 settle unrestricted Erdos7. No Lean verification is asserted.
+
+## 103. Three top classes forbid two kinds of coherent retained phase
+
+Keep R=empty, a global terminal-singular batch of exactly three classes,
+and opposite minimum prime5. By sections97--100, H>=12. Its top cofactor
+ideal has exactly three members and is either{1,p,r} for distinct primes
+p,r>5, or{1,p,p^2}. This follows from divisor closure: a composite third
+member can have no proper nonunit divisor other than p, so is p^2.
+
+Put M=pr or p^2 respectively. All three top parents have common lower
+ternary prefix u mod3^(H-1). Their cofactor phases are compatible by
+the already reused singular-elimination theorem. Let alpha modM be their
+intersection phase. The entire top-deletion obligation E_T lies in
+
+    C_M={x:x=u mod3^(H-1), x=alpha modM}.
+
+LC1's existing joint-replacement argument forces original3^(H-1)M:
+if absent, the single C_M would replace the entire three-class batch
+with a strict count saving. Its lower ancestors3^a M are therefore
+original. This is only a reused inventory fact; the payoffs below
+include the OLD ancestor's entire liability.
+
+### Equal cofactor phase at any positive ternary height is impossible
+
+Suppose A_d is the original d=3^a M, 1<=a<=H-1, and
+
+    a_d=alpha modM.                                 (AC1)
+
+It has the same first-three root i as the top batch, by concentration.
+Delete the three top parents AND A_d. Every point missed by the retained
+family lies in C_M union A_d: a missed point outside A_d already missed
+every lower-height original and hence belongs to E_T.
+
+Retain original A_5=0 mod5 unchanged. When M=pr, use the four fresh
+numerical labels
+
+    5p, 15p, 5r, 15r.
+
+Assign them respectively5-residues1,2,3,4. At p or r use alpha's
+corresponding actual phase; at3, when present, use root i. Every point
+of C_M union A_d obeys all these conditions apart from its chosen5-root,
+so A_5 and the four new APs cover that entire union.
+
+For M=p^2 use instead5p,15p,5p^2,15p^2, with alpha read at the indicated
+depth. The same source argument applies. All four labels are pairwise
+distinct and absent from the entire original inventory by CP1: each
+contains5 and a prime from the opposite color. The output is a whole
+distinct odd cover at the SAME class count.
+
+The new modulus sum is20(p+r) or20(p+p^2). The deleted top batch alone
+has sum3^H(1+p+r) or3^H(1+p+p^2), respectively, and H>=12. Thus the
+modulus sum strictly decreases, contradicting EB1. AC1 is impossible.
+
+Consequently every original3^a M with1<=a<=H-1 has a cofactor phase
+different from alpha. At a=1 this already follows from the nonempty
+joint remainder and the fixed color root; the new repair extends the
+restriction to ancestors whose ternary prefixes can diverge deeper.
+
+### A coarser prime phase with a shared depth-three prefix is also excluded
+
+Let b=alpha modp, where p is either singleton prime whose top parent
+is present. Suppose ANY retained original A_d, not necessarily an M
+ancestor, satisfies
+
+    27p divides d, a_d=u mod27, a_d=b modp.         (AC2)
+
+Both C_M and A_d lie in the one actual cylinder V given by those27p
+conditions. Delete A_d together with the three top parents. As before,
+their exact joint obligation lies in C_M union A_d, hence in V.
+
+For a=0,1,2,3, add the complete CRT AP of modulus5*3^a*p with
+3-prefix u mod3^a, p-phase b, and5-residue a+1. Original A_5 covers
+residue0; the four new APs cover all of V. CP1 again guarantees fresh
+distinct numerical labels. This is another four-for-four replacement.
+
+Its new modulus sum is5p(1+3+9+27)=200p. The deleted top batch alone
+has modulus sum greater than3^H p>200p. Thus AC2 also contradicts EB1.
+For M=pr the restriction applies separately at p and r; for M=p^2
+it uses the common first-p phase of the two nonpure top parents.
+
+### Reuse and remaining gap
+
+These are PH1--PH2 replacements with CP1's actual vacant cross-color
+palette. The general joint-liability and congruence-hull methods are
+already present in LC1, DR3--DR5 and NF57. DR5 itself additionally needs
+a crowded descendant phase group and a member dividing the parent's
+COMPLETE private hull. Neither premise is supplied for an arbitrary
+ancestor in AC1 or retained original in AC2. The replacements above use their own stated phase premises.
+
+The two restrictions do not force one of these coherent phases to
+exist. In the remaining case the occupied ancestors differ on M, and
+every retained class divisible by27p in the top first-p phase has a
+different modulo27 prefix. Classes of ternary height below three are
+not excluded by AC2. No bound on
+that remaining joint liability is supplied. In particular, three fresh
+cross-color APs do not automatically cover four surviving5-roots; their
+existence requires further actual residual information. This is a
+conditional arithmetic restriction, not an all-cover contradiction or
+a claim that a locally permissible phase configuration is realizable.
+
+No numerical enumeration or new Lean verification is asserted.
