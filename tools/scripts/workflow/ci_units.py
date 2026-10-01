@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Resolve explicitly registered CI inputs using Python 3's standard library."""
 import argparse
+import hashlib
 import json
 from pathlib import Path, PurePosixPath
 import re
+import subprocess
 import sys
 
 
@@ -116,7 +118,7 @@ def project_closure(projects, path, closure_excludes=()):
 
 def load_units(root):
     manifest = read_json(root / "Meta/ci-units.json")
-    exact_keys(manifest, ("schema", "shared_inputs", "closure_excludes", "units"), "CI manifest")
+    exact_keys(manifest, ("schema", "shared_inputs", "closure_excludes", "units", "caches"), "CI manifest")
     if manifest["schema"] != "ci-units-v1":
         raise RegistrationError("invalid CI unit schema")
     shared = patterns(manifest["shared_inputs"], "shared_inputs")
@@ -164,7 +166,56 @@ def load_units(root):
         units[unit_id] = (unit, set(shared) | {workflow} | closures[project] | set(unit["inputs"]))
     if list(units) != sorted(units):
         raise RegistrationError("units must be sorted by id")
-    return units
+    return units, load_caches(manifest["caches"], projects)
+
+
+def load_caches(caches, projects):
+    """Build caches keyed by the full compile closure of a registered project.
+
+    closure_excludes does not apply: content compiled into the build is an input
+    of its outputs even when units do not re-run for it.
+    """
+    if not isinstance(caches, dict):
+        raise RegistrationError("caches must be an object")
+    result = {}
+    for name, cache in caches.items():
+        if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", name):
+            raise RegistrationError(f"invalid cache name: {name!r}")
+        exact_keys(cache, ("project", "inputs"), f"cache {name}")
+        project = repo_path(cache["project"], "project", ".csproj")
+        if project not in projects:
+            raise RegistrationError(f"cache {name}: unregistered project: {project}")
+        patterns(cache["inputs"], f"cache {name} inputs", includes_only=True)
+        result[name] = project_closure(projects, project) | set(cache["inputs"])
+    if list(result) != sorted(result):
+        raise RegistrationError("caches must be sorted by name")
+    return result
+
+
+def pattern_regex(pattern):
+    return re.compile(re.escape(pattern).replace(r"\*", ".*").replace(r"\?", "."))
+
+
+def fingerprint(root, inputs):
+    """sha256 over (path, blob id) of every tracked file the patterns select."""
+    listing = subprocess.run(["git", "-C", str(root), "ls-files", "-s", "-z"],
+                             capture_output=True, check=False)
+    if listing.returncode != 0:
+        raise RegistrationError("cannot list tracked files: " + listing.stderr.decode(errors="replace").strip())
+    selected = [pattern_regex(pattern) for pattern in sorted(inputs)]
+    digest = hashlib.sha256()
+    count = 0
+    for record in sorted(listing.stdout.split(b"\0")):
+        if not record:
+            continue
+        meta, _, path_bytes = record.partition(b"\t")
+        path = path_bytes.decode("utf-8", errors="strict")
+        if any(regex.fullmatch(path) for regex in selected):
+            digest.update(path_bytes + b"\0" + meta.split()[1] + b"\n")
+            count += 1
+    if count == 0:
+        raise RegistrationError("cache inputs select no tracked file")
+    return digest.hexdigest()
 
 
 def main():
@@ -173,12 +224,28 @@ def main():
     resolve = commands.add_parser("resolve")
     resolve.add_argument("unit")
     resolve.add_argument("--paths-file", type=Path, required=True)
+    # github.workflow_ref of the run: the calling workflow must be the one registered for the unit.
+    resolve.add_argument("--workflow-ref", required=True)
+    cache = commands.add_parser("fingerprint")
+    cache.add_argument("name")
     args = parser.parse_args()
     try:
-        units = load_units(Path(__file__).resolve().parents[3])
+        root = Path(__file__).resolve().parents[3]
+        units, caches = load_units(root)
+        if args.command == "fingerprint":
+            if args.name not in caches:
+                raise RegistrationError(f"unknown cache: {args.name}")
+            print(fingerprint(root, caches[args.name]))
+            return 0
         if args.unit not in units:
             raise RegistrationError(f"unknown unit: {args.unit}")
         unit, inputs = units[args.unit]
+        caller = re.fullmatch(r"[^/@]+/[^/@]+/(\.github/workflows/[^/@]+\.yml)@\S+", args.workflow_ref)
+        if caller is None:
+            raise RegistrationError(f"invalid workflow ref: {args.workflow_ref!r}")
+        if caller.group(1) != unit["workflow"]:
+            raise RegistrationError(
+                f"workflow {caller.group(1)} does not own unit {args.unit} (registered {unit['workflow']})")
         includes = sorted(pattern for pattern in inputs if not pattern.startswith("!"))
         excludes = sorted(pattern for pattern in inputs if pattern.startswith("!"))
         args.paths_file.write_text("\n".join(includes + excludes) + "\n", encoding="utf-8")
@@ -187,7 +254,7 @@ def main():
         print(f"lean={unit['lean']}")
         print(f"dotnet={str(unit['dotnet']).lower()}")
         return 0
-    except (RegistrationError, OSError) as error:
+    except (RegistrationError, OSError, UnicodeError) as error:
         print(f"CI_UNITS_ERROR {error}", file=sys.stderr)
         return 2
 

@@ -727,7 +727,7 @@ internal static partial class FileMapPolicy
         // Validate this projection's shape; ci_units.py owns complete unit admission.
         using var document = JsonDocument.Parse(source);
         var root = document.RootElement;
-        RequireKeys(root, ["schema", "shared_inputs", "closure_excludes", "units"]);
+        RequireKeys(root, ["schema", "shared_inputs", "closure_excludes", "units", "caches"]);
         if (root.GetProperty("schema").ValueKind != JsonValueKind.String
             || root.GetProperty("schema").GetString() != "ci-units-v1"
             || root.GetProperty("units").ValueKind != JsonValueKind.Array)
@@ -735,6 +735,14 @@ internal static partial class FileMapPolicy
         RequirePatterns(root.GetProperty("shared_inputs"));
         RequirePatterns(root.GetProperty("closure_excludes"));
         var content = new List<string>();
+        if (root.GetProperty("caches").ValueKind != JsonValueKind.Object)
+            throw new InvalidDataException("invalid CI unit selection shape");
+        foreach (var cache in root.GetProperty("caches").EnumerateObject())
+        {
+            RequireKeys(cache.Value, ["project", "inputs"]);
+            RequirePatterns(cache.Value.GetProperty("inputs"));
+            content.AddRange(JsonStrings(cache.Value.GetProperty("project")));
+        }
         foreach (var unit in root.GetProperty("units").EnumerateArray())
         {
             RequireKeys(unit, ["id", "workflow", "project", "test", "lean", "dotnet", "inputs"]);

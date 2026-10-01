@@ -26,6 +26,8 @@ env:
   REPORT: .lake/build/stratalint/raw-lean-report.json
   CLI: tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll
   SCRIBE: tools/StrataLint.Scribe.Documents/bin/Release/net10.0/StrataLint.Scribe.Documents.dll
+  # The judge build recipe: the build step runs it and the judge cache key hashes it.
+  JUDGE_BUILD_ARGS: tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -p:RestoreLockedMode=true -nologo
 
 jobs:
   current:
@@ -39,7 +41,9 @@ jobs:
           persist-credentials: false
       - id: current_unit
         name: Resolve current inputs
-        run: python3 tools/scripts/workflow/ci_units.py resolve current --paths-file "$RUNNER_TEMP/current-hit-paths" >> "$GITHUB_OUTPUT"
+        env:
+          WORKFLOW_REF: ${{ github.workflow_ref }}
+        run: python3 tools/scripts/workflow/ci_units.py resolve current --paths-file "$RUNNER_TEMP/current-hit-paths" --workflow-ref "$WORKFLOW_REF" >> "$GITHUB_OUTPUT"
       - id: entry
         name: Check current inputs
         env:
@@ -51,7 +55,9 @@ jobs:
       - id: delta_unit
         name: Resolve delta inputs
         if: github.event_name == 'pull_request' && steps.entry.outputs.hit == 'true'
-        run: python3 tools/scripts/workflow/ci_units.py resolve delta --paths-file "$RUNNER_TEMP/delta-hit-paths" >> "$GITHUB_OUTPUT"
+        env:
+          WORKFLOW_REF: ${{ github.workflow_ref }}
+        run: python3 tools/scripts/workflow/ci_units.py resolve delta --paths-file "$RUNNER_TEMP/delta-hit-paths" --workflow-ref "$WORKFLOW_REF" >> "$GITHUB_OUTPUT"
       - id: delta_entry
         name: Check delta inputs
         if: github.event_name == 'pull_request' && steps.entry.outputs.hit == 'true'
@@ -69,12 +75,27 @@ jobs:
           if [[ "$DELTA_OUTCOME" == success ]]; then
             case "$DELTA_HIT" in true|false) ;; *) echo "CI_ENTRY_ERROR delta hit output is '$DELTA_HIT'" >&2; exit 2 ;; esac
           fi
-      # The judge build reads tools/, the Blueprint definitions compiled into
-      # StrataLint.Scribe.Documents and the root build configuration. The key is
-      # taken before anything is built, and an exact hit skips the build.
+      # The judge cache key binds the resolved SDK, the build recipe and the
+      # registered compile inputs of the judge (`ci_units.py fingerprint judge`:
+      # the project's registered closure, Blueprint definitions included, plus the
+      # analyzer files, embedded resources and root build configuration listed in
+      # Meta/ci-units.json). It is taken before anything is built; an exact hit
+      # skips the build.
+      - if: steps.entry.outputs.hit == 'true'
+        uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+          cache: true
+          cache-dependency-path: '**/packages.lock.json'
       - id: judge_key
         if: steps.entry.outputs.hit == 'true'
-        run: echo "key=judge-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('tools/**', '!tools/**/bin/**', '!tools/**/obj/**', '!tools/**/.lake/**', 'Blueprint/**/*.scribe.cs', 'Directory.Build.props', 'Directory.Packages.props', 'global.json', '.editorconfig') }}" >> "$GITHUB_OUTPUT"
+        run: |
+          sdk="$(dotnet --version)"
+          [[ "$sdk" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]] || { echo "unexpected SDK version '$sdk'" >&2; exit 2; }
+          recipe="$(printf '%s' "$JUDGE_BUILD_ARGS" | sha256sum | cut -c1-16)"
+          inputs="$(python3 tools/scripts/workflow/ci_units.py fingerprint judge)"
+          [[ "$inputs" =~ ^[0-9a-f]{64}$ ]] || { echo "unexpected judge fingerprint '$inputs'" >&2; exit 2; }
+          echo "key=judge-${{ runner.os }}-${{ runner.arch }}-sdk$sdk-$recipe-$inputs" >> "$GITHUB_OUTPUT"
       - id: judge
         if: steps.entry.outputs.hit == 'true'
         continue-on-error: true
@@ -84,12 +105,6 @@ jobs:
             tools/StrataLint.Cli/bin/Release/net10.0
             tools/StrataLint.Scribe.Documents/bin/Release/net10.0
           key: ${{ steps.judge_key.outputs.key }}
-      - if: steps.entry.outputs.hit == 'true'
-        uses: actions/setup-dotnet@v5
-        with:
-          global-json-file: global.json
-          cache: true
-          cache-dependency-path: '**/packages.lock.json'
       - id: keys
         if: steps.entry.outputs.hit == 'true'
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
@@ -135,7 +150,7 @@ jobs:
         run: make lean-report
       - name: Build the judge
         if: steps.entry.outputs.hit == 'true' && steps.judge.outputs.cache-hit != 'true'
-        run: dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -p:RestoreLockedMode=true -nologo
+        run: dotnet build $JUDGE_BUILD_ARGS
       # The judge outputs are a function of the keyed sources, so they are saved
       # as soon as the build succeeds.
       - if: ${{ success() && steps.entry.outputs.hit == 'true' && env.CACHE_WRITES == 'true' && steps.judge.outputs.cache-hit != 'true' }}

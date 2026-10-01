@@ -8,7 +8,11 @@ Each `ci-*.yml` workflow is an independent required-check unit.
 `Meta/ci-units.json`, registered in FILEMAP, is the authority for CI selection.
 `ci_units.py` expands shared inputs, the unit workflow, explicitly registered
 project includes and transitive references, and unit inputs into bash patterns.
-Project exclusions do not narrow this selection. `ci-entry.sh` consumes the
+Project exclusions do not narrow this selection; registered includes under a
+`closure_excludes` prefix (Blueprint content, judged by `current`) stay out of
+project closures unless a unit lists them in its inputs. The resolver requires the
+run's `github.workflow_ref` and rejects a unit called from any workflow other than
+the one registered for it. `ci-entry.sh` consumes the
 resolved patterns through `CI_HIT_PATHS_FILE`; the entry verifies
 the checked-out `GITHUB_SHA`, the complete event range and the pull-request merge
 parents before deciding whether the unit is hit. A miss skips that unit and exits

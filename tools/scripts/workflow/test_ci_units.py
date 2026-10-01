@@ -32,7 +32,9 @@ class CiUnitsTests(unittest.TestCase):
              "include": ["shared/Exact.cs"], "exclude": [], "references": []},
         ]}
         self.manifest = {"schema": "ci-units-v1", "shared_inputs": ["global.json"],
-                         "closure_excludes": [], "units": [self.unit()]}
+                         "closure_excludes": [], "units": [self.unit()],
+                         "caches": {"fixture-build": {"project": "tests/T/T.csproj",
+                                                      "inputs": ["config/*.props"]}}}
 
     @staticmethod
     def unit():
@@ -40,13 +42,15 @@ class CiUnitsTests(unittest.TestCase):
                 "project": "tests/T/T.csproj", "test": True, "lean": "toolchain",
                 "dotnet": True, "inputs": ["!linked/Omit.cs", "assets/*", "global.json"]}
 
-    def resolve(self, unit="fixture", manifest_text=None):
+    def resolve(self, unit="fixture", manifest_text=None,
+                workflow_ref="owner/repo/.github/workflows/ci-fixture.yml@refs/pull/7/merge"):
         (self.root / "Meta/engineering-projects.json").write_text(json.dumps(self.projects))
         (self.root / "Meta/ci-units.json").write_text(
             json.dumps(self.manifest) if manifest_text is None else manifest_text)
         self.paths = self.root / "hit paths"
         return subprocess.run([sys.executable, str(self.script), "resolve", unit,
-                               "--paths-file", str(self.paths)], cwd=tempfile.gettempdir(),
+                               "--paths-file", str(self.paths), "--workflow-ref", workflow_ref],
+                              cwd=tempfile.gettempdir(),
                               capture_output=True, text=True)
 
     def assert_error(self, result, message):
@@ -174,6 +178,81 @@ class CiUnitsTests(unittest.TestCase):
             with self.subTest(value=value):
                 self.manifest["closure_excludes"] = value
                 self.assert_error(self.resolve(), "closure_excludes")
+
+    def test_calling_workflow_must_own_the_unit(self):
+        other = self.root / ".github/workflows/ci-other.yml"
+        other.write_text("opaque synthetic workflow\n")
+        self.assert_error(
+            self.resolve(workflow_ref="owner/repo/.github/workflows/ci-other.yml@refs/heads/dev"),
+            "does not own unit")
+
+    def test_malformed_workflow_ref(self):
+        for ref in ("", "owner/repo/.github/workflows/ci-fixture.yml",
+                    "owner/repo/tools/ci-fixture.yml@refs/heads/dev", "ci-fixture.yml@refs/heads/dev"):
+            with self.subTest(ref=ref):
+                self.assert_error(self.resolve(workflow_ref=ref), "workflow ref")
+
+    def test_registered_workflow_ref_resolves_on_any_ref(self):
+        for ref in ("o/r/.github/workflows/ci-fixture.yml@refs/heads/dev",
+                    "o/r/.github/workflows/ci-fixture.yml@refs/pull/9/merge"):
+            with self.subTest(ref=ref):
+                self.assertEqual(self.resolve(workflow_ref=ref).returncode, 0)
+
+    def fingerprint(self, name="fixture-build"):
+        (self.root / "Meta/engineering-projects.json").write_text(json.dumps(self.projects))
+        (self.root / "Meta/ci-units.json").write_text(json.dumps(self.manifest))
+        return subprocess.run([sys.executable, str(self.script), "fingerprint", name],
+                              cwd=tempfile.gettempdir(), capture_output=True, text=True)
+
+    def commit_tree(self, files):
+        for path, text in files.items():
+            target = self.root / path
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(text)
+        git = ["git", "-C", str(self.root), "-c", "user.name=t", "-c", "user.email=t@t"]
+        if not (self.root / ".git").exists():
+            subprocess.run(git + ["init", "-q"], check=True)
+        subprocess.run(git + ["add", "-A"], check=True)
+
+    def base_tree(self):
+        return {"tests/T/A.cs": "a", "src/P/x/Nested/B.cs": "b", "shared/Exact.cs": "c",
+                "config/build.props": "p", "unrelated/Other.cs": "u", "src/P/P.csproj": "p",
+                "tests/T/T.csproj": "t", "src/D/D.csproj": "d"}
+
+    def test_fingerprint_follows_compile_inputs_only(self):
+        self.commit_tree(self.base_tree())
+        first = self.fingerprint()
+        self.assertEqual(first.returncode, 0, first.stderr)
+        self.assertRegex(first.stdout, r"^[0-9a-f]{64}\n$")
+        self.commit_tree({"unrelated/Other.cs": "changed"})
+        self.assertEqual(self.fingerprint().stdout, first.stdout)
+        for path in ("shared/Exact.cs", "src/P/x/Nested/B.cs", "config/build.props", "tests/T/T.csproj"):
+            with self.subTest(path=path):
+                self.commit_tree({path: "changed " + path})
+                changed = self.fingerprint()
+                self.assertEqual(changed.returncode, 0, changed.stderr)
+                self.assertNotEqual(changed.stdout, first.stdout)
+                first = changed
+
+    def test_fingerprint_ignores_closure_excludes(self):
+        self.manifest["closure_excludes"] = ["shared/"]
+        self.commit_tree(self.base_tree())
+        first = self.fingerprint()
+        self.commit_tree({"shared/Exact.cs": "changed"})
+        self.assertNotEqual(self.fingerprint().stdout, first.stdout)
+
+    def test_fingerprint_rejects_unknown_or_malformed_caches(self):
+        self.commit_tree(self.base_tree())
+        result = self.fingerprint("missing")
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("unknown cache", result.stderr)
+        for caches in ({"fixture-build": {"project": "src/X/X.csproj", "inputs": []}},
+                       {"fixture-build": {"project": "tests/T/T.csproj"}},
+                       {"fixture-build": {"project": "tests/T/T.csproj", "inputs": [1]}}, []):
+            with self.subTest(caches=caches):
+                self.manifest["caches"] = caches
+                result = self.fingerprint()
+                self.assertEqual(result.returncode, 2, result.stdout)
 
     def test_diamond_references_are_deduplicated(self):
         self.projects["projects"][0]["references"].append("src/D/D.csproj")

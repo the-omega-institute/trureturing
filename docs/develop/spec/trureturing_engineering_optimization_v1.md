@@ -53,7 +53,7 @@
 | `ExactRate.lean` | 已证明 `escapeNumerator_without_eq` 等式及正增益刻画 | 可直接复用，避免重新枚举每个留一族 |
 | `SealCommand.lean` | 先在局部环境 kernel-check，再一次发布环境；JSON 为输出 | 保留原子性，增强文件发布与编译产物绑定 |
 | `README.md`、缓存归属文档 | 私有工作树、禁止 symlink 共享 `.lake`、已有 clonefile/donor | 不以移除互斥锁或共享可写目录换性能 |
-| `.github/workflows/ci-current.yml` 与拆分的 `ci-*.yml` | 每个 workflow 由自身路径白名单决定是否命中；current 构建一次报告并随项目 buildDir 缓存运输 | 单独处理可选缓存传输失败；真正检查失败仍阻断 |
+| `.github/workflows/ci-current.yml` 与拆分的 `ci-*.yml` | 每个 workflow 按 `Meta/ci-units.json` 登记解析出的路径谓词决定是否命中；current 构建一次报告并随项目 buildDir 缓存运输 | 单独处理可选缓存传输失败；真正检查失败仍阻断 |
 
 上述为源码审查，不是耗时排行。必须先测量各阶段 wall time、CPU、RSS、读写与锁等待，再决定并行度和批量大小。源码显示重复工作，不自动证明它是部署环境的最大耗时。
 

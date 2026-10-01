@@ -2484,5 +2484,18 @@
         "tools/*"
       ]
     }
-  ]
+  ],
+  "caches": {
+    "judge": {
+      "project": "tools/StrataLint.Cli/StrataLint.Cli.csproj",
+      "inputs": [
+        ".editorconfig",
+        "Directory.Build.props",
+        "Directory.Packages.props",
+        "global.json",
+        "tools/Architecture/BannedSymbols*.txt",
+        "tools/StrataLint.Scribe/Vendor/Katex/katex.min.js"
+      ]
+    }
+  }
 }

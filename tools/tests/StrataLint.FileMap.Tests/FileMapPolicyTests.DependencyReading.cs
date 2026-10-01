@@ -27,10 +27,23 @@ public sealed partial class FileMapPolicyTests
         Assert.Single(InspectCiDependencies(document.ToJsonString()));
     }
 
+    [Fact]
+    public void CiCacheProjectRemainsDependency()
+    {
+        var document = CiSelection();
+        document["caches"] = new JsonObject
+        {
+            ["judge"] = new JsonObject { ["project"] = GeneratedInput, ["inputs"] = new JsonArray() },
+        };
+        Assert.Single(InspectCiDependencies(document.ToJsonString()));
+    }
+
     [Theory]
     [InlineData("schema")]
     [InlineData("shared-type")]
     [InlineData("closure-type")]
+    [InlineData("caches-type")]
+    [InlineData("cache-unknown-field")]
     [InlineData("input-type")]
     [InlineData("unknown-field")]
     [InlineData("duplicate-key")]
@@ -42,6 +55,10 @@ public sealed partial class FileMapPolicyTests
             case "schema": document["schema"] = "unknown"; break;
             case "shared-type": document["shared_inputs"] = GeneratedInput; break;
             case "closure-type": document["closure_excludes"] = GeneratedInput; break;
+            case "caches-type": document["caches"] = GeneratedInput; break;
+            case "cache-unknown-field":
+                document["caches"] = JsonNode.Parse("""{"judge":{"project":"p.csproj","inputs":[],"unknown":1}}""");
+                break;
             case "input-type": document["units"]![0]!["inputs"] = GeneratedInput; break;
             case "unknown-field": document["units"]![0]!["unknown"] = GeneratedInput; break;
         }
@@ -51,7 +68,7 @@ public sealed partial class FileMapPolicyTests
     }
 
     private static JsonNode CiSelection() => JsonNode.Parse("""
-        {"schema":"ci-units-v1","shared_inputs":[],"closure_excludes":[],"units":[{
+        {"schema":"ci-units-v1","shared_inputs":[],"closure_excludes":[],"caches":{},"units":[{
           "id":"fixture","workflow":".github/workflows/ci-fixture.yml","project":null,
           "test":false,"lean":"none","dotnet":false,"inputs":[]
         }]}
