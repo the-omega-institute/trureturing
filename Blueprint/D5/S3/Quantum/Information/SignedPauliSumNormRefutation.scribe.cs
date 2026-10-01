@@ -76,7 +76,7 @@ internal sealed class SignedPauliSumNormRefutationDocument : IScribeDocumentDefi
         Formula sign = new Formula.Power(Parenthesized(new Formula.Negate(D(1))),
             new Formula.Apply(beta, [k]));
         Formula term = new Formula.Binary(sign, FormulaBinaryOperator.Multiply, word);
-        Formula range = Seq(Underscore, Grp(Rel(k, FormulaRelationOperator.Equal, D(1))), Caret,
+        Formula range = Seq(Underscore, Grp(k, Sp, Eq, Sp, D(1)), Caret,
             Grp(new Formula.Binary(new Formula.Power(D(4), F.Id("m")), FormulaBinaryOperator.Subtract, D(1))));
         Formula sum = Seq(Sum, range, Sp, term);
         return Disp(Equal(Call(F.Id("signedPauliSum"), beta), sum));
