@@ -11511,6 +11511,7 @@ prime-power palette, A_r intersect A_(r^2) still has modulus r^2,
 so the third row above would repeat the second row's label.
 FL6 remains an unexcluded layout, not a full covering example.
 No additional experiment or Lean verification is asserted.
+
 ## 84. The actual low-cofactor complement imposes a colorwise reciprocal threshold
 
 Keep CP1–CP5's one all-concentrated two-color EB1 original cover, with full ternary height H≥2. For i∈{1,2}, use the complete original cofactor carrier
@@ -11567,3 +11568,53 @@ The strict inequality retains the finite original heights. For p≥7 the right s
 as possible two-prime supports. For the color k not owning9, CM4 leaves only{5,7}: the next largest two-prime Euler limit is3/8 for{5,11}, below5/13. At H=2, CM5 leaves only{5,7} for either color. The supports are disjoint, so they cannot both be two-prime supports. These restrictions do not imply that each color has at least three primes; the finite-height Euler masses on{5,7} can exceed both thresholds in CM5. No new lower bound on the total number of support primes is claimed.
 
 The deduction uses CP5's actual complete-root cover and the same low-cofactor complement as section74, now measuring the entire complement instead of selecting one point. Its measure estimates are elementary product counting and the union bound; it is not another Simpson cut or HSW construction. The HSW budget conditions CP11–CP12 and SC4 remain the existing conditional descent criteria. Arbitrary color supports can have larger divisor reciprocal mass, so CM3–CM4 alone do not exclude the remaining all-concentrated branch or establish a strict count or modulus-sum descent. These are ordinary deductions, with no Lean verification or priority claim.
+
+### The same threshold applies with arbitrary nonconcentrated support
+
+The all-concentrated hypothesis is unnecessary for the measure
+inequality. Keep section73's partition R,S_1,S_2 of the nonternary
+support, with arbitrary H>=1, and set
+
+    P_i=R union S_i,
+    Qhat_i=product_(p in P_i)p^H_p,
+    Rhat_i=sum_(m|Qhat_i,m>1)1/m.
+
+Section74's singleton-root elimination gives whole coverage of root
+i by the actual originals whose nonternary support is contained in
+P_i. This statement precedes, and does not require, the additional
+small-prime condition used for CP19. Every retained coordinate keeps
+its full original height. Form the low union from the surviving
+originals m and the surviving3m classes active at root i; retain
+every actual pure-three guard there. The same fixed-complement
+argument gives
+
+    Rhat_i>=(1-beta_i)/(2(1-beta_i)+theta_H).         (CM6)
+
+Only numerical distinctness bounds the low inventory by2Rhat_i
+and the high product inventory by theta_H Rhat_i. Originals
+supported entirely on R can occur in both retained families. Each
+inequality is proved separately on its actual retained carrier;
+no disjointness or irredundancy of these families, and no duplicated
+joint inventory budget, is asserted.
+
+For H>=2, CM1--CM5 remain valid with Rhat_i in place of R_i.
+In particular each Rhat_i>1/3, and the root not owning9 has
+Rhat_i>5/13. For H=1, theta_H=beta_i=0, giving Rhat_i>=1/2.
+
+If R={p} and S_i were empty, its retained carrier would be p^H_p
+and
+
+    Rhat_i=sum_(a=1..H_p)p^(-a)<1/(p-1)<=1/4,
+
+contrary to CM6 at every H>=1. Thus a unique nonconcentrated prime
+forces BOTH concentrated color groups to be nonempty at arbitrary
+ternary height. This extends section75's nonemptiness conclusion,
+not its height-one common private-source construction.
+
+The individual two-prime tests apply to P_i, not to S_i. At H=1
+every P_i has at least three primes: the largest two-prime Euler
+limit is11/24<1/2. Hence R={p} further gives |S_i|>=2 at H=1.
+When R is nonempty the P_i overlap, so disjoint-support consequences
+from the all-concentrated case cannot be carried over. Larger
+reciprocal inventories remain possible under these necessary bounds;
+unrestricted noncoverage is not established.
