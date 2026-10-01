@@ -41828,3 +41828,149 @@ H_{D,q}=5040q\prod_{k\in D}F_{k+3}.
 同时成立。
 
 **证明。** $120\mid K$ 与 $F_{120}$ 的5040整除核给 $5040\mid F_K$。因而 $H=5040F_K\mid F_K^2$。相邻项互素给 $\gcd(F_K,aF_K+F_{K+1})=1$，平方保留互素性，再沿 $H\mid F_K^2$ 限制，即得式（300.11）。每个探针值的约数个数均为一，故种子平均为一。式（300.12）由定理299.1给出；它比较的是另一条标准来源的完整时间平均，不把两种测度误作同一种平均。$\square$
+
+## 301. 自然来源的短种子探针：可见除数核心、高度合同与相同签名的乘法反差
+
+**定义 301.0。** 沿用 §300 的实际自然来源与约数权重
+\[
+N_1(a,1)=3a+5,\qquad U_H=\frac{\sigma(H)}H.
+\]
+对整数 $L\ge1$、$H\ge1$，定义
+\[
+Q_L=\operatorname{lcm}_{0\le a<L}(3a+5),\qquad
+B_L(H)=3^{v_3(H)}\gcd(H,Q_L),
+\tag{301.1}
+\]
+以及观测签名
+\[
+\mathcal O_L(H)=\left(v_3(H),\bigl(\gcd(H,3a+5)\bigr)_{0\le a<L}\right).
+\tag{301.2}
+\]
+签名保留逐项 gcd，未将它们替换为约数个数或前缀均值。记
+\[
+A_L(p)=\lfloor\log L/\log p\rfloor,\qquad
+\delta_L=\prod_{p\le L}(1-p^{-A_L(p)-1}),\qquad
+P(x)=\prod_{p\le x}(1-1/p)^{-1},
+\tag{301.3}
+\]
+其中乘积指标均为素数。
+
+### 301.1 短探针重构同一目标的除数核心
+
+**定理 301.1。** 对全部 $L,H\ge1$，签名（301.2）唯一确定 $B_L(H)$，且
+\[
+\gcd(H,Q_L)=\operatorname{lcm}_{0\le a<L}\gcd(H,3a+5),\qquad B_L(H)\mid H.
+\tag{301.4}
+\]
+对每个素数 $p$，有
+\[
+v_p(B_L(H))\ge\min\{v_p(H),A_L(p)\},\qquad
+v_3(B_L(H))=v_3(H).
+\tag{301.5}
+\]
+进一步，若 $L\ge2$、$X\ge L$ 为实数，则
+\[
+\boxed{
+1\le\frac{U_H}{U_{B_L(H)}}\le
+\delta_L^{-1}\frac{P(X)}{P(L)}
+\exp\!\left(\frac{\log H}{(X-1)\log X}\right).
+}
+\tag{301.6}
+\]
+
+**证明。** gcd 对有限 lcm 的分配律是经典整除格恒等式；逐素数的 $\min/\max$ 分配律给式（301.4）的第一式。每个 $3a+5$ 都模三等于二，因此 $Q_L$ 与三互素。记 $R=\gcd(H,Q_L)$；则 $R\mid H$、$3^{v_3(H)}\mid H$，且这两因子互素，故其乘积 $B_L(H)\mid H$，同时保留完整的三赋值。
+
+若 $1\le d\le L$ 且 $(d,3)=1$，同余式 $3a+5\equiv0\pmod d$ 恰有一个剩余类，其代表 $0\le a<d\le L$ 位于采样区间内。因而 $d\mid Q_L$。对 $p\ne3$ 取
+$e=\min\{v_p(H),A_L(p)\}$；由 $p^e\le L$ 及 $p^e\mid H$，得到 $p^e\mid R\mid B_L(H)$。三轴已完全保留，所以式（301.5）对它也成立。这一覆盖只依赖仿射剩余类的可逆性；一般斜率 $c$ 的对应覆盖条件是 $(c,d)=1$，并不来自 Fibonacci 时间周期。
+
+写局部几何因子 $U_p(v)=\sum_{j=0}^vp^{-j}$。若 $v_p(H)\le A_L(p)$，则式（301.5）与 $B_L(H)\mid H$ 给该轴完全相同。否则，核心至少保留 $A_L(p)$ 层，有限几何级数公式给
+\[
+1\le\frac{U_p(v_p(H))}{U_p(v_p(B_L(H)))}
+\le(1-p^{-A_L(p)-1})^{-1}.
+\]
+将 $p\le L$ 的因子相乘，低素轴损失至多为 $\delta_L^{-1}$。这是 §205 引理205.4 所用有限素数幂截断的局部机制，不能将 $A_L(p)$ 换成阶乘赋值 $v_p(L!)$。
+
+对高素轴，核心的每个因子至少为一，因此比值不超过目标 $H$ 的完整高素部分。把 $L<p\le X$ 的几何因子扩为无限几何因子，所得上界为 $P(X)/P(L)$。对 $p>X$，使用
+\[
+\log(1-1/p)^{-1}\le\frac1{p-1}\le\frac1{X-1},\qquad
+\#\{p\mid H:p>X\}\le\frac{\log H}{\log X},
+\]
+便得式（301.6）的指数因子。这是既有高素截断包络在实际可见核心上的应用。下界来自 $B_L(H)\mid H$ 以及约数倒数和 $U_H=\sum_{d\mid H}1/d$ 的单调性。$\square$
+
+### 301.2 高度受控时，短签名一致逼近约数权重
+
+**定理 301.2。** 对每个固定 $C>0$ 及每个 $\varepsilon>0$，存在 $L_0$，使全部整数 $L\ge L_0$、$H\ge1$ 满足
+\[
+H\le\exp(C L\log L)
+\quad\Longrightarrow\quad
+1\le\frac{U_H}{U_{B_L(H)}}<1+\varepsilon.
+\tag{301.7}
+\]
+
+**证明。** §205 引理205.4 的截断估计给 $\delta_L\to1$。具体地，对 $L\ge4$，同一小素与大素拆分给
+\[
+\sum_{p\le L}p^{-A_L(p)-1}
+\le\frac1{\sqrt L}+\frac1{\sqrt L-1},\qquad
+0\le1-\delta_L\le\sum_{p\le L}p^{-A_L(p)-1}.
+\tag{301.8}
+\]
+前一部分使用 $p^{A_L(p)+1}>L$；后一部分使用 $A_L(p)\ge1$ 并扩为整数平方倒数尾和。因此这不是从阶乘同余估计推得的截断损失。
+
+取 $X=L(\log L)^2$；充分大时 $X\ge L$，且
+\[
+\frac{\log X}{\log L}
+=1+\frac{2\log\log L}{\log L}\longrightarrow1.
+\]
+经典 Mertens 乘积公式 $P(x)\sim e^\gamma\log x$ 给 $P(X)/P(L)\to1$。所用背景可见 Lichtman, *Mertens’ prime product formula, dissected*, [Theorem 1.1，式（1.2）](https://arxiv.org/html/2002.03361v3)；这里仅需其相对渐近，不需要加性 $o(1)$ 精度。
+
+高度假设给 $\log H\le C L\log L$。当 $\log L\ge1$ 时，$X-1\ge X/2$ 及 $\log X\ge\log L$ 给
+\[
+\frac{\log H}{(X-1)\log X}\le\frac{2C}{(\log L)^2}.
+\]
+因此式（301.6）的整个上界一致不超过
+\[
+E_C(L)=\delta_L^{-1}\frac{P(L(\log L)^2)}{P(L)}
+\exp\!\left(\frac{2C}{(\log L)^2}\right)\longrightarrow1,
+\]
+得到式（301.7）。这里固定的是 $C$，结论不允许 $C$ 随 $H$ 或 $L$ 任意增长。
+
+若把式（301.6）的上界记为 $E(L,H,X)$，则对每个实预算 $T$，
+\[
+U_{B_L(H)}E(L,H,X)<T\quad\Longrightarrow\quad U_H<T.
+\tag{301.9}
+\]
+取 $T=e^\gamma\log\log H$ 即给同一目标整数的一个充分 Robin 证书条件。定理301.2本身未保证该严格条件：相对误差趋零不等于误差小于实际 Robin 余量。式（301.9）仍以严格预算为假设，未给出价格剥离的有符号尾项估计。$\square$
+
+### 301.3 相同短签名可以隐藏非消失的权重差
+
+**定理 301.3。** 对整数 $L\ge10$，置
+\[
+H_L=5040\prod_{3L+2<p\le L^2}p.
+\tag{301.10}
+\]
+则
+\[
+\mathcal O_L(H_L)=\mathcal O_L(5040),\qquad
+B_L(H_L)=B_L(5040)=5040,
+\tag{301.11}
+\]
+而
+\[
+\boxed{\frac{U_{H_L}}{U_{5040}}\longrightarrow2.}
+\tag{301.12}
+\]
+因而仅由签名（301.2）确定 $U_H$ 的规则，不可能对全部正的5040倍数都精确成立。对每个固定 $C>0$，这些 $H_L$ 最终都超过 $\exp(C L\log L)$。
+
+**证明。** 每个采样值满足 $3a+5\le3L+2$，所以式（301.10）新增的素数均与全部采样值、与5040及与三互素。若 $(t,n)=1$，则 $\gcd(Ht,n)=\gcd(H,n)$；应用于每个采样值，且 $v_3(H_L)=v_3(5040)=2$，便得签名相同。
+
+当 $L\ge10$ 时，探针 $a=0,3,9$ 分别给 $5,14,32$，所以 $\gcd(5040,Q_L)$ 包含 $5,7,2^4$。它不含三，且是5040的除数，因此恰为 $2^4\cdot5\cdot7=560$；补齐三轴后核心恰为5040。新素数与5040互素且只出现一次，故
+\[
+\frac{U_{H_L}}{U_{5040}}
+=\prod_{3L+2<p\le L^2}(1+1/p)
+=\frac{P(L^2)}{P(3L+2)}
+  \prod_{3L+2<p\le L^2}(1-p^{-2}).
+\]
+Mertens 公式给前一比值趋于二；后一乘积的缺损至多为
+$\sum_{n>3L+2}n^{-2}\to0$，故趋于一，得到式（301.12）。这只限制指定的短 gcd 签名与三赋值，不限制额外读取 $H$、高度信息或其他探针的规则。
+
+最后固定 $C>0$，取定理301.2中的 $\varepsilon=1/4$。充分大 $L$ 时，若 $H_L\le\exp(C L\log L)$，其核心等于5040会迫使 $U_{H_L}/U_{5040}<5/4$；但式（301.12）使该比值最终大于 $3/2$，矛盾。因此本反差族位于该固定高度合同之外，与一致恢复没有冲突。$\square$
