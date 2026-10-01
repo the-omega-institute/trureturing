@@ -7563,3 +7563,214 @@ increase of NF51. The all-low ten-class repair still has ten
 different retained cofactor labels excluding5 and7 in this
 equality case. Its actual phases and the unrestricted larger
 inventories remain unresolved, as does Erdős #7.
+
+## 54. Common-source exchanges and divisor closure restrict the nineteen-label case
+
+Use the actual minimum hypothetical original cover with N_3=19.
+By NF60 its two non-parent first-three branches are all low, with
+eight and ten classes. Write their cofactor sets as
+
+    E={5,7,s,35,5s,7s,35s,u^a},
+    u=s-2, a>=1, s>=13, with u and s prime,
+    |F|=10, E intersect F empty.
+
+Every value in E and F is a retained C0 label: original divisor
+closure puts the three-free divisor m of each original label 3m
+into the original palette, hence into C0.
+
+Let R=R_3 be the nonempty actual cofactor remainder outside C0,
+and let A_m for m in E and B_n for n in F be the corresponding
+actual repair APs. Both families cover R. All events live on one
+common finite carrier retaining every original height and phase.
+When combining the two repairs on P_3, lift their APs to the same
+required first-three root by CRT. The labels are 3m and 3n,
+pairwise different, different from three, and absent from
+the retained three-free labels C0. A label from a discarded
+original branch is not permanently forbidden.
+
+### Retaining the separator fixes an eight-class numerical template
+
+Put G=E without {u^a}. Any complete eight-class repair retaining
+3u^a must have precisely cofactor set E. By NF37 its set has form
+
+    {5,7,t,35,5t,7t,35t,(t-2)^b},
+    t>=13, with t and t-2 prime, b>=1.
+
+If a>=2, the nonsquarefree u^a must equal the separator (t-2)^b.
+Unique factorization gives t=s and b=a. If a=1, the prime u>=11
+could only be t or the separator. The first possibility would
+require u-2,u,u+2=s all prime greater than three, impossible
+modulo three. Again t=s and b=a. This fixes numerical labels,
+not the AP phases.
+
+For nonempty J contained in G define the exact joint obligation
+
+    Q_J = R minus union_(m in E without J) A_m.
+
+If actual F events indexed by I cover Q_J, keeping E without J
+and adding I gives a legal complete repair of size 8-|J|+|I|.
+NF28 forbids fewer than eight. Equality would retain u^a and
+therefore force all of E, impossible because I is disjoint from E
+and J is nonempty. If five belongs to J, the hybrid omits fifteen,
+so NF50 forbids nine classes as well. Consequently
+
+    Q_J contained in union_(n in I) B_n ==>
+      |I|>=|J|+1;
+    if also 5 in J, then |I|>=|J|+2.                     (NF61)
+
+These are restrictions on entire actual regions, not on separately
+chosen sample witnesses. In particular Q_{ {5} } cannot be covered
+by two F events; no other core private region can be covered by one.
+
+For each p in {5,7,s}, its four-element core star is
+
+    S_5={5,35,5s,35s}, S_7={7,35,7s,35s},
+    S_s={s,5s,7s,35s}.
+
+NF42 makes the repair APs in each star pairwise disjoint. Hence for
+J contained in one star,
+
+    Q_J = union_(m in J) Q_{ {m} }.
+
+Indeed, a point in Q_J belongs to at least one removed A_m because
+E covers R, and to at most one because those APs are disjoint. It
+belongs to no retained event, and so is private to that removed A_m.
+This identity is not claimed for arbitrary overlapping subfamilies.
+
+Join m in a star to n in F exactly when Q_{ {m} } meets B_n.
+The neighbors of J cover Q_J, so NF61 gives their cardinality
+bounds. Reusing capacitated Hall with demand three at five and
+one at each other member of S_5 gives six distinct F labels:
+three meet Q_{ {5} }, and one meets each of Q_{ {35} },
+Q_{ {5s} }, Q_{ {35s} }. Either other star admits five distinct
+labels, with two meeting any one chosen private region and one
+meeting each of the other three. These separate matchings are not
+combined into one independent family. Each matching edge has an
+actual witness in R, and in particular its full phases satisfy
+
+    beta_m = gamma_n modulo gcd(m,n).
+
+CRT compatibility alone does not supply that witness in R.
+
+### The ten cofactor values have greatest common divisor one
+
+The original numerical palette is divisor-closed. Its complete
+three-bearing part is {3} together with 3(E union F). Thus
+
+    m in E union F, d>1, d divides m ==> d in E union F.
+
+This uses the actual original split: the original label 3d divides
+3m and must occur. Two arbitrary replacement families need not
+have this property.
+
+Any strict selected-chain certificate for the ten different values
+F contradicts minimum original cardinality. Apply complete-prefix
+avoidance and ONE PC1--PC2 transport to the actual whole cofactor
+cover C0 together with the ten F repair APs, deleting one endpoint
+at each repeated modulus. It produces a distinct odd whole cover
+with at most |C0|+10 members, fewer than the original |C0|+19.
+The argument retains the full actual phases and heights.
+
+Suppose a prime p divides every F value. All values are coprime to
+six, so p>=5. The following cases give strict certificates, with
+the bases defined in section53.
+
+For p=5, divisor closure of u^a forces u into E union F. Since u
+is five-free, it lies in E, which forces a=1. Write each F value
+as 5^k n with k>=1 and five not dividing n. Its five-free part
+lies in {1,7,s,7s,u}. For the first four types k>=2, since their
+depth-one values are already in E. Assign these items to five;
+at conservative base three their total cost is bounded by
+
+    4 sum_(k>=2) 3^(-k)=2/3<1.
+
+If a u-type occurs, let K be its maximum five-depth. Divisor
+closure forces the K values 5u,...,5^K u and the K-1 values
+5^2,...,5^K into F. They are distinct, so 2K-1<=10 and K<=5.
+Select the chain 3<5<u and assign the u-types to u, whose base
+is u-4>=7. Their cost is at most 5/7<1. If no u-type occurs,
+the single selected prime five already suffices.
+
+For p=7, the seven-free part of every F value belongs to
+{1,5,s,5s,u^a}. For the first four types, seven-depth one is
+excluded because 7,35,7s,35s already belong to E. Thus at most
+one of the ten items has seven-depth one; all others have depth
+at least two. Select only seven, whose base is five. Its cost
+is at most
+
+    1/5+9/25=14/25<1.
+
+For p=11, each depth-one value is 11n with eleven not dividing n.
+Divisor closure puts n in {1} union E, so there are at most nine
+such distinct values. If at least two items are deeper, select
+only eleven, with base nine and cost at most
+
+    8/9+2/81=74/81<1.
+
+There cannot be ten depth-one items. If there is exactly one deep
+item, all nine possible depth-one choices must occur. This forces
+all of E to be eleven-free, and in particular 11s belongs to F.
+Select 3<11<s and assign 11s to s; assign every other value to
+eleven. The loads are at most 1/(s-10)<1 and 8/9+1/81=73/81<1.
+
+For p>=13, select p alone. The ten values have cost at most
+10/(p-2)<=10/11<1. These cases exhaust all possible common
+prime factors. Therefore
+
+    gcd(F)=1.                                           (NF62)
+
+### The original three-bearing palette has bounded prime heights
+
+Reuse the pure-group argument in section48 with the following
+interface extension: any finite set of different nonunit values
+coprime to six, consisting of a nonempty pure-p-power group and
+at most six non-pure-p items, has a strict certificate.
+
+The proof there assigns the pure group total conservative cost
+strictly below 1/2 regardless of its finite cardinality. All its
+projected singleton and pair cases depend only on the at most
+six other items. The only estimate using exactly three pure
+items is the case of three projected q items and three outside
+items. Replace its pure-group bound 13/27 by the strict bound
+1/2. The sharper assignment moves at most one q item to p at
+depth at least two, and at most one outside item at depth at
+least one. Its total p cost is then strictly below
+
+    1/2+1/9+1/3=17/18<1.
+
+If the outside item instead goes to q, the existing q bound 8/9
+is unchanged. The six-on-two-projected-axes case uses the same
+capacities R_p-2,R_q-1,R_r-1 and the same inequality
+
+    1/(R_p-1)+(R_p-2)/R_p<1.
+
+Both uses of NF17 involve only five or six different p-free items
+and retain its conservative-base guarantee. Thus the existing
+proof extends to every finite pure group without a missing-value
+assumption; no other assignment theorem is reproved here.
+
+If F contained four different pure powers of any prime p, at
+most six other values would remain. The extended pure-group
+argument would give a strict certificate, contradicting the
+actual transport above. Hence F contains at most three distinct
+pure powers on each prime axis.
+
+E supplies exactly one pure power at each of 5,7,s,u and none
+at other primes. For m in E union F, divisor closure puts all
+p,p^2,...,p^{v_p(m)} in this union. Counting these different pure
+powers gives
+
+    m in E union F ==>
+      v_p(m)<=4 for p in {5,7,s,u},
+      v_p(m)<=3 for every other prime;
+    in particular 1<=a<=4.                              (NF63)
+
+Every original three-bearing label in the N_3=19 case is three
+or 3m for m in E union F. Thus NF63 bounds all its non-three
+prime heights. It places no height bound on retained C0 labels
+outside E union F. The prime s, other support primes, remaining
+retained labels and their actual common-source coverage are
+still unrestricted. NF61--NF63 do not exclude the whole all-low
+eight-plus-ten case, increase the unconditional bound N_3>=19,
+or settle Erdős #7. These are ordinary mathematical deductions,
+not newly compiled Lean results.

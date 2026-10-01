@@ -31378,6 +31378,33 @@ unconditional bound is still19. The all-low ten-class case
 with ten different retained cofactors excluding5 and7 remains
 open. These are ordinary deductions, without new Lean verification.
 
+[Report385, section54](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#54-common-source-exchanges-and-divisor-closure-restrict-the-nineteen-label-case)
+restricts the actual all-low eight-plus-ten case further. Its
+two disjoint cofactor sets E and F cover the same remainder R_3.
+Retaining the eight-class separator u^a pins that repair's entire
+numerical template. Replacing a nonempty core subset J by actual
+F events therefore requires at least |J|+1 events, or |J|+2 when
+five is removed. On the NF42 disjoint stars, the exact joint
+obligation is the union of private regions. Capacitated Hall
+then gives six distinct F labels meeting the five-star regions,
+with three assigned to the private region at five. Every edge
+has an actual common-source witness; separate matchings are
+not combined into independent evidence.
+
+The original split also makes E union F divisor-closed. Strict
+selected-chain certificates exclude every possible common prime
+factor of F, giving gcd(F)=1. Reusing section48's pure-group
+argument with its finite geometric bound shows that F has at
+most three distinct pure powers of any prime. Thus every
+m in E union F satisfies v_p(m)<=4 on p in {5,7,s,s-2}, and
+v_p(m)<=3 on every other prime; in particular the separator
+exponent is at most four. These bounds apply to the original
+three-bearing labels in the N_3=19 split. They do not bound
+the heights of other retained C0 labels, exclude this whole
+remaining split, or raise the unconditional bound above nineteen.
+The deductions reuse the existing actual-cover transport and are
+ordinary mathematical proofs, without new Lean verification.
+
 [Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
 keeps the residual cover's entire old q coordinate unchanged.
 It excludes one endpoint per repeated pair and reserves the
