@@ -18,7 +18,8 @@ open D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd (Window first last)
 open D5.S3.Arith.FibonacciAtomic.GraftAffineClosure (step quantity)
 open D5.S3.Arith.FibonacciAtomic.ImmediateWindowStateCapacity
 open D5.S3.Arith.FibonacciAtomic.ParityLiftRationalMinimum
-  (WordRepresentation wordMap wordBehavior integerTask integerFieldTask prefixes)
+  (WordRepresentation wordMap wordBehavior integerTask integerFieldTask prefixes suffixes
+    response_minor_le_finrank)
 open D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound (wordOperator)
 
 abbrev SixState (K : Type*) := Fin 6 → K
@@ -99,13 +100,28 @@ def fourDimensional (K : Type*) [Field K] :
   initial := ![0, 1, 0, 0]
   output := fourOutput
 
+/-- Six scalar queries made after actual continuations. -/
+def sixSuffixes : Fin 6 → List Window :=
+  ![[.high], [.high], [.high, .zero], [.zero, .high],
+    [.zero, .high], [.zero, .high, .zero]]
+
+/-- Actual task responses, with legality selected in rows zero and three. -/
+def sixResponseMinor (K : Type*) [Field K] : Matrix (Fin 6) (Fin 6) K :=
+  fun i j => (if i = 0 ∨ i = 3 then LinearMap.fst K K K else LinearMap.snd K K K)
+    (integerFieldTask K (sixPrefixes j ++ sixSuffixes i))
+
+/-- Four actual task queries, using the existing four prefixes and suffixes. -/
+def fourResponseMinor (K : Type*) [Field K] : Matrix (Fin 4) (Fin 4) K :=
+  fun i j => (if i = 0 ∨ i = 2 then LinearMap.fst K K K else LinearMap.snd K K K)
+    (integerFieldTask K (prefixes j ++ suffixes i))
+
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1200000 in
--- Word simulation and six-column determinant expansion share this proof.
 /-- Every integer-induced response is realized over any field, and actual
-input histories span the six-dimensional homogeneous state space. In
-characteristic two, its four-dimensional quotient has the same all-word
-response and is also spanned by actual input histories. -/
+input histories span the six-dimensional homogeneous state space. The
+attained minimum is six when two is nonzero, and four when two is zero.
+Actual prefix/suffix response matrices give the lower bounds for arbitrary
+finite-dimensional representations. -/
 theorem result (K : Type*) [Field K] :
     (∀ w : List Window, wordBehavior (sixDimensional K) w = integerFieldTask K w) ∧
     Module.finrank K (SixState K) = 6 ∧
@@ -113,22 +129,30 @@ theorem result (K : Type*) [Field K] :
       wordMap (sixDimensional K).transition (sixPrefixes j) (sixDimensional K).initial) ∧
     Submodule.span K (Set.range (fun w : List Window =>
       wordMap (sixDimensional K).transition w (sixDimensional K).initial)) = ⊤ ∧
+    ((2 : K) ≠ 0 →
+      (sixResponseMinor K).det ≠ 0 ∧
+      ∀ (V : Type*) [AddCommGroup V] [Module K V] [FiniteDimensional K V]
+        (R : WordRepresentation K Window V (K × K)),
+        (∀ w : List Window, wordBehavior R w = integerFieldTask K w) →
+          6 ≤ Module.finrank K V) ∧
     ((2 : K) = 0 →
       (∀ w : List Window, wordBehavior (fourDimensional K) w = integerFieldTask K w) ∧
       Module.finrank K (FourState K) = 4 ∧
       LinearIndependent K (fun j : Fin 4 =>
         wordMap (fourDimensional K).transition (prefixes j) (fourDimensional K).initial) ∧
       Submodule.span K (Set.range (fun w : List Window =>
-        wordMap (fourDimensional K).transition w (fourDimensional K).initial)) = ⊤) := by
+        wordMap (fourDimensional K).transition w (fourDimensional K).initial)) = ⊤ ∧
+      (fourResponseMinor K).det ≠ 0 ∧
+      ∀ (V : Type*) [AddCommGroup V] [Module K V] [FiniteDimensional K V]
+        (R : WordRepresentation K Window V (K × K)),
+        (∀ w : List Window, wordBehavior R w = integerFieldTask K w) →
+          4 ≤ Module.finrank K V) := by
   classical
-  have castZero : Int.cast (R := K) (0 : ZMod 0) = 0 := Int.cast_zero
   have castOne : Int.cast (R := K) (1 : ZMod 0) = 1 := Int.cast_one
   have castAdd (a b : ZMod 0) : Int.cast (R := K) (a + b) =
       Int.cast (R := K) a + Int.cast (R := K) b := Int.cast_add a b
   have castMul (a b : ZMod 0) : Int.cast (R := K) (a * b) =
       Int.cast (R := K) a * Int.cast (R := K) b := Int.cast_mul a b
-  have castNat (n : ℕ) : Int.cast (R := K) (n : ZMod 0) = (n : K) :=
-    Int.cast_natCast n
   have commute (q : RawState 0) (b : Window) :
       sixTransition b (sixEmbed (K := K) q) = sixEmbed (K := K) (rawTransition q b) := by
     cases q with
@@ -138,7 +162,7 @@ theorem result (K : Type*) [Field K] :
       rcases q with ⟨s, a, c⟩
       cases s <;> cases b <;> ext i <;> fin_cases i <;>
         simp [sixTransition, sixUpdate, sixEmbed, rawTransition, clock,
-          step, displacement, first, last, castZero, castOne, castAdd, castMul, castNat] <;> ring
+          step, displacement, first, last, castOne, castAdd, castMul] <;> ring
   have simulation (w : List Window) (q : RawState 0) :
       wordMap (sixTransition (K := K)) w (sixEmbed (K := K) q) =
         sixEmbed (K := K) ((rawMachine 0).toDFA.evalFrom q w) := by
@@ -160,13 +184,13 @@ theorem result (K : Type*) [Field K] :
     | none => simp [sixOutput, sixEmbed, rawOutput]
     | some q =>
       rcases q with ⟨s, a, b⟩
-      cases s <;> simp [sixOutput, sixEmbed, rawOutput, quantity, castAdd, castMul, castNat]
+      cases s <;> simp [sixOutput, sixEmbed, rawOutput, quantity, castAdd, castMul]
   have correct (w : List Window) :
       wordBehavior (sixDimensional K) w = integerFieldTask K w := by
     have initial : (sixDimensional K).initial =
         sixEmbed (K := K) (rawMachine 0).start := by
       ext i
-      fin_cases i <;> simp [sixDimensional, sixEmbed, rawMachine, castZero]
+      fin_cases i <;> simp [sixDimensional, sixEmbed, rawMachine, Int.cast_zero]
     unfold wordBehavior
     rw [initial]
     change sixOutput (wordMap (sixTransition (K := K)) w
@@ -199,12 +223,44 @@ theorem result (K : Type*) [Field K] :
   have independent : LinearIndependent K reach := by
     change LinearIndependent K P.col
     exact Matrix.linearIndependent_cols_of_det_ne_zero nonzero
-  refine ⟨correct, by simp [SixState], independent, ?_, ?_⟩
+  let O : Matrix (Fin 6) (Fin 6) K :=
+    !![0, 0, 1, 0, 0, 0;
+       8, 13, 5, 0, 0, 0;
+       34, 55, 21, 0, 0, 0;
+       0, 0, 1, 0, 0, 1;
+       34, 55, 5, 34, 55, 5;
+       144, 233, 21, 144, 233, 21]
+  have observationDet : O.det = -4 := by
+    simp [O, Matrix.det_succ_row_zero, Fin.sum_univ_succ,
+      Matrix.submatrix, Fin.succAbove] <;> ring
+  have responseFactor : sixResponseMinor K = O * P := by
+    rw [values]
+    ext i j
+    simp only [sixResponseMinor]
+    rw [← correct]
+    fin_cases i <;> fin_cases j <;>
+      simp [O, sixPrefixes, sixSuffixes, wordBehavior, wordMap, wordOperator,
+        sixDimensional, sixOutput, sixTransition, sixUpdate, LinearMap.comp_apply,
+        Matrix.mul_apply, Fin.sum_univ_succ] <;> ring
+  have responseDet : (sixResponseMinor K).det = 4 := by
+    rw [responseFactor, Matrix.det_mul, observationDet, determinant]
+    ring
+  refine ⟨correct, by simp [SixState], independent, ?_, ?_, ?_⟩
   · apply top_unique
     rw [← independent.span_eq_top_of_card_eq_finrank' (by simp [SixState])]
     apply Submodule.span_mono
     rintro _ ⟨j, rfl⟩
     exact ⟨sixPrefixes j, rfl⟩
+  · intro htwo
+    have minorNonzero : (sixResponseMinor K).det ≠ 0 := by
+      rw [responseDet]
+      convert mul_ne_zero htwo htwo using 1 <;> norm_num
+    refine ⟨minorNonzero, ?_⟩
+    intro V _ _ _ R realized
+    exact response_minor_le_finrank R (integerFieldTask K) realized
+      sixPrefixes sixSuffixes
+      (fun i => if i = 0 ∨ i = 3 then LinearMap.fst K K K else LinearMap.snd K K K)
+      minorNonzero
   · intro htwo
     have three : (3 : K) = 1 := by
       calc
@@ -252,11 +308,31 @@ theorem result (K : Type*) [Field K] :
     have fourIndependent : LinearIndependent K fourReach := by
       change LinearIndependent K Q.col
       exact Matrix.linearIndependent_cols_of_det_ne_zero fourNonzero
-    refine ⟨fourCorrect, by simp [FourState], fourIndependent, ?_⟩
-    apply top_unique
-    rw [← fourIndependent.span_eq_top_of_card_eq_finrank' (by simp [FourState])]
-    apply Submodule.span_mono
-    rintro _ ⟨j, rfl⟩
-    exact ⟨prefixes j, rfl⟩
+    have fourMinorValues : fourResponseMinor K =
+        !![1, 1, 0, 0; 1, 2, 0, 0; 1, 1, 1, 1; 1, 2, 1, 2] := by
+      ext i j
+      simp only [fourResponseMinor]
+      rw [← fourCorrect]
+      fin_cases i <;> fin_cases j <;>
+        simp [prefixes, suffixes, wordBehavior, wordMap, wordOperator,
+          fourDimensional, fourOutput, fourTransition, fourUpdate, LinearMap.comp_apply] <;> ring
+    have fourMinorDet : (fourResponseMinor K).det = 1 := by
+      rw [fourMinorValues]
+      simp [Matrix.det_succ_row_zero, Fin.sum_univ_succ, Matrix.submatrix,
+        Fin.succAbove] <;> ring
+    have fourMinorNonzero : (fourResponseMinor K).det ≠ 0 := by
+      rw [fourMinorDet]
+      exact one_ne_zero
+    refine ⟨fourCorrect, by simp [FourState], fourIndependent, ?_, fourMinorNonzero, ?_⟩
+    · apply top_unique
+      rw [← fourIndependent.span_eq_top_of_card_eq_finrank' (by simp [FourState])]
+      apply Submodule.span_mono
+      rintro _ ⟨j, rfl⟩
+      exact ⟨prefixes j, rfl⟩
+    · intro V _ _ _ R realized
+      exact response_minor_le_finrank R (integerFieldTask K) realized
+        prefixes suffixes
+        (fun i => if i = 0 ∨ i = 2 then LinearMap.fst K K K else LinearMap.snd K K K)
+        fourMinorNonzero
 
 end D5.S3.Arith.FibonacciAtomic.FiveWindowFieldLinearMinimum

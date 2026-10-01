@@ -13,6 +13,7 @@ internal sealed class FiveWindowFieldLinearMinimumDocument : IScribeDocumentDefi
     private static Formula Par(Formula body) => Seq(Open, body, Close);
     private static Formula EqOf(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
     private static Formula All(string name, Formula body) => Seq(Forall, Sp, V(name), Comma, Sp, body);
+    private static Formula LeOf(Formula a, Formula b) => Seq(a, Sp, Leq, Sp, b);
     private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
     private static Formula And(params Formula[] clauses)
     {
@@ -30,8 +31,8 @@ internal sealed class FiveWindowFieldLinearMinimumDocument : IScribeDocumentDefi
         AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Integer-induced Fibonacci window responses admit reachable homogeneous realizations over every field.",
-        H("Homogeneous Field Realizations of Fibonacci Window Responses"),
+        "Integer-induced Fibonacci window responses have exact minimum linear dimension six or four according to the characteristic.",
+        H("Minimum Field Dimensions of Fibonacci Window Responses"),
         Blocks(
             Paragraph(Text("Let K be any field. Windows null, [2], [3], [25], [5] are read "
                 + "high to low, with a seam retaining the previous higher window's low bit. "
@@ -74,8 +75,18 @@ internal sealed class FiveWindowFieldLinearMinimumDocument : IScribeDocumentDefi
             Definition("fourDimensional", "The quotient word representation", "The "
                 + "initial vector is (0,1,0,0), the letter operators are fourTransition, "
                 + "and the output is fourOutput."),
+            Definition("sixSuffixes", "Six actual scalar continuation tests", "The six rows "
+                + "query [5] legality, [5] quantity, [5]null quantity, null[5] legality, "
+                + "null[5] quantity and null[5]null quantity, in this order."),
+            Definition("sixResponseMinor", "Six-by-six actual responses", "H6(K) has entry "
+                + "in row i and column j equal to the selected scalar output of f_K after "
+                + "sixPrefixes(j) followed by sixSuffixes(i). Rows zero and three select "
+                + "legality; all other rows select quantity."),
+            Definition("fourResponseMinor", "Four-by-four actual responses", "H4(K) uses "
+                + "the existing four prefixes and four suffixes. Rows zero and two select "
+                + "legality, and rows one and three select quantity."),
             Describe.Lean(DescribeId.Create("field-window-six-realization"),
-                DeclarationHandle.Create(Prefix + "result"), H("All-word correctness and reachable span"),
+                DeclarationHandle.Create(Prefix + "result"), H("All-word correctness, reachable span and attained minimum"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("For each field K, F_K denotes sixDimensional(K), f_K "
@@ -86,7 +97,13 @@ internal sealed class FiveWindowFieldLinearMinimumDocument : IScribeDocumentDefi
                         + "G_K denotes fourDimensional(K), W_K denotes FourState(K), and B_K(w) is "
                         + "its reached vector after w. Q_K is its reached family for the four "
                         + "existing prefixes: the empty word, [3], [2], [3][2]. The scalar twoK(K) "
-                        + "is 2 in K; twoK(K)=0 is the characteristic-two field condition.")),
+                        + "is 2 in K; twoK(K)=0 is the characteristic-two field condition. "
+                        + "H6K and H4K denote sixResponseMinor(K) and fourResponseMinor(K). "
+                        + "V ranges over every finite-dimensional K-vector space, and R ranges "
+                        + "over linear Window representations on V with output in K^2. "
+                        + "FiniteKSpace(V) and LinearWordRep(R,V) specify these domains; "
+                        + "Nonsingular(H) means det(H) is nonzero. No reachability or "
+                        + "observability condition is imposed on competing representations.")),
                     Paragraph(Text("The integer-state embedding commutes with each window "
                         + "operator. Induction on word length transports the complete integer "
                         + "reader to the homogeneous representation. A forbidden seam erases "
@@ -102,17 +119,37 @@ internal sealed class FiveWindowFieldLinearMinimumDocument : IScribeDocumentDefi
                         + "and preserves the linear output. Word induction extends this relation "
                         + "to all finite words. The four actual prefix vectors are (0,1,0,0), "
                         + "(1,1,0,0),(0,0,0,1),(0,0,1,1). Their determinant is one, so they "
-                        + "form a basis of the quotient space over every characteristic-two field."))),
+                        + "form a basis of the quotient space over every characteristic-two field.")),
+                    Paragraph(Text("The six continuation tests have observation matrix O with "
+                        + "diagonal blocks R0 and R0 A0, where R0 has rows (0,0,1), "
+                        + "(8,13,5), (34,55,21), and A0 is the homogeneous zero-displacement "
+                        + "clock. Its determinant is minus four. The reached-prefix matrix P "
+                        + "has determinant minus one, so the actual response matrix H6K=OP "
+                        + "has determinant four. This is nonzero whenever twoK(K) is nonzero.")),
+                    Paragraph(Text("In characteristic two, H4K has rows (1,1,0,0), "
+                        + "(1,2,0,0), (1,1,1,1), (1,2,1,2), interpreted in K. Its determinant "
+                        + "is one. For every competing all-word realization, actual suffix "
+                        + "observations linearly map its reached-prefix vectors to the columns "
+                        + "of the corresponding response matrix. Nonsingularity forces six "
+                        + "or four independent reached vectors. The explicit realizations "
+                        + "attain these respective lower bounds."))),
                 DescribeRole.Theorem))));
+
+    private static Formula LowerBound(int n) => All("V", All("R",
+        Imp(And(Call("FiniteKSpace", V("V")), Call("LinearWordRep", V("R"), V("V"))),
+            Imp(Call("Realizes", V("R"), V("fK")), LeOf(D(n), Call("dimK", V("V")))))));
 
     private static Formula ResultFormula() => Disp(All("K", And(
         Call("Realizes", V("FK"), V("fK")),
         EqOf(Call("dimK", V("VK")), D(6)),
         Call("LinearIndependentK", V("PK")),
         EqOf(Call("spanK", Call("range", V("AK"))), V("VK")),
+        Imp(Call("Nonzero", Call("twoK", V("K"))), And(
+            Call("Nonsingular", V("H6K")), LowerBound(6))),
         Imp(EqOf(Call("twoK", V("K")), D(0)), And(
             Call("Realizes", V("GK"), V("fK")),
             EqOf(Call("dimK", V("WK")), D(4)),
             Call("LinearIndependentK", V("QK")),
-            EqOf(Call("spanK", Call("range", V("BK"))), V("WK")))))));
+            EqOf(Call("spanK", Call("range", V("BK"))), V("WK")),
+            Call("Nonsingular", V("H4K")), LowerBound(4))))));
 }

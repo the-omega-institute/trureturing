@@ -13,7 +13,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
 namespace Reg.D5.S3.Arith.FibonacciAtomic.FiveWindowFieldLinearMinimum
-universe u
+universe u v w
 
 abbrev signature : Signature where
   Params := Σ K : Type u, Field K
@@ -40,21 +40,32 @@ def rejected : Realization signature.{u} :=
       wordMap (sixDimensional K).transition (sixPrefixes j) (sixDimensional K).initial) ∧
     Submodule.span K (Set.range (fun w : List Window =>
       wordMap (sixDimensional K).transition w (sixDimensional K).initial)) = ⊤ ∧
+    ((2 : K) ≠ 0 →
+      (sixResponseMinor K).det ≠ 0 ∧
+      ∀ (V : Type v) [AddCommGroup V] [Module K V] [FiniteDimensional K V]
+        (R : WordRepresentation K Window V (K × K)),
+        (∀ w : List Window, wordBehavior R w = integerFieldTask K w) →
+          6 ≤ Module.finrank K V) ∧
     ((2 : K) = 0 →
       (∀ w : List Window, wordBehavior (fourDimensional K) w = integerFieldTask K w) ∧
       Module.finrank K (FourState K) = 4 ∧
       LinearIndependent K (fun j : Fin 4 =>
         wordMap (fourDimensional K).transition (prefixes j) (fourDimensional K).initial) ∧
       Submodule.span K (Set.range (fun w : List Window =>
-        wordMap (fourDimensional K).transition w (fourDimensional K).initial)) = ⊤)
+        wordMap (fourDimensional K).transition w (fourDimensional K).initial)) = ⊤ ∧
+      (fourResponseMinor K).det ≠ 0 ∧
+      ∀ (V : Type w) [AddCommGroup V] [Module K V] [FiniteDimensional K V]
+        (R : WordRepresentation K Window V (K × K)),
+        (∀ w : List Window, wordBehavior R w = integerFieldTask K w) →
+          4 ≤ Module.finrank K V)
 
-theorem rejected_law : ¬ arena.{u}.Law rejected := by
+theorem rejected_law : ¬ arena.{u, v, w}.Law rejected := by
   intro h
   have hz := (h (ULift.{u} ℚ)).1 []
   simpa [rejected, realize, wordBehavior, sixDimensional, wordMap, wordOperator,
     sixOutput] using hz
 
-def registration : Registration arena.{u} (arena.{u}.Law actual) where
+def registration : Registration arena.{u, v, w} (arena.{u, v, w}.Law actual) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨result, rejected, rejected_law⟩
