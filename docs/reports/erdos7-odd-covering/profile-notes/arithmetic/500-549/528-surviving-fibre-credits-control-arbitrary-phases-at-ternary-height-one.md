@@ -30872,17 +30872,21 @@ repair fibres. With budget k, every indispensable repair modulus m
 satisfies f(m/gcd(m,Q))<=k-1, giving a finite numerical palette;
 this is reuse of the published bound. For the same minimum whole
 cover, the complete pure3 private hull is exactly3. At EVERY
-ternary height, at most six distinct odd nonunit moduli not dividing
-Q cannot repair that private region. The existing Report378 incidence bound gives
-N_3>=9, and the branch restriction below excludes the remaining
-9-divisible palette after the quinary case is removed. In any
+ternary height, at most eight distinct odd nonunit moduli not
+dividing Q cannot repair that private region. The same Report376
+cofactor law, with uniform higher3 digits and uniform integer lifts,
+gives each outside class mass at most1/9 except for the one pure
+label3^(H_3+1), at most1/3. An essential excess5 or7 digit forces
+at least five or seven corresponding classes; their smaller
+masses make the entire eight-class total less than one. The
+existing Report378 incidence bound gives N_3>=9, and branch
+restriction excludes the remaining9-divisible palette. In any
 repair using at most four distinct odd nonunit moduli, with label3
 unavailable, all outside classes can be discarded. At height one,
 Report376's joint prime-chain obstruction makes the hull of
 R_3 minus any cofactor class modulo e>1, e|B with B=Q/3, equal to1;
-this excludes
-the three-outside completion. This statement about the COMPLETE
-old private region does not require retaining every old3-free
+this excludes the three-outside completion. This statement about
+the COMPLETE old private region does not require retaining every old3-free
 class in the proposed exchange. It does not establish existence
 of an inside repair or exclude larger mixed budgets. A pair in
 one top shadow does not supply the complete repair obligation.
@@ -30898,8 +30902,17 @@ and the parent label q must instead create an actual residual
 collision between a first-level q*m repair and its q-free parent
 m, either retained or supplied by another repair. This necessary
 collision does not give a way to combine its two different phases
-legally. Larger mixed repairs and this general collision mechanism
-remain unresolved.
+legally. The same section directly applies Report348/374's complete
+digit transport to collision families sharing a prime p>q. If
+there are at most p-q residual pairs in total and every repeated
+modulus is divisible by p, an
+effective repair d must satisfy q^2|d and p not dividing d;
+otherwise one can avoid an endpoint of each pair and transport
+to a smaller distinct odd whole cover. This also applies to a
+new repair prime p. In particular, for a single q=3 collision
+at m, every prime factor p of m requires at least one9-divisible
+repair not divisible by p. Arbitrary collision families and larger mixed
+repairs remain unresolved.
 
 The new restrictions remove actual possible activations and height
 profiles which the specified earlier tests miss. They do not force

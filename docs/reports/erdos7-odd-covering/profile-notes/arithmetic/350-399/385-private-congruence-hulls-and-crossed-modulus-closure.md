@@ -3431,37 +3431,71 @@ Moving the original3 class cannot be paid for in that palette
 by deleting a group of at most four descendants. This does not
 exclude a repair using unused divisors of Q or a larger budget.
 
-### Six outside classes cannot repair the complete private region
+### Eight outside classes cannot repair the complete private region
 
-NF9 restricts any irredundant outside repair of size at most six
-to relative indices3,5,9. In one complete Q-fibre, the induced
-ternary classes depend only on the fibre parameter modulo9, and
-the quinary classes only on that parameter modulo5. If neither
-group covers its whole parameter coordinate, CRT combines an
-uncovered ternary value with an uncovered quinary value. Thus at
-least one of these two groups must cover the complete fibre.
+Take an irredundant repair of the complete P_3 by k<=8 distinct
+odd nonunit moduli, none dividing Q. The old support contains5
+and7: Report350 supplies initial-segment support, and the existing
+two-prime reciprocal obstruction in
+[Report375](375-deep-prime-prefix-projections-and-tree-contraction.md#9-liability-multiplicity-and-the-missing-distribution-of-blocked-fibres)
+excludes a support contained in{3,5}. NF9 says that every prime
+dividing a relative index is at most k. Thus every prime whose
+repair exponent exceeds its old height is one of3,5,7.
 
-If a quinary repair class is essential for P_3, use one of its
-private Q-fibres. The ternary group cannot cover that fibre, so
-the quinary group must do so, requiring at least five classes.
-There is then at most one ternary class in the entire repair.
-That class cannot cover any whole Q-fibre, and consequently the
-quinary group covers every P_3-fibre by itself. All ternary
-classes are redundant.
+Use the ONE probability nu on actual R_3 supplied by
+[Report376, PC7](376-complete-prime-chain-transport-and-joint-prefix-laws.md#4-one-probability-controls-the-entire-selected-prime-chain)
+for the full consecutive support chain above3. Every nonunit
+cofactor AP modulo e|B, B=Q/3^H, has nu-mass at most1/3.
+More precisely, for every support prime p>3 an old p-prefix of
+positive depth j has mass at most3^(-j), since every chain gap
+base is at least three.
 
-Such a quinary-only repair is impossible. Put J=v_5(Q), allowing
-J=0. Its moduli are5^(J+1)*e_i with e_i|Q/5^J. Every low5^J
-phase in P_3 needs at least five labels; at most six labels can
-serve only one such phase. If J>0 this would force5|Gamma_3,
-contrary to NF8. If J=0, the five next-digit buckets must all be
-nonempty and at least four are singletons. Each singleton's
-cofactor class contains all of P_3, so its e_i divides Gamma_3=3.
-Only two distinct cofactors,1 and3, are available, not four.
+Form mu_0 on the complete P_3 modulo Q by taking this same
+cofactor law and independently choosing all old higher3 digits
+uniformly, with the first3 root fixed at a_3. Let R be the full
+LCM of Q and the repair moduli. Extend mu_0 uniformly over each
+fibre modulo R above its old Q-point, giving a probability mu
+on all lifts of P_3. For any repair class a mod m, NF2 gives
 
-All remaining classes have relative index3 or9, hence moduli
-divisible by3^(H+1) and therefore by9. Their number is at least
-N_3 by the existing branch-restriction consumer BC1 in section26,
-whose proof is independent of this budget argument.
+    mu(a mod m)=mu_0(a mod gcd(m,Q))/(m/gcd(m,Q)).
+
+This is uniform lifting of a declared common law, not a product
+of separately optimized old marginal laws. If m exceeds the old
+height at p=5 or7, its old trace fixes at least one p digit and
+its relative index is divisible by p. Consequently its mass is
+at most1/(3p). If its only excess exponent is at3, write
+m=3^(H+j)*e, j>=1,e|B. Its mass is at most3^(1-H-j), with
+an additional factor1/3 when e>1. Therefore every outside label
+has mass at most1/9, except possibly the single numerical label
+3^(H+1), whose mass is at most1/3. Distinctness permits this
+exception at most once.
+
+Suppose a repair class exceeds the old p-height for p=5 or7.
+Take its private integer x in P_3. Within x's complete Q-fibre,
+fix all coordinates except the first new p digit and vary that
+digit over its p values. Every class not exceeding the old
+p-height misses x and keeps missing all these points. Every
+class exceeding that height can cover at most one of the p
+values. Thus there are at least p such classes in the repair,
+irrespective of their other factors or higher exponents. The
+private point need not have positive mu-mass.
+
+If p=5, charge five of those classes at1/15 each. The at most
+three other labels have total mass at most1/3+2/9, even if more
+of them also exceed the old5-height. If p=7, charge seven at
+1/21 each and the at most one other label at1/3. The resulting
+total bounds are respectively
+
+    5/15+1/3+2/9=8/9<1,
+    7/21+1/3=2/3<1.
+
+Both contradict coverage of the probability mu. In particular,
+a modulus with relative index15 still fixes one new5 digit;
+its simultaneous3 condition cannot invalidate the counting.
+
+Every remaining repair modulus can exceed Q only at3, so it
+is divisible by3^(H+1), hence by9. BC1 in section26 then gives
+k>=N_3, independently of this probability argument.
 
 The retained tail-incidence bound
 [Report378, SF12](378-saturated-prime-fibres-and-mixed-tail-incidence.md#5-a-nonvanishing-tail-incidence-requirement)
@@ -3474,7 +3508,7 @@ it gives I_3>35/6, requiring at least six. In every case N_3>=9.
 These are direct uses of the existing incidence and restriction
 results, not new bounds on those source objects. Consequently
 
-    H>=1 ==> P_3 has no outside repair of size<=6.   (NF10)
+    H>=1 ==> P_3 has no outside repair of size<=8.   (NF10)
 
 This concerns the complete private region and moduli not dividing
 Q, with no restriction on the original support size or other
@@ -3613,7 +3647,7 @@ apply to a proper subset of that private region or a composite parent.
 
 For q=3 the bound applies to every repair using only9-divisible
 moduli, at every budget. NF10 separately excludes all outside
-repairs of size at most six, even before asking whether they can
+repairs of size at most eight, even before asking whether they can
 pay a descendant deletion. The small-budget argument uses BC1;
 the proof of BC1 uses only the branch restriction and minimum
 cardinality, so it does not depend on NF10.
@@ -3641,7 +3675,74 @@ Every prime-parent repair that could pay the DR1 deletion budget
 must therefore use such a first-level collision. The statement
 includes missing old divisors and new-period moduli, and requires
 neither a class-budget bound nor a probability-law substitution.
-It does not eliminate the collisions: the remaining task is to
-control their actual parent and child phases, or to construct a
-different legal joint exchange. Unrestricted noncoverage is still
-unproved.
+It does not by itself eliminate the collisions. The existing
+digit transport does exclude the following family of collision
+patterns; the general case remains unresolved.
+
+### A common prime can transport away all residual collisions
+
+Let C be the full residual cover obtained in BC2, with L<n
+classes, and let E be its nonempty set of repeated numerical
+moduli. Every repetition is a pair, and every m in E is q-free.
+Suppose a prime p>q satisfies all three conditions:
+
+* Every m in E is divisible by p.
+* Every q-bearing modulus in C is divisible by p.
+* A set S of at most p-q first-p roots contains the phase of
+  at least one endpoint of every repeated pair.
+
+Select q first-p roots outside S and match them to all new
+first-q roots. Reuse the full-height transport from
+[Report348, retaining an already present q](../../321-384/348-fresh-prime-root-transport-and-two-copy-reduction.md#retaining-the-digits-of-an-already-present-q).
+For a retained p-bearing modulus its numerical action is
+
+    p^alpha*q^beta*r -> p^(alpha-1)*q^(beta+1)*r,
+    alpha>=1, beta>=0, gcd(r,p*q)=1.               (BC3)
+
+The old high-p digits remain; the complete old q coordinate is
+shifted one place upward while the new lowest q digit selects
+the old p root. All p-free classes stay unchanged, since the
+second condition makes them q-free as required by Report348.
+The carrier uses the complete period of C, including any repair
+primes or heights beyond Q. Every output point has one common
+old witness in a selected whole p branch, so the outputs cover
+all integers. No closing class is added: every new q root is used.
+
+Every repeated pair loses at least one endpoint. The numerical
+map BC3 is injective within the remaining p-bearing labels; its
+outputs have a q factor and cannot collide with the unchanged
+q-free group. A surviving old label p may become q safely, as in
+[Report374, section2](374-extremal-prime-projections-and-cardinality-descent.md#2-too-small-a-projection-gives-a-strictly-smaller-cover),
+because no added closing class competes for q. Thus the output
+is a distinct odd nonunit whole cover with at most L-1<n classes,
+a contradiction. This is a direct consumer of those transports,
+not a new transport theorem or an assumption of independent phases.
+
+### Necessary higher-level repairs for small collision families
+
+If |E|<=p-q and p divides every m in E, the third condition is
+automatic: choose one endpoint from each pair and let S contain
+their actual p roots. Coincident roots only reduce |S|. Therefore
+some q-bearing residual modulus must avoid p. In BC2 every such
+modulus comes from an effective repair d with q^2|d;
+C0 and all q-free repairs contribute no q-bearing output. Hence
+
+    p>q, p divides every m in E, |E|<=p-q
+      ==> some effective repair d has q^2|d and p does not divide d.
+                                                        (BC4)
+
+For a single repeated modulus m this holds for every prime
+p|m with p>q. At q=3, every prime factor of m qualifies: the
+9-divisible repairs must be nonempty, and no prime factor of m
+can divide all of them. For up to two repeated moduli sharing5,
+at least one9-divisible repair avoids5; for up to four sharing7,
+at least one avoids7. These conditions retain all original heights.
+
+The prime p can be absent from the original cover: two repairs
+may create their repeated parent at a new prime. BC3 uses the
+residual cover's actual full period and does not require an
+original pure-p class. Larger collision families may still meet
+the root-set condition directly, but no such condition is forced
+for arbitrary E. Nor is every q-bearing residual label forced to
+share a prime with E. The remaining mixed repairs and unrestricted
+noncoverage are not settled by BC4.
