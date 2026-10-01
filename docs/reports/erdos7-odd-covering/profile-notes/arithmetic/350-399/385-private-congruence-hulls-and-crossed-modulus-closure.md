@@ -7441,3 +7441,125 @@ seven-low/three-high phase configurations unresolved. They do
 not raise NF51's unconditional bound N_3>=19 or settle
 unrestricted Erdős #7. The proofs are ordinary symbolic
 deductions, not newly compiled Lean results.
+
+## 53. Missing five and seven force ternary height one at nineteen labels
+
+The proof uses the existing capacitated Hall theorem and strict-certificate transport. It is an ordinary mathematical deduction, without new Lean verification. Every integer below is greater than one and coprime to six. A list is labelled: repeated numerical values remain different events.
+
+### Eight items with one duplicate
+
+Let D be a list of at most eight items. Assume that at most one numerical value occurs twice, every other value occurs once, and neither numerical five nor numerical seven occurs. There is a selected increasing support-prime chain
+
+    3 < p_1 < ... < p_t,
+    r_1 = p_1-2,   r_i = p_i-p_(i-1)+1,
+
+and an assignment of each event m to a selected dividing prime p_i, such that
+
+    sum_(m assigned to p_i) r_i^(-v_(p_i)(m)) < 1
+
+at every selected prime.                                      (NF58)
+
+The exclusions concern the numerical values five and seven; those primes may occur in composite items.
+
+### Reused assignment tools
+
+Every selected base is at least three. Integer capacity r_i-1 at prime p_i guarantees a strict certificate. An assignment with at most two events per axis therefore costs at most 2/3. Reserving one or two deep events (an event at an axis with exponent at least two) and restoring them after an integer-capacity assignment also remains strict, since
+
+    (r-1)/r + 2/r^2 < 1  for r>=3.
+
+For a two-slot assignment of at most eight events, Hall can fail only through three events supported on one prime, five supported on two primes, or seven supported on three primes. Projecting away an already used prime gives the same criterion on the remaining prime supports.
+
+Two chain observations will be used.
+
+1. Two core primes greater than five, selected together with at most one external prime, cannot both have base three. Otherwise the two predecessor requirements either need two different external primes or form three consecutive odd numbers above three, all prime. Thus if two core bases are three in such a chain, one core prime is five.
+2. Three core primes, selected together with at most one external prime, can all have base three only if the core contains both five and seven. With at most three selected primes, three bases of three would force 5,7,9. With four selected primes, base three cannot occur simultaneously at neighboring positions j,j+1 with j>=2 (three consecutive odd primes above three are impossible). Three marked positions must consequently be positions 1,2,4; the first two core primes are 5 and7.
+
+For a chain of exactly three primes, the total integer capacity telescopes to max(p,q,r)-3>=8. Its bases cannot all be three, so at most one pair has total capacity four; all other pairs have capacity at least six.
+
+#### Deep reservations on two axes
+
+Any set of at most four numerically distinct deep values supported on two primes can be assigned to axes at which their exponents are at least two, with added cost strictly below 1/3 on each axis, using conservative base three.
+
+If at most two values can be assigned to each axis, the added costs are at most 2/9. Otherwise at least three of the values have only the same available deep axis. The exponent on the other prime is then zero or one. At most two different values can have exponent exactly two on the forced deep axis. Thus three forced values cost at most 2/9+1/27=7/27; four forced values cost at most 2/9+2/27=8/27. When exactly three are forced, the possible fourth value can be put on the other axis unless it is forced too. This proves the lemma.
+
+#### Eight items on two primes
+
+Every list of eight items, with at most one value occurring twice and every other value occurring once, supported on at most two primes, has a strict base-three certificate; no missing-value assumption is needed here.
+
+If at least six events are pure powers of one prime, put all of them on that prime. Distinct powers have finite total cost below 1/2; one extra copy adds at most 1/3. Thus their cost is below 5/6. Assign the at most two remaining events to the other prime. The one-prime case is included.
+
+Otherwise each pure group has at most five events. The list has at least seven distinct values and at most three squarefree values, so it contains at least four different deep values. Reserve four different deep values, choosing enough pure values that each remaining pure group has at most two events. This is possible: a pure group of k>2 events has at least k-2 distinct deep pure values, and the combined reservation requirement is at most four. Complete those required reservations to four different deep values. The remaining four events satisfy two-slot Hall. Restore the four reservations by the deep reservation lemma. Each cost remains below 2/3+1/3=1.
+
+### Eight-item proof
+
+For at most seven items, use NF47. For eight different values, use NF44. It is therefore enough to treat exactly eight items, of which one value is repeated twice and the other six occur once.
+
+#### Case A: a pure group has at least three events
+
+Collect all k>=3 pure powers of p. Their total conservative base-three cost is below 5/6, and below 1/2 if they are distinct. If k>=6, assign the at most two other events to non-p factors.
+
+Let 3<=k<=5. Try a two-slot assignment of all remaining events to their factors other than p. If it exists, combine it with the pure group.
+
+First suppose some projected singleton {q} supports at least three remaining events. Collect all such events as T. Each has the form p^u*q^v with u>=0 and v>=1. Its size t is 3,4 or5. If t=5, then k=3 and the whole list is supported on p,q, so use the two-prime lemma. Otherwise at most two events lie outside the pure group and T; each has a factor outside p,q, to which it may be assigned.
+
+If t=3 and at least one q exponent is at least two, put all three T events at q, at cost at most 7/9. If all three q exponents are one, move one T event with positive p exponent to p and leave two at q. If the pure group has the repeated value, all T values are different, so the largest p exponent is at least two; the p cost is below 5/6+1/9=17/18. If the pure group is distinct, some p exponent is positive because three equal q events are forbidden; the p cost is below 1/2+1/3=5/6.
+
+If t=4, necessarily k<=4. Let h be the number of T events with q exponent one. For h<=2, all four cost at most 8/9 at q. For h=3, move one of these three as in the previous paragraph; the remaining q cost is at most 7/9. For h=4, move two T events to p and leave two at q. If the pure group contains the repeated value, the four T values are different; their two largest p exponents are at least two and three. The pure group costs at most 22/27, so the new p cost is at most 22/27+1/9+1/27=26/27. If the pure group is distinct, T has at most one repeated value; its two largest p exponents are at least one and two. The p cost is below 1/2+1/3+1/9=17/18. This resolves every projected-singleton failure.
+
+Now assume every projected singleton has at most two events. A projected Hall failure must consist of five remaining events supported on a pair {q,r}. Hence k=3 and the entire list is supported on p,q,r. Reserve one deep pure-p event, which exists because no value has multiplicity three. Select exactly these three primes. Among the remaining seven events, singleton demands are at most two; a pair containing p has demand at most four, since only two pure-p events remain and the projected singleton demand is at most two. The only possible Hall failure at actual capacities is five p-free events on {q,r} with both their bases equal to three.
+
+If that failure does not occur, Hall assigns the remaining seven with actual capacities and the deep pure-p reservation can be restored. If it occurs, the first chain observation forces the pair {q,r} to contain five. Missing numerical five means only the other prime and the product of the two primes are available squarefree values on this pair. They account for at most three labelled events, so among the five p-free events there is a deep event. Reserve one such event as well. The remaining six satisfy two-slot Hall: every singleton has demand at most two and every pair at most four. Restore the pure-p event at p and the other reservation at q or r. The two restorations use different axes and add at most 1/9 each. This finishes Case A, including the five-event projected-pair failure.
+
+#### Case B: every pure group has at most two events
+
+Suppose some pair supports at least five events. Let g be the maximum number of events supported on any pair, choose a maximizing pair {p,q}, and collect all its g events.
+
+For g=8, use the two-prime lemma.
+
+For g=7, choose one outside factor r of the remaining event and select p,q,r. If one core base is at least five, reserve one deep internal event (there are at least six distinct internal values but only three squarefree values). The remaining six internal events fit the pair's actual capacities, whose sum is at least six and whose singleton demands are at most two. Restore the deep reservation and put the outside event at r. If both core bases are three, the first chain observation forces one core prime to be five. The absence of numerical five leaves at most two squarefree values, so there are at least four distinct deep internal values. Reserve three of them, assign the remaining four internally with two slots each, and restore using the deep reservation lemma. Put the outside event at r.
+
+For g=6, at least two internal events are deep: three squarefree values and at most one extra copy account for at most four events. Reserve any two deep events, assign the other four internally with two slots each, and restore the reservations at cost at most 2/9 per axis. Assign each of the two outside events to a factor outside p,q. Every outside axis receives at most two events.
+
+For g=5, at least one internal event is deep. Reserve it and assign the other four internally with two slots each. If the three outside events admit a two-slot assignment on their non-p,q factors, use it and restore the reservation. Otherwise all three outside events have the same singleton projected support {r}. The whole list is supported on p,q,r. Select these three primes and use their actual capacities. Their sum is at least eight. Every singleton demand is at most two, every pair demand is at most five, and at most one pair has capacity four. If that pair has demand at most four, Hall assigns the entire list. If it has demand five, its two bases are three and the first chain observation forces it to contain five. Missing numerical five implies that one of its five events is deep. Reserve one such event, assign the other seven by actual-capacity Hall, and restore it. All pairs of capacity at least six meet their demand bound five. This finishes every g>=5 case.
+
+It remains that each pair supports at most four events. A two-slot Hall failure now puts seven or eight events on three primes. If all eight are supported on a triple, select just that triple. Its actual capacity sum is at least eight; singleton and pair demands are at most two and four, so Hall gives the assignment.
+
+Otherwise choose a triple supporting seven events and one outside factor of the eighth event. Select these four primes. If at least one of the three core bases is at least five, the core's capacities total at least eight; singleton and pair demands are at most two and four, so the seven core events fit. Assign the outside event to its outside factor.
+
+If all three core bases are three, the second chain observation shows that the core contains both five and seven. Three primes have seven nonempty squarefree products; excluding numerical five and seven leaves only five squarefree values, and one repeated value accounts for at most six labelled squarefree events. Thus one of the seven core events is deep. Reserve it, assign the other six core events with two slots each, restore the deep event for at most 1/9, and assign the outside event separately. All costs are strict. This completes the proof.
+
+### A remaining high ten-class repair requires twenty-one
+
+Use exactly the actual-source setup and legal label restrictions of NF57. Assume a complete repair with seven low and three high classes omits numerical fifteen. Its seven low cofactors form a seven-element retained set E inside C_0, with numerical five absent, and all low labels are 3m for m in E. Its three singleton high roots have distinct labels 9e_1,9e_2,9e_3 and actual cofactor APs containing the same nonempty low remainder.
+
+Suppose twenty-one is also absent. Then seven is absent from E. Since the three e_i are different, at least one satisfies e_i>1 and e_i!=5. NF57 forces this e_i into E. The actual cofactor cover C_0 plus the seven low cofactor events plus this singleton query has exactly the deletion list E disjoint-union {e_i}: eight labelled values, one repeated, with numerical five and seven absent.
+
+The theorem supplies a strict certificate. Apply the existing complete-prefix avoidance and one PC1--PC2 CRT transport to this one actual cover. Deleted events have empty pullback; every retained event has at most one AP pullback; all complete heights, phases and actual source witnesses remain as required in NF49/NF57. The result is a whole distinct odd cover with at most |C_0|+8 members, smaller than the original minimum cover because the independent earlier N_3 bound exceeds eight. Contradiction.
+
+Therefore
+
+    a ten-class repair with seven lows and three highs
+      which omits15 must contain21.                      (NF59)
+ In the actual N_3=19 branch split 8+10, the eight-class branch already requires both fifteen and twenty-one. Global numerical distinctness makes the other original branch omit both; consequently its (7,3) ten-class case is excluded. This does not exclude the all-low ten-class case and does not establish an unconditional N_3>=20.
+
+
+### Equality in the nineteen-label bound has ternary height one
+
+If N_3=19, NF28 and NF50 force the two non-parent original
+first3 branches to have8 and10 labels. NF37 requires both15
+and21 in the eight-class branch. The other actual branch
+therefore omits both labels. NF56 leaves ten lows or the
+seven-low/three-high split; NF59 excludes the latter.
+The eight-class branch is already all low by NF34. NF19's
+translations preserve the numerical labels and their heights,
+so every original3-bearing label in either non-parent branch
+has3-height one. Including the original prime3 class gives
+
+    N_3=19 ==> v_3(d)<=1 for every original modulus d;
+    an original modulus divisible by9 ==> N_3>=20.        (NF60)
+
+This is a height-sensitive consequence, not an unconditional
+increase of NF51. The all-low ten-class repair still has ten
+different retained cofactor labels excluding5 and7 in this
+equality case. Its actual phases and the unrestricted larger
+inventories remain unresolved, as does Erdős #7.

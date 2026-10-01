@@ -31352,6 +31352,32 @@ The unrestricted conclusion remains N_3>=19; neither remaining
 ten-class form nor Erdős #7 is settled by these deductions.
 These are ordinary symbolic results, without new Lean verification.
 
+[Report385, section53](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#53-missing-five-and-seven-force-ternary-height-one-at-nineteen-labels)
+proves that at most eight numerical deletion items with one
+possible double value admit a strict selected-chain certificate
+when BOTH5 and7 are absent. This uses the existing Hall
+criterion, with deep-item reservations and the actual chain
+bases; neither missing value may simply be dropped from the
+stated hypotheses.
+
+In a seven-low/three-high repair omitting15, choose a singleton
+query e_i different from1 and5. NF57 puts e_i among the
+seven retained low cofactors E. If21 were also absent, the
+actual deletion list E plus this one extra e_i would meet
+the eight-item certificate. One PC1--PC2 transport would give
+a smaller distinct odd whole cover. Thus this repair form
+requires21.
+
+At N_3=19 the original non-parent branches have8 and10 labels.
+The eight-label branch requires15 and21, so the other branch
+omits both and its seven-low/three-high form is excluded.
+Both branches must therefore have only height-one ternary
+labels. Equivalently, any minimum hypothetical whole cover
+with an original modulus divisible by9 has N_3>=20. The
+unconditional bound is still19. The all-low ten-class case
+with ten different retained cofactors excluding5 and7 remains
+open. These are ordinary deductions, without new Lean verification.
+
 [Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
 keeps the residual cover's entire old q coordinate unchanged.
 It excludes one endpoint per repeated pair and reserves the
