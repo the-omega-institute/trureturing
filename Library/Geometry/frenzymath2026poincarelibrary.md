@@ -568,3 +568,115 @@ uniqueness remain unfinished, including noncompact and nonorientable
 manifolds. These are scoped transient classical applications under
 unchanged pins, with only `propext`, `Classical.choice` and `Quot.sound`;
 no new project Lean declaration or novelty claim is retained.
+
+
+## Global metric-preserving covering of an arbitrary negative target
+
+For any complete, preconnected smooth three-manifold with a smooth
+Riemannian metric of sectional curvature `-1` and the stated Levi-Civita
+data, the next composition constructs a smooth covering from the actually
+constructed H3 metric to that target. Any prescribed source and target
+points can be matched. No compactness, orientability or finite-volume
+hypothesis is added.
+
+Within this covering construction, choose one normalized global H3
+exponential and its global diffeomorphism witness, and one normalized global
+target covering exponential. Their differential pullback inner products
+agree at every Euclidean parameter. At zero this is their common initial
+normalization; at a nonzero parameter, write it as its norm times a unit
+vector and apply both full negative polar identities. The positive squared
+norm cancels. This establishes the equality over the entire parameter
+space, without a finite-radius restriction.
+
+Compose the target exponential with the smooth inverse of the chosen H3
+diffeomorphism. The derivative chain rule and the inverse differential
+identity convert the pullback equality into preservation of the actual
+tangent metrics at every H3 point. Covering structure follows from the
+target exponential's `IsCoveringMap` by Mathlib's
+`IsCoveringMap.comp_homeomorph`. The value at the chosen basepoint follows
+from the two exponential normalizations. The target need not be simply
+connected.
+
+The combined check binds this statement to the same constructed H3 metric
+`g` and retains all prior source, exponential, volume, curvature,
+completeness, conditional core/tail and quotient clauses and the original
+free, compact-set proper action conditions. Quotient metric uniqueness
+remains within its selected smooth structure. Removing the one new
+arbitrary-target covering clause and its application and reversing names
+restores the preceding combined constructor byte-for-byte. The exponentials
+used within this new covering construction are selected there; no identity
+with existential exponential witnesses in separate earlier clauses is
+asserted.
+
+These scoped transient classical applications use unchanged pins and only
+`propext`, `Classical.choice` and `Quot.sound`, with no new tracked project
+Lean declaration or novelty claim. The preceding covering clause alone does
+not include the deck-action conclusions. The following composition supplies
+the faithful isometric deck action and topological quotient identification.
+Global isometric quotient-to-target realization, finite-volume cusp
+classification and covolume, and full Mostow-Prasad existence, homotopy and
+uniqueness remain unfinished. Noncompact cusps and nonorientable manifolds
+remain within the full rigidity target.
+
+
+## Isometric deck action and topological realization of a negative target
+
+For the same constructed H3 metric and any preconnected smooth
+three-manifold with `T3Space` topology, a smooth Riemannian metric that is
+`MetricComplete` and has sectional curvature `-1`, and the supplied
+Levi-Civita data, a new composition supplies a surjective, smooth,
+tangent-metric-preserving covering through any prescribed pair of basepoints. Its full deck group
+acts freely and properly discontinuously, is represented faithfully by
+isometries of the original H3 metric, and has an orbit quotient homeomorphic
+to the target. The homeomorphism composed with the orbit projection is
+exactly this selected covering. No target simple connectedness,
+compactness, orientability or finite-volume premise is added.
+
+For the topological part, the H3 source is simply connected and locally
+path connected. Mathlib's covering lift existence and uniqueness construct
+a deck homeomorphism between any two points of a fiber. Uniqueness makes
+the deck action free. Path lifting over the connected target supplies
+surjectivity; fibers are precisely deck orbits, giving a quotient covering.
+The unchanged pinned `PoincareLib/Topology/Covering/Quotient/Properness.lean`
+gives, over the Hausdorff target, finiteness of the group elements that move
+one compact set to meet another. This argument has no finite-group or compact-source premise.
+
+Positive definiteness and equal tangent dimensions make the covering's
+differential bijective. Its covering branches and the pinned smooth inverse
+theorem make it a local diffeomorphism. Any continuous projection-preserving
+map agrees locally with a smooth inverse branch composed with the
+projection, so it is smooth. Differentiating the projection identity gives
+preservation of the actual source tangent metric. Applying the pinned
+`edist_le_mul_of_inner_mfderiv_le` with factor one to a deck homeomorphism
+and its inverse gives equality of intrinsic distances. The already checked
+identity between that same H3 intrinsic distance and the original
+hyperbolic distance turns each deck homeomorphism into an actual
+`IsometryEquiv`; the underlying maps respect identity and composition,
+giving a faithful group homomorphism. Freeness and compact-set properness
+transfer along its pointwise equality with the deck action.
+
+The orbit relation equals the covering's fiber relation. Mathlib's quotient
+homeomorphism constructions therefore identify the orbit quotient with the
+target and retain the projection identity. This is a topological
+identification: global distance preservation by that quotient-to-target
+homeomorphism has not yet been checked.
+
+The combined check adds one arbitrary-target isometric-deck clause for the
+same actual H3 metric `g`. Removing that clause and its application and
+reversing names restores the preceding combined constructor byte-for-byte.
+All preceding source, exponential, volume, curvature, completeness,
+conditional core/tail and quotient clauses and original free, compact-set
+proper action conditions are retained. The new covering is selected within
+this construction; it is not identified with the witness of a separately
+quantified earlier covering clause. Quotient metric uniqueness remains
+within its selected smooth structure.
+
+These are scoped transient classical applications under unchanged pins,
+with only `propext`, `Classical.choice` and `Quot.sound`. No new tracked
+project Lean declaration or novelty claim is retained. Isometric realization
+of an arbitrary target, finite-volume cusp classification and covolume,
+and full Mostow-Prasad existence, homotopy and uniqueness remain unfinished,
+including noncompact cusps and nonorientable manifolds. The existing escape
+audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these recorded compilation checks nor prior CI closes that audit.

@@ -37164,10 +37164,544 @@ $F_{17}=1597$、$F_{12}=144$ 给式（265.13）与两个数量。
 
 共同本原组成指定了一份可共享的 Fibonacci 数量结构；按 §263 的逆归约，两者都从约化核心 $(1,0)$ 推进九步得到该组成；它没有使两个整数的完整素数赋值相同，也不单独传递 Robin 余量。
 本节的桥梁是实际来源的精确乘法重编码，以及该来源对公因子成本上界的饱和。
+## 266. 2026 解析前沿：Fibonacci zeta 与 Möbius 平均不能替代点值桥
 
-## 追加锚（本行以下为增补区）
+本节补入两项 2026 年与当前 FIB/RH 接口直接相关的来源。它们分别给出 Fibonacci Dirichlet 级数的零点边界和 Möbius 部分和的平均振荡；两者都没有把 FIB 递归输送到 Riemann zeta 的点态判据。
 
-## 266. Lucas 饱和来源的小素数停止与 5040 指标剖面
+### 262.1 Fibonacci zeta 的零点边界不是 Riemann zeta 的临界线
+
+[Mantovanelli 的 Fibonacci zeta 预印本](../../../Library/Weil/mantovanelli2026fibonaccizeta.md)确定
+
+$$
+Z_F(s)=\sum_{n\ge1}F_n^{-s}
+$$
+
+在绝对收敛半平面内的零点右边界
+
+$$
+\sigma_F=0.743163398726901648\ldots.
+$$
+
+这里的 Fibonacci 增长与项目的 $M$ 递归有直接的尺度联系，但该级数没有因此获得 Riemann zeta 的 Euler 乘积、von Mangoldt 系数或 Robin 的约数和。它证明的是另一份几乎周期 Dirichlet 级数的零点几何；把 $\sigma_F$ 当作 $\zeta$ 的临界线证据会丢失系数与检验集合的桥接。
+
+### 262.2 Möbius 平均振荡仍不是指定 FIB 来源的符号界
+
+[Pintz 的 Möbius 振荡预印本](../../../Library/Analytic/pintz2026mobiusoscillation.md)把 $|M(x)|$ 的长区间平均与素数计数公式的最大误差联系起来。这为项目的有符号残差提供了新的历史接口，但当前目标需要在同一
+
+$$
+N_g=1+F_rg
+$$
+
+上控制完整的 $\mu$/$\Phi$ 残差。平均量不能自动限制这个稀疏仿射族的最大值；仍需从平均域到指定 FIB 来源的统一输送或点态误差估计。
+
+### 262.3 去重后的结论
+
+这两项来源把“FIB 谱边界”和“Riemann 点态符号”清楚分开：前者缺 Euler/约数和接口，后者缺指定 FIB 族的输送界。因此下一步应继续处理 §233.5 的同一候选完整权重，或证明一个真正保留约数和与显式公式系数的 FIB 映射；再造一个 FIB zeta 零点判据或重复平均 Möbius 估计不会缩小该缺口。
+
+## 267. 2026 Robin/Lagarias 新声称的证明缺口
+
+[Sabihi 的 v14 预印本](../../../Library/Analytic/sabihi2026robinlagarias.md)是本轮定向检索到的、尚未进入仓内审计的最新直接 Robin 声称。它不是新的 FIB 路线：稿件仍直接处理普通约数和与素数乘积，并未给出
+
+$$
+N_g=1+F_rg
+\longrightarrow
+\text{同一价格源和同一有符号尾项}
+$$
+
+的运输。
+
+其大数部分依赖一个命题：从带符号、单调函数的 $f=O(g)$ 推出 $f'=O(g')$。该命题有单调尖峰反例；稿件随后还把阶梯函数 $\pi(x)$ 的素数定理余项按此规则微分。因此 Lemma 9 的严格单调性没有由所给证明得到，依赖它的后续 Robin/Lagarias 全覆盖也不能作为已验证的 RH 证明。这个审计只排除该证明链，不否定 Robin 判据本身，也不把未 peer-review 的声称当作 RH 进展。
+
+去重后的工作边界仍是 §233.5：找到保留约数和、显式公式系数和点态符号的 FIB 映射，或给出同一 $N_g$ 族上的统一余量估计；重述 Robin/Lagarias 判据或重复平均素数估计不会缩小该缺口。
+
+## 268. 有限形式证书仍留下全局尾项
+
+[Hu--Xu--Sun--Jin--Xiong 的 VGPT-RSI 预印本](../../../Library/Analytic/hu2026vgptrsi.md)报告了两个经过区间算术和 Coq 检查的有限 RH 邻近证书，并明确把全局 Lagarias 等价、任意有限截断之后的尾项，以及可能的 CA 约化列为未解义务。它没有把有限证书延伸成所有整数上的 Robin 不等式，也没有给出
+
+$$
+N_g=1+F_rg
+\longrightarrow
+\text{同一完整除数权重或有符号 }\Phi/\mu\text{ 尾项}
+$$
+
+的输送估计。因此这项最新形式化工作与本卷的去重判断一致：有限验证和 CA 接触只能缩小边界，不能替代 §233.5 的同一候选联合预算。
+
+## 269. Regular arithmetic functions 给出另一种 FIB 语言，但没有价格源桥
+
+[Cloitre 的 *Regular Arithmetic Functions* 第一卷](../../../Library/Analytic/cloitre2026regulararithmetic.md)把 RH 放进三角算术核的“正则性指标”框架。其基本方程是
+
+$$
+\sum_{k\le n}a_kG(n,k)=n^{-\beta},
+$$
+
+而 Ingham 核
+
+$$
+G(n,k)=\Phi(k/n)=\frac{k}{n}\left\lfloor\frac nk\right\rfloor
+$$
+
+的指标为 $1/2$ 当且仅当 RH 成立。这里的反演链明确经过 Möbius 和与 Mellin 变换，所以它与本项目的“正向 FIB 递归还缺有符号尾项”是同一个接口方向：若要消费该等价判据，必须先把五窗来源接到该核的实际系数。
+
+该卷第 14.9 节还记录 Harcos 的 Fibonacci 分数部定理：
+
+$$
+\sum_{k=1}^{n}\left\{\frac{F_n}{F_k}\right\}
+=
+\begin{cases}
+\dfrac{\pi}{8}n+O(\sqrt n),&n\text{ 为奇数},\\[4pt]
+\dfrac{3\log 2}{4}n+O(\sqrt n),&n\text{ 为偶数}.
+\end{cases}
+$$
+
+它确实提供了一个 Fibonacci 索引的 Abelian 密度，并由 Lucas--Fibonacci 同余与奇偶分解证明；但其中的 gauge 是分数部和里的 $F_n$，不是本卷的五分类 Zeckendorf 地址，也不是
+
+$$
+N_g=1+F_rg
+$$
+
+的同一 Robin 候选。它没有给出
+
+$$
+\text{FIB 地址}
+\longrightarrow
+\text{同一 }\sigma(N_g)/N_g\text{ 或 }\mu/\Phi\text{ 点值}
+$$
+
+的运输。因而这项工作值得纳入历史和方法地图，却不能替代 §233.5 的联合预算；真正的新任务是构造一个既保留五窗来源、又具有 Ingham 型正则性指标的 FIB-gauged kernel，并证明该指标与 Robin 价格源相同。
+
+## 270. Fibonacci gauge 到 Ingham 核的精确接口仍缺一个加权分数部估计
+
+Cloitre 卷中的 Fibonacci gauge 可以与 Ingham 核写出一个精确接口，但这个接口也明确显示缺口在哪里。令
+
+$$
+G_F(n,k)=\Phi\!\left(\frac{F_k}{F_n}\right),
+\qquad 1\le k\le n,
+$$
+
+并使用
+
+$$
+\Phi(x)=x\left\lfloor\frac1x\right\rfloor
+=1-x\left\{\frac1x\right\}
+\qquad(0<x\le1).
+$$
+
+则逐项恒等式给出
+
+$$
+\boxed{
+\sum_{k=1}^{n}G_F(n,k)
+=n-\frac1{F_n}\sum_{k=1}^{n}F_k\left\{\frac{F_n}{F_k}\right\}.
+}
+\tag{270.1}
+$$
+
+这把 Fibonacci 分数部和真正接到了一个 Ingham 型核；它不是把两个同名的“gauge”直接认成同一对象。
+
+Harcos 的已知结果控制的是无权总和
+
+$$
+H_n=\sum_{k=1}^{n}\left\{\frac{F_n}{F_k}\right\},
+$$
+
+而式（270.1）需要加权总和
+
+$$
+W_n=\sum_{k=1}^{n}F_k\left\{\frac{F_n}{F_k}\right\}.
+$$
+
+令
+
+$$
+A_m=\sum_{k=1}^{m}\left\{\frac{F_n}{F_k}\right\},
+$$
+
+离散分部求和给出
+
+$$
+W_n=F_nA_n-\sum_{m=1}^{n-1}(F_{m+1}-F_m)A_m.
+\tag{270.2}
+$$
+
+所以一个终点估计 $A_n=H_n$ 不能决定 $W_n$；必须同时控制所有中间部分和 $A_m$。仅用 $0\le A_m\le m$ 得到的界，经过 $F_n^{-1}$ 归一化仍是宏观量，远不能提供正则性指标或 Robin 所需的点值误差。
+
+这给出一条可检验的新路线：先证明 $A_m$ 在 $m$ 与 $n$ 的二维范围内具有足够强的统一估计，再研究 $G_F$ 的离散正则性指标；随后还必须证明该指标和 Ingham 核的指标通过同一 Möbius/约数系数运输。即使前两步成功，也不能仅凭 Fibonacci 分数部定理推出 RH，因为 $G_F$ 的跳点是 Fibonacci 比值，尚未携带普通整数约数的 Euler 乘积。
+
+因此当前缺口可以精确写成
+
+$$
+\boxed{
+\text{Fibonacci 分数部}
+\;\longrightarrow\;
+W_n\text{ 的二维点态界}
+\;\longrightarrow\;
+\text{同一 Ingham/Möbius 系数源}
+\;\longrightarrow\;
+\text{RH 判据}.
+}
+$$
+
+这条接口比重新提出一个 Fibonacci zeta 或无权平均更接近 Robin/RH 的真实证明义务；目前仍未完成最后三步。
+
+## 271. 加权 Fibonacci Ingham 行和的精确极限
+
+式（270.1）所需的加权分数部和本身可以在 Fibonacci gauge 上求出极限。令
+
+$$
+W_n=\sum_{k=1}^{n}F_k\left\{\frac{F_n}{F_k}\right\},
+\qquad
+q=\varphi^{-1}.
+$$
+
+则
+
+$$
+\boxed{
+\lim_{n\to\infty}\frac{W_n}{F_n}=\frac2{\sqrt5}.
+}
+\tag{271.1}
+$$
+
+从而由式（270.1）得到
+
+$$
+\boxed{
+\sum_{k=1}^{n}\Phi\!\left(\frac{F_k}{F_n}\right)
+=n-\frac2{\sqrt5}+o(1).
+}
+\tag{271.2}
+$$
+
+**证明。** 令 $j=n-k$。对每个固定 $j\ge1$，Binet 公式给出
+
+$$
+\frac{F_{n-j}}{F_n}\longrightarrow q^j,
+\qquad
+\frac{F_n}{F_{n-j}}\longrightarrow\varphi^j.
+$$
+
+记 Lucas 数为 $L_j=\varphi^j+(-\varphi^{-1})^j$。由于
+
+$$
+\varphi^j=L_j-(-\varphi^{-1})^j,
+$$
+
+且 $L_j$ 为整数，故
+
+$$
+\left\{\varphi^j\right\}
+=
+\begin{cases}
+q^j,&j\text{ 奇},\\
+1-q^j,&j\text{ 偶}.
+\end{cases}
+\tag{271.3}
+$$
+
+因此第 $j$ 个固定尾项的极限为 $q^j\{\varphi^j\}$。Fibonacci 的标准指数界给出一致支配
+
+$$
+0\le \frac{F_{n-j}}{F_n}\left\{\frac{F_n}{F_{n-j}}\right\}
+\le \varphi q^j,
+$$
+
+其中 $1\le j<n$；右侧可求和，所以对三角形求和使用尾项一致截断即可交换极限与级数。于是
+
+$$
+\lim_{n\to\infty}\frac{W_n}{F_n}
+=\sum_{j\ge1}q^j\{\varphi^j\}
+=\sum_{m\ge1}q^{4m-2}
+ +\sum_{m\ge1}(q^{2m}-q^{4m}).
+$$
+
+几何级数化简为
+
+$$
+\frac{q^2}{1-q^2}+\frac{q^2}{1+q^2}
+=\frac2{\sqrt5},
+$$
+
+其中 $q=(\sqrt5-1)/2$。$j=0$ 项为零，故式（271.1）成立；再代入式（270.1) 即得式（271.2）。证毕。
+
+这个结果提供了一个明确的负面诊断：Fibonacci 比值核的普通行和是 $n+O(1)$，而 Robin 的临界预算来自约数 Euler 乘积的 $log\log n$ 尺度。即使继续求得该核的更高阶误差，也不能把它直接当成 Robin 的 Ingham 核；还必须建立普通整数约数系数、Möbius 反演和 Fibonacci 来源之间的共同运输。它把“Fibonacci gauge 已经接上 RH”排除为尺度不匹配，而不是排除所有可能的 FIB-gauged 变形。
+
+## 272. GraftAffineClosure 的完整动态观察仍不包含 Robin 价格
+
+最新合入的 `D5.S3.Arith.FibonacciAtomic.GraftAffineClosure.result` 给出了一个精确的来源侧接口。对正模数 $H$ 和 Fibonacci 原子块 $w=M^j(1,0)$，同一有限操作词上的全部 gcd 读出满足
+
+$$
+\operatorname{behavior}_H(w,v,v')
+\iff
+\rho_H(v)=\rho_H(v'),
+$$
+
+其中操作词由 Fibonacci 步和固定接枝组成。原定理还证明：接枝及其下一步生成的平移空间、四步周期、观察器运输和最小状态下界均在同一模 $H$ 合同中成立。这个结果把“FIB 操作能恢复完整模余数”从模型描述提升为已编译的 Lean 定理；它没有把读出扩展成所有整数约数探针。
+
+可以直接看到这两个任务并不等价。取 $H=5$、$j=0$，即 $w=(1,0)$，并取
+
+$$
+v=(1,0),\qquad v'=(6,0).
+$$
+
+两者的组成坐标模 $5$ 相同，所以 `result` 给出它们在**每一个共同有限操作词**下的 gcd 读出完全相同。但数量读出分别为
+
+$$
+q(v)=2,\qquad q(v')=12,
+$$
+
+而普通约数权重已经不同：
+
+$$
+\frac{\sigma(2)}2=\frac32,
+\qquad
+\frac{\sigma(12)}{12}=\frac73.
+$$
+
+因此下面这个推断是错误的：
+
+$$
+\text{完整固定模 FIB 动态行为}\Longrightarrow
+\text{同一整数的 Robin 价格}.
+$$
+
+反例只说明固定模合同的观察纤维太粗；它不构造 Robin 反例，也不涉及把模数选成目标整数本身的另一合同。对当前主线的作用是划定接口：要把 `GraftAffineClosure` 接到 §233.5，必须把观察器继续扩展到同一个 $N_g$ 上的全部素数幂赋值或等价的约数指示函数，并保留实际来源、窗口和乘子共同实现。仅有 $\rho_H$ 的完备性、接枝平移闭包或四相矩阵恒等式，不能提供所需的 $Z(N_g)=\sigma(N_g)/N_g$ 点值预算。
+
+这项区分也解释了为什么“再增加一个 FIB 状态”不会自动缩小 Robin 缺口：状态若只记录固定模余数，仍可把不同约数权重的整数压到同一观察纤维；状态若记录全部素数幂赋值，就已经承担了 §233.5 所要求的完整价格源。后者才是尚未得到统一界的真实新增义务。
+
+## 273. 把模数锁定到目标整数后，FIB 操作可以实现完整约数探针
+
+§272 的反例固定了模数而改变了数量。若把模数锁定到同一个目标整数，`GraftAffineClosure.result` 给出一个相反方向的精确接口。取原子块 $w=M^j(1,0)$；原定理的原子分支有
+
+$$
+\operatorname{graftGcd}(H,w)=1.
+$$
+
+因此对每个 $z\in\mathbb Z/H\mathbb Z$，存在一个接枝空间元素 $t$ 满足
+
+$$
+\operatorname{quantity}(t)=z,
+$$
+
+并存在一个有限操作词 $W_z$，使其把任意初态的模组成推进到
+
+$$
+\rho_H(\operatorname{run}(w,W_z,v))
+=\rho_H(v)+t.
+$$
+
+若初态满足 $q(v)\equiv0\pmod H$（例如 $q(v)=H$），则这些操作的终端 gcd 读出覆盖完整函数
+
+$$
+P_H(z)=\gcd(\widetilde z,H),
+\qquad z\in\mathbb Z/H\mathbb Z,
+$$
+
+其中 $\widetilde z\in\{0,\ldots,H-1\}$ 是标准代表。也就是说，FIB 接枝并非只能看一个 residue；在模数等于目标的合同下，它可以逐项实现目标整数的所有 gcd 探针。
+
+这个函数确实包含完整的约数格。对每个 $d\mid H$，有
+
+$$
+\#\{z\in\mathbb Z/H\mathbb Z:P_H(z)=d\}
+=\varphi(H/d).
+\tag{273.1}
+$$
+
+证明只用写 $z=d u$：条件变为 $u$ 在模 $H/d$ 下与 $H/d$ 互素，$d=H$ 时约定 $\varphi(1)=1$。因此完整的 $P_H$ 既能恢复全部约数 $d$，也能恢复每个商的 Euler 权重；例如其值域为 $H$ 的约数集合，而每个值 $d$ 的纤维大小给出 $\varphi(H/d)$。
+
+更强的是，约数权重本身就是这张探针表的一个精确平均。记 $\tau(d)$ 为正约数个数，则
+
+$$
+\boxed{
+\frac1H\sum_{z\in\mathbb Z/H\mathbb Z}\tau(P_H(z))
+ =\frac{\sigma(H)}H.
+}
+\tag{273.2}
+$$
+
+因为式（273.1）把左边的未归一化和化为
+
+$$
+\sum_{d\mid H}\varphi(H/d)\tau(d),
+$$
+
+而经典 Dirichlet 卷积恒等式 $\varphi*\tau=\sigma$ 正好给出 $\sigma(H)$。也可逐素数幂验证：两边都是乘法函数，$H=p^a$ 时有限和
+$\sum_{j=0}^{a}\varphi(p^{a-j})(j+1)$ 化为 $1+p+\cdots+p^a$。
+
+所以对 $H>5040$，Robin 严格不等式本身等价于同一个目标整数上的探针平均界
+
+$$
+\boxed{
+\frac1H\sum_{z\in\mathbb Z/H\mathbb Z}\tau(P_H(z))
+<e^\gamma\log\log H.
+}
+\tag{273.3}
+$$
+
+这不是把预算换成另一个函数：式（273.2）逐项把它还原为 $\sigma(H)/H$。新增内容是一个 FIB 操作语义，使 Robin 的完整约数权重成为可执行探针的平均；困难转移为如何从递归来源直接控制该平均。
+
+在中国剩余定理坐标下，这个平均还逐素数幂分解。若 $p^a\parallel H$，均匀 $z\bmod H$ 的局部截断赋值 $J_p=\min(v_p(z),a)$ 满足
+
+$$
+\mathbb P(J_p=j)=
+\begin{cases}
+(1-p^{-1})p^{-j},&0\le j<a,\\
+p^{-a},&j=a,
+\end{cases}
+$$
+
+从而
+
+$$
+\mathbb E\,\tau(p^{J_p})=1+p^{-1}+\cdots+p^{-a}.
+$$
+
+不同素数幂的 $J_p$ 独立，乘起来正好得到式（273.2）。所以现有接枝定理的“全翻译空间”并没有隐藏额外的 FIB 偏置：它实现的是均匀模相位，Robin 困难完整地留在这些局部 Euler 因子的乘积上。若要从五窗分支取得更强的界，必须先指定一个严格的非均匀来源测度，并证明它仍能上界同一个均匀探针平均；单凭分支数量或收缩坐标不能完成这一步。
+
+这是一条真正的正向桥，但它还没有证明 Robin。它把约数和改写成了一个长度为 $H$ 的完整探针表；已知 $H$ 时，直接分解或枚举这张表只是在重算 $\sigma(H)$，未知 $H$ 时，恢复表本身的成本就是目标规模。要推进 §233.5，必须从 FIB 递归直接估计
+
+$$
+\frac1H\sum_{z\in\mathbb Z/H\mathbb Z}\tau(P_H(z))
+$$
+
+或其同一素数幂合同下的严格上包络，而不能先展开全部 $H$ 个接枝词。当前 `GraftAffineClosure` 提供了探针的可实现性与来源保持，也提供了 Robin 权重的精确观测表示；它没有提供这个平均的非平凡统一上界。
+
+因此两种结论应分开保存：固定模行为不足以决定 Robin 价格；目标锁模后可以实现完整 gcd 观察，但从完整观察到 $\sigma(H)/H$ 的低成本统一预算仍是开放义务。这把“FIB 操作是否能看见约数”与“能否证明 Robin 上界”严格分成了可实现性和估计强度两个问题。
+
+## 274. 秩为 60 的倍数时，FIB 仿射窗口落入已知 Robin 安全类
+
+这里把 Assani--Chester--Paschal 预印本的外部输入与 Fibonacci 的整除秩接起来。该来源声称：对 $n>5040$ 且 $2\nmid n$、$3\nmid n$、$5\nmid n$，Robin 严格不等式成立；这项外部证明没有在本项目中独立复核或 Lean 形式化。
+
+对本卷的窗口族
+
+$$
+V=F_r,\qquad
+I_r=\left[\left\lceil\frac{F_r}{10}\right\rceil,
+\left\lfloor\frac{F_r}{5}\right\rfloor\right]\cap\mathbb Z,
+\qquad
+N_{r,g}=1+F_rg,
+$$
+
+若 $60\mid r$，则
+
+$$
+F_3=2\mid F_r,\qquad F_4=3\mid F_r,\qquad F_5=5\mid F_r,
+$$
+
+因为 Fibonacci 强整除性给出 $F_a\mid F_b$ 当且仅当 $a\mid b$（在这里 $a\in\{3,4,5\}$）。于是对每个 $g\in I_r$，
+
+$$
+N_{r,g}\equiv1\pmod 2,\qquad
+N_{r,g}\equiv1\pmod 3,\qquad
+N_{r,g}\equiv1\pmod 5.
+$$
+
+当 $60\mid r$ 时 $r\ge60$，而 $g\ge F_r/10$，故 $N_{r,g}>5040$。因此，在接受上述外部安全类定理的前提下，得到
+
+$$
+\boxed{
+60\mid r\quad\Longrightarrow\quad
+\frac{\sigma(N_{r,g})}{N_{r,g}}
+<e^\gamma\log\log N_{r,g}
+\quad(g\in I_r).
+}
+$$
+
+这是真正投影到同一 FIB 整数上的新筛选：它比单独由 $3\mid r$ 得到的奇性条件更强，直接同时排除 $2,3,5$ 三个小素因子。它只处理秩为 $60$ 的倍数，不能覆盖其余秩，也没有把 FIB 地址变成 CA/SA 来源；因此剩余任务仍是对 $60\nmid r$ 的窗口建立同一 Robin 价格源的统一点值界。
+
+### 275.1 任意秩的显式小素数安全比例
+
+同一个接口还给出每个秩的安全窗口比例，而不只给出 $60$ 的倍数。令
+
+$$
+z_2=3,\qquad z_3=4,\qquad z_5=5,
+$$
+
+分别是 $2,3,5$ 的 Fibonacci 出现秩，并定义
+
+$$
+m_r=\prod_{p\in\{2,3,5\}:\ z_p\nmid r}p.
+$$
+
+若 $z_p\mid r$，则 $p\mid F_r$，所以 $p\nmid N_{r,g}$ 对所有 $g$ 成立。若 $z_p\nmid r$，强整除性与
+
+$$
+\gcd(F_r,F_{z_p})=F_{\gcd(r,z_p)}=1
+$$
+
+给出 $p\nmid F_r$；此时恰有一个余数类
+
+$$
+g\equiv -F_r^{-1}\pmod p
+$$
+
+使 $p\mid N_{r,g}$. 中国剩余定理因此给出
+
+$$
+\#\{a\bmod m_r:\gcd(1+F_ra,30)=1\}=\varphi(m_r).
+$$
+
+从而对任意整数区间 $I$，有精确的周期计数
+
+$$
+\boxed{
+\#\{g\in I:\gcd(N_{r,g},30)=1\}
+ =\frac{\varphi(m_r)}{m_r}|I|+O(m_r),
+\qquad m_r\le30.
+}
+$$
+
+当 $r\ge13$ 时，本卷的 $I_r$ 中所有 $N_{r,g}$ 都大于 $5040$。故在接受 Assani--Chester--Paschal 的小素数自由安全类定理后，右侧计数的每个 $g$ 都满足 Robin 严格不等式。最坏情形是 $m_r=30$，安全比例仍为
+
+$$
+\frac{\varphi(30)}{30}=\frac4{15};
+$$
+
+而 $60\mid r$ 时 $m_r=1$，比例升为 $1$，正好恢复上一段的整窗结论。
+
+这项计数把前沿文献的整除条件具体投影到 FIB 仿射窗口；它没有控制剩余的 $1-4/15$ 候选，也没有提供这些候选的 CA 身份或完整约数预算。因此它缩小了 Robin 反例可能落入的 FIB 地址纤维，但没有关闭全称缺口。
+
+## 276. Cloitre 的精确 Fibonacci 分数部余项与加权接口的边界
+
+2026 年 7 月的 Cloitre 预印本 [*Fibonacci, Dirichlet, and Gauss in a single sum*](../../../Library/Analytic/cloitre2026fibonacciddp.md) 把本卷前面使用的 Fibonacci 分数部 gauge 放进两个经典误差问题。对
+
+$$
+\mathcal F(n)=\sum_{k=1}^{n}\left\{\frac{F_n}{F_k}\right\},
+$$
+
+它给出奇偶分离的精确余项：
+
+$$
+\mathcal F(n)=\frac{\pi}{8}n
+ +\frac14\left(\Delta_C(n)-\Delta_C(n/2)\right)+O(n^\varepsilon)
+ \qquad(n\ge3\text{ 奇}),
+$$
+
+以及
+
+$$
+\mathcal F(n)=\frac{3\log2}{4}n
+ +2\Delta_H(n/2)-5\Delta_H(n/4)+2\Delta_H(n/8)+O(n^\varepsilon)
+ \qquad(n\ge4\text{ 偶}).
+$$
+
+这里 $\Delta_C$ 是 Gauss 圆问题余项，$\Delta_H$ 是 Dirichlet 除数问题余项。该文还证明反向的指数传递：奇指标上的 $\mathcal F(n)$ 余项指数给出 $\Delta_C$ 的指数，偶指标上的余项指数给出 $\Delta_H$ 的指数；普通 Lucas 序列交换这两个奇偶角色。
+
+这项结果是当前文献史上对 Fibonacci 分数部和的更强接口，但它与本卷 §270–§271 的任务仍有一个不可省略的权重差别。那里需要的是
+
+$$
+A_n=\sum_{k=1}^{n}F_k\left\{\frac{F_n}{F_k}\right\},
+$$
+
+而 Cloitre 的定理没有 $F_k$ 权重。由于 $F_k$ 随指标指数增长，不能把无权主项或余项乘上一个平均 $F_k$ 就得到 $A_n$ 的估计；必须另证加权的局部余数控制。即使得到该控制，还要证明所得核的系数能运输普通整数的 Möbius/约数权重，才能回到 Robin 的点值
+
+$$
+\frac{\sigma(1+F_rg)}{1+F_rg}.
+$$
+
+因此，这篇最新来源完成的是“Fibonacci gauge 的无权余项属于哪一个经典误差问题”的历史定位；它没有关闭本项目的 FIB 来源到 Robin 价格的联合估计，也没有改变 RH 仍为开放问题的状态。重复证明其无权奇偶公式不会推进当前缺口；下一项真实任务仍是加权局部余数与完整约数源之间的同一对象估计。
+
+
+## 277. Lucas 饱和来源的小素数停止与 5040 指标剖面
 
 本节考察 §265 的同一实际整数
 \[
@@ -37182,19 +37716,19 @@ N_{k,a}=d_kF_{2k+3-a},\qquad k\ge2,\quad a\in\{1,2\}.
 [Theorem 1.4](https://arxiv.org/pdf/0910.2907v4)。
 强整除性与三倍指标恒等式是经典前置，本节的对象是它们在 §265 实际来源上的联合停止条件与剖面传递。
 
-### 定理 266.1 饱和乘子与数量骨架的共同素方向
+### 定理 277.1 饱和乘子与数量骨架的共同素方向
 
 对 $b\in\{1,2\}$，有
 \[
 \gcd(d_k,F_{2k+b})\mid F_{3b}.
-\tag{266.1}
+\tag{277.1}
 \]
 故 $a=2$ 时该公因子整除二，$a=1$ 时整除八；两个因子不共享任何奇素数。
 此外，乘子满足
 \[
 v_3(d_k)=\begin{cases}1&4\mid k,\\0&4\nmid k,\end{cases}
 \qquad v_5(d_k)=v_7(d_k)=v_{11}(d_k)=0.
-\tag{266.2}
+\tag{277.2}
 \]
 
 **证明。** $d_k\mid F_{3k}$，所以共同公因子整除
@@ -37202,7 +37736,7 @@ v_3(d_k)=\begin{cases}1&4\mid k,\\0&4\nmid k,\end{cases}
 \gcd(F_{3k},F_{2k+b})=F_{\gcd(3k,2k+b)}.
 \]
 指标公因子同时整除 $2(3k)$ 与 $3(2k+b)$，因而整除其差 $3b$。
-Fibonacci 整除性给式（266.1）；$F_3=2,F_6=8$ 给两个分支的界。
+Fibonacci 整除性给式（277.1）；$F_3=2,F_6=8$ 给两个分支的界。
 
 对素数三，$4\mid3k$ 当且仅当 $4\mid k$。
 若二者均不成立，则三不整除 $F_{3k}$；若成立，赋值提升给
@@ -37214,34 +37748,34 @@ v_3(d_k)=v_3(F_{3k})-v_3(F_k)
 对七、十一，其首次指标八、十分别与三互素；
 首次指标整除 $3k$ 当且仅当整除 $k$。
 两种 Fibonacci 赋值因而同时为零，或具有相同的初始赋值且提升差为 $v_p(3)=0$。
-这证明式（266.2），没有假设任意其它素数的首次赋值为一。$\square$
+这证明式（277.2），没有假设任意其它素数的首次赋值为一。$\square$
 
-### 定理 266.2 短平移一分支的低三赋值与 Robin 停止
+### 定理 277.2 短平移一分支的低三赋值与 Robin 停止
 
 对所有 $k\ge2$，
 \[
 v_3(N_{k,2})=v_3(d_k)\le1.
-\tag{266.3}
+\tag{277.3}
 \]
 因此，只要 $N_{k,2}>5040$，该实际整数满足严格 Robin 不等式。
 特别地，全部 $k\ge5$ 的该分支均满足这一结论。
 
 **证明。** 指标 $2k+1$ 为奇数，不被 $z(3)=4$ 整除，故
-$3\nmid F_{2k+1}$。乘积的三赋值与式（266.2）给式（266.3）。
+$3\nmid F_{2k+1}$。乘积的三赋值与式（277.2）给式（277.3）。
 适用的 Robin 充分条件是 Hertlein, *Robin's inequality for new families of integers*，
 Integers 18 (2018), A71，[Theorem 2](https://math.colgate.edu/~integers/s71/s71.pdf)
 中的 $v_3(n)\le12$，其定义域为 $n>5040$。
 对 $k\ge5$，$L_k\ge L_5=11$，故
 $d_k\ge120$ 且 $F_{2k+1}\ge F_{11}=89$，从而 $N_{k,2}\ge10680>5040$。$\square$
 
-式（266.3）的低赋值也可由 Pell 恒等式直接检查。
+式（277.3）的低赋值也可由 Pell 恒等式直接检查。
 经典判别式关系给 $d_k=5F_k^2+3(-1)^k$；
 平方模九只取 $0,1,4,7$，所以九不整除 $d_k$。
 而 $F_{2k+1}=F_k^2+F_{k+1}^2$ 与相邻 Fibonacci 数互素，
 结合平方模三只取零、一，也给 $3\nmid F_{2k+1}$。
-这提供式（266.3）上界的另一条纯代数推导。
+这提供式（277.3）上界的另一条纯代数推导。
 
-### 定理 266.3 零短平移分支的五方向失败模数
+### 定理 277.3 零短平移分支的五方向失败模数
 
 记 §95 的
 \[
@@ -37249,23 +37783,23 @@ D=2^{15}3^{10}5^87^511^5,
 \qquad
 H=2^{17}3^{12}5^97^611^5=1260D
 =2577784973890984704000000000.
-\tag{266.4}
+\tag{277.4}
 \]
 在 $N_{k,1}$ 上，五个充分条件
 \[
 v_2\le20,\quad v_3\le12,\quad v_5\le8,\quad v_7\le6,\quad v_{11}\le5
-\tag{266.5}
+\tag{277.5}
 \]
 全部失败，当且仅当
 \[
 \boxed{\ H\mid k+1.\ }
-\tag{266.6}
+\tag{277.6}
 \]
 因此，对 $N_{k,1}>5040$，$H\nmid k+1$ 足以认证严格 Robin。
 这里只给五个指定停止条件的精确剩余域。
 
 **证明。** 若 $k$ 偶，则 $2k+2\equiv2\pmod4$，所以骨架不含三；
-式（266.2）给 $v_3(N_{k,1})\le1$，素数三条件成功。
+式（277.2）给 $v_3(N_{k,1})\le1$，素数三条件成功。
 若五条件均失败，必有 $k$ 奇，且
 \[
 v_3(N_{k,1})=1+v_3(k+1)\ge13,
@@ -37279,7 +37813,7 @@ v_2(N_{k,1})=v_2(k+1)+4.
 二方向失败故 $2^{17}\mid k+1$。
 五不整除 $d_k$，所以 $v_5(N_{k,1})=v_5(k+1)$；失败给 $5^9\mid k+1$。
 已获得的二、五条件同时保证骨架指标被八、十整除。
-式（266.2）与对应提升式遂给
+式（277.2）与对应提升式遂给
 \[
 v_7(N_{k,1})=1+v_7(k+1),\qquad
 v_{11}(N_{k,1})=1+v_{11}(k+1).
@@ -37292,13 +37826,13 @@ v_{11}(N_{k,1})=1+v_{11}(k+1).
 认证 Robin 时，二、五方向使用 Axler, *On Robin's inequality*，
 The Ramanujan Journal 61 (2023), 909–919，
 [Theorem 3](https://doi.org/10.1007/s11139-022-00683-0)，
-三、七、十一方向使用定理266.2所引 Hertlein Theorem 2。$\square$
+三、七、十一方向使用定理277.2所引 Hertlein Theorem 2。$\square$
 
-作为指标集合，式（266.6）在 $k\ge2$ 中的自然密度为 $1/H$，首次出现于 $k=H-1$。
+作为指标集合，式（277.6）在 $k\ge2$ 中的自然密度为 $1/H$，首次出现于 $k=H-1$。
 此密度只计指定来源的指标，不是全部整数中 Robin 反例的密度；
 该等差进程上的整数仍可由其它已知条件认证。
 
-### 定理 266.4 新旧来源的五素数赋值剖面相同
+### 定理 277.4 新旧来源的五素数赋值剖面相同
 
 令 $P=(2,3,5,7,11)$、$\mathbf b=(21,13,9,7,6)$。
 对每个正整数 $t$，令
@@ -37312,16 +37846,16 @@ A_t=N_{Ht-1,1},\qquad B_t=5040F_{Dt}.
 =(v_p(B_t))_{p\in P}
 =\mathbf b+(v_p(t))_{p\in P}.
 \quad}
-\tag{266.7}
+\tag{277.7}
 \]
 因此，任何只依赖这五个实际赋值的已知 Robin 充分条件，在两个来源上具有相同的判定结果。
 
-**证明。** 对 $k=Ht-1$，定理266.3证明中的精确式依次为
+**证明。** 对 $k=Ht-1$，定理277.3证明中的精确式依次为
 \[
 (v_2(k+1)+4,\ v_3(k+1)+1,\ v_5(k+1),\
 v_7(k+1)+1,\ v_{11}(k+1)+1).
 \]
-将 $k+1=Ht$ 与式（266.4）的五个指数代入，得到右端。
+将 $k+1=Ht$ 与式（277.4）的五个指数代入，得到右端。
 §95 的同一赋值公式对 $j=Dt$ 给 $B_t$ 的相同剖面。
 两个整数均超过 $5040$，故相应充分条件的定义域也满足。$\square$
 
@@ -37336,7 +37870,7 @@ v_7(k+1)+1,\ v_{11}(k+1)+1).
 这是同一五赋值判据的传递，不是 $A_t=B_t$，也不是两个 Robin 余量相等。
 两个来源在其它素方向、数量规模与约数和上的差异仍须保留。
 
-### 命题 266.5 五方向剩余域上的精确二接缝修正
+### 命题 277.5 五方向剩余域上的精确二接缝修正
 
 对 $k=Ht-1$，记 $U=F_{2k+2}$、$e=v_2(U)=v_2(k+1)+3\ge20$，并令 $Z(n)=\sigma(n)/n$。
 则
@@ -37345,13 +37879,13 @@ v_7(k+1)+1,\ v_{11}(k+1)+1).
 Z(d_kU)=Z(d_k)Z(U)
 \left(\frac23+\frac1{3(2^{e+1}-1)}\right).
 \quad}
-\tag{266.8}
+\tag{277.8}
 \]
 特别地，括号内严格大于 $2/3$，且不超过
 $2/3+1/(3(2^{21}-1))$。
 
 **证明。** $k$ 奇且 $3\nmid k$，故 $v_2(d_k)=1$。
-定理266.1排除全部共同奇素数，所以真实的乘法接缝只在二方向发生。
+定理277.1排除全部共同奇素数，所以真实的乘法接缝只在二方向发生。
 该方向的三个有限 Euler 因子分别为
 \[
 Z(2)=\frac32,\qquad Z(2^e)=2-2^{-e},\qquad
@@ -37363,7 +37897,7 @@ Z(2^{e+1})=2-2^{-(e+1)}.
 =\frac{4\cdot2^e-1}{3(2^{e+1}-1)}
 =\frac23+\frac1{3(2^{e+1}-1)}.
 \]
-其它素数的乘法因子无重叠，得到式（266.8）。
+其它素数的乘法因子无重叠，得到式（277.8）。
 $e\ge20$ 给上界；当 $t$ 的二赋值趋于无穷时，修正趋于 $2/3$。$\square$
 
 本节给出实际饱和来源的低三赋值分支、另一分支的精确五方向剩余指标、
@@ -37371,3 +37905,756 @@ $e\ge20$ 给上界；当 $t$ 的二赋值趋于无穷时，修正趋于 $2/3$。
 它没有扩大所引已发表停止条件覆盖的整数集，也没有把剩余指标称为 Robin 反例。
 §265 的同整数渐近乘法预算仍可用于全部充分大指标；
 本节没有给它的统一显式入口，也没有控制一般来源的全部新素方向或证明 RH。
+
+## 278. Fibonacci 加法测试的乘法不可识别性
+
+Park 的 2026 年预印本 [*The Fibonacci numbers are not an additive uniqueness set for multiplicative functions*](../../../Library/Arith/park2026fibonacciadditiveuniqueness.md) 给出了一条与本卷来源接口直接相关的负边界。它构造正整数值的乘法函数 $f\ne\operatorname{id}$，却满足
+
+$$
+f(F_n+F_m)=f(F_n)+f(F_m)\qquad(n,m\ge1).
+$$
+
+最小展示来自
+
+$$
+F_{31}=557\cdot2417,
+$$
+
+并交换这两个素数的贡献：
+
+$$
+f(N)=N\left(\frac{2417}{557}\right)^{\mathbf 1_{557\mid N}-\mathbf 1_{2417\mid N}}.
+$$
+
+关键条件是 $557$ 与 $2417$ 在全部 Fibonacci 数及全部两项 Fibonacci 和上的整除签名相同；论文还给出由共同出现秩和四次剩余构造更多素数对的有限判据。
+
+这项结果不能推出 $Z(n)=\sigma(n)/n$ 在任何 FIB 族上失控，也不是 Robin 反例。它排除的是一种过强的识别路线：只用 Fibonacci 数值或两项 Fibonacci 和的加法测试，不能恢复任意乘法函数的完整素数贡献。因而本卷的 `GraftAffineClosure` 或五窗口地址若要进入 Robin 点值估计，仍须保留同一个候选的素数幂赋值、完整约数探针，或证明专门针对 $\sigma(n)/n$ 的联合估计；有限 FIB 测试签名本身不足以承担这项义务。
+
+## 279. 加权 Fibonacci Ingham 行和的指数收敛速率
+
+§271 只给出了加权和的极限。对当前核，实际上可以把误差压到 Fibonacci 尺度的一半指数。令
+
+$$
+W_n=\sum_{k=1}^{n}F_k\left\{\frac{F_n}{F_k}\right\},
+\qquad q=\varphi^{-1}.
+$$
+
+### 命题 279.1
+
+当 $n\to\infty$ 时，
+
+$$
+\boxed{
+\frac{W_n}{F_n}=\frac2{\sqrt5}+O\!\left(\varphi^{-n/2}\right).
+}
+\tag{279.1}
+$$
+
+因此，若沿用 §270 的
+
+$$
+G_F(n,k)=\Phi\!\left(\frac{F_k}{F_n}\right),
+\qquad
+\Phi(x)=x\left\lfloor\frac1x\right\rfloor,
+$$
+
+则
+
+$$
+\boxed{
+\sum_{k=1}^{n}G_F(n,k)
+=n-\frac2{\sqrt5}+O\!\left(\varphi^{-n/2}\right).
+}
+\tag{279.2}
+$$
+
+**证明。** 写 $j=n-k$，并记
+
+$$
+u_{n,j}=\frac{F_{n-j}}{F_n},
+\qquad
+r_{n,j}=\frac{F_n}{F_{n-j}}.
+$$
+
+Binet 公式给出
+
+$$
+F_m=\frac{\varphi^m}{\sqrt5}(1-(-1)^mq^{2m}).
+$$
+
+所以对 $1\le j<n$ 存在绝对常数 $C_0$ 使
+
+$$
+\left|u_{n,j}-q^j\right|\le C_0q^{2n-j},
+\qquad
+\left|r_{n,j}-\varphi^j\right|\le C_0q^{2n-3j}.
+\tag{279.3}
+$$
+
+另一方面，Lucas 数恒等式给出（对 $j\ge2$）
+
+$$
+\operatorname{dist}(\varphi^j,\mathbb Z)=q^j.
+\tag{279.4}
+$$
+
+指数 $j=1$ 是固定的边界例外：$\{\varphi\}=q$，而
+$\operatorname{dist}(\varphi,\mathbb Z)=1-q=q^2$；它可以单独吸收到主段估计中。固定一个足够大的整数 $K$，并在下文先取 $j\ge2$。当
+$j\le n/2-K$ 时，式（279.3）小于式（279.4）的一半，于是分数部没有跨过整数：
+
+$$
+\left|\{r_{n,j}\}-\{\varphi^j\}\right|
+\le C_0q^{2n-3j}.
+$$
+
+结合式（279.3），主段的逐项差满足
+
+$$
+\left|u_{n,j}\{r_{n,j}\}-q^j\{\varphi^j\}\right|
+\le C_1\bigl(q^{2n-j}+q^{2n-2j}\bigr).
+\tag{279.5}
+$$
+
+对 $j\le n/2-K$ 求和，右端为 $O(nq^n)$。中间带 $|j-n/2|\le K$ 的至多 $2K+1$ 项，各项及其极限都为 $O(q^{n/2})$。剩余尾段对应 $k<n/2-K$，由 Fibonacci 和的指数界
+
+$$
+\sum_{k<n/2-K}\frac{F_k}{F_n}=O(q^{n/2})
+$$
+
+控制；分数部只会减小绝对值。于是
+
+$$
+\frac{W_n}{F_n}
+=\sum_{j\ge1}q^j\{\varphi^j\}+O(q^{n/2}).
+$$
+
+§271 已计算该几何级数为 $2/\sqrt5$，得到式（279.1）。最后逐项使用
+
+$$
+\Phi\!\left(\frac{F_k}{F_n}\right)
+=1-\frac{F_k}{F_n}\left\{\frac{F_n}{F_k}\right\}
+$$
+
+即得式（279.2）。证毕。 $\square$
+
+这条速率估计是当前加权 FIB 核的实质新信息：它说明 §271 的常数项不是只在极限意义上出现，而以 $\varphi^{-n/2}$ 的速度稳定。它仍不能替代 Robin 所需的普通整数 Möbius/约数系数，因为 $G_F$ 的跳点仍由 Fibonacci 比值给出；要从式（279.2）进入 RH，还需要证明同一误差核保留 $\sigma(n)/n$ 的点值源，而不是只保留 Fibonacci gauge 的行和。
+
+## 追加锚（本行以下为增补区）
+
+## 280. Lucas 饱和来源的两指标回接与显式 Robin 余量
+
+本节沿用 §265 与 §277 的实际整数
+\[
+d_k=L_k^2-(-1)^k=\frac{F_{3k}}{F_k},\qquad
+N_{k,a}=d_kF_{2k+3-a},\qquad k\ge2,\quad a\in\{1,2\}.
+\]
+记 $Z(n)=\sigma(n)/n$、$\Delta(n)=e^\gamma\log\log n-Z(n)$。
+使用 §§163–164 的 Fibonacci 首次秩性质和 Axler 通用 Euler 包络，
+§169.1 的经典除数函数界，以及 §277 的来源指标停止分类作为中间前置。
+这些输入的文献范围仍为 Lengyel (1995) 与 Axler (2023)，不增加 RH 假设。
+本节利用真实乘子 $d_k$ 的三倍指标分解，把 §265 的新规范来源回接到旧定理176.2的两因子合同；全部大于 $5040$ 的成员已在该旧合同的覆盖范围内。
+本节进一步给出加性余量的显式增长下界与 Robin 比值趋于零的来源特化。
+
+### 定理 280.1 饱和乘子的两个实际素因子指标
+
+令 $b=3-a\in\{1,2\}$。则
+\[
+N_{k,a}F_k=F_{3k}F_{2k+b},\qquad
+N_{k,a}\mid F_{3k}F_{2k+b}.
+\tag{280.1}
+\]
+因此，对每个实际整除 $N_{k,a}$ 的素数 $p$，
+\[
+z(p)\mid3k\quad\text{或}\quad z(p)\mid2k+b.
+\tag{280.2}
+\]
+这里 $z(p)$ 是同一个标准 Fibonacci 序列的首次正整除指标。
+
+**证明。** §265 的实际三倍指标恒等式 $F_{3k}=d_kF_k$ 与数量分解给第一式。
+$F_k$ 为正整数，故第二式成立。
+素数整除乘积时至少整除一个因子；再用经典首次指标性质得到式（280.2）。$\square$
+
+### 定理 280.2 两族共有的显式正余量入口
+
+在上述无条件文献输入下，对 $k>e^{40}$ 和两个 $a$，均有
+\[
+\boxed{\quad
+\frac{\Delta(N_{k,a})}{e^\gamma}
+>\frac{11}{26}\log k-\frac{1091}{65}
+>\frac9{65}>0.
+\quad}
+\tag{280.3}
+\]
+
+**证明。** 令
+\[
+v=\log k>40,\quad
+t=\tau(3k)+\tau(2k+b),\quad
+T=\max\{t,57024\},\quad u=\log T.
+\]
+$2k+b\le3k$ 对 $k\ge2$ 成立。由 §169.1 的 $\tau(r)<9r^{1/4}$，
+\[
+t<18(3k)^{1/4}<24k^{1/4}.
+\]
+以下有理比较给出基线与对数常数：
+\[
+57024^4<24^4(8/3)^{40},\quad
+24^4<(8/3)^{13},\quad
+(11/4)^{10}<57024,\quad 513<(8/3)^7.
+\tag{280.4}
+\]
+使用 $8/3<e<11/4$，便有
+\[
+10<u<\frac v4+\frac{13}4,\qquad \log513<7.
+\tag{280.5}
+\]
+对 $u\ge10$，$\log u\le u/4$。
+例如 $\log10<5/2$ 与 $\log(u/10)\le u/10-1$ 给出
+$\log u<u/10+3/2\le u/4$。
+
+取 $Y=\lceil512Tu\rceil$，把两个指标的低秩来源放入同一乘积
+\[
+A=\prod_{\substack{r\mid3k\\r\le Y}}F_r
+\prod_{\substack{r\mid2k+b\\r\le Y}}F_r.
+\]
+$3\mid3k$ 且 $Y\ge5$，所以 $A\ge F_3=2$。
+每个低秩实际素数都属于 $A$ 的素支撑；每个高秩实际素数只在其真实 Euler 乘积中计一次。
+按式（280.2）取上包络时，即使两个指标共享某个秩桶，至多把该桶的非负贡献重复放大。
+因此 §163.1 的秩桶界给
+\[
+Z(N_{k,a})<\frac{N_{k,a}}{\varphi(N_{k,a})}
+\le\frac A{\varphi(A)}e^R,
+\qquad
+0\le R\le\frac{6T(1+\log Y)}Y.
+\tag{280.6}
+\]
+同时 $\log A<tY\le TY$；这里没有将两个独立 Euler 包络相乘。
+
+由 $512Tu\le Y\le513Tu$，
+\[
+\log Y\le7+u+\log u.
+\]
+于是
+\[
+R\le\frac6{512}\left(1+\frac{8+\log u}{u}\right)
+<\frac6{512}\left(1+\frac8{10}+\frac14\right)
+<\frac1{40},\qquad e^R<\frac{40}{39}.
+\tag{280.7}
+\]
+对数乘积的低秩部分满足
+\[
+\begin{aligned}
+\log\log A+a_0
+&<7+2u+\log u+\frac1{100}\\
+&\le7+\frac94u+\frac1{100}
+<\frac9{16}v+15,
+\end{aligned}
+\tag{280.8}
+\]
+其中 $a_0=0.0094243<1/100$。
+$v>40$ 时，右端大于 $32$，故 §164.1 的常数分支也被覆盖。
+同一来源的预算为
+\[
+\frac{Z(N_{k,a})}{e^\gamma}
+<\frac{40}{39}\left(\frac9{16}v+15\right)
+=\frac{15}{26}v+\frac{200}{13}.
+\tag{280.9}
+\]
+
+双步递推给 $F_m\ge2^{(m-2)/2}$ 对 $m\ge2$ 成立。
+由于 $N_{k,a}\ge F_{2k+1}$、$\log2>1/2$ 和 $k\ge2$，
+$\log N_{k,a}>k/4$。再用 $\log4<7/5$ 得
+\[
+\log\log N_{k,a}>v-7/5.
+\]
+与式（280.9）相减，得到式（280.3）的第一个严格下界。
+在 $v=40$，其值恰为 $9/65$，并随 $v$ 严格增加。$\square$
+
+### 定理 280.3 全部大于 5040 的实际饱和来源满足 Robin
+
+在 §§95、160、163–164、169、176、266 明确列出的无条件文献输入下，
+\[
+\boxed{\quad
+\forall k\ge5\ \forall a\in\{1,2\},\qquad
+\sigma(N_{k,a})<e^\gamma N_{k,a}\log\log N_{k,a}.
+\quad}
+\tag{280.10}
+\]
+这是旧定理176.2对 §265 新规范来源的应用，不扩大该定理的整数覆盖范围。
+
+**证明。** 首先直接复用旧定理176.2：取 $c=1$、$V=N_{k,a}$、$r=3k$、$s=2k+b$、$A=B=F$。
+式（280.1）给整除合同；$2k+b\ge k$ 与 Fibonacci 单调性给
+\[
+V=F_{3k}rac{F_{2k+b}}{F_k}\ge F_{3k}=F_{\max(3k,2k+b)}.
+\]
+因此规模合同也成立，旧定理的全部前提已满足。
+
+也可沿 §277 的五方向分类得到与本节显式余量相容的证明。
+$a=2$ 已由定理277.2的低三赋值覆盖。
+对 $a=1$，若 $H\nmid k+1$，定理277.3的五个指定停止条件至少一条成功。
+剩下 $H\mid k+1$ 时，正指标给 $k\ge H-1$，而有理整数比较
+\[
+H-1>3^{40}>e^{40}
+\tag{280.11}
+\]
+保证定理280.2已适用。
+因此有限入口与两个实际秩载体的尾估计之间没有未覆盖的指标区间。
+
+对 $k\ge5$，§277.2给 $N_{k,2}>5040$，再由 $F_{2k+2}\ge F_{2k+1}$ 得 $N_{k,1}>5040$；
+对 $k=2,3,4$，两族数量分别为 $(64,40),(357,221),(2640,1632)$，都小于 $5040$。
+所以式（280.10）的指标域恰覆盖所述两族超过 Robin 阈值的部分。$\square$
+
+式（277.6）仍然准确描述五个指定测试的失败域，
+但在本节输入下，该域也已由联合秩预算认证安全。
+其成员并不因旧测试失败而构成未解决的 Robin 实例。
+
+### 定理 280.4 利用乘子来源后，实际 Robin 比值趋于零
+
+对同样两个 $a$，使用经典 Mertens 公式与 §184.1 的保留除数函数尾界，有
+\[
+\boxed{\quad
+\frac{Z(N_{k,a})}{e^\gamma\log\log N_{k,a}}\longrightarrow0,
+\qquad
+\frac{\Delta(N_{k,a})}{e^\gamma\log\log N_{k,a}}\longrightarrow1.
+\quad}
+\tag{280.12}
+\]
+两个有限分支可取共同起效阈值。
+
+**证明。** 固定任意 $0<\varepsilon<1$，取 $y=\lceil k^\varepsilon\rceil$。
+两个实际 Fibonacci 指标均为 $O(k)$，且趋于无穷。
+使用引理204.3的证明中的经典 $\tau(r)\le C_\eta r^\eta$，令 $\eta=\varepsilon/4$，
+§184.1给两个实际素因子集合在 $p>y$ 上的对数尾总和为
+$O_\varepsilon(k^{-\varepsilon/4})$。
+式（280.2）因此给
+\[
+Z(N_{k,a})
+\le\prod_{p\le y}\left(1-\frac1p\right)^{-1}
+\exp\!\bigl(O_\varepsilon(k^{-\varepsilon/4})\bigr).
+\]
+重复的素数只出现一次，新增素方向仍来自相同的两个实际指标。
+经典 Mertens 公式给右端为 $e^\gamma\varepsilon\log k\,(1+o(1))$；
+参见 Lichtman, *Mertens' prime product formula, dissected*，
+[Theorem 1.1](https://arxiv.org/html/2002.03361v3)。
+§265 的增长式给 $\log\log N_{k,a}=\log k+O(1)$，故比值的上极限至多为 $\varepsilon$。
+$\varepsilon$ 可任意减小且比值非负，得到第一个极限；第二个极限由差额定义给出。$\square$
+
+§265 对任意受控乘子套用单位范数预算时只保留固定正储备；
+本节对真实 Lucas 乘子保留 $d_k\mid F_{3k}$ 这份额外来源关系，得到旧两因子合同的来源回接、增长的加性余量以及趋零比值。
+四次乘子成本的边界可达性、实际本原范数为一与这种 Robin 安全性同时成立。
+它们不能推广为任意单位范数乘子来源的相同比值极限：§186 的实际阶乘乘子族已有 Robin 比值趋于一。
+两指标载体合同也不覆盖一般五窗加法来源；本节没有证明一般 Robin 不等式或 RH。
+
+## 追加锚（本行以下为增补区）
+
+## 281. 5040 骨架的全素数赋值保留与 Lucas 来源的互素扩张
+
+沿用 §265、§277 与 §280 的 $d_k=F_{3k}/F_k=L_k^2-(-1)^k$ 和 $N_{k,1}=d_kF_{2k+2}$。
+本节固定同一个正整数 $n$，定义
+\[
+k_n=1260n-1,\qquad B_n=5040F_n,\qquad A_n=N_{k_n,1},
+\qquad Q_n=\frac{F_{2520n}}{2520F_n},\qquad M_n=\frac{d_{k_n}}2Q_n.
+\tag{281.1}
+\]
+$Q_n,M_n$ 的整数性由下述证明给出。使用经典 Fibonacci 强整除性与
+Lengyel 的全素数赋值公式，后者见 Medina–Rowland (2015),
+[Theorem 1.4](https://arxiv.org/pdf/0910.2907v4)。
+对一般素数保留实际首次赋值，不假定它等于一。
+新增对象是这两份实际来源之间的乘法嵌入、其精确互素指标域与差额合同。
+
+### 定理 281.1 全指标整数嵌入及恰为 24 的互素入口
+
+对每个 $n\ge1$，式（281.1）的 $Q_n,M_n$ 都是正整数，并且
+\[
+\boxed{\quad A_n=B_nM_n.\quad}
+\tag{281.2}
+\]
+令
+\[
+\alpha_n=
+\begin{cases}
+0,&6\mid n,\\
+1,&n\equiv3\pmod6,\\
+v_2(n)+2,&3\nmid n,
+\end{cases}
+\quad
+\beta_n=
+\begin{cases}0,&4\mid n,\\v_3(n)+1,&4\nmid n,\end{cases}
+\quad
+\chi_n=\begin{cases}0,&8\mid n,\\v_7(n)+1,&8\nmid n.\end{cases}
+\]
+则有精确式
+\[
+(v_2(M_n),v_3(M_n),v_5(M_n),v_7(M_n))
+=(\alpha_n,\beta_n,0,\chi_n),
+\tag{281.3}
+\]
+\[
+\gcd(M_n,B_n)
+=2^{\min(4,\alpha_n)}3^{\min(2,\beta_n)}7^{\min(1,\chi_n)}.
+\tag{281.4}
+\]
+特别地，
+\[
+\boxed{\quad \gcd(M_n,B_n)=1\quad\Longleftrightarrow\quad24\mid n.\quad}
+\tag{281.5}
+\]
+
+**证明。** $k_n$ 为奇数且 $k_n\equiv2\pmod3$。
+$F_{k_n}$ 为奇数，而 $3k_n\equiv3\pmod6$，故 $v_2(d_{k_n})=1$。
+§277.1同时给 $v_3(d_{k_n})=v_5(d_{k_n})=v_7(d_{k_n})=0$。
+
+先令 $W_n=F_{2520n}/F_n$。Fibonacci 整除性保证 $W_n$ 为正整数。
+由于 $2520=2^3 3^2 5\cdot7$，且 $2520n$ 总为六、四、五、八的倍数，
+经典赋值公式给
+\[
+\begin{aligned}
+v_2(F_{2520n})&=v_2(n)+5,&
+v_3(F_{2520n})&=v_3(n)+3,\\
+v_5(F_{2520n})&=v_5(n)+1,&
+v_7(F_{2520n})&=v_7(n)+2.
+\end{aligned}
+\tag{281.6}
+\]
+对三和七，这里只使用已核对的首次秩四、八及首次赋值一。
+在这些方向减去 $v_p(F_n)$，得到
+\[
+v_2(W_n)\ge3,\qquad v_3(W_n)\ge2,\qquad v_5(W_n)=1,\qquad v_7(W_n)\ge1.
+\]
+因此 $2520\mid W_n$，$Q_n=W_n/2520$ 为正整数。
+又 $d_{k_n}/2$ 为正整数，故 $M_n$ 也为正整数。
+$2k_n+2=2520n$ 遂给式（281.2）。
+式（281.6）减去 $v_p(F_n)$ 和 $v_p(2520)$，再使用 $d_{k_n}/2$ 在四方向均为单位，
+即得式（281.3）。
+
+接着排除未列出的旧素数交叠。指标关系给
+\[
+\gcd(3k_n,n)=\gcd(3,n),\qquad
+\gcd(F_{3k_n},F_n)=F_{\gcd(3,n)}\mid2.
+\tag{281.7}
+\]
+$d_{k_n}\mid F_{3k_n}$，而 $d_{k_n}/2$ 为奇数，所以
+\[
+\gcd(d_{k_n}/2,F_n)=1.
+\]
+若奇素数 $p\mid F_n$，全素数提升式给
+\[
+v_p(F_{2520n})-v_p(F_n)=v_p(2520).
+\tag{281.8}
+\]
+$p=5$ 使用它的独立精确式，其它奇素数使用同一实际首次秩与首次赋值；
+首次赋值在差中抵消，无须知道其具体深度。
+除去 $2520$ 后 $v_p(Q_n)=0$，所以 $M_n$ 与 $F_n$ 不共享任何奇素数。
+结合式（281.3），还得到
+\[
+\gcd(M_n,F_n)=\begin{cases}2,&n\equiv3\pmod6,\\1,&\text{其它情形}.\end{cases}
+\]
+$B_n$ 相比 $F_n$ 只加入二、三、五、七；五在 $M_n$ 中的赋值为零。
+若六整除 $n$，二方向交叠为零；若 $n\equiv3\pmod6$，交叠恰为一层；
+若三不整除 $n$，$F_n$ 为奇数，交叠恰截断在四层。
+三和七若已出现于 $F_n$，相应 $\beta_n,\chi_n$ 为零；否则分别截断在二层、一层。
+这证明式（281.4）。
+其右端为一当且仅当六、四、八都整除 $n$，等价于 $24\mid n$，得到式（281.5）。$\square$
+
+### 定理 281.2 五方向剩余来源保留旧整数的全部素数赋值
+
+沿用 §277 的 $H=1260D$。对每个 $t\ge1$，令
+\[
+B_t^*=5040F_{Dt},\qquad A_t^*=N_{Ht-1,1},\qquad M_t^*=M_{Dt}.
+\]
+则
+\[
+A_t^*=B_t^*M_t^*,\qquad\gcd(B_t^*,M_t^*)=1.
+\tag{281.9}
+\]
+因此，对每个实际整除 $B_t^*$ 的素数 $p$，都有
+\[
+\boxed{\quad v_p(A_t^*)=v_p(B_t^*).\quad}
+\tag{281.10}
+\]
+并且两素支撑满足不交并
+\[
+\operatorname{Supp}(A_t^*)=
+\operatorname{Supp}(B_t^*)\sqcup\operatorname{Supp}(M_t^*).
+\tag{281.11}
+\]
+
+**证明。** $D=2^{15}3^{10}5^87^511^5$ 为二十四的倍数，故定理281.1适用于 $n=Dt$。
+$k_{Dt}=1260Dt-1=Ht-1$ 给式（281.9）。
+互素乘积中每个素数只属于一个因子，且赋值相加，得到式（281.10）与式（281.11）。$\square$
+
+§277.4的五素数等式是式（281.10）在 $\{2,3,5,7,11\}$ 上的限制。
+本结论保留的是旧整数的全部素因子及其深度；新增因子 $M_t^*$ 仍可加入旧整数没有的素数。
+它没有把两个整数的完整素支撑等同。
+
+### 定理 281.3 互素扩张的精确 Robin 差额与规模系数 5040
+
+对 $24\mid n$，记 $Z(x)=\sigma(x)/x$、$\Delta(x)=e^\gamma\log\log x-Z(x)$。
+则
+\[
+Z(A_n)=Z(B_n)Z(M_n),
+\tag{281.12}
+\]
+\[
+\boxed{\quad
+\Delta(A_n)-\Delta(B_n)
+=e^\gamma\log\frac{\log A_n}{\log B_n}
+-Z(B_n)\bigl(Z(M_n)-1\bigr).
+\quad}
+\tag{281.13}
+\]
+沿正整数 $n\to\infty$，还有
+\[
+\frac{\log A_n}{\log B_n}\longrightarrow5040,
+\qquad
+\log\log A_n-\log\log B_n\longrightarrow\log5040.
+\tag{281.14}
+\]
+最后两个极限对全体正指标成立，因而也可限制到 $24\mid n$ 或 $n=Dt$。
+
+**证明。** 定理281.1的互素乘积与约数和的经典乘法性给式（281.12）。
+将两份差额相减，并用 $\log\log A_n-\log\log B_n=\log(\log A_n/\log B_n)$，
+得到式（281.13）。
+这里所有实际整数大于一，各对数的定义域均满足。
+
+Binet 公式给 $F_n\sim\varphi^n/\sqrt5$，而 $k_n$ 总为奇数，
+\[
+d_{k_n}=L_{k_n}^2+1\sim\varphi^{2k_n}.
+\]
+于是
+\[
+A_n\sim\frac{\varphi^{5040n-2}}{\sqrt5},
+\qquad B_n\sim\frac{5040\varphi^n}{\sqrt5}.
+\tag{281.15}
+\]
+这给 $\log A_n=5040n\log\varphi+O(1)$ 与
+$\log B_n=n\log\varphi+O(1)$，证明式（281.14）。$\square$
+
+式（281.13）中，规模项和新增素数项分别非负，且以相反方向进入差额。
+保留全部旧素数赋值给出精确乘法分解，不单独给出二者的大小比较。
+由于 $B_n\ge5040$，$\log\log B_n>0$。
+若要从 $A_n$ 的 Robin 不等式传回 $B_n$，一个明确的充分合同是
+\[
+Z(M_n)\ge\frac{\log\log A_n}{\log\log B_n}.
+\tag{281.16}
+\]
+因为该条件与式（281.12）给
+$Z(B_n)=Z(A_n)/Z(M_n)<e^\gamma\log\log B_n$。
+相反方向的充分合同为式（281.16）的反向弱不等式。
+这里只说明这两个有条件的传递，不断言全部 $M_n$ 满足某一方向。
+§280 的安全性直接来自同一实际来源的两指标合同；一般 Robin 全称命题仍不由这份互素嵌入推出。
+
+## 追加锚（本行以下为增补区）
+
+## 282. 系数素数的骨架与 Lucas 双路供给及指数迭代的分支消失
+
+沿用 §265、§277 与 §§280–281 的 $d_k=F_{3k}/F_k=L_k^2-(-1)^k$。
+对正整数 $m,n$，要求 $mn\ge3$，定义
+\[
+w=mn,\qquad k=mn-1,\qquad
+A_{m,n}=d_kF_{2mn}=N_{k,1},\qquad B_{m,n}=4mF_n.
+\tag{282.1}
+\]
+对素数 $p$，$z(p)$ 表示标准 Fibonacci 首次秩，$h_p=v_p(F_{z(p)})$ 表示同一序列的实际首次深度。
+使用经典强整除性、三倍指标恒等式与 Lengyel 全素数赋值公式，
+后者见 Medina–Rowland (2015), [Theorem 1.4](https://arxiv.org/pdf/0910.2907v4)。
+$h_p$ 始终保留为实际值，不以一般素数不存在更高首次深度作为假设。
+§281对应 $m=1260$；本节允许系数的素数由两个不同的实际因子供给。
+
+### 定理 282.1 全系数的互素扩张判据
+
+存在正整数 $M$ 满足
+\[
+A_{m,n}=B_{m,n}M,\qquad\gcd(B_{m,n},M)=1
+\tag{282.2}
+\]
+当且仅当以下条件同时成立：
+\[
+6\mid n,
+\tag{282.3}
+\]
+且对每个奇素数 $p\mid m$、$p\ne5$，至少一条供给合同成立：
+\[
+\boxed{\quad
+z(p)\mid n
+\quad\text{或}\quad
+\bigl(z(p)\mid3k,\ z(p)\nmid k,\ v_p(m)=h_p\bigr).
+\quad}
+\tag{282.4}
+\]
+第一条称为骨架供给，第二条称为 Lucas 供给。
+对这些实际参数，两条供给不同时成立；$M$ 如存在则唯一。
+
+**证明。** 对正整数的互素乘法扩张，式（282.2）等价于
+\[
+v_p(A_{m,n})=v_p(B_{m,n})\quad\text{对每个 }p\mid B_{m,n}.
+\tag{282.5}
+\]
+这些等式保证 $B_{m,n}\mid A_{m,n}$，并保证商没有旧素因子。
+
+先用二方向证明必要的式（282.3）。记 $t=v_2(m)$、$s=v_2(n)$。
+经典 Fibonacci 二赋值式给下表，其中 $k=w-1\ge2$：
+
+| 指标情形 | $v_2(A_{m,n})$ | $v_2(B_{m,n})$ |
+| --- | --- | --- |
+| $3\mid w,\ 2\mid w$ | $t+s+4$ | $t+2+v_2(F_n)$ |
+| $3\mid w,\ 2\nmid w$ | $v_2(k)+5\ge6$ | $2+v_2(F_n)\le3$ |
+| $w\equiv1\pmod3$ | $0$ | $t+2+v_2(F_n)\ge2$ |
+| $w\equiv2\pmod3,\ 2\mid w$ | $1$ | $t+2\ge2$ |
+| $w\equiv2\pmod3,\ 2\nmid w$ | $v_2(k)+2\ge3$ | $2$ |
+
+第一行的等式要求 $v_2(F_n)=s+2$。
+当 $6\mid n$ 时成立；当 $n\equiv3\pmod6$ 时左端为一而 $s+2=2$；
+当 $3\nmid n$ 时左端为零。
+其它四行均不满足式（282.5），所以六必须整除 $n$。
+反过来，$6\mid n$ 时二方向的赋值自动精确匹配。
+
+现在固定 $6\mid n$。则 $k$ 为奇数且 $k\equiv2\pmod3$，$v_2(d_k)=1$。
+强整除性给
+\[
+\gcd(F_{3k},F_n)=F_{\gcd(3k,n)}=F_3=2,
+\qquad\gcd(d_k/2,F_n)=1.
+\tag{282.6}
+\]
+若奇素数 $p\mid F_n$，其首次秩整除 $n$；全素数提升式给
+\[
+v_p(F_{2mn})=v_p(F_n)+v_p(m).
+\tag{282.7}
+\]
+$p=5$ 使用独立的式 $v_5(F_j)=v_5(j)$，其它奇素数的实际 $h_p$ 在差中抵消。
+$d_k$ 不提供这些旧奇素数，故式（282.5）对全部 $p\mid F_n$ 已成立。
+对五，即使 $5\nmid F_n$ 也有 $v_5(d_k)=0$ 和
+$v_5(F_{2mn})=v_5(m)+v_5(n)$，所以仍精确匹配。
+
+剩下奇素数 $p\mid m$、$p\ne5$ 且 $p\nmid F_n$。
+若 $p\mid F_{2mn}$，提升式给
+\[
+v_p(F_{2mn})=v_p(m)+v_p(n)+h_p>v_p(m)=v_p(B_{m,n}),
+\tag{282.8}
+\]
+因此不可能满足式（282.5）。
+若 $p\nmid F_{2mn}$，式（282.5）要求 $d_k$ 提供恰好 $v_p(m)$ 层。
+对于 $p\ne3$，$p\mid m$ 给 $k\equiv-1\pmod p$，故 $p\nmid3k$。
+而对素数三，$z(3)=4$ 使 $z(3)\mid3k$ 与 $z(3)\mid k$ 等价，Lucas 供给不可能发生。
+因此所有可能的 Lucas 供给均满足
+\[
+z(p)\mid3k,\qquad z(p)\nmid k,\qquad v_p(d_k)=h_p.
+\tag{282.9}
+\]
+这里没有从指标额外提升深度：$p\mid m$ 已强制 $k$ 在模 $p$ 下为负一。
+精确匹配遂等价于式（282.4）的第二条。
+
+为验证它也充分，§277.1在 $b=2$ 的结论给
+\[
+\gcd(d_k,F_{2k+2})\mid F_6=8.
+\]
+所以 Lucas 供给中的奇素数不会同时出现在 $F_{2mn}$。
+式（282.6）也保证它不属于旧 $F_n$ 的素支撑。
+因此其贡献恰为 $h_p=v_p(m)$，全部式（282.5）成立。
+两条供给不能同时成立亦由式（282.6）得到。
+正整数除法给 $M=A_{m,n}/B_{m,n}$ 的存在与唯一性。$\square$
+
+### 定理 282.2 骨架同步子域的最小公倍数律与实际规模
+
+定义
+\[
+C_m=\operatorname{lcm}\bigl(\{6\}\cup\{z(p):p\mid m,\ p\ne2,5\}\bigr).
+\tag{282.10}
+\]
+则 $C_m\mid n$ 保证式（282.2），且全部需要双路分类的系数奇素数 $p\ne5$ 均走骨架供给；
+五方向由独立赋值公式自动匹配。
+对正整数 $u,v$ 与 $a\ge1$，
+\[
+C_{uv}=\operatorname{lcm}(C_u,C_v),\qquad C_{m^a}=C_m.
+\tag{282.11}
+\]
+对每个固定 $m\ge1$，沿 $n\to\infty$ 还有
+\[
+\frac{\log A_{m,n}}{\log B_{m,n}}\longrightarrow4m.
+\tag{282.12}
+\]
+
+**证明。** $C_m\mid n$ 恰要求六及所列全部首次秩整除同一 $n$，
+故定理282.1中的骨架合同同时成立。
+乘积的素支撑为两素支撑的并，正整数幂不改变素支撑，最小公倍数性质给式（282.11）。
+Binet 公式给
+\[
+A_{m,n}\sim\frac{\varphi^{4mn-2}}{\sqrt5},\qquad
+B_{m,n}\sim\frac{4m\varphi^n}{\sqrt5}
+\quad(n\to\infty,\ m\text{ 固定}),
+\]
+证明式（282.12）。$\square$
+
+当 $m=1260=2^2 3^2 5\cdot7$，有 $C_{1260}=\operatorname{lcm}(6,4,8)=24$。
+三、七的首次秩与三互素，所以它们均不能走 Lucas 供给。
+因此该特化的充分条件也是必要条件，回到 §281 的精确互素入口与规模系数 $4\cdot1260=5040$。
+式（282.11）描述骨架供给子域，不把一般双路合同改写成仅依赖素支撑的条件。
+
+### 定理 282.3 同一系数素数的指数迭代删除 Lucas 分支
+
+对 $a\ge1$，取 $m=61^a$，保留式（282.1）的实际来源。
+式（282.2）成立当且仅当
+\[
+\boxed{\quad
+n\equiv0\pmod{30}
+\quad\text{或}\quad
+\bigl(a=1,\ n\equiv6\pmod{30}\bigr).
+\quad}
+\tag{282.13}
+\]
+因此 $a=1$ 与 $a\ge2$ 的允许指标自然密度分别为 $1/15$ 与 $1/30$。
+
+**证明。** $61$ 为素数，$F_{15}=610=2\cdot5\cdot61$，此前正指标均不被 $61$ 整除，
+故 $z(61)=15$、$h_{61}=1$。
+$61^a\equiv1\pmod5$，所以 $5\mid k$ 等价于 $n\equiv1\pmod5$。
+在 $6\mid n$ 下，骨架供给为 $15\mid n$，联合等价于 $n\equiv0\pmod{30}$。
+Lucas 供给为 $5\mid k$ 且 $v_{61}(m)=1$；$3\nmid k$ 已由六整除 $n$ 保证。
+这等价于 $a=1$ 与 $n\equiv6\pmod{30}$。
+定理282.1给式（282.13）。两个剩余类不交，密度结论由周期三十得到。$\square$
+
+例如 $m=61,n=6$ 的实际旧整数为 $4\cdot61F_6=1952$，有互素扩张；
+同一 $n$ 升到 $m=61^2$ 时，实际 Lucas 乘子仍只提供一层 $61$，而旧整数要求两层，
+所以旧整数不再整除新来源。
+这不反驳骨架子域上的 $C_{61^a}=30$，它精确定位额外分支在指数迭代中的消失。
+
+### 定理 282.4 两个 Lucas 候选素数须在同一指标上拼接
+
+取 $m=61\cdot421=25681$。式（282.2）成立当且仅当
+\[
+\boxed{\quad n\equiv0,66,126,150\pmod{210}.\quad}
+\tag{282.14}
+\]
+其允许指标自然密度为 $2/105$。
+
+**证明。** $421$ 为素数，$F_{21}=10946=2\cdot13\cdot421$，此前正指标均不被它整除，
+故 $z(421)=21$、$h_{421}=1$。
+两素数在系数中都恰有一层。
+$m\equiv1\pmod5$、$m\equiv5\pmod7$，因此，在 $6\mid n$ 下，
+$61$ 的两个供给条件分别给
+\[
+n\equiv0\pmod{30},\qquad n\equiv6\pmod{30};
+\]
+$421$ 的两个供给条件分别给
+\[
+n\equiv0\pmod{42},\qquad n\equiv24\pmod{42}.
+\]
+对同一个 $n$ 取四个联合交集，分别得到
+\[
+\begin{array}{c|cc}
+ &421\text{ 骨架}&421\text{ Lucas}\\\hline
+61\text{ 骨架}&0&150\\
+61\text{ Lucas}&126&66
+\end{array}
+\qquad(\bmod210).
+\]
+这四个共同剩余类互异，定理282.1给式（282.14）；密度为 $4/210=2/105$。$\square$
+
+定理282.3与282.4使递归的算术状态包含实际系数深度、首次深度及同一指标的联合剩余类。
+骨架供给可以按最小公倍数组合；Lucas 供给还要求深度精确匹配，且改变系数会改变联合同余。
+满足式（282.2）时仍有 §281.3 的同源差额恒等式
+\[
+\Delta(A_{m,n})-\Delta(B_{m,n})
+=e^\gamma\log\frac{\log A_{m,n}}{\log B_{m,n}}
+-Z(B_{m,n})\bigl(Z(M)-1\bigr).
+\]
+本节分类乘法扩张的存在与互素性，没有断言上式两项的统一大小比较。
