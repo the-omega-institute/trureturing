@@ -3108,3 +3108,134 @@ global H_3=1 restriction. Its conclusion limits actual mixed-column
 heights; it still permits a densely occupied second row and does
 not bound every complementary continuation charge. No unrestricted
 noncoverage conclusion or new Lean verification follows here.
+
+## 24. Separating the exact cofactor3 controls a vacant third row
+
+Retain the same minimum whole cover and suppose9 belongs to D. Thus
+the original3 and9 classes are both retained and disjoint. Let s be
+the number of support primes, p>=5 a support prime, and select one
+row of the following table:
+
+| r | Fresh cofactors per layer | Fresh layer counts | N | B=N-1 |
+|---:|---:|---|---:|---:|
+|5|12|12,9|21|20|
+|6|14|14,3|17|16|
+|7|16|15|15|14|
+
+Assume a>=r and the local vacancy
+
+    27*p^(a-r) notin D.                             (TR1)
+
+There is no upper bound on H_3. The conclusion is
+
+    H_p<=a+floor((B*(s-2)+1)/(p-3)).                 (TR2)
+
+This uses the existing HC8 mixed-supplier demand and RP3 forest
+counts. The additional point is a partition which removes all
+cofactors divisible by9 before counting the remaining pure3
+cofactor separately. Numerical presence of a mixed original is
+not substituted for its actual participation at the private point.
+
+### Complete repairs for the same actual supplier groups
+
+If H_p>a, put delta=H_p-a and take ONE private point x of the
+original pure p^H_p class. As in SP2, at least1+delta(p-2) mixed
+suppliers have p-height greater than a, agree with x modulo p^a,
+and their complete p-free cofactor congruences contain x.
+Partition these original labels:
+
+* Put every supplier with9 dividing its cofactor in the9-bucket.
+* Put suppliers with cofactor exactly3 in a separate group.
+* Assign each remaining supplier to one chosen prime q!=3,p of
+  its cofactor. Such a prime exists: the cofactor is greater than1,
+  is not exactly3, and has3-height at most one.
+
+For a nonempty9-bucket the original common interface is h=9*p^a.
+The fresh labels27*p^(a-2),27*p^(a-1),27*p^a cover its three
+next ternary children, with the old p-phase inherited. They are
+globally absent by TR1 and divisor closure. Their sum divided by h
+is3(1+1/p+1/p^2)<15, the minimum quotient sum for three distinct
+proper odd multiples of h. PH2 therefore gives capacity two.
+
+The group with cofactor exactly3 has at most delta labels: each
+is3*p^k for one of a<k<=H_p, and original numerical moduli are
+distinct. This bound needs no claim that all those classes actually
+occur or that their different p-phases can be chosen independently.
+
+For a nonempty q-bucket use its original interface h=p^a*q.
+Since h is coprime to3, retained3 and9 remove respectively9 and3
+disjoint roots modulo27 from the ENTIRE old h-class. Fifteen roots
+remain, regardless of their actual positions. At every later
+ternary level use the local fresh palette
+
+    3^(3+j)*p^i*q^epsilon,
+    j>=0, a-r<=i<=a, epsilon in{0,1}.              (TR3)
+
+All these labels are globally absent by TR1. They are distinct
+because3,p,q are different primes. Assign their p and q phases
+from the old h-class wherever those factors are present. There
+are2(r+1) available labels per layer. Reuse the RP3 greedy forest
+on these fifteen actual roots: for r=5, use12 leaves and then9;
+for r=6, use14 and then3; for r=7, use15 leaves immediately.
+Every branch of the entire old h-class is thereby repaired, at
+all higher digits and outside coordinates.
+
+This local palette does not require global ternary height two.
+The displayed vacancy proves freshness, while the original3 and9
+supply the retained roots. No division or relocation of the whole
+original family is involved in factoring p^(a-r) from its prices.
+For either two-layer row, even charging the entire palette at
+BOTH layers gives the strict upper bound
+
+    S/h < (27+81)(1+1/q)/(1-1/p)<=162.
+
+It is below N(N+2), namely483 for N=21 and323 for N=17.
+For r=7 the single-layer price is less than81/2<255=15*17.
+The minimum sum of N distinct proper odd h-multiples is
+h*N(N+2). Hence PH2 gives capacity B=N-1 in every q-bucket.
+At the original h-phase comparable disjointness already gives
+capacity one. There are at most s-2 such buckets.
+
+All counts refer to disjoint sets of suppliers at the SAME x;
+the hypothetical repairs used to prove the separate capacities
+need not be simultaneously executed. Adding their bounds yields
+
+    1+delta(p-2)<=2+delta+B*(s-2),
+    delta(p-3)<=B*(s-2)+1.                          (TR4)
+
+This proves TR2 when H_p>a. Otherwise it holds automatically,
+since3 and p belong to the support, s>=2, and the right-hand
+additional term is nonnegative.
+
+### Forced third-row originals and the global height-two branch
+
+Write k_(p,r)=floor((B*(s-2)+1)/(p-3)) with B from the table.
+Apply TR2 contrapositively at a=H_p-k_(p,r)-1. For each row,
+
+    H_p>=r+k_(p,r)+1
+      ==> 27*p^(H_p-k_(p,r)-r-1) belongs to D.      (TR5)
+
+An exponent zero means the pure original27. Thus if H_3=2,
+all three local vacancy tests are available at a=r and give
+
+    H_p<=min{
+       5+floor((20s-39)/(p-3)),
+       6+floor((16s-31)/(p-3)),
+       7+floor((14s-27)/(p-3))}.                    (TR6)
+
+For example, with H_3=2,s=31 and p=131, TR6 gives H_131<=9.
+The previous HC5 bound using H_3=2 permits H_131=10: its
+first allowed cut a=10 has t=11,N=25 and gives10, and every
+later allowed cut is at least11. If all3*p^i and9*p^i up to
+i=10 are present, SP5, MH5 and GF6 do not exclude that height.
+Indeed every proper pure cut a<10 has K_i=2 and fails GF2,
+since(a+1)/9<=10/9<4/3. The new constraint excludes these
+parameters by separating actual supplier groups. This comparison
+is only with the named earlier bounds; it claims neither an
+actual phase realization nor independence from all other constraints.
+
+TR5 can force a third-row original even when a dense second row
+has made SP1 unavailable. It does not control arbitrary dense
+higher rows, and TR6 does not exclude the case where every
+support-prime height is at most two. No unrestricted noncoverage
+conclusion or new Lean verification follows from these bounds.

@@ -30851,6 +30851,21 @@ H_3. The scope remains a necessary condition on the same minimum
 whole cover. It does not supply the unbounded dense remainder's
 head-law mass, moments or terminal payment.
 
+[Report385, section24](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#24-separating-the-exact-cofactor3-controls-a-vacant-third-row)
+separates the actual suppliers with cofactor exactly3 from those
+divisible by9. Let s be the support size and p>=5 a support prime.
+Under9 in D, a>=r and27*p^(a-r) absent, it gives
+
+    H_p<=a+floor((B*(s-2)+1)/(p-3)),
+    (r,B) in{(5,20),(6,16),(7,14)}.
+
+The actual3 and9 classes supply the retained guards without an
+upper bound on H_3. The contrapositive forces specified third-row
+originals; when H_3=2 the three bounds apply at a=r. These remain
+height constraints on the same minimum whole cover, not a payment
+for every dense continuation or an exclusion of all height-two
+profiles.
+
 The new restrictions remove actual possible activations and height
 profiles which the specified earlier tests miss. They do not force
 useful vacancies in every hypothetical cover: densely occupied
