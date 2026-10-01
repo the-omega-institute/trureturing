@@ -1143,3 +1143,415 @@ quadratic bit bound must not be attributed to it. Its code license has
 not been verified, and no upstream code is vendored here. These controls
 support reuse of the published arithmetic interface, not a new algorithm,
 a Lean result, or a strict Robin budget.
+
+## Price the resource and retain the residual phase
+
+The optimization input is classical weak duality, not an independence
+assumption between size and character. Boyd–Vandenberghe,
+*Convex Optimization* (2004),
+[§5.1.3, printed p.216, equation (5.2), and §5.2.2, p.225,
+equation (5.23)](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf),
+gives a lower bound by pricing a constraint, including for nonconvex
+problems. The repository's
+[fractional-knapsack note](../../Blueprint/D5/S3/Analytic/Knapsack/FractionalKnapsackDual.md)
+already records the box-price model; its continuous fill has no character
+endpoint. The following is a paper application to the same existing
+benefit and quartic interface, not a new duality theorem, a claim of
+novelty, or a Lean-verified bridge.
+
+Keep the same actual $N,C_s,g,u,v,e,u_0,R_s(v),L_r$ and phase
+$\psi_V(u_0)=i^j$. Set $E_0=\log u_0$ and retain the eligible prime set
+
+$$
+\mathcal P=\{p\text{ prime}:p\nmid vrV\}.
+$$
+
+The actual residual exponent is $\nu_p=v_p(u_0)$. Its $k$-th
+post-reference layer has resource $\log p$ and cost
+
+$$
+d_{p,k}=\log p-s\ell_{p,a_p+k}>0,
+\qquad d_{p,1}=b_s(p),\qquad d_{p,k}\ge b_s(p).
+$$
+
+Every actual layer occurs once, so the residual addition cost and resource
+are
+
+$$
+\mathcal A_s^{[r]}(N)=\sum_{p\mid u_0}\sum_{k=1}^{\nu_p}d_{p,k},
+\qquad E_0=\sum_{p\mid u_0}\nu_p\log p.
+$$
+
+For a resource price $0\le h\le h_0<1$, define the complete eligible
+weak-layer deficit
+
+$$
+K_{\mathcal P}(h)=
+\sum_{p\in\mathcal P}\sum_{k\ge1}(h\log p-d_{p,k})_+.
+$$
+
+This sum is finite uniformly on the specified price interval. A nonzero
+term requires
+
+$$
+(1-h_0)p\log p<s,
+$$
+
+by $\ell_{p,a_p+k}\le p^{-(a_p+k)}\le p^{-1}$. There are only
+finitely many such primes, and for each one $d_{p,k}\to\log p$ makes
+the contributing layers finite. The case $h_0=1$ is not covered.
+
+For a nonzero phase $z$, define the residual edge minimum
+
+$$
+\beta_z(h)=
+\min_{\substack{p\in\mathcal P\\\psi_V(p)=i^z}}
+(b_s(p)-h\log p)_+,
+$$
+
+with $+\infty$ for an empty class. Let $c_j(h)$ be the nonnegative
+phase-word cost from the preceding four-state formulas, replacing each
+$\beta_z$ by $\beta_z(h)$; in particular $c_0(h)=0$. The residual
+edges can be zero even for nonzero phases. No positive gap or four
+nonempty classes is presumed. A nonempty class has an attained minimum,
+since the residual first-layer cost tends to infinity with $p$ at fixed
+$h<1$.
+
+Split each actual layer by the exact identity
+
+$$
+d_{p,k}=h\log p-(h\log p-d_{p,k})_+
+                   +(d_{p,k}-h\log p)_+.
+$$
+
+The sum of actual deficits is at most $K_{\mathcal P}(h)$. The sum of
+actual positive residuals is at least $c_j(h)$: each occurrence has
+residual cost at least $(b_s(p)-h\log p)_+$, and the same actual
+prime-power word has endpoint $j$. Hence the paper-level certificate is
+
+$$
+\mathcal A_s^{[r]}(N)
+\ge hE_0-K_{\mathcal P}(h)+c_j(h),
+$$
+
+$$
+\boxed{
+D_s(N)\ge R_s(v)+L_r+
+\sup_{0\le h\le h_0}
+\{h\log u_0-K_{\mathcal P}(h)+c_j(h)\}.
+}
+$$
+
+The phase term prices only the positive residual cost. Adding the raw
+$c_j(0)$ to an already complete capacity bound would still charge the
+same layers twice. Likewise, negative raw edges $b_s(p)-h\log p$ do not
+permit the nonnegative cycle-deletion argument used for the four-state
+formulas. The actual layered supply, including the entire weak deficit,
+is essential; a first-layer-only deficit need not pay repeated additions.
+
+This allocation supplies a lower certificate for the same host. It does
+not yet compare that certificate with its signed Robin budget, exclude
+the original low-loss candidate, or control all five-window sources.
+
+## Compare the joint certificate with the separate bounds
+
+Write
+
+$$
+\mathcal L_s(N)=L_r+
+\sup_{0\le h\le h_0}
+\{h\log u_0-K_{\mathcal P}(h)+c_j(h)\}.
+$$
+
+At $h=0$, the deficit vanishes and the preceding phase certificate is
+recovered: $\mathcal L_s(N)\ge L_r+c_j(0)$.
+
+For the capacity comparison, let $K_v(h)$ be the same complete deficit
+over all primes $p\nmid v$, and let $K_r(h)$ be its part at $r$. Their
+exact weak-layer capacity is $A_{+,v}(h)$ from above, so finite
+layer-cake summation gives
+
+$$
+K_v(h)=\int_0^h A_{+,v}(t)\,dt,
+$$
+
+$$
+\sup_{0\le h\le h_0}\{hE-K_v(h)\}
+=\int_0^{h_0}(E-A_{+,v}(t))_+\,dt.
+$$
+
+For the second equality, the integrand before taking its positive part
+is nonincreasing. Choosing the price where it changes sign, or an
+interval endpoint if there is no crossing, attains its positive-area
+integral. Threshold ties change neither integral.
+
+The exact index block already paid satisfies
+$L_r\ge he\log r-K_r(h)$. Also
+$K_v(h)\ge K_{\mathcal P}(h)+K_r(h)$: primes dividing $V$ cannot
+occur among the actual additions, and $r\nmid vV$. Consequently
+
+$$
+L_r+h\log u_0-K_{\mathcal P}(h)+c_j(h)
+\ge h\log u-K_v(h).
+$$
+
+When $y\ge6$ and $h_0\le1/3$, the already cited envelope
+$A_{+,v}(t)\le U_y(t)-\Delta_v(t)$ therefore gives
+
+$$
+\boxed{
+\mathcal L_s(N)\ge
+\max\{I_v(\log u),\ L_r+c_j(0)\}.
+}
+$$
+
+This comparison uses the complete exact eligible deficit. An upper
+approximation to that deficit still yields a valid lower certificate,
+but its resulting value need not retain this dominance comparison.
+Exact deficits do not require factoring $u_0$: the finite prime prefix,
+known reference exponents, and eligibility probes suffice. No bound on
+the computational cost at the growing source scale is asserted.
+
+For the same actual host and a chosen price $h$, put
+
+$$
+B_h=B_r-h\log u_0+K_{\mathcal P}(h),
+\qquad B_r=T_s(N)-R_s(v)-L_r.
+$$
+
+Then $c_j(h)>B_h$ is sufficient for strict Robin at that host. If
+$B_h<0$, nonnegativity already pays it. If $B_h\ge0$, every prime
+capable of an edge of residual cost at most $B_h$ lies below the finite
+cutoff
+
+$$
+P_h=\max\{s,\exp((B_h+1)/(1-h))\}.
+$$
+
+Indeed $p>P_h$ implies $\log p>1$, $a_p=0$, and
+
+$$
+b_s(p)-h\log p
+\ge(1-h)\log p-s/p>B_h.
+$$
+
+Checking eligible prime phases and their residual costs in that prefix
+can exclude every phase word costing at most $B_h$. Nonnegative edges
+allow a cheapest path with at most three edges, including zero-cost
+edges; an absent phase class is never presumed nonempty. For $j=0$
+and $B_h\ge0$, the empty word remains an obstruction to this particular
+strict test. The parameter $h$ here is a resource price, not the cofactor
+in $N=dh$.
+
+## A strict allocation gain and the remaining arithmetic obligation
+
+A finite layered allocation illustrates the distinction from taking a
+maximum. It is not an exhibited FIB residual candidate. Take three
+available layers, each with resource one, with phases $0,0,1$ and costs
+$1/20,1/20,4/5$, and consume all three. At $h_0=1/3$, the capacity
+optimum, raw phase cost and residual phase cost are respectively
+
+$$
+K(h_0)=\frac{17}{30},\qquad
+\sup_{0\le h\le h_0}\{3h-K(h)\}=\frac{13}{30},\qquad
+c_1(0)=\frac45,\qquad c_1(h_0)=\frac7{15}.
+$$
+
+Thus the joint certificate gives
+
+$$
+\frac{13}{30}+\frac7{15}=\frac9{10}
+>\max\left\{\frac{13}{30},\frac45\right\}=\frac45,
+$$
+
+equal to this allocation's actual cost. The separate capacity optimum
+is attained at $h_0$: before $h=1/20$ its slope is three, and afterwards
+its slope is one. Naively adding the raw phase cost instead would give
+$37/30$, exceeding the actual $9/10$. This example shows a genuine
+gain in the allocation model and why the positive residual is needed;
+it establishes no gain on the qualifying low-loss arithmetic hosts.
+
+For the original actual sources, the sufficient comparison is now
+
+$$
+\mathcal L_s(N)>T_s(N)-R_s(v),
+$$
+
+or a source-preserving exclusion of any candidate where it fails. Every
+term still belongs to the same host: the resource is $\log u_0$, the
+endpoint uses its actual gcd and index-prime valuation, and eligibility
+comes from that same $v,r,V$. If $u_0=1$, its endpoint is zero and the
+supremum contributes zero; restoration-only hosts do not acquire a
+spurious phase loss. Tied removed layers stay in the exact removal cost.
+For $N=dh$, valuations are $v_p(d)+v_p(h)$, including common primes;
+this allocation never optimizes those two factors independently.
+
+The exact deficit and finite phase-prefix certificate provide an
+additional interface for the missing comparison. No uniform lower bound
+paying that signed budget has been established. The original window,
+residue, low-loss divisor incidence, cofactor $h=1$, small-prime cofactors
+and all-candidate scope of FIB §233.5 remain obligations. A larger finite
+search, a positive phase cost, or the abstract strict-gain example is not
+a proof of the complete weighted Robin inequality or RH.
+
+## Retain each prime's complete reduced-cost block
+
+A stronger application keeps the layered supply and the phase endpoint
+in one finite-state problem. The optimization algorithm is already
+classical: Mohri, *Semiring Frameworks and Algorithms for Shortest-Distance
+Problems*, [§4, Corollary 2, author-PDF p.17, with its proof on p.18;
+§5.1, p.19](https://cs.nyu.edu/~mohri/pub/jalc.pdf), gives exact shortest
+distances on finite acyclic weighted graphs over a semiring and explicitly
+includes the real min-plus semiring. The prime-stage graph below is
+acyclic; no new shortest-path algorithm is proposed. This is a paper
+application, not a Lean-verified arithmetic bridge.
+
+For $p\in\mathcal P$, define
+
+$$
+f_{p,h}(k)=W_p(k)-hk\log p,\qquad k\ge0,\qquad
+K_p(h)=\sum_{\ell\ge1}(h\log p-d_{p,\ell})_+.
+$$
+
+The reduced marginals increase and eventually become positive for
+$h<1$, so $\min_{k\ge0}f_{p,h}(k)=-K_p(h)$. For every local phase,
+including zero, retain the table
+
+$$
+a_{p,z}(h)=K_p(h)+
+\min_{\substack{k\ge0\\kj_p=z\pmod4}}f_{p,h}(k),
+\qquad \psi_V(p)=i^{j_p},
+$$
+
+with $+\infty$ for an unreachable local phase. Every finite table entry
+is nonnegative. Let
+
+$$
+\delta_j(h)=
+\inf_{\substack{(k_p)\text{ finite support}\\
+\sum_p k_pj_p=j\pmod4}}
+\left\{K_{\mathcal P}(h)+\sum_p f_{p,h}(k_p)\right\}.
+$$
+
+Only finitely many $K_p(h)$ are nonzero. For any such word, its expression
+inside braces equals
+
+$$
+\sum_{\text{omitted layers}}(h\log p-d_{p,\ell})_+
++\sum_{\text{selected layers}}(d_{p,\ell}-h\log p)_+.
+$$
+
+The omitted weak deficits retain which prefixes were not selected; they
+cannot all be collected independently of the endpoint. The selected
+positive residuals pay at least the earlier clipped phase cost, giving
+$\delta_j(h)\ge c_j(h)$. The actual word is also allowed, hence
+
+$$
+\boxed{
+D_s(N)\ge R_s(v)+L_r+
+\sup_{0\le h\le h_0}
+\{h\log u_0-K_{\mathcal P}(h)+\delta_j(h)\}
+\ge R_s(v)+\mathcal L_s(N).
+}
+$$
+
+This refinement can improve the zero-phase branch: the collection of
+locally minimizing prefixes need not have total phase zero. No positive
+improvement is guaranteed. When $u_0=1$, both optimized residual
+certificates equal zero. The empty word bounds the block expression by
+zero, and $h=0$ attains zero.
+
+### Four local choices in the existing capacity range
+
+For $h\le1/3$, the already established marginal separation gives
+$d_{p,\ell}>\tfrac12\log p$ for $\ell\ge2$. Thus $f_{p,h}(k)$ is
+strictly increasing for $k\ge1$, and
+
+$$
+f_{p,h}(4)>
+\left[-h+3\left(\tfrac12-h\right)\right]\log p
+\ge\tfrac16\log p>0.
+$$
+
+Every local phase minimum is therefore attained among $k=0,1,2,3$.
+For an odd $j_p$, the zero phase prefers $k=0$ to $k=4$ and all later
+representatives; each other phase uses its least positive representative.
+For $j_p=2$, the zero phase compares $k=0,2$ and phase two uses $k=1$.
+For $j_p=0$, only $k=0,1$ need be compared. This reduces the local
+minimization; it does not assert that actual residual valuations are at
+most three.
+
+On a complete finite prime list, process each prime once:
+
+$$
+q_n(z)=\min_{t\in\mathbb Z_4}
+\{q_{n-1}(z-t)+a_{p_n,t}(h)\},
+\qquad q_0(0)=0,\quad q_0(z\ne0)=+\infty.
+$$
+
+The stage advances even for a zero phase, so a negative raw reduced block
+could also be used safely on this acyclic graph. It cannot be repeatedly
+reused as a subsidizing cycle. An arbitrary truncated prime list is not
+complete for the infinite certificate: omitted weak deficits or cheap
+phase blocks can raise the computed lower bound incorrectly. Tail
+coverage remains required.
+
+### A finite conditional test for the actual budget
+
+Fix $B=B_r(N)\ge0$ and suppose the actual remaining cost were at most
+$B$. Every used prime then has $b_s(p)\le B$ and lies below
+$P_B=\max\{s,e^{B+1}\}$ by the existing first-entry cutoff. Every used
+exponent belongs to the finite set
+
+$$
+\mathcal K_p(B)=\{k\ge0:W_p(k)\le B\},
+$$
+
+since $W_p(k)\ge k b_s(p)$ and $b_s(p)>0$. For all eligible primes
+$p\le P_B$, and any real multiplier $\lambda$, compute by the same
+acyclic recurrence
+
+$$
+Q_B(\lambda,j)=
+\min_{\substack{k_p\in\mathcal K_p(B)\\
+\sum_p k_pj_p=j\pmod4}}
+\sum_p\{W_p(k_p)-\lambda k_p\log p\}.
+$$
+
+The hypothesized low-cost actual word is included, so
+
+$$
+\boxed{
+\lambda\log u_0+Q_B(\lambda,j)>B
+\quad\Longrightarrow\quad
+\mathcal A_s^{[r]}(N)>B.
+}
+$$
+
+An empty endpoint-feasible set also rejects the low-cost hypothesis.
+This is a conditional rejection test, not an unconditional lower bound
+from an unproved truncation. The finite formulation permits
+$\lambda=1$; it does not extend the unrestricted deficit $K(1)$, whose
+prime sum diverges. Real logarithmic resources are retained; integer
+rounding of them would require an additional valid relaxation.
+
+For an abstract zero-phase gain, take one prime block with resource one,
+phase one per occurrence, first cost $1/20$, and later costs
+$d_k=1-1/(k+2)$ for $k\ge2$. Consume four occurrences, so the endpoint
+is zero and the actual cost is $73/30$. On $0\le h\le1/3$, only the
+first layer can have a weak deficit, $f_{p,h}(4)>0$, and the local
+zero-phase minimizer is $k=0$. Therefore the optimized clipped bound is
+$21/20$, while the optimized block bound is $4/3$, a gain of $17/60$.
+This is a layered allocation example, not an actual FIB low-loss host.
+
+The phase endpoint is retained exactly within each relaxation; pricing
+the resource gives a lower bound and supplies no strong-duality equality
+with the original constrained arithmetic problem. Failure of a sufficient
+rejection test does not imply failure of Robin.
+
+The blockwise certificate and the finite conditional test still need to
+pay the same host's $B_r(N)$ on the original qualifying sources, or
+exclude the cases where they do not. They retain, rather than discharge,
+the full window, residue, weighted divisor incidence, tied removals,
+merged valuations and cofactor-$h=1$ obligations. The cited optimization
+results supply no uniform weighted Robin estimate or proof of RH.
