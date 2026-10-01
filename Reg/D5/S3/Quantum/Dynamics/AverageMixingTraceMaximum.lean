@@ -51,7 +51,7 @@ theorem trace_bot : (avgMixing (⊥ : SimpleGraph (Fin 2))).trace = 2 := by
   simp only [sum_singleton, hrow]
   norm_num
 
-theorem trace_top_le : (avgMixing (⊤ : SimpleGraph (Fin 2))).trace ≤ 1 := by
+theorem trace_top : (avgMixing (⊤ : SimpleGraph (Fin 2))).trace = 1 := by
   have hA : ((⊤ : SimpleGraph (Fin 2)).adjMatrix ℝ).IsHermitian :=
     isHermitian_iff_isSymm.mpr (⊤ : SimpleGraph (Fin 2)).isSymm_adjMatrix
   -- every eigenbasis vector of `A(K_2)` has both squared coordinates `1/2` and eigenvalue `±1`
@@ -89,68 +89,55 @@ theorem trace_top_le : (avgMixing (⊤ : SimpleGraph (Fin 2))).trace ≤ 1 := by
     · linear_combination (1 / 2) * hn - (1 / 2) * x ^ 2 * hl
     · rw [e0]
       linear_combination (1 / 2) * hn + (1 / 2) * x ^ 2 * hl
-  have htr : hA.eigenvalues 0 + hA.eigenvalues 1 = 0 := by
+  have hsum : hA.eigenvalues 0 + hA.eigenvalues 1 = 0 := by
     have h := hA.trace_eq_sum_eigenvalues
     rw [SimpleGraph.trace_adjMatrix, Fin.sum_univ_two] at h
     simpa using h.symm
   have hne : hA.eigenvalues 0 ≠ hA.eigenvalues 1 := by
     intro h
-    have h0 : hA.eigenvalues 0 = 0 := by linarith
+    have h0 : hA.eigenvalues 0 = 0 := by linarith [hsum]
     have := (hvec 0).2
     rw [h0] at this
     norm_num at this
-  have hp : ∀ (a : Fin 2) (θ : ℝ), ∑ i with hA.eigenvalues i = θ,
-      hA.eigenvectorBasis i a * hA.eigenvectorBasis i a ≤ 1 / 2 := by
-    intro a θ
-    have hhalf : ∀ i, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a = 1 / 2 := by
-      intro i
-      rw [← sq]
-      fin_cases a
-      · exact (hvec i).1.1
-      · exact (hvec i).1.2
-    rw [sum_congr rfl fun i _ => hhalf i, sum_const, nsmul_eq_mul]
-    have hcard : (univ.filter fun i => hA.eigenvalues i = θ).card ≤ 1 := by
-      refine card_le_one.mpr fun i hi j hj => ?_
-      have hij : hA.eigenvalues i = hA.eigenvalues j := by
-        rw [(mem_filter.mp hi).2, (mem_filter.mp hj).2]
-      fin_cases i <;> fin_cases j
-      · rfl
-      · exact absurd hij hne
-      · exact absurd hij.symm hne
-      · rfl
-    have : ((univ.filter fun i => hA.eigenvalues i = θ).card : ℝ) ≤ 1 := by exact_mod_cast hcard
-    nlinarith
-  have hsum : ∀ a : Fin 2, ∑ θ ∈ univ.image hA.eigenvalues, ∑ i with hA.eigenvalues i = θ,
-      hA.eigenvectorBasis i a * hA.eigenvectorBasis i a = 1 := by
+  -- the two eigenvalues differ, so every eigenvalue has a one-element fibre
+  have hinj : ∀ i j : Fin 2, hA.eigenvalues i = hA.eigenvalues j → i = j := by
+    intro i j hij
+    fin_cases i <;> fin_cases j
+    · rfl
+    · exact absurd hij hne
+    · exact absurd hij.symm hne
+    · rfl
+  have hfib : ∀ a i : Fin 2, ∑ j with hA.eigenvalues j = hA.eigenvalues i,
+      hA.eigenvectorBasis j a * hA.eigenvectorBasis j a = 1 / 2 := by
+    intro a i
+    have hS : (univ.filter fun j => hA.eigenvalues j = hA.eigenvalues i) = {i} := by
+      ext j
+      simp only [mem_filter, mem_univ, true_and, mem_singleton]
+      exact ⟨hinj j i, fun h => h ▸ rfl⟩
+    rw [hS, sum_singleton, ← sq]
+    fin_cases a
+    · exact (hvec i).1.1
+    · exact (hvec i).1.2
+  have hdiag : ∀ a : Fin 2, ∑ θ ∈ univ.image hA.eigenvalues,
+      (∑ j with hA.eigenvalues j = θ, hA.eigenvectorBasis j a * hA.eigenvectorBasis j a) ^ 2 =
+        1 / 2 := by
     intro a
-    rw [sum_fiberwise_of_maps_to (fun i _ => mem_image_of_mem _ (mem_univ i))]
-    have h := congrFun (congrFun (mem_unitaryGroup_iff.mp hA.eigenvectorUnitary.2) a) a
-    simpa [mul_apply, star_apply, one_apply] using h
+    rw [sum_image (by intro i _ j _ h; exact hinj i j h),
+      sum_congr rfl fun i _ => by rw [hfib a i], Fin.sum_univ_two]
+    norm_num
   have htr : (avgMixing (⊤ : SimpleGraph (Fin 2))).trace = ∑ a, ∑ θ ∈ univ.image hA.eigenvalues,
       (∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a) ^ 2 := by
     simp only [avgMixing, idempotent, trace, diag_apply, Matrix.sum_apply, hadamard_apply,
       vecMulVec_apply, sq]
-  rw [htr]
-  calc ∑ a, ∑ θ ∈ univ.image hA.eigenvalues,
-        (∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a) ^ 2
-      ≤ ∑ a : Fin 2, ∑ θ ∈ univ.image hA.eigenvalues, (1 / 2 : ℝ) *
-          ∑ i with hA.eigenvalues i = θ, hA.eigenvectorBasis i a * hA.eigenvectorBasis i a := by
-        refine sum_le_sum fun a _ => sum_le_sum fun θ _ => ?_
-        have h1 := hp a θ
-        have h0 : 0 ≤ ∑ i with hA.eigenvalues i = θ,
-            hA.eigenvectorBasis i a * hA.eigenvectorBasis i a :=
-          sum_nonneg fun i _ => mul_self_nonneg _
-        nlinarith
-    _ = 1 := by
-        simp only [← mul_sum, hsum, Fin.sum_univ_two]
-        norm_num
+  rw [htr, sum_congr rfl fun a _ => hdiag a, Fin.sum_univ_two]
+  norm_num
 
 theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hle := @h 2 ⊥ inferInstance
     (by change (⊤ : SimpleGraph (Fin 2)).Connected; exact SimpleGraph.connected_top)
-  rw [trace_bot] at hle
-  linarith [trace_top_le]
+  rw [trace_bot, trace_top] at hle
+  norm_num at hle
 
 theorem dependence_proof : ObservationalDependence signature actual := by
   intro i
