@@ -30,6 +30,7 @@ public sealed partial class FileMapPolicyTests
     [Theory]
     [InlineData("schema")]
     [InlineData("shared-type")]
+    [InlineData("closure-type")]
     [InlineData("input-type")]
     [InlineData("unknown-field")]
     [InlineData("duplicate-key")]
@@ -40,6 +41,7 @@ public sealed partial class FileMapPolicyTests
         {
             case "schema": document["schema"] = "unknown"; break;
             case "shared-type": document["shared_inputs"] = GeneratedInput; break;
+            case "closure-type": document["closure_excludes"] = GeneratedInput; break;
             case "input-type": document["units"]![0]!["inputs"] = GeneratedInput; break;
             case "unknown-field": document["units"]![0]!["unknown"] = GeneratedInput; break;
         }
@@ -49,7 +51,7 @@ public sealed partial class FileMapPolicyTests
     }
 
     private static JsonNode CiSelection() => JsonNode.Parse("""
-        {"schema":"ci-units-v1","shared_inputs":[],"units":[{
+        {"schema":"ci-units-v1","shared_inputs":[],"closure_excludes":[],"units":[{
           "id":"fixture","workflow":".github/workflows/ci-fixture.yml","project":null,
           "test":false,"lean":"none","dotnet":false,"inputs":[]
         }]}

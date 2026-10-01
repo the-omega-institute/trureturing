@@ -727,12 +727,13 @@ internal static partial class FileMapPolicy
         // Validate this projection's shape; ci_units.py owns complete unit admission.
         using var document = JsonDocument.Parse(source);
         var root = document.RootElement;
-        RequireKeys(root, ["schema", "shared_inputs", "units"]);
+        RequireKeys(root, ["schema", "shared_inputs", "closure_excludes", "units"]);
         if (root.GetProperty("schema").ValueKind != JsonValueKind.String
             || root.GetProperty("schema").GetString() != "ci-units-v1"
             || root.GetProperty("units").ValueKind != JsonValueKind.Array)
             throw new InvalidDataException("invalid CI unit selection shape");
         RequirePatterns(root.GetProperty("shared_inputs"));
+        RequirePatterns(root.GetProperty("closure_excludes"));
         var content = new List<string>();
         foreach (var unit in root.GetProperty("units").EnumerateArray())
         {
