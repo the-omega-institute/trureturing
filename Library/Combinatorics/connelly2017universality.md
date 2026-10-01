@@ -26,14 +26,20 @@ switching equivalence (`MA = BM` for a monomial matrix `M`) and the circulants
 criterion of Cameron et al. for circulants. The concluding section considers
 complex unit gain graphs and states:
 
-> We say a graph has {\em property $\TT$} if all of the nonzero coefficients
-> in its adjacency matrix are complex numbers with unit magnitude.
-> \begin{conjecture} $\Circ(0,-\ii,\ii)$ is the only circulant with property
-> $\TT$ which has universal perfect state transfer. \end{conjecture}
+```latex
+We say a graph has {\em property $\TT$} if all of the nonzero coefficients
+in its adjacency matrix are complex numbers with unit magnitude.
+\begin{conjecture} $\Circ(0,-\ii,\ii)$ is the only circulant with property
+$\TT$ which has universal perfect state transfer. \end{conjecture}
+```
 
-The introduction adds: "The only known examples of complex unit gain graphs
+The introduction adds:
+
+```latex
+The only known examples of complex unit gain graphs
 with the universal property are the circulants $K_{2}$ and $\Circ(0,-\ii,\ii)$.
-We conjecture that this set is unique."
+We conjecture that this set is unique.
+```
 
 ## Verified locator
 

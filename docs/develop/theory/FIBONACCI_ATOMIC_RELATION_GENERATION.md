@@ -36283,3 +36283,300 @@ $$
 尚需实际素数幂位置与权重、适当细分的共同端点预算或另外证明的谱控制。
 这里的 $F_n$ 始终是模型尾项的价格输入；结论不反驳任何整数的 Robin 不等式，
 也不将人工源的相位认作 zeta 的实际零点。
+
+
+## 262. 中心化增量预算的临界对数网格与正脉冲源类边界
+
+§260 的中心化弦估计与 §261 的取整源构造可在同一个网格尺度上比较。
+本节保留 §260 的实际素数源与逐区间一致的 Guth–Maynard 输入，
+同时构造另一个人工源来检验仅凭该类增量合同可以传递多稀疏的端点预算。
+实际源的充分结论与人工源类的反向结论使用不同量词，后者不识别为实际素数源。
+新增内容是临界对数幂的定位及满足联合源合同的反向构造，不主张文献优先权。
+
+### definition 262.1 临界宽度与两侧网格
+
+对 $a>1$ 记 $L_a=\log a$、$u_a=L_a^{1/4}$，令
+
+$$
+W(a)=a^{3/4}\frac{e^{u_a/2}}{\sqrt{L_a}},\qquad
+H_\delta^-(a)=W(a)L_a^{-\delta},\qquad
+H_\delta^+(a)=W(a)L_a^\delta.
+\tag{262.1}
+$$
+
+其中 $\delta$ 是固定参数。
+$\Phi,q,k,w,\mathcal R_{a,b}$ 使用 §260 的定义；特别地，
+$w(x)=\sqrt x\log x$，$\mathcal R$ 是同一 $q$ 坐标下的双端弦余量。
+
+### theorem 262.2 实际源在临界宽度上的有界弦误差
+
+在 §260.3 的同一分析输入下，对每个固定 $\delta\ge0$，全部充分大的 $a$、
+$a<b\le a+H_\delta^-(a)$ 及 $y\in[a,b]$ 一致有
+
+$$
+\begin{aligned}
+w(y)|\mathcal R_{a,b}(y)|\ll{}&
+L_a^{-2\delta}
++a^{-1/12}e^{u_a/2}L_a^{-1/2-\delta}\\
+&+a^{-1/4}e^{3u_a/2}L_a^{-5/2-3\delta}
++a^{-1/4}e^{u_a/2}L_a^{3/2-\delta}.
+\end{aligned}
+\tag{262.2}
+$$
+
+因此 $\delta>0$ 时归一弦误差一致趋零；$\delta=0$ 时它一致有界。
+对每个固定 $\delta$，仍有 $H_\delta^-(a)/a\to0$，并且
+$H_\delta^-(a)/a^{3/4}\to\infty$。
+
+**证明。** 式（260.10） 给出，对 $a^{2/3}\le T\le a^{0.99}$，
+
+$$
+M_{a,a+T}\ll a^{2/3}+TL_ae^{-u_a}
++\frac{T^2}{aL_a}+\sqrt a\,L_a^2.
+$$
+
+固定 $\delta$ 后，$T=H_\delta^-(a)$ 最终在上述范围内，且 $a+T\le2a$。
+对任何较短区间使用同一截止 $T$；式（260.4） 于是给
+
+$$
+w(y)|\mathcal R_{a,b}(y)|
+\ll\frac{T}{a^{3/2}}
+\left(a^{2/3}+TL_ae^{-u_a}+\frac{T^2}{aL_a}+\sqrt a\,L_a^2\right).
+$$
+
+主成本恰为
+
+$$
+\frac{T^2L_ae^{-u_a}}{a^{3/2}}=L_a^{-2\delta}.
+\tag{262.3}
+$$
+
+其余三项逐项代入给式（262.2）。
+由于 $u_a=o(L_a)$，任何固定正幂的 $a^{-1}$ 都压过这里的指数与对数因子，
+故后三项趋零；$\delta>0$ 时第一项也趋零。
+两个宽度比值的结论同样由 $\log L_a=o(u_a)$ 与 $u_a=o(L_a)$ 得到。$\square$
+
+### corollary 262.3 临界递归网格保留单边 RH 判据
+
+取充分大的 $a_0$，定义
+
+$$
+a_{j+1}=a_j+W(a_j),\qquad j\ge0.
+\tag{262.4}
+$$
+
+该网格的相邻胞腔覆盖 $[a_0,\infty)$。
+在 §92.3 明列的经典单边 RH 桥接及定理 262.2 的实际源输入下，
+
+$$
+\mathrm{RH}\iff
+\exists K\ge0\ \exists J\in\mathbb N\quad
+\forall j\ge J,\quad w(a_j)\Phi(a_j)\ge-K.
+\tag{262.5}
+$$
+
+**证明。** 最终 $W(a)\ge1$，故 $a_j\to\infty$，相邻区间覆盖半轴。
+定理 262.2 在 $\delta=0$ 时给固定有限 $C_0\ge0$，使所有充分晚胞腔内
+$w(y)|\mathcal R_{a_j,a_{j+1}}(y)|\le C_0$。
+又 $W(a)/a\to0$，所以最终
+$w(y)/w(a_j)\le2$ 对整个胞腔一致成立。
+若两端归一尾项都不小于 $-K$，因 $w$ 正且递增，双端弦不小于 $-K/w(a_j)$。
+因此整个胞腔内有
+
+$$
+w(y)\Phi(y)\ge-2K-C_0.
+\tag{262.6}
+$$
+
+§92.3 的任意固定有限单边预算推论遂给 RH。
+反向将其 RH 下的最终连续预算限制到网格即可。$\square$
+
+式（262.5）没有给出实际统一的 $K,J$。
+若取 $0<\delta<1/2$，$H_\delta^-$ 比 §260 的宽度增加因子
+$L_a^{1/2-\delta}$，仍保留消失弦误差。
+这些 $a_j$ 都是尾项的价格输入，不据此认证同数值整数的 Robin 不等式。
+
+### definition 262.4 临界宽度另一侧的人工源
+
+现在固定 $\delta>0$，置
+
+$$
+\varepsilon(a)=L_ae^{-u_a},\qquad
+h(a)=H_\delta^+(a),\qquad c=\frac1{128},\qquad
+\eta(s)=s^2(1-s)^2.
+\tag{262.7}
+$$
+
+取充分大的 $A$，使对全部 $a\ge A$ 有
+$L_a\ge1$、$\varepsilon(a)\le1$、$\varepsilon$ 递减及 $1\le h(a)\le a$。
+定义 $a_0=A$、$a_{j+1}=a_j+h(a_j)$，并在第 $j$ 个胞腔上置
+
+$$
+f(x)=-\alpha_j\eta\left(\frac{x-a_j}{h_j}\right),\qquad
+\alpha_j=c\frac{L_{a_j}^{2\delta-1}}{\sqrt{a_j}},\qquad
+h_j=h(a_j).
+\tag{262.8}
+$$
+
+在 $x\ge A$ 上定义
+
+$$
+B(x)=x-\frac{f'(x)}{k(x)},\qquad
+\Psi^*(x)=\lfloor B(x)\rfloor,\qquad
+\Phi^*(x)=\int_x^\infty(\Psi^*(v)-v)k(v)\,dv.
+\tag{262.9}
+$$
+
+星号表示人工源；事件位置不要求为素数幂，质量为一。
+每个固定 $\delta$ 都有自己的源与起点，不把这族模型当作一个同时处理所有 $\delta$ 的源。
+
+### theorem 262.5 人工源保留全局、跨缝增量及尾积分合同
+
+定义 262.4 给出 $C^1$ 函数 $f$、连续严格递增的 $B$，以及非负、右连续、
+单调的单位正脉冲源 $\Psi^*$。每个紧区间只有有限个脉冲。
+$B$ 在胞腔内部光滑，但不要求在接缝处可微。
+对全部 $a\ge A$ 及全部 $t\ge0$，有
+
+$$
+\boxed{|\Psi^*(a+t)-\Psi^*(a)-t|
+\le\varepsilon(a)t+1.}
+\tag{262.10}
+$$
+
+全局有
+
+$$
+|\Psi^*(x)-x|
+\ll_\delta x^{3/4}(\log x)^{\delta+1/2}+1,
+\tag{262.11}
+$$
+
+从而对每个固定 $c_0>0$ 有
+$\Psi^*(x)-x=O_{\delta,c_0}(xe^{-c_0\sqrt{\log x}})$。
+尾积分绝对收敛，且
+
+$$
+\boxed{f(x)-q(x)\le\Phi^*(x)\le f(x).}
+\tag{262.12}
+$$
+
+**证明。** 在 $0\le s\le1$ 上直接展开得
+
+$$
+\begin{gathered}
+0\le\eta(s)\le\frac1{16},\qquad
+\eta'(s)=2s(1-s)(1-2s),\quad |\eta'(s)|\le\frac12,\\
+\eta''(s)=2-12s+12s^2,\quad |\eta''(s)|\le2,\qquad
+\eta(0)=\eta(1)=\eta'(0)=\eta'(1)=0.
+\end{gathered}
+\tag{262.13}
+$$
+
+网格宽度至少为一，故接缝在每个紧区间内有限。
+两侧 $f,f'$ 都在接缝归零，因此 $f\in C^1$，$B$ 连续且 $B(a_j)=a_j$。
+令 $a=a_j$、$h=h_j$、$L=L_a$、$\varepsilon=\varepsilon(a)$。
+幅度与宽度有精确抵消
+
+$$
+\frac{\alpha_j}{h_j^2}=\frac{c\varepsilon}{a^2L}.
+\tag{262.14}
+$$
+
+对 $x\in[a,a+h]\subset[a,2a]$，$L\le\log x\le2L$，直接由 $k$ 的公式得到
+
+$$
+\frac1{k(x)}\le8a^2L,\qquad
+\frac{|k'(x)|}{k(x)}
+=\frac{2(\log x)^2+3\log x+2}{x\log x(\log x+1)}
+\le\frac7a.
+\tag{262.15}
+$$
+
+在胞腔内部，$B'=1-f''/k+f'k'/k^2$。式（262.13）—（262.15）给出
+
+$$
+|B'(x)-1|\le c\varepsilon\left(16+\frac{28h}{a}\right)
+\le44c\varepsilon<\frac{\varepsilon}{2},
+\qquad |B(x)-x|\le4c\varepsilon h.
+\tag{262.16}
+$$
+
+因此光滑段内 $1/2\le B'\le3/2$，且 $B(x)\ge x/2$。
+连续性与有限分片积分将斜率界延伸到跨缝区间，故 $B$ 严格递增。
+它穿过每个整数时，$\lfloor B\rfloor$ 产生一次单位跳跃；有界值域保证局部事件有限。
+
+还有，若 $x\in[a_j,a_{j+1}]$，则
+
+$$
+\frac{\varepsilon(a_j)}{\varepsilon(x)}
+=\frac{L_{a_j}}{\log x}
+\exp\big((\log x)^{1/4}-L_{a_j}^{1/4}\big)\le2.
+\tag{262.17}
+$$
+
+因为 $x\le2a_j$ 且 $L_{a_j}\ge1$，对数差至多 $\log2$，四次根差至多 $\log2/4$。
+结合式（262.16），所有非接缝点满足 $|B'(x)-1|\le\varepsilon(x)$。
+在任意 $[a,a+t]$ 上分片积分，再用 $\varepsilon$ 递减，得到
+$|B(a+t)-B(a)-t|\le\varepsilon(a)t$。
+两个取整误差之差的绝对值小于一，遂得式（262.10）。
+
+由式（262.16）及 $\varepsilon(a_j)h_j
+=a_j^{3/4}e^{-u_{a_j}/2}L_{a_j}^{\delta+1/2}$，
+舍去指数衰减因子并用 $a_j\le x$ 即得式（262.11）。
+其强 PNT 量级来自
+$e^{-L/4+c_0\sqrt L}L^{\delta+1/2}\to0$。
+这也保证尾积分绝对收敛。
+式（262.8）给 $f(x)\to0$，而 $B-x=-f'/k$，故
+
+$$
+\Phi^*(x)=f(x)+\int_x^\infty(\lfloor B(v)\rfloor-B(v))k(v)\,dv.
+$$
+
+取整误差在 $(-1,0]$，$k>0$ 且 $\int_x^\infty k=q(x)$，于是得式（262.12）。$\square$
+
+### theorem 262.6 任意固定正对数幂扩宽的源类反向实例
+
+对每个固定 $\delta>0$，定义 262.4 的源满足定理 262.5 的全部合同。
+在全部网格端点有
+
+$$
+-1<\Psi^*(a_j)-a_j\le0,\qquad
+|w(a_j)\Phi^*(a_j)|\le a_j^{-1/2}\longrightarrow0.
+\tag{262.18}
+$$
+
+但令 $m_j=(a_j+a_{j+1})/2$，则
+
+$$
+\boxed{w(m_j)\Phi^*(m_j)
+\le-\frac1{2048}L_{a_j}^{2\delta}\longrightarrow-\infty.}
+\tag{262.19}
+$$
+
+因此该宽度为 $W(a)(\log a)^\delta$ 的递归网格上，
+源的共同局部增量预算、强全局误差及趋零的端点归一尾项，
+仍不能传递为连续半轴上的统一归一下界。
+
+**证明。** $B(a_j)=a_j$ 给第一个取整界。
+$f(a_j)=0$ 与式（262.12）给 $-q(a_j)\le\Phi^*(a_j)\le0$；
+乘以 $w(a_j)$ 即得式（262.18）。
+在中点，$\eta(1/2)=1/16$，所以
+
+$$
+w(m_j)f(m_j)
+=-\frac c{16}\sqrt{\frac{m_j}{a_j}}
+\frac{\log m_j}{L_{a_j}}L_{a_j}^{2\delta}
+\le-\frac c{16}L_{a_j}^{2\delta}.
+$$
+
+由 $\Phi^*\le f$ 及 $c=1/128$ 得式（262.19）。
+$a_j\to\infty$ 且 $\delta>0$ 给出显示极限。
+这里未归一化的 $\Phi^*$ 本身仍趋零。$\square$
+
+定理 262.2—262.6 定位了这份增量合同的临界对数幂：
+实际源在 $W$ 上的归一弦误差有界，略缩宽度时趋零；
+对每个固定正对数幂扩宽，都有满足联合源合同的相应人工反向实例。
+这不排除实际素数幂位置与质量提供额外控制，也不评价全部自适应网格的最优性。
+§241 的 $5040$ 首次越界仍只提供有限入口；
+五窗的合法转移尚未被映射为上述全部实际价格胞腔的共同端点预算。
+以上没有取得一般 Robin 不等式、实际统一尾项下界或 RH。
