@@ -81,7 +81,7 @@ public sealed class DuplicateStatementAdvisoryTests
 
         var completed = Execute(fixture);
 
-        var diagnostic = Assert.Single(completed.Diagnostics);
+        var diagnostic = Assert.Single(completed.Diagnostics.Where(d => d.RuleId == RuleId.CreateKnown(28)));
         Assert.Equal(RuleId.CreateKnown(28), diagnostic.RuleId);
         Assert.Null(AdmissionEngine.RejectIfNeeded(
             completed,

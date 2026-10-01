@@ -1,5 +1,8 @@
 import LeanInformationAudit.Tests.Occurrence.ImportedArenaContractSource
 import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 open Lean Elab Command LeanInformationAudit ImportedContractProbe
 
@@ -7,7 +10,7 @@ local instance : DecidableEq lawArena.State := lawArena.toArena.stateDecidableEq
 
 /-- error: IE-C003 ArenaSourceUnsupported arena=ImportedContractProbe.expectationNamedLive owner=ImportedContractProbe.expectationNamedLive -/
 #guard_msgs (error) in
-expect_information_occurrence target in expectationNamedLive
+test_assess in expect_information_occurrence target in expectationNamedLive
   from "LeanInformationAudit.Tests.Occurrence.ImportedArenaExpectation"
 
 run_cmd do
@@ -18,7 +21,7 @@ run_cmd do
     try
       unless (InformationRegistry.entries (← getEnv)).isEmpty do
         throwError "[FAIL] named expectation has incidental registration"
-      elabCommand (← `(command| expect_information_occurrence target in $(mkIdent name)
+      elabCommand (← `(command| test_assess in expect_information_occurrence target in $(mkIdent name)
         from "LeanInformationAudit.Tests.Occurrence.ImportedArenaExpectation"))
       let env ← getEnv
       let entries := ExpectedOccurrenceManifest.declaredEntries env env.header.mainModule
@@ -43,9 +46,9 @@ run_cmd do
     unless message == s!"IE-C003 ArenaSourceUnavailable declaration={name} reason=provenance" do
       throwError "expectation input was acquired incidentally: {name}: {message}"
 
-expect_information_occurrence target in expectationAlias
+test_assess in expect_information_occurrence target in expectationAlias
   from "LeanInformationAudit.Tests.Occurrence.ImportedArenaExpectation"
-expect_information_occurrence target in expectationCopy
+test_assess in expect_information_occurrence target in expectationCopy
   from "LeanInformationAudit.Tests.Occurrence.ImportedArenaExpectation"
 
 run_cmd do
@@ -53,9 +56,9 @@ run_cmd do
     unless (← liftTermElabM <| resolveCanonicalArenaNameFromEvidence name) == owner do
       throwError "independent expectation command did not acquire evidence: {name}"
 
-register_information_theorem target in lawArena object_arena arena catalog forwarding
+test_assess in register_information_theorem target in lawArena object_arena arena catalog forwarding
   primitives readout.toPrimitiveBundle realization bridge
-register_information_theorem target in lawArena object_arena expectationCopy catalog copy
+test_assess in register_information_theorem target in lawArena object_arena expectationCopy catalog copy
   primitives readout.toPrimitiveBundle realization bridge
 
-#seal_information_theory
+test_assess in #seal_information_theory

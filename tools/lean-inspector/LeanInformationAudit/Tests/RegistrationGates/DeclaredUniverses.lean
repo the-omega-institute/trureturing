@@ -1,4 +1,7 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredBindings
+import LeanInformationAudit.Tests.Assessment
+
+test_imported_assessment
 
 namespace LeanInformationAudit.Tests.DeclaredUniverses
 open Lean Meta Elab Command
@@ -9,7 +12,7 @@ def template.{u, v} (f : Bool → Bool) : PrimitiveRealization (cutSignature Boo
   let Second : Type v := PUnit.{v + 1}
   cutRealization f
 
-register_information_template template
+test_assess in register_information_template template
 
 def descriptor.{u, v} : PrimitiveRealization (cutSignature Bool Bool) :=
   template.{u, v} (fun x : Bool => x)
@@ -92,25 +95,25 @@ theorem namedBridge.{u} : LegacyPrimitiveRealization polymorphicArena.{u}
 
 theorem inlineStatement.{u} : polymorphicArena.{u}.Law polymorphicReadout.{u} :=
   by intro _; rfl
-register_information_theorem inlineStatement in polymorphicArena
+test_assess in register_information_theorem inlineStatement in polymorphicArena
   primitives polymorphicReadout.toPrimitiveBundle
   realization inline (polymorphicReadout) := by exact namedBridge
 
-register_information_theorem namedStatement in polymorphicArena
+test_assess in register_information_theorem namedStatement in polymorphicArena
   primitives polymorphicReadout.toPrimitiveBundle realization namedBridge
 
 noncomputable abbrev polymorphicObjectArena.{u} : Arena.{u} := polymorphicArena.{u}.toArena
 
 theorem inlineOccurrenceStatement.{u} :
     polymorphicArena.{u}.Law polymorphicReadout.{u} := by intro _; rfl
-register_information_theorem inlineOccurrenceStatement in polymorphicArena
+test_assess in register_information_theorem inlineOccurrenceStatement in polymorphicArena
   object_arena polymorphicObjectArena catalog polymorphicInline
   primitives polymorphicReadout.toPrimitiveBundle
   realization inline (polymorphicReadout) := by exact namedBridge
 
 theorem namedOccurrenceStatement.{u} :
     polymorphicArena.{u}.Law polymorphicReadout.{u} := by intro _; rfl
-register_information_theorem namedOccurrenceStatement in polymorphicArena
+test_assess in register_information_theorem namedOccurrenceStatement in polymorphicArena
   object_arena polymorphicObjectArena catalog polymorphicNamed
   primitives polymorphicReadout.toPrimitiveBundle realization namedBridge
 
@@ -122,13 +125,13 @@ theorem reorderedBridge.{v, u} : LegacyPrimitiveRealization polymorphicArena.{u}
     polymorphicReadout.{u} :=
   ⟨fun h => h PUnit.unit, fun h _ => h⟩
 
-register_information_theorem reorderedStatement in polymorphicArena
+test_assess in register_information_theorem reorderedStatement in polymorphicArena
   primitives polymorphicReadout.toPrimitiveBundle realization reorderedBridge
 
 theorem reorderedOccurrenceStatement.{u, v} :
     (∀ _ : PUnit.{v + 1}, polymorphicArena.{u}.Law polymorphicReadout.{u}) :=
   fun _ _ => rfl
-register_information_theorem reorderedOccurrenceStatement in polymorphicArena
+test_assess in register_information_theorem reorderedOccurrenceStatement in polymorphicArena
   object_arena polymorphicObjectArena catalog polymorphicReordered
   primitives polymorphicReadout.toPrimitiveBundle realization reorderedBridge
 
@@ -156,12 +159,12 @@ theorem independentNamedStatement.{u} : ∀ _ : PUnit.{u + 1}, True :=
 theorem independentBridge.{v, u} : LegacyPrimitiveRealization independentArena.{u, v}
     (∀ _ : PUnit.{u + 1}, True) independentReadout.{u, v} := ⟨Iff.rfl⟩
 
-register_information_theorem independentNamedStatement in independentArena
+test_assess in register_information_theorem independentNamedStatement in independentArena
   primitives independentReadout.toPrimitiveBundle realization independentBridge
 
 theorem independentInlineStatement.{u} : ∀ _ : PUnit.{u + 1}, True :=
   fun _ => trivial
-register_information_theorem independentInlineStatement in independentArena
+test_assess in register_information_theorem independentInlineStatement in independentArena
   primitives independentReadout.toPrimitiveBundle
   realization inline independentReadout := by exact independentBridge
 
@@ -170,13 +173,13 @@ noncomputable abbrev independentObjectArena.{u, v} : Arena.{u} :=
 
 theorem independentNamedOccurrenceStatement.{u} : ∀ _ : PUnit.{u + 1}, True :=
   fun _ => trivial
-register_information_theorem independentNamedOccurrenceStatement in independentArena
+test_assess in register_information_theorem independentNamedOccurrenceStatement in independentArena
   object_arena independentObjectArena catalog independentNamed
   primitives independentReadout.toPrimitiveBundle realization independentBridge
 
 theorem independentInlineOccurrenceStatement.{u} : ∀ _ : PUnit.{u + 1}, True :=
   fun _ => trivial
-register_information_theorem independentInlineOccurrenceStatement in independentArena
+test_assess in register_information_theorem independentInlineOccurrenceStatement in independentArena
   object_arena independentObjectArena catalog independentInline
   primitives independentReadout.toPrimitiveBundle
   realization inline independentReadout := by exact independentBridge
@@ -190,7 +193,7 @@ theorem independentDiagonalBridge.{u} :
 /-- error: IE-C006 StatementProofMismatch:
 LeanInformationAudit.Tests.DeclaredUniverses.independentDiagonalStatement -/
 #guard_msgs (error) in
-register_information_theorem independentDiagonalStatement in independentArena
+test_assess in register_information_theorem independentDiagonalStatement in independentArena
   primitives independentReadout.toPrimitiveBundle realization independentDiagonalBridge
 
 theorem independentDiagonalOccurrenceStatement.{u} : ∀ _ : PUnit.{u + 1}, True :=
@@ -198,7 +201,7 @@ theorem independentDiagonalOccurrenceStatement.{u} : ∀ _ : PUnit.{u + 1}, True
 /-- error: IE-C006 StatementProofMismatch:
 LeanInformationAudit.Tests.DeclaredUniverses.independentDiagonalOccurrenceStatement -/
 #guard_msgs (error) in
-register_information_theorem independentDiagonalOccurrenceStatement in independentArena
+test_assess in register_information_theorem independentDiagonalOccurrenceStatement in independentArena
   object_arena independentObjectArena catalog independentDiagonal
   primitives independentReadout.toPrimitiveBundle realization independentDiagonalBridge
 
@@ -207,7 +210,7 @@ theorem independentNarrowStatement.{u} : ∀ _ : PUnit.{u + 1}, True :=
 /-- error: IE-C006 StatementProofMismatch:
 LeanInformationAudit.Tests.DeclaredUniverses.independentNarrowStatement -/
 #guard_msgs (error) in
-register_information_theorem independentNarrowStatement in independentArena
+test_assess in register_information_theorem independentNarrowStatement in independentArena
   primitives independentReadout.{u, 0}.toPrimitiveBundle
   realization inline independentReadout.{u, 0} := by exact independentBridge.{0, u}
 
@@ -216,7 +219,7 @@ theorem independentNarrowOccurrenceStatement.{u} : ∀ _ : PUnit.{u + 1}, True :
 /-- error: IE-C006 StatementProofMismatch:
 LeanInformationAudit.Tests.DeclaredUniverses.independentNarrowOccurrenceStatement -/
 #guard_msgs (error) in
-register_information_theorem independentNarrowOccurrenceStatement in independentArena
+test_assess in register_information_theorem independentNarrowOccurrenceStatement in independentArena
   object_arena independentObjectArena catalog independentNarrow
   primitives independentReadout.{u, 0}.toPrimitiveBundle
   realization inline independentReadout.{u, 0} := by exact independentBridge.{0, u}
@@ -232,7 +235,7 @@ theorem diagonalBridge.{u} : LegacyPrimitiveRealization polymorphicArena.{u}
 /-- error: IE-C006 StatementProofMismatch:
 LeanInformationAudit.Tests.DeclaredUniverses.diagonalStatement -/
 #guard_msgs (error) in
-register_information_theorem diagonalStatement in polymorphicArena
+test_assess in register_information_theorem diagonalStatement in polymorphicArena
   primitives polymorphicReadout.toPrimitiveBundle realization diagonalBridge
 
 def finiteReadout : PrimitiveRealization DeclaredBindings.arena.signature :=
@@ -252,7 +255,7 @@ theorem finiteBridge : LegacyPrimitiveRealization DeclaredBindings.arena
     finiteReadout :=
   ⟨fun h => h.1, fun h => ⟨h, rfl⟩⟩
 
-register_information_theorem finiteStatement in DeclaredBindings.arena
+test_assess in register_information_theorem finiteStatement in DeclaredBindings.arena
   primitives finiteReadout.toPrimitiveBundle realization finiteBridge
 
 run_meta do

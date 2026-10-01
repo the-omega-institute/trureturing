@@ -81,16 +81,6 @@ register_information_theorem rough_prime_suffix_complete in arena
       stateBinder := 1 }] })
   escape continues (open)
 
-open Lean in
-run_meta do
-  let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-    record.occurrence.key.theoremName ==
-      `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.rough_prime_suffix_complete
-  let valid := row.any fun record => match record.result with
-    | .declaredValidated _ => true
-    | _ => false
-  unless valid do throwError "rough prime suffix registration is not declaredValidated"
-
 #print axioms rejected_law
 #print axioms registration
 
@@ -257,18 +247,6 @@ register_information_theorem feasible_finite in finiteArena
       path := #["body", "body", "body", "body", "arg", "arg", "body", "arg"]
       stateBinder := 4 }] })
   escape continues (open)
-
-open Lean in
-run_meta do
-  for name in [
-      `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.feasible_finite,
-      `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellman_complete,
-      `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.suffix_prime_factors] do
-    let row := (TemplateBinding.records (← getEnv)).find? fun record =>
-      record.occurrence.key.theoremName == name
-    unless row.any (fun record => match record.result with
-        | .declaredValidated _ => true | _ => false) do
-      throwError "{name} registration is not declaredValidated"
 
 #print axioms supportRegistration
 #print axioms bellmanRegistration

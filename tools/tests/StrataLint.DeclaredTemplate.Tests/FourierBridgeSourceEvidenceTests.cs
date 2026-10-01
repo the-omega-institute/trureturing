@@ -35,7 +35,7 @@ public sealed class FourierBridgeSourceEvidenceTests(Xunit.Abstractions.ITestOut
             try
             {
                 var produced = BoundedProcessRunner.Run("/bin/bash",
-                    ["tools/scripts/worktree/lean-cache-run.sh", "lake", "-d", "Reg", "build",
+                    ["tools/scripts/worktree/lean-cache-run.sh", "lake", "-d", "tools/lean-inspector-reg", "build",
                         "+" + module + ":report", "+Reg." + module + ":report"],
                     root, NativeEvidenceDeadline, 4 * 1024 * 1024,
                     standardOutput: stdout, standardError: stderr);
