@@ -36267,3 +36267,46 @@ N_g=1+F_rg
 $$
 
 的输送估计。因此这项最新形式化工作与本卷的去重判断一致：有限验证和 CA 接触只能缩小边界，不能替代 §233.5 的同一候选联合预算。
+
+## 265. Regular arithmetic functions 给出另一种 FIB 语言，但没有价格源桥
+
+[Cloitre 的 *Regular Arithmetic Functions* 第一卷](../../../Library/Analytic/cloitre2026regulararithmetic.md)把 RH 放进三角算术核的“正则性指标”框架。其基本方程是
+
+$$
+\sum_{k\le n}a_kG(n,k)=n^{-\beta},
+$$
+
+而 Ingham 核
+
+$$
+G(n,k)=\Phi(k/n)=\frac{k}{n}\left\lfloor\frac nk\right\rfloor
+$$
+
+的指标为 $1/2$ 当且仅当 RH 成立。这里的反演链明确经过 Möbius 和与 Mellin 变换，所以它与本项目的“正向 FIB 递归还缺有符号尾项”是同一个接口方向：若要消费该等价判据，必须先把五窗来源接到该核的实际系数。
+
+该卷第 14.9 节还记录 Harcos 的 Fibonacci 分数部定理：
+
+$$
+\sum_{k=1}^{n}\left\{\frac{F_n}{F_k}\right\}
+=
+\begin{cases}
+\dfrac{\pi}{8}n+O(\sqrt n),&n\text{ 为奇数},\\[4pt]
+\dfrac{3\log 2}{4}n+O(\sqrt n),&n\text{ 为偶数}.
+\end{cases}
+$$
+
+它确实提供了一个 Fibonacci 索引的 Abelian 密度，并由 Lucas--Fibonacci 同余与奇偶分解证明；但其中的 gauge 是分数部和里的 $F_n$，不是本卷的五分类 Zeckendorf 地址，也不是
+
+$$
+N_g=1+F_rg
+$$
+
+的同一 Robin 候选。它没有给出
+
+$$
+\text{FIB 地址}
+\longrightarrow
+\text{同一 }\sigma(N_g)/N_g\text{ 或 }\mu/\Phi\text{ 点值}
+$$
+
+的运输。因而这项工作值得纳入历史和方法地图，却不能替代 §233.5 的联合预算；真正的新任务是构造一个既保留五窗来源、又具有 Ingham 型正则性指标的 FIB-gauged kernel，并证明该指标与 Robin 价格源相同。
