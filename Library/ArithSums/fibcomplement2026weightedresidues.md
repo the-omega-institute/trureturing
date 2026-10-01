@@ -481,3 +481,34 @@ under its same-source cutoff and exception hypotheses, while those
 hypotheses cannot be supplied for every CA integer merely by assuming a
 uniform raw-discriminant log-power bound. No signed Robin margin or RH
 proof is obtained here.
+
+### A finite stopping bound for consecutive tiny-residual sources
+
+The same calculation also bounds an entire finite run, rather than only
+refuting an eventual bound. Suppose $n_0,\ldots,n_m$, $m\ge1$, is a
+prime-step CA chain with $n_0>e$, $p_j\le4\log n_j$ at every step, and
+
+$$
+|E(n_i)|\le\frac1{240(\log n_i)^2}\qquad(0\le i\le m).
+$$
+
+Then (A2)–(A3) force $h_i=0$ at all these sources and
+$E(n_m)=(n_m/n_0)E(n_0)$. Apply (A2) again with $t=n_0$ and
+$k=-c_0$. Since $h_0=0$, $|E(n_0)|\ge1/(6n_0)$. The upper bound at
+the same final source consequently requires
+
+$$
+\boxed{n_m(\log n_m)^2\le\frac{n_0^2}{40}.}
+\tag{A5}
+$$
+
+For any sufficiently large CA anchor $n_0$, the tied layers can be
+ordered so that the unbounded chain passes through that actual anchor.
+Continue to its first member at least $n_0^2$. The preceding member is
+below $n_0^2$, so the prime-step bound puts this first member below
+$8n_0^2\log n_0$. If every source in that finite chain segment had a
+tiny residual, (A5) would fail. Thus the segment contains an actual CA
+integer satisfying (A4), once $n_0$ is large enough for the preceding
+eventual bounds. This gives a quadratic-scale stopping interval for
+this observation; no effective starting threshold or bound for gaps
+between actual Robin violations is supplied.
