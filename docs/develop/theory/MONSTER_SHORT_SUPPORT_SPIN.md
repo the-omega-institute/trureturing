@@ -27,6 +27,9 @@ Q(g,\xi)=g_0\xi_0+g_1\xi_1+g_2\xi_2.
   `IsSignTable.opposite` 证明不同非零地面截面的极化配对为 1。这是二次律真正消耗的符号表几何。
 * `shortWeight` 将七段支持大小公开为可复用 API；唯一支持至多 3 的结论继续由
   `MonsterShortSupport.unique_short_support` 提供。
+* `labelQuadratic_fullMap` 将七段系数和的二次值形式化为
+  \(\binom{\operatorname{shortWeight}(c)+1}{2}\bmod 2\)。证明先对有限支持集合归纳，
+  再使用每个地面截面的二次值为 1、不同截面的极化值为 1，以及七段补集关系。
 
 这些声明的 `#print axioms` 只包含 Lean 的 `propext`、`Classical.choice` 和 `Quot.sound`，没有 `sorryAx`、自定义公理或 `native_decide`。
 
@@ -65,7 +68,7 @@ van Ekeren–Möller–Scheithauer 2020 提供满足其假设时的 VOA 扩展�
 | --- | --- | --- |
 | 七段系数是否有唯一短支持代表？ | **已形式化** | `MonsterShortSupport.unique_short_support`；支持界为 3。 |
 | 地面截面是否形成统一的有限二次数据？ | **已形式化** | `labelQuadratic_groundSection` 与 `labelQuadratic_groundSection_polar`。 |
-| 全 `fullMap` 二次律是否成立？ | **开放** | 完成七项极化展开并通过 Lean 编译。 |
+| 全 `fullMap` 二次律是否成立？ | **已形式化** | `MonsterShortSupportSpin.labelQuadratic_fullMap`；证明消耗七段支持集合归纳、单截面值和两两极化值。 |
 | 标签是否已经是 VOA 模的索引？ | **开放** | 具体模块构造及模块公理；有限标签本身不提供此证据。 |
 | 标签加法是否是 VOA 融合？ | **开放** | 实际 intertwiner、结合/编织相容性和非零 OPE 见证。 |
 | `Q/2` 是否是最低共形权模 1？ | **开放** | 真实 `L₀` 谱与标签到模块的识别；不能由有限二次函数推出。 |
