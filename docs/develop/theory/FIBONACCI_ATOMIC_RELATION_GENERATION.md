@@ -36876,3 +36876,85 @@ W_n\text{ 的二维点态界}
 $$
 
 这条接口比重新提出一个 Fibonacci zeta 或无权平均更接近 Robin/RH 的真实证明义务；目前仍未完成最后三步。
+
+## 271. 加权 Fibonacci Ingham 行和的精确极限
+
+式（270.1）所需的加权分数部和本身可以在 Fibonacci gauge 上求出极限。令
+
+$$
+W_n=\sum_{k=1}^{n}F_k\left\{\frac{F_n}{F_k}\right\},
+\qquad
+q=\varphi^{-1}.
+$$
+
+则
+
+$$
+\boxed{
+\lim_{n\to\infty}\frac{W_n}{F_n}=\frac2{\sqrt5}.
+}
+\tag{271.1}
+$$
+
+从而由式（270.1）得到
+
+$$
+\boxed{
+\sum_{k=1}^{n}\Phi\!\left(\frac{F_k}{F_n}\right)
+=n-\frac2{\sqrt5}+o(1).
+}
+\tag{271.2}
+$$
+
+**证明。** 令 $j=n-k$。对每个固定 $j\ge1$，Binet 公式给出
+
+$$
+\frac{F_{n-j}}{F_n}\longrightarrow q^j,
+\qquad
+\frac{F_n}{F_{n-j}}\longrightarrow\varphi^j.
+$$
+
+记 Lucas 数为 $L_j=\varphi^j+(-\varphi^{-1})^j$。由于
+
+$$
+\varphi^j=L_j-(-\varphi^{-1})^j,
+$$
+
+且 $L_j$ 为整数，故
+
+$$
+\left\{\varphi^j\right\}
+=
+\begin{cases}
+q^j,&j\text{ 奇},\\
+1-q^j,&j\text{ 偶}.
+\end{cases}
+\tag{271.3}
+$$
+
+因此第 $j$ 个固定尾项的极限为 $q^j\{\varphi^j\}$。Fibonacci 的标准指数界给出一致支配
+
+$$
+0\le \frac{F_{n-j}}{F_n}\left\{\frac{F_n}{F_{n-j}}\right\}
+\le \varphi q^j,
+$$
+
+其中 $1\le j<n$；右侧可求和，所以对三角形求和使用尾项一致截断即可交换极限与级数。于是
+
+$$
+\lim_{n\to\infty}\frac{W_n}{F_n}
+=\sum_{j\ge1}q^j\{\varphi^j\}
+=\sum_{m\ge1}q^{4m-2}
+ +\sum_{m\ge1}(q^{2m}-q^{4m}).
+$$
+
+几何级数化简为
+
+$$
+\frac{q^2}{1-q^2}+\frac{q^2}{1+q^2}
+=\frac2{\sqrt5},
+$$
+
+其中 $q=(\sqrt5-1)/2$。$j=0$ 项为零，故式（271.1）成立；再代入式（270.1) 即得式（271.2）。证毕。
+
+这个结果提供了一个明确的负面诊断：Fibonacci 比值核的普通行和是 $n+O(1)$，而 Robin 的临界预算来自约数 Euler 乘积的 $log\log n$ 尺度。即使继续求得该核的更高阶误差，也不能把它直接当成 Robin 的 Ingham 核；还必须建立普通整数约数系数、Möbius 反演和 Fibonacci 来源之间的共同运输。它把“Fibonacci gauge 已经接上 RH”排除为尺度不匹配，而不是排除所有可能的 FIB-gauged 变形。
