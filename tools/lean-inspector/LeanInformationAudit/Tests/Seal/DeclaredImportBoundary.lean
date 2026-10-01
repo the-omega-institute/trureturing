@@ -27,9 +27,9 @@ run_cmd do
   -- SourceContract through Assessment, plus Interface.SourceSelection through Records.
   -- The infinite-domain support adds one D5/Impl module to that closure.
   -- Finite catalog projection remains co-located in SourceContract, so it adds
-  -- no separate module. The registration elaborator moved from the retired
-  -- `LeanInformationAudit.Syntax` into the interface recorder, so the current
-  -- closure is 106 = 100 D5/Impl + 6 Interface.
+  -- no separate module. `LeanInformationAuditInterface.Syntax` provides the
+  -- registration command elaborators and records their inputs. This test
+  -- checks 106 repository modules: 100 D5/Impl and 6 Interface.
   let interface := modules.filter ((`LeanInformationAuditInterface).isPrefixOf ·)
   let unchanged := modules.size == 106 && interface.size == 6
   (if unchanged then logInfo else logError) m!"[{if unchanged then "PASS" else "FAIL"}] finite_seal_family_closure_unchanged"
