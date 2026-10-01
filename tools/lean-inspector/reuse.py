@@ -215,6 +215,41 @@ def reuse(repository, report, output):
     return dict(needs_lake=False, reason='complete-entry-reused')
 
 
+class CacheIncompatible(ValueError):
+    def __init__(self, local, current, dev, reason):
+        super().__init__(f'LEAN_REPORT_CACHE_INCOMPATIBLE local_version={local} '
+                         f'current_version={current} dev_seed_version={dev} reason={reason}\n'
+                         'Rebuild explicitly with make lean-report REBUILD_REPORT_CACHE=1')
+
+
+def recover_and_reuse(repository, report, output):
+    """Check, restore and consume the actual seed under private-cache ownership."""
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/worktree'))
+    from lean_cache_release import cache_guard
+    current = publication.selection.Selection(repository).data['report_cache_release_semantic_version']
+    try:
+        with cache_guard(repository):
+            status = seed_version(repository, report)
+            local = status['local_version']
+            if status['reason'] != 'version-matched':
+                # The parent owns the same exclusive guard used by Release fetch
+                # and LeanCacheGuard. Its child must not reacquire that lock.
+                fetched = subprocess.run(['/bin/bash', str(repository / 'tools/scripts/worktree/lean-cache-publish.sh'),
+                                          'fetch', '--mode', 'production', '--refresh-stale', '--writer-owned'],
+                                         cwd=repository)
+                if fetched.returncode:
+                    raise CacheIncompatible(local, current, 'unavailable', 'fetch-unavailable')
+                report = repository / '.lake/build/stratalint/raw-lean-report.json'
+                status = seed_version(repository, report)
+                if status['reason'] != 'version-matched':
+                    raise CacheIncompatible(local, current, status['local_version'], status['reason'])
+            # Same-version misses retain the existing Lake incremental path.
+            # Snapshot/publish the checked seed before releasing ownership.
+            return reuse(repository, report, output)
+    except BlockingIOError as error:
+        raise CacheIncompatible('unavailable', current, 'unavailable', 'cache-busy') from error
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('command', choices=('probe', 'reuse', 'capture', 'seal', 'seed-version'))
@@ -224,6 +259,8 @@ def main():
     parser.add_argument('--snapshot', type=Path)
     parser.add_argument('--diagnostics', action='store_true',
                         help='emit probe mismatch warnings to stderr while retaining JSON stdout')
+    parser.add_argument('--cache-miss-policy', choices=('reuse-or-build', 'fetch-or-fail'),
+                        default='reuse-or-build', help='policy for the reuse consumer')
     args = parser.parse_args()
     if args.command in ('probe', 'reuse', 'seal', 'seed-version') and args.report is None:
         parser.error('--report is required')
@@ -245,7 +282,8 @@ def main():
         if args.diagnostics:
             warn_mismatch(result, sys.stderr)
     else:
-        result = reuse(args.repository, args.report, args.output)
+        consumer = recover_and_reuse if args.cache_miss_policy == 'fetch-or-fail' else reuse
+        result = consumer(args.repository, args.report, args.output)
         print('LEAN_INSPECTOR_REUSE ' + json.dumps(result, separators=(',', ':')))
         warn_mismatch(result, sys.stdout)
         if result['needs_lake']:
@@ -258,6 +296,9 @@ def main():
 if __name__ == '__main__':
     try:
         raise SystemExit(main())
+    except CacheIncompatible as error:
+        print(error, file=sys.stderr)
+        raise SystemExit(4)
     except INVALID_SEED as error:
         print(f'lean-inspector-reuse: {error}', file=sys.stderr)
         raise SystemExit(1)
