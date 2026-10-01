@@ -28518,3 +28518,159 @@ minimum whole covers need not satisfy the exceptional cap-sum
 condition or have their higher-order supports confined to a
 Lambda obeying FC1218. No argument here forces such a set or
 a cutoff meeting these hypotheses.
+
+## Actual four-prime shadows control every higher exceptional support
+
+The containing-set condition FC1218 can be replaced by a smaller
+inventory of actual four-prime relations. Keep FC1217's split
+into the actual F_3 and exceptional E, its raw source P_3, and
+its fixed constants C_p. Let V be the union of the prime supports
+of E. Define the four-element shadow and its all-height weight by
+
+    H_4={A subset V: |A|=4 and A subset supp(m)
+                        for some original m in E},
+    w_p=C_p/(p-1),
+    Z_4=sum_(A in H_4)product_(p in A)w_p.       (FC1222)
+
+Primes below67 are permitted; their C_p are the actual constants
+of the reused source schedule. No exceptional original or its
+literal phase is changed. If E is empty, its cost is zero and
+the three-factor theorem already applies. Otherwise V and H_4
+are nonempty and W=sum_(p in V)w_p>0.
+
+### Reuse Finner on independent auxiliary vertices
+
+For k>=4 let C_k(H_4) be the k-element sets all of whose
+four-element subsets belong to H_4, and put
+
+    Z_k^clique=sum_(A in C_k(H_4))product_(p in A)w_p.
+
+Every actual exceptional support of size k belongs to this
+clique family. The converse is not asserted. In particular
+Z_4^clique=Z_4. Cliques are used only to upper-bound the actual
+numerical sum, not inserted as new original moduli.
+
+Use Finner's existing generalized Holder inequality, in its
+fractional-matching form. A precise statement is
+[Pelekis--Ramon--Wang, arXiv:1511.07204v1,
+Definition1 and Theorem2.1](https://arxiv.org/html/1511.07204v1#S2.Thmtheorem1),
+which attributes it to
+[Finner, 1992](https://doi.org/10.1214/aop/1176989534).
+For independent basic variables and nonnegative functions Y_J
+depending on coordinate subsets J, it bounds
+
+    E product_J Y_J
+       <=product_J(E Y_J^(1/phi_J))^phi_J
+
+whenever phi_J>0 and sum_(J containing i)phi_J<=1 at each
+basic coordinate i. This general inequality is reused, not
+reproved here.
+
+Take k independent AUXILIARY prime-valued variables with law
+nu(p)=w_p/W. For every four-position subset J, let Y_J be the
+indicator that its four drawn primes are distinct and their
+set belongs to H_4. Every such factor has expectation
+24Z_4/W^4. Each basic coordinate appears in exactly
+d_k=binom(k-1,3) factors. Thus phi_J=1/d_k meets the condition
+with equality, and indicator powers leave Y_J unchanged.
+
+The product of all these indicators is one exactly when the
+whole ordered tuple has distinct vertices and forms a clique.
+Indeed every repeated pair lies in a four-position subset.
+Its expectation is therefore k!Z_k^clique/W^k. Finner gives
+
+    k!Z_k^clique/W^k
+       <=(24Z_4/W^4)^(binom(k,4)/binom(k-1,3)),
+    k!Z_k^clique<=(24Z_4)^(k/4).                (FC1223)
+
+All factors of W cancel because the exponent ratio is k/4.
+The inequality also holds when k>|V|, where the left side is
+zero. The independence in this argument belongs solely to the
+auxiliary vertex draws. The actual source P_3 may be correlated;
+no Finner step is applied to its prime coordinates.
+
+### The fourth shadow supplies the entire same-source deletion budget
+
+As in FC1218, numerical distinctness and the geometric sum
+over all positive exponents bound the exceptional weight at
+one fixed support A by product_(p in A)w_p. Hence, with
+
+    Psi(t)=sum_(k>=4)t^k/k!
+          =exp(t)-1-t-t^2/2-t^3/6,
+
+FC1223 gives the complete finite-family upper bound
+
+    epsilon(E)<=sum_(k>=4)Z_k^clique
+               <=Psi((24Z_4)^(1/4)).            (FC1224)
+
+No height or support-size cutoff is imposed on the originals.
+Completing the final nonnegative sum to infinitely many k is
+only an upper bound on a finite actual family.
+
+In particular Z_4<=1/24 gives epsilon(E)<=Psi(1)<=5/96.
+FC1217 therefore supplies the SAME actual full survivor mass
+strictly greater than1/96, without the containing-set condition
+FC1218. If this fourth-shadow bound is imposed only on the
+head component containing3, FC1220 and its complete arbitrary
+tail consumer apply unchanged. Their cutoff requirement remains.
+More generally Psi((24Z_4)^(1/4))<=1/16 already forces positive
+full-family survivor mass, by the strict baseline reserve.
+
+In a minimum whole cover, numerical divisor closure identifies
+H_4 exactly with the actual squarefree four-prime original
+labels: every four-subset of an exceptional support divides
+its original, and every such squarefree original is itself
+exceptional. Consequently such a cover must have
+
+    sum_(m in D, m squarefree, omega(m)=4)
+               product_(p|m) C_p/(p-1)>1/24.    (FC1225)
+
+This is a necessary weighted inventory condition, not a
+contradiction. The weight uses full-height geometric sums;
+it is neither the raw squarefree-class upper weight
+product_(p|m)C_p/p nor its actual probability. Outside the
+divisor-closed setting, H_4 remains a derived support shadow,
+and its squarefree labels need not be original.
+
+### Sparse relations can pass when their containing prime set does not
+
+For a strict range comparison, choose disjoint finite prime
+sets Lambda_1,Lambda_2, all at least67, with
+
+    3/5<W_i=sum_(p in Lambda_i)2/(p-2)<2/3.
+
+Such blocks exist by divergence of the reciprocal-prime sum.
+Successively add unused primes until the sum first exceeds3/5;
+each added weight is at most2/65, so the result is at most
+3/5+2/65=41/65<2/3. Repeat outside the finite first block.
+
+On any finite odd-prime set P containing3 and these two blocks,
+with arbitrary positive finite heights, include every nonunit
+divisor having at most three prime factors, and every nonunit
+divisor supported entirely in Lambda_1 or entirely in Lambda_2.
+The numerical union is divisor-closed and connected through
+the originals3q. Each block has more than four vertices, so
+every block vertex occurs in an exceptional original.
+The exceptional shadow consists exactly of the four-subsets
+inside either block. Therefore
+
+    W_(Lambda_1 union Lambda_2)>6/5>1,
+    Z_4=e_4((w_p)_(Lambda_1))+e_4((w_p)_(Lambda_2))
+          <=(W_1^4+W_2^4)/24<4/243<1/24.        (FC1226)
+
+Any set containing all exceptional supports must contain both
+blocks, so FC1218 fails. The actual-shadow criterion nevertheless
+proves noncoverage for every literal residue assignment.
+Appending arbitrarily many sufficiently large primes to either
+block preserves W_i<2/3; thus the allowed exceptional support
+sizes are unbounded as well as their heights. This is a scope
+comparison, not an irredundant covering example.
+
+FC1222--1226 apply an existing hypergraph inequality to the
+new source supplier. They reduce this sufficient test to an
+actual fourth-support inventory and enlarge its admitted range;
+they do not prove that every minimum cover has small Z_4.
+Dense or sufficiently heavy fourth shadows, and a forcing
+argument for a passing head cut, remain unresolved. These are
+ordinary symbolic deductions, with no new Lean verification
+or claim of a new general Finner inequality.
