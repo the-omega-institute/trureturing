@@ -31565,3 +31565,17 @@ mixed columns remain, and the complementary same-source charge Q_L
 is still unpaid in general. The unrestricted #7 objective is
 unchanged and unresolved. These are ordinary symbolic results;
 no new Lean verification or new finite producer is claimed.
+
+[Report385, section61](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#61-variable-depth-guarded-frontiers-retain-one-common-witness)
+permits a prefix antichain of different depths outside any selected
+actual pure-q guards containing A_q. Each leaf uses its own collision
+depth while retaining every old q digit and the literal divided p-tail.
+The interface contains every uniform-depth guarded graph, and a finite
+noncover with private points admits a variable-depth matching although
+all its uniform-depth graphs fail. For the full original q-height H,
+every successful finite frontier has a successful representative of
+depth at most H+1; an exact tree recurrence retains disjoint sets of
+assigned p-roots across child subtrees. These results concern the same
+actual source and give a finite joint interface, without asserting
+that every hypothetical cover admits a matching or adding Lean
+verification.

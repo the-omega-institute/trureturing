@@ -8965,3 +8965,231 @@ Lean verification or a claim of literature priority. No upper bound
 on the full three-bearing inventory has been established. Dense
 mixed inventories at arbitrary heights remain, and unrestricted
 Erdős #7 is unresolved.
+
+## 61. Variable-depth guarded frontiers retain one common witness
+
+The guarded IC1 interface permits the surviving q-domain to use
+different leaf depths simultaneously. The collision test uses each
+chosen leaf's actual depth. Every successful finite interface has a
+successful representative of maximum depth at most H_q+1, where H_q
+is the full original q-height. Section59 supplies the common witness,
+literal high-coordinate tails and pure guards; sections13 and20 supply
+the complete-prefix-cut counting identity used below.
+
+### Selected actual guards and per-leaf forbidden roots
+
+Fix the same EB1-selected distinct odd original whole cover. Let p>q
+be support primes, normalize the pure-p root to zero, and write its
+complete period as
+
+    p^A*q^H*M, A,H>=1, gcd(M,p*q)=1.
+
+Choose any subfamily G of the actual original pure-q classes, required
+to contain A_q, and retain each chosen class with its actual phase.
+These pure cylinders are pairwise disjoint by minimum cardinality.
+Let U be the complement of these SELECTED guards on the q-coordinate.
+The parameter H remains the maximum q-height of the ENTIRE original
+family, not the greatest depth among selected guards.
+
+Take a finite prefix antichain B whose q-cylinders partition U. A leaf
+b is a residue modulo q^h(b), with h(b)>=1. Distinct leaf cylinders
+are disjoint; their phases and depths describe this one actual domain.
+Put D=max(H,max_b h(b)). The output carrier is p^(A-1)*q^D*M.
+
+For a live leaf b, define F_b to contain the actual first-p root of
+every original mixed label
+
+    d=p^alpha*q^beta*u, alpha,beta>=1, gcd(u,p*q)=1,
+
+whose q-prefix intersects that leaf:
+
+    b == a_d mod q^min(beta,h(b)).
+
+Define T_b from every actual original numerical pair
+
+    p*u, q^h(b)*u, gcd(u,p*q)=1,
+
+by inserting the actual first-p root of the original p*u. This set
+depends only on h(b), but is applied only on leaves of that depth.
+There is no need to exclude its roots at every other leaf depth.
+
+Use right vertices R=(Z/pZ) minus {0} and allowed lists
+
+    A_b=R minus (F_b union T_b).
+
+There is no injection sigma:B -> R such that
+
+    sigma(b) belongs to A_b for every b.             (NF85)
+
+### Each original still produces at most one output AP
+
+Suppose such an injection exists. On an output point z in U, let b
+be its unique leaf and use the one old witness
+
+    y mod p^A = sigma(b)+p*(z mod p^(A-1)),
+    y mod q^H = z mod q^H,
+    y mod M = z mod M.                               (NF86)
+
+Represent sigma(b) in {0,...,p-1}. All p-free original APs are retained
+whole. Outside U the selected pure guards cover the output, so no
+witness is needed there. Inside U, old p-free membership implies
+membership in the same retained AP. Mixed p*q originals have empty
+pullback by F_b. All old q digits are kept, even when a leaf stops
+before depth H or uses additional digits beyond H.
+
+Consider a q-free original p^alpha*u, alpha>=1, gcd(u,p*q)=1. Its
+first-p root occurs at at most one leaf because sigma is globally
+injective, including between leaves of different depths. If the root
+is absent from the image, its pullback is empty. Otherwise let b be
+the assigned leaf and a=a_d mod p in {0,...,p-1}. Its pullback is the
+one complete CRT class
+
+    z == b mod q^h(b),
+    z == (a_d-a)/p mod p^(alpha-1),
+    z == a_d mod u,
+
+whose numerical modulus is
+
+    q^h(b)*p^(alpha-1)*u.                            (NF87)
+
+This whole AP lies in U because its q-prefix is the live leaf b.
+The divided old p-tail is retained literally at every original alpha.
+Equality of two output numerical moduli forces, by their valuations,
+h(b)=h(b'), alpha=alpha' and u=u'. The old numerical moduli would
+then be identical. Original distinctness and the global injection
+therefore rule out collisions between transported labels.
+
+A collision with an unchanged p-free modulus requires alpha=1 and
+the actual pair p*u,q^h(b)*u. Its p-root is excluded by T_b. Thus all
+output labels are distinct odd nonunits. The pure-p class disappears
+because sigma avoids zero; every other original supplies at most one
+class. The total is at most n-1.
+
+Pure guards cover outside U. Inside U, an old class covering the one
+witness NF86 supplies a retained or transported output class. All
+output moduli divide the new carrier, so these classes cover all
+integers. This contradicts EB1 and proves NF85.
+
+Section57's existing compatible-full-phase test may relax the collision
+reservations when transported and retained APs are identical. NF85
+uses the simpler exclusion of every possible numerical collision.
+
+Every uniform-depth NF75 interface is included: for its depth h, take
+G={A_(q^j):1<=j<=min(h,H)} and its live depth-h prefixes. The variable
+interface permits those same guard domains together with nonuniform
+leaf depths.
+
+### The full original height gives an exact finite search horizon
+
+Suppose a successful finite frontier and injection exist, with some
+leaves deeper than H+1. Fix a live prefix v of depth H+1 subdivided
+by that frontier. Every old q-condition has depth at most H, so its
+compatibility with v is the same as with each descendant of v.
+There are also no original labels of q-height H+1 or greater; T_v
+and all descendant collision lists are empty.
+
+Choose one descendant leaf and retain its assigned p-root. Replace
+all frontier leaves below v by the single leaf v with this root.
+Its mixed forbidden-root list is unchanged, its collision list is
+empty, and deleting the other assigned roots preserves injectivity.
+The cylinders still partition the same complement of the selected G.
+
+Repeating this at every subdivided depth-(H+1) prefix gives
+
+    a successful finite variable-depth frontier exists
+    iff one exists with maximum depth <= H+1.         (NF88)
+
+This statement uses the full original H, even when G contains only
+shallow guards. Depth H alone is not supplied by this argument:
+original q^H*u labels can still create numerical collisions. The
+extra level is where every collision label is fresh.
+
+### The actual guard tree can need fewer boundary leaves
+
+Here choose ALL H original pure-q guards. Let B_can be the maximal
+q-cylinders in their complement. This is a finite antichain of depths
+at most H. Every live cylinder lies inside one of these maximal
+cylinders, each of which must be covered, so B_can has the fewest
+leaves among prefix antichains partitioning that complement. This
+minimality concerns partition size, not matching.
+
+Let I count the distinct proper prefix ancestors of the H guards.
+They are the internal nodes of the full pruned q-ary tree with leaves
+G union B_can. Directly applying sections13 and20's tree identity gives
+
+    |B_can|=1+(q-1)*I-H.                             (NF89)
+
+For q=3, guard words 0,10,110,... in lowest-digit-first order have
+I=H and H+1 live leaves. The uniform depth-H representation instead
+has (3^H+1)/2 live words. This is a pure-guard example, not a whole
+cover. The actual I must be read from the given guard tree; that
+chain layout is not substituted for arbitrary original phases.
+
+Coarsening can enlarge F_b by meeting more mixed q-prefixes, while
+changing depth also changes T_b. Fewer leaves alone therefore do not
+imply a matching or a stronger uniform numerical bound. The interface
+keeps both effects in the same actual graph.
+
+### One finite actual family separates variable and uniform depths
+
+Take p=5,q=3 and the following distinct odd APs, written as
+(modulus,residue):
+
+    (3,0),(9,1),(5,0),(7,0),(11,0),(13,0),
+    (21,8),(33,23),(39,14),(35,16),(55,2),(65,28).
+
+The numerical set is divisor-closed and every comparable pair of
+original APs is disjoint. In the displayed order, private points are
+
+    3,1,5,7,11,13,8,23,53,16,2,158.
+
+Integer4 is uncovered. Thus this family is a control for the finite
+interface, not a whole cover or an EB1 extremal example.
+
+At uniform depth1 the pure3 guard leaves two roots. The actual pairs
+5,3 and 5*r,3*r for r=7,11,13 give T_1={0,1,2,3}. Only p-root4
+remains, so no matching exists. At depth2, five live words cannot
+inject into four nonzero p-roots. At every uniform h>=3 the guards
+leave5*3^(h-2)>4 live words. All uniform-depth graphs therefore fail.
+
+The complement of both pure3 and pure9 instead has frontier
+
+    2 mod3, 4 mod9, 7 mod9.
+
+Assign these leaves p-roots4,1,2, respectively. There are no mixed3*5
+originals, so F_b is empty. Root4 avoids T_1 at the depth-one leaf.
+At depth2 the only collision pair is5,9, giving T_2={0}, so roots1,2
+are allowed. This is a full variable-depth matching on the one actual
+family. Together with the uniform embedding above, it strictly
+separates the two interfaces. The uncovered point prevents this
+control from contradicting NF85's whole-cover premise.
+
+### An exact finite tree-cut and root-allocation recurrence
+
+Use NF88 to set D=H+1. At a q-prefix node v, let C(v) be the collection
+of subsets of R that can be used by an injectively labelled live
+frontier inside v. A node wholly inside a SELECTED guard from G has
+C(v)={empty set}. A node wholly outside G, with no selected-guard
+ancestor or descendant, may stop using any singleton {a}, a in A_v.
+At depth D those are the only live-node possibilities.
+
+At a smaller depth a live node may instead split into all q children.
+A node partly meeting G must split. The split option contributes
+
+    union_i S_i, where S_i belongs to C(child_i)
+    and the S_i are pairwise disjoint.               (NF90)
+
+At depth D no partially guarded node remains. Induction on the
+remaining depth proves this recurrence exact: pairwise disjoint masks
+express precisely the global injection across child subtrees. At the
+root, any feasible mask gives one of the matchings excluded by NF85.
+Thus an extremal whole cover requires C(root) to be the empty
+collection, not the singleton collection containing the empty mask.
+
+There are at most2^(p-1) possible masks per node. This is a finite
+exact test of one given family's interface, not an assertion of low
+uniform complexity or successful matching for every possible family.
+A general contradiction still requires controlling the actual guard,
+collision and mixed-prefix incidence together. These are ordinary
+mathematical arguments, with no new Lean verification or literature
+priority claim; unrestricted Erdős #7 remains unresolved.
