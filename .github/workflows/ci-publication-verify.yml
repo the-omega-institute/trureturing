@@ -43,10 +43,8 @@ jobs:
             lean-toolchain
             tools/Architecture/*
             tools/Makefile
-            tools/StrataLint.Cli/Commands/CompilationProof.cs
-            tools/StrataLint.Cli/Commands/CompileProofCommand.cs
-            tools/StrataLint.Cli/Commands/TestEvidenceCommands.cs
-            tools/StrataLint.Cli/Commands/TestResultEvidence.cs
+            tools/StrataLint.Engine/*
+            tools/StrataLint.TestEvidence/*
             tools/scripts/dotnet-test.sh
             tools/scripts/workflow/*
             tools/scripts/worktree/*
