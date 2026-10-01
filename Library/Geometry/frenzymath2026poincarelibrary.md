@@ -859,9 +859,141 @@ These are six scoped transient classical applications under unchanged pins,
 with only `propext`, `Classical.choice` and `Quot.sound`, with no new tracked
 project Lean declaration or novelty claim. Transfer of intrinsic quotient
 volume does not identify Haar covolume in an ambient isometry group or
-establish a lattice-conjugacy theorem. Ambient discreteness, finite-volume
+establish a lattice-conjugacy theorem. Finite-volume
 cusp classification, Haar covolume and full Mostow-Prasad existence, homotopy
 and uniqueness remain unfinished, including noncompact cusps and
 nonorientable manifolds. The existing escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these compilation checks nor CI closes that audit.
+
+
+## Discrete actual deck image in the compact-open topology
+
+Give the original-H3 isometry group the topology induced by sending each
+isometry to its bundled continuous map in `C(HyperbolicThreeSpace,
+HyperbolicThreeSpace)`, equipped with Mathlib's compact-open topology.
+This explicitly specified topology is used throughout this increment.
+Evaluation at every fixed H3 point is continuous, by
+`continuous_eval_const` and continuity of the induced map.
+
+For an actual quotient covering `F` by its full covering deck group and an
+isometric representation whose evaluation equals that deck action,
+evaluation of the image subgroup at a fixed point lands in the actual
+fiber of `F`. The covering's evenly covered neighborhood gives that fiber
+its discrete subtype topology. Freeness from
+`IsQuotientCoveringMap.isCancelSMul` makes evaluation on the image subgroup
+injective. Applying `DiscreteTopology.of_continuous_injective` proves that
+the actual image subgroup has discrete subtype topology in the specified
+compact-open topology. No discreteness premise or replacement discrete
+ambient topology is used.
+
+For each preconnected smooth three-manifold with `T3Space` topology, a
+smooth `MetricComplete` Riemannian metric of sectional curvature `-1`, and
+supplied Levi-Civita data, this discreteness conclusion is attached to the
+same jointly selected covering, faithful full deck representation,
+basepoint fundamental-group equivalence, intrinsic isometric orbit
+realization and intrinsic-volume transfer. The volume measures retain the
+preceding pinned intrinsic normalized Hausdorff3 definition and original
+Borel structures. No compactness, orientability or finite-volume premise
+is added. A shortened source-contract check chooses the actual H3 chart and metric from the
+preceding complete source constructor and retains its actual distance,
+completeness and curvature data while supplying the new target contract.
+The previous entire constructor remains available unchanged. Extending
+its large statement with the new clause did not compile within the default
+heartbeat limit; no successful extension of that entire statement is
+claimed here.
+
+These are four scoped transient classical composition checks under the
+unchanged pins, with only `propext`, `Classical.choice` and `Quot.sound`.
+No new tracked project Lean declaration or mathematical novelty is claimed.
+The four discreteness checks alone do not supply continuity of group
+multiplication or inversion, local compactness of the ambient group, Haar
+covolume, cusp classification or an ambient conjugator. Full Mostow-Prasad existence,
+homotopy and uniqueness remain unfinished, including noncompact cusps and
+nonorientable manifolds. The existing escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these compilation checks nor CI closes that audit.
+
+
+## Hausdorff topological group and closed actual deck image
+
+The same explicitly induced compact-open topology makes the actual
+original-H3 isometry group a Hausdorff topological group. The original-H3
+proper-space instance supplies local compactness of H3 for the existing
+continuous-map joint-evaluation interface; this does not assert local
+compactness of the isometry group.
+
+Joint evaluation is continuous by Mathlib's `continuous_eval` through the
+induced bundling map. Joint inverse evaluation is continuous by the exact
+identity
+`dist (e.symm x) (e0.symm x0) = dist x (e (e0.symm x0))`:
+the right side tends to zero by fixed-point evaluation continuity and
+continuity of distance. `ContinuousMap.continuous_of_continuous_uncurry`
+and the inducing-map continuity equivalence then give continuity of
+isometry-group multiplication and inversion in that same topology.
+
+Bundling an actual isometry as a continuous map is injective. Applying
+`T2Space.of_injective_continuous` to this map into the Hausdorff
+continuous-map space proves Hausdorffness of the isometry-group topology.
+For an actual quotient covering and its full deck representation with the
+exact deck-action evaluation identity, the previously checked discrete
+image conclusion and this group structure meet the hypotheses of pinned
+`Subgroup.isClosed_of_discrete`. Hence the same actual image subgroup is
+closed in the specified compact-open topology. Closedness of an arbitrary
+discrete subset is not inferred.
+
+These three additional scoped transient classical checks retain the same
+pins and standard three axioms. They add no tracked project Lean
+mathematical declaration, volume premise or novelty claim. Haar covolume, finite-volume cusp classification,
+lattice conjugacy and full Mostow-Prasad existence, homotopy and uniqueness
+remain unfinished, including noncompact cusps and nonorientable manifolds.
+The preceding intrinsic normalized Hausdorff3 volume definition and the
+unfinished escape-audit disclosure remain in force.
+
+
+## Locally compact isometry group and existence of Haar measure
+
+For an actual original-H3 basepoint `p`, the same explicitly induced
+compact-open isometry-group topology is locally compact. For every real
+`R`, the set of actual isometries satisfying `dist (e p) p ≤ R` is compact.
+With positive `R` this is a neighborhood of the identity. This establishes
+local compactness of the isometry group itself.
+
+The forward and inverse continuous maps form a closed embedding into a
+product of continuous-map spaces. Its range is characterized by distance
+preservation and both inverse identities. Joint continuous-map evaluation
+and continuity of distance make these constraints closed. The product
+pairing homeomorphism and the existing compact-convergence embedding put
+this same pair into the function space used by pinned Arzela-Ascoli.
+
+The paired functions `x ↦ (e x, e.symm x)` preserve distances for the product
+metric, so they form a uniformly equicontinuous family. When the image of
+`p` moves by at most `R`, both coordinates of the image of any `x` lie in
+an actual proper-H3 product closed ball of radius `dist x p + R` centered
+at `(p,p)`. These balls are compact. Applying
+`ArzelaAscoli.isCompact_closure_of_isClosedEmbedding` to all compact H3
+subsets proves compactness of the closure of the bounded-basepoint set.
+Continuous evaluation and distance make that set closed, so it equals its
+compact closure. The positive-radius identity neighborhood and
+`IsCompact.locallyCompactSpace_of_mem_nhds_of_group` give local compactness
+in the original specified group topology.
+
+The original coordinate homeomorphism gives second countability of H3.
+The existing second-countability result for `C(H3,H3)` and the induced
+bundling topology give second countability of the same isometry group.
+With its Borel measurable structure, pinned `Measure.haar` supplies a
+regular, sigma-finite left Haar measure. It is finite on compact sets and
+positive on nonempty open sets; finite total mass is not asserted.
+
+This Haar measure is on the isometry group. It has not been identified
+with the preceding normalized intrinsic Hausdorff3 measures on H3 or its
+quotient targets. No finite Haar covolume or lattice realization is derived
+from target finite volume in this increment. These are four scoped
+transient classical composition checks under unchanged pins and standard
+three axioms, with no new tracked project Lean declaration or novelty
+claim. Finite-volume cusp classification, Haar covolume identification,
+lattice conjugacy and full Mostow-Prasad existence, homotopy and uniqueness
+remain unfinished, including noncompact cusps and nonorientable manifolds.
+The existing escape audit remains unfinished:
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
 Neither these compilation checks nor CI closes that audit.
