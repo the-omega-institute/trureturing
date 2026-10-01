@@ -273,11 +273,11 @@ def Covers00 (H L : Nat) : Prop :=
     w.length ≤ L ∧ w ≠ [] ∧ firstTwoZero w ∧ Success w ∧
       windowCoefficients H w = (A, B)
 
-noncomputable def D (H : Nat) : Nat :=
-  sInf {L : Nat | Covers H L}
+noncomputable def D (H : Nat) : WithTop Nat :=
+  sInf ((fun L : Nat => (L : WithTop Nat)) '' {L : Nat | 1 ≤ L ∧ Covers H L})
 
-noncomputable def D00 (H : Nat) : Nat :=
-  sInf {L : Nat | Covers00 H L}
+noncomputable def D00 (H : Nat) : WithTop Nat :=
+  sInf ((fun L : Nat => (L : WithTop Nat)) '' {L : Nat | 1 ≤ L ∧ Covers00 H L})
 
 private theorem legal_of_no_adj (N : Nat) (f : Fin N → Bool) :
     ∀ s : Bool,
@@ -664,104 +664,169 @@ canonically after every actual legal prefix. -/
 theorem result (H : Nat) (hH : 2 ≤ H) :
     5 ≤ firstIndex H ∧
     2 * H < Nat.fib (firstIndex H) ∧ Nat.fib (firstIndex H) < 4 * H ∧
-    ∀ A B : ZMod H, ∃ w : List Window,
+    (∀ A B : ZMod H, ∃ w : List Window,
+      w.length ≤ lengthBound H ∧ w ≠ [] ∧ firstTwoZero w ∧ Success w ∧
+      windowCoefficients H w = (A, B) ∧
+      (∀ u v : ZMod H, value u v (flatten w) = A * u + B * v) ∧
+      (∀ (epsilon : Bool) (p : List Window), legal epsilon (flatten p) →
+        ∃ N : Nat, 0 < N ∧ initialized epsilon (p ++ w) = some N)) ∧
+    D H ≤ D00 H ∧ D00 H ≤ (lengthBound H : WithTop Nat) ∧
+    lengthBound H ≤ 2 * Nat.log 2 H + 5 := by
+  classical
+  obtain ⟨hj, hq, hq4, hpair⟩ := bounded_coefficient_pair H hH
+  have hwords : ∀ A B : ZMod H, ∃ w : List Window,
       w.length ≤ lengthBound H ∧ w ≠ [] ∧ firstTwoZero w ∧ Success w ∧
       windowCoefficients H w = (A, B) ∧
       (∀ u v : ZMod H, value u v (flatten w) = A * u + B * v) ∧
       (∀ (epsilon : Bool) (p : List Window), legal epsilon (flatten p) →
         ∃ N : Nat, 0 < N ∧ initialized epsilon (p ++ w) = some N) := by
-  classical
-  obtain ⟨hj, hq, hq4, hpair⟩ := bounded_coefficient_pair H hH
-  refine ⟨hj, hq, hq4, ?_⟩
-  intro A B
-  obtain ⟨n, hnlo, hnhi, hnB, hnA⟩ := hpair A B
-  have hn : 0 < n := by omega
-  let t := lengthBound H
-  have hm : H * (Nat.fib (firstIndex H) + 1) ≤ Nat.fib (lengthIndex H) := by
-    unfold lengthIndex
-    exact Nat.find_spec (p := fun k => H * (Nat.fib (firstIndex H) + 1) ≤ Nat.fib k) _
-  have ht : lengthIndex H ≤ 3 * t := by dsimp [t, lengthBound]; omega
-  have htpos : 1 ≤ t := by
-    by_contra hh
-    have heq : lengthIndex H = 0 := by dsimp [t, lengthBound] at *; omega
-    rw [heq, Nat.fib_zero] at hm
-    omega
-  have hbnd : ∀ k ∈ Nat.zeckendorf n, k < 3 * t := by
-    intro k hk
-    have hkn : Nat.fib k ≤ n := by
-      rw [← Nat.sum_zeckendorf_fib n]
-      exact List.single_le_sum (fun _ _ => Nat.zero_le _) _ (List.mem_map.mpr ⟨k, hk, rfl⟩)
-    have hkm : k < lengthIndex H := by
+    intro A B
+    obtain ⟨n, hnlo, hnhi, hnB, hnA⟩ := hpair A B
+    have hn : 0 < n := by omega
+    let t := lengthBound H
+    have hm : H * (Nat.fib (firstIndex H) + 1) ≤ Nat.fib (lengthIndex H) := by
+      unfold lengthIndex
+      exact Nat.find_spec (p := fun k => H * (Nat.fib (firstIndex H) + 1) ≤ Nat.fib k) _
+    have ht : lengthIndex H ≤ 3 * t := by dsimp [t, lengthBound]; omega
+    have htpos : 1 ≤ t := by
       by_contra hh
-      have hf := Nat.fib_mono (by omega : lengthIndex H ≤ k)
+      have heq : lengthIndex H = 0 := by dsimp [t, lengthBound] at *; omega
+      rw [heq, Nat.fib_zero] at hm
       omega
-    omega
-  have hlegal := supportBits_legal n t hn
-  obtain ⟨hpacklen, hpackflat⟩ := pack_support n t htpos hlegal
-  let w := trim (supportWord n t)
-  have hval {R : Type} [CommSemiring R] (u v : R) :
-      value u v (flatten w) = (shiftedFibSum n : R) * u + (n : R) * v := by
-    dsimp [w]
-    rw [trim_value, hpackflat]
-    exact support_value n t hbnd u v
-  have hnonempty : w ≠ [] := by
-    intro he
-    have hz : 0 = n := by simpa [he, flatten, value] using hval (R := Nat) 0 1
-    omega
-  have hfirst : firstTwoZero (supportWord n t) := by
-    rw [firstTwoZero, hpackflat]
-    simp [supportBits]
-  have hfirsttrim : firstTwoZero w := by
-    cases he : supportWord n t with
-    | nil => simp [w, he, trim] at hnonempty
-    | cons b tail =>
-      have hkeep : trim (b :: tail) = b :: trim tail := by
-        change (if b = .zero ∧ trim tail = [] then [] else b :: trim tail) = _
-        split
-        · simp [w, he, trim, *] at hnonempty
-        · rfl
+    have hbnd : ∀ k ∈ Nat.zeckendorf n, k < 3 * t := by
+      intro k hk
+      have hkn : Nat.fib k ≤ n := by
+        rw [← Nat.sum_zeckendorf_fib n]
+        exact List.single_le_sum (fun _ _ => Nat.zero_le _) _ (List.mem_map.mpr ⟨k, hk, rfl⟩)
+      have hkm : k < lengthIndex H := by
+        by_contra hh
+        have hf := Nat.fib_mono (by omega : lengthIndex H ≤ k)
+        omega
+      omega
+    have hlegal := supportBits_legal n t hn
+    obtain ⟨hpacklen, hpackflat⟩ := pack_support n t htpos hlegal
+    let w := trim (supportWord n t)
+    have hval {R : Type} [CommSemiring R] (u v : R) :
+        value u v (flatten w) = (shiftedFibSum n : R) * u + (n : R) * v := by
       dsimp [w]
-      rw [he, hkeep]
-      rw [he] at hfirst
-      cases b <;> simp [firstTwoZero, flatten, bits] at hfirst ⊢
-  have hsuccess : Success w := trim_success (supportWord n t) (by rw [hpackflat]; exact hlegal)
-  have hwlegal : legal true (flatten w) :=
-    trim_legal (supportWord n t) (by rw [hpackflat]; exact hlegal)
-  have halllegal (s : Bool) : legal s (flatten w) := by
-    cases s
-    · cases he : flatten w with
-      | nil => trivial
-      | cons b bs =>
-        rw [he] at hwlegal
-        exact ⟨by simp, hwlegal.2⟩
-    · exact hwlegal
-  have hterminal (E : Bool) : w.foldl (fun _ b => nonzero b) E = true := by
-    have hh := hsuccess
-    rw [Success, (execution true true w).1.2 hwlegal] at hh
-    simp only [endable, Option.any_some] at hh
-    cases he : w with
-    | nil => exact False.elim (hnonempty he)
-    | cons b bs => simpa only [he, List.foldl_cons] using hh
-  have hend (s E : Bool) : endable (run (some (s, E)) w) = true := by
-    rw [(execution s E w).1.2 (halllegal s)]
-    simpa only [endable, Option.any_some] using hterminal E
-  refine ⟨w, (trim_length _).trans (hpacklen.le), hnonempty, hfirsttrim, hsuccess, ?_, ?_, ?_⟩
-  · apply Prod.ext <;> simp [windowCoefficients, hval, hnA, hnB]
-  · intro u v
-    rw [hval, hnA, hnB]
-  · intro epsilon p hp
-    have run_append (q : Option (Bool × Bool)) (a b : List Window) :
-        run q (a ++ b) = run (run q a) b := by
-      induction a generalizing q with
-      | nil => rfl
-      | cons a as ih => exact ih (step q a)
-    have hout : initialized epsilon (p ++ w) =
-        some ((if epsilon then 1 else 0) + value 2 3 (flatten (p ++ w))) := by
-      unfold initialized observe
-      rw [run_append, (execution epsilon epsilon p).1.2 hp, hend]
-      rfl
-    refine ⟨_, ?_, hout⟩
-    exact (LiteralWindowEnd.result 0).2.2.2.2.2.2.2 epsilon (p ++ w) _ hout
+      rw [trim_value, hpackflat]
+      exact support_value n t hbnd u v
+    have hnonempty : w ≠ [] := by
+      intro he
+      have hz : 0 = n := by simpa [he, flatten, value] using hval (R := Nat) 0 1
+      omega
+    have hfirst : firstTwoZero (supportWord n t) := by
+      rw [firstTwoZero, hpackflat]
+      simp [supportBits]
+    have hfirsttrim : firstTwoZero w := by
+      cases he : supportWord n t with
+      | nil => simp [w, he, trim] at hnonempty
+      | cons b tail =>
+        have hkeep : trim (b :: tail) = b :: trim tail := by
+          change (if b = .zero ∧ trim tail = [] then [] else b :: trim tail) = _
+          split
+          · simp [w, he, trim, *] at hnonempty
+          · rfl
+        dsimp [w]
+        rw [he, hkeep]
+        rw [he] at hfirst
+        cases b <;> simp [firstTwoZero, flatten, bits] at hfirst ⊢
+    have hsuccess : Success w := trim_success (supportWord n t) (by rw [hpackflat]; exact hlegal)
+    have hwlegal : legal true (flatten w) :=
+      trim_legal (supportWord n t) (by rw [hpackflat]; exact hlegal)
+    have halllegal (s : Bool) : legal s (flatten w) := by
+      cases s
+      · cases he : flatten w with
+        | nil => trivial
+        | cons b bs =>
+          rw [he] at hwlegal
+          exact ⟨by simp, hwlegal.2⟩
+      · exact hwlegal
+    have hterminal (E : Bool) : w.foldl (fun _ b => nonzero b) E = true := by
+      have hh := hsuccess
+      rw [Success, (execution true true w).1.2 hwlegal] at hh
+      simp only [endable, Option.any_some] at hh
+      cases he : w with
+      | nil => exact False.elim (hnonempty he)
+      | cons b bs => simpa only [he, List.foldl_cons] using hh
+    have hend (s E : Bool) : endable (run (some (s, E)) w) = true := by
+      rw [(execution s E w).1.2 (halllegal s)]
+      simpa only [endable, Option.any_some] using hterminal E
+    refine ⟨w, (trim_length _).trans (hpacklen.le), hnonempty, hfirsttrim, hsuccess, ?_, ?_, ?_⟩
+    · apply Prod.ext <;> simp [windowCoefficients, hval, hnA, hnB]
+    · intro u v
+      rw [hval, hnA, hnB]
+    · intro epsilon p hp
+      have run_append (q : Option (Bool × Bool)) (a b : List Window) :
+          run q (a ++ b) = run (run q a) b := by
+        induction a generalizing q with
+        | nil => rfl
+        | cons a as ih => exact ih (step q a)
+      have hout : initialized epsilon (p ++ w) =
+          some ((if epsilon then 1 else 0) + value 2 3 (flatten (p ++ w))) := by
+        unfold initialized observe
+        rw [run_append, (execution epsilon epsilon p).1.2 hp, hend]
+        rfl
+      refine ⟨_, ?_, hout⟩
+      exact (LiteralWindowEnd.result 0).2.2.2.2.2.2.2 epsilon (p ++ w) _ hout
+  have hcover00 : Covers00 H (lengthBound H) := by
+    intro A B
+    obtain ⟨w, hl, hn, h00, hs, hc, _⟩ := hwords A B
+    exact ⟨w, hl, hn, h00, hs, hc⟩
+  have hLpos : 1 ≤ lengthBound H := by
+    obtain ⟨w, hl, hn, _⟩ := hcover00 0 0
+    have hw : 0 < w.length := by
+      cases w with
+      | nil => exact False.elim (hn rfl)
+      | cons _ _ => simp
+    omega
+  have hcover (K : Nat) (hk : Covers00 H K) : Covers H K := by
+    intro A B
+    obtain ⟨w, hl, hn, _, hs, hc⟩ := hk A B
+    exact ⟨w, hl, hn, hs, hc⟩
+  have hdepth : D H ≤ D00 H := by
+    unfold D D00
+    apply sInf_le_sInf
+    rintro _ ⟨K, hk, rfl⟩
+    exact ⟨K, ⟨hk.1, hcover K hk.2⟩, rfl⟩
+  have hdepth00 : D00 H ≤ (lengthBound H : WithTop Nat) := by
+    unfold D00
+    exact sInf_le ⟨lengthBound H, ⟨hLpos, hcover00⟩, rfl⟩
+  have hpow : ∀ r : Nat, 2 ^ r ≤ Nat.fib (2 * r + 2) := by
+    intro r
+    induction r with
+    | zero => norm_num
+    | succ r ih =>
+      have hrec := Nat.fib_add_two (n := 2 * r + 2)
+      have hmono := Nat.fib_mono (show 2 * r + 2 ≤ 2 * r + 3 by omega)
+      rw [pow_succ]
+      have he : 2 * (r + 1) + 2 = (2 * r + 2) + 2 := by omega
+      rw [he, hrec]
+      nlinarith
+  let k := Nat.log 2 H
+  have hp : H < 2 ^ (k + 1) := Nat.lt_pow_succ_log_self (by decide) H
+  have hsq : H ^ 2 < (2 ^ (k + 1)) ^ 2 := Nat.pow_lt_pow_left hp (by decide)
+  have hN : H * (Nat.fib (firstIndex H) + 1) ≤ 4 * H ^ 2 + H := by nlinarith
+  have hP : 4 * H ^ 2 + H < 8 * (2 ^ (k + 1)) ^ 2 := by nlinarith
+  have heq : 2 ^ (2 * k + 5) = 8 * (2 ^ (k + 1)) ^ 2 := by
+    rw [show 2 * k + 5 = (k + 1) * 2 + 3 by omega, pow_add, pow_mul]
+    norm_num
+    ring
+  have hf : H * (Nat.fib (firstIndex H) + 1) ≤ Nat.fib (4 * k + 12) := by
+    calc
+      H * (Nat.fib (firstIndex H) + 1) ≤ 4 * H ^ 2 + H := hN
+      _ ≤ 2 ^ (2 * k + 5) := by rw [heq]; exact hP.le
+      _ ≤ Nat.fib (4 * k + 12) := by
+        simpa only [show 2 * (2 * k + 5) + 2 = 4 * k + 12 by omega] using
+          hpow (2 * k + 5)
+  have hm : lengthIndex H ≤ 4 * k + 12 := by
+    unfold lengthIndex
+    exact Nat.find_min' _ hf
+  have hlog : lengthBound H ≤ 2 * Nat.log 2 H + 5 := by
+    unfold lengthBound
+    dsimp [k] at hm
+    omega
+  exact ⟨hj, hq, hq4, hwords, hdepth, hdepth00, hlog⟩
 
 #print axioms result
 
