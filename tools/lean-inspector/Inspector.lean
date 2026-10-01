@@ -307,15 +307,19 @@ def resolveIncludedDeclaration (env : Environment) (moduleName selector : String
 def closedExpression (expression : Expr) : Bool :=
   !expression.hasFVar && !expression.hasMVar && !expression.hasLooseBVars
 
-/-- Render deferred errors while their Meta context still exists. In particular,
-heartbeat failures must retain the operation that exhausted the unchanged limit. -/
-def runReportMeta (env : Environment) (phase : String) (action : MetaM α) : IO α := do
+/-- Render deferred errors while their Meta context still exists, including
+the phase and operation that exhausted its heartbeat budget. -/
+def runReportMeta (env : Environment) (phase : String) (action : MetaM α)
+    (heartbeatBudget : Nat := 0) : IO α := do
   let action : MetaM α := tryCatchRuntimeEx action fun error => do
     let message ← addMessageContextFull error.toMessageData
     throw <| Exception.error Syntax.missing m!"{phase}: {message}"
+  let options := ({} : Options).setBool `debug.moduleNameAtTimeout true
+  let options := if heartbeatBudget == 0 then options else
+    options.set `maxHeartbeats heartbeatBudget
   return (← action.run' |>.toIO
     { fileName := phase, fileMap := default,
-      options := ({} : Options).setBool `debug.moduleNameAtTimeout true } { env }).1
+      options, maxHeartbeats := heartbeatBudget * 1000 } { env }).1
 
 /-- This checks one declared relationship, not the usefulness or classification of a module. -/
 def closedNegation (env : Environment) (input : ModuleInput) (utility : UtilityInput) : IO Bool := do
@@ -609,8 +613,10 @@ private unsafe def templateBindings (env : Environment) (inputs : Array ModuleIn
       throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer_type"
     let driver ← IO.ofExcept <| env.evalConstCheck (Array Name → MetaM (Array Json)) {}
       typeName producerName
+    -- The join assesses the full imported registry, which can outweigh the requested modules.
+    let heartbeatBudget := max 1000000 (inputs.size * 10000)
     let bindings ← runReportMeta env "information-template-join"
-      (driver (inputs.map (·.moduleName.toName)))
+      (driver (inputs.map (·.moduleName.toName))) heartbeatBudget
     return bindings
   throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
 

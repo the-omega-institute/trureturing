@@ -22,9 +22,8 @@ import publication as public
 selection = public.selection
 ROW_SUFFIXES = ('', '.materials.zip', '.provenance.json')
 # Each native invocation imports the batch's environment and joins its whole
-# registration universe; larger batches amortize that fixed cost. Each joined
-# occurrence has its own heartbeat budget, so batch size does not bound it.
-NATIVE_BATCH_MODULES = 100
+# registration universe. Bound per-invocation memory when reports are stale.
+NATIVE_BATCH_MODULES = 8
 UTILITY_FIELDS = {'modulePath', 'claimGid', 'claimModule', 'claimSelector', 'claimSourcePath',
                   'claimSourceSha256', 'resultGid', 'resultModule', 'resultSelector'}
 

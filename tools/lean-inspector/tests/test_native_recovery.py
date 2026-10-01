@@ -31,7 +31,7 @@ class NativeBatchPartitionTests:
         chunks = []
         with patch.object(native, 'produce_batch_chunk', side_effect=chunks.append):
             native.produce_batch(requests)
-        self.assertEqual([len(chunk) for chunk in chunks], [100, 100, 2])
+        self.assertEqual([len(chunk) for chunk in chunks], [8] * 25 + [2])
         self.assertEqual([row[1] for chunk in chunks for row in chunk],
                          [f'Module.{index:03}' for index in range(202)])
 
@@ -41,7 +41,7 @@ class NativeBatchPartitionTests:
         chunks = []
         with patch.object(native, 'produce_batch_chunk', side_effect=chunks.append):
             native.produce_batch(requests)
-        self.assertEqual([len(chunk) for chunk in chunks], [97])
+        self.assertEqual([len(chunk) for chunk in chunks], [8] * 12 + [1])
 
     def test_partition_rejects_cross_chunk_duplicate_and_mixed_owner(self):
         requests = [['/root', f'Module.{index:03}', '', '', '/inspector', '']
