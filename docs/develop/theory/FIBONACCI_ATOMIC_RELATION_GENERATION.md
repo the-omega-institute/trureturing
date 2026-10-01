@@ -35556,3 +35556,44 @@ $$
 $$
 
 这项筛选没有给出 $\omega(N_g)$ 的统一上界或下界的 FIB 证明，也没有说明该整数是 CA/SA；它只把一个现有的不同素因子条件正确地投影到同一实际整数。因而仍不能替代同一价格源和 §250 的有符号点值桥，亦不改变 Robin/RH 的 open 状态。
+
+### 254.7 26-free 筛在 FIB 窗口上的精确余类投影
+
+[Fabbian 的显式 Mertens 预印本](../../../Library/ArithSums/fabbian2026mertens.md)声称：对 $n>5040$，条件 $v_2(n)\le25$ 足以推出 Robin 严格不等式。把这个外部条件投影到
+
+$$
+N_g=1+F_rg,qquad
+I_r=\left[\left\lceil\frac{F_r}{10}\right\rceil,
+\left\lfloor\frac{F_r}{5}\right\rfloor\right]
+$$
+
+得到一个比一般 26-free 标签更细的 FIB 筛选。Fibonacci 奇偶性给出
+
+$$
+3\mid r\Longrightarrow 2\mid F_r\Longrightarrow N_g\text{ 为奇数},
+$$
+
+所以这部分窗口自动满足 $v_2(N_g)=0$. 若 $3\nmid r$，则 $F_r$ 在模 $2^{26}$ 下可逆；任何 Robin 反例必须满足
+
+$$
+2^{26}\mid N_g
+\iff
+g\equiv-F_r^{-1}\pmod{2^{26}}.
+$$
+
+因此，在接受 Fabbian 预印本的外部定理作为输入时，窗口中的潜在反例只可能出现在
+
+$$
+3\nmid r,qquad
+g\in I_r\cap\bigl(-F_r^{-1}+2^{26}\mathbb Z\bigr).
+$$
+
+并且其个数满足显式计数界
+
+$$
+\#\bigl(I_r\cap(-F_r^{-1}+2^{26}\mathbb Z)\bigr)
+\le
+\left\lfloor\frac{F_r}{10\cdot2^{26}}\right\rfloor+1.
+$$
+
+这是同一 FIB 地址到同一整数的真实余类约束，不是把窗口长度当作随机概率。它仍没有控制奇数秩窗口中的剩余素因子、CA 身份或 §250 的有符号尾项；外部证书的证明与数值依赖也未由 Lean 重核。因此它是一个新的候选密度筛选，不是 Robin 或 RH 的全称结论。
