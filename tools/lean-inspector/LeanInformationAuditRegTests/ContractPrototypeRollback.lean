@@ -1,5 +1,6 @@
 import LeanInformationAudit.ContractPrototype.Replay
 import Reg.ContractPrototype.IffCatalog
+import Reg.ContractPrototype.Readout
 
 open Lean Meta Elab Command LeanInformationAudit
 
@@ -33,15 +34,21 @@ run_cmd do
   setEnv saved
   liftTermElabM do
     let root := `Reg.ContractPrototype.IffCatalog
-    let snapshot ← ContractPrototype.discover #[root]
-    let row := snapshot.roots[0]!.2.expected[0]!
-    let snapshot := { snapshot with expected := #[(root, {
+    let followup := `Reg.ContractPrototype.Readout
+    let snapshot ← ContractPrototype.discover #[root, followup]
+    let some (_, contract) := snapshot.roots.find? (·.1 == root)
+      | throwError "rollback_root_control_missing"
+    let row := contract.expected[0]!
+    let snapshot := { snapshot with expected := snapshot.expected ++ #[(root, {
       rootId := root, objectArenaName := row.objectArenaName, theoremName := row.theoremName,
       statementIdentity := row.statementIdentity, capturedStatement := row.capturedStatement,
       registrationModuleName := row.registrationModuleName })] }
     let before ← stateImage saved snapshot
-    let followup := `Reg.ContractPrototype.Readout
     ContractPrototype.replay followup snapshot
+    unless (TemplateBinding.records (← getEnv)).any (fun record =>
+        record.occurrence.key.registrationModule == followup &&
+          match record.result with | .declaredValidated _ => true | _ => false) do
+      throwError "rollback_followup_control_not_validated"
     let clean ← stateImage (← getEnv) snapshot
     unless clean != before do throwError "rollback_control_did_not_write"
     for stage in #["root", "expectation", "companions", "reset", "assessment", "seal"] do
