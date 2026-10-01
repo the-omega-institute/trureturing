@@ -33,7 +33,10 @@ internal sealed class PaddedGinibreNonHalfIntegerRefutationDocument : IScribeDoc
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "Take eta = 1/4, n = 3, q = 2, L = 0, m = 4, the zero parity map, u = (1,1,1), every epsilon_i = -1, and rows V = (1,0,0), (1,0,0), (0,1,0), (0,0,1). The matrices are [[1,0],[0,0]], [[0,0],[0,1]], [[1,1],[1,1]]. Their quadratic forms are v_0^2, v_1^2, (v_0+v_1)^2; the sum has form v_0^2 + v_1^2 + (v_0+v_1)^2 and is positive definite. The determinant is x_0 x_1 + x_0 x_2 + x_1 x_2. The sixteen terms combine into Theta = 2*48^(-1/4) - 4*55^(-1/4) + 2*56^(-1/4) - 4*60^(-1/4) + 4*64^(-1/4). Integer fourth-power comparisons give 48*3800^4, 56*3656^4, 64*3536^4 > 10^16 and 55*3672^4, 60*3593^4 < 10^16. Monotonicity of the fourth power gives upper bounds for the three powers with positive coefficients and lower bounds for the two powers with negative coefficients, so Theta < (2*3800 - 4*3672 + 2*3656 - 4*3593 + 4*3536)/10000 = -1/2500 < 0."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("abdesselam-2022-pgg-non-half-integer-exponent-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
