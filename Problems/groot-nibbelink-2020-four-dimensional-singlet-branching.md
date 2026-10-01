@@ -115,9 +115,11 @@ subgroup; the paper's enumeration over the 1,594 CARAT groups and the groups
 of order at most 500 is therefore not a restriction.
 
 **Mechanism (proved, inside `result`):** the average of `det(1 − D(h))` over
-`H` equals `2 + m₂`, where `m₂` is the number of trivial singlets in `Λ²ℂ⁴`;
-condition (iii) makes every `det(1 − D(h))` vanish, while the average is at
-least `2`.
+`H` equals `2 + m`, where `m` is the rank of the idempotent
+`Q = (Σ_h D(h) ⊗ D(h))(1 − Swap)/(2|H|)`; condition (iii) makes every
+`det(1 − D(h))` vanish, while the average is at least `2`. Interpretation, not
+separately formalized: `Q` projects onto the invariants of `Λ²ℂ⁴`, so `m` is
+the number of trivial singlets in `Λ²ℂ⁴`.
 
 **Not formalized (argument):** for a representation of dimension `n` with
 trivial determinant and no trivial singlet, the same average is
@@ -127,7 +129,12 @@ average is `0`, so the argument gives no obstruction; this matches the paper's
 five-dimensional `Q₈` example. For `n = 2` the average is `2`. For `n = 6` it
 is `2 + 2m₂ − m₃`, which the identity alone does not keep away from `0`.
 
-**Open:** whether the six-dimensional analogue of the conjecture holds.
+**Computed, not formalized:** the six-dimensional analogue fails. For
+`H = {±1} × {±1}` and `D(a, b) = diag(a, a, b, b, ab, ab)`, every `D(a, b)` has
+determinant `1`; the elements `(−1, 1)` and `(1, −1)` together fix no nonzero
+vector; and every cyclic subgroup, of order at most `2`, fixes a coordinate
+vector, since one of `a`, `b`, `ab` equals `1`. Here the average of
+`det(1 − D(h))` is `0`.
 
 **Source consequences (paper's reduction, not formalized):** in the paper,
 a group violating the conjecture is what a non-supersymmetric
