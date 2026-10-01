@@ -1880,7 +1880,7 @@ $$
 $$
 \begin{aligned}
 X+Z&\le BH+Aa+Bb<BN+Aa+Bb<2BN,\\
-g&=F_{m-3d+6}=3F_{m-3d+2}+2F_{m-3d+3}\ge5f.
+g&=F_{m-3d+6}=2F_{m-3d+2}+3F_{m-3d+3}\ge5f.
 \end{aligned}
 \tag{6.17}
 $$
