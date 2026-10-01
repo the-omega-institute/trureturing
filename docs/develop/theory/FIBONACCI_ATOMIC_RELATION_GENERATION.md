@@ -42183,3 +42183,180 @@ E^{-1}\lim_{L\to\infty}\Delta(A_L)
 所以该正常数是两类素数截断系数 $1$ 与 $1/2$ 的算术平均与几何平均的对数比。
 
 **证明。** 两个剩余类各有密度 $1/2$，故整数对数大小的主系数为 $\frac12(1+\frac12)=3/4$，而权重常数项对应的有效截断系数为 $\exp(-\frac12\log2)=1/\sqrt2$。二者的对数差就是（302.25），化简得（302.28）。这给两个指定来源族的余量机制；它不估计任意整数的余量，也不控制 §301 所述价格剥离的有符号尾项。$\square$
+
+## 303. 饱和短签名中的素幂递归与新素轴费用：无需高度上限的部分纤维排除
+
+**定义 303.0。** 沿用 §§301–302 的 $Q_L,A_L,m_L=3L+2,U_H$ 与 $E=e^\gamma$。对 $L\ge3$，定义饱和 Euler 权重、Robin 阈值及正实常数
+\[
+\mathscr F_L=\prod_{p\mid A_L}(1-p^{-1})^{-1},\qquad
+R(H)=E\log\log H\quad(H>1),\qquad
+d=\log\frac3{2\sqrt2}=\tfrac12\log\frac98>0.
+\tag{303.1}
+\]
+对同一饱和签名的正整数 $H$，置
+\[
+\mathcal N_L(H)=\{p:p\mid H,\ p\nmid A_L\},\qquad
+K_L(H)=\#\mathcal N_L(H),\qquad
+J_L(H)=\sum_{p\in\mathcal N_L(H)}\log(1-p^{-1})^{-1}.
+\tag{303.2}
+\]
+所有集合中的 $p$ 都为素数，计数只计不同素数，不计其幂次。由定理302.1，同签名恰好意味着 $H=A_Lt$、$t\ge1$ 且 $(t,3)=1$；乘子与 $Q_L$ 不要求互素。
+
+**定理 303.1（实际同签名整数的有限费用界）。** 对 $L\ge3$ 及每个正整数 $H$ 满足 $\mathcal O_L(H)=\mathcal O_L(A_L)$，有
+\[
+p\in\mathcal N_L(H)\quad\Longrightarrow\quad p>m_L/2,
+\tag{303.3}
+\]
+\[
+0\le J_L(H)\le\frac{2K_L(H)}{m_L-2},\qquad
+U_H\le\mathscr F_L\exp(J_L(H)).
+\tag{303.4}
+\]
+因此，对任何实预算 $K$，
+\[
+K_L(H)\le K,\qquad
+\mathscr F_L\exp\!\left(\frac{2K}{m_L-2}\right)<R(A_L)
+\quad\Longrightarrow\quad U_H<R(H).
+\tag{303.5}
+\]
+反向中，若 $H>5040$ 且 $U_H\ge R(H)$，则
+\[
+J_L(H)\ge\log\frac{R(H)}{\mathscr F_L},\qquad
+K_L(H)\ge\frac{m_L-2}{2}\log\frac{R(H)}{\mathscr F_L}
+\ge\frac{m_L-2}{2}\log\frac{R(A_L)}{\mathscr F_L}.
+\tag{303.6}
+\]
+这些有限不等式不使用假设302.1。
+
+**证明。** $A_L\mid H$，故 $A_L$ 的素支撑包含于 $H$ 的素支撑。$L\ge3$ 时，三已整除 $A_L$，因此新素数不同于三。由（302.7），模三等于一的新素数必须大于 $m_L/2$，模三等于二的新素数必须大于 $m_L$，得到（303.3）。
+
+同一仿射种子还给出全部素数幂层的递归法则。对 $L\ge2$、素数 $p$ 及整数 $k\ge1$，
+\[
+p^k\mid Q_L\quad\Longleftrightarrow\quad
+\bigl(p^k\equiv1\pmod3\ \land\ 2p^k\le m_L\bigr)
+\ \lor\
+\bigl(p^k\equiv2\pmod3\ \land\ p^k\le m_L\bigr).
+\tag{303.7}
+\]
+素数幂整除有限 lcm，等价于它整除其中一个探针，这来自素赋值上的有限最大值。把（302.7）证明中的 $p$ 换为 $p^k$ 即得该式；$p^k=2$ 仍由探针8补上。这是等差数列整除结构的中间计算，相关 lcm 背景沿用 §302 引用的 Qian–Hong 文献。
+
+约化剩余类群 $(\mathbb Z/3\mathbb Z)^\times$ 的二阶乘法使（303.7）成为
+\[
+\begin{array}{c|c}
+p\pmod3& p^k\text{ 的可见截断条件}\\ \hline
+1&2p^k\le m_L\text{，对全部 }k\ge1\\
+2& p^k\le m_L\text{，当 }k\text{ 为奇数；}\quad
+2p^k\le m_L\text{，当 }k\text{ 为偶数}.
+\end{array}
+\tag{303.8}
+\]
+三轴由 $3^{e_L}$ 单独保留。这条奇偶律描述实际 Fibonacci 仿射种子 $F_4a+F_5=3a+5$ 的素数幂观测；它没有把全体正整数的乘法半群当作群。
+
+经典局部几何级数上界给
+\[
+U_H=\prod_{p\mid H}\sum_{j=0}^{v_p(H)}p^{-j}
+\le\prod_{p\mid H}(1-p^{-1})^{-1}
+=\mathscr F_L\exp(J_L(H)).
+\tag{303.9}
+\]
+这里使用的是同一个整数的 Euler 上包络 $U_H\le H/\varphi(H)$，背景可见 `Library/ArithSums/weingartner2010distribution.md` 的有限正矩接口；没有混用不同整数的极值。对每个新素数，经典 $\log(1+x)\le x$ 与（303.3）给
+\[
+0\le\log(1-p^{-1})^{-1}
+\le\frac1{p-1}<\frac2{m_L-2}.
+\tag{303.10}
+\]
+求和得到（303.4）。若（303.5）成立，指数的单调性给 $U_H<R(A_L)$；又因 $H\ge A_L>1$，$R(H)\ge R(A_L)$，得到严格 Robin 界。若 $H>5040$ 违反严格不等式，则 $R(H)>0$，由（303.9）除以正的 $\mathscr F_L$ 并取对数，得到（303.6）的第一式；再用（303.4）与阈值单调性得到其余两式。$\square$
+
+**定理 303.2（少量新素轴的整个纤维一致安全）。** 假设302.1成立。对每个固定实数 $\eta$ 满足
+\[
+0\le\eta<d/2,
+\tag{303.11}
+\]
+存在 $L_0$，使全部整数 $L\ge L_0$、$H\ge1$ 满足
+\[
+\mathcal O_L(H)=\mathcal O_L(A_L),\qquad
+K_L(H)\le\eta\frac{m_L}{\log m_L}
+\tag{303.12}
+\]
+时，都有 $H>5040$ 且 $U_H<R(H)$。结论对 $H$ 没有高度上限，不另设非三素数的指数上限；三赋值仍固定为 $e_L$。更精确地，对每个 $\varepsilon>0$，同一个族最终一致满足
+\[
+\Delta(H)\ge E(d-2\eta)-\varepsilon.
+\tag{303.13}
+\]
+该余量估计的最终阈值还可依赖 $\varepsilon$。
+
+**证明。** 由（302.23）–（302.25），
+\[
+\mathscr F_L=E\bigl(\log m_L-\tfrac12\log2\bigr)+o(1),\qquad
+R(A_L)-\mathscr F_L=Ed+o(1).
+\tag{303.14}
+\]
+两式都是 §302 在固定解析输入下已得计算的中间后果，不新增 Mertens 误差假设。令
+\[
+q_L=\frac{2\eta m_L}{(m_L-2)\log m_L}.
+\tag{303.15}
+\]
+则 $q_L\to0$，且
+\[
+\mathscr F_Lq_L\longrightarrow2E\eta,
+\qquad
+\mathscr F_L(e^{q_L}-1)\longrightarrow2E\eta.
+\tag{303.16}
+\]
+第二式来自指数在零处的导数；它对 $\eta=0$ 也成立。因而
+\[
+R(A_L)-\mathscr F_Le^{q_L}
+\longrightarrow E(d-2\eta)>0.
+\tag{303.17}
+\]
+对所有（303.12）的实际整数，（303.4）给 $J_L(H)\le q_L$，并且 $R(H)\ge R(A_L)$，所以
+\[
+\Delta(H)\ge R(A_L)-\mathscr F_Le^{q_L}.
+\tag{303.18}
+\]
+右端仅依赖 $L$ 和固定 $\eta$，给一致余量（303.13）及最终严格性。由 $\log A_L\sim3m_L/4$、$H\ge A_L$，最终 $H>5040$。这里 $L_0$ 可依赖 $\eta$ 和解析输入；没有给跨所有 $\eta\uparrow d/2$ 的共同阈值。$\square$
+
+**定理 303.3（该饱和纤维中 Robin 违例的新素轴数量门槛）。** 假设302.1成立。对每个 $\varepsilon>0$，存在 $L_1$，使全部 $L\ge L_1$ 及全部 $H>5040$ 满足
+\[
+\mathcal O_L(H)=\mathcal O_L(A_L),\qquad U_H\ge R(H)
+\tag{303.19}
+\]
+时，必有
+\[
+K_L(H)\frac{\log m_L}{m_L}>\frac d2-\varepsilon.
+\tag{303.20}
+\]
+每个被计数的新素数都大于 $m_L/2$。这是一条违例的必要条件，不断言这样的违例存在。
+
+**证明。** 置 $\Gamma_L=\log(R(A_L)/\mathscr F_L)$。由（303.14），
+\[
+\frac{R(A_L)}{\mathscr F_L}-1
+=\frac{d+o(1)}{\log m_L},\qquad
+\Gamma_L\log m_L\longrightarrow d.
+\tag{303.21}
+\]
+最后的极限使用 $\log(1+x)/x\to1$；它也可由对数在一处的导数给出。代入（303.6）得到
+\[
+K_L(H)\frac{\log m_L}{m_L}
+\ge\frac{m_L-2}{2m_L}\Gamma_L\log m_L
+\longrightarrow\frac d2,
+\tag{303.22}
+\]
+其中箭头仅作用于右侧与 $H$ 无关的表达式。故得到统一的（303.20）；新素数的位置来自（303.3）。$\square$
+
+**定理 303.4（可见指数的无界变化与剩余障碍）。** 假设302.1成立。对全部充分大 $L$，同一饱和签名内凡 $\mathcal N_L(H)=\varnothing$ 的整数都满足严格 Robin 不等式，并且
+\[
+0\le U_H-U_{A_L}\le\mathscr F_L-U_{A_L}
+=O\!\left(\frac{\log L}{\sqrt L}\right),
+\tag{303.23}
+\]
+误差对这些 $H$ 一致。尤其，全部整数 $k\ge1$ 给出的
+\[
+H_{L,k}=3^{e_L}Q_L^k
+\tag{303.24}
+\]
+都保留同一签名，并在该共同阈值之后满足严格 Robin；$k$ 可任意随 $L$ 增长。
+
+**证明。** 取定理303.2的 $\eta=0$ 即得整个子纤维的安全性。$A_L\mid H$ 使约数倒数和单调，故 $U_H\ge U_{A_L}$；相同素支撑的饱和上界给 $U_H\le\mathscr F_L$。由（302.22）–（302.23），$U_{A_L}=\mathscr F_L\delta(A_L)$、$\mathscr F_L=O(\log L)$，得到（303.23）。$Q_L$ 与三互素，且 $H_{L,k}=A_LQ_L^{k-1}$，所以（302.6）给同签名，素支撑不变。
+
+因而对充分大 $L$，在三赋值固定时，仅增加已可见的非三素数幂次不能产生本纤维的 Robin 违例；甚至低于（303.11）预算的新素轴也不足以消掉所列余量。剩余候选允许在模三等于一的缺失带、或更高素数处引入足够多新轴。定理303.3只给该来源纤维的数量条件，不排除全部此类候选，也没有估计任意整数或价格剥离的有符号尾项。$\square$
