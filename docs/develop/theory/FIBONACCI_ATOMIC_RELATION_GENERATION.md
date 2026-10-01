@@ -43238,3 +43238,141 @@ a=d/2,\qquad j=d^2/4,
 **证明。** （307.8）、（307.12）–（307.13）给（308.10）及（308.20）；假设302.1给（308.11）。代入得 $d^2/4-(d/2)^2/2=d^2/8$。其余符号关系由（308.14）与 $a>0$ 得到。
 
 （308.3）–（308.19）是该实际仿射族上的有限证书与条件推导：它们将权重误差及非线性余项归于实际质量、距离矩与核心比值。它们不提供（308.10）–（308.11）的新素数分布证明；共同基线 $S(m)$、有符号失衡 $b_L$ 的速率、价格剥离尾项以及全体整数的 Robin 判据仍各有独立义务。特别是（308.13）保留了 $h_Lb_L/m$，不由 $b_L\to0$ 推断它在 $\sqrt m$ 尺度上消失。$\square$
+
+## 309. 模三短区间输入与实际末端矩的质量刚性
+
+**定义 309.0。** 沿用 §§307–308 的实际整数 $T_L,H_L(z_L)$、$m=3L+2$、$E=e^\gamma$、$\ell=\log m$、$\rho=m^{1/4}$ 及 $h_L,M_L,b_L$。对 $L\ge16$、$m/2\le z_L\le m$，置 $D_L=m-z_L$，定义实际累积质量
+\[
+F_L(v)=\sum_{p\in\mathcal T_L(z_L),\ m-p<v}\log p.
+\tag{309.1}
+\]
+在 $0\le v\le D_L$ 上，
+\[
+F_L(v)=\vartheta_1(m)-\vartheta_1(m-v),\qquad
+F_L(0)=0,\quad F_L(D_L)=h_L.
+\tag{309.2}
+\]
+严格条件 $m-p<v$ 与 §307 的严格下端一致。
+
+**定理 309.1（实际累积质量的校准与有限矩误差）。** 存在固定 $C>0$，使充分大的 $L$ 上，定义
+\[
+\epsilon_L=\frac C\ell,\qquad
+\delta_L=C\left(\frac{m^{-1/12}}\ell+m^{-1/4}\ell^2\right),
+\tag{309.3}
+\]
+则 $\epsilon_L,\delta_L\to0$，并且对每个 $m/2\le z_L\le m$ 与 $0\le v\le D_L$，
+\[
+|F_L(v)-v/2|\le\epsilon_Lv+\delta_L\rho^3.
+\tag{309.4}
+\]
+更一般地，只要一个实际 $L,z_L$ 满足（309.4）、$\epsilon_L\ge0$，便有有限恒等式与误差证书
+\[
+M_L=D_Lh_L-\int_0^{D_L}F_L(v)\,dv,
+\tag{309.5}
+\]
+\[
+|M_L-D_L^2/4|
+\le2D_L(\epsilon_LD_L+\delta_L\rho^3).
+\tag{309.6}
+\]
+
+**证明。** 已知素数分布输入为 Perelli–Pintz–Salerno，*Bombieri's theorem in short intervals*，Annali della Scuola Normale Superiore di Pisa，series 4，11（1984），529–539，原文印刷页529式（2）与页530 THEOREM；其准确参数和量词见 [Library 文献条目](../../../Library/Analytic/perellipintzsalerno1984shortintervals.md)。这是经典前置，不是本节的新素数定理。原式对模数取非负总和，并对互素剩余类、长度与起点取最大值。取 $y=x^{2/3}$、模数上限 $Q=x^{1/12}/(\log x)^B$，充分大时 $3\le Q$，可抽取 $q=3,a=1$，得到对 $x/2<t\le x$、$0\le u\le y$ 一致的
+\[
+|\psi(t+u,3;1)-\psi(t,3;1)-u/2|
+\ll_A y/(\log x)^A.
+\tag{309.7}
+\]
+此处 $\psi$ 计 von Mangoldt 权重，$A>0$ 可固定。
+
+对 $(m-v,m]$ 取相邻的长度不超过 $m^{2/3}$ 的分块，并在 $x=m$ 应用（309.7）。若第一起点恰为 $m/2$，先单独取一个长度至多一的片段，其误差为 $O(\ell)$；其余起点严格大于 $m/2$。块数不超过 $v/m^{2/3}+2$，合并误差为 $O_A((v+m^{2/3})/\ell^A)+O(\ell)$。然后在整个已合并区间上一次去掉素数幂；用整数计数即得其贡献为 $O(\sqrt m\,\ell^2)$。因此对 $0\le v\le m/2$，
+\[
+|\vartheta_1(m)-\vartheta_1(m-v)-v/2|
+\ll_A\frac{v+m^{2/3}}{\ell^A}+\sqrt m\,\ell^2.
+\tag{309.8}
+\]
+取 $A=1$，再利用（309.2）与 $m^{2/3}/\rho^3=m^{-1/12}$、$\sqrt m/\rho^3=m^{-1/4}$，增大固定常数 $C$ 即得（309.3）–（309.4）。固定模三类别来自原文的模数与剩余类最大值，未将普通素数定理换成剩余类定理。
+
+对每个实际删除素数，记 $d_p=m-p\in[0,D_L)$。经典阶梯函数积分给
+\[
+\int_0^{D_L}{\bf1}_{d_p<v}\log p\,dv=(D_L-d_p)\log p.
+\]
+有限求和得到（309.5），故跳点或下端为素数均不产生额外项。由（309.4）与 $\epsilon_L\ge0$，
+\[
+|h_L-D_L/2|\le\epsilon_LD_L+\delta_L\rho^3,
+\quad
+\left|\int_0^{D_L}(F_L(v)-v/2)\,dv\right|
+\le D_L(\epsilon_LD_L+\delta_L\rho^3).
+\]
+最后将
+\[
+M_L-D_L^2/4
+=D_L(h_L-D_L/2)-\int_0^{D_L}(F_L(v)-v/2)\,dv
+\tag{309.9}
+\]
+两项分别取绝对值，即得（309.6）。新增承重是将经典分布输入接到该实际仿射末端族的质量与矩校准。$\square$
+
+**定理 309.2（一个质量极限强制宽度与矩极限）。** 取最终位于 $[m/2,m]$ 的实际截止序列 $z_L$。若对有限实数 $a$ 有
+\[
+h_L/\rho^3\longrightarrow a,
+\tag{309.10}
+\]
+则 $a\ge0$，并且
+\[
+D_L/\rho^3\longrightarrow2a,\qquad
+D_L/m\longrightarrow0,\qquad
+M_L/\rho^6\longrightarrow a^2.
+\tag{309.11}
+\]
+因此该实际完整末端族在 §308 的有限极限域中满足 $j=a^2$。若 $a>0$，其实际加权平均删除距离还满足
+\[
+\frac{M_L/h_L}{m^{3/4}}\longrightarrow a.
+\tag{309.12}
+\]
+
+**证明。** 记 $q_L=h_L/\rho^3$、$t_L=D_L/\rho^3$。由（309.4）的端点式，
+\[
+|q_L-t_L/2|\le\epsilon_Lt_L+\delta_L.
+\tag{309.13}
+\]
+在 $\epsilon_L<1/4$ 时，左右两侧重排给
+\[
+\frac{2(q_L-\delta_L)}{1+2\epsilon_L}
+\le t_L\le
+\frac{2(q_L+\delta_L)}{1-2\epsilon_L}.
+\tag{309.14}
+\]
+两端均趋于 $2a$，由夹逼得第一个极限。所有 $q_L,t_L$ 非负，故 $a\ge0$；又 $D_L/m=t_L/\rho$，得第二个极限，不预先假设相对宽度趋零。将（309.6）除以 $\rho^6$，
+\[
+\left|\frac{M_L}{\rho^6}-\frac{t_L^2}{4}\right|
+\le2t_L(\epsilon_Lt_L+\delta_L)\longrightarrow0,
+\tag{309.15}
+\]
+得到最后一个极限，包括 $a=0$。若 $a>0$，两个实际质量与矩极限取商给（309.12）。这一步强制的是完整截止尾集合的矩；没有将任意删去子集视为同一个末端族。$\square$
+
+**定理 309.3（实际刚性曲线上的中心化响应）。** 在定理309.2的质量极限之外，若实际核心比值满足
+\[
+U_L/(E\ell)\longrightarrow1,\qquad m/X_L\longrightarrow1,
+\tag{309.16}
+\]
+则
+\[
+\sqrt m\left[
+\frac{\Delta(H_L(z_L))-\Delta(T_L)}E-rac{h_L}m b_L
+\right]\longrightarrow\frac{a^2}{2}.
+\tag{309.17}
+\]
+若 $D_L/\rho^3\to d\ge0$，则 $h_L/\rho^3\to d/2$，相应系数为 $d^2/8$。在 $d>0$ 时，§307 的短边一致规律（307.9）由（309.4）得到。若再采用假设302.1，从而可应用（305.8），则有
+\[
+\sqrt m\left[\Delta(H_L(z_L))-S(m)-E\frac{h_L}m b_L\right]
+\longrightarrow E\left(2\sqrt2+\frac{a^2}{2}\right).
+\tag{309.18}
+\]
+
+**证明。** 定理309.2自动给出假设308.1中的相对宽度与距离矩输入，代入（308.13）得 $a^2-a^2/2=a^2/2$。若先给出 $t_L\to d$，由（309.13）及 $\epsilon_L,\delta_L\to0$ 可反向推出 $q_L\to d/2$；此论证包括 $d=0$。当 $d>0$ 时，$D_L\sim d\rho^3$，于是
+\[
+\sup_{0\le v\le D_L}|F_L(v)-v/2|
+\le\epsilon_LD_L+\delta_L\rho^3=o(D_L),
+\]
+正是（307.9）。已知的 PPS 前置因此提供该指定模三短边输入；其余核心比值与共同基线展开仍按各自前提使用。最后将（309.17）与（305.8）相加即得（309.18）。
+
+若 $a>0$，中心化系数严格为正，但实际差值仍含 $h_Lb_L/m$。本节没有证明它在 $\sqrt m$ 尺度消失，也没有控制共同基线 $S(m)$ 或价格剥离有符号尾项。因此质量刚性与正的中心化系数均不决定严格 Robin 符号，也不推出 RH。$\square$
