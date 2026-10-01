@@ -543,8 +543,7 @@ jobs:
             tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/lean-inspector/Inspector.lean
-            tools/lean-inspector/LeanInformationAudit/Projection/OutputOnlyAudit.lean
-            tools/lean-inspector/LeanInformationAudit/Syntax.lean
+            tools/lean-inspector/LeanInformationAudit/*
             tools/lean-inspector/LeanInformationAuditRegAnalysis/*
             tools/lean-inspector/LeanInformationAuditRegTests/*
             tools/lean-inspector/tests/*
