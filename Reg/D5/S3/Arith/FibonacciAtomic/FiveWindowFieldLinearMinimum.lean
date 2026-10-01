@@ -3,7 +3,7 @@ import Reg.Support.DependentFamily
 
 open _root_.D5.S3.Arith.FibonacciAtomic.FiveWindowFieldLinearMinimum
 open _root_.D5.S3.Arith.FibonacciAtomic.ParityLiftRationalMinimum
-  (WordRepresentation wordMap wordBehavior integerTask integerFieldTask)
+  (WordRepresentation wordMap wordBehavior integerTask integerFieldTask prefixes)
 open _root_.D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd (Window first last)
 open _root_.D5.S3.Arith.FibonacciAtomic.ImmediateWindowStateCapacity
 open _root_.D5.S3.Arith.FibonacciAtomic.GraftAffineClosure (step quantity)
@@ -39,7 +39,14 @@ def rejected : Realization signature.{u} :=
     LinearIndependent K (fun j : Fin 6 =>
       wordMap (sixDimensional K).transition (sixPrefixes j) (sixDimensional K).initial) ∧
     Submodule.span K (Set.range (fun w : List Window =>
-      wordMap (sixDimensional K).transition w (sixDimensional K).initial)) = ⊤
+      wordMap (sixDimensional K).transition w (sixDimensional K).initial)) = ⊤ ∧
+    ((2 : K) = 0 →
+      (∀ w : List Window, wordBehavior (fourDimensional K) w = integerFieldTask K w) ∧
+      Module.finrank K (FourState K) = 4 ∧
+      LinearIndependent K (fun j : Fin 4 =>
+        wordMap (fourDimensional K).transition (prefixes j) (fourDimensional K).initial) ∧
+      Submodule.span K (Set.range (fun w : List Window =>
+        wordMap (fourDimensional K).transition w (fourDimensional K).initial)) = ⊤)
 
 theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
@@ -65,6 +72,8 @@ def registration : Registration arena.{u} (arena.{u}.Law actual) where
     norm_num [actual, realize, integerFieldTask, integerTask, task, DFAO.evalOutput,
       rawMachine, DFA.eval, DFA.evalFrom, rawOutput, rawTransition, clock, step,
       displacement, first, last, quantity]
+    intro h
+    exact one_ne_zero (congrArg Prod.fst h)
 
 register_information_theorem _root_.D5.S3.Arith.FibonacciAtomic.FiveWindowFieldLinearMinimum.result in arena
   readout via (realize signature (fun _ p w => @integerFieldTask p.1 p.2 w)

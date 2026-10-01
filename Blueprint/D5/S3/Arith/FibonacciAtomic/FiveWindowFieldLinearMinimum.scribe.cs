@@ -13,6 +13,7 @@ internal sealed class FiveWindowFieldLinearMinimumDocument : IScribeDocumentDefi
     private static Formula Par(Formula body) => Seq(Open, body, Close);
     private static Formula EqOf(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
     private static Formula All(string name, Formula body) => Seq(Forall, Sp, V(name), Comma, Sp, body);
+    private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
     private static Formula And(params Formula[] clauses)
     {
         var items = new List<Formula>();
@@ -58,6 +59,21 @@ internal sealed class FiveWindowFieldLinearMinimumDocument : IScribeDocumentDefi
                 + "to K and homogeneous coordinate one. The absorbing error embeds as zero."),
             Definition("sixPrefixes", "Six actual histories", "The prefixes are the empty "
                 + "word, [3], [5], [2], [3][2], [5][2], in this order."),
+            Definition("FourState", "The four-coordinate quotient", "FourState(K)=K^4 has "
+                + "coordinates (b_0,c_0,b_1,c_1), retaining two homogeneous coordinates per seam."),
+            Definition("fourTrim", "Projection onto the second composition coordinate", "The "
+                + "K-linear projection discards a_0 and a_1 and retains (b_0,c_0,b_1,c_1)."),
+            Definition("fourUpdate", "Updates after projection", "Allowed source blocks "
+                + "map (b,c) to (b+d_b c,c) in the new seam block. Null and [2] have d_b=0, "
+                + "and [3], [25], [5] have d_b=1. Disallowed source blocks map to zero; "
+                + "contributions to a common destination are added."),
+            Definition("fourTransition", "Quotient letter operators", "Each fourUpdate is "
+                + "regarded as a K-linear endomorphism on K^4."),
+            Definition("fourOutput", "Quotient observations", "The linear output is "
+                + "(c_0+c_1,b_0+b_1). It agrees with sixOutput after projection when 2=0 in K."),
+            Definition("fourDimensional", "The quotient word representation", "The "
+                + "initial vector is (0,1,0,0), the letter operators are fourTransition, "
+                + "and the output is fourOutput."),
             Describe.Lean(DescribeId.Create("field-window-six-realization"),
                 DeclarationHandle.Create(Prefix + "result"), H("All-word correctness and reachable span"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(),
@@ -66,7 +82,11 @@ internal sealed class FiveWindowFieldLinearMinimumDocument : IScribeDocumentDefi
                         + "denotes integerFieldTask(K), and V_K denotes SixState(K). P_K(j) is "
                         + "the vector reached after prefix j of sixPrefixes, for j in Fin(6). "
                         + "A_K(w) is the reached vector after any finite word w. Realizes(F_K,f_K) "
-                        + "means equality of outputs for every finite window word, including illegal words.")),
+                        + "means equality of outputs for every finite window word, including illegal words. "
+                        + "G_K denotes fourDimensional(K), W_K denotes FourState(K), and B_K(w) is "
+                        + "its reached vector after w. Q_K is its reached family for the four "
+                        + "existing prefixes: the empty word, [3], [2], [3][2]. The scalar twoK(K) "
+                        + "is 2 in K; twoK(K)=0 is the characteristic-two field condition.")),
                     Paragraph(Text("The integer-state embedding commutes with each window "
                         + "operator. Induction on word length transports the complete integer "
                         + "reader to the homogeneous representation. A forbidden seam erases "
@@ -76,12 +96,23 @@ internal sealed class FiveWindowFieldLinearMinimumDocument : IScribeDocumentDefi
                         + "(1,0,1),(3,3,1),(4,5,1). The six reached columns have determinant "
                         + "minus one, so they form a basis over every field. Consequently the "
                         + "span of all actual reached vectors is the whole state space. This "
-                        + "does not assert that each state vector is itself reached by a word."))),
+                        + "does not assert that each state vector is itself reached by a word.")),
+                    Paragraph(Text("When 2=0 in K, the clock on composition is the identity "
+                        + "and quantity reads b. Projection intertwines every letter operator "
+                        + "and preserves the linear output. Word induction extends this relation "
+                        + "to all finite words. The four actual prefix vectors are (0,1,0,0), "
+                        + "(1,1,0,0),(0,0,0,1),(0,0,1,1). Their determinant is one, so they "
+                        + "form a basis of the quotient space over every characteristic-two field."))),
                 DescribeRole.Theorem))));
 
     private static Formula ResultFormula() => Disp(All("K", And(
         Call("Realizes", V("FK"), V("fK")),
         EqOf(Call("dimK", V("VK")), D(6)),
         Call("LinearIndependentK", V("PK")),
-        EqOf(Call("spanK", Call("range", V("AK"))), V("VK")))));
+        EqOf(Call("spanK", Call("range", V("AK"))), V("VK")),
+        Imp(EqOf(Call("twoK", V("K")), D(0)), And(
+            Call("Realizes", V("GK"), V("fK")),
+            EqOf(Call("dimK", V("WK")), D(4)),
+            Call("LinearIndependentK", V("QK")),
+            EqOf(Call("spanK", Call("range", V("BK"))), V("WK")))))));
 }

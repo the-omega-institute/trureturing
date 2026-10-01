@@ -18,7 +18,7 @@ open D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd (Window first last)
 open D5.S3.Arith.FibonacciAtomic.GraftAffineClosure (step quantity)
 open D5.S3.Arith.FibonacciAtomic.ImmediateWindowStateCapacity
 open D5.S3.Arith.FibonacciAtomic.ParityLiftRationalMinimum
-  (WordRepresentation wordMap wordBehavior integerTask integerFieldTask)
+  (WordRepresentation wordMap wordBehavior integerTask integerFieldTask prefixes)
 open D5.S3.ConceptDynamics.Coding.CommonNilpotencyForgettingBound (wordOperator)
 
 abbrev SixState (K : Type*) := Fin 6 → K
@@ -64,17 +64,62 @@ def sixEmbed {K : Type*} [Field K] : RawState 0 → SixState K
 def sixPrefixes : Fin 6 → List Window :=
   ![[], [.middle], [.high], [.low], [.middle, .low], [.high, .low]]
 
+abbrev FourState (K : Type*) := Fin 4 → K
+
+/-- Retain (b,c) in each seam block. This is a projection on the whole state space. -/
+def fourTrim {K : Type*} [Field K] : SixState K →ₗ[K] FourState K where
+  toFun x := ![x 1, x 2, x 4, x 5]
+  map_add' x y := by ext i; fin_cases i <;> simp
+  map_smul' r x := by ext i; fin_cases i <;> simp
+
+/-- Homogeneous updates of the characteristic-two quotient. -/
+def fourUpdate {K : Type*} [Field K] (b : Window) (x : FourState K) : FourState K :=
+  match b with
+  | .zero => ![x 0 + x 2, x 1 + x 3, 0, 0]
+  | .low => ![0, 0, x 0 + x 2, x 1 + x 3]
+  | .middle => ![x 0 + x 2 + x 1 + x 3, x 1 + x 3, 0, 0]
+  | .ends => ![0, 0, x 0 + x 1, x 1]
+  | .high => ![x 0 + x 1, x 1, 0, 0]
+
+def fourTransition {K : Type*} [Field K] (b : Window) : FourState K →ₗ[K] FourState K where
+  toFun := fourUpdate b
+  map_add' x y := by
+    cases b <;> ext i <;> fin_cases i <;> simp [fourUpdate] <;> ring
+  map_smul' r x := by
+    cases b <;> ext i <;> fin_cases i <;> simp [fourUpdate] <;> ring
+
+def fourOutput {K : Type*} [Field K] : FourState K →ₗ[K] (K × K) where
+  toFun x := (x 1 + x 3, x 0 + x 2)
+  map_add' x y := by ext <;> simp <;> ring
+  map_smul' r x := by ext <;> simp <;> ring
+
+def fourDimensional (K : Type*) [Field K] :
+    WordRepresentation K Window (FourState K) (K × K) where
+  transition := fourTransition
+  initial := ![0, 1, 0, 0]
+  output := fourOutput
+
 set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 800000 in
+set_option maxHeartbeats 1200000 in
+-- Word simulation and six-column determinant expansion share this proof.
 /-- Every integer-induced response is realized over any field, and actual
-input histories span the whole six-dimensional homogeneous state space. -/
+input histories span the six-dimensional homogeneous state space. In
+characteristic two, its four-dimensional quotient has the same all-word
+response and is also spanned by actual input histories. -/
 theorem result (K : Type*) [Field K] :
     (∀ w : List Window, wordBehavior (sixDimensional K) w = integerFieldTask K w) ∧
     Module.finrank K (SixState K) = 6 ∧
     LinearIndependent K (fun j : Fin 6 =>
       wordMap (sixDimensional K).transition (sixPrefixes j) (sixDimensional K).initial) ∧
     Submodule.span K (Set.range (fun w : List Window =>
-      wordMap (sixDimensional K).transition w (sixDimensional K).initial)) = ⊤ := by
+      wordMap (sixDimensional K).transition w (sixDimensional K).initial)) = ⊤ ∧
+    ((2 : K) = 0 →
+      (∀ w : List Window, wordBehavior (fourDimensional K) w = integerFieldTask K w) ∧
+      Module.finrank K (FourState K) = 4 ∧
+      LinearIndependent K (fun j : Fin 4 =>
+        wordMap (fourDimensional K).transition (prefixes j) (fourDimensional K).initial) ∧
+      Submodule.span K (Set.range (fun w : List Window =>
+        wordMap (fourDimensional K).transition w (fourDimensional K).initial)) = ⊤) := by
   classical
   have castZero : Int.cast (R := K) (0 : ZMod 0) = 0 := Int.cast_zero
   have castOne : Int.cast (R := K) (1 : ZMod 0) = 1 := Int.cast_one
@@ -154,12 +199,67 @@ theorem result (K : Type*) [Field K] :
   have independent : LinearIndependent K reach := by
     change LinearIndependent K P.col
     exact Matrix.linearIndependent_cols_of_det_ne_zero nonzero
-  refine ⟨correct, by simp [SixState], independent, ?_⟩
-  apply top_unique
-  rw [← independent.span_eq_top_of_card_eq_finrank' (by simp [SixState])]
-  apply Submodule.span_mono
-  rintro _ ⟨j, rfl⟩
-  exact ⟨sixPrefixes j, rfl⟩
+  refine ⟨correct, by simp [SixState], independent, ?_, ?_⟩
+  · apply top_unique
+    rw [← independent.span_eq_top_of_card_eq_finrank' (by simp [SixState])]
+    apply Submodule.span_mono
+    rintro _ ⟨j, rfl⟩
+    exact ⟨sixPrefixes j, rfl⟩
+  · intro htwo
+    have three : (3 : K) = 1 := by
+      calc
+        (3 : K) = 2 + 1 := by norm_num
+        _ = 1 := by rw [htwo, zero_add]
+    have trimLetter (b : Window) (x : SixState K) :
+        fourTransition b (fourTrim x) = fourTrim (sixTransition b x) := by
+      cases b <;> ext i <;> fin_cases i <;>
+        simp [fourTransition, fourUpdate, fourTrim, sixTransition, sixUpdate, htwo, three] <;>
+        ring
+    have trimWords (w : List Window) (x : SixState K) :
+        wordMap fourTransition w (fourTrim x) =
+          fourTrim (wordMap sixTransition w x) := by
+      induction w using List.reverseRecOn with
+      | nil => rfl
+      | append_singleton w b ih =>
+        simp only [wordMap, List.reverse_append, List.reverse_singleton,
+          List.singleton_append, wordOperator, LinearMap.comp_apply]
+        change fourTransition b (wordMap fourTransition w (fourTrim x)) =
+          fourTrim (sixTransition b (wordMap sixTransition w x))
+        rw [ih, trimLetter]
+    have trimOutput (x : SixState K) : fourOutput (fourTrim x) = sixOutput x := by
+      ext <;> simp [fourOutput, fourTrim, sixOutput, htwo, three]
+    have fourCorrect (w : List Window) :
+        wordBehavior (fourDimensional K) w = integerFieldTask K w := by
+      have initial : (fourDimensional K).initial = fourTrim (sixDimensional K).initial := by
+        ext i
+        fin_cases i <;> simp [fourDimensional, fourTrim, sixDimensional]
+      unfold wordBehavior
+      rw [initial]
+      change fourOutput (wordMap fourTransition w (fourTrim (sixDimensional K).initial)) = _
+      rw [trimWords, trimOutput]
+      exact correct w
+    let fourReach : Fin 4 → FourState K := fun j =>
+      wordMap (fourDimensional K).transition (prefixes j) (fourDimensional K).initial
+    let Q : Matrix (Fin 4) (Fin 4) K := fun i j => fourReach j i
+    have fourValues : Q = !![0, 1, 0, 0; 1, 1, 0, 0; 0, 0, 0, 1; 0, 0, 1, 1] := by
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [Q, fourReach, prefixes, wordMap, wordOperator, fourDimensional,
+          fourTransition, fourUpdate, LinearMap.comp_apply]
+    have fourDeterminant : Q.det = 1 := by
+      rw [fourValues]
+      simp [Matrix.det_succ_row_zero, Fin.sum_univ_succ, Matrix.submatrix, Fin.succAbove] <;>
+        ring
+    have fourNonzero : Q.det ≠ 0 := by rw [fourDeterminant]; exact one_ne_zero
+    have fourIndependent : LinearIndependent K fourReach := by
+      change LinearIndependent K Q.col
+      exact Matrix.linearIndependent_cols_of_det_ne_zero fourNonzero
+    refine ⟨fourCorrect, by simp [FourState], fourIndependent, ?_⟩
+    apply top_unique
+    rw [← fourIndependent.span_eq_top_of_card_eq_finrank' (by simp [FourState])]
+    apply Submodule.span_mono
+    rintro _ ⟨j, rfl⟩
+    exact ⟨prefixes j, rfl⟩
 
 #print axioms result
 
