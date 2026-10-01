@@ -36,12 +36,12 @@ internal sealed class MonsterShortSupportSpinDocument : IScribeDocumentDefinitio
                     + "quadratic datum is not a renamed support predicate."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("monster-short-support-public"),
-                DeclarationHandle.Create(Prefix + "unique_short_support_public"),
-                H("Public unique short-support API"),
+                DescribeId.Create("monster-short-support-weight"),
+                DeclarationHandle.Create(Prefix + "shortWeight"),
+                H("Public short-support weight"),
                 StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Background),
-                Blocks(Paragraph(Text("This exposes the existing unique representative theorem "
-                    + "under the public shortWeight name."))),
-                DescribeRole.Theorem))));
+                AssessedProvenance.FromRepo(ShortSupportBackground),
+                Blocks(Paragraph(Text("The existing unique representative theorem remains in "
+                    + "MonsterShortSupport; this declaration supplies its public weight expression."))),
+                DescribeRole.Definition))));
 }

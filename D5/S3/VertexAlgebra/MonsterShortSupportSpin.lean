@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Finite Monster labels carry quadratic parity and a public short-support API.
--/
+   digest: Finite Monster labels carry quadratic parity and a public short-support API. -/
 
 /-
 proof_shape: finite_quadratic_ground_sections: content
@@ -30,7 +29,7 @@ abbrev Coeff := Fin 7 → F
 
 /-- Public support weight for the seven-section coefficient vector. -/
 def shortWeight (c : Coeff) : Nat :=
-  MonsterShortSupport.weight c
+  (Finset.univ.filter (fun i => c i = 1)).card
 
 /-- The finite quadratic parity on a six-bit label `(g, ξ)`. -/
 def labelQuadratic (x : Label) : F :=
@@ -119,13 +118,7 @@ theorem labelQuadratic_groundSection_polar
   rw [labelQuadratic_add, ground_pairing_formula f hf]
   rw [hf.opposite g h hg hh hne]
 
-/-- The existing unique short-support theorem with a public support-weight name. -/
-theorem unique_short_support_public (f : E → E → F) (hf : IsSignTable f) (x : Label) :
-    ∃! c : Coeff, fullMap f c = x ∧ shortWeight c ≤ 3 := by
-  simpa [shortWeight] using unique_short_support f hf x
-
 #print axioms labelQuadratic_groundSection
 #print axioms labelQuadratic_groundSection_polar
-#print axioms unique_short_support_public
 
 end D5.S3.VertexAlgebra.MonsterShortSupportSpin

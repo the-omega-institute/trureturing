@@ -34,11 +34,11 @@ Lean statement: `D5/S3/VertexAlgebra/MonsterShortSupportSpin.labelQuadratic_grou
 
 The proof consumes the IsSignTable opposite law, so the quadratic datum is not a renamed support predicate.
 
-**Theorem 1.3 (Public unique short-support API).**
+**Definition 1.3 (Public short-support weight).**
 
-Lean statement: `D5/S3/VertexAlgebra/MonsterShortSupportSpin.unique_short_support_public`
+Lean statement: `D5/S3/VertexAlgebra/MonsterShortSupportSpin.shortWeight`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/MonsterShortSupportSpin.unique_short_support_public` (`✓ std3`). ∎
+*Definition.* Machine-checked in Lean as `D5/S3/VertexAlgebra/MonsterShortSupportSpin.shortWeight` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -46,7 +46,7 @@ Lean statement: `D5/S3/VertexAlgebra/MonsterShortSupportSpin.unique_short_suppor
 
 *Commentary.*
 
-This exposes the existing unique representative theorem under the public shortWeight name.
+The existing unique representative theorem remains in `MonsterShortSupport`; this declaration supplies its public weight expression.
 
 ## References
 
