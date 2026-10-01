@@ -40009,3 +40009,164 @@ $$
 本节所用稠密性与固定素支撑上的 Robin 安全界均已有标准输入；新增的纸面接口是同一整数上的本原合同与精确有限地址运输。未核验所有相关文献，未主张此组合为原创结果，未新增 Lean 声明、冻结事件或 atom 覆盖。
 
 ## 追加锚（本行以下为增补区）
+
+## 290. 余数取一的本原构造与统一低亏损排除
+
+本节处理 §289 构造的一个额外约束。低亏损编辑界、真实增量源、高亏损包络及支撑损失均直接复用 §§218、230、232–233；本节只补足该构造与这些既有估计之间的适用接口：平方支撑成本来自已有黄金有理逼近界的应用，不另立新的逼近理论。以下为纸面推导，未新增 Lean 声明或核验，不作原创性声明。
+
+### 290.1 特定合同强制平方支撑成本
+
+沿用 $T=\phi^3$、$\lambda=\psi^3$ 及 $J_L=\lambda^L(\phi^{-1},2\phi^{-1})$。
+
+**引理 290.1（余数取一构造的有限数量下界）。** 设整数 $R\ge6$、$m\ge1$、$L\ge0$，并取 §289 的实际提升
+
+$$
+N=Rm,\qquad r=R\lfloor m/\phi^2\rfloor+1,
+\qquad y=T\left(1-R\{m/\phi^2\}\right)\in J_L.
+\tag{290.1}
+$$
+
+则
+
+$$
+\boxed{m>R/8,\qquad N>R^2/8.}
+\tag{290.2}
+$$
+
+特别地，§289 的 $N=P\#\,2^u6^v$ 满足 $R=\operatorname{rad}N=P\#$，所以
+
+$$
+\log\operatorname{rad}N<\tfrac12\log(8N).
+\tag{290.3}
+$$
+
+证明。令 $\theta=\phi^{-2}=2-\phi$、$j=\lfloor m\theta\rfloor$、$\delta=m\theta-j\in(0,1)$，并取有理数 $z=(2m-j)/m$。它的既约分母 $d$ 不超过 $m$，且 $|\phi-z|=\delta/m$。直接应用仓内既有的 [黄金有理逼近界 `golden_hurwitz_bound`](../../../D5/S1/Depth/GoldenHurwitzBound.lean)，得到
+
+$$
+\frac\delta m
+>\frac1{\sqrt5d^2+d}
+\ge\frac1{\sqrt5m^2+m},
+\qquad
+\delta>\frac1{\sqrt5m+1}>\frac1{4m}.
+\tag{290.4}
+$$
+
+最后一个严格界只用 $m\ge1$ 与 $\sqrt5+1<4$。另一方面，$J_L\subset(-1,\phi)\subset(-T,T)$ 给 $|1-R\delta|<1$，故 $R\delta<2$。合并这两个严格界得到式（290.2）。$\square$
+
+该下界使用了特定的 $r\equiv1\pmod R$ 与收缩命中公式。任意本原组成仅要求 $\gcd(N,r)=1$，不强迫 $r$ 在全部素因子模数上都等于一。因此式（290.3）不是全部本原规范来源的定理，不能把它用于不同提升合同。
+
+### 290.2 复用完整源账本而非只估素因子
+
+固定 $C_0>1$，取 $A\le N\le X\le C_0A$，记 $y_0=\log A$、$\ell=\log y_0$、$s=y_0\ell$、$t=e^\gamma\ell$，并固定 $b_2=\pi^2/6$、$J_0=8b_2y_0/\ell^2$。这里 $y_0$ 是解析规模，不是式（290.1）的收缩读数。使用 §230 的实际参考整数 $n_{y_0}$、同一真实源 $b_s(d)$ 与亏损 $J_s(d)$，以及已取得的统一编辑界
+
+$$
+J_s(d)\le J_0
+\quad\Longrightarrow\quad
+\mathcal L(d,n_{y_0})\le L_0(y_0),
+\qquad L_0(y_0)=O(y_0/\sqrt\ell)=o(y_0).
+\tag{290.5}
+$$
+
+记实际缺失支撑质量
+
+$$
+D_{y_0}(N)=\sum_{\substack{p\le y_0\\p\nmid N}}\log p.
+\tag{290.6}
+$$
+
+任意实际除数 $d\mid N$ 的编辑损失至少为 $D_{y_0}(N)$，因为参考整数在每个 $p\le y_0$ 上的指数至少为一。故已有支撑损失机制直接给
+
+$$
+D_{y_0}(N)>L_0(y_0)
+\quad\Longrightarrow\quad
+C_A(N):=t^{-s}\sum_{\substack{d\mid N\\J_s(d)\le J_0}}b_s(d)=0.
+\tag{290.7}
+$$
+
+这里没有新设独立最优素数剖面，也没有删除这些除数的实际素数幂重数。
+
+对式（290.1）中 $R=\operatorname{rad}N$ 的来源，式（290.3）与既有素数定理输入给
+
+$$
+\begin{aligned}
+D_{y_0}(N)
+&\ge\vartheta(y_0)-\log\operatorname{rad}N\\
+&>\vartheta(y_0)-\tfrac12\log(8X)
+=\tfrac12y_0+o(y_0)>L_0(y_0).
+\end{aligned}
+\tag{290.8}
+$$
+
+因此对全部充分大规模，这些来源的每个实际除数都为高亏损除数。阈值不依赖 $P,L,u,v$；只保留既有编辑、素数与源包络输入及固定 $C_0$ 的依赖。
+
+直接消费 §232 的非负完整源分解，令
+
+$$
+\mathcal E_A:=\frac{XU}{t^s}\mu_s\{J_s>J_0\},
+\qquad U=\sum_{d\ge1}\frac{b_s(d)}d,
+\quad\mu_s(d)=\frac{b_s(d)}{dU}.
+$$
+
+同一个 $N$ 的全部响应满足
+
+$$
+\left(\frac{Z(N)}t\right)^s
+=t^{-s}\sum_{d\mid N}b_s(d)
+\le\frac{XU}{t^s}\mu_s\{J_s>J_0\}
+=\mathcal E_A.
+\tag{290.9}
+$$
+
+不等号只使用实际 $d\le N\le X$。直接复用式（210.11）的全域归一矩展开与式（230.3）的固定 $K=8b_2$ 尾界，得
+
+$$
+\log\frac{XU}{t^s}=b_2\frac{y_0}{\ell^2}+o(y_0/\ell^2),\qquad
+\mu_s\{J_s>J_0\}\le
+\exp\left[-\frac{5b_2}{3}\frac{y_0}{\ell^2}+o(y_0/\ell^2)\right].
+$$
+
+这两个输入只使用 $y_0\to\infty$、$s=y_0\ell$ 与 $\log(X/A)=O(1)$，不消耗 §230.1 其余部分的 FIB 模数、素指标或余类条件。因此在当前固定 $C_0$ 的窗口上一致有
+
+$$
+\mathcal E_A\le
+\exp\left[-\frac{2b_2}{3}\frac{y_0}{\ell^2}+o(y_0/\ell^2)\right]\longrightarrow0.
+$$
+
+所以最终小于真实目标
+
+$$
+\mathsf T_A(N)
+=\left(\frac{\log\log N}{\log\log A}\right)^s\ge1.
+$$
+
+若所用完整窗口高亏损包络为 $\epsilon_A<1$，则也已支付 §233.5 的充分预算 $C_A(N)+\epsilon_A<\mathsf T_A(N)$，因为此处 $C_A(N)=0$。这是对该指定提升族、允许素支撑与空窗深度增长的统一纸面 Robin 结论；§289.4 中固定 $P$ 的安全性因此有这一更强的适用范围。
+
+对于单个这样的实际来源，可以取 $A=N$、$X=2N$ 消费这个点值账本；这不将其单位位零地址自动输送为指定单位位一的 FIB 仿射剩余类。极值候选、来源地址与目标模合同仍需分别核对。
+
+### 290.3 为什么此构造不能直接输送剩余候选
+
+反过来，任何在有界比值窗口 $[A,C_0A]$ 内承载低亏损除数的实际宿主 $N_*$，由同一个必要编辑条件都必须满足
+
+$$
+D_{y_0}(N_*)\le L_0(y_0),\qquad
+\log\operatorname{rad}N_*\ge\vartheta(y_0)-L_0(y_0)
+=y_0-o(y_0).
+\tag{290.10}
+$$
+
+所以 $\operatorname{rad}N_*=N_*^{1-o(1)}$。这只是必要条件，不给出其完整权重的上界。它与式（290.3）的指定构造在充分大规模上不相容；不能以该安全族代替实际 $N_*$。
+
+同一成本还限制近模态剖面的运输。若从既有 $n_{y_0}$ 出发，尝试用 $N=n_{y_0}2^u6^v$、$R=\operatorname{rad}n_{y_0}$ 执行余数取一提升，则式（290.2）给
+
+$$
+\log(2^u6^v)
+>2\log\operatorname{rad}n_{y_0}-\log n_{y_0}-\log8
+=y_0+o(y_0).
+\tag{290.11}
+$$
+
+最后一步直接复用 §230 的 $\log n_{y_0}=y_0+o(y_0)$ 及 $\log\operatorname{rad}n_{y_0}=\vartheta(y_0)=y_0+o(y_0)$。这次纯分子编辑的真实成本恰为 $\log(2^u6^v)$，与要求的 $o(y_0)$ 编辑、以及原有界比值规模窗口不相容。只改善同一半群命中的速率不能消掉式（290.11）；需要改变提升合同，或继续控制同一候选的有符号联合预算。
+
+式（290.2）是既有黄金逼近界在指定提升合同上的应用；源账本、编辑界与支撑损失也直接复用。这里没有新的逼近定理、独立矩方法或 bind-only Lean 包装。一般本原来源、其他单位余数及实际 $N_*$ 的价格损失仍没有被本节统一估计，也没有完成全体整数的 Robin 判据或 RH。
+
+## 追加锚（本行以下为增补区）
