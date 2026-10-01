@@ -150,10 +150,10 @@ private theorem sic_negativity_bound
       ring
     _ ≤ 7/8 := by rw [hsum]; linarith
 
-private def bitSign (z b : ℕ) : GaussianInt :=
+def bitSign (z b : ℕ) : GaussianInt :=
   if (z%2 * (b%2) + z/2%2 * (b/2%2) + z/4%2 * (b/4%2)) % 2 = 0 then 1 else -1
 
-private def orbitG (j : Fin 64) (b : Fin 8) : GaussianInt :=
+def orbitG (j : Fin 64) (b : Fin 8) : GaussianInt :=
   bitSign (j.val%8) (Nat.xor b.val (j.val/8)) *
     (if b.val = j.val/8 then ⟨-1,2⟩ else 1)
 
