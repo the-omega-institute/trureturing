@@ -28674,3 +28674,244 @@ Dense or sufficiently heavy fourth shadows, and a forcing
 argument for a passing head cut, remain unresolved. These are
 ordinary symbolic deductions, with no new Lean verification
 or claim of a new general Finner inequality.
+
+## An unrestricted six-prime head admits a complete three-factor continuation
+
+There is a source alternative when the direct exceptional-label
+budget FC1217 is too large. It permits every original modulus
+supported on A={3,5,7,11,13,17}, followed by arbitrarily many
+three-factor originals. Only the three-factor part ending at19
+needs the explicit additional budget below. All heights and
+literal residues remain arbitrary; no minimum-cover premise
+is needed for this sufficient noncoverage theorem.
+
+The source inputs are already available. Reuse the actual
+six-prime prefix in
+[Chapter30, SP1--SP4](../../../problem-details/30-six-prime-prefix-measures-close-all-six-vertex-blocks.md)
+and [Report461](../450-499/461-query-stop-loss-gives-a-common-law-six-core-completion-margin.md),
+with the raw domination construction of
+[Report779, sections1--2](../750-799/779-the-original-capped-source-lowers-the-general-eight-prime-tail-cutoff.md).
+They come from Schroeder's edition1.0.1 source. The continuation
+uses the separate version1.0 three-factor source and its fixed
+certificate, as recorded in
+[the source entry](../../../../../../Library/Arith/schroeder2026noncoverage.md).
+No source proof or unchanged finite producer is repeated here.
+
+### Retain a surviving head and its actual dominating raw law
+
+Apply the six-prime source to all actual A-supported originals.
+It gives a submeasure mu_6 avoiding every one of them, with
+
+    mu_6(1)>=m_6=68006602781/1350000000000
+                      >403/8000.
+
+For its upper law, use Report779's initial-anchor enlargement
+and stop the same construction at17. The countable pure
+completions at3 and5 have complementary Haar masses1/2 and3/4.
+Replace the original initial anchor by their product and omit
+the subsequent deletions, keeping all source kernels, including
+their definitions on deleted histories. The result Lambda_6
+satisfies
+
+    mu_6<=Lambda_6, Lambda_6(1)=3/8,
+    c=(c_3,c_5,c_7,c_11,c_13,c_17)
+       =(2,4/3,3/2,5/3,3/2,2).                 (FC1227)
+
+Here c_p/p^a is a complete-past conditional depth-a prefix
+bound for the PROBABILITY (8/3)Lambda_6. The first two bounds
+come from the normalized independent pure-anchor factors;
+the other four are the actual source kernel caps. Their full
+conditional form, not just marginal bounds, is essential.
+Coordinatewise prefix-tree normalization can be undone without
+changing these bounds. Construct first on the source's full
+coordinates and project only after resolving every height
+needed by the entire original family and its tail queries.
+
+These constants are coordinatewise at most the three-factor
+schedule's corresponding constants
+
+    (2,4/3,3/2,5/3,12/5,160/63).
+
+Append the same actual normalized tail kernels to mu_6 and
+Lambda_6, using the three-factor threshold schedule at q>=19.
+Positive linearity preserves domination. The extended raw law
+still has mass3/8; its normalization has all the conditional
+prefix caps required by the published cofactor comparison.
+The surviving law is NOT separately normalized or assigned
+these caps. Its initial mass remains at least m_6 until the
+complete tail union is deleted.
+
+### Reuse the remaining certificate from23, not the old19 charge
+
+Suppose every actual original whose largest prime exceeds17
+has at most three distinct prime factors. At each q>=23, the
+published cofactor bound therefore applies to the new raw
+probability. It requires the full earlier conditional caps
+and the support bound on originals ENDING at q; it does not
+require that the earlier six-prime originals have three factors.
+Absent primes and exponent slots can still be included in the
+nonnegative auxiliary comparison, as in the original proof.
+
+Let beta_q denote the finite certificate's upward-rounded
+charge BUDGETS, not the actual losses. That certificate gives
+the sum of its budgets through997 plus its analytic remaining
+tail bound strictly below Gamma_0=937076/10^6. Its budget sum
+through19, including beta_19, is
+
+    sum_(q<=19)beta_q
+       =829422615143548620788962/10^24,
+    beta_19=41854719740077179472464/10^24.
+
+Consequently the complete unchanged comparison from23 onward
+has budget strictly below
+
+    R=Gamma_0-sum_(q<=19)beta_q
+      =107653384856451379211038/10^24
+      <323/3000.                              (FC1228)
+
+These are readings of the existing version1.0 certificate;
+no comparison table was rerun. Subtracting its own constituent
+budgets leaves a valid budget for the remaining terms. This
+does not subtract a loss upper bound from a separately known
+actual loss. The actual new head and19 row are paid by their
+own estimates on the ONE pair mu<=Lambda.
+
+The entire tail from23 therefore costs less than(3/8)R on
+the unnormalized dominating law. Every original, including
+those involving19 and ending at a larger prime, remains in
+this comparison. Arbitrarily many larger primes are allowed.
+
+### A direct19 estimate retains all single-prime old cofactors
+
+Keep delta_19=11/17. Its pure-conditioned cofactor comparison
+has d_19=17, threshold t_19=11 and denominator6. First consider
+the pure and two-factor originals ending at19. Pure powers
+are removed by the actual pure19 law, exactly as in the source.
+For a mixed original d*19^e attach its original weight18/19^e
+and retain its own literal old phase. Numerical distinctness
+gives total weight at most one for each fixed old cofactor d.
+
+After the published conditional convex comparison, all the
+one-prime old cofactors are bounded by
+
+    Y=sum_(p in A)K_p,
+    Pr(K_p>=a)=c_p/p^a, a>=1,
+
+with independent AUXILIARY heights. This does not assert
+independence of any actual source coordinates. The elementary
+geometric moment formula gives
+
+    E 2^Y=product_(p in A)(1+c_p/(p-2))
+      =3*(13/9)*(13/10)*(32/27)*(25/22)*(17/15)
+      =22984/2673<9.
+
+For each nonnegative integer Y,
+(Y-11)_+<=2^(Y-12). Thus the19 probability charge is less
+than3/8192 on the normalized raw law, or
+
+    raw19 pair charge<9/65536.                (FC1229)
+
+The19 kernel still has the source's cap C_19=3 for all its
+prefixes conditional on the complete past. The stronger
+charge estimate therefore changes none of the caps used in
+FC1228 at later primes.
+
+### A numerical budget also permits three-factor19 originals
+
+Let D_19 consist of the numerical old cofactors d with exactly
+two distinct prime factors for which d*19^e is an actual
+original for at least one e>=1. Put
+
+    lambda_d=sum_(e: d*19^e original)18/19^e<=1,
+    J_19=sum_(d in D_19)lambda_d
+                        product_(p^a exactly dividing d)c_p/p^a.
+
+The constants c are those of FC1227. Distinct full numerical
+labels justify lambda_d; different old residues at different
+19 heights are retained separately until the conditional
+comparison aligns them. On that same auxiliary probability
+the additional old load is
+
+    Z=sum_(d in D_19)lambda_d
+                    product_(p^a exactly dividing d)1_(K_p>=a),
+    E Z=J_19.
+
+The complete19 comparison load is at most Y+Z. Since
+(Y+Z-11)_+<=(Y-11)_++Z, without any independence of Y and Z,
+FC1229 extends to
+
+    raw19 charge<9/65536+J_19/16.              (FC1230)
+
+The coefficient1/16 is(3/8)/6. Pure19, all its two-factor
+originals, and every permitted three-factor original have
+now been paid. In particular no cofactor multiplicity from
+different current exponents is dropped before comparison.
+
+If J_19<=1/8, combine FC1228--1230 on the extended mu_6 and
+its SAME dominating raw law. Since
+
+    m_6-(3/8)R>403/8000-323/8000=1/100,
+
+deleting the entire actual tail union leaves a submeasure
+of mass strictly greater than
+
+    1/100-9/65536-J_19/16
+       >49/5000-1/128
+        =159/80000>1/512.                     (FC1231)
+
+In the displayed middle bound J_19<=1/8 is used together
+with 1/100-9/65536>49/5000. This is one actual full-family
+survivor, so finite CRT supplies an uncovered integer. The
+mass is under the constructed submeasure, not a claimed
+Haar-density bound.
+
+### The admitted class crosses the six-prime exceptional-budget boundary
+
+One structural sufficient condition is to allow, at19, only
+pure powers, all two-factor originals, and three-factor
+originals with support{3,17,19}. Every finite such inventory
+satisfies, by nonnegative completion over all three heights,
+
+    J_19<=sum_(a,b>=1)(2/3^a)(2/17^b)=1/8.     (FC1232)
+
+No restriction is placed on its literal phases. All later
+originals with at most three factors are allowed, including
+triples involving19 or any two small head primes. More general
+19 supports are also admitted whenever their actual J_19
+meets FC1231; the structural example is not a necessity claim.
+
+For a numerical range comparison, the old FC1217 weights on
+the first six primes are
+(1,1/3,1/4,1/6,1/5,10/63). Their entire exceptional box has
+sum of support-degree terms at least four equal to
+
+    1/18+(10/63)(137/360+1/18)=283/2268>1/16.
+
+This failure of the old sufficient estimate already occurs
+at finite heights: restrict every positive exponent to1 or2.
+Each factor's retained/full geometric ratio is1-p^(-2).
+For every support S contained in A, its retained ratio is at
+least product_(p in A)(1-p^(-2))>=1-sum_(p in A)p^(-2)>3/4,
+because that sum is at most1/9+1/25+4/49<1/4.
+Thus the finite exceptional charge exceeds
+283/3024>1/16. This is not a covering example; FC1231 now
+supplies its missing source by a different construction.
+
+Include the complete finite A-divisor box, the19 labels of
+FC1232, and all permitted pure-power, two- and three-factor labels on
+any further finite set of primes. This numerical family is
+divisor-closed and has arbitrarily large connected interaction
+blocks through labels3q, while retaining a six-factor original
+with largest prime17. All original phases and finite heights
+are arbitrary. The class is outside the three-factor source's
+original and10^9-cutoff hypotheses and the six-vertex graph-block
+condition of Chapter30. No arbitrary assignment is claimed
+irredundant.
+
+FC1227--1232 give a new common-source continuation using the
+existing two source constructions and certificate. They add
+no new Lean verification or general distortion theorem. The
+unrestricted obstruction is reduced but not removed: larger
+J_19 and originals with at least four prime factors ending
+after17 remain outside this sufficient result. Nothing
+here proves that a minimum whole cover must avoid those cases.
