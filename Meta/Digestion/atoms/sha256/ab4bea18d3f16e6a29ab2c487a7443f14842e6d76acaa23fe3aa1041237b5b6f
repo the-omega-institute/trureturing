@@ -1,0 +1,34 @@
+**定义 35.1（整窗坐标切面与有序接缝端口）。** 固定整数 $n\ge1$，沿用第6、19、32节的零初始化、低位到高位字母表 $\Sigma=\{000,100,010,101,001\}$。每个坐标是一个完整窗口，输入域是全部 $\Sigma^n$，包括非法接缝和末窗为零的词。End 在第 $n$ 个窗之后查询，不属于输入字母表。记
+
+$$
+F_n(w)=\mathbf1_{\{w_n\ne000\}}
+\prod_{i=1}^{n-1}\bigl(1-b_3(w_i)b_1(w_{i+1})\bigr).
+\tag{35.1}
+$$
+
+这是式（32.3）在长度 $n$ 上的限制，只使用原卷约定104.1、定义104.2–104.3的单位位为零的结构部分；不附加算术读出。$000$ 仍消耗一个窗，不是空词。
+
+对 $A\subseteq[n]=\{1,\ldots,n\}$，令 $B=[n]\setminus A$，沿用 [观察边界代数卷](OBSERVATION_BOUNDARY_ALGEBRA_MINIMAL_REALIZATION.md) 定义14的全部补全响应
+
+$$
+R_A(a)(b)=F_n(a\sqcup b),\qquad
+\kappa_A(F_n)=|\{R_A(a):a\in\Sigma^A\}|.
+\tag{35.2}
+$$
+
+补全量词是所有 $b\in\Sigma^B$，不筛选合法补全。定义实响应矩阵 $H_A(F_n)$，行由 $a\in\Sigma^A$ 标记，列由 $b\in\Sigma^B$ 标记，矩阵元为 $F_n(a\sqcup b)$。
+
+令 $C_A$ 为路径边 $\{i,i+1\}$ 中恰有一个端点属于 $A$ 的集合，按 $i$ 递增排序，记 $d_A=|C_A|$。对于 $e=\{i,i+1\}\in C_A$，两侧的端口是左窗的高位 $b_3(w_i)$ 和右窗的低位 $b_1(w_{i+1})$；以 $p_e(a)$、$p_e(b)$ 分别表示落在 $A$、$B$ 一侧的那个位。故每侧端口剖面均属于 $\{0,1\}^{d_A}$。置
+
+$$
+\begin{aligned}
+g_A(a)&=\prod_{\substack{1\le i<n\\i,i+1\in A}}
+\bigl(1-b_3(a_i)b_1(a_{i+1})\bigr)
+\begin{cases}\mathbf1_{\{a_n\ne000\}},&n\in A,\\1,&n\notin A,\end{cases}\\
+\epsilon_A&=\mathbf1_{\{\,n\in A\ \text{或存在 }i\text{ 使 }i,i+1\in A\,\}}.
+\end{aligned}
+\tag{35.3}
+$$
+
+$g_B$ 同理定义。空乘积取一。称 $g_A=1$ 的赋值为好赋值；这里的“好”只检查已在该侧闭合的因子。
+
