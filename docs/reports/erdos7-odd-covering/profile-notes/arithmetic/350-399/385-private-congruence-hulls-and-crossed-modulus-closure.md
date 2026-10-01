@@ -13608,3 +13608,100 @@ conditional arithmetic restriction, not an all-cover contradiction or
 a claim that a locally permissible phase configuration is realizable.
 
 No numerical enumeration or new Lean verification is asserted.
+
+## 104. First-digit compression strictly raises the forced mixed heights
+
+Keep one EB1 minimum original whole cover in the all-concentrated branch
+R=empty. For opposite-color primes p<q, let
+
+    t_p=max{c:3^c p belongs to D},
+    t_q=max{c:3^c q belongs to D}, t=min(t_p,t_q).
+
+These are actual original heights, with no restriction on any other
+prime-power exponent. Direct application of section56's first-digit
+compression gives the stronger necessary condition
+
+    min(t_p,t_q)>=q-p+1.                            (SG1)
+
+The full-tree bound in section97 allowed equality with q-p. The existing
+first-digit interface avoids that equality by retaining all higher
+q-digits and using the retained original A_p on the zero output root.
+
+### Actual collision roots are the only obstruction
+
+Apply section56 with its larger prime renamed q and its smaller prime
+renamed p. CP1 excludes every ORIGINAL pq-bearing label, so all mixed-root
+blacklists F_b of that interface are empty. Its possible numerical
+collisions come from original pairs
+
+    q*u, p*u, gcd(u,pq)=1.
+
+Every nonternary prime dividing u would have to belong to both disjoint
+colors. Thus u=3^c. Divisor closure makes the paired heights precisely
+c=0,...,t. Let T be the set of the actual first-q roots of the originals
+A_(3^c q) at those heights. Then
+
+    0 belongs to T, |T|<=t+1.                       (SG2)
+
+The first assertion uses the fixed common normalization A_q=0 modq.
+Different heights can contribute the same root; no independence or
+distinct-phase assumption is made.
+
+Only the p-1 nonzero first-p roots need transport: original A_p is kept
+whole. If q-|T|>=p-1, inject these roots into the complement of T. The
+blacklists are empty, so this is exactly a successful matching in the
+existing interface. It would produce a smaller distinct odd whole cover.
+EB1 therefore forces
+
+    |T|>=q-p+2.                                    (SG3)
+
+Combining SG2 and SG3 proves SG1. This uses the actual collision set,
+rather than the coarser h0 count in NF66's final alternative.
+
+### The common source retains every higher digit
+
+For completeness, the parameter correspondence with section56 is as
+follows. Write the original period p^A q^B M, A,B>=1, gcd(M,pq)=1.
+The output carrier has period p^A q^(B-1)M. For a point z with nonzero
+first-p root, the existing single witness is
+
+    y modp^A = z modp^A,
+    y modq^B = sigma(z modp)+q*(z modq^(B-1)),
+    y modM = z modM.
+
+When B=1, the q-tail has one value. All ternary and other prime-power
+coordinates remain unchanged. Retain every q-free original as its whole
+old AP; A_p covers the omitted zero root.
+
+An old q-bearing label is q^a u with a>=1 and gcd(u,pq)=1, because old
+pq-bearing labels are absent. Its restricted pullback is empty or one
+complete AP with numerical modulus p*q^(a-1)*u, as verified in IC1.
+The numerical map is injective among transported labels. For a>=2 its
+image still contains q and cannot collide with a retained q-free label.
+For a=1 a collision requires the old pair q*u,p*u, whose actual first-q
+root lies in T and hence has empty pullback. New labels containing both
+p and q are legal: CP1 restricts the original inventory, not the output.
+
+Coverage follows from the one old witness at every transported point
+and retained A_p elsewhere. Every output modulus is odd and greater
+than one. Original A_q disappears since 0 belongs to T, giving the
+strict class saving used above. No uniform replacement of the higher
+digits, new covering theorem, or separate phase optimization is used.
+
+### Consequences for the original inventory
+
+Every opposite gap is at most H_3-1. Section96 already forces some such
+gap to be at least twelve, so
+
+    R=empty ==> H_3>=13.                            (SG4)
+
+Every nonternary prime p has a prime in the opposite nonempty color.
+Their positive gap is even and at least two. Thus SG1 forces original
+27p for EVERY nonternary support prime p. More generally it forces
+original3^(|p-q|+1)p and3^(|p-q|+1)q for each opposite pair.
+
+The conditional argument in section97 about an opposite gap equal to
+H_3 remains an implication, but SG1 excludes its antecedent in this
+extremal branch. In particular the height-twelve branch is excluded.
+These are ordinary arithmetic deductions from the existing transport;
+no new Lean verification or unrestricted noncoverage is asserted.
