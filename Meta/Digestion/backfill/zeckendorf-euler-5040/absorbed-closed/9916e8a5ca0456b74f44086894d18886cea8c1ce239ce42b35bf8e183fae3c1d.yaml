@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:9916e8a5ca0456b74f44086894d18886cea8c1ce239ce42b35bf8e183fae3c1d
   normalized_sha256: sha256:9916e8a5ca0456b74f44086894d18886cea8c1ce239ce42b35bf8e183fae3c1d
 cas_ref: sha256:9916e8a5ca0456b74f44086894d18886cea8c1ce239ce42b35bf8e183fae3c1d
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenFutureExtensionMaximum.golden_future_extension_maximum_attained
+    target_statement_id: sha256:ccc618e8faf02406e71794397a193399beb4067fe696b72c571a27e5814e2e42
 receipts:
   unresolved_subitems: []
