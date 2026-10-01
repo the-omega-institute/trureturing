@@ -1,8 +1,8 @@
 /- GID: D5/S1/Recurrence/Invariants/CloitreActualRightProfile
-   generality: G
+   generality: I
    mirror-B: D5/B/S1/Recurrence/Invariants/CloitreActualRightProfile
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S1/Recurrence/GoldenFibDivisibility, D5/S1/Phase/SelfReference/GoldenShellRecurrence]
+   anchors: []
    utility: none
    digest: Conditional right Fibonacci profiles for the actual Cloitre sequence. -/
 
