@@ -35944,3 +35944,757 @@ $w(y)\Phi(y)\ge-K-1$，§92.3 遂推出 RH。
 可使较宽实际价格胞腔的误差一致趋零，而无须先估计起点的绝对 $\Psi(a)-a$。
 尚未取得全部五窗来源到式（260.14）的价格映射或共同端点预算；
 这些价格胞腔不增加 Robin 的整数认证覆盖范围。
+
+
+## 261. 精确 Fibonacci 采样的相位盲区与单调脉冲模型
+
+§244 的几何采样反例只规定函数的局部变化，未在精确 Fibonacci 点给出同一结论。
+本节构造一个较强的模型：它具有单调、右连续的正脉冲源、绝对收敛的同型尾积分，
+以及强于 §260 所需量级的局部增量误差；精确 Fibonacci 采样的归一尾项仍趋零，
+而连续半轴上没有最终有限下界。
+构造使用经典 Binet 公式、正弦相位与取整误差；新增对象是这些条件在同一模型上的联合实现。
+模型事件不规定为素数幂，事件质量为一，不识别为实际 $\Psi$ 或 $\Phi$。
+
+### definition 261.1 相位、光滑原函数与取整源
+
+令 $\varphi=(1+\sqrt5)/2$、$\omega=\pi/\log\varphi>0$，对 $x>1$ 置
+
+$$
+L=\log x,\qquad
+\theta(x)=\omega\left(\log x+\frac{\log5}{2}\right),\qquad
+f(x)=\frac{x^{-1/4}}{\log x}\sin\theta(x),
+$$
+
+$$
+q(x)=\frac1{x\log x},\qquad
+k(x)=-q'(x)=\frac{\log x+1}{x^2\log^2x}.
+\tag{261.1}
+$$
+
+记 $c=\omega\log5/2$，并定义对数变量上的函数
+
+$$
+A(L)=\frac{(L/4+1)\sin(\omega L+c)-\omega L\cos(\omega L+c)}{L+1},
+\qquad B(x)=x+x^{3/4}A(\log x).
+\tag{261.2}
+$$
+
+取
+
+$$
+D=\omega^2+2\omega+2,\qquad
+X=\max\{e,4,(2D)^4\}.
+$$
+
+在 $x\ge X$ 上定义人工源及其尾项
+
+$$
+\Psi^*(x)=\lfloor B(x)\rfloor,
+\qquad
+\Phi^*(x)=\int_x^\infty(\Psi^*(v)-v)k(v)\,dv.
+\tag{261.3}
+$$
+
+星号表示模型量。以下所有源与局部增量结论限定在这个定义域。
+
+### theorem 261.2 正脉冲源、全局误差及全部局部增量
+
+在 $x\ge X$ 上，$B$ 严格递增且
+
+$$
+\frac12\le B'(x)\le\frac32,\qquad B(x)\ge x/2.
+\tag{261.4}
+$$
+
+因此 $\Psi^*$ 非负、右连续、单调；每个紧区间只有有限个事件，
+每次内部事件的跳跃恰为一。全局有
+
+$$
+|\Psi^*(x)-x|\le(1+\omega)x^{3/4}+1.
+\tag{261.5}
+$$
+
+对每个 $a\ge X$ 及全部 $t\ge0$，有
+
+$$
+\boxed{|\Psi^*(a+t)-\Psi^*(a)-t|
+\le Dta^{-1/4}+1.}
+\tag{261.6}
+$$
+
+特别地，对每个固定 $c_0>0$，有
+$\Psi^*(x)-x=O(xe^{-c_0\sqrt{\log x}})$。
+若 $L_a=\log a$、$u_a=L_a^{1/4}$，则对
+$a^{2/3}\le t\le a^{0.99}$ 一致有
+
+$$
+|\Psi^*(a+t)-\Psi^*(a)-t|
+=o(tL_ae^{-u_a}).
+\tag{261.7}
+$$
+
+这是与 §260 由 Guth–Maynard 输入导出的 Chebyshev 增量预算相容的模型界；
+它不将人工事件计数识别为素数计数 $\pi$。
+
+**证明。** 对式（261.2）求导，其中 $A'$ 指对 $L$ 求导，得到
+
+$$
+A'(L)=\frac{(\omega^2L^2+\omega^2L-3/4)\sin(\omega L+c)
++\omega(L^2/4+5L/4)\cos(\omega L+c)}{(L+1)^2}.
+\tag{261.8}
+$$
+
+在 $L\ge1$ 时，直接由三角函数的绝对值上界得
+
+$$
+|A(L)|\le1+\omega,\qquad
+|A'(L)|\le\frac54+\omega^2+\frac{5\omega}{4}.
+$$
+
+第二界也可先对分子 $N(L)$ 求导：
+$N'=(1/4+\omega^2L)\sin(\omega L+c)+(\omega L/4)\cos(\omega L+c)$，
+再用 $|A'|\le |N'|/(L+1)+|N|/(L+1)^2$。
+所以
+
+$$
+B'(x)=1+x^{-1/4}\left(\frac34A(L)+A'(L)\right),\qquad
+|B'(x)-1|\le Dx^{-1/4}\le\frac12.
+$$
+
+阈值同时给 $x^{1/4}\ge2D\ge2(1+\omega)$，故
+$B(x)\ge x-(1+\omega)x^{3/4}\ge x/2$。
+连续严格递增的 $B$ 穿过整数时，$\lfloor B\rfloor$ 产生单位正跳跃，
+取整值在事件点取右值；紧区间内 $B$ 的值域有界，因而事件有限。
+由 $-1<\lfloor B(x)\rfloor-B(x)\le0$ 得式（261.5）。
+
+在 $[a,a+t]$ 对 $B'-1$ 积分，因 $v^{-1/4}\le a^{-1/4}$，有
+$|B(a+t)-B(a)-t|\le Dta^{-1/4}$。
+两个取整误差之差的绝对值小于一，故式（261.6）成立。
+最后，$e^{-L/4+c_0\sqrt L}\to0$；且在所列局部范围中
+
+$$
+\frac{Dta^{-1/4}+1}{tL_ae^{-u_a}}
+\le\frac{(Da^{-1/4}+a^{-2/3})e^{u_a}}{L_a}\longrightarrow0.
+$$
+
+这分别给出全局强 PNT 量级与一致局部预算。$\square$
+
+### theorem 261.3 取整尾项与光滑原函数的精确夹逼
+
+式（261.3）的积分绝对收敛，并且对每个 $x\ge X$，有
+
+$$
+\boxed{f(x)-q(x)\le\Phi^*(x)\le f(x).}
+\tag{261.9}
+$$
+
+在无事件区间，$\Phi^{*\prime}(x)=k(x)(x-\Psi^*(x))$。
+$\Phi^*$ 在事件处连续，导数的右值减左值恰为 $-k(x)<0$。
+
+**证明。** 对 $f$ 求导得
+
+$$
+f'(x)=\frac{x^{-5/4}}{L^2}
+\left[(-L/4-1)\sin\theta(x)+\omega L\cos\theta(x)\right].
+$$
+
+所以 $B(x)-x=-f'(x)/k(x)$。
+式（261.5）与 $k(x)=O(1/(x^2\log x))$ 保证尾积分绝对收敛。
+又 $f(x)\to0$，故普通分段积分给
+
+$$
+\Phi^*(x)=f(x)
++\int_x^\infty(\lfloor B(v)\rfloor-B(v))k(v)\,dv.
+\tag{261.10}
+$$
+
+最后一个积分位于 $[-\int_x^\infty k(v)\,dv,0]=[-q(x),0]$。
+局部导数公式、连续性与跳跃方向则由有限事件积分及单位质量给出。$\square$
+
+### theorem 261.4 精确 Fibonacci 端点近零与连续负谷无界
+
+记 $F_n$ 为标准 Fibonacci 数，$w(x)=\sqrt x\log x$。
+对全部满足 $F_n\ge X$ 的指标，有
+
+$$
+\boxed{|w(F_n)\Phi^*(F_n)|
+\le2\omega\varphi^{-7n/4}+F_n^{-1/2}\longrightarrow0.}
+\tag{261.11}
+$$
+
+但对 $j\ge0$ 定义
+
+$$
+x_j=\frac{\varphi^{2j+3/2}}{\sqrt5},
+$$
+
+则全部充分大的 $j$ 满足 $x_j\ge X$，且
+
+$$
+w(x_j)\Phi^*(x_j)\le-x_j^{1/4}\longrightarrow-\infty.
+\tag{261.12}
+$$
+
+因此不存在固定有限 $K$，使 $w(x)\Phi^*(x)\ge-K$ 在连续半轴上最终成立。
+这个失败与在全部精确 Fibonacci 端点上的归一尾项趋零同时发生。
+
+**证明。** 经典 Binet 公式及 $\psi=-\varphi^{-1}$ 给
+
+$$
+F_n=\frac{\varphi^n}{\sqrt5}(1-\delta_n),\qquad
+\delta_n=(-1)^n\varphi^{-2n}.
+$$
+
+$F_n\ge X\ge4$ 保证 $n\ge1$，且 $|\delta_n|\le\varphi^{-2}<1/2$。
+于是
+
+$$
+\theta(F_n)=n\pi+\omega\log(1-\delta_n).
+\tag{261.13}
+$$
+
+由 $|\log(1-v)|\le2|v|$ 对 $|v|\le1/2$ 的经典对数界，
+以及 $|\sin(n\pi+r)|\le|r|$，得到
+
+$$
+|\sin\theta(F_n)|\le2\omega\varphi^{-2n}.
+$$
+
+又 $F_n\le\varphi^n$，且 $w(x)f(x)=x^{1/4}\sin\theta(x)$，
+所以 $|w(F_n)f(F_n)|\le2\omega\varphi^{-7n/4}$。
+式（261.9）另给 $w(x)|\Phi^*(x)-f(x)|\le x^{-1/2}$，
+即得式（261.11）。$F_n\to\infty$ 与 $\varphi>1$ 给显示极限。
+
+对所列 $x_j$，有 $\theta(x_j)=(2j+3/2)\pi$，故正弦为 $-1$。
+利用 $\Phi^*\le f$ 得式（261.12），其增长给最终有限下界的否定。$\square$
+
+### proposition 261.5 消失的胞腔误差仍容许端点水平失控
+
+取 §260 的 $H(a)=a^{3/4}e^{(\log a)^{1/4}/2}/\log a$。
+对模型 $\Phi^*$ 用同一 $q$ 坐标定义双端弦余量 $\mathcal R^*_{a,b}$。
+令 $u=(\log a)^{1/4}$、$L=\log a$，则所有充分大的 $a$、
+$a<b\le a+H(a)$ 及 $y\in[a,b]$ 都有
+
+$$
+w(y)|\mathcal R^*_{a,b}(y)|
+\le4D\,a^{-1/4}\frac{e^u}{L^2}
++4a^{-3/4}\frac{e^{u/2}}L
+\longrightarrow0
+\tag{261.14}
+$$
+
+且该收敛对 $b,y$ 一致。
+
+**证明。** §260.2 的有限积分消去只需连续尾项与局部源增量，
+不使用事件位置是素数幂。式（261.6）给
+$M^*_{a,b}\le D(b-a)a^{-1/4}+1$。
+最终 $b\le2a$，故同一积分估计给
+
+$$
+w(y)|\mathcal R^*_{a,b}(y)|
+\le\frac{4(b-a)M^*_{a,b}}{a^{3/2}}
+\le\frac{4D H(a)^2}{a^{7/4}}+\frac{4H(a)}{a^{3/2}}.
+$$
+
+代入 $H(a)$ 即得式（261.14）；$u=o(\log a)$ 保证两项趋零。$\square$
+
+本模型同时保留强全局误差、全部局部增量预算、同型尾积分、正脉冲导数跳跃，
+在所有充分大的精确 Fibonacci 端点上，归一尾项趋于零。
+因此这些条件的联合，仍不足以用未经细分的 Fibonacci 价格骨架替代连续半轴下界。
+在五窗深度取固定步长的 Fibonacci 子列也继承式（261.11），并不能消除该盲区。
+尚需实际素数幂位置与权重、适当细分的共同端点预算或另外证明的谱控制。
+这里的 $F_n$ 始终是模型尾项的价格输入；结论不反驳任何整数的 Robin 不等式，
+也不将人工源的相位认作 zeta 的实际零点。
+
+
+## 262. 中心化增量预算的临界对数网格与正脉冲源类边界
+
+§260 的中心化弦估计与 §261 的取整源构造可在同一个网格尺度上比较。
+本节保留 §260 的实际素数源与逐区间一致的 Guth–Maynard 输入，
+同时构造另一个人工源来检验仅凭该类增量合同可以传递多稀疏的端点预算。
+实际源的充分结论与人工源类的反向结论使用不同量词，后者不识别为实际素数源。
+新增内容是临界对数幂的定位及满足联合源合同的反向构造，不主张文献优先权。
+
+### definition 262.1 临界宽度与两侧网格
+
+对 $a>1$ 记 $L_a=\log a$、$u_a=L_a^{1/4}$，令
+
+$$
+W(a)=a^{3/4}\frac{e^{u_a/2}}{\sqrt{L_a}},\qquad
+H_\delta^-(a)=W(a)L_a^{-\delta},\qquad
+H_\delta^+(a)=W(a)L_a^\delta.
+\tag{262.1}
+$$
+
+其中 $\delta$ 是固定参数。
+$\Phi,q,k,w,\mathcal R_{a,b}$ 使用 §260 的定义；特别地，
+$w(x)=\sqrt x\log x$，$\mathcal R$ 是同一 $q$ 坐标下的双端弦余量。
+
+### theorem 262.2 实际源在临界宽度上的有界弦误差
+
+在 §260.3 的同一分析输入下，对每个固定 $\delta\ge0$，全部充分大的 $a$、
+$a<b\le a+H_\delta^-(a)$ 及 $y\in[a,b]$ 一致有
+
+$$
+\begin{aligned}
+w(y)|\mathcal R_{a,b}(y)|\ll{}&
+L_a^{-2\delta}
++a^{-1/12}e^{u_a/2}L_a^{-1/2-\delta}\\
+&+a^{-1/4}e^{3u_a/2}L_a^{-5/2-3\delta}
++a^{-1/4}e^{u_a/2}L_a^{3/2-\delta}.
+\end{aligned}
+\tag{262.2}
+$$
+
+因此 $\delta>0$ 时归一弦误差一致趋零；$\delta=0$ 时它一致有界。
+对每个固定 $\delta$，仍有 $H_\delta^-(a)/a\to0$，并且
+$H_\delta^-(a)/a^{3/4}\to\infty$。
+
+**证明。** 式（260.10） 给出，对 $a^{2/3}\le T\le a^{0.99}$，
+
+$$
+M_{a,a+T}\ll a^{2/3}+TL_ae^{-u_a}
++\frac{T^2}{aL_a}+\sqrt a\,L_a^2.
+$$
+
+固定 $\delta$ 后，$T=H_\delta^-(a)$ 最终在上述范围内，且 $a+T\le2a$。
+对任何较短区间使用同一截止 $T$；式（260.4） 于是给
+
+$$
+w(y)|\mathcal R_{a,b}(y)|
+\ll\frac{T}{a^{3/2}}
+\left(a^{2/3}+TL_ae^{-u_a}+\frac{T^2}{aL_a}+\sqrt a\,L_a^2\right).
+$$
+
+主成本恰为
+
+$$
+\frac{T^2L_ae^{-u_a}}{a^{3/2}}=L_a^{-2\delta}.
+\tag{262.3}
+$$
+
+其余三项逐项代入给式（262.2）。
+由于 $u_a=o(L_a)$，任何固定正幂的 $a^{-1}$ 都压过这里的指数与对数因子，
+故后三项趋零；$\delta>0$ 时第一项也趋零。
+两个宽度比值的结论同样由 $\log L_a=o(u_a)$ 与 $u_a=o(L_a)$ 得到。$\square$
+
+### corollary 262.3 临界递归网格保留单边 RH 判据
+
+取充分大的 $a_0$，定义
+
+$$
+a_{j+1}=a_j+W(a_j),\qquad j\ge0.
+\tag{262.4}
+$$
+
+该网格的相邻胞腔覆盖 $[a_0,\infty)$。
+在 §92.3 明列的经典单边 RH 桥接及定理 262.2 的实际源输入下，
+
+$$
+\mathrm{RH}\iff
+\exists K\ge0\ \exists J\in\mathbb N\quad
+\forall j\ge J,\quad w(a_j)\Phi(a_j)\ge-K.
+\tag{262.5}
+$$
+
+**证明。** 最终 $W(a)\ge1$，故 $a_j\to\infty$，相邻区间覆盖半轴。
+定理 262.2 在 $\delta=0$ 时给固定有限 $C_0\ge0$，使所有充分晚胞腔内
+$w(y)|\mathcal R_{a_j,a_{j+1}}(y)|\le C_0$。
+又 $W(a)/a\to0$，所以最终
+$w(y)/w(a_j)\le2$ 对整个胞腔一致成立。
+若两端归一尾项都不小于 $-K$，因 $w$ 正且递增，双端弦不小于 $-K/w(a_j)$。
+因此整个胞腔内有
+
+$$
+w(y)\Phi(y)\ge-2K-C_0.
+\tag{262.6}
+$$
+
+§92.3 的任意固定有限单边预算推论遂给 RH。
+反向将其 RH 下的最终连续预算限制到网格即可。$\square$
+
+式（262.5）没有给出实际统一的 $K,J$。
+若取 $0<\delta<1/2$，$H_\delta^-$ 比 §260 的宽度增加因子
+$L_a^{1/2-\delta}$，仍保留消失弦误差。
+这些 $a_j$ 都是尾项的价格输入，不据此认证同数值整数的 Robin 不等式。
+
+### definition 262.4 临界宽度另一侧的人工源
+
+现在固定 $\delta>0$，置
+
+$$
+\varepsilon(a)=L_ae^{-u_a},\qquad
+h(a)=H_\delta^+(a),\qquad c=\frac1{128},\qquad
+\eta(s)=s^2(1-s)^2.
+\tag{262.7}
+$$
+
+取充分大的 $A$，使对全部 $a\ge A$ 有
+$L_a\ge1$、$\varepsilon(a)\le1$、$\varepsilon$ 递减及 $1\le h(a)\le a$。
+定义 $a_0=A$、$a_{j+1}=a_j+h(a_j)$，并在第 $j$ 个胞腔上置
+
+$$
+f(x)=-\alpha_j\eta\left(\frac{x-a_j}{h_j}\right),\qquad
+\alpha_j=c\frac{L_{a_j}^{2\delta-1}}{\sqrt{a_j}},\qquad
+h_j=h(a_j).
+\tag{262.8}
+$$
+
+在 $x\ge A$ 上定义
+
+$$
+B(x)=x-\frac{f'(x)}{k(x)},\qquad
+\Psi^*(x)=\lfloor B(x)\rfloor,\qquad
+\Phi^*(x)=\int_x^\infty(\Psi^*(v)-v)k(v)\,dv.
+\tag{262.9}
+$$
+
+星号表示人工源；事件位置不要求为素数幂，质量为一。
+每个固定 $\delta$ 都有自己的源与起点，不把这族模型当作一个同时处理所有 $\delta$ 的源。
+
+### theorem 262.5 人工源保留全局、跨缝增量及尾积分合同
+
+定义 262.4 给出 $C^1$ 函数 $f$、连续严格递增的 $B$，以及非负、右连续、
+单调的单位正脉冲源 $\Psi^*$。每个紧区间只有有限个脉冲。
+$B$ 在胞腔内部光滑，但不要求在接缝处可微。
+对全部 $a\ge A$ 及全部 $t\ge0$，有
+
+$$
+\boxed{|\Psi^*(a+t)-\Psi^*(a)-t|
+\le\varepsilon(a)t+1.}
+\tag{262.10}
+$$
+
+全局有
+
+$$
+|\Psi^*(x)-x|
+\ll_\delta x^{3/4}(\log x)^{\delta+1/2}+1,
+\tag{262.11}
+$$
+
+从而对每个固定 $c_0>0$ 有
+$\Psi^*(x)-x=O_{\delta,c_0}(xe^{-c_0\sqrt{\log x}})$。
+尾积分绝对收敛，且
+
+$$
+\boxed{f(x)-q(x)\le\Phi^*(x)\le f(x).}
+\tag{262.12}
+$$
+
+**证明。** 在 $0\le s\le1$ 上直接展开得
+
+$$
+\begin{gathered}
+0\le\eta(s)\le\frac1{16},\qquad
+\eta'(s)=2s(1-s)(1-2s),\quad |\eta'(s)|\le\frac12,\\
+\eta''(s)=2-12s+12s^2,\quad |\eta''(s)|\le2,\qquad
+\eta(0)=\eta(1)=\eta'(0)=\eta'(1)=0.
+\end{gathered}
+\tag{262.13}
+$$
+
+网格宽度至少为一，故接缝在每个紧区间内有限。
+两侧 $f,f'$ 都在接缝归零，因此 $f\in C^1$，$B$ 连续且 $B(a_j)=a_j$。
+令 $a=a_j$、$h=h_j$、$L=L_a$、$\varepsilon=\varepsilon(a)$。
+幅度与宽度有精确抵消
+
+$$
+\frac{\alpha_j}{h_j^2}=\frac{c\varepsilon}{a^2L}.
+\tag{262.14}
+$$
+
+对 $x\in[a,a+h]\subset[a,2a]$，$L\le\log x\le2L$，直接由 $k$ 的公式得到
+
+$$
+\frac1{k(x)}\le8a^2L,\qquad
+\frac{|k'(x)|}{k(x)}
+=\frac{2(\log x)^2+3\log x+2}{x\log x(\log x+1)}
+\le\frac7a.
+\tag{262.15}
+$$
+
+在胞腔内部，$B'=1-f''/k+f'k'/k^2$。式（262.13）—（262.15）给出
+
+$$
+|B'(x)-1|\le c\varepsilon\left(16+\frac{28h}{a}\right)
+\le44c\varepsilon<\frac{\varepsilon}{2},
+\qquad |B(x)-x|\le4c\varepsilon h.
+\tag{262.16}
+$$
+
+因此光滑段内 $1/2\le B'\le3/2$，且 $B(x)\ge x/2$。
+连续性与有限分片积分将斜率界延伸到跨缝区间，故 $B$ 严格递增。
+它穿过每个整数时，$\lfloor B\rfloor$ 产生一次单位跳跃；有界值域保证局部事件有限。
+
+还有，若 $x\in[a_j,a_{j+1}]$，则
+
+$$
+\frac{\varepsilon(a_j)}{\varepsilon(x)}
+=\frac{L_{a_j}}{\log x}
+\exp\big((\log x)^{1/4}-L_{a_j}^{1/4}\big)\le2.
+\tag{262.17}
+$$
+
+因为 $x\le2a_j$ 且 $L_{a_j}\ge1$，对数差至多 $\log2$，四次根差至多 $\log2/4$。
+结合式（262.16），所有非接缝点满足 $|B'(x)-1|\le\varepsilon(x)$。
+在任意 $[a,a+t]$ 上分片积分，再用 $\varepsilon$ 递减，得到
+$|B(a+t)-B(a)-t|\le\varepsilon(a)t$。
+两个取整误差之差的绝对值小于一，遂得式（262.10）。
+
+由式（262.16）及 $\varepsilon(a_j)h_j
+=a_j^{3/4}e^{-u_{a_j}/2}L_{a_j}^{\delta+1/2}$，
+舍去指数衰减因子并用 $a_j\le x$ 即得式（262.11）。
+其强 PNT 量级来自
+$e^{-L/4+c_0\sqrt L}L^{\delta+1/2}\to0$。
+这也保证尾积分绝对收敛。
+式（262.8）给 $f(x)\to0$，而 $B-x=-f'/k$，故
+
+$$
+\Phi^*(x)=f(x)+\int_x^\infty(\lfloor B(v)\rfloor-B(v))k(v)\,dv.
+$$
+
+取整误差在 $(-1,0]$，$k>0$ 且 $\int_x^\infty k=q(x)$，于是得式（262.12）。$\square$
+
+### theorem 262.6 任意固定正对数幂扩宽的源类反向实例
+
+对每个固定 $\delta>0$，定义 262.4 的源满足定理 262.5 的全部合同。
+在全部网格端点有
+
+$$
+-1<\Psi^*(a_j)-a_j\le0,\qquad
+|w(a_j)\Phi^*(a_j)|\le a_j^{-1/2}\longrightarrow0.
+\tag{262.18}
+$$
+
+但令 $m_j=(a_j+a_{j+1})/2$，则
+
+$$
+\boxed{w(m_j)\Phi^*(m_j)
+\le-\frac1{2048}L_{a_j}^{2\delta}\longrightarrow-\infty.}
+\tag{262.19}
+$$
+
+因此该宽度为 $W(a)(\log a)^\delta$ 的递归网格上，
+源的共同局部增量预算、强全局误差及趋零的端点归一尾项，
+仍不能传递为连续半轴上的统一归一下界。
+
+**证明。** $B(a_j)=a_j$ 给第一个取整界。
+$f(a_j)=0$ 与式（262.12）给 $-q(a_j)\le\Phi^*(a_j)\le0$；
+乘以 $w(a_j)$ 即得式（262.18）。
+在中点，$\eta(1/2)=1/16$，所以
+
+$$
+w(m_j)f(m_j)
+=-\frac c{16}\sqrt{\frac{m_j}{a_j}}
+\frac{\log m_j}{L_{a_j}}L_{a_j}^{2\delta}
+\le-\frac c{16}L_{a_j}^{2\delta}.
+$$
+
+由 $\Phi^*\le f$ 及 $c=1/128$ 得式（262.19）。
+$a_j\to\infty$ 且 $\delta>0$ 给出显示极限。
+这里未归一化的 $\Phi^*$ 本身仍趋零。$\square$
+
+定理 262.2—262.6 定位了这份增量合同的临界对数幂：
+实际源在 $W$ 上的归一弦误差有界，略缩宽度时趋零；
+对每个固定正对数幂扩宽，都有满足联合源合同的相应人工反向实例。
+这不排除实际素数幂位置与质量提供额外控制，也不评价全部自适应网格的最优性。
+§241 的 $5040$ 首次越界仍只提供有限入口；
+五窗的合法转移尚未被映射为上述全部实际价格胞腔的共同端点预算。
+以上没有取得一般 Robin 不等式、实际统一尾项下界或 RH。
+
+## 263. 规范来源的约化核心与 Robin 候选的绝对深度亏损
+
+### definition 263.1 本原组成的逆递推核心
+
+沿用
+
+$$
+M(a,b)=(b,a+b),\qquad q(a,b)=2a+3b,\qquad
+Q(a,b)=a^2+ab-b^2,\qquad \varphi=(1+\sqrt5)/2.
+$$
+
+设单位位为零的实际规范五窗来源具有非零非负组成 $(A,B)$，令
+
+$$
+g=\gcd(A,B),\qquad x=(A/g,B/g),\qquad
+U=q(x),\qquad N=gU,\qquad D=|Q(x)|.
+\tag{263.1}
+$$
+
+在本原非负组成上，只要 $b\ge a$ 就执行
+$R(a,b)=(b-a,a)$；到达 $r>s\ge0$ 时停止。
+所得 $(r,s)$ 称为约化核心，执行次数记为 $j$。
+它是组成坐标的归约；$j$ 不按五窗地址的字面 null 数定义。
+广义 Pell 方程的单位轨道与基本代表是经典背景，参见
+[Robertson 的单位等价类与代表说明](../../../Library/notes/robertson2004generalizedpell.md)；
+这里采用非负组成锥的退出截面，并将其与实际来源及 §201 的预算连接。
+
+### theorem 263.2 同一来源的核心大小与推进深度
+
+定义 263.1 的核心与深度唯一，并且
+
+$$
+x=M^j(r,s),\qquad \gcd(r,s)=1,\qquad r>s\ge0,
+\qquad D=r^2+rs-s^2.
+\tag{263.2}
+$$
+
+定义同一来源的绝对深度亏损
+
+$$
+\mathcal L(x)=\frac{\log U}{\log\varphi}-j.
+$$
+
+则
+
+$$
+\boxed{\quad
+\frac{\log D-\log(5/4)}{2\log\varphi}+1
+\ \le\ \mathcal L(x)
+\ \le\ \frac{\log D}{2\log\varphi}+4.
+\quad}
+\tag{263.3}
+$$
+
+**证明。** 若 $b\ge a$，$R(a,b)$ 非负，且
+
+$$
+MR(a,b)=(a,b),\qquad
+q(a,b)-q(R(a,b))=a+b>0.
+$$
+
+因此非零组成在有限步后退出，终点满足 $r>s\ge0$。
+逆步保持公因子，$Q(Mz)=-Q(z)$ 保持绝对范数。
+$M$ 是单射，而任何至少推进一步的非负组成都满足第二坐标不小于第一坐标。
+若两个终点给出 $M^j(r,s)=M^k(u,v)$，不妨 $j\le k$，消去 $M^j$；
+当 $k-j>0$ 时，右侧处于该第二坐标较大的锥内，左侧核心却满足 $r>s$，矛盾。
+故深度相同，再由单射得到核心相同。
+
+核心满足两个恒等式
+
+$$
+D-r^2=s(r-s)\ge0,\qquad
+5r^2-4D=(r-2s)^2\ge0,
+$$
+
+所以
+
+$$
+r^2\le D\le\frac54r^2,\qquad r\ge1.
+\tag{263.4}
+$$
+
+Fibonacci 递推给同一组成的数量
+
+$$
+U=rF_{j+3}+sF_{j+4},\qquad
+rF_{j+3}\le U\le rF_{j+5}.
+\tag{263.5}
+$$
+
+由 $F_2=1,F_3=2$、$\varphi^2=\varphi+1$ 作二阶归纳，
+对 $n\ge2$ 有经典估计
+$\varphi^{n-2}\le F_n\le\varphi^{n-1}$。
+于是
+
+$$
+r\varphi^{j+1}\le U\le r\varphi^{j+4},
+\qquad
+\frac12\bigl(\log D-\log(5/4)\bigr)
+\le\log r\le\frac12\log D.
+$$
+
+取对数、除以正数 $\log\varphi$，得到式（263.3）。
+
+$5040$ 的具体来源也落在这套坐标中：
+
+$$
+5040=35F_{12},\qquad
+(A,B)=(735,1190)=35(21,34),\qquad
+(21,34)=M^9(1,0),\qquad D=1.
+\tag{263.6}
+$$
+
+确有 $q(735,1190)=5040$、$\gcd(735,1190)=35$。
+它的共轭读数为 $35\psi^9=-35\varphi^{-9}$。
+由于 $\varphi^3=2+\sqrt5>4$，有 $\varphi^9>64>35$，
+故该读数属于 $(-1,0)$；§182.1 识别它为实际单位位零的规范组成。
+完整范数为 $-1225$，除去公因子后的本原范数为 $-1$，两者不能混用。
+这个实例没有把所有 $n>5040$ 变成同一个固定核心的轨道。$\square$
+
+### theorem 263.3 依赖慢范数预算的 Robin 候选定位
+
+固定 $0<\omega<1/2$，假设 §201.6 的统一慢范数余量结论成立。
+则存在只依赖 $\omega$ 的 $T_\omega>\exp(e)$，使定义 263.1 中的来源若满足
+
+$$
+U\ge T_\omega,\qquad N>5040,\qquad
+\Delta(N):=e^\gamma\log\log N-\frac{\sigma(N)}N\le0,
+$$
+
+其同一约化核心必满足，记 $t=\log\log\log U$，
+
+$$
+\boxed{\quad
+D>\exp\!\bigl(\exp(t^\omega)\bigr)-2,
+\qquad
+r^2>\frac45\left(\exp\!\bigl(\exp(t^\omega)\bigr)-2\right).
+\quad}
+\tag{263.7}
+$$
+
+并且存在绝对常数 $C_0$，使这些来源满足
+
+$$
+\boxed{\quad
+\mathcal L(x)>\frac{\exp(t^\omega)}{2\log\varphi}-C_0.
+\quad}
+\tag{263.8}
+$$
+
+若只通过实际整数 $N$ 指定规模，充分条件可取
+$N\ge\max\{5041,T_\omega^2\}$。
+
+**证明。** §200.6 的严格规范条带与同一非负组成给
+
+$$
+g<\frac{\varphi^2}{3D}U<U.
+\tag{263.9}
+$$
+
+这里 $D$ 是当前本原组成的范数，$U$ 仍是当前同一组成的数量；
+因此全部这些乘子进入 §201.6 的 $C=1$ 范围。
+该结论的统一下极限至少为
+$c_\omega=e^\gamma(\log2-H(\omega))>0$。
+取足够大的共同阈值 $T_\omega$，所有满足
+
+$$
+U\ge T_\omega,\qquad
+\log\log(2+D)\le(\log\log\log U)^\omega
+$$
+
+的来源都有 $\Delta(gU)\ge c_\omega/2>0$。
+所以定理中的候选必须违反这个慢范数条件。
+$D\ge1$ 保证两层对数均处于严格单调的定义域，连续取指数得到式（263.7）的第一个不等式。
+再由式（263.4）的上界得到第二个不等式。
+
+令 $E=\exp(\exp(t^\omega))$。当 $U$ 充分大时，$E\ge4$，
+故 $D>E-2\ge E/2$，从而
+
+$$
+\log D>\exp(t^\omega)-\log2.
+$$
+
+代入式（263.3）的左端，得到式（263.8），例如可取
+$C_0=\log(5/2)/(2\log\varphi)$，并增大 $T_\omega$ 以满足 $E\ge4$。
+最后，式（263.9）给 $N=gU<U^2$，所以 $N\ge T_\omega^2$ 迫使 $U>T_\omega$。$\square$
+
+本节的解析结论以 §201.6 的统一预算为前提；
+新增关系把该预算读成同一真实来源的约化核心大小与绝对推进深度限制。
+它没有扩大 §201 的已覆盖整数族，也没有为单位位一的 $gU+1$ 提供对应结论。
+由于 $\exp(t^\omega)=o(\log U)$，式（263.8）不排除
+$j/(\log U/\log\varphi)\to1$。
+逆递推还不保证中间组成落在规范条带内，也不传递 $\Delta\le0$；
+因此这不是保持 Robin 违例性的最小反例下降。
+它给出的必要结构是：在上述预算前提下，无界的单位位零违例来源必须具有增长的本原核心与增长的绝对深度亏损。

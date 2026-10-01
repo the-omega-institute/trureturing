@@ -76,7 +76,7 @@ $$\forall d:\mathbb{N}, \forall rho:\operatorname{Matrix}\left(\operatorname{Fin
 
 *Commentary.*
 
-Equation (7), p. 2: 'For d ⊗ d system described by the density operator ρ, the SPA-PT of the state ρ denoted as ρ̃ and it may be expressed as [32],' followed by ρ̃ = (d/(d^3+1)) I⊗I + (1/(d^3+1)) [I⊗T](ρ). The identity on the pair-indexed space is I⊗I; the coefficients in Lean are complex scalar multiples.
+Equation (7), p. 2: 'For d ⊗ d system described by the density operator ρ, the SPA-PT of the state ρ denoted as ρ̃ and it may be expressed as [32],' followed by ρ̃ = (d/(d^3+1)) I⊗I + (1/(d^3+1)) ([I⊗T])(ρ). The identity on the pair-indexed space is I⊗I; the coefficients in Lean are complex scalar multiples.
 
 **Definition 1.7 (Least eigenvalue).**
 
