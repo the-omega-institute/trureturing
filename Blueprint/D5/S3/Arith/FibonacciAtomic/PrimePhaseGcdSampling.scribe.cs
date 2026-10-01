@@ -17,29 +17,27 @@ internal sealed class PrimePhaseGcdSamplingDocument : IScribeDocumentDefinition
             Paragraph(Text("F(0)=0 and F(1)=1. All queried times are positive natural numbers. "
                 + "The signed reading takes the absolute value of the entire linear combination. "
                 + "The source reading uses actual nonnegative coordinates, not merely residue labels.")),
-            Node("localGcd", "Signed local reading", Disp(Equal(Call("G", Ids("p", "n", "z", "k")),
+            Node("localGcd", "Signed local reading", Disp(All(F.Id("p"), Nat,
+                All(Vars("n", "z"), Int, All(F.Id("k"), Nat, Equal(Call("G", Ids("p", "n", "z", "k")),
                 Call("gcd", Call("abs", Seq(Call("F", Seq(F.Id("k"), Minus, D(1))), Cdot, Sp, F.Id("n"),
-                    Plus, Call("F", F.Id("k")), Cdot, Sp, F.Id("z"))), F.Id("p")))),
+                    Plus, Call("F", F.Id("k")), Cdot, Sp, F.Id("z"))), F.Id("p"))))))),
                 "The state coordinates n,z are integers and the modulus p is natural.",
                 DescribeRole.Definition),
-            Node("sourceGcd", "Natural source reading", Disp(Equal(Call("g", Ids("H", "a", "b", "k")),
+            Node("sourceGcd", "Natural source reading", Disp(All(Vars("H", "a", "b", "k"), Nat,
+                Equal(Call("g", Ids("H", "a", "b", "k")),
                 Call("gcd", Seq(Call("F", Seq(F.Id("k"), Plus, D(3))), Cdot, Sp, F.Id("a"), Plus,
-                    Call("F", Seq(F.Id("k"), Plus, D(4))), Cdot, Sp, F.Id("b")), F.Id("H")))),
+                    Call("F", Seq(F.Id("k"), Plus, D(4))), Cdot, Sp, F.Id("b")), F.Id("H"))))),
                 "The source coordinates a,b and the modulus H are natural numbers.",
                 DescribeRole.Definition),
-            Node("primitive", "Prime-primitive signed state", Disp(Seq(Call("Primitive", Ids("p", "n", "z")),
+            Node("primitive", "Prime-primitive signed state", Disp(All(F.Id("p"), Nat,
+                All(Vars("n", "z"), Int, Seq(Call("Primitive", Ids("p", "n", "z")),
                 Sp, Leftrightarrow, Sp, Par(Seq(Neg, Call("dvd", F.Id("p"), Call("abs", F.Id("n"))),
-                    Sp, Lor, Sp, Neg, Call("dvd", F.Id("p"), Call("abs", F.Id("z"))))))),
+                    Sp, Lor, Sp, Neg, Call("dvd", F.Id("p"), Call("abs", F.Id("z"))))))))),
                 "A state is p-primitive when at least one coordinate is not divisible by p.",
                 DescribeRole.Definition),
             Paragraph(Text("For each prime p, write r=zeroRank(p), the least positive d with p dividing F(d). "
                 + "For a finite positive-time table S, let A be its phase image modulo r. "
                 + "Set T=r-1 when r=p+1 and T=r otherwise.")),
-            new DocumentBlock.DisplayFormula(Disp(And(Equal(F.Id("r"), Call("zeroRank", F.Id("p"))),
-                Equal(F.Id("A"), Seq(OpenBrace, Call("mod", F.Id("k"), F.Id("r")), Sp, Mid, Sp,
-                    F.Id("k"), Sp, InMacro, Sp, F.Id("S"), CloseBrace)),
-                Equal(F.Id("T"), Call("if", Equal(F.Id("r"), Seq(F.Id("p"), Plus, D(1))),
-                    Seq(F.Id("r"), Minus, D(1)), F.Id("r")))))),
             Node("prime_phase_gcd_sampling", "Sharp identification and fixed-source late separation",
                 Disp(ResultFormula()),
                 "The two identification statements include zero and nonprimitive states, hence constant "
@@ -97,7 +95,11 @@ internal sealed class PrimePhaseGcdSamplingDocument : IScribeDocumentDefinition
     private static Formula ResultFormula()
     {
         Formula p = F.Id("p"), S = F.Id("S"), k = F.Id("k"), Q = F.Id("Q"), t = F.Id("t");
-        Formula H = Seq(Q, Cdot, Sp, p), B = F.Id("B"), count = Call("card", F.Id("A"));
+        Formula rank = Call("zeroRank", p);
+        Formula phases = Call("image", Seq(k, Sp, Mapsto, Sp, Call("mod", k, rank)), S);
+        Formula phaseThreshold = Call("if", Equal(rank, Seq(p, Plus, D(1))),
+            Seq(rank, Minus, D(1)), rank);
+        Formula H = Seq(Q, Cdot, Sp, p), B = F.Id("B"), count = Call("card", phases);
         Formula n = F.Id("n"), z = F.Id("z"), n2 = F.Id("nPrime"), z2 = F.Id("zPrime");
         Formula a = F.Id("a"), b = F.Id("b"), a2 = F.Id("aPrime"), b2 = F.Id("bPrime");
         Formula signedEquality = Equal(Call("G", p, n, z, k), Call("G", p, n2, z2, k));
@@ -115,9 +117,9 @@ internal sealed class PrimePhaseGcdSamplingDocument : IScribeDocumentDefinition
             Some(Vars("a", "b", "aPrime", "bPrime"), Nat, And(
                 Call("Primitive", p, n, z), Call("Primitive", p, n2, z2),
                 LtThan(a, H), LtThan(b, H), LtThan(a2, H), LtThan(b2, H), transport, agreement, late)));
-        Formula threshold = Seq(F.Id("T"), Le, count);
+        Formula threshold = Seq(phaseThreshold, Le, count);
         Formula result = And(Iff(Recovery(false), threshold), Iff(Recovery(true), threshold),
-            Imp(LtThan(count, F.Id("T")), All(Q, Nat, Imp(Positive(Q), witnesses))));
+            Imp(LtThan(count, phaseThreshold), All(Q, Nat, Imp(Positive(Q), witnesses))));
         return All(p, Nat, Imp(Call("Prime", p), All(S, Call("Finset", Nat),
             Imp(All(k, S, Positive(k)), result))));
     }
