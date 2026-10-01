@@ -1249,10 +1249,71 @@ These are five further scoped transient classical composition checks,
 with nine printed closures using only `propext`, `Classical.choice` and
 `Quot.sound` under the same pins. No tracked project Lean declaration or
 mathematical novelty is claimed. Neither compactness nor orientability is
-assumed in these checks; they do not classify noncompact ends. Ambient
-unimodularity, any additional library lattice predicate, finite-volume
+assumed in these checks; they do not classify noncompact ends. These five checks alone do not establish ambient unimodularity. Any
+additional library lattice predicate, finite-volume
 cusp classification, lattice conjugacy and full Mostow-Prasad existence,
 homotopy and uniqueness remain unfinished, including noncompact cusps and
 nonorientable manifolds. The existing escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
+Neither these checks nor CI closes that audit or the remaining mathematics.
+
+## Right invariance from the same finite-volume deck domain
+
+For a supplied locally compact, second-countable topological group with
+its Borel structure and supplied left Haar measure `μ`, let `Γ` be a
+countable subgroup with a supplied Borel fundamental domain `D` of finite
+`μ` measure. Existing `IsFundamentalDomain.measure_ne_zero`, using Haar
+nonzero and subgroup left invariance, makes the domain's mass nonzero.
+For each ambient element `g`, existing
+`quasiMeasurePreserving_mul_right` and `IsFundamentalDomain.preimage_of_equiv`
+show that the right-translation preimage of `D` is another fundamental
+domain for the same subgroup and measure. Associativity gives the exact
+equivariance with the subgroup's left action; right invariance is not
+assumed for this step. Existing fundamental-domain measure equality
+therefore gives the translated domain the same mass.
+
+The existing right-translation Haar instance and
+`Measure.isMulLeftInvariant_eq_smul` express the right-pushed measure as a
+scalar multiple of the same left Haar measure. Evaluate that equality on
+`D`. Its finite nonzero mass forces the scalar to equal one by existing
+ENNReal cancellation. Hence every right pushforward equals `μ`, proving
+`μ.IsMulRightInvariant`. This is a classical finite-domain argument using
+existing APIs, with countability and the Borel fundamental domain explicit.
+It does not require compactness of the group or the domain.
+
+Apply this to the same original-H3 full compact-open isometry group, the
+same actual full-deck image `ρ.range`, and the same normalized left Haar
+measure selected by the preceding actual target-volume construction.
+The actual covering derives countability of the deck group and its image.
+The evaluation preimage of the same Borel source domain is Borel by
+continuous evaluation and is already a fundamental domain for that image.
+Its mass equals the already identified covolume, hence the actual target
+total volume. If that target volume is finite, the finite-domain argument
+makes this same `μ` right invariant. It remains a left Haar measure, and
+its actual image-subgroup covolume still equals the actual target volume.
+The supplied original-H3 smooth source geometry and original pairwise
+distance identity, actual target geometry/Borel structure, actual full-deck
+quotient covering/local diffeomorphism/tangent-metric pullback, and faithful
+representation implementing the actual action at every point remain
+explicit premises.
+
+A shortened composition retains these conditions in the existing
+complete curvature-minus-one target constructor. For the same chosen
+covering and faithful compact-open discrete full-deck image, with the
+fundamental-group/deck-group correspondence retained, a left and right
+invariant normalized Haar measure gives covolume equal to actual finite
+target volume. The actual complete source metric, original pairwise
+distance formula, source and target curvature-minus-one data, and actual
+basepoints remain explicit. No compactness or orientability premise is
+added, and the old whole 455-line extension is not claimed to compile.
+
+These are three further scoped transient classical composition checks
+with three standard-axiom closures and no tracked project Lean declaration
+or novelty claim. The right-invariance conclusion is tied to the actual
+finite-volume construction above. Any additional library lattice predicate,
+finite-volume cusp classification, lattice conjugacy and full
+Mostow-Prasad existence, homotopy and uniqueness remain unfinished,
+including noncompact cusps and nonorientable manifolds. The existing escape
+audit remains unfinished:
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549 .
 Neither these checks nor CI closes that audit or the remaining mathematics.
