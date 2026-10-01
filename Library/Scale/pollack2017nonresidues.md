@@ -449,7 +449,7 @@ an assertion $q\asymp n$, or an obstruction proved on SA/CA candidates.
 
 ## The terminal CA prime band forces a conductor lower bound
 
-The preceding canonical family is not an asymptotic CA family. For
+The preceding canonical family is not established to be an asymptotic CA family. For
 actual CA sources, a different restriction follows by applying the
 published [Thorner–Zaman prime count](thornerzaman2019chebotarev.md).
 This is a paper-level application of existing analytic and canonical
@@ -537,3 +537,31 @@ remaining larger conductors still require their own estimates. The
 are not known to belong to this canonical branch, so their bound cannot
 be combined with (T5) by treating separately realized witnesses as one
 source. No actual Robin violation or RH proof is obtained.
+
+### A numerical exponent from the published progression interval
+
+The independently published [Haynes–White interval theorem](hayneswhite2014intervals.md)
+supplies a prime in $(P/2,P]$ with $\chi_\delta(p)=-1$ whenever
+$q\le P^\eta$, for every fixed $0<\eta<5/67$ and sufficiently large
+$P$. Applying the same contradiction (T3)–(T4), without reconstructing
+either interface, gives the numerical version
+
+$$
+\boxed{q>P^\eta\quad\text{eventually for every fixed }0<\eta<5/67}
+\tag{T7}
+$$
+
+on the same actual $h=1$, nonsquare-$D$ CA branch. The eventual onset
+can depend on $\eta$ and is not claimed effective. For example
+$q>P^{1/14}$ eventually. The effective existential version (T5) is
+retained independently; no comparison of its unnamed exponent with
+$5/67$ is asserted.
+
+This numerical rate still leaves the useful faithful-mask cutoff
+compatible. For example $b=1/5$ allows $m_1\le Y^5$, while the lower
+bound is only $m_1>P^{1/14}$ and $P\sim Y$. A conductor lower bound
+$q>P^\eta$ would contradict $m_1^b\le Y$ by powers alone if
+$\eta b>1$; equality requires further constant or lower-order
+information. The supplied rate does not cross that scale in the
+stated $\beta_0<b<1/4$ regime. All same-source and unresolved-branch
+limitations above remain in force.
