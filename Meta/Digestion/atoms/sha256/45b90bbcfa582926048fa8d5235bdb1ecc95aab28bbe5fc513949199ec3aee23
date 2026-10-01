@@ -1,0 +1,51 @@
+**定理 14.2（规范五窗的双读出与双进位）。** 写 $c_Z(n)=(a(n),b(n))^{\mathsf T}$，则
+
+$$
+\begin{aligned}
+n&=e(n)+2a(n)+3b(n),\\
+G(n)&=e(n)+a(n)+2b(n),\\
+a(n)&=2n-3G(n)+e(n),\\
+b(n)&=2G(n)-n-e(n).
+\end{aligned}
+\tag{14.1}
+$$
+
+令 $v=(3,-2)^{\mathsf T}$、$t=(1,-1)^{\mathsf T}$，则所有 $x,y\geq0$ 都满足
+
+$$
+c_Z(x)+c_Z(y)-c_Z(x+y)
+=-\delta(x,y)v+\eta(x,y)t,
+\tag{14.2}
+$$
+
+其中 $\delta\in\{-1,0,1\}$、$\eta\in\{-1,0,1,2\}$。方向 $v$ 对数量观察不可见，却对黄金读出可见：$qv=0$、$r_Gv=-1$。方向 $t$ 同时补偿两个读出中的单位位：$qt=r_Gt=-1$。因此规范加法的组成误差由这两个整数进位唯一决定。
+
+证明。$qS^j d_\sigma$ 是第 $j$ 个窗口的实际数量。由于 $r_GM=q$，$r_GS^j d_\sigma$ 则将其中每个 Fibonacci 权重降一阶，单位位 $F_2$ 降为仍等于一的 $F_1$。为明确这个中间读出的取整约定，写规范位为 $\epsilon_k$，有
+
+$$
+F_{k-1}-\alpha F_k=(-1)^k\alpha^k,\qquad
+R=\sum_{k\geq2}\epsilon_k(-1)^k\alpha^k.
+$$
+
+有限位串给严格几何尾界
+
+$$
+-\frac{\alpha^3}{1-\alpha^2}=-\alpha^2<R
+<\frac{\alpha^2}{1-\alpha^2}=\alpha.
+$$
+
+故 $0<\alpha(n+1)-\sum_k\epsilon_kF_{k-1}=\alpha-R<1$，降阶和正是 $G(n)$。这重现所引经典中间读出并给出式 (14.1) 的前两行。两行的组成系数矩阵行列式为一，解出后两行。对于 $D=c_Z(x)+c_Z(y)-c_Z(x+y)$，有
+
+$$
+qD=-\eta,
+\qquad r_GD=\delta-\eta.
+$$
+
+右侧 $-\delta v+\eta t$ 有相同的两个读出，系数矩阵可逆，故式 (14.2) 成立。若 $\rho(z)=\{\alpha(z+1)\}$，则经典取整恒等式为
+
+$$
+\delta(x,y)=-\lfloor\rho(x)+\rho(y)-\alpha\rfloor.
+$$
+
+括号内在 $(-\alpha,2-\alpha)$ 中，得到三个标量进位值；单位位的取值直接给出四个 $\eta$ 值。两个方向的行列式为 $-1$，所以进位分解唯一。这里的唯一性来自规范词与双读出，不能推广成“任意同数量树的组成相同”。
+
