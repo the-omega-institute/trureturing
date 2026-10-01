@@ -92,7 +92,9 @@ noncomputable def summaryMachine (m : ℕ) : DFAO Window (Option (ZMod m)) (Summ
 /-- The exact state capacity; gcd accounts for the even-modulus observation kernel. -/
 def capacity (m : ℕ) : ℕ := 2 * m ^ 2 / Nat.gcd m 2 + 1
 
-/- The complete raw reader is reachable from its initialized state. -/
+/- The complete raw reader is reachable from its initialized state.
+   This is an existing proof migration shared with the summary reader;
+   it contributes no new mathematical content or escape witness. -/
 theorem raw_reachable (m : ℕ) [NeZero m] (q : RawState m) :
     ∃ w : List Window, (rawMachine m).toDFA.eval w = q := by
   classical
