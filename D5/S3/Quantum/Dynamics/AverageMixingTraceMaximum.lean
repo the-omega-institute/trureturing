@@ -8,10 +8,11 @@
 
 /-
 proof_shape: result: content; private vertex_bound: content; private simplex_bound: content;
-  private complete_diag: content; the other private lemmas: bind-only
+  private complete_eigen: content; private complete_diag: content; the other private
+  declarations: bind-only
 escape_witness: vertex_bound shows (E_θ)_aa ≤ 1 - 1/n at every vertex a with a neighbour,
   by Cauchy–Schwarz on the eigen-equation of E_θ e_a at a and at one neighbour of a;
-  complete_diag evaluates the diagonal of the average mixing matrix of K_n.
+  complete_eigen and complete_diag evaluate the diagonal of the average mixing matrix of K_n.
 admission_basis: open-problem-resolution (#11821; Proved)
 Direct frozen dependencies: none (Mathlib only).
 Utility: none; the result is a theorem over every n.
