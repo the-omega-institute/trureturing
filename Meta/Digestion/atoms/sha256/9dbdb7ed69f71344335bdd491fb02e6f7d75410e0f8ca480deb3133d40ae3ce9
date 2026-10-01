@@ -1,0 +1,4 @@
+## 19. 从四态结构语言到词响应合同
+
+本批承接第6、8节，把结构任务接到 [计算行为表示卷](COMPUTATIONAL_BEHAVIOR_REPRESENTATION_THEORY.md) §§5.1–5.5 的词残余与有限块恢复，以及 [FIB 延拓几何卷](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) §6 的线性最小边界。一般构造属于既有理论；这里给出低位到高位、带终端 End 查询的具体实例及其验证证书。
+
