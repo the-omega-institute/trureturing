@@ -31195,6 +31195,61 @@ an obstruction to this numerical certificate, not a realized
 repair or a covering counterexample. Its actual pair phases,
 nine-class repairs and unrestricted #7 remain unresolved.
 
+[Report385, section46](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#46-two-axis-collision-inventories-admit-an-arbitrary-budget-exclusion)
+removes a class-budget restriction from the two-axis collision
+test. Assigning distinct exponent pairs by their larger exponent
+gives infinite cost envelopes at most9/16 and3/4 whenever one
+selected-chain base is at least five. If both bases are three,
+the axes are5,7; omitting either pure numerical value gives
+envelopes11/12 and3/4. Thus an entirely3-free BC2 residual
+whose repeated bases use at most two primes is impossible at
+ANY finite budget, unless those primes are5,7 and both pure
+values occur. Other residual labels may have unrestricted prime
+support and heights. This does not cover mixed3-bearing residuals.
+
+The exceptional numerical corner has a sharp finite control:
+the24 values5^a*7^b with0<=a,b<=4, excluding1, have minimum
+maximum assignment cost exactly82/81. The proof uses a total-
+cost penalty for reversing a larger-exponent assignment and
+an explicit assignment attaining82/81,80/81. This is an
+unmerged numerical obstruction; actual endpoint coincidences
+can still save prefix cost. Separately, the nine values
+{5,13,19,65,95,247,1235,11,17} have no selected-chain
+certificate despite omitting7. The missing5 nine-item question
+and its whole-cover consumer are not settled by this counterexample.
+
+[Report385, section47](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#47-actual-endpoint-phases-force-a-positive-common-covering-demand)
+uses the actual endpoints of an eight-class repair. If two
+incident squarefree core bases offer the same root on a shared
+axis, choosing those endpoints saves one root deletion. The
+remaining five core bases satisfy capacities1,2,2, and BC5
+gives a whole-cover descent. Failure of every such endpoint
+certificate is therefore equivalent to disjoint incident root
+sets on each core axis. At5 those sets partition all five roots
+with sizes2,1,1,1. The mixed endpoint pairs consequently agree
+at5; this also forces at least one of the7s and35s pairs to
+agree at7. At least seven s endpoint roots occur, without
+asserting that all are realized in R_3. Indispensable repair
+classes do separately witness all four non-retained-pure5 roots
+in R_3; no common further-coordinate section is inferred.
+
+For these actual phases the fourteen core endpoint events have
+union density22(s+2)/(35s). With the two separate(s-2)^a
+endpoints added, their common complement has exact density
+
+    D=(13s-44)/(35s)*(1-2/(s-2)^a)>=225/1001.
+
+Every other original C0 class must jointly cover this complement,
+so their reciprocal sum is at least D. Independence is used
+only for disjoint CRT supports among the specified sixteen
+events, never for the remaining original classes. An explicit
+divisor-closed partial phase family satisfies all local root
+conditions yet misses a point, showing why those conditions
+alone do not contradict each other. The missing step is a bound
+on the unrestricted remaining inventory over this SAME complement;
+positive complement density before those classes is not a proof
+of an uncovered integer. No new Lean verification is claimed.
+
 [Report385, section27](../350-399/385-private-congruence-hulls-and-crossed-modulus-closure.md#27-keeping-the-old-q-coordinate-forces-a-joint-repair-cost)
 keeps the residual cover's entire old q coordinate unchanged.
 It excludes one endpoint per repeated pair and reserves the

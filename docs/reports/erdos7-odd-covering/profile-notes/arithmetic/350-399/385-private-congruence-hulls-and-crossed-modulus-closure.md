@@ -6216,3 +6216,261 @@ pair phases, nine-class repairs and unrestricted Erdős #7
 remain unresolved. NF37--NF38 are ordinary symbolic deductions
 using the cited existing criteria, without new Lean verification
 or a claim of literature priority.
+
+## 46. Two-axis collision inventories admit an arbitrary-budget exclusion
+
+The number of repeated bases need not be bounded when their
+joint prime support has only two axes. Let E be any finite set
+of different nonunit integers supported on p<q, with p>=5.
+Select only the chain3<p<q and write
+
+    R=p-2, T=q-p+1.
+
+Pure powers must go to their own axes. Assign a mixed p^a*q^b
+to the axis with the larger exponent, assigning equal exponents
+to the axis with the larger base. If that larger base is V>=5,
+the total cost on it is bounded by
+
+    sum_(a>=1) (a+1)*V^(-a)
+      =(2V-1)/(V-1)^2<=9/16.
+
+The other axis, of base W>=3, receives its pure powers and
+at most b-1 mixed items at exponent b. Its cost is bounded by
+
+    sum_(b>=1) b*W^(-b)=W/(W-1)^2<=3/4.
+
+These are upper bounds over all possible exponent pairs, so
+they hold for every finite inventory and arbitrary depths.
+They are not independence assumptions about the actual classes.
+
+Both bases equal three only for p=5,q=7. If the numerical value
+5 is missing from E, send the equal-exponent mixed items to5.
+The first envelope loses the missing pure term1/3, giving
+
+    delta_5<=5/4-1/3=11/12, delta_7<=3/4.
+
+If7 is missing, exchange the axes. A single-axis inventory
+already costs less than sum_(a>=1)3^(-a)=1/2. Thus
+
+    any finite distinct two-axis inventory has a strict
+    certificate, except possibly when its support is{5,7}
+    and it contains BOTH numerical values5 and7.           (NF39)
+
+For an entirely3-free BC2 residual cover with fewer than n
+classes, apply this certificate to one actual endpoint of each
+repeated base and invoke BC5. Its repeated-base set cannot be
+supported on at most two primes unless the exceptional condition
+in NF39 holds. The OTHER residual moduli may contain arbitrary
+primes and complete heights: PC1--PC2 transport the selected
+coordinates through their full actual heights and preserve all
+unselected coordinates. This conclusion has no bound on |E|.
+It does not apply to a residual that still contains3-bearing
+labels; those require the additional collision controls of
+sections36--38.
+
+### The exceptional two-axis condition cannot be discarded numerically
+
+Consider the twenty-four distinct values
+
+    E_4={5^a*7^b:0<=a,b<=4, (a,b)!=(0,0)}.
+
+Any candidate chain must contain5 and7. Both have base three;
+additional selected primes cannot change either base or receive
+an item. The minimum possible MAXIMUM of the two numerical
+loads is exactly
+
+    min_assignment max(delta_5,delta_7)=82/81.              (NF40)
+
+For a lower bound, place every off-diagonal mixed item in its
+cheaper direction, namely the larger-exponent axis. The minimum
+TOTAL cost, including pure and diagonal items, is
+
+    2*(1/3+1/9+1/27+1/81)
+      +1/3+3/9+5/27+7/81=156/81.
+
+Before allocating diagonal items, each axis has pure plus cheap
+off-diagonal cost40/81+18/81=58/81. Whichever axis receives35
+therefore has baseline cost at least85/81. Let A be the sum of
+cheap costs of off-diagonal items reassigned AWAY from that
+axis. Reassignments into it and further diagonals only add cost.
+If both final loads were at most one, A would have to be at
+least4/81. Every reversed off-diagonal assignment increases
+total cost by at least twice its former cheap cost. Hence the
+total final cost would be at least
+
+    156/81+2A>=164/81>2,
+
+a contradiction. All loads are multiples of1/81, so their
+maximum is at least82/81. This bound is attained: keep the
+cheap off-diagonal directions except for5^3*7^2, which goes
+to7; put35 at5 and all other diagonal items at7. The resulting
+loads are82/81 and80/81. The same rule on the height-three
+rectangle gives26/27 and25/27, so this nested rectangular
+family first fails at height four.
+
+This is an exact obstruction to the unmerged numerical prefix
+sum. It is not a family of covering classes: no phases are
+specified. Actual endpoint coincidences can still reduce BC5's
+antichain costs, and other transports are not excluded.
+
+### Missing seven does not extend the eight-item classification
+
+The nine distinct values
+
+    {5,13,19,65,95,247,1235,11,17}                         (NF41)
+
+do not contain7 but have no strict selected-chain certificate.
+Their pure values force the chain to contain5,11,13,17,19.
+The first seven items are the seven nonempty squarefree products
+of5,13,19. Each of those three axes has base three, and adding
+more primes cannot increase these bases. Seven core items
+cannot fit the six strict slots on those axes. Thus NF37's
+requirement for the numerical value7 cannot be extended to nine
+items. This does not decide the corresponding missing5 claim
+or produce a covering counterexample.
+
+## 47. Actual endpoint phases force a positive common covering demand
+
+Take an eight-class legal complete repair. By NF35 and NF37,
+put u=s-2 and write its eight repeated cofactor bases as
+
+    E={5,7,s,35,5s,7s,35s,u^a},
+    a>=1, s>=13, with u and s prime.
+
+Work in the ONE actual whole cofactor cover consisting of C0
+and the eight low repair cofactor APs. Each base m in E has
+two actual endpoints, one retained and one from the repair.
+They have different full phases; otherwise the repair class
+would miss R_3. For a squarefree core base m and p|m, let
+S_p(m) be the one- or two-element set of first p roots offered
+by its two endpoints.
+
+### Root sharing is exactly what this endpoint certificate can use
+
+If two different core bases m,m' containing p have
+S_p(m) intersect S_p(m') nonempty, choose one endpoint of each
+at a common p root. Both disappear when that root is avoided,
+at antichain cost1/3 on the p axis. Assign the other five core
+bases with integer capacities one at p and two at each of the
+other two core primes. The existing Hall criterion holds:
+singletons have at most one remaining pure item; any pair
+containing p has at most three items, and the other pair at
+most three; the total count is five. Hence every core axis
+avoids at most two roots.
+
+Use the chain3<5<7<u<s. Its core bases are all three, while
+the u base is u-6>=5. The remaining repeated item u^a can
+be deleted at cost(u-6)^(-a)<1 on its own axis. BC5 then
+produces a smaller distinct odd whole cover, a contradiction.
+
+Conversely, if every pair of incident core bases has disjoint
+root sets on each shared axis, one deleted root can remove
+an endpoint of only one core base. Each core axis has strict
+capacity for at most two roots, while there are seven core
+repetitions to eliminate. Their pure bases force the three
+axes, and the pure u^a item forces the separator u. No extra
+selected prime improves these capacities. Thus the exact failure
+condition for these endpoint/full-prefix certificates is
+
+    S_p(m) intersect S_p(m') empty
+      for all different core m,m' divisible by p.          (NF42)
+
+This is a condition on the actual phases of the SAME input
+family. It characterizes this certificate mechanism, not every
+possible transport or every whole-cover argument.
+
+At p=5, the pure5 pair offers two different roots. The three
+other incident bases35,5s,35s each offer at least one. NF42
+forces them to partition all five roots with sizes2,1,1,1.
+Consequently each mixed pair has the SAME5 root at its two
+endpoints, and those three roots are distinct from each other
+and from both pure5 roots.
+
+The35 endpoints must therefore differ at7, and the5s endpoints
+must differ at s. At7 the pure7 pair and35 pair each offer
+two roots. The other incident pairs7s and35s cannot both
+offer two, since that would require eight different7 roots.
+At least one of those two pairs has the same7 root at both
+endpoints, and must then differ at s. In particular, at least
+seven different s roots occur among the four incident endpoint
+sets. These are endpoint counts, not claims that all such
+retained-class roots occur in actual R_3.
+
+Every one of the eight repair classes is indispensable by NF28.
+Its private point in P_3 supplies a cofactor point in R_3.
+The repairs with bases5,35,5s,35s therefore make their four
+different5 roots occur in R_3. The retained pure5 class excludes
+its own root, proving that the first5 projection of R_3 is
+exactly the other four roots. These separate private witnesses
+are not assumed to lie in one further-cofactor section.
+
+### The remaining original classes must cover one explicit complement
+
+Under NF42, two different core events with overlapping prime
+supports are disjoint: on a shared prime their endpoint-root
+sets are disjoint. The two endpoints at one base are disjoint
+as well. Events with disjoint prime supports have their ordinary
+CRT intersection density. Inclusion-exclusion for the fourteen
+core endpoint events therefore has only the following terms:
+
+    single-event sum       =(26s+96)/(35s),
+    two-event intersections=(4s+60)/(35s),
+    three-event intersections=8/(35s).
+
+There are no larger intersections. The union density is exactly
+22(s+2)/(35s). The two distinct u^a endpoint phases lie in a
+separate CRT coordinate and have union density2/u^a. Hence the
+complement of all sixteen endpoint events has exact density
+
+    D=(13s-44)/(35s)*(1-2/u^a)>=225/1001>0.                (NF43)
+
+The minimum displayed bound uses s>=13 and u^a>=11. Both
+factors increase with these lower bounds; no unproved joint
+distribution is substituted. All statements are finite counts
+in the common period, or equivalently normalized Haar counts.
+
+Every point of this same complement must be covered by the
+remaining C0 classes. None of the eight repair classes or the
+eight retained E endpoints covers it. Therefore the necessary
+actual-inventory condition is
+
+    sum_(d in C0, d not in E) 1/d>=D>=225/1001.
+
+The remaining classes are not declared independent; this last
+step is only the union bound on their actual common complement.
+No uniform upper bound below D is supplied for their unrestricted
+inventory. The positive demand is not an uncovered-integer proof.
+
+### The local phase conditions themselves are compatible
+
+For a=1, the following table gives compatible endpoint phases
+on coordinates5,7,s. A star means that coordinate is not part
+of the event. The first endpoint is retained and the second is
+the repair cofactor.
+
+| Base | Retained phase | Repair phase |
+|---|---|---|
+|5|(0,*,*)|(1,*,*)|
+|7|(*,0,*)|(*,1,*)|
+|s|(*,*,0)|(*,*,1)|
+|35|(2,2,*)|(2,3,*)|
+|5s|(3,*,2)|(3,*,3)|
+|7s|(*,4,4)|(*,4,5)|
+|35s|(4,5,6)|(4,5,7)|
+
+Use phases0 and1 for the two u endpoints. These satisfy NF42
+and all its stated root-count consequences. The retained core
+labels together with u are divisor-closed. If desired, give
+the repair labels3m the common first3 root1 and add the parent
+class0 mod3. The resulting partial numerical family is still
+divisor-closed, and classes with comparable distinct moduli are
+disjoint.
+
+Nevertheless the cofactor point with roots2 at5,6 at7,8 at s
+and3 at u misses all sixteen endpoint events. At first3 root1
+it also misses the added parent. Thus this is a partial family,
+not a whole cover, a complete repair, or a minimum-cover example.
+It verifies that the local endpoint and divisor conditions alone
+do not give a contradiction. The unresolved step is to control
+the remaining original classes on the positive common complement.
+These are ordinary symbolic results, not new Lean verification.
