@@ -14208,3 +14208,89 @@ BOTH actual centers(u,alpha) and(v,beta), with PX1 restricted to
 untouched originals. This does not force an excluded agreement to
 occur or exclude the nonsingleton local incidences in section109.
 No new Lean verification or unrestricted noncoverage is asserted.
+
+## 111. Every nonpure local branch pays a strict fraction of the two-level batch
+
+Keep the actual local batch G_w=O_w union {R} from section109,
+k=|G_w|, and the exact joint deletion set
+
+    E=Z minus union(C minus (T union O_w)).
+
+For any local digit branch consisting entirely of nonpure classes,
+write m for its number of members, counting R if present. Then
+
+    k+2<4m.                                        (LB5)
+
+The argument uses the same full sibling fibers as LB2, now retaining
+the union of the m actual cofactor APs instead of a singleton.
+It does not replace their possibly intersecting phases by one phase.
+
+### A common branch supplies a union cover of the entire obligation
+
+Write the selected branch's members as cofactor classes c_S modd_S,
+d_S>1. For every point of E, move only its (H-1)-st digit into that
+branch. It remains uncovered by the retained originals. Whole coverage
+by F supplies one selected branch member, so
+
+    E subset {x:x=w mod3^(H-2),
+                  x belongs to some c_S modd_S}.  (LB6)
+
+For each such member, cover its full displayed cylinder by four
+CRT APs using the four nonzero5-roots and the member's cofactor phase.
+Normally give these APs ternary heights0,1,2,3, with the corresponding
+prefixes of w; their total modulus sum is200d_S.
+
+All originals in O_w have the same ternary height H-1 and distinct
+numerical labels, hence distinct cofactors. The only possible repeated
+cofactor in G_w is M, from R and the original occupied ancestor.
+If BOTH occur in the selected branch, assign R heights0,1,2,3 and
+that original heights4,5,6,7. Its four APs then have total sum
+16200M. Every other member keeps heights0 through3. Because H>=20,
+all these prefix constraints are implied by w.
+
+The construction has exactly4m distinct numerical labels. The only
+cofactor repetition was resolved by disjoint ternary heights; different
+3-free cofactors cannot create further numerical collisions. Every
+cofactor uses only the old top color, so adjoining5 makes every new
+label fresh by original CP1. The APs and retained A_5 cover all of E
+by LB6. The resulting whole cover has N-(k+2)+4m classes.
+
+### Equality in the class budget also gives a strict descent
+
+Each selected ORIGINAL member of cofactor d_S is among the removed
+O_w and has old modulus3^(H-1)d_S. Its own new block costs at most
+16200d_S<3^(H-1)d_S. These original payers are distinct.
+
+If R is selected, its new block costs200M. Use the separately deleted
+top class3^H p as its payer. For M=pr or p^2, opposite-color prime5
+and the existing gap bound give M/p<=H+5. Also3^H>200(H+5) for H>=20.
+Thus200M<3^H p. This top payer is different from every height-H-1
+original payer and is used only once. If R is not selected, no such
+payment is needed.
+
+Therefore the new modulus sum is strictly smaller than that of the
+deleted originals. If k+2>4m, cardinality decreases; if k+2=4m,
+cardinality is unchanged and modulus sum decreases. Both violate
+EB1, proving LB5. The budget combines actual disjoint deleted
+labels, not separately optimized or duplicated credits.
+
+### Necessary balance of the surviving branches
+
+With a pure singleton, let the other branch counts be a,b. Then
+k=1+a+b and LB5 applied to both mixed branches gives
+
+    max(a,b)<=3*min(a,b)-4.                         (LB7)
+
+In particular, if the smaller mixed branch has two members, the
+only possibility is(1,2,2); the earlier candidate(1,2,3) is excluded.
+
+Without a pure member, let m be the smallest of the three counts.
+Then3m<=k and k+2<4m, so m>=3. If m=3, the same inequality gives
+k<=9, forcing exactly(3,3,3). Thus the prior(2,2,2) incidence is
+excluded, while larger sufficiently balanced batches remain possible
+under this necessary inequality.
+
+The statement controls arbitrary local inventories at all admitted
+original heights. It does not establish realizability of any surviving
+count pattern or exclude all such patterns. No new general covering
+theorem, numerical search or Lean verification is asserted.
