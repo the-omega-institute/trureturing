@@ -10009,6 +10009,27 @@ When H=1, the union of root batches admitting the same-depth reuse in PI4a is a 
 
 When u>1, the original divisor u is p-free and retained, so it cannot be counted as an unused DELETED label. When u=1, it is not an admissible nonunit label. The one pure-p label also supplies at most one actual credit if it is unused, not one credit for each bad column. No argument here shows that U_top is unused in a constructed frontier.
 
+### Full mixed children have separate actual private obligations
+
+Keep q=3 and arbitrary original height H. Fix one p-column x_alpha=p^alpha*u, 1≤alpha≤A_u, from PI8. Select any set I of levels for which V_(x_alpha) is a singleton and the full mixed child y_alpha=3*x_alpha is original. PI6 supplies that child whenever the parent has a proper original multiple. Then all the actual original classes
+
+    {A_(x_beta):1≤beta≤A_u}
+       union {A_(y_alpha):alpha∈I}
+
+are pairwise disjoint. This is an application of the existing crowded-phase prohibition DR5, with the original phases unchanged; the selected parents need not have the SAME private ternary root.
+
+For beta≤alpha, x_beta divides y_alpha, so original comparable-class disjointness applies. If beta>alpha and A_(y_alpha) meets A_(x_beta), the two proper original multiples y_alpha and x_beta belong to the same residue group modulo x_alpha. That group has at least two members. But concentration gives y_alpha|Γ_(x_alpha), and DR5 forbids a member of such a crowded group from dividing the parent's complete private hull. This contradiction handles every cross pair. The x labels form one divisibility chain and the y labels form another, so all pairs within each chain are already disjoint.
+
+For a bad column in PI9, take I={1,...,A_u−1}. The resulting2*A_u−1 original classes are therefore pairwise disjoint, at arbitrary ternary height and even when their private roots differ. For ANY subset J of these labels, PH1 simplifies exactly to
+
+    E_J = union_(d∈J) P_d.                           (PI10)
+
+Indeed, whole original coverage ensures that a point missing every retained class lies in some removed class; disjointness means it belongs to exactly one removed class and hence to that class's COMPLETE original private region. The converse follows from privacy. This equality concerns this proved disjoint subfamily; it does not replace PH1 by a union of private regions for general deletion sets.
+
+When A_u≥2, moving the parent x_(A_u−1) to the top x_(A_u)'s residue does not free the already matched child y_(A_u−1). Their original APs are disjoint and their gcd is x_(A_u−1), so their residues modulo that parent differ. In DR2's notation, y_(A_u−1) is not in the removed phase group J_c. The lower y levels are not multiples of this adjacent parent, so that group frees none of the matched ternary-height-one y labels from this column. Higher ternary-height mixed originals are not excluded by this argument. The top itself has no proper original multiple and cannot directly serve as a DR2 parent.
+
+Deleting an additional matched mixed original is legal only with its own nonempty private region included in the joint repair obligation. PI10 makes that extra obligation exact; it does not prove that no different global replacement can repair it. Thus these original mixed labels are inventory witnesses, not unoccupied labels whose phases can be reassigned without paying for their old private points. No free elimination of the exceptional top follows.
+
 ### Boundary of the payment
 
 PI2, PI5 and the deduplicated PI9 are actual original-inventory bounds and may pay for suitably identified copies. They do not yet prove the count-saving inequality
