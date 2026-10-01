@@ -27194,3 +27194,235 @@ The global replacement and continuation results are reused. A
 present anchor product, a larger core, or absence of a passing
 proper cut still prevents these certificates from settling the
 unrestricted question. No such cut is forced here.
+
+## Present anchor products leave an actual mixed-label budget
+
+Keep the same minimum whole cover and full-height proper cut B.
+Take P=15 or105, assume all its prime factors belong to C, and
+now suppose P IS original. Write A for its prime set, c=|C|,
+k=c-|A|, and Q_C for the complete original core carrier. Define
+
+    J={g|Q_C/P:P*g in D}, s=|J|>=1.
+
+This is an actual numerical inventory from the one original
+family. It contains1 and is closed under divisors. Its size is
+exactly the number of original core moduli divisible by P,
+including P itself. It is not a freely chosen repair palette or
+a probability normalizing factor. No upper bound on s is assumed
+until a sufficient condition explicitly uses one.
+
+### Count vacancies inside the actual mixed-label downset
+
+For T a proper subset of A, let A_T=product_(r in T)r,
+M_T=P/A_T and R_T=phi(M_T). An original h with exact anchor
+support T, with h|Q_C, can be written
+
+    h=A_T*z,
+    z|Q_C/P, supp(z) disjoint from A without T.
+
+Conversely all such z describe the carrier for that fixed T;
+the exponent of an anchor in T is reduced by one in z, while
+the absent anchors remain absent. Eligible divisors f of h
+containing all anchors in T are precisely f=A_T*g with g|z.
+Their candidate repair labels are M_T*f=P*g. Thus the exact
+number of globally vacant candidates is
+
+    E_T(z)=#{g|z:g notin J}.                     (FC1178)
+
+If E_T(z)>=R_T, choose R_T such divisors. They are globally
+absent by the definition of J: every P*g under consideration
+divides Q_C. The retained actual prime guards at p|M_T and
+these distinct vacant labels repair the entire old h-class,
+using its literal f-phases and all unit roots modulo M_T.
+The cost comparison FC1170 applies unchanged, so
+
+    E_T(z)>=R_T ==> q_(A_T*z)(x)<=R_T-1
+                                for every x.    (FC1179)
+
+No occupied repair is counted as vacant. In particular g=1
+is in J and cannot supply a repair label when P is present.
+The construction uses missing multiples within the original
+height box; it does not raise a repair prime above its height.
+
+### A maximal original divisor controls the remaining quotient
+
+In one fixed T carrier, choose for each z a divisibility-maximal
+j in J with j|z, resolving ties by a fixed numerical choice.
+Such a j exists since1 belongs to J. Put v=z/j. For every
+nonunit t|v, the divisor jt of z lies outside J: otherwise it
+would contradict maximality of j. These are distinct vacancies.
+Consequently
+
+    E_T(z)<R ==> tau(v)-1<=E_T(z)<R
+                          ==> tau(v)<=R.        (FC1180)
+
+The assignment z maps to(j,v) is injective because z=j*v.
+Both factors stay on the k+|T| allowed prime directions.
+
+Suppose instead z is divisibility-minimal with E_T(z)>=R
+within this SAME T carrier. Then z notin J, so v>1. Pick a
+prime p|v. The divisor z/p is low by minimality, and j still
+divides z/p. No nonunit multiple jt can enter J, even when
+it is regarded as a divisor of z/p. Hence
+
+    tau(v/p)-1<=E_T(z/p)<R,
+    tau(v)<=2tau(v/p)<=2R.                       (FC1181)
+
+Multiplying back by A_T shows that this decrement does not
+remove the last required anchor: the support class remains T.
+The same injective assignment bounds the minimal high inventory.
+
+For a fixed threshold R and l named prime directions, let
+
+    D_R(l)=#{v supported on these primes:tau(v)<=R},
+
+including v=1. This is a finite all-height inventory: exponents
+are at most R-1 and support size is at most floor(log_2 R).
+Counting the finitely many exponent patterns at each support
+size makes D_R a polynomial in binom(l,i), independent of prime
+values. FC1180--1181 bound, respectively, the low and minimal
+high counts in a T carrier by s*D_R(k+|T|) and s*D_(2R)(k+|T|).
+Using all of J only enlarges the count; the chosen j is actually
+supported on the same allowed directions as z.
+
+### Pay the full-anchor originals explicitly
+
+Select an original future label exactly when its C-supported
+old part is A_T*z for a proper T and E_T(z)>=R_T. Assign it
+once to a divisibility-minimal high divisor in the same T.
+Divisor closure makes that assigned interface original, so
+FC1179 controls its group. The assignment is fixed at B over
+all future suffixes, as in FC1172.
+
+Leave every other original light. This includes ALL old parts
+with full anchor support A: they have the form d=P*z with
+z in J and contribute at most s distinct core slots per fixed
+suffix. It also includes every low proper-T part, the unit,
+pure future labels and O-supported parts. Thus no case which
+was impossible in the missing-P argument has been dropped here.
+
+Define the finite polynomials
+
+    W_P(c)=1+sum_(T proper subset A)D_(R_T)(k+|T|),
+    V_P(c)=sum_(T proper subset A)(R_T-1)
+                                      *D_(2R_T)(k+|T|).
+
+For every actual head point and every fixed actual light suffix,
+the complete selected and light bounds are
+
+    selected head activation count<=b=s*V_P(c),
+    light core load<=a=s*W_P(c).                 (FC1182)
+
+The initial1 in W_P pays the full-anchor slots; the actual unit
+slot belongs to the proper empty-T group. These polynomials
+bound the finite carrier for its FIXED actual J. No monotonicity
+claim compares different families whose J changes with height.
+
+### Explicit coefficients for15 and leading terms for105
+
+For P=15, k=c-2, direct divisor-pattern counts give
+
+    D_2(l)=1+l,
+    D_4(l)=1+3l+binom(l,2),
+    D_8(l)=1+7l+5binom(l,2)+binom(l,3),
+    D_16(l)=1+15l+19binom(l,2)+7binom(l,3)+binom(l,4).
+
+For example, the19 ordered two-prime exponent patterns in D_16
+come from factors a,b>=2 with ab<=16: for a=2,...,8 there are
+respectively7,4,3,2,1,1,1 choices for b. Three primes permit
+all exponents one, or one exponent two or three, giving7
+patterns. Four primes permit only the squarefree pattern.
+The smaller thresholds follow from the same product test.
+It follows exactly that
+
+    W_15=1+D_8(k)+D_4(k+1)+D_2(k+1)
+        =8+12k+6binom(k,2)+binom(k,3),
+    V_15=7D_16(k)+3D_8(k+1)+D_4(k+1)
+        =35+145k+152binom(k,2)+52binom(k,3)+7binom(k,4).
+                                                     (FC1183)
+
+For P=105, k=c-3, the exact finite definitions are
+
+    W_105=1+D_48(k)+D_24(k+1)+D_12(k+1)+D_8(k+1)
+                         +D_6(k+2)+D_4(k+2)+D_2(k+2),
+    V_105=47D_96(k)+23D_48(k+1)+11D_24(k+1)+7D_16(k+1)
+                         +5D_12(k+2)+3D_8(k+2)+D_4(k+2).
+
+On exactly five primes the patterns with tau<=48 are the squarefree
+one and the five choices with exactly one exponent two. On
+exactly six primes, tau<=96 permits the analogous seven patterns.
+All other terms in the displayed formulas have smaller support
+degree. Hence
+
+    W_105=6binom(k,5)+O(k^4) asymptotic to c^5/20,
+    V_105=329binom(k,6)+O(k^5).                  (FC1184)
+
+For15, W_15 is asymptotic to c^3/6 and V_15 to7c^4/24.
+These coefficients count explicit exponent patterns; no numerical
+optimizer or finite experimental fit supplies them.
+
+### A complete criterion for the joint size of core and mixed inventory
+
+Use FC1182 on one NEW light-only Haar continuation from the same
+core Dirac survivor and companion source as FC1144--1146. Every
+selected original is paid under that very law, and every other
+original stays in its light queries. A complete sufficient test,
+with pi(B)>=10, is therefore
+
+    B>2s*V_P(c),
+    [s*W_P(c)+sqrt(5Theta_O)]^2
+                         /[1-2s*V_P(c)/B]<=T_B. (FC1185)
+
+This permits P to be present with arbitrary original heights and
+phases. Its additional cost is the measured inventory s, rather
+than an inverse core survivor mass or an omitted full-anchor case.
+
+There is a uniform asymptotic consumer even when s varies. Fix
+0<theta<1. At every sufficiently large proper cut, a minimum
+whole cover cannot have P in D, all its primes in C, and
+
+    s*W_P(c)<=theta*sqrt(B log B).                (FC1186)
+
+To verify the selected debit at the same time, put d=3 for15
+and d=5 for105. The fixed polynomials satisfy
+
+    W_P(c)>=constant*(c+1)^d,
+    V_P(c)/W_P(c)=O(c+1),
+
+with positive constants valid over c>=|A|. Since s>=1, FC1186
+forces c+1=O((B log B)^(1/(2d))). Therefore
+
+    2s*V_P(c)/B
+       =O((c+1)*sqrt(log B/B))=o(1).
+
+The companion term is o(sqrt(B log B)) uniformly by FC1134.
+Together with T_B asymptotic to B log B and theta<1, this
+proves the full finite test FC1185 for sufficiently large B.
+In particular this is a single joint criterion, not two costs
+evaluated on different constructed probability laws.
+
+If s is bounded by a fixed s_0>=1, the leading terms give the
+following explicit uniform core-size corollaries:
+
+    P=15: c<=gamma(B log B)^(1/6),
+                         0<gamma<(6/s_0)^(1/3);
+    P=105: c<=gamma(B log B)^(1/10),
+                         0<gamma<(20/s_0)^(1/5). (FC1187)
+
+They follow by choosing theta strictly between the corresponding
+leading bound and1 in FC1186. With unbounded s and bounded c,
+the lower terms multiplied by s need not be negligible; FC1186
+uses the COMPLETE W_P and makes no such leading-term replacement.
+
+The unresolved issue is now a quantitative one even when the
+anchor product is present: no result here forces some proper cut
+to make its actual s*W_P(c) small enough. Nor can s be replaced
+solely by the number of maximal elements of J at the inventory
+level. For instance J=Div(q^H) has one maximal element and H+1
+distinct z with no missing divisors; this is a downset example,
+not a covering counterexample or a query lower bound.
+
+FC1178--1187 are ordinary symbolic deductions. They reuse the
+whole-class replacement and complete same-law tail theorems,
+retain all original labels, and introduce no new Lean verification.
+They do not settle unrestricted Erdős#7 or force a passing cut.
