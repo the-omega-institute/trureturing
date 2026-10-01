@@ -3,6 +3,7 @@ bibkey: kaliski2017targeted
 authors: Burton S. Kaliski Jr.
 year: 2017
 title: Targeted Fibonacci Exponentiation
+doi: null
 url: https://arxiv.org/abs/1711.02491v1
 claim: Every prescribed modular Hofstadter G pair has a realizing Zeckendorf word of at most 2h bits when the modulus is below phi^h.
 strata_touched: []
