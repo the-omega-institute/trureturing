@@ -49,6 +49,9 @@ inductive Pauli
   | I | X | Y | Z
   deriving DecidableEq
 
+/-- The four Pauli labels form a finite type. -/
+instance : Fintype Pauli := ⟨{.I, .X, .Y, .Z}, fun p => by cases p <;> simp⟩
+
 /-- The Pauli matrices: `X`, `Z` are the frozen `qubitX`, `qubitZ`, and `Y = i X Z`. -/
 noncomputable def pauliMatrix : Pauli → Matrix (Fin 2) (Fin 2) ℂ
   | .I => 1

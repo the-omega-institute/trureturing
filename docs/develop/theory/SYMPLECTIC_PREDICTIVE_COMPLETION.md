@@ -3004,6 +3004,51 @@ $$
 证明。指数函数的解析性给出被积函数 $f(t)=(Ce^{tB})^*(Ce^{tB})$ 在零点可微且 $f(0)=H$。因而在零点附近有 $\|f(t)-H\|\le R|t|$，对实际区间积分得到 $\|G(T)-TH\|\le RT^2$。$G(T)$ 为半正定自伴随算子；在其实际正交特征基中，$\log\det(I+sG(T))$ 是 $\sum_i\log(1+s\lambda_i)$。对 $x\ge0$ 有 $|\log(1+x)-x|\le x^2/2$，且 $0\le\lambda_i\le\|G(T)\|$。这给出对数余项的二次界。再用 $|\operatorname{tr}(L)|\le\dim(V)\|L\|$ 控制 $G(T)-TH$ 的迹，即得结论。
 
 ## 追加锚（本行以下为增补区）
+## 23. 分层标量谱的全部噪声日程
+
+**定理 23.1（信息首项、阈值风险与完整恢复日程）。** 设 $n\ge0$，指标 $i$ 属于 $\{0,\ldots,n\}$。给定整数 $q_i\ge0$，满足 $q_i\le q_n$，以及实函数 $\lambda_i(T)$。固定 $\beta,c,C>0$，并假设在充分小的正时间上同时有
+
+$$
+cT^{q_i}\le\lambda_i(T)\le CT^{q_i}\qquad(0\le i\le n).
+$$
+
+对每个实数 $\alpha$ 定义
+
+$$
+I_\alpha(T)=\frac12\sum_{i=0}^n\log\left(1+\frac{\lambda_i(T)}{\beta T^\alpha}\right),\qquad
+R_\alpha(T)=\frac12\sum_{i=0}^n\frac{T^\alpha}{\beta T^\alpha+\lambda_i(T)}.
+$$
+
+每个实数 $\alpha$（包括 $\alpha=q_i$ 的情形）均满足
+
+$$
+I_\alpha(T)=\frac12\sum_{i=0}^n(\alpha-q_i)_+\log(1/T)+O(1).
+$$
+
+对每个在全部正时间上为正的函数 $\varepsilon(T)$，不要求连续性或幂律形式，令
+
+$$
+R_\varepsilon(T)=\frac12\sum_{i=0}^n\frac{\varepsilon(T)}{\beta\varepsilon(T)+\lambda_i(T)}.
+$$
+
+则
+
+$$
+\lim_{T\downarrow0}R_\varepsilon(T)=0
+\quad\Longleftrightarrow\quad
+\varepsilon(T)=o(T^{q_n}).
+$$
+
+若 $\alpha\ne q_i$ 对所有指标成立，则
+
+$$
+\lim_{T\downarrow0}R_\alpha(T)=\frac1{2\beta}\#\{i:q_i>\alpha\}.
+$$
+
+证明。置 $h=(\alpha-q_i)_+$。当 $0<T\le1$ 时，$T^h(1+\lambda_i/(\beta T^\alpha))$ 位于固定正区间 $[\min(1,c/\beta),1+C/\beta]$，因此取对数得到各指标共同的有界余项；有限求和给出信息首项。置 $\delta(T)=\varepsilon(T)/T^{q_n}$，则每个风险项非负且不超过 $\delta(T)/c$，而最深指标的风险项至少为 $\delta(T)/(\beta\delta(T)+C)$。上界证明充分性；若总风险趋零，该下界也趋零，由恒等式 $\delta=Cv/(1-\beta v)$（其中 $v=\delta/(\beta\delta+C)$）得到必要性。最后按 $\alpha<q_i$ 或 $\alpha>q_i$ 分别将单项分母除以 $T^\alpha$ 或 $T^{q_i}$，得到阈值风险极限并求和。
+
+## 追加锚（本行以下为增补区）
+
 ### 追加定理 18.1：平移的最大弱导数域
 
 **定理 18.1（光滑紧支测试与实际 L² 平移轨道）。** 设 $f,h:\mathbb R\to\mathbb C$ 均对 Lebesgue 测度 $dx$ 平方可积，记 $[f],[h]\in L^2(\mathbb R;\mathbb C)$ 为它们的几乎处处等价类，并令 $V(t)[f]=[x\mapsto f(x+t)]$。则
