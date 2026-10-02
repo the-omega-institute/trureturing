@@ -1,0 +1,66 @@
+**定理 51.5（准确相位识别的分离尺度）。** 固定 $0<\gamma<1/2$，令
+
+$$
+\Theta_\gamma=\{0,1\}\cup[\gamma,1-\gamma],\qquad
+S=\frac{452-315\sqrt2}{75}>0.
+\tag{51.10}
+$$
+
+采用 $\gamma/2,1-\gamma/2$ 替换推论51.4的两个阈值，等号分别归于端点分支。该规则对 $\Theta_\gamma$ 的一致错误至多 $2e^{-m\gamma^2/72}$。对任意 $0<\delta<1$，充分样本条件为
+
+$$
+m\ge\left\lceil72\gamma^{-2}\log(2/\delta)\right\rceil.
+\tag{51.11}
+$$
+
+反之，如果任意完整记录规则在 $\Theta_\gamma$ 上一致错误至多 $\delta$，其中 $0<\delta<1/2$，那么必要条件为
+
+$$
+m\ge\frac{\operatorname{kl}(1-\delta,\delta)}{3S\gamma^2},\qquad
+\operatorname{kl}(1-\delta,\delta)
+=(1-2\delta)\log\frac{1-\delta}{\delta}.
+\tag{51.12}
+$$
+
+特别在 $0<\delta\le1/4$，必要样本数至少为
+$\log(1/\delta)/(12S\gamma^2)$，与充分界同为 $\gamma^{-2}\log(1/\delta)$ 阶。
+
+证明。在分离集合中，错误都要求 $|\beta-\alpha|\ge\gamma/2$，式（51.4）给充分界，包括阈值等号。
+
+必要界使用完整 $(X,Y)$，而不先压缩成匹配数。对任意 $a,b\in[0,1]$，共同输入因子逐项消去，得到
+
+$$
+\begin{aligned}
+\operatorname{KL}(P_a\Vert P_b)
+&=\sum_{c=0}^2\pi_c\sum_{y=0}^2
+q_a(c,y)\log\frac{q_a(c,y)}{q_b(c,y)},\\
+\operatorname{KL}(P_a^m\Vert P_b^m)
+&=m\operatorname{KL}(P_a\Vert P_b).
+\end{aligned}
+\tag{51.13}
+$$
+
+所有坐标正，似然比有限；独立记录的对数似然相加。取 $a=\gamma,b=0$，成熟的 $\operatorname{KL}\le\chi^2$ 比较给
+
+$$
+\operatorname{KL}(P_\gamma\Vert P_0)
+\le\sum_c\pi_c\sum_y
+\frac{(q_\gamma(c,y)-1/3)^2}{1/3}
+=3\gamma^2\sum_c\pi_c\|w_c\|_2^2
+=3S\gamma^2.
+\tag{51.14}
+$$
+
+其中类0、2的平方和相同，类1的平方和为 $1/24$；将 $w_0=(1/6,\sqrt2-4/3,7/6-\sqrt2)$ 代入给式（51.10）的 $S$。这里没有随尾长度下降的质量因子。
+
+令事件 $E$ 为规则输出非零相位。在 $P_\gamma^m$ 下其概率至少 $1-\delta$，在 $P_0^m$ 下至多 $\delta$。对事件及其补集使用 log-sum／KL 数据处理不等式，就有
+
+$$
+\operatorname{KL}(P_\gamma^m\Vert P_0^m)
+\ge\operatorname{kl}(P_\gamma^m(E),P_0^m(E))
+\ge\operatorname{kl}(1-\delta,\delta).
+\tag{51.15}
+$$
+
+最后一步在第一参数大于第二参数的区域中，二元 KL 随第一参数增大、随第二参数减小。独立算法随机化只是在记录之后加同一个 Markov 核，不改变此不等式。这个事件级变换的成熟供应是 Kaufmann、Cappé、Garivier，[*On the Complexity of Best-Arm Identification in Multi-Armed Bandit Models*](https://jmlr.org/papers/volume17/kaufman16a/kaufman16a.pdf)，JMLR 17:1–42，Appendix A.1、Lemma 19；此处取固定停止时刻 $m$，不需自适应 bandit 条件。式（51.13）–（51.15）给必要界。$\delta\le1/4$ 时 $1-2\delta\ge1/2$ 且 $1-\delta\ge\sqrt\delta$，故二元 KL 至少为 $\log(1/\delta)/4$，得到明确的同阶范围。$\square$
+
