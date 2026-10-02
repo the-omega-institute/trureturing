@@ -22220,3 +22220,215 @@ It is only a numerical witness, not a covering system.
 
 This is a necessary numerical floor only; it does not exclude the
 unrestricted high-factor branch or settle Erdős #7.
+
+## 184. Distinct odd divisor-closed families invalidate the raw coprime-density shortcut
+
+The finite counterexamples already recorded in
+[McNew--Setty](../../../../../../Library/Arith/mcnewsetty2026covering.md)
+show that the pairwise-coprime part of inclusion--exclusion is not a valid
+universal upper bound when numerical moduli may repeat. The same shortcut
+still fails after imposing the structural conditions relevant here: distinct
+odd numerical moduli, divisor closure, and irredundancy.
+
+For a finite set \(M\) of numerical moduli, write (U(M)) as in (DC1),
+and let \(\delta(M)\) denote the density of the union of the displayed
+residue classes.
+
+\[
+ U(M)=
+ \sum_{\substack{\varnothing\ne I\subseteq M\\
+                   I\ {\rm pairwise\ coprime}}}
+       \frac{(-1)^{|I|+1}}{\prod_{m\in I}m}.
+\tag{DC1}
+\]
+
+Let \(a\) be an odd prime and let \(S\) be a finite set of different odd
+primes not containing \(a\). Define the divisor-closed labelled family
+
+\[
+ D_a(S)=\{a\}\cup S\cup\{ap:p\in S\}.
+\tag{DC2}
+\]
+
+Give the prime classes residue \(1\), and give every composite class \(ap\)
+residue \(0\). Comparable classes are disjoint because their residues differ
+on the shared prime coordinate. Every class has a private CRT point: for
+\(ap\) set the \(a\)- and \(p\)-coordinates to \(0\) and all other prime
+coordinates to \(2\); for a prime class set its own coordinate to \(1\) and
+all other coordinates to \(2\). Thus this is an irredundant family with one
+common CRT source.
+
+Put
+
+\[
+ H_S=\prod_{p\in S}\left(1-\frac1p\right),\qquad
+ s_S=\sum_{p\in S}\frac1{p-1},\qquad
+ R_S=\prod_{p\in S}\left(1-\frac1{p-1}\right).
+\]
+
+Grouping the pairwise-coprime subsets in (DC1) according to the \(a\)-block
+gives
+
+\[
+ 1-U(D_a(S))=\frac{H_S}{a}\bigl(a-1-s_S\bigr).
+\tag{DC3}
+\]
+
+The actual uncovered density of the displayed residue classes is instead
+
+\[
+ \Delta_a(S)=\frac{H_S}{a}\bigl(a-2+R_S\bigr).
+\tag{DC4}
+\]
+
+Indeed, when the \(a\)-coordinate is nonzero and different from \(1\), only
+the prime classes in \(S\) have to be avoided; when it is \(0\), each
+\(p\)-coordinate must avoid both \(0\) and \(1\). The two formulas are exact
+finite CRT counts, not independent marginal estimates.
+
+Choose disjoint prime sets \(S,T\), avoiding \(3,5\), with
+
+\[
+ s_S>4,\qquad s_T>8.
+\tag{DC5}
+\]
+
+Such finite sets exist because the reciprocal sum of the primes, and hence
+the sum of \(1/(p-1)\), diverges after deleting finitely many primes. From
+(DC3)--(DC4),
+
+\[
+ 1-U(D_3(S))< -\Delta_3(S)<0,\qquad
+ 1-U(D_5(T))< -\Delta_5(T)<0.
+\]
+
+The two blocks use disjoint CRT coordinates. Therefore their raw expressions
+and their actual survivor densities tensorize:
+
+\[
+ 1-U(D_3(S)\cup D_5(T))
+   =\bigl(1-U(D_3(S))\bigr)\bigl(1-U(D_5(T))\bigr)
+   >\Delta_3(S)\Delta_5(T)
+   =1-\delta(D_3(S)\cup D_5(T)).
+\tag{DC6}
+\]
+
+Consequently
+
+\[
+\boxed{U(D_3(S)\cup D_5(T))<\delta(D_3(S)\cup D_5(T))<1.}
+\]
+
+This rules out repairing the raw pairwise-coprime density shortcut merely by
+adding distinctness, oddness, divisor closure, irredundancy, or a common CRT
+source. It is not a whole-cover counterexample: the displayed family still
+has a positive survivor. It therefore does not refute Erdős #7.
+
+### A complete two-owner budget on the same source
+
+The failed shortcut can nevertheless be replaced by an exact budget that
+keeps the original labels and phases. Let \(D\) be any finite actual whole
+cover, \(Q=\operatorname{lcm}(D)\), \(A_d\) its labelled residue class, and
+
+\[
+ O(x)=\{d\in D:x\in A_d\}.
+\]
+
+For \(x\in\mathbb Z/Q\mathbb Z\), define
+
+\[
+ \chi(x)=
+ \sum_{\substack{\varnothing\ne I\subseteq O(x)\\
+                   I\ {\rm pairwise\ coprime}}}
+ (-1)^{|I|+1}.
+\tag{DC7}
+\]
+
+Interchanging the finite sums and using CRT on every pairwise-coprime
+subset gives the exact identity
+
+\[
+ U(D)=\frac1Q\sum_{x\bmod Q}\chi(x).
+\tag{DC8}
+\]
+
+Define the signed-overlap defect
+
+\[
+ {\cal C}(D)=\frac1Q\sum_{x\bmod Q}(1-\chi(x))_+.
+\]
+
+The scalar identity \((1-t)_+=1-t+(t-1)_+\) yields
+
+\[
+ {\cal C}(D)=1-U(D)+\frac1Q\sum_{x\bmod Q}(\chi(x)-1)_+.
+\tag{DC9}
+\]
+
+If \(K_I=\{x:O(x)=I\}\) denotes an exact owner atom, the correction term
+in (DC9) is exactly
+
+\[
+ \sum_{\varnothing\ne I\subseteq D}(\chi(I)-1)_+\,\mu(K_I).
+\tag{DC9a}
+\]
+
+Here \(\chi(I)\) is the sum in (DC7) with \(O(x)\) replaced by \(I\).
+
+Thus (DC10) keeps only the two-owner atoms with noncoprime labels; all higher
+owner atoms remain an explicit unpaid term.
+
+For a pair of original labels with \(\gcd(d,g)>1\), let
+
+\[
+ K_{d,g}=(A_d\cap A_g)\setminus
+          \bigcup_{m\in D\setminus\{d,g\}}A_m
+\]
+
+be its complete two-owner region. On \(K_{d,g}\), the coprime graph has two
+isolated vertices, so \(\chi=2\). Distinct complete two-owner regions are
+disjoint. Hence (DC9) gives the source-preserving lower budget
+
+\[
+ \boxed{
+ {\cal C}(D)\ge 1-U(D)+
+ \sum_{\substack{\{d,g\}\subseteq D\\\gcd(d,g)>1}}
+ \mu(K_{d,g}) .}
+\tag{DC10}
+\]
+
+For any reciprocal-pair collection whose receiving packets are nonempty,
+the already proved complete-private-region result in Section 176 gives
+\(K_{d,g}\ne\varnothing\). Each such region has mass at least \(1/Q\), so
+
+\[
+ {\cal C}(D)\ge 1-U(D)+\frac{r}{Q}
+\tag{DC11}
+\]
+
+for \(r\) such pairs with \(\gcd(d,g)>1\). This is a joint-overlap budget,
+not a count or modulus-sum bound for a legal AP repair. It does not force a
+composite reciprocal pair, establish the private-hull divisibilities needed
+by Sections 176--179, or settle the unrestricted problem. The missing step
+remains a whole-cover argument that pays the complete phase-sensitive repair
+liability.
+
+The external Filaseta--Kalogirou result already recorded in
+[the reciprocal-gap source note](../../../../../../Library/Arith/filaseta2026reciprocalgap.md)
+supplies a separate whole-cover input. In an all-odd family, the classes whose
+moduli are powers of (3) have total mass below (1/2), so the complement of
+that (3)-smooth subfamily has density greater than (1/12). Their Theorem 1
+therefore gives
+
+\[
+ \sum_{d\in D}\frac1d\ge1+\exp(-3.363054\times10^{21}).
+\tag{DC12}
+\]
+
+The proof also forces two distinct original classes with nonempty intersection
+and both moduli at most
+\(K=\exp(1.681527\times10^{21})\), hence an intersection mass greater than
+\(K^{-2}\). This uses the original labels and phases, but it does not identify
+a reciprocal private-hull pair or pay its complete \(K_{d,g}\) liability. It
+can be used as a bounded-overlap search input; it cannot be substituted for
+(RH1)--(RH6).
