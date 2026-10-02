@@ -1,8 +1,8 @@
 /- GID: D5/S3/Factorization/Galois/GoldenCubicCommonDifferentSupport
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Factorization/Galois/GoldenCubicCommonDifferentSupport
    mirror-E: none(waiver:algebraically-proved)
-   anchors: [lit/tauceti2026tamedifferent]
+   anchors: []
    utility: none
    digest: Exact local ramification, Galois, and different computations for the actual common golden cubic fields. -/
 
@@ -60,7 +60,6 @@ open D5.S3.Factorization.Galois.GoldenCubicBlockPositiveRootTower
 open NumberField IsDedekindDomain.HeightOneSpectrum
 open scoped NumberField Valued WithZeroTopology Pointwise
 open UniqueFactorizationMonoid NumberField.InfinitePlace
-open private base_not_cube from D5.S3.Factorization.Galois.GoldenCubicBlockKummerTower
 
 namespace D5.S3.Factorization.Galois.GoldenCubicBlockCommonDiscriminants
 
@@ -70,6 +69,40 @@ theorem actual_common_cubic_semidirect (J : ℕ) :
       (∀ x, φ (Multiplicative.ofAdd (1 : ZMod 2)) x = x⁻¹) ∧
       Nonempty ((Fin J → Multiplicative (ZMod 3)) ⋊[φ]
         Multiplicative (ZMod 2) ≃* (complexTower J ≃ₐ[ℚ] complexTower J)) := by
+  have base_not_cube (a : ℕ) (ha : ¬ ∃ z : ℤ, z ^ 3 = (a : ℤ)) :
+      ¬ ∃ x : Base, x ^ 3 = (a : Base) := by
+    have hq : ∀ y : ℚ, y ^ 3 ≠ (a : ℚ) := by
+      intro y hy
+      obtain ⟨z, hz⟩ :=
+        IsIntegrallyClosed.exists_algebraMap_eq_of_isIntegral_pow (R := ℤ) (K := ℚ)
+          (show 0 < 3 by decide) (by rw [hy]; exact isIntegral_intCast (a : ℤ))
+      apply ha
+      refine ⟨z, ?_⟩
+      have hzpow : (z : ℚ) ^ 3 = (a : ℚ) := by
+        calc
+          (z : ℚ) ^ 3 = y ^ 3 := by simpa using congrArg (fun t : ℚ => t ^ (3 : ℕ)) hz
+          _ = (a : ℚ) := hy
+      exact_mod_cast hzpow
+    have hirr : Irreducible (Polynomial.X ^ 3 - Polynomial.C (a : ℚ)) :=
+      (X_pow_sub_C_irreducible_iff_of_prime (by decide : Nat.Prime 3)).2 hq
+    rintro ⟨x, hx⟩
+    have haeval : Polynomial.aeval x (Polynomial.X ^ 3 - Polynomial.C (a : ℚ)) = 0 := by
+      simp [hx]
+    have hmin : Polynomial.X ^ 3 - Polynomial.C (a : ℚ) = minpoly ℚ x := by
+      exact minpoly.eq_of_irreducible_of_monic hirr haeval
+        (Polynomial.monic_X_pow_sub_C (a : ℚ) (by decide : 3 ≠ 0))
+    have hdeg : (minpoly ℚ x).natDegree = 3 := by
+      rw [← hmin, Polynomial.natDegree_X_pow_sub_C]
+    have hbound : (minpoly ℚ x).natDegree ≤ Module.finrank ℚ Base :=
+      minpoly.natDegree_le x
+    have hbase : Module.finrank ℚ Base = 2 := by
+      letI : NeZero (3 : ℚ) := ⟨by norm_num⟩
+      letI : IsCyclotomicExtension {3} ℚ Base :=
+        CyclotomicField.isCyclotomicExtension 3 ℚ
+      rw [IsCyclotomicExtension.finrank (n := 3) Base
+        (Polynomial.cyclotomic.irreducible_rat (by decide : 0 < 3))]
+      decide
+    omega
   have actual_common_cubic_full_coordinates (J : ℕ) :
       ∃ beta : Fin J → complexTower J,
         (∀ i, (beta i : ℂ) = positiveRoot (i.val + 1)) ∧

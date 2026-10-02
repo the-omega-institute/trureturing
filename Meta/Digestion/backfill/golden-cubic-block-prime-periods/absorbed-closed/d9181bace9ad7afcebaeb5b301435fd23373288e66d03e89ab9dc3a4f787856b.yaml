@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:d9181bace9ad7afcebaeb5b301435fd23373288e66d03e89ab9dc3a4f787856b
   normalized_sha256: sha256:d9181bace9ad7afcebaeb5b301435fd23373288e66d03e89ab9dc3a4f787856b
 cas_ref: sha256:d9181bace9ad7afcebaeb5b301435fd23373288e66d03e89ab9dc3a4f787856b
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/DyadicSeriesIntegerObstruction.dyadic_series_integer_obstruction
+    target_statement_id: sha256:097ac6aaaabbd10c859311a6540d52317d44f80a62012466037fcdc16c4d5455
 receipts:
   unresolved_subitems: []

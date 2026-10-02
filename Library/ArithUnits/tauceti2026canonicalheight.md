@@ -18,6 +18,12 @@ triage: anchor
 
 # Quadratic heights and point transport
 
+## Locator
+
+https://github.com/TauCetiProject/TauCeti/tree/934db6ae0034643ffe7b5180242f9ec4c00a56ae
+
+The immutable source tree contains the selected canonical-height, parallelogram and elliptic variable-change sources listed below.
+
 The immutable TauCeti revision is
 `934db6ae0034643ffe7b5180242f9ec4c00a56ae`. Its selected sources are:
 

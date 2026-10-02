@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Factorization/Mordell/PointVariableChange
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [lit/tauceti2026canonicalheight]
+   anchors: []
    utility: none
    digest: An admissible change of Weierstrass variables induces an additive equivalence of elliptic point groups. -/
 

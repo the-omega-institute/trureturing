@@ -15,6 +15,12 @@ triage: anchor
 
 # Prime-power traces and the different
 
+## Locator
+
+https://github.com/TauCetiProject/TauCeti/tree/33c2099c678ea391f7ea3e0ddaf945a76a625e5d
+
+The immutable source tree contains the selected prime-power trace, different and adic-completion sources listed below.
+
 The immutable source revision is `33c2099c678ea391f7ea3e0ddaf945a76a625e5d`
 of TauCeti. The selected source closure is:
 

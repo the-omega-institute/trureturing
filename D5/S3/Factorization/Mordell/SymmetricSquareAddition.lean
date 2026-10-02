@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Factorization/Mordell/SymmetricSquareAddition
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [lit/tauceti2026canonicalheight]
+   anchors: []
    utility: none
    digest: Symmetric-square point coordinates satisfy the homogeneous addition and subtraction identity. -/
 

@@ -40,4 +40,3 @@ If the base field contains a primitive cube root of unity, the generated radical
 
 - Truth anchor: `D5/S3/Factorization/Galois/CubicRadicalTowerDegree.cubic_radical_tower_degree_of_saturated_noncube_tests`
 - Truth anchor: `D5/S3/Factorization/Galois/CubicRadicalTowerDegree.finite_valuation_degree_and_unit_noncube`
-- Dependency: [D5/S3/Factorization/Galois/GoldenCubicBlockKummerTower](GoldenCubicBlockKummerTower.md)

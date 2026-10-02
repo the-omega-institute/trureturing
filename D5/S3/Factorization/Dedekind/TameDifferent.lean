@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Factorization/Dedekind/TameDifferent
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [lit/tauceti2026tamedifferent]
+   anchors: []
    utility: none
    digest: Prime-power quotient traces and Dedekind different divisibility detect tame ramification. -/
 

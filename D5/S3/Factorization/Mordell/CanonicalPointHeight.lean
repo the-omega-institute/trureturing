@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Factorization/Mordell/CanonicalPointHeight
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [lit/tauceti2026canonicalheight]
+   anchors: []
    utility: none
    digest: The doubling height sequence converges uniformly up to bounded comparison and yields the exact parallelogram law. -/
 

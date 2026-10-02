@@ -6,8 +6,11 @@
    utility: none
    digest: Saturated base-field noncube tests force every cubic radical stage to have degree three. -/
 
-import D5.S3.Factorization.Galois.GoldenCubicBlockKummerTower
 import Mathlib.FieldTheory.KummerExtension
+import Mathlib.FieldTheory.Relrank
+import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
+import Mathlib.NumberTheory.Cyclotomic.PrimitiveRoots
 import Mathlib.Tactic
 import Mathlib.NumberTheory.Padics.HeightOneSpectrum
 
@@ -16,7 +19,7 @@ set_option relaxedAutoImplicit false
 
 open scoped WithZero
 
-open private cubic_stage_descent from D5.S3.Factorization.Galois.GoldenCubicBlockKummerTower
+universe u v
 
 namespace D5.S3.Factorization.Galois.CubicRadicalTowerDegree
 
@@ -28,7 +31,7 @@ noncomputable def radicalTower {K L : Type*} [Field K] [Field L] [Algebra K L]
 /-- Base-field tests that detect noncubes and are unchanged by earlier radical powers
 certify every degree increase and preserve terminal noncube tests in the radical tower. -/
 theorem cubic_radical_tower_degree_of_saturated_noncube_tests
-    {K L : Type*} [Field K] [Field L] [Algebra K L]
+    {K : Type u} {L : Type v} [Field K] [Field L] [Algebra K L]
     (ζ : K) (hζ : IsPrimitiveRoot ζ 3)
     (rad : ℕ → K) (roots : ℕ → L) (J : ℕ)
     (hroots : ∀ j, 1 ≤ j → j ≤ J → roots j ^ 3 = algebraMap K L (rad j))
@@ -40,6 +43,121 @@ theorem cubic_radical_tower_degree_of_saturated_noncube_tests
     Module.finrank K (radicalTower (K := K) roots J) = 3 ^ J ∧
       ∀ a, P J a → ∀ x : radicalTower (K := K) roots J,
         x ^ 3 ≠ algebraMap K (radicalTower (K := K) roots J) a := by
+  have cubic_stage_descent {K L : Type v} [Field K] [Field L] [Algebra K L]
+      [FiniteDimensional K L] {ζ a b : K}
+      (hζ : IsPrimitiveRoot ζ 3) (ha : a ≠ 0) (hb : b ≠ 0)
+      (hdeg : Module.finrank K L = 3) (β z : L)
+      (hβ : β ^ 3 = algebraMap K L b)
+      (hgen : IntermediateField.adjoin K {β} = ⊤)
+      (hz : z ^ 3 = algebraMap K L a) :
+      ∃ e : ℕ, e ≤ 3 ∧ ∃ c : K, a * b ^ e = c ^ 3 := by
+    have cubic_descent {K L : Type v} [Field K] [Field L] [Algebra K L]
+        {ζ a b : K} (hζ : IsPrimitiveRoot ζ 3) (ha : a ≠ 0) (hb : b ≠ 0)
+        (σ : L ≃ₐ[K] L) (β z : L)
+        (hβ : β ^ 3 = algebraMap K L b)
+        (hσβ : σ β = algebraMap K L ζ * β)
+        (hz : z ^ 3 = algebraMap K L a)
+        (hfix : ∀ y : L, σ y = y → ∃ c : K, algebraMap K L c = y) :
+        ∃ e : ℕ, e ≤ 3 ∧ ∃ c : K, a * b ^ e = c ^ 3 := by
+      have haL : algebraMap K L a ≠ 0 := by
+        simpa using (algebraMap K L).injective.ne ha
+      have hbL : algebraMap K L b ≠ 0 := by
+        simpa using (algebraMap K L).injective.ne hb
+      have hz0 : z ≠ 0 := by
+        intro h
+        exact haL (hz.symm.trans (by simp [h]))
+      have hβ0 : β ≠ 0 := by
+        intro h
+        exact hbL (hβ.symm.trans (by simp [h]))
+      have hratio : (σ z / z) ^ 3 = 1 := by
+        calc
+          (σ z / z) ^ 3 = σ (z ^ 3) / z ^ 3 := by rw [div_pow, map_pow]
+          _ = algebraMap K L a / algebraMap K L a := by rw [hz, σ.commutes]
+          _ = 1 := div_self haL
+      have hζL : IsPrimitiveRoot (algebraMap K L ζ) 3 :=
+        hζ.map_of_injective (algebraMap K L).injective
+      obtain ⟨k, hk, hpow⟩ := hζL.eq_pow_of_pow_eq_one hratio
+      have hσz : σ z = (algebraMap K L ζ) ^ k * z := by
+        calc
+          σ z = (σ z / z) * z := (div_mul_cancel₀ _ hz0).symm
+          _ = (algebraMap K L ζ) ^ k * z := by rw [← hpow]
+      have hσq : σ (z / β ^ k) = z / β ^ k := by
+        rw [map_div₀, map_pow, hσz, hσβ, mul_pow]
+        field_simp [hβ0, hζL.ne_zero]
+      obtain ⟨c, hc⟩ := hfix _ hσq
+      have hzrep : z = algebraMap K L c * β ^ k := by
+        calc
+          z = (z / β ^ k) * β ^ k := (div_mul_cancel₀ _ (pow_ne_zero _ hβ0)).symm
+          _ = algebraMap K L c * β ^ k := by rw [← hc]
+      have hclass : a = c ^ 3 * b ^ k := (algebraMap K L).injective (by
+        calc
+          algebraMap K L a = z ^ 3 := hz.symm
+          _ = (algebraMap K L c * β ^ k) ^ 3 := by rw [hzrep]
+          _ = algebraMap K L (c ^ 3 * b ^ k) := by
+            rw [mul_pow, ← pow_mul, mul_comm k 3, pow_mul, hβ, map_mul, map_pow, map_pow])
+      refine ⟨3 - k, Nat.sub_le _ _, c * b, ?_⟩
+      rw [hclass, mul_assoc, ← pow_add, Nat.add_sub_of_le hk.le, mul_pow]
+    have hζdim : (primitiveRoots (Module.finrank K L) K).Nonempty := by
+      rw [hdeg]
+      exact ⟨ζ, (mem_primitiveRoots (by decide : 0 < 3)).mpr hζ⟩
+    have hβdim : β ^ (Module.finrank K L) = algebraMap K L b := by
+      simpa only [hdeg] using hβ
+    have hsplit : Polynomial.IsSplittingField K L
+        (Polynomial.X ^ 3 - Polynomial.C b) := by
+      simpa only [hdeg] using
+        (isSplittingField_X_pow_sub_C_of_root_adjoin_eq_top hζdim hβdim hgen)
+    letI : Polynomial.IsSplittingField K L
+        (Polynomial.X ^ 3 - Polynomial.C b) := hsplit
+    have hirr : Irreducible (Polynomial.X ^ 3 - Polynomial.C b) := by
+      simpa only [hdeg] using
+        (irreducible_X_pow_sub_C_of_root_adjoin_eq_top hβdim hgen)
+    letI : NeZero (3 : ℕ) := ⟨by decide⟩
+    letI : IsGalois K L :=
+      isGalois_of_isSplittingField_X_pow_sub_C
+        ⟨ζ, (mem_primitiveRoots (by decide : 0 < 3)).mpr hζ⟩ hirr L
+    let σ : L ≃ₐ[K] L :=
+      (autEquivZmod hirr L hζ).symm (Multiplicative.ofAdd ((1 : ℕ) : ZMod 3))
+    have hσβ : σ β = algebraMap K L ζ * β := by
+      simpa only [σ, pow_one, Algebra.smul_def] using
+        (autEquivZmod_symm_apply_natCast hirr L hβ hζ 1)
+    have hβ0 : β ≠ 0 := by
+      intro h
+      apply (algebraMap K L).injective.ne hb
+      simpa [h] using hβ.symm
+    have hσ : σ ≠ 1 := by
+      intro h
+      have heq : (algebraMap K L ζ) * β = 1 * β := by
+        simpa [h] using hσβ.symm
+      exact hζ.ne_one (by decide : 1 < 3)
+        ((algebraMap K L).injective (by simpa using mul_right_cancel₀ hβ0 heq))
+    exact cubic_descent hζ ha hb σ β z hβ hσβ hz
+      (fun y hy => by
+        have hcard : Nat.card (L ≃ₐ[K] L) = 3 := by
+          rw [IsGalois.card_aut_eq_finrank, hdeg]
+        let Hfix : Subgroup (L ≃ₐ[K] L) := {
+          carrier := {τ | τ y = y}
+          one_mem' := by simp
+          mul_mem' := by
+            intro τ υ hτ hυ
+            change (τ * υ) y = y
+            rw [AlgEquiv.mul_apply, hυ, hτ]
+          inv_mem' := by
+            intro τ hτ
+            change τ.symm y = y
+            apply τ.injective
+            simpa using hτ.symm
+        }
+        letI : Fact (Nat.Prime 3) := ⟨by decide⟩
+        have hzp : Subgroup.zpowers σ = ⊤ :=
+          zpowers_eq_top_of_prime_card hcard hσ
+        have htop : Hfix = ⊤ := by
+          apply top_unique
+          rw [← hzp]
+          exact Subgroup.zpowers_le.mpr hy
+        apply (IsGalois.mem_range_algebraMap_iff_fixed y).2
+        intro τ
+        have hτ : τ ∈ Hfix := by rw [htop]; exact Subgroup.mem_top τ
+        exact hτ)
   have hrad : ∀ j, 1 ≤ j → j ≤ J → rad j ≠ 0 := by
     intro j hj hjJ hzero
     have htest := hPfresh (j - 1) (by omega)

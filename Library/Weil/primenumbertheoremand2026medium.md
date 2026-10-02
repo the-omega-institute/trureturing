@@ -21,6 +21,12 @@ triage: anchor
 
 # Medium prime number theorem
 
+## Locator
+
+https://github.com/AlexKontorovich/PrimeNumberTheoremAnd/tree/6a380f0c4658c04a420a9eb00b1ed62a1e3fde01
+
+The immutable source tree contains `PrimeNumberTheoremAnd/MellinCalculus.lean` and `PrimeNumberTheoremAnd/MediumPNT.lean`, the consumed sources for the medium prime number theorem.
+
 Source: https://github.com/AlexKontorovich/PrimeNumberTheoremAnd/tree/6a380f0c4658c04a420a9eb00b1ed62a1e3fde01
 
 The immutable source uses Lean 4.32.2 and Mathlib

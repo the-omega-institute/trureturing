@@ -4,6 +4,6 @@ fingerprints:
 cas_ref: sha256:f1b03e957b5df7ec29bf05780bd0bc64949552af4a95eaf19fa08d6ecdbceb1e
 coverage_gids:
   - gid: D5/S3/Arith/Primes/FibonacciOddTwentyfiveNonsquare.fibonacci_odd_twentyfive_normalized_nonsquare
-    target_statement_id: sha256:9b159bfcb2bc71cfc2f1d19752d92f52f684ba2e7e3e0c018aefcf3b58b0930f
+    target_statement_id: sha256:bdab5214d6512860ffddd8442f198d4f9f657ead28a2fb405521fe3716d612bf
 receipts:
   unresolved_subitems: []

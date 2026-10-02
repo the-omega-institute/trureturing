@@ -1,8 +1,8 @@
 /- GID: D5/S3/Factorization/Galois/GoldenCubicCommonInertiaAndSignature
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Factorization/Galois/GoldenCubicCommonInertiaAndSignature
    mirror-E: none(waiver:algebraically-proved)
-   anchors: [lit/tauceti2026tamedifferent]
+   anchors: []
    utility: none
    digest: Exact local ramification, Galois, and different computations for the actual common golden cubic fields. -/
 
@@ -60,7 +60,6 @@ open D5.S3.Factorization.Galois.GoldenCubicBlockPositiveRootTower
 open NumberField IsDedekindDomain.HeightOneSpectrum
 open scoped NumberField Valued WithZeroTopology Pointwise
 open UniqueFactorizationMonoid NumberField.InfinitePlace
-open private base_not_cube from D5.S3.Factorization.Galois.GoldenCubicBlockKummerTower
 
 namespace D5.S3.Factorization.Galois.GoldenCubicBlockCommonDiscriminants
 

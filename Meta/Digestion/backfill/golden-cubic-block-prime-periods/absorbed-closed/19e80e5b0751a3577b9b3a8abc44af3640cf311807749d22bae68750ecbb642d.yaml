@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:19e80e5b0751a3577b9b3a8abc44af3640cf311807749d22bae68750ecbb642d
   normalized_sha256: sha256:19e80e5b0751a3577b9b3a8abc44af3640cf311807749d22bae68750ecbb642d
 cas_ref: sha256:19e80e5b0751a3577b9b3a8abc44af3640cf311807749d22bae68750ecbb642d
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/Galois/CubicRadicalTowerDegree.finite_valuation_degree_and_unit_noncube
+    target_statement_id: sha256:df2f5a857aefd5e054f2bad0d4ba87bd8a68188b65439a01059d88a99e99d2af
 receipts:
   unresolved_subitems: []
