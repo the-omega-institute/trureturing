@@ -4478,3 +4478,413 @@ Fibonacci 数量读数可以是组成任务的精确边界，但不能自动升�
 新增 Lean 声明、消化账目或原胞自动机内容。
 
 ## 35.99 追加锚
+
+## 36. 跨分辨率的联合 FIB 端点码与动态自然性
+
+§35 的取得码 $c_K$ 针对一个固定合法比较域；把它拆成不同分辨率的码时，
+还须保证这些码属于同一实际历史，且更新后的粗读数可以由声明的细读数取得。
+本节给出这两项义务与端点核、行为核的接合接口。§§31–32 的合法性、事件与
+有限续接，§33 的端点身份，§34 的共同历史四视图，以及 §35 的双向取得判据
+分别承担不同部分；它们没有单独给出下面的具体 FIB 联合塔。
+
+### 36.1 固定共同历史域上的分辨率码
+
+令 $a$ 表示一个取得合同类型，固定实际来源、绝对纪元、参考类和比较权限类型。
+选择一个在全部分辨率上共同使用的实际历史域
+
+$$
+D^a_\infty\subseteq D_{K_a}\subseteq H_R,
+\qquad n\in\mathbb N=\{0,1,2,\ldots\}.
+\tag{PG.3601}
+$$
+
+$D_{K_a}$ 取 §35.1 的含义。同一权限类型内仍可有不同的实际权限见证；允许
+比较两个历史不等于允许它们执行同一动作。若每层原有不同取得域 $D^a_n$，
+须先声明共同子域 $D^a_\infty\subseteq\bigcap_nD^a_n$，再在这个子域上写下
+所有等式；不能逐层换代表，或把不同来源的边缘读数乘起来当作历史。
+
+每层联合码保留以下数据：
+
+$$
+\begin{aligned}
+c^a_n(h)=\bigl(&\xi(h),\nu(h),r(h),A_n(h),
+\operatorname{cursor}_n(h),\rho_n(h),\pi(h);\\
+&\mathsf{Space}_n(h),\mathsf{Time}_n(h),
+\mathsf{Boundary}_n(h),\mathsf{Memory}_n(h)\bigr)
+\in C^a_n.
+\end{aligned}
+\tag{PG.3602}
+$$
+
+来源 $\xi$、纪元 $\nu$、参考类 $r$ 与实际权限 $\pi$ 是整份联合记录的共享
+元数据，不是四张视图各自选取的标签。$A_n$ 是指定分辨率下的档案，
+$\operatorname{cursor}_n$ 必须保留该层任务所需的有序地址与上下文；$\rho_n$
+是运行参考的相应读数。四视图复用 §34 的共同历史投影约定，时间视图不把
+分辨率指标 $n$ 当成绝对纪元，记忆视图也不预设只含一个来源后验就足够。
+$C^a_n$ 是合同声明的良构联合码空间，可以取实际像，也可以含尚未实现的候选
+码；元组的字段类型不授予独立组合它们的权限。
+
+与 §35 的固定域取得码接合，还须给出实际像上的分辨率选择
+
+$$
+\sigma^a_n:\operatorname{im}(c_{K_a}|_{D^a_\infty})\longrightarrow C^a_n,
+\qquad
+c^a_n=\sigma^a_n\circ c_{K_a}|_{D^a_\infty}.
+\tag{PG.3603}
+$$
+
+这是合同义务：若所需视图依赖 $c_{K_a}$ 未取得的字段，便不能宣称已给出
+$\sigma^a_n$。增加取得支持须声明扩大后的合同，再固定它的共同域。
+[Transport–Memory](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)
+§23 的同一出生来源、§24 的绝对纪元与有序游标、§25 的档案和权限联合边界
+提供字段的语义依据；这些引用不证明 (PG.3602)–(PG.3603) 的具体取得实现。
+
+### 36.2 相容线程、实际像与分离
+
+对 $m\le n$ 给出限制映射 $r^a_{mn}:C^a_n\to C^a_m$，满足
+
+$$
+r^a_{nn}=\operatorname{id},\qquad
+r^a_{\ell m}\circ r^a_{mn}=r^a_{\ell n}\quad(\ell\le m\le n),
+\qquad
+c^a_m=r^a_{mn}\circ c^a_n.
+\tag{PG.3604}
+$$
+
+限制保留共享来源、纪元、参考类与权限见证，只按合同限制档案、游标、运行
+参考和四视图。它不是对四个边缘值任意实施四次互不相关的压缩。
+定义形式逆极限和实际线程为
+
+$$
+\begin{aligned}
+L^a&=\varprojlim_n C^a_n
+=\{x=(x_n)_n:\ r^a_{mn}(x_n)=x_m\ (m\le n)\},\\
+c^a_\infty(h)&=(c^a_n(h))_n,\qquad
+I^a=\operatorname{im}(c^a_\infty)\subseteq L^a.
+\end{aligned}
+\tag{PG.3605}
+$$
+
+$I^a$ 要求存在一个共同的 $h$ 实现全部层；$L^a$ 只检查码间限制相容。
+即便每层满足 $C^a_n=\operatorname{im}(c^a_n)$，也不能推出 $I^a=L^a$。
+$L^a\setminus I^a$ 中的幽灵线程不承担实际来源或端点语义。
+
+所有核都在同一个 $D^a_\infty$ 上比较。令
+$\eta_a:D^a_\infty\to E_a$ 是 §33–§35 意义下的完整端点映射；
+$\beta_a:D^a_\infty\to\mathcal B_a$ 是指定任务的完整有限续接响应。
+其测试族 $\mathcal Q$ 保留空路径当前读出、全部声明动作的合法性、事件、失败
+与任务所需记录，并对有类型前缀和续接封闭，如 §32.2 所规定。
+执行后报告失败与动作未定义须区分。由线程逐坐标相等，
+
+$$
+\ker(c^a_\infty)=\bigcap_n\ker(c^a_n).
+\tag{PG.3606}
+$$
+
+沿用 §§31.3、35.2–35.3 的实际像因子化判据，有
+
+$$
+\begin{aligned}
+\eta_a=\delta_a\circ c^a_\infty
+&\iff \ker(c^a_\infty)\subseteq\ker(\eta_a),\\
+c^a_\infty=\gamma_a\circ\eta_a
+&\iff \ker(\eta_a)\subseteq\ker(c^a_\infty),\\
+\beta_a=\theta_a\circ c^a_\infty
+&\iff \ker(c^a_\infty)\subseteq\ker(\beta_a),\\
+c^a_\infty=\zeta_a\circ\beta_a
+&\iff \ker(\beta_a)\subseteq\ker(c^a_\infty).
+\end{aligned}
+\tag{PG.3607}
+$$
+
+这里 $\delta_a:I^a\to\operatorname{im}\eta_a$、
+$\gamma_a:\operatorname{im}\eta_a\to I^a$、
+$\theta_a:I^a\to\operatorname{im}\beta_a$、
+$\zeta_a:\operatorname{im}\beta_a\to I^a$，存在时均唯一。
+按同一码或端点的任一实际代表定义因子，核包含保证代表无关；实际像保证唯一性。
+因而三份表示互相恢复的精确条件是
+
+$$
+\boxed{
+\ker(c^a_\infty)=\ker(\eta_a)=\ker(\beta_a)
+\quad\text{（仅在 }D^a_\infty\text{ 上）。}
+}
+\tag{PG.3608}
+$$
+
+端点分离只要求 (PG.3607) 第一行，不要求区分端点相同的全部历史。行为分离
+不自动等于端点分离，正如 §33 的端点拼接与行为核心之别。若某些档案或权限
+区别不影响指定任务，则联合码可以严格细于行为码；四视图也不因共同来源而
+逐一取得与端点相同的核。
+
+### 36.3 带前视深度的部分动作自然性
+
+对每条已声明的有类型动作 $e:a\to b$，目标合同须另给
+$D^b_\infty,c^b_n,r^b_{mn},L^b,I^b,\eta_b$。实际动作是
+
+$$
+T_e:D^a_\infty\longrightarrow
+\operatorname{Option}(L_e\times D^b_\infty).
+\tag{PG.3609}
+$$
+
+$\operatorname{none}$ 表示动作不合法；执行后报告失败若属于任务响应，则是
+带失败事件的 $\operatorname{some}(\ell,h')$，必要时把目标合同按终止类型分支。
+事件标签 $L_e$ 保留该任务要求的读数、writer 记录、grade 与权限结果，不能在
+限制时丢弃影响续接的事件区别。
+
+允许第 $n$ 层的后继依赖更细的输入。指定前视函数 $j_e:\mathbb N\to\mathbb N$
+及跨层更新
+
+$$
+\begin{gathered}
+j_e(n)\ge n,\qquad m\le n\Longrightarrow j_e(m)\le j_e(n),\\
+U_{e,n}:C^a_{j_e(n)}\longrightarrow
+\operatorname{Option}(L_e\times C^b_n).
+\end{gathered}
+\tag{PG.3610}
+$$
+
+单调性保证比较两层时存在所需的输入限制。以下交换式在每个
+$C^a_{j_e(n)}$ 的全部码上要求成立：
+
+$$
+\boxed{
+\operatorname{Option.map}(\operatorname{id}_{L_e}\times r^b_{mn})
+\circ U_{e,n}=U_{e,m}\circ r^a_{j_e(m),j_e(n)}
+\qquad(m\le n).
+}
+\tag{PG.3611}
+$$
+
+左侧先更新到目标第 $n$ 层，再限制到第 $m$ 层；右侧先把输入限制到
+$j_e(m)$，再更新。$\operatorname{Option.map}(\operatorname{id}\times r)$
+保持 $\operatorname{none}$，并把 $\operatorname{some}(\ell,z)$ 送到
+$\operatorname{some}(\ell,r(z))$。所以 (PG.3611) 同时约束合法性、事件标签
+与后继，不能只检查成功后继的四视图。
+
+与实际动作的下降还需逐层等式
+
+$$
+\boxed{
+U_{e,n}(c^a_{j_e(n)}(h))=
+\operatorname{Option.map}(\operatorname{id}_{L_e}\times c^b_n)(T_e(h)),
+\qquad h\in D^a_\infty.
+}
+\tag{PG.3612}
+$$
+
+若 $a=b$ 且动作保持同一比较域，下降式写为
+$U_{e,n}(c_{j_e(n)}(h))=\operatorname{Option.map}(\operatorname{id}\times c_n)(T_e(h))$。
+若动作改变来源、纪元、参考类或权限，必须使用 (PG.3609)–(PG.3612) 的目标
+合同：目标码记录实际的 $\xi(h'),\nu(h'),r(h'),\pi(h')$，并声明它们与旧字段
+的更新关系，不能默认为仍等于旧值。尤其 `ApplyRho` 的绝对纪元更新复用
+Transport–Memory §§23.5、24.2 的不重置来源约定，旧句柄是否持续有效另受
+目标权限合同约束；它不使 $h'$ 自动回到旧的固定纪元域。
+
+### 36.4 形式线程更新与可执行实际后继
+
+对 $x\in L^a$，令 $y_n=U_{e,n}(x_{j_e(n)})$。由 (PG.3611) 和线程相容性，
+若 $y_0=\operatorname{none}$，则每个 $y_n$ 都是 $\operatorname{none}$；若
+$y_0=\operatorname{some}(\ell,z_0)$，则每个 $y_n$ 都是
+$\operatorname{some}(\ell,z_n)$，且 $(z_n)_n\in L^b$。这使用了限制不会把
+$\operatorname{some}$ 变为 $\operatorname{none}$，且事件标签保持不变。因此
+
+$$
+\begin{aligned}
+U_{e,\infty}:L^a&\longrightarrow\operatorname{Option}(L_e\times L^b),\\
+U_{e,\infty}(x)&=
+\begin{cases}
+\operatorname{none},&y_0=\operatorname{none},\\
+\operatorname{some}(\ell,(z_n)_n),&
+y_n=\operatorname{some}(\ell,z_n)\ \text{对所有 }n.
+\end{cases}
+\end{aligned}
+\tag{PG.3613}
+$$
+
+(PG.3612) 则逐坐标给出实际下降的整体交换式
+
+$$
+U_{e,\infty}\circ c^a_\infty=
+\operatorname{Option.map}(\operatorname{id}_{L_e}\times c^b_\infty)\circ T_e.
+\tag{PG.3614}
+$$
+
+若只在实际输入码上检查 (PG.3611)，这个构造仅保证 $I^a$ 上的更新，不能
+宣称已经得到全 $L^a$ 上的自然更新。即便给出了 (PG.3613)，可执行实际后继
+仍须满足
+
+$$
+x\in I^a,\quad U_{e,\infty}(x)=\operatorname{some}(\ell,z)
+\Longrightarrow z\in I^b.
+\tag{PG.3615}
+$$
+
+当 (PG.3614) 由一个目标始终在 $D^b_\infty$ 中的实际 $T_e$ 提供时，
+(PG.3615) 随之成立。若先构造码上的更新，则必须另供应这个实际来源实现，
+不能把各层分别存在的后继代表视为一个共同后继。即使 $z$ 有实际代表，也不
+据此得到有限成本取得代表或实际执行动作的算法。
+
+要把端点与行为语义扩到全部形式线程，至少须有源完备性
+
+$$
+I^a=L^a\quad\text{及所涉及目标类型的 }I^b=L^b.
+\tag{PG.3616}
+$$
+
+Transport–Memory §5.1.1 的共同紧 Hausdorff 载体、连续满射观察、Hausdorff
+层及闭纤维可以供应这项实现性；这些拓扑前提须在本节实际域和联合码上重新
+给出。码空间的紧性本身不证明实际历史域紧，紧化得到的新点也不自动成为
+原域中的历史。不采用 (PG.3616) 时，恢复只在 $I^a$ 上成立，幽灵线程的
+实际解释保持 open。
+
+同层闭合是 $j_e(n)=n$ 的特殊情形，而不是每个分辨率的默认性质。对有限
+有类型接续 $e:a\to b$、$f:b\to d$，为求第 $n$ 层的复合后继，可先在
+$j_f(n)$ 层执行 $e$，再在第 $n$ 层执行 $f$；一个足够的输入深度为
+
+$$
+j_{f\circ e}(n)=j_e(j_f(n)).
+\tag{PG.3617}
+$$
+
+事件按执行顺序配对，$\operatorname{none}$ 按部分复合传播。每个有限动作词
+因而有有限的声明前视深度；这不是无界续接的统一深度界，也不保证获得该层
+码的费用有限或均匀有界。
+
+### 36.5 联合端点码的条件充分性模式
+
+**命题 36.1（跨层联合码的动态充分性，条件模式）。** 对每个涉及的取得合同
+类型，设有 (PG.3601)–(PG.3605) 的共同实际域与相容限制；每个声明动作有
+(PG.3610)–(PG.3612) 的单调前视、包含事件与合法性的跨层相容和实际下降，
+且成功后继具有 (PG.3615) 的同一实际来源实现。假设当前任务读出
+$q_a:D^a_\infty\to O_a$ 是完整端点的函数，并满足端点分离条件
+
+$$
+q_a=w_a\circ\eta_a,\qquad
+\ker(c^a_\infty)\subseteq\ker(\eta_a)
+\quad\text{（对每个涉及的 }a\text{）。}
+\tag{PG.3618}
+$$
+
+则 $c^a_\infty$ 在 $I^a$ 上承载唯一的实际部分后继和当前读出，使全部有限
+有类型续接的任务响应下降；特别地
+
+$$
+\ker(c^a_\infty)\subseteq\ker(\beta_a).
+\tag{PG.3619}
+$$
+
+全形式线程上的更新由 (PG.3613) 给出，但其端点与行为解释须另满足
+(PG.3616)。端点、联合码和行为的相互恢复分别需要 (PG.3607) 的反向核
+包含；三者全部互相恢复恰须 (PG.3608)，不能仅由 (PG.3619) 宣称。
+若任务不读取完整端点，可把 (PG.3618) 换为较弱的
+$\ker(c^a_\infty)\subseteq\ker(q_a)$，此时只得行为充分性，不得端点解码。
+
+证明。若 $c^a_\infty(h)=c^a_\infty(k)$，每个前视坐标也相同。
+(PG.3612) 给出两历史对每条动作同时非法，或同时合法且事件标签相同。
+合法时两份后继的每层码相同，故后继线程相同；实际像闭合使下一步仍属于
+目标合同。当前读出由 (PG.3618) 与实际像上的端点因子化得到。
+对有限续接长度归纳，当前读出、事件、失败及下一响应逐项相同，得
+(PG.3619)；§32 的行为响应递归与 Transport–Memory §25.2 的逐步下降在
+这里仅用于这一步有限归纳。定义每个实际码的读出与更新时选择任一实际代表，
+上述相同性保证代表无关，$c^a_\infty$ 到 $I^a$ 的满射给唯一性。
+(PG.3611) 给形式线程拼接，(PG.3614) 给与共同实际来源的交换；双向恢复则
+应用 (PG.3607)，并未从形式相容性推断源完备性。证毕。
+
+本模式也复用
+[Boundary Dynamics](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md)
+§§80.2–80.6 的联合合法性、事件、后继与记录下降纪律；本节只写确定性部分
+动作。概率动作须改为同一来源上的联合后继核相容，不能用事件边缘与后继
+边缘分别相同替代；所引有限核结论不证明这里的无限 FIB 塔。
+
+### 36.6 非实现、前视与权限的必要边界
+
+复用 Transport–Memory §§5.3–5.3.3 的整数脉冲塔。取共同实际域
+$D_\infty=\mathbb Z$，对整数 $z$ 定义
+
+$$
+q_n(z)=\bigl(\mathbf1_{\{z+k=0\}}\bigr)_{|k|\le n},
+\qquad B_n=q_n(\mathbb Z),
+\qquad r_{mn}=\text{窗口限制}.
+\tag{PG.3620}
+$$
+
+每层全零向量都由 $|z|>n$ 的整数实现，任意有限组窗口也可由一个足够远的
+整数同时实现。然而全零相容线程没有整数来源：对每个固定 $z$，只要
+$n\ge|z|$，窗口的 $k=-z$ 位置就为一。故
+
+$$
+(0_n)_n\in\varprojlim B_n\setminus\operatorname{im}((q_n)_n),
+\qquad
+\forall n\ \exists z:\ q_n(z)=0_n,
+\quad
+\neg\exists z\ \forall n:\ q_n(z)=0_n.
+\tag{PG.3621}
+$$
+
+这沿用既有反例而非新增整数完成结论。它排除了“有限联合实现与限制相容
+就够了”的实现判据，即使每层已经取实际像也不够。
+
+平移 $T_\pm(z)=z\pm1$ 的第 $n$ 层读数由第 $n+1$ 层得到：
+
+$$
+s_n^\pm(b)_k=b_{k\pm1},\qquad
+q_n(z\pm1)=s_n^\pm(q_{n+1}(z)),\qquad |k|\le n.
+\tag{PG.3622}
+$$
+
+把恒定平移事件加入 $L_e$ 即得 (PG.3610)–(PG.3612) 型接口，
+$j_e(n)=n+1$。一般不存在同层 $B_n\to B_n$ 的反向平移更新：
+$z=n+1,n+2$ 的输入均为 $0_n$，反向一步后前者在 $k=-n$ 出现脉冲，
+后者仍为零。同理正向平移可用 $z=-(n+1),-(n+2)$ 区分。
+所以允许前视是必要的接口自由度；形式平移固定全零线程，不使这个线程变成
+实际整数后继。这两个障碍分别针对同层闭合与来源实现性。
+
+再在一个局部权限合同内取两条实际历史 $h_{\rm yes},h_{\rm no}$：二者具有
+同一 $\xi,\nu,r$、相同档案和游标，以及相同的粗空间、时间、边界、记忆视图，
+但分别带有允许与禁止动作 $e$ 的权限见证。令遗漏权限的候选粗码为 $d_n$，
+并令合法一方执行后仍在声明的目标域；则
+
+$$
+\begin{gathered}
+d_n(h_{\rm yes})=d_n(h_{\rm no}),\qquad
+\pi(h_{\rm yes})\ne\pi(h_{\rm no}),\\
+T_e(h_{\rm yes})=\operatorname{some}(\ell,h'),\qquad
+T_e(h_{\rm no})=\operatorname{none}.
+\end{gathered}
+\tag{PG.3623}
+$$
+
+任何只从该粗码更新的 $U$ 都不能满足实际下降：相同输入必须返回相同值，
+但 $\operatorname{Option.map}$ 不会把合法方的 $\operatorname{some}$ 变为
+$\operatorname{none}$。故没有以前视仍止于该粗层的下降映射。
+较细联合码 $\widehat d_{n+1}=(d_n,\pi)$ 及忘却权限的限制可以分开这两个
+历史；若在这个局部两历史模型中 $e$ 的标签与目标码已经固定，其逐代表更新
+便良定义。对更大的域仍须检查所有纤维、事件与实际后继，补上权限只消除
+这一处碰撞。$d_n$ 是不满足 (PG.3602) 的被否定候选，不是该完整联合码的
+合格层；四视图粗读数一致不能代替共享权限。
+
+此局部对复用 Transport–Memory §25.6 的句柄／刷新权限边界。
+§35.6 的 `DownL`／`DownR` 地址遗漏对与来源／纪元遗漏对仍是已有的有限
+边界：它们分别阻止端点分离与合法共同域的认定。升高分辨率若仍遗漏这些
+字段，并不能消除对应的错误纤维；它们不因本节的线程构造取得新的证明身份。
+
+### 36.7 条件归属与开放接口
+
+本节是 repo-derived 的条件接口综合：§§31–35 供应有限行为、端点核与共同
+四视图的定义和因子化方法；Transport–Memory §5.1 供应带拓扑前提的实现
+路线，§5.3.3 供应前视与幽灵线程反例，§§23–25 供应 FIB 的共同来源、绝对
+纪元、游标、档案与权限语义；Boundary Dynamics 供应联合动作下降的有限
+纪律。一般逆极限、纤维因子化与有限续接归纳保持这些既有归属。
+(PG.3603)、(PG.3611)–(PG.3612)、(PG.3615) 和 (PG.3618) 在具体联合 FIB
+码上的成立，均是本接口要求的条件，不由所引材料自动保证；不据此主张
+文献原创或具体 FIB 塔已经给出。
+
+具体 FIB 分辨率选择与限制映射、实际源完备性、共同历史域的紧性与所需闭
+纤维、权限／取得合同及其可执行性均为 ASSUMED-UNVERIFIED；相应构造与
+验证为 open。未实现线程的实际语义、有限取得成本、无限续接的统一资源界
+以及任何物理时空解释保持 open。本节的条件命题是普通数学接口，不承担
+物理时空结论，也不宣称已有形式核验。
+
+## 36.99 追加锚
