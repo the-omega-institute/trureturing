@@ -3377,3 +3377,84 @@ Full finite-volume Mostow-Prasad, including cusps and nonorientable cases,
 remains active and incomplete. The escape audit remains unfinished:
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
 Registration stays paused under CLAUDE section 3.9.
+
+
+### 两侧原几何、给定同伦等价与度量绑定
+
+`h3_intrinsic_topological_homotopy_equiv_lift_deck_isomorphism` 现在从原
+H³ 上半空间的凸坐标域，经已有 `Convex.locallyPathConnectedSpace` 及
+坐标同胚导出局部道路连通性，不要求另给 H³ 的 `ChartedSpace`。
+对原实际商覆盖 `FM/FN`、任意给定同伦等价 `h` 和原源基点 `pHM`，
+使用已有一般覆盖提升构造同一个 `pHN/h₀/L/τ/d`，保留
+`d.toMonoidHom=τ`、`L pHM=pHN`、逐点投影
+`FN(L x)=h(FM x)`、完整 deck 等变性以及实际基本群自然性。
+`d` 在该同一基点与基本群识别下唯一；这不声称提升无条件唯一，
+也不要求原提升是等距映射。
+
+`h3SameDMeasuredCompatibleFlowData` 是已经验证的对应子群测度、中心化子、
+同一共轭元延拓和自然 H 商遍历性结论的显式合取，不是新的刚性假设。
+对表示 `ρA/ρB`、同一个 `d:A≃B`、原 `μ` 和体积 `V`，它的目标群始终为
+`KN=h3SameIsomorphismGeneratedSource ρB ρA d.symm`，实际环境子群为
+`Γ=KN.map ρB`。数据包含同一可测基本域 `E`、
+`μ(E)≤(V+V)+(V+V)<∞`、Γ 的环境中心化子平凡、同一自然商
+`H ⧸ Γ.subgroupOf H` 的闭性证明和测度 ν、原 comapped inverse-Haar
+商前像恒等式，以及 `ν(univ)=μ(E∩H)≠0`、`ν(univ)≤4V`、H 不变遍历性
+和同一对数时间膨胀的连续遍历性。延拓结论仍为条件命题：
+对任意已给定 c，若它在对应源子群上实现该 d 的共轭关系，
+则同一个 c 在完整原源群上实现同一个 d。
+
+`complete_negative_three_manifolds_prescribed_h_two_native_compatible_flows`
+从两侧原连通、T3、Borel、光滑三维流形的 Riemannian 度量、各自内蕴完备性、
+每个 Levi-Civita 实现在每个非退化平面上曲率为 −1，以及各自原体积有限出发，
+对任意原给定 `h:M≃ₕN`，构造两侧实际 `FM/FN`、原商覆盖、忠实表示
+`ρM/ρN` 及其逐点原 deck 作用绑定，并各给一个 Haar 且右不变的 `μM/μN`，
+满足各自 `covolume(ρ.range)=g.volumeMeasure(univ)`。从这两个同一覆盖导出
+原 h 的同一个 L/d 及全部基点、投影、完整等变、基本群自然性和 d 的唯一性。
+目标数据以实际 `ρM/d` 调用，源数据以实际 `ρN/d.symm` 调用，
+各保留本侧原测度和原体积；没有用一个另外给定的表示或同构代替它们。
+同一个 d 给出的 `KM/KN` 正规、有限指标相等且各至多四，
+原限制同构及其逆逐点等于 d/d.symm，同一个 L 在限制作用下继续等变。
+该结论没有保留轨道商到原流形的度量识别，不能单凭它进行等距下降。
+
+`complete_negative_three_manifold_metric_bound_same_d_native_compatible_flow`
+处理该度量接口。这里原 M 带 `MetricSpace`；除上述原连通、Borel、光滑三维、
+内蕴完备、每个 Levi-Civita 实现的非退化平面曲率 −1 及有限原体积条件外，
+显式要求 `∀x y, gM.edist x y=edist x y`，将原 Riemannian 内蕴距离
+绑定到当前度量。已有完备连接构造给出实际 Levi-Civita 实现，
+原 H³ bridge 给出实际图册、度量和同一个原 deck 覆盖 F/ρ。
+已有覆盖纤维距离与轨道商距离识别导出一个实际轨道商等距同构 e，
+保留 `e(orbitQuotientMk ρ x)=F x`。同一个 F/ρ 的作用适当不连续；
+在它的轨道商度量下，e 对当前原 M 度量等距。该同一覆盖、表示和原度量
+再导出原 Haar/右不变 μ 及余体积等于原体积，并对任意另给 ρA 和同一个 d
+产生上述完整对应子群数据。这里没有另给覆盖、holonomy、图册、连接、
+有限基本域、中心化子、遍历性或轨道商等距同构的前提。
+
+`complete_negative_three_manifolds_prescribed_h_native_metric_restricted_endpoint`
+将两侧上述度量绑定构造与原任意给定 h 合并。M/N 位于同一 Lean 宇宙，
+各带原 `MetricSpace`、连通性、Borel 结构、光滑三维结构、内蕴完备原度量、
+每个 Levi-Civita 实现的非退化平面曲率 −1、有限原体积，以及各自显式
+`g.edist=edist`。它构造并保留两侧同一个覆盖、忠实且逐点绑定的表示、
+适当不连续性、实际轨道商等距同构、原 Haar/右不变测度及精确余体积，
+并从这些同一覆盖构造原 h 的同一个 L/d、全部基本群自然性、d 的唯一性、
+两侧对应子群测度/遍历性数据和同一个有限指标限制同构。
+
+在上述两侧原几何、度量识别以及原 h 所确定的同一个 d 条件下，
+若另给 c 并证明
+`∀a:KM, c*ρM(a)*c⁻¹=ρN(d(a))`，则目标子群的原数据延拓该同一个 c，
+在完整源 deck 群上实现该同一个 d。已有同一提升的共轭下降、等距轨道商下降
+和连接无关的原几何同伦类唯一性给出实际 `e:M≃ᵢN`，满足
+`∀x, FN(c x)=e(FM x)`、e 的连续映射同伦于原 h，并且任意另一个
+同伦于该原 h 的等距同构 e' 均等于 e。源代码只在 c 及其限制共轭关系
+已经给定的同一条件作用域内断言这一存在和唯一性；没有证明 ∃c。
+该条件链保留原给定同构、提升和覆盖，没有以另一个可实现同构替代原 d。
+
+完整有限体积 Mostow–Prasad 仍为 **ACTIVE/INCOMPLETE**。
+当前真实缺口是对上述原 h 诱导的同一个 d 构造对应子群上的实际环境共轭元。
+原 d 的边界映射、被迫的几何/配对保持及其存在性仍未证明，
+自然 H 商的代数对数时间作用也尚未识别为几何单位切丛/测地流。
+没有建立几何定向识别、对应有限覆盖和其提升同伦/体积识别。
+本轮没有加入紧性或可定向假设，目标仍包含非紧尖点及非可定向情形；
+条件等距存在性不等于完整刚性已证。上述都是已有构造的经典应用和接口组装，
+无新颖性、跟踪 Lean、准入或冻结声明；Lean 源仍位于忽略目录 `.lake`，
+本笔记是唯一跟踪交付。逃逸审计仍未完成，登记按 CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
