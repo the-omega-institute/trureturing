@@ -13,11 +13,11 @@ public sealed class ScribeResourceCodecTests
         yield return [ScribeResourceErrorCode.InvalidJson, Encoding.UTF8.GetBytes("{")];
         yield return [ScribeResourceErrorCode.TrailingData, Encoding.UTF8.GetBytes(valid + "x")];
         yield return [ScribeResourceErrorCode.SchemaMismatch, Encoding.UTF8.GetBytes(valid.Replace(ScribeResourceCodec.SchemaName, "other", StringComparison.Ordinal))];
-        yield return [ScribeResourceErrorCode.VersionMismatch, Encoding.UTF8.GetBytes(valid.Replace("\"version\":1", "\"version\":2", StringComparison.Ordinal))];
+        yield return [ScribeResourceErrorCode.VersionMismatch, Encoding.UTF8.GetBytes(valid.Replace($"\"version\":{ScribeResourceCodec.SemanticVersion}", "\"version\":0", StringComparison.Ordinal))];
         yield return [ScribeResourceErrorCode.UnknownType, Encoding.UTF8.GetBytes(valid.Replace("\"type\":\"ScribeDocument\"", "\"type\":\"Unknown\"", StringComparison.Ordinal))];
         yield return [ScribeResourceErrorCode.MissingField, Encoding.UTF8.GetBytes(valid.Replace(",\"sourcePath\":\"Blueprint/D5/S1/Scale/Resource.scribe.cs\"", string.Empty, StringComparison.Ordinal))];
         yield return [ScribeResourceErrorCode.ExtraField, Encoding.UTF8.GetBytes(valid.Replace("}", ",\"extra\":0}", StringComparison.Ordinal))];
-        yield return [ScribeResourceErrorCode.TypeMismatch, Encoding.UTF8.GetBytes(valid.Replace("\"version\":1", "\"version\":\"one\"", StringComparison.Ordinal))];
+        yield return [ScribeResourceErrorCode.TypeMismatch, Encoding.UTF8.GetBytes(valid.Replace($"\"version\":{ScribeResourceCodec.SemanticVersion}", "\"version\":\"one\"", StringComparison.Ordinal))];
         yield return [ScribeResourceErrorCode.InvalidValue, Encoding.UTF8.GetBytes(valid.Replace("Blueprint/D5/S1/Scale/Resource.scribe.cs", "/tmp/resource.scribe.cs", StringComparison.Ordinal))];
     }
 
@@ -44,7 +44,7 @@ public sealed class ScribeResourceCodecTests
     public void CodecRejectsUnknownTypeWithNamedReason()
     {
         var bytes = Encoding.UTF8.GetBytes(
-            "{\"schema\":\"trureturing.scribe.document-definition\",\"version\":1,\"document\":{\"type\":\"unknown\"},\"sourcePath\":\"Blueprint/D5/S1/Resource.scribe.cs\"}");
+            "{\"schema\":\"trureturing.scribe.document-definition\",\"version\":2,\"document\":{\"type\":\"unknown\"},\"sourcePath\":\"Blueprint/D5/S1/Resource.scribe.cs\"}");
 
         var error = Assert.Throws<ScribeResourceException>(() => ScribeResourceCodec.Decode(bytes));
 
@@ -90,7 +90,7 @@ public sealed class ScribeResourceCodecTests
     {
         var resource = JsonNode.Parse(ScribeResourceCodec.Encode(AuthoredFormulaDefinition()))!.AsObject();
         var block = resource["document"]!["content"]![0]!.AsObject();
-        block["kindSource"]!["kind"] = "Theorem";
+        block["construction"]!["kind"] = "Theorem";
 
         var error = Assert.Throws<ScribeResourceException>(() =>
             ScribeResourceCodec.Decode(Encoding.UTF8.GetBytes(resource.ToJsonString())));
@@ -103,20 +103,23 @@ public sealed class ScribeResourceCodecTests
     {
         var resource = JsonNode.Parse(ScribeResourceCodec.Encode(ClaimDefinition()))!.AsObject();
         var block = resource["document"]!["content"]![0]!.AsObject();
-        block["claim"] = null;
-        block["statement"]!["value"] = "D5/S1/Scale/Other.different";
+        block["construction"]!["statement"] = new JsonObject
+        {
+            ["type"] = "LeanDeclaration", ["value"] = "D5/S1/Scale/Other.different",
+        };
 
         var error = Assert.Throws<ScribeResourceException>(() =>
             ScribeResourceCodec.Decode(Encoding.UTF8.GetBytes(resource.ToJsonString())));
 
-        Assert.Equal(ScribeResourceErrorCode.InvalidValue, error.ReasonCode);
+        Assert.Equal(ScribeResourceErrorCode.ExtraField, error.ReasonCode);
     }
 
     [Fact]
     public void CodecRejectsDuplicateTopLevelField()
     {
         var valid = Encoding.UTF8.GetString(ScribeResourceCodec.Encode(Definition()));
-        var duplicate = valid.Replace("\"version\":1", "\"version\":1,\"version\":1", StringComparison.Ordinal);
+        var version = $"\"version\":{ScribeResourceCodec.SemanticVersion}";
+        var duplicate = valid.Replace(version, version + "," + version, StringComparison.Ordinal);
 
         var error = Assert.Throws<ScribeResourceException>(() =>
             ScribeResourceCodec.Decode(Encoding.UTF8.GetBytes(duplicate)));
@@ -145,37 +148,41 @@ public sealed class ScribeResourceCodecTests
     [InlineData("handle")]
     public void CodecRejectsResolutionClaimOutsideItsLeanDeclarationFactory(string invalidHost)
     {
-        var resource = JsonNode.Parse(ScribeResourceCodec.Encode(Definition()))!.AsObject();
-        var block = JsonNode.Parse(ScribeResourceCodec.Encode(ClaimDefinition()))!
-            ["document"]!["content"]![0]!.AsObject();
+        var resource = JsonNode.Parse(ScribeResourceCodec.Encode(ClaimDefinition()))!.AsObject();
+        var block = resource["document"]!["content"]![0]!.AsObject();
+        var construction = block["construction"]!.AsObject();
         if (invalidHost == "formula")
         {
-            block["statement"] = new JsonObject
+            block["construction"] = new JsonObject
             {
-                ["type"] = "FormulaAst",
-                ["value"] = block["statementFormula"]!.DeepClone(),
+                ["type"] = "AuthoredFormula", ["kind"] = "Remark",
+                ["formula"] = construction["statementSource"]!["presentation"]!.DeepClone(),
+                ["claim"] = construction["claim"]!.DeepClone(),
             };
         }
         else if (invalidHost == "remark")
         {
-            block["kindSource"]!["role"] = "Remark";
+            construction["role"] = "Remark";
         }
         else
         {
-            block["kindSource"]!["handle"] = "D5/S1/Scale/Other.different";
+            construction["statement"] = new JsonObject
+            {
+                ["type"] = "LeanDeclaration", ["value"] = "D5/S1/Scale/Other.different",
+            };
         }
-        resource["document"]!["content"] = new JsonArray(block.DeepClone());
 
         var error = Assert.Throws<ScribeResourceException>(() =>
             ScribeResourceCodec.Decode(Encoding.UTF8.GetBytes(resource.ToJsonString())));
 
-        Assert.Equal(ScribeResourceErrorCode.InvalidValue, error.ReasonCode);
+        Assert.Equal(invalidHost == "remark" ? ScribeResourceErrorCode.InvalidValue : ScribeResourceErrorCode.ExtraField,
+            error.ReasonCode);
     }
 
-    private static DocumentDefinition ClaimDefinition()
+    internal static DocumentDefinition ClaimDefinition()
     {
         var formula = DefinitionDsl.Equal(DefinitionDsl.Num(1), DefinitionDsl.Num(1));
-        var source = new StatementSource.Authored(formula, null);
+        var source = StatementSource.FromAuthor(formula);
         var describe = DocumentBlock.Describe.ReportDerived(
             DescribeId.Create("claim"), DefinitionDsl.H("Claim"),
             DeclarationHandle.Create("D5/S1/Scale/Other.member"), source,
@@ -184,7 +191,8 @@ public sealed class ScribeResourceCodecTests
             DescribeRole.Theorem,
             new OpenProblemResolutionClaim(ProblemSlugRef.Create("batch-problem"), ResolutionKind.Proved,
                 [DeclarationHandle.Create("D5/S1/Scale/Other.additional")]),
-            restoredStatement: (source, formula));
+            recordedAssessment: new StatementAssessment.Unprojectable(
+                "missing", "D5/S1/Scale/Other.member", "statement-projector-v1", new string('a', 64)));
         return DocumentDefinition.Create(
             ScribeNode.Create("resource-digest", DefinitionDsl.H("Claim"), DefinitionDsl.Blocks(describe),
                 sourcePath: "Blueprint/D5/S1/Scale/Claim.scribe.cs"),
@@ -206,32 +214,23 @@ public sealed class ScribeResourceCodecTests
     }
 
     [Fact]
-    public void LeanDerivedFormulaMarkerSurvivesRoundTripWhenSourceIsImplicit()
+    public void LeanDerivedFormulaAndAssessmentSurviveRoundTrip()
     {
-        var declaration = LeanDeclarationRef.Create("D5/S1/Scale/Other.member");
-        var formula = DefinitionDsl.Equal(DefinitionDsl.Num(1), DefinitionDsl.Num(1));
-        StatementProjectionFixtureLoader.RestoreDerived(formula, declaration);
-        var describe = DocumentBlock.Describe.Restore(
-            DescribeId.Create("derived"),
-            DefinitionDsl.H("Derived"),
-            DescribeStatement.FromLean(declaration),
-            AssessedProvenance.FromRepo(),
-            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("derived"))),
-            formula,
-            null,
-            new DescribeKindSource.Authored(DescribeKind.Remark));
+        var describe = DocumentBlock.Describe.ReportDerived(
+            DescribeId.Create("derived"), DefinitionDsl.H("Derived"),
+            DeclarationHandle.Create("D5/S1/Scale/Other.member"), StatementSource.FromLean(),
+            AssessedProvenance.FromRepo(), DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("derived"))),
+            DescribeRole.Theorem, null,
+            recordedAssessment: new StatementAssessment.Projected(DefinitionDsl.Equal(DefinitionDsl.Num(1), DefinitionDsl.Num(1))));
         var definition = DocumentDefinition.Create(
-            ScribeNode.Create(
-                "resource-digest",
-                DefinitionDsl.H("Derived"),
-                DefinitionDsl.Blocks(describe),
+            ScribeNode.Create("resource-digest", DefinitionDsl.H("Derived"), DefinitionDsl.Blocks(describe),
                 sourcePath: "Blueprint/D5/S1/Scale/Derived.scribe.cs"),
             "Blueprint/D5/S1/Scale/Derived.scribe.cs");
 
         var decoded = ScribeResourceCodec.Decode(ScribeResourceCodec.Encode(definition));
         var restored = Assert.IsType<DocumentBlock.Describe>(decoded.Document.Content.Items[0]);
         Assert.Equal(StatementFormulaProvenance.LeanDerived, restored.FormulaProvenance);
-        Assert.True(StatementProjectionFixtureLoader.IsDerivedFrom(restored.StatementFormula!, declaration));
+        Assert.True(ScribeResourceStructuralComparer.Equal(definition, decoded, out var difference), difference);
     }
 
     private static DocumentDefinition Definition() => DocumentDefinition.Create(

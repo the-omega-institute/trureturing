@@ -139,28 +139,18 @@ public sealed class ScribeResourceCorpusTests
     private static DocumentDefinition ProjectionGapDefinition()
     {
         var declaration = LeanDeclarationRef.Create("D5/S0/Synthetic/ProjectionGap.member");
-        var authored = DocumentBlock.Describe.Restore(
-            DescribeId.Create("authored-gap"),
-            DefinitionDsl.H("Authored gap"),
-            DescribeStatement.FromLean(declaration),
-            AssessedProvenance.FromRepo(),
-            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("authored gap"))),
-            DefinitionDsl.Num(1),
-            new StatementSource.Authored(DefinitionDsl.Num(1), new ProjectionGap(
-                "missing", "D5/S0/Synthetic/ProjectionGap.member", "statement-projector-v1", new string('a', 64))),
-            new DescribeKindSource.ReportDerived(
-                DeclarationHandle.Create(declaration.Value), DescribeRole.Lemma));
-        var noFormula = DocumentBlock.Describe.Restore(
-            DescribeId.Create("no-formula-gap"),
-            DefinitionDsl.H("No formula gap"),
-            DescribeStatement.FromLean(declaration),
-            AssessedProvenance.FromRepo(),
-            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("no formula gap"))),
-            null,
-            new StatementSource.NoFormula(new ProjectionGap(
-                "constant", "D5/S0/Synthetic/ProjectionGap.member", "statement-projector-v1", new string('b', 64))),
-            new DescribeKindSource.ReportDerived(
-                DeclarationHandle.Create(declaration.Value), DescribeRole.Proposition));
+        var authored = DocumentBlock.Describe.ReportDerived(
+            DescribeId.Create("authored-gap"), DefinitionDsl.H("Authored gap"), DeclarationHandle.Create(declaration.Value),
+            StatementSource.FromAuthor(DefinitionDsl.Num(1)), AssessedProvenance.FromRepo(),
+            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("authored gap"))), DescribeRole.Lemma, null,
+            recordedAssessment: new StatementAssessment.Unprojectable(
+                "missing", declaration.Value, "statement-projector-v1", new string('a', 64)));
+        var noFormula = DocumentBlock.Describe.ReportDerived(
+            DescribeId.Create("no-formula-gap"), DefinitionDsl.H("No formula gap"), DeclarationHandle.Create(declaration.Value),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("no formula gap"))), DescribeRole.Proposition, null,
+            recordedAssessment: new StatementAssessment.Unprojectable(
+                "constant", declaration.Value, "statement-projector-v1", new string('b', 64)));
         return DocumentDefinition.Create(
             ScribeDocument.Create(
                 DefinitionDsl.Header("D5/S0/Synthetic/ProjectionGap", "Projection gap fixture"),

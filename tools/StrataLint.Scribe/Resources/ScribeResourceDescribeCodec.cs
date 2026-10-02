@@ -5,150 +5,92 @@ namespace StrataLint.Scribe;
 
 public static partial class ScribeResourceCodec
 {
-    private static DocumentBlock.Describe ReadDescribe(JsonElement value)
+    private static JsonObject WriteDescribe(DocumentBlock.Describe value) => Obj(
+        "type", "Describe", "id", value.Id.Value, "title", value.Title.Value,
+        "provenance", WriteProvenance(value.AssessedProvenance), "content", WriteBlocks(value.Content),
+        "construction", WriteDescribeConstruction(value));
+
+    private static JsonObject WriteDescribeConstruction(DocumentBlock.Describe value) => value.KindSource switch
     {
-        var obj = Typed(value, "Describe", "id", "title", "statement", "kindSource", "provenance", "content", "statementFormula", "statementFormulaProvenance", "statementSource", "claim");
-        var statement = ReadStatement(obj, "statement");
-        var kindSource = ReadKindSource(obj, "kindSource");
-        var statementFormula = ReadNullableFormula(obj, "statementFormula");
-        var statementSource = ReadNullableStatementSource(obj, "statementSource");
-        var expectedProvenance = ParseEnum<StatementFormulaProvenance>(obj, "statementFormulaProvenance");
-        if (expectedProvenance == StatementFormulaProvenance.LeanDerived
-            && statementSource is null)
-        {
-            if (statementFormula is null || statement is not DescribeStatement.LeanDeclaration lean)
-            {
-                throw new ScribeResourceException(
-                    ScribeResourceErrorCode.InvalidValue,
-                    "Lean-derived formula provenance requires a Lean declaration and formula.");
-            }
+        DescribeKindSource.Authored authored when value.Statement is DescribeStatement.FormulaAst formula =>
+            Obj("type", "AuthoredFormula", "kind", authored.Value.ToString(), "formula", WriteFormula(formula.Value)),
+        DescribeKindSource.ReportDerived { Role: DescribeRole.Remark } derived =>
+            Obj("type", "DeclarationRemark", "handle", derived.Handle.Value),
+        DescribeKindSource.ReportDerived derived => Obj(
+            "type", "ReportDerived", "handle", derived.Handle.Value, "role", derived.Role?.ToString(),
+            "statementSource", WriteStatementSource(value.StatementSource ?? throw Invalid("Missing statement source.")),
+            "assessment", WriteAssessment(value.StatementAssessment ?? throw Invalid("Missing statement assessment.")),
+            "claim", value.OpenProblemResolutionClaim is null ? null : WriteClaim(value.OpenProblemResolutionClaim)),
+        _ => throw Invalid("Unknown Describe construction."),
+    };
 
-            StatementProjectionFixtureLoader.RestoreDerived(statementFormula, lean.Value);
-        }
-
-        var claim = ReadNullableClaim(obj, "claim");
-        var restored = claim is null
-            ? RestoreDescribe(obj, statement, kindSource, statementFormula, statementSource)
-            : RestoreClaimDescribe(obj, statement, kindSource, statementFormula, statementSource, claim);
-        if (restored.FormulaProvenance != expectedProvenance)
-        {
-            throw new ScribeResourceException(
-                ScribeResourceErrorCode.InvalidValue,
-                "Statement formula provenance does not match the decoded statement source.");
-        }
-
-        return restored;
-    }
-
-    private static DocumentBlock.Describe ReadDescribe(JsonObject value) => ReadDescribe(Element(value));
-
-    private static DocumentBlock.Describe RestoreDescribe(
-        JsonObject obj,
-        DescribeStatement statement,
-        DescribeKindSource kindSource,
-        Formula? formula,
-        StatementSource? source)
+    private static DocumentBlock.Describe ReadDescribe(JsonObject value)
     {
+        var obj = Typed(value, "Describe", "id", "title", "provenance", "content", "construction");
         var id = DescribeId.Create(ReadString(obj, "id"));
         var title = Heading.Create(ReadString(obj, "title"));
         var provenance = ReadProvenance(obj, "provenance");
         var content = ReadBlocks(obj, "content");
-
-        if (statement is DescribeStatement.FormulaAst authored)
+        var construction = RequireObject(Element(obj).GetProperty("construction"));
+        return ReadType(construction) switch
         {
-            if (kindSource is not DescribeKindSource.Authored authoredKind
-                || authoredKind.Value is not (DescribeKind.Remark or DescribeKind.Example)
-                || formula is not null
-                || source is not null)
-            {
-                throw InvalidDescribe("An authored formula requires an authored remark or example kind and no statement source.");
-            }
-
-            return authoredKind.Value == DescribeKind.Example
-                ? DocumentBlock.Describe.AuthoredFormula(id, DescribeKind.Example, title, authored.Value, provenance, content)
-                : DocumentBlock.Describe.AuthoredFormula(id, DescribeKind.Remark, title, authored.Value, provenance, content);
-        }
-
-        var lean = (DescribeStatement.LeanDeclaration)statement;
-        if (kindSource is DescribeKindSource.Authored
-            && source is null
-            && formula is not null
-            && StatementProjectionFixtureLoader.IsDerivedFrom(formula, lean.Value))
-        {
-            return DocumentBlock.Describe.Restore(
-                id, title, statement, provenance, content, formula, source, kindSource);
-        }
-
-        if (kindSource is not DescribeKindSource.ReportDerived derived
-            || !string.Equals(lean.Value.Value, derived.Handle.Value, StringComparison.Ordinal))
-        {
-            throw InvalidDescribe("A Lean declaration requires a matching report-derived handle.");
-        }
-
-        if (derived.Role == DescribeRole.Remark)
-        {
-            if (formula is not null || source is not null)
-            {
-                throw InvalidDescribe("A declaration remark cannot carry a statement source or formula.");
-            }
-
-            return DocumentBlock.Describe.RemarkOn(id, derived.Handle, title, provenance, content);
-        }
-
-        if (source is null)
-        {
-            throw InvalidDescribe("A report-derived declaration requires a statement source.");
-        }
-
-        if (source is StatementSource.NoFormula && formula is not null
-            || source is StatementSource.Authored && formula is null
-            || source is StatementSource.LeanDerived && formula is null)
-        {
-            throw InvalidDescribe("Statement source and materialized formula do not match.");
-        }
-
-        return DocumentBlock.Describe.ReportDerived(
-            id,
-            title,
-            derived.Handle,
-            source,
-            provenance,
-            content,
-            derived.Role,
-            openProblemResolutionClaim: null,
-            restoredStatement: (source, formula));
+            "AuthoredFormula" => ReadTyped(construction, "AuthoredFormula", "kind", "formula", () =>
+                DocumentBlock.Describe.AuthoredFormula(id, ParseEnum<DescribeKind>(construction, "kind"), title,
+                    ReadFormula(construction, "formula"), provenance, content)),
+            "DeclarationRemark" => ReadTyped(construction, "DeclarationRemark", "handle", () =>
+                DocumentBlock.Describe.RemarkOn(id, DeclarationHandle.Create(ReadString(construction, "handle")),
+                    title, provenance, content)),
+            "ReportDerived" => ReadTyped(construction, "ReportDerived", () =>
+                DocumentBlock.Describe.ReportDerived(id, title,
+                    DeclarationHandle.Create(ReadString(construction, "handle")),
+                    ReadStatementSource(construction, "statementSource"), provenance, content,
+                    ReadNullableEnum<DescribeRole>(construction, "role"), ReadNullableClaim(construction, "claim"),
+                    recordedAssessment: ReadAssessment(construction, "assessment")),
+                "handle", "role", "statementSource", "assessment", "claim"),
+            _ => throw UnknownType(construction),
+        };
     }
 
-    private static ScribeResourceException InvalidDescribe(string message) =>
-        new(ScribeResourceErrorCode.InvalidValue, message);
-
-    private static DocumentBlock.Describe RestoreClaimDescribe(
-        JsonObject obj,
-        DescribeStatement statement,
-        DescribeKindSource kindSource,
-        Formula? formula,
-        StatementSource? source,
-        OpenProblemResolutionClaim claim)
+    private static JsonObject WriteStatementSource(StatementSource value) => value switch
     {
-        if (statement is not DescribeStatement.LeanDeclaration lean
-            || kindSource is not DescribeKindSource.ReportDerived derived
-            || derived.Role == DescribeRole.Remark
-            || !string.Equals(lean.Value.Value, derived.Handle.Value, StringComparison.Ordinal)
-            || source is null)
-        {
-            throw new ScribeResourceException(ScribeResourceErrorCode.InvalidValue,
-                "A resolution claim requires its matching report-derived Lean declaration and statement source.");
-        }
+        StatementSource.LeanDerived => Obj("type", "LeanDerived"),
+        StatementSource.Authored authored => Obj("type", "Authored", "presentation", WriteFormula(authored.Presentation)),
+        StatementSource.NoFormula => Obj("type", "NoFormula"),
+        _ => throw Unknown(value),
+    };
 
-        return DocumentBlock.Describe.ReportDerived(
-            DescribeId.Create(ReadString(obj, "id")),
-            Heading.Create(ReadString(obj, "title")),
-            derived.Handle,
-            source,
-            ReadProvenance(obj, "provenance"),
-            ReadBlocks(obj, "content"),
-            derived.Role,
-            claim,
-            restoredStatement: (source, formula));
+    private static StatementSource ReadStatementSource(JsonObject parent, string name)
+    {
+        var obj = RequireObject(Element(parent).GetProperty(name));
+        return ReadType(obj) switch
+        {
+            "LeanDerived" => ReadTyped(obj, "LeanDerived", () => StatementSource.FromLean()),
+            "Authored" => ReadTyped(obj, "Authored", "presentation", () => StatementSource.FromAuthor(ReadFormula(obj, "presentation"))),
+            "NoFormula" => ReadTyped(obj, "NoFormula", () => StatementSource.WithoutFormula()),
+            _ => throw UnknownType(obj),
+        };
+    }
+
+    private static JsonObject WriteAssessment(StatementAssessment value) => value switch
+    {
+        StatementAssessment.Projected projected => Obj("type", "Projected", "formula", WriteFormula(projected.Formula)),
+        StatementAssessment.Unprojectable failed => Obj("type", "Unprojectable",
+            "reasonCode", failed.ReasonCode, "offendingSubject", failed.OffendingSubject,
+            "projectorEpoch", failed.ProjectorEpoch, "declarationContentDigest", failed.DeclarationContentDigest),
+        _ => throw Unknown(value),
+    };
+
+    private static StatementAssessment ReadAssessment(JsonObject parent, string name)
+    {
+        var obj = RequireObject(Element(parent).GetProperty(name));
+        return ReadType(obj) switch
+        {
+            "Projected" => ReadTyped(obj, "Projected", "formula", () =>
+                new StatementAssessment.Projected(ReadFormula(obj, "formula"))),
+            "Unprojectable" => ReadTyped(obj, "Unprojectable", "reasonCode", "offendingSubject", "projectorEpoch", "declarationContentDigest", () =>
+                new StatementAssessment.Unprojectable(ReadString(obj, "reasonCode"), ReadString(obj, "offendingSubject"),
+                    ReadString(obj, "projectorEpoch"), ReadString(obj, "declarationContentDigest"))),
+            _ => throw UnknownType(obj),
+        };
     }
 }

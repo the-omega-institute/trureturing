@@ -106,6 +106,29 @@ public sealed class ScribeResourceCliTests
     }
 
     [Fact]
+    public void VerifyRejectsUnreachableDescribeWithExitTwo()
+    {
+        using var root = Prepare();
+        var path = root.Resolve("resources.zip");
+        ScribeResourcePack.Write(path, [ScribeResourceCodecTests.ClaimDefinition()]);
+        var entries = ScribeResourcePackTests.ReadZip(path);
+        var resource = JsonNode.Parse(entries[0].Bytes)!;
+        resource["document"]!["content"]![0]!["construction"]!["statementFormula"] = null;
+        entries[0] = (entries[0].Name, Encoding.UTF8.GetBytes(resource.ToJsonString()));
+        var index = entries.FindIndex(item => item.Name == "manifest.json");
+        var manifest = JsonNode.Parse(entries[index].Bytes)!;
+        manifest["entries"]![0]!["sha256"] = Convert.ToHexStringLower(SHA256.HashData(entries[0].Bytes));
+        manifest["totalSha256"] = Convert.ToHexStringLower(SHA256.HashData(
+            Encoding.UTF8.GetBytes(manifest["entries"]!.ToJsonString())));
+        entries[index] = ("manifest.json", Encoding.UTF8.GetBytes(manifest.ToJsonString()));
+        ScribeResourcePackTests.RewriteZip(path, entries);
+        var error = new StringWriter();
+
+        Assert.Equal(2, Run(root, ["resources", "verify", "--pack", path], TextWriter.Null, error));
+        Assert.Contains("ExtraField", error.ToString(), StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void PackThenVerifyUsesTheAssemblyDefinitionDiscoveryPath()
     {
         using var root = Prepare();

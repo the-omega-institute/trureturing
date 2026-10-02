@@ -70,15 +70,11 @@ public sealed class ScribeResourceAstCoverageTests
     public void AllDocumentNodeFamiliesAndEdgesRoundTrip()
     {
         var declaration = DeclarationHandle.Create("D5/S1/Scale/Embedding.embedding_injective");
-        var authored = DocumentBlock.Describe.Restore(
-            DescribeId.Create("authored"),
-            DefinitionDsl.H("Authored"),
-            DescribeStatement.FromFormula(DefinitionDsl.Equal(DefinitionDsl.Id("x"), DefinitionDsl.Num(1))),
+        var authored = Describe.Remark(
+            DescribeId.Create("authored"), DefinitionDsl.H("Authored"),
+            DefinitionDsl.Equal(DefinitionDsl.Id("x"), DefinitionDsl.Num(1)),
             AssessedProvenance.FromRepo(),
-            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative"))),
-            null,
-            null,
-            new DescribeKindSource.Authored(DescribeKind.Remark));
+            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative"))));
         var declarationRemark = Describe.Remark(
             DescribeId.Create("remark"),
             declaration,
@@ -282,6 +278,13 @@ public sealed class ScribeResourceAstCoverageTests
             sourcePath: "Blueprint/D5/S1/Scale/Resource.scribe.cs"),
         "Blueprint/D5/S1/Scale/Resource.scribe.cs");
 
+    private static DocumentBlock.Describe Declaration(string id, StatementSource source, StatementAssessment assessment,
+        AssessedProvenance provenance, DescribeRole role, OpenProblemResolutionClaim? claim = null) =>
+        DocumentBlock.Describe.ReportDerived(DescribeId.Create(id), DefinitionDsl.H(id),
+            DeclarationHandle.Create("D5/S1/Scale/Other.member"), source, provenance,
+            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative"))), role, claim,
+            recordedAssessment: assessment);
+
     private static IEnumerable<DocumentDefinition> CoverageDefinitions()
     {
         var atom = new Formula.Symbol(FormulaIdentifier.Create("x"));
@@ -297,61 +300,22 @@ public sealed class ScribeResourceAstCoverageTests
         blocks.Add(new DocumentBlock.Section(
             DefinitionDsl.H("section"),
             DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("section content")))));
-        blocks.Add(DocumentBlock.Describe.Restore(
-            DescribeId.Create("authored"),
-            DefinitionDsl.H("Authored"),
-            DescribeStatement.FromFormula(atom),
-            AssessedProvenance.FromRepo(),
-            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative"))),
-            null,
-            null,
-            new DescribeKindSource.Authored(DescribeKind.Remark)));
-        blocks.Add(DocumentBlock.Describe.Restore(
-            DescribeId.Create("lean"),
-            DefinitionDsl.H("Lean"),
-            DescribeStatement.FromLean(LeanDeclarationRef.Create("D5/S1/Scale/Other.member")),
-            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/sos1957threegap")),
-            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative"))),
-            atom,
-            StatementSource.FromLean(),
-            new DescribeKindSource.ReportDerived(
-                DeclarationHandle.Create("D5/S1/Scale/Other.member"),
-                DescribeRole.Theorem)));
-        blocks.Add(DocumentBlock.Describe.Restore(
-            DescribeId.Create("authored-source"),
-            DefinitionDsl.H("Authored source"),
-            DescribeStatement.FromLean(LeanDeclarationRef.Create("D5/S1/Scale/Other.member")),
-            AssessedProvenance.NovelAfterSearch(GidRef.Create("D5/S1/Scale/Search")),
-            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative"))),
-            atom,
-            new StatementSource.Authored(atom, new ProjectionGap(
-                "missing", "D5/S1/Scale/Other.member", "statement-projector-v1", new string('a', 64))),
-            new DescribeKindSource.ReportDerived(
-                DeclarationHandle.Create("D5/S1/Scale/Other.member"),
-                DescribeRole.Lemma)));
-        blocks.Add(DocumentBlock.Describe.Restore(
-            DescribeId.Create("no-formula"),
-            DefinitionDsl.H("No formula"),
-            DescribeStatement.FromLean(LeanDeclarationRef.Create("D5/S1/Scale/Other.member")),
-            AssessedProvenance.FromRepo(),
-            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative"))),
-            null,
-            new StatementSource.NoFormula(new ProjectionGap(
-                "constant", "Fixture.subject", "statement-projector-v1", new string('b', 64))),
-            new DescribeKindSource.ReportDerived(
-                DeclarationHandle.Create("D5/S1/Scale/Other.member"),
-                DescribeRole.Proposition)));
-
-        var claimSource = new StatementSource.Authored(atom, null);
-        blocks.Add(DocumentBlock.Describe.ReportDerived(
-            DescribeId.Create("claim"), DefinitionDsl.H("Claim"),
-            DeclarationHandle.Create("D5/S1/Scale/Other.member"), claimSource,
-            AssessedProvenance.FromRepo(),
-            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("claim"))),
-            DescribeRole.Theorem,
+        blocks.Add(Describe.Remark(
+            DescribeId.Create("authored"), DefinitionDsl.H("Authored"), atom, AssessedProvenance.FromRepo(),
+            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative")))));
+        blocks.Add(Declaration("lean", StatementSource.FromLean(), new StatementAssessment.Projected(atom),
+            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/sos1957threegap")), DescribeRole.Theorem));
+        blocks.Add(Declaration("authored-source", StatementSource.FromAuthor(atom),
+            new StatementAssessment.Unprojectable("missing", "D5/S1/Scale/Other.member", "statement-projector-v1", new string('a', 64)),
+            AssessedProvenance.NovelAfterSearch(GidRef.Create("D5/S1/Scale/Search")), DescribeRole.Lemma));
+        blocks.Add(Declaration("no-formula", StatementSource.WithoutFormula(),
+            new StatementAssessment.Unprojectable("constant", "Fixture.subject", "statement-projector-v1", new string('b', 64)),
+            AssessedProvenance.FromRepo(), DescribeRole.Proposition));
+        blocks.Add(Declaration("claim", StatementSource.FromAuthor(atom),
+            new StatementAssessment.Unprojectable("missing", "D5/S1/Scale/Other.member", "statement-projector-v1", new string('c', 64)),
+            AssessedProvenance.FromRepo(), DescribeRole.Theorem,
             new OpenProblemResolutionClaim(ProblemSlugRef.Create("batch-problem"), ResolutionKind.Proved,
-                [DeclarationHandle.Create("D5/S1/Scale/Other.additional")]),
-            restoredStatement: (claimSource, atom)));
+                [DeclarationHandle.Create("D5/S1/Scale/Other.additional")])));
 
         DocumentEdge[] edges =
         [

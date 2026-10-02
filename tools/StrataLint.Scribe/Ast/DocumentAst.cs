@@ -132,10 +132,6 @@ public abstract record DocumentBlock
             StatementSource = statementSource;
             OpenProblemResolutionClaim = openProblemResolutionClaim;
             FormulaProvenance = statementSource is StatementSource.LeanDerived
-                || statementSource is null
-                    && statementFormula is not null
-                    && statement is DescribeStatement.LeanDeclaration lean
-                    && StatementProjectionFixtureLoader.IsDerivedFrom(statementFormula, lean.Value)
                 ? StatementFormulaProvenance.LeanDerived : StatementFormulaProvenance.HandAuthored;
             this.kind = kind is DescribeKind.Definition
                 or DescribeKind.Theorem
@@ -178,8 +174,12 @@ public abstract record DocumentBlock
                 AssessedProvenance,
                 resolvedContent,
                 StatementFormula,
+                kindSource: KindSource,
                 statementSource: StatementSource,
-                openProblemResolutionClaim: OpenProblemResolutionClaim);
+                openProblemResolutionClaim: OpenProblemResolutionClaim)
+            {
+                StatementAssessment = StatementAssessment,
+            };
         }
 
         public Heading Title { get; }
@@ -206,6 +206,8 @@ public abstract record DocumentBlock
         public Formula? StatementFormula { get; }
 
         public StatementSource? StatementSource { get; }
+
+        internal StatementAssessment? StatementAssessment { get; private init; }
 
         public OpenProblemResolutionClaim? OpenProblemResolutionClaim { get; }
 
@@ -275,10 +277,11 @@ public abstract record DocumentBlock
             BlockSequence content,
             DescribeRole? role,
             OpenProblemResolutionClaim? openProblemResolutionClaim,
-            (StatementSource Source, Formula? Formula)? restoredStatement = null)
+            StatementAssessment? recordedAssessment = null)
         {
             var declaration = LeanDeclarationRef.Create(handle.Value);
-            var materialized = restoredStatement ?? StatementSource.Materialize(statementSource, declaration);
+            var assessment = recordedAssessment ?? StatementSource.Evaluate(declaration);
+            var materialized = StatementSource.Materialize(statementSource, declaration, assessment);
             return new(
                 id,
                 role switch
@@ -297,39 +300,12 @@ public abstract record DocumentBlock
                 materialized.Formula,
                 new DescribeKindSource.ReportDerived(handle, role),
                 materialized.Source,
-                openProblemResolutionClaim);
+                openProblemResolutionClaim)
+            {
+                StatementAssessment = assessment,
+            };
         }
 
-        internal static Describe Restore(
-            DescribeId id,
-            Heading title,
-            DescribeStatement statement,
-            AssessedProvenance provenance,
-            BlockSequence content,
-            Formula? statementFormula,
-            StatementSource? statementSource,
-            DescribeKindSource kindSource) =>
-            new(
-                id,
-                kindSource is DescribeKindSource.Authored authored ? authored.Value :
-                kindSource is DescribeKindSource.ReportDerived derived && derived.Role is { } role
-                    ? role switch
-                    {
-                        DescribeRole.Definition => DescribeKind.Definition,
-                        DescribeRole.Theorem => DescribeKind.Theorem,
-                        DescribeRole.Proposition => DescribeKind.Proposition,
-                        DescribeRole.Lemma => DescribeKind.Lemma,
-                        DescribeRole.Remark => DescribeKind.Remark,
-                        _ => null,
-                    }
-                    : null,
-                title,
-                statement,
-                provenance,
-                content,
-                statementFormula,
-                kindSource,
-                statementSource);
 
     }
 
