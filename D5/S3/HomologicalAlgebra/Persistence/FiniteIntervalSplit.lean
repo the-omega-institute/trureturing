@@ -9,26 +9,23 @@
 import Mathlib.LinearAlgebra.Basis.VectorSpace
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.LinearAlgebra.Projection
+import Mathlib.Algebra.Category.ModuleCat.Basic
+import Mathlib.CategoryTheory.ComposableArrows.Basic
 
 namespace D5.S3.HomologicalAlgebra.Persistence.FiniteIntervalSplit
 
-open Module
+open Module CategoryTheory
 
 universe u v
 
-variable {K : Type u} [Field K] {n : ℕ} {V : Fin n → Type v}
-  [∀ index, AddCommGroup (V index)] [∀ index, Module K (V index)]
+variable {K : Type u} [Field K] {n : ℕ}
 
-structure Diagram (K : Type u) [Field K] {n : ℕ} (V : Fin n → Type v)
-    [∀ index, AddCommGroup (V index)] [∀ index, Module K (V index)] where
-  map : ∀ source target, source ≤ target → V source →ₗ[K] V target
-  identity : ∀ index, map index index le_rfl = LinearMap.id
-  composition : ∀ source middle target (first : source ≤ middle) (second : middle ≤ target),
-    (map middle target second).comp (map source middle first) =
-      map source target (first.trans second)
-
-theorem exists_interval_split [∀ index, FiniteDimensional K (V index)]
-    (diagram : Diagram K V) (nonzero : ∃ index, ∃ vector : V index, vector ≠ 0) :
+theorem exists_interval_split (diagram : Fin n ⥤ ModuleCat.{v} K)
+    [∀ index, FiniteDimensional K (diagram.obj index)]
+    (nonzero : ∃ index, ∃ vector : diagram.obj index, vector ≠ 0) :
+    let V := fun index => diagram.obj index
+    let maps := fun source target (ordered : source ≤ target) =>
+      (diagram.map (homOfLE ordered)).hom
     ∃ (birth last : Fin n) (vectors : ∀ index, V index)
       (functionals : ∀ index, V index →ₗ[K] K),
       birth ≤ last ∧
@@ -37,10 +34,10 @@ theorem exists_interval_split [∀ index, FiniteDimensional K (V index)]
         vectors index = 0 ∧ functionals index = 0) ∧
       (∀ index, birth ≤ index ∧ index ≤ last → functionals index (vectors index) = 1) ∧
       (∀ source target (ordered : source ≤ target),
-        diagram.map source target ordered (vectors source) =
+        maps source target ordered (vectors source) =
           if birth ≤ source ∧ target ≤ last then vectors target else 0) ∧
       (∀ source target (ordered : source ≤ target),
-        (functionals target).comp (diagram.map source target ordered) =
+        (functionals target).comp (maps source target ordered) =
           if birth ≤ source ∧ target ≤ last then functionals source else 0) ∧
       (∃ equivalences : ∀ index,
           V index ≃ₗ[K] ((Submodule.span K {vectors index}) × LinearMap.ker (functionals index)),
@@ -49,14 +46,28 @@ theorem exists_interval_split [∀ index, FiniteDimensional K (V index)]
           ((equivalences index vector).2 : V index) =
             vector - functionals index vector • vectors index) ∧
       (∀ source target (ordered : source ≤ target) vector,
-        diagram.map source target ordered (functionals source vector • vectors source) =
-          functionals target (diagram.map source target ordered vector) • vectors target) ∧
+        maps source target ordered (functionals source vector • vectors source) =
+          functionals target (maps source target ordered vector) • vectors target) ∧
       (∀ source target (ordered : source ≤ target) vector,
         functionals source vector = 0 →
-          functionals target (diagram.map source target ordered vector) = 0) ∧
+          functionals target (maps source target ordered vector) = 0) ∧
       (∑ index, finrank K (LinearMap.ker (functionals index))) <
         ∑ index, finrank K (V index) := by
   classical
+  let V := fun index => diagram.obj index
+  let maps := fun source target (ordered : source ≤ target) =>
+    (diagram.map (homOfLE ordered)).hom
+  have identity : ∀ index, maps index index le_rfl = LinearMap.id := by
+    intro index
+    change (diagram.map (𝟙 index)).hom = _
+    rw [diagram.map_id, ModuleCat.hom_id]
+  have composition : ∀ source middle target (first : source ≤ middle)
+      (second : middle ≤ target),
+      (maps middle target second).comp (maps source middle first) =
+        maps source target (first.trans second) := by
+    intro source middle target first second
+    exact (congrArg ModuleCat.Hom.hom
+      (diagram.map_comp (homOfLE first) (homOfLE second))).symm
   let live := Finset.univ.filter fun index => ∃ vector : V index, vector ≠ 0
   have live_nonempty : live.Nonempty := by
     obtain ⟨index, vector, unequal⟩ := nonzero
@@ -70,16 +81,16 @@ theorem exists_interval_split [∀ index, FiniteDimensional K (V index)]
     have member : index ∈ live := Finset.mem_filter.mpr ⟨Finset.mem_univ _, vector, unequal⟩
     exact (not_le_of_gt earlier) (Finset.min'_le live index member)
   let surviving := Finset.univ.filter fun index =>
-    ∃ ordered : birth ≤ index, diagram.map birth index ordered initial ≠ 0
+    ∃ ordered : birth ≤ index, maps birth index ordered initial ≠ 0
   have birth_survives : birth ∈ surviving := by
     apply Finset.mem_filter.mpr
     refine ⟨Finset.mem_univ _, le_rfl, ?_⟩
-    simpa [diagram.identity] using initial_nonzero
+    simpa [identity] using initial_nonzero
   have surviving_nonempty : surviving.Nonempty := ⟨birth, birth_survives⟩
   let last := surviving.max' surviving_nonempty
   obtain ⟨birth_last, last_nonzero⟩ :=
     (Finset.mem_filter.mp (Finset.max'_mem surviving surviving_nonempty)).2
-  let terminal := diagram.map birth last birth_last initial
+  let terminal := maps birth last birth_last initial
   have terminal_nonzero : terminal ≠ 0 := last_nonzero
   let terminal_functional := (LinearMap.toSpanSingleton K (V last) terminal).leftInverse
   have terminal_normalized : terminal_functional terminal = 1 := by
@@ -88,10 +99,10 @@ theorem exists_interval_split [∀ index, FiniteDimensional K (V index)]
         (LinearMap.ker_toSpanSingleton K terminal_nonzero) (1 : K)
   let vectors : ∀ index, V index := fun index =>
     if supported : birth ≤ index ∧ index ≤ last then
-      diagram.map birth index supported.1 initial else 0
+      maps birth index supported.1 initial else 0
   let functionals : ∀ index, V index →ₗ[K] K := fun index =>
     if supported : birth ≤ index ∧ index ≤ last then
-      terminal_functional.comp (diagram.map index last supported.2) else 0
+      terminal_functional.comp (maps index last supported.2) else 0
   have unsupported_zero : ∀ index, ¬ (birth ≤ index ∧ index ≤ last) →
       vectors index = 0 ∧ functionals index = 0 := by
     intro index unsupported
@@ -101,12 +112,12 @@ theorem exists_interval_split [∀ index, FiniteDimensional K (V index)]
     intro index supported
     simp only [functionals, vectors, dif_pos supported, LinearMap.comp_apply]
     change terminal_functional
-      (diagram.map index last supported.2 (diagram.map birth index supported.1 initial)) = 1
+      (maps index last supported.2 (maps birth index supported.1 initial)) = 1
     have composite := LinearMap.congr_fun
-      (diagram.composition birth index last supported.1 supported.2) initial
+      (composition birth index last supported.1 supported.2) initial
     exact (congrArg terminal_functional composite).trans terminal_normalized
   have vector_naturality : ∀ source target (ordered : source ≤ target),
-      diagram.map source target ordered (vectors source) =
+      maps source target ordered (vectors source) =
         if birth ≤ source ∧ target ≤ last then vectors target else 0 := by
     intro source target ordered
     by_cases active : birth ≤ source ∧ target ≤ last
@@ -115,21 +126,21 @@ theorem exists_interval_split [∀ index, FiniteDimensional K (V index)]
       have target_supported : birth ≤ target ∧ target ≤ last :=
         ⟨active.1.trans ordered, active.2⟩
       simp only [if_pos active, vectors, dif_pos source_supported, dif_pos target_supported]
-      rw [← LinearMap.comp_apply, diagram.composition]
+      rw [← LinearMap.comp_apply, composition]
     · rw [if_neg active]
       by_cases supported : birth ≤ source ∧ source ≤ last
       · have birth_target : birth ≤ target := supported.1.trans ordered
-        have vanished : diagram.map birth target birth_target initial = 0 := by
+        have vanished : maps birth target birth_target initial = 0 := by
           by_contra unequal
           have member : target ∈ surviving :=
             Finset.mem_filter.mpr ⟨Finset.mem_univ _, birth_target, unequal⟩
           exact active ⟨supported.1, Finset.le_max' surviving target member⟩
         simp only [vectors, dif_pos supported]
-        rw [← LinearMap.comp_apply, diagram.composition]
+        rw [← LinearMap.comp_apply, composition]
         exact vanished
       · simp [vectors, supported]
   have functional_naturality : ∀ source target (ordered : source ≤ target),
-      (functionals target).comp (diagram.map source target ordered) =
+      (functionals target).comp (maps source target ordered) =
         if birth ≤ source ∧ target ≤ last then functionals source else 0 := by
     intro source target ordered
     by_cases active : birth ≤ source ∧ target ≤ last
@@ -138,7 +149,7 @@ theorem exists_interval_split [∀ index, FiniteDimensional K (V index)]
       have target_supported : birth ≤ target ∧ target ≤ last :=
         ⟨active.1.trans ordered, active.2⟩
       simp only [if_pos active, functionals, dif_pos source_supported, dif_pos target_supported]
-      rw [LinearMap.comp_assoc, diagram.composition]
+      rw [LinearMap.comp_assoc, composition]
     · rw [if_neg active]
       by_cases supported : birth ≤ target ∧ target ≤ last
       · have source_earlier : source < birth := by
@@ -149,8 +160,8 @@ theorem exists_interval_split [∀ index, FiniteDimensional K (V index)]
         simp
       · simp [functionals, supported]
   have projector_naturality : ∀ source target (ordered : source ≤ target) vector,
-      diagram.map source target ordered (functionals source vector • vectors source) =
-        functionals target (diagram.map source target ordered vector) • vectors target := by
+      maps source target ordered (functionals source vector • vectors source) =
+        functionals target (maps source target ordered vector) • vectors target := by
     intro source target ordered vector
     have scalar_eq := LinearMap.congr_fun (functional_naturality source target ordered) vector
     rw [map_smul, vector_naturality]
@@ -160,7 +171,7 @@ theorem exists_interval_split [∀ index, FiniteDimensional K (V index)]
       simpa [active] using congrArg (fun scalar : K => scalar • vectors target) scalar_eq.symm
   have kernel_naturality : ∀ source target (ordered : source ≤ target) vector,
       functionals source vector = 0 →
-        functionals target (diagram.map source target ordered vector) = 0 := by
+        functionals target (maps source target ordered vector) = 0 := by
     intro source target ordered vector in_kernel
     have scalar_eq := LinearMap.congr_fun (functional_naturality source target ordered) vector
     split_ifs at scalar_eq <;> simpa [in_kernel] using scalar_eq

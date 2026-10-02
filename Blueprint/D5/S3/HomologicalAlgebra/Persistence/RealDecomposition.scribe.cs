@@ -13,17 +13,6 @@ internal sealed class RealDecompositionDocument : IScribeDocumentDefinition
         H("Actual Natural Real Classification"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("decomposition"), DeclarationHandle.Create(Prefix + "Decomposition"),
-                H("The full real decomposition object"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text(
-                    "The output has one finite occurrence type, positive real half-open intervals "
-                        + "with finite or infinite deaths, and an actual natural isomorphism from "
-                        + "the real module to their supported coordinate sum. Universe lifting "
-                        + "allows the field and original vector-space carriers to inhabit "
-                        + "independent universes; it changes neither the maps nor the field."))),
-                DescribeRole.Definition),
-            Describe.Lean(
                 DescribeId.Create("exists-unique-decomposition"),
                 DeclarationHandle.Create(Prefix + "exists_unique_decomposition"),
                 H("Existence and uniqueness against arbitrary finite competitors"),
@@ -51,5 +40,25 @@ internal sealed class RealDecompositionDocument : IScribeDocumentDefinition
                             + "endpoint cuts and integer differences to isolate each multiplicity. "
                             + "Induced matching, quantitative estimates, exact interleaving iff "
                             + "matching and extended isometry remain separate obligations."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("exists-image-decomposition"),
+                DeclarationHandle.Create(Prefix + "exists_image_decomposition"),
+                H("Classifying the image of the same actual morphism"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "The sorted union of both families' births and finite deaths determines "
+                        + "a common grid. Endpoint membership establishes invertible source, "
+                        + "target and image transports inside each cell. The zero prefix follows "
+                        + "from actual target support, including an empty grid. Compatible "
+                        + "sampled-image maps form a natural isomorphism to the same categorical "
+                        + "image; finite-diagram classification constructs one image family. "
+                        + "Both transported factors use that family and compose to the original "
+                        + "morphism. A finite reindexing preserves arbitrary occurrence universes. "
+                        + "Sorted birth and death fibers produce two embeddings of this same "
+                        + "image family into source and target occurrences: the first preserves "
+                        + "birth and bounds death, the second preserves death and bounds birth. "
+                        + "Quantitative trim sandwiches and the exact interleaving "
+                        + "converse are not conclusions of this theorem."))),
                 DescribeRole.Theorem))));
 }

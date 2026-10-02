@@ -16,18 +16,6 @@ internal sealed class FiniteIntervalSplitDocument : IScribeDocumentDefinition
         H("Splitting an Interval from an Actual Finite Diagram"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("finite-diagram"),
-                DeclarationHandle.Create(Prefix + "Diagram"),
-                H("Actual forward maps"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text(
-                    "The vertices are Fin(n), with arbitrary K-vector spaces V(i). "
-                        + "For each i <= k the diagram contains the actual linear map F(i,k), "
-                        + "identity maps at equal indices and the composition equations. "
-                        + "No barcode, basis, common ambient space or dimension bound is supplied."))),
-                DescribeRole.Definition),
-            Describe.Lean(
                 DescribeId.Create("exists-interval-split"),
                 DeclarationHandle.Create(Prefix + "exists_interval_split"),
                 H("A natural interval and its complementary kernel diagram"),
@@ -94,7 +82,7 @@ internal sealed class FiniteIntervalSplitDocument : IScribeDocumentDefinition
                 Call("StrictDescent", field, spaces, maps)));
         return Disp(new Formula.BindMany(FormulaQuantifier.ForAll,
             [Bound("K", F.Id("Type")), Bound("n", Call("Nat")),
-             Bound("V", Call("VertexSpaces", F.Id("n"))), Bound("F", Call("Diagram", field, spaces))],
+             Bound("V", Call("VertexSpaces", F.Id("n"))), Bound("F", Call("ModuleCatFunctor", field, spaces))],
             new Formula.Logic(All(Call("Field", field), Call("FiniteDimensionalVertices", field, spaces),
                 Call("NonzeroVertex", spaces)), FormulaLogicOperator.Implies, conclusion)));
     }

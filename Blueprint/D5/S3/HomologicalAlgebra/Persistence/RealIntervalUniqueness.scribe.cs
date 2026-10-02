@@ -12,36 +12,6 @@ internal sealed class RealIntervalUniquenessDocument : IScribeDocumentDefinition
         "Actual supported interval sums used in natural classification and endpoint recovery.",
         H("Actual Real Interval Sums"),
         Blocks(
-            Definition("interval-family", "IntervalFamily", "Positive finite or essential intervals",
-                "An occurrence has a real birth and a death in WithTop(Real), strictly greater than "
-                    + "birth. Infinity is allowed. Repeated intervals retain separate occurrences."),
-            Definition("interval-space", "intervalSpace", "The actual supported coordinate subspace",
-                "At time r this is the subspace of K-valued occurrence coordinates that vanish "
-                    + "unless birth <= r < death. The field is arbitrary."),
-            Definition("interval-arrow", "intervalArrow", "The actual structure map",
-                "For s <= t, retain source coordinates whose deaths are strictly above t and kill "
-                    + "the others. The output lies in the supported subspace at t."),
-            Definition("interval-sum", "intervalSum", "A real persistence functor",
-                "The supported spaces and actual arrows form a functor from the real preorder to "
-                    + "ModuleCat. Identity and composition hold at exact birth/death points, "
-                    + "zero spaces and infinite tails. The substantive classification and "
-                    + "arbitrary competing-decomposition uniqueness proof is in RealDecomposition."),
-            Describe.Lean(
-                DescribeId.Create("image-range-mono"),
-                DeclarationHandle.Create(Prefix + "image_range_mono"),
-                H("Actual morphism images persist under interval arrows"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
-                Blocks(Paragraph(Text(
-                    "For arbitrary source and target occurrence families and an actual natural map "
-                        + "between their interval sums, the image of a source component is carried "
-                        + "inside the image of the target component by every interval arrow. The "
-                        + "inclusion is proved from the actual naturality square: an element in the "
-                        + "source image is transported along the source interval arrow, then mapped "
-                        + "by the target component, and hence is the target interval arrow applied "
-                        + "to the original source image element. This is the same-map image "
-                        + "persistence needed before classifying a common image; it does not assert "
-                        + "a barcode decomposition or a quantitative endpoint bound."))),
-                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("mono-death-window-count"),
                 DeclarationHandle.Create(Prefix + "mono_death_window_count"),
@@ -54,7 +24,7 @@ internal sealed class RealIntervalUniquenessDocument : IScribeDocumentDefinition
                         + "The upper cut u may be infinity; this version uses the birth image "
                         + "without an artificial arrow to an infinite-time object. "
                         + "Extend window coordinates into the source at s and t. Naturality at "
-                        + "s -> t and t -> u puts their actual images in the target birth-image "
+                        + "s -> t and, for finite u, t -> u puts their actual images in the target birth-image "
                         + "and death-kernel intersection. Restriction to the target window is "
                         + "injective, so the existing finrank comparison gives the count bound. "
                         + "No occurrence injection or quantitative endpoint bound is assumed."))),
@@ -112,8 +82,4 @@ internal sealed class RealIntervalUniquenessDocument : IScribeDocumentDefinition
                         + "additional conclusions, not assertions of these injections."))),
                 DescribeRole.Theorem))));
 
-    private static DocumentBlock.Describe Definition(string id, string declaration, string heading, string body) =>
-        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
-            H(heading), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(body))), DescribeRole.Definition);
 }

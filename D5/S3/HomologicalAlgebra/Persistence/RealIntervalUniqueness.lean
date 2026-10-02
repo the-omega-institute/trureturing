@@ -4,12 +4,13 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Actual supported real interval-sum spaces and structure maps. -/
+   digest: Actual morphism window counts and ordered occurrence injections. -/
 
 import Mathlib.Algebra.Category.ModuleCat.Basic
 import Mathlib.Data.Real.Basic
 import Mathlib.LinearAlgebra.Dimension.Constructions
 import Mathlib.Data.Finset.Max
+import Mathlib.LinearAlgebra.Pi
 
 namespace D5.S3.HomologicalAlgebra.Persistence.RealIntervalUniqueness
 
@@ -17,121 +18,135 @@ open CategoryTheory Module
 
 universe u v
 
-structure IntervalFamily (Occurrence : Type v) where
-  birth : Occurrence → ℝ
-  death : Occurrence → WithTop ℝ
-  positive : ∀ occurrence, (birth occurrence : WithTop ℝ) < death occurrence
-
-variable {K : Type u} [Field K] {Occurrence : Type v}
-
-def intervalSpace (family : IntervalFamily Occurrence) (time : ℝ) :
-    Submodule K (Occurrence → K) where
-  carrier := {coordinates | ∀ occurrence,
-    ¬ (family.birth occurrence ≤ time ∧ (time : WithTop ℝ) < family.death occurrence) →
-      coordinates occurrence = 0}
-  zero_mem' := by simp
-  add_mem' := by
-    intro first second first_supported second_supported occurrence unsupported
-    simp [first_supported occurrence unsupported, second_supported occurrence unsupported]
-  smul_mem' := by
-    intro scalar coordinates supported occurrence unsupported
-    simp [supported occurrence unsupported]
-
-noncomputable def intervalArrow (family : IntervalFamily Occurrence) (source target : ℝ)
-    (ordered : source ≤ target) :
-    intervalSpace (K := K) family source →ₗ[K] intervalSpace (K := K) family target := by
-  classical
-  refine {
-    toFun := fun coordinates => ⟨fun occurrence =>
-      if (target : WithTop ℝ) < family.death occurrence then coordinates.val occurrence else 0, ?_⟩
-    map_add' := ?_
-    map_smul' := ?_ }
-  · intro occurrence unsupported
-    by_cases survives : (target : WithTop ℝ) < family.death occurrence
-    · have not_born : ¬ family.birth occurrence ≤ source := by
-        intro born
-        exact unsupported ⟨born.trans ordered, survives⟩
-      simp [survives, coordinates.property occurrence (by tauto)]
-    · simp [survives]
-  · intro first second
-    ext occurrence
-    by_cases survives : (target : WithTop ℝ) < family.death occurrence <;> simp [survives]
-  · intro scalar coordinates
-    ext occurrence
-    by_cases survives : (target : WithTop ℝ) < family.death occurrence <;> simp [survives]
-
-noncomputable def intervalSum (family : IntervalFamily Occurrence) :
-    ℝ ⥤ ModuleCat.{max u v} K where
-  obj time := ModuleCat.of K (intervalSpace (K := K) family time)
-  map {source target} arrow := ModuleCat.ofHom (intervalArrow family source target (leOfHom arrow))
-  map_id time := by
-    classical
-    ext coordinates occurrence
-    by_cases survives : (time : WithTop ℝ) < family.death occurrence
-    · simp [intervalArrow, survives]
-    · simp [intervalArrow, survives, coordinates.property occurrence (by tauto)]
-  map_comp {source middle target} first second := by
-    classical
-    ext coordinates occurrence
-    by_cases survives : (target : WithTop ℝ) < family.death occurrence
-    · have middle_survives : (middle : WithTop ℝ) < family.death occurrence :=
-        lt_of_le_of_lt (WithTop.coe_le_coe.mpr (leOfHom second)) survives
-      simp [intervalArrow, survives, middle_survives]
-    · simp [intervalArrow, survives]
-
-theorem image_range_mono {Source Target : Type v}
-    (sourceFamily : IntervalFamily Source) (targetFamily : IntervalFamily Target)
-    (morphism : intervalSum (K := K) sourceFamily ⟶ intervalSum (K := K) targetFamily)
-    {source target : ℝ} (ordered : source ≤ target) :
-    Submodule.map (intervalArrow targetFamily source target ordered)
-        (LinearMap.range (morphism.app source).hom) ≤
-      LinearMap.range (morphism.app target).hom := by
-  rintro vector ⟨preimage, ⟨original, rfl⟩, rfl⟩
-  have square := congrArg (fun arrow => arrow.hom original)
-    (morphism.naturality (homOfLE ordered))
-  change (morphism.app target).hom
-      (intervalArrow sourceFamily source target ordered original) =
-    intervalArrow targetFamily source target ordered
-      ((morphism.app source).hom original) at square
-  have in_range : (morphism.app target).hom
-      (intervalArrow sourceFamily source target ordered original) ∈
-    LinearMap.range (morphism.app target).hom :=
-      ⟨intervalArrow sourceFamily source target ordered original, rfl⟩
-  rw [square] at in_range
-  exact in_range
+variable {K : Type u} [Field K]
 
 set_option backward.isDefEq.respectTransparency false in
 theorem mono_death_window_count {Source Target : Type v} [Fintype Source] [Fintype Target]
-    (sourceFamily : IntervalFamily Source) (targetFamily : IntervalFamily Target)
-    (morphism : intervalSum (K := K) sourceFamily ⟶ intervalSum (K := K) targetFamily)
+    (sourceFamily : (Source → ℝ) × (Source → WithTop ℝ)) (targetFamily : (Target → ℝ) × (Target → WithTop ℝ))
+    (source_positive : ∀ occurrence, (sourceFamily.1 occurrence : WithTop ℝ) <
+      sourceFamily.2 occurrence)
+    (target_positive : ∀ occurrence, (targetFamily.1 occurrence : WithTop ℝ) <
+      targetFamily.2 occurrence) :
+    let intervalSpace := fun {Index : Type v}
+        (family : (Index → ℝ) × (Index → WithTop ℝ)) (time : ℝ) =>
+      Submodule.pi {occurrence | ¬ (family.1 occurrence ≤ time ∧
+        (time : WithTop ℝ) < family.2 occurrence)} (fun _ => (⊥ : Submodule K K));
+    let intervalArrow := fun {Index : Type v}
+        (family : (Index → ℝ) × (Index → WithTop ℝ)) (source target : ℝ)
+        (ordered : source ≤ target) =>
+      (((LinearMap.pi fun occurrence : Index =>
+          if (target : WithTop ℝ) < family.2 occurrence then
+            (LinearMap.proj occurrence : (Index → K) →ₗ[K] K) else 0).domRestrict
+          (intervalSpace family source)).codRestrict (intervalSpace family target) (by
+        classical
+        intro coordinates occurrence unsupported
+        by_cases survives : (target : WithTop ℝ) < family.2 occurrence
+        · have not_born : ¬ family.1 occurrence ≤ source := by
+            intro born
+            exact unsupported ⟨born.trans ordered, survives⟩
+          simpa [survives] using coordinates.property occurrence (by tauto)
+        · simp [survives]));
+    let intervalSum := fun {Index : Type v}
+        (family : (Index → ℝ) × (Index → WithTop ℝ)) =>
+      ({ obj time := ModuleCat.of K (intervalSpace family time)
+         map {source target} arrow :=
+           ModuleCat.ofHom (intervalArrow family source target (leOfHom arrow))
+         map_id time := by
+           classical
+           ext coordinates occurrence
+           by_cases survives : (time : WithTop ℝ) < family.2 occurrence
+           · simp [intervalArrow, apply_ite, ite_apply, survives]
+           · have zero : coordinates.val occurrence = 0 :=
+               coordinates.property occurrence (by tauto)
+             simp [intervalArrow, apply_ite, ite_apply, survives, zero]
+         map_comp {source middle target} first second := by
+           classical
+           ext coordinates occurrence
+           by_cases survives : (target : WithTop ℝ) < family.2 occurrence
+           · have middle_survives : (middle : WithTop ℝ) < family.2 occurrence :=
+               lt_of_le_of_lt (WithTop.coe_le_coe.mpr (leOfHom second)) survives
+             simp [intervalArrow, apply_ite, ite_apply, survives, middle_survives]
+           · simp [intervalArrow, apply_ite, ite_apply, survives] } : ℝ ⥤ ModuleCat.{max u v} K);
+    ∀ (morphism : intervalSum sourceFamily ⟶ intervalSum targetFamily)
     (injective : ∀ time, Function.Injective (morphism.app time).hom)
     (birthCut sample : ℝ) (deathCut : WithTop ℝ) (birth_before : birthCut ≤ sample)
-    (sample_before : (sample : WithTop ℝ) ≤ deathCut) :
-    Fintype.card {occurrence // sourceFamily.birth occurrence ≤ birthCut ∧
-      (sample : WithTop ℝ) < sourceFamily.death occurrence ∧
-      sourceFamily.death occurrence ≤ deathCut} ≤
-    Fintype.card {occurrence // targetFamily.birth occurrence ≤ birthCut ∧
-      (sample : WithTop ℝ) < targetFamily.death occurrence ∧
-      targetFamily.death occurrence ≤ deathCut} := by
+    (sample_before : (sample : WithTop ℝ) ≤ deathCut),
+    Fintype.card {occurrence // sourceFamily.1 occurrence ≤ birthCut ∧
+      (sample : WithTop ℝ) < sourceFamily.2 occurrence ∧
+      sourceFamily.2 occurrence ≤ deathCut} ≤
+    Fintype.card {occurrence // targetFamily.1 occurrence ≤ birthCut ∧
+      (sample : WithTop ℝ) < targetFamily.2 occurrence ∧
+      targetFamily.2 occurrence ≤ deathCut} := by
   classical
-  let SourceWindow := {occurrence // sourceFamily.birth occurrence ≤ birthCut ∧
-    (sample : WithTop ℝ) < sourceFamily.death occurrence ∧
-    sourceFamily.death occurrence ≤ deathCut}
-  let TargetWindow := {occurrence // targetFamily.birth occurrence ≤ birthCut ∧
-    (sample : WithTop ℝ) < targetFamily.death occurrence ∧
-    targetFamily.death occurrence ≤ deathCut}
+  let intervalSpace := fun {Index : Type v}
+      (family : (Index → ℝ) × (Index → WithTop ℝ)) (time : ℝ) =>
+    Submodule.pi {occurrence | ¬ (family.1 occurrence ≤ time ∧
+      (time : WithTop ℝ) < family.2 occurrence)} (fun _ => (⊥ : Submodule K K));
+  let intervalArrow := fun {Index : Type v}
+      (family : (Index → ℝ) × (Index → WithTop ℝ)) (source target : ℝ)
+      (ordered : source ≤ target) =>
+    (((LinearMap.pi fun occurrence : Index =>
+        if (target : WithTop ℝ) < family.2 occurrence then
+          (LinearMap.proj occurrence : (Index → K) →ₗ[K] K) else 0).domRestrict
+        (intervalSpace family source)).codRestrict (intervalSpace family target) (by
+      classical
+      intro coordinates occurrence unsupported
+      by_cases survives : (target : WithTop ℝ) < family.2 occurrence
+      · have not_born : ¬ family.1 occurrence ≤ source := by
+          intro born
+          exact unsupported ⟨born.trans ordered, survives⟩
+        simpa [survives] using coordinates.property occurrence (by tauto)
+      · simp [survives]));
+  let intervalSum := fun {Index : Type v}
+      (family : (Index → ℝ) × (Index → WithTop ℝ)) =>
+    ({ obj time := ModuleCat.of K (intervalSpace family time)
+       map {source target} arrow :=
+         ModuleCat.ofHom (intervalArrow family source target (leOfHom arrow))
+       map_id time := by
+         classical
+         ext coordinates occurrence
+         by_cases survives : (time : WithTop ℝ) < family.2 occurrence
+         · simp [intervalArrow, apply_ite, ite_apply, survives]
+         · have zero : coordinates.val occurrence = 0 :=
+             coordinates.property occurrence (by tauto)
+           simp [intervalArrow, apply_ite, ite_apply, survives, zero]
+       map_comp {source middle target} first second := by
+         classical
+         ext coordinates occurrence
+         by_cases survives : (target : WithTop ℝ) < family.2 occurrence
+         · have middle_survives : (middle : WithTop ℝ) < family.2 occurrence :=
+             lt_of_le_of_lt (WithTop.coe_le_coe.mpr (leOfHom second)) survives
+           simp [intervalArrow, apply_ite, ite_apply, survives, middle_survives]
+         · simp [intervalArrow, apply_ite, ite_apply, survives] } : ℝ ⥤ ModuleCat.{max u v} K);
+  change ∀ (morphism : intervalSum sourceFamily ⟶ intervalSum targetFamily)
+      (injective : ∀ time, Function.Injective (morphism.app time).hom)
+      (birthCut sample : ℝ) (deathCut : WithTop ℝ) (birth_before : birthCut ≤ sample)
+      (sample_before : (sample : WithTop ℝ) ≤ deathCut),
+      Fintype.card {occurrence // sourceFamily.1 occurrence ≤ birthCut ∧
+        (sample : WithTop ℝ) < sourceFamily.2 occurrence ∧
+        sourceFamily.2 occurrence ≤ deathCut} ≤
+      Fintype.card {occurrence // targetFamily.1 occurrence ≤ birthCut ∧
+        (sample : WithTop ℝ) < targetFamily.2 occurrence ∧
+        targetFamily.2 occurrence ≤ deathCut}
+  intro morphism injective birthCut sample deathCut birth_before sample_before
+  let SourceWindow := {occurrence // sourceFamily.1 occurrence ≤ birthCut ∧
+    (sample : WithTop ℝ) < sourceFamily.2 occurrence ∧
+    sourceFamily.2 occurrence ≤ deathCut}
+  let TargetWindow := {occurrence // targetFamily.1 occurrence ≤ birthCut ∧
+    (sample : WithTop ℝ) < targetFamily.2 occurrence ∧
+    targetFamily.2 occurrence ≤ deathCut}
   let extend : ∀ time, birthCut ≤ time → time ≤ sample →
-      (SourceWindow → K) →ₗ[K] intervalSpace (K := K) sourceFamily time :=
+      (SourceWindow → K) →ₗ[K] intervalSpace sourceFamily time :=
     fun time after_birth before_sample => {
       toFun := fun coordinates => ⟨fun occurrence =>
-        if supported : sourceFamily.birth occurrence ≤ birthCut ∧
-            (sample : WithTop ℝ) < sourceFamily.death occurrence ∧
-            sourceFamily.death occurrence ≤ deathCut
+        if supported : sourceFamily.1 occurrence ≤ birthCut ∧
+            (sample : WithTop ℝ) < sourceFamily.2 occurrence ∧
+            sourceFamily.2 occurrence ≤ deathCut
         then coordinates ⟨occurrence, supported⟩ else 0, by
           intro occurrence unsupported
-          have absent : ¬ (sourceFamily.birth occurrence ≤ birthCut ∧
-              (sample : WithTop ℝ) < sourceFamily.death occurrence ∧
-              sourceFamily.death occurrence ≤ deathCut) := by
+          have absent : ¬ (sourceFamily.1 occurrence ≤ birthCut ∧
+              (sample : WithTop ℝ) < sourceFamily.2 occurrence ∧
+              sourceFamily.2 occurrence ≤ deathCut) := by
             intro supported
             exact unsupported ⟨supported.1.trans after_birth,
               lt_of_le_of_lt (WithTop.coe_le_coe.mpr before_sample) supported.2.1⟩
@@ -152,36 +167,36 @@ theorem mono_death_window_count {Source Target : Type v} [Fintype Source] [Finty
       extend sample birth_before le_rfl coordinates := by
     intro coordinates
     ext occurrence
-    by_cases supported : sourceFamily.birth occurrence ≤ birthCut ∧
-        (sample : WithTop ℝ) < sourceFamily.death occurrence ∧
-        sourceFamily.death occurrence ≤ deathCut
-    · simp [intervalArrow, extend, supported]
-    · simp [intervalArrow, extend, supported]
+    by_cases supported : sourceFamily.1 occurrence ≤ birthCut ∧
+        (sample : WithTop ℝ) < sourceFamily.2 occurrence ∧
+        sourceFamily.2 occurrence ≤ deathCut
+    · simp [intervalArrow, apply_ite, ite_apply, extend, supported]
+    · simp [intervalArrow, apply_ite, ite_apply, extend, supported]
   have death_kernel : ∀ (cut : ℝ) (after_sample : sample ≤ cut),
       deathCut ≤ (cut : WithTop ℝ) → ∀ coordinates,
       intervalArrow sourceFamily sample cut after_sample
         (extend sample birth_before le_rfl coordinates) = 0 := by
     intro cut after_sample above coordinates
     ext occurrence
-    by_cases supported : sourceFamily.birth occurrence ≤ birthCut ∧
-        (sample : WithTop ℝ) < sourceFamily.death occurrence ∧
-        sourceFamily.death occurrence ≤ deathCut
-    · simp [intervalArrow, extend, not_lt_of_ge (supported.2.2.trans above)]
-    · simp [intervalArrow, extend, supported]
+    by_cases supported : sourceFamily.1 occurrence ≤ birthCut ∧
+        (sample : WithTop ℝ) < sourceFamily.2 occurrence ∧
+        sourceFamily.2 occurrence ≤ deathCut
+    · simp [intervalArrow, apply_ite, ite_apply, extend, not_lt_of_ge (supported.2.2.trans above)]
+    · simp [intervalArrow, apply_ite, ite_apply, extend, supported]
   have target_supported : ∀ coordinates occurrence,
-      ¬ (targetFamily.birth occurrence ≤ birthCut ∧
-        (sample : WithTop ℝ) < targetFamily.death occurrence ∧
-        targetFamily.death occurrence ≤ deathCut) →
+      ¬ (targetFamily.1 occurrence ≤ birthCut ∧
+        (sample : WithTop ℝ) < targetFamily.2 occurrence ∧
+        targetFamily.2 occurrence ≤ deathCut) →
       ((morphism.app sample).hom (extend sample birth_before le_rfl coordinates)).val
         occurrence = 0 := by
     intro coordinates occurrence unsupported
-    by_cases born : targetFamily.birth occurrence ≤ birthCut
-    · by_cases survives : (sample : WithTop ℝ) < targetFamily.death occurrence
+    by_cases born : targetFamily.1 occurrence ≤ birthCut
+    · by_cases survives : (sample : WithTop ℝ) < targetFamily.2 occurrence
       · cases deathCut with
         | top => exact False.elim (unsupported ⟨born, survives, le_top⟩)
         | coe finiteCut =>
           have after_sample : sample ≤ finiteCut := WithTop.coe_le_coe.mp sample_before
-          have survives_cut : (finiteCut : WithTop ℝ) < targetFamily.death occurrence := by
+          have survives_cut : (finiteCut : WithTop ℝ) < targetFamily.2 occurrence := by
             apply lt_of_not_ge
             intro dies
             exact unsupported ⟨born, survives, dies⟩
@@ -196,9 +211,9 @@ theorem mono_death_window_count {Source Target : Type v} [Fintype Source] [Finty
                 (extend sample birth_before le_rfl coordinates)) at square
           rw [death_kernel finiteCut after_sample le_rfl, map_zero] at square
           have coordinate := congrArg
-            (fun vector : intervalSpace (K := K) targetFamily finiteCut => vector.val occurrence)
+            (fun vector : intervalSpace targetFamily finiteCut => vector.val occurrence)
             square
-          simpa [intervalArrow, survives_cut] using coordinate.symm
+          simpa [intervalArrow, apply_ite, ite_apply, survives_cut] using coordinate.symm
       · exact ((morphism.app sample).hom
           (extend sample birth_before le_rfl coordinates)).property occurrence (by tauto)
     · have square := congrArg (fun arrow => arrow.hom
@@ -211,13 +226,14 @@ theorem mono_death_window_count {Source Target : Type v} [Fintype Source] [Finty
           ((morphism.app birthCut).hom (extend birthCut le_rfl birth_before coordinates)) at square
       rw [birth_image] at square
       have coordinate := congrArg
-        (fun vector : intervalSpace (K := K) targetFamily sample => vector.val occurrence) square
+        (fun vector : intervalSpace targetFamily sample => vector.val occurrence) square
       have absent := ((morphism.app birthCut).hom
         (extend birthCut le_rfl birth_before coordinates)).property occurrence (by tauto)
-      simpa [intervalArrow, absent] using coordinate
+      change _ = (0 : K) at absent
+      simpa [intervalArrow, apply_ite, ite_apply, absent] using coordinate
   let restricted : (SourceWindow → K) →ₗ[K] (TargetWindow → K) :=
     LinearMap.pi fun occurrence => (LinearMap.proj occurrence.val).comp
-      ((intervalSpace (K := K) targetFamily sample).subtype.comp
+      ((intervalSpace targetFamily sample).subtype.comp
         ((morphism.app sample).hom.comp (extend sample birth_before le_rfl)))
   have restricted_injective : Function.Injective restricted := by
     intro first second equal
@@ -225,16 +241,16 @@ theorem mono_death_window_count {Source Target : Type v} [Fintype Source] [Finty
         (morphism.app sample).hom (extend sample birth_before le_rfl second) := by
       apply Subtype.ext
       funext occurrence
-      by_cases supported : targetFamily.birth occurrence ≤ birthCut ∧
-          (sample : WithTop ℝ) < targetFamily.death occurrence ∧
-          targetFamily.death occurrence ≤ deathCut
+      by_cases supported : targetFamily.1 occurrence ≤ birthCut ∧
+          (sample : WithTop ℝ) < targetFamily.2 occurrence ∧
+          targetFamily.2 occurrence ≤ deathCut
       · exact congrFun equal ⟨occurrence, supported⟩
       · rw [target_supported first occurrence supported,
           target_supported second occurrence supported]
     have equal_sources := injective sample equal_images
     funext occurrence
     have coordinate := congrArg
-      (fun vector : intervalSpace (K := K) sourceFamily sample => vector.val occurrence.val)
+      (fun vector : intervalSpace sourceFamily sample => vector.val occurrence.val)
       equal_sources
     simpa [extend, occurrence.property] using coordinate
   have dimensions := LinearMap.finrank_le_finrank_of_injective
@@ -243,38 +259,133 @@ theorem mono_death_window_count {Source Target : Type v} [Fintype Source] [Finty
 
 set_option backward.isDefEq.respectTransparency false in
 theorem epi_birth_window_count {Source Target : Type v} [Fintype Source] [Fintype Target]
-    (sourceFamily : IntervalFamily Source) (targetFamily : IntervalFamily Target)
-    (morphism : intervalSum (K := K) sourceFamily ⟶ intervalSum (K := K) targetFamily)
+    (sourceFamily : (Source → ℝ) × (Source → WithTop ℝ)) (targetFamily : (Target → ℝ) × (Target → WithTop ℝ))
+    (source_positive : ∀ occurrence, (sourceFamily.1 occurrence : WithTop ℝ) <
+      sourceFamily.2 occurrence)
+    (target_positive : ∀ occurrence, (targetFamily.1 occurrence : WithTop ℝ) <
+      targetFamily.2 occurrence) :
+    let intervalSpace := fun {Index : Type v}
+        (family : (Index → ℝ) × (Index → WithTop ℝ)) (time : ℝ) =>
+      Submodule.pi {occurrence | ¬ (family.1 occurrence ≤ time ∧
+        (time : WithTop ℝ) < family.2 occurrence)} (fun _ => (⊥ : Submodule K K));
+    let intervalArrow := fun {Index : Type v}
+        (family : (Index → ℝ) × (Index → WithTop ℝ)) (source target : ℝ)
+        (ordered : source ≤ target) =>
+      (((LinearMap.pi fun occurrence : Index =>
+          if (target : WithTop ℝ) < family.2 occurrence then
+            (LinearMap.proj occurrence : (Index → K) →ₗ[K] K) else 0).domRestrict
+          (intervalSpace family source)).codRestrict (intervalSpace family target) (by
+        classical
+        intro coordinates occurrence unsupported
+        by_cases survives : (target : WithTop ℝ) < family.2 occurrence
+        · have not_born : ¬ family.1 occurrence ≤ source := by
+            intro born
+            exact unsupported ⟨born.trans ordered, survives⟩
+          simpa [survives] using coordinates.property occurrence (by tauto)
+        · simp [survives]));
+    let intervalSum := fun {Index : Type v}
+        (family : (Index → ℝ) × (Index → WithTop ℝ)) =>
+      ({ obj time := ModuleCat.of K (intervalSpace family time)
+         map {source target} arrow :=
+           ModuleCat.ofHom (intervalArrow family source target (leOfHom arrow))
+         map_id time := by
+           classical
+           ext coordinates occurrence
+           by_cases survives : (time : WithTop ℝ) < family.2 occurrence
+           · simp [intervalArrow, apply_ite, ite_apply, survives]
+           · have zero : coordinates.val occurrence = 0 :=
+               coordinates.property occurrence (by tauto)
+             simp [intervalArrow, apply_ite, ite_apply, survives, zero]
+         map_comp {source middle target} first second := by
+           classical
+           ext coordinates occurrence
+           by_cases survives : (target : WithTop ℝ) < family.2 occurrence
+           · have middle_survives : (middle : WithTop ℝ) < family.2 occurrence :=
+               lt_of_le_of_lt (WithTop.coe_le_coe.mpr (leOfHom second)) survives
+             simp [intervalArrow, apply_ite, ite_apply, survives, middle_survives]
+           · simp [intervalArrow, apply_ite, ite_apply, survives] } : ℝ ⥤ ModuleCat.{max u v} K);
+    ∀ (morphism : intervalSum sourceFamily ⟶ intervalSum targetFamily)
     (surjective : ∀ time, Function.Surjective (morphism.app time).hom)
     (earlier birthCut sample : ℝ) (earlier_before : earlier ≤ birthCut)
-    (birth_before : birthCut ≤ sample) :
-    Fintype.card {occurrence // earlier < targetFamily.birth occurrence ∧
-      targetFamily.birth occurrence ≤ birthCut ∧
-      (sample : WithTop ℝ) < targetFamily.death occurrence} ≤
-    Fintype.card {occurrence // earlier < sourceFamily.birth occurrence ∧
-      sourceFamily.birth occurrence ≤ birthCut ∧
-      (sample : WithTop ℝ) < sourceFamily.death occurrence} := by
+    (birth_before : birthCut ≤ sample),
+    Fintype.card {occurrence // earlier < targetFamily.1 occurrence ∧
+      targetFamily.1 occurrence ≤ birthCut ∧
+      (sample : WithTop ℝ) < targetFamily.2 occurrence} ≤
+    Fintype.card {occurrence // earlier < sourceFamily.1 occurrence ∧
+      sourceFamily.1 occurrence ≤ birthCut ∧
+      (sample : WithTop ℝ) < sourceFamily.2 occurrence} := by
   classical
-  let SourceWindow := {occurrence // earlier < sourceFamily.birth occurrence ∧
-    sourceFamily.birth occurrence ≤ birthCut ∧
-    (sample : WithTop ℝ) < sourceFamily.death occurrence}
-  let TargetWindow := {occurrence // earlier < targetFamily.birth occurrence ∧
-    targetFamily.birth occurrence ≤ birthCut ∧
-    (sample : WithTop ℝ) < targetFamily.death occurrence}
-  let extend : ∀ {Index : Type v} (family : IntervalFamily Index),
-      ({occurrence // earlier < family.birth occurrence ∧
-        family.birth occurrence ≤ birthCut ∧
-        (sample : WithTop ℝ) < family.death occurrence} → K) →ₗ[K]
-      intervalSpace (K := K) family birthCut := fun family => {
+  let intervalSpace := fun {Index : Type v}
+      (family : (Index → ℝ) × (Index → WithTop ℝ)) (time : ℝ) =>
+    Submodule.pi {occurrence | ¬ (family.1 occurrence ≤ time ∧
+      (time : WithTop ℝ) < family.2 occurrence)} (fun _ => (⊥ : Submodule K K));
+  let intervalArrow := fun {Index : Type v}
+      (family : (Index → ℝ) × (Index → WithTop ℝ)) (source target : ℝ)
+      (ordered : source ≤ target) =>
+    (((LinearMap.pi fun occurrence : Index =>
+        if (target : WithTop ℝ) < family.2 occurrence then
+          (LinearMap.proj occurrence : (Index → K) →ₗ[K] K) else 0).domRestrict
+        (intervalSpace family source)).codRestrict (intervalSpace family target) (by
+      classical
+      intro coordinates occurrence unsupported
+      by_cases survives : (target : WithTop ℝ) < family.2 occurrence
+      · have not_born : ¬ family.1 occurrence ≤ source := by
+          intro born
+          exact unsupported ⟨born.trans ordered, survives⟩
+        simpa [survives] using coordinates.property occurrence (by tauto)
+      · simp [survives]));
+  let intervalSum := fun {Index : Type v}
+      (family : (Index → ℝ) × (Index → WithTop ℝ)) =>
+    ({ obj time := ModuleCat.of K (intervalSpace family time)
+       map {source target} arrow :=
+         ModuleCat.ofHom (intervalArrow family source target (leOfHom arrow))
+       map_id time := by
+         classical
+         ext coordinates occurrence
+         by_cases survives : (time : WithTop ℝ) < family.2 occurrence
+         · simp [intervalArrow, apply_ite, ite_apply, survives]
+         · have zero : coordinates.val occurrence = 0 :=
+             coordinates.property occurrence (by tauto)
+           simp [intervalArrow, apply_ite, ite_apply, survives, zero]
+       map_comp {source middle target} first second := by
+         classical
+         ext coordinates occurrence
+         by_cases survives : (target : WithTop ℝ) < family.2 occurrence
+         · have middle_survives : (middle : WithTop ℝ) < family.2 occurrence :=
+             lt_of_le_of_lt (WithTop.coe_le_coe.mpr (leOfHom second)) survives
+           simp [intervalArrow, apply_ite, ite_apply, survives, middle_survives]
+         · simp [intervalArrow, apply_ite, ite_apply, survives] } : ℝ ⥤ ModuleCat.{max u v} K);
+  change ∀ (morphism : intervalSum sourceFamily ⟶ intervalSum targetFamily)
+      (surjective : ∀ time, Function.Surjective (morphism.app time).hom)
+      (earlier birthCut sample : ℝ) (earlier_before : earlier ≤ birthCut)
+      (birth_before : birthCut ≤ sample),
+      Fintype.card {occurrence // earlier < targetFamily.1 occurrence ∧
+        targetFamily.1 occurrence ≤ birthCut ∧
+        (sample : WithTop ℝ) < targetFamily.2 occurrence} ≤
+      Fintype.card {occurrence // earlier < sourceFamily.1 occurrence ∧
+        sourceFamily.1 occurrence ≤ birthCut ∧
+        (sample : WithTop ℝ) < sourceFamily.2 occurrence}
+  intro morphism surjective earlier birthCut sample earlier_before birth_before
+  let SourceWindow := {occurrence // earlier < sourceFamily.1 occurrence ∧
+    sourceFamily.1 occurrence ≤ birthCut ∧
+    (sample : WithTop ℝ) < sourceFamily.2 occurrence}
+  let TargetWindow := {occurrence // earlier < targetFamily.1 occurrence ∧
+    targetFamily.1 occurrence ≤ birthCut ∧
+    (sample : WithTop ℝ) < targetFamily.2 occurrence}
+  let extend : ∀ {Index : Type v} (family : (Index → ℝ) × (Index → WithTop ℝ)),
+      ({occurrence // earlier < family.1 occurrence ∧
+        family.1 occurrence ≤ birthCut ∧
+        (sample : WithTop ℝ) < family.2 occurrence} → K) →ₗ[K]
+      intervalSpace family birthCut := fun family => {
     toFun := fun coordinates => ⟨fun occurrence =>
-      if supported : earlier < family.birth occurrence ∧
-          family.birth occurrence ≤ birthCut ∧
-          (sample : WithTop ℝ) < family.death occurrence
+      if supported : earlier < family.1 occurrence ∧
+          family.1 occurrence ≤ birthCut ∧
+          (sample : WithTop ℝ) < family.2 occurrence
       then coordinates ⟨occurrence, supported⟩ else 0, by
         intro occurrence unsupported
-        have absent : ¬ (earlier < family.birth occurrence ∧
-            family.birth occurrence ≤ birthCut ∧
-            (sample : WithTop ℝ) < family.death occurrence) := by
+        have absent : ¬ (earlier < family.1 occurrence ∧
+            family.1 occurrence ≤ birthCut ∧
+            (sample : WithTop ℝ) < family.2 occurrence) := by
           intro supported
           exact unsupported ⟨supported.2.1,
             lt_of_le_of_lt (WithTop.coe_le_coe.mpr birth_before) supported.2.2⟩
@@ -291,7 +402,7 @@ theorem epi_birth_window_count {Source Target : Type v} [Fintype Source] [Fintyp
       split_ifs <;> simp }
   let restricted : (SourceWindow → K) →ₗ[K] (TargetWindow → K) :=
     LinearMap.pi fun occurrence => (LinearMap.proj occurrence.val).comp
-      ((intervalSpace (K := K) targetFamily sample).subtype.comp
+      ((intervalSpace targetFamily sample).subtype.comp
         ((morphism.app sample).hom.comp
           ((intervalArrow sourceFamily birthCut sample birth_before).comp
             (extend sourceFamily))))
@@ -299,13 +410,13 @@ theorem epi_birth_window_count {Source Target : Type v} [Fintype Source] [Fintyp
     intro coordinates
     obtain ⟨preimage, image_eq⟩ := surjective birthCut (extend targetFamily coordinates)
     let source_coordinates : SourceWindow → K := fun occurrence => preimage.val occurrence.val
-    let early : intervalSpace (K := K) sourceFamily earlier := ⟨fun occurrence =>
-      if sourceFamily.birth occurrence ≤ earlier ∧
-          (sample : WithTop ℝ) < sourceFamily.death occurrence
+    let early : intervalSpace sourceFamily earlier := ⟨fun occurrence =>
+      if sourceFamily.1 occurrence ≤ earlier ∧
+          (sample : WithTop ℝ) < sourceFamily.2 occurrence
       then preimage.val occurrence else 0, by
         intro occurrence unsupported
-        have absent : ¬ (sourceFamily.birth occurrence ≤ earlier ∧
-            (sample : WithTop ℝ) < sourceFamily.death occurrence) := by
+        have absent : ¬ (sourceFamily.1 occurrence ≤ earlier ∧
+            (sample : WithTop ℝ) < sourceFamily.2 occurrence) := by
           intro supported
           exact unsupported ⟨supported.1,
             lt_of_le_of_lt
@@ -316,15 +427,16 @@ theorem epi_birth_window_count {Source Target : Type v} [Fintype Source] [Fintyp
           (extend sourceFamily source_coordinates) +
         intervalArrow sourceFamily earlier sample (earlier_before.trans birth_before) early := by
       ext occurrence
-      by_cases survives : (sample : WithTop ℝ) < sourceFamily.death occurrence
-      · by_cases old : sourceFamily.birth occurrence ≤ earlier
-        · simp [intervalArrow, extend, early, survives, old, not_lt_of_ge old]
-        · have recent : earlier < sourceFamily.birth occurrence := lt_of_not_ge old
-          by_cases born : sourceFamily.birth occurrence ≤ birthCut
-          · simp [intervalArrow, extend, early, source_coordinates, survives, old, recent, born]
+      by_cases survives : (sample : WithTop ℝ) < sourceFamily.2 occurrence
+      · by_cases old : sourceFamily.1 occurrence ≤ earlier
+        · simp [intervalArrow, apply_ite, ite_apply, extend, early, survives, old, not_lt_of_ge old]
+        · have recent : earlier < sourceFamily.1 occurrence := lt_of_not_ge old
+          by_cases born : sourceFamily.1 occurrence ≤ birthCut
+          · simp [intervalArrow, apply_ite, ite_apply, extend, early, source_coordinates, survives, old, recent, born]
           · have absent := preimage.property occurrence (by tauto)
-            simp [intervalArrow, extend, early, survives, old, born, absent]
-      · simp [intervalArrow, survives]
+            change _ = (0 : K) at absent
+            simp [intervalArrow, apply_ite, ite_apply, extend, early, survives, old, born, absent]
+      · simp [intervalArrow, apply_ite, ite_apply, survives]
     have early_zero : ∀ occurrence : TargetWindow,
         ((morphism.app sample).hom
           (intervalArrow sourceFamily earlier sample (earlier_before.trans birth_before) early)).val
@@ -337,11 +449,12 @@ theorem epi_birth_window_count {Source Target : Type v} [Fintype Source] [Fintyp
         intervalArrow targetFamily earlier sample (earlier_before.trans birth_before)
           ((morphism.app earlier).hom early) at square
       have coordinate := congrArg
-        (fun vector : intervalSpace (K := K) targetFamily sample => vector.val occurrence.val)
+        (fun vector : intervalSpace targetFamily sample => vector.val occurrence.val)
         square
       have absent := ((morphism.app earlier).hom early).property occurrence.val
         (by exact fun supported => (not_le_of_gt occurrence.property.1) supported.1)
-      simpa [intervalArrow, absent] using coordinate
+      change _ = (0 : K) at absent
+      simpa [intervalArrow, apply_ite, ite_apply, absent] using coordinate
     have square := congrArg (fun arrow => arrow.hom preimage)
       (morphism.naturality (homOfLE birth_before))
     change (morphism.app sample).hom
@@ -352,9 +465,9 @@ theorem epi_birth_window_count {Source Target : Type v} [Fintype Source] [Fintyp
     refine ⟨source_coordinates, ?_⟩
     funext occurrence
     have coordinate := congrArg
-      (fun vector : intervalSpace (K := K) targetFamily sample => vector.val occurrence.val) square
+      (fun vector : intervalSpace targetFamily sample => vector.val occurrence.val) square
     have transported := congrArg
-      (fun vector : intervalSpace (K := K) sourceFamily sample =>
+      (fun vector : intervalSpace sourceFamily sample =>
         ((morphism.app sample).hom vector).val occurrence.val) splitting
     simp only [map_add] at transported
     change ((morphism.app sample).hom
@@ -367,7 +480,7 @@ theorem epi_birth_window_count {Source Target : Type v} [Fintype Source] [Fintyp
     have reconstruction : ((morphism.app sample).hom
         (intervalArrow sourceFamily birthCut sample birth_before preimage)).val occurrence.val =
         coordinates occurrence := by
-      simpa [intervalArrow, extend, occurrence.property.1, occurrence.property.2.1,
+      simpa [intervalArrow, apply_ite, ite_apply, extend, occurrence.property.1, occurrence.property.2.1,
         occurrence.property.2.2] using coordinate
     exact transported.symm.trans reconstruction
   have dimensions := LinearMap.finrank_le_finrank_of_surjective
@@ -377,33 +490,136 @@ theorem epi_birth_window_count {Source Target : Type v} [Fintype Source] [Fintyp
 set_option backward.isDefEq.respectTransparency false in
 theorem mono_ordered_occurrence_injection {Source Target : Type v}
     [Fintype Source] [Fintype Target]
-    (sourceFamily : IntervalFamily Source) (targetFamily : IntervalFamily Target)
-    (morphism : intervalSum (K := K) sourceFamily ⟶ intervalSum (K := K) targetFamily)
+    (sourceFamily : (Source → ℝ) × (Source → WithTop ℝ)) (targetFamily : (Target → ℝ) × (Target → WithTop ℝ))
+    (source_positive : ∀ occurrence, (sourceFamily.1 occurrence : WithTop ℝ) <
+      sourceFamily.2 occurrence)
+    (target_positive : ∀ occurrence, (targetFamily.1 occurrence : WithTop ℝ) <
+      targetFamily.2 occurrence) :
+    let intervalSpace := fun {Index : Type v}
+        (family : (Index → ℝ) × (Index → WithTop ℝ)) (time : ℝ) =>
+      Submodule.pi {occurrence | ¬ (family.1 occurrence ≤ time ∧
+        (time : WithTop ℝ) < family.2 occurrence)} (fun _ => (⊥ : Submodule K K));
+    let intervalArrow := fun {Index : Type v}
+        (family : (Index → ℝ) × (Index → WithTop ℝ)) (source target : ℝ)
+        (ordered : source ≤ target) =>
+      (((LinearMap.pi fun occurrence : Index =>
+          if (target : WithTop ℝ) < family.2 occurrence then
+            (LinearMap.proj occurrence : (Index → K) →ₗ[K] K) else 0).domRestrict
+          (intervalSpace family source)).codRestrict (intervalSpace family target) (by
+        classical
+        intro coordinates occurrence unsupported
+        by_cases survives : (target : WithTop ℝ) < family.2 occurrence
+        · have not_born : ¬ family.1 occurrence ≤ source := by
+            intro born
+            exact unsupported ⟨born.trans ordered, survives⟩
+          simpa [survives] using coordinates.property occurrence (by tauto)
+        · simp [survives]));
+    let intervalSum := fun {Index : Type v}
+        (family : (Index → ℝ) × (Index → WithTop ℝ)) =>
+      ({ obj time := ModuleCat.of K (intervalSpace family time)
+         map {source target} arrow :=
+           ModuleCat.ofHom (intervalArrow family source target (leOfHom arrow))
+         map_id time := by
+           classical
+           ext coordinates occurrence
+           by_cases survives : (time : WithTop ℝ) < family.2 occurrence
+           · simp [intervalArrow, apply_ite, ite_apply, survives]
+           · have zero : coordinates.val occurrence = 0 :=
+               coordinates.property occurrence (by tauto)
+             simp [intervalArrow, apply_ite, ite_apply, survives, zero]
+         map_comp {source middle target} first second := by
+           classical
+           ext coordinates occurrence
+           by_cases survives : (target : WithTop ℝ) < family.2 occurrence
+           · have middle_survives : (middle : WithTop ℝ) < family.2 occurrence :=
+               lt_of_le_of_lt (WithTop.coe_le_coe.mpr (leOfHom second)) survives
+             simp [intervalArrow, apply_ite, ite_apply, survives, middle_survives]
+           · simp [intervalArrow, apply_ite, ite_apply, survives] } : ℝ ⥤ ModuleCat.{max u v} K);
+    ∀ (morphism : intervalSum sourceFamily ⟶ intervalSum targetFamily)
     (injective : ∀ time, Function.Injective (morphism.app time).hom)
     (sourceEnumeration : ∀ death, Fin (Fintype.card
-      {occurrence // sourceFamily.death occurrence = death}) ≃
-        {occurrence // sourceFamily.death occurrence = death})
+      {occurrence // sourceFamily.2 occurrence = death}) ≃
+        {occurrence // sourceFamily.2 occurrence = death})
     (targetEnumeration : ∀ death, Fin (Fintype.card
-      {occurrence // targetFamily.death occurrence = death}) ≃
-        {occurrence // targetFamily.death occurrence = death})
+      {occurrence // targetFamily.2 occurrence = death}) ≃
+        {occurrence // targetFamily.2 occurrence = death})
     (source_sorted : ∀ death, Monotone fun ordinal =>
-      sourceFamily.birth (sourceEnumeration death ordinal).val)
+      sourceFamily.1 (sourceEnumeration death ordinal).val)
     (target_sorted : ∀ death, Monotone fun ordinal =>
-      targetFamily.birth (targetEnumeration death ordinal).val) :
+      targetFamily.1 (targetEnumeration death ordinal).val),
     ∃ embedding : Source ↪ Target, ∀ occurrence,
-      targetFamily.birth (embedding occurrence) ≤ sourceFamily.birth occurrence ∧
-      ∃ sameDeath : targetFamily.death (embedding occurrence) = sourceFamily.death occurrence,
-        ((targetEnumeration (sourceFamily.death occurrence)).symm
+      targetFamily.1 (embedding occurrence) ≤ sourceFamily.1 occurrence ∧
+      ∃ sameDeath : targetFamily.2 (embedding occurrence) = sourceFamily.2 occurrence,
+        ((targetEnumeration (sourceFamily.2 occurrence)).symm
           ⟨embedding occurrence, sameDeath⟩).val =
-        ((sourceEnumeration (sourceFamily.death occurrence)).symm ⟨occurrence, rfl⟩).val := by
+        ((sourceEnumeration (sourceFamily.2 occurrence)).symm ⟨occurrence, rfl⟩).val := by
   classical
+  let intervalSpace := fun {Index : Type v}
+      (family : (Index → ℝ) × (Index → WithTop ℝ)) (time : ℝ) =>
+    Submodule.pi {occurrence | ¬ (family.1 occurrence ≤ time ∧
+      (time : WithTop ℝ) < family.2 occurrence)} (fun _ => (⊥ : Submodule K K));
+  let intervalArrow := fun {Index : Type v}
+      (family : (Index → ℝ) × (Index → WithTop ℝ)) (source target : ℝ)
+      (ordered : source ≤ target) =>
+    (((LinearMap.pi fun occurrence : Index =>
+        if (target : WithTop ℝ) < family.2 occurrence then
+          (LinearMap.proj occurrence : (Index → K) →ₗ[K] K) else 0).domRestrict
+        (intervalSpace family source)).codRestrict (intervalSpace family target) (by
+      classical
+      intro coordinates occurrence unsupported
+      by_cases survives : (target : WithTop ℝ) < family.2 occurrence
+      · have not_born : ¬ family.1 occurrence ≤ source := by
+          intro born
+          exact unsupported ⟨born.trans ordered, survives⟩
+        simpa [survives] using coordinates.property occurrence (by tauto)
+      · simp [survives]));
+  let intervalSum := fun {Index : Type v}
+      (family : (Index → ℝ) × (Index → WithTop ℝ)) =>
+    ({ obj time := ModuleCat.of K (intervalSpace family time)
+       map {source target} arrow :=
+         ModuleCat.ofHom (intervalArrow family source target (leOfHom arrow))
+       map_id time := by
+         classical
+         ext coordinates occurrence
+         by_cases survives : (time : WithTop ℝ) < family.2 occurrence
+         · simp [intervalArrow, apply_ite, ite_apply, survives]
+         · have zero : coordinates.val occurrence = 0 :=
+             coordinates.property occurrence (by tauto)
+           simp [intervalArrow, apply_ite, ite_apply, survives, zero]
+       map_comp {source middle target} first second := by
+         classical
+         ext coordinates occurrence
+         by_cases survives : (target : WithTop ℝ) < family.2 occurrence
+         · have middle_survives : (middle : WithTop ℝ) < family.2 occurrence :=
+             lt_of_le_of_lt (WithTop.coe_le_coe.mpr (leOfHom second)) survives
+           simp [intervalArrow, apply_ite, ite_apply, survives, middle_survives]
+         · simp [intervalArrow, apply_ite, ite_apply, survives] } : ℝ ⥤ ModuleCat.{max u v} K);
+  change ∀ (morphism : intervalSum sourceFamily ⟶ intervalSum targetFamily)
+      (injective : ∀ time, Function.Injective (morphism.app time).hom)
+      (sourceEnumeration : ∀ death, Fin (Fintype.card
+        {occurrence // sourceFamily.2 occurrence = death}) ≃
+          {occurrence // sourceFamily.2 occurrence = death})
+      (targetEnumeration : ∀ death, Fin (Fintype.card
+        {occurrence // targetFamily.2 occurrence = death}) ≃
+          {occurrence // targetFamily.2 occurrence = death})
+      (source_sorted : ∀ death, Monotone fun ordinal =>
+        sourceFamily.1 (sourceEnumeration death ordinal).val)
+      (target_sorted : ∀ death, Monotone fun ordinal =>
+        targetFamily.1 (targetEnumeration death ordinal).val),
+      ∃ embedding : Source ↪ Target, ∀ occurrence,
+        targetFamily.1 (embedding occurrence) ≤ sourceFamily.1 occurrence ∧
+        ∃ sameDeath : targetFamily.2 (embedding occurrence) = sourceFamily.2 occurrence,
+          ((targetEnumeration (sourceFamily.2 occurrence)).symm
+            ⟨embedding occurrence, sameDeath⟩).val =
+          ((sourceEnumeration (sourceFamily.2 occurrence)).symm ⟨occurrence, rfl⟩).val
+  intro morphism injective sourceEnumeration targetEnumeration source_sorted target_sorted
   have counts (birth : ℝ) (death : WithTop ℝ) (positive : (birth : WithTop ℝ) < death) :
-      Fintype.card {occurrence // sourceFamily.birth occurrence ≤ birth ∧
-        sourceFamily.death occurrence = death} ≤
-      Fintype.card {occurrence // targetFamily.birth occurrence ≤ birth ∧
-        targetFamily.death occurrence = death} := by
+      Fintype.card {occurrence // sourceFamily.1 occurrence ≤ birth ∧
+        sourceFamily.2 occurrence = death} ≤
+      Fintype.card {occurrence // targetFamily.1 occurrence ≤ birth ∧
+        targetFamily.2 occurrence = death} := by
     let endpoints := (insert (birth : WithTop ℝ)
-      (Finset.univ.image sourceFamily.death ∪ Finset.univ.image targetFamily.death)).filter
+      (Finset.univ.image sourceFamily.2 ∪ Finset.univ.image targetFamily.2)).filter
         (fun endpoint => endpoint < death)
     have birth_mem : (birth : WithTop ℝ) ∈ endpoints := by simp [endpoints, positive]
     let maximum := endpoints.sup' ⟨_, birth_mem⟩ id
@@ -419,25 +635,25 @@ theorem mono_ordered_occurrence_injection {Source Target : Type v}
       rw [sample_eq]
       exact Finset.le_sup' id birth_mem
     have before : (sample : WithTop ℝ) < death := by rwa [sample_eq]
-    have source_lower : ∀ occurrence, sourceFamily.death occurrence < death →
-        sourceFamily.death occurrence ≤ (sample : WithTop ℝ) := by
+    have source_lower : ∀ occurrence, sourceFamily.2 occurrence < death →
+        sourceFamily.2 occurrence ≤ (sample : WithTop ℝ) := by
       intro occurrence less
       rw [sample_eq]
       apply Finset.le_sup' id
       simp [endpoints, less]
-    have target_lower : ∀ occurrence, targetFamily.death occurrence < death →
-        targetFamily.death occurrence ≤ (sample : WithTop ℝ) := by
+    have target_lower : ∀ occurrence, targetFamily.2 occurrence < death →
+        targetFamily.2 occurrence ≤ (sample : WithTop ℝ) := by
       intro occurrence less
       rw [sample_eq]
       apply Finset.le_sup' id
       simp [endpoints, less]
-    have window := mono_death_window_count sourceFamily targetFamily morphism injective
+    have window := mono_death_window_count sourceFamily targetFamily source_positive target_positive morphism injective
       birth sample death birth_before before.le
-    have source_predicate : (fun occurrence => sourceFamily.birth occurrence ≤ birth ∧
-        (sample : WithTop ℝ) < sourceFamily.death occurrence ∧
-        sourceFamily.death occurrence ≤ death) =
-        (fun occurrence => sourceFamily.birth occurrence ≤ birth ∧
-          sourceFamily.death occurrence = death) := by
+    have source_predicate : (fun occurrence => sourceFamily.1 occurrence ≤ birth ∧
+        (sample : WithTop ℝ) < sourceFamily.2 occurrence ∧
+        sourceFamily.2 occurrence ≤ death) =
+        (fun occurrence => sourceFamily.1 occurrence ≤ birth ∧
+          sourceFamily.2 occurrence = death) := by
       funext occurrence
       apply propext
       constructor
@@ -446,11 +662,11 @@ theorem mono_ordered_occurrence_injection {Source Target : Type v}
           (not_lt_of_ge (source_lower occurrence less)) supported.2.1)⟩
       · rintro ⟨born, rfl⟩
         exact ⟨born, before, le_rfl⟩
-    have target_predicate : (fun occurrence => targetFamily.birth occurrence ≤ birth ∧
-        (sample : WithTop ℝ) < targetFamily.death occurrence ∧
-        targetFamily.death occurrence ≤ death) =
-        (fun occurrence => targetFamily.birth occurrence ≤ birth ∧
-          targetFamily.death occurrence = death) := by
+    have target_predicate : (fun occurrence => targetFamily.1 occurrence ≤ birth ∧
+        (sample : WithTop ℝ) < targetFamily.2 occurrence ∧
+        targetFamily.2 occurrence ≤ death) =
+        (fun occurrence => targetFamily.1 occurrence ≤ birth ∧
+          targetFamily.2 occurrence = death) := by
       funext occurrence
       apply propext
       constructor
@@ -465,18 +681,18 @@ theorem mono_ordered_occurrence_injection {Source Target : Type v}
       (fun occurrence => Iff.of_eq (congrFun target_predicate occurrence)))
     exact source_card ▸ target_card ▸ window
   have ordinal_bound (occurrence : Source) :
-      let ordinal := (sourceEnumeration (sourceFamily.death occurrence)).symm ⟨occurrence, rfl⟩
-      ordinal.val < Fintype.card {other // targetFamily.birth other ≤
-        sourceFamily.birth occurrence ∧ targetFamily.death other = sourceFamily.death occurrence} := by
-    let death := sourceFamily.death occurrence
+      let ordinal := (sourceEnumeration (sourceFamily.2 occurrence)).symm ⟨occurrence, rfl⟩
+      ordinal.val < Fintype.card {other // targetFamily.1 other ≤
+        sourceFamily.1 occurrence ∧ targetFamily.2 other = sourceFamily.2 occurrence} := by
+    let death := sourceFamily.2 occurrence
     let ordinal := (sourceEnumeration death).symm ⟨occurrence, rfl⟩
-    let initial : Fin (ordinal.val + 1) → {other // sourceFamily.birth other ≤
-        sourceFamily.birth occurrence ∧ sourceFamily.death other = death} := fun index =>
+    let initial : Fin (ordinal.val + 1) → {other // sourceFamily.1 other ≤
+        sourceFamily.1 occurrence ∧ sourceFamily.2 other = death} := fun index =>
       ⟨(sourceEnumeration death ⟨index.val, by omega⟩).val,
         by
           constructor
           · have ordered : (⟨index.val, by omega⟩ : Fin (Fintype.card
-                {other // sourceFamily.death other = death})) ≤ ordinal := by
+                {other // sourceFamily.2 other = death})) ≤ ordinal := by
               exact Nat.le_of_lt_succ index.isLt
             simpa [ordinal] using source_sorted death ordered
           · exact (sourceEnumeration death _).property⟩
@@ -485,32 +701,32 @@ theorem mono_ordered_occurrence_injection {Source Target : Type v}
       have equal_values := congrArg Subtype.val equal
       have equal_indices := (sourceEnumeration death).injective (Subtype.ext equal_values)
       exact Fin.ext (congrArg (fun index : Fin (Fintype.card
-        {other // sourceFamily.death other = death}) => index.val) equal_indices)
+        {other // sourceFamily.2 other = death}) => index.val) equal_indices)
     have initial_count := Fintype.card_le_of_injective initial initial_injective
-    have comparison := counts (sourceFamily.birth occurrence) death (sourceFamily.positive occurrence)
+    have comparison := counts (sourceFamily.1 occurrence) death (source_positive occurrence)
     simp only [Fintype.card_fin] at initial_count
     exact lt_of_lt_of_le (Nat.lt_of_succ_le initial_count) comparison
   have class_bound (occurrence : Source) :
-      ((sourceEnumeration (sourceFamily.death occurrence)).symm ⟨occurrence, rfl⟩).val <
-        Fintype.card {other // targetFamily.death other = sourceFamily.death occurrence} := by
+      ((sourceEnumeration (sourceFamily.2 occurrence)).symm ⟨occurrence, rfl⟩).val <
+        Fintype.card {other // targetFamily.2 other = sourceFamily.2 occurrence} := by
     have eligible := ordinal_bound occurrence
     have total := Fintype.card_le_of_injective
-      (fun other : {other // targetFamily.birth other ≤ sourceFamily.birth occurrence ∧
-          targetFamily.death other = sourceFamily.death occurrence} =>
+      (fun other : {other // targetFamily.1 other ≤ sourceFamily.1 occurrence ∧
+          targetFamily.2 other = sourceFamily.2 occurrence} =>
         (⟨other.val, other.property.2⟩ : {other //
-          targetFamily.death other = sourceFamily.death occurrence}))
+          targetFamily.2 other = sourceFamily.2 occurrence}))
       (by intro first second equal; exact Subtype.ext (congrArg
-        (fun other : {other // targetFamily.death other = sourceFamily.death occurrence} =>
+        (fun other : {other // targetFamily.2 other = sourceFamily.2 occurrence} =>
           other.val) equal))
     exact eligible.trans_le total
-  have class_bound' : ∀ death (occurrence : {other // sourceFamily.death other = death}),
+  have class_bound' : ∀ death (occurrence : {other // sourceFamily.2 other = death}),
       ((sourceEnumeration death).symm occurrence).val <
-        Fintype.card {other // targetFamily.death other = death} := by
+        Fintype.card {other // targetFamily.2 other = death} := by
     intro death ⟨occurrence, sameDeath⟩
     subst death
     exact class_bound occurrence
-  let classMap : ∀ death, {other // sourceFamily.death other = death} ↪
-      {other // targetFamily.death other = death} := fun death => {
+  let classMap : ∀ death, {other // sourceFamily.2 other = death} ↪
+      {other // targetFamily.2 other = death} := fun death => {
     toFun := fun occurrence => targetEnumeration death
       ⟨((sourceEnumeration death).symm occurrence).val, class_bound' death occurrence⟩
     inj' := by
@@ -518,39 +734,39 @@ theorem mono_ordered_occurrence_injection {Source Target : Type v}
       have sameOrdinal := (targetEnumeration death).injective equal
       apply (sourceEnumeration death).symm.injective
       exact Fin.ext (congrArg (fun index : Fin (Fintype.card
-        {other // targetFamily.death other = death}) => index.val) sameOrdinal) }
-  let embedding := (Equiv.sigmaFiberEquiv sourceFamily.death).symm.toEmbedding.trans
+        {other // targetFamily.2 other = death}) => index.val) sameOrdinal) }
+  let embedding := (Equiv.sigmaFiberEquiv sourceFamily.2).symm.toEmbedding.trans
     ((Function.Embedding.sigmaMap (Function.Embedding.refl _) classMap).trans
-      (Equiv.sigmaFiberEquiv targetFamily.death).toEmbedding)
-  let selected := fun occurrence => classMap (sourceFamily.death occurrence) ⟨occurrence, rfl⟩
+      (Equiv.sigmaFiberEquiv targetFamily.2).toEmbedding)
+  let selected := fun occurrence => classMap (sourceFamily.2 occurrence) ⟨occurrence, rfl⟩
   have birth_bound (occurrence : Source) :
-      targetFamily.birth (selected occurrence).val ≤ sourceFamily.birth occurrence := by
+      targetFamily.1 (selected occurrence).val ≤ sourceFamily.1 occurrence := by
     by_contra not_before
-    let ordinal := (sourceEnumeration (sourceFamily.death occurrence)).symm ⟨occurrence, rfl⟩
-    let below : {other // targetFamily.birth other ≤ sourceFamily.birth occurrence ∧
-        targetFamily.death other = sourceFamily.death occurrence} → Fin ordinal.val := fun other =>
-      ⟨((targetEnumeration (sourceFamily.death occurrence)).symm
+    let ordinal := (sourceEnumeration (sourceFamily.2 occurrence)).symm ⟨occurrence, rfl⟩
+    let below : {other // targetFamily.1 other ≤ sourceFamily.1 occurrence ∧
+        targetFamily.2 other = sourceFamily.2 occurrence} → Fin ordinal.val := fun other =>
+      ⟨((targetEnumeration (sourceFamily.2 occurrence)).symm
           ⟨other.val, other.property.2⟩).val, by
         by_contra not_less
         have ordered : (⟨ordinal.val, class_bound occurrence⟩ : Fin (Fintype.card
-            {other // targetFamily.death other = sourceFamily.death occurrence})) ≤
-          (targetEnumeration (sourceFamily.death occurrence)).symm
+            {other // targetFamily.2 other = sourceFamily.2 occurrence})) ≤
+          (targetEnumeration (sourceFamily.2 occurrence)).symm
             ⟨other.val, other.property.2⟩ := Nat.le_of_not_gt not_less
-        have comparison := target_sorted (sourceFamily.death occurrence) ordered
-        have comparison' : targetFamily.birth (selected occurrence).val ≤
-            targetFamily.birth other.val := by simpa [selected, classMap] using comparison
+        have comparison := target_sorted (sourceFamily.2 occurrence) ordered
+        have comparison' : targetFamily.1 (selected occurrence).val ≤
+            targetFamily.1 other.val := by simpa [selected, classMap] using comparison
         exact not_before (comparison'.trans other.property.1)⟩
     have below_injective : Function.Injective below := by
       intro first second equal
-      have equal_indices : (targetEnumeration (sourceFamily.death occurrence)).symm
+      have equal_indices : (targetEnumeration (sourceFamily.2 occurrence)).symm
           ⟨first.val, first.property.2⟩ =
-        (targetEnumeration (sourceFamily.death occurrence)).symm
+        (targetEnumeration (sourceFamily.2 occurrence)).symm
           ⟨second.val, second.property.2⟩ :=
         Fin.ext (congrArg (fun index : Fin ordinal.val => index.val) equal)
-      have equal_values := (targetEnumeration (sourceFamily.death occurrence)).symm.injective
+      have equal_values := (targetEnumeration (sourceFamily.2 occurrence)).symm.injective
         equal_indices
       exact Subtype.ext (congrArg (fun other : {other //
-        targetFamily.death other = sourceFamily.death occurrence} => other.val) equal_values)
+        targetFamily.2 other = sourceFamily.2 occurrence} => other.val) equal_values)
     have bound := Fintype.card_le_of_injective below below_injective
     simp only [Fintype.card_fin] at bound
     exact (not_lt_of_ge bound) (ordinal_bound occurrence)
@@ -562,33 +778,136 @@ theorem mono_ordered_occurrence_injection {Source Target : Type v}
 set_option backward.isDefEq.respectTransparency false in
 theorem epi_ordered_occurrence_injection {Source Target : Type v}
     [Fintype Source] [Fintype Target]
-    (sourceFamily : IntervalFamily Source) (targetFamily : IntervalFamily Target)
-    (morphism : intervalSum (K := K) sourceFamily ⟶ intervalSum (K := K) targetFamily)
+    (sourceFamily : (Source → ℝ) × (Source → WithTop ℝ)) (targetFamily : (Target → ℝ) × (Target → WithTop ℝ))
+    (source_positive : ∀ occurrence, (sourceFamily.1 occurrence : WithTop ℝ) <
+      sourceFamily.2 occurrence)
+    (target_positive : ∀ occurrence, (targetFamily.1 occurrence : WithTop ℝ) <
+      targetFamily.2 occurrence) :
+    let intervalSpace := fun {Index : Type v}
+        (family : (Index → ℝ) × (Index → WithTop ℝ)) (time : ℝ) =>
+      Submodule.pi {occurrence | ¬ (family.1 occurrence ≤ time ∧
+        (time : WithTop ℝ) < family.2 occurrence)} (fun _ => (⊥ : Submodule K K));
+    let intervalArrow := fun {Index : Type v}
+        (family : (Index → ℝ) × (Index → WithTop ℝ)) (source target : ℝ)
+        (ordered : source ≤ target) =>
+      (((LinearMap.pi fun occurrence : Index =>
+          if (target : WithTop ℝ) < family.2 occurrence then
+            (LinearMap.proj occurrence : (Index → K) →ₗ[K] K) else 0).domRestrict
+          (intervalSpace family source)).codRestrict (intervalSpace family target) (by
+        classical
+        intro coordinates occurrence unsupported
+        by_cases survives : (target : WithTop ℝ) < family.2 occurrence
+        · have not_born : ¬ family.1 occurrence ≤ source := by
+            intro born
+            exact unsupported ⟨born.trans ordered, survives⟩
+          simpa [survives] using coordinates.property occurrence (by tauto)
+        · simp [survives]));
+    let intervalSum := fun {Index : Type v}
+        (family : (Index → ℝ) × (Index → WithTop ℝ)) =>
+      ({ obj time := ModuleCat.of K (intervalSpace family time)
+         map {source target} arrow :=
+           ModuleCat.ofHom (intervalArrow family source target (leOfHom arrow))
+         map_id time := by
+           classical
+           ext coordinates occurrence
+           by_cases survives : (time : WithTop ℝ) < family.2 occurrence
+           · simp [intervalArrow, apply_ite, ite_apply, survives]
+           · have zero : coordinates.val occurrence = 0 :=
+               coordinates.property occurrence (by tauto)
+             simp [intervalArrow, apply_ite, ite_apply, survives, zero]
+         map_comp {source middle target} first second := by
+           classical
+           ext coordinates occurrence
+           by_cases survives : (target : WithTop ℝ) < family.2 occurrence
+           · have middle_survives : (middle : WithTop ℝ) < family.2 occurrence :=
+               lt_of_le_of_lt (WithTop.coe_le_coe.mpr (leOfHom second)) survives
+             simp [intervalArrow, apply_ite, ite_apply, survives, middle_survives]
+           · simp [intervalArrow, apply_ite, ite_apply, survives] } : ℝ ⥤ ModuleCat.{max u v} K);
+    ∀ (morphism : intervalSum sourceFamily ⟶ intervalSum targetFamily)
     (surjective : ∀ time, Function.Surjective (morphism.app time).hom)
     (sourceEnumeration : ∀ birth, Fin (Fintype.card
-      {occurrence // sourceFamily.birth occurrence = birth}) ≃
-        {occurrence // sourceFamily.birth occurrence = birth})
+      {occurrence // sourceFamily.1 occurrence = birth}) ≃
+        {occurrence // sourceFamily.1 occurrence = birth})
     (targetEnumeration : ∀ birth, Fin (Fintype.card
-      {occurrence // targetFamily.birth occurrence = birth}) ≃
-        {occurrence // targetFamily.birth occurrence = birth})
+      {occurrence // targetFamily.1 occurrence = birth}) ≃
+        {occurrence // targetFamily.1 occurrence = birth})
     (source_sorted : ∀ birth, Antitone fun ordinal =>
-      sourceFamily.death (sourceEnumeration birth ordinal).val)
+      sourceFamily.2 (sourceEnumeration birth ordinal).val)
     (target_sorted : ∀ birth, Antitone fun ordinal =>
-      targetFamily.death (targetEnumeration birth ordinal).val) :
+      targetFamily.2 (targetEnumeration birth ordinal).val),
     ∃ embedding : Target ↪ Source, ∀ occurrence,
-      targetFamily.death occurrence ≤ sourceFamily.death (embedding occurrence) ∧
-      ∃ sameBirth : sourceFamily.birth (embedding occurrence) = targetFamily.birth occurrence,
-        ((sourceEnumeration (targetFamily.birth occurrence)).symm
+      targetFamily.2 occurrence ≤ sourceFamily.2 (embedding occurrence) ∧
+      ∃ sameBirth : sourceFamily.1 (embedding occurrence) = targetFamily.1 occurrence,
+        ((sourceEnumeration (targetFamily.1 occurrence)).symm
           ⟨embedding occurrence, sameBirth⟩).val =
-        ((targetEnumeration (targetFamily.birth occurrence)).symm ⟨occurrence, rfl⟩).val := by
+        ((targetEnumeration (targetFamily.1 occurrence)).symm ⟨occurrence, rfl⟩).val := by
   classical
+  let intervalSpace := fun {Index : Type v}
+      (family : (Index → ℝ) × (Index → WithTop ℝ)) (time : ℝ) =>
+    Submodule.pi {occurrence | ¬ (family.1 occurrence ≤ time ∧
+      (time : WithTop ℝ) < family.2 occurrence)} (fun _ => (⊥ : Submodule K K));
+  let intervalArrow := fun {Index : Type v}
+      (family : (Index → ℝ) × (Index → WithTop ℝ)) (source target : ℝ)
+      (ordered : source ≤ target) =>
+    (((LinearMap.pi fun occurrence : Index =>
+        if (target : WithTop ℝ) < family.2 occurrence then
+          (LinearMap.proj occurrence : (Index → K) →ₗ[K] K) else 0).domRestrict
+        (intervalSpace family source)).codRestrict (intervalSpace family target) (by
+      classical
+      intro coordinates occurrence unsupported
+      by_cases survives : (target : WithTop ℝ) < family.2 occurrence
+      · have not_born : ¬ family.1 occurrence ≤ source := by
+          intro born
+          exact unsupported ⟨born.trans ordered, survives⟩
+        simpa [survives] using coordinates.property occurrence (by tauto)
+      · simp [survives]));
+  let intervalSum := fun {Index : Type v}
+      (family : (Index → ℝ) × (Index → WithTop ℝ)) =>
+    ({ obj time := ModuleCat.of K (intervalSpace family time)
+       map {source target} arrow :=
+         ModuleCat.ofHom (intervalArrow family source target (leOfHom arrow))
+       map_id time := by
+         classical
+         ext coordinates occurrence
+         by_cases survives : (time : WithTop ℝ) < family.2 occurrence
+         · simp [intervalArrow, apply_ite, ite_apply, survives]
+         · have zero : coordinates.val occurrence = 0 :=
+             coordinates.property occurrence (by tauto)
+           simp [intervalArrow, apply_ite, ite_apply, survives, zero]
+       map_comp {source middle target} first second := by
+         classical
+         ext coordinates occurrence
+         by_cases survives : (target : WithTop ℝ) < family.2 occurrence
+         · have middle_survives : (middle : WithTop ℝ) < family.2 occurrence :=
+             lt_of_le_of_lt (WithTop.coe_le_coe.mpr (leOfHom second)) survives
+           simp [intervalArrow, apply_ite, ite_apply, survives, middle_survives]
+         · simp [intervalArrow, apply_ite, ite_apply, survives] } : ℝ ⥤ ModuleCat.{max u v} K);
+  change ∀ (morphism : intervalSum sourceFamily ⟶ intervalSum targetFamily)
+      (surjective : ∀ time, Function.Surjective (morphism.app time).hom)
+      (sourceEnumeration : ∀ birth, Fin (Fintype.card
+        {occurrence // sourceFamily.1 occurrence = birth}) ≃
+          {occurrence // sourceFamily.1 occurrence = birth})
+      (targetEnumeration : ∀ birth, Fin (Fintype.card
+        {occurrence // targetFamily.1 occurrence = birth}) ≃
+          {occurrence // targetFamily.1 occurrence = birth})
+      (source_sorted : ∀ birth, Antitone fun ordinal =>
+        sourceFamily.2 (sourceEnumeration birth ordinal).val)
+      (target_sorted : ∀ birth, Antitone fun ordinal =>
+        targetFamily.2 (targetEnumeration birth ordinal).val),
+      ∃ embedding : Target ↪ Source, ∀ occurrence,
+        targetFamily.2 occurrence ≤ sourceFamily.2 (embedding occurrence) ∧
+        ∃ sameBirth : sourceFamily.1 (embedding occurrence) = targetFamily.1 occurrence,
+          ((sourceEnumeration (targetFamily.1 occurrence)).symm
+            ⟨embedding occurrence, sameBirth⟩).val =
+          ((targetEnumeration (targetFamily.1 occurrence)).symm ⟨occurrence, rfl⟩).val
+  intro morphism surjective sourceEnumeration targetEnumeration source_sorted target_sorted
   have counts (birth : ℝ) (death : WithTop ℝ) (positive : (birth : WithTop ℝ) < death) :
-      Fintype.card {occurrence // targetFamily.birth occurrence = birth ∧
-        death ≤ targetFamily.death occurrence} ≤
-      Fintype.card {occurrence // sourceFamily.birth occurrence = birth ∧
-        death ≤ sourceFamily.death occurrence} := by
+      Fintype.card {occurrence // targetFamily.1 occurrence = birth ∧
+        death ≤ targetFamily.2 occurrence} ≤
+      Fintype.card {occurrence // sourceFamily.1 occurrence = birth ∧
+        death ≤ sourceFamily.2 occurrence} := by
     let births := (insert (birth - 1)
-      (Finset.univ.image sourceFamily.birth ∪ Finset.univ.image targetFamily.birth)).filter
+      (Finset.univ.image sourceFamily.1 ∪ Finset.univ.image targetFamily.1)).filter
         (fun endpoint => endpoint < birth)
     have earlier_mem : birth - 1 ∈ births := by simp [births]
     let earlier := births.sup' ⟨_, earlier_mem⟩ id
@@ -596,18 +915,18 @@ theorem epi_ordered_occurrence_injection {Source Target : Type v}
       apply (Finset.sup'_lt_iff _).mpr
       intro endpoint member
       exact (Finset.mem_filter.mp member).2
-    have source_birth_lower : ∀ occurrence, sourceFamily.birth occurrence < birth →
-        sourceFamily.birth occurrence ≤ earlier := by
+    have source_birth_lower : ∀ occurrence, sourceFamily.1 occurrence < birth →
+        sourceFamily.1 occurrence ≤ earlier := by
       intro occurrence less
       apply Finset.le_sup' id
       simp [births, less]
-    have target_birth_lower : ∀ occurrence, targetFamily.birth occurrence < birth →
-        targetFamily.birth occurrence ≤ earlier := by
+    have target_birth_lower : ∀ occurrence, targetFamily.1 occurrence < birth →
+        targetFamily.1 occurrence ≤ earlier := by
       intro occurrence less
       apply Finset.le_sup' id
       simp [births, less]
     let deaths := (insert (birth : WithTop ℝ)
-      (Finset.univ.image sourceFamily.death ∪ Finset.univ.image targetFamily.death)).filter
+      (Finset.univ.image sourceFamily.2 ∪ Finset.univ.image targetFamily.2)).filter
         (fun endpoint => endpoint < death)
     have birth_mem : (birth : WithTop ℝ) ∈ deaths := by simp [deaths, positive]
     let maximum := deaths.sup' ⟨_, birth_mem⟩ id
@@ -623,26 +942,26 @@ theorem epi_ordered_occurrence_injection {Source Target : Type v}
       rw [sample_eq]
       exact Finset.le_sup' id birth_mem
     have before : (sample : WithTop ℝ) < death := by rwa [sample_eq]
-    have source_death_lower : ∀ occurrence, sourceFamily.death occurrence < death →
-        sourceFamily.death occurrence ≤ (sample : WithTop ℝ) := by
+    have source_death_lower : ∀ occurrence, sourceFamily.2 occurrence < death →
+        sourceFamily.2 occurrence ≤ (sample : WithTop ℝ) := by
       intro occurrence less
       rw [sample_eq]
       apply Finset.le_sup' id
       simp [deaths, less]
-    have target_death_lower : ∀ occurrence, targetFamily.death occurrence < death →
-        targetFamily.death occurrence ≤ (sample : WithTop ℝ) := by
+    have target_death_lower : ∀ occurrence, targetFamily.2 occurrence < death →
+        targetFamily.2 occurrence ≤ (sample : WithTop ℝ) := by
       intro occurrence less
       rw [sample_eq]
       apply Finset.le_sup' id
       simp [deaths, less]
-    have predicate {Index : Type v} (family : IntervalFamily Index)
-        (birth_lower : ∀ occurrence, family.birth occurrence < birth →
-          family.birth occurrence ≤ earlier)
-        (death_lower : ∀ occurrence, family.death occurrence < death →
-          family.death occurrence ≤ (sample : WithTop ℝ)) :
-        ∀ occurrence, (earlier < family.birth occurrence ∧ family.birth occurrence ≤ birth ∧
-          (sample : WithTop ℝ) < family.death occurrence) ↔
-          (family.birth occurrence = birth ∧ death ≤ family.death occurrence) := by
+    have predicate {Index : Type v} (family : (Index → ℝ) × (Index → WithTop ℝ))
+        (birth_lower : ∀ occurrence, family.1 occurrence < birth →
+          family.1 occurrence ≤ earlier)
+        (death_lower : ∀ occurrence, family.2 occurrence < death →
+          family.2 occurrence ≤ (sample : WithTop ℝ)) :
+        ∀ occurrence, (earlier < family.1 occurrence ∧ family.1 occurrence ≤ birth ∧
+          (sample : WithTop ℝ) < family.2 occurrence) ↔
+          (family.1 occurrence = birth ∧ death ≤ family.2 occurrence) := by
       intro occurrence
       constructor
       · intro supported
@@ -651,7 +970,7 @@ theorem epi_ordered_occurrence_injection {Source Target : Type v}
           le_of_not_gt fun less => (not_lt_of_ge (death_lower occurrence less)) supported.2.2⟩
       · rintro ⟨sameBirth, survives⟩
         exact ⟨by simpa [sameBirth] using earlier_before, sameBirth.le, before.trans_le survives⟩
-    have window := epi_birth_window_count sourceFamily targetFamily morphism surjective
+    have window := epi_birth_window_count sourceFamily targetFamily source_positive target_positive morphism surjective
       earlier birth sample earlier_before.le birth_before
     have source_card := Fintype.card_congr (Equiv.subtypeEquivRight
       (predicate sourceFamily source_birth_lower source_death_lower))
@@ -659,19 +978,19 @@ theorem epi_ordered_occurrence_injection {Source Target : Type v}
       (predicate targetFamily target_birth_lower target_death_lower))
     exact source_card ▸ target_card ▸ window
   have ordinal_bound (occurrence : Target) :
-      let ordinal := (targetEnumeration (targetFamily.birth occurrence)).symm ⟨occurrence, rfl⟩
-      ordinal.val < Fintype.card {other // sourceFamily.birth other =
-        targetFamily.birth occurrence ∧ targetFamily.death occurrence ≤ sourceFamily.death other} := by
-    let birth := targetFamily.birth occurrence
+      let ordinal := (targetEnumeration (targetFamily.1 occurrence)).symm ⟨occurrence, rfl⟩
+      ordinal.val < Fintype.card {other // sourceFamily.1 other =
+        targetFamily.1 occurrence ∧ targetFamily.2 occurrence ≤ sourceFamily.2 other} := by
+    let birth := targetFamily.1 occurrence
     let ordinal := (targetEnumeration birth).symm ⟨occurrence, rfl⟩
-    let initial : Fin (ordinal.val + 1) → {other // targetFamily.birth other = birth ∧
-        targetFamily.death occurrence ≤ targetFamily.death other} := fun index =>
+    let initial : Fin (ordinal.val + 1) → {other // targetFamily.1 other = birth ∧
+        targetFamily.2 occurrence ≤ targetFamily.2 other} := fun index =>
       ⟨(targetEnumeration birth ⟨index.val, by omega⟩).val,
         by
           constructor
           · exact (targetEnumeration birth _).property
           · have ordered : (⟨index.val, by omega⟩ : Fin (Fintype.card
-                {other // targetFamily.birth other = birth})) ≤ ordinal := by
+                {other // targetFamily.1 other = birth})) ≤ ordinal := by
               exact Nat.le_of_lt_succ index.isLt
             simpa [ordinal] using target_sorted birth ordered⟩
     have initial_injective : Function.Injective initial := by
@@ -679,32 +998,32 @@ theorem epi_ordered_occurrence_injection {Source Target : Type v}
       have equal_values := congrArg Subtype.val equal
       have equal_indices := (targetEnumeration birth).injective (Subtype.ext equal_values)
       exact Fin.ext (congrArg (fun index : Fin (Fintype.card
-        {other // targetFamily.birth other = birth}) => index.val) equal_indices)
+        {other // targetFamily.1 other = birth}) => index.val) equal_indices)
     have initial_count := Fintype.card_le_of_injective initial initial_injective
-    have comparison := counts birth (targetFamily.death occurrence) (targetFamily.positive occurrence)
+    have comparison := counts birth (targetFamily.2 occurrence) (target_positive occurrence)
     simp only [Fintype.card_fin] at initial_count
     exact lt_of_lt_of_le (Nat.lt_of_succ_le initial_count) comparison
   have class_bound (occurrence : Target) :
-      ((targetEnumeration (targetFamily.birth occurrence)).symm ⟨occurrence, rfl⟩).val <
-        Fintype.card {other // sourceFamily.birth other = targetFamily.birth occurrence} := by
+      ((targetEnumeration (targetFamily.1 occurrence)).symm ⟨occurrence, rfl⟩).val <
+        Fintype.card {other // sourceFamily.1 other = targetFamily.1 occurrence} := by
     have eligible := ordinal_bound occurrence
     have total := Fintype.card_le_of_injective
-      (fun other : {other // sourceFamily.birth other = targetFamily.birth occurrence ∧
-          targetFamily.death occurrence ≤ sourceFamily.death other} =>
+      (fun other : {other // sourceFamily.1 other = targetFamily.1 occurrence ∧
+          targetFamily.2 occurrence ≤ sourceFamily.2 other} =>
         (⟨other.val, other.property.1⟩ : {other //
-          sourceFamily.birth other = targetFamily.birth occurrence}))
+          sourceFamily.1 other = targetFamily.1 occurrence}))
       (by intro first second equal; exact Subtype.ext (congrArg
-        (fun other : {other // sourceFamily.birth other = targetFamily.birth occurrence} =>
+        (fun other : {other // sourceFamily.1 other = targetFamily.1 occurrence} =>
           other.val) equal))
     exact eligible.trans_le total
-  have class_bound' : ∀ birth (occurrence : {other // targetFamily.birth other = birth}),
+  have class_bound' : ∀ birth (occurrence : {other // targetFamily.1 other = birth}),
       ((targetEnumeration birth).symm occurrence).val <
-        Fintype.card {other // sourceFamily.birth other = birth} := by
+        Fintype.card {other // sourceFamily.1 other = birth} := by
     intro birth ⟨occurrence, sameBirth⟩
     subst birth
     exact class_bound occurrence
-  let classMap : ∀ birth, {other // targetFamily.birth other = birth} ↪
-      {other // sourceFamily.birth other = birth} := fun birth => {
+  let classMap : ∀ birth, {other // targetFamily.1 other = birth} ↪
+      {other // sourceFamily.1 other = birth} := fun birth => {
     toFun := fun occurrence => sourceEnumeration birth
       ⟨((targetEnumeration birth).symm occurrence).val, class_bound' birth occurrence⟩
     inj' := by
@@ -712,40 +1031,40 @@ theorem epi_ordered_occurrence_injection {Source Target : Type v}
       have sameOrdinal := (sourceEnumeration birth).injective equal
       apply (targetEnumeration birth).symm.injective
       exact Fin.ext (congrArg (fun index : Fin (Fintype.card
-        {other // sourceFamily.birth other = birth}) => index.val) sameOrdinal) }
-  let embedding := (Equiv.sigmaFiberEquiv targetFamily.birth).symm.toEmbedding.trans
+        {other // sourceFamily.1 other = birth}) => index.val) sameOrdinal) }
+  let embedding := (Equiv.sigmaFiberEquiv targetFamily.1).symm.toEmbedding.trans
     ((Function.Embedding.sigmaMap (Function.Embedding.refl _) classMap).trans
-      (Equiv.sigmaFiberEquiv sourceFamily.birth).toEmbedding)
-  let selected := fun occurrence => classMap (targetFamily.birth occurrence) ⟨occurrence, rfl⟩
+      (Equiv.sigmaFiberEquiv sourceFamily.1).toEmbedding)
+  let selected := fun occurrence => classMap (targetFamily.1 occurrence) ⟨occurrence, rfl⟩
   have death_bound (occurrence : Target) :
-      targetFamily.death occurrence ≤ sourceFamily.death (selected occurrence).val := by
+      targetFamily.2 occurrence ≤ sourceFamily.2 (selected occurrence).val := by
     by_contra not_after
-    let ordinal := (targetEnumeration (targetFamily.birth occurrence)).symm ⟨occurrence, rfl⟩
-    let below : {other // sourceFamily.birth other = targetFamily.birth occurrence ∧
-        targetFamily.death occurrence ≤ sourceFamily.death other} → Fin ordinal.val := fun other =>
-      ⟨((sourceEnumeration (targetFamily.birth occurrence)).symm
+    let ordinal := (targetEnumeration (targetFamily.1 occurrence)).symm ⟨occurrence, rfl⟩
+    let below : {other // sourceFamily.1 other = targetFamily.1 occurrence ∧
+        targetFamily.2 occurrence ≤ sourceFamily.2 other} → Fin ordinal.val := fun other =>
+      ⟨((sourceEnumeration (targetFamily.1 occurrence)).symm
           ⟨other.val, other.property.1⟩).val, by
         by_contra not_less
         have ordered : (⟨ordinal.val, class_bound occurrence⟩ : Fin (Fintype.card
-            {other // sourceFamily.birth other = targetFamily.birth occurrence})) ≤
-          (sourceEnumeration (targetFamily.birth occurrence)).symm
+            {other // sourceFamily.1 other = targetFamily.1 occurrence})) ≤
+          (sourceEnumeration (targetFamily.1 occurrence)).symm
             ⟨other.val, other.property.1⟩ := Nat.le_of_not_gt not_less
-        have comparison := source_sorted (targetFamily.birth occurrence) ordered
-        have comparison' : sourceFamily.death other.val ≤
-            sourceFamily.death (selected occurrence).val := by
+        have comparison := source_sorted (targetFamily.1 occurrence) ordered
+        have comparison' : sourceFamily.2 other.val ≤
+            sourceFamily.2 (selected occurrence).val := by
           simpa [selected, classMap] using comparison
         exact not_after (other.property.2.trans comparison')⟩
     have below_injective : Function.Injective below := by
       intro first second equal
-      have equal_indices : (sourceEnumeration (targetFamily.birth occurrence)).symm
+      have equal_indices : (sourceEnumeration (targetFamily.1 occurrence)).symm
           ⟨first.val, first.property.1⟩ =
-        (sourceEnumeration (targetFamily.birth occurrence)).symm
+        (sourceEnumeration (targetFamily.1 occurrence)).symm
           ⟨second.val, second.property.1⟩ :=
         Fin.ext (congrArg (fun index : Fin ordinal.val => index.val) equal)
-      have equal_values := (sourceEnumeration (targetFamily.birth occurrence)).symm.injective
+      have equal_values := (sourceEnumeration (targetFamily.1 occurrence)).symm.injective
         equal_indices
       exact Subtype.ext (congrArg (fun other : {other //
-        sourceFamily.birth other = targetFamily.birth occurrence} => other.val) equal_values)
+        sourceFamily.1 other = targetFamily.1 occurrence} => other.val) equal_values)
     have bound := Fintype.card_le_of_injective below below_injective
     simp only [Fintype.card_fin] at bound
     exact (not_lt_of_ge bound) (ordinal_bound occurrence)
