@@ -8,6 +8,24 @@ namespace StrataLint.Scribe.Tests;
 public sealed class ScribeResourcePackTests
 {
     [Theory]
+    [InlineData("missing")]
+    [InlineData("invalid")]
+    public void ReaderRejectsMissingOrInvalidInputKeys(string kind)
+    {
+        using var root = new TemporaryRoot();
+        var path = root.Resolve("resources.zip");
+        ScribeResourcePackTests.WritePack(path, [Definition("First")]);
+        var entries = ReadZip(path);
+        var index = entries.FindIndex(item => item.Name == "manifest.json");
+        var manifest = JsonNode.Parse(entries[index].Bytes)!;
+        if (kind == "missing") manifest["entries"]![0]!.AsObject().Remove("inputKey");
+        else manifest["entries"]![0]!["inputKey"] = "invalid";
+        entries[index] = ("manifest.json", Encoding.UTF8.GetBytes(manifest.ToJsonString()));
+        RewriteZip(path, entries);
+        AssertReason(path, "InvalidManifest");
+    }
+
+    [Theory]
     [InlineData("MissingManifest")]
     [InlineData("UnexpectedEntry")]
     [InlineData("MissingEntry")]
@@ -23,7 +41,7 @@ public sealed class ScribeResourcePackTests
     {
         using var root = new TemporaryRoot();
         var path = root.Resolve("resources.zip");
-        ScribeResourcePack.Write(path, [Definition("First"), Definition("Second")]);
+        ScribeResourcePackTests.WritePack(path, [Definition("First"), Definition("Second")]);
         var entries = ReadZip(path);
         var manifest = JsonNode.Parse(entries.Single(item => item.Name == "manifest.json").Bytes)!.AsObject();
         switch (reason)
@@ -34,7 +52,7 @@ public sealed class ScribeResourcePackTests
             case "EntryDigestMismatch": entries[0].Bytes[0] ^= 1; break;
             case "TotalDigestMismatch": manifest["totalSha256"] = new string('0', 64); break;
             case "SchemaMismatch": manifest["schema"] = "unknown"; break;
-            case "VersionMismatch": manifest["version"] = 2; break;
+            case "VersionMismatch": manifest["version"] = -1; break;
             case "DuplicateGid": manifest["entries"]![1]!["gid"] = manifest["entries"]![0]!["gid"]!.DeepClone(); break;
             case "DuplicatePath": manifest["entries"]![1]!["path"] = manifest["entries"]![0]!["path"]!.DeepClone(); break;
             case "InvalidManifest": manifest["entryCount"] = 9; break;
@@ -58,7 +76,7 @@ public sealed class ScribeResourcePackTests
     {
         using var root = new TemporaryRoot();
         var path = root.Resolve("resources.zip");
-        ScribeResourcePack.Write(path, [Definition("First")]);
+        ScribeResourcePackTests.WritePack(path, [Definition("First")]);
         var entries = ReadZip(path);
         entries[0].Bytes[^1] ^= 1;
         RewriteZip(path, entries);
@@ -74,7 +92,7 @@ public sealed class ScribeResourcePackTests
         var definition = Definition("First");
 
         var error = Assert.Throws<ScribeResourcePackException>(() =>
-            ScribeResourcePack.Write(path, [definition, definition]));
+            ScribeResourcePackTests.WritePack(path, [definition, definition]));
 
         Assert.Equal(ScribeResourcePackErrorCode.DuplicateGid, error.ReasonCode);
         Assert.False(File.Exists(path));
@@ -85,7 +103,7 @@ public sealed class ScribeResourcePackTests
     {
         using var root = new TemporaryRoot();
         var path = root.Resolve("duplicate.zip");
-        ScribeResourcePack.Write(path, [Definition("First")]);
+        ScribeResourcePackTests.WritePack(path, [Definition("First")]);
         var entries = ReadZip(path);
         entries.Add(entries[0]);
         RewriteZip(path, entries);
@@ -98,7 +116,7 @@ public sealed class ScribeResourcePackTests
     {
         using var root = new TemporaryRoot();
         var path = root.Resolve("duplicate-field.zip");
-        ScribeResourcePack.Write(path, [Definition("First")]);
+        ScribeResourcePackTests.WritePack(path, [Definition("First")]);
         var entries = ReadZip(path);
         var index = entries.FindIndex(item => item.Name == "manifest.json");
         var manifest = Encoding.UTF8.GetString(entries[index].Bytes);
@@ -117,12 +135,12 @@ public sealed class ScribeResourcePackTests
         using var root = new TemporaryRoot();
         var path = root.Resolve("resources.zip");
         var definitions = new[] { Definition("Second"), Definition("First") };
-        var written = ScribeResourcePack.Write(path, definitions);
+        var written = ScribeResourcePackTests.WritePack(path, definitions);
         var pack = ScribeResourcePack.Open(path);
 
         Assert.Equal(2, pack.Manifest.EntryCount);
         Assert.Equal(ScribeResourcePack.SchemaName, pack.Manifest.Schema);
-        Assert.Equal(1, pack.Manifest.Version);
+        Assert.Equal(2, pack.Manifest.Version);
         Assert.Equal(written.TotalSha256, pack.Manifest.TotalSha256);
         Assert.Equal(definitions.Sum(item => (long)ScribeResourceCodec.Encode(item).Length), pack.TotalUncompressedBytes);
         Assert.Equal(["D5/S0/Synthetic/First.scribe.json", "D5/S0/Synthetic/Second.scribe.json"],
@@ -136,7 +154,7 @@ public sealed class ScribeResourcePackTests
             Assert.Equal(Convert.ToHexStringLower(SHA256.HashData(bytes)), entry.Sha256);
         }
         var list = "[" + string.Join(",", pack.Manifest.Entries.Select(item =>
-            $"{{\"path\":\"{item.Path}\",\"gid\":\"{item.Gid}\",\"sha256\":\"{item.Sha256}\"}}")) + "]";
+            $"{{\"path\":\"{item.Path}\",\"gid\":\"{item.Gid}\",\"sha256\":\"{item.Sha256}\",\"inputKey\":\"{item.InputKey}\"}}")) + "]";
         Assert.Equal(Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(list))), pack.Manifest.TotalSha256);
         Assert.Throws<KeyNotFoundException>(() => pack.Read("D5/S0/Synthetic/Missing"));
         using var zip = new ZipArchive(new MemoryStream(File.ReadAllBytes(path)), ZipArchiveMode.Read);
@@ -148,7 +166,7 @@ public sealed class ScribeResourcePackTests
     {
         using var root = new TemporaryRoot();
         var path = root.Resolve("resources.zip");
-        ScribeResourcePack.Write(path, [Definition("Second"), Definition("First")]);
+        ScribeResourcePackTests.WritePack(path, [Definition("Second"), Definition("First")]);
         var original = ScribeResourcePack.Open(path).Manifest;
         var originalBytes = File.ReadAllBytes(path);
         var entries = ReadZip(path);
@@ -161,6 +179,9 @@ public sealed class ScribeResourcePackTests
         Assert.False(originalBytes.SequenceEqual(File.ReadAllBytes(path)));
         Assert.Equal(2, rewritten.ReadAll().Count());
     }
+
+    internal static ScribeResourcePackManifest WritePack(string path, IEnumerable<DocumentDefinition> definitions) =>
+        ScribeResourcePack.Write(path, definitions.Select(definition => (definition, new string('a', 64))));
 
     internal static DocumentDefinition Definition(string name) => DocumentDefinition.Create(
         ScribeDocument.Create(DefinitionDsl.Header("D5/S0/Synthetic/" + name, "Resource fixture"),

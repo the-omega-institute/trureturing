@@ -34,7 +34,7 @@ public sealed class ScribeResourceScriptPackTests
         if (kind == "malformed") TemporaryFileSystem.File.WriteAllBytes(old, [0xff]);
         if (kind is "version" or "entry-digest")
         {
-            ScribeResourcePack.Write(old, [ScribeResourcePackTests.Definition("Alpha")]);
+            ScribeResourcePackTests.WritePack(old, [ScribeResourcePackTests.Definition("Alpha")]);
             var entries = ScribeResourcePackTests.ReadZip(old);
             if (kind == "entry-digest") entries[0].Bytes[0] ^= 1;
             else

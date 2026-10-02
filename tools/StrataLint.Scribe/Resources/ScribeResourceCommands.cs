@@ -4,15 +4,17 @@ namespace StrataLint.Scribe;
 
 internal static class ScribeResourceCommands
 {
-    private const string Usage = "usage: resources pack --out <file> | resources verify --pack <file>";
+    private const string Usage = "usage: resources pack --out <file> [--reuse-from <file>] | resources verify --pack <file>";
 
     internal static int Run(Assembly assembly, IReadOnlyList<string> arguments, string workingDirectory,
         Func<string> repositoryRoot, TextWriter output, TextWriter error)
     {
-        if (arguments.Count != 4
+        if (arguments.Count is not (4 or 6)
             || arguments[1] is not ("pack" or "verify")
             || arguments[2] != (arguments[1] == "pack" ? "--out" : "--pack")
-            || string.IsNullOrWhiteSpace(arguments[3]))
+            || string.IsNullOrWhiteSpace(arguments[3])
+            || arguments.Count == 6 && (arguments[1] != "pack" || arguments[4] != "--reuse-from"
+                || string.IsNullOrWhiteSpace(arguments[5])))
         {
             error.WriteLine(Usage);
             return 2;
@@ -24,9 +26,16 @@ internal static class ScribeResourceCommands
             var root = repositoryRoot();
             if (arguments[1] == "pack")
             {
-                var manifest = ScribeResourcePack.Write(path, DocumentDefinitions.Discover(assembly, root));
+                var result = ScribeResourceScriptPacker.Write(root, path, arguments.Count == 6
+                    ? Path.GetFullPath(arguments[5], workingDirectory) : null);
+                if (!result.Failures.IsEmpty)
+                {
+                    foreach (var failure in result.Failures) error.WriteLine(failure);
+                    return 1;
+                }
+                var manifest = result.Manifest!;
                 output.WriteLine(FormattableString.Invariant(
-                    $"resources pack: entries={manifest.EntryCount} uncompressedBytes={manifest.TotalUncompressedBytes} totalSha256={manifest.TotalSha256}"));
+                    $"resources pack: entries={manifest.EntryCount} executed={result.ExecutedPaths.Length} reused={result.ReusedPaths.Length} uncompressedBytes={manifest.TotalUncompressedBytes} totalSha256={manifest.TotalSha256}"));
                 return 0;
             }
 

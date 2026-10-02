@@ -26,6 +26,7 @@ internal static class ScribeResourcePackManifestCodec
             ["path"] = entry.Path,
             ["gid"] = entry.Gid,
             ["sha256"] = entry.Sha256,
+            ["inputKey"] = entry.InputKey,
         }).ToArray());
 
     internal static ScribeResourcePackManifest Decode(byte[] bytes)
@@ -43,8 +44,8 @@ internal static class ScribeResourcePackManifestCodec
                 throw Error(ScribeResourcePackErrorCode.VersionMismatch, "Unsupported resource pack semantic version.");
             var entries = root.GetProperty("entries").EnumerateArray().Select(item =>
             {
-                RequireFields(item, "path", "gid", "sha256");
-                return new ScribeResourcePackEntry(String(item, "path"), String(item, "gid"), String(item, "sha256"));
+                RequireFields(item, "path", "gid", "sha256", "inputKey");
+                return new ScribeResourcePackEntry(String(item, "path"), String(item, "gid"), String(item, "sha256"), String(item, "inputKey"));
             }).ToImmutableArray();
             var count = root.GetProperty("entryCount").GetInt32();
             if (count != entries.Length)
@@ -56,7 +57,7 @@ internal static class ScribeResourcePackManifestCodec
             {
                 if (entry.Path != ScribeResourcePack.ResourcePath(entry.Gid)
                     || previous is not null && StringComparer.Ordinal.Compare(previous, entry.Path) >= 0
-                    || !IsDigest(entry.Sha256))
+                    || !IsDigest(entry.Sha256) || !IsDigest(entry.InputKey))
                     throw Error(ScribeResourcePackErrorCode.InvalidManifest, "Entries require canonical paths, ascending path order and lowercase SHA-256 digests.");
                 previous = entry.Path;
             }
@@ -87,7 +88,7 @@ internal static class ScribeResourcePackManifestCodec
     private static string String(JsonElement value, string name) => value.GetProperty(name).GetString()
         ?? throw Error(ScribeResourcePackErrorCode.InvalidManifest, $"Manifest field {name} cannot be null.");
 
-    private static bool IsDigest(string value) => value.Length == 64
+    internal static bool IsDigest(string value) => value.Length == 64
         && value.All(character => character is >= '0' and <= '9' or >= 'a' and <= 'f');
 
     private static ScribeResourcePackException Error(ScribeResourcePackErrorCode reason, string message) => new(reason, message);

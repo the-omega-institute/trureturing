@@ -71,6 +71,9 @@ public static partial class ScribeResourceCodec
         };
     }
 
+    internal static byte[] EncodeAssessment(StatementAssessment value) =>
+        JsonSerializer.SerializeToUtf8Bytes(WriteAssessment(value));
+
     private static JsonObject WriteAssessment(StatementAssessment value) => value switch
     {
         StatementAssessment.Projected projected => Obj("type", "Projected", "formula", WriteFormula(projected.Formula)),

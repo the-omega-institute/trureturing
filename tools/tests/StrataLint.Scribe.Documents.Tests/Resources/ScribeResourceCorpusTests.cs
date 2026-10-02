@@ -80,7 +80,7 @@ public sealed class ScribeResourceCorpusTests
         {
             var path = Path.Combine(directory.FullName, "resources.zip");
             var definitions = CorpusDefinitions();
-            var written = ScribeResourcePack.Write(path, definitions);
+            var written = ScribeResourcePack.Write(path, definitions.Select(definition => (definition, new string('a', 64))));
             var pack = ScribeResourcePack.Open(path);
             Assert.Equal(definitions.Length, pack.Manifest.EntryCount);
             Assert.Equal(written.TotalSha256, pack.Manifest.TotalSha256);
