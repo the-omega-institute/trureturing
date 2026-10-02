@@ -55,6 +55,21 @@ these published numerical bounds through the smaller rational thresholds
 moment input also has the published [KKL](klein2023boundedmultiplicity.md)
 justification. Neither the table nor that citation is new Lean verification.
 
+The same source proves a directly reusable global support restriction. Its
+Theorem 1.4 states that for any finite collection of arithmetic progressions
+with distinct moduli, if (Q=\operatorname{lcm}(D)), then
+
+\[
+  2\mid Q\quad\text{or}\quad 9\mid Q\quad\text{or}\quad 15\mid Q.
+\]
+
+The theorem keeps the actual phases and has no square-free hypothesis. Hence a
+hypothetical cover whose moduli are all odd must satisfy (9\mid Q) or
+(15\mid Q). In particular, the branch (v_3(Q)=1) with (5\nmid Q) is
+already excluded. This is a cited published result, not a new Lean replay;
+it supplies a support restriction only and does not settle the unrestricted
+odd-covering problem.
+
 Theorem 10.1 of the [primary v1](https://arxiv.org/pdf/1811.03547v1),
 printed pp. 25--27 (statement p. 25, proof pp. 26--27), constructs, for
 every M>0 and epsilon>0, a finite distinct-modulus family with all

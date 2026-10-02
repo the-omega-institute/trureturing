@@ -25268,3 +25268,249 @@ does not apply when \(v_3(Q)>2\), because the \(p^e\parallel Q\) hypothesis
 behind Sections 192--194 then fails. It also leaves the equal-prefix branch,
 the \(\lvert I_-\rvert=2\) phase liability, and the resulting \(r\)-phase
 problem open; no unrestricted Erdős #7 conclusion follows.
+
+## 217. The full-height prefix-separated ternary packet has no fresh exact-height repair
+
+Continue under the hypotheses of Section 216.  Write
+
+\[
+ B=[b]_R,
+ \qquad R=3r^2,
+ \qquad \{T_1,T_2,T_3\}=
+ \{9,9r,9r^2\}\text{ with their source phases}.
+\]
+
+Each source phase is congruent to (b) modulo (3m_i).  On the source
+class (B), the three top classes therefore each have relative density
+(1/3).  The source-cover identity from Section 192 says that their union
+covers (B); hence they partition (B), and their secondary ternary digits
+modulo (9) are the three distinct lifts of the common residue modulo (3).
+This is a phase statement about the original classes, not an independently
+chosen replacement phase.
+
+There are two useful exchange consequences.
+
+First retain the occupied class (A), delete the three top classes, and use
+the source class (B).  The remaining responsibility on this side is
+(E_B).  A pure high-layer repair by three classes of ternary height (2)
+has labels (9s_i) with (s_i\mid K_B).  The minimum-divisor normal form
+(NF1) gives
+
+\[
+ S_3(K_B)=S_3(L)=\{1,r,r^2\},
+\]
+
+whereas Section 216 has already forced the numerical labels
+
+\[
+ 9,\quad 9r,\quad 9r^2
+\]
+
+into the original inventory.  A fresh exact-height three-class repair thus
+has strictly larger modulus sum than the deleted top packet.  Any possible
+strict descent in this exchange must consequently use a low-height bridge;
+the one-low-plus-three-high reduction of Section 203 leaves its actual
+source phase and deleted-point hull comparison to be checked.
+
+Second rephase (A) to (B) and delete the top packet.  The remaining
+responsibility is the complete private region (P_R) of (A).  The
+prefix-separated hull occupancy of Section 193 forces every divisor of its
+complete hull (Gamma_R=9K_A) to be an occupied numerical label.  Thus no
+fresh height-(2) label (9s), (s\mid K_A), can appear in a complete
+three-class high-layer repair of (P_R).  The first possible fresh ternary
+height is at least (3), giving the lower bound
+
+\[
+  27\,S_3(K_A)
+  =27(1+r+r^2)
+  >9(1+r+r^2),
+\]
+
+which is the old top-packet sum.  Hence the pure high-layer rephase route
+cannot give an EB1 class-count or modulus-sum descent.  Mixed repairs still
+have to pay the complete source liability; this section closes the exact-
+height packet route but does not claim a universal forcing theorem.
+## 218. Equal-prefix low bridges must expose an external cofactor
+
+The equal-prefix branch has a further source-compatible reduction.  Keep the
+notation of Sections 192, 194, and 206.  Thus
+
+\[
+ Q=p^eM,\quad N=Q/p=p^{e-1}M,\quad
+ R=p^{e-1}L,\quad L=\operatorname{lcm}(m_1,\ldots,m_p),
+\]
+
+and the occupied and source phases are
+
+\[
+ A=[a_R]_R,\qquad B=[b]_R,
+ \qquad p^{e-1}\mid(a_R-b).
+\]
+
+Write
+
+\[
+ E_A=A\setminus\mathcal U,\qquad
+ E_B=B\setminus\mathcal U,\qquad E=E_A\mathbin{\dot\cup}E_B,
+\]
+
+and put
+
+\[
+ K_A=\gamma_N(E_A)/p^{e-1},\qquad
+ K_B=\gamma_N(E_B)/p^{e-1},\qquad
+ \Delta=(a_R-b)/p^{e-1}.
+\]
+
+The nonemptiness and periodicity hypotheses used in Sections 192 and 195 are
+retained.  In particular, $L\mid K_A,K_B$ and the displayed quotients are
+prime to $p$.
+
+### The complete two-sided hull
+
+The gcd of the union of two nonempty periodic sets is the gcd of their two
+individual hulls and one cross difference.  Consequently,
+
+\[
+ \boxed{
+ \frac{\gamma_N(E)}{p^{e-1}}
+   =\gcd(K_A,K_B,\Delta).
+ }
+ \tag{EP1}
+\]
+
+Indeed, if $x_A\in E_A$ and $x_B\in E_B$, then
+
+\[
+ \frac{x_B-x_A}{p^{e-1}}= -\Delta+Lz
+\]
+
+for some integer $z$.  Taking the gcd with $K_A,K_B$ removes the $Lz$
+term because $L$ divides both $K_A$ and $K_B$; the reverse inclusion follows
+from the individual hulls and the same cross differences.  This is an identity
+of the actual source sets, not a comparison of separately optimized phases.
+
+Equal-prefix also gives
+
+\[
+ v_p(\gamma_N(E))=e-1.
+\]
+
+The upper bound is $v_p(N)=e-1$, while every cross difference and every
+within-side difference is divisible by $p^{e-1}$.  Applying (HL2) from
+Section 194 to (EP1) therefore yields
+
+\[
+ \boxed{\tau\!\left(\gcd(K_A,K_B,\Delta)\right)\le p-1.}
+ \tag{EP2}
+\]
+
+For the smallest occupied top prime $p=3$, the complete two-sided hull has
+at most two divisors.  This bound concerns the whole joint liability; it is
+not a bound on either $K_A$ or $K_B$ separately, whose first three divisors
+are the top cofactors by (NF1).
+
+### Internal cross-side low bridges are impossible
+
+Within an inclusion-minimal mixed repair of $E$ by at most $p+1$ classes, consider its low repair class
+
+\[
+ C=[c]_d,\qquad d=p^r s,\quad r<e,\quad p\nmid s,
+\]
+
+that meets both $E_A$ and $E_B$.  The bounded-repair reduction (MR3) gives
+$d\mid N$, hence $r\le e-1$.  If its odd cofactor is internal to the top
+period, $s\mid L$, choose
+
+\[
+ x_A\in C\cap E_A,\qquad x_B\in C\cap E_B.
+\]
+
+Since both points lie in the same class $C$ and in the two occupied
+$R$-classes,
+
+\[
+ s\mid(a_R-b).
+\]
+
+As $p\nmid s$, this is $s\mid\Delta$.  Together with $s\mid L$ and
+$L\mid K_A,K_B$, (EP1) implies $s\mid\gamma_N(E)/p^{e-1}$.  Therefore
+
+\[
+ d=p^r s\mid p^{e-1}\frac{\gamma_N(E)}{p^{e-1}}=\gamma_N(E).
+\]
+
+The point $x_A$ then shows that every point of $E$ is congruent to $c$
+modulo $d$, so $C$ contains the complete liability $E$.  This makes $C$
+redundant, contrary to inclusion-minimality.  Hence
+
+\[
+ \boxed{
+ C\text{ essential and meeting both sides}
+ \Longrightarrow s\nmid L.
+ }
+ \tag{EP3}
+\]
+
+Thus every genuine cross-side low bridge must expose at least one prime-power
+coordinate from $Q/L$ (possibly together with factors from $L$).  This is a
+source-compatible strengthening of (CB1)--(CB2): the entire internal split in
+(CB2) is empty once the two-sided hull identity is used.
+
+### What EB1 already removes, and what remains
+
+For $p=3$, a four-class mixed repair has one low class and three exact-height
+high classes by (MR1)--(MR3).  If its low class contains all of $E_A$ and has
+a fresh label $d\ne R$, then
+
+\[
+ \mathcal U\cup\{C,B\}
+\]
+
+is a distinct whole cover with two classes replacing the original four.  The
+analogous cover $\mathcal U\cup\{A,C\}$ applies when $C$ contains all of
+$E_B$.  EB1 therefore excludes every **complete side-contained** low class
+with a fresh label.  A class that meets neither side is inessential.
+
+The unresolved cases are exact.  A cross-side low class must satisfy (EP3),
+so its cofactor uses an external $Q/L$ coordinate.  A side-contained class
+that does not contain its whole side leaves nonempty pieces of both sides;
+after deletion its hull $K_F=\gamma_N(E\setminus C)/p^{e-1}$ can be strictly
+larger than the original joint hull in (EP1).  The three high classes can then
+be feasible when $\tau(K_F)\ge3$, and no comparison with (EP2) alone is valid.
+Consequently the remaining equal-prefix obstruction is precisely the
+external-coordinate bridge or this deleted-point hull growth, together with
+the actual source phases and fresh-label condition.  No unrestricted
+Erdős--#7 conclusion follows from (EP1)--(EP3).
+
+## 219. Reusing the published LCM divisibility restriction leaves the high-height branches
+
+Balister--Bollobás--Morris--Sahasrabudhe--Tiba, *On the Erdős covering
+problem: the density of the uncovered set* (Invent. Math. 228 (2022),
+377--414; arXiv:1811.03547), Theorem 1.4, proves that a finite covering
+system with distinct moduli and \(Q\) their least common multiple satisfies
+
+\[
+  2\mid Q\quad\text{or}\quad 9\mid Q\quad\text{or}\quad 15\mid Q.
+  \tag{BD1}
+\]
+
+The statement has no square-free hypothesis and retains the actual residue
+classes. It therefore applies directly to a hypothetical all-odd cover and
+gives
+
+\[
+  9\mid Q\quad\text{or}\quad 15\mid Q.
+  \tag{BD2}
+\]
+
+In particular, the branch \(v_3(Q)=1\) with \(5\nmid Q\) is already excluded
+by a published theorem. The \(15\)-alternative only supplies the stated LCM
+condition (the source allows the \(3\)- and \(5\)-divisibility to be witnessed
+by different moduli); it does not force a single label divisible by \(15\).
+
+This is a support restriction, not a phase-sensitive repair theorem. It does
+not exclude unrestricted distinct odd covers, and it supplies no conclusion
+about prefix separation, equal-prefix bridges, or a common source law for the
+remaining liability. The \(v_3(Q)\ge2\) and \(3,5\)-split branches therefore
+remain within the open whole-cover problem addressed by Sections 217--218.
