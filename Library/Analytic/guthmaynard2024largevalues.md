@@ -269,8 +269,16 @@ $$
 Conjugates and multiplicities are included, so this is a real contribution
 of the same actual spectrum.
 
-Take $H=X^h$ with fixed $h>0$. Partition $[1/2,3/4]$ into finitely many
-fixed real-part bins of maximum width $\delta$. For a bin starting at
+Take $H=X^h$ with fixed $h>0$. In the lower band
+$1/2<\beta\le7/10$, the standard total zero count
+$N(T)\ll T\log T$ and (8), summed over dyadic heights, give
+$O_{A_0}(X^{1/5}H^{-2}\log H)$. At $h=31/300$ this is
+$O_{A_0}(X^{-1/150}\log X)$, whose power is strictly smaller than
+$-7/2700$.
+
+Apply Guth–Maynard only in the upper band $7/10<\beta\le3/4$.
+Partition $[7/10,3/4]$ into finitely many fixed real-part bins of maximum
+width $\delta$. For a bin starting at
 $\sigma$, (8) bounds its cumulative terms by a constant times
 $X^{\sigma+\delta-1/2}|\gamma|^{-3}$. At heights
 $2^jH<|\gamma|\le2^{j+1}H$, Theorem 1.2 bounds the number of terms by
