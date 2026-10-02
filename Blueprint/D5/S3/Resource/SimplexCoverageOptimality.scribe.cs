@@ -33,7 +33,7 @@ internal sealed class SimplexCoverageOptimalityDocument : IScribeDocumentDefinit
                         "This is arXiv:2603.06489v1 Section 3 Conjecture 3.2, solving "
                         + "Problem B at the simplex parameters; the predecessor is "
                         + "arXiv:2507.20639v1 Section III's unnumbered optimizer paragraph. "
-                        + "Issue #11799 preregisters the complete named assertion. All zero, "
+                        + "All zero, "
                         + "repeated and scalar-parallel competitor positions remain in the "
                         + "same iid uniform-with-replacement physical sample space. The "
                         + "result is not a uniqueness statement, a prime-field or "
@@ -44,7 +44,7 @@ internal sealed class SimplexCoverageOptimalityDocument : IScribeDocumentDefinit
                         + "Submodule containment couples every original prefix with its "
                         + "replacement on the identical positions and also preserves full "
                         + "span. Local GL span invariance and finite orbit Jensen use the "
-                        + "frozen represented root-concavity theorem. Local physical ray "
+                        + "represented root-concavity theorem. Local physical ray "
                         + "fiber sums preserve multiplicity. An actual alphabet bijection "
                         + "and the pinned projective cardinality identify uniform ray "
                         + "recovery with physical simplex recovery. Measurable complements "
@@ -54,12 +54,8 @@ internal sealed class SimplexCoverageOptimalityDocument : IScribeDocumentDefinit
                     Paragraph(Text(
                         "The sole new public declaration is result. All averaging, "
                         + "coupling, transport, cardinality and measure arguments are "
-                        + "theorem-local. Its proof_shape is bind-only; admission_basis is "
-                        + "open-problem-resolution for #11799, not an escape-witness claim. "
-                        + "The literature's closed-form simplex expectation is context, "
-                        + "not a second new theorem. Independent literature review, "
-                        + "canonical admission, freezing and merged publication remain "
-                        + "separate caller-owned obligations."))),
+                        + "theorem-local. The published closed-form simplex expectation "
+                        + "supplies context for this optimizer theorem."))),
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("bertuzzo-2026-simplex-coverage-optimality"),
