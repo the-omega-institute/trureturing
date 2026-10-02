@@ -44,7 +44,7 @@ Q_{s,n}^{(k)}=qM^k\binom{A_{s,n}}{n-A_{s,n}} .
 $$
 The generation $k$, spatial window length $n$, and spatial position $s$ are distinct indices. When $n=0$, the sum and composition are zero; this convention introduces no empty member of $\mathcal T$.
 
-**Hypothesis 1.4 (Sampling and dynamics contracts).** A spatial occurrence experiment chooses a leaf-window uniformly among all positions in $w(\rho^n t)$ for fixed nonempty $t$. A stationary symbolic experiment chooses a stationary law on $X_M$ or $X_\tau$ and then a cylinder at the origin. A transport experiment chooses positive edge resistances $r_\alpha,r_\beta$, a jump scale $0<\theta\le\min(r_\alpha,r_\beta)/2$, and a physical time unit $\delta>0$; it uses the Markov chain specified in Definition 5.1 below. A controlled boundary experiment chooses the finite state law and kernels in Definition 6.1. These probability laws, permissions, boundary conditions and clocks are additional hypotheses. The recursion itself selects none of them.
+**Hypothesis 1.4 (Sampling and dynamics contracts).** A spatial occurrence experiment chooses a leaf-window uniformly among all positions in $w(\rho^n t)$ for fixed nonempty $t$. A stationary symbolic experiment chooses a stationary law on $X_M$ or $X_\tau$ and then a cylinder at the origin. A transport experiment chooses positive edge resistances $r_\alpha,r_\beta$, a jump scale $0<\theta\le\min(r_\alpha,r_\beta)/2$, and a physical time unit $\delta>0$; it uses the Markov chain specified in Definition 5.1 below. A controlled boundary experiment uses the encoding and swaps of Definition 6.1 together with the initial law, stochastic kernel and action contract of Hypothesis 6.2. These probability laws, permissions, boundary conditions and clocks are additional hypotheses. The recursion itself selects none of them.
 
 ## 2. Fibers, measures and exact occurrence laws
 
@@ -118,7 +118,7 @@ At $\vartheta=3\log\varphi$, its stationary Markov law has the same one- and two
 
 **Proof.** The ordered word recurrence is $\tau^n(\beta)=\tau^{n-1}(\beta)\tau^{n-2}(\beta)$ and its lengths are Fibonacci numbers. For any fixed word $u$ of length $m$, its occurrence count $A_n$ in these words satisfies
 $$
-A_n=A_{n-1}+A_{n-2}+\varepsilon_n,qquad0\le\varepsilon_n\le m-1.
+A_n=A_{n-1}+A_{n-2}+\varepsilon_n,\qquad0\le\varepsilon_n\le m-1.
 $$
 After division by the corresponding lengths, the differences satisfy
 $$
@@ -167,7 +167,7 @@ R^n\nu(B)=\frac1{D_n}\int\sum_{k=0}^{|\tau^n(x_0)|-1}{\bf1}_B(\sigma^k\tau^n(x))
 $$
 For a fixed cylinder of length $m$, at most $m-1$ positions per substituted block cross a block boundary. All other positions lie inside a copy of $\tau^n(\alpha)$ or $\tau^n(\beta)$, whose internal frequencies converge to $\mu_F$; the boundary fraction is at most $(m-1)/\min(|\tau^n(\alpha)|,|\tau^n(\beta)|)$ and tends to zero. Thus every cylinder converges to $\mu_F$. Continuity of $R$ on stationary laws gives $R\mu_F=\mu_F$, and a fixed law must equal the limit of its iterates. $\square$
 
-Citation: the source occurrence and gap-frequency inputs are [*Fibonacci Atomic Relation Generation*](https://github.com/the-omega-institute/trureturing/blob/4ab7dd1d2631b0a0859643815bcc2c442ce34e32/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md) and [*Recursive Relational Observation*](https://github.com/the-omega-institute/trureturing/blob/4ab7dd1d2631b0a0859643815bcc2c442ce34e32/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md), Theorems 20.9, 33.9–33.10 and Proposition 71.8.
+Citation: the source occurrence and gap-frequency background is [*Fibonacci Atomic Relation Generation*](https://github.com/the-omega-institute/trureturing/blob/4ab7dd1d2631b0a0859643815bcc2c442ce34e32/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md) and [*Recursive Relational Observation*](https://github.com/the-omega-institute/trureturing/blob/4ab7dd1d2631b0a0859643815bcc2c442ce34e32/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md), Theorem 20.9. In the latter source, Theorems 33.9–33.10 distinguish natural boundary and stationary maximum-entropy laws, while Proposition 71.8 supplies legal-prefix counting and natural-boundary-measure background.
 
 ## 3. Joint windows and fluctuation laws
 
@@ -177,7 +177,7 @@ C_j(U)=\lfloor U+(j+1)a\rfloor-\lfloor U+ja\rfloor .
 $$
 For comparison, let $C$ have the stationary Markov law
 $$
-P_p=\begin{pmatrix}1-p&p\\1&0\end{pmatrix},qquad
+P_p=\begin{pmatrix}1-p&p\\1&0\end{pmatrix},\qquad
 \pi_p=\left(\frac1{1+p},\frac p{1+p}\right),\qquad0\le p\le1.
 $$
 Both paths forbid $11$, but only the phase path is supported on the Fibonacci substitution language. Independently choose a fair bit $B$, let $x_0=B$ and
@@ -229,7 +229,7 @@ $$
 \frac{\left|Q_{s,\lfloor Nt\rfloor}^{(k)}-(F_{k+4}-aF_{k+2})\lfloor Nt\rfloor\right|}{F_{k+2}\sqrt N}
 \le N^{-1/2}.
 $$
-Thus every finite collection of rational or real observation times has zero square-root fluctuation limit. The unscaled variance has all subsequential limits in $[0,F_{k+2}^2/4]$, and for $j\ge2$,
+Thus the centered count step processes and every finite collection of centered quantity step processes, divided by $\sqrt N$, converge uniformly on $[0,T]$ to zero for every phase. In particular this is functional convergence in the Skorohod $J_1$ topology, as well as zero fluctuation at every finite collection of observation times. The unscaled variance has all subsequential limits in $[0,F_{k+2}^2/4]$, and for $j\ge2$,
 $$
 \operatorname{Var}(A_{s,F_j})=\varphi^{-j}(1-\varphi^{-j}).
 $$
@@ -246,7 +246,7 @@ F_j a=F_{j-2}+(-1)^j\varphi^{-j},
 $$
 which yields the displayed return variance. Intersecting two arcs of length $a$ gives the bit covariance formula; at Fibonacci returns the overlap tends to $a$. The anchored correlation formula in Theorem 3.2 then has absolute value tending to one. Mixing would force bounded centered correlations to tend to zero. The Binet identity used here is the source formula `Real.coe_fib_eq` in [Mathlib, *Real Golden Ratio*](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Real/GoldenRatio.lean#L197). $\square$
 
-**Theorem 3.4 (A declared Markov dynamics and its finite-dimensional Gaussian law).** For the Markov path of Hypothesis 3.1 put
+**Theorem 3.4 (A declared Markov dynamics and its joint functional Gaussian law).** For the Markov path of Hypothesis 3.1 put
 $$
  m=\frac p{1+p},\qquad v=m(1-m),\qquad r=-p.
 $$
@@ -258,20 +258,63 @@ and for $m_0\le n$ the covariance of prefix counts of lengths $m_0,n$ is
 $$
 V_{m_0}+\frac{vr(1-r^{m_0})(1-r^{n-m_0})}{(1-r)^2}.
 $$
-The pathwise quantity identity of Theorem 3.2 remains valid, so the generation covariance is $F_{k+2}F_{\ell+2}V_n$. If $0<p<1$, centered prefix counts at finitely many nonnegative times, divided by $\sqrt N$, converge jointly to a centered Gaussian vector with covariance
+The pathwise quantity identity of Theorem 3.2 remains valid, so the generation covariance is $F_{k+2}F_{\ell+2}V_n$. If $0<p<1$, fix $0<T<\infty$ and generations $k_1,\ldots,k_d$. Put
 $$
-\sigma_p^2\min(t_i,t_j),
+X_N(t)=\frac{A_{0,\lfloor Nt\rfloor}-m\lfloor Nt\rfloor}{\sqrt N},
 \qquad
-\sigma_p^2=\frac{p(1-p)}{(1+p)^3}>0.
+Y_N^{(k)}(t)=
+\frac{Q_{0,\lfloor Nt\rfloor}^{(k)}-(F_{k+4}-mF_{k+2})\lfloor Nt\rfloor}{\sqrt N}.
 $$
-The corresponding quantity coordinates have covariance $F_{k+2}F_{\ell+2}\sigma_p^2\min(t_i,t_j)$. This is a finite-dimensional statement. The anchored spin correlations satisfy
+In $D([0,T],\mathbb R^{d+1})$ with the Skorohod $J_1$ topology,
+$$
+\bigl(X_N,Y_N^{(k_1)},\ldots,Y_N^{(k_d)}\bigr)
+\Longrightarrow
+\sigma_p B\,\bigl(1,-F_{k_1+2},\ldots,-F_{k_d+2}\bigr),
+\qquad
+\sigma_p^2=\frac{p(1-p)}{(1+p)^3}>0,
+$$
+where $B$ is one standard Brownian motion shared by all coordinates. In particular, centered prefix counts at finitely many nonnegative times, divided by $\sqrt N$, converge jointly to a centered Gaussian vector with covariance
+$$
+\sigma_p^2\min(t_i,t_j).
+$$
+The corresponding quantity coordinates have covariance $F_{k+2}F_{\ell+2}\sigma_p^2\min(t_i,t_j)$. The anchored spin correlations satisfy
 $$
 K_0=1,\qquad K_1=\frac{p-1}{p+1},\qquad
 K_{n+2}=-(1-p)K_{n+1}-pK_n.
 $$
 At $p=0$ the path is constant zero. At $p=1$ it alternates, with $V_n=0$ for even $n$ and $V_n=1/4$ for odd $n$; both endpoints have zero square-root fluctuation limit.
 
-**Proof.** For $f(i)=i-m$, direct multiplication gives $P_pf=-pf$. Thus the centered indicators have covariance $vr^{|i-j|}$, and summing the geometric series gives both finite formulas. For the limit, the tilted matrix $P_p\operatorname{diag}(1,e^z)$ has leading eigenvalue
+**Proof.** For $f(i)=i-m$, direct multiplication gives $P_pf=-pf$. Thus the centered indicators have covariance $vr^{|i-j|}$, and summing the geometric series gives both finite formulas.
+
+For the path limit, set $g=f/(1+p)$, so $g-P_pg=f$ and $P_pg=-pg$. With $\mathcal F_n=\sigma(C_0,\ldots,C_n)$, the process
+$$
+M_n=\sum_{j=0}^{n-1}\bigl[g(C_{j+1})-P_pg(C_j)\bigr],
+\qquad M_0=0,
+$$
+is a square-integrable martingale. Telescoping gives the exact decomposition
+$$
+A_{0,n}-nm=M_n+g(C_0)-g(C_n).
+$$
+If $C_j=1$, the next state is zero and the martingale increment is zero. If $C_j=0$, that increment is $(C_{j+1}-p)/(1+p)$. Its conditional variance is therefore $p(1-p)/(1+p)^2$ at state zero and zero at state one. Hence its predictable bracket is
+$$
+\langle M\rangle_n
+=\frac{p(1-p)}{(1+p)^2}\sum_{j=0}^{n-1}(1-C_j)
+=\frac{p(1-p)}{(1+p)^2}(n-A_{0,n}).
+$$
+For fixed $t$, stationarity and the displayed variance formula $V_n=O(n)$ give
+$$
+\frac{\langle M\rangle_{\lfloor Nt\rfloor}}N
+\longrightarrow t\sigma_p^2\quad\text{in }L^2.
+$$
+This convergence is uniform in probability on compact time intervals: the bracket is nondecreasing, so between successive points of a finite time grid its error is bounded by the largest grid error plus $\sigma_p^2$ times the grid mesh. First let $N$ tend to infinity on the grid, then let the mesh tend to zero.
+
+The step martingale $M_{\lfloor Nt\rfloor}/\sqrt N$, with filtration $\mathcal F_{\lfloor Nt\rfloor}$, starts at zero and is locally square-integrable. Its maximum squared jump on $[0,T]$ is at most $1/((1+p)^2N)$, and the maximum jump of its predictable bracket is at most $p(1-p)/((1+p)^2N)$. These deterministic bounds also bound the expectations of the jumps. Thus the predictable-bracket and jump conditions of W. Whitt, [*Proofs of the martingale FCLT*](https://arxiv.org/pdf/0712.1929v2), Theorem 2.1(ii), apply and give convergence to $\sigma_p B$ in $J_1$. The remainder $g(C_0)-g(C_{\lfloor Nt\rfloor})$ is bounded by $1/(1+p)$ uniformly in $t$, so its division by $\sqrt N$ does not affect the limit. Finally, the exact common-path identity
+$$
+Y_N^{(k)}=-F_{k+2}X_N
+$$
+transfers this convergence to the joint count and quantity process. No stochastic assumption beyond Hypothesis 3.1 is used.
+
+The finite-dimensional limit can also be read directly from the tilted matrix $P_p\operatorname{diag}(1,e^z)$, whose leading eigenvalue is
 $$
 \Lambda(z)=\frac{1-p+\sqrt{(1-p)^2+4pe^z}}2,
 $$
@@ -313,7 +356,11 @@ be its length-$r$ cylinder vector, and let
 $$
 \Phi_r(\mu)=\bigl(O_r(R^n\mu)\bigr)_{n\ge0}
 $$
-be its complete forward scale response. The response records all iterates of the chosen spatial inflation, but only at the fixed window size $r$.
+be its complete forward scale response. The response records all iterates of the chosen spatial inflation, but only at the fixed window size $r$. For either map $H=O_r$ or $H=\Phi_r$, define its equality kernel by
+$$
+\ker H=\{(\mu,\eta):H(\mu)=H(\eta)\}.
+$$
+This is an equivalence relation on stationary laws, rather than a linear null space.
 
 **Theorem 4.2 (Exact scale compatibility and finite-window blindness).** There is a unique stationary law $\nu$ on $X_\tau$, with letter vector
 $$
@@ -344,11 +391,17 @@ Every column sum of $A_r$ is $d_r$, and the $r=1$ transfer is the incidence matr
 
 Under $\beta\leftrightarrow0$, $\alpha\leftrightarrow1$, the substitution is the classical Fibonacci substitution. Its rotation coding is minimal and uniquely ergodic and has factor complexity $m+1$; these are the classical ingredients in Berstel, [*Sturmian and Episturmian Words*](https://ligm.univ-eiffel.fr/~berstel/Articles/2007SturmianThessalonique.pdf), §§2–3. Thus $\nu$ exists and has zero entropy. Since $R\nu$ is stationary and supported on $X_\tau$, unique ergodicity gives $R\nu=\nu$. Every $\tau^n(c)$ is a long legal Fibonacci block, and the proportion of length-$r$ roots crossing a boundary between substituted letters is at most $(r-1)/\min_c|\tau^n(c)|$, which tends to zero. This proves convergence from every finite tree and from every stationary input.
 
-Fix $r\ge2$. Let the states be legal words $u$ of length $r-1$, with state mass $\nu[u]$ and transition
+Fix $r\ge2$. Take the finite state space of positive-occurrence Fibonacci factors
 $$
-K(u,uc)=\frac{\nu[uc]}{\nu[u]}
+\mathcal S_r=\{u:|u|=r-1,\ \nu[u]>0\}.
 $$
-whenever $uc$ is legal. Cylinder consistency gives a stationary Markov law $\mu_r$ with $O_r(\mu_r)=O_r(\nu)$. The finite graph is irreducible, and its unique right-special state has two positive extensions, so $h(\mu_r)>0$. The transfer identity above preserves its length-$r$ vector at every iterate.
+Give $u$ state mass $\nu[u]$. For $c\in\{\alpha,\beta\}$ with $\nu[uc]>0$, set
+$$
+K\bigl(u,\operatorname{suffix}_{r-1}(uc)\bigr)=\frac{\nu[uc]}{\nu[u]},
+$$
+and set all other transition entries to zero. Here $\operatorname{suffix}_{r-1}(uc)$ is the last $r-1$ letters of $uc$, so each supported edge joins two states in $\mathcal S_r$. Right-cylinder consistency gives row sum one, and left-cylinder consistency and stationarity give incoming mass $\nu[v]$ at every state $v$. The resulting stationary letter law $\mu_r$ has $O_r(\mu_r)=O_r(\nu)$ and is supported on $X_M$.
+
+Minimality of the Fibonacci shift makes this support graph irreducible: starting at an occurrence of any factor $u$, uniform recurrence supplies a later occurrence of any factor $v$, and the intervening Fibonacci word gives a path of supported edges from $u$ to $v$. Thus the stationary Markov law is ergodic. Every state has one or two right extensions. Factor complexity gives $|\mathcal S_r|=r$ and exactly $r+1$ supported length-$r$ words, so precisely one state is right-special, with two positive outgoing probabilities. State paths and letter paths determine one another by their overlapping blocks and have the same entropy rate. The right-special state's positive stationary mass contributes strictly positive conditional entropy, proving $h(\mu_r)>0$. The transfer identity above preserves its length-$r$ vector at every iterate.
 
 For entropy, form the tower
 $$
@@ -398,7 +451,7 @@ N\varphi^{-3}\frac{1-\varphi^{-1}}{1+\varphi^{-1}}+O(1)=N\varphi^{-6}+O(1).
 $$
 Thus the complete forward response at window size two can agree while the triple projection and fluctuation law differ. $\square$
 
-Citation: the operation-stable observation quotient is the finite-cylinder principle in [*Recursive Relational Observation*](https://github.com/the-omega-institute/trureturing/blob/4ab7dd1d2631b0a0859643815bcc2c442ce34e32/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md), Theorems 20.4, 33.9–33.10 and 71.8; the common-source boundary is [*FIB Relational Continuation Geometry*](https://github.com/the-omega-institute/trureturing/blob/4ab7dd1d2631b0a0859643815bcc2c442ce34e32/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md), Theorems 2.5 and 13.1.
+Citation: rotation coding is background from [*Recursive Relational Observation*](https://github.com/the-omega-institute/trureturing/blob/4ab7dd1d2631b0a0859643815bcc2c442ce34e32/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md), Theorem 20.4. Its Theorems 33.9–33.10 distinguish boundary and stationary probabilities, and Proposition 71.8 supplies legal-prefix counting and natural-boundary-measure background. The substitution-specific finite-cylinder transfer identity is proved above. The common-source comparison uses the contract in Hypothesis 13.1 and the conditional compatibility statement in Theorem 13.2 of [*FIB Relational Continuation Geometry*](https://github.com/the-omega-institute/trureturing/blob/4ab7dd1d2631b0a0859643815bcc2c442ce34e32/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md); its Theorem 2.5 supplies the distinct finite-prefix versus finite-source-realization background.
 
 ## 5. Ordered transport and passage statistics
 
@@ -416,7 +469,7 @@ and measure elapsed time by $\delta\tau(t)$ for $\delta>0$. The source generatio
 
 **Theorem 5.2 (Currents, passage recurrence and the Cassini order correction).** Let $m_n(k)=\Pr(X_n=k)$, set $J_n(-1)=J_n(L)=0$, and define
 $$
-J_n(i)=\frac{\theta}{r_{s_i}}\bigl(m_n(i)-m_n(i+1)\bigr)quad(0\le i<L-1),
+J_n(i)=\frac{\theta}{r_{s_i}}\bigl(m_n(i)-m_n(i+1)\bigr)\quad(0\le i<L-1),
 \qquad
 J_n(L-1)=\frac{\theta}{r_{s_{L-1}}}m_n(L-1).
 $$
@@ -432,7 +485,7 @@ $$
 $$
 For a word $u=u_0\cdots u_{L-1}$ put
 $$
-R(u)=\sum_{i=0}^{L-1}r_{u_i},qquad
+R(u)=\sum_{i=0}^{L-1}r_{u_i},\qquad
 A(u)=\sum_{i=0}^{L-1}(i+1)r_{u_i}.
 $$
 Writing $A_j=A(w(T_j))$, $R_j=R(w(T_j))$ and $L_j=|w(T_j)|$, one has
@@ -461,7 +514,7 @@ $$
 $$
 so the tail is bounded geometrically. Let $h_k=\mathbb E_k\tau$ and $d_i=h_i-h_{i+1}$. The first-step equations give
 $$
-\frac{\theta d_0}{r_{s_0}}=1,qquad
+\frac{\theta d_0}{r_{s_0}}=1,\qquad
 \frac{\theta d_i}{r_{s_i}}-\frac{\theta d_{i-1}}{r_{s_{i-1}}}=1,
 $$
 whence $d_i=(i+1)r_{s_i}/\theta$ and $h_0=A(w)/\theta$.
@@ -518,8 +571,8 @@ exists.
 
 **Proof.** The Fibonacci two-root formula gives
 $$
-\frac{N(T_j)}{L_j}\to\varphi^2,qquad
-R_j=\overline rL_j+O(\varphi^{-j}),qquad
+\frac{N(T_j)}{L_j}\to\varphi^2,\qquad
+R_j=\overline rL_j+O(\varphi^{-j}),\qquad
 F_{j-2}=\varphi^{-3}L_j+O(\varphi^{-j}).
 $$
 Insert these estimates in Theorem 5.2. Because $L_j=O(\varphi^j)$, the product of the resistance error with $L_j+1$ is bounded. The coefficient of the linear term is
@@ -544,7 +597,7 @@ q(c(\rho t))-q(c(t))=a+2b>0
 $$
 for every nonempty tree with composition $(a,b)$. Therefore the quantity is a growing readout, not a conserved charge. $\square$
 
-Citation: the source quantity bridge and ordered recurrence are in [*Fibonacci Atomic Relation Generation*](https://github.com/the-omega-institute/trureturing/blob/4ab7dd1d2631b0a0859643815bcc2c442ce34e32/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md), Theorems 3.2, 3.4, 5.4 and 8.2. The distinction between a common source and an independently supplied operation is formalized in [*FIB Relational Continuation Geometry*](https://github.com/the-omega-institute/trureturing/blob/4ab7dd1d2631b0a0859643815bcc2c442ce34e32/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md), Theorems 2.5 and 13.1.
+Citation: the source quantity bridge and ordered recurrence are in [*Fibonacci Atomic Relation Generation*](https://github.com/the-omega-institute/trureturing/blob/4ab7dd1d2631b0a0859643815bcc2c442ce34e32/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md), Theorems 3.2, 3.4, 5.4 and 8.2. The common-source and legal-operation conditions are in [*FIB Relational Continuation Geometry*](https://github.com/the-omega-institute/trureturing/blob/4ab7dd1d2631b0a0859643815bcc2c442ce34e32/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md), Hypothesis 13.1 and conditional Theorem 13.2; its Theorem 2.5 supplies finite-prefix versus finite-source-realization background.
 
 ## 6. Complementary fibers and controlled joint laws
 
@@ -602,7 +655,7 @@ $$
 $$
 so pushforward by any supplied readout preserves every finite joint law. The same induction with a legal-domain indicator and an adaptive kernel proves the action statement. The aggregate formula is independent of the history and inherits the Fibonacci recurrence. Finally, realizing the all-zero probe vector requires at least $k$ leaves of one atom and realizing the all-one vector at least $k$ leaves of the other atom; a fixed-composition carrier therefore has at least $2k$ leaves, attained by the displayed pairs. $\square$
 
-**Theorem 6.4 (Sharp cross-correlation obstruction under identical separate histories).** For $k=2$, let $Z$ have
+**Theorem 6.4 (Sharp cross-correlation obstruction under identical marginal trajectory laws).** For $k=2$, let $Z$ have
 $$
 \Pr(Z=(0,0))=\Pr(Z=(1,1))=\frac{1+\lambda}{4},
 $$
@@ -624,17 +677,39 @@ $$
 \varphi^{-2n}\operatorname{Cov}(R_1(n),R_2(n))
 \longrightarrow\frac{\lambda\varphi^4}{20}.
 $$
-The fraction of $\beta$ leaves is $F_{n+2}/F_{n+3}\to\varphi^{-1}$ for every $\lambda$. The event $Z_1=Z_2$ has probability $(1+\lambda)/2$. From the aggregate history and the two separate probe histories alone, the minimax absolute error for this event probability is $1/2$, and the minimax total-variation error for the joint probe law is $1/2$.
+The fraction of $\beta$ leaves is $F_{n+2}/F_{n+3}\to\varphi^{-1}$ for every $\lambda$. Define the observation map to be the aggregate trajectory law and the two separate marginal trajectory laws:
+$$
+\mathcal O(\lambda)=
+\left(
+\operatorname{Law}_\lambda\bigl((q(c(E_n(Z))))_{n\ge0}\bigr),
+\operatorname{Law}_\lambda\bigl((R_1(n))_{n\ge0}\bigr),
+\operatorname{Law}_\lambda\bigl((R_2(n))_{n\ge0}\bigr)
+\right).
+$$
+These data withhold paired sample histories and the joint trajectory law
+$$
+\mathsf J_\lambda=
+\operatorname{Law}_\lambda\bigl((R_1(n),R_2(n))_{n\ge0}\bigr).
+$$
+Let $a$ range over deterministic functions of $\mathcal O$ taking values in $[0,1]$, and let $H$ range over deterministic functions of $\mathcal O$ taking values in probabilities on the joint trajectory space. Then the worst-case absolute-error and total-variation radii are
+$$
+\inf_a\sup_{-1\le\lambda\le1}
+\left|a(\mathcal O(\lambda))-\frac{1+\lambda}{2}\right|=\frac12,
+\qquad
+\inf_H\sup_{-1\le\lambda\le1}
+\operatorname{TV}\bigl(H(\mathcal O(\lambda)),\mathsf J_\lambda\bigr)=\frac12.
+$$
+Here “separate histories” means the separate marginal trajectory laws in $\mathcal O$. Paired common-source samples constitute a different observation map: at any generation the two readouts decode both seed bits and hence reveal their equality.
 
 **Proof.** Each $Z_i$ is fair for every $\lambda$, and
 $$
 R_i(n,Z)=F_{n+3}+F_{n+2}Z_i.
 $$
-Thus each separate trajectory law is the same equal mixture of the two deterministic trajectories, while
+Thus each marginal trajectory law is the same equal mixture of the two deterministic trajectories, while
 $$
 \operatorname{Cov}(Z_1,Z_2)=\frac\lambda4
 $$
-proves the covariance formula. Binet's formula gives the normalized limit. The complementary pair has composition $(F_{n+1},F_{n+2})$ in each slot, proving the common aggregate history and the limiting leaf fraction. At $\lambda=1$ the joint seed is supported on the equal-bit states; at $\lambda=-1$ it is supported on the unequal-bit states. These supports are disjoint while all stated separate data agree. Any common event estimate has error at least $1/2$ at one endpoint and the constant estimate $1/2$ attains it. The endpoint joint laws have total variation one, so every estimator has radius at least $1/2$; the $\lambda=0$ law has distance $|\lambda|/2$ from the member at parameter $\lambda$, attaining the bound. $\square$
+proves the covariance formula. Binet's formula gives the normalized limit. The complementary pair has composition $(F_{n+1},F_{n+2})$ in each slot, proving the common aggregate history and the limiting leaf fraction. Consequently $\mathcal O(\lambda)$ is constant throughout the family, so each permitted deterministic estimator must return the same estimate for every $\lambda$. At $\lambda=1$ the joint seed is supported on the equal-bit states; at $\lambda=-1$ it is supported on the unequal-bit states. The decoder transports their disjoint supports to disjoint joint-trajectory supports. Any common event estimate has error at least $1/2$ at one endpoint and the constant estimate $1/2$ attains it. The endpoint joint trajectory laws have total variation one, so the triangle inequality gives radius at least $1/2$ for every $H$; the constant estimator $\mathsf J_0$ has distance $|\lambda|/2$ from $\mathsf J_\lambda$, attaining the bound. $\square$
 
 Citation: the finite-fiber and lawful-operation boundary is [*Recursive Relational Observation*](https://github.com/the-omega-institute/trureturing/blob/4ab7dd1d2631b0a0859643815bcc2c442ce34e32/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md), Theorems 2.2, 2.5 and 57.9, together with [*Recursive Relational Observation Transport Memory Completion*](https://github.com/the-omega-institute/trureturing/blob/4ab7dd1d2631b0a0859643815bcc2c442ce34e32/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md), §3.2. The finite-kernel semantics used inside the proof are described in Tobias Fritz, [*A synthetic approach to Markov kernels, conditional independence and theorems on sufficient statistics*](https://doi.org/10.1016/j.aim.2020.107239).
 
@@ -646,19 +721,23 @@ Citation: the finite-fiber and lawful-operation boundary is [*Recursive Relation
 2. the same one- and two-letter statistics can carry the entire triple interval of Theorem 2.4 and the pressure law with positive entropy;
 3. the same fixed-window scale response can carry positive entropy (Theorem 4.2);
 4. the same means and adjacent pairs can carry zero or positive square-root fluctuations (Theorem 3.5);
-5. the same separate probe histories can carry every cross-correlation in $[-1,1]$ (Theorem 6.4);
+5. the same two separate marginal probe trajectory laws can carry every cross-correlation in $[-1,1]$ (Theorem 6.4);
 6. transport and elapsed time vary while the static source and its quantity observations remain fixed (Theorem 5.4).
 
 Therefore no universal physical law, Gibbs law, Brownian limit, heat equation, quantum transport exponent or empirical universality claim follows from the FIB ATOM recursion alone.
 
-**Proof.** Each item is witnessed by the explicit pair of models already constructed. Theorem 2.2 supplies identical complete quantity paths with different genealogical measures. Theorem 2.4 fixes the one- and two-cylinder data and computes the full compatible triple interval, including the entropy-maximizing pressure law. Theorem 4.2 constructs, for each fixed $r$, an ergodic positive-entropy law with the same $O_r(R^n\cdot)$ for every $n$, while its quantifier order leaves open the simultaneous all-$r$ problem. Theorem 3.5 gives the density-matched Markov counterlaw with positive diffusion coefficient and a forbidden length-three word, while Theorem 3.3 gives bounded native discrepancy. Theorem 6.4 keeps both complete separate probe histories and every aggregate quantity fixed while varying the joint coupling. Theorem 5.4 keeps the source carrier fixed while changing the transition kernel, resistance and clock. These are mathematical countermodels to any inference that omits the corresponding data.
+**Proof.** Each item is witnessed by the explicit pair of models already constructed. Theorem 2.2 supplies identical complete quantity paths with different genealogical measures. Theorem 2.4 fixes the one- and two-cylinder data and computes the full compatible triple interval, including the entropy-maximizing pressure law. Theorem 4.2 constructs, for each fixed $r$, an ergodic positive-entropy law with the same $O_r(R^n\cdot)$ for every $n$. Simultaneous equality for all $r$ instead determines the law: if $O_r(\mu)=O_r(\nu)$ for every $r$, then all contiguous cylinders agree, and stationarity and marginalization give equality on every finite-coordinate cylinder. These cylinders generate the Borel sigma-field, so $\mu=\nu$ and $h(\mu)=0$. Thus one positive-entropy law cannot meet all window constraints simultaneously. Theorem 3.5 gives the density-matched Markov counterlaw with positive diffusion coefficient and a forbidden length-three word, while Theorem 3.3 gives bounded native discrepancy. Theorem 6.4 keeps both complete marginal probe trajectory laws and the aggregate trajectory law fixed while varying the joint coupling. Theorem 5.4 keeps the source carrier fixed while changing the transition kernel, resistance and clock. These are mathematical countermodels to any inference that omits the corresponding data.
 
 Conversely, once a sampling law, a common source, a legal operation, a joint coupling and a clock are explicitly supplied, Theorems 3.2, 5.2 and 6.3 prove the resulting finite-dimensional laws by direct calculation. The conclusions are therefore conditional statistical laws of the declared models, not laws selected by the recursion or by an external physical interpretation. $\square$
 
-## 8. Finite-dimensional limits and common-source qualification
+## 8. Process limits and common-source qualification
 
-**Theorem 8.1 (Limit scope).** The native phase statements in Theorems 3.2 and 3.3 are exact finite-window and finite-time statements; the Markov Gaussian statement in Theorem 3.4 is finite-dimensional convergence of prefix counts; the transport statement in Theorem 5.3 is a finite-mean passage asymptotic along the ordered cells; and the controlled statement in Theorem 6.3 is equality of finite histories under the supplied kernel. None of these statements implies a functional invariance principle, a Brownian path law, a continuum heat equation, a thermodynamic limit, or a physical scaling law without additional tightness, topology, dynamics and realization hypotheses.
+**Theorem 8.1 (Limit scope).** The native phase statements in Theorems 3.2 and 3.3 give exact joint window laws and uniform convergence of the square-root-normalized fluctuation processes to zero on compact time intervals. Under the existing stationary Markov hypotheses with $0<p<1$, Theorem 3.4 gives a Brownian functional limit in $D([0,T])$ with the $J_1$ topology for the centered prefix count and its common-path quantity multiples. The transport statement in Theorem 5.3 is a mean-passage asymptotic along the ordered finite cells, with finiteness of the mean proved in Theorem 5.2. The controlled statement in Theorem 6.3 transports the supplied finite-state history laws, which consistently extend to full trajectory laws.
 
-**Proof.** The phase proof gives a single circle phase and bounded discrepancy, so its normalized fluctuation is identically degenerate. The Markov proof gives convergence of characteristic functions at finitely many time coordinates; it does not establish tightness in a path space. The passage proof uses the exact finite-chain expectation and the Fibonacci asymptotics of one ordered family; it assumes finite mean and does not define a diffusive rescaling. The controlled proof is an induction on finite histories and contains no infinite-state extension. A functional, continuum or physical conclusion would require precisely the additional structures absent from Hypothesis 1.4, and Theorem 7.1 supplies countermodels when they are omitted. $\square$
+The Markov Brownian limit concerns spatial prefix counts. It supplies no identification with a physical heat flow or with a diffusive scaling limit of the cut-chain transport. A continuum transport limit requires a specified family of rescaled cut-chain processes, spatial and time embeddings, boundary data and convergence target; a physical claim additionally requires a realization matching the observations, legal operations and clocks. These conclusions specify mathematical laws of the declared models without supplying those further identifications.
+
+**Proof.** The supremum bound in Theorem 3.3 proves uniform convergence to the zero path. For the stationary Markov model, the Poisson-equation decomposition, bracket convergence and vanishing jumps in Theorem 3.4 supply tightness and the Brownian path law using Whitt's martingale FCLT; no additional stochastic hypothesis is needed. All quantity coordinates are fixed linear multiples of that same count path.
+
+For the cut chain, the positive probability of absorption within $L$ steps from every nonabsorbed state bounds the tail geometrically and proves finite mean. The passage asymptotic then follows from the exact first-step equations and the Fibonacci estimates along $T_j$. An expectation asymptotic alone does not specify a continuum process or its convergence. The finite-state probabilities $\nu(z_0)\prod_{j<N}K(z_j,z_{j+1})$ in Theorem 6.3 are consistent under summing out the last state, so the standard cylinder extension defines their infinite trajectory law; the encoding transports this law because it transports every cylinder. This construction does not select an external physical realization. Finally, the countermodels in Theorem 7.1 vary data not selected by the native recursion; they do not refute the functional limit under the fixed $P_p$ hypotheses. The distinction is between these established mathematical process laws and the further continuum or physical identifications, which have not been specified. $\square$
 
 ## 追加锚（本行以下为增补区）
