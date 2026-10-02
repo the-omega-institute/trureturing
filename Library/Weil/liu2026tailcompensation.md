@@ -541,3 +541,63 @@ G_9^{-1}+J_9\succeq
 $$
 
 This condition would imply $M_9+V_9\succeq0$, and (A7) would then give $Q(f)\ge2^{-49162}\|f\|^2$ on the legal even tests in this window when all objects are restricted to the even space. It is an application of the published block criterion, not an established inequality (A4). The actual entries of $K_9$ and the filtered-vector columns, their directed source errors, the inverse-compression bound and the finite sign test remain payable. The tail input is supplied by (A5)–(A6), and the explicit even embedding has its cross and complementary-block allowances in (A8)–(A9). No retained matrix or approximation error from the $17/16$ certificate has been transported to $\log3$; the matching tail numbers have their separate parameter proof above. Using another retained basis requires identifying the same form and transporting all these objects together. Even a completed $c=9$ sign test would still leave the subsequent cofinal support layers required for RH.
+
+## A common 256-mode consumer
+
+For an actual assembly using 256 even Legendre columns, take $E_j(u)=\sqrt{(4j+1)/(2a)}P_{2j}(u/a)$, $0\le j<256$, and redefine $P,J,R,A,B,G,D$ together with this embedding. This is distinct from the 224-mode instance above. The kernel bounds (A10)–(A12) are dimension-independent and remain applicable; its projection allowances must be calculated for the new space.
+
+The Bernstein ellipse of parameter $2$ has imaginary semiaxis $3/4$. Degree-$511$ Chebyshev truncation of $\cos(tax)$ is even, so its degree is at most $510$ and it belongs to this retained space. The coefficient tail gives
+
+$$
+r:=\sup_{|t|\le256}\|(I-P)\cos(tu)\|
+\le\sqrt{2a}\,e^{192a}2^{-510}<2^{-200}.
+$$
+
+Here $\sqrt{2a}<3/2$ and $(3/2)(68/25)^{212}<2^{310}$ prove the last outward comparison. Taylor truncation of $\cosh(u/2)$ through degree $510$ gives $p_\perp:=\|(I-P)\cosh(u/2)\|<3/512!<2^{-509}$. Using $\|h_{0,9}\|<1$, the same band, pole and tail estimates as (A9) give
+
+$$
+\|R_{10}\|<2154r+4p_\perp,
+\qquad R_{11}\succeq-896r^2I,
+\qquad \|R_{11}\|<8996r^2+2p_\perp^2.
+$$
+
+Thus $e=2^{-188}$, $n=2^{-390}$ and $h=2^{-386}$ are valid conservative allowances for this common embedding. With $m=264/325$ and $\theta=\chi=1$, the source's coefficients satisfy $\alpha<2^{-187}$ and $\beta<2^{-186}$. This is another source-proof parameter application, with no finite sign inferred from the smaller projection error.
+
+Section 4, equation (11), supplies the inverse-compression upper bound without knowing the target sign. For any trial matrix $X$, choose $\mu=4/5<m$ and put
+
+$$
+\mathcal W_\mu(A,B;X)
+=X+X^*-X^*AX+\mu^{-1}(I-AX-X^*A+X^*BX).
+$$
+
+The source residual identity gives $\mathcal W_\mu(A,B;X)\succeq G$. If $\|X\|\le s$ and Hermitian centers have errors $\varepsilon_A,\varepsilon_B$, then
+
+$$
+W=\mathcal W_\mu(A_0,B_0;X)
++\left[(s^2+2s/\mu)\varepsilon_A+(s^2/\mu)\varepsilon_B\right]I
+\succeq G\succ0.
+$$
+
+Consequently $W^{-1}\preceq G^{-1}$. In particular, the direction is suitable for a sufficient lower comparison. With $D_0=B_0-A_0^2$, $b=2011/325$ and $\varepsilon_D=\varepsilon_B+(2b+\varepsilon_A)\varepsilon_A$, the new finite target is
+
+$$
+W^{-1}+J_0-\varepsilon_JI-2^{-187}I
+-2^{-186}(D_0+\varepsilon_DI)\succeq0.
+\tag{A13}
+$$
+
+This condition is not established. All three centers and their errors must belong to the same actual 256-mode embedding. In particular, $B_0$ must approximate $E^*M_9^2E$, rather than $A_0^2$; clipping occurs before composing the shifts. The kernel analytic allowance $2^{-206}$ above contributes to $\varepsilon_J$ only under the stated author-moment premise, and arithmetic error must still be added. Source positivity of the original window does not settle (A13).
+
+```python
+from fractions import Fraction as F
+
+assert F(3, 2) * F(68, 25)**212 < 2**310
+r, p = F(1, 2**200), F(1, 2**509)
+e, n, h = F(1, 2**188), F(1, 2**390), F(1, 2**386)
+assert 2154*r + 4*p < e
+assert 896*r*r < n and 8996*r*r + 2*p*p < h
+m = F(264, 325)
+assert e + 2*e*e/(m-n) < F(1, 2**187)
+assert (e+n)/m**2 + 2*h*h/(m**2*(m-n)) < F(1, 2**186)
+print('common256-mode projection and consumer allowances passed')
+```
