@@ -9,6 +9,32 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class ScribeScriptHostTests
 {
+    [Theory]
+    [InlineData(null)]
+    [InlineData("   ")]
+    [InlineData("NET10_0;bad-symbol")]
+    public void InvalidDefineConstantsReturnHostConfiguration(string? constants)
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        WriteDefinition(root.Path, path, "Probe");
+        var execute = typeof(ScribeScriptHost).GetMethod("ExecuteWithDefineConstants", BindingFlags.NonPublic | BindingFlags.Static);
+        Assert.NotNull(execute);
+        var result = Assert.IsType<ScribeScriptResult>(execute.Invoke(null, [root.Path, path, constants]));
+        Assert.Equal(ScribeScriptFailureCode.HostConfiguration, result.Failure?.Code);
+        Assert.Null(result.Definition);
+    }
+
+    [Fact]
+    public void EscapedNamespaceUsesMetadataNames()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        Write(root, path, "namespace @event.@class; internal sealed class Probe : IScribeDocumentDefinition { public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(\"digest\", H(\"title\"), Blocks(Paragraph(Text(\"content\"))))); }");
+        var result = ScribeScriptHost.Execute(root.Path, path);
+        Assert.True(result.IsSuccess, result.Failure?.ToString());
+    }
+
     [Fact]
     public void ExecutesOneSyntheticDefinition()
     {
