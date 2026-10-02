@@ -35,7 +35,7 @@ private def sourceNames (statement : Expr) (fuel : Nat) : MetaM (NameSet × Nat)
     remaining := remaining - work
     pending := type.getUsedConstants.toList ++ pending
     if (`D5).isPrefixOf owner && !(← isProp info.type) then
-      if let some value := info.value? then
+      if let some value ← dependencyBody info owner then
         let (value, work) ← eraseProofs value remaining
         remaining := remaining - work
         pending := value.getUsedConstants.toList ++ pending

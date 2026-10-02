@@ -319,11 +319,10 @@ def inspectionDependencies (event : TemplateOccurrenceEvent) : MetaM (Array Name
     let (type, work) ← eraseProofs info.type remaining
     remaining := remaining - work
     pending := type.getUsedConstants.toList ++ pending
-    if Repository.isModule owner && !(← isProp info.type) then
-      if let some value := info.value? then
-        let (value, work) ← eraseProofs value remaining
-        remaining := remaining - work
-        pending := value.getUsedConstants.toList ++ pending
+    if let some value ← dependencyBody info owner then
+      let (value, work) ← eraseProofs value remaining
+      remaining := remaining - work
+      pending := value.getUsedConstants.toList ++ pending
   return seen.toArray
 
 private def escapeIdentity (params : List Name) (value : Expr) : MetaM String := do

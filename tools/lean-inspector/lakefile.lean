@@ -20,6 +20,9 @@ lean_lib LeanInformationAudit where
 lean_lib LeanInformationAuditAnalysis where
   globs := #[.submodules `LeanInformationAuditAnalysis]
 
+lean_lib ContractPrototypeFixtures where
+  globs := #[.submodules `ContractPrototypeFixtures]
+
 lean_lib InformationSourceFixture
 
 target nativeImage pkg : FilePath := do

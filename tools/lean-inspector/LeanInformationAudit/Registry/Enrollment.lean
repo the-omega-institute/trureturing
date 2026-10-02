@@ -223,7 +223,7 @@ private def dependency (info : ConstantInfo) : CompileM Unit := do
   let .ok (typeId, typeBytes) ← rawIdentity info.levelParams info.type state.remaining
     | throwError "incomplete_closure:E7.type_identity"
   charge typeBytes
-  let (bodyId, bodyBytes) ← if ← isProp info.type then pure ("", 0) else match info.value? with
+  let (bodyId, bodyBytes) ← match ← dependencyBody info owner with
     | some body =>
       let .ok pair ← rawIdentity info.levelParams body (← get).remaining
         | throwError "incomplete_closure:E7.body_identity"
@@ -653,8 +653,13 @@ def initializeGrammarPins : CommandElabM Unit := do
       let some owner := ownerOf (← getEnv) name | throwError "DTR primitive owner missing"
       let .ok (typeId, _) ← liftTermElabM <| rawIdentity info.levelParams info.type
         | throwError "DTR primitive type exceeds identity bound: {name}"
-      let .ok (bodyId, _) ← liftTermElabM <| rawIdentity info.levelParams (info.value?.getD info.type)
-        | throwError "DTR primitive body exceeds identity bound: {name}"
+      let bodyId ← liftTermElabM do
+        match ← dependencyBody info owner with
+        | none => pure ""
+        | some body =>
+          let .ok (value, _) ← rawIdentity info.levelParams body
+            | throwError "DTR primitive body exceeds identity bound: {name}"
+          pure value
       modifyEnv fun env => primitivePins.addEntry env {
         identity := { name, owner, typeIdentity := typeId, bodyIdentity := bodyId }
         levelCount := info.levelParams.length }

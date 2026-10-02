@@ -82,7 +82,8 @@ selection can authorize its own renaming. Prefix domains and images are disjoint
 def validatePrefixes (mapping : NameMapping) : MetaM Unit := do
   for index in [:mapping.size] do
     let (source, target) := mapping[index]!
-    unless (`Reg).isPrefixOf source && (`Reg).isPrefixOf target do
+    unless (source.getRoot == `Reg || source.getRoot == `ContractPrototypeFixtures) &&
+        (target.getRoot == `Reg || target.getRoot == `ContractPrototypeFixtures) do
       throwError "contract.mapping:unauthorized_owner:{source}/{target}"
     for earlier in [:index] do
       let (a,b) := mapping[earlier]!

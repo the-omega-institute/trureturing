@@ -10,13 +10,13 @@ def isInspectorModule (name : Lean.Name) : Bool :=
 /-- The implementation package and its downstream test/analysis host share
 this source directory. These are library namespaces, not individual module pins. -/
 def isImplementationSourceModule (name : Lean.Name) : Bool :=
-  #[`LeanInformationAudit, `LeanInformationAuditAnalysis,
+  #[`LeanInformationAudit, `LeanInformationAuditAnalysis, `ContractPrototypeFixtures,
     `LeanInformationAuditRegTests, `LeanInformationAuditRegAnalysis].contains name.getRoot
 
 /-- Local data/type bodies include registration support; external libraries remain
 opaque. This classifies a supplied owner, without enumerating loaded modules. -/
 def isModule (name : Lean.Name) : Bool :=
-  isInspectorModule name || (`D5).isPrefixOf name || (`Reg).isPrefixOf name || name == `Trureturing
+  isInspectorModule name || (`ContractPrototypeFixtures).isPrefixOf name || (`D5).isPrefixOf name || (`Reg).isPrefixOf name || name == `Trureturing
 
 /-- Resolve the current checkout at runtime, including from a nested Lake package.
 Only logical relative source names are stored in evidence; no build-host path is
@@ -37,6 +37,12 @@ def source (path : String) : IO System.FilePath := do
 end LeanInformationAudit.Repository
 
 namespace LeanInformationAudit.TemplateAudit
+
+/-- Read repository data implementations, including opaque and unsafe bodies.
+Proof bodies and pinned upstream bodies contribute no implementation identity. -/
+def dependencyBody (info : Lean.ConstantInfo) (owner : Lean.Name) : Lean.MetaM (Option Lean.Expr) := do
+  if (← Lean.Meta.isProp info.type) || !Repository.isModule owner then return none
+  return info.value? (allowOpaque := true)
 
 def sourcePath (name : Lean.Name) : String :=
   (if (`LeanInformationAuditInterface).isPrefixOf name then "tools/lean-inspector-interface/"

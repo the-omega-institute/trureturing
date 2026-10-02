@@ -38,8 +38,7 @@ def dependency (oldEnv newEnv : Environment) (mapping : NameMapping)
   let oldType ← inEnvironment oldEnv <| fingerprint oldInfo.levelParams oldInfo.type
   check s!"dependency.old.type:{input.name}" oldType input.typeIdentity
   let oldBody ← inEnvironment oldEnv do
-    if !rawDefinition && ((← isProp oldInfo.type) || (source && !Repository.isModule input.owner)) then return ""
-    match oldInfo.value? with
+    match ← dependencyBody oldInfo input.owner with
     | none => pure ""
     | some value => fingerprint oldInfo.levelParams value
   check s!"dependency.old.body:{input.name}" oldBody input.bodyIdentity
@@ -48,8 +47,7 @@ def dependency (oldEnv newEnv : Environment) (mapping : NameMapping)
   let mappedType := renameExpr mapping oldInfo.type
   let typeIdentity ← inEnvironment newEnv <| fingerprint oldInfo.levelParams mappedType
   let bodyIdentity ← inEnvironment newEnv do
-    if !rawDefinition && ((← isProp mappedType) || (source && !Repository.isModule owner)) then return ""
-    match oldInfo.value? with
+    match ← inEnvironment oldEnv (dependencyBody oldInfo input.owner) with
     | none => pure ""
     | some value => fingerprint oldInfo.levelParams (renameExpr mapping value)
   return { name, owner, typeIdentity, bodyIdentity }
@@ -87,7 +85,7 @@ def planIdentity (oldEnv newEnv : Environment) (mapping : NameMapping)
   let oldPlan ← result (selectedPlan oldEnv name)
   let oldInfo ← inEnvironment oldEnv <| getConstInfo oldPlan.name
   let oldType ← inEnvironment oldEnv <| identity false oldInfo.levelParams oldInfo.type
-  let some oldBody := oldInfo.value? | throwError "contract.equivalence:template_value"
+  let some oldBody ← inEnvironment oldEnv (dependencyBody oldInfo oldPlan.definitionOwner) | throwError "contract.equivalence:template_value"
   let oldBodyId ← inEnvironment oldEnv <| identity false oldInfo.levelParams oldBody
   check "plan.old.type" oldType oldPlan.typeIdentity
   check "plan.old.body" oldBodyId oldPlan.bodyIdentity
@@ -123,7 +121,8 @@ private def actual (env : Environment) (event : TemplateOccurrenceEvent) (source
   inEnvironment env do
     let info ← getConstInfo event.realizationName
     let raw ← if source then do
-        let some value := info.value? | throwError "contract.equivalence:source_record_value"
+        let owner := (RegistrationReifier.declaringModuleOf env info.name).getD env.header.mainModule
+        let some value ← dependencyBody info owner | throwError "contract.equivalence:source_record_value"
         let value := (value.instantiateLevelParams info.levelParams
           (event.levelParams.map Level.param)).consumeMData
         unless value.isAppOfArity
@@ -134,7 +133,7 @@ private def actual (env : Environment) (event : TemplateOccurrenceEvent) (source
           `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization 3 ||
           info.type.isAppOfArity escapeForwardBridge 3 ||
           info.type.isAppOfArity escapeWitnessBridge 3 then pure info.type.getAppArgs[2]!
-      else match info.value? with
+      else match ← dependencyBody info ((RegistrationReifier.declaringModuleOf env info.name).getD env.header.mainModule) with
         | some value => pure value
         | none => throwError "contract.equivalence:actual_value"
     if source || info.levelParams.isEmpty then return raw
@@ -225,7 +224,7 @@ def verifyCurrentCertificate (side : String) (env : Environment) (record : Bindi
   let plan ← result (selectedPlan env template)
   let info ← getConstInfo template
   check s!"plan.{side}.type" (← identity false info.levelParams info.type) plan.typeIdentity
-  let some body := info.value? | throwError "contract.equivalence:{side}.template_body"
+  let some body ← dependencyBody info plan.definitionOwner | throwError "contract.equivalence:{side}.template_body"
   check s!"plan.{side}.body" (← identity false info.levelParams body) plan.bodyIdentity
   for input in plan.dependencies do discard <| dependency env env #[] false input
   let (bytes, _) ← result (planEncodingWithWork plan)
@@ -244,12 +243,6 @@ def verifyCurrentCertificate (side : String) (env : Environment) (record : Bindi
       (← result (binding.getObjValAs? String "registration_identity"))
   check s!"evidence.{side}" (← result (bindingIdentity record.occurrence.statementIdentity certificate 524288)).1
     certificate.evidenceRef
-
-/-- Repository data bodies include opaque implementations. Proof bodies and
-pinned upstream implementations are omitted by the same rule in every phase. -/
-private def actualDependencyBody (info : ConstantInfo) (owner : Name) : MetaM (Option Expr) := do
-  if (← isProp info.type) || !Repository.isModule owner then return none
-  return info.value? (allowOpaque := true)
 
 /-- Actuals and supplied roots keep their raw expression shape after proof erasure.
 Repository data/type dependencies are followed; proof bodies are omitted and
@@ -274,7 +267,7 @@ def actualDependencies (env : Environment) (event : TemplateOccurrenceEvent)
     let (type, work) ← eraseProofs info.type remaining
     remaining := remaining - work
     pending := type.getUsedConstants.toList ++ pending
-    if let some body ← actualDependencyBody info owner then
+    if let some body ← dependencyBody info owner then
       let (body, work) ← eraseProofs body remaining
       remaining := remaining - work
       pending := body.getUsedConstants.toList ++ pending
@@ -282,7 +275,7 @@ def actualDependencies (env : Environment) (event : TemplateOccurrenceEvent)
     let info ← getConstInfo name
     let owner := (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule
     let typeIdentity ← identity false info.levelParams info.type
-    let bodyIdentity ← (← actualDependencyBody info owner).mapM (identity false info.levelParams)
+    let bodyIdentity ← (← dependencyBody info owner).mapM (identity false info.levelParams)
     let bodyIdentity := bodyIdentity.getD ""
     return { name, owner, typeIdentity, bodyIdentity }
 
@@ -304,7 +297,7 @@ def verifyActualDependencies (label : String) (oldEnv newEnv : Environment)
     -- The closure fingerprints upstream types but omits pinned upstream bodies.
     let info ← inEnvironment oldEnv <| getConstInfo input.name
     let typeIdentity ← inEnvironment newEnv <| identity false info.levelParams (renameExpr mapping info.type)
-    let body ← inEnvironment oldEnv <| actualDependencyBody info input.owner
+    let body ← inEnvironment oldEnv <| dependencyBody info input.owner
     let bodyIdentity ← inEnvironment newEnv <| body.mapM fun value =>
       identity false info.levelParams (renameExpr mapping value)
     let bodyIdentity := bodyIdentity.getD ""
@@ -357,6 +350,8 @@ def verifyRecord (oldEnv newEnv : Environment) (authorization : Authorization)
   let actualIdentity ← inEnvironment newEnv <| identity source oldRecord.occurrence.levelParams
     (renameExpr mapping rawActual)
   check "actual.mapped" actualIdentity newCert.actualIdentity
+  verifyActualDependencies "validated" oldEnv newEnv mapping
+    oldRecord.occurrence newRecord.occurrence source #[descriptor] #[newDescriptor]
   let planIdentity ← planIdentity oldEnv newEnv mapping descriptor newCert.planIdentity
   let arguments ← oldCert.argumentInputs.mapM fun input =>
     dependency oldEnv newEnv mapping source input

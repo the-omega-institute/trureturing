@@ -111,11 +111,9 @@ private def inputIdentity (name : Name) : M DependencyIdentity := do
   let typeIdentity ← fingerprint info.levelParams info.type
   -- Source-opaque operands need no duplicated upstream body fingerprint.
   -- The owning imported image is validated by the existing native coherence gate.
-  let bodyIdentity ← if !(← isProp info.type) && Repository.isModule owner then
-      match info.value? with
-      | some value => fingerprint info.levelParams value
-      | none => pure ""
-    else pure ""
+  let bodyIdentity ← match ← TemplateAudit.dependencyBody info owner with
+    | some value => fingerprint info.levelParams value
+    | none => pure ""
   return { name, owner, typeIdentity, bodyIdentity }
 
 /-- Fixed source-bound branch of the shared assessor. No callback or additional

@@ -17,14 +17,24 @@ import time
 from contextlib import closing
 
 
-def wait_for_lean_builds():
-    """Wait on macOS process exit events before starting a Lean build."""
+def wait_for_lean_builds(root=None):
+    """Serialize Lake writers in this worktree before starting a Lean build."""
     deadline = time.monotonic() + 7200
     while True:
         processes = subprocess.check_output(["ps", "-axo", "pid=,comm="], text=True)
         pids = [int(pid) for line in processes.splitlines()
                 for pid, command in [line.strip().split(None, 1)]
                 if pathlib.Path(command).name == "lake"]
+        if root is not None:
+            local = []
+            for pid in pids:
+                reading = subprocess.run(["lsof", "-a", "-p", str(pid), "-d", "cwd", "-Fn"],
+                    text=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
+                directories = [pathlib.Path(line[1:]).resolve() for line in reading.stdout.splitlines()
+                    if line.startswith("n")]
+                if any(path == root or root in path.parents for path in directories):
+                    local.append(pid)
+            pids = local
         if not pids:
             return
         print("waiting for existing Lean builds: " + ",".join(map(str, pids)), flush=True)
@@ -56,14 +66,14 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", required=True, type=pathlib.Path)
     parser.add_argument("--out", required=True, type=pathlib.Path)
-    parser.add_argument("--unit", choices=["rollback", "negatives", "mapping", "isolated", "repair", "current", "unresolved", "opaque", "arena", "imports"], required=True)
+    parser.add_argument("--unit", choices=["rollback", "negatives", "mapping", "isolated", "repair", "current", "unresolved", "opaque", "arena", "imports", "validated-opaque"], required=True)
     parser.add_argument("--baseline", action="store_true", help="expect opaque body regressions to fail when the comparator omits opaque bodies")
     parser.add_argument("--reference", type=pathlib.Path)
     args = parser.parse_args()
     if sys.platform != "darwin":
         parser.error("these probes require macOS vm_stat")
-    if args.baseline and args.unit != "opaque":
-        parser.error("--baseline is only supported by --unit opaque")
+    if args.baseline and args.unit not in ("opaque", "validated-opaque"):
+        parser.error("--baseline requires an opaque unit")
     for tool in ("make", "vm_stat"):
         if shutil.which(tool) is None:
             parser.error("missing required tool: " + tool)
@@ -74,10 +84,13 @@ def main():
     results = []
 
     def build(label, module, expected_exit, diagnostic=None, env=None):
-        wait_for_lean_builds()
+        wait_for_lean_builds(root)
         memory = free_bytes()
-        if memory < 8 * 1024**3:
-            raise RuntimeError(f"free memory below 8 GiB: {memory}")
+        while memory < 8 * 1024**3:
+            print(f"waiting for 8 GiB free memory: {memory}", flush=True)
+            time.sleep(30)
+            wait_for_lean_builds(root)
+            memory = free_bytes()
         command = ["make", "lean", "LEAN_TARGETS=" + module]
         run_command = ["/usr/bin/time", "-l", *command] if args.unit == "isolated" else command
         path = out / (label + ".log")
@@ -116,7 +129,40 @@ def main():
             raise RuntimeError(f"unmatched negative or control: {label}; see {path}")
 
     try:
-        if args.unit in ("repair", "current", "unresolved", "opaque", "arena", "imports"):
+        if args.unit == "validated-opaque":
+            probe = "LeanInformationAuditRegTests.ContractValidatedOpaqueProbe"
+            build("validated-opaque-control", probe, 0)
+            for side, fixture in (
+                ("old", root / "tools/lean-inspector/ContractPrototypeFixtures/ValidatedOpaqueOld.lean"),
+                ("new", root / "tools/lean-inspector/ContractPrototypeFixtures/ValidatedOpaqueNew.lean"),
+            ):
+                original = fixture.read_bytes()
+                marker = ("namespace Reg.ContractPrototype.Inputs.ValidatedOpaque" + side.title()).encode()
+                head, tail = original.split(marker, 1)
+                changed = head + marker + tail.replace(b"hiddenBit : Bool := false", b"hiddenBit : Bool := true", 1)
+                if changed == original:
+                    raise RuntimeError("validated opaque input did not change")
+                expected = ["comparator_rejects_validated_opaque_" + side]
+                prediction = {"mutation_location": str(fixture.relative_to(root)),
+                    "expected_red_tests": expected, "expected_compile_errors": 0}
+                (out / ("validated-opaque-" + side + "-prediction.json")).write_text(
+                    json.dumps(prediction, indent=2) + "\n")
+                try:
+                    fixture.write_bytes(changed)
+                    environment = os.environ | {"STRATALINT_CONTRACT_VALIDATED_OPAQUE_MUTATION": side}
+                    build("validated-opaque-" + side, probe, 2 if args.baseline else 0,
+                        r"\[FAIL\] " + expected[0] if args.baseline else
+                        r"\[PASS\] " + expected[0], environment)
+                    if results[-1]["compile_errors"] or results[-1]["named_failures"] != (
+                        expected if args.baseline else []):
+                        raise RuntimeError("unexpected validated opaque result")
+                finally:
+                    fixture.write_bytes(original)
+                if fixture.read_bytes() != original:
+                    raise RuntimeError("validated opaque restoration failed")
+                results[-1]["restored_source_sha256"] = hashlib.sha256(original).hexdigest()
+                build("validated-opaque-" + side + "-restored", probe, 0)
+        elif args.unit in ("repair", "current", "unresolved", "opaque", "arena", "imports"):
             package = root / "tools/lean-inspector/LeanInformationAudit/ContractPrototype"
             mapping = package / "NameMapping.lean"
             equivalence = package / "Equivalence.lean"
@@ -241,7 +287,7 @@ def main():
                             if results[-1]["compile_errors"] != 0 or sorted(results[-1]["named_failures"]) != sorted(expected):
                                 raise RuntimeError("invalid opaque baseline red")
                         else:
-                            mutation("opaque-body-" + side, equivalence,
+                            mutation("opaque-body-" + side, root / "tools/lean-inspector/LeanInformationAudit/Registry/Repository.lean",
                                      lambda s: s.replace("info.value? (allowOpaque := true)", "info.value?"),
                                      opaque_probe, expected, "opaque:" + side)
                     finally:
@@ -259,7 +305,7 @@ def main():
                         probe.write_bytes(original + b"\n")
                         build("opaque-traversal-control", opaque_probe, 0,
                               r"\[PASS\] opaque_repository_body_traversal_old", environment)
-                        mutation("opaque-traversal", equivalence,
+                        mutation("opaque-traversal", root / "tools/lean-inspector/LeanInformationAudit/Registry/Repository.lean",
                                  lambda s: s.replace("info.value? (allowOpaque := true)", "info.value?"),
                                  opaque_probe, ["opaque_repository_body_traversal_old",
                                                 "opaque_repository_body_traversal_new"], "opaque:walk")

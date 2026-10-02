@@ -392,7 +392,7 @@ private def inputIdentity (name : Name) : CompareM DependencyIdentity := do
   debit typeWork
   -- Proof implementations contribute no body identity; nested proof arguments
   -- in data inputs are erased by rawIdentity as well.
-  let bodyIdentity ← if ← isProp info.type then pure "" else match info.value? with
+  let bodyIdentity ← match ← dependencyBody info owner with
     | none => pure ""
     | some value =>
       let .ok (identity, bodyWork) ← TemplateAudit.rawIdentity info.levelParams value (← get).remaining

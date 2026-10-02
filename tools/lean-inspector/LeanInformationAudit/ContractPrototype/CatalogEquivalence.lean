@@ -25,8 +25,8 @@ private def identity (env : Environment) (name : Name) : MetaM (String × String
   inEnvironment env do
     let info ← getConstInfo name
     let type ← fingerprint info.levelParams info.type
-    let body ← if ← isProp info.type then pure "" else
-      match info.value? with
+    let owner := (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule
+    let body ← match ← dependencyBody info owner with
       | none => pure ""
       | some value => fingerprint info.levelParams value
     return (type, body)
@@ -55,8 +55,7 @@ private def dependency (oldEnv newEnv : Environment) (mapping : NameMapping)
   let typeIdentity ← inEnvironment newEnv <|
     fingerprint info.levelParams (renameExpr mapping info.type)
   let bodyIdentity ← inEnvironment newEnv do
-    if ← isProp info.type then return ""
-    match info.value? with
+    match ← inEnvironment oldEnv (dependencyBody info input.owner) with
     | none => return ""
     | some value => fingerprint info.levelParams (renameExpr mapping value)
   let name := renameName mapping input.name
@@ -86,8 +85,8 @@ def verifyTemplate (oldEnv newEnv : Environment) (prefixes : NameMapping)
   let oldInfo ← inEnvironment oldEnv <| getConstInfo oldName
   let newInfo ← inEnvironment newEnv <| getConstInfo newName
   require (renameExpr mapping oldInfo.type == newInfo.type) "template.raw_type"
-  let some oldBody := oldInfo.value? | throwError "contract.catalog_equivalence:template.original_body"
-  let some newBody := newInfo.value? | throwError "contract.catalog_equivalence:template.prototype_body"
+  let some oldBody ← inEnvironment oldEnv (dependencyBody oldInfo oldPlan.definitionOwner) | throwError "contract.catalog_equivalence:template.original_body"
+  let some newBody ← inEnvironment newEnv (dependencyBody newInfo newPlan.definitionOwner) | throwError "contract.catalog_equivalence:template.prototype_body"
   require (renameExpr mapping oldBody == newBody) "template.raw_body"
   let typeIdentity ← inEnvironment oldEnv <| fingerprint oldInfo.levelParams oldInfo.type
   let bodyIdentity ← inEnvironment oldEnv <| fingerprint oldInfo.levelParams oldBody
