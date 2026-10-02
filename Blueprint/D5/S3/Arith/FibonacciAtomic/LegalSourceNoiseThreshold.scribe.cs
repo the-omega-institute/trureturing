@@ -59,7 +59,7 @@ internal sealed class LegalSourceNoiseThresholdDocument : IScribeDocumentDefinit
                         + "canonical state. Below c(M), a single threshold strictly between nu and "
                         + "lambda^M-nu*s(M) separates all zero and one coordinates. This threshold "
                         + "lies between zero and one, so it also decodes the empty word.")),
-                    Paragraph(Text("At c=c(M) with M>=1, use the legal words 100^M and 000^M. The "
+                    Paragraph(Text("At c=c(M) with M>=1, use the legal words (100)^M and (000)^M. The "
                         + "first trajectory adds -c*zB at every step. The second adds -c*zA for "
                         + "its first M-1 steps, then (c,-c,-c). Their actual final rows are both "
                         + "c*zB, although their canonical targets are B and A and their End labels "
@@ -91,10 +91,10 @@ internal sealed class LegalSourceNoiseThresholdDocument : IScribeDocumentDefinit
             nu, Sp, Lt, Sp, C(depth), Close);
         var lines = new List<Formula> {
             Seq(Forall, Sp, LambdaLower, Sp, InMacro, Sp, Rational, Comma, Sp,
-                D(0), Sp, Lt, Sp, LambdaLower, Sp, Lt, Sp, D(1), Comma),
-            Seq(Forall, Sp, nu, Sp, InMacro, Sp, Real, Comma, Sp, nu, Sp, Ge, Sp, D(0), Comma, Sp,
+                D(0), Sp, Lt, Sp, LambdaLower, Sp, Lt, Sp, D(1), Sp, Rightarrow),
+            Seq(Forall, Sp, nu, Sp, InMacro, Sp, Real, Comma, Sp, nu, Sp, Ge, Sp, D(0), Sp, Rightarrow, Sp,
                 Forall, Sp, m, Sp, InMacro, Sp, Nat, Comma, Sp, Forall, Sp, b, Sp, InMacro, Sp,
-                Call("Bool"), Comma)
+                Seq(Operatorname, Grp(V("Bool"))), Comma)
         };
         foreach (var name in Contracts)
             lines.Add(Seq(R(name, m), Sp, Leftrightarrow, Sp, Condition(m)));
@@ -104,7 +104,7 @@ internal sealed class LegalSourceNoiseThresholdDocument : IScribeDocumentDefinit
                 nu, Sp, Lt, Sp, Fr(LambdaLower, D(2)), Close));
         lines.Add(Seq(m, Sp, Ge, Sp, D(2), Sp, Rightarrow, Sp,
             Fr(Pow(LambdaLower, m), Mul(D(2), S(m))), Sp, Lt, Sp, C(m)));
-        lines.Add(EqOf(Seq(new Formula.Subscript(Lim, Seq(k, Sp, Rightarrow, Sp, Infty)),
+        lines.Add(EqOf(Seq(new Formula.Subscript(Lim, Seq(k, Sp, To, Sp, Infty)),
             Sp, C(k)), D(0)));
         return Disp(new Formula.Aligned([.. lines]));
     }
