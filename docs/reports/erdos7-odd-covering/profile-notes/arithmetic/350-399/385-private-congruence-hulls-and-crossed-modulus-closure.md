@@ -25091,3 +25091,43 @@ The remaining unrestricted obligation is therefore precise: combine (PG1),
 layer, a compatible repeated phase, or a complete-liability exchange. No such
 forcing theorem is supplied here, and the unrestricted Erdős #7 question
 remains open.
+
+## 214. Every lower odd prime is already in the period in the occupied-top branch
+
+The vacancy theorem also rules out a missing lower prime from the period. Keep
+the occupied-top-$p$ notation of Section 200, and let $q<p$ be any odd prime.
+Then
+
+\[
+\boxed{q\mid Q.}
+\tag{214.1}
+\]
+
+Indeed, suppose $q\nmid Q$. Then $q\nmid L$, so the candidate set in (LP1)
+has $b_q=0$ and $J=L$. Every label in it is therefore of the form
+
+\[
+ qd,\qquad d\mid p^{e-1}L.
+\]
+
+Such a label cannot belong to $D$: every member of $D$ divides $Q$, whereas
+$q$ does not divide $Q$. Hence the whole candidate layer is vacant, and
+
+\[
+ |\mathcal V_q|=\tau(p^{e-1}L)=e\,\tau(L).
+\]
+
+The $p$ top cofactors are distinct divisors of $L$, so
+$\tau(L)\ge p$. Consequently
+
+\[
+ |\mathcal V_q|\ge p>q-1,
+\]
+
+contradicting the EB1 vacancy bound (LP5). This proves (214.1).
+
+This is a branch-local inventory restriction. It does not replace the global
+initial-support results, and it does not force a phase-compatible exchange or
+settle unrestricted Erdős #7. Its use is that any later occupied-top repair
+may assume every smaller odd prime is already present in the common period,
+without reopening the partially occupied-layer case.
