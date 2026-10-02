@@ -34,8 +34,11 @@ internal static class ScribeResourceCommands
                     return 1;
                 }
                 var manifest = result.Manifest!;
-                output.WriteLine(FormattableString.Invariant(
-                    $"resources pack: entries={manifest.EntryCount} executed={result.ExecutedPaths.Length} reused={result.ReusedPaths.Length} uncompressedBytes={manifest.TotalUncompressedBytes} totalSha256={manifest.TotalSha256}"));
+                var summary = FormattableString.Invariant(
+                    $"resources pack: entries={manifest.EntryCount} executed={result.ExecutedPaths.Length} reused={result.ReusedPaths.Length} uncompressedBytes={manifest.TotalUncompressedBytes} totalSha256={manifest.TotalSha256}");
+                output.WriteLine(summary + (result.ReuseSkippedReason is null
+                    ? ""
+                    : " reuseSkipped=" + result.ReuseSkippedReason));
                 return 0;
             }
 

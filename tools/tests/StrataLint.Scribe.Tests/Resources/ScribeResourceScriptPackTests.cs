@@ -26,17 +26,27 @@ public sealed class ScribeResourceScriptPackTests
     [InlineData("malformed")]
     [InlineData("version")]
     [InlineData("entry-digest")]
+    [InlineData("missing-environment")]
+    [InlineData("malformed-environment")]
     public void InvalidReusePackReturnsTwoWithoutOutput(string kind)
     {
         using var root = Prepare();
         Definition(root.Path, "Alpha");
         var old = root.Resolve("input.zip");
         if (kind == "malformed") TemporaryFileSystem.File.WriteAllBytes(old, [0xff]);
-        if (kind is "version" or "entry-digest")
+        if (kind is "version" or "entry-digest" or "missing-environment" or "malformed-environment")
         {
             ScribeResourcePackTests.WritePack(old, [ScribeResourcePackTests.Definition("Alpha")]);
             var entries = ScribeResourcePackTests.ReadZip(old);
             if (kind == "entry-digest") entries[0].Bytes[0] ^= 1;
+            else if (kind is "missing-environment" or "malformed-environment")
+            {
+                var index = entries.FindIndex(item => item.Name == "manifest.json");
+                var manifest = JsonNode.Parse(entries[index].Bytes)!;
+                if (kind == "missing-environment") manifest.AsObject().Remove("executionEnvironment");
+                else manifest["executionEnvironment"] = "icu";
+                entries[index] = ("manifest.json", Encoding.UTF8.GetBytes(manifest.ToJsonString()));
+            }
             else
             {
                 var index = entries.FindIndex(item => item.Name == "manifest.json");
@@ -124,6 +134,45 @@ public sealed class ScribeResourceScriptPackTests
         foreach (var name in new[] { "Alpha", "Beta" })
             Assert.Equal(ScribeResourcePack.Open(root.Resolve("first.zip")).EncodedBytes(GidFor(name)).ToArray(),
                 ScribeResourcePack.Open(root.Resolve("second.zip")).EncodedBytes(GidFor(name)).ToArray());
+    }
+
+    [Theory]
+    [InlineData("dotnetRuntimeVersion")]
+    [InlineData("globalizationBackend")]
+    public void EnvironmentMismatchExecutesEveryPathAndNamesTheChangedField(string field)
+    {
+        using var root = Prepare();
+        Definition(root.Path, "Alpha");
+        Definition(root.Path, "Beta");
+        var baseline = new ScribeResourcePackExecutionEnvironment("runtime-a", "icu");
+        var changed = field == "dotnetRuntimeVersion"
+            ? baseline with { DotnetRuntimeVersion = "runtime-b" }
+            : baseline with { GlobalizationBackend = "invariant" };
+        Pack(root.Path, "first.zip", environment: baseline);
+        var result = Pack(root.Path, "second.zip", "first.zip", environment: changed);
+        AssertPaths(result.Executed, "Alpha", "Beta");
+        Assert.Empty(result.Reused);
+        Assert.Contains(field, result.ReuseSkippedReason!, StringComparison.Ordinal);
+        Assert.Equal(Pack(root.Path, "full.zip", environment: changed).Manifest.TotalSha256,
+            result.Manifest.TotalSha256);
+    }
+
+    [Fact]
+    public void EnvironmentFieldsRoundTripInStableOrder()
+    {
+        using var root = Prepare();
+        Definition(root.Path, "Alpha");
+        var environment = new ScribeResourcePackExecutionEnvironment("runtime-a", "icu");
+        var written = Pack(root.Path, "first.zip", environment: environment).Manifest;
+        var reopened = ScribeResourcePack.Open(root.Resolve("first.zip")).Manifest;
+        Assert.Equal(environment, written.ExecutionEnvironment);
+        Assert.Equal(environment, reopened.ExecutionEnvironment);
+        var manifest = JsonNode.Parse(ScribeResourcePackTests.ReadZip(root.Resolve("first.zip")
+            ).Single(item => item.Name == "manifest.json").Bytes)!.AsObject();
+        Assert.Equal(["schema", "version", "entryCount", "executionEnvironment", "entries", "totalSha256"],
+            manifest.Select(property => property.Key));
+        Assert.Equal(["dotnetRuntimeVersion", "globalizationBackend"],
+            manifest["executionEnvironment"]!.AsObject().Select(property => property.Key));
     }
 
     [Fact]
@@ -333,18 +382,23 @@ public sealed class ScribeResourceScriptPackTests
             item => item!["inputKey"]!.GetValue<string>(), StringComparer.Ordinal);
     }
 
-    private static PackObservation Pack(string root, string output, string? reuse = null, int? version = null)
+    private static PackObservation Pack(string root, string output, string? reuse = null, int? version = null,
+        ScribeResourcePackExecutionEnvironment? environment = null)
     {
         var path = System.IO.Path.Combine(root, output);
         var prior = reuse is null ? null : System.IO.Path.Combine(root, reuse);
-        var result = version is null ? ScribeResourceScriptPacker.Write(root, path, prior)
-            : ScribeResourceScriptPacker.WriteCore(root, path, prior, version.Value);
+        var result = environment is null && version is null
+            ? ScribeResourceScriptPacker.Write(root, path, prior)
+            : ScribeResourceScriptPacker.WriteCore(root, path, prior,
+                version ?? ScribeScriptSemantics.ResourceSemanticVersion,
+                environment ?? ScribeResourcePackExecutionEnvironment.Current);
         Assert.Empty(result.Failures);
         Assert.NotNull(result.Manifest);
-        return new(result.Manifest, result.ExecutedPaths, result.ReusedPaths);
+        return new(result.Manifest, result.ExecutedPaths, result.ReusedPaths, result.ReuseSkippedReason);
     }
 
-    private sealed record PackObservation(ScribeResourcePackManifest Manifest, ImmutableArray<string> Executed, ImmutableArray<string> Reused);
+    private sealed record PackObservation(ScribeResourcePackManifest Manifest, ImmutableArray<string> Executed,
+        ImmutableArray<string> Reused, string? ReuseSkippedReason = null);
 
     private static TemporaryRoot Prepare()
     {

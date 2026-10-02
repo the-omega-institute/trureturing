@@ -27,7 +27,8 @@ public sealed class ScribeScriptGlobalizationTests(ITestOutputHelper output)
         output.WriteLine("reuse: " + reused.Output.Trim());
         Assert.Contains("executed=1 reused=0", icu.Output, StringComparison.Ordinal);
         Assert.Contains("executed=1 reused=0", invariant.Output, StringComparison.Ordinal);
-        Assert.Contains("executed=0 reused=1", reused.Output, StringComparison.Ordinal);
+        Assert.Contains("executed=1 reused=0", reused.Output, StringComparison.Ordinal);
+        Assert.Contains("reuseSkipped=globalizationBackend", reused.Output, StringComparison.Ordinal);
         var expected = ScribeResourcePack.Open(root.Resolve("icu.zip")).Manifest.TotalSha256;
         Assert.Equal(expected, ScribeResourcePack.Open(root.Resolve("invariant.zip")).Manifest.TotalSha256);
         Assert.Equal(expected, ScribeResourcePack.Open(root.Resolve("reused.zip")).Manifest.TotalSha256);

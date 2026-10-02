@@ -12,6 +12,11 @@ internal static class ScribeResourcePackManifestCodec
             ["schema"] = manifest.Schema,
             ["version"] = manifest.Version,
             ["entryCount"] = manifest.EntryCount,
+            ["executionEnvironment"] = new JsonObject
+            {
+                ["dotnetRuntimeVersion"] = manifest.ExecutionEnvironment.DotnetRuntimeVersion,
+                ["globalizationBackend"] = manifest.ExecutionEnvironment.GlobalizationBackend,
+            },
             ["entries"] = EntriesNode(manifest.Entries),
             ["totalSha256"] = manifest.TotalSha256,
         });
@@ -40,13 +45,18 @@ internal static class ScribeResourcePackManifestCodec
         {
             using var json = JsonDocument.Parse(bytes);
             var root = json.RootElement;
-            RequireFields(root, "schema", "version", "entryCount", "entries", "totalSha256");
+            RequireFields(root, "schema", "version", "entryCount", "executionEnvironment", "entries", "totalSha256");
             var schema = String(root, "schema");
             if (schema != ScribeResourcePack.SchemaName)
                 throw Error(ScribeResourcePackErrorCode.SchemaMismatch, "Unsupported resource pack schema.");
             var version = root.GetProperty("version").GetInt32();
             if (version != ScribeResourcePack.SemanticVersion)
                 throw Error(ScribeResourcePackErrorCode.VersionMismatch, "Unsupported resource pack semantic version.");
+            var environmentValue = root.GetProperty("executionEnvironment");
+            RequireFields(environmentValue, "dotnetRuntimeVersion", "globalizationBackend");
+            var environment = new ScribeResourcePackExecutionEnvironment(
+                String(environmentValue, "dotnetRuntimeVersion"),
+                String(environmentValue, "globalizationBackend"));
             var entries = root.GetProperty("entries").EnumerateArray().Select(item =>
             {
                 RequireFields(item, "path", "gid", "sha256", "inputKey", "readSet");
@@ -75,7 +85,10 @@ internal static class ScribeResourcePackManifestCodec
             var total = String(root, "totalSha256");
             if (!IsDigest(total) || total != ScribeResourcePack.Digest(EncodeEntries(entries)))
                 throw Error(ScribeResourcePackErrorCode.TotalDigestMismatch, "Ordered entry list digest differs.");
-            return new ScribeResourcePackManifest(schema, version, count, entries, total);
+            return new ScribeResourcePackManifest(schema, version, count, entries, total)
+            {
+                ExecutionEnvironment = environment,
+            };
         }
         catch (ScribeResourcePackException) { throw; }
         catch (Exception exception) when (exception is JsonException or InvalidOperationException or FormatException or ArgumentException)

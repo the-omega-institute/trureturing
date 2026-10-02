@@ -27,6 +27,9 @@ public sealed record ScribeResourcePackEntry(string Path, string Gid, string Sha
 public sealed record ScribeResourcePackManifest(
     string Schema, int Version, int EntryCount, ImmutableArray<ScribeResourcePackEntry> Entries, string TotalSha256)
 {
+    public ScribeResourcePackExecutionEnvironment ExecutionEnvironment { get; init; } =
+        ScribeResourcePackExecutionEnvironment.Current;
+
     public long TotalUncompressedBytes { get; internal init; }
 }
 
@@ -59,7 +62,8 @@ public sealed class ScribeResourcePack
     }
 
     internal static ScribeResourcePackManifest WriteEncoded(string path,
-        IEnumerable<(string Gid, string InputKey, byte[] Bytes, ImmutableArray<ScribeProjectionRead> ReadSet)> resources)
+        IEnumerable<(string Gid, string InputKey, byte[] Bytes, ImmutableArray<ScribeProjectionRead> ReadSet)> resources,
+        ScribeResourcePackExecutionEnvironment? executionEnvironment = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
         var ordered = resources.Select(item => (Path: ResourcePath(item.Gid), item.Gid, item.InputKey, item.Bytes, ReadSet: item.ReadSet.OrderBy(read => read.Declaration, StringComparer.Ordinal).ToImmutableArray()))
@@ -84,7 +88,11 @@ public sealed class ScribeResourcePack
         }
         var list = entries.ToImmutable();
         var manifest = new ScribeResourcePackManifest(SchemaName, SemanticVersion, list.Length, list,
-            Digest(ScribeResourcePackManifestCodec.EncodeEntries(list))) { TotalUncompressedBytes = totalBytes };
+            Digest(ScribeResourcePackManifestCodec.EncodeEntries(list)))
+        {
+            ExecutionEnvironment = executionEnvironment ?? ScribeResourcePackExecutionEnvironment.Current,
+            TotalUncompressedBytes = totalBytes,
+        };
         WriteEntry(zip, "manifest.json", ScribeResourcePackManifestCodec.Encode(manifest));
         return manifest;
     }

@@ -6,16 +6,25 @@ public sealed record ScribeResourceScriptPackResult(
     ScribeResourcePackManifest? Manifest,
     ImmutableArray<string> ExecutedPaths,
     ImmutableArray<string> ReusedPaths,
-    ImmutableArray<ScribeScriptFailure> Failures);
+    ImmutableArray<ScribeScriptFailure> Failures)
+{
+    public string? ReuseSkippedReason { get; init; }
+}
 
 /// <summary>Produces resource packs from scripts, with reuse only from an explicitly supplied pack.</summary>
 public static class ScribeResourceScriptPacker
 {
     public static ScribeResourceScriptPackResult Write(string repositoryRoot, string outputPath, string? reuseFrom = null) =>
-        WriteCore(repositoryRoot, outputPath, reuseFrom, ScribeScriptSemantics.ResourceSemanticVersion);
+        WriteCore(repositoryRoot, outputPath, reuseFrom, ScribeScriptSemantics.ResourceSemanticVersion,
+            ScribeResourcePackExecutionEnvironment.Current);
 
     internal static ScribeResourceScriptPackResult WriteCore(string repositoryRoot, string outputPath,
         string? reuseFrom, int semanticVersion)
+        => WriteCore(repositoryRoot, outputPath, reuseFrom, semanticVersion,
+            ScribeResourcePackExecutionEnvironment.Current);
+
+    internal static ScribeResourceScriptPackResult WriteCore(string repositoryRoot, string outputPath,
+        string? reuseFrom, int semanticVersion, ScribeResourcePackExecutionEnvironment executionEnvironment)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentException.ThrowIfNullOrWhiteSpace(outputPath);
@@ -23,8 +32,12 @@ public static class ScribeResourceScriptPacker
         var reuse = reuseFrom is null ? null : ScribeResourcePack.Open(reuseFrom);
         // Validate resource shapes even for entries that the current tree no longer selects.
         if (reuse is not null) foreach (var definition in reuse.ReadAll()) _ = definition;
-        var priorEntries = reuse?.Manifest.Entries.ToDictionary(
-            entry => "Blueprint/" + entry.Gid + ".scribe.cs", StringComparer.Ordinal);
+        var environmentDifferences = reuse?.Manifest.ExecutionEnvironment.Differences(executionEnvironment)
+            .ToImmutableArray() ?? [];
+        var priorEntries = environmentDifferences.IsEmpty
+            ? reuse?.Manifest.Entries.ToDictionary(
+                entry => "Blueprint/" + entry.Gid + ".scribe.cs", StringComparer.Ordinal)
+            : null;
         var paths = Directory.EnumerateFiles(Path.Combine(root, "Blueprint"), "*.scribe.cs", SearchOption.AllDirectories)
             .Select(path => Path.GetRelativePath(root, path).Replace('\\', '/'))
             .Order(StringComparer.Ordinal).ToImmutableArray();
@@ -69,8 +82,15 @@ public static class ScribeResourceScriptPacker
                     ScribeResourceCodec.Encode(result.Definition), result.ReadSet));
             }
             var errors = failures.OrderBy(failure => failure.RelativePath, StringComparer.Ordinal).ToImmutableArray();
-            var manifest = errors.IsEmpty ? ScribeResourcePack.WriteEncoded(outputPath, resources) : null;
-            return new ScribeResourceScriptPackResult(manifest, execute.ToImmutable(), reused.ToImmutable(), errors);
+            var manifest = errors.IsEmpty
+                ? ScribeResourcePack.WriteEncoded(outputPath, resources, executionEnvironment)
+                : null;
+            return new ScribeResourceScriptPackResult(manifest, execute.ToImmutable(), reused.ToImmutable(), errors)
+            {
+                ReuseSkippedReason = environmentDifferences.IsEmpty
+                    ? null
+                    : string.Join(",", environmentDifferences),
+            };
         });
     }
 
