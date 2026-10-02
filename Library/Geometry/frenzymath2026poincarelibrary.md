@@ -2411,3 +2411,70 @@ deck isomorphism remain unconstructed. Full finite-volume
 Mostow-Prasad, including cusps and nonorientable manifolds, remains
 active and incomplete. The linked escape audit is unfinished and
 registration remains paused. Only this research note is tracked.
+
+
+### The actual finite quotient measure and its L2 domain action
+
+On the SAME original-H3 compact-open isometry group G, let Gamma be a
+closed subgroup. Every finite measure on the coset space G/Gamma with
+its ORIGINAL quotient measurable structure is regular. The existing
+locally compact, Hausdorff and second-countable quotient topology gives
+sigma compactness and a compatible metrizable topology; the existing
+Polish group structure identifies the quotient measurable structure
+with its Borel structure. The finite-measure regularity theorem then
+supplies compact inner regularity and local finiteness. The original
+H3 metric and isometry-group topology are preserved. No normality of
+Gamma is required, and no new quotient measurable structure replaces
+the one used by the existing quotient-measure constructor.
+
+For a finite G-invariant measure nu on this actual coset domain, a
+normed additive target and 1 <= q < infinity, the existing jointly
+continuous isometric domain-pullback action therefore applies to
+Lp(nu). Regularity and continuous action are derived from this actual
+quotient, rather than supplied as separate hypotheses. If every
+positive actual dilation pullback fixes f, every actual horizontal
+translation pullback fixes f. The reverse multiplication of DomMulAct
+and the inverse-dilation contraction proved in the preceding appendix
+remain the mechanism. Invariance under ALL positive dilations is a
+material premise, not a conclusion obtained from finite volume.
+
+The geometric specialization selects the SAME nu already produced by
+the actual finite-target quotient-measure construction. Its data are
+Riemannian metrics on original H3 and a base M, compatibility of the H3
+metric with its original distance, a quotient covering by the FULL deck
+group, a local diffeomorphism preserving the tangent inner products,
+and an injective actual-H3 isometric deck representation whose point
+evaluation agrees with the original deck action. Base intrinsic volume
+is finite. The existing construction supplies nu on G/rho.range,
+G-invariance, finite nonzero mass and total mass equal to that intrinsic
+base volume. The closedness of the ACTUAL deck image is derived from
+the same covering and representation data. With its original measurable
+carrier, this same nu now supports the exact real L2 application:
+for every f in L2(nu), if all positive dilation pullbacks fix f, all
+horizontal-translation pullbacks fix f. Neither nu, its regularity nor
+a continuous quotient action is supplied to this geometric statement.
+The stated geometric hypotheses remain explicit; this is not a theorem
+from finite base volume alone.
+
+One accepted serial scoped cache-guarded transient Lean check exited
+zero, with three axiom closures using only propext, Classical.choice
+and Quot.sound. Four haveILetI style warnings are retained without
+suppression. Failed checks are excluded from the accepted readings.
+All new Lean remains under ignored .lake; these are classical reuse and
+construction with default resources and the original metric/topology,
+not a novelty or tracked-Lean claim.
+
+This supplies the actual quotient regularity/action integration left
+open in the preceding appendix. It proves a consequence of all-positive-
+dilation fixing; it does not establish the required invariant-function
+constancy or flow ergodicity. Actual H3 subgroup generation, opposite
+unipotent invariance, boundary-map construction and geometric
+preservation for the SAME arbitrary-h induced deck isomorphism remain
+separate obligations. Orientation components and covers still need
+explicit treatment: the full disconnected isometry-group quotient has
+two components for an orientation-preserving lattice. Cusps and the
+nonorientable endpoint remain in the full target. Arbitrary-h ambient
+conjugator and isometric representative existence are still unproved,
+and full finite-volume Mostow-Prasad remains active and incomplete.
+The linked escape audit is unfinished and registration remains paused.
+Only this research note is intended tracked delivery.
