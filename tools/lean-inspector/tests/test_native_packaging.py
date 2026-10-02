@@ -500,7 +500,7 @@ class NativePackageConsumerTests(NativeReleaseSupport):
         self.assertEqual('4242', manifest['workflow_run_id'])
         self.assertEqual('1', manifest['workflow_run_attempt'])
         shutil.rmtree(self.root / '.lake/build')
-        self.env['STRATALINT_ACTIONS_CACHE_SEEDED'] = 'true'
+        self.env['STRATALINT_ACTIONS_CACHE_SEEDED'] = '0'
         restored = self.release_run('fetch', refresh_stale=True)
         self.assertIn('"resolved":"' + tag + '"', restored.stdout)
         self.assertEqual(expected, {suffix: publication.member(output, suffix).read_bytes()
