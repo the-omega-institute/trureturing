@@ -565,3 +565,72 @@ $\eta b>1$; equality requires further constant or lower-order
 information. The supplied rate does not cross that scale in the
 stated $\beta_0<b<1/4$ regime. All same-source and unresolved-branch
 limitations above remain in force.
+
+## The progression count crosses the deep-layer capacity
+
+A published quantitative count now gives a stronger numerical conductor
+restriction than (T7). Reuse [Maynard, published Theorem 3.2](maynard2013bruntitchmarsh.md)
+through (M2), without reconstructing its proof or the preceding canonical
+and CA layer interfaces. This is a paper-level same-source application,
+with no new analytic theorem, originality claim or Lean verification.
+
+Take an actual CA maximizer $n$, including intermediate tied maximizers,
+whose own canonical unit bit is $h=1$ and whose own signed $D$ is
+nonsquare. Let $q$ be its primitive quadratic conductor and $P=P^+(n)$.
+Every prime up to $P$ belongs to its initial support. By (T3), every
+negative-character prime there, except possibly two and five, has even
+positive exponent and therefore is at most $\xi_2$. The existing
+$\xi_2\le\sqrt{2\xi}$ and $P\sim\xi$ give a fixed constant $C_A>0$
+such that, eventually at every such source,
+
+$$
+\pi_-(P;\chi)\le\pi(\xi_2)+2
+\le C_A\frac{\sqrt P}{\log P}.
+\tag{T8}
+$$
+
+This is an upper bound for the same actual negative-prime population;
+ramified primes remain zeros. It does not assume every prime below
+$\xi_2$ has even exponent.
+
+Suppose instead that $q\le P^{1/8}$ and $q\ge q_0$, where $q_0,c_0$
+are Maynard's effective constants. Then $P\ge q^8$ and (M2) supplies
+
+$$
+\pi_-(P;\chi)\ge\frac{c_0}{2}
+\frac{P\log q}{\sqrt q\log P}
+\ge\frac{c_0\log q_0}{2}
+\frac{P^{15/16}}{\log P}.
+\tag{T9}
+$$
+
+The ratio of (T9)'s lower bound to (T8)'s upper bound tends to infinity
+at least as a positive constant times $P^{7/16}$, uniformly throughout
+this conductor range. For the finitely many $q<q_0$, reuse (T2) from the
+[earlier effective terminal-interval supplier](thornerzaman2019chebotarev.md)
+with $P\ge\max\{x_0,q_0^C\}$; its negative primes in $(P/2,P]$
+contradict (T4). Thus
+
+$$
+\boxed{q>P^{1/8}}
+\tag{T10}
+$$
+
+for every sufficiently large actual CA source in this canonical $h=1$,
+nonsquare-$D$ branch. The exact endpoint is allowed here because
+Maynard's supplied range is $P\ge q^8$. No numerical CA onset or
+infinitude of this branch is asserted.
+
+For fixed $\beta_0<b<1/4$, any sufficiently large actual source in
+this branch that also satisfies the sufficient cutoff
+$m_1^b\le Y=\log n$ must have its faithful mask in the range
+
+$$
+P^{1/8}<q\le m_1\le Y^{1/b},\qquad Y=\log n\sim P.
+$$
+
+This is still compatible with the existing $\beta_0<b<1/4$ cutoff;
+for example $b=1/5$ permits an upper scale $Y^5$. The count comparison
+excludes a larger conductor range than (T7), but supplies neither a
+reciprocal-prime deficit nor the required signed Robin margin. Unit-bit
+zero, square $D$ and the larger remaining conductors stay unresolved.
