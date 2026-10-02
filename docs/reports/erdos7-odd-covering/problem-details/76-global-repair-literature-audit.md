@@ -1,0 +1,224 @@
+# Global repair literature audit and the exact remaining interface
+
+The unrestricted target is the negative assertion in the problem file: every
+finite family of distinct odd moduli greater than one, with arbitrary fixed
+residue classes, leaves an uncovered integer.  The audit below reuses the
+checked published results and separates their actual conclusions from the
+stronger exchange statement still needed by the project.  It does not claim a
+resolution of the conjecture.
+
+## 1. The missing conclusion is a phase-preserving strict repair
+
+Write a hypothetical whole cover as
+
+\[
+\mathcal C=\{A_d=a_d+d\mathbb Z:d\in D\},
+\qquad K=|D|,
+\qquad S=\sum_{d\in D}d.
+\]
+
+For a proposed deletion set \(T\subseteq D\), let \(L\) be a common period
+of the old classes and all proposed replacement classes, and put
+
+\[
+U_T=(\mathbb Z/L\mathbb Z)\setminus
+       \bigcup_{d\in D\setminus T}A_d.
+\]
+
+The required global step is the existence of a family \(\mathcal R\) such
+that
+
+\[
+U_T\subseteq\bigcup_{B\in\mathcal R}B,
+\tag{G1}
+\]
+
+while retained phases are unchanged, all numerical moduli remain distinct
+odd nonunits, no new label collides with a retained label, and the original
+source and phase-inheritance conditions are preserved.  The strict EB1
+improvement is
+
+\[
+\bigl(|\mathcal R|,\sum_{B\in\mathcal R}\operatorname{mod}(B)\bigr)
+ <_{\mathrm{lex}}
+\bigl(|T|,\sum_{d\in T}d\bigr).
+\tag{G2}
+\]
+
+Numerical necessary conditions, a covering assignment on a related divisor
+palette, and (G1)--(G2) are different conclusions.  The checked sources below
+provide the first two in useful forms, but no universal construction of the
+third.
+
+## 2. Simpson is directly reusable and gives a prime-tail constraint
+
+Simpson, *Regular coverings of the integers by arithmetic progressions*, Acta
+Arithmetica 45 (1985), Theorem 2, states that an irredundant cover with least
+common multiple \(N\) satisfies, for every proper divisor \(E\mid N\),
+
+\[
+\#\{A_d:d\nmid E\}\ge 1+f(N/E),
+\qquad
+f(n)=\sum_{p^\alpha\parallel n}\alpha(p-1).
+\tag{S}
+\]
+
+An EB1 representative is irredundant: a redundant class could be deleted and
+would improve the first lexicographic objective.  Hence (S) applies to its
+actual phases and labels without any normalization.  Taking
+\(E=N/p\) when \(p^\alpha\parallel N\) gives
+
+\[
+\#\{d\in D:v_p(d)=\alpha\}\ge p.
+\]
+
+Distinct numerical labels give the opposite bound
+\(\#\{d:v_p(d)=\alpha\}\le\tau(N/p^\alpha)\).  Therefore every such
+prime power obeys
+
+\[
+\boxed{p\le\tau(N/p^\alpha).}
+\tag{S'}
+\]
+
+This is a genuine reusable necessary condition and avoids importing the
+different hypothesis that an EB1 least common multiple is a *primitive*
+covering number.  Simpson's cut still does not specify a receiving family for
+\(U_T\), so it does not imply (G1) or (G2).
+
+## 3. McNew--Setty: safe interfaces and a false unrestricted import
+
+McNew and Setty, *On the densities of covering numbers and abundant numbers*,
+[arXiv:2507.23041v2](https://arxiv.org/abs/2507.23041), define
+\(c(n)=1+r(n)/n\) and \(h(n)=\sigma(n)/n\), where \(r(n)\) is the maximum
+number of residues covered by distinct divisor moduli of \(n\).  Their
+Theorem 4.3 gives, for \((u,v)=1\),
+
+\[
+c(uv)\le c(u)h(v).
+\tag{M1}
+\]
+
+For a whole cover with lcm \(N=uv\), (M1) can exclude a specified divisor
+palette whenever an independently certified upper bound makes
+\(\overline c(u)h(v)<2\).  It does not show that every hypothetical EB1 lcm
+has such a factorization.
+
+Their Lemma 4.9 is a real coverage-preserving normalization: under its
+almost-covering hypotheses it replaces the \(\ell\)-divisor part while
+retaining the previously covered union.  The replacement can change phases,
+use different divisor labels, and has no class-count or modulus-sum decrease,
+so it is not an EB1 repair.  For odd \(n\), the paper's prescribed
+almost-covering factor is \(\ell=1\), which supplies no nontrivial odd
+normalization.
+
+The displayed unrestricted Theorem 4.11 cannot be imported as stated.  Its
+bound is
+
+\[
+c(n)\le 1+\frac{\ell-1}{\ell}
+ +\frac1\ell\sum_{\substack{d\mid b\\d>1}}
+ \frac{B(\tau(\ell),\omega(d))}{d},
+\qquad n=\ell b,\quad(\ell,b)=1,
+\tag{M2}
+\]
+
+with \(B(r,j)=-\sum_{k=1}^j(-r)^kS_2(j,k)\).  The concrete choice
+\(\ell=64\), \(b=15\), \(n=960\) violates the displayed conclusion:
+
+\[
+r(64)=63,\qquad \tau(64)=7,
+\qquad B(7,1)=7,\qquad B(7,2)=-42,
+\]
+
+so the sum in (M2) is \(14/15\), and (M2) would give
+
+\[
+c(960)\le 1+\frac{63}{64}+\frac1{64}\frac{14}{15}
+ =2-\frac1{960}<2.
+\]
+
+But the five distinct classes
+
+\[
+0\pmod 2,\quad 0\pmod3,\quad 1\pmod4,\quad
+5\pmod6,\quad 7\pmod{12}
+\]
+
+cover all twelve residues modulo 12, and all five moduli divide 960.  Thus
+\(r(960)=960\) and \(c(960)=2\).  Direct enumeration of the twelve residues
+and exact rational arithmetic verify both sides.  The paper later installs a
+guard in its computational definition that avoids this example; the guarded
+claims and the odd \(\ell=1\) specialization are not refuted here.  The
+unrestricted statement itself is unavailable as a proof input.
+
+## 4. Other reusable results and their exact boundary
+
+The following sources were checked against (G1)--(G2).
+
+* Balister--Bollobás--Morris--Sahasrabudhe--Tiba,
+  [arXiv:1904.04806](https://arxiv.org/abs/1904.04806), Theorem 2.3, gives a
+  generalized frame in a minimal coordinate-hyperplane cover under a linear
+  size hypothesis.  CRT and prime-adic coordinates preserve the actual phases,
+  but a generalized frame is not a common-phase replacement family and gives
+  no strict EB1 descent.
+* Klein--Koukoulopoulos--Lemieux,
+  [arXiv:2212.01299](https://arxiv.org/abs/2212.01299), bound the \(j\)-th
+  smallest modulus of a minimal distinct cover.  Their translate construction
+  changes phases and permits repeated numerical labels, so it cannot be used
+  as (G1)--(G2).
+* BBMST, *On the Erdős Covering Problem: the density of the uncovered set*,
+  Inventiones Mathematicae 228 (2022), Theorem 3.1, gives the phase-sensitive
+  sufficient condition
+  \[
+  \sum_i\min\left\{M_i^{(1)},
+    \frac{M_i^{(2)}}{4\delta_i(1-\delta_i)}\right\}<1
+  \Longrightarrow \text{positive uncovered density},
+  \tag{D}
+  \]
+  in its stated range.  It retains the actual congruence system, but no
+  checked result derives the strict joint-moment inequality from EB1.
+* Lettl--Sun, *On covers of abelian groups by cosets*,
+  [arXiv:math/0411144](https://arxiv.org/abs/math/0411144), gives index and
+  cardinality bounds for essential cosets.  EB1 essentiality does not imply
+  exact-two-owner points or reciprocal private hulls.
+* The full-divisor-palette results of Adenwalla,
+  [arXiv:2501.15170](https://arxiv.org/abs/2501.15170), and Jia--Li--Liu,
+  [arXiv:2504.09579](https://arxiv.org/abs/2504.09579), concern prescribed
+  overlap assignments on the complete divisor palette.  An EB1 label set need
+  not be that palette, and these results do not preserve an incoming phased
+  assignment under a repair.
+
+Recent odd-cover constructions allowing repeated labels, including Bispels et
+al., [arXiv:2507.16135](https://arxiv.org/abs/2507.16135), likewise do not meet
+the distinct-label condition.  A 2026 Zenodo deposit by Giovanni Esposito
+advertises a “Distinctness Allocation Lemma”, but its available description
+does not expose the phase-preserving and complete-liability quantifiers in
+(G1)--(G2); it is therefore not counted as a verified resolution.
+
+## 5. Exact next interface
+
+The valid composition currently available is
+
+\[
+\text{EB1 whole cover}
+\Longrightarrow (S),\ (S'),\ \text{and the checked finite/project bounds}
+\]
+
+plus conditional density or frame criteria. The missing theorem is still one
+of the following:
+
+1. derive a strict inequality in (D) for every EB1 candidate while retaining
+   the same phases and all original labels; or
+2. construct (G1)--(G2), including occupied-label and phase-inheritance
+   constraints, from the existing private-hull or digit-contraction data.
+
+At a fixed finite palette, the second route is an exact integer-feasibility
+problem: lock retained classes, enforce one class per numerical modulus, keep
+the original phases, cover every point of \(U_T\), and impose (G2).  A feasible
+finite instance is useful evidence, but universal feasibility is the open
+bridge.  The current project floors, including the 34547 modulus-sum floor and
+the least-LCM digit-contraction obstruction, remain necessary conditions only.
+
+No checked source in this audit proves unrestricted Erdős #7 or supplies its
+required global repair.
