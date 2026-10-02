@@ -13608,3 +13608,603 @@ conditional arithmetic restriction, not an all-cover contradiction or
 a claim that a locally permissible phase configuration is realizable.
 
 No numerical enumeration or new Lean verification is asserted.
+
+## 104. First-digit compression strictly raises the forced mixed heights
+
+Keep one EB1 minimum original whole cover in the all-concentrated branch
+R=empty. For opposite-color primes p<q, let
+
+    t_p=max{c:3^c p belongs to D},
+    t_q=max{c:3^c q belongs to D}, t=min(t_p,t_q).
+
+These are actual original heights, with no restriction on any other
+prime-power exponent. Direct application of section56's first-digit
+compression gives the stronger necessary condition
+
+    min(t_p,t_q)>=q-p+1.                            (SG1)
+
+The full-tree bound in section97 allowed equality with q-p. The existing
+first-digit interface avoids that equality by retaining all higher
+q-digits and using the retained original A_p on the zero output root.
+
+### Actual collision roots are the only obstruction
+
+Apply section56 with its larger prime renamed q and its smaller prime
+renamed p. CP1 excludes every ORIGINAL pq-bearing label, so all mixed-root
+blacklists F_b of that interface are empty. Its possible numerical
+collisions come from original pairs
+
+    q*u, p*u, gcd(u,pq)=1.
+
+Every nonternary prime dividing u would have to belong to both disjoint
+colors. Thus u=3^c. Divisor closure makes the paired heights precisely
+c=0,...,t. Let T be the set of the actual first-q roots of the originals
+A_(3^c q) at those heights. Then
+
+    0 belongs to T, |T|<=t+1.                       (SG2)
+
+The first assertion uses the fixed common normalization A_q=0 modq.
+Different heights can contribute the same root; no independence or
+distinct-phase assumption is made.
+
+Only the p-1 nonzero first-p roots need transport: original A_p is kept
+whole. If q-|T|>=p-1, inject these roots into the complement of T. The
+blacklists are empty, so this is exactly a successful matching in the
+existing interface. It would produce a smaller distinct odd whole cover.
+EB1 therefore forces
+
+    |T|>=q-p+2.                                    (SG3)
+
+Combining SG2 and SG3 proves SG1. This uses the actual collision set,
+rather than the coarser h0 count in NF66's final alternative.
+
+### The common source retains every higher digit
+
+For completeness, the parameter correspondence with section56 is as
+follows. Write the original period p^A q^B M, A,B>=1, gcd(M,pq)=1.
+The output carrier has period p^A q^(B-1)M. For a point z with nonzero
+first-p root, the existing single witness is
+
+    y modp^A = z modp^A,
+    y modq^B = sigma(z modp)+q*(z modq^(B-1)),
+    y modM = z modM.
+
+When B=1, the q-tail has one value. All ternary and other prime-power
+coordinates remain unchanged. Retain every q-free original as its whole
+old AP; A_p covers the omitted zero root.
+
+An old q-bearing label is q^a u with a>=1 and gcd(u,pq)=1, because old
+pq-bearing labels are absent. Its restricted pullback is empty or one
+complete AP with numerical modulus p*q^(a-1)*u, as verified in IC1.
+The numerical map is injective among transported labels. For a>=2 its
+image still contains q and cannot collide with a retained q-free label.
+For a=1 a collision requires the old pair q*u,p*u, whose actual first-q
+root lies in T and hence has empty pullback. New labels containing both
+p and q are legal: CP1 restricts the original inventory, not the output.
+
+Coverage follows from the one old witness at every transported point
+and retained A_p elsewhere. Every output modulus is odd and greater
+than one. Original A_q disappears since 0 belongs to T, giving the
+strict class saving used above. No uniform replacement of the higher
+digits, new covering theorem, or separate phase optimization is used.
+
+### Consequences for the original inventory
+
+Every opposite gap is at most H_3-1. Section96 already forces some such
+gap to be at least twelve, so
+
+    R=empty ==> H_3>=13.                            (SG4)
+
+Every nonternary prime p has a prime in the opposite nonempty color.
+Their positive gap is even and at least two. Thus SG1 forces original
+27p for EVERY nonternary support prime p. More generally it forces
+original3^(|p-q|+1)p and3^(|p-q|+1)q for each opposite pair.
+
+The conditional argument in section97 about an opposite gap equal to
+H_3 remains an implication, but SG1 excludes its antecedent in this
+extremal branch. In particular the height-twelve branch is excluded.
+These are ordinary arithmetic deductions from the existing transport;
+no new Lean verification or unrestricted noncoverage is asserted.
+
+## 105. A three-class terminal repair must use a hole in the original divisor ideal
+
+Work in section98's GLOBAL terminal-singular case with t=1. Keep the
+original distinct whole cover, numerical palette D and period Q=3^H M,
+H>=2, gcd(M,3)=1. Its three top labels are
+
+    3^H, 3^H p, 3^H m, p>3 prime, m>1, m!=p.
+
+Put n0=3^(H-1)p and delete exactly those three top originals and the
+old A_(n0). Let B be the retained original family and E* its exact
+uncovered set. The following is a necessary condition on a successful
+repair by at most three distinct odd nonunit APs, with numerical labels
+absent from B:
+
+    some indispensable repair label d satisfies
+    d divides Q and d notin D.                      (TH1)
+
+Thus rephasing only the four freed original labels cannot meet this
+strict repair budget. TH1 uses the existing periodic-obligation palette
+and three-fiber classification of section25, rather than a new repair
+theorem. It does not require R=empty or an opposite prime five.
+
+### The deletion retains two distinct actual phase liabilities
+
+Every retained modulus divides P=Q/3, so E* is P-periodic. Section98
+supplies two actual witnesses. An original private point of A_(n0)
+belongs to E* in the old n0 phase. The nonempty full-top-deletion
+remainder supplies a point of E* in the coarsening class C0. The
+classes A_(n0) and C0 have the same modulus n0 and different phases.
+In particular E* is not contained in ANY single AP modulo n0, including
+one assigned a new phase.
+
+Prune a proposed repair to an inclusion-minimal subfamily covering E*,
+without changing any retained original. Apply NF1 and its Lettl--Sun
+input NF9 with periodicity P, not Q. At a budget of at most three,
+each indispensable repair modulus is either a divisor of P or
+
+    3^H e, e divides M.
+
+Consequently every indispensable label divides Q. This conclusion
+concerns the irredundant subrepair. A redundant additional AP outside
+Q in an unpruned proposal need not satisfy it.
+
+### The four freed labels cannot repair both liabilities
+
+Suppose every label of this subrepair belongs to D. Availability then
+restricts them to
+
+    n0, 3^H, 3^H p, 3^H m.
+
+If a modulus dividing P occurs, it must be n0. There are at most two
+remaining off-period classes. NF2 says they cannot cover a complete
+P-fiber left uncovered by the period-dividing classes, so the single
+newly phased n0 class would have to cover E*. The two liabilities above
+rule this out.
+
+If no modulus dividing P occurs, NF2 requires exactly three repair
+classes. They use all three top labels. NF4 requires the projection of
+each of these classes modulo its gcd with P to contain all of E*.
+For the label3^H p that gcd is n0, again contradicting the two
+liabilities. This proves TH1.
+
+An unused divisor is only a necessary numerical resource; the argument
+neither constructs its covering phase nor proves that three such
+classes repair E*. Deleting or changing more retained classes changes
+the joint obligation and needs its own budget. Terminal singularity and
+unrestricted Erdős#7 remain unresolved. No new enumeration or Lean
+verification is asserted.
+
+## 106. The colorwise reciprocal threshold raises ternary height to nineteen
+
+Keep one EB1 original whole cover with R=empty. Let P be its largest
+support prime, H=H_3, and
+
+    G=max{|p-q|:p in S_1, q in S_2}.
+
+Reuse the initial-segment support property in Report350 section1,
+NF68's attributed nine-prime-support theorem, and CM3's actual
+colorwise reciprocal threshold. They give original primes5 and P,
+P>=29, and, for each color's finite original cofactor carrier Q_i,
+
+    1/3<R_i=sum_(m|Q_i,m>1)1/m
+       < product_(p in S_i)p/(p-1)-1.
+
+The last strict Euler upper bound is the one already used in section84.
+The established exclusion of H=1 supplies its H>=2 premise. SG1 gives
+H>=G+1, without bounding any nonternary height.
+
+### One color is confined between two endpoint constraints
+
+If5 and P have opposite colors, then G>=P-5. Otherwise they have the
+same color A. Every prime of the other color B has distance at most G
+from each endpoint, whence
+
+    B subset {prime r:P-G<=r<=5+G}.
+
+The reciprocal bound on that ONE actual color therefore requires
+
+    product_(prime r in [P-G,5+G]) r/(r-1)>4/3.    (IG1)
+
+Enlarging its support to this interval gives an upper bound. No two
+independently optimized color inventories are combined.
+
+Suppose G<=16. Since P>=29, the endpoints5 and P have the same color.
+The other color is contained in [13,21], whose only primes are13,17,19.
+Thus
+
+    R_B<13*17*19/(12*16*18)-1=743/3456<1/3,
+
+contradicting CM3. All opposite gaps are even, so
+
+    R=empty ==> G>=18 and H_3>=19.                 (IG2)
+
+This strengthens SG4 using existing reciprocal information, with no
+new sieve certificate or enumeration of two-color assignments.
+
+### Only two support layouts remain at gap eighteen
+
+Suppose G=18. Again5 and P have the same color A. If P>=31, the other
+color B lies in [13,23]. Its Euler upper bound is
+
+    R_B<13*17*19*23/(12*16*18*22)-1
+       =20545/76032<1/3.
+
+Hence P=29. The initial-segment property gives exactly the nonternary
+support{5,7,11,13,17,19,23,29}, and B is a subset of
+{11,13,17,19,23}. It must contain all of11,13,17,19: omitting any of
+these four has largest possible Euler product when19 is omitted,
+because r/(r-1) decreases with r. Even that upper bound gives
+
+    R_B<11*13*17*23/(10*12*16*22)-1
+       =1243/3840<1/3.
+
+Consequently, up to exchanging color names, the only possible supports
+at G=18 are
+
+    A={5,7,29},    B={11,13,17,19,23};
+    A={5,7,23,29}, B={11,13,17,19}.                (IG3)
+
+In the second layout, B must own original9. Otherwise CM4 requires
+R_B>5/13, whereas
+
+    R_B<11*13*17*19/(10*12*16*18)-1
+       =11629/34560<5/13.
+
+These are necessary support and ownership restrictions, not covering
+realizations. They leave actual phases and prime-power heights open.
+
+### Terminal singularity needs one further ternary layer
+
+Under the additional global TS hypothesis of section98, every top
+mixed parent has the same lower ternary prefix and hence the same
+color i. Every prime r of the other color has t_r<=H-1; otherwise
+its original3^H r would be a top parent in a different first-three
+root. Applying SG1 to each opposite pair then gives
+
+    R=empty and TS ==> H>=G+2>=20.                 (IG4)
+
+This does not assert that TS occurs in a general cover. In particular
+the global highest ternary digit of a remaining height-nineteen
+all-concentrated cover must be nonsingular, with one of IG3's support
+layouts. No nonsingularity claim is made about its other coordinates.
+
+IG2--IG4 use NF68's ordinary attributed Schroeder result, edition1.0.1,
+Theorem1.1. Its source entry retains the finite-geometry verification
+and the absence of a complete local kernel replay of its arbitrary-height
+reduction. No new source replay, numerical optimization or Lean
+verification is asserted here. The all-concentrated cases at larger
+height and all branches with R nonempty remain unresolved.
+
+## 107. Deep prime-private concentration bounds every original root group
+
+Keep one EB1 original cover with R=empty and normalized prime classes.
+For a nonternary prime q, let P_q be its COMPLETE original private
+region and Gamma_q its congruence hull from PH3--PH4. Put
+
+    h_q=v_3(Gamma_q).
+
+Thus h_q is the largest h<=H_3 for which P_q lies in one actual residue
+u modulo3^h. Concentration gives h_q>=1. Choose ANY prime p in the
+opposite color, with no ordering requirement between p and q. Suppose
+
+    h_q>=p-2.                                      (RG1)
+
+For each nonzero q-root r, define the COMPLETE original group
+
+    J_r={d in D:q divides d, d>q, a_d=r modq}.
+
+Then every such group obeys
+
+    |J_r|<=p-1;                                    (RG2)
+    |J_r|=p-1 ==> sum_(d in J_r)d
+                    <=p*q*(3^(p-1)-1)/2.           (RG3)
+
+These bounds include all original q-exponents, same-color cofactors
+and ternary heights. They are not limited to the chain3^c q.
+
+### Apply the existing exact phase-group repair
+
+For nonempty J_r, use DR1 with parent q: move A_q to r modq, remove
+ALL J_r, and keep every other original. Its exact whole-cover hole
+set is P_q. In particular no removed child's independent private
+point is substituted for the actual joint obligation.
+
+By RG1, this obligation lies in the cylinder
+
+    x=0 modq, x=u mod3^(p-2).
+
+For a=0,...,p-2 add the complete CRT AP
+
+    x=0 modq, x=a+1 modp, x=u mod3^a,
+    numerical modulus3^a*p*q.                     (RG4)
+
+The ternary constraint at a=0 is empty. Every point of P_q avoids
+retained original A_p=0 modp, so its nonzero p-root selects a single
+one of these p-1 APs. Its fixed private prefix supplies that AP's
+ternary condition. Thus RG4 covers the entire P_q. Equivalently,
+RG4 together with retained A_p covers the larger displayed cylinder.
+
+Every new modulus contains opposite-color primes p and q, so CP1
+makes it absent from the entire old palette. The labels are distinct,
+odd nonunits, and divide the original period because p-2<=h_q<=H_3.
+No retained or freed original label is reused. The resulting whole
+cover has
+
+    N_new=N-|J_r|+(p-1),
+    W_new=W-sum_(d in J_r)d+p*q*sum_(a=0..p-2)3^a.
+
+DR2's two EB1 budgets give RG2 and RG3. An empty group satisfies RG2
+without a phase move. This is a consumer of DR1--DR2 and the vacant
+cross-color CRT palette, not a new general repair theorem.
+
+### Existing singleton roots sharpen the complete inventory bound
+
+Let t_q=max{c:3^c q belongs to D} and s=min(h_q,t_q). For each
+c=1,...,s, original3^c q divides Gamma_q. By DR5 its actual q-root
+group cannot contain any second original label. These s groups are
+therefore singletons, and their roots are distinct. Comparable-class
+disjointness makes every proper q-bearing original have a nonzero
+q-root. Hence, writing N_q for ALL original q-bearing labels,
+
+    N_q=1+sum_(r!=0)|J_r|
+       <=1+s+(q-1-s)*(p-1).                        (RG5)
+
+The initial1 is A_q. The singleton assertion is exactly the existing
+DR5 prohibition; no additional source-reset or singleton theorem is
+needed for this count.
+
+Conversely, if an actual group has at least p members, or has p-1
+members with modulus sum greater than the RG3 threshold, then
+
+    h_q<=p-3.                                      (RG6)
+
+Thus its complete private region meets at least two actual prefixes
+modulo3^(p-2). This is a dispersion statement about one source, not
+an independence or full-fiber claim.
+
+One may choose the smallest opposite-color prime; GM1 places it in
+{5,7,11,13}. For p=5, deep concentration means h_q>=3, every root
+group has at most four labels, and a four-label group's sum is at most
+200q. SG3's many actual collision roots do not establish RG1: their
+separate nonempty private traces need not share a deep ternary prefix.
+If RG1 fails, RG4 is not justified; if it holds and all groups meet
+these budgets, no strict descent follows from this operation. All
+original heights remain unrestricted. No Lean verification or
+unrestricted noncoverage is asserted.
+
+## 108. The next terminal row needs an actual supplier coprime to the top cofactor
+
+Keep section103's one R=empty EB1 source with exactly three global
+top classes and opposite-color prime5. Write those classes as T, with
+numerical labels3^H,3^H p,3^H s, where either s=r is a prime different
+from p or s=p^2. Put M=lcm(p,s). Their common lower ternary prefix is
+u modulo3^(H-1), and their compatible cofactor phase is alpha modulo M.
+The exact top-deletion remainder is nonempty and lies in
+
+    E_T subset C_M={x:x=u mod3^(H-1),x=alpha modM}.
+
+Reuse AC2's exclusion of retained originals matching one top prime
+phase and the first three ternary digits. The new inventory consequence
+is an ORIGINAL class
+
+    3^(H-1)n, n>1, gcd(n,M)=1, supp(n) subset S_i,  (NS1)
+
+where i is the top color. Thus there is an original numerical label
+
+    3^(H-1)ell, ell in S_i minus supp(M).           (NS2)
+
+No phase is copied from the composite supplier to this divisor label.
+The height is the actual next-to-top height, not just the presence
+of another prime somewhere in the original support.
+
+### Two altered siblings require actual next-row suppliers
+
+Choose x in E_T, keep ALL its nonternary coordinates, and vary only
+its (H-1)-st ternary digit. The two altered siblings have prefixes
+different from u, with the same w=u mod3^(H-2). They lie in no top
+class, since all top classes require u. No original of height at most
+H-2 covers either sibling: it would then also cover x. Whole original
+coverage therefore supplies an original of height exactly H-1 at each
+altered sibling.
+
+The unique pure class A_(3^(H-1)) covers at most one of these two
+siblings. Choose the other and a mixed supplier3^(H-1)n covering it.
+Its first H-2 ternary digits agree with u. In particular its first
+three do, since this branch has H>=20 by IG4. If ell divided both
+n and M, its actual ell-phase would be alpha modell, because the
+nonternary coordinates were kept. This is precisely the forbidden
+AC2 configuration. Hence gcd(n,M)=1. The first ternary root is i,
+so concentration puts every prime of n in S_i. Divisor closure
+then gives NS2 for any prime ell dividing n.
+
+### The same supplier family covers the complete projected obligation
+
+Let V be the nonternary projection of E_T. The two altered digit
+values are fixed by u. Choose one value j which is not covered by
+the pure height-H-1 guard on the prefix w; at most one value is
+excluded by that guard. This choice is independent of the point in V.
+For EVERY z in V, keep z and use that same altered ternary sibling.
+The argument above shows
+
+    V subset union {the actual cofactor AP of A:
+      A original, h_3(A)=H-1,
+      A has prefix w+j*3^(H-2) modulo3^(H-1),
+      n(A)>1, gcd(n(A),M)=1, supp(n(A)) subset S_i}. (NS3)
+
+This is one simultaneous family of actual phases covering V. It does
+not assert that V is a full cofactor carrier or replace its points by
+independently optimized sources.
+
+The original height-H-1 row therefore contains at least five labels
+in the distinct-prime case, with cofactors1,p,r,pr,ell, and at least
+four in the square case, with cofactors1,p,p^2,ell. The M ancestor
+used here is already forced by section103; ell is supplied by NS2.
+These are global row counts, not claims that all those classes have
+the same lower ternary prefix.
+
+CM3 already rules out a two-prime color not containing5. The new
+content is NS1--NS3's next-row numerical height and actual supplier
+coverage, not another proof that the top color has at least three
+primes. More complex next-row incidence is not excluded. No new
+Lean verification or unrestricted noncoverage is asserted.
+
+## 109. A local nonpure singleton gives a two-level terminal descent
+
+Keep section108's original source and notation. Form the intermediate
+whole cover
+
+    F=(C minus T) union {R}, R=C_M.
+
+The one resolvent R covers the exact top-deletion obligation. F has
+N-2 classes; its occupied numerical label is permitted only for this
+intermediate argument. No minimality or divisor closure of F is assumed.
+
+Put w=u mod3^(H-2). Let O_w contain ALL original classes of height
+H-1 whose lower ternary prefix modulo3^(H-2) is w, and define
+
+    G_w=O_w union {R}, k=|G_w|=|O_w|+1.
+
+Count this local batch by its (H-1)-st ternary digit. The following
+necessary condition is stronger than excluding global singularity
+of that digit:
+
+    no local digit branch of G_w has a nonpure
+    class as its unique member.                    (LB1)
+
+Here nonpure means cofactor greater than one. This includes the
+resolvent R, whose cofactor is M.
+
+### The simultaneous deletion has full sibling fibers
+
+Take a point of the nonempty E_T. It is private to R in F. Changing
+its (H-1)-st digit while keeping all other coordinates makes every
+class of height at most H-2 remain absent, and every retained class
+of height H-1 outside O_w is disjoint from the lower prefix w.
+Whole coverage by F therefore shows that all three local branches
+of G_w are nonempty. In particular k>=3.
+
+Suppose a branch has the unique nonpure member S, of cofactor d>1
+and actual cofactor phase c modd. Remove G_w from F. The retained
+family is exactly C minus (T union O_w). Every removed class lies
+over w, so the exact uncovered set E is supported over w. Within
+that lower prefix, every retained original is independent of the
+(H-1)-st digit: a height-H-1 original outside O_w is disjoint,
+and all others have height at most H-2. Thus E is a union of full
+three-sibling fibers.
+
+At S's singleton digit, whole coverage by F forces every such
+fiber's nonternary coordinates to satisfy c modd. Consequently
+
+    E subset K_d={x:x=w mod3^(H-2),x=c modd}.        (LB2)
+
+This is the complete joint deletion region, including every old
+class in O_w, not a union of separately selected private points.
+
+### Four fresh classes replace at least five originals
+
+The support of d lies in the old top color: if S is original this
+follows from its first ternary root; if S=R it follows from d=M.
+For j=0,1,2,3 add the complete CRT AP
+
+    x=w mod3^j, x=c modd, x=j+1 mod5,
+    numerical modulus5*3^j*d.
+
+Because H-2>=3, the four APs together with retained A_5 cover all
+of K_d and hence E. Each new label contains5 and a prime of the
+opposite color, so CP1 makes it absent from the entire old palette.
+The four labels are distinct odd nonunits.
+
+The deleted ORIGINAL family is T union O_w, of size3+(k-1)=k+2.
+It contains at least five classes. Therefore the resulting whole
+distinct cover has
+
+    N_new=N-(k+2)+4=N+2-k<N.                       (LB3)
+
+This contradicts EB1 and proves LB1. The cardinality decrease
+already settles the comparison; no modulus-sum estimate or extra
+gap bound is needed to pay for the four new moduli.
+
+### The surviving local incidence
+
+If the original pure3^(H-1) guard belongs to O_w, it is alone in
+its local branch. Any original mixed member there would be
+contained in that comparable guard, and R cannot be contained in
+a retained guard because E_T is nonempty. LB1 then requires the
+local counts, up to digit permutation, to have the form
+
+    (1,a,b), a,b>=2, with the singleton pure.       (LB4)
+
+If that pure guard lies outside O_w, all members of G_w are
+nonpure and each branch has at least two members. Thus k>=5 in
+the first case and k>=6 in the second. These are counts in ONE
+actual lower prefix; no claim of global next-digit singularity
+was needed for the descent.
+
+The cases in LB4 and the three nonsingleton-branch case are not
+excluded. Their supplier intersections and occupied original
+labels remain part of the unresolved repair problem. This is an
+ordinary two-level consumer of the existing coarsening and
+cross-color repair; no Lean verification is asserted.
+
+## 110. Paying the occupied ancestor transports the phase exclusion to a second center
+
+Keep the same original three-class top batch T. Write its cofactor
+intersection as alpha modM and its lower ternary prefix as u, as in
+section108. The occupied original ancestor of numerical modulus
+3^(H-1)M has its OWN actual cylinder
+
+    A_0={x:x=v mod3^(H-1),x=beta modM}.
+
+There is a whole-cover exchange preserving the entire numerical
+palette D, cardinality N and modulus sum W. Delete T and A_0. Put
+the ancestor label at C_M=(u,alpha). Reinsert the three freed top
+labels3^H,3^H p,3^H s above v, on three distinct final digits,
+with their nonpure cofactor phases the restrictions of beta.
+
+The reassigned ancestor covers E_T. The three relocated top classes
+cover the ENTIRE old A_0, since every point of A_0 has the required
+cofactor phase for whichever final digit it occupies. The exact
+simultaneous deletion region lies in E_T union A_0. Thus the output
+is a whole distinct cover with exactly the old labels and both old
+objectives. In particular it is again EB1-minimal. The ancestor's
+old liability was paid; it was not silently discarded or treated
+as an available free label.
+
+### Apply AC2 at the new top center without transferring private colors
+
+The relocated top classes have center(v,beta) and still occupy the
+three final digits singly. In the exchanged whole cover, their
+top-deletion remainder lies in
+
+    {x:x=v mod3^(H-1),x=beta modM}.
+
+This follows by looking at each of the three top digits; the
+retained lower classes do not depend on that digit. All originals
+other than T and A_0 remain untouched.
+
+Consequently, for every untouched lower original A_d and prime
+ell dividing M, the following simultaneous agreement is impossible:
+
+    27ell divides d,
+    a_d=v mod27, a_d=beta modell.                  (PX1)
+
+Indeed these data instantiate the already proved AC2 repair at
+center(v,beta). The needed numerical vacancies5ell,15ell,45ell,
+135ell are unchanged: the exchange preserves D, and their absence
+was established by ORIGINAL CP1. Original A_5 is also untouched.
+The exact joint obligation lies in the common27ell cylinder,
+and the four replacement moduli have sum200ell, below the deleted
+top budget. EB1 therefore rules out PX1.
+
+No claim is needed that private regions or their color classification
+stay unchanged under the exchange. The reused interface only needs
+the new actual top center, the unchanged numerical vacancies, the
+retained A_5 and the untouched class's actual phase. The four-top-label
+exchange itself need not be a descent.
+
+Together with original AC2, PX1 places the phase exclusion around
+BOTH actual centers(u,alpha) and(v,beta), with PX1 restricted to
+untouched originals. This does not force an excluded agreement to
+occur or exclude the nonsingleton local incidences in section109.
+No new Lean verification or unrestricted noncoverage is asserted.
