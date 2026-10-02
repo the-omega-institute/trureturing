@@ -18,6 +18,24 @@ public static class TruthGraphModelBuilder
     public static TruthGraphExportModel Create(
         TruthDagProjection dag,
         TruthGraphProvenance provenance,
+        IEnumerable<DocumentDefinition> definitions,
+        string repositoryRoot,
+        DeclarationCatalog catalog,
+        bool tolerateAbsentDocuments = false)
+    {
+        ArgumentNullException.ThrowIfNull(dag);
+        ArgumentNullException.ThrowIfNull(provenance);
+        return Create(dag, provenance, DocumentGraphExportProjection.AssembleRepository(
+            definitions,
+            repositoryRoot,
+            catalog,
+            dag.Nodes.Select(static node => node.RepoPath.Value).ToHashSet(StringComparer.Ordinal),
+            tolerateAbsentDocuments));
+    }
+
+    public static TruthGraphExportModel Create(
+        TruthDagProjection dag,
+        TruthGraphProvenance provenance,
         DocumentGraphExportProjection? documentProjection = null)
     {
         ArgumentNullException.ThrowIfNull(dag);
@@ -215,13 +233,31 @@ public static class DocumentGraphExportProjectionExtensions
             ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
             ArgumentNullException.ThrowIfNull(catalog);
             ArgumentNullException.ThrowIfNull(formalTruthRepoPaths);
-            var definitions = DocumentDefinitions.Discover(documentsAssembly, repositoryRoot);
-            var documents = definitions.Select(definition => definition.Document.ResolveDeclarations(catalog)).ToArray();
-            var census = ReceiptFreeDocumentCatalog.Load(repositoryRoot, documents);
+            return DocumentGraphExportProjection.AssembleRepository(
+                DocumentDefinitions.Discover(documentsAssembly, repositoryRoot),
+                repositoryRoot,
+                catalog,
+                formalTruthRepoPaths);
+        }
+
+        public static DocumentGraphExportProjection AssembleRepository(
+            IEnumerable<DocumentDefinition> definitions,
+            string repositoryRoot,
+            DeclarationCatalog catalog,
+            IReadOnlySet<string> formalTruthRepoPaths,
+            bool tolerateAbsentDocuments = false)
+        {
+            ArgumentNullException.ThrowIfNull(definitions);
+            ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+            ArgumentNullException.ThrowIfNull(catalog);
+            ArgumentNullException.ThrowIfNull(formalTruthRepoPaths);
+            var material = definitions.ToArray();
+            var documents = material.Select(definition => definition.Document.ResolveDeclarations(catalog)).ToArray();
+            var census = ReceiptFreeDocumentCatalog.Load(repositoryRoot, documents, tolerateAbsentDocuments);
             var graph = DocumentGraphAssembler.Assemble(
                 documents,
                 catalog);
-            var sources = definitions.Select(definition => new DocumentGraphDocument(
+            var sources = material.Select(definition => new DocumentGraphDocument(
                 definition.RelativePath.Value,
                 definition.Document,
                 census.ReceiptFreeDocumentGids.Contains(definition.Document.Header.Gid.Value)
