@@ -291,6 +291,16 @@ public static class ScribeScriptHost
         var additionalFiles = new[] { "BannedSymbols.txt", "BannedSymbols.Determinism.txt", "BannedSymbols.Guid.txt" }
             .Select(name => (AdditionalText)new RuleText(Path.Combine(directory, name))).ToImmutableArray();
         var analyzerOptions = new AnalyzerOptions(additionalFiles);
+        foreach (var tree in trees.Where(tree => sources.Contains(tree.FilePath, StringComparer.Ordinal)))
+        {
+            foreach (var node in tree.GetRoot().DescendantNodesAndSelf())
+            {
+                if (node is UnsafeStatementSyntax or PointerTypeSyntax or FunctionPointerTypeSyntax
+                    || node is MethodDeclarationSyntax method && method.Modifiers.Any(SyntaxKind.ExternKeyword))
+                    return (null, null, MakeFailure(tree.FilePath, ScribeScriptFailureCode.DisallowedSymbol,
+                        $"{tree.FilePath}:{node.GetLocation().GetLineSpan().StartLinePosition.Line + 1}: disallowed unsafe, pointer, function-pointer, or extern syntax"));
+            }
+        }
         var diagnostics = compilation.GetDiagnostics().AddRange(
             compilation.WithAnalyzers(analyzers, analyzerOptions).GetAnalyzerDiagnosticsAsync().GetAwaiter().GetResult());
         var first = diagnostics
