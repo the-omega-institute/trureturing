@@ -16,7 +16,43 @@ Lean statement: `D5/S3/Arith/Congruence/PrimePowerAffineBehavior.depth`
 
 For natural p,h and integer x, depth(p,h,x) is log base p of gcd(x,p^h). At prime p the theorem identifies it with min(v_p(x),h) for x!=0, and assigns depth h to every zero residue modulo p^h.
 
-**Definition 1.2 (Disjoint quotient coordinates).**
+**Theorem 1.2 (Exact saturated-depth data).**
+
+Lean statement: `D5/S3/Arith/Congruence/PrimePowerAffineBehavior.depth_data`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/PrimePowerAffineBehavior.depth_data` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every prime p, natural h and integer x, depth(p,h,x)<=h and gcd(x,p^h)=p^depth(p,h,x).
+
+**Theorem 1.3 (Depth thresholds).**
+
+Lean statement: `D5/S3/Arith/Congruence/PrimePowerAffineBehavior.depth_divisibility`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/PrimePowerAffineBehavior.depth_divisibility` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every prime p, natural h,j and integer x, p^j divides x and j<=h if and only if j<=depth(p,h,x).
+
+**Theorem 1.4 (Normalized gcd).**
+
+Lean statement: `D5/S3/Arith/Congruence/PrimePowerAffineBehavior.normalized_gcd`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/PrimePowerAffineBehavior.normalized_gcd` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every prime p, natural h and integer x, put r=depth(p,h,x). The gcd of x/p^r and p^(h-r) is one. The division removes their exact common gcd, including the zero residue.
+
+**Definition 1.5 (Disjoint quotient coordinates).**
 
 Lean statement: `D5/S3/Arith/Congruence/PrimePowerAffineBehavior.eta`
 
@@ -28,7 +64,7 @@ Lean statement: `D5/S3/Arith/Congruence/PrimePowerAffineBehavior.eta`
 
 Put N=p^h, D=p^e and M=p^(h-e). Write r(x)=depth(p,h,x). The coordinate E(x)=eta(p,h,e,x) is S(r(x),[x/p^r(x)]_M) when r(x)<e, and D([x/p^e]_M) otherwise. The S and D labels are disjoint constructors. The ambient carrier is (natural numbers x ZMod M) disjoint-union ZMod M; the low residue is proved to be a unit, rather than imposed as a restriction on integer source values. Integer division is exact in the relevant branch.
 
-**Definition 1.3 (Finite forward continuations).**
+**Definition 1.6 (Finite forward continuations).**
 
 Lean statement: `D5/S3/Arith/Congruence/PrimePowerAffineBehavior.run`
 
@@ -40,7 +76,7 @@ Lean statement: `D5/S3/Arith/Congruence/PrimePowerAffineBehavior.run`
 
 A word is any finite list whose entries are either a positive natural multiplier or a unit marker meaning add p^e. T(w,x)=run(p,e,w,x) applies entries in list order. The empty word returns x. There is no fixed bound on word length.
 
-**Theorem 1.4 (Exact local classification and its bridges).**
+**Theorem 1.7 (Exact local classification and its bridges).**
 
 $$p \text{prime}, h,e \in \mathbb{N}, e \leq h \Rightarrow\\{}(\forall x, r(x) \leq h \land gcd(x, N) = p^{r(x)} \land (r(x) = h \iff N \mid x) \land (x \neq 0 \Rightarrow r(x) = min(v(p, x), h)) \land (r(x) < e \Rightarrow IsUnit([x/p^{r(x)}]_{M}))) \land\\{}(\forall x,y, (x \equiv y (\operatorname{mod} N) \Rightarrow r(x) = r(y) \land E(x) = E(y))) \land\\{}(\forall x, (\exists X, X > 0 \land x \equiv X (\operatorname{mod} N))) \land\\{}(\forall a,b, (\exists A,B, A > 0 \land B \geq 0 \land (\forall x, ax+Db \equiv Ax+DB (\operatorname{mod} N)))) \land\\{}(\forall w, (\exists A,B \in \mathbb{N}, A > 0 \land (\forall x, T(w, x) = Ax+DB))) \land\\{}(\forall A,B \in \mathbb{N}, (A > 0 \Rightarrow (\exists w, (\forall x, T(w, x) = Ax+DB)))) \land\\{}(\forall x,y, (E(x) = E(y) \iff (\forall a,b, (a > 0 \land b \geq 0 \Rightarrow r(ax+Db) = r(ay+Db)))) \land (E(x) = E(y) \iff (\forall w, r(T(w, x)) = r(T(w, y))))) \land\\{}(e = h \Rightarrow (\forall u,v \in U_{M}, u = v))$$
 
@@ -61,6 +97,9 @@ Every source residue has the positive representative x mod N+N. In particular th
 ## References
 
 - Truth anchor: `D5/S3/Arith/Congruence/PrimePowerAffineBehavior.depth`
+- Truth anchor: `D5/S3/Arith/Congruence/PrimePowerAffineBehavior.depth_data`
+- Truth anchor: `D5/S3/Arith/Congruence/PrimePowerAffineBehavior.depth_divisibility`
 - Truth anchor: `D5/S3/Arith/Congruence/PrimePowerAffineBehavior.eta`
 - Truth anchor: `D5/S3/Arith/Congruence/PrimePowerAffineBehavior.local_classification`
+- Truth anchor: `D5/S3/Arith/Congruence/PrimePowerAffineBehavior.normalized_gcd`
 - Truth anchor: `D5/S3/Arith/Congruence/PrimePowerAffineBehavior.run`

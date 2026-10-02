@@ -4,7 +4,19 @@
 
 Finite Fibonacci samples determine exactly the coarse time observations; a nonzero sampling kernel prevents an autonomous one-step update.
 
-**Theorem 1.1 (Coarse time equivalence and the one-step obstruction).**
+**Theorem 1.1 (Readout and the iterated step).**
+
+$$\forall (n: \mathbb{N}), \forall (k: \mathbb{N}), \forall (x: \operatorname{ZMod}\left(n\right)^{2}), \operatorname{readout}\left(n, k, x\right) = \operatorname{snd}\left(\operatorname{iterate}\left(S, k, x\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/SamplingQuotient.readout_iterate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural modulus N, time k and state x over Z/NZ, the Fibonacci readout r(N,k,x)=F(k)x.1+F(k+1)x.2 is the second coordinate of S^k(x), where S(a,b)=(b,a+b). This includes the integer ring at N=0.
+
+**Theorem 1.2 (Coarse time equivalence and the one-step obstruction).**
 
 $$(\forall x, \forall j, \operatorname{u}\left(j + 2, x\right) = L \cdot \operatorname{u}\left(j + 1, x\right) - (-1)^{g} \cdot \operatorname{u}\left(j, x\right)) \land (\forall z, ((\operatorname{O}\left(z\right) = 0) \iff ((\operatorname{r}\left(s, z\right) = 0) \land (\operatorname{r}\left(s + g, z\right) = 0))) \land ((\operatorname{O}\left(z\right) = 0) \iff ((\operatorname{snd}\left(\operatorname{iterate}\left(S, s, z\right)\right) = 0) \land (\operatorname{fib}\left(g\right) \cdot \operatorname{fst}\left(\operatorname{iterate}\left(S, s, z\right)\right) = 0)))) \land (\forall x, \forall y, (\operatorname{O}\left(x\right) = \operatorname{O}\left(y\right)) \iff (\forall j, \operatorname{u}\left(j, x\right) = \operatorname{u}\left(j, y\right))) \land (\forall Phi, (\forall x, \operatorname{O}\left(\operatorname{S}\left(x\right)\right) = \operatorname{Phi}\left(\operatorname{O}\left(x\right)\right)) \implies \forall z, \operatorname{O}\left(z\right) = 0 \implies \operatorname{O}\left(\operatorname{S}\left(z\right)\right) = 0) \land (\operatorname{Injective}\left(x \mapsto (\operatorname{r}\left(s, x\right),\operatorname{r}\left(s + 1, x\right))\right)) \land (\operatorname{det}\left(\operatorname{adjacentRows}\left(s\right)\right) = (-1)^{s + 1}) \land ((\exists z, (z \neq 0) \land (\operatorname{O}\left(z\right) = 0)) \implies \neg(\exists Phi, \forall x, \operatorname{O}\left(\operatorname{S}\left(x\right)\right) = \operatorname{Phi}\left(\operatorname{O}\left(x\right)\right))) \land ((M3^{4} = 2 \cdot I) \land (\forall j, \forall x, \operatorname{r3}\left(4 \cdot j, x\right) = 2^{j} \cdot \operatorname{snd}\left(x\right)) \land (\forall j, \forall x, (\operatorname{r3}\left(8 \cdot j, x\right) = \operatorname{snd}\left(x\right)) \land (\operatorname{r3}\left(8 \cdot j + 4, x\right) = 2 \cdot \operatorname{snd}\left(x\right))) \land (\forall j, \operatorname{r3}\left(4 \cdot j, \operatorname{pair}\left(0, 0\right)\right) = \operatorname{r3}\left(4 \cdot j, \operatorname{pair}\left(1, 0\right)\right)) \land (\operatorname{r3}\left(1, \operatorname{pair}\left(0, 0\right)\right) = 0) \land (\operatorname{r3}\left(1, \operatorname{pair}\left(1, 0\right)\right) = 1) \land (0 \neq 1) \land (\exists Psi, \forall x, \operatorname{O4}\left(\operatorname{iterate}\left(S, 4, x\right)\right) = \operatorname{Psi}\left(\operatorname{O4}\left(x\right)\right)) \land (\neg(\exists Phi, \forall x, \operatorname{O4}\left(\operatorname{iterate}\left(S, 1, x\right)\right) = \operatorname{Phi}\left(\operatorname{O4}\left(x\right)\right))) \land (\neg((\exists Psi, \forall x, \operatorname{O4}\left(\operatorname{iterate}\left(S, 4, x\right)\right) = \operatorname{Psi}\left(\operatorname{O4}\left(x\right)\right)) \implies (\exists Phi, \forall x, \operatorname{O4}\left(\operatorname{iterate}\left(S, 1, x\right)\right) = \operatorname{Phi}\left(\operatorname{O4}\left(x\right)\right)))))$$
 
@@ -28,6 +40,7 @@ Cayley-Hamilton gives the coarse recurrence. Fibonacci divisibility places the t
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/SamplingQuotient.readout_iterate`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/SamplingQuotient.sampling_quotient`
 - Dependency: [D5/S1/Recurrence/FiniteSamplingSmithDefect](../../../S1/Recurrence/FiniteSamplingSmithDefect.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/TimeSampling](TimeSampling.md)

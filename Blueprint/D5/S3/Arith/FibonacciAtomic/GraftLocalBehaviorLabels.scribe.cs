@@ -65,9 +65,11 @@ internal sealed class GraftLocalBehaviorLabelsDocument : IScribeDocumentDefiniti
             Call("IsUnit", Call("snd", x)));
         Formula conclusion = Seq(Par(Equal(first(k), D(0))), Sp, Iff, Sp,
             Par(Equal(Call("mod", k, r), Call("mod", t, r))));
-        return Disp(All(p, N, All(m, N, Seq(
-            Call("Prime", p), Sp, Implies, Sp,
-            All(x, Pow(Call("ZMod", n), D(2)), Seq(Par(primitive), Sp, Implies, Sp,
-                All(t, N, All(k, N, Seq(Equal(first(t), D(0)), Sp, Implies, Sp, conclusion)))))))));
+        Formula hit = All(t, N, All(k, N,
+            Seq(Equal(first(t), D(0)), Sp, Implies, Sp, Par(conclusion))));
+        Formula body = All(x, Pow(Call("ZMod", n), D(2)),
+            Seq(Par(primitive), Sp, Implies, Sp, hit));
+        return Disp(All(p, N, All(m, N,
+            Seq(Call("Prime", p), Sp, Implies, Sp, body))));
     }
 }
