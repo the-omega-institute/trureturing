@@ -9,7 +9,16 @@ internal sealed class SamplingQuotientDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite Fibonacci samples determine exactly the coarse time observations; a nonzero sampling kernel prevents an autonomous one-step update.",
         H("Fibonacci Sampling and the Coarse Time Quotient"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("fibonacci-readout-iterate"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/SamplingQuotient.readout_iterate"),
+                H("Readout and the iterated step"),
+                StatementSource.FromAuthor(ReadoutFormula(false)),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural modulus N, time k and state x over Z/NZ, the Fibonacci readout r(N,k,x)=F(k)x.1+F(k+1)x.2 is the second coordinate of S^k(x), where S(a,b)=(b,a+b). This includes the integer ring at N=0."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("fibonacci-sampling-quotient"),
             DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/SamplingQuotient.sampling_quotient"),
             H("Coarse time equivalence and the one-step obstruction"),
@@ -57,6 +66,20 @@ internal sealed class SamplingQuotientDocument : IScribeDocumentDefinition
     private static Formula Pow(Formula a, Formula b) => Seq(a, Caret, Grp(b));
     private static Formula Both(params Formula[] xs) =>
         Seq(xs.SelectMany((x, i) => i == 0 ? new[] { Par(x) } : new[] { Sp, Land, Sp, Par(x) }).ToArray());
+    private static Formula N => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula ReadoutFormula(bool shifted)
+    {
+        Formula n = F.Id("n"), k = F.Id("k"), x = F.Id("x"), a = F.Id("a"), b = F.Id("b");
+        Formula all(Formula v, Formula type, Formula body) =>
+            Seq(Forall, Sp, Open, v, Colon, Sp, type, Close, Comma, Sp, body);
+        Formula state = Pow(Call("ZMod", n), D(2));
+        Formula body = shifted
+            ? all(a, N, all(b, N, all(x, state, Equal(Call("readout", n, Add(a, b), x),
+                Call("readout", n, b, Call("iterate", F.Id("S"), a, x))))))
+            : all(k, N, all(x, state, Equal(Call("readout", n, k, x),
+                Call("snd", Call("iterate", F.Id("S"), k, x)))));
+        return Disp(all(n, N, body));
+    }
     private static Formula ResultFormula()
     {
         Formula x = F.Id("x"), y = F.Id("y"), z = F.Id("z"), j = F.Id("j");

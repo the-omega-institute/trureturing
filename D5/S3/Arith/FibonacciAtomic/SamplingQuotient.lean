@@ -18,6 +18,26 @@ open D5.S1.Recurrence.FiniteSamplingSmithDefect
 
 namespace D5.S3.Arith.FibonacciAtomic.SamplingQuotient
 
+/-- Fibonacci readout is the second coordinate of the iterated step. -/
+theorem readout_iterate (N k : ℕ) (x : ZMod N × ZMod N) :
+    readout N k x = ((fun z : ZMod N × ZMod N => (z.2, z.1 + z.2))^[k] x).2 := by
+  let T : ℕ × ℕ → ℕ × ℕ := fun z => (z.2, z.1 + z.2)
+  let C : ℕ × ℕ → ZMod N × ZMod N := fun z =>
+    (((z.2 : ZMod N) - z.1) * x.1 + z.1 * x.2,
+      z.1 * x.1 + z.2 * x.2)
+  have hC : Function.Semiconj C T (fun z : ZMod N × ZMod N => (z.2, z.1 + z.2)) := by
+    intro z
+    apply Prod.ext <;> dsimp [C, T] <;> push_cast <;> ring
+  have hbase : C (0, 1) = x := by ext <;> simp [C]
+  have hfst : (T^[k] (0, 1)).1 = Nat.fib k := rfl
+  have hsnd : (T^[k] (0, 1)).2 = Nat.fib (k + 1) := by
+    change (T^[k] (0, 1)).2 = (T^[k + 1] (0, 1)).1
+    rw [Function.iterate_succ_apply']
+  have h := congrArg Prod.snd (hC.iterate_right k (0, 1))
+  rw [hbase] at h
+  change (T^[k] (0, 1)).1 * x.1 + (T^[k] (0, 1)).2 * x.2 = _ at h
+  simpa only [hfst, hsnd, readout] using h
+
 /-- The finite sample fibers are exactly the full coarse-clock fibers. A nonzero
 sample kernel prevents any autonomous one-step update, as the four-step example
 modulo three illustrates. All moduli, including one, are retained. -/
@@ -71,23 +91,7 @@ theorem sampling_quotient (n m : ℕ) (hn : 0 < n) (hm : 2 ≤ m)
     simp only [readout, S, Nat.fib_add_two, Nat.cast_add]
     ring
   have hiter (N k : ℕ) (x : ZMod N × ZMod N) :
-      readout N k x = ((S N)^[k] x).2 := by
-    let T : ℕ × ℕ → ℕ × ℕ := fun z => (z.2, z.1 + z.2)
-    let C : ℕ × ℕ → ZMod N × ZMod N := fun z =>
-      (((z.2 : ZMod N) - z.1) * x.1 + z.1 * x.2,
-        z.1 * x.1 + z.2 * x.2)
-    have hC : Function.Semiconj C T (S N) := by
-      intro z
-      apply Prod.ext <;> dsimp [C, T, S] <;> push_cast <;> ring
-    have hbase : C (0, 1) = x := by ext <;> simp [C]
-    have hfst : (T^[k] (0, 1)).1 = Nat.fib k := rfl
-    have hsnd : (T^[k] (0, 1)).2 = Nat.fib (k + 1) := by
-      change (T^[k] (0, 1)).2 = (T^[k + 1] (0, 1)).1
-      rw [Function.iterate_succ_apply']
-    have h := congrArg Prod.snd (hC.iterate_right k (0, 1))
-    rw [hbase] at h
-    change (T^[k] (0, 1)).1 * x.1 + (T^[k] (0, 1)).2 * x.2 = _ at h
-    simpa only [hfst, hsnd, readout] using h
+      readout N k x = ((S N)^[k] x).2 := readout_iterate N k x
   have hshift (N a b : ℕ) (x : ZMod N × ZMod N) :
       readout N (a + b) x = readout N b ((S N)^[a] x) := by
     rw [hiter, hiter, Nat.add_comm a b, Function.iterate_add_apply]
