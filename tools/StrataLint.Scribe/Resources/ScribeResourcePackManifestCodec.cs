@@ -27,6 +27,11 @@ internal static class ScribeResourcePackManifestCodec
             ["gid"] = entry.Gid,
             ["sha256"] = entry.Sha256,
             ["inputKey"] = entry.InputKey,
+            ["readSet"] = new JsonArray(entry.ReadSet.Select(read => (JsonNode)new JsonObject
+            {
+                ["declaration"] = read.Declaration,
+                ["sha256"] = read.Sha256,
+            }).ToArray()),
         }).ToArray());
 
     internal static ScribeResourcePackManifest Decode(byte[] bytes)
@@ -44,8 +49,14 @@ internal static class ScribeResourcePackManifestCodec
                 throw Error(ScribeResourcePackErrorCode.VersionMismatch, "Unsupported resource pack semantic version.");
             var entries = root.GetProperty("entries").EnumerateArray().Select(item =>
             {
-                RequireFields(item, "path", "gid", "sha256", "inputKey");
-                return new ScribeResourcePackEntry(String(item, "path"), String(item, "gid"), String(item, "sha256"), String(item, "inputKey"));
+                RequireFields(item, "path", "gid", "sha256", "inputKey", "readSet");
+                var reads = item.GetProperty("readSet").EnumerateArray().Select(read =>
+                {
+                    RequireFields(read, "declaration", "sha256");
+                    return new ScribeProjectionRead(String(read, "declaration"), String(read, "sha256"));
+                }).ToImmutableArray();
+                ValidateReads(reads);
+                return new ScribeResourcePackEntry(String(item, "path"), String(item, "gid"), String(item, "sha256"), String(item, "inputKey"), reads);
             }).ToImmutableArray();
             var count = root.GetProperty("entryCount").GetInt32();
             if (count != entries.Length)
@@ -71,6 +82,20 @@ internal static class ScribeResourcePackManifestCodec
         {
             throw new ScribeResourcePackException(ScribeResourcePackErrorCode.InvalidManifest,
                 "The manifest is not a valid resource pack manifest.", exception);
+        }
+    }
+
+    internal static void ValidateReads(ImmutableArray<ScribeProjectionRead> reads)
+    {
+        string? previous = null;
+        foreach (var read in reads)
+        {
+            _ = LeanDeclarationRef.Create(read.Declaration);
+            if (!IsDigest(read.Sha256)
+                || previous is not null && StringComparer.Ordinal.Compare(previous, read.Declaration) >= 0)
+                throw Error(ScribeResourcePackErrorCode.InvalidManifest,
+                    "Projection reads require unique ascending declarations and lowercase SHA-256 digests.");
+            previous = read.Declaration;
         }
     }
 

@@ -19,7 +19,10 @@ public sealed class ScribeResourcePackException : FormatException
     public ScribeResourcePackErrorCode ReasonCode { get; }
 }
 
-public sealed record ScribeResourcePackEntry(string Path, string Gid, string Sha256, string InputKey);
+public sealed record ScribeProjectionRead(string Declaration, string Sha256);
+
+public sealed record ScribeResourcePackEntry(string Path, string Gid, string Sha256, string InputKey,
+    ImmutableArray<ScribeProjectionRead> ReadSet);
 
 public sealed record ScribeResourcePackManifest(
     string Schema, int Version, int EntryCount, ImmutableArray<ScribeResourcePackEntry> Entries, string TotalSha256)
@@ -30,7 +33,7 @@ public sealed record ScribeResourcePackManifest(
 public sealed class ScribeResourcePack
 {
     public const string SchemaName = "trureturing.scribe.resource-pack";
-    public const int SemanticVersion = 2;
+    public const int SemanticVersion = 3;
     private static readonly DateTimeOffset EntryTimestamp = new(1980, 1, 1, 0, 0, 0, TimeSpan.Zero);
     private readonly IReadOnlyDictionary<string, byte[]> resources;
 
@@ -50,20 +53,23 @@ public sealed class ScribeResourcePack
         return WriteEncoded(path, definitions.Select(item =>
         {
             ArgumentNullException.ThrowIfNull(item.Definition);
-            return (item.Definition.Document.Header.Gid.Value, item.InputKey, ScribeResourceCodec.Encode(item.Definition));
+            return (item.Definition.Document.Header.Gid.Value, item.InputKey, ScribeResourceCodec.Encode(item.Definition),
+                ImmutableArray<ScribeProjectionRead>.Empty);
         }));
     }
 
     internal static ScribeResourcePackManifest WriteEncoded(string path,
-        IEnumerable<(string Gid, string InputKey, byte[] Bytes)> resources)
+        IEnumerable<(string Gid, string InputKey, byte[] Bytes, ImmutableArray<ScribeProjectionRead> ReadSet)> resources)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
-        var ordered = resources.Select(item => (Path: ResourcePath(item.Gid), item.Gid, item.InputKey, item.Bytes))
+        var ordered = resources.Select(item => (Path: ResourcePath(item.Gid), item.Gid, item.InputKey, item.Bytes, ReadSet: item.ReadSet.OrderBy(read => read.Declaration, StringComparer.Ordinal).ToImmutableArray()))
             .OrderBy(item => item.Path, StringComparer.Ordinal).ToArray();
         RequireUnique(ordered.Select(item => item.Gid), ScribeResourcePackErrorCode.DuplicateGid);
         RequireUnique(ordered.Select(item => item.Path), ScribeResourcePackErrorCode.DuplicatePath);
         if (ordered.Any(item => !ScribeResourcePackManifestCodec.IsDigest(item.InputKey)))
             throw Error(ScribeResourcePackErrorCode.InvalidManifest, "Input keys require lowercase SHA-256 digests.");
+
+        foreach (var item in ordered) ScribeResourcePackManifestCodec.ValidateReads(item.ReadSet);
 
         var entries = ImmutableArray.CreateBuilder<ScribeResourcePackEntry>(ordered.Length);
         var totalBytes = 0L;
@@ -73,7 +79,7 @@ public sealed class ScribeResourcePack
         {
             var bytes = item.Bytes;
             totalBytes = checked(totalBytes + bytes.LongLength);
-            entries.Add(new ScribeResourcePackEntry(item.Path, item.Gid, Digest(bytes), item.InputKey));
+            entries.Add(new ScribeResourcePackEntry(item.Path, item.Gid, Digest(bytes), item.InputKey, item.ReadSet));
             WriteEntry(zip, item.Path, bytes);
         }
         var list = entries.ToImmutable();

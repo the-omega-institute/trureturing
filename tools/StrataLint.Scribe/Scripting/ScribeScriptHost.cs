@@ -43,6 +43,7 @@ public sealed record ScribeScriptResult(
     DocumentDefinition? Definition,
     ScribeScriptFailure? Failure)
 {
+    public ImmutableArray<ScribeProjectionRead> ReadSet { get; init; } = [];
     public bool IsSuccess => Definition is not null && Failure is null;
 }
 
@@ -127,6 +128,9 @@ public static class ScribeScriptHost
                     return FailureResult(normalized, ScribeScriptFailureCode.TypeLoad, FirstMessage(exception));
                 }
                 DocumentDefinition definition;
+                var reads = new Dictionary<string, string>(StringComparer.Ordinal);
+                ImmutableArray<ScribeProjectionRead> ReadSet() => reads.OrderBy(item => item.Key, StringComparer.Ordinal)
+                    .Select(item => new ScribeProjectionRead(item.Key, item.Value)).ToImmutableArray();
                 var culture = CultureInfo.CurrentCulture;
                 var uiCulture = CultureInfo.CurrentUICulture;
                 try
@@ -139,12 +143,12 @@ public static class ScribeScriptHost
                             as IScribeDocumentDefinition
                             ?? throw new InvalidOperationException("definition needs a parameterless constructor");
                         return instance.Create();
-                    })
+                    }, reads)
                         ?? throw new InvalidOperationException("definition returned null");
                 }
                 catch (Exception exception) when (exception is not OutOfMemoryException)
                 {
-                    return FailureResult(normalized, ScribeScriptFailureCode.CreateFailed, FirstMessage(exception));
+                    return FailureResult(normalized, ScribeScriptFailureCode.CreateFailed, FirstMessage(exception)) with { ReadSet = ReadSet() };
                 }
                 finally
                 {
@@ -161,7 +165,7 @@ public static class ScribeScriptHost
                 {
                     return FailureResult(normalized, ScribeScriptFailureCode.GidPathMismatch, exception.Message);
                 }
-                return new(normalized, definition, null);
+                return new(normalized, definition, null) { ReadSet = ReadSet() };
             }
             finally
             {

@@ -71,6 +71,44 @@ public sealed class ScribeResourcePackTests
         AssertReason(path, reason);
     }
 
+    [Theory]
+    [InlineData("missing")]
+    [InlineData("duplicate")]
+    [InlineData("order")]
+    [InlineData("declaration")]
+    [InlineData("digest")]
+    [InlineData("fields")]
+    public void ReaderRejectsInvalidProjectionReadSets(string kind)
+    {
+        using var root = new TemporaryRoot();
+        var path = root.Resolve("resources.zip");
+        WritePack(path, [Definition("First")]);
+        var entries = ReadZip(path);
+        var index = entries.FindIndex(item => item.Name == "manifest.json");
+        var manifest = JsonNode.Parse(entries[index].Bytes)!;
+        var entry = manifest["entries"]![0]!.AsObject();
+        JsonObject Read(string declaration) => new()
+        {
+            ["declaration"] = declaration, ["sha256"] = new string('a', 64),
+        };
+        var reads = new JsonArray(Read("D5/S0/Synthetic/First.member"));
+        entry["readSet"] = reads;
+        switch (kind)
+        {
+            case "missing": entry.Remove("readSet"); break;
+            case "duplicate": reads.Add(reads[0]!.DeepClone()); break;
+            case "order": reads.Add(Read("D5/S0/Synthetic/First.before")); break;
+            case "declaration": reads[0]!["declaration"] = "D5/S0/Synthetic/First"; break;
+            case "digest": reads[0]!["sha256"] = "invalid"; break;
+            case "fields": reads[0]!["extra"] = true; break;
+        }
+        manifest["totalSha256"] = Convert.ToHexStringLower(SHA256.HashData(
+            Encoding.UTF8.GetBytes(manifest["entries"]!.ToJsonString())));
+        entries[index] = ("manifest.json", Encoding.UTF8.GetBytes(manifest.ToJsonString()));
+        RewriteZip(path, entries);
+        AssertReason(path, "InvalidManifest");
+    }
+
     [Fact]
     public void ReaderRejectsEntryDigestMismatch()
     {
@@ -140,7 +178,7 @@ public sealed class ScribeResourcePackTests
 
         Assert.Equal(2, pack.Manifest.EntryCount);
         Assert.Equal(ScribeResourcePack.SchemaName, pack.Manifest.Schema);
-        Assert.Equal(2, pack.Manifest.Version);
+        Assert.Equal(3, pack.Manifest.Version);
         Assert.Equal(written.TotalSha256, pack.Manifest.TotalSha256);
         Assert.Equal(definitions.Sum(item => (long)ScribeResourceCodec.Encode(item).Length), pack.TotalUncompressedBytes);
         Assert.Equal(["D5/S0/Synthetic/First.scribe.json", "D5/S0/Synthetic/Second.scribe.json"],
@@ -154,7 +192,7 @@ public sealed class ScribeResourcePackTests
             Assert.Equal(Convert.ToHexStringLower(SHA256.HashData(bytes)), entry.Sha256);
         }
         var list = "[" + string.Join(",", pack.Manifest.Entries.Select(item =>
-            $"{{\"path\":\"{item.Path}\",\"gid\":\"{item.Gid}\",\"sha256\":\"{item.Sha256}\",\"inputKey\":\"{item.InputKey}\"}}")) + "]";
+            $"{{\"path\":\"{item.Path}\",\"gid\":\"{item.Gid}\",\"sha256\":\"{item.Sha256}\",\"inputKey\":\"{item.InputKey}\",\"readSet\":[]}}")) + "]";
         Assert.Equal(Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(list))), pack.Manifest.TotalSha256);
         Assert.Throws<KeyNotFoundException>(() => pack.Read("D5/S0/Synthetic/Missing"));
         using var zip = new ZipArchive(new MemoryStream(File.ReadAllBytes(path)), ZipArchiveMode.Read);

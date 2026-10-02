@@ -253,7 +253,7 @@ public abstract record StatementSource
     internal static StatementAssessment Evaluate(LeanDeclarationRef declaration)
     {
         var assessment = StatementProjectionFixtureLoader.Assess(declaration);
-        return assessment.Outcome switch
+        StatementAssessment result = assessment.Outcome switch
         {
             ProjectionOutcome.Projected projected => new StatementAssessment.Projected(projected.Formula),
             ProjectionOutcome.Unprojectable failed => new StatementAssessment.Unprojectable(
@@ -263,6 +263,8 @@ public abstract record StatementSource
                 assessment.DeclarationContentDigest),
             _ => throw new InvalidOperationException("Unknown statement projection outcome."),
         };
+        StatementProjectionFixtureLoader.RecordRead(declaration, result);
+        return result;
     }
 
     internal static (StatementSource Source, Formula? Formula) Materialize(

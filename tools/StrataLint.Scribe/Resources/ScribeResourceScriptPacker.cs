@@ -22,7 +22,7 @@ public static class ScribeResourceScriptPacker
         var root = Path.GetFullPath(repositoryRoot);
         var reuse = reuseFrom is null ? null : ScribeResourcePack.Open(reuseFrom);
         // Validate resource shapes even for entries that the current tree no longer selects.
-        var prior = reuse?.ReadAll().ToDictionary(definition => definition.SourcePath, StringComparer.Ordinal);
+        if (reuse is not null) foreach (var definition in reuse.ReadAll()) _ = definition;
         var priorEntries = reuse?.Manifest.Entries.ToDictionary(
             entry => "Blueprint/" + entry.Gid + ".scribe.cs", StringComparer.Ordinal);
         var paths = Directory.EnumerateFiles(Path.Combine(root, "Blueprint"), "*.scribe.cs", SearchOption.AllDirectories)
@@ -34,7 +34,7 @@ public static class ScribeResourceScriptPacker
             var reused = ImmutableArray.CreateBuilder<string>();
             var failures = ImmutableArray.CreateBuilder<ScribeScriptFailure>();
             var inputs = new Dictionary<string, string>(StringComparer.Ordinal);
-            var resources = new List<(string Gid, string InputKey, byte[] Bytes)>();
+            var resources = new List<(string Gid, string InputKey, byte[] Bytes, ImmutableArray<ScribeProjectionRead> ReadSet)>();
             foreach (var path in paths)
             {
                 var input = ScribeScriptInputs.Read(root, path, semanticVersion);
@@ -48,9 +48,9 @@ public static class ScribeResourceScriptPacker
                 }
                 inputs.Add(path, input.Key!);
                 if (priorEntries is not null && priorEntries.TryGetValue(path, out var entry)
-                    && entry.InputKey == input.Key && AssessmentsMatch(prior![path]))
+                    && entry.InputKey == input.Key && ReadsMatch(entry.ReadSet))
                 {
-                    resources.Add((entry.Gid, input.Key!, reuse!.EncodedBytes(entry.Gid).ToArray()));
+                    resources.Add((entry.Gid, input.Key!, reuse!.EncodedBytes(entry.Gid).ToArray(), entry.ReadSet));
                     reused.Add(path);
                 }
                 else execute.Add(path);
@@ -66,7 +66,7 @@ public static class ScribeResourceScriptPacker
                     });
                 }
                 else resources.Add((result.Definition!.Document.Header.Gid.Value, inputs[result.RelativePath],
-                    ScribeResourceCodec.Encode(result.Definition)));
+                    ScribeResourceCodec.Encode(result.Definition), result.ReadSet));
             }
             var errors = failures.OrderBy(failure => failure.RelativePath, StringComparer.Ordinal).ToImmutableArray();
             var manifest = errors.IsEmpty ? ScribeResourcePack.WriteEncoded(outputPath, resources) : null;
@@ -74,34 +74,15 @@ public static class ScribeResourceScriptPacker
         });
     }
 
-    private static bool AssessmentsMatch(DocumentDefinition definition)
+    private static bool ReadsMatch(ImmutableArray<ScribeProjectionRead> reads)
     {
-        foreach (var describe in Descriptions(definition.Document.Content))
+        foreach (var read in reads)
         {
-            if (describe.StatementAssessment is not { } recorded
-                || describe.KindSource is not DescribeKindSource.ReportDerived derived) continue;
             StatementAssessment current;
-            try { current = StatementSource.Evaluate(LeanDeclarationRef.Create(derived.Handle.Value)); }
+            try { current = StatementSource.Evaluate(LeanDeclarationRef.Create(read.Declaration)); }
             catch (Exception exception) when (exception is not OutOfMemoryException) { return false; }
-            if (!ScribeResourceCodec.EncodeAssessment(recorded).AsSpan()
-                .SequenceEqual(ScribeResourceCodec.EncodeAssessment(current))) return false;
+            if (ScribeResourcePack.Digest(ScribeResourceCodec.EncodeAssessment(current)) != read.Sha256) return false;
         }
         return true;
-    }
-
-    private static IEnumerable<DocumentBlock.Describe> Descriptions(BlockSequence blocks)
-    {
-        foreach (var block in blocks.Items)
-        {
-            var nested = block switch
-            {
-                DocumentBlock.Section section => section.Content,
-                DocumentBlock.Describe describe => describe.Content,
-                _ => null,
-            };
-            if (block is DocumentBlock.Describe description) yield return description;
-            if (nested is not null)
-                foreach (var item in Descriptions(nested)) yield return item;
-        }
     }
 }

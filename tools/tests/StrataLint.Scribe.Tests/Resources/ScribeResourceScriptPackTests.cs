@@ -41,7 +41,7 @@ public sealed class ScribeResourceScriptPackTests
             {
                 var index = entries.FindIndex(item => item.Name == "manifest.json");
                 var manifest = JsonNode.Parse(entries[index].Bytes)!;
-                manifest["version"] = -1;
+                manifest["version"] = 2;
                 entries[index] = ("manifest.json", Encoding.UTF8.GetBytes(manifest.ToJsonString()));
             }
             ScribeResourcePackTests.RewriteZip(old, entries);
@@ -201,6 +201,92 @@ public sealed class ScribeResourceScriptPackTests
         AssertPaths(second.Executed, "Alpha");
         AssertPaths(second.Reused, "Beta");
         Assert.Equal(Pack(root.Path, "full.zip").Manifest.TotalSha256, second.Manifest.TotalSha256);
+    }
+
+    [Fact]
+    public void DiscardedProjectionChangeExecutesAndMatchesFullPack()
+    {
+        using var root = ProjectionReader();
+        var first = Pack(root.Path, "first.zip");
+        ProjectionFixture(root, 2, false);
+        var reused = Pack(root.Path, "reused.zip", "first.zip");
+        AssertPaths(reused.Executed, "Alpha");
+        AssertPaths(reused.Reused, "Beta");
+        Assert.Equal(Pack(root.Path, "full.zip").Manifest.TotalSha256, reused.Manifest.TotalSha256);
+        Assert.NotEqual(first.Manifest.TotalSha256, reused.Manifest.TotalSha256);
+    }
+
+    [Fact]
+    public void DiscardedUnprojectableReadFailsForReuseAndFullExecution()
+    {
+        using var root = ProjectionReader();
+        Pack(root.Path, "first.zip");
+        ProjectionFixture(root, 2, true);
+        var reused = ScribeResourceScriptPacker.Write(root.Path, System.IO.Path.Combine(root.Path, "reused.zip"), System.IO.Path.Combine(root.Path, "first.zip"));
+        var full = ScribeResourceScriptPacker.Write(root.Path, System.IO.Path.Combine(root.Path, "full.zip"));
+        Assert.Null(reused.Manifest);
+        Assert.Null(full.Manifest);
+        Assert.Equal(full.Failures.ToArray(), reused.Failures.ToArray());
+        Assert.Equal(PathFor("Alpha"), Assert.Single(reused.Failures).RelativePath);
+        Assert.Equal(ScribeScriptFailureCode.CreateFailed, reused.Failures[0].Code);
+        Assert.False(File.Exists(System.IO.Path.Combine(root.Path, "reused.zip")));
+        Assert.False(File.Exists(System.IO.Path.Combine(root.Path, "full.zip")));
+    }
+
+    [Fact]
+    public void DiscardedProjectionReadsAreRecordedOnceAndReuseWhenUnchanged()
+    {
+        using var root = ProjectionReader();
+        Pack(root.Path, "first.zip");
+        var manifest = JsonNode.Parse(ScribeResourcePackTests.ReadZip(System.IO.Path.Combine(root.Path, "first.zip"))
+            .Single(item => item.Name == "manifest.json").Bytes)!;
+        var reads = manifest["entries"]![0]!["readSet"]!.AsArray();
+        var read = Assert.Single(reads)!;
+        Assert.Equal(GidFor("Alpha") + ".claim", read["declaration"]!.GetValue<string>());
+        Assert.Equal(64, read["sha256"]!.GetValue<string>().Length);
+        Assert.Empty(manifest["entries"]![1]!["readSet"]!.AsArray());
+        var reused = Pack(root.Path, "reused.zip", "first.zip");
+        Assert.Empty(reused.Executed);
+        AssertPaths(reused.Reused, "Alpha", "Beta");
+    }
+
+    [Fact]
+    public async Task ConcurrentBatchesKeepProjectionReadsSeparate()
+    {
+        using var first = ProjectionReader();
+        using var second = ProjectionReader();
+        ProjectionFixture(second, 2, false);
+        var batches = await Task.WhenAll(
+            Task.Run(() => ScribeScriptHost.ExecuteBatch(first.Path, [PathFor("Alpha"), PathFor("Beta")])),
+            Task.Run(() => ScribeScriptHost.ExecuteBatch(second.Path, [PathFor("Alpha"), PathFor("Beta")])));
+        foreach (var batch in batches)
+        {
+            Assert.All(batch, result => Assert.True(result.IsSuccess, result.Failure?.ToString()));
+            Assert.Single(batch[0].ReadSet);
+            Assert.Empty(batch[1].ReadSet);
+        }
+        Assert.NotEqual(batches[0][0].ReadSet[0].Sha256, batches[1][0].ReadSet[0].Sha256);
+    }
+
+    private static StatementProjectionTestRepository ProjectionReader()
+    {
+        var root = new StatementProjectionTestRepository();
+        TemporaryFileSystem.File.WriteAllText(System.IO.Path.Combine(root.Path, "global.json"), "{}");
+        ProjectionFixture(root, 1, false);
+        Write(root.Path, "Alpha", $$"""
+            internal sealed class Alpha : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create()
+                {
+                    for (var index = 0; index < 2; index++)
+                        _ = Describe.Lean(DescribeId.Create("claim"), DeclarationHandle.Create("{{GidFor("Alpha")}}.claim"),
+                            H("Claim"), StatementSource.FromLean(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("content"))), DescribeRole.Theorem);
+                    return DocumentDefinition.Create(ScribeNode.Create("digest", H("title"), Blocks(Paragraph(Text("content")))));
+                }
+            }
+            """);
+        Definition(root.Path, "Beta");
+        return root;
     }
 
     [Fact]

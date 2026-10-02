@@ -466,7 +466,8 @@ internal static class StatementProjectionFixtureLoader
 {
     internal const string ProjectorEpoch = "statement-projector-v1";
     internal sealed record Assessment(ProjectionOutcome Outcome, string DeclarationContentDigest);
-    private static readonly AsyncLocal<string?> RepositoryRoot = new();
+    private sealed record ExecutionScope(string Root, IDictionary<string, string>? Reads);
+    private static readonly AsyncLocal<ExecutionScope?> RepositoryRoot = new();
     private static readonly AsyncLocal<(string Root, Lazy<ImmutableDictionary<RepoPath, ImmutableArray<StatementEntry>>> Statements)?>
         FreshStatements = new();
     private static readonly Dictionary<string, ImmutableDictionary<RepoPath, ImmutableArray<StatementEntry>>> StatementsByRoot =
@@ -552,12 +553,13 @@ internal static class StatementProjectionFixtureLoader
     internal static string FixtureDirectory(string repositoryRoot) => Path.Combine(
         repositoryRoot, "Golden", "Projection");
 
-    internal static T WithRepositoryRoot<T>(string repositoryRoot, Func<T> action)
+    internal static T WithRepositoryRoot<T>(string repositoryRoot, Func<T> action,
+        IDictionary<string, string>? reads = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(action);
         var previous = RepositoryRoot.Value;
-        RepositoryRoot.Value = Path.GetFullPath(repositoryRoot);
+        RepositoryRoot.Value = new ExecutionScope(Path.GetFullPath(repositoryRoot), reads);
         try
         {
             return action();
@@ -566,6 +568,15 @@ internal static class StatementProjectionFixtureLoader
         {
             RepositoryRoot.Value = previous;
         }
+    }
+
+    internal static void RecordRead(LeanDeclarationRef declaration, StatementAssessment assessment)
+    {
+        if (RepositoryRoot.Value?.Reads is not { } reads) return;
+        var digest = ScribeResourcePack.Digest(ScribeResourceCodec.EncodeAssessment(assessment));
+        if (reads.TryGetValue(declaration.Value, out var previous) && previous != digest)
+            throw new InvalidOperationException($"Projection changed during execution: {declaration.Value}");
+        reads[declaration.Value] = digest;
     }
 
     internal static T WithFreshRepositoryRoot<T>(string repositoryRoot, Func<T> action)
@@ -580,7 +591,7 @@ internal static class StatementProjectionFixtureLoader
 
     private static ImmutableDictionary<RepoPath, ImmutableArray<StatementEntry>> StatementsForCurrentRepository()
     {
-        var repositoryRoot = RepositoryRoot.Value ?? FindRepositoryRoot();
+        var repositoryRoot = RepositoryRoot.Value?.Root ?? FindRepositoryRoot();
         if (FreshStatements.Value is { } fresh && fresh.Root == repositoryRoot)
             return fresh.Statements.Value;
         lock (StatementsByRoot)
