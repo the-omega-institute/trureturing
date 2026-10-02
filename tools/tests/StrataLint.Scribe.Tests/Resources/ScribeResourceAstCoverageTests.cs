@@ -62,6 +62,7 @@ public sealed class ScribeResourceAstCoverageTests
             var encoded = ScribeResourceCodec.Encode(definition);
             var decoded = ScribeResourceCodec.Decode(encoded);
             Assert.Equal(encoded, ScribeResourceCodec.Encode(decoded));
+            Assert.True(ScribeResourceStructuralComparer.Equal(definition, decoded, out var difference), difference);
         }
     }
 
@@ -110,7 +111,9 @@ public sealed class ScribeResourceAstCoverageTests
         var definition = DocumentDefinition.Create(document, "Blueprint/D5/S1/Scale/Resource.scribe.cs");
 
         var encoded = ScribeResourceCodec.Encode(definition);
-        Assert.Equal(encoded, ScribeResourceCodec.Encode(ScribeResourceCodec.Decode(encoded)));
+        var decoded = ScribeResourceCodec.Decode(encoded);
+        Assert.Equal(encoded, ScribeResourceCodec.Encode(decoded));
+        Assert.True(ScribeResourceStructuralComparer.Equal(definition, decoded, out var difference), difference);
     }
 
     [Fact]
@@ -181,6 +184,49 @@ public sealed class ScribeResourceAstCoverageTests
         var actual = new HashSet<Type> { sharedA };
         Assert.Contains(sharedA, actual);
         Assert.DoesNotContain(sharedB, actual);
+    }
+
+    [Fact]
+    public void CoverageDefinitionsPreserveAllInstanceProperties()
+    {
+        foreach (var definition in CoverageDefinitions())
+        {
+            var decoded = ScribeResourceCodec.Decode(ScribeResourceCodec.Encode(definition));
+            Assert.True(ScribeResourceStructuralComparer.Equal(definition, decoded, out var difference), difference);
+        }
+    }
+
+    [Fact]
+    public void AuthoredAndNoFormulaProjectionGapFieldsSurviveRoundTrip()
+    {
+        var definition = CoverageDefinitions().First();
+        var decoded = ScribeResourceCodec.Decode(ScribeResourceCodec.Encode(definition));
+        var expected = definition.Document.Content.Items.OfType<DocumentBlock.Describe>()
+            .Where(static item => item.StatementSource is StatementSource.Authored or StatementSource.NoFormula)
+            .Where(static item => item.Id.Value != "claim").ToArray();
+        var actual = decoded.Document.Content.Items.OfType<DocumentBlock.Describe>()
+            .Where(static item => item.StatementSource is StatementSource.Authored or StatementSource.NoFormula)
+            .Where(static item => item.Id.Value != "claim").ToArray();
+        Assert.Equal(2, expected.Length);
+        Assert.Equal(expected.Length, actual.Length);
+        for (var index = 0; index < expected.Length; index++)
+        {
+            var expectedGap = Gap(expected[index].StatementSource!);
+            var actualGap = Gap(actual[index].StatementSource!);
+            Assert.NotNull(expectedGap);
+            Assert.NotNull(actualGap);
+            Assert.Equal(expectedGap.ReasonCode, actualGap.ReasonCode);
+            Assert.Equal(expectedGap.OffendingSubject, actualGap.OffendingSubject);
+            Assert.Equal(expectedGap.ProjectorEpoch, actualGap.ProjectorEpoch);
+            Assert.Equal(expectedGap.DeclarationContentDigest, actualGap.DeclarationContentDigest);
+        }
+
+        static ProjectionGap? Gap(StatementSource source) => source switch
+        {
+            StatementSource.Authored authored => authored.ProjectionGap,
+            StatementSource.NoFormula noFormula => noFormula.ProjectionGap,
+            _ => null,
+        };
     }
 
     private static void CollectAstTypes(object? value, ISet<Type> types, ISet<object> visited)
@@ -278,7 +324,8 @@ public sealed class ScribeResourceAstCoverageTests
             AssessedProvenance.NovelAfterSearch(GidRef.Create("D5/S1/Scale/Search")),
             DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative"))),
             atom,
-            new StatementSource.Authored(atom, null),
+            new StatementSource.Authored(atom, new ProjectionGap(
+                "missing", "D5/S1/Scale/Other.member", "statement-projector-v1", new string('a', 64))),
             new DescribeKindSource.ReportDerived(
                 DeclarationHandle.Create("D5/S1/Scale/Other.member"),
                 DescribeRole.Lemma)));
@@ -289,7 +336,8 @@ public sealed class ScribeResourceAstCoverageTests
             AssessedProvenance.FromRepo(),
             DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative"))),
             null,
-            new StatementSource.NoFormula(null),
+            new StatementSource.NoFormula(new ProjectionGap(
+                "constant", "Fixture.subject", "statement-projector-v1", new string('b', 64))),
             new DescribeKindSource.ReportDerived(
                 DeclarationHandle.Create("D5/S1/Scale/Other.member"),
                 DescribeRole.Proposition)));

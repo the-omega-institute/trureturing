@@ -16,8 +16,9 @@ public sealed class ScribeResourceCorpusTests
     [Fact]
     public void EveryDocumentDefinitionSurvivesResourceRoundTrip()
     {
-        var catalog = FixtureCatalog(DocumentAssembly.Definitions.Select(static item => item.Document));
-        var citations = DocumentAssembly.Definitions
+        var definitions = CorpusDefinitions();
+        var catalog = FixtureCatalog(definitions.Select(static item => item.Document));
+        var citations = definitions
             .SelectMany(static item => LiteratureReferences(item.Document))
             .DistinctBy(static item => item.BibKey.Value, StringComparer.Ordinal)
             .ToDictionary(
@@ -28,7 +29,7 @@ public sealed class ScribeResourceCorpusTests
         var totalBytes = 0L;
         var sizes = new List<int>();
 
-        foreach (var definition in DocumentAssembly.Definitions)
+        foreach (var definition in definitions)
         {
             try
             {
@@ -40,13 +41,14 @@ public sealed class ScribeResourceCorpusTests
                 totalBytes += encoded.Length;
                 sizes.Add(encoded.Length);
                 Assert.Equal(encoded, ScribeResourceCodec.Encode(decoded));
+                Assert.True(ScribeResourceStructuralComparer.Equal(CanonicalDefinition(definition), decoded, out var difference), difference);
                 var expectedMarkdown = CanonicalMarkdownWriter.Write(definition.Document, catalog, citations);
                 var actualMarkdown = CanonicalMarkdownWriter.Write(decoded.Document, catalog, citations);
                 if (!expectedMarkdown.SequenceEqual(actualMarkdown))
                 {
-                    var difference = Enumerable.Range(0, Math.Min(expectedMarkdown.Length, actualMarkdown.Length))
+                    var markdownDifference = Enumerable.Range(0, Math.Min(expectedMarkdown.Length, actualMarkdown.Length))
                         .FirstOrDefault(index => expectedMarkdown[index] != actualMarkdown[index], -1);
-                    throw new InvalidOperationException($"Markdown differs at {difference}; lengths {expectedMarkdown.Length}/{actualMarkdown.Length}.");
+                    throw new InvalidOperationException($"Markdown differs at {markdownDifference}; lengths {expectedMarkdown.Length}/{actualMarkdown.Length}.");
                 }
                 Assert.Equal(
                     DocumentGraphAssembler.Extract(definition.Document).Select(DocumentGraphAssembler.CanonicalKey),
@@ -77,7 +79,7 @@ public sealed class ScribeResourceCorpusTests
         try
         {
             var path = Path.Combine(directory.FullName, "resources.zip");
-            var definitions = DocumentAssembly.Definitions;
+            var definitions = CorpusDefinitions();
             var written = ScribeResourcePack.Write(path, definitions);
             var pack = ScribeResourcePack.Open(path);
             Assert.Equal(definitions.Length, pack.Manifest.EntryCount);
@@ -86,7 +88,9 @@ public sealed class ScribeResourceCorpusTests
             foreach (var definition in definitions)
             {
                 var bytes = ScribeResourceCodec.Encode(definition);
-                Assert.Equal(bytes, ScribeResourceCodec.Encode(pack.Read(definition.Document.Header.Gid.Value)));
+                var decoded = pack.Read(definition.Document.Header.Gid.Value);
+                Assert.Equal(bytes, ScribeResourceCodec.Encode(decoded));
+                Assert.True(ScribeResourceStructuralComparer.Equal(CanonicalDefinition(definition), decoded, out var difference), difference);
                 sizes.Add(bytes.Length);
             }
             var ordered = sizes.Order().ToArray();
@@ -120,6 +124,50 @@ public sealed class ScribeResourceCorpusTests
                         .ToImmutableArray()),
                 StringComparer.Ordinal);
         return DeclarationCatalog.Create(LeanAxiomReport.Create(declarations));
+    }
+
+    private static ImmutableArray<DocumentDefinition> CorpusDefinitions() =>
+        [.. DocumentAssembly.Definitions, ProjectionGapDefinition()];
+
+    private static DocumentDefinition CanonicalDefinition(DocumentDefinition definition)
+    {
+        var path = definition.SourcePath.Replace('\\', '/');
+        var blueprint = path.LastIndexOf("/Blueprint/", StringComparison.Ordinal);
+        return DocumentDefinition.Create(definition.Document, blueprint < 0 ? path : path[(blueprint + 1)..]);
+    }
+
+    private static DocumentDefinition ProjectionGapDefinition()
+    {
+        var declaration = LeanDeclarationRef.Create("D5/S0/Synthetic/ProjectionGap.member");
+        var authored = DocumentBlock.Describe.Restore(
+            DescribeId.Create("authored-gap"),
+            DefinitionDsl.H("Authored gap"),
+            DescribeStatement.FromLean(declaration),
+            AssessedProvenance.FromRepo(),
+            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("authored gap"))),
+            DefinitionDsl.Num(1),
+            new StatementSource.Authored(DefinitionDsl.Num(1), new ProjectionGap(
+                "missing", "D5/S0/Synthetic/ProjectionGap.member", "statement-projector-v1", new string('a', 64))),
+            new DescribeKindSource.ReportDerived(
+                DeclarationHandle.Create(declaration.Value), DescribeRole.Lemma));
+        var noFormula = DocumentBlock.Describe.Restore(
+            DescribeId.Create("no-formula-gap"),
+            DefinitionDsl.H("No formula gap"),
+            DescribeStatement.FromLean(declaration),
+            AssessedProvenance.FromRepo(),
+            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("no formula gap"))),
+            null,
+            new StatementSource.NoFormula(new ProjectionGap(
+                "constant", "D5/S0/Synthetic/ProjectionGap.member", "statement-projector-v1", new string('b', 64))),
+            new DescribeKindSource.ReportDerived(
+                DeclarationHandle.Create(declaration.Value), DescribeRole.Proposition));
+        return DocumentDefinition.Create(
+            ScribeDocument.Create(
+                DefinitionDsl.Header("D5/S0/Synthetic/ProjectionGap", "Projection gap fixture"),
+                DefinitionDsl.H("Projection gap fixture"),
+                DefinitionDsl.Blocks(new DocumentBlock.Section(
+                    DefinitionDsl.H("Sources"), DefinitionDsl.Blocks(authored, noFormula)))),
+            "Blueprint/D5/S0/Synthetic/ProjectionGap.scribe.cs");
     }
 
     private static IEnumerable<(LeanDeclarationRef Reference, string Kind)> References(ScribeDocument document) =>
