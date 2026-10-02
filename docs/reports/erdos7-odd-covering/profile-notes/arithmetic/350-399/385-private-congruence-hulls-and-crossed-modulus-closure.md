@@ -276,6 +276,13 @@ being excluded. Opposite5 with7,11,13 yields respective support bounds
 3854,10246,14570, sharpening the uniform finite carrier without adding
 an unproved height assumption or excluding every remaining palette.
 
+[Section160](#160-a-missing-two-prime-power-product-forces-a-support-cutoff)
+reuses the four-row code on exponent quotients and retains their
+remainders. Absence of an original p^u ell^v forces a quantified support
+cutoff, so sufficiently large support forces both powers in ONE original
+label. This works without a color assignment; it does not multiply
+separately forced labels or infer their phase compatibility.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -19456,3 +19463,111 @@ In particular the small-anchor branch has the uniform restriction
 The proof does not assume either anchor's extra height before the contradiction; HPA supplies it only in the branch being excluded. Covers already below the threshold need no such height claim. The full old phase data and all cofactor coordinates stay literal throughout the transport.
 
 This excludes the larger-prime subbranch and sharpens the existing finite carrier restriction. It does not exclude every remaining covering palette, give new height bounds, or provide Lean verification. The construction does not use the externally attributed nine-prime result.
+
+## 160. A missing two-prime power product forces a support cutoff
+
+Keep one original EB1 whole cover. Let p,ell be distinct original support primes and let u,v>=1. Put m=p^u ell^v. Reusing FPA's existing four-row encoding after division of exponents into quotient and remainder gives
+
+    m absent from the ORIGINAL numerical labels
+      ==> P^+(Q)<B_(p,ell;u,v),                     (PPL1)
+
+where
+
+    B_(p,ell;u,v)
+      =(p-1)(ell-1) p^(3u-2) ell^(3v-2)
+         min(p^u,ell^v).                            (PPL2)
+
+Thus a sufficiently large original support prime forces the JOINT original label p^u ell^v. This implication is obtained from one whole-cover descent; it does not multiply separately forced labels or claim a joint private source. The construction is ordinary mathematics and asserts neither Lean verification nor unrestricted noncoverage.
+
+### Quotients reduce the original heights to the existing forbidden-pair domain
+
+Suppose m is absent. Original divisor closure excludes EVERY original multiple of m. To prove one orientation of PPL1, suppose an original support prime q satisfies
+
+    q>B:=p^(3u-2)(p-1)ell^(4v-2)(ell-1).           (PPL3)
+
+This q is distinct from p and ell. Write Q=p^H ell^K q^G M, gcd(M,p ell q)=1, and use the existing simultaneous prime-phase normalization A_p=0 modp, A_ell=0 modell, A_q=0 modq.
+
+Every q-bearing original has numerical form d=p^a ell^c q^e t, with t|M and e>=1. Divide its two anchor heights as
+
+    a=u alpha+i, 0<=i<u,
+    c=v gamma+j, 0<=j<v.
+
+The missing original product implies alpha*gamma=0: if both quotients were positive, m would divide d. Thus (alpha,gamma,e) is precisely an allowed input to FPA's already proved four-row encoding. Denote its output by(U,V). No new lattice encoding is introduced.
+
+### A scaled prefix supplies every needed enclosure depth
+
+For e>=1 use the anchor prefix depths
+
+    L_p(e)=u(2e+1)-1,
+    L_ell(e)=v(2e+2)-1.
+
+As in FPA, restrict to prefixes with nonzero first p- and ell-roots. Their first-level count is exactly
+
+    (p-1)p^(L_p(1)-1)(ell-1)ell^(L_ell(1)-1)=B.
+
+Every prefix has p^(2u)ell^(2v) extensions at the next level. Both alphabets fit under PPL3, since
+
+    B/[p^(2u)ell^(2v)]
+      =p^(u-2)(p-1)ell^(2v-2)(ell-1)
+      >=(p-1)(ell-1)/p>1.
+
+Choose one prefix-compatible injection of these domains into q-prefixes, with first image avoiding root0. Keep FPA's single source: preserve the complete old p^H, ell^K and M coordinates, use the coded q-coordinate on the nonzero-root domain D, and set q to zero on D^c. A complete new carrier is
+
+    Qtilde=p^max(H,L_p(G)) ell^max(K,L_ell(G)) M.
+
+The retained original prime classes A_p,A_ell cover all of D^c. The complete inverse of A_q is exactly D^c. Every other q-bearing original has nonzero first q-phase, by comparable-original disjointness, so its inverse is empty off D.
+
+On D, a selected q^e prefix has one inverse pair of anchor prefixes. Combining them with the literal original p^a, ell^c and t phases gives an empty inverse if incompatible, and otherwise ONE exact AP of modulus
+
+    p^max(a,L_p(e)) ell^max(c,L_ell(e)) t.           (PPL4)
+
+This is the same complete-inverse check as FPA5 with scaled prefix depths. The selected prefixes already belong to D; no further mask splits the AP.
+
+### Only exponent remainders and containment need a new check
+
+Apply FPA's output(U,V) to the quotient heights and assign the ONE new numerical modulus
+
+    d'=p^(uU+i) ell^(vV+j) t.                      (PPL5)
+
+FPA gives U,V>=1 and
+
+    U<=max(alpha,2e), V<=max(gamma,2e+1).
+
+Consequently
+
+    uU+i<=max(a,2eu+i)<=max(a,L_p(e)),
+    vV+j<=max(c,(2e+1)v+j)<=max(c,L_ell(e)).
+
+Thus d' divides the exact inverse modulus in PPL4. Reducing that inverse's one phase modulo d' supplies one enclosing AP containing the ENTIRE inverse.
+
+Both new anchor exponents are at least u and v, so every new label is divisible by the absent m. It therefore collides with no original label, including every retained q-free original.
+
+For new–new collisions, the p-exponent modulo u recovers i, and the ell-exponent modulo v recovers j. Division after subtracting these remainders recovers U and V. The EXISTING four-row decoder then recovers alpha,gamma,e, and the anchor-free part recovers t. Hence it recovers the complete original tuple(a,c,e,t). Numerical distinctness of the original family proves new–new injectivity. This also handles u=1 or v=1, whose corresponding remainder is necessarily zero.
+
+All new moduli are odd nonunits and divide Qtilde. Each surviving original contributes one AP; no original is copied for different remainders or source points.
+
+### The existing source-and-guard coverage argument gives the cutoff
+
+Retain every q-free original, omit A_q, and replace each other nonempty q-bearing inverse by its PPL5 enclosure. Points of D^c are covered by the retained A_p or A_ell. At every point of D, the ONE original source is covered by an original other than A_q. A q-free owner covers the output point unchanged; a q-bearing owner covers it through its complete inverse and enclosure.
+
+This proves whole coverage of the complete new period and all integer lifts. The output has at most one fewer class, since A_q is omitted and every other original contributes at most one AP. Freshness and injectivity have already supplied distinct odd nonunit moduli, so EB1 forbids this descent. It follows that P^+(Q)<B; equality is impossible because B is composite, and both anchor primes are below B.
+
+Interchanging(p,u) with(ell,v) gives the second orientation. Their minimum is exactly PPL2. At u=v=1 this reduces to FPA2, with no stronger claim for that already established case.
+
+### Joint original labels forced by the same-family support
+
+The useful contrapositive is
+
+    P^+(Q)>=B_(p,ell;u,v)
+      ==> p^u ell^v is ORIGINAL.                   (PPL6)
+
+It includes both powers in ONE original numerical label and requires neither a color assignment nor an assumed joint occurrence. The source and arithmetic comparison supplied that occurrence. It does not prescribe the label's phase, prove simultaneous incidence with any other original, or imply products of three or more different primes.
+
+For example, the following are exact substitutions into PPL6 for the original support primes3 and5:
+
+    P^+(Q)>=16200 ==> 3^2*5=45 is ORIGINAL,
+    P^+(Q)>=45000 ==> 3*5^2=75 is ORIGINAL.         (PPL7)
+
+These are consumers in the unrestricted original source. The existing small-opposite-pair bound P^+(Q)<14570 removes both displayed large-P regimes inside that particular small-anchor branch, so PPL7 is not presented as a further exclusion there. PPL6 remains a joint-label constraint when the small-anchor hypotheses are unavailable or for other parameter choices.
+
+The remaining step is to consume such genuinely forced joint labels with an actual original-parent capacity, supplier relation or complete-hole repair. This result supplies no automatic closure under multiplying several separately forced products, no small opposite-color pair when R meets {5,7,11,13}, and no unrestricted contradiction.
