@@ -10257,6 +10257,10 @@ $$
 
 这里 $T$ 是[半局部源的 $\theta_{\{\infty,2\}}$](../../../Library/Weil/connesconsanimoscovici2024semilocal.md)在共同 unitary 物理表示中的候选实现。需要一起核对源 Mellin 约定与 Fourier 运输，而不能只核对乘子模。
 
+具体地，$(U\xi)(x)=2^{-1/2}\xi(x/2)$，故 $(T\xi)(x)=\xi(x)-\tfrac12\xi(x/2)$。令 $(\mathscr L\xi)(s)=e^{s/2}\xi(e^s)$；在这一 half-density unitary 坐标中，$U$ 是长度 $\ell$ 的平移。源式 (57) 的乘子及 Proposition 4.7(i)、Theorem 4.6 分别承担该运输的乘子、Fourier 与 Sonin 子空间合同；单个物理点值公式不能代替这三个对应。
+
+由 $(1-q)^2I\le G\le(1+q)^2I$，受限算子 $K$ 有有界逆。以下 $K^{-1}$ 只在 $V$ 上取逆，并在 $V^\perp$ 上延为零。
+
 设
 
 $$
@@ -10328,11 +10332,58 @@ $$
 
 零阶系数由 $(1-q^2)\sum_{n\ge0}q^{2n}-1=0$ 消去。这个推导必须在 trace-class 的差上完成，不能相减两个未定义的无限迹。[局部散射的源合同](../../../Library/Weil/burnol1999scattering.md)也要求保留完整 local factor 的符号与恒等修正。
 
+下面给出用于这一交换的局部块估计。取 logarithmic cell $I=(-\ell,0)$，$E_{mn}$ 将第 $n$ 个 cell 的 fibre 坐标复制到第 $m$ 个 cell，并在其余坐标取零。上述 fibre 公式对应
+
+$$
+\widetilde Q-Q=(1-q^2)\sum_{m,n\ge0}q^{m+n}E_{mn}-E_{00}.
+$$
+
+在 logarithmic 坐标中，设 $X_f$ 为卷积 $f$，则 $A_f=X_fX_f^*$。若 $\operatorname{supp}f\subset[-L,L]$ 且 $M=\|f\|_2^2$，令 $I_L=I+[-L,L]$。因 $X_f^*\mathbf1_I$ 的值域支撑于 $I_L$，有
+
+$$
+\begin{aligned}
+A_f\mathbf1_I&=X_f\mathbf1_{I_L}X_f^*\mathbf1_I,\\
+\|A_f\mathbf1_I\|_1
+&\le\|X_f\mathbf1_{I_L}\|_2\|X_f^*\mathbf1_I\|_2
+=M\sqrt{\ell(\ell+2L)}.
+\end{aligned}
+$$
+
+这里右侧的 $\|\cdot\|_2$ 是 Hilbert–Schmidt 范数。平移不变性给出每个 $A_fE_{mn}$ 的同一迹范数界，因此
+
+$$
+\|A_f(\widetilde Q-Q)\|_1
+\le\frac{2M}{1-q}\sqrt{\ell(\ell+2L)}.
+$$
+
+该界在 $2L\le r_*$、$M$ 固定时统一成立。各块的迹为 $\ell H_f((n-m)\ell)$；绝对迹范数可和性使有限块求和与取迹可交换，得到前述算术配对。它不要求 $\widetilde Q-Q$ 本身紧。
+
 在只激活 $2^1$ 的真实测试上，上式就是 $\mathcal A_2(f)$。设 $J_2=W-\mathcal F_2Q\mathcal F_2$；由[源 archimedean 迹约定](../../../Library/Weil/connesconsani2021archimedean.md)运输而来的待核对等式为
 
 $$
 Q_{\rm full}(f)=\operatorname{Tr}(A_fJ_2).
 $$
+
+本章两个 Sonin 迹还需独立的迹类供应。设 $J_0=W-\mathcal FQ\mathcal F$。archimedean 源 Proposition 1.5(iii)–(iv) 给出 $A_fJ_0\in\mathfrak S_1$ 及 $W_\infty(h)=\operatorname{Tr}(A_fJ_0)$；源中 cutoff 投影的字母 $P$ 对应这里的 $W$，不能与这里的 Sonin 投影 $P$ 混用。设
+
+$$
+Z=W\mathcal FW\mathcal FW.
+$$
+
+源 Proposition 2.2(iii) 的证明给出 $A_fZ\in\mathfrak S_1$；式 (81)、(90) 的谱分解给出
+
+$$
+Z=P+S_0,\qquad
+S_0=\sum_n\lambda_n^2|\zeta_n\rangle\langle\zeta_n|\in\mathfrak S_1.
+$$
+
+这里 $Q\mathcal FQ$ 是 Hilbert–Schmidt，故 $\sum_n\lambda_n^2<\infty$。于是 $A_fP=A_fZ-A_fS_0\in\mathfrak S_1$。再由 $[A_f,T]=0$ 得
+
+$$
+A_fP_2=T(A_fP)K^{-1}PT^*\in\mathfrak S_1.
+$$
+
+对实偶 $H_f$，$[A_f,\mathcal F]=0$；上述算术差的迹类估计同时给出 $A_fJ_2\in\mathfrak S_1$。因此以下投影差额由真实有限迹组成，不是只知 $PA_fP$ 迹类后对更强结论作替换。源 Theorem 4.7 的迹恒等式适用于紧支撑光滑 $h$；它与后续只覆盖小支撑的有符号估计范围不同。
 
 ### 14.5 剩余投影差额的计算合同
 
@@ -10419,6 +10470,22 @@ $$
 
 所需连续性来自固定 trace-class 算子与强连续伸缩的配对，而不是未经证明的 operator-norm 连续性。
 
+非线性贡献的统一大小可直接控制。以 $r_\epsilon=2L$ 记自相关支撑界，$B_\epsilon=QA_{f_\epsilon}W$ 的 logarithmic cross-cutoff 核仅在 $[-r_\epsilon,0]\times[0,r_\epsilon]$ 非零。由 $A_{f_\epsilon}^{1/2}$ 分解以及 Young 不等式，
+
+$$
+\begin{aligned}
+\|B_\epsilon\|_1&\le r_\epsilon M,\\
+\|B_\epsilon\|&\le\|f_\epsilon\|_1^2
+\le4(1+c)^2\|\beta\|_1^2\epsilon,\\
+\left|2\operatorname{Re}\operatorname{Tr}
+\left[C_2^3R_2B_\epsilon\mathcal F_2Q\right]\right|
+&\le\frac{2J_3^3}{1-\gamma^2}\|f_\epsilon\|_1^2
+=O_\beta(\epsilon).
+\end{aligned}
+$$
+
+此处 $C_2,R_2,\gamma,J_3$ 不随测试宽度变化。迹类配对的连续核在零点为零；这个余项不隐藏算术原子。
+
 令 $\sigma_{-1}=-1$、$\sigma_j=1$（$j\ge0$），以及 $\operatorname{sinc}z=\sin z/z$，在零点作连续延拓。线性 cross-cutoff 部分的候选 kernel 为
 
 $$
@@ -10440,9 +10507,26 @@ $$
 \operatorname{sinc}\bigl(2\pi2^kx(2-e^t)\bigr)\,dx.
 $$
 
-需要证明 $\mathcal K_{\rm lin}-\mathcal L$ 在 $[0,r_*]$ 连续。候选控制如下：非同频族的绝对值用 $O(2^{-\max(j,k)})$ 求和；$j=k$ 在 $t=0$ 的端点项用 $O(t(1+|\log t|))$ 控制；$j=0,k=-1$ 在 $\ell$ 只是一项连续贡献。
+以下估计补足有限核与迹配对极限之间的收敛义务。除 $j=k$ 和 $j=k+1$ 外，$|2^j-2^ke^t|\ge c_*2^{\max(j,k)}$；plus 项无须排除这两族。因此非共振双和以 $O(2^{-\max(j,k)})$ 一致绝对可和。$j=0,k=-1$ 在 $\ell$ 只是一项连续贡献。
 
-有限截断在 $\ell$ 附近还需有与截断无关的、局部可积的 logarithmic 主控界。仅有 operator-norm 截断误差不完成这项证明；必须排除取极限时额外出现未计入的集中项。
+记 $j=k$ 的已积分项为 $D_j(t)$。它们满足
+
+$$
+|D_j(t)|\le Ct\min\{1,2^{-j}/t\},\qquad
+\sup_{0\le t\le r_*}\sum_{j>N}|D_j(t)|\le C2^{-N}.
+$$
+
+其总和在 $t=0$ 为 $O(t(1+\log^+(1/t)))$，并一致收敛为连续函数。内点共振的部分和 $\mathcal L_N$ 则满足
+
+$$
+\begin{aligned}
+|\mathcal L_N(t)|&\le C\left(1+\log^+\frac1{|t-\ell|}\right),\qquad t\ne\ell,\\
+\|\mathcal L-\mathcal L_N\|_{L^1(0,r_*)}
+&\le C(N+1)2^{-N}.
+\end{aligned}
+$$
+
+后一界由逐项积分 $\min\{1,C2^{-k}/|t-\ell|\}$ 后求尾和得到。非共振部分一致收敛、共振部分 $L^1$ 收敛，与有限截断的迹极限共同给出核配对；没有额外端点原子。仅有 operator-norm 收敛不承担这个结论。
 
 **候签定理 15.1（共同测试上的共振分解）。** 若上述迹识别、矩形截断与连续余项合同成立，则存在固定 $\kappa\in C([0,r_*])$，使
 
@@ -10451,9 +10535,49 @@ D_2(f_\epsilon)=\int_0^{r_*}H_\epsilon(t)
 \bigl[\mathcal L(t)+\kappa(t)\bigr]dt.
 $$
 
-算术尺度上的集中项已在第 14 章单独配平；这里剩下的是 locally integrable 的对数共振。不能预先把整个投影修正当成随支撑宽度消失的连续核。
+这里是几乎处处及 $L^1$ 的核等式；$\mathcal L(\ell)$ 的定义级数正向发散，不是处处有限函数。积分忽略单点值。算术尺度上的集中项已在第 14 章单独配平；这里剩下的是 locally integrable 的对数共振，不能预先把整个投影修正当成连续核。
 
-### 15.3 正 dyadic 配对与待核验的余项
+### 15.3 保留变动端点的直接对数估计
+
+对非零 $z\to0$，按 $2^k|z|\le1$ 与补段分开，低尺度有 $\operatorname{sinc}(2^kz)=1+O(4^kz^2)$，累计误差有界；高尺度用几何尾和控制绝对值。因此
+
+$$
+\sum_{k\ge0}\operatorname{sinc}(2^kz)
+=\frac1\ell\log(1/|z|)+O(1).
+$$
+
+在 $t$ 接近 $\ell$ 时，$x\in[e^{-t},1]$ 一致远离零。将该估计用于 $\mathcal L$ 的精确积分，并保留变动端点，得到
+
+$$
+\begin{aligned}
+\mathcal L(t)
+&=\frac{e^{t/2}-e^{-t/2}}{\ell}\log\frac1{|2-e^t|}+O(1),\\
+\mathcal L(\ell+s)
+&=\frac1{\sqrt2\,\ell}\log(1/|s|)+O(1),\qquad s\ne0.
+\end{aligned}
+$$
+
+第二式使用 $e^{\ell/2}-e^{-\ell/2}=1/\sqrt2$；系数随 $s$ 的变化乘对数仍有界。该计算不先把积分端点冻结到 $1/2$。
+
+设 $r(v)=\int\beta(u)\beta(u-v)\,du$。在隔离的共振脉冲上，即 $|v|\le2$，有 $H_\epsilon(\ell+\epsilon v)=2c\,r(v)$。这个等式不对全部实 $v$ 成立；其他脉冲的正 lag 中心为 $0,a-b,2b,2a$，均与 $\ell$ 分离。由于
+
+$$
+\int r(v)\,dv=\beta_0^2,\qquad
+\int|r(v)\log|v||\,dv<\infty,\qquad
+\|H_\epsilon\|_1\le\|f_\epsilon\|_1^2=O_\beta(\epsilon),
+$$
+
+其余脉冲及连续核的贡献为 $O_\beta(\epsilon)$；共振脉冲贡献为
+
+$$
+2c\epsilon\int r(v)\mathcal L(\ell+\epsilon v)\,dv
+=\frac{\sqrt2c}{\ell}\beta_0^2\epsilon\log(1/\epsilon)
++O_\beta(\epsilon).
+$$
+
+这条直接标量估计承担非零均值情形的主项推导。所有 $O_\beta$ 都固定 $a,b,c$ 和 $\beta$；不声称对退化中心距离或变动脉冲形状统一。
+
+### 15.4 可选的正 dyadic 配对
 
 定义
 
@@ -10476,17 +10600,17 @@ S_\beta(\epsilon)=\sum_{k\ge0}\int_{1/2}^1
 \Psi_\beta(4\pi2^k\epsilon x)\,dx.
 $$
 
-自相关在 $\ell$ 附近恰为 $H_\epsilon(\ell+\epsilon v)=2c\,r(v)$；其其他正 lag 中心为 $0,a-b,2b,2a$，均与 $\ell$ 分离。候选配对估计是
+在第 15.3 节隔离的共振脉冲上，另一个候选配对表达式是
 
 $$
 D_2(f_\epsilon)=2\sqrt2\,c\epsilon S_\beta(\epsilon)+O_\beta(\epsilon).
 $$
 
-这里的 $O_\beta(\epsilon)$ 必须是对同一固定 $\beta$、全部充分小 $\epsilon$ 的统一界。连续核部分通过自相关脉冲的 $L^1$ 大小控制。共振项中的 $e^{\epsilon v}$、半密度与变动端点，则需要先按 $2^k\epsilon\asymp1$ 分段；低尺度的误差按层数求和，高尺度作 $w=(e^{\epsilon v}-1)/\epsilon$ 的换元并控制 sinc 积分尾。
+这一表达式需要比直接对数估计更细的误差控制。对 $s\asymp2^k\epsilon\le1$，每层振幅、参数和端点变化为 $O_\beta(\epsilon)$，共有 $O(\log(1/\epsilon))$ 层。对 $s\ge1$，用 $w=(e^{\epsilon v}-1)/\epsilon$ 换元后的权重与 $r(w)$ 相差 $O_\beta(\epsilon)$，sinc 配对误差为 $O_\beta(\epsilon\log(2+s)/s)$。端点位移为 $O(\epsilon|v|)$，其单独误差为 $O_\beta(\epsilon/s)$。两种高尺度界沿 dyadic 层数可和，恢复外层 $\epsilon$ 后得到 $O_\beta(\epsilon^2(1+\log(1/\epsilon)))$。
 
-所需的更细候选误差为 $O_\beta(\epsilon^2(1+|\log\epsilon|))$。未证明这个 uniform-in-$k$ 估计时，逐个固定 $k$ 的 Taylor 展开不足以推出上式。
+逐个固定 $k$ 的 Taylor 展开不足以替代上述统一求和。这条可选估计不再是非零均值主项的必要依赖。
 
-### 15.4 较强迹支配条件的候选障碍
+### 15.5 较强迹支配条件的候选障碍
 
 由于 $\beta_0>0$，候选尺度读数满足
 
@@ -10496,13 +10620,13 @@ $$
 \Psi_\beta(v)=O_\beta(v^{-1})\quad(v\to\infty).
 $$
 
-把 $2^k\epsilon\le1$ 与其补段分开，待核验的 dyadic 计数结论为
+把 $2^k\epsilon\le1$ 与其补段分开，可选的 dyadic 计数给出同一主系数：
 
 $$
 S_\beta(\epsilon)=\frac{\beta_0^2}{2\ell}\log(1/\epsilon)+O_\beta(1).
 $$
 
-**候签定理 15.2（实际投影差额的对数主项）。** 在第 14 章源合同与本章共振、余项义务全部成立时，对上述固定非负 $\beta$，有
+**候签定理 15.2（实际投影差额的对数主项）。** 在第 14 章源合同与本章 $L^1$ 核识别成立时，第 15.3 节的直接估计对上述固定非负 $\beta$ 给出
 
 $$
 D_2(f_\epsilon)
@@ -10510,7 +10634,7 @@ D_2(f_\epsilon)
 +O_\beta(\epsilon).
 $$
 
-其严格正主系数将给出充分小 $\epsilon$ 下的 $D_2(f_\epsilon)>0$。源 archimedean 连续修正的配对为 $O_\beta(\epsilon)$ 时，还将得到
+其严格正主系数给出充分小 $\epsilon$ 下的 $D_2(f_\epsilon)>0$。undeformed 压缩余弦算子为迹类，固定迹类算子与强连续伸缩的配对使源 archimedean 修正核连续；故该测试的 $E_\infty(h_\epsilon)=O_\beta(\epsilon)$。用第 14.5 节同一总账得到
 
 $$
 \delta_2(g_\epsilon)
@@ -10547,7 +10671,7 @@ $$
 
 物理投影与 entire generator、dual semilocal transport、archimedean trace 和 quasi-inner 紧性分别复用第 14 章的源条目。局部相位级数、有限 rank-one 线性代数与已有 source statement 的改写不计作新成果；候选新增内容是实际算术项配平之后的共振 kernel 与 uniform 余项。
 
-当前完整证明义务是：识别共同 unitary 表示下的 $T,\mathcal F_2,P_2$；以 trace-class 的差完成算术项配平；证明 double-sinc 截断的局部可积主控与连续余项；证明 dyadic 指标上的统一误差；把得到的实际比较接回完整 Weil 形式。没有这些条件的数值正矩阵不提供该结论。
+本文给出了共同 unitary 表示下的运输公式、Sonin 迹类供应链、统一局部块界、double-sinc 的 $L^1$ 尾界以及直接标量对数估计。独立解析审阅支持固定非零均值脉冲的候选主项，其范围是所提供推导的纸面核对；不提供工作树执行、Lean 编译或全支撑正性。当前形式化义务仍是将这些源对应、迹配对与核极限接回同一完整 Weil 形式。下一项研究缺口是较弱门槛 $D_S\le\sigma_S$ 在全部目标支撑上的统一估计；较强门槛的候选障碍不承担该估计。
 
 本文没有形式化、deposit 或覆盖记录，没有实际加权迹数值和已认证的具体 $\epsilon_0$。RH、全部支撑上的有符号比较以及黄金/FIB 组成与这些物理算子的额外识别均保持未解决。素数二的乘法伸缩 $U=\rho(2)$ 在本章有固定物理定义；它与 FIB 原子递归的黄金尺度作用需要另给对应。
 
