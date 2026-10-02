@@ -422,3 +422,50 @@ This is a uniform comparison of the named upper allowances. It does not supply a
 The sign of the cross alone cannot determine a favorable contribution for all actual vectors. For $c=3$ and $N=2$, $1/2<\log2/\log3<3/4$ implies $P_3(2)>0$, and the positive pole and Gamma terms give $s(3,2)<0$. Set $v_{-2}=v_2=1$, with either $v_0=-1$ or $v_0=-3$ and all other coefficients zero. Both vectors have $B_0=A_1=0$ and $B_1=4s(3,2)$, but their respective $X$ values are $4s(3,2)<0$ and $-4s(3,2)>0$. These are two realized moment configurations for the same symbol.
 
 At $M=200$, the coarse bounds $H(3)<40$ and $L/(2\pi)<1$ in (24), together with $Z_4\le Z_3/(M+1)$, give $T(3,200)<0$: its upper coefficient relative to $Z_3$ is less than $-\pi/4+81/201<0$. Therefore $-2TX$ decreases the energy for one of these vectors and increases it for the other. The general change of cross has an error matrix with eigenvalues of opposite signs; a retained-Schur argument must handle both common endpoints or establish a further constraint on the actual moment image.
+
+### A uniform reduction of the named jet allowance
+
+For $c\ge100000$ and integer $M\ge c\log c$, use the exact-Fourier interval (22) in (28). Let $\mathcal J_*$ be the normalized quadratic allowance (27) with center $t_*=t_B+r/2$ and radius $\epsilon_*=g+r/2$. Then
+
+$$
+\mathcal J_I(v)\le\mathcal J_*(v)
+\le\frac45\mathcal J_{\rm new}(v)
+\qquad\text{for every finite complex coefficient vector }v.
+\tag{31}
+$$
+
+The first inequality follows because every endpoint lies in $[t_*-\epsilon_*,t_*+\epsilon_*]$ and $2|X(v)|\le M(\|z_1\|^2+\|z_2\|^2)$. The second is a comparison of the same two moment matrices. Its constants can be checked without evaluating the growing prime sum.
+
+The decreasing envelope in (26) is below $19/50$, so $H(c)/M<19/50$. Also $K/M\le1/(2\pi\sqrt c)$ and $a/M\le1/(4\pi c)$. Integral upper bounds for $Z_3,Z_4,Z_6$ give
+
+$$
+M^2|t_*|<\frac12+\frac{19}{50}+\frac1{1000}+\frac1{1000}<\frac9{10},
+\qquad
+M^2\epsilon_*\le\frac1{6c}+\frac1{320c^{5/2}}<\frac1{1000}.
+\tag{32}
+$$
+
+Here $M^2r/2\le1/(320c^{5/2})$ and $KM^2Z_4\le K/(3M)<1/1000$. Since $E\ge0$, $F_1\ge8/M$ and $F_2\ge8/(3M^3)$. Since $B^2\ge c+2\ge8$, taking the minimum in (8) still gives $U_1\ge8/M$ and $M^2U_2\ge8/(3M)$. These are lower bounds on the chosen **allowance coefficients**, not lower bounds on the actual $S_2$ or $S_4$.
+
+Before the common factor $2/\pi^2$, the Young matrices on $z_1,z_2$ are $Y_1=\operatorname{diag}(2U_1,2/(3M))$ and $Y_2=\operatorname{diag}(2/M,2M^2U_2)$. The differences $(4/5)Y_i-\widetilde G_i$ have diagonal lower bounds
+
+$$
+\left(\frac{4799}{1000M},\frac{199}{1000M}\right),
+\qquad
+\left(\frac{599}{1000M},\frac{1599}{1000M}\right),
+$$
+
+and off-diagonal modulus below $9/(10M)$. Their diagonal products are at least $955001/(10^6M^2)$ and $957801/(10^6M^2)$, both greater than $81/(100M^2)$. The elementary two-by-two positivity criterion therefore proves the second inequality in (31). This is a paper application of the existing Fourier supplier and bounds, without a new Lean theorem or an originality claim.
+
+If all four moments vanish, both named jet allowances are zero. The comparison gives no strict improvement in that kernel. The full actual-column allowance still adds the unchanged remainder (11), and all middle modes remain; neither the full coupling nor the retained Schur loss is asserted to shrink by a factor $4/5$.
+
+For clarity, define $\mathcal E_{\rm mid}(v)=\sum_{N<|m|\le M}|C_m(v)|^2$. For the same $c,N,M$ and $\eta>0$,
+
+$$
+\sum_{|m|>N}|C_m(v)|^2\le
+\mathcal E_{\rm mid}(v)+(1+\eta)\mathcal J_I(v)
++(1+\eta^{-1})\mathcal R_2(v).
+\tag{33}
+$$
+
+Even when the actual exterior block has a lower bound $D_{\rm ext}\succeq d(c,N)I$ with $d(c,N)>0$, completing the Schur argument requires the actual retained form to dominate the entire right side of (33), divided by $d(c,N)$, for every retained vector along a cofinal support exhaustion. This requires the common endpoints, the middle shell, the remainder and the form-domain/exhaustion bridges together. No source or estimate in this note establishes that domination. For the existing FIB schedule $c_r=3^{F_{r+1}}$, the range $c_r\ge100000$ begins at $r=6$; parameter matching supplies (31) there when $M\ge c_r\log c_r$, and supplies no additional retained-form sign.
