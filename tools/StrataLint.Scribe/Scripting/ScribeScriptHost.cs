@@ -123,8 +123,7 @@ public static class ScribeScriptHost
                 catch (Exception exception) when (exception is TypeLoadException or FileLoadException
                     or FileNotFoundException or BadImageFormatException)
                 {
-                    return FailureResult(normalized, ScribeScriptFailureCode.TypeLoad,
-                        $"{normalized}: {FirstMessage(exception)}");
+                    return FailureResult(normalized, ScribeScriptFailureCode.TypeLoad, FirstMessage(exception));
                 }
                 DocumentDefinition definition;
                 try

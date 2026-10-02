@@ -215,7 +215,7 @@ public sealed class ScribeScriptHostTests
         var result = ScribeScriptHost.ExecuteWithEntryType(root.Path, path, "Missing.Entry");
 
         Assert.Equal(ScribeScriptFailureCode.TypeLoad, result.Failure?.Code);
-        Assert.Contains(path, result.Failure!.Message, StringComparison.Ordinal);
+        Assert.Contains(path, result.Failure!.ToString(), StringComparison.Ordinal);
         Assert.Null(result.Definition);
     }
 
