@@ -44571,3 +44571,646 @@ C(\bigcup I_s)\ge-\sum_sK_sR(I_s).
 \tag{320.17}
 \]
 五块划分是该恒等式的一个取值；需要累加的量是贡献与质量，而非各块平均的等权和。它只合并已有块预算，不供应未展开块的预算，也没有证明普通左端对数权重与（320.1）具有相同反向 RH 强度。$\square$
+## 321. CA宿主条件化后的增长乘子矩
+
+本节及 §§322–323 只组合已有 CA价格、非负除数增量和Bohr容量机制，研究同一个实际乘子族；不重证数位分类、素数尺度或Dirichlet逼近。价格、$X\sim P$、$Z(C)\sim e^\gamma\log P$ 与 $\Delta(C)\to0$ 采用 §317 的既有来源；非负增长矩的Euler接口见 §§216、222 及 [完整增量文献条目](../../../Library/Fourier/fibentropy2026weightedaggregates.md)。Bohr背景见 [相位盒文献条目](../../../Library/Fourier/fibcharacter2026bohrbarrier.md)。新增组合为纸面推导，尚无对应Lean核验或原创性声明。
+
+令 $C\to\infty$ 沿实际极大丰数取值，$P=P^+(C)$，并取任一使 $C$ 全局最大化 $Z(n)n^{-\epsilon}$ 的正价格。记
+
+$$
+F_C(t)=\frac{Z(Ct)}{Z(C)},\qquad a_p=v_p(C),\qquad
+R_{C,p}=\frac{(1-1/p)^{-1}}{Z(p^{a_p})}
+=\frac1{1-p^{-a_p-1}}.
+\tag{321.1}
+$$
+
+$F_C$ 是乘子 $t$ 上的乘法函数；它没有假设 $(C,t)=1$。局部值为 $F_C(p^v)=Z(p^{a_p+v})/Z(p^{a_p})$，所以 $1\le F_C(t)\le Z(t)$。后一上界与 [既有Beatty第二矩输入](../../../Library/ArithSums/guloglunevans2008beatty.md) 可给一个对 $C$ 统一的固定函数类，但固定斜率平均不能直接处理本节变化的 $C\varphi$ 与缩小的相位窗。以下不调用固定函数类定理来认证增长阶矩。
+
+**命题 321.1（全乘子区间的条件化增长矩）。** 固定 $0<\chi<1/2$，令 $s=\chi P\log P$。定义乘法增量
+
+$$
+b_{C,s}(1)=1,\qquad
+b_{C,s}(p^v)=F_C(p^v)^s-F_C(p^{v-1})^s\ge0,
+\qquad
+M_C(s)=\prod_p\left(1+\sum_{v\ge1}\frac{b_{C,s}(p^v)}{p^v}\right).
+\tag{321.2}
+$$
+
+这个Euler乘积收敛，且
+
+$$
+\log M_C(s)=o(\sqrt P),\qquad
+\sum_{1\le t\le T}F_C(t)^s\le T M_C(s)
+\quad(T\in\mathbb N_{>0}).
+\tag{321.3}
+$$
+
+第二式对所有 $T$ 同时成立；第一式的误差不依赖所选的并列最优价格。
+
+证明。对 $p\le P$，比较同一价格下的 $Cp$ 与 $C$，得到
+
+$$
+\frac{p^{-a_p-1}}{Z(p^{a_p})}\le e^{\epsilon\log p}-1,
+\qquad
+R_{C,p}-1\le\frac p{p-1}(e^{\epsilon\log p}-1).
+\tag{321.4}
+$$
+
+局部增量的望远镜上界给
+
+$$
+0\le\sum_{v\ge1}\frac{b_{C,s}(p^v)}{p^v}
+\le\frac{R_{C,p}^s-1}{p}.
+\tag{321.5}
+$$
+
+取固定 $\chi<\chi'<1/2$。既有价格界给 $s\epsilon\le\chi P\log(1+1/P)\to\chi$，且 $0\le\epsilon\log p\le\log(1+1/P)\to0$ 对 $p\le P$ 统一。因此先固定充分大的素数截止 $p_0$，再取充分大的宿主，便有
+
+$$
+s\log R_{C,p}\le\chi'\log p\quad(p_0<p\le P).
+\tag{321.6}
+$$
+
+对有限的 $p\le p_0$，$s\log R_{C,p}=O_\chi(\log p)$，局部乘积有统一常数上界。利用（321.5）并将素数扩大为全部整数，旧素数部分满足
+
+$$
+\sum_{p\le P}\log\left(1+\sum_{v\ge1}\frac{b_{C,s}(p^v)}{p^v}\right)
+\le O_\chi(1)+\sum_{2\le n\le P}n^{\chi'-1}
+=O_{\chi,\chi'}(P^{\chi'})=o(\sqrt P).
+\tag{321.7}
+$$
+
+对 $p>P$，宿主指数为零，$F_C(p^v)=Z(p^v)$，所以 §222 的一般局部尾界直接适用：
+
+$$
+\sum_{v\ge1}\frac{b_{C,s}(p^v)}{p^v}
+\le\frac{s}{p(p-1)}e^{s/(p-1)}.
+\tag{321.8}
+$$
+
+不使用仅在 $s/(p-1)\le1$ 时成立的线性化。将素数尾扩大为全部整数尾，得到
+
+$$
+\begin{aligned}
+\sum_{p>P}\log\left(1+\sum_{v\ge1}\frac{b_{C,s}(p^v)}{p^v}\right)
+&\le s e^{s/P}\sum_{n>P}\frac1{n(n-1)}\\
+&=\frac{s}{P}e^{s/P}
+=\chi\log P\,P^\chi=o(\sqrt P).
+\end{aligned}
+\tag{321.9}
+$$
+
+这也对每个固定宿主证明尾乘积收敛。合并两部分得增长矩界。最后，既有非负Möbius增量接口给 $F_C(t)^s=\sum_{d\mid t}b_{C,s}(d)$；所有项非负，因此
+
+$$
+\sum_{t\le T}F_C(t)^s
+=\sum_{d\le T}b_{C,s}(d)\left\lfloor\frac Td\right\rfloor
+\le T\sum_{d\ge1}\frac{b_{C,s}(d)}d=T M_C(s).
+\tag{321.10}
+$$
+
+这里直接控制增长的 $s$ 与同一宿主的完整权重，没有从固定 $s$ 定理的隐含常数外推。$\square$
+
+## 追加锚（本行以下为增补区）
+## 322. 齐次相位窗与响应坏集的共同选择
+
+固定参数
+
+$$
+\kappa>0,\quad 0<\chi<\tfrac12,\quad
+0<\eta<\frac{\chi\kappa}{1+\chi},\quad
+\frac\eta\chi<u<\kappa-\eta,
+\qquad
+Q_C=\lfloor e^{\kappa\sqrt P}\rfloor,\quad
+K_C=\lceil e^{\eta\sqrt P}\rceil.
+\tag{322.1}
+$$
+
+参数 $\eta$ 表示相位窗精度，区别于单位位 $h(N)$。所有参数固定，不断言端点或随 $C$ 变化的参数统一性。
+
+**命题 322.1（大乘子、严格相位命中与低响应共同实现）。** 对每个充分大的实际 CA宿主，至少有 $Q_C/(16K_C)$ 个整数乘子满足
+
+$$
+\frac{Q_C}{8K_C}<t\le Q_C,\qquad
+\|tC\varphi\|<\frac1{K_C},\qquad
+\log F_C(t)\le\frac{u}{\sqrt P\log P},
+\quad \varphi=\frac{1+\sqrt5}{2}.
+\tag{322.2}
+$$
+
+证明。先把标准齐次Bohr容量机制写到有限区间载体上，以核对所用常数。对任意实数 $\vartheta$ 和整数 $K\ge1$、$Q\ge2K$，将 $\{j\vartheta\}$（$0\le j\le Q$）放入 $K$ 个等长半开区间，令各区间计数为 $n_i$。同区间两点的正指标差 $t$ 满足 $\|t\vartheta\|<1/K$。Cauchy–Schwarz给同区间无序对数至少为 $((Q+1)^2/K-(Q+1))/2$；每个正指标差至多出现 $Q$ 次。因此相位命中数至少为
+
+$$
+\frac{(Q+1)^2/K-(Q+1)}{2Q}
+\ge\frac{Q+1-K}{2K}.
+\tag{322.3}
+$$
+
+当 $Q\ge2K$，这个下界不小于 $Q/(4K)$；删除所有 $t\le Q/(8K)$ 后还留下至少 $Q/(8K)$ 个命中。这是以零为中心的对称窗下界，不是等分布断言，不能直接当作任意平移窗的下界。
+
+另一方面，定义同一乘子区间的响应坏集
+
+$$
+\mathcal B_C=\left\{1\le t\le Q_C:
+\log F_C(t)>\frac{u}{\sqrt P\log P}\right\}.
+\tag{322.4}
+$$
+
+以 §321 的 $s=\chi P\log P$ 使用非负矩上界，得到
+
+$$
+|\mathcal B_C|
+\le Q_C M_C(s)e^{-\chi u\sqrt P}
+=Q_C\exp(-\chi u\sqrt P+o(\sqrt P))
+<\frac{Q_C}{16K_C}
+\quad\text{最终成立}.
+\tag{322.5}
+$$
+
+严格最后一步使用 $\chi u>\eta$。现在取 $\vartheta=C\varphi$；（322.3）在每个实际宿主的这个相位上成立，不需要它随 $C$ 等分布。$\eta<\kappa$ 使 $Q_C\ge2K_C$ 最终成立。大相位命中数至少为 $Q_C/(8K_C)$，除掉全部响应坏集后仍至少为 $Q_C/(16K_C)$。所余乘子同时满足所有条件，未把分别可达的相位与权重最优值拼成一个虚构来源。$\square$
+
+## 追加锚（本行以下为增补区）
+## 323. 平方根空窗深度下的正余量差额及回传边界
+
+令 $t_C$ 为 §322 中任一合格乘子，$N_C=t_CC$。则它在同一个实际有限规范来源上具有单位位零及至少
+
+$$
+L_C=\left\lfloor\frac{\log K_C}{3\log\varphi}\right\rfloor-2
+=\frac{\eta}{3\log\varphi}\sqrt P+O(1)
+\tag{323.1}
+$$
+
+个连续低位 `[null]` 窗口，有限初段取到 $L_C\ge0$ 后才使用。其正值End、合法接缝及未指定的有限后继沿用 §318 的来源合同。此处相位窗宽为 $1/K_C$，比 §318 的Dirichlet最深窗 $1/(Q_C+1)$ 宽；它是另一份精度合同，不能当作最深窗内已有有符号控制。
+
+**命题 323.1（同一实际整数上的严格正差额）。** 写 $W(n)=\sqrt{\log n}\,\Delta(n)$，则对上述全部合格乘子统一有
+
+$$
+e^\gamma(\kappa-\eta-u)+o(1)
+\le W(N_C)-W(C)
+\le e^\gamma\kappa+o(1),
+\qquad \kappa-\eta-u>0.
+\tag{323.2}
+$$
+
+证明。由乘子下界及取整误差，$\ell=\log t_C$ 满足
+
+$$
+(\kappa-\eta)\sqrt P-O(1)<\ell\le\kappa\sqrt P.
+\tag{323.3}
+$$
+
+因此 $\log N_C\sim P$，预算增量满足
+
+$$
+e^\gamma\log(1+\ell/\log C)
+\ge\frac{e^\gamma(\kappa-\eta)+o(1)}{\sqrt P}.
+\tag{323.4}
+$$
+
+同一选中乘子的权重条件及 $Z(C)\sim e^\gamma\log P$ 给
+
+$$
+0\le Z(N_C)-Z(C)
+\le Z(C)\left(e^{u/(\sqrt P\log P)}-1\right)
+=\frac{e^\gamma u+o(1)}{\sqrt P}.
+\tag{323.5}
+$$
+
+从精确余量账本（317.4）相减，得到正差额下界；上界使用 §317 对全部允许乘子的统一预算界。归一化运输只用 $\Delta(C)\to0$ 和 $|\sqrt{\log N_C}-\sqrt{\log C}|=O_\kappa(1)$，不假设 $W(C)$ 有界或收敛。
+
+最后，（322.2）的严格相位命中在充分大时迫使 $h(N_C)=0$，且既有规范读数给 $|A_C+B_C\psi|=\varphi^3\|N_C\varphi\|<\varphi^3/K_C$。沿 §318 的严格null柱集接口及（323.1）逐层读回即可。得到的是原整数的有限低位窗口，不是高位补零或无限完成中的任意点。$\square$
+
+给定 $\kappa$，条件（322.1）对每个固定 $0<\eta<\kappa/3$ 都可实现：选 $\eta/(\kappa-\eta)<\chi<1/2$，再在 $\eta/\chi$ 与 $\kappa-\eta$ 之间选 $u$。这里的三分之一只是当前矩估计与选择预算允许的范围，不声称最优或在端点成立。
+
+这份有符号结论确定的是 $W(N_C)-W(C)$ 的正号，尚未确定任何一边的绝对正号，也没有排除新的Robin反例范围。它保留平方根级空窗深度，但降低了相位精度的固定系数；原Dirichlet最深窗上的响应控制仍未建立。
+
+在回到 CA宿主时，§319 的成本仍必须支付。为独立的 $W(N_C)$ 下界减去 $e^\gamma\kappa+o(1)$ 才得到宿主下界；仅有（323.2）或所选整数最终正余量，都不提供这笔超出成本的储备。新的乘子选择不能把由自身放大预算制造的差额当成宿主原有余量。实际数量、完整素支撑、本原性或CA性也未由这项选择保持。
+
+所选 $\Delta(N_C)\to0$ 仍成立，因此增加归一化差额没有自动进入 §201.6 的固定正加性储备族；既有慢本原范数适用条件仍须另外核对。后续需要的是对这些实际来源的绝对有符号储备，而不是再分类地址、重做有限Robin检查，或把本节差额重新命名为RH证明。本节没有新增Lean、冻结或准入判官改动。
+
+## 追加锚（本行以下为增补区）
+
+## 324. 把成本与响应合成同一个量的加权选择
+
+本节复用 §322 的区间Bohr计数及既有非负有限除数求和接口，将大小与响应共同估计。参数随宿主变化的矩界在本节单独写明；不把 §321 的固定 $\chi$ 渐近直接代入变化参数。所用加权组合属于纸面推导，没有Lean核验或原创性声明。
+
+保留实际 CA宿主 $C$、$P=P^+(C)$、$F_C$ 与其最优价格 $\epsilon$，定义
+
+$$
+\mathcal A_P=P\log P,\qquad
+\mathcal D_C(t)=\log t-\mathcal A_P\log F_C(t).
+\tag{324.1}
+$$
+
+由全局价格及 $\mathcal A_P\epsilon\le P\log(1+1/P)<1$，有 $0\le\mathcal D_C(t)\le\log t$。既有价格损失 $\operatorname{Ben}_{C,\epsilon}(tC)=\epsilon\log t-\log F_C(t)$ 给精确账本
+
+$$
+\mathcal D_C(t)
+=\mathcal A_P\operatorname{Ben}_{C,\epsilon}(tC)
+ +(1-\mathcal A_P\epsilon)\log t.
+\tag{324.2}
+$$
+
+这两个非负项来自同一个实际 $C,t,\epsilon$，不预设Robin符号。
+
+**命题 324.1（变化矩参数的统一有限预算）。** 对所有 $1/4\le\beta\le1/2$，令 $s=\beta\mathcal A_P$，则存在不依赖 $\beta,C$ 或最优价格选择的常数 $A_0$，使充分大的宿主同时满足
+
+$$
+\log M_C(s)\le A_0 P^\beta\log P,
+\qquad
+\sum_{t\le Q}e^{-\beta\mathcal D_C(t)}
+\le\frac{Q^{1-\beta}}{1-\beta}M_C(s)
+\quad(Q\in\mathbb N_{>0}).
+\tag{324.3}
+$$
+
+证明。对旧素数 $p\le P$，全局价格给 $F_C(p^v)^s\le p^{\beta v}$。非负增量的Euler因子等于 $(1-1/p)\sum_{v\ge0}F_C(p^v)^s/p^v$，所以旧素数部分的对数不超过
+
+$$
+\sum_{p\le P}-\log(1-p^{\beta-1})
+\ll\sum_{n\le P}n^{\beta-1}\ll P^\beta,
+\tag{324.4}
+$$
+
+常数对区间 $1/4\le\beta\le1/2$ 统一：$p^{\beta-1}\le2^{-1/2}<1$，且积分求和中的 $1/\beta\le4$。新素数尾使用（321.8）及整数截止 $p>P$，给 $sP^{-1}e^{s/P}=\beta\log P\,P^\beta$，由此得第一式。对每个固定宿主和参数，尾界也证明乘积收敛。
+
+令 $g_{C,s}=\mu*(F_C^s)\ge0$，使用同一个有限除数求和接口及 $\sum_{m\le x}m^{-\beta}\le x^{1-\beta}/(1-\beta)$（$x\ge1$），得到
+
+$$
+\begin{aligned}
+\sum_{t\le Q}e^{-\beta\mathcal D_C(t)}
+&=\sum_{t\le Q}t^{-\beta}F_C(t)^s\\
+&=\sum_{d\le Q}g_{C,s}(d)d^{-\beta}
+  \sum_{m\le Q/d}m^{-\beta}\\
+&\le\frac{Q^{1-\beta}}{1-\beta}
+  \sum_{d\le Q}\frac{g_{C,s}(d)}d
+\le\frac{Q^{1-\beta}}{1-\beta}M_C(s).
+\end{aligned}
+\tag{324.5}
+$$
+
+全部求和在同一宿主上进行，因非负而可向完整Euler均值上界扩展；没有固定函数或固定矩阶的隐藏阈值。$\square$
+
+**命题 324.2（半预算以下的实际平方根空窗与正差额）。** 固定 $\kappa>0$ 和 $0<\eta<\kappa/2$，令 $Q_C=\lfloor e^{\kappa\sqrt P}\rfloor$、$K_C=\lceil e^{\eta\sqrt P}\rceil$。每个充分大的实际 CA宿主都有一个乘子 $1\le t_C\le Q_C$，使同一整数 $N_C=t_CC$ 满足
+
+$$
+\begin{gathered}
+\|N_C\varphi\|<1/K_C,\qquad
+\log t_C\ge(\kappa-2\eta-o(1))\sqrt P,\\
+e^\gamma(\kappa-2\eta)-o(1)
+\le W(N_C)-W(C)
+\le e^\gamma\kappa+o(1),\\
+h(N_C)=0,\qquad
+\text{实际低位null窗数}\ge
+\left\lfloor\frac{\log K_C}{3\log\varphi}\right\rfloor-2.
+\end{gathered}
+\tag{324.6}
+$$
+
+证明。取
+
+$$
+\beta_P=\frac12-\frac{2\log\log P}{\log P}.
+\tag{324.7}
+$$
+
+它最终位于命题324.1的统一参数区间，且 $P^{\beta_P}=\sqrt P/(\log P)^2$，因此 $\log M_C(\beta_P\mathcal A_P)=O(\sqrt P/\log P)=o(\sqrt P)$。原相位命中集合 $\mathcal H_C=\{1\le t\le Q_C:\|tC\varphi\|<1/K_C\}$ 由 §322 至少有 $Q_C/(4K_C)$ 个元素。在这同一集合上使用（324.3）的非负总和上界，至少有一个实际乘子满足
+
+$$
+\mathcal D_C(t_C)\ge\log Q_C-
+\frac{\log(4K_C)+\log M_C(\beta_P\mathcal A_P)-\log(1-\beta_P)}{\beta_P}
+=(\kappa-2\eta-o(1))\sqrt P.
+\tag{324.8}
+$$
+
+$\mathcal D_C(t_C)\le\log t_C$ 自动给出所需大小下界，无须先从相位命中中删去小乘子再对响应作独立筛选。
+
+对全部 $t\le Q_C$，令 $\ell=\log t$、$v=\log F_C(t)$。同源价格给 $0\le v\le\epsilon\ell=O_\kappa((\sqrt P\log P)^{-1})$。在精确余量账本（317.4）中统一展开 $\log(1+\ell/\log C)$ 与 $e^v-1$，再使用 $\log C\sim P$、$Z(C)\sim e^\gamma\log P$ 以及既有归一化运输，得到
+
+$$
+W(tC)-W(C)=\frac{e^\gamma}{\sqrt P}\mathcal D_C(t)+o(1).
+\tag{324.9}
+$$
+
+二次项的归一化误差分别为 $O_\kappa(P^{-1/2})$ 与 $O_\kappa((\sqrt P\log P)^{-1})$；一阶系数替换只使用已有渐近。根尺度改变项仍由 $\Delta(C)\to0$ 控制，不假设 $W(C)$ 有界。将（324.8）及 $0\le\mathcal D_C(t_C)\le\kappa\sqrt P$ 代入即得差额界。真实单位位、null深度、接缝和正值End直接复用 §323 的严格相位来源接口。$\square$
+
+**推论 324.3（次平方根深度与完整增量）。** 固定 $\kappa>0$，令 $r(P)\to\infty$ 且 $r(P)=o(\sqrt P)$，改取 $K_C=\lceil e^{r(P)}\rceil$。同一统一加权方法给实际相位命中，并有
+
+$$
+\begin{gathered}
+\log t_C=\kappa\sqrt P-o(\sqrt P),\qquad
+Z(t_CC)-Z(C)=o(P^{-1/2}),\\
+W(t_CC)-W(C)=e^\gamma\kappa+o(1),\qquad
+\text{实际低位null窗数}\ge
+\left\lfloor\frac{\log K_C}{3\log\varphi}\right\rfloor-2.
+\end{gathered}
+\tag{324.10}
+$$
+
+证明。（324.8）的分子除 $\log Q_C$ 外均为 $o(\sqrt P)$，故 $\mathcal D_C(t_C)=\kappa\sqrt P-o(\sqrt P)$。由 $\mathcal D_C(t_C)\le\log t_C\le\kappa\sqrt P$，得 $\mathcal A_P\log F_C(t_C)=o(\sqrt P)$，于是 $Z(C)(F_C(t_C)-1)=o(P^{-1/2})$。再用（324.9）和原有限来源接口。这里变化的相位参数由命题324.1的明确统一界支撑，不改变 §322 的固定参数范围。$\square$
+
+本节扩大了有符号差额可构造的深度系数范围，仍未进入原Dirichlet最深窗，也不声称半预算端点最优或可达。对固定正 $\eta$，（324.6）只给响应增量 $O(P^{-1/2})$；不能把推论324.3的 $o(P^{-1/2})$ 结论搬到固定平方根深度。
+
+加权选择没有降低回传上侧成本：较小响应使预算增长留在差额中。绝对的 $W(C)$ 下界、或超过同一乘子已认证回传成本的独立 $W(N_C)$ 下界，仍是 §319 的未解义务。原子的有限地址、非负价格损失与统一增长矩可以共同落实到同一整数，但这不把两个整数的差额正号升级为Robin判据或RH证明。
+
+## 追加锚（本行以下为增补区）
+
+## 325. 任意固定多项式5040子族的普通对数平均与指数自举
+
+**定义 325.0。** 沿用 §§313、315、316 的实际整数 $T_L$、$m_L=3L+2$、归一化 Robin 余量 $\mathfrak m_L$、$\kappa=2\sqrt2-2$ 与同源尾项 $\Phi=I_\psi$。采用假设302.1及这些章节列明的经典解析输入；本节还在证明内部使用 von Mangoldt 截断显式公式、标准零点计数及其幂次 PNT 推论。对固定整数 $d\ge1$、整数 $j\ge16$ 定义
+\[
+N_j^{(d)}=T_{j^d},\quad a_j^{(d)}=3j^d+2,\quad
+q_j^{(d)}=\mathfrak m_{j^d},\quad
+\omega_j^{(d)}=\log a_{j+1}^{(d)}-\log a_j^{(d)}.
+\tag{325.1}
+\]
+对整数 $J\ge17$ 置
+\[
+D_J^{(d)}=\sum_{j=16}^{J-1}\omega_j^{(d)}
+=\log(a_J^{(d)}/a_{16}^{(d)}),\qquad
+A_J^{(d)}=\frac1{D_J^{(d)}}
+\sum_{j=16}^{J-1}\omega_j^{(d)}q_j^{(d)}.
+\tag{325.2}
+\]
+这些平均仅使用左端实际整数的归一化余量。$j^d\ge16$，故同一5040整除性与饱和签名仍由（305.3）给出。固定 $d$ 不随 $j$ 或截止增长。
+
+**定理 325.1（普通稀疏平均的全多项式次数判据）。** 在定义325.0的输入下，对每个固定整数 $d\ge1$，以下命题等价：
+\[
+\begin{aligned}
+&\mathrm{RH};\\
+&\exists K\ge0\ \exists J_0\ge17\ \forall J\ge J_0:
+       \quad A_J^{(d)}\ge-K;\\
+&A_J^{(d)}\longrightarrow\kappa;\\
+&\exists\ell\in\mathbb R:\quad A_J^{(d)}\longrightarrow\ell.
+\end{aligned}
+\tag{325.3}
+\]
+其中阈值、指标为整数，预算为固定有限实数。它没有提供预算存在的独立证明。
+
+**证明。** 固定 $d$，以下省略上标。置 $\eta=1/d>0$。实际截止严格递增、趋于无穷，$\omega_j>0$、$D_J\to\infty$，并有
+\[
+a_j\sim3j^d,\quad h_j=a_{j+1}-a_j=O_d(a_j^{1-\eta}),
+\quad a_{j+1}/a_j\to1,\quad \omega_j\le h_j/a_j.
+\tag{325.4}
+\]
+例如经典幂差估计给 $(j+1)^d-j^d\le d(j+1)^{d-1}$，因 $j+1\le2j$ 得 $h_j/a_j\le d2^{d-1}/j$；全部常数允许依赖固定 $d$。
+
+记 $Z(x)=\sqrt x\log x\,\Phi(x)$。定理315.1给实际端点恒等式
+\[
+q_j=Z(a_j)+\kappa-\mathfrak h_{j^d}+\varepsilon_j,
+\qquad \mathfrak h_{j^d}\ge0,\quad\varepsilon_j\to0.
+\tag{325.5}
+\]
+若（325.3）第二项成立，正权误差的平均趋零，非负缺损遂给固定 $K_1\ge0$ 使
+\[
+\sum_{j=16}^{J-1}\omega_jZ(a_j)\ge-K_1D_J
+\tag{325.6}
+\]
+最终成立。收敛误差以固定初段贡献除以 $D_J$ 加上任意小的尾预算控制；不要求缺损的平均预先趋零。
+
+先取得一个严格小于一的零点实部上界。经典有效 PNT 保证 $\Phi$ 在 $[a_{16},\infty)$ 上连续、有界且局部绝对连续，同一尾核给几乎处处
+\[
+Z'(x)=\frac{\log x+2}{2\sqrt x}\Phi(x)
++\frac{\log x+1}{x^{3/2}\log x}[x-\psi(x)].
+\tag{325.7}
+\]
+Chebyshev 界与 $\Phi$ 有界于是给
+\[
+Z(x)=O(\sqrt x\log x),\qquad
+Z'(x)=O(\log x/\sqrt x).
+\tag{325.8}
+\]
+$Z$ 自身局部绝对连续，素数幂处的密度变化不妨碍用 $Z'$ 的几乎处处界积分。在充分晚的格子上 $a_j\le y\le a_{j+1}\le2a_j$，由（325.4）、（325.8）得
+\[
+\sup_{a_j\le y\le a_{j+1}}|Z(y)-Z(a_j)|
+=O_d(a_j^{1/2-\eta}\log a_j).
+\tag{325.9}
+\]
+乘以 $\omega_j$ 并求和，比较 $\sum\omega_j a_j^{1/2-\eta}\log a_j$ 与相应的 $\int x^{-1/2-\eta}\log x\,dx$，得到对每个固定
+\[
+\max\{1/2-\eta,0\}<\lambda<1/2
+\tag{325.10}
+\]
+有
+\[
+\left|\int_{a_{16}}^{a_J}Z(x)\frac{dx}x
+ -\sum_{j=16}^{J-1}\omega_jZ(a_j)\right|=O_{d,\lambda}(a_J^\lambda).
+\tag{325.11}
+\]
+正指数时原误差为 $O(a_J^{1/2-\eta}\log a_J)$，零指数时至多 $O(\log^2a_J)$，负指数时有界；（325.10）统一吸收这些情形。
+
+任意末尾部分格子的积分也须控制。由 $|Z(x)|=O(\sqrt x\log x)$ 与对数长度不超过 $h_j/a_j$，其绝对值是 $O_d(a_j^{1/2-\eta}\log a_j)$，同样被 $O(a_j^\lambda)$ 吸收。有限初段可用连续性纳入常数。因此（325.6）、（325.11）给全部 $T\ge t_0=\log a_{16}>0$ 上的累计下界
+\[
+\mathcal A(T)=\int_{t_0}^T Z(e^t)\,dt\ge-K_\lambda e^{\lambda T}
+\tag{325.12}
+\]
+其中 $K_\lambda\ge0$ 固定。这一步允许增长误差，尚未将它判成线性累计预算。
+
+把指数预算接到同一个经典正逆变换。沿用（316.6）–（316.7）的 $b,c,g$，置 $p=-g'$、$r=c/2-c'$，并以本节 $t_0$ 为积分起点。对 $u\ge0$ 有 $0\le b(u)\le1$、$0\le p(u)\le5$、$0\le2r(u)\le8$。正逆累计恒等式给
+\[
+\mathcal B(T)=b(T)\mathcal A(T)
++\int_{t_0}^T p(u)\mathcal A(u)\,du
++2\int_T^\infty e^{-(u-T)/2}r(u)\mathcal A(u)\,du-C_0,
+\tag{325.13}
+\]
+其中 $\mathcal B(T)=\int_{t_0}^T e^{t/2}J(e^t)\,dt$，$C_0$ 是改变起点后的固定有限常数。所需 Fubini、分部积分及绝对收敛仍由 §316 使用的无条件有效 PNT 给出；指数下界本身只用于估计正系数项。
+
+对任意 $0<\lambda<1/2$，准确的未来比较核积分为
+\[
+\int_T^\infty e^{-(u-T)/2}e^{\lambda u}\,du
+=\frac{e^{\lambda T}}{1/2-\lambda}.
+\]
+有限过去的比较积分不超过 $e^{\lambda T}/\lambda$。因此由（325.12）得到
+\[
+\mathcal B(T)\ge-
+\left[K_\lambda\left(1+\frac5\lambda+
+\frac8{1/2-\lambda}\right)+|C_0|\right]e^{\lambda T}.
+\tag{325.14}
+\]
+$e^{\lambda T}\ge1$ 使固定常数得以吸收；严格条件 $\lambda<1/2$ 保证未来比较积分收敛。
+
+经典积分显式公式于是给 $\int_0^T F(t)\,dt\le M e^{\lambda T}+C_1$，其中 $F$ 是 §316 的零点轮廓。可增大常数使
+\[
+h(T)=M e^{\lambda T}+C-\int_0^T F(t)\,dt\ge1\quad(T\ge0).
+\]
+复用经典 Landau 非负变换定理。在 $\Re z>1/2$，逐项积分给
+\[
+\mathcal Lh(z)=\frac M{z-\lambda}+\frac Cz
+-\sum_\rho\frac1{z\rho(1-\rho)[z-(\rho-1/2)]}.
+\tag{325.15}
+\]
+同一标准零点计数保证级数在避开极点的紧集上正常收敛。$h\ge1$ 与 $F(t)=O(e^{t/2})$ 使其真 Laplace 收敛横坐标 $\sigma$ 位于 $[0,1/2]$。右侧唯一可能的正实极点是 $\lambda$，因为 $0<\Re\rho<1$ 内没有实零点。因此若 $\sigma>\lambda$，右侧在正实 $\sigma$ 解析，与 Landau 相矛盾；所以 $\sigma\le\lambda$。这里不能把存在辅助实极点的公式直接解释为 $\sigma=0$。
+
+若某个零点 $\rho_0$ 满足 $\Re\rho_0>1/2+\lambda$，则其非实极点 $z_0=\rho_0-1/2$ 位于实际 Laplace 解析域，留数仍为 $-m_{\rho_0}/[z_0\rho_0(1-\rho_0)]\ne0$；辅助项在该点解析，不能抵消它。故（325.12）推出
+\[
+S:=\sup_\rho\Re\rho\le1/2+\lambda.
+\tag{325.16}
+\]
+经典零点存在、临界带与反射对称性给 $1/2\le S\le1$。由于（325.10）的区间非空，首轮（325.16）已经给 $S<1$。不要求上确界由某个零点取到。
+
+现在利用这个已取得的上界改善同一格子的估计。对每个固定 $S<\theta<1$，经典 von Mangoldt 截断显式公式与零点计数给
+\[
+\psi(x)-x=O_\theta(x^\theta).
+\tag{325.17}
+\]
+具体可先在半整数处取可用于标准截断公式的高度 $T\asymp x^2$，使用每个零点的 $\Re\rho\le S$ 与 $\sum_{|\Im\rho|\le T}|\rho|^{-1}=O(\log^2T)$，得 $O(x^S\log^2x)$ 及较小截断项；单调性把估计送到任意实数，$\theta>S$ 吸收对数。此处只复用经典幂次 PNT 推导，不要求常数在 $\theta\downarrow S$ 时一致。
+
+同一尾积分及（325.7）遂给
+\[
+\Phi(x)=O_\theta(x^{\theta-1}/\log x),\quad
+Z(x)=O_\theta(x^{\theta-1/2}),\quad
+Z'(x)=O_\theta(x^{\theta-3/2})
+\tag{325.18}
+\]
+最后一式几乎处处成立。$\theta<1$ 保证尾积分收敛。于是（325.9）的格内误差改进为 $O_{d,\theta}(a_j^{\theta-1/2-\eta})$；乘以 $\omega_j$ 后的整格积分误差也可写成 $O(h_j^2a_j^{\theta-5/2})$。累计比较与部分格子估计因此给，对每个
+\[
+\max\{\theta-1/2-\eta,0\}<\lambda<1/2,
+\]
+（325.12）重新成立。累计误差至多为常数、对数与 $x^{\max\{\theta-1/2-\eta,0\}}$ 的和；部分格子使用（325.18）的点值界，同样损失一个 $\eta$。此轮估计仍从同一个（325.6）出发。
+
+再次用（325.13）–（325.16），再令允许的 $\lambda$ 下降到其下端，得
+\[
+S\le\max\{\theta-\eta,1/2\}\quad(S<\theta<1).
+\]
+由于首轮已保证 $S<1$，可以令 $\theta\downarrow S$，得到
+\[
+S\le\max\{S-\eta,1/2\}.
+\tag{325.19}
+\]
+若 $S>1/2$，右侧两项都严格小于 $S$，矛盾。故 $S\le1/2$，零点反射对称性给 RH。这个收紧使用正的网格指数 $\eta$，没有以更细的同形地址分类代替解析误差控制。
+
+反向假设 RH。定理315.1给 $q_j=\kappa-\mathcal W(\log a_j)+o(1)$。§316 的连续谱对数平均为零；$\mathcal W$ 有界且一致连续，而（325.4）给 $\omega_j\to0$。因此每格普通左端谱和与其连续积分之差不超过 $\omega_j$ 乘以趋零的一致连续模，累计除以 $D_J$ 后趋零。正权残差平均也趋零，故 $A_J\to\kappa$。任一有限极限给最终有限下界，完成（325.3）的等价链。
+
+对截止 $X\ge a_{16}$，本族采样数精确为
+\[
+\#\{j\ge16:a_j\le X\}
+=\left\lfloor((X-2)/3)^{1/d}\right\rfloor-15
+\sim(X/3)^{1/d}.
+\tag{325.20}
+\]
+因此任何固定多项式稀疏程度都由同一实际平均判据覆盖。$d=4$ 的普通权重版本补上 §320 末尾未建立的运输关系；这里不把两套平均的差无条件断言为趋零，而是分别通过同源谱预算与指数自举得到 RH 强度。
+
+整个推导依赖 $\eta>0$。几何增长的截止，如直接以 Fibonacci 数作指数网格，通常只有 $h_j\asymp a_j$，不供应本证明的正指数改善。当前结论既没有覆盖这种网格，也没有证明其相应判据为假。$\square$
+
+## 326. 实际稀疏平均的负部增长指数与零点实部上确界
+
+**定义 326.0。** 沿用 §325 的实际整数 $T_{j^d}$、截止 $a_j=3j^d+2$、普通左端对数平均 $A_J^{(d)}$，并采用同节的假设302.1与明列经典解析输入。固定整数 $d\ge1$，记 $\eta=1/d>0$，定义
+\[
+S=\sup\{\Re\rho:\rho\text{ 为 }\zeta\text{ 的非平凡零点}\},\qquad
+R_d=\limsup_{J\to\infty}
+\frac{\log(1+\max\{-A_J^{(d)},0\})}{\log a_J}.
+\tag{326.1}
+\]
+指标 $J\ge17$ 为整数；经典零点存在、临界带及反射对称性给 $1/2\le S\le1$。这里的增长尺度是解析截止 $a_J$，不是实际整数 $T_{J^d}$ 的大小。
+
+**定理 326.1（负部增长率读回零点区域）。** 在定义326.0的输入下，$R_d$ 是有限实数，且对每个固定 $d\ge1$ 有
+\[
+R_d=S-1/2.
+\tag{326.2}
+\]
+因此同一个增长指数由全部固定多项式次数读到。对任意固定 $0\le\nu\le1/2$，还有
+\[
+S\le1/2+\nu
+\quad\Longleftrightarrow\quad
+\forall\epsilon>0\ \exists K_\epsilon\ge0\ \exists J_\epsilon\ge17\
+\forall J\ge J_\epsilon:\quad
+A_J^{(d)}\ge-K_\epsilon a_J^{\nu+\epsilon}.
+\tag{326.3}
+\]
+预算和阈值可依赖固定的 $d,\nu,\epsilon$，不要求一致常数。这是同一实际平均的单边增长判据，不预先假设任一具体预算存在。
+
+**证明。** 先给出双边上增长控制，尤其保留 §315 的非负端点缺损。该节的实际恒等式是
+\[
+q_j=Z(a_j)+\kappa-\mathfrak h_{j^d}+\varepsilon_j,
+\quad \varepsilon_j\to0,\quad
+\mathfrak h_L=\sqrt{m_L}\,[q_a(m_L)+\log m_L\,q_e(m_L)].
+\tag{326.4}
+\]
+经典 PNT 给 $a(x)\to0,e(x)\to0$。在充分大的尾域上，经典二次余项界 $0\le q_a\le2a^2$、$0\le q_e\le e^2$，加上 §325 的无条件 $Z=O(\sqrt x\log x)$，得到
+\[
+|q_j|=O_d(\sqrt{a_j}\log a_j),\qquad
+|A_J^{(d)}|=O_d(\sqrt{a_J}\log a_J).
+\tag{326.5}
+\]
+第二式利用正权重总质量恰等于分母；有限初段可放大常数。于是（326.1）的比值非负，且其 limsup 在 $[0,1/2]$ 内，确为有限实数。
+
+若 $S<1$，取任意固定 $S<\theta<1$。§325 已引用的经典截断显式公式给 $\psi(x)-x=O_\theta(x^\theta)$。由于 $\theta>1/2$，经典素幂余项 $\psi-\vartheta=O(\sqrt x\log^2x)$ 可被吸收，故 $a(x)=O_\theta(x^{\theta-1})$。同截断 Abel 式
+\[
+e(x)=a(x)/\log x-I_\vartheta(x)-\tau(x)
+\]
+及其正尾核与 $\tau(x)=O(1/x)$ 给 $e(x)=O_\theta(x^{\theta-1}/\log x)$。因此
+\[
+\mathfrak h_L=O_\theta(m_L^{2\theta-3/2}),\qquad
+Z(x)=O_\theta(x^{\theta-1/2}).
+\tag{326.6}
+\]
+缺损项没有被删为小 $o(1)$：当 $\theta>3/4$ 它可以增长，但 $\theta<1$ 使 $2\theta-3/2<\theta-1/2$，所以它的增长阶仍低于谱项。由（326.4）及正权重，得到
+\[
+|A_J^{(d)}|=O_{d,\theta}(a_J^{\theta-1/2}).
+\tag{326.7}
+\]
+令 $\theta\downarrow S$，有 $R_d\le S-1/2$。若 $S=1$，同一不等式由（326.5）的 $R_d\le1/2$ 给出。这一步不需要 $S$ 被某个零点取得。
+
+反向从一个允许增长的单边预算出发。固定 $0\le\nu<1/2$，假设
+\[
+A_J^{(d)}\ge-Ka_J^\nu\quad\text{最终成立},\qquad K\ge0.
+\tag{326.8}
+\]
+（326.4）的非负缺损与收敛误差的正权平均给
+\[
+\sum_{j=16}^{J-1}\omega_jZ(a_j)
+\ge-K_1a_J^\nu\log(a_J/a_{16})
+\tag{326.9}
+\]
+最终成立；$a_J^\nu\ge1$ 将固定常数吸收进 $K_1$。
+
+§325 的无条件整格积分误差和部分格子估计遂对每个固定
+\[
+\max\{\nu,1/2-\eta,0\}<\lambda<1/2
+\tag{326.10}
+\]
+给全部实数尾域上的累计下界 $\mathcal A(T)\ge-K_\lambda e^{\lambda T}$。预算中的对数因子由严格条件 $\lambda>\nu$ 吸收。沿同一个正逆累计恒等式（325.13），其指数下界运输保持 $\lambda$，再由同一个带辅助实极点的 Landau 论证（325.15）–（325.16）得 $S\le1/2+\lambda<1$。因此此轮预算先取得严格的零点区域。
+
+现在取任意 $S<\theta<1$，以改善后的 $Z,Z'$ 幂界重做同源整格与部分格子估计。允许指数变为
+\[
+\max\{\nu,\theta-1/2-\eta,0\}<\lambda<1/2.
+\tag{326.11}
+\]
+该区间非空；重新使用指数正逆变换与 Landau，并令 $\lambda$ 下降到其下端，得到
+\[
+S\le\max\{1/2+\nu,\theta-\eta\}.
+\]
+再令 $\theta\downarrow S$，有
+\[
+S\le\max\{1/2+\nu,S-\eta\}.
+\tag{326.12}
+\]
+若 $S>1/2+\nu$，右侧两项都小于 $S$，矛盾。因此（326.8）推出
+\[
+S\le1/2+\nu.
+\tag{326.13}
+\]
+这里网格指数 $\eta$ 决定每轮改善，预算指数 $\nu$ 决定收紧的下限；两者不能互相替代。$\nu=0$ 恢复 §325 的 RH 反向，但尚未由 $S\le1/2+\nu$ 推出端点预算 $A_J^{(d)}\ge-Ka_J^\nu$；这里只得到全部严格更大的预算指数。
+
+若 $R_d<1/2$，对每个固定 $R_d<\nu<1/2$，limsup 的定义使
+\[
+\log(1+\max\{-A_J^{(d)},0\})\le\nu\log a_J
+\]
+最终成立，因此 $A_J^{(d)}\ge-a_J^\nu$ 最终成立。由（326.13），$S\le1/2+\nu$。令 $\nu\downarrow R_d$ 得 $S\le1/2+R_d$。若 $R_d=1/2$，这项不等式直接由 $S\le1$ 成立。结合已得 $R_d\le S-1/2$，证明（326.2）；也覆盖 $S=1$ 的边界情形。
+
+最后，非负序列的对数 limsup 与全部严格上指数预算等价。若 $R_d\le\nu$，对每个 $\epsilon>0$ 最终有 $1+\max\{-A_J^{(d)},0\}\le a_J^{\nu+\epsilon}$，从而得到（326.3）右侧。反之，对每个固定 $\epsilon>0$，右侧使
+\[
+1+\max\{-A_J^{(d)},0\}
+\le(1+K_\epsilon)a_J^{\nu+\epsilon}
+\]
+最终成立；常数的对数除以 $\log a_J\to\infty$ 后趋零，故 $R_d\le\nu+\epsilon$。令 $\epsilon\downarrow0$ 得 $R_d\le\nu$，再用（326.2）完成（326.3）。$\square$
+
+**推论 326.2（缓慢负增长不能独立脱离 RH）。** 在同一输入下，RH 等价于 $R_d=0$，也等价于（326.3）在 $\nu=0$ 时的全正指数预算。若 RH 不成立，则 $R_d>0$，而且对每个固定 $0\le r<S-1/2$、任意 $K\ge0$ 与任意整数 $J_0\ge17$，都有整数 $J\ge J_0$ 使
+\[
+A_J^{(d)}<-Ka_J^r.
+\tag{326.14}
+\]
+
+**证明。** 零点反射对称性使 RH 等价于 $S=1/2$，代入定理326.1。若 RH 不成立而（326.14）失败，就会有某个最终预算 $A_J^{(d)}\ge-Ka_J^r$。由于 $r<S-1/2\le1/2$，有 $r<1/2$，可用（326.13）得 $S\le1/2+r$，矛盾。
+
+这确定的是任意晚负值的临界幂指数，不确定出现频率、某个可计算的违例、端点指数处的大小，或未归一化余量的无界性。只有将全部正指数预算作为同一实际平均的前提，才得到 RH；固定一个正指数只给相应零点区域。几何或 Fibonacci 截止仍没有本证明使用的 $\eta>0$，不能把（326.2）移到这些网格。$\square$
