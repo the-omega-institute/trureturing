@@ -15,7 +15,7 @@ triage: anchor
 
 The published input is Selberg's discrete large-sieve inequality in Montgomery, *Bulletin of the American Mathematical Society* **84** (1978), 547–567, §7, Theorem 3, printed p.559, with the finite-dimensional duality of §4, Lemma 2. The exact theorem locator and its normalization were supplied by an external source review; the publisher metadata was independently checked, but the original article's full text was not retrieved locally. The application below is paper mathematics, without a new Lean large-sieve theorem, an originality claim, or an independent audit of the source's proof.
 
-For a finite set of frequencies separated by at least $\delta>0$ modulo one, arbitrary complex coefficients $a_\theta$, and $H\ge1$ consecutive integer samples, the dual form is
+For a finite set of frequencies separated by at least $0<\delta\le1$ modulo one, arbitrary complex coefficients $a_\theta$, and $H\ge1$ consecutive integer samples, the dual form is
 
 $$
 \sum_{m=U+1}^{U+H}\left|\sum_\theta a_\theta e^{2\pi i m\theta}\right|^2
@@ -189,7 +189,7 @@ $$
 
 The old/new comparison uses the same $N,M,\varepsilon$, remainder, and Schur denominator. Every middle mode $N<|m|\le M$ stays in the independently retained shell. Moving $M$ outwards does not delete that shell or its coupling.
 
-For the actual vector supported only at $n=0$, $s(c,0)=0$ makes $B_0=A_1=B_1=0$ and $R_m=0$. Its exact exterior energy is $2S_2/\pi^2$. Thus the scalar supplier has a genuine coupling consumer, while this one direction supplies no full Schur positivity conclusion.
+For the actual vector supported only at $n=0$, $s(c,0)=0$ makes $B_0=A_1=B_1=0$ and $R_m=0$. Its exact exterior energy is $2|v_0|^2S_2/\pi^2$. Thus the scalar supplier has a genuine coupling consumer, while this one direction supplies no full Schur positivity conclusion.
 
 ## A growth regime and its limitations
 
