@@ -467,6 +467,8 @@ internal static class StatementProjectionFixtureLoader
     internal const string ProjectorEpoch = "statement-projector-v1";
     internal sealed record Assessment(ProjectionOutcome Outcome, string DeclarationContentDigest);
     private static readonly AsyncLocal<string?> RepositoryRoot = new();
+    private static readonly AsyncLocal<(string Root, Lazy<ImmutableDictionary<RepoPath, ImmutableArray<StatementEntry>>> Statements)?>
+        FreshStatements = new();
     private static readonly Dictionary<string, ImmutableDictionary<RepoPath, ImmutableArray<StatementEntry>>> StatementsByRoot =
         new(StringComparer.Ordinal);
     private static readonly ConditionalWeakTable<Formula, LeanDeclarationRef> Derived = new();
@@ -566,9 +568,21 @@ internal static class StatementProjectionFixtureLoader
         }
     }
 
+    internal static T WithFreshRepositoryRoot<T>(string repositoryRoot, Func<T> action)
+    {
+        var root = Path.GetFullPath(repositoryRoot);
+        var previous = FreshStatements.Value;
+        FreshStatements.Value = (root, new Lazy<ImmutableDictionary<RepoPath, ImmutableArray<StatementEntry>>>(
+            () => LoadStatements(root)));
+        try { return WithRepositoryRoot(root, action); }
+        finally { FreshStatements.Value = previous; }
+    }
+
     private static ImmutableDictionary<RepoPath, ImmutableArray<StatementEntry>> StatementsForCurrentRepository()
     {
         var repositoryRoot = RepositoryRoot.Value ?? FindRepositoryRoot();
+        if (FreshStatements.Value is { } fresh && fresh.Root == repositoryRoot)
+            return fresh.Statements.Value;
         lock (StatementsByRoot)
         {
             if (!StatementsByRoot.TryGetValue(repositoryRoot, out var statements))
