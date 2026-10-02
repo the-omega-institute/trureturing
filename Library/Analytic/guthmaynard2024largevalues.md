@@ -175,3 +175,181 @@ a_{\rm I}(\sigma)=\frac{3(1-\sigma)}{2-\sigma},
 $$
 
 On $1/2\le\sigma\le3/4$, the smaller of these two is $a_{\rm I}$, and at $3/4$ the two coincide with value $3/5$. Theorem 1.2 gives $a(3/4)=5/9$. This is a comparison with these named bounds, not a claim about every other zero-density refinement.
+
+## A controlled infinite sector of the actual cumulative spectrum
+
+Use the same actual $I_\psi$, $Z(x)=\sqrt x\log x\,I_\psi(x)$ and cumulative quantity as [the FIB volume](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md), §§316 and 335:
+
+$$
+\mathcal S(X)=\int_{A_0}^X Z(x)\frac{dx}{x},\qquad
+X\ge A_0\ge50,\qquad t_0=\log A_0,\quad L=\log X.
+$$
+
+The finite true-node certificate and its finite total discretization loss in §335 are reused. The estimate below concerns a part of $\mathcal S$ itself, rather than another interpolation error.
+
+The existing unconditional integrated explicit formula for
+$J(x)=\int_x^\infty(\psi(v)-v)dv/v^2$ supplies the zero terms
+$-x^{\rho-1}/[\rho(1-\rho)]$ and an elementary remainder $O(x^{-1})$.
+Put $a_0(t)=(t+1)/t^2$. Integration by parts gives
+
+$$
+I_\psi(e^t)=a_0(t)J(e^t)
++\int_t^\infty a_0'(u)J(e^u)\,du.
+\tag{4}
+$$
+
+The zero coefficients of $J$ are summable in absolute value, of order
+$|\Im\rho|^{-2}$ at large height. Since $0<\Re\rho<1$,
+$|e^{(\rho-1)u}|\le1$ for $u\ge t_0$, and $a_0'$ is absolutely
+integrable there. Thus (4) can be applied termwise to that integrated
+formula. It does not require interchanging the raw, conditionally
+convergent zero series for $\psi$ with an infinite integral. The elementary
+remainder has bounded cumulative contribution after the same transform.
+
+For an actual zero $\rho=\beta+i\gamma$, the resulting cumulative term is
+
+$$
+s_\rho(X)=-\frac1\rho\int_{t_0}^L t e^{t/2}
+\left[\int_t^\infty e^{-(1-\rho)u}\frac{u+1}{u^2}\,du\right]dt.
+\tag{5}
+$$
+
+Both the infinite inner upper limit and the two cumulative endpoints are retained. Set $\lambda=1-\rho$, $z=\rho-1/2$ and
+
+$$
+b_\rho(t)=\int_0^\infty e^{-y}
+\frac{\lambda(t+y)}{\lambda t+y}\,dy.
+\tag{6}
+$$
+
+The integrand in (5), including $-1/\rho$, equals
+$-e^{zt}b_\rho(t)/[\rho\lambda]$. Indeed,
+$(u+1)/u^2=\int_0^\infty e^{-uv}(1+v)dv$; absolute convergence
+when $\Re\lambda>0$ permits the exchange of these two integrals, and
+$y=tv$ gives (6).
+
+For $t>0$ and $y\ge0$, $|\lambda t+y|\ge|\lambda|t$. The rational
+integrand's $t$-derivative is
+$\lambda\rho y/(\lambda t+y)^2$. Dominated differentiation on each
+positive compact $t$-interval therefore gives, when $|\gamma|\ge1$,
+
+$$
+|b_\rho(t)|\le1+\frac1t,\qquad
+|b_\rho'(t)|\le\frac{|\rho|}{|\lambda|t^2}
+\le\frac{\sqrt2}{t^2}.
+\tag{7}
+$$
+
+Here $|\rho|/|1-\rho|\le\sqrt2$ follows from
+$0<\beta<1$ and $|\gamma|\ge1$. Integration by parts against $e^{zt}$,
+with both endpoints and the derivative integral kept, gives
+
+$$
+\begin{aligned}
+|s_\rho(X)|
+&\le\left[2+\frac{2+\sqrt2}{t_0}\right]
+\frac{X^{\max(\beta-1/2,0)}}{|\rho(1-\rho)(\rho-1/2)|}\\
+&\le3\frac{X^{\max(\beta-1/2,0)}}{|\gamma|^3}.
+\end{aligned}
+\tag{8}
+$$
+
+The constant is valid for $t_0\ge\log50>7/2$. The additional inverse
+height power comes from cumulative integration; it is not an assumed
+cancellation among zeros. At each fixed $X$, (8) and the usual zero count
+make the following infinite sum absolutely convergent:
+
+$$
+\mathcal R_{3/4}(X;H)
+=\sum_{\substack{\rho=\beta+i\gamma\\
+1/2<\beta\le3/4,\ |\gamma|>H}}s_\rho(X),\qquad H\ge1.
+\tag{9}
+$$
+
+Conjugates and multiplicities are included, so this is a real contribution
+of the same actual spectrum.
+
+Take $H=X^h$ with fixed $h>0$. Partition $[1/2,3/4]$ into finitely many
+fixed real-part bins of maximum width $\delta$. For a bin starting at
+$\sigma$, (8) bounds its cumulative terms by a constant times
+$X^{\sigma+\delta-1/2}|\gamma|^{-3}$. At heights
+$2^jH<|\gamma|\le2^{j+1}H$, Theorem 1.2 bounds the number of terms by
+$O_{\sigma,\eta}((2^{j+1}H)^{a(\sigma)+\eta})$, for any fixed sufficiently
+small $\eta>0$ and sufficiently large $H$. Since $a(\sigma)+\eta<3$,
+the geometric height sum converges. This bin contributes
+
+$$
+O_{\sigma,\eta,A_0}
+\left(X^{\sigma+\delta-1/2}H^{a(\sigma)-3+\eta}\right).
+\tag{10}
+$$
+
+Choose the finite bin widths and $\eta$ in terms of a fixed final
+$\varepsilon>0$, so that $\delta+h\eta<\varepsilon$. Only finitely many
+fixed density parameters occur. Their separate constants and thresholds
+can be combined; no unproved uniformity in $\sigma$ is used.
+
+For $h=31/300$, the exponent
+$F(\sigma)=\sigma-1/2+h[a(\sigma)-3]$ is increasing on the entire bin
+range: $F'=1-120h/(3+5\sigma)^2>0$. Its endpoint is
+
+$$
+F(3/4)=\frac14+\frac{31}{300}\left(\frac59-3\right)
+=-\frac7{2700}.
+$$
+
+Consequently, for every fixed $\varepsilon>0$, on all sufficiently large
+real cutoffs,
+
+$$
+|\mathcal R_{3/4}(X;X^{31/300})|
+\ll_{\varepsilon,A_0}X^{-7/2700+\varepsilon}.
+\tag{11}
+$$
+
+In particular this actual infinite sector is $o(1)$ for
+$0<\varepsilon<7/2700$. The same calculation with the named
+Ingham–Huxley bounds has its maximum at $3/4$, with exponent
+$1/4+(31/300)(3/5-3)=1/500>0$:
+
+| Density input to this sector calculation | Allowance at $H=X^{31/300}$ | Endpoint threshold for decay |
+|---|---|---|
+| Named Ingham–Huxley bounds | $X^{1/500+o(1)}$ | $h>5/48$ |
+| Guth–Maynard Theorem 1.2 | $X^{-7/2700+o(1)}$ | $h>9/88$ |
+
+The selected power satisfies $9/88<31/300<5/48$. Thus the new input
+changes this comparison from a growing allowance to a decaying one.
+The growing allowance is an upper bound supplied by those classical
+inputs, not an assertion that the actual sector grows.
+
+## The complementary signed contribution remains
+
+Equation (11) controls neither $\beta>3/4$ nor the right-of-line zeros at
+heights $|\gamma|\le X^{31/300}$. Every fixed off-line zero eventually
+leaves the controlled sector. For a fixed $\rho$ with $\beta>1/2$, (5)–(7)
+retain the cumulative leading term
+
+$$
+s_\rho(X)=-\frac{X^{\rho-1/2}}
+{\rho(1-\rho)(\rho-1/2)}
+\left(1+O_\rho\left(\frac1{\log X}\right)\right)
++O_{\rho,A_0}(1).
+\tag{12}
+$$
+
+Its conjugate pair still has an oscillatory component on the
+$X^{\beta-1/2}$ scale. The sector bound does not control the sign or
+cancellation of that remaining contribution and supplies no fixed
+logarithmic lower budget for the full $\mathcal S$. It therefore proves
+neither the missing budget in §335 nor RH. It computes or verifies no
+zeros and makes no estimate on the unknown subset of actual low-loss
+FIB candidates.
+
+Transient Lean checks verified the exact height ordering, both endpoint
+exponents, the scalar maximum inequalities on the stated real-part
+range, the numerical kernel constant under $t_0\ge7/2$, and the
+negative-power limit. Their axiom closures contain only `propext`,
+`Classical.choice` and `Quot.sound`. These checks retain no new Lean
+declarations. The kernel and sector arguments above are paper
+derivations; the improper integrals, the zero-density theorem and the
+actual-zeta bridge are not Lean-formalized here.
