@@ -24,6 +24,11 @@ cosets of an abelian group satisfies `k >= m + f(n)`, where
 `f(n) = sum_p v_p(n)(p-1)`. For an inclusion-minimal ordinary cover of
 the integers this applies to every original modulus. The paper attributes
 the integer, m=1 case to Znám (1975); it is not a new covering-system bound.
+The equality case recorded in Corollary 2.1 says that, when `k-m=f(n)`,
+the other evaluations at the selected point have the corresponding prime
+orders; in particular, an essential relative index 5 forces the other
+relative indices to be divisible by 5, and an essential relative index 9
+forces the other relative indices to be divisible by 3.
 
 Theorem 2.1 gives more information. In an m-cover, at an integer a with
 multiplicity exactly m, let N_a be the least common multiple of the moduli covering a.

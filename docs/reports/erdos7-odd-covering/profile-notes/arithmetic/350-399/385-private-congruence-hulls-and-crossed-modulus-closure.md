@@ -24471,9 +24471,16 @@ eliminations make this palette exact.
 **Index five.**  If one repair class has $\delta_j=5$, take a private point
 of that class and its complete $N$-fibre inside $S_h$.  The induced fibre
 cover is a cover of the whole fibre parameter line and still has the selected
-class essential.  The deletion corollary for fewer than five classes divisible
-by $5$ therefore forces five compatible index-five classes; the budget is
-exhausted, so every repair class has index five.  Here $\delta_j=5$ means
+class essential.  Lettl--Sun Theorem 1.3 gives equality
+
+\[
+ k_{\mathrm{fibre}}-1=f(5)=4.
+\]
+
+The equality case in their Corollary 2.1 forces each of the other four
+induced characters to have order divisible by $5$.  Since the essential-coset
+bound has already reduced the relative-index palette to $\{1,3,5,9\}$,
+all five classes have index $5$.  Here $\delta_j=5$ means
 $d_j=5g_j$ with $g_j=\gcd(d_j,N)$, so the restriction is one residue of the
 five next digits.  On every $N$-fibre contained in $S_h$, each class occupies one of
 the five next digits.  Hence every class is compatible with every such fibre,
@@ -24508,10 +24515,14 @@ $v_5(g_j)=\nu$.  CRT phases using the five next $5$-digits attain the
 bound.  The resulting labels have one more $5$-adic digit than $Q$, so
 they are fresh from the retained family.
 
-**Index nine.** If an index-nine class occurs, its private fibre needs three
-index-nine classes on its occupied first ternary digit.  The other two first
-digits each need an index-three class, so the five-class budget forces the
-pattern
+**Index nine.** If an index-nine class occurs, take its private point and the
+complete fibre through it.  Theorem 1.3 and the Corollary 2.1 equality case
+give $k_{\mathrm{fibre}}-1=f(9)=4$; every other induced relative index is
+therefore divisible by $3$.  The palette reduces these to $3$ or $9$.  A
+compatible index-three class on the selected first ternary digit would contain
+the private point, so that branch can only use index-nine classes.  It needs
+three of them, one for each second ternary digit.  The other two first digits
+each need one index-three class, and the five-class budget forces the pattern
 
 \[
  3\text{ classes of index }9,\qquad 2\text{ classes of index }3.
@@ -24521,9 +24532,24 @@ An index-nine class has $d_j=9g_j$ with $g_j=3^{e-1}s_j$, $s_j\mid M$;
 an index-three class similarly has $d_j=3^es_j$.  A compatible index-one
 class, or an index-three class on the selected first digit, would cover the
 selected private point.  Thus the three deep classes and two shallow classes
-are forced.  All five classes have the same prefix modulo $3^{e-1}$.  Applying
-the same fibre argument to every $N$-fibre in $S_h$ shows that each deep class has a
-shadow containing all of $S_h$ modulo $3^{e-1}s_i$.  Replacing the five
+are forced.  All five classes have the same prefix modulo $3^{e-1}$.  Because
+$S_h$ is the complement of an $N$-periodic retained union, every $y\in S_h$
+has the complete fibre $y+N\mathbb Z\subseteq S_h$.  On such a fibre a
+missing deep class leaves density at most
+
+\[
+ \frac{2}{9}+\frac{2}{3}=\frac89,
+\]
+
+and a missing shallow class leaves density at most
+
+\[
+ \frac{3}{9}+\frac13=\frac23.
+\]
+
+Thus all five classes are compatible with every complete fibre in $S_h$, so
+each deep class has a shadow containing all of $S_h$ modulo $3^{e-1}s_i$.
+Replacing the five
 classes by three classes of labels
 
 \[
@@ -24870,3 +24896,198 @@ low class and a packet whose source-compatible price is strictly below the
 deleted packet. The global problem is consequently reduced to forcing one of
 these two source-preserving strict routes, rather than comparing an
 unrealized arithmetic hull with EB1.
+
+## 213. Occupied-$R$ prime gaps and phase-aware vacancy
+
+The vacancy bound in Section 200 has two useful refinements. The first uses
+the existing mixed-height transport HPM6; the second keeps the literal phase
+of the occupied class instead of counting only numerical labels. Both are
+necessary conditions on one hypothetical EB1 whole cover. Neither forces a
+vacancy in every lower-prime layer, so neither settles unrestricted Erdős #7.
+
+### A prime-gap threshold at every lower support prime
+
+Keep the notation of Section 200: $p^e\parallel Q$ is a top layer with exactly
+$p$ cofactors $C$, $L=\operatorname{lcm}(C)$, and $R=p^{e-1}L$. For an odd
+support prime $q<p$, put
+
+\[
+ H_q=v_q(Q),\qquad a_q=v_q(L),\qquad K_q=L/q^{a_q}.
+\]
+
+Then
+
+\[
+\boxed{p<q^{\,2H_q}.}
+\tag{PG1}
+\]
+
+Indeed, suppose $p\ge q^{2H_q}$. Apply the existing HPM6 with the roles of
+$q$ and $p$ exchanged, and with $t=H_q$: it gives the original label
+$q^{H_q}p^e$. Since this label is in the top $p$-layer, divisor closure puts
+$q^{H_q}$ in $C$, so $a_q=H_q$. Section 200's full-height consequence then
+gives
+
+\[
+ e\,\tau(K_q)\le q-1.
+\]
+
+The divisor-closed cofactor set satisfies
+
+\[
+ p=|C|\le\tau(L)=(H_q+1)\tau(K_q)
+   \le\frac{(H_q+1)(q-1)}e
+   \le(H_q+1)(q-1).
+\]
+
+But $q^{2H_q}>(H_q+1)(q-1)$ for $q\ge3$ and $H_q\ge1$, a contradiction.
+When the full-height condition $a_q=H_q$ is already known, the same argument
+also gives the sharper inventory bounds
+
+\[
+ ep\le(q-1)(H_q+1),\qquad
+ \left\lceil\frac{ep}{q-1}\right\rceil-1\le H_q\le p-1.
+\tag{PG2}
+\]
+
+The upper bound uses the divisor chain $1,q,\ldots,q^{H_q}$ in $C$; the
+lower bound is the first inequality in (PG2) rearranged. The threshold (PG1)
+is unconditional within the occupied top-layer branch, while (PG2) is only a
+full-height statement.
+
+### The full ternary-height inventory has only two numerical forms
+
+Suppose $p>3$ and $v_3(L)=H_3=v_3(Q)=:H$. Section 200 gives
+
+\[
+ e\,\tau(L/3^H)\le2.
+\]
+
+Divisor closure and $|C|=p$ then leave exactly the following possibilities.
+
+\[
+\begin{array}{ll}
+\text{(T1)}&e\in\{1,2\},\quad H=p-1,\quad L=3^{p-1},\quad
+ C=\{3^j:0\le j\le p-1\};\\[2mm]
+\text{(T2)}&e=1,\quad L=3^H r,\quad r\ne3,p\text{ prime},\\
+&C=\{3^j:0\le j\le H\}\cup\{r3^j:0\le j\le b\},
+ \quad 0\le b\le H,\quad p=H+b+2.
+\end{array}
+\tag{T3}
+\]
+
+For (T1), the full $3$-power in the lcm and divisor closure force the entire
+chain, and its cardinality is $H+1=p$. For (T2), the cofactor part has one
+prime and the divisor-closed set consists of one complete $3$-chain and one
+initial $r$-chain. In particular,
+
+\[
+ e\ge3\Longrightarrow v_3(L)<H_3.
+\tag{T4}
+\]
+
+This is a numerical classification only. It does not assert that either
+shape can carry compatible original phases or a whole cover; it records the
+remaining full-height branch that any phase argument must exclude.
+
+### Vacancy must be counted together with the retained phase
+
+Fix $q<p$ and write $a=v_q(L)$ and $N=R/q^a$. Partition the occupied class
+$A_R=a_R+R\mathbb Z$ into the $q$ complete subfibres
+
+\[
+ F_j=a_R+jR+qR\mathbb Z,\qquad j\in\mathbb Z/q\mathbb Z.
+\]
+
+Let
+
+\[
+ \mathcal U_q=\{q^{a+1}d:d\mid N\},\qquad
+ f_q=|\mathcal U_q\setminus D|,
+\]
+
+and let $G_q$ be the set of indices $j$ for which a retained original class
+$A_u$, with $u\in\mathcal U_q\cap D$, contains the complete fibre $F_j$.
+Put $g_q=|G_q|$. Then
+
+\[
+\boxed{f_q+g_q\le q-1.}
+\tag{PV1}
+\]
+
+If this failed, retain every class outside the top $p$-packet and $A_R$,
+replace $A_R$ by the source phase at the occupied label $R$, and choose
+$q-g_q$ distinct vacant labels from $\mathcal U_q$ for the remaining fibres.
+Each chosen label divides $qR$, so a CRT phase can make its class contain the
+assigned complete $F_j$. The source identity from Section 200 then gives a
+whole cover with
+
+\[
+ |D|-(p+1)+(q+1)=|D|-p+q<|D|
+\]
+
+classes. The new labels are vacant, pairwise distinct, odd, and have
+$p$-height at most $e-1$, so they do not collide with the deleted top packet.
+This proves (PV1) by EB1 minimality. Unlike LP5, (PV1) charges the actual
+phase service already supplied by retained classes.
+
+If $q\nmid L$, the divisor-closed label $q$ is retained and, because
+$\gcd(q,R)=1$, its class contains one complete $F_j$. Thus $g_q\ge1$ and
+
+\[
+ q\nmid L\Longrightarrow f_q\le q-2.
+\tag{PV2}
+\]
+
+For $q=3$, this has a particularly rigid consequence. Here
+$\mathcal U_3=\{3d:d\mid R\}$. If $3d\notin D$ for a proper divisor
+$d<R$, divisor closure also makes $3R\notin D$, so $f_3\ge2$, contradicting
+(PV2). Hence
+
+\[
+\boxed{3\nmid L\Longrightarrow 3d\in D
+       \quad(d\mid R, d<R).}
+\tag{PV3}
+\]
+
+In particular, if $e\ge2$ then $3p^{e-2}L\in D$. If $3R\notin D$, then
+$f_3=g_3=1$. Every other label $3d$ with $d<R$ must have a phase disjoint
+from $A_R$: it cannot meet a second complete $F_j$, because the retained
+$3$-class already occupies the unique fibre it meets and (PV1) would then
+give $g_3\ge2$. Equivalently,
+
+\[
+ a_{3d}\not\equiv a_R\pmod d
+ \qquad(1<d<R, d\mid R).
+\tag{PV4}
+\]
+
+### Boundary of the strengthening
+
+The conditions above do not force $a_q=H_q$ or a vacancy. For example, take
+
+\[
+ \mathcal P=\{3,5,7,11,13,17,19,23,29\},\qquad
+ T=\prod_{r\in\mathcal P\setminus\{p\}}r^{30},
+\]
+
+with $p\in\mathcal P\setminus\{3\}$, and define the divisor-closed numerical
+inventory
+
+\[
+ D_0=\{d>1:d\mid p^2T\}
+     \cup\{p^3 3^j:0\le j\le p-1\}.
+\]
+
+It has $Q=p^3T$, top height $e=3$, exactly $p$ top labels, and
+$L=3^{p-1}$, while $v_3(Q)=30$. Every candidate layer in (LP1) for a
+smaller support prime is occupied, so the vacancy bounds alone do not force
+full height. $D_0$ is only an inventory control and is not asserted to be a
+cover; it demonstrates why the phase-sensitive whole-cover forcing step is
+still necessary.
+
+The remaining unrestricted obligation is therefore precise: combine (PG1),
+(T3), and (PV1)--(PV4) with a theorem that forces either a usable vacant
+layer, a compatible repeated phase, or a complete-liability exchange. No such
+forcing theorem is supplied here, and the unrestricted Erdős #7 question
+remains open.
