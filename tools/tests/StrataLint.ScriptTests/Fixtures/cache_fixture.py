@@ -18,7 +18,8 @@ class CacheFixture:
         self.env = dict(os.environ, GITHUB_RUN_ID="17", GITHUB_RUN_ATTEMPT="2",
                         GITHUB_EVENT_NAME="push", GITHUB_REF="refs/heads/dev",
                         CI_WORKFLOW_INPUTS="", GITHUB_EVENT_PATH="",
-                        STRATALINT_CHECK_SUCCEEDED="true", STRATALINT_CACHE_WRITES="true",
+                        STRATALINT_CHECK_SUCCEEDED="true", STRATALINT_REPORT_SUCCEEDED="true",
+                        STRATALINT_CACHE_WRITES="true",
                         HOME=str(self.root),
                         GITHUB_OUTPUT=str(self.root / "outputs"), GITHUB_ENV=str(self.root / "environment"))
         (self.root / "lake-manifest.json").write_text(json.dumps({"packages": [{"name": "mathlib", "rev": REV}]}))

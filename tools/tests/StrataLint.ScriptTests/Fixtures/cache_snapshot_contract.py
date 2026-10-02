@@ -2,6 +2,7 @@
 import contextlib
 import importlib
 import io
+import json
 import os
 import pathlib
 import sys
@@ -12,7 +13,18 @@ from cache_fixture import CACHE, REV, CacheFixture
 
 
 class SnapshotContracts(CacheFixture, unittest.TestCase):
+    def work(self, report=1, programs=0, **changes):
+        path = self.root / "build/lean-cache/build-work.json"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        value = dict(schema_version=1, run_id="17", run_attempt="2",
+                     repository=str(self.root.resolve()), report=report, programs=programs)
+        value.update(changes)
+        path.write_text(json.dumps(value))
+        self.env["STRATALINT_LEAN_BUILD_WORK_FILE"] = str(path)
+        return path
+
     def native_seed(self, layer):
+        self.work()
         owner = self.restore_owner()
         owner.dependency_restored_record(self.root).unlink(missing_ok=True)
         with mock.patch.dict(os.environ, self.env):
@@ -34,7 +46,9 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                     owner, keys, target = self.native_seed(layer)
                     key = keys[layer]["key"]
                     if key_kind == "foreign": key = key.replace(REV, "b" * 40)
-                    if key_kind == "legacy": key = key.replace("-v4-", "-v3-")
+                    if key_kind == "legacy":
+                        key = (key.replace("lean-project-push-", "lean-project-v4-") if layer == "project"
+                               else key.replace("-v4-", "-v3-"))
                     sibling = self.root / ".lake" / ("build" if layer == "dependency" else "packages")
                     sibling.mkdir(exist_ok=True)
                     (sibling / "keep").write_bytes(b"other accepted material")
@@ -146,9 +160,11 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
             keys = owner.actions_keys(self.root)
         for layer, path in (("dependency", ".lake/packages"), ("project", ".lake/build")):
             self.assertEqual(path, keys[layer]["path"])
-            self.assertIn("-v4-", keys[layer]["restore_prefix"])
+            self.assertTrue(keys[layer]["restore_prefix"].startswith(
+                "lean-project-push-" if layer == "project" else "lean-dependency-v4-"))
 
     def test_native_project_authorization_preserves_outputs_without_directory_reads(self):
+        self.work()
         owner = self.restore_owner()
         source = self.root / ".lake/build/lib/Module.olean"
         source.parent.mkdir(parents=True)
@@ -162,6 +178,94 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         self.assertEqual(before, source.stat().st_ino)
         self.assertEqual(b"new successful build", source.read_bytes())
         self.assertFalse((self.root / "build/lean-cache/project/data").exists())
+
+    def test_project_zero_report_and_program_work_skips_upload(self):
+        self.native_seed("project")
+        self.work(0, 0)
+        ready, receipts = self.snapshot_result()
+        self.assertEqual("false", ready["project_ready"])
+        self.assertEqual("no-build-work", receipts["project"]["reason"])
+
+    def test_project_report_and_program_only_work_are_publishable_on_push(self):
+        self.native_seed("project")
+        for report, programs in ((2, 0), (0, 3)):
+            with self.subTest(report=report, programs=programs):
+                self.work(report, programs)
+                ready, receipts = self.snapshot_result()
+                self.assertEqual("true", ready["project_ready"])
+                self.assertEqual(report + programs, receipts["project"]["build_work"])
+
+    def test_project_unknown_work_never_claims_zero_or_uploads(self):
+        self.native_seed("project")
+        for defect in ("missing", "malformed", "stale", "negative", "bool", "unknown", "foreign-root", "duplicate-field", "archived-path", "symlink"):
+            with self.subTest(defect=defect):
+                path = self.work()
+                if defect == "missing": path.unlink()
+                elif defect == "malformed": path.write_text("[]")
+                elif defect == "stale": self.work(run_attempt="1")
+                elif defect == "negative": self.work(-1)
+                elif defect == "bool": self.work(True)
+                elif defect == "unknown": self.work(None)
+                elif defect == "foreign-root": self.work(repository="/other")
+                elif defect == "duplicate-field": path.write_text(path.read_text().rstrip()[:-1] + ', "report": 0}')
+                elif defect == "archived-path":
+                    archived = self.root / ".lake/build/work.json"
+                    archived.write_bytes(path.read_bytes())
+                    self.env["STRATALINT_LEAN_BUILD_WORK_FILE"] = str(archived)
+                elif defect == "symlink":
+                    link = path.with_suffix(".link")
+                    link.symlink_to(path)
+                    self.env["STRATALINT_LEAN_BUILD_WORK_FILE"] = str(link)
+                ready, receipts = self.snapshot_result()
+                self.assertEqual("false", ready["project_ready"])
+                self.assertEqual("build-work-unknown", receipts["project"]["reason"])
+
+    def test_pull_requests_never_publish_project_seeds_even_with_build_work(self):
+        self.native_seed("project")
+        self.native_seed("dependency")
+        self.env.update(GITHUB_EVENT_NAME="pull_request", GITHUB_REF="refs/pull/12/merge")
+        for report, programs in ((2, 0), (0, 3), (0, 0), (None, None)):
+            with self.subTest(report=report, programs=programs):
+                self.work(report, programs)
+                ready, receipts = self.snapshot_result()
+                self.assertEqual("false", ready["project_ready"])
+                self.assertEqual("pull-requests-do-not-publish-project-seeds", receipts["project"]["reason"])
+                self.assertEqual("true", ready["dependency_ready"])
+
+    def test_only_dev_and_integration_pushes_publish_project_seeds(self):
+        self.native_seed("project")
+        for ref, expected in (("refs/heads/dev", "true"),
+                ("refs/heads/integration-ci-perf-tests", "true"), ("refs/heads/topic", "false")):
+            with self.subTest(ref=ref):
+                self.env["GITHUB_REF"] = ref
+                ready, _ = self.snapshot_result()
+                self.assertEqual(expected, ready["project_ready"])
+
+    def test_project_save_authorization_and_dependency_policy_remain_independent(self):
+        self.native_seed("project")
+        self.native_seed("dependency")
+        self.work(0, 0)
+        ready, receipts = self.snapshot_result()
+        self.assertEqual("true", ready["dependency_ready"])
+        self.env["STRATALINT_CACHE_WRITES"] = "false"
+        ready, receipts = self.snapshot_result()
+        self.assertEqual("false", ready["project_ready"])
+        self.assertEqual("false", ready["dependency_ready"])
+        self.assertEqual("save-disabled", receipts["project"]["status"])
+
+    def test_project_guard_requires_report_success_and_dependency_requires_check_success(self):
+        self.native_seed("project")
+        self.native_seed("dependency")
+        for report, checked, project, dependency in (("true", "false", "true", "false"),
+                ("false", "true", "false", "true"), (None, "true", "false", "true"),
+                ("true", "true", "true", "true")):
+            with self.subTest(report=report, checked=checked):
+                self.env["STRATALINT_CHECK_SUCCEEDED"] = checked
+                self.env.pop("STRATALINT_REPORT_SUCCEEDED", None)
+                if report is not None: self.env["STRATALINT_REPORT_SUCCEEDED"] = report
+                ready, _ = self.snapshot_result()
+                self.assertEqual(project, ready["project_ready"])
+                self.assertEqual(dependency, ready["dependency_ready"])
 
     def restore_owner(self):
         sys.path.insert(0, str(CACHE.parent))
