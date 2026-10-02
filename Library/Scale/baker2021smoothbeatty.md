@@ -236,7 +236,7 @@ $\Delta(C_i)\to0$ for every $C_i\to\infty$ used above. A relative
 Grönwall limit alone would not justify this additive conclusion.
 
 For their actual comparators $N_i=t_iC_i$, retain the price bound and
-the same two integers. Since $Z(C_i)=O(\log P_i)$, the response change
+the same actual pair, with possible equality. Since $Z(C_i)=O(\log P_i)$, the response change
 and budget change both satisfy
 
 $$
