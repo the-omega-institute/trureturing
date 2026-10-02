@@ -22859,7 +22859,8 @@ representative, not a settlement of unrestricted Erdős #7.
 There is one more reusable conditional bridge at a maximal prime-power layer.
 Klein, [arXiv:2508.18062](https://arxiv.org/abs/2508.18062), Lemma 2.2
 (attributed there to Dalton--Trifonov, Corollary 9), states that if a covering
-system has exactly \(p\) classes whose moduli are
+system has exactly \(p\) classes in the set of progressions with modulus
+divisible by \(p^e\), whose moduli are
 
 \[
 p^e m_1,\ldots,p^e m_p,
@@ -22877,27 +22878,29 @@ and whole coverage is preserved.  The lemma is intentionally a covering
 statement for a multiset of moduli; it does not promise that \(R\) is absent
 from the other labels or that the inherited phases are retained.
 
-Apply it to an EB1 representative and suppose the maximal \(p\)-height layer
-contains exactly \(p\) labels.  If \(R\) is not already an occupied numerical
-label among the retained classes, the replacement is a distinct odd cover with
-\(K-p+1<K\), contradicting the first EB1 objective.  (The degenerate case
-\(R=1\) would mean that the \(p\) classes of modulus \(p\) already cover all
-integers, making every other class redundant.)  Therefore EB1 forces the
-following conditional alternative:
+Apply it with \(e=\max_{d\in D}v_p(d)\) to an EB1 representative and suppose
+the maximal \(p\)-height layer contains exactly \(p\) labels.  Then the
+lemma's \(p\) classes are precisely these top-layer labels, and \(p\nmid m_i\).
+If \(R\notin D\), the replacement has a numerical label distinct from every
+retained class and from every deleted class (its \(p\)-valuation is \(e-1\)),
+so it is a distinct odd cover with \(K-p+1<K\), contradicting the first EB1
+objective.  The degenerate case \(R=1\) would instead mean that the \(p\)
+classes of modulus \(p\) cover all integers, making every other class
+redundant.  Thus, in the nondegenerate EB1 case, the output label is forced to
+be occupied:
 
 \[
 \boxed{
 |\{d\in D:v_p(d)=e\}|=p
 \Longrightarrow
-R\text{ is already occupied, or a separate phase-compatible repair is
-needed}.}
+R\in D\setminus\{d\in D:v_p(d)=e\}.}
 \tag{PW-EB1}
 \]
 
-When \(R\) is occupied, Lemma 2.2 produces a repeated numerical label and
-cannot by itself be used as an EB1 comparison.  Thus (PW-EB1) is an occupied
-label obstruction, not a proof that the top layer has at least \(p+1\) labels.
-Combined with (EB-DC), it supplies a concrete target for a future repair: the
-top-layer \(p\)-digit collisions and the occupied label \(R\) must be handled
-jointly while preserving the original phases.  No unconditional strict descent
-follows from the cited lemma alone.
+When \(R\) is occupied, Lemma 2.2 may produce a repeated numerical label and
+cannot by itself be used as an EB1 comparison; it also need not preserve the
+original phases.  Thus (PW-EB1) is an occupied-label obstruction, not a proof
+that the top layer has at least \(p+1\) labels.  Combined with (EB-DC), it
+supplies a concrete target for a future repair: the top-layer \(p\)-digit
+collisions, the occupied label \(R\), and the phase liability must be handled
+jointly.  No unconditional strict descent follows from the cited lemma alone.
