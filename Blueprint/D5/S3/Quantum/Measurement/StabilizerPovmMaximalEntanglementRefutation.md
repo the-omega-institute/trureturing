@@ -298,6 +298,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lo-monaco-2025-stabilizer-povm-maximal-entanglement-refutation` (refuted) by `D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lo-monaco-2025-stabilizer-povm-maximal-entanglement-refutation","declaration_gid":"D5/S3/Quantum/Measurement/StabilizerPovmMaximalEntanglementRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Gabriele Lo Monaco; Salvatore Lorenzo; Alessandro Ferraro; Mauro Paternostro; G. Massimo Palma; Luca Innocenti (2025). *The non-stabilizerness cost of quantum state estimation*. DOI: [10.48550/arXiv.2510.00157](https://doi.org/10.48550/arXiv.2510.00157). URL: <https://arxiv.org/abs/2510.00157v2>.
