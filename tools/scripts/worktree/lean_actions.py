@@ -9,6 +9,7 @@ import pathlib
 import re
 import shutil
 import tempfile
+import threading
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -122,6 +123,105 @@ class SeedLookupUnavailable(ValueError):
     pass
 
 
+def wait_for_seed_lookup(completed, seconds):
+    return completed.wait(seconds)
+
+
+def guarded_seed_lookup(lookup):
+    completed = threading.Event()
+    result = []
+
+    def run():
+        try:
+            result.append((lookup(), None))
+        except Exception as error:
+            result.append((None, error))
+        finally:
+            completed.set()
+
+    threading.Thread(target=run, daemon=True).start()
+    # One transport hang guard covers DNS, headers, bodies and every page.
+    if not wait_for_seed_lookup(completed, 10):
+        raise SeedLookupUnavailable("lookup-transport-hang-guard")
+    key, error = result[0]
+    if error is not None:
+        raise error
+    return key
+
+
+def lookup_project_seed(spec, ref, token, repository, api):
+    endpoint = api + "/repos/" + repository + "/actions/caches"
+    query = dict(key=spec["restore_prefix"], ref=ref, per_page="100", sort="created_at", direction="desc")
+    url = endpoint + "?" + urllib.parse.urlencode(query)
+    total, seen, page, best = None, set(), 1, None
+    pattern = re.compile(re.escape(spec["restore_prefix"]) + r"([1-9][0-9]*)-([1-9][0-9]*)")
+
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise SeedLookupUnavailable("lookup-malformed-listing")
+            result[key] = value
+        return result
+
+    while True:
+        request = urllib.request.Request(url, headers={
+            "Authorization": "Bearer " + token, "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28"})
+        with urllib.request.urlopen(request, timeout=10) as response:
+            if response.status != 200:
+                raise SeedLookupUnavailable("lookup-http-error")
+            try:
+                value = json.loads(response.read(), object_pairs_hook=unique)
+            except (ValueError, UnicodeError):
+                raise SeedLookupUnavailable("lookup-malformed-listing")
+            link = response.headers.get("Link", "")
+        if (not isinstance(value, dict) or type(value.get("total_count")) is not int
+                or value["total_count"] < 0 or not isinstance(value.get("actions_caches"), list)):
+            raise SeedLookupUnavailable("lookup-malformed-listing")
+        if total is None:
+            total = value["total_count"]
+        elif total != value["total_count"]:
+            raise SeedLookupUnavailable("lookup-incomplete-listing")
+        rows = value["actions_caches"]
+        for row in rows:
+            if (not isinstance(row, dict) or not isinstance(row.get("key"), str)
+                    or not isinstance(row.get("ref"), str)):
+                raise SeedLookupUnavailable("lookup-malformed-listing")
+            cache_id = row.get("id")
+            if type(cache_id) is not int or cache_id <= 0 or cache_id in seen:
+                raise SeedLookupUnavailable("lookup-incomplete-listing")
+            seen.add(cache_id)
+            match = pattern.fullmatch(row["key"])
+            if row["ref"] == ref and match:
+                candidate = (int(match[1]), int(match[2]), row["key"])
+                if best is None or candidate[:2] > best[:2]:
+                    best = candidate
+        if len(seen) > total or not isinstance(link, str):
+            raise SeedLookupUnavailable("lookup-incomplete-listing")
+        links = {}
+        if link:
+            for entry in link.split(","):
+                match = re.fullmatch(r'\s*<([^<>]+)>;\s*rel="([^"]+)"\s*', entry)
+                if not match or match[2] in links:
+                    raise SeedLookupUnavailable("lookup-incomplete-listing")
+                links[match[2]] = match[1]
+        next_url = links.get("next")
+        if next_url is None:
+            if len(seen) != total:
+                raise SeedLookupUnavailable("lookup-incomplete-listing")
+            break
+        next_parts = urllib.parse.urlsplit(next_url)
+        if (not rows or len(seen) >= total or next_parts._replace(query="").geturl() != endpoint
+                or urllib.parse.parse_qs(next_parts.query) != {
+                    **{key: [item] for key, item in query.items()}, "page": [str(page + 1)]}):
+            raise SeedLookupUnavailable("lookup-incomplete-listing")
+        url, page = next_url, page + 1
+    if best is None:
+        raise SeedLookupUnavailable("lookup-no-eligible-seed")
+    return best[2]
+
+
 def project_restore_key(keys):
     spec = keys["project"]
     fallback = spec["key"]
@@ -136,74 +236,9 @@ def project_restore_key(keys):
         if not token or not repository or not ref:
             raise SeedLookupUnavailable(reason)
         api = os.environ.get("GITHUB_API_URL", "https://api.github.com").rstrip("/")
-        endpoint = api + "/repos/" + repository + "/actions/caches"
-        query = dict(key=spec["restore_prefix"], ref=ref, per_page="100")
-        url = endpoint + "?" + urllib.parse.urlencode(query)
-        total, seen, page, best = None, 0, 1, None
-        pattern = re.compile(re.escape(spec["restore_prefix"]) + r"([1-9][0-9]*)-([1-9][0-9]*)")
-
-        def unique(pairs):
-            result = {}
-            for key, value in pairs:
-                if key in result:
-                    raise SeedLookupUnavailable("lookup-malformed-listing")
-                result[key] = value
-            return result
-
-        while True:
-            request = urllib.request.Request(url, headers={
-                "Authorization": "Bearer " + token, "Accept": "application/vnd.github+json",
-                "X-GitHub-Api-Version": "2022-11-28"})
-            with urllib.request.urlopen(request, timeout=10) as response:
-                if response.status != 200:
-                    raise SeedLookupUnavailable("lookup-http-error")
-                try:
-                    value = json.loads(response.read(), object_pairs_hook=unique)
-                except (ValueError, UnicodeError):
-                    raise SeedLookupUnavailable("lookup-malformed-listing")
-                link = response.headers.get("Link", "")
-            if (not isinstance(value, dict) or type(value.get("total_count")) is not int
-                    or value["total_count"] < 0 or not isinstance(value.get("actions_caches"), list)):
-                raise SeedLookupUnavailable("lookup-malformed-listing")
-            if total is None:
-                total = value["total_count"]
-            elif total != value["total_count"]:
-                raise SeedLookupUnavailable("lookup-incomplete-listing")
-            rows = value["actions_caches"]
-            for row in rows:
-                if (not isinstance(row, dict) or not isinstance(row.get("key"), str)
-                        or not isinstance(row.get("ref"), str)):
-                    raise SeedLookupUnavailable("lookup-malformed-listing")
-                match = pattern.fullmatch(row["key"])
-                if row["ref"] == ref and match:
-                    candidate = (int(match[1]), int(match[2]), row["key"])
-                    if best is None or candidate[:2] > best[:2]:
-                        best = candidate
-            seen += len(rows)
-            if seen > total or not isinstance(link, str):
-                raise SeedLookupUnavailable("lookup-incomplete-listing")
-            links = {}
-            if link:
-                for entry in link.split(","):
-                    match = re.fullmatch(r'\s*<([^<>]+)>;\s*rel="([^"]+)"\s*', entry)
-                    if not match or match[2] in links:
-                        raise SeedLookupUnavailable("lookup-incomplete-listing")
-                    links[match[2]] = match[1]
-            next_url = links.get("next")
-            if next_url is None:
-                if seen != total:
-                    raise SeedLookupUnavailable("lookup-incomplete-listing")
-                break
-            next_parts = urllib.parse.urlsplit(next_url)
-            if (not rows or seen >= total or next_parts._replace(query="").geturl() != endpoint
-                    or urllib.parse.parse_qs(next_parts.query) != {
-                        **{key: [item] for key, item in query.items()}, "page": [str(page + 1)]}):
-                raise SeedLookupUnavailable("lookup-incomplete-listing")
-            url, page = next_url, page + 1
-        if best is None:
-            raise SeedLookupUnavailable("lookup-no-eligible-seed")
-        receipt("project", "restore-preference", base_ref=ref, requested_key=best[2])
-        return best[2]
+        preferred = guarded_seed_lookup(lambda: lookup_project_seed(spec, ref, token, repository, api))
+        receipt("project", "restore-preference", base_ref=ref, requested_key=preferred)
+        return preferred
     except SeedLookupUnavailable as error:
         reason = str(error)
     except urllib.error.HTTPError:
