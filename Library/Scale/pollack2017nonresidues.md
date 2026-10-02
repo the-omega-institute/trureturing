@@ -446,3 +446,122 @@ an improved upper certificate for $m_1$ cannot change that fact on this
 family. The onset may depend on the fixed $b,c$. This is a paper-level
 application of the existing weighted estimate, not a new analytic theorem,
 an assertion $q\asymp n$, or an obstruction proved on SA/CA candidates.
+
+## The terminal CA prime band forces a conductor lower bound
+
+The preceding canonical family is not established to be an asymptotic CA family. For
+actual CA sources, a different restriction follows by applying the
+published [Thorner–Zaman prime count](thornerzaman2019chebotarev.md).
+This is a paper-level application of existing analytic and canonical
+interfaces, without a new analytic theorem, originality claim or Lean
+verification.
+
+Let $n$ be any actual CA maximizer, including an intermediate tied
+maximizer, and put $P=P^+(n)$. Retain its own canonical unit bit $h$,
+coordinates $A,B$, $c=4A+7B$, and signed discriminant
+$D=5h^2-4(A^2+AB-B^2)$. In the branch $h=1$ with nonsquare $D$,
+write $D=\delta s^2$ as above and let $q$ be its primitive quadratic
+conductor. The existing prime-power exception result gives
+
+$$
+p\mid n,\quad p\ne2,5,\quad\chi_\delta(p)=-1
+\quad\Longrightarrow\quad v_p(n)\text{ is even}.
+\tag{T3}
+$$
+
+This implication is reused at the same source; no canonical coordinates
+are transported from a larger representative. Primes dividing $q$
+remain character zeros.
+
+### The terminal support consists of exponent-one primes
+
+At the actual CA price $\epsilon$, use the classical thresholds
+$F(\xi_k,k)=\epsilon$, with $\xi=\xi_1$. The
+[Nicolas manuscript](https://hal.science/hal-05389053v1/document),
+equation (3.8) and Remark 3.1, printed p.11, give the prime-layer support
+and tied choices; (3.19)–(3.23), printed pp.12–13, give
+$\xi_2\le\sqrt{2\xi}$. Every prime below $\xi$ has strictly positive
+first-layer gain and is included. A first-layer tie can only affect the
+possible endpoint prime $\xi$. Hence $P\sim\xi$ by ordinary PNT,
+while $\xi_2=o(P)$.
+
+Every sufficiently large actual CA integer therefore satisfies
+
+$$
+v_p(n)=1\qquad\text{for every prime }P/2<p\le P.
+\tag{T4}
+$$
+
+Indeed $P/2>\xi_2$ eventually: each such prime is in the initial support
+and has strictly negative second-layer gain. A tied square activation
+at $\xi_2$ lies below this band. The argument permits every tied
+maximizer, rather than only the all-ties representative.
+
+### The primitive conductor is bounded below at the same candidate
+
+Let $C,x_0$ be the constants in the linked interval consequence (T2).
+If $P>\max\{10,2\xi_2\}$ and $P\ge x_0$, (T3)–(T4) prohibit any
+prime $p\in(P/2,P]$ with $\chi_\delta(p)=-1$. If $q^C\le P$,
+(T2) instead supplies at least $P/(8\log P)$ such primes. Consequently,
+with a fixed $\eta=1/C>0$,
+
+$$
+\boxed{q>P^\eta}
+\tag{T5}
+$$
+
+for every sufficiently large actual CA integer in this $h=1$,
+nonsquare-$D$ branch. No numerical CA onset or infinitude of this
+particular canonical branch is supplied.
+
+This is a lower bound for the actual primitive conductor, rather than
+for the raw discriminant or an upper-bound certificate for the mask.
+Since $m_1=\operatorname{lcm}(q,R_1)\ge q$, it also gives
+$m_1>P^\eta$. On an unbounded branch of these sources, neither $q$ nor
+$m_1$ can be bounded by a fixed power of $\log P$.
+
+For the existing sufficient cutoff $m_1^b\le Y=\log n$, the necessary
+range is now
+
+$$
+P^\eta<q\le m_1\le Y^{1/b},\qquad P\sim Y.
+\tag{T6}
+$$
+
+The small fixed $\eta$ supplied here leaves that interval compatible;
+it does not exclude fixed-power-in-$\log n$ conductors. No
+reciprocal-prime deficit, exception-weight payment or signed Robin
+margin follows. Unit-bit-zero sources, square discriminants and the
+remaining larger conductors still require their own estimates. The
+[raw-discriminant chain witnesses](../ArithSums/fibcomplement2026weightedresidues.md#recurring-doubling-activations-improve-the-unbounded-subset-rate)
+are not known to belong to this canonical branch, so their bound cannot
+be combined with (T5) by treating separately realized witnesses as one
+source. No actual Robin violation or RH proof is obtained.
+
+### A numerical exponent from the published progression interval
+
+The independently published [Haynes–White interval theorem](hayneswhite2014intervals.md)
+supplies a prime in $(P/2,P]$ with $\chi_\delta(p)=-1$ whenever
+$q\le P^\eta$, for every fixed $0<\eta<5/67$ and sufficiently large
+$P$. Applying the same contradiction (T3)–(T4), without reconstructing
+either interface, gives the numerical version
+
+$$
+\boxed{q>P^\eta\quad\text{eventually for every fixed }0<\eta<5/67}
+\tag{T7}
+$$
+
+on the same actual $h=1$, nonsquare-$D$ CA branch. The eventual onset
+can depend on $\eta$ and is not claimed effective. For example
+$q>P^{1/14}$ eventually. The effective existential version (T5) is
+retained independently; no comparison of its unnamed exponent with
+$5/67$ is asserted.
+
+This numerical rate still leaves the useful faithful-mask cutoff
+compatible. For example $b=1/5$ allows $m_1\le Y^5$, while the lower
+bound is only $m_1>P^{1/14}$ and $P\sim Y$. A conductor lower bound
+$q>P^\eta$ would contradict $m_1^b\le Y$ by powers alone if
+$\eta b>1$; equality requires further constant or lower-order
+information. The supplied rate does not cross that scale in the
+stated $\beta_0<b<1/4$ regime. All same-source and unresolved-branch
+limitations above remain in force.

@@ -376,3 +376,192 @@ they are not merely fixed-multiplier statements. A new safety proof for
 this branch would not expand the covered Robin family. Remaining norm
 and affine-unit branches still require estimates with their own actual
 support, gcd, discriminant and price budget kept together.
+
+## Actual CA prime-step chains cannot stay in raw small-discriminant windows
+
+The fixed-support family above does not consist of asymptotic CA
+candidates. A different application uses an unbounded chain of actual
+CA integers and the exact canonical lift already recorded in the
+[Beatty note](guloglunevans2008beatty.md). This is a paper derivation from
+classical CA optimization and quadratic irrational separation, without
+a Lean-verification or originality claim.
+
+For the canonical source of each integer $n>1$, retain
+
+$$
+n=h+2A+3B,\quad h\in\{0,1\},\quad c=4A+7B,
+\quad E(n)=c-\sqrt5(n-h),
+\quad D(n)=5h^2-4(A^2+AB-B^2).
+$$
+
+The existing rotation branches give $|E(n)|<1$. Also $E(n)\ne0$,
+because $n-h>0$ and $\sqrt5$ is irrational. The actual-source identity is
+
+$$
+D(n)=5h^2+E(n)\bigl(2\sqrt5(n-h)+E(n)\bigr).
+\tag{A1}
+$$
+
+The classical local CA objective and tied-price convention, recalled
+in [Nicolas's comparison note](nicolas2025comparison.md), permit an
+unbounded chain $n_{j+1}=p_jn_j$ of actual CA maximizers, with each $p_j$
+prime. To obtain it, order the prime-power activation prices
+$\log[Z(p^a)/Z(p^{a-1})]/\log p$ decreasingly and include each activated
+layer. At a tied price, include the tied layers one at a time. Every
+intermediate product includes all layers having strictly positive gain
+at that price and a subset having zero gain, so is still a global
+maximizer. The activation prices strictly decrease at each fixed prime,
+and only finitely many layers exceed any fixed positive price. Letting
+the price tend to zero gives the unbounded chain. No bound on the number
+of simultaneous ties is needed, and the chain need not contain every CA
+integer.
+
+Put $L_j=\log n_j$. Initial prime support gives
+$\vartheta(p_j)\le\log n_{j+1}=L_j+\log p_j$. Ordinary PNT and
+$\log p\le p/4$ for large $p$ imply $p_j\le4L_j$ eventually. Bounded
+step primes also satisfy this bound once $L_j$ is large.
+
+For integers $k,t$ with $t\ne0$, the elementary quadratic irrational
+bound is
+
+$$
+|k+\sqrt5t|\ge\frac1{6|t|}.
+\tag{A2}
+$$
+
+If the absolute value is at least one, the bound is immediate.
+Otherwise $|k-\sqrt5t|\le1+2\sqrt5|t|<6|t|$, while the nonzero integer
+$|k^2-5t^2|$ is at least one. Their product proves (A2).
+
+Suppose that every sufficiently large actual CA integer satisfied
+$|E(n)|\le1/[240(\log n)^2]$. Write $h_j,c_j$ for the two actual
+canonical readouts. Their exact neighbor relation is
+
+$$
+E(n_{j+1})-p_jE(n_j)
+=(c_{j+1}-p_jc_j)-\sqrt5(p_jh_j-h_{j+1}).
+\tag{A3}
+$$
+
+On the late chain, its left side has absolute value at most
+$(p_j+1)/(240L_j^2)\le1/(48L_j)$. If
+$t=p_jh_j-h_{j+1}\ne0$, then $|t|\le p_j$ and (A2) instead gives
+at least $1/(6p_j)\ge1/(24L_j)$. Hence $t=0$, which forces
+$h_j=h_{j+1}=0$. The remaining integer $c_{j+1}-p_jc_j$ has absolute
+value below one and is zero. Thus $E(n_{j+1})=p_jE(n_j)$ throughout
+the late chain. At a fixed late index $J$, this gives
+$E(n_j)=(n_j/n_J)E(n_J)$, unbounded in absolute value, contrary to the
+canonical bound. Therefore arbitrarily large actual CA integers satisfy
+$|E(n)|>1/[240(\log n)^2]$.
+
+At those same integers, (A1) gives
+$|D(n)|\ge2\sqrt5(n-1)|E(n)|-6$. Consequently an unbounded subset of
+the CA test set satisfies
+
+$$
+\boxed{|D(n)|\ge\frac{n}{240(\log n)^2}.}
+\tag{A4}
+$$
+
+For the last constant it suffices to take members large enough that
+$3n-4\ge1440(\log n)^2$. In particular, for every fixed real $K$ and
+$C>0$, an eventual upper bound $|D(n)|\le C(\log n)^K$ cannot hold
+on the whole CA test set. This addresses actual extremal integers,
+rather than only the non-CA fixed-support examples above.
+
+The conclusion concerns the raw canonical discriminant. It gives no
+lower bound for its radical, squarefree kernel, primitive conductor or
+exception-adjusted modulus; large square factors and square $D$ remain
+possible. It neither identifies these CA integers as Robin violations
+nor excludes an independently justified RH-equivalent thinning whose
+members have small discriminants. A small-discriminant bound restricted
+to actual violations is also not refuted. The
+[Pollack application](../Scale/pollack2017nonresidues.md) remains usable
+under its same-source cutoff and exception hypotheses, while those
+hypotheses cannot be supplied for every CA integer merely by assuming a
+uniform raw-discriminant log-power bound. No signed Robin margin or RH
+proof is obtained here.
+
+### A finite stopping bound for consecutive tiny-residual sources
+
+The same calculation also bounds an entire finite run, rather than only
+refuting an eventual bound. Suppose $n_0,\ldots,n_m$, $m\ge1$, is a
+prime-step CA chain with $n_0>e$, $p_j\le4\log n_j$ at every step, and
+
+$$
+|E(n_i)|\le\frac1{240(\log n_i)^2}\qquad(0\le i\le m).
+$$
+
+Then (A2)–(A3) force $h_i=0$ at all these sources and
+$E(n_m)=(n_m/n_0)E(n_0)$. Apply (A2) again with $t=n_0$ and
+$k=-c_0$. Since $h_0=0$, $|E(n_0)|\ge1/(6n_0)$. The upper bound at
+the same final source consequently requires
+
+$$
+\boxed{n_m(\log n_m)^2\le\frac{n_0^2}{40}.}
+\tag{A5}
+$$
+
+For any sufficiently large CA anchor $n_0$, the tied layers can be
+ordered so that the unbounded chain passes through that actual anchor.
+Continue to its first member at least $n_0^2$. The preceding member is
+below $n_0^2$, so the prime-step bound puts this first member below
+$8n_0^2\log n_0$. If every source in that finite chain segment had a
+tiny residual, (A5) would fail. Thus the segment contains an actual CA
+integer satisfying (A4), once $n_0$ is large enough for the preceding
+eventual bounds. This gives a quadratic-scale stopping interval for
+this observation; no effective starting threshold or bound for gaps
+between actual Robin violations is supplied.
+
+### Recurring doubling activations improve the unbounded-subset rate
+
+The layer-refined chain processes every prime-power layer, so it has
+infinitely many steps with $p_j=2$. This additional relation improves
+the unbounded-subset bound, without changing the finite stopping
+hypotheses of (A5).
+
+Suppose every sufficiently late member of such a complete chain had
+$|E(n)|\le1/[100\log n]$. At every late step, (A3) and $p_j\le4L_j$
+give
+
+$$
+|E(n_{j+1})-p_jE(n_j)|
+\le\frac{p_j+1}{100L_j}\le\frac1{20}.
+$$
+
+Choose a late doubling step. Here $t=2h_j-h_{j+1}$ has $|t|\le2$,
+and (A2) would give at least $1/12$ if $t\ne0$. Thus both unit bits
+are zero, and the remaining integer difference is zero. Once the
+current bit is zero, the next arbitrary prime step has
+$t=-h_{j+1}\in\{0,-1\}$. The nonzero alternative would give at least
+$1/6$, so the bit stays zero and $E(n_{j+1})=p_jE(n_j)$.
+
+Induction after that doubling step contradicts $E(n)\to0$, since the
+initial nonzero residual scales by the unbounded ratio of the actual
+integers. Therefore every complete layer-refined CA chain contains
+arbitrarily large members with $|E(n)|>1/[100\log n]$.
+
+For those same members, $c\ge2(n-h)$ and (A1) give
+$|D(n)|\ge(2+\sqrt5)(n-1)|E(n)|-5$. Hence an unbounded subset obeys
+the stronger rate
+
+$$
+\boxed{|D(n)|>\frac{n}{100\log n}.}
+\tag{A6}
+$$
+
+This still makes no assertion about the distribution of the witnesses
+or a thinning that omits the recurring doubling steps. For a nonsquare
+witness, write $D=f^2\Delta$ with $\Delta$ a signed fundamental
+discriminant and $q=|\Delta|$ the primitive quadratic conductor.
+If an independent same-candidate bound $q\le C(\log n)^K$ held, then
+(A6) would require
+
+$$
+f^2>\frac{n}{100C(\log n)^{K+1}}.
+$$
+
+Thus a small-conductor route must also account for a square factor of
+that size on these witnesses. This conditional alternative supplies
+neither a lower bound for $q$ nor a bound for the faithful exception
+mask; square $D$ remains outside the nonprincipal-character application.
