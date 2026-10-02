@@ -1,4 +1,5 @@
 using System.Reflection;
+using StrataLint.Engine;
 using StrataLint.Scribe;
 
 namespace StrataLint.Scribe.Tests;
@@ -87,6 +88,38 @@ public sealed class ScribeScriptHostTests
 
         Assert.Equal(ScribeScriptFailureCode.BannedSymbol,
             ScribeScriptHost.Execute(root.Path, path).Failure?.Code);
+    }
+
+    [Fact]
+    public void FieldInitializationUsesTheSuppliedRepositoryRoot()
+    {
+        using var repository = new StatementProjectionTestRepository(
+            new StatementProjectionTestRepository.Pin("D5.S0.Test.Probe.claim", "D5/S0/Test/Probe.lean",
+                StatementProjectionResolutionTests.Equality(1)));
+        Assert.NotEqual(System.IO.Path.GetFullPath(Environment.CurrentDirectory), repository.Path);
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        var fullPath = System.IO.Path.Combine(repository.Path, path);
+        Directory.CreateDirectory(System.IO.Path.GetDirectoryName(fullPath)!);
+        File.WriteAllText(fullPath, """
+            using StrataLint.Engine;
+            using StrataLint.Scribe;
+            using static StrataLint.Scribe.DefinitionDsl;
+            internal sealed class Probe : IScribeDocumentDefinition
+            {
+                private readonly DocumentBlock.Describe statement = Describe.Lean(
+                    DescribeId.Create("claim"), DeclarationHandle.Create("D5/S0/Test/Probe.claim"),
+                    H("Claim"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text("content"))), DescribeRole.Theorem);
+                public DocumentDefinition Create() => DocumentDefinition.Create(
+                    ScribeNode.Create("digest", H("Probe"), Blocks(statement)));
+            }
+            """);
+        var discovered = Assert.Single(DocumentDefinitions.Discover(new FieldDefinitionAssembly(), repository.Path));
+
+        var result = ScribeScriptHost.Execute(repository.Path, path);
+
+        Assert.True(result.IsSuccess, result.Failure?.ToString());
+        Assert.Equal(ScribeResourceCodec.Encode(discovered), ScribeResourceCodec.Encode(result.Definition!));
     }
 
     [Theory]
@@ -228,6 +261,27 @@ public sealed class ScribeScriptHostTests
         internal static Assembly Value { get; } = new FixtureAssembly();
 
         public override Type[] GetTypes() => [typeof(FirstDefinition)];
+    }
+
+    private sealed class FieldDefinitionAssembly : Assembly
+    {
+        public override Type[] GetTypes() => [typeof(FieldDefinition)];
+    }
+
+    private sealed class FieldDefinition : IScribeDocumentDefinition
+    {
+        private readonly DocumentBlock.Describe statement = Describe.Lean(
+            DescribeId.Create("claim"), DeclarationHandle.Create("D5/S0/Test/Probe.claim"),
+            DefinitionDsl.H("Claim"), StatementSource.FromLean(), AssessedProvenance.FromRepo(),
+            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("content"))), DescribeRole.Theorem);
+
+        public DocumentDefinition Create()
+        {
+            const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+            return DocumentDefinition.Create(
+                ScribeNode.Create("digest", DefinitionDsl.H("Probe"), DefinitionDsl.Blocks(statement),
+                    sourcePath: path), sourcePath: path);
+        }
     }
 
     private sealed class FirstDefinition : IScribeDocumentDefinition

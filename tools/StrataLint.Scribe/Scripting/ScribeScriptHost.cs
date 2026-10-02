@@ -92,10 +92,13 @@ public static class ScribeScriptHost
                 DocumentDefinition definition;
                 try
                 {
-                    var instance = Activator.CreateInstance(type, nonPublic: true)
-                        as IScribeDocumentDefinition
-                        ?? throw new InvalidOperationException("definition needs a parameterless constructor");
-                    definition = StatementProjectionFixtureLoader.WithRepositoryRoot(root, instance.Create)
+                    definition = StatementProjectionFixtureLoader.WithRepositoryRoot(root, () =>
+                    {
+                        var instance = Activator.CreateInstance(type, nonPublic: true)
+                            as IScribeDocumentDefinition
+                            ?? throw new InvalidOperationException("definition needs a parameterless constructor");
+                        return instance.Create();
+                    })
                         ?? throw new InvalidOperationException("definition returned null");
                 }
                 catch (Exception exception) when (exception is not OutOfMemoryException)
