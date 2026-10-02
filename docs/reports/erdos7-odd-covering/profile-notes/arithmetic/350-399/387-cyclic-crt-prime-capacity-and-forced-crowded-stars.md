@@ -506,6 +506,17 @@ coordinate equal to 0, so
  =62415.
 \]
 
+For any finite prime set (P), the same construction has strictly positive
+hole count
+
+\[
+ \prod_{p\in P}(p-2)
+ +\sum_{r\in P}\prod_{p\in P\setminus\{r\}}(p-2)>0.
+\]
+
+The six-prime choice is only used to make the (3)- and (5)-stars
+crowded; the triple-owner obstruction itself is independent of that choice.
+
 At the prime (p=3), the prime-support graph has five
 neighbors, so (g_3=5\ge3); at (p=5), (g_5=5\ge5).  Hence it contains crowded stars while **no noncoprime collision has an exact two-owner point**.
 
