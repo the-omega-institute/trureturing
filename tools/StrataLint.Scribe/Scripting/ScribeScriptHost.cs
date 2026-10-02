@@ -43,6 +43,10 @@ public sealed record ScribeScriptResult(
     public bool IsSuccess => Definition is not null && Failure is null;
 }
 
+/// <summary>
+/// 宿主执行定义，并对被执行的代码施加禁用符号规则。
+/// 定义的编译准入（含 SDK 与代码风格分析器）不由宿主承担。
+/// </summary>
 public static class ScribeScriptHost
 {
     private const string BlueprintPrefix = "Blueprint/";
