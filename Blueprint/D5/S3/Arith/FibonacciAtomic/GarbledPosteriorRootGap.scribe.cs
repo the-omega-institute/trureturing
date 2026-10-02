@@ -85,7 +85,7 @@ internal sealed class GarbledPosteriorRootGapDocument : IScribeDocumentDefinitio
             Seq(Mathbb, Grp(V("R"))), Comma),
         Seq(Forall, Sp, V("u"), Comma, V("v"), Colon, Call("Fin", D(3)), To,
             Seq(Mathbb, Grp(V("R"))), Comma, Sp,
-            V("p"), Sp, Eq, Sp, Call("softmax", V("z"), V("u"), V("v")), Colon),
+            V("p"), Sp, Colon, Eq, Sp, Call("softmax", V("z"), V("u"), V("v")), Colon),
         Seq(Kappa(), Sp, Le, Sp, Seq(Sub("R", D(2)), Par(V("p"))), Minus, V("b"), Sp, Land,
             Sp, Kappa(), Sp, Le, Sp, Seq(Sub("R", V("log")), Par(V("p"))), Minus, V("h"), Sp, Land),
         Seq(Kappa(), Sp, Eq, Sp, Fraction(Seq(Sq(Mu), Sq(LogRatio())), N(1875)),

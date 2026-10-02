@@ -6,8 +6,9 @@
    utility: none
    digest: A garbled window teacher has a uniform risk gap for scalar softmax roots. -/
 
-import D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd
+import D5.S3.Arith.FibonacciAtomic.FirstRejectionCutCapacity
 import D5.S3.TotalVariation.Pinsker
+import Mathlib.Algebra.BigOperators.Expect
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -22,7 +23,7 @@ open D5.S3.TotalVariation.Pinsker
 open scoped BigOperators
 
 /-- Independent whole windows, including every tail word. -/
-abbrev Input (m : ℕ) := Fin (m + 3) → Window
+abbrev Input (m : ℕ) := FirstRejectionCutCapacity.Word (m + 2)
 
 /-- The class is 1 at the first selected seam, 2 at the second seam only
 when the first is absent, and 0 otherwise. -/
@@ -44,7 +45,7 @@ def uniformMass (m : ℕ) : ℝ := 1 / (5 : ℝ) ^ (m + 3)
 def jointMass {m : ℕ} (x : Input m) (j : Fin 3) : ℝ :=
   uniformMass m * posterior x j
 
-def mean {m : ℕ} (f : Input m → ℝ) : ℝ := uniformMass m * ∑ x, f x
+def mean {m : ℕ} (f : Input m → ℝ) : ℝ := Finset.expect Finset.univ f
 
 /-- Every scalar root is allowed. A zero-dimensional root embeds by z = 0;
 there is no restriction on trees, peaks, encodings, or internal parameters. -/
@@ -341,6 +342,11 @@ theorem result (m : ℕ) (z : Input m → ℝ) (u v : Fin 3 → ℝ) :
         (hp x) (hmin c) hdist
   let error := fun x : Input m => ∑ i, (p x i - posterior x i) ^ 2
   have hcard : Fintype.card Window = 5 := by decide
+  have mean_eq (f : Input m → ℝ) : mean f = uniformMass m * ∑ x, f x := by
+    simp only [mean, Fintype.expect_eq_sum_div_card, Fintype.card_fun, Fintype.card_fin, hcard,
+      Nat.cast_pow, Nat.cast_ofNat]
+    dsimp [uniformMass]
+    ring
   have peel (n : ℕ) (f : (Fin (n + 1) → Window) → ℝ) :
       (∑ x, f x) = ∑ w : Window, ∑ tail : Fin n → Window, f (Fin.cons w tail) := by
     rw [← (Fin.consEquiv (fun _ : Fin (n + 1) => Window)).sum_comp f,
@@ -366,7 +372,7 @@ theorem result (m : ℕ) (z : Input m → ℝ) (u v : Fin 3 → ℝ) :
         Finset.sum_const, Fintype.card_fun, hcard, Fin.ext_iff]
     <;> ring
   have hclass : (16 / 125 : ℝ) ≤ mean (fun x : Input m => if teacher x = c then 1 else 0) := by
-    rw [mean, hcount, uniformMass, pow_add]
+    rw [mean_eq, hcount, uniformMass, pow_add]
     fin_cases c <;> norm_num
     all_goals field_simp <;> nlinarith [pow_pos (show (0 : ℝ) < 5 by norm_num) m]
   have hmean : kappa ≤ mean error := by
@@ -388,9 +394,9 @@ theorem result (m : ℕ) (z : Input m → ℝ) (u v : Fin 3 → ℝ) :
       _ = uniformMass m * ∑ x : Input m,
           (mu ^ 2 * δ ^ 2 / 240) * (if teacher x = c then 1 else 0) := by
         rw [← Finset.mul_sum]
-        dsimp [mean]
+        rw [mean_eq]
         ring
-      _ ≤ mean error := hsumw
+      _ ≤ mean error := by simpa only [mean_eq] using hsumw
   have hbrier : brierRisk p - brierBayes m = mean error := by
     have point (x : Input m) :
         (∑ j, posterior x j * ∑ i, (p x i - if j = i then 1 else 0) ^ 2) =
@@ -404,18 +410,19 @@ theorem result (m : ℕ) (z : Input m → ℝ) (u v : Fin 3 → ℝ) :
       linear_combination (p x 0 ^ 2 + p x 1 ^ 2 + p x 2 ^ 2 + 1) * hmass
     have hrisk : brierRisk p =
         mean (fun x : Input m => 1 - ∑ i, posterior x i ^ 2 + error x) := by
-      unfold brierRisk mean
+      unfold brierRisk
+      rw [mean_eq]
       rw [Finset.mul_sum]
       apply Finset.sum_congr rfl
       intro x _
       simp only [jointMass, mul_assoc, ← Finset.mul_sum]
       rw [point]
     rw [hrisk]
-    simp only [mean, brierBayes, Finset.sum_add_distrib, mul_add]
+    simp only [mean_eq, brierBayes, Finset.sum_add_distrib, mul_add]
     ring
   have hlog : logRisk p - logBayes m = mean (fun x => klDivergence (posterior x) (p x)) := by
-    unfold logRisk logBayes mean klDivergence
-    simp only [jointMass, mul_assoc, ← Finset.mul_sum]
+    unfold logRisk logBayes
+    simp only [mean_eq, klDivergence, jointMass, mul_assoc, ← Finset.mul_sum]
     rw [← mul_sub, ← Finset.sum_sub_distrib]
     congr 1
     apply Finset.sum_congr rfl
@@ -457,7 +464,9 @@ theorem result (m : ℕ) (z : Input m → ℝ) (u v : Fin 3 → ℝ) :
   · rw [hbrier]
     exact hmean
   · rw [hlog]
-    exact hmean.trans (mul_le_mul_of_nonneg_left (Finset.sum_le_sum (fun x _ => hkl x))
-      (show 0 ≤ uniformMass m by dsimp [uniformMass]; positivity))
+    exact hmean.trans (by
+      rw [mean_eq, mean_eq]
+      exact mul_le_mul_of_nonneg_left (Finset.sum_le_sum (fun x _ => hkl x))
+        (show 0 ≤ uniformMass m by dsimp [uniformMass]; positivity))
 
 end D5.S3.Arith.FibonacciAtomic.GarbledPosteriorRootGap
