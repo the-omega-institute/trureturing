@@ -48665,3 +48665,169 @@ $-K\varepsilon t_\varepsilon+O(\varepsilon^2/L_\varepsilon^3)$。
 该细化不给实际 Robin 累计证书的最终符号，也不改变 $n>5040$ 的已认证范围。
 
 ## 追加锚（本行以下为增补区）
+
+## 348. 完整零点谱极小路径的一致阈值与定量双对数修正
+
+本节将 §§346–347 的路径推导写成一组在极小点量词之前选定的常数。关键是从驻点方程产生初阶尺度，再反演；极小点存在、正性和尺度均不作为输入假设。这里的常数整理来自本卷推导，反演机制沿用 §347 所引的经典对数反演，不另主张该机制的新颖性。
+
+**定义 348.1（完整纵坐标模型的同源目标）。** 沿用定理346.6的全部不同正纵坐标非平凡复零点指标 $I_+$，保留解析重数。对每个指标记 $D_\rho=1/4+\gamma_\rho^2$、$a_\rho=m_\rho/(\gamma_\rho D_\rho)$，并使用定义344.1的同一有理系数 $b_\rho,c_\rho,g_\rho,h_\rho$。置
+
+$$
+\begin{aligned}
+F(t)&=\sum_{\rho\in I_+}a_\rho[b_\rho\cos(\gamma_\rho t)-c_\rho\sin(\gamma_\rho t)],\\
+G(t)&=\sum_{\rho\in I_+}a_\rho[g_\rho\cos(\gamma_\rho t)-h_\rho\sin(\gamma_\rho t)],\\
+\mathcal J_\varepsilon(t)&=\delta_+(t)+\varepsilon F(t)+\varepsilon^2G(t),\\
+M_0&=\sum_\rho a_\rho,\qquad M_1=\sum_\rho a_\rho\gamma_\rho,\\
+K&=\sum_\rho\frac{a_\rho\gamma_\rho^2}{D_\rho}
+=\sum_\rho\frac{m_\rho\gamma_\rho}{D_\rho^2},\qquad
+A=\sum_\rho\frac{a_\rho\gamma_\rho^2}{D_\rho^2},\qquad f_*=F(0).
+\end{aligned}
+$$
+
+模型以纵坐标为权重变量，作为上述实函数定义无需 RH。解释为定义344.1的实际 Robin 相位模型时，仍使用 RH 所给的同一实际频率识别。若再有 $\iota\in H$，则 $z(t)=\iota\phi(t)\in H$，逐坐标 $\operatorname{Im}z_\rho(t)=\cos(\gamma_\rho t)$、$\operatorname{Re}z_\rho(t)=-\sin(\gamma_\rho t)$，从而精确有
+
+$$
+J_\varepsilon(z(t))=\mathcal J_\varepsilon(t).
+$$
+
+这保留原相位包络的 $H$ 与同源目标，不将独立参数 $t$ 替换成实际截止 $T=1/\varepsilon$。
+
+**定理 348.1（同一阈值控制全部极小点的三项误差）。** 对定义348.1，令 $c=1/(2\pi)$、$d=2K$、$C_*=d/c=4\pi K$、$D_*=d^2/(2c)=4\pi K^2$。存在固定的 $a>0$、$0<\varepsilon_0<e^{-2}$、$Q\ge1$，使对每个 $0<\varepsilon<\varepsilon_0$，$\mathcal J_\varepsilon$ 在 $[-a,a]$ 上取得极小值，且该区间上每一个极小点 $t$ 均满足 $0<t<a$、$\mathcal J_\varepsilon'(t)=0$。记 $L=\log(1/\varepsilon)$、$\ell=\log(1/t)$，同时有
+
+$$
+\left|\ell-[L+2\log L-\log C_*]\right|
+\le Q\frac{\log L}{L},
+$$
+
+$$
+\left|\frac{tL^2}{C_*\varepsilon}-\left(1-\frac{4\log L}{L}\right)\right|
+\le\frac QL,
+$$
+
+$$
+\left|\mathcal J_\varepsilon(t)-\left[f_*\varepsilon+8A\varepsilon^2
+-D_*\frac{\varepsilon^2}{L^2}\left(1-\frac{4\log L}{L}\right)\right]\right|
+\le Q\frac{\varepsilon^2}{L^3}.
+$$
+
+常数不依赖极小点的选择，结论不要求极小点唯一。该陈述的完整公开形式化仍待将固定区间、共同阈值、全部极小点与实际谱输入组装为一个证明；局部估计不单独承担本定理的覆盖。
+
+**证明。** 定理346.6给 $M_0,M_1<\infty$。$\gamma>0$ 时 $\gamma^2/D\le1$、$\gamma^2/D^2\le1$，所以 $K,A$ 可和。非平凡零点存在、共轭对称和实轴无非平凡零点给一个正纵坐标零点；其重数与权重严格正，因此 $K>0$。这里 $K$ 的分子保留 $\gamma$，不将其换成 $\sum m_\rho/D_\rho^2$。
+
+令 $r=F-\delta_+$。§347 的同源分解给
+
+$$
+F(t)=\delta_+(t)-2M_0+R(t),\qquad
+|r'(t)+d|\le(K+2M_1)|t|.
+$$
+
+$G$ 的系数满足 $|g_\rho|\le8$、$|\gamma_\rho h_\rho|\le14$，故导数级数有可和主控 $8a_\rho\gamma_\rho+14a_\rho$，并有
+
+$$
+|G'(t)|\le8M_1+14M_0.
+$$
+
+在零点处 $G(0)=8A$，该处级数可和；结合导数主控即得全部实数上的一次求导。此论证不要求 $h_\rho$ 在趋零频率上统一有界，也不要求额外的 $\sum a_\rho/\gamma_\rho$。取定理346.6的 $L_0,B_0$，置 $\sigma=1/L_0$，选
+
+$$
+B\ge\max(1,B_0,K+2M_1,8M_1+14M_0).
+$$
+
+于是 $\delta=\delta_+$、$v=\delta_+'$、$r$、$G$ 在 $|t|\le\sigma$ 上满足相位、斜率、驱动导数的统一界；目标精确为 $(1+\varepsilon)\delta+\varepsilon r+\varepsilon^2G$。
+
+置 $E=\max(16,8B/c)$，选
+
+$$
+0<a\le\min\left(\sigma,e^{-E},\frac d{4(B+1)}\right).
+$$
+
+对 $0<|t|\le a$，$\ell_t=\log(1/|t|)\ge E$，所以
+$B(\ell_t+1)\le c\ell_t^2/4$，$v(t)$ 与 $t$ 同号且
+$|v(t)-ct\ell_t^2|\le(c/4)|t|\ell_t^2$。
+对 $0<\varepsilon\le\min(1,d/[4(B+1)])$，驱动满足
+
+$$
+\frac d2\le-[r'(t)+\varepsilon G'(t)]\le\frac{3d}2
+\qquad(|t|\le a).
+$$
+
+再取 $\varepsilon_0\le v(a)/(3d)$，则目标在左端点的导数负、右端点的导数正。连续性和紧性产生极小点；沿向内方向的一阶必要条件排除两个端点。内点的 Fermat 条件产生驻点方程
+
+$$
+(1+\varepsilon)v(t)+\varepsilon r'(t)+\varepsilon^2G'(t)=0.
+$$
+
+它给 $v(t)>0$，从而 $t>0$，并给出全部极小点共同的夹逼
+
+$$
+p\varepsilon\le t\ell^2\le q\varepsilon,
+\qquad p=\frac d{5c},\quad q=\frac{2d}c.
+$$
+
+令 $A_0=\max(|\log p|,|\log q|)$、$B_1=2+2\log3+A_0$、$H_1=6B/c+3B/d+3$。将共同阈值进一步缩至
+$\varepsilon_0\le\exp[-\max(16,2A_0,4H_1)]$，并严格小于 $e^{-2}$。夹逼取对数给
+
+$$
+|\ell-L-2\log\ell|\le A_0.
+$$
+
+$\ell\ge16$ 时 $2\log\ell\le\ell/2$，故先得 $L/2\le\ell\le3L$，再得 $|\ell-L|\le B_1\log L$。这些尺度均从驻点夹逼产生。
+
+$\varepsilon L\le1$ 来自 $\log(1/\varepsilon)\le1/\varepsilon-1$。保留驻点方程中的 $\varepsilon^2G'$ 项，与原斜率误差合并，得到
+
+$$
+|ct\ell^2-d\varepsilon|
+\le2Bt\ell+B\varepsilon t+(B+d)\varepsilon^2.
+$$
+
+用 $t\ell^2\le q\varepsilon$、$\varepsilon\ell\le3$、$\ell\ge1$，得
+
+$$
+X=\frac{t\ell^2}{C_*\varepsilon},\qquad |X-1|\le\frac{H_1}{\ell}.
+$$
+
+$\ell\ge2H_1$ 给 $X\ge1/2$，且 $|\log X|\le2|X-1|$。精确恒等式
+$\log X=-\ell+2\log\ell-\log C_*+L$，与 $[L/2,3L]$ 上对数的均值界一起给第一项误差，常数可取
+
+$$
+Q_\ell=4(B_1+H_1).
+$$
+
+置 $u=(\ell-L)/L$，已有 $-1/2\le u\le2$。精确有理余项为
+
+$$
+0\le(1+u)^{-2}-(1-2u)
+=\frac{u^2(3+2u)}{(1+u)^2}\le28u^2.
+$$
+
+再用 $(\log L)^2\le4L$、$\log L\le L$，保留相对驻点关系而不只指数化对数误差，得第二项误差，常数可取
+
+$$
+Q_t=8H_1+2|\log C_*|+2Q_\ell+112B_1^2.
+$$
+
+最后，驱动导数的均值界给 $|r(t)-r(0)+dt|\le Bt^2$、$|G(t)-G(0)|\le Bt$。将相位误差与驻点误差一起代入目标，得
+
+$$
+|\mathcal J_\varepsilon(t)-\mathcal J_\varepsilon(0)+(d/2)\varepsilon t|
+\le3Bt^2\ell+\frac{c+7B}2\varepsilon t^2\ell^2
++\frac{3B+d}2\varepsilon^2t.
+$$
+
+由 $t\le4q\varepsilon/L^2$、$\ell\le3L$、$\varepsilon L\le1$，右侧不超过 $Q_{v0}\varepsilon^2/L^3$，其中
+
+$$
+Q_{v0}=144Bq^2+72(c+7B)q^2+2(3B+d)q.
+$$
+
+代入第二项误差与 $(d/2)C_*=D_*$，第三项常数可取 $Q_{v0}+D_*Q_t$。共同选择
+
+$$
+Q=\max(1,Q_\ell,Q_t,Q_{v0}+D_*Q_t)
+$$
+
+即同时控制全部极小点的三项误差。$\square$
+
+相对于 $\mathcal J_\varepsilon(0)-D_*\varepsilon^2/L^2$，极小值的双重对数校正为正的 $4D_*\varepsilon^2\log L/L^3$。这个校正不判断极小值本身的符号，更不判定实际 cutoff 轨道的 Robin 符号。五分递归的有限证书与这里的无限相位控制仍通过同源目标相接；未获得新的已认证整数范围或 RH 证明。
+
+## 追加锚（本行以下为增补区）
