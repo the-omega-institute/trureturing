@@ -83,11 +83,17 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
             content.OfType<RelationDescribe>().ToImmutableArray());
     }
 
-    private object? Method(MethodDeclarationSyntax method, Dictionary<ISymbol, object?> scope)
+    private object? Method(SyntaxNode method, Dictionary<ISymbol, object?> scope)
     {
-        if (method.ExpressionBody is { } expressionBody) return Eval(expressionBody.Expression, scope);
-        if (method.Body is null) throw Reject(method, "HelperBody", "Expected an expression or straight-line body.");
-        foreach (var statement in method.Body.Statements)
+        var (expressionBody, body) = method switch
+        {
+            MethodDeclarationSyntax declaration => (declaration.ExpressionBody, declaration.Body),
+            LocalFunctionStatementSyntax declaration => (declaration.ExpressionBody, declaration.Body),
+            _ => throw Reject(method, "HelperBody", "Unsupported helper declaration."),
+        };
+        if (expressionBody is not null) return Eval(expressionBody.Expression, scope);
+        if (body is null) throw Reject(method, "HelperBody", "Expected an expression or straight-line body.");
+        foreach (var statement in body.Statements)
         {
             switch (statement)
             {
@@ -101,6 +107,8 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
                     break;
                 case ReturnStatementSyntax { Expression: { } expression }:
                     return Eval(expression, scope);
+                case LocalFunctionStatementSyntax:
+                    break;
                 default:
                     throw Reject(statement, statement.Kind().ToString(), "Only local initializers and one return are supported.");
             }
@@ -121,17 +129,25 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
             case ParenthesizedExpressionSyntax parenthesized:
                 return Eval(parenthesized.Expression, scope);
             case CastExpressionSyntax cast:
-                return Eval(cast.Expression, scope);
+                var castValue = Eval(cast.Expression, scope);
+                if (constant.HasValue) return constant.Value;
+                var targetType = Model(cast).GetTypeInfo(cast.Type).Type;
+                if (SymbolEqualityComparer.Default.Equals(targetType, Model(cast).GetTypeInfo(cast.Expression).Type)
+                    || targetType?.SpecialType == SpecialType.System_String && castValue is string)
+                    return castValue;
+                throw Reject(cast, "UnsupportedCast", "Only constant, identity, and known string casts are supported.");
             case PostfixUnaryExpressionSyntax postfix when postfix.OperatorToken.ValueText == "!":
                 return Eval(postfix.Operand, scope);
             case BinaryExpressionSyntax binary when binary.OperatorToken.ValueText == "+":
-                return Scalar(Eval(binary.Left, scope), binary.Left) + Scalar(Eval(binary.Right, scope), binary.Right);
+                if (Model(binary).GetTypeInfo(binary).Type?.SpecialType != SpecialType.System_String)
+                    throw Reject(binary, "NonStringAddition", "Only string concatenation is supported.");
+                return Component(binary.Left, scope) + Component(binary.Right, scope);
             case InterpolatedStringExpressionSyntax interpolated:
                 return string.Concat(interpolated.Contents.Select(part => part switch
                 {
                     InterpolatedStringTextSyntax text => text.TextToken.ValueText,
                     InterpolationSyntax interpolation when interpolation.AlignmentClause is null
-                        && interpolation.FormatClause is null => Scalar(Eval(interpolation.Expression, scope), interpolation),
+                        && interpolation.FormatClause is null => Component(interpolation.Expression, scope),
                     _ => throw Reject(part, "InterpolationFormat", "Formatted interpolation is unsupported."),
                 }));
             case CollectionExpressionSyntax collection:
@@ -161,6 +177,12 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
     private object? Symbol(ExpressionSyntax expression, Dictionary<ISymbol, object?> scope)
     {
         var symbol = Model(expression).GetSymbolInfo(expression).Symbol;
+        if (expression is MemberAccessExpressionSyntax { Name.Identifier.ValueText: "Value" } member
+            && symbol is IPropertySymbol property && property.ContainingType.ToDisplayString() is
+                "StrataLint.Scribe.GidRef" or "StrataLint.Scribe.DeclarationHandle"
+                or "StrataLint.Scribe.LeanDeclarationRef" or "StrataLint.Scribe.DescribeId"
+                or "StrataLint.Scribe.ProblemSlugRef" or "StrataLint.Scribe.LibraryNoteRef")
+            return Eval(member.Expression, scope);
         if (symbol is not null && scope.TryGetValue(symbol, out var value))
             return ResolveBinding(value);
         if (symbol is IFieldSymbol { HasConstantValue: true } field) return field.ConstantValue;
@@ -170,7 +192,7 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
         {
             if (!sourceField.IsReadOnly) throw Reject(expression, "MutableField", "Only readonly field initializers are supported.");
             if (sourceField.ContainingType.Constructors.Any(constructor => !constructor.IsImplicitlyDeclared)
-                || sourceField.ContainingType.StaticConstructors.Any())
+                || sourceField.ContainingType.StaticConstructors.Any(constructor => !constructor.IsImplicitlyDeclared))
                 throw Reject(expression, "ConstructorState", "Explicit constructors may replace field initializers.");
             if (sourceField.Type is IArrayTypeSymbol)
                 throw Reject(expression, "MutableField", "Readonly array contents may be mutated.");
@@ -191,7 +213,8 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
             if (child is AssignmentExpressionSyntax assignment)
             {
                 var target = Model(assignment.Left).GetSymbolInfo(assignment.Left).Symbol;
-                if (target is not ILocalSymbol and not IParameterSymbol)
+                if (target is not ILocalSymbol and not IParameterSymbol
+                    && Model(assignment.Left).GetTypeInfo(assignment.Left).Type is { } type && IsRelationType(type))
                     throw Reject(assignment, "SourceMutation", "Source code may mutate shared relation state.");
             }
             if (child is ArgumentSyntax argument && argument.RefKindKeyword.RawKind != 0)
@@ -199,7 +222,8 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
             if (child is InvocationExpressionSyntax invocation
                 && Model(invocation).GetSymbolInfo(invocation).Symbol is IMethodSymbol method)
             {
-                if (method.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax() is MethodDeclarationSyntax helper
+                if (method.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax() is { } helper
+                    && helper is MethodDeclarationSyntax or LocalFunctionStatementSyntax
                     && visited.Add(method))
                     ValidatePresentationEffects(helper, visited);
                 if (method.ContainingType.OriginalDefinition.ToDisplayString() == "System.Collections.Generic.List<T>"
@@ -213,7 +237,12 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
     private static bool IsRelationType(ITypeSymbol type) => type.SpecialType == SpecialType.System_String
         || type.ToDisplayString().StartsWith("StrataLint.Scribe.DocumentBlock", StringComparison.Ordinal)
         || type.ToDisplayString().StartsWith("StrataLint.Scribe.DocumentEdge", StringComparison.Ordinal)
-        || type.ToDisplayString().StartsWith("StrataLint.Scribe.Inline", StringComparison.Ordinal);
+        || type.ToDisplayString().StartsWith("StrataLint.Scribe.Inline", StringComparison.Ordinal)
+        || type.ToDisplayString() is "StrataLint.Scribe.GidRef" or "StrataLint.Scribe.DeclarationHandle"
+            or "StrataLint.Scribe.LeanDeclarationRef" or "StrataLint.Scribe.DescribeId"
+            or "StrataLint.Scribe.ProblemSlugRef" or "StrataLint.Scribe.LibraryNoteRef"
+            or "StrataLint.Scribe.BlockSequence" or "StrataLint.Scribe.OpenProblemResolutionClaim"
+            or "StrataLint.Scribe.ScribeDocument" or "StrataLint.Scribe.DocumentDefinition";
 
     private object? Call(ExpressionSyntax node, SeparatedSyntaxList<ArgumentSyntax> arguments,
         Dictionary<ISymbol, object?> scope)
@@ -249,7 +278,8 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
                 _ => throw Reject(node, "UnsupportedInvocation", "String operation is outside the closed set."),
             };
         }
-        if (symbol.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax() is MethodDeclarationSyntax helper)
+        if (symbol.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax() is { } helper
+            && helper is MethodDeclarationSyntax or LocalFunctionStatementSyntax)
         {
             if (!symbol.IsStatic) throw Reject(node, "InstanceHelper", "Only static helpers may be expanded.");
             if (!active.Add(symbol)) throw Reject(node, "RecursiveHelper", "Recursive helper call.");
@@ -302,7 +332,7 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
                 return Array.Empty<object>();
             case ("StrataLint.Scribe.GidRef" or "StrataLint.Scribe.DeclarationHandle"
                 or "StrataLint.Scribe.LeanDeclarationRef" or "StrataLint.Scribe.DescribeId"
-                or "StrataLint.Scribe.ProblemSlugRef", "Create"):
+                or "StrataLint.Scribe.ProblemSlugRef" or "StrataLint.Scribe.LibraryNoteRef", "Create"):
                 return Str("value");
             case ("StrataLint.Scribe.DocumentEdge.Dependency", "Create"):
                 return new RelationEdge("dependency", "document", Str("target"), null);
@@ -363,10 +393,17 @@ internal sealed class RelationSyntaxEvaluator(Compilation compilation, string en
     {
         string text => text,
         char character => character.ToString(),
-        int number => number.ToString(System.Globalization.CultureInfo.InvariantCulture),
-        long number => number.ToString(System.Globalization.CultureInfo.InvariantCulture),
+        IFormattable number when value is byte or sbyte or short or ushort or int or uint or long or ulong =>
+            number.ToString(null, System.Globalization.CultureInfo.InvariantCulture),
         _ => throw Reject(node, "NonConstantString", "Expected a constant string component."),
     };
+
+    private string Component(ExpressionSyntax expression, Dictionary<ISymbol, object?> scope)
+    {
+        if (Model(expression).GetTypeInfo(expression).Type?.TypeKind == TypeKind.Enum)
+            throw Reject(expression, "NonConstantString", "Enum formatting is outside the closed string component set.");
+        return Scalar(Eval(expression, scope), expression);
+    }
 
     private static string EnumName(ITypeSymbol type, object? value, SyntaxNode node) =>
         type.GetMembers().OfType<IFieldSymbol>().FirstOrDefault(field => field.HasConstantValue

@@ -8,12 +8,39 @@ public sealed class RelationBoundaryTests
     [Theory]
     [InlineData("\"D5/S0/Test/\" + (true ? \"First\" : \"Second\")", "ConditionalExpression")]
     [InlineData("nameof(Relations)", "UnsupportedInvocation")]
+    [InlineData("\"D5/S0/Test/First.claim\" + (1 + 2)", "NonStringAddition")]
+    [InlineData("\"D5/S0/Test/\" + ResolutionKind.Proved", "NonConstantString")]
     public void NestedUnknownFormsAreNotFoldedAway(string expression, string shape)
     {
         using var root = RelationContractTests.Fixture("Paragraph(Ref(" + expression + "))");
         var result = StaticRelationIndexer.Read(root.Path, RelationContractTests.Entry);
         Assert.Null(result.Projection);
         Assert.Equal(shape, result.Failure?.Shape);
+    }
+
+    [Theory]
+    [InlineData("\"D5/S0/Test/First.claim\" + (char)97")]
+    [InlineData("\"D5/S0/Test/First.claim\" + ((byte)12)")]
+    public void ConstantCastsRetainCSharpSemantics(string expression)
+    {
+        using var root = RelationContractTests.Fixture("Paragraph(Ref(" + expression + "))");
+        AssertMatches(root);
+    }
+
+    [Theory]
+    [InlineData("Paragraph(Ref(1 switch { 1 => \"D5/S0/Test/First\", _ => \"D5/S0/Test/Second\" }))", "", "SwitchExpression")]
+    [InlineData("Paragraph(Ref(Target))", "private static string Target => \"D5/S0/Test/First\";", "UnresolvedSymbol")]
+    [InlineData("Paragraph(Ref(Target))", "private static string Target = \"D5/S0/Test/First\";", "MutableField")]
+    [InlineData("Item()", "private DocumentBlock Item() => Paragraph(Ref(\"D5/S0/Test/First\"));", "InstanceHelper")]
+    [InlineData("Item()", "private static DocumentBlock Item() { if (true) return Paragraph(Ref(\"D5/S0/Test/First\")); return Paragraph(Text(\"content\")); }", "IfStatement")]
+    [InlineData("Paragraph(Ref($\"D5/S0/Test/First.claim{1:00}\"))", "", "InterpolationFormat")]
+    public void UnsupportedCorpusShapesAreNamed(string blocks, string helper, string shape)
+    {
+        using var root = RelationContractTests.Fixture(blocks, helper);
+        var result = StaticRelationIndexer.Read(root.Path, RelationContractTests.Entry);
+        Assert.Null(result.Projection);
+        Assert.Equal(shape, result.Failure?.Shape);
+        Assert.True(result.Failure!.Line > 0);
     }
 
     [Fact]
@@ -118,6 +145,52 @@ public sealed class RelationBoundaryTests
     }
 
     [Fact]
+    public void LocalFunctionDeclarationsDoNotExecuteAndStaticTemplatesExpand()
+    {
+        using var root = RelationContractTests.Fixture("Paragraph(Text(\"content\"))");
+        File.WriteAllText(root.Resolve(RelationContractTests.Entry), """
+            using StrataLint.Scribe; using static StrataLint.Scribe.DefinitionDsl;
+            internal sealed class Relations : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create()
+                {
+                    Formula Display() => Id("x");
+                    static DocumentBlock Item(string name) => Paragraph(Ref("D5/S0/Test/" + name));
+                    return DocumentDefinition.Create(ScribeNode.Create("digest", H("title"),
+                        Blocks(Item("First"), Paragraph(Math(Display())))));
+                }
+            }
+            """);
+        AssertMatches(root);
+    }
+
+    [Theory]
+    [InlineData("DeclarationHandle.Create(\"D5/S0/Test/First.claim\").Value", "")]
+    [InlineData("LibraryNoteRef.Create(\"D5/L/sample2000note\").Value", "")]
+    [InlineData("Target.Value", "private static readonly DeclarationHandle Target = DeclarationHandle.Create(\"D5/S0/Test/First.claim\");")]
+    public void TypedValueSelectorsPreserveCanonicalTargets(string expression, string field)
+    {
+        using var root = RelationContractTests.Fixture("Paragraph(Ref(" + expression + "))", field);
+        AssertMatches(root);
+    }
+
+    [Fact]
+    public void PresentationArrayMutationCannotAlterRelations()
+    {
+        using var root = RelationContractTests.Fixture("Paragraph(Ref(\"D5/S0/Test/First\"))", """
+            private static Heading Title()
+            {
+                Formula[] values = [Num(1)];
+                values[0] = Num(2);
+                return H("title");
+            }
+            """);
+        File.WriteAllText(root.Resolve(RelationContractTests.Entry),
+            File.ReadAllText(root.Resolve(RelationContractTests.Entry)).Replace("H(\"title\"), Blocks", "Title(), Blocks", StringComparison.Ordinal));
+        AssertMatches(root);
+    }
+
+    [Fact]
     public void ClaimsIncludeHostAndEveryAdditionalMember()
     {
         using var root = RelationContractTests.Fixture("""
@@ -186,6 +259,27 @@ public sealed class RelationBoundaryTests
         using var root = RelationContractTests.Fixture("Paragraph(Text(\"content\"))");
         Assert.Equal(2, ScribeCli.Run(typeof(RelationBoundaryTests).Assembly, ["relations", "verify", "--paths-from", "-"],
             root.Path, TextWriter.Null, new StringWriter(), new StringReader(selected)));
+    }
+
+    [Fact]
+    public void SelectionFilesDeduplicateAndExcludeUnselectedDefinitions()
+    {
+        using var root = RelationContractTests.Fixture("Paragraph(Text(\"content\"))");
+        const string other = "Blueprint/D5/S0/Test/Other.scribe.cs";
+        File.WriteAllText(root.Resolve(other), File.ReadAllText(root.Resolve(RelationContractTests.Entry))
+            .Replace("Paragraph(Text(\"content\"))", "Paragraph(Ref(true ? \"D5/S0/Test/First\" : \"D5/S0/Test/Second\"))", StringComparison.Ordinal));
+        var selection = root.Resolve("selection.txt");
+        File.WriteAllText(selection, RelationContractTests.Entry + "\n" + RelationContractTests.Entry);
+        var output = new StringWriter();
+        Assert.Equal(0, ScribeCli.Run(typeof(RelationBoundaryTests).Assembly,
+            ["relations", "verify", "--paths-from", selection], root.Path, output, new StringWriter(), TextReader.Null));
+        Assert.Contains("paths=1 unreadable=0", output.ToString(), StringComparison.Ordinal);
+        output = new StringWriter();
+        var error = new StringWriter();
+        Assert.Equal(1, ScribeCli.Run(typeof(RelationBoundaryTests).Assembly,
+            ["relations", "verify"], root.Path, output, error, TextReader.Null));
+        Assert.Contains("paths=2 unreadable=1", output.ToString(), StringComparison.Ordinal);
+        Assert.Contains(other, error.ToString(), StringComparison.Ordinal);
     }
 
     private static RelationProjection AssertMatches(TemporaryRoot root)

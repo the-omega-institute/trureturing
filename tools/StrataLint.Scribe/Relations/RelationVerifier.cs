@@ -47,8 +47,13 @@ public static class RelationVerifier
         return new(indexed.Select(read =>
         {
             var host = hosts[read.RelativePath];
-            var difference = read.Projection is not null && host.IsSuccess
-                ? read.Projection.FirstDifference(RelationProjection.FromDefinition(host.Definition!)) : null;
+            string? difference = null;
+            if (read.Projection is not null && host.IsSuccess)
+            {
+                var actual = RelationProjection.FromDefinition(host.Definition!);
+                if (!read.Projection.Encode().AsSpan().SequenceEqual(actual.Encode()))
+                    difference = read.Projection.FirstDifference(actual);
+            }
             return new RelationVerificationItem(read.RelativePath, read.Failure, host.Failure, difference);
         }).ToImmutableArray(), elapsed);
     }
