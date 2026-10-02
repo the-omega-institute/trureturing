@@ -12,7 +12,7 @@ internal sealed class LevelSequenceCatalanDocument : IScribeDocumentDefinition
         H("Catalan Enumeration of Level Sequences"),
         Blocks(
             Node("level-sequence-levelsequencecatalan-result", "The Catalan enumeration", "result",
-                "For every positive n, the number of level sequences of length n avoiding 101 and 102 equals the Catalan number at index n.", DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("mansour-level-sequences-101-102-catalan"), ResolutionKind.Proved))),
+                "For every positive n, the number of level sequences of length n avoiding 101 and 102 equals the Catalan number at index n.", DescribeRole.Theorem)),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,
