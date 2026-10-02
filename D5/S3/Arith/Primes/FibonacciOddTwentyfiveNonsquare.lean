@@ -14,15 +14,14 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Arith.Primes.FibonacciOddTwentyfiveNonsquare
 
-local instance : Fact (Nat.Prime 5) := ⟨Nat.prime_five⟩
-local instance : Fact (Nat.Prime 7) := ⟨by decide⟩
-
 /-- After the exact factor of twenty-five is removed, every positive
 odd-index twenty-five-fold Fibonacci quotient is five modulo seven. -/
 theorem fibonacci_odd_twentyfive_normalized_nonsquare
     (n : ℕ) (hn : 0 < n) (hodd : Odd n) :
     ∃ d : ℕ, Nat.fib (25 * n) = 25 * Nat.fib n * d ∧
       (d : ZMod 7) = 5 ∧ ¬ IsSquare d := by
+  letI : Fact (Nat.Prime 5) := ⟨Nat.prime_five⟩
+  letI : Fact (Nat.Prime 7) := ⟨by decide⟩
   have hshift (r : ℕ) :
       (Nat.fib (r + 8) : ZMod 7) = -(Nat.fib r : ZMod 7) := by
     have h := Nat.fib_add 7 r

@@ -11,11 +11,11 @@ internal sealed class OriginalOddDepthSupportDocument : IScribeDocumentDefinitio
         H("Original odd-depth support"),
         Blocks(
             Paragraph(Text(
-                "Fix a finite set S of primes greater than five and its actual Fibonacci "
-                    + "rank closure H(S). The classical prime-index nonsquare input is "
-                    + "stated for the prime divisors of the chosen index n; it is a "
-                    + "hypothesis here, not a new Lean proof of nonsquareness. The "
-                    + "prime-to-index valuation equality is proved separately.")),
+                "Fix a positive index n, a finite set S of primes greater than five, "
+                    + "and its Fibonacci rank closure H(S). Assume that each prime ell "
+                    + "greater than five dividing n has a prime factor of F_ell with "
+                    + "odd valuation. The prime-to-index valuation equality applies "
+                    + "to factors p that do not divide n.")),
             Describe.Lean(
                 DescribeId.Create("prime-index-odd-factor"),
                 DeclarationHandle.Create(Prefix + "PrimeIndexOddFactor"),
@@ -51,9 +51,11 @@ internal sealed class OriginalOddDepthSupportDocument : IScribeDocumentDefinitio
                         + "index prime and has that exact first-zero rank. If it divided "
                         + "n, maximality and closure would give a contradiction. It is "
                         + "therefore an external odd-depth factor, giving the same "
-                        + "contradiction through S. The proved prime-to-index valuation "
-                        + "formula then puts every odd-exponent prime factor of F_n "
-                        + "in H(S), so its squarefree kernel divides the product "
+                        + "contradiction through S. Small primes belong to H(S) by "
+                        + "definition, and factors dividing n belong to it by index "
+                        + "support. The remaining odd-exponent factors belong to H(S) "
+                        + "by the original-depth condition and the prime-to-index "
+                        + "valuation formula. Thus the squarefree kernel divides the product "
                         + "of the primes in H(S)."))),
                 DescribeRole.Theorem)),
         []));

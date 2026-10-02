@@ -13,12 +13,11 @@ namespace D5.S3.Arith.Primes.FiniteFibonacciRankClosure
 
 open D5.S3.Arith.GoldenApparition
 
-local instance : Fact (Nat.Prime 5) := ⟨Nat.prime_five⟩
-
 /-- The least positive zero index of the original Fibonacci sequence modulo a prime. -/
 def rankWitness (p : ℕ) (hp : p.Prime) :
     {r : ℕ // 0 < r ∧ p ∣ Nat.fib r ∧
       ∀ n, 0 < n → p ∣ Nat.fib n → r ≤ n} := by
+  letI : Fact (Nat.Prime 5) := ⟨Nat.prime_five⟩
   have hex : ∃ n : ℕ, 0 < n ∧ p ∣ Nat.fib n := by
     by_cases hp5 : p = 5
     · subst p
@@ -81,6 +80,7 @@ theorem finite_fibonacci_rank_closure (S : Finset ℕ)
     rankClosureStep H = H ∧
     (∀ K : Finset ℕ, rankClosureSeed S ⊆ K → rankClosureStep K ⊆ K →
       H ⊆ K) := by
+  letI : Fact (Nat.Prime 5) := ⟨Nat.prime_five⟩
   dsimp only
   let B := max 5 (S.sup id)
   let U := (Finset.range (B + 1)).filter Nat.Prime

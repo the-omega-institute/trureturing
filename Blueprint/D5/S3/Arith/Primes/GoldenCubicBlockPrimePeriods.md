@@ -32,5 +32,5 @@ For j at least one, every prime factor p of L_(3^j)^2 + 1 has Fibonacci matrix p
 
 - Truth anchor: `D5/S3/Arith/Primes/GoldenCubicBlockPrimePeriods.cubic_block_b_prime_period`
 - Truth anchor: `D5/S3/Arith/Primes/GoldenCubicBlockPrimePeriods.cubic_block_c_prime_period`
-- Dependency: [D5/S3/Arith/GoldenMatrixPeriodBridge](../GoldenMatrixPeriodBridge.md)
+- Dependency: [D5/S3/Arith/GoldenFibonacciModulusPeriod](../GoldenFibonacciModulusPeriod.md)
 - Dependency: [D5/S3/Arith/Primes/GoldenCubicBlockRanks](GoldenCubicBlockRanks.md)

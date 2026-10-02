@@ -33,6 +33,5 @@ For the same selected block product M and largest index K, the first period iter
 - Truth anchor: `D5/S3/Arith/Primes/GoldenCubicBlockPeriodIteration.cubic_block_product_first_arrival`
 - Truth anchor: `D5/S3/Arith/Primes/GoldenCubicBlockPeriodIteration.cubic_block_product_period`
 - Dependency: [D5/S3/Arith/GoldenFibonacciModulusPeriod](../GoldenFibonacciModulusPeriod.md)
-- Dependency: [D5/S3/Arith/GoldenMatrixPeriodBridge](../GoldenMatrixPeriodBridge.md)
 - Dependency: [D5/S3/Arith/GoldenPrimePowerOrder](../GoldenPrimePowerOrder.md)
 - Dependency: [D5/S3/Arith/Primes/GoldenCubicBlockPrimePeriods](GoldenCubicBlockPrimePeriods.md)

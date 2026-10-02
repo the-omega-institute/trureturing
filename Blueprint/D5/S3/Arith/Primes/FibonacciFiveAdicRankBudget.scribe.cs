@@ -15,9 +15,9 @@ internal sealed class FibonacciFiveAdicRankBudgetDocument : IScribeDocumentDefin
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Let H be a finite set of primes containing five, and let R be "
+                    "Let H be a finite set of primes, and let R be "
                     + "the least common multiple of their first Fibonacci entry ranks. "
-                    + "If every prime dividing a positive index n belongs to H and "
+                    + "If every prime dividing an index n belongs to H and "
                     + "every prime occurring to odd order in F_n belongs to H, then "
                     + "the exponent of five in n is at most one more than the exponent "
                     + "of five in R. A nonsquare normalized quotient at the odd index "

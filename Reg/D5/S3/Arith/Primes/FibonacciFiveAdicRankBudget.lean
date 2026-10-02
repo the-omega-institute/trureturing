@@ -66,7 +66,8 @@ def registration : Registration arena
       padicValNat 5 n ≤ padicValNat 5 (H.lcm fibonacciRank) + 1) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨fibonacci_five_adic_rank_budget, rejected, rejected_law⟩
+  variation := ⟨(fun H n hH _ _ hIndex hOdd =>
+    fibonacci_five_adic_rank_budget H n hH hIndex hOdd), rejected, rejected_law⟩
   sensitivity := by
     constructor
     · intro i

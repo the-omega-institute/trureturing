@@ -6,14 +6,40 @@
    utility: none
    digest: Odd Fibonacci moduli have exact fourfold matrix period. -/
 
-import D5.S3.Arith.GoldenMatrixPeriodBridge
+import D5.S3.Arith.GoldenApparition
+import Mathlib.Data.Matrix.Reflection
+import Mathlib.GroupTheory.OrderOfElement
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.Ring
 import Mathlib.Data.Int.Fib.Lemmas
 
 namespace D5.S3.Arith.GoldenFibonacciModulusPeriod
 
 open scoped Matrix
 open D5.S0.Carrier D5.S1.Scale
-open D5.S3.Arith.GoldenApparition D5.S3.Arith.GoldenMatrixPeriodBridge
+open D5.S3.Arith.GoldenApparition
+
+def multiplicationMatrix (m : ℕ) (z : GoldenMod m) :
+    Matrix (Fin 2) (Fin 2) (ZMod m) :=
+  !![z.a + z.b, z.b; z.b, z.a]
+
+def goldenMatrixHom (m : ℕ) :
+    GoldenMod m →+* Matrix (Fin 2) (Fin 2) (ZMod m) where
+  toFun := multiplicationMatrix m
+  map_zero' := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [multiplicationMatrix]
+  map_one' := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [multiplicationMatrix]
+  map_add' x y := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [multiplicationMatrix, add_left_comm, add_comm]
+  map_mul' x y := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [multiplicationMatrix, Matrix.mul_apply, Fin.sum_univ_two] <;> ring
 
 private theorem fib_index_dvd_of_fib_dvd {n t : ℕ} (hn : 5 ≤ n)
     (h : Nat.fib n ∣ Nat.fib t) : n ∣ t := by
@@ -46,6 +72,28 @@ Fibonacci value first returns after four times the index. -/
 theorem golden_fibonacci_modulus_period (n : ℕ) (hn : 5 ≤ n) (hodd : Odd n) :
     orderOf (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod (Nat.fib n))) =
       4 * n := by
+  have hMatrixOrder (m : ℕ) :
+      orderOf (GoldenMod.phi : GoldenMod m) =
+        orderOf (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod m)) := by
+    have hinj : Function.Injective (goldenMatrixHom m) := by
+      intro x y h
+      apply GoldenMod.ext
+      · have h11 := congrArg
+          (fun M : Matrix (Fin 2) (Fin 2) (ZMod m) => M 1 1) h
+        simpa [goldenMatrixHom, multiplicationMatrix] using h11
+      · have h01 := congrArg
+          (fun M : Matrix (Fin 2) (Fin 2) (ZMod m) => M 0 1) h
+        simpa [goldenMatrixHom, multiplicationMatrix] using h01
+    have hphi : goldenMatrixHom m (GoldenMod.phi : GoldenMod m) =
+        !![1, 1; 1, 0] := by
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [goldenMatrixHom, multiplicationMatrix, GoldenMod.phi]
+    have horder := orderOf_injective (goldenMatrixHom m).toMonoidHom
+      hinj (GoldenMod.phi : GoldenMod m)
+    change orderOf (goldenMatrixHom m (GoldenMod.phi : GoldenMod m)) = _ at horder
+    rw [hphi] at horder
+    exact horder.symm
   let m := Nat.fib n
   have hmge : 5 ≤ m := by
     dsimp [m]
@@ -148,7 +196,7 @@ theorem golden_fibonacci_modulus_period (n : ℕ) (hn : 5 ≤ n) (hodd : Odd n) 
     have hmul := Nat.div_mul_cancel hndvd
     rw [hdiv] at hmul
     omega
-  rw [← (golden_matrix_faithful m).2.2]
+  rw [← hMatrixOrder m]
   exact hxorder
 
 #print axioms golden_fibonacci_modulus_period

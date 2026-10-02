@@ -4,7 +4,19 @@
 
 Odd Fibonacci values carry an exact fourfold return of the Fibonacci matrix.
 
-**Theorem 1.1 (Exact period at an odd Fibonacci modulus).**
+**Definition 1.1 (Multiplication in the golden residue algebra).**
+
+Lean statement: `D5/S3/Arith/GoldenFibonacciModulusPeriod.goldenMatrixHom`
+
+*Formalization.* `D5/S3/Arith/GoldenFibonacciModulusPeriod.goldenMatrixHom` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+On the ordered basis consisting of the golden generator and one, the residue a+b*phi acts by the matrix with rows (a+b,b) and (b,a). This assignment preserves zero, one, addition and multiplication over any modulus.
+
+**Theorem 1.2 (Exact period at an odd Fibonacci modulus).**
 
 Lean statement: `D5/S3/Arith/GoldenFibonacciModulusPeriod.golden_fibonacci_modulus_period`
 
@@ -18,5 +30,5 @@ For every odd index n at least five, the Fibonacci matrix modulo F_n has multipl
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/GoldenFibonacciModulusPeriod.goldenMatrixHom`
 - Truth anchor: `D5/S3/Arith/GoldenFibonacciModulusPeriod.golden_fibonacci_modulus_period`
-- Dependency: [D5/S3/Arith/GoldenMatrixPeriodBridge](GoldenMatrixPeriodBridge.md)

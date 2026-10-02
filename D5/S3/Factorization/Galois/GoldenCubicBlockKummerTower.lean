@@ -113,38 +113,6 @@ private theorem cubic_descent {K L : Type*} [Field K] [Field L] [Algebra K L]
   refine ⟨3 - k, Nat.sub_le _ _, c * b, ?_⟩
   rw [hclass, mul_assoc, ← pow_add, Nat.add_sub_of_le hk.le, mul_pow]
 
-private theorem fixed_of_degree_three {K L : Type*} [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsGalois K L]
-    (hdeg : Module.finrank K L = 3) (σ : L ≃ₐ[K] L) (hσ : σ ≠ 1)
-    (y : L) (hy : σ y = y) :
-    ∃ c : K, algebraMap K L c = y := by
-  have hcard : Nat.card (L ≃ₐ[K] L) = 3 := by
-    rw [IsGalois.card_aut_eq_finrank, hdeg]
-  let Hfix : Subgroup (L ≃ₐ[K] L) := {
-    carrier := {τ | τ y = y}
-    one_mem' := by simp
-    mul_mem' := by
-      intro τ υ hτ hυ
-      change (τ * υ) y = y
-      rw [AlgEquiv.mul_apply, hυ, hτ]
-    inv_mem' := by
-      intro τ hτ
-      change τ.symm y = y
-      apply τ.injective
-      simpa using hτ.symm
-  }
-  letI : Fact (Nat.Prime 3) := ⟨by decide⟩
-  have hzp : Subgroup.zpowers σ = ⊤ :=
-    zpowers_eq_top_of_prime_card hcard hσ
-  have htop : Hfix = ⊤ := by
-    apply top_unique
-    rw [← hzp]
-    exact Subgroup.zpowers_le.mpr hy
-  apply (IsGalois.mem_range_algebraMap_iff_fixed y).2
-  intro τ
-  have hτ : τ ∈ Hfix := by rw [htop]; exact Subgroup.mem_top τ
-  exact hτ
-
 private theorem cubic_stage_descent {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] {ζ a b : K}
     (hζ : IsPrimitiveRoot ζ 3) (ha : a ≠ 0) (hb : b ≠ 0)
@@ -187,7 +155,33 @@ private theorem cubic_stage_descent {K L : Type*} [Field K] [Field L] [Algebra K
     exact hζ.ne_one (by decide : 1 < 3)
       ((algebraMap K L).injective (by simpa using mul_right_cancel₀ hβ0 heq))
   exact cubic_descent hζ ha hb σ β z hβ hσβ hz
-    (fun y hy => fixed_of_degree_three hdeg σ hσ y hy)
+    (fun y hy => by
+      have hcard : Nat.card (L ≃ₐ[K] L) = 3 := by
+        rw [IsGalois.card_aut_eq_finrank, hdeg]
+      let Hfix : Subgroup (L ≃ₐ[K] L) := {
+        carrier := {τ | τ y = y}
+        one_mem' := by simp
+        mul_mem' := by
+          intro τ υ hτ hυ
+          change (τ * υ) y = y
+          rw [AlgEquiv.mul_apply, hυ, hτ]
+        inv_mem' := by
+          intro τ hτ
+          change τ.symm y = y
+          apply τ.injective
+          simpa using hτ.symm
+      }
+      letI : Fact (Nat.Prime 3) := ⟨by decide⟩
+      have hzp : Subgroup.zpowers σ = ⊤ :=
+        zpowers_eq_top_of_prime_card hcard hσ
+      have htop : Hfix = ⊤ := by
+        apply top_unique
+        rw [← hzp]
+        exact Subgroup.zpowers_le.mpr hy
+      apply (IsGalois.mem_range_algebraMap_iff_fixed y).2
+      intro τ
+      have hτ : τ ∈ Hfix := by rw [htop]; exact Subgroup.mem_top τ
+      exact hτ)
 
 private theorem tower_noncube (roots : ℕ → Ambient)
     (hroots : ∀ j, 1 ≤ j → roots j ^ 3 = algebraMap Base Ambient (block j))

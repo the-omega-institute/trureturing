@@ -9,6 +9,18 @@ internal sealed class GoldenFibonacciModulusPeriodDocument : IScribeDocumentDefi
         H("Golden Fibonacci Modulus Period"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("golden-multiplication-matrix"),
+                DeclarationHandle.Create("D5/S3/Arith/GoldenFibonacciModulusPeriod.goldenMatrixHom"),
+                H("Multiplication in the golden residue algebra"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "On the ordered basis consisting of the golden generator and one, "
+                    + "the residue a+b*phi acts by the matrix with rows "
+                    + "(a+b,b) and (b,a). This assignment preserves zero, one, "
+                    + "addition and multiplication over any modulus."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("odd-fibonacci-modulus-matrix-period"),
                 DeclarationHandle.Create("D5/S3/Arith/GoldenFibonacciModulusPeriod.golden_fibonacci_modulus_period"),
                 H("Exact period at an odd Fibonacci modulus"),

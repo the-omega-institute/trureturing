@@ -19,7 +19,6 @@ Let p be a prime greater than five, let a be positive, and let t be the order of
 ## References
 
 - Truth anchor: `D5/S3/Arith/Primes/GoldenPrimePowerMatrixPeriod.golden_matrix_prime_power_period`
-- Dependency: [D5/S3/Arith/GoldenMatrixPeriodBridge](../GoldenMatrixPeriodBridge.md)
-- Dependency: [D5/S3/Arith/GoldenPrimePeriodBounds](../GoldenPrimePeriodBounds.md)
+- Dependency: [D5/S3/Arith/GoldenFibonacciModulusPeriod](../GoldenFibonacciModulusPeriod.md)
 - Dependency: [D5/S3/Arith/GoldenPrimePowerOrder](../GoldenPrimePowerOrder.md)
 - Dependency: [D5/S3/Arith/Primes/FibonacciPrimeToIndexValuation](FibonacciPrimeToIndexValuation.md)

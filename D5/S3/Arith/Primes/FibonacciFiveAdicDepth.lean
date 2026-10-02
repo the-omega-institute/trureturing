@@ -18,13 +18,12 @@ namespace D5.S3.Arith.Primes.FibonacciFiveAdicDepth
 
 open D5.S0.Carrier D5.S1.Scale
 
-local instance : Fact (Nat.Prime 5) := ⟨Nat.prime_five⟩
-
 /-- The ramified prime has exactly the same depth in a positive Fibonacci
 number as in its index. The proof computes the fifth golden power and shows
 that its residual coordinate factor is a unit modulo five. -/
 theorem fibonacci_five_adic_depth (n : ℕ) (hn : 0 < n) :
     padicValNat 5 (Nat.fib n) = padicValNat 5 n := by
+  letI : Fact (Nat.Prime 5) := ⟨Nat.prime_five⟩
   let Q (a b : ℤ) : ℤ := a ^ 4 + 2 * a ^ 3 * b + 4 * a ^ 2 * b ^ 2 +
     3 * a * b ^ 3 + b ^ 4
   have hstep (m : ℕ) (hm : 0 < m) :

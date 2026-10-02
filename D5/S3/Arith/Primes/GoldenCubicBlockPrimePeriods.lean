@@ -7,13 +7,13 @@
    digest: Prime factors of golden cubic blocks have their exact Fibonacci matrix periods. -/
 
 import D5.S3.Arith.Primes.GoldenCubicBlockRanks
-import D5.S3.Arith.GoldenMatrixPeriodBridge
+import D5.S3.Arith.GoldenFibonacciModulusPeriod
 
 namespace D5.S3.Arith.Primes.GoldenCubicBlockPrimePeriods
 
 open scoped Matrix
 open D5.S0.Carrier D5.S1.Scale
-open D5.S3.Arith.GoldenApparition D5.S3.Arith.GoldenMatrixPeriodBridge
+open D5.S3.Arith.GoldenApparition D5.S3.Arith.GoldenFibonacciModulusPeriod
 open D5.S3.Arith.Primes.FiniteFibonacciRankClosure
 open D5.S3.Arith.Primes.GoldenCubicBlockRanks
 
@@ -23,6 +23,28 @@ theorem cubic_block_b_prime_period (j p : ℕ) (hj : 1 ≤ j) (hp : p.Prime)
     (hpB : (p : ℤ) ∣ goldenLucas (3 ^ j) ^ 2 + 3) :
     orderOf (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p)) =
       2 * 3 ^ (j + 1) := by
+  have hMatrixOrder (m : ℕ) :
+      orderOf (GoldenMod.phi : GoldenMod m) =
+        orderOf (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod m)) := by
+    have hinj : Function.Injective (goldenMatrixHom m) := by
+      intro x y h
+      apply GoldenMod.ext
+      · have h11 := congrArg
+          (fun M : Matrix (Fin 2) (Fin 2) (ZMod m) => M 1 1) h
+        simpa [goldenMatrixHom, multiplicationMatrix] using h11
+      · have h01 := congrArg
+          (fun M : Matrix (Fin 2) (Fin 2) (ZMod m) => M 0 1) h
+        simpa [goldenMatrixHom, multiplicationMatrix] using h01
+    have hphi : goldenMatrixHom m (GoldenMod.phi : GoldenMod m) =
+        !![1, 1; 1, 0] := by
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [goldenMatrixHom, multiplicationMatrix, GoldenMod.phi]
+    have horder := orderOf_injective (goldenMatrixHom m).toMonoidHom
+      hinj (GoldenMod.phi : GoldenMod m)
+    change orderOf (goldenMatrixHom m (GoldenMod.phi : GoldenMod m)) = _ at horder
+    rw [hphi] at horder
+    exact horder.symm
   let n := 3 ^ (j + 1)
   have hnodd : Odd n := (by decide : Odd (3 : ℕ)).pow
   have hrank : fibonacciRank p = 2 * n := by
@@ -86,7 +108,7 @@ theorem cubic_block_b_prime_period (j p : ℕ) (hj : 1 ≤ j) (hp : p.Prime)
     rw [← hrn]
     exact (D5.S3.Arith.FibonacciRank.fibonacci_entry_point
       hrpos hrzero hrmin).mp htFib
-  rw [← (golden_matrix_faithful p).2.2]
+  rw [← hMatrixOrder p]
   exact Nat.dvd_antisymm htDvd hndvd
 
 #print axioms cubic_block_b_prime_period
@@ -97,6 +119,28 @@ theorem cubic_block_c_prime_period (j p : ℕ) (hj : 1 ≤ j) (hp : p.Prime)
     (hpC : (p : ℤ) ∣ goldenLucas (3 ^ j) ^ 2 + 1) :
     orderOf (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p)) =
       4 * 3 ^ (j + 1) := by
+  have hMatrixOrder (m : ℕ) :
+      orderOf (GoldenMod.phi : GoldenMod m) =
+        orderOf (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod m)) := by
+    have hinj : Function.Injective (goldenMatrixHom m) := by
+      intro x y h
+      apply GoldenMod.ext
+      · have h11 := congrArg
+          (fun M : Matrix (Fin 2) (Fin 2) (ZMod m) => M 1 1) h
+        simpa [goldenMatrixHom, multiplicationMatrix] using h11
+      · have h01 := congrArg
+          (fun M : Matrix (Fin 2) (Fin 2) (ZMod m) => M 0 1) h
+        simpa [goldenMatrixHom, multiplicationMatrix] using h01
+    have hphi : goldenMatrixHom m (GoldenMod.phi : GoldenMod m) =
+        !![1, 1; 1, 0] := by
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [goldenMatrixHom, multiplicationMatrix, GoldenMod.phi]
+    have horder := orderOf_injective (goldenMatrixHom m).toMonoidHom
+      hinj (GoldenMod.phi : GoldenMod m)
+    change orderOf (goldenMatrixHom m (GoldenMod.phi : GoldenMod m)) = _ at horder
+    rw [hphi] at horder
+    exact horder.symm
   let n := 3 ^ (j + 1)
   have hnge : 5 ≤ n := by
     dsimp [n]
@@ -221,7 +265,7 @@ theorem cubic_block_c_prime_period (j p : ℕ) (hj : 1 ≤ j) (hp : p.Prime)
     have hmul := Nat.div_mul_cancel hndvd
     rw [hdiv] at hmul
     omega
-  rw [← (golden_matrix_faithful p).2.2]
+  rw [← hMatrixOrder p]
   exact hxorder
 
 #print axioms cubic_block_c_prime_period

@@ -2,8 +2,6 @@ fingerprints:
   raw_sha256: sha256:8bbc465524f4b44e28f91d6392357c3bd080559688b9e3b56a8af74d64085a56
   normalized_sha256: sha256:8bbc465524f4b44e28f91d6392357c3bd080559688b9e3b56a8af74d64085a56
 cas_ref: sha256:8bbc465524f4b44e28f91d6392357c3bd080559688b9e3b56a8af74d64085a56
-coverage_gids:
-  - gid: D5/S3/Arith/GoldenMatrixPeriodBridge.golden_matrix_faithful
-    target_statement_id: sha256:2f244288d4bfbb42255295b040a3cec8bcce4281a2f09022d50bf86997674683
+coverage_gids: []
 receipts:
   unresolved_subitems: []

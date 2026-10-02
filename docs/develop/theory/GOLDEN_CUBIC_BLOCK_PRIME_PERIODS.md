@@ -4372,3 +4372,53 @@ different multiplicity is zero. Unique factorization of ideals
 then gives the displayed equality at every prime.
 
 ## 追加锚（本行以下为增补区）
+
+## 70. Conditional original-depth support descent
+
+**Theorem 70.1 (conditional index and squarefree-kernel support).**
+Let $S$ be a finite set of rational primes greater than five, let
+$H(S)$ be its Fibonacci-rank closure from Section 5, and let $n\geq1$.
+Assume that for every prime $\ell>5$ dividing $n$ there is a prime
+$p\mid F_\ell$ with odd $v_p(F_\ell)$. Also assume that every prime
+$p>5$ satisfying
+
+$$
+p\mid F_n,\qquad p\nmid n,\qquad
+v_p(F_{\rho(p)})\text{ is odd}
+$$
+
+belongs to $S$. Then
+
+$$
+\operatorname{Supp}(n)\subseteq H(S),\qquad
+\prod_{\substack{p\mid F_n\\v_p(F_n)\text{ odd}}}p
+\ \bigm|\ \prod_{p\in H(S)}p,
+$$
+
+where the product on the left ranges over the distinct prime divisors
+of $F_n$ with odd valuation.
+
+Proof. If some index prime lies outside $H(S)$, choose the largest
+such prime $\ell$. Since $2,3,5\in H(S)$, it exceeds five. The first
+assumption gives an odd-exponent prime $p\mid F_\ell$. Its exact
+Fibonacci entry rank is $\ell$, and the rank bound together with
+parity gives $p>\ell$. If $p\mid n$, maximality puts $p$ in $H(S)$;
+rank closure would then put $\ell$ in $H(S)$, a contradiction. Thus
+$p\nmid n$. Its odd valuation in $F_\ell=F_{\rho(p)}$ and the second
+assumption put $p$ in $S$, again contradicting rank closure. This
+proves the index-support statement.
+
+For a prime with odd valuation in $F_n$, the primes at most five
+already belong to $H(S)$. A larger prime dividing $n$ belongs there
+by the index-support statement. For a larger prime not dividing $n$,
+the original prime-to-index valuation identity gives
+$v_p(F_n)=v_p(F_{\rho(p)})$, so the second assumption puts it in $S$.
+Every prime in the squarefree-kernel product therefore belongs to
+$H(S)$, proving the divisibility of products.
+
+The prime-index assumption is explicit. For primes $\ell>5$,
+Theorem 51.1 and prime factorization of the positive nonsquare
+$F_\ell$ supply it. The conclusion uses the actual original-depth
+valuation, including primes that divide the chosen index.
+
+## 追加锚（本行以下为增补区）

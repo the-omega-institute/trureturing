@@ -8,6 +8,7 @@ url: https://github.com/TauCetiProject/TauCeti/tree/33c2099c678ea391f7ea3e0ddaf9
 claim: The trace on a prime-power quotient is the prime exponent times the residue trace, and a prime power with a coprime complement divides the different exactly when residue separability or nonvanishing of that exponent fails.
 strata_touched:
   - D5/S3/Factorization/Dedekind/TameDifferent
+  - D5/S3/Factorization/Galois/GoldenCubicBlockCommonDiscriminants
 license: Apache-2.0
 triage: anchor
 ---
@@ -23,16 +24,24 @@ of TauCeti. The selected source closure is:
 - `TauCeti/RingTheory/Trace/QuotientPow.lean`
 - `TauCeti/RingTheory/DedekindDomain/Different/Basic.lean`
 - `TauCeti/RingTheory/DedekindDomain/Different.lean`
+- `TauCeti/RingTheory/DedekindDomain/AdicCompletionExtension.lean`
 
 Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.
 The donor distribution has no `NOTICE` file.
 
-The adapted source has two authored theorem declarations. The first constructs the prime-power
+The adapted TameDifferent source has two authored theorem declarations. The first constructs the prime-power
 quotient filtration, proves exactness and computes its trace by a split block
 presentation. The second constructs the trace-dual criterion and a Chinese
 remainder lift with nonzero residue trace. Intermediate helpers are local proof
 terms. The source uses pinned Mathlib directly; it imports no TauCeti modules.
 This is an adapted source distribution of upstream mathematical proofs.
+
+The common golden cubic discriminant proof adapts the completion-map
+construction from `AdicCompletionExtension.lean`. It uses the dense
+fraction-field image and continuity to transport the valuation relation
+to completions. The actual radicands, ramification indices, prime orbits,
+relative different norm and global discriminants are proved separately
+for the golden cubic fields.
 
 The donor Lean toolchain is `leanprover/lean4:v4.35.0-rc3`, and the repository
 Lean toolchain is `leanprover/lean4:v4.33.0`. Direct package dependency is

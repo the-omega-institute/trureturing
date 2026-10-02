@@ -19,16 +19,15 @@ open D5.S3.Arith.Primes.FiniteFibonacciRankClosure
 open D5.S3.Arith.Primes.FibonacciOddTwentyfiveNonsquare
 open D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation
 
-local instance : Fact (Nat.Prime 5) := ⟨Nat.prime_five⟩
-
 /-- Odd prime support of a Fibonacci value bounds the five-adic depth of
 its index by one more than the rank lcm of that support. -/
 theorem fibonacci_five_adic_rank_budget (H : Finset ℕ) (n : ℕ)
-    (hH : ∀ p ∈ H, p.Prime) (_hFive : 5 ∈ H) (_hn : 0 < n)
+    (hH : ∀ p ∈ H, p.Prime)
     (hIndex : ∀ p : ℕ, p.Prime → p ∣ n → p ∈ H)
     (hOdd : ∀ p : ℕ, p.Prime → p ∣ Nat.fib n →
       Odd (padicValNat p (Nat.fib n)) → p ∈ H) :
     padicValNat 5 n ≤ padicValNat 5 (H.lcm fibonacciRank) + 1 := by
+  letI : Fact (Nat.Prime 5) := ⟨Nat.prime_five⟩
   let R := H.lcm fibonacciRank
   let a := padicValNat 5 R
   let e := padicValNat 5 n

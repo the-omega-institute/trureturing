@@ -7,7 +7,6 @@
    digest: Exact iteration trajectory of products of distinct golden cubic blocks. -/
 
 import Mathlib
-import D5.S3.Arith.GoldenMatrixPeriodBridge
 import D5.S3.Arith.GoldenPrimePowerOrder
 import D5.S3.Arith.GoldenFibonacciModulusPeriod
 import D5.S3.Arith.Primes.GoldenCubicBlockPrimePeriods
@@ -15,7 +14,7 @@ import D5.S3.Arith.Primes.GoldenCubicBlockPrimePeriods
 namespace D5.S3.Arith.Primes.GoldenCubicBlockPeriodIteration
 
 open scoped Matrix
-open D5.S3.Arith.GoldenApparition D5.S3.Arith.GoldenMatrixPeriodBridge
+open D5.S3.Arith.GoldenApparition
 open D5.S0.Carrier D5.S1.Scale D5.S3.Arith.GoldenPrimePowerOrder
 open D5.S3.Arith.Primes.GoldenCubicBlockRanks
 open D5.S3.Arith.Primes.GoldenCubicBlockPrimePeriods
@@ -31,6 +30,28 @@ theorem cubic_block_product_period (I J : Finset ℕ)
       (ZMod ((∏ i ∈ I, (goldenLucas (3 ^ i) ^ 2 + 1).natAbs) *
         (∏ j ∈ J, (goldenLucas (3 ^ j) ^ 2 + 3).natAbs)))) =
       (if I.Nonempty then 4 else 2) * 3 ^ ((I ∪ J).max' hUnion + 1) := by
+  have hMatrixOrder (m : ℕ) :
+      orderOf (GoldenMod.phi : GoldenMod m) =
+        orderOf (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod m)) := by
+    have hinj : Function.Injective (goldenMatrixHom m) := by
+      intro x y h
+      apply GoldenMod.ext
+      · have h11 := congrArg
+          (fun M : Matrix (Fin 2) (Fin 2) (ZMod m) => M 1 1) h
+        simpa [goldenMatrixHom, multiplicationMatrix] using h11
+      · have h01 := congrArg
+          (fun M : Matrix (Fin 2) (Fin 2) (ZMod m) => M 0 1) h
+        simpa [goldenMatrixHom, multiplicationMatrix] using h01
+    have hphi : goldenMatrixHom m (GoldenMod.phi : GoldenMod m) =
+        !![1, 1; 1, 0] := by
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [goldenMatrixHom, multiplicationMatrix, GoldenMod.phi]
+    have horder := orderOf_injective (goldenMatrixHom m).toMonoidHom
+      hinj (GoldenMod.phi : GoldenMod m)
+    change orderOf (goldenMatrixHom m (GoldenMod.phi : GoldenMod m)) = _ at horder
+    rw [hphi] at horder
+    exact horder.symm
   let K := (I ∪ J).max' hUnion
   let C : ℕ → ℕ := fun i => (goldenLucas (3 ^ i) ^ 2 + 1).natAbs
   let B : ℕ → ℕ := fun j => (goldenLucas (3 ^ j) ^ 2 + 3).natAbs
@@ -178,7 +199,7 @@ theorem cubic_block_product_period (I J : Finset ℕ)
       exact hsq
     change orderOf
       (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod PB)) ∣ 2 * n
-    rw [← (golden_matrix_faithful PB).2.2]
+    rw [← hMatrixOrder PB]
     exact orderOf_dvd_of_pow_eq_one hreturn
   have hcop : PC.Coprime PB := by
     rw [Nat.coprime_prod_left_iff]
@@ -337,6 +358,28 @@ theorem cubic_block_product_first_arrival (I J : Finset ℕ)
       (∀ t : ℕ, π^[2 + t] M = 8 * 3 ^ max 1 (K - t)) ∧
       (π^[K + 1] M = 24 ∧ ∀ n : ℕ, n < K + 1 → π^[n] M ≠ 24) ∧
       π 24 = 24 := by
+  have hMatrixOrder (m : ℕ) :
+      orderOf (GoldenMod.phi : GoldenMod m) =
+        orderOf (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod m)) := by
+    have hinj : Function.Injective (goldenMatrixHom m) := by
+      intro x y h
+      apply GoldenMod.ext
+      · have h11 := congrArg
+          (fun M : Matrix (Fin 2) (Fin 2) (ZMod m) => M 1 1) h
+        simpa [goldenMatrixHom, multiplicationMatrix] using h11
+      · have h01 := congrArg
+          (fun M : Matrix (Fin 2) (Fin 2) (ZMod m) => M 0 1) h
+        simpa [goldenMatrixHom, multiplicationMatrix] using h01
+    have hphi : goldenMatrixHom m (GoldenMod.phi : GoldenMod m) =
+        !![1, 1; 1, 0] := by
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [goldenMatrixHom, multiplicationMatrix, GoldenMod.phi]
+    have horder := orderOf_injective (goldenMatrixHom m).toMonoidHom
+      hinj (GoldenMod.phi : GoldenMod m)
+    change orderOf (goldenMatrixHom m (GoldenMod.phi : GoldenMod m)) = _ at horder
+    rw [hphi] at horder
+    exact horder.symm
   let C : ℕ → ℕ := fun i => (goldenLucas (3 ^ i) ^ 2 + 1).natAbs
   let B : ℕ → ℕ := fun j => (goldenLucas (3 ^ j) ^ 2 + 3).natAbs
   let M := (∏ i ∈ I, C i) * (∏ j ∈ J, B j)
@@ -426,7 +469,7 @@ theorem cubic_block_product_first_arrival (I J : Finset ℕ)
     change orderOf
       (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod (3 ^ u))) =
         8 * 3 ^ (u - 1)
-    rw [← (golden_matrix_faithful (3 ^ u)).2.2]
+    rw [← hMatrixOrder (3 ^ u)]
     exact h
   have hPiTwo : π 2 = 3 := by
     change orderOf (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod 2)) = 3

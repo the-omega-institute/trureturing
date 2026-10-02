@@ -13,8 +13,6 @@ namespace D5.S3.Arith.Primes.OriginalOddDepthSupport
 open D5.S3.Arith.Primes.FiniteFibonacciRankClosure
 open D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation
 
-local instance : Fact (Nat.Prime 5) := ⟨Nat.prime_five⟩
-
 /-- A prime-index block contributes an odd-depth factor. This is the explicit
 classical nonsquare input to the support descent. -/
 def PrimeIndexOddFactor (n : ℕ) : Prop :=
@@ -34,6 +32,7 @@ private theorem support_descent_core
     (hExternal : ∀ p : ℕ, p.Prime → 5 < p → p ∣ Nat.fib n → ¬ p ∣ n →
       Odd (padicValNat p (Nat.fib (fibonacciRank p))) → p ∈ S) :
     ∀ ell : ℕ, ell.Prime → ell ∣ n → ell ∈ fibonacciRankClosure S := by
+  letI : Fact (Nat.Prime 5) := ⟨Nat.prime_five⟩
   let H := fibonacciRankClosure S
   have hSeed : rankClosureSeed S ⊆ H :=
     (finite_fibonacci_rank_closure S hS).1

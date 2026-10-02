@@ -8,9 +8,8 @@
 
 import Mathlib
 import D5.S3.Arith.GoldenApparition
-import D5.S3.Arith.GoldenMatrixPeriodBridge
 import D5.S3.Arith.GoldenPrimePowerOrder
-import D5.S3.Arith.GoldenPrimePeriodBounds
+import D5.S3.Arith.GoldenFibonacciModulusPeriod
 import D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation
 
 namespace D5.S3.Arith.Primes.GoldenPrimePowerMatrixPeriod
@@ -18,9 +17,8 @@ namespace D5.S3.Arith.Primes.GoldenPrimePowerMatrixPeriod
 open scoped Matrix
 open D5.S0.Carrier D5.S1.Scale
 open D5.S3.Arith.GoldenApparition
-open D5.S3.Arith.GoldenMatrixPeriodBridge
+open D5.S3.Arith.GoldenFibonacciModulusPeriod
 open D5.S3.Arith.GoldenPrimePowerOrder
-open D5.S3.Arith.GoldenPrimePeriodBounds
 open D5.S3.Arith.Primes.FiniteFibonacciRankClosure
 open D5.S3.Arith.Primes.FibonacciPrimeToIndexValuation
 
@@ -60,6 +58,28 @@ theorem golden_matrix_prime_power_period
       orderOf
         (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod (p ^ a))) =
         τ * p ^ (a - h) := by
+  have hMatrixOrder (m : ℕ) :
+      orderOf (GoldenMod.phi : GoldenMod m) =
+        orderOf (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod m)) := by
+    have hinj : Function.Injective (goldenMatrixHom m) := by
+      intro x y h
+      apply GoldenMod.ext
+      · have h11 := congrArg
+          (fun M : Matrix (Fin 2) (Fin 2) (ZMod m) => M 1 1) h
+        simpa [goldenMatrixHom, multiplicationMatrix] using h11
+      · have h01 := congrArg
+          (fun M : Matrix (Fin 2) (Fin 2) (ZMod m) => M 0 1) h
+        simpa [goldenMatrixHom, multiplicationMatrix] using h01
+    have hphi : goldenMatrixHom m (GoldenMod.phi : GoldenMod m) =
+        !![1, 1; 1, 0] := by
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [goldenMatrixHom, multiplicationMatrix, GoldenMod.phi]
+    have horder := orderOf_injective (goldenMatrixHom m).toMonoidHom
+      hinj (GoldenMod.phi : GoldenMod m)
+    change orderOf (goldenMatrixHom m (GoldenMod.phi : GoldenMod m)) = _ at horder
+    rw [hphi] at horder
+    exact horder.symm
   have hpair (m n : ℕ) :
       (GoldenMod.phi : GoldenMod m) ^ (n + 1) =
         ⟨(Nat.fib n : ZMod m), (Nat.fib (n + 1) : ZMod m)⟩ := by
@@ -87,14 +107,81 @@ theorem golden_matrix_prime_power_period
     omega
   have hprimeCase :
       (t ∣ p - 1 ∧ ¬ p ∣ t) ∨ (t ∣ 2 * (p + 1) ∧ ¬ p ∣ t) := by
+    have hpNotDvdFive : ¬ p ∣ 5 := by
+      intro h
+      have hle := Nat.le_of_dvd (by decide : 0 < 5) h
+      omega
+    have hentry := fibonacci_apparition_entry_point hp hpNotDvdFive
+    have hfp : ((Nat.fib p : ℕ) : ZMod p) = (legendreSym 5 p : ZMod p) := by
+      simpa only [Int.fib_natCast, Int.cast_natCast] using hentry.2
     rcases legendreSym.eq_one_or_neg_one (p := 5) (a := (p : ℤ)) hpModFive with
       heps | heps
     · left
-      simpa only [t, (golden_matrix_faithful p).2.2] using
-        (golden_prime_period_bounds hp hp5).1 heps
+      have hfprev : ((Nat.fib (p - 1) : ℕ) : ZMod p) = 0 := by
+        have h := hentry.1
+        rw [heps] at h
+        have hindex : (p : ℤ) - 1 = ((p - 1 : ℕ) : ℤ) := by omega
+        rw [hindex, Int.fib_natCast, Int.cast_natCast] at h
+        exact h
+      have hfcurrent : ((Nat.fib p : ℕ) : ZMod p) = 1 := by
+        simpa [heps] using hfp
+      have hpow : (GoldenMod.phi : GoldenMod p) ^ p = GoldenMod.phi := by
+        have h := hpair p (p - 1)
+        have hindex : p - 1 + 1 = p := by omega
+        rw [hindex] at h
+        apply GoldenMod.ext
+        · simpa [GoldenMod.phi] using (congrArg GoldenMod.a h).trans hfprev
+        · simpa [GoldenMod.phi] using (congrArg GoldenMod.b h).trans hfcurrent
+      have hinv : (GoldenMod.phi : GoldenMod p) *
+          (GoldenMod.phi - 1) = 1 := by
+        apply GoldenMod.ext <;>
+          simp [GoldenMod.phi, sub_eq_add_neg]
+      have hreturn : (GoldenMod.phi : GoldenMod p) ^ (p - 1) = 1 := by
+        have hindex : p - 1 + 1 = p := by omega
+        calc
+          (GoldenMod.phi : GoldenMod p) ^ (p - 1) =
+              (GoldenMod.phi : GoldenMod p) ^ (p - 1) *
+                (GoldenMod.phi * (GoldenMod.phi - 1)) := by rw [hinv, mul_one]
+          _ = (GoldenMod.phi : GoldenMod p) ^ p *
+                (GoldenMod.phi - 1) := by
+              rw [← mul_assoc, ← pow_succ, hindex]
+          _ = 1 := by rw [hpow, hinv]
+      have hdiv : t ∣ p - 1 := orderOf_dvd_of_pow_eq_one hreturn
+      refine ⟨hdiv, ?_⟩
+      intro hpdvd
+      have hbad : p ∣ p - 1 := dvd_trans hpdvd hdiv
+      have hle := Nat.le_of_dvd (by omega : 0 < p - 1) hbad
+      omega
     · right
-      simpa only [t, (golden_matrix_faithful p).2.2] using
-        (golden_prime_period_bounds hp hp5).2 heps
+      have hfnext : ((Nat.fib (p + 1) : ℕ) : ZMod p) = 0 := by
+        have h := hentry.1
+        rw [heps] at h
+        have hindex : (p : ℤ) - -1 = ((p + 1 : ℕ) : ℤ) := by omega
+        rw [hindex, Int.fib_natCast, Int.cast_natCast] at h
+        exact h
+      have hfcurrent : ((Nat.fib p : ℕ) : ZMod p) = -1 := by
+        simpa [heps] using hfp
+      have hpow : (GoldenMod.phi : GoldenMod p) ^ (p + 1) = -1 := by
+        have h := hpair p p
+        apply GoldenMod.ext
+        · simpa using (congrArg GoldenMod.a h).trans hfcurrent
+        · simpa using (congrArg GoldenMod.b h).trans hfnext
+      have hreturn : (GoldenMod.phi : GoldenMod p) ^ (2 * (p + 1)) = 1 := by
+        calc
+          (GoldenMod.phi : GoldenMod p) ^ (2 * (p + 1)) =
+              ((GoldenMod.phi : GoldenMod p) ^ (p + 1)) ^ 2 := by
+                rw [Nat.mul_comm 2 (p + 1), pow_mul]
+          _ = 1 := by rw [hpow]; norm_num
+      have hdiv : t ∣ 2 * (p + 1) := orderOf_dvd_of_pow_eq_one hreturn
+      refine ⟨hdiv, ?_⟩
+      intro hpdvd
+      have hbad : p ∣ 2 * (p + 1) := dvd_trans hpdvd hdiv
+      rcases hp.dvd_mul.mp hbad with htwo | hnext
+      · have hle := Nat.le_of_dvd (by decide : 0 < 2) htwo
+        omega
+      · have hone : p ∣ 1 := (Nat.dvd_add_self_left).mp hnext
+        have hle := Nat.le_of_dvd (by decide : 0 < 1) hone
+        omega
   have hprimeBound : t ∣ p - 1 ∨ t ∣ 2 * (p + 1) :=
     hprimeCase.elim (fun h => Or.inl h.1) (fun h => Or.inr h.1)
   have htpos : 0 < t := by
@@ -277,7 +364,12 @@ theorem golden_matrix_prime_power_period
       (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod q)) ^ t =
         1 + ((p ^ h : ℕ) : ZMod q) • A.map (Nat.castRingHom (ZMod q)) := by
     have hbase := congrArg (goldenMatrixHom q) (hpair q (t - 1))
-    rw [htPred, map_pow, (golden_matrix_faithful q).2.1] at hbase
+    have hphi : goldenMatrixHom q (GoldenMod.phi : GoldenMod q) =
+        !![1, 1; 1, 0] := by
+      ext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [goldenMatrixHom, multiplicationMatrix, GoldenMod.phi]
+    rw [htPred, map_pow, hphi] at hbase
     have hcoords :
         (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod q)) ^ t =
           goldenMatrixHom q (⟨(c : ZMod q), (f : ZMod q)⟩ : GoldenMod q) := by
@@ -385,7 +477,7 @@ theorem golden_matrix_prime_power_period
       ((!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod (p ^ a))) ^
           (t * m) = 1 ↔ a ≤ h + padicValNat p m) := by
     rw [← orderOf_dvd_iff_pow_eq_one,
-      ← (golden_matrix_faithful (p ^ a)).2.2, hgoal]
+      ← hMatrixOrder (p ^ a), hgoal]
     have hcancel : (t * p ^ (a - h) ∣ t * m) ↔ p ^ (a - h) ∣ m := by
       exact Nat.mul_dvd_mul_iff_left htpos
     rw [hcancel, padicValNat_dvd_iff_le (p := p) hm.ne']
@@ -394,7 +486,7 @@ theorem golden_matrix_prime_power_period
       (hn : (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod (p ^ a))) ^ n = 1) :
       t ∣ n := by
     have hdvd := orderOf_dvd_of_pow_eq_one hn
-    rw [← (golden_matrix_faithful (p ^ a)).2.2] at hdvd
+    rw [← hMatrixOrder (p ^ a)] at hdvd
     change orderOf x ∣ n at hdvd
     rw [hgoal] at hdvd
     exact dvd_trans ⟨p ^ (a - h), rfl⟩ hdvd
@@ -454,8 +546,7 @@ theorem golden_matrix_prime_power_period
         (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod (p ^ a))) =
         orderOf (!![1, 1; 1, 0] : Matrix (Fin 2) (Fin 2) (ZMod p)) *
           p ^ (a - h)
-  rw [← (golden_matrix_faithful (p ^ a)).2.2,
-    ← (golden_matrix_faithful p).2.2]
+  rw [← hMatrixOrder (p ^ a), ← hMatrixOrder p]
   exact ⟨hhpos, by simpa only [f] using hval,
     by simpa only [f, c] using hval.trans hvalC.symm,
     htEven, by simpa only [c, f] using hIdentity,
