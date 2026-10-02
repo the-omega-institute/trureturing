@@ -12,7 +12,21 @@ Crossing and closed seams. C consists of seams with exactly one endpoint in A; J
 
 Independent permitted profiles. Extend an A assignment by middle windows outside A. Its diagnostic tau is the first A-closed seam failure or the A-owned terminal zero failure. A profile consists of an allowed cutoff and the crossing bits strictly before it. The allowed cutoffs are acceptance, each seam in J, and the terminal label when n lies in A. Only for a terminal cutoff is the incoming last crossing port fixed to zero. There are no other restrictions.
 
-**Theorem 1.1 (All Cuts, All Positive Lengths).**
+For natural endpoints l<r<=n, I(l,r) is the half-open coordinate interval [l,r), with zero-based coordinates l through r-1. terminal(n) denotes coordinate n-1. leftCut(l) is zero at l=0 and one otherwise; rightCut(r) is zero at r=n and one otherwise. singletonSuffix(l,r) is one exactly when 0<l, r=n, and r-l=1, and is zero otherwise. Subtractions below are natural subtractions.
+
+**Theorem 1.1 (Interval Seams and Terminal Ownership).**
+
+$$\forall l, \forall r, l < r \land r \le n \implies {\operatorname{d}\left(\operatorname{I}\left(l, r\right)\right) = \operatorname{leftCut}\left(l\right) + \operatorname{rightCut}\left(r\right) \land \operatorname{card}\left(\operatorname{J}\left(\operatorname{I}\left(l, r\right)\right)\right) = r - l - 1 \land {\forall j \in \operatorname{J}\left(\operatorname{I}\left(l, r\right)\right), \operatorname{c}\left(\operatorname{I}\left(l, r\right), j\right) = \operatorname{leftCut}\left(l\right)} \land {\operatorname{terminal}\left(n\right) \in \operatorname{I}\left(l, r\right) \iff r = n} \land \operatorname{delta}\left(\operatorname{I}\left(l, r\right)\right) = \operatorname{singletonSuffix}\left(l, r\right)}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/FirstRejectionCutCapacity.interval_data` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The only crossing seams are the two interval boundaries that do not coincide with the ends of the whole word. The internal seams are the r-l-1 consecutive pairs inside the interval, and every such seam has exactly leftCut(l) earlier crossings. The terminal coordinate belongs to the interval exactly when r=n. The terminal incoming-port correction is nonzero exactly for a terminal singleton with a nonempty left complement.
+
+**Theorem 1.2 (All Cuts, All Positive Lengths).**
 
 $$\begin{aligned}\forall n \ge 1, \forall A \subseteq \operatorname{coordinates}\left(n\right),\\\operatorname{capacityT}\left(A\right) = 2^{d} + \sum_{j \in J}2^{\operatorname{c}\left(j\right)} + \operatorname{terminalOwned}\left(A\right) \times2^{d - \delta}\\\delta \le d, \operatorname{project}\left(T\right) = F\\\operatorname{capacityF}\left(A\right) = 2^{d} + epsilon\\\forall n \ge 2, \operatorname{F}\left(\operatorname{x}\left(n\right)\right) = 0, \operatorname{F}\left(\operatorname{y}\left(n\right)\right) = 0\\\operatorname{T}\left(\operatorname{x}\left(n\right)\right) = 1, \operatorname{T}\left(\operatorname{y}\left(n\right)\right) = n\end{aligned}$$
 
@@ -36,6 +50,7 @@ For every n>=2, the words x=(001,100,010^(n-2)) and y=(010^(n-1),000) both have 
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/FirstRejectionCutCapacity.interval_data`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/FirstRejectionCutCapacity.result`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd](LiteralWindowEnd.md)
 - Dependency: [D5/S3/ConceptDynamics/Communication/LanguagePostprocessingObstruction](../../ConceptDynamics/Communication/LanguagePostprocessingObstruction.md)

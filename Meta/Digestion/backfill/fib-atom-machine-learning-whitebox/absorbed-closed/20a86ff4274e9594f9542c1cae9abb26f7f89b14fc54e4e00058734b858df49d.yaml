@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:20a86ff4274e9594f9542c1cae9abb26f7f89b14fc54e4e00058734b858df49d
+  normalized_sha256: sha256:20a86ff4274e9594f9542c1cae9abb26f7f89b14fc54e4e00058734b858df49d
+cas_ref: sha256:20a86ff4274e9594f9542c1cae9abb26f7f89b14fc54e4e00058734b858df49d
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/FourMessageTreeRigidity.result
+    target_statement_id: sha256:3edc7229065153fe712b751bdd7a6e3a653366327ae40ced3e06749559d14d4a
+receipts:
+  unresolved_subitems: []

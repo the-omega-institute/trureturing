@@ -28,6 +28,22 @@ internal sealed class FirstRejectionCutCapacityDocument : IScribeDocumentDefinit
             Paragraph(Text("Ordered diagnostic. T is the earliest bad seam, where the left high bit and right low bit are both one. If no seam fails, T is the terminal label n for a last window 000, and is acceptance otherwise. The Lean label is WithTop(Fin(n)): finite value i represents source label i+1, and top represents acceptance. F is the Boolean End readout of the actual run from (false,false).")),
             Paragraph(Text("Crossing and closed seams. C consists of seams with exactly one endpoint in A; J consists of seams with both endpoints in A. The number d is the cardinality of C. For j in J, c(j) counts crossing seams strictly before j. A crossing port is the left high bit when the left coordinate lies in A, and the right low bit otherwise. The value delta is one exactly when n>=2, the terminal coordinate lies in A, and its predecessor does not. The factor terminalOwned(A) is the numeric indicator of terminal ownership.")),
             Paragraph(Text("Independent permitted profiles. Extend an A assignment by middle windows outside A. Its diagnostic tau is the first A-closed seam failure or the A-owned terminal zero failure. A profile consists of an allowed cutoff and the crossing bits strictly before it. The allowed cutoffs are acceptance, each seam in J, and the terminal label when n lies in A. Only for a terminal cutoff is the incoming last crossing port fixed to zero. There are no other restrictions.")),
+            Paragraph(Text("For natural endpoints l<r<=n, I(l,r) is the half-open coordinate "
+                + "interval [l,r), with zero-based coordinates l through r-1. terminal(n) denotes "
+                + "coordinate n-1. leftCut(l) is zero at l=0 and one otherwise; rightCut(r) is "
+                + "zero at r=n and one otherwise. singletonSuffix(l,r) is one exactly when "
+                + "0<l, r=n, and r-l=1, and is zero otherwise. Subtractions below are natural "
+                + "subtractions.")),
+            Describe.Lean(DescribeId.Create("interval-cut-data"),
+                DeclarationHandle.Create(Prefix + "interval_data"), H("Interval Seams and Terminal Ownership"),
+                StatementSource.FromAuthor(IntervalDataFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The only crossing seams are the two interval boundaries "
+                    + "that do not coincide with the ends of the whole word. The internal seams "
+                    + "are the r-l-1 consecutive pairs inside the interval, and every such seam "
+                    + "has exactly leftCut(l) earlier crossings. The terminal coordinate belongs "
+                    + "to the interval exactly when r=n. The terminal incoming-port correction "
+                    + "is nonzero exactly for a terminal singleton with a nonempty left complement."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("first-rejection-cut-capacity"),
                 DeclarationHandle.Create(Prefix + "result"), H("All Cuts, All Positive Lengths"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(),
@@ -67,6 +83,20 @@ internal sealed class FirstRejectionCutCapacityDocument : IScribeDocumentDefinit
                         + "the first seam label 1 and the terminal label n, respectively. Hence no function "
                         + "of the Boolean output alone reconstructs the diagnostic on all raw inputs. This "
                         + "does not restrict computation from the full raw word."))), DescribeRole.Theorem))));
+
+    private static Formula IntervalDataFormula()
+    {
+        var l = V("l"); var r = V("r"); var n = V("n"); var j = V("j");
+        var interval = Call("I", l, r); var left = Call("leftCut", l);
+        return Seq(Forall, Sp, l, Comma, Sp, Forall, Sp, r, Comma, Sp,
+            l, Sp, Lt, Sp, r, Sp, Land, Sp, r, Sp, Le, Sp, n, Sp, Implies, Sp, Grp(Seq(
+                EqOf(Call("d", interval), Add(left, Call("rightCut", r))), Sp, Land, Sp,
+                EqOf(Call("card", Call("J", interval)), Sub(Sub(r, l), D(1))), Sp, Land, Sp,
+                Grp(Seq(Forall, Sp, j, Sp, InMacro, Sp, Call("J", interval), Comma, Sp,
+                    EqOf(Call("c", interval, j), left))), Sp, Land, Sp,
+                Grp(Seq(Call("terminal", n), Sp, InMacro, Sp, interval, Sp, Iff, Sp, r, Sp, Eq, Sp, n)),
+                Sp, Land, Sp, EqOf(Call("delta", interval), Call("singletonSuffix", l, r)))));
+    }
 
     private static Formula ResultFormula()
     {
