@@ -20088,7 +20088,7 @@ If a source has positive reserve, the uniform law on the WHOLE E_J intersect F_w
 
 Thus either an aligned q-height-two low-row original exists, or at least q distinct deeper low-row originals are required. This statement concerns the same actual cofactor, all later q-digits and the entire cell; it supplies no additional copy of a shared original elsewhere.
 
-The new reduction is from arbitrary retained top inventory to at most two fixed original partners, and then to a two-congruence condition on one COMPLETE private region. Deep partners cannot block positive reserve. The unresolved source step is to defeat TPO3, for example by proving a certificate such as TPO5–TPO6 for the actual blocker inventory. Even after source selection, TPO7 can be paid by existing low-row originals; a legal repair of the full E_J and strict whole-family descent remain separate obligations. No argument here forces every hypothetical cover to contain this particular triangle or proves unrestricted noncoverage. These are ordinary mathematical deductions; no new Lean verification is asserted.
+The reduction is from arbitrary retained top inventory to at most two fixed original partners, and then to a two-congruence condition on one COMPLETE private region. Deep partners cannot block positive reserve. Section166 excludes both actual partners by a whole-family exchange, so the stipulated triangle's source-selection step does not require the conditional TPO5–TPO6 certificate. TPO7 can still be paid by existing low-row originals; a legal repair of the full E_J and strict whole-family descent remain separate obligations. No argument here forces every hypothetical cover to contain this particular triangle or proves unrestricted noncoverage. These are ordinary mathematical deductions; no new Lean verification is asserted.
 
 ## 165. Actual prime guards exclude the singleton-R opposite flat5/7 branch
 
@@ -20362,3 +20362,120 @@ Hence H>=4 and original27 exists by divisor closure. Moreover GCB1 implies tau_S
       originals9 and27 both have the color opposite5. (GCB11)
 
 Only their actual first-three roots are fixed by this conclusion. Their full ternary phases and those of every other original remain unchanged. These necessary conditions do not exclude the remaining shared7 branch.
+
+## 166. The primitive triangle has singleton top cells and two complete low-row probe obligations
+
+Keep the ONE original EB1 family and the actual primitive triangle of §152. Write
+
+    Q=3^H q^G M, G>=2, gcd(M,3q)=1,
+    h=3^H q^2,
+    d_0=hpr, d_1=hpt, d_2=hrt.
+
+The primes p,r,t divide M and are distinct. The three originals have the same full ternary word u, the same first-q root omega, pairwise distinct second-q prefixes beta_i, and compatible literal cofactor phases at ONE v modulo M. Let c_i modulo h combine u and beta_i by CRT. No assertion forces every hypothetical cover to contain this triangle.
+
+A four-class application of the existing whole-deletion rule PH1–PH2 excludes every extra original in any of these three h-phases. The fresh ternary rows reuse the construction pattern in §85. The consequence is stronger than TPO's conditional two-partner reduction: neither actual partner can exist, so both complete probe cells survive every complete private escape. The low-row repair of the whole E_J remains a separate obligation.
+
+### The three top phases are singletons
+
+For each i in {0,1,2},
+
+    {d in D:h|d and a_d=c_i modulo h}={d_i}.             (TSC1)
+
+Suppose instead that an additional original m occupies c_i. It differs from all three triangle labels because their second-q prefixes are distinct. Set
+
+    k_0=t, k_1=r, k_2=p,
+    K={d_0,d_1,d_2,m}.
+
+All four removed classes have ternary word u and first-q root omega. The classes A_(d_i) and A_m lie in beta_i modulo q^2, while the other two triangle classes lie in v modulo k_i. Thus the FULL removed union has a crossed enclosure by these two actual congruences; it is not an enclosure selected separately at different source points.
+
+Choose a representative of u and put rho_j=u+j*3^H modulo3^(H+1), j=0,1,2. Insert the following four genuine APs:
+
+| Ternary residue modulo3^(H+1) | Additional conditions | Numerical modulus |
+| --- | --- | --- |
+| rho_0 | none | 3^(H+1) |
+| rho_1 | omega modulo q | 3^(H+1)q |
+| rho_2 | beta_i modulo q^2 | 3^(H+1)q^2 |
+| rho_2 | v modulo k_i | 3^(H+1)k_i |
+
+Each point in the removed union has exactly one of the three ternary extensions. The first extension is covered by the first row; the second is covered by the common first-q root. At the third extension, the last two rows cover respectively A_(d_i) union A_m and the other two triangle classes. Therefore
+
+    union_(d in K) A_d subset union_(B in new rows) B.   (TSC2)
+
+Since the original family is a whole cover, E_K is contained in the left side. This proves coverage of the ENTIRE simultaneous-deletion hole, including all overlaps among deleted originals. No private-region union is substituted for E_K.
+
+The cofactors 1,q,q^2,k_i are pairwise distinct. All four new numerical labels have ternary height H+1, strictly beyond the global original height. Hence they are distinct odd nonunits with neither new–new nor new–retained collisions. Their moduli divide3Q. EB1 compares against all distinct odd whole covers, so increasing the carrier is allowed; the coverage argument holds for every integer.
+
+Exactly four originals are removed and four APs inserted. Their added modulus sum satisfies, since q,k_i>=5,
+
+    W_add/(h k_i)
+      =3(1/(q^2 k_i)+1/(q k_i)+1/k_i+1/q^2)
+      <=108/125<1.
+
+Each of the other two triangle moduli is a proper multiple of h k_i. Consequently
+
+    W_add<h k_i<sum_(d in K)d.                         (TSC3)
+
+PH2 forbids this same-cardinality strict modulus-sum descent. This proves TSC1 for all three phases, with no restriction on an alleged partner's cofactor support, cofactor phase, or higher q-digits.
+
+### Complete owner blockers lose every full-height high-q original
+
+The phase c_0 singleton implies
+
+    d!=d_0, v_3(d)=H, v_q(d)>=2
+      ==> A_d intersect A_(d_0)=empty.
+
+An intersection would force the original into the same h-phase as d_0. Therefore the COMPLETE private region is exactly
+
+    P_(d_0)=A_(d_0) minus
+      union_(d!=d_0; v_3(d)<H or v_q(d)<=1) A_d.         (TSC4)
+
+This retains all higher digits and all original cofactor coordinates. In TPO4's complete owner parameterization x=a_0+d_0 z modulo Q, the omitted original blockers are proved empty. All remaining blockers keep their exact gcd compatibility condition, literal reduced residue, repeated reduced modulus and complete residual coordinates.
+
+There is a corresponding incidence restriction. For a nonempty original blocker B_d, with n_d=d/gcd(d,d_0),
+
+    q|n_d ==> d in J,
+    J={d in D:v_3(d)<H and v_q(d)>=1}.
+
+Indeed q|n_d forces v_q(d)>=3; TSC4 rules out full ternary height. No automatic LLL activity certificate is inferred from this restriction.
+
+### Every complete private escape exposes both whole probe cells
+
+Use PTE1–PTE2 to select the actual escaping triangle owner, and relabel once so that it is d_0. For ANY complete private point x of this owner escaping v modulo t, let w=x modulo M. Then w agrees with v at p,r and differs at t. Preserve its entire cofactor coordinate and every unmentioned source coordinate.
+
+On the fibre F_w=(u,omega,w) with unrestricted remaining q-tail, let F_i(w) be the complete second-prefix cell beta_i, i=1,2. The family retained after deleting the WHOLE J misses both cells:
+
+    F_1(w) union F_2(w) subset E_J,
+    mu_w(E_J intersect (F_1(w) union F_2(w)))=2/q.       (TSC5)
+
+Originals of q-height at most one miss all of F_w because their truth values are constant there and they miss x. Every other retained original has full ternary height H. If it met F_i(w), TSC1 would make it d_i; but that triangle class fails at the actual t-coordinate. This proves TSC5 directly with the complete retained complement. Equivalently, both actual partners in TPO1 are absent.
+
+The conclusion eliminates the obstruction instantiated by the two original partners in TPO3 before any query estimate is needed. It does not assert that an arbitrary private set cannot lie in an unrelated union of two congruences.
+
+For this SAME w define the original payer sets
+
+    L_i(w)={d in J:A_d intersect F_i(w) is nonempty},
+    i=1,2.
+
+Every such payer has q-height e>=2, and its relative measure in the complete cell is exactly q^(2-e). Whole original coverage forces
+
+    sum_(d in L_i(w)) q^(2-v_q(d))>=1, i=1,2.
+
+Moreover L_1(w) and L_2(w) are disjoint: an original with q-height at least two has only one literal second-q prefix. Consequently
+
+    sum_(d in L_1(w) union L_2(w)) q^(2-v_q(d))>=2.      (TSC6)
+
+Each cell either has an aligned height-two payer or needs at least q distinct deeper original payers. If both cells lack height-two payers, the union contains at least2q distinct deeper originals. These two budgets share one actual source and use disjoint original-label inventories. No sum over different cofactor sources is authorized; the same original may serve several such sources.
+
+### The remaining lower-row repair requires a new certificate
+
+An incident low-row original m=3^a q^e s, a<H, has a whole class extending beyond the one full ternary word u. The H+1 repair above covers only that word. Thus replacing an extra top original by this low-row payer does not establish TSC2 for the entire four-original deletion. This is a missing coverage implication, not a claim that every additional point is uncovered by the retained family.
+
+Moving that four-row template down to height a+1 instead produces the proposed labels
+
+    3^(a+1), 3^(a+1)q, 3^(a+1)q^2, 3^(a+1)k_i.
+
+All four divide triangle labels and hence already belong to D. They differ from m by ternary height and from the triangle labels by cofactor, so all remain in D minus {d_0,d_1,d_2,m}. Every row then has an actual new–retained numerical collision. Their phases cannot be overwritten freely.
+
+Deleting the complete J frees the two q-bearing candidate labels only when a+1<H; at a+1=H they remain retained as well. The two q-free labels remain retained in either case. Any added deletion must carry its complete joint liability, and deleting J itself requires repairing all of E_J.
+
+The source-selection gap in the stipulated triangle branch is closed: the top cells are singletons and both complete probes are low-row obligations at every escaped private source. A lawful repair of the entire simultaneous-deletion hole, and a theorem forcing a useful triangle or handling its absence, remain unresolved. These are ordinary mathematical deductions with no new Lean verification or literature-priority claim.
