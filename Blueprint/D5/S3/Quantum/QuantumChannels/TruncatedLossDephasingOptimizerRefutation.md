@@ -130,6 +130,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/memarzadeh-mancini-2016-truncated-loss-dephasing-optimizer-refutation` (refuted) by `D5/S3/Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"memarzadeh-mancini-2016-truncated-loss-dephasing-optimizer-refutation","declaration_gid":"D5/S3/Quantum/QuantumChannels/TruncatedLossDephasingOptimizerRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Laleh Memarzadeh; Stefano Mancini (2016). *Minimum output entropy of a non-Gaussian quantum channel*. DOI: [10.1103/PhysRevA.94.022341](https://doi.org/10.1103/PhysRevA.94.022341). URL: <https://arxiv.org/abs/1605.04525v1>.
