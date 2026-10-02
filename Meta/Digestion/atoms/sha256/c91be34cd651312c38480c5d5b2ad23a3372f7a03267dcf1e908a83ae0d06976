@@ -1,0 +1,42 @@
+**定理 52.2（正信号下的结构恢复）。** 对 $n\ge4$、$0<a\le1$、$0<\delta<1$，若
+
+$$
+ m\ge
+\left\lceil
+\frac{72}{25\tau^2a^2}\log\frac{2n}{\delta}
+\right\rceil,
+\tag{52.15}
+$$
+
+则
+
+$$
+\inf_{\theta\in\Theta_n,\,\alpha\in[a,1]}
+P_{\theta,\alpha}^{m}\{\widehat\theta=\theta\}\ge1-\delta.
+\tag{52.16}
+$$
+
+恢复器本身不需要知道 $a$；$a$ 只出现在统一预算中。对每个固定的 $\alpha>0$，同一规则逐点强一致；式（52.16）不声称在 $\alpha\downarrow0$ 时仍有统一结构准确性。
+
+**证明。** Hoeffding 对区间长度 $6/5$ 的 $J_i$ 给出
+$P(|\overline J_i-\mathbb E J_i|\ge e)\le2\exp(-25me^2/18)$。取
+$e=a\tau/2$ 并对 $n$ 个坐标作并集界；在该事件上每个活动均值至少为 $a\tau$，每个非活动均值为零，故三个活动坐标严格排在所有非活动坐标之前。证毕。$\square$
+
+标量仍可由同一记录流式估计。令
+
+$$
+\overline Z=m^{-1}\sum_{j=1}^m Z_j,qquad
+\widehat\alpha=\operatorname{clip}_{[0,1]}(\overline Z/\kappa).
+\tag{52.17}
+$$
+
+因为 $Z\in[-1,1]$，对任意 $r>0$
+
+$$
+P_{\theta,\alpha}^{m}\{|\widehat\alpha-\alpha|>r\}
+\le2\exp\left(-\frac{m\kappa^2r^2}{2}\right).
+\tag{52.18}
+$$
+
+这个边际标量估计在学习 $\theta$ 以前仍有效；§51 的已知教师匹配计数没有被移植成未知教师的充分统计量。
+
