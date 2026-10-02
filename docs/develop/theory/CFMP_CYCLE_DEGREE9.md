@@ -176,7 +176,19 @@ facets unpaired.  Full-tile disjointness gives disjoint interiors; the
 incident u- or v-mirrors are orthogonal to every incident original mirror, so
 the omitted facets form smooth totally geodesic boundary patches.
 
-The development is a manifold with totally geodesic boundary. At interior points, the rank-two dihedral cycles and the spherical rank-three groups <a,b,d> (order 16), <a,c,d> (order 12) give balls. At a truncation face, its incident reflections preserve its supporting plane and tile it by hyperbolic triangles, giving half-balls. In particular no pleated boundary or singular finite vertex remains.
+The development is a manifold with totally geodesic boundary. More precisely,
+let \(J=\{a,b,c,d\}\), and let a point \(x\in wQ\), \(w\in W\), lie on the
+Q-facets indexed by I. The full-tiling point stabilizer is the finite
+\(w\widehat W_Iw^{-1}\); its intersection with W is
+\(wW_{I\cap J}w^{-1}\), by the standard intersection property of special
+Coxeter subgroups. Away from truncation facets this is the full local
+stabilizer, so the residue contains a ball. At a truncation point I contains
+exactly one of u,v, which commutes with every incident original generator.
+Omitting that reflection leaves exactly half of the full local star, a
+half-ball. This covers interiors, edges, and corners of all truncation
+facets, excludes hidden boundary contacts, and gives totally geodesic boundary.
+The finite vertices ABD and ACD have spherical stabilizers of orders 16
+and 12 and become ordinary points after coarsening.
 
 Let \(W^+\) be the orientation-preserving index-two subgroup.  It has a
 finite-index torsion-free subgroup \(\Gamma\) by Selberg's lemma: W is a
@@ -212,7 +224,7 @@ This proves every incidence/manifold hypothesis of the degree-(8,9) packet theor
 - Luo–Yang, "Volume and rigidity of hyperbolic polyhedral 3-manifolds," Proposition 4.1 (existence and uniqueness of a strictly hyperideal tetrahedron from positive angles with vertex sums <π): https://arxiv.org/html/1404.5365v2#S4.SS1
 - T. H. Marshall, "Truncated tetrahedra and their reflection groups," J. Austral. Math. Soc. 64 (1998), 54–72, pp. 58–60 (Poincare reflection presentation), pp. 64–65 (open/truncated reflection groups and torsionfree subgroups), pp. 69–70 (chamber coarsening/manifold construction): https://doi.org/10.1017/S1446788700001294
 - Felikson--Tumarkin, *On hyperbolic Coxeter polytopes with mutually intersecting facets*, arXiv:math/0604248v3 (intro: integer-submultiple dihedral angles give a discrete reflection tiling): https://arxiv.org/abs/math/0604248
-- Selberg's lemma: finitely generated characteristic-zero linear groups have finite-index torsionfree subgroups. No effective index bound is claimed.
+- Selberg's lemma: finitely generated characteristic-zero linear groups have finite-index torsionfree subgroups; see Nica, *Linear groups — Malcev's theorem and Selberg's lemma*, arXiv:1306.2385, Theorem 1.2: https://arxiv.org/abs/1306.2385. No effective index bound is claimed.
 - The six-sector grouping, full-face adjacency, and explicit (8,9) edge count are the argument here, not a claim that Marshall stated this mixed packet.
 
 The direct Coxeter-chamber quotient without coarsening has degree 2m, not m. It fails for odd degree 9. The present construction avoids that failure by two Q-sectors per high edge, one per low edge, and does not identify sectors via torsion.
