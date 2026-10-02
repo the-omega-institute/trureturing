@@ -4888,3 +4888,270 @@ $\operatorname{none}$。故没有以前视仍止于该粗层的下降映射。
 物理时空结论，也不宣称已有形式核验。
 
 ## 36.99 追加锚
+
+## 37. 有序 FIB 源运输的中心化刚性与入口恢复
+
+### 37.1 有限自由源与运输条件
+
+本节固定 [FIB 原子关系生成](FIBONACCI_ATOMIC_RELATION_GENERATION.md)
+§§2–3 的原始语法。$\mathcal T$ 是全部非空有限有序二叉树构成的自由代数：
+
+$$
+t::=\alpha\mid\beta\mid\langle s,t\rangle,
+\qquad
+\alpha\ne\beta,
+\qquad
+\langle s,t\rangle=\langle s',t'\rangle
+\iff s=s'\ \text{且}\ t=t'.
+\tag{PG.3701}
+$$
+
+两个叶构造与配对构造不交；没有空树、交换律、结合律或行为商等同。
+替换及其迭代为
+
+$$
+\begin{aligned}
+\rho(\alpha)&=\beta,&
+\rho(\beta)&=\langle\beta,\alpha\rangle,\\
+\rho(\langle s,t\rangle)&=\langle\rho(s),\rho(t)\rangle,&
+\rho^0&=\operatorname{id}_{\mathcal T}.
+\end{aligned}
+\tag{PG.3702}
+$$
+
+这里的全局源运输是总映射 $F:\mathcal T\to\mathcal T$，要求对所有
+$s,t\in\mathcal T$ 满足
+
+$$
+F(\langle s,t\rangle)=\langle F(s),F(t)\rangle,
+\qquad F(\rho(t))=\rho(F(t)).
+\tag{PG.3703}
+$$
+
+不要求 $F$ 固定具名叶 $\alpha,\beta$，也不预设 $F$ 可逆。
+[Transport–Memory](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)
+§15.4 的 (RA.1512) 给出生成元判据
+$v=\rho(u)$、$\rho(v)=\langle v,u\rangle$；该卷 §22.1 的 (RA.2207)
+给出 $\rho$ 的像语法、唯一解析与单射性。下面的条件推导以这两个具体接口为依赖。
+
+### 37.2 中心化运输只有非负替换幂
+
+**定理 37.2（有序 FIB 源运输的中心化刚性）。** 在 (PG.3701)–(PG.3702)
+的自由有限树上，对任意总映射 $F:\mathcal T\to\mathcal T$，有
+
+$$
+\boxed{F\text{ 满足 (PG.3703)}
+\iff \exists!\,k\in\mathbb N:\ F=\rho^k,}
+\qquad \mathbb N=\{0,1,2,\ldots\}.
+\tag{PG.3704}
+$$
+
+每个这样的 $F$ 都单射；它作为 $\mathcal T\to\mathcal T$ 的映射双射，
+当且仅当 $k=0$。对 $k>0$，$\rho^k$ 只在其实际像
+$I_k:=\rho^k[\mathcal T]$ 上有唯一的逆映射 $I_k\to\mathcal T$，
+没有全体 $\mathcal T$ 上的双侧逆。
+
+证明。先复用 (RA.2207) 的解析，并明确其中的排碰条件。替换的根输出只有
+叶 $\beta$、特殊块 $\langle\beta,\alpha\rangle$ 或内部配对像
+$\langle\rho(s),\rho(t)\rangle$，因此
+
+$$
+\alpha\notin\operatorname{im}\rho,
+\qquad
+\rho(a)=\rho(b)\Longrightarrow a=b.
+\tag{PG.3705}
+$$
+
+第二式的解析理由是：叶 $\beta$ 与两个配对情形不交；特殊块的右孩子是
+$\alpha$，内部配对像的右孩子则为 $\rho(t)\in\operatorname{im}\rho$，
+故二者不能相撞。两个内部配对像相等时，有序构造分别消去，递归到严格更小的
+源子树，得到两棵源树相等。这里排除的是内部配对像的右孩子为 $\alpha$，
+并非声称特殊块没有这个右孩子。由此每个 $\rho^j$，特别是 $\rho^2$，均单射。
+
+设 $F$ 满足 (PG.3703)，置 $u=F(\alpha)$、$v=F(\beta)$。
+生成元判据 (RA.1512) 恰给出
+
+$$
+v=\rho(u),\qquad \rho(v)=\langle v,u\rangle,
+\qquad
+E(u):\quad \rho^2(u)=\langle\rho(u),u\rangle.
+\tag{PG.3706}
+$$
+
+现在分类有限树中的全部 $E$ 解。两个叶都满足 $E$：
+
+$$
+\rho^2(\alpha)=\langle\beta,\alpha\rangle
+ =\langle\rho(\alpha),\alpha\rangle,
+\qquad
+\rho^2(\beta)=\langle\langle\beta,\alpha\rangle,\beta\rangle
+ =\langle\rho(\beta),\beta\rangle.
+\tag{PG.3707}
+$$
+
+若 $u=\langle s,t\rangle$ 满足 $E$，则其等式两边的根构造比较给出
+
+$$
+\rho^2(t)=u,\qquad
+\rho^2(s)=\rho(u)=\rho^3(t)=\rho^2(\rho(t)).
+\tag{PG.3708}
+$$
+
+由 $\rho^2$ 的单射性，$s=\rho(t)$。于是
+
+$$
+u=\langle\rho(t),t\rangle=\rho^2(t),
+\qquad E(t),\qquad |t|<|u|,
+\quad
+|\alpha|=|\beta|=1,\quad
+|\langle s,t\rangle|=1+|s|+|t|.
+\tag{PG.3709}
+$$
+
+按有限节点数作良基归纳：叶情形分别是 $\rho^0(\alpha)$ 与
+$\rho^1(\alpha)$；配对情形由较小的 $t=\rho^j(\alpha)$ 得
+$u=\rho^{j+2}(\alpha)$。反向地，对 $E(z)$ 的等式施加保持配对的 $\rho$，
+即得 $E(\rho(z))$，从 $E(\alpha)$ 出发得到每个轨道项。因此
+
+$$
+\{u\in\mathcal T:E(u)\}
+ =\{\rho^k(\alpha):k\in\mathbb N\}.
+\tag{PG.3710}
+$$
+
+对原来的 $F$，存在 $k$ 使
+
+$$
+F(\alpha)=\rho^k(\alpha),\qquad
+F(\beta)=\rho^{k+1}(\alpha)=\rho^k(\beta).
+\tag{PG.3711}
+$$
+
+$F$ 与 $\rho^k$ 都保持配对，又在两个自由生成元上相同，故由 FIB §2
+的唯一延拓，$F=\rho^k$。反向地，$\rho$ 的每个非负幂都保持配对且与
+$\rho$ 交换，所以满足 (PG.3703)。
+
+若 $m<n$ 且 $\rho^m(\alpha)=\rho^n(\alpha)$，消去单射的 $\rho^m$ 得
+
+$$
+\alpha=\rho^{n-m}(\alpha)\in\operatorname{im}\rho,
+\tag{PG.3712}
+$$
+
+与 (PG.3705) 矛盾。轨道项两两不同，在 $\alpha$ 上比较即可确定幂指数的唯一性。
+$\rho^k$ 的单射性已经成立；$k=0$ 时是恒等映射，$k>0$ 时
+$I_k\subseteq\operatorname{im}\rho$，缺少 $\alpha$，故不满射。准确限制余域后，
+它是 $\mathcal T\to I_k$ 的双射，唯一逆 $\delta_k=(\rho^k)^{-1}:I_k\to\mathcal T$
+满足
+
+$$
+\delta_k\rho^k=\operatorname{id}_{\mathcal T},
+\qquad
+\rho^k\delta_k=\operatorname{id}_{I_k}.
+\tag{PG.3713}
+$$
+
+像外没有原像；任意补写像外函数值都不能成为全域双侧逆。证毕。
+
+### 37.3 已取得记录上的入口恢复
+
+**推论 37.3（同一实际历史源的带指数入口恢复）。** 显式声明一个实际联合
+历史源 $H$，及同一历史上的入口树、运输指数、当前树
+
+$$
+x:H\to\mathcal T,\qquad k:H\to\mathbb N,\qquad y:H\to\mathcal T,
+\qquad y(h)=\rho^{k(h)}(x(h)).
+\tag{PG.3714}
+$$
+
+条件是记录 $R(h)=(k(h),y(h))$ 已经取得，并已认证
+$y(h)\in I_{k(h)}$。在带有这一像成员条件的记录域上定义
+
+$$
+\mathscr R=\{(j,z)\in\mathbb N\times\mathcal T:z\in I_j\},
+\qquad
+D:\mathscr R\to\mathcal T,
+\qquad D(j,z)=\delta_j(z)=(\rho^j)^{-1}(z).
+\tag{PG.3715}
+$$
+
+则入口唯一恢复，且纯代数的正向记录更新保持这个入口：
+
+$$
+D(R(h))=x(h),\qquad
+D(j,\rho^j(a))=a\quad(j\in\mathbb N,\ a\in\mathcal T),
+\tag{PG.3716}
+$$
+
+$$
+U(j,z)=(j+1,\rho(z))\in\mathscr R,
+\qquad D(U(j,z))=D(j,z)\quad((j,z)\in\mathscr R).
+\tag{PG.3717}
+$$
+
+若擦去指数，只保留 $y(h)$，在这个声明的实际源上恢复入口的充要条件是
+
+$$
+\begin{aligned}
+&\exists d:y[H]\to\mathcal T\quad
+ \forall h\in H:\ d(y(h))=x(h)\\
+&\qquad\iff
+\forall h,h'\in H:\ y(h)=y(h')\Longrightarrow x(h)=x(h').
+\end{aligned}
+\tag{PG.3718}
+$$
+
+这个条件并非自动成立。声明两历史源 $H=\{h_0,h_1\}$，令
+
+$$
+(k(h_0),x(h_0),y(h_0))=(0,\beta,\beta),
+\qquad
+(k(h_1),x(h_1),y(h_1))=(1,\alpha,\beta).
+\tag{PG.3719}
+$$
+
+两条历史都满足 (PG.3714)，但擦去指数后当前树相同、入口树不同。
+若另有共同合同明确 $k(h)=k_0$ 对所有实际历史成立，而且固定的 $k_0$ 已知，
+则直接在 $I_{k_0}$ 上用 $\delta_{k_0}$ 解码，单独的指数记录字段可以冗余。
+
+证明。(PG.3713) 在每个实际像上给出唯一原像，得到 (PG.3716)。若
+$z=\rho^j(a)$，则 $\rho(z)=\rho^{j+1}(a)$，得到 (PG.3717)。
+若只从 $y$ 解码，相同的 $y$ 必须给出相同的 $x$；反向在 $y[H]$ 上，
+将每个当前值送到其实际历史共同的入口值便良定义，得到 (PG.3718)。
+(PG.3719) 由 $\rho^0(\beta)=\beta=\rho(\alpha)$ 直接验证，而
+$\alpha\ne\beta$ 排除无指数解码。固定已知 $k_0$ 的结论仍来自 (PG.3713)。证毕。
+
+这里的 $k$ 是自入口起的运输次数，不是绝对纪元。若实际合同还要求来源身份
+$\xi$、绝对纪元 $\nu$、参考 $r$、权限 $\pi$、档案 $A$、writer 记录 $W$
+及档案／writer 事件次序 $\omega$，这些保持为同一历史中的独立字段，例如
+
+$$
+J(h)=\bigl(\xi(h),\nu(h),r(h),\pi(h),A(h),W(h),\omega(h);\ k(h),y(h)\bigr).
+\tag{PG.3720}
+$$
+
+该列举不声称 $J$ 已足够完成其他任务。若合同中的合法正向一步保持入口，
+使指数增一、当前树替换为 $\rho(y)$，其代数记录按 (PG.3717) 更新；
+合法性、实际取得以及其他字段的事件更新须由该合同另行给出。
+解码 $D$ 只恢复入口树，不授予记录取得、回滚、逆向执行或四视图恢复。
+本卷 §36 的联合端点码与取得义务，以及
+[Boundary Dynamics](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md)
+§80 的合法性、事件—后继摘要—writer 记录联合核下降义务，仍分别承担其原有条件。
+
+### 37.4 适用边界与可反驳条件
+
+本节是依上述自由语法、生成元判据和像解析作出的 repo-derived 条件推导，
+给出普通数学证明，不主张文献原创。其分类只针对全部有限原始树上的总映射。
+行为商、计数商和任意部分映射须分别声明对象、等价关系与定义域；本节没有给出
+这些对象的中心化分类。向这些对象以及完备化树、无限树的分类迁移为 open，
+所需对应关系未经建立时为 ASSUMED-UNVERIFIED；有限节点数下降不能直接用于无限树。
+物理可逆性与具体观察者取得的存在、合法性及资源界同样未由本节验证，保持
+ASSUMED-UNVERIFIED；相关实现与逆向动作的可执行性为 open。
+
+一个有限树 $u\notin\{\rho^k(\alpha):k\in\mathbb N\}$ 若满足 $E(u)$，
+就反驳 (PG.3710)，其生成元像 $(u,\rho(u))$ 的自由延拓还会反驳
+(PG.3704)。同样，一个在全部 $\mathcal T$ 上保持有序配对且与 $\rho$ 交换、
+却不等于任何非负幂的总映射 $F$，就是 (PG.3704) 的反例。
+检验这些反例须使用原始有序树的相等，而不能只比较组成数或行为读数。
+
+## 37.99 追加锚
