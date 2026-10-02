@@ -22176,3 +22176,40 @@ Thus a hypothetical cover chosen by (EB1) lies simultaneously in the
 high-factor, nine-support, at-least-119-class, and modulus-sum-at-least-2404
 branch. The bound uses the original numerical labels and does not replace
 the unresolved phase-sensitive whole-cover condition.
+
+## 183. The cardinality floor raises the modulus-sum floor to 15463
+
+The cardinality bound in Section 181 combines directly with the
+four-factor modulus from Section 180 and divisor closure (EB2). Let
+
+\[
+ p_1<p_2<p_3<p_4
+\]
+
+be four distinct odd primes dividing one original modulus. The full product
+and the product of the three largest primes are both divisors greater than
+one, so EB2 puts them in \(D\). They are distinct and satisfy
+
+\[
+ p_1p_2p_3p_4\ge3\cdot5\cdot7\cdot11=1155,
+ \qquad
+ p_2p_3p_4\ge5\cdot7\cdot11=385.                 \tag{HF7}
+\]
+
+Section 181 gives \(|D|\ge119\). Both forced moduli exceed 235, so at
+least 117 further distinct odd moduli greater than one remain. Their sum is
+at least the sum of the 117 smallest such integers:
+
+\[
+ \sum_{j=1}^{117}(2j+1)=117\frac{3+235}{2}=13923.
+\]
+
+Consequently every extremal representative in the remaining branch obeys
+
+\[
+ \boxed{\displaystyle
+ \sum_{d\in D}d\ge1155+385+13923=15463.}           \tag{HF8}
+\]
+
+This is a necessary numerical floor only; it does not exclude the
+unrestricted high-factor branch or settle Erdős #7.
