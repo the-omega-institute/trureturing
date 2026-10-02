@@ -22904,3 +22904,35 @@ that the top layer has at least \(p+1\) labels.  Combined with (EB-DC), it
 supplies a concrete target for a future repair: the top-layer \(p\)-digit
 collisions, the occupied label \(R\), and the phase liability must be handled
 jointly.  No unconditional strict descent follows from the cited lemma alone.
+
+## 191. The occupied output is necessarily phase-incompatible
+
+The occupied-label conclusion has a phase consequence that is useful for the
+remaining repair problem.  Let \(\rho\bmod R\) be any phase supplied by the
+Klein--Dalton--Trifonov replacement of the top-layer family, and write the
+already retained class at modulus \(R\) as \(a_R\bmod R\).  The replacement
+lemma says that
+
+\[
+\left(\mathcal C\setminus\{p^e m_1,\ldots,p^e m_p\}\right)
+\cup\{\rho\bmod R\}
+\tag{PW-Cover}
+\]
+
+is still a whole cover.  If \(\rho\equiv a_R\pmod R\), the retained class
+\(a_R\bmod R\) already supplies the replacement in (PW-Cover).  Deleting all
+\(p\) top-layer classes would then leave a whole cover with strictly fewer
+classes, contradicting EB1's minimum-cardinality clause.  Consequently every
+phase furnished by the replacement obeys
+
+\[
+\boxed{\rho\not\equiv a_R\pmod R.}
+\tag{PW-Phase}
+\]
+
+Thus the occupied output is not merely a numerical collision: its existing
+phase is forced to differ from the phase that covers the deleted top family.
+The lemma still does not provide a distinct replacement for this second
+\(R\)-residue, nor does it bound the complete joint liability of the two
+phases.  (PW-Phase) therefore sharpens the repair target while leaving the
+unrestricted whole-cover implication open.
