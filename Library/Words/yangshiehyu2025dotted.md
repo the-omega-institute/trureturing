@@ -5,9 +5,10 @@ year: 2025
 title: Stack-Sorting with Dotted-Pattern-Avoiding Stacks
 doi: null
 url: https://arxiv.org/abs/2411.11914v2
-claim: "Valley runs, Proposition 3.5, and Conjecture 6.2 for the 21-dot machine."
+claim: "Valley runs, Proposition 3.5, and Conjecture 6.2 for the 21-dot machine; peak runs, Proposition 3.1, and Conjecture 6.1 for the 12-dot machine."
 strata_touched:
   - D5/S1/Words/Patterns/ShiehYangYuMachineConvergence
+  - D5/S3/Combinatorics/DottedStack/ShiehYangYuTwelveDot
 license: citation-only
 triage: anchor
 ---
@@ -37,6 +38,21 @@ Proposition 3.5, p. 6:
 
 > Let π = V₁V₂ . . . Vₖ ∈ Sₙ. Then, s₂₁̇(π) = rev(V₁)rev(V₂) . . . rev(Vₖ).
 
+Section 2, p. 3, defines a peak of π as an entry greater than every earlier entry, and a peak run as a maximal
+sequence of consecutive entries whose first entry is a peak and no other entry is a peak.
+
+Proposition 3.1, p. 4:
+
+> Let π = P₁P₂ . . . Pₖ ∈ Sₙ. Then, s₁₂̇(π) = rev(P₁)rev(P₂) . . . rev(Pₖ).
+
+Conjecture 6.1, p. 10:
+
+> The machine-sortable permutations under the 12̇-machine map in Sₙ are enumerated by (2n−2 choose n−1).
+
+Here a permutation is machine-sortable when s(s₁₂̇(π)) is the identity. The module
+`D5/S3/Combinatorics/DottedStack/ShiehYangYuTwelveDot` proves Conjecture 6.1 for every n ≥ 1,
+taking the proved closed form of Proposition 3.1 as the definition of s₁₂̇.
+
 Conjecture 6.2, p. 11:
 
 > All permutations in Sₙ for all n ≥ 1 are eventually mapped to a fixed point of the 21̇-machine after a finite number of iterations through the machine.
@@ -49,12 +65,15 @@ pops while the stack top is smaller than the next input, pushes otherwise,
 and flushes at end of input. The theorem gives a natural t with
 `(M^[t + 1]) w = (M^[t]) w` for every n ≥ 1 and every permutation w in Sₙ.
 The convergence proof is derived here; the citation credits the conjecture
-and definitions, not a published proof. Conjecture 6.1 is outside this result.
+and definitions, not a published proof.
 
 ## Verified locator
 
 - URL: https://arxiv.org/abs/2411.11914v2
 - PDF: https://arxiv.org/pdf/2411.11914v2
 - Valley and valley run definitions: Section 2, printed page 3.
+- Peak and peak run definitions: Section 2, printed page 3.
+- Proposition 3.1: printed page 4.
 - Proposition 3.5: printed page 6.
+- Conjecture 6.1: Section 6, printed page 10.
 - Conjecture 6.2: Section 6, printed pages 10-11 (statement on page 11).
