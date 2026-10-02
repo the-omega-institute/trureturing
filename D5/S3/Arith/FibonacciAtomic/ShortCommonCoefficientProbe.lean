@@ -9,6 +9,7 @@
 import D5.S3.Analytic.GoldenEulerBetaZeckendorf
 import D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd
 import D5.S1.Digit.GoldenZeckendorfLanguage
+import D5.S1.Digit.GoldenBase4TwentyStatePrefixBarrier
 import D5.S3.Quantum.FockSpace.ForbiddenNeighbourDeterminant
 import Mathlib.Analysis.SpecialFunctions.Log.Base
 import Mathlib.Data.Nat.Log
@@ -480,18 +481,9 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
   have hdepth00 : D00 H ≤ (lengthBound H : WithTop Nat) := by
     unfold D00
     exact sInf_le ⟨lengthBound H, ⟨hLpos, hcover00⟩, rfl⟩
-  have hpow : ∀ r : Nat, 2 ^ r ≤ Nat.fib (2 * r + 2) := by
-    intro r
-    induction r with
-    | zero => norm_num
-    | succ r ih =>
-      have hrec := Nat.fib_add_two (n := 2 * r + 2)
-      have hmono := Nat.fib_mono (show 2 * r + 2 ≤ 2 * r + 3 by omega)
-      rw [pow_succ]
-      have he : 2 * (r + 1) + 2 = (2 * r + 2) + 2 := by omega
-      rw [he, hrec]
-      nlinarith
   let k := Nat.log 2 H
+  have hkpos : 1 ≤ Nat.log 2 H :=
+    Nat.le_log_of_pow_le (by decide) (by simpa using hH)
   have hp : H < 2 ^ (k + 1) := Nat.lt_pow_succ_log_self (by decide) H
   have hsq : H ^ 2 < (2 ^ (k + 1)) ^ 2 := Nat.pow_lt_pow_left hp (by decide)
   have hN : H * (Nat.fib (firstIndex H) + 1) ≤ 4 * H ^ 2 + H := by nlinarith
@@ -504,9 +496,14 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
     calc
       H * (Nat.fib (firstIndex H) + 1) ≤ 4 * H ^ 2 + H := hN
       _ ≤ 2 ^ (2 * k + 5) := by rw [heq]; exact hP.le
-      _ ≤ Nat.fib (4 * k + 12) := by
-        simpa only [show 2 * (2 * k + 5) + 2 = 4 * k + 12 by omega] using
-          hpow (2 * k + 5)
+      _ ≤ 4 ^ (k + 3) := by
+        calc
+          2 ^ (2 * k + 5) ≤ 2 ^ (2 * (k + 3)) :=
+            Nat.pow_le_pow_right (by decide) (by omega)
+          _ = 4 ^ (k + 3) := by rw [pow_mul]; norm_num
+      _ ≤ Nat.fib (3 * (k + 3) + 4) :=
+        (D5.S1.Digit.GoldenBase4TwentyStatePrefixBarrier.powerDigits_bound (k + 3)).le
+      _ ≤ Nat.fib (4 * k + 12) := Nat.fib_mono (by dsimp [k]; omega)
   have hm : lengthIndex H ≤ 4 * k + 12 := by
     unfold lengthIndex
     exact Nat.find_min' _ hf
@@ -514,8 +511,6 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
     unfold lengthBound
     dsimp [k] at hm
     omega
-  have hkpos : 1 ≤ Nat.log 2 H :=
-    Nat.le_log_of_pow_le (by decide) (by simpa using hH)
   have hlog7 : lengthBound H ≤ 7 * Nat.log 2 H := by omega
   have hreal : (lengthBound H : Real) ≤ (7 / Real.log 2) * Real.log (H : Real) := by
     calc
