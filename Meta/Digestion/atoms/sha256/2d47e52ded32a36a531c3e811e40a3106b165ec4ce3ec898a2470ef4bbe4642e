@@ -1,0 +1,11 @@
+**Theorem 7.1 (What the recursion does and does not determine).** The native recursion determines the ordered source carrier, the composition evolution $c\mapsto Mc$, the quantity sequence $q(c(T_j))$, and the exact ordered leaf words. It does not determine any of the following without the corresponding hypotheses above: a probability on hidden composition fibers; a stationary law on $X_M$; a pressure parameter; a spatial-root convention; a Markov transition kernel; a transport resistance, boundary condition or clock; a joint coupling between separate probes; or a physical identification of trees, observables and operations. In particular:
+
+1. the same quantity trajectory can carry tree laws whose total variation tends to one (Theorem 2.2);
+2. the same one- and two-letter statistics can carry the entire triple interval of Theorem 2.4 and the pressure law with positive entropy;
+3. the same fixed-window scale response can carry positive entropy (Theorem 4.2);
+4. the same means and adjacent pairs can carry zero or positive square-root fluctuations (Theorem 3.5);
+5. the same two separate marginal probe trajectory laws can carry every cross-correlation in $[-1,1]$ (Theorem 6.4);
+6. transport and elapsed time vary while the static source and its quantity observations remain fixed (Theorem 5.4).
+
+Therefore no universal physical law, Gibbs law, Brownian limit, heat equation, quantum transport exponent or empirical universality claim follows from the FIB ATOM recursion alone.
+

@@ -1,0 +1,11 @@
+**Theorem 2.5 (Normalized inflation preserves short observations and selects the occurrence law).** For every stationary $\nu$ on $X_M$, $R\nu$ is stationary and
+$$
+(R\nu)[\alpha]=\frac{1-p}{2-p},
+\qquad (R\nu)[\beta\beta\beta]=0.
+$$
+If $p=\varphi^{-2}$, $R$ preserves the singleton and pair table in Theorem 2.4. For the pressure law $\nu_*$, the triple projection of $R\nu_*$ differs from that of $\nu_*$ by total variation $2\varphi^{-5}$. For every stationary $\nu$,
+$$
+R^n\nu\Longrightarrow\mu_F,
+$$
+and $\mu_F$ is the unique stationary fixed point of $R$.
+
