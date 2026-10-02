@@ -4888,3 +4888,379 @@ $$
 因此 FIB 五种实际整窗模式及其接缝关系的语义响应结构，不决定指定概率头合同的坐标前沿；所需 $bc$ 方向与计费常数是完成全部补全响应的运算条件，不能按类型数解释为坐标数。结论只涉及上述精确实数、齐次双线性、固定有限相对头偏置模型的准确后验和 Bayes 超额；它没有给节点逐一或总存储最优性、物理神经元／比特下界、训练、泛化、因果、运行时间或有限精度结论，也没有给全局文献优先权。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 49. 严格标签退化与概率接口增维：同一 FIB 教师的 Markov 反例及解码闭包
+
+### 49.1. 同一整窗输入上的实际退化通道
+
+**定义 49.1（曲线后验、追加标签噪声与原头合同）。** 固定 $n\ge3$ 及任意一棵叶标号为 $1,\ldots,n$ 的二叉树。输入边缘仍为
+
+$$
+P_n=\operatorname{Unif}(\Sigma)^{\otimes n},\qquad
+\Sigma=\{000,100,010,101,001\}.
+$$
+
+独立单位是完整窗口，窗内两端位不拆成独立样本。沿用定义48.1的教师粗化与实际位函数
+
+$$
+a=h(w_1),\quad b=\ell(w_2),\quad c=h(w_2),\quad d=\ell(w_3),
+\qquad G_1=ab,\quad G_2=(1-ab)cd,\quad C=G_1+2G_2.
+\tag{49.1}
+$$
+
+令 $s=\sqrt2$，取定义48.1的曲线通道参数 $r=1/2$。其参数对应为
+
+$$
+r=\frac12,\quad e=\frac14,\quad A=s-1,\quad
+D=\frac{3-2s}{2},\quad k=\log2,\quad t=\log(1+s).
+\tag{49.2}
+$$
+
+标签 $Y,Y'\in\{0,1,2\}$；所有概率向量按行排列，标签顺序为 $0,1,2$。记
+
+$$
+Q=\begin{pmatrix}r&A&D\\e&r&e\\D&A&r\end{pmatrix},\qquad
+T=\frac12I_3+\frac16J_3
+=\begin{pmatrix}2/3&1/6&1/6\\1/6&2/3&1/6\\1/6&1/6&2/3\end{pmatrix},
+\tag{49.3}
+$$
+
+其中 $J_3$ 是全1矩阵。直接规定同一个联合律
+
+$$
+P(X=x,Y=i,Y'=j)=5^{-n}Q_{C(x),i}T_{ij}.
+\tag{49.4}
+$$
+
+因此 $Y$ 已有曲线后验噪声，$T$ 是在它之后追加的标签通道；$Y$ 不是确定教师标签 $C$。分别记旧律、退化律的后验为
+
+$$
+\rho(X)=Q_{C(X),\cdot},\qquad
+\rho'(X)=Q'_{C(X),\cdot},\qquad
+Q'=QT=\frac12Q+\frac16J_3
+=\begin{pmatrix}r'&A'&D'\\e'&r'&e'\\D'&A'&r'\end{pmatrix},
+\tag{49.5}
+$$
+
+其中
+
+$$
+r'=\frac5{12},\quad e'=\frac7{24},\quad
+A'=\frac{s}{2}-\frac13,\quad D'=\frac{11-6s}{12},\qquad \mu=D'.
+\tag{49.6}
+$$
+
+每片叶只接收其一个完整窗口，可使用任意非线性、有符号实编码。内部合并在整个环境向量空间上分别齐次双线性；不允许免费内部常数、跨子树输入、携带输入的控制或时序通道。树、编码、合并与头参数均固定且与输入无关；全部实际叶、非根、根以及忽略子树的坐标都计费。$q$ 是实际根维数，$w$ 是包括根的消息维数峰值。原头合同仍为
+
+$$
+L_i(z)=u_i\cdot z+v_i,\qquad p_i=\frac{\exp L_i}{\sum_j\exp L_j},\qquad
+H(p)=\left(\log\frac{p_1}{p_0},\log\frac{p_2}{p_0}\right).
+\tag{49.7}
+$$
+
+头允许任意有限、输入无关的偏置，不设偏置跨度预算；编码、消息和其余实参数也无范数上界。头的 $3(q+1)$ 个仿射参数槽、三个 logits 和三个概率输出另计，不混入 $q,w$。本合同不含 softmax 之后的概率适配器。
+
+旧律的风险对 $(X,Y)$ 评分，退化律的风险对 $(X,Y')$ 评分。对 $j\in\{\mathrm{o},\mathrm{g}\}$，令 $Y_{\mathrm{o}}=Y$、$Y_{\mathrm{g}}=Y'$、$\rho^{\mathrm{o}}=\rho$、$\rho^{\mathrm{g}}=\rho'$。使用自然对数损失和完整、不按类平均的三类 Brier 损失，零预测真类概率的对数损失为 $+\infty$；本例的有限 softmax 预测始终为正。各自的风险、Bayes 值及超额记为
+
+$$
+\begin{aligned}
+R_{\log}^j(p)&=\mathbb E[-\log p_{Y_j}(X)],&
+R_2^j(p)&=\mathbb E\sum_{i=0}^2(p_i(X)-\mathbf1_{\{Y_j=i\}})^2,\\
+h_j&=\mathbb E_{P_n}\mathcal E(\rho^j),&
+\mathcal E(p)&=-\sum_i p_i\log p_i,\\
+b_j&=\mathbb E_{P_n}[1-\|\rho^j\|_2^2],&
+\Delta_{\log}^j(p)&=R_{\log}^j(p)-h_j,\qquad
+\Delta_2^j(p)=R_2^j(p)-b_j.
+\end{aligned}
+\tag{49.8}
+$$
+
+准确后验指每个原始词上 $p=\rho^j$；零超额下确界对上述全部有限参数预测器取下确界，不以可靠性校准代替准确后验。
+
+### 49.2. 概率、响应商与严格随机顺序
+
+**命题 49.2（同商但严格退化的两个实际实验）。** 式（49.4）是正联合概率律，满足 $X\to Y\to Y'$，且式（49.5）是其真实条件后验。三个教师类的质量为
+
+$$
+(\pi_0,\pi_1,\pi_2)=\frac1{125}(89,20,16).
+\tag{49.9}
+$$
+
+两套行向量正、归一，均严格以 $C$ 为唯一最大类；对各自观测标签的 Bayes 零一风险分别为 $1/2,7/12$。对于教师 $C$ 的每个切面和全部合法补全，两后验的补全响应等价关系与 $C$ 的等价关系完全相同。
+
+实验 $C\to Y'$ 是 $C\to Y$ 的随机后处理，但不存在与 $C,X$ 无关的反向行随机矩阵 $S$ 使 $Q'S=Q$。与此同时，已知通道的后验向量在其像上有准确代数反演
+
+$$
+\rho=2\rho'-\frac13\mathbf1.
+\tag{49.10}
+$$
+
+这个反演不是随机标签解码。两矩阵的普通概率秩均为三。
+
+各律的 proper Bayes 基线及超额恒等式为
+
+$$
+\begin{aligned}
+h_{\mathrm{o}}&=\frac{21}{25}\mathcal E(r,A,D)+\frac4{25}\mathcal E(e,r,e),\\
+h_{\mathrm{g}}&=\frac{21}{25}\mathcal E(r',A',D')+\frac4{25}\mathcal E(e',r',e'),\\
+b_{\mathrm{o}}&=\frac{105\sqrt2-134}{25},\qquad
+b_{\mathrm{g}}=\frac{105\sqrt2-84}{100}=\frac12+\frac14b_{\mathrm{o}},\\
+\Delta_{\log}^j(p)&=\mathbb E_{P_n}\mathrm{KL}(\rho^j\Vert p),\qquad
+\Delta_2^j(p)=\mathbb E_{P_n}\|p-\rho^j\|_2^2.
+\end{aligned}
+\tag{49.11}
+$$
+
+证明。$e^t=1+s$、$e^{-t}=s-1$，在 $\zeta=-t,0,t$ 处，$\operatorname{softmax}(-\zeta,k,\zeta)$ 依次等于 $Q$ 的三行。两端的归一化分母为 $(1+s)+2+(s-1)=2(1+s)$，给 $r,A,D$；中间分母为4，给 $e,r,e$。$1<s<3/2$ 给 $A,D>0$，且
+
+$$
+A+D=\frac12,\qquad r-A=D>0,\qquad r-D=A>0,\qquad r-e=\frac14>0.
+$$
+
+$T$ 正且每行和为一，所以式（49.4）总和为一，并直接给 $P(Y'=j\mid X,Y=i)=T_{ij}$。求和得到 $\rho'=\rho T$ 及式（49.6）。所有坐标差在这个后处理中减半，故严格教师赢家保留，正确类概率从 $r$ 变为 $r'$。又 $A-e=e-D=s-5/4>0$，所以 $r>A>e>D>0$，退化律的最小坐标恰为 $\mu=D'>0$。
+
+整窗独立给 $\mathbb E[a]=\mathbb E[b]=\mathbb E[c]=\mathbb E[d]=2/5$，实际中窗则给 $\mathbb E[bc]=1/5$。因此
+
+$$
+P(ab=1)=\frac4{25},\quad P(cd=1)=\frac4{25},\quad
+P(abcd=1)=\frac25\frac15\frac25=\frac4{125}.
+$$
+
+互斥指示 $G_1,G_2$ 给式（49.9）。这些质量也对每个固定尾 $w_4,\ldots,w_n$ 条件成立。每个输入的最大标签概率分别为 $r,r'$，故两标签预测任务的 Bayes 零一风险不同；它们不是从 $Y$ 或 $Y'$ 反推 $C$ 的风险。
+
+每套行映射 $C\mapsto Q_C$、$C\mapsto Q'_C$ 都单射，其在三点像上的逆是 $\arg\max$。对任意切面 $J$、局部赋值 $u,\widetilde u$，逐补全 $v$ 有
+
+$$
+\begin{aligned}
+Q_{C(u,v)}=Q_{C(\widetilde u,v)}
+&\ \Longleftrightarrow\ C(u,v)=C(\widetilde u,v)\\
+&\ \Longleftrightarrow\ Q'_{C(u,v)}=Q'_{C(\widetilde u,v)}.
+\end{aligned}
+$$
+
+对全部合法 $v$ 取全称量词就得到同一响应商，商上的代表元拼接也相同。特别地，作为确定统计量，$\sigma(\rho(X))=\sigma(\rho'(X))=\sigma(C(X))$。此处教师仅是粗化 $C$，不将这个结论提升为完整首次诊断教师的全部响应。
+
+有限实验的随机顺序采用 Blackwell，[*Equivalent Comparisons of Experiments*](https://doi.org/10.1214/aoms/1177729032)，1953，24(2)，265–272 的成熟比较框架。本例的方向可直接由 $Q'=QT$ 看出：任何使用 $Y'$ 的随机决策规则，都可在 $Y$ 后先应用 $T$ 再应用该规则，得到相同的逐教师类决策律。反向则由以下精确矩阵证书排除：
+
+$$
+\det Q=AD>0,\qquad \det T=\frac14,\qquad
+\det Q'=\frac14AD>0,\qquad T^{-1}=2I_3-\frac13J_3.
+\tag{49.12}
+$$
+
+若 $Q'S=Q$，可逆性迫使 $S=T^{-1}$；其非对角元为 $-1/3$，不可能行随机。式（49.10）却在已知后验像上成立。又 $P(Y=i\mid X=x,Y'=j)=Q_{C(x),i}T_{ij}/Q'_{C(x),j}>0$ 对每个 $i$ 都成立，所以即使给定 $X,Y'$，也不能确定原来那次 $Y$ 抽样。故随机标签实验的严格退化、后验向量的代数反演与指定头合同中的可取得性是三个不同问题；这里没有全单纯形上的随机反演。
+
+最后，对每个律分别条件于 $X$，对数损失减条件熵给正确方向的 KL，Brier 展开给 $1-\|\rho^j\|_2^2+\|p-\rho^j\|_2^2$。两端类总质量为 $21/25$，中间类为 $4/25$，得到式（49.11）；代入式（49.2）给 $b_{\mathrm{o}}$。对任意三类概率向量 $v$，$\|vT\|_2^2=\|v\|_2^2/4+1/4$，给 $b_{\mathrm{g}}$。评分约定复用 Gneiting、Raftery，[*Strictly Proper Scoring Rules, Prediction, and Estimation*](https://sites.stat.washington.edu/raftery/Research/PDF/Gneiting2007jasa.pdf)，§3 Examples 1、3 的负评分损失；不把一个律的完整风险作为另一个律的超额。$\square$
+
+### 49.3. 精确 log-odds 三角形与全部参数统一的正超额底
+
+**定理 49.3（退化后的根一维不能逼近 proper Bayes 值）。** 在定义49.1的原仿射-softmax 头合同内，对每个 $n\ge3$、固定树、任意有限参数、任意峰值及全部尾输入，只要实际根 $q\le1$，就有
+
+$$
+\Delta_2^{\mathrm{g}}(p)\ge\kappa,\qquad
+\Delta_{\log}^{\mathrm{g}}(p)\ge\kappa,\qquad
+\kappa=\frac{\mu^2}{1875}\left[\log\frac{125}{98}\right]^2
+=\frac{193-132\sqrt2}{270000}\left[\log\frac{125}{98}\right]^2>0.
+\tag{49.13}
+$$
+
+这一下界同时排除准确后验和两种零 proper 超额下确界，允许偏置、斜率及内部消息沿任意参数序列无界。
+
+证明。采用式（49.7）的同一个 $H$ 坐标图。旧律三点为 $(k+\zeta,2\zeta)$、$\zeta=-t,0,t$，仿射维数恰为一。置
+
+$$
+\eta=\log\frac{A'}{r'},\quad \xi=\log\frac{r'}{e'},\quad
+\lambda=\log\frac{r'}{D'},\quad \delta=\log\frac{125}{98}.
+$$
+
+退化律的三个目标点为
+
+$$
+v_0=(\eta,-\lambda),\qquad v_1=(\xi,0),\qquad
+v_2=(\eta+\lambda,\lambda).
+\tag{49.14}
+$$
+
+精确代数给
+
+$$
+(A')^2=\frac23D',\qquad
+(r')^3D'-(A')^2(e')^2=\frac{D'}{64}>0,\qquad
+\frac{(r')^3D'}{(A')^2(e')^2}=\frac{125}{98}.
+\tag{49.15}
+$$
+
+其中 $(r')^3=125/1728$，而 $(A')^2(e')^2=(98/1728)D'$，两者的差系数为 $27/1728=1/64$。故
+
+$$
+2(\xi-\eta)-\lambda=\delta,\qquad
+\det(v_1-v_0,v_2-v_0)=\lambda\delta>0.
+\tag{49.16}
+$$
+
+因为本例 $r'>D'>0$，三个点共线当且仅当 $(A')^2(e')^2=(r')^3D'$。它约束 log-odds 的仿射维数；式（49.12）的两个普通概率秩相同，不能用它们区分根一维与根二维。
+
+现在证明所需的条带距离。$s>4/3$ 给 $r'/D'>5/3>125/98$，所以 $\lambda>\delta>0$；又 $125/98<2$ 给 $\delta<\log2<1$。式（49.16）说明
+
+$$
+v_1-\frac{v_0+v_2}{2}=\left(\frac\delta2,0\right),\qquad
+\|v_2-v_0\|_2=\sqrt5\lambda,\qquad
+\|v_1-v_0\|_2^2,\|v_2-v_1\|_2^2<2\lambda^2.
+$$
+
+因此 $v_0v_2$ 是最长边，三角形的二倍面积为 $\lambda\delta$。
+
+这里使用的三角形最小条带事实可以直接证明。对单位方向 $\nu=(\cos\theta,\sin\theta)$，宽度为
+
+$$
+W(\nu)=\max_i\nu\cdot v_i-\min_i\nu\cdot v_i.
+$$
+
+非退化三角形给 $W>0$。投影次序只在 $\nu$ 垂直于某条边时改变；在两次改变之间，极大、极小顶点固定，故 $W(\theta)=\nu\cdot(v_i-v_j)$，且 $W''=-W<0$。这样的开区间内不可能有局部极小点。因此单位圆上连续宽度的最小值在某条边的法向方向取得。该方向上这条边的两个顶点投影相同，第三顶点在另一条平行支撑线上，宽度就是该边的高，即二倍面积除以边长。最小宽度于是是最长边上的高，本例为 $\delta/\sqrt5$。对任意仿射直线 $\ell$，设其单位法向为 $\nu$；若所有顶点到 $\ell$ 的距离至多 $a$，则其投影落在长 $2a$ 的区间内。因此
+
+$$
+\max_c\operatorname{dist}(v_c,\ell)\ge
+\frac12\min_\nu W(\nu)=\frac{\delta}{2\sqrt5}=:d_*.
+\tag{49.17}
+$$
+
+这个固定目标三角形的几何证明没有给学习参数或根消息设置紧致域。
+
+根 $q\le1$ 时，消去第0类 logit 后 $H(p(X))=\beta+Mz(X)$ 落在一个固定仿射直线上；仿射像为点时，把它包含在任意直线内即可。式（49.17）选出一个教师类 $c_*$，使其目标到该线的距离至少为 $d_*$。于是对这个类的每个原始输入和每个尾，均有 $\|H(p)-v_{c_*}\|_2\ge d_*$。
+
+把几何距离转成概率误差必须保留内点和大误差两个分支。记 $a_p=\|p-Q'_{c_*}\|_2$。若 $a_p\le\mu/2$，连接二者的概率线段上每个坐标至少为 $\mu/2$。差分矩阵
+
+$$
+M_0=\begin{pmatrix}-1&1&0\\-1&0&1\end{pmatrix},\qquad
+M_0M_0^{\mathsf T}=\begin{pmatrix}2&1\\1&2\end{pmatrix}
+$$
+
+的算子范数为 $\sqrt3$，各对数导数绝对值至多 $2/\mu$。沿该线段积分得到
+
+$$
+d_*\le\|H(p)-v_{c_*}\|_2\le\frac{2\sqrt3}{\mu}a_p,\qquad
+a_p^2\ge\frac{\mu^2\delta^2}{240}.
+\tag{49.18}
+$$
+
+若 $a_p>\mu/2$，直接有 $a_p^2>\mu^2/4\ge\mu^2\delta^2/240$，因为 $\delta<1$。所以式（49.18）的最后一个下界覆盖所有预测，包括逼近单纯形边界的参数序列。所选整类的实际质量至少为 $16/125$，故
+
+$$
+\mathbb E_{P_n}\|p-\rho'\|_2^2
+\ge\frac{16}{125}\frac{\mu^2\delta^2}{240}
+=\frac{\mu^2\delta^2}{1875}.
+$$
+
+只用了一个整类见证，未把重叠障碍的下界相加；也未选取一个尾词而付出 $5^{-(n-3)}$ 的代价。
+
+自然对数 Pinsker 给 $\mathrm{KL}(R\Vert p)\ge\|R-p\|_1^2/2$。因差向量的坐标和为零，正、负部分各有同一总质量 $m$，各部分平方和至多 $m^2$，所以 $\|R-p\|_2^2\le2m^2=\|R-p\|_1^2/2$。由式（49.11）得对数超额的同一个底。这里的 Pinsker 常数复用 Reid、Williamson，[*Information, Divergence and Risk for Binary Experiments*](https://jmlr.org/papers/volume12/reid11a/reid11a.pdf)，§3.2、Appendix E 的完整 $L^1$ 变差约定。
+
+softmax 的 log-probability 因子化与概率混合逃出单 softmax 秩限制的成熟视角见 Yang、Dai、Salakhutdinov、Cohen，[*Breaking the Softmax Bottleneck: A High-Rank RNN Language Model*](https://arxiv.org/pdf/1711.03953)，§2.1、§2.4；其 universal-approximator 充分性不用于本节。Ganea、Gelly、Bécigneul、Severyn，[*Breaking the Softmax Bottleneck via Learnable Monotonic Pointwise Non-linearities*](https://proceedings.mlr.press/v97/ganea19a/ganea19a.pdf)，§3 区分 log-probability 逼近、交叉熵和众数匹配；其 Theorem 2 固定词嵌入的最大熵刻画不替代本节对全部头的统一风险底。式（49.15）–（49.18）把这些视角接到当前实际整窗律与自由偏置合同，正底由固定三角形和内点常数直接给出。$\square$
+
+### 49.4. 每棵树的直接根与准确达到
+
+**定理 49.4（严格退化把最小实际根从一维提高到二维）。** 固定定义49.1的任意 $n\ge3$ 和树，在原仿射-softmax 合同内，不对峰值另设上限时，准确后验及每一种零 proper 超额下确界所需的最小实际根维数分别是
+
+$$
+q_{\min}^{\mathrm{o}}=1,\qquad q_{\min}^{\mathrm{g}}=2.
+\tag{49.19}
+$$
+
+两种律各有一个有限参数、全树相容的预测器，逐词准确并同时达到该律的两种 proper Bayes 值；所给构造均有 $w\le3$。此处未主张峰值三的最优性，也未要求一个预测器在两个律下同时等于两个不同后验。
+
+证明。旧律正是定义48.1的曲线通道取 $r=1/2$：$K=r/e=2$，式（48.2）的正根 $x=1+\sqrt2$，故其 $k,t,A,D$ 与式（49.2）逐项相同。根零维的排除直接复用定理48.4、式（48.26）第四行：对任意偏置与任意峰值，
+
+$$
+q=0\quad\Longrightarrow\quad
+\Delta_{\log}^{\mathrm{o}}(p),\Delta_2^{\mathrm{o}}(p)
+\ge\frac{16}{125}D^2\min\left\{\frac14,\frac{5t^2}{12}\right\}>0.
+\tag{49.20}
+$$
+
+本节虽不固定 $B$，每个允许头的偏置跨度仍有限，可取该跨度为定理48.4的 $B$；其第四行与 $B$ 无关，所以同一底覆盖任意偏置序列。退化律根至多一维的排除由定理49.3给出。两个排除都针对下确界，而不只是准确非达到。
+
+充分性复用 §44.5 的实际 $G$ 基及式（44.22）的六个合并恒等式，使用范围是这些多项式传输，不是定理44.5的 $n\ge12$ 最优性断言。每个非根节点的固定活动集为其叶集与 $\{1,2,3\}$ 的交；它发送所引表中的实际基值，每个维数至多三。每个忽略叶和空活动子树发送一个实际计费标量1。对空活动合并，标量乘另一子消息的各坐标；两个空活动标量相乘。反向子序交换实参。
+
+叶消息给正确基值。非空、不交活动集的六种无序分拆恰为式（44.22）中的六式，代入各自基给父基；空活动合并也保留这一不变量。每个坐标表达式都是一个左坐标乘一个右坐标的固定线性组合，故在整个环境空间上分别双线性。树结构归纳于是覆盖全部节点、非连续叶集、忽略叶先进入活动子树，以及完整活动集先在真子树形成再吸收忽略子树的情形。这是同一完整输入的相容传输，不拼接不同切面的分别最优值。
+
+在实际根处，令 $B_1,B_2$ 表示最终合并的两条双线性坐标表达式，它们在真实子消息上分别等于 $G_1,G_2$；这个记号不是先物化的二坐标根。旧律直接输出
+
+$$
+u=tB_1+2tB_2\in\mathbb R,\qquad
+(L_0,L_1,L_2)=(-u+t,k,u-t).
+\tag{49.21}
+$$
+
+这就是式（48.30）的实际根一维构造。$u$ 的实际值为 $0,t,2t$，令 $\zeta=u-t$ 即得到 $\operatorname{softmax}(-\zeta,k,\zeta)=\rho$。
+
+退化律在根直接输出 $g=(B_1,B_2)$，使用头
+
+$$
+(L_0,L_1,L_2)=
+\left(0,\ \eta+(\xi-\eta)g_1+\lambda g_2,
+\ -\lambda+\lambda g_1+2\lambda g_2\right).
+\tag{49.22}
+$$
+
+$g=(0,0),(1,0),(0,1)$ 时，这个头的 log-odds 分别是式（49.14）的 $v_0,v_1,v_2$。正概率向量由两个 log-odds 唯一确定，故其概率逐词等于 $\rho'$。
+
+所有根活动分拆都由同一直接定义覆盖。例如非连续分拆 $13+2$ 的子消息为 $x=(a,d,ad)$、$y=(b,c,bc)$；旧根是单条标量双线性式
+
+$$
+u=tx_1y_1+2t(x_2y_2-x_3y_3),
+$$
+
+退化根是 $(x_1y_1,x_2y_2-x_3y_3)$。$12+3$ 和 $23+1$ 直接使用式（44.22）各自末端的两条表达式及同一个标量组合。若完整活动子树消息 $(g_1,g_2)$ 与忽略标量 $s_0$ 在根汇合，旧根直接为 $ts_0(g_1+2g_2)$，退化根直接为 $(s_0g_1,s_0g_2)$；逆方向交换实参。这些仍在整个子消息空间上分别双线性，没有内部加常数或额外根坐标。
+
+两构造保留全部非根及忽略坐标的费用。旧头有六个仿射参数槽，退化头有九个；各自产生三个 logits 和三个概率。式（49.21）的偏置 $(t,k,-t)$ 与式（49.22）的偏置 $(0,\eta,-\lambda)$ 有限且输入无关。参数共享不删除实际坐标或参数槽。每个律的同一个准确预测器由式（49.11）同时达到自己的对数、Brier Bayes 值；与必要底合并给式（49.19）。$\square$
+
+### 49.5. 输出后复合的闭包条件与独立费用
+
+**定义 49.5（在可达根集上的随机后复合闭包）。** 设允许解码族中的 $d:\mathbb R^q\to\Delta_m$ 与一个允许编码相配，其可达根集为 $S_z\subseteq\mathbb R^q$。对一个固定、输入无关的行随机矩阵 $U\in[0,1]^{m\times m'}$，闭包条件是存在准入解码 $d_U$，使
+
+$$
+d_U(z)=d(z)U\qquad(z\in S_z),
+\tag{49.23}
+$$
+
+并保持原树及全部叶、非根、根消息资源，只给解码侧增加明确允许的费用向量 $c_U$；$m'$ 个输出及其系数、常数、运算和实际存储另计。若对所比较的全部允许编码／解码与矩阵都满足此条件，称该族有相应的构造闭包。要求等式在全部 $\mathbb R^q$ 上成立是充分的更强条件；可达集上的条件已经足够。这是对同一编码的构造转移条件，不规定它是重新选择编码后所有最小资源比较的必要条件。
+
+**命题 49.6（适配器恢复根资源单调构造，但改变原头族）。** 若显式准入概率后适配器 $p\mapsto pT$ 并允许其解码费用，式（49.21）的旧根一维预测器可在不改变任一树消息的条件下准确给退化律后验，同时达到退化律的两个 proper Bayes 值。更一般地，对任意旧律概率预测 $p(X)$，本例适配器满足
+
+$$
+\Delta_2^{\mathrm{g}}(pT)=\frac14\Delta_2^{\mathrm{o}}(p),\qquad
+\Delta_{\log}^{\mathrm{g}}(pT)\le\Delta_{\log}^{\mathrm{o}}(p).
+\tag{49.24}
+$$
+
+因此定义49.5的闭包给同一编码的根／树消息资源不增加的构造关系；它不是解码零费用或总资源单调定理。原仿射-softmax 族在本例可达根集上不满足这个闭包，所以原合同的式（49.13）、（49.19）保持成立。
+
+证明。将解码改为 $d_T(z)=d(z)T$，可达根和所有树消息逐点不变。旧律的 $d(z(X))=\rho(X)$ 给 $d_T(z(X))=\rho'(X)$，无需反演任何标签通道。
+
+对任意概率向量，$pT=p/2+\mathbf1/6$，故 $pT-\rho T=(p-\rho)/2$。平方范数和式（49.11）给式（49.24）的等号。对数不等号逐输入使用 log-sum：对每个输出 $j$，取 $a_i=\rho_iT_{ij}$、$b_i=p_iT_{ij}$，则
+
+$$
+\left(\sum_i a_i\right)\log\frac{\sum_i a_i}{\sum_i b_i}
+\le\sum_i a_i\log\frac{a_i}{b_i}.
+$$
+
+求和并用 $\sum_jT_{ij}=1$ 得 $\mathrm{KL}(\rho T\Vert pT)\le\mathrm{KL}(\rho\Vert p)$；对 $X$ 积分完成证明。这是随机后处理的成熟数据处理机制。式（49.24）把准确达到以及两种消失超额同时转移，仍使用退化律自身的 Bayes 基线。
+
+一般闭包也只按式（49.23）复用同一编码，因而原来的 $q,w$ 保持。对有限矩阵 $U$，还分别有 KL 数据处理和 $\|(p-\rho)U\|_2\le\|U\|_{\mathrm{op}}\|p-\rho\|_2$，所以所需解码费用准入时，零 proper 超额构造也可转移。这里没有比较所有模型的总存储或运行时间。
+
+本例的解码费用可明确列出。密集适配器是一个 $3\times3$ 系数矩阵，三维概率输入、三维概率输出；逐坐标展开有九个系数槽、九次乘法和六次加法。若同时保留输入与输出，二者是六个解码存储坐标。利用 $\sum_i p_i=1$ 的专用表达式
+
+$$
+p'_j=\frac12p_j+\frac16\qquad(j=0,1,2)
+\tag{49.25}
+$$
+
+有三次乘法、三次加法，系数 $1/2$ 和常数 $1/6$ 各有三次表达式出现；它们可共享数值描述，其实际槽、出现和输出坐标仍由所声明解码费用核算。是否允许原位覆盖输入是另外的存储合同，不能从根维数不变推出额外存储为零。这些概率运算在原 softmax 之后发生，既不是免费内部常数，也不是原头合同的一部分。
+
+若原仿射-softmax 族已对这个旧预测器闭合，就会有同一根一维、原族头输出准确 $\rho'$，与定理49.3矛盾。因此本例展示的是真实输出算子族不闭合造成的资源顺序失败，而非语义教师更复杂。已知 posterior 向量的式（49.10）反演也没有提供随机标签逆矩阵或原头族的闭包。
+
+概率级前向修正归于 Patrini、Rozza、Menon、Nock、Qu，[*Making Deep Neural Networks Robust to Label Noise: A Loss Correction Approach*](https://openaccess.thecvf.com/content_cvpr_2017/papers/Patrini_Making_Deep_Neural_CVPR_2017_paper.pdf)，CVPR 2017，§4.2、式（3）–（5）、Theorem 2。其列概率约定写 $T^{\mathsf T}p$，对应这里的行概率 $pT$；其 proper-composite、非奇异噪声矩阵下的总体最小化结论不被用作本节受限头的训练保证。Lukasik、Bhojanapalli、Menon、Kumar，[*Does Label Smoothing Mitigate Label Noise?*](https://proceedings.mlr.press/v119/lukasik20a/lukasik20a.pdf)，§2.2 式（2）–（5）明确行随机标签通道、对称形式及 softmax 概率之后的前向修正；其中类数 $L=3$、$\alpha=1/2$、翻转率 $\varrho=1/3$ 对应式（49.3），不把旧曲线通道换成 one-hot 教师。
+
+本例的新增连接是同一实际 FIB 律上的严格随机退化、精确仿射 log-odds 增维、无尾质量损失的统一正底及兼容直接根。五种整窗模式的窗内相关、接缝相消和忽略方向仍按既有传输共同实现；它们的语义响应分类没有增加，却不能决定指定概率算子所需的实际根维数。结论限于所声明精确实数、分别齐次双线性树和解码合同；不推出物理比特／神经元、唯一表示、总存储、有限精度、运行时间、训练、泛化或因果学习结论，也不主张成熟工具的原创性或全局文献优先权。$\square$
+
+## 追加锚（本行以下为增补区）

@@ -45214,3 +45214,462 @@ A_J^{(d)}<-Ka_J^r.
 **证明。** 零点反射对称性使 RH 等价于 $S=1/2$，代入定理326.1。若 RH 不成立而（326.14）失败，就会有某个最终预算 $A_J^{(d)}\ge-Ka_J^r$。由于 $r<S-1/2\le1/2$，有 $r<1/2$，可用（326.13）得 $S\le1/2+r$，矛盾。
 
 这确定的是任意晚负值的临界幂指数，不确定出现频率、某个可计算的违例、端点指数处的大小，或未归一化余量的无界性。只有将全部正指数预算作为同一实际平均的前提，才得到 RH；固定一个正指数只给相应零点区域。几何或 Fibonacci 截止仍没有本证明使用的 $\eta>0$，不能把（326.2）移到这些网格。$\square$
+## 追加锚（本行以下为增补区）
+
+## 327. 紧邻宿主截止的低成本素乘子族
+
+本节采用 §§317–319、324 的实际 CA宿主与余量运输接口，直接接用文献研究提供的素带构造。它供应大量低成本的实际整数候选，尚不供应相位命中或绝对余量。下面的构造及组合属于纸面推导，没有Lean核验或原创性声明。
+
+令 $C$ 为实际极大丰数，$P=P^+(C)$，$S=\sqrt P$，固定 $\kappa>0$。沿用
+
+$$
+F_C(t)=\frac{Z(Ct)}{Z(C)},\qquad
+\mathcal A_P=P\log P,\qquad
+\mathcal D_C(t)=\log t-\mathcal A_P\log F_C(t).
+\tag{327.1}
+$$
+
+全局价格及 $\mathcal A_P\epsilon<1$ 已给 $0\le\mathcal D_C(t)\le\log t$。定义
+
+$$
+U_P=P+\frac P{\log P},\quad
+\mathcal P_P=\{p\text{ 素数}:P<p\le U_P\},\quad
+m_P=|\mathcal P_P|,\quad
+r_P=\left\lfloor\frac{\kappa S}{\log U_P}\right\rfloor,
+\quad Q_C=\lfloor e^{\kappa S}\rfloor,
+\tag{327.2}
+$$
+
+以及实际平方自由乘子族
+
+$$
+\mathcal T_C=
+\left\{\prod_{p\in E}p:
+E\subseteq\mathcal P_P,\ |E|=r_P\right\}.
+\tag{327.3}
+$$
+
+这里只增加原宿主没有的素数；$P$ 始终指 $P^+(C)$，不是新整数的最大素因子。
+
+**命题 327.1（统一小损失与候选数量）。** 充分大的每个实际宿主都有 $1\le r_P\le m_P$，族中所有乘子同时满足
+
+$$
+\begin{gathered}
+1\le t\le Q_C,\qquad
+\log t=(\kappa+o(1))S,\\
+0\le\mathcal D_C(t)\le
+b_P:=r_P\left(1+\frac1{\log P}+\frac{\log P}{2P}\right)
+=(\kappa+o(1))\frac S{\log P}=o(S),\\
+|\mathcal T_C|
+=\exp\left(\left(\frac\kappa2+o(1)\right)S\right).
+\end{gathered}
+\tag{327.4}
+$$
+
+所有误差对同一宿主的整族乘子统一，不依赖宿主的详细指数或并列最优价格。
+
+证明。若 $p>P$，则它与 $C$ 互素，第一次加入给精确因子 $F_C(p)=1+1/p$，从而
+
+$$
+d_P(p):=\mathcal D_C(p)
+=\log p-P\log P\log(1+1/p)>0.
+\tag{327.5}
+$$
+
+严格正号也直接由 $\log(1+1/p)<1/p$、$p>P$ 得到。写 $p=P(1+h)$，$0<h\le1/\log P$，用 $\log(1+x)\ge x-x^2/2$ 得
+
+$$
+\begin{aligned}
+d_P(p)
+&\le \frac h{1+h}\log P+\log(1+h)
+     +\frac{P\log P}{2p^2}\\
+&\le1+\frac1{\log P}+\frac{\log P}{2P}.
+\end{aligned}
+\tag{327.6}
+$$
+
+因这些素数不同且都不在宿主中，同一 $t$ 有
+$\mathcal D_C(t)=\sum_{p\mid t}d_P(p)$。同时
+$r_P\log P\le\log t\le r_P\log U_P\le\kappa S$；
+整数性给 $t\le Q_C$，且两端除以 $S$ 均趋于 $\kappa$。于是得到损失和大小的统一界。
+
+素数数量直接使用仓内已经核对的
+[Dusart Theorem5.2](../../../Library/Weil/dusart2010estimates.md)，
+即 $\vartheta(x)=x+O(x/\log^2x)$。由于 $U_P-P=P/\log P$，
+
+$$
+\vartheta(U_P)-\vartheta(P)\sim\frac P{\log P},
+\qquad m_P\sim\frac P{\log^2P}.
+\tag{327.7}
+$$
+
+每个带内素数的对数在 $\log P$ 与 $\log U_P$ 之间，故第二式由第一式夹出，不要求异常短区间素数定理。于是
+$r_P\sim\kappa S/\log P$、$r_P/m_P\to0$，最终 $1\le r_P\le m_P$。唯一分解给 $|\mathcal T_C|=\binom{m_P}{r_P}$，经典阶乘估计给
+
+$$
+\log\binom{m_P}{r_P}
+=r_P\log(m_P/r_P)+O(r_P+r_P^2/m_P)
+=\left(\frac\kappa2+o(1)\right)S.
+\tag{327.8}
+$$
+
+这里 $r_P^2/m_P=O_\kappa(1)$，其余误差均为 $o(S)$。$\square$
+
+**推论 327.2（同一整数上的一阶抵消）。** 对全部 $t\in\mathcal T_C$，既有 CA输入及（324.9）给统一关系
+
+$$
+\begin{gathered}
+Z(Ct)-Z(C)=\frac{e^\gamma\kappa+o(1)}S,\\
+e^\gamma\log\left(1+\frac{\log t}{\log C}\right)
+=\frac{e^\gamma\kappa+o(1)}S,\\
+W(Ct)-W(C)=o(1),\qquad
+W(n)=\sqrt{\log n}\,[e^\gamma\log\log n-Z(n)].
+\end{gathered}
+\tag{327.9}
+$$
+
+证明。$\mathcal A_P\log F_C(t)=\log t-\mathcal D_C(t)
+=(\kappa+o(1))S$。所以 $\log F_C(t)
+=(\kappa+o(1))/(S\log P)$，由 $Z(C)\sim e^\gamma\log P$ 得第一式。第二式用 $\log C\sim P$；第三式直接复用（324.9）及 $\mathcal D_C(t)=o(S)$。这不要求 $W(C)$ 有界，也不给任一绝对符号。$\square$
+
+若固定 $0<\eta<\kappa/2$、$\delta_C=e^{-\eta S}$，在均匀相位观察下确有
+
+$$
+\int_0^1\#\{t\in\mathcal T_C:\|t\theta\|<\delta_C\}\,d\theta
+=2\delta_C|\mathcal T_C|
+=\exp\left(\left(\frac\kappa2-\eta+o(1)\right)S\right).
+\tag{327.10}
+$$
+
+这只是整数乘法保持圆上均匀长度的既有性质。它不认证实际相位 $\theta=C\varphi$ 的命中。对两个候选作差也不能自动补上缺口，因为差不再保留（327.3）的素因子结构。
+
+因此这里已经控制每个候选的成本，但尚未在候选族内构造真实低位null前缀；规范来源、单位位和接缝仍须由同一整数的严格相位命中读回。整族中也未建立任何独立的正 $W(Ct)$ 下界。
+
+## 追加锚（本行以下为增补区）
+
+## 328. 有理相位弧对更低回传成本的阻碍
+
+固定 $0<2\eta<\kappa$，沿用 $S,Q_C$，置 $\delta_C=e^{-\eta S}$。既有 §318 的有限Dirichlet输入只需把预算改为 $R_C=\lceil\delta_C^{-1}\rceil$，就供应
+
+$$
+1\le t\le R_C<Q_C,\qquad
+\|tC\varphi\|<\delta_C,\qquad
+\mathcal D_C(t)\le\eta S+o(1).
+\tag{328.1}
+$$
+
+它的上侧归一化回传成本为 $e^\gamma\eta+o(1)$。这是旧输入的参数取值，不是新增选择定理。更低成本需要另外控制实际相位，下面给出斜率统一方法的明确边界。
+
+**命题 328.1（有理弧内的最小命中成本）。** 充分大 $P$ 时，选一素数
+
+$$
+\frac1{8\delta_C}\le q\le\frac1{4\delta_C}.
+\tag{328.2}
+$$
+
+对任意与 $q$ 互素的整数 $a$，若实相位 $\theta$ 满足
+
+$$
+\left\|\theta-\frac aq\right\|_{\mathbb T}
+\le\frac{\delta_C}{2Q_C},
+\tag{328.3}
+$$
+
+则每个 $1\le t\le Q_C$、$\|t\theta\|<\delta_C$ 的命中都被 $q$ 整除，并有
+
+$$
+\mathcal D_C(t)\ge\eta S+O(1).
+\tag{328.4}
+$$
+
+同时 $t=q$ 是一个命中，且
+$\mathcal D_C(q)=\eta S+O(1)$。式中成本仍按同一个实际 CA宿主 $C$ 计算；相位允许改变。
+
+证明。经典 Bertrand输入保证（328.2）的素数最终存在。此时 $q>P$、$q\le Q_C$、$\log q=\eta S+O(1)$。若 $q\nmid t$，圆上三角不等式给
+
+$$
+\|t\theta\|\ge
+\left\|\frac{at}{q}\right\|
+-t\left\|\theta-\frac aq\right\|_{\mathbb T}
+\ge\frac1q-\frac{\delta_C}2>\delta_C.
+\tag{328.5}
+$$
+
+所以命中必有 $t=q^v u$、$v\ge1$、$(q,u)=1$。
+由 $q>P$ 和
+$1+q^{-1}+\cdots+q^{-v}\le(1+q^{-1})^v$，得到
+
+$$
+\begin{aligned}
+\mathcal D_C(t)
+&=\mathcal D_C(q^v)+\mathcal D_C(u)\\
+&\ge v\mathcal D_C(q)\ge\mathcal D_C(q)\\
+&=\log q-\mathcal A_P\log(1+1/q)
+=\eta S+O(1).
+\end{aligned}
+\tag{328.6}
+$$
+
+这里 $\mathcal D_C(u)\ge0$ 来自同源价格，$\mathcal A_P/q\to0$。另一方面，
+$\|q\theta\|\le q\delta_C/(2Q_C)\le1/(8Q_C)<\delta_C$，
+故 $q$ 本身命中，给出相同上界。$\square$
+
+这证明（328.1）的首项成本系数对任意斜率的统一断言不能降低。它没有证明任何实际 CA相位 $C\varphi$ 落入（328.3），因此不是实际CA低成本命中的反例，更不是Robin反例。
+
+黄金数的经典坏逼近下界，在乘以 $C$ 后只给
+
+$$
+\|qC\varphi\|\ge\frac{c_\varphi}{Cq},\qquad
+\left\|C\varphi-\frac aq\right\|_{\mathbb T}
+\ge\frac{c_\varphi}{Cq^2}.
+\tag{328.7}
+$$
+
+它的下界尺度为 $\exp(-(1+o(1))P-2\eta S+O(1))$，
+小于（328.3）的弧宽 $\exp(-(\kappa+\eta)S+O(1))$，
+因而这份下界不能排除该弧。逐个 $C\varphi$ 都是二次无理数，也不供应宿主族统一的有界部分商常数。
+
+§327 的廉价候选使用的素数全小于 $q$，故在（328.3）的相位弧中全部不命中。这把候选数量与真实相位交叠明确分开；下一步需要实际 $C\varphi$ 的联合算术输入。
+
+## 追加锚（本行以下为增补区）
+
+## 329. 保留廉价来源与独立储备的有限频率接口
+
+对每个宿主，先独立指定一个比较类 $\mathscr K_C$，保留
+
+$$
+\mathcal G_C=\{t\in\mathcal T_C:Ct\in\mathscr K_C\},
+\qquad H_C=\lceil\delta_C^{-1}\rceil,\qquad e(x)=e^{2\pi ix}.
+\tag{329.1}
+$$
+
+需要的是同一实际整数满足的联合计数
+
+$$
+\sum_{1\le t\le Q_C}
+\mathbf1_{\{\mathcal D_C(t)\le b_C\}}
+\mathbf1_{\{\|tC\varphi\|<\delta_C\}}
+\mathbf1_{\{Ct\in\mathscr K_C\}}>0,
+\qquad b_C=o(S).
+\tag{329.2}
+$$
+
+§327 已为 $\mathcal T_C$ 供应 $b_C=b_P$，尚未供应命中和比较类的绝对储备。
+
+直接使用 Roger Baker,
+*Diophantine approximation with smooth numbers*，
+[arXiv:2007.05823v2，Lemma3](https://arxiv.org/html/2007.05823v2)，
+可以把命中转为一份足够的有限证书：
+
+$$
+\sum_{h=1}^{H_C}
+\left|\sum_{t\in\mathcal G_C}e(htC\varphi)\right|
+<\frac{|\mathcal G_C|}{6}.
+\tag{329.3}
+$$
+
+Lemma3 的原文对任意有限实序列成立：若每项到整数的距离均不小于 $1/H$，左侧不少于项数的六分之一。故（329.3）强迫非空 $\mathcal G_C$ 中某项满足
+$\|tC\varphi\|<1/H_C\le\delta_C$。
+这里只应用既有有限结论，不新增一般频率定理，也没有证明（329.3）。
+
+一旦这份证书与同一个独立比较类实现，既有 §318 的实际有限来源接口给
+
+$$
+h(Ct)=0,\qquad
+\text{实际低位null窗数}\ge
+\left\lfloor\frac{\eta S}{3\log\varphi}\right\rfloor-2,
+\tag{329.4}
+$$
+
+且保留合法接缝、有限后继与正值End；（327.9）同时给 $W(Ct)-W(C)=o(1)$。若另有独立、统一的固定储备 $W(n)\ge a>0$ 对全部相关 $n\in\mathscr K_C$ 最终成立，才可回传 $W(C)\ge a-o(1)$。储备前提与频率证书都尚未建立，不能由宿主运输恒等式自己供应。
+
+### 329.1 可直接复用的文献与未满足的范围
+
+在 $x=Q_C$、$y\asymp P$ 下，有
+$y\asymp(\log x)^2$、
+$\delta_C=x^{-\eta/\kappa+o(1)}$、
+$|\mathcal T_C|=x^{1/2+o(1)}$。
+以下核对仅针对原文定理的范围，不重复其解析证明。
+
+| 原始结果 | 与当前目标的对应及仍缺条件 |
+|---|---|
+| Baker, arXiv:2007.05823v2，§1 未编号定理及式（1.2），Lemma3 | 固定平滑指数 $B>2$ 的逼近指数是 $1/3-2/(3B)$；$B=2$ 不给正指数，也不允许把固定参数改为 $B(P)\downarrow2$。Lemma3 则已直接用于（329.3），无需固定斜率渐近。 |
+| Drappeau–Shparlinski, [arXiv:2404.10278v2，Corollary1.2](https://arxiv.org/html/2404.10278v2) | 结果确实对实相位统一。其全平滑集合上界在 $y\asymp\log^2x$ 时含 $x^{3/4+o(1)}$ 的保证精度，已大于当前整族 $x^{1/2+o(1)}$。全集合的取消也不能未经运输直接当成带比较类筛选的子集取消。 |
+| Nath–Rahaman, [arXiv:2603.17732v2，Theorem1](https://arxiv.org/html/2603.17732v2) | 给固定无理斜率上的无限多平滑逼近，并把指数改进到 $6/17$ 以下；平滑截止要求足够大的固定对数幂。它不供应临界幂二、指定宿主尺度、指定窄素带或全部 $hC\varphi$ 的统一频率证书。 |
+| Granville–Lamzouri, [arXiv:2604.02306v1，Theorem1.2、Corollary1.2](https://arxiv.org/html/2604.02306v1) | 支持模不超过一的乘法系数。其固定常数 $B$ 的条件 $(2q)^{\log(u+1)/B}\le y$，$u=\log x/\log y$，在当前尺度迫使 $\log(2q)\le(2+o(1))B$。因此不能静默纳入增长分母；比较类筛选也未证明是该乘法系数。 |
+| Baier–Roy, [arXiv:2512.02174v3，Theorem1 条件（2）–（4）、Corollary2](https://arxiv.org/html/2512.02174v3) | 对 $X\asymp P$、$Y\asymp P/\log P$ 的素带，其允许的最小窗宽仍不小于多项式尺度 $P^{-1/4+10\epsilon}\sqrt{\log P}$，大于 $e^{-\eta S}$；有界部分商推论还缺宿主统一常数。 |
+
+这些原文范围没有供应（329.3）；这不是所有可能文献或方法都失败的断言。表中版本均用于其明确的条件，未把预印本提升为独立验证或原创性依据。仓内 [Musin 条目](../../../Library/Analytic/musin2026higherorder.md) 的递归接触保留与固定整数整除结论也不供应实际 CA后继的深相位命中；更换最优对象仍需同源运输，不能直接换成所需比较类。
+
+这条路线现在保留了完整合同：实际宿主、明确低成本素乘子、全部需要控制的频率、真实null前缀及独立绝对储备。频率上界与储备仍是两个未解义务，没有新增Robin安全范围或RH证明。
+
+## 追加锚（本行以下为增补区）
+
+## 330. 实际 Robin 有限累计证书的积分误差与五分递归预算
+
+**定义 330.1（有限实际采样与连续累计量）。** 沿用 §325 的实际整数 $T_L$、价格截止 $m_L=3L+2$、归一化 Robin 余量 $\mathfrak m_L$ 与 $\kappa=2\sqrt2-2$。取有限严格递增自然数列 $16\le L_0<\cdots<L_N$，$N\ge1$，置
+\[
+a_i=m_{L_i},\quad q_i=\mathfrak m_{L_i},\quad
+\omega_i=\log(a_{i+1}/a_i),\qquad
+\mathcal I(x)=\int_{a_0}^x Z(y)\frac{dy}{y},
+\quad Z(y)=\sqrt y\log y\,\Phi(y).
+\tag{330.1}
+\]
+对 $0<a\le b$ 记
+\[
+D(a,b)=(b-a)-a\log(b/a).
+\tag{330.2}
+\]
+
+**假设 330.1（逐格可用的实际输入）。** 在所选有限区间上，§315 的有符号分解给
+\[
+q_i=Z(a_i)+\kappa-H_i+\varepsilon_i,\qquad H_i\ge0.
+\tag{330.3}
+\]
+给定每点明确的残差上界 $\varepsilon_i\le e_i$。在每格 $[a_i,a_{i+1}]$ 上，$Z$ 绝对连续，且有明确的 $M_i\ge0$ 使 $|Z'(y)|\le M_i$ 几乎处处成立。以上输入仅针对有限区间；$\varepsilon_i\to0$ 不独自提供这里需要的有限 $e_i$，未给出这些界时不宣称取得数值证书。
+
+**定理 330.1（实际左和到整个有限连续区间的下界证书）。** 在假设330.1下，对每个 $j<N$、$a_j\le x\le a_{j+1}$，有
+\[
+\begin{aligned}
+\mathcal I(x)\ge{}&
+ \sum_{i<j}\bigl[\omega_i(q_i-\kappa-e_i)-M_iD(a_i,a_{i+1})\bigr]\\
+ &+(q_j-\kappa-e_j)\log(x/a_j)-M_jD(a_j,x).
+\end{aligned}
+\tag{330.4}
+\]
+特别地，
+\[
+\mathcal I(a_N)\ge
+\sum_{i<N}\omega_i(q_i-\kappa-e_i)
+-\sum_{i<N}M_iD(a_i,a_{i+1}),
+\qquad
+0\le D(a,b)\le\frac{(b-a)^2}{2a}.
+\tag{330.5}
+\]
+因此（330.4）也在每个 $D$ 项以相应二次上界替代后成立。
+
+**证明。** 使用绝对连续函数的经典微积分基本定理作为中间步骤，几乎处处导数界给
+\[
+|Z(y)-Z(a)|\le M(y-a)\qquad(a\le y\le b).
+\]
+这一步无须在素数幂处逐点可微。由 $a>0$，
+\[
+\begin{aligned}
+\left|\int_a^b Z(y)\frac{dy}{y}-Z(a)\log(b/a)\right|
+&\le M\int_a^b\frac{y-a}{y}\,dy\\
+&=M D(a,b)
+\le M\int_a^b\frac{y-a}{a}\,dy
+=\frac{M(b-a)^2}{2a}.
+\end{aligned}
+\tag{330.6}
+\]
+积分表达同时给 $D\ge0$。这些是经典积分不等式在本证明中的使用，不单独主张其新颖性。实际分解（330.3）给 $Z(a_i)\ge q_i-\kappa-e_i$；对数权重非负，故（330.6）的下边界可以用该实际左端下界替代。对整格求和，末格应用于 $[a_j,x]$，得到（330.4）及（330.5）。
+
+实际递归比较还使用下述经典积分不等式的推论作为中间步骤。取 $0<a=a_0<\cdots<a_b=c$，假设 $Z$ 在 $[a,c]$ 上绝对连续且 $|Z'|\le M$ 几乎处处，$M\ge0$。记
+\[
+S_{\rm fine}=\sum_{s<b}Z(a_s)\log(a_{s+1}/a_s),\qquad
+S_{\rm coarse}=Z(a)\log(c/a),\qquad
+D_{\rm fine}=\sum_{s<b}D(a_s,a_{s+1}).
+\]
+则
+\[
+\begin{aligned}
+\sum_{s<b}\log(a_{s+1}/a_s)&=\log(c/a),\\
+D(a,c)-D_{\rm fine}&=\sum_{s<b}(a_s-a)\log(a_{s+1}/a_s)\ge0,\\
+|S_{\rm fine}-S_{\rm coarse}|&\le M\bigl[D(a,c)-D_{\rm fine}\bigr].
+\end{aligned}
+\tag{330.7}
+\]
+所以谱积分的证书区间在细分时包含关系为
+\[
+[S_{\rm fine}-MD_{\rm fine},\ S_{\rm fine}+MD_{\rm fine}]
+\subseteq
+[S_{\rm coarse}-MD(a,c),\ S_{\rm coarse}+MD(a,c)].
+\tag{330.8}
+\]
+共同导数界与真实谱样值是此包含关系的前提。仅把真实谱样值换成（330.3）的实际余量下界，并不自动保留每次细分的数值单调性。
+
+第一式由对数望远镜求和。第二式由 $D$ 定义与 $\sum(a_{s+1}-a_s)=c-a$ 得到。又
+\[
+S_{\rm fine}-S_{\rm coarse}
+=\sum_{s<b}\log(a_{s+1}/a_s)[Z(a_s)-Z(a)],
+\]
+对每项应用导数界给第三式，继而推出两侧端点的单调性及（330.8）。实际余量下界还含 $H_i$ 与 $e_i-\varepsilon_i$，它们不会因谱函数的同一导数界而在新旧节点间满足所需单调关系；只有分别有效的下界证书可以取最大值继续保持有效。具体而言，在新插入左端点的正权重上，任意增大其合法上界 $e_i$ 仍保持 $\varepsilon_i\le e_i$，却可使细分下界任意降低；固定真实数据也不足以排除这种情况。上述守恒对象是对数质量，普通左端贡献的差仍是（330.7）的第三式所控制的量。$\square$
+
+**定义 330.2（Fibonacci 块上的五分整数叶）。** 取 $k\ge8$，$F=F_k$、$h=F_{k-1}$，于是 $F_{k+1}=F+h$ 且 $F/2\le h\le F$。取满足 $b=5^r\le h$ 的整数深度 $r\ge0$，定义
+\[
+U_s=F+\left\lfloor\frac{sh}{b}\right\rfloor\quad(0\le s\le b),
+\qquad a_s=3U_s+2,
+\qquad \ell_s=U_{s+1}-U_s.
+\tag{330.9}
+\]
+这些节点对应实际整数 $T_{U_s}$。相邻 Fibonacci 块的共同边界只保留一次。这里的五分是采样分割，不额外假定它等同于原有五窗口语法。
+
+**定理 330.2（实际递归块的精确二阶误差预算）。** 在定义330.2下，令 $v=\lfloor h/b\rfloor$、$t=h-bv$，$0\le t<b$。整数叶严格递增，叶长只取 $v$ 与 $v+1$，其中 $v+1$ 恰出现 $t$ 次，并有
+\[
+\sum_{s<b}\ell_s^2
+=bv^2+t(2v+1)
+=\frac{h^2}{b}+t\left(1-\frac tb\right).
+\tag{330.10}
+\]
+若同一块上可以使用共同导数界 $M$，则实际有限证书的积分误差满足
+\[
+M\sum_{s<b}D(a_s,a_{s+1})
+\le\frac{9M}{2(3F+2)}\bigl[bv^2+t(2v+1)\bigr]
+\le\frac{45M h^2}{8(3F+2)b}.
+\tag{330.11}
+\]
+合法相邻深度的节点满足精确祖先关系
+\[
+U^{(r+1)}_{5s}=U^{(r)}_s.
+\tag{330.12}
+\]
+因此在同一共同导数界与真实谱数据下，（330.7）–（330.8）逐父格适用；（330.11）则直接给实际余量证书的显式预算。
+
+**证明。** 用 $h=bv+t$，有
+\[
+\ell_s=v+\left\lfloor\frac{(s+1)t}{b}\right\rfloor
+-\left\lfloor\frac{st}{b}\right\rfloor.
+\]
+最后两项之差为零或一；从 $s=0$ 到 $b-1$ 求和为 $t$。因 $b\le h$，$v\ge1$，所以节点严格递增；展开平方得到（330.10）。将实际价格格宽 $a_{s+1}-a_s=3\ell_s$ 与 $a_s\ge3F+2$ 代入（330.5），得（330.11）的第一界。由
+\[
+0\le t(1-t/b)\le b/4\le h^2/(4b)
+\]
+得第二界。（330.12）只用 $\lfloor5sh/5^{r+1}\rfloor=\lfloor sh/5^r\rfloor$。五分本身不提供唯一的数论意义；任何固定整数分支数至少为二时都有对应的整数分割预算。$\square$
+
+**定理 330.3（递归深度与实际解析改善的接口）。** 对各 Fibonacci 块使用合法深度 $r_k$，记最大整数叶长 $H_k$。则
+\[
+H_k=\left\lceil\frac{F_{k-1}}{5^{r_k}}\right\rceil,
+\qquad
+\log H_k=\log F_{k-1}-r_k\log5+O(1).
+\tag{330.13}
+\]
+从而若 $\eta_*:=\liminf_{k\to\infty}r_k\log5/\log F_k$，有
+\[
+\limsup_{k\to\infty}\frac{\log H_k}{\log F_k}=1-\eta_*.
+\tag{330.14}
+\]
+对每个固定 $0<\eta\le1$，固定幂格宽 $H_k=O(F_k^{1-\eta})$ 等价于
+\[
+r_k\ge\eta\log F_k/\log5-O(1).
+\tag{330.15}
+\]
+$\eta_*>0$ 保证每个严格小于 $\eta_*$ 的正改善指数，不自动保证端点 $\eta=\eta_*$ 的固定常数界。
+
+在 §325 的实际经典解析输入下，初轮共同导数界可取 $M_k=O(\log F_k/\sqrt{F_k})$；取得 $S<1$ 后，每个固定 $S<\theta<1$ 可取 $M_k=O_\theta(F_k^{\theta-3/2})$。因此（330.11）分别生产块误差
+\[
+O\left(\frac{\sqrt{F_k}\log F_k}{5^{r_k}}\right),
+\qquad
+O_\theta\left(\frac{F_k^{\theta-1/2}}{5^{r_k}}\right).
+\tag{330.16}
+\]
+这给 §§325–326 整格误差所用的正幂改善在 Fibonacci 递归采样上的明确来源；末尾部分格子仍由（330.4）独立控制。
+
+**证明。** 定理330.2的叶长分布给最大值为该上取整。合法性使 $u=F_{k-1}/5^{r_k}\ge1$，故 $u\le\lceil u\rceil\le2u$；又 $F_k/2\le F_{k-1}\le F_k$，得（330.13）–（330.15）。若仅有 liminf，则对任意严格更小的指数最终有所需深度下界；端点可失败，例如 $0<\eta<1$ 时取
+\[
+r_k=\max\left\{0,\left\lfloor
+\frac{\eta\log F_k-\sqrt{\log F_k}}{\log5}\right\rfloor\right\}.
+\]
+这给 $\eta_*=\eta$，但 $H_k/F_k^{1-\eta}$ 无界；充分早的深度可另置为零以确保全程合法。共同导数界由（325.8）、（325.18）在 $[3F_k+2,3F_{k+1}+2]$ 上取常数获得，代入（330.11）便得（330.16）。固定深度或 $o(\log F_k)$ 深度不给这条机制固定的正幂改善；这不判定粗 Fibonacci 判据的真假。
+
+若固定整数 $d\ge2$ 并取 $r_k=\lfloor\log_5F_k/d\rfloor$，则 $5^{r_k}\asymp_d F_k^{1/d}$，充分晚时合法；其最大格宽为 $O_d(F_k^{1-1/d})$，截至价格 $X$ 的去重样本数为 $\Theta_d(X^{1/d})$。前者由（330.13）得，后者由 Fibonacci 块的几何增长对每块 $5^{r_k}$ 个新样本求和得。实际样本数量、递归深度、积分预算因此有同一量化关系；这仍没有证明实际平均的最终有限预算存在，也没有消去无限有符号尾项。$\square$
