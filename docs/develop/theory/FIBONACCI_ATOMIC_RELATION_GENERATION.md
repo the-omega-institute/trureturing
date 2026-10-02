@@ -44914,3 +44914,180 @@ $$
 加权选择没有降低回传上侧成本：较小响应使预算增长留在差额中。绝对的 $W(C)$ 下界、或超过同一乘子已认证回传成本的独立 $W(N_C)$ 下界，仍是 §319 的未解义务。原子的有限地址、非负价格损失与统一增长矩可以共同落实到同一整数，但这不把两个整数的差额正号升级为Robin判据或RH证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 325. 任意固定多项式5040子族的普通对数平均与指数自举
+
+**定义 325.0。** 沿用 §§313、315、316 的实际整数 $T_L$、$m_L=3L+2$、归一化 Robin 余量 $\mathfrak m_L$、$\kappa=2\sqrt2-2$ 与同源尾项 $\Phi=I_\psi$。采用假设302.1及这些章节列明的经典解析输入；本节还在证明内部使用 von Mangoldt 截断显式公式、标准零点计数及其幂次 PNT 推论。对固定整数 $d\ge1$、整数 $j\ge16$ 定义
+\[
+N_j^{(d)}=T_{j^d},\quad a_j^{(d)}=3j^d+2,\quad
+q_j^{(d)}=\mathfrak m_{j^d},\quad
+\omega_j^{(d)}=\log a_{j+1}^{(d)}-\log a_j^{(d)}.
+\tag{325.1}
+\]
+对整数 $J\ge17$ 置
+\[
+D_J^{(d)}=\sum_{j=16}^{J-1}\omega_j^{(d)}
+=\log(a_J^{(d)}/a_{16}^{(d)}),\qquad
+A_J^{(d)}=\frac1{D_J^{(d)}}
+\sum_{j=16}^{J-1}\omega_j^{(d)}q_j^{(d)}.
+\tag{325.2}
+\]
+这些平均仅使用左端实际整数的归一化余量。$j^d\ge16$，故同一5040整除性与饱和签名仍由（305.3）给出。固定 $d$ 不随 $j$ 或截止增长。
+
+**定理 325.1（普通稀疏平均的全多项式次数判据）。** 在定义325.0的输入下，对每个固定整数 $d\ge1$，以下命题等价：
+\[
+\begin{aligned}
+&\mathrm{RH};\\
+&\exists K\ge0\ \exists J_0\ge17\ \forall J\ge J_0:
+       \quad A_J^{(d)}\ge-K;\\
+&A_J^{(d)}\longrightarrow\kappa;\\
+&\exists\ell\in\mathbb R:\quad A_J^{(d)}\longrightarrow\ell.
+\end{aligned}
+\tag{325.3}
+\]
+其中阈值、指标为整数，预算为固定有限实数。它没有提供预算存在的独立证明。
+
+**证明。** 固定 $d$，以下省略上标。置 $\eta=1/d>0$。实际截止严格递增、趋于无穷，$\omega_j>0$、$D_J\to\infty$，并有
+\[
+a_j\sim3j^d,\quad h_j=a_{j+1}-a_j=O_d(a_j^{1-\eta}),
+\quad a_{j+1}/a_j\to1,\quad \omega_j\le h_j/a_j.
+\tag{325.4}
+\]
+例如经典幂差估计给 $(j+1)^d-j^d\le d(j+1)^{d-1}$，因 $j+1\le2j$ 得 $h_j/a_j\le d2^{d-1}/j$；全部常数允许依赖固定 $d$。
+
+记 $Z(x)=\sqrt x\log x\,\Phi(x)$。定理315.1给实际端点恒等式
+\[
+q_j=Z(a_j)+\kappa-\mathfrak h_{j^d}+\varepsilon_j,
+\qquad \mathfrak h_{j^d}\ge0,\quad\varepsilon_j\to0.
+\tag{325.5}
+\]
+若（325.3）第二项成立，正权误差的平均趋零，非负缺损遂给固定 $K_1\ge0$ 使
+\[
+\sum_{j=16}^{J-1}\omega_jZ(a_j)\ge-K_1D_J
+\tag{325.6}
+\]
+最终成立。收敛误差以固定初段贡献除以 $D_J$ 加上任意小的尾预算控制；不要求缺损的平均预先趋零。
+
+先取得一个严格小于一的零点实部上界。经典有效 PNT 保证 $\Phi$ 在 $[a_{16},\infty)$ 上连续、有界且局部绝对连续，同一尾核给几乎处处
+\[
+Z'(x)=\frac{\log x+2}{2\sqrt x}\Phi(x)
++\frac{\log x+1}{x^{3/2}\log x}[x-\psi(x)].
+\tag{325.7}
+\]
+Chebyshev 界与 $\Phi$ 有界于是给
+\[
+Z(x)=O(\sqrt x\log x),\qquad
+Z'(x)=O(\log x/\sqrt x).
+\tag{325.8}
+\]
+$Z$ 自身局部绝对连续，素数幂处的密度变化不妨碍用 $Z'$ 的几乎处处界积分。在充分晚的格子上 $a_j\le y\le a_{j+1}\le2a_j$，由（325.4）、（325.8）得
+\[
+\sup_{a_j\le y\le a_{j+1}}|Z(y)-Z(a_j)|
+=O_d(a_j^{1/2-\eta}\log a_j).
+\tag{325.9}
+\]
+乘以 $\omega_j$ 并求和，比较 $\sum\omega_j a_j^{1/2-\eta}\log a_j$ 与相应的 $\int x^{-1/2-\eta}\log x\,dx$，得到对每个固定
+\[
+\max\{1/2-\eta,0\}<\lambda<1/2
+\tag{325.10}
+\]
+有
+\[
+\left|\int_{a_{16}}^{a_J}Z(x)\frac{dx}x
+ -\sum_{j=16}^{J-1}\omega_jZ(a_j)\right|=O_{d,\lambda}(a_J^\lambda).
+\tag{325.11}
+\]
+正指数时原误差为 $O(a_J^{1/2-\eta}\log a_J)$，零指数时至多 $O(\log^2a_J)$，负指数时有界；（325.10）统一吸收这些情形。
+
+任意末尾部分格子的积分也须控制。由 $|Z(x)|=O(\sqrt x\log x)$ 与对数长度不超过 $h_j/a_j$，其绝对值是 $O_d(a_j^{1/2-\eta}\log a_j)$，同样被 $O(a_j^\lambda)$ 吸收。有限初段可用连续性纳入常数。因此（325.6）、（325.11）给全部 $T\ge t_0=\log a_{16}>0$ 上的累计下界
+\[
+\mathcal A(T)=\int_{t_0}^T Z(e^t)\,dt\ge-K_\lambda e^{\lambda T}
+\tag{325.12}
+\]
+其中 $K_\lambda\ge0$ 固定。这一步允许增长误差，尚未将它判成线性累计预算。
+
+把指数预算接到同一个经典正逆变换。沿用（316.6）–（316.7）的 $b,c,g$，置 $p=-g'$、$r=c/2-c'$，并以本节 $t_0$ 为积分起点。对 $u\ge0$ 有 $0\le b(u)\le1$、$0\le p(u)\le5$、$0\le2r(u)\le8$。正逆累计恒等式给
+\[
+\mathcal B(T)=b(T)\mathcal A(T)
++\int_{t_0}^T p(u)\mathcal A(u)\,du
++2\int_T^\infty e^{-(u-T)/2}r(u)\mathcal A(u)\,du-C_0,
+\tag{325.13}
+\]
+其中 $\mathcal B(T)=\int_{t_0}^T e^{t/2}J(e^t)\,dt$，$C_0$ 是改变起点后的固定有限常数。所需 Fubini、分部积分及绝对收敛仍由 §316 使用的无条件有效 PNT 给出；指数下界本身只用于估计正系数项。
+
+对任意 $0<\lambda<1/2$，准确的未来比较核积分为
+\[
+\int_T^\infty e^{-(u-T)/2}e^{\lambda u}\,du
+=\frac{e^{\lambda T}}{1/2-\lambda}.
+\]
+有限过去的比较积分不超过 $e^{\lambda T}/\lambda$。因此由（325.12）得到
+\[
+\mathcal B(T)\ge-
+\left[K_\lambda\left(1+\frac5\lambda+
+\frac8{1/2-\lambda}\right)+|C_0|\right]e^{\lambda T}.
+\tag{325.14}
+\]
+$e^{\lambda T}\ge1$ 使固定常数得以吸收；严格条件 $\lambda<1/2$ 保证未来比较积分收敛。
+
+经典积分显式公式于是给 $\int_0^T F(t)\,dt\le M e^{\lambda T}+C_1$，其中 $F$ 是 §316 的零点轮廓。可增大常数使
+\[
+h(T)=M e^{\lambda T}+C-\int_0^T F(t)\,dt\ge1\quad(T\ge0).
+\]
+复用经典 Landau 非负变换定理。在 $\Re z>1/2$，逐项积分给
+\[
+\mathcal Lh(z)=\frac M{z-\lambda}+\frac Cz
+-\sum_\rho\frac1{z\rho(1-\rho)[z-(\rho-1/2)]}.
+\tag{325.15}
+\]
+同一标准零点计数保证级数在避开极点的紧集上正常收敛。$h\ge1$ 与 $F(t)=O(e^{t/2})$ 使其真 Laplace 收敛横坐标 $\sigma$ 位于 $[0,1/2]$。右侧唯一可能的正实极点是 $\lambda$，因为 $0<\Re\rho<1$ 内没有实零点。因此若 $\sigma>\lambda$，右侧在正实 $\sigma$ 解析，与 Landau 相矛盾；所以 $\sigma\le\lambda$。这里不能把存在辅助实极点的公式直接解释为 $\sigma=0$。
+
+若某个零点 $\rho_0$ 满足 $\Re\rho_0>1/2+\lambda$，则其非实极点 $z_0=\rho_0-1/2$ 位于实际 Laplace 解析域，留数仍为 $-m_{\rho_0}/[z_0\rho_0(1-\rho_0)]\ne0$；辅助项在该点解析，不能抵消它。故（325.12）推出
+\[
+S:=\sup_\rho\Re\rho\le1/2+\lambda.
+\tag{325.16}
+\]
+经典零点存在、临界带与反射对称性给 $1/2\le S\le1$。由于（325.10）的区间非空，首轮（325.16）已经给 $S<1$。不要求上确界由某个零点取到。
+
+现在利用这个已取得的上界改善同一格子的估计。对每个固定 $S<\theta<1$，经典 von Mangoldt 截断显式公式与零点计数给
+\[
+\psi(x)-x=O_\theta(x^\theta).
+\tag{325.17}
+\]
+具体可先在半整数处取可用于标准截断公式的高度 $T\asymp x^2$，使用每个零点的 $\Re\rho\le S$ 与 $\sum_{|\Im\rho|\le T}|\rho|^{-1}=O(\log^2T)$，得 $O(x^S\log^2x)$ 及较小截断项；单调性把估计送到任意实数，$\theta>S$ 吸收对数。此处只复用经典幂次 PNT 推导，不要求常数在 $\theta\downarrow S$ 时一致。
+
+同一尾积分及（325.7）遂给
+\[
+\Phi(x)=O_\theta(x^{\theta-1}/\log x),\quad
+Z(x)=O_\theta(x^{\theta-1/2}),\quad
+Z'(x)=O_\theta(x^{\theta-3/2})
+\tag{325.18}
+\]
+最后一式几乎处处成立。$\theta<1$ 保证尾积分收敛。于是（325.9）的格内误差改进为 $O_{d,\theta}(a_j^{\theta-1/2-\eta})$；乘以 $\omega_j$ 后的整格积分误差也可写成 $O(h_j^2a_j^{\theta-5/2})$。累计比较与部分格子估计因此给，对每个
+\[
+\max\{\theta-1/2-\eta,0\}<\lambda<1/2,
+\]
+（325.12）重新成立。累计误差至多为常数、对数与 $x^{\max\{\theta-1/2-\eta,0\}}$ 的和；部分格子使用（325.18）的点值界，同样损失一个 $\eta$。此轮估计仍从同一个（325.6）出发。
+
+再次用（325.13）–（325.16），再令允许的 $\lambda$ 下降到其下端，得
+\[
+S\le\max\{\theta-\eta,1/2\}\quad(S<\theta<1).
+\]
+由于首轮已保证 $S<1$，可以令 $\theta\downarrow S$，得到
+\[
+S\le\max\{S-\eta,1/2\}.
+\tag{325.19}
+\]
+若 $S>1/2$，右侧两项都严格小于 $S$，矛盾。故 $S\le1/2$，零点反射对称性给 RH。这个收紧使用正的网格指数 $\eta$，没有以更细的同形地址分类代替解析误差控制。
+
+反向假设 RH。定理315.1给 $q_j=\kappa-\mathcal W(\log a_j)+o(1)$。§316 的连续谱对数平均为零；$\mathcal W$ 有界且一致连续，而（325.4）给 $\omega_j\to0$。因此每格普通左端谱和与其连续积分之差不超过 $\omega_j$ 乘以趋零的一致连续模，累计除以 $D_J$ 后趋零。正权残差平均也趋零，故 $A_J\to\kappa$。任一有限极限给最终有限下界，完成（325.3）的等价链。
+
+对截止 $X\ge a_{16}$，本族采样数精确为
+\[
+\#\{j\ge16:a_j\le X\}
+=\left\lfloor((X-2)/3)^{1/d}\right\rfloor-15
+\sim(X/3)^{1/d}.
+\tag{325.20}
+\]
+因此任何固定多项式稀疏程度都由同一实际平均判据覆盖。$d=4$ 的普通权重版本补上 §320 末尾未建立的运输关系；这里不把两套平均的差无条件断言为趋零，而是分别通过同源谱预算与指数自举得到 RH 强度。
+
+整个推导依赖 $\eta>0$。几何增长的截止，如直接以 Fibonacci 数作指数网格，通常只有 $h_j\asymp a_j$，不供应本证明的正指数改善。当前结论既没有覆盖这种网格，也没有证明其相应判据为假。$\square$
