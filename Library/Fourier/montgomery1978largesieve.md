@@ -379,3 +379,46 @@ $$
 The diagonal differences are nonnegative by (8). The remaining error matrix has off-diagonal $-M(T-t)$; its quadratic form is at most $M\varepsilon\|z\|^2$. Thus (27) jointly majorizes the **same** two exact blocks, and $2(z_1^*\widetilde G_1z_1+z_2^*\widetilde G_2z_2)/\pi^2$ is a valid second-jet energy allowance for every complex finite vector. All four moments remain. Use this whole-vector allowance alongside (10); no universal matrix ordering between the two majorants is claimed.
 
 The unchanged second-jet remainder (11), the same Young transport (12), and every middle mode $N<|m|\le M$ remain necessary for the actual coupling. Twenty finite parameter/precision diagnostics at 45 and 65 decimal digits checked the prime-tail envelope, actual pole/Gamma normalization and 80 actual-vector jet inequalities. The numerical checks use neither directed rounding nor an infinite-form certificate. Negative $T$ determines a cross coefficient's sign; its contribution still depends on the joint moment phases, and proves neither complete retained-Schur positivity nor an induction remainder sign. The remaining RH obligation is unchanged.
+
+### A common endpoint allowance without extra matrix-radius loss
+
+Both Cauchy–Schwarz inequalities apply to the same actual $T$, so define
+
+$$
+\tau=\min\{\sqrt{U_1Z_4},\sqrt{Z_2U_2}\},\qquad
+I=[t_B-g,t_B+g+r]\cap[-\tau,\tau]=[\ell,u].
+\tag{28}
+$$
+
+This interval is nonempty because it contains $T$. The symmetric interval in (23) can replace the first interval if the finite prime expression is not evaluated. Write
+
+$$
+D(v)=U_1|A_0|^2+Z_4|B_1|^2+Z_2|B_0|^2+U_2|A_1|^2,
+\quad
+X(v)=\Re(\overline{A_0}B_1+\overline{B_0}A_1).
+$$
+
+With $t_I=(\ell+u)/2$ and $e_I=(u-\ell)/2$, the whole second jet has the allowance
+
+$$
+\sum_{|m|>M}|J_2(m)|^2\le
+\mathcal J_I(v):=\frac2{\pi^2}
+\left[D(v)-2t_IX(v)+2e_I|X(v)|\right]
+=\frac2{\pi^2}\max_{t\in\{\ell,u\}}\{D(v)-2tX(v)\}.
+\tag{29}
+$$
+
+Each endpoint is used simultaneously in both Gram blocks. The maximum bounds one identified arithmetic quantity; it does not assert that either endpoint is attained by that arithmetic symbol. Replacing $|X(v)|$ by the sum of the two individual absolute cross terms would discard a possible cancellation between the blocks.
+
+For every $t\in I$, $|t|\le\sqrt{U_1Z_4}$ and $|t|\le\sqrt{Z_2U_2}$. Thus each endpoint block is positive semidefinite and its quadratic form is at most twice its diagonal form. Consequently,
+
+$$
+\mathcal J_I(v)\le\frac4{\pi^2}D(v)\le\mathcal J_{\rm new}(v).
+\tag{30}
+$$
+
+This is a uniform comparison of the named upper allowances. It does not supply a strict saving for every vector or reduce the actual retained operator to four coordinates.
+
+The sign of the cross alone cannot determine a favorable contribution for all actual vectors. For $c=3$ and $N=2$, $1/2<\log2/\log3<3/4$ implies $P_3(2)>0$, and the positive pole and Gamma terms give $s(3,2)<0$. Set $v_{-2}=v_2=1$, with either $v_0=-1$ or $v_0=-3$ and all other coefficients zero. Both vectors have $B_0=A_1=0$ and $B_1=4s(3,2)$, but their respective $X$ values are $4s(3,2)<0$ and $-4s(3,2)>0$. These are two realized moment configurations for the same symbol.
+
+At $M=200$, the coarse bounds $H(3)<40$ and $L/(2\pi)<1$ in (24), together with $Z_4\le Z_3/(M+1)$, give $T(3,200)<0$: its upper coefficient relative to $Z_3$ is less than $-\pi/4+81/201<0$. Therefore $-2TX$ decreases the energy for one of these vectors and increases it for the other. The general change of cross has an error matrix with eigenvalues of opposite signs; a retained-Schur argument must handle both common endpoints or establish a further constraint on the actual moment image.
