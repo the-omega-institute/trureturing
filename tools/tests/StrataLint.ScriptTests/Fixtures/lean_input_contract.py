@@ -1,4 +1,5 @@
 """Mathlib-only cache partition and Actions snapshot transport identities."""
+import hashlib
 import importlib.util
 import json
 import os
@@ -63,6 +64,11 @@ class PartitionTests(PartitionFixture, unittest.TestCase):
         write(self.root / "D5/A.lean", "def a := 2\n")
         second = keys("13", "2", "pull_request", "refs/pull/42/merge")
         self.assertTrue(first["save_allowed"])
+        system, arch = first["os"], first["arch"]
+        pinned = hashlib.sha256(b"leanprover/lean4:v4.33.0\n").hexdigest()
+        self.assertEqual(f"elan-pinned-{system}-{arch}-{pinned}", first["elan_key"])
+        self.assertFalse(any(key.startswith("elan_restore") for key in first))
+        self.assertNotEqual(first["elan_key"], second["elan_key"])
         self.assertTrue(second["save_allowed"])
         self.assertFalse(keys("14", "1", "push", "refs/heads/dev", "false")["save_allowed"])
         self.assertFalse(keys("16", "1", "pull_request", "refs/pull/42/head")["save_allowed"])
