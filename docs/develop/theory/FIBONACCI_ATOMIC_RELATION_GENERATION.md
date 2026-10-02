@@ -46295,3 +46295,112 @@ K_m=w(m)\int_m^{m^2}R(t)k(t)dt.
 \tag{334.10}
 \]
 RH 下原端点估计使 $\mathfrak h_L\to0$，几何格误差按 §333 处理。反向仍要求全部充分大实数截止上的累计预算，未将 Fibonacci 粗端点预算自动延伸为它。本节生产了有限残差标签及其一致消失的误差，未生产累计预算的存在性、共同导数界的数值常数表或无限有符号尾项的下界，也未证明 RH。$\square$
+
+## 335. 有限真谱节点的五分包络与无条件有限累计亏损
+
+**定义 335.1（沿用有限真谱值的实际证书）。** 沿用 §§87、92、313、330、333 的同源 $Z(x)=\sqrt x\log x\,I_\psi(x)$，区分本节的有限素数幂和
+\[
+A(x)=\sum_{\substack{p\text{ 素数},\ r\ge1\\p^r\le x}}\frac1{rp^r}
+=\sum_{1<n\le x}\frac{\Lambda(n)}{n\log n}
+\]
+与 §§313、334 的 Euler 乘积 $P(x)$。复用 §87.3、§92 及《黄金分层算术观察理论》“定理1.1：尾积分的有限算式”的经典同截断表达
+\[
+z_{\rm fin}(x)=\sqrt x\log x\left[
+\gamma+\log\log x-A(x)+\frac{\psi(x)-x}{x\log x}\right]=Z(x),\qquad x>1.
+\tag{335.1}
+\]
+该已知表达由有效素数定理、Stieltjes 分部求和及 Mertens 常数得出；其文献背景与适用核已在 §87.3 注明，这里不另立有限谱公式为新定理。每个素数幂 $p^r\le x$ 的底数均 $p\le x$。
+
+取定义333.1的实际 Fibonacci 五分平方密度网格，块端点为 $A_k=3F_k+2$，节点为 $a_{k,s}=3U_{k,s}+2$，包括每块两端。固定 §333 的同一有效 PNT 输入及已证实的共同导数界 $M_k\ge0$。定义
+\[
+\mathcal E_k^{\rm fin}(x)=\max_s[
+ z_{\rm fin}(a_{k,s})-M_k|x-a_{k,s}|],\qquad A_k\le x\le A_{k+1}.
+\tag{335.2}
+\]
+在每个块上固定节点及共同 $M_k$，令 $\mathcal E^{\rm fin}$ 为这些块函数的拼接，并记
+\[
+\mathcal C^{\rm fin}(X)=\int_{A_{k_0}}^X\mathcal E^{\rm fin}(x)\frac{dx}{x},\qquad
+\mathcal S(X)=\int_{A_{k_0}}^XZ(x)\frac{dx}{x},\qquad
+\mathcal L(X)=\mathcal S(X)-\mathcal C^{\rm fin}(X),\quad X\ge A_{k_0}.
+\tag{335.3}
+\]
+两侧块在共同端点都等于 $Z$，故拼接连续。早块可以采用另外的已证实有限共同导数界，不从绝对连续性单独推出它的存在。
+
+**定理 335.1（实际五分谱证书的全实数有限累计亏损）。** 在上述已有解析输入下，不预设 RH，有
+\[
+\mathcal E^{\rm fin}(x)\le Z(x),\qquad
+0\le\mathcal L(X)\nearrow\mathcal L_\infty<\infty
+\quad(X\to\infty\text{，遍及全部实数截止}).
+\tag{335.4}
+\]
+更具体地，在块 $k$ 的相邻节点 $a\le b$ 上，
+\[
+0\le Z(x)-\mathcal E_k^{\rm fin}(x)
+\le2M_k\min\{x-a,b-x\},\qquad a\le x\le b,
+\]
+\[
+0\le\int_a^b[Z(x)-\mathcal E_k^{\rm fin}(x)]\frac{dx}{x}
+\le\frac{M_k(b-a)^2}{2a}.
+\tag{335.5}
+\]
+存在只依赖已固定输入的常数 $C,c>0$，使所有充分晚的块及 $X\ge A_k$ 满足
+\[
+0\le\mathcal L_\infty-\mathcal L(X)
+\le C(1+k)e^{-c\sqrt k}.
+\tag{335.6}
+\]
+保留旧节点及同一 $M_k$ 的五分递归加密使 $\mathcal E_k^{\rm fin}$ 逐点不减，从而在同一截止 $X$ 的亏损不增。此加密方向与固定证书下 $\mathcal L(X)$ 随截止增长不减的方向不同。
+
+**证明。** 同一块上的绝对连续性和共同几乎处处导数界给 $|Z(x)-Z(y)|\le M_k|x-y|$。将既有有限表达（335.1）代入每个锥，得 $\mathcal E_k^{\rm fin}\le Z$。在任一保留节点取其自身锥，给 $\mathcal E_k^{\rm fin}(a_{k,s})\ge Z(a_{k,s})$，故恰好插值真实谱值。分别使用相邻两个端点的锥，得第一条（335.5）；两端都保留是取得最近距离的必要输入。经典有限最大值的 Lipschitz 性保证每块连续。
+
+因 $x\ge a>0$，将非负误差除以 $x$ 后不超过 $2M_k\min(x-a,b-x)/a$。经典初等积分给
+\[
+\int_a^b\min\{x-a,b-x\}\,dx=\frac{(b-a)^2}4,
+\]
+得到第二条（335.5）。这些 Lipschitz 锥与初等积分是已知中间步骤，新的对象是定义335.1的实际有限真谱证书。
+
+§333 的实际网格预算给 $\sum_sM_k(a_{k,s+1}-a_{k,s})^2/(2a_{k,s})\le\beta_k$，其中 $\sum_k\beta_k<\infty$，并可取充分晚时 $\beta_k\le C_0\sqrt k\,e^{-c_0\sqrt k}$。所以正误差的整个积分被有限早段及这份可和预算控制。固定拼接证书下，$\mathcal L(Y)-\mathcal L(X)$ 是 $[X,Y]$ 上的非负误差积分，故单调不减并有界。经典单调收敛给有限极限；对任意实数截止的部分末块也由完整块的非负预算控制，因而没有粗端点运输缺口。
+
+若 $X\ge A_k$，剩余误差不超过 $\sum_{j\ge k}\beta_j$。充分晚时 $\sqrt t\,e^{-c_0\sqrt t}$ 递减，经典积分比较及 $u=\sqrt t$ 给
+\[
+\int_k^\infty\sqrt t\,e^{-c_0\sqrt t}dt
+=2e^{-c_0\sqrt k}\left(\frac{k}{c_0}
+ +\frac{2\sqrt k}{c_0^2}+\frac2{c_0^3}\right).
+\]
+加入起始项得到（335.6）。保留旧锥取更大最大值即得加密单调性。$\square$
+
+**定理 335.2（与实际 Robin 下标签的精确关系及剩余预算）。** 对 §334 的同一 $m=3L+2$，沿用其 $R(t),k,J_m,\tau,w,D,\mathfrak h_L$，置有限同截断修正
+\[
+B_m=w(m)\left[\frac{\psi(m)-\vartheta(m)}{m\log m}
+ +\log P(m)-A(m)\right].
+\tag{335.7}
+\]
+既有素数幂分解与经典对数级数给 $B_m=w(m)[J_m-\tau(m)]$。因此
+\[
+\ell_L^*:=\sqrt mD(m)+B_m=Z(m)-\mathfrak h_L,
+\qquad z_{\rm fin}(m)=\ell_L^*+\mathfrak h_L.
+\tag{335.8}
+\]
+对原 §334 的标签，精确有
+\[
+0\le\ell_L^*-\ell_L^{\rm cut}
+=e_L^{\rm cut}-\varepsilon_L
+\le9\frac{\log m}{\sqrt m}.
+\tag{335.9}
+\]
+在原有 §316、§333 的解析输入下，RH 等价于
+\[
+\frac{\mathcal C^{\rm fin}(X)}{\log(X/A_{k_0})}\longrightarrow0,
+\]
+也等价于这个归一化证书在全部充分大实数截止上有固定有限下界。此处证书是 $Z$ 的谱下界；加回 $\mathfrak h_L$ 不给实际 Robin 余量更强下界。
+
+**证明。** 对正核使用经典素数幂分解和非负换序，
+\[
+J_m=\frac{\psi(m)-\vartheta(m)}{m\log m}
+ +\sum_{\substack{p^r>m\\r\ge2}}\frac1{rp^r}.
+\]
+其中 $p>m$ 的全部项恰好是 $\tau(m)$。对剩余 $p\le m$，经典 $-\log(1-1/p)=\sum_{r\ge1}1/(rp^r)$ 减去 $p^r\le m$ 的有限前缀，得到（335.7）；$r=1$ 对每个 $p\le m$ 均已被减去，素数幂恰等于 $m$ 的端点项保留在首项中。将它代入既有（334.6）得到（335.8）。同一实际余量仍为 $\mathfrak m_L=\ell_L^*+R_L-B_m$，所以它与谱证书的关系保留实际核心修正。由 §334 的精确差额得到（335.9），未把未受无条件控制的 $\mathfrak h_L$ 设为零。
+
+由定理335.1，$\mathcal S(X)-\mathcal C^{\rm fin}(X)$ 在全部实数截止上一致有界。除以趋于无穷的对数长度，两者归一化平均的差无条件趋零。RH 下 §316 给连续谱平均为零；反向的最终有限下界给同一个连续累计预算，复用 §316 的正逆变换及经典 Landau 论证即得 RH。
+
+本节的有限总亏损控制了由有限真谱节点到连续谱累计量的损失，未证明任一证书累计值的最终有限下预算。旧 §334 标签还含非负端点缺损，其无条件累计贡献不由本节消除；这里改用既有精确谱观察器，并没有改善实际整数的 Robin 余量。无限有符号预算和 RH 仍待证。$\square$
