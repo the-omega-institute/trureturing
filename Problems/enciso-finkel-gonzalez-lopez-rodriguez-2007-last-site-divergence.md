@@ -119,10 +119,19 @@ $R>0$. All three steps work for every admissible configuration and
 arbitrary chain length; the harmonic estimate is a lower bound, not an
 asymptotic equality or an upper bound.
 
+**Symmetric strengthening (written, not kernel-checked; not part of
+`result`):** reversal and negation map the unique increasing solution to
+itself, so the gap $d_k$ is the $(N-k)$-th gap of the reversed solution
+and the prefix estimate also gives $1/d_k<(N-k)R$. Hence
+$\sum_{k=1}^{N-1}1/\min(k,N-k)<R\sum_k d_k=2R^2$. The left side equals
+$2H_m$ for $N=2m+1$ and $2H_{m-1}+1/m$ for $N=2m$, so it is at least
+$2H_{\lfloor(N-1)/2\rfloor}$ and $R^2>H_{\lfloor(N-1)/2\rfloor}\geq
+\log\lfloor(N+1)/2\rfloor$. The leading coefficient of the lower bound in
+$\sqrt{\log N}$ becomes $1$, against $\sqrt2$ in the source heuristic.
+
 **Open:** sharpness of the harmonic lower bound; a matching upper bound;
 the source's inverse-error-function approximation (19) and asymptotic
-formulas (20)–(21); and the stronger bound obtained from both prefix and
-suffix estimates with $\min(k,N-k)$. None is a separate theorem here.
+formulas (20)–(21). None is a separate theorem here.
 
 **Source consequence of the proved assertion:** the geometric radius
 $2\xi_N/\pi$ in the quoted interpretation cannot stay bounded as the
