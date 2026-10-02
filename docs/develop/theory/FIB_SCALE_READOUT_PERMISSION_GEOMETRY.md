@@ -5250,3 +5250,77 @@ $$
 对只给 $O_h$ 的观察，下界仍由定理 16.2 的同组成见证给出。上界不使用组成：当 $h$ 不小于上述最大实际像高度时，任一与正像 $V$ 具有同一 $O_h$ 的树都因有限路径递归比较而等于 $V$；没有正像的观察纤维则全为负类。因此 $\nu_d^{O}(H)$ 与 $\nu_d(H)$ 相同。这个相等不表示 $c$ 在每个受限纤维上无用。例如 $h=0$ 且 $H\ge a$ 时，$A_d$ 与 $\langle\alpha,\alpha\rangle$ 都只显示根为分支，故具有相同 $O_0$；但它们的组成分别为 $(F_{d-1},F_d)$ 与 $(2,0)$，组成观察把这两个候选分开。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 17. 已知正实例的地址证书基数与尖锐深度障碍
+
+**定义 17.1（选址正证书与查询基数）。** 固定 $d=3k$、$k\ge1$，取实际像中的正实例 $V\in\mathcal I_d$，并把其完整组成
+
+$$
+c(V)=(a,b)^{\mathsf T}
+$$
+
+作为已知输入。对 $h\in\mathbb N_0$，令 $Q$ 遍历 $\Sigma_{\le h}$ 的有限子集；$Q$ 中每个地址只查询一次，并以定义 16.1 的四值结果
+
+$$
+\mathsf{leaf}_\alpha,\qquad \mathsf{leaf}_\beta,\qquad \mathsf{branch},\qquad \mathsf{absent}
+$$
+
+与 $V$ 的结果逐项比较。称 $Q$ 对 $(V,h)$ **有声**，若对每一棵合法的完整有序树 $U\in\mathcal T$，都有
+
+$$
+c(U)=c(V)\quad\text{且}\quad
+\bigl(\forall u\in Q,\ \operatorname{out}_U(u)=\operatorname{out}_V(u)\bigr)
+\quad\Longrightarrow\quad U\in\mathcal I_d .
+\tag{17.1}
+$$
+
+定义
+
+$$
+\tau_d(V,h)=
+\min\bigl\{|Q|:Q\subseteq\Sigma_{\le h}\text{ 有声}\bigr\},
+\qquad \min\varnothing=+\infty .
+\tag{17.2}
+$$
+
+这里的选择是在 $V$ 与精确的 $c(V)$ 已知后进行；$h$ 只限制地址长度，$|Q|$ 只计不同地址的数目，不另行计地址描述所含的比特或定位成本。树 $U$ 的竞争范围是全部 $\mathcal T$ 中的同组成树，不加预算截断，不要求前缀闭包，也不引入自适应次序、随机化、发现算法或物理取得模型。因此 $\tau_d(V,h)$ 是正实例证书的基数—深度关系；它既不是从未知树中寻找 $Q$ 的复杂度，也不是组成逆像或实际逆执行的许可。
+
+**定理 17.1（实际像正实例的精确证书基数）。** 对每个 $d=3k$、$k\ge1$，每个 $V\in\mathcal I_d$ 及每个 $h\in\mathbb N_0$，若 $c(V)=(a,b)^{\mathsf T}$，则
+
+$$
+\boxed{\qquad
+\tau_d(V,h)=
+\begin{cases}
++\infty,&h<\operatorname{ht}(V),\\[2pt]
+a,&h\ge\operatorname{ht}(V).
+\end{cases}\qquad}
+\tag{17.3}
+$$
+
+**证明。** 先作结构桥接。由
+
+$$
+\rho^2(\alpha)=\langle\beta,\alpha\rangle,
+\qquad
+\rho^2(\beta)=\langle\langle\beta,\alpha\rangle,\beta\rangle
+$$
+
+可见每个叶块含有一片 $\alpha$，且块内每个内节点都有 $\alpha$ 后代。若来源节点本身是分支，替换后的左右两个非空子树也各含有 $\alpha$ 后代；对来源树作结构归纳，得到 $V$ 的每个内节点都是某个 $\alpha$ 叶地址的严格前缀。这只使用 $d\ge3$ 给出的 $\mathcal I_d\subseteq\rho^2(\mathcal T)$，并沿用[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的树作用单射与实际像边界；完整地址读数的唯一解析仍由[母卷定理 9.2、9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)供应。
+
+令 $Q_\alpha(V)$ 为 $V$ 的全部 $\alpha$ 叶地址。其基数是 $a$。若 $h\ge\operatorname{ht}(V)$，这些地址都属于 $\Sigma_{\le h}$。设 $U$ 与 $V$ 具有相同组成并匹配 $Q_\alpha(V)$ 的全部 $\mathsf{leaf}_\alpha$ 结果。对 $V$ 的任一内节点，结构桥接给出一个 $\alpha$ 叶后代；该叶地址的每个真前缀在 $V$ 中都是分支，匹配结果遂迫使这些前缀在 $U$ 中也都是分支。因此 $V$ 的分支地址集包含于 $U$ 的分支地址集。两树都有 $n=a+b$ 片叶，而完整有序二叉树的分支数恒为 $n-1$；这里复用钉版 Mathlib 的 [`BinaryTree.numLeaves_eq_numNodes_succ`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Tree/Basic.lean#L138)，其叶数等于内节点数加一。于是两个分支地址集相等。分支地址集确定相同的叶槽位；已查询的 $a$ 个槽位已经给出 $U$ 的全部 $\alpha$ 叶，组成又规定其余槽位全为 $\beta$，故 $U=V$。于是 $Q_\alpha(V)$ 有声，得到 $\tau_d(V,h)\le a$。
+
+再证有限证书的下界。上述两个 $\rho^2$ 叶块均只有一个末端樱桃 $\langle\beta,\alpha\rangle$，且它们的 $\alpha$ 叶恰为该樱桃的右端；这些块在 $V$ 中彼此不交。因此 $V$ 的 $a$ 片 $\alpha$ 叶给出 $a$ 个两两不交的端点对 $\{r\mathtt L,r\mathtt R\}$，其中 $r$ 是末端樱桃地址。对任一这样的 $r$，在该处把 $\langle\beta,\alpha\rangle$ 换成 $\langle\alpha,\beta\rangle$，得到树 $U_r$。它与 $V$ 的组成相同；所有严格后代地址在两棵树中都给出 $\mathsf{absent}$，而除 $r\mathtt L,r\mathtt R$ 外的地址结果相同。另一方面，$U_r$ 有一片作为左孩子的 $\alpha$ 叶，故不属于 $\rho(\mathcal T)$，从而不属于 $\mathcal I_d$。若有声的 $Q$ 不含这两个端点中的任一个，$U_r$ 就匹配 $Q$ 的全部结果并构成反例；所以 $Q$ 必须命中每个不交端点对，因而 $|Q|\ge a$。
+
+最后处理深度。若 $h<\operatorname{ht}(V)=D$，取深度为 $D$ 的叶。它的兄弟也必须是叶，故其父是末端樱桃；结构桥接及叶块形状把它确定为 $\langle\beta,\alpha\rangle$。对这个樱桃作上述交换得到 $U_r$。两个改变的端点都在深度 $D>h$，所以任何长度不超过 $h$ 的地址在 $V$ 与 $U_r$ 上都有相同的四值结果；组成相同而 $U_r\notin\mathcal I_d$，于是没有有声的 $Q$，即 $\tau_d(V,h)=+\infty$。当 $h\ge D$ 时，前面的 $Q_\alpha(V)$ 已给出大小 $a$ 的有声证书，且下界已经证明任何有声证书至少有 $a$ 个地址。式（17.3）得证。证毕。
+
+端点命中本身并非充分条件。取
+
+$$
+V=\rho^3(\alpha)=\langle\langle\beta,\alpha\rangle,\beta\rangle,
+\qquad
+U=\langle\langle\beta,\beta\rangle,\alpha\rangle .
+$$
+
+两者组成都是 $(1,2)$。$V$ 的唯一末端樱桃位于地址 $0$，其左端地址为 $00$；取 $Q=\{00\}$ 虽然命中了这个樱桃，却有 $\operatorname{out}_V(00)=\operatorname{out}_U(00)=\mathsf{leaf}_\beta$。树 $U$ 的根右侧 $\alpha$ 叶的左兄弟是内节点而不是 $\beta$ 叶，故 $U\notin\rho(\mathcal T)$，从而 $Q$ 不有声。相反，$\{01\}$ 在 $h\ge2=\operatorname{ht}(V)$ 时按定理 17.1 给出大小为一的尖锐证书；在 $h<2$ 时则不存在任何证书。
+
+## 追加锚（本行以下为增补区）
