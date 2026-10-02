@@ -31,14 +31,13 @@ internal sealed class GenealogicalFiberTransportDocument : IScribeDocumentDefini
             Def("fiberEquiv", "Fixed-composition correspondence", "For a+b>=1, actual sources of composition (a,b) correspond to shapes with a+b-1 internal nodes and subsets of exactly a alpha positions."),
             Def("fiberMap", "Actual iterated substitution", "The map from Fiber(v) to Fiber(M^n v) sends a source to its n-th substituted tree."),
             Def("uniformMass", "Real uniform mass", "Each tree in a nonempty fiber has mass 1/card(Fiber(v))."),
-            Def("pushedMass", "Actual pushforward mass", "At each target tree, sum the source uniform masses over all source trees whose n-th substituted tree equals that target."),
             Def("transportVariation", "Variation on one target fiber", "Compare the actual pushforward and the uniform target mass using one half of their finite absolute-difference sum."),
             Describe.Lean(DescribeId.Create("genealogical-fiber-result"), DeclarationHandle.Create(Prefix + "result"),
                 H("Exact hidden fibers and transport variation"), StatementSource.FromAuthor(ResultFormula()),
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("All a,b,n are natural numbers, including zero. F(v) is the actual tree fiber, "
-                        + "N(v) its Catalan and binomial expression, P_n(v,y) the actual pushforward mass, and U(v,y) "
-                        + "the uniform mass. I_n(v) is the image of the actual fiber map rho_v^n. Every sum below "
+                        + "N(v) its Catalan and binomial expression, P_n(v,y) the existing preimage-sum pushforward applied to the actual fiber map and source uniform mass, and U(v,y) "
+                        + "the uniform mass. M(n,v) denotes M^n v and rho(n,t) denotes rho^n t. TV(v,n) compares the pushed and uniform target masses. I_n(v) is the image of the actual fiber map rho_v^n. Every sum below "
                         + "ranges over the whole target fiber F(M^n v).")),
                     Paragraph(Text("The substitution is injective because no image is the leaf alpha. The image of a beta leaf "
                         + "is the pair (beta,alpha), which cannot be the image of an internal node: its right child alpha "
@@ -66,6 +65,7 @@ internal sealed class GenealogicalFiberTransportDocument : IScribeDocumentDefini
     private static Formula LeOf(Formula a, Formula b) => Seq(a, Sp, Leq, Sp, b);
     private static Formula Add(Formula a, Formula b) => Seq(a, Sp, Plus, Sp, b);
     private static Formula Sub(Formula a, Formula b) => Seq(a, Sp, Minus, Sp, b);
+    private static Formula Fraction(Formula a, Formula b) => Seq(Frac, Grp(a), Grp(b));
     private static Formula Pow(Formula a, Formula b) => Seq(a, Caret, Grp(b));
     private static Formula And(params Formula[] xs)
     {
@@ -91,20 +91,20 @@ internal sealed class GenealogicalFiberTransportDocument : IScribeDocumentDefini
     private static Formula ResultFormula()
     {
         Formula a=V("a"), b=V("b"), n=V("n"), t=V("t"), y=V("y"), v=Pair(a,b);
-        Formula trajectory=All("t",Imp(InOf(t,Fiber(v)),All("n",And(
-            EqOf(Call("c",Rho(n,t)),M(n,v)),
-            EqOf(Call("q",Call("c",Rho(n,t))),Call("q",M(n,v))))));
+        Formula composition=EqOf(Call("c",Rho(n,t)),M(n,v));
+        Formula quantity=EqOf(Call("q",Call("c",Rho(n,t))),Call("q",M(n,v)));
+        Formula trajectory=All("t",Imp(InOf(t,Fiber(v)),All("n",And(composition,quantity))));
         Formula pn=Call("P",n,v,y), un=Call("U",M(n,v),y);
         Formula transport=All("n",And(Call("Injective",Call("rhoFiber",v,n)),
             EqOf(Call("card",Call("I",n,v)),N(v)),
             All("y",Imp(InOf(y,Fiber(M(n,v))),And(LeOf(D(0),pn),LeOf(D(0),un)))),
             EqOf(TargetSum(pn,v,n),D(1)),EqOf(TargetSum(un,v,n),D(1)),
-            EqOf(Tv(v,n),Sub(D(1),Frac(N(v),N(M(n,v)))))));
-        Formula lower=Imp(LeOf(D(2),Add(a,b)),LeOf(Sub(D(1),Pow(Frac(D(1),D(2)),b)),Tv(v,D(1))));
+            EqOf(Tv(v,n),Sub(D(1),Fraction(N(v),N(M(n,v)))))));
+        Formula lower=Imp(LeOf(D(2),Add(a,b)),LeOf(Sub(D(1),Pow(Fraction(D(1),D(2)),b)),Tv(v,D(1))));
         Formula limit=Call("Tendsto",Seq(n,Sp,Mapsto,Sp,Tv(v,n)),V("atTop"),Call("nhds",D(1)));
         return Disp(And(All("a,b",Imp(LeOf(D(1),Add(a,b)),And(Call("Finite",Fiber(v)),
             EqOf(Call("card",Fiber(v)),N(v)),Call("Nonempty",Fiber(v)),trajectory,transport,lower,limit))),
-            EqOf(Tv(Pair(D(1),D(1)),D(1)),Frac(D(2),D(3)))));
+            EqOf(Tv(Pair(D(1),D(1)),D(1)),Fraction(D(2),D(3)))));
     }
 
 }
