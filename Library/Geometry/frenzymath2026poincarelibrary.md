@@ -3562,3 +3562,58 @@ h 所诱导的同一个 d（或其实际兼容限制 r）的单射等变边界�
 Lean 源仍在忽略目录 `.lake`，笔记是唯一跟踪交付；没有新颖性、
 跟踪 Lean、准入或冻结声明。逃逸审计仍未完成，登记按 CLAUDE 3.9 暂缓：
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+
+
+### 实际测地线、归一化理想端点与有界距离端点唯一性
+
+本轮在原 H³ 的原距离上构造几何边界工具。
+对原归一化零光锥截面中的 b，定义
+`h3BoundaryGeodesicVector(b,t)=(cosh(t),sinh(t)*b₁,sinh(t)*b₂,sinh(t)*b₃)`。
+原空间方向平方和为 1，故该向量的 Lorentz 自配对为 1，时间坐标
+严格为正。已有原未来单位向量逆构造给出实际点
+`h3BoundaryGeodesicLine b t`，并证明其原 Lorentz 坐标正是上述向量。
+同一条线上的配对为 `cosh(s-t)`；原配对与原距离的恒等式及 cosh
+在非负半轴的单射性给出 `Isometry (h3BoundaryGeodesicLine b)`，因此
+实际距离精确等于 `|s-t|`。时间零的点是原上半空间坐标 `(0,1)`。
+没有要求调用者提供另一条测地线或替代距离。
+
+`real_sinh_div_cosh_tendsto_atTop_one` 以 `exp(-t)` 趋于零和恒等式
+`sinh(t)/cosh(t)=(1-exp(-t)^2)/(1+exp(-t)^2)` 证明该比值趋于 1。
+`h3_boundary_geodesic_normalized_endpoint` 随后证明实际点的原 Lorentz
+坐标经 `h3NullRayNormalize` 归一化后，在 t 趋于正无穷时趋于原 b。
+这里收敛发生在原四维实向量空间；有限时间的归一化内部点并未被
+宣称属于零光锥截面，也没有把归一化坐标收敛冒充一般紧化等价性。
+
+对任意原实际等距映射 e，
+`h3_actual_isometry_normalized_lorentz_equivariance` 证明实际点 e(p)
+的归一化坐标，等于把 p 的归一化坐标送入原 Lorentz 线性表示后
+再次归一化。`h3_actual_isometry_preserves_normalized_boundary_convergence`
+对任意滤子及任意实际点族 P 证明：若 P 的归一化坐标趋于原 b，
+则 e(P) 的归一化坐标趋于原 `h3NullBoundaryAction e b`。
+证明使用原有限维线性表示的连续性和像的严格正时间坐标。
+这个结论描述实际等距映射；没有证明原同伦提升的边界延拓。
+
+`h3_boundary_convergence_forces_inverse_time_to_zero` 由原归一化坐标
+的自配对等于时间坐标倒数的平方、原零光锥极限的零自配对以及
+正时间分支，推出时间坐标的倒数趋于零。
+`h3_bounded_distance_normalized_boundary_endpoints_equal` 则证明：
+对同一个非底滤子 l，若实际点族 P、Q 的归一化坐标分别趋于原
+边界点 b、c，且存在非负实数 C 使每个参数处的原距离都不超过 C，
+则 b=c。原归一化配对非负，并被两条路径时间倒数的乘积乘
+`cosh(C)` 控制，因而趋于零；原配对联合连续性和零配对分离性质
+给出端点相等。`NeBot l` 与两条路径各自的收敛都是明确前提；
+结论没有供应另一条路径的收敛、射线追踪或原提升的几何控制。
+
+四个完整模块串行编译通过，共十二项公理闭包只含
+`propext`、`Classical.choice`、`Quot.sound`，零警告。三个模块初次
+完整失败均保留并整次排除，只有最终完整成功编译被接受。
+这些结论复用原 Lorentz 模型、实际等距作用与经典双曲函数分析，
+没有新增紧性或可定向前提。完整有限体积 Mostow–Prasad 仍为
+**ACTIVE/INCOMPLETE**，范围包含非紧尖点与非可定向情形。
+尚未从原给定同伦等价构造其同一个诱导群同构 d 的单射等变边界
+映射，也尚未迫使那个映射保持原交比。上述端点唯一性是构造该
+映射所需的几何工具，不是该映射存在或完整刚性的证明。
+Lean 源仍在忽略目录 `.lake`，研究笔记是唯一跟踪交付；没有
+新颖性、跟踪 Lean、准入或冻结声明。逃逸审计仍未完成，登记按
+CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
