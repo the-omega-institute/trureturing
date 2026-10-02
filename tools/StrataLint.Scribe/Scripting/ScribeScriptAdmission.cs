@@ -36,9 +36,11 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
             foreach (var node in nodes)
             {
                 if (node is TypeDeclarationSyntax declaration
-                    && model.GetDeclaredSymbol(declaration) is { IsValueType: false } declared)
+                    && model.GetDeclaredSymbol(declaration) is { } declared)
                 {
-                    foreach (var constructor in declared.InstanceConstructors.Where(method =>
+                    var interfaceFailure = admission.DeclaredInterfaces(declaration, declared, model);
+                    if (interfaceFailure is not null) return interfaceFailure;
+                    foreach (var constructor in declared.InstanceConstructors.Where(method => !declared.IsValueType &&
                         method.IsImplicitlyDeclared && method.Parameters.IsEmpty))
                     {
                         var failure = admission.Member(constructor, node);
@@ -71,6 +73,59 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
             }
         }
         return null;
+    }
+
+    private ScribeScriptFailure? DeclaredInterfaces(TypeDeclarationSyntax declaration,
+        INamedTypeSymbol type, SemanticModel model)
+    {
+        if (type.TypeKind == TypeKind.Interface || declaration.BaseList is null) return null;
+        var contracts = declaration.BaseList.Types
+            .Select(item => model.GetTypeInfo(item.Type).Type).OfType<INamedTypeSymbol>()
+            .Where(item => item.TypeKind == TypeKind.Interface)
+            .SelectMany(item => item.AllInterfaces.Prepend(item)).Where(item => !IsScript(item))
+            .Distinct<INamedTypeSymbol>(SymbolEqualityComparer.Default);
+        foreach (var contract in contracts)
+            foreach (var slot in contract.GetMembers().Where(member => member is IMethodSymbol { AssociatedSymbol: null }
+                or IPropertySymbol or IEventSymbol))
+            {
+                var implementation = type.FindImplementationForInterfaceMember(slot);
+                if (implementation is null)
+                    return Disallowed(declaration, $"unresolved interface implementation {TypeId(type)} {ScribeScriptAllowlist.Id(slot)}");
+                var failure = InspectImplementation(type, implementation, declaration)
+                    ?? Dispatch(slot, declaration, type);
+                if (failure is not null) return failure;
+            }
+        return null;
+    }
+
+    private ScribeScriptFailure? InspectImplementation(INamedTypeSymbol type, ISymbol implementation, SyntaxNode node)
+    {
+        if (implementation is IPropertySymbol property)
+        {
+            foreach (var accessor in new[] { property.GetMethod, property.SetMethod })
+            {
+                if (accessor is null) continue;
+                var failure = InspectImplementation(type, accessor, node);
+                if (failure is not null) return failure;
+            }
+            return InspectMember(property, node);
+        }
+        if (IsScript(implementation) && implementation is IMethodSymbol method
+            && !method.DeclaringSyntaxReferences.Any(reference => reference.GetSyntax() switch
+            {
+                MethodDeclarationSyntax source => source.Body is not null || source.ExpressionBody is not null,
+                AccessorDeclarationSyntax source => source.Body is not null || source.ExpressionBody is not null,
+                PropertyDeclarationSyntax source => source.ExpressionBody is not null,
+                IndexerDeclarationSyntax source => source.ExpressionBody is not null,
+                ArrowExpressionClauseSyntax { Parent: PropertyDeclarationSyntax or IndexerDeclarationSyntax } => true,
+                OperatorDeclarationSyntax source => source.Body is not null || source.ExpressionBody is not null,
+                ConversionOperatorDeclarationSyntax source => source.Body is not null || source.ExpressionBody is not null,
+                _ => false,
+            }))
+            return Disallowed(node, $"uninspected interface implementation {TypeId(type)} {ScribeScriptAllowlist.Id(method)}");
+        var memberFailure = InspectMember(implementation, node);
+        return memberFailure is null ? null : Disallowed(node,
+            $"interface implementation {TypeId(type)} {ScribeScriptAllowlist.Id(implementation)}: {memberFailure.Message}");
     }
 
     private ScribeScriptFailure? Operation(IOperation operation, SemanticModel model)
@@ -345,6 +400,12 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
             {
                 if (implementation is null || implementation.IsAbstract && !type.IsAbstract)
                     return Disallowed(node, $"unresolved dispatch {TypeId(type)} {ScribeScriptAllowlist.Id(symbol)}");
+                if (contract && !IsScript(symbol))
+                {
+                    var interfaceFailure = InspectImplementation(type, implementation, node);
+                    if (interfaceFailure is not null) return interfaceFailure;
+                    continue;
+                }
                 var failure = InspectMember(implementation, node);
                 if (failure is null && implementation is IPropertySymbol property)
                     foreach (var accessor in new[] { property.GetMethod, property.SetMethod })
@@ -389,15 +450,8 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
     private ScribeScriptFailure? InspectMember(ISymbol? symbol, SyntaxNode node, bool argumentsChecked = false)
     {
         if (symbol is null) return null;
-        // Default equality in Array.IndexOf can call arbitrary implementations on T.
-        // Restrict this registered overload to sealed primitive/string equality domains.
-        if (symbol is IMethodSymbol callback && ScribeScriptAllowlist.Id(callback) == "M:System.Array.IndexOf``1(``0[],``0)"
-            && callback.TypeArguments.Single().SpecialType is not (SpecialType.System_String
-                or SpecialType.System_Boolean or SpecialType.System_Byte or SpecialType.System_SByte
-                or SpecialType.System_Char or SpecialType.System_Int16 or SpecialType.System_UInt16
-                or SpecialType.System_Int32 or SpecialType.System_UInt32 or SpecialType.System_Int64
-                or SpecialType.System_UInt64 or SpecialType.System_IntPtr or SpecialType.System_UIntPtr))
-            return Disallowed(node, $"uncheckable equality callback {ScribeScriptAllowlist.Id(callback)}");
+        if (!allowlist.AllowsTypeArguments(symbol))
+            return Disallowed(node, $"unregistered type argument {ScribeScriptAllowlist.Id(symbol)}");
         if (!argumentsChecked && allowlist.HasParameterConstraints(symbol))
             return Disallowed(node, $"uncheckable parameter constraints {ScribeScriptAllowlist.Id(symbol)}");
         if (IsScript(symbol) && symbol is IMethodSymbol { IsImplicitlyDeclared: true } generated)

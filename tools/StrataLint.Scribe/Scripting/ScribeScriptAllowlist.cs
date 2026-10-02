@@ -13,6 +13,7 @@ internal sealed class ScribeScriptAllowlist
     private readonly HashSet<string> formattedTypes = new(StringComparer.Ordinal);
 
     private readonly Dictionary<(string Member, string Parameter), HashSet<string>> constants = new();
+    private readonly Dictionary<(string Member, int Ordinal), HashSet<string>> typeArguments = new();
 
     internal static (ScribeScriptAllowlist? Table, ScribeScriptFailure? Failure) Read(
         CSharpCompilation compilation, string entry, string? overridePath)
@@ -30,6 +31,23 @@ internal sealed class ScribeScriptAllowlist
         {
             var line = lines[index].Trim();
             if (line.Length == 0 || line.StartsWith('#')) continue;
+            if (line.StartsWith("type-argument ", StringComparison.Ordinal))
+            {
+                var parts = line.Split(' ');
+                if (parts.Length != 4 || parts.Any(string.IsNullOrEmpty) || !seen.Add(line)) return Invalid();
+                var methods = DocumentationCommentId.GetSymbolsForDeclarationId(parts[1], compilation);
+                if (methods.Length != 1 || methods[0] is not IMethodSymbol method || Id(method) != parts[1]) return Invalid();
+                var parameter = method.TypeParameters.SingleOrDefault(item => item.Name == parts[2]);
+                var allowed = new HashSet<string>(StringComparer.Ordinal);
+                if (parameter is null || !table.typeArguments.TryAdd((parts[1], parameter.Ordinal), allowed)) return Invalid();
+                foreach (var typeId in parts[3].Split(','))
+                {
+                    var typeSymbols = DocumentationCommentId.GetSymbolsForDeclarationId(typeId, compilation);
+                    if (!allowed.Add(typeId) || typeSymbols.Length != 1 || typeSymbols[0] is not INamedTypeSymbol { Arity: 0 } type
+                        || Id(type) != typeId) return Invalid();
+                }
+                continue;
+            }
             if (line.StartsWith("constant ", StringComparison.Ordinal))
             {
                 var parts = line.Split(' ');
@@ -83,6 +101,9 @@ internal sealed class ScribeScriptAllowlist
         if (table.constants.Any(item => !table.members.Contains(item.Key.Member)
             || item.Value.Any(id => !table.members.Contains(id))))
             return (null, Configuration(entry, "parameter constants require exact member and constant entries"));
+        if (table.typeArguments.Any(item => !table.members.Contains(item.Key.Member)
+            || item.Value.Any(id => !table.types.Contains(id) && !table.wholeTypes.Contains(id))))
+            return (null, Configuration(entry, "type argument constraints require exact member and type-use entries"));
         return (table, null);
     }
 
@@ -93,6 +114,17 @@ internal sealed class ScribeScriptAllowlist
         && (members.Contains(id) || symbol.ContainingType is { } type && wholeTypes.Contains(Id(type)!));
 
     internal bool AllowsFormatting(ITypeSymbol type) => Id(type) is { } id && formattedTypes.Contains(id);
+
+    internal bool AllowsTypeArguments(ISymbol symbol)
+    {
+        if (symbol is not IMethodSymbol method || Id(method) is not { } id) return true;
+        method = method.ReducedFrom ?? method;
+        foreach (var constraint in typeArguments.Where(item => item.Key.Member == id))
+            if (constraint.Key.Ordinal >= method.TypeArguments.Length
+                || Id(method.TypeArguments[constraint.Key.Ordinal]) is not { } argument
+                || !constraint.Value.Contains(argument)) return false;
+        return true;
+    }
 
     internal bool HasParameterConstraints(ISymbol symbol) => Id(symbol) is { } id
         && constants.Keys.Any(key => key.Member == id);

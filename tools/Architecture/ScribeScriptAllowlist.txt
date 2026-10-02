@@ -142,7 +142,6 @@ T:System.Index
 T:System.Int16
 T:System.Int32
 T:System.Int64
-T:System.IntPtr
 T:System.InvalidOperationException
 T:System.Linq.Enumerable
 T:System.Nullable`1
@@ -156,7 +155,6 @@ T:System.StringSplitOptions
 T:System.UInt16
 T:System.UInt32
 T:System.UInt64
-T:System.UIntPtr
 T:System.ValueTuple`2
 T:System.ValueTuple`3
 T:System.Void
@@ -498,14 +496,12 @@ format T:System.Char
 format T:System.Int16
 format T:System.Int32
 format T:System.Int64
-format T:System.IntPtr
 format T:System.Numerics.BigInteger
 format T:System.SByte
 format T:System.String
 format T:System.UInt16
 format T:System.UInt32
 format T:System.UInt64
-format T:System.UIntPtr
 M:StrataLint.Scribe.DefinitionDsl.Header(System.String,System.String,StrataLint.Engine.Anchor[])
 M:System.Range.#ctor(System.Index,System.Index)
 M:StrataLint.Scribe.ScribeDocument.Create(StrataLint.Scribe.DocumentHeader,StrataLint.Scribe.Heading,StrataLint.Scribe.BlockSequence,System.Collections.Generic.IEnumerable{StrataLint.Scribe.DocumentEdge})
@@ -532,3 +528,7 @@ constant M:System.String.Contains(System.String,System.StringComparison) compari
 constant M:System.String.EndsWith(System.String,System.StringComparison) comparisonType F:System.StringComparison.Ordinal
 constant M:System.String.IndexOf(System.String,System.Int32,System.StringComparison) comparisonType F:System.StringComparison.Ordinal
 constant M:System.String.IndexOf(System.String,System.StringComparison) comparisonType F:System.StringComparison.Ordinal
+
+# type-argument <member-ID> <type-parameter-name> <type-ID>[,<type-ID>...]
+# Constructed calls and method references require a listed type for that parameter.
+type-argument M:System.Array.IndexOf``1(``0[],``0) T T:System.String,T:System.Boolean,T:System.Byte,T:System.SByte,T:System.Char,T:System.Int16,T:System.UInt16,T:System.Int32,T:System.UInt32,T:System.Int64,T:System.UInt64
