@@ -48,6 +48,12 @@ internal interface IScribeEmissionVerifier
     VerifiedScribeEmissions Verify(
         RepositorySnapshot snapshot,
         LeanAxiomReport report,
+        IReadOnlyList<DocumentDefinition> definitions) =>
+        throw new InvalidOperationException("Scribe verifier does not support supplied definitions.");
+
+    VerifiedScribeEmissions Verify(
+        RepositorySnapshot snapshot,
+        LeanAxiomReport report,
         RawChangeSet? changes = null,
         FrozenStateCatalog? frozenState = null,
         FrozenStatementIndex? frozenStatements = null);
@@ -68,10 +74,23 @@ internal sealed class ProductionScribeEmissionVerifier : IScribeEmissionVerifier
     {
     }
 
+    internal ProductionScribeEmissionVerifier(IReadOnlyList<DocumentDefinition> definitions)
+        : this((root, report, frozenState, frozenStatements) =>
+            VerifyMaterialized(definitions, root, report, frozenState, frozenStatements))
+    {
+        ArgumentNullException.ThrowIfNull(definitions);
+    }
+
     internal ProductionScribeEmissionVerifier(
         Func<string, LeanAxiomReport, FrozenStateCatalog?, FrozenStatementIndex?, VerifiedScribeEmissions> verifyMaterialized) =>
         this.verifyMaterialized = verifyMaterialized
             ?? throw new ArgumentNullException(nameof(verifyMaterialized));
+
+    public VerifiedScribeEmissions Verify(
+        RepositorySnapshot snapshot,
+        LeanAxiomReport report,
+        IReadOnlyList<DocumentDefinition> definitions) =>
+        new ProductionScribeEmissionVerifier(definitions).Verify(snapshot, report);
 
     public VerifiedScribeEmissions Verify(
         RepositorySnapshot snapshot,
@@ -97,14 +116,25 @@ internal sealed class ProductionScribeEmissionVerifier : IScribeEmissionVerifier
         string repositoryRoot,
         LeanAxiomReport report,
         FrozenStateCatalog? frozenState,
-        FrozenStatementIndex? frozenStatements,
-        IReadOnlyList<DocumentDefinition>? definitions = null)
+        FrozenStatementIndex? frozenStatements)
     {
         var error = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
-        return (definitions is null ? ScribeEmitter.Verify(documentsAssembly, repositoryRoot, error, report,
-                frozenState, frozenStatements) : ScribeEmitter.Verify(repositoryRoot, error, report, definitions))
+        return ScribeEmitter.Verify(documentsAssembly, repositoryRoot, error, report,
+                frozenState, frozenStatements)
             ?? throw new InvalidOperationException(
                 "Scribe emission verification failed: " + error.ToString().Trim());
     }
 
+    private static VerifiedScribeEmissions VerifyMaterialized(
+        IReadOnlyList<DocumentDefinition> definitions,
+        string repositoryRoot,
+        LeanAxiomReport report,
+        FrozenStateCatalog? frozenState,
+        FrozenStatementIndex? frozenStatements)
+    {
+        var error = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
+        return ScribeEmitter.Verify(repositoryRoot, error, report, definitions, frozenState, frozenStatements)
+            ?? throw new InvalidOperationException(
+                "Scribe emission verification failed: " + error.ToString().Trim());
+    }
 }

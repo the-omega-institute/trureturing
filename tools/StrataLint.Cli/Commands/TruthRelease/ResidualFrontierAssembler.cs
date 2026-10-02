@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Engine;
+using StrataLint.Scribe;
 
 namespace StrataLint.Cli;
 
@@ -11,7 +12,8 @@ internal static class ResidualFrontierAssembler
         AcceptedLeanClosure lean,
         LeanAxiomReport report,
         IScribeEmissionVerifier scribeEmissionVerifier,
-        IReadOnlyDictionary<RepoPath, TruthState> truthStates)
+        IReadOnlyDictionary<RepoPath, TruthState> truthStates,
+        IReadOnlyList<DocumentDefinition>? definitions = null)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(lean);
@@ -19,7 +21,10 @@ internal static class ResidualFrontierAssembler
         ArgumentNullException.ThrowIfNull(scribeEmissionVerifier);
         ArgumentNullException.ThrowIfNull(truthStates);
 
-        scribeEmissionVerifier.Verify(snapshot, report);
+        if (definitions is null)
+            scribeEmissionVerifier.Verify(snapshot, report);
+        else
+            scribeEmissionVerifier.Verify(snapshot, report, definitions);
         var document = BackfillInventoryLoader.Load(snapshot);
         var evaluation = DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.FullScan,
