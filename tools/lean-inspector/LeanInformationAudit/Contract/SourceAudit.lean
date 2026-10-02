@@ -16,6 +16,78 @@ partial def resultType (e : Expr) : Expr :=
   | .forallE _ _ body _ => resultType body
   | e => e
 
+private def allowedTypeCarrierStructures : Array Name := #[
+  `D5.S3.ConceptDynamics.InformationEscape.Arena,
+  `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena,
+  `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature,
+  `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena]
+
+private def projectionStructure (env : Environment) (name : Name) : Option Name :=
+  (env.getProjectionFnInfo? name).map (·.ctorName.getPrefix)
+
+private def projectionReturnsSort (env : Environment) (name : Name) : Bool :=
+  match env.find? name with
+  | some info => (resultType info.type).isType
+  | none => false
+
+private def allowedProjection (structureName : Name) : Bool :=
+  allowedTypeCarrierStructures.contains structureName
+
+private partial def resultTypeIssueAt (env : Environment) (e : Expr) : Option String :=
+  match e.consumeMData with
+  | .letE _ type value body _ =>
+      if let some issue := resultTypeIssueAt env type then some issue
+      else if let some issue := resultTypeIssueAt env value then some issue
+      else if let some issue := resultTypeIssueAt env body then some issue
+      else some "contract.discovery:result_type_let"
+  | .proj structureName index value =>
+      let fields := getStructureFields env structureName
+      match fields[index]? with
+      | some field =>
+          let projection := structureName ++ field
+          if projectionReturnsSort env projection && !allowedProjection structureName then
+            some s!"contract.discovery:result_type_projection:{structureName}:{field}"
+          else resultTypeIssueAt env value
+      | none => some s!"contract.discovery:result_type_projection:{structureName}:{index}"
+  | .app fn arg =>
+      if let some fnName := fn.constName? then
+        if let some projection := projectionStructure env fnName then
+          if projectionReturnsSort env fnName && !allowedProjection projection then
+            some s!"contract.discovery:result_type_projection:{projection}:{fnName}"
+          else if let some issue := resultTypeIssueAt env fn then some issue
+          else resultTypeIssueAt env arg
+        else if let some issue := resultTypeIssueAt env fn then some issue
+        else if let some issue := resultTypeIssueAt env arg then some issue else none
+      else if let some issue := resultTypeIssueAt env fn then some issue
+      else resultTypeIssueAt env arg
+  | .forallE _ domain body _ =>
+      if let some issue := resultTypeIssueAt env domain then some issue
+      else resultTypeIssueAt env body
+  | .lam _ domain body _ =>
+      if let some issue := resultTypeIssueAt env domain then some issue
+      else resultTypeIssueAt env body
+  | .mdata _ body => resultTypeIssueAt env body
+  | _ => none
+
+def resultTypeIssue (env : Environment) (e : Expr) : Option String :=
+  resultTypeIssueAt env (resultType e)
+
+private partial def containsAtomValue (stx : Syntax) (value : String) : Bool :=
+  (stx.isAtom && stx.getAtomVal == value) || stx.getArgs.any (containsAtomValue · value)
+
+/-- Check the authored result-type syntax before elaboration zeta-reduces it. -/
+def sourceResultTypeIssue (command : Syntax) : Option String :=
+  if !command.isOfKind ``Parser.Command.declaration then none
+  else
+    let declaration := command[1]
+    if !declaration.isOfKind ``Parser.Command.definition then none
+    else
+      let signature := declaration[2]
+      let type := signature[1][0][1]
+      if containsAtomValue type "let" || containsAtomValue type "have" then
+        some "contract.discovery:result_type_let"
+      else none
+
 /-- Recognize proposition-valued heads from their compiled signatures, without
 normalization or examining proofs. Proposition arguments are mathematical data. -/
 partial def proposition (env : Environment) (e : Expr) : Bool :=
@@ -36,6 +108,8 @@ private partial def typeConstants (env : Environment) (e : Expr) : Array Name :=
   if proposition env e then return #[]
   match e with
   | .lam _ _ body _ => return typeConstants env body
+  | .letE _ type value body _ =>
+      return typeConstants env type ++ typeConstants env value ++ typeConstants env body
   | .proj _ _ value => return value.getUsedConstants
   | .app .. =>
     let fn := e.getAppFn
@@ -189,6 +263,76 @@ def expansionKeys (entries : Array Entry) (coreDelegates : NameSet := {}) : Name
         if ids.any kinds.contains then
           for id in ids do unless kinds.contains id do keys := keys.insert id
   return keys
+
+private partial def containsIdentifier (stx : Syntax) (names : Array Name) : Bool :=
+  (stx.isIdent && names.contains stx.getId) || stx.getArgs.any (containsIdentifier · names)
+
+private def commandTextKind (command : Syntax) : String := command.getKind.toString.toLower
+
+private def commandHasAttribute (command : Syntax) : Bool :=
+  (command.find? (·.isOfKind ``Parser.Term.attributes)).isSome
+
+private def onlyReducibleAttribute (command : Syntax) : Bool :=
+  match command.find? (·.isOfKind ``Parser.Term.attributes) with
+  | some attrs => attrs[1].getSepArgs.all fun attr =>
+      let names := identifiers attr
+      !names.isEmpty && names.all (· == `reducible)
+  | none => false
+
+private def existingLocalNotationOwner (owner : String) : Bool :=
+  #["Reg.D5.S3.Quantum.Measurement.ExactConditionalPreparationCost",
+    "Reg.D5.S1.Recurrence.Invariants.CloitreActualLeftPlateau",
+    "Reg.D5.S1.Recurrence.Invariants.CloitreActualSpineCarry"].contains owner
+
+private partial def containsQualifiedIdentifier (command : Syntax) (suffix : String) : Bool :=
+  (command.isIdent && command.getId.toString.endsWith suffix) ||
+    command.getArgs.any (containsQualifiedIdentifier · suffix)
+
+private partial def containsAtom (command : Syntax) (value : String) : Bool :=
+  (command.isAtom && command.getAtomVal == value) ||
+    command.getArgs.any (containsAtom · value)
+
+private def allowedRegRunCommand (command : Syntax) : Bool :=
+  containsQualifiedIdentifier command "RootCatalogs.declare"
+
+private def forbiddenRegAttribute (command : Syntax) : Option Name :=
+  let names := #[`macro, `term_elab, `command_elab, `builtin, `builtin_macro,
+    `builtin_term_elab, `builtin_command_elab]
+  names.find? fun name => containsIdentifier command #[name]
+
+/-- Reg source commands use an explicit, finite policy. Existing catalog and
+snapshot declarations are retained by exact operation class; all other
+repository-owned metaprogramming is rejected before any elaboration is used. -/
+def auditRegCommands (owner : Name) (entries : Array Entry) : Except String Unit := do
+  let ownerText := owner.toString
+  for entry in entries do
+    let command := entry.originCommand
+    let kind := commandTextKind command
+    if let some attrName := forbiddenRegAttribute command then
+      throw s!"contract.reg:metaprogramming_not_allowed:{owner}:{attrName}"
+    if commandHasAttribute command && !onlyReducibleAttribute command then
+      throw s!"contract.reg:metaprogramming_not_allowed:{owner}:attribute"
+    if kind.contains "runcmd" || kind.contains "run_cmd" ||
+        kind.contains "runmeta" || kind.contains "run_meta" ||
+        kind.contains "runelab" || kind.contains "run_elab" then
+      unless allowedRegRunCommand command do
+        throw s!"contract.reg:metaprogramming_not_allowed:{owner}:{command.getKind}"
+    else if kind.contains "eval" || kind.contains "initialize" then
+      throw s!"contract.reg:metaprogramming_not_allowed:{owner}:{command.getKind}"
+    else if kind.contains "macro" || kind.contains "syntax" ||
+        kind.contains "elab" || kind.contains "notation" ||
+        kind.contains "infix" || kind.contains "prefix" || kind.contains "postfix" then
+      unless kind.contains "notation" && containsAtom command "local" &&
+          existingLocalNotationOwner ownerText do
+        throw s!"contract.reg:metaprogramming_not_allowed:{owner}:{command.getKind}"
+    else if kind.contains "attribute" then
+      -- Ordinary instance attributes (including `local`/`scoped` blocks) are
+      -- existing Reg infrastructure.  Meta attributes were rejected above.
+      pure ()
+    else if kind.contains "declaration" && commandHasAttribute command then
+      unless onlyReducibleAttribute command do
+        throw s!"contract.reg:metaprogramming_not_allowed:{owner}:{command.getKind}"
+  pure ()
 
 /-- Parse every command, so a compiled head filter cannot erase a source entry. -/
 def parse (env : Environment) (source : String) (file : String) : IO (Array Entry) := do

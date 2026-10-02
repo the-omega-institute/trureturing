@@ -128,6 +128,10 @@ Rigid level parameters and their occurrences remain the compiler's original data
 def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := do
   let env := (← getEnv).setExporting false
   let entries ← SourceAudit.parse env source owner.toString
+  if (`Reg).isPrefixOf owner then
+    match SourceAudit.auditRegCommands owner entries with
+    | .error error => throwError error
+    | .ok _ => pure ()
   let map := FileMap.ofString source
   let mut found : Array Definition := #[]
   let mut expansionKeys : Option NameSet := none
@@ -144,6 +148,9 @@ def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := d
     let (relevant, cache) := candidate env info unrelated
     unrelated := cache
     unless relevant do continue
+    if (`Reg).isPrefixOf owner then
+      if let some issue := SourceAudit.resultTypeIssue env info.type then
+        throwError s!"{issue}:{info.name}"
     let head := (SourceAudit.resultType info.type).getAppFn.constName?.getD .anonymous
     let functionDefinition := match info with
       | .defnInfo _ => info.type.isForall
@@ -155,6 +162,9 @@ def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := d
     let stop := map.ofPosition range.range.endPos
     let some entry := entries.find? fun entry => entry.start ≤ start && stop ≤ entry.stop
       | throwError "contract.discovery:source_inventory_missing:{name}"
+    if (`Reg).isPrefixOf owner then
+      if let some issue := SourceAudit.sourceResultTypeIssue entry.command then
+        throwError s!"{issue}:{info.name}"
     match SourceAudit.audit entry.command head with
     | .error error => throwError "{error}:{name}"
     | .ok _ => pure ()
