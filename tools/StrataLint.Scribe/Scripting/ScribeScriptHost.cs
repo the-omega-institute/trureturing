@@ -131,7 +131,7 @@ public static class ScribeScriptHost
         var results = new ConcurrentBag<ScribeScriptResult>();
         var references = ReferenceAssemblies();
         var analyzers = AnalyzerReferences();
-        Parallel.ForEach(paths, new ParallelOptions { MaxDegreeOfParallelism = Math.Min(Environment.ProcessorCount, 16) },
+        Parallel.ForEach(paths,
             path => results.Add(ExecuteCore(repositoryRoot, path, references, analyzers)));
         return results.OrderBy(result => result.RelativePath, StringComparer.Ordinal).ToImmutableArray();
     }
