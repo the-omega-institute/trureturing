@@ -90,7 +90,7 @@ private theorem boundedDigits_eq (k n : Nat) (bound : n < Nat.fib (k + 2)) :
 private def powerDigits (n : Nat) : List Nat :=
   boundedDigits (3 * n + 2) (4 ^ n) (Nat.fastFib (3 * n + 3)) (Nat.fastFib (3 * n + 4))
 
-private theorem powerDigits_bound (n : Nat) : 4 ^ n < Nat.fib (3 * n + 4) := by
+theorem powerDigits_bound (n : Nat) : 4 ^ n < Nat.fib (3 * n + 4) := by
   have lower : ∀ n : Nat, 4 ^ n ≤ Nat.fib (3 * n + 2) := by
     intro n
     induction n with
