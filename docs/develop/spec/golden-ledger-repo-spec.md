@@ -453,7 +453,7 @@ current/delta 在谓词级分开，不能用空 changes 或 base=candidate 模�
 
 离线 truth release bundle 接口验证完整性及调用者声明的成功 check 名称；来源真实性、保护策略完整性及发布授权须独立核验。该接口不查询 CI，也不选择可发布 dev 提交或下载 push 报告。
 
-**缓存与增量。** Lean 的 dependency/project/elan keys、restore 与 snapshot 可独立使用。显式 `Meta/ci-cache-paths.json` 限定 dependency 为 `.lake/packages`、project 为 `.lake/build`；project 同时保留 Lean 编译、Inspector 与原生报告材料，不建立独立 report 层。远端兼容分区取 resolved mathlib revision，二进制另按 OS/arch 隔离。PR 缓存只供同一 PR 使用，不能供其它 PR 或 dev 恢复；缓存缺失、损坏或保存失败不撤销业务判词，正常生产失败仍阻断。缓存命中不等于当前检查通过。
+**缓存与增量。** Lean 的 dependency/project/elan keys、restore 与 snapshot 可独立使用。显式 `Meta/ci-cache-paths.json` 限定 dependency 为 `.lake/packages`、project 为 `.lake/build`；project 同时保留 Lean 编译、Inspector 与原生报告材料，不建立独立 report 层。远端兼容分区取 resolved mathlib revision，二进制另按 OS/arch 隔离。project Actions key 使用唯一的 `lean-project-push-` 前缀，不恢复其它 project 前缀；所有读者使用同一生成规则。首次 miss 令 `STRATALINT_ACTIONS_CACHE_SEEDED=0`，由既有 Release 快照恢复与 Lake 权威增量补编补齐。project 种子只由 dev/integration push 发布，在报告生产成功后、判卷开始前只尝试一次，且本次报告与程序目标的构建工作须已知并为正；pull request 恢复 push 种子，不发布 project 种子并具名报告跳过。生产者在恢复树之外记录本次 run/attempt 与报告、程序两类工作；缺失、畸形、陈旧或无法判定的记录禁写 project，并具名报告 unknown，不视为零工作；零工作另报跳过原因。project 的成功前置称为 `STRATALINT_REPORT_SUCCEEDED`，不预报检查成功。dependency 与 elan 仍在全部检查成功后按各自条件保存，PR 的这些缓存只供同一 PR 使用。缓存步骤不承载业务判词；缓存缺失、损坏或保存失败不撤销业务判词，正常生产失败仍阻断。缓存命中不等于当前检查通过。
 
 `lean-report-inputs.json` 的 report_cache_release_semantic_version 决定报告兼容性，Lake traces 决定实际模块重建；复用行保留原 producer 来源。正常报告入口仍执行原生构建与严格 publication 校验，不借恢复绕过 Lean kernel、utility/audit 或报告验证。定时 Release 缓存发布与 integration 的 cache publication 验证独立保留；验证事件、来源、run/attempt、归档材料与空目标恢复按其既有程序核对，不外推为 truth 发布成功。
 

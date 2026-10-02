@@ -89,10 +89,13 @@ def actions_keys(root: pathlib.Path) -> dict:
         "mathlib_revision": revision, "os": system, "arch": machine,
         "partition": partition_path(root),
         "save_allowed": writer_allowed and os.environ.get("STRATALINT_CHECK_SUCCEEDED") == "true",
+        "project_save_allowed": push_writer and os.environ.get("STRATALINT_CACHE_WRITES") == "true"
+        and os.environ.get("STRATALINT_REPORT_SUCCEEDED") == "true",
         "release_prefix": f"lean-cache-v2-{revision}-{system}-{machine}-",
     }
     for layer in LAYERS:
-        prefix = f"lean-{layer}-v4-{revision}-{system}-{machine}-"
+        generation = "project-push" if layer == "project" else "dependency-v4"
+        prefix = f"lean-{generation}-{revision}-{system}-{machine}-"
         result[layer] = {
             "restore_prefix": prefix, "key": f"{prefix}{run}-{attempt}",
             "path": ".lake/packages" if layer == "dependency" else ".lake/build",
@@ -201,13 +204,56 @@ def restore(root, keys, matched, layers=LAYERS, *, outcomes=None):
         output({"STRATALINT_ACTIONS_CACHE_SEEDED": "1" if seeded else "0"}, "GITHUB_ENV")
 
 
+def project_work(root):
+    path = pathlib.Path(os.environ.get("STRATALINT_LEAN_BUILD_WORK_FILE", str(root / "build/lean-cache/build-work.json")))
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError("duplicate work field")
+            result[key] = value
+        return result
+    try:
+        if (not path.is_absolute() or path.is_symlink()
+                or path.resolve().is_relative_to(root.resolve() / ".lake")):
+            raise ValueError("work fact must be outside the restored tree")
+        value = json.loads(path.read_text(), object_pairs_hook=unique)
+        if (not isinstance(value, dict) or set(value) != {"schema_version", "run_id", "run_attempt", "repository", "report", "programs"}
+                or type(value["schema_version"]) is not int or value["schema_version"] != 1
+                or value["run_id"] != os.environ.get("GITHUB_RUN_ID")
+                or value["run_attempt"] != os.environ.get("GITHUB_RUN_ATTEMPT")
+                or value["repository"] != str(root.resolve())
+                or any(type(value[name]) is not int or value[name] < 0 for name in ("report", "programs"))):
+            raise ValueError("invalid or stale invocation work fact")
+        return value["report"] + value["programs"]
+    except (OSError, UnicodeError, ValueError, TypeError, KeyError):
+        return None
+
+
+def project_publication(root):
+    if os.environ.get("GITHUB_EVENT_NAME") == "pull_request":
+        return False, "pull-requests-do-not-publish-project-seeds", None
+    work = project_work(root)
+    if work is None:
+        return False, "build-work-unknown", work
+    if work == 0:
+        return False, "no-build-work", work
+    return True, "built-project-artifacts", work
+
+
 def snapshot(root, keys, layers=LAYERS):
     for layer in layers:
         if layer not in LAYERS:
             continue
         ready = False
         try:
-            if not keys["save_allowed"]:
+            if layer == "project":
+                allowed, reason, work = project_publication(root)
+                if not allowed:
+                    receipt(layer, "save-disabled", reason=reason)
+                    output({layer + "_ready": False})
+                    continue
+            if not keys["project_save_allowed" if layer == "project" else "save_allowed"]:
                 receipt(layer, "save-disabled")
                 output({layer + "_ready": False})
                 continue
@@ -229,7 +275,7 @@ def snapshot(root, keys, layers=LAYERS):
                     pass
                 write_small_record(target / ".stratalint-actions-inputs.json", {"inputs_sha256": fingerprint})
             ready = True
-            receipt(layer, "snapshot", key=keys[layer]["key"])
+            receipt(layer, "snapshot", key=keys[layer]["key"], **({"build_work": work} if layer == "project" else {}))
         except (OSError, ValueError, TypeError) as error:
             receipt(layer, "save-failed", reason=str(error))
         output({layer + "_ready": ready})
