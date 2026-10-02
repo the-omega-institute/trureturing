@@ -8,7 +8,7 @@ using static StrataLint.TestSupport.FrozenLedgerTestData;
 
 namespace StrataLint.TruthRelease.Tests;
 
-public sealed class TruthReleaseCommandTests
+public sealed partial class TruthReleaseCommandTests
 {
     private const string ProducerCommit = "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
     private const string ProducerRepository = "the-omega-institute/trureturing";
@@ -109,7 +109,8 @@ public sealed class TruthReleaseCommandTests
     private static (int ExitCode, BufferedConsole Console) Run(
         Fixture fixture,
         string outputDirectory,
-        IReadOnlyList<string> trustArguments)
+        IReadOnlyList<string> trustArguments,
+        IReadOnlyList<string>? extraArguments = null)
     {
         var console = new BufferedConsole();
         var arguments = new List<string>
@@ -121,6 +122,7 @@ public sealed class TruthReleaseCommandTests
             "--produced-at", "2026-08-23T00:00:00Z",
         };
         arguments.AddRange(trustArguments);
+        if (extraArguments is not null) arguments.AddRange(extraArguments);
         var exitCode = CliApplication.Run(
             arguments,
             fixture.Environment,
