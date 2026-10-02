@@ -64,8 +64,19 @@ internal sealed class WindowHistogramLegalCountDocument : IScribeDocumentDefinit
             Node("terminalGap", "The final gap",
                 "TerminalGap(p) selects the final gap, including an empty final gap.",
                 DescribeRole.Definition),
+            Node("inventory", "Counts recovered from gap exponents",
+                "Inventory(p) assigns the sums of the X and Y gap exponents, the number "
+                + "of gaps carrying Z, and the counts of false/true neutral Booleans.",
+                DescribeRole.Definition),
+            Node("HistogramWords", "An exact literal-word histogram fiber",
+                "For any function h from Window to natural numbers, HistogramWords(h) "
+                + "contains exactly the legal literal words with count(f,w)=h(f) for every f.",
+                DescribeRole.Definition),
+            Node("HistogramCodes", "The corresponding canonical-code fiber",
+                "HistogramCodes(h) contains the Codes whose Inventory is h.",
+                DescribeRole.Definition),
             Node("result", "Unique decomposition and exact legal gap shape",
-                "Six assertions hold jointly. For every finite window word w there "
+                "Eight assertions hold jointly. For every finite window word w there "
                 + "exists exactly one p in Cuts with Clean(p) and Join(p)=w. For every "
                 + "w, the number of separator-gap pairs in Split(w) is count(U,w)+count(V,w). "
                 + "For every w, Legal(w) holds if and only if, for every gap g in "
@@ -74,6 +85,9 @@ internal sealed class WindowHistogramLegalCountDocument : IScribeDocumentDefinit
                 + "with CodeWord(p)=w. For every Code p, its word ends in X precisely "
                 + "when its final gap has x>0, z=false and y=0; it ends in Z precisely "
                 + "when its final gap has z=true and y=0. "
+                + "For every p and f, count(f,CodeWord(p))=Inventory(p)(f). For every "
+                + "histogram h there is a bijection from HistogramCodes(h) to "
+                + "HistogramWords(h) sending p to CodeWord(p). "
                 + "All natural exponents, empty words, empty gaps and words with no "
                 + "neutral letters are included.", DescribeRole.Theorem,
                 "Each neutral letter removes both possible seam obstructions. Inside "

@@ -210,8 +210,9 @@ def readCode (p : Cuts) : Code :=
   (readGap p.1, p.2.map fun dg => (dg.1, readGap dg.2))
 def terminalGap (p : Code) : Gap := p.2.foldl (fun _ dg => dg.2) p.1
 
-private theorem code_language (w : List Window) :
-    legal false (flatten w) ↔ ∃! p : Code, codeWord p = w := by
+private theorem code_language :
+    (∀ w : List Window, legal false (flatten w) ↔ ∃! p : Code, codeWord p = w) ∧
+    (∀ p : Code, readCode (split (codeWord p)) = p ∧ legal false (flatten (codeWord p))) := by
   have reading (q : Gap) : readGap (gap q) = q := by
     rcases q with ⟨a, z, b⟩
     cases z <;> simp [readGap, gap, List.count_replicate]
@@ -236,6 +237,8 @@ private theorem code_language (w : List Window) :
     rcases hg with rfl | ⟨dg, _, rfl⟩
     · exact ⟨p.1, rfl, fun q hq => by simpa [reading] using congrArg readGap hq⟩
     · exact ⟨dg.2, rfl, fun q hq => by simpa [reading] using congrArg readGap hq⟩
+  refine ⟨?_, fun p => ⟨inverse p, legal_code p⟩⟩
+  intro w
   constructor
   · intro hw
     have hs := split_properties w
@@ -289,11 +292,60 @@ private theorem terminal_shapes (p : Code) :
   generalize terminalGap p = q
   rcases q with ⟨a, z, b⟩
   cases z <;>
-    simp only [gap, Bool.false_eq_true, Bool.true_eq_true, ↓reduceIte,
+    simp only [gap, Bool.false_eq_true, ↓reduceIte,
       List.getLast?_append, List.getLast?_replicate, List.getLast?_singleton,
       List.getLast?_nil]
   all_goals by_cases ha : a = 0 <;> by_cases hb : b = 0 <;>
     simp [ha, hb, Nat.pos_iff_ne_zero]
+
+/-- The five letter multiplicities read directly from a canonical code. -/
+def inventory (p : Code) : Window → ℕ
+  | .low => p.1.x + (p.2.map fun dg => dg.2.x).sum
+  | .high => p.1.y + (p.2.map fun dg => dg.2.y).sum
+  | .ends => (if p.1.z then 1 else 0) + (p.2.map fun dg => if dg.2.z then 1 else 0).sum
+  | .zero => (p.2.map Prod.fst).count false
+  | .middle => (p.2.map Prod.fst).count true
+
+/-- The fiber consists of literal words, without quotienting or identifying positions. -/
+def HistogramWords (h : Window → ℕ) :=
+  {w : List Window // legal false (flatten w) ∧ ∀ f, w.count f = h f}
+
+def HistogramCodes (h : Window → ℕ) := {p : Code // ∀ f, inventory p f = h f}
+
+private theorem histogram_encoding (h : Window → ℕ) :
+    (∀ p : Code, ∀ f, (codeWord p).count f = inventory p f) ∧
+    (∃ e : HistogramCodes h ≃ HistogramWords h,
+      ∀ p, (e p).val = codeWord p.val) := by
+  have counts (p : Code) (f : Window) : (codeWord p).count f = inventory p f := by
+    rcases p with ⟨g, ds⟩
+    induction ds generalizing g with
+    | nil => cases f <;> cases hz : g.z <;>
+        simp [codeWord, codeCuts, join, inventory, gap, hz, List.count_replicate]
+    | cons dg ds ih =>
+      rcases dg with ⟨d, q⟩
+      have he : codeWord (g, (d, q) :: ds) = gap g ++ neutral d :: codeWord (q, ds) := by
+        simp [codeWord, codeCuts, join, List.flatMap_cons]
+      rw [he, List.count_append, List.count_cons, ih q]
+      cases f <;> cases d <;> cases hz : g.z <;>
+        simp [inventory, gap, neutral, hz, List.count_replicate, List.count_cons,
+          Nat.add_assoc]
+  let e : HistogramCodes h ≃ HistogramWords h :=
+    { toFun := fun p => ⟨codeWord p.val, (code_language.2 p.val).2,
+        fun f => (counts p.val f).trans (p.property f)⟩
+      invFun := fun w => ⟨readCode (split w.val), by
+        obtain ⟨p, hp, _⟩ := (code_language.1 w.val).mp w.property.1
+        have hr : readCode (split w.val) = p := by
+          rw [← hp, (code_language.2 p).1]
+        intro f
+        rw [hr, ← counts p f, hp]
+        exact w.property.2 f⟩
+      left_inv := fun p => Subtype.ext (code_language.2 p.val).1
+      right_inv := fun w => by
+        apply Subtype.ext
+        obtain ⟨p, hp, _⟩ := (code_language.1 w.val).mp w.property.1
+        change codeWord (readCode (split w.val)) = w.val
+        rw [← hp, (code_language.2 p).1] }
+  exact ⟨counts, e, fun _ => rfl⟩
 
 /-- Unique neutral-position decomposition and a reversible canonical code
 that retains the restrictions on an exact low or ends terminal window. -/
@@ -306,9 +358,13 @@ theorem result :
     (∀ p : Code, (codeWord p).getLast? = some .low ↔
       0 < (terminalGap p).x ∧ (terminalGap p).z = false ∧ (terminalGap p).y = 0) ∧
     (∀ p : Code, (codeWord p).getLast? = some .ends ↔
-      (terminalGap p).z = true ∧ (terminalGap p).y = 0) :=
-  ⟨decomposition.1, decomposition.2.1, decomposition.2.2, code_language,
-    fun p => (terminal_shapes p).1, fun p => (terminal_shapes p).2⟩
+      (terminalGap p).z = true ∧ (terminalGap p).y = 0) ∧
+    (∀ p : Code, ∀ f, (codeWord p).count f = inventory p f) ∧
+    (∀ h : Window → ℕ, ∃ e : HistogramCodes h ≃ HistogramWords h,
+      ∀ p, (e p).val = codeWord p.val) :=
+  ⟨decomposition.1, decomposition.2.1, decomposition.2.2, code_language.1,
+    fun p => (terminal_shapes p).1, fun p => (terminal_shapes p).2, (histogram_encoding (fun _ => 0)).1,
+    fun h => (histogram_encoding h).2⟩
 
 #print axioms result
 
