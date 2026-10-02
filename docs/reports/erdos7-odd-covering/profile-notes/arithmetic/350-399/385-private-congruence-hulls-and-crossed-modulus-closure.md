@@ -194,6 +194,13 @@ In the small-prime concentrated branch, a group of at least47 suppliers
 has at most seven top-support primes; the number and combined capacity
 of the remaining small-support groups are still uncontrolled.
 
+[Section149](#149-a-qualified-mixed-parent-bounds-the-whole-top-q-suffix-at-one-private-source)
+splits one complete all-depth q-packet into a finite low-ternary strip,
+one qualified parent phase, and the already bounded colored part.
+For one nonconcentrated prime, the resulting height bound no longer
+contains H_3 and needs no original mixed corner. With further shared
+primes, their cofactor divisor count remains in the denominator.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -18248,3 +18255,100 @@ LSM3 uses only one common LOWER source. Its fixed-core divisor count is product_
 Section140 TQ1–TQ7 already consumes the same private fan by counting R-only numerical inventories and assigning concentrated labels to CP1/CD1 parent buckets. Its bounds are aggregate counts and can remove the concentrated divisor inventory when G exceeds a color threshold. FCF4–FCF8 instead reuse the opposite-PAIR OCP repair on the complete cofactor support of each supplier group, including R-only groups. They provide phase capacities controlled by the PRODUCT of full-height divisor factors. No new fan lemma, squarefree-cover theorem, KKL theorem, moment estimate or distortion recurrence is needed.
 
 The remaining groups have genuinely small product cores; their original numerical cofactors may still vary on arbitrarily many primes outside their common top support. Neither their number nor their total original lower inventory is uniformly bounded here. FCF2 can distribute q-1 owners among such groups. The selected one-dimensional fan is not a whole cover of the complete top box, and the bound does not supply KKL's uniform numerical multiplicity premise for every active support in such a cover. No bounded head containing an R-prime and no unrestricted contradiction follow from this consumer alone.
+
+## 149. A qualified mixed parent bounds the whole top-q suffix at one private source
+
+This is an ordinary arithmetic consumer of Library/Arith/lettlsun2008cosets.md QC1–QC2, Report385 §140's original-source pruning and q-parent color capacity, and §144 OCP2–OCP4. No original label, phase, height, or complete private-source obligation is replaced. It does not assert Lean verification or unrestricted noncoverage.
+
+### One complete source and a mixed-parent cutoff
+
+Use one original EB1 whole cover and its prime-private partition R,S_1,S_2. First assume R={q}. Write H=v_3(Q) and G=v_q(Q); Q is the whole period and is not assumed to be an original modulus. Fix opposite concentrated original primes p_1 in S_1 and p_2 in S_2. Thus neither is q. Put
+
+    N_1=(p_1-2)(p_2-1),
+    N_2=(p_1-1)(p_2-2),
+    N=max(N_1,N_2).
+
+The original pure label q^G exists by divisor closure. Choose ONE of its complete original private points, and let i be its first ternary root. Let p be the selected opposite prime p_(3-i), and put
+
+    c=p-2, C_i=c|S_i|.
+
+Use §140's already established modification: reset every opposite-color coordinate to its original 3ell singleton first root, retaining all other coordinates. Every opposite-color original vanishes, including ternary-height-zero originals, and q^G still owns this one modified point x privately. All original APs themselves keep their literal residues. The private ternary root of q^G is not asserted to occur in both colors.
+
+Choose integer cutoffs
+
+    a>=1, b>=c, (a+1)(b+1)>=N.                    (QHP1)
+
+The role of a is a ternary inventory cutoff, not a depth at which the colored ternary cap is used. Consequently a>=c is NOT required. If G<=b, the height bound below is automatic. Suppose G>b and put k=G-b.
+
+### The high ternary group supplies its own original parent
+
+At the SAME x, use all original q-direction terms of QC1 at cutoff b, with their exact weights at most one. Give the original owner q^G weight one as an additional label. Their total service is at least
+
+    1+k(q-1).                                     (QHP2)
+
+Every such label has q-height in {b+1,...,G}, shares x modulo q^b, and agrees with x at its COMPLETE q-free cofactor. The owner is not one of the QC1 suppliers and is counted only once.
+
+The S_i-bearing labels number at most C_i: assign each once to a dividing ell in S_i and use §140's parent q^b ell, whose phase capacity is c because b>=c. Their complete ell incidence and depth-b q prefix are fixed at this source, and q-height>b makes them proper descendants. This counts ALL their ternary heights. Opposite-color labels are absent.
+
+The remaining labels are R-only. Those with ternary height t<a have distinct numerical labels
+
+    3^t q^e, 0<=t<a, b<e<=G,
+
+so their count is at most ak. The pure owner q^G belongs to this low group. This inventory bound remains valid when a exceeds H.
+
+All remaining R-only labels have t>=a and q-height>b. Thus all are proper multiples of
+
+    h=3^a q^b,
+
+and share the SAME phase x modulo h. If this high group is nonempty, any one of its actual original members supplies h as an ORIGINAL divisor. Then tau(h)=(a+1)(b+1)>=N. The old parent h has its own fixed ternary root, so OCP4 supplies its old private-pair container of size N_j<=N. OCP2 bounds every non-own h-phase group by N_j-1<=N-1. The own phase contains no proper original descendant, by comparable-original disjointness. Thus the high group has at most N-1 labels. If the high group is empty, that same bound holds without assuming h exists at all.
+
+The source root i is not identified with h's OLD own root. The uniform N is exactly what avoids that identification. This is one previously proved whole-parent repair capacity, not a repair performed independently at different sources.
+
+Adding the three disjoint inventories gives
+
+    1+k(q-1) <= ak+(N-1)+C_i,
+    (q-1-a)(G-b) <= N-2+C_i.                      (QHP3)
+
+In particular there is no need to assume an original full corner 3^H q^G, or even an original mixed top-q label in advance. No expression tau(Q) is substituted into an original-parent condition.
+
+### The resulting height bound and numerical comparisons
+
+For q>a+1, QHP3 gives the global q-height bound
+
+    G <= b+floor((N-2+C_i)/(q-1-a)).               (QHP4)
+
+It is valid also when G<=b. When q<=a+1, QHP3 is retained only as an inequality; it supplies no upper height bound. For any fixed b>=c the smallest allowed ternary cutoff is
+
+    a=max(1,ceil(N/(b+1))-1).                     (QHP5)
+
+One may minimize the QHP4 right side over admissible b with a<q-1. All choices use the same original-source root i; the budgets are alternative estimates, not sums of independently attainable optima.
+
+For opposite concentrated primes 5 and 7, N=20. At a source whose color contains 7, the opposite choice p=5 gives c=3, C_i=3|S_i|. Taking a=4,b=3 gives
+
+    G <= 3+floor((18+3|S_i|)/(q-5)), q>5.          (QHP6)
+
+At a source whose color contains 5, use p=7, c=5, C_i=5|S_i|. Taking a=3,b=5 gives
+
+    G <= 5+floor((18+5|S_i|)/(q-4)), q>4.          (QHP7)
+
+For numerical parameter comparison only, take |S_1|=|S_2|=1 and H=28, which is the OCP6 upper bound for this opposite pair.
+
+* At q=17, QHP6 gives G<=4 at the 7-color private source, and QHP7 gives G<=6 at the 5-color private source. Thus G<=6 without knowing which private root occurs. OCP5 gives G<=23. The displayed §140 TQ7 has denominator q-H-2=-13 and does not give a height upper bound.
+* At q=29, QHP6 gives G<=3 and QHP7 gives G<=5, hence G<=5 without a private-root choice. OCP5 gives G<=22. The TQ7 denominator is -1 and again gives no height upper bound.
+
+These are comparisons of the displayed necessary inequalities on numerical parameters. They are not constructed covering families, assertions that the parameters satisfy every other constraint, or claims of independence from all repository consequences. QHP4 need not dominate every previous bound at every parameter choice.
+
+### More than one nonconcentrated prime
+
+The same proof allows arbitrary R containing q. Put
+
+    Q_0=product_(r in R minus {q}) r^H_r,
+    D_0=tau(Q_0).
+
+The colored capacity and high-parent capacity are unchanged. The low R-only inventory becomes akD_0 because its numerical labels are 3^t q^e s with s|Q_0. Therefore
+
+    (q-1-aD_0)(G-b) <= N-2+C_i,                  (QHP8)
+
+and a height upper bound follows when q>1+aD_0. Neither Q_0 nor Q is assumed original; they are used only to overcount possible cofactors. This does not bound D_0 or the amount of nonconcentrated support. For R={q}, D_0=1 recovers QHP3–QHP7.
+
+The new arithmetic input is the division of one full all-depth private packet into a finite low-ternary strip and one qualified mixed-parent phase. CPA's same-parent accounting and OCP2 provide the capacity; §140 provides the color removal. The absence of an original parent can only make the high group empty, so it is not an extra existence assumption. A whole-cover contradiction and an extension of the all-concentrated SG1 support-gap repair to R-only cofactors are not supplied here.
