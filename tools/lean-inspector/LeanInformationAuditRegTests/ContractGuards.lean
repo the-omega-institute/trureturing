@@ -1,3 +1,4 @@
+import LeanInformationAuditRegTests.ContractAssertions
 import LeanInformationAudit.Contract.Discovery
 import LeanInformationAudit.Contract.InterfaceGuard
 import D5.S3.ConceptDynamics.InformationEscape.Arena
@@ -5,9 +6,10 @@ import D5.S3.ConceptDynamics.InformationEscape.Arena
 namespace LeanInformationAuditRegTests.ContractGuards
 open Lean Meta Elab Command
 
-def assertTest (label : String) (ok : Bool) : MetaM Unit := do
-  if ok then logInfo m!"[PASS] {label}"
-  else logError m!"[FAIL] {label}"
+def finiteArena : D5.S3.ConceptDynamics.InformationEscape.Arena where
+  State := Bool
+  stateFintype := inferInstance
+  stateDecidableEq := inferInstance
 
 run_meta do
   let env := (← getEnv).setExporting false
@@ -35,7 +37,7 @@ run_meta do
       | .error error => error.startsWith "contract.interface:command_not_allowed:"
       | .ok _ => false)
   let letIssue := LeanInformationAudit.Contract.SourceAudit.resultTypeIssue env
-    (.letE `hidden (.sort .zero) (.sort .zero) (.sort .zero) false)
+    (.letE `hidden (.sort (.succ .zero)) (.sort .zero) (.bvar 0) false)
   assertTest "reg.result_type.let_rejected"
     (letIssue.any (·.startsWith "contract.discovery:result_type_let"))
   let letEntries ← LeanInformationAudit.Contract.SourceAudit.parse env
@@ -51,7 +53,7 @@ run_meta do
       (·.startsWith "contract.discovery:result_type_projection:"))
   let allowedProjection := Expr.proj
     ``D5.S3.ConceptDynamics.InformationEscape.Arena 0
-    (.const ``D5.S3.ConceptDynamics.InformationEscape.Arena [])
+    (.const ``finiteArena [])
   assertTest "reg.result_type.allowlisted_arena_projection"
     ((LeanInformationAudit.Contract.SourceAudit.resultTypeIssue env allowedProjection).isNone)
   for (label, source) in #[
@@ -111,7 +113,7 @@ run_meta do
     if seen.contains name then continue
     seen := seen.insert name
     if #[`Lean.Meta.evalExpr, `Lean.evalConst, `Lean.evalConstCheck,
-        `Lean.evalConstCheck', `Lean.Meta.evalExprCore].contains name then
+        `Lean.evalConstCheck', `Lean.Meta.evalExprCore, `Lean.Meta.whnf, `Lean.Meta.isDefEq].contains name then
       forbidden := forbidden.push name
     if let some info := env.find? name then
       pending := pending ++ info.type.getUsedConstants

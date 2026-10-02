@@ -8,7 +8,11 @@ bare instance/reducible attributes. Unknown commands and wrapped inner commands
 fail closed. The catalog call resolves uniquely to the fully qualified declare
 constant. P3 deletes catalog and legacy registration/enrollment/seal permissions.
 
-No source command or evaluator is invoked.
+Every compiled declaration's result is inspected before candidacy. The four
+listed mathematical carriers require a constant-backed constructor instance and
+a selected field whose structural constant closure excludes all Contract heads.
+Unknown instances and stored Contract fields receive named projection failures.
+No source command, evaluator, whnf or isDefEq is invoked.
 -/
 
 namespace LeanInformationAudit.Contract.SourceAudit
@@ -33,58 +37,136 @@ private def allowedTypeCarrierStructures : Array Name := #[
   `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature,
   `D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena]
 
-private def projectionStructure (env : Environment) (name : Name) : Option Name :=
-  (env.getProjectionFnInfo? name).map (·.ctorName.getPrefix)
-
 private def projectionReturnsSort (env : Environment) (name : Name) : Bool :=
   match env.find? name with
   | some info => (resultType info.type).isType
   | none => false
 
-private def allowedProjection (structureName : Name) : Bool :=
-  allowedTypeCarrierStructures.contains structureName
+/-- Read a constructor field by kernel metadata, without reducing the term. -/
+private def constructorField (env : Environment) (structureName : Name)
+    (index : Nat) (value : Expr) : Option Expr := do
+  let some (.ctorInfo info) := value.getAppFn.constName? >>= env.find? | none
+  guard (info.induct == structureName)
+  guard (value.getAppArgs.size == info.numParams + info.numFields)
+  value.getAppArgs[info.numParams + index]?
+
+/-- Only constant-backed constructor trees are carrier instances. Lambda
+substitution applies the constant's literal telescope; it is not normalization.
+Projection selection reads the same constructor tree recursively. -/
+private def carrierValue (env : Environment) (value : Expr) : Option Expr :=
+  let rec read (fuel : Nat) (seen : NameSet) (value : Expr) : Option Expr := do
+    let fuel + 1 := fuel | none
+    let value := value.consumeMData
+    if let .proj structureName index parent := value then
+      let parent ← read fuel seen parent
+      read fuel seen (← constructorField env structureName index parent)
+    else
+      let .const name levels := value.getAppFn | none
+      let info ← env.find? name
+      if info.isCtor then return value
+      if let some projection := env.getProjectionFnInfo? name then
+        let args := value.getAppArgs
+        let parent ← args[projection.numParams]?
+        let parent ← read fuel seen parent
+        let field ← constructorField env projection.ctorName.getPrefix projection.i parent
+        read fuel seen (mkAppN field (args.extract (projection.numParams + 1) args.size))
+      else
+        guard (!seen.contains name)
+        let .defnInfo definition := info | none
+        let mut body := definition.value.instantiateLevelParams definition.levelParams levels
+        for arg in value.getAppArgs do
+          let .lam _ _ next _ := body.consumeMData | none
+          body := next.instantiate1 arg
+        read fuel (seen.insert name) body
+  read 128 {} value
+
+/-- A structural constant closure of the selected field. All types and bodies
+are read as Expr trees; no evaluator, whnf or definitional equality is used. -/
+private def fieldContainsContract (env : Environment) (field : Expr) : Bool := Id.run do
+  let mut pending := field.getUsedConstants
+  let mut seen : NameSet := {}
+  while !pending.isEmpty do
+    let name := pending.back!
+    pending := pending.pop
+    if heads.contains name then return true
+    if seen.contains name then continue
+    seen := seen.insert name
+    if let some info := env.find? name then
+      pending := pending ++ info.type.getUsedConstants
+      if let some body := info.value? (allowOpaque := true) then
+        pending := pending ++ body.getUsedConstants
+  return false
+
+private def carrierIssue (env : Environment) (structureName : Name)
+    (index : Nat) (value : Expr) : Option String := do
+  let field := (getStructureFields env structureName)[index]?
+  let diagnostic := s!"contract.discovery:result_type_projection:{structureName}:{field}"
+  if !allowedTypeCarrierStructures.contains structureName then return diagnostic
+  let some constructor := carrierValue env value
+    | return diagnostic ++ ":carrier_unresolved"
+  let some payload := constructorField env structureName index constructor
+    | return diagnostic ++ ":carrier_unresolved"
+  if payload.hasLooseBVars || payload.hasFVar || payload.hasMVar then
+    return diagnostic ++ ":carrier_unresolved"
+  if fieldContainsContract env payload then return diagnostic ++ ":contract_payload"
+  none
 
 private partial def resultTypeIssueAt (env : Environment) (e : Expr) : Option String :=
-  match e.consumeMData with
-  | .letE _ type value body _ =>
-      if let some issue := resultTypeIssueAt env type then some issue
-      else if let some issue := resultTypeIssueAt env value then some issue
-      else if let some issue := resultTypeIssueAt env body then some issue
-      else some "contract.discovery:result_type_let"
+  let e := e.consumeMData
+  match e with
+  | .letE _ _ _ _ _ => some "contract.discovery:result_type_let"
   | .proj structureName index value =>
-      let fields := getStructureFields env structureName
-      match fields[index]? with
+      match (getStructureFields env structureName)[index]? with
       | some field =>
-          let projection := structureName ++ field
-          if projectionReturnsSort env projection && !allowedProjection structureName then
-            some s!"contract.discovery:result_type_projection:{structureName}:{field}"
+          if projectionReturnsSort env (structureName ++ field) then
+            carrierIssue env structureName index value
           else resultTypeIssueAt env value
       | none => some s!"contract.discovery:result_type_projection:{structureName}:{index}"
-  | .app fn arg =>
-      if let some fnName := fn.constName? then
-        if let some projection := projectionStructure env fnName then
-          if projectionReturnsSort env fnName && !allowedProjection projection then
-            some s!"contract.discovery:result_type_projection:{projection}:{fnName}"
-          else if let some issue := resultTypeIssueAt env fn then some issue
-          else resultTypeIssueAt env arg
-        else if let some issue := resultTypeIssueAt env fn then some issue
-        else if let some issue := resultTypeIssueAt env arg then some issue else none
-      else if let some issue := resultTypeIssueAt env fn then some issue
-      else resultTypeIssueAt env arg
-  | .forallE _ domain body _ =>
-      if let some issue := resultTypeIssueAt env domain then some issue
-      else resultTypeIssueAt env body
-  | .lam _ domain body _ =>
-      if let some issue := resultTypeIssueAt env domain then some issue
-      else resultTypeIssueAt env body
-  | .mdata _ body => resultTypeIssueAt env body
+  | .app .. =>
+      if let some name := e.getAppFn.constName? then
+        if let some projection := env.getProjectionFnInfo? name then
+          if projectionReturnsSort env name then
+            match e.getAppArgs[projection.numParams]? with
+            | some value => carrierIssue env projection.ctorName.getPrefix projection.i value
+            | none => some s!"contract.discovery:result_type_projection:{name}:carrier_unresolved"
+          else none
+        else none
+      else resultTypeIssueAt env e.getAppFn
+  | .forallE _ _ body _ | .lam _ _ body _ => resultTypeIssueAt env body
   | _ => none
 
+/-- Recognize proposition-valued heads from their compiled signatures, without
+normalization or examining proofs. Proposition arguments are mathematical data. -/
+partial def proposition (env : Environment) (e : Expr) : Bool :=
+  match e.consumeMData with
+  | .forallE _ _ body _ => proposition env body
+  | .letE _ _ _ body _ => proposition env body
+  | .sort .zero => true
+  | e => match e.getAppFn.constName? >>= env.find? with
+    | some info => resultType info.type == .sort .zero
+    | none => false
+
+private partial def hasTelescope (e : Expr) : Bool :=
+  match e.consumeMData with
+  | .forallE .. => true
+  | .letE _ _ _ body _ => hasTelescope body
+  | _ => false
+
+/-- A telescoped mathematical function is not a stored-type result instance.
+Its endpoint still passes through contract candidacy, which rejects contractual
+functions and wrappers. Closed results receive the strict carrier check. -/
 def resultTypeIssue (env : Environment) (e : Expr) : Option String :=
-  resultTypeIssueAt env (resultType e)
+  if proposition env e || hasTelescope e then none else resultTypeIssueAt env e
 
 private partial def containsAtomValue (stx : Syntax) (value : String) : Bool :=
   (stx.isAtom && stx.getAtomVal == value) || stx.getArgs.any (containsAtomValue · value)
+
+partial def termHead (stx : Syntax) : Syntax :=
+  if stx.isOfKind ``Parser.Term.paren then termHead stx[1]
+  else if stx.isOfKind ``Parser.Term.app then termHead stx[0]
+  else if stx.isOfKind ``Parser.Term.explicit then termHead stx[1]
+  else if stx.isOfKind ``Parser.Term.explicitUniv then termHead stx[0]
+  else stx
 
 /-- Check the authored result-type syntax before elaboration zeta-reduces it. -/
 def sourceResultTypeIssue (command : Syntax) : Option String :=
@@ -94,20 +176,10 @@ def sourceResultTypeIssue (command : Syntax) : Option String :=
     if !declaration.isOfKind ``Parser.Command.definition then none
     else
       let signature := declaration[2]
-      let type := signature[1][0][1]
+      let type := termHead signature[1][0][1]
       if containsAtomValue type "let" || containsAtomValue type "have" then
         some "contract.discovery:result_type_let"
       else none
-
-/-- Recognize proposition-valued heads from their compiled signatures, without
-normalization or examining proofs. Proposition arguments are mathematical data. -/
-partial def proposition (env : Environment) (e : Expr) : Bool :=
-  match e.consumeMData with
-  | .forallE _ _ body _ => proposition env body
-  | .sort .zero => true
-  | e => match e.getAppFn.constName? >>= env.find? with
-    | some info => resultType info.type == .sort .zero
-    | none => false
 
 private def carriesTypes (e : Expr) : Bool :=
   (e.find? fun t => match t with | .sort (.succ _) | .sort (.param _) => true | _ => false).isSome
@@ -121,9 +193,20 @@ private partial def typeConstants (env : Environment) (e : Expr) : Array Name :=
   | .lam _ _ body _ => return typeConstants env body
   | .letE _ type value body _ =>
       return typeConstants env type ++ typeConstants env value ++ typeConstants env body
-  | .proj _ _ value => return value.getUsedConstants
+  | .proj structureName index value =>
+    if let some constructor := carrierValue env value then
+      if let some field := constructorField env structureName index constructor then
+        if fieldContainsContract env field then return heads
+        return typeConstants env field
+    return value.getUsedConstants
   | .app .. =>
     let fn := e.getAppFn
+    if let some name := fn.constName? then
+      if let some projection := env.getProjectionFnInfo? name then
+        if let some value := e.getAppArgs[projection.numParams]? then
+          if let some constructor := carrierValue env value then
+            if let some field := constructorField env projection.ctorName.getPrefix projection.i constructor then
+              if fieldContainsContract env field then return heads
     let mut names := typeConstants env fn
     if let some info := fn.constName? >>= env.find? then
       let mut signature := info.type
@@ -172,13 +255,6 @@ def scanContract (env : Environment) (e : Expr) (unrelated : NameSet := {})
 
 def containsContract (env : Environment) (e : Expr) : Bool :=
   (scanContract env e).1
-
-partial def termHead (stx : Syntax) : Syntax :=
-  if stx.isOfKind ``Parser.Term.paren then termHead stx[1]
-  else if stx.isOfKind ``Parser.Term.app then termHead stx[0]
-  else if stx.isOfKind ``Parser.Term.explicit then termHead stx[1]
-  else if stx.isOfKind ``Parser.Term.explicitUniv then termHead stx[0]
-  else stx
 
 def isHeadSpelling (stx : Syntax) (head : Name) : Bool :=
   !head.isAnonymous && stx.isIdent && #[head, head.getString!.toName, `Contract ++ head.getString!.toName,

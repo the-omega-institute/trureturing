@@ -132,6 +132,10 @@ def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := d
     match SourceAudit.auditRegCommands owner entries with
     | .error error => throwError error
     | .ok _ => pure ()
+  if (`Reg).isPrefixOf owner then
+    for entry in entries do
+      if let some issue := SourceAudit.sourceResultTypeIssue entry.command then
+        throwError s!"{issue}:{entry.sourceName}"
   let map := FileMap.ofString source
   let mut found : Array Definition := #[]
   let mut expansionKeys : Option NameSet := none
@@ -145,12 +149,12 @@ def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := d
     return (name, info)
   let mut unrelated : NameSet := {}
   for (name, info) in constants do
-    let (relevant, cache) := candidate env info unrelated
-    unrelated := cache
-    unless relevant do continue
     if (`Reg).isPrefixOf owner then
       if let some issue := SourceAudit.resultTypeIssue env info.type then
         throwError s!"{issue}:{info.name}"
+    let (relevant, cache) := candidate env info unrelated
+    unrelated := cache
+    unless relevant do continue
     let head := (SourceAudit.resultType info.type).getAppFn.constName?.getD .anonymous
     let functionDefinition := match info with
       | .defnInfo _ => info.type.isForall
