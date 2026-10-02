@@ -52,8 +52,31 @@ The existing arena structure decorators are admitted as direct delegates to the
 core structure elaborators: their module owner, private-aware identity and
 compiled direct delegation shape and marker body SHA-256 are checked. They annotate mathematical arena
 expressions without changing contract fields. Other repository term elaborators
-on metadata syntax fail closed. Arbitrary metaprogrammatic registration outside
-the compiler attribute tables and source rule patterns is outside this policy.
+on metadata syntax fail closed.
+
+The four `Contract` interface modules have a closed command allowlist: imports,
+namespace/section scaffolding, `open`, `universe`, documentation comments, and
+bare `structure`/`inductive` declarations. Type declarations with attributes,
+`variable`, `set_option`, tactic or `do` terms, term elaboration blocks,
+`deriving`, macros, `run_*`, `initialize`, notation, and every other command
+are rejected with `contract.interface:command_not_allowed`. The compiled
+inventory is checked only after this lexical gate, so a rejected command cannot
+authorize a companion name.
+
+`Reg` sources use a separate finite command table. The existing
+`RootCatalogs.declare` catalog/snapshot forms, the three named catalog
+contracts, the three existing local notation owners, ordinary instance
+attributes, and `[reducible]` declarations are the only retained registrations;
+all other repository-owned macros, syntax, elaborators, notation, macro-related
+attributes, `local`/`scoped` registrations, `run_cmd`/`run_meta`/`run_elab`,
+`#eval`, and `initialize` commands fail closed with
+`contract.reg:metaprogramming_not_allowed`. Result types reject `let`/`have`
+forms and projections of stored `Sort` fields. The only projection carriers
+currently admitted are `D5.S3.ConceptDynamics.InformationEscape.Arena`,
+`D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena`, and
+`D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature`, and
+`D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena`; every other
+carrier is rejected with a named result-type diagnostic.
 
 The four Contract interface modules are checked against their compiled constant
 inventories. Each constant must belong to a source structure/inductive family:
