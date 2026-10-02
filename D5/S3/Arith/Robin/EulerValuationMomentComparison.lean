@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/Robin/EulerValuationMomentComparison
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/Arith/Robin/EulerValuationMomentComparison
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
@@ -61,7 +61,9 @@ theorem result (s : ℝ) (hs : 4 ≤ s) :
     have hc : 0 < 1 - q := by linarith
     let P : ℝ := (1 - q) ^ (-s)
     have hP : P = ((1 - q)⁻¹) ^ s := Real.rpow_neg_eq_inv_rpow _ _
-    have hSlo (a : ℕ) : 1 ≤ S a q := geometric_prefix_one_le a q hq0.le
+    have hSlo (a : ℕ) : 1 ≤ S a q := by
+      simpa only [S, pow_zero] using Finset.single_le_sum (f := fun k : ℕ => q ^ k)
+        (fun k _ => pow_nonneg hq0.le k) (Finset.mem_range.mpr (Nat.zero_lt_succ a))
     have hgeo : Summable (fun a : ℕ => q ^ a) := summable_geometric_of_lt_one hq0.le hq1
     have hgeoeq : ∑' a : ℕ, q ^ a = (1 - q)⁻¹ :=
       tsum_geometric_of_lt_one hq0.le hq1
@@ -221,14 +223,17 @@ theorem result (s : ℝ) (hs : 4 ≤ s) :
       nlinarith
     have hgeom : S a q = (1 - u) / (1 - q) := by
       apply (eq_div_iff hc.ne').mpr
-      simpa only [mul_comm] using geometric_prefix_mul a q
+      simpa only [S, u] using geom_sum_mul_neg q (a + 1)
     have hpowid : S a q ^ s = (1 - u) ^ s * (1 - q) ^ (-s) := by
       rw [hgeom, Real.div_rpow huc.le hc.le, Real.rpow_neg hc.le, div_eq_mul_inv]
     have hsum := (hlocal p).1
     have hterm : S a q ^ s * q ^ a ≤ ∑' b : ℕ, S b q ^ s * q ^ b := by
       exact hsum.le_tsum a (fun b _ => by
         apply mul_nonneg _ (pow_nonneg hq0.le _)
-        exact Real.rpow_nonneg (by linarith [geometric_prefix_one_le b q hq0.le]) _)
+        have hSlo : 1 ≤ S b q := by
+          simpa only [S, pow_zero] using Finset.single_le_sum (f := fun k : ℕ => q ^ k)
+            (fun k _ => pow_nonneg hq0.le k) (Finset.mem_range.mpr (Nat.zero_lt_succ b))
+        exact Real.rpow_nonneg (by linarith [hSlo]) _)
     have hU : Real.exp (-2) / (2 * s) * (1 - q) ^ (-s) ≤ localU p s := by
       have hPpos : 0 ≤ (1 - q) ^ (-s) := Real.rpow_nonneg hc.le _
       have hexp : 0 ≤ Real.exp (-2) := (Real.exp_pos _).le

@@ -30,17 +30,6 @@ def P (a : ℕ) (t : ℝ) : ℝ := ∑ k ∈ range (a + 1), ((a : ℝ) - k) * t 
 /-- The harmonic-prefix deficit of the geometric logarithm. -/
 def D (a : ℕ) (t : ℝ) : ℝ := Q a t - Real.log (S a t)
 
-/-- Multiplication by the geometric denominator gives the finite remainder. -/
-theorem geometric_prefix_mul (b : ℕ) (t : ℝ) :
-    (1 - t) * S b t = 1 - t ^ (b + 1) := by
-  simpa only [S, mul_comm] using geom_sum_mul_neg t (b + 1)
-
-/-- A nonnegative geometric prefix contains its initial unit term. -/
-theorem geometric_prefix_one_le (b : ℕ) (t : ℝ) (ht : 0 ≤ t) : 1 ≤ S b t := by
-  have h := single_le_sum (f := fun k : ℕ => t ^ k)
-    (fun k _ => pow_nonneg ht k) (mem_range.mpr (Nat.zero_lt_succ b))
-  simpa [S] using h
-
 /-- Exact interval-integral representation and two-sided uniform reserve,
 with the stronger lower denominator `1 + z`. -/
 theorem result (a : ℕ) (z : ℝ) (ha : 1 ≤ a) (hz : 0 < z) (hz1 : z < 1) :
@@ -60,7 +49,8 @@ theorem result (a : ℕ) (z : ℝ) (ha : 1 ≤ a) (hz : 0 < z) (hz1 : z < 1) :
     apply sum_congr rfl
     intro k hk
     ring
-  have hgeom := geometric_prefix_mul
+  have hgeom (b : ℕ) (t : ℝ) : (1 - t) * S b t = 1 - t ^ (b + 1) := by
+    simpa only [S, mul_comm] using geom_sum_mul_neg t (b + 1)
   have htri (b : ℕ) (t : ℝ) : (1 - t) * P b t = (b : ℝ) + 1 - S b t := by
     induction b with
     | zero => simp [P, S]
@@ -69,7 +59,9 @@ theorem result (a : ℕ) (z : ℝ) (ha : 1 ≤ a) (hz : 0 < z) (hz1 : z < 1) :
       push_cast
       ring
   have hSpos (b : ℕ) (t : ℝ) (ht : 0 ≤ t) : 0 < S b t := by
-    have : (1 : ℝ) ≤ S b t := geometric_prefix_one_le b t ht
+    have h := single_le_sum (f := fun k : ℕ => t ^ k)
+      (fun k _ => pow_nonneg ht k) (mem_range.mpr (Nat.zero_lt_succ b))
+    have : (1 : ℝ) ≤ S b t := by simpa [S] using h
     linarith
   have hkernelLower (b : ℕ) (t : ℝ) (ht : 0 ≤ t) (ht1 : t ≤ 1) :
       (b : ℝ) * S b t ≤ (1 + t) * P b t := by
