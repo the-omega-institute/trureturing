@@ -82,6 +82,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Algebra/CyclicYangBaxterPauliRigidityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/galindo-rowell-2026-pauli-rigidity-mixed-sign-refutation` (refuted) by `D5/S3/Quantum/Algebra/CyclicYangBaxterPauliRigidityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"galindo-rowell-2026-pauli-rigidity-mixed-sign-refutation","declaration_gid":"D5/S3/Quantum/Algebra/CyclicYangBaxterPauliRigidityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

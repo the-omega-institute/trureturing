@@ -35,7 +35,10 @@ internal sealed class CyclicYangBaxterPauliRigidityRefutationDocument : IScribeD
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("pauli-rigidity-refuted", "Conjecture 10.6 is refuted", "result", ResultFormula(),
                 "At d=15, α=1, and a_t=w^(2t²) for a primitive fifteenth root, the coefficient-to-braid identity and a translation of the finite character sum prove the braid equation. Character orthogonality gives R R†=15·I, hence projective unitarity. At s=t=1 the two signs would require w^8=w^5 or w^8=w^3, both impossible for a primitive fifteenth root.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo()
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("galindo-rowell-2026-pauli-rigidity-mixed-sign-refutation"),
+                    ResolutionKind.Refuted)
 ))));
 
     private static DocumentBlock Node(
