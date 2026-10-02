@@ -4,7 +4,7 @@
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
    utility: none
-   digest: Short positive intervals have a logarithmic multiplicative energy bound. -/
+   digest: Short cofactor character sums have fourth moment upper and first moment lower bounds. -/
 
 import Mathlib.Combinatorics.Additive.Energy
 import Mathlib.NumberTheory.Harmonic.Bounds
@@ -15,6 +15,8 @@ import Mathlib.Analysis.MeanInequalities
 import Mathlib.Analysis.Complex.Polynomial.Basic
 import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
 import Mathlib.Data.Nat.GCD.Basic
+import Mathlib.Data.Nat.Fib.Basic
+import Mathlib.Data.Nat.Totient
 import Mathlib.Data.Finset.Sigma
 import Mathlib.Tactic
 
@@ -401,5 +403,151 @@ theorem character_bounds (V : ℕ) [NeZero V] (H : ℝ) (hH : 1 ≤ H) (hshort :
   have hright : 0 ≤ M 1 * (4 * H * Real.sqrt (1 + Real.log H)) :=
     mul_nonneg (hM 1) denominator_pos.le
   nlinarith only [hsq, hright, Real.rpow_nonneg hk (3 / 2 : ℝ)]
+
+/-- The reference scale `1 + V ceil(V/10)`. -/
+noncomputable def referenceScale (V : ℕ) : ℕ := 1 + V * ⌈(V : ℝ) / 10⌉₊
+
+/-- The short-cofactor cutoff at a positive budget coefficient. -/
+noncomputable def cutoff (a : ℝ) (V : ℕ) : ℝ :=
+  let y := Real.log (referenceScale V)
+  Real.exp (a * (y / (Real.log y) ^ 2))
+
+/-- All sufficiently large prime Fibonacci indices satisfy the short-cofactor bounds. -/
+theorem result (a : ℝ) (ha : 0 < a) :
+    ∃ r₀ : ℕ, ∀ r : ℕ, r₀ ≤ r → r.Prime →
+      (cutoff a (Nat.fib r)) ^ 2 < Nat.fib r ∧
+        nonprincipalMoment (Nat.fib r) (cutoff a (Nat.fib r)) 4 ≤
+          2 * (cutoff a (Nat.fib r)) ^ 2 * (1 + Real.log (cutoff a (Nat.fib r))) ∧
+        ((cofactors (Nat.fib r) (cutoff a (Nat.fib r))).card : ℝ) ^ (3 / 2 : ℝ) /
+          (4 * cutoff a (Nat.fib r) * Real.sqrt (1 + Real.log (cutoff a (Nat.fib r)))) ≤
+            nonprincipalMoment (Nat.fib r) (cutoff a (Nat.fib r)) 1 := by
+  classical
+  have totient_square (V : ℕ) (hV : 0 < V) : V ≤ 2 * V.totient ^ 2 := by
+    let P := V.primeFactors
+    let L := ∏ p ∈ P, p
+    let R := ∏ p ∈ P, (p - 1)
+    have hLpos : 0 < L := prod_pos (fun p hp => Nat.pos_of_mem_primeFactors hp)
+    have hLdvd : L ∣ V := Nat.prod_primeFactors_dvd V
+    have hrest : (∏ p ∈ P.erase 2, p) ≤ (∏ p ∈ P.erase 2, (p - 1)) ^ 2 := by
+      rw [← prod_pow]
+      apply prod_le_prod'
+      intro p hp
+      have hpP := (mem_erase.mp hp).2
+      have hp2 := (mem_erase.mp hp).1
+      have hprime : p.Prime := Nat.prime_of_mem_primeFactors hpP
+      have hp3 : 3 ≤ p := by have := hprime.two_le; omega
+      have hsub : p - 1 + 1 = p := Nat.sub_add_cancel hprime.one_le
+      nlinarith
+    have hLR : L ≤ 2 * R ^ 2 := by
+      by_cases h2 : 2 ∈ P
+      · dsimp [L, R]
+        rw [← mul_prod_erase P (fun p : ℕ => p) h2, ← mul_prod_erase P (fun p => p - 1) h2]
+        norm_num only [Nat.reduceSub, one_mul]
+        nlinarith only [hrest]
+      · simp only [erase_eq_of_notMem h2] at hrest
+        dsimp [L, R]
+        nlinarith only [hrest, sq_nonneg (∏ p ∈ P, (p - 1))]
+    let d := V / L
+    have hd : 1 ≤ d := Nat.div_pos (Nat.le_of_dvd hV hLdvd) hLpos
+    have hVeq : V = d * L := (Nat.div_mul_cancel hLdvd).symm
+    have hQeq : V.totient = d * R := Nat.totient_eq_div_primeFactors_mul V
+    rw [hQeq, hVeq]
+    calc
+      d * L ≤ d * (2 * R ^ 2) := Nat.mul_le_mul_left _ hLR
+      _ = 2 * d * R ^ 2 := by ring
+      _ ≤ 2 * d ^ 2 * R ^ 2 := by
+        have hd2 : d ≤ d ^ 2 := by nlinarith
+        gcongr
+      _ = 2 * (d * R) ^ 2 := by ring
+  let t := Real.sqrt (8 * a) + 1
+  let r₀ := max 65 ⌈Real.exp (Real.exp t)⌉₊
+  refine ⟨r₀, ?_⟩
+  intro r hr _hrprime
+  let V := Nat.fib r
+  have hr65 : 65 ≤ r := (le_max_left _ _).trans hr
+  have hrceil : ⌈Real.exp (Real.exp t)⌉₊ ≤ r := (le_max_right _ _).trans hr
+  have hrV : r ≤ V := Nat.le_fib_self (by omega)
+  have hV65 : 65 ≤ V := hr65.trans hrV
+  have hVpos : 0 < V := by omega
+  have : NeZero V := ⟨by omega⟩
+  have hVR : (64 : ℝ) < V := by exact_mod_cast (show 64 < V by omega)
+  have hV2 : (2 : ℝ) ≤ V := by linarith
+  have hV0 : (0 : ℝ) < V := by positivity
+  have threshold : Real.exp (Real.exp t) ≤ (V : ℝ) :=
+    (Nat.le_ceil _).trans (by exact_mod_cast hrceil.trans hrV)
+  let g := ⌈(V : ℝ) / 10⌉₊
+  let A : ℝ := referenceScale V
+  let y := Real.log A
+  let ell := Real.log y
+  let H := cutoff a V
+  have hg1 : 1 ≤ g := Nat.ceil_pos.mpr (by positivity : 0 < (V : ℝ) / 10)
+  have hgR : (g : ℝ) < (V : ℝ) / 10 + 1 := Nat.ceil_lt_add_one (by positivity)
+  have hAeq : A = 1 + (V : ℝ) * g := by simp [A, referenceScale, g]
+  have hVA : (V : ℝ) ≤ A := by
+    have hgR1 : (1 : ℝ) ≤ g := by exact_mod_cast hg1
+    rw [hAeq]
+    nlinarith
+  have hAupper : A ≤ (V : ℝ) ^ 2 := by
+    rw [hAeq]
+    nlinarith
+  have hApos : 0 < A := hV0.trans_le hVA
+  have hlogV : 0 < Real.log (V : ℝ) := Real.log_pos (by linarith)
+  have hypos : 0 < y := hlogV.trans_le (Real.log_le_log hV0 hVA)
+  have hyupper : y ≤ 2 * Real.log (V : ℝ) := by
+    have hh := Real.log_le_log hApos hAupper
+    simpa only [Real.log_pow, Nat.cast_ofNat, y] using hh
+  have hylower : Real.exp t ≤ y := by
+    have hh := Real.log_le_log (Real.exp_pos (Real.exp t)) threshold
+    rw [Real.log_exp] at hh
+    exact hh.trans (Real.log_le_log hV0 hVA)
+  have hell : t ≤ ell := by
+    have hh := Real.log_le_log (Real.exp_pos t) hylower
+    simpa only [Real.log_exp, ell] using hh
+  have hsqrt : (Real.sqrt (8 * a)) ^ 2 = 8 * a := Real.sq_sqrt (by positivity)
+  have hsqrt0 := Real.sqrt_nonneg (8 * a)
+  have hellpos : 0 < ell := by dsimp [t] at hell; linarith
+  have hellsq : 8 * a < ell ^ 2 := by dsimp [t] at hell; nlinarith
+  have hexponent : a * (y / ell ^ 2) ≤ Real.log (V : ℝ) / 4 := by
+    calc
+      a * (y / ell ^ 2) ≤ y / 8 := by
+        rw [← mul_div_assoc, div_le_iff₀ (sq_pos_of_pos hellpos)]
+        nlinarith
+      _ ≤ Real.log (V : ℝ) / 4 := by linarith
+  have hHexp : H = Real.exp (a * (y / ell ^ 2)) := rfl
+  have hH1 : 1 ≤ H := by
+    rw [hHexp]
+    exact Real.one_le_exp (by positivity)
+  have hloglarge : 2 * Real.log 8 < Real.log (V : ℝ) := by
+    have hh := Real.log_lt_log (by norm_num : (0 : ℝ) < 64) hVR
+    have heq : Real.log (64 : ℝ) = 2 * Real.log 8 := by
+      rw [show (64 : ℝ) = 8 ^ 2 by norm_num, Real.log_pow]
+      norm_num
+    rwa [heq] at hh
+  have h8 : 8 * H ^ 2 < (V : ℝ) := by
+    calc
+      8 * H ^ 2 = Real.exp (Real.log 8 + 2 * (a * (y / ell ^ 2))) := by
+        rw [Real.exp_add, Real.exp_log (by norm_num : (0 : ℝ) < 8),
+          show 2 * (a * (y / ell ^ 2)) = (2 : ℕ) * (a * (y / ell ^ 2)) by norm_num,
+          Real.exp_nat_mul, hHexp]
+      _ < Real.exp (Real.log (V : ℝ)) := Real.exp_lt_exp.mpr (by linarith)
+      _ = (V : ℝ) := Real.exp_log hV0
+  have hshort : H ^ 2 < (V : ℝ) := by nlinarith [sq_nonneg H]
+  have hcard : (cofactors V H).card ≤ ⌈H⌉₊ - 1 := by
+    have hh := card_filter_le (shortInterval H) (Nat.Coprime · V)
+    simpa only [cofactors, shortInterval, Nat.card_Ico] using hh
+  have hceil : 0 < ⌈H⌉₊ := Nat.ceil_pos.mpr (by linarith : 0 < H)
+  have hcardH : ((cofactors V H).card : ℝ) ≤ H := by
+    have hn : ⌈H⌉₊ - 1 < ⌈H⌉₊ := by omega
+    exact (Nat.cast_le.mpr hcard).trans (Nat.lt_ceil.mp hn).le
+  have htotient : (V : ℝ) ≤ 2 * (V.totient : ℝ) ^ 2 := by
+    exact_mod_cast totient_square V hVpos
+  have hQ0 : (0 : ℝ) ≤ V.totient := Nat.cast_nonneg _
+  have hH0 : 0 ≤ H := by linarith
+  have h2H : 2 * H ≤ (V.totient : ℝ) := by nlinarith
+  have hbalance : 2 * (cofactors V H).card ≤ V.totient := by
+    have hh : 2 * ((cofactors V H).card : ℝ) ≤ (V.totient : ℝ) := by linarith
+    exact_mod_cast hh
+  have general := character_bounds V H hH1 hshort.le
+  exact ⟨hshort, general.1, general.2 hbalance⟩
 
 end D5.S3.Arith.Robin.ShortCofactorCharacterEnergy

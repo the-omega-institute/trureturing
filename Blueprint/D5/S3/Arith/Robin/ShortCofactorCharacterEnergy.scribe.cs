@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
 internal sealed class ShortCofactorCharacterEnergyDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Short positive intervals have a logarithmic multiplicative energy bound.",
+        "Short cofactor character sums have fourth moment upper and first moment lower bounds.",
         H("Short Cofactor Character Energy"),
         Blocks(
             Paragraph(Text("For a real cutoff H, I(H) consists of the positive natural "
@@ -57,7 +57,50 @@ internal sealed class ShortCofactorCharacterEnergyDocument : IScribeDocumentDefi
                         + "collisions and character moments, see Ayyad, Cochrane and "
                         + "Zheng, Journal of Number Theory 59, 398-413, "
                         + "doi:10.1006/jnth.1996.0105."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("fibonacci-short-cofactor-character-energy"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/ShortCofactorCharacterEnergy.result"),
+                H("Fibonacci cutoffs"),
+                StatementSource.FromAuthor(FibonacciStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("Let V=F_r, g=ceil(V/10), A=1+Vg, y=log(A), "
+                        + "ell=log(y), and H=exp(a*y/ell squared). For every "
+                        + "positive real a, all sufficiently large prime indices r "
+                        + "satisfy the three displayed bounds with these same parameters.")),
+                    Paragraph(Text("Euler's product formula gives n <= 2*phi(n) squared "
+                        + "for every positive integer n: p <= (p-1) squared for primes "
+                        + "p other than two, and two contributes the factor 2. "
+                        + "An explicit threshold ensures 8*H squared < V. "
+                        + "The cardinality of the short unit set is at most H, "
+                        + "so 2k <= phi(V) and the general character estimates apply.")),
+                    Paragraph(Text("The logarithmic cutoff is smaller than V because "
+                        + "A <= V squared and ell squared eventually exceeds 8a. "
+                        + "The growth bound r <= F_r for r >= 5 transfers the "
+                        + "explicit threshold to Fibonacci indices."))),
                 DescribeRole.Theorem))));
+
+    private static Formula FibonacciStatement()
+    {
+        Formula a = F.Id("a");
+        Formula r = F.Id("r");
+        Formula r0 = Seq(F.Id("r"), Underscore, Grp(D(0)));
+        Formula h = F.Id("H");
+        Formula k = F.Id("k");
+        Formula m1 = Seq(F.Id("M"), Underscore, Grp(D(1)));
+        Formula m4 = Seq(F.Id("M"), Underscore, Grp(D(4)));
+        Formula logarithm = Seq(D(1), Plus, new Formula.Apply(Log, [h]));
+        return Disp(new Formula.Aligned([
+            Seq(Forall, Sp, a, Sp, Gt, Sp, D(0), Comma, Sp, Exists, Sp, r0,
+                Comma, Sp, Forall, Sp, r, Sp, Ge, Sp, r0, Sp, F.Id("prime"), Comma),
+            Seq(new Formula.Power(h, D(2)), Sp, Lt, Sp, F.Id("V"), Comma, Sp,
+                m4, Sp, Le, Sp, D(2), Sp, new Formula.Power(h, D(2)),
+                Open, logarithm, Close, Comma),
+            Seq(new Formula.Fraction(new Formula.Power(k, new Formula.Fraction(D(3), D(2))),
+                Seq(D(4), Sp, h, Sp, Sqrt, Grp(logarithm))), Sp, Le, Sp, m1)
+        ]));
+    }
 
     private static Formula CharacterStatement()
     {
