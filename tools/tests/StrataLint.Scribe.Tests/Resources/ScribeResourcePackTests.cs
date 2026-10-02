@@ -7,6 +7,11 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class ScribeResourcePackTests
 {
+    [Fact]
+    public void PublicWriterWithoutProjectionReadSetsDoesNotExist() =>
+        Assert.DoesNotContain(typeof(ScribeResourcePack).GetMethods(System.Reflection.BindingFlags.Public
+            | System.Reflection.BindingFlags.Static), method => method.Name == "Write");
+
     [Theory]
     [InlineData("missing")]
     [InlineData("invalid")]
@@ -219,7 +224,9 @@ public sealed class ScribeResourcePackTests
     }
 
     internal static ScribeResourcePackManifest WritePack(string path, IEnumerable<DocumentDefinition> definitions) =>
-        ScribeResourcePack.Write(path, definitions.Select(definition => (definition, new string('a', 64))));
+        ScribeResourcePack.WriteEncoded(path, definitions.Select(definition =>
+            (definition.Document.Header.Gid.Value, new string('a', 64), ScribeResourceCodec.Encode(definition),
+                System.Collections.Immutable.ImmutableArray<ScribeProjectionRead>.Empty)));
 
     internal static DocumentDefinition Definition(string name) => DocumentDefinition.Create(
         ScribeDocument.Create(DefinitionDsl.Header("D5/S0/Synthetic/" + name, "Resource fixture"),

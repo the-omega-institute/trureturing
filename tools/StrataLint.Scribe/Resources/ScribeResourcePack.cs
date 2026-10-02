@@ -49,18 +49,6 @@ public sealed class ScribeResourcePack
     public ScribeResourcePackManifest Manifest { get; }
     public long TotalUncompressedBytes => Manifest.TotalUncompressedBytes;
 
-    public static ScribeResourcePackManifest Write(string path,
-        IEnumerable<(DocumentDefinition Definition, string InputKey)> definitions)
-    {
-        ArgumentNullException.ThrowIfNull(definitions);
-        return WriteEncoded(path, definitions.Select(item =>
-        {
-            ArgumentNullException.ThrowIfNull(item.Definition);
-            return (item.Definition.Document.Header.Gid.Value, item.InputKey, ScribeResourceCodec.Encode(item.Definition),
-                ImmutableArray<ScribeProjectionRead>.Empty);
-        }));
-    }
-
     internal static ScribeResourcePackManifest WriteEncoded(string path,
         IEnumerable<(string Gid, string InputKey, byte[] Bytes, ImmutableArray<ScribeProjectionRead> ReadSet)> resources,
         ScribeResourcePackExecutionEnvironment? executionEnvironment = null)
