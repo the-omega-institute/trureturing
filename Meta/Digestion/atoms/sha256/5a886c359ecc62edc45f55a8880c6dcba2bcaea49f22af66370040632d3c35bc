@@ -1,0 +1,22 @@
+**Theorem 69.1 (compatible completion collapse at three).**
+For every $J\geq0$, $E$ and $N_J$ are number fields. For every
+prime $\mathfrak p$ of $\mathcal O_E$ above $(3)$ and every
+prime $\mathfrak P$ of $\mathcal O_{N_J}$ above $\mathfrak p$,
+there is a continuous surjective unital ring homomorphism
+
+$$
+\iota_{\mathfrak p,\mathfrak P}:E_{\mathfrak p}\longrightarrow
+(N_J)_{\mathfrak P}
+$$
+
+between their adic completions, such that for every $x\in E$
+its value on the image of $x$ equals the image of $x$ through
+$E\hookrightarrow N_J\hookrightarrow(N_J)_{\mathfrak P}$.
+
+Proof. Each actual block is congruent to one modulo nine.
+The three-adic Hensel construction gives a cube root of each
+block in the completion of the base. Embed the generated tower
+into that completion using those roots, extend the compatible
+base embedding to the specified tower completion, and identify
+the closure of the base with the entire completion.
+

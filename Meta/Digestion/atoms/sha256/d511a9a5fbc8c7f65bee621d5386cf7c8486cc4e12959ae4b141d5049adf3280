@@ -1,0 +1,18 @@
+**Theorem 69.6 (primes above three and the unique fixed prime).**
+For every $J\geq0$, $N_J$ is a number field and there is an
+automorphism $c$ acting as complex conjugation on every element.
+There are exactly $3^J$ primes of $\mathcal O_{N_J}$ above
+$(3)$. Every such prime $\mathfrak P$ satisfies
+
+$$
+e(\mathfrak P/(3))=2,\qquad f(\mathfrak P/(3))=1.
+$$
+
+Exactly one of these primes is fixed by $c$.
+
+Proof. Combine relative completion collapse with the quadratic
+cyclotomic ramification at three. Galois transitivity and the
+fundamental identity give the number of primes. The decomposition
+subgroup has order two; self-normalization of conjugation makes
+its action have exactly one fixed prime.
+

@@ -1,0 +1,19 @@
+**Theorem 69.10 (semidirect product with coordinate inversion).**
+For every $J\geq0$, there exists an action
+$\phi:C_2\to\operatorname{Aut}(C_3^J)$ whose nonidentity element
+sends each vector $x$ to $x^{-1}$, and a group isomorphism
+
+$$
+C_3^J\rtimes_\phi C_2
+\simeq\operatorname{Gal}(N_J/\mathbb Q).
+$$
+
+Here $C_3^J$ is the product of $J$ cyclic groups, with the empty
+product equal to the trivial group.
+
+Proof. Restrict rational automorphisms to the actual cyclotomic
+base. The kernel is the cubic-coordinate group and conjugation
+splits the order-two quotient. Its action on that kernel is
+inversion. Transport the split extension along the actual
+coordinate and cyclic-quotient equivalences.
+

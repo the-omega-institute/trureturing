@@ -1,0 +1,14 @@
+**Theorem 69.8 (inertia has at most three elements at a block prime).**
+For every $J\geq0$, every $1\leq j\leq J$, every rational
+prime $p\ne3$ dividing $B_j$, and every prime
+$\mathfrak P$ of $\mathcal O_{N_J}$ above $(p)$,
+
+$$
+\#I_{\mathfrak P}(N_J/\mathbb Q)\leq3.
+$$
+
+Proof. The actual block supports are disjoint. Inertia fixes the
+base and every other radical coordinate. The image of the one
+remaining radical can have only its three cubic conjugates, and
+those generator images determine the automorphism.
+

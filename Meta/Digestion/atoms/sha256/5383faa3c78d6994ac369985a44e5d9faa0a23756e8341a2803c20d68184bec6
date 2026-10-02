@@ -1,0 +1,17 @@
+**Theorem 69.5 (the conjugation subgroup is self-normalizing).**
+For every $J\geq0$, there is an actual conjugation automorphism
+$c\in\operatorname{Gal}(N_J/\mathbb Q)$ with
+$c(x)=\overline x$ for all $x\in N_J$, $c^2=1$ and $c\ne1$,
+such that
+
+$$
+N_{\operatorname{Gal}(N_J/\mathbb Q)}(\langle c\rangle)
+=\langle c\rangle.
+$$
+
+Proof. An automorphism normalizing the nontrivial order-two
+subgroup commutes with conjugation. Its radical-coordinate
+part equals its inverse. A group of exponent three has no
+nonidentity element satisfying that equality, leaving precisely
+the two elements of the conjugation subgroup.
+
