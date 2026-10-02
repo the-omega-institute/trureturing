@@ -193,6 +193,16 @@ Recent odd-cover constructions allowing repeated labels, including Bispels et
 al., [arXiv:2507.16135](https://arxiv.org/abs/2507.16135), likewise do not meet
 the distinct-label condition.
 
+Mian--Siddique, [arXiv:2607.25628](https://arxiv.org/abs/2607.25628), provide
+an independent Lean-kernel exclusion
+`odd_covering_lcm_gt_10000`: every distinct odd cover has lcm greater than
+`10000`. Their public implementation is
+[`ibrahimmian36/centurion`](https://github.com/ibrahimmian36/centurion). This
+is a reusable finite lower bound, not a new phase-preserving repair: it removes
+only the range `lcm <= 10000` and leaves the unrestricted large-lcm liability
+untouched. The present lane records the source without replaying its external
+Lean build.
+
 ### The Esposito Zenodo claim does not close the gap
 
 The primary record [Zenodo 18440762](https://zenodo.org/records/18440762),
