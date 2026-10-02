@@ -25,8 +25,8 @@ separability after every two-qubit loss. The formal claim is
 
 ## Motivation
 
-The external Tier-1 question and its exact proof were preregistered in
-#11551. The frozen declaration
+The external Tier-1 question, its quantified claim and a proposed proof
+route were preregistered in #11551. The frozen declaration
 `D5/S3/Quantum/Entanglement/CycleFiveStrongOneResistance.result`
 answers the C₅ clause Yes by proving all three conjuncts of strong
 1-resistance. The C₆, m = 2 clause is a separate question settled by the
