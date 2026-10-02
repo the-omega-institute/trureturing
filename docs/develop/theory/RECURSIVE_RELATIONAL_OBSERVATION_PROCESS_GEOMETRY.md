@@ -3014,3 +3014,1877 @@ D5/S3/Observer/ProbabilisticClosure/StrongLumpabilityDescent.lean 的 strong_lum
 本节保留的综合推导是累计时钟多项式运输、条件化与动态恢复的两个交换式、联合签名细化及两个不同恢复任务的独立性。其精确核、动作合同、实际来源和初始像条件均需由具体系统供给。连续或无界时钟支持、未知核的有限样本认证、近似细化的稳定误差、一般预测表示的全局最小性和物理时空解释均未由此解决。Claim status: open；没有执行新增形式化。
 
 ## 29.99 追加锚
+
+## 30. 单一有类型过程关系的四视图承载与可恢复性
+
+前面各节分别给出了有类型边、完整路径、联合事件—时钟核和动态边界。本节把它们压到一个共同的底层对象上，目的不是重新定义未来行为商，而是说明四种表达究竟从什么载体导出，以及恢复时缺少哪一项会失败。
+
+### 30.1 有类型原子过程关系
+
+取类型集 \(I\)，每类接口的载体为 \(X_i\)，令
+
+$$
+X=\coprod_{i\in I}X_i .
+$$
+
+一个**有类型过程关系**由以下数据组成：
+
+$$
+\mathfrak P=(X,\tau,E,s,t,a,\lambda,\iota,\mathsf D,\circ,1,\delta_1,\sigma).
+\tag{PG.3001}
+$$
+
+其中：
+
+* \(\tau:X\to I\) 给出接口类型；
+* \(E\) 是原子边集合，\(s,t:E\to X\) 给出源与靶，\(a:E\to A\) 给出动作标签，\(\lambda:E\to L\) 给出事件、失败或读数标签；
+* \(\iota:E\hookrightarrow J\) 是单射的原子标识，并进入可观察记录，用来区分同端点、同标签的平行原子边；
+* \(\mathsf D\subseteq E\times E\) 是可接续域，\(e_2\circ e_1\) 只在 \(\mathsf D\) 上定义，并保留中间类型与中间事件；
+* \(1_x\) 是接口 \(x\) 上的单位过程，单位和结合律只在声明的有类型路径上要求；
+* \(\delta_1:E\to G\) 是取值于加法幺半群 \(G\) 的单步 grade；
+* \(\sigma:E\to S\) 是可选的空间支持或边权数据。若空间被定义为过程支持，需要另声明从 \(S\) 到支持图的解释；若空间有独立连接或度量，\(\sigma\) 必须作为额外数据声明。\(\sigma\) 本身不是动作选择器；若它参与选择，必须另给出可访问的选择合同。
+
+路径是 \(E\) 中满足 \(\mathsf D\) 的有限词；\(\operatorname{Path}(\mathfrak P)\) 还包含单位路径和合法复合，单位路径长度为零。定义 \(\operatorname{grade}:\operatorname{Path}(\mathfrak P)\to G\) 为
+
+$$
+\operatorname{grade}(1_x)=0,\qquad
+\operatorname{grade}(e)=\delta_1(e),\qquad
+\operatorname{grade}(e_2\circ e_1)=\operatorname{grade}(e_1)+\operatorname{grade}(e_2).
+\tag{PG.3002}
+$$
+
+顺序写在复合符号中：先执行 \(e_1\)，再执行 \(e_2\)。若一个接口可以有多个后继，由 \(s,a,t\) 给出的可接续关系不是函数；不能把关系的多值性偷偷改写成一个选择器。
+
+### 30.2 从同一载体导出的四种视图
+
+给定一条合法路径 \(p\)，四种视图分别记录不同层次的关系：
+
+$$
+\begin{aligned}
+B(p)&=(\tau(s(p)),s(p);\tau(t(p)),t(p)),\\
+T(p)&=(\text{原子标识序列},\text{路径前缀顺序},\operatorname{grade}(p)),\\
+M_{\mathcal Q}(p)(q)&=\operatorname{Obs}(p\circ q)\qquad(q\in\mathcal Q),
+\end{aligned}
+\tag{PG.3003}
+$$
+
+其中 \(\mathcal Q\) 是声明的后续测试族，\(\operatorname{Obs}\) 至少包括合法性、失败、事件、记录和指定后继读数。\(B\) 是边界视图；\(T\) 是路径时间视图；\(M_{\mathcal Q}\) 是记忆视图，因为它保存了这条历史面对后续接口的响应。
+
+空间视图取 \(\sigma\) 的支持图。若 \(\sigma\) 只标出无向相邻边，并给每条边正权，空间距离可以约定为支持图上的最短路距离；这是一条模型合同，不是由裸过程关系自动推出的物理度量。
+
+因此，四视图不是四个独立对象：
+
+$$
+\mathsf V_{\mathfrak P}(p)=
+\bigl(\operatorname{Space}_\sigma(p),B(p),T(p),M_{\mathcal Q}(p)\bigr)
+\tag{PG.3004}
+$$
+
+是同一个 \(\mathfrak P\) 的不同投影。若只给出四份边缘表而没有同一实际来源中的联合路径，则不能把它们重新拼成（PG.3001）。
+
+### 30.3 条件性重构定理
+
+**定理 30.1（过程关系四视图的忠实重构）。** 假设：
+
+1. 路径有单位和有类型结合，且长度一的原子过程通过联合视图中的单射原子标识可反复识别；
+2. 类型、源、靶和 \(\lambda\) 在允许的有类型同构下分离原子边；
+3. \(\operatorname{grade}\) 由（PG.3002）递归给出，且 \(\delta_1\) 的值可从单步记录读取；
+4. \(\mathcal Q\) 对允许的同端点路径是分离的：两条不同的原子路径至少被一个测试响应区分；
+5. 若空间任务独立于过程标签，则 \(\sigma\) 与边权已经声明，且空间距离确实采用支持图的最短路合同。
+
+则联合数据
+
+$$
+\bigl(\operatorname{Space}_\sigma,\ B,\ T,\ M_{\mathcal Q}\bigr)
+\tag{PG.3005}
+$$
+
+确定 \(\mathfrak P\) 到有类型过程同构；若只要求指定测试族下的行为，则确定到该测试族的行为同构。
+
+**证明。** 长度一的记录给出单射原子标识、源、靶、类型和标签，故恢复 \(E,s,t,a,\tau,\lambda,\iota\)。有类型结合和单位恢复所有合法有限路径的复合；测试分离性恢复不同路径的可观察响应和可接续域。由（PG.3002）递归恢复每条路径的 grade。若空间任务采用第五项的合同，\(\sigma\) 的支持解释和边权恢复空间图及其最短路距离。任意视图保持这些数据的映射因此给出 \(\mathfrak P\) 的有类型同构；若测试族只分离行为类，则只能得到行为同构，不能恢复被任务明确商掉的内部差异。证毕。
+
+这个定理给出恢复义务，而不是声称四个当前数值足以恢复一切。若只保存总 grade、端点和一个当前读数，长度一原子或中间接口可能已经被合并，定理的第一项或第四项就不成立。
+
+### 30.4 时间何时能由边界恢复
+
+若 \(G\) 是加法群，在每个选定根 \(x_0\) 可达的区域内，任意两条从 \(x_0\) 到同一端点的合法路径具有相同 grade，则存在一个端点势
+
+$$
+\theta:X\to G,\qquad
+\operatorname{grade}(p)=\theta(t(p))-\theta(s(p)).
+\tag{PG.3006}
+$$
+
+反之，若存在这样的 \(\theta\)，每个闭路径的 grade 总和必为零。
+
+**证明。** 由可达性定义 \(\theta(x)\) 为任意从 \(x_0\) 到 \(x\) 的路径 grade；路径独立性保证定义良好。对任意 \(p:x\to y\)，把根到 \(x\) 的路径接上 \(p\)，得到（PG.3006）。反向把（PG.3006）沿闭路径相加，端点项消去。势在每个根可达区域上只差一个常数。若过程是有向群胚或每个区域强连通且边具有逆，根可达的路径独立性等价于每个闭路径 grade 为零；对一般有向关系，单有“无闭路径”并不足以推出端点势。
+
+所以在上述路径独立条件下，时间可以由端点边界恢复；在群胚情形这就是闭路零 grade。若路径独立性失败，只能恢复路径时间 \(T(p)\)，不能把它压成端点的单值时间。这个条件与已有 holonomy/势差判据相同，但这里明确了它在共同过程载体中的位置。
+
+### 30.5 空间何时能由过程支持恢复
+
+若空间被定义为 \(\sigma\)-支持的简单无向图的无权最短路距离 \(d\)，并且没有平行边、自环或未记录的权重，则从 \(d\) 反恢复原子空间边至少需要声明
+
+$$
+\sigma=\{(x,y):d(x,y)=1\}
+\tag{PG.3007}
+$$
+
+或提供等价的 geodesic irreducibility 条件。没有这个条件，直接边可能被捷径或额外权重折叠：同一距离函数可以来自不同的原子支持图。因此独立的空间任务必须把 \(\sigma\) 或等价的空间合同纳入共同关系对象。
+
+### 30.6 三个最小失效例子
+
+**例 30.2（类型缺失）。** 一条未标类型的有向边只写成 \(x\to y\)。它可以解释为 \(A\to B\) 的跨类型接口，也可以解释为 \(A\to A\) 的自环。若边界任务要判断能否与 \(B\)-端口接续，两个解释给出不同合法性；裸边关系不能恢复边界类型。
+
+**例 30.3（总 grade 丢失原子分解）。** 直接边 \(A\to C\) 的 grade 为 \(2\)，和路径 \(A\to B\to C\) 的两个 grade \(1\) 在端点与总 grade 上相同。若未来测试能读取中间 \(B\) 或分别调用两步动作，两者不可合并；只存（端点，总 grade）不是动态充分边界。
+
+**例 30.4（端点和时间丢失未来记忆）。** 第25节的四世界关系给出两条历史：它们可以有相同的当前目标后验、端点和已累计 grade，但在保存的 parity/reference 关系不同后，下一次读取同一参考会产生不同输出。因此 \(B\) 与 \(T\) 不能替代 \(M_{\mathcal Q}\)。这不是新的 XOR 定理，而是把已有有限反例接到（PG.3003）的记忆视图。
+
+还可有独立的空间失效：同一过程支持若不声明 \(\sigma\)，可以赋予线形或三角形的空间度量；空间不能从过程标签单独恢复。
+
+### 30.7 FIB 原子生成层的接合
+
+在 FIB 生成层，取自由树 sort 的叶标签/源项 \(\alpha,\beta\)；它们不是两个动态端口。把有序 \(\langle-, -\rangle\) 作为构造器、\(\rho\) 作为保持该 sort 的后继，把 \(E\) 取为《递归关系观察：运输、任务记忆与完成化》§24 的 ReadTag、DownL、DownR、Up、ApplyRho 合法动作。动作的源、靶取游标载体的相应类型子集，并把失败标签、绝对纪元和 writer 记录放入 \(\lambda\)。则：
+
+* 边界视图保留源／靶接口类型和当前游标位置；
+* 时间视图保留绝对纪元与路径 grade；
+* 空间视图由有序上下文的支持关系给出；
+* 记忆视图是《递归关系观察：运输、任务记忆与完成化》§25 的未来续接核或其指定测试族商。
+
+若只观察组成计数，测试族不分离括号和左右次序，四视图只能恢复组成行为商；加入左、右路径读取后，\(\langle\alpha,\beta\rangle\) 与 \(\langle\beta,\alpha\rangle\) 被分开，必须使用更细的过程关系。这里再次说明：\(\alpha,\beta\) 是叶生成元，配对和 \(\rho\) 是构造与动力学，真正的过程边是带源/靶类型的动作；四视图的恢复条件不能把它们压成两个无类型数。
+
+### 30.8 范围与未决边界
+
+本节是对已有 typed process、holonomy、联合核和 FIB 游标接口的结构性收束，没有新增 Lean 声明。它不证明物理时空、无限完成、量子通道或任意空间度量；在多端口局部块中，二元端点需推广为端口列表或相应 operadic 合同。若测试族不分离路径、空间支持未声明、或实际共同来源不闭合，重构只能得到指定任务的行为同构，不能得到原子关系本身。
+
+## 30.99 追加锚
+
+## 31. 有限有类型过程的联合视图核与最小可执行商
+
+第30节说明了四种视图从同一过程载体导出，但“能够区分全部路径”仍不是一个最小、可执行的边界判据。本节在有限经典模型中把它收紧为一个分割迭代。所有结论都针对从声明根和允许动作实际可达的子关系；不可达边若没有进入测试族，不能由观察结果恢复。
+
+### 31.1 有限联合核
+
+令 \(\mathsf S\) 是有限的完整配置集，\(\mathsf A\) 是动作集，\(\mathsf Y\) 是输出集，\(\mathsf L\) 是事件、失败和原子标识的记录集，\(G\) 是加法幺半群。每个动作 \(a\) 给出一个有限次概率核
+
+$$
+K_a(\ell,y,d,s'\mid s)\ge0,\qquad
+\sum_{\ell,y,d,s'}K_a(\ell,y,d,s'\mid s)\le1 .
+\tag{EX.3101}
+$$
+
+这里 \(d\in G\) 是本步 grade 增量；确定性过程是取值为零或一的特例。合法性由总质量是否为零决定。把类型、当前边界、空间支持、参考和权限等不希望被此任务合并的静态字段放入
+
+$$
+v_0:\mathsf S\longrightarrow V_0,\qquad
+\Pi_0=\ker v_0 .
+\tag{EX.3102}
+$$
+
+对任一分割 \(\Pi\) 和其块 \(C\in\Pi\)，定义动作的块响应
+
+$$
+K_a^\Pi(\ell,y,d,C\mid s)
+=\sum_{s'\in C}K_a(\ell,y,d,s'\mid s).
+\tag{EX.3103}
+$$
+
+由此定义细化算子
+
+$$
+s\mathrel{\equiv_{\operatorname{Ref}(\Pi)}}t
+\iff
+\bigl[v_0(s)=v_0(t)\ \land\
+\forall a,\ell,y,d,C:
+K_a^\Pi(\ell,y,d,C\mid s)=K_a^\Pi(\ell,y,d,C\mid t)\bigr].
+\tag{EX.3104}
+$$
+
+动作选择本身也在量词中：若某动作在一代表上非法而在另一代表上有正质量，取总质量即可把两者分开。令
+
+$$
+\Pi_{n+1}=\operatorname{Ref}(\Pi_n).
+\tag{EX.3105}
+$$
+
+这一步同时保留了输出、失败、原子标识、grade 和后继块的联合关系；分别保存这些边缘量再拼接并不等价。
+
+### 31.2 稳定平台与最小可执行边界
+
+**定理 31.1（有限联合核的平台定理）。** 设 \(\mathsf S\) 有限。则：
+
+1. \(\Pi_{n+1}\) 细化 \(\Pi_n\)，并在至多 \(|\mathsf S|-|\Pi_0|\) 次严格细化后达到固定分割 \(\Pi_\ast\)；
+2. 对 \(q_\ast:\mathsf S\to\mathsf S/\Pi_\ast\)，以下商核良定义：
+
+$$
+\overline K_a(\ell,y,d,C\mid q_\ast(s))
+=\sum_{u\in C}K_a(\ell,y,d,u\mid s),
+\qquad C\in\Pi_\ast .
+\tag{EX.3106}
+$$
+
+3. 合法性、事件、输出、grade 增量和下一块都由 \(q_\ast(s)\) 决定；任意有限动作词的联合响应都从这个商递归得到；
+4. 若 \(r:\mathsf S\to R\) 也是一个保留 \(v_0\) 且使每个动作核在 \(r\)-纤维上强可合并的表示，则在实际摘要像上
+
+$$
+r(s)=r(t)\Longrightarrow q_\ast(s)=q_\ast(t).
+\tag{EX.3107}
+$$
+
+因而 \(\Pi_\ast\) 是指定任务下最粗的可执行动态边界。
+
+**证明。** 每次严格细化至少增加一个非空块，故得到次数界。固定后，式（EX.3104）保证同一块内对每个动作、记录标签、输出、grade 和目标块的质量相同，所以（EX.3106）与代表无关。对动作词长度作归纳，得到任意有限续接的联合响应因子化。最后，若 \(r\) 的纤维满足强可合并条件，则同一 \(r\)-块中的状态对 \(\Pi_n\) 的每个块有相同响应；归纳得到该 \(r\)-块细化每个 \(\Pi_n\)，直到细化 \(\Pi_\ast\)。这正是最粗性。证毕。
+
+这个定理的“最小”是相对于已声明的动作、记录、概率核和 \(v_0\) 而言；它不是恢复完整内部配置的绝对最小编码。若目标只要求一个有限 horizon \(H\)，可停在 \(\Pi_H\)；若要求所有有限续接，则取固定平台 \(\Pi_\ast\)。仓内的有限未来层迭代、controlled behavior universal property 和 strong lumpability 结果分别承担这一递推、因子化与概率商的既有形式化支点；本节只给出它们在四视图载体上的统一解释。
+
+### 31.3 视图之间的恢复只由核包含决定
+
+设 \(u:S\to U\)、\(w:S\to W\) 是同一实际来源上的两个有限视图。则
+
+$$
+w=F\circ u\text{（在 }\operatorname{im}u\text{ 上存在唯一 }F)
+\iff
+\ker u\subseteq\ker w .
+\tag{EX.3108}
+$$
+
+因此，两个视图互相可恢复，当且仅当它们的核相等。把第30节的联合视图写成
+
+$$
+\Phi=(\operatorname{Space}_\sigma,B,T,M_{\mathcal Q}),
+\tag{EX.3109}
+$$
+
+把指定任务的完整未来行为写成 \(\beta_{\mathcal Q}\)，则
+
+$$
+\ker\Phi\subseteq\ker\beta_{\mathcal Q}
+\tag{EX.3110}
+$$
+
+是 \(\Phi\) 对该任务动态充分的充要条件；只有
+
+$$
+\ker\Phi=\ker\beta_{\mathcal Q}
+\tag{EX.3111}
+$$
+
+时，\(\Phi\) 才与最小行为边界互相无损。若还要求恢复原过程本身，右侧必须进一步替换为从声明根可达的有类型过程同构关系；不可达部分不能由当前观察凭空补出。
+
+式（EX.3108）是纤维上的良定义判据。它说明“空间、时间、边界和记忆都来自同一对象”并不自动推出任意两者互相恢复；每一条恢复箭头都要检查相应的核包含。
+
+### 31.4 trace 等价与可执行等价的差别
+
+若 \(\mathcal Q\) 只记录一组未必包含全部动作、也未必对前缀封闭的输出词，那么相同 trace 不足以保证下一步动作合法性或概率核可执行。可执行商必须使用式（EX.3104）的逐动作、逐标签、逐后继块质量条件。
+
+**例 31.2（遗漏动作）。** 取两个当前配置 \(u,v\)，它们有相同的 \(v_0\)。动作 \(a\) 在二者上都输出 \(0\) 并回到相同的可见块；另一个动作 \(f\) 只在 \(u\) 上合法。若 \(\mathcal Q\) 只含 \(a\) 的 trace，二者 trace 等价；但选择器若可提出 \(f\)，两者的合法性不同，故不能合并到同一可执行状态。
+
+**例 31.3（首步相同、后继不同）。** 取 \(u,v,r,s\)，令 \(a\) 在 \(u,v\) 上都输出 \(0\)，但分别把它们送到 \(r,s\)；再令动作 \(b\) 在 \(r\) 上输出 \(0\)、在 \(s\) 上输出 \(1\)。只看长度一的 \(a\)-trace 时，\(u,v\) 相同；加入两步续接后，式（EX.3104）的第一次细化把它们分开。于是零即时读数并不等于零未来区别。
+
+在确定性、动作全集已声明且测试族前缀封闭时，稳定平台可与相应的带标签 bisimulation 商相合；在概率系统中仍需保留每个输出标签到每个后继类的质量，不能仅以 trace 相等替代强可合并条件。
+
+### 31.5 回接第30节与 FIB
+
+第30节中的四视图在本有限模型中分别进入：
+
+* \(\operatorname{Space}_\sigma\) 与 \(B\) 进入 \(v_0\) 或其指定静态细化；
+* 原子标识 \(\iota\)、动作 \(a\)、失败/读数 \(\lambda\) 进入 \((\ell,y)\)；
+* 路径 grade 通过 \(d\) 的加法运输；
+* 未来续接记忆由 \(\Pi_\ast\) 的行为类承担。
+
+对 FIB，\(\alpha,\beta\) 仍只是自由树的叶生成元；有序配对和 \(\rho\) 生成源结构与纪元变化。真正进入 \(K_a\) 的是带游标、来源、绝对纪元、参考和权限合同的 ReadTag、DownL、DownR、Up、ApplyRho 动作。因而一个可执行的最小边界应至少形如
+
+$$
+(\text{sort},\text{cursor},\text{reference/permission},[s]_{\Pi_\ast}),
+\tag{EX.3112}
+$$
+
+其中最后一项是指定未来任务的稳定行为类；只保存 \(\alpha,\beta\) 计数、当前端点或来源边缘后验，不能保证下一次 DownL/DownR 的合法性和读出。
+
+## 31.99 追加锚
+
+## 32. 依赖类型生成器与可达行为核心
+
+第30节的过程元组保留了所有接口字段，第31节的联合核给出了有限商的算法。本节再向下收缩一次：把类型、原子边、合法性、后继和当前读出作为生成器的原语，把路径、复合、时间响应和动态边界全部递归导出。结论只针对给定根集合生成的可达子关系。
+
+### 32.1 最小的有类型生成数据
+
+取类型集 \(I\)，每个类型 \(i\) 的配置纤维为 \(S_i\)，每对类型的原子边集合为 \(E_{ij}\)。一条边 \(e\in E_{ij}\) 的动作标签、事件标签和原子标识记为
+
+$$
+a(e)\in A,\qquad
+\lambda(e)\in L,\qquad
+\iota(e)\in J .
+\tag{TG.3201}
+$$
+
+每个类型有当前读出 \(q_i:S_i\to O_i\)。边的单步语义是部分函数
+
+$$
+\operatorname{step}_e:S_i\longrightarrow
+\operatorname{Option}\bigl(L_e\times S_j\bigr),
+\qquad e\in E_{ij}.
+\tag{TG.3202}
+$$
+
+返回 \(\operatorname{none}\) 表示该边在当前配置不合法；返回 \(\operatorname{some}(\ell,s')\) 同时给出事件标签和后继。若过程具有随机性，把右侧换成有限次概率分布，并保留每个输出标签到后继类的质量；本节先写确定性版本。
+
+从这些数据导出有限 typed path。空路径 \(1_i:i\to i\) 是每个类型的单位；若 \(e:i\to j\) 且 \(p:j\to k\)，则 \(p\circ e:i\to k\)。只有索引相等的边才能接续，因此不需要另把“接口类型相容”作为一个无类型布尔条件附加在路径外。
+
+若每条边还有单步 grade \(\delta_1(e)\in G\)，其中 \(G\) 是加法幺半群，则路径 grade 由
+
+$$
+\operatorname{grade}(1_i)=0,\qquad
+\operatorname{grade}(p\circ e)
+=\delta_1(e)+\operatorname{grade}(p)
+\tag{TG.3203}
+$$
+
+导出。空间支持 \(\sigma(e)\) 若不由边类型和 step 定义，也必须作为独立字段加入；它不是生成器可以免费推出来的坐标。
+
+### 32.2 完整有限路径响应与行为核
+
+对 \(p:i\to k\) 和 \(s\in S_i\)，递归定义响应
+
+$$
+\operatorname{Resp}_{1_i}(s)=\operatorname{ok}(q_i(s)),
+\tag{TG.3204}
+$$
+
+若 \(p\) 以 \(e:i\to j\) 开始，则
+
+$$
+\operatorname{Resp}_{p\circ e}(s)=
+\begin{cases}
+\operatorname{fail}(e),&
+\operatorname{step}_e(s)=\operatorname{none},\\
+\operatorname{event}\bigl(e,\ell,
+\operatorname{Resp}_p(s')\bigr),&
+\operatorname{step}_e(s)=\operatorname{some}(\ell,s').
+\end{cases}
+\tag{TG.3205}
+$$
+
+这里的响应保留动作、原子标识、事件、失败、终端读出和路径顺序。定义完整行为
+
+$$
+\beta_i(s):
+\bigl\{p:i\to k\text{ 的有限 typed path}\bigr\}
+\longrightarrow
+\operatorname{Response},
+\qquad
+\beta_i(s)(p)=\operatorname{Resp}_p(s).
+\tag{TG.3206}
+$$
+
+在实际根集合 \(R_i\subseteq S_i\) 上，只取由（TG.3202）反复产生的可达闭包
+\(\operatorname{Reach}(R)\)。所有后续等价和最小性都在这个闭包上判断；未从声明根可达的状态和边不被当前观察自动恢复。
+
+### 32.3 最小可执行行为商
+
+在同一类型纤维上定义
+
+$$
+s\mathrel{\approx_i}t
+\iff
+\beta_i(s)=\beta_i(t).
+\tag{TG.3207}
+$$
+
+**定理 32.1（有类型行为核的动态充分性与最小性）。** 在可达闭包上，\(\approx_i\) 是等价关系，并满足：
+
+1. \(s\approx_i t\) 时，当前读出相同：\(q_i(s)=q_i(t)\)；
+2. 对每条 \(e:i\to j\)，若 \(\operatorname{step}_e(s)=\operatorname{none}\)，则 \(\operatorname{step}_e(t)=\operatorname{none}\)；若
+   \[
+   \operatorname{step}_e(s)=\operatorname{some}(\ell,s'),
+   \]
+   则存在 \(t'\) 使
+   \[
+   \operatorname{step}_e(t)=\operatorname{some}(\ell,t')
+   \quad\text{且}\quad s'\approx_j t' ;
+   \tag{TG.3208}
+   \]
+3. 因而 \(q_i\)、每条 \(\operatorname{step}_e\) 以及所有有限路径响应都下降到商
+   \[
+   \mathsf S_{\mathrm{beh}}=\operatorname{Reach}(R)/{\approx};
+   \tag{TG.3209}
+   \]
+4. 若 \(r\) 是另一个实际可达摘要，并且
+   \[
+   r(s)=r(t)
+   \Longrightarrow
+   \bigl(q_i(s)=q_i(t)\ \land\
+   \text{每条 }e\text{ 的合法性、标签与 }r\text{-后继相同}\bigr),
+   \tag{TG.3210}
+   \]
+   则在 \(\operatorname{im}r\) 上存在唯一映射
+   \[
+   \overline\beta(r(s))=[s]_{\approx}
+   \quad\text{且}\quad
+   \overline\beta\circ r=q_{\mathrm{beh}} .
+   \tag{TG.3211}
+   \]
+   所以任何这样的精确摘要的实际状态数都不小于行为商的类数。
+
+**证明。** 等价关系由函数 \(\beta_i\) 的相等得到。取空路径，立即得到当前读出相等。若一步在 \(s\) 上失败而在 \(t\) 上成功，长度一响应已经不同；若两边都成功但事件标签不同，同样由长度一响应矛盾。因此成功状态具有相同标签。对成功后继 \(s',t'\)，任意后续路径 \(p\) 的响应由 \(p\circ e\) 的响应给出；\(\beta_i(s)=\beta_i(t)\) 遂推出 \(\beta_j(s')=\beta_j(t')\)。这给出（TG.3208），并按路径长度归纳得到商上的全部响应。若 \(r(s)=r(t)\)，条件（TG.3210）沿任意路径归纳给出 \(\beta_i(s)=\beta_i(t)\)，故（TG.3211）在实际像上良定义且唯一。证毕。
+
+这里的唯一性只在 \(\operatorname{im}r\) 上成立；若给摘要值域加入从未由实际来源取得的点，因子在那些点上的延拓没有意义，也不能被称作观察者的最小实现。
+
+### 32.4 四视图恢复的方向性
+
+令 \(\Phi\) 是第30节的联合视图，限制在 \(\operatorname{Reach}(R)\) 上。由（TG.3207）得到
+
+$$
+\ker\Phi\subseteq\approx
+\quad\Longleftrightarrow\quad
+\text{\(\Phi\) 足以决定指定的全部有限路径响应}.
+\tag{TG.3212}
+$$
+
+若还要求 \(\Phi\) 本身就是最小动态边界，则必须有
+
+$$
+\ker\Phi=\approx .
+\tag{TG.3213}
+$$
+
+只有当联合视图含有空路径读出、全部声明动作及其失败响应、原子标识和所有允许的有限 typed continuation 时，\(\ker\Phi\) 才有机会达到（TG.3213）。遗漏空路径会遗漏当前边界读数；遗漏某个动作会把不同的合法性合并；遗漏某个后缀会把未来才出现的区别推到视图核中。
+
+这也给出一个更精简的生成层—视图层分界：
+
+* \(I,S_i,E_{ij},\operatorname{step}_e,q_i\) 决定可达过程和完整行为核；
+* \(\delta_1\) 是可选的路径时间读出，只有在进入响应或另有同步合同后才可由行为恢复；
+* \(\sigma\) 是可选的空间读出，不能仅由 \(\operatorname{step}\) 的数值响应推出；
+* \(\Phi\) 的最小充分边界是行为商 \(\operatorname{Reach}(R)/{\approx}\)，而不是任意单个坐标、总 grade 或当前后验。
+
+### 32.5 FIB 的依赖类型特化
+
+对 Fibonacci 生成层，可以令一个源类型承载自由树项，另设游标、纪元和权限的配置类型。叶常元是
+
+$$
+\alpha,\beta:\mathsf{Tree},
+\qquad
+\langle-,-\rangle:\mathsf{Tree}\times\mathsf{Tree}\to\mathsf{Tree},
+\qquad
+\rho:\mathsf{Tree}\to\mathsf{Tree}.
+\tag{TG.3214}
+$$
+
+它们分别是叶生成元、构造器和替换；真正的 \(E_{ij}\) 是带源/靶索引的
+ReadTag、DownL、DownR、Up、ApplyRho 等游标动作。把动作的失败、事件、绝对纪元和
+writer 收据放入 \(\operatorname{step}_e\) 的标签，行为核便同时决定：
+
+$$
+\text{当前读数},\quad
+\text{下一动作是否合法},\quad
+\text{后缀上下文怎样变化},\quad
+\text{未来读数怎样继续}.
+\tag{TG.3215}
+$$
+
+若任务只读取组成，\(\approx\) 可以把不同括号和左右次序合并；若任务包含路径读取，
+（TG.3208）会把这些后继差异保留下来。故“两个不可约关系”准确地说是
+自由语法的两个叶生成元；最小运行边界还必须包含类型化动作和其行为商。
+
+**例 32.2（空路径与不可达边）。** 若观察只记录非空动作的输出而不记录
+\(q_i(s)\)，两个当前读数不同但每个非空动作都失败的状态会被错误合并。反过来，
+若一条边从任何声明根都不可达，改变它的动作标签或 grade 不会改变任何
+\(\operatorname{Resp}_p\)；因此完整过程的全局同构不能由可达观察推出，最多得到
+\(\operatorname{Reach}(R)\) 上的同构。
+
+## 32.99 追加锚
+
+## 33. 根标记历史的端点核与展开图拼接
+
+第32节的行为核给出了动态上最小的可执行商，但它没有自动说明两条成功的有类型历史是否在同一个实际可达配置结束。下面只补入这一条端点关系；它把行为响应与端点的图拼接分开。根、类型、合法性和共同来源仍取前文已经声明的范围。本节只讨论（TG.3202）的确定性部分 step 函数，不主张概率或非确定性系统的相应提升。
+
+### 33.1 成功历史、端点映射与两个核
+
+固定一组带来源标签的根 \(R\)。实际配置载体取为不交并 \(\mathsf C=\coprod_{(\xi,\nu,i)}S_{\xi,\nu,i}\)，其中 \(\xi\) 是来源身份，\(i\) 是当前类型，\(\nu\) 是使用时声明的 epoch；不使用纪元时略去该索引。根 \(r\in R\subseteq\mathsf C\) 的标签保留在其配置身份中，不能仅因内部状态值相同而抹去来源、类型或纪元。第32节的 \(\operatorname{step}_e\) 与 \(q_i\) 在此按标签提升为 \(\operatorname{step}_{\xi,\nu,e}:S_{\xi,\nu,i}\to\operatorname{Option}(L_e\times S_{\xi,\nu,j})\)（\(e\in E_{ij}\)）及 \(q_{\xi,\nu,i}:S_{\xi,\nu,i}\to O_i\)，其中 step 保持来源及声明的固定 epoch，返回的后继仍带这些标签。本节在标签由输入确定时，用 \(\operatorname{step}_e\) 和 \(q_i\) 或 \(q\) 简记这些带标签的提升；\(\operatorname{Reach}(R)\) 是此带标签载体中的可达闭包。根标记是指定映射 \(R\to\operatorname{Reach}(R),\ r\mapsto r\)，不额外把出发根写成每个后继顶点的路径属性。同源的不同根可以到达同一配置；跨根的 \(\operatorname{EqEnd}\) 只在显式共同 source identity 合同及同一声明的 epoch 范围内有意义。
+
+令 \(H_R\) 为所有从 \(R\) 出发的成功有类型历史。历史允许长度为零，并以 \(\varepsilon_r\) 表示根 \(r\) 的空历史。若 \(h\) 的端点上有合法 typed edge \(e\)，且该步返回事件 \(\ell\) 与带标签后继 \(s'\)，则把扩展记为 \(he\)，并要求 \(he\in H_R\)。端点求值 \(\eta:H_R\to\operatorname{Reach}(R)\) 递归定义为
+
+$$
+\eta(\varepsilon_r)=r,
+\qquad
+\operatorname{step}_e(\eta(h))=\operatorname{some}(\ell,s')
+\Longrightarrow
+\eta(he)=s'.
+\tag{EG.3301}
+$$
+
+这里的 \(\operatorname{Reach}(R)\) 只包括从声明根反复执行成功 typed edge 得到的实际配置。令 \(U_R\) 为 \(H_R\) 的有类型前缀展开：其顶点是历史，其边为
+
+$$
+h\xrightarrow{e}_{U_R}he
+\quad\Longleftrightarrow\quad
+he\in H_R.
+\tag{EG.3302}
+$$
+
+给每个可达配置 \(s\) 的完整未来响应记为 \(\beta(s)\)。它对每个允许的有限 typed continuation 返回当前读出、合法或失败、事件与标签以及该 continuation 的单步 grade 序列；若要把 grade 纳入某次任务响应，就按该任务的声明合同纳入，而不把端点本身偷偷加入响应。令 \(H_{R;\xi,\nu,i}=\{h\in H_R:\eta(h)\in S_{\xi,\nu,i}\}\)，这些纤维按端点的来源、声明的 epoch 与当前类型划分 \(H_R\)。以 \(\beta_{\xi,\nu,i}\) 表示 \(\beta\) 在 \(\operatorname{Reach}(R)\cap S_{\xi,\nu,i}\) 上的限制，只在同一纤维内比较响应。定义端点核及这些纤维内行为核的并
+
+$$
+K_{\mathrm{end}}
+ :=\{(h,k)\in H_R^2:\eta(h)=\eta(k)\},
+\qquad
+K_{\mathrm{beh}}
+ :=\bigcup_{(\xi,\nu,i)}
+ \{(h,k)\in H_{R;\xi,\nu,i}^{\,2}:\beta_{\xi,\nu,i}(\eta(h))=\beta_{\xi,\nu,i}(\eta(k))\}.
+\tag{EG.3303}
+$$
+
+后文的 \(H_R/K_{\mathrm{beh}}\) 及 \(\beta\) 在商上的诱导映射均使用这个保留标签的关系。
+
+于是历史相等的对角关系、端点核和行为核满足
+
+$$
+\Delta_{H_R}\subseteq K_{\mathrm{end}}\subseteq K_{\mathrm{beh}}.
+\tag{EG.3304}
+$$
+
+第二个包含关系只使用“同一实际端点产生同一未来响应”：若 \(\eta(h)=\eta(k)\)，则两边的所有后缀执行完全相同。它不反向断言未来响应能够识别端点。
+
+### 33.2 端点商就是可达根图
+
+定义实际的可达根标记 decorated typed transition graph \(\mathcal G_R\)。其签名包含顶点集 \(V_R=\operatorname{Reach}(R)\)、根标记 \(R\to V_R\) 的指定映射，以及顶点的来源/epoch/类型标签、当前读出 \(q_{\xi,\nu,i}\) 和所有已供应且声明为端点不变量的 support 字段。其边关系 \(\mathcal E_R\) 由带标签的 step 在 \(V_R\) 上诱导；边装饰保留动作 \(a(e)\)、原子标识 \(\iota(e)\)、原子标签 \(\lambda(e)\)、返回事件 \(\ell\) 及已供应的单步 grade \(\delta_1(e)\)。这些装饰是图签名的输入，未供应的字段不由端点商恢复。对 \(s\in V_R\cap S_{\xi,\nu,i}\)、\(s'\in V_R\cap S_{\xi,\nu,j}\) 和 \(e\in E_{ij}\)，令
+
+$$
+s\xrightarrow{e,\ell}_{\mathcal G_R}s'
+\quad\Longleftrightarrow\quad
+\operatorname{step}_{\xi,\nu,e}(s)=\operatorname{some}(\ell,s').
+\tag{EG.3305}
+$$
+
+端点映射先诱导顶点集之间唯一的良定义双射
+
+$$
+\overline\eta:H_R/K_{\mathrm{end}}\;\longrightarrow\;V_R,
+\qquad
+\overline\eta([h])=\eta(h).
+\tag{EG.3306}
+$$
+
+其理由是：\(\eta\) 按可达性的定义满射；两个历史落在同一端点类当且仅当它们的 \(\eta\) 值相等，所以商后单射；每个根的空历史保留根的类型与来源标签。商上的边只在扩展合法时定义：
+
+$$
+[h]\xrightarrow{e,\ell}_{H_R/K_{\mathrm{end}}}[he]
+\quad\Longleftrightarrow\quad
+he\in H_R\ \land\
+\operatorname{step}_e(\eta(h))=\operatorname{some}(\ell,\eta(he)).
+\tag{EG.3307}
+$$
+
+该定义与代表无关。若 \([h]=[h']\)，则 \(\eta(h)=\eta(h')\)；同一实际配置给出相同的 typed edge 合法性、事件和标签，并给出端点相同的后继，于是 \(he\) 与 \(h'e\) 仍属于同一 \(K_{\mathrm{end}}\)-类。配上上述诱导边关系及装饰后，\(\overline\eta\) 才成为根标记 decorated typed graph 的同构：它保持并反映类型、边的合法性、事件/标签、当前读出 \(q\) 和已供应的单步 grade。商边的 grade 读出 \(\overline\delta_1\) 定义为沿用原子边的 \(\delta_1(e)\)：
+
+$$
+q([h])=q(\eta(h)),
+\qquad
+\operatorname{lab}([h],e)=\operatorname{lab}(\eta(h),e),
+\qquad
+\overline\delta_1\bigl([h]\xrightarrow{e,\ell}[he]\bigr):=\delta_1(e).
+\tag{EG.3308}
+$$
+
+任何已供应且声明为端点不变量的 support 字段也同样下降到商。在 §32 的加法幺半群约定下，历史的累计 grade 是按执行次序累加的路径数据；若还声明了序，则沿用该序：
+
+$$
+\operatorname{Grade}(\varepsilon_r)=0,
+\qquad
+\operatorname{Grade}(h e)
+ =\operatorname{Grade}(h)+\delta_1(e),
+\tag{EG.3309}
+$$
+
+不同长度或不同绕行历史可以到达同一顶点而具有不同的累计值，因此累计 grade 一般不下降为顶点坐标。这一商是“根标记可达图”的规范实现；它不把不可达配置加入图，也不把路径记忆误写成顶点属性。
+
+### 33.3 端点观察的必要性与充分性
+
+对 \(h,k\in H_R\)，写精确端点比较观察为
+
+$$
+\operatorname{EqEnd}(h,k)\;:\Longleftrightarrow\;\eta(h)=\eta(k).
+\tag{EG.3310}
+$$
+
+相对于已知且带完整响应装饰的前缀展开 \(U_R\)、已供应的根/类型、标签、读出及可选 grade/support 字段，全部成对的 \(\operatorname{EqEnd}\) 恰好给出 \(K_{\mathrm{end}}\)。这里“必要且充分”只指：由这些输入与端点比较可构造端点商图；反过来，由该图连同历史求值映射可恢复端点比较，因而在式（EG.3306）的规范对应下互相可恢复。它不是比特数或查询次数的下界，也不能恢复输入中遗漏的装饰。充分性来自先取端点类再按（EG.3307）接边；必要性指任何连同历史求值精确恢复端点身份的重建，都必须能判定这同一端点核，否则无法确定哪些历史指向同一顶点。等价地，可以使用一个端点代码 \(c\) 代替成对比较，只要
+
+$$
+c(h)=c(k)\quad\Longleftrightarrow\quad\operatorname{EqEnd}(h,k).
+\tag{EG.3311}
+$$
+
+行为观察只给出 \(K_{\mathrm{beh}}\)。用 §32 的动态同余（TG.3208）定义该商的转移：若 \(\operatorname{step}_e(\eta(h))=\operatorname{none}\)，则 \(\operatorname{step}^{\mathrm{beh}}_e([h])=\operatorname{none}\)；若 \(he\in H_R\) 且该步返回 \(\ell\)，则 \(\operatorname{step}^{\mathrm{beh}}_e([h])=\operatorname{some}(\ell,[he])\)。同余保证合法性、事件及后继行为类与代表无关，商边沿用动作/原子标签及已供应的 \(\delta_1(e)\)，当前读出由空路径响应下降。以 \([\varepsilon_r]\) 标记根，便得到行为商 typed graph \(\mathcal G_{\mathrm{beh}}\)，其顶点集为 \(H_R/K_{\mathrm{beh}}\)。因此
+
+$$
+\overline\eta_{\mathrm{beh}}:\mathcal G_{\mathrm{beh}}\longrightarrow\mathcal G_R,
+\qquad
+\overline\eta_{\mathrm{beh}}([h])=\eta(h)
+\quad\text{为良定义的规范同构}
+\quad\Longleftrightarrow\quad
+K_{\mathrm{end}}=K_{\mathrm{beh}},
+\tag{EG.3312}
+$$
+
+这里 \(\overline\eta_{\mathrm{beh}}\) 的公式先是顶点映射候选；两核相等时它良定义且为双射，再由上述商转移成为同构，仍保留根标记、typed edge、合法性、标签、读出和已供应的单步 grade。其他已供应的端点不变量也在两核相等时下降；不额外宣称它们在一般行为类上不变。若包含关系严格，则行为商只恢复行为核心，不能恢复端点图的全部 gluing。仅测试“是否回到根”更弱：它只回答某条历史的端点是否等于指定根，不能比较两个非根端点，也不能区分两个都不回根但彼此不同的端点。
+
+### 33.4 反例 A：相同被动响应而不同循环端点
+
+这里的 \(C_m\) 与 \(C_n\) 是在同一个外部被动响应合同下比较的独立模型；它们的响应相等是跨模型见证，不是同一个来源标记 \(H_R\) 内的 \(K_{\mathrm{beh}}\) 配对。
+
+对 \(m\ge2\)，令 \(C_m\) 的状态为 \(\mathbb Z/m\mathbb Z\)，根为 \(0\)，唯一总动作为 \(a\)，并令
+
+$$
+\operatorname{step}_a(x)=\operatorname{some}(\lambda_0,x+1\!\!\pmod m),
+\qquad
+q(x)=q_0,
+\qquad
+\delta_1(a)=1,
+\tag{EG.3313}
+$$
+
+事件和其他支持字段均为常量。根历史 \(a^k\) 的有限响应都是同一个常量事件词、终端读出 \(q_0\) 和累计 grade \(k\)；因此对每个固定 \(k\)，\(C_2\) 与 \(C_3\) 的被动响应完全相同，包括 grade \(k\)。然而
+
+$$
+(a^i,a^j)\in K_{\mathrm{end}}^{(m)}
+\quad\Longleftrightarrow\quad
+i\equiv j\pmod m,
+\tag{EG.3314}
+$$
+
+而可达图的顶点数分别为 \(2\) 与 \(3\)。从任一端点开始的未来行为在两个系统内都只看到同一常量响应，故行为核没有提供这一个模 \(m\) 的端点拼接信息。该例把“响应长度和 grade”与“循环端点数”明确分开。
+
+### 33.5 反例 B：分支汇点与根回返不足
+
+这里的 \(B_1\) 与 \(B_2\) 是在同一个外部被动响应合同下比较的独立模型；它们的响应相等是跨模型见证，不是同一个来源标记 \(H_R\) 内的 \(K_{\mathrm{beh}}\) 配对。
+
+取相同的根 \(r\)、动作 \(a,b\)、常量读出 \(q_0\)、常量事件 \(\lambda_0\) 和单步 grade \(\delta_1(a)=\delta_1(b)=1\)。用 \(T_j\) 表示 \(B_j\) 的总后继函数，即 \(\operatorname{step}_e(x)=\operatorname{some}(\lambda_0,T_j(x,e))\)。系统 \(B_1\) 有状态 \(\{r,s\}\)，其全部转移为
+
+$$
+T_1(r,a)=T_1(r,b)=s,
+\qquad
+T_1(s,a)=T_1(s,b)=s.
+\tag{EG.3315}
+$$
+
+系统 \(B_2\) 有状态 \(\{r,s_a,s_b\}\)，其全部转移为
+
+$$
+T_2(r,a)=s_a,
+\quad
+T_2(r,b)=s_b,
+\qquad
+T_2(s_a,a)=T_2(s_a,b)=s_a,
+\quad
+T_2(s_b,a)=T_2(s_b,b)=s_b.
+\tag{EG.3316}
+$$
+
+两者对每个有限动作词都给出相同的常量输出、事件和 grade 长度；所有非空词都不回到根，所以任意被动响应与根回返测试均一致。但在 \(B_1\) 中
+
+$$
+\operatorname{EqEnd}(a,b)\text{ 为真},
+\tag{EG.3317}
+$$
+
+在 \(B_2\) 中 \(\operatorname{EqEnd}(a,b)\) 为假。于是分支是否在一个实际汇点粘合，不能由根回返或被动响应单独决定。
+
+### 33.6 解释、取得合同与来源边界
+
+在这一层，\(K_{\mathrm{end}}\) 是边界/空间的 incidence glue：它说明哪些前缀历史指向同一个实际配置；grade 与 writer 历史仍是路径时间和历史记录；\(K_{\mathrm{beh}}\) 是面向任务的记忆抽象。这里的“空间”和“时间”是这些关系的结构名称，不推出空间度量、物理时间或物理时空完成。
+
+多个根之间的比较必须携带显式 source identity；只有在共同来源合同已经声明时，跨根的 \(\operatorname{EqEnd}\) 才有意义。取得端点比较还需要合法 replay、reference stability、固定 epoch 以及相应 permission；被动响应语义本身只授予输出和后缀行为，不授予端点相等的权限。若这些条件缺失，\(\operatorname{EqEnd}\) 应保持为未取得的接口观测，而不能从相同响应推断。
+
+下一迭代问题是：对选定 carrier，哪一个具体的 FIB cursor/archive/permission 合同能够提供精确的端点比较？
+
+来源边界：本节复用本卷 §§3.3、4.4 的精确纤维与来源/行为分离条件，以及 §30–§32 的四视图、有类型生成器和行为核；它也复用仓内既有 ReachableBehavior* 与 contextual-congruence 结果所承载的可达行为最小性和同余事实。上述结果在此只作接口前提，不在本节重复证明，也不声称本节已有 Lean 验证。本文是理论层追加；端点 acquisition contract 仍由接口所有者给出，长期的物理时空解释仍未解决。
+
+## 33.99 追加锚
+
+## 34. 共同历史关系的四因子化与恢复
+
+本节把 §§30–33 的确定性、部分、有类型历史放进一个共同的实际载体。定义 1.1(d)
+区分动作未定义与动作执行后报告失败。为明确这一区分，本节用 $H_R$ 表示只含
+成功输出的历史子集，用 $H_R^{\rm run}$ 表示全部已执行历史（包括报告失败的步骤）；
+两者都允许空历史。§33 的端点商论证分别应用于这两个历史域时，须使用各自的
+可达端点像，不能把两个可达域混同。四种表达不是四张可以
+各自实现再事后对齐的表，而是同一实际关系的四个投影。为此固定一个联合编码
+
+$$
+\Phi=(\mathsf{Space},\mathsf{Time},\mathsf{Boundary},\mathsf{Memory}) :
+H_R\longrightarrow X_S\times X_T\times X_B\times X_M .
+\tag{PG.3401}
+$$
+
+先固定 §33 的实际状态载体与它的 work-state 投影。定义 1.1(b) 中的
+$S_i$ 是完整联合像；因此本节把带标签的完整状态写成
+
+$$
+\mathsf S_R:=\coprod_{(\xi,\nu,i)\in I_R}S_{\xi,\nu,i},
+\qquad
+\mathsf C:=\coprod_{(\xi,\nu,i)\in I_R}X_{\xi,\nu,i},
+$$
+
+其中不交并标签同时记录 source identity $\xi$、epoch $\nu$ 和当前 type $i$，而
+$\mathsf C$ 只收纳定义 1.1(b) 的 work-state 坐标。由于每个
+$S_{\xi,\nu,i}$ 是相应像的子集，有规范投影
+
+$$
+\operatorname{arc}:\mathsf S_R\to\mathsf A_R^{\rm state},\quad
+\operatorname{cfg}:\mathsf S_R\to\mathsf C,\quad
+\operatorname{ref}:\mathsf S_R\to\mathsf{Ref}_R,\quad
+\operatorname{perm}:\mathsf S_R\to\mathsf{Perm}_R,
+$$
+
+并令 $\eta_{\rm cfg}:=\operatorname{cfg}\circ\eta$。后文的 $\eta$ 仍是 §33
+给出的完整状态端点；出现 $\eta_{\rm cfg}$ 时才指 work-state 坐标。
+对每个纤维，令 $\operatorname{Ref}_{\xi,\nu,i}$ 与
+$\operatorname{Perm}_{\xi,\nu,i}$ 分别为定义 1.1(b) 的整个来源关系坐标（包含 reference）与 permission 集合；这些
+集合的乘积只提供字段类型，不表示可以独立任取一个 archive、reference 和 permission。
+令 $\operatorname{root}(h)$ 表示历史 $h$ 在 $H_R$ 中的出发根。先定义候选记录域
+
+$$
+\Omega_R^0:=
+\coprod_{\substack{r\in R\\(\xi,\nu,i)\in I_R}}
+\left\{\omega=(h,s,\rho,\pi)\ \middle|\
+\begin{array}{l}
+h\in H_R,\ \operatorname{root}(h)=r,\ \text{$h$ 的每一步均成功},\\
+s=\eta(h)\in S_{\xi,\nu,i},\quad
+\rho\in\operatorname{Ref}_{\xi,\nu,i},\quad
+\pi\in\operatorname{Perm}_{\xi,\nu,i}
+\end{array}\right\}.
+\tag{PG.3400}
+$$
+
+定义同一来源的联合映射
+
+$$
+\begin{aligned}
+\widehat\chi_R:\Omega_R^0&\longrightarrow
+\mathsf A_R^{\rm archive}\times\mathsf C\times\mathsf{Ref}_R\times\mathsf{Perm}_R,\\
+\widehat\chi_R(r;h,s,\rho,\pi)&:=
+\bigl(\operatorname{arc}(s),\operatorname{cfg}(s),\operatorname{ref}(s),\operatorname{perm}(s)\bigr),
+\end{aligned}
+\tag{PG.3400a}
+$$
+
+其中 $\mathsf A_R^{\rm archive}:=\mathsf A_R^{\rm state}$ 是定义 1.1(b) 的
+archive 坐标（其内容可包含完整输入历史），
+$\mathsf{Ref}_R:=\coprod_{(\xi,\nu,i)\in I_R}\operatorname{Ref}_{\xi,\nu,i}$，
+$\mathsf{Perm}_R:=\coprod_{(\xi,\nu,i)\in I_R}\operatorname{Perm}_{\xi,\nu,i}$。
+共同来源合同给出带候选见证的谓词
+$\operatorname{Compat}_R(\omega,\widehat\chi_R(\omega))$，它要求四个分量由同一实际来源记录、
+同一 $\xi,\nu,i$、同一历史 archive 和同一取得合同见证；于是实际记录域为
+
+$$
+\Omega_R:=\{\omega\in\Omega_R^0:\operatorname{Compat}_R(\omega,\widehat\chi_R(\omega))\},
+\qquad
+\chi_R:=\widehat\chi_R|_{\Omega_R},\qquad
+\mathsf J_R:=\operatorname{im}(\chi_R)\subseteq
+\mathsf A_R^{\rm archive}\times\mathsf C\times\mathsf{Ref}_R\times\mathsf{Perm}_R.
+\tag{PG.3400b}
+$$
+
+这里的 $\mathsf J_R$ 才是定义 1.1(b) 的**可达实际联合像**；它的元素同时携带
+archive、work-state、reference、permission 及 source/epoch/type 标签。$\mathsf C$
+只是其 configuration/work-state 坐标的值域，不承载完整状态的其他联合字段；完整状态
+仍位于 $\mathsf S_R$。$\operatorname{Compat}_R$ 还要求候选见证中的 $\rho,\pi$
+与 $\operatorname{ref}(s),\operatorname{perm}(s)$ 及取得合同一致。
+
+取得合同还必须满足以下**共同来源满性**；它是本节的附加假设，不由定义 1.1(b) 自动给出。先写
+$Q(h):=(\xi(h),\nu(h),i(h))$ 为 $h$ 的 source/epoch/type 标签，并令
+$\operatorname{type}(\xi,\nu,i)=i$：
+
+$$
+\begin{aligned}
+\operatorname{Full}_R:\quad
+&\forall h\in H_R,\quad
+\exists\rho\in\operatorname{Ref}_{Q(h)},\ \pi\in\operatorname{Perm}_{Q(h)}:\\[-2pt]
+&\qquad\omega_h=(\operatorname{root}(h);h,\eta(h),\rho,\pi)\in\Omega_R^0\ \land\\[-2pt]
+&\qquad\operatorname{Compat}_R\bigl(\omega_h,\widehat\chi_R(\omega_h)\bigr).
+\end{aligned}
+\tag{PG.3400b-full}
+$$
+
+其中 $Q(h)$ 是该 $h$ 的实际 source/epoch/type 标签；见证保留同一 $h$、同一
+$\eta(h)$ 和全部标签。下文均假定
+(PG.3400b-full)；它给出 $\eta_{\rm cfg}(H_R)\subseteq\operatorname{pr}_{\mathsf C}(\mathsf J_R)$，
+而 $\Omega_R^0$ 的定义给出反向包含，故
+
+$$
+\operatorname{pr}_{\mathsf C}(\mathsf J_R)=\eta_{\rm cfg}(H_R)=\operatorname{cfg}(\operatorname{Reach}(R))
+\subseteq\mathsf C.
+\tag{PG.3400b-full-pr}
+$$
+
+$\mathsf J_R$ 是定义 1.1(b) 的实际联合像条件：实际配置不是四个值域的自由乘积，
+而是由一个共同来源见证得到的像。以下说“同一来源见证”均指在 $\mathsf J_R$ 中的
+同一联合元，而不是分别选择几个分量。令
+$\mathsf C_R^{\mathrm{cfg}}:=\operatorname{pr}_{\mathsf C}(\mathsf J_R)$，它仅表示 endpoint/work-state projection，则
+
+$$
+\mathsf C_R^{\mathrm{cfg}}=\eta_{\rm cfg}(H_R)=\operatorname{cfg}(\operatorname{Reach}(R))
+\subseteq
+\mathsf C=\coprod_{(\xi,\nu,i)\in I_R}X_{\xi,\nu,i}.
+\tag{PG.3400b'}
+$$
+
+这里 $\mathsf C_R^{\mathrm{cfg}}$ 仅表示 $\mathsf J_R$ 在 endpoint/work-state 坐标上的投影；完整实际配置仍由 $\mathsf J_R$ 中的联合元表示。
+
+对 $h\in H_R$ 写 $Q(h)=(\xi_h,\nu_h,i_h)$。对已声明边 $e\in E_{i_hj}$，
+令 $L_e^{\rm ok}$ 为成功输出标签；其余已执行失败标签在运行层处理。
+next-contract 给出 $\operatorname{NextCompat}_e\subseteq\mathsf J_R^2$。
+下式中 $\omega_h=(\operatorname{root}(h);h,\eta(h),\rho,\pi)$，
+$\omega'=(\operatorname{root}(h);he,s',\rho',\pi')$ 是由各量词变量确定的元组：
+
+$$
+\begin{aligned}
+&\forall h\in H_R,\ \forall j\in I,\ \forall e\in E_{i_hj},\quad
+\forall\rho\in\operatorname{Ref}_{Q(h)},\ \forall\pi\in\operatorname{Perm}_{Q(h)},\quad
+\forall\ell\in L_e^{\rm ok},\ \forall s'\in S_{\xi_h,\nu_h,j},\\
+&\quad\bigl(\omega_h\in\Omega_R\ \land\
+\operatorname{step}_e(\eta(h))=\operatorname{some}(\ell,s')\bigr)\\
+&\qquad\Longrightarrow\quad
+he\in H_R\ \land\ \eta(he)=s'\ \land\
+\exists\rho'\in\operatorname{Ref}_{\xi_h,\nu_h,j},\ \exists\pi'\in\operatorname{Perm}_{\xi_h,\nu_h,j}:\\
+&\qquad\qquad\omega'\in\Omega_R\ \land\
+\bigl(\chi_R(\omega_h),\chi_R(\omega')\bigr)\in\operatorname{NextCompat}_e.
+\end{aligned}
+\tag{PG.3400c}
+$$
+
+历史项 $he$ 的端点只在 $he\in H_R$ 的分支内求值。这里 reference、permission、
+archive 和后继 $s'$ 都来自同一个 $\omega'$；不把分别存在的分量当作联合存在。
+source $\xi_h$ 与固定 epoch $\nu_h$ 按 §33 的 step 合同保持，目标 type $j$ 随边更新。
+这给出实际像上的附加取得闭合条件；已执行失败使用下文的运行像闭合条件。
+
+**空间因子。**
+support 与 incidence 不是由端点商凭空补出的字段；它们必须作为已经声明的端点图字段
+函数给出。写
+
+$$
+\operatorname{support}:H_R\to\mathsf{Supp},\qquad
+\operatorname{incidence}:H_R\to\mathsf{Inc},
+\qquad
+\mathsf{Space}(h):=
+\bigl(\eta_{\rm cfg}(h),\operatorname{support}(h),\operatorname{incidence}(h)\bigr)\in X_S,
+\tag{PG.3400d0a}
+$$
+
+其中 $\mathsf{Supp}$、$\mathsf{Inc}$ 及其值域均由实际图签名声明，并把
+$\mathsf{Space}$ corestrict 到其实际像。这里明确要求端点不变量
+
+$$
+\eta_{\rm cfg}(h)=\eta_{\rm cfg}(k)\Longrightarrow
+\bigl(\operatorname{support}(h),\operatorname{incidence}(h)\bigr)=
+\bigl(\operatorname{support}(k),\operatorname{incidence}(k)\bigr).
+\tag{PG.3400d}
+$$
+
+此处要求 support/incidence 由工作态投影及其标签给出，比仅要求完整端点不变更强；
+完整端点仍通过 $\operatorname{cfg}$ 决定这个空间因子。若任务要求度量或不可约性，
+还必须把相应的 support/metric irreducibility 条件写进合同；PG.3007 只在
+(PG.3400d) 及该不可约性假设同时成立时提供 endpoint$\to$space 的接口。单有端点
+值或相同读数，不会自动产生空间支持。
+
+**时间因子。**
+$\mathsf{Time}(h)$ 保留完整的、有序的原子路径记录：动作、原子标识、类型、
+事件和每一步的 grade（在合同中供应的字段均保留次序），并带累计可加 grade
+$\operatorname{Grade}(h)$ 作为一个投影。故完整路径顺序至少不粗于累计数值；仅当存在
+相同 grade 而路径记录不同的历史时，完整路径才严格更细；不能用累计 grade 代替路径
+记录，也不能从累计 grade 反推绕行、分支或原子次序。
+
+PG.3006 只对固定单根的可达区域成立。对多根 $H_R$，端点到累计 grade 不得直接
+声称；必须或者限制到固定根的 $H_{\{r\}}$，或者另加全局条件
+
+$$
+\ker(\eta)\subseteq\ker(\operatorname{Grade}),
+\tag{PG.3400e}
+$$
+
+即所有允许跨根而到达同一端点的路径 grade 相容。只有在 (PG.3400e) 成立后，才
+可以定义全局 endpoint$\to$grade 因子。“每个闭路 grade 为零”只在 PG.3006 所述的
+有向群胚或强连通且有逆的情形中等价；普通有向关系中不作此推断。
+
+**边界因子。**
+仍令 $Q(h):=(\xi(h),\nu(h),i(h))$ 为 $h$ 的 source/epoch/type 标签，
+$H_Q:=\{h\in H_R:Q(h)=Q\}$，并为每个 $Q$ 给出带标签的共同纤维定义
+
+$$
+\beta_Q:\operatorname{im}(\eta|_{H_Q})\longrightarrow Y_Q.
+$$
+
+把边界值域固定为不交并
+
+$$
+X_B:=\coprod_QY_Q,\qquad
+\mathsf{Boundary}(h):=
+\bigl(Q(h),\beta_{Q(h)}(\eta(h))\bigr)\in X_B.
+\tag{PG.3400f}
+$$
+
+每个 $\beta_Q$ 是声明完整的 typed-continuation response：对每个合同允许的延续给出
+合法性或失败、事件、标签和读出；只有当本次任务合同把 grade 纳入 response 时，才把
+相应 grade 序列也纳入。于是全局边界核为
+
+$$
+\begin{aligned}
+\ker(\mathsf{Boundary})
+&=\bigcup_Q\{(h,k)\in H_Q^2:
+\beta_Q(\eta(h))=\beta_Q(\eta(k))\}\\
+&=K_{\mathrm{beh}}.
+\end{aligned}
+\tag{PG.3400g}
+$$
+
+不交并的 $Q$ 标签阻止全局核合并跨 source、epoch 或 type 的历史；因此这里的全局
+$\ker(\mathsf{Boundary})$ 与共同纤维内的 $K_{\mathrm{beh}}$ 完全一致，而不是把
+不同 $Q$ 的相同 response 当成同一边界点。
+
+**记忆因子。**
+为严格回接定义 1.1(d) 与（TG.3202）–（TG.3205），本节保留 $H_R$ 表示全成功历史，
+对每个声明 typed action $e:i\to j$ 固定
+$L_e:=L_e^{\mathrm{ok}}\sqcup L_e^{\mathrm{fail}}$，并仍取
+$\operatorname{step}_e:S_i\to\operatorname{Option}(L_e\times S_j)$。因此
+(TG.3205) 的 $\operatorname{fail}(e)$ 分支只解释
+$\operatorname{step}_e=\operatorname{none}$（缺边或当前非法）；已执行的失败必须走
+$\operatorname{some}(\ell,s')$ 分支，其中 $\ell\in L_e^{\mathrm{fail}}$，由
+$\operatorname{event}(e,\ell,\operatorname{Resp}_p(s'))$ 保留其失败标签与后继。
+这正是定义 1.1(d) 的“已定义动作失败”，不会把它与 absent/none 合并。
+在运行标签纤维 $Q=(\xi,\nu,i)$ 上，$\operatorname{step}_e$ 表示 §33.1 的带 source/epoch
+标签提升，其类型为
+$S^{\mathrm{run}}_{\xi,\nu,i}\to\operatorname{Option}(L_e\times S^{\mathrm{run}}_{\xi,\nu,j})$；
+下文为简洁仍省略这些标签。另定义一个运行历史扩展 $H_R^{\mathrm{run}}\supseteq H_R$：它的每个扩展都按合同记录
+成功或声明的执行失败。若
+$\operatorname{step}_e(\eta_{\mathrm{run}}(h))
+=\operatorname{some}(\ell,s')$，则 $s'=\eta_{\mathrm{run}}(he)$ 是成功后继或
+失败后继，且 $\ell\in L_e^{\mathrm{ok}}\sqcup L_e^{\mathrm{fail}}$；失败标签及其后继同样
+写入 archive。只有缺边或当前动作未启用、因而没有执行记录时，step 才返回
+$\operatorname{none}$。令 $\eta_{\mathrm{run}}$ 是把端点求值延伸到
+$H_R^{\mathrm{run}}$ 的映射，并在 $H_R$ 上约定 $\eta_{\mathrm{run}}=\eta$。
+
+运行来源还必须携带事件字段。令
+$\Lambda_{\mathrm{run}}:=\{\bot\}\sqcup\coprod_e
+(L_e^{\mathrm{ok}}\sqcup L_e^{\mathrm{fail}})$，其中空历史的事件为 $\bot$，非空历史的事件为
+其最后一步的 success/failure 标签；令 $\operatorname{evt}_{\mathrm{run}}(h)\in
+\Lambda_{\mathrm{run}}$ 为该字段。定义运行标签函数
+$Q_{\mathrm{run}}:H_R^{\mathrm{run}}\to I_R^{\mathrm{run}}$，并要求
+$Q_{\mathrm{run}}|_{H_R}=Q$。令 $\mathsf C^{\mathrm{run}}:=\coprod_{Q\in I_R^{\mathrm{run}}}X_Q^{\mathrm{run}}$ 是这些运行标签下的 work-state 不交并
+（在成功历史上与 $\mathsf C$ 相同）。运行完整状态 $S_Q^{\mathrm{run}}$ 仍按定义 1.1(b)
+是相应 $\mathsf A_Q^{\mathrm{archive,run}}\times X_Q^{\mathrm{run}}\times R_Q^{\mathrm{run}}\times P_Q^{\mathrm{run}}$ 的实际像；其四个坐标投影分别记为
+$\operatorname{arc}_{\mathrm{run}},\operatorname{cfg}_{\mathrm{run}},\operatorname{ref}_{\mathrm{run}},\operatorname{perm}_{\mathrm{run}}$。另令
+$\operatorname{archive}(h):=\operatorname{arc}_{\mathrm{run}}(\eta_{\mathrm{run}}(h))$ 为由端点状态携带的运行档案坐标，并令
+$\mathsf{Ref}_R^{\mathrm{run}}:=
+\coprod_{(\xi,\nu,i)\in I_R^{\mathrm{run}}}\operatorname{Ref}_{\xi,\nu,i}$、
+$\mathsf{Perm}_R^{\mathrm{run}}:=
+\coprod_{(\xi,\nu,i)\in I_R^{\mathrm{run}}}\operatorname{Perm}_{\xi,\nu,i}$；各运行纤维的
+reference 与 permission 集合均由合同声明。
+
+随后定义候选运行记录域
+
+$$
+\Omega_R^{\mathrm{run},0}:=
+\coprod_{\substack{r\in R\\(\xi,\nu,i)\in I_R^{\mathrm{run}}}}
+\left\{\omega=(r;h,s,a,\rho,\pi,\ell)\ \middle|\
+\begin{array}{l}
+h\in H_R^{\mathrm{run}},\ \operatorname{root}(h)=r,\ Q_{\mathrm{run}}(h)=(\xi,\nu,i),\\
+s=\eta_{\mathrm{run}}(h)\in S^{\mathrm{run}}_{\xi,\nu,i},\quad
+ a=\operatorname{archive}(h),\\
+\rho\in\operatorname{Ref}_{\xi,\nu,i},\quad
+\pi\in\operatorname{Perm}_{\xi,\nu,i},\quad
+\ell=\operatorname{evt}_{\mathrm{run}}(h)\in\Lambda_{\mathrm{run}}
+\end{array}\right\}.
+\tag{PG.3402-run0}
+$$
+
+定义运行联合映射、相容域和实际运行像
+
+$$
+\begin{aligned}
+\widehat\chi_R^{\mathrm{run}}:\Omega_R^{\mathrm{run},0}&\longrightarrow
+\mathsf A_R^{\mathrm{archive,run}}\times\mathsf C^{\mathrm{run}}
+\times\mathsf{Ref}_R^{\mathrm{run}}\times\mathsf{Perm}_R^{\mathrm{run}}\times\Lambda_{\mathrm{run}},\\
+\widehat\chi_R^{\mathrm{run}}(r;h,s,a,\rho,\pi,\ell)&:=
+\bigl(\operatorname{arc}_{\mathrm{run}}(s),\operatorname{cfg}_{\mathrm{run}}(s),
+\operatorname{ref}_{\mathrm{run}}(s),\operatorname{perm}_{\mathrm{run}}(s),\ell\bigr),\\
+\Omega_R^{\mathrm{run}}&:=\{\omega\in\Omega_R^{\mathrm{run},0}:
+\operatorname{Compat}_R^{\mathrm{run}}(\omega,\widehat\chi_R^{\mathrm{run}}(\omega))\},\\
+\chi_R^{\mathrm{run}}&:=\widehat\chi_R^{\mathrm{run}}|_{\Omega_R^{\mathrm{run}}},\qquad
+\mathsf J_R^{\mathrm{run}}:=\operatorname{im}(\chi_R^{\mathrm{run}}).
+\end{aligned}
+\tag{PG.3402-run1}
+$$
+
+$\mathsf J_R^{\mathrm{run}}$ 同样是定义 1.1(b) 的可达运行联合像，元素同时携带 archive、
+work-state、reference、permission、source/epoch/type 标签及 success/failure 事件；
+$\mathsf C^{\mathrm{run}}$ 及其投影只表示 work-state 坐标，完整运行状态仍在
+$\coprod_QS_Q^{\mathrm{run}}$ 中。
+
+这里 $\operatorname{Compat}_R^{\mathrm{run}}(\omega,\widehat\chi_R^{\mathrm{run}}(\omega))$
+同时读取候选见证及四投影，要求 $a=\operatorname{arc}_{\rm run}(s)$、
+$\rho=\operatorname{ref}_{\rm run}(s)$、$\pi=\operatorname{perm}_{\rm run}(s)$，并要求 archive、配置、reference、permission、
+source/epoch/type 标签和 success/failure 事件来自同一运行来源见证。以下另外假定
+运行取得合同的来源满性；其中 $\operatorname{Ref}_Q$、$\operatorname{Perm}_Q$ 是对应三元标签的集合：
+
+$$
+\begin{aligned}
+\operatorname{Full}_R^{\mathrm{run}}:\quad
+&\forall h\in H_R^{\mathrm{run}},\quad
+\exists\rho\in\operatorname{Ref}_{Q_{\mathrm{run}}(h)},\
+\pi\in\operatorname{Perm}_{Q_{\mathrm{run}}(h)},\\
+&\omega_h:=(\operatorname{root}(h);h,\eta_{\mathrm{run}}(h),
+\operatorname{archive}(h),\rho,\pi,\operatorname{evt}_{\mathrm{run}}(h))
+\in\Omega_R^{\mathrm{run},0},\\
+&\operatorname{Compat}_R^{\mathrm{run}}(\omega_h,\widehat\chi_R^{\mathrm{run}}(\omega_h)).
+\end{aligned}
+\tag{PG.3402-run-full}
+$$
+
+其中 $\rho,\pi$ 具有 $Q_{\mathrm{run}}(h)$ 的对应类型；因此运行像在 work-state 坐标上的投影满足
+$\operatorname{pr}_{\mathsf C^{\mathrm{run}}}(\mathsf J_R^{\mathrm{run}})=
+\operatorname{cfg}_{\mathrm{run}}(\eta_{\mathrm{run}}(H_R^{\mathrm{run}}))$，完整联合字段仍保留在 $\mathsf J_R^{\mathrm{run}}$ 中。
+
+对每个声明动作 $e$，next-contract 给出
+$\operatorname{NextCompat}^{\mathrm{run}}_e\subseteq
+\mathsf J_R^{\mathrm{run}}\times\mathsf J_R^{\mathrm{run}}$。若
+$\operatorname{step}_e(\eta_{\mathrm{run}}(h))=
+\operatorname{some}(\ell,\eta_{\mathrm{run}}(he))$，其中
+$\ell\in L_e^{\mathrm{ok}}\sqcup L_e^{\mathrm{fail}}$，则对每个携带 $h$ 的运行记录
+$\omega_h\in\Omega_R^{\mathrm{run}}$，要求存在
+$\omega_{he}\in\Omega_R^{\mathrm{run}}$。它们分别携带
+$h,\eta_{\mathrm{run}}(h),\operatorname{archive}(h),\operatorname{evt}_{\mathrm{run}}(h)$ 和
+$he,\eta_{\mathrm{run}}(he),\operatorname{archive}(he),\ell$，并满足
+
+$$
+\bigl(\chi_R^{\mathrm{run}}(\omega_h),\chi_R^{\mathrm{run}}(\omega_{he})\bigr)
+\in\operatorname{NextCompat}^{\mathrm{run}}_e.
+\tag{PG.3402-run-next}
+$$
+
+因此每个 success/failure 的 $\operatorname{some}$ 后继都通过
+$\operatorname{NextCompat}^{\mathrm{run}}_e$ 落在同一个运行像
+$\mathsf J_R^{\mathrm{run}}$ 内；没有把失败后继留在未连接的 $\operatorname{SuccCompat}_e$ 中。
+
+为给出记忆状态的类型与初始化域，取每个运行共同纤维的记忆状态类型
+$\mathcal M_Q$，令
+
+$$
+X_M:=\coprod_Q\mathcal M_Q,\qquad
+m_0:R\longrightarrow X_M,\quad m_0(r)\in\mathcal M_{Q_{\mathrm{run}}(\varepsilon_r)},\qquad
+m:H_R^{\mathrm{run}}\longrightarrow X_M,\quad m(h)\in\mathcal M_{Q_{\mathrm{run}}(h)}.
+\tag{PG.3402a0}
+$$
+
+对每个合同允许的 $e:Q\to Q'$，更新函数的类型为
+$U_e:\mathcal M_Q\times (L_e^{\mathrm{ok}}\sqcup L_e^{\mathrm{fail}})\to\mathcal M_{Q'}$，
+并从 $m(\varepsilon_r)=m_0(r)$ 开始。$\operatorname{Record}_e$ 是合同声明的事件记录编码，
+下面仅把事件与后继工作态投影写入档案；不把包含新档案自身的完整后继状态嵌入该档案。对每个
+$h\in H_R^{\mathrm{run}}$ 和每个声明的 typed action $e$，PG.3402 的 step 判定以
+上述携带同一 $h$ 的 $\Omega_R^{\mathrm{run}}$ 记录为前提；$he$ 表示语法扩展，
+$\eta_{\rm run}(he)$、$m(he)$ 和 $\operatorname{archive}(he)$ 仅在该扩展属于运行历史时求值。
+archive/memory 更新还以
+(PG.3402-run-next) 的运行像配对及第二行给出的 $\ell$ 为前提：
+
+$$
+\forall h\in H_R^{\mathrm{run}},\ \forall j\in I,\ \forall e\in E_{\operatorname{type}(Q_{\rm run}(h)),j},\quad
+\left\{
+\begin{aligned}
+&\operatorname{step}_e(\eta_{\mathrm{run}}(h))=\operatorname{none}
+\Longleftrightarrow
+\text{$e$ 当前非法，且没有已执行的记录},\\
+&\Bigl(he\in H_R^{\mathrm{run}}
+ \ \land\
+ \exists!\,\ell\in L_e^{\mathrm{ok}}\sqcup L_e^{\mathrm{fail}}:\quad
+ \operatorname{step}_e(\eta_{\mathrm{run}}(h))
+ =\operatorname{some}\bigl(\ell,\eta_{\mathrm{run}}(he)\bigr)\Bigr)
+ \Longleftrightarrow
+ \operatorname{step}_e(\eta_{\mathrm{run}}(h))\ne\operatorname{none},\\
+&\forall\ell\in L_e^{\mathrm{ok}}\sqcup L_e^{\mathrm{fail}},\quad
+ \Bigl(he\in H_R^{\mathrm{run}}\ \land\
+ \operatorname{step}_e(\eta_{\mathrm{run}}(h))
+ =\operatorname{some}\bigl(\ell,\eta_{\mathrm{run}}(he)\bigr)\Bigr)
+ \Longrightarrow\\[-2pt]
+&\qquad m(he)=U_e\bigl(m(h),\ell\bigr),\qquad
+\operatorname{archive}(he)
+ =\operatorname{archive}(h)\mathbin{\|}\operatorname{Record}_e(\ell,\operatorname{cfg}_{\rm run}(\eta_{\mathrm{run}}(he))).
+\end{aligned}
+\right.
+\tag{PG.3402}
+$$
+
+这里的外层量词是公式中的 $\forall h\in H_R^{\mathrm{run}}\;\forall e$，第二行再以
+$\exists!\,\ell\in L_e^{\mathrm{ok}}\sqcup L_e^{\mathrm{fail}}$ 有界地给出唯一事件标签，并与
+$he\in H_R^{\mathrm{run}}$ 双向对应于 $\operatorname{some}$ 分支；最后一行只在该
+$\operatorname{some}$ 分支内更新记忆和 archive。第二行统一覆盖成功标签与失败
+标签；最后一行对两者都更新记忆并保留失败响应、失败后继及 archive 记录。因而“执行失败”
+不再被写成 $\operatorname{none}$；$\operatorname{none}$ 只表示缺边或当前非法且尚未执行。
+$\mathsf{Memory}(h)=m(h)$ 是该初始化和更新合同产生的观察者状态在
+$H_R$ 上的限制；source、epoch、type、permission、reference 等字段仍属于共同实际来源，
+除非合同明确把它们复制进记忆。FIB 的 $\alpha,\beta$ 叶、cursor/archive/permission
+只在这种映射和取得合同中作接口名称；本节不声称该合同已经实例化。
+
+为使记忆商能够执行，还需显式的 forward/update closure。令
+$H_{Q}^{\mathrm{run}}:=\{h\in H_R^{\mathrm{run}}:Q_{\mathrm{run}}(h)=Q\}$。对每个共同纤维
+$H_{Q}^{\mathrm{run}}$，任意 $h,k\in H_{Q}^{\mathrm{run}}$ 满足 $m(h)=m(k)$，以及每个
+允许的 $e$，要求
+
+$$
+\forall Q\in I_R^{\mathrm{run}},\ \forall h,k\in H_Q^{\mathrm{run}},\ \forall j\in I,\ \forall e\in E_{\operatorname{type}(Q),j},\quad
+m(h)=m(k)\Longrightarrow
+\left\{
+\begin{aligned}
+&\operatorname{step}_e(\eta_{\mathrm{run}}(h))=\operatorname{none}
+\Longleftrightarrow
+\operatorname{step}_e(\eta_{\mathrm{run}}(k))=\operatorname{none},\\
+&\forall\ell,\ell'\in L_e,\quad
+\Bigl(he,ke\in H_R^{\rm run}\ \land\
+\operatorname{step}_e(\eta_{\mathrm{run}}(h))
+ =\operatorname{some}\bigl(\ell,\eta_{\mathrm{run}}(he)\bigr)\ \land\
+\operatorname{step}_e(\eta_{\mathrm{run}}(k))
+ =\operatorname{some}\bigl(\ell',\eta_{\mathrm{run}}(ke)\bigr)\Bigr)\\
+&\qquad\Longrightarrow\quad
+\ell=\ell'\ \land\ Q_{\mathrm{run}}(he)=Q_{\mathrm{run}}(ke)\ \land\ m(he)=m(ke)\\
+&\qquad\qquad\land\ \exists\omega_h,\omega_k,\omega_{he},\omega_{ke}\in\Omega_R^{\mathrm{run}}:\\
+&\text{$\omega_h,\omega_k,\omega_{he},\omega_{ke}$ 分别携带 }h,k,he,ke,\\
+&\bigl(\chi_R^{\mathrm{run}}(\omega_h),\chi_R^{\mathrm{run}}(\omega_{he})\bigr)
+ \in\operatorname{NextCompat}^{\mathrm{run}}_e\ \land\\
+&\bigl(\chi_R^{\mathrm{run}}(\omega_k),\chi_R^{\mathrm{run}}(\omega_{ke})\bigr)
+ \in\operatorname{NextCompat}^{\mathrm{run}}_e.
+\end{aligned}
+\right.
+\tag{PG.3402a}
+$$
+
+第一行覆盖缺边与当前非法的 $\operatorname{none}$ 事件，第二行同时覆盖
+$\operatorname{some}$ 的成功和失败事件、标签、后继及记忆更新；每一个后继均由
+$\operatorname{NextCompat}^{\mathrm{run}}_e$ 连接到 $\mathsf J_R^{\mathrm{run}}$ 中的联合
+运行见证。
+
+对同一 $H_R$ 上的任意两个映射 $u,v$，写
+$\ker(u)=\{(h,k):u(h)=u(k)\}$。同时把两个映射 corestrict 到其实际像：
+
+$$
+u^\#:H_R\to\operatorname{im}(u),\quad u^\#(h)=u(h),
+\qquad
+v^\#:H_R\to\operatorname{im}(v),\quad v^\#(h)=v(h).
+$$
+
+于是实际像上的因子化有一个精确判据：存在唯一的
+$\bar v:\operatorname{im}(u)\to\operatorname{im}(v)$ 使
+$v^\#=\bar v\circ u^\#$，当且仅当
+
+$$
+\ker(u)\subseteq\ker(v).
+\tag{PG.3403}
+$$
+
+因此 $u$ 与 $v$ 互相恢复，当且仅当 $\ker(u)=\ker(v)$；这是 §31.3 的核包含判据
+在本节实际像上的应用。这里的唯一性只针对实际像，不把未出现的编码值当成额外状态。
+四因子共同给出的规范联合商是
+
+$$
+H_R/\ker(\Phi),
+\qquad
+\ker(\Phi)=\ker(\mathsf{Space})\cap\ker(\mathsf{Time})\cap
+\ker(\mathsf{Boundary})\cap\ker(\mathsf{Memory}),
+\tag{PG.3404}
+$$
+
+这是 §31.3 联合核构造在四因子记号下的回接，不另立新的恢复定理；它保留四个
+分量同时可见的最小历史区分。若要在该商上执行动态，只能取后继仍在 $H_R$ 中的
+操作，并必须再要求前向同余：$\Phi(h)=\Phi(k)$ 时，二者对每个这种操作具有相同的
+enabledness、事件、后继的 $\Phi$-值，以及相同的 strategy/update 输入。否则 $\Phi$
+只是静态编码，不能定义可执行的商过程。这里的四因子和 $\Phi$ 仍只定义在 $H_R$；
+含执行失败的完整过程仅由附加的运行取得合同及 (PG.3402a) 给出记忆运行层的闭合，
+没有声明失败历史上的 $\Phi$ 或四因子商后继。
+
+在这些共同来源与前向同余条件下，可得到以下条件箭头，而非无条件的四视图等价：
+
+- 端点到累计 grade 仅在 PG.3006 的路径独立性、势存在和单根（或 (PG.3400e)）条件下成立；完整时间因子仍至少不粗于该投影。
+- 端点到空间因子需要已声明的 support/metric irreducibility 合同和 (PG.3400d)；没有这些假设，空间只保留实际提供的 incidence 字段。
+- 在 §33 的纤维和 source 条件下，端点到边界的因子化只需
+  $K_{\mathrm{end}}\subseteq K_{\mathrm{beh}}$；附加的等号
+  $K_{\mathrm{end}}=K_{\mathrm{beh}}$ 才给出边界到端点的反向因子化及二者互相恢复；
+  严格包含时只能恢复行为商。
+- 在每个共同纤维 $H_Q$ 上，静态映射
+  $\mathsf{Memory}\to\mathsf{Boundary}$ 的因子化当且仅当
+  $\ker(\mathsf{Memory}|_{H_Q})\subseteq
+  \ker(\mathsf{Boundary}|_{H_Q})$；这是 PG.3403 的核包含判据，不把 update
+  closure 混进静态 iff。若还要得到可执行的动态边界商，则另外要求 (PG.3402a) 的
+  forward/update closure，使相同记忆值对每个动作有相同 enabledness/失败、事件、后继
+  标签和更新状态。
+- 四者全部互相恢复，要求相关因子在共同 $H_R$ 上的核相等（并满足执行所需的
+  前向同余）；任意一个严格更粗的核都会留下不可恢复的历史区分。
+
+**分离例（§33.4 的 $C_3$ 工作态图的档案提升）。** 取固定 source/epoch/type，
+完整状态为 $(n\bmod3,a^n)$，其中 $a^n$ 是档案，根为 $(0,\varepsilon)$；唯一动作
+$a$ 把状态送到 $((n+1)\bmod3,a^{n+1})$，单步 grade 为一。事件、任务读出和 support
+均为常量，边界合同不查询档案或 grade；该合同下所有有限续接响应相同。令被动记忆为 $M=\beta$。则 $\varepsilon$ 与 $a$ 具有相同的
+Boundary 和 Memory，但 work-state 端点分别为 $0$ 与 $1$，累计 grade 分别为 $0$ 与
+$1$。另一方面，$\varepsilon$ 与 $a^3$ 在 $C_3$ 中具有相同 work-state 端点 $0$、
+相同常量 support 和相同 Boundary，却有不同累计 grade $0$ 与 $3$。这里
+$\eta_{\rm cfg}(\varepsilon)=\eta_{\rm cfg}(a^3)$ 只说明 configuration/work-state projection 相同；相应的
+完整 archive 已使它们在 $\mathsf J_R$（运行时在
+$\mathsf J_R^{\mathrm{run}}$）中是不同的联合元。因此不存在
+从该粗边界/记忆自动恢复端点或 grade 的结论。更丰富的 archive 可以把路径或来源
+字段加入 $M$ 并细化其核；该例证明的是缺少自动恢复，而不是任何丰富记忆都不可
+恢复。它也说明完整有序路径与累计 grade 必须保持为不同分量。
+
+本节给出 §30 四视图、§31 联合核、§32 行为同余及 §33 端点核之间的共同来源接口；
+因子化判据复用已有结果，新增部分明确完整状态与工作态投影、取得合同及运行档案之间的对应。本节保持 theory-only 边界：无
+Lean 证明、无 FIB 实例化或完成、无物理时空完成。未声明的 support、取得权限、跨
+source 比较和非确定性/概率提升仍属 open 边界。
+
+## 34.99 追加锚
+
+## 35. FIB 端点取得的完备性
+
+上一节把 FIB 的 $\alpha,\beta$、游标、档案、参考和权限保留为接口名。本节给出一个
+可检验的取得合同：它不预设某个具体实现的游标类型，也不把“取得了一个摘要”说成
+已经取得了完整端点。关键区别是，FIB 的两个叶生成元只说明源语法的原子层；端点
+还包含出现地址、组合结构、替换纪元以及后续操作所需的联合关系。
+
+### 35.1 合法比较域与取得码
+
+令 $H_R$ 是固定实际来源上的有限或无限历史集合，$\eta:H_R\to E_R$ 是完整端点
+映射。只在同一来源、同一纪元、参考稳定并且权限允许比较的历史上讨论恢复。记这个
+合法比较域为
+
+$$
+D_K\subseteq H_R.
+\tag{PG.3501}
+$$
+
+其中任意 $h,k\in D_K$ 具有相同的 source、epoch、reference class 和比较权限类型；
+这些条件是比较域的前提，不是取得码可以事后补出的字段。令取得合同给出的码为
+
+$$
+c_K(h)=igl(\xi(h),\nu(h),r(h),A_h,
+\operatorname{cursor}_h,\rho_h,\pi_h\bigr),
+\qquad h\in D_K .
+\tag{PG.3502}
+$$
+
+这里 $\xi$ 表示实际来源标识，$\nu$ 表示纪元或版本标识，$r$ 是当前参考类，
+$A_h$ 是已取得档案，$\operatorname{cursor}_h$ 是端口或树上的位置，
+$\rho_h$ 是运行所用参考，$\pi_h$ 是实际权限见证。若某个字段没有被合同取得，
+它不能在后面的恢复结论中被默认为已知。
+
+对 $u,v:D_K\to Y$ 写
+
+$$
+\ker(u)=\{(h,k)\in D_K^2:u(h)=u(k)\}.
+\tag{PG.3503}
+$$
+
+端点取得码的两个方向分别有不同的要求。
+
+### 35.2 端点可由取得码恢复
+
+**命题 35.1（端点解码判据）。** 存在唯一的函数
+
+$$
+\delta_K:\operatorname{im}(c_K)\longrightarrow\operatorname{im}(\eta|_{D_K})
+$$
+
+满足
+
+$$
+\eta|_{D_K}=\delta_K\circ c_K
+\tag{PG.3504}
+$$
+
+当且仅当
+
+$$
+\boxed{\ker(c_K)\subseteq\ker(\eta|_{D_K}).}
+\tag{PG.3505}
+$$
+
+也就是说，同一个取得码不能对应两个不同端点。证明是实际像上的商因子化：必要
+性来自 (PG.3504) 对相同码值的应用，充分性则令 $\delta_K(c_K(h)):=\eta(h)$；
+核包含保证这个定义与代表元无关，实际像保证唯一性。
+
+命题 35.1 只说明取得码足以回答“端点是什么”。它没有说明端点能够重现档案、游标
+或权限，也没有说明这个解码可由观察者以有限成本计算。
+
+### 35.3 取得码可由端点重建
+
+反向要求的是另一条核包含。
+
+**命题 35.2（取得码重建判据）。** 存在唯一的函数
+
+$$
+\gamma_K:\operatorname{im}(\eta|_{D_K})\longrightarrow\operatorname{im}(c_K)
+$$
+
+满足
+
+$$
+c_K=\gamma_K\circ\eta|_{D_K}
+\tag{PG.3506}
+$$
+
+当且仅当
+
+$$
+\boxed{\ker(\eta|_{D_K})\subseteq\ker(c_K).}
+\tag{PG.3507}
+$$
+
+两条命题合起来给出精确的双向恢复条件：
+
+$$
+\boxed{
+\eta\text{ 与 }c_K\text{ 在 }D_K\text{ 上互相恢复}
+\iff
+\ker(\eta|_{D_K})=\ker(c_K).
+}
+\tag{PG.3508}
+$$
+
+这里的“互相恢复”是指定比较域上的相互因子化，不是说完整 FIB 树、全部历史或所有
+未授权接口都已经暴露。若 (PG.3505) 严格成立而 (PG.3507) 失败，取得码仍是端点的
+充分表示，却保留了端点本身看不出的档案或权限区别；若反过来，只能由端点重建取得
+码，不能声称观察者已经取得端点。
+
+### 35.4 取得码的动态闭合
+
+静态核相等还不足以让取得码成为一个可运行的边界。设 $e$ 是声明的带类型操作，
+在完整历史上有部分后继
+
+$$
+T_e:H_R\longrightarrow\operatorname{Option}(L_e\times H_R),
+$$
+
+并假定执行成功或失败的事件标签都属于 $L_e$。若该操作在取得合同下保持比较域，
+把所有仍在 $D_K$ 中的后继写成
+
+$$
+T_e^K:D_K\longrightarrow\operatorname{Option}(L_e\times D_K).
+$$
+
+要在取得码上定义后继，必须有一个
+
+$$
+\overline T_{e,K}:\operatorname{im}(c_K)
+\longrightarrow
+\operatorname{Option}(L_e\times\operatorname{im}(c_K))
+\tag{PG.3509}
+$$
+
+使下图交换：
+
+$$
+\boxed{
+c_K\,T_e^K=\overline T_{e,K}\,c_K
+}
+\tag{PG.3510}
+$$
+
+这里的等式按 `Option` 和事件标签逐项解释。它成立的充分且必要条件是：对任意
+$h,k\in D_K$，若 $c_K(h)=c_K(k)$，则 $T_e^K(h)$ 与 $T_e^K(k)$ 同时
+非法或同时合法；合法时事件标签相同，并且后继仍在 $D_K$ 且取得码相同。若操作会
+改变 source、epoch、reference class 或 permission type，则必须把新的比较域和新的
+取得码一并声明，不能沿用旧的静态因子化。
+
+这正是“边界是可继续使用的关系状态”的条件。仅有 (PG.3505) 而没有 (PG.3510)，
+取得码只是一次性报告；仅有工作态后继相同而没有档案和事件相容，也不能推出同一段
+FIB 过程。
+
+### 35.5 两个叶生成元与端点完备性的区别
+
+FIB 源层可写成
+
+$$
+t::=\alpha\mid\beta\mid\langle t,t\rangle,
+\qquad
+\rho(\alpha)=\beta,
+\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,
+\tag{PG.3511}
+$$
+
+并在组合层记录
+
+$$
+c(\alpha)=(1,0),\quad c(\beta)=(0,1),\quad
+c(\langle s,t\rangle)=c(s)+c(t).
+\tag{PG.3512}
+$$
+
+因此“只有两个不可约关系”在严格意义上是“只有两个叶标签生成元”。二元组合
+$\langle-,-\rangle$ 仍是独立的构造原语，$\rho$ 仍是独立的后继作用；没有它们，
+只能得到两个标签的静态集合，不能得到 Fibonacci 结构。
+
+对只要求组成数量及其替换后继的任务，$c$ 配合两次数量读数可以成为动态充分边界。
+但它不能成为原始端点的完整取得码，因为
+
+$$
+c(\langle\alpha,\beta\rangle)
+=c(\langle\beta,\alpha\rangle),
+\qquad
+\langle\alpha,\beta\rangle\ne\langle\beta,\alpha\rangle .
+\tag{PG.3513}
+$$
+
+若端点任务要求左右地址、括号结构或替换路径，(PG.3513) 的两个历史落在同一计数
+纤维，却必须落在不同的端点纤维。因此要满足 (PG.3505)，$A_h$ 或
+$\operatorname{cursor}_h$ 至少要包含能区分这些结构的路径码；只保存 $\#\alpha$、
+$\#\beta$、深度或一个标量读数不够。
+
+### 35.6 两个有限失效对
+
+**失效对一（遗漏分支地址）。** 取同一 FIB 根的两个合法游标
+$\operatorname{DownL}(r)$ 与 $\operatorname{DownR}(r)$。它们可以具有相同的深度、
+叶标签、组成计数、当前 reference、Boundary 和被动 Memory；若取得码只保存这些
+字段而遗漏左、右分支地址，则
+
+$$
+c_K(\operatorname{DownL}(r))
+=c_K(\operatorname{DownR}(r)),
+$$
+
+而两个游标端点不同。于是 (PG.3505) 失败，任何声称由该码恢复端点的函数都会把
+不同地址送到同一个值。下一步 `Up` 或 `ApplyRho` 也可能读取不同的邻接子项，所以
+这不是只影响静态显示的差异。
+
+**失效对二（遗漏来源或纪元）。** 取两个来源或两个 epoch 中具有相同叶标签、
+深度、组成、工作态和档案内容的历史 $h,k$，但它们的 source/epoch 标识不同。若
+取得码省略 $\xi$ 或 $\nu$，就有 $c_K(h)=c_K(k)$；跨来源比较却不属于同一个实际
+联合像，跨纪元的 `ReadTag`、权限和替换版本也未必具有相同含义。此时即使端点的
+局部字段逐项相同，(PG.3505) 也不能在扩大后的比较域上成立。固定 $D_K$ 只是在
+比较前排除这种非法拼接，不能把遗漏的 source/epoch 变成已取得的信息。
+
+这两个有限反例说明，端点完备性不是“字段数量足够多”的直觉，而是核包含和动态
+闭合条件。增加一个字段只有在它确实切开原来的错误纤维，并且在后续操作下保持可
+追踪时，才会改善取得码。
+
+### 35.7 结论与开放边界
+
+在固定的实际来源和合法比较域上，FIB 端点取得可以按三层检查：
+
+1. (PG.3505) 检查取得码是否足以解码端点；
+2. (PG.3507) 检查端点是否足以重建取得码；
+3. (PG.3510) 检查取得码是否能承载后续合法操作、事件和权限更新。
+
+只有三层都成立，才可把取得码称为该任务下的端点完备动态边界。组成计数和两次
+Fibonacci 数量读数可以是组成任务的精确边界，但不能自动升级为有序 FIB 树的完整
+端点码。
+
+本节没有指定具体的 FIB cursor、archive、permission 或 replay 数据类型，也没有
+证明所有合法历史都能被取得合同覆盖；reference stability、失败与非确定运行层、
+跨来源运输、无限逆极限以及物理时空解释仍是 open。本文仍只追加理论接口，没有
+新增 Lean 声明、消化账目或原胞自动机内容。
+
+## 35.99 追加锚
+
+## 36. 跨分辨率的联合 FIB 端点码与动态自然性
+
+§35 的取得码 $c_K$ 针对一个固定合法比较域；把它拆成不同分辨率的码时，
+还须保证这些码属于同一实际历史，且更新后的粗读数可以由声明的细读数取得。
+本节给出这两项义务与端点核、行为核的接合接口。§§31–32 的合法性、事件与
+有限续接，§33 的端点身份，§34 的共同历史四视图，以及 §35 的双向取得判据
+分别承担不同部分；它们没有单独给出下面的具体 FIB 联合塔。
+
+### 36.1 固定共同历史域上的分辨率码
+
+令 $a$ 表示一个取得合同类型，固定实际来源、绝对纪元、参考类和比较权限类型。
+选择一个在全部分辨率上共同使用的实际历史域
+
+$$
+D^a_\infty\subseteq D_{K_a}\subseteq H_R,
+\qquad n\in\mathbb N=\{0,1,2,\ldots\}.
+\tag{PG.3601}
+$$
+
+$D_{K_a}$ 取 §35.1 的含义。同一权限类型内仍可有不同的实际权限见证；允许
+比较两个历史不等于允许它们执行同一动作。若每层原有不同取得域 $D^a_n$，
+须先声明共同子域 $D^a_\infty\subseteq\bigcap_nD^a_n$，再在这个子域上写下
+所有等式；不能逐层换代表，或把不同来源的边缘读数乘起来当作历史。
+
+每层联合码保留以下数据：
+
+$$
+\begin{aligned}
+c^a_n(h)=\bigl(&\xi(h),\nu(h),r(h),A_n(h),
+\operatorname{cursor}_n(h),\rho_n(h),\pi(h);\\
+&\mathsf{Space}_n(h),\mathsf{Time}_n(h),
+\mathsf{Boundary}_n(h),\mathsf{Memory}_n(h)\bigr)
+\in C^a_n.
+\end{aligned}
+\tag{PG.3602}
+$$
+
+来源 $\xi$、纪元 $\nu$、参考类 $r$ 与实际权限 $\pi$ 是整份联合记录的共享
+元数据，不是四张视图各自选取的标签。$A_n$ 是指定分辨率下的档案，
+$\operatorname{cursor}_n$ 必须保留该层任务所需的有序地址与上下文；$\rho_n$
+是运行参考的相应读数。四视图复用 §34 的共同历史投影约定，时间视图不把
+分辨率指标 $n$ 当成绝对纪元，记忆视图也不预设只含一个来源后验就足够。
+$C^a_n$ 是合同声明的良构联合码空间，可以取实际像，也可以含尚未实现的候选
+码；元组的字段类型不授予独立组合它们的权限。
+
+与 §35 的固定域取得码接合，还须给出实际像上的分辨率选择
+
+$$
+\sigma^a_n:\operatorname{im}(c_{K_a}|_{D^a_\infty})\longrightarrow C^a_n,
+\qquad
+c^a_n=\sigma^a_n\circ c_{K_a}|_{D^a_\infty}.
+\tag{PG.3603}
+$$
+
+这是合同义务：若所需视图依赖 $c_{K_a}$ 未取得的字段，便不能宣称已给出
+$\sigma^a_n$。增加取得支持须声明扩大后的合同，再固定它的共同域。
+[Transport–Memory](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)
+§23 的同一出生来源、§24 的绝对纪元与有序游标、§25 的档案和权限联合边界
+提供字段的语义依据；这些引用不证明 (PG.3602)–(PG.3603) 的具体取得实现。
+
+### 36.2 相容线程、实际像与分离
+
+对 $m\le n$ 给出限制映射 $r^a_{mn}:C^a_n\to C^a_m$，满足
+
+$$
+r^a_{nn}=\operatorname{id},\qquad
+r^a_{\ell m}\circ r^a_{mn}=r^a_{\ell n}\quad(\ell\le m\le n),
+\qquad
+c^a_m=r^a_{mn}\circ c^a_n.
+\tag{PG.3604}
+$$
+
+限制保留共享来源、纪元、参考类与权限见证，只按合同限制档案、游标、运行
+参考和四视图。它不是对四个边缘值任意实施四次互不相关的压缩。
+定义形式逆极限和实际线程为
+
+$$
+\begin{aligned}
+L^a&=\varprojlim_n C^a_n
+=\{x=(x_n)_n:\ r^a_{mn}(x_n)=x_m\ (m\le n)\},\\
+c^a_\infty(h)&=(c^a_n(h))_n,\qquad
+I^a=\operatorname{im}(c^a_\infty)\subseteq L^a.
+\end{aligned}
+\tag{PG.3605}
+$$
+
+$I^a$ 要求存在一个共同的 $h$ 实现全部层；$L^a$ 只检查码间限制相容。
+即便每层满足 $C^a_n=\operatorname{im}(c^a_n)$，也不能推出 $I^a=L^a$。
+$L^a\setminus I^a$ 中的幽灵线程不承担实际来源或端点语义。
+
+所有核都在同一个 $D^a_\infty$ 上比较。令
+$\eta_a:D^a_\infty\to E_a$ 是 §33–§35 意义下的完整端点映射；
+$\beta_a:D^a_\infty\to\mathcal B_a$ 是指定任务的完整有限续接响应。
+其测试族 $\mathcal Q$ 保留空路径当前读出、全部声明动作的合法性、事件、失败
+与任务所需记录，并对有类型前缀和续接封闭，如 §32.2 所规定。
+执行后报告失败与动作未定义须区分。由线程逐坐标相等，
+
+$$
+\ker(c^a_\infty)=\bigcap_n\ker(c^a_n).
+\tag{PG.3606}
+$$
+
+沿用 §§31.3、35.2–35.3 的实际像因子化判据，有
+
+$$
+\begin{aligned}
+\eta_a=\delta_a\circ c^a_\infty
+&\iff \ker(c^a_\infty)\subseteq\ker(\eta_a),\\
+c^a_\infty=\gamma_a\circ\eta_a
+&\iff \ker(\eta_a)\subseteq\ker(c^a_\infty),\\
+\beta_a=\theta_a\circ c^a_\infty
+&\iff \ker(c^a_\infty)\subseteq\ker(\beta_a),\\
+c^a_\infty=\zeta_a\circ\beta_a
+&\iff \ker(\beta_a)\subseteq\ker(c^a_\infty).
+\end{aligned}
+\tag{PG.3607}
+$$
+
+这里 $\delta_a:I^a\to\operatorname{im}\eta_a$、
+$\gamma_a:\operatorname{im}\eta_a\to I^a$、
+$\theta_a:I^a\to\operatorname{im}\beta_a$、
+$\zeta_a:\operatorname{im}\beta_a\to I^a$，存在时均唯一。
+按同一码或端点的任一实际代表定义因子，核包含保证代表无关；实际像保证唯一性。
+因而三份表示互相恢复的精确条件是
+
+$$
+\boxed{
+\ker(c^a_\infty)=\ker(\eta_a)=\ker(\beta_a)
+\quad\text{（仅在 }D^a_\infty\text{ 上）。}
+}
+\tag{PG.3608}
+$$
+
+端点分离只要求 (PG.3607) 第一行，不要求区分端点相同的全部历史。行为分离
+不自动等于端点分离，正如 §33 的端点拼接与行为核心之别。若某些档案或权限
+区别不影响指定任务，则联合码可以严格细于行为码；四视图也不因共同来源而
+逐一取得与端点相同的核。
+
+### 36.3 带前视深度的部分动作自然性
+
+对每条已声明的有类型动作 $e:a\to b$，目标合同须另给
+$D^b_\infty,c^b_n,r^b_{mn},L^b,I^b,\eta_b$。实际动作是
+
+$$
+T_e:D^a_\infty\longrightarrow
+\operatorname{Option}(L_e\times D^b_\infty).
+\tag{PG.3609}
+$$
+
+$\operatorname{none}$ 表示动作不合法；执行后报告失败若属于任务响应，则是
+带失败事件的 $\operatorname{some}(\ell,h')$，必要时把目标合同按终止类型分支。
+事件标签 $L_e$ 保留该任务要求的读数、writer 记录、grade 与权限结果，不能在
+限制时丢弃影响续接的事件区别。
+
+允许第 $n$ 层的后继依赖更细的输入。指定前视函数 $j_e:\mathbb N\to\mathbb N$
+及跨层更新
+
+$$
+\begin{gathered}
+j_e(n)\ge n,\qquad m\le n\Longrightarrow j_e(m)\le j_e(n),\\
+U_{e,n}:C^a_{j_e(n)}\longrightarrow
+\operatorname{Option}(L_e\times C^b_n).
+\end{gathered}
+\tag{PG.3610}
+$$
+
+单调性保证比较两层时存在所需的输入限制。以下交换式在每个
+$C^a_{j_e(n)}$ 的全部码上要求成立：
+
+$$
+\boxed{
+\operatorname{Option.map}(\operatorname{id}_{L_e}\times r^b_{mn})
+\circ U_{e,n}=U_{e,m}\circ r^a_{j_e(m),j_e(n)}
+\qquad(m\le n).
+}
+\tag{PG.3611}
+$$
+
+左侧先更新到目标第 $n$ 层，再限制到第 $m$ 层；右侧先把输入限制到
+$j_e(m)$，再更新。$\operatorname{Option.map}(\operatorname{id}\times r)$
+保持 $\operatorname{none}$，并把 $\operatorname{some}(\ell,z)$ 送到
+$\operatorname{some}(\ell,r(z))$。所以 (PG.3611) 同时约束合法性、事件标签
+与后继，不能只检查成功后继的四视图。
+
+与实际动作的下降还需逐层等式
+
+$$
+\boxed{
+U_{e,n}(c^a_{j_e(n)}(h))=
+\operatorname{Option.map}(\operatorname{id}_{L_e}\times c^b_n)(T_e(h)),
+\qquad h\in D^a_\infty.
+}
+\tag{PG.3612}
+$$
+
+若 $a=b$ 且动作保持同一比较域，下降式写为
+$U_{e,n}(c_{j_e(n)}(h))=\operatorname{Option.map}(\operatorname{id}\times c_n)(T_e(h))$。
+若动作改变来源、纪元、参考类或权限，必须使用 (PG.3609)–(PG.3612) 的目标
+合同：目标码记录实际的 $\xi(h'),\nu(h'),r(h'),\pi(h')$，并声明它们与旧字段
+的更新关系，不能默认为仍等于旧值。尤其 `ApplyRho` 的绝对纪元更新复用
+Transport–Memory §§23.5、24.2 的不重置来源约定，旧句柄是否持续有效另受
+目标权限合同约束；它不使 $h'$ 自动回到旧的固定纪元域。
+
+### 36.4 形式线程更新与可执行实际后继
+
+对 $x\in L^a$，令 $y_n=U_{e,n}(x_{j_e(n)})$。由 (PG.3611) 和线程相容性，
+若 $y_0=\operatorname{none}$，则每个 $y_n$ 都是 $\operatorname{none}$；若
+$y_0=\operatorname{some}(\ell,z_0)$，则每个 $y_n$ 都是
+$\operatorname{some}(\ell,z_n)$，且 $(z_n)_n\in L^b$。这使用了限制不会把
+$\operatorname{some}$ 变为 $\operatorname{none}$，且事件标签保持不变。因此
+
+$$
+\begin{aligned}
+U_{e,\infty}:L^a&\longrightarrow\operatorname{Option}(L_e\times L^b),\\
+U_{e,\infty}(x)&=
+\begin{cases}
+\operatorname{none},&y_0=\operatorname{none},\\
+\operatorname{some}(\ell,(z_n)_n),&
+y_n=\operatorname{some}(\ell,z_n)\ \text{对所有 }n.
+\end{cases}
+\end{aligned}
+\tag{PG.3613}
+$$
+
+(PG.3612) 则逐坐标给出实际下降的整体交换式
+
+$$
+U_{e,\infty}\circ c^a_\infty=
+\operatorname{Option.map}(\operatorname{id}_{L_e}\times c^b_\infty)\circ T_e.
+\tag{PG.3614}
+$$
+
+若只在实际输入码上检查 (PG.3611)，这个构造仅保证 $I^a$ 上的更新，不能
+宣称已经得到全 $L^a$ 上的自然更新。即便给出了 (PG.3613)，可执行实际后继
+仍须满足
+
+$$
+x\in I^a,\quad U_{e,\infty}(x)=\operatorname{some}(\ell,z)
+\Longrightarrow z\in I^b.
+\tag{PG.3615}
+$$
+
+当 (PG.3614) 由一个目标始终在 $D^b_\infty$ 中的实际 $T_e$ 提供时，
+(PG.3615) 随之成立。若先构造码上的更新，则必须另供应这个实际来源实现，
+不能把各层分别存在的后继代表视为一个共同后继。即使 $z$ 有实际代表，也不
+据此得到有限成本取得代表或实际执行动作的算法。
+
+要把端点与行为语义扩到全部形式线程，至少须有源完备性
+
+$$
+I^a=L^a\quad\text{及所涉及目标类型的 }I^b=L^b.
+\tag{PG.3616}
+$$
+
+Transport–Memory §5.1.1 的共同紧 Hausdorff 载体、连续满射观察、Hausdorff
+层及闭纤维可以供应这项实现性；这些拓扑前提须在本节实际域和联合码上重新
+给出。码空间的紧性本身不证明实际历史域紧，紧化得到的新点也不自动成为
+原域中的历史。不采用 (PG.3616) 时，恢复只在 $I^a$ 上成立，幽灵线程的
+实际解释保持 open。
+
+同层闭合是 $j_e(n)=n$ 的特殊情形，而不是每个分辨率的默认性质。对有限
+有类型接续 $e:a\to b$、$f:b\to d$，为求第 $n$ 层的复合后继，可先在
+$j_f(n)$ 层执行 $e$，再在第 $n$ 层执行 $f$；一个足够的输入深度为
+
+$$
+j_{f\circ e}(n)=j_e(j_f(n)).
+\tag{PG.3617}
+$$
+
+事件按执行顺序配对，$\operatorname{none}$ 按部分复合传播。每个有限动作词
+因而有有限的声明前视深度；这不是无界续接的统一深度界，也不保证获得该层
+码的费用有限或均匀有界。
+
+### 36.5 联合端点码的条件充分性模式
+
+**命题 36.1（跨层联合码的动态充分性，条件模式）。** 对每个涉及的取得合同
+类型，设有 (PG.3601)–(PG.3605) 的共同实际域与相容限制；每个声明动作有
+(PG.3610)–(PG.3612) 的单调前视、包含事件与合法性的跨层相容和实际下降，
+且成功后继具有 (PG.3615) 的同一实际来源实现。假设当前任务读出
+$q_a:D^a_\infty\to O_a$ 是完整端点的函数，并满足端点分离条件
+
+$$
+q_a=w_a\circ\eta_a,\qquad
+\ker(c^a_\infty)\subseteq\ker(\eta_a)
+\quad\text{（对每个涉及的 }a\text{）。}
+\tag{PG.3618}
+$$
+
+则 $c^a_\infty$ 在 $I^a$ 上承载唯一的实际部分后继和当前读出，使全部有限
+有类型续接的任务响应下降；特别地
+
+$$
+\ker(c^a_\infty)\subseteq\ker(\beta_a).
+\tag{PG.3619}
+$$
+
+全形式线程上的更新由 (PG.3613) 给出，但其端点与行为解释须另满足
+(PG.3616)。端点、联合码和行为的相互恢复分别需要 (PG.3607) 的反向核
+包含；三者全部互相恢复恰须 (PG.3608)，不能仅由 (PG.3619) 宣称。
+若任务不读取完整端点，可把 (PG.3618) 换为较弱的
+$\ker(c^a_\infty)\subseteq\ker(q_a)$，此时只得行为充分性，不得端点解码。
+
+证明。若 $c^a_\infty(h)=c^a_\infty(k)$，每个前视坐标也相同。
+(PG.3612) 给出两历史对每条动作同时非法，或同时合法且事件标签相同。
+合法时两份后继的每层码相同，故后继线程相同；实际像闭合使下一步仍属于
+目标合同。当前读出由 (PG.3618) 与实际像上的端点因子化得到。
+对有限续接长度归纳，当前读出、事件、失败及下一响应逐项相同，得
+(PG.3619)；§32 的行为响应递归与 Transport–Memory §25.2 的逐步下降在
+这里仅用于这一步有限归纳。定义每个实际码的读出与更新时选择任一实际代表，
+上述相同性保证代表无关，$c^a_\infty$ 到 $I^a$ 的满射给唯一性。
+(PG.3611) 给形式线程拼接，(PG.3614) 给与共同实际来源的交换；双向恢复则
+应用 (PG.3607)，并未从形式相容性推断源完备性。证毕。
+
+本模式也复用
+[Boundary Dynamics](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md)
+§§80.2–80.6 的联合合法性、事件、后继与记录下降纪律；本节只写确定性部分
+动作。概率动作须改为同一来源上的联合后继核相容，不能用事件边缘与后继
+边缘分别相同替代；所引有限核结论不证明这里的无限 FIB 塔。
+
+### 36.6 非实现、前视与权限的必要边界
+
+复用 Transport–Memory §§5.3–5.3.3 的整数脉冲塔。取共同实际域
+$D_\infty=\mathbb Z$，对整数 $z$ 定义
+
+$$
+q_n(z)=\bigl(\mathbf1_{\{z+k=0\}}\bigr)_{|k|\le n},
+\qquad B_n=q_n(\mathbb Z),
+\qquad r_{mn}=\text{窗口限制}.
+\tag{PG.3620}
+$$
+
+每层全零向量都由 $|z|>n$ 的整数实现，任意有限组窗口也可由一个足够远的
+整数同时实现。然而全零相容线程没有整数来源：对每个固定 $z$，只要
+$n\ge|z|$，窗口的 $k=-z$ 位置就为一。故
+
+$$
+(0_n)_n\in\varprojlim B_n\setminus\operatorname{im}((q_n)_n),
+\qquad
+\forall n\ \exists z:\ q_n(z)=0_n,
+\quad
+\neg\exists z\ \forall n:\ q_n(z)=0_n.
+\tag{PG.3621}
+$$
+
+这沿用既有反例而非新增整数完成结论。它排除了“有限联合实现与限制相容
+就够了”的实现判据，即使每层已经取实际像也不够。
+
+平移 $T_\pm(z)=z\pm1$ 的第 $n$ 层读数由第 $n+1$ 层得到：
+
+$$
+s_n^\pm(b)_k=b_{k\pm1},\qquad
+q_n(z\pm1)=s_n^\pm(q_{n+1}(z)),\qquad |k|\le n.
+\tag{PG.3622}
+$$
+
+把恒定平移事件加入 $L_e$ 即得 (PG.3610)–(PG.3612) 型接口，
+$j_e(n)=n+1$。一般不存在同层 $B_n\to B_n$ 的反向平移更新：
+$z=n+1,n+2$ 的输入均为 $0_n$，反向一步后前者在 $k=-n$ 出现脉冲，
+后者仍为零。同理正向平移可用 $z=-(n+1),-(n+2)$ 区分。
+所以允许前视是必要的接口自由度；形式平移固定全零线程，不使这个线程变成
+实际整数后继。这两个障碍分别针对同层闭合与来源实现性。
+
+再在一个局部权限合同内取两条实际历史 $h_{\rm yes},h_{\rm no}$：二者具有
+同一 $\xi,\nu,r$、相同档案和游标，以及相同的粗空间、时间、边界、记忆视图，
+但分别带有允许与禁止动作 $e$ 的权限见证。令遗漏权限的候选粗码为 $d_n$，
+并令合法一方执行后仍在声明的目标域；则
+
+$$
+\begin{gathered}
+d_n(h_{\rm yes})=d_n(h_{\rm no}),\qquad
+\pi(h_{\rm yes})\ne\pi(h_{\rm no}),\\
+T_e(h_{\rm yes})=\operatorname{some}(\ell,h'),\qquad
+T_e(h_{\rm no})=\operatorname{none}.
+\end{gathered}
+\tag{PG.3623}
+$$
+
+任何只从该粗码更新的 $U$ 都不能满足实际下降：相同输入必须返回相同值，
+但 $\operatorname{Option.map}$ 不会把合法方的 $\operatorname{some}$ 变为
+$\operatorname{none}$。故没有以前视仍止于该粗层的下降映射。
+较细联合码 $\widehat d_{n+1}=(d_n,\pi)$ 及忘却权限的限制可以分开这两个
+历史；若在这个局部两历史模型中 $e$ 的标签与目标码已经固定，其逐代表更新
+便良定义。对更大的域仍须检查所有纤维、事件与实际后继，补上权限只消除
+这一处碰撞。$d_n$ 是不满足 (PG.3602) 的被否定候选，不是该完整联合码的
+合格层；四视图粗读数一致不能代替共享权限。
+
+此局部对复用 Transport–Memory §25.6 的句柄／刷新权限边界。
+§35.6 的 `DownL`／`DownR` 地址遗漏对与来源／纪元遗漏对仍是已有的有限
+边界：它们分别阻止端点分离与合法共同域的认定。升高分辨率若仍遗漏这些
+字段，并不能消除对应的错误纤维；它们不因本节的线程构造取得新的证明身份。
+
+### 36.7 条件归属与开放接口
+
+本节是 repo-derived 的条件接口综合：§§31–35 供应有限行为、端点核与共同
+四视图的定义和因子化方法；Transport–Memory §5.1 供应带拓扑前提的实现
+路线，§5.3.3 供应前视与幽灵线程反例，§§23–25 供应 FIB 的共同来源、绝对
+纪元、游标、档案与权限语义；Boundary Dynamics 供应联合动作下降的有限
+纪律。一般逆极限、纤维因子化与有限续接归纳保持这些既有归属。
+(PG.3603)、(PG.3611)–(PG.3612)、(PG.3615) 和 (PG.3618) 在具体联合 FIB
+码上的成立，均是本接口要求的条件，不由所引材料自动保证；不据此主张
+文献原创或具体 FIB 塔已经给出。
+
+具体 FIB 分辨率选择与限制映射、实际源完备性、共同历史域的紧性与所需闭
+纤维、权限／取得合同及其可执行性均为 ASSUMED-UNVERIFIED；相应构造与
+验证为 open。未实现线程的实际语义、有限取得成本、无限续接的统一资源界
+以及任何物理时空解释保持 open。本节的条件命题是普通数学接口，不承担
+物理时空结论，也不宣称已有形式核验。
+
+## 36.99 追加锚

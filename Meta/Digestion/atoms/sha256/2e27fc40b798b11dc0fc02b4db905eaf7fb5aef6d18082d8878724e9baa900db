@@ -1,0 +1,2 @@
+* `labelQuadratic_groundSection_polar` 使用
+  `IsSignTable.opposite` 证明不同非零地面截面的极化配对为 1。这是二次律真正消耗的符号表几何。

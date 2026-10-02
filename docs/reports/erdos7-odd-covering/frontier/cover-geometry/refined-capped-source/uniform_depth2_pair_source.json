@@ -1,0 +1,68 @@
+{
+  "direct": {
+    "baseline": "1131518/596413125",
+    "credit": "522796387/113716102500",
+    "mass": "2215617457/341148307500",
+    "pair_count": 546,
+    "positive_pairs": 526,
+    "zero_degree_supports": 8
+  },
+  "enumeration": {
+    "canonical_profiles": 929408,
+    "raw_vertices": 10000000,
+    "refined_profiles": 683,
+    "skipped_baseline_lower": "1/100"
+  },
+  "final_mass_decimal": 0.000381983877163074,
+  "final_mass_lower": "10439067371125821438773774487324422240822090881352229294557593656106514754698248346126731/27328554934451445611568056401193854055664185598074820765618099631866976234376100052992000000",
+  "minimizer": [
+    [
+      1,
+      2
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ]
+  ],
+  "missing_three": {
+    "final": "10274059524668135940890482701817695492260227326143871554716840596102277525235012852830959463/18162978048743114621842154408178069156995274120566650108841567755333128820385346496757760000",
+    "final_decimal": 0.5656594142819605,
+    "fourth": "7101326389957751920822379861/821055227980138905600000",
+    "mass": "299974/530145"
+  },
+  "proof_boundary": "Uses Report789 actual source, one-clique Shearer premise and prefix transport, the shared-deficit cancellation and separate concavity proved in Report791, and Report734 analytic prime-tail input. The finite comparison does not establish those ordinary mathematical premises by itself.",
+  "raw_fourth_upper": "83957323825075240180209923/277054053281280000000",
+  "scope": "At most eight actual support primes at most1300; only originals wholly supported there need v3<=2. All tail-bearing originals retain unrestricted finite heights, mixed supports and globally fixed phases.",
+  "simple_lower": "1/3000",
+  "source_mass_decimal": 0.0064945872756528335,
+  "source_mass_lower": "2215617457/341148307500",
+  "status": "exact_arithmetic_passed_not_Lean",
+  "tail": {
+    "cutoff": 1300,
+    "delta": "2/7",
+    "ell": 6,
+    "factor": "109323345047174240000660568319410783713795637869810415599124665/5419768939160455141609769381211593650684744446215887941160949008945152",
+    "growth": 21
+  }
+}
