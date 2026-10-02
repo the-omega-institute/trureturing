@@ -14839,3 +14839,219 @@ prefix and this common-U argument does not apply. Neither its local
 position nor incompatibility of these four cells with all original
 lower constraints has been established. No unrestricted conclusion
 or new Lean verification is asserted.
+
+## 118. Actual retained demand permits complete-private safe-root transport
+
+Keep one all-concentrated EB1 original cover and opposite-color primes
+p<q. Write q in S_i, p in S_o, o=3-i, and retain the full carriers
+
+    Z=Z/3^H, X_i=(Z/q^B) times W_i,
+    X_o=product_(ell in S_o) Z/ell^H_ell,
+    T_q=Z/q^(B-1).
+
+The full original carrier is Z times X_i times X_o. In particular
+X_o retains every p-digit. This section reuses CP1--CP5, Report374
+EP5, the disjoint-deletion private-region identity PH1/PI10, and
+section113's fixed enclosing APs. The stronger interface excludes
+only sources without a surviving owner, rather than every source
+meeting a numerical collision class.
+
+### The exact demand sees only the actually occurring p-roots
+
+Let C_o be the union of the actual three-free originals of color o,
+and put R_o=X_o minus C_o. Let K be its first-p projection and k=|K|.
+For a complete ternary word s, let V(s) subset W_i avoid all q-free
+color-i originals whose ternary conditions are active at s. Define
+
+    Y={(s,w,v): s avoids all original pure-three guards,
+                s=i mod3, w in V(s), v in T_q}.    (AD1)
+
+In the output carrier with one fewer q-digit, the EXACT region left
+uncovered by ALL retained q-free originals is
+
+    Y times R_o.                                  (AD2)
+
+At root i, opposite-color mixed originals are inactive and their
+three-free originals exclude precisely C_o. The same-color q-free
+originals exclude precisely the complement of V(s). The pure-three
+guards are retained. At the other nonzero ternary root, CP5 supplies
+full coverage by the opposite-color originals, which are all q-free;
+root zero is covered by A_3. Finally no retained class constrains a
+q-digit. These facts prove both inclusions of AD2 on the original
+full coordinate carriers.
+
+Y and R_o are nonempty: a complete private point of A_q supplies
+the former, and CP4 supplies the latter. Every active output p-root
+sees the SAME Y, although its own slice of R_o can have different
+higher p-digits and other opposite-color coordinates.
+
+The actual three-free residual is
+
+    R_3=(X_i minus C_i) times R_o,
+
+with both factors nonempty. Its p-projection is therefore K.
+Directly invoking [Report374, EP5](374-extremal-prime-projections-and-cardinality-descent.md#3-consequences-for-the-extremal-original-model)
+at observing prime3 gives
+
+    K subset {1,...,p-1}, p-2<=k<=p-1.             (AD3)
+
+The upper bound also follows from retained A_p. This does not assert
+uniform root frequencies or independence within R_o.
+
+### Complete private regions give the exact forbidden traces
+
+Keep t=min(t_p,t_q) from section104 and let C_col be the original
+label set {q,3q,...,3^t q}. These are exactly the labels whose
+q-to-p images would collide with retained originals. Write their
+actual first-q roots as j_c and ternary prefixes as alpha_c, with
+j_0=0, and put T={j_c:0<=c<=t}.
+
+For y=(s,w,v) in Y, x in R_o, and an old first-q root j, define
+the literal original source
+
+    L_j(y,x)=(s,j+q*v,w,x).                        (AD4)
+
+The q-tail v and every other full coordinate are unchanged. The
+original APs in C_col form a numerical divisibility chain and are
+pairwise disjoint. Thus PH1/PI10 identifies the whole hole left by
+deleting them with union_(d in C_col) P_d, where each P_d is the
+COMPLETE private region in the original cover. Define
+
+    H_j={y in Y:L_j(y,x) lies in union_(d in C_col)P_d}.
+                                                        (AD5)
+
+This is independent of x in R_o: its opposite-color three-free
+originals are absent, its mixed originals are inactive at root i,
+and all remaining original memberships ignore x. Consequently
+
+    y not in H_j iff L_j(y,x) has a NONCOLLISION
+    original owner, for every x in R_o.            (AD6)
+
+On AD2 all q-free originals are absent, so that owner is q-bearing.
+In particular
+
+    H_0=Y;
+    H_j!=empty iff j in T, for j!=0;
+    H_j subset {y in Y:s(y) in B_j}.               (AD7)
+
+The first identity uses A_q and its disjointness from every other
+q-bearing original. Nonemptiness for every used root uses an actual
+private point of its collision original. The last inclusion uses
+section113's COMPLETE prefix-forbidden set B_j, with all repeated
+root occurrences retained.
+
+Unlike the earlier prefix test, AD6 permits a source inside a
+collision AP if some noncollision original also covers it. Thus
+omitted collision APs can have NONEMPTY pullbacks. Their omission
+is justified by the surviving owner, not by an empty-inverse claim.
+
+### One fixed enclosing AP still suffices per surviving original
+
+Let cd_priv be the maximum number of pairwise root-label-disjoint
+subfamilies of {Y minus H_j:1<=j<=q-1}, each covering Y. Then
+
+    cd_priv<=k-1.                                 (AD8)
+
+Suppose instead there were k disjoint covering groups L_r indexed
+by the actual roots r in K. For each y choose theta_y(r) in L_r
+with y not in H_(theta_y(r)). At a point (y,x) of AD2, use the one
+source L_(theta_y(r))(y,x), where r is the first-p root of x.
+AD6 supplies a surviving q-bearing owner of this source.
+
+For each noncollision original d=q^a u, CP1 gives gcd(u,pq)=1.
+Write its actual q-phase as j_d+q*beta_d moduloq^a. If j_d is in
+L_r, its entire selected-domain inverse is contained in the fixed AP
+
+    z=r modp, z=beta_d modq^(a-1), z=a_d modu,
+    numerical modulus p*q^(a-1)*u.                (AD9)
+
+The selector mask may depend on all of y; removing that mask only
+enlarges the inverse. Each root belongs to at most one group, so
+each original receives at most one enclosing AP. Assign none to any
+member of C_col; AD6 has already supplied a noncollision owner.
+
+The modulus map is injective. At a>=2 its image contains q and
+cannot equal a retained q-free label. At a=1 an original pair qu,pu
+would be required for a collision; CP1 forces u=3^c and the shared
+heights are precisely0,...,t. All such q-originals were omitted.
+Every output modulus is an odd nonunit. Retained originals cover
+the complement of AD2 and the selected owners' enclosures cover
+AD2. The whole cover has at most N-(t+1) classes, contradicting
+EB1 and proving AD8 with all original heights retained.
+
+This strengthens the safe-source criterion using actual privacy
+and the exact number of required p-roots. It does not assert that
+the necessary disjoint groups exist in every source. No new Lean
+verification or unrestricted noncoverage is asserted.
+
+## 119. Minimal paired height forces one simultaneous original private fiber
+
+Use section118's complete traces H_j on the same Y and the actual
+active-root count k. Join two nonempty traces by an edge exactly
+when they are disjoint, and let nu_priv be the maximum matching size
+of this graph. Exactly q-|T| roots have empty trace and provide
+singleton safe groups; every matching edge supplies an additional
+two-root group. Thus AD8 gives
+
+    q-|T|+nu_priv<=cd_priv<=k-1,
+    |T|>=q-k+1+nu_priv,
+    t>=q-k+nu_priv.                               (AD10)
+
+This weakly strengthens SCV6. We have k<=p-1, and every edge coming
+from disjoint complete prefix regions remains an edge between
+their smaller private traces. New edges require disjoint COMPLETE
+traces; unrelated individual private points do not establish them.
+
+### Saturating the free-root budget requires a common intersection
+
+Suppose |T|=q-k+1. The free roots already give k-1 disjoint safe
+singleton groups. If the intersection of all nonempty H_j were
+empty, their root labels together would form another safe covering
+group, disjoint from the free roots. This contradicts AD8. Hence
+
+    |T|=q-k+1 implies
+    intersection_(j in T minus {0}) H_j!=empty.    (AD11)
+
+No two-Helly assumption is used. This conclusion applies to the
+whole finite intersection, not merely to pairwise intersections.
+
+In particular suppose the paired height has the original minimum
+
+    t=q-p+1.
+
+AD3, AD10 and |T|<=t+1 force
+
+    k=p-1, |T|=t+1=q-p+2,
+    j_0,...,j_t distinct,
+    intersection_(c=1..t) H_(j_c)!=empty.          (AD12)
+
+If the actual opposite-color remainder misses a nonzero p-root,
+then k=p-2 and this branch is excluded: t must instead be at least
+q-p+2. More generally the same distinct-root and common-intersection
+conclusions hold at the localized minimum t=q-k.
+
+### The common trace is a simultaneous private source
+
+Choose y_*=(s_*,w_*,v_*) in AD12's intersection. Each root j_c occurs
+just once in C_col, so for EVERY x in the whole actual R_o,
+
+    L_(j_c)(y_*,x) is private to A_(3^c q),
+    simultaneously for c=0,...,t.                 (AD13)
+
+At c=0 use H_0=Y. All these actual original points share the complete
+ternary word, the divided q-tail and every coordinate other than
+the first q-digit. The factor x ranges over the same original
+opposite-color remainder, not independently chosen completions.
+
+The original AP memberships recover SCV8's nested ternary prefixes.
+AD13 additionally says that every other original is absent at each
+of the corresponding lifts. It is stronger than selecting one
+unrelated private witness for each class. It still does not place
+the ENTIRE private region of A_q or any collision class on this
+common ternary path, and it need not specify the global top prefix.
+
+The actual complete private constraints have therefore replaced the
+pure-prefix boundary by a same-source private-fiber requirement.
+No contradiction to such a fiber has been established. In particular
+the k=p-1 tight branch and larger-height sources remain unresolved.
+No new Lean verification or unrestricted conclusion is asserted.
