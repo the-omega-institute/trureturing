@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Neutral windows uniquely separate legal words into ordered low-end-high gaps. -/
+   digest: Neutral gaps give exact legal-word histograms and terminal label fibers. -/
 
 import D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd
 import D5.S3.Combinatorics.ArrowWilfGapData
@@ -268,39 +268,6 @@ private theorem code_language :
   · rintro ⟨p, hp, _⟩
     simpa [← hp] using legal_code p
 
-private theorem terminal_shapes (p : Code) :
-    ((codeWord p).getLast? = some .low ↔
-      0 < (terminalGap p).x ∧ (terminalGap p).z = false ∧ (terminalGap p).y = 0) ∧
-    ((codeWord p).getLast? = some .ends ↔
-      (terminalGap p).z = true ∧ (terminalGap p).y = 0) := by
-  have final (g : Gap) (ds : List (Bool × Gap)) (f : Window)
-      (hf : f = .low ∨ f = .ends) :
-      (codeWord (g, ds)).getLast? = some f ↔
-        (gap (terminalGap (g, ds))).getLast? = some f := by
-    induction ds generalizing g with
-    | nil => simp [codeWord, codeCuts, join, terminalGap]
-    | cons dg ds ih =>
-      rcases dg with ⟨d, h⟩
-      have he : codeWord (g, (d, h) :: ds) = gap g ++ neutral d :: codeWord (h, ds) := by
-        simp [codeWord, codeCuts, join, List.flatMap_cons, List.append_assoc]
-      rw [he, List.getLast?_append_of_ne_nil _ (by simp)]
-      have hn : neutral d ≠ f := by
-        rcases hf with rfl | rfl <;> cases d <;> simp [neutral]
-      have ht : (neutral d :: codeWord (h, ds)).getLast? = some f ↔
-          (codeWord (h, ds)).getLast? = some f := by
-        cases codeWord (h, ds) <;> simp [hn]
-      rw [ht, ih h]
-      rfl
-  rw [final p.1 p.2 .low (Or.inl rfl), final p.1 p.2 .ends (Or.inr rfl)]
-  generalize terminalGap p = q
-  rcases q with ⟨a, z, b⟩
-  cases z <;>
-    simp only [gap, Bool.false_eq_true, ↓reduceIte,
-      List.getLast?_append, List.getLast?_replicate, List.getLast?_singleton,
-      List.getLast?_nil]
-  all_goals by_cases ha : a = 0 <;> by_cases hb : b = 0 <;>
-    simp [ha, hb, Nat.pos_iff_ne_zero]
-
 /-- The five letter multiplicities read directly from a canonical code. -/
 def inventory (p : Code) : Window → ℕ
   | .low => p.1.x + (p.2.map fun dg => dg.2.x).sum
@@ -314,6 +281,14 @@ def HistogramWords (h : Window → ℕ) :=
   {w : List Window // legal false (flatten w) ∧ ∀ f, w.count f = h f}
 
 def HistogramCodes (h : Window → ℕ) := {p : Code // ∀ f, inventory p f = h f}
+
+/-- An exact last-window fiber inside a literal-word histogram. -/
+def EndpointWords (h : Window → ℕ) (f : Window) :=
+  {w : HistogramWords h // w.val.getLast? = some f}
+
+/-- Positive End acceptance with a zero initial seam and zero initial flag. -/
+def PositiveEndpointWords (h : Window → ℕ) (f : Window) :=
+  {w : EndpointWords h f // endable (run (some (false, false)) w.val.val) = true}
 
 private theorem histogram_encoding (h : Window → ℕ) :
     (∀ p : Code, ∀ f, (codeWord p).count f = inventory p f) ∧
@@ -525,7 +500,7 @@ private theorem histogram_count (a b c r s : ℕ) :
     simp [Nat.card_eq_fintype_card, Fintype.card_finset_len, Nat.mul_assoc]
 
 /-- Unique neutral-position decomposition and a reversible canonical code
-that retains the restrictions on an exact low or ends terminal window. -/
+that counts every histogram and retains exact terminal constraints and labels. -/
 theorem result :
     (∀ w : List Window, ∃! p : Cuts, Clean p ∧ join p = w) ∧
     (∀ w : List Window, (split w).2.length = w.count .zero + w.count .middle) ∧
@@ -545,11 +520,116 @@ theorem result :
       Finite (HistogramWords (histogram a b c r s)) ∧
       Nat.card (HistogramWords (histogram a b c r s)) =
         (r + s).choose r * (r + s + 1).choose c *
-          (r + s + 1).multichoose a * (r + s + 1).multichoose b) :=
-  ⟨decomposition.1, decomposition.2.1, decomposition.2.2, code_language.1,
+          (r + s + 1).multichoose a * (r + s + 1).multichoose b) ∧
+    (∀ a b c r s : ℕ, 0 < a + b + c + r + s →
+      (∑ f : Window, Nat.card (EndpointWords (histogram a b c r s) f)) =
+        Nat.card (HistogramWords (histogram a b c r s))) ∧
+    (Nat.card (HistogramWords (histogram 0 0 0 0 0)) = 1 ∧
+      ∀ w : HistogramWords (histogram 0 0 0 0 0), w.val = []) ∧
+    (∀ h : Window → ℕ, ∀ f : Window, h f = 0 → IsEmpty (EndpointWords h f)) ∧
+    (∀ a b c r s : ℕ, r + s + 1 < c → IsEmpty (HistogramWords (histogram a b c r s))) ∧
+    (∀ h : Window → ℕ, ∀ f : Window,
+      Nat.card (PositiveEndpointWords h f) =
+        if f = .zero then 0 else Nat.card (EndpointWords h f)) := by
+  have terminal_shapes (p : Code) :
+      ((codeWord p).getLast? = some .low ↔
+        0 < (terminalGap p).x ∧ (terminalGap p).z = false ∧ (terminalGap p).y = 0) ∧
+      ((codeWord p).getLast? = some .ends ↔
+        (terminalGap p).z = true ∧ (terminalGap p).y = 0) := by
+    have final (g : Gap) (ds : List (Bool × Gap)) (f : Window)
+        (hf : f = .low ∨ f = .ends) :
+        (codeWord (g, ds)).getLast? = some f ↔
+          (gap (terminalGap (g, ds))).getLast? = some f := by
+      induction ds generalizing g with
+      | nil => simp [codeWord, codeCuts, join, terminalGap]
+      | cons dg ds ih =>
+        rcases dg with ⟨d, h⟩
+        have he : codeWord (g, (d, h) :: ds) = gap g ++ neutral d :: codeWord (h, ds) := by
+          simp [codeWord, codeCuts, join, List.flatMap_cons, List.append_assoc]
+        rw [he, List.getLast?_append_of_ne_nil _ (by simp)]
+        have hn : neutral d ≠ f := by
+          rcases hf with rfl | rfl <;> cases d <;> simp [neutral]
+        have ht : (neutral d :: codeWord (h, ds)).getLast? = some f ↔
+            (codeWord (h, ds)).getLast? = some f := by
+          cases codeWord (h, ds) <;> simp [hn]
+        rw [ht, ih h]
+        rfl
+    rw [final p.1 p.2 .low (Or.inl rfl), final p.1 p.2 .ends (Or.inr rfl)]
+    generalize terminalGap p = q
+    rcases q with ⟨a, z, b⟩
+    cases z <;>
+      simp only [gap, Bool.false_eq_true, ↓reduceIte,
+        List.getLast?_append, List.getLast?_replicate, List.getLast?_singleton,
+        List.getLast?_nil]
+    all_goals by_cases ha : a = 0 <;> by_cases hb : b = 0 <;>
+      simp [ha, hb, Nat.pos_iff_ne_zero]
+  refine ⟨decomposition.1, decomposition.2.1, decomposition.2.2, code_language.1,
     fun p => (terminal_shapes p).1, fun p => (terminal_shapes p).2,
     (histogram_encoding (fun _ => 0)).1,
-    (fun h => (histogram_encoding h).2), histogram_count⟩
+    (fun h => (histogram_encoding h).2), histogram_count, ?_, ?_, ?_, ?_, ?_⟩
+  · intro a b c r s hn
+    classical
+    letI : Finite (HistogramWords (histogram a b c r s)) := (histogram_count a b c r s).2.1
+    have nonempty (w : HistogramWords (histogram a b c r s)) : w.val ≠ [] := by
+      intro he
+      have hx := w.property.2 .low
+      have hy := w.property.2 .high
+      have hz := w.property.2 .ends
+      have hu := w.property.2 .zero
+      have hv := w.property.2 .middle
+      simp [he, histogram] at hx hy hz hu hv
+      omega
+    letI : IsEmpty {w : HistogramWords (histogram a b c r s) // w.val.getLast? = none} :=
+      ⟨fun w => nonempty w.val (List.getLast?_eq_none_iff.mp w.property)⟩
+    have total : Nat.card (HistogramWords (histogram a b c r s)) =
+        Nat.card {w : HistogramWords (histogram a b c r s) // w.val.getLast? = none} +
+          ∑ f : Window, Nat.card (EndpointWords (histogram a b c r s) f) := by
+      rw [← Nat.card_congr (Equiv.sigmaFiberEquiv
+        (fun w : HistogramWords (histogram a b c r s) => w.val.getLast?)),
+        Nat.card_sigma, Fintype.sum_option]
+      rfl
+    have h0 : Nat.card {w : HistogramWords (histogram a b c r s) //
+        w.val.getLast? = none} = 0 := Nat.card_of_isEmpty
+    rw [h0, zero_add] at total
+    exact total.symm
+  · refine ⟨?_, ?_⟩
+    · simpa using (histogram_count 0 0 0 0 0).2.2
+    · intro w
+      apply List.eq_nil_iff_forall_not_mem.mpr
+      intro f hf
+      have hp := List.count_pos_iff.mpr hf
+      rw [w.property.2 f] at hp
+      cases f <;> simp [histogram] at hp
+  · intro h f hf
+    refine ⟨fun w => ?_⟩
+    have hp := List.count_pos_iff.mpr (List.mem_of_getLast? w.property)
+    rw [w.val.property.2 f, hf] at hp
+    exact Nat.not_lt_zero _ hp
+  · intro a b c r s hc
+    letI : Finite (HistogramWords (histogram a b c r s)) := (histogram_count a b c r s).2.1
+    letI : Fintype (HistogramWords (histogram a b c r s)) := Fintype.ofFinite _
+    apply Fintype.card_eq_zero_iff.mp
+    rw [← Nat.card_eq_fintype_card, (histogram_count a b c r s).2.2,
+      Nat.choose_eq_zero_of_lt hc]
+    simp
+
+  · intro h f
+    have terminal (w : EndpointWords h f) :
+        endable (run (some (false, false)) w.val.val) = nonzero f := by
+      rw [(execution false false w.val.val).1.mpr w.val.property.1]
+      obtain ⟨u, hu⟩ := List.getLast?_eq_some_iff.mp w.property
+      simp [endable, hu, List.foldl_append]
+    by_cases hf : f = .zero
+    · subst f
+      letI : IsEmpty (PositiveEndpointWords h .zero) := ⟨fun w => by
+        have hp := w.property
+        rw [terminal w.val] at hp
+        simp [nonzero] at hp⟩
+      simp
+    · rw [if_neg hf]
+      exact Nat.card_congr (Equiv.subtypeUnivEquiv (fun w : EndpointWords h f => by
+        rw [terminal w]
+        simp [nonzero, hf]))
 
 #print axioms result
 

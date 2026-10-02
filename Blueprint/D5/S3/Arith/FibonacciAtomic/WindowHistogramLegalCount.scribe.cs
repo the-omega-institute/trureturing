@@ -75,6 +75,14 @@ internal sealed class WindowHistogramLegalCountDocument : IScribeDocumentDefinit
             Node("HistogramCodes", "The corresponding canonical-code fiber",
                 "HistogramCodes(h) contains the Codes whose Inventory is h.",
                 DescribeRole.Definition),
+            Node("EndpointWords", "Exact last-window fibers",
+                "EndpointWords(h,f) retains precisely the literal words in HistogramWords(h) "
+                + "whose last window is f. The empty word belongs to none of these fibers.",
+                DescribeRole.Definition),
+            Node("PositiveEndpointWords", "Positive F labels in a terminal fiber",
+                "PositiveEndpointWords(h,f) further requires End acceptance from zero initial "
+                + "seam and flag, using the existing run and endable definitions.",
+                DescribeRole.Definition),
             Node("rawCode", "Indexed neutral and gap assignments",
                 "For t indexed neutral Booleans and t+1 indexed Gaps, RawCode retains "
                 + "gap 0 and then each neutral Boolean together with its successor gap.",
@@ -110,6 +118,12 @@ internal sealed class WindowHistogramLegalCountDocument : IScribeDocumentDefinit
                 + "multichoose(t+1,a) multichoose(t+1,b). The standard multichoose "
                 + "counts ordered weak compositions; for these positive slot counts it "
                 + "equals binom(a+t,t) and binom(b+t,t), respectively. "
+                + "For nonzero total multiplicity, the five terminal-fiber cardinalities "
+                + "sum to the histogram cardinality. The zero histogram has cardinality "
+                + "one and its only word is empty. Every fiber ending in a letter with "
+                + "zero multiplicity is empty, and every histogram with c>t+1 is empty. "
+                + "For every h and f, the positive F fiber has cardinality zero when f=U, "
+                + "and otherwise has the full terminal-fiber cardinality. "
                 + "All natural exponents, empty words, empty gaps and words with no "
                 + "neutral letters are included.", DescribeRole.Theorem,
                 "Each neutral letter removes both possible seam obstructions. Inside "
