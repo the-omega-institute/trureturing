@@ -1,0 +1,86 @@
+{
+  "K_pair_empty": true,
+  "RH1_holds_for_pair": false,
+  "comparable_classes_disjoint": true,
+  "complete_private_hulls": {
+    "105": 105,
+    "15": 15,
+    "21": 21,
+    "3": 3,
+    "35": 105,
+    "5": 5,
+    "7": 7,
+    "9": 9
+  },
+  "cross_hull_15_to_21": false,
+  "cross_hull_21_to_15": false,
+  "crowded_star": true,
+  "holes": 89,
+  "moduli": [
+    3,
+    5,
+    7,
+    9,
+    15,
+    21,
+    35,
+    105
+  ],
+  "pair": [
+    15,
+    21
+  ],
+  "pair_exact_two_owner_points": [],
+  "pair_intersection_modulus": 105,
+  "pair_intersection_points": [
+    7,
+    112,
+    217
+  ],
+  "pair_owner_sets": [
+    [
+      15,
+      21,
+      35
+    ]
+  ],
+  "period": 315,
+  "prime_three_height": 2,
+  "prime_three_neighbor_count": 2,
+  "prime_three_neighbors": [
+    5,
+    7
+  ],
+  "private_counts": {
+    "105": 2,
+    "15": 15,
+    "21": 9,
+    "3": 69,
+    "35": 2,
+    "5": 27,
+    "7": 17,
+    "9": 22
+  },
+  "private_witnesses": {
+    "105": 72,
+    "15": 22,
+    "21": 28,
+    "3": 2,
+    "35": 147,
+    "5": 1,
+    "7": 12,
+    "9": 15
+  },
+  "residues": {
+    "105": 72,
+    "15": 7,
+    "21": 7,
+    "3": 2,
+    "35": 7,
+    "5": 1,
+    "7": 5,
+    "9": 6
+  },
+  "schema": "crowded-star-owner-control-v1",
+  "scope": "finite local structural control; not a whole-cover result"
+}
