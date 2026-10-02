@@ -41,8 +41,8 @@ information between a subalgebra of observables and its commutant, for
 generalized tensor product structures that include superselection sectors
 and quantum reference frames. The conjecture identifies the least long-time
 scrambling over all non-resonant Hamiltonians of a given algebra class, and
-says it is achieved exactly by eigenstates without coherence across sectors
-and without entanglement inside them. The frozen declaration
+says it is attained by the distinguished product basis, the vectors
+$|a\rangle\otimes|b\rangle$ of each sector. The frozen declaration
 `D5/S3/Quantum/Information/AlgebraOTOCLongTimeMinimum.result` proves it.
 
 ## Gap
