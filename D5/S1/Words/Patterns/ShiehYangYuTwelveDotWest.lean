@@ -157,33 +157,5 @@ theorem peak_structure (word : List ℕ) :
       · exact large
       · exact (body_bound entry member).trans_lt large
 
-theorem peak_split_max (left right : List ℕ) (maximum : ℕ)
-    (left_bound : ∀ entry ∈ left, entry < maximum)
-    (right_bound : ∀ entry ∈ right, entry ≤ maximum) :
-    peakRuns (left ++ maximum :: right) = peakRuns left ++ [maximum :: right] := by
-  fun_induction peakRuns left with
-  | case1 =>
-    have taken : right.takeWhile (fun entry => decide (entry ≤ maximum)) = right :=
-      List.takeWhile_eq_self_iff.mpr (by simpa using right_bound)
-    have dropped : right.dropWhile (fun entry => decide (entry ≤ maximum)) = [] :=
-      List.dropWhile_eq_nil_iff.mpr (by simpa using right_bound)
-    simp [peakRuns, taken, dropped]
-  | case2 leader tail induction =>
-    let test := fun entry => decide (entry ≤ leader)
-    have stop : test maximum = false := by
-      simp [test, Nat.not_le.mpr (left_bound leader (by simp))]
-    have split (entries : List ℕ) :
-        (entries ++ maximum :: right).takeWhile test = entries.takeWhile test ∧
-          (entries ++ maximum :: right).dropWhile test =
-            entries.dropWhile test ++ maximum :: right := by
-      induction entries with
-      | nil => simp [stop]
-      | cons entry rest induction =>
-        cases passed : test entry <;> simp [passed, induction]
-    have remaining_bound : ∀ entry ∈ tail.dropWhile test, entry < maximum := by
-      intro entry member
-      exact left_bound entry (by simp [List.dropWhile_subset test member])
-    simp only [List.cons_append, peakRuns]
-    rw [(split tail).1, (split tail).2, induction remaining_bound]
 
 end D5.S1.Words.Patterns.ShiehYangYuTwelveDotWest

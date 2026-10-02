@@ -6,7 +6,7 @@
    utility: none
    digest: Maximum splitting constructs the unique avoiding grammar and its record statistic. -/
 
-import D5.S1.Words.Patterns.ShiehYangYuTwelveDotMachine
+import D5.S1.Words.Patterns.ShiehYangYuTwelveDotFibre
 import Mathlib.Combinatorics.Enumerative.DyckWord
 
 set_option autoImplicit false
@@ -18,211 +18,182 @@ open D5.S1.Words.Patterns.ShiehYangYuTwelveDotFibre
 open D5.S3.Combinatorics.Nonnesting.NonnestingDefs
 open D5.S3.Combinatorics.Fishburn.FishburnTenNineClassicalSplit
 
-theorem avoiding_decomposition (size : ℕ) (word : List ℕ)
-    (permutation : word.Perm (List.range' 1 (size + 1)))
-    (avoiding : ¬ Occurs [2, 3, 1] word) :
-    ∃! pieces : Σ _cut : Fin (size + 1), List ℕ × List ℕ,
-      pieces.2.1.Perm (List.range' 1 pieces.1.val) ∧
-      ¬ Occurs [2, 3, 1] pieces.2.1 ∧
-      pieces.2.2.Perm (List.range' 1 (size - pieces.1.val)) ∧
-      ¬ Occurs [2, 3, 1] pieces.2.2 ∧
-      word = pieces.2.1 ++ (size + 1) ::
-        pieces.2.2.map (fun entry => entry + pieces.1.val) ∧
-      recordCuts word = insert (size + 1) (recordCuts pieces.2.1) := by
-  have shift_occurrence (pattern entries : List ℕ) (offset : ℕ) :
-      Occurs pattern (entries.map (fun entry => entry + offset)) ↔
-        Occurs pattern entries := by
-    constructor
-    · rintro ⟨values, increasing, membership, sublist, _⟩
-      refine ⟨fun rank => values rank - offset, ?_, ?_, ?_, by simp⟩
-      · intro rank lower upper
-        obtain ⟨first, _, first_equal⟩ := List.mem_map.mp (membership rank lower (by omega))
-        obtain ⟨second, _, second_equal⟩ :=
-          List.mem_map.mp (membership (rank + 1) (by omega) (by omega))
-        have comparison := increasing rank lower upper
-        change values rank - offset < values (rank + 1) - offset
-        omega
-      · intro rank lower upper
-        obtain ⟨entry, member, equal⟩ := List.mem_map.mp (membership rank lower upper)
-        have recovered : values rank - offset = entry := by omega
-        simpa only [recovered] using member
-      · simpa [List.map_map, Function.comp_def] using
-          sublist.map (fun entry => entry - offset)
-    · rintro ⟨values, increasing, membership, sublist, _⟩
-      refine ⟨fun rank => values rank + offset, ?_, ?_, ?_, by simp⟩
-      · intro rank lower upper
-        exact Nat.add_lt_add_right (increasing rank lower upper) offset
-      · intro rank lower upper
-        exact List.mem_map_of_mem (membership rank lower upper)
-      · simpa [List.map_map, Function.comp_def] using
-          sublist.map (fun entry => entry + offset)
-  have maximum_mem : size + 1 ∈ word :=
-    permutation.mem_iff.mpr (List.mem_range'.mpr ⟨size, by omega, by omega⟩)
-  obtain ⟨left, right, split, absent⟩ := List.eq_append_cons_of_mem maximum_mem
-  have distinct : (left ++ (size + 1) :: right).Nodup :=
-    split ▸ permutation.nodup_iff.mpr (List.nodup_range' 1)
-  have maximum_bound : ∀ entry ∈ left ++ right, entry < size + 1 := by
-    intro entry member
-    have in_word : entry ∈ word := by
-      rw [split]
-      rcases List.mem_append.mp member with member | member
-      · exact List.mem_append_left _ member
-      · exact List.mem_append_right _ (List.mem_cons_of_mem _ member)
-    obtain ⟨index, index_bound, equal⟩ := List.mem_range'.mp (permutation.mem_iff.mp in_word)
-    have unequal : entry ≠ size + 1 := by
-      intro equal
-      rw [equal] at member
-      rcases List.mem_append.mp member with in_left | in_right
-      · exact (List.nodup_append.mp distinct).2.2 (size + 1) in_left
-          (size + 1) (by simp) rfl
-      · exact (List.nodup_cons.mp (List.nodup_append.mp distinct).2.1).1 in_right
-    omega
-  obtain ⟨left_avoid, right_avoid, separated⟩ :=
-    (avoids231_maxSplit_iff left right (size + 1) maximum_bound distinct).mp (split ▸ avoiding)
-  have parent_perm : (left ++ right).Perm (List.range' 1 size) := by
-    have rearranged := List.perm_middle.symm.trans (split ▸ permutation)
-    rw [List.range'_1_concat] at rearranged
-    have range_rearranged : (List.range' 1 size ++ [1 + size]).Perm
-        ((size + 1) :: List.range' 1 size) := by
-      simpa only [List.append_nil, Nat.add_comm] using
-        (List.perm_middle : (List.range' 1 size ++ (size + 1) :: []).Perm
-          ((size + 1) :: (List.range' 1 size ++ [])))
-    exact (rearranged.trans range_rearranged).cons_inv
-  have sorted_pair : (left.mergeSort (· ≤ ·) ++ right.mergeSort (· ≤ ·)).Pairwise
-      (· ≤ ·) := by
-    refine List.pairwise_append.mpr
-      ⟨List.pairwise_mergeSort' (· ≤ ·) left,
-        List.pairwise_mergeSort' (· ≤ ·) right, ?_⟩
-    intro first first_mem second second_mem
-    exact (separated first ((List.mergeSort_perm left (· ≤ ·)).mem_iff.mp first_mem)
-      second ((List.mergeSort_perm right (· ≤ ·)).mem_iff.mp second_mem)).le
-  have sorted : left.mergeSort (· ≤ ·) ++ right.mergeSort (· ≤ ·) =
-      List.range' 1 size := by
-    apply List.Perm.eq_of_pairwise' sorted_pair List.pairwise_le_range'
-    exact ((List.mergeSort_perm left (· ≤ ·)).append
-      (List.mergeSort_perm right (· ≤ ·))).trans parent_perm
-  obtain ⟨cut, cut_bound, left_sorted, right_sorted⟩ :=
-    List.range'_eq_append_iff.mp sorted.symm
-  have left_perm : left.Perm (List.range' 1 cut) := by
-    rw [← left_sorted]
-    exact (List.mergeSort_perm left (· ≤ ·)).symm
-  have right_perm : right.Perm (List.range' (cut + 1) (size - cut)) := by
-    simpa only [left_sorted, right_sorted, Nat.mul_one, Nat.add_comm] using
-      (List.mergeSort_perm right (· ≤ ·)).symm
-  let unshifted := right.map (fun entry => entry - cut)
-  have unshifted_perm : unshifted.Perm (List.range' 1 (size - cut)) := by
-    simpa only [List.map_sub_range' (by omega : cut ≤ cut + 1), Nat.add_sub_cancel_left]
-      using right_perm.map (fun entry => entry - cut)
-  have recovered_right : unshifted.map (fun entry => entry + cut) = right := by
-    rw [List.map_map]
-    conv_rhs => rw [← List.map_id right]
-    apply List.map_congr_left
-    intro entry member
-    have interval := right_perm.mem_iff.mp member
-    simp only [List.mem_range'_1] at interval
-    change entry - cut + cut = entry
-    omega
-  have unshifted_avoid : ¬ Occurs [2, 3, 1] unshifted := by
-    intro occurrence
-    have shifted := (shift_occurrence [2, 3, 1] unshifted cut).mpr occurrence
-    rw [recovered_right] at shifted
-    exact right_avoid shifted
-  have records : recordCuts word = insert (size + 1) (recordCuts left) := by
-    ext value
-    by_cases equal : value = size + 1
-    · subst value
-      have passed : ∀ entry ∈ left, decide (entry ≠ size + 1) = true := by
-        intro entry member
-        exact decide_eq_true (Nat.ne_of_lt (maximum_bound entry (by simp [member])))
-      have taken : word.takeWhile (fun entry => decide (entry ≠ size + 1)) = left := by
-        rw [split, List.takeWhile_append_of_pos passed]
-        simp
-      have record : size + 1 ∈ recordCuts word :=
-        Finset.mem_filter.mpr ⟨List.mem_toFinset.mpr maximum_mem, by
-          rw [taken]
-          intro entry member
-          exact maximum_bound entry (by simp [member])⟩
-      simp only [record, Finset.mem_insert_self]
-    · by_cases member : value ∈ left
-      · obtain ⟨before, after, left_split, absent⟩ := List.eq_append_cons_of_mem member
-        have passed : ∀ entry ∈ before, decide (entry ≠ value) = true := by
-          intro entry member
-          exact decide_eq_true (fun equal => absent (equal ▸ member))
-        have taken : word.takeWhile (fun entry => decide (entry ≠ value)) =
-            left.takeWhile (fun entry => decide (entry ≠ value)) := by
-          rw [split, left_split, List.append_assoc,
-            List.takeWhile_append_of_pos passed, List.takeWhile_append_of_pos passed]
-          simp
-        have in_word : value ∈ word := by simp [split, member]
-        simp only [Finset.mem_insert, equal, false_or, recordCuts, Finset.mem_filter,
-          List.mem_toFinset, in_word, member, true_and, taken]
-      · have not_record : value ∉ recordCuts word := by
-          intro record
-          obtain ⟨in_word, bound⟩ := Finset.mem_filter.mp record
-          have in_right : value ∈ right := by
-            have membership := List.mem_toFinset.mp in_word
-            simp only [split, List.mem_append, List.mem_cons, member, equal, false_or]
-              at membership
-            exact membership
-          have passed : ∀ entry ∈ left, decide (entry ≠ value) = true := by
-            intro entry in_left
-            exact decide_eq_true (fun equal => member (equal ▸ in_left))
-          have maximum_before : size + 1 ∈
-              word.takeWhile (fun entry => decide (entry ≠ value)) := by
-            rw [split, List.takeWhile_append_of_pos passed]
-            simp [Ne.symm equal]
-          have too_large := bound (size + 1) maximum_before
-          have too_small := maximum_bound value (by simp [in_right])
-          omega
-        have not_left : value ∉ recordCuts left := by
-          intro record
-          exact member (List.mem_toFinset.mp (Finset.mem_filter.mp record).1)
-        simp only [not_record, Finset.mem_insert, equal, not_left, or_self]
-  refine ⟨⟨⟨cut, by omega⟩, left, unshifted⟩,
-    ⟨left_perm, left_avoid, unshifted_perm, unshifted_avoid, ?_, records⟩, ?_⟩
-  · simpa only [recovered_right] using split
-  · rintro ⟨candidate_cut, candidate_left, candidate_right⟩
-      ⟨candidate_left_perm, _, candidate_right_perm, _, candidate_split, _⟩
-    have original_prefix : word.takeWhile (fun entry => decide (entry ≠ size + 1)) = left := by
-      have passed : ∀ entry ∈ left, decide (entry ≠ size + 1) = true := by
-        intro entry member
-        exact decide_eq_true (Nat.ne_of_lt (maximum_bound entry (by simp [member])))
-      rw [split, List.takeWhile_append_of_pos passed]
-      simp
-    have candidate_prefix : word.takeWhile (fun entry => decide (entry ≠ size + 1)) =
-        candidate_left := by
-      have passed : ∀ entry ∈ candidate_left, decide (entry ≠ size + 1) = true := by
-        intro entry member
-        have interval := candidate_left_perm.mem_iff.mp member
-        simp only [List.mem_range'_1] at interval
-        have cut_bound := candidate_cut.is_lt
-        exact decide_eq_true (by omega)
-      rw [candidate_split, List.takeWhile_append_of_pos passed]
-      simp
-    have same_left : candidate_left = left := candidate_prefix.symm.trans original_prefix
-    have same_cut : candidate_cut.val = cut := by
-      have candidate_length := candidate_left_perm.length_eq
-      have original_length := left_perm.length_eq
-      simp only [List.length_range', same_left] at candidate_length original_length
-      omega
-    have cut_equal : candidate_cut = ⟨cut, Nat.lt_succ_of_le cut_bound⟩ := Fin.ext same_cut
-    subst candidate_cut
-    have same_shifted : candidate_right.map (fun entry => entry + cut) = right := by
-      have equality := candidate_split.symm.trans split
-      rw [same_left] at equality
-      exact (List.cons.inj (List.append_cancel_left equality)).2
-    have same_right : candidate_right = unshifted := by
-      apply (List.map_inj_right (fun first second equal => Nat.add_right_cancel equal)).mp
-      exact same_shifted.trans recovered_right.symm
-    exact Sigma.ext rfl (heq_of_eq (Prod.ext same_left same_right))
-
 noncomputable def avoiding_encode : (size : ℕ) →
     {word : List ℕ // word.Perm (List.range' 1 size) ∧ ¬ Occurs [2, 3, 1] word} →
       {path : DyckWord // path.semilength = size}
   | 0, _ => ⟨0, rfl⟩
   | size + 1, word => by
-      let decomposition := (avoiding_decomposition size word.val
-        word.property.1 word.property.2).exists
+      have record_mem (entries : List ℕ) (value : ℕ) :
+          value ∈ recordCuts entries ↔ value ∈ entries.toFinset ∧
+            ∀ earlier ∈ entries.takeWhile (fun entry => decide (entry ≠ value)),
+              earlier < value := by
+        simp only [recordCuts, Finset.mem_filter]
+        apply and_congr_right
+        intro contained
+        have index_bound := List.idxOf_lt_length_of_mem (List.mem_toFinset.mp contained)
+        have taken : entries.takeWhile (fun entry => decide (entry ≠ value)) =
+            entries.take (entries.idxOf value) := by
+          simp [List.takeWhile_eq_take_findIdx_not, List.idxOf, Bool.beq_eq_decide_eq]
+        rw [taken, List.forall_mem_iff_getElem]
+        simp only [List.getElem_take, List.length_take_of_le index_bound.le]
+        unfold D5.S3.Combinatorics.ArrowWilfDefs.IsLtrMax
+        rw [List.getD_eq_getElem entries 0 index_bound, List.getElem_idxOf]
+        constructor <;> intro bound position smaller <;>
+          simpa only [List.getD_eq_getElem entries 0 (smaller.trans index_bound)]
+            using bound position smaller
+      have avoiding_decomposition (size : ℕ) (word : List ℕ)
+          (permutation : word.Perm (List.range' 1 (size + 1)))
+          (avoiding : ¬ Occurs [2, 3, 1] word) :
+          ∃ pieces : Σ _cut : Fin (size + 1), List ℕ × List ℕ,
+            pieces.2.1.Perm (List.range' 1 pieces.1.val) ∧
+            ¬ Occurs [2, 3, 1] pieces.2.1 ∧
+            pieces.2.2.Perm (List.range' 1 (size - pieces.1.val)) ∧
+            ¬ Occurs [2, 3, 1] pieces.2.2 ∧
+            word = pieces.2.1 ++ (size + 1) ::
+              pieces.2.2.map (fun entry => entry + pieces.1.val) ∧
+            recordCuts word = insert (size + 1) (recordCuts pieces.2.1) := by
+        have shift_occurrence (pattern entries : List ℕ) (offset : ℕ) :
+            Occurs pattern (entries.map (fun entry => entry + offset)) ↔
+              Occurs pattern entries := by
+          constructor
+          · rintro ⟨values, increasing, membership, sublist, _⟩
+            refine ⟨fun rank => values rank - offset, ?_, ?_, ?_, by simp⟩
+            · intro rank lower upper
+              obtain ⟨first, _, first_equal⟩ :=
+                List.mem_map.mp (membership rank lower (by omega))
+              obtain ⟨second, _, second_equal⟩ :=
+                List.mem_map.mp (membership (rank + 1) (by omega) (by omega))
+              have comparison := increasing rank lower upper
+              change values rank - offset < values (rank + 1) - offset
+              omega
+            · intro rank lower upper
+              obtain ⟨entry, member, equal⟩ := List.mem_map.mp (membership rank lower upper)
+              have recovered : values rank - offset = entry := by omega
+              simpa only [recovered] using member
+            · simpa [List.map_map, Function.comp_def] using
+                sublist.map (fun entry => entry - offset)
+          · rintro ⟨values, increasing, membership, sublist, _⟩
+            refine ⟨fun rank => values rank + offset, ?_, ?_, ?_, by simp⟩
+            · intro rank lower upper
+              exact Nat.add_lt_add_right (increasing rank lower upper) offset
+            · intro rank lower upper
+              exact List.mem_map_of_mem (membership rank lower upper)
+            · simpa [List.map_map, Function.comp_def] using
+                sublist.map (fun entry => entry + offset)
+        have maximum_mem : size + 1 ∈ word :=
+          permutation.mem_iff.mpr (List.mem_range'.mpr ⟨size, by omega, by omega⟩)
+        obtain ⟨left, right, split, absent⟩ := List.eq_append_cons_of_mem maximum_mem
+        have distinct : (left ++ (size + 1) :: right).Nodup :=
+          split ▸ permutation.nodup_iff.mpr (List.nodup_range' 1)
+        have maximum_bound : ∀ entry ∈ left ++ right, entry < size + 1 := by
+          intro entry member
+          have in_word : entry ∈ word := by
+            rw [split]
+            rcases List.mem_append.mp member with member | member
+            · exact List.mem_append_left _ member
+            · exact List.mem_append_right _ (List.mem_cons_of_mem _ member)
+          obtain ⟨index, index_bound, equal⟩ :=
+            List.mem_range'.mp (permutation.mem_iff.mp in_word)
+          have unequal : entry ≠ size + 1 := by
+            intro equal
+            rw [equal] at member
+            rcases List.mem_append.mp member with in_left | in_right
+            · exact (List.nodup_append.mp distinct).2.2 (size + 1) in_left
+                (size + 1) (by simp) rfl
+            · exact (List.nodup_cons.mp (List.nodup_append.mp distinct).2.1).1 in_right
+          omega
+        obtain ⟨left_avoid, right_avoid, separated⟩ :=
+          (avoids231_maxSplit_iff left right (size + 1) maximum_bound distinct).mp
+            (split ▸ avoiding)
+        have parent_perm : (left ++ right).Perm (List.range' 1 size) := by
+          have rearranged := List.perm_middle.symm.trans (split ▸ permutation)
+          rw [List.range'_1_concat] at rearranged
+          have range_rearranged : (List.range' 1 size ++ [1 + size]).Perm
+              ((size + 1) :: List.range' 1 size) := by
+            simpa only [List.append_nil, Nat.add_comm] using
+              (List.perm_middle : (List.range' 1 size ++ (size + 1) :: []).Perm
+                ((size + 1) :: (List.range' 1 size ++ [])))
+          exact (rearranged.trans range_rearranged).cons_inv
+        have sorted_pair : (left.mergeSort (· ≤ ·) ++ right.mergeSort (· ≤ ·)).Pairwise
+            (· ≤ ·) := by
+          refine List.pairwise_append.mpr
+            ⟨List.pairwise_mergeSort' (· ≤ ·) left,
+              List.pairwise_mergeSort' (· ≤ ·) right, ?_⟩
+          intro first first_mem second second_mem
+          exact (separated first ((List.mergeSort_perm left (· ≤ ·)).mem_iff.mp first_mem)
+            second ((List.mergeSort_perm right (· ≤ ·)).mem_iff.mp second_mem)).le
+        have sorted : left.mergeSort (· ≤ ·) ++ right.mergeSort (· ≤ ·) =
+            List.range' 1 size := by
+          apply List.Perm.eq_of_pairwise' sorted_pair List.pairwise_le_range'
+          exact ((List.mergeSort_perm left (· ≤ ·)).append
+            (List.mergeSort_perm right (· ≤ ·))).trans parent_perm
+        obtain ⟨cut, cut_bound, left_sorted, right_sorted⟩ :=
+          List.range'_eq_append_iff.mp sorted.symm
+        have left_perm : left.Perm (List.range' 1 cut) := by
+          simpa only [left_sorted] using (List.mergeSort_perm left (· ≤ ·)).symm
+        have right_perm : right.Perm (List.range' (cut + 1) (size - cut)) := by
+          simpa only [left_sorted, right_sorted, Nat.mul_one, Nat.add_comm] using
+            (List.mergeSort_perm right (· ≤ ·)).symm
+        let unshifted := right.map (fun entry => entry - cut)
+        have unshifted_perm : unshifted.Perm (List.range' 1 (size - cut)) := by
+          simpa only [List.map_sub_range' (by omega : cut ≤ cut + 1), Nat.add_sub_cancel_left]
+            using right_perm.map (fun entry => entry - cut)
+        have recovered_right : unshifted.map (fun entry => entry + cut) = right := by
+          rw [List.map_map]
+          conv_rhs => rw [← List.map_id right]
+          apply List.map_congr_left
+          intro entry member
+          have interval := right_perm.mem_iff.mp member
+          simp only [List.mem_range'_1] at interval
+          change entry - cut + cut = entry
+          omega
+        have unshifted_avoid : ¬ Occurs [2, 3, 1] unshifted := by
+          apply (not_congr (shift_occurrence [2, 3, 1] unshifted cut)).mp
+          simpa only [recovered_right] using right_avoid
+        have records : recordCuts word = insert (size + 1) (recordCuts left) := by
+          ext value
+          by_cases equal : value = size + 1
+          · subst value
+            have record : size + 1 ∈ recordCuts word :=
+              (record_mem _ _).mpr ⟨List.mem_toFinset.mpr maximum_mem, by
+                rw [split, List.takeWhile_append_of_pos (fun entry member =>
+                  decide_eq_true (Nat.ne_of_lt (maximum_bound entry (by simp [member]))))]
+                simpa using fun entry member => maximum_bound entry (by simp [member])⟩
+            simp only [record, Finset.mem_insert_self]
+          · by_cases member : value ∈ left
+            · obtain ⟨before, after, left_split, absent⟩ := List.eq_append_cons_of_mem member
+              have passed : ∀ entry ∈ before, decide (entry ≠ value) = true :=
+                fun entry contained => decide_eq_true (fun equal => absent (equal ▸ contained))
+              have taken : word.takeWhile (fun entry => decide (entry ≠ value)) =
+                  left.takeWhile (fun entry => decide (entry ≠ value)) := by
+                rw [split, left_split, List.append_assoc,
+                  List.takeWhile_append_of_pos passed, List.takeWhile_append_of_pos passed]
+                simp
+              have in_word : value ∈ word := by simp [split, member]
+              simp only [Finset.mem_insert, equal, false_or, record_mem,
+                List.mem_toFinset, in_word, member, true_and, taken]
+            · have not_record : value ∉ recordCuts word := by
+                intro record
+                obtain ⟨in_word, bound⟩ := (record_mem _ _).mp record
+                have in_right : value ∈ right := by
+                  simpa only [split, List.mem_append, List.mem_cons, member, equal, false_or]
+                    using List.mem_toFinset.mp in_word
+                have maximum_before : size + 1 ∈
+                    word.takeWhile (fun entry => decide (entry ≠ value)) := by
+                  rw [split, List.takeWhile_append_of_pos (fun entry (contained : entry ∈ left) =>
+                    decide_eq_true (show entry ≠ value from
+                      fun same => member (same ▸ contained)))]
+                  simp [Ne.symm equal]
+                have too_large := bound (size + 1) maximum_before
+                have too_small := maximum_bound value (by simp [in_right])
+                omega
+              simp only [not_record, Finset.mem_insert, equal, record_mem,
+                List.mem_toFinset, member, false_and, or_self]
+        refine ⟨⟨⟨cut, by omega⟩, left, unshifted⟩,
+          ⟨left_perm, left_avoid, unshifted_perm, unshifted_avoid, ?_, records⟩⟩
+        simpa only [recovered_right] using split
+      let decomposition := avoiding_decomposition size word.val
+        word.property.1 word.property.2
       let pieces := Classical.choose decomposition
       have specification := Classical.choose_spec decomposition
       let left_path := avoiding_encode pieces.1.val
@@ -265,8 +236,7 @@ theorem last_excursion :
         simpa only [outside_empty, add_zero, zero_add] using
           (DyckWord.nest_insidePart_add_outsidePart nonempty).symm
       · have smaller : path.outsidePart.semilength < height := by
-          rw [← length_eq]
-          exact DyckWord.semilength_outsidePart_lt nonempty
+          simpa only [length_eq] using DyckWord.semilength_outsidePart_lt nonempty
         have previous := induction _ smaller path.outsidePart rfl outside_empty
         have scan : lastExcursion path =
             (path.insidePart.nest + (lastExcursion path.outsidePart).1,
@@ -298,8 +268,7 @@ theorem last_excursion :
             DyckWord.semilength_zero] at lengths
           omega
         have smaller : before.outsidePart.semilength < height := by
-          rw [← length_eq]
-          exact DyckWord.semilength_outsidePart_lt empty
+          simpa only [length_eq] using DyckWord.semilength_outsidePart_lt empty
         have previous := induction _ smaller before.outsidePart rfl inside
         rw [lastExcursion, dif_neg composite_nonempty, if_neg outside_nonempty,
           DyckWord.insidePart_add empty, DyckWord.outsidePart_add empty, previous]
@@ -401,6 +370,171 @@ theorem avoiding_inverse :
       (∀ path, (avoiding_encode path.semilength (avoiding_decode path)).val = path) ∧
       ∀ size word, (recordCuts word.val).card =
         (excursions (avoiding_encode size word).val).length := by
+  have record_mem (entries : List ℕ) (value : ℕ) :
+      value ∈ recordCuts entries ↔ value ∈ entries.toFinset ∧
+        ∀ earlier ∈ entries.takeWhile (fun entry => decide (entry ≠ value)),
+          earlier < value := by
+    simp only [recordCuts, Finset.mem_filter]
+    apply and_congr_right
+    intro contained
+    have index_bound := List.idxOf_lt_length_of_mem (List.mem_toFinset.mp contained)
+    have taken : entries.takeWhile (fun entry => decide (entry ≠ value)) =
+        entries.take (entries.idxOf value) := by
+      simp [List.takeWhile_eq_take_findIdx_not, List.idxOf, Bool.beq_eq_decide_eq]
+    rw [taken, List.forall_mem_iff_getElem]
+    simp only [List.getElem_take, List.length_take_of_le index_bound.le]
+    unfold D5.S3.Combinatorics.ArrowWilfDefs.IsLtrMax
+    rw [List.getD_eq_getElem entries 0 index_bound, List.getElem_idxOf]
+    constructor <;> intro bound position smaller <;>
+      simpa only [List.getD_eq_getElem entries 0 (smaller.trans index_bound)]
+        using bound position smaller
+  have avoiding_decomposition (size : ℕ) (word : List ℕ)
+      (permutation : word.Perm (List.range' 1 (size + 1)))
+      (avoiding : ¬ Occurs [2, 3, 1] word) :
+      ∃ pieces : Σ _cut : Fin (size + 1), List ℕ × List ℕ,
+        pieces.2.1.Perm (List.range' 1 pieces.1.val) ∧
+        ¬ Occurs [2, 3, 1] pieces.2.1 ∧
+        pieces.2.2.Perm (List.range' 1 (size - pieces.1.val)) ∧
+        ¬ Occurs [2, 3, 1] pieces.2.2 ∧
+        word = pieces.2.1 ++ (size + 1) ::
+          pieces.2.2.map (fun entry => entry + pieces.1.val) ∧
+        recordCuts word = insert (size + 1) (recordCuts pieces.2.1) := by
+    have shift_occurrence (pattern entries : List ℕ) (offset : ℕ) :
+        Occurs pattern (entries.map (fun entry => entry + offset)) ↔
+          Occurs pattern entries := by
+      constructor
+      · rintro ⟨values, increasing, membership, sublist, _⟩
+        refine ⟨fun rank => values rank - offset, ?_, ?_, ?_, by simp⟩
+        · intro rank lower upper
+          obtain ⟨first, _, first_equal⟩ := List.mem_map.mp (membership rank lower (by omega))
+          obtain ⟨second, _, second_equal⟩ :=
+            List.mem_map.mp (membership (rank + 1) (by omega) (by omega))
+          have comparison := increasing rank lower upper
+          change values rank - offset < values (rank + 1) - offset
+          omega
+        · intro rank lower upper
+          obtain ⟨entry, member, equal⟩ := List.mem_map.mp (membership rank lower upper)
+          have recovered : values rank - offset = entry := by omega
+          simpa only [recovered] using member
+        · simpa [List.map_map, Function.comp_def] using
+            sublist.map (fun entry => entry - offset)
+      · rintro ⟨values, increasing, membership, sublist, _⟩
+        refine ⟨fun rank => values rank + offset, ?_, ?_, ?_, by simp⟩
+        · intro rank lower upper
+          exact Nat.add_lt_add_right (increasing rank lower upper) offset
+        · intro rank lower upper
+          exact List.mem_map_of_mem (membership rank lower upper)
+        · simpa [List.map_map, Function.comp_def] using
+            sublist.map (fun entry => entry + offset)
+    have maximum_mem : size + 1 ∈ word :=
+      permutation.mem_iff.mpr (List.mem_range'.mpr ⟨size, by omega, by omega⟩)
+    obtain ⟨left, right, split, absent⟩ := List.eq_append_cons_of_mem maximum_mem
+    have distinct : (left ++ (size + 1) :: right).Nodup :=
+      split ▸ permutation.nodup_iff.mpr (List.nodup_range' 1)
+    have maximum_bound : ∀ entry ∈ left ++ right, entry < size + 1 := by
+      intro entry member
+      have in_word : entry ∈ word := by
+        rw [split]
+        rcases List.mem_append.mp member with member | member
+        · exact List.mem_append_left _ member
+        · exact List.mem_append_right _ (List.mem_cons_of_mem _ member)
+      obtain ⟨index, index_bound, equal⟩ := List.mem_range'.mp (permutation.mem_iff.mp in_word)
+      have unequal : entry ≠ size + 1 := by
+        intro equal
+        rw [equal] at member
+        rcases List.mem_append.mp member with in_left | in_right
+        · exact (List.nodup_append.mp distinct).2.2 (size + 1) in_left
+            (size + 1) (by simp) rfl
+        · exact (List.nodup_cons.mp (List.nodup_append.mp distinct).2.1).1 in_right
+      omega
+    obtain ⟨left_avoid, right_avoid, separated⟩ :=
+      (avoids231_maxSplit_iff left right (size + 1) maximum_bound distinct).mp (split ▸ avoiding)
+    have parent_perm : (left ++ right).Perm (List.range' 1 size) := by
+      have rearranged := List.perm_middle.symm.trans (split ▸ permutation)
+      rw [List.range'_1_concat] at rearranged
+      have range_rearranged : (List.range' 1 size ++ [1 + size]).Perm
+          ((size + 1) :: List.range' 1 size) := by
+        simpa only [List.append_nil, Nat.add_comm] using
+          (List.perm_middle : (List.range' 1 size ++ (size + 1) :: []).Perm
+            ((size + 1) :: (List.range' 1 size ++ [])))
+      exact (rearranged.trans range_rearranged).cons_inv
+    have sorted_pair : (left.mergeSort (· ≤ ·) ++ right.mergeSort (· ≤ ·)).Pairwise
+        (· ≤ ·) := by
+      refine List.pairwise_append.mpr
+        ⟨List.pairwise_mergeSort' (· ≤ ·) left,
+          List.pairwise_mergeSort' (· ≤ ·) right, ?_⟩
+      intro first first_mem second second_mem
+      exact (separated first ((List.mergeSort_perm left (· ≤ ·)).mem_iff.mp first_mem)
+        second ((List.mergeSort_perm right (· ≤ ·)).mem_iff.mp second_mem)).le
+    have sorted : left.mergeSort (· ≤ ·) ++ right.mergeSort (· ≤ ·) =
+        List.range' 1 size := by
+      apply List.Perm.eq_of_pairwise' sorted_pair List.pairwise_le_range'
+      exact ((List.mergeSort_perm left (· ≤ ·)).append
+        (List.mergeSort_perm right (· ≤ ·))).trans parent_perm
+    obtain ⟨cut, cut_bound, left_sorted, right_sorted⟩ :=
+      List.range'_eq_append_iff.mp sorted.symm
+    have left_perm : left.Perm (List.range' 1 cut) := by
+      simpa only [left_sorted] using (List.mergeSort_perm left (· ≤ ·)).symm
+    have right_perm : right.Perm (List.range' (cut + 1) (size - cut)) := by
+      simpa only [left_sorted, right_sorted, Nat.mul_one, Nat.add_comm] using
+        (List.mergeSort_perm right (· ≤ ·)).symm
+    let unshifted := right.map (fun entry => entry - cut)
+    have unshifted_perm : unshifted.Perm (List.range' 1 (size - cut)) := by
+      simpa only [List.map_sub_range' (by omega : cut ≤ cut + 1), Nat.add_sub_cancel_left]
+        using right_perm.map (fun entry => entry - cut)
+    have recovered_right : unshifted.map (fun entry => entry + cut) = right := by
+      rw [List.map_map]
+      conv_rhs => rw [← List.map_id right]
+      apply List.map_congr_left
+      intro entry member
+      have interval := right_perm.mem_iff.mp member
+      simp only [List.mem_range'_1] at interval
+      change entry - cut + cut = entry
+      omega
+    have unshifted_avoid : ¬ Occurs [2, 3, 1] unshifted := by
+      apply (not_congr (shift_occurrence [2, 3, 1] unshifted cut)).mp
+      simpa only [recovered_right] using right_avoid
+    have records : recordCuts word = insert (size + 1) (recordCuts left) := by
+      ext value
+      by_cases equal : value = size + 1
+      · subst value
+        have record : size + 1 ∈ recordCuts word :=
+          (record_mem _ _).mpr ⟨List.mem_toFinset.mpr maximum_mem, by
+            rw [split, List.takeWhile_append_of_pos (fun entry member =>
+              decide_eq_true (Nat.ne_of_lt (maximum_bound entry (by simp [member]))))]
+            simpa using fun entry member => maximum_bound entry (by simp [member])⟩
+        simp only [record, Finset.mem_insert_self]
+      · by_cases member : value ∈ left
+        · obtain ⟨before, after, left_split, absent⟩ := List.eq_append_cons_of_mem member
+          have passed : ∀ entry ∈ before, decide (entry ≠ value) = true :=
+            fun entry contained => decide_eq_true (fun equal => absent (equal ▸ contained))
+          have taken : word.takeWhile (fun entry => decide (entry ≠ value)) =
+              left.takeWhile (fun entry => decide (entry ≠ value)) := by
+            rw [split, left_split, List.append_assoc,
+              List.takeWhile_append_of_pos passed, List.takeWhile_append_of_pos passed]
+            simp
+          have in_word : value ∈ word := by simp [split, member]
+          simp only [Finset.mem_insert, equal, false_or, record_mem,
+            List.mem_toFinset, in_word, member, true_and, taken]
+        · have not_record : value ∉ recordCuts word := by
+            intro record
+            obtain ⟨in_word, bound⟩ := (record_mem _ _).mp record
+            have in_right : value ∈ right := by
+              simpa only [split, List.mem_append, List.mem_cons, member, equal, false_or]
+                using List.mem_toFinset.mp in_word
+            have maximum_before : size + 1 ∈
+                word.takeWhile (fun entry => decide (entry ≠ value)) := by
+              rw [split, List.takeWhile_append_of_pos (fun entry (contained : entry ∈ left) =>
+                decide_eq_true (show entry ≠ value from fun same => member (same ▸ contained)))]
+              simp [Ne.symm equal]
+            have too_large := bound (size + 1) maximum_before
+            have too_small := maximum_bound value (by simp [in_right])
+            omega
+          simp only [not_record, Finset.mem_insert, equal, record_mem,
+            List.mem_toFinset, member, false_and, or_self]
+    refine ⟨⟨⟨cut, by omega⟩, left, unshifted⟩,
+      ⟨left_perm, left_avoid, unshifted_perm, unshifted_avoid, ?_, records⟩⟩
+    simpa only [recovered_right] using split
   have decode_step (before inside : DyckWord) :
       (avoiding_decode (before + inside.nest)).val =
         (avoiding_decode before).val ++
@@ -439,8 +573,8 @@ theorem avoiding_inverse :
       (avoiding_encode (size + 1) word).val =
         (avoiding_encode cut.val left).val +
           (avoiding_encode (size - cut.val) right).val.nest := by
-    let existence := (avoiding_decomposition size word.val
-      word.property.1 word.property.2).exists
+    let existence := avoiding_decomposition size word.val
+      word.property.1 word.property.2
     let chosen := Classical.choose existence
     have spec := Classical.choose_spec existence
     have taken (initial : List ℕ) (suffix : List ℕ)
@@ -499,7 +633,7 @@ theorem avoiding_inverse :
           (by simpa only [List.range'_zero] using word.property.1)
         simp [avoiding_encode, avoiding_decode, empty]
       | succ size =>
-        obtain ⟨pieces, spec, _⟩ := avoiding_decomposition size word.val
+        obtain ⟨pieces, spec⟩ := avoiding_decomposition size word.val
           word.property.1 word.property.2
         let left : {word : List ℕ // word.Perm (List.range' 1 pieces.1.val) ∧
           ¬ Occurs [2, 3, 1] word} := ⟨pieces.2.1, spec.1, spec.2.1⟩
@@ -607,7 +741,7 @@ theorem avoiding_inverse :
           simp only [empty, recordCuts, List.toFinset_nil, Finset.filter_empty,
             Finset.card_empty, List.length_nil]
         | succ size =>
-          obtain ⟨pieces, spec, _⟩ := avoiding_decomposition size word.val
+          obtain ⟨pieces, spec⟩ := avoiding_decomposition size word.val
             word.property.1 word.property.2
           let left : {word : List ℕ // word.Perm (List.range' 1 pieces.1.val) ∧
             ¬ Occurs [2, 3, 1] word} := ⟨pieces.2.1, spec.1, spec.2.1⟩
