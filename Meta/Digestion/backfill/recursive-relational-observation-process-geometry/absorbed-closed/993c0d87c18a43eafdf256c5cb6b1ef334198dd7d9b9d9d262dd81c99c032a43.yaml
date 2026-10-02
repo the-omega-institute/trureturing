@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:993c0d87c18a43eafdf256c5cb6b1ef334198dd7d9b9d9d262dd81c99c032a43
   normalized_sha256: sha256:993c0d87c18a43eafdf256c5cb6b1ef334198dd7d9b9d9d262dd81c99c032a43
 cas_ref: sha256:993c0d87c18a43eafdf256c5cb6b1ef334198dd7d9b9d9d262dd81c99c032a43
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/BeneficialMarkerDeflection.beneficial_marker_deflection
+    target_statement_id: sha256:093e1736a8dd6a373016bb266ce982cb617e627f954f953b8911497e5a8b94fc
 receipts:
   unresolved_subitems: []
