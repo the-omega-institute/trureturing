@@ -1,5 +1,6 @@
 import LeanInformationAudit.Contract.Decoder
 import LeanInformationAudit.Contract.SourceAudit
+import LeanInformationAudit.Contract.SourceLiteral
 
 namespace LeanInformationAudit.Contract.Discovery
 open Lean Meta
@@ -66,6 +67,9 @@ def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := d
     let head := info.type.getAppFn.constName?.getD .anonymous
     match SourceAudit.audit entry.command head with
     | .error error => throwError "{error}:{name}"
+    | .ok _ => pure ()
+    match SourceLiteral.audit env (.record head) entry.command[1][3][1] name.toString with
+    | .error error => throwError "{error}"
     | .ok _ => pure ()
     let value ← checkDefinition info
     unless entry.sourceName == some (privateToUserName name) do
