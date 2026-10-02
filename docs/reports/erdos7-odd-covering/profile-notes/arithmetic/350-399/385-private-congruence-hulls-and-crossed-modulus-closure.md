@@ -20515,3 +20515,27 @@ For the particular numerical shape
     (s_0,s_1,s_2)=(AB,AC,BC),
 
 with pairwise coprime A,B,C>1, the same escape misses BOTH other cylinders. After relabeling its owner asAB, x agrees withv moduloAB but not moduloABC, so it fails moduloC and therefore fails bothAC andBC. TSC5–TSC6 then hold unchanged for both complete cells and their disjoint original payer inventories. A,B,C need not be prime; their complete original powers and literal residues are retained.
+
+### Every aligned low-row payer has a complete private escape from the triangle word
+
+Keep the actual triangle and notation of TSC1–TSC6, and put
+
+    U={x:x=u modulo3^H}.
+
+Let m=3^a q^e s be ANY additional original with a<H, e>=2, a_m=u modulo3^a, and a_m=beta_i modulo q^2 for some i in {0,1,2}. Then
+
+    P_m minus U is nonempty.                         (TLE1)
+
+In particular TLE1 applies to every actual original in L_1(w) union L_2(w), at every complete escaped source w considered in TSC5–TSC6. No cofactor condition beyond those original incidences is required.
+
+To prove it, delete exactly K={d_0,d_1,d_2,m}. All three triangle classes lie in U. Whole original coverage therefore gives the EXACT outside-word identity
+
+    E_K minus U=P_m minus U.                         (TLE2)
+
+Indeed, outside U a point missing all retained originals can only be owned by m, and then it misses every other original. The reverse inclusion follows from complete privacy. This identity does not replace the joint hole inside U by a union of private regions.
+
+Suppose P_m minus U were empty. Then E_K is contained in U. On this entire hole, reuse the four rows of TSC2 with cofactors1,q,q^2,k_i, where k_0=t,k_1=r,k_2=p. Every point has the common first-q root omega. At the third new ternary leaf, points of A_(d_i) or A_m satisfy beta_i modulo q^2, while points of the other two triangle classes satisfy v modulo k_i. Hence those four rows repair the WHOLE E_K, although they need not cover the part of A_m outside U; that part already has retained owners by TLE2.
+
+The same fresh H+1 height excludes all numerical collisions. Four classes replace four, and the same inequality TSC3 gives a strictly smaller modulus sum. PH2 forbids the exchange, proving TLE1.
+
+The escape is a COMPLETE private point of the actual payer. It need not preserve w, and the payer need not have any private point inside U. Thus TLE1 does not force two private ternary words, an additional payment in TSC6, decreasing height along an escape path, or termination of a dependency graph. A joint deletion closure still requires its whole E_K and one compatible assignment of actual replacement labels; selected private escapes or a sink component alone supply neither.
