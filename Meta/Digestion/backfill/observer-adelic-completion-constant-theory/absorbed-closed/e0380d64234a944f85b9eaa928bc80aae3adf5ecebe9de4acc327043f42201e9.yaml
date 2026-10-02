@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e0380d64234a944f85b9eaa928bc80aae3adf5ecebe9de4acc327043f42201e9
+  normalized_sha256: sha256:e0380d64234a944f85b9eaa928bc80aae3adf5ecebe9de4acc327043f42201e9
+cas_ref: sha256:e0380d64234a944f85b9eaa928bc80aae3adf5ecebe9de4acc327043f42201e9
+coverage_gids:
+  - gid: D5/S3/VertexAlgebra/PolynomialFockStateField.stateField_locality
+    target_statement_id: sha256:06c86b929b2fb19dca93549aa6cbf843b00b0cd9796aa6e9bf626a65eae94ed9
+receipts:
+  unresolved_subitems: []

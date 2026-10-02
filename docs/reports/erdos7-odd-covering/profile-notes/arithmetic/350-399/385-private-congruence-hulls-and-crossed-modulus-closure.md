@@ -381,6 +381,25 @@ At most two fixed original labels meet every collision edge. For each
 complete ternary word, all original3^Hpq multiples together number
 at most pq-max(p,q), retaining every higher digit and cofactor.
 
+[Section173](#173-the-shared7-branch-has-a-finite-height-box-and-forced-cofactors)
+consumes the same-source guarded inequality with its finite ternary
+height. It gives H_3<=52 and H_7<=44 in the remaining R={7}, H_5=1
+branch, while retaining all higher digits and literal phases. In the
+21-root-of-5 subbranch it also forces every pair among the five
+concentrated primes, and one triple, to be original numerical labels.
+
+[Section174](#174-every-complete-private-source-of-q2-demands-a-fixed-mixed-service)
+turns every actual q^2 private source with q in R intersect
+{5,7,11,13} into a fixed mixed-service demand. It supplies a positive
+sourcewise weight and, for q=7,11,13, a tail set independent of the
+companion root; it does not repair the whole deletion hole.
+
+[Section175](#175-complete-liability-obstructs-the-payer-move-shortcut)
+gives a literal non-cover construction in which the displayed probes and
+global collision graph hold, but a critical parent move frees two labels
+while its complete private liability costs four arbitrary odd APs. This
+rules out that shortcut and is not a counterexample to EB1.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -21299,3 +21318,557 @@ For GLC2, form the(p-1)-by-(q-1) table whose entry m_(b,c) counts every original
 In the general R intersect{5,7,11,13} branch, companion7 for shared5 and companion5 for shared7,11,13 give respective bounds28,28,44,52 per complete u. Original5 and7 are available by initial-segment support and the existing two-prime reciprocal obstruction in Report375 §9. No assumption makes the selected shared prime the largest or excludes it from being the largest.
 
 The new relation controls noncoprime interactions across different sources and supplies fixed small-pair capacities while retaining every tail. Coprime cofactor overlaps can still form odd incidence cycles; GLC1 does not imply balancedness or nesting of traces. Originals omitting the chosen pair, lower ternary rows and the number of complete u remain uncontrolled here. Even the actual parent3^Hpq need not have bounded numerical size. No bounded mixed vacancy, absolute support bound or unrestricted noncoverage follows from this ordinary mathematical result alone; no Lean verification is asserted.
+
+## 173. The shared7 branch has a finite height box and forced cofactors
+
+Keep one original EB1 whole cover in the remaining branch
+
+    R={7}, H_5=1,
+
+with the same actual source, colors, phases and divisor-closed numerical
+palette used in §§165 and 170. This section consumes the guarded,
+same-source inequality already proved in §170; it does not rederive the
+guard or replace its complete-liability hypotheses.
+
+### The §170 inequality has a monotone finite envelope
+
+For the opposite-color source, write
+
+    theta_H=sum_(b=2..H)3^(1-b),
+    r_H=theta_H/(1-theta_H),
+    alpha=A_G/y,
+
+and retain §170's quantities (W,ell,u,tau). Its actual source gives
+
+    tau u <= theta_H K,
+    K=(1+alpha)W+alpha(1-ell),
+    u>=1-ell-2alpha W,
+    tau>=1-theta_H.
+
+Consequently every such source must satisfy
+
+    1 <= F_H(alpha,W,ell),
+
+where
+
+    F_H(alpha,W,ell)
+      =ell+2alpha W+r_H((1+alpha)W+alpha(1-ell)).       (SHB1)
+
+On the parameter range used here, F_H is increasing in each of
+(alpha,W,ell). In particular, replacing r_H by its limiting upper
+bound 1 and replacing the actual palette by a larger palette gives a
+valid necessary-condition envelope for the same original source.
+
+### Both 21-root branches force the complete five-prime color
+
+Let (S) be the concentrated color opposite (5), and put
+
+    C'={11,13,17,19,23}.
+
+The existing §165 and §170 restrictions give S subseteq C' and
+|S|>=4. The largest proper palette is therefore
+
+    S_4={11,13,17,19},
+    W_4=69/187,
+    C_(0,4)=698/8415.
+
+If (21) has the color of (5), the guard estimate gives
+alpha<7/34. If (21) has the opposite color, the pure 7^e and
+root-i 3*7^e prefixes give alpha<1/4. Applying the monotone
+envelope in SHB1, with r_H<1, gives respectively
+
+    F_infinity(7/34,W_4,C_(0,4))=13807/15895<1,
+    F_infinity(1/4,W_4,C_(0,4))=2687/2805<1.
+
+Both contradict the necessary inequality 1<=F_H. Hence the actual
+same-family color is forced in both branches:
+
+    S={11,13,17,19,23}.                                  (SHB2)
+
+This is a source-faithful support conclusion, not an independently optimized
+probability assignment.
+
+### The same envelope bounds both relevant heights
+
+For the full palette, use the already computed values
+
+    W_*=155/357,
+    C_*=6956/58905.
+
+If (21) has the opposite color, substituting H=3 and
+alpha=1/4 into (SHB1) gives
+
+    F_3 <=557083/589050<1,
+
+so H_3>=4. If (21) has the color of (5), substituting H=6
+and alpha=7/34 gives
+
+    F_6 <=121706983/122168970<1,
+
+so H_3>=7. The earlier G=H_7>=2 bound remains valid, and the
+21-in-the-5-color branch retains the earlier G>=3 conclusion.
+
+### Complete-parent exchange gives a finite exponent envelope
+
+Use §144's complete-private-region parent exchange with the actual opposite
+concentrated primes (5) and (11). Its two ternary fixed-root capacities
+are
+
+    N_1=(5-2)(11-1)=30,
+    N_2=(5-1)(11-2)=36,
+    N_*=36.
+
+The exchange therefore gives
+
+    H_3 <= N_*-1+floor((N_*-2)/2)=35+17=52.
+
+For the shared prime (7), the corresponding capacity is
+
+    N_0=(5-1)(11-1)-1=39,
+
+and the same complete-parent calculation gives
+
+    H_7 <=N_0-1+floor((N_0-2)/(7-1))
+        =38+floor(37/6)=44.                            (SHB3)
+
+Together with the already established initial-prime-segment and
+concentrated-height restrictions, the original period lies in the finite
+parameter envelope
+
+    Q | 3^52 7^44 product_(5<=p<=113, p prime, p!=7) p.   (SHB4)
+
+This is a finite parameterization of the same original source. It is not a
+finite enumeration and does not by itself exclude the remaining branch.
+The exchange uses the complete old private region and both EB1 comparison
+objectives; it is not a scalar inventory or a union of selected witnesses.
+
+### Missing cofactor labels are impossible in the 21-root-of-5 branch
+
+Assume 21 has the color of 5, so the branch has G>=3 and the
+original (147,63,441) restrictions from §170. Let
+
+    D_S={d>1 : d is an original numerical label and d divides product_(p in S)p}.
+
+If a squarefree d dividing product_(p in S) p is absent from D_S, divisor
+closure removes every possible original (3^b7^e d) descendant as well.
+Thus the §170 capacity can be evaluated on the actual palette
+
+    W_D=sum_(d in D_S) product_(p|d)1/(p-2),
+    C_D=2 sum_(d in D_S, omega(d)>=2) product_(p|d)1/(p-2).
+
+The full-palette limiting slack is
+
+    334462/333795 - 1 = 667/333795.
+
+Deleting a composite d lowers F_H by
+
+    c_H w_d,
+    c_H=2+2alpha+r_H(1-alpha),
+    w_d=product_(p|d)1/(p-2).
+
+In this branch G>=3 and H>=7, so r_H>=364/365 and
+c_H>=1094/365. The smallest pair weight is
+
+    w_(19*23)=1/357,
+
+and the triple 11*13*17 has weight 1/1485. Each produces
+a strict loss larger than the full-palette slack. Therefore the same
+original source must contain every pair label and the indicated triple:
+
+    pq is original for every distinct p,q in {11,13,17,19,23},
+    11*13*17 is original.                              (SHB5)
+
+These are literal numerical-label conclusions. They do not determine the
+residues or imply that all (3^b7^e d) descendants occur.
+
+### The remaining obligation is still a complete whole-cover argument
+
+The forced (63) and (441) labels do not supply a second unconditional
+loss in the §170 inequality. The guard contains pure 7^e and root-i
+3*7^e prefixes, not every 3^b7^e prefix with b>=2. The
+known phase exclusions for 63 against 49 and 147 therefore do not
+force a further 63/441 first-7-digit separation. A compatible local
+phase pattern remains possible, so no simultaneous subtraction is justified.
+
+Nor does (SHB4) authorize an exhaustive check without preserving every
+literal phase, original label and complete deletion liability. A closing
+step still needs either a finite obstruction over that exact source family,
+a source-preserving whole-parent descent whose repair covers the complete
+deleted complement, or an independently accepted arbitrary-height theorem
+followed by a treatment of the same-color primes allowed below 113.
+No admissible odd distinct whole cover has been found, and unrestricted
+Erdős #7 remains open at this point.
+
+## 174. Every complete private source of q2 demands a fixed mixed service
+
+Choose q in R intersect {5,7,11,13}, and put p=7 when q=5 and p=5
+otherwise. Here q=5 uses the already established presence of 7 in the
+same initial-prime support. Write Q=3^H q^G M. If G=1, the existing
+§163 missing-product bridge applies. Assume G>=2; divisor closure supplies
+the original q^2.
+
+Let beta0 be the literal phase of q^2 modulo q^2 and let omega=beta0
+modulo q. Let R_q be the complete survivor of all q-free originals.
+Remove from R_q the actual cofactor cylinders of every original n with
+v_q(n)=1 and first q-root omega, and call the remaining set Y. The
+complete source calculation gives Y nonempty and
+
+    Priv_(q^2)
+      =CRT(Y x {t modulo q^G:t=beta0 modulo q^2}).      (Q2P1)
+
+For an original n, write h=v_3(n), e=v_q(n), and n^(q)=n/q^e.
+Define the fixed mixed family
+
+    J={n in D:
+       e>=2, n^(q)>1, and
+       [h<=H-2 or (h=H-1 and e<=7)
+        or (h=H and e=2 and p does not divide n)]}.    (Q2P2)
+
+Let E_J be the complete simultaneous-deletion hole. For every y in Y,
+fix the full q-free coordinate and the first q-root omega, and let mu_y
+be the uniform law on this complete fibre F_y. Then
+
+    mu_y(E_J intersect F_y)>=delta_q,
+
+where
+
+    delta_q=((q-3)(q-2)/q^2)(1-12/q^2)-1/(q(q-1))
+            >=187/2500.                               (Q2P3)
+
+Whole coverage therefore forces the actual incident labels
+
+    J(y,omega)={n in J:
+       y=a_n modulo n^(q), a_n=omega modulo q}
+
+to satisfy the sourcewise inequality
+
+    sum_(n in J(y,omega)) q^(1-e(n))>=delta_q.           (Q2P4)
+
+This counts each actual label with its exact relative mass on the same
+source fibre; it does not copy a supplier between different y.
+
+At a fixed complete ternary word, §172's global collision graph leaves at
+most one exceptional companion root. Outside it, the first factor in
+delta_q improves from q-3 to q-2, giving
+
+    delta_q^ord=((q-2)^2/q^2)(1-12/q^2)-1/(q(q-1)).
+
+For q=7,11,13, take p=5. The §172 prime-root table bounds all
+full-height p-bearing originals at fixed (u,omega), across every
+companion root and cofactor source, by p. The prefix filters can therefore
+be chosen once for all companion roots. They give one common tail set with
+
+    delta_(q,5)^all
+      =((q-6)(q-2)/q^2)(1-12/q^2)-1/(q(q-1))>0.
+
+At q=7 this is 767/14406. For q=5 the common-tail subtraction is not
+positive; the valid statement is the fixed-root table with at most one
+exceptional root, delta_5=187/2500 and delta_5^ord=343/2500.
+
+The proof uses complete prefix filters for all full-height q^2 labels, all
+deeper full-height labels, and all near-top labels of q-height at least
+eight. It then restores every pure q-power by subtracting its complete
+literal trace. Arbitrary support, phases, heights and the remaining
+liabilities stay in the source. The certified subset of E_J is not the
+whole hole, so this result supplies no bounded vacancy and no EB1 descent.
+
+## 175. Complete liability obstructs the payer-move shortcut
+
+The following finite construction is a negative boundary for a proposed
+exchange, not an Erdős #7 counterexample. Take
+
+    q=101, p=103, r=107, t=109, H=G=2,
+
+and let the numerical inventory be divisor-closed with
+
+    D_0={3^a q^e s:0<=a,e<=2,
+         s in {1,p,r,t,pr,pt,rt}} minus {1},
+
+augmented by the other odd primes through 109. The distinguished full
+triangle is
+
+    d_0=9q^2pr, d_1=9q^2pt, d_2=9q^2rt,
+
+with payer labels
+
+    m_1=3q^2pr, m_2=q^2pr,
+
+and critical parent b=3q^2p. Choose literal CRT phases so that the
+triangle, both complete probes over the entire escaped-source set, and
+the source-global §172 collision graph all hold. In particular, the
+complete proper-descendant packet of b in the moved phase is exactly
+
+    Delta={m_1,d_1}.
+
+Moving b and deleting Delta therefore frees only two numerical labels.
+
+The old private liability P_b can be written exactly as the part of the
+phase 2 modulo b avoiding all prime-zero classes, except for the retained
+rt class. On a common CRT carrier its normalized mass is
+
+    mu(P_b)=1-1/((r-1)(t-1))=11447/11448.
+
+Every legally available odd replacement modulus has a prime exponent
+exceeding that in F=9q^2p, and hence has mass at most 1/4 on this carrier.
+Consequently any repair of the complete P_b requires at least four APs.
+Four fresh APs with numerical moduli
+
+    5q, 5q^2, 5p, 5qp
+
+achieve the bound, using the four nonzero residues modulo 5 while the
+retained 5-class pays residue zero. Thus the complete repair cost is exactly
+four, while the proposed move would change the count from 85 to 87.
+
+This construction is deliberately not a whole cover. At an explicit
+escaped source, replacing the q^2 prefix by a fourth prefix leaves an
+uncovered point; the actual QC2 supplier count there is 2<q-1. Therefore
+the example does not refute a repair theorem using all EB1 whole-cover
+information. It does refute the shortcut that complete probe service plus
+a globally fixed GLC exception set automatically pays a complete parent
+move. Any next exchange must retain the full whole-cover shell or add a
+separate source-capacity theorem; the displayed probe and collision data
+alone are insufficient.
+
+## 176. Reciprocal private-hull swaps leave one exact joint liability
+
+Keep one EB1-selected whole cover with distinct odd numerical labels
+\(D\), classes \(A_d=a_d\bmod d\), complete private regions \(P_d\),
+and private congruence hulls \(\Gamma_d\) as in (PH3)--(PH4). Take two
+distinct labels \(d,g\in D\) satisfying
+
+\[
+g\mid\Gamma_d,\qquad d\mid\Gamma_g.                 \tag{RH1}
+\]
+
+Choose \(w_d\in P_d\) and \(w_g\in P_g\), and define the two actual
+replacement classes
+
+\[
+B_d=w_g\bmod d,
+\qquad
+B_g=w_d\bmod g.                                     \tag{RH2}
+\]
+
+The hull equivalence says that \(B_g\) covers all of \(P_d\), while
+\(B_d\) covers all of \(P_g\). The only possible uncovered points after
+replacing \(A_d,A_g\) by \(B_d,B_g\) are the points whose complete set of
+old owners is exactly \(\{d,g\}\):
+
+\[
+K_{d,g}:=(A_d\cap A_g)\setminus
+          \bigcup_{m\in D\setminus\{d,g\}}A_m.        \tag{RH3}
+\]
+
+More precisely, the replacement preserves whole coverage if and only if
+
+\[
+\boxed{K_{d,g}=\varnothing.}                         \tag{RH4}
+\]
+
+For sufficiency, a point with only owner \(d\) lies in \(P_d\) and is
+covered by \(B_g\); the analogous statement holds for \(g\). A point
+with an unchanged owner remains covered. For necessity, \(w_g\in P_g\)
+implies \(w_g\notin A_d\), so \(B_d\) is disjoint from \(A_d\); likewise
+\(B_g\) is disjoint from \(A_g\). Hence every point of \(K_{d,g}\) is
+missed by both replacements and by every unchanged class.
+
+The swap can then absorb actual descendants. Define
+
+\[
+\begin{aligned}
+J_d&=\{m\in D\setminus\{d,g\}:d\mid m,\ a_m\equiv w_g\pmod d\},\\
+J_g&=\{m\in D\setminus\{d,g\}:g\mid m,\ a_m\equiv w_d\pmod g\},\\
+J&=J_d\cup J_g.                                      \tag{RH5}
+\end{aligned}
+\]
+
+Every class in \(J_d\) is contained in \(B_d\), and every class in
+\(J_g\) is contained in \(B_g\). Thus (RH4) together with
+\(J\ne\varnothing\) gives a whole cover with \(|D|-|J|\) classes after
+the swap and deletion. It contradicts the EB1 cardinality minimum. The
+resulting necessary condition is therefore
+
+\[
+\boxed{
+g\mid\Gamma_d,\ d\mid\Gamma_g,\ J\ne\varnothing
+\ \Longrightarrow\ K_{d,g}\ne\varnothing.
+}                                                        \tag{RH6}
+\]
+
+For comparable \(d,g\), one side of (RH1) can simplify: if \(d\mid g\)
+and \(g\mid\Gamma_d\), then \(d\mid\Gamma_g\) follows from
+\(d\mid g\mid\Gamma_g\), and the old classes are disjoint. This still
+does not force \(J\ne\varnothing\): the definition of \(J_d,J_g\)
+excludes the two exchanged parent labels themselves, so the comparable
+case supplies no descendant credit automatically. The same distinction
+is why a one-way hull divisor from DR3--DR4 or PI1--PI6 cannot by itself
+produce the strict descent.
+
+This is a source-preserving count descent. It does not spend an occupied
+label as deleted inventory, does not rephase a class without repairing its
+complete private region, and does not assume that the descendants of the
+two parents have a common multiple. When the old parent classes are
+disjoint, (RH4) is automatic, so any reciprocal hull pair with a proper
+descendant in either receiving phase is impossible in an EB1 family.
+
+The result narrows the remaining whole-cover gap but does not close it.
+Section 174 supplies one-direction hull divisibility for a certified
+subset of \(q^2\) sources; it does not force the reciprocal condition,
+the absence of \(K_{d,g}\), or a descendant in the receiving phase.
+For comparable \(d,g\), the old classes are already disjoint, so (RH4)
+is automatic; the existing DR3--DR4 and PI1--PI6 results can supply one
+direction of (RH1) in their stated concentrated branches. They do not
+supply the reverse hull containment, and EB8 does not align a child phase
+with the particular witnesses \(w_d,w_g\) needed for (RH5).
+Section 175 is deliberately not a whole cover and therefore does not
+refute (RH4)--(RH6). A complete solution still needs a whole-cover
+argument forcing one usable reciprocal pair, or a different construction
+that pays the complete joint liability \(K_{d,g}\) while satisfying both
+EB1 comparisons.
+
+## 177. An occupied lcm transfers a reciprocal swap to complete private liability
+
+Keep the EB1-selected whole cover and the notation of Section 176. Assume
+
+\[
+g\mid\Gamma_d,\qquad d\mid\Gamma_g,\qquad
+J=J_d\cup J_g,\qquad r:=|J|\ge 2,
+\]
+
+and put \(L=\operatorname{lcm}(d,g)\). Then
+
+\[
+\boxed{K_{d,g}\ne\varnothing,\qquad L\in D\setminus J.}
+\tag{OL1}
+\]
+
+Moreover, after choosing \(c\in K_{d,g}\), replacing the two parent
+classes by \(B_d,B_g\), replacing \(A_L\) by \(c\bmod L\), and deleting
+all labels in \(J\), the exact remaining hole is the original complete
+private region \(P_L\).
+
+Consequently, every legal repair \(\mathcal R\) of \(P_L\) whose moduli
+are distinct odd nonunits outside \(D\setminus J\) satisfies
+
+\[
+|\mathcal R|\ge r,
+\qquad
+|\mathcal R|=r\Longrightarrow
+\sum_{R\in\mathcal R}\operatorname{mod}(R)
+\ge \sum_{m\in J}m.
+\tag{OL2}
+\]
+
+In particular,
+
+\[
+\boxed{
+\{e>1:e\mid\Gamma_L\}\subseteq D\setminus J,
+\qquad \Gamma_L\ne Q.
+}
+\tag{OL3}
+\]
+
+Here “outside \(D\setminus J\)” is the post-exchange label palette: labels in
+\(J\) have been freed and may be reused, while every label retained in
+\(D\setminus J\) is unavailable to a repair.
+
+### Proof
+
+Since \(r\ge2\), (RH6) gives \(K_{d,g}\ne\varnothing\). Choose
+\(c\in K_{d,g}\). The two old classes meet in the single residue class
+\(c\bmod L\). If \(L\notin D\setminus J\), then this label is either unused
+or has just been freed, so after the reciprocal swap and deletion of \(J\)
+we may add \(c\bmod L\). The swap leaves only \(K_{d,g}\) uncovered, and
+this addition gives a whole cover with \(|D|-r+1<|D|\) classes. EB1 therefore
+forces \(L\in D\setminus J\).
+
+The nonempty intersection and irredundancy make \(d\) and \(g\)
+incomparable, so \(L\ne d,g\). Since \(d\mid L\) and \(g\mid L\), an
+intersection of \(A_L\) with \(A_d\) or \(A_g\) would make \(L\)'s old class
+redundant; hence both intersections are empty. If \(A_L\cap B_d\) were
+nonempty, then \(d\mid L\) and the phase equality would put \(L\in J_d\),
+contrary to \(L\in D\setminus J\); the same argument applies to \(B_g\).
+
+Now perform all three rephasings and delete \(J\). The new \(L\)-class
+covers \(K_{d,g}\). Points private to \(d\) and \(g\) are covered by the
+opposite exchanged parent, and points with any other old owner retain that
+owner. Every deleted class lies inside \(B_d\cup B_g\), so its deletion
+loses no point outside those exchanged parents. On the old \(A_L\), neither
+exchanged parent nor any deleted class has an owner; the new class
+\(c\bmod L\subseteq A_d\) is disjoint from \(A_L\). Thus precisely the
+points private to \(L\), namely \(P_L\), remain uncovered.
+
+Adding a repair \(\mathcal R\) consequently gives a whole cover with
+\(|D|-r+|\mathcal R|\) classes. EB1 yields the first inequality in (OL2),
+and its equal-cardinality modulus-sum comparison yields the second.
+
+If \(e>1\) divides \(\Gamma_L\) but \(e\notin D\setminus J\), then
+\(P_L\subseteq w_L\bmod e\) by the definition of the complete private hull.
+The single class \(w_L\bmod e\) is therefore a legal repair, contradicting
+\(r\ge2\). This proves the inclusion in (OL3). Every element of \(J\) divides
+\(Q\); if \(\Gamma_L=Q\), each such element would belong to the left-hand
+side of (OL3), contradicting \(J\cap(D\setminus J)=\varnothing\). Hence
+\(\Gamma_L\ne Q\). \(\square\)
+
+This is a complete-liability transfer, not a universal forcing theorem. It
+only applies after a reciprocal pair with at least two receiving descendants
+has been found. The unrestricted problem still requires a whole-cover
+argument forcing such a pair, or another strict descent that handles the
+remaining joint-owner obstruction.
+
+### Full ternary height bounds the two-sided receiving packet
+
+The existing [Hough--Nielsen Theorem 1](https://arxiv.org/pdf/1703.02133v2),
+already recorded in the repository, says that every finite distinct covering
+system with moduli greater than one has a modulus divisible by \(2\) or
+\(3\). Therefore a hypothetical all-odd cover has \(3\mid Q\).
+
+Let \(H=v_3(Q)\), \(T=3^H\), and suppose the reciprocal pair above also
+satisfies
+
+\[
+v_3(d)=v_3(g)=H,\qquad J_d\ne\varnothing,\qquad J_g\ne\varnothing.
+\]
+
+Then
+
+\[
+\boxed{|J_d\cup J_g|\le2.}
+\tag{OL4}
+\]
+
+Indeed, if \(r:=|J_d\cup J_g|\ge3\), (OL1)--(OL2) apply. Write
+\(d=Tu\) and \(g=Tv\). The nonempty joint owner set and irredundancy make
+the parents incomparable, so \(u,v>1\) are distinct odd integers not
+divisible by \(3\). Let \(\rho=a_L\bmod T\), and define three CRT classes
+\[
+\begin{array}{c|c|c}
+j & \text{cofactor condition} & \text{new modulus}\\ \hline
+0 & \text{none} & 3T\\
+1 & x\equiv a_L\pmod u & 3d\\
+2 & x\equiv a_L\pmod v & 3g
+\end{array}
+\]
+Their residues modulo \(3T\) are respectively
+\(\rho,\rho+T,\rho+2T\). Every point of \(A_L\) has exactly one of these
+three next ternary digits and satisfies both cofactor congruences inherited
+from \(L\), so these three fresh classes cover all of \(A_L\), hence \(P_L\).
+Their ternary exponent is \(H+1\), so none is an original label.
+
+If \(r>3\), this is a repair with fewer than \(r\) classes, contradicting
+(OL2). If \(r=3\), choose distinct \(M_d\in J_d\) and \(M_g\in J_g\);
+the union-size assumption guarantees such a choice even when the two
+receiving sets overlap. Since \(d\) and \(g\) already have the full
+ternary height of \(Q\), each proper descendant ratio is an odd integer
+greater than one and not divisible by \(3\), hence at least \(5\). Thus
+\[
+\sum_{m\in J}m\ge M_d+M_g\ge5(d+g)>3(T+d+g),
+\]
+where the last inequality follows from \(d=Tu,g=Tv\) and the distinct
+odd \(u,v>1\). This contradicts the equal-cardinality modulus-sum bound in
+(OL2), because the three fresh repair moduli have sum \(3(T+d+g)\).
+
+This consequence is still conditional on finding a reciprocal pair with
+both receiving sets nonempty. It supplies a sharper obstruction inside the
+full-ternary branch, not the missing universal forcing statement.
