@@ -3690,3 +3690,162 @@ Lean 源仍位于忽略目录 `.lake`，研究笔记是唯一跟踪交付；没�
 新颖性、跟踪 Lean、准入或冻结声明。逃逸审计仍未完成，登记按
 CLAUDE 3.9 暂缓：
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+
+
+### 从原距离控制构造连续等变边界映射
+
+本轮输入是一个实际原 H³ 映射 F，以及原距离上的全局双边控制：
+对所有原点 p、q，`dist(F(p),F(q))≤L*dist(p,q)+K`，且
+`a*dist(p,q)-B≤dist(F(p),F(q))`，其中 L、K 非负，a 严格为正，
+B 是实数。这里没有假设 F 连续，也没有输入一个边界映射。
+
+`h3_coarse_map_ray_step_and_escape` 对每个原归一化零光锥点 b，
+在同一原实际测地线的整数时刻证明：像序列的相邻原距离至多
+`L+K`，到原点 o 的原径向距离至少为
+`a*n-(B+dist(F(o),o))`；o 始终是原上半空间点 `(0,1)`。
+此前已证明的径向逃逸端点存在定理因而供应每条像序列的实际
+原边界极限。`h3_coarse_map_constructs_equivariant_discrete_boundary_map`
+选择这些极限，构造同一个原边界映射 φ。它进一步对任意一对
+原实际等距映射 e、e′ 证明：若同一个 F 在每个原点处满足
+`F(e(p))=e′(F(p))`，则同一个 φ 在每个原边界点处满足
+`φ(action(e,b))=action(e′,φ(b))`。
+证明把原实际等距射线比较界送入 F 的同一个距离上界，并由
+一条已知端点的收敛推导另一条路径的同端点收敛，最后使用
+自然数正无穷滤子的非底性与原四维 Hausdorff 极限唯一性。
+φ 及其极限均由原距离控制构造，没有作为这条存在结论的前提。
+
+`h3_coarse_upper_control_extends_discrete_ray_endpoint_to_real_times`
+利用 `floor(max(t,0))` 采样。采样自然数随 t 趋于正无穷；原
+单位速度测地线上的采样点与 `max(t,0)` 时刻的点相距至多 1，
+故其 F 像的原距离至多 `L+K`。有界扰动收敛定理把整数极限
+传到整条实参数射线，且 t 最终非负，夹零参数与原参数最终
+相同。`h3_coarse_map_constructs_equivariant_real_ray_boundary_map`
+将这一步应用于同一个实际构造的 φ，保留上述所有逐点等变
+关系。F 连续性和另一个实参数极限都不是额外前提。
+
+为了证明边界映射连续，另构造定量坐标误差界。若实际原点
+p、q 的原距离至多非负 C，且 `1/time(p)≤A*(r^n)^2`，其中
+A、r 非负，则每个原归一化坐标差的绝对值至多
+`sqrt(2*cosh(C)*A)*r^n`。若这个几何时间倒数界在序列每一步
+都成立、每步距离至多 C、`r<1`，且该序列的原归一化极限为 b，
+经典几何级数尾项界进一步给出任一坐标误差上界
+`sqrt(2*cosh(C)*A)*r^n/(1-r)`。
+该定量中间定理使用已知极限；最终构造中的极限仍由此前的
+存在定理供应，不把它重新变成外部假设。
+
+对同一个受控 F，设
+`A=2*exp(B+dist(F(o),o))`、`r=exp(-a/2)`、`C=L+K`，并令
+`D=sqrt(2*cosh(C)*A)`、`T=D/(1-r)`。
+`h3_coarse_map_ray_inverse_time_geometric_bound` 从原距离下界
+推导每条整数射线像的时间倒数界 `A*(r^n)^2`。
+`h3_coarse_map_ray_endpoint_uniform_coordinate_tail` 因而将同一
+映射 φ 的每个坐标误差统一控制在 `T*r^n`；常数与 b、坐标 i
+无关，且 `0<r<1`。
+
+`h3_boundary_geodesic_vector_continuous_at_time` 证明固定任意实数
+t 时原测地线向量随原边界点连续。原配对联合连续性、自配对
+等于 1 及原 cosh 距离恒等式进一步说明：对于固定 c、t，b 在
+c 的某个邻域中时，原射线点 `ray(b,t)` 与 `ray(c,t)` 距离至多 1。
+这一步没有借助 F 的连续性。
+在 n 时刻满足这个原距离条件时，F 像的归一化坐标差至多
+`D*r^n`；两个像序列各自的端点尾项至多 `T*r^n`，故
+`h3_coarse_map_boundary_coordinate_pair_bound` 给出
+`abs(φ(b)_i-φ(c)_i)≤(2*T+D)*r^n`。
+先令 n 足够大，再取上述原边界邻域，这个统一界使每个 φ
+坐标连续；有限乘积和原零光锥截面的子空间拓扑给出
+`h3_coarse_map_ray_endpoint_map_continuous`。
+最后，`h3_coarse_map_constructs_continuous_equivariant_boundary_map`
+实际供应同一个连续 φ、整条实参数射线像的原归一化收敛和
+所有由同一个 F 逐点实现的原等距作用等变关系。没有要求
+调用者供应连续 φ、射线追踪界或 Morse 引理。
+
+四个完整模块串行编译通过，共十三项公理闭包仅含
+`propext`、`Classical.choice`、`Quot.sound`，零警告。
+三次完整失败尝试均保留并整次排除；成功编译中未抑制的 ring
+技巧建议不计作错误或警告。这些结果复用经典原 H³ 几何与
+实数、滤子、几何级数分析，没有新增紧性或可定向前提。
+完整有限体积 Mostow–Prasad 仍为 **ACTIVE/INCOMPLETE**，范围
+包含非紧尖点与非可定向流形。尚未从原给定同伦等价供应保持
+其同一个诱导群同构 d 的受控 F；当前逐点等变构造只在这样的
+F 及其原距离控制已给定时应用。也尚未证明同一个 φ 的单射性
+或迫使其保持原交比；这里的连续映射不是已证明的边界同胚。
+Lean 源仍在忽略目录 `.lake`，研究笔记是唯一跟踪交付；没有
+新颖性、跟踪 Lean、准入或冻结声明。逃逸审计仍未完成，登记按
+CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+
+
+### 一般点族的边界扩展与受控逆映射
+
+`h3PolarBoundaryDirection` 从实际原 H³ 点 p 的原 Lorentz 空间
+坐标除以 `sinh(dist(p,o))` 构造原归一化零光锥方向；原点仍为
+`o=(0,1)`。当 p=o 时使用实际零光锥点 `(1,1,0,0)`。
+原自配对为 1、时间坐标等于 `cosh(dist(p,o))` 及原双曲恒等式
+证明这确是原边界点，而非输入一个方向。
+`h3_polar_ray_reconstruction` 对每个实际原点 p 证明
+`ray(direction(p),dist(p,o))=p`；射线表示是结论。
+
+对于任意同一个滤子 l 和实际原点族 P，若 P 的原归一化坐标
+趋近实际原边界点 b，已有的时间倒数趋零结论和原 cosh 距离
+恒等式给出 `dist(P(z),o)` 趋于正无穷。
+`h3_polar_direction_spatial_coordinates_away` 将实际极坐标方向
+的空间坐标写成 `cosh(radius)/sinh(radius)` 乘原归一化坐标。
+原 sinh/cosh 的无穷远极限供应系数趋于 1，最终
+`h3_boundary_convergence_polar_direction_tendsto` 证明实际构造的
+方向在原边界子空间拓扑中趋于同一个 b。
+没有输入径向逃逸或极坐标方向极限，也不要求 l 非底；这一段
+是收敛推导，不是任意滤子上的极限唯一性。
+
+设实际原映射 F 在所有原点对上满足距离上界 `L*dist+K` 和
+下界 `a*dist-B`，其中 L、K 非负，a 严格为正，B 任意实数。
+极坐标射线在 `floor(radius)` 的采样点与 p 的原距离至多 1，
+故 F 像间距离至多 `L+K`。保留此前同一个实际构造的 φ，以及
+`A=2*exp(B+dist(F(o),o))`、`r=exp(-a/2)`、`C=L+K`、
+`D=sqrt(2*cosh(C)*A)`、`T=D/(1-r)`。
+整数射线的统一端点尾界和采样像的归一化坐标差界共同给出
+`h3_coarse_map_point_uniform_coordinate_tail`：任意实际原点 p
+的 F 像归一化坐标与 `φ(direction(p))` 的各坐标误差至多
+`(T+D)*r^floor(radius)`。
+径向逃逸使这个界趋零，实际极坐标方向趋近 b，已证明的同一
+φ 连续性使 `φ(direction(P(z)))` 趋近 `φ(b)`。
+`h3_coarse_map_extends_any_normalized_boundary_convergence` 因而
+供应任意原边界趋近点族的 F 像归一化极限，不再局限于固定
+射线。最终构造定理供应同一个连续 φ、所有这些一般点族极限
+和由同一个 F 在每个原点处实现的所有原等距作用等变关系。
+中间尾界定理使用整数端点极限；实际构造仍由此前的存在定理
+供应这些极限，没有重新把它们变成构造的外部假设。
+
+进一步设另一个实际原映射 G 也具有它自己的全局原距离双边
+控制 `LG*dist+KG`、`aG*dist-BG`，其中 LG、KG 非负，aG 严格
+为正，BG 任意实数；F 的控制仍保持上述全部条件。
+若存在非负 C 使所有原点 p 都满足 `dist(G(F(p)),p)≤C`，一般
+点族扩展可应用于 F 的原射线像。有界扰动又把同一复合像的
+端点供应为原 b；自然数正无穷滤子的非底性与原坐标空间极限
+唯一性证明实际构造的两个边界映射满足 `ψ(φ(b))=b`。
+`h3_controlled_left_inverse_constructs_injective_boundary_map`
+据此实际构造同一个连续单射 φ、F 的整条实参数射线端点极限
+和所有原逐点作用等变关系。这里只需这一侧的复合距离界。
+
+若还存在非负 D0，使所有原点 q 满足
+`dist(F(G(q)),q)≤D0`，对称论证供应 `φ(ψ(b))=b`。
+`h3_controlled_inverse_constructs_equivariant_boundary_homeomorphism`
+从这两个实际构造的连续映射及双向逆关系构造原边界同胚 E。
+它保留同一个 F、G 的整条实参数射线极限；对每一对由同一个
+F 在每个原点处联系的原实际等距作用，E 保留对应等变关系，
+而 E 的逆对由同一个 G 逐点联系的作用也保留对应等变关系。
+最终单射和同胚构造均没有输入边界映射、端点极限、单射性、
+同胚或 Morse/射线追踪前提；实际原 F、G 的各自全局控制及
+所使用的一侧或两侧原复合距离界始终是明确的输入条件。
+
+四个完整模块串行编译成功，共十五项公理闭包仅含
+`propext`、`Classical.choice`、`Quot.sound`，零警告。
+三次完整失败尝试均保留并整次排除，没有接受失败尝试中的
+部分闭包。完整有限体积 Mostow–Prasad 仍为 **ACTIVE/INCOMPLETE**，
+包含非紧尖点、非可定向流形、两侧原度量及原给定同伦等价
+诱导的同一个群同构 d。本轮没有从该原 h/d 供应满足上述条件
+的 F、G 和原一致有界复合，也没有迫使同一个边界映射保持
+原交比；条件下的实际边界同胚构造不等于原目标实例已构造。
+Lean 源仍在忽略目录 `.lake`，研究笔记是唯一跟踪交付；没有
+跟踪 Lean、准入、冻结或新颖性声明。逃逸审计仍未完成，登记
+按 CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
