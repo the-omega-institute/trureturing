@@ -14554,3 +14554,111 @@ For larger t, repeated-root unions and unmatched overlapping regions
 remain possible under these necessary conditions. No argument here
 forces cd>=p-1 for some opposite pair in every EB1 source. No new
 Lean verification or unrestricted noncoverage is asserted.
+
+## 115. Complete collision unions isolate the missing whole-cover constraint
+
+The following two explicit PARTIAL AP families test the geometric
+premises of sections113--114. They are not covers, EB1 sources, or
+instances of concentrated complete prime-private regions and CP5.
+Their numerical palettes are divisor-closed, their comparable APs
+are disjoint, and every displayed AP has a private point within the
+partial family. These weaker properties do not force the required
+safe-root decomposition.
+
+### Nested complete regions attain the insufficient boundary
+
+Fix odd primes5<=p<q, t=q-p+1 and H>=max(t,20). On the common carrier
+3^H*p*q use the numerical labels
+
+    3^h (1<=h<=H), p, q, 3^c p, 3^c q (1<=c<=t).
+
+Assign their actual CRT phases as follows:
+
+* A_3 has phase0. For h>=2, A_(3^h) has phase2+3^(h-1).
+* A_p and A_q have their respective prime phases0.
+* A_(3^c q) has ternary phase1 mod3^c and q-root c.
+* A_(3p) has ternary root2 and p-root1. For c>=2,
+  A_(3^c p) has ternary phase2+2*3^(c-1) and p-root2.
+
+Here t<=q-4, so the nonzero q-roots are distinct. The higher pure
+guards are a prefix antichain in ternary root2. The mixed p-root2
+prefixes are another antichain, disjoint from those guards; the
+remaining p-mixed class has a different p-root. All q-mixed classes
+lie in ternary root1. This verifies comparable disjointness; divisor
+closure follows directly from the displayed numerical chains.
+
+Private points can be chosen on each class's own ternary phase:
+use p-root3 and q-root1 for a pure class; its own p-root and q-root1
+for a p-mixed class; p-root3 and its own q-root for a q-mixed class.
+For A_p use p-root0 and q-root t+1; for A_q use q-root0 and p-root3.
+Each prime class has such private points at BOTH ternary words1 and2.
+All unspecified higher digits can be zero. These are simultaneous
+CRT assignments in the one displayed carrier, not assumed EB1 data.
+
+The whole ternary root1 avoids the pure guards. Thus the COMPLETE
+forbidden regions are
+
+    B_c=[1 mod3^c], 1<=c<=t; B_j=empty, t<j<=q-1.
+
+They all contain the complete word1 mod3^H. Every safe covering
+group must use one of the p-2 empty-region roots; their singleton
+groups attain that bound. Consequently
+
+    |T|=q-p+2, f0=p-2, nu(G)=0, cd=p-2.           (UC1)
+
+Both mixed heights are t, so the SG1 and SG3 numerical thresholds
+hold, including their tight values. Nevertheless the actual CRT
+point with ternary word1, p-root3 and q-root t+1 is uncovered. The
+two-root prime-private witnesses also show why this is not a
+concentrated source. At ternary word1 its q-color family fails CP5.
+
+### Repeated-root unions need not be two-Helly
+
+Take p=5,q=7,t=7,H>=20. Retain the pure guards and p-mixed phases
+above, and replace the q-mixed phases by this table. Ternary digits
+are listed from lowest to highest; each word specifies the entire
+prefix at that original height.
+
+| c | q-root | ternary prefix |
+| --- | --- | --- |
+| 1 | 1 | (1) |
+| 2 | 2 | (1,0) |
+| 3 | 3 | (1,0,0) |
+| 4 | 3 | (1,1,0,0) |
+| 5 | 4 | (1,1,0,0,0) |
+| 6 | 4 | (1,2,0,0,0,0) |
+| 7 | 2 | (1,2,0,0,0,0,0) |
+
+Occurrences of each repeated q-root lie in different second-digit
+branches. Hence comparable disjointness and the private-point
+construction remain valid, using q-root5 for A_p. The noncover
+witness is now ternary word1, p-root3, q-root5.
+
+The COMPLETE unions B_2,B_3,B_4 intersect pairwise at the displayed
+prefixes of depths3,5,7 respectively, but have empty triple
+intersection: those pairwise overlaps have distinct second digits.
+B_1 contains all three unions, and B_5=B_6=empty. Therefore
+
+    B_2 intersect B_3 intersect B_4=empty,
+    every pair of nonempty B_j intersects.         (UC2)
+
+The groups {5}, {6}, {2,3,4} provide three disjoint safe covers.
+Any group using neither5 nor6 must contain all of2,3,4: omitting
+one leaves a nonempty forbidden intersection, also if1 is included.
+Such a triple can be used only once. Thus
+
+    cd=3>f0+nu(G)=2, while cd=p-2<p-1.             (UC3)
+
+This refutes automatic two-Helly behavior and exactness of the
+pair-matching bound for complete repeated-root unions. It preserves
+SCV7's explicit hypothesis and the single-occurrence laminar case.
+
+Both controls retain every collision occurrence, one prefix per
+height, the forbidden3q region filling the unguarded ternary root1,
+and the original pure guards. Neither admits the actual complete
+private-color or CP5 assumptions. In a larger source, additional
+same-color originals could supply their displayed uncovered points;
+these controls neither construct nor exclude that completion.
+The missing implication must use those whole-source constraints or
+a different legal replacement, beyond the tested prefix geometry.
+No enumeration, Lean verification or unrestricted conclusion is claimed.
