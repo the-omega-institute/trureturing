@@ -25,15 +25,18 @@ internal sealed class NearestNeighborFreezingUniqueMinimumDocument : IScribeDocu
                 "claim", DescribeRole.Definition),
             Node("result", "The unique-minimum theorem", ClaimFormula(),
                 "For every N ≥ 3, the site configuration supplied by the theorem is the unique minimizer of U on the strictly increasing chamber.",
-                "result", DescribeRole.Theorem)),
+                "result", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("enciso-finkel-gonzalez-lopez-rodriguez-2007-freezing-unique-minimum"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        string declaration, DescribeRole role) => Describe.Lean(
+        string declaration, DescribeRole role, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("nearest-neighbor-" + id), DeclarationHandle.Create(Prefix + declaration),
         H(title), StatementSource.FromAuthor(formula),
         (role == DescribeRole.Theorem ? AssessedProvenance.FromRepo() : AssessedProvenance.FromLiterature(Source)),
-        Blocks(Paragraph(Text(prose))), role);
+        Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula All(string variable, Formula domain, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(variable), domain, body);

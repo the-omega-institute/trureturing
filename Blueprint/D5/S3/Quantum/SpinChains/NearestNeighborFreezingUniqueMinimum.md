@@ -46,6 +46,10 @@ $$\forall N \in \mathbb{N},\; (3\leq N \Rightarrow \exists xi \in \operatorname{
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/SpinChains/NearestNeighborFreezingUniqueMinimum.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/enciso-finkel-gonzalez-lopez-rodriguez-2007-freezing-unique-minimum` (proved) by `D5/S3/Quantum/SpinChains/NearestNeighborFreezingUniqueMinimum.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"enciso-finkel-gonzalez-lopez-rodriguez-2007-freezing-unique-minimum","declaration_gid":"D5/S3/Quantum/SpinChains/NearestNeighborFreezingUniqueMinimum.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

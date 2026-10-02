@@ -19,3 +19,9 @@ A. Enciso, F. Finkel, A. González-López and M. A. Rodríguez, arXiv:0704.3046v
 The paper states in the paragraph after Eqs. (31)–(32), printed p. 13:
 
 > “The first one is the requirement that ξ be the unique minimum of the potential U in the domain C. Although our numerical calculations suggest that this is indeed the case, we have not been able to provide a rigorous proof of this fact.”
+
+## Verified locator
+
+- URL: https://arxiv.org/abs/0704.3046v1, §3, printed p. 13, after Eqs. (31)–(32).
+- DOI: https://doi.org/10.1016/j.nuclphysb.2007.07.001. The DOI identifies the journal article;
+  its full text is unverified. The quoted claim and formal statement concern the arXiv v1 text.
