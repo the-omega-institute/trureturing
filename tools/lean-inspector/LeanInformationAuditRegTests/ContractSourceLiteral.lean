@@ -28,7 +28,8 @@ run_meta do
           ("tools/lean-inspector/" ++ moduleName.toString.replace "." "/" ++ ".lean")
     catch ex => error := ← ex.toMessageData.toString
     assertTest s!"discovery.source_literal.{fixture}"
-      (error.startsWith "contract.source_literal:nonliteral:" && (error.splitOn field).length > 1)
+      (error.startsWith (if fixture == "Macro" then
+        "contract.source_literal:term_expander:" else "contract.source_literal:nonliteral:") && (error.splitOn field).length > 1)
     logInfo m!"CONTRACT_DIAGNOSTIC discovery.source_literal.{fixture} {error}"
 
 end LeanInformationAuditRegTests.ContractSourceLiteral

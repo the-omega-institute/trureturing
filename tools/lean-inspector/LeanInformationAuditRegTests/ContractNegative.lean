@@ -13,6 +13,8 @@ private def sourceRejected (label source expected : String) : MetaM Unit := do
   logInfo m!"CONTRACT_DIAGNOSTIC {label} {error}"
 
 run_meta do
+  assertTest "source.anonymous_head"
+    (!SourceAudit.isHeadSpelling (mkIdent Name.anonymous) Name.anonymous)
   let diagnosticPrefix := "def exampleContract : LeanInformationAudit.Contract.Seal := "
   let value := "{ rootId := Lean.Name.anonymous, options := #[] }"
   sourceRejected "source.alias" "def x : Alias := { rootId := Lean.Name.anonymous, options := #[] }"

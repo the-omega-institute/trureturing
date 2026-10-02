@@ -34,7 +34,12 @@ def checkDefinition (info : ConstantInfo) : MetaM DefinitionVal := do
 
 private def candidate (env : Environment) (info : ConstantInfo)
     (unrelated : NameSet) : Bool × NameSet := Id.run do
-  let (inType, unrelated) := SourceAudit.scanContract env info.type unrelated
+  if info.isCtor || info.isTheorem || isAuxRecursor env info.name ||
+      isNoConfusion env info.name || (env.getProjectionFnInfo? info.name).isSome then
+    return (false, unrelated)
+  if info.name == info.name.getPrefix.str "_flat_ctor" then
+    if let some (.ctorInfo _) := env.find? info.name.getPrefix then return (false, unrelated)
+  let (inType, unrelated) := SourceAudit.scanContract env (SourceAudit.resultType info.type) unrelated
   if inType then return (true, unrelated)
   if info.type.isSort then
     if let some value := info.value? (allowOpaque := true) then
@@ -46,6 +51,78 @@ def requireRange (name : Name) : MetaM DeclarationRanges := do
     | throwError "contract.discovery:source_range:{name}"
   return range
 
+def moduleSource (name : Name) : IO System.FilePath := do
+  if Repository.isImplementationSourceModule name then
+    Repository.source ("tools/lean-inspector/" ++ name.toString.replace "." "/" ++ ".lean")
+  else ArenaProvenance.moduleSource name
+
+/-- The existing arena marker delegates syntax unchanged to a core structure
+elaborator. It only annotates mathematical arena expressions; contract metadata
+is assembled by the core delegate. This permission names its compiler owner,
+private-aware identity and exact direct delegation shape. -/
+private def coreStructureDelegate (env : Environment) (name : Name) : Bool := Id.run do
+  let some idx := env.getModuleIdxFor? name | return false
+  unless env.header.moduleNames[idx.toNat]! == `LeanInformationAuditInterface.Syntax do
+    return false
+  unless #[`LeanInformationAudit.elabArenaConstruction,
+      `LeanInformationAudit.elabDefaultArenaConstruction].contains (privateToUserName name) do
+    return false
+  let some info := env.find? name | return false
+  let some body := info.value? (allowOpaque := true) | return false
+  let some marker := body.getAppFn.constName? | return false
+  unless privateToUserName marker == `LeanInformationAudit.markArenaConstruction &&
+      env.getModuleIdxFor? marker == some idx && body.getAppArgs.size == 1 do return false
+  let some markerInfo := env.find? marker | return false
+  let some markerBody := markerInfo.value? (allowOpaque := true) | return false
+  unless Sha256.hex (reprStr markerBody).toUTF8 ==
+      "13a94365395add495532e09e0c8968203c92a091e569a11a3e26fb059e84a2b1" do return false
+  return #[`Lean.Elab.Term.StructInst.elabStructInst,
+    `Lean.Elab.Term.StructInst.elabStructInstDefault].any (body.getAppArgs[0]!.isConstOf ·)
+
+/-- Audit the compiler import DAG, restricted to source files inside this
+checkout. Core Lean and pinned external libraries supply the permitted builtin
+syntax. Missing repository sources are errors, never silently skipped. -/
+def importExpansionKeys (owner : Name) (sourceOf : Name → IO System.FilePath)
+    : MetaM NameSet := do
+  let env ← getEnv
+  let root ← Repository.root
+  let mut pending := #[owner]
+  let mut seen : NameSet := {}
+  let mut keys : NameSet := {}
+  while !pending.isEmpty do
+    let moduleName := pending.back!
+    pending := pending.pop
+    if seen.contains moduleName then continue
+    seen := seen.insert moduleName
+    if let some idx := env.getModuleIdx? moduleName then
+      pending := pending ++ env.header.moduleData[idx.toNat]!.imports.map (·.module)
+    else if moduleName == env.header.mainModule then
+      pending := pending ++ env.header.imports.map (·.module)
+    let path ← if moduleName == owner then sourceOf moduleName
+      else pure (root / LeanInformationAudit.TemplateAudit.sourcePath moduleName)
+    unless ← path.pathExists do
+      if Repository.isModule moduleName || Repository.isImplementationSourceModule moduleName then
+        throwError "contract.source_literal:source_missing:{moduleName}"
+      continue
+    let path ← IO.FS.realPath path
+    unless moduleName == owner ||
+        ((root.toString ++ "/").isPrefixOf path.toString &&
+          !((root / ".lake").toString ++ "/").isPrefixOf path.toString) do continue
+    let entries ← SourceAudit.parse env (← IO.FS.readFile path) moduleName.toString
+    let mut delegates : NameSet := {}
+    if let some idx := env.getModuleIdx? moduleName then
+      for name in env.header.moduleData[idx.toNat]!.constNames do
+        if coreStructureDelegate env name then delegates := delegates.insert (privateToUserName name)
+    for key in (SourceAudit.expansionKeys entries delegates).toArray do keys := keys.insert key
+    if let some idx := env.getModuleIdx? moduleName then
+      for entry in Elab.macroAttribute.ext.ext.getModuleEntries env idx do
+        let value := match entry with | .global e | .scoped _ e => e
+        keys := keys.insert value.key
+      for entry in Elab.Term.termElabAttribute.ext.ext.getModuleEntries env idx do
+        let value := match entry with | .global e | .scoped _ e => e
+        unless coreStructureDelegate env value.declName do keys := keys.insert value.key
+  return keys
+
 /-- Source and compiled inventories must agree, including private declarations.
 Rigid level parameters and their occurrences remain the compiler's original data. -/
 def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := do
@@ -53,6 +130,7 @@ def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := d
   let entries ← SourceAudit.parse env source owner.toString
   let map := FileMap.ofString source
   let mut found : Array Definition := #[]
+  let mut expansionKeys : Option NameSet := none
   let names := if owner == env.header.mainModule then
       env.constants.map₂.toList.toArray.map Prod.fst
     else if let some idx := env.getModuleIdx? owner then
@@ -66,7 +144,7 @@ def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := d
     let (relevant, cache) := candidate env info unrelated
     unrelated := cache
     unless relevant do continue
-    let head := info.type.getAppFn.constName?.getD .anonymous
+    let head := (SourceAudit.resultType info.type).getAppFn.constName?.getD .anonymous
     let functionDefinition := match info with
       | .defnInfo _ => info.type.isForall
       | _ => false
@@ -80,7 +158,12 @@ def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := d
     match SourceAudit.audit entry.command head with
     | .error error => throwError "{error}:{name}"
     | .ok _ => pure ()
-    match SourceLiteral.audit env (.record head) entry.command[1][3][1] name.toString with
+    if info.type.isForall && SourceAudit.heads.contains head then
+      throwError "contract.discovery:term_parameters:{name}"
+    if expansionKeys.isNone then
+      expansionKeys := some (← importExpansionKeys owner fun _ => do
+        return ← moduleSource owner)
+    match SourceLiteral.audit env (.record head) entry.command[1][3][1] name.toString (expansionKeys.getD {}) with
     | .error error => throwError "{error}"
     | .ok _ => pure ()
     let value ← checkDefinition info
@@ -101,20 +184,14 @@ def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := d
             break
       unless present do
         throwError "contract.discovery:compiled_inventory_missing:{owner}:{entry.sourceName}"
-    let relevant := (entry.command.find? fun node =>
-      node.isIdent && SourceAudit.heads.any (SourceAudit.isHeadSpelling node)).isSome
-    unless relevant do continue
-    unless found.any (fun d =>
-        entry.start ≤ map.ofPosition d.range.range.pos &&
-          map.ofPosition d.range.range.endPos ≤ entry.stop) do
-      throwError "contract.discovery:compiled_inventory_missing:{owner}"
   return found.qsort fun a b =>
     a.range.range.pos.line < b.range.range.pos.line ||
       (a.range.range.pos.line == b.range.range.pos.line &&
         a.range.range.pos.column < b.range.range.pos.column)
 
+
 def discover (moduleNames : Array Name)
-    (sourceOf : Name → IO System.FilePath := ArenaProvenance.moduleSource) : MetaM Snapshot := do
+    (sourceOf : Name → IO System.FilePath := moduleSource) : MetaM Snapshot := do
   let original ← getEnv
   setEnv (original.setExporting false)
   try

@@ -1,4 +1,4 @@
-import LeanInformationAuditRegTests.ContractNegative
+import LeanInformationAuditRegTests.ContractGuards
 import LeanInformationAuditRegTests.ContractNegativeFixtures.Parameters
 import LeanInformationAuditRegTests.ContractNegativeFixtures.Forall
 import LeanInformationAuditRegTests.ContractNegativeFixtures.Alias

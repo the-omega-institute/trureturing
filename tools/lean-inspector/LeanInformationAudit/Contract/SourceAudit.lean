@@ -10,10 +10,56 @@ def heads : Array Name := #[
   `LeanInformationAudit.Contract.ExpectedDeclaration,
   `LeanInformationAudit.Contract.Seal]
 
-/-- Inspect dependency syntax to detect aliases and wrappers; never normalize it. -/
+/-- Only the endpoint of a declaration telescope determines its output. -/
+partial def resultType (e : Expr) : Expr :=
+  match e.consumeMData with
+  | .forallE _ _ body _ => resultType body
+  | e => e
+
+/-- Recognize proposition-valued heads from their compiled signatures, without
+normalization or examining proofs. Proposition arguments are mathematical data. -/
+partial def proposition (env : Environment) (e : Expr) : Bool :=
+  match e.consumeMData with
+  | .forallE _ _ body _ => proposition env body
+  | .sort .zero => true
+  | e => match e.getAppFn.constName? >>= env.find? with
+    | some info => resultType info.type == .sort .zero
+    | none => false
+
+private def carriesTypes (e : Expr) : Bool :=
+  (e.find? fun t => match t with | .sort (.succ _) | .sort (.param _) => true | _ => false).isSome
+
+/-- Application arguments count only in type positions. Numeric indices and
+other mathematical values cannot turn their enclosing type into a carrier. -/
+private partial def typeConstants (env : Environment) (e : Expr) : Array Name := Id.run do
+  let e := resultType e
+  if proposition env e then return #[]
+  match e with
+  | .lam _ _ body _ => return typeConstants env body
+  | .proj _ _ value => return value.getUsedConstants
+  | .app .. =>
+    let fn := e.getAppFn
+    let mut names := typeConstants env fn
+    if let some info := fn.constName? >>= env.find? then
+      let mut signature := info.type
+      for arg in e.getAppArgs do
+        if let .forallE _ domain body _ := signature.consumeMData then
+          if domain.isSort || carriesTypes domain then
+            names := names ++ typeConstants env arg
+          signature := body.instantiate1 arg
+    return names
+  | .const name _ => return #[name]
+  | .mdata _ body => return typeConstants env body
+  | _ => return #[]
+
+/-- Inspect result-type syntax and type-producing constant bodies. Ordinary
+value bodies and proposition proofs never propagate contract candidacy.
+A projection of a stored type (such as packed.1) retains its carrier closure. -/
 def scanContract (env : Environment) (e : Expr) (unrelated : NameSet := {})
     : Bool × NameSet := Id.run do
-  let mut pending := e.getUsedConstants
+  let e := resultType e
+  if proposition env e then return (false, unrelated)
+  let mut pending := typeConstants env e
   let mut seen : NameSet := {}
   while !pending.isEmpty do
     let name := pending.back!
@@ -22,23 +68,35 @@ def scanContract (env : Environment) (e : Expr) (unrelated : NameSet := {})
     if seen.contains name || unrelated.contains name then continue
     seen := seen.insert name
     if let some info := env.find? name then
-      pending := pending ++ info.type.getUsedConstants
+      let endpoint := resultType info.type
+      if proposition env endpoint then continue
+      unless endpoint.isSort || carriesTypes endpoint do continue
+      -- Constants in a type expression may store types in products or return
+      -- types through definitions. Inspect their syntax, never reduce it.
       if let some value := info.value? (allowOpaque := true) then
-        pending := pending ++ value.getUsedConstants
-      if let .inductInfo d := info then pending := pending ++ d.ctors.toArray
+        pending := pending ++ typeConstants env value
+      if let .inductInfo d := info then
+        for ctor in d.ctors do
+          if let some ctorInfo := env.find? ctor then
+            let mut signature := ctorInfo.type
+            repeat
+              let .forallE _ domain body _ := signature.consumeMData | break
+              pending := pending ++ typeConstants env domain
+              signature := body
   return (false, seen.toArray.foldl (fun cache name => cache.insert name) unrelated)
 
 def containsContract (env : Environment) (e : Expr) : Bool :=
   (scanContract env e).1
 
 partial def termHead (stx : Syntax) : Syntax :=
-  if stx.isOfKind ``Parser.Term.app then termHead stx[0]
+  if stx.isOfKind ``Parser.Term.paren then termHead stx[1]
+  else if stx.isOfKind ``Parser.Term.app then termHead stx[0]
   else if stx.isOfKind ``Parser.Term.explicit then termHead stx[1]
   else if stx.isOfKind ``Parser.Term.explicitUniv then termHead stx[0]
   else stx
 
 def isHeadSpelling (stx : Syntax) (head : Name) : Bool :=
-  stx.isIdent && #[head, `Contract ++ head.getString!.toName,
+  !head.isAnonymous && stx.isIdent && #[head, head.getString!.toName, `Contract ++ head.getString!.toName,
     `_root_ ++ head, `_root_.Contract ++ head.getString!.toName].contains stx.getId
 
 def audit (command : Syntax) (head : Name) : Except String Unit := do
@@ -101,6 +159,35 @@ private partial def openNamespaces (command : Syntax) : Array (Name × Bool) :=
   else if command.isOfKind ``Parser.Command.openScoped then
     command[1].getArgs.map (fun id => (id.getId, false))
   else command.getArgs.flatMap openNamespaces
+
+private partial def identifiers (stx : Syntax) : Array Name :=
+  if stx.isIdent then #[stx.getId] else stx.getArgs.flatMap identifiers
+
+private partial def patternKeys (stx : Syntax) : Array Name :=
+  if stx.isOfKind ``Parser.Term.matchAlt then
+    match stx[1].find? (·.isOfKind ``Parser.Term.quot) with
+    | some quote => #[quote[1].getKind]
+    | none => #[]
+  else stx.getArgs.flatMap patternKeys
+
+/-- Source patterns retain local extensions that are absent from an imported
+module’s exported attribute table. Reading syntax never runs an expander. -/
+def expansionKeys (entries : Array Entry) (coreDelegates : NameSet := {}) : NameSet := Id.run do
+  let mut keys : NameSet := {}
+  for entry in entries do
+    let command := entry.command
+    if command.isOfKind ``Parser.Command.macro_rules ||
+        command.isOfKind ``Parser.Command.elab_rules then
+      for key in patternKeys command do keys := keys.insert key
+    if entry.sourceName.any coreDelegates.contains then continue
+    -- Attribute registration may name an existing builtin syntax kind.
+    if let some attrs := command.find? (·.isOfKind ``Parser.Term.attributes) then
+      for attrSyntax in attrs[1].getSepArgs do
+        let ids := identifiers attrSyntax
+        let kinds := #[`macro, `term_elab, `builtin_macro, `builtin_term_elab]
+        if ids.any kinds.contains then
+          for id in ids do unless kinds.contains id do keys := keys.insert id
+  return keys
 
 /-- Parse every command, so a compiled head filter cannot erase a source entry. -/
 def parse (env : Environment) (source : String) (file : String) : IO (Array Entry) := do

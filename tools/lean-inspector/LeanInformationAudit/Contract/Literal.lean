@@ -93,6 +93,23 @@ def sourceSelection (e : Expr) : Except String Contract.SourceSelection := do
   return { owner := ← name "source.owner" fs[0]!, definition
            coordinates := ← (← array "coordinates" fs[2]!).mapM (nat "coordinate"), readouts }
 
+/-- Decode only fixed core numeral and negation instances, without reduction. -/
+partial def int (field : String) (e : Expr) : Except String Int := do
+  let e := e.consumeMData
+  if e.isAppOfArity ``Int.ofNat 1 then
+    return .ofNat (← nat field e.getAppArgs[0]!)
+  if e.isAppOfArity ``Int.negSucc 1 then
+    return .negSucc (← nat field e.getAppArgs[0]!)
+  if e.isAppOfArity ``OfNat.ofNat 3 then
+    let args := e.getAppArgs
+    if args[0]!.isConstOf ``Int && args[2]!.isAppOfArity ``instOfNat 1 &&
+        args[2]!.getAppArgs[0]! == args[1]! then return .ofNat (← nat field args[1]!)
+  if e.isAppOfArity ``Neg.neg 3 then
+    let args := e.getAppArgs
+    if args[0]!.isConstOf ``Int && args[1]!.isConstOf ``Int.instNegInt then
+      return -(← int field args[2]!)
+  reject field e
+
 def optionValue (e : Expr) : Except String DataValue := do
   let e := e.consumeMData
   let args := e.getAppArgs
@@ -103,12 +120,7 @@ def optionValue (e : Expr) : Except String DataValue := do
   | some ``Contract.OptionValue.nat => return .ofNat (← nat "option.nat" value)
   | some ``Contract.OptionValue.string => return .ofString (← string "option.string" value)
   | some ``Contract.OptionValue.name => return .ofName (← name "option.name" value)
-  | some ``Contract.OptionValue.int =>
-    if value.isAppOfArity ``Int.ofNat 1 then
-      return .ofInt (.ofNat (← nat "option.int" value.getAppArgs[0]!))
-    if value.isAppOfArity ``Int.negSucc 1 then
-      return .ofInt (.negSucc (← nat "option.int" value.getAppArgs[0]!))
-    reject "option.int" value
+  | some ``Contract.OptionValue.int => return .ofInt (← int "option.int" value)
   | _ => reject "option.value" e
 
 def options (e : Expr) : Except String Options := do

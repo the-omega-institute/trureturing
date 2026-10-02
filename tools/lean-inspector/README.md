@@ -16,6 +16,52 @@ make lean-report LEAN_REPORT=.lake/build/stratalint/custom-report.json
 和 Python 3。[入口](inspect.sh)负责输入验证、utility 输入工具构建、Lean-cache
 ensure、原生 Lake 报告构建和发布。
 
+Typed contract discovery accepts safe, closed `def` entries with one of the five
+direct Contract result heads and a structure literal body. Rigid universes remain
+unchanged. Parentheses around the result head are accepted; used section term
+variables receive `contract.discovery:term_parameters`.
+
+Metadata uses the following closed grammar. Mathematical payload fields keep
+ordinary Lean elaboration; metadata never unfolds user definitions or evaluates
+user code.
+
+| Metadata shape | Accepted source forms | Compiled forms |
+| --- | --- | --- |
+| Name | quoted names; `Lean.Name.anonymous`, `str`, `num`; qualified, opened namespace and dot constructors | Name constructors and core quotation shorthands |
+| Nat | numerals; `Nat.zero`, nested `Nat.succ`, including dot constructors | Nat literals/constructors and the fixed core OfNat instance |
+| Int | numerals, unary minus; `Int.ofNat`, `Int.negSucc`; `OfNat.ofNat n`, `Neg.neg i` | Int constructors and the fixed core OfNat/Neg instances |
+| Bool/String | true/false constructors and string literals | Bool constructors and string literals |
+| Optional/array | `none`, `some literal`, `#[literal, …]` | Option constructors and core List.toArray/Array.mk constructor trees |
+| Contract records | complete structure literals, anonymous constructors, fixed named constructors | exact schema constructors |
+| Parentheses/ascriptions | parentheses on literal terms; `(literal : T)` for the exact literal or record type, with qualified or opened short spelling | the corresponding literal/constructor expression |
+
+Array and Option type ascriptions, user aliases, references, updates and
+computations are outside this grammar and receive
+`contract.source_literal:nonliteral`. The expression decoder separately verifies
+constructor arities and exact core numeric instances.
+
+For metadata syntax, discovery reads macro and term elaborator registration keys
+from the entry module’s compiler import DAG, plus source patterns for local
+rules. A repository extension capable of processing a metadata node receives
+`contract.source_literal:term_expander`; the audit never invokes it. Parser
+choices are checked across alternatives. Unrelated mathematical notation and
+mathematical payload expansion remain available. Core numeric instances are
+verified separately by the expression decoder.
+
+The existing arena structure decorators are admitted as direct delegates to the
+core structure elaborators: their module owner, private-aware identity and
+compiled direct delegation shape and marker body SHA-256 are checked. They annotate mathematical arena
+expressions without changing contract fields. Other repository term elaborators
+on metadata syntax fail closed. Arbitrary metaprogrammatic registration outside
+the compiler attribute tables and source rule patterns is outside this policy.
+
+The four Contract interface modules are checked against their compiled constant
+inventories. Each constant must belong to a source structure/inductive family:
+kernel types and constructors, recorded projections, or the pinned compiler’s
+explicit recursor, noConfusion, constructor and sizeOf companion names.
+Unexpected products receive `contract.interface:compiled_non_type`; no command
+is executed by the audit. Unrecognized future compiler products fail closed.
+
 [CI](../../.github/workflows/ci-current.yml) 和本地数学门通过 `make lean-report`
 调用同一个 `inspect.sh`。入口可独立构建 utility 输入工具,也可接收显式的
 `STRATALINT_LEAN_PRODUCER_DLL`。生成的报告交给 check-current/check-delta;

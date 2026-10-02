@@ -61,6 +61,9 @@ private def constructorName (env : Environment) (type : Name) (stx : Syntax) : O
   let name := if (`_root_).isPrefixOf name then name.replacePrefix `_root_ .anonymous else name
   let name := if (`Contract).isPrefixOf name then
       name.replacePrefix `Contract `LeanInformationAudit.Contract else name
+  let name := if (env.find? name).isSome then name
+    else if name.getPrefix == type.getString!.toName then type ++ name.getString!.toName
+    else if name.getPrefix.isAnonymous then type ++ name else name
   let some (.ctorInfo info) := env.find? name | none
   if info.induct == type then some name else none
 
@@ -81,19 +84,34 @@ private def arguments (type ctor : Name) : Array Shape :=
     #[lit <| match ctor.getString! with
       | "bool" => `Bool | "nat" => `Nat | "int" => `Int
       | "string" => `String | _ => `Lean.Name]
+  else if type == `Nat then
+    if ctor == `Nat.zero then #[] else #[lit `Nat]
   else if type == `Int then #[lit `Nat]
   else (fields type).map Prod.snd
 
 /-- Inspect the original parser tree, before any macro or tactic expansion. -/
 partial def audit (env : Environment) (shape : Shape) (stx : Syntax)
-    (path : String) : Except String Unit := do
+    (path : String) (forbidden : NameSet := {}) : Except String Unit := do
   if let .math := shape then return
+  if forbidden.contains stx.getKind ||
+      (stx.getKind == `choice &&
+        (stx.find? (fun node => forbidden.contains node.getKind)).isSome) then
+    throw s!"contract.source_literal:term_expander:{path}:{stx.getKind}"
   let reject := s!"contract.source_literal:nonliteral:{path}:{stx.getKind}"
+  if stx.isOfKind ``Parser.Term.typeAscription then
+    let expected := match shape with
+      | .literal n | .record n => n
+      | _ => Name.anonymous
+    let annotation := stx[3][0]
+    unless !expected.isAnonymous && annotation.isIdent &&
+        #[expected, expected.getString!.toName,
+          `Contract ++ expected.getString!.toName].contains annotation.getId do throw reject
+    return ← audit env shape stx[1] path forbidden
   if stx.isOfKind ``Parser.Term.paren then
-    return ← audit env shape stx[1] path
+    return ← audit env shape stx[1] path forbidden
   if let .array element := shape then
     unless stx.isOfKind `«term#[_,]» do throw reject
-    for item in stx[1].getSepArgs do audit env element item path
+    for item in stx[1].getSepArgs do audit env element item path forbidden
     return
   let type := match shape with
     | .literal n | .record n => n | .optional _ => `Option | _ => .anonymous
@@ -102,7 +120,7 @@ partial def audit (env : Environment) (shape : Shape) (stx : Syntax)
     if n == `String && stx.isOfKind `str then return
     if (n == `Nat || n == `Int) && stx.isOfKind `num then return
     if n == `Int && stx.isOfKind `«term-_» then
-      return ← audit env (lit `Nat) stx[1] path
+      return ← audit env (lit `Int) stx[1] path forbidden
   if stx.isOfKind ``Parser.Term.structInst then
     unless (fields type).size > 0 && stx[1].getArgs.isEmpty &&
         stx[3][0].getArgs.isEmpty && stx[4].getArgs.isEmpty do
@@ -113,10 +131,14 @@ partial def audit (env : Environment) (shape : Shape) (stx : Syntax)
         throw reject
       let key := field[0][0].getId
       let some (_, role) := (fields type).find? (·.1 == key) | throw reject
-      audit env role field[1][2][2] (path ++ "." ++ key.toString)
+      audit env role field[1][2][2] (path ++ "." ++ key.toString) forbidden
     return
   let (head, args) := if stx.isOfKind ``Parser.Term.app then (stx[0], stx[1].getArgs)
     else (stx, #[])
+  if type == `Int && head.isIdent &&
+      #[`OfNat.ofNat, `Neg.neg].contains head.getId then
+    unless args.size == 1 do throw reject
+    return ← audit env (lit (if head.getId == `OfNat.ofNat then `Nat else `Int)) args[0]! path forbidden
   let roles ← if stx.isOfKind ``Parser.Term.anonymousCtor then
       if (fields type).isEmpty then throw reject else pure ((fields type).map Prod.snd)
     else do
@@ -126,6 +148,6 @@ partial def audit (env : Environment) (shape : Shape) (stx : Syntax)
       else pure (arguments type ctor)
   let args := if stx.isOfKind ``Parser.Term.anonymousCtor then stx[1].getSepArgs else args
   unless args.size == roles.size do throw reject
-  for i in [:args.size] do audit env roles[i]! args[i]! path
+  for i in [:args.size] do audit env roles[i]! args[i]! path forbidden
 
 end LeanInformationAudit.Contract.SourceLiteral
