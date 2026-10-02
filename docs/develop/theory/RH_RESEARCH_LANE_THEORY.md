@@ -11756,3 +11756,451 @@ Connes–Consani, arXiv:2006.13771v1, Proposition 4.5(iv) 的谱配对、Abusaks
 FIB 的 $\beta=\rho(\alpha)$、五模式来源及四相观察运输，尚无通向实际 prime-dilation 与本章迹读出的交织定理。Robin 的约数倒数预算也没有由本章 Hankel 上界推出。两条接口与 RH 的完整正性目标均保留为未解义务；不把几何长度守恒、换切面或减少估计损失写成这些义务的解答。
 
 ## 追加锚（本行以下为增补区）
+
+## 23. 固定素数切面上的相位范数预算障碍
+
+本章条件于第 18—21 节的实际物理表示与迹合同，检验候签定理 21.1 第一式能否作为覆盖全部 constrained 测试的充分预算。以下密度渐近作为显式前提保留，不将其归给一个未提供该陈述的半局部供应定理，也不使用随素数集增长的联合渐近。
+
+**假设 23.1（固定有限素数集的实际评价密度）。** 采用 $d\mu(t)=dt/(2\pi)$，令 $k_t$ 为 archimedean Sonin 空间的物理评价向量，$d(t)=\|k_t\|^2$。对于每个固定有限 $S=\{\infty\}\cup\mathcal P$，设实际普通度量满足
+
+$$
+\begin{aligned}
+\sigma_S(f)&=\int_{\mathbb R}|\widehat f(t)|^2d_S(t)\,d\mu(t),\\
+d_S(t)&=w_S(t)\langle k_t,K_S^{-1}k_t\rangle,\qquad
+w_S(t)=\left|\prod_{p\in\mathcal P}(1-p^{-1/2-it})\right|^2.
+\end{aligned}
+$$
+
+$K_S$ 是第 18 节的普通 Sonin 度量压缩，其逆没有被删除。进一步假定 $d\ge0$ 局部有界，且
+
+$$
+\frac{d(t)}{\log|t|}\longrightarrow1,\qquad
+\frac{d_S(t)}{d(t)}\longrightarrow1\quad(|t|\to\infty),\qquad
+0\le d_S(t)\le\chi_Sd(t),\qquad \chi_S<\infty.
+$$
+
+后两个式子的量词是固定 $S$；没有假设关于增长 $S$ 的统一阈值。Burnol, arXiv:math/0208121v1, Theorems 4、8、9 提供 archimedean 投影与评价的来源接口；本假设所需的半局部密度渐近是额外条件。
+
+**定义 23.1（三零点的实偶高频测试）。** 固定 $r>0$、有限 $\mathcal P\supseteq\{p:p\le e^r\}$ 及非零实偶 $\phi\in C_c^\infty((-r/2,r/2))$。对于 $\tau\ge1$，令
+
+$$
+f_\tau(x)=\tau^{-3}\partial_x(\partial_x^2-1/4)
+\bigl[\phi(x)\sin(\tau x)\bigr],\qquad
+m_0=\frac{\|\phi\|_2^2}{2}>0.
+$$
+
+令 $U_{\mathrm{phase},S}$ 精确表示候签定理 21.1 第一式的右侧：
+
+$$
+U_{\mathrm{phase},S}(f)
+=2D(f)+2\|f\|_2\left(\|xf\|_2+
+\|\omega_S\widehat f\|_{L^2(d\mu)}\right),\qquad
+\omega_S=\omega_\infty+\omega_{\mathcal P}.
+$$
+
+**候签定理 23.1（固定切面的预算主项加倍）。** 在假设 23.1 及第 18—21 节合同下，定义 23.1 的每个 $f_\tau$ 都是支撑完整的实际 constrained 测试，且对该固定 $S$，
+
+$$
+\begin{aligned}
+\|f_\tau\|_2^2&\longrightarrow m_0,\\
+\frac{\sigma_S(f_\tau)}{\log\tau}&\longrightarrow m_0,\\
+\frac{D_{\mathrm{lin},S}(f_\tau)}{\log\tau}&\longrightarrow0,\\
+\frac{U_{\mathrm{phase},S}(f_\tau)}{\log\tau}&\longrightarrow2m_0.
+\end{aligned}
+$$
+
+因此存在依赖 $S,r,\phi$ 的 $\tau_0$，使得 $\tau\ge\tau_0$ 时，即便使用精确正迹与精确线性修正，证书仍严格为负；其归一化极限为
+
+$$
+\boxed{
+\frac{\sigma_S(f_\tau)-D_{\mathrm{lin},S}(f_\tau)
+-U_{\mathrm{phase},S}(f_\tau)}{\log\tau}
+\longrightarrow-m_0<0.
+}
+$$
+
+证明。种子 $\phi\sin(\tau x)$ 实且奇，奇阶微分后 $f_\tau$ 实且偶，微分不扩大支撑。对任意复数 $z$，分部积分给出精确式
+
+$$
+\widehat f_\tau(z)
+=-\frac{z(z^2+1/4)}{2\tau^3}
+\bigl[\widehat\phi(z-\tau)-\widehat\phi(z+\tau)\bigr].
+$$
+
+故 $\widehat f_\tau(0)=\widehat f_\tau(i/2)=\widehat f_\tau(-i/2)=0$，自相关实偶且支撑于 $[-r,r]$。若 $p\notin\mathcal P$，则每个 $k\ge1$ 都满足 $k\log p>r$，所以没有遗漏的活跃纯素数幂；所含素数的完整幂级数仍保留。
+
+直接微分可写成
+
+$$
+f_\tau=-\phi\cos(\tau x)+O_{L^2}(\tau^{-1}).
+$$
+
+Riemann–Lebesgue 给出质量极限 $m_0$。固定支撑同时给出
+
+$$
+D(f_\tau)\le\frac r2\|f_\tau\|_2^2=O(1),\qquad
+\|xf_\tau\|_2\le\frac r2\|f_\tau\|_2=O(1).
+$$
+
+复用 NIST DLMF [5.11.2](https://dlmf.nist.gov/5.11.E2) 的 digamma 渐近，路径 $1/4+it/2$ 位于一个固定允许扇形，故
+
+$$
+\omega_\infty(t)=-\log|t|+\log(2\pi)+o(1),\qquad
+|\omega_{\mathcal P}(t)|\le2\mathfrak d_S.
+$$
+
+$\mathfrak d_S$ 在这里是固定有限常数。局部有界性与上述渐近给出全局对数增长控制；假设 23.1 也给出 $d_S(t)=O_S(\log(2+|t|))$。
+
+对精确 Fourier 式分别置 $t=\tau+s$、$t=-\tau+s$。归一化的三次多项式因子分别趋于 $1$ 与 $-1$，由一个固定的 $s$ 多项式控制；两份平移后的 $\widehat\phi$ 都有 Schwartz 衰减。支配收敛分别给出每包 $\|\phi\|_2^2/4$ 的密度主项，包间交叉项由同一衰减趋于零。因此
+
+$$
+\frac{\sigma_S(f_\tau)}{\log\tau}\longrightarrow m_0,\qquad
+\frac{\|\omega_S\widehat f_\tau\|_{L^2(d\mu)}}{\log\tau}
+\longrightarrow\sqrt{m_0}.
+$$
+
+这些是标准 Fourier 包局部化对所给实际密度的应用，不重新证明密度前提。第 19.2 节的 $|D_{\mathrm{lin},S}(f)|\le2r\|f\|_2^2$ 使线性项除以 $\log\tau$ 后趋于零。代入 $U_{\mathrm{phase},S}$ 即得系数 $2m_0$ 与所示负极限。$\square$
+
+对同一测试，若 $L_S(f)\le\sigma_S(f)$，且
+
+$$
+D_{\mathrm{fin},S}(f)+\|f\|_2^2E_S\ge D_{\mathrm{lin},S}(f),
+$$
+
+则使用这些替代量并扣除 $U_{\mathrm{phase},S}$ 的证书，逐态不超过候签定理 23.1 的精确证书。候签定理 21.1 第二式的多项式 Gamma 预算也不小于 $U_{\mathrm{phase},S}$，故在同一族上最终同样失败。
+
+这直接由各界的方向得到。第二式预算由第一式中的相位范数经三角不等式及 $|\omega_\infty|\le a_\Gamma+b_\Gamma t^2$、$|\omega_{\mathcal P}|\le2\mathfrak d_S$ 得到，所以只能增加被扣预算。
+
+上述负号仅属于充分预算证书；它没有给出 $N_S(f_\tau)>\sigma_S(f_\tau)-D_{\mathrm{lin},S}(f_\tau)$，也没有反驳 $N_S\le U_{\mathrm{phase},S}$。更早的 $\|CX_f\|_{\mathrm{HS}}^2$ 和负半轴 Hankel 矩没有被此论证反驳。负的 Gamma 相位经范数取绝对方向，再乘外层系数 $2$，是本证书的主项损失。标准调制、digamma 渐近及固定 $S$ 评价前提都作为复用输入；本章只作这份特定预算的条件性适用范围判定，不认证其组合的原创性。
+
+## 追加锚（本行以下为增补区）
+
+## 24. 保留负半轴方向的同一测试预算
+
+沿用第 21 节的实际 $m_S,h_{S,f},Q,C$ 与有符号谱配对，第 23 节仅对相位范数预算的障碍不涉及负半轴矩本身。本章比较这两个估计环节，中心参数只用于标量矩控制，不移动物理 cutoff，不改变实际散射或测试。
+
+**定义 24.1（有方向的中心剩余预算）。** 在第 21 节合同下，对 $a>0$ 定义
+
+$$
+\begin{aligned}
+R_{a,S}(f)&=\left\|(\omega_S(t)+a)\widehat f(-t)
++i\widehat f'(-t)\right\|_{L^2(d\mu)}^2,\\
+U_{\mathrm{or},a,S}(f)&=
+\left(\sqrt{D(f)}+\frac{\sqrt{R_{a,S}(f)}}{2\sqrt a}\right)^2.
+\end{aligned}
+$$
+
+$\widehat f'(-t)$ 表示先对 $\widehat f$ 求导，再在 $-t$ 处取值。完整 $\omega_S$ 包含实际 Gamma 相位和全部有限素数幂，不把局部内函数或平移分开收费。
+
+**候签定理 24.1（相位方向在固定高频族上的预算比较）。** 在第 21 节合同下，对每个 $a>0$ 有 $N_S(f)\le U_{\mathrm{or},a,S}(f)$。特别地，取定义 23.1 的固定有限 $S$ 与实偶测试族，令
+
+$$
+a_\tau=\log\tau-\log(2\pi)>0\quad(\tau>2\pi),\qquad
+D_0=\frac12\int_{\mathbb R}|x|\,|\phi(x)|^2dx.
+$$
+
+则在不使用正迹密度前提时已有
+
+$$
+R_{a_\tau,S}(f_\tau)=O_{S,r,\phi}(1),\qquad
+\mathcal H_S(f_\tau)=O_{S,r,\phi}(1/\log\tau),\qquad
+U_{\mathrm{or},a_\tau,S}(f_\tau)\longrightarrow D_0.
+$$
+
+若同时满足假设 23.1，则同一个实际 $f_\tau,S$ 上的精确证书满足
+
+$$
+\boxed{
+\frac{\sigma_S(f_\tau)-D_{\mathrm{lin},S}(f_\tau)
+-U_{\mathrm{or},a_\tau,S}(f_\tau)}{\log\tau}
+\longrightarrow m_0>0.
+}
+$$
+
+它与候签定理 23.1 的负主项形成两份充分预算的比较，未给出实际 $N_S$ 的极限或绝对值界。
+
+证明。只作为标准单侧二次矩工具使用标量不等式
+
+$$
+(-u)\mathbf1_{u<0}\le\frac{(u-a)^2}{4a}.
+$$
+
+在 $u<0$ 时，两边之差是 $(u+a)^2/(4a)$；其余位置直接非负。由 $\widehat h=m_S\widehat f(-t)$、$m_S'=i\omega_Sm_S$ 及 Plancherel，
+
+$$
+\mathscr F[(u-a)h_{S,f}](t)
+=i\widehat h'(t)-a\widehat h(t)
+=-m_S(t)\bigl[(\omega_S(t)+a)\widehat f(-t)
++i\widehat f'(-t)\bigr].
+$$
+
+因此 $\mathcal H_S(f)\le R_{a,S}(f)/(4a)$。复用第 21.1—21.2 节已给的谱配对与截断恒等式，
+
+$$
+N_S(f)\le\|CX_f\|_{\mathrm{HS}}^2
+\le\left(\sqrt{\mathcal H_S(f)}+\sqrt{D(f)}\right)^2
+\le U_{\mathrm{or},a,S}(f).
+$$
+
+上述标量不等式和既有算子链不另作为新工具定理列出。
+
+对实偶 $f$，$\widehat f,\widehat f'$ 在实轴上取实值，$\omega_S$ 实且偶，故二次式的交叉项逐点为零，准确得到
+
+$$
+R_{a,S}(f)=\|(\omega_S+a)\widehat f\|_{L^2(d\mu)}^2
++\|xf\|_2^2.
+$$
+
+仅有实偶自相关时不能作这个简化。现在使用第 23 节的精确双包式。对每个 $\eta=\pm1$ 的中心区域 $|t-\eta\tau|\le\tau/2$，$|t|/\tau\in[1/2,3/2]$；DLMF 5.11.2 的渐近保证 $\omega_\infty(t)+a_\tau$ 在该区域一致有界。归一化多项式 $t(t^2+1/4)/\tau^3$ 同样有界，固定 $S$ 的完整素数相位不超过 $2\mathfrak d_S$。
+
+在第 $\eta$ 包的补区域令 $s=t-\eta\tau$，则 $|s|>\tau/2$。全局对数增长及 $\tau\le2|s|$ 给出一个可积的支配量
+
+$$
+C_{S,\phi}(1+|s|)^6\bigl(1+\log(2+|s|)\bigr)^2
+|\widehat\phi(s)|^2.
+$$
+
+Schwartz 衰减同时控制多项式导数归一化和 $\log\tau$；对两包用三角不等式即可，不需要假定一个加权交叉消去。因此
+
+$$
+\|(\omega_S+a_\tau)\widehat f_\tau\|_{L^2(d\mu)}=O_{S,\phi}(1),\qquad
+R_{a_\tau,S}(f_\tau)=O_{S,r,\phi}(1).
+$$
+
+代入负半轴矩界得到 $\mathcal H_S(f_\tau)=O(1/\log\tau)$。固定支撑下，$f_\tau=-\phi\cos(\tau x)+O_{L^2}(\tau^{-1})$ 允许带权质量替换；Riemann–Lebesgue 给出 $D(f_\tau)\to D_0$。定义 24.1 中另一个平方根项趋于零，所以 $U_{\mathrm{or},a_\tau,S}\to D_0$。最后，在假设 23.1 下直接复用候签定理 23.1 的正迹和线性主项，即得证书的正系数。$\square$
+
+这份比较解释了第 23 节的一个估计损失：负的 Gamma 相位把高频包的实际 $h_{S,f}$ 质量送向正半轴，完整相位的大小范数丢掉了该方向。中心 $a_\tau$ 只恢复矩估计需要的方向信息，没有把 $Q$ 换成另一个投影，也没有删除普通度量中的 $K_S^{-1}$。
+
+标准包调制、标量矩控制和受限高频正性均作为既有方法或现象复用；本章的承重比较是两份特定预算在同一实际载体上的不同增长量，不把受限高频正性重新列为开放问题。所有隐含常数和成功阈值允许依赖固定 $S$；若 $S$ 随 $\tau$ 增长，$\omega_{\mathcal P}$ 不能再吸收进固定 $O(1)$，假设 23.1 也没有给出联合统一阈值。对一般测试，合适正中心和小剩余矩均未保证；完整的 $\sigma_S-D_{\mathrm{lin},S}\ge N_S$ 因而仍是更广的未解比较。
+
+## 追加锚（本行以下为增补区）
+
+## 25. 非活跃素数簇与正负角能量的必要抵消
+
+本章研究另一种估计损失：即使不取相位范数，也不损失负半轴方向，只保留谱配对中的正角能量仍不能在任意支撑完整的实际有限素数集上被正迹覆盖。以下使用第 18—21 节的实际算子合同与普通加权评价上界；小支撑正性直接复用 Connes–Consani, arXiv:2006.13771v1, Theorem 6.11、式 (141)，不把它外推到扩张支撑。
+
+**定义 25.1（固定测试与贪心实际素数簇）。** 令
+
+$$
+\phi_0(x)=
+\begin{cases}
+\exp\bigl(-1/(1-16x^2)\bigr),&|x|<1/4,\\
+0,&|x|\ge1/4,
+\end{cases}
+\qquad f=\phi_0'-4\phi_0'''.
+$$
+
+记
+
+$$
+M=\|f\|_2^2>0,\quad J_1=\|f'\|_2>0,\quad D=D(f),\quad
+\mathcal T_0=\int_{\mathbb R}|\widehat f(t)|^2d(t)\,d\mu(t)<\infty,
+$$
+
+并取
+
+$$
+\varepsilon=1/64,\qquad
+\delta=\min\{1,\sqrt M/(128J_1)\}>0.
+$$
+
+对充分大的 $L$，按递增顺序从 $[e^L,e^{L+\delta}]$ 中选择素数，直到倒平方根之和第一次达到 $\varepsilon$。记所得有限集合为 $\mathcal P_L$，并令 $S_L=\{\infty\}\cup\mathcal P_L$。定义实际正角能量
+
+$$
+E_S^+(f)=\|C_SX_f\|_{\mathrm{HS}}^2.
+$$
+
+**候签定理 25.1（度量受控但正角预算无界）。** 假设第 18—21 节的实际物理投影、迹及普通加权评价合同成立。定义 25.1 的素数簇对所有充分大的 $L$ 存在，每个 $S_L$ 都对该固定 $f$ 支撑完整，且
+
+$$
+\begin{aligned}
+\chi_{S_L}&\le e^{1/4}<2,\\
+0\le\sigma_{S_L}(f)&\le2\mathcal T_0,\\
+|D_{\mathrm{lin},S_L}(f)|&\le M,\\
+\mathcal H_{S_L}(f)&\ge\frac{\varepsilon^2ML}{8},\\
+E_{S_L}^+(f)&\ge\frac{\varepsilon^2ML}{32}.
+\end{aligned}
+$$
+
+因此在同一个实际测试上，
+
+$$
+\boxed{
+\sigma_{S_L}(f)-D_{\mathrm{lin},S_L}(f)-E_{S_L}^+(f)
+\le2\mathcal T_0+M-\frac{\varepsilon^2ML}{32}
+\longrightarrow-\infty.
+}
+$$
+
+但完整形式 $q_0=Q_{\mathrm{full}}(f)$ 与 $L$ 无关且 $q_0\ge0$，实际有符号非线性项满足
+
+$$
+|N_{S_L}(f)|\le2\mathcal T_0+M+q_0.
+$$
+
+证明。$f$ 实且奇，精确 Fourier 式为
+
+$$
+\widehat f(z)=iz(1+4z^2)\widehat\phi_0(z).
+$$
+
+三个指定零点精确消失，且 $f\ne0$，否则 $\widehat\phi_0$ 在实轴开区间上恒为零，与非零 bump 矛盾。其自相关实偶且支撑于 $[-1/2,1/2]$。因 $\log2>1/2$，全部有限素数及其纯幂对这个自相关均不活跃；所以任意有限 $S_L$ 都支撑完整。同时 $D\le M/4$。
+
+复用固定乘法区间的素数定理，
+
+$$
+\#\{p:e^L\le p\le e^{L+\delta}\}
+\sim(e^\delta-1)e^L/L.
+$$
+
+整个区间的倒平方根之和因此趋于无穷，贪心选择可执行；这里没有使用变窄区间的素数假设。令 $q_p=p^{-1/2}$、$q_*=e^{-L/2}$、$s_L=\sum_{p\in\mathcal P_L}q_p$，有
+
+$$
+\varepsilon\le s_L\le\varepsilon+q_*.
+$$
+
+取 $L$ 足够大使 $q_*\le\varepsilon^2$，则 $s_L\le2\varepsilon$。在 $0\le q\le1/2$ 上，$\log((1+q)/(1-q))\le4q$，于是
+
+$$
+\log\chi_{S_L}
+=2\sum_{p\in\mathcal P_L}\log\frac{1+q_p}{1-q_p}
+\le8s_L\le16\varepsilon=1/4.
+$$
+
+实际普通评价为 $d_S=w_S\langle k_t,K_S^{-1}k_t\rangle$。由既有 $K_S\ge\alpha_S^2I$、$w_S\le\beta_S^2$，直接复用 $\sigma_S(f)\le\chi_S\mathcal T_0$；没有把 $K_S^{-1}$ 换成恒等算子。第 19.2 节线性界在 $r=1/2$ 时给 $|D_{\mathrm{lin},S}(f)|\le M$，故正迹与线性项满足陈述中的统一界。
+
+保留完整 Gamma 乘子，写
+
+$$
+\begin{aligned}
+m_{S_L}(t)&=m_\infty(t)b_L(t),\\
+b_L(t)&=\prod_{p\in\mathcal P_L}
+\frac{1-q_pe^{-it\log p}}{1-q_pe^{it\log p}}
+=e^{i\theta_L(t)},\\
+\theta_L(t)&=2\sum_{p\in\mathcal P_L}\sum_{k\ge1}
+\frac{q_p^k}{k}\sin(kt\log p).
+\end{aligned}
+$$
+
+全部素数幂仍在最后一式。与 $\theta_0(t)=2\varepsilon\sin(Lt)$ 比较，首幂的相位误差不超过 $4\varepsilon\delta|t|+2q_*$，高次幂的完整误差不超过
+
+$$
+2\sum_p\sum_{k\ge2}\frac{q_p^k}{k}
+\le\sum_p\frac{q_p^2}{1-q_p}
+\le2s_Lq_*\le4\varepsilon q_*.
+$$
+
+结合 $|e^{i\theta_L}-1-i\theta_0|\le|\theta_L-\theta_0|+\theta_0^2/2$，得到
+
+$$
+\left|b_L(t)-\bigl(1+\varepsilon e^{iLt}-\varepsilon e^{-iLt}\bigr)\right|
+\le4\varepsilon\delta|t|+5\varepsilon^2.
+$$
+
+令 $g_0=m_\infty\widehat f(-t)$、$h_0=\mathscr F^{-1}g_0$。$m_\infty$ 酉，故 $\|h_0\|_2=\sqrt M$、$\|tg_0\|_{L^2(d\mu)}=J_1$。Plancherel 给出实际完整响应
+
+$$
+h_{S_L,f}(u)=h_0(u)+\varepsilon h_0(u+L)
+-\varepsilon h_0(u-L)+r_L(u),
+$$
+
+$$
+\|r_L\|_2\le4\varepsilon\delta J_1+5\varepsilon^2\sqrt M
+\le\frac7{64}\varepsilon\sqrt M
+<\frac18\varepsilon\sqrt M.
+$$
+
+这里 $e^{iLt}$ 的响应准确位于 $u\simeq-L$，Gamma 作用没有被丢弃。
+
+选 $A>0$ 使 $\|\mathbf1_{[-A,A]}h_0\|_2\ge3\sqrt M/4$。由 $h_0\in L^2$，充分晚时
+
+$$
+\|\mathbf1_{(-\infty,-L+A]}h_0\|_2
+\le\frac{\varepsilon\sqrt M}{8(1+\varepsilon)}.
+$$
+
+取 $L\ge2A$，在 $I_L=[-L-A,-L+A]$ 上，$\varepsilon h_0(u+L)$ 的范数至少为 $3\varepsilon\sqrt M/4$；背景及反向平移合计至多为 $\varepsilon\sqrt M/8$，余项至多为同一个量。因此
+
+$$
+\|\mathbf1_{I_L}h_{S_L,f}\|_2\ge\varepsilon\sqrt M/2,
+\qquad
+\mathcal H_{S_L}(f)
+=\int_{u<0}(-u)|h_{S_L,f}(u)|^2du
+\ge\frac{\varepsilon^2ML}{8}.
+$$
+
+复用第 21.2 节的实际截断恒等式与交换子范数，反向三角不等式给出
+
+$$
+\sqrt{E_{S_L}^+(f)}\ge\sqrt{\mathcal H_{S_L}(f)}-\sqrt D.
+$$
+
+当 $L\ge32D/(\varepsilon^2M)$ 时，$\mathcal H_{S_L}\ge4D$，所以 $E_{S_L}^+\ge\mathcal H_{S_L}/4\ge\varepsilon^2ML/32$。每个固定有限 $S_L$ 的 Hilbert–Schmidt 有限性由第 21 节完整符号的 $H^1$ 合同保证；本论证没有假设 $C_S^2$ 迹类。
+
+最后直接复用 CC Theorem 6.11、式 (141)。参数对应是 $g(\rho)=f(\log\rho)$，采用 $d^*\rho$ 的乘法 Fourier 约定，故 $\widehat g(z)=\widehat f(z)$。其支撑 $[e^{-1/4},e^{1/4}]\subset[2^{-1/2},2^{1/2}]$，源要求的 $\widehat g(-i/2)=0$ 已满足，额外的 $\widehat g(0)=0$ 消去秩一误差。定理右侧为非负普通投影迹，故 $W_\infty(g*g^*)\ge0$。本测试的全部极点与有限素数项又消失，得到 $q_0=Q_{\mathrm{full}}(f)=W_\infty(g*g^*)\ge0$。该来源定理的小支撑与其源数值前提没有被重新证明或外推。
+
+由第 18 节完整差额恒等式，
+
+$$
+N_{S_L}(f)=\sigma_{S_L}(f)-D_{\mathrm{lin},S_L}(f)-q_0,
+$$
+
+即得有符号项的统一界及所示负的预算证书。$\square$
+
+### 25.1 配对负项与嵌套共尾范围
+
+在第 21.1 节实际谱对上，令 $a_j=\langle e_j,A_fe_j\rangle$、$d_j=\langle u_j,A_fu_j\rangle\ge0$，并记
+
+$$
+E_S^-(f)=\sum_jc_j^2d_j.
+$$
+
+先在有限谱和中复用已发表配对关系 $N_{S,n}=E_{S,n}^+-E_{S,n}^-$。对每个固定 $S$，$E_S^+<\infty$，$N_{S,n}$ 按既有迹类算子收敛，而 $E_{S,n}^-$ 为非负递增和，故 $E_S^-<\infty$ 且
+
+$$
+N_S=E_S^+-E_S^-.
+$$
+
+这是对已验证有限性的配对和取极限，没有相减两份未经验证的无限迹。候签定理 25.1 的非嵌套簇族因此满足
+
+$$
+E_{S_L}^+\to\infty,\qquad E_{S_L}^-\to\infty,\qquad
+E_{S_L}^+-E_{S_L}^-=N_{S_L}=O_f(1).
+$$
+
+第 21 节的每份后续预算都不小于 $E_S^+$；定义 24.1 的中心预算同样如此。因此沿这个族，改进正迹下界、线性截断精度或负半轴矩估计都不能支付一份仍然大于等于 $E_S^+$ 的预算。损失在丢掉负配对能量时已经出现；它与第 23 节丢掉相位方向的损失不同。
+
+**候签定理 25.2（失败证书可嵌入一条嵌套共尾序列）。** 在候签定理 25.1 的合同下，同一个固定 $f$ 存在有限素数集序列
+
+$$
+S_1\subset S_2\subset\cdots,\qquad
+\bigcup_nS_n=\{\infty\}\cup\{\text{全部素数}\},
+$$
+
+使得每个 $n\ge1$ 都有
+
+$$
+\sigma_{S_n}(f)-D_{\mathrm{lin},S_n}(f)-E_{S_n}^+(f)<-n,
+\qquad Q_{\mathrm{full}}(f)=q_0\ge0.
+$$
+
+证明。对任意固定有限基集合 $\mathcal B$，将候签定理 25.1 证明中的 $h_0$ 换成
+
+$$
+h_{\mathcal B}=\mathscr F^{-1}
+\bigl[m_{\{\infty\}\cup\mathcal B}\widehat f(-t)\bigr].
+$$
+
+它仍有 $L^2$ 范数 $\sqrt M$，频率一阶矩仍为 $J_1$。选择 $L>\log\max(\mathcal B\cup\{1\})$ 的同类素数簇，使 $\mathcal P_L\cap\mathcal B=\varnothing$，并继续增大 $L$ 满足以下阈值。所有相位误差和负半轴窗口论证原样适用，常数 $A$ 和最终阈值允许依赖当前 $\mathcal B$。加入簇后的普通条件数满足
+
+$$
+\chi_{\mathcal B\cup\mathcal P_L}\le e^{1/4}\chi_{\mathcal B},
+$$
+
+所以该步骤的正迹有与 $L$ 无关的上界 $e^{1/4}\chi_{\mathcal B}\mathcal T_0$，而 $E_S^+$ 仍至少为 $\varepsilon^2ML/32$。取 $L$ 足够大即可使差额小于 $-n$。递归地让每个新基集合包含前一步集合及所有 $p\le n$，再加一个这样的远簇，即得嵌套且遍历全部素数的序列。$\square$
+
+条件数小于 $2$、正迹与实际 $N_S$ 的统一有界性只用于候签定理 25.1 的非嵌套簇族；候签定理 25.2 不宣称这些统一界。后一结论给出一条失败的共尾选择，不宣称所有共尾选择都会失败。
+
+固定乘法区间的 PNT、Fourier 平移、普通加权度量界、已发表谱配对与 CC 小支撑正性均是复用前置；本章的候选综合内容是实际非活跃素数簇对正角预算的失效以及被它强迫的大量配对抵消，不认证世界原创性。该构造使用超出当前测试活跃支撑的大素数，因此没有决定第 22 节 $\mathcal P_{\mathcal R}^{\mathrm{act}}\subseteq\mathcal P\subseteq\{p:p\le e^{\mathcal R}\}$ 的扩张族，也没有排除精心选择有限素数集或直接保留 $E_S^+-E_S^-$ 的方法。完整 constrained 同一测试正性、FIB 来源到实际素数伸缩的交织及 Robin 的全整数估计均未由此构造解决。
+
+## 追加锚（本行以下为增补区）
