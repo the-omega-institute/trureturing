@@ -22853,3 +22853,51 @@ complete proof still needs a source-preserving way to replace or jointly repair
 those outputs while keeping distinct numerical labels and whole coverage. The
 result is therefore a stronger necessary structure for the same EB1
 representative, not a settlement of unrestricted Erdős #7.
+
+## 190. A top-layer \(p\)-way reduction leaves an occupied-label dichotomy
+
+There is one more reusable conditional bridge at a maximal prime-power layer.
+Klein, [arXiv:2508.18062](https://arxiv.org/abs/2508.18062), Lemma 2.2
+(attributed there to Dalton--Trifonov, Corollary 9), states that if a covering
+system has exactly \(p\) classes whose moduli are
+
+\[
+p^e m_1,\ldots,p^e m_p,
+\]
+
+then those \(p\) classes can be replaced by one arithmetic progression of
+modulus
+
+\[
+R=p^{e-1}\operatorname{lcm}(m_1,\ldots,m_p),
+\tag{PW}
+\]
+
+and whole coverage is preserved.  The lemma is intentionally a covering
+statement for a multiset of moduli; it does not promise that \(R\) is absent
+from the other labels or that the inherited phases are retained.
+
+Apply it to an EB1 representative and suppose the maximal \(p\)-height layer
+contains exactly \(p\) labels.  If \(R\) is not already an occupied numerical
+label among the retained classes, the replacement is a distinct odd cover with
+\(K-p+1<K\), contradicting the first EB1 objective.  (The degenerate case
+\(R=1\) would mean that the \(p\) classes of modulus \(p\) already cover all
+integers, making every other class redundant.)  Therefore EB1 forces the
+following conditional alternative:
+
+\[
+\boxed{
+|\{d\in D:v_p(d)=e\}|=p
+\Longrightarrow
+R\text{ is already occupied, or a separate phase-compatible repair is
+needed}.}
+\tag{PW-EB1}
+\]
+
+When \(R\) is occupied, Lemma 2.2 produces a repeated numerical label and
+cannot by itself be used as an EB1 comparison.  Thus (PW-EB1) is an occupied
+label obstruction, not a proof that the top layer has at least \(p+1\) labels.
+Combined with (EB-DC), it supplies a concrete target for a future repair: the
+top-layer \(p\)-digit collisions and the occupied label \(R\) must be handled
+jointly while preserving the original phases.  No unconditional strict descent
+follows from the cited lemma alone.
