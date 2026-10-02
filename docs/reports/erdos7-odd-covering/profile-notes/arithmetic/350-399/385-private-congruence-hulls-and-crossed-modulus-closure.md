@@ -224,6 +224,14 @@ forced at one complete escaped cofactor. A squarefree three-prime
 cofactor carrier and q-height two force an aligned low-ternary owner.
 That owner is still allowed; its further exclusion or payment is open.
 
+[Section153](#153-actual-mixed-heights-force-original-labels-and-bound-the-large-prime-tail)
+retains a literal q-prefix while encoding its suffix into fresh p-heights.
+A large support prime now forces the ORIGINAL full-height mixed label
+p^t q^(H_q); existing parent-phase capacities charge every forced q-layer.
+For opposite5 and ell in {7,11,13}, the tail above ell^8 has total height
+at most6003,39531,78543, respectively. These are same-family necessary
+constraints, not an exclusion of the remaining finite branch.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -18685,3 +18693,173 @@ whose ternary phase agrees with u modulo3^a, whose literal second-q prefix is on
 RLC5's primitive triple alone supplies neither G=2 nor the stated cofactor carrier. At larger q-height, deeper unit-cofactor moduli fall outside that ancestor argument; with additional cofactor primes or a higher missing-prime exponent, numerical uniqueness alone no longer excludes two different full-height labels avoiding p and r. The current result does not claim that any of those numerical possibilities have actual covering phases.
 
 Even under PTE4 the forced low-row original is allowed by the original problem. A contradiction requires a further same-source exclusion or complete-liability budget for that aligned low-row activity. No complete joint-hole repair for arbitrary primitive triples, no forced W point, and no unrestricted odd noncoverage follows here. The reusable increment is the exact private escape followed by the two original-source supplier restrictions PTE2–PTE4, using the existing OHL and phase-capacity interfaces.
+
+## 153. Actual mixed heights force original labels and bound the large-prime tail
+
+Keep one original EB1 whole cover. For distinct original support primes p,q define
+
+    H=H_p=v_p(Q), G=H_q=v_q(Q),
+    Q=p^H q^G M, gcd(M,pq)=1,
+    A=A_p(q)=max{v_p(d):d is ORIGINAL and q divides d}.
+
+The maximum exists because q is an original support prime, and0<=A<=H. A refinement of §151's EXISTING height-coded transport gives
+
+    q<p^(H+A+1).                                   (HPM1)
+
+Its arithmetic purpose is to constrain the ACTUAL joint occurrence of two prime powers. In particular, large q forces original mixed labels p^t q^(H_q). A qualified phase capacity on that original p^t parent then bounds the whole large-prime tail. This is ordinary conditional mathematics, without Lean verification or an exclusion of the resulting finite branch.
+
+### Reuse HPA with shifted exponent blocks
+
+Suppose q>p^(H+A+1), and set
+
+    b=A+1,
+    E_e=H+eb,
+    k_e(a)=H+1+(e-1)b+a, 0<=a<=A.                  (HPM2)
+
+Use HPA4's same block code, now encoding the first E_1=H+A+1 p-digits into first q-roots avoiding A_q, and each later block of b p-digits into one q-digit. The first alphabet fits because p^E_1<=q-1; the later alphabets fit because p^b<q. The code remains fixed independently of labels and complete cofactors.
+
+Retain HPA5's ONE source Psi on the new carrier p^E_G M. It preserves the original p^H and complete M coordinates. Every q-free original is unchanged. For a q-bearing original d=p^a q^e s, its actual height satisfies a<=A. The exact inverse is still the HPA6 AP with p-height E_e, or is empty after the same original q-prefix and p^a compatibility tests.
+
+Enclose each nonempty inverse in the ONE AP
+
+    z=c_d modulo p^k_e(a), z=rho_d modulo s,
+    d'=p^k_e(a)s.                                  (HPM3)
+
+The two needed height checks are
+
+    k_e(a)>=H+1,
+    k_e(a)<=H+1+(e-1)b+A=H+eb=E_e.
+
+Thus every enclosure contains its complete exact inverse, and every new label has p-height above the old global maximum H. For a new height k, division of k-H-1 by b recovers quotient e-1 and remainder a in {0,...,A}. The p-free part recovers s. This verifies new–new injectivity and new–old noncollision, including the case A=0,b=1. All labels remain odd nonunits and divide the new carrier.
+
+These are the only changed checks in HPA. Its exact same one-source coverage argument applies, and A_q still has empty inverse, so the class count drops. The ratio also remains strictly decreasing:
+
+    d'/d=p^[H+1+(e-1)b]/q^e
+         =(p^(H+1)/q)(p^b/q)^(e-1)<1.             (HPM4)
+
+EB1 forbids that descent. Equality q=p^(H+A+1) is impossible for a prime q because H+A+1>=2. This proves HPM1. At A=H the schedule and bound recover HPA exactly. No new generic transport or whole-cover theorem is required.
+
+### Retaining a q-prefix forces the complete remaining q-height
+
+Original divisor closure supplies every pure q^j, j=1,...,G. Define the actual mixed-height profile
+
+    h_j=max{v_p(d):d is ORIGINAL and v_q(d)=j},
+    0<=j<=G.
+
+The original pure p^H gives h_0=H, and divisor closure gives h_0>=h_1>=...>=h_G>=0. Fix0<=k<G and put
+
+    A=h_(k+1), B=h_k, b=A+1,
+    E_1=max(H,B+A+1),
+    E_e=E_1+(e-1)b, 1<=e<=G-k.
+
+Suppose q>p^E_1. Use the new carrier p^E_(G-k) q^k M. For EACH retained q^k prefix u choose a prefix-compatible code theta_(u,e):Z/p^E_e -> Z/q^e. Its first alphabet fits into q-1 digits. At the particular u belonging to the original A_(q^(k+1)), avoid that original's next q-digit; at every other u choose any one excluded first tail digit. Later alphabets have size p^b<q. All choices are fixed for each u before transporting any labels and are independent of M-cofactors.
+
+The ONE source for an output point z is
+
+    u=z modulo q^k,
+    Psi_k(z) modulo p^H = z modulo p^H,
+    Psi_k(z) modulo q^G
+       =u+q^k theta_(u,G-k)(z modulo p^E_(G-k)),
+    Psi_k(z) modulo M = z modulo M.
+
+Every original of q-height at most k is retained unchanged: this source preserves all its tested coordinates. An original d=p^a q^(k+e)s has a<=h_(k+e)<=A, and its own literal q^k prefix fixes ONE u_d. The tail code theta_(u_d,e) gives either an empty inverse or a unique c_d. After the unchanged old p^a compatibility test, its exact inverse has
+
+    z=u_d modulo q^k,
+    z=c_d modulo p^E_e,
+    z=rho_d modulo s.
+
+Enclose it by replacing E_e with
+
+    L_e(a)=B+1+(e-1)b+a.
+
+This is permissible because L_e(a)<=B+b+(e-1)b<=E_e. Every new label is p^L_e(a) q^k s and has q-height exactly k. A retained label of smaller q-height cannot collide with it. A retained label of q-height k has p-height at most B, whereas L_e(a)>B. For new labels, dividing L_e(a)-B-1 by b recovers quotient e-1 and remainder a; the p,q-free part recovers s. Thus all numerical collisions are excluded. The code's dependence on u causes no splitting: every transported original fixes that complete u_d.
+
+The same HPA pointwise coverage implication at Psi_k(z) applies to every output point. The original A_(q^(k+1)) has empty inverse, since its retained prefix selects exactly the code that avoids its next digit. Every other original contributes at most one AP. All outputs remain odd nonunits and divide the new carrier, so this is a strict EB1 class-count descent. It follows that
+
+    q<p^max(H,h_k+h_(k+1)+1), 0<=k<G.              (HPM5)
+
+Equality is impossible for distinct primes p,q. For k=0 this is HPM1, so the retained-prefix construction includes the first shifted schedule. The q-height profile is nonincreasing; its last two levels give the smallest displayed exponent.
+
+For any integer1<=t<=H, apply HPM5 at k=G-1. If h_G<=t-1, its exponent is at most H+t, since h_(G-1)<=H. Thus
+
+    q>=p^(H+t) ==> h_G>=t
+                 ==> p^t q^G is ORIGINAL.          (HPM6)
+
+The last implication uses original divisor closure. Absence of that full mixed label therefore gives q<p^(H+t). In particular every p^t q^e for1<=e<=G is original. The conclusion prescribes no phase and does not identify any private sources.
+
+If t>H, the threshold q>=p^(H+t) already contradicts HPA1, since H+t>=2H+1. No tail prime at that threshold exists. An original parent p^t is used only when t<=H.
+
+### Opposite colors remove the shared-cofactor term from their pairwise bound
+
+For opposite concentrated primes p,q, CP1 excludes every original multiple of pq. Thus A_p(q)=0, even when R is nonempty, and HPM1 yields
+
+    q<p^(H_p+1).                                   (HPM7)
+
+If H_q>=2, use k=1 in HPM5. Both h_1 and h_2 vanish by CP1, giving the stronger bound q<p^(H_p). Thus the larger exponent in HPM7 is needed only for possible height-one q.
+
+Unlike RSG2's first-digit collision count, this bound has no factor tau(Q_R). It follows from allocating fresh p-heights; it does not assume that original collision cofactors are ternary-only.
+
+In the branch R intersect K=empty, K={5,7,11,13}, name the color of5 S_o and choose an opposite ell in {7,11,13}. OCP8 gives H_ell<=4. Therefore every prime in S_o is below ell^5, in particular below13^5=371293.
+
+For the other color, use p=5. The actual OCP8 substitution is
+
+    H_5<=ell-1+floor((ell-3)/4),
+
+which gives7,12,14 when ell is7,11,13. Accordingly the valid color bounds are
+
+| opposite ell | primes in S_o | primes in the ell-color |
+| --- | ---: | ---: |
+| 7 | q<7^5=16807 | q<5^8=390625 |
+| 11 | q<11^5=161051 | q<5^13=1220703125 |
+| 13 | q<13^5=371293 | q<5^15=30517578125 |
+
+For primes of height at least two, lower each displayed power by one: the respective bounds are ell^4 and5^(H_5 upper bound). Each bound may also use the same-family HPA estimate q<ell^9, taking the smaller upper bound. In particular H_5<=ell-1 is NOT supplied by OCP8 and is not used here. These colored bounds do not bound every member of R below13^5.
+
+### An existing original-parent capacity counts forced large primes
+
+Suppose h=p^t is an ORIGINAL parent whose non-own phases each contain at most C original proper descendants. The already established inventory argument in CPA5 gives at most C(h-1) such descendants. Combining it with HPM6 yields the immediate weighted tail bound
+
+    sum_(q original support prime, q>=p^(H+t)) H_q
+       <= C(p^t-1).                                (HPM8)
+
+Every forced p^t q^(H_q) supplies the H_q ORIGINAL labels p^t q^e, 1<=e<=H_q. Distinct pairs(q,e) give different numerical labels, all proper descendants of this ONE original parent. No common phase or common private source is asserted for those labels; the bound sums the valid per-phase capacities over their disjoint phase groups.
+
+Section17's proper-divisor phase exclusion sharpens this count for a pure-power parent. All original p,p^2,...,p^t are present and their classes are pairwise disjoint by comparable-original disjointness. On the p^t carrier they exclude exactly
+
+    sum_(j=1..t)p^(t-j)=(p^t-1)/(p-1)
+
+phases. Every proper original p^t-multiple avoids this entire pure-power union. Thus the same inventory argument gives
+
+    sum_(q original support prime, q>=p^(H+t)) H_q
+       <= C [p^t-(p^t-1)/(p-1)].                   (HPM9)
+
+This is the existing phase-capacity counting consumer with the actual pure-power exclusions retained. It does not replace an original label by Q or infer that products of different tail primes occur together in one label.
+
+### A concrete tail constraint in the bounded-height branch
+
+Continue with opposite5 and ell in {7,11,13}. If H_ell=4, the original parent h=ell^4 exists. OCP8's already proved complete-private repair uses the four fresh labels5ell^j, j=1,...,4, and bounds every non-own phase of h by C=3 proper original descendants.
+
+HPM6 at p=ell,t=4 forces ell^4 q^(H_q) to be ORIGINAL for every original support prime q>=ell^8. Therefore
+
+    sum_(q original support prime, q>=ell^8) H_q
+      <=3[ell^4-(ell^4-1)/(ell-1)] =: K_ell.       (HPM10)
+
+If H_ell<4, HPA1 already places every original support prime below ell^7 and hence below ell^8. The same HPM10 bound then holds with an empty tail, without claiming that ell^4 is original.
+
+The exact constants are
+
+| ell | tail begins at ell^8 | K_ell |
+| --- | ---: | ---: |
+| 7 | 5764801 | 6003 |
+| 11 | 214358881 | 39531 |
+| 13 | 815730721 | 78543 |
+
+The weaker direct CPA5 count is3(ell^4-1); the displayed values retain all original pure-power exclusions.
+
+Initial-segment support now turns this into an explicit prime-count condition. If pi denotes the prime-counting function and P=P^+(Q), then for P>=ell^8,
+
+    pi(P)-pi(ell^8-1)<=K_ell.                       (HPM11)
+
+Equivalently, let r_(K_ell+1) be the (K_ell+1)-st prime at least ell^8. Then P<r_(K_ell+1); if P<ell^8 this conclusion is automatic. This can be combined with P<ell^9, and does not require enumerating candidate covers. No numerical value of that indexed prime or additional prime-count estimate is asserted here.
+
+The new use is the implication from a large original support prime to a specific full-q-height mixed ORIGINAL label, followed by the existing parent inventory cap. HPA's original height-only cutoff does not supply that label. The weighted tail budget pays every original q-height layer, rather than only one class per large prime. These are necessary restrictions on the same hypothetical source, not an exclusion of the finite remaining branch. A full contradiction still requires a legal complete-liability descent or another sufficient whole-family estimate.
