@@ -3458,3 +3458,44 @@ H³ 上半空间的凸坐标域，经已有 `Convex.locallyPathConnectedSpace` �
 无新颖性、跟踪 Lean、准入或冻结声明；Lean 源仍位于忽略目录 `.lake`，
 本笔记是唯一跟踪交付。逃逸审计仍未完成，登记按 CLAUDE 3.9 暂缓：
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+
+
+### 原等距群的紧光锥截面作用与边界交比
+
+`h3NormalizedNullSection` 是原 Lorentz 坐标中的实际截面
+`{v:Fin 4→ℝ | v 0=1 ∧ h3LorentzKernel v v=0}`。
+`h3_normalized_null_section_isCompact` 从连续二次型的闭性与各坐标的
+`[-1,1]` 界证明其紧性，并给出截面类型的 `CompactSpace`。
+这里的紧性属于该截面；原有限体积流形仍允许非紧、带尖点。
+
+`h3NullRayNormalize v=(v 0)⁻¹•v` 对非零标量缩放不变。
+原实际 H³ 等距变换 e 的已有 Lorentz 线性表示保持未来零光锥，
+其正时间坐标 `t(e,b)` 因而给出实际归一化作用
+`h3NullBoundaryAction e b=normalize(Ae b)`。该作用满足单位和乘法律，
+在原等距群的已有 compact-open 拓扑与截面拓扑下联合连续，
+每个 e 均产生以 e⁻¹ 作用为逆的实际截面同胚。原线性作用可精确重构为
+`Ae b=t(e,b)•action(e,b)`，且 t 为正并满足
+`t(e*f,b)=t(e,action(f,b))*t(f,b)`。
+
+`h3_null_boundary_pairing_transform` 保留原二次型的精确变换关系：
+作用后两点的 Lorentz 配对等于原配对除以两点各自的正时间因子之积。
+`h3_null_boundary_pairing_spatial_difference` 进一步证明，原截面两点
+后三个坐标之差的平方和精确等于其 Lorentz 配对的两倍。
+因此配对非负、为零当且仅当两截面点相等、为正当且仅当两点不同。
+
+`h3NullBoundaryCrossRatio(a,b,c,d)` 定义为
+`K(a,c)*K(b,d)/(K(a,d)*K(b,c))`。在 a≠d、b≠c 两个分母点对
+不同的条件下，已有配对正性确保分母非零，原实际 H³ 等距变换的
+归一化作用精确保持这个交比。该定理没有断言尚未构造的、由原 h
+诱导的同一个 d 的边界映射存在，更没有断言该未知映射保持交比。
+
+两个完整模块串行编译通过，共十一项已检查公理闭包只含
+`propext`、`Classical.choice`、`Quot.sound`，没有风格警告抑制。
+第一个模块的整次失败尝试保留并整体排除，只有修正后的完整编译被接受。
+这些是原光锥截面与原等距作用的经典构造和几何事实；没有新增紧性或
+可定向流形前提，也没有构造对应原 h/d 的边界映射、迫使该映射保持几何，
+或给出对应子群上的实际共轭元。完整有限体积 Mostow–Prasad 仍为
+**ACTIVE/INCOMPLETE**，继续包含非紧尖点与非可定向情形。
+Lean 源仍在忽略目录 `.lake`，笔记是唯一跟踪交付；没有新颖性、跟踪 Lean、
+准入或冻结声明。逃逸审计仍未完成，登记按 CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
