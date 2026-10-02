@@ -444,6 +444,65 @@ Their definition contains no support half-width. The release packet `w200-pub-20
 
 The small [reviewer-materials archive](https://github.com/luciferyu666/certified-weil-positivity/releases/download/v1.0-mcom-submission/w201-reviewer-materials.zip) has SHA-256 `e5547b885d3df9113895877032ba861235adb159cd5b816c9d9f6080d22fbf41` and contains that manifest. Member size and SHA-256 were checked after selective retrieval of the moment packet; the full large archive hash was not checked. These are data-identity and format checks. The mathematical premise that every interval contains its moment, and hence $|\vartheta_q-\widehat\vartheta_q|<2^{-1023}$, is the author's Appendix C.1 claim. Its producer and oracle were not reexecuted here. The packet is read-only research input and is not redistributed in this repository.
 
+## A new-width kernel from the same scalar input
+
+Assuming the moment containment just specified, Appendix C.2 applies with the actual $a=\log3$. Put $z=512a<563$ and define
+
+$$
+k_{0,9}(2ay)=\sum_{q=0}^{1023}
+\frac{2a^{2q}+(-1)^qz^{2q}\widehat\vartheta_q}{(2q)!}y^{2q}.
+\tag{A10}
+$$
+
+This constructs a new kernel; it does not rescale the author's old matrix. On $|y|\le1$, the moment replacement costs less than $2^{-1023}\cosh563<2^{-210}$, because $(68/25)^{563}<2^{813}$ and $e<68/25$. The band absolute-weight input $\kappa<896$ and $2\cosh a=10/3<4$ bound the exact-moment Taylor remainder by
+
+$$
+914\frac{563^{2048}}{2048!}<2^{-758}.
+$$
+
+Indeed $(68/25)563/2048<3/4$, so the same factorial argument as Appendix C.2 applies. Consequently the full kernel and convolution operators obey the conditional bounds
+
+$$
+\sup_{|x|\le2a}|k(x)-k_{0,9}(x)|<2^{-209},
+\qquad \|K_9-K_{0,9}\|<2a\,2^{-209}<2^{-207}.
+\tag{A11}
+$$
+
+These bounds are independent of retained dimension. The source Binet remainder is already paid inside its moment intervals and is not subtracted again.
+
+For the actual band operator, use its new-width polynomial
+
+$$
+b_{0,9}(2ay)=\frac{256}{\pi}\sum_{q=0}^{1023}
+\frac{(-1)^qz^{2q}}{(2q+1)!}y^{2q}.
+$$
+
+The sinc remainder and the same outward comparison give
+
+$$
+\|B_9-B_{0,9}\|
+\le\frac{z^{2049}}{\pi\,2049!}<2^{-768}.
+\tag{A12}
+$$
+
+Thus $h_{0,9}^{(0)}=(I-B_{0,9}-\delta I)v_{0,9}$ approximates the actual filtered vector with norm error less than $2^{-768}$. Since $\|h_{0,9}\|<1/29$, its rank-one update error is at most $81(2\|h_{0,9}\|2^{-768}+2^{-1536})<2^{-765}$. Together with (A11), a matrix assembled from $K_{0,9}+81|h_{0,9}^{(0)}\rangle\langle h_{0,9}^{(0)}|$ has analytic operator error less than $2^{-206}$, before paying its own directed arithmetic and center rounding. This is conditional source-input reuse and new-width assembly, not a reproduced author certificate, a finite sign test or a kernel-verified result.
+
+The needed scalar comparisons can be replayed without regenerating any moment:
+
+```python
+from fractions import Fraction as F
+
+assert 512 * F(1098613, 10**6) < 563
+assert F(68, 25)**563 < 2**813
+assert F(68, 25) * 563 / 2048 < F(3, 4)
+assert F(68, 25) * 563 / 2049 < F(3, 4)
+assert F(3, 4)**4 < F(1, 3)
+assert 3**512 > 2**768 and 914 < 2**10
+assert F(11, 5) * F(1, 2**209) < F(1, 2**207)
+assert 81 * (F(2, 29) * F(1, 2**768) + F(1, 2**1536)) < F(1, 2**765)
+print('new-width kernel and actual filtered-band allowances passed')
+```
+
 ## The remaining retained-matrix consumer at $c=9$
 
 The source's Certification Theorem, section 6, equations (17)–(22), now has a legitimate prime-block input $m=4/5$, $b=31/5$ at this new window. In particular $M_9$ is boundedly invertible and $\|M_9^{-1}\|\le5/4$. The same already evaluated bound (A3), before rounding, also permits $m_*=264/325$, $b_*=2011/325$ and $\|M_9^{-1}\|\le325/264$; these are parameter substitutions, not another prime-block calculation. The conservative parameters below suffice to state the remaining obligation.
