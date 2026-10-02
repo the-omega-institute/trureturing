@@ -22,6 +22,42 @@ open D5.S3.Factorization.PrimePowers.PrimeBudgetReadoutDichotomy (primePowerProj
 open D5.S3.Observer.Budget.PrimePowerNonadaptiveResolution (depth)
 open D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion (jointReadout)
 
+/- The finite scan protocol used by the bottom-sibling proof is shared with
+   downstream Fibonacci applications. -/
+theorem probe_finite_scan {I X : Type} [Fintype I] [DecidableEq I]
+    (read : I → X → Option Nat) :
+    ∃ protocol : D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.PassiveProtocol
+        I (fun _ => Option Nat),
+      ∀ x y, D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.runPassiveProtocol
+        read protocol x =
+        D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.runPassiveProtocol
+        read protocol y → ∀ i, read i x = read i y := by
+  open D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound in
+  let scan : List I → PassiveProtocol I (fun _ => Option Nat) :=
+    fun l => l.foldr (fun i rest => .query i (fun _ => rest)) .stop
+  have scan_reads (l : List I) (x y : X)
+      (h : D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.runPassiveProtocol
+        read (scan l) x =
+        D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.runPassiveProtocol
+        read (scan l) y) :
+      ∀ i ∈ l, read i x = read i y := by
+    induction l with
+    | nil => simp
+    | cons a as ih =>
+      intro i hi
+      simp only [scan, List.foldr_cons,
+        D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.runPassiveProtocol]
+        at h
+      rcases List.cons.inj h with ⟨hhead, htail⟩
+      have ha : read a x = read a y := by
+        exact eq_of_heq (by simpa only [Sigma.mk.inj_iff, true_and] using hhead)
+      rcases List.mem_cons.mp hi with rfl | hi
+      · exact ha
+      · exact ih htail i hi
+  refine ⟨scan Finset.univ.toList, ?_⟩
+  intro x y h i
+  exact scan_reads _ x y h i (by simp)
+
 /-- The full actual-source bottom-sibling theorem, including all original End
 readouts and globally attached successful-word queries. -/
 theorem result (H t : Nat) (hH : 2 ≤ H) (u v : ZMod H)
@@ -310,40 +346,6 @@ theorem result (H t : Nat) (hH : 2 ≤ H) (u v : ZMod H)
       ring
     exact hraw.trans (congrArg some (Nat.ModEq.gcd_eq
       ((ZMod.natCast_eq_natCast_iff _ _ H).mp hcast)))
-
-  have probe_finite_scan {I X : Type} [Fintype I] [DecidableEq I]
-      (read : I → X → Option Nat) :
-      ∃ protocol : D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.PassiveProtocol
-          I (fun _ => Option Nat),
-        ∀ x y, D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.runPassiveProtocol
-          read protocol x =
-          D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.runPassiveProtocol
-          read protocol y → ∀ i, read i x = read i y := by
-    open D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound in
-    let scan : List I → PassiveProtocol I (fun _ => Option Nat) :=
-      fun l => l.foldr (fun i rest => .query i (fun _ => rest)) .stop
-    have scan_reads (l : List I) (x y : X)
-        (h : D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.runPassiveProtocol
-          read (scan l) x =
-          D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.runPassiveProtocol
-          read (scan l) y) :
-        ∀ i ∈ l, read i x = read i y := by
-      induction l with
-      | nil => simp
-      | cons a as ih =>
-        intro i hi
-        simp only [scan, List.foldr_cons,
-          D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.runPassiveProtocol]
-          at h
-        rcases List.cons.inj h with ⟨hhead, htail⟩
-        have ha : read a x = read a y := by
-          exact eq_of_heq (by simpa only [Sigma.mk.inj_iff, true_and] using hhead)
-        rcases List.mem_cons.mp hi with rfl | hi
-        · exact ha
-        · exact ih htail i hi
-    refine ⟨scan Finset.univ.toList, ?_⟩
-    intro x y h i
-    exact scan_reads _ x y h i (by simp)
 
   have probe_actual_ident_iff_model (H t : Nat) (hH : 2 ≤ H) (u v : ZMod H)
       (hrow : ∃ source : ActualPrefix,

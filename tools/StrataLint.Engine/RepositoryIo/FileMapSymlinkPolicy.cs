@@ -51,9 +51,9 @@ internal static class FileMapSymlinkPolicy
         {
             var document = documents[index];
             if (!document.Table.TryGetValue("schema_version", out var version)
-                || version is not (2L or 3L or 4L or 5L))
+                || version is not (2L or 3L or 4L or 5L or 6L))
                 throw Invalid(document.Path,
-                    "symlink declarations require schema_version 2, 3, 4 or 5");
+                    "symlink declarations require schema_version 2, 3, 4, 5 or 6");
             if (!document.Table.TryGetValue("files", out var rawFiles) && document.Table.ContainsKey("include")) continue;
             var files = FileMapTomlTables.Parse(rawFiles, document.Path, allowEmpty: false);
             tables.AddRange(files.Select((table, index) => (table, $"{document.Path}:files[{index}]")));

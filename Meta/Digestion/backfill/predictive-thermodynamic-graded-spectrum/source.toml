@@ -1,0 +1,5 @@
+source_id = "predictive-thermodynamic-graded-spectrum"
+path = "docs/develop/theory/PREDICTIVE_THERMODYNAMIC_GRADED_SPECTRUM.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

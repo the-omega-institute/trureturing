@@ -96,10 +96,12 @@ structure Hyp21_1 (U : ℕ → ℕ) : Prop where
   depthEntry : ∀ N : ℕ, 3 ≤ N → DepthEntry N
 
 set_option maxHeartbeats 1200000 in
--- Nested prefix, offset and orbit inductions share substantial arithmetic side conditions.
-/-- Every fixed nonnegative offset has the complete right Fibonacci profile. -/
-theorem full21_3 (U : ℕ → ℕ) (h : Hyp21_1 U) :
-    ∀ t k : ℕ, 6 * t + 6 ≤ k → C (F k + t) = F (k - 1) + t := by
+-- Prefix construction and orbit agreement require nested inductions.
+/-- The actual finite-prefix construction keeps every orbit in its legal domain
+and satisfies its prescribed split recurrence without conditional hypotheses. -/
+theorem actual_foundations :
+    (∀ N i : ℕ, 3 ≤ N → X N i ∈ D N) ∧
+    (∀ N : ℕ, 3 ≤ N → C N = C (g N) + C (N - g N)) := by
   have oldRead : ∀ m x, 1 ≤ x → x ≤ m →
       readAt (builtPrefix (m + 1)) x = readAt (builtPrefix m) x := by
     intro m x hx hxm
@@ -215,6 +217,14 @@ theorem full21_3 (U : ℕ → ℕ) (h : Hyp21_1 U) :
     rw [← hNm]
     change R (f^[R m] m) + R (N - f^[R m] m) = _
     rw [e1, e2, selEq]
+  exact ⟨orbitDomain, actualRecurrence⟩
+
+set_option maxHeartbeats 1200000 in
+-- Nested prefix, offset and orbit inductions share substantial arithmetic side conditions.
+/-- Every fixed nonnegative offset has the complete right Fibonacci profile. -/
+theorem full21_3 (U : ℕ → ℕ) (h : Hyp21_1 U) :
+    ∀ t k : ℕ, 6 * t + 6 ≤ k → C (F k + t) = F (k - 1) + t := by
+  obtain ⟨orbitDomain, actualRecurrence⟩ := actual_foundations
   have goldenMono : Monotone G := by
     intro a b hab
     unfold D5.S1.Phase.SelfReference.GoldenShellRecurrence.g

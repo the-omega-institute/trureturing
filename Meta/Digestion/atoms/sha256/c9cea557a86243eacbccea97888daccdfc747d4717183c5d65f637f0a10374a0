@@ -1,0 +1,2 @@
+* `shortWeight` 将七段支持大小公开为可复用 API；唯一支持至多 3 的结论继续由
+  `MonsterShortSupport.unique_short_support` 提供。

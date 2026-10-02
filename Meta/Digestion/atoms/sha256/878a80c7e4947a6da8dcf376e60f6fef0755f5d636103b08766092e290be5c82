@@ -1,0 +1,17 @@
+# Monster 短支持代表的有限二次自旋数据
+
+本页把 PR [#10310](https://github.com/the-omega-institute/trureturing/pull/10310) 中的有限 Monster 标签段落接到可核验的 Lean 声明。它只处理
+
+\[
+F=\mathbf F_2,\qquad E=F^{\mathrm{Fin}\,3},\qquad
+\mathrm{Label}=E\times E,
+\]
+
+以及七个非零地面截面在六比特标签空间中的关系。这里的二次函数是有限标签上的
+
+\[
+Q(g,\xi)=g_0\xi_0+g_1\xi_1+g_2\xi_2.
+\]
+
+它是有限极化数据，不能单独解释为 VOA 模的最低共形权。
+
