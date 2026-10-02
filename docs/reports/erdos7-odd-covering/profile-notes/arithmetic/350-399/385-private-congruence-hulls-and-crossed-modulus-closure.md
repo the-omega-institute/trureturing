@@ -269,6 +269,13 @@ The existing two-packet inventory bound then applies. With opposite5,7,
 H_5=H_7=1 and R={q}, the branch q>=49 has q=53 and H_q<=3.
 The packets retain distinct actual sources and one original inventory.
 
+[Section159](#159-retained-pure-guards-reduce-the-forbidden-pair-prefix-alphabet)
+removes the actual pure-prime guards from the initial coding alphabet.
+HPA supplies the needed guard heights only in the large-prime branch
+being excluded. Opposite5 with7,11,13 yields respective support bounds
+3854,10246,14570, sharpening the uniform finite carrier without adding
+an unproved height assumption or excluding every remaining palette.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -19394,3 +19401,58 @@ This uses the favorable root of an ACTUAL mixed top owner, even if the pure q^G 
 The numerical regime is below both the HPA cutoff P<125 supplied by H_5=1 and the forbidden-pair cutoff P<4200 for5,7. Thus this consumer is not removed merely by either large-prime cutoff. It remains a necessary conditional restriction; no actual cover with these parameters is claimed, and the surviving q=53, H_q<=3 branch is not excluded.
 
 For unrestricted R, MTR3–MTR4 retain the actual A=tau(Q_0). They do not replace it by1 or bound all shared cofactors. The new root availability can be consumed by further same-family inventory bounds, but it does not itself yield unrestricted odd noncoverage.
+
+## 159. Retained pure guards reduce the forbidden-pair prefix alphabet
+
+Use the same original EB1 family and the forbidden pair r,s of FPA1. Suppose additionally that
+
+    H_r>=2, H_s>=3.
+
+All original pure classes A_r,A_(r^2),A_s,A_(s^2),A_(s^3) are present by divisor closure. On their respective axes the pure classes are pairwise disjoint by comparable-original disjointness. Replace FPA's first prefix domain by
+
+    D_1={(u mod r^2,v mod s^3):
+          u avoids A_r and A_(r^2),
+          v avoids A_s,A_(s^2),A_(s^3)}.
+
+These are literal original phases, not independently chosen guard placements. Its exact cardinality is
+
+    B_guard=(r^2-r-1)(s^3-s^2-s-1).                 (FPG1)
+
+For e>=1, let D_e be all (r^(2e),s^(2e+1)) prefixes projecting to D_1. Every prefix still has exactly r^2 s^2 children at the next level. Provided B_guard>=r^2 s^2, a support prime q>B_guard supplies both FPA's initial injection into nonzero q-roots and every later block injection.
+
+Use precisely FPA3's source and the same new carrier, defining F=0 outside the resulting D. The complete inverse of A_q is now D^c. Every point of D^c is covered by at least one of the FIVE displayed retained pure guard classes, all q-free because q differs from the anchors.
+
+Every other q-bearing original still has a nonzero first q-phase by comparable disjointness, so its inverse is empty off D. On D, prefix compatibility yields the same exact inverse AP FPA5. Its initial inverse prefix already lies in D_1, making all the added guard-avoidance conditions automatic; no further mask or cofactor dependence appears. The all-height four-row encoding, exponent containment, complete decoder and rs-freshness proof are unchanged.
+
+The same one-source whole-coverage argument therefore drops A_q and assigns at most one AP to each remaining original. Thus, under the two height premises and B_guard>=r^2s^2,
+
+    P^+(Q)<B_guard.                                 (FPG2)
+
+The threshold is composite, so equality with the largest support prime is impossible. This argument uses FPA's established transport and encoding with a smaller actual prefix domain; it does not propose a new generic repair theorem.
+
+### Bootstrap the required original heights from HPA
+
+Return to R intersect {5,7,11,13}=empty. Choose the existing opposite pair5,ell with ell in {7,11,13}, and orient r=ell,s=5. The exact candidate thresholds are
+
+| ell | B_guard=94(ell^2-ell-1) | later alphabet ell^2*25 |
+| --- | ---: | ---: |
+| 7 | 3854 | 1225 |
+| 11 | 10246 | 3025 |
+| 13 | 14570 | 4225 |
+
+Each B_guard exceeds both ell^3 and5^5, and exceeds its later alphabet. Suppose P=P^+(Q)>=B_guard. If H_ell<=1, HPA1 would give P<ell^3; if H_5<=2, it would give P<5^5. Both contradict the assumed lower bound. Therefore the SAME original family has H_ell>=2 and H_5>=3, exactly the premises needed to apply FPG2. That application contradicts P>=B_guard.
+
+Consequently
+
+    opposite5,7  ==> P^+(Q)<3854,
+    opposite5,11 ==> P^+(Q)<10246,
+    opposite5,13 ==> P^+(Q)<14570.                  (FPG3)
+
+In particular the small-anchor branch has the uniform restriction
+
+    P^+(Q)<14570,
+    Q divides 3^64 product_(r prime,5<=r<14570)r^48. (FPG4)
+
+The proof does not assume either anchor's extra height before the contradiction; HPA supplies it only in the branch being excluded. Covers already below the threshold need no such height claim. The full old phase data and all cofactor coordinates stay literal throughout the transport.
+
+This excludes the larger-prime subbranch and sharpens the existing finite carrier restriction. It does not exclude every remaining covering palette, give new height bounds, or provide Lean verification. The construction does not use the externally attributed nine-prime result.
