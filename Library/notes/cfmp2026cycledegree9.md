@@ -42,3 +42,10 @@ Primary references:
   https://arxiv.org/html/1404.5365v2#S4.SS3
 - Uemura, abstract invariant-box criterion, Theorem 3.2:
   https://arxiv.org/html/2609.34108v1
+
+
+## Non-vacuity provenance
+
+A finite non-vacuity witness is now supplied by a six-sector Coxeter quotient, not by an N=24 pairing. Start with the unique symmetric hyper-ideal tetrahedron with low angle pi/4 and high angle 2*pi/9. Its S3 sector is the [4,9,3] doubly-truncated Coxeter orthoscheme Q. The finite K=<c,d> sector group has order 6; KQ is exactly one target tetrahedron: A facets orbit as 1 base hexagon, B facets as 3 side hexagons, U truncations as 3 peripheral triangles, and V truncations as 1 center triangle. In the Coxeter development, <a,b> has 8 sectors around a generic low edge with trivial K stabilizer, while <b,c> has 18 sectors around a high edge and K stabilizer <c> of order 2, giving target degrees 8 and 9. A torsion-free finite-index subgroup of the orientation-preserving parabolic subgroup gives a compact orientable quotient with geodesic boundary; collapsing boundary components yields a topological ideal triangulation. The local exact audit is docs/develop/theory/verify_cycle9_coxeter_local.py; it checks the [4,9,3] relations, maximal finite parabolics, K intersections, and all angle sums over F_17/rational arithmetic.
+
+Primary sources for this non-vacuity addition: Luo--Yang, arXiv:1404.5365v2, Proposition 4.1 and Proposition 4.4; Marshall, J. Austral. Math. Soc. 64 (1998), pp. 58--60 and 69--70; Felikson--Tumarkin, arXiv:math/0604248v3, introduction.
