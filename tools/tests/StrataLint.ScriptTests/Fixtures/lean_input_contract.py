@@ -39,6 +39,7 @@ class PartitionTests(PartitionFixture, unittest.TestCase):
     def test_actions_snapshots_share_partition_and_pr_writes_stay_isolated(self):
         def keys(run, attempt, event, ref, success="true"):
             environment = {"GITHUB_RUN_ID": run, "GITHUB_RUN_ATTEMPT": attempt,
+                           "GH_TOKEN": "",
                            "GITHUB_EVENT_NAME": event, "GITHUB_REF": ref,
                            "GITHUB_SHA": "a" * 40, "CANDIDATE_SHA": "a" * 40,
                            "STRATALINT_CACHE_WRITES": "true",
@@ -48,7 +49,9 @@ class PartitionTests(PartitionFixture, unittest.TestCase):
                                     text=True, capture_output=True,
                                     env={**os.environ, **environment})
             self.assertEqual(0, result.returncode, result.stderr)
-            flat = dict(line.split("=", 1) for line in result.stdout.splitlines())
+            flat = dict(line.split("=", 1) for line in result.stdout.splitlines()
+                        if not line.startswith("LEAN_ACTIONS_CACHE "))
+            self.assertEqual(flat["project_key"], flat["project_restore_key"])
             self.assertFalse(any(key.startswith("report_") for key in flat), flat)
             flat["save_allowed"] = flat["save_allowed"] == "true"
             return {**flat, **{

@@ -128,7 +128,7 @@ public sealed class RegisteredCachePathTests
             var output = Path.Combine(Root, "outputs");
             File.Delete(output);
             var script = Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean_actions.py");
-            var result = EngineeringProcess.Process(Root, "env", ["GITHUB_RUN_ID=17", "GITHUB_RUN_ATTEMPT=1", "GITHUB_OUTPUT=" + output,
+            var result = EngineeringProcess.Process(Root, "env", ["GH_TOKEN=", "GITHUB_RUN_ID=17", "GITHUB_RUN_ATTEMPT=1", "GITHUB_OUTPUT=" + output,
                 "python3", "-B", script, "keys", "--repository", Root, "--layers", layer],
                 hangGuard: TestBudgets.WorkflowProcessHangGuard, maximumOutputBytes: 1024 * 1024);
             return (result.Exit, result.Text,
