@@ -1,0 +1,9 @@
+## 279. 加权 Fibonacci Ingham 行和的指数收敛速率
+
+§271 只给出了加权和的极限。对当前核，实际上可以把误差压到 Fibonacci 尺度的一半指数。令
+
+$$
+W_n=\sum_{k=1}^{n}F_k\left\{\frac{F_n}{F_k}\right\},
+\qquad q=\varphi^{-1}.
+$$
+

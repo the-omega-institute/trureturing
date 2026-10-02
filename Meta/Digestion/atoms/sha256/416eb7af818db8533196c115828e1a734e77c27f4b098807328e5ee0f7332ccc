@@ -1,0 +1,37 @@
+### theorem 253.2 保留积分尾部时的全阶统一 Robin 条件预算
+
+令 $K=2461/1000$，并对每个整数 $N\ge0$ 定义
+
+$$
+\begin{aligned}
+\mathcal M_N(t)&=\frac{e^{-t/2}}t
+\left[\mathcal J(1/t)+\sum_{n=0}^{N}\frac{h_n}{t^n}\right],\\
+E_N(t)&=\frac{Ce^{-t/2}}t
+\frac{(q/t)^{N+1}}{1-q/t},\qquad
+B(t)=\frac{2Ke^{-t/2}}{t^3}.
+\end{aligned}
+\tag{253.4}
+$$
+
+在 §251 同一实际价格源与其 Dusart 输入下，
+对全部同时满足 $t\ge100$、$1/t<\varepsilon$、$q<t$ 的 $t$，
+以及全部 $N\ge0$，有
+
+$$
+\boxed{|\mathcal M(t)-\mathcal M_N(t)|\le E_N(t),\qquad
+R(e^t)>\mathcal M_N(t)-B(t)-E_N(t).}
+\tag{253.5}
+$$
+
+特别地，同一点的条件
+
+$$
+\Phi(e^t)+\mathcal M_N(t)\ge B(t)+E_N(t)
+\tag{253.6}
+$$
+
+蕴含 $\mathfrak D(e^t)>0$。
+对每个上述固定 $t$，$E_N(t)\to0$，全部阶数使用同一 $C,q$。
+若该点满足严格条件 $\Phi(e^t)+\mathcal M(t)>B(t)$，
+则所有充分大的 $N$ 均满足式（253.6）。
+

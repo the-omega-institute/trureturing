@@ -1,0 +1,8 @@
+**定理 301.2。** 对每个固定 $C>0$ 及每个 $\varepsilon>0$，存在 $L_0$，使全部整数 $L\ge L_0$、$H\ge1$ 满足
+\[
+H\le\exp(C L\log L)
+\quad\Longrightarrow\quad
+1\le\frac{U_H}{U_{B_L(H)}}<1+\varepsilon.
+\tag{301.7}
+\]
+

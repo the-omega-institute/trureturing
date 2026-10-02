@@ -1,0 +1,13 @@
+## 256. 实际素数脉冲的精确弦余量与四次预算
+
+本节保留 §§92、243 的实际尾项 $\Phi$，利用其素数幂事件的导数跳跃方向。
+既有 [Guth–Maynard 笔记](../../../Library/Analytic/guthmaynard2024largevalues.md)
+已给同一 $I_\psi=\Phi$ 在 $q(x)=1/(x\log x)$ 坐标下的双端插值，
+以及间距 $O(x^{3/4})$ 的单边采样 RH 强度。这里复用该尺度，
+新增其实际有限素数脉冲的精确正修正、原价格坐标下的显式预算与六次网格反例。
+所用二次修正凹性与弦插值是经典半凹函数方法，参见 Cannarsa–Sinestrari,
+*Semiconcave Functions, Hamilton–Jacobi Equations, and Optimal Control*,
+[DOI:10.1007/b138356](https://doi.org/10.1007/b138356)。
+四次网格与 Fibonacci 叶宽只作为这些预算的具体应用；
+不将一般插值方法或 §92.3 的经典 RH 桥接重新列为新判据。
+

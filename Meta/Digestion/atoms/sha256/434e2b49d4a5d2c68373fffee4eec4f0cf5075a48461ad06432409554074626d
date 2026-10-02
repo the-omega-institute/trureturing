@@ -1,0 +1,41 @@
+**定理 346.1（实际时间速度的无限能量与一阶奇异渐近）。** 同一实际谱满足
+
+$$
+\begin{aligned}
+\sum_{\gamma\le Y}a_\gamma\gamma^2
+&=\frac1{4\pi}\log^2Y+O(\log Y),\\
+\delta(t)&=\frac{t^2}{4\pi}L_t^2+O(t^2L_t),\\
+\delta'(t)&=\frac{t}{2\pi}L_t^2+O(|t|L_t).
+\end{aligned}
+\tag{346.3}
+$$
+
+函数 $\delta$ 为 $C^1$，$\delta(0)=\delta'(0)=0$，但不存在有限的 $\delta''(0)$；时间速度 $(\gamma)_\gamma$ 不属于定义344.2的加权 Hilbert 空间。
+
+证明。将经典实纵坐标分部求和应用于（346.2），有
+
+$$
+\sum_{\gamma\le Y}\frac{m_\gamma}{\gamma}
+=\frac{N(Y)}Y+\int_{\gamma_0}^Y\frac{N(u)}{u^2}\,du
+=\frac1{4\pi}\log^2Y+O(\log Y),
+\tag{346.4}
+$$
+
+其中 $0<\gamma_0\le\min\Gamma$ 固定；首个频率处的跳跃由 $N(Y)/Y$ 与积分共同计入，不另删去端点重数。差项
+
+$$
+\frac{m_\gamma}{\gamma}-a_\gamma\gamma^2
+=\frac{m_\gamma}{4\gamma D_\gamma}
+$$
+
+绝对可和，所以（346.3）的首式成立。相同分部求和给
+
+$$
+\sum_{\gamma\le Y}a_\gamma\gamma^4=O(Y^2\log Y),\qquad
+\sum_{\gamma>Y}a_\gamma=O(Y^{-2}\log Y),\qquad
+\sum_{\gamma>Y}a_\gamma\gamma=O(Y^{-1}\log Y).
+\tag{346.5}
+$$
+
+这些步骤复用经典计数分部求和与幂衰减尾界，不把它们作为独立新定理。由于 $\sum a_\gamma\gamma<\infty$，相位级数可以绝对一致地作一次求导。以 $Y=1/|t|$ 分割，低频使用 $2(1-\cos x)=x^2+O(x^4)$ 和 $\sin x=x+O(x^3)$，高频使用有界三角函数。两个低频误差分别被 $t^4\sum_{\gamma\le Y}a_\gamma\gamma^4=O(t^2L_t)$ 和 $|t|^3\sum_{\gamma\le Y}a_\gamma\gamma^4=O(|t|L_t)$ 控制；两个高频尾分别由（346.5）的第二、三式控制。这给余下两式。最后 $\delta'(t)/t\to+\infty$，故不能再在零点处交换二次求导；首式亦直接给 $\sum a_\gamma\gamma^2=\infty$。$\square$
+

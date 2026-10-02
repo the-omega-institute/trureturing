@@ -1,0 +1,28 @@
+### 定理 287.1 分叉保留根入口，代数预算控制全部整包
+
+$19\nmid m_T$，而全部非根指标都整除 $m_T$。
+若
+\[
+t_T=(24D_Tm_T)^{-1}\bmod19\in\{1,\ldots,18\},\qquad
+r_T=24D_Tt_T,
+\]
+则全部 $n\ge1$ 满足精确判据
+\[
+\boxed{\quad
+n\in\mathcal E(m_T)
+\quad\Longleftrightarrow\quad
+n\equiv0\pmod{24S_T}
+\ \text{或}\quad
+\bigl(a_{19}=1,\ n\equiv r_T\pmod{24S_T}\bigr).
+\quad}
+\tag{287.2}
+\]
+同时，对所有树和所有正指数，有
+\[
+\boxed{\quad
+\log\frac{M_T}{\varphi(M_T)}
+<\frac{1+W(T)}{398}.
+\quad}
+\tag{287.3}
+\]
+

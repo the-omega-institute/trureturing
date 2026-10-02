@@ -1,0 +1,50 @@
+**定理 304.3（实际填充达到下确界的极限）。** 假设302.1成立。对每个固定 $0\le\eta\le1/4$，将不整除 $A_L$ 的全部素数按全局大小递增排列为 $q_{L,1},q_{L,2},\ldots$，并置
+\[
+k_L=\left\lfloor\frac{\eta m}{\log m}\right\rfloor,
+\qquad
+T_{L,\eta}=\prod_{j=1}^{k_L}q_{L,j},\qquad
+H_{L,\eta}=A_LT_{L,\eta}.
+\tag{304.17}
+\]
+空乘积取一。则 $H_{L,\eta}\in\mathcal B_L(\eta)$，且
+\[
+\frac{\log H_{L,\eta}}m\longrightarrow\frac34+\eta,
+\qquad
+U_{H_{L,\eta}}
+=E\log m+\frac E2\log(1/2+2\eta)+o(1),
+\tag{304.18}
+\]
+\[
+\Delta(H_{L,\eta})\longrightarrow E\delta(\eta),
+\qquad
+\mathfrak D_L(\eta)\longrightarrow E\delta(\eta).
+\tag{304.19}
+\]
+特别地，在 $\eta=1/4$ 时，这两个极限均为零；这不决定该端点各有限整数的严格 Robin 符号。
+
+**证明。** $L\ge3$ 时，三整除 $A_L$，所以每个被选择的素数不同于三，且不整除 $A_L$。$T_{L,\eta}$ 平方自由并与 $A_L$ 互素；（302.6）给同签名，新增素数个数恰为 $k_L$，故满足预算。当 $\eta=0$ 时，结论归为 §302 的核心余量。
+
+对 $\eta>0$，记最后选中素数为 $z_L$。由（304.10）及端点外的普通素数计数，
+\[
+\frac{z_L}m\longrightarrow\beta_\eta:=\frac12+2\eta.
+\tag{304.20}
+\]
+当 $\eta<1/4$ 时，$z_L<m$ 最终成立，选中者全在模三等于一的缺失带内。当 $\eta=1/4$ 时，全局排序的定义仍有效：对任何固定 $h>0$，截至 $(1-h)m$ 的缺失素数不足预算，而截至 $(1+h)m$ 已超过预算，因此 $z_L/m\to1$；不需要声称该端点所选素数全部小于等于 $m$。
+
+所选素数都至少为 $m/2$，且至多为 $(\beta_\eta+o(1))m$，所以它们的对数除以 $\log m$ 一致趋于一。由 $k_L\log m/m\to\eta$，得 $\log T_{L,\eta}/m\to\eta$，给大小渐近。固定剩余类分部求和及（304.20）还给
+\[
+\log m\sum_{j=1}^{k_L}\log(1-q_{L,j}^{-1})^{-1}
+\longrightarrow\tfrac12\log(2\beta_\eta).
+\tag{304.21}
+\]
+端点附近超出或未达到 $m$ 的部分总贡献为 $o(1/\log m)$，由固定比例夹逼即可得到。
+
+约数权重的互素乘法性给精确式
+\[
+U_{H_{L,\eta}}=U_{A_L}\prod_{j=1}^{k_L}(1+q_{L,j}^{-1})
+=U_{A_L}\exp\left(\sum_{j=1}^{k_L}\log(1-q_{L,j}^{-1})^{-1}\right)
+\prod_{j=1}^{k_L}(1-q_{L,j}^{-2}).
+\tag{304.22}
+\]
+最后乘积的缺损为 $O(1/m)$，与 $U_{A_L}=O(\log m)$ 相乘仍为 $o(1)$。用（302.16）与（304.21）展开，就得（304.18）的权重项；与同一整数的阈值相减得到余量极限。定理304.2给全部成员的一致下界，构造成员给下确界的上界，夹逼得到（304.19）。这里断言的是下确界的精确极限，没有断言构造在每个有限 $L$ 上实现精确最小值。$\square$
+

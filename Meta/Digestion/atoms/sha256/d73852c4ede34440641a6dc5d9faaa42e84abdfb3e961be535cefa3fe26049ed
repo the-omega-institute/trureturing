@@ -1,0 +1,12 @@
+## 285. 同秩素数的同步供给与可变乘子 Robin 尾段
+
+沿用 §282 的实际来源 $A_{m,n}=d_{mn-1}F_{2mn}$、$B_{m,n}=4mF_n$，其中
+$d_k=F_{3k}/F_k=L_k^2-(-1)^k$。记 $Z(x)=\sigma(x)/x$，并记
+\[
+\mathcal E(m)=\{n\ge1:\ \exists M\ge1,\ A_{m,n}=B_{m,n}M,
+\ \gcd(B_{m,n},M)=1\}.
+\tag{285.1}
+\]
+下面的共同秩与原序列首次深度均保持实际值。秩界与赋值公式仍取
+Lengyel (1995), §3，见 [既有文献条目](../../../Library/Scale/lengyel1995fibonacciorder.md)。
+

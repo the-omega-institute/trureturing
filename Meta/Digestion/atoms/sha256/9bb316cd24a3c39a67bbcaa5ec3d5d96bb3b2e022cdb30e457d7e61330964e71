@@ -1,0 +1,38 @@
+**定理 305.1（相同签名、支撑和新增计数的平方层提升）。** 对每个 $L\ge16$，两个整数均为5040的倍数，并且
+\[
+\mathcal O_L(C_L)=\mathcal O_L(\widetilde C_L)=\mathcal O_L(A_L),
+\qquad B_L(C_L)=B_L(\widetilde C_L)=A_L,
+\tag{305.3}
+\]
+\[
+\{p:p\mid C_L\}=\{p:p\mid\widetilde C_L\}=\{p:p\le m\},
+\qquad
+\mathcal N_L(C_L)=\mathcal N_L(\widetilde C_L)
+=\{m/2<p\le m:p\equiv1\pmod3\}.
+\tag{305.4}
+\]
+对 $p\mid V_L$，有 $p\ne3$、$p\mid A_L$ 且
+\[
+v_p(C_L)=1,\qquad v_p(\widetilde C_L)=2.
+\tag{305.5}
+\]
+因此新增素数个数完全相同，而权重和大小的有限变化为
+\[
+\frac{U_{\widetilde C_L}}{U_{C_L}}
+=\prod_{p\mid V_L}\left(1+\frac1{p(p+1)}\right),
+\qquad
+\log\widetilde C_L-\log C_L=\sum_{p\mid V_L}\log p.
+\tag{305.6}
+\]
+
+**证明。** $A_L\mid D_m$ 保证原支撑在 $m$ 以下，补齐因子把每个尚未整除核心的 $p\le m$ 恰加入一次。三已经整除 $A_L$，补齐因子与三互素，故（302.6）给 $C_L$ 的签名。由（302.7），缺失素数集合正是（305.4）右端。
+
+$m\ge50$ 时，$\sqrt{2m}\le m/2$，而 $\sqrt{m/2}\ge5$。因此 $V_L$ 避开三，且其每个素数均在 $m/2$ 以下；（302.7）使它已整除 $A_L$。对非三素数，$p^2\equiv1\pmod3$，所以（303.7）–（303.8）统一给
+\[
+p^2\mid A_L\quad\Longleftrightarrow\quad 2p^2\le m.
+\tag{305.7}
+\]
+提升区间中的素数不满足该二次层条件，原指数恰为一。它们没有进入补齐因子，故（305.5）成立；乘 $V_L$ 不改变三赋值，沿（302.6）得到另一签名及核心等式。$5040\mid A_L$ 给整除性。
+
+经典局部几何级数公式把每个被提升素数的因子从 $1+p^{-1}$ 改为 $1+p^{-1}+p^{-2}$；二者的比为 $1+1/[p(p+1)]$，其他因子相消，得到（305.6）。$\square$
+

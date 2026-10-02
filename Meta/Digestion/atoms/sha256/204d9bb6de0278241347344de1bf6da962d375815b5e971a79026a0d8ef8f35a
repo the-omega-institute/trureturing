@@ -1,0 +1,22 @@
+### 定理 295.2 保留两处实际小指标的半收缩树预算
+
+设 $T$ 为根 $s_0=10007$ 的有限祖先闭合实际秩树。根及实际节点 $p,q$ 均可选择任意实际子节点；每个其余父节点 $s$ 满足下列条件之一：
+
+1. 全部选中实际子节点满足 $u\ge s^2/8$；
+2. 存在定义294.1的有效剩余证书，使 $\mathcal B_s(K,C_s)\le w(s)/2$。
+
+叶节点的条件为空，不限制分叉数。取任意正整包指数 $a_s$，令 $M_T=\prod_{s\in T}m_s^{a_s}$；记实际层集 $T_j$、$A_j=\sum_{s\in T_j}w(s)$，超过树高的层为空。则
+\[
+\boxed{\quad
+1<Z(M_T)\le\frac{M_T}{\varphi(M_T)}<e^{1/250}.
+\quad}
+\tag{295.7}
+\]
+对 $J\ge2$，还有共同后段成本
+\[
+\sum_{j=J}^{h}\sum_{s\in T_j}\log\frac{m_s}{\varphi(m_s)}
+\le4\left(\frac12\right)^{J-2}A_2.
+\tag{295.8}
+\]
+对 $n\ge1$、$B=5040M_TF_n$、$\mathcal R=n+\sum_{s\in T}a_ss$，该树族的归一 Robin 比值随 $\mathcal R\to\infty$ 一致趋零。
+

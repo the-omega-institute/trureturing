@@ -1,0 +1,19 @@
+**定理 306.2（有限端点的精确缩放下确界及实际达到族）。** 假设306.1成立。则
+\[
+\ell^2\Delta(N_L^*)\longrightarrow\kappa,
+\qquad
+\ell^2 \mathfrak D_L(1/4)\longrightarrow\kappa,
+\tag{306.9}
+\]
+其中 $\mathfrak D_L$ 是（304.4）的实数下确界，且 $N_L^*\in\mathcal B_L(1/4)$。更具体地，对每个 $\varepsilon>0$，全部充分大的 $L$ 与全部 $H\in\mathcal B_L(1/4)$ 一致满足
+\[
+\ell^2\Delta(H)\ge\kappa-\varepsilon.
+\tag{306.10}
+\]
+因而整个端点预算纤维最终严格满足 Robin 不等式，成员均为超过5040的整数。任何同饱和签名的严格 Robin 违例最终必须满足
+\[
+K_L(H)>\frac{m}{4\log m},
+\quad\text{等价地}\quad K_L(H)\ge k_L+1.
+\tag{306.11}
+\]
+

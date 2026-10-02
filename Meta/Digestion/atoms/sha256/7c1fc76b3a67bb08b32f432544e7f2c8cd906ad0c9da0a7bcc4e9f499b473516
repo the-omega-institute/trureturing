@@ -1,0 +1,43 @@
+### 定理 285.1 同秩系数只能同步选择供给路线
+
+设 $s>1$、$\gcd(s,6)=1$，非空有限素数集 $P$ 中每个素数均满足
+\[
+z(p)=3s,\qquad h_p=v_p(F_{3s}).
+\]
+取正指数 $a_p\ge1$，令
+\[
+m=\prod_{p\in P}p^{a_p},\qquad
+\eta=\prod_{p\in P}\varepsilon_p^{a_p}\in\{1,-1\},
+\qquad \varepsilon_p=(5/p).
+\tag{285.2}
+\]
+定义 $r_+=6(6^{-1}\bmod s)$、$r_-=6s-r_+$，逆元取标准正代表。
+则
+\[
+\boxed{\quad
+n\in\mathcal E(m)
+\quad\Longleftrightarrow\quad
+n\equiv0\pmod{6s}
+\ \text{或}\ 
+\left(\forall p\in P,\ a_p=h_p,\quad n\equiv r_\eta\pmod{6s}\right).
+\quad}
+\tag{285.3}
+\]
+其中 $r_\eta$ 在 $\eta=1$ 时取 $r_+$，在 $\eta=-1$ 时取 $r_-$。
+因此额外分支需要整份系数深度向量与首次深度向量同时匹配；在这些实际参数上，不存在部分系数素数走骨架、其余走 Lucas 的混合供给。
+扩张域的自然密度在深度全匹配时为 $1/(3s)$，否则为 $1/(6s)$。
+
+**证明。** $z(p)=3s>3$ 排除二和五。秩界给 $p\equiv\varepsilon_p\pmod s$，
+故 $m\equiv\eta\pmod s$。在六整除 $n$ 时，$k=mn-1$ 与六互素。
+§282.1对每个系数素数给同一份骨架条件 $3s\mid n$，或同一份 Lucas 指标条件
+$s\mid k$，另加各自的深度条件 $a_p=h_p$。
+若骨架成立，则全部素数都走该路；若不成立，每个素数都必须满足 Lucas 条件和自身深度条件。
+所以整个合同是
+\[
+6\mid n,\qquad
+3s\mid n\ \text{或}\ 
+\left(s\mid mn-1,\ \forall p\in P,\ a_p=h_p\right).
+\]
+前一联合条件给 $n\equiv0\pmod{6s}$；后一联合条件给 $n\equiv r_\eta\pmod{6s}$。
+两类不交，周期计数给密度。$\square$
+

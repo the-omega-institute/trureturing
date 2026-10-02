@@ -1,0 +1,68 @@
+### 定理 295.1 两个实际小子节点的完整后继预算
+
+$r$ 为素数，且
+\[
+m_p=rR_p,\qquad
+\gcd(r,R_p)=\gcd(R_p,D_p(8757))=1,
+\qquad
+\gcd(m_q,D_q(30022))=1.
+\tag{295.2}
+\]
+两份必要地址乘积分别含 $3503$ 与 $12010$ 个地址。对应的完整实际支撑满足
+\[
+\begin{aligned}
+r&=6\cdot16\cdot p+1,\qquad 8r<p^2,\\
+u\mid R_p, u\text{ 为素数}
+&\Longrightarrow u\ge P_p:=22085556563=6\cdot8758\cdot p-1>p^2/8,\\
+v\mid m_q, v\text{ 为素数}
+&\Longrightarrow v\ge P_q:=259580479241=6\cdot30023\cdot q-1>q^2/8.
+\end{aligned}
+\tag{295.3}
+\]
+$r$ 在 $m_p$ 中的赋值恰为一，首次秩为 $3p=1260879$、首次赋值为一。两个完整实际子层具有严格收缩
+\[
+\boxed{\qquad
+\sum_{u\mid m_p\atop u\text{ 为素数}}w(u)<\frac23w(p),
+\qquad
+\sum_{v\mid m_q\atop v\text{ 为素数}}w(v)<\frac{11}{20}w(q).
+\qquad}
+\tag{295.4}
+\]
+因而 $s_0\to p\to r$ 是连续两条不满足平方间隙的实际边。
+
+**证明。** 使用定理293.2的精确 Fibonacci 二倍递推及 Euclidean 递推计算同一完整整包与地址乘积，得到式（295.2）。$p\bmod5=3$ 采用 $k\bmod10\in\{1,3,6,0\}$，$q\bmod5=4$ 采用 $k\bmod10\in\{1,2,7,0\}$；在所写完整区间逐周期计数给 $3503$ 与 $12010$。有限试除给 $r$ 的素性。
+
+剩余实际素因子不能处于已排除的地址范围，故分别有 $k\ge8758$ 与 $k\ge30023$。用 $a_s(k)\ge6ks-1$ 得式（295.3）的两份阈值。全部地址、平方间隙和阈值比较均为整数比较。$\gcd(r,R_p)=1$ 给整包赋值一，§285.2排除旧 $2F_p$ 支撑并给首次秩 $3p$，因此首次赋值也为一。
+
+使用 §294 的实际剩余预算，且放宽 $\log R_p$、$\log m_q$ 分别为 $p$、$q$，得到
+\[
+\begin{aligned}
+\sum_{u\mid m_p\atop u\text{ 为素数}}w(u)
+&\le w(r)+\frac p{P_p}\left(1+\frac c{\log P_p}\right),\\
+\sum_{v\mid m_q\atop v\text{ 为素数}}w(v)
+&\le\frac q{P_q}\left(1+\frac c{\log P_q}\right).
+\end{aligned}
+\tag{295.5}
+\]
+$c=1+\log3<11/5$。由 $8/3<e<11/4$ 与精确有理幂比较，有
+\[
+\begin{gathered}
+\log(3p)>13,\qquad \log(3r)<19,\qquad \log P_p>23,\\
+\log(3q)>15,\qquad \log P_q>25.
+\end{gathered}
+\]
+例如所需比较分别为 $(11/4)^{13}<1260879$、$121044387<(8/3)^{19}$、$(11/4)^{23}<P_p$、$(11/4)^{15}<4323027$ 及 $(11/4)^{25}<P_q$。所以
+\[
+w(p)>\frac{14}{p},\qquad w(r)<\frac{20}{r},\qquad w(q)>\frac{16}{q},
+\]
+\[
+\frac{20}{40348129}
++\frac{420293}{22085556563}\frac{126}{115}
+<\frac23\frac{14}{420293},
+\qquad
+\frac{1441009}{259580479241}\frac{136}{125}
+<\frac{11}{20}\frac{16}{1441009}.
+\tag{295.6}
+\]
+这些严格有理比较与式（295.5）证明式（295.4）。§294 已给 $s_0\to p$ 的实际短边，式（295.3）给 $p\to r$ 的实际短边，形成所述连续见证。$\square$
+

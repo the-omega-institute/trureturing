@@ -1,0 +1,39 @@
+**证明。** $A_L\mid H$，故 $A_L$ 的素支撑包含于 $H$ 的素支撑。$L\ge3$ 时，三已整除 $A_L$，因此新素数不同于三。由（302.7），模三等于一的新素数必须大于 $m_L/2$，模三等于二的新素数必须大于 $m_L$，得到（303.3）。
+
+同一仿射种子还给出全部素数幂层的递归法则。对 $L\ge2$、素数 $p$ 及整数 $k\ge1$，
+\[
+p^k\mid Q_L\quad\Longleftrightarrow\quad
+\bigl(p^k\equiv1\pmod3\ \land\ 2p^k\le m_L\bigr)
+\ \lor\
+\bigl(p^k\equiv2\pmod3\ \land\ p^k\le m_L\bigr).
+\tag{303.7}
+\]
+素数幂整除有限 lcm，等价于它整除其中一个探针，这来自素赋值上的有限最大值。把（302.7）证明中的 $p$ 换为 $p^k$ 即得该式；$p^k=2$ 仍由探针8补上。这是等差数列整除结构的中间计算，相关 lcm 背景沿用 §302 引用的 Qian–Hong 文献。
+
+约化剩余类群 $(\mathbb Z/3\mathbb Z)^\times$ 的二阶乘法使（303.7）成为
+\[
+\begin{array}{c|c}
+p\pmod3& p^k\text{ 的可见截断条件}\\ \hline
+1&2p^k\le m_L\text{，对全部 }k\ge1\\
+2& p^k\le m_L\text{，当 }k\text{ 为奇数；}\quad
+2p^k\le m_L\text{，当 }k\text{ 为偶数}.
+\end{array}
+\tag{303.8}
+\]
+三轴由 $3^{e_L}$ 单独保留。这条奇偶律描述实际 Fibonacci 仿射种子 $F_4a+F_5=3a+5$ 的素数幂观测；它没有把全体正整数的乘法半群当作群。
+
+经典局部几何级数上界给
+\[
+U_H=\prod_{p\mid H}\sum_{j=0}^{v_p(H)}p^{-j}
+\le\prod_{p\mid H}(1-p^{-1})^{-1}
+=\mathscr F_L\exp(J_L(H)).
+\tag{303.9}
+\]
+这里使用的是同一个整数的 Euler 上包络 $U_H\le H/\varphi(H)$，背景可见 `Library/ArithSums/weingartner2010distribution.md` 的有限正矩接口；没有混用不同整数的极值。对每个新素数，经典 $\log(1+x)\le x$ 与（303.3）给
+\[
+0\le\log(1-p^{-1})^{-1}
+\le\frac1{p-1}<\frac2{m_L-2}.
+\tag{303.10}
+\]
+求和得到（303.4）。若（303.5）成立，指数的单调性给 $U_H<R(A_L)$；又因 $H\ge A_L>1$，$R(H)\ge R(A_L)$，得到严格 Robin 界。若 $H>5040$ 违反严格不等式，则 $R(H)>0$，由（303.9）除以正的 $\mathscr F_L$ 并取对数，得到（303.6）的第一式；再用（303.4）与阈值单调性得到其余两式。$\square$
+
