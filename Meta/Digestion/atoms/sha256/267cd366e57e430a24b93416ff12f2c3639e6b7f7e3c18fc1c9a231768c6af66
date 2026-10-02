@@ -1,0 +1,14 @@
+**Theorem 11.2 (exact first-coordinate recurrence and normalization).** For all such data and every $t\ge0$,
+
+$$
+W_{U,0}=\begin{cases}1&U=V,\\0&U\ne V,\end{cases}
+\qquad
+W_{U,t+1}=\sum_{i\in I}X_i W_{U+\operatorname{span}\{a_i\},t},
+\qquad
+W_{U,t}=t!F_{U,t}.
+$$
+
+The last equation is an identity in $\mathbb Q[X_i:i\in I]$ for the existing exact reciprocal-factorial polynomial of Definition 5.1. It therefore holds under every rational-algebra evaluation, without a nonnegativity or probability assumption.
+
+**Proof.** There is a unique length-zero word; its sampled span is zero and its product is one. The equivalence between a length-$(t+1)$ word and its first index together with its length-$t$ tail preserves both the product and the span: the range of the represented word is the union of the first singleton and the represented tail range. The span of this union is the join of their spans. Reindexing the finite sum through this equivalence and distributing multiplication proves the recurrence, also for an empty alphabet. The degree-zero coefficient formula for $F$ gives the same indicator. In degree $t+1$, homogeneity and Euler give $\sum_i X_i\partial_i F_{U,t+1}=(t+1)F_{U,t+1}$, and exact contraction gives $\partial_iF_{U,t+1}=F_{U+\operatorname{span}\{a_i\},t}$. Induction in the recurrence, with $(t+1)t!=(t+1)!$, proves normalization. No histogram counting or unfiltered multinomial identity is substituted for the spanning condition.
+
