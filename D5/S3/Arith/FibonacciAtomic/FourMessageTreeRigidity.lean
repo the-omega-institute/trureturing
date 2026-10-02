@@ -1,10 +1,10 @@
 /- GID: D5/S3/Arith/FibonacciAtomic/FourMessageTreeRigidity
    generality: G
-   mirror-B: D5/B/S3/Arith/FibonacciAtomic/FourMessageTreeRigidity
-   mirror-E: none(waiver:unbounded-symbolic-proof)
+   mirror - B: D5/B/S3/Arith/FibonacciAtomic/FourMessageTreeRigidity
+   mirror - E: none(waiver:unbounded - symbolic - proof)
    anchors: []
    utility: none
-   digest: Four-message window computation forces complementary peeling spines. -/
+   digest: Four - message window computation forces complementary peeling spines. -/
 
 import D5.S3.Arith.FibonacciAtomic.FirstRejectionCutCapacity
 import D5.S3.Arith.FibonacciAtomic.TreeMessageRealization
@@ -14,60 +14,62 @@ set_option autoImplicit false
 namespace D5.S3.Arith.FibonacciAtomic.FourMessageTreeRigidity
 
 open TreeMessageRealization
-open FirstRejectionCutCapacity (interval boolean d epsilon crossings internals Cross Internal left right)
+open FirstRejectionCutCapacity
+  (interval boolean d epsilon crossings internals Cross Internal left right)
 open LiteralWindowEnd (Window)
 open D5.S3.Observer.Separation.SurjectiveColumnSharpWidth (capacity)
 
 /-- Global proper prefixes, global proper suffixes, and internal singleton blocks. -/
-def SmallBlock {k : ℕ} (A : Finset (Fin (k+1))) : Prop :=
-  (∃ j, 0 < j ∧ j < k+1 ∧ A = interval k 0 j) ∨
-  (∃ j, 0 < j ∧ j < k+1 ∧ A = interval k j (k+1)) ∨
-  (∃ i : Fin (k+1), 0 < i.val ∧ i.val < k ∧ A = {i})
+def SmallBlock {k : ℕ} (A : Finset (Fin (k + 1))) : Prop :=
+  (∃ j, 0 < j ∧ j < k + 1 ∧ A = interval k 0 j) ∨
+  (∃ j, 0 < j ∧ j < k + 1 ∧ A = interval k j (k + 1)) ∨
+  (∃ i : Fin (k + 1), 0 < i.val ∧ i.val < k ∧ A = {i})
 
 /-- A prefix spine peels its highest remaining coordinate at each fork.
 The two constructors allow the actual children to be exchanged independently. -/
-inductive PrefixSpine (k : ℕ) : ℕ → TreeMessageRealization.Tree (Fin (k+1)) → Prop
+inductive PrefixSpine (k : ℕ) : ℕ → TreeMessageRealization.Tree (Fin (k + 1)) → Prop
   | one : PrefixSpine k 1 (leaf ⟨0, Nat.zero_lt_succ k⟩)
-  | peel {j : ℕ} {t : TreeMessageRealization.Tree (Fin (k+1))} (hj : j < k+1)
-      (h : PrefixSpine k j t) : PrefixSpine k (j+1) (fork t (leaf ⟨j,hj⟩))
-  | peel_swap {j : ℕ} {t : TreeMessageRealization.Tree (Fin (k+1))} (hj : j < k+1)
-      (h : PrefixSpine k j t) : PrefixSpine k (j+1) (fork (leaf ⟨j,hj⟩) t)
+  | peel {j : ℕ} {t : TreeMessageRealization.Tree (Fin (k + 1))} (hj : j < k + 1)
+      (h : PrefixSpine k j t) : PrefixSpine k (j + 1) (fork t (leaf ⟨j,hj⟩))
+  | peel_swap {j : ℕ} {t : TreeMessageRealization.Tree (Fin (k + 1))} (hj : j < k + 1)
+      (h : PrefixSpine k j t) : PrefixSpine k (j + 1) (fork (leaf ⟨j,hj⟩) t)
 
 /-- A suffix spine peels its lowest remaining coordinate at each fork. -/
-inductive SuffixSpine (k : ℕ) : ℕ → TreeMessageRealization.Tree (Fin (k+1)) → Prop
+inductive SuffixSpine (k : ℕ) : ℕ → TreeMessageRealization.Tree (Fin (k + 1)) → Prop
   | one : SuffixSpine k k (leaf (Fin.last k))
-  | peel {j : ℕ} {t : TreeMessageRealization.Tree (Fin (k+1))} (hj : j < k)
-      (h : SuffixSpine k (j+1) t) : SuffixSpine k j (fork (leaf ⟨j,by omega⟩) t)
-  | peel_swap {j : ℕ} {t : TreeMessageRealization.Tree (Fin (k+1))} (hj : j < k)
-      (h : SuffixSpine k (j+1) t) : SuffixSpine k j (fork t (leaf ⟨j,by omega⟩))
+  | peel {j : ℕ} {t : TreeMessageRealization.Tree (Fin (k + 1))} (hj : j < k)
+      (h : SuffixSpine k (j + 1) t) : SuffixSpine k j (fork (leaf ⟨j,by omega⟩) t)
+  | peel_swap {j : ℕ} {t : TreeMessageRealization.Tree (Fin (k + 1))} (hj : j < k)
+      (h : SuffixSpine k (j + 1) t) : SuffixSpine k j (fork t (leaf ⟨j,by omega⟩))
 
-/-- Exact child-swap freedom at all forks is built into the two spine predicates. -/
-def DoubleComb {k : ℕ} (t : TreeMessageRealization.Tree (Fin (k+1))) : Prop :=
-  ∃ j, 0 < j ∧ j < k+1 ∧ ∃ l r, PrefixSpine k j l ∧ SuffixSpine k j r ∧
+/-- Exact child - swap freedom at all forks is built into the two spine predicates. -/
+def DoubleComb {k : ℕ} (t : TreeMessageRealization.Tree (Fin (k + 1))) : Prop :=
+  ∃ j, 0 < j ∧ j < k + 1 ∧ ∃ l r, PrefixSpine k j l ∧ SuffixSpine k j r ∧
     (t = fork l r ∨ t = fork r l)
 
 set_option maxHeartbeats 2000000 in
-/-- Arbitrary leaf-labelled full binary trees whose proper blocks are small
+-- Capacity classification and the two spine inductions are elaborated in one proof.
+/-- Arbitrary leaf - labelled full binary trees whose proper blocks are small
 have precisely the two peeling spines, with independent child exchanges. -/
 theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
-    (t : TreeMessageRealization.Tree (Fin (k+1))) (ht : Full t)
+    (t : TreeMessageRealization.Tree (Fin (k + 1))) (ht : Full t)
     (hall : leaves t = Finset.univ)
-    (m : Implementation (fun _ : Fin (k+1) => Window))
+    (m : Implementation (fun _ : Fin (k + 1) => Window))
     (read : m.Message t → Bool) (hm : Correct boolean t m read) (hp : peak m t ≤ 4) :
-    ∃ j, 0 < j ∧ j < k+1 ∧ ∃ l r, PrefixSpine k j l ∧ SuffixSpine k j r ∧
-      (t = fork l r ∨ t = fork r l) ∧ height t = max j (k+1-j) := by
+    ∃ j, 0 < j ∧ j < k + 1 ∧ ∃ l r, PrefixSpine k j l ∧ SuffixSpine k j r ∧
+      (t = fork l r ∨ t = fork r l) ∧ height t = max j (k + 1 - j) ∧ (k + 2) / 2 ≤ height t := by
   classical
-  letI : Nonempty Window := ⟨.middle⟩
+  have : Nonempty Window := ⟨.middle⟩
   have hcap : ∀ s ∈ subtrees t, s ≠ t →
       capacity (fun _ => Window) boolean (fun i => i ∈ leaves s) ≤ 4 := by
     intro s hs _
     exact (implementation_lower_bound boolean t ht m read hm s hs).trans
       ((Finset.le_sup hs).trans hp)
-  let z : Fin (k+1) := ⟨0, by omega⟩
-  let e : Fin (k+1) := Fin.last k
-  have mem_interval (a b : ℕ) (i : Fin (k+1)) :
+  let z : Fin (k + 1) := ⟨0, by omega⟩
+  let e : Fin (k + 1) := Fin.last k
+  have mem_interval (a b : ℕ) (i : Fin (k + 1)) :
       i ∈ interval k a b ↔ a ≤ i.val ∧ i.val < b := by simp [interval]
-  have nonempty (u : TreeMessageRealization.Tree (Fin (k+1))) (hu : Full u) :
+  have nonempty (u : TreeMessageRealization.Tree (Fin (k + 1))) (hu : Full u) :
       (leaves u).Nonempty := by
     induction u with
     | nil => simp [Full] at hu
@@ -77,7 +79,7 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
       | none =>
         obtain ⟨i,hi⟩ := hl hu.1
         exact ⟨i, by simp [leaves, hi]⟩
-  have classify (A : Finset (Fin (k+1))) (hA : A.Nonempty) (hproper : A ≠ Finset.univ)
+  have classify (A : Finset (Fin (k + 1))) (hA : A.Nonempty) (hproper : A ≠ Finset.univ)
       (hwidth : capacity (fun _ => Window) boolean (fun i => i ∈ A) ≤ 4) :
       SmallBlock A := by
     rw [(FirstRejectionCutCapacity.result k A).2.2.2.2.2.2.2.2.1] at hwidth
@@ -100,7 +102,7 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
           intro i hi
           exact hn ⟨i,by simp [crossings,hi]⟩
         have constant (j : ℕ) (hj : j ≤ k) :
-            (⟨j,by omega⟩ : Fin (k+1)) ∈ A ↔ z ∈ A := by
+            (⟨j,by omega⟩ : Fin (k + 1)) ∈ A ↔ z ∈ A := by
           induction j with
           | zero => rfl
           | succ j ih =>
@@ -117,7 +119,7 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
       obtain ⟨edge, hedge⟩ := crosses
       have boundary : Cross A edge := by simpa [crossings] using hedge
       have pattern (j : ℕ) (hj : j ≤ k) :
-          (⟨j,by omega⟩ : Fin (k+1)) ∈ A ↔ (j ≤ edge.val ↔ z ∈ A) := by
+          (⟨j,by omega⟩ : Fin (k + 1)) ∈ A ↔ (j ≤ edge.val ↔ z ∈ A) := by
         induction j with
         | zero => simp [z]
         | succ j ih =>
@@ -128,7 +130,7 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
             rw [← ee] at hc
             simp only [Cross,left,right,Fin.castSucc_mk,Fin.succ_mk] at hc
             have hjle : j ≤ edge.val := by omega
-            have hjnle : ¬ j+1 ≤ edge.val := by omega
+            have hjnle : ¬ j + 1 ≤ edge.val := by omega
             simp only [hjle,true_iff] at prev
             simp only [hjnle,false_iff]
             tauto
@@ -137,13 +139,13 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
               have eq := unique (⟨j,by omega⟩ : Fin k) (by simp [crossings,hc]) edge hedge
               exact je (congrArg Fin.val eq)
             simp only [Cross,left,right,Fin.castSucc_mk,Fin.succ_mk] at nc
-            have step : (j+1 ≤ edge.val) = (j ≤ edge.val) := by
+            have step : (j + 1 ≤ edge.val) = (j ≤ edge.val) := by
               apply propext; omega
             rw [step]
             tauto
       by_cases hz : z ∈ A
       · left
-        refine ⟨edge.val+1,by omega,by omega,?_⟩
+        refine ⟨edge.val + 1,by omega,by omega,?_⟩
         ext i
         rw [mem_interval]
         have h : i ∈ A ↔ i.val ≤ edge.val := by
@@ -151,7 +153,7 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
         rw [h]
         omega
       · right; left
-        refine ⟨edge.val+1,by omega,by omega,?_⟩
+        refine ⟨edge.val + 1,by omega,by omega,?_⟩
         ext i
         rw [mem_interval]
         have h : i ∈ A ↔ ¬ i.val ≤ edge.val := by
@@ -162,7 +164,7 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
       have nointernal : ∀ i : Fin k, ¬ Internal A i := by
         intro i hi
         exact heps (Or.inr ⟨i,by simp [internals,hi]⟩)
-      have below (i : Fin (k+1)) (hi : i ∈ A) : i.val < k := by
+      have below (i : Fin (k + 1)) (hi : i ∈ A) : i.val < k := by
         by_contra hn
         have ie : i = Fin.last k := Fin.ext (by simp; omega)
         exact hlast (ie ▸ hi)
@@ -176,7 +178,7 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
         have hak := below a ha
         have hbk := below b hb
         let x : Fin k := ⟨a.val,hak⟩
-        let y : Fin k := ⟨b.val-1,by omega⟩
+        let y : Fin k := ⟨b.val - 1,by omega⟩
         let q : Fin k := ⟨b.val,hbk⟩
         have ax : left x = a := Fin.ext rfl
         have bq : left q = b := Fin.ext rfl
@@ -187,7 +189,7 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
         have xcross : x ∈ crossings A := by simp [crossings,Cross,ax,ha,nx]
         have ycross : y ∈ crossings A := by simp [crossings,Cross,by',hb,ny]
         have qcross : q ∈ crossings A := by simp [crossings,Cross,bq,hb,nq]
-        have gap : a.val+1 < b.val := by
+        have gap : a.val + 1 < b.val := by
           by_contra hn
           have xe : right x = b := Fin.ext (by dsimp [x,right]; omega)
           exact nx (xe ▸ hb)
@@ -211,8 +213,8 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
         · intro h; apply Fin.ext; omega
       · right; right
         exact ⟨i,by omega,below i hi,eq⟩
-  have proper_subtree (u : TreeMessageRealization.Tree (Fin (k+1))) (hu : Full u)
-      (s : TreeMessageRealization.Tree (Fin (k+1))) (hs : s ∈ subtrees u)
+  have proper_subtree (u : TreeMessageRealization.Tree (Fin (k + 1))) (hu : Full u)
+      (s : TreeMessageRealization.Tree (Fin (k + 1))) (hs : s ∈ subtrees u)
       (hne : s ≠ u) : leaves s ≠ leaves u := by
     intro he
     induction u with
@@ -238,12 +240,12 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
     · rw [← hall]
       exact proper_subtree t ht s hs hne
     · exact hcap s hs hne
-  have self (u : TreeMessageRealization.Tree (Fin (k+1))) (hu : Full u) : u ∈ subtrees u := by
+  have self (u : TreeMessageRealization.Tree (Fin (k + 1))) (hu : Full u) : u ∈ subtrees u := by
     cases u with
     | nil => simp [Full] at hu
     | node a l r => cases a <;> simp [subtrees]
-  have single (u : TreeMessageRealization.Tree (Fin (k+1))) (hu : Full u)
-      (i : Fin (k+1)) (hi : leaves u = {i}) : u = leaf i := by
+  have single (u : TreeMessageRealization.Tree (Fin (k + 1))) (hu : Full u)
+      (i : Fin (k + 1)) (hi : leaves u = {i}) : u = leaf i := by
     cases u with
     | nil => simp [Full] at hu
     | node a l r =>
@@ -264,7 +266,7 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
           simpa [hi] using this
         subst a; subst b
         exact False.elim (Finset.disjoint_left.mp hu.2.2 ha hb)
-  have small_endpoints (A : Finset (Fin (k+1))) (hA : SmallBlock A) :
+  have small_endpoints (A : Finset (Fin (k + 1))) (hA : SmallBlock A) :
       ¬ (z ∈ A ∧ e ∈ A) := by
     rcases hA with ⟨j,hj,hjn,rfl⟩ | ⟨j,hj,hjn,rfl⟩ | ⟨i,hi,hik,rfl⟩
     · simp only [mem_interval] at *
@@ -279,18 +281,18 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
       have := congrArg Fin.val hz
       dsimp [z] at this
       omega
-  have prefix_at_zero (A : Finset (Fin (k+1))) (hA : SmallBlock A)
-      (hz : z ∈ A) (he : e ∉ A) : ∃ a, 0 < a ∧ a < k+1 ∧ A = interval k 0 a := by
+  have prefix_at_zero (A : Finset (Fin (k + 1))) (hA : SmallBlock A)
+      (hz : z ∈ A) (he : e ∉ A) : ∃ a, 0 < a ∧ a < k + 1 ∧ A = interval k 0 a := by
     rcases hA with h | ⟨a,ha,han,rfl⟩ | ⟨i,hi,hik,rfl⟩
     · exact h
-    · have := (mem_interval a (k+1) z).mp hz
+    · have := (mem_interval a (k + 1) z).mp hz
       dsimp [z] at this
       omega
     · have := congrArg Fin.val (Finset.mem_singleton.mp hz)
       dsimp [z] at this
       omega
-  have suffix_at_end (A : Finset (Fin (k+1))) (hA : SmallBlock A)
-      (he : e ∈ A) (hz : z ∉ A) : ∃ a, 0 < a ∧ a < k+1 ∧ A = interval k a (k+1) := by
+  have suffix_at_end (A : Finset (Fin (k + 1))) (hA : SmallBlock A)
+      (he : e ∈ A) (hz : z ∉ A) : ∃ a, 0 < a ∧ a < k + 1 ∧ A = interval k a (k + 1) := by
     rcases hA with ⟨a,ha,han,rfl⟩ | h | ⟨i,hi,hik,rfl⟩
     · have := (mem_interval 0 a e).mp he
       dsimp [e] at this
@@ -299,8 +301,8 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
     · have := congrArg Fin.val (Finset.mem_singleton.mp he)
       dsimp [e] at this
       omega
-  have internal_only (A : Finset (Fin (k+1))) (hA : SmallBlock A)
-      (hz : z ∉ A) (he : e ∉ A) : ∃ i : Fin (k+1), 0 < i.val ∧ i.val < k ∧ A = {i} := by
+  have internal_only (A : Finset (Fin (k + 1))) (hA : SmallBlock A)
+      (hz : z ∉ A) (he : e ∉ A) : ∃ i : Fin (k + 1), 0 < i.val ∧ i.val < k ∧ A = {i} := by
     rcases hA with ⟨a,ha,han,rfl⟩ | ⟨a,ha,han,rfl⟩ | h
     · apply False.elim; apply hz
       apply (mem_interval _ _ _).mpr
@@ -309,11 +311,11 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
       apply (mem_interval _ _ _).mpr
       dsimp [e]; omega
     · exact h
-  have prefix_ordered (A B : Finset (Fin (k+1))) (j : ℕ)
-      (hj : 0 < j) (hjn : j < k+1) (hdis : Disjoint A B)
+  have prefix_ordered (A B : Finset (Fin (k + 1))) (j : ℕ)
+      (hj : 0 < j) (hjn : j < k + 1) (hdis : Disjoint A B)
       (hu : A ∪ B = interval k 0 j) (hA : SmallBlock A) (hB : SmallBlock B)
       (hz : z ∈ A) :
-      ∃ (a : ℕ) (ha : a < k+1), j = a+1 ∧
+      ∃ (a : ℕ) (ha : a < k + 1), j = a + 1 ∧
         A = interval k 0 a ∧ B = {⟨a,ha⟩} ∧ 0 < a := by
     have noend : e ∉ A ∧ e ∉ B := by
       have hn : e ∉ A ∪ B := by rw [hu, mem_interval]; dsimp [e]; omega
@@ -327,7 +329,7 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
       have him : i ∈ A ∪ B := by simp [hBe]
       rw [hu, mem_interval] at him
       omega
-    let q : Fin (k+1) := ⟨a,han⟩
+    let q : Fin (k + 1) := ⟨a,han⟩
     have qm : q ∈ A ∪ B := by rw [hu, mem_interval]; dsimp [q]; omega
     have qi : q = i := by
       rw [hAe,hBe,Finset.mem_union,mem_interval,Finset.mem_singleton] at qm
@@ -336,9 +338,9 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
       · omega
       · exact h
     have ia : i.val = a := (congrArg Fin.val qi).symm
-    have ja : j ≤ a+1 := by
+    have ja : j ≤ a + 1 := by
       by_contra hn
-      let q' : Fin (k+1) := ⟨a+1,by omega⟩
+      let q' : Fin (k + 1) := ⟨a + 1,by omega⟩
       have qm' : q' ∈ A ∪ B := by rw [hu, mem_interval]; dsimp [q']; omega
       rw [hAe,hBe,Finset.mem_union,mem_interval,Finset.mem_singleton] at qm'
       rcases qm' with h | h
@@ -350,11 +352,11 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
     rw [hBe]
     congr 1
     exact Fin.ext ia
-  have suffix_ordered (A B : Finset (Fin (k+1))) (j : ℕ)
-      (hj : 0 < j) (hjn : j < k+1) (hdis : Disjoint A B)
-      (hu : A ∪ B = interval k j (k+1)) (hA : SmallBlock A) (hB : SmallBlock B)
+  have suffix_ordered (A B : Finset (Fin (k + 1))) (j : ℕ)
+      (hj : 0 < j) (hjn : j < k + 1) (hdis : Disjoint A B)
+      (hu : A ∪ B = interval k j (k + 1)) (hA : SmallBlock A) (hB : SmallBlock B)
       (he : e ∈ B) :
-      ∃ (hj' : j < k), A = {⟨j,by omega⟩} ∧ B = interval k (j+1) (k+1) := by
+      ∃ (hj' : j < k), A = {⟨j,by omega⟩} ∧ B = interval k (j + 1) (k + 1) := by
     have nozero : z ∉ A ∧ z ∉ B := by
       have hn : z ∉ A ∪ B := by rw [hu, mem_interval]; dsimp [z]; omega
       simpa using hn
@@ -367,7 +369,7 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
       have him : i ∈ A ∪ B := by simp [hAi]
       rw [hu, mem_interval] at him
       omega
-    let q : Fin (k+1) := ⟨j,hjn⟩
+    let q : Fin (k + 1) := ⟨j,hjn⟩
     have qm : q ∈ A ∪ B := by rw [hu,mem_interval]; dsimp [q]; omega
     have qi : q = i := by
       rw [hAi,hBe,Finset.mem_union,mem_interval,Finset.mem_singleton] at qm
@@ -376,7 +378,7 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
       · exact h
       · omega
     have ij : i.val = j := (congrArg Fin.val qi).symm
-    let p : Fin (k+1) := ⟨a-1,by omega⟩
+    let p : Fin (k + 1) := ⟨a - 1,by omega⟩
     have pm : p ∈ A ∪ B := by rw [hu,mem_interval]; dsimp [p]; omega
     have pi : p = i := by
       rw [hAi,hBe,Finset.mem_union,mem_interval,Finset.mem_singleton] at pm
@@ -386,13 +388,13 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
       · omega
     have pa := congrArg Fin.val pi
     dsimp [p] at pa
-    have aj : a = j+1 := by omega
+    have aj : a = j + 1 := by omega
     refine ⟨by omega,?_,by simpa [aj] using hBe⟩
     rw [hAi]
     congr 1
     exact Fin.ext ij
-  have prefix_force (u : TreeMessageRealization.Tree (Fin (k+1))) (hu : Full u)
-      (j : ℕ) (hj : 0 < j) (hjn : j < k+1) (hset : leaves u = interval k 0 j)
+  have prefix_force (u : TreeMessageRealization.Tree (Fin (k + 1))) (hu : Full u)
+      (j : ℕ) (hj : 0 < j) (hjn : j < k + 1) (hset : leaves u = interval k 0 j)
       (hblocks : ∀ s ∈ subtrees u, SmallBlock (leaves s)) : PrefixSpine k j u := by
     induction u generalizing j with
     | nil => simp [Full] at hu
@@ -404,7 +406,7 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
         have zi : z = i := by simpa [leaves] using zm
         have jone : j = 1 := by
           by_contra hn
-          let q : Fin (k+1) := ⟨1,by omega⟩
+          let q : Fin (k + 1) := ⟨1,by omega⟩
           have qm : q ∈ leaves (leaf i) := by rw [hset,mem_interval]; dsimp [q]; omega
           have qi : q = i := by simpa [leaves] using qm
           have he := congrArg Fin.val (qi.trans zi.symm)
@@ -436,8 +438,8 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
           have hle := single l hu.1 ⟨a,ha⟩ hla
           rw [hle]
           exact PrefixSpine.peel_swap ha (hr hu.2.1 a ha0 ha hra hrb)
-  have suffix_force (u : TreeMessageRealization.Tree (Fin (k+1))) (hu : Full u)
-      (j : ℕ) (hj : 0 < j) (hjn : j < k+1) (hset : leaves u = interval k j (k+1))
+  have suffix_force (u : TreeMessageRealization.Tree (Fin (k + 1))) (hu : Full u)
+      (j : ℕ) (hj : 0 < j) (hjn : j < k + 1) (hset : leaves u = interval k j (k + 1))
       (hblocks : ∀ s ∈ subtrees u, SmallBlock (leaves s)) : SuffixSpine k j u := by
     induction u generalizing j with
     | nil => simp [Full] at hu
@@ -448,7 +450,7 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
         have em : e ∈ leaves (leaf i) := by rw [hset,mem_interval]; dsimp [e]; omega
         have ei : e = i := by simpa [leaves] using em
         have jk : j = k := by
-          let q : Fin (k+1) := ⟨j,hjn⟩
+          let q : Fin (k + 1) := ⟨j,hjn⟩
           have qm : q ∈ leaves (leaf i) := by rw [hset,mem_interval]; dsimp [q]; omega
           have qi : q = i := by simpa [leaves] using qm
           have he := congrArg Fin.val (qi.trans ei.symm)
@@ -465,7 +467,7 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
         have elr : e ∈ leaves l ∨ e ∈ leaves r := by
           have : e ∈ leaves (.node none l r) := by rw [hset,mem_interval]; dsimp [e]; omega
           simpa [leaves] using this
-        have union_set : leaves l ∪ leaves r = interval k j (k+1) := by
+        have union_set : leaves l ∪ leaves r = interval k j (k + 1) := by
           ext i
           simpa only [leaves, Finset.mem_union] using (Finset.ext_iff.mp hset i)
         rcases elr with hel | her
@@ -475,13 +477,13 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
           have hre := single r hu.2.1 ⟨j,by omega⟩ hra
           rw [hre]
           exact SuffixSpine.peel_swap hjk
-            (hl hu.1 (j+1) (by omega) (by omega) hla hlb)
+            (hl hu.1 (j + 1) (by omega) (by omega) hla hlb)
         · obtain ⟨hjk,hla,hra⟩ := suffix_ordered (leaves l) (leaves r) j hj hjn hu.2.2 union_set
             (hlb l (self l hu.1)) (hrb r (self r hu.2.1)) her
           have hle := single l hu.1 ⟨j,by omega⟩ hla
           rw [hle]
           exact SuffixSpine.peel hjk
-            (hr hu.2.1 (j+1) (by omega) (by omega) hra hrb)
+            (hr hu.2.1 (j + 1) (by omega) (by omega) hra hrb)
   have shape : DoubleComb t := by
     cases t with
     | nil => simp [Full] at ht
@@ -529,7 +531,7 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
             · exact h
           have hel : e ∉ leaves l := fun h => Finset.disjoint_left.mp ht.2.2 h her
           obtain ⟨j,hj,hjn,hla⟩ := prefix_at_zero (leaves l) hL hzl hel
-          have hra : leaves r = interval k j (k+1) := by
+          have hra : leaves r = interval k j (k + 1) := by
             ext i
             have cover : i ∈ leaves l ∨ i ∈ leaves r := by
               have : i ∈ leaves (.node none l r) := by rw [hall]; simp
@@ -554,7 +556,7 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
             · exact False.elim (small_endpoints (leaves r) hR ⟨hzr,h⟩)
           have her : e ∉ leaves r := fun h => Finset.disjoint_left.mp ht.2.2 hel h
           obtain ⟨j,hj,hjn,hra⟩ := prefix_at_zero (leaves r) hR hzr her
-          have hla : leaves l = interval k j (k+1) := by
+          have hla : leaves l = interval k j (k + 1) := by
             ext i
             have cover : i ∈ leaves l ∨ i ∈ leaves r := by
               have : i ∈ leaves (.node none l r) := by rw [hall]; simp
@@ -573,31 +575,36 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
               · omega
           exact ⟨j,hj,hjn,r,l,prefix_force r ht.2.1 j hj hjn hra hrb,
             suffix_force l ht.1 j hj hjn hla hlb,Or.inr rfl⟩
-  have prefix_height (j : ℕ) (u : TreeMessageRealization.Tree (Fin (k+1)))
+  have prefix_height (j : ℕ) (u : TreeMessageRealization.Tree (Fin (k + 1)))
       (h : PrefixSpine k j u) : u.height = j ∧ 0 < j := by
     induction h with
-    | one => simp [leaf]
+    | one => simp
     | peel hj h ih =>
-      simp only [fork,BinaryTree.height,leaf] at *
+      simp only [BinaryTree.height,leaf] at *
       omega
     | peel_swap hj h ih =>
-      simp only [fork,BinaryTree.height,leaf] at *
+      simp only [BinaryTree.height,leaf] at *
       omega
-  have suffix_height (j : ℕ) (u : TreeMessageRealization.Tree (Fin (k+1)))
-      (h : SuffixSpine k j u) : u.height = k+1-j := by
+  have suffix_height (j : ℕ) (u : TreeMessageRealization.Tree (Fin (k + 1)))
+      (h : SuffixSpine k j u) : u.height = k + 1 - j := by
     induction h with
-    | one => simp [leaf]
+    | one => simp
     | @peel j u hj h ih =>
-      simp only [fork,BinaryTree.height,leaf] at *
+      simp only [BinaryTree.height,leaf] at *
       omega
     | @peel_swap j u hj h ih =>
-      simp only [fork,BinaryTree.height,leaf] at *
+      simp only [BinaryTree.height,leaf] at *
       omega
   obtain ⟨j,hj,hjn,l,r,hl,hr,he⟩ := shape
-  refine ⟨j,hj,hjn,l,r,hl,hr,he,?_⟩
   have hL := (prefix_height j l hl).1
   have hR := suffix_height j r hr
-  rcases he with rfl | rfl <;>
-    simp only [height,fork,BinaryTree.height,hL,hR,Nat.add_sub_cancel,Nat.max_comm]
+  have hh : height t = max j (k + 1 - j) := by
+    rcases he with rfl | rfl <;>
+      simp only [height,BinaryTree.height,hL,hR,Nat.add_sub_cancel,Nat.max_comm]
+  refine ⟨j,hj,hjn,l,r,hl,hr,he,hh,?_⟩
+  rw [hh]
+  omega
+
+
 
 end D5.S3.Arith.FibonacciAtomic.FourMessageTreeRigidity

@@ -161,19 +161,22 @@ theorem implementation_lower_bound {I O : Type} [Finite I] {X : I → Type}
       unfold response
       congr 1
       funext i
-      by_cases hi : i ∈ A <;> simp [glue, Equiv.piEquivPiSubtypeProd, Equiv.coe_fn_mk, Equiv.coe_fn_symm_mk, hi]
+      by_cases hi : i ∈ A <;>
+        simp [glue, Equiv.piEquivPiSubtypeProd, Equiv.coe_fn_mk, hi]
     rw [view, view]
     rw [← hm (glue (a,b)), ← hm (glue (a',b))]
     apply congrArg read
     apply context t ht s hs
     · intro i hi
-      simp [glue, Equiv.piEquivPiSubtypeProd, Equiv.coe_fn_mk, Equiv.coe_fn_symm_mk, A, hi]
+      simp [glue, Equiv.piEquivPiSubtypeProd, Equiv.coe_fn_mk, A, hi]
     · calc
         evaluate m s (glue (a,b)) = send a := locality s _ _ (by
-          intro i hi; simp [send, glue, Equiv.piEquivPiSubtypeProd, Equiv.coe_fn_mk, Equiv.coe_fn_symm_mk, A, hi])
+          intro i hi
+          simp [glue, Equiv.piEquivPiSubtypeProd, Equiv.coe_fn_mk, A, hi])
         _ = send a' := he
         _ = evaluate m s (glue (a',b)) := (locality s _ _ (by
-          intro i hi; simp [send, glue, Equiv.piEquivPiSubtypeProd, Equiv.coe_fn_mk, Equiv.coe_fn_symm_mk, A, hi])).symm
+          intro i hi
+          simp [glue, Equiv.piEquivPiSubtypeProd, Equiv.coe_fn_mk, A, hi])).symm
   let select : Set.range (response X F (fun i => i ∈ A)) → Set.range (evaluate m s) :=
     fun q => ⟨send q.property.choose, ⟨glue (q.property.choose, fun i => x₀ i.val), rfl⟩⟩
   apply Nat.card_le_card_of_injective select
@@ -230,7 +233,7 @@ theorem simultaneous_realization {I O : Type} [Fintype I] {X : I → Type}
     rw [← q.property.choose_spec]
     congr 1
     funext i
-    simp [nominal, Equiv.piEquivPiSubtypeProd, Equiv.coe_fn_mk, Equiv.coe_fn_symm_mk, i.property]
+    simp [nominal, Equiv.piEquivPiSubtypeProd, Equiv.coe_fn_mk, i.property]
   have response_on (A : Finset I) (x y : ∀ i, X i)
       (h : ∀ i ∈ A, x i = y i) :
       response X F (fun i => i ∈ A) (fun i => x i.val) =
@@ -246,7 +249,7 @@ theorem simultaneous_realization {I O : Type} [Fintype I] {X : I → Type}
     congr 1
     funext i
     by_cases hi : i ∈ A <;>
-      simp [Equiv.piEquivPiSubtypeProd, Equiv.coe_fn_symm_mk, hi]
+      simp [Equiv.piEquivPiSubtypeProd, hi]
   have substitute (A : Finset I) (x y : ∀ i, X i)
       (h : response X F (fun i => i ∈ A) (fun i => x i.val) =
         response X F (fun i => i ∈ A) (fun i => y i.val)) (z : ∀ i, X i) :
@@ -257,14 +260,16 @@ theorem simultaneous_realization {I O : Type} [Fintype I] {X : I → Type}
         unfold response
         congr 1
         funext i
-        by_cases hi : i ∈ A <;> simp [Equiv.piEquivPiSubtypeProd, Equiv.coe_fn_mk, Equiv.coe_fn_symm_mk, Set.piecewise, hi]
+        by_cases hi : i ∈ A <;>
+        simp [Equiv.piEquivPiSubtypeProd, Equiv.coe_fn_mk, Set.piecewise, hi]
       _ = response X F (fun i => i ∈ A) (fun i => y i.val) (fun i => z i.val) :=
         congrFun h _
       _ = F ((A : Set I).piecewise y z) := by
         unfold response
         congr 1
         funext i
-        by_cases hi : i ∈ A <;> simp [Equiv.piEquivPiSubtypeProd, Equiv.coe_fn_mk, Equiv.coe_fn_symm_mk, Set.piecewise, hi]
+        by_cases hi : i ∈ A <;>
+        simp [Equiv.piEquivPiSubtypeProd, Equiv.coe_fn_mk, Set.piecewise, hi]
   have evaluates (u : Tree I) (hu : Full u) (x : ∀ i, X i) :
       evaluate m u x = responseMessage F u x := by
     induction u with
@@ -277,7 +282,7 @@ theorem simultaneous_realization {I O : Type} [Fintype I] {X : I → Type}
         intro j hj
         have : j = i := by simpa [leaves] using hj
         subst j
-        simp [m, responseImplementation, evaluate, Function.update]
+        simp [Function.update]
       | none =>
         rw [evaluate, hl hu.1, hr hu.2.1]
         apply Subtype.ext
@@ -319,9 +324,11 @@ theorem simultaneous_realization {I O : Type} [Fintype I] {X : I → Type}
             F ((leaves l : Set I).piecewise xl ((leaves r : Set I).piecewise xr z)) = F z :=
           first.trans second
         rw [view, view]
-        convert assembled using 1 <;> congr 1 <;> funext i
+        convert assembled using 1
+        congr 1
+        funext i
         · by_cases hil : i ∈ leaves l <;> by_cases hir : i ∈ leaves r <;>
-            simp [m, responseImplementation, responseMessage, Set.piecewise,
+            simp [responseMessage, Set.piecewise,
               fork, leaves, xl, xr, z, hil, hir]
   let read : m.Message t → O := fun q => q.val (fun i => x₀ i.val)
   have correct : Correct F t m read := by
@@ -331,7 +338,7 @@ theorem simultaneous_realization {I O : Type} [Fintype I] {X : I → Type}
     unfold response
     congr 1
     funext i
-    simp [Equiv.piEquivPiSubtypeProd, Equiv.coe_fn_mk, Equiv.coe_fn_symm_mk, hall]
+    simp [Equiv.piEquivPiSubtypeProd, Equiv.coe_fn_mk, hall]
   have sharp : ∀ s ∈ subtrees t,
       reachable m s = capacity X F (fun i => i ∈ leaves s) := by
     intro s hs

@@ -41,7 +41,8 @@ internal sealed class FourMessageTreeRigidityDocument : IScribeDocumentDefinitio
                     Exists, Sp, V("j"), Comma, Sp, D(0), Sp, Lt, Sp, V("j"), Sp, Lt, Sp,
                     Call("n", V("k")), Sp, Land, Sp, Call("DoubleCombAt", V("j"), V("T")),
                     Sp, Land, Sp, Call("height", V("T")), Sp, Eq, Sp,
-                    Call("max", V("j"), Seq(Call("n", V("k")), Minus, V("j"))))),
+                    Call("max", V("j"), Seq(Call("n", V("k")), Minus, V("j"))), Sp, Land, Sp,
+                    Call("ceilHalf", Call("n", V("k"))), Sp, Le, Sp, Call("height", V("T")))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Every accurate implementation has at least the cut capacity many reachable "
@@ -60,6 +61,6 @@ internal sealed class FourMessageTreeRigidityDocument : IScribeDocumentDefinitio
                         + "to be the rightmost remaining coordinate. The suffix argument reverses "
                         + "the endpoint roles. Structural induction determines both spines. A j-coordinate prefix spine has "
                         + "height j-1, and its complementary suffix spine has height n-j-1. Their "
-                        + "root merge has height max(j,n-j)."))),
+                        + "root merge has height max(j,n-j), which is at least the ceiling of n/2."))),
                 DescribeRole.Theorem))));
 }
