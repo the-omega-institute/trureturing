@@ -388,6 +388,18 @@ branch, while retaining all higher digits and literal phases. In the
 21-root-of-5 subbranch it also forces every pair among the five
 concentrated primes, and one triple, to be original numerical labels.
 
+[Section174](#174-every-complete-private-source-of-q2-demands-a-fixed-mixed-service)
+turns every actual q^2 private source with q in R intersect
+{5,7,11,13} into a fixed mixed-service demand. It supplies a positive
+sourcewise weight and, for q=7,11,13, a tail set independent of the
+companion root; it does not repair the whole deletion hole.
+
+[Section175](#175-complete-liability-obstructs-the-payer-move-shortcut)
+gives a literal non-cover construction in which the displayed probes and
+global collision graph hold, but a critical parent move frees two labels
+while its complete private liability costs four arbitrary odd APs. This
+rules out that shortcut and is not a counterexample to EB1.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -21486,3 +21498,133 @@ deleted complement, or an independently accepted arbitrary-height theorem
 followed by a treatment of the same-color primes allowed below 113.
 No admissible odd distinct whole cover has been found, and unrestricted
 Erdős #7 remains open at this point.
+
+## 174. Every complete private source of q2 demands a fixed mixed service
+
+Choose q in R intersect {5,7,11,13}, and put p=7 when q=5 and p=5
+otherwise. Here q=5 uses the already established presence of 7 in the
+same initial-prime support. Write Q=3^H q^G M. If G=1, the existing
+§163 missing-product bridge applies. Assume G>=2; divisor closure supplies
+the original q^2.
+
+Let beta0 be the literal phase of q^2 modulo q^2 and let omega=beta0
+modulo q. Let R_q be the complete survivor of all q-free originals.
+Remove from R_q the actual cofactor cylinders of every original n with
+v_q(n)=1 and first q-root omega, and call the remaining set Y. The
+complete source calculation gives Y nonempty and
+
+    Priv_(q^2)
+      =CRT(Y x {t modulo q^G:t=beta0 modulo q^2}).      (Q2P1)
+
+For an original n, write h=v_3(n), e=v_q(n), and n^(q)=n/q^e.
+Define the fixed mixed family
+
+    J={n in D:
+       e>=2, n^(q)>1, and
+       [h<=H-2 or (h=H-1 and e<=7)
+        or (h=H and e=2 and p does not divide n)]}.    (Q2P2)
+
+Let E_J be the complete simultaneous-deletion hole. For every y in Y,
+fix the full q-free coordinate and the first q-root omega, and let mu_y
+be the uniform law on this complete fibre F_y. Then
+
+    mu_y(E_J intersect F_y)>=delta_q,
+
+where
+
+    delta_q=((q-3)(q-2)/q^2)(1-12/q^2)-1/(q(q-1))
+            >=187/2500.                               (Q2P3)
+
+Whole coverage therefore forces the actual incident labels
+
+    J(y,omega)={n in J:
+       y=a_n modulo n^(q), a_n=omega modulo q}
+
+to satisfy the sourcewise inequality
+
+    sum_(n in J(y,omega)) q^(1-e(n))>=delta_q.           (Q2P4)
+
+This counts each actual label with its exact relative mass on the same
+source fibre; it does not copy a supplier between different y.
+
+At a fixed complete ternary word, §172's global collision graph leaves at
+most one exceptional companion root. Outside it, the first factor in
+delta_q improves from q-3 to q-2, giving
+
+    delta_q^ord=((q-2)^2/q^2)(1-12/q^2)-1/(q(q-1)).
+
+For q=7,11,13, take p=5. The §172 prime-root table bounds all
+full-height p-bearing originals at fixed (u,omega), across every
+companion root and cofactor source, by p. The prefix filters can therefore
+be chosen once for all companion roots. They give one common tail set with
+
+    delta_(q,5)^all
+      =((q-6)(q-2)/q^2)(1-12/q^2)-1/(q(q-1))>0.
+
+At q=7 this is 767/14406. For q=5 the common-tail subtraction is not
+positive; the valid statement is the fixed-root table with at most one
+exceptional root, delta_5=187/2500 and delta_5^ord=343/2500.
+
+The proof uses complete prefix filters for all full-height q^2 labels, all
+deeper full-height labels, and all near-top labels of q-height at least
+eight. It then restores every pure q-power by subtracting its complete
+literal trace. Arbitrary support, phases, heights and the remaining
+liabilities stay in the source. The certified subset of E_J is not the
+whole hole, so this result supplies no bounded vacancy and no EB1 descent.
+
+## 175. Complete liability obstructs the payer-move shortcut
+
+The following finite construction is a negative boundary for a proposed
+exchange, not an Erdős #7 counterexample. Take
+
+    q=101, p=103, r=107, t=109, H=G=2,
+
+and let the numerical inventory be divisor-closed with
+
+    D_0={3^a q^e s:0<=a,e<=2,
+         s in {1,p,r,t,pr,pt,rt}} minus {1},
+
+augmented by the other odd primes through 109. The distinguished full
+triangle is
+
+    d_0=9q^2pr, d_1=9q^2pt, d_2=9q^2rt,
+
+with payer labels
+
+    m_1=3q^2pr, m_2=q^2pr,
+
+and critical parent b=3q^2p. Choose literal CRT phases so that the
+triangle, both complete probes over the entire escaped-source set, and
+the source-global §172 collision graph all hold. In particular, the
+complete proper-descendant packet of b in the moved phase is exactly
+
+    Delta={m_1,d_1}.
+
+Moving b and deleting Delta therefore frees only two numerical labels.
+
+The old private liability P_b can be written exactly as the part of the
+phase 2 modulo b avoiding all prime-zero classes, except for the retained
+rt class. On a common CRT carrier its normalized mass is
+
+    mu(P_b)=1-1/((r-1)(t-1))=11447/11448.
+
+Every legally available odd replacement modulus has a prime exponent
+exceeding that in F=9q^2p, and hence has mass at most 1/4 on this carrier.
+Consequently any repair of the complete P_b requires at least four APs.
+Four fresh APs with numerical moduli
+
+    5q, 5q^2, 5p, 5qp
+
+achieve the bound, using the four nonzero residues modulo 5 while the
+retained 5-class pays residue zero. Thus the complete repair cost is exactly
+four, while the proposed move would change the count from 85 to 87.
+
+This construction is deliberately not a whole cover. At an explicit
+escaped source, replacing the q^2 prefix by a fourth prefix leaves an
+uncovered point; the actual QC2 supplier count there is 2<q-1. Therefore
+the example does not refute a repair theorem using all EB1 whole-cover
+information. It does refute the shortcut that complete probe service plus
+a globally fixed GLC exception set automatically pays a complete parent
+move. Any next exchange must retain the full whole-cover shell or add a
+separate source-capacity theorem; the displayed probe and collision data
+alone are insufficient.
