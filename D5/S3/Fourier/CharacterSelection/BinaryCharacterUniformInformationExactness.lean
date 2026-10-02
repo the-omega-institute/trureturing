@@ -100,23 +100,19 @@ private theorem pushforward_uniform_to_range
     exact_mod_cast (Fintype.card_pos : 0 < Fintype.card f.range).ne'
   field_simp
 
-/-- Reciprocal-cardinality mass is a law on every nonempty finite carrier. -/
-theorem uniform_mass_is_law
-    {X : Type*} [Fintype X] [Nonempty X] :
-    (∀ x : X, 0 ≤ (Fintype.card X : ℝ)⁻¹) ∧
-      ∑ _x : X, (Fintype.card X : ℝ)⁻¹ = 1 := by
-  have cardPositive : (0 : ℝ) < Fintype.card X := by
-    exact_mod_cast Fintype.card_pos
-  constructor
-  · intro _x
-    exact (inv_pos.mpr cardPositive).le
-  · simp
-
 private theorem uniform_entropy_bits
     {X : Type*} [Fintype X] [Nonempty X] :
     shannonEntropy (fun _ : X => (Fintype.card X : ℝ)⁻¹) / Real.log 2 =
       Real.logb 2 (Fintype.card X) := by
-  have uniformLaw := uniform_mass_is_law (X := X)
+  have cardPositive : (0 : ℝ) < Fintype.card X := by
+    exact_mod_cast Fintype.card_pos
+  have uniformLaw :
+      (∀ x : X, 0 ≤ (Fintype.card X : ℝ)⁻¹) ∧
+        ∑ _x : X, (Fintype.card X : ℝ)⁻¹ = 1 := by
+    constructor
+    · intro _x
+      exact (inv_pos.mpr cardPositive).le
+    · simp
   have entropyEqualsLog :
       shannonEntropy (fun _ : X => (Fintype.card X : ℝ)⁻¹) =
         Real.log (Fintype.card X) :=
@@ -143,7 +139,17 @@ theorem binary_character_uniform_profile_entropy_bits
   have rangeNonempty : Nonempty profileHom.range :=
     ⟨⟨0, ⟨0, profileHom.map_zero⟩⟩⟩
   letI : Nonempty profileHom.range := rangeNonempty
-  have uniformLaw := uniform_mass_is_law (X := profileHom.range)
+  have rangeCardPositive : (0 : ℝ) < Fintype.card profileHom.range := by
+    exact_mod_cast Fintype.card_pos
+  have uniformLaw :
+      (∀ b : profileHom.range,
+          0 ≤ (Fintype.card profileHom.range : ℝ)⁻¹) ∧
+        ∑ _b : profileHom.range,
+          (Fintype.card profileHom.range : ℝ)⁻¹ = 1 := by
+    constructor
+    · intro _b
+      exact (inv_pos.mpr rangeCardPositive).le
+    · simp
   have entropyEqualsLog :
       shannonEntropy
           (pushforward

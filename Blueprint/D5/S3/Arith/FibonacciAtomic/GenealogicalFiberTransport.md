@@ -237,6 +237,5 @@ The shape count is the Catalan count in Stanley, Enumerative Combinatorics, Volu
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.uniformMass`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/GraftAffineClosure](GraftAffineClosure.md)
 - Dependency: [D5/S3/Entropy/Forgetting/CompletionEntropyMinimality](../../Entropy/Forgetting/CompletionEntropyMinimality.md)
-- Dependency: [D5/S3/Fourier/CharacterSelection/BinaryCharacterUniformInformationExactness](../../Fourier/CharacterSelection/BinaryCharacterUniformInformationExactness.md)
 - Dependency: [D5/S3/Quantum/MultifactorCorrelationSectorDecomposition](../../Quantum/MultifactorCorrelationSectorDecomposition.md)
 - Dependency: [D5/S3/TotalVariation/Pinsker](../../TotalVariation/Pinsker.md)

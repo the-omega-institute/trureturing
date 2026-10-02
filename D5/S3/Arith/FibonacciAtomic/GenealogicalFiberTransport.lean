@@ -9,7 +9,6 @@
 import D5.S3.Arith.FibonacciAtomic.GraftAffineClosure
 import D5.S3.TotalVariation.Pinsker
 import D5.S3.Entropy.Forgetting.CompletionEntropyMinimality
-import D5.S3.Fourier.CharacterSelection.BinaryCharacterUniformInformationExactness
 import D5.S3.Quantum.MultifactorCorrelationSectorDecomposition
 import Mathlib.Algebra.Free
 import Mathlib.Combinatorics.Enumerative.Catalan.Tree
@@ -26,8 +25,6 @@ open scoped BigOperators
 open GraftAffineClosure (step quantity)
 open D5.S3.Entropy.Forgetting.CapacityMonotone (pushforward)
 open D5.S3.Entropy.Forgetting.CompletionEntropyMinimality (pushforward_is_law)
-open D5.S3.Fourier.CharacterSelection.BinaryCharacterUniformInformationExactness
-  (uniform_mass_is_law)
 open D5.S3.Quantum.MultifactorCorrelationSectorDecomposition (supportEquiv)
 
 /-- Actual nonempty ordered binary trees; true labels alpha and false labels beta. -/
@@ -450,12 +447,25 @@ theorem result :
       letI : Nonempty (Fiber (step^[n] (a, b))) := hnonempty.map (fiberMap (a, b) n)
       have source_law : (∀ x, 0 ≤ uniformMass (a, b) x) ∧
           (∑ x, uniformMass (a, b) x) = 1 := by
-        simpa only [uniformMass, Nat.card_eq_fintype_card] using
-          (uniform_mass_is_law (X := Fiber (a, b)))
+        have cardPositive : (0 : ℝ) < (Nat.card (Fiber (a, b)) : ℝ) := by
+          rw [Nat.card_eq_fintype_card]
+          exact_mod_cast Fintype.card_pos
+        constructor
+        · intro _x
+          dsimp [uniformMass]
+          exact (inv_pos.mpr cardPositive).le
+        · simp [uniformMass, Nat.card_eq_fintype_card]
       have target_law : (∀ y, 0 ≤ uniformMass (step^[n] (a, b)) y) ∧
           (∑ y, uniformMass (step^[n] (a, b)) y) = 1 := by
-        simpa only [uniformMass, Nat.card_eq_fintype_card] using
-          (uniform_mass_is_law (X := Fiber (step^[n] (a, b))))
+        have cardPositive :
+            (0 : ℝ) < (Nat.card (Fiber (step^[n] (a, b))) : ℝ) := by
+          rw [Nat.card_eq_fintype_card]
+          exact_mod_cast Fintype.card_pos
+        constructor
+        · intro _y
+          dsimp [uniformMass]
+          exact (inv_pos.mpr cardPositive).le
+        · simp [uniformMass, Nat.card_eq_fintype_card]
       have pushed_law := pushforward_is_law (uniformMass (a, b))
         (fiberMap (a, b) n) source_law
       refine ⟨map_injective _ n, ?_, ?_, pushed_law.2, target_law.2, variation _ hv' n⟩
