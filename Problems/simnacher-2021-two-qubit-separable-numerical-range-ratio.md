@@ -66,8 +66,9 @@ $u_{00}u_{11}-u_{01}u_{10}=z^Tz/2$.
 1. $u$ is a product vector $a\otimes b$ exactly when $z^Tz=0$, and the
    projector of $a\otimes b$ is $(aa^*)\otimes(bb^*)$.
 2. After a phase, $z^Tz=C$ with $0\le C\le\|z\|^2=1$.
-3. For a real unit $r\perp\operatorname{Re}z$, put
-   $\eta=(\operatorname{Im}z)\cdot r$, $\delta=\sqrt{\eta^2+C}$ and
+3. If $C=0$, $z$ is a product vector by step 1. If $C>0$, for a real unit
+   $r\perp\operatorname{Re}z$ put
+   $\eta=(\operatorname{Im}z)\cdot r$, $\delta=\sqrt{\eta^2+C}>0$ and
    $t_\pm=-\eta\pm\delta$. The vectors $z+it_\pm r$ are product vectors, and
    with weights $(\delta\pm\eta)/(2\delta)$ their projectors sum to
    $zz^*+C\,rr^T$, which is therefore separable.
