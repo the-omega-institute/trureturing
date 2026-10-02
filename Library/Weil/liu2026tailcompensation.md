@@ -5,7 +5,7 @@ year: 2026
 title: "Certified Weil Positivity Beyond the Unit Window: Source-Exact Block-Schur and Tail-Compensation Bounds for the Riemann Zeta Function"
 doi: null
 url: https://github.com/luciferyu666/certified-weil-positivity/releases/tag/v1.0-mcom-submission
-claim: The author-submitted manuscript states full complex Weil-form coercivity at physical half-widths 1 and 17/16. Source-proof parameter applications supply a 4/5 prime-block floor and an actual positive Fourier-tail correction at c=9; the complete retained sign and cofinal positivity remain unproved.
+claim: The author-submitted manuscript states full complex Weil-form coercivity at physical half-widths 1 and 17/16. Source-proof parameter applications supply a 4/5 prime-block floor, an actual positive Fourier-tail correction and even-space complement/coupling bounds at c=9; the retained sign and cofinal positivity remain unproved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -394,6 +394,23 @@ $$
 $$
 
 Restriction gives this upper allowance on the even space. Its pole operator is $2|\cosh(u/2)\rangle\langle\cosh(u/2)|$, hence positive there. The pole allowance $p$ is an upper-error input, not a negative-complement charge.
+
+For the actual $V_9=K_9+U_9$, put $R_9=V_9-PV_9P$. The source's support-independent band-weight input is
+
+$$
+\kappa=\frac1{2\pi}\int_{-256}^{256}|A(t)-7/2|\,dt<896.
+$$
+
+The rank-one band integral and (A8) bound its cross block by $1344r$ and its complementary norm by $896r^2$. Since $v_{0,9}\in\operatorname{ran}P$, the source's Cauchy--Schwarz and Plancherel estimate gives $\|(I-P)h_{0,9}\|<10r$. Thus the actual even tail cross block is bounded by $(810/29)r<28r$, and its complementary norm by $8100r^2$. The pole and tail complementary blocks are both positive. Consequently the following source-proof application pays the actual even blocks:
+
+$$
+\|(R_9)_{10}\|<1372r+p,\qquad
+(R_9)_{11}\succeq-896r^2I,\qquad
+\|(R_9)_{11}\|<8996r^2+p.
+\tag{A9}
+$$
+
+The positivity of the even pole is used only in the lower complementary bound. Its upper allowance remains in the cross and norm bounds. These bounds cover the entire complement inside the even Hilbert space; they do not assert an odd-sector result or supply the finite sign in (A4).
 
 ## The remaining retained-matrix consumer at $c=9$
 
