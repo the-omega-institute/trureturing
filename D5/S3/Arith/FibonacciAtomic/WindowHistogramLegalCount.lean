@@ -7,8 +7,10 @@
    digest: Neutral windows uniquely separate legal words into ordered low-end-high gaps. -/
 
 import D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd
-import Mathlib.Data.Fin.Tuple.NatAntidiagonal
-import Mathlib.Data.Sym.Card
+import D5.S3.Combinatorics.ArrowWilfGapData
+import Mathlib.Data.Bool.Count
+import Mathlib.Data.Vector.Basic
+import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -18,6 +20,7 @@ namespace D5.S3.Arith.FibonacciAtomic.WindowHistogramLegalCount
 
 open LiteralWindowEnd (Window bits first last flatten run endable nonzero execution)
 open D5.S3.Arith.ZeckendorfFutureKernel (legal)
+open D5.S3.Combinatorics.ArrowWilfGapData (Gaps)
 open scoped BigOperators
 
 /-- The Boolean records which of the two actual neutral windows occurs. -/
@@ -347,6 +350,180 @@ private theorem histogram_encoding (h : Window → ℕ) :
         rw [← hp, (code_language.2 p).1] }
   exact ⟨counts, e, fun _ => rfl⟩
 
+def rawCode {t : ℕ} (q : (Fin t → Bool) × (Fin (t + 1) → Gap)) : Code :=
+  (q.2 0, List.ofFn fun i => (q.1 i, q.2 i.succ))
+
+def histogram (a b c r s : ℕ) : LiteralWindowEnd.Window → ℕ
+  | .low => a | .high => b | .ends => c | .zero => r | .middle => s
+abbrev Factors (a b c r s : ℕ) :=
+  {R : Finset (Fin (r + s)) // R.card = r} ×
+  {Z : Finset (Fin (r + s + 1)) // Z.card = c} × Gaps (r + s + 1) a × Gaps (r + s + 1) b
+
+def factorRaw {a b c r s : ℕ} (p : Factors a b c r s) :
+    (Fin (r + s) → Bool) × (Fin (r + s + 1) → Gap) :=
+  (fun i => decide (i ∉ p.1.val), fun i =>
+    ⟨p.2.2.1.val i, decide (i ∈ p.2.1.val), p.2.2.2.val i⟩)
+
+
+private theorem histogram_count (a b c r s : ℕ) :
+    (∃ e : Factors a b c r s ≃ HistogramWords (histogram a b c r s),
+      ∀ p, (e p).val = codeWord (rawCode (factorRaw p))) ∧
+    Finite (HistogramWords (histogram a b c r s)) ∧
+    Nat.card (HistogramWords (histogram a b c r s)) =
+      (r + s).choose r * (r + s + 1).choose c *
+        (r + s + 1).multichoose a * (r + s + 1).multichoose b := by
+  let rawEquiv (t : ℕ) :
+      {p : Code // p.2.length = t} ≃ (Fin t → Bool) × (Fin (t + 1) → Gap) := by
+    let e : {p : Code // p.2.length = t} ≃ (Fin t → Bool) × (Fin (t + 1) → Gap) :=
+      { toFun := fun p =>
+          let v : List.Vector (Bool × Gap) t := ⟨p.val.2, p.property⟩
+          (fun i => (v.get i).1, Fin.cons p.val.1 (fun i => (v.get i).2))
+        invFun := fun q => ⟨rawCode q, by simp [rawCode]⟩
+        left_inv := fun p => by
+          apply Subtype.ext
+          dsimp [rawCode]
+          apply Prod.ext
+          · simp
+          · have hv := congrArg List.Vector.toList
+              (List.Vector.ofFn_get (⟨p.val.2, p.property⟩ : List.Vector (Bool × Gap) t))
+            simpa [List.Vector.toList_ofFn] using hv
+        right_inv := fun q => by
+          apply Prod.ext
+          · funext i
+            change ((List.ofFn fun j => (q.1 j, q.2 j.succ)).get
+              ⟨i.val, by simpa using i.isLt⟩).1 = q.1 i
+            rw [List.get_ofFn]
+            congr 1
+          · funext i
+            refine Fin.cases ?_ (fun j => ?_) i
+            · simp [rawCode]
+            · change ((List.ofFn fun j => (q.1 j, q.2 j.succ)).get
+                ⟨j.val, by simpa using j.isLt⟩).2 = q.2 j.succ
+              rw [List.get_ofFn]
+              congr 1 }
+    exact e
+  let factorEquiv (a b c r s : ℕ) :
+      {q : (Fin (r + s) → Bool) × (Fin (r + s + 1) → Gap) //
+        ∀ f, inventory (rawCode q) f = histogram a b c r s f} ≃ Factors a b c r s := by
+    have counts {n : ℕ} (d : Fin n → Bool) (f : Bool) :
+        (List.ofFn d).count f = ∑ i, if d i = f then 1 else 0 := by
+      calc
+        _ = ((List.ofFn d).flatMap fun x => [x]).count f := by simp
+        _ = ((List.ofFn d).map fun x => if x = f then 1 else 0).sum := by
+          rw [List.count_flatMap]
+          simp [Function.comp_def, List.count_singleton]
+        _ = _ := by simp [List.map_ofFn, List.sum_ofFn, Function.comp_def]
+    have totals (q : (Fin (r + s) → Bool) × (Fin (r + s + 1) → Gap)) :
+        inventory (rawCode q) .low = ∑ i, (q.2 i).x ∧
+        inventory (rawCode q) .high = ∑ i, (q.2 i).y ∧
+        inventory (rawCode q) .ends = ∑ i, if (q.2 i).z then 1 else 0 := by
+      refine ⟨?_, ?_, ?_⟩
+      · simpa only [rawCode, inventory, List.map_ofFn, List.sum_ofFn, Function.comp_def]
+          using (Fin.sum_univ_succ (fun i => (q.2 i).x)).symm
+      · simpa only [rawCode, inventory, List.map_ofFn, List.sum_ofFn, Function.comp_def]
+          using (Fin.sum_univ_succ (fun i => (q.2 i).y)).symm
+      · simp only [rawCode, inventory, List.map_ofFn, List.sum_ofFn, Function.comp_def]
+        rw [Fin.sum_univ_succ]
+        apply congrArg₂ Nat.add
+        · by_cases hz : (q.2 0).z = true <;> simp [hz]
+        · apply Finset.sum_congr rfl
+          intro i _
+          by_cases hz : (q.2 i.succ).z = true <;> simp [hz]
+    let e : {q : (Fin (r + s) → Bool) × (Fin (r + s + 1) → Gap) //
+        ∀ f, inventory (rawCode q) f = histogram a b c r s f} ≃ Factors a b c r s :=
+      { toFun := fun q =>
+          (⟨Finset.univ.filter (fun i => q.val.1 i = false), by
+            have h := q.property .zero
+            simpa [inventory, rawCode, List.map_ofFn, counts, Finset.sum_boole, histogram] using h⟩,
+          ⟨Finset.univ.filter (fun i => (q.val.2 i).z = true), by
+            have h := (totals q.val).2.2.symm.trans (q.property .ends)
+            simpa [Finset.sum_boole, histogram] using h⟩,
+          ⟨Finsupp.equivFunOnFinite.symm (fun i => (q.val.2 i).x), by
+            simp only [Finset.mem_finsuppAntidiag]
+            exact ⟨(totals q.val).1.symm.trans (q.property .low), Finset.subset_univ _⟩⟩,
+          ⟨Finsupp.equivFunOnFinite.symm (fun i => (q.val.2 i).y), by
+            simp only [Finset.mem_finsuppAntidiag]
+            exact ⟨(totals q.val).2.1.symm.trans (q.property .high), Finset.subset_univ _⟩⟩)
+        invFun := fun p => ⟨factorRaw p, by
+          intro f
+          have hx := (Finset.mem_finsuppAntidiag.mp p.2.2.1.property).1
+          have hy := (Finset.mem_finsuppAntidiag.mp p.2.2.2.property).1
+          cases f with
+          | low => simpa [histogram, factorRaw] using (totals (factorRaw p)).1.trans hx
+          | high => simpa [histogram, factorRaw] using (totals (factorRaw p)).2.1.trans hy
+          | ends =>
+            rw [(totals (factorRaw p)).2.2]
+            simpa [histogram, factorRaw, Finset.sum_boole] using p.2.1.property
+          | zero => simpa [histogram, inventory, rawCode, factorRaw, List.map_ofFn,
+              counts, Finset.sum_boole] using p.1.property
+          | middle =>
+            have hn := List.count_false_add_count_true (List.ofFn (factorRaw p).1)
+            have hz : (List.ofFn (factorRaw p).1).count false = r := by
+              simpa [factorRaw, counts, Finset.sum_boole] using p.1.property
+            simp only [List.length_ofFn] at hn
+            have ht : (List.ofFn (factorRaw p).1).count true = s := by omega
+            simpa [inventory, rawCode, List.map_ofFn, histogram, Function.comp_def] using ht⟩
+        left_inv := fun q => by
+          apply Subtype.ext
+          apply Prod.ext
+          · funext i
+            dsimp [factorRaw]
+            cases hi : q.val.1 i <;> simp [hi]
+          · funext i
+            cases hgi : q.val.2 i with
+            | mk x z y => cases z <;> simp [factorRaw, hgi]
+        right_inv := fun p => by
+          apply Prod.ext
+          · apply Subtype.ext; ext i; simp [factorRaw]
+          · apply Prod.ext
+            · apply Subtype.ext; ext i; simp [factorRaw]
+            · apply Prod.ext <;> apply Subtype.ext <;> ext i <;> rfl }
+    exact e
+  let codesRawEquiv (a b c r s : ℕ) :
+      HistogramCodes (histogram a b c r s) ≃
+        {q : (Fin (r + s) → Bool) × (Fin (r + s + 1) → Gap) //
+          ∀ f, inventory (rawCode q) f = histogram a b c r s f} := by
+    have length (p : HistogramCodes (histogram a b c r s)) : p.val.2.length = r + s := by
+      calc
+        _ = (p.val.2.map Prod.fst).length := by simp
+        _ = (p.val.2.map Prod.fst).count false + (p.val.2.map Prod.fst).count true :=
+          (List.count_false_add_count_true _).symm
+        _ = r + s := by
+          change inventory p.val .zero + inventory p.val .middle = r + s
+          rw [p.property .zero, p.property .middle]
+          rfl
+    let e := rawEquiv (r + s)
+    exact
+      { toFun := fun p => ⟨e ⟨p.val, length p⟩, by
+          have hr := congrArg Subtype.val (e.symm_apply_apply ⟨p.val, length p⟩)
+          change rawCode (e ⟨p.val, length p⟩) = p.val at hr
+          rw [hr]
+          exact p.property⟩
+        invFun := fun q => ⟨rawCode q.val, q.property⟩
+        left_inv := fun p => by
+          apply Subtype.ext
+          have hr := congrArg (fun q : {p : Code // p.2.length = r + s} => q.val)
+            (e.symm_apply_apply ⟨p.val, length p⟩)
+          change rawCode (e ⟨p.val, length p⟩) = p.val at hr
+          exact hr
+        right_inv := fun q => by
+          apply Subtype.ext
+          exact e.apply_symm_apply q.val }
+  obtain ⟨words, hw⟩ := (histogram_encoding (histogram a b c r s)).2
+  let e := ((codesRawEquiv a b c r s).trans (factorEquiv a b c r s)).symm.trans words
+  refine ⟨⟨e, ?_⟩, Finite.of_equiv _ e, ?_⟩
+  · intro p
+    change (words _).val = codeWord (rawCode (factorRaw p))
+    exact hw _
+  · classical
+    rw [Nat.card_congr e.symm]
+    have cg (n k : ℕ) : Nat.card (Gaps n k) = n.multichoose k := by
+      rw [Nat.card_eq_fintype_card, Fintype.card_coe]
+      simpa using Finset.card_finsuppAntidiag_nat_eq_multichoose
+        (s := (Finset.univ : Finset (Fin n))) k
+    simp only [Factors, Nat.card_prod, cg]
+    simp [Nat.card_eq_fintype_card, Fintype.card_finset_len, Nat.mul_assoc]
+
 /-- Unique neutral-position decomposition and a reversible canonical code
 that retains the restrictions on an exact low or ends terminal window. -/
 theorem result :
@@ -361,10 +538,18 @@ theorem result :
       (terminalGap p).z = true ∧ (terminalGap p).y = 0) ∧
     (∀ p : Code, ∀ f, (codeWord p).count f = inventory p f) ∧
     (∀ h : Window → ℕ, ∃ e : HistogramCodes h ≃ HistogramWords h,
-      ∀ p, (e p).val = codeWord p.val) :=
+      ∀ p, (e p).val = codeWord p.val) ∧
+    (∀ a b c r s : ℕ,
+      (∃ e : Factors a b c r s ≃ HistogramWords (histogram a b c r s),
+        ∀ p, (e p).val = codeWord (rawCode (factorRaw p))) ∧
+      Finite (HistogramWords (histogram a b c r s)) ∧
+      Nat.card (HistogramWords (histogram a b c r s)) =
+        (r + s).choose r * (r + s + 1).choose c *
+          (r + s + 1).multichoose a * (r + s + 1).multichoose b) :=
   ⟨decomposition.1, decomposition.2.1, decomposition.2.2, code_language.1,
-    fun p => (terminal_shapes p).1, fun p => (terminal_shapes p).2, (histogram_encoding (fun _ => 0)).1,
-    fun h => (histogram_encoding h).2⟩
+    fun p => (terminal_shapes p).1, fun p => (terminal_shapes p).2,
+    (histogram_encoding (fun _ => 0)).1,
+    (fun h => (histogram_encoding h).2), histogram_count⟩
 
 #print axioms result
 

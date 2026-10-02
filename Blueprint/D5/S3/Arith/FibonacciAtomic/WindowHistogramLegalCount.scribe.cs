@@ -8,7 +8,7 @@ internal sealed class WindowHistogramLegalCountDocument : IScribeDocumentDefinit
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Neutral input positions give a unique gap decomposition of the actual five-window language.",
-        H("Neutral Gaps in Legal Fibonacci Window Words"),
+        H("Neutral Gaps and Exact Histogram Counts of Legal Fibonacci Window Words"),
         Blocks(
             Paragraph(Text("Use the literal windows X=100, Y=001, Z=101, U=000 and V=010, "
                 + "with bits written low to high. A word is a finite list of these windows. "
@@ -75,8 +75,23 @@ internal sealed class WindowHistogramLegalCountDocument : IScribeDocumentDefinit
             Node("HistogramCodes", "The corresponding canonical-code fiber",
                 "HistogramCodes(h) contains the Codes whose Inventory is h.",
                 DescribeRole.Definition),
+            Node("rawCode", "Indexed neutral and gap assignments",
+                "For t indexed neutral Booleans and t+1 indexed Gaps, RawCode retains "
+                + "gap 0 and then each neutral Boolean together with its successor gap.",
+                DescribeRole.Definition),
+            Node("histogram", "Five prescribed multiplicities",
+                "Histogram(a,b,c,r,s) assigns a to X, b to Y, c to Z, r to U and s to V.",
+                DescribeRole.Definition),
+            Node("Factors", "Independent subset and weak-composition factors",
+                "With t=r+s, Factors(a,b,c,r,s) consists of an r-element subset of Fin(t), "
+                + "a c-element subset of Fin(t+1), and the existing ArrowWilfGapData.Gaps "
+                + "weak compositions of a and b into t+1 ordered slots.", DescribeRole.Definition),
+            Node("factorRaw", "Reconstructing indexed assignments",
+                "The first subset specifies U positions, its complement V positions; "
+                + "the second subset specifies Z-bearing gaps, and the two weak compositions "
+                + "specify the X and Y exponents of every gap.", DescribeRole.Definition),
             Node("result", "Unique decomposition and exact legal gap shape",
-                "Eight assertions hold jointly. For every finite window word w there "
+                "The assertions hold jointly. For every finite window word w there "
                 + "exists exactly one p in Cuts with Clean(p) and Join(p)=w. For every "
                 + "w, the number of separator-gap pairs in Split(w) is count(U,w)+count(V,w). "
                 + "For every w, Legal(w) holds if and only if, for every gap g in "
@@ -88,6 +103,13 @@ internal sealed class WindowHistogramLegalCountDocument : IScribeDocumentDefinit
                 + "For every p and f, count(f,CodeWord(p))=Inventory(p)(f). For every "
                 + "histogram h there is a bijection from HistogramCodes(h) to "
                 + "HistogramWords(h) sending p to CodeWord(p). "
+                + "For all natural a,b,c,r,s and t=r+s, there is also a bijection "
+                + "from Factors(a,b,c,r,s) to HistogramWords(Histogram(a,b,c,r,s)), "
+                + "whose word is CodeWord(RawCode(FactorRaw(p))). This word fiber is finite "
+                + "and its exact cardinality is binom(t,r) binom(t+1,c) "
+                + "multichoose(t+1,a) multichoose(t+1,b). The standard multichoose "
+                + "counts ordered weak compositions; for these positive slot counts it "
+                + "equals binom(a+t,t) and binom(b+t,t), respectively. "
                 + "All natural exponents, empty words, empty gaps and words with no "
                 + "neutral letters are included.", DescribeRole.Theorem,
                 "Each neutral letter removes both possible seam obstructions. Inside "
