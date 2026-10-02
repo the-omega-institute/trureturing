@@ -44,7 +44,10 @@ internal sealed class LogLaplacianEvenResidueVanishingDocument : IScribeDocument
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "Centering the primary coefficient series by exp(-s/2) makes it even: its square is the inverse of 2 cosh(s)-2 cos(2a). The b-array convolution multiplies that series by an even series. Bernoulli translation to 1/2 then makes the residue functional annihilate the odd derivative for every even m. These are identities of formal power-series coefficients; no analytic convergence hypothesis is needed."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("rosenzweig-stanfill-2026-open-problem-1-6-even-residues"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string name, string heading, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("rs16-" + (name == "s2" ? "sequence" : name.ToLowerInvariant())),

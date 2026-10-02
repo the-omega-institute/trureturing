@@ -154,6 +154,10 @@ $$\forall m \in \mathbb{N},\; (Even\left(m\right)) \Rightarrow (\forall a \in \m
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/LogLaplacianEvenResidueVanishing.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/rosenzweig-stanfill-2026-open-problem-1-6-even-residues` (proved) by `D5/S3/ArithSums/LogLaplacianEvenResidueVanishing.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"rosenzweig-stanfill-2026-open-problem-1-6-even-residues","declaration_gid":"D5/S3/ArithSums/LogLaplacianEvenResidueVanishing.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Bart Rosenzweig and Jonathan Stanfill (2026). *On the fundamental solutions of two nonlocal parabolic equations related to logarithmic Laplacians*. DOI: [10.48550/arXiv.2606.04225](https://doi.org/10.48550/arXiv.2606.04225). URL: <https://arxiv.org/abs/2606.04225v1>.
