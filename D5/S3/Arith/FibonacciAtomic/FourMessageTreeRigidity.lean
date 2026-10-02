@@ -1,10 +1,10 @@
 /- GID: D5/S3/Arith/FibonacciAtomic/FourMessageTreeRigidity
    generality: G
-   mirror - B: D5/B/S3/Arith/FibonacciAtomic/FourMessageTreeRigidity
-   mirror - E: none(waiver:unbounded - symbolic - proof)
+   mirror-B: D5/B/S3/Arith/FibonacciAtomic/FourMessageTreeRigidity
+   mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Four - message window computation forces complementary peeling spines. -/
+   digest: Four-message window computation forces complementary peeling spines. -/
 
 import D5.S3.Arith.FibonacciAtomic.FirstRejectionCutCapacity
 import D5.S3.Arith.FibonacciAtomic.TreeMessageRealization
@@ -614,7 +614,8 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
 
 
 set_option maxHeartbeats 2000000 in
-/-- Small proper coordinate blocks are exactly the endpoint intervals and internal singletons. -/
+/-- Complete capacity classification, arbitrary-tree rigidity, sharp message realization,
+and the attained minimum height under the four-message bound. -/
 theorem result (k : ℕ) (hk : 2 ≤ k) :
     (∀ A : Finset (Fin (k + 1)), A.Nonempty → A ≠ Finset.univ →
       (capacity (fun _ => Window) boolean (fun i => i ∈ A) ≤ 4 ↔ SmallBlock A)) ∧
@@ -638,8 +639,12 @@ theorem result (k : ℕ) (hk : 2 ≤ k) :
   have singleton_capacity (i : Fin (k + 1)) (hi : 0 < i.val) (hik : i.val < k) :
       capacity (fun _ => Window) boolean (fun j => j ∈ ({i} : Finset _)) = 4 := by
     have he : ({i} : Finset (Fin (k + 1))) = interval k i.val (i.val + 1) := by
-      ext j
-      simp only [Finset.mem_singleton, interval, Finset.mem_filter, Finset.mem_univ, true_and, Fin.ext_iff]
+      apply Eq.symm
+      apply Finset.eq_singleton_iff_unique_mem.mpr
+      refine ⟨by simp [interval],?_⟩
+      intro j hj
+      apply Fin.ext
+      have hb : i.val ≤ j.val ∧ j.val < i.val + 1 := by simpa [interval] using hj
       omega
     rw [he, (FirstRejectionCutCapacity.result k _).2.2.2.2.2.2.2.2.1]
     obtain ⟨hd,hj,hc,ht,hdel⟩ := FirstRejectionCutCapacity.interval_data k i.val (i.val + 1) (by omega) (by omega)

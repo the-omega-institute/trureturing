@@ -62,5 +62,64 @@ internal sealed class FourMessageTreeRigidityDocument : IScribeDocumentDefinitio
                         + "the endpoint roles. Structural induction determines both spines. A j-coordinate prefix spine has "
                         + "height j-1, and its complementary suffix spine has height n-j-1. Their "
                         + "root merge has height max(j,n-j), which is at least the ceiling of n/2."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("four-message-tree-classification-and-optimum"),
+                DeclarationHandle.Create(Prefix + "result"), H("Sharp Peak and Minimum Height"),
+                StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("For every nonempty proper coordinate block, capacity is at most four "
+                        + "exactly when the block is a global prefix, a global suffix, or an interior "
+                        + "singleton. Each interior singleton has capacity exactly four. Endpoint "
+                        + "intervals have one crossing seam; an interior singleton has two crossing "
+                        + "seams and has neither an internal seam nor the terminal coordinate.")),
+                    Paragraph(Text("Every fully labelled tree contains an interior coordinate as a leaf, "
+                        + "so every accurate implementation has peak at least four. Conversely each "
+                        + "double comb is full, uses every coordinate once, and has capacity at most "
+                        + "four at every subtree. Its proper subtree blocks are endpoint intervals or "
+                        + "singletons; its root capacity is two. Simultaneous response-class realization "
+                        + "therefore gives an accurate implementation with peak exactly four and "
+                        + "Optimum(F,T)=4.")),
+                    Paragraph(Text("Every tree with Optimum(F,T)<=4 has height at least ceil(n/2). "
+                        + "Choose the root split j=floor(n/2), build a prefix spine on the first j "
+                        + "coordinates and a suffix spine on the remaining n-j coordinates, and join "
+                        + "them at the root. The resulting full tree has optimum four and height "
+                        + "max(j,n-j)=ceil(n/2). Thus the minimum peak over all accurate tree "
+                        + "implementations is four, and the minimum height among trees with "
+                        + "optimum at most four is the ceiling of n/2."))),
                 DescribeRole.Theorem))));
+    private static Formula ResultFormula()
+    {
+        var k = V("k"); var n = V("n"); var a = V("A"); var t = V("T");
+        var i = V("i"); var j = V("j"); var m = V("m"); var g = V("g");
+        var peak = Call("Peak", m, t); var opt = Call("Optimum", V("F"), t);
+        var height = Call("height", t); var half = Call("ceilHalf", n);
+        var taskTree = Seq(Call("Full", t), Sp, Land, Sp,
+            Call("A", t), Sp, Eq, Sp, Call("coordinates", k));
+        var correct = Call("Correct", V("F"), t, m, g);
+        var shape = Seq(Exists, Sp, j, Comma, Sp, D(0), Sp, Lt, Sp, j, Sp, Lt, Sp, n,
+            Sp, Land, Sp, Call("DoubleCombAt", j, t), Sp, Land, Sp,
+            height, Sp, Eq, Sp, Call("max", j, Seq(n, Minus, j)), Sp, Land, Sp,
+            half, Sp, Le, Sp, height);
+        var classification = Seq(Forall, Sp, a, Comma, Sp,
+            Call("nonemptyProper", a), Sp, Implies, Sp,
+            Grp(Seq(Call("capacityF", a), Sp, Le, Sp, D(4), Sp, Iff, Sp, Call("SmallBlock", a))));
+        var singleton = Seq(Forall, Sp, i, Comma, Sp, D(0), Sp, Lt, Sp, i, Sp, Lt, Sp, k,
+            Sp, Implies, Sp, Call("capacityF", Call("singleton", i)), Sp, Eq, Sp, D(4));
+        var rigidity = Seq(Forall, Sp, t, Comma, Sp, taskTree, Sp, Implies, Sp,
+            Forall, Sp, m, Comma, Sp, Forall, Sp, g, Comma, Sp, correct, Sp, Implies, Sp,
+            Grp(Seq(D(4), Sp, Le, Sp, peak, Sp, Land, Sp,
+                Grp(Seq(peak, Sp, Le, Sp, D(4), Sp, Implies, Sp, shape)))));
+        var realization = Seq(Forall, Sp, t, Comma, Sp, Call("DoubleComb", t), Sp, Implies, Sp,
+            Exists, Sp, m, Comma, Sp, Exists, Sp, g, Comma, Sp, correct, Sp, Land, Sp,
+            peak, Sp, Eq, Sp, D(4), Sp, Land, Sp, opt, Sp, Eq, Sp, D(4));
+        var lower = Seq(Forall, Sp, t, Comma, Sp, taskTree, Sp, Land, Sp,
+            opt, Sp, Le, Sp, D(4), Sp, Implies, Sp, half, Sp, Le, Sp, height);
+        var attained = Seq(Exists, Sp, t, Comma, Sp, taskTree, Sp, Land, Sp,
+            opt, Sp, Eq, Sp, D(4), Sp, Land, Sp, height, Sp, Eq, Sp, half);
+        return Seq(k, Sp, Ge, Sp, D(2), Sp, Implies, Sp, Grp(Seq(
+            Grp(classification), Sp, Land, Sp, Grp(singleton), Sp, Land, Sp,
+            Grp(rigidity), Sp, Land, Sp, Grp(realization), Sp, Land, Sp,
+            Grp(lower), Sp, Land, Sp, Grp(attained))));
+    }
+
 }
