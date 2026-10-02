@@ -68,7 +68,8 @@ theorem effective_ne_scalar (n : ℕ) (c : ℝ) :
   have hp := eta_pos n
   linarith
 
-private theorem log_remainder_bounds {y : ℝ} (_hy : 0 ≤ y) (hy' : y ≤ 1 / 2) :
+/-- The logarithm remainder on the nonnegative half interval is quadratic. -/
+theorem log_remainder_bounds {y : ℝ} (_hy : 0 ≤ y) (hy' : y ≤ 1 / 2) :
     0 ≤ -Real.log (1 - y) - y ∧ -Real.log (1 - y) - y ≤ 2 * y ^ 2 := by
   have hd : 0 < 1 - y := by linarith
   constructor
