@@ -16000,3 +16000,272 @@ Then every mixed original of color i, and every pure-three original with first r
     H<=max(T_1,T_2).                                (HH4)
 
 This uniform pure-guard argument includes the highest pure3^H case, already accessible through the existing QC2/HC8 common-private-source consumer, and avoids repeating its fan proof. No upper bound on either color support size is supplied here.
+
+## 129. The complete all-concentrated branch contradicts the original budgets
+
+An EB1-minimal distinct odd whole cover cannot have R=empty in the
+prime-private classification of CP1--CP5. Equivalently, a hypothetical
+EB1 cover must contain a nonternary prime whose complete private
+projection meets BOTH nonzero first-three roots. This result keeps
+arbitrary original prime-power heights, phases and support sizes.
+
+The proof combines the height bound HH1 with the existing SG1 and CM3;
+it does not require the pure-guard strengthening HH4. All three bounds
+refer to the SAME EB1 original family. The conclusion is an ordinary
+mathematical branch exclusion, not new Lean verification or an
+unrestricted solution of Erdos#7.
+
+### The color opposite five has at most six primes
+
+Suppose R=empty. CP3 supplies two nonempty disjoint colors. Initial
+odd-prime support therefore supplies the original prime5. Name its
+color S_o, name the opposite color S_i, and put n=|S_i|>=1. Every
+q in S_i is at least7. Keep the original mixed heights
+
+    t_r=max{a:3^a*r belongs to D}.
+
+For every q in S_i, SG1 and HH1 with p=5 give
+
+    q-4<=min(t_5,t_q)<=t_q<=3n+2,
+    q<=3n+6.                                      (CT1)
+
+SG1 also gives H>=3, so CM3's H>=2 premise holds. With full finite
+color period Q_S, its reciprocal threshold implies
+
+    1/3 < sum_(m|Q_S,m>1)1/m
+        < product_(r in S)r/(r-1)-1,
+    product_(r in S)r/(r-1)>4/3                    (CT2)
+
+for EACH color S. The second strict inequality retains the finite
+prime-power heights; the Euler product is only an upper bound.
+
+There are exactly n integers coprime to6 in [7,3n+6]. Indeed, if
+n=2k, the interval splits into k consecutive blocks of six starting
+at7, each containing two such integers. If n=2k+1, the extra final
+block of three contains one. For n>=7 this interval contains25,
+which is coprime to6 but not prime. Thus it cannot contain the n
+distinct primes required by CT1. Consequently
+
+    1<=n<=6.                                      (CT3)
+
+For these six possibilities, the coprime-to6 entries in the interval
+are the first n terms of
+
+    7,11,13,17,19,23.
+
+All are prime. Since S_i has n members, CT1 forces equality with that
+initial list. If n<=2, its Euler product is at most77/60<4/3,
+contrary to CT2. Hence n is one of3,4,5,6, and7 belongs to S_i.
+
+### The opposite color then has insufficient reciprocal capacity
+
+For any r in S_o with r>7, apply SG1 to the actual pair7,r and HH1
+to the original height t_7:
+
+    r-6<=t_7<=3n+2,
+    r<=3n+8.                                      (CT4)
+
+The colors are disjoint, contain only support primes, and5 belongs
+to S_o. Their possible supports therefore satisfy:
+
+| n | Forced S_i | Possible S_o |
+|---|---|---|
+| 3 | {7,11,13} | a subset of {5,17} containing5 |
+| 4 | {7,11,13,17} | a subset of {5,19} containing5 |
+| 5 | {7,11,13,17,19} | a subset of {5,23} containing5 |
+| 6 | {7,11,13,17,19,23} | {5} |
+
+In every row,
+
+    product_(r in S_o)r/(r-1)<=85/64<4/3.          (CT5)
+
+The largest bound is (5/4)(17/16); the strict final comparison is
+255<256. This contradicts CT2 on the SAME opposite color. No
+finite search, support cutoff assumption or independence between
+color choices is used: CT3 was forced by the original constraints.
+
+### The contradiction yields one explicit whole-cover descent
+
+The same argument identifies a legal replacement if one retains SG1
+and CM3 but asks where HH1 must fail. Its arithmetic portion forces
+some q in S_i with
+
+    e=t_q>=3n+3.                                  (CT6)
+
+Choose one actual private point x of the original3^e*q. At its
+complete nonternary coordinate and ternary prefix of depth3, HH3
+gives at least e-2>=3n+1 actual deep mixed originals, including the
+owner. Partition these labels once by a dividing prime ell in S_i.
+Some bucket has at least four labels. All are proper original
+multiples of the original parent d=27ell in one actual phase
+c=x mod d. The parent exists by divisor closure; c is non-own
+because x is private to an original of larger ternary height.
+
+Let J_c be the ENTIRE original proper-descendant group in that phase,
+and put r=|J_c|>=4. Move the original parent to c and delete all of
+J_c. DR1 identifies the exact remaining hole as the complete OLD P_d.
+Use the four already established CD1/RG4 repairs, for j=0,1,2,3:
+
+    z=a_d mod ell, z=a_d mod3^j, z=j+1 mod5,
+    numerical labels5ell,15ell,45ell,135ell.
+
+Every old private point of d avoids retained A_5=0 mod5 and has the
+original d-prefix, so these APs cover ALL of P_d, including every
+integer lift. The labels are distinct, odd and greater than one;
+all are fresh by original CP1, since5 and ell have opposite colors.
+No unchanged original label is reused.
+
+The output class count is N-r+4. If r>4 it decreases. If r=4,
+every removed original is a proper odd multiple of27ell, so
+
+    old deleted modulus sum >=4*81ell=324ell,
+    new repair modulus sum =200ell.
+
+The count is unchanged and the sum drops by at least124ell. This
+single replacement contradicts EB1 in either case. There is no
+joint addition of independently selected repairs or substitution
+of separate private regions for a joint hole.
+
+Thus the all-concentrated branch is excluded at arbitrary heights.
+The nonconcentrated branch R!=empty remains: CP1's two-color support
+separation and the fresh opposite-color repair are not supplied
+there. No original-quantifier covering counterexample or universal
+descent in that remaining branch follows from CT1--CT6.
+
+## 130. The retained-tree predicate is determined by its first two q-rows
+
+Keep section127's original EB1 whole-cover assumptions. The following exact cutoff reuses DR8/AQ2 and Report375's tree semantics. Report528 FC1006--FC1008 already supplies the corresponding parent3^H*q^2 phase cap; the new consequence concerns the complete retained-tree predicate. These are ordinary mathematical deductions, not new Lean verification. All original heights, residues, labels, complete q-lines and joint deletion obligations are retained.
+
+### Exact truncation of the retained-tree predicate
+
+Use section127's original notation:
+
+    Q=3^H q^G M, q>3, gcd(M,3q)=1,
+    T={d in D:v_3(d)=H, v_q(d)>=1},
+    x=(u,v) in R,
+    D_x=union_(d in T, x in B_d)[r_d]_(q^e_d).
+
+Put b=min(G,2), T_<=2={d in T:e_d<=2}, and
+
+    D_x^sh=union_(d in T_<=2, x in B_d)[r_d]_(q^e_d),
+
+as subsets of the ORIGINAL full carrier Z/q^G. Then
+
+    D_x contains a complete 3-ary depth-G subtree
+      iff D_x^sh contains a complete 3-ary depth-G subtree.  (SH1)
+
+The assertion concerns the existence of such a tree; it does NOT assert D_x=D_x^sh or equality of their complements.
+
+For G<=2 the statement is identical. Suppose G>=3 and choose an actual complete ternary tree whose leaves lie in D_x. Fix any depth-two node w of that tree. If an incident retained prefix of depth one or two contains w, its whole descendant cylinder is already in D_x^sh.
+
+Otherwise select one full leaf from each of w's three selected depth-three child branches. Since these leaves belong to D_x and no shallow retained prefix covers w, their covering originals all have q-depth at least three. One such original prefix can meet only one of the three different child branches, so at least three DISTINCT original labels are required. Every such label is a proper multiple of
+
+    h=3^H q^2,
+
+and all have the SAME phase modulo h: ternary coordinate u and q-prefix w. Their cofactor phases match the SAME v, although no cofactor condition is needed to bound this group. The existence of any such original supplies h in D by original divisor closure. Since 3 is the smallest original prime, H is its full global height, and tau(q^2)=3, DR8 permits at most two proper original descendants in this phase. Contradiction.
+
+Thus every depth-two node of the chosen tree is covered by a shallow original. All its full leaves are already in D_x^sh. The reverse implication is containment. This proves SH1 without bounding G or altering any deeper original.
+
+### An exact finite bad-pair criterion
+
+For G>=2, call a first-q-digit root alpha shallow-good at the same x if either:
+
+1. an active retained e=1 original has q-root alpha; or
+2. at least three DISTINCT second-digit prefixes over alpha have active retained e=2 originals.
+
+Then
+
+    x outside W iff at least three q-roots are shallow-good. (SH2)
+
+For the forward implication use SH1 and inspect the first two layers of a witnessing tree. For the reverse implication choose three such first roots; at each root without a depth-one owner choose three of the specified depth-two prefixes, and extend every selected depth-two node arbitrarily to full depth G. A shallow owner covers every extended leaf. For G=1 the criterion is simply three distinct active e=1 q-roots.
+
+This criterion retains the actual ternary word u, actual cofactor v and all original phases. Merely counting three numerical cofactors remains insufficient.
+
+### The erased-word charge uses only two original rows
+
+Define, on the same actual R,
+
+    c_sh(x)=sum_(d in T_<=2)3^(-e_d) 1_(B_d)(x).
+
+SH1 lets the existing ternary-tree leaf law charge only shallow retained prefixes. Hence
+
+    1_(R minus W)(x)<=c_sh(x).                       (SH3)
+
+All RE4/RE5 applications remain valid with T replaced by T_<=2. In particular, for every actual ternary prefix cell P,
+
+    |(L minus U_*) intersect P|
+      <=sum_(d in T_<=2, r_d mod3^H in P)3^(-e_d).   (SH4)
+
+The chosen witnesses are one actual (u,v_u) per word as in RE5; each label can be charged at only its original full ternary word. Keeping their literal cofactor incidences gives the sharper version.
+
+For G>=2, numerical uniqueness gives
+
+    |L minus U|<=|L minus U_*|
+      <= |T_1|/3+|T_2|/9 <= (4/9)tau(M).             (SH5)
+
+For G=1 the last bound is tau(M)/3. The analogous RE10 density debit can likewise sum only over T_<=2. RE9 may use the strictly more selective shallow-row payment on its right side. These remain sufficient margins: no universal positive margin or nonempty W is proved.
+
+The original complement E_x=(Z/q^G)\D_x, not the enlarged shallow complement, MUST still be used to construct the supported law in RE7. SH1 certifies the same W; it does not authorize restoring points killed by deeper retained originals.
+
+### Three simultaneous ancestor restrictions
+
+The same phase capacity gives a useful hierarchy on incident original labels at ONE x=(u,v). These are direct consumers of DR8, not new phase-capacity theorems.
+
+* For any n|M with tau(n)>=3, at most two incident retained labels have n|s_d. Their parent is 3^H n and their common phase is (u,v mod n). Thus the gcd of the cofactors of any three incident retained labels is either one or a prime.
+* Within one fixed first-q root alpha, at most two incident retained labels with e_d>=2 have n|s_d for any n>1 dividing M. Their parent is 3^H q n, whose nonternary divisor count is at least four. In particular any three active depth-two originals in one first root have cofactor gcd ONE.
+* Within one fixed second-q prefix, at most two incident retained labels have e_d>=3, by parent 3^H q^2. This is the decisive obstruction used in SH1.
+
+Each application uses a parent guaranteed by an actual descendant, its actual phase group, and distinct numerical originals. Neither the parent's original phase nor its private witness is identified with this descendant-group phase. At a nonempty group they differ by comparable disjointness.
+
+The original pure 3^H private top fan does not remove the remaining margin condition: it is based at that pure original's own full ternary phase, which is excluded from R because 3^H is q-free. Its two sibling suppliers can also have q-free owners at their auxiliary source. Without a further statement forcing a sibling pair into the SAME R and controlling its shallow retained incidences, that fan cannot be treated as a W witness. Report371's saturated-first-root and all-high conclusions retain their extra premises.
+
+### General full-height cutoff
+
+The same consumer works with any original odd support primes r<q. Write Q=r^H q^G M, gcd(M,rq)=1, and retain the full-r-height q-bearing originals. Set b=min(G,r-1).
+
+    D_x contains a complete r-ary depth-G subtree
+      iff its retained q-depth-at-most-b union contains one. (SH6)
+
+If G>=r, apply the EXISTING AQ2 single-parent extension at h=r^H q^(r-1): its non-r cofactor has exactly r divisors, so every proper-descendant phase group has at most r-1 labels. A depth-(r-1) node without a shallow owner would require r distinct deeper owners for its r first child branches, contradicting that cap. G<r is the identity case. AQ2, rather than the smallest-prime-only version of DR8, permits r to be any original odd prime.
+
+The associated existing tree charge is truncated to e<=b and its numerical inventory ceiling is
+
+    tau(M) sum_(e=1..b)r^(-e)
+      =tau(M)(1-r^(-b))/(r-1).
+
+This is a cutoff for a specified retained-tree existence predicate, not a bound on original prime heights or the complete survivor relation.
+
+### A genuine two-copy interface, with its remaining source condition
+
+After removing the fixed factors 3^H q^e from all shallow retained originals, each nonunit numerical cofactor s occurs at most twice, once from each e=1,2 row. Define ONE globally fixed cofactor family
+
+    F_sh={r_d mod s_d:d in T_<=2, s_d>1},
+    V=(Z/M)\union F_sh.
+
+These are actual phases from the same original family. The two possible unit cofactors s=1 are not inserted as forbidden modulus-one classes.
+
+For every v in V and every (u,v) in R, the only shallow retained incidences have s=1. There are at most two such numerical labels, whose total ternary-tree charge is at most 1/3+1/9=4/9<1. Therefore SH1/SH3 imply
+
+    R intersect ((Z/3^H) times V) subset W.          (SH7)
+
+This is a useful exact source interface. It is not yet a law on R.
+
+For example, when M is supported on {5,7,11,13,17,19}, Report569 SD1 applies to this actual two-copy family and supplies ONE law nu on V with its established complete cofactor query bound B_*. Its multiplicity premise is now genuinely satisfied, independent of original q-heights. This does not reopen the already closed NC1 target.
+
+To use nu in RE7, choose one actual ternary reference law sigma and define the COMPLETE q-free-survivor mask and fibre reserve
+
+    chi(u,v)=1_R(u,v),
+    c(v)=integral chi(u,v) d sigma(u).
+
+If c(v)>=c0>0 for nu-almost every v, Report572 FS2 directly gives
+
+    theta(du,dv)=chi(u,v) sigma(du) nu(dv)/c(v),
+
+supported on R intersect ((Z/3^H) times V), hence on W by SH7, with M-marginal exactly nu. For every original non-q event,
+
+    theta(B_d)<=sigma([r_d]_(3^a_d))
+                   *nu([r_d]_(s_d))/c0.             (SH8)
+
+RE7 then supplies one full-height original joint law on E_J. All its q-trees are selected in the genuine deep-retained complement E_x, and every price uses this SAME theta.
+
+The required reserve c0 is an additional hypothesis. Section131 identifies an actual obstruction to this hypothesis for the full-support law on V. The q-free originals include varying ternary heights and may eliminate entire ternary fibres over some v in V. Appending all their projected cofactor phases to F_sh can exceed two phases per numerical s, so it is not a legitimate unqualified SD1 reuse. Conditioning nu on only compatible v generally changes its query bound; positivity of the conditioned mass and its cost must be established. A query norm bound or nonempty V by itself is not support on R. The new work isolates this remaining compatibility requirement rather than bypassing it.
