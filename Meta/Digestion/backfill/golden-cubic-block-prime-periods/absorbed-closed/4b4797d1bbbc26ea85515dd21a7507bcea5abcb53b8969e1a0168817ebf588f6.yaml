@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:4b4797d1bbbc26ea85515dd21a7507bcea5abcb53b8969e1a0168817ebf588f6
   normalized_sha256: sha256:4b4797d1bbbc26ea85515dd21a7507bcea5abcb53b8969e1a0168817ebf588f6
 cas_ref: sha256:4b4797d1bbbc26ea85515dd21a7507bcea5abcb53b8969e1a0168817ebf588f6
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/Mordell/EllipticTraceNormDivisibility.elliptic_trace_norm_denominator_divides_coordinates
+    target_statement_id: sha256:cb4b28117582e3c6b14c9030a2c65f0e15a228fbeed77ac894920a4934b6ba1d
 receipts:
   unresolved_subitems: []
