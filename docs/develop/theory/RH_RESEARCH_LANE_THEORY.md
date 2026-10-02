@@ -11756,3 +11756,121 @@ Connes–Consani, arXiv:2006.13771v1, Proposition 4.5(iv) 的谱配对、Abusaks
 FIB 的 $\beta=\rho(\alpha)$、五模式来源及四相观察运输，尚无通向实际 prime-dilation 与本章迹读出的交织定理。Robin 的约数倒数预算也没有由本章 Hankel 上界推出。两条接口与 RH 的完整正性目标均保留为未解义务；不把几何长度守恒、换切面或减少估计损失写成这些义务的解答。
 
 ## 追加锚（本行以下为增补区）
+
+## 23. 固定素数切面上的相位范数预算障碍
+
+本章条件于第 18—21 节的实际物理表示与迹合同，检验候签定理 21.1 第一式能否作为覆盖全部 constrained 测试的充分预算。以下密度渐近作为显式前提保留，不将其归给一个未提供该陈述的半局部供应定理，也不使用随素数集增长的联合渐近。
+
+**假设 23.1（固定有限素数集的实际评价密度）。** 采用 $d\mu(t)=dt/(2\pi)$，令 $k_t$ 为 archimedean Sonin 空间的物理评价向量，$d(t)=\|k_t\|^2$。对于每个固定有限 $S=\{\infty\}\cup\mathcal P$，设实际普通度量满足
+
+$$
+\begin{aligned}
+\sigma_S(f)&=\int_{\mathbb R}|\widehat f(t)|^2d_S(t)\,d\mu(t),\\
+d_S(t)&=w_S(t)\langle k_t,K_S^{-1}k_t\rangle,\qquad
+w_S(t)=\left|\prod_{p\in\mathcal P}(1-p^{-1/2-it})\right|^2.
+\end{aligned}
+$$
+
+$K_S$ 是第 18 节的普通 Sonin 度量压缩，其逆没有被删除。进一步假定 $d\ge0$ 局部有界，且
+
+$$
+\frac{d(t)}{\log|t|}\longrightarrow1,\qquad
+\frac{d_S(t)}{d(t)}\longrightarrow1\quad(|t|\to\infty),\qquad
+0\le d_S(t)\le\chi_Sd(t),\qquad \chi_S<\infty.
+$$
+
+后两个式子的量词是固定 $S$；没有假设关于增长 $S$ 的统一阈值。Burnol, arXiv:math/0208121v1, Theorems 4、8、9 提供 archimedean 投影与评价的来源接口；本假设所需的半局部密度渐近是额外条件。
+
+**定义 23.1（三零点的实偶高频测试）。** 固定 $r>0$、有限 $\mathcal P\supseteq\{p:p\le e^r\}$ 及非零实偶 $\phi\in C_c^\infty((-r/2,r/2))$。对于 $\tau\ge1$，令
+
+$$
+f_\tau(x)=\tau^{-3}\partial_x(\partial_x^2-1/4)
+\bigl[\phi(x)\sin(\tau x)\bigr],\qquad
+m_0=\frac{\|\phi\|_2^2}{2}>0.
+$$
+
+令 $U_{\mathrm{phase},S}$ 精确表示候签定理 21.1 第一式的右侧：
+
+$$
+U_{\mathrm{phase},S}(f)
+=2D(f)+2\|f\|_2\left(\|xf\|_2+
+\|\omega_S\widehat f\|_{L^2(d\mu)}\right),\qquad
+\omega_S=\omega_\infty+\omega_{\mathcal P}.
+$$
+
+**候签定理 23.1（固定切面的预算主项加倍）。** 在假设 23.1 及第 18—21 节合同下，定义 23.1 的每个 $f_\tau$ 都是支撑完整的实际 constrained 测试，且对该固定 $S$，
+
+$$
+\begin{aligned}
+\|f_\tau\|_2^2&\longrightarrow m_0,\\
+\frac{\sigma_S(f_\tau)}{\log\tau}&\longrightarrow m_0,\\
+\frac{D_{\mathrm{lin},S}(f_\tau)}{\log\tau}&\longrightarrow0,\\
+\frac{U_{\mathrm{phase},S}(f_\tau)}{\log\tau}&\longrightarrow2m_0.
+\end{aligned}
+$$
+
+因此存在依赖 $S,r,\phi$ 的 $\tau_0$，使得 $\tau\ge\tau_0$ 时，即便使用精确正迹与精确线性修正，仍有
+
+$$
+\boxed{
+\frac{\sigma_S(f_\tau)-D_{\mathrm{lin},S}(f_\tau)
+-U_{\mathrm{phase},S}(f_\tau)}{\log\tau}
+\longrightarrow-m_0<0.
+}
+$$
+
+证明。种子 $\phi\sin(\tau x)$ 实且奇，奇阶微分后 $f_\tau$ 实且偶，微分不扩大支撑。对任意复数 $z$，分部积分给出精确式
+
+$$
+\widehat f_\tau(z)
+=-\frac{z(z^2+1/4)}{2\tau^3}
+\bigl[\widehat\phi(z-\tau)-\widehat\phi(z+\tau)\bigr].
+$$
+
+故 $\widehat f_\tau(0)=\widehat f_\tau(i/2)=\widehat f_\tau(-i/2)=0$，自相关实偶且支撑于 $[-r,r]$。若 $p\notin\mathcal P$，则每个 $k\ge1$ 都满足 $k\log p>r$，所以没有遗漏的活跃纯素数幂；所含素数的完整幂级数仍保留。
+
+直接微分可写成
+
+$$
+f_\tau=-\phi\cos(\tau x)+O_{L^2}(\tau^{-1}).
+$$
+
+Riemann–Lebesgue 给出质量极限 $m_0$。固定支撑同时给出
+
+$$
+D(f_\tau)\le\frac r2\|f_\tau\|_2^2=O(1),\qquad
+\|xf_\tau\|_2\le\frac r2\|f_\tau\|_2=O(1).
+$$
+
+复用 NIST DLMF [5.11.2](https://dlmf.nist.gov/5.11.E2) 的 digamma 渐近，路径 $1/4+it/2$ 位于一个固定允许扇形，故
+
+$$
+\omega_\infty(t)=-\log|t|+\log(2\pi)+o(1),\qquad
+|\omega_{\mathcal P}(t)|\le2\mathfrak d_S.
+$$
+
+$\mathfrak d_S$ 在这里是固定有限常数。局部有界性与上述渐近给出全局对数增长控制；假设 23.1 也给出 $d_S(t)=O_S(\log(2+|t|))$。
+
+对精确 Fourier 式分别置 $t=\tau+s$、$t=-\tau+s$。归一化的三次多项式因子分别趋于 $1$ 与 $-1$，由一个固定的 $s$ 多项式控制；两份平移后的 $\widehat\phi$ 都有 Schwartz 衰减。支配收敛分别给出每包 $\|\phi\|_2^2/4$ 的密度主项，包间交叉项由同一衰减趋于零。因此
+
+$$
+\frac{\sigma_S(f_\tau)}{\log\tau}\longrightarrow m_0,\qquad
+\frac{\|\omega_S\widehat f_\tau\|_{L^2(d\mu)}}{\log\tau}
+\longrightarrow\sqrt{m_0}.
+$$
+
+这些是标准 Fourier 包局部化对所给实际密度的应用，不重新证明密度前提。第 19.2 节的 $|D_{\mathrm{lin},S}(f)|\le2r\|f\|_2^2$ 使线性项除以 $\log\tau$ 后趋于零。代入 $U_{\mathrm{phase},S}$ 即得系数 $2m_0$ 与所示负极限。$\square$
+
+对同一测试，若 $L_S(f)\le\sigma_S(f)$，且
+
+$$
+D_{\mathrm{fin},S}(f)+\|f\|_2^2E_S\ge D_{\mathrm{lin},S}(f),
+$$
+
+则使用这些替代量并扣除 $U_{\mathrm{phase},S}$ 的证书，逐态不超过候签定理 23.1 的精确证书。候签定理 21.1 第二式的多项式 Gamma 预算也不小于 $U_{\mathrm{phase},S}$，故在同一族上最终同样失败。
+
+这直接由各界的方向得到。第二式预算由第一式中的相位范数经三角不等式及 $|\omega_\infty|\le a_\Gamma+b_\Gamma t^2$、$|\omega_{\mathcal P}|\le2\mathfrak d_S$ 得到，所以只能增加被扣预算。
+
+上述负号仅属于充分预算证书；它没有给出 $N_S(f_\tau)>\sigma_S(f_\tau)-D_{\mathrm{lin},S}(f_\tau)$，也没有反驳 $N_S\le U_{\mathrm{phase},S}$。更早的 $\|CX_f\|_{\mathrm{HS}}^2$ 和负半轴 Hankel 矩没有被此论证反驳。负的 Gamma 相位经范数取绝对方向，再乘外层系数 $2$，是本证书的主项损失。标准调制、digamma 渐近及固定 $S$ 评价前提都作为复用输入；本章只作这份特定预算的条件性适用范围判定，不认证其组合的原创性。
+
+## 追加锚（本行以下为增补区）
