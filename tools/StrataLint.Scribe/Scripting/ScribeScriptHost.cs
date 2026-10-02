@@ -169,11 +169,7 @@ public static class ScribeScriptHost
             {
                 foreach (var attribute in declaration.AttributeLists.SelectMany(list => list.Attributes))
                 {
-                    var name = attribute.Name.ToString();
-                    var attributeName = typeof(ScribeSharedSourceAttribute).Name;
-                    var shortAttributeName = attributeName[..^"Attribute".Length];
-                    if (!name.EndsWith(attributeName, StringComparison.Ordinal)
-                        && !name.EndsWith(shortAttributeName, StringComparison.Ordinal))
+                    if (!IsSharedSourceAttribute(attribute.Name))
                     {
                         continue;
                     }
@@ -211,6 +207,30 @@ public static class ScribeScriptHost
         return failure is null
             ? (sources.ToImmutableArray(), null)
             : (null, failure);
+    }
+
+    private static bool IsSharedSourceAttribute(NameSyntax name)
+    {
+        var identifier = name switch
+        {
+            IdentifierNameSyntax simple => simple,
+            QualifiedNameSyntax
+            {
+                Right: IdentifierNameSyntax member,
+                Left: QualifiedNameSyntax
+                {
+                    Right: IdentifierNameSyntax { Identifier.ValueText: "Scribe" },
+                    Left: var prefix,
+                },
+            } when prefix is IdentifierNameSyntax { Identifier.ValueText: "StrataLint" }
+                or AliasQualifiedNameSyntax
+                {
+                    Alias.Identifier.ValueText: "global",
+                    Name.Identifier.ValueText: "StrataLint",
+                } => member,
+            _ => null,
+        };
+        return identifier?.Identifier.ValueText is "ScribeSharedSource" or "ScribeSharedSourceAttribute";
     }
 
     private static (MemoryStream? Image, string? EntryType, ScribeScriptFailure? Failure) Compile(

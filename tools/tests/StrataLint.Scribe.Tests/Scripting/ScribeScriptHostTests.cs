@@ -100,6 +100,46 @@ public sealed class ScribeScriptHostTests
     }
 
     [Fact]
+    public void UnrelatedAttributeSuffixDoesNotDeclareSharedSource()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        Write(root, path, """
+            internal sealed class OtherScribeSharedSourceAttribute(string path) : Attribute
+            {
+                public string Path { get; } = path;
+            }
+            [OtherScribeSharedSource("Outside/Shared.scribe.cs")]
+            internal sealed class Probe : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create() => DocumentDefinition.Create(
+                    ScribeNode.Create("digest", H("title"), Blocks(Paragraph(Text("content")))));
+            }
+            """);
+
+        var result = ScribeScriptHost.Execute(root.Path, path);
+
+        Assert.True(result.IsSuccess, result.Failure?.ToString());
+    }
+
+    [Theory]
+    [InlineData("ScribeSharedSource")]
+    [InlineData("ScribeSharedSourceAttribute")]
+    [InlineData("StrataLint.Scribe.ScribeSharedSource")]
+    [InlineData("StrataLint.Scribe.ScribeSharedSourceAttribute")]
+    [InlineData("global::StrataLint.Scribe.ScribeSharedSource")]
+    [InlineData("global::StrataLint.Scribe.ScribeSharedSourceAttribute")]
+    public void ExactSharedSourceAttributeNamesAreRecognized(string name)
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        Write(root, path, $"[{name}(\"Blueprint/D5/S0/Test/Missing.scribe.cs\")] internal sealed class Probe {{ }}");
+
+        Assert.Equal(ScribeScriptFailureCode.SharedSourceMissing,
+            ScribeScriptHost.Execute(root.Path, path).Failure?.Code);
+    }
+
+    [Fact]
     public void ScriptsVerifyReturnsZeroForAnEquivalentSyntheticSet()
     {
         using var root = PrepareCommandRoot();
