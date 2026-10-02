@@ -44414,3 +44414,104 @@ $$
 这些是（317.10）—（317.11）的直接应用，不是新增的RH等价判据。最终的尾域结论也不自动检查任何有限初段。符号来源仍须属于被选出的同一整数族；无关地址或无关因子配置上的最优下界不能代替（319.2）。
 
 ## 追加锚（本行以下为增补区）
+## 320. CA宿主条件化后的增长乘子矩
+
+本节及 §§321–322 只组合已有 CA价格、非负除数增量和Bohr容量机制，研究同一个实际乘子族；不重证数位分类、素数尺度或Dirichlet逼近。价格、$X\sim P$、$Z(C)\sim e^\gamma\log P$ 与 $\Delta(C)\to0$ 采用 §317 的既有来源；非负增长矩的Euler接口见 §§216、222 及 [完整增量文献条目](../../../Library/Fourier/fibentropy2026weightedaggregates.md)。Bohr背景见 [相位盒文献条目](../../../Library/Fourier/fibcharacter2026bohrbarrier.md)。新增组合为纸面推导，尚无对应Lean核验或原创性声明。
+
+令 $C\to\infty$ 沿实际极大丰数取值，$P=P^+(C)$，并取任一使 $C$ 全局最大化 $Z(n)n^{-\epsilon}$ 的正价格。记
+
+$$
+F_C(t)=\frac{Z(Ct)}{Z(C)},\qquad a_p=v_p(C),\qquad
+R_{C,p}=\frac{(1-1/p)^{-1}}{Z(p^{a_p})}
+=\frac1{1-p^{-a_p-1}}.
+\tag{320.1}
+$$
+
+$F_C$ 是乘子 $t$ 上的乘法函数；它没有假设 $(C,t)=1$。局部值为 $F_C(p^v)=Z(p^{a_p+v})/Z(p^{a_p})$，所以 $1\le F_C(t)\le Z(t)$。后一上界与 [既有Beatty第二矩输入](../../../Library/ArithSums/guloglunevans2008beatty.md) 可给一个对 $C$ 统一的固定函数类，但固定斜率平均不能直接处理本节变化的 $C\varphi$ 与缩小的相位窗。以下不调用固定函数类定理来认证增长阶矩。
+
+**命题 320.1（全乘子区间的条件化增长矩）。** 固定 $0<\chi<1/2$，令 $s=\chi P\log P$。定义乘法增量
+
+$$
+b_{C,s}(1)=1,\qquad
+b_{C,s}(p^v)=F_C(p^v)^s-F_C(p^{v-1})^s\ge0,
+\qquad
+M_C(s)=\prod_p\left(1+\sum_{v\ge1}\frac{b_{C,s}(p^v)}{p^v}\right).
+\tag{320.2}
+$$
+
+这个Euler乘积收敛，且
+
+$$
+\log M_C(s)=o(\sqrt P),\qquad
+\sum_{1\le t\le T}F_C(t)^s\le T M_C(s)
+\quad(T\in\mathbb N_{>0}).
+\tag{320.3}
+$$
+
+第二式对所有 $T$ 同时成立；第一式的误差不依赖所选的并列最优价格。
+
+证明。对 $p\le P$，比较同一价格下的 $Cp$ 与 $C$，得到
+
+$$
+\frac{p^{-a_p-1}}{Z(p^{a_p})}\le e^{\epsilon\log p}-1,
+\qquad
+R_{C,p}-1\le\frac p{p-1}(e^{\epsilon\log p}-1).
+\tag{320.4}
+$$
+
+局部增量的望远镜上界给
+
+$$
+0\le\sum_{v\ge1}\frac{b_{C,s}(p^v)}{p^v}
+\le\frac{R_{C,p}^s-1}{p}.
+\tag{320.5}
+$$
+
+取固定 $\chi<\chi'<1/2$。既有价格界给 $s\epsilon\le\chi P\log(1+1/P)\to\chi$，且 $0\le\epsilon\log p\le\log(1+1/P)\to0$ 对 $p\le P$ 统一。因此先固定充分大的素数截止 $p_0$，再取充分大的宿主，便有
+
+$$
+s\log R_{C,p}\le\chi'\log p\quad(p_0<p\le P).
+\tag{320.6}
+$$
+
+对有限的 $p\le p_0$，$s\log R_{C,p}=O_\chi(\log p)$，局部乘积有统一常数上界。利用（320.5）并将素数扩大为全部整数，旧素数部分满足
+
+$$
+\sum_{p\le P}\log\left(1+\sum_{v\ge1}\frac{b_{C,s}(p^v)}{p^v}\right)
+\le O_\chi(1)+\sum_{2\le n\le P}n^{\chi'-1}
+=O_{\chi,\chi'}(P^{\chi'})=o(\sqrt P).
+\tag{320.7}
+$$
+
+对 $p>P$，宿主指数为零，$F_C(p^v)=Z(p^v)$，所以 §222 的一般局部尾界直接适用：
+
+$$
+\sum_{v\ge1}\frac{b_{C,s}(p^v)}{p^v}
+\le\frac{s}{p(p-1)}e^{s/(p-1)}.
+\tag{320.8}
+$$
+
+不使用仅在 $s/(p-1)\le1$ 时成立的线性化。将素数尾扩大为全部整数尾，得到
+
+$$
+\begin{aligned}
+\sum_{p>P}\log\left(1+\sum_{v\ge1}\frac{b_{C,s}(p^v)}{p^v}\right)
+&\le s e^{s/P}\sum_{n>P}\frac1{n(n-1)}\\
+&=\frac{s}{P}e^{s/(P-1)}
+=O(\log P\,P^{\chi+o(1)})=o(\sqrt P).
+\end{aligned}
+\tag{320.9}
+$$
+
+这也对每个固定宿主证明尾乘积收敛。合并两部分得增长矩界。最后，既有非负Möbius增量接口给 $F_C(t)^s=\sum_{d\mid t}b_{C,s}(d)$；所有项非负，因此
+
+$$
+\sum_{t\le T}F_C(t)^s
+=\sum_{d\le T}b_{C,s}(d)\left\lfloor\frac Td\right\rfloor
+\le T\sum_{d\ge1}\frac{b_{C,s}(d)}d=T M_C(s).
+\tag{320.10}
+$$
+
+这里直接控制增长的 $s$ 与同一宿主的完整权重，没有从固定 $s$ 定理的隐含常数外推。$\square$
+
+## 追加锚（本行以下为增补区）
