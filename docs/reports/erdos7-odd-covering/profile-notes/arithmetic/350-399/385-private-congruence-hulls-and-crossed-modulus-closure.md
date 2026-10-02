@@ -24696,15 +24696,15 @@ question remains open.
 ## 210. Fixed source phases give an exact attainment criterion
 
 The CRT part of (MR4) has a simple boundary when a source contract fixes the
-cofactor phase of every new high class.  Let (F) be a nonempty
-(N)-periodic set with
+cofactor phase of every new high class. Let \(F\) be a nonempty
+\(N\)-periodic set with
 
 \[
  \Gamma_N(F)=3^{e-1}G,
 \]
 
-and let (s_1,s_2,s_3) be three distinct divisors of (G).  For a free phase
-choice (w\in F), the three arithmetic classes are the unique CRT classes
+and let \(s_1,s_2,s_3\) be three distinct divisors of \(G\). For a free phase
+choice \(w\in F\), the three arithmetic classes are the unique CRT classes
 with
 
 \[
@@ -24712,44 +24712,161 @@ with
  h_i\equiv w+\beta_i3^{e-1}\pmod {3^e},
 \]
 
-where ((\beta_1,\beta_2,\beta_3)) is a permutation of ((0,1,2)).  They
-cover every (N)-fibre of (F): the cofactor condition follows from
-(s_i\mid G), and the three next ternary digits are covered once each.
-When the top ternary layer is fully released, the labels (3^es_i) are
+where \((\beta_1,\beta_2,\beta_3)\) is a permutation of \((0,1,2)\). They
+cover every \(N\)-fibre of \(F\): the cofactor condition follows from
+\(s_i\mid G\), and the three next ternary digits are covered once each.
+When the top ternary layer is fully released, the labels \(3^es_i\) are
 fresh from the retained family and are distinct.
 
 Suppose instead that a same-source contract prescribes cofactor phases
-\(ho_i\pmod {s_i}\).  Then the arithmetic choice with these three labels is
-attainable if and only if there are (w\in F) and a permutation
-((\beta_1,\beta_2,\beta_3)) such that
+\(\rho_i\pmod {s_i}\). Then the arithmetic choice with these three labels is
+attainable if and only if there are \(w\in F\) and a permutation
+\((\beta_1,\beta_2,\beta_3)\) such that
 
 \[
  \rho_i\equiv w\pmod {s_i}\qquad(1\le i\le3),
 \]
 
 and the prescribed ternary phases agree with
-(w+\beta_i3^{e-1}\pmod {3^e}).  Necessity follows by restricting the repair
- to every (N)-fibre in (F): each next ternary digit occurs, so every
-cofactor branch must accept every base point.  Sufficiency is the CRT
-construction above.  Thus the obstruction is phase alignment, not the hull
+\(w+\beta_i3^{e-1}\pmod {3^e}\). Necessity follows by restricting the repair
+to every \(N\)-fibre in \(F\): each next ternary digit occurs, so every
+cofactor branch must accept every base point. Sufficiency is the CRT
+construction above. Thus the obstruction is phase alignment, not the hull
 or the divisor sum.
 
 A finite contract-level example is
 
 \[
- p=3,qquad e=2,qquad N=75,qquad Q=225,qquad F=[1]_{75}.
+ p=3,\qquad e=2,\qquad N=75,\qquad Q=225,\qquad F=[1]_{75}.
 \]
 
-Here (Gamma_N(F)=75=3^{e-1}\cdot25), and the arithmetic divisors are
-(s_1,s_2,s_3=1,5,25).  Free phases use (w=1), so the (5)- and
-(25)-cofactor phases are (1).  If the source contract prescribes phase
-(0) modulo both (5) and (25), no classes with labels (45) and (225)
-can meet (F), even though the unconstrained CRT classes with phases from
-(w=1) cover it.  This does not form a whole EB1 cover; it only shows that a
+Here \(\Gamma_N(F)=75=3^{e-1}\cdot25\), and the arithmetic divisors are
+\(s_1,s_2,s_3=1,5,25\). Free phases use \(w=1\), so the \(5\)- and
+\(25\)-cofactor phases are \(1\). If the source contract prescribes phase
+\(0\) modulo both \(5\) and \(25\), no classes with labels \(45\) and \(225\)
+can meet \(F\), even though the unconstrained CRT classes with phases from
+\(w=1\) cover it. This does not form a whole EB1 cover; it only shows that a
 fixed source-phase contract is an additional attainment condition.
 
 Consequently, if “same source” means only actual CRT phases chosen from the
-complete responsibility set, (MR4) already supplies attainment.  If it means
+complete responsibility set, (MR4) already supplies attainment. If it means
 fixed prescribed source phases, the exact remaining obligation is the phase
-alignment criterion above for every admissible low class.  Neither reading by
+alignment criterion above for every admissible low class. Neither reading by
 itself proves the unrestricted Erdős #7 forcing statement.
+
+## 211. Free-source attainment is one actual source map
+
+The free-source construction in Section 210 does not require an external
+choice of unrelated phases. It uses one actual periodic responsibility set
+and a different witness in that same set for each next \(p\)-digit. This is
+the precise source contract supplied by (MR4).
+
+Let \(p\) be odd, \(Q=p^eM\) with \(p\nmid M\), and \(N=Q/p\). Let \(F\)
+be \(N\)-periodic and nonempty, and suppose
+
+\[
+ \Gamma_N(F)=p^{e-1}G.
+\]
+
+Choose \(w\in F\), and choose distinct divisors
+\(s_1,\ldots,s_p\mid G\). For each \(i\), let
+\(\beta_i\in\{0,\ldots,p-1\}\) be a permutation of the \(p\) next
+digits. Since \(N=p^{e-1}M\) and \(p\nmid M\), there is a
+\(k_i\in\{0,\ldots,p-1\}\) with
+
+\[
+ k_iM\equiv \beta_i\pmod p.
+\]
+
+Set
+
+\[
+ x_i=w+k_iN.
+\]
+
+Periodicity gives \(x_i\in F\). Also \(s_i\mid N\), so
+\(x_i\equiv w\pmod {s_i}\), while
+
+\[
+ x_i\equiv w+\beta_i p^{e-1}\pmod {p^e}.
+\]
+
+Therefore the CRT class \(H_i\) used in (MR4), defined by
+
+\[
+ H_i=[x_i]_{p^e s_i},
+\]
+
+has an actual witness \(x_i\) in the same \(F\). The witnesses may differ
+with \(i\); requiring one fixed integer to witness all \(H_i\) would be a
+different and generally impossible contract, because the \(p\) classes have
+different next \(p\)-digits.
+
+For every \(x\in F\), the definition of \(\Gamma_N(F)\) gives
+\(x\equiv w\pmod {s_i}\) for every \(i\). Exactly one \(i\) has
+\(x\equiv w+\beta_i p^{e-1}\pmod {p^e}\), so \(x\in H_i\). Hence
+
+\[
+ F\subseteq\bigcup_{i=1}^p H_i.
+\]
+
+If \(E=C\mathbin{\dot\cup}F\) with \(C=[c]_d\) and \(F=E\setminus C\),
+then \(C\cup H_1\cup\cdots\cup H_p\) covers the complete liability \(E\).
+Under the full top-layer-release hypotheses already used in (MR4), the
+labels \(p^es_i\) are fresh and pairwise distinct. Thus free-source
+attainment is a single-source, whole-liability construction; the remaining
+unrestricted gap is the forcing of a low class and packet for which this
+construction yields a strict EB1 descent.
+
+
+## 212. Vacant mixed moduli give a source-compatible strict route
+
+[Report 528](../500-549/528-surviving-fibre-credits-control-arbitrary-phases-at-ternary-height-one.md), in its result (FC1128), supplies a separate strict-descent
+mechanism that does not use an arithmetic hull minimum. Reuse it under its
+actual hypotheses: let \(D\) be the divisor-closed numerical inventory of an
+EB1-minimal whole cover, with the retained class \(0\pmod 3\). Let \(h>1\)
+be a \(3\)-free original, and suppose that two distinct nonunit divisors
+\(f,g\mid h\) satisfy
+
+\[
+ 3f\notin D,\qquad 3g\notin D.
+\]
+
+Then FC1128 proves, for every phase \(c\bmod h\),
+
+\[
+ q_h(c)=\#\{u\in D:h\mid u,\ a_u\equiv c\pmod h\}\le1.
+\]
+
+If two distinct proper multiples \(u,v\) of \(h\) had the same phase \(c\),
+move the \(h\)-class to phase \(c\), delete \(u,v\), and add the two fresh
+classes
+
+\[
+ 1\pmod 3,\quad a_h\pmod f,
+ \qquad
+ 2\pmod 3,\quad a_h\pmod g.
+\]
+
+Together with the retained \(0\pmod3\) class, these two new classes cover the
+entire old \(h\)-class, with all other coordinates unrestricted. Their
+numerical moduli \(3f,3g\) are distinct and absent from the retained
+inventory. The number of classes is unchanged, while
+
+\[
+ 3(f+g)\le6h<8h\le u+v,
+\]
+
+so the modulus-sum tie-break is strictly reduced. This is a
+source-compatible whole-class replacement, and it retains the original
+phase \(a_h\); it is stronger than a repair of selected private points.
+
+The route therefore closes every EB1 branch that supplies both the two vacant
+labels and a repeated phase among proper \(h\)-multiples. It does not prove
+that such a branch exists in every hypothetical cover: the vacancy condition
+and the repeated-phase pair are separate forcing obligations. In the
+remaining branch, Section 211's free-source MR4 construction still requires a
+low class and a packet whose source-compatible price is strictly below the
+deleted packet. The global problem is consequently reduced to forcing one of
+these two source-preserving strict routes, rather than comparing an
+unrealized arithmetic hull with EB1.
