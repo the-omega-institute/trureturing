@@ -73,6 +73,10 @@ def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := d
     found := found.push ⟨owner, value, range⟩
   for entry in entries do
     unless entry.command.isOfKind ``Parser.Command.declaration do continue
+    if entry.command[1].isOfKind ``Parser.Command.definition then
+      unless entry.sourceName.any (fun sourceName =>
+          names.any (fun name => privateToUserName name == sourceName)) do
+        throwError "contract.discovery:compiled_inventory_missing:{owner}"
     let relevant := (entry.command.find? fun node =>
       node.isIdent && SourceAudit.heads.any (SourceAudit.isHeadSpelling node)).isSome
     unless relevant do continue

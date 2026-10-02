@@ -56,6 +56,13 @@ unsafe def unsafeEntry : Seal := { rootId := .anonymous, options := #[] }
 def relay : Seal := forwarded
 
 run_meta do
+  let mut sourceError := "accepted"
+  try
+    discard <| Discovery.auditModule `Synthetic.aliasOnly
+      "def extra : LeanInformationAuditRegTests.ContractNegative.AliasType := { rootId := Lean.Name.anonymous, options := #[] }"
+  catch ex => sourceError := ← ex.toMessageData.toString
+  assertTest "inventory.alias_source_without_compiled_entry"
+    (sourceError.startsWith "contract.discovery:compiled_inventory_missing")
   for (name, expected) in #[
       (``viaAlias, "contract.discovery:type_alias_or_wrapper"),
       (``asFunction, "contract.discovery:forall"),
@@ -75,6 +82,10 @@ run_meta do
     value := (← getConstInfo ``forwarded).value!,
     hints := .opaque, safety := .safe }
   addDecl (.defnDecl value)
+  let mut openError := "accepted"
+  try discard <| Discovery.checkDefinition (.defnInfo { value with value := .bvar 0 })
+  catch ex => openError := ← ex.toMessageData.toString
+  assertTest "compiled.open_term" (openError.startsWith "contract.discovery:open_term")
   let mut error := "accepted"
   try discard <| Discovery.requireRange noRange.name
   catch ex => error := ← ex.toMessageData.toString
