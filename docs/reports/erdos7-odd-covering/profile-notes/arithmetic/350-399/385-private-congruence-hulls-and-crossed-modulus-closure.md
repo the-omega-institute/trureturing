@@ -15396,3 +15396,509 @@ No selected point substitutes for a full trace: all traces on the declared finit
 The useful additional interface is one extra complete cover obtained by matching whole private donor liabilities to existing spare original labels, with PH4 giving an exact arithmetic adjacency test. It can share a spare root across output columns without copying any original label.
 
 No unconditional label allocation or strict descent for every EB1 source was obtained. In particular, private-trace coverage is sufficient for the declared single or pairwise-disjoint donor deletions; arbitrary simultaneous donor deletions require their joint original obligation and cannot use LA3. Replacing LA2 by one private witness per donor, or by pointwise covering multiplicity alone, is not justified.
+
+## 124. Complete cofactor fibres refine the actual joint-liability charge
+
+Apply the conditional normalization in [Report572, FS2--FS3a](../550-599/572-compatible-fibres-lift-one-six-prime-query-law.md#1-a-compatible-fibre-lift-preserves-the-pure-q-query-contribution) to the blocked-tree source in Report375 JL1--JL5. Report375 LM11 already retains cofactor incidence on a fixed section with a complete q-marginal; the source here instead retains every complete cofactor fibre above the selected joint-liability tree. The conditioning construction and tree duality are reused.
+
+The following charge keeps arbitrary original heights and phases. Its useful uniform density and one adequate law on the blocked ternary words remain conditional. No new Lean verification or unrestricted descent is asserted.
+
+### The exact source and a marginal-preserving law
+
+Use [Report375, JL1](375-deep-prime-prefix-projections-and-tree-contraction.md#81-one-actual-joint-region) with r=3:
+
+    Q=3^H q^G M, gcd(M,3q)=1, q>3,
+    J={d in D:q divides d and v_3(d)<H},
+    K=D minus J,
+    E_J=(Z/Q) minus union_(d in K) A_d,
+    t=q-2.
+
+Every original q-height is at most G. For each blocked u in U, take one of the existing complete t-ary depth-G trees T_u whose leaves lie in the projection E_u. Choose all these trees once for the one actual original family.
+
+For EVERY selected leaf xi define its complete actual cofactor fibre and density:
+
+    V_(u,xi)={v mod M:(u,xi,v) in E_J},
+    delta_(u,xi)=|V_(u,xi)|/M > 0.                    (CF1)
+
+The fibres may differ, and the measure is not an independent product on the retained source. Applying FS2 gives the one probability
+
+    nu_u(u,xi,v)=t^(-G)/|V_(u,xi)|
+        if xi in T_u and v in V_(u,xi),              (CF2)
+
+with zero mass elsewhere. Its q-marginal is uniform on T_u; hence all JL3 q-prefix caps are unchanged. Every retained original still has mass zero. Unlike replacing a source by an unrelated favourable cofactor, this construction distributes mass only among all the actual witnesses in each original nonempty fibre.
+
+For a fixed original deleted label d=3^a q^e s, write its actual ternary, q and cofactor phases as alpha_d, b_d and c_d respectively. Here a<H, 1<=e<=G and s|M. Its exact probability is
+
+    nu_u(A_d)
+      =1_(u=alpha_d mod3^a) t^(-G)
+         sum_(xi in T_u, xi=b_d modq^e)
+           |V_(u,xi) intersect [c_d]_s|/|V_(u,xi)|. (CF3)
+
+This retains the actual cofactor incidence, including zero intersections. A full cofactor cylinder modulo s has M/s points, so the usable upper charge is
+
+    nu_u(A_d)
+      <=1_(u=alpha_d mod3^a) t^(-G)
+         sum_(xi in T_u, xi=b_d modq^e)
+           min(1,1/(s delta_(u,xi))).                (CF4)
+
+All terms concern the SAME CF2 law. No maximum taken under a different cofactor law is inserted. The right side is at most the old literal-tree prefix price, and therefore at most t^(-e) when the ternary phase is active.
+
+Now take ONE probability sigma on U and form nu=sum_u sigma(u)nu_u. The exact original cofactor ratios CF3, or the weaker leafwise prices CF4, may be mixed with these same weights. Whole original coverage supplies
+
+    1 <= sum_(d in J) nu(A_d)
+      <= sum_(d=3^a q^e s in J)
+           sum_(u in U, u=alpha_d mod3^a) sigma(u) t^(-G)
+             sum_(xi in T_u, xi=b_d modq^e)
+               min(1,1/(s delta_(u,xi))).            (CF5)
+
+The first inequality uses coverage of E_J by the whole deleted family, including joint owners. Individual private regions never replace E_J. A strict upper charge below one for the selected actual source contradicts blockage under the whole-cover premise. If all putatively blocked words can be excluded, JL2 supplies the existing complete strict descent. Neither the existence of such low charges nor that global exclusion is established here.
+
+### A uniform density is only a conditional simplification
+
+Suppose that for every u in the support of the SAME sigma, all leaves xi of its selected tree have delta_(u,xi)>=delta>0. A length-e prefix has at most t^(G-e) selected leaves, so
+
+    nu_u(A_d)
+      <=1_(u=alpha_d mod3^a) t^(-e) min(1,1/(s delta)). (CF6)
+
+If this same sigma has the LM4 caps beta_a, then
+
+    1 <= sum_(d=3^a q^e s in J)
+             beta_a t^(-e) min(1,1/(s delta))
+      <= A_delta(M) [sum_(a=0..H-1) beta_a]
+                     (1-t^(-G))/(q-3),             (CF7)
+
+    A_delta(M)=sum_(s|M) min(1,1/(s delta)).         (CF8)
+
+The last step uses only one original numerical label for each (a,e,s). This gives the conditional replacement
+
+    q-3 < A_delta(M) sum_(a=0..H-1) beta_a.         (CF9)
+
+Always A_delta(M)<=tau(M), with strict inequality whenever M has a divisor larger than 1/delta. Also
+
+    A_delta(M) <= delta^(-1) sum_(s|M)1/s
+               < delta^(-1) product_(ell|M) ell/(ell-1)
+
+when M>1; use the non-strict finite-product version at M=1. Thus a reserve bounded away from zero would replace the divisor-count growth in cofactor exponents by a reciprocal inventory. Such a reserve has NOT been derived from the original whole-cover assumptions. If a selected fibre is a singleton, the automatic uniform bound delta=1/M can give A_delta(M)=tau(M), with no gain. The leafwise CF4–CF5 must therefore be retained before this simplification.
+
+The unresolved global condition is one compatible choice of sigma, its trees and their actual fibres for which CF5, or CF7 under its extra premise, is below one for an appropriate nonconcentrated q. Separate optimizing laws for different labels, ternary depths or absorbed primes do not meet that condition.
+
+### Strict information gain on the existing fourteen-class control
+
+Reuse Report375 §9.4's SECOND finite control, whose original (residue,modulus) pairs are
+
+    (0,3),(4,9),(10,27),(28,81),(82,243),
+    (0,7),(1,21),(37,63),(136,189),(487,567),
+    (0,5),(7,15),(26,35),(76,105).
+
+The control is recorded in [Report375, section9.4](375-deep-prime-prefix-projections-and-tree-contraction.md#94-actual-odd-controls-exclude-a-local-geometric-replacement) and its [finite program](../../../frontier/cover-geometry/p-flat-constructor/joint_liability_global_bridge.py). The published local control is a distinct odd divisor-closed irredundant NONCOVER, with Q=8505, H=5, q=7, G=1, M=5. It is already rejected by LM8 and is not evidence against an EB1 whole-cover theorem.
+
+At the same u=1 mod243 used there, K is the q-free family: there are no full-ternary-height q-bearing originals. The pure-three guards all miss u. Original 0 mod5 excludes v=0, and original 7 mod15 excludes v=2. Thus directly from the displayed classes,
+
+    V_(1,xi)={1,3,4} for EVERY xi mod7,
+    delta_(1,xi)=3/5.                              (CF10)
+
+Take the literal complete t=5 depth-one tree with roots
+
+    T={0,1,2,5,6}.
+
+On roots 0,1,2, originals 7,21,63 cover all three actual cofactor points. On roots 5 and 6, the only active originals are respectively 35 and 105, each requiring v=1. Every other original misses these selected points. The CF2 law therefore gives
+
+    sum_(d in J) nu_1(A_d)
+        =3/5+2*(1/5)*(1/3)=11/15<1.               (CF11)
+
+CF4 attains that same value: s=1 for the first three labels, while s=5 gives min(1,1/(5*(3/5)))=1/3 for the last two. The missing mass 4/15 lies at the four actual source points with roots 5 or 6 and v=3 or 4. These are original holes; hence the whole-cover lower bound in CF5 correctly fails for this known noncover.
+
+If the cofactor incidence is discarded, the five original prefixes meeting this same tree each cost 1/5, totaling exactly one. Covering all of E_u, which is all seven q-roots, costs 7/5 in JL5 because all seven available original first-q prefixes are distinct. Thus the stronger charge detects information that neither corresponding prefix-only sum retains. This is a strict comparison on an already available actual arithmetic source, not a new noncoverage result and not a replacement for the still-missing all-EB1 quantifiers.
+
+### Scope of the result
+
+The additional reusable content is the actual-fibre charge CF3–CF5 for the existing joint-liability tree, its conditional divisor-sum replacement CF7–CF9, and the exact strict comparison CF10–CF11 on the existing control. The general conditional normalization, tree duality and selected-source union bound are explicitly reused. No positivity of the complete survivor, independent cofactor law, two-copy projection, useful uniform delta, or successful descent for every nonconcentrated source is asserted.
+
+## 125. One original phase bounds the cumulative deep supplier inventory
+
+Keep one all-concentrated EB1 original cover, with opposite-color
+primes p in S_o and q in S_i. The original prime phases are normalized
+to zero. The following bounds reuse DR1--DR2 and the vacant
+opposite-color repair RG4. They concern actual original phase groups,
+not numerical divisibility alone.
+
+### A deep mixed parent has at most p-2 descendants in one phase
+
+Let ell be a prime of S_i, and let the original label
+
+    d=3^a ell, a>=p-2
+
+be present. For a non-own actual phase c modulo d, let J_c be ALL
+proper original multiples of d with that phase, and put r=|J_c|.
+Then
+
+    r<=p-2.                                         (CD1)
+
+For a nonempty group, use DR1 to move the original parent to c and
+remove its entire J_c. The exact whole-cover hole is the complete
+original P_d. Apply RG4 with the original d-prefix and cofactor ell:
+for j=0,...,p-2, the repair AP has conditions
+
+    x=a_d modell, x=a_d mod3^j, x=j+1 modp,
+    numerical modulus p*ell*3^j.
+
+Every private point avoids retained A_p and has the original d-prefix,
+so these p-1 classes cover all of P_d. Each label is fresh by CP1,
+because it contains opposite-color primes p and ell. Their total is
+
+    W_rep=p*ell*(3^(p-1)-1)/2.
+
+If r>p-1, DR2 gives a class-count contradiction. If r=p-1, every
+removed label is a proper odd multiple of d and is at least3d. Hence
+
+    sum_(e in J_c)e >=3*(p-1)*d
+       >=(p-1)*3^(p-1)*ell > W_rep,
+
+contradicting DR2's modulus-sum budget at unchanged class count.
+This proves CD1. The repair uses the parent's entire P_d; no private
+region of a descendant is substituted for it.
+
+### All deep suppliers in one actual live cylinder share the budget
+
+Fix the actual same-color auxiliary coordinate w_* and divided
+q-tail v_* from section118, with the nonempty residual slice
+
+    Y_*={s:(s,w_*,v_*) in Y}.
+
+Choose h_0 with p-1<=h_0<=H, put a_0=h_0-1, and choose an actual
+ternary prefix alpha modulo3^a_0 with
+
+    Y_* intersect[alpha]!=empty.
+
+Let W_alpha be ALL original same-color q-free mixed labels
+3^b n with b>=h_0 whose cofactor AP contains w_* and whose whole
+ternary cylinder is contained in[alpha]. Here n>1, gcd(n,3q)=1,
+and every prime of n lies in S_i minus {q}. Put N_alpha=|W_alpha|.
+Then
+
+    N_alpha <= (p-2)*|S_i minus {q}|.                 (CD2)
+
+For each prime ell in S_i minus {q}, collect the members whose
+cofactor is divisible by ell. If this collection is nonempty,
+divisor closure supplies the ONE original parent
+
+    d_ell=3^a_0*ell.
+
+Every collected label is a proper multiple of d_ell. Its actual
+phase modulo d_ell is the same pair(alpha,w_* modell). Thus the
+whole collection lies in one actual descendant phase group of that
+parent. Since a_0>=p-2, CD1 bounds it by p-2. Assign each supplier
+once to any one of its dividing cofactor primes and sum these
+bounds. This proves CD2 without counting a higher power of ell as
+another prime slot, and without executing different repairs together.
+
+The original parent phase need not equal(alpha,w_* modell); a
+nonempty descendant group makes them different by comparable
+class disjointness. No phase is copied onto the original parent.
+
+### Complete losses at different depths cannot reuse suppliers
+
+For any live s_* in Y_* intersect[alpha], let D_h be its two
+complete altered children at depth h, as in section122. Define
+
+    L_*={h:h_0<=h<=H, D_h intersect Y_*=empty}.
+
+Every h in L_* requires at least one actual mixed supplier by AS3.
+All of its suppliers lie in W_alpha. Each supplier's whole ternary
+cylinder is inside D_h, and the D_h are pairwise disjoint: their
+words first differ from s_* at different digits. Thus suppliers
+at different lost depths are distinct original labels, giving
+
+    |L_*| <= sum_(h in L_*)|S_h|
+          <= N_alpha
+          <= (p-2)*|S_i minus {q}|.                 (CD3)
+
+In particular, among the H-h_0+1 depths there are at least
+
+    max(0,H-h_0+1-N_alpha)
+
+at which some actual word in an altered child remains in Y_*.
+This supplies surviving words only; it does not say that a whole
+altered child survives or that those words share their higher digits.
+When h_0>H there are no depths to count, so no existence claim follows.
+
+The inventory statement CD2 applies to every actual live prefix at
+this fixed source, and CD3 to every live reference word in that
+prefix. They do not pool different auxiliary coordinates or transfer
+private constraints to a different parent. No strict descent for every
+all-concentrated cover, no nonconcentrated-source distribution, and
+no new Lean verification is asserted.
+
+## 126. A bounded original inventory yields one law on the complete live slice
+
+Use section125's SAME actual slice and live prefix. Write b=a_0=h_0-1,
+L=Y_* intersect[alpha], N=N_alpha and C=(p-2)|S_i minus {q}|.
+CD2 gives N<=C. After fixing w_*, every active q-free mixed original
+is one literal ternary cylinder. Any such cylinder of height at most b
+meeting[alpha] would contain its live point, so no such lower cylinder
+is active. The same observation excludes lower pure-three guards.
+
+Consequently L is exactly the complement inside[alpha] of the N
+counted mixed cylinders and the actual pure-three guards, at most one
+per absolute height. No further mask or independently selected
+cofactor is inserted. The proof below uses the actual count N; it
+does not assume the mixed cylinders are pairwise disjoint.
+
+### A single-live-child node spends a distinct mixed label along its path
+
+Prune the complete ternary tree below alpha by keeping exactly the nodes having at least one descendant in L. Each live nonleaf has one, two or three live children.
+
+Consider a live node at absolute depth d<H that has exactly one live child. Its other two complete child cylinders are dead and contain
+
+    2*3^(H-d-1)
+
+original complete ternary words. A pure guard meeting this node has depth at least d+1; otherwise it would kill every descendant and the node would not be live. At most one pure guard is available at each depth. Their total possible coverage of those two children is therefore at most
+
+    sum_(e=d+1..H)3^(H-e)=(3^(H-d)-1)/2,
+
+strictly less than2*3^(H-d-1). The difference is(3^(H-d-1)+1)/2>0. Consequently some point of the dead pair is covered by an actual mixed cylinder.
+
+The mixed cylinder containing that point is wholly contained in one of these two dead children. Indeed, if its depth were at most d, prefix nesting would make it contain the live node, a contradiction. Its greater depth places it inside a single child.
+
+Now fix ANY root-to-live-leaf path. The pairs of dead children belonging to different single-live-child nodes on this path are disjoint. The preceding containment, not disjointness alone, ensures that one mixed cylinder cannot pay for two such nodes. Choose one mixed original at each such node; these original labels are distinct. Hence every live path has at most N single-live-child nodes. The same bound applies to every initial segment of the path.
+
+This is the concrete additional counting step. It uses actual cylinder nesting and the finite one-pure-guard-per-height inventory; an arbitrary family of masks would not justify the injection.
+
+### One simultaneous law and all its prefix caps
+
+Start at alpha and, at every live nonleaf, choose uniformly among its live children. Continue to absolute depth H. This defines ONE probability mu supported on exactly L, with positive mass at every actual live leaf. It is not asserted to be Haar measure on L.
+
+For a live prefix beta at absolute depth a, put r=a-b. If u of the r preceding choices have only one live child, its probability is the product of their transition probabilities. Each of the other r-u choices has at least two live children. Since u<=min(N,r),
+
+    mu([beta]) <= 2^(-(r-u))
+               <= min(1,2^(N-r))
+               <= min(1,2^(C-r)).                 (BL1)
+
+A nonlive prefix has mass zero. Thus this SAME mu obeys, for every residue z and every b<=a<=H,
+
+    mu(s=z mod3^a)
+       <=min(1,2^(N-(a-h0+1)))
+       <=min(1,2^(C-(a-h0+1))).                   (BL2)
+
+No separate law is selected for different depths, residues, or original labels. Its mass is one on the actual fixed-cofactor slice Y_* intersect[alpha]. The full original q-tail v_* stays fixed throughout.
+
+At a=b the cap is1. If H=b, the tree has no transition and the assertion is trivial. If N=0, every live internal node has at least two live children and BL2 becomes2^(-(a-b)). If N exceeds the remaining height, the displayed caps are valid but may be vacuous. On the finite original carrier no bound for a>H is claimed.
+
+Writing a0=b, the SAME law has the requested full low-row prefix price
+
+    sum_(a=0..H-1) sup_z mu(s=z mod3^a)
+       <=sum_(a=0..H-1) min(1,2^(N-(a-a0)))
+       <a0+N+2<=a0+C+2.                          (BL3)
+
+The caps through depth a0 are1; after them at most N further cap terms are1, followed by the geometric tail1/2,1/4,... of total1. The infinite comparison profile therefore totals a0+N+2, and every finite truncation is STRICTLY smaller because its omitted tail is positive. This also handles H<=a0+1 directly. BL3 is only a property of this same slice law, not an LM4 distribution on U.
+
+
+Report375 DP6--DP7 already constructs supported laws on complete prefix
+subtrees. The existing pure-prefix capacity realization likewise
+handles one forbidden word at each depth. Here the additional source
+condition is the pathwise injection from a single-live-child node to
+an actual mixed original: at most N such defects occur on any live
+path. The general probability construction is reused with this
+explicit finite defect budget.
+
+The same-law bounds BL2--BL3 are independent of the maximum ternary
+height once the prime inventory and starting depth are fixed. They
+apply only to this all-concentrated Y_* slice. They neither put it in
+the nonconcentrated blocked set U nor supply a joint cofactor law
+across different w_* or different primes. No new Lean verification or
+unrestricted noncoverage is asserted.
+
+## 127. Retained full-height incidences bound the loss of blocked live fibres
+
+Use the general source in section124 and Report375 JL1, allowing
+arbitrary shared prime support and arbitrary original heights. Write
+
+    Q=3^H*q^G*M, q>3, gcd(M,3q)=1, t=q-2,
+    d=3^a_d*q^e_d*s_d, s_d|M,
+    J={d:e_d>=1, a_d<H},
+    T={d:e_d>=1, a_d=H}, K=D minus J.
+
+Let r_d be the actual original phase. On the non-q carrier
+X=(Z/3^H) times(Z/M), let R be the complete actual q-free residual
+and let L be its ternary projection. For each q-bearing original put
+
+    B_d={(u,v):u=r_d mod3^a_d, v=r_d mods_d}.
+
+For each actual x=(u,v) in R, the retained q-bearing union on its
+complete q-line is
+
+    D_x=union_(d in T, x in B_d)[r_d modq^e_d].
+
+Because x has no q-free owner, its complement is exactly
+
+    E_x=(Z/q^G) minus D_x
+       ={xi:(u,xi,v) in E_J}.                       (RE1)
+
+Thus this construction keeps the full joint deletion region.
+Define
+
+    W={x in R:D_x contains no complete
+                 3-ary depth-G prefix subtree},
+    U_*=projection_3(W).
+
+Then
+
+    U_* subset U,                                  (RE2)
+
+where U is Report375's set of words with no ternary tree avoiding
+the projected E_u. Indeed such an avoiding tree would be contained
+in D_x for every actual cofactor above that word, contrary to any
+witness x in W. The converse has not been established: different
+cofactor fibres can jointly block every avoiding tree. In particular
+U nonempty does not imply U_* nonempty.
+
+### An exceptional actual pair requires a full retained-tree payment
+
+Set
+
+    c(x)=sum_(d in T)3^(-e_d)*1_(B_d)(x).
+
+If x is outside W, D_x contains a complete ternary depth-G tree.
+Its uniform leaf law gives each incident original q-prefix of depth e
+mass at most3^(-e). The retained prefixes cover that whole tree, so
+
+    1_(R minus W)(x)<=c(x).                         (RE3)
+
+The branching factor here is3, while the ambient digit alphabet has q
+symbols. Integrating this pointwise inequality gives, for any finite
+nonnegative measure lambda on R and any subset A of R,
+
+    lambda(A minus W)
+      <=sum_(d in T)3^(-e_d)*lambda(A intersect B_d). (RE4)
+
+For each bad live WORD u in L minus U_*, choose one actual
+v_u in R_u. Every such pair is outside W. Every retained label in T
+has ternary height H, so it can be incident to only ONE of these
+chosen word-pairs. Consequently, for any set P of full ternary words,
+
+    |(L minus U_*) intersect P|
+       <=sum_(d in T, r_d mod3^H in P)3^(-e_d).     (RE5)
+
+Keeping the actual test v_u=r_d mods_d in this sum gives a sharper
+cofactor-sensitive bound. Dropping it gives the displayed upper
+bound, which in particular applies to every ternary prefix cell.
+
+Distinct original numerical labels allow at most one retained
+3^H*q^e*s per pair(e,s). Hence
+
+    |L minus U| <= |L minus U_*|
+       <=sum_(d in T)3^(-e_d)
+       <=tau(M)*(1-3^(-G))/2 < tau(M)/2.             (RE6)
+
+This replaces Report375 LM6's G*tau(M) phase-count estimate by a
+height-uniform retained-incidence bound on an explicitly smaller
+certified set U_*. For example tau(M)=8 permits at most three lost
+live words, independently of G. No lower bound on |L| is supplied.
+
+At any fixed actual pair, labels with ONE fixed cofactor s contribute
+at most sum_(e=1..G)3^(-e)<1/2 to c(x). Therefore every x outside W
+has at least THREE distinct actual numerical cofactors s_d among its
+incident retained labels. Their mere number is not sufficient for
+such an exception.
+
+### One law can preserve the entire actual ternary-cofactor marginal
+
+Suppose ONE probability theta on W is supplied. For each x in W,
+reuse Report375's finite-tree alternative: E_x contains a complete
+t-ary depth-G tree. Choose one such tree and its uniform leaf law.
+Sample x according to theta, then sample its q-leaf from that law.
+The resulting ONE original probability nu satisfies
+
+    support(nu) subset E_J,
+    projection_(u,v)(nu)=theta,
+    nu(A_d)=0 for every d in K,
+    nu(A_d)<=t^(-e_d)*theta(B_d) for every d in J.    (RE7)
+
+The q-prefix estimate is conditional on the unchanged pair x; a
+label is absent unless x belongs to its literal B_d. Whole original
+coverage of E_J now gives
+
+    1<=sum_(d in J)nu(A_d)
+      <=sum_(d in J)t^(-e_d)*theta(B_d).             (RE8)
+
+The ternary marginal sigma is the projection of this SAME theta and
+is supported on U_* subset U. All prefix masses and all cofactor
+incidences must use it. The q-tree kernels may depend on v here:
+this is a probability construction, not the cofactor-independent
+prefix map required to transport original APs.
+
+RE5 supplies a precise conditional certificate for binary prefix
+caps. Suppose a complete binary depth-(H-1) ternary prefix subtree
+has, in every one of its final cells P,
+
+    |L intersect P|
+       >sum_(d in T, r_d mod3^H in P)3^(-e_d).      (RE9)
+
+Every such cell then meets U_*. Choose one actual W-pair over each
+cell and assign equal binary leaf masses. The resulting same theta
+has ternary prefix masses at most2^(-a), simultaneously for all
+0<=a<H. Their sum is at most2*(1-2^(-H))<2. This is a sufficient
+certificate; RE9 has not been forced from EB1 or nonconcentration.
+The two live first roots of L cannot be transferred to U_* without
+checking their retained payments.
+
+A cofactor-sensitive density certificate follows directly from RE4.
+Normalize counting measure on X and write
+
+    delta=|R|/(3^H*M), delta_*=|W|/(3^H*M),
+    eta=(3^H*M)^(-1) sum_(d in T)3^(-e_d)|R intersect B_d|.
+
+Then
+
+    delta_*>=delta-eta,
+    eta<=3^(-H) sum_(d in T)3^(-e_d)/s_d
+        <=[sum_(s|M)1/s]*(1-3^(-G))/(2*3^H).        (RE10)
+
+If delta>eta, the uniform law theta on W exists and simultaneously
+obeys theta(B_d)<=3^(-a_d)/(s_d*delta_*) and the ternary prefix cap
+min(1,3^(-a)/delta_*). These follow from actual cylinder sizes under
+one joint law. The exact ratio |W intersect B_d|/|W| remains the
+more informative price in RE8. The condition delta>eta is unproved
+for a general source.
+
+### Complete-line counting rules out a tempting unconditioned shortcut
+
+For any finite nonnegative lambda on R put
+
+    T(lambda)=sum_(d in T)3^(-e_d)*lambda(B_d),
+    J(lambda)=sum_(d in J)t^(-e_d)*lambda(B_d).
+
+A proposed contradiction obtained by paying T(lambda) and discarding
+all conditioning information would require
+
+    J(lambda)<lambda(R)-T(lambda).
+
+The original whole-cover premise already forbids this inequality.
+For every actual x in R, all q^G points of its full q-line have
+q-bearing owners, so Haar counting gives
+
+    1<=sum_(d in J union T)q^(-e_d)*1_(B_d)(x).
+
+Integrate against the SAME lambda and use q^(-e)<=3^(-e) and
+q^(-e)<=t^(-e). This proves
+
+    T(lambda)+J(lambda)>=lambda(R).                 (RE11)
+
+Thus the shortcut is dominated before forgetting any original phase,
+cofactor incidence or height. This excludes that particular test; it
+does not exclude a useful conditional price on W, a different law on
+the larger U, or a legal whole-hole repair.
+
+The construction complements CF1--CF11. CF first chooses a tree in
+the projected joint fibre and then conditions its complete actual
+cofactor fibres; it remains available outside the certified U_*.
+RE7 first fixes actual(u,v) pairs in W and then chooses their q-trees.
+Neither law is automatically the other. Taking the smaller of their
+prices separately for different original labels would change the
+source and is unjustified.
+
+The unconditional additions are the retained-incidence erasure
+bounds RE3--RE6 on the original source. Their useful distribution
+consumers still need sufficient actual retained-payment margins or
+a suitable single theta. No universal such margin, unrestricted
+Erdos#7 conclusion, or new Lean verification is asserted.
