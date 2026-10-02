@@ -164,3 +164,39 @@ an unconditional application of the repeated-prime exposure result in
 [Report 381](381-repeated-prime-exposure-in-missing-fibres.md). Any such
 application needs an additional global hypothesis controlling repeated
 quotient labels or a separate payment for their phases.
+
+## A complete quotient packet still does not supply a global descent
+
+The failure is already visible in a small local model with an occupied
+replacement label. Consider
+
+\[
+\mathcal F=
+\{0\bmod175,\ 0\bmod245,\ 0\bmod3,
+  25\bmod75,\ 98\bmod147,\ 1\bmod1225\}.
+\]
+
+The first two classes have intersection \(I=0\bmod1225\). Writing
+\(x=1225z\), the next three classes induce respectively
+
+\[
+ z\equiv0,\qquad z\equiv1,\qquad z\equiv2\pmod3.
+\]
+
+Thus every point of \(I\) has a third owner, even though no one third class
+contains \(I\); this is the \(Q\)-branch with a complete three-phase packet.
+The label \(1225\) is already occupied at the incompatible phase
+\(1\bmod1225\), so the literal quotient lift \(0\bmod1225\) is not an
+available distinct label. The third classes have private witnesses
+\(3\) (for \(0\bmod3\)), \(25\) (for \(25\bmod75\)), and \(98\) (for
+\(98\bmod147\)); all lie outside \(I\). Replacing the packet only on \(I\)
+therefore loses genuine original private points.
+
+All six numerical labels are distinct odd nonunits and the common period is
+\(3675\). Direct period enumeration confirms the displayed owner phases,
+the three private witnesses, and an uncovered point \(2\). This is
+deliberately not a whole-cover counterexample. It proves the narrower
+methodological point needed here: a complete quotient packet, local
+irredundancy, and an occupied incompatible replacement label do not by
+themselves produce a cardinality or LCM descent. A global argument must
+cover the full deletion hole while preserving original labels and phases.
