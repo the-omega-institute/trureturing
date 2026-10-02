@@ -11083,3 +11083,329 @@ $$
 减去定义中的完整 $Q_{\rm full}$ 即得所列差额。$\widehat f(\pm i/2)=0$ 分别消去 $A_\pm(f)$；$\widehat f(0)=0$ 保留原 constrained criterion 的测试类。若 $\mathcal P=\{2,3\}$，则 $r<\log5$ 足以消去遗漏素数，仍须保留所有活跃的 $2^k$ 和 $3^k$，包括 $r\ge\log4$ 时的 $2^2$。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 19. 满足完整零点约束的低频扩张测试族
+
+本节与第 20 节研究第 18 节充分证书的适用边界。复用混合频率的积分尾界、普通正交 Sonin 投影及实际线性迹合同，不重新证明它们。新增内容是一个同时保留实偶自相关、三个 Fourier 零点和真实支撑增长的测试族，以及它对分离误差证书的条件性障碍。正文是纸面候选推导，未作 Lean 核验；完整 Weil 正性、Robin 的全整数界及 RH 均仍待证。
+
+### 19.1 复用的同一测试合同与对角假设
+
+沿用第 18 节的 $\mathcal F_S,C,R,B_f,P_S$，其中 $C=Q\mathcal F_SQ$、$R=(I-C^2)^{-1}$。有限非空素数集记为 $\mathcal P$，$S=\{\infty\}\cup\mathcal P$。为避免与尺度参数混淆，以下使用 $\mathcal R\ge1$ 表示测试族的大小。定义
+
+$$
+c_0=1-\|Q\mathcal FQ\|>0,\qquad
+\chi_S=(\beta_S/\alpha_S)^2\ge1,\qquad
+\delta_S=c_0/\chi_S,\qquad
+b_S=\frac{2J_S^3}{\delta_S(2-\delta_S)}.
+$$
+
+这里 $\alpha_S,\beta_S,J_S$ 均取第 18 节原定义。对实偶自相关 $H_f$ 支撑于 $[-r,r]$ 的测试，复用
+
+$$
+\begin{aligned}
+D_{\rm lin}(f)&=2\operatorname{Re}\operatorname{Tr}(CB_f\mathcal F_SQ),\\
+D_{\rm fin}(f)&=\int_0^r H_f(t)\mathcal K_{S,\mathbf N}(t)dt,\\
+|D_{\rm lin}(f)-D_{\rm fin}(f)|&\le\|f\|_2^2E_S(r,\mathbf N),\qquad
+\|B_f\|_1\le r\|f\|_2^2.
+\end{aligned}
+$$
+
+正项使用实际 Burnol 物理评价向量 $k_t\in V$。具体地，$k_t$ 是源的 Sonin 评价意义下未完成 Mellin 泛函
+
+$$
+\mathcal M\xi(t)=\int_0^\infty\xi(x)x^{-1/2-it}dx
+$$
+
+在 $V$ 上的 Riesz 代表。若 $D_{\rm comp}(t)$ 是对应完成 Mellin 评价的范数平方，令
+
+$$
+s_t=\tfrac12+it,\qquad \gamma(s)=\pi^{-s/2}\Gamma(s/2),\qquad
+d(t)=\|k_t\|^2=\frac{D_{\rm comp}(t)}{|\gamma(s_t)|^2}.
+$$
+
+这一归一化直接运输评价泛函；不能把完成对角 $D_{\rm comp}$ 直接作为物理迹密度。这里不构造一个假定的 Euler-product entire generator。令 $d\mu(t)=dt/(2\pi)$，并复用实际加权密度合同
+
+$$
+\sigma_S(f)=\int_{\mathbb R}|\widehat f(t)|^2
+w_S(t)\langle k_t,K^{-1}k_t\rangle\,d\mu(t),\qquad
+w_S(t)=\left|\prod_{p\in\mathcal P}(1-p^{-1/2-it})\right|^2.
+$$
+
+其中 $K=(PT^*TP)|_V$，不删除 $K^{-1}$。在 $K\ge\alpha_S^2I_V$、$w_S\le\beta_S^2$ 下，直接应用既有有界算子序给出
+
+$$
+\sigma_S(f)\le\chi_S\mathcal T_0(f),\qquad
+\mathcal T_0(f):=\int|\widehat f(t)|^2d(t)d\mu(t).
+$$
+
+本节另明确保留一个固定 cutoff 的对角假设：
+
+$$
+0\le d(t)\le C_d(1+t^2)\quad(t\in\mathbb R),\qquad C_d<\infty.
+$$
+
+$C_d$ 与 $S,r,\mathbf N$ 无关。这一弱界可由实际对角的局部有界性与 $d(t)=O(\log(2+|t|))$ 得到；这里把该对角输入作为条件保留。局部核及源生成元来自 [Burnol author preprint math/0208121v1](https://arxiv.org/abs/math/0208121v1)，但对角增长的推导不是该文一句具名的 growing-prime 定理。本文不把供应的纸面推导标成 Lean 真值，也不需要一个已认证的数值 $C_d$。
+
+### 19.2 有利的有符号补偿也保留下来
+
+令 $L_S(f)$ 是任何已经独立得到的正迹下界，满足 $L_S(f)\le\sigma_S(f)$；它可以取实际加权评价下界。定义第 18 节充分证书及其更强版本
+
+$$
+\begin{aligned}
+\mathfrak c_{S,\mathbf N}(f)
+&=L_S(f)-D_{\rm fin}(f)-\|f\|_2^2E_S(r,\mathbf N)-b_S\|f\|_1^2,\\
+\widetilde{\mathfrak c}_{S,\mathbf N}(f)
+&=\sigma_S(f)-D_{\rm fin}(f)-\|f\|_2^2E_S(r,\mathbf N)-b_S\|f\|_1^2.
+\end{aligned}
+$$
+
+在第 18 节源合同、极点消去条件及支撑完整条件下，$\mathfrak c\ge0$ 足以推出 $Q_{\rm full}(f)\ge0$；$\mathfrak c<0$ 不给出 $Q_{\rm full}$ 的符号。更强版本保留精确正迹，故 $\mathfrak c\le\widetilde{\mathfrak c}$。
+
+$\mathcal F_S$ 是酉对合，$C$ 是其压缩，因此
+
+$$
+|D_{\rm lin}(f)|\le2\|B_f\|_1\le2r\|f\|_2^2,\qquad
+D_{\rm fin}(f)+\|f\|_2^2E_S\ge D_{\rm lin}(f).
+$$
+
+没有假设线性核、线性迹或完整校正非负。又因为
+
+$$
+b_S=\frac{2\chi_SJ_S^3}{c_0(2-\delta_S)}\ge\frac{\chi_SJ_S^3}{c_0},
+$$
+
+上述同一测试合同给出条件性上界
+
+$$
+\boxed{
+\frac{\widetilde{\mathfrak c}_{S,\mathbf N}(f)}{\chi_S}
+\le\mathcal T_0(f)+\frac{2r\|f\|_2^2}{\chi_S}
+-\frac{J_S^3}{c_0}\|f\|_1^2.
+}
+$$
+
+这里使用真实截断误差的方向消去尾部；未把各项分别可达的极值当成同一配置。
+
+### 19.3 显式实测试与三个精确约束
+
+固定实偶 bump
+
+$$
+\phi(x)=
+\begin{cases}
+\exp\!\bigl(-1/(1-4x^2)\bigr),&|x|<1/2,\\
+0,&|x|\ge1/2.
+\end{cases}
+$$
+
+定义
+
+$$
+F_{\mathcal R}(y)=\phi'(y)-4\mathcal R^{-2}\phi'''(y),\qquad
+f_{\mathcal R}(x)=\mathcal R^{-1/2}F_{\mathcal R}(x/\mathcal R).
+$$
+
+这给出实奇 $C_c^\infty$ 函数，支撑于 $[-\mathcal R/2,\mathcal R/2]$。其自相关实且偶，支撑于 $[-\mathcal R,\mathcal R]$。采用 $\widehat f(z)=\int f(x)e^{-izx}dx$，分部积分与变量替换给出整函数身份
+
+$$
+\widehat f_{\mathcal R}(z)=i\mathcal R^{3/2}z(1+4z^2)\widehat\phi(\mathcal Rz).
+$$
+
+因此 $\widehat f_{\mathcal R}(0)=\widehat f_{\mathcal R}(i/2)=\widehat f_{\mathcal R}(-i/2)=0$ 精确成立，不依赖数值近似或复调制。
+
+记 $u=\|\phi'\|_1>0$、$v=\|\phi'\|_2>0$，并取
+
+$$
+\begin{aligned}
+\mathcal R_0&=\max\left\{1,\sqrt{8\|\phi'''\|_1/u},\sqrt{8\|\phi'''\|_2/v}\right\},\\
+a_*&=u^2/4,\qquad M_*=9v^2/4,\\
+D_*&=\|\phi''\|_2+4\|\phi''''\|_2,\qquad
+B_*=C_d(M_*+D_*^2).
+\end{aligned}
+$$
+
+对 $\mathcal R\ge\mathcal R_0$，三角不等式与缩放给出
+
+$$
+\begin{aligned}
+\|f_{\mathcal R}\|_1^2&\ge a_*\mathcal R,\\
+v^2/4\le\|f_{\mathcal R}\|_2^2&\le M_*,\qquad
+\|f_{\mathcal R}'\|_2^2\le D_*^2/\mathcal R^2,\\
+\mathcal T_0(f_{\mathcal R})&\le
+C_d\bigl(\|f_{\mathcal R}\|_2^2+\|f_{\mathcal R}'\|_2^2\bigr)\le B_*.
+\end{aligned}
+$$
+
+最后一步仅用明确的对角假设与 Plancherel。对每个固定 $\varepsilon>0$，同一 Plancherel 身份还给出
+
+$$
+\int_{|t|>\varepsilon}|\widehat f_{\mathcal R}(t)|^2d\mu(t)
+\le\frac{D_*^2}{\varepsilon^2\mathcal R^2}.
+$$
+
+总能量下界为 $v^2/4$，故这是实质的低频集中族；在频率零点恰为零不妨碍能量集中到其越来越小的邻域。
+
+## 追加锚（本行以下为增补区）
+
+## 20. 支撑完整素数集上的分离证书障碍
+
+### 20.1 素数增长来自同一测试的实际活跃响应
+
+继续使用第 19 节的 $f_{\mathcal R}$ 及固定常数。取
+
+$$
+\eta=\min\{1/2,v/(2D_*)\}>0.
+$$
+
+对任意实 $F\in H^1(\mathbb R)$，复用平移的 Sobolev 界得到
+
+$$
+H_F(s)=\|F\|_2^2-\tfrac12\|F(\cdot+s)-F\|_2^2
+\ge\|F\|_2^2-\tfrac{s^2}{2}\|F'\|_2^2.
+$$
+
+代入 $F_{\mathcal R}$ 及第 19.3 节的界，得
+
+$$
+\boxed{
+H_{f_{\mathcal R}}(t)=H_{F_{\mathcal R}}(t/\mathcal R)
+\ge v^2/8>0\quad\text{当 }|t|\le\eta\mathcal R.
+}
+$$
+
+定义最小活跃素数集
+
+$$
+\mathcal P_{\mathcal R}^{\rm act}
+=\{p\text{ prime}:\exists k\ge1,\ H_{f_{\mathcal R}}(k\log p)\ne0\}.
+$$
+
+它是有限集，且
+
+$$
+\{p:p\le e^{\eta\mathcal R}\}
+\subseteq\mathcal P_{\mathcal R}^{\rm act}
+\subseteq\{p:p\le e^{\mathcal R}\}.
+$$
+
+每个 $p\le e^{\eta\mathcal R}$ 已在第一素幂活跃；所有 $k\log p\le\eta\mathcal R$ 的素幂也活跃。故本节没有把小支撑函数任意配上大量冗余素数，也没有删除高素幂。自相关实际支撑随 $\mathcal R$ 增长，而非仅把一个固定支撑的上界放大。
+
+### 20.2 非线性预算的初等统一下界
+
+第 18 节的局部因子为
+
+$$
+j_p=p^{-5/6}+\frac{1-p^{-1}}{1-p^{-1/6}}.
+$$
+
+置 $q=p^{-1/6}$，精确写成
+
+$$
+j_p=1+q+q^2+q^3+q^4+2q^5
+\ge1+2/p\ge(1-p^{-1})^{-1}.
+$$
+
+对 $X\ge2$，有限 Euler 乘积的正项展开包含每个 $n\le\lfloor X\rfloor$，因而
+
+$$
+\prod_{p\le X}(1-p^{-1})^{-1}
+\ge\sum_{n\le\lfloor X\rfloor}\frac1n\ge\log X.
+$$
+
+这只复用唯一素因子分解与调和和估计，不需要素数定理或素数间距输入。对每个有限支撑完整集 $\mathcal P\supseteq\mathcal P_{\mathcal R}^{\rm act}$，只要 $e^{\eta\mathcal R}\ge2$，得到
+
+$$
+\boxed{J_S^3=4\Bigl(\prod_{p\in\mathcal P}j_p\Bigr)^3
+\ge4\eta^3\mathcal R^3.}
+$$
+
+加入冗余素数仍保持这一方向，因为每个 $j_p>1$。
+
+### 20.3 对所有截断与支撑完整集的条件性失效
+
+**候签定理 20.1（保留绝对非线性预算的充分证书不覆盖全部测试）。** 假设第 18 节实际投影、线性迹及矩形积分尾合同，以及第 19.1 节实际正迹密度和固定对角界成立。使用第 19.3 节的显式实测试族，令
+
+$$
+\mathcal R_*
+=\max\left\{
+\mathcal R_0,\frac{\log2}{\eta},
+\left[\frac{c_0(B_*+2M_*)}{u^2\eta^3}\right]^{1/3}
+\right\}.
+$$
+
+对每个 $\mathcal R>\mathcal R_*$、每个有限 $\mathcal P\supseteq\mathcal P_{\mathcal R}^{\rm act}$ 和每个矩形截断 $\mathbf N$，以 $r=\mathcal R$ 计算第 19.2 节证书，均有
+
+$$
+\boxed{
+\mathfrak c_{S,\mathbf N}(f_{\mathcal R})
+\le\widetilde{\mathfrak c}_{S,\mathbf N}(f_{\mathcal R})
+\le\chi_S\left[B_*+2M_*\mathcal R
+-\frac{u^2\eta^3}{c_0}\mathcal R^4\right]<0.
+}
+$$
+
+同样的负上界适用于没有截断误差的更强表达式
+
+$$
+\sigma_S(f_{\mathcal R})-D_{\rm lin}(f_{\mathcal R})-b_S\|f_{\mathcal R}\|_1^2.
+$$
+
+上述两个表达式使用精确正迹，已经允许线性迹具有最有利的负符号。任意更小的正迹下界、增加截断深度或扩大有限素数集，都无法使这一保留预算的证书在该族上成功。
+
+**证明。** 第 19.2 节给出
+
+$$
+\frac{\widetilde{\mathfrak c}_{S,\mathbf N}(f_{\mathcal R})}{\chi_S}
+\le\mathcal T_0(f_{\mathcal R})+
+\frac{2\mathcal R\|f_{\mathcal R}\|_2^2}{\chi_S}
+-\frac{J_S^3}{c_0}\|f_{\mathcal R}\|_1^2.
+$$
+
+分别代入 $\mathcal T_0\le B_*$、$\chi_S\ge1$、$\|f_{\mathcal R}\|_2^2\le M_*$、$\|f_{\mathcal R}\|_1^2\ge u^2\mathcal R/4$ 及第 20.2 节的 $J_S^3$ 下界，得到陈述中的同一测试上界。由于 $\mathcal R\ge1$，有 $B_*+2M_*\mathcal R\le(B_*+2M_*)\mathcal R$；阈值保证四次项严格支配。用 $D_{\rm lin}$ 直接替代 $D_{\rm fin}+\|f\|_2^2E_S$ 时，仍有 $D_{\rm lin}\ge-2\mathcal R\|f\|_2^2$，故同一上界成立。$\square$
+
+若选用更大的形式支撑界 $r\ge\mathcal R$，仍可用实际支撑证明 $\|B_{f_{\mathcal R}}\|_1\le\mathcal R\|f_{\mathcal R}\|_2^2$，而该 $r$ 的尾项仍按正确方向控制其线性近似误差。因此扩大支撑上界也不修复证书。
+
+本命题中的 $\chi_S$ 可随素数集任意增长；它被完整保留在正上界与预算下界中，没有作为固定常数处理。结论已适用于最小活跃素数集，不能把障碍归因于冗余素数。结论也允许别的、特选的测试子族具有任意大支撑并通过证书；被排除的是用此证书覆盖全部合法测试。
+
+### 20.4 尚须控制的量与来源边界
+
+在第 18 节合同下，令
+
+$$
+\mathfrak c_{{\rm exact},S}(f)=\sigma_S(f)-D_{\rm lin}(f)-b_S\|f\|_1^2.
+$$
+
+则有
+
+$$
+Q_{\rm full}(f)=\mathfrak c_{{\rm exact},S}(f)
++\bigl[b_S\|f\|_1^2-N_S(f)\bigr],\qquad
+b_S\|f\|_1^2-N_S(f)\ge0,
+$$
+
+其中 $N_S=D_{\rm corr}-D_{\rm lin}$。因此证书变负仍与实际 $Q_{\rm full}$ 非负相容；被扣预算与实际余项之间的差额正是未被粗界解释的部分。
+
+障碍落在 $b_S\|f\|_1^2$ 这一绝对预算，并未给出 $D_{\rm corr}(f_{\mathcal R})>\sigma_S(f_{\mathcal R})$，也未决定不扣预算时 $L_S(f)-D_{\rm lin}(f)$ 的符号。条件性推导只说明：在同一族上，除去共同因子 $\chi_S$ 后，最有利的正迹与线性补偿上界为 $O(1)+O(\mathcal R)$，而保留预算至少为固定正系数乘 $\mathcal R^4$。
+
+需要研究的实际有符号余项是
+
+$$
+N_S(f)=D_{\rm corr}(f)-D_{\rm lin}(f)
+=2\operatorname{Re}\operatorname{Tr}(C^3RB_f\mathcal F_SQ).
+$$
+
+在极点消去及支撑完整合同下，足够的联合条件为
+
+$$
+N_S(f)\le\sigma_S(f)-D_{\rm lin}(f)
+$$
+
+对全部 constrained 测试成立，并保留低频区、增长的支撑、同一测试的 Euler 相位及所有活跃素幂。这是待证估计，不能把它改名为非负几何量就宣告成立，也不能用 $A_f$ 与 $\mathcal F_S$ 交换代替尚未成立的 $A_f$ 与 $C$ 交换。
+
+文献接口复用 [Burnol math/0208121v1](https://arxiv.org/abs/math/0208121v1) 的固定 cutoff 与实际评价生成元、[Connes–Consani 2006.13771v1](https://arxiv.org/abs/2006.13771v1) 的 archimedean 迹合同及 [Connes–Consani–Moscovici 2310.18423v2](https://arxiv.org/abs/2310.18423v2) 的有限 $S$ 运输。三者不被引用为上述全支撑联合估计。CC 的小支撑 Theorem 6.11 不用于本节扩张测试。支撑增长、完整约束与预算失效的组合是本卷的候选综合推导；限定来源检索未取得足够的统一供应定理，不认证原创性。
+
+FIB 的 $\beta=\rho(\alpha)$、五模式分辨和四相运输仍提供独立的来源—观察几何。它们尚未给出通向这里物理 prime-dilation、实际 Sonin 投影或 $N_S(f)$ 的交织定理。五模式长度守恒不能替代 Robin 的约数倒数预算，也不能替代本节所缺的有符号联合估计。
+
+本文新增桥接未摄入 atom、未 deposit 或 cover，未执行 Lean 构建，未给出实际加权迹数值证书。上述失效结论始终受第 19.1 节明列的纸面合同约束；RH 及其完整 Robin/Weil 判据目标保持未解决。
+
+## 追加锚（本行以下为增补区）
