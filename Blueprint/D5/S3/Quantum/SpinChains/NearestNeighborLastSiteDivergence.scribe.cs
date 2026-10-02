@@ -30,7 +30,10 @@ internal sealed class NearestNeighborLastSiteDivergenceDocument : IScribeDocumen
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Reflection and negation preserve the cyclic equations and the increasing chamber. A maximum-coordinate comparison gives uniqueness, hence the first and last coordinates are −R and R with R > 0. Summing the first k equations retains the wrap-around reciprocal and gives 1/k < R(ξk − ξ(k−1)) in zero-based indices, for 1 ≤ k < N. Summing these gap estimates yields H_(N−1) < 2R², where H_m = Σ_(j=1)^m 1/j. Harmonic divergence then gives the displayed conclusion. Increasing solutions exist for every N ≥ 3 by NearestNeighborFreezingUniqueMinimum.result. The sharper inverse-error-function approximation in Eq. (19) is a separate question."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("enciso-finkel-gonzalez-lopez-rodriguez-2007-last-site-divergence"),
+                    ResolutionKind.Proved))),
         []));
 
     private static Formula All(string variable, Formula domain, Formula body) =>
