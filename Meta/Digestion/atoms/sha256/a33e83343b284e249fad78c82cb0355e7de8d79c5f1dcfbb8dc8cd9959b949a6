@@ -1,0 +1,11 @@
+**定理 313.2（正储备与任意深负余量的二择）。** 在定理313.1的输入下，RH 蕴含
+\[
+\liminf_{L\to\infty}\mathfrak m_L\ge2\sqrt2-2-C_\gamma>0.
+\tag{313.14}
+\]
+若 RH 不成立，则
+\[
+\forall K\ge0\ \forall L_0\ge16\ \exists L\ge L_0:\quad \mathfrak m_L<-K.
+\tag{313.15}
+\]
+

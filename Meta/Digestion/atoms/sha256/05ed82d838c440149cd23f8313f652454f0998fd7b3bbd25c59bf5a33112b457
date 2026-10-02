@@ -1,0 +1,44 @@
+**命题 317.2（固定临界预算的统一单向界）。** 固定实数 $\kappa>0$。存在仅依赖宿主尺度与该固定参数的非负函数 $\eta_\kappa(C)\to0$，使所有
+
+$$
+1\le t\le Q_C:=\left\lfloor e^{\kappa\sqrt P}\right\rfloor
+\tag{317.5}
+$$
+
+同时满足
+
+$$
+\Delta(C)-\frac{\eta_\kappa(C)}{\sqrt P}
+\le\Delta(tC)
+\le\Delta(C)+\frac{e^\gamma\kappa+\eta_\kappa(C)}{\sqrt P}.
+\tag{317.6}
+$$
+
+证明。对上述范围，$0\le\ell\le\kappa\sqrt P$。利用 $\log(1+u)\ge u-u^2/2$（$u\ge0$）及 $e^v-1\le v+O(v^2)$（$0\le v\le1$），命题317.1给
+
+$$
+\Delta(tC)-\Delta(C)
+\ge\ell\left(\frac{e^\gamma}{X}-\epsilon Z(C)\right)
+-O_\kappa\left(\frac{\ell^2}{X^2}+Z(C)(\epsilon\ell)^2\right).
+\tag{317.7}
+$$
+
+同一个宿主的（317.2）给
+
+$$
+\frac{e^\gamma}{X}=\frac{e^\gamma+o(1)}P,
+\qquad
+\epsilon Z(C)\le\frac{e^\gamma+o(1)}P,
+\tag{317.8}
+$$
+
+所以括号中的量有下界 $-o(1/P)$，无需为该量断言正号。两个二次误差分别为 $O_\kappa(1/P)$ 与 $O_\kappa(1/(P\log P))$，均为 $o(P^{-1/2})$。这给（317.6）的下界，且误差对全部允许的 $t$ 统一。上界由
+
+$$
+e^\gamma\log(1+\ell/X)\le e^\gamma\ell/X
+\le\frac{e^\gamma\kappa+o(1)}{\sqrt P}
+\tag{317.9}
+$$
+
+得到。增大共同的非负误差函数即可同时覆盖两端。$\square$
+

@@ -1,0 +1,34 @@
+**定理 315.1（实际余量的单向缺损与直接尾项桥）。** 不预设 RH，有
+\[
+\mathfrak m_L=\mathcal Z_\psi(m_L)+\kappa-\mathfrak h_L+o(1),
+\qquad \mathfrak h_L\ge0.
+\tag{315.2}
+\]
+因此完整族或四次子族的归一化余量若有最终有限下界，相应端点的 $\mathcal Z_\psi$ 也有最终有限下界；分别使用（313.8）的长度三运输或（314.5）的双端运输，再用 §92.3，即得 RH。此推导不需要先把实际余量转换为 $\log f$ 的下界。
+
+若采用 RH 的经典端点估计
+\[
+|a(x)|=O(\log^2x/\sqrt x),\qquad
+|e(x)|=O(\log x/\sqrt x),
+\tag{315.3}
+\]
+则 $\mathfrak h_L\to0$，从而（313.13）的实际谱渐近由这些原始端点估计推出。
+
+**证明。** 经典不等式 $\log u\le u-1$（$u>0$）与 $\exp e\ge1+e$ 给 $q_a,q_e\ge0$。对 $L\ge16$，$m_L\ge50$、$\vartheta(m_L)>0$、$\log m_L>0$，故缺损非负。由精确 Abel 关系 $a=\log x(e+\tau+I_\vartheta)$ 及 $D=\log(1+a)-\log x(\exp e-1)$，直接得到（313.10）；此恒等式和两种凸性余项均为已注明的经典中间步骤。
+
+将（313.10）乘以 $\sqrt x$，并仅对 $\sqrt x\log x\,\tau(x)\to0$、（313.12）的无条件素平方移位及（313.4）的实际平方层修正取极限，得（315.2）。未对无条件的 $\mathfrak h_L$ 作消失断言。若 $\mathfrak m_L\ge-K$ 最终成立，将小 $o$ 的绝对值界为一便得
+\[
+\mathcal Z_\psi(m_L)\ge-K-|\kappa|-1
+\quad\text{最终成立}.
+\tag{315.4}
+\]
+若仅已知 $\mathfrak q_j\ge-K$ 最终成立，先将（315.2）限制到 $L=j^4$，再用同一不等式得 $\mathcal Z_\psi(\mu_j)\ge-K-|\kappa|-1$ 最终成立；不借用完整族的下界。两种已证明的全实数运输各自保留固定有限成本，故可调用 §92.3；四次运输仍使用仿射网格的 $1701C$ 成本。
+
+在（315.3）下，$a,e\to0$。当 $|a|\le1/2$、$|e|\le1$ 时，经典二次余项估计给 $0\le q_a\le2a^2$、$0\le q_e\le e^2$。若同一个 $C\ge0$ 控制（315.3），则
+\[
+0\le\sqrt x[q_a+\log x\,q_e]
+\le\frac{2C^2\log^4x+C^2\log^3x}{\sqrt x}\longrightarrow0.
+\tag{315.5}
+\]
+由此得到所述实际谱渐近。$\square$
+

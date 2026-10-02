@@ -6213,3 +6213,332 @@ $$
 实际 G.5 共同网关、更宽数值轮廓、盆和着陆、同历史修正相位、实际无界周期、规范缺陷和终端占用的一致估计、联合块补偿与离散度、达到的优化策略、$C(n)/n\to\alpha$、全局收敛以及完整跨递归类型对应仍未解决。实际 erasure、线性定位、自动 evaluator、phase table、未改变的 higher word、有限新前提、世界新颖性和 kernel 结论均不由本章推出。以上条件纸面数学不结束完整研究目标。
 
 ## 追加锚（本行以下为增补区）
+
+## 36. Campbell 五窗同步图的上下文无关边界
+
+**假设 36.1（精确的 Campbell 尺度公式）。** 本章只承继假设 17.1，即 [Campbell note，Theorem 1](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/campbell/note.tex) 的完整分支公式：对 $n\ge2$，在相应半开区间中取唯一的 $s=3^k$，有
+
+$$
+\begin{aligned}
+b(n)&=\min(n-s,3s)&&\text{若 }n\text{ 为偶数， }2s\le n<6s,\\
+b(n)&=\max(2s,n-3s)&&\text{若 }n\text{ 为奇数， }3s\le n<9s.
+\end{aligned}
+\tag{36.1}
+$$
+
+沿用定义 17.2 的五窗字母表 $\Sigma=\{\mathrm{null},[2],[3],[25],[5]\}$、专用单位末字母表 $\mathcal U=\{\underline0,\underline1\}$ 以及所有窗口内、相邻窗口和最低窗口到单位位的接缝守卫。每一行的合法表示都保留实际单位分解
+
+$$
+x=e_x+q c_x,\qquad q=(2,3),
+\tag{36.2}
+$$
+
+其中 $e_x\in\{0,1\}$ 是该行真实的末单位位，$c_x$ 是窗口 Horner 状态；同步词最后配对的是 $(\underline {e_x},\underline {e_y})$，而不是一个可另行供应的时钟或标记。
+
+定义规范首输入图
+
+$$
+\mathcal G_b^{\mathrm{can}}
+ =\left\{\bigl(W_{L(n)}(n),W_{L(n)}(b(n))\bigr)_{\mathrm{sync}}:n\ge1\right\},
+\tag{36.3}
+$$
+
+其中第二行以同一个 $H=L(n)$ 写出；由于 $b(n)\le n$，这个共同长度在合法容量内。令 $\mathcal G_b^{\mathrm{all}}=\mathcal G_b$ 为定义 17.2 的全共同补零图，即保留每个 $H\ge\max\{L(n),L(b(n))\}$。
+
+**定理 36.2（两个 Campbell 图都不是上下文无关语言）。** 在假设 36.1 下，$\mathcal G_b^{\mathrm{can}}$ 和 $\mathcal G_b^{\mathrm{all}}$ 都不是上下文无关语言。因此，不存在带有限控制、一个有限栈字母表、LIFO 栈并允许 $\varepsilon$ 移步的普通单向 NPDA，能够在上述精确字母表和接缝合同下识别其中任一图。
+
+**证明。** 先固定一个只检验现有两轨字母的正则过滤。§§7、17.3、20 的 Fibonacci 模块算术与容量边界给出：固定线性式 $2x-5y=0$ 有有限进位读者，$x\equiv1\pmod4$ 有有限模读者；二者与两轨的规范表示、全部接缝守卫、唯一配对单位末字母相交后仍是正则语言。这里的 $2x-5y$ 过滤正是定理 17.3 已使用的过滤，状态中的模数和进位只属于正则约束，不增加输入轨道、外部时钟或供应的轮廓。
+
+由假设 36.1，奇数平台和奇数线性分支分别在 $n=5s$ 处给出同一个交界值，偶数的两个分支均不满足该等式；因此直接复用定理 17.3 的水平集
+
+$$
+\{n\ge1:5b(n)=2n\}=\{5\cdot3^k:k\ge0\}.
+\tag{36.4}
+$$
+
+在此集合上再取 $n\equiv1\pmod4$。因为 $5\cdot3^k\equiv1\pmod4$ 当且仅当 $k$ 为偶数，过滤后的真实整数对恰为
+
+$$
+n_j=5\cdot9^j,\qquad y_j=b(n_j)=2\cdot9^j,\qquad j\ge0.
+\tag{36.5}
+$$
+
+这里的 $y_j<n_j$ 保证输出行能在输入行的共同窗口数中合法书写。对 $\mathcal G_b^{\mathrm{can}}$，共同窗口数本来就是 $L(n_j)$。对 $\mathcal G_b^{\mathrm{all}}$，再与“第一行最高窗口非 $\mathrm{null}$”的正则语言相交；任何 $H>L(n_j)$ 都会在第一位留下高端 $\mathrm{null}$，所以该过滤强制
+
+$$
+H=m_j:=L(n_j).
+\tag{36.6}
+$$
+
+这一步保留的是原图中的规范首字母和原共同 $H$ 合同，不是另造一条首位轨道。两种图在过滤后都只留下 (36.5) 的合法五窗表示及其真实配对单位 $(\underline {e_{n_j}},\underline {e_{y_j}})$。
+
+把每一个保留下来的配对窗口字母都映为一个 $a$，并把最后的配对单位字母也映为一个 $a$。这是不抹除任何字母的非擦除同态。由于每个词有恰好 $m_j$ 个窗口和一个末单位字母，若任一图是上下文无关的，则上下文无关语言对正则相交及同态像的闭合性会推出一元语言
+
+$$
+U=\{a^{m_j+1}:j\ge0\}
+\tag{36.7}
+$$
+
+也是上下文无关的。下面证明其长度集合不可能是一元上下文无关语言。
+
+令 $F_0=0,F_1=1,F_{r+2}=F_{r+1}+F_r$。五窗规范容量的精确区间是：恰有 $m$ 个窗口的非零规范词所表示的整数满足
+
+$$
+F_{3m}\le n<F_{3m+3}.
+\tag{36.8}
+$$
+
+这个窗口带宽与 Horner 组成的来源复用 [Campbell scale-memory](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/campbell/scale-memory.md)；这里只使用其精确容量区间，不把有限视界读数当作新的前提。
+
+所以每个 $m_j$ 唯一满足
+
+$$
+F_{3m_j}\le5\cdot9^j<F_{3m_j+3}.
+\tag{36.9}
+$$
+
+这些窗口数严格递增。事实上，对 $r\ge3$，
+
+$$
+F_{r+3}=3F_r+2F_{r-1}<5F_r<9F_r.
+\tag{36.10}
+$$
+
+若 $m_{j+1}\le m_j$，则由 (36.9)--(36.10)
+
+$$
+5\cdot9^{j+1}=9n_j\ge9F_{3m_j}>F_{3m_j+3},
+$$
+
+这与 $m_{j+1}\le m_j$ 时的上界矛盾，故 $m_{j+1}>m_j$。特别地，同态 (36.7) 对这些窗口数是单射的；没有用近似对数来判定成员或注入。
+
+对整数 $T\ge1$，(36.8)--(36.9) 给出完全精确的计数等式
+
+$$
+\begin{aligned}
+A(T)&:=\#\{j:m_j+1\le T\}\\
+&=\#\{j:5\cdot9^j<F_{3T}\}\\
+&=\max\!\left(0,\left\lceil\frac{\log(F_{3T}/5)}{\log9}\right\rceil\right),
+\end{aligned}
+\tag{36.11}
+$$
+
+并且 $A(0)=0$。第一等号使用整数关系 $m_j+1\le T\iff m_j<T$；第二等号使用严格的两侧 Fibonacci 带宽，故仍是成员等价而非渐近估计。Binet 公式给出
+
+$$
+F_{3T}=\frac{\varphi^{3T}}{\sqrt5}+O(\varphi^{-3T}),
+\qquad
+\lim_{T\to\infty}\frac{A(T)}T
+=\frac{\log(\varphi^3)}{\log9}>0.
+\tag{36.12}
+$$
+
+该密度是无理数。若 $\log(\varphi^3)/\log9=p/q$ 为正有理数，则在 $\mathbb Q(\sqrt5)$ 中
+
+$$
+(2+\sqrt5)^q=9^p.
+$$
+
+取范数得到
+
+$$
+(-1)^q=9^{2p},
+$$
+
+矛盾。这是定理 17.3 所用乘法独立性的同一范数检验；没有把对数误差当作精确计数。
+
+另一方面，一元上下文无关语言的 Parikh 长度集是半线性的，因而最终周期；可直接参见 Parikh 的原始论文 [On context-free languages](https://doi.org/10.1145/321356.321364) 及 Esparza 的可访问证明 [Parikh's Theorem: A simple and direct automaton construction](https://arxiv.org/abs/1006.3825v3)。最终周期子集的自然密度是有理数，而 (36.12) 是无理数，故 $U$ 不是上下文无关语言。这与假设任一图上下文无关所推出的 (36.7) 矛盾，两个图均非上下文无关。普通单向 NPDA（允许 $\varepsilon$ 移步）与上下文无关语言等价，故末句的读者结论随之成立。证毕。
+
+**表示合同与边界。** 这里的障碍来自五窗表示语法与一栈读者的长度边界，不来自 Campbell 内轨道的周期长度。来源给出的内周期 $1/2$、以及原生三进制尺度图的正则性仍保持：三进制的 $10^*$ 尺度和有限进位分支可以由有限控制识别，不能把这种原生正则性移植为五窗图的上下文无关性。未过滤的全体 $\{5\cdot3^k\}$ 交替出现两个模四余类且窗口长度会重复，不能直接给出 (36.11) 所需的严格单调、精确计数族；不剪去高端补零时，全共同长度会产生 $H\ge m_j$ 的尾族，其一元像趋于余有限，不能作为见证。仅有有界对数误差也只给聚合计数的近似，不能证明词成员关系或长度注入。上述证明只使用假设 17.1、§§7/17.3/20 的表示和有限进位接口、以及直接引用的 Parikh 工具；来源的有限初值和 checker 读数仍标为 `ASSUMED-UNVERIFIED` 的独立证据，没有引入实际 Cloitre 的假设 24 链，也不声称世界新颖性、Lean 核验或完整研究目标已完成。
+
+## 追加锚（本行以下为增补区）
+
+## 37. Campbell 固定模余数图的准确正则与单栈分类
+
+**约定 37.1（来源公式与原共同长度的两轨余数图）。** 使用定义 15.1 的 Campbell 初值 $b(1)=1$，并只以假设 17.1 的尺度公式为来源前提；其固定版本为 [Campbell note，Theorem 1](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/campbell/note.tex)。准确使用该公式本身：对 $n\ge2$，在相应半开区间中取唯一的 $s=3^k$、$k\ge0$，有
+
+$$
+\begin{aligned}
+b(n)&=\min(n-s,3s)&&\text{若 }n\text{ 为偶数， }2s\le n<6s,\\
+b(n)&=\max(2s,n-3s)&&\text{若 }n\text{ 为奇数， }3s\le n<9s.
+\end{aligned}
+\tag{37.1}
+$$
+
+本节不加入实际 Cloitre 的前提。固定外部整数 $M\ge1$，令 $R_M(n)=b(n)\bmod M$ 为最小非负余数。沿用定义 17.2、20.1 的 $W_H$、规范窗口数 $L$、五窗字母表 $\Sigma$ 和实际单位末字母表 $\mathcal U$，定义
+
+$$
+\begin{aligned}
+\Gamma_M^{\mathrm{can}}
+&=\left\{\bigl(W_{L(n)}(n),W_{L(n)}(R_M(n))\bigr)_{\mathrm{sync}}:n\ge1\right\},\\
+\Gamma_M^{\mathrm{all}}
+&=\left\{\bigl(W_H(n),W_H(R_M(n))\bigr)_{\mathrm{sync}}:
+n\ge1,\ H\ge L(n)\right\}.
+\end{aligned}
+\tag{37.2}
+$$
+
+每个词恰有 $H$ 个 $\Sigma^2$ 窗口字母，随后恰有一个 $\mathcal U^2$ 单位末字母；每轨满足全部窗口内、窗口间及最低窗口到单位位的原接缝守卫，数值仍是 $e+qc$，$q=(2,3)$。输出是整数余数的合法数值行，不是替换标签。由初值及 (37.1)，$0\le R_M(n)\le b(n)\le n$，故容量式 (20.7)
+
+$$
+L(z)\le H\quad\Longleftrightarrow\quad0\le z<F_{3H+3}
+\tag{37.3}
+$$
+
+保证输出能使用每个原输入长度；不要求 $H\ge L(M)$。零行是 $\mathrm{null}^H\underline0$；$L(0)=L(1)=0$，而输入域仍是全部 $n\ge1$。
+
+**定理 37.2（两张 Campbell 余数图正则及上下文无关恰在模一、二）。** 在约定 37.1 的来源前提下，对每个外部固定整数 $M\ge1$，
+
+$$
+\begin{aligned}
+\operatorname{Reg}(\Gamma_M^{\mathrm{can}})
+&\Longleftrightarrow\operatorname{Reg}(\Gamma_M^{\mathrm{all}})\\
+&\Longleftrightarrow\operatorname{CFL}(\Gamma_M^{\mathrm{can}})
+\Longleftrightarrow\operatorname{CFL}(\Gamma_M^{\mathrm{all}})
+\Longleftrightarrow M\in\{1,2\}.
+\end{aligned}
+\tag{37.4}
+$$
+
+具体地，$M=1,2$ 时两张图均正则；每个 $M\ge3$ 时两张图各自都不是上下文无关语言。
+
+**证明。** 先核对两种原长度合同。令 $\Delta=(\mathrm{null},\mathrm{null})$，令 $\mathrm{Can}_1$ 是正则条件“首个输入窗口非空，或没有窗口”。因为输出不超过输入，删除输入的全部额外高端空窗时，输出在这些位置也恰为空窗。因此准确有
+
+$$
+\Gamma_M^{\mathrm{all}}=\Delta^{*}\Gamma_M^{\mathrm{can}},
+\qquad
+\Gamma_M^{\mathrm{can}}=\Gamma_M^{\mathrm{all}}\cap\mathrm{Can}_1.
+\tag{37.5}
+$$
+
+这包括输入一、输出零及真实单位末位置。正则语言与上下文无关语言分别对正则相交及与正则语言连接封闭，所以各类中的两种合同等价；以下仍对两张图使用同一个具体过滤。
+
+模一时，输出恰是 $\mathrm{null}^H\underline0$。将此正则输出条件与原合法正输入语言相交，得到全补零图，再用 (37.5) 得规范首输入图。模二直接复用 [Campbell note 的 bounds 式](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/campbell/note.tex) 的奇偶接口：$n\ge2$ 时 $b(n)\equiv n+1\pmod2$，而初值给 $R_2(1)=1$。这一正结论使用已有来源公式与表示接口。
+
+有限控制读者须取得整行的数值奇偶，而不是只读单位位。复用 §7 的 Horner 状态 $c\leftarrow Sc+d_\sigma$，其中
+
+$$
+S=\begin{pmatrix}1&2\\2&3\end{pmatrix}\equiv I\pmod2.
+$$
+
+只需初始化 $z=0$，每读一个输入窗口就更新 $z\leftarrow z+(d_\sigma)_2\pmod2$；在实际单位末字母处，$n\equiv e_n+z\pmod2$。要求全部输出窗口为空；对 $n\ge2$，要求其单位位 $e_y\equiv1+e_n+z\pmod2$。合法输入表示一的正则族 $\mathrm{null}^{*}\underline1$ 单独要求 $e_y=1$，表示零的族 $\mathrm{null}^{*}\underline0$ 被正输入域排除。与两轨全部原接缝守卫作有限控制积，即准确识别 $\Gamma_2^{\mathrm{all}}$；$H=0$ 时唯一正输入是一，末字母对为 $(\underline1,\underline1)$。(37.5) 给另一个正则图。
+
+现固定任意 $M\ge3$，独立证明非上下文无关性。写
+
+$$
+M=3^a d,\qquad a\ge0,\quad d\ge1,\quad\gcd(d,3)=1.
+$$
+
+有限单位群给出 $p\ge1$ 使 $3^p\equiv1\pmod d$；$d=1$ 时取 $p=1$。由中国剩余定理取唯一最小非负余数 $c$，使
+
+$$
+c\equiv0\pmod{3^a},\qquad c\equiv1\pmod d.
+$$
+
+于是 $k\ge a$ 且 $p\mid k$ 时，$3^k\equiv c\pmod M$。固定两个数值余数
+
+$$
+r=(2-c)\bmod M,\qquad r'=3c\bmod M.
+\tag{37.6}
+$$
+
+它们不同：若 $a\ge1$，二者模三分别为二和零；若 $a=0$，则 $c=1$，相等会要求 $M\mid2$，与 $M\ge3$ 矛盾。
+
+因 $\det S=-1$，$S$ 是模 $2M$ 的可逆矩阵；有限群存在性给出某个 $t\ge1$ 使 $S^t\equiv I\pmod{2M}$，不需要求出周期。取 $A=[2]$、$B=\mathrm{null}$。由 §7 的窗口权重桥，Fibonacci 锚点的原规范词准确为
+
+$$
+\begin{aligned}
+n_m&=F_{3m},&W(n_m)&=AB^{m-1}\underline0,&L(n_m)&=m,\\
+c_{n_m}&=S^{m-1}(1,0)^{\mathsf T},&
+n_m&=qS^{m-1}(1,0)^{\mathsf T}\qquad(m\ge1).
+\end{aligned}
+\tag{37.7}
+$$
+
+这是只占据 $F_{3m}$ 的合法词，终端单位为零。对 $m=1+tj$、$j\ge0$，(37.7) 给 $n_m\equiv2\pmod{2M}$；故这些实际输入为偶数，且模 $M$ 余数为二。
+
+使用一个正则两轨过滤 $\mathcal E$：输入行属于 $A(B^t)^{*}\underline0$，输出行属于 $B^{*}W(r)$，并保留原合法行及唯一配对单位末字母的守卫。准确地，输入窗口数是 $m=1+tj$，输出行可取 $B^\ell W(r)$、$\ell\ge0$，同步要求 $\ell+L(r)=m$。输出零或一时 $W(r)$ 只有其真实单位末字母，仍使用这个同一规则。输入首窗 $A$ 强制 $H=m$，故 (37.2) 的任一图在此过滤中都保留原最短共同长度，没有额外时钟、尺度或相位轨。
+
+将每个配对窗口字母和每个配对单位末字母都映为一元字母 $u$，得到非擦除同态 $h$。对 $\Gamma$ 为两张图中的任意一张，有准确等式
+
+$$
+h(\Gamma\cap\mathcal E)
+=U_r:=\left\{u^{m+1}:m\ge1,\ m\equiv1\pmod t,\ R_M(F_{3m})=r\right\}.
+\tag{37.8}
+$$
+
+如果固定 $r$ 在某个早期 $m$ 上放不下，则过滤的输出族在该长度为空；没有遗漏任何真实输出，因为 $R_M(n_m)=r$ 必有 $r\le b(n_m)\le n_m$，再由 (37.3) 已能在 $m$ 个窗口内表示。证明不要求未选中的余数也在这些早期长度内有表示。
+
+假设 $\Gamma$ 上下文无关。由对正则相交和同态像的闭合性，$U_r$ 也上下文无关。直接复用 Parikh 的经典定理及其 [Parikh's Theorem: A simple and direct automaton construction，v3](https://arxiv.org/abs/1006.3825v3)：上下文无关语言有与某个正则语言相同的 Parikh 像。一元字母表上 Parikh 像确定语言，所以 $U_r$ 的长度集最终周期。设其周期为 $P\ge1$；在
+
+$$
+m_j=1+tPj,\qquad |u^{m_j+1}|=2+tPj\qquad(j\ge0)
+\tag{37.9}
+$$
+
+上，充分晚的成员关系必须恒定，因为这些长度属于同一个模 $P$ 余类。
+
+接着用准确尺度判定该成员关系。置
+
+$$
+\varphi=\frac{1+\sqrt5}{2},\qquad
+\alpha=\log_3(\varphi^3),\quad
+\beta=\log_3(2\sqrt5),\quad
+\lambda=\log_3 2\in(0,1).
+$$
+
+Binet 恒等式给出准确分解
+
+$$
+\begin{aligned}
+z_m&:=\log_3(F_{3m}/2)=m\alpha-\beta+\varepsilon_m,\\
+\varepsilon_m&=\log_3\!\left(1-(-1)^m\varphi^{-6m}\right)\longrightarrow0.
+\end{aligned}
+\tag{37.10}
+$$
+
+对上述偶输入，(37.1) 的唯一尺度指数恰是 $k_m=\lfloor z_m\rfloor$，因为 $2\cdot3^{k_m}\le n_m<6\cdot3^{k_m}$。令 $\theta_m=z_m-k_m$。准确的内部两分支是
+
+$$
+\begin{aligned}
+0<\theta_m<\lambda&\quad\Longrightarrow\quad b(n_m)=n_m-3^{k_m},\\
+\lambda<\theta_m<1&\quad\Longrightarrow\quad b(n_m)=3^{k_m+1}.
+\end{aligned}
+\tag{37.11}
+$$
+
+首区间给 $2\cdot3^{k_m}<n_m<4\cdot3^{k_m}$，次区间给 $4\cdot3^{k_m}<n_m<6\cdot3^{k_m}$；这里只在严格内部取点，边界仍由原 min 公式处理。
+
+$\alpha$ 是无理数，使用 §§17、36 的同一范数方法：若 $\alpha=u/v>0$、$u,v$ 为正整数，则 $(2+\sqrt5)^v=3^u$，在 $\mathbb Q(\sqrt5)$ 中取范数给 $(-1)^v=3^{2u}$，矛盾。沿 (37.9)，未扰动尺度模 $p$ 的单位圆坐标是
+
+$$
+\frac{m_j\alpha-\beta}{p}
+=\rho+j\delta,\qquad
+\rho=\frac{\alpha-\beta}{p},\quad
+\delta=\frac{tP\alpha}{p}\notin\mathbb Q.
+\tag{37.12}
+$$
+
+直接复用仓内 [无理旋转区间采样定理 irrational_rotation_interval_sampling](https://github.com/the-omega-institute/trureturing/blob/9b2c1292f477beeea81faa9124a49604ba2b3578/D5/S1/Phase/IntervalSampling.lean)：任意无理实步长、任意实初相位对 $[a,b)\subseteq[0,1)$ 的采样频率为 $b-a$。在每个起始尾段换初相位为 $\rho+J\delta$，该结果直接保证 (37.12) 的每个尾段稠密；这里仅复用其一维旋转结论，不引入新的通用密度定理。
+
+为把稠密性用于实际 $z_{m_j}$，在模 $p$ 的代表区间 $[0,p)$ 内分别取非空开区间 $I_-\Subset(0,\lambda)$、$I_+\Subset(\lambda,1)$，再各取一个闭包位于该开区间内的更小非空开区间 $J_-,J_+$。每个 $J_\pm$ 的闭包到 $I_\pm$ 补集的距离为正；由 (37.10)，充分晚时 $|\varepsilon_{m_j}|$ 小于这两个边界余量的最小值。将 (37.12) 的采样区间缩放为 $J_\pm/p$，每个尾段都有访问，因此未扰动尺度模 $p$ 无限次进入 $J_-$ 和 $J_+$，实际尺度 $z_{m_j}$ 模 $p$ 也分别无限次进入 $I_-$ 和 $I_+$。这一步使用趋零误差与内部余量，没有用近似对数代替准确分支判定。
+
+两种访问都使 $k_{m_j}$ 为 $p$ 的倍数：若 $z_{m_j}\bmod p\in(0,1)$，则 $z_{m_j}=p\ell+\theta$、$0<\theta<1$，其下取整为 $p\ell$。又由 $z_{m_j}\to+\infty$，充分晚时 $k_{m_j}\ge a$。于是 (37.6)、(37.7)、(37.11) 给
+
+$$
+\begin{aligned}
+z_{m_j}\bmod p\in I_-&\quad\Longrightarrow\quad R_M(n_{m_j})=(2-c)\bmod M=r,\\
+z_{m_j}\bmod p\in I_+&\quad\Longrightarrow\quad R_M(n_{m_j})=3c\bmod M=r'\ne r.
+\end{aligned}
+\tag{37.13}
+$$
+
+所以长度 $2+tPj$ 在 $U_r$ 中和不在 $U_r$ 中均有无限次出现，违背 (37.9) 的最终恒定。任一原图若为上下文无关都会给出这个矛盾，因此每个 $M\ge3$ 的两张图分别均非上下文无关，也均非正则。连同模一、二的复用构造，(37.4) 成立。证毕。
+
+**适用边界与跨递归比较。** 定理 37.2 通过一张未知图的一次正则相交和一次非擦除同态完成否定证明；没有取上下文无关补集，也没有相交两张未知上下文无关图。$k_m,z_m$ 及分支区间只出现在数值成员关系的证明中；正则过滤只读原两轨。由普通单向 NPDA 与上下文无关语言的等价，每个 $M\ge3$ 时不存在有限控制、一个有限字母表 LIFO 栈且允许 $\varepsilon$ 移步的普通单向 NPDA 识别任一准确图；该结论限于 (37.2) 的编码与原资源合同。
+
+模二产生一个准确的跨类型区别：在假设 17.1 及 Campbell 初值下，Campbell 的两张数值余数图正则；实际 Cloitre 的全共同补零模二图则由定理 34.2 非上下文无关，但后一个结论只在**完整假设 24.1 及其经 23.1、21.1 承继的全部前提**下成立。其未重算有限前提仍为 `ASSUMED-UNVERIFIED`，包括比值区间 $[16384,131071]$、黄金归纳基 $[1,65535]$、规定深度入周期基域 $3\le N\le52$、式 (24.10) 的两条初始行及其余所有继承有限前提。每个 $M\ge3$ 时，两种递归在各自假设下都具有非上下文无关余数图，但这里的 Campbell 单输出纤维证明没有迁移实际 $C$ 的首次下降机制，也没有从 §36 的完整值图向有损余数图转移否定结论。
+
+本节的 `repo-derived` 内容是固定模 $M\ge3$ 的准确 Fibonacci 锚纤维、尺度取样与两种原合同的余数否定桥；模一、二、窗口算术、容量、Parikh 与无理旋转采样均为复用。来源公式作为显式假设，不以来源有限初值或 checker 读数认证它；本节也没有新的有限数值前提或 Lean 核验结论。实际 $C$ 的既有图阻碍保持 §§25、27、32–34 的原条件；实际 G.5 与更宽轮廓取得、盆与落点及校正的同历史相位、实际无界周期、统一缺陷与终端占用、联合块补偿和离散度、达到的优化策略、全局收敛与完整跨类型对应仍未由本节解决。
+
+## 追加锚（本行以下为增补区）

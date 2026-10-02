@@ -5478,3 +5478,198 @@ $$
 后一等式给出 $W\in\mathcal I_1$ 的实际完整来源；其 $\langle\beta,\beta\rangle$ 末端樱桃排除 $W\in\mathcal I_2$。两树的组成分别为 $(1,2)^{\mathsf T}$ 与 $(0,3)^{\mathsf T}$，所以这个单叶改标见证属于定义 18.2 的无承诺竞争域，不是定义 17.1 的同组成竞争见证。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 19. 纯数量竞争域的尖锐地址证书前沿
+
+**定义 19.1（纯数量有声性与地址成本）。** 沿用定义 16.1、17.1、18.1 的自由有序满二叉树集合 $\mathcal T$、四值原始路径读数、实际像 $\mathcal I_d=\rho^d(\mathcal T)$ 及地址窗口 $\Sigma_{\le h}$。对树 $T$ 写
+
+$$
+m(T)=2\,|A(T)|+3\,|B(T)|,
+\tag{19.1}
+$$
+
+其中 $A(T)$、$B(T)$ 分别是 $\alpha$、$\beta$ 叶地址集。固定 $d=3k$、$k\ge1$，以及已知的正实例 $V\in\mathcal I_d$。令
+
+$$
+A=A(V),\qquad B=B(V),\qquad a=|A|,\qquad b=|B|,
+\qquad D=\operatorname{ht}(V).
+\tag{19.2}
+$$
+
+对有限的 $Q\subseteq\Sigma_{\le h}$，称 $Q$ 对 $(V,h)$ **纯数量有声**，若
+
+$$
+\forall U\in\mathcal T,\qquad
+\left(m(U)=m(V)\ \land\ \forall u\in Q,
+\operatorname{out}_U(u)=\operatorname{out}_V(u)\right)
+\Longrightarrow U\in\mathcal I_d.
+\tag{19.3}
+$$
+
+竞争者遍历全部非空有限自由有序满二叉树，只保留精确数量 $m(U)=m(V)$；不附加组成相等、实际像承诺、叶数预算、前缀闭包或高度上界。查询基数 $|Q|$ 只计不同地址，深度成本只由 $h$ 限制地址长度，不计地址文字长度、定位成本、自适应次序或实际逆执行。定义
+
+$$
+\tau_d^{\,m}(V,h)=
+\min\{|Q|:Q\subseteq\Sigma_{\le h}\text{ 纯数量有声}\},
+\qquad \min\varnothing=+\infty.
+\tag{19.4}
+$$
+
+**定理 19.1（纯数量的尖锐证书前沿与全部极小解）。** 对每个定义 19.1 的 $V$，有 $a\ge1$，并且
+
+$$
+\boxed{
+\tau_d^{\,m}(V,h)=+\infty\qquad(h<D).
+}
+\tag{19.5}
+$$
+
+当 $h\ge D$ 时，若 $a\ge2$，则
+
+$$
+\boxed{
+\tau_d^{\,m}(V,h)=b,
+\qquad\text{唯一达到极小值的集合为 }Q=B.
+}
+\tag{19.6}
+$$
+
+若 $a=1$，则必有
+
+$$
+ d=3,\qquad
+ V=\rho^3(\alpha)=\langle\langle\beta,\alpha\rangle,\beta\rangle,
+ \qquad b=2,
+\tag{19.7}
+$$
+
+并且
+
+$$
+\boxed{
+\tau_d^{\,m}(V,h)=2,
+}
+\tag{19.8}
+$$
+
+恰有三组极小查询，即该树三片叶地址的三组二元子集
+
+$$
+\{\mathtt{LL},\mathtt{LR}\},
+\qquad
+\{\mathtt{LL},\mathtt R\},
+\qquad
+\{\mathtt{LR},\mathtt R\}.
+\tag{19.9}
+$$
+
+**证明。** 先记下三个结构事实。每个非空树的数量至少为 $2$，且数量为 $2$ 的非空树恰为单叶 $\alpha$；这是叶权重为 $2,3$ 与满二叉结构的直接归纳。其次，$d\ge3$ 时每个实际像树的每个分支都有一个 $\beta$ 叶后代：两个基本块 $\rho^d(\alpha)$、$\rho^d(\beta)$ 都含有 $\beta$ 叶，分支递归保持这一性质。最后，$\mathcal I_d\subseteq\mathcal I_2$，故 $V$ 的每个末端樱桃均为 $\langle\beta,\alpha\rangle$，沿用定理 16.1、17.1 的结构桥接与 [RA.2207](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#22-一次全局替换的实际节点单孔边界与来源恢复) 的一步像语法。地址读数的唯一解析与全路径恢复沿用[母卷定理 9.2、9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)；这里只使用其既有读数接口，不重复解析或恢复证明。
+
+若 $h<D$，取 $V$ 的深度为 $D$ 的叶及其末端樱桃，交换该樱桃的两个叶标签得到 $W$。定理 17.1 已给出
+
+$$
+O_h(W)=O_h(V),\qquad c(W)=c(V),
+\qquad W\notin\mathcal I_d.
+\tag{19.10}
+$$
+
+组成相同遂数量相同，故任意 $Q\subseteq\Sigma_{\le h}$ 都被同一个 $W$ 反例击中，得到（19.5）。
+
+以下设 $h\ge D$。先证明全 $\beta$ 查询的充分性。令 $Q=B$，设 $U$ 匹配所有查询且 $m(U)=m(V)$。$V$ 的每个分支都是某个 $\beta$ 叶地址的严格前缀；因该叶在 $U$ 中仍是 $\mathsf{leaf}_\beta$，这些前缀在 $U$ 中全是分支。于是 $U$ 的骨架只能由在 $V$ 的每个 $\alpha$ 叶槽位处替换非空子树得到：记这些子树为 $S_x$（$x\in A$），则
+
+$$
+ m(U)=3b+\sum_{x\in A}m(S_x),
+ \qquad m(S_x)\ge2.
+\tag{19.11}
+$$
+
+而 $m(V)=3b+2a$。数量相等迫使每个 $m(S_x)=2$，从而每个 $S_x=\alpha$，故 $U=V\in\mathcal I_d$。因此 $B$ 有声，且 $\tau_d^{\,m}(V,h)\le b$。
+
+现在给出任意有声集合的二分支约束。若 $Q$ 同时遗漏 $x\in A$ 与 $y\in B$，就在保持括号形状的条件下把 $x$ 的标签 $\alpha$ 改为 $\beta$，把 $y$ 的标签 $\beta$ 改为 $\alpha$，得到 $W$。交换只改变两个叶端点的结果，故
+
+$$
+ m(W)=m(V),
+\qquad
+\operatorname{out}_W(u)=\operatorname{out}_V(u)
+\quad\bigl(u\notin\{x,y\}\bigr).
+\tag{19.12}
+$$
+
+其中严格后代在两树中都为 $\mathsf{absent}$，并且
+
+$$
+\{u:\operatorname{out}_W(u)\ne\operatorname{out}_V(u)\}=\{x,y\}.
+$$
+
+同时 $W\notin\mathcal I_1$：若新 $\alpha$ 叶在左孩子位置，直接违反一步像语法；若它在右孩子位置，则其左兄弟不能是 $\beta$ 叶，因为 $V$ 的末端樱桃全为 $\langle\beta,\alpha\rangle$，故左兄弟为内节点，而 [RA.2207](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#22-一次全局替换的实际节点单孔边界与来源恢复) 要求像中的 $\alpha$ 右孩子左邻为 $\beta$。所以 $W\notin\mathcal I_d$。这与有声性矛盾，遂有
+
+$$
+Q\supseteq A\quad\text{或}\quad Q\supseteq B.
+\tag{19.13}
+$$
+
+还需处理全 $\alpha$ 分支。设 $Q\supseteq A$，并令 $R=B\setminus Q$ 为遗漏的 $\beta$ 叶地址。若 $x,y\in R$ 为两个不同地址，且 $Q$ 不含 $y\mathtt L$、$y\mathtt R$，就在 $y$ 处把单叶 $\beta$ 换成 $\langle\alpha,\alpha\rangle$，在 $x$ 处把 $\beta$ 改成 $\alpha$，得到 $W$。组成变化为
+
+$$
+\Delta(a,b)=(3,-2),
+\qquad
+\Delta m=2\cdot3+3\cdot(-2)=0,
+\tag{19.14}
+$$
+
+故 $m(W)=m(V)$。唯一改变的地址响应恰为
+
+$$
+\{x,y,y\mathtt L,y\mathtt R\};
+\tag{19.15}
+$$
+
+在 $y$ 的更深后代处，两树均先到达叶而为 $\mathsf{absent}$，在 $x$ 的更深后代也同样如此。新树含有以 $\alpha$ 为左孩子的节点，因而 $W\notin\mathcal I_1$。这与 $Q$ 有声矛盾。因此，只要 $|R|\ge2$，每个遗漏的 $\beta$ 地址 $y$ 都必须在 $Q$ 中带有至少一个立即孩子 $y\mathtt L$ 或 $y\mathtt R$；不同遗漏地址的立即孩子互不相同，从而
+
+$$
+|Q|\ge a+(b-|R|)+|R|=a+b.
+\tag{19.16}
+$$
+
+这一步也说明了为什么只查分支或更深的缺失地址不能替代该立即孩子判别器。
+
+若 $|R|=0$，则 $Q$ 至少含有 $A\cup B$，故 $|Q|\ge a+b$；若 $|R|=1$，则 $|Q|\ge a+b-1$。结合（19.13），当 $a\ge2$ 时，全 $\alpha$ 分支的下界始终严格大于 $b$，而全 $\beta$ 分支的下界为 $b$，且等号只可能是 $Q=B$。连同（19.11），得到（19.6）。
+
+若 $a=1$，写来源组成 $c(T)=(x,y)^{\mathsf T}$，其中 $V=\rho^{3k}(T)$。由[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的组成作用，
+
+$$
+(a,b)^{\mathsf T}=S^k(x,y)^{\mathsf T},
+\qquad
+S=M^3=\begin{pmatrix}1&2\\2&3\end{pmatrix}.
+\tag{19.17}
+$$
+
+若 $k\ge2$，则 $S^k$ 的第一行每个系数至少为 $5$，与 $a=1$ 矛盾；故 $k=1$。此时 $x+2y=1$，所以 $(x,y)=(1,0)$，来源树只能是单叶 $\alpha$。这给出（19.7），其叶地址为
+
+$$
+\mathtt{LL}\mapsto\beta,\qquad
+\mathtt{LR}\mapsto\alpha,\qquad
+\mathtt R\mapsto\beta.
+\tag{19.18}
+$$
+
+全 $\beta$ 集合 $\{\mathtt{LL},\mathtt R\}$ 由（19.11）有声。两个混合二元集合也有声：$\{\mathtt{LL},\mathtt{LR}\}$ 固定左子树，剩余右槽位的数量必须为 $3$；$\{\mathtt{LR},\mathtt R\}$ 固定右叶及左子树的右叶，剩余左槽位的数量必须为 $3$。非空树数量为 $3$ 恰唯一实现为单叶 $\beta$，故两者都迫使 $U=V$。
+
+最后，任意有声集合都满足（19.13）。若它含有全部两个 $\beta$ 地址，则在基数为 $2$ 时恰为 $\{\mathtt{LL},\mathtt R\}$；否则它必须含有唯一的 $\alpha$ 地址。若还遗漏两个 $\beta$ 地址，则（19.16）的立即孩子要求使基数至少为 $3$；故基数为 $2$ 时第二个地址必是一个 $\beta$ 叶，恰得到另外两组（19.9）。所以三组且仅三组达到（19.8）。在这个特例中，旧的单独 $\alpha$ 证书确实失败：令
+
+$$
+U_8=\langle\langle\alpha,\alpha\rangle,
+             \langle\alpha,\alpha\rangle\rangle.
+\tag{19.19}
+$$
+
+则 $m(U_8)=8=m(V)$，$\operatorname{out}_{U_8}(\mathtt{LR})=\mathsf{leaf}_\alpha$ 与 $V$ 相同，但 $U_8\notin\mathcal I_1$，且相对 $V$ 的精确改变支持为
+
+$$
+\{\mathtt{LL},\mathtt R,\mathtt{RL},\mathtt{RR}\}.
+\tag{19.20}
+$$
+
+这完成了全部情形。证毕。
+
+## 追加锚（本行以下为增补区）

@@ -3914,3 +3914,136 @@ Lean 源仍在忽略目录 `.lake`，研究笔记是唯一跟踪交付；没有
 跟踪 Lean、准入、冻结或新颖性声明。逃逸审计仍未完成，登记
 按 CLAUDE 3.9 暂缓：
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+
+
+### 从水平数据构造原 H³ 高度保持映射
+
+`h3HorizontalHeightExtension T` 将实际水平映射 `T : ℂ → ℂ`
+延伸到实际原 H³：水平坐标变为 T 的像，严格正的原高度保持。
+若 C、D 都至少为 1，且所有水平点对 z、w 满足欧氏距离上界
+`dist(T(z),T(w))≤C*dist(z,w)` 与反向界
+`dist(z,w)≤D*dist(T(z),T(w))`，
+`h3_horizontal_height_extension_native_distance_controls` 就在所有
+原 H³ 点对 p、q 上推导原双曲距离双边界：
+`dist(p,q)-arcosh(D²)≤dist(F(p),F(q))≤dist(p,q)+arcosh(C²)`。
+F 是上述同一个实际高度保持延伸；双曲距离控制是推导结论，
+没有作为水平输入条件。证明用原坐标的精确 cosh 距离式、
+复数欧氏距离平方、严格正的高度分母及 cosh 加法公式。
+`h3_horizontal_height_extension_surjective` 还从 T 的实际满射性
+构造同一个 F 的实际原 H³ 满射性；目标高度保持为原正高度。
+这个满射结论本身不需要 C、D 或水平距离控制。
+
+对每一对实际原等距映射 e、e′，若它们在原 Lorentz 表示中
+都将原无穷远零光锥标架射线按同一个 a 缩放，且所有水平点 z
+满足 `T(h3InfinityHorizontalMap(e,z))=h3InfinityHorizontalMap(e′,T(z))`，
+`h3_horizontal_height_extension_intertwines_original_isometries`
+就在每个实际原 H³ 点 p 上推导
+`F(e(p))=e′(F(p))`。它用实际原等距作用的水平坐标与高度律，
+推导原逐点关系，没有再输入 F 的逐点等变性；没有加入定向
+保持条件。同一个缩放 a 的正性由实际原射线固定关系供应。
+这段等变推导自身不需要 T 的双边距离控制或满射性。
+
+`h3PeriodBasisHorizontalEquiv b b′` 从两组实际实基
+`b,b′ : Module.Basis (Fin 2) ℝ ℂ` 构造同一个实际连续实线性
+等价 T；`h3PeriodBasisHeightExtension b b′` 是它的原 H³ 高度
+保持延伸 F。`h3_period_bases_construct_controlled_surjective_translation_map`
+不再输入 T、F 或水平距离控制，而是从这两组有同一索引配对
+的基实际构造它们。T 与 T.symm 的算子范数给出各自的常数
+`C=max(1,‖T‖)`、`D=max(1,‖T.symm‖)`，推导同一个 F 的上述
+所有原 H³ 距离双边界和实际满射性。对每个整数系数族
+`m : Fin 2 → ℤ` 及每个原 H³ 点 p，同一个 F 精确联系实际
+水平平移：源平移向量是 `∑j (m(j):ℝ)•b(j)`，目标平移向量
+是使用同一个 m 的 `∑j (m(j):ℝ)•b′(j)`。这些平移的逐点关系
+来自所构造的同一个基等价的线性性，没有输入该原 F 的
+平移等变性。两组实基及同一索引的配对仍是明示的周期输入，
+本轮没有从原 h/d 构造尖点上的这两组周期基。
+
+三个完整模块串行本地 Lean 成功，四项公理闭包仅含
+`propext`、`Classical.choice`、`Quot.sound`，零警告。
+四次完整失败尝试全部排除；其中的部分标准闭包、`sorryAx`
+诊断及警告均未接收。仅修正距离平方规范化、实基类型的
+命名空间、反向算子范数界的常数推断及原正高度证明的显式参数，不改变数学条件和
+目标陈述，不压制诊断。
+
+前两个模块以实际水平 T 及明示的水平控制、满射或等变条件
+为相应输入；第三个模块从明示的两组实基构造 T、F 及全部
+距离控制、满射性和上述全部整数周期关系。尚未为原给定同伦等价诱导的同一个全甲板群
+同构 d 构造尖点水平映射 T，也没有完成尖点与紧核心的原
+全局等变拼接或迫使原交比保持。完整有限体积 Mostow–Prasad
+仍为 **ACTIVE/INCOMPLETE**，保留非紧尖点、非可定向情形、
+两侧原度量及原 h 所诱导的同一个 d。Lean 源仍在忽略目录
+`.lake`，仅交付研究笔记，没有跟踪 Lean、准入、冻结或新颖性
+声明。逃逸审计仍未完成，登记按 CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+
+
+### 正规平移周期、有限轨道平均与尖点仿射修正
+
+`h3_affine_finite_index_zero_stabilizer_constructs_fixed_shift` 对实际
+实仿射表示 `ψ : G →* (ℂ ≃ᵃ[ℝ] ℂ)` 和给定的有限指数子群 H，
+若每个 h∈H 都满足 `ψ(h)(0)=0`，便构造整个 G 的固定点 c。
+证明先建立实际求值作用，由 H 包含于零点稳定子推导实际零点
+轨道有限，再取这个非空有限轨道的重心。仿射组合保持重心且
+每个群元素置换同一个轨道，故每个 `ψ(g)` 都固定 c。
+这里不要求整个 G 有限、H 正规或作用保持定向，也没有输入
+固定点。有限指数和所有 H 元素固定零点仍是明示条件。
+
+`h3_affine_period_linear_compatibility_constructs_full_conjugacy`
+对同一个 G 的两个实际实仿射表示 r、s，给定可逆连续实线性
+A 和有限指数 H，若每个 g、z 满足
+`A(r(g).linear(z))=s(g).linear(A(z))`，且每个 h∈H 满足
+`A(r(h)(0))=s(h)(0)`，则构造实际 c 和同一个
+`T(z)=A(z)+c`，证明 T 双射及每个 g、z 的精确关系
+`T(r(g)(z))=s(g)(T(z))`。它实际构造平移缺陷仿射表示：
+`δ(g)=s(g)(0)-A(r(g)(0))`，`ψ(g)(c)=δ(g)+s(g).linear(c)`，
+从原 r、s 的乘法及上述线性兼容性证明该表示的乘法，再用
+前一重心构造修正 c。没有输入 c、T 或完整仿射共轭关系；
+T 的线性部分保持为上述同一个可逆 A，没有通过平均任意
+映射来假定可逆性。这个阶段仍输入每个 g 的线性兼容性。
+
+`h3_normal_translation_periods_construct_full_affine_conjugacy`
+进一步从周期数据推导该线性兼容性。条件是同一个 G 的实际
+仿射表示 r、s，有正规有限指数 H，在两侧每个 h∈H 都按
+`z↦z+r(h)(0)`、`z↦z+s(h)(0)` 平移；给定两组实际实基
+`b,b′ : Module.Basis (Fin 2) ℝ ℂ`，每个 h∈H 的两侧平移
+向量使用同一个整数系数族分别展开在 b、b′ 中，且 b 的每个
+基向量实际出现为某个源 H 元素的平移向量。由两组基构造
+同一个连续实线性 A，H 的正规性将每个周期的共轭仍留在 H；
+比较实际共轭平移的两侧向量，然后用基的外延性，导出每个
+g 的线性兼容性。随后构造同一个 c 及双射 T，对所有 G 元素
+和所有水平点实现上述仿射关系。没有输入线性兼容性、T、c
+或仿射共轭；H 的正规性、有限指数和全部匹配周期仍是输入。
+没有增加定向保持条件，因此条件允许外围作用含反射。
+
+`h3_prescribed_period_data_construct_original_controlled_equivariant_map`
+将此构造接回原 H³。输入是两个给定无穷远稳定子群 G、G′ 的
+群同构 d，两侧实际原 H³ 等距表示在每个群元素处都按单位
+实比例固定原无穷远零光锥标架射线，以及在所有水平点处与
+原水平映射相等的实际仿射表示 r、s。再输入源 G 中上述正规
+有限指数 H、两组实基、所有同系数周期与源基向量的实现；
+目标仿射表示使用同一个 `s.comp d.toMonoidHom`。
+由这些数据构造同一个 c、T(z)=A(z)+c 及原高度保持延伸
+`h3PeriodAffineHeightExtension b b′ c`。A 与 A 的逆的算子范数
+实际给出 C、D≥1，在每个原 H³ 点对上导出
+`dist(p,q)-arcosh(D²)≤dist(F(p),F(q))≤dist(p,q)+arcosh(C²)`，
+证明同一个 F 满射，且对每个 g∈G、每个原点 p 精确满足
+`F(ρ(g)(p))=ρ′(d(g))(F(p))`。没有输入 F、距离控制、满射性、
+水平或原逐点等变性，也没有定向保持条件。
+
+这最后一段是无穷远稳定子群的条件桥接，不能把“所有 G
+元素”理解成有限体积流形的整个甲板群。两侧尖点稳定子群的
+识别、单位缩放、实际水平仿射表示、正规有限指数平移子群及
+周期数据仍未从原给定 h/d 构造；这里的 d 也尚未被实现为原
+同伦等价诱导的同一个全甲板群同构在尖点上的限制。全局尖点
+与紧核心的受控粗稠密等变拼接和原交比保持仍缺，完整非紧、
+含尖点、非可定向、两侧原度量及原 h 所诱导同一个全甲板群 d
+的 Mostow–Prasad 仍为 **ACTIVE/INCOMPLETE**。
+
+四个完整模块串行本地 Lean 成功，四项公理闭包仅含
+`propext`、`Classical.choice`、`Quot.sound`，零警告。四次完整
+失败尝试全部排除，未接受其 `sorryAx` 诊断或警告；修正仅为
+实例/仿射强制转换、同一个原逆像的显式化、已有正规性证明
+参数和单位实标量类型，不压制诊断。Lean 仍在忽略目录
+`.lake`，仅交付研究笔记，没有跟踪 Lean、准入、冻结或新颖性
+声明。逃逸审计仍未完成，登记按 CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549

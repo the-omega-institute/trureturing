@@ -1,0 +1,17 @@
+### proposition 261.5 消失的胞腔误差仍容许端点水平失控
+
+取 §260 的 $H(a)=a^{3/4}e^{(\log a)^{1/4}/2}/\log a$。
+对模型 $\Phi^*$ 用同一 $q$ 坐标定义双端弦余量 $\mathcal R^*_{a,b}$。
+令 $u=(\log a)^{1/4}$、$L=\log a$，则所有充分大的 $a$、
+$a<b\le a+H(a)$ 及 $y\in[a,b]$ 都有
+
+$$
+w(y)|\mathcal R^*_{a,b}(y)|
+\le4D\,a^{-1/4}\frac{e^u}{L^2}
++4a^{-3/4}\frac{e^{u/2}}L
+\longrightarrow0
+\tag{261.14}
+$$
+
+且该收敛对 $b,y$ 一致。
+

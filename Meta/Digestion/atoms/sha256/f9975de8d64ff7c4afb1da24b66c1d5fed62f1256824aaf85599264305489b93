@@ -1,0 +1,15 @@
+### 定理 293.3 平方间隙实际树的统一饱和成本与 Robin 后段
+
+设 $T$ 为根十九的任意有限祖先闭合实际树。对父指标 $797$ 不增加选支条件；对每个其余非根父指标 $s$，要求选入树的实际边满足 $p\ge s^2/8$。没有分叉数量上限，叶节点的边条件为空。取任意正整包指数 $a_s$，令 $M_T=\prod_{s\in T}m_s^{a_s}$。则
+\[
+\boxed{\quad 1<Z(M_T)\le\frac{M_T}{\varphi(M_T)}<e^{1/5}.\quad}
+\tag{293.11}
+\]
+令 $T_j$ 为实际第 $j$ 层、$A_j=\sum_{s\in T_j}w(s)$，$h$ 为树高。对 $J\ge1$，有共同后代成本界
+\[
+\sum_{j=J}^h\sum_{s\in T_j}E(s)
+\le16\left(\frac78\right)^{J-1}A_1.
+\tag{293.12}
+\]
+对 $n\ge1$、$B=5040M_TF_n$、$R=n+\sum_{s\in T}a_ss$，该树族的归一 Robin 比值随 $R\to\infty$ 一致趋零。
+

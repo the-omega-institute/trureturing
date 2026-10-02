@@ -1,0 +1,14 @@
+**定理 311.3（实际漂移的速率判据与 RH 运输）。** 对每个固定 $0<\lambda<1/2$，有
+\[
+m_L^\lambda b_L\longrightarrow0
+\quad\Longleftrightarrow\quad
+\vartheta(x)-x=o(x^{1-\lambda}).
+\tag{311.18}
+\]
+因此结合经典 RH 素数误差判据，有
+\[
+\mathrm{RH}\quad\Longleftrightarrow\quad
+\forall\lambda\in(0,1/2),\quad m_L^\lambda b_L\longrightarrow0.
+\tag{311.19}
+\]
+

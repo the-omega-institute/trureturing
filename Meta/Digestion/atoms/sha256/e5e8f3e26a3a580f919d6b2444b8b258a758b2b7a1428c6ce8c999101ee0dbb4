@@ -1,0 +1,19 @@
+**定义 310.0。** 沿用 §§307–309 的实际整数 $T_L,H_L(z)$、$m=3L+2$、$E=e^\gamma$、$\ell=\log m$、$\rho=m^{1/4}$ 与 $h_L(z),M_L(z),b_L$。记
+\[
+\alpha_L=\frac{U_L}{E\ell},\qquad \chi_L=\frac m{X_L},\qquad
+\beta_L=\rho b_L=\rho(\alpha_L-\chi_L),
+\tag{310.1}
+\]
+\[
+t_L(z)=\frac{m-z}{\rho^3},\qquad q_L(z)=\frac{h_L(z)}{\rho^3},\qquad
+G_L(z)=\frac{\sqrt m}{E}\,[\Delta(H_L(z))-\Delta(T_L)].
+\tag{310.2}
+\]
+本节只在 $L\ge16$、$m/2\le z\le m$ 使用这些截止。定义有限候选集及实际最小值
+\[
+\mathcal C_L=\{m/2,m\}\cup\{p:m/2\le p\le m,\ p\nmid A_L\},
+\qquad I_L=\min_{z\in[m/2,m]}G_L(z),
+\tag{310.3}
+\]
+其中集合右侧的 $p$ 均为素数。
+

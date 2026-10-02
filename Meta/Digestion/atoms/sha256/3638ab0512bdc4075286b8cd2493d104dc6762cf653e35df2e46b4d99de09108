@@ -1,0 +1,13 @@
+## 328. 有理相位弧对更低回传成本的阻碍
+
+固定 $0<2\eta<\kappa$，沿用 $S,Q_C$，置 $\delta_C=e^{-\eta S}$。既有 §318 的有限Dirichlet输入只需把预算改为 $R_C=\lceil\delta_C^{-1}\rceil$，就供应
+
+$$
+1\le t\le R_C<Q_C,\qquad
+\|tC\varphi\|<\delta_C,\qquad
+\mathcal D_C(t)\le\eta S+o(1).
+\tag{328.1}
+$$
+
+它的上侧归一化回传成本为 $e^\gamma\eta+o(1)$。这是旧输入的参数取值，不是新增选择定理。更低成本需要另外控制实际相位，下面给出斜率统一方法的明确边界。
+

@@ -1,0 +1,62 @@
+### 定理 285.2 素指标 Lucas 整包保留全部首次深度并消去集体负相位
+
+对素数 $s\ge5$，定义实际整数
+\[
+m_s=\frac{L_s^2+1}{2}=\frac{F_{3s}}{2F_s}.
+\tag{285.4}
+\]
+则 $m_s>1$ 为奇整数，它的素因子集合恰为 $\{p:z(p)=3s\}$，并且
+\[
+\boxed{\quad v_p(m_s)=h_p\quad\text{对每个 }p\mid m_s.\quad}
+\tag{285.5}
+\]
+还有
+\[
+m_s\equiv1\pmod s,\qquad
+\prod_{p\mid m_s}\varepsilon_p^{h_p}=1.
+\tag{285.6}
+\]
+因此，对每个正整数 $a$，
+\[
+\boxed{\quad
+n\in\mathcal E(m_s^a)
+\quad\Longleftrightarrow\quad
+n\equiv0\pmod{6s}
+\ \text{或}\ 
+\left(a=1,\quad n\equiv r_+\pmod{6s}\right).
+\quad}
+\tag{285.7}
+\]
+本判据不需要假设任一 $h_p$ 等于一。对全部幂次，候选额外相位均为 $r_+$；其实际存在性只保留在一次整包系数中。
+
+**证明。** 使用经典三倍指标与 Lucas–Fibonacci 范数恒等式，因 $s$ 为奇数，
+\[
+d_s=L_s^2+1=5F_s^2-3.
+\]
+$s$ 不被三整除，所以 $F_s,L_s$ 为奇数，而 $3s\equiv3\pmod6$。
+经典二赋值式给 $v_2(d_s)=1$，因此式（285.4）为奇整数；$s\ge5$ 又给 $L_s\ge11$，故 $m_s\ge61$。
+
+若奇素数 $p\mid d_s$，则 $p\mid F_{3s}$，故 $z(p)\mid3s$。
+因 $s$ 为素数，可能秩只有 $1,3,s,3s$；前两者不能属于奇素数。
+若 $z(p)=s$，则 $p\mid F_s$，而 $d_s=5F_s^2-3$ 迫使 $p=3$。
+但 $z(3)=4$，不可能等于奇素数 $s$。所以必有 $z(p)=3s$。
+反过来，实际秩为 $3s$ 的素数不整除 $F_s$；由 $F_{3s}=2m_sF_s$ 得 $p\mid m_s$。
+它在该乘积的其余因子上赋值为零，故式（285.5）成立。
+
+经典 Lucas 素指标同余 $L_s\equiv1\pmod s$ 可在黄金整数环中直接由二项式证明：
+写 $\psi=1-\phi$，则
+\[
+\phi^s+\psi^s\equiv(\phi+\psi)^s=1\pmod{s\mathbb Z[\phi]}.
+\]
+素数 $s$ 整除所有中间二项式系数，且整数在该环中的 $s$ 整除等价于普通整数的 $s$ 整除。
+因二在模 $s$ 下可逆，式（285.4）给 $m_s\equiv1\pmod s$。
+另一方面，式（285.5）与经典秩界给
+\[
+m_s\equiv\prod_{p\mid m_s}\varepsilon_p^{h_p}\pmod s.
+\]
+右端只能为正一或负一，$s\ge5$ 使它们在模 $s$ 下不同，得到式（285.6）。
+
+$m_s^a$ 的各素数深度为 $ah_p$。全部 $h_p\ge1$，且素支撑非空，
+所以向量合同 $ah_p=h_p$ 对全部素数成立当且仅当 $a=1$。
+定理285.1遂给式（285.7）。$\square$
+

@@ -1,0 +1,19 @@
+### theorem 251.2 实际储备相对完整模型的有效单侧界
+
+使用 §249 的同一实际价格源与 Dusart 输入，令 $K=2461/1000$。
+对所有 $t\ge100$ 有
+
+$$
+\boxed{R(e^t)>\mathcal M(t)-\frac{2K e^{-t/2}}{t^3}.}
+\tag{251.4}
+$$
+
+因此同一点上的条件
+
+$$
+\Phi(e^t)+\mathcal M(t)\ge\frac{2K e^{-t/2}}{t^3}
+\tag{251.5}
+$$
+
+蕴含 $\mathfrak D(e^t)>0$。
+

@@ -1,0 +1,24 @@
+**定理 307.1（实际末端删除的有限响应）。** $H_L(z)$ 是正整数，且
+\[
+\mathcal O_L(H_L(z))=\mathcal O_L(A_L),\qquad
+B_L(H_L(z))=A_L,\qquad5040\mid H_L(z).
+\tag{307.4}
+\]
+其平方层与 $T_L$ 相同，新增素数集合为
+\[
+\mathcal N_L(H_L(z))=\{m/2<p\le z:p\equiv1\pmod3\}.
+\tag{307.5}
+\]
+高度和权重的精确变化为
+\[
+\log H_L(z)=X_L-h_L,\qquad
+U_{H_L(z)}=U_Le^{-s_L},
+\tag{307.6}
+\]
+因此
+\[
+\frac{\Delta(H_L(z))-\Delta(T_L)}E
+=\log(1-h_L/X_L)+\frac{U_L}E(1-e^{-s_L}).
+\tag{307.7}
+\]
+

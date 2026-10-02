@@ -1,0 +1,20 @@
+**定理 330.1（实际左和到整个有限连续区间的下界证书）。** 在假设330.1下，对每个 $j<N$、$a_j\le x\le a_{j+1}$，有
+\[
+\begin{aligned}
+\mathcal I(x)\ge{}&
+ \sum_{i<j}\bigl[\omega_i(q_i-\kappa-e_i)-M_iD(a_i,a_{i+1})\bigr]\\
+ &+(q_j-\kappa-e_j)\log(x/a_j)-M_jD(a_j,x).
+\end{aligned}
+\tag{330.4}
+\]
+特别地，
+\[
+\mathcal I(a_N)\ge
+\sum_{i<N}\omega_i(q_i-\kappa-e_i)
+-\sum_{i<N}M_iD(a_i,a_{i+1}),
+\qquad
+0\le D(a,b)\le\frac{(b-a)^2}{2a}.
+\tag{330.5}
+\]
+因此（330.4）也在每个 $D$ 项以相应二次上界替代后成立。
+

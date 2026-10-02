@@ -1,0 +1,30 @@
+**证明。** 经典 Binet 公式及 $\psi=-\varphi^{-1}$ 给
+
+$$
+F_n=\frac{\varphi^n}{\sqrt5}(1-\delta_n),\qquad
+\delta_n=(-1)^n\varphi^{-2n}.
+$$
+
+$F_n\ge X\ge4$ 保证 $n\ge1$，且 $|\delta_n|\le\varphi^{-2}<1/2$。
+于是
+
+$$
+\theta(F_n)=n\pi+\omega\log(1-\delta_n).
+\tag{261.13}
+$$
+
+由 $|\log(1-v)|\le2|v|$ 对 $|v|\le1/2$ 的经典对数界，
+以及 $|\sin(n\pi+r)|\le|r|$，得到
+
+$$
+|\sin\theta(F_n)|\le2\omega\varphi^{-2n}.
+$$
+
+又 $F_n\le\varphi^n$，且 $w(x)f(x)=x^{1/4}\sin\theta(x)$，
+所以 $|w(F_n)f(F_n)|\le2\omega\varphi^{-7n/4}$。
+式（261.9）另给 $w(x)|\Phi^*(x)-f(x)|\le x^{-1/2}$，
+即得式（261.11）。$F_n\to\infty$ 与 $\varphi>1$ 给显示极限。
+
+对所列 $x_j$，有 $\theta(x_j)=(2j+3/2)\pi$，故正弦为 $-1$。
+利用 $\Phi^*\le f$ 得式（261.12），其增长给最终有限下界的否定。$\square$
+
