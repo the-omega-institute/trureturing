@@ -24419,3 +24419,179 @@ selected liability by the complement of a few displayed $1155$-classes does
 not preserve the repair.  Consequently this example only proves a
 methodological boundary: a global strict comparison must use the common
 source and whole-liability constraints, not the congruence-hull price alone.
+
+## 208. Releasing one additional occupied label has an exact finite exchange reduction
+
+The one-additional-label exchange can be reduced further without imposing a
+prefix-separation hypothesis.  This uses the essential-coset index bound
+already recorded in Section 25 and the deletion corollary used in Section
+192; those published results are reused here rather than reproved.
+
+Specialize to $p=3$.  Write
+
+\[
+ Q=3^eM,\qquad 3\nmid M,\qquad N=Q/3,\qquad
+ L=\operatorname{lcm}(m_1,m_2,m_3),\qquad R=3^{e-1}L,
+\]
+
+where the top packet has labels $3^em_1,3^em_2,3^em_3$.  Choose one
+additional retained numerical label $h$, delete its class $A_h$, and write
+
+\[
+ \mathcal U_h=\mathcal U\setminus\{A_h\},\qquad
+ S_h=\mathbb Z\setminus\bigcup\mathcal U_h.
+\]
+
+Every retained modulus divides $N$, so $S_h$ is $N$-periodic; it is
+nonempty by irredundancy.  Repairs below are inclusion-minimal, so each
+repair class has a private point.
+
+Thus $S_h$ includes the original two-sided liability and the complete joint
+liability exposed by releasing $h$.  The five released labels have total
+
+\[
+ \Sigma_h=R+3^e(m_1+m_2+m_3)+h.
+\]
+
+For an inclusion-minimal repair of $S_h$ with at most five classes, let
+
+\[
+ g_j=\gcd(d_j,N),\qquad \delta_j=d_j/g_j.
+\]
+
+The Section 25 essential-coset bound gives
+
+\[
+ f(\delta_j)=\sum_{q\mid\delta_j}v_q(\delta_j)(q-1)\le4,
+\]
+
+so every relative index is one of $1,3,5,9$.  The following two
+eliminations make this palette exact.
+
+**Index five.**  If one repair class has $\delta_j=5$, take a private point
+of that class and its complete $N$-fibre inside $S_h$.  The induced fibre
+cover is a cover of the whole fibre parameter line and still has the selected
+class essential.  The deletion corollary for fewer than five classes divisible
+by $5$ therefore forces five compatible index-five classes; the budget is
+exhausted, so every repair class has index five.  Here $\delta_j=5$ means
+$d_j=5g_j$ with $g_j=\gcd(d_j,N)$, so the restriction is one residue of the
+five next digits.  On every $N$-fibre contained in $S_h$, each class occupies one of
+the five next digits.  Hence every class is compatible with every such fibre,
+and
+
+\[
+ S_h\subseteq[c_j]_{g_j}\qquad(1\le j\le5).
+\]
+
+Let
+
+\[
+ \Gamma_h=\gcd\bigl(N,\{x-w:x\in S_h\}\bigr),\qquad
+ \nu=v_5(N),
+\]
+
+for any $w\in S_h$.  The pure index-five branch has exact minimum modulus
+sum
+
+\[
+ P_{5,h}=
+ \begin{cases}
+ 5^{\nu+1}s_5(\Gamma_h/5^\nu),&v_5(\Gamma_h)=\nu,\\
+ +\infty,&v_5(\Gamma_h)<\nu,
+ \end{cases}
+\]
+
+where $s_5(t)$ is the sum of the five smallest distinct divisors of $t$,
+and is $+\infty$ if there are fewer than five.  Necessity follows because
+each shadow modulus is $5g_j$, with $g_j\mid\Gamma_h$ and
+$v_5(g_j)=\nu$.  CRT phases using the five next $5$-digits attain the
+bound.  The resulting labels have one more $5$-adic digit than $Q$, so
+they are fresh from the retained family.
+
+**Index nine.** If an index-nine class occurs, its private fibre needs three
+index-nine classes on its occupied first ternary digit.  The other two first
+digits each need an index-three class, so the five-class budget forces the
+pattern
+
+\[
+ 3\text{ classes of index }9,\qquad 2\text{ classes of index }3.
+\]
+
+An index-nine class has $d_j=9g_j$ with $g_j=3^{e-1}s_j$, $s_j\mid M$;
+an index-three class similarly has $d_j=3^es_j$.  A compatible index-one
+class, or an index-three class on the selected first digit, would cover the
+selected private point.  Thus the three deep classes and two shallow classes
+are forced.  All five classes have the same prefix modulo $3^{e-1}$.  Applying
+the same fibre argument to every $N$-fibre in $S_h$ shows that each deep class has a
+shadow containing all of $S_h$ modulo $3^{e-1}s_i$.  Replacing the five
+classes by three classes of labels
+
+\[
+ 3^es_1,\qquad3^es_2,\qquad3^es_3,\qquad s_i\mid M,
+\]
+
+and assigning the three next ternary digits gives an admissible whole-$S_h$
+repair.  These labels divide $Q$, are distinct, and are fresh from every
+retained class because retained classes have ternary height below $e$.
+Thus an optimal repair never needs relative index $9$.
+
+Consequently every remaining repair is of one of two types:
+
+\[
+\begin{array}{ll}
+\text{Type I:}&\delta_j\in\{1,3\},\text{ hence every }d_j\mid Q;\\
+\text{Type II:}&k=5\text{ and every }\delta_j=5.
+\end{array}
+\]
+
+Type I is now a finite, phase-sensitive binary covering problem.  Put
+
+\[
+ \mathcal P_h=\{d>1:d\mid Q,\ d\notin D_{\mathrm{ret},h}\},
+\]
+
+where $D_{\mathrm{ret},h}$ is the numerical label set of the retained
+classes in $\mathcal U_h$.  Use variables $x_{d,a}\in\{0,1\}$, with at most
+one phase for each numerical label $d$, at most five selected classes, and
+coverage of the complete $Q$-periodic liability
+
+\[
+ \overline S_h=\{z\bmod Q:z\not\equiv a_t\pmod t
+                    \text{ for every retained class }[a_t]_t\}.
+\]
+
+Let $\Phi_h$ be the lexicographic minimum of the selected class count and
+modulus sum subject to those constraints.  It retains numerical distinctness,
+actual phases, and every integer lift; it is not a density relaxation.
+
+If $\operatorname{OPT}_h$ denotes the lexicographic optimum over all
+admissible odd repairs with at most five classes, the two reductions give the
+exact finite interface
+
+\[
+\boxed{
+ \operatorname{OPT}_h
+ =\min_{\mathrm{lex}}\{\Phi_h,(5,P_{5,h})\}.
+}
+\]
+
+Therefore an EB1 extremal cover must satisfy, for every releasable label
+$h$,
+
+\[
+ \boxed{\Phi_h=(5,\Sigma_h),\qquad P_{5,h}\ge\Sigma_h.}
+\]
+
+This is a genuine reduction of the unrestricted-label exchange to a finite
+problem for each $h$.  It still does not prove the required forcing
+statement
+
+\[
+ \exists h:
+ \Phi_h<_{\mathrm{lex}}(5,\Sigma_h)
+ \quad\text{or}\quad
+ P_{5,h}<\Sigma_h.
+\]
+
+That universal comparison, larger exchanges, and the unrestricted Erdős #7
+assertion remain open.
