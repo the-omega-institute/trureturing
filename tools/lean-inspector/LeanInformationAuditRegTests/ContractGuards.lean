@@ -1,4 +1,5 @@
 import LeanInformationAudit.Contract.Discovery
+import LeanInformationAudit.Contract.InterfaceGuard
 
 namespace LeanInformationAuditRegTests.ContractGuards
 open Lean Meta Elab Command
@@ -9,6 +10,28 @@ def assertTest (label : String) (ok : Bool) : MetaM Unit := do
 
 run_meta do
   let env := (← getEnv).setExporting false
+  let interfaceModules := env.header.moduleNames.filter
+    ((`LeanInformationAuditInterface.Contract).isPrefixOf ·)
+  assertTest "interface.contract_modules" (interfaceModules.size >= 4)
+  for owner in interfaceModules do
+    let source ← IO.FS.readFile (← LeanInformationAudit.Repository.source
+      ("tools/lean-inspector-interface/" ++ owner.toString.replace "." "/" ++ ".lean"))
+    let entries ← LeanInformationAudit.Contract.SourceAudit.parse env source owner.toString
+    let result := LeanInformationAudit.Contract.InterfaceGuard.audit entries
+    assertTest s!"interface.types_only.{owner.getString!}" result.isOk
+    if let .error error := result then logInfo m!"CONTRACT_DIAGNOSTIC {error}"
+  for (kind, source) in #[
+      ("def", "def x : Nat := 17"),
+      ("theorem", "theorem x : True := by trivial"),
+      ("abbrev", "abbrev x : Nat := 17"),
+      ("opaque", "opaque x : Nat := 17"),
+      ("instance", "instance x : Inhabited Nat := ⟨17⟩"),
+      ("axiom", "axiom x : Nat")] do
+    let entries ← LeanInformationAudit.Contract.SourceAudit.parse env source "InterfaceNegative"
+    let result := LeanInformationAudit.Contract.InterfaceGuard.audit entries
+    assertTest s!"interface.authored_non_type.{kind}" (match result with
+      | .error error => error.startsWith "contract.interface:authored_non_type:"
+      | .ok _ => false)
   let structures := #[
     ``LeanInformationAudit.Contract.Ref, ``LeanInformationAudit.Contract.OptionSetting,
     ``LeanInformationAudit.Contract.ReadoutSelection,
