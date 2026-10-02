@@ -13,6 +13,7 @@ class NativeReportConsumerTests:
                    'leanInspectorInterface/LeanInformationAuditInterface', 'reg/Reg',
                    'regInspector/LeanInformationAuditRegTests']
         self.reg_package()
+        self.copy('tools/scripts/worktree/lean_cache_release.py')
         self.build()  # Restore the native fixture's private compiler stage.
         root_config = self.root / 'lakefile.toml'
         root_config.write_text(root_config.read_text().replace(
