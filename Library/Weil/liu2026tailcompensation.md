@@ -5,7 +5,7 @@ year: 2026
 title: "Certified Weil Positivity Beyond the Unit Window: Source-Exact Block-Schur and Tail-Compensation Bounds for the Riemann Zeta Function"
 doi: null
 url: https://github.com/luciferyu666/certified-weil-positivity/releases/tag/v1.0-mcom-submission
-claim: The author-submitted manuscript states full complex Weil-form coercivity at physical half-widths 1 and 17/16 and retains a positive Fourier-tail correction. A weighted-Schur application gives a 4/5 lower bound for the actual prime comparison block at c=9; the complete retained sign and cofinal positivity remain unproved.
+claim: The author-submitted manuscript states full complex Weil-form coercivity at physical half-widths 1 and 17/16. Source-proof parameter applications supply a 4/5 prime-block floor and an actual positive Fourier-tail correction at c=9; the complete retained sign and cofinal positivity remain unproved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -274,6 +274,88 @@ S_9=I-B_9-\delta I,\qquad 0\preceq S_9\preceq I.
 $$
 
 This conclusion covers the entire complex Hilbert space. The exterior Gamma-weighted form used below is finite on the original smooth legal domain; its bounded comparison (A5) does not assert finiteness of that weighted integral for arbitrary $L^2$ vectors. This is an application of the inspected proof with a new remainder comparison, not a new uncertainty principle or a kernel-verified declaration.
+
+## Positive tail compensation at the new width
+
+At this same $a=\log3$, define the newly normalized modes and filtered vectors
+
+$$
+v_{0,9}(u)=(2a)^{-1/2},\qquad
+v_{1,9}(u)=\sqrt{3/(2a)}\,u/a,\qquad
+h_{j,9}=S_9v_{j,9},\qquad
+e_j=\langle v_{j,9},(I-B_9)v_{j,9}\rangle.
+$$
+
+The exterior-weight estimate in B.2 uses only $|t|\ge256$ and the background $7/2$, so it supplies $T_{{\rm tail},9}(f)\ge C\mathcal E_9(f)$ with $C=123/1280>1/16$. This is the source's actual exterior integral, with all poles, contributing prime powers and the central Gamma band retained elsewhere in $Q$.
+
+B.3's normalized Fourier integrals, evaluated with $c_{\rm band}=256a$, supply independent lower and upper bounds:
+
+$$
+\frac{c_{\rm band}-1}{\pi c_{\rm band}^2}\le e_0
+\le\frac{c_{\rm band}+1}{\pi c_{\rm band}^2},\qquad
+\frac{3(c_{\rm band}-2)}{\pi c_{\rm band}^2}\le e_1
+\le\frac{3/c_{\rm band}+6/c_{\rm band}^2+2/c_{\rm band}^3}{\pi}.
+$$
+
+All four envelopes decrease on $[272,282]$. Using the source's $157/50<\pi<22/7$, the lower envelopes at $282$ and upper envelopes at $272$ give
+
+| Direction | Lower bound for $e_j$ | Upper bound for $e_j$ | Required upper comparison |
+|---|---:|---:|---|
+| $j=0$ | $1967/1749528$ | $6825/5807744$ | $81e_0<C$ |
+| $j=1$ | $245/72897$ | $2794825/789853184$ | $27e_1<C$ |
+
+Both lower bounds exceed $2^{-11}>\delta$. Thus $e_j-\delta>0$ is established independently of the upper estimates. Reflection commutes with $S_9$, making $h_{0,9}$ even, $h_{1,9}$ odd and $\langle v_{0,9},S_9v_{1,9}\rangle=0$. The source's complex square completion in the positive form of $S_9$ therefore applies:
+
+$$
+\langle f,S_9f\rangle\ge
+\sum_{j=0}^1\frac{|\langle h_{j,9},f\rangle|^2}{e_j-\delta}.
+$$
+
+Since $C/(e_0-\delta)>81$, $C/(e_1-\delta)>27$ and $C\delta>\delta/16$, this gives the actual new-window tail input
+
+$$
+\boxed{
+T_{{\rm tail},9}(f)\ge\tau_9\|f\|^2+\langle f,U_9f\rangle,
+\quad
+\tau_9=2^{-49162},\quad
+U_9=81|h_{0,9}\rangle\langle h_{0,9}|
++27|h_{1,9}\rangle\langle h_{1,9}|,
+}
+\tag{A6}
+$$
+
+for every $f\in C_c^\infty((-a,a);\mathbb C)$. On even tests the odd contribution vanishes. The displayed constants match the old calibration because the new parameter bounds justify them, while $B_9$, the modes and both filtered vectors are new-width objects. This is a paper application of the inspected analytic proof, independently reviewed; it is not a reproduced numerical certificate, a new kernel theorem or positivity of the complete form.
+
+The same upper envelopes give $\|h_{0,9}\|<1/29$ and $\|h_{1,9}\|<3/50$, since $S_9^2\preceq S_9$ implies $\|h_{j,9}\|^2\le e_j-\delta$. These norm bounds do not provide finite-column approximation errors for the new vectors.
+
+This exact scalar replay checks only the new parameter comparisons. Its logarithm and $\pi$ enclosures are the cited analytic inputs; it does not reexecute the original finite matrices or prove the analytic interpolation and square-completion suppliers.
+
+```python
+from fractions import Fraction as F
+
+log3_lo, log3_hi = F(1098612, 10**6), F(1098613, 10**6)
+assert F(17, 16) < log3_lo < log3_hi < F(11, 10)
+assert F(272) < 256 * log3_lo < 256 * log3_hi < F(282)
+ratio = F(3 * 768, 4096) * F(11, 10)
+assert ratio == F(99, 160) < F(5, 8)
+assert F(5, 8)**2 < F(1, 2)
+
+band_lo, band_hi = F(272), F(282)
+pi_lo, pi_hi, C = F(157, 50), F(22, 7), F(123, 1280)
+lower = [(band_hi - 1) / (pi_hi * band_hi**2),
+         3 * (band_hi - 2) / (pi_hi * band_hi**2)]
+upper = [(band_lo + 1) / (pi_lo * band_lo**2),
+         (3 / band_lo + 6 / band_lo**2 + 2 / band_lo**3) / pi_lo]
+assert lower == [F(1967, 1749528), F(245, 72897)]
+assert upper == [F(6825, 5807744), F(2794825, 789853184)]
+assert all(value > F(1, 2**11) for value in lower)
+assert 49158 > 11
+assert C > F(1, 16)
+assert 81 * upper[0] < C and 27 * upper[1] < C
+assert upper[0] < F(1, 29**2) and upper[1] < F(9, 50**2)
+for j in range(2):
+    print(j, lower[j], upper[j])
+```
 
 ## The remaining retained-matrix consumer at $c=9$
 
