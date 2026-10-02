@@ -174,14 +174,6 @@ facets unpaired.  Full-tile disjointness gives disjoint interiors; the
 incident u- or v-mirrors are orthogonal to every incident original mirror, so
 the omitted facets form smooth totally geodesic boundary patches.
 
-For a concrete embeddedness check, intersect the half-spaces bounded by all
-W-translates of U and V that contain the corresponding chamber.  The
-resulting set is convex and W-invariant.  The standard Coxeter gallery
-criterion says that a chamber lies in this intersection exactly when its
-gallery word uses only the generators a,b,c,d, hence exactly when it is wQ
-for w∈W.  Therefore this convex set is Ω and its boundary is precisely the
-union of the unpaired truncation facets.
-
 The development is a manifold with totally geodesic boundary. At interior points, the rank-two dihedral cycles and the spherical rank-three groups <a,b,d> (order 16), <a,c,d> (order 12) give balls. At a truncation face, its incident reflections preserve its supporting plane and tile it by hyperbolic triangles, giving half-balls. In particular no pleated boundary or singular finite vertex remains.
 
 Let \(W^+\) be the orientation-preserving index-two subgroup.  It has a
