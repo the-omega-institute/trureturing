@@ -23,3 +23,5 @@ Nonnegative sample weights preserve the pointwise inequality. No marginal-normal
 - Truth anchor: `D5/S0/Asymptotics/Bonferroni/TruncationBounds.escape_bonferroni_truncation`
 - Dependency: [D5/S0/Asymptotics/WeightedProbability/BinomialMomentIdentity](../WeightedProbability/BinomialMomentIdentity.md)
 - Dependency: [D5/S0/Asymptotics/WeightedProbability/FiniteBonferroni](../WeightedProbability/FiniteBonferroni.md)
+
+ci-perf negative probe: this hand-written line is not produced by the Scribe definition.
