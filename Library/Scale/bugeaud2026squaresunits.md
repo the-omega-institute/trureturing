@@ -5,7 +5,7 @@ year: 2026
 title: "On the difference between squares and integral S-units"
 doi: 10.4171/pm/2145
 url: https://ems.press/journals/pm/articles/14298883
-claim: "Theorem 1.4 applies to the actual CA golden norm, but its universal exponent exceeds 3 on every support containing 2 and 5; its literal power bound cannot exclude the dangerous arc, so a useful strengthening must retain additional CA restrictions or change the bound."
+claim: "Theorem 1.4 applies to the actual CA golden norm, but its universal exponent exceeds 3 on every support containing 2 and 5; its literal power bound cannot exclude the dangerous arc, so a useful strengthening must restrict the solution family or change the bound."
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -132,11 +132,13 @@ infinity. Optimizing the exponent in the quoted universal power bound cannot
 make the required comparison hold.
 
 The small witness belongs to the theorem's full solution family; it is not
-an actual CA host pair or an instance of the dangerous arc. An estimate
-restricted to the complete CA valuations can exclude that witness and must
-be assessed on its own. Bounds with additional prefactors or height
-thresholds must retain those parameters in the comparison. No exclusion of
-such alternative arguments, and no actual CA incidence in the arc, is claimed.
+an actual CA host pair or an instance of the dangerous arc. Restrictions on
+the solution family, including complete CA valuations or coprimality with
+the full support, can exclude that witness and must be assessed on the actual
+pair, preserving any common divisors. Bounds with additional prefactors or
+height thresholds must retain those parameters in the comparison. No
+exclusion of such alternative arguments, and no actual CA incidence in
+the arc, is claimed.
 
 The prime $q$ here is the rational-obstruction denominator and a costly
 multiplier in §328. It is not a member of §327's cheap family: that family
