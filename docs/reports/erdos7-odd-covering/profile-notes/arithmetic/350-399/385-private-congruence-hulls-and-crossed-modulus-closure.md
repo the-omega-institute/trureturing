@@ -319,9 +319,9 @@ and H_5=H_7=1, for arbitrary H_3 and H_q. Conditioning on actual p/3p
 guards sharpens each color's reciprocal budget; the shared pure-three
 guard mass excludes the final q=11,13 cases. This also excludes the
 specified q=53 subcase of Sections158 and161 without enumerating its
-finite carrier. HPM7 then forces H_5>=2 and an original25 whenever R
-is a singleton and5/7 have opposite colors. The other branches of
-unrestricted Erdős#7 remain open.
+finite carrier. The same one-root budget forces an original25 whenever
+R={q} and q>=11, without requiring5/7 to have opposite colors. The
+remaining singleton cases and unrestricted Erdős#7 remain open.
 
 ## 1. Replace only the region that depends on the changed classes
 
@@ -20245,4 +20245,34 @@ There is a direct stronger anchor conclusion. If H_5=1, the height-at-least-two 
 
 The original25 follows from divisor closure, with its actual phase unrestricted here. Together with TCP5's existing height bounds, the remaining anchor pairs lie in {2,3,4} times {1,2}. These are necessary original-family conditions, not jointly realized examples.
 
-This ordinary arithmetic exclusion has no Lean verification or priority claim. It excludes the singleton-R, opposite5/7 branch with H_5=1, for every finite H_3 and H_q. It does not exclude larger R, same-color5/7, or the remaining anchor heights, and does not settle unrestricted Erdős #7.
+This ordinary arithmetic exclusion has no Lean verification or priority claim. It excludes the singleton-R, opposite5/7 branch with H_5=1, for every finite H_3 and H_q. This argument does not exclude larger R or the remaining anchor heights, and does not settle unrestricted Erdős #7.
+
+### A concentrated height-one5 forces the sole shared prime to be7
+
+More generally, keep ONE EB1 original whole cover with R={q}, assume5 is concentrated, and set H_5=1. Then
+
+    q=7.                                             (GCB5)
+
+The one-root derivation of GCB1–GCB3 requires height one only for the concentrated primes in the retained color S. The opposite color can have arbitrary original heights: DP9/SI1 still eliminates every one of its original classes at the same fixed singleton-root assignment, with their higher digits fixed arbitrarily. The retained cofactor carrier, guard exclusions and inventory formulas are therefore unchanged. This also permits S to be empty: then P=1,W=X=T=0 and M_*=A>0, so the same strict necessary bound J_infinity(S,q)>1 holds.
+
+Since5 is concentrated, q is not5. Suppose q>=11. Initial-segment prime support and EB2 supply original7, and7 is concentrated because R={q}. If7 has the opposite color to5, the height-at-least-two part of HPM7 excludes H_7>=2, since it would give7<5. Thus H_7=1, contrary to the opposite5/7 exclusion above.
+
+If7 has the same color as5, let S be the other concentrated color. HPM7 with opposite5 gives
+
+    S subset {11,13,17,19,23}, H_p=1 for every p in S.
+
+Indeed, every such p is below5^2=25, while H_p>=2 would require p<5. Apply the same one-root GCB3 budget to S. Its numerical upper palette and q>=11 give
+
+    1<J_infinity(S,q)
+      <=J_infinity({11,13,17,19,23},11)
+       =545189/589050<1,
+
+a contradiction. As with the upper palettes in section165, a prime appearing in both numerical inputs only enlarges an inventory bound; no original prime is assigned both roles. These two cases exclude every q>=11, leaving q=7.
+
+The exact fraction has positive margin1-J=43861/589050. This ordinary consumer needs no bound on H_3 or H_q, no height restriction on the other primes sharing5's color, and no nonemptiness assumption on the opposite color. It does not exclude the remaining q=7 branch and has no Lean verification claim.
+
+In particular, if R={q} and q>=11, initial-segment support makes5 an original concentrated prime. GCB5 then excludes H_5=1. Divisor closure therefore gives the color-independent necessary condition
+
+    R={q}, q>=11 ==> H_5>=2 and25 is ORIGINAL.        (GCB6)
+
+Together with NTH1, a singleton R consequently has either q in {5,7}, or11<=q<=211 with an actual original25. This does not fix25's phase, exclude either small shared prime, or settle the remaining singleton cases.
