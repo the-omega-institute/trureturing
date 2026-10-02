@@ -26,12 +26,18 @@ inputs="$(git ls-files --others -- Blueprint Golden/Projection)" || fail 2 'GitR
 SOURCE_COMMIT="$(git rev-parse --verify HEAD)" || fail 2 'SourceCommitUnavailable'
 [[ "$SOURCE_COMMIT" =~ ^[0-9a-f]{40}$ ]] || fail 2 'InvalidSourceCommit'
 DIRECTORY="$ROOT/Generated/scribe-release/$SOURCE_COMMIT"
+PATHS_FILE=''
+COMMIT_FILE=''
+TREE_FILE=''
+trap 'rm -f "$PATHS_FILE" "$COMMIT_FILE" "$TREE_FILE"' EXIT
 PATHS_FILE="$(mktemp "${TMPDIR:-/tmp}/scribe-paths.XXXXXX")" || fail 2 'DefinitionPathsTemporaryFileFailed'
+COMMIT_FILE="$(mktemp "${TMPDIR:-/tmp}/scribe-commit.XXXXXX")" || fail 2 'SourceCommitTemporaryFileFailed'
 TREE_FILE="$(mktemp "${TMPDIR:-/tmp}/scribe-tree.XXXXXX")" || fail 2 'SourceTreeTemporaryFileFailed'
-trap 'rm -f "$PATHS_FILE" "$TREE_FILE"' EXIT
+export GIT_NO_REPLACE_OBJECTS=1
+git cat-file commit "$SOURCE_COMMIT" > "$COMMIT_FILE" || fail 2 'GitSourceCommitFailed'
 git ls-tree -r -z "$SOURCE_COMMIT" > "$TREE_FILE" || fail 2 'GitSourceTreeFailed'
 dotnet run --project "$PROJECT" --configuration Release -- \
-    resources verify-source --tree-from "$TREE_FILE" \
+    resources verify-source --source-commit "$SOURCE_COMMIT" --commit-from "$COMMIT_FILE" --tree-from "$TREE_FILE" \
   || fail "$?" 'SourceContentMismatch: disk bytes do not match source commit'
 tree_paths="$(git ls-tree -r --name-only "$SOURCE_COMMIT" -- Blueprint)" || fail 2 'GitDefinitionPathsFailed'
 while IFS= read -r path; do

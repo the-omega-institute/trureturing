@@ -49,6 +49,39 @@ public sealed class ScribeReleaseScriptTests
         Assert.Equal(new[] { "verify-source", "release", "verify-release" }, fixture.Calls);
     }
 
+    [Fact]
+    public void ReplacedCommitWithMatchingDiskNeverInvokesRelease()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ReleaseFixture();
+        fixture.Change("replace");
+        var result = fixture.Run();
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("SourceContentMismatch:", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
+        Assert.DoesNotContain("release", fixture.Calls);
+        Assert.DoesNotContain("verify-release", fixture.Calls);
+    }
+
+    [Theory]
+    [InlineData("temporary-1", "DefinitionPathsTemporaryFileFailed")]
+    [InlineData("temporary-2", "SourceCommitTemporaryFileFailed")]
+    [InlineData("temporary-3", "SourceTreeTemporaryFileFailed")]
+    [InlineData("commit-read", "GitSourceCommitFailed")]
+    [InlineData("tree-read", "GitSourceTreeFailed")]
+    [InlineData("definition-paths", "GitDefinitionPathsFailed")]
+    [InlineData("verify-source", "SourceContentMismatch")]
+    [InlineData("release", "ReleaseFailed")]
+    [InlineData("verify-release", "VerificationFailed")]
+    public void FailureLeavesNoTemporaryFiles(string failure, string reason)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ReleaseFixture();
+        fixture.FailAt(failure);
+        var result = fixture.Run();
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Contains(reason, Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
+    }
+
     private sealed class ReleaseFixture : IDisposable
     {
         internal const string Definition = "Blueprint/D5/S0/Test/Neutral.scribe.cs";
@@ -59,22 +92,36 @@ public sealed class ScribeReleaseScriptTests
         private readonly string calls;
         private readonly string pathsCopy;
         private readonly string pathsFile;
+        private readonly string temporary;
+        private readonly string gitExecutable;
+        private string failure = "";
 
         internal ReleaseFixture()
         {
             if (OperatingSystem.IsWindows()) throw new PlatformNotSupportedException();
             root = Path.Combine(scratch.Path, "repository");
+            gitExecutable = OperatingSystem.IsMacOS()
+                ? Encoding.UTF8.GetString(TestProcessRunner.Run("xcrun", ["--find", "git"], scratch.Path,
+                    TestBudgets.ScriptProcessHangGuard, 64 * 1024).StandardOutput).Trim()
+                : "/usr/bin/git";
             bin = Path.Combine(scratch.Path, "bin");
             calls = Path.Combine(scratch.Path, "calls");
             pathsCopy = Path.Combine(scratch.Path, "paths-copy");
             pathsFile = Path.Combine(scratch.Path, "paths-file");
+            temporary = Path.Combine(scratch.Path, "temporary");
             ScriptHarnessScratch.EnsureDirectory(root);
             ScriptHarnessScratch.EnsureDirectory(bin);
+            ScriptHarnessScratch.EnsureDirectory(temporary);
             ScriptHarnessScratch.CopyScriptInto(Path.Combine(TestRepositoryLayout.FindRoot(), Script), Path.Combine(root, Script));
             Write("global.json", "{}\n");
             Write("tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj", "<Project />\n");
             Write(Definition, "neutral definition\n");
             Write("Blueprint/neutral.txt", "tracked non-definition\n");
+            Write("nested/neutral.txt", "nested file\n");
+            Write("executable", "#!/bin/sh\nexit 0\n");
+            File.SetUnixFileMode(Path.Combine(root, "executable"), UnixFileMode.UserRead
+                | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+            File.CreateSymbolicLink(Path.Combine(root, "link"), "nested/neutral.txt");
             Write("Golden/Projection/neutral.json", "{}\n");
             Write(".gitignore", "*.ignored\nGenerated/\n");
             Git("init", "-q");
@@ -88,6 +135,7 @@ public sealed class ScribeReleaseScriptTests
                 shift
                 command="$1"
                 shift
+                if [[ "$command" == "$RELEASE_FAIL_COMMAND" ]]; then exit 92; fi
                 if [[ "$command" == verify-source ]]; then
                   printf '%s\n' "$command" >> "$RELEASE_CALLS"
                   exec "$RELEASE_DOTNET" "$RELEASE_HOST" resources verify-source "$@"
@@ -108,6 +156,28 @@ public sealed class ScribeReleaseScriptTests
                   cat "$paths" > "$RELEASE_PATHS_COPY"
                   printf '%s' "$paths" > "$RELEASE_PATHS_FILE"
                 fi
+                """);
+        }
+
+        internal void FailAt(string stage)
+        {
+            if (OperatingSystem.IsWindows()) throw new PlatformNotSupportedException();
+            failure = stage;
+            ScriptHarnessScratch.WriteExecutableStub(Path.Combine(bin, "mktemp"), """
+                count=0
+                [[ ! -f "$RELEASE_MKTEMP_COUNT" ]] || read -r count < "$RELEASE_MKTEMP_COUNT"
+                count=$((count + 1))
+                printf '%s\n' "$count" > "$RELEASE_MKTEMP_COUNT"
+                [[ "$RELEASE_FAIL_COMMAND" != "temporary-$count" ]] || exit 93
+                exec /usr/bin/mktemp "$@"
+                """);
+            ScriptHarnessScratch.WriteExecutableStub(Path.Combine(bin, "git"), """
+                case "$RELEASE_FAIL_COMMAND:$1:${2:-}" in
+                  commit-read:cat-file:*|tree-read:ls-tree:-r)
+                    [[ "$RELEASE_FAIL_COMMAND" != tree-read || "$3" == -z ]] && exit 94 ;;
+                  definition-paths:ls-tree:-r) [[ "$3" != --name-only ]] || exit 95 ;;
+                esac
+                exec "$RELEASE_GIT" "$@"
                 """);
         }
 
@@ -141,19 +211,37 @@ public sealed class ScribeReleaseScriptTests
                     Write(Definition, "modified definition\n");
                     break;
                 case "unstaged": Write(Definition, "unstaged definition\n"); break;
+                case "replace":
+                    Git("branch", "original", "HEAD");
+                    Write(Definition, "replacement definition\n");
+                    Git("add", Definition);
+                    Git("commit", "-qm", "Alternative fixture");
+                    Git("branch", "alternative", "HEAD");
+                    Git("reset", "--hard", "original");
+                    Git("replace", "original", "alternative");
+                    Write(Definition, "replacement definition\n");
+                    break;
             }
         }
 
-        internal ProcessOutput Run() => TestProcessRunner.Run("env",
-            [$"PATH={bin}:{Environment.GetEnvironmentVariable("PATH")}", $"RELEASE_CALLS={calls}",
+        internal ProcessOutput Run()
+        {
+            var result = TestProcessRunner.Run("env",
+            [$"PATH={bin}:{Environment.GetEnvironmentVariable("PATH")}", $"TMPDIR={temporary}", $"RELEASE_CALLS={calls}",
                 $"RELEASE_DOTNET={Path.Combine(Environment.GetEnvironmentVariable("DOTNET_ROOT")!, "dotnet")}",
                 $"RELEASE_HOST={Path.Combine(TestRepositoryLayout.FindRoot(), "tools/StrataLint.Scribe.Documents/bin/Release/net10.0/StrataLint.Scribe.Documents.dll")}",
-                $"RELEASE_PATHS_COPY={pathsCopy}", $"RELEASE_PATHS_FILE={pathsFile}", "/bin/bash", Path.Combine(root, Script)],
+                $"RELEASE_PATHS_COPY={pathsCopy}", $"RELEASE_PATHS_FILE={pathsFile}",
+                $"RELEASE_FAIL_COMMAND={failure}", $"RELEASE_MKTEMP_COUNT={Path.Combine(scratch.Path, "temporary-count")}",
+                $"RELEASE_GIT={gitExecutable}",
+                "/bin/bash", Path.Combine(root, Script)],
             root, TestBudgets.ScriptProcessHangGuard, 64 * 1024);
+            Assert.Empty(Directory.EnumerateFileSystemEntries(temporary));
+            return result;
+        }
 
         private void Git(params string[] arguments)
         {
-            var result = TestProcessRunner.Run("git", arguments, root, TestBudgets.ScriptProcessHangGuard, 64 * 1024);
+            var result = TestProcessRunner.Run(gitExecutable, arguments, root, TestBudgets.ScriptProcessHangGuard, 64 * 1024);
             Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
         }
 
