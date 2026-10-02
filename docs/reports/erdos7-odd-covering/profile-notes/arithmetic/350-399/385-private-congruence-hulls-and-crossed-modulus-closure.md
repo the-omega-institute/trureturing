@@ -118,6 +118,14 @@ actual source laws eliminate opposite-color originals even at ternary
 height zero; one global mixture yields a smaller full-height liability
 budget without assuming independent cofactors or adequate fibre density.
 
+[Section139](#139-compatible-shallow-certificates-force-a-complete-joint-escape)
+uses the existing running-intersection theorem to align shared original
+labels across certificates. Any two actual certificates have a complete
+joint-liability escape outside both cofactor cylinders. More generally,
+a certificate cover of the top-row joint-demand source cannot have a
+label running-intersection tree. The escaped point may have several
+original owners; individual private regions are not substituted for it.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -17076,3 +17084,140 @@ Section73 already supplies the arithmetic singleton-root elimination and the who
 The same construction permits retaining the exact pruned C-fractions in PS4 instead of bounding them by1. A useful uniform density or a strict total price below1 has not been forced. Choosing a single private cofactor from each original A_q-private root is insufficient by itself: the lawful law above may change the cofactor with beta while preserving the one original source and both complete deletion masks.
 
 These are ordinary mathematical consequences of the cited source and probability constructions, not new Lean verification or a resolution of unrestricted Erdős #7.
+
+## 139. Compatible shallow certificates force a complete joint escape
+
+No automatic sink-SCC deletion follows from SCE1. A weaker-than-common-cylinder LEGAL replacement test is already available by combining PH1--PH2, the literal fresh-height inverse APs, and the original-label capacity principle in Report385 section67 RS1--RS3. The missing data are the complete simultaneous-deletion demand and ONE compatible prefix assignment per original label. They are independent of reachability in an escape graph.
+
+The following is a concrete application of those interfaces, with one readily checkable sufficient gluing condition. It is ordinary mathematics, not a new generic gluing theorem or Lean result.
+
+### Exact finite test, without private-region substitution
+
+Fix one full ternary word u. Let J be any nonempty batch of original shallow top labels
+
+    d=3^H q^(e_d) s_d, e_d in{1,2},
+    a_d=u modulo3^H, s_d|M.
+
+For G=1 only e_d=1 occurs. Keep every original outside J unchanged. Form the COMPLETE original joint hole
+
+    E_J=Z/Q minus union_(d outside J) A_d
+
+and its actual cofactor projection
+
+    F_J={v modulo M: exists xi modulo q^G,
+                        (u,xi,v) in E_J}.
+
+Whole original coverage implies E_J has ternary word u. Define the literal cofactor cylinder C_d={v:v=a_d modulo s_d}.
+
+Choose ONCE, for every d in J, a ternary prefix c_d modulo3^(e_d). Put D=2 (or D=1 at G=1). The exact test is
+
+    for every v in F_J and b modulo3^D,
+    exists d in J with v in C_d and b=c_d modulo3^(e_d).  (JCE1)
+
+Equivalently, for every new full tail b,
+
+    F_J subset union_(d in J: c_d prefix of b) C_d.       (JCE2)
+
+This tests actual cofactor cylinders, including all their prime-power depths and phases; no independent phase optimization or replacement of F_J by a private projection is used.
+
+For any assignment satisfying JCE1, use the complete AP
+
+    B_d={z:z=u+3^H c_d modulo3^(H+e_d),
+             z=a_d modulo s_d}.
+
+These APs repair E_J if and only if JCE1 holds. Sufficiency follows at every missing original point and all its new ternary lifts. For necessity, if JCE1 fails at(v,b), use the old q-witness in the definition of F_J, the fixed old word u, and the new tail b. CRT gives a point in E_J missed by every B_d. A common carrier is3^(H+D)q^G M: the original q-axis is retained.
+
+All B_d have fresh ternary height above H. Their moduli3^(H+e_d)s_d are pairwise distinct because(e_d,s_d) identifies the original numerical label. Each original is used once; count is unchanged and every modulus shrinks by(3/q)^(e_d). Thus an EB1 family cannot admit JCE1 for any such J.
+
+This is PH1--PH2 with explicit literal source and numeric-label maps. Section67 RS1 supplies the analogous complete projected-demand condition and RS2 the original-label capacity; no new general exchange theorem is needed. Unlike the section67 first-prime digit removal, the present map keeps q and uses only fresh higher ternary digits, so its old/new collision check is automatic.
+
+For a finite check, retain the ACTUAL incidence profiles
+
+    I(v)={d in J:v in C_d}, v in F_J.
+
+For each realized profile require that the assigned ternary cylinders of I(v) cover all3^D tails. There are at most nine tail tests per realized profile. Each d has exactly3^(e_d) choices and chooses only one. The potentially large calculation is obtaining F_J from the full original retained union; using only individual private points does not obtain it. No new solver or experiment is required to state this test.
+
+### Multiple certificates can cover different cofactor cylinders
+
+Let S_alpha be a finite nonempty family of actual SH2 certificates, all at the SAME old word u, but possibly at different actual cofactors v_alpha. Put
+
+    J=union_alpha S_alpha,
+    h_alpha=lcm_(d in S_alpha)s_d,
+    C_alpha={v:v=v_alpha modulo h_alpha}.
+
+A sufficient complete-liability condition is
+
+    F_J subset union_alpha C_alpha.                      (JCE3)
+
+This is weaker than confining every selected private region to one common cofactor cylinder. It permits different cofactor sources. It is still a condition on the COMPLETE simultaneous-deletion hole, not just the union of the individual P_d.
+
+For each certificate, its literal q-prefix antichain has a nonempty finite menu Gamma_alpha of inverse ternary-prefix assignments to its original labels. These are exactly the assignments obtained by permuting the three first children and, independently under each height-two branch, the three second children. Every row partitions the full new ternary tail into the certificate's terminals.
+
+If ONE assignment c_d restricts to a row in every Gamma_alpha, then each certificate covers its entire C_alpha at every new ternary tail. JCE3 therefore implies JCE1. This supplies the desired multi-certificate legal replacement without giving any original a second numerical copy or enlarging its cofactor to an lcm.
+
+### Existing tree gluing yields a useful sufficient compatibility condition
+
+Suppose a tree on the certificate indices has running intersection for ORIGINAL LABELS: for each d in J, the indices alpha with d in S_alpha form a connected subtree. Then the above menus have a common assignment.
+
+This reuses RunningIntersectionRecords.local_row_extends_raw_join, already discussed in Reports368 section4 and369 section3. No generic tree theorem is reproved or proposed for formalization.
+
+The arithmetic menu-matching premise needs checking, and here it holds: on shared labels, either certificate's row preserves the labels' original depths and their original first-q-root equality pattern. The possible shared projections are therefore identical. Concretely, first permute the at most three occupied first-ternary slots to align the shared original q-roots; within a shared root, permute its at most three second slots to align the shared depth-two labels. Unoccupied slots can be filled arbitrarily. All comparisons use the SAME original q-prefixes. Thus every shared row of either menu extends to the other, giving equality of COMPLETE separator projection images, not merely coordinatewise feasibility.
+
+Running intersection then glues these menus. Equivalently, attach certificates along the tree, use the described digit permutations on the next certificate, and retain all previously assigned labels; running intersection ensures that its old labels are exactly those visible through its parent separator.
+
+Consequently an EB1 family cannot contain a certificate family satisfying BOTH JCE3 and this original-label running-intersection tree condition. This is a precise forbidden configuration, using existing interfaces. No claim says that every escape SCC has such a tree or even compatible cyclic menus.
+
+### A forced joint escape, already for two certificates
+
+Take ANY nonempty finite family of actual same-u shallow certificates whose original-label scopes admit the above running-intersection tree, and put J=union S_alpha. The code compatibility premise is supplied by the shared depth/LCA argument, so EB1 forces JCE3 to fail. Therefore there is an ORIGINAL point y with
+
+    y in E_J,
+    y's M-coordinate outside union_alpha C_alpha.       (JCE4)
+
+Its nonempty original owner set is contained in J. This is a complete joint-liability escape, not a selected collection of individually private escapes. For a single certificate, global disjointness makes JCE4 precisely the private escape of SCE1. For two certificates, the two-node tree always has running intersection, so
+
+    E_(S_1 union S_2) has an actual point whose
+    cofactor is outside C_1 union C_2.                  (JCE5)
+
+No pairwise-disjointness assumption on S_1 union S_2 is needed: JCE5 explicitly retains the full joint hole. The escaped point may have several selected owners and need not be private to any one original.
+
+This is a concrete necessary relation on the same EB1 family. It excludes closure of the actual joint liability inside two certificate cylinders. It does not require building or evaluating a new noncover model.
+
+### Consequence for the whole top-row replacement source
+
+Let T_u be ALL original top q-bearing labels at the fixed full word u, and define
+
+    P_u=projection_M(E_(T_u)).
+
+This notation is a joint-demand projection, not an individual private set. It can be strictly smaller than the complete q-free residual R_u. For J subset T_u,
+
+    E_J subset E_(T_u), hence F_J subset P_u.            (JCE6)
+
+Assume T_u is nonempty. Original irredundancy then guarantees P_u nonempty. If every (u,v), v in P_u, is outside W, SH2 supplies an actual shallow certificate at every such v. Their common cofactor cylinders cover P_u. A finite subfamily suffices because the old cofactor carrier is finite.
+
+No such covering subfamily can have an original-label running-intersection tree: otherwise JCE6 gives JCE3 and the above legal replacement contradicts EB1. In particular no ONE or TWO actual certificate cylinders cover P_u. Thus the actual source satisfies the following alternative:
+
+    either some (u,v) with v in P_u belongs to W;
+    or P_u admits shallow-certificate covers, but EVERY
+    such cover needs at least three distinct cylinders
+    and has no original-label running-intersection tree. (JCE7)
+
+The word "cycle" here means failure of this precise join-tree property, not merely a directed cycle in a chosen escape graph. Larger certificate families can have ordinary incidence cycles yet still have a join tree; JCE7 concerns the full running-intersection requirement.
+
+If T_u is empty, P_u is empty and there is no nonempty deletion budget. In that case D_(u,v) is empty and every actual q-free-live pair at u is already in W. Do not use empty-source coverage to assert a strict descent.
+
+No hidden cofactor-dependent code is used. The glued c_d is one fixed value for each ORIGINAL numerical label. Distinct labels with the same old q-root are allowed different new prefixes when they never occur together in a certificate; the argument does not assert one global inverse map from old q-roots. The new APs may enclose extra points, because PH1 only requires coverage of the full joint liability. Their moduli and literal s_d phases stay fixed throughout.
+
+### What a sink SCC still fails to certify
+
+An SCE1 escape graph ordinarily records one selected private escape per certificate. Being a sink has three separate gaps:
+
+1. A selected escape edge does not enumerate ALL private points of each selected original. Sink closure of chosen witnesses is weaker than confinement of their complete private regions.
+2. Even closure of every individual P_d inside union C_alpha does not prove JCE3 when J contains overlapping original APs. Original points owned only by TWO OR MORE selected labels lie in E_J and can belong to none of those private regions. PH1 explicitly retains them.
+3. Even if JCE3 is supplied, independent certificate inverses need not agree on shared original labels. The common menu join, or a condition such as running intersection plus matching complete projections, is necessary for this construction. A strongly connected directed graph is not such a join tree.
+
+If the ENTIRE removed family is pairwise disjoint, PH1/PI10 does give E_J=disjoint union P_d, and complete private-region closure suffices for JCE3. Pairwise disjointness inside each certificate alone does not extend to their union.
+
+Sections99/101 concern EXACT single-AP inverses. Section113 SCV3--SCV4 explicitly bypasses that stronger requirement by enclosing each required inverse in one fixed AP with checked numerical resources. Those controls do not disprove the enclosing fixed-code repair used here. Reports368/369 distinguish nonempty local menus, matching complete separators, and running intersection. Thus no additional generic SCC/gluing theorem should be introduced. The research obligation is to derive JCE3 and a compatible original-label prefix assignment from actual EB1 constraints, or find one concrete remaining EB1 structural case forcing them. SCE1 by itself supplies neither.
+
+The actual joint escape and the source alternative are ordinary mathematical consumers of the existing replacement and running-intersection results. They do not eliminate the cyclic alternative, establish unrestricted noncoverage, or add Lean verification.
