@@ -3,9 +3,8 @@ import LeanInformationAudit.Contract.SourceAudit
 namespace LeanInformationAudit.Contract.InterfaceGuard
 open Lean
 
-/-- Author declarations are read from source. Compiler-generated constructors,
-projections, recursors and theorems are part of their enclosing type declaration. -/
-def audit (entries : Array SourceAudit.Entry) : Except String Unit := do
+/-- Source types authorize their compiled families, never arbitrary name prefixes. -/
+def auditSource (entries : Array SourceAudit.Entry) : Except String Unit := do
   for entry in entries do
     unless entry.command.isOfKind ``Parser.Command.declaration do continue
     let declaration := entry.command[1]
@@ -14,5 +13,41 @@ def audit (entries : Array SourceAudit.Entry) : Except String Unit := do
         declaration.isOfKind ``Parser.Command.coinductive ||
         declaration.isOfKind ``Parser.Command.classInductive do
       throw s!"contract.interface:authored_non_type:{entry.sourceName}:{declaration.getKind}"
+
+/-- Fixed companion families emitted by the pinned Lean compiler. Constructor
+and projection names come from kernel/structure metadata, not source spelling.
+An unrecognized compiler product fails closed alongside authored constants. -/
+def family (env : Environment) (type : Name) : Except String NameSet := do
+  let some (.inductInfo info) := env.find? type
+    | throw s!"contract.interface:compiled_type_missing:{type}"
+  let mut allowed : NameSet := ({} : NameSet).insert type
+  for suffix in #[`rec, `recOn, `casesOn, `noConfusion, `noConfusionType,
+      `ctorIdx, `ctorElim, `ctorElimType, `_sizeOf_1, `_sizeOf_inst] do
+    allowed := allowed.insert (type ++ suffix)
+  for ctor in info.ctors do
+    allowed := allowed.insert ctor
+    for suffix in #[`inj, `injEq, `noConfusion, `elim, `sizeOf_spec, `_flat_ctor] do
+      allowed := allowed.insert (ctor ++ suffix)
+  for projection in getStructureFields env type do
+    allowed := allowed.insert (type ++ projection)
+  return allowed
+
+/-- Inventory is read from the imported compiled module; no user command runs. -/
+def audit (env : Environment) (owner : Name) (entries : Array SourceAudit.Entry)
+    : Except String Unit := do
+  auditSource entries
+  let some idx := env.getModuleIdx? owner
+    | throw s!"contract.interface:module_missing:{owner}"
+  let names := env.header.moduleData[idx.toNat]!.constNames
+  let mut allowed : NameSet := {}
+  for entry in entries do
+    unless SourceAudit.hasInventory entry.command do continue
+    let some type := entry.sourceName
+      | throw "contract.interface:source_type_missing"
+    unless names.contains type do throw s!"contract.interface:compiled_type_missing:{type}"
+    for name in (← family env type).toArray do allowed := allowed.insert name
+  for name in names do
+    unless allowed.contains name do
+      throw s!"contract.interface:compiled_non_type:{owner}:{name}"
 
 end LeanInformationAudit.Contract.InterfaceGuard

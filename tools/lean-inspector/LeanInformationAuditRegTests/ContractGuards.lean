@@ -17,7 +17,7 @@ run_meta do
     let source ← IO.FS.readFile (← LeanInformationAudit.Repository.source
       ("tools/lean-inspector-interface/" ++ owner.toString.replace "." "/" ++ ".lean"))
     let entries ← LeanInformationAudit.Contract.SourceAudit.parse env source owner.toString
-    let result := LeanInformationAudit.Contract.InterfaceGuard.audit entries
+    let result := LeanInformationAudit.Contract.InterfaceGuard.audit env owner entries
     assertTest s!"interface.types_only.{owner.getString!}" result.isOk
     if let .error error := result then logInfo m!"CONTRACT_DIAGNOSTIC {error}"
   for (kind, source) in #[
@@ -28,7 +28,7 @@ run_meta do
       ("instance", "instance x : Inhabited Nat := ⟨17⟩"),
       ("axiom", "axiom x : Nat")] do
     let entries ← LeanInformationAudit.Contract.SourceAudit.parse env source "InterfaceNegative"
-    let result := LeanInformationAudit.Contract.InterfaceGuard.audit entries
+    let result := LeanInformationAudit.Contract.InterfaceGuard.auditSource entries
     assertTest s!"interface.authored_non_type.{kind}" (match result with
       | .error error => error.startsWith "contract.interface:authored_non_type:"
       | .ok _ => false)
