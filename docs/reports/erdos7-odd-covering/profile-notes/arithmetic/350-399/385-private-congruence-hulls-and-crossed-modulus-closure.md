@@ -232,6 +232,13 @@ For opposite5 and ell in {7,11,13}, the tail above ell^8 has total height
 at most6003,39531,78543, respectively. These are same-family necessary
 constraints, not an exclusion of the remaining finite branch.
 
+[Section154](#154-a-unique-nonconcentrated-prime-outside-the-small-head-is-at-most857)
+combines the existing whole q-height and support-gap inequalities with
+the colorwise reciprocal threshold. If R={q} avoids5,7,11,13, then
+q<=857; opposite5/7 and5/11 give211 and593, respectively. This bounds
+the unique nonconcentrated prime, not the largest support prime, and
+leaves both the surviving singleton cases and larger R unresolved.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -18863,3 +18870,95 @@ Initial-segment support now turns this into an explicit prime-count condition. I
 Equivalently, let r_(K_ell+1) be the (K_ell+1)-st prime at least ell^8. Then P<r_(K_ell+1); if P<ell^8 this conclusion is automatic. This can be combined with P<ell^9, and does not require enumerating candidate covers. No numerical value of that indexed prime or additional prime-count estimate is asserted here.
 
 The new use is the implication from a large original support prime to a specific full-q-height mixed ORIGINAL label, followed by the existing parent inventory cap. HPA's original height-only cutoff does not supply that label. The weighted tail budget pays every original q-height layer, rather than only one class per large prime. These are necessary restrictions on the same hypothetical source, not an exclusion of the finite remaining branch. A full contradiction still requires a legal complete-liability descent or another sufficient whole-family estimate.
+
+## 154. A unique nonconcentrated prime outside the small head is at most857
+
+Keep ONE original EB1 whole cover with R={q} and R intersect {5,7,11,13}=empty. Thus q>=17. The existing initial-support condition supplies5 in a concentrated color, denoted S_5; GM1 supplies an opposite concentrated prime ell in {7,11,13}, in the other color S_o. Write H=v_3(Q), G=v_q(Q).
+
+The following ordinary arithmetic consumer of OCP6, QHP3, RSG2 and CM6 gives
+
+    q<=857.                                         (SPH1)
+
+If7 can be chosen opposite to5, the stronger bound is q<=211. If11 can be chosen opposite to5, it is q<=593. These are bounds on the unique nonconcentrated prime, not on the largest original support prime. The conclusions exclude actual EB1 branches outside those ranges; they neither construct covering phases inside the ranges nor exclude the whole one-shared-prime branch.
+
+### One source, with both possible private roots retained
+
+For the chosen pair5,ell, put
+
+    c=ell-2,
+    N=max(3(ell-1),4(ell-2)),
+    Hbar=(3N-4)/2,
+    B(G)=c+(Hbar+1)(G+1).
+
+OCP6 gives H<=Hbar. RSG2 gives every concentrated prime r the upper bound r<=B(G): use pair5,r in S_o and pairell,r for r>ell in S_5; smaller S_5 primes already lie below B(G). Since R contains only q and the original support is an initial prime segment, q<=the first prime strictly above B(G). Indeed, if q were larger, that first prime would be another original nonconcentrated prime. This reasoning does not assume q is the largest original prime.
+
+Let pi(x) be the number of primes at most x, including2. Every source color has at most
+
+    |S_i|<=pi(B(G))-3:                             (SPH2)
+
+its primes are at least5 and at most B(G), and it omits at least the selected opposite-color prime. This estimate works whether q lies below or above B(G).
+
+Choose ONE original private point of q^G and use exactly QHP's justified opposite-coordinate pruning. If its root belongs to S_5, the opposite prime ell gives colored capacity c|S_5|. If its root belongs to S_o, opposite5 gives capacity3|S_o|, at most c|S_o|. In both cases QHP3 may use a=3,b=c: (a+1)(b+1)=4(ell-1)>=N. Consequently for G>c,
+
+    (q-4)(G-c)<=N-2+c[pi(B(G))-3].                (SPH3)
+
+Both bounds are on the same original family and the same actual private source. No claim says q^G has private points in both roots.
+
+### Three exact prime counts suffice for a first head bound
+
+The required constants are
+
+| ell | Hbar | N | c | G_0=c+2 | B(G_0-1) | next prime | B(G_0) | pi(B(G_0)) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 7 | 28 | 20 | 5 | 7 | 208 | 211 | 237 | 51 |
+| 11 | 52 | 36 | 9 | 11 | 592 | 593 | 645 | 117 |
+| 13 | 64 | 44 | 11 | 13 | 856 | 857 | 921 | 157 |
+
+For G<=G_0-1, the next-prime bound already gives the corresponding third-from-last column. For G=G_0+t, t>=0, each increment of G increases B by the odd integer Hbar+1. An interval of that length contains at most (Hbar+2)/2 odd integers. Since all new primes here are odd,
+
+    pi(B(G_0+t))<=pi(B(G_0))+t(Hbar+2)/2.
+
+Thus the right side of SPH3 is at most, respectively,
+
+    258+75t, 1060+243t, 1736+363t.
+
+If q is at least223,599,877, respectively, its left side is at least
+
+    438+219t, 1190+595t, 1746+873t.
+
+Each displayed lower bound is strictly larger than its paired upper bound for every t>=0. Hence
+
+    ell=7  ==> q<=211,
+    ell=11 ==> q<=593,
+    ell=13 ==> q<=863.                              (SPH4)
+
+The final conversion uses the actual consecutive primes211<223,593<599,863<877. No extrapolation of sampled prime counts is used; the affine extension counts all odd integers and is valid for every integer G beyond the displayed cutoff.
+
+The three exact prime counts and consecutive-prime comparisons are finite arithmetic through921; trial division and an independent sieve give the displayed values. The argument does not enumerate covering palettes or phases, and its all-height continuation is the proved affine odd-integer bound.
+
+### Existing root capacity removes the last two primes
+
+It remains to rule out q in {859,863}; the ell7 andell11 cases already have smaller bounds. Suppose therefore q>857 and use ell13. SPH4 gives q<=863. The low-G argument gives G>=13. In particular B(G)>=921>q.
+
+Reuse the EXISTING arbitrary-R statement CM6: on each retained root, the finite reciprocal divisor inventory Rhat_i is greater than1/3 for H>=2, and at least1/2 for H=1. Thus it is greater than1/3 in either case. Its corresponding infinite Euler product is therefore strictly greater than4/3. For R={q} this product is
+
+    q/(q-1) product_(r in S_i) r/(r-1).
+
+If S_5 had only5, its product would be 5q/[4(q-1)]<4/3 for q>=17. Hence |S_5|>=2. If S_o had at most two primes, both are at least7, and its product would be at most77q/[60(q-1)]<4/3 for q>=29. Hence |S_o|>=3. These inequalities directly reuse CM6; no new source law or union-bound argument is required.
+
+Because q<=863<B(G), the available prime inventory now also omits q. Therefore
+
+    |S_5|<=pi(B(G))-6,
+    |S_o|<=pi(B(G))-5.
+
+For a private root in S_5 the colored capacity is11|S_5|. For a root in S_o it is3|S_o|. Since pi(B(G))>=157, both are bounded by11[pi(B(G))-6]. Applying QHP3 with a=3,b=11,N=44 at the same actual private source gives
+
+    (q-4)(G-11)<=42+11[pi(B(G))-6].              (SPH5)
+
+Write G=13+t. The right side is at most1703+363t. Since q>857 is prime, q>=859 and the left side is at least1710+855t. This is a strict contradiction for every t>=0. Together with SPH4 it proves SPH1.
+
+Neither the head863 step nor the CM6 refinement requires HPA12 or its externally attributed prime-support theorem. Both are direct consumers of the original same-family arithmetic and root-capacity statements cited above.
+
+### Scope
+
+The constant857 is an upper bound from necessary conditions, not a realizability claim. A small q can coexist with a larger concentrated support under the surviving inequalities. This result must not be restated as P^+(Q)<=857 or Q supported through857. RSG's bound on the concentrated primes and OCP's height bounds remain available separately. No Lean verification or unrestricted odd noncoverage is asserted.
