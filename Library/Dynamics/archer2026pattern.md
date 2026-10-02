@@ -4,10 +4,11 @@ authors: Kassie Archer, Noel Bourne
 year: 2026
 title: Pattern avoidance in compositions and powers of permutations
 doi: 10.46298/dmtcs.17199
-claim: Section 5 conjectures a counting equality for permutations avoiding 312 and 321 whose cubes avoid 2143 and compositions with at most one part outside 1 and 3.
+claim: Section 5 conjectures a counting equality for permutations avoiding 312 and 321 whose cubes avoid 2143 and compositions with at most one part outside 1 and 3, and a tetranacci-type recurrence for permutations avoiding 312 and 54321 whose squares avoid 132.
 strata_touched:
   - D5/S3/ConceptDynamics/PatternAvoidance/RotationSumPowerPatternAvoidance
   - D5/S3/ConceptDynamics/PatternAvoidance/ArcherBourneDecomposition
+  - D5/S3/Combinatorics/PermutationSquare/PermutationSquareRefutation
 license: citation-only
 triage: anchor
 ---
@@ -47,6 +48,17 @@ and Mathlib compositions, then combines them with the cube criterion to prove
 the counting equality. Lemma 3.1 and the bijection retain literature
 provenance; the final counting theorem is repository-derived and carries the
 problem's `Proved` resolution claim.
+
+The same section, printed page 14, states a second conjecture:
+
+> For example, we conjecture that if we take $a_n := a_n(312, 54321 : 132)$
+> then $a_n = a_{n-1} + a_{n-2} + a_{n-3} + a_{n-4} + n - 1$ for $n \ge 6$.
+
+Here $a_n(312, 54321 : 132)$ counts permutations of $[n]$ avoiding 312 and
+54321 whose square avoids 132. The module
+`D5/S3/Combinatorics/PermutationSquare/PermutationSquareRefutation` refutes it:
+the recurrence holds for $6 \le n \le 10$ and fails at $n = 11$, where
+$a_{11} = 1265$ while the recurrence gives 1266.
 
 ## Search log
 
@@ -90,3 +102,4 @@ formal statement.
 - Journal: https://dmtcs.episciences.org/17199 (caller-supplied redirect target).
 - PDF: https://arxiv.org/pdf/2505.05218v3 (worker HTTP 200; Section 5, page 13;
   Lemma 3.1, page 4; bijection, page 5).
+- Square recurrence conjecture: Section 5, printed page 14.
