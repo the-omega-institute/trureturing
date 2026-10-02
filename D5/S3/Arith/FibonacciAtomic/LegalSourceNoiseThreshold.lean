@@ -10,6 +10,8 @@ import D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd
 import D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue
 import D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization
 import Mathlib.Data.Matrix.Mul
+import Mathlib.Analysis.ODE.DiscreteGronwall
+import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Algebra.Field.GeomSum
 import Mathlib.Analysis.SpecificLimits.ArithmeticGeometric
 import Mathlib.Data.Nat.SuccPred
@@ -27,7 +29,7 @@ noncomputable section
 namespace D5.S3.Arith.FibonacciAtomic.LegalSourceNoiseThreshold
 
 open D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd
-open D5.S3.Arith.ZeckendorfFutureKernel (legal)
+open D5.S3.Arith.ZeckendorfFutureKernel (legal flag legal_append)
 open D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization (noisyRun)
 open scoped BigOperators Matrix
 
@@ -73,66 +75,6 @@ def ClockRecovery {Y : Type*} (out : State → Y) (lam ν : ℝ) (M : ℕ)
     noiseBound ν p → decode p.length (actual lam p) =
       out (run (some (false, false)) (p.map Prod.fst))
 
-/-- Arbitrary legal trajectories retain a one-sided margin on occupied coordinates;
-zero coordinates retain only their most recent error. -/
-private theorem coordinate_invariant (lam ν : ℝ) (hlam : 0 ≤ lam)
-    (p : List (Window × Row)) :
-    ∀ (s E : Bool) (y : Row) (k : ℕ),
-      legal s (flatten (p.map Prod.fst)) → noiseBound ν p →
-      (∀ r, canonical (some (s, E)) r = 0 → |y r| ≤ ν) →
-      (∀ r, canonical (some (s, E)) r = 1 → lam ^ k - ν * geometric lam k ≤ y r) →
-      ∀ r,
-        (canonical (run (some (s, E)) (p.map Prod.fst)) r = 0 →
-          |noisyRun (fun a x => lam • (x ᵥ* matrix a)) y p r| ≤ ν) ∧
-        (canonical (run (some (s, E)) (p.map Prod.fst)) r = 1 →
-          lam ^ (k + p.length) - ν * geometric lam (k + p.length) ≤
-            noisyRun (fun a x => lam • (x ᵥ* matrix a)) y p r) := by
-  induction p with
-  | nil =>
-      intro s E y k _ _ hz ho r
-      exact ⟨hz r, by simpa [run, noisyRun] using ho r⟩
-  | cons e p ih =>
-      rcases e with ⟨a, ξ⟩
-      intro s E y k hlegal hnoise hz ho
-      have dead (w : List Window) : run none w = none := by
-        have h := (execution false false (.high :: .low :: w)).2.mpr
-          (by simp [flatten, bits, legal])
-        simpa [run, step, first, last, nonzero] using h
-      have live := (execution s E (a :: p.map Prod.fst)).1.mpr hlegal
-      have guard : (s && first a) = false := by
-        cases s <;> cases a <;> simp [run, step, first, dead] at live ⊢
-      have tailLegal : legal (last a) (flatten (p.map Prod.fst)) := by
-        apply (execution (last a) (nonzero a) (p.map Prod.fst)).1.mp
-        simpa [run, step, guard, List.foldl_cons] using live
-      have readOne : canonical (some (s, E)) (readIndex a) = 1 := by
-        cases s <;> cases a <;> simp [canonical, readIndex, first] at guard ⊢
-      have sourceLower := ho (readIndex a) readOne
-      have errorBound : ∀ r, |ξ r| ≤ ν := by
-        intro r
-        exact (Real.norm_eq_abs _ ▸ norm_le_pi_norm ξ r).trans
-          (hnoise (a, ξ) (by simp))
-      have action (x : Row) : x ᵥ* matrix a = x (readIndex a) • target a := by
-        simp [matrix, Matrix.vecMul_vecMulVec]
-      have newZero : ∀ r, canonical (some (last a, nonzero a)) r = 0 →
-          |(lam • (y ᵥ* matrix a) + ξ) r| ≤ ν := by
-        intro r hr
-        simpa [action, target, Pi.add_apply, Pi.smul_apply, smul_eq_mul, hr] using
-          errorBound r
-      have newOne : ∀ r, canonical (some (last a, nonzero a)) r = 1 →
-          lam ^ (k + 1) - ν * geometric lam (k + 1) ≤
-            (lam • (y ᵥ* matrix a) + ξ) r := by
-        intro r hr
-        have hξ := (abs_le.mp (errorBound r)).1
-        have hmul := mul_le_mul_of_nonneg_left sourceLower hlam
-        simp only [action, Pi.add_apply, Pi.smul_apply, smul_eq_mul, target, hr, mul_one]
-        rw [geometric, geom_sum_succ, ← geometric, pow_succ]
-        nlinarith
-      have tailNoise : noiseBound ν p := fun e he => hnoise e (by simp [he])
-      have h := ih (last a) (nonzero a) (lam • (y ᵥ* matrix a) + ξ)
-        (k + 1) tailLegal tailNoise newZero newOne
-      simpa [run, step, guard, noisyRun, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
-        using h
-
 /-- A single coordinate threshold works at every permitted depth and needs no clock. -/
 private theorem sufficient (lam ν : ℝ) (M : ℕ) (hlam0 : 0 < lam)
     (hlam1 : lam < 1) (hν : 0 ≤ ν) (hsmall : ν < threshold lam M)
@@ -140,6 +82,219 @@ private theorem sufficient (lam ν : ℝ) (M : ℕ) (hlam0 : 0 < lam)
     Recovery canonical lam ν M fixed ∧ ClockRecovery canonical lam ν M fixed ∧
       Recovery endable lam ν M fixed ∧ ClockRecovery endable lam ν M fixed := by
   classical
+  have prefix_legal (s : Bool) (p : List (Window × Row))
+      (hl : legal s (flatten (p.map Prod.fst))) (i : ℕ) :
+      legal s (flatten ((p.take i).map Prod.fst)) := by
+    have heq : flatten (p.map Prod.fst) =
+        flatten ((p.take i).map Prod.fst) ++ flatten ((p.drop i).map Prod.fst) := by
+      conv_lhs => rw [← List.take_append_drop i p]
+      simp only [List.map_append, flatten, List.flatMap_append]
+    rw [heq] at hl
+    exact (legal_append _ _ s).mp hl |>.1
+  have flatten_flag (s : Bool) (w : List Window) :
+      flag s (flatten w) = w.foldl (fun _ a => last a) s := by
+    simp only [flag, flatten, List.foldl_flatMap]
+    have hf : (fun (q : Bool) (a : Window) => (bits a).foldl (fun _ b => b) q) =
+        (fun (_ : Bool) (a : Window) => last a) := by
+      funext q a
+      cases a <;> rfl
+    rw [hf]
+  have prefix_seam (s : Bool) (p : List (Window × Row))
+      (hl : legal s (flatten (p.map Prod.fst))) (i : ℕ) (hi : i < p.length) :
+      ¬ (((p.take i).map Prod.fst).foldl (fun _ a => last a) s = true ∧
+        first p[i].1 = true) := by
+    have h := prefix_legal s p hl (i + 1)
+    rw [List.take_succ_eq_append_getElem hi] at h
+    simp only [List.map_append, List.map_cons, List.map_nil, flatten,
+      List.flatMap_append, List.flatMap_cons, List.flatMap_nil, List.append_nil] at h
+    have ht := ((legal_append _ _ s).mp h).2
+    change legal (flag s (flatten ((p.take i).map Prod.fst))) (bits p[i].1) at ht
+    rw [flatten_flag] at ht
+    generalize (((p.take i).map Prod.fst).foldl (fun _ a => last a) s) = q at ht ⊢
+    generalize p[i].1 = a at ht ⊢
+    cases q <;> cases a <;>
+      simp only [bits, legal, first, Bool.false_eq_true, not_false_eq_true,
+        and_false, and_true, not_true_eq_false] at ht ⊢
+  have prefix_state (s E : Bool) (p : List (Window × Row))
+      (hl : legal s (flatten (p.map Prod.fst))) (i : ℕ) :
+      run (some (s, E)) ((p.take i).map Prod.fst) =
+        some (((p.take i).map Prod.fst).foldl (fun _ a => last a) s,
+          ((p.take i).map Prod.fst).foldl (fun _ a => nonzero a) E) :=
+    (execution s E _).1.mpr (prefix_legal s p hl i)
+  have read_one (s E : Bool) (p : List (Window × Row))
+      (hl : legal s (flatten (p.map Prod.fst))) (i : ℕ) (hi : i < p.length) :
+      canonical (run (some (s, E)) ((p.take i).map Prod.fst)) (readIndex p[i].1) = 1 := by
+    rw [prefix_state s E p hl i]
+    have hs := prefix_seam s p hl i hi
+    generalize (((p.take i).map Prod.fst).foldl (fun _ a => last a) s) = q at hs ⊢
+    generalize (((p.take i).map Prod.fst).foldl (fun _ a => nonzero a) E) = F
+    generalize p[i].1 = a at hs ⊢
+    cases q <;> cases F <;> cases a <;>
+      simp only [canonical, readIndex, first, Bool.false_eq_true, ↓reduceIte,
+        Matrix.cons_val_one, Matrix.cons_val_zero, Matrix.cons_val_two,
+        not_false_eq_true, false_and, true_and, not_true_eq_false] at hs ⊢
+    all_goals rfl
+  have next_state (s E : Bool) (p : List (Window × Row))
+      (hl : legal s (flatten (p.map Prod.fst))) (i : ℕ) (hi : i < p.length) :
+      run (some (s, E)) ((p.take (i + 1)).map Prod.fst) = some (last p[i].1, nonzero p[i].1) := by
+    rw [prefix_state s E p hl (i + 1), List.take_succ_eq_append_getElem hi]
+    simp only [List.map_append, List.map_cons, List.map_nil, List.foldl_append,
+      List.foldl_cons, List.foldl_nil]
+  let minimum (q : State) (x : Row) : ℝ :=
+    min (if canonical q 0 = 1 then x 0 else x 2)
+      (min (if canonical q 1 = 1 then x 1 else x 2) (x 2))
+  have minimum_le (q : State) (x : Row) (r : Fin 3)
+      (hr : canonical q r = 1) : minimum q x ≤ x r := by
+    fin_cases r
+    · unfold minimum
+      change canonical q 0 = 1 at hr
+      rw [if_pos hr]
+      exact min_le_left _ _
+    · unfold minimum
+      change canonical q 1 = 1 at hr
+      rw [if_pos hr]
+      exact (min_le_right _ _).trans (min_le_left _ _)
+    · exact (min_le_right _ _).trans (min_le_right _ _)
+  have lower_minimum (q : State) (x : Row) (B : ℝ) (h2 : canonical q 2 = 1)
+      (h : ∀ r, canonical q r = 1 → B ≤ x r) : B ≤ minimum q x := by
+    unfold minimum
+    apply le_min
+    · by_cases h0 : canonical q 0 = 1
+      · rw [if_pos h0]; exact h 0 h0
+      · rw [if_neg h0]; exact h 2 h2
+    · apply le_min
+      · by_cases h1 : canonical q 1 = 1
+        · rw [if_pos h1]; exact h 1 h1
+        · rw [if_neg h1]; exact h 2 h2
+      · exact h 2 h2
+  have actual_next (lam : ℝ) (y : Row) (p : List (Window × Row))
+      (i : ℕ) (hi : i < p.length) :
+      noisyRun (fun a x => lam • (x ᵥ* matrix a)) y (p.take (i + 1)) =
+        lam • (noisyRun (fun a x => lam • (x ᵥ* matrix a)) y (p.take i) ᵥ* matrix p[i].1) +
+          p[i].2 := by
+    rw [List.take_succ_eq_append_getElem hi]
+    simp only [noisyRun, List.foldl_append, List.foldl_cons, List.foldl_nil]
+  have one_step (lam ν : ℝ) (hlam : 0 ≤ lam) (s E : Bool) (y : Row)
+      (p : List (Window × Row)) (hl : legal s (flatten (p.map Prod.fst)))
+      (hn : noiseBound ν p) (i : ℕ) (hi : i < p.length) :
+      let q := fun n => run (some (s, E)) ((p.take n).map Prod.fst)
+      let x := fun n => noisyRun (fun a v => lam • (v ᵥ* matrix a)) y (p.take n)
+      (∀ r, canonical (q (i + 1)) r = 0 → |x (i + 1) r| ≤ ν) ∧
+      lam * minimum (q i) (x i) - ν ≤ minimum (q (i + 1)) (x (i + 1)) := by
+    dsimp only
+    let q := fun n => run (some (s, E)) ((p.take n).map Prod.fst)
+    let x := fun n => noisyRun (fun a v => lam • (v ᵥ* matrix a)) y (p.take n)
+    have he : ∀ r, |p[i].2 r| ≤ ν := by
+      intro r
+      exact (Real.norm_eq_abs _ ▸ norm_le_pi_norm p[i].2 r).trans
+        (hn p[i] (List.getElem_mem hi))
+    have action (a : Window) (v : Row) : v ᵥ* matrix a = v (readIndex a) • target a := by
+      simp only [matrix, Matrix.vecMul_vecMulVec, dotProduct_single_one]
+    have hb := mul_le_mul_of_nonneg_left
+      (minimum_le (q i) (x i) (readIndex p[i].1) (read_one s E p hl i hi)) hlam
+    have hstate : q (i + 1) = some (last p[i].1, nonzero p[i].1) := next_state s E p hl i hi
+    have hx : x (i + 1) = lam • (x i ᵥ* matrix p[i].1) + p[i].2 := actual_next lam y p i hi
+    constructor
+    · intro r hr
+      change |x (i + 1) r| ≤ ν
+      rw [hx, action]
+      change canonical (q (i + 1)) r = 0 at hr
+      rw [hstate] at hr
+      simpa only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, target, hr,
+        mul_zero, zero_add] using he r
+    · change lam * minimum (q i) (x i) - ν ≤ minimum (q (i + 1)) (x (i + 1))
+      apply lower_minimum (q (i + 1)) (x (i + 1)) _ (by rw [hstate]; rfl)
+      intro r hr
+      rw [hstate] at hr
+      rw [hx, action]
+      have hξ := (abs_le.mp (he r)).1
+      simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, target, hr, mul_one]
+      linarith
+  have gronwall (lam ν : ℝ) (hlam : 0 ≤ lam) (m : ℕ → ℝ)
+      (hm : ∀ i, lam * m i - ν ≤ m (i + 1)) (n : ℕ) :
+      lam ^ n * m 0 - ν * geometric lam n ≤ m n := by
+    have h := discrete_gronwall_prod_general (u := fun i => -m i)
+      (c := fun _ => lam) (b := fun _ => ν) (n₀ := 0)
+      (fun i _ => by have := hm i; linarith) (fun _ _ => hlam) (Nat.zero_le n)
+    have hs : (∑ j ∈ Finset.range n, lam ^ (n - (j + 1))) = geometric lam n := by
+      unfold geometric
+      convert Finset.sum_range_reflect (fun j => lam ^ j) n using 1
+      apply Finset.sum_congr rfl
+      intro j hj
+      congr 1
+      omega
+    simp only [Finset.prod_const, Nat.card_Ico,
+      Nat.Ico_zero_eq_range, Finset.card_range, ← Finset.mul_sum] at h
+    rw [hs] at h
+    linarith
+  have coordinate_invariant (lam ν : ℝ) (hlam : 0 ≤ lam)
+      (p : List (Window × Row)) :
+      ∀ (s E : Bool) (y : Row) (k : ℕ),
+        legal s (flatten (p.map Prod.fst)) → noiseBound ν p →
+        (∀ r, canonical (some (s, E)) r = 0 → |y r| ≤ ν) →
+        (∀ r, canonical (some (s, E)) r = 1 → lam ^ k - ν * geometric lam k ≤ y r) →
+        ∀ r,
+          (canonical (run (some (s, E)) (p.map Prod.fst)) r = 0 →
+            |noisyRun (fun a x => lam • (x ᵥ* matrix a)) y p r| ≤ ν) ∧
+          (canonical (run (some (s, E)) (p.map Prod.fst)) r = 1 →
+            lam ^ (k + p.length) - ν * geometric lam (k + p.length) ≤
+              noisyRun (fun a x => lam • (x ᵥ* matrix a)) y p r) := by
+    intro s E y k hl hn hz ho
+    let q := fun n => run (some (s, E)) ((p.take n).map Prod.fst)
+    let x := fun n => noisyRun (fun a v => lam • (v ᵥ* matrix a)) y (p.take n)
+    let z := fun n => minimum (q n) (x n)
+    let m := fun n => if n ≤ p.length then z n else
+      arithGeom lam (-ν) (z p.length) (n - p.length)
+    have hm : ∀ n, lam * m n - ν ≤ m (n + 1) := by
+      intro n
+      by_cases hlt : n < p.length
+      · have h := (one_step lam ν hlam s E y p hl hn n hlt).2
+        simpa only [m, if_pos (Nat.le_of_lt hlt), if_pos (by omega : n + 1 ≤ p.length)]
+          using h
+      · by_cases hle : n ≤ p.length
+        · have heq : n = p.length := by omega
+          subst n
+          simp only [m, if_pos (le_refl p.length),
+            if_neg (by omega : ¬p.length + 1 ≤ p.length), Nat.add_sub_cancel_left,
+            arithGeom_succ, arithGeom_zero, sub_eq_add_neg, le_refl]
+        · have hnext : ¬n + 1 ≤ p.length := by omega
+          have hsub : n + 1 - p.length = (n - p.length) + 1 := by omega
+          simp only [m, if_neg hle, if_neg hnext, hsub, arithGeom_succ,
+            sub_eq_add_neg, le_refl]
+    have hm0 : m 0 = minimum (some (s, E)) y := by
+      simp only [m, if_pos (Nat.zero_le _), z, q, x, List.take_zero, List.map_nil,
+        run, noisyRun, List.foldl_nil]
+    have hmend : m p.length = minimum (run (some (s, E)) (p.map Prod.fst))
+        (noisyRun (fun a v => lam • (v ᵥ* matrix a)) y p) := by
+      simp only [m, if_pos (le_refl _), z, q, x, List.take_length]
+    have hstart := lower_minimum (some (s, E)) y
+      (lam ^ k - ν * geometric lam k) (by rfl) ho
+    have hG := gronwall lam ν hlam m hm p.length
+    rw [hm0, hmend] at hG
+    have hmul := mul_le_mul_of_nonneg_left hstart (pow_nonneg hlam p.length)
+    have hsum : geometric lam (k + p.length) =
+        geometric lam p.length + lam ^ p.length * geometric lam k := by
+      rw [Nat.add_comm k p.length]
+      simp only [geometric, Finset.sum_range_add, pow_add, Finset.mul_sum]
+    have hlower : lam ^ (k + p.length) - ν * geometric lam (k + p.length) ≤
+        minimum (run (some (s, E)) (p.map Prod.fst))
+          (noisyRun (fun a v => lam • (v ᵥ* matrix a)) y p) := by
+      rw [hsum, pow_add]
+      nlinarith
+    intro r
+    constructor
+    · intro hr
+      cases hlen : p.length with
+      | zero =>
+        have hp : p = [] := List.length_eq_zero_iff.mp hlen
+        subst p
+        exact hz r hr
+      | succ n =>
+        have h := (one_step lam ν hlam s E y p hl hn n (by omega)).1 r
+        simp only [← hlen, List.take_length] at h
+        exact h hr
+    · intro hr
+      exact hlower.trans (minimum_le _ _ r hr)
   have sumNonneg (n : ℕ) : 0 ≤ geometric lam n :=
     Finset.sum_nonneg fun j _ => pow_nonneg hlam0.le j
   have hden : 0 < geometric lam M + 1 := by linarith [sumNonneg M]
@@ -532,5 +687,7 @@ theorem result (decay : ℚ) (hdecay0 : 0 < decay) (hdecay1 : decay < 1) :
             dsimp [geometric]
             linarith))
     exact tendsto_pow_atTop_nhds_zero_of_lt_one hlam.le hlam1
+
+#print axioms result
 
 end D5.S3.Arith.FibonacciAtomic.LegalSourceNoiseThreshold
