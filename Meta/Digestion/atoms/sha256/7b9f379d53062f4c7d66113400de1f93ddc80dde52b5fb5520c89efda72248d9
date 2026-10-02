@@ -1,0 +1,1 @@
+**Theorem 10.1 (analytic line derivatives).** For every finite index set $I$, rational multivariate polynomial $f$, and real coordinate vectors $x,y$, define $z(t)_i=x_i+t y_i$ and $A(t)=f(z(t))$ using the coefficient homomorphism $\mathbb Q\to\mathbb R$. Then $A'(t)=\sum_i y_i(\partial_i f)(z(t))$. 
