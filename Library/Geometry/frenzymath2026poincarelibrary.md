@@ -3217,3 +3217,244 @@ remain unfinished. Full finite-volume Mostow-Prasad, including cusps
 and nonorientable manifolds, remains active and incomplete. The linked
 escape audit remains unfinished; registration stays paused under
 CLAUDE section 3.9.
+
+
+### Corresponding finite-index subgroups for the prescribed homotopy equivalence
+
+The two original determinant characters need not be preserved by an
+arbitrary prescribed group isomorphism. For arbitrary groups A and B,
+homomorphisms rhoA and rhoB into the SAME actual H3 isometry group G,
+and an arbitrary isomorphism d : A equiv B, define
+
+    KM = preimage(rhoA,H) intersect preimage(rhoB composed with d,H)
+    KN = preimage(rhoB,H) intersect preimage(rhoA composed with inverse(d),H).
+
+Here H is the ORIGINAL generated subgroup, already identified with the
+kernel of the original Lorentz/light determinant homomorphism. No premise
+asserts that d preserves either individual determinant character.
+
+KM is exactly the kernel of the homomorphism sending a to the PAIR
+of original determinants det(rhoA(a)) and det(rhoB(d(a))). Each coordinate
+is 1 or -1. Thus this pair has finite range, and its kernel is normal
+and has index at most four. The same construction proves the corresponding
+facts for KN. The restriction of the SAME original d is an actual
+isomorphism KM equiv KN: its underlying value is d(a), and its inverse
+has underlying value inverse(d)(b). The image of KM under d is exactly
+KN, so their indices in the two original groups are equal. The bound
+does not require either original representation to be injective.
+
+For any two ORIGINAL quotient covering maps FM and FN from H3, with
+the charted H3 instance used by the existing lift theorem, any original
+prescribed homotopy equivalence h, original source basepoint and explicitly
+supplied homomorphisms rhoM/rhoN from their full deck groups into G,
+the accepted lift theorem constructs pHN, L and d. The checked application
+retains L's basepoint value, its every-point projection to h, every-point
+FULL deck equivariance, naturality with the actual fundamental-group
+map of h and uniqueness of that same induced d. The corresponding KM
+and KN are then constructed from THIS d, with normality, finite index,
+equal indices and the bound four on each side. The restricted isomorphism
+retains d and inverse(d) pointwise, both represented deck elements lie
+in the SAME H, and the ORIGINAL L is equivariant for this restriction
+at every point. No unrelated isomorphism or lift is substituted.
+
+The general algebraic check and the prescribed-h application each passed
+a complete serial default-resource scoped transient Lean check, with
+seven printed standard-three axiom closures in total and two unsuppressed
+haveILetI warnings. Each module's first whole attempt failed on elaboration
+(product projections and implicit restricted-subgroup binders respectively);
+both whole failed modules are preserved and excluded, and each revised
+whole module passed. This is classical reuse and exact application under
+.lake, with no tracked-Lean, novelty, admission or freeze claim.
+
+This discharges an algebraic correspondence needed for a prescribed-h
+finite-cover reduction. The application keeps rhoM/rhoN explicitly
+supplied; it does not establish their geometric holonomy identities
+from these topological covering inputs. Membership in H is the proved
+original determinant/generated-subgroup condition, without asserting
+smooth orientation identification. Geometric finite-cover realization,
+lifted homotopy equivalence and quotient-volume transfer are not supplied
+by this algebraic construction. Geometric unit-tangent/geodesic-flow
+identification, the boundary map and forced geometric preservation for
+the SAME arbitrary prescribed-h induced deck/lattice isomorphism,
+actual ambient conjugator existence, prescribed isometric representative
+existence and full endpoint assembly remain unfinished. Full finite-volume
+Mostow-Prasad, including cusps and nonorientable manifolds, remains active
+and incomplete. The linked escape audit remains unfinished; registration
+stays paused under CLAUDE section 3.9.
+
+
+### Finite domains, native recurrence and full-group extension for the same isomorphism
+
+For an arbitrary measurable ambient group R, ONE left-invariant measure
+mu, a subgroup Gamma, an original measurable finite-mass Gamma fundamental
+domain D, and ANY homomorphism chi : Gamma -> real-units whose values are
+1 or -1, construct a measurable fundamental domain E for the ACTUAL image
+of kernel(chi) under the subgroup inclusion. Its mass satisfies
+
+    mu(E) = index(kernel(chi) in Gamma) * mu(D)
+    mu(E) <= mu(D) + mu(D), and mu(E) < infinity.
+
+The trivial character uses D and index one; the nontrivial character uses
+D union r.D and index two. Actual almost-everywhere disjointness of the
+two original Gamma translates proves the equality. No replacement of mu
+or assumption of compactness is used.
+
+For a faithful representation rho : A -> R and Gamma <= range(rho),
+transport any original sign character psi on A to Gamma through the
+inverse of rho's actual range equivalence. The image of the transported
+kernel is EXACTLY (preimage(rho,Gamma) intersect kernel(psi)).map(rho).
+Applying this construction to Gamma = range(rhoA) intersect original H
+and psi = original determinant composed with rhoB composed with SAME d
+produces an actual finite fundamental domain for represented KM. The
+symmetric application produces one for represented KN. These applications
+retain the original d, its inverse and mu, with at most twice the mass
+of the corresponding original Gamma domain.
+
+For any discrete subgroup of the ACTUAL H3 isometry group with an actual
+measurable finite-mass fundamental domain for a Haar and right-invariant
+mu, derive closedness and countability, construct a finite nonzero full
+group quotient measure, and apply the accepted centralizer conjugation
+recurrence and closed dilation constraint. The accepted actual H3 identity
+for all conjugates then forces its ambient centralizer to be trivial.
+Discreteness of a represented subgroup follows from discreteness of the
+original representation range by the actual continuous injective inclusion.
+
+For arbitrary homomorphisms alpha,beta : A -> Q, agreement on a NORMAL
+subgroup K and trivial centralizer of beta(K) force alpha = beta:
+beta(a)^(-1) alpha(a) centralizes beta(K) for each original a. Consequently,
+if a supplied c conjugates rhoA to rhoB composed with SAME d on KM, and
+the target representation is faithful and discrete with an actual finite
+domain for range(rhoB) intersect H, the constructed KN domain supplies
+the required trivial centralizer and SAME c conjugates on ALL original A.
+The restricted conjugator remains a premise; this reduction creates none.
+
+For an original connected T3 smooth three-manifold M, with its Borel
+measure structure, intrinsic complete Riemannian metric gM, curvature -1
+on every nondegenerate plane for every Levi-Civita realization, and finite
+original volume V, consume the earlier complete native flow construction.
+It supplies an actual H3 quotient covering F, faithful deck representation
+rho with EVERY-POINT original deck evaluation, and ONE original Haar,
+right-invariant mu with covolume(range(rho)) = V. For ANY explicitly
+supplied other group A, representation rhoA and SAME isomorphism
+d : A equiv deck(F), construct E for EXACT represented KN, with
+
+    mu(E) <= (V + V) + (V + V), and mu(E) < infinity.
+
+The original cover/evaluation derive discreteness. The SAME mu/E derive
+trivial ambient centralizer and extend a supplied KM conjugator c to ALL
+A without changing c or d. No connection, holonomy, fundamental domain,
+closedness, countability or centralizer premise is supplied on this native
+target; the other rhoA, d and existence of restricted c remain explicit.
+
+For ANY discrete Gamma <= original H with an actual finite domain E,
+derive ONE natural H/Gamma quotient measure nu from SAME mu/E. Its mass
+is exactly mu(E intersect H), is nonzero and at most mu(E); it is finite
+and invariant/ergodic under H. The original log-time dilation action on
+this SAME quotient and SAME nu is continuous and ergodic. The checked
+complete native application retains F/rho/mu, represented KN, E, the
+derived centralizer and SAME-c extension together with this natural
+H/KN measure, whose total mass is at most (V+V)+(V+V).
+
+Six complete serial default-resource transient Lean checks passed, with
+twelve printed closures containing only propext, Classical.choice and
+Quot.sound, and nineteen unsuppressed haveILetI style warnings. The first
+whole sign-kernel and faithful-intersection attempts failed on elaboration;
+both are preserved and wholly excluded, with a two-failure reassessment,
+and their repaired whole modules passed. All new Lean remains ignored
+under .lake. This is classical reuse and exact application, with no
+novelty, tracked-Lean, admission or freeze claim; only this note is the
+intended tracked mathematical delivery.
+
+The new native applications leave other rhoA and d explicitly supplied.
+They do not assemble the original arbitrary prescribed-h lift with both
+derived native holonomies. Smooth orientation identification, geometric
+finite covers and their lifted homotopy/volume transfer, and geometric
+unit-tangent/geodesic-flow identification are not established here. The
+boundary map and forced geometric preservation for SAME prescribed-h d,
+actual restricted ambient conjugator existence, prescribed isometric
+representative existence and full endpoint assembly remain unfinished.
+Full finite-volume Mostow-Prasad, including cusps and nonorientable cases,
+remains active and incomplete. The escape audit remains unfinished:
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+Registration stays paused under CLAUDE section 3.9.
+
+
+### 两侧原几何、给定同伦等价与度量绑定
+
+`h3_intrinsic_topological_homotopy_equiv_lift_deck_isomorphism` 现在从原
+H³ 上半空间的凸坐标域，经已有 `Convex.locallyPathConnectedSpace` 及
+坐标同胚导出局部道路连通性，不要求另给 H³ 的 `ChartedSpace`。
+对原实际商覆盖 `FM/FN`、任意给定同伦等价 `h` 和原源基点 `pHM`，
+使用已有一般覆盖提升构造同一个 `pHN/h₀/L/τ/d`，保留
+`d.toMonoidHom=τ`、`L pHM=pHN`、逐点投影
+`FN(L x)=h(FM x)`、完整 deck 等变性以及实际基本群自然性。
+`d` 在该同一基点与基本群识别下唯一；这不声称提升无条件唯一，
+也不要求原提升是等距映射。
+
+`h3SameDMeasuredCompatibleFlowData` 是已经验证的对应子群测度、中心化子、
+同一共轭元延拓和自然 H 商遍历性结论的显式合取，不是新的刚性假设。
+对表示 `ρA/ρB`、同一个 `d:A≃B`、原 `μ` 和体积 `V`，它的目标群始终为
+`KN=h3SameIsomorphismGeneratedSource ρB ρA d.symm`，实际环境子群为
+`Γ=KN.map ρB`。数据包含同一可测基本域 `E`、
+`μ(E)≤(V+V)+(V+V)<∞`、Γ 的环境中心化子平凡、同一自然商
+`H ⧸ Γ.subgroupOf H` 的闭性证明和测度 ν、原 comapped inverse-Haar
+商前像恒等式，以及 `ν(univ)=μ(E∩H)≠0`、`ν(univ)≤4V`、H 不变遍历性
+和同一对数时间膨胀的连续遍历性。延拓结论仍为条件命题：
+对任意已给定 c，若它在对应源子群上实现该 d 的共轭关系，
+则同一个 c 在完整原源群上实现同一个 d。
+
+`complete_negative_three_manifolds_prescribed_h_two_native_compatible_flows`
+从两侧原连通、T3、Borel、光滑三维流形的 Riemannian 度量、各自内蕴完备性、
+每个 Levi-Civita 实现在每个非退化平面上曲率为 −1，以及各自原体积有限出发，
+对任意原给定 `h:M≃ₕN`，构造两侧实际 `FM/FN`、原商覆盖、忠实表示
+`ρM/ρN` 及其逐点原 deck 作用绑定，并各给一个 Haar 且右不变的 `μM/μN`，
+满足各自 `covolume(ρ.range)=g.volumeMeasure(univ)`。从这两个同一覆盖导出
+原 h 的同一个 L/d 及全部基点、投影、完整等变、基本群自然性和 d 的唯一性。
+目标数据以实际 `ρM/d` 调用，源数据以实际 `ρN/d.symm` 调用，
+各保留本侧原测度和原体积；没有用一个另外给定的表示或同构代替它们。
+同一个 d 给出的 `KM/KN` 正规、有限指标相等且各至多四，
+原限制同构及其逆逐点等于 d/d.symm，同一个 L 在限制作用下继续等变。
+该结论没有保留轨道商到原流形的度量识别，不能单凭它进行等距下降。
+
+`complete_negative_three_manifold_metric_bound_same_d_native_compatible_flow`
+处理该度量接口。这里原 M 带 `MetricSpace`；除上述原连通、Borel、光滑三维、
+内蕴完备、每个 Levi-Civita 实现的非退化平面曲率 −1 及有限原体积条件外，
+显式要求 `∀x y, gM.edist x y=edist x y`，将原 Riemannian 内蕴距离
+绑定到当前度量。已有完备连接构造给出实际 Levi-Civita 实现，
+原 H³ bridge 给出实际图册、度量和同一个原 deck 覆盖 F/ρ。
+已有覆盖纤维距离与轨道商距离识别导出一个实际轨道商等距同构 e，
+保留 `e(orbitQuotientMk ρ x)=F x`。同一个 F/ρ 的作用适当不连续；
+在它的轨道商度量下，e 对当前原 M 度量等距。该同一覆盖、表示和原度量
+再导出原 Haar/右不变 μ 及余体积等于原体积，并对任意另给 ρA 和同一个 d
+产生上述完整对应子群数据。这里没有另给覆盖、holonomy、图册、连接、
+有限基本域、中心化子、遍历性或轨道商等距同构的前提。
+
+`complete_negative_three_manifolds_prescribed_h_native_metric_restricted_endpoint`
+将两侧上述度量绑定构造与原任意给定 h 合并。M/N 位于同一 Lean 宇宙，
+各带原 `MetricSpace`、连通性、Borel 结构、光滑三维结构、内蕴完备原度量、
+每个 Levi-Civita 实现的非退化平面曲率 −1、有限原体积，以及各自显式
+`g.edist=edist`。它构造并保留两侧同一个覆盖、忠实且逐点绑定的表示、
+适当不连续性、实际轨道商等距同构、原 Haar/右不变测度及精确余体积，
+并从这些同一覆盖构造原 h 的同一个 L/d、全部基本群自然性、d 的唯一性、
+两侧对应子群测度/遍历性数据和同一个有限指标限制同构。
+
+在上述两侧原几何、度量识别以及原 h 所确定的同一个 d 条件下，
+若另给 c 并证明
+`∀a:KM, c*ρM(a)*c⁻¹=ρN(d(a))`，则目标子群的原数据延拓该同一个 c，
+在完整源 deck 群上实现该同一个 d。已有同一提升的共轭下降、等距轨道商下降
+和连接无关的原几何同伦类唯一性给出实际 `e:M≃ᵢN`，满足
+`∀x, FN(c x)=e(FM x)`、e 的连续映射同伦于原 h，并且任意另一个
+同伦于该原 h 的等距同构 e' 均等于 e。源代码只在 c 及其限制共轭关系
+已经给定的同一条件作用域内断言这一存在和唯一性；没有证明 ∃c。
+该条件链保留原给定同构、提升和覆盖，没有以另一个可实现同构替代原 d。
+
+完整有限体积 Mostow–Prasad 仍为 **ACTIVE/INCOMPLETE**。
+当前真实缺口是对上述原 h 诱导的同一个 d 构造对应子群上的实际环境共轭元。
+原 d 的边界映射、被迫的几何/配对保持及其存在性仍未证明，
+自然 H 商的代数对数时间作用也尚未识别为几何单位切丛/测地流。
+没有建立几何定向识别、对应有限覆盖和其提升同伦/体积识别。
+本轮没有加入紧性或可定向假设，目标仍包含非紧尖点及非可定向情形；
+条件等距存在性不等于完整刚性已证。上述都是已有构造的经典应用和接口组装，
+无新颖性、跟踪 Lean、准入或冻结声明；Lean 源仍位于忽略目录 `.lake`，
+本笔记是唯一跟踪交付。逃逸审计仍未完成，登记按 CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549

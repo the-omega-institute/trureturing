@@ -5237,3 +5237,196 @@ $$
 的算术或读出等价输运仍有未证义务：在不隐含更宽表或前缀的条件下，从 $k,v$、实际 $\sigma$ 及两张 $0..v$ 负侧表取得正确入口对，或取得足以消去独立入口对的实际周期读出类与相位修正。原入口之后若还有局部瞬态 $\tau$、实际周期 $p$，来源 C.10 的修正仍含 $(\sigma+\theta+\tau)\bmod p$；$\theta=2R$ 不独立取得该剩余类。可以先对 $v=k^3$ 的实际根或完整固定帽族证明这种输运，而 $\sigma$、两张下行轮廓与资格的自主取得另须证明。实际亏四的完整支集线性包络与累计高亏量正费用、式 (24.32) 的固定系数实际访问界、全域固定时域的同实现 $D$ 敏感离散度与全局收敛、无限制终端占用、实际内周期无界族及完整 Cloitre–Campbell 对应仍未由这些入口结论解决。
 
 ## 追加锚（本行以下为增补区）
+
+## 32. 实际固定模余数与规定深度时钟的五窗阻碍
+
+**假设 32.1（完整实际来源条件与余数词图合同）。** 完整承继假设 24.1，包括它经假设 23.1、21.1 承继的全部前提，而不以本证明直接使用的子集替代它。先固定定义 15.1、式 (24.1) 的同一个实际 $C$，再选择外部固定整数 $M$；起点、内步、规定深度、被选点与实际互补拆分准确为
+
+$$
+\begin{aligned}
+C(1)&=C(2)=1,\\
+D_N&=\{1,\ldots,N-1\},&T_N(x)&=N-C(x),\\
+x_0&=N-1,&x_{i+1}&=T_N(x_i),\\
+d_N&=C(N-1),&g_N&=x_{d_N},\\
+C(N)&=C(g_N)+C(N-g_N)\qquad(N\ge3).
+\end{aligned}
+$$
+
+保留全部实际合法域、$G\le C\le U\le n$、$U$ 的非减及步长界、Fibonacci 锚值及锚前值、捕获与不变性、全锚交集、规定深度入周期、实际两子的闭块及继承阶数，以及来源参数网络、共享物理行、终端编码和守恒逆标签预算的原有限定。不另假设 $C$ 单调，不放宽深度或相位，不把独立响应行拼成另一实现，不假设任何实际周期族。全部所承继且未独立重算的有限数值前提仍为 `ASSUMED-UNVERIFIED`，包括比值区间 $[16384,131071]$、黄金归纳基 $[1,65535]$、规定深度入周期基域 $3\le N\le52$、式 (24.10) 的两条初始行及其余来源有限基础。以下是条件于完整假设的纸面数学证明，不是 Lean 核验结论。
+
+采用定义 2.1、17.2、20.1 的准确表示。$W_H(x)=\mathrm{null}^{H-L(x)}W(x)$ 对 $H\ge L(x)$ 定义；每条轨道有 $H$ 个高到低窗口，随后恰有一个独立单位末字母。窗口字母表与单位末字母表不交，每轨满足窗口内、相邻窗口之间及最低窗口到单位位的全部不相邻占位守卫。零的表示是 $W_H(0)=\mathrm{null}^H\underline0$，$H=0$ 时只含单位末字母。对 $M\ge1$，$z\bmod M$ 始终指 $\{0,\ldots,M-1\}$ 中的最小非负余数，定义
+
+$$
+\begin{aligned}
+R_M(n)&=C(n)\bmod M&& (n\ge1),\\
+D_M(N)&=d_N\bmod M=C(N-1)\bmod M&& (N\ge3),\\
+\Gamma_{R_M}
+&=\left\{\bigl(W_H(n),W_H(R_M(n))\bigr)_{\mathrm{sync}}:
+ n\ge1,\ H\ge\max\{L(n),L(R_M(n))\}\right\},\\
+\Gamma_{D_M}
+&=\left\{\bigl(W_H(N),W_H(D_M(N))\bigr)_{\mathrm{sync}}:
+ N\ge3,\ H\ge\max\{L(N),L(D_M(N))\}\right\}.
+\end{aligned}
+$$
+
+两图保留每一个允许的共同 $H$，包括最短词长、零余数和任意额外共同高端补零。$M$ 是外部固定的有限控制参数，不增加一条数值轨道。由最小非负余数及实际界，$R_M(n)\le C(n)\le n$、$D_M(N)\le C(N-1)\le N-1$，所以各图的允许长度也可分别写成 $H\ge L(n)$、$H\ge L(N)$。
+
+**定理 32.2（每个非平凡固定模的实际词图与全域深度时钟阻碍）。** 在假设 32.1 下，对每一个固定整数 $M\ge2$，$\Gamma_{R_M}$ 和 $\Gamma_{D_M}$ 都非正则。因而对任意外部固定 $M\ge2$，不存在只读裸输入 $W_H(N)$、对全部 $N\ge3$ 及全部 $H\ge L(N)$ 总定义并准确输出 $d_N\bmod M$ 的普通五窗 DFAO。$M=1$ 时两函数恒为零，两张准确全补零词图正则。
+
+证明。固定任意 $M\ge2$。算术关系直接复用 §§17、20、25 已用的 Fibonacci 同步加法、比较、固定常数及正则语言的相交、逆字母投影和字母投影闭合。其算术方法来源为 Du、Mousavi、Schaeffer、Shallit，[《Decision Algorithms for Fibonacci-Automatic Words, with Applications to Pattern Avoidance》arXiv:1406.0670v4，§2、Procedure 3](https://arxiv.org/abs/1406.0670v4)。与这里合同的对应是：将窗口内按低到高记为 $(l,m,u)$ 的三位展开成高到低的 $u,m,l$，再将独立单位末字母展开成其一位；$H$ 窗口词由此成为含高端补零的 $3H+1$ 位合法 Zeckendorf 词。拉回既有算术关系后，另与原五窗逐轨合法语言相交，保留末字母与窗口字母的区别。这只使用算术方法，不假定实际 $C$ 或其余数序列已自动。
+
+以下所有 $k$ 轨语言都限于同一正则合法环境 $\mathcal L^{(k)}$：各位置同步读窗口轨，最后恰有一个共同单位末位置，此前无单位末字母，每轨另满足完整接缝守卫。投影只删除坐标，保留所有 $H$ 个窗口位置和这个单位末位置。对同一 $H$ 的合法轨道，整数相等当且仅当其词相等；所以余数不等是两条合法轨道的不同。相对补集始终取在指定合法环境内，缺失或重复单位末字母以及其他畸形词均被排除。
+
+复用式 (25.2) 的正则锚过滤与式 (25.4) 的二轨语言：
+
+$$
+\begin{aligned}
+\mathcal F_2&=\mathrm{null}^{*}[5]\mathrm{null}^{+}\underline0,\\
+p_m&=\left\lfloor\frac{2m-9}{3}\right\rfloor,\\
+\mathcal P_2
+&=\left\{\bigl(W_H(F_m),W_H(b)\bigr)_{\mathrm{sync}}:
+\begin{array}{l}
+m\ge8,\quad m\equiv2\pmod3,\quad 0\le b\le p_m,\\
+H\ge\max\{L(F_m),L(b)\}
+\end{array}\right\}.
+\end{aligned}
+$$
+
+过滤 $\mathcal F_2$ 恰给出这些 $F_m$ 的每一个允许补零长度。定理 25.1 的证明已由式 (25.4)–(25.7) 在这一准确合同下证明 $\mathcal P_2$ 非正则；以下直接引用这个结论，不重复其删环证明。
+
+令 $A=F_m$、$s_*=p_m+1$。由 $F_k\ge k-1$（$k\ge2$）与 $m\ge8$，
+
+$$
+\begin{aligned}
+0\le p_m<s_*&\le\frac{2m-6}{3}\le m-3\le F_{m-2}\le A-2,\\
+A-s_*&\ge F_{m-1}\ge2.
+\end{aligned}
+$$
+
+因此 $s_*$ 是定理 24.3 的自然闭块内的合法整数偏移。式 (24.7) 同时给出
+
+$$
+\begin{aligned}
+C(A-s)&=C(A)=F_{m-1}&& (0\le s\le p_m),\\
+1\le\lambda_m(s_*)&\le\max(1,s_*-p_m-1)=1,\\
+C(A-s_*)&=C(A)-1.
+\end{aligned}
+$$
+
+于是 $C(A-s_*)\bmod M\ne C(A)\bmod M$：若二者相等，则 $M$ 整除 $1$，与 $M\ge2$ 矛盾。这是实际首次单位下降的余数失配；后面的余数即使返回锚余数，也不改变此前已经出现的失配。
+
+先反设 $\Gamma_{R_M}$ 正则。令 $\mathcal B_R$ 是合法二轨 $(A,b)$ 的正则环境，其中 $W_H(A)\in\mathcal F_2$、$0\le b<A$。在合法六轨 $(A,b,s,n,r,r_0)$ 上要求
+
+$$
+\begin{gathered}
+(A,b)\in\mathcal B_R,\qquad 0\le s\le b,\qquad n+s=A,\\
+(n,r)\in\Gamma_{R_M},\qquad (A,r_0)\in\Gamma_{R_M},\qquad r\ne r_0.
+\end{gathered}
+$$
+
+这里及下文的轨道关系都指当前同一 $H$ 上的 $W_H$ 同步词。上述语言由逆坐标投影、相交与既有算术关系构成，其向 $(A,b)$ 的投影 $\mathcal E_R$ 正则。取合法环境内的相对补集
+
+$$
+\mathcal Q_R=\mathcal B_R\setminus\mathcal E_R.
+$$
+
+核对这个投影在每一个原允许 $H$ 上的双向含义。固定 $\mathcal B_R$ 中任意一词及其 $H$。对每个整数 $0\le s\le b$，都有 $n=A-s\in[1,A]$，并且它的真实输出满足
+
+$$
+0\le r=C(n)\bmod M\le C(n)\le n\le A,\qquad
+0\le r_0=C(A)\bmod M\le C(A)\le A.
+$$
+
+$s,n,r,r_0$ 均不超过 $A$，而 $A$ 已放入这个 $H$。容量式 (20.7) 因而保证这些数都有同一 $H$ 的唯一合法表示，假设的准确全补零词图也提供同一 $H$ 的两次查询。每个真实失配由此产生一个合法投影见证。反向地，每个六轨见证由 $n+s=A$ 和准确词图必给出这样一个真实失配。因此
+
+$$
+(A,b)\in\mathcal Q_R
+\quad\Longleftrightarrow\quad
+\forall s\in[0,b]\cap\mathbb Z,\quad
+C(A-s)\bmod M=C(A)\bmod M
+$$
+
+在每个原 $H$ 上成立。没有因较短词长丢失见证而把失配误判成全称相等。若 $b\le p_m$，整段均在实际平台上，故属于 $\mathcal Q_R$；若 $b>p_m$，$s_*\le b$ 给出上述真实失配，故不属于 $\mathcal Q_R$。每个 $\mathcal P_2$ 词也满足 $b<A$，所以正反两向给出
+
+$$
+\mathcal Q_R=\mathcal P_2
+$$
+
+于每一个允许共同长度。即使环境中的 $b$ 超出自然闭块，反向排除也只需自然块内的 $s_*$。正则 $\mathcal Q_R$ 与既有非正则 $\mathcal P_2$ 相矛盾，证明 $\Gamma_{R_M}$ 非正则。
+
+再独立反设 $\Gamma_{D_M}$ 正则。令 $\mathcal B_D$ 是合法锚二轨环境，要求 $W_H(A)\in\mathcal F_2$、$0\le b\le A-2$。在合法七轨 $(A,b,s,u,v,r,r_0)$ 上要求
+
+$$
+\begin{gathered}
+(A,b)\in\mathcal B_D,\qquad 0\le s\le b,\qquad v=A+1,\qquad u+s=v,\\
+(u,r)\in\Gamma_{D_M},\qquad (v,r_0)\in\Gamma_{D_M},\qquad r\ne r_0.
+\end{gathered}
+$$
+
+于是 $u=A-s+1\ge3$、$v=A+1\ge3$，两次查询准确比较
+
+$$
+r=C(u-1)\bmod M=C(A-s)\bmod M,\qquad
+r_0=C(v-1)\bmod M=C(A)\bmod M.
+$$
+
+由相同的算术与投影闭合，其失配投影 $\mathcal E_D$ 和合法相对补集 $\mathcal Q_D=\mathcal B_D\setminus\mathcal E_D$ 正则。
+
+这里必须独立验证查询输入 $A+1$ 在原最短词长中的容量。锚阶满足 $m\equiv2\pmod3$；令 $H_0=L(A)=(m-2)/3\ge2$，则 $m=3H_0+2$，并且
+
+$$
+A+1=F_m+1<F_m+F_{m-1}=F_{m+1}=F_{3H_0+3}.
+$$
+
+严格不等式来自 $F_{m-1}>1$。由式 (20.7)，$v=A+1$ 及所有 $3\le u\le v$ 都能放进这个最短 $H_0$，从而也能放进每个原 $H\ge H_0$。其余真实辅助值满足
+
+$$
+s,b\le A,\qquad
+0\le r\le C(u-1)\le u-1\le A,\qquad
+0\le r_0\le C(A)\le A.
+$$
+
+环境比较 $b+2\le A$ 若使用中间轨 $t=b+2$，则 $t\le A$；比较 $s\le b$ 若使用非负松弛 $b-s$，也不超过 $A$。固定常数 $1,2$ 均能放入每个 $H\ge H_0$；$v=A+1$ 的加法和以及 $u+s=v$ 的和也在已证容量内。$R$ 归约的比较若使用 $b+1$ 或 $A-b-1$，相应合法值同样不超过 $A$。因此两次构造所需的普通算术中间轨不增加原窗口资源。
+
+在 $\mathcal B_D$ 的任意原 $H$ 上，每个 $s\in[0,b]$ 的真实失配都有上述同长度见证；每个投影见证反过来也给出真实失配。故 $\mathcal Q_D$ 再次精确表示
+
+$$
+\forall s\in[0,b]\cap\mathbb Z,\quad
+C(A-s)\bmod M=C(A)\bmod M.
+$$
+
+每个 $b\le p_m$ 都在环境 $b\le A-2$ 内且通过平台检验；每个环境内 $b>p_m$ 都包含合法 $s_*\le A-2$ 而被排除。因此
+
+$$
+\mathcal Q_D=\mathcal P_2
+$$
+
+对最短共同 $H$ 及每个额外共同高端补零长度双向成立，与既有非正则性矛盾。这证明 $\Gamma_{D_M}$ 非正则，使用的是当前锚的严格容量界。首次失配时两次查询输入之差为 $s_*$，两次实际 $C$ 读数之差为 $1$；查询输入可以到 $A+1$，真实余数均不超过 $A$。即使 $M>A$，最小非负余数仍不超过其实际 $C$ 值；没有任何轨道需要容纳 $M$ 或 $M-1$。
+
+若 $M=1$，两输出均为零。将正则合法输入域 $n\ge1$ 或 $N\ge3$ 与第二轨的常零语言 $\mathrm{null}^{*}\underline0$ 同步相交，即得到各自准确全补零词图。$R_1$ 的零窗口输入 $n=1$ 及所有允许补零也在此构造内，所以这是完整的常零例外。
+
+最后证明总定义原始深度时钟的后果。反设对某个固定 $M\ge2$ 存在陈述中的 DFAO。对每个 $r\in\{0,\ldots,M-1\}$，取它在合法 $N\ge3$ 输入上的输出纤维 $\mathcal I_r$，以及常数 $r$ 的全部合法补零词语言 $\mathcal K_r=\{W_H(r):H\ge L(r)\}$。二者正则，故
+
+$$
+\Gamma_{D_M}
+=\mathcal L^{(2)}\cap
+\bigcup_{r=0}^{M-1}
+\left(\pi_1^{-1}(\mathcal I_r)\cap\pi_2^{-1}(\mathcal K_r)\right)
+$$
+
+正则；$\pi_1,\pi_2$ 仍只删坐标。这个等式在原 $H$ 上准确：真实 $r=D_M(N)\le C(N-1)\le N-1$，式 (20.7) 保证每个原输入 $H\ge L(N)$ 都已有常数输出轨，故有限纤维构造不遗漏最短词，也不补入额外位置。反向地，纤维的准确输出决定唯一真实余数。与已证 $\Gamma_{D_M}$ 非正则矛盾。证毕。
+
+这个时钟后果接到 [固定版本来源的六响应选择接口，S.6](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/recursive-descent.md#six-response-states-close-a-wider-selected-orbit-interface)：在来源原有有限前提、$K\ge27$、$9\le d\le43$ 及合格实际着陆范围内，$D=C(N-1)$，原实际响应图 $H_d$、偶数着陆时钟 $\eta$、两步后的实际种子 $s$、该种子轨道的瞬态 $b$ 和实际周期 $p$ 给出
+
+$$
+a_D=H_d^{\,D-\eta-2}(s),\qquad
+\theta=(D-\eta-2-b)\bmod p.
+$$
+
+这里 $b$ 是来源响应轨道的瞬态，区别于归约中的左偏移；所有响应、着陆、深度和循环均属同一实际历史。来源有 $b\le5$、$1\le p\le6$ 及 $D-\eta-2\ge5$，所以这确为循环读出。偶数 $\eta$ 将其着陆余数缩为 $p/\gcd(p,2)$ 类，$p=1,2$ 时该时钟可省，较宽周期仍保留其原修正。定理排除了对每个外部固定 $M\ge2$、从裸 $N$ 对全域 $N\ge3$ 独立取得原始 $d_N\bmod M$ 的普通五窗 DFAO，含 $M=2$ 的全域原始奇偶模块。
+
+这个全域否定不决定只在另行合格域或实际 $p=M$ 子族上的供应者，也不决定入口修正后的 $\theta$ 是否正则：$\eta+2+b$ 的修正及读出压缩另有义务。它不产生实际 $M$ 周期，不排除可变周期控制器或丰富输入，也不判定来源 [G.5 的共同五行网关及后续实际读出](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/recursive-descent.md#the-exterior-replay-reaches-an-unbounded-profile-after-two-steps)、较宽轮廓取得、盆或着陆生成、实际无界周期族、全局收敛或完整跨递归类型对应。来源已取得的轮廓及响应初段、原有外侧生成带，以及 §§25、27 已建立的实际全输出和规定选择器词图非正则性各保留原条件与范围；来源未独立重算的有限前提仍为 `ASSUMED-UNVERIFIED`。
+
+算术方法与既有 $\mathcal P_2$ 非正则性是直接复用。这里的 `repo-derived` 桥梁是以实际首次单位下降构造全称前缀余数相等检验，将每个固定非平凡模的准确词图分别归约到同一 $\mathcal P_2$，并在深度版独立跨过 $A+1$ 的原最短词长边界。完整输出非正则性本身不提供任意有损余数读出的非正则性；本证明由首次失配避免了后续模返回。该结果不主张世界原创性，也不结算上述更宽目标。
+
+## 追加锚（本行以下为增补区）
