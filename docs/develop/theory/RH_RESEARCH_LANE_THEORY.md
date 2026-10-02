@@ -10718,7 +10718,7 @@ T=\prod_{p\in\mathcal P}(I-q_pU_p),\qquad
 \mathcal F_S=T\mathcal FT^{-1}.
 $$
 
-此处物理运输及源 Sonin 空间的识别使用 [CCM 的半局部归一化](../../../Library/Weil/connesconsanimoscovici2024semilocal.md)，即 arXiv:2310.18423v2 的式 (57)、Proposition 4.7 与 Theorem 4.6；$T$ 是有界可逆运输。$mathscr L\xi(s)=e^{s/2}\xi(e^s)$ 把 $I-q_pU_p$ 送到 Fourier 乘子 $1-p^{-1/2-i\tau}$。例如
+此处物理运输及源 Sonin 空间的识别使用 [CCM 的半局部归一化](../../../Library/Weil/connesconsanimoscovici2024semilocal.md)，即 arXiv:2310.18423v2 的式 (57)、Proposition 4.7 与 Theorem 4.6；$T$ 是有界可逆运输。$\mathscr L\xi(s)=e^{s/2}\xi(e^s)$ 把 $I-q_pU_p$ 送到 Fourier 乘子 $1-p^{-1/2-i\tau}$。以下 $\mathcal P$ 取非空，以使矩形深度的最小值有定义。例如
 
 $$
 \mathcal P=\{2,3\}\quad\Longrightarrow\quad
@@ -10884,7 +10884,7 @@ P_S=TPK^{-1}PT^*,\qquad
 C=Q\mathcal F_SQ,\qquad R=(I-C^2)^{-1}.
 $$
 
-其中 $K^{-1}$ 仅在 $V$ 上取逆，在 $V^\perp$ 上延为零。采用 [Burnol 的物理 Sonin 投影](../../../Library/Weil/burnol2002sonine.md)及 [CC 的 archimedean 迹合同](../../../Library/Weil/connesconsani2021weilpositivity.md)：后者钉为 arXiv:2006.13771v1，使用 Proposition 1.5、Proposition 2.2、式 (81)、式 (90) 和 Theorem 4.7 的紧支撑光滑测试迹接口，不把后续小支撑正性定理外推到一般支撑。
+其中 $K^{-1}$ 仅在 $V$ 上取逆，在 $V^\perp$ 上延为零。采用 [Burnol 的物理 Sonin 投影](../../../Library/Weil/burnol2002sonine.md)及 [CC 的 archimedean 迹合同](../../../Library/Weil/connesconsani2021archimedean.md)：后者钉为 arXiv:2006.13771v1，使用 Proposition 1.5、Proposition 2.2、式 (81)、式 (90) 和 Theorem 4.7 的紧支撑光滑测试迹接口，不把后续小支撑正性定理外推到一般支撑。
 
 具体合同是 $V_S=TV=\ker Q\cap\ker Q\mathcal F_S$、$P_S$ 为其普通正交投影，以及
 
