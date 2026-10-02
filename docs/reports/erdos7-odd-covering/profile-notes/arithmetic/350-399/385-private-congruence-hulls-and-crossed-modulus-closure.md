@@ -91,6 +91,14 @@ the deep-q prefix prices both at a fixed W-marginal and on the larger
 projected U; the latter retains prefix-cofactor correlation. Adequate
 simultaneous source bounds and a strict total liability price remain open.
 
+[Section135](#135-every-q-free-live-full-ternary-word-is-blocked-by-a-local-modulus-sum-descent)
+localizes the full-height replacement to one actual word while retaining
+all other originals and the q-axis. EB1's modulus-sum minimum then gives
+U=L: every q-free-live word supports the projected construction. A
+nonconcentrated prime supplies one two-root law, reducing the crude
+ternary factor from H to (H+1)/2. Deeper distribution and useful joint
+cofactor prices remain unproved.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -16721,3 +16729,98 @@ For G=1 define C_(u,j) using the actual height-one retained ancestors of root j.
 The (u,v)-marginal of PS4 need not be supported on W, and its conditional q-law at a fixed (u,v) need not have the old RE7 caps. The v choice depends on beta. Therefore one must NOT assert nu(A_d)<=kappa_e theta(B_d) merely by naming this marginal theta. PS4--PS5 are the legitimate correlated prices. In particular this construction does not identify U with projection(W), condition away the cofactor choice, or grant the same lambda to a different experiment.
 
 CF3--CF5 choose a full q-tree leaf first and then condition its complete actual cofactor fibre. Here the source chooses a shallow prefix, then a full shallow-safe cofactor, then a dense complete actual tail. The two laws need not coincide, and a per-label minimum of their prices is unjustified. Useful delta, ternary distribution, and a strict whole-family upper price remain the substantive unresolved conditions.
+
+## 135. Every q-free-live full ternary word is blocked by a local modulus-sum descent
+
+For the original EB1 family and the definitions in Report375 JL1 and Report385 §§127/134,
+
+    U=L.                                           (LW1)
+
+The extra input is EB1's modulus-sum minimum. One avoiding tree at one actual live full ternary word already permits a strict local replacement, while every low-height original is retained. This reuses the literal single-AP pullback in Report375 LA2–LA3/JL2; it does not require an avoiding tree at any other word.
+
+### Local replacement at one complete old word
+
+More generally let r<q be original support primes, with
+
+    Q=r^H q^G M, H,G>=1, gcd(M,rq)=1.
+
+For each original d=r^a q^e s write A_d for its unchanged actual class. Let J={d:e>=1,a<H}, K=D minus J, and E_J be the complement of the complete K union. For u modulo r^H put
+
+    R_u={v mod M:no q-free original contains (u,v)},
+    E_u={xi mod q^G:exists v,(u,xi,v) in E_J}.
+
+Suppose R_u is nonempty and a complete r-ary depth-G q-prefix tree avoids E_u. Choose its compatible injections
+
+    theta_e:Z/r^e -> Z/q^e, 0<=e<=G.
+
+They depend on this fixed u, not on v. Let T_u consist of exactly the original labels r^H q^e s, e>=1, whose actual full r-phase is u.
+
+Keep EVERY original outside T_u unchanged, including all J originals. For each d in T_u, with original residue a_d, use the existing LA3 inverse:
+
+* If a_d modulo q^e is outside image(theta_e), omit d.
+* Otherwise let c_d be its unique inverse and insert the single AP
+
+      z=u+r^H c_d mod r^(H+e),
+      z=a_d mod s,
+      numerical modulus d'=r^(H+e)s.               (LW2)
+
+Prefix compatibility makes this one AP, with all subsequent digits free. No lower-r original is restricted to a root or copied.
+
+To check the whole output, use the common finite carrier
+
+    N=r^(H+G) q^G M.
+
+For z whose old r-coordinate differs from u, every old T_u event was already false, and every original outside T_u is unchanged. The original whole cover therefore still covers z.
+
+For z=u modulo r^H, put b=(z-u)/r^H modulo r^G and v=z modulo M. Evaluate the ONE old source point
+
+    y=(u,theta_G(b),v).
+
+Since theta_G(b) avoids E_u, some original in K covers this y. A q-free owner covers z unchanged. Otherwise its r-height is H and its r-phase is u, so it lies in T_u; its nonempty LW2 inverse covers z. This holds for every v and every old q-coordinate of z. Thus the output covers all of N and hence all integers.
+
+This proof permits the piecewise source map to ignore the output q-coordinate inside the chosen word. It need not be injective. It also does not claim that an unchanged J event equals its old event at y: such events are extra retained coverage and are not used for the inside-u argument. All events actually used there have the exact LA3 correspondence at this same y.
+
+Every new label has r-height H+e>H, so it is absent from the complete original inventory. Two new labels recover the same pair (e,s) only when their original numerical labels coincide. Thus new labels are pairwise distinct and collide with no unchanged original. Oddness and nonunit labels are preserved when r,q are odd.
+
+The set T_u is nonempty. Indeed fix v in R_u and any selected tree leaf: that source point has no q-free owner and, by avoidance of E_u, has an owner in K, necessarily in T_u. Each member of T_u produces at most one output. If any is omitted, the class count decreases. Otherwise every member is replaced and
+
+    d'/d=(r/q)^e<1,
+
+so the class count is unchanged and the modulus sum decreases strictly. This contradicts EB1. The output need not be irredundant, divisor closed, or have an LCM bounded by Q: EB1 is the minimum over ALL distinct odd whole covers, and the construction meets that admissible class.
+
+### Consequence for the original live source
+
+It follows that EVERY u with R_u nonempty has no complete r-ary depth-G q-tree avoiding E_u. Conversely R_u empty implies E_u empty, so an avoiding tree exists. With r=3 and Report385's notation this is exactly LW1.
+
+Consequently Report375's existing dual tree and Report385 §134's complete shallow-cofactor/tail construction are available at every u in L. Any ONE probability sigma on the actual live projection L may now be used in PS4–PS6, with its actual C_(u,beta) sets and full tails. The old need to establish sigma's support in the possibly smaller U is discharged.
+
+This does not prove W=R or projection_3(W)=L. Localizing additionally to a chosen cofactor would require a different arithmetic replacement; no such replacement is used here. It also does not establish a positive uniform size for C_(u,beta) or a complete binary subtree in L.
+
+### A nonconcentrated prime gives simultaneous two-root caps
+
+In the EB1 source, the original prime-q private region is precisely the complete q-free residual R times its original q-root, including all higher q-digits. Every other q-bearing original is disjoint from that prime class. Thus nonconcentration of q gives two full words u_1,u_2 in L at different nonzero first-three roots.
+
+Choose this ONE sigma with mass1/2 at each word. By LW1 both words are in U, so use the SAME §134 law with its complete actual C sets and tails. Its ternary prefix bounds are
+
+    beta_0=1,
+    beta_a=1/2 for 1<=a<H.                         (LW3)
+
+Every positive-height ternary cylinder meets at most one of the two words. This is a simultaneous bound for all original heights; it is not the stronger complete binary-depth profile 2^(-a).
+
+Apply PS5 with its actual cofactor ratios bounded by one and retain DT2's kappa_e. Numerical distinctness gives
+
+    1<=sum_(d in J)nu(A_d)
+      <=tau(M) [(H+1)/2] K_(q,G),                 (LW4)
+
+where K_(q,G)=sum_(e=1..G)kappa_e is DT5's finite sum. Since K_(q,G)<K_(q,infinity),
+
+    tau(M)(H+1)>2/K_(q,infinity),
+
+    K_(q,infinity)
+      =1/(q-3)-2/[(q-3)(q-2)^3(q-1)].              (LW5)
+
+With the older t^(-e) coefficients this same actual two-root source gives q-3<tau(M)(H+1)/2. At q=5, LW5 reads tau(M)(H+1)>216/53. These bounds retain arbitrary original H,G and do not assume an unpaid binary-cell margin.
+
+The exact PS4 price, or PS5 retaining g_(u,beta)(d), remains available for this same sigma. A further inequality forcing that complete price below one is not proved here. LW1 removes the support gap; useful cofactor reserve and stronger distribution across deeper ternary prefixes remain separate obligations.
+
+The literal AP pullback is reused from Report375 LA2--LA3; the common-cofactor avoidance criterion is JL2. The local replacement retains all lower-height originals and the q-axis. The result uses EB1's original modulus-sum minimum and gives an ordinary mathematical proof, not new Lean verification or a resolution of unrestricted Erdős #7.
