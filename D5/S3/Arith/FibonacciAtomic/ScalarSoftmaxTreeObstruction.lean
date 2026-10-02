@@ -20,7 +20,6 @@ namespace D5.S3.Arith.FibonacciAtomic.ScalarSoftmaxTreeObstruction
 open LiteralWindowEnd (Window first last)
 open TreeMessageRealization (Full leaves Implementation evaluate)
 
-private abbrev TaskTree := TreeMessageRealization.Tree
 open scoped BigOperators
 
 /-- Three initial windows and an arbitrary tail. Positions start at zero. -/
@@ -40,7 +39,7 @@ noncomputable def coarse {m : ℕ} (w : Word m) : Fin 3 := by
 the constant zero coordinate. Each merger is separately linear on the whole
 ambient real line and has no additional input or affine constant. -/
 def scalarImplementation {m : ℕ} (f : Fin (m + 3) → Window → ℝ)
-    (B : TaskTree (Fin (m + 3)) → TaskTree (Fin (m + 3)) → ℝ →ₗ[ℝ] ℝ →ₗ[ℝ] ℝ) :
+    (B : TreeMessageRealization.Tree (Fin (m + 3)) → TreeMessageRealization.Tree (Fin (m + 3)) → ℝ →ₗ[ℝ] ℝ →ₗ[ℝ] ℝ) :
     Implementation (fun _ : Fin (m + 3) => Window) where
   Message := fun _ => ℝ
   empty := 0
@@ -74,28 +73,30 @@ noncomputable def squareRisk {m : ℕ} (z : Word m → ℝ) (u v : Fin 3 → ℝ
 noncomputable def logRisk {m : ℕ} (z : Word m → ℝ) (u v : Fin 3 → ℝ) : ℝ :=
   𝔼 w, -Real.log (probability u v (z w) (coarse w))
 
+-- The decision-fiber geometry and uniform averaging share one proof scope.
 set_option maxHeartbeats 1600000 in
 /-- Uniform risk floors for every fully labelled scalar bilinear tree. The
 parameter m is the number of windows after the first three, so n=m+3. -/
-theorem result (m : ℕ) (t : TaskTree (Fin (m + 3))) (ht : Full t)
+theorem result (m : ℕ) (t : TreeMessageRealization.Tree (Fin (m + 3))) (ht : Full t)
     (hall : leaves t = Finset.univ) (f : Fin (m + 3) → Window → ℝ)
-    (B : TaskTree (Fin (m + 3)) → TaskTree (Fin (m + 3)) → ℝ →ₗ[ℝ] ℝ →ₗ[ℝ] ℝ)
+    (B : TreeMessageRealization.Tree (Fin (m + 3)) → TreeMessageRealization.Tree (Fin (m + 3)) → ℝ →ₗ[ℝ] ℝ →ₗ[ℝ] ℝ)
     (u v : Fin 3 → ℝ) :
     (∀ choose, LegalChoice choose →
       (1 / 125 : ℝ) ≤ errorRisk (evaluate (scalarImplementation f B) t) u v choose) ∧
     (1 / 250 : ℝ) ≤ squareRisk (evaluate (scalarImplementation f B) t) u v ∧
     Real.log 2 / 125 ≤ logRisk (evaluate (scalarImplementation f B) t) u v := by
   classical
-  letI : DecidableEq (Fin (m + 3)) := Classical.decEq _
+  letI : Nonempty Window := ⟨.zero⟩
   have scalar (A : ℝ →ₗ[ℝ] ℝ →ₗ[ℝ] ℝ) (x y : ℝ) :
       A x y = A 1 1 * x * y := by
     calc
       A x y = A (x • (1 : ℝ)) (y • (1 : ℝ)) := by simp
       _ = x • (y • A 1 1) := by rw [LinearMap.map_smul₂, LinearMap.map_smul]
       _ = A 1 1 * x * y := by simp only [smul_eq_mul]; ring
-  have factorize (s : TaskTree (Fin (m + 3))) (hs : Full s) :
+  have factorize (s : TreeMessageRealization.Tree (Fin (m + 3))) (hs : Full s) :
       ∃ κ : ℝ, ∀ w : Word m,
         evaluate (scalarImplementation f B) s w = κ * ∏ i ∈ leaves s, f i (w i) := by
+    letI : DecidableEq (Fin (m + 3)) := Classical.decEq _
     induction s with
     | nil => simp [Full] at hs
     | node a l r hl hr =>
@@ -317,8 +318,14 @@ theorem result (m : ℕ) (t : TaskTree (Fin (m + 3))) (ht : Full t)
     have b1 : FirstRejectionCutCapacity.bad w p1 ↔ last (w p1) = true ∧ first (w p2) = true := by
       simp [FirstRejectionCutCapacity.bad, p1, p2, show 1 < m + 2 by omega]
     unfold coarse
-    set_option pp.all true in trace_state
-    simp only [label0, label1, b0, b1]
+    have h0eq : FirstRejectionCutCapacity.task w =
+        ((⟨0, by omega⟩ : Fin (m + 3)) : FirstRejectionCutCapacity.Label (m + 2)) ↔
+        last (w p0) = true ∧ first (w p1) = true := (label0 w).trans b0
+    have h1eq : FirstRejectionCutCapacity.task w =
+        ((⟨1, by omega⟩ : Fin (m + 3)) : FirstRejectionCutCapacity.Label (m + 2)) ↔
+        ¬ (last (w p0) = true ∧ first (w p1) = true) ∧
+        (last (w p1) = true ∧ first (w p2) = true) := (label1 w).trans (b0.not.and b1)
+    simp only [h0eq, h1eq]
     by_cases h0 : last (w p0) = true ∧ first (w p1) = true <;>
       by_cases h1 : last (w p1) = true ∧ first (w p2) = true <;> simp only [h0, h1,
         not_true_eq_false, not_false_eq_true, true_and, false_and, ↓reduceIte]
@@ -345,7 +352,8 @@ theorem result (m : ℕ) (t : TaskTree (Fin (m + 3))) (ht : Full t)
         (κ * ∏ i : Fin m, f i.succ.succ.succ (τ i)) * f p1 b * (f p0 a * f p2 c) := by
     rw [hκ, hall, e0, e1, e2]
     simp only [Fin.prod_univ_succ, join, Fin.cons_zero, Fin.cons_succ]
-    ring
+    ring_nf
+    rfl
   have eight (choose : Finset (Fin 3) → Fin 3) (hc : LegalChoice choose)
       (τ : Fin m → Window) : ∃ a b c : Bool,
       prediction u v choose (evaluate (scalarImplementation f B) t (join (wa a) (wb b) (wc c) τ)) ≠
@@ -359,6 +367,126 @@ theorem result (m : ℕ) (t : TaskTree (Fin (m + 3))) (ht : Full t)
       simpa only [score, table, Bool.false_eq_true, if_false] using hn a false c
     · intro a c
       simpa only [score, table, if_true] using hn a true c
-  sorry
+  have cons_mean (q : ℕ) (g : (Fin (q + 1) → Window) → ℝ) :
+      (𝔼 w, g w) = 𝔼 a : Window, 𝔼 τ : Fin q → Window, g (Fin.cons a τ) := by
+    calc
+      (𝔼 w, g w) = 𝔼 x : Window × (Fin q → Window), g (Fin.cons x.1 x.2) :=
+        (Fintype.expect_equiv (Fin.consEquiv (fun _ : Fin (q + 1) => Window))
+          (fun x => g (Fin.cons x.1 x.2)) g (by intro x; rfl)).symm
+      _ = _ := by
+        simpa only [Finset.univ_product_univ] using
+          Finset.expect_product (Finset.univ : Finset Window)
+            (Finset.univ : Finset (Fin q → Window)) (fun x => g (Fin.cons x.1 x.2))
+  have split_mean (g : Word m → ℝ) :
+      (𝔼 w, g w) = 𝔼 τ : Fin m → Window,
+        𝔼 a : Window, 𝔼 b : Window, 𝔼 c : Window, g (join a b c τ) := by
+    rw [cons_mean (m + 2)]
+    simp_rw [cons_mean (m + 1), cons_mean m]
+    simp_rw [Finset.expect_comm (Finset.univ : Finset Window)
+      (Finset.univ : Finset (Fin m → Window))]
+    rfl
+  have floor (choose : Finset (Fin 3) → Fin 3) (hc : LegalChoice choose)
+      (loss : Word m → ℝ) (η : ℝ) (hn : ∀ w, 0 ≤ loss w)
+      (hl : ∀ w, prediction u v choose (evaluate (scalarImplementation f B) t w) ≠ coarse w →
+        η ≤ loss w) : η / 125 ≤ 𝔼 w, loss w := by
+    have fibre (τ : Fin m → Window) : η ≤
+        ∑ a : Window, ∑ b : Window, ∑ c : Window, loss (join a b c τ) := by
+      obtain ⟨a, b, c, h⟩ := eight choose hc τ
+      calc
+        η ≤ loss (join (wa a) (wb b) (wc c) τ) := hl _ h
+        _ ≤ ∑ c : Window, loss (join (wa a) (wb b) c τ) :=
+          Finset.single_le_sum (s := Finset.univ)
+            (f := fun c : Window => loss (join (wa a) (wb b) c τ))
+            (fun c _ => hn _) (Finset.mem_univ (wc c))
+        _ ≤ ∑ b : Window, ∑ c : Window, loss (join (wa a) b c τ) :=
+          Finset.single_le_sum (s := Finset.univ)
+            (f := fun b : Window => ∑ c : Window, loss (join (wa a) b c τ))
+            (fun b _ => Finset.sum_nonneg (fun c _ => hn _)) (Finset.mem_univ (wb b))
+        _ ≤ _ := Finset.single_le_sum (s := Finset.univ)
+          (f := fun a : Window => ∑ b : Window, ∑ c : Window, loss (join a b c τ))
+          (fun a _ => Finset.sum_nonneg (fun b _ => Finset.sum_nonneg (fun c _ => hn _)))
+          (Finset.mem_univ (wa a))
+    have prefix_mean (τ : Fin m → Window) : η / 125 ≤
+        𝔼 a : Window, 𝔼 b : Window, 𝔼 c : Window, loss (join a b c τ) := by
+      have hw : Fintype.card Window = 5 := by decide
+      simp only [Fintype.expect_eq_sum_div_card, hw, Nat.cast_ofNat]
+      simp only [← Finset.sum_div, div_div]
+      have h := fibre τ
+      norm_num
+      linarith only [h]
+    rw [split_mean]
+    calc
+      η / 125 = 𝔼 _τ : Fin m → Window, η / 125 := (Fintype.expect_const _).symm
+      _ ≤ _ := Finset.expect_le_expect (fun τ _ => prefix_mean τ)
+  have denominator_pos (z : ℝ) : 0 < ∑ j, Real.exp (logit u v z j) := by
+    exact Finset.sum_pos (fun j _ => Real.exp_pos _) Finset.univ_nonempty
+  have prob_pos (z : ℝ) (y : Fin 3) : 0 < probability u v z y :=
+    div_pos (Real.exp_pos _) (denominator_pos z)
+  have prob_sum (z : ℝ) : ∑ y, probability u v z y = 1 := by
+    simp only [probability, ← Finset.sum_div]
+    exact div_self (ne_of_gt (denominator_pos z))
+  have prob_le_one (z : ℝ) (y : Fin 3) : probability u v z y ≤ 1 := by
+    apply (div_le_one (denominator_pos z)).mpr
+    exact Finset.single_le_sum (fun j _ => (Real.exp_pos _).le) (Finset.mem_univ y)
+  have log_nonneg (z : ℝ) (y : Fin 3) : 0 ≤ -Real.log (probability u v z y) :=
+    neg_nonneg.mpr (Real.log_nonpos (prob_pos z y).le (prob_le_one z y))
+  have error_losses (choose : Finset (Fin 3) → Fin 3) (hc : LegalChoice choose)
+      (z : ℝ) (y : Fin 3) (he : prediction u v choose z ≠ y) :
+      (1 / 2 : ℝ) ≤ ∑ i, (probability u v z i - if y = i then 1 else 0) ^ 2 ∧
+      Real.log 2 ≤ -Real.log (probability u v z y) := by
+    let j := prediction u v choose z
+    have hjy : j ≠ y := he
+    have horder : probability u v z y ≤ probability u v z j := by
+      apply div_le_div_of_nonneg_right _ (denominator_pos z).le
+      exact Real.exp_le_exp.mpr (winner choose hc z y)
+    have pair : probability u v z y + probability u v z j ≤ 1 := by
+      calc
+        _ = ∑ i ∈ ({y, j} : Finset (Fin 3)), probability u v z i := by
+          simp [Ne.symm hjy]
+        _ ≤ ∑ i, probability u v z i := Finset.sum_le_sum_of_subset_of_nonneg
+          (Finset.subset_univ _) (fun i _ _ => (prob_pos z i).le)
+        _ = 1 := prob_sum z
+    have half : probability u v z y ≤ 1 / 2 := by linarith only [pair, horder]
+    constructor
+    · have square_pair : (probability u v z y - 1) ^ 2 + probability u v z j ^ 2 ≤
+          ∑ i, (probability u v z i - if y = i then 1 else 0) ^ 2 := by
+        calc
+          _ = ∑ i ∈ ({y, j} : Finset (Fin 3)),
+              (probability u v z i - if y = i then 1 else 0) ^ 2 := by
+            simp [Ne.symm hjy]
+          _ ≤ _ := Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ _)
+            (fun i _ _ => sq_nonneg _)
+      have py := (prob_pos z y).le
+      have pj := (prob_pos z j).le
+      nlinarith only [square_pair, horder, py, pj, sq_nonneg (probability u v z y - 1 / 2)]
+    · have hlog := Real.log_le_log (prob_pos z y) half
+      have hhalf : Real.log (1 / 2 : ℝ) = -Real.log 2 := by
+        rw [one_div, Real.log_inv]
+      rw [hhalf] at hlog
+      linarith only [hlog]
+  let choose : Finset (Fin 3) → Fin 3 := fun S => if h : S.Nonempty then S.min' h else 0
+  have choose_legal : LegalChoice choose := by
+    intro S hS
+    simp only [choose, dif_pos hS]
+    exact Finset.min'_mem S hS
+  refine ⟨?_, ?_, ?_⟩
+  · intro c hc
+    unfold errorRisk
+    apply floor c hc _ 1
+    · intro w
+      split_ifs <;> norm_num
+    · intro w h
+      simp only [if_neg h, le_refl]
+  · unfold squareRisk
+    have h := floor choose choose_legal
+      (fun w => ∑ y, (probability u v (evaluate (scalarImplementation f B) t w) y -
+        if coarse w = y then 1 else 0) ^ 2) (1 / 2)
+      (fun w => Finset.sum_nonneg (fun y _ => sq_nonneg _))
+      (fun w he => (error_losses choose choose_legal _ _ he).1)
+    norm_num at h
+    exact h
+  · unfold logRisk
+    exact floor choose choose_legal _ (Real.log 2)
+      (fun w => log_nonneg _ _) (fun w he => (error_losses choose choose_legal _ _ he).2)
 
 end D5.S3.Arith.FibonacciAtomic.ScalarSoftmaxTreeObstruction
