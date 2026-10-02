@@ -94,6 +94,24 @@ public sealed class ScribeResourcePackTests
     }
 
     [Fact]
+    public void ReaderRejectsDuplicateManifestField()
+    {
+        using var root = new TemporaryRoot();
+        var path = root.Resolve("duplicate-field.zip");
+        ScribeResourcePack.Write(path, [Definition("First")]);
+        var entries = ReadZip(path);
+        var index = entries.FindIndex(item => item.Name == "manifest.json");
+        var manifest = Encoding.UTF8.GetString(entries[index].Bytes);
+        entries[index] = ("manifest.json", Encoding.UTF8.GetBytes(manifest.Replace(
+            "\"schema\":\"trureturing.scribe.resource-pack\"",
+            "\"schema\":\"trureturing.scribe.resource-pack\",\"schema\":\"trureturing.scribe.resource-pack\"",
+            StringComparison.Ordinal)));
+        RewriteZip(path, entries);
+
+        AssertReason(path, "InvalidManifest");
+    }
+
+    [Fact]
     public void PackRoundTripsCanonicalBytesAndEnumeratesItsManifest()
     {
         using var root = new TemporaryRoot();

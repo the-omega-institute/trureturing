@@ -19,6 +19,7 @@ public enum ScribeResourceErrorCode
     TypeMismatch,
     InvalidValue,
     ExpectationMismatch,
+    DuplicateField,
 }
 
 public sealed class ScribeResourceException : FormatException
@@ -32,7 +33,7 @@ public sealed class ScribeResourceException : FormatException
 public static partial class ScribeResourceCodec
 {
     public const string SchemaName = "trureturing.scribe.document-definition";
-    public const int SemanticVersion = 1;
+    public const int SemanticVersion = 2;
 
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
@@ -185,15 +186,14 @@ public static partial class ScribeResourceCodec
     }
 
     private static JsonObject WriteHeader(DocumentHeader value) =>
-        Obj("type", "DocumentHeader", "gid", value.Gid.Value, "generality", value.Generality.ToString(), "mirrorBlueprint", value.MirrorBlueprint.Value, "mirrorEvidence", WriteEvidence(value.MirrorEvidence), "anchors", new JsonArray(value.Anchors.Select(static item => JsonValue.Create(item.CanonicalString)).ToArray()), "digest", value.Digest.Value);
+        Obj("type", "DocumentHeader", "gid", value.Gid.Value, "generality", value.Generality.ToString(), "mirrorEvidence", WriteEvidence(value.MirrorEvidence), "anchors", new JsonArray(value.Anchors.Select(static item => JsonValue.Create(item.CanonicalString)).ToArray()), "digest", value.Digest.Value);
 
     private static DocumentHeader ReadHeader(JsonElement parent, string name)
     {
-        var obj = Typed(parent.GetProperty(name), "DocumentHeader", "gid", "generality", "mirrorBlueprint", "mirrorEvidence", "anchors", "digest");
+        var obj = Typed(parent.GetProperty(name), "DocumentHeader", "gid", "generality", "mirrorEvidence", "anchors", "digest");
         return DocumentHeader.Create(
             GidRef.Create(ReadString(obj, "gid")),
             ParseEnum<Generality>(obj, "generality"),
-            GidRef.Create(ReadString(obj, "mirrorBlueprint")),
             ReadEvidence(obj, "mirrorEvidence"),
             ReadArray(obj, "anchors").EnumerateArray().Select(item => Anchor.ParseCanonical(ReadRequiredString(item, "anchor"))),
             Digest.Create(ReadString(obj, "digest")));
@@ -276,95 +276,6 @@ public static partial class ScribeResourceCodec
             _ => throw UnknownType(obj),
         };
     }
-
-    private static JsonObject WriteDescribe(DocumentBlock.Describe value) => Obj(
-        "type", "Describe",
-        "id", value.Id.Value,
-        "title", value.Title.Value,
-        "statement", WriteStatement(value.Statement),
-        "kindSource", WriteKindSource(value.KindSource),
-        "provenance", WriteProvenance(value.AssessedProvenance),
-        "content", WriteBlocks(value.Content),
-        "statementFormula", value.StatementFormula is null ? null : WriteFormula(value.StatementFormula),
-        "statementFormulaProvenance", value.FormulaProvenance.ToString(),
-        "statementSource", value.StatementSource is null ? null : WriteStatementSource(value.StatementSource),
-        "claim", value.OpenProblemResolutionClaim is null ? null : WriteClaim(value.OpenProblemResolutionClaim));
-
-    private static JsonObject WriteStatement(DescribeStatement value) => value switch
-    {
-        DescribeStatement.FormulaAst formula => Obj("type", "FormulaAst", "value", WriteFormula(formula.Value)),
-        DescribeStatement.LeanDeclaration lean => Obj("type", "LeanDeclaration", "value", lean.Value.Value),
-        _ => throw Unknown(value),
-    };
-
-    private static DescribeStatement ReadStatement(JsonElement parent, string name)
-    {
-        var obj = RequireObject(parent.GetProperty(name));
-        return ReadType(obj) switch
-        {
-            "FormulaAst" => ReadTyped(obj, "FormulaAst", "value", () => DescribeStatement.FromFormula(ReadFormula(obj, "value"))),
-            "LeanDeclaration" => ReadTyped(obj, "LeanDeclaration", "value", () => DescribeStatement.FromLean(LeanDeclarationRef.Create(ReadString(obj, "value")))),
-            _ => throw UnknownType(obj),
-        };
-    }
-
-    private static DescribeStatement ReadStatement(JsonObject parent, string name) => ReadStatement(Element(parent), name);
-
-    private static JsonObject WriteKindSource(DescribeKindSource value) => value switch
-    {
-        DescribeKindSource.Authored authored => Obj("type", "Authored", "kind", authored.Value.ToString()),
-        DescribeKindSource.ReportDerived derived => Obj("type", "ReportDerived", "handle", derived.Handle.Value, "role", derived.Role?.ToString()),
-        _ => throw Unknown(value),
-    };
-
-    private static DescribeKindSource ReadKindSource(JsonElement parent, string name)
-    {
-        var obj = RequireObject(parent.GetProperty(name));
-        return ReadType(obj) switch
-        {
-            "Authored" => ReadTyped(obj, "Authored", "kind", () => new DescribeKindSource.Authored(ParseEnum<DescribeKind>(obj, "kind"))),
-            "ReportDerived" => ReadTyped(obj, "ReportDerived", "handle", "role", () => new DescribeKindSource.ReportDerived(DeclarationHandle.Create(ReadString(obj, "handle")), ReadNullableEnum<DescribeRole>(obj, "role"))),
-            _ => throw UnknownType(obj),
-        };
-    }
-
-    private static DescribeKindSource ReadKindSource(JsonObject parent, string name) => ReadKindSource(Element(parent), name);
-
-    private static JsonObject WriteStatementSource(StatementSource value) => value switch
-    {
-        StatementSource.LeanDerived => Obj("type", "LeanDerived"),
-        StatementSource.Authored authored => Obj("type", "Authored", "presentation", WriteFormula(authored.Presentation), "gap", WriteNullableGap(authored.ProjectionGap)),
-        StatementSource.NoFormula noFormula => Obj("type", "NoFormula", "gap", WriteNullableGap(noFormula.ProjectionGap)),
-        _ => throw Unknown(value),
-    };
-
-    private static StatementSource? ReadNullableStatementSource(JsonElement parent, string name)
-    {
-        var element = parent.GetProperty(name);
-        if (element.ValueKind == JsonValueKind.Null) return null;
-        var obj = RequireObject(element);
-        return ReadType(obj) switch
-        {
-            "LeanDerived" => ReadTyped(obj, "LeanDerived", () => StatementSource.FromLean()),
-            "Authored" => ReadTyped(obj, "Authored", "presentation", "gap", () => new StatementSource.Authored(ReadFormula(obj, "presentation"), ReadNullableGap(obj, "gap"))),
-            "NoFormula" => ReadTyped(obj, "NoFormula", "gap", () => new StatementSource.NoFormula(ReadNullableGap(obj, "gap"))),
-            _ => throw UnknownType(obj),
-        };
-    }
-
-    private static StatementSource? ReadNullableStatementSource(JsonObject parent, string name) => ReadNullableStatementSource(Element(parent), name);
-
-    private static JsonNode? WriteNullableGap(ProjectionGap? value) => value is null ? null : Obj("type", "ProjectionGap", "reasonCode", value.ReasonCode, "offendingSubject", value.OffendingSubject, "projectorEpoch", value.ProjectorEpoch, "declarationContentDigest", value.DeclarationContentDigest);
-
-    private static ProjectionGap? ReadNullableGap(JsonElement parent, string name)
-    {
-        var element = parent.GetProperty(name);
-        if (element.ValueKind == JsonValueKind.Null) return null;
-        var obj = Typed(element, "ProjectionGap", "reasonCode", "offendingSubject", "projectorEpoch", "declarationContentDigest");
-        return new ProjectionGap(ReadString(obj, "reasonCode"), ReadString(obj, "offendingSubject"), ReadString(obj, "projectorEpoch"), ReadString(obj, "declarationContentDigest"));
-    }
-
-    private static ProjectionGap? ReadNullableGap(JsonObject parent, string name) => ReadNullableGap(Element(parent), name);
 
     private static JsonObject WriteProvenance(AssessedProvenance value) => value switch
     {
@@ -552,14 +463,6 @@ public static partial class ScribeResourceCodec
 
     private static IEnumerable<string> ReadStrings(JsonObject parent, string name) => ReadStrings(Element(parent), name);
 
-    private static Formula? ReadNullableFormula(JsonElement parent, string name)
-    {
-        var value = parent.GetProperty(name);
-        return value.ValueKind == JsonValueKind.Null ? null : ReadFormula(value);
-    }
-
-    private static Formula? ReadNullableFormula(JsonObject parent, string name) => ReadNullableFormula(Element(parent), name);
-
     private static JsonObject Obj(string firstName, object? firstValue, params object?[] rest)
     {
         var result = new JsonObject { [firstName] = ToNode(firstValue) };
@@ -579,8 +482,24 @@ public static partial class ScribeResourceCodec
     };
 
     private static JsonObject RequireObject(JsonElement value) => value.ValueKind is JsonValueKind.Object
-        ? value.Deserialize<JsonObject>(JsonOptions) ?? throw Invalid("Object is null.")
+        ? UniqueObject(value).Deserialize<JsonObject>(JsonOptions) ?? throw Invalid("Object is null.")
         : throw InvalidType("Expected an object.");
+
+    private static JsonElement UniqueObject(JsonElement value)
+    {
+        var names = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var property in value.EnumerateObject())
+        {
+            if (!names.Add(property.Name))
+            {
+                throw new ScribeResourceException(
+                    ScribeResourceErrorCode.DuplicateField,
+                    $"Duplicate field '{property.Name}'.");
+            }
+        }
+
+        return value;
+    }
 
     private static JsonElement Element(JsonObject value)
     {
@@ -639,8 +558,16 @@ public static partial class ScribeResourceCodec
         }
 
         var expected = fields.ToHashSet(StringComparer.Ordinal);
+        var seen = new HashSet<string>(StringComparer.Ordinal);
         foreach (var property in value.EnumerateObject())
         {
+            if (!seen.Add(property.Name))
+            {
+                throw new ScribeResourceException(
+                    ScribeResourceErrorCode.DuplicateField,
+                    $"Duplicate field '{property.Name}'.");
+            }
+
             if (!expected.Contains(property.Name))
             {
                 throw new ScribeResourceException(ScribeResourceErrorCode.ExtraField, $"Unexpected field '{property.Name}'.");

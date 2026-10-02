@@ -62,6 +62,7 @@ public sealed class ScribeResourceAstCoverageTests
             var encoded = ScribeResourceCodec.Encode(definition);
             var decoded = ScribeResourceCodec.Decode(encoded);
             Assert.Equal(encoded, ScribeResourceCodec.Encode(decoded));
+            Assert.True(ScribeResourceStructuralComparer.Equal(definition, decoded, out var difference), difference);
         }
     }
 
@@ -69,15 +70,11 @@ public sealed class ScribeResourceAstCoverageTests
     public void AllDocumentNodeFamiliesAndEdgesRoundTrip()
     {
         var declaration = DeclarationHandle.Create("D5/S1/Scale/Embedding.embedding_injective");
-        var authored = DocumentBlock.Describe.Restore(
-            DescribeId.Create("authored"),
-            DefinitionDsl.H("Authored"),
-            DescribeStatement.FromFormula(DefinitionDsl.Equal(DefinitionDsl.Id("x"), DefinitionDsl.Num(1))),
+        var authored = Describe.Remark(
+            DescribeId.Create("authored"), DefinitionDsl.H("Authored"),
+            DefinitionDsl.Equal(DefinitionDsl.Id("x"), DefinitionDsl.Num(1)),
             AssessedProvenance.FromRepo(),
-            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative"))),
-            null,
-            null,
-            new DescribeKindSource.Authored(DescribeKind.Remark));
+            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative"))));
         var declarationRemark = Describe.Remark(
             DescribeId.Create("remark"),
             declaration,
@@ -110,7 +107,9 @@ public sealed class ScribeResourceAstCoverageTests
         var definition = DocumentDefinition.Create(document, "Blueprint/D5/S1/Scale/Resource.scribe.cs");
 
         var encoded = ScribeResourceCodec.Encode(definition);
-        Assert.Equal(encoded, ScribeResourceCodec.Encode(ScribeResourceCodec.Decode(encoded)));
+        var decoded = ScribeResourceCodec.Decode(encoded);
+        Assert.Equal(encoded, ScribeResourceCodec.Encode(decoded));
+        Assert.True(ScribeResourceStructuralComparer.Equal(definition, decoded, out var difference), difference);
     }
 
     [Fact]
@@ -134,10 +133,15 @@ public sealed class ScribeResourceAstCoverageTests
     [Fact]
     public void EveryAstAbstractFamilyHasAnEncodedConcreteBranch()
     {
-        var encoded = string.Join(
-            "\n",
-            CoverageDefinitions().Select(static definition =>
-                Encoding.UTF8.GetString(ScribeResourceCodec.Encode(definition))));
+        var roundTripped = CoverageDefinitions()
+            .Select(static definition => ScribeResourceCodec.Decode(ScribeResourceCodec.Encode(definition)))
+            .ToArray();
+        var roundTrippedTypes = new HashSet<Type>();
+        foreach (var definition in roundTripped)
+        {
+            CollectAstTypes(definition, roundTrippedTypes, new HashSet<object>(ReferenceEqualityComparer.Instance));
+        }
+
         var abstractFamilies = new[]
         {
             typeof(Inline),
@@ -148,20 +152,132 @@ public sealed class ScribeResourceAstCoverageTests
             typeof(DescribeStatement),
             typeof(AssessedProvenance),
             typeof(StatementSource),
+            typeof(StatementAssessment),
             typeof(NarrativeTarget),
             typeof(DocumentEdge),
         };
 
         foreach (var family in abstractFamilies)
         {
-            var concreteTypes = family
-                .GetNestedTypes(BindingFlags.Public | BindingFlags.NonPublic)
-                .Where(type => !type.IsAbstract && family.IsAssignableFrom(type));
+            var concreteTypes = ConcreteBranches(family);
             foreach (var concreteType in concreteTypes)
             {
-                Assert.Contains($"\"type\":\"{concreteType.Name}\"", encoded);
+                Assert.Contains(concreteType, roundTrippedTypes);
             }
         }
+    }
+
+    [Fact]
+    public void CoverageIncludesNonNestedConcreteBranches()
+    {
+        Assert.Null(typeof(ResourceCoverageBranch).DeclaringType);
+        Assert.Contains(typeof(ResourceCoverageBranch), ConcreteBranches(typeof(ResourceCoverageFamily)));
+    }
+
+    private static IEnumerable<Type> ConcreteBranches(Type family) => family.Assembly
+        .GetTypes()
+        .Where(type => !type.IsAbstract && family.IsAssignableFrom(type));
+
+    [Fact]
+    public void CoverageDoesNotCrossSatisfySameNamedConcreteTypes()
+    {
+        var familyA = typeof(SyntheticFamilyA);
+        var familyB = typeof(SyntheticFamilyB);
+        var sharedA = familyA.GetNestedType(nameof(SyntheticFamilyA.Shared), BindingFlags.Public | BindingFlags.NonPublic)!;
+        var sharedB = familyB.GetNestedType(nameof(SyntheticFamilyB.Shared), BindingFlags.Public | BindingFlags.NonPublic)!;
+        Assert.Equal(sharedA.Name, sharedB.Name);
+
+        var actual = new HashSet<Type> { sharedA };
+        Assert.Contains(sharedA, actual);
+        Assert.DoesNotContain(sharedB, actual);
+    }
+
+    [Fact]
+    public void CoverageDefinitionsPreserveAllInstanceProperties()
+    {
+        foreach (var definition in CoverageDefinitions())
+        {
+            var decoded = ScribeResourceCodec.Decode(ScribeResourceCodec.Encode(definition));
+            Assert.True(ScribeResourceStructuralComparer.Equal(definition, decoded, out var difference), difference);
+        }
+    }
+
+    [Fact]
+    public void AuthoredAndNoFormulaProjectionGapFieldsSurviveRoundTrip()
+    {
+        var definition = CoverageDefinitions().First();
+        var decoded = ScribeResourceCodec.Decode(ScribeResourceCodec.Encode(definition));
+        var expected = definition.Document.Content.Items.OfType<DocumentBlock.Describe>()
+            .Where(static item => item.StatementSource is StatementSource.Authored or StatementSource.NoFormula)
+            .Where(static item => item.Id.Value != "claim").ToArray();
+        var actual = decoded.Document.Content.Items.OfType<DocumentBlock.Describe>()
+            .Where(static item => item.StatementSource is StatementSource.Authored or StatementSource.NoFormula)
+            .Where(static item => item.Id.Value != "claim").ToArray();
+        Assert.Equal(2, expected.Length);
+        Assert.Equal(expected.Length, actual.Length);
+        for (var index = 0; index < expected.Length; index++)
+        {
+            var expectedGap = Gap(expected[index].StatementSource!);
+            var actualGap = Gap(actual[index].StatementSource!);
+            Assert.NotNull(expectedGap);
+            Assert.NotNull(actualGap);
+            Assert.Equal(expectedGap.ReasonCode, actualGap.ReasonCode);
+            Assert.Equal(expectedGap.OffendingSubject, actualGap.OffendingSubject);
+            Assert.Equal(expectedGap.ProjectorEpoch, actualGap.ProjectorEpoch);
+            Assert.Equal(expectedGap.DeclarationContentDigest, actualGap.DeclarationContentDigest);
+        }
+
+        static ProjectionGap? Gap(StatementSource source) => source switch
+        {
+            StatementSource.Authored authored => authored.ProjectionGap,
+            StatementSource.NoFormula noFormula => noFormula.ProjectionGap,
+            _ => null,
+        };
+    }
+
+    private static void CollectAstTypes(object? value, ISet<Type> types, ISet<object> visited)
+    {
+        if (value is null || value is string || value.GetType().IsPrimitive || value.GetType().IsEnum)
+        {
+            return;
+        }
+
+        if (value is System.Collections.IEnumerable sequence)
+        {
+            foreach (var item in sequence)
+            {
+                CollectAstTypes(item, types, visited);
+            }
+
+            return;
+        }
+
+        var type = value.GetType();
+        if (type.Namespace != typeof(Formula).Namespace || !visited.Add(value))
+        {
+            return;
+        }
+
+        types.Add(type);
+        foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+        {
+            if (property.GetIndexParameters().Length != 0 || property.GetMethod is null)
+            {
+                continue;
+            }
+
+            CollectAstTypes(property.GetValue(value), types, visited);
+        }
+    }
+
+    private abstract class SyntheticFamilyA
+    {
+        public sealed class Shared : SyntheticFamilyA;
+    }
+
+    private abstract class SyntheticFamilyB
+    {
+        public sealed class Shared : SyntheticFamilyB;
     }
 
     private static DocumentDefinition Definition(Formula formula) => DocumentDefinition.Create(
@@ -171,6 +287,13 @@ public sealed class ScribeResourceAstCoverageTests
             DefinitionDsl.Blocks(new DocumentBlock.DisplayFormula(formula)),
             sourcePath: "Blueprint/D5/S1/Scale/Resource.scribe.cs"),
         "Blueprint/D5/S1/Scale/Resource.scribe.cs");
+
+    private static DocumentBlock.Describe Declaration(string id, StatementSource source, StatementAssessment assessment,
+        AssessedProvenance provenance, DescribeRole role, OpenProblemResolutionClaim? claim = null) =>
+        DocumentBlock.Describe.ReportDerived(DescribeId.Create(id), DefinitionDsl.H(id),
+            DeclarationHandle.Create("D5/S1/Scale/Other.member"), source, provenance,
+            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative"))), role, claim,
+            recordedAssessment: assessment);
 
     private static IEnumerable<DocumentDefinition> CoverageDefinitions()
     {
@@ -187,59 +310,22 @@ public sealed class ScribeResourceAstCoverageTests
         blocks.Add(new DocumentBlock.Section(
             DefinitionDsl.H("section"),
             DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("section content")))));
-        blocks.Add(DocumentBlock.Describe.Restore(
-            DescribeId.Create("authored"),
-            DefinitionDsl.H("Authored"),
-            DescribeStatement.FromFormula(atom),
-            AssessedProvenance.FromRepo(),
-            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative"))),
-            null,
-            null,
-            new DescribeKindSource.Authored(DescribeKind.Remark)));
-        blocks.Add(DocumentBlock.Describe.Restore(
-            DescribeId.Create("lean"),
-            DefinitionDsl.H("Lean"),
-            DescribeStatement.FromLean(LeanDeclarationRef.Create("D5/S1/Scale/Other.member")),
-            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/sos1957threegap")),
-            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative"))),
-            atom,
-            StatementSource.FromLean(),
-            new DescribeKindSource.ReportDerived(
-                DeclarationHandle.Create("D5/S1/Scale/Other.member"),
-                DescribeRole.Theorem)));
-        blocks.Add(DocumentBlock.Describe.Restore(
-            DescribeId.Create("authored-source"),
-            DefinitionDsl.H("Authored source"),
-            DescribeStatement.FromLean(LeanDeclarationRef.Create("D5/S1/Scale/Other.member")),
-            AssessedProvenance.NovelAfterSearch(GidRef.Create("D5/S1/Scale/Search")),
-            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative"))),
-            atom,
-            new StatementSource.Authored(atom, null),
-            new DescribeKindSource.ReportDerived(
-                DeclarationHandle.Create("D5/S1/Scale/Other.member"),
-                DescribeRole.Lemma)));
-        blocks.Add(DocumentBlock.Describe.Restore(
-            DescribeId.Create("no-formula"),
-            DefinitionDsl.H("No formula"),
-            DescribeStatement.FromLean(LeanDeclarationRef.Create("D5/S1/Scale/Other.member")),
-            AssessedProvenance.FromRepo(),
-            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative"))),
-            null,
-            new StatementSource.NoFormula(null),
-            new DescribeKindSource.ReportDerived(
-                DeclarationHandle.Create("D5/S1/Scale/Other.member"),
-                DescribeRole.Proposition)));
-
-        var claimSource = new StatementSource.Authored(atom, null);
-        blocks.Add(DocumentBlock.Describe.ReportDerived(
-            DescribeId.Create("claim"), DefinitionDsl.H("Claim"),
-            DeclarationHandle.Create("D5/S1/Scale/Other.member"), claimSource,
-            AssessedProvenance.FromRepo(),
-            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("claim"))),
-            DescribeRole.Theorem,
+        blocks.Add(Describe.Remark(
+            DescribeId.Create("authored"), DefinitionDsl.H("Authored"), atom, AssessedProvenance.FromRepo(),
+            DefinitionDsl.Blocks(DefinitionDsl.Paragraph(DefinitionDsl.Text("narrative")))));
+        blocks.Add(Declaration("lean", StatementSource.FromLean(), new StatementAssessment.Projected(atom),
+            AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/sos1957threegap")), DescribeRole.Theorem));
+        blocks.Add(Declaration("authored-source", StatementSource.FromAuthor(atom),
+            new StatementAssessment.Unprojectable("missing", "D5/S1/Scale/Other.member", "statement-projector-v1", new string('a', 64)),
+            AssessedProvenance.NovelAfterSearch(GidRef.Create("D5/S1/Scale/Search")), DescribeRole.Lemma));
+        blocks.Add(Declaration("no-formula", StatementSource.WithoutFormula(),
+            new StatementAssessment.Unprojectable("constant", "Fixture.subject", "statement-projector-v1", new string('b', 64)),
+            AssessedProvenance.FromRepo(), DescribeRole.Proposition));
+        blocks.Add(Declaration("claim", StatementSource.FromAuthor(atom),
+            new StatementAssessment.Unprojectable("missing", "D5/S1/Scale/Other.member", "statement-projector-v1", new string('c', 64)),
+            AssessedProvenance.FromRepo(), DescribeRole.Theorem,
             new OpenProblemResolutionClaim(ProblemSlugRef.Create("batch-problem"), ResolutionKind.Proved,
-                [DeclarationHandle.Create("D5/S1/Scale/Other.additional")]),
-            restoredStatement: (claimSource, atom)));
+                [DeclarationHandle.Create("D5/S1/Scale/Other.additional")])));
 
         DocumentEdge[] edges =
         [
@@ -277,3 +363,7 @@ public sealed class ScribeResourceAstCoverageTests
             "Blueprint/D5/S1/Scale/WaiverBranch.scribe.cs");
     }
 }
+
+internal abstract class ResourceCoverageFamily;
+
+internal sealed class ResourceCoverageBranch : ResourceCoverageFamily;
