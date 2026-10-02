@@ -525,3 +525,10 @@ T:System.ReadOnlySpan`1
 P:System.Collections.Immutable.ImmutableArray`1.Length
 M:System.Range.StartAt(System.Index)
 M:System.Range.EndAt(System.Index)
+
+# constant <member-ID> <parameter-name> <constant-field-ID>[,<constant-field-ID>...]
+# Arguments must directly name one of the registered constant fields.
+constant M:System.String.Contains(System.String,System.StringComparison) comparisonType F:System.StringComparison.Ordinal
+constant M:System.String.EndsWith(System.String,System.StringComparison) comparisonType F:System.StringComparison.Ordinal
+constant M:System.String.IndexOf(System.String,System.Int32,System.StringComparison) comparisonType F:System.StringComparison.Ordinal
+constant M:System.String.IndexOf(System.String,System.StringComparison) comparisonType F:System.StringComparison.Ordinal

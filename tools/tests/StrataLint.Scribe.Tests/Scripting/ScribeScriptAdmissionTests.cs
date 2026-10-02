@@ -201,6 +201,145 @@ public sealed class ScribeScriptAdmissionTests
         Assert.Equal("sum:4", result.Definition!.Document.Title.Value);
     }
 
+    [Theory]
+    [InlineData("$\"{new Value()}\"", "internal sealed class Value : ArgumentException { public Value() : base(\"detail\") { } }", "M:System.Exception.ToString")]
+    [InlineData("$\"{new Value(1)}\"", "internal sealed record Value(int Number);", "M:Value.ToString")]
+    [InlineData("\"prefix\" + new Value()", "internal sealed class Value : ArgumentException { public Value() : base(\"detail\") { } }", "M:System.Exception.ToString")]
+    [InlineData("\"prefix\" + new Value(1)", "internal sealed record Value(int Number);", "M:Value.ToString")]
+    [InlineData("$\"{new Value()}\".Contains(\'\\r\') ? \"CR\" : \"LF\"", "internal sealed class Value : InvalidOperationException { public override string StackTrace => \"frame\"; }", "M:System.Exception.ToString")]
+    public void ScriptImplicitFormattingChecksSelectedMember(string expression, string declaration, string id)
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Entry, Definition("", expression) + declaration);
+        Reject(ScribeScriptHost.Execute(root.Path, Entry), id);
+    }
+
+    [Theory]
+    [InlineData("$\"{new Value()}\"")]
+    [InlineData("\"\" + new Value()")]
+    public void ExplicitScriptToStringIsInspectable(string expression)
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Entry, Definition("", expression)
+            + "internal sealed class Value { public override string ToString() => \"value\"; }");
+        var result = ScribeScriptHost.Execute(root.Path, Entry);
+        Assert.True(result.IsSuccess, result.Failure?.ToString());
+        Assert.Equal("value", result.Definition!.Document.Title.Value);
+    }
+
+    [Theory]
+    [InlineData("(System.StringComparison)0", "")]
+    [InlineData("default(System.StringComparison)", "")]
+    [InlineData("comparison", "var comparison = System.StringComparison.Ordinal;")]
+    [InlineData("(System.StringComparison)4", "")]
+    [InlineData("System.StringComparison.Ordinal + 0", "")]
+    public void ComparisonParameterRequiresRegisteredConstant(string argument, string statements)
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Entry, Definition(statements,
+            $"\"Hel\\0lo\".IndexOf(\"\\0\", {argument}).ToString(System.Globalization.CultureInfo.InvariantCulture)"));
+        Reject(ScribeScriptHost.Execute(root.Path, Entry), "M:System.String.IndexOf(System.String,System.StringComparison)");
+    }
+
+    [Theory]
+    [InlineData("\"text\".Contains(\"t\", comparison)")]
+    [InlineData("\"text\".EndsWith(\"t\", comparison)")]
+    [InlineData("\"text\".IndexOf(\"t\", comparison)")]
+    [InlineData("\"text\".IndexOf(\"t\", 0, comparison)")]
+    public void EveryComparisonOverloadConstrainsItsParameter(string expression)
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Entry, Definition("var comparison = System.StringComparison.Ordinal; _ = " + expression + ";"));
+        Reject(ScribeScriptHost.Execute(root.Path, Entry), "System.StringComparison)");
+        Write(root, Entry, Definition("_ = " + expression.Replace("comparison", "System.StringComparison.Ordinal", StringComparison.Ordinal) + ";"));
+        var result = ScribeScriptHost.Execute(root.Path, Entry);
+        Assert.True(result.IsSuccess, result.Failure?.ToString());
+    }
+
+    [Fact]
+    public void OrdinalComparisonConstantIsAccepted()
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Entry, Definition("",
+            "\"Hel\\0lo\".IndexOf(\"\\0\", System.StringComparison.Ordinal).ToString(System.Globalization.CultureInfo.InvariantCulture)"));
+        var result = ScribeScriptHost.Execute(root.Path, Entry);
+        Assert.True(result.IsSuccess, result.Failure?.ToString());
+        Assert.Equal("3", result.Definition!.Document.Title.Value);
+    }
+
+    [Theory]
+    [InlineData("constant M:System.String.IndexOf(System.String,System.StringComparison) comparisonType")]
+    [InlineData("constant M:System.String.IndexOf(System.String,System.StringComparison) absent F:System.StringComparison.Ordinal")]
+    [InlineData("constant M:System.String.IndexOf(System.String,System.StringComparison) comparisonType F:System.StringComparison.Absent")]
+    public void InvalidParameterConstraintIsHostConfiguration(string constraint)
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Entry, Definition(""));
+        var original = Path.Combine(AppContext.BaseDirectory, "Scripting", "ScribeScriptAllowlist.txt");
+        var table = root.Resolve("Scripting/Allowlist.txt");
+        TemporaryFileSystem.File.WriteAllText(table, File.ReadAllText(original) + "\n" + constraint);
+        Assert.Equal(ScribeScriptFailureCode.HostConfiguration,
+            ScribeScriptHost.ExecuteWithAllowlistPath(root.Path, Entry, table).Failure?.Code);
+    }
+
+    [Fact]
+    public void ConstrainedMethodCannotEscapeThroughDelegate()
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Entry, Definition("""
+            Func<string, System.StringComparison, int> search = "Hel\\0lo".IndexOf;
+            _ = search("\\0", (System.StringComparison)0);
+            """));
+        Reject(ScribeScriptHost.Execute(root.Path, Entry), "M:System.String.IndexOf(System.String,System.StringComparison)");
+    }
+
+    [Theory]
+    [InlineData("var text = \"\"; text += new Value();", "internal sealed class Value : ArgumentException { public Value() : base(\"detail\") { } }", "M:System.Exception.ToString")]
+    [InlineData("var text = \"\"; text += new Value(1);", "internal sealed record Value(int Number);", "M:Value.ToString")]
+    [InlineData("_ = $\"{new Value()}\";", "internal sealed class Value { public new string ToString() => \"value\"; }", "M:System.Object.ToString")]
+    public void AdditionalFormattingShapesCheckSelectedMember(string statements, string declaration, string id)
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Entry, Definition(statements) + declaration);
+        Reject(ScribeScriptHost.Execute(root.Path, Entry), id);
+    }
+
+    [Fact]
+    public void HiddenVirtualToStringDoesNotReplaceObjectDispatch()
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Entry, Definition("", "$\"{new Value()}\"") + """
+            internal class Parent { public new virtual string ToString() => "parent"; }
+            internal sealed class Value : Parent { public override string ToString() => "value"; }
+            """);
+        Reject(ScribeScriptHost.Execute(root.Path, Entry), "M:System.Object.ToString");
+    }
+
+    [Fact]
+    public void ScriptFormattableImplementationIsInspected()
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Entry, Definition("", "$\"{new Value():format}\"") + """
+            internal sealed class Value : System.IFormattable
+            {
+                public string ToString(string? format, System.IFormatProvider? provider) => "formatted";
+            }
+            """);
+        var original = Path.Combine(AppContext.BaseDirectory, "Scripting", "ScribeScriptAllowlist.txt");
+        var table = root.Resolve("Scripting/Allowlist.txt");
+        TemporaryFileSystem.File.WriteAllText(table, File.ReadAllText(original) + "\nT:System.IFormattable");
+        var result = ScribeScriptHost.ExecuteWithAllowlistPath(root.Path, Entry, table);
+        Assert.True(result.IsSuccess, result.Failure?.ToString());
+        Assert.Equal("formatted", result.Definition!.Document.Title.Value);
+        Write(root, Entry, Definition("", "$\"{new Value()}\"") + """
+            internal sealed class Value : System.IFormattable
+            {
+                public string ToString(string? format, System.IFormatProvider? provider) => "I".ToLower();
+            }
+            """);
+        Reject(ScribeScriptHost.ExecuteWithAllowlistPath(root.Path, Entry, table), "M:System.String.ToLower");
+    }
+
     private static string TableWithout(TemporaryRoot root, string id)
     {
         var original = Path.Combine(AppContext.BaseDirectory, "Scripting", "ScribeScriptAllowlist.txt");

@@ -1,5 +1,6 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Operations;
 
 namespace StrataLint.Scribe;
 
@@ -10,6 +11,8 @@ internal sealed class ScribeScriptAllowlist
     private readonly HashSet<string> members = new(StringComparer.Ordinal);
     private readonly HashSet<string> wholeTypes = new(StringComparer.Ordinal);
     private readonly HashSet<string> formattedTypes = new(StringComparer.Ordinal);
+
+    private readonly Dictionary<(string Member, string Parameter), HashSet<string>> constants = new();
 
     internal static (ScribeScriptAllowlist? Table, ScribeScriptFailure? Failure) Read(
         CSharpCompilation compilation, string entry, string? overridePath)
@@ -27,6 +30,24 @@ internal sealed class ScribeScriptAllowlist
         {
             var line = lines[index].Trim();
             if (line.Length == 0 || line.StartsWith('#')) continue;
+            if (line.StartsWith("constant ", StringComparison.Ordinal))
+            {
+                var parts = line.Split(' ');
+                if (parts.Length != 4 || parts.Any(string.IsNullOrEmpty) || !seen.Add(line)) return Invalid();
+                var methods = DocumentationCommentId.GetSymbolsForDeclarationId(parts[1], compilation);
+                if (methods.Length != 1 || methods[0] is not IMethodSymbol method || Id(method) != parts[1]) return Invalid();
+                var parameter = method.Parameters.SingleOrDefault(item => item.Name == parts[2]);
+                var ids = parts[3].Split(',');
+                var allowed = new HashSet<string>(StringComparer.Ordinal);
+                if (parameter is null || !table.constants.TryAdd((parts[1], parts[2]), allowed)) return Invalid();
+                foreach (var constant in ids)
+                {
+                    var fields = DocumentationCommentId.GetSymbolsForDeclarationId(constant, compilation);
+                    if (!allowed.Add(constant) || fields.Length != 1 || fields[0] is not IFieldSymbol { HasConstantValue: true } field
+                        || Id(field) != constant || !SymbolEqualityComparer.Default.Equals(field.Type, parameter.Type)) return Invalid();
+                }
+                continue;
+            }
             var mode = line.StartsWith("all ", StringComparison.Ordinal) ? "all"
                 : line.StartsWith("format ", StringComparison.Ordinal) ? "format" : "symbol";
             var id = mode == "symbol" ? line : line[(mode.Length + 1)..];
@@ -59,6 +80,9 @@ internal sealed class ScribeScriptAllowlist
             return (null, Configuration(entry, "script allowlist is empty"));
         if (table.formattedTypes.Any(id => !table.types.Contains(id) && !table.wholeTypes.Contains(id)))
             return (null, Configuration(entry, "implicit formatting requires a type-use entry"));
+        if (table.constants.Any(item => !table.members.Contains(item.Key.Member)
+            || item.Value.Any(id => !table.members.Contains(id))))
+            return (null, Configuration(entry, "parameter constants require exact member and constant entries"));
         return (table, null);
     }
 
@@ -69,6 +93,17 @@ internal sealed class ScribeScriptAllowlist
         && (members.Contains(id) || symbol.ContainingType is { } type && wholeTypes.Contains(Id(type)!));
 
     internal bool AllowsFormatting(ITypeSymbol type) => Id(type) is { } id && formattedTypes.Contains(id);
+
+    internal bool HasParameterConstraints(ISymbol symbol) => Id(symbol) is { } id
+        && constants.Keys.Any(key => key.Member == id);
+
+    internal bool AllowsArgument(IParameterSymbol? parameter, IOperation value)
+    {
+        if (parameter is null || Id(parameter.ContainingSymbol) is not { } id
+            || !constants.TryGetValue((id, parameter.Name), out var allowed)) return true;
+        return value is IFieldReferenceOperation { Field.HasConstantValue: true } field
+            && value.ConstantValue.HasValue && Id(field.Field) is { } constant && allowed.Contains(constant);
+    }
 
     internal static string? Id(ISymbol symbol)
     {

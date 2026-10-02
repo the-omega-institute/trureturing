@@ -66,9 +66,9 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
         switch (operation.Kind)
         {
             case OperationKind.Invocation:
-                failure = Member(((IInvocationOperation)operation).TargetMethod, node); break;
+                failure = Member(((IInvocationOperation)operation).TargetMethod, node, argumentsChecked: true); break;
             case OperationKind.ObjectCreation:
-                failure = Member(((IObjectCreationOperation)operation).Constructor, node); break;
+                failure = Member(((IObjectCreationOperation)operation).Constructor, node, argumentsChecked: true); break;
             case OperationKind.MethodReference:
                 failure = Member(((IMethodReferenceOperation)operation).Method, node); break;
             case OperationKind.PropertyReference:
@@ -101,7 +101,10 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
             case OperationKind.Argument:
                 var argument = (IArgumentOperation)operation;
                 failure = Member(argument.InConversion.MethodSymbol, node)
-                    ?? Member(argument.OutConversion.MethodSymbol, node); break;
+                    ?? Member(argument.OutConversion.MethodSymbol, node);
+                if (failure is null && !allowlist.AllowsArgument(argument.Parameter, argument.Value))
+                    failure = Disallowed(node, $"parameter {argument.Parameter!.Name} of {ScribeScriptAllowlist.Id(argument.Parameter.ContainingSymbol)} requires a registered constant");
+                break;
             case OperationKind.ImplicitIndexerReference:
                 var indexer = (IImplicitIndexerReferenceOperation)operation;
                 failure = Member(indexer.LengthSymbol, node) ?? Member(indexer.IndexerSymbol, node); break;
@@ -110,7 +113,7 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
             case OperationKind.VariableDeclarator:
                 failure = Type(((IVariableDeclaratorOperation)operation).Symbol.Type, node); break;
             case OperationKind.Interpolation:
-                failure = Formatting(((IInterpolationOperation)operation).Expression); break;
+                failure = Formatting(((IInterpolationOperation)operation).Expression, interpolation: true); break;
             case OperationKind.Loop:
                 failure = operation is IForEachLoopOperation loop ? Foreach(loop, model) : null; break;
             case OperationKind.CollectionExpression:
@@ -234,17 +237,47 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
         return null;
     }
 
-    private ScribeScriptFailure? Formatting(IOperation value)
+    private ScribeScriptFailure? Formatting(IOperation value, bool interpolation = false)
     {
         while (value is IConversionOperation { IsImplicit: true } conversion) value = conversion.Operand;
         if (value.Type is null && value.ConstantValue is { HasValue: true, Value: null }) return null;
-        return value.Type is { } type && (IsScript(type) || allowlist.AllowsFormatting(type))
-            ? null : Disallowed(value.Syntax, $"implicit formatting {TypeId(value.Type)}");
+        if (value.Type is not INamedTypeSymbol type) return Disallowed(value.Syntax, $"implicit formatting {TypeId(value.Type)}");
+        if (!IsScript(type)) return allowlist.AllowsFormatting(type)
+            ? null : Disallowed(value.Syntax, $"implicit formatting {TypeId(type)}");
+        if (interpolation)
+        {
+            foreach (var metadataName in new[] { "System.ISpanFormattable", "System.IFormattable" })
+            {
+                var contract = compilation.GetTypeByMetadataName(metadataName);
+                if (contract is null || !type.AllInterfaces.Contains(contract, SymbolEqualityComparer.Default)) continue;
+                var method = contract.GetMembers().OfType<IMethodSymbol>().Single();
+                var implementation = type.FindImplementationForInterfaceMember(method);
+                if (implementation is null) return Disallowed(value.Syntax, $"unresolved formatting {ScribeScriptAllowlist.Id(method)}");
+                return Member(implementation, value.Syntax);
+            }
+        }
+        // String concatenation and the fallback interpolation path dispatch Object.ToString virtually.
+        for (INamedTypeSymbol? current = type; current is not null; current = current.BaseType)
+        {
+            var method = current.GetMembers("ToString").OfType<IMethodSymbol>().FirstOrDefault(candidate =>
+                IsObjectToString(candidate));
+            if (method is not null) return Member(method, value.Syntax);
+        }
+        return Disallowed(value.Syntax, $"unresolved implicit formatting {TypeId(type)}");
     }
 
-    private ScribeScriptFailure? Member(ISymbol? symbol, SyntaxNode node)
+    private static bool IsObjectToString(IMethodSymbol method)
+    {
+        if (method.IsStatic || !method.Parameters.IsEmpty) return false;
+        while (method.OverriddenMethod is { } overridden) method = overridden;
+        return method.ContainingType.SpecialType == SpecialType.System_Object;
+    }
+
+    private ScribeScriptFailure? Member(ISymbol? symbol, SyntaxNode node, bool argumentsChecked = false)
     {
         if (symbol is null) return null;
+        if (!argumentsChecked && allowlist.HasParameterConstraints(symbol))
+            return Disallowed(node, $"uncheckable parameter constraints {ScribeScriptAllowlist.Id(symbol)}");
         if (IsScript(symbol) && symbol is IMethodSymbol { IsImplicitlyDeclared: true } generated)
         {
             if (generated.MethodKind != MethodKind.Constructor || !generated.Parameters.IsEmpty)

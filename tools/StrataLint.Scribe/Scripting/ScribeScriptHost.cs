@@ -163,7 +163,7 @@ public static class ScribeScriptHost
                 }
                 catch (InvalidOperationException exception)
                 {
-                    return FailureResult(normalized, ScribeScriptFailureCode.GidPathMismatch, exception.Message);
+                    return FailureResult(normalized, ScribeScriptFailureCode.GidPathMismatch, exception.Message) with { ReadSet = ReadSet() };
                 }
                 return new(normalized, definition, null) { ReadSet = ReadSet() };
             }

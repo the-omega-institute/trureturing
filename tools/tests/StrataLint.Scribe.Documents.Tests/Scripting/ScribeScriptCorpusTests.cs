@@ -37,7 +37,7 @@ public sealed class ScribeScriptCorpusTests
             foreach (var definition in definitions)
                 Assert.Equal(ScribeResourceCodec.Encode(definition),
                     first.EncodedBytes(definition.Document.Header.Gid.Value).ToArray());
-            output.WriteLine($"script pack definitions={definitions.Length}; firstExecuted={firstResult.ExecutedPaths.Length}; secondExecuted={secondResult.ExecutedPaths.Length}; secondReused={secondResult.ReusedPaths.Length}; firstSha256={first.Manifest.TotalSha256}; secondSha256={second.Manifest.TotalSha256}; firstFileBytes={new FileInfo(firstPath).Length}; secondFileBytes={new FileInfo(secondPath).Length}");
+            output.WriteLine($"script pack definitions={definitions.Length}; firstExecuted={firstResult.ExecutedPaths.Length}; firstReused={firstResult.ReusedPaths.Length}; secondExecuted={secondResult.ExecutedPaths.Length}; secondReused={secondResult.ReusedPaths.Length}; firstSha256={first.Manifest.TotalSha256}; secondSha256={second.Manifest.TotalSha256}; readDefinitions={first.Manifest.Entries.Count(entry => !entry.ReadSet.IsEmpty)}; readItems={first.Manifest.Entries.Sum(entry => entry.ReadSet.Length)}; firstFileBytes={new FileInfo(firstPath).Length}; secondFileBytes={new FileInfo(secondPath).Length}");
         }
         finally { directory.Delete(recursive: true); }
     }
@@ -62,7 +62,7 @@ public sealed class ScribeScriptCorpusTests
                     .SequenceEqual(ScribeResourceCodec.Encode(definition)))
             .ToArray();
 
-        output.WriteLine($"corpus paths={paths.Length}; hostFailures={failures.Length}; mismatches={mismatches.Length}");
+        output.WriteLine($"corpus paths={paths.Length}; hostFailures={failures.Length}; mismatches={mismatches.Length}; readDefinitions={results.Count(result => !result.ReadSet.IsEmpty)}; readItems={results.Sum(result => result.ReadSet.Length)}");
         Assert.True(failures.Length == 0, string.Join(Environment.NewLine, failures.Take(8)));
         Assert.True(mismatches.Length == 0, string.Join(Environment.NewLine,
             mismatches.Take(8).Select(static result => $"{result.RelativePath}: CanonicalContentMismatch")));
