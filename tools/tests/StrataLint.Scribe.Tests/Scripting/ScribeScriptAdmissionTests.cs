@@ -7,6 +7,40 @@ public sealed class ScribeScriptAdmissionTests
     private const string Entry = "Blueprint/D5/S0/Test/Probe.scribe.cs";
     private const string Shared = "Blueprint/D5/S0/Test/Shared.scribe.cs";
 
+    [Fact]
+    public void EntryFinalizerDeclarationIsRejected()
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Entry, Definition("").Replace("public DocumentDefinition Create()",
+            "~Probe() { }\n    public DocumentDefinition Create()", StringComparison.Ordinal));
+        var result = ScribeScriptHost.Execute(root.Path, Entry);
+        Reject(result, "finalizer declaration in T:Probe");
+        Assert.Equal(Entry, result.Failure!.RelativePath);
+        Assert.Contains(Entry + ":3:", result.Failure.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SharedFinalizerDeclarationIsRejected()
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Shared, "internal sealed class Shared\n{\n    ~Shared() { }\n}");
+        Write(root, Entry, $"[ScribeSharedSource(\"{Shared}\")] " + Definition(""));
+        var result = ScribeScriptHost.Execute(root.Path, Entry);
+        Reject(result, "finalizer declaration in T:Shared");
+        Assert.Equal(Shared, result.Failure!.RelativePath);
+        Assert.Contains(Shared + ":3:", result.Failure.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void OrdinaryConstructorDeclarationIsAccepted()
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Entry, Definition("").Replace("public DocumentDefinition Create()",
+            "public Probe() { }\n    public DocumentDefinition Create()", StringComparison.Ordinal));
+        var result = ScribeScriptHost.Execute(root.Path, Entry);
+        Assert.True(result.IsSuccess, result.Failure?.ToString());
+    }
+
     [Theory]
     [InlineData("\"scribe\".GetHashCode()", "M:System.String.GetHashCode")]
     [InlineData("new object().GetHashCode()", "M:System.Object.GetHashCode")]

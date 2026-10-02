@@ -35,6 +35,8 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
             // Executable roots include methods, accessors, operators, initializers and nested functions.
             foreach (var node in nodes)
             {
+                if (node is DestructorDeclarationSyntax destructor)
+                    return Disallowed(destructor, $"finalizer declaration in {TypeId(model.GetDeclaredSymbol(destructor)?.ContainingType)}");
                 if (node is TypeDeclarationSyntax declaration
                     && model.GetDeclaredSymbol(declaration) is { } declared)
                 {
