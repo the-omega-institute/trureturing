@@ -18,4 +18,16 @@ public sealed class LeanCachePublishTests
             result.Text);
     }
 
+    [Fact]
+    public void ActionsInputPartitionUsesPinnedGenerationAndElanKey()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = EngineeringProcess.Process(root, "python3", ["-B",
+            Path.Combine(root, "tools/tests/StrataLint.ScriptTests/Fixtures/lean_input_contract.py"), "PartitionTests"],
+            hangGuard: TestBudgets.LongWorkflowProcessHangGuard, maximumOutputBytes: 1024 * 1024);
+        Assert.True(result.Exit == 0,
+            result.Text);
+    }
+
 }

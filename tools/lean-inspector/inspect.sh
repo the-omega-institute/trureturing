@@ -6,6 +6,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 REPOSITORY="" OUTPUT="" LOG_DIR=""
 BUILD_TARGETS=()
 PROGRAM_BUILD_PENDING=0
+BUILD_PHASES=()
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --repository|--output|--log-dir)
@@ -31,6 +32,9 @@ if [[ "${STRATALINT_INSPECTOR_SUPERVISED:-0}" != 1 ]]; then
     env STRATALINT_INSPECTOR_SUPERVISED=1 \
     "$SCRIPT_DIR/inspect.sh" --repository "$REPOSITORY" --output "$OUTPUT" --log-dir "$LOG_DIR"
 fi
+BUILD_WORK_FILE="${STRATALINT_LEAN_BUILD_WORK_FILE:-$REPOSITORY/build/lean-cache/build-work.json}"
+# Work facts live outside the restored project tree and start empty every call.
+rm -f -- "$BUILD_WORK_FILE"
 source "$SCRIPT_DIR/../scripts/lib/resource-observation-lib.sh"
 resource_observe lean-inspector-start "$REPOSITORY" || true
 # Default output/log paths are inside .lake. Creating them before ensure would
@@ -42,6 +46,9 @@ finish() {
   local rc=$?
   trap - EXIT
   if [[ "$rc" != 0 || "$PROGRAM_BUILD_PENDING" == 1 ]]; then rm -f -- "${OUTPUT}.reuse.json"; fi
+  if [[ "$rc" == 0 && "$PROGRAM_BUILD_PENDING" == 0 ]]; then
+    python3 -B "$SCRIPT_DIR/build_work.py" "$REPOSITORY" "$LOG_DIR" "$BUILD_WORK_FILE" ${BUILD_PHASES[@]+"${BUILD_PHASES[@]}"} || true
+  fi
   rm -rf -- "$STARTUP_LOG_DIR" || true
   resource_observe lean-inspector-finish "$REPOSITORY" || true
   exit "$rc"
@@ -54,6 +61,7 @@ run_phase() {
   local phase="$1" status=0
   local phase_started="${SECONDS:-unavailable}" phase_finished phase_elapsed=unavailable
   shift
+  case "$phase" in report|programs) BUILD_PHASES+=("$phase") ;; esac
   # Observations never participate in report reuse or change a phase's verdict.
   [[ "$phase_started" =~ ^[0-9]+$ ]] || phase_started=unavailable
   printf 'LEAN_INSPECTOR_PHASE phase=%s status=started clock=shell-seconds start_seconds=%s\n' \

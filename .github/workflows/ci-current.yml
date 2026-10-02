@@ -348,6 +348,8 @@ jobs:
             tools/tests/Trureturing.Truth.Tests/*
             [tests-cache]
             Meta/ci-cache-paths.json
+            tools/tests/StrataLint.ScriptTests/Fixtures/lean_input_contract.py
+            tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_support.py
             tools/TestSupport/StrataLint.ScriptProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
             tools/lean-inspector/LeanInformationAuditRegAnalysis/*
@@ -538,6 +540,7 @@ jobs:
             tools/scripts/agent/integration-mirror-test.sh
             tools/scripts/agent/integration-mirror.sh
             [tests-lean]
+            tools/lean-inspector/build_work.py
             Meta/ci-cache-paths.json
             tools/StrataLint.Lean/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
@@ -562,6 +565,7 @@ jobs:
             tools/scripts/worktree/lean-cache-run.sh
             tools/tests/StrataLint.LeanCacheScript.Tests/*
             [tests-lean-report-script]
+            tools/lean-inspector/build_work.py
             tools/TestSupport/StrataLint.LeanTestSupport/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
             tools/TestSupport/StrataLint.TestSupport/*
@@ -823,8 +827,8 @@ jobs:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 120
     env:
-      # This job is the only writer of the Lean dependency, project and elan
-      # caches: dev/integration pushes and the PR's own merge-ref scope.
+      # This job writes project seeds only on dev/integration pushes.
+      # Dependency and elan writes also use the PR's own merge-ref scope.
       CACHE_WRITES: ${{ (github.event_name == 'push' && (github.ref == 'refs/heads/dev' || startsWith(github.ref, 'refs/heads/integration-'))) || github.event_name == 'pull_request' }}
       REPORT: .lake/build/stratalint/raw-lean-report.json
       CLI: tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll
@@ -960,11 +964,27 @@ jobs:
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
-      - name: Build the Lean report
+      - id: lean_report
+        name: Build the Lean report
         env:
           GH_TOKEN: ${{ github.token }}
           STRATALINT_ACCEPT_COLD_BUILD: '1'
         run: make lean-report
+      - id: project_snapshot_push
+        name: Prepare the project seed
+        if: ${{ !cancelled() && env.CACHE_WRITES == 'true' && steps.lean_report.outcome == 'success' }}
+        continue-on-error: true
+        env:
+          STRATALINT_CACHE_WRITES: ${{ env.CACHE_WRITES }}
+          STRATALINT_REPORT_SUCCEEDED: 'true'
+        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers project
+      - name: Publish the push project seed
+        if: ${{ !cancelled() && steps.project_snapshot_push.outcome == 'success' && steps.project_snapshot_push.outputs.project_ready == 'true' }}
+        continue-on-error: true
+        uses: actions/cache/save@v5
+        with:
+          path: ${{ steps.keys.outputs.project_archive_path }}
+          key: ${{ steps.keys.outputs.project_key }}
       - name: Build the judge
         if: steps.judge.outputs.cache-hit != 'true'
         run: dotnet build $JUDGE_BUILD_ARGS
@@ -1001,21 +1021,14 @@ jobs:
           # Exit 3: protected-surface change (SL-022) with every content check passed.
           if [ "$rc" -eq 3 ]; then echo "::notice title=SL-022::protected surface change; content checks passed"; exit 0; fi
           exit "$rc"
-      # Caches are written only after every check above succeeded; the snapshot
-      # program decides per layer whether the archive is ready to publish.
+      # Dependency and elan caches follow successful checks.
       - id: snapshot
         if: ${{ success() && env.CACHE_WRITES == 'true' }}
         continue-on-error: true
         env:
           STRATALINT_CACHE_WRITES: ${{ env.CACHE_WRITES }}
           STRATALINT_CHECK_SUCCEEDED: 'true'
-        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE"
-      - if: ${{ success() && steps.snapshot.outcome == 'success' && steps.snapshot.outputs.project_ready == 'true' }}
-        continue-on-error: true
-        uses: actions/cache/save@v5
-        with:
-          path: ${{ steps.keys.outputs.project_archive_path }}
-          key: ${{ steps.keys.outputs.project_key }}
+        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers dependency
       - if: ${{ success() && steps.snapshot.outcome == 'success' && steps.snapshot.outputs.dependency_ready == 'true' }}
         continue-on-error: true
         uses: actions/cache/save@v5

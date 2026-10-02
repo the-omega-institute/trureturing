@@ -33,6 +33,7 @@
         {"pattern": "tools/Architecture/BannedSymbols.Determinism.txt", "optional": false},
         {"pattern": "tools/Architecture/BannedSymbols.Guid.txt", "optional": false},
         {"pattern": "tools/lean-inspector/Inspector.lean", "optional": false},
+        {"pattern": "tools/lean-inspector/build_work.py", "optional": false},
         {"pattern": "tools/lean-inspector/inspect.sh", "optional": false},
         {"pattern": "tools/lean-inspector/materials.py", "optional": false},
         {"pattern": "tools/scripts/report/lean-report.sh", "optional": false},
