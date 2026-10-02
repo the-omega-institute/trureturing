@@ -417,12 +417,16 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
       change List.take 2 (flatten w ++ _) = [false, false] at htake
       rw [List.take_append_of_le_length hwlen] at htake
       exact htake
-    have hwlegal : legal true (flatten w) := by
-      by_contra h
-      have hnone := (execution true true w).2.2 h
-      have hs := hsuccess
-      rw [Success, hnone] at hs
-      simp [endable] at hs
+    have hparts : legal true (flatten w) ∧
+        w.foldl (fun _ b => nonzero b) true = true := by
+      have hlegal : legal true (flatten w) := by
+        have hh : (run (some (true, true)) w).isSome := Option.isSome_of_any hsuccess
+        exact not_not.mp (((execution true true w).2.not).mp
+          (Option.isSome_iff_ne_none.mp hh))
+      refine ⟨hlegal, ?_⟩
+      simpa only [Success, (execution true true w).1.2 hlegal, endable, Option.any_some]
+        using hsuccess
+    have hwlegal : legal true (flatten w) := hparts.1
     have hcoeff : windowCoefficients H w = (A, B) := by
       apply Prod.ext
       · have h := hreadout H 1 0 sw
@@ -445,12 +449,9 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
           exact ⟨by simp, hwlegal.2⟩
       · exact hwlegal
     have hterminal (E : Bool) : w.foldl (fun _ b => nonzero b) E = true := by
-      have hh := hsuccess
-      rw [Success, (execution true true w).1.2 hwlegal] at hh
-      simp only [endable, Option.any_some] at hh
       cases he : w with
       | nil => exact False.elim (hnonempty he)
-      | cons b bs => simpa only [he, List.foldl_cons] using hh
+      | cons b bs => simpa only [he, List.foldl_cons] using hparts.2
     refine ⟨w, by simpa only [← hr] using sw.property.1, hnonempty, hfirsttrim, hsuccess, hcoeff, hval, ?_⟩
     intro epsilon p hp
     have hout : initialized epsilon (p ++ w) =
