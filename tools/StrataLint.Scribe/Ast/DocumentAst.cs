@@ -176,10 +176,7 @@ public abstract record DocumentBlock
                 StatementFormula,
                 kindSource: KindSource,
                 statementSource: StatementSource,
-                openProblemResolutionClaim: OpenProblemResolutionClaim)
-            {
-                StatementAssessment = StatementAssessment,
-            };
+                openProblemResolutionClaim: OpenProblemResolutionClaim);
         }
 
         public Heading Title { get; }
@@ -207,7 +204,18 @@ public abstract record DocumentBlock
 
         public StatementSource? StatementSource { get; }
 
-        internal StatementAssessment? StatementAssessment { get; private init; }
+        internal StatementAssessment? StatementAssessment => StatementSource switch
+        {
+            StatementSource.LeanDerived when StatementFormula is { } formula =>
+                new StatementAssessment.Projected(formula),
+            StatementSource.Authored { ProjectionGap: { } gap } => AssessmentFromGap(gap),
+            StatementSource.NoFormula { ProjectionGap: { } gap } => AssessmentFromGap(gap),
+            _ => null,
+        };
+
+        private static StatementAssessment AssessmentFromGap(ProjectionGap gap) =>
+            new StatementAssessment.Unprojectable(
+                gap.ReasonCode, gap.OffendingSubject, gap.ProjectorEpoch, gap.DeclarationContentDigest);
 
         public OpenProblemResolutionClaim? OpenProblemResolutionClaim { get; }
 
@@ -300,13 +308,8 @@ public abstract record DocumentBlock
                 materialized.Formula,
                 new DescribeKindSource.ReportDerived(handle, role),
                 materialized.Source,
-                openProblemResolutionClaim)
-            {
-                StatementAssessment = assessment,
-            };
+                openProblemResolutionClaim);
         }
-
-
     }
 
     internal static BlockSequence ResolveBlocks(BlockSequence content, DeclarationCatalog catalog) =>
