@@ -42,7 +42,8 @@ internal sealed class GraftLocalBehaviorLabelsDocument : IScribeDocumentDefiniti
 
     private static DocumentBlock Node(string name, string title, string statement,
         DescribeRole role, params string[] proof) => Describe.Lean(
-            DescribeId.Create("graft-local-" + name.Replace('_', '-').ToLowerInvariant()),
+            DescribeId.Create("graft-local-" + (name == "LocalLabel" ? "label-type"
+                : name.Replace('_', '-').ToLowerInvariant())),
             DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/GraftLocalBehaviorLabels." + name),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks([Paragraph(Text(statement)), .. proof.Select(text => Paragraph(Text(text)))]), role);
