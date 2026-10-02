@@ -5,7 +5,7 @@ open Lean Meta LeanInformationAudit LeanInformationAudit.TemplateAudit
 
 -- The constructor occurs only in the Interface-owned default's data body.
 def interfaceDefaultClaim : Prop :=
-  ∃ value : EscapeRecordInput, value = TemplateBindingClaim.escapeInput._default
+  ∃ value : EscapeRecordInput, value = TemplateBinding.ResolvedDeclaration.escapeInput._default
 
 def foreignBodyClaim : Prop := ImportedAllowlistSources.proofRead () true = true
 
@@ -29,7 +29,7 @@ private def dependencies (statement : Name) : MetaM (Array Name) := do
 run_meta do
   let env ← getEnv
   unless (RegistrationReifier.declaringModuleOf env
-      ``TemplateBindingClaim.escapeInput._default) == some `LeanInformationAuditInterface.Records do
+      ``TemplateBinding.ResolvedDeclaration.escapeInput._default) == some `LeanInformationAuditInterface.Store do
     throwError "[FAIL] interface_default_compiler_owner"
   let names ← dependencies ``interfaceDefaultClaim
   unless names.contains ``EscapeRecordInput.mk do

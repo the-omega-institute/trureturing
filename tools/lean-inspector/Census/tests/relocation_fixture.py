@@ -17,7 +17,9 @@ class NativeRelocationTests(NativeTestSupport, unittest.TestCase):
                         ignore=shutil.ignore_patterns(".lake", "__pycache__"))
         shutil.copytree(INSPECTOR / "Census", self.root / "tools/lean-inspector/Census",
                         ignore=shutil.ignore_patterns("__pycache__"))
-        for name in ("NameWire", "RegistryTypes", "Census/Ownership", "Census/Stream", "Census/Membership"):
+        for name in ("NameWire", "RegistryTypes", "BindingRecords", "CatalogRecords",
+                     "EscapeEvidence", "StructuralProvenance", "Census/Ownership",
+                     "Census/Stream", "Census/Membership"):
             self.copy("tools/lean-inspector/LeanInformationAudit/" + name + ".lean")
         # Keep the support fixture's synthetic driver in this library's source root.
         (self.root / "LeanInformationAudit/SealCommand.lean").rename(
