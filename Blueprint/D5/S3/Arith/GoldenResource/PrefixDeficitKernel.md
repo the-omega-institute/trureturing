@@ -6,7 +6,31 @@ A finite geometric-prefix deficit has an exact positive-kernel integral and unif
 
 For a natural exponent a, write S_a(t) = sum from k = 0 to a of t^k, Q_a(t) = sum from k = 1 to a of t^k/k, and P_a(t) = sum from k = 0 to a of (a-k)t^k. Let D_a(t) = Q_a(t) - log S_a(t), and K_a(t) = t^a P_a(t)/S_a(t). Interval integrability below is with respect to real Lebesgue measure.
 
-**Theorem 1.1 (Exact integral and uniform reserve).**
+**Theorem 1.1 (Finite geometric identity).**
+
+$$\forall b \in \mathbb{N}, t \in \mathbb{R}, (1-t)S_{b}\left(t\right) = 1-t^{b+1}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/PrefixDeficitKernel.geometric_prefix_mul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Multiplying the finite prefix by one minus the ratio cancels its adjacent terms and leaves one minus the first omitted power. This identity holds for every real ratio.
+
+**Theorem 1.2 (Initial unit term).**
+
+$$\forall b \in \mathbb{N}, t \in \mathbb{R}, 0 \le t \Rightarrow 1 \le S_{b}\left(t\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/PrefixDeficitKernel.geometric_prefix_one_le` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a nonnegative ratio every power is nonnegative, and the exponent-zero term equals one.
+
+**Theorem 1.3 (Exact integral and uniform reserve).**
 
 $$\begin{aligned}\forall a \in \mathbb{N}, z \in \mathbb{R},\\1 \le a \land 0 < z \land z < 1 \Rightarrow\\IntervalIntegrable\left(K_a, 0, z\right) \land\\D_a\left(z\right) = \int_{0}^{z} \frac{t^{a} P_a\left(t\right)}{S_a\left(t\right)} dt \land\\\frac{a z^{a+1}}{(a+1)(1+z)} \le D_a\left(z\right) \le \frac{a z^{a+1}}{a+1}\end{aligned}$$
 
@@ -24,4 +48,6 @@ For 0 <= t <= 1, the factor P_a(t)/S_a(t) is the mean remaining exponent in the 
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/GoldenResource/PrefixDeficitKernel.geometric_prefix_mul`
+- Truth anchor: `D5/S3/Arith/GoldenResource/PrefixDeficitKernel.geometric_prefix_one_le`
 - Truth anchor: `D5/S3/Arith/GoldenResource/PrefixDeficitKernel.result`
