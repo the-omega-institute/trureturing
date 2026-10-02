@@ -1,0 +1,18 @@
+**约定 47.2（两种完整 proper excess）。** 以下总体期望都使用式（47.3）的同一联合律，对数为自然对数，Brier 不按类平均：
+
+$$
+\begin{aligned}
+R_{\log,\varepsilon}(p)&=\mathbb E[-\log p_Y(X)],&
+R_{2,\varepsilon}(p)&=\mathbb E\sum_{y=0}^2(p_y(X)-\mathbf1_{\{Y=y\}})^2,\\
+h_\varepsilon&=-(1-2\varepsilon)\log(1-2\varepsilon)-2\varepsilon\log\varepsilon,&
+b_\varepsilon&=4\varepsilon-6\varepsilon^2,\\
+\Delta_{\log}(p)&=R_{\log,\varepsilon}(p)-h_\varepsilon
+=\mathbb E\,\mathrm{KL}(r\Vert p),&
+\Delta_2(p)&=R_{2,\varepsilon}(p)-b_\varepsilon
+=\mathbb E\|p-r\|_2^2.
+\end{aligned}
+\tag{47.7}
+$$
+
+这里直接复用 §14 的条件均值风险分解、§34 的条件 Bayes 决策及严格 proper score 恒等式。具体地，给定 $X$，对数风险减去 $-\sum_y r_y\log r_y$ 得 $\sum_y r_y\log(r_y/p_y)$；平方风险展开为 $1-\|r\|_2^2+\|p-r\|_2^2$，而 $1-\|r\|_2^2=4\varepsilon-6\varepsilon^2$。因此两个 Bayes 风险均由 $p=r$ 唯一达到；有限域上每个原始词质量为正，任一个零超额都等价于逐词准确后验。这里追求零的是超额，不是带噪声的完整 proper 风险。
+
