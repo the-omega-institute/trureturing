@@ -41,15 +41,19 @@ internal sealed class GaleRobinsonKernelDimensionRefutationDocument : IScribeDoc
             Node("claim", "Beluhov Conjecture 3", ClaimFormula(),
                 "Conjecture 3, page 24: \"For every proper type 𝐧 of order n, it holds that dim Ω⊠ = ⌊n/2⌋.\" The encoding quantifies over all proper GRType records. Module.finrank is the dimension over K. It uses the source's stated parity-only gauge space and independent coefficients, without a finite-field specialization. Natural integer division order(t)/2 encodes the floor.", "claim", true),
             Node("result", "Refutation at type (1,3,6)", Disp(new Formula.Not(F.Id("claim"))),
-                "The type (1,3,6) is proper and has order 10. Six explicit polynomials H₀,…,H₅ satisfy the degree-10, index-weight-45 constraints and phi(Hⱼ)=0. Their coefficients at exponent tuples 1111111111, 2011111021, 2101111012, 2110011211, 2110101121 and 2110110112 form diag(1,b,b²,c,bc²,bc). Because b and c are nonzero indeterminates in K, these six elements are independent. The domain subspace is spanned by a finite monomial set, so the restricted kernel is finite dimensional and its dimension is at least 6, contradicting the predicted 5. A matching upper bound is not asserted. The larger type-dependent gauge space obtained by imposing only the three nonzero recurrence terms is outside this statement.", "result", false, DescribeRole.Theorem)),
+                "The type (1,3,6) is proper and has order 10. Six explicit polynomials H₀,…,H₅ satisfy the degree-10, index-weight-45 constraints and phi(Hⱼ)=0. Their coefficients at exponent tuples 1111111111, 2011111021, 2101111012, 2110011211, 2110101121 and 2110110112 form diag(1,b,b²,c,bc²,bc). Because b and c are nonzero indeterminates in K, these six elements are independent. The domain subspace is spanned by a finite monomial set, so the restricted kernel is finite dimensional and its dimension is at least 6, contradicting the predicted 5. A matching upper bound is not asserted. The larger type-dependent gauge space obtained by imposing only the three nonzero recurrence terms is outside this statement.", "result", false, DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("beluhov-2026-conjecture-3-dimension-refutation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        string declaration, bool literature, DescribeRole role = DescribeRole.Definition) =>
+        string declaration, bool literature, DescribeRole role = DescribeRole.Definition,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("beluhov-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Named(name), [.. args]);

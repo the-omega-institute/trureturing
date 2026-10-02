@@ -226,6 +226,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/Combinatorics/GaleRobinsonKernelDimensionRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/beluhov-2026-conjecture-3-dimension-refutation` (refuted) by `D5/S0/Certificates/Combinatorics/GaleRobinsonKernelDimensionRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"beluhov-2026-conjecture-3-dimension-refutation","declaration_gid":"D5/S0/Certificates/Combinatorics/GaleRobinsonKernelDimensionRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Nikolai Beluhov (2026). *Diamond Determinants and Somos Sequences*. URL: <https://arxiv.org/abs/2602.24239v2>.
