@@ -783,7 +783,6 @@ jobs:
             tools/TestSupport/StrataLint.TestSupport/*
             tools/tests/StrataLint.TruthRelease.Tests/*
             [tests-workflow-script]
-            Blueprint/*.scribe.cs
             tools/StrataLint.Scribe/*
             tools/StrataLint.Scribe.Documents/*
             tools/TestSupport/StrataLint.ProcessTestSupport/*
