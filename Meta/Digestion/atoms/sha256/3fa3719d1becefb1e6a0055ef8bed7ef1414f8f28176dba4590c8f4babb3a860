@@ -1,0 +1,32 @@
+### 定理 295.1 两个实际小子节点的完整后继预算
+
+$r$ 为素数，且
+\[
+m_p=rR_p,\qquad
+\gcd(r,R_p)=\gcd(R_p,D_p(8757))=1,
+\qquad
+\gcd(m_q,D_q(30022))=1.
+\tag{295.2}
+\]
+两份必要地址乘积分别含 $3503$ 与 $12010$ 个地址。对应的完整实际支撑满足
+\[
+\begin{aligned}
+r&=6\cdot16\cdot p+1,\qquad 8r<p^2,\\
+u\mid R_p, u\text{ 为素数}
+&\Longrightarrow u\ge P_p:=22085556563=6\cdot8758\cdot p-1>p^2/8,\\
+v\mid m_q, v\text{ 为素数}
+&\Longrightarrow v\ge P_q:=259580479241=6\cdot30023\cdot q-1>q^2/8.
+\end{aligned}
+\tag{295.3}
+\]
+$r$ 在 $m_p$ 中的赋值恰为一，首次秩为 $3p=1260879$、首次赋值为一。两个完整实际子层具有严格收缩
+\[
+\boxed{\qquad
+\sum_{u\mid m_p\atop u\text{ 为素数}}w(u)<\frac23w(p),
+\qquad
+\sum_{v\mid m_q\atop v\text{ 为素数}}w(v)<\frac{11}{20}w(q).
+\qquad}
+\tag{295.4}
+\]
+因而 $s_0\to p\to r$ 是连续两条不满足平方间隙的实际边。
+

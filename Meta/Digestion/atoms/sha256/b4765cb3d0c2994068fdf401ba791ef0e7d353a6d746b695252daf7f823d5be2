@@ -1,0 +1,30 @@
+### 定理 291.2 联合通道对至多一千零二十四子节点严格收缩
+
+使用从零开始的槽编号，定义
+\[
+(c_0,c_1,c_2,c_3)=(1,2,6,10),\qquad
+\kappa_i=10\left\lfloor\frac i4\right\rfloor+c_{i\bmod4},
+\qquad \mu_i=6\kappa_i-\frac1{100}.
+\tag{291.2}
+\]
+$c$ 是定理291.1四份地址表的逐槽下包络，不是某个父指标的一份实际允许表。令
+\[
+r=\frac{99}{100},\qquad q=\frac78,\qquad C=200,
+\qquad w(s)=s^{-r}.
+\tag{291.3}
+\]
+设 $s\ge100$ 为实际父节点，选中的不同素子节点按大小排列为 $p_0<\cdots<p_{b-1}$，且 $b\le1024$。则
+\[
+p_i\ge6\kappa_i s-1\ge\mu_i s,
+\qquad
+\sum_{i<b}w(p_i)\le q w(s).
+\tag{291.4}
+\]
+全部实际整包还满足
+\[
+\log\frac{m_s}{\varphi(m_s)}\le
+\frac{2(1+\log(3s))}{s}\le Cw(s).
+\tag{291.5}
+\]
+左端的实际素数范围为 $s\ge5$，右端的解析比较对全部 $s\ge1$ 成立。
+

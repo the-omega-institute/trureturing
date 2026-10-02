@@ -1,0 +1,43 @@
+**命题 45.6（指数代价、有限分类与非达到的零损失）。** 对定理45.4的同一个预测器，置 $t=\exp(-\lambda/4)$。完整总体损失满足
+
+$$
+\frac{93}{125}\log(1+t)
+\le R_{\log}\le\log(1+2t)\le2t,
+\qquad
+\frac{186}{125}\frac{t^2}{(1+2t)^2}
+\le R_2\le6t^2.
+\tag{45.21}
+$$
+
+两种 proper loss 的下确界均为零，任何有限实 logit 都不达到零；分类零误差却已在每个有限 $\lambda>0$ 达到。给 $0<\varepsilon<1$，充分的尺度分别为
+
+$$
+\lambda\ge4\log(2/\varepsilon)\quad\Longrightarrow\quad R_{\log}\le\varepsilon,
+\qquad
+\lambda\ge2\log(6/\varepsilon)\quad\Longrightarrow\quad R_2\le\varepsilon.
+\tag{45.22}
+$$
+
+若同时要求两者至多 $\varepsilon$，选两个充分尺度的最大值，仍是同一个预测器。
+
+证明。对某个输入，未缩放真类差为 $g,h>0$，令 $r=\exp(-\lambda g)$、$s=\exp(-\lambda h)$。三概率恰为真类 $1/(1+r+s)$ 和两竞争类 $r/(1+r+s),s/(1+r+s)$，所以该输入的完整损失为
+
+$$
+\Phi_\lambda(g,h)=\log(1+r+s),\qquad
+\Psi_\lambda(g,h)=\frac{(r+s)^2+r^2+s^2}{(1+r+s)^2}.
+\tag{45.23}
+$$
+
+总体精确值是定理45.4五行按质量 $89,4,12,16,4$ 除以125加权的 $\Phi_\lambda$、$\Psi_\lambda$。它们对应同一真实联合实现，而非逐类另选预测器。因为 $r,s\le t$，有 $\Phi\le\log(1+2t)$、$\Psi\le(4t^2+2t^2)=6t^2$。前两行共93个词含真类差 $1/4$，至少一个竞争比率等于 $t$，因此 $\Phi\ge\log(1+t)$，且 $\Psi\ge2t^2/(1+2t)^2$；其余词贡献非负，得到全部界。
+
+这些界直接给式（45.22）与趋零下确界。有限 logit 下三个概率都严格处于 $(0,1)$，真类不可能为1，故每个词的两种 proper loss 都严格正。更精确地，五行表达式给
+
+$$
+\lim_{\lambda\to\infty}\frac{R_{\log}}{\exp(-\lambda/4)}=\frac{93}{125},
+\qquad
+\lim_{\lambda\to\infty}\frac{R_2}{\exp(-\lambda/2)}=\frac{186}{125}.
+\tag{45.24}
+$$
+
+因为只有前两行含 $1/4$ 差，其第二个差严格更大，其他行的最小差亦严格更大。这说明该固定分数／模板下，逼近精度要求的尺度按 $\log(1/\varepsilon)$ 增长；它不是有限参数集合中的零损失达到性或训练收敛结论。$\square$
+

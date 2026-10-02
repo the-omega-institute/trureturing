@@ -1,0 +1,15 @@
+**定义 333.1（实际平方密度的两种网格）。** 沿用 §§315、325、330 的实际 $T_L$、$m_L=3L+2$、$\mathfrak m_L$、$\kappa$、$\Phi=I_\psi$ 与 $Z(x)=\sqrt x\log x\,\Phi(x)$。第一种网格取 $L_j=j^2$、$a_j=3j^2+2$，$j\ge16$。第二种网格使用定义330.2的 Fibonacci 块，取
+\[
+r_k=\left\lfloor\frac{\log_5 F_k}{2}\right\rfloor,
+\qquad b_k=5^{r_k},\qquad
+U_{k,s}=F_k+\left\lfloor\frac{sF_{k-1}}{b_k}\right\rfloor,
+\qquad a_{k,s}=3U_{k,s}+2.
+\tag{333.1}
+\]
+从充分晚的合法块开始，相邻块边界只计一次。两种网格均按实际截止递增枚举为 $a_i=m_{L_i}$，记 $\omega_i=\log(a_{i+1}/a_i)$。对 $X\ge a_0$，只使用已完成格子的谱左和
+\[
+\mathcal S(X)=\sum_{a_{i+1}\le X}\omega_i Z(a_i),\qquad
+\mathcal Q(X)=\int_{a_0}^X Z(x)\frac{dx}{x}-\mathcal S(X).
+\tag{333.2}
+\]
+

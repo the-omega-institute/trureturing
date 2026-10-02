@@ -1,0 +1,48 @@
+### 332.1 保留共因子的乘积形式
+
+令 $\mathcal P_P=\{p:p\le P\}$，
+$[m]_{\mathcal P_P}=\prod_{p\le P}p^{v_p(m)}$。在基域 $\mathbb Q$ 上采用以下两种局部线性形式：
+
+$$
+\begin{array}{c|cc}
+v&L_1^{(v)}&L_2^{(v)}\\ \hline
+\infty&X_1-\varphi X_2&X_2\\
+p\le P&X_1&X_2 .
+\end{array}
+\tag{332.3}
+$$
+
+每处行列式为一。实际向量 $\boldsymbol x=(m,n)$ 的射影高度充分晚时为
+$H(\boldsymbol x)=m/d$。两形式的未归一化局部范数乘积为
+$qE/[m]_{\mathcal P_P}$，各处向量范数的乘积为 $m/d$，因此
+
+$$
+\prod_{v\in\{\infty\}\cup\mathcal P_P}
+\prod_{i=1}^{2}
+\frac{|L_i^{(v)}(m,n)|_v}
+ {\max(|m|_v,|n|_v)}
+=H(\boldsymbol x)^{-2}\frac{qE}{[m]_{\mathcal P_P}}.
+\tag{332.4}
+$$
+
+这是保留同一个未约分整数对的精确公式。取
+
+$$
+q_{\max}=\frac{e^{\eta S}}4,\qquad
+U=2Cq_{\max},\qquad
+\varepsilon_0=\frac{(\kappa-\eta)S}{\log U}.
+\tag{332.5}
+$$
+
+实际候选有 $H<U$、$qE<e^{-(\kappa-\eta)S}$，所以（332.4）满足原文（3.11）相应的 $H^{-2-\varepsilon_0}$ 乘积不等式，
+$\varepsilon_0\sim(\kappa-\eta)/\sqrt P$。其 Corollary 3.2 方向计数中保留了支持大小
+$s=\pi(P)+1$ 的因子
+
+$$
+(36/\varepsilon_0)^{2s},\qquad
+\log\big((36/\varepsilon_0)^{2s}\big)=(1+o(1))P.
+\tag{332.6}
+$$
+
+这里只核对乘积假设和计数中的支持因子，不把方向数量界当成点态距离下界。
+

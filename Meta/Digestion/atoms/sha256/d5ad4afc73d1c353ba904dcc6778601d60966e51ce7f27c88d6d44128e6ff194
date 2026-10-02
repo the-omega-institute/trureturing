@@ -1,0 +1,35 @@
+**证明。** 已知素数分布输入为 Perelli–Pintz–Salerno，*Bombieri's theorem in short intervals*，Annali della Scuola Normale Superiore di Pisa，series 4，11（1984），529–539，原文印刷页529式（2）与页530 THEOREM；其准确参数和量词见 [Library 文献条目](../../../Library/Analytic/perellipintzsalerno1984shortintervals.md)。这是经典前置，不是本节的新素数定理。原式对模数取非负总和，并对互素剩余类、长度与起点取最大值。取 $y=x^{2/3}$、模数上限 $Q=x^{1/12}/(\log x)^B$，充分大时 $3\le Q$，可抽取 $q=3,a=1$，得到对 $x/2<t\le x$、$0\le u\le y$ 一致的
+\[
+|\psi(t+u,3;1)-\psi(t,3;1)-u/2|
+\ll_A y/(\log x)^A.
+\tag{309.7}
+\]
+此处 $\psi$ 计 von Mangoldt 权重，$A>0$ 可固定。
+
+对 $(m-v,m]$ 取相邻的长度不超过 $m^{2/3}$ 的分块，并在 $x=m$ 应用（309.7）。若第一起点恰为 $m/2$，先单独取一个长度至多一的片段，其误差为 $O(\ell)$；其余起点严格大于 $m/2$。块数不超过 $v/m^{2/3}+2$，合并误差为 $O_A((v+m^{2/3})/\ell^A)+O(\ell)$。然后在整个已合并区间上一次去掉素数幂；用整数计数即得其贡献为 $O(\sqrt m\,\ell^2)$。因此对 $0\le v\le m/2$，
+\[
+|\vartheta_1(m)-\vartheta_1(m-v)-v/2|
+\ll_A\frac{v+m^{2/3}}{\ell^A}+\sqrt m\,\ell^2.
+\tag{309.8}
+\]
+取 $A=1$，再利用（309.2）与 $m^{2/3}/\rho^3=m^{-1/12}$、$\sqrt m/\rho^3=m^{-1/4}$，增大固定常数 $C$ 即得（309.3）–（309.4）。固定模三类别来自原文的模数与剩余类最大值，未将普通素数定理换成剩余类定理。
+
+对每个实际删除素数，记 $d_p=m-p\in[0,D_L)$。经典阶梯函数积分给
+\[
+\int_0^{D_L}{\bf1}_{d_p<v}\log p\,dv=(D_L-d_p)\log p.
+\]
+有限求和得到（309.5），故跳点或下端为素数均不产生额外项。由（309.4）与 $\epsilon_L\ge0$，
+\[
+|h_L-D_L/2|\le\epsilon_LD_L+\delta_L\rho^3,
+\quad
+\left|\int_0^{D_L}(F_L(v)-v/2)\,dv\right|
+\le D_L(\epsilon_LD_L+\delta_L\rho^3).
+\]
+最后将
+\[
+M_L-D_L^2/4
+=D_L(h_L-D_L/2)-\int_0^{D_L}(F_L(v)-v/2)\,dv
+\tag{309.9}
+\]
+两项分别取绝对值，即得（309.6）。新增承重是将经典分布输入接到该实际仿射末端族的质量与矩校准。$\square$
+

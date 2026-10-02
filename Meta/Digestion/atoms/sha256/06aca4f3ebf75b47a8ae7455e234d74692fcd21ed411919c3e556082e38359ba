@@ -1,0 +1,17 @@
+### theorem 249.2 全大域预算与两侧统一导数间隔
+
+对所有 $t\ge100$，有
+
+$$
+\boxed{t(t+1)E(t)<\frac52<H-\frac12.}
+\tag{249.7}
+$$
+
+因此对同一 $x$ 的配对左右状态均有
+
+$$
+\boxed{\frac{W'_{2,\pm}(x)-\mathfrak D'_\pm(x)}{\sqrt x\,w(x)}
+>\frac1{2t(t+1)}.}
+\tag{249.8}
+$$
+

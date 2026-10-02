@@ -1,0 +1,58 @@
+### theorem 256.3 实际尾项的二次修正凹性
+
+取 §243.3 的无条件 Chebyshev 常数 $C\ge1$，满足 $0\le\Psi(x)\le Cx$。
+令
+
+$$
+k(x)=\frac{\log x+1}{x^2\log^2x},\qquad
+M_a=\frac{7C}{a^2\log a},\qquad a\ge4.
+$$
+
+对任意 $b>a$，函数
+
+$$
+g_a(x)=\Phi(x)-\frac{M_a}{2}x^2
+\tag{256.3}
+$$
+
+在 $[a,b]$ 上凹。特别地，对 $a\le y\le b$，
+
+$$
+\boxed{\Phi(y)\ge
+\frac{b-y}{b-a}\Phi(a)+\frac{y-a}{b-a}\Phi(b)
+-\frac{7C}{2a^2\log a}(y-a)(b-y).}
+\tag{256.4}
+$$
+
+**证明。** 素数幂事件之外，$\Psi$ 局部常值且 $\Phi'=k(x)(x-\Psi(x))$。
+置 $t=\log x\ge1$，直接微分得
+
+$$
+k'(x)=-\frac{2t^2+3t+2}{x^3t^3},\qquad
+\Phi''(x)=
+\frac{-t^2-2t-2+(\Psi(x)/x)(2t^2+3t+2)}{x^2t^3}
+\le\frac{7C}{x^2\log x}\le M_a.
+\tag{256.5}
+$$
+
+这里仅使用 $\Psi(x)/x\le C$ 与 $2t^2+3t+2\le7t^2$。
+在事件 $x=p^r$，§243.3 的两项跳幅抵消保证 $\Phi$ 连续，
+而导数的左右极限满足
+
+$$
+\Phi'_+(p^r)-\Phi'_-(p^r)=-k(p^r)\log p<0.
+\tag{256.6}
+$$
+
+每个紧区间只含有限个这样的事件。
+因此 $g_a'$ 在各光滑段不增，跨事件也向下跳；$g_a$ 连续且分段光滑。
+对任意相邻的两个子区间，积分平均斜率按同一方向排序，故 $g_a$ 凹。
+将其弦不等式展开，并使用
+
+$$
+\frac{b-y}{b-a}a^2+\frac{y-a}{b-a}b^2-y^2=(y-a)(b-y),
+$$
+
+即得式（256.4）。
+该论证保留事件处的导数跳跃，未把 $\Phi$ 当作全域二次可微函数。$\square$
+

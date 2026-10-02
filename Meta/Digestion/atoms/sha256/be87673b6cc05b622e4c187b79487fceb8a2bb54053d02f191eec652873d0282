@@ -1,0 +1,16 @@
+### theorem 256.4 两端点预算在四次单元内的统一传递
+
+沿用 $w(x)=\sqrt x\log x$。取整数 $j\ge2$，令 $a=j^4,b=(j+1)^4$。
+若 $K\ge0$ 且同一实际尾项满足
+
+$$
+w(a)\Phi(a)\ge-K,\qquad w(b)\Phi(b)\ge-K,
+$$
+
+则所有 $y\in[a,b]$ 满足
+
+$$
+\boxed{w(y)\Phi(y)\ge-(8K+567C).}
+\tag{256.7}
+$$
+

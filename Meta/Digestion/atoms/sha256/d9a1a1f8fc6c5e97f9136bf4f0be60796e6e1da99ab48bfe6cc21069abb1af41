@@ -1,0 +1,92 @@
+### theorem 249.1 两层实际截止与单侧源误差
+
+定义
+
+$$
+E(t)=(1+t)e^{-t/2}
++\frac{4(\rho+1)}{5t^2}
++2e^{-t/6}+\frac{2t}{\ell}e^{-t/4}.
+\tag{249.2}
+$$
+
+对每个 $t\ge100$，实际来源满足
+
+$$
+\boxed{\frac{A^-(x)-\Psi_+(x)}{\sqrt x}\ge U-1-E(t).}
+\tag{249.3}
+$$
+
+**证明。** 前两层的实际边际为
+
+$$
+h_1(v)=\log(1+1/v),\qquad
+h_2(v)=\log(1+1/(v^2+v)).
+$$
+
+它们的实截止 $y_k$ 满足 $h_k(y_k)/\log y_k=1/(xt)$。
+对 $v>1$，分子正且严格递减，分母正且严格递增，故比值严格递减。
+由经典对数界 $a/(1+a)<\log(1+a)<a$（$a>0$），在第一层的端点有
+
+$$
+h_1(x-1)>1/x,\qquad h_1(x)<1/x.
+$$
+
+结合 $\log(x-1)<t$，得到 $x-1<y_1<x$。
+第二层在端点满足
+
+$$
+h_2(q-1)>\frac1{q(q-1)+1}>\frac1{q^2},
+\qquad h_2(q)<\frac1{q^2+q}<\frac1{q^2}.
+$$
+
+结合 $\log(q-1)<\log q$ 与 $q^2\log q=xt$，得到 $q-1<y_2<q$。
+两下端严格处于实际截止之内，所以包括端点素数也仍收入严格源 $A^-$。
+舍去实际高层的非负贡献，得到
+
+$$
+A^-(x)\ge\vartheta(x-1)+\vartheta(q-1).
+\tag{249.4}
+$$
+
+参考源的经典素数幂分层是
+
+$$
+\Psi_+(x)=\vartheta(x)+\vartheta(\sqrt x)
++\sum_{3\le k\le\lfloor t/\ell\rfloor}\vartheta(x^{1/k}).
+\tag{249.5}
+$$
+
+整数区间 $(x-1,x]$ 至多含一个整数，因而
+$\vartheta(x)-\vartheta(x-1)\le t$。
+经典 Chebyshev 界 $\vartheta(y)\le(\log4)y\le2y$ 对 $y\ge0$ 成立；
+分别取 $k=3$ 和 $k\ge4$，并用 $x^{1/k}\le x^{1/4}$ 及项数至多 $t/\ell$，有
+
+$$
+\sum_{3\le k\le\lfloor t/\ell\rfloor}\vartheta(x^{1/k})
+\le2x^{1/3}+\frac{2t}{\ell}x^{1/4}.
+\tag{249.6}
+$$
+
+由式（248.2）及 $\rho>7/5$、$\ell<1$、$t\ge100$ 得 $U>4/3$。
+又有 $\sqrt x=e^{t/2}\ge e^{50}>2^{50}$，所以
+$q-1>\sqrt x\ge3594641$ 且 $\log(q-1)\ge t/2$。
+将式（249.1）直接用于 $q-1$ 及 $\sqrt x$，得到
+
+$$
+\begin{aligned}
+\vartheta(q-1)&\ge q-1-\frac{4q}{5t^2},\\
+\vartheta(\sqrt x)&\le\sqrt x+\frac{4\sqrt x}{5t^2}.
+\end{aligned}
+$$
+
+直接使用 $q-1$ 避免额外扣除 $\log q$ 的端点跳幅。
+将这两式与式（249.4）—（249.6）相减，再用 $U<\rho$，有
+
+$$
+\frac{A^- -\Psi_+}{\sqrt x}
+\ge U-1-\frac{1+t}{\sqrt x}
+-\frac{4(\rho+1)}{5t^2}-2x^{-1/6}-\frac{2t}{\ell}x^{-1/4}.
+$$
+
+代入 $x=e^t$ 即为式（249.3）。$\square$
+

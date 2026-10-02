@@ -1,0 +1,46 @@
+### theorem 256.4 两端点预算在四次单元内的统一传递
+
+沿用 $w(x)=\sqrt x\log x$。取整数 $j\ge2$，令 $a=j^4,b=(j+1)^4$。
+若 $K\ge0$ 且同一实际尾项满足
+
+$$
+w(a)\Phi(a)\ge-K,\qquad w(b)\Phi(b)\ge-K,
+$$
+
+则所有 $y\in[a,b]$ 满足
+
+$$
+\boxed{w(y)\Phi(y)\ge-(8K+567C).}
+\tag{256.7}
+$$
+
+**证明。** $w$ 在 $[4,\infty)$ 上正且递增。
+故两个端值均不小于 $-K/w(a)$，它们的弦也不小于这个数。
+又有
+
+$$
+b\le16a,\qquad \log a\ge\log16,
+\qquad w(y)\le8w(a),\qquad b-a\le9j^3.
+\tag{256.8}
+$$
+
+前两个界给 $\sqrt y\le4\sqrt a$、$\log y\le2\log a$。
+最后一个界来自
+
+$$
+\frac{(j+1)^4-j^4}{j^3}
+=4+\frac6j+\frac4{j^2}+\frac1{j^3}
+\le\frac{65}{8}<9.
+$$
+
+由 $(y-a)(b-y)\le(b-a)^2/4$ 与式（256.4），
+
+$$
+w(y)\Phi(y)\ge
+-8K-8w(a)\frac{M_a(b-a)^2}{8}
+=-8K-7C\frac{(b-a)^2}{a^{3/2}}
+\ge-8K-567C.
+$$
+
+这里 $a^{3/2}=j^6$，所有误差使用同一单元两端的实际价格源。$\square$
+

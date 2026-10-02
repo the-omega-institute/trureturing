@@ -1,0 +1,64 @@
+**定理 338.2（实际三角振幅的模四障碍与关系亏损）。** 对定义338.1的同一实际频率群，下列条件等价：
+
+$$
+\begin{aligned}
+&A_*=B_\triangle;\\
+&(i)_{\gamma\in\Gamma}\in H;\\
+&\text{对每个有限支撑整数关系 }h,\quad
+\sum_\gamma h_\gamma\gamma=0\ \Longrightarrow\
+\sum_\gamma h_\gamma\equiv0\pmod4.
+\end{aligned}
+\tag{338.4}
+$$
+
+对任意非零有限支撑整数关系 $h$，还有显式界
+
+$$
+B_\triangle-A_*
+\ge
+\frac{|1-i^{\sum_\gamma h_\gamma}|^2}
+{\displaystyle\sum_{\gamma\in\operatorname{supp}h}h_\gamma^2/a_\gamma}.
+\tag{338.5}
+$$
+
+若关系的系数和不被 $4$ 整除，分子为 $2$ 或 $4$，从而严格改进三角振幅上界。这是关系存在时的条件性证书；没有在此断言真实 $\zeta$ 零点具有一个这样的关系。
+
+**证明。** 对每个 $z\in H$，单位圆的精确距离恒等式给
+
+$$
+|z_\gamma-i|^2=2(1-\operatorname{Im}z_\gamma),\qquad
+B_\triangle+s_H(z)=\sum_\gamma a_\gamma|z_\gamma-i|^2\ge0.
+\tag{338.6}
+$$
+
+所有权重严格为正。若 $A_*=B_\triangle$，在一个最小值点 $s_H(z)=-B_\triangle$，右侧非负可和级数为零，故每个 $z_\gamma=i$。反之全四分之一相位在 $H$ 中就达到最小值 $-B_\triangle$，反演给最大值 $B_\triangle$。符号在这里有区别：$i$ 达到最小值，$-i$ 达到最大值。
+
+余下相位可达性复用经典 Kronecker 紧群判据；来源为 [Onishchik，Kronecker theorem，Encyclopedia of Mathematics，2020 修订](https://encyclopediaofmath.org/index.php?title=Kronecker_theorem&oldid=47528)。对任意有限频率集 $F$，连续时间轨道闭包的整数特征为
+
+$$
+\chi_h(\phi(t))=\exp\!\left(it\sum_{\gamma\in F}h_\gamma\gamma\right).
+$$
+
+它对所有实数 $t$ 恒为 $1$ 当且仅当频率线性组合严格等于零。经典有限环面子群判据因而说：目标相位属于有限投影闭包，当且仅当其满足每个这种零关系。乘积拓扑的基本邻域只限制有限个坐标，将判据传递到 $H$；在目标 $z_\gamma=i$ 上，特征值为 $i^{\sum h_\gamma}$，即（338.4）。连续时间的零关系不能替换为整数采样的 $\sum h_\gamma\gamma\in2\pi\mathbb Z$。
+
+为证定量界，取 $F=\operatorname{supp}h$。每个 $z\in H$ 都满足 $\prod_{\gamma\in F}z_\gamma^{h_\gamma}=1$。单位圆上整数幂的距离界与有限乘积的望远镜分解给
+
+$$
+|1-i^{\sum h_\gamma}|
+\le\sum_{\gamma\in F}|h_\gamma|\,|z_\gamma-i|.
+$$
+
+按 $a_\gamma$ 加权使用 Cauchy–Schwarz，得到
+
+$$
+|1-i^{\sum h_\gamma}|^2
+\le\left(\sum_{\gamma\in F}\frac{h_\gamma^2}{a_\gamma}\right)
+\left(\sum_{\gamma\in F}a_\gamma|z_\gamma-i|^2\right)
+\le\left(\sum_{\gamma\in F}\frac{h_\gamma^2}{a_\gamma}\right)
+(B_\triangle+s_H(z)).
+$$
+
+分母正且有限；在最小值点 $s_H(z)=-A_*$ 代入即得（338.5）。幂距离界、乘积估计和加权平方和不等式均为经典中间步骤，此处将它们施于（337.2）的实际正弦谱。
+
+例如只取频率 $\lambda,2\lambda$、权重均为 $1$ 的谐波模型，关系 $h=(2,-1)$ 的系数和为 $1$，分母为 $5$，故对每个实数 $t$ 有 $\sin(\lambda t)+\sin(2\lambda t)\le9/5<2$。这是关系如何阻止同向正弦饱和的模型，并非实际零点关系，也不将 $9/5$ 称为该模型的精确最大值。$\square$
+

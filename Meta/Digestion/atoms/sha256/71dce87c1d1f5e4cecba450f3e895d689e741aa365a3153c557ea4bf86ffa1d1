@@ -1,0 +1,16 @@
+**证明。** 置 $\Gamma_L=\log(R(A_L)/\mathscr F_L)$。由（303.14），
+\[
+\frac{R(A_L)}{\mathscr F_L}-1
+=\frac{d+o(1)}{\log m_L},\qquad
+\Gamma_L\log m_L\longrightarrow d.
+\tag{303.21}
+\]
+最后的极限使用 $\log(1+x)/x\to1$；它也可由对数在一处的导数给出。代入（303.6）得到
+\[
+K_L(H)\frac{\log m_L}{m_L}
+\ge\frac{m_L-2}{2m_L}\Gamma_L\log m_L
+\longrightarrow\frac d2,
+\tag{303.22}
+\]
+其中箭头仅作用于右侧与 $H$ 无关的表达式。故得到统一的（303.20）；新素数的位置来自（303.3）。$\square$
+

@@ -1,0 +1,17 @@
+**定义 305.0。** 沿用 §§302–304 的实际饱和核心 $A_L$、签名 $\mathcal O_L$、$m=3L+2$、$E=e^\gamma$、$U_H=\sigma(H)/H$、$R(H)=E\log\log H$ 及 $\Delta(H)=R(H)-U_H$。对整数 $L\ge16$，定义两个实际整数族
+\[
+C_L=A_L\prod_{\substack{p\le m\\p\nmid A_L}}p,
+\qquad
+V_L=\prod_{\sqrt{m/2}<p\le\sqrt{2m}}p,
+\qquad
+\widetilde C_L=C_LV_L.
+\tag{305.1}
+\]
+所有乘积指标均为素数。另置
+\[
+\vartheta(y)=\sum_{p\le y}\log p,\qquad
+S(y)=E\log\vartheta(y)-P(y),
+\tag{305.2}
+\]
+其中 $P$ 是（302.2）的 Euler 乘积；本节只在 $y\ge2$ 使用 $S$，此时 $\vartheta(y)>0$。$S$ 的定义保留同一素数截断处的两个相关误差，没有指定其符号。
+
