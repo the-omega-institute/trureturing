@@ -283,6 +283,36 @@ cutoff, so sufficiently large support forces both powers in ONE original
 label. This works without a color assignment; it does not multiply
 separately forced labels or infer their phase compatibility.
 
+[Section161](#161-the-private-ternary-root-lowers-colored-repair-depths)
+uses a colored parent's complete private ternary root in the fresh
+repair labels. The exact odd-quotient price lowers q-parent depth to
+(p-3)/2 and pure colored-parent depth to(p-1)/2, retaining capacity p-2.
+Opposite5 forces the other anchor's height at most2; all concentrated
+heights in the small-anchor branch are at most8. The specified MTR
+q=53 branch has every nonternary height one, maximum support prime53
+and H_3<=28, with no assertion that H_3 is one.
+
+[Section162](#162-a-unique-nonconcentrated-prime-is-at-most211)
+forces an actual near-top colored owner and retains the discounted
+global top layer in its shell budget. If R contains exactly one prime q,
+then q is at most211; opposite pairs5/7,5/11,5/13 give103,173,211.
+This bounds that shared prime, not the entire support, and leaves the
+remaining singleton cases and the general nonconcentrated branch open.
+
+[Section163](#163-a-missing-higher-product-supplies-an-all-height-replacement-palette)
+uses a checksum to encode every old anchor exponent and the removed
+prime's height. An absent mixed label on three or more primes now gives
+an explicit support cutoff without color or height restrictions. The
+unrestricted gap is to force a bounded missing label or a bounded
+actual parent with the required capacity.
+
+[Section164](#164-two-fixed-original-partners-reduce-a-private-source-obstruction-to-two-congruences)
+uses the triangle's actual parent capacity to leave at most one fixed
+partner in each of two probe cells. Only two compatible shallow partners
+can block their reserve at every escaped source. The resulting condition
+concerns the complete private region; the cited conditional LLL provides
+an explicit sufficient test, whose arithmetic hypotheses remain open.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -19571,3 +19601,481 @@ For example, the following are exact substitutions into PPL6 for the original su
 These are consumers in the unrestricted original source. The existing small-opposite-pair bound P^+(Q)<14570 removes both displayed large-P regimes inside that particular small-anchor branch, so PPL7 is not presented as a further exclusion there. PPL6 remains a joint-label constraint when the small-anchor hypotheses are unavailable or for other parameter choices.
 
 The remaining step is to consume such genuinely forced joint labels with an actual original-parent capacity, supplier relation or complete-hole repair. This result supplies no automatic closure under multiplying several separately forced products, no small opposite-color pair when R meets {5,7,11,13}, and no unrestricted contradiction.
+
+## 161. The private ternary root lowers colored repair depths
+
+Keep one original EB1 whole cover. Let ell be a concentrated prime of color i and let p be a concentrated prime of the opposite color. Both are at least5. Every original multiple d of ell has its COMPLETE private region at first ternary root i, by the same private-reset containment used in CP1:
+
+    V_d subset V_ell={i}.
+
+This supplies one additional ternary factor in the fresh CP1 palette. Reusing DR1–DR2 and AQ3 with that factor lowers the q-parent depth in §140 and improves the global heights of concentrated primes. No new exchange theorem or Lean verification is asserted.
+
+### A q-parent needs only (p-3)/2 shared q-digits
+
+Let q>3 be an original prime distinct from p and ell, and suppose the ORIGINAL parent
+
+    d=q^a ell
+
+exists. Put
+
+    N=p-1, k=(p-1)/2, b=k-1=(p-3)/2,
+
+and assume a>=b. Assign the N nonzero first-p roots injectively to the N pairs
+
+    (epsilon,j), epsilon in {0,1}, 0<=j<=k-1.
+
+For each pair use the fresh numerical label
+
+    p ell 3^epsilon q^j.                            (TCP1)
+
+Its phase is the assigned nonzero p-root, the old parent's ell- and q^j-phases, and, when epsilon=1, the fixed first-three root i. All these CRT coordinates are compatible. The labels are pairwise distinct and absent from the ENTIRE original family because each contains the forbidden opposite-color product p ell.
+
+Every point of the whole old P_d avoids retained A_p, has the parent's original ell- and q^j-congruences, and has first-three root i. Its nonzero p-root therefore selects one TCP1 AP containing it. This repairs the ENTIRE private obligation, including every cofactor and integer lift. The ternary root comes from the old parent's private region, not from a selected descendant-phase witness.
+
+Now apply the existing DR1 move at any non-own d-phase and delete its complete original proper-descendant group J. Its exact remaining hole is P_d. If |J|>N, the TCP1 repair decreases class count. If |J|=N, the EXISTING distinct-odd quotient estimate AQ3 gives
+
+    sum_(M in J) M>=N(N+2)d=(p^2-1)d.
+
+The repair price satisfies
+
+    W=4p ell sum_(j=0..k-1)q^j,
+    W/d<=4p sum_(j=0..k-1)q^(-j)
+       <4p q/(q-1)<p^2-1.                         (TCP2)
+
+The first inequality uses a>=k-1. For p>=7 and q>=5, the last expression is at most5p<p^2-1. For p=5, distinctness q!=p gives q>=7, and4p q/(q-1)<=70/3<24=p^2-1. Thus the modulus sum also decreases at tied count. EB1 forces
+
+    a>=(p-3)/2 ==>
+    every non-own phase of original q^a ell
+       has at most p-2 proper original descendants. (TCP3)
+
+The capacity remains p-2; its depth threshold is now(p-3)/2. The stronger deletion sum N(N+2)d is essential to the last saved depth. Using only3Nd would give the weaker cutoff(p-1)/2.
+
+### A pure colored parent uses the same two-axis palette
+
+For a concentrated prime r of color i and opposite p, consider the ORIGINAL parent d=r^a with a>=k=(p-1)/2. Its entire P_d has first-three root i. Use the N fresh labels
+
+    3^epsilon p r^j,
+    epsilon in {0,1}, 1<=j<=k.                     (TCP4)
+
+The index starts at1, so the original labels p and3p are not reused. Assign the N nonzero p-roots to these pairs and inherit the parent's r^j-phases and its private first-three root as above. Every P_d point meets its assigned AP. CP1 supplies freshness, and the two exponents distinguish all labels.
+
+The price satisfies
+
+    W/d<=4p sum_(j=0..k-1)r^(-j)
+       <4p r/(r-1)<p^2-1.
+
+The same two cases as TCP2 apply: p=5 implies r>=7, while p>=7 permits r>=5. DR1–DR2/AQ3 therefore give the same phase capacity p-2 for this parent at the smaller cutoff a>=k.
+
+Use the existing QC2/HC1 pure-top packet at one original private point of r^(H_r). If H_r>k, it contains at least1+(H_r-k)(r-1) original labels in one non-own r^k phase, including the top owner. Consequently
+
+    1+(H_r-k)(r-1)<=p-2,
+    H_r<=(p-1)/2+floor((p-3)/(r-1)).               (TCP5)
+
+The displayed height bound is automatic when H_r<=k. It is an ordinary consumer of the existing pure-top demand and the just-checked complete-private repair; no new private-point lemma is needed.
+
+In the branch R intersect {5,7,11,13}=empty, use opposite5 and ell in {7,11,13}. The SAME original family now satisfies
+
+    H_ell<=2,
+    H_5<=4,7,8 for ell=7,11,13 respectively,
+    H_r<=8 for every concentrated prime r.          (TCP6)
+
+For the last assertion, choose an opposite concentrated prime at most13 for either color, as already supplied in OCP9. These bounds concern concentrated primes; they do not replace the separate OCP bound on primes in R or on3.
+
+### Existing fan budgets retain their capacities and lower their cutoffs
+
+For a root-i actual q-top fan, let c=p-2, C_i=c|S_i| and b=(p-3)/2. Each color-i bucket whose labels contain ell in S_i shares the original parent phase modulo q^b ell. When G>b its members are proper descendants, so TCP3 bounds the entire colored part by C_i. The TQ3 inequality is therefore available under G>b, rather than G>c:
+
+    G>b ==> q<=A(H_3+1)+C_i.                       (TCP7)
+
+No change is made to c or C_i. The existing TQ6 all-depth argument likewise works for every b<=a<G, giving
+
+    1+(G-a)(q-1)<=(G-a)A(H_3+1)+C_i.
+
+If q-1>A(H_3+1), taking a=b gives
+
+    G<=b+floor((C_i-1)/(q-1-A(H_3+1))).            (TCP8)
+
+The old ternary-parent threshold in TQ1 is not lowered by this construction: its extra ternary digit would lie on the same axis as the parent. TCP3 changes only the q-parent use, where q differs from3.
+
+### The actual mixed-owner q=53 consumer now has height one
+
+Retain MTR5's additional hypotheses:5 and7 have opposite colors, H_5=H_7=1, R={q}, and q>=49. The existing mixed-owner argument gives q=53 and an ACTUAL private source of7q^G at the7-color root. It does not require the pure q^G to have private points at that root.
+
+Choose opposite p=5, so b=1 and C_i=3|S_(7-color)|. If G>1, TCP7 at this same source gives
+
+    q<=A(H_3+1)+3|S_(7-color)|<=29+18=47,
+
+using A=1, the unchanged OCP6 bound H_3<=28, and HPM7's7-color list {7,11,13,17,19,23}. This contradicts q>=49. Thus these hypotheses now force
+
+    q=53 and H_q=1.                                (TCP9)
+
+Together with HPM7, this determines every nonternary height in the same branch. Name the colors of5 and7 S_5 and S_7. If r in S_7 had H_r>=2, the height-at-least-two version of HPM7 with opposite5 would give r<5, impossible. For r in S_5 it gives r<7, leaving only r=5, whose height is already assumed one. TCP9 handles the sole shared prime53. Thus all nonternary heights are one.
+
+The ordinary HPM7 bound gives r<25 in S_7 and r<49 in S_5. Since R={53}, the maximum support prime is exactly53. Combining this with the unchanged OCP6 bound on H_3 gives the finite carrier
+
+    Q divides 3^28 product_(5<=p<=53, p prime)p.   (TCP10)
+
+There are14 nonternary prime factors in that product. Every original label, phase and source remains unchanged. The squarefree noncoverage theorem in [BBMST, arXiv:1901.11465v1](https://arxiv.org/abs/1901.11465v1), including the closing relaxation after Lemma5.4, still requires the3-height to be at most one; TCP10 does not supply that hypothesis. No enumeration or exclusion of this finite carrier is asserted. The q=53 branch and unrestricted odd noncoverage remain unresolved.
+
+## 162. A unique nonconcentrated prime is at most211
+
+Keep ONE original EB1 whole cover with R={q}. If q belongs to {5,7,11,13}, the bound q<=211 is immediate. It remains to consider q>=17, so R intersect {5,7,11,13}=empty. Write G=H_q and name the color containing5 S_5. There is an opposite concentrated prime ell in {7,11,13}, whose color is S_o. The existing TCP height bound, HPM retained-prefix absorption, QC3 shell identity and qualified-parent budgets give
+
+    ell=7  ==> q<=103,
+    ell=11 ==> q<=173,
+    ell=13 ==> q<=211.                             (NTH1)
+
+In particular q<=211. These bounds concern the unique shared prime, not P^+(Q). They are necessary restrictions on the same original family; they do not construct a surviving cover, assert Lean verification, or exclude unrestricted odd distinct whole coverage.
+
+### Original near-top ownership follows from the actual mixed profile
+
+For any distinct original primes p,q with G>=2, HPM5 gives
+
+    q>=p^H_p ==> p q^(G-1) is ORIGINAL.            (NTH2)
+
+Indeed, if that label were absent, divisor closure would forbid all originals having positive p-height and q-height at least G-1. The actual mixed profile would satisfy h_(G-1)=h_G=0. HPM5 at k=G-1 would then give q<p^max(H_p,1)=p^H_p, a contradiction.
+
+For p=ell, TCP6 gives H_ell<=2. Thus q>=ell^2 and G>=2 force the original owner
+
+    M=ell q^J, J=G-1.                              (NTH3)
+
+Its complete private region has the ell-color ternary root. Choose one actual private point and perform the existing opposite-coordinate pruning there. It preserves M privately, while removing every opposite-color original on its entire q-line. All original residues and heights remain literal. This supplies a favorable root without asserting that pure q^G has private points at both roots.
+
+### Keep the shallow shells and discount the deeper numerical layer
+
+For the opposite pair5,ell put
+
+    N=max(3(ell-1),4(ell-2)),
+    t=N/2-1, C=3|S_o|.
+
+Here N is even and t=9,17,21 for ell=7,11,13. Assume G>=3, so J=G-1>=2. At the source NTH3, use only q-defect shells b=1,...,J-1. QC3 gives the exact identity
+
+    F_b=(q-1)(Avg_(B_b)c-1_(b>=J)).
+
+Whole coverage makes each selected F_b at least q-1. Hence the selected original suppliers have total service at least(J-1)(q-1). This uses individual shell positivity, not subtraction of lower bounds on two suffix sums.
+
+A selected supplier of original q-height e has its exact weight q^(1-e+b). This is at most one when e<=J, and at most q^(J-e) when e>J, because b<=J-1. In particular, the global top layer e=G=J+1 remains present with weight at most1/q. Every supplier agrees with the source at its COMPLETE q-free cofactor and modulo q. Add M once with weight one; it is not a directional supplier.
+
+Partition these actual labels into three disjoint inventories.
+
+* Assign each colored label, including M, once to one of its S_o prime factors r. All have q-height at least two and are proper descendants of the ORIGINAL parent qr, in one common qr-phase. TCP3 with opposite5 has cutoff one and capacity three. The full colored contribution is at most C=3|S_o|.
+* Low-ternary R-only suppliers have labels3^a q^e with0<=a<t and2<=e<=G. Numerical distinctness and the exact weight bound give total service at most t[(J-1)+1/q]. This retains the global q-height G rather than replacing it by the owner's height J.
+* Every remaining R-only supplier is a proper multiple of h=3^t q, in the same source phase. If this group is nonempty, its original members supply h as an original divisor. Since tau(h)=2(t+1)=N, the existing uniform OCP parent budget bounds this group by N-1. The parent's old private root need not equal the selected source root. An empty group needs no original-parent assertion.
+
+Consequently
+
+    1+(J-1)(q-1)<=t[(J-1)+1/q]+(N-1)+C,
+    (G-2)(q-1-t)<=N-2+3|S_o|+t/q.                (NTH4)
+
+The owner is already included in C and is added only once. For G=2 the displayed final inequality is automatically true, but the preceding proper-descendant argument is used only for G>=3.
+
+The same source estimate keeps all shared cofactors when R is arbitrary. Put Q_0=product_(r in R minus {q})r^H_r and A=tau(Q_0). For each pair(a,e), the low group can have at most A labels3^a q^e u, u|Q_0. Its weighted contribution is therefore at most tA[(J-1)+1/q]. The colored and qualified high-parent capacities do not change. Under the same original-owner and opposite5 hypotheses this gives
+
+    (G-2)(q-1-tA)<=N-2+C+tA/q.                    (NTH6)
+
+Here Q_0 is only a numerical cofactor inventory, not an original label. This estimate does not bound A or justify replacing it by one for general R. The numerical head proof below specializes to R={q}, so A=1.
+
+### Initial-segment support and the exact color inventory
+
+For the chosen pair put
+
+    Hbar=(3N-4)/2,
+    B(G)=ell-2+(Hbar+1)(G+1).
+
+OCP6 and RSG2 put every concentrated prime at most B(G). Because R={q} and support is an initial odd-prime segment, q is at most the first prime strictly greater than B(G). This does not assume q is the largest support prime.
+
+CM6 forces |S_5|>=2 for q>=17: otherwise its infinite Euler product would be at most5q/[4(q-1)]<4/3, contrary to that root's reciprocal requirement. Therefore
+
+    |S_o|<=pi(B)-4,
+    q<=B ==> |S_o|<=pi(B)-5.                     (NTH5)
+
+The first bound removes2,3 and at least two S_5 primes; the second also removes the shared q. If7 and11 both belong to S_5, replace these two bounds by pi(B)-5 and pi(B)-6 respectively. No shared prime is subtracted when q>B.
+
+The necessary small exact arithmetic is:
+
+| ell | t | B(2) | nextprime(B(2)) | B(3) | pi(B(3)) | B(4) | pi(B(4)) | (Hbar+2)/2 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 7 | 9 | 92 | 97 | 121 | 30 | 150 | 35 | 15 |
+| 11 | 17 | 168 | 173 | 221 | 47 | 274 | 58 | 27 |
+| 13 | 21 | 206 | 211 | 271 | 58 | 336 | 67 | 33 |
+
+Here pi counts all primes including2 and nextprime is strict. These values are obtained by trial division through336. The three target successors are nextprime(103)=107, nextprime(173)=179 and nextprime(211)=223. No covering palettes or phases are enumerated.
+
+### The three upper bounds
+
+First let ell=7 and suppose q>103, hence q>=107>ell^2. G<=2 contradicts the next-prime bound q<=97. Thus the original near-top source exists and NTH4 applies.
+
+For G=3 and q>B(3)=121, NTH5 gives |S_o|<=26. The right side of NTH4 is at most96+9/q<97, while the left side q-10 exceeds111. If instead q<=121, the shared-prime subtraction gives |S_o|<=25. The right side is at most93+9/q<94, while q-10>=97. Both cases are impossible.
+
+For G=4+s, s>=0, an increment of G adds29 to B and at most15 new odd integers, so pi(B)<=35+15s. Without subtracting q, NTH5 bounds the right side by111+45s+9/q<112+45s. The left side is at least97(2+s)=194+97s. This excludes all remaining heights and proves the first line of NTH1.
+
+Next let ell=11 and suppose q>173, hence q>=179>ell^2. G<=2 gives q<=173. For G=3 and q>B(3)=221, the right side of NTH4 is at most163+17/q<164, while q-18>203. For q<=221, it is at most160+17/q<161, while q-18>=161. For G=4+s, pi(B)<=58+27s and the right side is at most196+81s+17/q<197+81s; the left side is at least161(2+s)=322+161s. These contradictions prove q<=173.
+
+Finally let ell=13 and suppose q>211, hence q>=223>ell^2. The two already proved pair bounds force7 and11 to share the color of5. Thus |S_5|>=3, and the strengthened form of NTH5 applies. G<=2 gives q<=211. For G=3 and q>B(3)=271, the right side of NTH4 is at most201+21/q<202, while q-22>249. For q<=271, it is at most198+21/q<199, while q-22>=201. For G=4+s, pi(B)<=67+33s and the right side is at most228+99s+21/q<229+99s; the left side is at least201(2+s)=402+201s. This proves q<=211.
+
+Each affine tail is valid for every integer s>=0 by counting all possible new odd integers. The improvement uses the actual near-top colored owner and the1/q weight of deeper suppliers in one fixed family. The global height G, the owner's height G-1, and the highest original support prime remain distinct quantities.
+
+## 163. A missing higher product supplies an all-height replacement palette
+
+Keep ONE original EB1 whole cover, with distinct odd nonunit numerical labels D and period Q. Let
+
+    m=product_(i=1..k) p_i^b_i, k>=2, b_i>=1,
+    v=rad(m)=product_i p_i,
+    L=tau(m)-1=product_i(b_i+1)-1,
+    B(m)=max(v^L, m v^(L-2) phi(v)),
+
+where the p_i are distinct ORIGINAL support primes. Then
+
+    m not in D ==> P^+(Q)<B(m).                    (HPAK1)
+
+The extension beyond §§156 and160 is the fresh palette for k>=3 anchors: it forces one joint higher product without multiplying separately forced pair labels. For k=2, directly retain §160's sharper two-prime-power cutoff; that case is not new. The complete-source coverage argument remains §156's, and no original label, phase or height is replaced in the hypotheses. This is ordinary conditional mathematics, without Lean verification or a claim of literature priority.
+
+### A checksum recovers every old exponent and the removed-prime height
+
+Suppose m is absent. Original divisor closure excludes every original multiple of m. Therefore any vector of anchor exponents a=(a_1,...,a_k) belonging to an original has at least one a_i<b_i.
+
+Record the finite state sigma_i=a_i when a_i<b_i, and sigma_i=* otherwise. There are exactly L allowed states: each coordinate has b_i+1 choices and the all-* state is excluded. Fix a bijection chi from these states to Z/LZ. Let j be the first deficient coordinate, sigma_j!=*.
+
+For an old q-bearing original of q-height e>=1, set, for i!=j,
+
+    u_i=a_i if sigma_i=*, and u_i=b_i otherwise.
+
+Choose u_j in the interval
+
+    b_j+L(e-1)<=u_j<=b_j+Le-1
+
+so that sum_i u_i=chi(sigma) modulo L. The interval has exactly L integers, hence exactly one permissible u_j. Every output satisfies
+
+    b_i<=u_i<=max(a_i,b_i+Le-1).                  (HPAK2)
+
+The decoder is global across ALL old heights. The residue of sum_i u_i first recovers sigma and hence j. Next
+
+    e=1+floor((u_j-b_j)/L).
+
+For deficient coordinates sigma_i already records a_i; for nondeficient coordinates a_i=u_i. Thus the complete input(a,e) is recovered. In particular no unrecorded choice of deficient coordinate, residue or old height can cause a new numerical collision.
+
+### Reuse the one-source transport with the required prefix widths
+
+Assume an original support prime q>B(m). It is distinct from every anchor. Write
+
+    Q=q^G M product_i p_i^H_i, gcd(M,qv)=1,
+    w_i(e)=b_i+Le-1.
+
+Normalize the original prime classes A_q and A_(p_i) to root zero, using the existing simultaneous CRT normalization. For each1<=e<=G let U_e be the tuples of anchor prefixes modulo p_i^w_i(e) whose first p_i-digits are all nonzero. Then
+
+    |U_1|=product_i (p_i-1)p_i^(b_i+L-2)
+          =m v^(L-2)phi(v)<=B(m)<q,
+
+and every prefix has exactly v^L<=B(m)<q extensions at the next level. Thus the first alphabet fits into q-1 nonzero q-roots, and each later alphabet fits into q next digits. Fix prefix-compatible injections theta_e:U_e->Z/q^eZ, independently of every original label and cofactor.
+
+Use the complete new carrier
+
+    Qtilde=M product_i p_i^max(H_i,w_i(G)).
+
+Let U consist of all output points avoiding every retained anchor prime class. On U, define F(z) by theta_G of its anchor prefixes; off U set F(z)=0 modulo q^G. The ONE old source Psi(z) preserves the full original M and p_i^H_i coordinates and has q-coordinate F(z).
+
+The complete inverse of A_q is U^c, not the empty set. Every point of U^c is covered by one of the retained original prime classes A_(p_i). Every other q-bearing original is a proper multiple of q and is disjoint from A_q by comparable-original disjointness. Its first q-phase is nonzero, so its inverse is empty off U.
+
+For such an original
+
+    d=q^e t product_i p_i^a_i, t|M,
+
+the literal q^e-phase either lies outside theta_e's image, giving empty inverse, or selects exactly one anchor-prefix tuple. Combine that tuple with the original anchor phases and the original t-phase. Incompatible same-prime congruences give empty inverse; otherwise the complete inverse is ONE AP of modulus
+
+    n_d=t product_i p_i^max(a_i,w_i(e)).           (HPAK3)
+
+All original heights H_i remain in Qtilde. The selected prefix already lies in U, so no additional domain mask cuts or splits this AP. Neither a selected private point nor a separately chosen cofactor source replaces this full inverse.
+
+Apply the checksum code to(a,e) and set
+
+    d'=t product_i p_i^u_i.                        (HPAK4)
+
+HPAK2 gives d'|n_d. Reduce the inverse AP's actual phase modulo d' to obtain ONE enclosing AP containing its whole inverse. Every new label is divisible by the absent m, hence collides with no retained original. Factoring a new label recovers t and the u_i; the decoder then recovers the complete original d. Thus there are no new-new collisions either. All new moduli are odd nonunits dividing Qtilde.
+
+Retain every q-free original, omit A_q, and use one enclosure for each other nonempty q-bearing inverse. Points of U^c are paid for by retained anchor primes. At a point of U, the old whole cover at Psi(z) supplies an owner other than A_q: a q-free owner covers z unchanged, and a q-bearing owner covers it through its complete inverse and enclosure. This is §156's whole-source implication, now with k anchor coordinates. It covers the complete new period and all integer lifts.
+
+Each old class other than A_q contributes at most one new class. The new whole cover therefore has at most |D|-1 distinct odd nonunit labels, contradicting EB1. No individual modulus-sum decrease is required. Finally L>=3, and both integers defining B(m) are composite and exceed every anchor prime. Hence P^+(Q)=B(m) is also impossible, giving the strict HPAK1 cutoff.
+
+### The existing remainder layer gives a second explicit cutoff
+
+The quotient-and-remainder step of §160 also applies to this checksum code. Put
+
+    L_0=2^k-1,
+    B_rem(m)=max(m^L_0, m^(L_0+1)phi(v)/v^2).     (HPAK5)
+
+The second expression is an integer: it equals product_i (p_i-1)p_i^(b_i(L_0+1)-2). Write a_i=b_i alpha_i+r_i,0<=r_i<b_i. At least one alpha_i is zero. Apply HPAK2 with all threshold exponents equal to one to(alpha,e), obtaining U_i>=1 and U_i<=max(alpha_i,L_0 e). Output u_i=b_i U_i+r_i.
+
+Reduction modulo b_i recovers r_i; division then recovers U_i and the existing checksum decoder recovers(alpha,e). The coordinate bound is
+
+    u_i<=max(a_i,b_i(L_0 e+1)-1).
+
+Thus the same source uses prefix widths b_i(L_0 e+1)-1. Its first alphabet is the second term of HPAK5 and each later alphabet has m^L_0 extensions. All freshness, complete-inverse and single-class checks above are unchanged. Since L_0>=3, both candidate integers in HPAK5 are composite and exceed every anchor, so this cutoff is strict as well. Consequently HPAK1 may use
+
+    P^+(Q)<min(B(m),B_rem(m)).                    (HPAK6)
+
+Here L_0>=3, so both integers defining B_rem(m) are composite and exceed the anchors; its cutoff is likewise strict. No comparison claiming that one of these bounds always dominates the other is needed. For two anchors use the already established §160 cutoff instead. For squarefree m, both expressions give
+
+    m absent ==> P^+(Q)<m^(2^k-1).                (HPAK7)
+
+For example, if5,7,11 are original support primes, then
+
+    P^+(Q)>=385^7=1253790880222890625
+       ==>385 is ONE ORIGINAL numerical label.
+
+This remains a statement about one actual joint label when an anchor belongs to R. Pairwise presence is not substituted for that joint occurrence. No common private point or phase alignment follows from the numerical conclusion.
+
+### An actual qualified parent supplies a missing higher label
+
+Suppose an ORIGINAL parent h has an established phase capacity N-1 as in CPA5. Reuse its existing same-family consequence
+
+    M original and h|M ==> tau(M/h)<=C,
+    C=1+(N-1)(h-1).
+
+Choose an integer t with2^t>C, for example t=ceil(log_2(C+1)), and take the first t odd primes ell_j not dividing h. Put m_h=h product_j ell_j. Then m_h is absent: otherwise tau(m_h/h)=2^t>C contradicts CPA5. This is one missing numerical label, not a claim that separately counted descendants share a phase.
+
+If every ell_j is an original support prime, HPAK6 applies to m_h. If some ell_j is absent, initial-segment support already gives P^+(Q)<ell_j, which is smaller than either cutoff for m_h. Thus either case gives the explicit bound
+
+    P^+(Q)<min(B(m_h),B_rem(m_h)).                 (HPAK8)
+
+This consumer requires a real original parent and its proved whole-parent capacity. It does not assert such a parent in a uniformly bounded numerical range for every remaining family. When m_h has only two anchor primes, §160 remains the preferable direct consumer.
+
+Once a support cutoff B_* is available, choose the least prime ell>B_*. It is absent, and the EXISTING HC6 gives H_p<=ell-1+floor((ell-2)/(p-1)) for each original p. Hence Q divides the finite product of those prime powers over odd primes p<B_*. This is a finite carrier restriction, with no phase enumeration or exclusion claim.
+
+The remaining unrestricted obligation is to produce a uniformly bounded missing mixed label, or a uniformly bounded actual parent with the required capacity, or to contradict the forced joint inventory while retaining its literal phases and complete obligations. The checksum construction by itself does not supply that obligation.
+
+## 164. Two fixed original partners reduce a private-source obstruction to two congruences
+
+Keep the original EB1 family and the actual primitive triangle of §152:
+
+    Q=3^H q^G M, G>=2, gcd(M,3q)=1,
+    d_0=3^H q^2 pr, d_1=3^H q^2 pt, d_2=3^H q^2 rt.
+
+Their full ternary phase is u, their common first-q root is omega, their distinct second-q prefixes are beta_0,beta_1,beta_2, and their literal cofactor phases agree at the actual v modulo M. Relabel once as in PTE so that d_0 has a complete private point escaping v modulo t. All original phases and the complete low-row deletion family J from §155 remain fixed.
+
+The following consumer strengthens the source-selection question in §155. Two fixed original labels control the two other triangle cells. Their deeper q-heights automatically leave positive complete-hole mass; the remaining obstruction is a two-congruence containment of the ENTIRE private region of d_0. An explicit conditional-LLL certificate can defeat that containment. Neither the certificate nor a subsequent whole-hole repair is asserted for every EB1 family.
+
+### Each probe phase has at most one fixed partner
+
+Let h=3^H q^2. This is an ORIGINAL label by divisor closure. The smallest support prime is3, its global height in h is full, and tau(q^2)=3. Thus the actual DR8 hypotheses hold: every h-phase has at most two proper original descendants, independently of their other cofactor coordinates or heights.
+
+For i=1,2, the phase c_i=(u,beta_i) modulo h already contains the proper descendant d_i. It can therefore contain at most one further original; call it m_i when present. The parent h itself cannot own c_i, since that would contain A_(d_i), contrary to comparable-original disjointness. Write
+
+    m_i=3^H q^e_i s_i, e_i>=2, s_i|M,
+    b_i=a_(m_i) mod s_i.
+
+These partners are fixed original labels, determined before any private source is chosen. They are not separately selected suppliers at different cofactor points.
+
+Choose ANY escaped complete private point x of d_0 and write w=x mod M. It satisfies
+
+    w=v mod p, w=v mod r, w!=v mod t.
+
+Let F_w be the whole fibre with fixed full ternary coordinate u, first-q root omega and complete cofactor w. Let F_i(w) be its complete second-prefix cell beta_i, for i=1,2. Under the uniform law mu_w on F_w, each cell has mass1/q.
+
+Every original of q-height at most one is false throughout F_w, since its truth value is constant there and it misses the private point x. In F_i(w), d_i fails at t and the other triangle labels have wrong q-prefixes. Every remaining retained original has full ternary height H, q-height at least two and h-phase c_i. The preceding global phase cap leaves only m_i. Consequently the COMPLETE low-row deletion hole obeys the exact identity
+
+    mu_w(E_J intersect (F_1(w) union F_2(w)))
+      =2/q-sum_(i=1,2; m_i exists)
+                  q^(1-e_i) 1_(w=b_i mod s_i).             (TPO1)
+
+A matching partner contributes exactly q^(1-e_i); its higher q-digits are retained in this count. The two probe cells are disjoint, so no union-bound loss enters TPO1. This is a subset of the correctly defined joint deletion hole, not a claim that these cells exhaust E_J or equal a union of private regions.
+
+### Only two compatible shallow partners can eliminate both cells
+
+If either partner is absent or its cofactor misses w, an entire cell belongs to E_J. If either partner has e_i>=3, the reserve in the two cells is at least
+
+    1/q-1/q^2=(q-1)/q^2>0,
+
+even if the other cell is fully retained-top-covered. Thus zero reserve in both cells is equivalent to
+
+    e_1=e_2=2 and w=b_1 mod s_1 and w=b_2 mod s_2.           (TPO2)
+
+The already saturated original3^H qp phase contains d_0,d_1, while the corresponding3^H qr phase contains d_0,d_2. A further partner containing p or r cannot match an escaped w with the displayed p,r phases. Such a partner therefore leaves a whole cell at every escaped source. In the remaining case both partner cofactors satisfy gcd(s_i,pr)=1.
+
+For shallow partners, s_i>1 because m_i is a proper descendant of h. The two partners have different numerical labels and therefore s_1!=s_2. If their cofactor congruences are incompatible, TPO2 never occurs. Otherwise their intersection is one congruence
+
+    w=b mod s, s=lcm(s_1,s_2).
+
+The index s is analytical; it need not be an original label. It is composite, since two distinct nonunit divisors of a prime cannot exist. As s|M and M has no prime factor2 or3, s>=25. Also gcd(s,pr)=1 and gcd(ts,d_0)=1. The indices t and s themselves need NOT be coprime.
+
+Let V be the projection modulo M of all private points of d_0 escaping v modulo t. PTE makes V nonempty. In this sole remaining two-compatible-shallow-partner case, zero reserve at EVERY escaped source is equivalent to
+
+    V subset {w:w=b mod s},
+
+and hence to the complete private-region containment
+
+    P_(d_0) subset {x:x=v mod t} union {x:x=b mod s}.        (TPO3)
+
+This is the exact obstruction for the two probes. It does not assert that the full fibre has no other holes. If t|s and b=v modulo t, the second congruence is contained in the first and TPO3 is already impossible by PTE's escaped private point. If t|s and the residues differ modulo t, the two congruences are disjoint; otherwise t and s are coprime. None of the arguments below assumes independent query events under the private-source law.
+
+### Restrict every original blocker to the complete owner class
+
+To test TPO3, parameterize the ENTIRE original owner class, including every remaining q-digit and every cofactor coordinate:
+
+    Sigma={a_0+d_0 z:z mod L}, L=Q/d_0,
+
+where a_0 is the literal phase of d_0. This is a bijection from Z/LZ to the owner class modulo Q. Initially z is uniform; no privacy is yet asserted.
+
+For EVERY other original d define its blocker B_d by a_0+d_0 z belonging to A_d. Put
+
+    g_d=gcd(d,d_0), n_d=d/g_d.
+
+The blocker is empty unless a_d=a_0 modulo g_d. When compatible it is exactly
+
+    z=((a_d-a_0)/g_d)*(d_0/g_d)^(-1) mod n_d,              (TPO4)
+
+since gcd(d_0/g_d,n_d)=1. Here n_d|L and its probability is1/n_d. Every nonempty blocker has n_d>1: n_d=1 would make d a divisor of d_0 and the original classes disjoint. Comparable larger originals are empty blockers as well.
+
+It is NOT legitimate to discard all primes already present in d_0. The reduced n_d can share an owner prime when d tests additional digits at that prime; those residual coordinates and all their correlations remain in TPO4. Repeated reduced moduli remain separate event indices with their actual phases; identical congruence events alone may be exactly deduplicated. No distinct-modulus theorem is applied to this restricted family.
+
+Avoiding all these blockers is exactly the complete private region P_(d_0). The two analytical query events are
+
+    T={z:a_0+d_0 z=v mod t},
+    C_s={z:a_0+d_0 z=b mod s}.
+
+Their original probabilities are1/t and1/s because gcd(ts,d_0)=1. A general query not coprime to d_0 would instead require the same gcd reduction and compatibility test as TPO4; its probability could not simply be written1/k. The augmented avoidance set is exactly
+
+    P_(d_0) intersect complement(T) intersect complement(C_s).
+
+Thus every point found by an avoidance argument is a genuine escaped private source, rather than merely an avoiding lower shadow.
+
+### A conditional-LLL certificate preserves the whole private-source law
+
+Use the independent CRT prime-power coordinates of the ONE uniform variable z modulo L. A blocker with modulus n_d depends on the corresponding full prime-power coordinates. Joining blockers whenever gcd(n_d,n_c)>1 therefore gives a valid variable-sharing dependency graph, including residual owner-prime digits and repeated reduced indices.
+
+Suppose there are activities theta_d in (0,1), one for every nonempty source blocker, satisfying
+
+    1/n_d <= theta_d
+       product_(c!=d, gcd(n_c,n_d)>1)(1-theta_c).           (TPO5)
+
+This is the explicit asymmetric LLL hypothesis for that complete blocker family. Let nu be uniform on the whole P_(d_0), equivalently the uniform owner-class law conditioned on avoiding EVERY source blocker. For k=t or s put
+
+    Lambda(k)=product_(d:gcd(n_d,k)>1)(1-theta_d)^(-1).
+
+Haeupler–Saha–Srinivasan, *New Constructive Aspects of the Lovasz Local Lemma*, [arXiv:1001.1231v5](https://arxiv.org/abs/1001.1231v5), Theorems1.1 and2.1, applies to finite independent variables with these variable-sharing neighborhoods. Theorem2.1 bounds arbitrary query probabilities in the actual conditional avoidance distribution. It gives
+
+    nu(T)<=Lambda(t)/t, nu(C_s)<=Lambda(s)/s.
+
+Using all prime-sharing blockers is an admissible, possibly enlarged neighborhood. This use is of the conditional law, not a Moser–Tardos terminal distribution or a claim that resampling preserves privacy.
+
+Therefore the sufficient source-selection test is
+
+    Lambda(t)/t+Lambda(s)/s<1.                            (TPO6)
+
+It leaves positive nu-mass outside both queries. Such a point misses the intersection of the two shallow partner cofactors, so at least one whole F_i(w) lies in E_J. The two query events may share t-coordinates; the step is a union bound under ONE conditional law and does not require their independence.
+
+For example, the sufficient bounds Lambda(t)<=4 and Lambda(s)<=4 give
+
+    nu(complement(T) intersect complement(C_s))
+      >=1-4/5-4/25=1/25,
+
+using t>=5 and s>=25. These inflation bounds are a target, not a proved consequence of the existing original-parent capacities. Conversely, whenever TPO5 is available, containment TPO3 necessarily requires Lambda(t)/t+Lambda(s)/s>=1. Failure of TPO6 alone proves neither that containment nor absence of a good source.
+
+### The resulting low-row obligation and the remaining bridge
+
+If a source has positive reserve, the uniform law on the WHOLE E_J intersect F_w is an actual complete-hole law. When a whole cell F_i(w) is obtained by a missed partner, whole original coverage requires the low-row originals to cover that complete cell. Let L_i(w) contain ALL actual originals in J with matching ternary prefix, second-q prefix beta_i and literal cofactor incidence at w. The q-height-zero and height-one originals are already false on F_w. Uniform counting within the cell therefore yields
+
+    sum_(d in L_i(w)) q^(2-v_q(d))>=1.                    (TPO7)
+
+Thus either an aligned q-height-two low-row original exists, or at least q distinct deeper low-row originals are required. This statement concerns the same actual cofactor, all later q-digits and the entire cell; it supplies no additional copy of a shared original elsewhere.
+
+The new reduction is from arbitrary retained top inventory to at most two fixed original partners, and then to a two-congruence condition on one COMPLETE private region. Deep partners cannot block positive reserve. The unresolved source step is to defeat TPO3, for example by proving a certificate such as TPO5–TPO6 for the actual blocker inventory. Even after source selection, TPO7 can be paid by existing low-row originals; a legal repair of the full E_J and strict whole-family descent remain separate obligations. No argument here forces every hypothetical cover to contain this particular triangle or proves unrestricted noncoverage. These are ordinary mathematical deductions; no new Lean verification is asserted.
