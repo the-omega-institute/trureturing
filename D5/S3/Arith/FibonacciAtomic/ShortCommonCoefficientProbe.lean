@@ -130,10 +130,13 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
       have hrec := Real.goldenRatio_mul_fib_succ_add_fib (k + 1)
       have hf := Nat.fib_add_two (n := k)
       have hm := Nat.fib_le_fib_succ (n := k)
+      have hfpos : 0 < (Nat.fib (k + 2) : Real) := by
+        exact_mod_cast Nat.fib_pos.mpr (by omega : 0 < k + 2)
       have hR : (Nat.fib (k + 2) : Real) = (Nat.fib k : Real) + Nat.fib (k + 1) := by
         exact_mod_cast hf
       have hmR : (Nat.fib k : Real) ≤ Nat.fib (k + 1) := by exact_mod_cast hm
       norm_num only [Nat.add_assoc] at hrec
+      dsimp [φ] at hφ hφ1 hφsq ⊢
       nlinarith [hφ, hφ1, hφsq]
     have hqR : 0 < (q : Real) := by exact_mod_cast (show 0 < q by omega)
     have hsmall : (q : Real) * α ^ j < 1 / 2 := by
