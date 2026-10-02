@@ -82,6 +82,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumBounds/Designs/CrossFrameExclusiveDualRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/aceska-kaczanowski-2022-exclusive-grassmannian-dual-refutation` (refuted) by `D5/S3/QuantumBounds/Designs/CrossFrameExclusiveDualRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"aceska-kaczanowski-2022-exclusive-grassmannian-dual-refutation","declaration_gid":"D5/S3/QuantumBounds/Designs/CrossFrameExclusiveDualRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* R. Aceska and M. Kaczanowski (2022). *Cross-Frame Potential*. DOI: [10.1080/01630563.2022.2128818](https://doi.org/10.1080/01630563.2022.2128818). URL: <https://arxiv.org/abs/2205.05613v3>.

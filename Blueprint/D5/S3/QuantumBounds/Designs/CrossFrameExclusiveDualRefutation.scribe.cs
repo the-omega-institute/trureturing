@@ -34,13 +34,17 @@ internal sealed class CrossFrameExclusiveDualRefutationDocument : IScribeDocumen
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "A noncanonical unique minimizer", Disp(new Formula.Not(Call("claim"))), "result",
                 "Take n = 1, k = 3 and F = (3, 2, 1). Its frame bound is 14 and its duals satisfy 3 h_0 + 2 h_1 + h_2 = 1. The off-diagonal bounds imply 2 |h_0| <= mu(F,H), 3 |h_1| <= mu(F,H) and 3 |h_2| <= mu(F,H). Hence 1 <= (5/2) mu(F,H). The dual G = (1/5, 2/15, 2/15) attains mu(F,G) = 2/5. If a dual has magnitude at most 2/5, the reconstruction identity and the three coordinate upper bounds force each coordinate to equal the corresponding coordinate of G. Thus G is the unique minimizer. The frame operator is multiplication by 14, so its canonical dual has first coordinate 3/14, different from 1/5.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("aceska-kaczanowski-2022-exclusive-grassmannian-dual-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string name,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("cross-frame-exclusive-" + id),
             DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Call(string name, params Formula[] args) =>
         args.Length == 0 ? Seq(Operatorname, Grp(F.Id(name)))
