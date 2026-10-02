@@ -25,7 +25,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", required=True, type=pathlib.Path)
     parser.add_argument("--out", required=True, type=pathlib.Path)
-    parser.add_argument("--unit", choices=["rollback", "negatives", "mapping", "isolated"], required=True)
+    parser.add_argument("--unit", choices=["rollback", "negatives", "mapping", "isolated", "repair"], required=True)
     parser.add_argument("--reference", type=pathlib.Path)
     args = parser.parse_args()
     if sys.platform != "darwin":
@@ -81,7 +81,127 @@ def main():
             raise RuntimeError(f"unmatched negative or control: {label}; see {path}")
 
     try:
-        if args.unit == "rollback":
+        if args.unit == "repair":
+            package = root / "tools/lean-inspector/LeanInformationAudit/ContractPrototype"
+            mapping = package / "NameMapping.lean"
+            equivalence = package / "Equivalence.lean"
+            unresolved = package / "UnresolvedEquivalence.lean"
+            inline = root / "Reg/ContractPrototype/Inline.lean"
+            witness = root / "Reg/ContractPrototype/ValidWitness.lean"
+            mapping_probe = "LeanInformationAuditRegTests.ContractMappingProbe"
+            semantic_probe = "LeanInformationAuditRegTests.ContractSemanticProbe"
+
+            def mutation(label, path, transform, module, expected, mode=None):
+                original = path.read_bytes()
+                changed = transform(original.decode())
+                if changed == original.decode():
+                    raise RuntimeError("mutation did not change source: " + label)
+                prediction = {
+                    "mutation_location": str(path.relative_to(root)),
+                    "expected_red_tests": expected, "expected_compile_errors": 0,
+                }
+                (out / (label + "-prediction.json")).write_text(json.dumps(prediction, indent=2) + "\n")
+                environment = os.environ | ({"STRATALINT_CONTRACT_SEMANTIC_MUTATION": mode} if mode else {})
+                try:
+                    path.write_text(changed)
+                    build(label, module, 2, r"\[FAIL\] " + re.escape(expected[0]), environment)
+                    row = results[-1]
+                    if row["compile_errors"] != 0 or sorted(row["named_failures"]) != sorted(expected):
+                        raise RuntimeError("unexpected repair mutation outcome: " + label)
+                    row["mutation_location"] = prediction["mutation_location"]
+                    row["expected_red_tests"] = expected
+                finally:
+                    path.write_bytes(original)
+                if path.read_bytes() != original:
+                    raise RuntimeError("source restoration failed: " + label)
+                row["restored_source_sha256"] = hashlib.sha256(original).hexdigest()
+                build(label + "-restored", module, 0, env=environment)
+                row["restored_exit_code"] = results[-1]["exit_code"]
+
+            def input_negative(label, path, transform, mode, failure, guard, weaken):
+                original = path.read_bytes()
+                changed = transform(original.decode())
+                if changed == original.decode():
+                    raise RuntimeError("input mutation did not change source: " + label)
+                environment = os.environ | {"STRATALINT_CONTRACT_SEMANTIC_MUTATION": mode}
+                try:
+                    path.write_text(changed)
+                    build(label, semantic_probe, 0, r"\[PASS\] " + re.escape(failure), environment)
+                    mutation(label + "-guard", guard, weaken, semantic_probe, [failure], mode)
+                finally:
+                    path.write_bytes(original)
+                if path.read_bytes() != original:
+                    raise RuntimeError("input restoration failed: " + label)
+                build(label + "-source-restored", semantic_probe, 0)
+
+            build("repair-control", mapping_probe, 0)
+            mutation("stale-descriptor", equivalence,
+                     lambda s: s.replace('  check s!"descriptor.{side}" (← identity source record.occurrence.levelParams descriptor)\n    certificate.descriptorIdentity\n', ''),
+                     mapping_probe, ["comparator_rejects_stale_target_descriptor"])
+            mutation("environment-claim", equivalence,
+                     lambda s: s.replace(
+                         'TemplateBinding.assess record.occurrence (some claims[0]!.2)',
+                         'TemplateBinding.assess record.occurrence (some { claims[0]!.2 with descriptor := record.descriptor })'),
+                     mapping_probe, ["comparator_rejects_stale_environment_claim"])
+            mutation("unauthorized-append", mapping,
+                     lambda s: s.replace('  validateInjection mapping\n  let key := oldRecord.occurrence.key',
+                                         '  mapping := mapping.push (`Nat, `Nat)\n  validateInjection mapping\n  let key := oldRecord.occurrence.key'),
+                     mapping_probe, ["comparator_rejects_unauthorized_mapping"])
+            mutation("duplicate-key", mapping,
+                     lambda s: s.replace('      if seen.contains record.occurrence.key then throwError "contract.pairing:duplicate_key"', '      if false then throwError "contract.pairing:duplicate_key"')
+                                .replace('  unless consumed.size == newRecords.size do throwError "contract.pairing:unconsumed_record"', '  unless true do throwError "contract.pairing:unconsumed_record"'),
+                     mapping_probe, ["comparator_rejects_duplicate_occurrence_key", "comparator_rejects_unconsumed_occurrence"])
+            mutation("missing-key", mapping,
+                     lambda s: s.replace('      | throwError "contract.pairing:missing_key:{key.theoremName}/{key.catalog}"', '      | continue'),
+                     mapping_probe, ["comparator_rejects_missing_occurrence_key"])
+            mutation("unconsumed", mapping,
+                     lambda s: s.replace('  unless consumed.size == newRecords.size do throwError "contract.pairing:unconsumed_record"', '  unless true do throwError "contract.pairing:unconsumed_record"'),
+                     mapping_probe, ["comparator_rejects_unconsumed_occurrence"])
+            mutation("theorem-only-pair", mapping,
+                     lambda s: s.replace('newRecords.find? (·.occurrence.key == key)', 'newRecords.find? (·.occurrence.key.theoremName == key.theoremName)'),
+                     mapping_probe, ["comparator_pairs_same_theorem_multiple_catalogs"])
+            mutation("theorem-only-input", mapping,
+                     lambda s: s.replace('owner == key.registrationModule && inputKey input.entry == key',
+                                         'owner == key.registrationModule && input.entry.theoremName == key.theoremName'),
+                     mapping_probe, ["comparator_rejects_missing_input_key",
+                                     "comparator_pairs_same_theorem_multiple_catalogs"])
+            mutation("duplicate-input", mapping,
+                     lambda s: s.replace('  unless candidates.size == 1 do', '  unless !candidates.isEmpty do'),
+                     mapping_probe, ["comparator_rejects_duplicate_input_key"])
+            mutation("support-collision", mapping,
+                     lambda s: s.replace('unless earlier == name do throwError "contract.mapping:constant_collision:{earlier}/{name}"', 'unless true do throwError "contract.mapping:constant_collision:{earlier}/{name}"'),
+                     mapping_probe, ["comparator_rejects_prefix_unmigrated_collision"])
+            # Both negative inputs are ordinary, kernel-checked contract source changes.
+            input_negative("generated-bridge-input", inline,
+                     lambda s: s.replace('theorem bridge :', 'theorem renamedBridge :')
+                                .replace('Inline.bridge, bridge', 'Inline.renamedBridge, renamedBridge'),
+                     "bridge", "comparator_rejects_generated_bridge_rename", mapping,
+                     lambda s: s.replace('    let predicted := (authorization.generatedBridges.find? (·.1 == oldRealization)).map Prod.snd\n      |>.getD (predictedCompanionName oldEnv mapping entry primitiveRealizationSuffix)',
+                                         '    let predicted := newInput.entry.realizationName'))
+            input_negative("undeclared-input", witness,
+                     lambda s: s.replace('def thirdDeclaration',
+                         'def changedReads := counterexampleRealization (fun i : Fin 2 => decide (i = 1))\n'
+                         'theorem changedBridge : WitnessPrimitiveRealization arena (¬ claim) changedReads := ⟨fun _ => third⟩\n'
+                         'theorem changedLaw : arena.Law changedReads := ⟨(0 : Fin 2), rfl⟩\n'
+                         'theorem changedVariation : arena.Law changedReads ∧ ¬ arena.Law arena.constantTrue := arena.variation changedLaw\n'
+                         'theorem changedSensitivity : LeanInformationAudit.FiniteSlotSensitivity arena.toPrimitiveLawArena := arena.sensitivity changedLaw\n\ndef thirdDeclaration')
+                       .replace('def thirdDeclaration : Registration third\n    WitnessArena WitnessArena (PrimitiveRealization arena.signature)\n    (arena.Law reads',
+                         'def thirdDeclaration : Registration third\n    WitnessArena WitnessArena (PrimitiveRealization arena.signature)\n    (arena.Law changedReads')
+                       .replace('realization := .witness arena reads reads.toPrimitiveBundle\n    ⟨`Reg.ContractPrototype.Fixtures.Witness.thirdBridge, thirdBridge⟩ law',
+                         'realization := .witness arena changedReads changedReads.toPrimitiveBundle\n'
+                         '    ⟨`Reg.ContractPrototype.ValidWitness.changedBridge, changedBridge⟩ changedLaw')
+                       .replace('  readout := none\n  variation := some ⟨`Reg.ContractPrototype.Fixtures.Witness.variation, variation⟩\n  sensitivity := some ⟨`Reg.ContractPrototype.Fixtures.Witness.sensitivity, sensitivity⟩',
+                         '  readout := none\n  variation := some ⟨`Reg.ContractPrototype.ValidWitness.changedVariation, changedVariation⟩\n'
+                         '  sensitivity := some ⟨`Reg.ContractPrototype.ValidWitness.changedSensitivity, changedSensitivity⟩'),
+                     "undeclared", "comparator_rejects_undeclared_primitive_change", equivalence,
+                     lambda s: s[:s.index('  let source := oldRecord.escape.bridgeKind == "source-equivalence"')] +
+                         s[s.index('  let occurrence := oldRecord.occurrence', s.index('def verifyMissingRecord')):])
+            mutation("unresolved-form", unresolved,
+                     lambda s: s[:s.index('def requireSupportedDiagnostic')] +
+                         'def requireSupportedDiagnostic (_diagnostic : String) : MetaM Unit := pure ()\n\n' +
+                         s[s.index('/-- Verify the named-site'):],
+                     semantic_probe, ["comparator_rejects_unsupported_unresolved_form"])
+        elif args.unit == "rollback":
             replay = root / "tools/lean-inspector/LeanInformationAudit/ContractPrototype/Replay.lean"
             original = replay.read_bytes()
             text = original.decode()
@@ -129,7 +249,7 @@ def main():
                 build("mapping-accept-all", "LeanInformationAuditRegTests.ContractMappingProbe", 2,
                       r"\[FAIL\] comparator_rejects_same_type_readout")
                 if results[-1]["compile_errors"] != 0 or sorted(results[-1]["named_failures"]) != sorted(expected):
-                    raise RuntimeError("mapping mutation did not produce precisely the four predicted failures")
+                    raise RuntimeError("mapping mutation did not produce precisely the predicted failures")
             finally:
                 comparator.write_bytes(original)
             if comparator.read_bytes() != original:
