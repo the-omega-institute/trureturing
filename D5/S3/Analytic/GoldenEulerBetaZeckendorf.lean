@@ -305,7 +305,7 @@ private theorem conjugate_error_sign {n : Nat} (hn : 0 < n) :
       have hupper := (abs_lt.mp htailAbs).2
       linarith [pow_pos hr0 k]
 
-private theorem fib_mul_inv_golden {k : Nat} (hk : 2 <= k) :
+theorem fib_mul_inv_golden {k : Nat} (hk : 2 <= k) :
     (Nat.fib k : Real) * Real.goldenRatio⁻¹ =
       (Nat.fib (k - 1) : Real) - Real.goldenConj ^ k := by
   have h := Real.goldenConj_mul_fib_succ_add_fib (k - 1)

@@ -158,11 +158,9 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
       apply Nat.Coprime.isCoprime
       simpa [p, q, show j - 1 + 1 = j by omega] using Nat.fib_coprime_fib_succ (j - 1)
     have herr : |(q : Real) * α - p| = α ^ j := by
-      have hg := Real.goldenConj_mul_fib_succ_add_fib (j - 1)
-      rw [show j - 1 + 1 = j by omega] at hg
       have heq : (q : Real) * α - p = -Real.goldenConj ^ j := by
+        have h := fib_mul_inv_golden (k := j) (by omega)
         dsimp [q, p, α, φ]
-        rw [Real.inv_goldenRatio]
         linarith
       rw [heq, abs_neg, abs_pow]
       congr 1
