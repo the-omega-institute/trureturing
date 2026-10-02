@@ -54,7 +54,7 @@ private theorem pushforward_comp {X Y Z : Type*} [Fintype X] [Fintype Y]
         simp [Ne.symm hy]
       · simp
 
-private theorem pushforward_is_law {X Y : Type*} [Fintype X] [Fintype Y]
+theorem pushforward_is_law {X Y : Type*} [Fintype X] [Fintype Y]
     (p : X -> Real) (f : X -> Y)
     (hp : (forall x, 0 ≤ p x) ∧ ∑ x, p x = 1) :
     (forall y, 0 ≤ pushforward f p y) ∧ ∑ y, pushforward f p y = 1 := by
