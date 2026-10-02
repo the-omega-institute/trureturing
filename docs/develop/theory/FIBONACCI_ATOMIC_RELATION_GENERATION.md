@@ -43376,3 +43376,144 @@ U_L/(E\ell)\longrightarrow1,\qquad m/X_L\longrightarrow1,
 正是（307.9）。已知的 PPS 前置因此提供该指定模三短边输入；其余核心比值与共同基线展开仍按各自前提使用。最后将（309.17）与（305.8）相加即得（309.18）。
 
 若 $a>0$，中心化系数严格为正，但实际差值仍含 $h_Lb_L/m$。本节没有证明它在 $\sqrt m$ 尺度消失，也没有控制共同基线 $S(m)$ 或价格剥离有符号尾项。因此质量刚性与正的中心化系数均不决定严格 Robin 符号，也不推出 RH。$\square$
+
+## 310. 完整末端族的实际最小余量与最优截止的不逃逸
+
+**定义 310.0。** 沿用 §§307–309 的实际整数 $T_L,H_L(z)$、$m=3L+2$、$E=e^\gamma$、$\ell=\log m$、$\rho=m^{1/4}$ 与 $h_L(z),M_L(z),b_L$。记
+\[
+\alpha_L=\frac{U_L}{E\ell},\qquad \chi_L=\frac m{X_L},\qquad
+\beta_L=\rho b_L=\rho(\alpha_L-\chi_L),
+\tag{310.1}
+\]
+\[
+t_L(z)=\frac{m-z}{\rho^3},\qquad q_L(z)=\frac{h_L(z)}{\rho^3},\qquad
+G_L(z)=\frac{\sqrt m}{E}\,[\Delta(H_L(z))-\Delta(T_L)].
+\tag{310.2}
+\]
+本节只在 $L\ge16$、$m/2\le z\le m$ 使用这些截止。定义有限候选集及实际最小值
+\[
+\mathcal C_L=\{m/2,m\}\cup\{p:m/2\le p\le m,\ p\nmid A_L\},
+\qquad I_L=\min_{z\in[m/2,m]}G_L(z),
+\tag{310.3}
+\]
+其中集合右侧的 $p$ 均为素数。
+
+**定理 310.1（有限代表与完整半区间上的余量下界）。** $I_L$ 存在且由 $\mathcal C_L$ 中的一个截止取得。取非负参数 $\epsilon_L,\delta_L$，并假定该实际 $L$ 上（309.4）对全部半区间截止及其 $v$ 域成立。若另有
+\[
+\ell\ge10000,\quad 0\le\epsilon_L\le10^{-3},\quad
+0\le\delta_L\le\rho/1000,\quad
+\frac{99}{100}\le\alpha_L,\chi_L\le\frac{101}{100},
+\tag{310.4}
+\]
+则对全部 $m/2\le z\le m$，一致有
+\[
+G_L(z)\ge q_L(z)\beta_L+\frac{t_L(z)^2}{32}
+-3\delta_Lt_L(z)-\delta_L^2-\frac6{\rho^2}.
+\tag{310.5}
+\]
+这里的下界覆盖完整半区间，不预先限制 $t_L(z)$。
+
+**证明。** 每个 $z\in[m/2,m]$ 都可用 $\mathcal C_L$ 中不超过它的最大元素 $w$ 表示。若一个缺失素数在 $(w,z]$ 内，它也是候选且不超过 $z$，与 $w$ 的最大性矛盾。因此两点删去的素数集合相同，$H_L(w)=H_L(z)$。候选集有限非空，有限实数集合的最小值存在，故（310.3）的两个取最小值方式相同。严格下端约定在素数截止处仍保持这一代表关系；两个边界保证空带也被覆盖。
+
+为证明下界，暂记 $D=m-z$、$h=h_L(z)$、$M=M_L(z)$、$s=s_L(z)$，$t=D/\rho^3$、$q=h/\rho^3$、$j=M/\rho^6$。实际有限正权重与（309.4）–（309.6）给
+\[
+0\le q\le(1/2+\epsilon_L)t+\delta_L,\qquad
+j\ge t^2/4-2t(\epsilon_Lt+\delta_L),\qquad j\ge0.
+\tag{310.6}
+\]
+又 $0\le t\le\rho/2$，故（310.4）使 $q\le503\rho/2000$，特别是 $q\le\rho/3$ 且 $0\le q\chi_L/\rho\le1/3$。
+
+以下光滑核与 Taylor 界都是经典中间步骤。对 $m/2\le p\le m$，$\log p\le\ell$ 与 $m^2\ge p(2m-p)$ 给
+\[
+\frac{\log p}{m\ell}+\frac{(m-p)\log p}{m^2\ell}\le\frac1p.
+\]
+同时 $\log p\ge\ell/2$、$p\ge m/2$ 及
+$|\log(1+1/p)-1/p|\le2/p^2$ 给
+\[
+0\le\log(1+1/p)\le\frac{4\log p}{m\ell},
+\]
+\[
+\log(1+1/p)\ge\frac{\log p}{m\ell}
++\frac{(m-p)\log p}{m^2\ell}-\frac{16\log p}{m^2\ell}.
+\]
+实际删除集合上求和得到
+\[
+0\le s\le\frac{4h}{m\ell},\qquad
+\ell s\ge\frac q\rho+\frac j{\rho^2}-\frac{16q}{\rho^5}.
+\tag{310.7}
+\]
+由上述界，$s\le4q/(\rho\ell)\le503/(500\ell)<1$。对 $0\le x\le1/3$，对数 Taylor 式及其四阶截断余项给
+$\log(1-x)\ge-x-3x^2/4$；对 $0\le s\le1$，指数 Taylor 界给 $1-e^{-s}\ge s-s^2$。取 $x=q\chi_L/\rho$，代入实际响应（307.7），再用（310.7），得到
+\[
+G_L(z)\ge q\beta_L+\alpha_Lj
+-\left(\frac{3\chi_L^2}{4}+\frac{16\alpha_L}{\ell}\right)q^2
+-\frac{16\alpha_Lq}{\rho^3}.
+\tag{310.8}
+\]
+（310.4）保证括号内不超过 $4/5$，$16\alpha_L\le17$，而 $q\le\rho/3$ 给 $17q/\rho^3\le6/\rho^2$。最后，（310.6）与 $\epsilon_L\le1/1000$ 蕴含
+\[
+\alpha_Lj-\frac45q^2
+\ge\frac{t^2}{32}-3\delta_Lt-\delta_L^2.
+\tag{310.9}
+\]
+具体地，$q\le501t/1000+\delta_L$，且
+$j\ge248t^2/1000-2\delta_Lt$。将二者代入 $\alpha_Lj\ge99j/100$，展开平方后，$t^2$ 系数大于 $1/32$，混合项系数大于 $-3$，$\delta_L^2$ 系数大于 $-1$。这给（310.9），与（310.8）合并即得（310.5）。$\square$
+
+**假设 310.1。** 采用定理309.1提供的完整半区间校准，且假设实际核心与实际漂移满足
+\[
+\alpha_L\longrightarrow1,\qquad \chi_L\longrightarrow1,
+\qquad \beta_L\longrightarrow\beta\in\mathbb R.
+\tag{310.10}
+\]
+最后一个有限极限是独立前提；前两个比值极限不蕴含它。
+
+**定理 310.2（实际非增余量的截止不能逃逸）。** 在假设310.1下，存在固定 $C>0$，使全部充分大的 $L$ 与全部 $z\in[m/2,m]$ 满足
+\[
+G_L(z)\le0\quad\Longrightarrow\quad0\le t_L(z)\le C.
+\tag{310.11}
+\]
+特别地，所有取得 $I_L$ 的截止均在此统一范围内。可取 $K=|\beta|+1$、$C=64(K+4)$。
+
+**证明。** 充分大时，（310.4）成立，并且 $|\beta_L|\le K$、$0\le\delta_L\le1$、$\rho\ge1$。由（310.6），$q_L(z)\le t_L(z)+\delta_L$。因此（310.5）给
+\[
+G_L(z)\ge\frac{t^2}{32}-(K+3\delta_L)t-K\delta_L-\delta_L^2-\frac6{\rho^2}
+\ge\frac{t^2}{32}-(K+3)t-K-7.
+\tag{310.12}
+\]
+若 $G_L(z)\le0$，则最后的二次式不正。对于 $t>64(K+4)$、$K\ge0$，该二次式严格为正，矛盾，得到（310.11）。无删除点 $z=m$ 给 $G_L(m)=0$，故 $I_L\le0$，全部最小截止都适用这一界。此处不逃逸来自实际有限估计，没有假设最小值极限或终点响应的一致收敛。$\square$
+
+**定理 310.3（真正有限最小值与全部最优截止的极限）。** 在假设310.1下，置
+\[
+d_* =\max\{0,-2\beta\},\qquad v_*=-\frac{\min\{\beta,0\}^2}{2}.
+\tag{310.13}
+\]
+则
+\[
+I_L\longrightarrow v_*.
+\tag{310.14}
+\]
+对任意实际最小截止序列 $z_L^*\in[m/2,m]$、$G_L(z_L^*)=I_L$，均有
+\[
+\frac{m-z_L^*}{m^{3/4}}\longrightarrow d_*.
+\tag{310.15}
+\]
+因此该结论处理有限 $L$ 上完整指定尾族的实际最小值，而不限于对每个固定参数的极限曲线取形式最小值。
+
+**证明。** 先考察任意趋于无穷的整数子列 $L_n$ 及其实际截止 $z_n$。如果 $t_{L_n}(z_n)\to d\ge0$，则两侧质量校准（309.13）与 $\epsilon_{L_n},\delta_{L_n}\to0$ 给 $q_{L_n}(z_n)\to d/2$；（309.6）同时给 $M_{L_n}(z_n)/\rho_{L_n}^6\to d^2/4$。相对宽度为 $t_{L_n}(z_n)/\rho_{L_n}\to0$，故 §308 的实际有限响应运输适用于此子列。加回真实漂移后，
+\[
+G_{L_n}(z_n)\longrightarrow\phi_\beta(d),\qquad
+\phi_\beta(d)=\frac{d^2}{8}+\frac{d\beta}{2}.
+\tag{310.16}
+\]
+这里没有从单个全序列极限推断子列结论：有限校准与响应恒等式在每个实际 $L_n$ 上成立，各个核心输入也沿同一子列限制。
+
+对固定 $d_*\ge0$，取实际竞争截止
+$w_L=\max\{m/2,m-d_*\rho^3\}$。它始终在半区间内，充分大时等于 $m-d_*\rho^3$，故（310.16）给 $G_L(w_L)\to\phi_\beta(d_*)=v_*$。取任意最小截止序列。定理310.2给其缩放宽度有界。任一收敛子列的极限 $d\ge0$ 都满足
+\[
+\phi_\beta(d)\le v_*=
+\min_{u\ge0}\phi_\beta(u),
+\tag{310.17}
+\]
+因为实际最小值逐点不超过同一实际竞争截止的响应，而两边沿该子列均有极限。经典配方给 $\phi_\beta$ 在 $u\ge0$ 上的唯一最小点 $d_*$，故 $d=d_*$。有界序列的任一收敛子列都只能有这一极限，紧性遂给整个最小宽度序列收敛，得到（310.15）。最后将该全序列重新代入（310.16），即得（310.14）。
+
+全部候选整数均保留（307.4）的饱和签名、核心和5040整除性；最小化也只遍历（307.1）的完整截止尾集合。它没有遍历任意删除子集、全部同签名整数或全部整数。非零 $\beta$ 的实际实现、漂移速度及共同有符号基线 $S(m)$ 仍按各自独立问题处理。即使 $\beta<0$ 使成对最小差额在此尺度为负，也没有决定任一实际整数的绝对 Robin 余量或 RH。$\square$

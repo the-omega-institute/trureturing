@@ -14208,3 +14208,850 @@ BOTH actual centers(u,alpha) and(v,beta), with PX1 restricted to
 untouched originals. This does not force an excluded agreement to
 occur or exclude the nonsingleton local incidences in section109.
 No new Lean verification or unrestricted noncoverage is asserted.
+
+## 111. Every nonpure local branch pays a strict fraction of the two-level batch
+
+Keep the actual local batch G_w=O_w union {R} from section109,
+k=|G_w|, and the exact joint deletion set
+
+    E=Z minus union(C minus (T union O_w)).
+
+For any local digit branch consisting entirely of nonpure classes,
+write m for its number of members, counting R if present. Then
+
+    k+2<4m.                                        (LB5)
+
+The argument uses the same full sibling fibers as LB2, now retaining
+the union of the m actual cofactor APs instead of a singleton.
+It does not replace their possibly intersecting phases by one phase.
+
+### A common branch supplies a union cover of the entire obligation
+
+Write the selected branch's members as cofactor classes c_S modd_S,
+d_S>1. For every point of E, move only its (H-1)-st digit into that
+branch. It remains uncovered by the retained originals. Whole coverage
+by F supplies one selected branch member, so
+
+    E subset {x:x=w mod3^(H-2),
+                  x belongs to some c_S modd_S}.  (LB6)
+
+For each such member, cover its full displayed cylinder by four
+CRT APs using the four nonzero5-roots and the member's cofactor phase.
+Normally give these APs ternary heights0,1,2,3, with the corresponding
+prefixes of w; their total modulus sum is200d_S.
+
+All originals in O_w have the same ternary height H-1 and distinct
+numerical labels, hence distinct cofactors. The only possible repeated
+cofactor in G_w is M, from R and the original occupied ancestor.
+If BOTH occur in the selected branch, assign R heights0,1,2,3 and
+that original heights4,5,6,7. Its four APs then have total sum
+16200M. Every other member keeps heights0 through3. Because H>=20,
+all these prefix constraints are implied by w.
+
+The construction has exactly4m distinct numerical labels. The only
+cofactor repetition was resolved by disjoint ternary heights; different
+3-free cofactors cannot create further numerical collisions. Every
+cofactor uses only the old top color, so adjoining5 makes every new
+label fresh by original CP1. The APs and retained A_5 cover all of E
+by LB6. The resulting whole cover has N-(k+2)+4m classes.
+
+### Equality in the class budget also gives a strict descent
+
+Each selected ORIGINAL member of cofactor d_S is among the removed
+O_w and has old modulus3^(H-1)d_S. Its own new block costs at most
+16200d_S<3^(H-1)d_S. These original payers are distinct.
+
+If R is selected, its new block costs200M. Use the separately deleted
+top class3^H p as its payer. For M=pr or p^2, opposite-color prime5
+and the existing gap bound give M/p<=H+5. Also3^H>200(H+5) for H>=20.
+Thus200M<3^H p. This top payer is different from every height-H-1
+original payer and is used only once. If R is not selected, no such
+payment is needed.
+
+Therefore the new modulus sum is strictly smaller than that of the
+deleted originals. If k+2>4m, cardinality decreases; if k+2=4m,
+cardinality is unchanged and modulus sum decreases. Both violate
+EB1, proving LB5. The budget combines actual disjoint deleted
+labels, not separately optimized or duplicated credits.
+
+### Necessary balance of the surviving branches
+
+With a pure singleton, let the other branch counts be a,b. Then
+k=1+a+b and LB5 applied to both mixed branches gives
+
+    max(a,b)<=3*min(a,b)-4.                         (LB7)
+
+In particular, if the smaller mixed branch has two members, the
+only possibility is(1,2,2); the earlier candidate(1,2,3) is excluded.
+
+Without a pure member, let m be the smallest of the three counts.
+Then3m<=k and k+2<4m, so m>=3. If m=3, the same inequality gives
+k<=9, forcing exactly(3,3,3). Thus the prior(2,2,2) incidence is
+excluded, while larger sufficiently balanced batches remain possible
+under this necessary inequality.
+
+The statement controls arbitrary local inventories at all admitted
+original heights. It does not establish realizability of any surviving
+count pattern or exclude all such patterns. No new general covering
+theorem, numerical search or Lean verification is asserted.
+
+## 112. The complete two-level obligation has trivial cofactor congruence hull
+
+Keep the same exact joint deletion region E from sections109--111.
+It is nonempty because it contains the original E_T, is supported
+over w modulo3^(H-2), and has full final ternary sibling fibers.
+Let Q_i be the complete original cofactor carrier of the top color,
+and let U be the projection of E to Z/Q_i. Define its COMPLETE
+congruence hull as in PH3--PH4: for any z_0 in U,
+
+    Gamma_i(U)=gcd(Q_i,{z-z_0:z in U}).
+
+Then
+
+    Gamma_i(U)=1.                                  (JH1)
+
+This concerns the entire simultaneous deletion of T union O_w.
+It does not assert that the smaller top-only remainder E_T has
+trivial cofactor hull.
+
+### A nontrivial hull would repair all original liabilities at once
+
+Suppose instead g=Gamma_i(U)>1. The existing hull equivalence
+puts U in one actual class c modg. Consequently
+
+    E subset {x:x=w mod3^(H-2),x=c modg}.
+
+Use LB2's four-root repair with cofactor g: add the four CRT APs
+of moduli5g,15g,45g,135g, with the corresponding prefixes of w,
+cofactor phase c and5-roots1,2,3,4. Retained A_5 covers root zero.
+All prime factors of g belong to the old top color, since g|Q_i.
+CP1 therefore makes all four labels fresh and distinct; their
+prefix constraints are justified by H-2>=3.
+
+These four APs cover the ENTIRE E. The deleted original family
+has k+2>=5 members, so cardinality strictly decreases. This
+contradicts EB1 and proves JH1. Only PH3--PH4 and the existing
+actual joint repair interface are reused; no independent private
+points have been assembled into an artificial common source.
+
+### Every full branch union inherits the restriction
+
+For a local digit branch let W_j be the union of its complete
+cofactor APs in Z/Q_i. LB6 gives U subset W_j, including the
+pure-guard branch when present. If W_j lay in a nonunit cofactor
+AP, U would lie there too, contradicting JH1. Hence
+
+    Gamma_i(W_j)=1 for each local branch j.         (JH2)
+
+For two members c_1 modn_1 and c_2 modn_2, the standard complete
+union-hull formula specializes this to
+
+    gcd(n_1,n_2,c_1-c_2)=1.                        (JH3)
+
+The value is representative-independent because both n_1 and n_2
+enter the gcd. In the remaining(1,2,2) layout, JH3 constrains the
+two actual original suppliers in the branch opposite R. The pair
+consisting of R and its companion already has trivial union hull
+by AC2: a shared nontrivial prime phase in that prefix would violate
+the earlier phase exclusion. It is not counted again as new content.
+
+The projection of E_T lies inside the top M-phase and is a smaller
+set than the U used here. JH1 does not transfer to it. Likewise,
+trivial hull does not mean that U contains every cofactor value,
+has any specified density, or splits into independent coordinates.
+The remaining two-supplier and larger balanced incidences require
+their actual intersection data. No new Lean verification or
+unrestricted noncoverage is asserted.
+
+## 113. Disjoint safe-root covers permit one enclosing AP per original
+
+Keep one R=empty EB1 original cover and opposite-color primes p<q,
+with the notation t=min(t_p,t_q) from section104. Write its period
+Q=p^A q^B M, gcd(M,pq)=1, and H=v_3(Q). Let Omega be the complete
+ternary words modulo3^H outside the actual original pure-three guards.
+All those guards and every q-free original will remain unchanged.
+
+For c=0,...,t, write the actual collision original A_(3^c q) as
+
+    s=alpha_c mod3^c, first-q root j_c.
+
+Here j_0=0, and j_c!=0 for c>=1 by comparable-class disjointness.
+Write T={j_c:0<=c<=t} for the collision-root set in sections113--114;
+it is not the top-class batch denoted by T in sections108--112.
+For each nonzero q-root j define its COMPLETE forbidden and safe sets
+
+    B_j=Omega intersect union_(1<=c<=t, j_c=j)
+                         {s:s=alpha_c mod3^c},
+    U_j=Omega minus B_j.                            (SCV1)
+
+Every occurrence of a repeated root is included. Suppose there are
+p-1 pairwise label-disjoint root sets L_1,...,L_(p-1) such that
+
+    union_(j in L_r) U_j=Omega for each r.           (SCV2)
+
+Then the original cover descends to a distinct odd whole cover with
+at most N-(t+1) classes. Thus SCV2 is impossible in an EB1 source.
+All original heights and all actual cofactor phases are unrestricted.
+
+The new interface permits the entire pullback of an original to be
+CONTAINED in one fixed AP. It does not require equality with that AP.
+The exact source map and numerical label map remain those of IC1;
+the disjoint groups are what make a fixed enclosure possible when
+the chosen first-q root varies with the ternary word.
+
+### One common source and one fixed enclosing AP
+
+For each s in Omega and r!=0, choose theta_s(r) in L_r with
+s in U_(theta_s(r)), for example the least allowed member. The groups
+are disjoint, so theta_s is injective. On the required output domain
+with ternary word s in Omega and first-p root r!=0, use the common
+source in the carrier Q'=p^A q^(B-1)M:
+
+    y modp^A=z modp^A, y modM=z modM,
+    y modq^B=theta_s(r)+q*(z modq^(B-1)).           (SCV3)
+
+All higher q-digits remain literal; B=1 has the one-point tail.
+Outside this required domain, retained A_p or a retained pure-three
+guard already covers the point.
+
+Every old q-bearing modulus has form d=q^a u with a>=1 and
+gcd(u,pq)=1, by CP1. Write its q-phase j_d+q*beta_d moduloq^a.
+If j_d belongs to L_r, its WHOLE required-domain pullback is contained
+in the fixed complete CRT AP
+
+    z=r modp, z=beta_d modq^(a-1), z=a_d modu,
+    numerical modulus p*q^(a-1)*u.                (SCV4)
+
+The exact inverse additionally imposes the mask theta_s(r)=j_d,
+which need not be an AP condition. Dropping that mask enlarges the
+set and preserves the covering implication. Since a root belongs
+to at most one L_r, each original receives at most ONE enclosing AP.
+An unassigned root has empty inverse and needs no output class.
+
+### All numerical collision originals disappear
+
+For c=0 the source never selects root0. For c>=1, membership in
+A_(3^c q) requires s=alpha_c mod3^c and hence s in B_(j_c), while
+selection of j_c requires s in U_(j_c). Thus every one of these
+t+1 originals has empty required-domain inverse. Omit them entirely;
+do not add an enclosure with an occupied numerical label.
+
+For all other originals, q^a u maps injectively to p*q^(a-1)*u.
+If a>=2 the new label contains q and cannot collide with a retained
+q-free original. At a=1, a collision would require the original pair
+qu,pu. CP1 forces u=3^c, and these are exactly the already omitted
+classes. Every output modulus is odd and greater than one. Output
+cross-color labels are allowed; CP1 was used only on the original
+inventory.
+
+At any required point, the old whole cover covers its single witness
+SCV3. A q-free owner remains a covering owner, and a q-bearing owner
+has its whole inverse inside its SCV4 enclosure. An omitted collision
+class cannot own that witness. Together with the unchanged coverage
+outside the required domain, this proves whole coverage. At most one
+AP is assigned per noncollision original, giving the asserted saving.
+Neither exact inverses nor irredundancy of the output are required.
+
+### The earlier exact-inverse obstruction keeps its original scope
+
+Section101's reservation control has p=7,q=11, four always-safe roots
+7,8,9,10, and pairwise disjoint complete forbidden prefixes for roots
+2,3,4,5,6. Its six required output roots can use the disjoint groups
+
+    {7}, {8}, {9}, {10}, {2,3}, {4,5}.
+
+Each group contains a safe root at every ternary word. In the fifth
+output column, the inverse of the control's test11*ell_2 is contained
+in the one AP z=5 mod7, z=1 modell_2. The other selectable root3 has
+its own different cofactor label ell_3, so its enclosure has a distinct
+numerical modulus7*ell_3. Their masks need not be APs.
+
+This does not turn that partial inventory into a whole cover. It
+identifies the exact stronger requirement bypassed by SCV4: section101
+still forbids the asserted exact single-AP inverse, while the present
+descent uses containment with separately checked numerical resources.
+No new Lean verification or unconditional noncoverage is asserted.
+
+## 114. Disjoint complete collision regions strengthen the root obstruction
+
+Keep section113's actual sets B_j,U_j on Omega. Let cd be the largest
+number of pairwise label-disjoint subfamilies of the U_j, each covering
+Omega. The enclosing-AP descent gives
+
+    cd<=p-2.                                       (SCV5)
+
+This is a condition on one actual source at arbitrary height. Distinct
+root labels remain distinct even if their safe sets happen to coincide.
+
+### Globally free roots and disjoint pairs are separate usable groups
+
+Let f0 be the number of nonzero roots with B_j empty. Form a graph G
+on the remaining roots, with an edge jk exactly when the COMPLETE sets
+B_j and B_k are disjoint. Write nu(G) for its maximum matching size.
+Every empty B_j supplies a singleton safe covering group. Every edge
+supplies a two-root safe covering group, because U_j union U_k=Omega.
+A matching makes these latter groups label-disjoint and avoids the
+already counted free roots. Therefore
+
+    f0+nu(G)<=cd<=p-2.
+
+Every actual root appearing in T has a nonempty forbidden region if
+it is nonzero: take a private point of one of its collision originals;
+its ternary word avoids all pure-three guards and lies in that B_j.
+The converse is immediate from SCV1. Since0 belongs to T,
+
+    f0=q-|T|,
+    |T|>=q-p+2+nu(G).                              (SCV6)
+
+SG3 used only globally free roots. SCV6 additionally counts disjoint
+PAIRS of complete collision regions, using each numerical root label
+once. It is not valid to form edges from merely disjoint individual
+prefix occurrences when either root has other occurrences.
+
+### Under two-Helly forbidden regions the matching test is exact
+
+Suppose the nonempty B_j satisfy the two-Helly property: every
+pairwise-intersecting subfamily has nonempty total intersection.
+Then
+
+    cd=f0+nu(G).                                   (SCV7)
+
+Indeed any safe covering group L has intersection_(j in L)B_j empty.
+It therefore contains either one empty B_j or two disjoint nonempty
+B_j. Choosing such a witness in each label-disjoint group gives
+distinct free roots and a matching on the nonempty roots. This bounds
+the number of groups above by f0+nu(G); the converse construction
+was already given.
+
+One sufficient hypothesis is that every nonzero collision root occurs
+at just one paired height. Then each B_j is one ternary prefix cylinder
+intersected with Omega. These sets are laminar; a finite pairwise
+intersecting subfamily is a nested chain with nonempty smallest member.
+Repeated-root unions are not assumed to have this property. No VC
+dimension bound or unrestricted cover-decomposition theorem is used.
+
+### Minimum paired height forces one actual ternary path
+
+Suppose the paired height has its least value permitted by SG1:
+
+    t=min(t_p,t_q)=q-p+1.
+
+SG2 and SCV6 force |T|=t+1=q-p+2 and nu(G)=0. Thus all q-roots j_c,
+c=0,...,t, are distinct. Each nonzero B_(j_c) is one nonempty actual
+prefix cylinder intersected with Omega. Since nu(G)=0, no two of
+these complete sets are disjoint. Their original ternary prefixes
+are therefore compatible at every pair of depths, giving
+
+    alpha_d=alpha_c mod3^c whenever1<=c<d<=t.      (SCV8)
+
+In particular the collision prefixes follow ONE common ternary path,
+and its deepest paired prefix meets Omega. This adds an actual phase
+restriction to the earlier root-distinctness count. It does not put
+the original complete private region on that path, or constrain the
+top H-prefix when it lies beyond the paired heights.
+
+For larger t, repeated-root unions and unmatched overlapping regions
+remain possible under these necessary conditions. No argument here
+forces cd>=p-1 for some opposite pair in every EB1 source. No new
+Lean verification or unrestricted noncoverage is asserted.
+
+## 115. Complete collision unions isolate the missing whole-cover constraint
+
+The following two explicit PARTIAL AP families test the geometric
+premises of sections113--114. They are not covers, EB1 sources, or
+instances of concentrated complete prime-private regions and CP5.
+Their numerical palettes are divisor-closed, their comparable APs
+are disjoint, and every displayed AP has a private point within the
+partial family. These weaker properties do not force the required
+safe-root decomposition.
+
+### Nested complete regions attain the insufficient boundary
+
+Fix odd primes5<=p<q, t=q-p+1 and H>=max(t,20). On the common carrier
+3^H*p*q use the numerical labels
+
+    3^h (1<=h<=H), p, q, 3^c p, 3^c q (1<=c<=t).
+
+Assign their actual CRT phases as follows:
+
+* A_3 has phase0. For h>=2, A_(3^h) has phase2+3^(h-1).
+* A_p and A_q have their respective prime phases0.
+* A_(3^c q) has ternary phase1 mod3^c and q-root c.
+* A_(3p) has ternary root2 and p-root1. For c>=2,
+  A_(3^c p) has ternary phase2+2*3^(c-1) and p-root2.
+
+Here t<=q-4, so the nonzero q-roots are distinct. The higher pure
+guards are a prefix antichain in ternary root2. The mixed p-root2
+prefixes are another antichain, disjoint from those guards; the
+remaining p-mixed class has a different p-root. All q-mixed classes
+lie in ternary root1. This verifies comparable disjointness; divisor
+closure follows directly from the displayed numerical chains.
+
+Private points can be chosen on each class's own ternary phase:
+use p-root3 and q-root1 for a pure class; its own p-root and q-root1
+for a p-mixed class; p-root3 and its own q-root for a q-mixed class.
+For A_p use p-root0 and q-root t+1; for A_q use q-root0 and p-root3.
+Each prime class has such private points at BOTH ternary words1 and2.
+All unspecified higher digits can be zero. These are simultaneous
+CRT assignments in the one displayed carrier, not assumed EB1 data.
+
+The whole ternary root1 avoids the pure guards. Thus the COMPLETE
+forbidden regions are
+
+    B_c=[1 mod3^c], 1<=c<=t; B_j=empty, t<j<=q-1.
+
+They all contain the complete word1 mod3^H. Every safe covering
+group must use one of the p-2 empty-region roots; their singleton
+groups attain that bound. Consequently
+
+    |T|=q-p+2, f0=p-2, nu(G)=0, cd=p-2.           (UC1)
+
+Both mixed heights are t, so the SG1 and SG3 numerical thresholds
+hold, including their tight values. Nevertheless the actual CRT
+point with ternary word1, p-root3 and q-root t+1 is uncovered. The
+two-root prime-private witnesses also show why this is not a
+concentrated source. At ternary word1 its q-color family fails CP5.
+
+### Repeated-root unions need not be two-Helly
+
+Take p=5,q=7,t=7,H>=20. Retain the pure guards and p-mixed phases
+above, and replace the q-mixed phases by this table. Ternary digits
+are listed from lowest to highest; each word specifies the entire
+prefix at that original height.
+
+| c | q-root | ternary prefix |
+| --- | --- | --- |
+| 1 | 1 | (1) |
+| 2 | 2 | (1,0) |
+| 3 | 3 | (1,0,0) |
+| 4 | 3 | (1,1,0,0) |
+| 5 | 4 | (1,1,0,0,0) |
+| 6 | 4 | (1,2,0,0,0,0) |
+| 7 | 2 | (1,2,0,0,0,0,0) |
+
+Occurrences of each repeated q-root lie in different second-digit
+branches. Hence comparable disjointness and the private-point
+construction remain valid, using q-root5 for A_p. The noncover
+witness is now ternary word1, p-root3, q-root5.
+
+The COMPLETE unions B_2,B_3,B_4 intersect pairwise at the displayed
+prefixes of depths3,5,7 respectively, but have empty triple
+intersection: those pairwise overlaps have distinct second digits.
+B_1 contains all three unions, and B_5=B_6=empty. Therefore
+
+    B_2 intersect B_3 intersect B_4=empty,
+    every pair of nonempty B_j intersects.         (UC2)
+
+The groups {5}, {6}, {2,3,4} provide three disjoint safe covers.
+Any group using neither5 nor6 must contain all of2,3,4: omitting
+one leaves a nonempty forbidden intersection, also if1 is included.
+Such a triple can be used only once. Thus
+
+    cd=3>f0+nu(G)=2, while cd=p-2<p-1.             (UC3)
+
+This refutes automatic two-Helly behavior and exactness of the
+pair-matching bound for complete repeated-root unions. It preserves
+SCV7's explicit hypothesis and the single-occurrence laminar case.
+
+Both controls retain every collision occurrence, one prefix per
+height, the forbidden3q region filling the unguarded ternary root1,
+and the original pure guards. Neither admits the actual complete
+private-color or CP5 assumptions. In a larger source, additional
+same-color originals could supply their displayed uncovered points;
+these controls neither construct nor exclude that completion.
+The missing implication must use those whole-source constraints or
+a different legal replacement, beyond the tested prefix geometry.
+No enumeration, Lean verification or unrestricted conclusion is claimed.
+
+## 116. A single next-row supplier cannot carry the complete top obligation
+
+Return to sections108--112's actual EB1 source: three top originals T,
+opposite prime5, H>=20, M=pr or p^2, top phase alpha modM, common
+prefix u mod3^(H-1), and w=u mod3^(H-2). Let V_i be the projection
+of the COMPLETE top-deletion region E_T to the top-color carrier X_i.
+It is nonempty and contained in alpha modM. It is not section112's
+larger simultaneous-deletion projection U.
+
+For any original mixed class S of height H-1 with lower prefix w,
+write its cofactor phase as c modn, n>1. For EVERY nonunit divisor
+e of n,
+
+    V_i is not contained in c mod e.               (JS1)
+
+### The entire supplier liability pays for a four-class repair
+
+Suppose V_i were contained in c mod e for such an e. Delete the four
+ORIGINAL classes T union {S}. Their exact uncovered set lies in
+E_T union S: a missed point outside S already misses every original
+outside T. Both the entire S and E_T then lie in
+
+    K={x:x=w mod3^(H-2), x=c mod e}.
+
+Reuse LB2's four-root construction with cofactor e: for a=0,1,2,3
+add the CRT AP with prefix w mod3^a, phase c mod e, and5-root a+1.
+Its numerical label is5*3^a*e. Along with retained A_5 these four
+APs cover all of K, so they discharge the supplier's complete old
+liability as well as the top obligation.
+
+All primes of e have the old top color, since S has the same first
+ternary root. CP1 makes all four labels fresh, distinct odd nonunits.
+The class count is unchanged. Their total modulus sum is200e, while
+the deleted S alone costs3^(H-1)n>=3^(H-1)e>200e. Hence the modulus sum strictly
+decreases, contradicting EB1 and proving JS1.
+
+This uses the existing joint-liability and four-root repair, with
+the supplier itself as payer. Unlike AC2, n need not share any prime
+with M; the premise being excluded is containment of the actual V_i.
+Unlike JH1, it places no trivial-hull requirement on the smaller V_i.
+
+### The actual next-row supply needs at least two distinct cofactors
+
+NS3 already supplies one fixed altered sibling whose M-coprime
+original cofactor APs cover the entire V_i. By JS1 no single member
+can cover it. Thus this family contains at least two distinct actual
+cofactors n_1,n_2>1 with gcd(n_j,M)=1. A smallest subfamily covering
+V_i has at least two members; no assertion makes every member of the
+larger original supplier family indispensable.
+
+The global height-H-1 row therefore has at least
+
+    six labels when M=pr, and five when M=p^2.     (JS2)
+
+Indeed its already forced cofactors are1,p,r,pr in the first case
+and1,p,p^2 in the second, together with the two new M-coprime
+cofactors. These are numerical row counts, not a claim that every
+listed class has the same lower ternary prefix.
+
+In the remaining local(1,2,2) layout write the nonpure branches as
+{R,D} and {A,B}, with R=C_M. Let A_i,B_i be the complete cofactor
+APs of A,B and a,b their numerical cofactors. LB6 gives
+V_i subset A_i union B_i. Applying JS1 separately to A and B yields
+
+    V_i intersect(A_i minus B_i)!=empty,
+    V_i intersect(B_i minus A_i)!=empty.           (JS3)
+
+Use PH3--PH4's complete congruence hull on the actual nonempty V_i,
+
+    Gamma_i(V_i)=gcd(Q_i,{z-z_0:z in V_i}), z_0 in V_i.
+
+Every next-row supplier meeting V_i has cofactor coprime to this
+ENTIRE hull. Indeed if a prime ell divided both its cofactor and
+Gamma_i(V_i), the hull would fix one ell-phase throughout V_i.
+An actual intersection point identifies that phase with the
+supplier's phase, contradicting JS1 with e=ell. Thus JS3 implies
+
+    gcd(a,Gamma_i(V_i))=gcd(b,Gamma_i(V_i))=1,
+    in particular gcd(a,M)=gcd(b,M)=1.             (JS4)
+
+The last implication uses M|Gamma_i(V_i), since V_i lies in alpha
+modM. It recovers the earlier AC2 consequence and additionally
+excludes every prime in the full actual top-obligation hull.
+These are requirements on two original APs
+with their actual phases, not two independently optimized choices.
+
+No step forces either supplier's cofactor or phase to agree with
+the other. The remaining compatibility problem is not resolved by
+their separate necessity. No new Lean verification is asserted.
+
+## 117. A local occupied ancestor couples two complete supplier obligations
+
+Keep section116's local(1,2,2) layout. The original occupied ancestor
+A_0 of numerical modulus3^(H-1)M exists by section103. Suppose its
+actual class belongs to O_w. By JS4 it cannot be A or B, and it is
+not the pure guard. Therefore
+
+    A_0=D, and its ternary prefix v equals u.       (JS5)
+
+Write its actual M-phase as beta. AC2 applied at each prime of M
+gives gcd(M,alpha-beta)=1. In particular the two full cofactor APs
+alpha modM and beta modM are disjoint.
+
+### The two centers divide the same complete joint remainder
+
+Let E and U be the entire simultaneous-deletion set and top-color
+projection from section112. Inside prefix w, the retained originals
+are independent of the last two ternary digits. For each point in U,
+take an actual E witness from its defining projection and change
+only the (H-1)-st digit to a selected local branch. The point remains
+in E by its full sibling fibers. This uses the SAME original
+nonternary coordinates, without assembling independent witnesses.
+
+At the branch of R and D, LB6 gives
+
+    U subset(alpha modM) union(beta modM).
+
+After deleting only the top batch, D is still retained. Thus the
+old top-only projection is exactly U minus(beta modM): the reverse
+inclusion follows by moving an actual E witness into the R branch,
+where D is the only local retained original and its phase is absent.
+Consequently
+
+    U=V_alpha disjoint_union V_beta,
+    V_alpha=U intersect(alpha modM)=V_i,
+    V_beta=U intersect(beta modM).                 (JS6)
+
+The first set is nonempty by E_T. The second is nonempty because
+the original D has an actual private point: it avoids every retained
+lower original and the top batch, and lies in its own beta phase.
+
+### The paid exchange leaves the intermediate process unchanged
+
+Reuse section110's exchange: move the occupied original ancestor
+to(u,alpha), and relocate the three top labels over u with compatible
+cofactor phase beta. The whole-cover property, numerical palette,
+N and W are preserved, so the new original family is again EB1.
+
+Its intermediate cover obtained by coarsening the new top batch is
+EXACTLY the old AP multiset F. The two M-classes at u merely exchange
+which one is the original ancestor and which is the artificial
+resolvent. Hence the full joint deletion E and its projection U are
+unchanged, while the new top-only obligation projects to V_beta.
+The two actual suppliers A,B are untouched.
+
+Apply JS1's full-liability repair to each unchanged supplier in this
+exchanged cover. Its own old modulus still pays for the four new
+APs. The unchanged numerical palette guarantees the same CP1
+vacancies; preservation of the private-color classification under
+the exchange is not needed. Together with JS3 this gives
+
+    V_alpha intersect(A_i minus B_i)!=empty,
+    V_alpha intersect(B_i minus A_i)!=empty,
+    V_beta  intersect(A_i minus B_i)!=empty,
+    V_beta  intersect(B_i minus A_i)!=empty.        (JS7)
+
+Each cell lifts to a private point of its supplier in the ORIGINAL
+cover: choose its actual E witness and move only the local digit
+to the branch of A,B. Lower originals remain absent by the full
+sibling property, the other supplier is absent, and the top originals
+lie in the different branch of R,D. Thus each supplier's complete private
+region realizes both alpha and beta modulo M, with distinct first
+residues at every prime dividing M.
+
+The stronger JS4 conclusion also applies at both centers: a and b
+are each coprime to Gamma_i(V_alpha) and to Gamma_i(V_beta). The
+same numerical suppliers must meet both of these whole-obligation
+constraints, rather than one independently selected constraint each.
+
+The four witnesses can have different auxiliary coordinates. JS7
+is not a product rectangle or an independence assertion. If the
+occupied ancestor lies outside O_w, the exchange changes the lower
+prefix and this common-U argument does not apply. Neither its local
+position nor incompatibility of these four cells with all original
+lower constraints has been established. No unrestricted conclusion
+or new Lean verification is asserted.
+
+## 118. Actual retained demand permits complete-private safe-root transport
+
+Keep one all-concentrated EB1 original cover and opposite-color primes
+p<q. Write q in S_i, p in S_o, o=3-i, and retain the full carriers
+
+    Z=Z/3^H, X_i=(Z/q^B) times W_i,
+    X_o=product_(ell in S_o) Z/ell^H_ell,
+    T_q=Z/q^(B-1).
+
+The full original carrier is Z times X_i times X_o. In particular
+X_o retains every p-digit. This section reuses CP1--CP5, Report374
+EP5, the disjoint-deletion private-region identity PH1/PI10, and
+section113's fixed enclosing APs. The stronger interface excludes
+only sources without a surviving owner, rather than every source
+meeting a numerical collision class.
+
+### The exact demand sees only the actually occurring p-roots
+
+Let C_o be the union of the actual three-free originals of color o,
+and put R_o=X_o minus C_o. Let K be its first-p projection and k=|K|.
+For a complete ternary word s, let V(s) subset W_i avoid all q-free
+color-i originals whose ternary conditions are active at s. Define
+
+    Y={(s,w,v): s avoids all original pure-three guards,
+                s=i mod3, w in V(s), v in T_q}.    (AD1)
+
+In the output carrier with one fewer q-digit, the EXACT region left
+uncovered by ALL retained q-free originals is
+
+    Y times R_o.                                  (AD2)
+
+At root i, opposite-color mixed originals are inactive and their
+three-free originals exclude precisely C_o. The same-color q-free
+originals exclude precisely the complement of V(s). The pure-three
+guards are retained. At the other nonzero ternary root, CP5 supplies
+full coverage by the opposite-color originals, which are all q-free;
+root zero is covered by A_3. Finally no retained class constrains a
+q-digit. These facts prove both inclusions of AD2 on the original
+full coordinate carriers.
+
+Y and R_o are nonempty: a complete private point of A_q supplies
+the former, and CP4 supplies the latter. Every active output p-root
+sees the SAME Y, although its own slice of R_o can have different
+higher p-digits and other opposite-color coordinates.
+
+The actual three-free residual is
+
+    R_3=(X_i minus C_i) times R_o,
+
+with both factors nonempty. Its p-projection is therefore K.
+Directly invoking [Report374, EP5](374-extremal-prime-projections-and-cardinality-descent.md#3-consequences-for-the-extremal-original-model)
+at observing prime3 gives
+
+    K subset {1,...,p-1}, p-2<=k<=p-1.             (AD3)
+
+The upper bound also follows from retained A_p. This does not assert
+uniform root frequencies or independence within R_o.
+
+### Complete private regions give the exact forbidden traces
+
+Keep t=min(t_p,t_q) from section104 and let C_col be the original
+label set {q,3q,...,3^t q}. These are exactly the labels whose
+q-to-p images would collide with retained originals. Write their
+actual first-q roots as j_c and ternary prefixes as alpha_c, with
+j_0=0, and put T={j_c:0<=c<=t}.
+
+For y=(s,w,v) in Y, x in R_o, and an old first-q root j, define
+the literal original source
+
+    L_j(y,x)=(s,j+q*v,w,x).                        (AD4)
+
+The q-tail v and every other full coordinate are unchanged. The
+original APs in C_col form a numerical divisibility chain and are
+pairwise disjoint. Thus PH1/PI10 identifies the whole hole left by
+deleting them with union_(d in C_col) P_d, where each P_d is the
+COMPLETE private region in the original cover. Define
+
+    H_j={y in Y:L_j(y,x) lies in union_(d in C_col)P_d}.
+                                                        (AD5)
+
+This is independent of x in R_o: its opposite-color three-free
+originals are absent, its mixed originals are inactive at root i,
+and all remaining original memberships ignore x. Consequently
+
+    y not in H_j iff L_j(y,x) has a NONCOLLISION
+    original owner, for every x in R_o.            (AD6)
+
+On AD2 all q-free originals are absent, so that owner is q-bearing.
+In particular
+
+    H_0=Y;
+    H_j!=empty iff j in T, for j!=0;
+    H_j subset {y in Y:s(y) in B_j}.               (AD7)
+
+The first identity uses A_q and its disjointness from every other
+q-bearing original. Nonemptiness for every used root uses an actual
+private point of its collision original. The last inclusion uses
+section113's COMPLETE prefix-forbidden set B_j, with all repeated
+root occurrences retained.
+
+Unlike the earlier prefix test, AD6 permits a source inside a
+collision AP if some noncollision original also covers it. Thus
+omitted collision APs can have NONEMPTY pullbacks. Their omission
+is justified by the surviving owner, not by an empty-inverse claim.
+
+### One fixed enclosing AP still suffices per surviving original
+
+Let cd_priv be the maximum number of pairwise root-label-disjoint
+subfamilies of {Y minus H_j:1<=j<=q-1}, each covering Y. Then
+
+    cd_priv<=k-1.                                 (AD8)
+
+Suppose instead there were k disjoint covering groups L_r indexed
+by the actual roots r in K. For each y choose theta_y(r) in L_r
+with y not in H_(theta_y(r)). At a point (y,x) of AD2, use the one
+source L_(theta_y(r))(y,x), where r is the first-p root of x.
+AD6 supplies a surviving q-bearing owner of this source.
+
+For each noncollision original d=q^a u, CP1 gives gcd(u,pq)=1.
+Write its actual q-phase as j_d+q*beta_d moduloq^a. If j_d is in
+L_r, its entire selected-domain inverse is contained in the fixed AP
+
+    z=r modp, z=beta_d modq^(a-1), z=a_d modu,
+    numerical modulus p*q^(a-1)*u.                (AD9)
+
+The selector mask may depend on all of y; removing that mask only
+enlarges the inverse. Each root belongs to at most one group, so
+each original receives at most one enclosing AP. Assign none to any
+member of C_col; AD6 has already supplied a noncollision owner.
+
+The modulus map is injective. At a>=2 its image contains q and
+cannot equal a retained q-free label. At a=1 an original pair qu,pu
+would be required for a collision; CP1 forces u=3^c and the shared
+heights are precisely0,...,t. All such q-originals were omitted.
+Every output modulus is an odd nonunit. Retained originals cover
+the complement of AD2 and the selected owners' enclosures cover
+AD2. The whole cover has at most N-(t+1) classes, contradicting
+EB1 and proving AD8 with all original heights retained.
+
+This strengthens the safe-source criterion using actual privacy
+and the exact number of required p-roots. It does not assert that
+the necessary disjoint groups exist in every source. No new Lean
+verification or unrestricted noncoverage is asserted.
+
+## 119. Minimal paired height forces one simultaneous original private fiber
+
+Use section118's complete traces H_j on the same Y and the actual
+active-root count k. Join two nonempty traces by an edge exactly
+when they are disjoint, and let nu_priv be the maximum matching size
+of this graph. Exactly q-|T| roots have empty trace and provide
+singleton safe groups; every matching edge supplies an additional
+two-root group. Thus AD8 gives
+
+    q-|T|+nu_priv<=cd_priv<=k-1,
+    |T|>=q-k+1+nu_priv,
+    t>=q-k+nu_priv.                               (AD10)
+
+This weakly strengthens SCV6. We have k<=p-1, and every edge coming
+from disjoint complete prefix regions remains an edge between
+their smaller private traces. New edges require disjoint COMPLETE
+traces; unrelated individual private points do not establish them.
+
+### Saturating the free-root budget requires a common intersection
+
+Suppose |T|=q-k+1. The free roots already give k-1 disjoint safe
+singleton groups. If the intersection of all nonempty H_j were
+empty, their root labels together would form another safe covering
+group, disjoint from the free roots. This contradicts AD8. Hence
+
+    |T|=q-k+1 implies
+    intersection_(j in T minus {0}) H_j!=empty.    (AD11)
+
+No two-Helly assumption is used. This conclusion applies to the
+whole finite intersection, not merely to pairwise intersections.
+
+In particular suppose the paired height has the original minimum
+
+    t=q-p+1.
+
+AD3, AD10 and |T|<=t+1 force
+
+    k=p-1, |T|=t+1=q-p+2,
+    j_0,...,j_t distinct,
+    intersection_(c=1..t) H_(j_c)!=empty.          (AD12)
+
+If the actual opposite-color remainder misses a nonzero p-root,
+then k=p-2 and this branch is excluded: t must instead be at least
+q-p+2. More generally the same distinct-root and common-intersection
+conclusions hold at the localized minimum t=q-k.
+
+### The common trace is a simultaneous private source
+
+Choose y_*=(s_*,w_*,v_*) in AD12's intersection. Each root j_c occurs
+just once in C_col, so for EVERY x in the whole actual R_o,
+
+    L_(j_c)(y_*,x) is private to A_(3^c q),
+    simultaneously for c=0,...,t.                 (AD13)
+
+At c=0 use H_0=Y. All these actual original points share the complete
+ternary word, the divided q-tail and every coordinate other than
+the first q-digit. The factor x ranges over the same original
+opposite-color remainder, not independently chosen completions.
+
+The original AP memberships recover SCV8's nested ternary prefixes.
+AD13 additionally says that every other original is absent at each
+of the corresponding lifts. It is stronger than selecting one
+unrelated private witness for each class. It still does not place
+the ENTIRE private region of A_q or any collision class on this
+common ternary path, and it need not specify the global top prefix.
+
+The actual complete private constraints have therefore replaced the
+pure-prefix boundary by a same-source private-fiber requirement.
+No contradiction to such a fiber has been established. In particular
+the k=p-1 tight branch and larger-height sources remain unresolved.
+No new Lean verification or unrestricted conclusion is asserted.

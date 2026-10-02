@@ -2191,3 +2191,68 @@ discharge of canonical original-H3 geometry remain open. The full
 finite-volume cusped/nonorientable Mostow–Prasad endpoint remains active
 and incomplete. The linked escape audit is unfinished, and new
 registration work remains paused.
+
+
+### Complete negative-curvature bases: uniqueness with constructed H3 covers
+
+The canonical original-H3 geometry and actual target covers constructed
+earlier are now integrated into the homotopy-class uniqueness statement.
+For connected smooth three-dimensional Riemannian metric bases M and N,
+with actual Levi-Civita data, complete intrinsic metrics, sectional
+curvature -1 on every nondegenerate tangent two-plane, finite intrinsic
+volume of M, and ordinary distances agreeing with both intrinsic metrics,
+every prescribed homotopy equivalence has at most one actual isometric
+bijection homotopic to it. M also carries a measurable/Borel structure.
+This proves the existing UniqueIsometryRepresentative predicate and
+asserts no existence of an isometric representative. No compactness,
+orientation, target finite-volume, dense-orbit, separately supplied
+centralizer or separately supplied faithfulness premise is used.
+
+The final statement supplies no H3 chart or Riemannian metric, original-H3
+distance identity, covering maps, full-deck quotient structure, covering
+local diffeomorphisms, tangent inner-preservation identities, actual deck
+representations or all-point evaluation identities. Those objects and
+facts are obtained together from the earlier
+hyperbolicRiemannianSourceAndCompleteOrbitIsometricDeckBridge. Choose the
+constructed H3 smooth structure and metric, and apply that same
+constructor's actual full-deck-cover clause to M and N, using connected
+nonemptiness and an actual H3 point. Its intrinsic-distance identity is
+the original hyperbolic distance; the original metric's edist_dist gives
+the required ordinary/intrinsic equality on H3. Apply the previously
+accepted same-cover uniqueness theorem to these exact constructed
+objects. The prescribed homotopy equivalence need not preserve distance.
+This is classical reuse and exact composition of existing results, not
+a new rigidity theorem or a tracked Lean declaration.
+
+Actual LeviCivitaData for both base metrics remains an explicit geometric
+input, together with its sectional-curvature hypotheses. The upstream
+global exists_leviCivitaData API requires T2Space and
+SecondCountableTopology; MetricSpace alone does not supply second
+countability. This composition neither silently adds that hypothesis nor
+claims global connection existence without it. The stated completeness,
+curvature, source volume, measurable/Borel and metric-compatibility
+conditions remain in the exact theorem telescope.
+
+One accepted serial scoped transient cache-guarded Lean check exited zero.
+The exact complete_negative_three_manifold_isometry_homotopy_class_unique
+declaration has a single axiom closure using only propext,
+Classical.choice and Quot.sound. Four haveILetI style warnings are
+retained. An earlier exact source/log pair exited one because an unused
+finite-tail index universe in the old constructor was unresolved; that
+attempt is preserved and excluded. The repair explicitly instantiates
+the constructor at universes u and 0, keeping geometric target types in
+Type u. The theorem telescope and consequent are byte-identical before
+and after this repair. Default resources and original metrics are
+retained, with no suppression or compiler replay claim. All new Lean
+remains transient under ignored .lake; only this research note is tracked.
+
+The preceding appendix's reference to an open canonical-H3 geometry
+obligation described integration into its then-current supplied-cover
+statement. It did not mean the earlier source geometry and actual target
+covers were absent. This composition closes that integration for the
+uniqueness half under the base geometric conditions above. Existence of
+an isometric representative for an arbitrary homotopy equivalence and
+existence of its ambient lattice conjugator remain open. The full
+finite-volume Mostow-Prasad endpoint, including cusps and nonorientable
+manifolds, remains active and incomplete. The linked escape audit is
+unfinished, and new registration work remains paused.
