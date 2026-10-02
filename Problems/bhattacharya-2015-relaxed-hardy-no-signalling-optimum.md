@@ -61,12 +61,15 @@ other than $r$ under $u\dots u$.
 1. No-signalling at $r$ and the second condition give the outcome $d$ at
    $r$ and $1$ elsewhere probability $m_r$ under $S_r$.
 2. For $i\ne j$, no-signalling at $j$, the third condition and
-   nonnegativity give the outcome $d$ at $i$, $1$ elsewhere probability at
-   least $m_i$ under $S_{ij}$; symmetrically for $j$.
-3. No-signalling at $i$ and at $j$ moves the marginal of the other parties
-   back to $u\dots u$. Since $m_i=q+P(x_i\ne1,\text{others }1\mid u\dots u)$,
-   the outcome with $x_i\ne1$, $x_j\ne1$ and $1$ elsewhere has probability
-   at least $q$ under $u\dots u$.
+   nonnegativity give the event $\{x_i=d,\ x_j\ne d,\ \text{others }1\}$
+   probability at least $m_i$ under $S_{ij}$; symmetrically the event
+   $\{x_i\ne d,\ x_j=d,\ \text{others }1\}$ has probability at least $m_j$.
+   These events are disjoint, so under $S_{ij}$ the parties other than $i$
+   and $j$ all give $1$ with probability at least $m_i+m_j$.
+3. No-signalling at $i$ and at $j$ moves this marginal back to $u\dots u$.
+   Since $m_i=q+P(x_i\ne1,\text{others }1\mid u\dots u)$ and likewise for
+   $m_j$, the event $\{x_i\ne1,\ x_j\ne1,\ \text{others }1\}$ has
+   probability at least $q$ under $u\dots u$.
 4. These $N-1$ events and the all-$1$ event are disjoint, so $Nq\le1$.
 
 The module carries out steps 1–4 for $N=4$, $d=2$ and each fixed $j$, so
@@ -116,10 +119,10 @@ Utility `certified-instance`, refuting `claim`.
   success probability at most $1/4$.
 - **Where the conjecture fails:** the third condition is imposed only for
   pairs containing the fixed party $j$, so each of the $N-1$ parties
-  $i\ne j$ forces a separate outcome string of probability at least $q$
-  under $u\dots u$. These strings and the all-$1$ string are disjoint, so the
-  bound decreases like $1/N$. At $N=3$ it equals $1/3$, which is the value
-  the paper computed and extrapolated.
+  $i\ne j$ forces a separate event $\{x_i\ne1,\ x_j\ne1,\ \text{others }1\}$
+  of probability at least $q$ under $u\dots u$. These events and the all-$1$
+  string are disjoint, so the bound decreases like $1/N$. At $N=3$ it
+  equals $1/3$, which is the value the paper computed and extrapolated.
 - **Model derivation, not formalized (steps 1–4 above):** $Nq\le1$ for every
   $N\ge2$, every $d\ge2$ and every fixed $j$; the same argument works with
   different outcome numbers $d_i$.
@@ -136,8 +139,8 @@ Utility `certified-instance`, refuting `claim`.
 - **Unchanged:** the paper's theorem that every quantum state satisfying
   (relH) is genuinely nonlocal does not depend on the conjecture. Its
   comparison with the conventional argument (value $1/2$) holds more
-  strongly, since the relaxed test's no-signalling optimum decreases with
-  $N$.
+  strongly, since the relaxed test's no-signalling optimum is at most $1/N$
+  (model derivation above), a bound that decreases with $N$.
 
 ## ASSUMED-UNVERIFIED
 

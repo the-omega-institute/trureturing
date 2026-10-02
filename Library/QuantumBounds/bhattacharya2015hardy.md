@@ -48,8 +48,11 @@ in GNST"):
 
 - DOI: https://doi.org/10.48550/arXiv.1507.07327 (arXiv-issued; v1 is
   the only version and the record lists no journal reference).
-- URL: https://arxiv.org/abs/1507.07327v1 (source md5
-  `4ad631be0c7ffb2812267af22347d9bf`): the outcomes (l. 171), the
-  relaxed Hardy conditions (l. 174–183), the normalization and
-  no-signalling conditions (l. 220–222, 231–236), the observation
-  (l. 239–241) and the conjecture (l. 244–246).
+- URL: https://arxiv.org/abs/1507.07327v1 (source
+  `Gen_Hardy_2015_07_27.tex` with CRLF line endings, md5 of the raw
+  decompressed bytes `84c375d26a8c9c405f9b62d1b6668395`; the gzip file
+  from https://arxiv.org/src/1507.07327v1 has md5
+  `1fc0975c85ac62196a2c7e24e8e00bd6`): the outcomes (l. 170), the relaxed
+  Hardy conditions (l. 173–182), the normalization and no-signalling
+  conditions (l. 219–221, 230–235), the observation (l. 238–240) and the
+  conjecture (l. 243–245).
