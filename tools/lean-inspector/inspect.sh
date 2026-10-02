@@ -157,6 +157,8 @@ if [[ "${1:-}" != --version ]]; then
     --repository "$STRATALINT_RECEIPT_REPOSITORY" --report "$STRATALINT_RECEIPT_OUTPUT" \
     --owner-snapshot "$STRATALINT_RECEIPT_OWNER_SNAPSHOT"
   trap finish_owned_lake EXIT
+  trap 'exit 130' INT
+  trap 'exit 143' TERM
 fi
 "$STRATALINT_RECEIPT_LAKE" "$@"
 SH_OWNED_LAKE

@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 import select
 import shutil
+import signal
 import subprocess
 import sys
 import time
@@ -611,6 +612,75 @@ with reuse.cache_guard(root):
         result = self.entry()
         self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
         self.assertIn('phase=programs exit=71', result.stderr)
+
+    def test_term_inside_writer_guard_respects_receipt_ownership(self):
+        runner = self.root / 'tools/scripts/worktree/native_fixture.py'
+        runner.write_text(runner.read_text().replace('    if result.returncode:', '''    if result.returncode:
+        import json
+        import reuse
+        report = root / '.lake/build/stratalint/raw-lean-report.json'
+        receipt = Path(str(report) + '.reuse.json')
+        if os.environ['TERM_REPLACEMENT'] == '1':
+            assert receipt.read_bytes() == (root / 'term-receipt').read_bytes()
+            assert reuse.receipt_identity(report) == json.loads((root / 'term-identity.json').read_text())
+        else:
+            assert not receipt.exists(), 'owned receipt survived TERM inside writer guard'
+        (root / 'term-cleanup-checked').write_text('1')'''))
+        self.executable('bin/lake', '''[[ "$1" != --version ]] || exit 0
+exec python3 -B "$(dirname "$0")/term_fixture.py"
+''')
+        self.fixture.write('bin/term_fixture.py', '''import json, os, sys
+from pathlib import Path
+sys.path.insert(0, os.environ['STRATALINT_RECEIPT_INSPECTOR'])
+import reuse
+root = Path(os.environ['STRATALINT_RECEIPT_REPOSITORY'])
+report = Path(os.environ['STRATALINT_RECEIPT_OUTPUT'])
+try:
+    with reuse.cache_guard(root):
+        raise AssertionError('writer guard must be held at TERM barrier')
+except BlockingIOError:
+    pass
+if os.environ['TERM_REPLACEMENT'] == '1':
+    owned = reuse.receipt_identity(report)
+    reuse.write_receipt(report, reuse.capture(root))
+    assert owned != reuse.receipt_identity(report)
+    (root / 'term-receipt').write_bytes(Path(str(report) + '.reuse.json').read_bytes())
+    (root / 'term-identity.json').write_text(json.dumps(reuse.receipt_identity(report)))
+(root / 'term-writer-pid').write_text(str(os.getppid()))
+with open(os.environ['TERM_READY'], 'wb', buffering=0) as ready:
+    ready.write(b'r')
+with open(os.environ['TERM_RELEASE'], 'rb', buffering=0) as release:
+    release.read(1)
+''')
+        for replacement in (False, True):
+            with self.subTest(replacement=replacement):
+                self.fixture.receipt()
+                ready, release = (self.root / f'term-{name}-{replacement}.fifo'
+                                  for name in ('ready', 'release'))
+                os.mkfifo(ready)
+                os.mkfifo(release)
+                ready_fd = os.open(ready, os.O_RDWR | os.O_NONBLOCK)
+                release_fd = os.open(release, os.O_RDWR | os.O_NONBLOCK)
+                self.addCleanup(os.close, ready_fd)
+                self.addCleanup(os.close, release_fd)
+                checked = self.root / 'term-cleanup-checked'
+                checked.unlink(missing_ok=True)
+                environment = dict(self.environment, TERM_REPLACEMENT=str(int(replacement)),
+                                   TERM_READY=str(ready), TERM_RELEASE=str(release),
+                                   PYTHONPATH=str(self.root / 'tools/lean-inspector'))
+                with subprocess.Popen(['make', '--no-print-directory', 'lean-report', 'REBUILD_REPORT_CACHE=1'],
+                                      cwd=self.root, env=environment, text=True,
+                                      stdout=subprocess.PIPE, stderr=subprocess.PIPE) as first:
+                    try:
+                        self.assertTrue(select.select([ready_fd], [], [], 20)[0], 'TERM writer barrier not reached')
+                        os.read(ready_fd, 1)
+                        os.kill(int((self.root / 'term-writer-pid').read_text()), signal.SIGTERM)
+                    finally:
+                        os.write(release_fd, b'r')
+                    stdout, stderr = first.communicate(timeout=20)
+                self.assertEqual(first.returncode, 2, stdout + stderr)
+                self.assertIn('phase=report exit=143', stderr)
+                self.assertTrue(checked.is_file(), stdout + stderr)
 
     def test_cleanup_preserves_receipt_replaced_after_owned_program_failure(self):
         self.environment['STRATALINT_LEAN_BUILD_TARGETS'] = '["D5/A"]'
