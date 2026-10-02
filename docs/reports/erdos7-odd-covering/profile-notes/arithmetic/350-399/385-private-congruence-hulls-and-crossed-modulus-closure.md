@@ -299,6 +299,13 @@ then q is at most211; opposite pairs5/7,5/11,5/13 give103,173,211.
 This bounds that shared prime, not the entire support, and leaves the
 remaining singleton cases and the general nonconcentrated branch open.
 
+[Section163](#163-a-missing-higher-product-supplies-an-all-height-replacement-palette)
+uses a checksum to encode every old anchor exponent and the removed
+prime's height. An absent mixed label on three or more primes now gives
+an explicit support cutoff without color or height restrictions. The
+unrestricted gap is to force a bounded missing label or a bounded
+actual parent with the required capacity.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -19800,3 +19807,131 @@ Next let ell=11 and suppose q>173, hence q>=179>ell^2. G<=2 gives q<=173. For G=
 Finally let ell=13 and suppose q>211, hence q>=223>ell^2. The two already proved pair bounds force7 and11 to share the color of5. Thus |S_5|>=3, and the strengthened form of NTH5 applies. G<=2 gives q<=211. For G=3 and q>B(3)=271, the right side of NTH4 is at most201+21/q<202, while q-22>249. For q<=271, it is at most198+21/q<199, while q-22>=201. For G=4+s, pi(B)<=67+33s and the right side is at most228+99s+21/q<229+99s; the left side is at least201(2+s)=402+201s. This proves q<=211.
 
 Each affine tail is valid for every integer s>=0 by counting all possible new odd integers. The improvement uses the actual near-top colored owner and the1/q weight of deeper suppliers in one fixed family. The global height G, the owner's height G-1, and the highest original support prime remain distinct quantities.
+
+## 163. A missing higher product supplies an all-height replacement palette
+
+Keep ONE original EB1 whole cover, with distinct odd nonunit numerical labels D and period Q. Let
+
+    m=product_(i=1..k) p_i^b_i, k>=2, b_i>=1,
+    v=rad(m)=product_i p_i,
+    L=tau(m)-1=product_i(b_i+1)-1,
+    B(m)=max(v^L, m v^(L-2) phi(v)),
+
+where the p_i are distinct ORIGINAL support primes. Then
+
+    m not in D ==> P^+(Q)<B(m).                    (HPAK1)
+
+The extension beyond §§156 and160 is the fresh palette for k>=3 anchors: it forces one joint higher product without multiplying separately forced pair labels. For k=2, directly retain §160's sharper two-prime-power cutoff; that case is not new. The complete-source coverage argument remains §156's, and no original label, phase or height is replaced in the hypotheses. This is ordinary conditional mathematics, without Lean verification or a claim of literature priority.
+
+### A checksum recovers every old exponent and the removed-prime height
+
+Suppose m is absent. Original divisor closure excludes every original multiple of m. Therefore any vector of anchor exponents a=(a_1,...,a_k) belonging to an original has at least one a_i<b_i.
+
+Record the finite state sigma_i=a_i when a_i<b_i, and sigma_i=* otherwise. There are exactly L allowed states: each coordinate has b_i+1 choices and the all-* state is excluded. Fix a bijection chi from these states to Z/LZ. Let j be the first deficient coordinate, sigma_j!=*.
+
+For an old q-bearing original of q-height e>=1, set, for i!=j,
+
+    u_i=a_i if sigma_i=*, and u_i=b_i otherwise.
+
+Choose u_j in the interval
+
+    b_j+L(e-1)<=u_j<=b_j+Le-1
+
+so that sum_i u_i=chi(sigma) modulo L. The interval has exactly L integers, hence exactly one permissible u_j. Every output satisfies
+
+    b_i<=u_i<=max(a_i,b_i+Le-1).                  (HPAK2)
+
+The decoder is global across ALL old heights. The residue of sum_i u_i first recovers sigma and hence j. Next
+
+    e=1+floor((u_j-b_j)/L).
+
+For deficient coordinates sigma_i already records a_i; for nondeficient coordinates a_i=u_i. Thus the complete input(a,e) is recovered. In particular no unrecorded choice of deficient coordinate, residue or old height can cause a new numerical collision.
+
+### Reuse the one-source transport with the required prefix widths
+
+Assume an original support prime q>B(m). It is distinct from every anchor. Write
+
+    Q=q^G M product_i p_i^H_i, gcd(M,qv)=1,
+    w_i(e)=b_i+Le-1.
+
+Normalize the original prime classes A_q and A_(p_i) to root zero, using the existing simultaneous CRT normalization. For each1<=e<=G let U_e be the tuples of anchor prefixes modulo p_i^w_i(e) whose first p_i-digits are all nonzero. Then
+
+    |U_1|=product_i (p_i-1)p_i^(b_i+L-2)
+          =m v^(L-2)phi(v)<=B(m)<q,
+
+and every prefix has exactly v^L<=B(m)<q extensions at the next level. Thus the first alphabet fits into q-1 nonzero q-roots, and each later alphabet fits into q next digits. Fix prefix-compatible injections theta_e:U_e->Z/q^eZ, independently of every original label and cofactor.
+
+Use the complete new carrier
+
+    Qtilde=M product_i p_i^max(H_i,w_i(G)).
+
+Let U consist of all output points avoiding every retained anchor prime class. On U, define F(z) by theta_G of its anchor prefixes; off U set F(z)=0 modulo q^G. The ONE old source Psi(z) preserves the full original M and p_i^H_i coordinates and has q-coordinate F(z).
+
+The complete inverse of A_q is U^c, not the empty set. Every point of U^c is covered by one of the retained original prime classes A_(p_i). Every other q-bearing original is a proper multiple of q and is disjoint from A_q by comparable-original disjointness. Its first q-phase is nonzero, so its inverse is empty off U.
+
+For such an original
+
+    d=q^e t product_i p_i^a_i, t|M,
+
+the literal q^e-phase either lies outside theta_e's image, giving empty inverse, or selects exactly one anchor-prefix tuple. Combine that tuple with the original anchor phases and the original t-phase. Incompatible same-prime congruences give empty inverse; otherwise the complete inverse is ONE AP of modulus
+
+    n_d=t product_i p_i^max(a_i,w_i(e)).           (HPAK3)
+
+All original heights H_i remain in Qtilde. The selected prefix already lies in U, so no additional domain mask cuts or splits this AP. Neither a selected private point nor a separately chosen cofactor source replaces this full inverse.
+
+Apply the checksum code to(a,e) and set
+
+    d'=t product_i p_i^u_i.                        (HPAK4)
+
+HPAK2 gives d'|n_d. Reduce the inverse AP's actual phase modulo d' to obtain ONE enclosing AP containing its whole inverse. Every new label is divisible by the absent m, hence collides with no retained original. Factoring a new label recovers t and the u_i; the decoder then recovers the complete original d. Thus there are no new-new collisions either. All new moduli are odd nonunits dividing Qtilde.
+
+Retain every q-free original, omit A_q, and use one enclosure for each other nonempty q-bearing inverse. Points of U^c are paid for by retained anchor primes. At a point of U, the old whole cover at Psi(z) supplies an owner other than A_q: a q-free owner covers z unchanged, and a q-bearing owner covers it through its complete inverse and enclosure. This is §156's whole-source implication, now with k anchor coordinates. It covers the complete new period and all integer lifts.
+
+Each old class other than A_q contributes at most one new class. The new whole cover therefore has at most |D|-1 distinct odd nonunit labels, contradicting EB1. No individual modulus-sum decrease is required. Finally L>=3, and both integers defining B(m) are composite and exceed every anchor prime. Hence P^+(Q)=B(m) is also impossible, giving the strict HPAK1 cutoff.
+
+### The existing remainder layer gives a second explicit cutoff
+
+The quotient-and-remainder step of §160 also applies to this checksum code. Put
+
+    L_0=2^k-1,
+    B_rem(m)=max(m^L_0, m^(L_0+1)phi(v)/v^2).     (HPAK5)
+
+The second expression is an integer: it equals product_i (p_i-1)p_i^(b_i(L_0+1)-2). Write a_i=b_i alpha_i+r_i,0<=r_i<b_i. At least one alpha_i is zero. Apply HPAK2 with all threshold exponents equal to one to(alpha,e), obtaining U_i>=1 and U_i<=max(alpha_i,L_0 e). Output u_i=b_i U_i+r_i.
+
+Reduction modulo b_i recovers r_i; division then recovers U_i and the existing checksum decoder recovers(alpha,e). The coordinate bound is
+
+    u_i<=max(a_i,b_i(L_0 e+1)-1).
+
+Thus the same source uses prefix widths b_i(L_0 e+1)-1. Its first alphabet is the second term of HPAK5 and each later alphabet has m^L_0 extensions. All freshness, complete-inverse and single-class checks above are unchanged. Since L_0>=3, both candidate integers in HPAK5 are composite and exceed every anchor, so this cutoff is strict as well. Consequently HPAK1 may use
+
+    P^+(Q)<min(B(m),B_rem(m)).                    (HPAK6)
+
+Here L_0>=3, so both integers defining B_rem(m) are composite and exceed the anchors; its cutoff is likewise strict. No comparison claiming that one of these bounds always dominates the other is needed. For two anchors use the already established §160 cutoff instead. For squarefree m, both expressions give
+
+    m absent ==> P^+(Q)<m^(2^k-1).                (HPAK7)
+
+For example, if5,7,11 are original support primes, then
+
+    P^+(Q)>=385^7=1253790880222890625
+       ==>385 is ONE ORIGINAL numerical label.
+
+This remains a statement about one actual joint label when an anchor belongs to R. Pairwise presence is not substituted for that joint occurrence. No common private point or phase alignment follows from the numerical conclusion.
+
+### An actual qualified parent supplies a missing higher label
+
+Suppose an ORIGINAL parent h has an established phase capacity N-1 as in CPA5. Reuse its existing same-family consequence
+
+    M original and h|M ==> tau(M/h)<=C,
+    C=1+(N-1)(h-1).
+
+Choose an integer t with2^t>C, for example t=ceil(log_2(C+1)), and take the first t odd primes ell_j not dividing h. Put m_h=h product_j ell_j. Then m_h is absent: otherwise tau(m_h/h)=2^t>C contradicts CPA5. This is one missing numerical label, not a claim that separately counted descendants share a phase.
+
+If every ell_j is an original support prime, HPAK6 applies to m_h. If some ell_j is absent, initial-segment support already gives P^+(Q)<ell_j, which is smaller than either cutoff for m_h. Thus either case gives the explicit bound
+
+    P^+(Q)<min(B(m_h),B_rem(m_h)).                 (HPAK8)
+
+This consumer requires a real original parent and its proved whole-parent capacity. It does not assert such a parent in a uniformly bounded numerical range for every remaining family. When m_h has only two anchor primes, §160 remains the preferable direct consumer.
+
+Once a support cutoff B_* is available, choose the least prime ell>B_*. It is absent, and the EXISTING HC6 gives H_p<=ell-1+floor((ell-2)/(p-1)) for each original p. Hence Q divides the finite product of those prime powers over odd primes p<B_*. This is a finite carrier restriction, with no phase enumeration or exclusion claim.
+
+The remaining unrestricted obligation is to produce a uniformly bounded missing mixed label, or a uniformly bounded actual parent with the required capacity, or to contradict the forced joint inventory while retaining its literal phases and complete obligations. The checksum construction by itself does not supply that obligation.
