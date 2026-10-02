@@ -1,0 +1,48 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
+
+internal sealed class ShortCofactorCharacterEnergyDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Short positive intervals have a logarithmic multiplicative energy bound.",
+        H("Short Cofactor Character Energy"),
+        Blocks(
+            Paragraph(Text("For a real cutoff H, I(H) consists of the positive natural "
+                + "numbers strictly below H. The multiplicative energy E(I) counts "
+                + "ordered quadruples (a,c,b,d) in I to the fourth power with ab=cd.")),
+            Describe.Lean(
+                DescribeId.Create("short-interval-multiplicative-energy"),
+                DeclarationHandle.Create("D5/S3/Arith/Robin/ShortCofactorCharacterEnergy.short_interval_energy"),
+                H("Logarithmic energy bound"),
+                StatementSource.FromAuthor(Statement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("The cutoff is any real number at least one. "
+                        + "There is no primality or coprimality restriction.")),
+                    Paragraph(Text("Write a=gu and c=gv with g=gcd(a,c). The equality "
+                        + "ab=cd and coprimality of u,v imply b=jv and d=ju. "
+                        + "For m=max(u,v), the two orientations and the smaller "
+                        + "coordinate give at most 2m choices; both g and j are "
+                        + "at most N/m for the integral interval from 1 to N. "
+                        + "Summing the resulting bounds gives 2N squared times "
+                        + "the N-th harmonic number.")),
+                    Paragraph(Text("This is the classical gcd parametrization for "
+                        + "the multiplicative energy of an interval. The harmonic "
+                        + "estimate is the standard bound by 1+log(N); "
+                        + "no originality claim is made."))),
+                DescribeRole.Theorem))));
+
+    private static Formula Statement()
+    {
+        Formula h = F.Id("H");
+        Formula interval = new Formula.Apply(F.Id("I"), [h]);
+        Formula energy = new Formula.Apply(F.Id("E"), [interval]);
+        return Disp(Seq(Forall, Sp, h, Sp, InMacro, Sp, Mathbb, Grp(F.Id("R")),
+            Comma, Sp, D(1), Sp, Le, Sp, h, Sp, Rightarrow, Sp,
+            energy, Sp, Le, Sp, D(2), Sp, new Formula.Power(h, D(2)), Sp,
+            Open, D(1), Plus, new Formula.Apply(Log, [h]), Close));
+    }
+}
