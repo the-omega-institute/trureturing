@@ -433,20 +433,20 @@ print('new-width band, even block and pole parameter comparisons passed')
 
 ## Reusing the support-independent Gamma moments
 
-Appendix C.1 supplies the scalar moments
+Appendix D.1, *Integrated digamma moments*, supplies the scalar moments
 
 $$
 \vartheta_q=\frac{256}{\pi}\int_0^1x^{2q}(A(256x)-7/2)\,dx,
 \qquad 0\le q\le1023.
 $$
 
-Their definition contains no support half-width. The release packet `w200-pub-2026-09-14/reproduction/release-run/certificates/moments.json` has SHA-256 `f8cb5c681a22755b980d2e98d781353fe9ce058fe33eb8a7753585e2c52b2f93`, matching the pinned `frozen-manifest.json`. Its 1,024 ordered rows all have `hi-lo=3` on the $2^{-1024}$ grid. Thus the packet midpoints are $\widehat\vartheta_q=(\mathrm{lo}_q+\mathrm{hi}_q)/2^{1025}$. The packet records the common band $256$ and background $7/2$; its metadata also records the original $L=17/16$, which is absent from the moment formula and is not a width to retain in the new kernel.
+Their definition contains no support half-width. The release packet `w200-pub-2026-09-14/reproduction/release-run/certificates/moments.json` has SHA-256 `f8cb5c681a22755b980d2e98d781353fe9ce058fe33eb8a7753585e2c52b2f93`, matching the pinned `frozen-manifest.json`. Its 1,024 ordered rows all have `hi-lo=3`. The checked packet-wide field `parameters.outputBits=1024` specifies the $2^{-1024}$ grid for every row; the rows have no separate `outputBits` field. Thus the packet midpoints are $\widehat\vartheta_q=(\mathrm{lo}_q+\mathrm{hi}_q)/2^{1025}$. The checked parameters also specify the common band $256$ and background $7/2$. Its metadata records the original $L=17/16$, which is absent from the moment formula and is not a width to retain in the new kernel.
 
-The small [reviewer-materials archive](https://github.com/luciferyu666/certified-weil-positivity/releases/download/v1.0-mcom-submission/w201-reviewer-materials.zip) has SHA-256 `e5547b885d3df9113895877032ba861235adb159cd5b816c9d9f6080d22fbf41` and contains that manifest. Member size and SHA-256 were checked after selective retrieval of the moment packet; the full large archive hash was not checked. These are data-identity and format checks. The mathematical premise that every interval contains its moment, and hence $|\vartheta_q-\widehat\vartheta_q|<2^{-1023}$, is the author's Appendix C.1 claim. Its producer and oracle were not reexecuted here. The packet is read-only research input and is not redistributed in this repository.
+The small [reviewer-materials archive](https://github.com/luciferyu666/certified-weil-positivity/releases/download/v1.0-mcom-submission/w201-reviewer-materials.zip) has SHA-256 `e5547b885d3df9113895877032ba861235adb159cd5b816c9d9f6080d22fbf41` and contains that manifest. Member size and SHA-256 were checked after selective retrieval of the moment packet; the full large archive hash was not checked. These are data-identity and format checks. The mathematical premise that every interval contains its moment, and hence $|\vartheta_q-\widehat\vartheta_q|<2^{-1023}$, is the author's Appendix D.1 claim. Its producer and oracle were not reexecuted here. The author's programs and certificate data remain ignored, read-only local input and are not redistributed in this repository. The identity checks establish neither moment containment nor a certificate result.
 
 ## A new-width kernel from the same scalar input
 
-Assuming the moment containment just specified, Appendix C.2 applies with the actual $a=\log3$. Put $z=512a<563$ and define
+Assuming the moment containment just specified, Appendix D.2, *A full-operator kernel enclosure*, applies with the actual $a=\log3$. Put $z=512a<563$ and define
 
 $$
 k_{0,9}(2ay)=\sum_{q=0}^{1023}
@@ -460,7 +460,7 @@ $$
 914\frac{563^{2048}}{2048!}<2^{-758}.
 $$
 
-Indeed $(68/25)563/2048<3/4$, so the same factorial argument as Appendix C.2 applies. Consequently the full kernel and convolution operators obey the conditional bounds
+Indeed $(68/25)563/2048<3/4$, so the corresponding factorial estimate in Appendix D.2 applies. Consequently the full kernel and convolution operators obey the conditional bounds
 
 $$
 \sup_{|x|\le2a}|k(x)-k_{0,9}(x)|<2^{-209},
@@ -470,7 +470,7 @@ $$
 
 These bounds are independent of retained dimension. The source Binet remainder is already paid inside its moment intervals and is not subtracted again.
 
-For the actual band operator, use its new-width polynomial
+For the actual band operator, apply Appendix D.5, *The complete tail columns*, using its new-width polynomial
 
 $$
 b_{0,9}(2ay)=\frac{256}{\pi}\sum_{q=0}^{1023}
@@ -553,7 +553,7 @@ r:=\sup_{|t|\le256}\|(I-P)\cos(tu)\|
 \le\sqrt{2a}\,e^{192a}2^{-510}<2^{-200}.
 $$
 
-Here $\sqrt{2a}<3/2$ and $(3/2)(68/25)^{212}<2^{310}$ prove the last outward comparison. Taylor truncation of $\cosh(u/2)$ through degree $510$ gives $p_\perp:=\|(I-P)\cosh(u/2)\|<3/512!<2^{-509}$. Using $\|h_{0,9}\|<1$, the same band, pole and tail estimates as (A9) give
+Here $a<11/10$ implies $192a<211.2<212$, hence $e^{192a}<(68/25)^{212}$. Together with $\sqrt{2a}<3/2$ and $(3/2)(68/25)^{212}<2^{310}$, this proves the last outward comparison. Taylor truncation of $\cosh(u/2)$ through degree $510$ gives $p_\perp:=\|(I-P)\cosh(u/2)\|<3/512!<2^{-509}$. For $c(u)=\cosh(u/2)$, its actual norm satisfies $\|c\|^2=a+\sinh a=\log3+4/3<73/30<4$. Thus the even pole cross block is at most $2\|Pc\|p_\perp<4p_\perp$; its complementary block is positive with norm $2p_\perp^2$. Using $\|h_{0,9}\|<1$, the same band and tail estimates as (A9) give
 
 $$
 \|R_{10}\|<2154r+4p_\perp,
@@ -563,14 +563,14 @@ $$
 
 Thus $e=2^{-188}$, $n=2^{-390}$ and $h=2^{-386}$ are valid conservative allowances for this common embedding. With $m=264/325$ and $\theta=\chi=1$, the source's coefficients satisfy $\alpha<2^{-187}$ and $\beta<2^{-186}$. This is another source-proof parameter application, with no finite sign inferred from the smaller projection error.
 
-Section 4, equation (11), supplies the inverse-compression upper bound without knowing the target sign. For any trial matrix $X$, choose $\mu=4/5<m$ and put
+The unnumbered inverse-residual identity in section 4's proof of Theorem B supplies the inverse-compression upper bound without knowing the target sign. Equation (11) there lists old-window error constants; those constants are not used here. For any trial matrix $X$, choose $\mu=4/5<m$ and put
 
 $$
 \mathcal W_\mu(A,B;X)
 =X+X^*-X^*AX+\mu^{-1}(I-AX-X^*A+X^*BX).
 $$
 
-The source residual identity gives $\mathcal W_\mu(A,B;X)\succeq G$. If $\|X\|\le s$ and Hermitian centers have errors $\varepsilon_A,\varepsilon_B$, then
+The source residual identity gives $\mathcal W_\mu(A,B;X)\succeq G$. This is a parameterized obligation: choose a trial $X$ and a supplied bound $s\ge\|X\|$, and Hermitian centers satisfying $\|A-A_0\|\le\varepsilon_A$ and $\|B-B_0\|\le\varepsilon_B$. No numerical $s$, $\varepsilon_A$ or $\varepsilon_B$ from the old window is transferred. Then
 
 $$
 W=\mathcal W_\mu(A_0,B_0;X)
@@ -578,7 +578,7 @@ W=\mathcal W_\mu(A_0,B_0;X)
 \succeq G\succ0.
 $$
 
-Consequently $W^{-1}\preceq G^{-1}$. In particular, the direction is suitable for a sufficient lower comparison. With $D_0=B_0-A_0^2$, $b=2011/325$ and $\varepsilon_D=\varepsilon_B+(2b+\varepsilon_A)\varepsilon_A$, the new finite target is
+Consequently $W^{-1}\preceq G^{-1}$. In particular, the direction is suitable for a sufficient lower comparison. Let $J_0$ be a Hermitian center of the compression of the polynomial kernel plus its actual polynomial-filtered rank-one update. If $\rho_J$ bounds the directed finite assembly and center-rounding error of that complete update, define $\varepsilon_J:=2^{-206}+\rho_J$. The first term pays both analytic replacements in (A11)–(A12), including the rank-one filtered-vector error; $\rho_J$ must pay all remaining arithmetic, column-evaluation and rank-one rounding errors. Then $\|J-J_0\|<\varepsilon_J$. If instead a separately rounded filtered column is used to construct $J_0$, its induced rank-one error must also enter $\rho_J$. With $D_0=B_0-A_0^2$, $b=2011/325$ and $\varepsilon_D=\varepsilon_B+(2b+\varepsilon_A)\varepsilon_A$, the parameterized finite target is
 
 $$
 W^{-1}+J_0-\varepsilon_JI-2^{-187}I
@@ -586,12 +586,14 @@ W^{-1}+J_0-\varepsilon_JI-2^{-187}I
 \tag{A13}
 $$
 
-This condition is not established. All three centers and their errors must belong to the same actual 256-mode embedding. In particular, $B_0$ must approximate $E^*M_9^2E$, rather than $A_0^2$; clipping occurs before composing the shifts. The kernel analytic allowance $2^{-206}$ above contributes to $\varepsilon_J$ only under the stated author-moment premise, and arithmetic error must still be added. Source positivity of the original window does not settle (A13).
+This condition is not established. All three centers and their supplied errors must belong to the same actual 256-mode embedding. In particular, $B_0$ must approximate $E^*M_9^2E$, rather than $A_0^2$; clipping occurs before composing the shifts. The combined analytic allowance $2^{-206}$ enters $\varepsilon_J$ only under the stated author-moment premise. Source positivity of the original window does not settle (A13). This note reuses the author's support-independent Gamma input, constructs only the new-width kernel and identifies the common 256-mode remaining finite obligation. It supplies no verified finite sign, full bounded or cofinal positivity, originality claim, kernel theorem or RH proof.
 
 ```python
 from fractions import Fraction as F
 
 assert F(3, 2) * F(68, 25)**212 < 2**310
+assert 192 * F(11, 10) < 212
+assert F(11, 10) + F(4, 3) == F(73, 30) < 4
 r, p = F(1, 2**200), F(1, 2**509)
 e, n, h = F(1, 2**188), F(1, 2**390), F(1, 2**386)
 assert 2154*r + 4*p < e
