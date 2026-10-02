@@ -88,15 +88,89 @@ No atom or coverage edge is used.
 
 ### What the settlement shows
 
-- Proved in this module: the five-cycle graph state is GME, every one-qubit
-  loss marginal is GME, and every two-qubit loss marginal is fully separable.
-- Proved in this module: the witness mechanism covers all 30 oriented cuts
-  of the five-qubit state and all 14 oriented cuts for each four-qubit
-  marginal; the ten two-qubit loss sets have four-term Pauli-product
-  decompositions.
-- The result settles the C₅ clause of the cited Discussion question. It does
-  not settle the C₆ clause, other cycle sizes, ordinary resistance, or any
-  stronger uniform statement beyond the finite C₅ instance.
+- [proved: D5/S3/Quantum/Entanglement/CycleFiveStrongOneResistance.result]
+  The decisive separation is between cut-product mixtures and the loss
+  marginals: graph-basis Gram decompositions make every partial transpose of
+  W positive semidefinite, so trace reindexing makes its expectation
+  nonnegative on every biseparable mixture, whereas the initial state and
+  each one-loss marginal have expectation −1/2. Four equal-weight local
+  Pauli products certify each two-loss marginal. Ordinary 1-resistance of C₅
+  is the known weaker result of Han–Zhang–Zhang; strong 1-resistance is this
+  settlement and implies the ordinary one by Definition 2 of
+  arXiv:2505.06567v1, p. 3.
+- [computed: python3 /tmp/op-c5-settlement/cycle_certificates.py →
+  C5_TWO_LOSS: marginals=10, rank_each=4, weights=(1/4,1/4,1/4,1/4);
+  PAULI_PRODUCTS: max_entry_error=0]
+  Exact cyclic-phase partial traces and local Pauli eigenprojectors give
+  rank four for all ten three-qubit marginals and reconstruct every entry
+  with four pure product terms. Thus four is the minimum number of pure
+  product terms in these decompositions: fewer than four rank-one matrices
+  cannot have rank four. This sharpness concerns decomposition length, not
+  an optimal entanglement or noise bound.
+- [computed: python3 /tmp/op-c5-settlement/cycle_certificates.py →
+  C3: initial_wpt_min=0; PAULI_PRODUCTS: marginals=3, rank=2, terms=2,
+  weight=1/2, max_entry_error=0; C3/C4: one_loss_wpt_min=−1/2]
+  The same two certificate types reach the smaller C₃, m=0 case: the
+  initial projector witness has nonnegative partial transposes, and all
+  three one-loss marginals are equal mixtures of two Pauli product states.
+  In contrast, the one-loss witness I/2 − 2ρ has a negative partial
+  transpose for every single loss of C₃ and C₄. That particular Gram
+  certificate fails; its failure alone is not a test for biseparability.
+- [computed: python3 /tmp/op-c5-settlement/cycle_certificates.py →
+  C6/C7/C8: one_loss_wpt_min=0, passing_losses=6/7/8;
+  two_loss_pt_min=−1/8, loss_sets=15/21/28]
+  Enumerating supported cycle stabilizers and their exact Walsh spectra
+  extends the single-loss witness certificate to every single loss for
+  n=6,7,8. However, every two-loss marginal in these three cycles has an
+  NPT cut, with minimum eigenvalue −1/8, so it cannot have the required
+  full-product decomposition. The GME part of the m=1 method extends in
+  this finite range; the full-separability part obstructs strong
+  1-resistance. An NPT cut establishes entanglement, not GME.
+- [computed: python3 /tmp/op-c5-settlement/cycle_certificates.py →
+  SEPARATOR: n=5,6,7,8, 2≤m≤n−2, cases=14, terms=2^m,
+  weight=2^(−m), max_entry_error=0; C6 lost={0,2}: rank=4,
+  cut_{1}_pt_min=0, all_cut_pt_min=−1/8]
+  Losing {0,2}, with additional losses {3,…,m} when m>2, isolates qubit 1
+  in the retained graph. For each lost-bit configuration the cyclic phase
+  factors across {1}|rest; averaging gives an exact cut-product mixture
+  with 2^m equal weights. This supplies a biseparable m-loss marginal in
+  each of the fourteen cases. For C₆, m=2 (#11641), the marginal is
+  entangled across another cut but biseparable across {1}|{3,4,5}:
+  ordinary 2-resistance cannot substitute for strong 2-resistance.
+  Together with the proved C₅ answer, this resolves both clauses of the
+  first Discussion question, rather than invalidating the paper's
+  ordinary-resistance results.
+- [open] Uniform versions of the computed mechanisms require new proof
+  obligations: a graph-basis spectrum/Gram identity and nonnegative
+  coefficients for every n≥5 single-loss cut, and a conditional-phase
+  cut-product identity for n≥4 and every 2≤m≤n−2. The fixed five-qubit
+  coefficient tables do not supply either quantified theorem. The C₄
+  one-loss case needs a different witness or an explicit biseparable
+  decomposition; a failed witness is insufficient. These are formal
+  method extensions, not fresh open resistance questions for large
+  cycles: Proposition 6 of the source already rules out ordinary
+  m-resistance for n≥7 and 0≤m≤n−2. Transporting that published no-go
+  through the strong-implies-ordinary implication would exclude strong
+  resistance too; that uniform implication is not proved in this module.
+- [open] A strong-resistance classification of the source's small-graph
+  classes needs more than its ordinary-resistance Table I. Extending this
+  C₅ proof to the entire local Clifford orbit requires a formal transport
+  of GME, full separability and partial trace under local unitaries and
+  relabelling. For six qubits the C₆ representative is excluded at m=2,
+  but the other two ordinary-2-resistant representatives G_I and G_AME
+  need their own GME certificates or biseparable loss witnesses, followed
+  by the same transport. No conclusion about those two strong classes
+  follows from the C₅ or C₆ certificates alone.
+- [open] The second Discussion question, whether non-stabilizer pure
+  states realize parameters forbidden to graph states, remains outside
+  these settlements. The graph/stabilizer no-go domain must not become a
+  no-go for all pure states; the Discussion itself cites seven-qubit
+  4- and 5-resistant pure states as known examples. The remaining
+  six-/seven-qubit parameters need a separately specified non-stabilizer
+  construction and certificates for every required loss, or a no-go
+  proof valid beyond stabilizers. The cycle Gram tables and Pauli-product
+  certificates supply neither, and the cited known examples are not new
+  open-problem targets.
 
 ## ASSUMED-UNVERIFIED
 
