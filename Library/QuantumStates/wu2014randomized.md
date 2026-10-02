@@ -44,9 +44,10 @@ The open question (Section V, last paragraph):
 > We have evaluated the negativity numerically for some RG states composed of a small number of qubits. The results for the negativity of states corresponding to the complete graph $K_{n}$ and the star graph $S_{n}$ up to $n=4 $ vertices are reported in Fig. \ref{fig::monotomicity_of_negativity}. As can be seen, in the studied cases the negativity exhibits a monotonic behaviour in terms of the randomness parameter $p$. This suggests that the entanglement content might increase monotonically in $p$ with respect to any bipartition. Actually, since for the extreme cases $p=0$ and $p=1$ we have a fully separable state and an entangled state, respectively, one might expect that, as the weight of entangled subgraph states in $\rho^{p}_{G}$ increases with increasing $p$, a corresponding growth of the entanglement content of the RG state $\rho^{p}_{G}$. However, even though this conjecture is supported by numerical evidence, it is an open question whether the monotonic behavior of the negativity in terms of the randomness $p$ is a common feature to all RG states.
 
 The encoding indexes the qubits by `Fin n` and the computational basis by
-`Fin n → Fin 2`, takes the graph state of an edge set to be its CZ phases
+`Fin n → Bool`, takes the graph state of an edge set to be its CZ phases
 times $|+\rangle^{\otimes n}$, sums over the subsets of the edge set of $G$,
-and uses the frozen trace norm $\operatorname{re}\operatorname{Tr}
+and uses the frozen partial transposition `transposePart` of an arbitrary set
+of qubits and the frozen trace norm $\operatorname{re}\operatorname{Tr}
 \sqrt{X^\dagger X}$.
 
 ## Verified locator
