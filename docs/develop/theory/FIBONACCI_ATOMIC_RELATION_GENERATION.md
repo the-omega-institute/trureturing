@@ -44515,3 +44515,61 @@ $$
 这里直接控制增长的 $s$ 与同一宿主的完整权重，没有从固定 $s$ 定理的隐含常数外推。$\square$
 
 ## 追加锚（本行以下为增补区）
+## 321. 齐次相位窗与响应坏集的共同选择
+
+固定参数
+
+$$
+\kappa>0,\quad 0<\chi<\tfrac12,\quad
+0<\eta<\frac{\chi\kappa}{1+\chi},\quad
+\frac\eta\chi<u<\kappa-\eta,
+\qquad
+Q_C=\lfloor e^{\kappa\sqrt P}\rfloor,\quad
+K_C=\lceil e^{\eta\sqrt P}\rceil.
+\tag{321.1}
+$$
+
+参数 $\eta$ 表示相位窗精度，区别于单位位 $h(N)$。所有参数固定，不断言端点或随 $C$ 变化的参数统一性。
+
+**命题 321.1（大乘子、严格相位命中与低响应共同实现）。** 对每个充分大的实际 CA宿主，至少有 $Q_C/(16K_C)$ 个整数乘子满足
+
+$$
+\frac{Q_C}{8K_C}<t\le Q_C,\qquad
+\|tC\varphi\|<\frac1{K_C},\qquad
+\log F_C(t)\le\frac{u}{\sqrt P\log P},
+\quad \varphi=\frac{1+\sqrt5}{2}.
+\tag{321.2}
+$$
+
+证明。先把标准齐次Bohr容量机制写到有限区间载体上，以核对所用常数。对任意实数 $\vartheta$ 和整数 $K\ge1$、$Q\ge2K$，将 $\{j\vartheta\}$（$0\le j\le Q$）放入 $K$ 个等长半开区间，令各区间计数为 $n_i$。同区间两点的正指标差 $t$ 满足 $\|t\vartheta\|<1/K$。Cauchy–Schwarz给同区间无序对数至少为 $((Q+1)^2/K-(Q+1))/2$；每个正指标差至多出现 $Q$ 次。因此相位命中数至少为
+
+$$
+\frac{(Q+1)^2/K-(Q+1)}{2Q}
+\ge\frac{Q+1-K}{2K}.
+\tag{321.3}
+$$
+
+当 $Q\ge2K$，这个下界不小于 $Q/(4K)$；删除所有 $t\le Q/(8K)$ 后还留下至少 $Q/(8K)$ 个命中。这是以零为中心的对称窗下界，不是等分布断言，不能直接当作任意平移窗的下界。
+
+另一方面，定义同一乘子区间的响应坏集
+
+$$
+\mathcal B_C=\left\{1\le t\le Q_C:
+\log F_C(t)>\frac{u}{\sqrt P\log P}\right\}.
+\tag{321.4}
+$$
+
+以 §320 的 $s=\chi P\log P$ 使用非负矩上界，得到
+
+$$
+|\mathcal B_C|
+\le Q_C M_C(s)e^{-\chi u\sqrt P}
+=Q_C\exp(-\chi u\sqrt P+o(\sqrt P))
+<\frac{Q_C}{16K_C}
+\quad\text{最终成立}.
+\tag{321.5}
+$$
+
+严格最后一步使用 $\chi u>\eta$。现在取 $\vartheta=C\varphi$；（321.3）在每个实际宿主的这个相位上成立，不需要它随 $C$ 等分布。$\eta<\kappa$ 使 $Q_C\ge2K_C$ 最终成立。大相位命中数至少为 $Q_C/(8K_C)$，除掉全部响应坏集后仍至少为 $Q_C/(16K_C)$。所余乘子同时满足所有条件，未把分别可达的相位与权重最优值拼成一个虚构来源。$\square$
+
+## 追加锚（本行以下为增补区）
