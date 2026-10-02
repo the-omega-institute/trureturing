@@ -23559,3 +23559,171 @@ original \(A,T_1,\ldots,T_p\) block with high-layer classes alone. Any descent
 in this branch must use a lower \(p\)-height label, alter the frozen outside
 family, or pay a larger complete liability. This is a branch restriction,
 not a proof of unrestricted noncoverage.
+
+## 199. A bounded mixed repair has a finite index palette
+
+The complete-fibre result of Section 25 applies directly to the two-sided
+responsibility in Section 192.  Put
+
+\[
+ N_0=Q/p=p^{e-1}L,\qquad p\nmid L,
+\]
+
+and let \(E=E_A\mathbin{\dot\cup}E_B\).  Consider an inclusion-minimal
+distinct repair of \(E\) by \(k\) odd nonunit classes
+
+\[
+ C_j=(c_j\pmod {d_j}),\qquad 1\le j\le k.
+\]
+
+For each repair class set
+
+\[
+ g_j=\gcd(d_j,N_0),\qquad \delta_j=d_j/g_j.
+\]
+
+At a private point of \(C_j\), its complete \(N_0\)-fibre is contained in
+\(E\), and the induced classes on the fibre parameter have index
+\(\delta_j\).  The already-used essential-coset theorem (the \(f\)-bound in
+Section 25) therefore gives
+
+\[
+\boxed{
+ f(\delta_j)=\sum_{q\mid\delta_j}v_q(\delta_j)(q-1)\le k-1.
+}
+\tag{MI1}
+\]
+
+This is a reuse of the established fibre theorem, not a new covering
+theorem.  It is valid for the actual source fibres and keeps the original
+repair phases.  In particular, for any fixed budget \(k\), the possible
+relative indices are a finite palette; no arbitrary new prime can enter an
+essential repair index.
+
+### High-layer labels collapse to one relative \(p\)-digit
+
+Assume \(k\le p+1\) and \(v_p(d_j)\ge e\).  Since
+\(v_p(N_0)=e-1\), the index \(\delta_j\) is divisible by \(p\).  If
+\(\delta_j\ne p\), then either its \(p\)-adic exponent is at least two or it
+has another odd prime factor.  In the first case
+\(f(\delta_j)\ge2(p-1)>p\) for \(p\ge3\); in the second,
+\(f(\delta_j)\ge(p-1)+(3-1)>p\).  Both contradict (MI1), because
+\(k-1\le p\).  Hence
+
+\[
+\boxed{\delta_j=p.}
+\tag{MI2}
+\]
+
+Writing \(g_j=p^{e-1}s_j\), (MI2) gives
+
+\[
+\boxed{
+ d_j=p^e s_j,\qquad s_j\mid L.
+}
+\tag{MI3}
+\]
+
+Thus every essential high-layer class in a repair of at most \(p+1\) classes
+has exactly the top \(p\)-height \(e\), and its cofactor is an original
+divisor of the reduced period \(L\).  In particular, a high class with a
+new prime, an extra \(p\)-power, or a cofactor outside \(L\) cannot occur in
+such a minimal mixed repair.  This conclusion is stronger than the
+prefix-separated \(2p\) count alone: it constrains every high class before
+the two source fibres are compared.
+
+### The two-fibre bridge inequality
+
+For completeness, the same fibre reduction gives a joint necessary
+inequality in the prefix-separated branch.  Choose
+\(x_A\in E_A\), \(x_B\in E_B\), put
+
+\[
+ \Delta=x_A-x_B,\qquad h=v_p(\Delta)<e-1,
+\]
+
+and define the potential bridge set
+
+\[
+ B_\Delta=\{j:g_j\mid\Delta\}.
+\tag{MI4}
+\]
+
+A repair class can be active on both selected fibres only if it belongs to
+\(B_\Delta\).  No class satisfying \(v_p(d_j)\ge e\) belongs to this set,
+while a bridge class necessarily has \(v_p(d_j)\le h\).  On an \(N_0\)-fibre,
+compatibility \(g_j\mid x-c_j\) induces one residue class modulo
+\(\delta_j\), so the active indices have reciprocal sum at least one.
+Adding the two fibre inequalities and allowing every potential bridge to
+contribute twice gives
+
+\[
+\boxed{
+ 2\le
+ 2\sum_{j\in B_\Delta}\frac1{\delta_j}
+ +\sum_{j\notin B_\Delta}\frac1{\delta_j}.
+}
+\tag{MI5}
+\]
+
+If all repair indices are at least \(p\), then
+
+\[
+ 2p\le k+|B_\Delta|.
+\tag{MI6}
+\]
+
+Consequently a \(k\le p+1\) repair needs at least \(p-1\) potential
+low-layer bridges.  If there is no bridge, this recovers the impossibility of
+any such mixed repair.  The estimate is intentionally only necessary:
+\(\delta_j=1\) bridge classes are whole compatible fibres, and the remaining
+low indices can themselves form a smaller odd covering problem.  Section 193
+excludes the special one-class hull descent in the prefix-separated branch,
+but it does not exclude a family that splits \(E_A\) and \(E_B\) among several
+occupied bridge labels.
+
+Therefore the bounded mixed branch is now reduced to two explicit obligations:
+the high part must use only the finite labels \(p^e s\) with \(s\mid L\), and
+the low part must supply the bridge capacity in (MI5) while paying the
+complete joint responsibility.  These constraints still do not force a
+strict EB1 descent for every hypothetical cover; the unrestricted
+Erdős #7 implication remains open.
+
+
+### The smallest-prime specialization
+
+When \(p=3\) and \(k\le4\), (MI1) gives an additional exact simplification.
+For a low class \(v_3(d_j)<e\), the factor \(3\) is cancelled in
+\(\delta_j=d_j/\gcd(d_j,N_0)\).  Thus \(\delta_j\) is odd and coprime to
+three.  Any nontrivial such index has a prime factor at least five and hence
+\(f(\delta_j)\ge4\), contradicting \(f(\delta_j)\le k-1\le3\).  Therefore
+
+\[
+\boxed{
+ p=3,\ k\le4,\ v_3(d_j)<e
+ \quad\Longrightarrow\quad
+ \delta_j=1,\ d_j\mid N_0.
+}
+\tag{MI7}
+\]
+
+Together with (MI2)--(MI3), every essential class in a four-class
+prefix-separated repair is consequently of one of two forms:
+
+\[
+ d_j\mid N_0,
+ \qquad\text{or}\qquad
+ d_j=3^e s_j,\ s_j\mid L.
+\tag{MI8}
+\]
+
+The first kind covers each compatible \(N_0\)-fibre in its entirety; the
+second kind contributes one residue class of index three and cannot bridge
+the two prefix-separated fibres.  Hence a four-class repair at \(p=3\) can
+exist only if its low divisor classes cover the required set of \(N_0\)-fibre
+bases, while the remaining high classes supply the uncovered ternary
+parameters separately on the two sides.  This turns the unresolved
+prefix-separated \(p=3\) case into a finite divisor-and-phase problem inside
+the original period, rather than an unrestricted search over new odd
+moduli.  The present results do not yet rule out a split of the two
+responsibility pieces among several such divisor classes.
