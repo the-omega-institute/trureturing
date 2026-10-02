@@ -9,6 +9,15 @@ public sealed class ScribeResourceCliTests
 {
     private static readonly Assembly Documents = new FixtureAssembly();
 
+    [Fact]
+    public void GeneralUsageIncludesTheResourcePackCommand()
+    {
+        using var root = Prepare();
+        var error = new StringWriter();
+        Assert.Equal(2, ScribeCli.Run(Documents, [], root.Path, TextWriter.Null, error));
+        Assert.Contains("resources pack --out <file>", error.ToString(), StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData("resources")]
     [InlineData("resources", "pack")]
@@ -129,7 +138,7 @@ public sealed class ScribeResourceCliTests
     }
 
     [Fact]
-    public void PackThenVerifyUsesTheAssemblyDefinitionDiscoveryPath()
+    public void PackScriptsThenVerifyUsesAssemblyDefinitions()
     {
         using var root = Prepare();
         var output = new StringWriter();
@@ -152,6 +161,21 @@ public sealed class ScribeResourceCliTests
         var root = new TemporaryRoot();
         TemporaryFileSystem.File.WriteAllText(root.Resolve("global.json"), "{}");
         TemporaryFileSystem.Directory.CreateDirectory(root.Resolve("Blueprint"));
+        foreach (var name in new[] { "First", "Second" })
+        {
+            var path = $"Blueprint/D5/S0/Synthetic/{name}.scribe.cs";
+            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(root.Resolve(path))!);
+            TemporaryFileSystem.File.WriteAllText(root.Resolve(path), $$"""
+                using StrataLint.Scribe;
+                using static StrataLint.Scribe.DefinitionDsl;
+                internal sealed class {{name}} : IScribeDocumentDefinition
+                {
+                    public DocumentDefinition Create() => DocumentDefinition.Create(
+                        ScribeDocument.Create(Header("D5/S0/Synthetic/{{name}}", "Resource fixture"),
+                            H("{{name}}"), Blocks(Paragraph(Text("body")))));
+                }
+                """);
+        }
         return root;
     }
 

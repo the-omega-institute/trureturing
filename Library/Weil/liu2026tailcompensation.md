@@ -5,7 +5,7 @@ year: 2026
 title: "Certified Weil Positivity Beyond the Unit Window: Source-Exact Block-Schur and Tail-Compensation Bounds for the Riemann Zeta Function"
 doi: null
 url: https://github.com/luciferyu666/certified-weil-positivity/releases/tag/v1.0-mcom-submission
-claim: The author-submitted manuscript states full complex Weil-form coercivity at physical half-widths 1 and 17/16. Source-proof parameter applications supply a 4/5 prime-block floor, an actual positive Fourier-tail correction and even-space complement/coupling bounds at c=9; the retained sign and cofinal positivity remain unproved.
+claim: The author-submitted manuscript states full complex Weil-form coercivity at physical half-widths 1 and 17/16. Source-proof parameter applications supply prime, tail and complement inputs at c=9. A positive constant prime reference and pointwise exterior positivity are incompatible at band256 for c>=27; the same cofinal strategy requires growing bands. Retained sign and cofinal positivity remain unproved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -586,7 +586,9 @@ W^{-1}+J_0-\varepsilon_JI-2^{-187}I
 \tag{A13}
 $$
 
-This condition is not established. All three centers and their supplied errors must belong to the same actual 256-mode embedding. In particular, $B_0$ must approximate $E^*M_9^2E$, rather than $A_0^2$; clipping occurs before composing the shifts. The combined analytic allowance $2^{-206}$ enters $\varepsilon_J$ only under the stated author-moment premise. Source positivity of the original window does not settle (A13). This note reuses the author's support-independent Gamma input, constructs only the new-width kernel and identifies the common 256-mode remaining finite obligation. It supplies no verified finite sign, full bounded or cofinal positivity, originality claim, kernel theorem or RH proof.
+All three centers and their supplied errors must belong to the same actual 256-mode embedding. In particular, $B_0$ must approximate $E^*M_9^2E$, rather than $A_0^2$; clipping occurs before composing the shifts. The combined analytic allowance $2^{-206}$ enters $\varepsilon_J$ only under the stated author-moment premise. Source positivity of the original window does not settle (A13). This note supplies its criterion and error interfaces, with no kernel theorem or originality claim.
+
+The [actual c9 reproduction package](../../docs/reports/weil-c9/README.md) publishes project-authored programs, hash-bound new-width matrix inputs and a local conditional run of (A13). At the pinned arithmetic environment and precision, all 256 directed LDL pivots are strictly positive and no directed negative witness is found. The recorded minimum pivot lower bound is not an eigenvalue bound. Moment containment remains an author premise; the retained-target source contract was reviewed separately, but independent execution and matrix regeneration have not been obtained. The package reuses the existing inputs rather than replaying the author's old certificate. This is conditional numerical evidence for the specified sufficient comparison; the cofinal support positivity required for RH remains unproved.
 
 ```python
 from fractions import Fraction as F
@@ -603,3 +605,156 @@ assert e + 2*e*e/(m-n) < F(1, 2**187)
 assert (e+n)/m**2 + 2*h*h/(m**2*(m-n)) < F(1, 2**186)
 print('common256-mode projection and consumer allowances passed')
 ```
+
+## The next FIB layer needs a different prime reference
+
+The source's inverse-residual comparison requires a positive reference operator. Its constant-background splitting is therefore subject to a separate scale condition. At $c>1$, put $a_c=\tfrac12\log c$ and use the actual even space $L^2_{\rm even}((-a_c,a_c);\mathbb C)$. With the same compressed shifts as above, define
+
+$$
+C_{{\rm p},c}=\sum_{n<c}\frac{\Lambda(n)}{\sqrt n}
+(S_{\log n}+S_{-\log n}),\qquad
+M_{c,\beta}=\beta I-C_{{\rm p},c}.
+$$
+
+Only prime powers contribute. The normalized constant vector $u_c=(\log c)^{-1/2}\mathbf1_{(-a_c,a_c)}$ gives the exact overlap identity
+
+$$
+\rho(c):=\langle u_c,C_{{\rm p},c}u_c\rangle
+=2\sum_{n<c}\frac{\Lambda(n)}{\sqrt n}
+\left(1-\frac{\log n}{\log c}\right).
+\tag{A14}
+$$
+
+The endpoint shift is zero almost everywhere. Each positive-part summand increases with $c$, so $\rho$ is nondecreasing. In particular, $M_{c,\beta}\succeq mI$ with $m>0$ requires $\beta\ge\rho(c)+m$. The constant vector belongs to the actual even Hilbert space; density also transports a strictly negative reference quadratic to even smooth compactly supported tests. This tests the reference operator, not the complete Weil form.
+
+At the next FIB cutoff $c=27$, retaining just $n\in\{2,3,4,5,7,8,9,11\}$ already gives $\rho(27)>4$. The other prime-power terms are nonnegative and need no recomputation for this lower comparison. Use the preceding source logarithm enclosures for $2,3,5,7$, the elementary $239/100<\log11<12/5$, and root upper bounds as in the scalar replay below. For $n=p^j$, each retained summand is bounded below by
+
+$$
+\frac{2l_p^-}{r_n^+}
+\left(1-\frac{j l_p^+}{3l_3^-}\right)>0.
+\tag{A15}
+$$
+
+This is an application of the existing compressed-translation formula and scalar test, rather than another prime matrix or certificate. The following exact replay verifies the new downstream comparison and the elementary enclosure for $\log11$; the other logarithm enclosures remain the previously cited analytic inputs. For $0<x<N+2$, the first omitted exponential-series term is $x^{N+1}/(N+1)!$ and every subsequent ratio is at most $x/(N+2)<1$, which justifies the geometric-tail upper bound used with $x=239/100$ and $N=12$.
+
+```python
+from fractions import Fraction as F
+from math import factorial
+
+lo = {2: F(693147, 10**6), 3: F(1098612, 10**6),
+      5: F(1609437, 10**6), 7: F(1945910, 10**6), 11: F(239, 100)}
+hi = {2: F(693148, 10**6), 3: F(1098613, 10**6),
+      5: F(1609438, 10**6), 7: F(1945911, 10**6), 11: F(12, 5)}
+roots = {2: F(1414214, 10**6), 3: F(1732051, 10**6), 4: F(2),
+         5: F(2236068, 10**6), 7: F(2645752, 10**6),
+         8: F(2828428, 10**6), 9: F(3), 11: F(10, 3)}
+powers = {2: (2, 1), 3: (3, 1), 4: (2, 2), 5: (5, 1),
+          7: (7, 1), 8: (2, 3), 9: (3, 2), 11: (11, 1)}
+
+def exp_partial(x, N):
+    return sum((x**k / factorial(k) for k in range(N + 1)), F(0))
+
+N = 12
+x = lo[11]
+exp_upper = (exp_partial(x, N)
+             + x**(N + 1) / factorial(N + 1) / (1 - x / (N + 2)))
+assert exp_upper < 11 < exp_partial(hi[11], N)
+assert all(r * r >= n for n, r in roots.items())
+terms = [2 * lo[p] / roots[n] * (1 - j * hi[p] / (3 * lo[3]))
+         for n, (p, j) in powers.items()]
+assert all(term > 0 for term in terms)
+assert sum(terms, F(0)) > 4
+print('the next FIB layer requires beta > 4 for a positive prime reference')
+```
+
+Consequently every $c\ge27$ requires $\beta>4$ for a strictly positive constant-background reference, including all subsequent cutoffs of the specified FIB sequence. This rules out reusing the $7/2$ prime background; it does not assert negativity of $Q$.
+
+## Raising the background conflicts with the fixed-band tail
+
+For a variable background $\beta$ at band cutoff $\Omega$, the same exact splitting has exterior weight $A(t)-\beta$. Retaining the source mechanism's **pointwise** condition $A(t)-\beta\ge0$ for $|t|>\Omega$ requires
+
+$$
+\beta\le A(\Omega).
+$$
+
+Continuity gives this necessary boundary inequality even when the frequency endpoint itself is excluded. This is a condition on that particular tail mechanism; no assertion is made that every lower bound for a signed exterior integral requires a pointwise nonnegative multiplier.
+
+At $\Omega=256$, the elementary upper bound $A(256)<4$ suffices. The primary formula [DLMF 5.9.13](https://dlmf.nist.gov/5.9.E13), for $\Re z>0$, is
+
+$$
+\psi(z)=\log z-\int_0^\infty h(t)e^{-zt}\,dt,
+\qquad h(t)=\frac1{1-e^{-t}}-\frac1t.
+$$
+
+The inequalities $1-e^{-t}<t<e^t-1$ give $0<h(t)<1$, hence $|\psi(w)-\log w|\le1/\Re w$. Apply the [digamma recurrence, DLMF 5.5.2](https://dlmf.nist.gov/5.5.E2), to $z=1/4+128i$ and $w=z+64$. Every subtracted reciprocal has positive real part, so
+
+$$
+\Re\psi(z)=\Re\psi(w)-\sum_{k=0}^{63}\Re\frac1{z+k}
+\le\Re\psi(w).
+$$
+
+Now $|w|<144$, $\Re w>64$ and $\pi>3$ give
+
+$$
+A(256)<\log48+\frac1{64}<4.
+\tag{A16}
+$$
+
+For the last comparison, $e^4>\sum_{k=0}^9 4^k/k!>54$ and $e^{1/64}<64/63$ imply $e^{4-1/64}>54\cdot63/64>48$. Its rational replay is:
+
+```python
+from fractions import Fraction as F
+from math import factorial
+
+assert F(257, 4)**2 + 128**2 < 144**2
+assert sum((F(4)**k / factorial(k) for k in range(10)), F(0)) > 54
+assert F(54) * F(63, 64) > 48
+print('the band256 pointwise tail mechanism requires beta < 4')
+```
+
+Thus, for every $c\ge27$, no real $\beta$ can satisfy both $M_{c,\beta}\succeq mI$ for some $m>0$ and the pointwise exterior-weight condition at band $256$. Merely raising the constant background cannot continue this fixed-band comparison through the next FIB layer. This is a paper-level obstruction to the stated splitting and sufficient criterion; it refutes neither full Weil positivity nor RH.
+
+## Necessary band growth for the same cofinal strategy
+
+The classical unconditional prime number theorem, in the form $\Psi(t)=\sum_{n\le t}\Lambda(n)\sim t$, and partial summation give
+
+$$
+S(t):=\sum_{n\le t}\frac{\Lambda(n)}{\sqrt n}
+=\frac{\Psi(t)}{\sqrt t}+\frac12\int_1^t\frac{\Psi(u)}{u^{3/2}}\,du
+\sim2\sqrt t.
+$$
+
+This is the existing half-weighted Mangoldt sum discussed in [Chirre–Helfgott's source application](chirrehelfgott2025nonnegative.md); no new prime-number theorem or stronger error term is used. Writing $\log(c/n)=\int_n^c dt/t$ in (A14) and exchanging the finite positive sum with the integral gives
+
+$$
+\rho(c)=\frac2{\log c}\int_1^c\frac{S(t)}t\,dt
+\sim\frac{8\sqrt c}{\log c}.
+\tag{A17}
+$$
+
+The positive-integral representation matters: a coarse error in two separately estimated weighted sums need not survive their leading cancellation, whereas $S(t)\sim2\sqrt t$ directly yields (A17).
+
+Suppose the same strategy uses $M_{c,\beta_c}\succeq m_cI$ with $m_c>0$ and $A(t)-\beta_c\ge0$ for all $|t|>\Omega_c$, along a specified cofinal family of cutoffs. These are conditions on the actual common splitting. They require
+
+$$
+A(\Omega_c)\ge\beta_c\ge\rho(c)+m_c.
+$$
+
+In particular $\Omega_c\to\infty$. The digamma asymptotic [DLMF 5.11.2](https://dlmf.nist.gov/5.11.E2), applied in a fixed sector containing $1/4+it/2$, gives $A(t)=\log(t/(2\pi))+o(1)$ as $t\to+\infty$. Therefore the strategy necessarily satisfies
+
+$$
+\liminf_{c\to\infty}\frac{\log\Omega_c\,\log c}{\sqrt c}\ge8.
+\tag{A18}
+$$
+
+The limit is taken through that asserted family; parameters at intervening cutoffs are not required.
+
+For the specified FIB sequence, write $c_r=3^{k_r}$ with $k_0=k_1=1$ and $k_{r+2}=k_{r+1}+k_r$. Then (A18) requires
+
+$$
+\log\Omega_r\ge(8-o(1))\frac{3^{k_r/2}}{k_r\log3}.
+$$
+
+Thus even a band growing polynomially in $c$ is insufficient for **these two simultaneous conditions**. This is a necessary growth bound for a constant-background reference with a pointwise nonnegative exterior multiplier. It is not a lower bound for the cost of proving RH, and a band satisfying it still supplies no retained sign or cofinal positivity.
+
+The existing [joint pole–prime localization identity](frankliebseiringer2006hardy.md) provides another representation: it combines the continuous prime main term with the pole and Gamma terms before estimating the signed Chebyshev remainder. Its common-test remainder still lacks the required favorable bound. Alternatives to the present obstruction must supply such a joint estimate, control a signed exterior band, or justify another reference operator without a globally positive $\beta I-C_{{\rm p},c}$. None is supplied by raising $\beta$ alone, reusing the scalar moment packet at a different band, or changing the FIB coordinates. These conclusions are source applications and interface analysis, not originality claims or a proof of RH.
