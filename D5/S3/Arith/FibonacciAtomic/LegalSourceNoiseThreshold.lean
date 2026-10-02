@@ -92,10 +92,16 @@ private theorem coordinate_invariant (lam ν : ℝ) (hlam : 0 ≤ lam)
   | cons e p ih =>
       rcases e with ⟨a, ξ⟩
       intro s E y k hlegal hnoise hz ho
+      have dead (w : List Window) : run none w = none := by
+        have h := (execution false false (.high :: .low :: w)).2.mpr
+          (by simp [flatten, bits, legal])
+        simpa [run, step, first, last, nonzero] using h
+      have live := (execution s E (a :: p.map Prod.fst)).1.mpr hlegal
       have guard : (s && first a) = false := by
-        cases s <;> cases a <;> simp [flatten, bits, first, legal] at hlegal ⊢
+        cases s <;> cases a <;> simp [run, step, first, dead] at live ⊢
       have tailLegal : legal (last a) (flatten (p.map Prod.fst)) := by
-        cases s <;> cases a <;> simp [flatten, bits, last, legal] at hlegal ⊢ <;> tauto
+        apply (execution (last a) (nonzero a) (p.map Prod.fst)).1.mp
+        simpa [run, step, guard, List.foldl_cons] using live
       have readOne : canonical (some (s, E)) (readIndex a) = 1 := by
         cases s <;> cases a <;> simp [canonical, readIndex, first] at guard ⊢
       have sourceLower := ho (readIndex a) readOne
@@ -209,7 +215,311 @@ private theorem sufficient (lam ν : ℝ) (M : ℕ) (hlam0 : 0 < lam)
   · obtain ⟨d, hd⟩ := labelRecovery
     exact ⟨fun _ => d, hd⟩
 
-#print axioms coordinate_invariant
-#print axioms sufficient
+/-- The sharp boundary holds for arbitrary row decoders, with or without a clock,
+at every bounded or fixed depth. -/
+theorem result (decay : ℚ) (hdecay0 : 0 < decay) (hdecay1 : decay < 1) :
+    (∀ (ν : ℝ), 0 ≤ ν → ∀ (M : ℕ) (fixed : Bool),
+      (Recovery canonical (decay : ℝ) ν M fixed ↔ M = 0 ∨ ν < threshold decay M) ∧
+      (ClockRecovery canonical (decay : ℝ) ν M fixed ↔ M = 0 ∨ ν < threshold decay M) ∧
+      (Recovery endable (decay : ℝ) ν M fixed ↔ M = 0 ∨ ν < threshold decay M) ∧
+      (ClockRecovery endable (decay : ℝ) ν M fixed ↔ M = 0 ∨ ν < threshold decay M)) ∧
+    (∀ (ν : ℝ), 0 ≤ ν → ∀ fixed : Bool,
+      Recovery canonical (decay : ℝ) ν 0 fixed ∧ ClockRecovery canonical (decay : ℝ) ν 0 fixed ∧
+      Recovery endable (decay : ℝ) ν 0 fixed ∧ ClockRecovery endable (decay : ℝ) ν 0 fixed) ∧
+    (∀ (ν : ℝ), 0 ≤ ν → ∀ fixed : Bool,
+      (Recovery canonical (decay : ℝ) ν 1 fixed ↔ ν < (decay : ℝ) / 2) ∧
+      (ClockRecovery canonical (decay : ℝ) ν 1 fixed ↔ ν < (decay : ℝ) / 2) ∧
+      (Recovery endable (decay : ℝ) ν 1 fixed ↔ ν < (decay : ℝ) / 2) ∧
+      (ClockRecovery endable (decay : ℝ) ν 1 fixed ↔ ν < (decay : ℝ) / 2)) ∧
+    (∀ M : ℕ, 2 ≤ M →
+      (decay : ℝ) ^ M / (2 * geometric decay M) < threshold decay M) ∧
+    Filter.Tendsto (threshold (decay : ℝ)) Filter.atTop (nhds 0) := by
+  classical
+  let lam : ℝ := decay
+  have hlam : 0 < lam := by exact_mod_cast hdecay0
+  have hlam1 : lam < 1 := by exact_mod_cast hdecay1
+  have collision (n : ℕ) :
+      let c := threshold lam (n + 1)
+      ∃ p q : List (Window × Row),
+        p.map Prod.fst = List.replicate (n + 1) .low ∧
+        q.map Prod.fst = List.replicate (n + 1) .zero ∧
+        p.length = n + 1 ∧ q.length = n + 1 ∧
+        noiseBound c p ∧ noiseBound c q ∧
+        actual lam p = c • canonical (some (false, true)) ∧
+        actual lam q = c • canonical (some (false, true)) := by
+    dsimp only
+    let c := threshold lam (n + 1)
+    let zA := canonical (some (false, false))
+    let zB := canonical (some (false, true))
+    let p : List (Window × Row) := List.replicate (n + 1) (.low, (-c) • zB)
+    let q : List (Window × Row) :=
+      List.replicate n (.zero, (-c) • zA) ++ [(.zero, ![c, -c, -c])]
+    have hsum : 0 ≤ geometric lam (n + 1) :=
+      Finset.sum_nonneg fun j _ => pow_nonneg hlam.le j
+    have hden : 0 < geometric lam (n + 1) + 1 := by linarith
+    have hc : 0 ≤ c := (div_pos (pow_pos hlam _) hden).le
+    have critical : lam ^ (n + 1) - c * geometric lam (n + 1) = c := by
+      have h : c * (geometric lam (n + 1) + 1) = lam ^ (n + 1) := by
+        exact div_mul_cancel₀ _ hden.ne'
+      nlinarith
+    have action (a : Window) (x : Row) : x ᵥ* matrix a = x (readIndex a) • target a := by
+      simp [matrix, Matrix.vecMul_vecMulVec]
+    have initialRead (a : Window) : zA (readIndex a) = 1 := by
+      cases a <;> rfl
+    have repeated (a : Window) (ha : target a (readIndex a) = 1) (k : ℕ) :
+        noisyRun (fun b x => lam • (x ᵥ* matrix b)) zA
+          (List.replicate (k + 1) (a, (-c) • target a)) =
+          (lam ^ (k + 1) - c * geometric lam (k + 1)) • target a := by
+      induction k with
+      | zero =>
+          ext r
+          simp [noisyRun, action, initialRead, geometric, Pi.smul_apply, smul_eq_mul]
+          ring
+      | succ k ih =>
+          rw [List.replicate_succ']
+          simp only [noisyRun, List.foldl_append, List.foldl_cons, List.foldl_nil]
+          change lam • (noisyRun (fun b x => lam • (x ᵥ* matrix b)) zA
+            (List.replicate (k + 1) (a, (-c) • target a)) ᵥ* matrix a) +
+            (-c) • target a = _
+          rw [ih, action]
+          ext r
+          simp only [Nat.succ_eq_add_one, Pi.add_apply, Pi.smul_apply, smul_eq_mul, ha,
+            mul_one, pow_succ]
+          rw [show geometric lam (k + 1 + 1) = lam * geometric lam (k + 1) + 1 from
+            geom_sum_succ]
+          ring
+    have lowFormula : actual lam p = c • zB := by
+      change noisyRun (fun b x => lam • (x ᵥ* matrix b)) zA
+        (List.replicate (n + 1) (.low, (-c) • target .low)) = _
+      rw [repeated .low (by rfl) n, critical]
+      rfl
+    have zeroPrefix : actual lam (List.replicate n (.zero, (-c) • zA)) =
+        (lam ^ n - c * geometric lam n) • zA := by
+      cases n with
+      | zero => simp [actual, noisyRun, geometric, zA]
+      | succ k => exact repeated .zero (by rfl) k
+    have zeroFormula : actual lam q = c • zB := by
+      change noisyRun (fun b x => lam • (x ᵥ* matrix b)) zA
+        (List.replicate n (.zero, (-c) • zA) ++ [(.zero, ![c, -c, -c])]) = _
+      simp only [noisyRun, List.foldl_append, List.foldl_cons, List.foldl_nil]
+      change lam • (actual lam (List.replicate n (.zero, (-c) • zA)) ᵥ* matrix .zero) +
+        ![c, -c, -c] = _
+      rw [zeroPrefix, action]
+      have hs : geometric lam (n + 1) = lam * geometric lam n + 1 := geom_sum_succ
+      rw [hs, pow_succ] at critical
+      ext r
+      fin_cases r <;> simp [target, readIndex, first, last, nonzero, zA, zB,
+        canonical, Pi.smul_apply, smul_eq_mul] <;> nlinarith
+    have lowNoise : ‖(-c) • zB‖ ≤ c := by
+      apply (pi_norm_le_iff_of_nonneg hc).mpr
+      intro r
+      fin_cases r <;> simp [zB, canonical, Real.norm_eq_abs, abs_of_nonneg hc]
+    have zeroNoise : ‖(-c) • zA‖ ≤ c := by
+      apply (pi_norm_le_iff_of_nonneg hc).mpr
+      intro r
+      fin_cases r <;> simp [zA, canonical, Real.norm_eq_abs, abs_of_nonneg hc, hc]
+    have lastNoise : ‖(![c, -c, -c] : Row)‖ ≤ c := by
+      apply (pi_norm_le_iff_of_nonneg hc).mpr
+      intro r
+      fin_cases r <;> simp [Real.norm_eq_abs, abs_of_nonneg hc]
+    refine ⟨p, q, by simp [p], by simp [q, List.replicate_succ'],
+      by simp [p], by simp [q], ?_, ?_, lowFormula, zeroFormula⟩
+    · intro e he
+      have heq : e = (.low, (-c) • zB) := (List.mem_replicate.mp he).2
+      simpa only [heq] using lowNoise
+    · intro e he
+      rcases List.mem_append.mp he with he | he
+      · have heq : e = (.zero, (-c) • zA) := (List.mem_replicate.mp he).2
+        simpa only [heq] using zeroNoise
+      · have heq : e = (.zero, ![c, -c, -c]) := List.mem_singleton.mp he
+        simpa only [heq] using lastNoise
+
+  have action (a : Window) (x : Row) : x ᵥ* matrix a = x (readIndex a) • target a := by
+    simp [matrix, Matrix.vecMul_vecMulVec]
+  have singleState (q : State) (a : Window) :
+      canonical q ᵥ* matrix a = canonical (step q a) := by
+    rw [action]
+    cases q with
+    | none =>
+        ext r
+        cases a <;> fin_cases r <;>
+          simp [canonical, target, readIndex, first, last, nonzero, step]
+    | some q =>
+        rcases q with ⟨s, E⟩
+        cases s <;> cases E <;> cases a <;> ext r <;> fin_cases r <;>
+          simp [canonical, target, readIndex, first, last, nonzero, step]
+  have fidelity : ∀ (w : List Window) (q : State),
+      noisyRun (fun a y => y ᵥ* matrix a) (canonical q)
+        (w.map (fun a => (a, (0 : Row)))) = canonical (run q w) := by
+    intro w
+    induction w with
+    | nil => intro q; rfl
+    | cons a w ih =>
+        intro q
+        simp only [List.map_cons, noisyRun, List.foldl_cons, run]
+        rw [singleState, add_zero]
+        exact ih (step q a)
+  have rowInjective : Function.Injective canonical := by
+    intro q q' h
+    cases q with
+    | none =>
+        cases q' with
+        | none => rfl
+        | some v => have h2 := congrFun h 2; norm_num [canonical] at h2
+    | some v =>
+        cases q' with
+        | none => have h2 := congrFun h 2; norm_num [canonical] at h2
+        | some v' =>
+            rcases v with ⟨s, E⟩
+            rcases v' with ⟨s', E'⟩
+            have h0 := congrFun h 0
+            have h1 := congrFun h 1
+            cases s <;> cases E <;> cases s' <;> cases E' <;>
+              simp [canonical] at h0 h1 ⊢
+  have repeatFixed (a : Window) (q : State)
+      (hfixed : canonical q ᵥ* matrix a = canonical q) (n : ℕ) :
+      noisyRun (fun b y => y ᵥ* matrix b) (canonical q)
+        (List.replicate n (a, (0 : Row))) = canonical q := by
+    unfold noisyRun
+    rw [List.foldl_replicate]
+    exact Function.iterate_fixed (by simp [hfixed]) n
+  have zeroRun (n : ℕ) : run (some (false, false)) (List.replicate n .zero) =
+      some (false, false) := by
+    apply rowInjective
+    rw [← fidelity, List.map_replicate]
+    exact repeatFixed .zero (some (false, false)) (by simpa [step, first, last, nonzero]
+      using singleState (some (false, false)) .zero) n
+  have lowRun (n : ℕ) : run (some (false, false)) (List.replicate (n + 1) .low) =
+      some (false, true) := by
+    apply rowInjective
+    rw [← fidelity, List.map_replicate, List.replicate_succ]
+    simp only [noisyRun, List.foldl_cons]
+    rw [singleState, add_zero]
+    exact repeatFixed .low (some (false, true)) (by simpa [step, first, last, nonzero]
+      using singleState (some (false, true)) .low) n
+  have asClock {Y : Type} (out : State → Y) (ν : ℝ) (M : ℕ) (fixed : Bool) :
+      Recovery out lam ν M fixed → ClockRecovery out lam ν M fixed := by
+    rintro ⟨d, hd⟩
+    exact ⟨fun _ => d, hd⟩
+  have clockNecessary {Y : Type} (out : State → Y)
+      (distinct : out (some (false, true)) ≠ out (some (false, false)))
+      (ν : ℝ) (M : ℕ) (hM : 0 < M) (fixed : Bool) :
+      ClockRecovery out lam ν M fixed → ν < threshold lam M := by
+    rintro ⟨d, hd⟩
+    by_contra hsmall
+    have large : threshold lam M ≤ ν := le_of_not_gt hsmall
+    have hdepth : M - 1 + 1 = M := by omega
+    obtain ⟨p, q, hpw, hqw, hpl, hql, hpn, hqn, hpa, hqa⟩ := collision (M - 1)
+    rw [hdepth] at hpw hqw hpl hql hpn hqn hpa hqa
+    have hpRun : run (some (false, false)) (p.map Prod.fst) = some (false, true) := by
+      rw [hpw]
+      simpa [hdepth] using lowRun (M - 1)
+    have hqRun : run (some (false, false)) (q.map Prod.fst) = some (false, false) := by
+      rw [hqw]
+      exact zeroRun M
+    have hpLegal : legal false (flatten (p.map Prod.fst)) := by
+      by_contra hl
+      have bad := (execution false false (p.map Prod.fst)).2.mpr hl
+      rw [hpRun] at bad
+      contradiction
+    have hqLegal : legal false (flatten (q.map Prod.fst)) := by
+      by_contra hl
+      have bad := (execution false false (q.map Prod.fst)).2.mpr hl
+      rw [hqRun] at bad
+      contradiction
+    have hpDepth : depthAllowed fixed M p.length := by
+      rw [hpl]
+      cases fixed <;> simp [depthAllowed]
+    have hqDepth : depthAllowed fixed M q.length := by
+      rw [hql]
+      cases fixed <;> simp [depthAllowed]
+    have hpCorrect := hd p hpDepth hpLegal (fun e he => (hpn e he).trans large)
+    have hqCorrect := hd q hqDepth hqLegal (fun e he => (hqn e he).trans large)
+    rw [hpl, hpa, hpRun] at hpCorrect
+    rw [hql, hqa, hqRun] at hqCorrect
+    exact distinct (hpCorrect.symm.trans hqCorrect)
+  have stateDistinct : canonical (some (false, true)) ≠ canonical (some (false, false)) := by
+    intro h
+    have h0 := congrFun h 0
+    norm_num [canonical] at h0
+  have labelDistinct : endable (some (false, true)) ≠ endable (some (false, false)) := by
+    decide
+  have zeroRecovery (ν : ℝ) (fixed : Bool) :
+      Recovery canonical lam ν 0 fixed ∧ ClockRecovery canonical lam ν 0 fixed ∧
+      Recovery endable lam ν 0 fixed ∧ ClockRecovery endable lam ν 0 fixed := by
+    have empty (p : List (Window × Row)) (hp : depthAllowed fixed 0 p.length) : p = [] := by
+      apply List.length_eq_zero_iff.mp
+      cases fixed with
+      | false => exact Nat.eq_zero_of_le_zero hp
+      | true => exact hp
+    have state : Recovery canonical lam ν 0 fixed := by
+      refine ⟨fun _ => canonical (some (false, false)), ?_⟩
+      intro p hp _ _
+      rw [empty p hp]
+      rfl
+    have label : Recovery endable lam ν 0 fixed := by
+      refine ⟨fun _ => false, ?_⟩
+      intro p hp _ _
+      rw [empty p hp]
+      rfl
+    exact ⟨state, asClock canonical ν 0 fixed state, label, asClock endable ν 0 fixed label⟩
+  have contracts (ν : ℝ) (hν : 0 ≤ ν) (M : ℕ) (fixed : Bool) :
+      (Recovery canonical lam ν M fixed ↔ M = 0 ∨ ν < threshold lam M) ∧
+      (ClockRecovery canonical lam ν M fixed ↔ M = 0 ∨ ν < threshold lam M) ∧
+      (Recovery endable lam ν M fixed ↔ M = 0 ∨ ν < threshold lam M) ∧
+      (ClockRecovery endable lam ν M fixed ↔ M = 0 ∨ ν < threshold lam M) := by
+    have backward : M = 0 ∨ ν < threshold lam M →
+        Recovery canonical lam ν M fixed ∧ ClockRecovery canonical lam ν M fixed ∧
+        Recovery endable lam ν M fixed ∧ ClockRecovery endable lam ν M fixed := by
+      rintro (rfl | hs)
+      · exact zeroRecovery ν fixed
+      · exact sufficient lam ν M hlam hlam1 hν hs fixed
+    refine ⟨⟨?_, fun h => (backward h).1⟩,
+      ⟨?_, fun h => (backward h).2.1⟩,
+      ⟨?_, fun h => (backward h).2.2.1⟩,
+      ⟨?_, fun h => (backward h).2.2.2⟩⟩
+    · intro h
+      by_cases hM : M = 0
+      · exact Or.inl hM
+      · exact Or.inr (clockNecessary canonical stateDistinct ν M (Nat.pos_of_ne_zero hM)
+          fixed (asClock canonical ν M fixed h))
+    · intro h
+      by_cases hM : M = 0
+      · exact Or.inl hM
+      · exact Or.inr (clockNecessary canonical stateDistinct ν M (Nat.pos_of_ne_zero hM) fixed h)
+    · intro h
+      by_cases hM : M = 0
+      · exact Or.inl hM
+      · exact Or.inr (clockNecessary endable labelDistinct ν M (Nat.pos_of_ne_zero hM)
+          fixed (asClock endable ν M fixed h))
+    · intro h
+      by_cases hM : M = 0
+      · exact Or.inl hM
+      · exact Or.inr (clockNecessary endable labelDistinct ν M (Nat.pos_of_ne_zero hM) fixed h)
+  refine ⟨contracts, fun ν _ fixed => zeroRecovery ν fixed, ?_, ?_, ?_⟩
+  · intro ν hν fixed
+    simpa [threshold, geometric] using contracts ν hν 1 fixed
+  · intro M hM
+    have lower : 1 + lam ≤ geometric lam M := by
+      calc
+        1 + lam = geometric lam 2 := by simp [geometric, Finset.sum_range_succ]; ring
+        _ ≤ geometric lam M := Finset.sum_le_sum_of_subset_of_nonneg (Finset.range_mono hM)
+          (fun j _ _ => pow_nonneg hlam.le j)
+    unfold threshold
+    exact div_lt_div_of_pos_left (pow_pos hlam M) (by linarith) (by linarith)
+  · apply squeeze_zero
+      (fun n => div_nonneg (pow_nonneg hlam.le n)
+        (by have h := Finset.sum_nonneg (fun j (_ : j ∈ Finset.range n) => pow_nonneg hlam.le j)
+            change 0 ≤ geometric lam n + 1
+            dsimp [geometric]
+            linarith))
+      (fun n => div_le_self (pow_nonneg hlam.le n)
+        (by have h := Finset.sum_nonneg (fun j (_ : j ∈ Finset.range n) => pow_nonneg hlam.le j)
+            change 1 ≤ geometric lam n + 1
+            dsimp [geometric]
+            linarith))
+    exact tendsto_pow_atTop_nhds_zero_of_lt_one hlam.le hlam1
+
+#print axioms result
 
 end D5.S3.Arith.FibonacciAtomic.LegalSourceNoiseThreshold
