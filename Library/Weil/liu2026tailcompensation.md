@@ -431,6 +431,19 @@ assert n < F(1, 2) < F(4, 5) < m
 print('new-width band, even block and pole parameter comparisons passed')
 ```
 
+## Reusing the support-independent Gamma moments
+
+Appendix C.1 supplies the scalar moments
+
+$$
+\vartheta_q=\frac{256}{\pi}\int_0^1x^{2q}(A(256x)-7/2)\,dx,
+\qquad 0\le q\le1023.
+$$
+
+Their definition contains no support half-width. The release packet `w200-pub-2026-09-14/reproduction/release-run/certificates/moments.json` has SHA-256 `f8cb5c681a22755b980d2e98d781353fe9ce058fe33eb8a7753585e2c52b2f93`, matching the pinned `frozen-manifest.json`. Its 1,024 ordered rows all have `hi-lo=3` on the $2^{-1024}$ grid. Thus the packet midpoints are $\widehat\vartheta_q=(\mathrm{lo}_q+\mathrm{hi}_q)/2^{1025}$. The packet records the common band $256$ and background $7/2$; its metadata also records the original $L=17/16$, which is absent from the moment formula and is not a width to retain in the new kernel.
+
+The small [reviewer-materials archive](https://github.com/luciferyu666/certified-weil-positivity/releases/download/v1.0-mcom-submission/w201-reviewer-materials.zip) has SHA-256 `e5547b885d3df9113895877032ba861235adb159cd5b816c9d9f6080d22fbf41` and contains that manifest. Member size and SHA-256 were checked after selective retrieval of the moment packet; the full large archive hash was not checked. These are data-identity and format checks. The mathematical premise that every interval contains its moment, and hence $|\vartheta_q-\widehat\vartheta_q|<2^{-1023}$, is the author's Appendix C.1 claim. Its producer and oracle were not reexecuted here. The packet is read-only research input and is not redistributed in this repository.
+
 ## The remaining retained-matrix consumer at $c=9$
 
 The source's Certification Theorem, section 6, equations (17)–(22), now has a legitimate prime-block input $m=4/5$, $b=31/5$ at this new window. In particular $M_9$ is boundedly invertible and $\|M_9^{-1}\|\le5/4$. The same already evaluated bound (A3), before rounding, also permits $m_*=264/325$, $b_*=2011/325$ and $\|M_9^{-1}\|\le325/264$; these are parameter substitutions, not another prime-block calculation. The conservative parameters below suffice to state the remaining obligation.
