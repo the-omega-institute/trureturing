@@ -46047,3 +46047,163 @@ $Ce^{-(\kappa-\eta)\sqrt P}$ 的尺度。
 这两条均未取得；排除某种弧以后还须控制完整未命中集合及独立比较类，不能将本节升格为廉价相位命中、Robin 正储备或 RH 证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 333. 平方密度的可求和谱积分误差与实际单边递归证书
+
+**定义 333.1（实际平方密度的两种网格）。** 沿用 §§315、325、330 的实际 $T_L$、$m_L=3L+2$、$\mathfrak m_L$、$\kappa$、$\Phi=I_\psi$ 与 $Z(x)=\sqrt x\log x\,\Phi(x)$。第一种网格取 $L_j=j^2$、$a_j=3j^2+2$，$j\ge16$。第二种网格使用定义330.2的 Fibonacci 块，取
+\[
+r_k=\left\lfloor\frac{\log_5 F_k}{2}\right\rfloor,
+\qquad b_k=5^{r_k},\qquad
+U_{k,s}=F_k+\left\lfloor\frac{sF_{k-1}}{b_k}\right\rfloor,
+\qquad a_{k,s}=3U_{k,s}+2.
+\tag{333.1}
+\]
+从充分晚的合法块开始，相邻块边界只计一次。两种网格均按实际截止递增枚举为 $a_i=m_{L_i}$，记 $\omega_i=\log(a_{i+1}/a_i)$。对 $X\ge a_0$，只使用已完成格子的谱左和
+\[
+\mathcal S(X)=\sum_{a_{i+1}\le X}\omega_i Z(a_i),\qquad
+\mathcal Q(X)=\int_{a_0}^X Z(x)\frac{dx}{x}-\mathcal S(X).
+\tag{333.2}
+\]
+
+**假设 333.1（已有有效 PNT 输入）。** 采用假设302.1及 §325 的经典解析输入，明确使用其无条件有效素数定理的如下既有形式：存在 $A,c>0$ 与 $x_0>1$，对全部实数 $x\ge x_0$ 有
+\[
+|\psi(x)-x|\le A x e^{-c\sqrt{\log x}}.
+\tag{333.3}
+\]
+这是经典零点自由区域所给的有效 PNT，不是本节新证明的零点结论；不预设 RH 或 $S<1$。$Z$ 局部绝对连续，其几乎处处导数使用（325.7）。
+
+**定理 333.1（实际平方密度的有限总谱误差）。** 在假设333.1下，对定义333.1的两种网格均有
+\[
+\sum_i\left|\int_{a_i}^{a_{i+1}}Z(x)\frac{dx}{x}
+-\omega_iZ(a_i)\right|<\infty,
+\qquad
+\mathcal Q(X)\longrightarrow Q_\infty\in\mathbb R
+\quad(X\to\infty).
+\tag{333.4}
+\]
+有限常数允许依赖网格初点。这将 §325 平方分支的粗积分误差加强为具有有限极限的误差。
+
+**证明。** 先从同一经典 PNT 生产导数预算，而非只使用 Chebyshev 粗界。置 $v=\sqrt{\log x}$。当 $x\ge\max\{x_0,e\}$ 时，对 $t\ge x$，核 $k(t)=(1+\log t)/(t^2\log^2t)$ 满足
+\[
+|\psi(t)-t|k(t)
+\le\frac{2A}{\sqrt{\log x}}
+\frac{e^{-c\sqrt{\log t}}}{t\sqrt{\log t}}.
+\]
+经典换元或微积分基本定理给
+\[
+\int_x^\infty\frac{e^{-c\sqrt{\log t}}}{t\sqrt{\log t}}\,dt
+=\frac2c e^{-c\sqrt{\log x}},
+\]
+因为被积函数是 $-(2/c)e^{-c\sqrt{\log t}}$ 的导数，且该原函数趋零。因此尾积分绝对收敛，且
+\[
+|\Phi(x)|\le\frac{4A}{c}
+\frac{e^{-c\sqrt{\log x}}}{\sqrt{\log x}}.
+\tag{333.5}
+\]
+代入（325.7），利用 $\log x+2\le3\log x$、$\log x+1\le2\log x$，得到同源点值及几乎处处导数界
+\[
+|Z(x)|\le C\sqrt{x\log x}\,e^{-c\sqrt{\log x}},
+\qquad
+|Z'(x)|\le C\frac{\sqrt{\log x}}{\sqrt x}
+ e^{-c\sqrt{\log x}}.
+\tag{333.6}
+\]
+可取 $C$ 大于 $4A/c$ 及 $A(6/c+2)$；有限初段的积分误差由连续性保证有限；如需共同有限导数界，则另用（325.7）及局部 $\psi$ 有界性，不从绝对连续性单独推断导数有界。
+
+普通平方网格满足 $a_j\asymp j^2$、$a_{j+1}-a_j\asymp j$、$a_{j+1}\le2a_j$。由（333.6）在每格取共同导数界，再使用（330.6），逐格绝对误差至多
+\[
+C'\frac{\sqrt{\log j}}j e^{-c'\sqrt{\log j}}
+\tag{333.7}
+\]
+其中 $c'>0$ 固定。此正函数充分晚时递减，经典积分比较及 $u=\sqrt{\log t}$ 给可和性，因为相应尾积分等于 $2\int u^2e^{-c'u}\,du$ 的尾部，有限。
+
+Fibonacci 块上 $x\asymp F_k$、$\log x\asymp\log F_k$，故可统一取
+\[
+M_k=C_0\frac{\sqrt{\log F_k}}{\sqrt{F_k}}
+ e^{-c_0\sqrt{\log F_k}},\qquad C_0,c_0>0.
+\tag{333.8}
+\]
+本块使用同一个 $M_k$。由 $b_k\asymp\sqrt{F_k}$ 和（330.11），全部叶的绝对谱误差之和至多
+\[
+\beta_k=C_1\sqrt{\log F_k}\,e^{-c_0\sqrt{\log F_k}}.
+\tag{333.9}
+\]
+经典 Fibonacci 几何增长给 $\log F_k\asymp k$，从而 $\sum\beta_k<\infty$。例如按 $n^2\le k<(n+1)^2$ 分组，每组至多 $2n+1$ 项，每项不超过 $C(n+1)e^{-c_2n}$，组总量为 $O((n+1)^2e^{-c_2n})$，由指数级数乘多项式的经典可和性得出。
+
+这些比较只是在实际网格上应用经典积分与级数估计。绝对可和的逐格误差使完整格子截止的 $\mathcal Q$ 趋于有限常数。还需处理所有实数 $X$：由（333.6）及两种网格的最大格宽 $O(\sqrt x)$，任一末格的部分积分绝对值至多
+\[
+C_2\sqrt{\log a_i}\,e^{-c_3\sqrt{\log a_i}}\longrightarrow0.
+\tag{333.10}
+\]
+在 Fibonacci 块内部，尚未加到完整块末的误差绝对总和不超过 $\beta_k\to0$。所以完成格左和的任意实数截止也趋于同一个误差常数，得到（333.4）。$\square$
+
+**推论 333.1（平方分支不需先做误差指数自举）。** 在同一输入下，若实际平方网格的普通 Robin 对数平均最终有固定有限下界，则其连续谱累计量直接满足
+\[
+\int_{a_0}^{X}Z(x)\frac{dx}{x}\ge-K(1+\log X)
+\quad\text{对全部充分大的 }X.
+\tag{333.11}
+\]
+因此可直接复用 §316 的正逆累计变换与经典 Landau 论证推出 RH；不需要先取得 $S<1$ 再重做平方网格的导数预算。
+
+**证明。** 按（315.2），非负 $H_i$ 及 $\varepsilon_i\to0$ 将实际平均的最终有限下界送到 $\sum\omega_iZ(a_i)\ge-K\log(a_N/a_0)$。定理333.1的有界误差和末格趋零把它延伸到全部实数，有限初段纳入常数。之后使用 §316 已有的同一连续累计预算推导。（333.11）的前提仍是未证明存在的最终预算；本推论不证明 RH。$\square$
+
+**定义 333.2（实际单边谱证书）。** 在定义333.1的一个 Fibonacci 块上，保留全部节点，包括右端点。取实际分解
+\[
+q_{k,s}=\mathfrak m_{U_{k,s}}
+=Z(a_{k,s})+\kappa-H_{k,s}+\varepsilon_{k,s},
+\qquad H_{k,s}\ge0,
+\]
+以及每点明确的有限上界 $\varepsilon_{k,s}\le e_{k,s}$，置
+\[
+\ell_{k,s}=q_{k,s}-\kappa-e_{k,s}\le Z(a_{k,s}),
+\qquad
+\mathcal E_k(x)=\max_{0\le s\le b_k}
+[\ell_{k,s}-M_k|x-a_{k,s}|].
+\tag{333.12}
+\]
+$M_k$ 采用（333.8）；有限早段可取其它已证实的共同导数界。对块端点 $A_k=3F_k+2$、$A_{k+1}=3F_{k+1}+2$，记
+\[
+\mathcal C_K=\sum_{k=k_0}^{K-1}
+\int_{A_k}^{A_{k+1}}\mathcal E_k(x)\frac{dx}{x},
+\qquad
+\mathcal C(X)=\mathcal C_K+\int_{A_K}^{X}\mathcal E_K(x)\frac{dx}{x}
+\quad(A_K\le X\le A_{K+1}),\qquad
+\overline{\mathcal C}(X)=\frac{\mathcal C(X)}{\log(X/A_{k_0})}
+\quad(X>A_{k_0}).
+\tag{333.13}
+\]
+每块单独使用其共同 $M_k$，不跨块把不同斜率混成全局共同常数。
+
+**定理 333.2（实际单边数据的递归继承与条件 RH 强度）。** 在同一解析输入及有限残差上界下，$\mathcal E_k\le Z$。在固定块、固定共同 $M_k$ 下，加密节点且保留旧的有效 $\ell_{k,s}$，使 $\mathcal E_k$ 逐点不减，其积分下界也不减；新节点的残差上界可以宽，不损坏已保留的旧证书。
+
+若再有
+\[
+\max_{0\le s\le b_k}|e_{k,s}|\longrightarrow0,
+\tag{333.14}
+\]
+则 RH 蕴含 $\overline{\mathcal C}(X)\to0$。反之，不要求（333.14），只要 $\overline{\mathcal C}(X)$ 在全部充分大实数 $X$ 上有固定有限下界，就由同一连续累计预算推出 RH。于是，在（333.14）与其余明确输入均满足时，RH 等价于该证书平均趋零，也等价于它最终有固定有限下界。
+
+**证明。** 使用经典实值 Lipschitz 锥包络作为中间步骤：共同几乎处处导数界和绝对连续性给 $Z(x)\ge Z(a)-M_k|x-a|$，故（333.12）每项都不超过 $Z$。保留旧项的最大值只会增大；这直接关闭 §330 中单独替换普通左和所没有的实际代理单调性。零斜率时包络为节点下界的常数最大值，同样成立。
+
+在有限节点上，经典包络还给一个闭合操作
+\[
+\ell_s\longmapsto c_s=\mathcal E_k(a_s).
+\]
+它保持序、增加下界，且二次闭合等于一次闭合：$c_s-M_k|x-a_s|\le\mathcal E_k(x)$ 来自包络自身的 Lipschitz 性，反向来自 $c_s\ge\ell_s$。这是证书信息的闭合，不给可逆群操作。包络是只保留这些单边样值与共同 Lipschitz 界时的最小兼容函数；这个极小性仅在该函数信息类内使用，不把它当成可实现的素数误差或另一条 $\zeta$ 函数。
+
+RH 下 §315 给 $H_L\to0$、$\varepsilon_L\to0$。与（333.14）合并，节点偏差
+\[
+B_{k,s}=Z(a_{k,s})-\ell_{k,s}
+=H_{k,s}+e_{k,s}-\varepsilon_{k,s}\ge0,
+\qquad \max_sB_{k,s}\to0.
+\tag{333.15}
+\]
+任取最近节点 $a_s$，共同导数界给
+\[
+0\le Z(x)-\mathcal E_k(x)
+\le B_{k,s}+2M_k|x-a_s|.
+\tag{333.16}
+\]
+每格两个端点均保留，最近节点距离至多半格宽。由最大价格格宽 $O(\sqrt{F_k})$ 与（333.8），右侧在晚块上一致趋零；其几何项的块积分甚至被可和的 $O(\beta_k)$ 控制。有限初段除以趋于无穷的对数总长趋零，晚块的一致小偏差也使其平均趋零。RH 下 §316 的连续谱对数平均为零，于是证书平均趋零。
+
+反向只用 $\mathcal E_k\le Z$：全部实数上的证书预算直接给 $\int_{A_{k_0}}^X Z(x)dx/x\ge-K\log(X/A_{k_0})$。复用 §316 的连续正逆变换与经典 Landau 论证即得 RH。不把只在 Fibonacci 块端点成立的预算当成全实数预算；本结论没有补上这种粗端点运输。证书预算的存在性与有限 $e_{k,s}$、$M_k$ 的数值实现仍需独立给出。$\square$
