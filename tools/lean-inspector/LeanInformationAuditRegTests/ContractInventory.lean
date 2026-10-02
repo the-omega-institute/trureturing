@@ -15,6 +15,7 @@ run_meta do
       ("alias_abbrev", s!"abbrev extra : {aliasType} := {value}"),
       ("alias_opaque", s!"opaque extra : {aliasType} := {value}"),
       ("alias_instance", s!"instance extra : {aliasType} := {value}"),
+      ("duplicate_alias", s!"def {owner}.source0 : {aliasType} := {value}"),
       ("theorem", "theorem extra : True := by trivial"),
       ("axiom", "axiom extra : True")] do
     let path ← IO.FS.createTempFile

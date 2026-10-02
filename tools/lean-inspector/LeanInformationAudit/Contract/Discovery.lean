@@ -66,12 +66,17 @@ def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := d
     let (relevant, cache) := candidate env info unrelated
     unrelated := cache
     unless relevant do continue
+    let head := info.type.getAppFn.constName?.getD .anonymous
+    let functionDefinition := match info with
+      | .defnInfo _ => info.type.isForall
+      | _ => false
+    unless SourceAudit.heads.contains head || functionDefinition do
+      throwError "contract.discovery:type_alias_or_wrapper:{name}"
     let range ← requireRange name
     let start := map.ofPosition range.range.pos
     let stop := map.ofPosition range.range.endPos
     let some entry := entries.find? fun entry => entry.start ≤ start && stop ≤ entry.stop
       | throwError "contract.discovery:source_inventory_missing:{name}"
-    let head := info.type.getAppFn.constName?.getD .anonymous
     match SourceAudit.audit entry.command head with
     | .error error => throwError "{error}:{name}"
     | .ok _ => pure ()
@@ -85,15 +90,15 @@ def auditModule (owner : Name) (source : String) : MetaM (Array Definition) := d
   for entry in entries do
     unless entry.command.isOfKind ``Parser.Command.declaration do continue
     if SourceAudit.hasInventory entry.command then
-      let mut present := entry.sourceName.any (fun sourceName =>
-        names.any (fun name => privateToUserName name == sourceName))
-      if entry.sourceName.isNone then
-        for name in names do
-          if let some range ← findDeclarationRanges? name then
-            if entry.start ≤ map.ofPosition range.range.pos &&
-                map.ofPosition range.range.endPos ≤ entry.stop then
-              present := true
-              break
+      let mut present := false
+      for name in names do
+        unless entry.sourceName.isNone ||
+            entry.sourceName == some (privateToUserName name) do continue
+        if let some range ← findDeclarationRanges? name then
+          if entry.start ≤ map.ofPosition range.range.pos &&
+              map.ofPosition range.range.endPos ≤ entry.stop then
+            present := true
+            break
       unless present do
         throwError "contract.discovery:compiled_inventory_missing:{owner}:{entry.sourceName}"
     let relevant := (entry.command.find? fun node =>

@@ -88,10 +88,19 @@ private def declarationName (ns : Name) (command : Syntax) : Option Name := do
 
 private partial def declarations (command : Syntax) : Array Syntax :=
   if command.isOfKind ``Parser.Command.declaration then #[command]
-  else if command.isOfKind ``Parser.Command.mutual then
+  else if command.isOfKind ``Parser.Command.mutual ||
+      command.isOfKind ``Parser.Command.set_option ||
+      command.isOfKind ``Parser.Command.in then
     command.getArgs.flatMap declarations
   else if command.getKind == `null then command.getArgs.flatMap declarations
   else #[]
+
+private partial def openNamespaces (command : Syntax) : Array (Name × Bool) :=
+  if command.isOfKind ``Parser.Command.openSimple then
+    command[0].getArgs.map (fun id => (id.getId, true))
+  else if command.isOfKind ``Parser.Command.openScoped then
+    command[1].getArgs.map (fun id => (id.getId, false))
+  else command.getArgs.flatMap openNamespaces
 
 /-- Parse every command, so a compiled head filter cannot erase a source entry. -/
 def parse (env : Environment) (source : String) (file : String) : IO (Array Entry) := do
@@ -101,11 +110,15 @@ def parse (env : Environment) (source : String) (file : String) : IO (Array Entr
   let mut state := initial
   let mut entries := #[]
   let mut ns := Name.anonymous
-  let mut scopes : List Name := []
+  let mut parserEnv := env
+  let mut opens : List OpenDecl := []
+  let mut scopes : List (Name × Environment × List OpenDecl) := []
   repeat
     let (command, next, messages) := Parser.parseCommand input
-      { env, options := {}, currNamespace := ns, openDecls := [] } state {}
-    if messages.hasErrors then throw <| IO.userError "contract.discovery:source_parse"
+      { env := parserEnv, options := {}, currNamespace := ns, openDecls := opens } state {}
+    if messages.hasErrors then
+      let details ← messages.toList.mapM fun m => m.data.toString
+      throw <| IO.userError s!"contract.discovery:source_parse:{file}:{details}"
     if Parser.isTerminalCommand command then break
     if next.pos == state.pos then throw <| IO.userError "contract.discovery:source_progress"
     let some start := command.getPos? | throw <| IO.userError "contract.discovery:source_range"
@@ -118,15 +131,23 @@ def parse (env : Environment) (source : String) (file : String) : IO (Array Entr
         entries := entries.push ⟨declaration, declarationName ns declaration,
           declaration.getPos?.getD start, declaration.getTailPos?.getD stop⟩
     if command.isOfKind ``Parser.Command.namespace then
-      scopes := ns :: scopes
+      scopes := (ns, parserEnv, opens) :: scopes
       ns := ns ++ command[1].getId
+      parserEnv := Parser.parserExtension.activateScoped parserEnv ns
     else if command.isOfKind ``Parser.Command.section then
-      scopes := ns :: scopes
+      scopes := (ns, parserEnv, opens) :: scopes
     else if command.isOfKind ``Parser.Command.end then
       let previous :: rest := scopes
         | throw <| IO.userError "contract.discovery:source_scope"
-      ns := previous
+      ns := previous.1
+      parserEnv := previous.2.1
+      opens := previous.2.2
       scopes := rest
+    if command.isOfKind ``Parser.Command.open then
+      for (name, simple) in openNamespaces command do
+        for resolved in ResolveName.resolveNamespace parserEnv ns opens name do
+          parserEnv := Parser.parserExtension.activateScoped parserEnv resolved
+          if simple then opens := .simple resolved [] :: opens
     state := next
   return entries
 

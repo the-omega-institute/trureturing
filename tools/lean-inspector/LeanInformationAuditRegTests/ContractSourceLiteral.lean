@@ -4,12 +4,20 @@ import LeanInformationAuditRegTests.ContractLiteralFixtures.Macro
 import LeanInformationAuditRegTests.ContractLiteralFixtures.Reference
 import LeanInformationAuditRegTests.ContractLiteralFixtures.Function
 import LeanInformationAuditRegTests.ContractLiteralFixtures.Nested
+import LeanInformationAuditRegTests.ContractLiteralFixtures.Literals
 
 namespace LeanInformationAuditRegTests.ContractSourceLiteral
 open Lean Meta Elab Command LeanInformationAudit.Contract
 open LeanInformationAuditRegTests.ContractGuards
 
 run_meta do
+  let literals ← Discovery.discover #[`LeanInformationAuditRegTests.ContractLiteralFixtures.Literals]
+    fun moduleName => LeanInformationAudit.Repository.source
+      ("tools/lean-inspector/" ++ moduleName.toString.replace "." "/" ++ ".lean")
+  let some (_, row) := literals.seals[0]? | throwError "setup: literal seal"
+  assertTest "discovery.source_literal.constructors"
+    (row.rootId == .str (.num .anonymous 7) "root" &&
+      row.options.find? `test.integer == some (.ofInt (-5)))
   for (fixture, field) in #[("Environment", "rootId"), ("Macro", "rootId"),
       ("Reference", "rootId"), ("Function", "rootId"), ("Nested", "companionPrefix")] do
     let owner := (`LeanInformationAuditRegTests.ContractLiteralFixtures).str fixture
