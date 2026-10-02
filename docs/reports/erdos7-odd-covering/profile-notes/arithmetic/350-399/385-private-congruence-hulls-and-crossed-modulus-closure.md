@@ -367,6 +367,12 @@ If21 has5's color, then H_7>=3 and147,63,441 have the other color;
 63's first7-prefix differs from those of49 and147. The remaining
 phase branches and higher powers are not excluded.
 
+[Section171](#171-fixed-probe-holes-force-a-finite-q-height-window-or-lower-ternary-suppliers)
+shrinks the fixed probe deletion family to height-two payers, lower
+ternary rows, and a finite q-height window of near-top payers. Complete
+private sources of deeper near-top originals force lower-row service.
+The smaller deletion family's whole repair is still missing.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -21056,3 +21062,113 @@ The positive derivatives of J on these ranges therefore imply
          =2687/2805=1-118/2805<1.
 
 This excludes every proper subpalette of C', proving S7B9 at all finite H and G in both21 branches. It supplies the five actual concentrated primes and their common color, without assigning further residues or excluding the remaining family.
+
+## 171. Fixed probe holes force a finite q-height window or lower ternary suppliers
+
+Keep section169's ONE original EB1 family, actual primitive triangle, complete private-source projection W_esc, and fixed probe i=i_* with N_i<=4. Retain its original-label families Xi_i,C_i and, for G>=3, its fixed third-prefix set Gamma_i with |Gamma_i|>=q-4. Write each original as d=3^a q^e s, s|M. Define
+
+    c_q=7 for q in {5,7,11}, and c_q=6 for q>=13,
+    T=c_q+1,
+    R_i={d in Xi_i:a+2<=H or e<=c_q}.
+
+Thus R_i is fixed before any w in W_esc is selected. Every such source satisfies
+
+    W_esc subset projection_M(E_(R_i)),                 (NQW1)
+
+where E_(R_i) is the complement of EVERY original outside R_i. Consequently its actual probe has a payer satisfying
+
+    e=2, or a+2<=H,
+    or [a=H-1, pr does not divide s, 3<=e<=c_q].        (NQW2)
+
+The additional restriction is the finite upper q-height in the last alternative. No bound on those cofactors or their prime-power digits is imposed. The construction below certifies complete cells in E_(R_i); it does not repair the entire E_(R_i).
+
+### A cofactor-free original parent bounds all deep near-top labels
+
+For an actual original parent
+
+    h_6=3^(H-1)q^6,
+
+reuse ML3–ML6 with repair prime3, parent heightH-1 and cofactor q^6. The initial forest has nine roots and seven divisor labels; its layers are7,6, giving N=13. Thus every phase c modulo h_6 has
+
+    #{d in D:h_6|d, d>h_6, a_d=c modulo h_6}<=12.       (NQW3)
+
+This is the existing parent-budget instance. Its concrete fresh repair labels are3^(H+1)q^j for0<=j<=6 and3^(H+2)q^j for0<=j<=5. ML repairs the entire old parent class, while its moved phase absorbs all descendants in the selected packet; ML6 already checks the complete deletion liability, distinct numerical labels and both EB1 objectives. No new general exchange proof is needed.
+
+An application asserts h_6 is original only when an actual counted label is divisible by it. Original divisor closure then supplies h_6. If the counted inventory is empty, no parent-existence claim is required.
+
+### Fixed prefixes avoid every newly retained original
+
+First suppose G>=T. Abbreviate Xi=Xi_i, R=R_i and Gamma=Gamma_i. The chosen threshold satisfies
+
+    q^(T-6)>12.
+
+For each sixth prefix delta modulo q^6 extending a member of Gamma, define the fixed original-label packet
+
+    T_delta={d in Xi minus R:a_d=delta modulo q^6}.
+
+Every member has a=H-1 and e>=T. It is a proper h_6-multiple in the ONE phase combining u modulo3^(H-1) with delta modulo q^6. NQW3 therefore gives |T_delta|<=12, independently of every cofactor phase and source w.
+
+Define
+
+    Theta_delta={eta modulo q^T:eta=delta modulo q^6}
+                  minus {a_d modulo q^T:d in T_delta},
+    Theta=union_delta Theta_delta.
+
+Each original in T_delta excludes at most one T-prefix, so
+
+    |Theta_delta|>=q^(T-6)-12>0,
+    |Theta|>=|Gamma| q^3(q^(T-6)-12).                 (NQW4)
+
+All these prefixes are fixed by the original family. For EVERY w in W_esc and eta in Theta,
+
+    {z modulo Q:z=u modulo3^H, z=eta modulo q^T,
+                  z=w modulo M} subset E_R.           (NQW5)
+
+Every higher q-digit remains unrestricted. To prove the full retained-complement claim, put gamma=eta modulo q^3 and delta=eta modulo q^6. Since gamma is in Gamma, NPL5 excludes every original outside Xi on this complete cell. The additional originals retained when the deletion shrinks from Xi to R are precisely Xi minus R. Any such original meeting the cell belongs to T_delta and has T-prefix eta, which Theta_delta excludes. These exhaust all original labels outside R, proving NQW5.
+
+Under the uniform law on the complete probe cell F_i(w), each T-prefix cell has mass q^(2-T). Hence NQW4–NQW5 imply
+
+    mu_(F_i(w))(E_R intersect F_i(w))
+      >=(|Gamma|/q)(1-12/q^(T-6)).
+
+Whole original coverage supplies R-owners on this set. Count each actual incident original once with its exact relative-cell mass to obtain
+
+    sum_(d in R_i(w)) q^(2-v_q(d))
+      >=(1-4/q)(1-12/q^(T-6))>0,                    (NQW6)
+
+where R_i(w) retains the complete literal cofactor incidence at w. No inequalities are summed over different w.
+
+If G<T, every original has e<=c_q, so R_i=Xi_i. For G>=3, NPL6 directly gives NQW1 and NPL4 gives the stronger service bound1-4/q. If G=2, every probe payer has e=2 and belongs to R_i; TSC5 and the complete actual owner inventory then put the whole F_i(w) in E_(R_i). This also proves NQW1. These cases avoid introducing unavailable q^6 or q^T coordinates.
+
+Thus NQW1–NQW2 hold for every allowed G. In particular, at even one escaped source the fixed probe cannot be supplied only by C_i(w) together with near-top, missing-p/r originals of q-height at least T. Such a source would have R_i(w) empty, contrary to NQW6 or the corresponding low-G case. This excludes an actual remaining branch while permitting the entire previously bounded C_i inventory.
+
+### A near-top payer's own private source forces lower ternary labels
+
+Let m=3^(H-1)q^e s, e>=7, be any actual original aligned with u modulo3^(H-1) and beta_i modulo q^2. Choose a COMPLETE original private point y of m; TLE permits one outside U={x:x=u modulo3^H}. It need not preserve any earlier w in W_esc. Consider the complete fibre
+
+    F_y={z modulo Q:z=y modulo3^H, z=y modulo M,
+                      z=y modulo q^6},
+    V_y={d in D:A_d meets F_y}.
+
+Every member of V_y has q-height at least seven. An original of smaller height has constant truth value on F_y, so meeting it would contain y and contradict m's complete privacy.
+
+Use the EXISTING QC2 suffix bound at this same y, in the q-direction with cut6. The directional weights are at most one, their original suppliers lie in V_y, and the private owner m is not among them. Adding that owner exactly once gives
+
+    |V_y|>=1+(e-6)(q-1).
+
+All members of V_y with ternary height at least H-1 are proper h_6-descendants in the single phase y modulo h_6. The actual m supplies original h_6, and NQW3 bounds this whole upper-row inventory by12, INCLUDING m and any full-H supplier on the new fibre. Consequently
+
+    #{d in V_y:v_3(d)+2<=H}
+      >=max(0,(e-6)(q-1)-11).                        (NQW7)
+
+Every counted lower-ternary original belongs to the SAME fixed R_i. Indeed its full non-q incidence matches y, whose ternary prefix through H-1 agrees with u because y is in A_m. Its q^6 phase matches y and hence beta_i. It therefore satisfies Xi_i's lower-row alternative and R_i's condition a+2<=H. All cofactor phases and higher digits remain literal.
+
+The common cofactor source here is y modulo M, which is not identified with an earlier escaped w and need not belong to W_esc. NQW7 is a one-step supply requirement at an actual complete private source, not a bound on R_i(w) at the earlier source. It gives no terminating iteration or additional copy of any original payer.
+
+### Remaining complete-hole obligation
+
+The finite-window constraint does not authorize removal of every higher-q original; those labels can remain necessary elsewhere. NQW5 describes a certified subset of E_(R_i), not its entirety. A legal exchange must still cover ALL of E_(R_i), E_(Xi_i), or an explicitly expanded deletion liability.
+
+The existing cofactor-free near-top ML threshold needs more than six divisor columns. The parent3^(H-1)q^5 has only six, whereas h_6 has seven; this argument therefore does not reduce the window to q-height two. Lowering the ternary parent changes that threshold and cannot reuse NQW3 unchanged.
+
+Actual height-two payers, the finite near-top missing-p/r window, and lower ternary rows remain. No step excludes the actual triangle as a whole or forces a triangle in every hypothetical cover. These are ordinary mathematical consumers of ML, NPL, TLE and QC2; no new Lean verification or unrestricted Erdős #7 conclusion is asserted.
