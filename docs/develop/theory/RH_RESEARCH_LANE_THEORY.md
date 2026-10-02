@@ -11083,3 +11083,153 @@ $$
 减去定义中的完整 $Q_{\rm full}$ 即得所列差额。$\widehat f(\pm i/2)=0$ 分别消去 $A_\pm(f)$；$\widehat f(0)=0$ 保留原 constrained criterion 的测试类。若 $\mathcal P=\{2,3\}$，则 $r<\log5$ 足以消去遗漏素数，仍须保留所有活跃的 $2^k$ 和 $3^k$，包括 $r\ge\log4$ 时的 $2^2$。$\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 19. 满足完整零点约束的低频扩张测试族
+
+本节与第 20 节研究第 18 节充分证书的适用边界。复用混合频率的积分尾界、普通正交 Sonin 投影及实际线性迹合同，不重新证明它们。新增内容是一个同时保留实偶自相关、三个 Fourier 零点和真实支撑增长的测试族，以及它对分离误差证书的条件性障碍。正文是纸面候选推导，未作 Lean 核验；完整 Weil 正性、Robin 的全整数界及 RH 均仍待证。
+
+### 19.1 复用的同一测试合同与对角假设
+
+沿用第 18 节的 $\mathcal F_S,C,R,B_f,P_S$，其中 $C=Q\mathcal F_SQ$、$R=(I-C^2)^{-1}$。有限非空素数集记为 $\mathcal P$，$S=\{\infty\}\cup\mathcal P$。为避免与尺度参数混淆，以下使用 $\mathcal R\ge1$ 表示测试族的大小。定义
+
+$$
+c_0=1-\|Q\mathcal FQ\|>0,\qquad
+\chi_S=(\beta_S/\alpha_S)^2\ge1,\qquad
+\delta_S=c_0/\chi_S,\qquad
+b_S=\frac{2J_S^3}{\delta_S(2-\delta_S)}.
+$$
+
+这里 $\alpha_S,\beta_S,J_S$ 均取第 18 节原定义。对实偶自相关 $H_f$ 支撑于 $[-r,r]$ 的测试，复用
+
+$$
+\begin{aligned}
+D_{\rm lin}(f)&=2\operatorname{Re}\operatorname{Tr}(CB_f\mathcal F_SQ),\\
+D_{\rm fin}(f)&=\int_0^r H_f(t)\mathcal K_{S,\mathbf N}(t)dt,\\
+|D_{\rm lin}(f)-D_{\rm fin}(f)|&\le\|f\|_2^2E_S(r,\mathbf N),\qquad
+\|B_f\|_1\le r\|f\|_2^2.
+\end{aligned}
+$$
+
+正项使用实际 Burnol 物理评价向量 $k_t\in V$，而非假定的 Euler-product entire generator。令 $d\mu(t)=dt/(2\pi)$、$d(t)=\|k_t\|^2$，并复用实际加权密度合同
+
+$$
+\sigma_S(f)=\int_{\mathbb R}|\widehat f(t)|^2
+w_S(t)\langle k_t,K^{-1}k_t\rangle\,d\mu(t),\qquad
+w_S(t)=\left|\prod_{p\in\mathcal P}(1-p^{-1/2-it})\right|^2.
+$$
+
+其中 $K=(PT^*TP)|_V$，不删除 $K^{-1}$。在 $K\ge\alpha_S^2I_V$、$w_S\le\beta_S^2$ 下，直接应用既有有界算子序给出
+
+$$
+\sigma_S(f)\le\chi_S\mathcal T_0(f),\qquad
+\mathcal T_0(f):=\int|\widehat f(t)|^2d(t)d\mu(t).
+$$
+
+本节另明确保留一个固定 cutoff 的对角假设：
+
+$$
+0\le d(t)\le C_d(1+t^2)\quad(t\in\mathbb R),\qquad C_d<\infty.
+$$
+
+$C_d$ 与 $S,r,\mathbf N$ 无关。这一弱界可由实际对角的局部有界性与 $d(t)=O(\log(2+|t|))$ 得到；这里把该对角输入作为条件保留。局部核及源生成元来自 [Burnol author preprint math/0208121v1](https://arxiv.org/abs/math/0208121v1)，但对角增长的推导不是该文一句具名的 growing-prime 定理。本文不把供应的纸面推导标成 Lean 真值，也不需要一个已认证的数值 $C_d$。
+
+### 19.2 有利的有符号补偿也保留下来
+
+令 $L_S(f)$ 是任何已经独立得到的正迹下界，满足 $L_S(f)\le\sigma_S(f)$；它可以取实际加权评价下界。定义第 18 节充分证书及其更强版本
+
+$$
+\begin{aligned}
+\mathfrak c_{S,\mathbf N}(f)
+&=L_S(f)-D_{\rm fin}(f)-\|f\|_2^2E_S(r,\mathbf N)-b_S\|f\|_1^2,\\
+\widetilde{\mathfrak c}_{S,\mathbf N}(f)
+&=\sigma_S(f)-D_{\rm fin}(f)-\|f\|_2^2E_S(r,\mathbf N)-b_S\|f\|_1^2.
+\end{aligned}
+$$
+
+在第 18 节源合同、消极点条件及支撑完整条件下，$\mathfrak c\ge0$ 足以推出 $Q_{\rm full}(f)\ge0$；$\mathfrak c<0$ 不给出 $Q_{\rm full}$ 的符号。更强版本保留精确正迹，故 $\mathfrak c\le\widetilde{\mathfrak c}$。
+
+$\mathcal F_S$ 是酉对合，$C$ 是其压缩，因此
+
+$$
+|D_{\rm lin}(f)|\le2\|B_f\|_1\le2r\|f\|_2^2,\qquad
+D_{\rm fin}(f)+\|f\|_2^2E_S\ge D_{\rm lin}(f).
+$$
+
+没有假设线性核、线性迹或完整校正非负。又因为
+
+$$
+b_S=\frac{2\chi_SJ_S^3}{c_0(2-\delta_S)}\ge\frac{\chi_SJ_S^3}{c_0},
+$$
+
+上述同一测试合同给出条件性上界
+
+$$
+\boxed{
+\frac{\widetilde{\mathfrak c}_{S,\mathbf N}(f)}{\chi_S}
+\le\mathcal T_0(f)+\frac{2r\|f\|_2^2}{\chi_S}
+-\frac{J_S^3}{c_0}\|f\|_1^2.
+}
+$$
+
+这里使用真实截断误差的方向消去尾部；未把各项分别可达的极值当成同一配置。
+
+### 19.3 显式实测试与恰好三个约束
+
+固定实偶 bump
+
+$$
+\phi(x)=
+\begin{cases}
+\exp\!\bigl(-1/(1-4x^2)\bigr),&|x|<1/2,\\
+0,&|x|\ge1/2.
+\end{cases}
+$$
+
+定义
+
+$$
+F_{\mathcal R}(y)=\phi'(y)-4\mathcal R^{-2}\phi'''(y),\qquad
+f_{\mathcal R}(x)=\mathcal R^{-1/2}F_{\mathcal R}(x/\mathcal R).
+$$
+
+这给出实奇 $C_c^\infty$ 函数，支撑于 $[-\mathcal R/2,\mathcal R/2]$。其自相关实且偶，支撑于 $[-\mathcal R,\mathcal R]$。采用 $\widehat f(z)=\int f(x)e^{-izx}dx$，分部积分与变量替换给出整函数身份
+
+$$
+\widehat f_{\mathcal R}(z)=i\mathcal R^{3/2}z(1+4z^2)\widehat\phi(\mathcal Rz).
+$$
+
+因此 $\widehat f_{\mathcal R}(0)=\widehat f_{\mathcal R}(i/2)=\widehat f_{\mathcal R}(-i/2)=0$ 精确成立，不依赖数值近似或复调制。
+
+记 $u=\|\phi'\|_1>0$、$v=\|\phi'\|_2>0$，并取
+
+$$
+\begin{aligned}
+\mathcal R_0&=\max\left\{1,\sqrt{8\|\phi'''\|_1/u},\sqrt{8\|\phi'''\|_2/v}\right\},\\
+a_*&=u^2/4,\qquad M_*=9v^2/4,\\
+D_*&=\|\phi''\|_2+4\|\phi''''\|_2,\qquad
+B_*=C_d(M_*+D_*^2).
+\end{aligned}
+$$
+
+对 $\mathcal R\ge\mathcal R_0$，三角不等式与缩放给出
+
+$$
+\begin{aligned}
+\|f_{\mathcal R}\|_1^2&\ge a_*\mathcal R,\\
+v^2/4\le\|f_{\mathcal R}\|_2^2&\le M_*,\qquad
+\|f_{\mathcal R}'\|_2^2\le D_*^2/\mathcal R^2,\\
+\mathcal T_0(f_{\mathcal R})&\le
+C_d\bigl(\|f_{\mathcal R}\|_2^2+\|f_{\mathcal R}'\|_2^2\bigr)\le B_*.
+\end{aligned}
+$$
+
+最后一步仅用明确的对角假设与 Plancherel。对每个固定 $\varepsilon>0$，同一 Plancherel 身份还给出
+
+$$
+\int_{|t|>\varepsilon}|\widehat f_{\mathcal R}(t)|^2d\mu(t)
+\le\frac{D_*^2}{\varepsilon^2\mathcal R^2}.
+$$
+
+总能量下界为 $v^2/4$，故这是实质的低频集中族；在频率零点恰为零不妨碍能量集中到其越来越小的邻域。
+
+## 追加锚（本行以下为增补区）
