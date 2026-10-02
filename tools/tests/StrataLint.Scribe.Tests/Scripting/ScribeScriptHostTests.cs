@@ -1,8 +1,7 @@
 using System.Reflection;
 using StrataLint.Scribe;
-using StrataLint.Scribe.Scripting;
 
-namespace StrataLint.Scribe.Tests.Scripting;
+namespace StrataLint.Scribe.Tests;
 
 public sealed class ScribeScriptHostTests
 {
@@ -27,7 +26,7 @@ public sealed class ScribeScriptHostTests
         WriteDefinition(root.Path, "Blueprint/D5/S0/Test/Zed.scribe.cs", "Zed");
         WriteDefinition(root.Path, "Blueprint/D5/S0/Test/Alpha.scribe.cs", "Alpha");
         var broken = "Blueprint/D5/S0/Test/Broken.scribe.cs";
-        File.WriteAllText(root.Resolve(broken), "namespace Synthetic; public sealed class Broken { }");
+        File.WriteAllText(root.Resolve(broken), "public sealed class Broken { }");
 
         var results = ScribeScriptHost.ExecuteBatch(root.Path, [broken, "Blueprint/D5/S0/Test/Zed.scribe.cs", "Blueprint/D5/S0/Test/Alpha.scribe.cs"]);
 
@@ -143,7 +142,7 @@ public sealed class ScribeScriptHostTests
 
     private static void Write(TemporaryRoot root, string path, string body) =>
         TemporaryFileSystem.File.WriteAllText(root.Resolve(path),
-            "using StrataLint.Scribe; using static StrataLint.Scribe.DefinitionDsl; namespace Synthetic; " + body);
+            "using StrataLint.Scribe; using static StrataLint.Scribe.DefinitionDsl; " + body);
 
     private static void WriteDefinition(string root, string path, string name)
     {
@@ -153,7 +152,6 @@ public sealed class ScribeScriptHostTests
         File.WriteAllText(fullPath, $$"""
             using static StrataLint.Scribe.DefinitionDsl;
             using StrataLint.Scribe;
-            namespace Synthetic;
             internal sealed class {{name}}Document : IScribeDocumentDefinition
             {
                 public DocumentDefinition Create() => DocumentDefinition.Create(

@@ -1,11 +1,10 @@
 using System.Collections.Immutable;
-using StrataLint.Scribe.Scripting;
 using StrataLint.Scribe;
 using StrataLint.Scribe.Documents;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace StrataLint.Scribe.Documents.Tests.Scripting;
+namespace StrataLint.Scribe.Documents.Tests;
 
 public sealed class ScribeScriptCorpusTests
 {
@@ -17,8 +16,8 @@ public sealed class ScribeScriptCorpusTests
     public void EveryDocumentDefinitionMatchesItsScript()
     {
         var root = FindRepositoryRoot();
-        var paths = DocumentAssembly.Definitions
-            .Select(definition => Path.GetRelativePath(root, definition.SourcePath).Replace('\\', '/'))
+        var paths = Directory.EnumerateFiles(Path.Combine(root, "Blueprint"), "*.scribe.cs", SearchOption.AllDirectories)
+            .Select(path => Path.GetRelativePath(root, path).Replace('\\', '/'))
             .Order(StringComparer.Ordinal)
             .ToImmutableArray();
         var results = ScribeScriptHost.ExecuteBatch(root, paths);
@@ -33,7 +32,8 @@ public sealed class ScribeScriptCorpusTests
 
         output.WriteLine($"corpus paths={paths.Length}; hostFailures={failures.Length}; mismatches={mismatches.Length}");
         Assert.True(failures.Length == 0, string.Join(Environment.NewLine, failures.Take(8)));
-        Assert.Empty(mismatches);
+        Assert.True(mismatches.Length == 0, string.Join(Environment.NewLine,
+            mismatches.Take(8).Select(static result => $"{result.RelativePath}: CanonicalContentMismatch")));
         Assert.Equal(DocumentAssembly.Definitions.Length, paths.Length);
     }
 

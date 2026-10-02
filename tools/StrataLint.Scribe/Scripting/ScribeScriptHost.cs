@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Text;
 
-namespace StrataLint.Scribe.Scripting;
+namespace StrataLint.Scribe;
 
 public enum ScribeScriptFailureCode
 {
