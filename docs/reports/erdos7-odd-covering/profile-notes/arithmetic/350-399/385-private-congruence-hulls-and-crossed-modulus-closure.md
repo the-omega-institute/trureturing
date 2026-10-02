@@ -24064,8 +24064,9 @@ class-count argument leaves only the released \(R\)-label, so no new
 comparison is needed.  When the phases are not prefix-separated, (MR5) is
 unavailable, and the full two-sided responsibility must be retained.  Thus
 (MR1)--(MR6) reduce the mixed branch to an exact finite-period envelope
-comparison, with the nontrivial remaining cases outside the branch settled
-in Section 205; they do not settle unrestricted Erdős #7.
+comparison; Section 205 settles the \(E_B\subseteq C\) subcase, while the
+other responsibility branches remain open.  These results do not settle
+unrestricted Erdős #7.
 
 ## 204. An equal-count pure high-layer repair has a rigid normal form
 
