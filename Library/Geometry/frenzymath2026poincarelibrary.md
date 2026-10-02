@@ -2256,3 +2256,83 @@ existence of its ambient lattice conjugator remain open. The full
 finite-volume Mostow-Prasad endpoint, including cusps and nonorientable
 manifolds, remains active and incomplete. The linked escape audit is
 unfinished, and new registration work remains paused.
+
+
+### Constructing an ambient conjugator from scaled future-null-cone data
+
+An independent conditional existence bridge now constructs an actual
+original-H3 ambient isometry from concrete Lorentz cone data. On the
+existing signature-(1,3) kernel B on Fin 4 -> R, use the future null cone
+{v | v(0) > 0 and B(v,v) = 0}. Suppose a map F preserves B(u,v) for every
+pair of cone vectors and has positive time coordinate on every cone
+image. Then there is an actual H3 isometry whose full Lorentz action
+agrees with F on every cone vector. F is presented as a total vector
+function for convenience; only its restriction to the cone is constrained
+or identified with a linear action. No linearity, continuity, surjectivity,
+ambient linear equivalence, interior isometry, local distance preservation
+or ambient conjugator is supplied.
+
+The four explicit future null vectors (1,1,0,0), (1,-1,0,0), (1,0,1,0)
+and (1,0,0,1) span the Lorentz vector space. Their images have the same
+Gram matrix. Using the existing basis kernel-detection theorem, derive
+image linear independence and obtain a full linear equivalence by
+transporting the two bases. Expand both arguments in that basis to prove
+kernel preservation on the entire vector space. Pairing with the image
+basis then shows that this same equivalence agrees with F at every cone
+vector, not just the four frame vectors. These are scaled null vectors,
+not merely projective ideal-boundary points.
+
+The actual reference hyperboloid point is half the sum of the first two
+null vectors. The positive time coordinates of their images put the
+constructed image of this point on the future unit sheet. The existing
+explicit Lorentz future-point inverse and Lorentz converse then construct
+an isometry of the original upper-half-space metric. Its faithful actual
+Lorentz representation is exactly the constructed linear equivalence.
+No supplied frame-image basis or supplied future-sheet interior point is
+used.
+
+For arbitrary abstract groups G,H, an isomorphism d:G ~=* H and actual
+H3 isometric representations rho and sigma, add the exact all-cone-point
+equivariance F(R(rho(g))v)=R(sigma(d(g)))F(v), where R is the existing
+actual full Lorentz representation. The same constructed ambient isometry
+a then satisfies sigma(d(g))=a*rho(g)*a^-1 for every g, and its cone action
+still agrees with the same F at every cone vector. Actual H3 isometries'
+future-null-cone preservation is proved from kernel preservation and the
+positive time of actual hyperboloid coordinates, not supplied as an
+extra action hypothesis. Equivariance on the spanning null frame makes
+the two linear compositions equal; faithfulness of the actual Lorentz
+representation yields the required original-H3 isometry equality.
+
+Future preservation is material. The accepted countermodel F(v)=-v
+preserves every Lorentz pairing, yet its future-cone restriction cannot
+be the Lorentz action of any actual original-H3 isometry. This exhibits
+why preserving the kernel alone does not select the required time sheet.
+The construction imposes no compactness, orientation, dense-orbit,
+faithfulness of the supplied group representations or finite-volume
+hypothesis: its stronger geometric cone data are explicit input.
+
+Two accepted serial scoped transient cache-guarded Lean checks exited
+zero, with ten axiom closures using only propext, Classical.choice and
+Quot.sound and no warning headers. Three exact failed source/log pairs
+are preserved and excluded, including their failed sorryAx closures.
+Default resources and
+original metrics are retained; no suppression, compiler replay, novelty
+or tracked Lean claim. These are classical finite-dimensional Gram and
+hyperboloid constructions checked under ignored .lake. The standard
+hyperbolic-model framework is discussed in Foundations of Hyperbolic
+Manifolds (Springer; DOI 10.1007/978-0-387-47322-2); public bibliography
+metadata identifies that reference but is not evidence for an exact
+theorem page or a completed formalization.
+
+This closes a sufficient cone-data-to-ambient-conjugator construction,
+not ambient conjugator existence for arbitrary lattice isomorphisms.
+Existence of the required future-cone map, its exact pairing preservation
+and equivariance for the SAME arbitrary-h induced deck isomorphism remain
+open. Projective boundary-map construction, cross-ratio lifting and the
+rigidity argument forcing the necessary boundary geometry are separate
+obligations. Finite volume has not been shown to supply these cone inputs.
+The full finite-volume Mostow-Prasad endpoint, including cusps and
+nonorientable manifolds, remains active and incomplete; arbitrary-h
+isometric representative existence remains unproved. The linked escape
+audit is unfinished and registration remains paused. Only this research
+note is intended tracked delivery.
