@@ -1,0 +1,13 @@
+**Theorem 71.1 (coordinate rotations from the Galois degree).**
+Let $L/K$ be a finite Galois extension, let $J\geq0$, and let
+$\zeta\in K$ be a primitive cube root of unity. Suppose nonzero
+$\beta_1,\ldots,\beta_J\in L$ have cubes in $K$, generate $L$ over
+$K$, and satisfy $[L:K]=3^J$. For each $j$ there is a
+$K$-automorphism sending $\beta_j$ to $\zeta\beta_j$ and fixing
+every other $\beta_i$.
+
+Proof. Each automorphism determines its vector of cubic rotations.
+The generator assumption makes this map to $\{0,1,2\}^J$
+injective. The Galois degree makes the two finite cardinalities
+equal, so the map is surjective. Choose the vector supported at $j$.
+

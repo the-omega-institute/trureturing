@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:559a77c7207365964038d519c18e87d49e1e352b204d3fa5804617b4676ac758
+  normalized_sha256: sha256:559a77c7207365964038d519c18e87d49e1e352b204d3fa5804617b4676ac758
+cas_ref: sha256:559a77c7207365964038d519c18e87d49e1e352b204d3fa5804617b4676ac758
+coverage_gids:
+  - gid: D5/S3/Factorization/Galois/GoldenCubicBlockCoordinateActions.actual_complex_tower_galois_and_generators
+    target_statement_id: sha256:ee795c7c72350858c5dc28ef2a4d308475e4e21330de91531bcd392b43994ac1
+receipts:
+  unresolved_subitems: []
