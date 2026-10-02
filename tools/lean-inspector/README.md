@@ -54,39 +54,89 @@ compiled direct delegation shape and marker body SHA-256 are checked. They annot
 expressions without changing contract fields. Other repository term elaborators
 on metadata syntax fail closed.
 
-The four `Contract` interface modules have a closed command allowlist: imports,
-namespace/section scaffolding, `open`, `universe`, documentation comments, and
-bare `structure`/`inductive` declarations. Type declarations with attributes,
-`variable`, `set_option`, tactic or `do` terms, term elaboration blocks,
-`deriving`, macros, `run_*`, `initialize`, notation, and every other command
-are rejected with `contract.interface:command_not_allowed`. The compiled
-inventory is checked only after this lexical gate, so a rejected command cannot
-authorize a companion name.
+The four `Contract` interface modules accept imports, namespace/section
+scaffolding, `open`, `universe`, documentation comments, and bare
+`structure`/`inductive` declarations. Declaration syntax has a finite node
+table in `Contract.InterfaceGuard.typeSyntaxKinds`: identifiers, numeric
+literals, application, arrows/Pi binders, Sort/Type/Prop, parentheses, type
+ascription, explicit/implicit/strict implicit/instance binders, explicit universe
+arguments, universe max/imax/addition/parentheses, and the listed declaration,
+field, constructor and documentation containers. Unknown nodes, defaults,
+attributes, deriving, tactics, do, quotations and every elaboration node
+(including `Lean.byElab`) receive
+`contract.interface:command_not_allowed`; unknown node kinds include the
+`type_syntax_not_allowed` suffix.
+The lexical gate precedes the compiled companion inventory; names cannot grant
+permission to rejected source commands.
 
-`Reg` sources use a separate finite command table. The existing
-`RootCatalogs.declare` catalog/snapshot forms, the three named catalog
-contracts, the three existing local notation owners, ordinary instance
-attributes, and `[reducible]` declarations are the only retained registrations;
-all other repository-owned macros, syntax, elaborators, notation, macro-related
-attributes, `local`/`scoped` registrations, `run_cmd`/`run_meta`/`run_elab`,
-`#eval`, and `initialize` commands fail closed with
-`contract.reg:metaprogramming_not_allowed`. Result types reject `let`/`have`
-forms and projections of stored `Sort` fields. The only projection carriers
-currently admitted are `D5.S3.ConceptDynamics.InformationEscape.Arena`,
-`D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena`, and
-`D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature`, and
-`D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena`; every other
-carrier is rejected with a named result-type diagnostic.
+Reg commands also have a complete finite command-kind table in
+`Contract.SourceAudit.ordinaryRegCommands`. Only listed ordinary mathematical
+and legacy registration scaffolding, bare `set_option` and allowed attributes
+pass. The ordinary parser kinds are `declaration`, `end`, `moduleDoc`,
+`namespace`, `open`, `printAxioms`, `section`, `universe` and `variable` in
+`Lean.Parser.Command`. The legacy kinds in `LeanInformationAudit` are
+`command__`, `registerInformationFiniteSourceTheoremCmd`,
+`registerInformationSourceTheoremCmd`,
+`registerInformationTheoremOccurrenceReadoutCmd`,
+`registerInformationTheoremReadoutCmd`, `sealInformationTheoryCmd` and
+`«command__Constructors_[_,,]»`.
+`in` and `mutual` recursively audit their inner commands. Unknown commands,
+`run_meta`, `run_elab`, macros, syntax, elaborators, initialization and evaluation
+commands receive `contract.reg:metaprogramming_not_allowed`.
 
-The four Contract interface modules are checked against their compiled constant
-inventories. Each constant must belong to a source structure/inductive family:
-kernel types and constructors, recorded projections, or the pinned compiler’s
-explicit recursor, noConfusion, constructor and sizeOf companion names.
-The source retains original command containers and permits only lexical
-scaffolding and type declarations without tactic or do blocks. Generated
-constants cannot gain permission by forging a companion name from a command.
-Unexpected products receive `contract.interface:compiled_non_type`; no command
-is executed by the audit. Unrecognized future compiler products fail closed.
+The sole `run_cmd` exception is the 84 exact module/syntax fingerprints in
+`Contract.RegPolicy.catalogCommands`: 65 direct catalog literals, 16 snapshot
+do bindings, and 3 named contracts. The entire tree contributes identifiers,
+atoms, node kinds and child order; source positions and whitespace do not.
+The final expression must be a one-argument call, whose name resolves uniquely
+to `LeanInformationAudit.RootCatalogs.declare`. The three pinned named forms
+use the existing `RootCatalogs.declare` short spelling under `open
+LeanInformationAudit`; their resolved target is fully qualified. References,
+quoted Names, suffix matches, changed arguments and additional statements
+have no entry. No audit executes a source command or macro.
+
+Local notation has exactly three module/syntax bindings:
+
+| Module | Exact notation |
+| --- | --- |
+| `Reg.D5.S1.Recurrence.Invariants.CloitreActualLeftPlateau` | `local notation "F" => Nat.fib` |
+| `Reg.D5.S1.Recurrence.Invariants.CloitreActualSpineCarry` | `local notation "F" => Nat.fib` |
+| `Reg.D5.S3.Quantum.Measurement.ExactConditionalPreparationCost` | `local notation "kact" => fun K X => PhyslibLeaf.MatrixMap.of_kraus K K X` |
+
+Changing the token or right hand term loses permission; duplicate catalog or
+notation commands are rejected. Standalone `attribute` and `@[…]` accept
+only `instance` and `reducible`, with no priority or other attribute arguments.
+Local/scoped markers do not expand the attribute-name table. Unlisted names
+receive `contract.reg:metaprogramming_not_allowed:…:attribute`.
+
+Every Reg compiled declaration receives the result-type check before contract
+candidate filtering. Propositions and telescoped mathematical functions retain
+their compiled types; the endpoint candidate scan still rejects contractual
+functions and wrappers. Authored `let`/`have` in the type-producing head is
+checked separately from proof and mathematical payload arguments.
+Stored Sort projections are permitted only for
+`D5.S3.ConceptDynamics.InformationEscape.Arena`, `PrimitiveLawArena`,
+`DependentFamily.Signature` and `DependentFamily.Arena` under that namespace.
+Permission requires reading the actual selected field from a constant-backed
+constructor tree. Literal telescope substitution and nested constructor-field
+selection are structural operations; the field's complete constant closure
+must not reach any of the five Contract heads. Nonconstant instances, missing
+constructor literals and unsupported forms receive
+`contract.discovery:result_type_projection:…:carrier_unresolved`; Contract
+payloads receive `…:contract_payload`. The audit uses no whnf, isDefEq or
+user evaluation. Mathematical propositions and numeric value arguments do not
+supply a hidden contract result.
+
+The compiled interface inventory admits only source types, kernel constructors,
+recorded projections and the pinned compiler's explicitly listed recursor,
+noConfusion, constructor and sizeOf companions. Unknown compiler products
+receive `contract.interface:compiled_non_type`.
+
+P3 must remove all 84 catalog `run_cmd` entries and their permission, together
+with the legacy registration/enrollment/seal command kinds. The three mathematical
+notations and `instance`/`reducible` entries remain only while their pure
+mathematical consumers remain. P3 must also delete the four legacy evalExpr
+paths; typed discovery has no evaluation fallback.
 
 [CI](../../.github/workflows/ci-current.yml) 和本地数学门通过 `make lean-report`
 调用同一个 `inspect.sh`。入口可独立构建 utility 输入工具,也可接收显式的
