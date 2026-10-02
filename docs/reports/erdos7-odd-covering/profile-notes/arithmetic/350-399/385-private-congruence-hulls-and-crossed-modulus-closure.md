@@ -24692,3 +24692,64 @@ that statement, the finite hull candidate can be cheaper while no legal
 whole-cover replacement exists.  This is why the selected periodic example in
 Section 207 does not contradict EB1, and why the unrestricted Erdős #7
 question remains open.
+
+## 210. Fixed source phases give an exact attainment criterion
+
+The CRT part of (MR4) has a simple boundary when a source contract fixes the
+cofactor phase of every new high class.  Let (F) be a nonempty
+(N)-periodic set with
+
+\[
+ \Gamma_N(F)=3^{e-1}G,
+\]
+
+and let (s_1,s_2,s_3) be three distinct divisors of (G).  For a free phase
+choice (w\in F), the three arithmetic classes are the unique CRT classes
+with
+
+\[
+ h_i\equiv w\pmod {s_i},\qquad
+ h_i\equiv w+\beta_i3^{e-1}\pmod {3^e},
+\]
+
+where ((\beta_1,\beta_2,\beta_3)) is a permutation of ((0,1,2)).  They
+cover every (N)-fibre of (F): the cofactor condition follows from
+(s_i\mid G), and the three next ternary digits are covered once each.
+When the top ternary layer is fully released, the labels (3^es_i) are
+fresh from the retained family and are distinct.
+
+Suppose instead that a same-source contract prescribes cofactor phases
+\(ho_i\pmod {s_i}\).  Then the arithmetic choice with these three labels is
+attainable if and only if there are (w\in F) and a permutation
+((\beta_1,\beta_2,\beta_3)) such that
+
+\[
+ \rho_i\equiv w\pmod {s_i}\qquad(1\le i\le3),
+\]
+
+and the prescribed ternary phases agree with
+(w+\beta_i3^{e-1}\pmod {3^e}).  Necessity follows by restricting the repair
+ to every (N)-fibre in (F): each next ternary digit occurs, so every
+cofactor branch must accept every base point.  Sufficiency is the CRT
+construction above.  Thus the obstruction is phase alignment, not the hull
+or the divisor sum.
+
+A finite contract-level example is
+
+\[
+ p=3,qquad e=2,qquad N=75,qquad Q=225,qquad F=[1]_{75}.
+\]
+
+Here (Gamma_N(F)=75=3^{e-1}\cdot25), and the arithmetic divisors are
+(s_1,s_2,s_3=1,5,25).  Free phases use (w=1), so the (5)- and
+(25)-cofactor phases are (1).  If the source contract prescribes phase
+(0) modulo both (5) and (25), no classes with labels (45) and (225)
+can meet (F), even though the unconstrained CRT classes with phases from
+(w=1) cover it.  This does not form a whole EB1 cover; it only shows that a
+fixed source-phase contract is an additional attainment condition.
+
+Consequently, if “same source” means only actual CRT phases chosen from the
+complete responsibility set, (MR4) already supplies attainment.  If it means
+fixed prescribed source phases, the exact remaining obligation is the phase
+alignment criterion above for every admissible low class.  Neither reading by
+itself proves the unrestricted Erdős #7 forcing statement.
