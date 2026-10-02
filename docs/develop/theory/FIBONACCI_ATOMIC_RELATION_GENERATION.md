@@ -45091,3 +45091,136 @@ S\le\max\{S-\eta,1/2\}.
 因此任何固定多项式稀疏程度都由同一实际平均判据覆盖。$d=4$ 的普通权重版本补上 §320 末尾未建立的运输关系；这里不把两套平均的差无条件断言为趋零，而是分别通过同源谱预算与指数自举得到 RH 强度。
 
 整个推导依赖 $\eta>0$。几何增长的截止，如直接以 Fibonacci 数作指数网格，通常只有 $h_j\asymp a_j$，不供应本证明的正指数改善。当前结论既没有覆盖这种网格，也没有证明其相应判据为假。$\square$
+## 追加锚（本行以下为增补区）
+
+## 326. 紧邻宿主截止的低成本素乘子族
+
+本节采用 §§317–319、324 的实际 CA宿主与余量运输接口，直接接用文献研究提供的素带构造。它供应大量低成本的实际整数候选，尚不供应相位命中或绝对余量。下面的构造及组合属于纸面推导，没有Lean核验或原创性声明。
+
+令 $C$ 为实际极大丰数，$P=P^+(C)$，$S=\sqrt P$，固定 $\kappa>0$。沿用
+
+$$
+F_C(t)=\frac{Z(Ct)}{Z(C)},\qquad
+\mathcal A_P=P\log P,\qquad
+\mathcal D_C(t)=\log t-\mathcal A_P\log F_C(t).
+\tag{326.1}
+$$
+
+全局价格及 $\mathcal A_P\epsilon<1$ 已给 $0\le\mathcal D_C(t)\le\log t$。定义
+
+$$
+U_P=P+\frac P{\log P},\quad
+\mathcal P_P=\{p\text{ 素数}:P<p\le U_P\},\quad
+m_P=|\mathcal P_P|,\quad
+r_P=\left\lfloor\frac{\kappa S}{\log U_P}\right\rfloor,
+\quad Q_C=\lfloor e^{\kappa S}\rfloor,
+\tag{326.2}
+$$
+
+以及实际平方自由乘子族
+
+$$
+\mathcal T_C=
+\left\{\prod_{p\in E}p:
+E\subseteq\mathcal P_P,\ |E|=r_P\right\}.
+\tag{326.3}
+$$
+
+这里只增加原宿主没有的素数；$P$ 始终指 $P^+(C)$，不是新整数的最大素因子。
+
+**命题 326.1（统一小损失与候选数量）。** 充分大的每个实际宿主都有 $1\le r_P\le m_P$，族中所有乘子同时满足
+
+$$
+\begin{gathered}
+1\le t\le Q_C,\qquad
+\log t=(\kappa+o(1))S,\\
+0\le\mathcal D_C(t)\le
+b_P:=r_P\left(1+\frac1{\log P}+\frac{\log P}{2P}\right)
+=(\kappa+o(1))\frac S{\log P}=o(S),\\
+|\mathcal T_C|
+=\exp\left(\left(\frac\kappa2+o(1)\right)S\right).
+\end{gathered}
+\tag{326.4}
+$$
+
+所有误差对同一宿主的整族乘子统一，不依赖宿主的详细指数或并列最优价格。
+
+证明。若 $p>P$，则它与 $C$ 互素，第一次加入给精确因子 $F_C(p)=1+1/p$，从而
+
+$$
+d_P(p):=\mathcal D_C(p)
+=\log p-P\log P\log(1+1/p)>0.
+\tag{326.5}
+$$
+
+严格正号也直接由 $\log(1+1/p)<1/p$、$p>P$ 得到。写 $p=P(1+h)$，$0<h\le1/\log P$，用 $\log(1+x)\ge x-x^2/2$ 得
+
+$$
+\begin{aligned}
+d_P(p)
+&\le \frac h{1+h}\log P+\log(1+h)
+     +\frac{P\log P}{2p^2}\\
+&\le1+\frac1{\log P}+\frac{\log P}{2P}.
+\end{aligned}
+\tag{326.6}
+$$
+
+因这些素数不同且都不在宿主中，同一 $t$ 有
+$\mathcal D_C(t)=\sum_{p\mid t}d_P(p)$。同时
+$r_P\log P\le\log t\le r_P\log U_P\le\kappa S$；
+整数性给 $t\le Q_C$，且两端除以 $S$ 均趋于 $\kappa$。于是得到损失和大小的统一界。
+
+素数数量直接使用仓内已经核对的
+[Dusart Theorem5.2](../../../Library/Weil/dusart2010estimates.md)，
+即 $\vartheta(x)=x+O(x/\log^2x)$。由于 $U_P-P=P/\log P$，
+
+$$
+\vartheta(U_P)-\vartheta(P)\sim\frac P{\log P},
+\qquad m_P\sim\frac P{\log^2P}.
+\tag{326.7}
+$$
+
+每个带内素数的对数在 $\log P$ 与 $\log U_P$ 之间，故第二式由第一式夹出，不要求异常短区间素数定理。于是
+$r_P\sim\kappa S/\log P$、$r_P/m_P\to0$，最终 $1\le r_P\le m_P$。唯一分解给 $|\mathcal T_C|=\binom{m_P}{r_P}$，经典阶乘估计给
+
+$$
+\log\binom{m_P}{r_P}
+=r_P\log(m_P/r_P)+O(r_P+r_P^2/m_P)
+=\left(\frac\kappa2+o(1)\right)S.
+\tag{326.8}
+$$
+
+这里 $r_P^2/m_P=O_\kappa(1)$，其余误差均为 $o(S)$。$\square$
+
+**推论 326.2（同一整数上的一阶抵消）。** 对全部 $t\in\mathcal T_C$，既有 CA输入及（324.9）给统一关系
+
+$$
+\begin{gathered}
+Z(Ct)-Z(C)=\frac{e^\gamma\kappa+o(1)}S,\\
+e^\gamma\log\left(1+\frac{\log t}{\log C}\right)
+=\frac{e^\gamma\kappa+o(1)}S,\\
+W(Ct)-W(C)=o(1),\qquad
+W(n)=\sqrt{\log n}\,[e^\gamma\log\log n-Z(n)].
+\end{gathered}
+\tag{326.9}
+$$
+
+证明。$\mathcal A_P\log F_C(t)=\log t-\mathcal D_C(t)
+=(\kappa+o(1))S$。所以 $\log F_C(t)
+=(\kappa+o(1))/(S\log P)$，由 $Z(C)\sim e^\gamma\log P$ 得第一式。第二式用 $\log C\sim P$；第三式直接复用（324.9）及 $\mathcal D_C(t)=o(S)$。这不要求 $W(C)$ 有界，也不给任一绝对符号。$\square$
+
+若固定 $0<\eta<\kappa/2$、$\delta_C=e^{-\eta S}$，在均匀相位观察下确有
+
+$$
+\int_0^1\#\{t\in\mathcal T_C:\|t\theta\|<\delta_C\}\,d\theta
+=2\delta_C|\mathcal T_C|
+=\exp\left(\left(\frac\kappa2-\eta+o(1)\right)S\right).
+\tag{326.10}
+$$
+
+这只是整数乘法保持圆上均匀长度的既有性质。它不认证实际相位 $\theta=C\varphi$ 的命中。对两个候选作差也不能自动补上缺口，因为差不再保留（326.3）的素因子结构。
+
+因此这里已经控制每个候选的成本，但尚未在候选族内构造真实低位null前缀；规范来源、单位位和接缝仍须由同一整数的严格相位命中读回。整族中也未建立任何独立的正 $W(Ct)$ 下界。
+
+## 追加锚（本行以下为增补区）
+
