@@ -934,3 +934,47 @@ cap, (T21) supplies no $o(L)$ bound for the actual moment. The full
 large-mask signed Robin estimate, unit bit zero and square discriminants
 remain unresolved. An average on free Beatty indices or independently
 selected residues cannot discharge this same-source obligation.
+
+### Small conductor forces a large actual exception radical
+
+The same moment budget remains useful when the primitive conductor is
+polynomial but the full mask is not. The split at
+$z=\max\{2,\log R_1\}$, again using the existing Mertens estimate,
+gives the uniform elementary bound
+
+$$
+M_r(n)\le r\log\log(R_1+3)+O_r(1).
+\tag{T24}
+$$
+
+For the large primes the contribution is at most
+$r(\log R_1)/z\le r$; the smaller primes contribute
+$r\log z+O_r(1)$. This uses the actual $R_1$, including any overlap
+with the conductor, without treating the two factors as coprime.
+
+Fix $0<C<K:=16-8\sqrt2$ and suppose the same actual source has
+$q\le P^C$. Formula (T19) is applicable through its fixed-power range
+and the existing bootstrap (T10), whether or not $m_1$ is polynomial.
+Taking $r=\sqrt2$ and inserting (T24) yields
+
+$$
+\frac{\log q}{\log P}
++16\frac{\log\log(R_1+3)}{\log P}\ge K-o(1).
+\tag{T25}
+$$
+
+Therefore for every fixed $0<\tau<(K-C)/16$ one has, eventually
+at every actual $h=1$, nonsquare-$D$ CA source satisfying $q\le P^C$,
+
+$$
+\boxed{\log R_1>P^\tau,\qquad m_1\ge R_1>\exp(P^\tau).}
+\tag{T26}
+$$
+
+For example $C=25/6$ permits every fixed
+$0<\tau<0.0324765521467\ldots$. This is a conditional tradeoff between
+the same integer's conductor and actual exception radical; it does not
+assert existence of infinitely many sources in that conductor range.
+No endpoint exponent, effective onset or universal distribution of the
+canonical lift is claimed. It quantifies why retaining the primitive
+conductor alone can lose the dominant mask scale, without proving Robin.
