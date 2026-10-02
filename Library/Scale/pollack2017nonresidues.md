@@ -769,3 +769,75 @@ $c_*b<1$ for $\beta_0<b<1/4$. No weighted missing-prime deficit,
 signed Robin margin, h=0 exclusion, square-$D$ exclusion or RH proof
 follows. Every character and layer in the comparison belongs to the
 same actual integer; no separately realized raw-$D$ witnesses are joined.
+
+### A quantified same-source eligibility condition that would cross the cutoff
+
+The preceding bound alone does not cross the sufficient cutoff. The
+existing set $\mathcal E_1$, however, gives a specific missing FIB readout
+for this signed supplier. For fixed $r\ge1$, define its actual moment
+
+$$
+M_r(n)=\sum_{\substack{p\le P,\ p\ne2,5\\v_p(n)\ \mathrm{even}\\p^{v_p(n)/2}\mid c}}
+\frac{\log p}{p}\left(r-\frac{\log p}{L}\right).
+\tag{T17}
+$$
+
+This is the weight of the same source's supported potential exceptions,
+not the weight of an independently selected residue class. Its membership
+is determined by the existing readout $c\bmod H_1$.
+The total support weight is $(r-1/2+o(1))L$. Every negative support
+prime outside two and five belongs to this set. Keeping the conductor-zero
+cost (T13), one can therefore replace (T14) by
+
+$$
+S_r(\chi;P)\ge
+\left(2r-1-\frac{r^2}{2}+o(1)\right)L-2M_r(n).
+\tag{T18}
+$$
+
+In any fixed power range $q\le P^C$, (T15) then gives the conditional
+comparison
+
+$$
+\frac{\log q}{L}\ge
+16-\frac8r-4r-\frac{16M_r(n)}{rL}-o(1).
+\tag{T19}
+$$
+
+The range is available whenever the same source satisfies
+$m_1^b\le Y=\log n$, since $q\le m_1$ and $Y\sim P$.
+Fix $b=6/25$, which lies in $\beta_0<b<1/4$, and $r=\sqrt2$.
+For any fixed coefficient
+
+$$
+0\le\mu<\frac{71\sqrt2}{96}-1
+=0.045928780505\ldots,
+$$
+
+the two conditions
+
+$$
+M_{\sqrt2}(n)\le\mu\log P,\qquad m_1^{6/25}\le\log n
+\tag{T20}
+$$
+
+are incompatible at every sufficiently large actual CA source in the
+$h=1$, nonsquare-$D$ branch. Indeed, (T19)'s lower coefficient exceeds
+$25/6$, whereas the cutoff gives
+$\log q/L\le25/6+o(1)$. The strict fixed gap absorbs both errors.
+This is a conditional application of the same published signed estimate;
+neither condition in (T20) is established for all remaining candidates.
+
+The unrestricted even-layer envelope is only
+
+$$
+M_r(n)\le
+\left(r(1-\log2)-\frac12+\frac{\pi^2}{24}+o(1)\right)L,
+$$
+
+whose coefficient at $r=\sqrt2$ is $0.345188935617\ldots$. It does
+not imply the required $0.045928\ldots$ bound. The missing work is an
+actual-source upper estimate for square-depth membership in
+$c=4A+7B$, sufficiently strong at this weighted scale, together with
+coverage of sources outside the cutoff. No distribution law, h=0 or
+square-$D$ exclusion, reciprocal-prime deficit or RH proof is supplied.
