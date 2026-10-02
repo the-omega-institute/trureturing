@@ -15628,3 +15628,82 @@ prefix. They do not pool different auxiliary coordinates or transfer
 private constraints to a different parent. No strict descent for every
 all-concentrated cover, no nonconcentrated-source distribution, and
 no new Lean verification is asserted.
+
+## 126. A bounded original inventory yields one law on the complete live slice
+
+Use section125's SAME actual slice and live prefix. Write b=a_0=h_0-1,
+L=Y_* intersect[alpha], N=N_alpha and C=(p-2)|S_i minus {q}|.
+CD2 gives N<=C. After fixing w_*, every active q-free mixed original
+is one literal ternary cylinder. Any such cylinder of height at most b
+meeting[alpha] would contain its live point, so no such lower cylinder
+is active. The same observation excludes lower pure-three guards.
+
+Consequently L is exactly the complement inside[alpha] of the N
+counted mixed cylinders and the actual pure-three guards, at most one
+per absolute height. No further mask or independently selected
+cofactor is inserted. The proof below uses the actual count N; it
+does not assume the mixed cylinders are pairwise disjoint.
+
+### A single-live-child node spends a distinct mixed label along its path
+
+Prune the complete ternary tree below alpha by keeping exactly the nodes having at least one descendant in L. Each live nonleaf has one, two or three live children.
+
+Consider a live node at absolute depth d<H that has exactly one live child. Its other two complete child cylinders are dead and contain
+
+    2*3^(H-d-1)
+
+original complete ternary words. A pure guard meeting this node has depth at least d+1; otherwise it would kill every descendant and the node would not be live. At most one pure guard is available at each depth. Their total possible coverage of those two children is therefore at most
+
+    sum_(e=d+1..H)3^(H-e)=(3^(H-d)-1)/2,
+
+strictly less than2*3^(H-d-1). The difference is(3^(H-d-1)+1)/2>0. Consequently some point of the dead pair is covered by an actual mixed cylinder.
+
+The mixed cylinder containing that point is wholly contained in one of these two dead children. Indeed, if its depth were at most d, prefix nesting would make it contain the live node, a contradiction. Its greater depth places it inside a single child.
+
+Now fix ANY root-to-live-leaf path. The pairs of dead children belonging to different single-live-child nodes on this path are disjoint. The preceding containment, not disjointness alone, ensures that one mixed cylinder cannot pay for two such nodes. Choose one mixed original at each such node; these original labels are distinct. Hence every live path has at most N single-live-child nodes. The same bound applies to every initial segment of the path.
+
+This is the concrete additional counting step. It uses actual cylinder nesting and the finite one-pure-guard-per-height inventory; an arbitrary family of masks would not justify the injection.
+
+### One simultaneous law and all its prefix caps
+
+Start at alpha and, at every live nonleaf, choose uniformly among its live children. Continue to absolute depth H. This defines ONE probability mu supported on exactly L, with positive mass at every actual live leaf. It is not asserted to be Haar measure on L.
+
+For a live prefix beta at absolute depth a, put r=a-b. If u of the r preceding choices have only one live child, its probability is the product of their transition probabilities. Each of the other r-u choices has at least two live children. Since u<=min(N,r),
+
+    mu([beta]) <= 2^(-(r-u))
+               <= min(1,2^(N-r))
+               <= min(1,2^(C-r)).                 (BL1)
+
+A nonlive prefix has mass zero. Thus this SAME mu obeys, for every residue z and every b<=a<=H,
+
+    mu(s=z mod3^a)
+       <=min(1,2^(N-(a-h0+1)))
+       <=min(1,2^(C-(a-h0+1))).                   (BL2)
+
+No separate law is selected for different depths, residues, or original labels. Its mass is one on the actual fixed-cofactor slice Y_* intersect[alpha]. The full original q-tail v_* stays fixed throughout.
+
+At a=b the cap is1. If H=b, the tree has no transition and the assertion is trivial. If N=0, every live internal node has at least two live children and BL2 becomes2^(-(a-b)). If N exceeds the remaining height, the displayed caps are valid but may be vacuous. On the finite original carrier no bound for a>H is claimed.
+
+Writing a0=b, the SAME law has the requested full low-row prefix price
+
+    sum_(a=0..H-1) sup_z mu(s=z mod3^a)
+       <=sum_(a=0..H-1) min(1,2^(N-(a-a0)))
+       <a0+N+2<=a0+C+2.                          (BL3)
+
+The caps through depth a0 are1; after them at most N further cap terms are1, followed by the geometric tail1/2,1/4,... of total1. The infinite comparison profile therefore totals a0+N+2, and every finite truncation is STRICTLY smaller because its omitted tail is positive. This also handles H<=a0+1 directly. BL3 is only a property of this same slice law, not an LM4 distribution on U.
+
+
+Report375 DP6--DP7 already constructs supported laws on complete prefix
+subtrees. The existing pure-prefix capacity realization likewise
+handles one forbidden word at each depth. Here the additional source
+condition is the pathwise injection from a single-live-child node to
+an actual mixed original: at most N such defects occur on any live
+path. The general probability construction is reused with this
+explicit finite defect budget.
+
+The same-law bounds BL2--BL3 are independent of the maximum ternary
+height once the prime inventory and starting depth are fixed. They
+apply only to this all-concentrated Y_* slice. They neither put it in
+the nonconcentrated blocked set U nor supply a joint cofactor law
+across different w_* or different primes. No new Lean verification or
+unrestricted noncoverage is asserted.
