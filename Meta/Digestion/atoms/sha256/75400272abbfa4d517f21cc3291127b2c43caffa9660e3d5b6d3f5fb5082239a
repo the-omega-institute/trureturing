@@ -1,0 +1,31 @@
+**定理 51.10（完整记录的容差样本下界）。** 若一个任意学习器对所有 $\alpha\in[0,1]$ 都以至少 $1-\delta$ 的训练概率满足式（51.26），那么在
+$0<\epsilon\le S/9$、$0<\delta<1/2$ 的范围内必有
+
+$$
+m\ge\frac{\operatorname{kl}(1-\delta,\delta)}{27\epsilon}.
+\tag{51.33}
+$$
+
+对 $0<\delta\le1/4$，这给
+$m\ge\log(1/\delta)/(108\epsilon)$。该下界甚至只需 Brier 保证，也适用于原树模型之外的预测器。结合式（51.24），对小 $\epsilon$ 与上述小失败概率范围，样本阶为匹配的 $\epsilon^{-1}\log(1/\delta)$；不推出根数、参数数或运行时间的最优性。
+
+证明。取两条完整记录律 $\alpha_0=0$、$\alpha_1=t=3\sqrt{\epsilon/S}\le1$。它们共用输入边缘，后验函数在 $L^2(P_n;\mathbb R^3)$ 中的距离由式（51.17）恰为
+
+$$
+\|q_t(C(\cdot))-q_0(C(\cdot))\|_{L^2(P_n)}
+=\sqrt S\,t=3\sqrt\epsilon.
+\tag{51.34}
+$$
+
+两个 Brier 超额 $\epsilon$ 球的半径各为 $\sqrt\epsilon$，因此不相交。对学习器输出作最近后验测试：哪个已知目标后验与该输出的 $L^2(P_n)$ 距离较小，就判哪个律，距离相等时固定处理。只要真实律的 Brier 保证成立，到另一目标的距离至少 $2\sqrt\epsilon$，该测试必正确。因此两条律下测试错误各至多 $\delta$，包括学习器独立随机化。
+
+对这个测试使用式（51.15）的事件数据处理，并在式（51.14）中把 $\gamma$ 换成 $t$，得到
+
+$$
+\operatorname{kl}(1-\delta,\delta)
+\le m\operatorname{KL}(P_t\Vert P_0)
+\le3mSt^2=27m\epsilon.
+$$
+
+这是完整 $(X,Y)$ 的信息界；最近后验测试仅承担下界归约，不是被部署预测器中的免费组件。$\delta\le1/4$ 时使用定理51.5已经给出的二元 KL 常数即可。$\square$
+
