@@ -16675,3 +16675,371 @@ Littman、Sutton、Singh 的 [Predictive Representations of State](https://proce
 仓内 [FinitePrefixInfiniteCompletionSeparation](../../../D5/S3/ConceptDynamics/ExperimentBoundary/FinitePrefixInfiniteCompletionSeparation.lean)处理既有 Bernoulli 系统的有限前缀律互相绝对连续与完整律分离，可作为“有限资料与完整律不同”的数学背景；它不代替定理81.10的无界、动作依赖和随机控制器论证。[ControlledBehaviorUniversality](../../../D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean)的有限确定性受控实现假设也不覆盖本节的无界随机来源。第80节有限 cutoff 合同下的具体分离、第39–42节的一般实际历史接口、观察者存储与实际抽样成本均保持各自适用条件，本节没有给出这些更大任务的完成结论。
 
 ## 81.99 追加锚
+
+## 82. 增长路径的抽样强度与二值记忆恢复
+
+本节沿用第81节的实际树族 $t_m$、$c(t_m)=(m,m)$、$m\ge2$ 和合同 B，比较同一个来源独立的固定增长协议在不同 $m$ 下产生的完整记录律。目标仅为恢复隐藏的整数尺度 $m$；增长深度、抽样配置与保留的关系记录共同决定此任务的边界。
+
+### 82.1 固定增长协议与实际乘积律
+
+**定义 82.1（有限批次增长与共同原始记录空间）。** 令 $F_0=0,F_1=1,F_{i+2}=F_{i+1}+F_i$，深度从 $k=0$ 开始。固定一个来源独立的确定性序列 $r=(r_k)_{k\ge0}$，其中每个 $r_k\in\mathbb N$ 都有限。在深度 $k$ 连续执行 $r_k$ 次 $\mathrm{PairRead}$，再执行一次 $\rho$，如此永久继续；允许 $r_k=0$。每次成对读取后恢复两叶，跨调用使用与过去独立的新生产者随机性，沿用假设81.2的共同可测控制和无侧信道要求。隐藏的 $m$ 不作为控制器输入，种子、时钟、成本、地址或来源 ID 均不另携带来源信息。
+
+记
+
+$$
+n_k:=F_{k+3},\qquad
+I_r:=\{(k,j):k\ge0,\ 1\le j\le r_k\},
+\qquad
+\mathcal A:=\{aa,ab,ba,bb\},
+\tag{82.1}
+$$
+
+其中 $a,b$ 仅分别缩写可见类型 $\alpha,\beta$。保留全部索引读取结果，取共同空间
+
+$$
+\Omega_r:=\mathcal A^{I_r},
+\qquad
+\mathcal F_r:=\bigotimes_{(k,j)\in I_r}2^{\mathcal A}.
+\tag{82.2}
+$$
+
+$\mathcal F_r$ 是共同的原始乘积 $\sigma$-代数，不按来源分别补全。$I_r=\varnothing$ 时取单点空间；$I_r$ 有限时是有限空间上的全部子集。动作与固定应答序列可由 $r$ 重建，附在档案中不增加来源信息。
+
+已知深度 $k$ 使控制器可计算 $n_k$，但不提供隐藏的实际总数 $mn_k$。下文数学结论适用于任意这样固定的序列；若声称它是合同内的实际实现，还须在控制器中声明产生该序列的算法或给定调度带。任意确定性无限序列不自动成为一个有限可计算程序。本节不设运行时间或存储成本界。
+
+**命题 82.2（增长路径的四格律与正质量下界）。** 在上述协议的深度 $k$，
+
+$$
+c(\rho^k t_m)=m(F_{k+1},F_{k+2}),\qquad
+N_{m,k}=mn_k.
+\tag{82.3}
+$$
+
+令
+
+$$
+p_k:=\frac{F_{k+1}}{n_k},\qquad
+v_k:=p_k(1-p_k),\qquad
+h_{m,k}:=\frac1{mn_k-1}.
+\tag{82.4}
+$$
+
+则一次成对读取在 $\mathcal A$ 上的实际律，按 $aa,ab,ba,bb$ 排列，为
+
+$$
+P_{m,k}
+=
+\bigl(
+p_k^2-v_kh_{m,k},\
+v_k(1+h_{m,k}),\
+v_k(1+h_{m,k}),\
+(1-p_k)^2-v_kh_{m,k}
+\bigr).
+\tag{82.5}
+$$
+
+并且
+
+$$
+\frac13\le p_k\le\frac12,\qquad
+\frac29\le v_k\le\frac14,\qquad
+0<h_{m,k}\le\frac13,\qquad
+P_{m,k}(x)\ge\frac1{27}\quad(x\in\mathcal A).
+\tag{82.6}
+$$
+
+因此本族从不发生拒绝，全部档案的实际概率律是
+
+$$
+\mu_m^r=\bigotimes_{(k,j)\in I_r}P_{m,k}.
+\tag{82.7}
+$$
+
+**证明。** 计数式直接沿用式（81.15）。将 $x=mn_kp_k$、$y=mn_k(1-p_k)$ 代入式（81.6），例如
+
+$$
+\frac{x(x-1)}{N_{m,k}(N_{m,k}-1)}
+=p_k^2-\frac{p_k(1-p_k)}{N_{m,k}-1},
+$$
+
+即得四格律。$p_0=1/2$，而 $p_{k+1}=(1-p_k)/(2-p_k)$ 把 $[1/3,1/2]$ 映入自身，故 $p_k$ 的界由归纳得到；$p(1-p)$ 在该区间的值属于 $[2/9,1/4]$。因 $m,n_k\ge2$，有 $h_{m,k}\le1/3$。同色第一格满足
+
+$$
+p_k^2-v_kh_{m,k}
+\ge p_k\left(p_k-\frac{1-p_k}{3}\right)
+=\frac{p_k(4p_k-1)}3
+\ge\frac1{27}.
+$$
+
+另一个同色格至少为 $1/4-(1/4)(1/3)=1/6$，两个异色格至少为 $v_k\ge2/9$。两类叶的数量各至少为 $2$，所以读取总合法。恢复使每次调用前的树不变，固定调度使当前计数不依赖先前读取结果，跨调用新随机性使有限个读取的联合质量等于各格质量的乘积。这些实际有限柱集律确定式（82.7），未以另造的独立模型替换当前来源。证毕。
+
+### 82.2 尺度差异的具体 Hellinger 强度
+
+本节使用[波粒子事件卷定义371.1](RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md)的归一化：
+
+$$
+H^2(P,Q)
+:=\frac12\sum_x(\sqrt{P(x)}-\sqrt{Q(x)})^2
+=1-\mathsf A(P,Q),
+\qquad
+\mathsf A(P,Q):=\sum_x\sqrt{P(x)Q(x)}.
+\tag{82.8}
+$$
+
+**引理 82.3（FIB 成对律的平方反总数估计）。** 对 $m\ne m'$、$m,m'\ge2$，令 $d:=|1/m-1/m'|>0$。每个深度 $k$ 都满足
+
+$$
+\frac{2}{81}\frac{d^2}{n_k^2}
+\le H^2(P_{m,k},P_{m',k})
+\le\frac83\frac{d^2}{n_k^2}.
+\tag{82.9}
+$$
+
+**证明。** 暂省深度下标，令 $\delta:=h_m-h_{m'}$。将 $h_m=(1/m)/(n-1/m)$ 相减，得
+
+$$
+|\delta|
+=\frac{nd}{(n-1/m)(n-1/m')}.
+$$
+
+因 $n\ge2$ 且 $1/m,1/m'\le1/2$，两因子都在 $[3n/4,n]$ 内，所以
+
+$$
+\frac d n\le|\delta|\le\frac{16d}{9n}.
+\tag{82.10}
+$$
+
+四格差恰为 $v\delta(-1,1,1,-1)$。有理化平方根差给出
+
+$$
+H^2(P_m,P_{m'})
+=\frac{v^2\delta^2}{2}
+\sum_{x\in\mathcal A}
+\frac1{(\sqrt{P_m(x)}+\sqrt{P_{m'}(x)})^2}.
+\tag{82.11}
+$$
+
+每格质量属于 $[1/27,1]$，故每个分母属于 $[4/27,4]$。四项求和后，
+
+$$
+\frac12v^2\delta^2
+\le H^2(P_m,P_{m'})
+\le\frac{27}{2}v^2\delta^2.
+$$
+
+代入 $2/9\le v\le1/4$ 和式（82.10）：下常数为 $(1/2)(2/9)^2=2/81$，上常数为 $(27/2)(1/4)^2(16/9)^2=8/3$。这是实际 FIB 四格律的估计，不是新增的一般 Hellinger 定理。证毕。
+
+### 82.3 抽样配置的等价／互奇阈值与共同解码
+
+**定理 82.4（固定增长协议的乘积律阈值）。** 定义扩展非负实数
+
+$$
+S(r):=\sum_{k\ge0}\frac{r_k}{n_k^2}.
+\tag{82.12}
+$$
+
+则
+
+$$
+\begin{aligned}
+S(r)<\infty
+&\ \Longrightarrow
+\mu_m^r\sim\mu_{m'}^r
+&&\text{对全部 }m,m'\ge2,\\
+S(r)=\infty
+&\ \Longrightarrow
+\mu_m^r\perp\mu_{m'}^r
+&&\text{对全部不同的 }m,m'\ge2.
+\end{aligned}
+\tag{82.13}
+$$
+
+这里 $\sim$ 表示相互绝对连续，$\perp$ 表示互奇。
+
+**证明。** 空索引时各律是同一个单点律；有限索引时各律在每个档案点上都严格正，故相互绝对连续，且 $S(r)<\infty$。现在设 $I_r$ 无限。每个 $r_k$ 有限，按深度再按批内编号即可把 $I_r$ 枚举为可数坐标。每坐标的四格律严格正，相互绝对连续；把四个标签嵌入 $\mathbb R$ 即满足经典 Kakutani 定理的坐标条件。
+
+具体使用 Rick Durrett, [Probability: Theory and Examples, Version 5，Theorem 4.3.8](https://services.math.duke.edu/~rtd/PTE/PTE5_011119.pdf)，印刷页229–230（PDF页237–238）。该定理允许独立而非同分布的实坐标，在局部绝对连续且密度严格正时，以无限亲和度乘积的正或零分别给出乘积律的绝对连续或互奇；交换两律后，正乘积情形得到相互绝对连续。因此此处只是把既有经典定理用于式（82.7）。
+
+令 $a_k:=\mathsf A(P_{m,k},P_{m',k})>0$。按[波粒子事件卷定理372.3](RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md)的独立亲和度乘法，深度 $k$ 的批次亲和度恰为 $a_k^{r_k}$，其中零批次的因子为 $1$。于是
+
+$$
+\mathsf A(P_{m,k}^{\otimes r_k},P_{m',k}^{\otimes r_k})
+=a_k^{r_k},
+\qquad
+H^2(P_{m,k}^{\otimes r_k},P_{m',k}^{\otimes r_k})
+=1-a_k^{r_k}.
+\tag{82.14}
+$$
+
+批次的平方距离不能直接写成 $r_kH^2(P_{m,k},P_{m',k})$。在逐次读取坐标上，正因子的无限乘积判据给出
+
+$$
+\prod_{k\ge0}a_k^{r_k}>0
+\quad\Longleftrightarrow\quad
+\sum_{k\ge0}r_k(1-a_k)<\infty.
+\tag{82.15}
+$$
+
+这里沿用[素数观察卷§§218、222–223](FORMAL_PRIME_OBSERVER_DYNAMICS.md)的亲和度判据。其标量步骤是 $1-a\le-\log a$，且当 $a\ge1/2$ 时 $-\log a\le2(1-a)$；逐坐标的缺损和有限使除有限项外都满足后一条件，故两种和的收敛等价。所有因子正是此步不可省的前件。由式（82.8）与（82.9），对每对不同 $m,m'$，
+
+$$
+\frac{2d^2}{81}S(r)
+\le
+\sum_{k\ge0}r_k(1-a_k)
+\le
+\frac{8d^2}{3}S(r).
+\tag{82.16}
+$$
+
+Kakutani 定理遂给出式（82.13）。证毕。
+
+**定理 82.5（完整档案同时几乎处处恢复尺度的充要条件）。** 在共同可测空间 $(\Omega_r,\mathcal F_r)$ 上，存在一个可测函数 $D:\Omega_r\to\{2,3,\ldots\}$，使
+
+$$
+\mu_m^r\{D=m\}=1
+\qquad\text{对每个 }m\ge2\text{ 同时成立},
+\tag{82.17}
+$$
+
+当且仅当 $S(r)=\infty$。
+
+**证明。** 若 $S(r)<\infty$，取不同的 $m,m'$。正确解码要求同一个可测事件 $\{D=m\}$ 在 $\mu_m^r$ 下质量为 $1$、在 $\mu_{m'}^r$ 下为 $0$，与定理82.4的等价性矛盾。这正是[素数观察卷§219](FORMAL_PRIME_OBSERVER_DYNAMICS.md)与既有声明 equivalent_probability_laws_exclude_perfect_separator 的障碍。若另给解码器一个共同、来源独立的种子律 $\nu$，等价性仍传到 $\mu_m^r\otimes\nu$，所以独立随机化也不能消除障碍。
+
+若 $S(r)=\infty$，定理82.4使本可数族两两互奇。沿用[素数观察卷§228](FORMAL_PRIME_OBSERVER_DYNAMICS.md)及既有 countable_pairwise_singular_common_partition：其参数在此为 $\mathrm{probability}(j)=\mu_{j+2}^r$，$\mathrm{weight}(j)=2^{-(j+1)}$，$j\in\mathbb N$。权重严格正且总和为 $1$；在该 Lean 声明的权重类型中取对应的非负扩展实数。所需共同支配混合为
+
+$$
+\lambda=\sum_{j\ge0}2^{-(j+1)}\mu_{j+2}^r.
+\tag{82.18}
+$$
+
+它提供原始共同 $\sigma$-代数中的两两不交可测满测度支撑。本族也可直接把这个已有分割结论写为：对每个 $m<\ell$ 选共同可测的 $E_{m,\ell}$，使 $\mu_m^r(E_{m,\ell})=1$、$\mu_\ell^r(E_{m,\ell})=0$，并令
+
+$$
+B_m
+=
+\left(\bigcap_{\ell>m}E_{m,\ell}\right)
+\cap
+\left(\bigcap_{2\le\ell<m}E_{\ell,m}^{\,c}\right).
+\tag{82.19}
+$$
+
+可数交保持可测，且每个被交集合在 $\mu_m^r$ 下为满测度，故 $\mu_m^r(B_m)=1$。若 $m<\ell$，则 $B_m\subseteq E_{m,\ell}$、$B_\ell\subseteq E_{m,\ell}^c$，所以这些支撑实际不交。在 $B_m$ 上置 $D=m$，剩余集合上默认置 $D=2$，得到共同可测函数和式（82.17）。这只是本族对已有可数分割的应用，不另立一般分割定理。证毕。
+
+即使 $S(r)<\infty$，只要至少有一次读取，式（82.5）的异色格随 $m$ 严格变化，故不同 $m$ 的档案律仍不相等；律不相等不等于存在零误差解码器。全零调度则各律完全相同。式（82.17）允许每个来源自己的零测异常，不保证每条合同相容轨迹都正确，也不保证有限停机、可计算解码或有界记忆。定理81.10仍排除全族共同的几乎必然有限停止零误差规则，包括 $S(r)=\infty$ 的调度。第81节对全部允许策略定义的 $K_B$ 及其计数识别结论不因选择这一固定协议而改变。
+
+### 82.4 每次仅保留异色关系位
+
+**推论 82.6（二值档案具有同一个尺度恢复阈值）。** 对每个索引调用仅保留
+
+$$
+Z_{k,j}:=\mathbf1\{\text{两次抽取类型不同}\}.
+\tag{82.20}
+$$
+
+取共同原始二值乘积空间 $\{0,1\}^{I_r}$，记其实际律为 $\eta_m^r$。则存在一个共同可测的二值档案解码器，对每个 $m\ge2$ 都以概率 $1$ 返回 $m$，当且仅当 $S(r)=\infty$。
+
+**证明。** 二值坐标独立，其成功概率由式（82.5）给出
+
+$$
+q_{m,k}=2v_k(1+h_{m,k}),
+\qquad
+\frac49\le q_{m,k}\le\frac23.
+\tag{82.21}
+$$
+
+两格都严格正。对不同 $m,m'$，仍记 $\delta=h_{m,k}-h_{m',k}$。有 $q_{m,k}-q_{m',k}=2v_k\delta$。对 Bernoulli 律有理化两项平方根差，因两个分母均不大于 $4$，
+
+$$
+\begin{aligned}
+H^2(\operatorname{Bern}(q_{m,k}),\operatorname{Bern}(q_{m',k}))
+&=\frac{(q_{m,k}-q_{m',k})^2}{2}
+\left[
+\frac1{(\sqrt{q_{m,k}}+\sqrt{q_{m',k}})^2}
++\frac1{(\sqrt{1-q_{m,k}}+\sqrt{1-q_{m',k}})^2}
+\right]\\
+&\ge\frac{(q_{m,k}-q_{m',k})^2}{4}
+=v_k^2\delta^2
+\ge\frac4{81}\frac{d^2}{n_k^2}.
+\end{aligned}
+\tag{82.22}
+$$
+
+当 $S(r)=\infty$，逐次二值坐标的平方距离和发散，局部严格正满足同一个经典 Kakutani 定理，故 $\eta_m^r$ 两两互奇；按定理82.5中 $j\mapsto j+2$ 的同一可数分割应用得到共同解码器。当 $S(r)<\infty$，$\eta_m^r$ 是 $\mu_m^r$ 在共同可测逐坐标映射 $aa,bb\mapsto0$、$ab,ba\mapsto1$ 下的推前；绝对连续性经过同一映射保持，故二值律相互等价。等价律障碍再次排除共同零误差解码。证毕。
+
+**命题 82.7（二值阈值保持不等于有限实验充分性）。** 异色位不保留完整四格实验的全部尺度信息。具体在 $k=1$，来源 $m=2$ 与 $m=3$ 分别满足
+
+$$
+P_{2,1}(aa\mid Z=0)=\frac17,
+\qquad
+P_{3,1}(aa\mid Z=0)=\frac16.
+\tag{82.23}
+$$
+
+**证明。** 此时两来源计数分别为 $(2,4)$ 与 $(3,6)$。式（81.6）给出
+
+$$
+\begin{aligned}
+P_{2,1}(aa)&=\frac1{15},&
+P_{2,1}(bb)&=\frac25,&
+P_{2,1}(aa\mid Z=0)
+&=\frac{1/15}{1/15+2/5}=\frac17,\\
+P_{3,1}(aa)&=\frac1{12},&
+P_{3,1}(bb)&=\frac5{12},&
+P_{3,1}(aa\mid Z=0)
+&=\frac{1/12}{1/12+5/12}=\frac16.
+\end{aligned}
+$$
+
+同一个 $Z=0$ 纤维中的条件律依赖隐藏参数，因而不能由这个位通过共同条件重建恢复四格实验；按有限正质量模型的统计充分性判据，$Z$ 不是该实验的充分统计量。推论82.6仅说明一个特定完整档案目标的阈值被保留，不宣称有限实验充分性或最小总记忆。每次一位仍可形成无界的整个二值档案，未给出固定有限观察者记忆的实现。证毕。
+
+### 82.5 可计算配置与稀疏配置
+
+**命题 82.8（配置实例与临界级数）。** 以下调度都来源独立，前三种可由整数递推实现：
+
+$$
+\begin{array}{c|c|c}
+r_k&S(r)&\text{共同完整档案尺度恢复}\\ \hline
+1&\sum_k n_k^{-2}<\infty&\text{不存在}\\
+n_k&\sum_k n_k^{-1}<\infty&\text{不存在}\\
+n_k^2&\sum_k1=\infty&\text{存在}
+\end{array}
+\tag{82.24}
+$$
+
+对固定实数 $\gamma$ 的数学调度
+
+$$
+r_k=\left\lceil\frac{n_k^2}{(k+1)^\gamma}\right\rceil,
+\tag{82.25}
+$$
+
+完整四格或二值档案可共同几乎处处恢复尺度，当且仅当 $\gamma\le1$。另取仅在 $k=2^\ell$、$\ell\ge0$ 时令 $r_k=n_k^2$、其余深度令 $r_k=0$，也能恢复；不要求每个深度都配置 $n_k^2$ 次读取。
+
+**证明。** Fibonacci 递推给出 $n_{k+2}=n_{k+1}+n_k\ge2n_k$。按奇偶深度分组，两条子序列至少逐项倍增，所以 $\sum_kn_k^{-1}$ 与 $\sum_kn_k^{-2}$ 均由几何级数控制而收敛。式（82.24）再由定理82.5和推论82.6得到。特别是 $r_k=n_k$ 虽使错误的一次幂候选量 $\sum_kr_k/n_k=\sum_k1$ 发散，仍落在等价区域；实际阈值需要式（82.12）的平方分母。
+
+式（82.25）的取整余量满足
+
+$$
+0\le
+\frac{r_k}{n_k^2}-\frac1{(k+1)^\gamma}
+\le\frac1{n_k^2}.
+\tag{82.26}
+$$
+
+右侧可和，故 $S(r)$ 与经典 $p$-级数 $\sum_k(k+1)^{-\gamma}$ 同敛散，得到 $\gamma=1$ 的临界点。稀疏调度每个活动深度贡献恰为 $1$，活动深度无限多，故 $S(r)=\infty$。证毕。
+
+任意实数 $\gamma$ 的数学序列不附带可计算性保证。$\gamma=1,2$ 的实例可分别通过 $n_k^2/(k+1)$、$n_k^2/(k+1)^2$ 的正整数除法和向上取整生成；连同 $r_k=1,n_k,n_k^2$ 及上述二幂深度调度，均可给出来源独立的可计算控制器。本节没有为这些控制器给出时间或存储界。在一个固定深度永远读取的 iid 无限实验不属于每批有限且持续增长的这一协议类。
+
+### 82.6 复用来源、证明范围与观察者边界
+
+通用乘积二分、等价律障碍、可数共同分割及弱信号平方阈值分别由[素数观察卷§§218–223、228、231](FORMAL_PRIME_OBSERVER_DYNAMICS.md)承担；本节增加的是实际 FIB 增长路径上的四格估计、有限批次配置判据和明确二值写入映射的目标恢复结论。波粒子事件卷§371.1使用的 $H^2=1-\mathsf A$ 与该卷§372.3的有限独立亲和度乘法在此直接复用；素数观察卷§222的能量是 $2(1-\mathsf A)$，两者只差因子 $2$，可和性不变。
+
+经典来源为 S. Kakutani, On Equivalence of Infinite Product Measures, Annals of Mathematics (2) 49(1), 214–224 (1948)，DOI [10.2307/1969123](https://doi.org/10.2307/1969123)。此处原论文的可用证据为出版元数据，不以其不可访问的全文作为逐项核对依据；承重定理与证明取自 Durrett 上述教材的 Theorem 4.3.8（Version 5, January 11, 2019），其独立坐标、正密度和双向应用条件已经在定理82.4中对应。
+
+仓内 [FinitePmfLikelihood](../../../D5/S3/Observer/ProductMeasures/FinitePmfLikelihood.lean) 的 productLaw_ac_of_summable 使用 energy $=2H^2$。本节的参数对应为将 $I_r$ 枚举后每坐标的 Output 取 $\mathcal A$、两组 PMF 取该索引的 $P_{m,k},P_{m',k}$；式（82.6）供给局部双向绝对连续，式（82.16）在 $S(r)<\infty$ 时供给其能量可和前件。该声明仅给可和方向的一次绝对连续，交换两律后可得到等价，不能单独给出发散方向。[CountableSingularPartition](../../../D5/S3/Observer/MeasureSeparation/CountableSingularPartition.lean) 的 countable_pairwise_singular_common_partition 与 [EquivalentMeasuresExcludePerfectSeparator](../../../D5/S3/Observer/MeasureSeparation/EquivalentMeasuresExcludePerfectSeparator.lean) 的 equivalent_probability_laws_exclude_perfect_separator 分别供给定理82.5的共同分割与障碍；参数与归一化已在其证明中列明。[WeakPrimeSignalCompletionThreshold](../../../D5/S3/Observer/MeasureSeparation/WeakPrimeSignalCompletionThreshold.lean) 的完成二分显式假设 SignalKakutaniDichotomy，不是本节发散方向的无条件证明。
+
+这些地址是既有结果的复用对应，不是本节精确应用的 Lean 编译或认证。本节是普通 repo-derived 理论综合与普通数学证明，不主张新的通用二分定理、Lean 内核认证或世界原创性。
+
+适用域仅为实际混色族 $m\ge2$、固定来源独立调度及声明的独立生产者随机性。$m=1$ 或坐标轴来源可出现零格，不在上述统一正质量估计内；未知、反馈或来源依赖调度、相关生产者随机性、除式（82.20）外的其他有损写入器、任意树形、物理时空与完整四视图恢复均不由本节结算。结论连接的是增长深度、抽样配置和实际保留的关系记忆，是这个协议的目标边界，不是所有观察者的内在不可能性。
+
+## 82.99 追加锚
