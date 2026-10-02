@@ -5729,3 +5729,145 @@ FIB 的 \(\alpha,\beta\) 在这里继续承担源语法的两个叶生成元；\
 本节没有把 FIB 解释成原胞自动机，也没有断言两个叶生成元足以无损生成任意关系系统。它只给出一个具体桥接：相同 FIB 终点与相同步数不蕴含相同的预测能力；终点压缩的合法性必须由策略因子化或完整行为核证明。这里没有新增 Lean 声明、消化结算或物理时空定律；若要把 (PG.4002)–(PG.4012) 形式化，仍需为 FIB 动作、档案权限和实际来源提供相应的联合类型与更新合同。
 
 ## 40.99 追加锚
+
+## 41. FIB 实际历史到有类型路径载体的最小胶合接口
+
+**本批导航与边界。** §39–40 已定义 FIB 实际历史、四视图、策略行为核和失效见证；Transport–Memory §§24–27 与 Boundary Dynamics §80 已给出相应的抽象动作或联合核。本节只新增把这些**已经给定的实际历史**嵌入一个带类型、部分后继的路径载体，并说明该嵌入如何接到 `TypedFiniteViewKernel`。本节是理论接口；具体 FIB 实例、Lean 应用、消化结算和物理解释保持 open。
+
+### 41.1 有类型实际像闭合
+
+令 $H^{\mathrm{act}}$、来源字段、档案和策略记录沿用 §39–40，$\tau:H^{\mathrm{act}}\to I$ 给出运行接口类型，并要求存在嵌入 $\iota:H^{\mathrm{act}}\hookrightarrow\Sigma_{i:I}S_i$。写
+
+$$
+H_i^{\mathrm{act}}:=\{h\in H^{\mathrm{act}}:\tau(h)=i\},
+\qquad
+\iota_i(h):=\text{第二分量}(\iota(h))\quad(h\in H_i^{\mathrm{act}}).
+$$
+
+新增的载体要求是
+
+$$
+\iota(h)=\langle\tau(h),\iota_{\tau(h)}(h)\rangle,
+\qquad
+\iota_i(h)=\iota_i(h')\Longrightarrow h=h'.
+\tag{PG.4101}
+$$
+
+这里的纤维单射把 §39 的共同来源记录忠实放进 typed 状态；它不授权读取未声明的历史，也不把各纤维中分别可达的字段拼成实际联合历史。采用 [TypedFiniteViewKernel.lean](../../../D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean) 的接口
+
+$$
+\mathrm{Edge}:I\to I\to\mathrm{Type},\qquad
+\mathrm{step}_e:S_i\to\mathrm{Option}(L_e\times S_j),\qquad
+r_i:S_i\to O_i.
+\tag{PG.4102}
+$$
+
+其中的边至少包含任务声明的读、游标、替换和（若任务可用）档案选择动作；参考、权限、writer 和句柄刷新必须在同一历史接续中更新，不能由 `epoch` 的数值变化代替。对每个 $e:i\to j$，给出实际接续 $T_e^{\mathrm{act}}$ 并要求
+
+$$
+\mathrm{step}_e(\iota_i h)
+=\mathrm{Option.map}(\mathrm{id}_{L_e}\times\iota_j)
+   (T_e^{\mathrm{act}}h),
+\qquad
+T_e^{\mathrm{act}}:H_i^{\mathrm{act}}\to\mathrm{Option}(L_e\times H_j^{\mathrm{act}}).
+\tag{PG.4103}
+$$
+
+于是 $A_i:=\iota_i(H_i^{\mathrm{act}})$ 对每条声明边闭合，失败的 `Option none` 也保留在响应比较中。需要区分拒绝原因、写入档案或继续执行时，必须把它们编码为同一 `Edge` 的标签和实际后继；裸 `none` 只表示没有后继。
+
+### 41.2 接到 typed 有限路径核
+
+在 $A_i$ 上限制 `Path`、`response` 和边动作，定义
+
+$$
+\begin{aligned}
+E_n(h,h')&:=\mathrm{E}(L,r,\mathrm{step}^A,n)(\iota h,\iota h'),\\
+B(h,h')&\Longleftrightarrow\beta(h)=\beta(h'),
+\end{aligned}
+\tag{PG.4104}
+$$
+
+其中 $\beta$ 收集空路径、所有有限前缀和失败响应，且保留起始类型。`typed_finite_view_kernel` 供应 $E_{n+1}\subseteq E_n$ 以及 $B=\bigcap_nE_n$ 的抽象接口；只有在实际载体上另证
+
+$$
+E_n=E_{n+1}\Longrightarrow E_n=B,
+\qquad E_{n+k}=E_n\ (k\in\mathbb N)
+\tag{PG.4105}
+$$
+
+才可把该层称为完整有限行为核。这里“有限”只指深度证书，不声称 $\Sigma_iA_i$ 或动作分支有限。`GradedPredictionShift.lean` 的平台与闭合更新只适用于其单个总更新假设；不能自动替代上面的 typed、部分动作条件。
+
+### 41.3 联合读出、核商与动作下降
+
+四视图读出按 §39.2 取 $q_k(h):=(\tau(h),v_k(h))$，令 $q=(q_k)_k$、$J=q(H^{\mathrm{act}})$；类型标签因此属于读出值域，不会把不同纤维的相同数值错误合并。为避免把带类型函数核和像混为一谈，定义
+
+$$
+\ker_H(f):=\{(h,h')\in H^{\mathrm{act}}\times H^{\mathrm{act}}:f(h)=f(h')\},
+\qquad
+R_k:=\ker_H(q_k),
+\qquad
+\ker_H(q)=\bigcap_kR_k.
+\tag{PG.4106}
+$$
+
+按每个纤维取
+
+$$
+R_{k,i}:=R_k\cap(H_i^{\mathrm{act}}\times H_i^{\mathrm{act}}),
+$$
+
+再把像放回带类型的和中，有核商到实际像的双射
+
+$$
+H_i^{\mathrm{act}}/R_{k,i}\;\cong\;q_k(H_i^{\mathrm{act}}),
+\qquad [h]\longmapsto q_k(h).
+\tag{PG.4106a}
+$$
+
+这是数学识别，不声称 `JointPredictionRelation` 或 `CompatibleFusionEmbedding` 已直接证明该桥；前者给出联合核交集，后者的 `compatibleImage` 仍要求同一实际历史代表，故 $J$ 不是边缘像的自由积。
+
+若摘要 $d$ 要在 $d(H^{\mathrm{act}})$ 上继续执行，先给出各纤维的带类型分量 $d_i:H_i^{\mathrm{act}}\to D_i$，并写 $d_j$ 为目标纤维分量；则必须对同类型 $h,h'$ 及 $e:i\to j$ 满足
+
+$$
+d(h)=d(h')\Longrightarrow
+\left\{
+\begin{aligned}
+r_i(\iota_i h)&=r_i(\iota_i h'),\\
+\mathrm{Option.map}(\mathrm{id}_{L_e}\times d_j)(T_e^{\mathrm{act}}h)
+&=\mathrm{Option.map}(\mathrm{id}_{L_e}\times d_j)(T_e^{\mathrm{act}}h').
+\end{aligned}\right.
+\tag{PG.4107}
+$$
+
+这是 §32.3 的下降条件在实际 typed 历史上的专门化。复用 §32.4 与 Transport–Memory §27 时，联合视图达到最小预测边界仍需另证
+
+$$
+\ker_H(q)=B.
+\tag{PG.4108}
+$$
+
+端点投影 $\eta$ 是否与该边界互恢复，也仍分别检查
+
+$$
+\eta=D_\eta\circ q\Longleftrightarrow\ker_H(q)\subseteq\ker_H(\eta),
+\qquad
+q=D_q\circ\eta\Longleftrightarrow\ker_H(\eta)\subseteq\ker_H(q).
+\tag{PG.4109}
+$$
+
+这些式子是接入检查，不把既有一般下降定理冒充为 FIB 实例已满足。
+
+### 41.4 仍需显式验证的边界
+
+§40.2 的同端点异路径见证在 typed 核中只有在存在同一条、对 $h_L,h_R$ 都声明的 `Select` 边 $e_{\mathrm{sel}}$，且
+
+$$
+\mathrm{response}_{e_{\mathrm{sel}}}(\iota h_L)\ne
+\mathrm{response}_{e_{\mathrm{sel}}}(\iota h_R)
+$$
+
+时才给出一步分离；这里差异须是失败、标签或终端读出。若只有后继摘要不同，则要给出同一共同续接使多步 `response` 分离，或把摘要纳入 $L_e$ 或 $r$。§36.6 的幽灵线程和 §39 的共同像条件仍是适用边界，本节不重述其反例。
+
+本节的真实新增仅是 (PG.4101)–(PG.4103) 的 typed 历史嵌入与实际像闭合，以及 (PG.4106a) 的核商到带类型实际像桥；实例满足性、来源完备性、跨纪元刷新、取得成本、四视图物理解释和 Lean 核验均为 ASSUMED-UNVERIFIED/open。本节没有新增 Lean 声明、消化、freeze、coverage 或判官变更。
+
+## 41.99 追加锚
