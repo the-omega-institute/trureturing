@@ -20335,3 +20335,30 @@ contradicting GCB9. Hence
       original9 has the concentrated color opposite5. (GCB10)
 
 This locates the literal first-three root of one actual original class. It does not align the deeper ternary phases, put every high original in that root, or exclude the branch. All comparable-class exclusions and full ternary words remain in force.
+
+The same actual guard budget gives minimum heights without imposing an upper bound on either H=H_3 or G=H_7. Since beta_S<=theta and tau_S>=1-theta, GCB1 requires
+
+    1<=L_*+[theta/(1-theta)]M_*.
+
+If H<=2, then theta<=1/3. The C' envelope would give
+
+    1<=L_infinity+(1/2)M_infinity=21854/25245<1,
+
+a contradiction. Thus the same remaining branch satisfies H_3>=3.
+
+When G=1, the exact shared-prime weight is A=a=1/6. At C' the finite-height envelopes are
+
+    L_1=50597/117810, M_1=103/153,
+    M_1/(1-L_1)=79310/67213<6/5.
+
+If H<=3, then theta<=4/9, giving the impossible requirement
+
+    1<=L_1+(4/5)M_1=7603/7854<1.
+
+Hence H>=4 and original27 exists by divisor closure. Moreover GCB1 implies tau_S<3/5, so beta_S>2/5. If original27 had the color of5, the same guard identity would give beta_S<=theta-1/9<7/18<2/5. It therefore has the color of S. In summary,
+
+    R={7}, H_5=1 ==> H_3>=3;
+    additionally H_7=1 ==> H_3>=4 and
+      originals9 and27 both have the color opposite5. (GCB11)
+
+Only their actual first-three roots are fixed by this conclusion. Their full ternary phases and those of every other original remain unchanged. These necessary conditions do not exclude the remaining shared7 branch.
