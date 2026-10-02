@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Data.Nat.Log]
    utility: none
-   digest: Recursive ordered interval bisection preserves every node block and attains logarithmic height. -/
+   digest: Ordered bisection preserves all node blocks and attains logarithmic height. -/
 
 import D5.S3.Arith.FibonacciAtomic.FirstRejectionCutCapacity
 import D5.S3.Arith.FibonacciAtomic.TreeMessageRealization
@@ -38,7 +38,7 @@ theorem result (k l w : ℕ) (hw : 0 < w) (hbound : l + w ≤ k + 1) :
           Finset.mem_univ, true_and, Fin.ext_iff]
         dsimp [i]
         omega
-      refine ⟨leaf i, by simp [Full], hleaves, by simp [height, leaf], ?_⟩
+      refine ⟨leaf i, by simp [Full], hleaves, by simp [height], ?_⟩
       intro s hs
       have he : s = leaf i := by simpa [subtrees] using hs
       subst s
@@ -60,7 +60,7 @@ theorem result (k l w : ℕ) (hw : 0 < w) (hbound : l + w ≤ k + 1) :
         simp only [interval, Finset.mem_filter, Finset.mem_univ, true_and] at hi hj
         omega
       have hleaves : leaves (fork L R) = interval k l (l + w) := by
-        simp only [fork, leaves, hLA, hRA]
+        simp only [leaves, hLA, hRA]
         ext i
         simp only [Finset.mem_union, interval, Finset.mem_filter, Finset.mem_univ, true_and]
         omega
