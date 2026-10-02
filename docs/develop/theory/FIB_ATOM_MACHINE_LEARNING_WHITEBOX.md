@@ -6903,3 +6903,78 @@ $\beta=\operatorname{clip}_{[0,1]}(\overline Z/\kappa)$ 对所有教师都有效
 表示费用继续取命题51.9及式（52.41）–（52.43）的直接根供应。式（52.23）的精确结构风险分解针对根二后验 plug-in；根一的式（52.29）只在已证明的教师恢复事件上调用，错误教师分支仍按式（52.31）计费。整个实验保持局部完整五符号的产品律、实际窗内相关性和低到高位序，不增加跨窗 seam 或全局 positive-End 条件化。
 
 ## 追加锚（本行以下为增补区）
+
+### 52.11. 标量校准与教师结构信息的区别
+
+本小节沿用式（52.1）的完整五符号产品律、实际窗内相关性、固定三类命名与已知 $Q$，并保留 §52.9–§52.10 的全部适用域。已知教师的标量校准、未知教师的标签边际校准和配对记录的结构发现，具有不同的信息权限。
+
+**命题 52.100（本实验中仅标签的准确结构恢复上限）。** 令 $n\ge3$、$N=\binom n3$、整数 $m\ge0$。学习器只取得 $D_m^Y=(Y_1,\ldots,Y_m)$，输出 $\widehat\theta\in\Theta_n$；其规则可以依赖已知实验、$n,m$ 和预先给定的参数域，但不依赖真实教师。内部种子 $U\sim\nu$ 独立于记录，分布不依赖未知 $\theta,\alpha$。写
+
+$$
+\mu_\alpha=u+\alpha\sum_{c=0}^2\pi_c w_c,
+\qquad
+\pi=(89,20,16)/125.
+$$
+
+对每个固定 $\alpha\in[0,1]$，所有教师的完整标签串律恰为 $\mu_\alpha^{\otimes m}$。因而对任意非空 $I\subseteq[0,1]$，有准确值
+
+$$
+\sup_{\mathcal A}\ \inf_{\substack{\theta\in\Theta_n\\\alpha\in I}}
+(\mu_\alpha^{\otimes m}\otimes\nu)
+\{\mathcal A(D_m^Y,U)=\theta\}
+=\frac1N.
+\tag{52.101}
+$$
+
+同样的值适用于每个固定的、甚至事先已知的 $\alpha$；不是仅在 $\alpha\downarrow0$ 时成立。$n=3$ 时右端为1，唯一三元组无需数据。$n\ge4$ 时，对所有教师的成功概率至少为 $1-\delta$ 可行，当且仅当 $\delta\ge1-1/N$，其中 $0\le\delta\le1$；这包含弱置信域与 $m=0$，不使用二元 KL 的 $\delta<1/2$ 条件。
+
+证明。跨窗独立而中窗 $\mathbb E[h\ell]=1/5$，所以
+$P(G_{1,\theta}=1)=4/25$，
+$P(G_{2,\theta}=1)=4/25-(2/5)(1/5)(2/5)=16/125$，得到共同 $\pi$。对完整输入积分即得共同标签边际 $\mu_\alpha$；独立记录给其乘积律。固定 $\alpha$ 后，学习器连同种子的输出分布是同一个 $r_\alpha$，与真实教师无关，因此
+
+$$
+\frac1N\sum_{\theta\in\Theta_n}
+(\mu_\alpha^{\otimes m}\otimes\nu)\{\widehat\theta=\theta\}
+=\frac1N\sum_{\theta\in\Theta_n}r_\alpha(\theta)=\frac1N.
+$$
+
+最小成功率不超过平均值。独立均匀猜测三元组在每个教师、每个 $\alpha$ 下成功率均为 $1/N$，给出反向不等式与置信域的充要条件。若允许弃权，平均式只会变成不等式，上限不增加。$\square$
+
+这个共同律仍含有标量信息：$Z=\mathbf1_{\{Y=0\}}-\mathbf1_{\{Y=2\}}$ 满足 $\mathbb E Z=\kappa\alpha$，且 $\kappa=73(\sqrt2-1)/125>0$。对 $m\ge1$，式（52.17）–（52.18）的仅标签估计因此对全部教师有效，并沿嵌套独立样本前缀几乎必然趋于真实 $\alpha$；后一个结论也可由固定正误差的可求和尾界得到。任何仅由这些标签及独立种子计算的校准值、置信区间或教师输出，其分布在固定 $\alpha$ 下仍与教师无关。准确校准 $\alpha$ 不切开这个教师纤维。
+
+若把训练观察换成某个统计量 $T_m$，上面的计数论证只要求：对每个固定 $\alpha$，整个 $T_m$ 的律在所有教师下相同，且后处理核不依赖教师。这是需要证明的条件，不能靠“边际统计量”之名取得。特别是 $X$ 边际与 $Y$ 边际分别不依赖教师，不意味着配对的 $(X,Y)$ 联合律不依赖教师；条件标签律 $P(Y\mid X)$ 也没有被命题52.100丢弃后的共同律所覆盖。
+
+**命题 52.102（仅标签训练下的小 Brier 容差障碍）。** 固定 $n\ge4$、$0<\alpha\le1$，并令
+
+$$
+0\le\varepsilon<\frac{\alpha^2T_*}{4},
+\qquad T_*=\frac{189-132\sqrt2}{125}>0.
+$$
+
+一个仅由 $D_m^Y,U$ 选择的预测器 $p:\Sigma^n\to\Delta_3$，可以在测试时读取完整 $X$，也可以预先知道这个 $\alpha$，但其训练规则与种子仍满足命题52.100。预测器在独立同律测试前固定。按式（51.2）、（52.1）的完整三类 Brier 超额，有
+
+$$
+\inf_{\theta\in\Theta_n}
+(\mu_\alpha^{\otimes m}\otimes\nu)
+\left\{
+\Delta_B(\theta,\alpha;p)
+=\mathbb E_{X\sim P_n}\|q_\alpha(C_\theta(X))-p(X)\|_2^2
+\le\varepsilon
+\right\}
+\le\frac1N.
+\tag{52.103}
+$$
+
+所以该域内的全教师风险成功保证仍须 $\delta\ge1-1/N$，任意样本数都不能替代缺失的配对关系。
+
+证明。写 $f_\theta=q_\alpha\circ C_\theta$。式（52.11）给不同教师
+$\|f_\theta-f_\eta\|_{L^2(P_n)}^2=\alpha^2T(\theta,\eta)\ge\alpha^2T_*$。若同一个 $p$ 同时属于两个超额不超过 $\varepsilon$ 的集合，三角不等式给
+$\|f_\theta-f_\eta\|_{L^2(P_n)}\le2\sqrt\varepsilon<\alpha\sqrt{T_*}$，矛盾。这些好集合互不相交；仅标签训练所得随机函数 $p$ 的律共同，所以各好集合的概率之和至多为1，最小者至多 $1/N$。这是条件总体风险的度量证明，与观测标签准确率无关。完整 Brier 的平方距离约定复用 Gneiting、Raftery，[*Strictly Proper Scoring Rules, Prediction, and Estimation*](https://sites.stat.washington.edu/raftery/Research/PDF/Gneiting2007jasa.pdf)，§3 Example 1。$\square$
+
+此障碍不覆盖 $n=3$、$\alpha=0$ 或较大容差：信号为零时所有目标后验都是 $u$；一般固定 $\alpha$ 时，均匀预测器的 Brier 超额准确为 $S\alpha^2$，故 $\varepsilon\ge S\alpha^2$ 时它对所有教师成功，而不恢复位置。命题52.102也不包含 $\varepsilon=\alpha^2T_*/4$ 的等号边界；最近教师对的后验中点在该边界可同时属于两个好球。对数风险没有由本命题另获下界。
+
+与现有两个完整记录接口的比较如下。§51 的教师 $C$ 已知，$\mathbf1\{Y=C(X)\}$ 的均值为 $1/3+\alpha/6$；它实际读取已知活动窗，校准的是唯一未知标量，不恢复未知位置。§52 的 $J_i=-\psi_iZ$ 则保留输入坐标与同一条标签的配对关系，其均值在活动位置至少为 $\alpha\tau$、在其他位置为零；式（52.15）在 $\alpha\ge a>0$ 的预算下恢复未知三元组。§52.10 的候选匹配也实际由已付费完整 $X_j$ 计算 $C_\eta(X_j)$，其均值为 $1/3+\alpha/6-\alpha\Gamma(\theta,\eta)$，故无需已知 $\alpha$ 即可排序；它不是仅标签操作。后选匹配计数仍须保留 §52.10.3 的选择依赖边界。扫描、穷举候选评价、完整输入取得、位置元数据与训练后固定的直接根及仿射头，继续按 §52.7–§52.10 分立收费。
+
+这里的白盒区别针对本实验的实际关系：标签边际能辨识通道标量，却把所有未知位置合并；配对指纹恢复这些位置后，才可在同一事件上接入 §51 的已知教师 secant 风险接口。§52.6 的弱信号均匀分支也可合法避开位置恢复。共同观察律下的决策上限、数据处理和互不相交风险球都是成熟论证；Scarlett、Cevher，[*An Introductory Guide to Fano's Inequality with Applications in Statistical Estimation*](https://arxiv.org/abs/1901.00555v1)，§2.1、§5.2 给其一般信息与估计背景。命题52.100–52.102只作共同类质量、正信号结构间隙及已收费预测接口的具体 FIB 比较，不取得一般决策理论或新学习算法的原创性身份，也不改变固定 $Q$、输入律、教师模板和类名的范围。
+
+## 追加锚（本行以下为增补区）
