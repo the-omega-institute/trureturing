@@ -19,14 +19,11 @@ open D5.S3.Combinatorics Nonnesting Fishburn.FishburnDefs
 open Fishburn.FishburnBasicAscents Fishburn.FishburnBasicThreePatterns
 open Fishburn.FishburnBasicInsertion
 
-def H (size : ℕ) :=
-  {p : List ℕ // p.Perm (List.range' 1 size) ∧ IsFishburn p ∧
-    ¬ NonnestingDefs.Occurs [2, 1, 3] p}
-
 theorem H_head_decomposition (size : ℕ) (p : List ℕ) :
-    (p.Perm (List.range' 1 (size + 1)) ∧ IsFishburn p ∧
-      ¬ NonnestingDefs.Occurs [2, 1, 3] p) ↔
-    ∃ q : H size, p = (size + 1) :: q.val ∨ p = 1 :: q.val.map (· + 1) := by
+    p ∈ avoiders (size + 1) [[2, 1, 3]] ↔
+    ∃ q : ↥(avoiders size [[2, 1, 3]]),
+      p = (size + 1) :: q.val ∨ p = 1 :: q.val.map (· + 1) := by
+  conv_lhs => simp only [avoiders, Set.mem_ofPred_eq, List.mem_singleton, forall_eq]
   have hmaximumPerm (q : List ℕ) :
       ((size + 1) :: q).Perm (List.range' 1 (size + 1)) ↔
         q.Perm (List.range' 1 size) := by
@@ -245,7 +242,9 @@ theorem H_head_decomposition (size : ℕ) (p : List ℕ) :
       · omega
     rcases hhead with rfl | rfl
     · have hqperm := (hmaximumPerm tail).mp hperm
-      exact ⟨⟨tail, hqperm, (hmaximum tail hqperm).mp ⟨hfish, havoid⟩⟩, Or.inl rfl⟩
+      refine ⟨⟨tail, hqperm, ?_⟩, Or.inl rfl⟩
+      simpa only [List.mem_singleton, forall_eq] using
+        (hmaximum tail hqperm).mp ⟨hfish, havoid⟩
     · have htailperm : tail.Perm (List.range' 2 size) := by
         have hp := hperm
         rw [List.range'_succ] at hp
@@ -264,19 +263,22 @@ theorem H_head_decomposition (size : ℕ) (p : List ℕ) :
         simp only [Function.comp_apply, id_eq]
         omega
       refine ⟨⟨q, hqperm, ?_⟩, Or.inr ?_⟩
-      · apply (hminimum q hqperm).mp
-        simpa [he] using And.intro hfish havoid
+      · simpa only [List.mem_singleton, forall_eq] using
+          (hminimum q hqperm).mp (by simpa [he] using And.intro hfish havoid)
       · simp [he]
   · rintro ⟨q, rfl | rfl⟩
     · exact ⟨(hmaximumPerm q.val).mpr q.property.1,
-        (hmaximum q.val q.property.1).mpr q.property.2⟩
+        (hmaximum q.val q.property.1).mpr
+          (by simpa only [List.mem_singleton, forall_eq] using q.property.2)⟩
     · exact ⟨hminimumPerm q.val q.property.1,
-        (hminimum q.val q.property.1).mpr q.property.2⟩
+        (hminimum q.val q.property.1).mpr
+          (by simpa only [List.mem_singleton, forall_eq] using q.property.2)⟩
 
 noncomputable def H_maximum_equiv (size : ℕ) (hsize : 1 ≤ size) :
-    H size ≃ Σ cut : Fin size, H (size - cut.val - 1) := by
+    ↥(avoiders size [[2, 1, 3]]) ≃
+      Σ cut : Fin size, ↥(avoiders (size - cut.val - 1) [[2, 1, 3]]) := by
   classical
-  have hconstruct : ∀ cut rest : ℕ, ∀ q : H rest,
+  have hconstruct : ∀ cut rest : ℕ, ∀ q : ↥(avoiders rest [[2, 1, 3]]),
       (List.range' 1 cut ++ (cut + rest + 1) :: q.val.map (· + cut)).Perm
           (List.range' 1 (cut + rest + 1)) ∧
         IsFishburn (List.range' 1 cut ++ (cut + rest + 1) :: q.val.map (· + cut)) ∧
@@ -286,12 +288,13 @@ noncomputable def H_maximum_equiv (size : ℕ) (hsize : 1 ≤ size) :
     induction cut with
     | zero =>
         intro rest q
-        simpa using (H_head_decomposition rest ((rest + 1) :: q.val)).mpr
+        simpa [avoiders] using (H_head_decomposition rest ((rest + 1) :: q.val)).mpr
           ⟨q, Or.inl rfl⟩
     | succ cut ih =>
         intro rest q
         let word := List.range' 1 cut ++ (cut + rest + 1) :: q.val.map (· + cut)
-        let parent : H (cut + rest + 1) := ⟨word, ih rest q⟩
+        let parent : ↥(avoiders (cut + rest + 1) [[2, 1, 3]]) :=
+          ⟨word, by simpa [avoiders, word] using ih rest q⟩
         have hword : List.range' 1 (cut + 1) ++
             (cut + 1 + rest + 1) :: q.val.map (· + (cut + 1)) =
             1 :: word.map (· + 1) := by
@@ -302,9 +305,10 @@ noncomputable def H_maximum_equiv (size : ℕ) (hsize : 1 ≤ size) :
         have hnext := (H_head_decomposition (cut + rest + 1)
           (1 :: word.map (· + 1))).mpr ⟨parent, Or.inr rfl⟩
         rw [hword]
-        simpa only [show cut + 1 + rest + 1 = cut + rest + 1 + 1 by omega] using hnext
-  have hexists : ∀ total : ℕ, 1 ≤ total → ∀ p : H total,
-      ∃ code : Σ cut : Fin total, H (total - cut.val - 1),
+        simpa only [show cut + 1 + rest + 1 = cut + rest + 1 + 1 by omega,
+          avoiders, Set.mem_ofPred_eq, List.mem_singleton, forall_eq] using hnext
+  have hexists : ∀ total : ℕ, 1 ≤ total → ∀ p : ↥(avoiders total [[2, 1, 3]]),
+      ∃ code : Σ cut : Fin total, ↥(avoiders (total - cut.val - 1) [[2, 1, 3]]),
         p.val = List.range' 1 code.1.val ++ total :: code.2.val.map (· + code.1.val) := by
     intro total
     induction total using Nat.strong_induction_on with
@@ -332,16 +336,16 @@ noncomputable def H_maximum_equiv (size : ℕ) (hsize : 1 ≤ size) :
               List.range'_succ, List.cons_append]
             rw [← List.range'_succ_left]
             simp [Function.comp_def, Nat.add_assoc]
-  let word (code : Σ cut : Fin size, H (size - cut.val - 1)) : List ℕ :=
+  let word (code : Σ cut : Fin size, ↥(avoiders (size - cut.val - 1) [[2, 1, 3]])) : List ℕ :=
     List.range' 1 code.1.val ++ size :: code.2.val.map (· + code.1.val)
-  have hwordmem (code : Σ cut : Fin size, H (size - cut.val - 1)) :
+  have hwordmem (code : Σ cut : Fin size, ↥(avoiders (size - cut.val - 1) [[2, 1, 3]])) :
       (word code).Perm (List.range' 1 size) ∧ IsFishburn (word code) ∧
         ¬ NonnestingDefs.Occurs [2, 1, 3] (word code) := by
     have he : code.1.val + (size - code.1.val - 1) + 1 = size := by
       have := code.1.is_lt
       omega
     simpa only [he] using hconstruct code.1.val (size - code.1.val - 1) code.2
-  have hposition (code : Σ cut : Fin size, H (size - cut.val - 1)) :
+  have hposition (code : Σ cut : Fin size, ↥(avoiders (size - cut.val - 1) [[2, 1, 3]])) :
       (word code).getD code.1.val 0 = size := by
     dsimp only [word]
     rw [List.getD_append_right _ _ _ _ (by simp)]
@@ -368,19 +372,20 @@ noncomputable def H_maximum_equiv (size : ℕ) (hsize : 1 ≤ size) :
       exact (List.map_inj_right (fun first second he => Nat.add_right_cancel he)).mp hmaps
     subst secondSuffix
     rfl
-  let encode (p : H size) : Σ cut : Fin size, H (size - cut.val - 1) :=
+  let encode (p : ↥(avoiders size [[2, 1, 3]])) :
+      Σ cut : Fin size, ↥(avoiders (size - cut.val - 1) [[2, 1, 3]]) :=
     Classical.choose (hexists size hsize p)
-  have hencode (p : H size) : p.val = word (encode p) :=
+  have hencode (p : ↥(avoiders size [[2, 1, 3]])) : p.val = word (encode p) :=
     Classical.choose_spec (hexists size hsize p)
   refine
     { toFun := encode
-      invFun := fun code => ⟨word code, hwordmem code⟩
+      invFun := fun code => ⟨word code, by simpa [avoiders] using hwordmem code⟩
       left_inv := ?_
       right_inv := ?_ }
   · intro p
     exact Subtype.ext (hencode p).symm
   · intro code
     apply hinjective
-    exact (hencode ⟨word code, hwordmem code⟩).symm
+    exact (hencode ⟨word code, by simpa [avoiders] using hwordmem code⟩).symm
 
 end D5.S3.Combinatorics.FishburnTenSeven.FishburnTenSevenAuxiliary

@@ -23,9 +23,9 @@ set_option maxHeartbeats 2400000 in
 theorem B_interval_normalForm (n : ℕ) (p : List ℕ) (hn : 1 ≤ n)
     (hp : p ∈ avoiders n [[1, 3, 2, 4], [2, 1, 4, 3], [3, 1, 2, 4]]) :
     ∃ m, 1 ≤ m ∧ m ≤ n ∧
-      ((∃ s : H m, s.val.head? = some 1 ∧
+      ((∃ s : ↥(avoiders m [[2, 1, 3]]), s.val.head? = some 1 ∧
           p = (List.range' (m + 1) (n - m)).reverse ++ s.val) ∨
-        ∃ d h, 2 ≤ d ∧ d ≤ h ∧ h < m ∧ ∃ q : H (d - 2),
+        ∃ d h, 2 ≤ d ∧ d ≤ h ∧ h < m ∧ ∃ q : ↥(avoiders (d - 2) [[2, 1, 3]]),
           p = (List.range' (m + 1) (n - m)).reverse ++
             (List.range' d (h + 1 - d)).reverse ++
               1 :: (List.range' (h + 1) (m - h - 1) ++ m :: q.val.map (· + 1))) := by
@@ -194,7 +194,8 @@ theorem B_interval_normalForm (n : ℕ) (p : List ℕ) (hn : 1 ≤ n)
           omega
         · exact hs
     refine ⟨m, hm.1, hm.2, Or.inl ?_⟩
-    exact ⟨⟨suffix, hsuffixPerm, hsuffixFish, htail213⟩, by simp [suffix],
+    exact ⟨⟨suffix, hsuffixPerm, hsuffixFish,
+      by simpa only [List.mem_singleton, forall_eq] using htail213⟩, by simp [suffix],
       by rw [hbeforeEq]⟩
   · have hnonempty : low.Nonempty := Finset.nonempty_iff_ne_empty.mpr hempty
     let d := low.min' hnonempty
@@ -448,8 +449,7 @@ theorem B_interval_normalForm (n : ℕ) (p : List ℕ) (hn : 1 ≤ n)
       intro first later hgap hlater hbad
       let offset := (before ++ 1 :: (middle ++ [m])).length
       apply hfish (offset + first) (offset + later) (by omega)
-        (by dsimp [offset]; simp only [List.length_append, List.length_cons,
-          List.length_singleton]; omega)
+        (by dsimp [offset]; simp only [List.length_append, List.length_cons]; omega)
       have hat (index : ℕ) :
           ((before ++ 1 :: (middle ++ [m])) ++ last).getD (offset + index) 0 =
             last.getD index 0 := by
@@ -486,7 +486,8 @@ theorem B_interval_normalForm (n : ℕ) (p : List ℕ) (hn : 1 ≤ n)
           simpa [List.map_map, Function.comp_def] using ht
         exact ht'.trans hlastSub
     refine ⟨m, hm.1, hm.2, Or.inr ⟨d, h, hd, hdh, hhMem.2,
-      ⟨q, hqPerm, hqFish, hqAvoid⟩, ?_⟩⟩
+      ⟨q, hqPerm, hqFish,
+        by simpa only [List.mem_singleton, forall_eq] using hqAvoid⟩, ?_⟩⟩
     change before ++ suffix = _
     change before ++ suffix = (List.range' (m + 1) (n - m)).reverse ++
       (List.range' d (h + 1 - d)).reverse ++

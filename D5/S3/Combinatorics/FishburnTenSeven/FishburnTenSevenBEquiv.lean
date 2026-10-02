@@ -1,10 +1,10 @@
 /- GID: D5/S3/Combinatorics/FishburnTenSeven/FishburnTenSevenBEquiv
    generality: G
    mirror-B: D5/B/S3/Combinatorics/FishburnTenSeven/FishburnTenSevenBEquiv
-   mirror-E: none(waiver:reversible-second-class-normal-forms)
+   mirror-E: none(waiver:second-class-interval-constructor)
    anchors: [mathlib/module/Mathlib.Data.List.Sort]
    utility: none
-   digest: Both interval constructors are valid and uniquely recover their parameters. -/
+   digest: The second interval constructor preserves Fishburn membership and pattern avoidance. -/
 
 import D5.S3.Combinatorics.FishburnTenSeven.FishburnTenSevenBStructure
 import D5.S3.Combinatorics.FishburnTenSeven.FishburnTenSevenBParameters
@@ -16,80 +16,12 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.FishburnTenSeven.FishburnTenSevenBEquiv
 
 open D5.S3.Combinatorics Nonnesting Fishburn.FishburnDefs
-open FishburnTenSevenAuxiliary FishburnTenSevenAuxiliaryCounting
+open FishburnTenSevenAuxiliary
 open FishburnTenSevenBStructure FishburnTenSevenBParameters FishburnTenSevenMinimum
 
 set_option maxHeartbeats 2400000 in
-theorem B_typeI_mem (n m : ℕ) (hm : 1 ≤ m) (hmn : m ≤ n) (s : HStart m) :
-    (List.range' (m + 1) (n - m)).reverse ++ s.val.val ∈
-      avoiders n [[1, 3, 2, 4], [2, 1, 4, 3], [3, 1, 2, 4]] := by
-  have hfull : ∀ size, m ≤ size →
-      ((List.range' (m + 1) (size - m)).reverse ++ s.val.val).Perm
-          (List.range' 1 size) ∧
-        IsFishburn ((List.range' (m + 1) (size - m)).reverse ++ s.val.val) ∧
-        ¬ NonnestingDefs.Occurs [2, 1, 3]
-          ((List.range' (m + 1) (size - m)).reverse ++ s.val.val) := by
-    intro size
-    induction size with
-    | zero => omega
-    | succ size ih =>
-      intro hbound
-      by_cases heq : m = size + 1
-      · subst m
-        simpa using s.val.property
-      · have hprev := ih (by omega)
-        have hword : (List.range' (m + 1) (size + 1 - m)).reverse ++ s.val.val =
-            (size + 1) :: ((List.range' (m + 1) (size - m)).reverse ++ s.val.val) := by
-          rw [show size + 1 - m = size - m + 1 by omega, List.range'_concat]
-          simp [List.reverse_append, show m + 1 + (size - m) = size + 1 by omega]
-        rw [hword]
-        apply (H_head_decomposition size _).mpr
-        exact ⟨⟨_, hprev⟩, Or.inl rfl⟩
-  obtain ⟨hperm, hfish, h213⟩ := hfull n hmn
-  refine ⟨hperm, hfish, ?_⟩
-  have htriple (low middle high : ℕ) (hlm : low < middle) (hmh : middle < high)
-      (hsub : [middle, low, high].Sublist
-        ((List.range' (m + 1) (n - m)).reverse ++ s.val.val)) : False := by
-    apply h213
-    change ArrowWilfDefs.Contains [2, 1, 3] [] 3 _
-    let values : ℕ → ℕ := fun rank => if rank = 1 then low
-      else if rank = 2 then middle else high
-    refine ⟨values, ?_, ?_, by simpa [values] using hsub, by simp⟩
-    · intro rank hl hh
-      have : rank = 1 ∨ rank = 2 := by omega
-      rcases this with rfl | rfl <;> simp [values] <;> omega
-    · intro rank hl hh
-      have : rank = 1 ∨ rank = 2 ∨ rank = 3 := by omega
-      rcases this with rfl | rfl | rfl <;>
-        simp only [values, ↓reduceIte, Nat.reduceEqDiff] <;> apply hsub.subset <;> simp
-  intro pattern hpattern hoccurs
-  simp only [List.mem_cons, List.not_mem_nil, or_false] at hpattern
-  rcases hpattern with rfl | rfl | rfl
-  · obtain ⟨values, hstep, _, hsub, _⟩ := hoccurs
-    apply htriple (values 2) (values 3) (values 4)
-      (hstep 2 (by omega) (by change 2 < 4; omega))
-      (hstep 3 (by omega) (by change 3 < 4; omega))
-    have ht : [3, 2, 4].Sublist [1, 3, 2, 4] := by decide
-    simpa using (ht.map values).trans hsub
-  · obtain ⟨values, hstep, _, hsub, _⟩ := hoccurs
-    apply htriple (values 1) (values 2) (values 4)
-      (hstep 1 (by omega) (by change 1 < 4; omega)) (by
-        have h23 : values 2 < values 3 := hstep 2 (by omega) (by change 2 < 4; omega)
-        have h34 : values 3 < values 4 := hstep 3 (by omega) (by change 3 < 4; omega)
-        omega)
-    have ht : [2, 1, 4].Sublist [2, 1, 4, 3] := by decide
-    simpa using (ht.map values).trans hsub
-  · obtain ⟨values, hstep, _, hsub, _⟩ := hoccurs
-    apply htriple (values 1) (values 3) (values 4) (by
-        have h12 : values 1 < values 2 := hstep 1 (by omega) (by change 1 < 4; omega)
-        have h23 : values 2 < values 3 := hstep 2 (by omega) (by change 2 < 4; omega)
-        omega) (hstep 3 (by omega) (by change 3 < 4; omega))
-    have ht : [3, 1, 4].Sublist [3, 1, 2, 4] := by decide
-    simpa using (ht.map values).trans hsub
-
-set_option maxHeartbeats 2400000 in
 theorem B_typeII_mem (n m d h : ℕ) (hd : 2 ≤ d) (hdh : d ≤ h)
-    (hhm : h < m) (hmn : m ≤ n) (q : H (d - 2)) :
+    (hhm : h < m) (hmn : m ≤ n) (q : ↥(avoiders (d - 2) [[2, 1, 3]])) :
     (List.range' (m + 1) (n - m)).reverse ++
       (List.range' d (h + 1 - d)).reverse ++
         1 :: (List.range' (h + 1) (m - h - 1) ++ m :: q.val.map (· + 1)) ∈
@@ -331,7 +263,7 @@ theorem B_typeII_mem (n m d h : ℕ) (hd : 2 ≤ d) (hdh : d ≤ h)
         heTranslate _ (by omega), heTranslate _ (by omega)] at hlow
       rw [hatEnding first hf, hatEnding third ht,
         heTranslate _ (by omega), heTranslate _ (by omega)] at hhigh
-      apply q.property.2.2
+      apply q.property.2.2 [2, 1, 3] (by simp)
       change ArrowWilfDefs.Contains [2, 1, 3] [] 3 q.val
       let values : ℕ → ℕ := fun rank => if rank = 1 then q.val.getD (second - finish) 0
         else if rank = 2 then q.val.getD (first - finish) 0
@@ -393,173 +325,5 @@ theorem B_typeII_mem (n m d h : ℕ) (hd : 2 ≤ d) (hdh : d ≤ h)
   · exact h1324
   · exact h2143
   · exact h3124
-
-set_option maxHeartbeats 2400000 in
-noncomputable def B_normalForm_equiv (n : ℕ) (hn : 1 ≤ n) :
-    {p : List ℕ // p ∈ avoiders n [[1, 3, 2, 4], [2, 1, 4, 3], [3, 1, 2, 4]]} ≃
-      BParameters n := by
-  classical
-  let initial (code : BParameters n) : List ℕ :=
-    (List.range' (code.1.val + 1) (n - code.1.val)).reverse ++
-      match code.2 with
-      | Sum.inl _ => []
-      | Sum.inr data => (List.range' data.1.val (data.2.1.val + 1 - data.1.val)).reverse
-  let suffix (code : BParameters n) : List ℕ :=
-    match code.2 with
-    | Sum.inl s => s.val.val
-    | Sum.inr data => 1 :: (List.range' (data.2.1.val + 1)
-        (code.1.val - data.2.1.val - 1) ++ code.1.val :: data.2.2.val.map (· + 1))
-  let word (code : BParameters n) := initial code ++ suffix code
-  have hwordMem (code : BParameters n) :
-      word code ∈ avoiders n [[1, 3, 2, 4], [2, 1, 4, 3], [3, 1, 2, 4]] := by
-    rcases code with ⟨maximum, s | ⟨low, high, q⟩⟩
-    · simpa [word, initial, suffix] using
-        B_typeI_mem n maximum.val maximum.property.1 maximum.property.2 s
-    · simpa [word, initial, suffix, List.append_assoc] using
-        B_typeII_mem n maximum.val low.val high.val low.property.1 high.property.1
-          high.property.2 maximum.property.2 q
-  have hspec (code : BParameters n) : (suffix code).head? = some 1 ∧
-      code.1.val ∈ suffix code ∧ ∀ value ∈ suffix code, value ≤ code.1.val := by
-    rcases code with ⟨maximum, s | ⟨low, high, q⟩⟩
-    · refine ⟨s.property, ?_, ?_⟩
-      · apply s.val.property.1.mem_iff.mpr
-        simp only [List.mem_range'_1]
-        omega
-      · intro value hv
-        change value ≤ maximum.val
-        have := s.val.property.1.mem_iff.mp hv
-        simp only [List.mem_range'_1] at this
-        omega
-    · refine ⟨by simp [suffix], by simp [suffix], ?_⟩
-      intro value hv
-      change value ≤ maximum.val
-      simp only [suffix, List.mem_cons, List.mem_append, List.mem_map] at hv
-      rcases hv with rfl | hv | rfl | ⟨old, hold, rfl⟩
-      · exact maximum.property.1
-      · obtain ⟨offset, hoffset, rfl⟩ := List.mem_range'.mp hv
-        simp only [Nat.one_mul] at *
-        have := high.property.2
-        omega
-      · exact le_rfl
-      · have := q.property.1.mem_iff.mp hold
-        simp only [List.mem_range'_1] at this
-        have := low.property.2
-        omega
-  have hnotOne (code : BParameters n) : 1 ∉ initial code := by
-    rcases code with ⟨maximum, s | ⟨low, high, q⟩⟩ <;>
-      simp only [initial, List.mem_append, List.mem_reverse, List.not_mem_nil, or_false,
-        List.mem_range', Nat.one_mul]
-    · rintro ⟨offset, _, heq⟩
-      have := maximum.property.1
-      omega
-    · rintro (⟨offset, _, heq⟩ | ⟨offset, _, heq⟩)
-      · have := maximum.property.1
-        omega
-      · have := low.property.1
-        omega
-  have hindex (code : BParameters n) : (word code).idxOf 1 = (initial code).length := by
-    obtain ⟨tail, htail⟩ := List.head?_eq_some_iff.mp (hspec code).1
-    dsimp only [word]
-    rw [List.idxOf_append, if_neg (hnotOne code), htail]
-    simp
-  have hinterval (low high value : ℕ) (hle : low ≤ high) :
-      value ∈ (List.range' low (high + 1 - low)).reverse ↔
-        low ≤ value ∧ value ≤ high := by
-    simp only [List.mem_reverse, List.mem_range', Nat.one_mul]
-    constructor
-    · rintro ⟨offset, hoffset, rfl⟩
-      omega
-    · rintro ⟨hlo, hhi⟩
-      exact ⟨value - low, by omega, by omega⟩
-  have hinjective : Function.Injective word := by
-    intro first second heq
-    have hlength : (initial first).length = (initial second).length := by
-      rw [← hindex first, ← hindex second, heq]
-    obtain ⟨hprefix, hsuffix⟩ := List.append_inj heq hlength
-    have hfirstMem := (hspec first).2.1
-    have hsecondMem := (hspec second).2.1
-    rw [hsuffix] at hfirstMem
-    rw [← hsuffix] at hsecondMem
-    have hle := (hspec second).2.2 _ hfirstMem
-    have hge := (hspec first).2.2 _ hsecondMem
-    rcases first with ⟨maximum, body⟩
-    rcases second with ⟨maximum', body'⟩
-    have hmaximum : maximum = maximum' := Subtype.ext (by simpa using Nat.le_antisymm hle hge)
-    subst maximum'
-    have hbody : body = body' := by
-      rcases body with s | ⟨low, high, q⟩ <;> rcases body' with s' | ⟨low', high', q'⟩
-      · apply congrArg Sum.inl
-        apply Subtype.ext
-        apply Subtype.ext
-        exact hsuffix
-      · simp only [initial, List.length_append, List.length_reverse,
-          List.length_range', List.length_nil, Nat.add_zero] at hlength
-        have := high'.property.1
-        omega
-      · simp only [initial, List.length_append, List.length_reverse,
-          List.length_range', List.length_nil, Nat.add_zero] at hlength
-        have := high.property.1
-        omega
-      · have hblocks : (List.range' low.val (high.val + 1 - low.val)).reverse =
-            (List.range' low'.val (high'.val + 1 - low'.val)).reverse := by
-          exact List.append_cancel_left hprefix
-        have hlow : low.val ∈ (List.range' low.val (high.val + 1 - low.val)).reverse :=
-          (hinterval _ _ _ high.property.1).mpr ⟨le_rfl, high.property.1⟩
-        have hlow' : low'.val ∈
-            (List.range' low'.val (high'.val + 1 - low'.val)).reverse :=
-          (hinterval _ _ _ high'.property.1).mpr ⟨le_rfl, high'.property.1⟩
-        rw [hblocks] at hlow
-        rw [← hblocks] at hlow'
-        have hbound := (hinterval _ _ _ high'.property.1).mp hlow
-        have hbound' := (hinterval _ _ _ high.property.1).mp hlow'
-        have hloweq : low = low' := Subtype.ext (by omega)
-        subst low'
-        have hhigh : high.val ∈ (List.range' low.val (high.val + 1 - low.val)).reverse :=
-          (hinterval _ _ _ high.property.1).mpr ⟨high.property.1, le_rfl⟩
-        have hhigh' : high'.val ∈
-            (List.range' low.val (high'.val + 1 - low.val)).reverse :=
-          (hinterval _ _ _ high'.property.1).mpr ⟨high'.property.1, le_rfl⟩
-        rw [hblocks] at hhigh
-        rw [← hblocks] at hhigh'
-        have hbound := (hinterval _ _ _ high'.property.1).mp hhigh
-        have hbound' := (hinterval _ _ _ high.property.1).mp hhigh'
-        have hhigheq : high = high' := Subtype.ext (by omega)
-        subst high'
-        have htail := (List.cons.inj hsuffix).2
-        have hpeak := List.append_cancel_left htail
-        have hshift := (List.cons.inj hpeak).2
-        have hq : q = q' := by
-          apply Subtype.ext
-          have ht := congrArg (List.map (· - 1)) hshift
-          simpa [List.map_map, Function.comp_def] using ht
-        subst q'
-        rfl
-    exact congrArg (Sigma.mk maximum) hbody
-  have hexists (p : {p : List ℕ //
-      p ∈ avoiders n [[1, 3, 2, 4], [2, 1, 4, 3], [3, 1, 2, 4]]}) :
-      ∃ code : BParameters n, word code = p.val := by
-    obtain ⟨maximum, hpositive, hbound, hform⟩ := B_interval_normalForm n p.val hn p.property
-    rcases hform with ⟨s, hhead, heq⟩ | ⟨low, high, hlo, hlh, hhm, q, heq⟩
-    · refine ⟨⟨⟨maximum, hpositive, hbound⟩, Sum.inl ⟨s, hhead⟩⟩, ?_⟩
-      simpa [word, initial, suffix] using heq.symm
-    · refine ⟨⟨⟨maximum, hpositive, hbound⟩,
-        Sum.inr ⟨⟨low, hlo, by change low < maximum; omega⟩,
-          ⟨high, hlh, hhm⟩, q⟩⟩, ?_⟩
-      simpa [word, initial, suffix, List.append_assoc] using heq.symm
-  let encode (p : {p : List ℕ //
-      p ∈ avoiders n [[1, 3, 2, 4], [2, 1, 4, 3], [3, 1, 2, 4]]}) :=
-    Classical.choose (hexists p)
-  have hencode (p : {p : List ℕ //
-      p ∈ avoiders n [[1, 3, 2, 4], [2, 1, 4, 3], [3, 1, 2, 4]]}) :
-      word (encode p) = p.val := Classical.choose_spec (hexists p)
-  refine
-    { toFun := encode
-      invFun := fun code => ⟨word code, hwordMem code⟩
-      left_inv := ?_
-      right_inv := ?_ }
-  · intro p
-    exact Subtype.ext (hencode p)
-  · intro code
-    exact hinjective (hencode ⟨word code, hwordMem code⟩)
 
 end D5.S3.Combinatorics.FishburnTenSeven.FishburnTenSevenBEquiv

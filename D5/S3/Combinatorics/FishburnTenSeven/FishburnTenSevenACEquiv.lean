@@ -10,23 +10,16 @@ import D5.S3.Combinatorics.FishburnTenSeven.FishburnTenSevenClasses
 import D5.S3.Combinatorics.FishburnTenSeven.FishburnTenSevenMinimum
 import D5.S3.Combinatorics.FishburnTenSeven.FishburnTenSevenUnimodal
 import D5.S3.Combinatorics.FishburnTenSeven.FishburnTenSevenWordEncoding
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
 namespace D5.S3.Combinatorics.FishburnTenSeven.FishburnTenSevenACEquiv
-
 open D5.S3.Combinatorics Nonnesting Fishburn.FishburnDefs
 open Fishburn.FishburnBasicPrefixes
 open FishburnTenSevenWords FishburnTenSevenWords.Letter FishburnTenSevenWordEncoding
 open FishburnTenSevenClasses FishburnTenSevenMinimum FishburnTenSevenUnimodal
-
-def ACParameters (third : Bool) (size : ℕ) :=
-  Unit ⊕ Σ peak : {peak : ℕ // 2 ≤ peak ∧ peak ≤ size},
+def ACParameters (third : Bool) (size : ℕ) := Unit ⊕ Σ peak : {peak : ℕ // 2 ≤ peak ∧ peak ≤ size},
     ↥(if third then languageC (peak.val - 2) else languageA (peak.val - 2))
-
-theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
-    ∃ correspondence :
+theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) : ∃ correspondence :
         (avoiders size (if third then
           [[1, 3, 2, 4], [1, 4, 2, 3], [3, 1, 2, 4]] else
           [[1, 3, 2, 4], [2, 1, 4, 3], [1, 4, 2, 3]])) ≃ ACParameters third size,
@@ -35,12 +28,245 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
         (correspondence.symm (Sum.inr ⟨peak, word⟩)).val =
           reconstruct size (fun index : Fin (peak.val - 2) => word.val.getD index.val d) := by
   classical
+  have hblockBijection (size : ℕ) : ∃ correspondence : (Fin size → Letter) ≃
+          {parts : List ℕ × List ℕ × List ℕ //
+            parts.1.Pairwise (· > ·) ∧ parts.2.1.Pairwise (· < ·) ∧
+            parts.2.2.Pairwise (· > ·) ∧
+            (parts.1 ++ (parts.2.1 ++ parts.2.2)).Perm (List.range' 2 size)},
+        (∀ word, (correspondence word).val = blocks word) ∧
+        (∀ parts, correspondence.symm parts = encodeBlocks parts.val) := by
+    let select (word : Fin size → Letter) (letter : Letter) :=
+      ((List.finRange size).filter (fun index => decide (word index = letter))).map
+        (fun index => index.val + 2)
+    let component (parts : List ℕ × List ℕ × List ℕ) (letter : Letter) := match letter with
+      | d => parts.1
+      | i => parts.2.1
+      | j => parts.2.2
+    have hmem (word : Fin size → Letter) (letter : Letter) (value : ℕ) :
+        value ∈ component (blocks word) letter ↔
+          ∃ index : Fin size, word index = letter ∧ index.val + 2 = value := by
+      cases letter <;> simp [component, blocks]
+    have hmem_index (word : Fin size → Letter) (letter : Letter) (index : Fin size) :
+        index.val + 2 ∈ component (blocks word) letter ↔ word index = letter := by
+      rw [hmem]
+      constructor
+      · rintro ⟨other, hletter, heq⟩
+        have hsame : other = index := Fin.ext (by omega)
+        simpa only [hsame] using hletter
+      · intro hletter
+        exact ⟨index, hletter, rfl⟩
+    have hrange : List.ofFn (fun index : Fin size => index.val + 2) = List.range' 2 size := by
+      apply List.ext_getElem (by simp)
+      intro index hleft hright; simp [Nat.add_comm]
+    have hselect_sorted (word : Fin size → Letter) (letter : Letter) :
+        (select word letter).Pairwise (· < ·) := by
+      have hsorted : (List.ofFn (fun index : Fin size => index.val + 2)).Pairwise (· < ·) :=
+        List.pairwise_ofFn.mpr (fun _ _ hlt => by omega)
+      rw [List.ofFn_eq_map, List.pairwise_map] at hsorted
+      exact (hsorted.filter _).map _ (fun _ _ hlt => hlt)
+    have hpartition (word : Fin size → Letter) (indices : List (Fin size)) :
+        ((indices.filter (fun index => decide (word index = d))) ++
+          ((indices.filter (fun index => decide (word index = i))) ++
+            (indices.filter (fun index => decide (word index = j))))).Perm indices := by
+      have hi (index : Fin size) :
+          (decide (word index = i) && !decide (word index = d)) = decide (word index = i) := by
+        cases word index <;> decide
+      have hj (index : Fin size) :
+          (!decide (word index = i) && !decide (word index = d)) = decide (word index = j) := by
+        cases word index <;> decide
+      have htail := List.filter_append_perm (fun index => decide (word index = i))
+        (indices.filter (fun index => !decide (word index = d)))
+      simp only [List.filter_filter] at htail; simp_rw [hi, hj] at htail
+      exact ((List.Perm.refl (indices.filter (fun index => decide (word index = d)))).append
+        htail).trans (List.filter_append_perm (fun index => decide (word index = d)) indices)
+    have hcorrect (word : Fin size → Letter) :
+        (blocks word).1.Pairwise (· > ·) ∧ (blocks word).2.1.Pairwise (· < ·) ∧
+        (blocks word).2.2.Pairwise (· > ·) ∧
+        ((blocks word).1 ++ ((blocks word).2.1 ++ (blocks word).2.2)).Perm
+          (List.range' 2 size) := by
+      refine ⟨List.pairwise_reverse.mpr (hselect_sorted word d),
+        hselect_sorted word i, List.pairwise_reverse.mpr (hselect_sorted word j), ?_⟩
+      have hperm := (hpartition word (List.finRange size)).map
+        (fun index => index.val + 2)
+      simp only [List.map_append, ← List.ofFn_eq_map, hrange] at hperm
+      exact ((List.reverse_perm (select word d)).append
+        ((List.Perm.refl (select word i)).append (List.reverse_perm (select word j)))).trans hperm
+    have hleft (word : Fin size → Letter) : encodeBlocks (blocks word) = word := by
+      funext index
+      have hd := hmem_index word d index
+      have hi := hmem_index word i index
+      cases hletter : word index <;> simp [encodeBlocks, component, hd, hi, hletter]
+    have hright (parts : List ℕ × List ℕ × List ℕ)
+        (hparts : parts.1.Pairwise (· > ·) ∧ parts.2.1.Pairwise (· < ·) ∧
+          parts.2.2.Pairwise (· > ·) ∧
+          (parts.1 ++ (parts.2.1 ++ parts.2.2)).Perm (List.range' 2 size)) :
+        blocks (encodeBlocks (size := size) parts) = parts := by
+      have hperm := hparts.2.2.2
+      have hnodup := hperm.nodup_iff.mpr (List.nodup_range' 1)
+      obtain ⟨_, hrest, hdrest⟩ := List.nodup_append.mp hnodup
+      obtain ⟨_, _, hij⟩ := List.nodup_append.mp hrest
+      have hdecode (index : Fin size) (letter : Letter) :
+          encodeBlocks parts index = letter ↔ index.val + 2 ∈ component parts letter := by
+        have hvalue : index.val + 2 ∈ parts.1 ++ (parts.2.1 ++ parts.2.2) := by
+          apply hperm.mem_iff.mpr
+          exact List.mem_range'.mpr ⟨index.val, index.isLt, by simp [Nat.add_comm]⟩
+        by_cases hd : index.val + 2 ∈ parts.1
+        · have hi : index.val + 2 ∉ parts.2.1 :=
+            fun hmem => hdrest _ hd _ (List.mem_append_left _ hmem) rfl
+          have hj : index.val + 2 ∉ parts.2.2 :=
+            fun hmem => hdrest _ hd _ (List.mem_append_right _ hmem) rfl
+          cases letter <;> simp [encodeBlocks, component, hd, hi, hj]
+        · by_cases hi : index.val + 2 ∈ parts.2.1
+          · have hj : index.val + 2 ∉ parts.2.2 := fun hmem => hij _ hi _ hmem rfl
+            cases letter <;> simp [encodeBlocks, component, hd, hi, hj]
+          · have hj : index.val + 2 ∈ parts.2.2 := by
+              simpa only [List.mem_append, hd, hi, false_or] using hvalue
+            cases letter <;> simp [encodeBlocks, component, hd, hi, hj]
+      have hmembers (letter : Letter) (value : ℕ) :
+          value ∈ component (blocks (encodeBlocks (size := size) parts)) letter ↔
+            value ∈ component parts letter := by
+        rw [hmem]
+        constructor
+        · rintro ⟨index, hletter, rfl⟩
+          exact (hdecode index letter).mp hletter
+        · intro hmem_part
+          have hmem_all : value ∈ parts.1 ++ (parts.2.1 ++ parts.2.2) := by
+            cases letter <;> simp_all [component]
+          obtain ⟨index, hbound, hvalue⟩ := List.mem_range'.mp (hperm.mem_iff.mp hmem_all)
+          refine ⟨⟨index, hbound⟩, (hdecode ⟨index, hbound⟩ letter).mpr ?_, ?_⟩
+          · simpa [hvalue, Nat.add_comm] using hmem_part
+          · simpa [Nat.add_comm] using hvalue.symm
+      have hsorted := hcorrect (encodeBlocks parts)
+      exact Prod.ext (hsorted.1.eq_of_mem_iff hparts.1 (hmembers d))
+        (Prod.ext (hsorted.2.1.eq_of_mem_iff hparts.2.1 (hmembers i))
+          (hsorted.2.2.1.eq_of_mem_iff hparts.2.2.1 (hmembers j)))
+    exact ⟨{
+      toFun := fun word => ⟨blocks word, hcorrect word⟩
+      invFun := fun parts => encodeBlocks parts.val
+      left_inv := hleft
+      right_inv := fun parts => Subtype.ext (hright parts.val parts.property) },
+      fun _ => rfl, fun _ => rfl⟩
+  have hreconstruct (total size : ℕ) (htotal : size + 2 ≤ total) :
+      Function.LeftInverse (encodePermutation (size := size)) (reconstruct total) ∧
+      ∀ word : Fin size → Letter,
+        let parts := blocks word
+        let decreasing := (List.range' (size + 3) (total - (size + 2))).reverse ++ parts.1
+        (reconstruct total word).Perm (List.range' 1 total) ∧
+        decreasing.Pairwise (· > ·) ∧ parts.2.1.Pairwise (· < ·) ∧
+        parts.2.2.Pairwise (· > ·) ∧
+        ∀ value ∈ parts.2.1 ++ parts.2.2, 1 < value ∧ value < size + 2 := by
+    obtain ⟨correspondence, hforward, hbackward⟩ := hblockBijection size
+    let upper := List.range' (size + 3) (total - (size + 2))
+    have hparts (word : Fin size → Letter) :
+        (blocks word).1.Pairwise (· > ·) ∧ (blocks word).2.1.Pairwise (· < ·) ∧
+        (blocks word).2.2.Pairwise (· > ·) ∧
+        ((blocks word).1 ++ ((blocks word).2.1 ++ (blocks word).2.2)).Perm
+          (List.range' 2 size) := by
+      simpa only [hforward] using (correspondence word).property
+    have hleft (word : Fin size → Letter) : encodeBlocks (blocks word) = word := by
+      simpa only [hbackward, hforward] using correspondence.symm_apply_apply word
+    have hsmall (word : Fin size → Letter) (value : ℕ)
+        (hvalue : value ∈ (blocks word).1 ++ ((blocks word).2.1 ++ (blocks word).2.2)) :
+        1 < value ∧ value < size + 2 := by
+      obtain ⟨index, hindex, heq⟩ := List.mem_range'.mp ((hparts word).2.2.2.mem_iff.mp hvalue)
+      omega
+    have hupper (value : ℕ) (hvalue : value ∈ upper.reverse) : size + 3 ≤ value := by
+      obtain ⟨index, _, heq⟩ := List.mem_range'.mp (List.mem_reverse.mp hvalue)
+      omega
+    constructor
+    · intro word
+      let parts := blocks word
+      have hprefix (value : ℕ) (hvalue : value ∈ upper.reverse ++ parts.1) :
+          (value != 1) = true := by
+        rcases List.mem_append.mp hvalue with hlarge | hlow
+        · have hbound := hupper value hlarge
+          simp only [bne_iff_ne]
+          omega
+        · have hbound := hsmall word value (List.mem_append_left _ hlow)
+          simp only [bne_iff_ne]
+          omega
+      have hincreasing (value : ℕ) (hvalue : value ∈ parts.2.1) : (value != size + 2) = true := by
+        have hbound := hsmall word value
+          (List.mem_append_right _ (List.mem_append_left _ hvalue))
+        simp only [bne_iff_ne]
+        omega
+      have htake : (reconstruct total word).takeWhile (fun value => value != 1) =
+          upper.reverse ++ parts.1 := by
+        change ((upper.reverse ++ parts.1) ++
+          1 :: (parts.2.1 ++ (size + 2) :: parts.2.2)).takeWhile _ = _
+        rw [List.takeWhile_append_of_pos hprefix]
+        simp
+      have hdrop : (reconstruct total word).dropWhile (fun value => value != 1) =
+          1 :: (parts.2.1 ++ (size + 2) :: parts.2.2) := by
+        change ((upper.reverse ++ parts.1) ++
+          1 :: (parts.2.1 ++ (size + 2) :: parts.2.2)).dropWhile _ = _
+        rw [List.dropWhile_append_of_pos hprefix]
+        simp
+      have htake_increasing : (parts.2.1 ++ (size + 2) :: parts.2.2).takeWhile
+            (fun value => value != size + 2) = parts.2.1 := by
+        rw [List.takeWhile_append_of_pos hincreasing]
+        simp
+      funext index
+      have hnot_upper : index.val + 2 ∉ upper.reverse := by
+        intro hvalue; have hbound := hupper _ hvalue
+        omega
+      simp only [encodePermutation, htake, hdrop, List.tail_cons, htake_increasing,
+        List.mem_append, hnot_upper, false_or]
+      exact congrFun (hleft word) index
+    · intro word
+      let parts := blocks word
+      have hpeak : (parts.1 ++ (parts.2.1 ++ (size + 2) :: parts.2.2)).Perm
+            ((parts.1 ++ (parts.2.1 ++ parts.2.2)) ++ [size + 2]) := by
+        have hmove : (parts.1 ++ (parts.2.1 ++ (size + 2) :: parts.2.2)).Perm
+            ((size + 2) :: (parts.1 ++ (parts.2.1 ++ parts.2.2))) := by
+          simpa only [List.append_assoc] using
+            (List.perm_middle (a := size + 2) (l₁ := parts.1 ++ parts.2.1) (l₂ := parts.2.2))
+        exact hmove.trans (by simpa using
+          (List.perm_append_comm (l₁ := [size + 2])
+            (l₂ := parts.1 ++ (parts.2.1 ++ parts.2.2))))
+      have hcore : (parts.1 ++ 1 :: (parts.2.1 ++ (size + 2) :: parts.2.2)).Perm
+          (1 :: ((parts.1 ++ (parts.2.1 ++ parts.2.2)) ++ [size + 2])) :=
+        List.perm_middle.trans (hpeak.cons 1)
+      have hwhole : (reconstruct total word).Perm
+          (1 :: ((parts.1 ++ (parts.2.1 ++ parts.2.2)) ++ (size + 2) :: upper)) := by
+        have hperm := ((List.reverse_perm upper).append hcore).trans
+          (List.perm_append_comm (l₁ := upper)
+            (l₂ := 1 :: ((parts.1 ++ (parts.2.1 ++ parts.2.2)) ++ [size + 2])))
+        simpa only [reconstruct, upper, parts, List.append_assoc, List.cons_append,
+          List.singleton_append, List.nil_append] using hperm
+      have hconcat : List.range' 2 size ++
+          List.range' (size + 2) ((total - (size + 2)) + 1) =
+            List.range' 2 (size + ((total - (size + 2)) + 1)) := by
+        simpa [Nat.add_comm] using
+          (List.range'_append (s := 2) (m := size) (n := (total - (size + 2)) + 1) (step := 1))
+      have htail : List.range' (size + 2) ((total - (size + 2)) + 1) = (size + 2) :: upper := by
+        rw [List.range'_succ]
+      have hlength : total = (size + ((total - (size + 2)) + 1)) + 1 := by omega
+      have hall : List.range' 1 total = 1 :: List.range' 2 (size + ((total - (size + 2)) + 1)) := by
+        conv_lhs => rw [hlength, List.range'_succ]
+      have hrange : 1 :: (List.range' 2 size ++ (size + 2) :: upper) = List.range' 1 total := by
+        rw [← htail, hconcat, ← hall]
+      have hpermutation : (reconstruct total word).Perm (List.range' 1 total) := by
+        apply hwhole.trans
+        rw [← hrange]
+        exact ((hparts word).2.2.2.append (List.Perm.refl ((size + 2) :: upper))).cons 1
+      have hsorted_upper : upper.Pairwise (· < ·) := by
+        apply List.pairwise_iff_getElem.mpr
+        intro left right hleft hright hlt; simp only [upper, List.getElem_range']
+        omega
+      refine ⟨hpermutation, ?_, (hparts word).2.1, (hparts word).2.2.1, ?_⟩
+      · apply List.pairwise_append.mpr
+        refine ⟨List.pairwise_reverse.mpr hsorted_upper, (hparts word).1, ?_⟩
+        intro larger hlarger smaller hsmaller; have hlarge := hupper larger hlarger
+        have hlow := hsmall word smaller (List.mem_append_left _ hsmaller)
+        omega
+      · intro value hvalue
+        exact hsmall word value (List.mem_append_right _ hvalue)
   let patterns := if third then
     [[1, 3, 2, 4], [1, 4, 2, 3], [3, 1, 2, 4]] else
     [[1, 3, 2, 4], [2, 1, 4, 3], [1, 4, 2, 3]]
   let language (length : ℕ) := if third then languageC length else languageA length
-  let piece (parts : List ℕ × List ℕ × List ℕ) (letter : Letter) :=
-    match letter with
+  let piece (parts : List ℕ × List ℕ × List ℕ) (letter : Letter) := match letter with
     | d => parts.1
     | i => parts.2.1
     | j => parts.2.2
@@ -67,8 +293,7 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
     · intro hp first second hfirst hsecond
       by_contra hnot
       have hneindex : first.val ≠ second.val := by
-        intro heq
-        have hsame : first = second := Fin.ext heq
+        intro heq; have hsame : first = second := Fin.ext heq
         exact hne (hfirst.symm.trans (hsame ▸ hsecond))
       have hlt : second < first := by change second.val < first.val; omega
       rcases hp hlt with hbad | hbad
@@ -77,16 +302,13 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
     · intro hp first second hlt
       by_cases hfirst : word first = later
       · right
-        intro hsecond
-        have hreverse := hp second first hsecond hfirst
-        change first.val < second.val at hlt
-        omega
+        intro hsecond; have hreverse := hp second first hsecond hfirst
+        change first.val < second.val at hlt; omega
       · exact Or.inl hfirst
   have hofFn (length : ℕ) (word : List Letter) (hlen : word.length = length) :
       List.ofFn (fun index : Fin length => word.getD index.val d) = word := by
     apply List.ext_getElem (by simp [hlen])
-    intro index hleft hright
-    simp only [List.getElem_ofFn, List.getD_eq_getElem word d hright]
+    intro index hleft hright; simp only [List.getElem_ofFn, List.getD_eq_getElem word d hright]
   have hgetFn (length : ℕ) (word : Fin length → Letter) :
       (fun index : Fin length => (List.ofFn word).getD index.val d) = word := by
     funext index
@@ -96,8 +318,7 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
     cases third <;> exact word.property.1
   have hrange_sorted (start length : ℕ) : (List.range' start length).Pairwise (· < ·) := by
     apply List.pairwise_iff_getElem.mpr
-    intro first second hfirst hsecond hlt
-    simp only [List.getElem_range']
+    intro first second hfirst hsecond hlt; simp only [List.getElem_range']
     omega
   have htransport (length : ℕ) (hbound : length + 2 ≤ size)
       (word : Fin length → Letter) :
@@ -105,12 +326,10 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
     let parts := blocks word
     let upper := (List.range' (length + 3) (size - (length + 2))).reverse
     let decreasing := upper ++ parts.1
-    obtain ⟨hperm, hdec, hinc, htrail, hsmall⟩ :=
-      (reconstruct_permutation size length hbound).2 word
+    obtain ⟨hperm, hdec, hinc, htrail, hsmall⟩ := (hreconstruct size length hbound).2 word
     have hshape := shape_classes_iff size decreasing parts.2.1 parts.2.2 (length + 2)
       hperm hdec hinc htrail (fun value hv => (hsmall value hv).2)
-    have hchain :
-        (List.ofFn word).IsChain (fun left right => left ≠ j ∨ right ≠ i) ↔
+    have hchain : (List.ofFn word).IsChain (fun left right => left ≠ j ∨ right ≠ i) ↔
           ∀ value ∈ parts.2.2, value + 1 ∉ parts.2.1 := by
       constructor
       · intro hc value hvalue hnext
@@ -122,18 +341,15 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
           omega
         have hrel := List.isChain_iff_getElem.mp hc first.val hnextbound
         simp only [List.getElem_ofFn] at hrel
-        have hsame : (⟨first.val + 1, by omega⟩ : Fin length) = second :=
-          Fin.ext hindex.symm
+        have hsame : (⟨first.val + 1, by omega⟩ : Fin length) = second := Fin.ext hindex.symm
         simp [hsame, hfirst, hsecond] at hrel
       · intro hc
         apply List.isChain_iff_getElem.mpr
-        intro index hindex
-        simp only [List.length_ofFn] at hindex
+        intro index hindex; simp only [List.length_ofFn] at hindex
         simp only [List.getElem_ofFn]
         by_cases hj : word ⟨index, by omega⟩ = j
         · right
-          intro hi
-          apply hc (index + 2)
+          intro hi; apply hc (index + 2)
           · exact (hblock_index length word j ⟨index, by omega⟩).mpr hj
           · have hmem := (hblock_index length word i ⟨index + 1, hindex⟩).mpr hi
             convert hmem using 1
@@ -148,13 +364,11 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
         · have hu := List.mem_range'_1.mp (List.mem_reverse.mp hupper)
           omega
         · obtain ⟨second, hsecond, rfl⟩ := (hblocks length word d earlier).mp hlow
-          have := hp first second hfirst hsecond
-          omega
+          have := hp first second hfirst hsecond; omega
       · intro hp first second hfirst hsecond
         have hj := (hblock_index length word j first).mpr hfirst
         have hd := (hblock_index length word d second).mpr hsecond
-        have := hp _ hj _ (List.mem_append_right _ hd)
-        omega
+        have := hp _ hj _ (List.mem_append_right _ hd); omega
     have hC : Before d i (List.ofFn word) ↔
         ∀ value ∈ decreasing, value < length + 2 →
           ∀ later ∈ parts.2.1, value < later := by
@@ -166,13 +380,11 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
         · have hu := List.mem_range'_1.mp (List.mem_reverse.mp hupper)
           omega
         · obtain ⟨first, hfirst, rfl⟩ := (hblocks length word d value).mp hsmall
-          have := hp first second hfirst hsecond
-          omega
+          have := hp first second hfirst hsecond; omega
       · intro hp first second hfirst hsecond
         have hd := (hblock_index length word d first).mpr hfirst
         have hi := (hblock_index length word i second).mpr hsecond
-        have := hp _ (List.mem_append_right _ hd) (by omega) _ hi
-        omega
+        have := hp _ (List.mem_append_right _ hd) (by omega) _ hi; omega
     cases third
     · change _ ↔ (List.ofFn word).length = length ∧ _ ∧ _
       simp only [List.length_ofFn, true_and, hchain, hA]
@@ -181,8 +393,7 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
       simp only [List.length_ofFn, true_and, hchain, hC]
       exact hshape.2
   let descending := (List.range' 1 size).reverse
-  have hdescending : descending.Pairwise (· > ·) :=
-    List.pairwise_reverse.mpr (hrange_sorted 1 size)
+  have hdescending : descending.Pairwise (· > ·) := List.pairwise_reverse.mpr (hrange_sorted 1 size)
   have hdescending_perm : descending.Perm (List.range' 1 size) := List.reverse_perm _
   have hdescending_member : descending ∈ avoiders size patterns := by
     refine ⟨hdescending_perm, ?_, ?_⟩
@@ -203,20 +414,16 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
         have hreverse : values high < values low := by simpa using hp
         have hforward := hlt values hstep
         omega
-      intro pattern hpattern
-      have h1324 : ¬ NonnestingDefs.Occurs [1, 3, 2, 4] descending := by
+      intro pattern hpattern; have h1324 : ¬ NonnestingDefs.Occurs [1, 3, 2, 4] descending := by
         apply hnot _ 1 3 (by simp)
-        intro values hs
-        exact lt_trans (hs 1 (by omega) (by omega)) (hs 2 (by omega) (by omega))
+        intro values hs; exact lt_trans (hs 1 (by omega) (by omega)) (hs 2 (by omega) (by omega))
       have h2143 : ¬ NonnestingDefs.Occurs [2, 1, 4, 3] descending := by
         apply hnot _ 1 4 (by simp)
-        intro values hs
-        exact lt_trans (hs 1 (by omega) (by omega))
+        intro values hs; exact lt_trans (hs 1 (by omega) (by omega))
           (lt_trans (hs 2 (by omega) (by omega)) (hs 3 (by omega) (by omega)))
       have h1423 : ¬ NonnestingDefs.Occurs [1, 4, 2, 3] descending := by
         apply hnot _ 1 4 (by simp)
-        intro values hs
-        exact lt_trans (hs 1 (by omega) (by omega))
+        intro values hs; exact lt_trans (hs 1 (by omega) (by omega))
           (lt_trans (hs 2 (by omega) (by omega)) (hs 3 (by omega) (by omega)))
       have h3124 : ¬ NonnestingDefs.Occurs [3, 1, 2, 4] descending := by
         apply hnot _ 3 4 (by simp)
@@ -233,13 +440,12 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
       (reconstruct size word).dropWhile (fun value => value != 1) =
         1 :: ((blocks word).2.1 ++ (length + 2) :: (blocks word).2.2) := by
     let initial := (List.range' (length + 3) (size - (length + 2))).reverse ++ (blocks word).1
-    have hp := ((reconstruct_permutation size length hb).2 word).1
+    have hp := ((hreconstruct size length hb).2 word).1
     have hn := hp.nodup_iff.mpr (List.nodup_range' 1)
     change (initial ++ 1 :: ((blocks word).2.1 ++
       (length + 2) :: (blocks word).2.2)).Nodup at hn
     have hnot : 1 ∉ initial := by
-      intro hmem
-      exact (List.nodup_append.mp hn).2.2 _ hmem _ (by simp) rfl
+      intro hmem; exact (List.nodup_append.mp hn).2.2 _ hmem _ (by simp) rfl
     have hprefix (value : ℕ) (hvalue : value ∈ initial) : (value != 1) = true := by
       simp only [bne_iff_ne]
       exact fun heq => hnot (heq ▸ hvalue)
@@ -253,16 +459,15 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
     rw [hdrop_construct length hb word]
     apply le_antisymm
     · apply Finset.sup_le
-      intro value hv
-      change value ≤ length + 2
+      intro value hv; change value ≤ length + 2
       have hmem := List.mem_toFinset.mp hv
       simp only [List.mem_cons, List.mem_append] at hmem
       rcases hmem with rfl | hi | rfl | hj
       · omega
-      · exact le_of_lt (((reconstruct_permutation size length hb).2 word).2.2.2.2 _
+      · exact le_of_lt (((hreconstruct size length hb).2 word).2.2.2.2 _
           (List.mem_append_left _ hi)).2
       · rfl
-      · exact le_of_lt (((reconstruct_permutation size length hb).2 word).2.2.2.2 _
+      · exact le_of_lt (((hreconstruct size length hb).2 word).2.2.2.2 _
           (List.mem_append_right _ hj)).2
     · exact Finset.le_sup (f := id) (b := length + 2)
         (List.mem_toFinset.mpr (by simp))
@@ -272,8 +477,7 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
     obtain ⟨initial, tail, heq⟩ := List.mem_iff_append.mp hone
     have htail : tail = [] := by
       apply List.eq_nil_iff_forall_not_mem.mpr
-      intro value hv
-      have htail_dec : (1 :: tail).Pairwise (· > ·) :=
+      intro value hv; have htail_dec : (1 :: tail).Pairwise (· > ·) :=
         (List.pairwise_append.mp (heq ▸ hdescending)).2.1
       have hdec : value < 1 := (List.pairwise_cons.mp htail_dec).1 value hv
       have hrange := hdescending_perm.mem_iff.mp (heq ▸ List.mem_append_right initial
@@ -300,7 +504,8 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
       apply (htransport _ hb _).mpr
       simpa only [hofFn _ word.val (hlength _ word)] using word.property
   have hrealize_peak (peak : {peak : ℕ // 2 ≤ peak ∧ peak ≤ size})
-      (word : language (peak.val - 2)) : peakOf (realize (Sum.inr ⟨peak, word⟩)) = peak.val := by
+      (word : language (peak.val - 2)) :
+      peakOf (realize (Sum.inr ⟨peak, word⟩)) = peak.val := by
     have hb : peak.val - 2 + 2 ≤ size := by have := peak.property; omega
     have heq := hpeak_construct _ hb
       (fun index : Fin (peak.val - 2) => word.val.getD index.val d)
@@ -312,27 +517,23 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
       rfl
     · have he := congrArg peakOf heq
       rw [hpeak_descending, hrealize_peak] at he
-      change 1 = top at he
-      omega
+      change 1 = top at he; omega
     · have he := congrArg peakOf heq
       rw [hrealize_peak, hpeak_descending] at he
-      change peak = 1 at he
-      omega
+      change peak = 1 at he; omega
     · have he := congrArg peakOf heq
       rw [hrealize_peak, hrealize_peak] at he
-      change peak = top at he
-      subst top
+      change peak = top at he; subst top
       have hb : peak - 2 + 2 ≤ size := by omega
       have hw := congrArg (encodePermutation (size := peak - 2)) heq
       change encodePermutation (reconstruct size _) = encodePermutation (reconstruct size _) at hw
-      rw [(reconstruct_permutation size (peak - 2) hb).1 _,
-        (reconstruct_permutation size (peak - 2) hb).1 _] at hw
+      rw [(hreconstruct size (peak - 2) hb).1 _,
+        (hreconstruct size (peak - 2) hb).1 _] at hw
       have hwords : word.val = letters.val := by
         rw [← hofFn _ word.val (hlength _ word), ← hofFn _ letters.val (hlength _ letters)]
         exact congrArg List.ofFn hw
       have hs : word = letters := Subtype.ext hwords
-      subst letters
-      rfl
+      subst letters; rfl
   have hsurjective (permutation : List ℕ) (hmember : permutation ∈ avoiders size patterns) :
       ∃ data : ACParameters third size, realize data = permutation := by
     obtain ⟨hperm, hfish, havoid⟩ := hmember
@@ -347,8 +548,7 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
       rw [hperm.mem_iff, List.mem_range'_1]
       omega
     obtain ⟨before, tail, heq⟩ := List.mem_iff_append.mp ((hvalues 1).mpr (by omega))
-    subst permutation
-    let suffix := 1 :: tail
+    subst permutation; let suffix := 1 :: tail
     have hbefore_sub : before.Sublist (before ++ suffix) := List.sublist_append_left _ _
     have hsuffix_sub : suffix.Sublist (before ++ suffix) := List.sublist_append_right _ _
     have hsuffix_nodup := hnodup.sublist hsuffix_sub
@@ -360,8 +560,7 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
       before.length honebound hone
     have hbefore_dec : before.Pairwise (· > ·) := by
       apply List.pairwise_iff_getElem.mpr
-      intro first second hfirst hsecond hlt
-      have hr := hdec first second hlt (by omega)
+      intro first second hfirst hsecond hlt; have hr := hdec first second hlt (by omega)
       rw [List.getD_append before suffix 0 second hsecond,
         List.getD_append before suffix 0 first hfirst,
         List.getD_eq_getElem _ _ hfirst, List.getD_eq_getElem _ _ hsecond] at hr
@@ -383,16 +582,13 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
     have htests := minimum_pattern_tests size (before ++ suffix) hperm hfish
       before.length honebound hone
     have h213 : ¬ NonnestingDefs.Occurs [2, 1, 3] suffix := by
-      change ¬ ArrowWilfDefs.Contains [2, 1, 3] [] 3 suffix
-      rintro ⟨values, hstep, _, hsub, _⟩
+      change ¬ ArrowWilfDefs.Contains [2, 1, 3] [] 3 suffix; rintro ⟨values, hstep, _, hsub, _⟩
       obtain ⟨positions, hembed⟩ := List.sublist_iff_exists_fin_orderEmbedding_get_eq.mp hsub
       let first := positions ⟨0, by simp⟩
       let second := positions ⟨1, by simp⟩
       let last := positions ⟨2, by simp⟩
-      have h12 : first.val < second.val :=
-        positions.strictMono (by change (0 : ℕ) < 1; omega)
-      have h23 : second.val < last.val :=
-        positions.strictMono (by change (1 : ℕ) < 2; omega)
+      have h12 : first.val < second.val := positions.strictMono (by change (0 : ℕ) < 1; omega)
+      have h23 : second.val < last.val := positions.strictMono (by change (1 : ℕ) < 2; omega)
       have hfirst : suffix.getD first.val 0 = values 2 := by
         simpa [first, List.getD_eq_getElem] using (hembed ⟨0, by simp⟩).symm
       have hsecond : suffix.getD second.val 0 = values 1 := by
@@ -406,8 +602,7 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
         have hz : first.val = 0 := by omega
         have hlt : values 1 < values 2 := hstep 1 (by omega) (by omega)
         rw [hz] at hfirst
-        change 1 = values 2 at hfirst
-        omega
+        change 1 = values 2 at hfirst; omega
       apply h1324
       apply htests.1.mpr
       refine ⟨before.length + first.val, before.length + second.val,
@@ -418,16 +613,13 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
       · rw [hafter, hafter, hfirst, hlast]
         exact hstep 2 (by omega) (by omega)
     have h312 : ¬ NonnestingDefs.Occurs [3, 1, 2] suffix := by
-      change ¬ ArrowWilfDefs.Contains [3, 1, 2] [] 3 suffix
-      rintro ⟨values, hstep, _, hsub, _⟩
+      change ¬ ArrowWilfDefs.Contains [3, 1, 2] [] 3 suffix; rintro ⟨values, hstep, _, hsub, _⟩
       obtain ⟨positions, hembed⟩ := List.sublist_iff_exists_fin_orderEmbedding_get_eq.mp hsub
       let first := positions ⟨0, by simp⟩
       let second := positions ⟨1, by simp⟩
       let last := positions ⟨2, by simp⟩
-      have h12 : first.val < second.val :=
-        positions.strictMono (by change (0 : ℕ) < 1; omega)
-      have h23 : second.val < last.val :=
-        positions.strictMono (by change (1 : ℕ) < 2; omega)
+      have h12 : first.val < second.val := positions.strictMono (by change (0 : ℕ) < 1; omega)
+      have h23 : second.val < last.val := positions.strictMono (by change (1 : ℕ) < 2; omega)
       have hfirst : suffix.getD first.val 0 = values 3 := by
         simpa [first, List.getD_eq_getElem] using (hembed ⟨0, by simp⟩).symm
       have hsecond : suffix.getD second.val 0 = values 1 := by
@@ -442,8 +634,7 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
         have hlt : values 1 < values 3 :=
           lt_trans (hstep 1 (by omega) (by omega)) (hstep 2 (by omega) (by omega))
         rw [hz] at hfirst
-        change 1 = values 3 at hfirst
-        omega
+        change 1 = values 3 at hfirst; omega
       apply h1423
       apply htests.2.1.mpr
       refine ⟨before.length + first.val, before.length + second.val,
@@ -471,8 +662,7 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
     have hpeak_not : peak ∉ increasing ++ trailing := by
       rw [htail_eq] at htail_nodup
       obtain ⟨_, hright, hcross⟩ := List.nodup_append.mp htail_nodup
-      intro hmem
-      rcases List.mem_append.mp hmem with hleft | hright_mem
+      intro hmem; rcases List.mem_append.mp hmem with hleft | hright_mem
       · exact hcross _ hleft _ (by simp) rfl
       · exact (List.nodup_cons.mp hright).1 hright_mem
     have hrest_mem (value : ℕ) (hv : value ∈ increasing ++ trailing) : value ∈ tail := by
@@ -501,8 +691,7 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
     let low := before.filter (fun value => decide (value < peak))
     have hlow (value : ℕ) : value ∈ low ↔ value ∈ before ∧ value < peak := by simp [low]
     have hseparate : ∀ value ∈ before, value ∉ suffix := by
-      intro value hv hs
-      exact (List.nodup_append.mp hnodup).2.2 _ hv _ hs rfl
+      intro value hv hs; exact (List.nodup_append.mp hnodup).2.2 _ hv _ hs rfl
     have hlow_partition : (low ++ (increasing ++ trailing)).Perm (List.range' 2 (peak - 2)) := by
       have hlow_nodup : low.Nodup := hbefore_dec.nodup.sublist List.filter_sublist
       have hrest_nodup : (increasing ++ trailing).Nodup := by
@@ -513,13 +702,11 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
       have hpartition_nodup : (low ++ (increasing ++ trailing)).Nodup := by
         apply List.nodup_append.mpr
         refine ⟨hlow_nodup, hrest_nodup, ?_⟩
-        intro value hv later hlater heq
-        apply hseparate value ((hlow value).mp hv).1
+        intro value hv later hlater heq; apply hseparate value ((hlow value).mp hv).1
         have hm : later ∈ suffix := List.mem_cons_of_mem 1 (hrest_mem later hlater)
         exact heq ▸ hm
       apply (List.perm_ext_iff_of_nodup hpartition_nodup (List.nodup_range' 1)).mpr
-      intro value
-      rw [List.mem_append, hlow, List.mem_range'_1]
+      intro value; rw [List.mem_append, hlow, List.mem_range'_1]
       constructor
       · rintro (⟨hbefore, hlt⟩ | hrest)
         · have hpos := ((hvalues value).mp (hbefore_sub.subset hbefore)).1
@@ -529,8 +716,7 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
           have hmem : value ∈ suffix := List.mem_cons_of_mem 1 (hrest_mem value hrest)
           have hpos := ((hvalues value).mp (hsuffix_sub.subset hmem)).1
           have hne : value ≠ 1 := by
-            intro heq
-            apply htail_not_one
+            intro heq; apply htail_not_one
             simpa only [heq] using hrest_mem value hrest
           omega
       · intro hb
@@ -545,7 +731,7 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
           · exact List.mem_append_left _ hi
           · omega
           · exact List.mem_append_right _ hj
-    obtain ⟨blockCorrespondence, hblockForward, _⟩ := block_bijection (peak - 2)
+    obtain ⟨blockCorrespondence, hblockForward, _⟩ := hblockBijection (peak - 2)
     let partition := (low, increasing, trailing)
     have hpartition : partition.1.Pairwise (· > ·) ∧ partition.2.1.Pairwise (· < ·) ∧
         partition.2.2.Pairwise (· > ·) ∧
@@ -557,15 +743,14 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
       exact congrArg Subtype.val (blockCorrespondence.apply_symm_apply ⟨partition, hpartition⟩)
     have hb : peak - 2 + 2 ≤ size := by omega
     have hpeak_eq : peak - 2 + 2 = peak := by omega
-    have hconstructed := (reconstruct_permutation size (peak - 2) hb).2 letters
+    have hconstructed := (hreconstruct size (peak - 2) hb).2 letters
     have hprefix_eq :
         (List.range' (peak - 2 + 3) (size - (peak - 2 + 2))).reverse ++ low = before := by
       have hsorted : List.Pairwise (· > ·)
           ((List.range' (peak - 2 + 3) (size - (peak - 2 + 2))).reverse ++ low) := by
         simpa only [hletters] using hconstructed.2.1
       apply hsorted.eq_of_mem_iff hbefore_dec
-      intro value
-      simp only [List.mem_append, List.mem_reverse, List.mem_range'_1, hlow]
+      intro value; simp only [List.mem_append, List.mem_reverse, List.mem_range'_1, hlow]
       constructor
       · rintro (hupper | ⟨hbefore, _⟩)
         · have hmem : value ∈ before ++ suffix := (hvalues value).mpr (by omega)
@@ -591,7 +776,8 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
       simp only [suffix, htail_eq]
     have hword_member : List.ofFn letters ∈ language (peak - 2) :=
       (htransport _ hb letters).mp (hwhole ▸ ⟨hperm, hfish, havoid⟩)
-    refine ⟨Sum.inr ⟨⟨peak, hpeak_ge, hpeak_le⟩, ⟨List.ofFn letters, hword_member⟩⟩, ?_⟩
+    refine
+      ⟨Sum.inr ⟨⟨peak, hpeak_ge, hpeak_le⟩, ⟨List.ofFn letters, hword_member⟩⟩, ?_⟩
     change reconstruct size (fun index : Fin (peak - 2) =>
       (List.ofFn letters).getD index.val d) = before ++ suffix
     rw [hgetFn]
@@ -609,5 +795,4 @@ theorem ac_equivalence (third : Bool) (size : ℕ) (hsize : 1 ≤ size) :
   · rfl
   · intro peak word
     rfl
-
 end D5.S3.Combinatorics.FishburnTenSeven.FishburnTenSevenACEquiv
