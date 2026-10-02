@@ -89,6 +89,7 @@ public sealed partial class TruthReleaseCommandTests
         Assert.Equal(1, exitCode);
         Assert.Contains("--commit-on-protected-dev true|false", console.Error, StringComparison.Ordinal);
         Assert.Contains("--required-check NAME=CONCLUSION", console.Error, StringComparison.Ordinal);
+        Assert.Contains("[--scribe-pack FILE --scribe-pack-digest HEX64]", console.Error, StringComparison.Ordinal);
         Assert.Empty(Directory.EnumerateFiles(output.Path));
     }
 

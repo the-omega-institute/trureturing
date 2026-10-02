@@ -26,6 +26,9 @@ internal static class TruthReleaseCommand
 
         try
         {
+            var suppliedDefinitions = options.ScribePackPath is null
+                ? (IEnumerable<DocumentDefinition>?)null
+                : ScribePackInput.ReadDefinitions(options.ScribePackPath, options.ScribePackDigest!);
             var verifier = scribeEmissionVerifier
                 ?? throw new InvalidOperationException("truth-release requires Scribe emission verification.");
             TruthExportValidation.RequireGitObjectId(
@@ -62,7 +65,7 @@ internal static class TruthReleaseCommand
                 truth.Lean,
                 preparation.States);
             var dagMarkdownBytes = CanonicalDagWriter.Write(projection);
-            var truthGraphBytes = AssembleTruthGraph(snapshot, truth, projection, rawLeanReportBytes);
+            var truthGraphBytes = AssembleTruthGraph(snapshot, truth, projection, rawLeanReportBytes, suppliedDefinitions);
             var blueprintIndexBytes = BlueprintIndexAssembler.Assemble(snapshot);
             var frozenLedgerHeadBytes = FrozenLedgerHeadAssembler.Assemble(preparation.BaseView);
             var residualFrontierBytes = ResidualFrontierAssembler.Assemble(
@@ -127,7 +130,8 @@ internal static class TruthReleaseCommand
         RepositorySnapshot snapshot,
         TruthContext truth,
         TruthDagProjection projection,
-        ImmutableArray<byte> rawLeanReportBytes)
+        ImmutableArray<byte> rawLeanReportBytes,
+        IEnumerable<DocumentDefinition>? suppliedDefinitions)
     {
         using var materialized = MaterializedSnapshot.Create(snapshot);
         var catalog = DeclarationCatalog.Create(truth.Report);
@@ -136,11 +140,11 @@ internal static class TruthReleaseCommand
                 && path.Value.EndsWith(".scribe.cs", StringComparison.Ordinal))
             .Select(static path => path.Value)
             .ToArray();
-        var definitions = DocumentDefinitions
+        var definitions = (suppliedDefinitions ?? DocumentDefinitions
             .Discover(DocumentAssembly.Value, materialized.Root)
             .Where(definition => sourcePaths.Contains(
                 ScribeEmissionAttestation.DefinitionPath(definition.Document.Header.Gid.Value),
-                StringComparer.Ordinal))
+                StringComparer.Ordinal)))
             .ToArray();
         var sourceFindings = DocumentDefinitions.CheckRepositorySourceBijection(sourcePaths, definitions);
         if (sourceFindings.Length > 0)
@@ -148,28 +152,6 @@ internal static class TruthReleaseCommand
             throw new InvalidOperationException(sourceFindings[0]);
         }
 
-        var documents = definitions
-            .Select(definition => definition.Document.ResolveDeclarations(catalog))
-            .ToArray();
-        var census = ReceiptFreeDocumentCatalog.Load(
-            materialized.Root,
-            documents,
-            tolerateAbsentDocuments: true);
-        var graph = DocumentGraphAssembler.Assemble(
-            documents,
-            catalog);
-        var documentProjection = DocumentGraphExportProjection.Create(
-            definitions.Select(definition => new DocumentGraphDocument(
-                definition.RelativePath.Value,
-                definition.Document,
-                census.ReceiptFreeDocumentGids.Contains(definition.Document.Header.Gid.Value)
-                    ? "receipt-free"
-                    : "receipt-bound")),
-            graph,
-            catalog,
-            projection.Nodes
-                .Select(static node => node.RepoPath.Value)
-                .ToHashSet(StringComparer.Ordinal));
         var provenance = new TruthGraphProvenance(
             SnapshotContentDigest.Compute(
                 snapshot,
@@ -179,7 +161,10 @@ internal static class TruthReleaseCommand
             TruthGraphModelBuilder.Create(
                 projection,
                 provenance,
-                documentProjection));
+                definitions,
+                materialized.Root,
+                catalog,
+                tolerateAbsentDocuments: true));
     }
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
@@ -210,6 +195,8 @@ internal static class TruthReleaseCommand
         string? candidateLeanReport = null;
         string? producerPackageCommit = null;
         string? producedAt = null;
+        string? scribePackPath = null;
+        string? scribePackDigest = null;
         bool? commitOnProtectedDev = null;
         var requiredChecks = ImmutableArray.CreateBuilder<TruthReleaseRequiredCheck>();
         for (var index = 0; index < arguments.Count; index += 2)
@@ -234,6 +221,12 @@ internal static class TruthReleaseCommand
                 case "--produced-at" when producedAt is null:
                     producedAt = value;
                     break;
+                case "--scribe-pack" when scribePackPath is null:
+                    scribePackPath = value;
+                    break;
+                case "--scribe-pack-digest" when scribePackDigest is null:
+                    scribePackDigest = value;
+                    break;
                 case "--commit-on-protected-dev" when commitOnProtectedDev is null
                     && bool.TryParse(value, out var parsedCommitOnProtectedDev):
                     commitOnProtectedDev = parsedCommitOnProtectedDev;
@@ -251,7 +244,9 @@ internal static class TruthReleaseCommand
             || producerPackageCommit is null
             || producedAt is null
             || commitOnProtectedDev is null
-            || requiredChecks.Count == 0)
+            || requiredChecks.Count == 0
+            || (scribePackPath is null) != (scribePackDigest is null)
+            || (scribePackDigest is not null && !ScribePackInput.IsDigest(scribePackDigest)))
         {
             return false;
         }
@@ -264,7 +259,9 @@ internal static class TruthReleaseCommand
             new TruthReleaseTrust(
                 commitOnProtectedDev.Value,
                 requiredChecks.ToImmutable(),
-                BlessedBy: null));
+                BlessedBy: null),
+            scribePackPath,
+            scribePackDigest);
         return true;
     }
 
@@ -292,14 +289,17 @@ internal static class TruthReleaseCommand
             + "--producer-package-commit COMMIT --produced-at TIMESTAMP "
             + "--commit-on-protected-dev true|false "
             + "--required-check NAME=CONCLUSION (required: "
-            + "every required check supplied by the caller" + ")\n");
+            + "every required check supplied by the caller" + ") "
+            + "[--scribe-pack FILE --scribe-pack-digest HEX64]\n");
 
     private readonly record struct TruthReleaseArguments(
         string OutDirectory,
         string CandidateLeanReport,
         string ProducerPackageCommit,
         string ProducedAt,
-        TruthReleaseTrust Trust);
+        TruthReleaseTrust Trust,
+        string? ScribePackPath,
+        string? ScribePackDigest);
 
     private sealed class MaterializedSnapshot : IDisposable
     {
