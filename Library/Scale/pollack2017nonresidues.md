@@ -846,3 +846,91 @@ actual-source upper estimate for square-depth membership in
 $c=4A+7B$, sufficiently strong at this weighted scale, together with
 coverage of sources outside the cutoff. No distribution law, h=0 or
 square-$D$ exclusion, reciprocal-prime deficit or RH proof is supplied.
+
+## The actual mask pays the moment and leaves the reachable cutoff
+
+The modulus in (P4) is $m_1=\operatorname{lcm}(q,R_1)$, so both
+$q\le m_1$ and $R_1\le m_1$ hold for the same actual canonical source.
+A polynomial mask cap therefore controls the moment in (T17), in addition
+to the primitive conductor. This is an application of existing results,
+without a new analytic theorem, originality claim or Lean verification.
+
+Continue on the actual CA source, whose initial support contains every
+prime through $P$. For fixed $C>0$, suppose $m_1\le P^C$. Then every
+prime in (T17) divides $R_1$; splitting at $L=\log P$ gives
+
+$$
+0\le M_r(n)\le r\sum_{p\mid R_1}\frac{\log p}{p}
+\le r\sum_{p\le L}\frac{\log p}{p}
++\frac rL\log R_1
+\le r\log L+O_{r,C}(1)=o(L).
+\tag{T21}
+$$
+
+This reuses the same two-range Mertens estimate as (T13), here split
+at $L=\log P$. It requires no
+independence, residue distribution or additional upper hypothesis about
+the same source's square-depth membership. In particular the cutoff
+$m_1^{6/25}\le\log n\sim P$ would imply the moment condition in (T20)
+for any fixed $0<\mu<71\sqrt2/96-1$, at sufficiently large sources.
+The combined (T19) lower coefficient $16-8\sqrt2=4.686291\ldots$
+then exceeds $25/6$. This already rules out that joint cutoff.
+
+A stronger existing supplier directly applies to the faithful mask.
+The induced character $\widetilde\chi_1\bmod m_1$ is nonprincipal and
+quadratic: reduction from units modulo $m_1$ to units modulo $q$ is
+surjective, so a negative unit of the primitive character has a unit
+lift. Formula (P4) says every prime with
+$\widetilde\chi_1(\ell)=-1$ is missing from the actual integer.
+For every actual CA maximizer with largest prime $P$, including ties,
+all primes through $P$ are supported. Thus every such negative prime
+satisfies $\ell>P$.
+
+Along any unbounded sequence in this actual branch, the mask tends to
+infinity with $P$. Indeed a negative unit represented
+by $1\le a<m_1$ has a negative prime factor $\ell\le a<m_1$;
+faithfulness gives $P<\ell<m_1$. Reuse the original published
+Theorem 1.1 above, whose character need not be primitive. For every fixed
+$\varepsilon>0$ and sufficiently large masks, it supplies a negative prime
+
+$$
+P<\ell\le m_1^{\beta_0+\varepsilon},
+\qquad \beta_0=\frac1{4\sqrt e}.
+$$
+
+Consequently, for every fixed $0<\eta<4\sqrt e$, choosing
+$\varepsilon$ with $\eta(\beta_0+\varepsilon)<1$ gives
+
+$$
+\boxed{m_1>P^\eta\quad\text{eventually}.}
+\tag{T22}
+$$
+
+The statement covers every actual $h=1$, nonsquare-$D$ CA source with
+its own faithful mask, including intermediate ties; it asserts no
+infinitude of this branch, endpoint $\eta=4\sqrt e$ or numerical onset.
+It is a lower bound for the full mask, not for the primitive conductor
+$q$ alone. This direct use of Pollack's theorem is stronger than the
+mask bound obtainable from (T21) and the triangular signed estimate;
+neither analytic proof is repeated.
+
+For any fixed $b>\beta_0$, choose $1/b<\eta<4\sqrt e$ in (T22).
+Since $P\sim\log n$ on these actual CA sources,
+
+$$
+\frac{m_1^b}{\log n}\longrightarrow\infty
+\tag{T23}
+$$
+
+along every unbounded sequence in this branch. Thus the sufficient
+cutoff $m_1^b\le\log n$ has no sufficiently large realization there,
+including the weighted supplier's entire $\beta_0<b<1/4$ regime.
+The conductor-only lower bounds in (T10) and (T16) remain valid; their
+numerical power comparison alone omitted this further mask constraint.
+
+This excludes applicability of that small-mask route at large CA sources;
+it proves no Robin violation or safety there. Outside a polynomial mask
+cap, (T21) supplies no $o(L)$ bound for the actual moment. The full
+large-mask signed Robin estimate, unit bit zero and square discriminants
+remain unresolved. An average on free Beatty indices or independently
+selected residues cannot discharge this same-source obligation.
