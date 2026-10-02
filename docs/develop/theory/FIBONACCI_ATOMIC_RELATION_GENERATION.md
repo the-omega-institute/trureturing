@@ -45673,3 +45673,175 @@ r_k=\max\left\{0,\left\lfloor
 这给 $\eta_*=\eta$，但 $H_k/F_k^{1-\eta}$ 无界；充分早的深度可另置为零以确保全程合法。共同导数界由（325.8）、（325.18）在 $[3F_k+2,3F_{k+1}+2]$ 上取常数获得，代入（330.11）便得（330.16）。固定深度或 $o(\log F_k)$ 深度不给这条机制固定的正幂改善；这不判定粗 Fibonacci 判据的真假。
 
 若固定整数 $d\ge2$ 并取 $r_k=\lfloor\log_5F_k/d\rfloor$，则 $5^{r_k}\asymp_d F_k^{1/d}$，充分晚时合法；其最大格宽为 $O_d(F_k^{1-1/d})$，截至价格 $X$ 的去重样本数为 $\Theta_d(X^{1/d})$。前者由（330.13）得，后者由 Fibonacci 块的几何增长对每块 $5^{r_k}$ 个新样本求和得。实际样本数量、递归深度、积分预算因此有同一量化关系；这仍没有证明实际平均的最终有限预算存在，也没有消去无限有符号尾项。$\square$
+## 追加锚（本行以下为增补区）
+
+## 331. 实际 CA 素赋值对辅助黄金范数的排除界
+
+沿用 §317 的实际 CA 宿主、完整素支撑和同源最优价格。本节接用研究供应的纸面推导，把这些输入与既有黄金单位分类及 Fibonacci 赋值公式组合；不重证所引成熟结果，不作原创性或 Lean 核验声明。
+
+记 $P=P^+(C)$，$a_p=v_p(C)$。取使 $C$ 最大化 $Z(n)n^{-\epsilon}$ 的任一正价格，允许并列极大点。既有接口给
+
+$$
+p\le P\Longrightarrow a_p\ge1,\qquad
+\epsilon P\log P<1,\qquad \log C\sim P.
+\tag{331.1}
+$$
+
+设正整数 $n$ 被 $C$ 整除，$m$ 为 $n\varphi$ 的最近整数，定义
+
+$$
+E=|m-n\varphi|=\|n\varphi\|,\qquad
+K=m^2-mn-n^2,\qquad \varphi=\frac{1+\sqrt5}{2}.
+\tag{331.2}
+$$
+
+这里 $K=Q(m-n,n)$，其中 $Q(a,b)=a^2+ab-b^2$ 是项目已有的黄金范数。组成 $(m-n,n)$ 是为相位误差构造的辅助黄金整数，不是数量 $n$ 的规范五窗口组成；不能把两份来源未经证明地认成同一个地址。
+
+**命题 331.1（受控高度下的实际范数下界）。** 对每个固定 $A>0$，存在宿主阈值，使充分大的全部实际 CA 宿主及全部满足
+
+$$
+C\mid n,\qquad n\ge1,\qquad \log n\le AP
+\tag{331.3}
+$$
+
+的整数同时有
+
+$$
+|K|\ge P,\qquad
+\|n\varphi\|\ge \frac{P}{\sqrt5\,n+1/2}.
+\tag{331.4}
+$$
+
+证明。先从同一宿主的价格比较取得所需赋值，不另作 CA 分类。比较 $C$ 与 $Cp$，对 $p\le P$ 有
+
+$$
+\begin{aligned}
+\epsilon\log p
+&\ge \log\frac{Z(Cp)}{Z(C)}\\
+&=\log\left(1+\frac{p-1}{p(p^{a_p+1}-1)}\right)
+\ge \frac{p-1}{p^{a_p+2}-1}.
+\end{aligned}
+\tag{331.5}
+$$
+
+最后一步使用 $\log(1+x)\ge x/(1+x)$。结合（331.1）给
+
+$$
+p^{a_p}>
+\frac{p-1}{p^2\log p}\,P\log P,
+\qquad
+2^{a_2}5^{a_5}>
+\frac{P^2(\log P)^2}{25\log2\log5}.
+\tag{331.6}
+$$
+
+还可对全部支撑素数同时得到
+
+$$
+p^{a_p}>\sqrt P\qquad(p\le P).
+\tag{331.7}
+$$
+
+若 $p>\sqrt P$，这由 $a_p\ge1$ 得出。若 $p\le\sqrt P$，（331.5）给
+$p^{a_p+1}>(1-1/p)P\log P/\log p\ge P$，而 $2a_p\ge a_p+1$，故（331.7）仍成立。
+
+假设 $0<|K|<P$，写
+
+$$
+d=\gcd(m,n),\qquad m=dm_0,\quad n=dn_0,\quad
+K_0=m_0^2-m_0n_0-n_0^2=K/d^2.
+\tag{331.8}
+$$
+
+由于 $d^2\mid K$，有 $d<\sqrt P$。式（331.7）保证 $d$ 不能删去 $C$ 中任何支撑素数的完整幂，因此每个 $p\le P$ 仍整除 $n_0$。又
+
+$$
+(K_0,n_0)=(m_0^2,n_0)=1,\qquad 0<|K_0|<P.
+\tag{331.9}
+$$
+
+若 $|K_0|>1$，其某个素因子不超过 $P$，因而整除 $n_0$，与（331.9）矛盾。故 $K_0=\pm1$。
+
+只有现在才接用已有的
+[黄金单位分类](../../../D5/S1/Scale/UnitGroup.lean)及
+[黄金 Pell 接口](../../../D5/S3/Arith/GoldenPell.lean)。
+辅助组成 $(m_0-n_0,n_0)$ 的两坐标充分晚时均为正，所以单位分类给
+
+$$
+(m_0,n_0)=(F_{k+1},F_k),\qquad k\ge2.
+\tag{331.10}
+$$
+
+本节取 $F_0=0,F_1=1$。经典 Fibonacci 增长及 $n_0\le n$、（331.3）给 $k=O_A(P)$。
+
+另一边，（331.6）及 $d<\sqrt P$ 使 $v_2(n_0)\ge3$ 最终成立。直接复用
+[Lengyel 的 Lemmas 1–2](../../../Library/Scale/lengyel1995fibonacciorder.md)：
+$v_2(F_k)\ge3$ 强迫 $6\mid k$，在这一类上
+$v_2(F_k)=v_2(k)+2$，且对正 $k$ 总有 $v_5(F_k)=v_5(k)$。于是
+
+$$
+\begin{aligned}
+k
+&\ge 2^{v_2(k)}5^{v_5(k)}
+=\frac{2^{v_2(F_k)}5^{v_5(F_k)}}4\\
+&\ge \frac{2^{a_2}5^{a_5}}
+ {4\,2^{v_2(d)}5^{v_5(d)}}
+\ge \frac{2^{a_2}5^{a_5}}{4d}
+\gg P^{3/2}(\log P)^2.
+\end{aligned}
+\tag{331.11}
+$$
+
+这与 $k=O_A(P)$ 矛盾。$K$ 不会为零，因为 $\varphi$ 无理，故已证 $|K|\ge P$。令 $e=m-\varphi n$，已有黄金共轭给精确分解
+
+$$
+K=e(\sqrt5\,n+e),\qquad |e|\le1/2.
+\tag{331.12}
+$$
+
+由此 $P\le |K|\le E(\sqrt5\,n+1/2)$，得到（331.4）。所有阈值只依赖固定 $A$ 和宿主尺度，未假设 $(m,n)=1$。$\square$
+
+### 331.1 与实际有理相位弧的尺度比较
+
+固定 $0<2\eta<\kappa$，沿用 §§327–329 的
+$S=\sqrt P$、$Q=\lfloor e^{\kappa S}\rfloor$、$\delta=e^{-\eta S}$。若素数
+
+$$
+\frac1{8\delta}\le q\le\frac1{4\delta},
+\tag{331.13}
+$$
+
+则 $n=Cq$ 满足（331.3），对任意固定 $A>1$ 最终成立。由
+$\|qC\varphi\|\le q\|C\varphi-a/q\|_{\mathbb T}$，命题331.1给所有整数 $a$ 的统一下界
+
+$$
+\left\|C\varphi-\frac aq\right\|_{\mathbb T}
+\ge \frac{P}{q(\sqrt5\,Cq+1/2)}.
+\tag{331.14}
+$$
+
+它较普通坏逼近界多出一个 $P$ 因子，但与 §328 的危险弧半径比较仍有
+
+$$
+\log\frac{P/[q(\sqrt5\,Cq+1/2)]}{\delta/(2Q)}
+=-\log C+(\kappa-\eta)\sqrt P+\log P+O(1)
+\longrightarrow-\infty.
+\tag{331.15}
+$$
+
+这里始终保留真实 $\log C$；$\log C\sim P$ 不供应 $\log C=P+o(\sqrt P)$。
+因此（331.14）没有排除实际宿主进入该弧，也没有证明进入。
+
+若该弧真实发生，最近整数对的范数仍可能落在当前两界未能排除的范围
+
+$$
+P\le |K|\le O\!\left(Ce^{-(\kappa-\eta)\sqrt P}\right).
+\tag{331.16}
+$$
+
+这只是剩余允许范围，不是实际实现声明。原分母 $Cq$ 本身不能在该受控高度中等于某个 $F_k$：Lengyel 的两条赋值公式会给
+$k\ge 2^{a_2}5^{a_5}/4\gg P^2(\log P)^2$，与高度给出的 $k=O(P)$ 矛盾；一般约分后的近整数对仍不能据此送入固定 Fibonacci 轨道。
+
+完整素支撑在本证明中迫使约分后的足够小范数成为单位，两个固定素数的大赋值随后排除单位情形。这两个作用来自同一整数对，而不是把独立可达的局部极值拼接起来。所需危险弧排除、廉价乘子命中与独立 Robin 正储备仍未获得。
+
+## 追加锚（本行以下为增补区）
