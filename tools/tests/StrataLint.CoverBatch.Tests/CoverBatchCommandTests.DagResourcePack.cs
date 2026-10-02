@@ -110,6 +110,76 @@ public sealed partial class CoverBatchCommandTests
     private const string DagPackUsage =
         "usage: dag-render [--check] [--scribe-pack FILE --scribe-pack-digest HEX64]";
 
+    [Theory]
+    [InlineData("Generated/DAG.md")]
+    [InlineData("Generated/truth-graph.v1.json")]
+    public void DagResourcePackCheckRejectsMissingArtifactWithoutWritingFiles(string path)
+    {
+        using var world = new BatchWorld { UseGitReader = true };
+        using var resources = new TemporaryDirectory();
+        WriteEmissionInputs(world.Root);
+        world.WriteReportBundle();
+        var packPath = Path.Combine(resources.Path, "resources.zip");
+        var digest = ScribeResourcePack.Write(packPath, [new BatchClaimDefinition().Create()]).TotalSha256;
+        string[] arguments = ["--scribe-pack", packPath, "--scribe-pack-digest", digest];
+        var emitted = RunPackedDag(world, arguments);
+        Assert.True(emitted.Success, emitted.Error);
+        File.Delete(Path.Combine(world.Root, path));
+        var before = DagFileImage(world.Root);
+
+        var result = RunPackedDagCli(world, ["--check", ..arguments]);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains(path, result.Console.Error, StringComparison.Ordinal);
+        AssertDagFileImage(before, world.Root);
+    }
+
+    [Theory]
+    [InlineData("Generated/DAG.md")]
+    [InlineData("Generated/truth-graph.v1.json")]
+    public void DagResourcePackCheckRejectsStaleArtifactWithoutWritingFiles(string path)
+    {
+        using var world = new BatchWorld { UseGitReader = true };
+        using var resources = new TemporaryDirectory();
+        WriteEmissionInputs(world.Root);
+        world.WriteReportBundle();
+        var packPath = Path.Combine(resources.Path, "resources.zip");
+        var digest = ScribeResourcePack.Write(packPath, [new BatchClaimDefinition().Create()]).TotalSha256;
+        string[] arguments = ["--scribe-pack", packPath, "--scribe-pack-digest", digest];
+        var emitted = RunPackedDag(world, arguments);
+        Assert.True(emitted.Success, emitted.Error);
+        File.WriteAllText(Path.Combine(world.Root, path), "stale\n");
+        var before = DagFileImage(world.Root);
+
+        var result = RunPackedDagCli(world, ["--check", ..arguments]);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains(path, result.Console.Error, StringComparison.Ordinal);
+        AssertDagFileImage(before, world.Root);
+    }
+
+    private static Dictionary<string, byte[]> DagFileImage(string root) =>
+        Directory.GetFiles(root, "*", SearchOption.AllDirectories)
+            .Select(path => Path.GetRelativePath(root, path))
+            .Where(path => !path.StartsWith(".git/", StringComparison.Ordinal))
+            .ToDictionary(path => path, path => File.ReadAllBytes(Path.Combine(root, path)), StringComparer.Ordinal);
+
+    private static (int ExitCode, BufferedConsole Console) RunPackedDagCli(
+        BatchWorld world, IReadOnlyList<string> arguments)
+    {
+        var console = new BufferedConsole();
+        var environment = new ProductionCliEnvironment(world.Root, world.Repository,
+            new PrecomputedLeanReportSource(world.Root), new ProductionScribeEmissionVerifier());
+        return (CliApplication.Run(["dag-render", ..arguments], environment, console), console);
+    }
+
+    private static void AssertDagFileImage(IReadOnlyDictionary<string, byte[]> before, string root)
+    {
+        var after = DagFileImage(root);
+        Assert.Equal(before.Keys.Order(StringComparer.Ordinal), after.Keys.Order(StringComparer.Ordinal));
+        foreach (var (path, bytes) in before) Assert.Equal(bytes, after[path]);
+    }
+
     private static CommandResult RunPackedDag(BatchWorld world, IReadOnlyList<string> arguments) =>
         DagRenderCommand.Run(world.Root, world.Repository, new PrecomputedLeanReportSource(world.Root), arguments);
 }
