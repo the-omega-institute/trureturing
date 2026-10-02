@@ -21,18 +21,21 @@ from cache_fixture import CACHE, REV, CacheFixture
 
 
 class SnapshotContracts(CacheFixture, unittest.TestCase):
-    def lookup_keys(self, responses=(), *, wait=None, **environment):
+    def lookup_keys(self, responses=(), *, wait=None, real_wait=False, streams=None, **environment):
         owner = self.restore_owner()
+        result, errors = streams or (io.StringIO(), io.StringIO())
+        wait_guard = (contextlib.nullcontext() if real_wait else
+            mock.patch.object(owner, "wait_for_seed_lookup", create=True,
+                side_effect=wait or (lambda completed, seconds: completed.wait())))
         env = dict(self.env, GH_TOKEN="synthetic-token", GITHUB_REPOSITORY="owner/repository",
                    GITHUB_API_URL="https://cache.example.test/api/v3")
         env.update(environment)
         with mock.patch.dict(os.environ, env, clear=True):
             publication = owner.actions_keys(self.root)["project"]
             with mock.patch.object(urllib.request, "urlopen", side_effect=responses) as opened, \
-                    mock.patch.object(owner, "wait_for_seed_lookup", create=True,
-                        side_effect=wait or (lambda completed, seconds: completed.wait())), \
+                    wait_guard, \
                     mock.patch.object(sys, "argv", [str(CACHE), "keys", "--repository", str(self.root)]), \
-                    contextlib.redirect_stdout(io.StringIO()) as result:
+                    contextlib.redirect_stdout(result), contextlib.redirect_stderr(errors):
                 code = owner.main()
         self.assertEqual(0, code, result.getvalue())
         lines = result.getvalue().splitlines()
@@ -95,6 +98,68 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
             with self.subTest(reason=reason, failure=type(failure).__name__):
                 opened = self.assert_lookup_fallback([failure], reason)
                 self.assertEqual(1, opened.call_count)
+
+    def test_seed_lookup_wait_guard_passes_the_transport_bound_and_reports_expiry(self):
+        owner = self.restore_owner()
+        completed = mock.Mock()
+        completed.wait.return_value = False
+        self.assertFalse(owner.wait_for_seed_lookup(completed, 10))
+        completed.wait.assert_called_once_with(10)
+
+    def test_project_lookup_real_wait_guard_uses_fixed_bound_and_named_fallback(self):
+        owner = self.restore_owner()
+        completed = mock.Mock()
+        completed.wait.return_value = False
+        with mock.patch.object(owner.threading, "Event", return_value=completed), \
+                mock.patch.object(owner.threading, "Thread") as worker, \
+                mock.patch.object(owner, "wait_for_seed_lookup", wraps=owner.wait_for_seed_lookup) as guard:
+            opened = self.assert_lookup_fallback([], "lookup-transport-hang-guard", real_wait=True)
+        guard.assert_called_once_with(completed, 10)
+        completed.wait.assert_called_once_with(10)
+        completed.set.assert_not_called()
+        worker.return_value.start.assert_called_once_with()
+        self.assertTrue(worker.call_args.kwargs["daemon"])
+        opened.assert_not_called()
+
+    def assert_late_lookup_completion_is_inert(self, failure=None):
+        owner = self.restore_owner()
+        completed = mock.Mock()
+        completed.wait.return_value = False
+        row = self.cache_row("999-1")
+        response = self.cache_page([row])
+        if failure is not None:
+            response.read.side_effect = failure
+        streams = (io.StringIO(), io.StringIO())
+        with mock.patch.object(owner.threading, "Event", return_value=completed), \
+                mock.patch.object(owner.threading, "Thread") as worker, \
+                mock.patch.object(urllib.request, "urlopen", return_value=response) as late_transport, \
+                mock.patch.dict(os.environ, self.env, clear=True), \
+                contextlib.redirect_stdout(streams[0]), contextlib.redirect_stderr(streams[1]):
+            values, receipt, opened = self.lookup_keys([], real_wait=True, streams=streams)
+            self.assertEqual("lookup-transport-hang-guard", receipt["reason"])
+            self.assertEqual("restore-preference-fallback", receipt["status"])
+            self.assertEqual(values["project_key"], values["project_restore_key"])
+            self.assertEqual(values["project_key"], receipt["requested_key"])
+            self.assertNotEqual(row["key"], values["project_restore_key"])
+            opened.assert_not_called()
+            completed.set.assert_not_called()
+            before = (streams[0].getvalue(), streams[1].getvalue(),
+                      (self.root / "outputs").read_bytes())
+            self.assertEqual("", before[1])
+            worker.call_args.kwargs["target"]()
+            completed.set.assert_called_once_with()
+            late_transport.assert_called_once()
+            response.read.assert_called_once_with()
+            self.assertEqual(before, (streams[0].getvalue(), streams[1].getvalue(),
+                (self.root / "outputs").read_bytes()))
+            selected = dict(line.split("=", 1) for line in streams[0].getvalue().splitlines() if "=" in line)
+            self.assertEqual(values["project_key"], selected["project_restore_key"])
+
+    def test_project_lookup_late_success_cannot_change_published_fallback(self):
+        self.assert_late_lookup_completion_is_inert()
+
+    def test_project_lookup_late_exception_cannot_change_published_fallback(self):
+        self.assert_late_lookup_completion_is_inert(OSError("late transport failure"))
 
     def test_project_lookup_hang_guard_abandons_blocked_transport_at_any_stage(self):
         for stage in ("open", "headers", "body", "second-page"):
