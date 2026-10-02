@@ -107,8 +107,15 @@ $z+it_\pm r$ non-product (issue #12146).
 The canonical source is
 `D5/S3/Quantum/Entanglement/SeparableNumericalRangeRatio.lean`. Its public
 declarations are `states`, `separableStates`, `numericalRange`, `claim` and
-`result`. The module state, the result statement identity and the Freeze
-event are recorded with the delivery. The proof uses only the standard
+`result`. The frozen module state has statement identity
+`sha256:ad9f39c042bc8c66c3f49d5e7591844b00204df42e745402b5e1df9e5ed191d7`. The
+result declaration has statement identity
+`sha256:8c35814a5581b8dd85f6068c299608bb3ab6358ca90eb7b729ad3bb8ebd2a1e0`. The
+Freeze event is
+`sha256:914b5b5f88db539920b49ca32941a150c277dcf0f10248d8d2ae017eac123a1c`; its
+project-level frozen prerequisite is the Freeze event of
+`D5/S3/Resource/EntanglementWitness` (through which the module imports
+`CompositeCones` and `CompositeConeDuality`). The proof uses only the standard
 axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`,
 `native_decide`, or new axiom.
 
