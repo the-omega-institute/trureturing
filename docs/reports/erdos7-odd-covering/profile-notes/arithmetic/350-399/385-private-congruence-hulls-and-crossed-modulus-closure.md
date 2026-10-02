@@ -239,6 +239,13 @@ q<=857; opposite5/7 and5/11 give211 and593, respectively. This bounds
 the unique nonconcentrated prime, not the largest support prime, and
 leaves both the surviving singleton cases and larger R unresolved.
 
+[Section155](#155-a-primitive-private-escape-gives-a-complete-low-row-fibre-reserve)
+keeps the full first-q-root fibre at the triangle's actual private escape.
+Its complete low-row deletion hole is exactly the complement of the
+owner and the surviving top labels avoiding two cofactor primes.
+The resulting reserve and low-row demand use this one unchanged source;
+a positive reserve still requires a bound on that actual top inventory.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -18962,3 +18969,70 @@ Neither the head863 step nor the CM6 refinement requires HPA12 or its externally
 ### Scope
 
 The constant857 is an upper bound from necessary conditions, not a realizability claim. A small q can coexist with a larger concentrated support under the surviving inequalities. This result must not be restated as P^+(Q)<=857 or Q supported through857. RSG's bound on the concentrated primes and OCP's height bounds remain available separately. No Lean verification or unrestricted odd noncoverage is asserted.
+
+## 155. A primitive private escape gives a complete low-row fibre reserve
+
+This is an ordinary mathematical deduction from §§143 and152; no Lean verification is asserted.
+
+Use ONE original EB1 whole cover with period Q=3^H q^G M, G>=2, gcd(M,3q)=1. Assume precisely PTE's original triangle 3^H q^2 pr, 3^H q^2 pt, 3^H q^2 rt at full ternary word u, first-q root omega, distinct second-q prefixes, and one actual original cofactor v. Select the complete private escape supplied by PTE1–PTE2. Relabel its owner d_pr and write x for that private point, w=x modulo M. Thus w agrees with v modulo p and r but differs modulo t. All unmentioned coordinates of w remain its ACTUAL coordinates.
+
+Let J be the COMPLETE original low-row family {d: d=3^a q^e s, a<H, e>=1}. Let E_J be its complete simultaneous-deletion hole. Let T_u be OHL's complete top packet and Omega_u=proj_M(E_{T_u}). Then
+
+    w in Omega_u.                                           (PER1)
+
+Indeed x is private to d_pr, which belongs to T_u. Deleting T_u therefore leaves x uncovered. This is a direct membership proof; w is not asserted to be a PS skeleton point or W witness.
+
+Define the one actual fibre
+
+    F={z modulo Q: z modulo3^H=u, z modulo M=w,
+                  z modulo q=omega}.
+
+Equip its q^(G-1) points with uniform probability mu_F. Every original of q-height at most one has constant truth value on F. It is false at x by privacy, and hence false throughout F.
+
+For e=2,...,G, define C_e(w) to count ACTUAL originals 3^H q^e s such that gcd(s,pr)=1, their literal ternary and first-q phases agree with (u,omega), and their literal cofactor cylinder contains w. Define L_e(w) analogously for ALL actual originals 3^a q^e s with a<H, with literal ternary phase u modulo3^a, literal first-q phase omega, and complete cofactor incidence at w. These are original numerical-label counts, not independently selected sources.
+
+The saturated p- and r-parent phases in PTE exclude every full-H original incident on F with p or r dividing its cofactor, except the three triangle labels. The two other triangle labels are false on F because w differs from v modulo t. Therefore the complete retained top union on F consists EXACTLY of d_pr's second-prefix cylinder together with the C_e(w) originals. Every q-free original, every q-height-one original, and every other full-H original is false there. In particular
+
+    E_J intersect F
+      =F minus [ A_(d_pr) union
+                 union_(e>=2, counted by C_e(w)) A_d ].       (PER2)
+
+No private-region union substitutes for the joint deletion hole. This equality also allows overlaps among the retained top cylinders.
+
+Put
+
+    rho(w)=1-1/q-sum_(e=2..G) C_e(w) q^(1-e).
+
+The owner covers exactly 1/q of F; each counted original of q-height e covers exactly q^(1-e). Thus the ordinary union bound gives
+
+    mu_F(E_J intersect F)>=max(0,rho(w)).                     (PER3)
+
+When rho(w)>0, the uniform law on the WHOLE E_J intersect F is an actual complete low-row-hole law at this SAME w and first-q root. It is obtained directly from the original family; no independent branch choices, chosen small retained tail, or PS realization premise is used.
+
+Whole coverage requires the actual low-row originals to cover E_J intersect F. Consequently
+
+    sum_(e=2..G) L_e(w) q^(1-e)>=max(0,rho(w)).               (PER4)
+
+Each summand's class weight is at most 1/q, so a distinct-label consequence is
+
+    sum_e L_e(w)>=ceil(max(0,q-1-sum_e C_e(w)q^(2-e))).       (PER5)
+
+The inequality is a liability estimate for one actual source. It does not assert disjointness of low-row classes or identify this source with another OHL-selected source.
+
+### A numerical cofactor overcount
+
+Let M_perp=M/(p^v_p(M) r^v_r(M)) and D=tau(M_perp). At each e, numerical distinctness gives C_e(w)<=D. Hence
+
+    rho(w)>=1-1/q-D*(1-q^(1-G))/(q-1).                       (PER6)
+
+Positive right-hand side supplies a concrete sufficient condition for a nonempty complete low-row fibre. When it is nonpositive no absence conclusion follows; the exact original C_e(w) or overlaps can still give a positive hole.
+
+For G=2, every retained top cylinder in F is one second-prefix cell. At most 1+C_2(w) cells are retained-top-covered. Thus at least
+
+    max(0,q-1-C_2(w))
+
+WHOLE second-prefix cells belong to E_J, and each needs a distinct original low-row label. Therefore L_2(w)>=max(0,q-1-C_2(w)), in agreement with PER5. If D<=2 this yields at least q-3 aligned low-row originals at the one escaped w, strengthening PTE's two inspected prefixes to the whole actual first-root fibre. D<=2 is only an additional conditional numerical regime; no claim says it occurs in an EB1 cover, and no example or exclusion relies on a small-prime-support cover.
+
+### Scope and reuse
+
+The new consumer is the exact classification PER2 and its same-source reserve PER3–PER6. PTE already supplies privacy and saturated original parent phases; OHL already supplies the complete J liability. The calculation introduces no new Hall, coloring, generic exchange, or transport theorem. It works with arbitrary q-height and arbitrary full cofactor carrier. It does not force rho(w)>0 in all families, W, a PS skeleton, or a whole-cover contradiction. The outstanding step is to force a sufficiently small ACTUAL complement top inventory or combine its necessary presence with another SAME-family budget.
