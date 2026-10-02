@@ -381,6 +381,13 @@ At most two fixed original labels meet every collision edge. For each
 complete ternary word, all original3^Hpq multiples together number
 at most pq-max(p,q), retaining every higher digit and cofactor.
 
+[Section173](#173-the-shared7-branch-has-a-finite-height-box-and-forced-cofactors)
+consumes the same-source guarded inequality with its finite ternary
+height. It gives H_3<=52 and H_7<=44 in the remaining R={7}, H_5=1
+branch, while retaining all higher digits and literal phases. In the
+21-root-of-5 subbranch it also forces every pair among the five
+concentrated primes, and one triple, to be original numerical labels.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -21299,3 +21306,183 @@ For GLC2, form the(p-1)-by-(q-1) table whose entry m_(b,c) counts every original
 In the general R intersect{5,7,11,13} branch, companion7 for shared5 and companion5 for shared7,11,13 give respective bounds28,28,44,52 per complete u. Original5 and7 are available by initial-segment support and the existing two-prime reciprocal obstruction in Report375 §9. No assumption makes the selected shared prime the largest or excludes it from being the largest.
 
 The new relation controls noncoprime interactions across different sources and supplies fixed small-pair capacities while retaining every tail. Coprime cofactor overlaps can still form odd incidence cycles; GLC1 does not imply balancedness or nesting of traces. Originals omitting the chosen pair, lower ternary rows and the number of complete u remain uncontrolled here. Even the actual parent3^Hpq need not have bounded numerical size. No bounded mixed vacancy, absolute support bound or unrestricted noncoverage follows from this ordinary mathematical result alone; no Lean verification is asserted.
+
+## 173. The shared7 branch has a finite height box and forced cofactors
+
+Keep one original EB1 whole cover in the remaining branch
+
+    R={7}, H_5=1,
+
+with the same actual source, colors, phases and divisor-closed numerical
+palette used in §§165 and 170. This section consumes the guarded,
+same-source inequality already proved in §170; it does not rederive the
+guard or replace its complete-liability hypotheses.
+
+### The §170 inequality has a monotone finite envelope
+
+For the opposite-color source, write
+
+    theta_H=sum_(b=2..H)3^(1-b),
+    r_H=theta_H/(1-theta_H),
+    alpha=A_G/y,
+
+and retain §170's quantities (W,ell,u,tau). Its actual source gives
+
+    tau u <= theta_H K,
+    K=(1+alpha)W+alpha(1-ell),
+    u>=1-ell-2alpha W,
+    tau>=1-theta_H.
+
+Consequently every such source must satisfy
+
+    1 <= F_H(alpha,W,ell),
+
+where
+
+    F_H(alpha,W,ell)
+      =ell+2alpha W+r_H((1+alpha)W+alpha(1-ell)).       (SHB1)
+
+On the parameter range used here, F_H is increasing in each of
+(alpha,W,ell). In particular, replacing r_H by its limiting upper
+bound 1 and replacing the actual palette by a larger palette gives a
+valid necessary-condition envelope for the same original source.
+
+### Both 21-root branches force the complete five-prime color
+
+Let (S) be the concentrated color opposite (5), and put
+
+    C'={11,13,17,19,23}.
+
+The existing §165 and §170 restrictions give S subseteq C' and
+|S|>=4. The largest proper palette is therefore
+
+    S_4={11,13,17,19},
+    W_4=69/187,
+    C_(0,4)=698/8415.
+
+If (21) has the color of (5), the guard estimate gives
+alpha<7/34. If (21) has the opposite color, the pure 7^e and
+root-i 3*7^e prefixes give alpha<1/4. Applying the monotone
+envelope in SHB1, with r_H<1, gives respectively
+
+    F_infinity(7/34,W_4,C_(0,4))=13807/15895<1,
+    F_infinity(1/4,W_4,C_(0,4))=2687/2805<1.
+
+Both contradict the necessary inequality 1<=F_H. Hence the actual
+same-family color is forced in both branches:
+
+    S={11,13,17,19,23}.                                  (SHB2)
+
+This is a source-faithful support conclusion, not an independently optimized
+probability assignment.
+
+### The same envelope bounds both relevant heights
+
+For the full palette, use the already computed values
+
+    W_*=155/357,
+    C_*=6956/58905.
+
+If (21) has the opposite color, substituting H=3 and
+alpha=1/4 into (SHB1) gives
+
+    F_3 <=557083/589050<1,
+
+so H_3>=4. If (21) has the color of (5), substituting H=6
+and alpha=7/34 gives
+
+    F_6 <=121706983/122168970<1,
+
+so H_3>=7. The earlier G=H_7>=2 bound remains valid, and the
+21-in-the-5-color branch retains the earlier G>=3 conclusion.
+
+### Complete-parent exchange gives a finite exponent envelope
+
+Use §144's complete-private-region parent exchange with the actual opposite
+concentrated primes (5) and (11). Its two ternary fixed-root capacities
+are
+
+    N_1=(5-2)(11-1)=30,
+    N_2=(5-1)(11-2)=36,
+    N_*=36.
+
+The exchange therefore gives
+
+    H_3 <= N_*-1+floor((N_*-2)/2)=35+17=52.
+
+For the shared prime (7), the corresponding capacity is
+
+    N_0=(5-1)(11-1)-1=39,
+
+and the same complete-parent calculation gives
+
+    H_7 <=N_0-1+floor((N_0-2)/(7-1))
+        =38+floor(37/6)=44.                            (SHB3)
+
+Together with the already established initial-prime-segment and
+concentrated-height restrictions, the original period lies in the finite
+parameter envelope
+
+    Q | 3^52 7^44 product_(5<=p<=113, p prime, p!=7) p.   (SHB4)
+
+This is a finite parameterization of the same original source. It is not a
+finite enumeration and does not by itself exclude the remaining branch.
+The exchange uses the complete old private region and both EB1 comparison
+objectives; it is not a scalar inventory or a union of selected witnesses.
+
+### Missing cofactor labels are impossible in the 21-root-of-5 branch
+
+Assume 21 has the color of 5, so the branch has G>=3 and the
+original (147,63,441) restrictions from §170. Let
+
+    D_S={d>1 : d is an original numerical label and d divides product_(p in S)p}.
+
+If a squarefree d dividing product_(p in S) p is absent from D_S, divisor
+closure removes every possible original (3^b7^e d) descendant as well.
+Thus the §170 capacity can be evaluated on the actual palette
+
+    W_D=sum_(d in D_S) product_(p|d)1/(p-2),
+    C_D=2 sum_(d in D_S, omega(d)>=2) product_(p|d)1/(p-2).
+
+The full-palette limiting slack is
+
+    334462/333795 - 1 = 667/333795.
+
+Deleting a composite d lowers F_H by
+
+    c_H w_d,
+    c_H=2+2alpha+r_H(1-alpha),
+    w_d=product_(p|d)1/(p-2).
+
+In this branch G>=3 and H>=7, so r_H>=364/365 and
+c_H>=1094/365. The smallest pair weight is
+
+    w_(19*23)=1/357,
+
+and the triple 11*13*17 has weight 1/1485. Each produces
+a strict loss larger than the full-palette slack. Therefore the same
+original source must contain every pair label and the indicated triple:
+
+    pq is original for every distinct p,q in {11,13,17,19,23},
+    11*13*17 is original.                              (SHB5)
+
+These are literal numerical-label conclusions. They do not determine the
+residues or imply that all (3^b7^e d) descendants occur.
+
+### The remaining obligation is still a complete whole-cover argument
+
+The forced (63) and (441) labels do not supply a second unconditional
+loss in the §170 inequality. The guard contains pure 7^e and root-i
+3*7^e prefixes, not every 3^b7^e prefix with b>=2. The
+known phase exclusions for 63 against 49 and 147 therefore do not
+force a further 63/441 first-7-digit separation. A compatible local
+phase pattern remains possible, so no simultaneous subtraction is justified.
+
+Nor does (SHB4) authorize an exhaustive check without preserving every
+literal phase, original label and complete deletion liability. A closing
+step still needs either a finite obstruction over that exact source family,
+a source-preserving whole-parent descent whose repair covers the complete
+deleted complement, or an independently accepted arbitrary-height theorem
+followed by a treatment of the same-color primes allowed below 113.
+No admissible odd distinct whole cover has been found, and unrestricted
+Erdős #7 remains open at this point.
