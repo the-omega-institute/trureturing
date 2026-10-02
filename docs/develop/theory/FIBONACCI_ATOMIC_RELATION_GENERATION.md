@@ -46736,3 +46736,170 @@ $$
 上述加强归入本仓同源证书的推导：Fibonacci 五分平方密度负责使累计插值损失有有限极限；积分零点振荡负责增加频率分母；精确正向累计变换负责排除额外漂移。它们共同把 §336 的可允许对数增长预算收紧为 $K=0$ 的固定总储备。该储备的存在仍等价于未决的 RH，没有给出其无条件值。§335 的 $z_{\rm fin}=\ell_L^*+\mathfrak h_L$ 关系仍保留实际整数 Robin 核心修正；此谱累计储备不直接给所有 $n>5040$ 的逐点 Robin 余量下界。
 
 ## 追加锚（本行以下为增补区）
+
+## 338. 同源零点频率群、四分之一相位障碍与固定储备的振幅
+
+**定义 338.1（实际累计量的频率群与振幅）。** 固定 §337 的实际 Fibonacci 五分证书、起点 $A_0$ 及同一组已证实的块斜率。在本节的谱结论中假设 RH，正零点纵坐标按不同频率组成可数集 $\Gamma$，重数为 $m_\gamma$。置
+
+$$
+a_\gamma=\frac{m_\gamma}{\gamma(1/4+\gamma^2)}>0,\qquad
+B_\triangle=2\sum_{\gamma\in\Gamma}a_\gamma<\infty,
+$$
+
+$$
+\phi(t)=(e^{i\gamma t})_{\gamma\in\Gamma},\qquad
+H=\overline{\phi(\mathbb R)}\subset\mathbb T^\Gamma,\qquad
+s_H(z)=-2\sum_{\gamma\in\Gamma}a_\gamma\operatorname{Im}z_\gamma,
+\qquad A_* =\max_{z\in H}s_H(z).
+\tag{338.1}
+$$
+
+这里 $\mathbb T=\{z\in\mathbb C:|z|=1\}$，乘法逐坐标定义。$\phi$ 是连续群同态，$H$ 是紧闭子群；权重可和使 $s_H$ 一致绝对收敛且连续，故最大值存在。反演 $z\mapsto z^{-1}=\overline z$ 将 $s_H$ 变为 $-s_H$。整数关系均指有限支撑的 $h\in\mathbb Z^{(\Gamma)}$ 满足 $\sum_\gamma h_\gamma\gamma=0$；本节不假设频率有理线性独立。
+
+**定理 338.1（实际原始证书的精确尾振幅）。** 在定义338.1及 §337 的既有解析输入下，定理337.1的同一常数 $c_0$ 满足
+
+$$
+\limsup_{T\to\infty}\mathcal C^{\rm fin}(e^T)=c_0+A_*,\qquad
+\liminf_{T\to\infty}\mathcal C^{\rm fin}(e^T)=c_0-A_*,
+\qquad 0<A_*\le B_\triangle.
+\tag{338.2}
+$$
+
+因此实际累计量的尾振荡宽度恰为 $2A_*$，由同源零点的频率关系与权重共同决定。
+
+**证明。** 先说明每个正时间尾轨道仍稠密于 $H$。可数个圆的乘积是紧度量群；由序列 $\phi(n)$ 的紧性，可取严格递增的整数 $n_j$ 使 $\phi(n_j)\to z$。于是
+
+$$
+q_j=n_{2j}-n_j\longrightarrow\infty,\qquad
+\phi(q_j)=\phi(n_{2j})\phi(n_j)^{-1}\longrightarrow1.
+$$
+
+对任意固定实数 $t$，$t+q_j\to\infty$ 且 $\phi(t+q_j)\to\phi(t)$。故任意 $R\in\mathbb R$ 都有 $\overline{\phi([R,\infty))}=H$。这一步是经典紧群回归机制，整数 $n$ 只用于构造回归时间，最终稠密性是连续时间尾轨道的稠密性。
+
+定理337.1给
+
+$$
+\mathcal C^{\rm fin}(e^T)=c_0+s_H(\phi(T))+o(1).
+\tag{338.3}
+$$
+
+连续性、紧性及每个尾轨道的稠密性给 $s_H(\phi(T))$ 的上、下极限分别为 $\max_Hs_H$ 和 $\min_Hs_H=-A_*$；趋零误差不改变两端。三角不等式给 $A_*\le B_\triangle$。若 $A_*=0$，反演对称性迫使 $s_H$ 恒为零，从而其沿轨道的所有 Fourier–Bohr 系数都为零，与（337.10）的非零实际零点系数矛盾。因此 $A_*>0$。$\square$
+
+**定理 338.2（实际三角振幅的模四障碍与关系亏损）。** 对定义338.1的同一实际频率群，下列条件等价：
+
+$$
+\begin{aligned}
+&A_*=B_\triangle;\\
+&(i)_{\gamma\in\Gamma}\in H;\\
+&\text{对每个有限支撑整数关系 }h,\quad
+\sum_\gamma h_\gamma\gamma=0\ \Longrightarrow\
+\sum_\gamma h_\gamma\equiv0\pmod4.
+\end{aligned}
+\tag{338.4}
+$$
+
+对任意非零有限支撑整数关系 $h$，还有显式界
+
+$$
+B_\triangle-A_*
+\ge
+\frac{|1-i^{\sum_\gamma h_\gamma}|^2}
+{\displaystyle\sum_{\gamma\in\operatorname{supp}h}h_\gamma^2/a_\gamma}.
+\tag{338.5}
+$$
+
+若关系的系数和不被 $4$ 整除，分子为 $2$ 或 $4$，从而严格改进三角振幅上界。这是关系存在时的条件性证书；没有在此断言真实 $\zeta$ 零点具有一个这样的关系。
+
+**证明。** 对每个 $z\in H$，单位圆的精确距离恒等式给
+
+$$
+|z_\gamma-i|^2=2(1-\operatorname{Im}z_\gamma),\qquad
+B_\triangle+s_H(z)=\sum_\gamma a_\gamma|z_\gamma-i|^2\ge0.
+\tag{338.6}
+$$
+
+所有权重严格为正。若 $A_*=B_\triangle$，在一个最小值点 $s_H(z)=-B_\triangle$，右侧非负可和级数为零，故每个 $z_\gamma=i$。反之全四分之一相位在 $H$ 中就达到最小值 $-B_\triangle$，反演给最大值 $B_\triangle$。符号在这里有区别：$i$ 达到最小值，$-i$ 达到最大值。
+
+余下相位可达性复用经典 Kronecker 紧群判据；来源为 [Onishchik，Kronecker theorem，Encyclopedia of Mathematics，2020 修订](https://encyclopediaofmath.org/index.php?title=Kronecker_theorem&oldid=47528)。对任意有限频率集 $F$，连续时间轨道闭包的整数特征为
+
+$$
+\chi_h(\phi(t))=\exp\!\left(it\sum_{\gamma\in F}h_\gamma\gamma\right).
+$$
+
+它对所有实数 $t$ 恒为 $1$ 当且仅当频率线性组合严格等于零。经典有限环面子群判据因而说：目标相位属于有限投影闭包，当且仅当其满足每个这种零关系。乘积拓扑的基本邻域只限制有限个坐标，将判据传递到 $H$；在目标 $z_\gamma=i$ 上，特征值为 $i^{\sum h_\gamma}$，即（338.4）。连续时间的零关系不能替换为整数采样的 $\sum h_\gamma\gamma\in2\pi\mathbb Z$。
+
+为证定量界，取 $F=\operatorname{supp}h$。每个 $z\in H$ 都满足 $\prod_{\gamma\in F}z_\gamma^{h_\gamma}=1$。单位圆上整数幂的距离界与有限乘积的望远镜分解给
+
+$$
+|1-i^{\sum h_\gamma}|
+\le\sum_{\gamma\in F}|h_\gamma|\,|z_\gamma-i|.
+$$
+
+按 $a_\gamma$ 加权使用 Cauchy–Schwarz，得到
+
+$$
+|1-i^{\sum h_\gamma}|^2
+\le\left(\sum_{\gamma\in F}\frac{h_\gamma^2}{a_\gamma}\right)
+\left(\sum_{\gamma\in F}a_\gamma|z_\gamma-i|^2\right)
+\le\left(\sum_{\gamma\in F}\frac{h_\gamma^2}{a_\gamma}\right)
+(B_\triangle+s_H(z)).
+$$
+
+分母正且有限；在最小值点 $s_H(z)=-A_*$ 代入即得（338.5）。幂距离界、乘积估计和加权平方和不等式均为经典中间步骤，此处将它们施于（337.2）的实际正弦谱。
+
+例如只取频率 $\lambda,2\lambda$、权重均为 $1$ 的谐波模型，关系 $h=(2,-1)$ 的系数和为 $1$，分母为 $5$，故对每个实数 $t$ 有 $\sin(\lambda t)+\sin(2\lambda t)\le9/5<2$。这是关系如何阻止同向正弦饱和的模型，并非实际零点关系，也不将 $9/5$ 称为该模型的精确最大值。$\square$
+
+**定理 338.3（同一证书的最终储备下确界）。** 在定义338.1下，定义最终可行储备集合
+
+$$
+\mathscr D_{\rm ev}
+=\{D\ge0:\ \exists T_D,\ \forall T\ge T_D,
+\ D+\mathcal C^{\rm fin}(e^T)\ge0\}.
+$$
+
+则
+
+$$
+\inf\mathscr D_{\rm ev}=\max(0,A_*-c_0).
+\tag{338.7}
+$$
+
+每个非负 $D>A_*-c_0$ 都最终可行；若非负 $D<A_*-c_0$，则任意晚仍有失败截止。若 $c_0>A_*$，下确界 $0$ 已最终可行；只有在 $A_*-c_0\ge0$ 时，非负临界储备 $D=A_*-c_0$ 的可行性不能仅由（338.3）决定。
+
+**证明。** 令 $\ell=c_0-A_*$。由（338.2），对每个 $\varepsilon>0$，全部充分大的 $T$ 满足 $\mathcal C^{\rm fin}(e^T)\ge\ell-\varepsilon$，而任意晚仍有 $\mathcal C^{\rm fin}(e^T)<\ell+\varepsilon$。分别在 $D> -\ell$ 和 $D< -\ell$ 时取小于严格间距的 $\varepsilon$，便得两面判据及下确界。其非空性也由定理337.2保证。
+
+临界点确实需要额外误差信息：谐波模型 $C_\pm(T)=-\sin T\pm1/T$（$T>0$）具有同一非恒定正弦谱、$c_0=0$、$A_*=1$ 和趋零误差。临界储备 $D=1$ 对 $C_+$ 在每个 $T>0$ 都可行，而对 $C_-$ 在 $T=\pi/2+2\pi n$ 的任意晚截止失败。这是谱渐近式的边界模型，并非实际零点谱。因此下确界不是已证成的最小可行值。全起点区间的最小储备还需考虑有限早段及实际误差，不能由（338.7）直接替代。$\square$
+
+**定理 338.4（有效递归加密平移中心而保持谱振幅）。** 比较两个固定实际证书，起点同为 $A_0$，块边界及每块的共同斜率 $M_k$ 相同；在每块内，新证书的节点包含所有旧节点，两者均使用同源实际标签 $z_{\rm fin}$ 和相邻节点的双锥下包络。则
+
+$$
+\mathcal E^{\rm fin}_{\rm new}\ge\mathcal E^{\rm fin}_{\rm old},\qquad
+\mathcal C^{\rm fin}_{\rm new}(X)-\mathcal C^{\rm fin}_{\rm old}(X)
+=\mathcal L_{\rm old}(X)-\mathcal L_{\rm new}(X)
+\nearrow\delta\ge0,
+$$
+
+$$
+\delta=\mathcal L_{{\rm old},\infty}-\mathcal L_{{\rm new},\infty}<\infty.
+\tag{338.8}
+$$
+
+RH 下，新证书的常数为 $c_{0,\rm new}=c_{0,\rm old}+\delta$；$H$、$A_*$、尾振荡宽度 $2A_*$ 及（338.4）的相位可达性均相同，而最终储备下确界降为
+
+$$
+\max(0,A_*-c_{0,\rm old}-\delta).
+\tag{338.9}
+$$
+
+**证明。** 在旧格 $[a,b]$ 的任一新子格 $[c,d]$ 上，同一 Lipschitz 界给
+
+$$
+z_{\rm fin}(c)-M_k(x-c)\ge z_{\rm fin}(a)-M_k(x-a),\qquad
+z_{\rm fin}(d)-M_k(d-x)\ge z_{\rm fin}(b)-M_k(b-x).
+$$
+
+取最大值得包络单调；两者仍不超过同源 $Z$，故新证书的非负累计损失不超过旧证书。旧损失由定理335.1有有限极限，故新损失也有有限极限。累计量之差的导数为非负的包络之差乘以 $1/X$，因而（338.8）的差从零单调增至 $\delta$。将该极限加到同一（337.2）即得中心位移，正弦谱逐项保持相同，最后用定理338.3。
+
+此结论比较预先固定的两个证书。若整数格点最终重复，则重复节点不增加包络；它不推出无限加密使损失趋零。特别在 $m=3L+2$ 的实际原子格上，最细可用格距仍受该整数结构限制。五分迭代控制证书中心的插值亏损，零点频率群控制剩余谱振幅；二者通过同一累计储备相连。$\square$
+
+## 追加锚（本行以下为增补区）
