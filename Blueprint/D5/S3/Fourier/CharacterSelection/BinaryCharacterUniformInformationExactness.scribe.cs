@@ -16,6 +16,15 @@ internal sealed class BinaryCharacterUniformInformationExactnessDocument
         H("Binary Character Uniform Information Exactness"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("reciprocal-cardinality-mass-is-law"),
+                DeclarationHandle.Create(Prefix + "uniform_mass_is_law"),
+                H("Uniform mass is a probability law"),
+                StatementSource.FromAuthor(UniformLawFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every nonempty finite carrier X, the constant real mass "
+                    + "(card X)^-1 is nonnegative at every point and its sum over X is one."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("binary-character-profile-hom"),
                 DeclarationHandle.Create(Prefix + "binaryCharacterProfileHom"),
                 H("Joint binary-character profile"),
@@ -104,6 +113,16 @@ internal sealed class BinaryCharacterUniformInformationExactnessDocument
                         + "character index type, both the profile entropy and its conditional "
                         + "residual therefore vanish."))),
                 DescribeRole.Theorem))));
+
+    private static Formula UniformLawFormula()
+    {
+        Formula mass = new Formula.Power(Call("card", F.Id("X")), Seq(Minus, D(1)));
+        return Disp(Seq(Forall, Sp, F.Id("X"), Comma, Sp,
+            Call("Finite", F.Id("X")), Sp, Land, Sp, Call("Nonempty", F.Id("X")),
+            Sp, Implies, Sp, Open, Forall, Sp, F.Id("x"), InMacro, F.Id("X"), Comma, Sp,
+            D(0), Leq, mass, Close, Sp, Land, Sp,
+            Sum, Underscore, Grp(Seq(F.Id("x"), InMacro, F.Id("X"))), mass, Eq, D(1)));
+    }
 
     private static Formula Equal(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);

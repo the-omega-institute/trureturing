@@ -26,8 +26,7 @@ internal sealed class GenealogicalFiberTransportDocument : IScribeDocumentDefini
             Def("sourceEquiv", "Shape and label equivalence", "Assembly and decomposition are inverse on all nonempty ordered sources."),
             Def("labelsEquiv", "Indexed leaf labels", "Leaf labels are functions on the left-to-right leaf positions of a shape."),
             Def("indexedEquiv", "Complete indexed encoding", "An actual source corresponds to its ordered shape and its Boolean leaf-position function."),
-            Def("positionsEquiv", "Alpha positions", "A Boolean function on finite positions corresponds to the subset of positions labeled alpha."),
-            Def("positionedEquiv", "Shape and alpha positions", "An actual source corresponds to its ordered shape and the subset of its alpha positions."),
+            Def("positionedEquiv", "Shape and alpha positions", "An actual source corresponds to its ordered shape and the subset of its alpha positions, using the existing supportEquiv."),
             Def("fiberEquiv", "Fixed-composition correspondence", "For a+b>=1, actual sources of composition (a,b) correspond to shapes with a+b-1 internal nodes and subsets of exactly a alpha positions."),
             Def("fiberMap", "Actual iterated substitution", "The map from Fiber(v) to Fiber(M^n v) sends a source to its n-th substituted tree."),
             Def("uniformMass", "Real uniform mass", "Each tree in a nonempty fiber has mass 1/card(Fiber(v))."),
@@ -102,9 +101,10 @@ internal sealed class GenealogicalFiberTransportDocument : IScribeDocumentDefini
             EqOf(Tv(v,n),Sub(D(1),Fraction(N(v),N(M(n,v)))))));
         Formula lower=Imp(LeOf(D(2),Add(a,b)),LeOf(Sub(D(1),Pow(Fraction(D(1),D(2)),b)),Tv(v,D(1))));
         Formula limit=Call("Tendsto",Seq(n,Sp,Mapsto,Sp,Tv(v,n)),V("atTop"),Call("nhds",D(1)));
-        return Disp(And(All("a,b",Imp(LeOf(D(1),Add(a,b)),And(Call("Finite",Fiber(v)),
+        Formula conclusion = And(All("a,b",Imp(LeOf(D(1),Add(a,b)),And(Call("Finite",Fiber(v)),
             EqOf(Call("card",Fiber(v)),N(v)),Call("Nonempty",Fiber(v)),trajectory,transport,lower,limit))),
-            EqOf(Tv(Pair(D(1),D(1)),D(1)),Fraction(D(2),D(3)))));
+            EqOf(Tv(Pair(D(1),D(1)),D(1)),Fraction(D(2),D(3))));
+        return Disp(Seq(Begin, Grp(V("gathered")), conclusion, End, Grp(V("gathered"))));
     }
 
 }

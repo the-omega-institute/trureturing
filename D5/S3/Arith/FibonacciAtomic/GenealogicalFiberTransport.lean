@@ -9,6 +9,8 @@
 import D5.S3.Arith.FibonacciAtomic.GraftAffineClosure
 import D5.S3.TotalVariation.Pinsker
 import D5.S3.Entropy.Forgetting.CompletionEntropyMinimality
+import D5.S3.Fourier.CharacterSelection.BinaryCharacterUniformInformationExactness
+import D5.S3.Quantum.MultifactorCorrelationSectorDecomposition
 import Mathlib.Algebra.Free
 import Mathlib.Combinatorics.Enumerative.Catalan.Tree
 import Mathlib.Data.Fintype.Powerset
@@ -24,6 +26,9 @@ open scoped BigOperators
 open GraftAffineClosure (step quantity)
 open D5.S3.Entropy.Forgetting.CapacityMonotone (pushforward)
 open D5.S3.Entropy.Forgetting.CompletionEntropyMinimality (pushforward_is_law)
+open D5.S3.Fourier.CharacterSelection.BinaryCharacterUniformInformationExactness
+  (uniform_mass_is_law)
+open D5.S3.Quantum.MultifactorCorrelationSectorDecomposition (supportEquiv)
 
 /-- Actual nonempty ordered binary trees; true labels alpha and false labels beta. -/
 abbrev Source := FreeMagma Bool
@@ -151,54 +156,47 @@ private theorem substitution_injective : Function.Injective substitution := by
       injection h with h1 h2
       exact congrArg₂ FreeMagma.mul (hs h1) (hu h2)
 
-/-- The composition of a shaped source is the sum of its actual leaf labels. -/
-private theorem assemble_composition (s : BinaryTree Unit) (f : Fin s.numLeaves → Bool) :
-    composition (assemble s ((labelsEquiv s).symm f)) =
-      (∑ i, if f i then 1 else 0, ∑ i, if f i then 0 else 1) := by
-  induction s with
-  | nil =>
-    change composition (.of (f (0 : Fin 1))) =
-      (∑ i : Fin 1, if f i then 1 else 0, ∑ i : Fin 1, if f i then 0 else 1)
-    cases h : f (0 : Fin 1) <;>
-      simp only [Fin.sum_univ_one, h, Bool.false_eq_true, ↓reduceIte, composition]
-  | node u l r hl hr =>
-    change composition (assemble l ((labelsEquiv l).symm
-      (fun i => f (Fin.castAdd r.numLeaves i)))) +
-      composition (assemble r ((labelsEquiv r).symm
-        (fun i => f (Fin.natAdd l.numLeaves i)))) = _
-    rw [hl, hr]
-    apply Prod.ext
-    · change (∑ i, if f (Fin.castAdd r.numLeaves i) then 1 else 0) +
-        (∑ i, if f (Fin.natAdd l.numLeaves i) then 1 else 0) =
-        ∑ i : Fin (l.numLeaves + r.numLeaves), if f i then 1 else 0
-      exact (Fin.sum_univ_add (a := l.numLeaves) (b := r.numLeaves)
-        (fun i => if f i then (1 : ℕ) else 0)).symm
-    · change (∑ i, if f (Fin.castAdd r.numLeaves i) then 0 else 1) +
-        (∑ i, if f (Fin.natAdd l.numLeaves i) then 0 else 1) =
-        ∑ i : Fin (l.numLeaves + r.numLeaves), if f i then 0 else 1
-      exact (Fin.sum_univ_add (a := l.numLeaves) (b := r.numLeaves)
-        (fun i => if f i then (0 : ℕ) else 1)).symm
-
-/-- A Boolean assignment is the set of positions assigned alpha. -/
-noncomputable def positionsEquiv (L : ℕ) : (Fin L → Bool) ≃ Finset (Fin L) :=
-  (Equiv.piCongrRight fun _ => Equiv.propEquivBool.symm).trans Fintype.finsetEquivSet.symm
-
 /-- The actual tree is encoded by its shape and its alpha positions. -/
 noncomputable def positionedEquiv : Source ≃ Σ s : BinaryTree Unit, Finset (Fin s.numLeaves) :=
-  indexedEquiv.trans (Equiv.sigmaCongrRight fun s => positionsEquiv s.numLeaves)
+  indexedEquiv.trans (Equiv.sigmaCongrRight fun s => supportEquiv (ι := Fin s.numLeaves))
 
 /-- The fixed-composition fiber corresponds to the shapes and alpha-position subsets. -/
 noncomputable def fiberEquiv (v : ℕ × ℕ) (hv : 1 ≤ v.1 + v.2) :
     Fiber v ≃ Σ s : BinaryTree.treesOfNumNodesEq (v.1 + v.2 - 1),
       {A : Finset (Fin s.val.numLeaves) // A.card = v.1} := by
   classical
+  have assemble_composition (s : BinaryTree Unit) (f : Fin s.numLeaves → Bool) :
+      composition (assemble s ((labelsEquiv s).symm f)) =
+        (∑ i, if f i then 1 else 0, ∑ i, if f i then 0 else 1) := by
+    induction s with
+    | nil =>
+      change composition (.of (f (0 : Fin 1))) =
+        (∑ i : Fin 1, if f i then 1 else 0, ∑ i : Fin 1, if f i then 0 else 1)
+      cases h : f (0 : Fin 1) <;>
+        simp only [Fin.sum_univ_one, h, Bool.false_eq_true, ↓reduceIte, composition]
+    | node u l r hl hr =>
+      change composition (assemble l ((labelsEquiv l).symm
+        (fun i => f (Fin.castAdd r.numLeaves i)))) +
+        composition (assemble r ((labelsEquiv r).symm
+          (fun i => f (Fin.natAdd l.numLeaves i)))) = _
+      rw [hl, hr]
+      apply Prod.ext
+      · change (∑ i, if f (Fin.castAdd r.numLeaves i) then 1 else 0) +
+          (∑ i, if f (Fin.natAdd l.numLeaves i) then 1 else 0) =
+          ∑ i : Fin (l.numLeaves + r.numLeaves), if f i then 1 else 0
+        exact (Fin.sum_univ_add (a := l.numLeaves) (b := r.numLeaves)
+          (fun i => if f i then (1 : ℕ) else 0)).symm
+      · change (∑ i, if f (Fin.castAdd r.numLeaves i) then 0 else 1) +
+          (∑ i, if f (Fin.natAdd l.numLeaves i) then 0 else 1) =
+          ∑ i : Fin (l.numLeaves + r.numLeaves), if f i then 0 else 1
+        exact (Fin.sum_univ_add (a := l.numLeaves) (b := r.numLeaves)
+          (fun i => if f i then (0 : ℕ) else 1)).symm
   have actual_composition (s : BinaryTree Unit) (A : Finset (Fin s.numLeaves)) :
       composition (positionedEquiv.symm ⟨s, A⟩) = (A.card, s.numLeaves - A.card) := by
-    change composition (assemble s ((labelsEquiv s).symm ((positionsEquiv _).symm A))) = _
+    change composition (assemble s ((labelsEquiv s).symm ((supportEquiv).symm A))) = _
     rw [assemble_composition]
-    have hf (i : Fin s.numLeaves) : ((positionsEquiv _).symm A i = true) ↔ i ∈ A := by
-      change (@decide (i ∈ A) (Classical.propDecidable _) = true) ↔ i ∈ A
-      simp only [decide_eq_true_eq]
+    have hf (i : Fin s.numLeaves) : ((supportEquiv).symm A i = true) ↔ i ∈ A := by
+      simp [supportEquiv]
     simp_rw [hf]
     have htrue : (∑ i : Fin s.numLeaves, if i ∈ A then 1 else 0) = A.card := by
       simp
@@ -277,20 +275,6 @@ noncomputable def transportVariation (v : ℕ × ℕ) (n : ℕ) : ℝ :=
   D5.S3.TotalVariation.Pinsker.totalVariation
     (pushforward (fiberMap v n) (uniformMass v)) (uniformMass (step^[n] v))
 
-/-- Actual fibers have their Catalan and binomial cardinality. -/
-private theorem fiber_cardinality (v : ℕ × ℕ) (hv : 1 ≤ v.1 + v.2) :
-    Nat.card (Fiber v) = fiberCount v := by
-  classical
-  rw [Nat.card_congr (fiberEquiv v hv), Nat.card_eq_fintype_card, Fintype.card_sigma]
-  simp_rw [Fintype.card_finset_len, Fintype.card_fin]
-  have hleaves (s : BinaryTree.treesOfNumNodesEq (v.1 + v.2 - 1)) :
-      s.val.numLeaves = v.1 + v.2 := by
-    have hs := BinaryTree.mem_treesOfNumNodesEq.mp s.property
-    rw [BinaryTree.numLeaves_eq_numNodes_succ, hs]
-    omega
-  simp_rw [hleaves]
-  simp [fiberCount, BinaryTree.treesOfNumNodesEq_card_eq_catalan]
-
 /-- Exact hidden fibers, probability transport, and asymptotic singularity. -/
 theorem result :
     (∀ a b : ℕ, 1 ≤ a + b →
@@ -311,6 +295,18 @@ theorem result :
       Filter.Tendsto (transportVariation (a, b)) Filter.atTop (nhds 1)) ∧
     transportVariation (1, 1) 1 = (2 / 3 : ℝ) := by
   classical
+  have fiber_cardinality (v : ℕ × ℕ) (hv : 1 ≤ v.1 + v.2) :
+      Nat.card (Fiber v) = fiberCount v := by
+    classical
+    rw [Nat.card_congr (fiberEquiv v hv), Nat.card_eq_fintype_card, Fintype.card_sigma]
+    simp_rw [Fintype.card_finset_len, Fintype.card_fin]
+    have hleaves (s : BinaryTree.treesOfNumNodesEq (v.1 + v.2 - 1)) :
+        s.val.numLeaves = v.1 + v.2 := by
+      have hs := BinaryTree.mem_treesOfNumNodesEq.mp s.property
+      rw [BinaryTree.numLeaves_eq_numNodes_succ, hs]
+      omega
+    simp_rw [hleaves]
+    simp [fiberCount, BinaryTree.treesOfNumNodesEq_card_eq_catalan]
   have count_pos (v : ℕ × ℕ) (hv : 1 ≤ v.1 + v.2) : 0 < fiberCount v := by
     have hc : 0 < catalan (v.1 + v.2 - 1) := by
       have hp := Nat.centralBinom_pos (v.1 + v.2 - 1)
@@ -450,29 +446,23 @@ theorem result :
       have h := (fiberMap (a, b) n t).property
       exact ⟨h, congrArg quantity h⟩
     · intro n
+      letI : Nonempty (Fiber (a, b)) := hnonempty
+      letI : Nonempty (Fiber (step^[n] (a, b))) := hnonempty.map (fiberMap (a, b) n)
       have source_law : (∀ x, 0 ≤ uniformMass (a, b) x) ∧
           (∑ x, uniformMass (a, b) x) = 1 := by
-        constructor
-        · intro x; simp [uniformMass]
-        · simp only [uniformMass, Finset.sum_const, Finset.card_univ, nsmul_eq_mul,
-            ← Nat.card_eq_fintype_card]
-          exact mul_inv_cancel₀ (by exact_mod_cast
-            (show Nat.card (Fiber (a, b)) ≠ 0 by
-              rw [fiber_cardinality _ hv']
-              exact (count_pos _ hv').ne'))
+        simpa only [uniformMass, Nat.card_eq_fintype_card] using
+          (uniform_mass_is_law (X := Fiber (a, b)))
+      have target_law : (∀ y, 0 ≤ uniformMass (step^[n] (a, b)) y) ∧
+          (∑ y, uniformMass (step^[n] (a, b)) y) = 1 := by
+        simpa only [uniformMass, Nat.card_eq_fintype_card] using
+          (uniform_mass_is_law (X := Fiber (step^[n] (a, b))))
       have pushed_law := pushforward_is_law (uniformMass (a, b))
         (fiberMap (a, b) n) source_law
-      refine ⟨map_injective _ n, ?_, ?_, pushed_law.2, ?_, variation _ hv' n⟩
+      refine ⟨map_injective _ n, ?_, ?_, pushed_law.2, target_law.2, variation _ hv' n⟩
       · rw [Finset.card_image_of_injective _ (map_injective _ n), Finset.card_univ,
           ← Nat.card_eq_fintype_card, fiber_cardinality _ hv']
       · intro y
-        exact ⟨pushed_law.1 y, by simp [uniformMass]⟩
-      · simp only [uniformMass, Finset.sum_const, Finset.card_univ, nsmul_eq_mul,
-          ← Nat.card_eq_fintype_card]
-        exact mul_inv_cancel₀ (by exact_mod_cast
-          (show Nat.card (Fiber (step^[n] (a, b))) ≠ 0 by
-            rw [fiber_cardinality _ (step_nonempty _ hv' n)]
-            exact (count_pos _ (step_nonempty _ hv' n)).ne'))
+        exact ⟨pushed_law.1 y, target_law.1 y⟩
     · intro hL
       have hc := catalan_scale (a + b - 1) b (by omega)
       have hchoose : Nat.choose (a + b) a ≤ Nat.choose (b + (a + b)) b := by
