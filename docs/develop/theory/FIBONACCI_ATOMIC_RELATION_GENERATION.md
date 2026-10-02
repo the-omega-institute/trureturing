@@ -45091,9 +45091,132 @@ S\le\max\{S-\eta,1/2\}.
 因此任何固定多项式稀疏程度都由同一实际平均判据覆盖。$d=4$ 的普通权重版本补上 §320 末尾未建立的运输关系；这里不把两套平均的差无条件断言为趋零，而是分别通过同源谱预算与指数自举得到 RH 强度。
 
 整个推导依赖 $\eta>0$。几何增长的截止，如直接以 Fibonacci 数作指数网格，通常只有 $h_j\asymp a_j$，不供应本证明的正指数改善。当前结论既没有覆盖这种网格，也没有证明其相应判据为假。$\square$
+
+## 326. 实际稀疏平均的负部增长指数与零点实部上确界
+
+**定义 326.0。** 沿用 §325 的实际整数 $T_{j^d}$、截止 $a_j=3j^d+2$、普通左端对数平均 $A_J^{(d)}$，并采用同节的假设302.1与明列经典解析输入。固定整数 $d\ge1$，记 $\eta=1/d>0$，定义
+\[
+S=\sup\{\Re\rho:\rho\text{ 为 }\zeta\text{ 的非平凡零点}\},\qquad
+R_d=\limsup_{J\to\infty}
+\frac{\log(1+\max\{-A_J^{(d)},0\})}{\log a_J}.
+\tag{326.1}
+\]
+指标 $J\ge17$ 为整数；经典零点存在、临界带及反射对称性给 $1/2\le S\le1$。这里的增长尺度是解析截止 $a_J$，不是实际整数 $T_{J^d}$ 的大小。
+
+**定理 326.1（负部增长率读回零点区域）。** 在定义326.0的输入下，$R_d$ 是有限实数，且对每个固定 $d\ge1$ 有
+\[
+R_d=S-1/2.
+\tag{326.2}
+\]
+因此同一个增长指数由全部固定多项式次数读到。对任意固定 $0\le\nu\le1/2$，还有
+\[
+S\le1/2+\nu
+\quad\Longleftrightarrow\quad
+\forall\epsilon>0\ \exists K_\epsilon\ge0\ \exists J_\epsilon\ge17\
+\forall J\ge J_\epsilon:\quad
+A_J^{(d)}\ge-K_\epsilon a_J^{\nu+\epsilon}.
+\tag{326.3}
+\]
+预算和阈值可依赖固定的 $d,\nu,\epsilon$，不要求一致常数。这是同一实际平均的单边增长判据，不预先假设任一具体预算存在。
+
+**证明。** 先给出双边上增长控制，尤其保留 §315 的非负端点缺损。该节的实际恒等式是
+\[
+q_j=Z(a_j)+\kappa-\mathfrak h_{j^d}+\varepsilon_j,
+\quad \varepsilon_j\to0,\quad
+\mathfrak h_L=\sqrt{m_L}\,[q_a(m_L)+\log m_L\,q_e(m_L)].
+\tag{326.4}
+\]
+经典 PNT 给 $a(x)\to0,e(x)\to0$。在充分大的尾域上，经典二次余项界 $0\le q_a\le2a^2$、$0\le q_e\le e^2$，加上 §325 的无条件 $Z=O(\sqrt x\log x)$，得到
+\[
+|q_j|=O_d(\sqrt{a_j}\log a_j),\qquad
+|A_J^{(d)}|=O_d(\sqrt{a_J}\log a_J).
+\tag{326.5}
+\]
+第二式利用正权重总质量恰等于分母；有限初段可放大常数。于是（326.1）的比值非负，且其 limsup 在 $[0,1/2]$ 内，确为有限实数。
+
+若 $S<1$，取任意固定 $S<\theta<1$。§325 已引用的经典截断显式公式给 $\psi(x)-x=O_\theta(x^\theta)$。由于 $\theta>1/2$，经典素幂余项 $\psi-\vartheta=O(\sqrt x\log^2x)$ 可被吸收，故 $a(x)=O_\theta(x^{\theta-1})$。同截断 Abel 式
+\[
+e(x)=a(x)/\log x-I_\vartheta(x)-\tau(x)
+\]
+及其正尾核与 $\tau(x)=O(1/x)$ 给 $e(x)=O_\theta(x^{\theta-1}/\log x)$。因此
+\[
+\mathfrak h_L=O_\theta(m_L^{2\theta-3/2}),\qquad
+Z(x)=O_\theta(x^{\theta-1/2}).
+\tag{326.6}
+\]
+缺损项没有被删为小 $o(1)$：当 $\theta>3/4$ 它可以增长，但 $\theta<1$ 使 $2\theta-3/2<\theta-1/2$，所以它的增长阶仍低于谱项。由（326.4）及正权重，得到
+\[
+|A_J^{(d)}|=O_{d,\theta}(a_J^{\theta-1/2}).
+\tag{326.7}
+\]
+令 $\theta\downarrow S$，有 $R_d\le S-1/2$。若 $S=1$，同一不等式由（326.5）的 $R_d\le1/2$ 给出。这一步不需要 $S$ 被某个零点取得。
+
+反向从一个允许增长的单边预算出发。固定 $0\le\nu<1/2$，假设
+\[
+A_J^{(d)}\ge-Ka_J^\nu\quad\text{最终成立},\qquad K\ge0.
+\tag{326.8}
+\]
+（326.4）的非负缺损与收敛误差的正权平均给
+\[
+\sum_{j=16}^{J-1}\omega_jZ(a_j)
+\ge-K_1a_J^\nu\log(a_J/a_{16})
+\tag{326.9}
+\]
+最终成立；$a_J^\nu\ge1$ 将固定常数吸收进 $K_1$。
+
+§325 的无条件整格积分误差和部分格子估计遂对每个固定
+\[
+\max\{\nu,1/2-\eta,0\}<\lambda<1/2
+\tag{326.10}
+\]
+给全部实数尾域上的累计下界 $\mathcal A(T)\ge-K_\lambda e^{\lambda T}$。预算中的对数因子由严格条件 $\lambda>\nu$ 吸收。沿同一个正逆累计恒等式（325.13），其指数下界运输保持 $\lambda$，再由同一个带辅助实极点的 Landau 论证（325.15）–（325.16）得 $S\le1/2+\lambda<1$。因此此轮预算先取得严格的零点区域。
+
+现在取任意 $S<\theta<1$，以改善后的 $Z,Z'$ 幂界重做同源整格与部分格子估计。允许指数变为
+\[
+\max\{\nu,\theta-1/2-\eta,0\}<\lambda<1/2.
+\tag{326.11}
+\]
+该区间非空；重新使用指数正逆变换与 Landau，并令 $\lambda$ 下降到其下端，得到
+\[
+S\le\max\{1/2+\nu,\theta-\eta\}.
+\]
+再令 $\theta\downarrow S$，有
+\[
+S\le\max\{1/2+\nu,S-\eta\}.
+\tag{326.12}
+\]
+若 $S>1/2+\nu$，右侧两项都小于 $S$，矛盾。因此（326.8）推出
+\[
+S\le1/2+\nu.
+\tag{326.13}
+\]
+这里网格指数 $\eta$ 决定每轮改善，预算指数 $\nu$ 决定收紧的下限；两者不能互相替代。$\nu=0$ 恢复 §325 的 RH 反向，但尚未由 $S\le1/2+\nu$ 推出端点预算 $A_J^{(d)}\ge-Ka_J^\nu$；这里只得到全部严格更大的预算指数。
+
+若 $R_d<1/2$，对每个固定 $R_d<\nu<1/2$，limsup 的定义使
+\[
+\log(1+\max\{-A_J^{(d)},0\})\le\nu\log a_J
+\]
+最终成立，因此 $A_J^{(d)}\ge-a_J^\nu$ 最终成立。由（326.13），$S\le1/2+\nu$。令 $\nu\downarrow R_d$ 得 $S\le1/2+R_d$。若 $R_d=1/2$，这项不等式直接由 $S\le1$ 成立。结合已得 $R_d\le S-1/2$，证明（326.2）；也覆盖 $S=1$ 的边界情形。
+
+最后，非负序列的对数 limsup 与全部严格上指数预算等价。若 $R_d\le\nu$，对每个 $\epsilon>0$ 最终有 $1+\max\{-A_J^{(d)},0\}\le a_J^{\nu+\epsilon}$，从而得到（326.3）右侧。反之，对每个固定 $\epsilon>0$，右侧使
+\[
+1+\max\{-A_J^{(d)},0\}
+\le(1+K_\epsilon)a_J^{\nu+\epsilon}
+\]
+最终成立；常数的对数除以 $\log a_J\to\infty$ 后趋零，故 $R_d\le\nu+\epsilon$。令 $\epsilon\downarrow0$ 得 $R_d\le\nu$，再用（326.2）完成（326.3）。$\square$
+
+**推论 326.2（缓慢负增长不能独立脱离 RH）。** 在同一输入下，RH 等价于 $R_d=0$，也等价于（326.3）在 $\nu=0$ 时的全正指数预算。若 RH 不成立，则 $R_d>0$，而且对每个固定 $0\le r<S-1/2$、任意 $K\ge0$ 与任意整数 $J_0\ge17$，都有整数 $J\ge J_0$ 使
+\[
+A_J^{(d)}<-Ka_J^r.
+\tag{326.14}
+\]
+
+**证明。** 零点反射对称性使 RH 等价于 $S=1/2$，代入定理326.1。若 RH 不成立而（326.14）失败，就会有某个最终预算 $A_J^{(d)}\ge-Ka_J^r$。由于 $r<S-1/2\le1/2$，有 $r<1/2$，可用（326.13）得 $S\le1/2+r$，矛盾。
+
+这确定的是任意晚负值的临界幂指数，不确定出现频率、某个可计算的违例、端点指数处的大小，或未归一化余量的无界性。只有将全部正指数预算作为同一实际平均的前提，才得到 RH；固定一个正指数只给相应零点区域。几何或 Fibonacci 截止仍没有本证明使用的 $\eta>0$，不能把（326.2）移到这些网格。$\square$
 ## 追加锚（本行以下为增补区）
 
-## 326. 紧邻宿主截止的低成本素乘子族
+## 327. 紧邻宿主截止的低成本素乘子族
 
 本节采用 §§317–319、324 的实际 CA宿主与余量运输接口，直接接用文献研究提供的素带构造。它供应大量低成本的实际整数候选，尚不供应相位命中或绝对余量。下面的构造及组合属于纸面推导，没有Lean核验或原创性声明。
 
@@ -45103,7 +45226,7 @@ $$
 F_C(t)=\frac{Z(Ct)}{Z(C)},\qquad
 \mathcal A_P=P\log P,\qquad
 \mathcal D_C(t)=\log t-\mathcal A_P\log F_C(t).
-\tag{326.1}
+\tag{327.1}
 $$
 
 全局价格及 $\mathcal A_P\epsilon<1$ 已给 $0\le\mathcal D_C(t)\le\log t$。定义
@@ -45114,7 +45237,7 @@ U_P=P+\frac P{\log P},\quad
 m_P=|\mathcal P_P|,\quad
 r_P=\left\lfloor\frac{\kappa S}{\log U_P}\right\rfloor,
 \quad Q_C=\lfloor e^{\kappa S}\rfloor,
-\tag{326.2}
+\tag{327.2}
 $$
 
 以及实际平方自由乘子族
@@ -45123,12 +45246,12 @@ $$
 \mathcal T_C=
 \left\{\prod_{p\in E}p:
 E\subseteq\mathcal P_P,\ |E|=r_P\right\}.
-\tag{326.3}
+\tag{327.3}
 $$
 
 这里只增加原宿主没有的素数；$P$ 始终指 $P^+(C)$，不是新整数的最大素因子。
 
-**命题 326.1（统一小损失与候选数量）。** 充分大的每个实际宿主都有 $1\le r_P\le m_P$，族中所有乘子同时满足
+**命题 327.1（统一小损失与候选数量）。** 充分大的每个实际宿主都有 $1\le r_P\le m_P$，族中所有乘子同时满足
 
 $$
 \begin{gathered}
@@ -45140,7 +45263,7 @@ b_P:=r_P\left(1+\frac1{\log P}+\frac{\log P}{2P}\right)
 |\mathcal T_C|
 =\exp\left(\left(\frac\kappa2+o(1)\right)S\right).
 \end{gathered}
-\tag{326.4}
+\tag{327.4}
 $$
 
 所有误差对同一宿主的整族乘子统一，不依赖宿主的详细指数或并列最优价格。
@@ -45150,7 +45273,7 @@ $$
 $$
 d_P(p):=\mathcal D_C(p)
 =\log p-P\log P\log(1+1/p)>0.
-\tag{326.5}
+\tag{327.5}
 $$
 
 严格正号也直接由 $\log(1+1/p)<1/p$、$p>P$ 得到。写 $p=P(1+h)$，$0<h\le1/\log P$，用 $\log(1+x)\ge x-x^2/2$ 得
@@ -45162,7 +45285,7 @@ d_P(p)
      +\frac{P\log P}{2p^2}\\
 &\le1+\frac1{\log P}+\frac{\log P}{2P}.
 \end{aligned}
-\tag{326.6}
+\tag{327.6}
 $$
 
 因这些素数不同且都不在宿主中，同一 $t$ 有
@@ -45177,7 +45300,7 @@ $r_P\log P\le\log t\le r_P\log U_P\le\kappa S$；
 $$
 \vartheta(U_P)-\vartheta(P)\sim\frac P{\log P},
 \qquad m_P\sim\frac P{\log^2P}.
-\tag{326.7}
+\tag{327.7}
 $$
 
 每个带内素数的对数在 $\log P$ 与 $\log U_P$ 之间，故第二式由第一式夹出，不要求异常短区间素数定理。于是
@@ -45187,12 +45310,12 @@ $$
 \log\binom{m_P}{r_P}
 =r_P\log(m_P/r_P)+O(r_P+r_P^2/m_P)
 =\left(\frac\kappa2+o(1)\right)S.
-\tag{326.8}
+\tag{327.8}
 $$
 
 这里 $r_P^2/m_P=O_\kappa(1)$，其余误差均为 $o(S)$。$\square$
 
-**推论 326.2（同一整数上的一阶抵消）。** 对全部 $t\in\mathcal T_C$，既有 CA输入及（324.9）给统一关系
+**推论 327.2（同一整数上的一阶抵消）。** 对全部 $t\in\mathcal T_C$，既有 CA输入及（324.9）给统一关系
 
 $$
 \begin{gathered}
@@ -45202,7 +45325,7 @@ e^\gamma\log\left(1+\frac{\log t}{\log C}\right)
 W(Ct)-W(C)=o(1),\qquad
 W(n)=\sqrt{\log n}\,[e^\gamma\log\log n-Z(n)].
 \end{gathered}
-\tag{326.9}
+\tag{327.9}
 $$
 
 证明。$\mathcal A_P\log F_C(t)=\log t-\mathcal D_C(t)
@@ -45215,16 +45338,16 @@ $$
 \int_0^1\#\{t\in\mathcal T_C:\|t\theta\|<\delta_C\}\,d\theta
 =2\delta_C|\mathcal T_C|
 =\exp\left(\left(\frac\kappa2-\eta+o(1)\right)S\right).
-\tag{326.10}
+\tag{327.10}
 $$
 
-这只是整数乘法保持圆上均匀长度的既有性质。它不认证实际相位 $\theta=C\varphi$ 的命中。对两个候选作差也不能自动补上缺口，因为差不再保留（326.3）的素因子结构。
+这只是整数乘法保持圆上均匀长度的既有性质。它不认证实际相位 $\theta=C\varphi$ 的命中。对两个候选作差也不能自动补上缺口，因为差不再保留（327.3）的素因子结构。
 
 因此这里已经控制每个候选的成本，但尚未在候选族内构造真实低位null前缀；规范来源、单位位和接缝仍须由同一整数的严格相位命中读回。整族中也未建立任何独立的正 $W(Ct)$ 下界。
 
 ## 追加锚（本行以下为增补区）
 
-## 327. 有理相位弧对更低回传成本的阻碍
+## 328. 有理相位弧对更低回传成本的阻碍
 
 固定 $0<2\eta<\kappa$，沿用 $S,Q_C$，置 $\delta_C=e^{-\eta S}$。既有 §318 的有限Dirichlet输入只需把预算改为 $R_C=\lceil\delta_C^{-1}\rceil$，就供应
 
@@ -45232,16 +45355,16 @@ $$
 1\le t\le R_C<Q_C,\qquad
 \|tC\varphi\|<\delta_C,\qquad
 \mathcal D_C(t)\le\eta S+o(1).
-\tag{327.1}
+\tag{328.1}
 $$
 
 它的上侧归一化回传成本为 $e^\gamma\eta+o(1)$。这是旧输入的参数取值，不是新增选择定理。更低成本需要另外控制实际相位，下面给出斜率统一方法的明确边界。
 
-**命题 327.1（有理弧内的最小命中成本）。** 充分大 $P$ 时，选一素数
+**命题 328.1（有理弧内的最小命中成本）。** 充分大 $P$ 时，选一素数
 
 $$
 \frac1{8\delta_C}\le q\le\frac1{4\delta_C}.
-\tag{327.2}
+\tag{328.2}
 $$
 
 对任意与 $q$ 互素的整数 $a$，若实相位 $\theta$ 满足
@@ -45249,27 +45372,27 @@ $$
 $$
 \left\|\theta-\frac aq\right\|_{\mathbb T}
 \le\frac{\delta_C}{2Q_C},
-\tag{327.3}
+\tag{328.3}
 $$
 
 则每个 $1\le t\le Q_C$、$\|t\theta\|<\delta_C$ 的命中都被 $q$ 整除，并有
 
 $$
 \mathcal D_C(t)\ge\eta S+O(1).
-\tag{327.4}
+\tag{328.4}
 $$
 
 同时 $t=q$ 是一个命中，且
 $\mathcal D_C(q)=\eta S+O(1)$。式中成本仍按同一个实际 CA宿主 $C$ 计算；相位允许改变。
 
-证明。经典 Bertrand输入保证（327.2）的素数最终存在。此时 $q>P$、$q\le Q_C$、$\log q=\eta S+O(1)$。若 $q\nmid t$，圆上三角不等式给
+证明。经典 Bertrand输入保证（328.2）的素数最终存在。此时 $q>P$、$q\le Q_C$、$\log q=\eta S+O(1)$。若 $q\nmid t$，圆上三角不等式给
 
 $$
 \|t\theta\|\ge
 \left\|\frac{at}{q}\right\|
 -t\left\|\theta-\frac aq\right\|_{\mathbb T}
 \ge\frac1q-\frac{\delta_C}2>\delta_C.
-\tag{327.5}
+\tag{328.5}
 $$
 
 所以命中必有 $t=q^v u$、$v\ge1$、$(q,u)=1$。
@@ -45284,14 +45407,14 @@ $$
 &=\log q-\mathcal A_P\log(1+1/q)
 =\eta S+O(1).
 \end{aligned}
-\tag{327.6}
+\tag{328.6}
 $$
 
 这里 $\mathcal D_C(u)\ge0$ 来自同源价格，$\mathcal A_P/q\to0$。另一方面，
 $\|q\theta\|\le q\delta_C/(2Q_C)\le1/(8Q_C)<\delta_C$，
 故 $q$ 本身命中，给出相同上界。$\square$
 
-这证明（327.1）的首项成本系数对任意斜率的统一断言不能降低。它没有证明任何实际 CA相位 $C\varphi$ 落入（327.3），因此不是实际CA低成本命中的反例，更不是Robin反例。
+这证明（328.1）的首项成本系数对任意斜率的统一断言不能降低。它没有证明任何实际 CA相位 $C\varphi$ 落入（328.3），因此不是实际CA低成本命中的反例，更不是Robin反例。
 
 黄金数的经典坏逼近下界，在乘以 $C$ 后只给
 
@@ -45299,25 +45422,25 @@ $$
 \|qC\varphi\|\ge\frac{c_\varphi}{Cq},\qquad
 \left\|C\varphi-\frac aq\right\|_{\mathbb T}
 \ge\frac{c_\varphi}{Cq^2}.
-\tag{327.7}
+\tag{328.7}
 $$
 
 它的下界尺度为 $\exp(-(1+o(1))P-2\eta S+O(1))$，
-小于（327.3）的弧宽 $\exp(-(\kappa+\eta)S+O(1))$，
+小于（328.3）的弧宽 $\exp(-(\kappa+\eta)S+O(1))$，
 因而这份下界不能排除该弧。逐个 $C\varphi$ 都是二次无理数，也不供应宿主族统一的有界部分商常数。
 
-§326 的廉价候选使用的素数全小于 $q$，故在（327.3）的相位弧中全部不命中。这把候选数量与真实相位交叠明确分开；下一步需要实际 $C\varphi$ 的联合算术输入。
+§327 的廉价候选使用的素数全小于 $q$，故在（328.3）的相位弧中全部不命中。这把候选数量与真实相位交叠明确分开；下一步需要实际 $C\varphi$ 的联合算术输入。
 
 ## 追加锚（本行以下为增补区）
 
-## 328. 保留廉价来源与独立储备的有限频率接口
+## 329. 保留廉价来源与独立储备的有限频率接口
 
 对每个宿主，先独立指定一个比较类 $\mathscr K_C$，保留
 
 $$
 \mathcal G_C=\{t\in\mathcal T_C:Ct\in\mathscr K_C\},
 \qquad H_C=\lceil\delta_C^{-1}\rceil,\qquad e(x)=e^{2\pi ix}.
-\tag{328.1}
+\tag{329.1}
 $$
 
 需要的是同一实际整数满足的联合计数
@@ -45328,10 +45451,10 @@ $$
 \mathbf1_{\{\|tC\varphi\|<\delta_C\}}
 \mathbf1_{\{Ct\in\mathscr K_C\}}>0,
 \qquad b_C=o(S).
-\tag{328.2}
+\tag{329.2}
 $$
 
-§326 已为 $\mathcal T_C$ 供应 $b_C=b_P$，尚未供应命中和比较类的绝对储备。
+§327 已为 $\mathcal T_C$ 供应 $b_C=b_P$，尚未供应命中和比较类的绝对储备。
 
 直接使用 Roger Baker,
 *Diophantine approximation with smooth numbers*，
@@ -45342,12 +45465,12 @@ $$
 \sum_{h=1}^{H_C}
 \left|\sum_{t\in\mathcal G_C}e(htC\varphi)\right|
 <\frac{|\mathcal G_C|}{6}.
-\tag{328.3}
+\tag{329.3}
 $$
 
-Lemma3 的原文对任意有限实序列成立：若每项到整数的距离均不小于 $1/H$，左侧不少于项数的六分之一。故（328.3）强迫非空 $\mathcal G_C$ 中某项满足
+Lemma3 的原文对任意有限实序列成立：若每项到整数的距离均不小于 $1/H$，左侧不少于项数的六分之一。故（329.3）强迫非空 $\mathcal G_C$ 中某项满足
 $\|tC\varphi\|<1/H_C\le\delta_C$。
-这里只应用既有有限结论，不新增一般频率定理，也没有证明（328.3）。
+这里只应用既有有限结论，不新增一般频率定理，也没有证明（329.3）。
 
 一旦这份证书与同一个独立比较类实现，既有 §318 的实际有限来源接口给
 
@@ -45355,12 +45478,12 @@ $$
 h(Ct)=0,\qquad
 \text{实际低位null窗数}\ge
 \left\lfloor\frac{\eta S}{3\log\varphi}\right\rfloor-2,
-\tag{328.4}
+\tag{329.4}
 $$
 
-且保留合法接缝、有限后继与正值End；（326.9）同时给 $W(Ct)-W(C)=o(1)$。若另有独立、统一的固定储备 $W(n)\ge a>0$ 对全部相关 $n\in\mathscr K_C$ 最终成立，才可回传 $W(C)\ge a-o(1)$。储备前提与频率证书都尚未建立，不能由宿主运输恒等式自己供应。
+且保留合法接缝、有限后继与正值End；（327.9）同时给 $W(Ct)-W(C)=o(1)$。若另有独立、统一的固定储备 $W(n)\ge a>0$ 对全部相关 $n\in\mathscr K_C$ 最终成立，才可回传 $W(C)\ge a-o(1)$。储备前提与频率证书都尚未建立，不能由宿主运输恒等式自己供应。
 
-### 328.1 可直接复用的文献与未满足的范围
+### 329.1 可直接复用的文献与未满足的范围
 
 在 $x=Q_C$、$y\asymp P$ 下，有
 $y\asymp(\log x)^2$、
@@ -45370,13 +45493,13 @@ $|\mathcal T_C|=x^{1/2+o(1)}$。
 
 | 原始结果 | 与当前目标的对应及仍缺条件 |
 |---|---|
-| Baker, arXiv:2007.05823v2，§1 未编号定理及式（1.2），Lemma3 | 固定平滑指数 $B>2$ 的逼近指数是 $1/3-2/(3B)$；$B=2$ 不给正指数，也不允许把固定参数改为 $B(P)\downarrow2$。Lemma3 则已直接用于（328.3），无需固定斜率渐近。 |
+| Baker, arXiv:2007.05823v2，§1 未编号定理及式（1.2），Lemma3 | 固定平滑指数 $B>2$ 的逼近指数是 $1/3-2/(3B)$；$B=2$ 不给正指数，也不允许把固定参数改为 $B(P)\downarrow2$。Lemma3 则已直接用于（329.3），无需固定斜率渐近。 |
 | Drappeau–Shparlinski, [arXiv:2404.10278v2，Corollary1.2](https://arxiv.org/html/2404.10278v2) | 结果确实对实相位统一。其全平滑集合上界在 $y\asymp\log^2x$ 时含 $x^{3/4+o(1)}$ 的保证精度，已大于当前整族 $x^{1/2+o(1)}$。全集合的取消也不能未经运输直接当成带比较类筛选的子集取消。 |
 | Nath–Rahaman, [arXiv:2603.17732v2，Theorem1](https://arxiv.org/html/2603.17732v2) | 给固定无理斜率上的无限多平滑逼近，并把指数改进到 $6/17$ 以下；平滑截止要求足够大的固定对数幂。它不供应临界幂二、指定宿主尺度、指定窄素带或全部 $hC\varphi$ 的统一频率证书。 |
 | Granville–Lamzouri, [arXiv:2604.02306v1，Theorem1.2、Corollary1.2](https://arxiv.org/html/2604.02306v1) | 支持模不超过一的乘法系数。其固定常数 $B$ 的条件 $(2q)^{\log(u+1)/B}\le y$，$u=\log x/\log y$，在当前尺度迫使 $\log(2q)\le(2+o(1))B$。因此不能静默纳入增长分母；比较类筛选也未证明是该乘法系数。 |
 | Baier–Roy, [arXiv:2512.02174v3，Theorem1 条件（2）–（4）、Corollary2](https://arxiv.org/html/2512.02174v3) | 对 $X\asymp P$、$Y\asymp P/\log P$ 的素带，其允许的最小窗宽仍不小于多项式尺度 $P^{-1/4+10\epsilon}\sqrt{\log P}$，大于 $e^{-\eta S}$；有界部分商推论还缺宿主统一常数。 |
 
-这些原文范围没有供应（328.3）；这不是所有可能文献或方法都失败的断言。表中版本均用于其明确的条件，未把预印本提升为独立验证或原创性依据。仓内 [Musin 条目](../../../Library/Analytic/musin2026higherorder.md) 的递归接触保留与固定整数整除结论也不供应实际 CA后继的深相位命中；更换最优对象仍需同源运输，不能直接换成所需比较类。
+这些原文范围没有供应（329.3）；这不是所有可能文献或方法都失败的断言。表中版本均用于其明确的条件，未把预印本提升为独立验证或原创性依据。仓内 [Musin 条目](../../../Library/Analytic/musin2026higherorder.md) 的递归接触保留与固定整数整除结论也不供应实际 CA后继的深相位命中；更换最优对象仍需同源运输，不能直接换成所需比较类。
 
 这条路线现在保留了完整合同：实际宿主、明确低成本素乘子、全部需要控制的频率、真实null前缀及独立绝对储备。频率上界与储备仍是两个未解义务，没有新增Robin安全范围或RH证明。
 
