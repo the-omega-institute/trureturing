@@ -42,6 +42,22 @@ search readings do not establish worldwide priority or exhaustive literature
 coverage. The source's ordinary-resistance results do not by themselves
 certify the stronger GME and full-separability conditions.
 
+Closest prior art: O. Gühne, B. Jungnitsch, T. Moroder and Y. S. Weinstein,
+*Multiparticle entanglement in graph-diagonal states: necessary and sufficient
+conditions for four qubits*, Phys. Rev. A 84, 052319 (2011), doi
+10.1103/PhysRevA.84.052319, [arXiv:1107.4863v2](https://arxiv.org/abs/1107.4863v2),
+Lemma 1, Eq. (8): for every choice of signs $\alpha,\beta$,
+$W_2=\tfrac12\mathbb 1-|{+}{+}{+}{+}\rangle\langle\cdot|-|{-}\alpha\beta{-}\rangle\langle\cdot|$
+is a witness of genuine multipartite entanglement for four-qubit states diagonal in
+the cluster-state basis. Deleting one vertex of the five-cycle leaves the path $P_4$, and the two neighbours of
+the lost vertex each pick up a $Z$, so each one-qubit-loss marginal is
+$\tfrac12(|{+}{+}{+}{+}\rangle\langle\cdot|+|{-}{+}{+}{-}\rangle\langle\cdot|)$ in the $P_4$
+graph basis and $\operatorname{Tr}(\rho W_2)=\tfrac12-\tfrac12-\tfrac12=-\tfrac12$ for $\alpha=\beta={+}$. Together
+with Han–Zhang–Zhang, Theorem 1 (every two-qubit-loss marginal is fully separable),
+this gives a short written derivation of the C₅ clause. Neither paper states the C₅
+clause, and the 2026 source still lists it as open; the frozen theorem here is the
+kernel-checked settlement.
+
 ## Route
 
 For the initial density matrix ρ₅ use the witness W = I/2 − ρ₅. For each
@@ -171,6 +187,8 @@ No atom or coverage edge is used.
   proof valid beyond stabilizers. The cycle Gram tables and Pauli-product
   certificates supply neither, and the cited known examples are not new
   open-problem targets.
+
+- **Written, not kernel-checked**: the short derivation from Gühne–Jungnitsch–Moroder–Weinstein (2011), Lemma 1, and Han–Zhang–Zhang, Theorem 1, recorded under Gap. It shows that the published tools already decide the C₅ clause once the marginal is written in the $P_4$ graph basis; this module's certificates give an independent kernel-checked proof of the same clause.
 
 ## ASSUMED-UNVERIFIED
 
