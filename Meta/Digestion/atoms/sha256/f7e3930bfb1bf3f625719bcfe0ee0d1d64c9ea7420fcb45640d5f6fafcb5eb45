@@ -1,0 +1,4 @@
+- The finite-parabolic orders and faithfulness used above are checked exactly in verify_cycle9_coxeter_local.py (orders 16, 12, 18; K order 6).
+
+The Coxeter-sector hypotheses are documented in PR 12065 (https://github.com/the-omega-institute/trureturing/pull/12065), and the exact finite-quotient audit and double-coset count in PR 12077 (https://github.com/the-omega-institute/trureturing/pull/12077).
+
