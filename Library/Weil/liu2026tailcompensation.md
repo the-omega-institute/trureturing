@@ -95,7 +95,7 @@ The [existing same-symbol coupling allowance](../Fourier/montgomery1978largesiev
 
 ## A source-formula application to the actual prime block at $c=9$
 
-The source's weighted Schur formula in Appendix B.2 can be reused without its old support-dependent constants. At the new physical half-width $a=\log3$, let $I=(-a,a)$, $\mathcal H=L^2(I;\mathbb C)$ and
+The source's weighted Schur formula in Appendix B.4, “Weighted Schur bound including prime power eight,” can be reused without its old support-dependent constants. At the new physical half-width $a=\log3$, let $I=(-a,a)$, $\mathcal H=L^2(I;\mathbb C)$ and
 
 $$
 (S_df)(u)=\mathbf1_I(u+d)f(u+d),\qquad
@@ -183,3 +183,45 @@ $$
 $$
 
 The bound applies to the complete complex Hilbert space, and therefore its even subspace. This is a paper application of an existing weighted Schur formula with a new exact scalar parameter calculation; it is not a new kernel theorem, reproduction of a fixed-window certificate or claim of priority. The pole and Gamma band are still in $K$, and the positive exterior-frequency contribution remains in $T_{\rm tail}$. Neither $M_9\succ0$ nor its invertibility establishes positivity of $M_9+K+U$ or $Q$.
+
+The following independent scalar replay produces the six quadratic minima using only exact fractions. The logarithm and root enclosures are the cited analytic inputs; this program verifies their downstream rational comparison, not the source's full analytic proof or a complete Weil certificate.
+
+```python
+from fractions import Fraction as F
+
+beta, target = F(5, 8), F(27, 10)
+log_lo = {2: 693147, 3: 1098612, 5: 1609437, 7: 1945910}
+log_hi = {2: 693148, 3: 1098613, 5: 1609438, 7: 1945911}
+root_lo = {2: 1414213, 3: 1732050, 4: 2000000,
+           5: 2236067, 7: 2645751, 8: 2828427}
+powers = {2: (2, 1), 3: (3, 1), 4: (2, 2),
+          5: (5, 1), 7: (7, 1), 8: (2, 3)}
+weight = {n: F(log_hi[p], root_lo[n])
+          for n, (p, j) in powers.items()}
+shift_lo = {n: F(1) if n == 3 else F(j * log_lo[p], log_hi[3])
+            for n, (p, j) in powers.items()}
+shift_hi = {n: F(1) if n == 3 else F(j * log_hi[p], log_lo[3])
+            for n, (p, j) in powers.items()}
+ends = [F(0), shift_lo[4] - 1, 1 - shift_lo[2],
+        shift_lo[5] - 1, shift_lo[7] - 1, shift_lo[8] - 1, F(1)]
+assert all(left < right for left, right in zip(ends, ends[1:]))
+negative = [[2, 3], [2, 3, 4], [2, 3, 4], [2, 3, 4, 5],
+            [2, 3, 4, 5, 7], [2, 3, 4, 5, 7, 8]]
+positive = [[2], [2], [], [], [], []]
+floors = [F(2, 5), F(13, 100), F(11, 10),
+          F(4, 25), F(1, 50), F(4, 25)]
+
+for i, (left, right) in enumerate(zip(ends, ends[1:])):
+    neg, pos = negative[i], positive[i]
+    W = sum((weight[n] for n in neg + pos), F(0))
+    B = (sum((weight[n] * shift_lo[n] for n in neg), F(0))
+         - sum((weight[n] * shift_hi[n] for n in pos), F(0)))
+    D = sum((weight[n] * shift_hi[n] ** 2 for n in neg + pos), F(0))
+    A, E, C = beta * (target - W), 2 * beta * B, target - W - beta * D
+    points = [left, right]
+    if A > 0 and left < -E / (2 * A) < right:
+        points.append(-E / (2 * A))
+    minimum = min(A * x * x + E * x + C for x in points)
+    assert minimum > floors[i] >= F(1, 50)
+    print(i + 1, minimum)
+```
