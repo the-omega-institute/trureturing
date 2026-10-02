@@ -10893,7 +10893,7 @@ P_S=I-R(Q-C\mathcal F_S)
 -\mathcal F_SR(Q\mathcal F_S-C).
 $$
 
-对所取 $f\in C_c^\infty(\mathbb R)$，沿用 $g(u)=f(\log u)$、$H_f(t)=(g*g^*)(e^t)$、$A_f=\rho(g*g^*)$。假定 $H_f$ 实且偶、$\operatorname{supp}H_f\subset[-r,r]$，并采用源中 $A_fP_S$、$A_fP$ 的迹类接口及第 14.4 节各局部差的迹类合同。定义
+对所取 $f\in C_c^\infty(\mathbb R)$，沿用 $g(u)=f(\log u)$、$H_f(t)=(g*g^*)(e^t)$、$A_f=\rho(g*g^*)$。假定 $H_f$ 实且偶、$\operatorname{supp}H_f\subset[-r,r]$，并采用 CC 的 archimedean $A_fP$ 迹类接口及第 14.4 节各局部差的迹类合同。有限素数的 $A_fP_S$ 迹类性质由下述有界运输推得，不另归给 archimedean 供应定理。定义
 
 $$
 \begin{aligned}
@@ -10951,7 +10951,16 @@ $$
 
 特别地，若 $\widehat f(0)=\widehat f(i/2)=\widehat f(-i/2)=0$ 且 $\mathcal P$ 包含所有支撑活跃素数，则 $\sigma_S-Q_{\rm full}=D_{\rm corr}$。本结论给出固定有限 $S$ 和固定支撑的绝对误差，未给出随 $S,r$ 增长的相对估计 $D_{\rm corr}\le\sigma_S$。
 
-**证明。** 在 logarithmic unitary 坐标中，$A_f=X_fX_f^*$，其中 $X_f$ 为卷积 $f$ 的算子。$B_f$ 的核只在 $[-r,0]\times[0,r]$ 上非零。两个 cutoff 的 Hilbert–Schmidt 因子分别具有范数 $\sqrt{rM_f}$；复用 Schatten Hölder 与 Young 不等式，得到
+**证明。** $A_f$ 与 $T$ 交换，故 $A_fP_S=T(A_fP)K^{-1}PT^*$ 是迹类；这里复用 archimedean 供应结果和迹类理想的有界乘法封闭性。
+
+在 logarithmic unitary 坐标中，$A_f=X_fX_f^*$，其中 $X_f$ 为卷积 $f$ 的算子。$B_f$ 的核只在 $[-r,0]\times[0,r]$ 上非零。令 $E_-=\mathbf1_{[-r,0]}$、$E_+=\mathbf1_{[0,r]}$，则
+
+$$
+B_f=(E_-X_f)(E_+X_f)^*,\qquad
+\|E_-X_f\|_2=\|E_+X_f\|_2=\sqrt{rM_f}.
+$$
+
+这两个有限区间因子为 Hilbert–Schmidt；复用 Schatten Hölder 与 Young 不等式，得到
 
 $$
 \|B_f\|_1\le rM_f,\qquad
@@ -11041,7 +11050,31 @@ $$
 =W_\infty(H_f)-\mathcal A_{\mathcal P}(f).
 $$
 
-普通正交投影公式与第 14.1 节相同的 cross-cutoff 展开给出
+为核对最后的投影迹运算，记
+
+$$
+\mathcal M_0=W-\mathcal F_SQ\mathcal F_S,\qquad
+Y=Q\mathcal F_SW,\qquad A_{11}=QA_fQ.
+$$
+
+archimedean 供应结果和有限个局部加权差给出 $A_f\mathcal M_0\in\mathfrak S_1$，并有
+
+$$
+QA_f\mathcal M_0W=-A_{11}CY+B_f(W-Y^*Y),\qquad
+YY^*=Q-C^2.
+$$
+
+因为 $B_f$ 是迹类，$A_{11}CY$ 是迹类。$Y^*R$ 是 $Y$ 的有界右逆，故 $A_{11}C$ 是迹类；再用 $WA_fQC=B_f^*C$ 是迹类，得到 $A_fC\in\mathfrak S_1$。这不要求 $C^2$ 自身属于迹类。
+
+于是普通正交投影公式的有界算子身份
+
+$$
+P_S-\mathcal M_0
+=RC\mathcal F_SW+W\mathcal F_SCR
++RC^2-\mathcal F_SRC^2\mathcal F_S
+$$
+
+可以安全地与 $A_f$ 配对取迹。实偶 $H_f$ 给出 $[A_f,\mathcal F_S]=0$，最后两个加权迹相消；前两个互为共轭，其和为 $2\operatorname{Re}\operatorname{Tr}(CRB_f\mathcal F_SQ)$。因此
 
 $$
 \sigma_S(f)=W_\infty(H_f)-\mathcal A_{\mathcal P}(f)+D_{\rm corr}(f).
