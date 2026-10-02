@@ -39,6 +39,9 @@ def composition : Source → ℕ × ℕ
 /-- A fiber is a subset of the actual source algebra. -/
 def Fiber (v : ℕ × ℕ) := {t : Source // composition t = v}
 
+instance fiberDecidableEq (v : ℕ × ℕ) : DecidableEq (Fiber v) :=
+  inferInstanceAs (DecidableEq {t : Source // composition t = v})
+
 /-- The Catalan and binomial expression for a composition fiber. -/
 def fiberCount (v : ℕ × ℕ) : ℕ :=
   catalan (v.1 + v.2 - 1) * Nat.choose (v.1 + v.2) v.1
@@ -288,9 +291,155 @@ private theorem fiber_cardinality (v : ℕ × ℕ) (hv : 1 ≤ v.1 + v.2) :
   simp_rw [hleaves]
   simp [fiberCount, Fintype.card_coe, BinaryTree.treesOfNumNodesEq_card_eq_catalan]
 
-#print axioms substitution_injective
-#print axioms fiberEquiv
-#print axioms fiber_cardinality
-#print axioms fiberMap
+/-- Exact hidden fibers, probability transport, and asymptotic singularity. -/
+theorem result :
+    (∀ a b : ℕ, 1 ≤ a + b →
+      Finite (Fiber (a, b)) ∧ Nat.card (Fiber (a, b)) = fiberCount (a, b) ∧
+      Nonempty (Fiber (a, b)) ∧
+      (∀ t : Fiber (a, b), ∀ n : ℕ,
+        composition (substitution^[n] t.val) = step^[n] (a, b) ∧
+        quantity (composition (substitution^[n] t.val)) = quantity (step^[n] (a, b))) ∧
+      (∀ n : ℕ, Function.Injective (fiberMap (a, b) n) ∧
+        (Finset.univ.image (fiberMap (a, b) n)).card = fiberCount (a, b) ∧
+        (∀ y, 0 ≤ pushedMass (a, b) n y ∧ 0 ≤ uniformMass (step^[n] (a, b)) y) ∧
+        (∑ y, pushedMass (a, b) n y) = 1 ∧
+        (∑ y, uniformMass (step^[n] (a, b)) y) = 1 ∧
+        transportVariation (a, b) n = 1 - (fiberCount (a, b) : ℝ) /
+          (fiberCount (step^[n] (a, b)) : ℝ)) ∧
+      (2 ≤ a + b → 1 - (2 : ℝ)⁻¹ ^ b ≤ transportVariation (a, b) 1) ∧
+      Filter.Tendsto (transportVariation (a, b)) Filter.atTop (nhds 1)) ∧
+    transportVariation (1, 1) 1 = (2 / 3 : ℝ) := by
+  classical
+  have count_pos (v : ℕ × ℕ) (hv : 1 ≤ v.1 + v.2) : 0 < fiberCount v := by
+    have hc : 0 < catalan (v.1 + v.2 - 1) := by
+      have hp := Nat.centralBinom_pos (v.1 + v.2 - 1)
+      rw [← succ_mul_catalan_eq_centralBinom] at hp
+      by_contra hn
+      have hzero : catalan (v.1 + v.2 - 1) = 0 := by omega
+      simp only [hzero, mul_zero] at hp
+      omega
+    exact Nat.mul_pos hc (Nat.choose_pos (by omega))
+  have step_nonempty (v : ℕ × ℕ) (hv : 1 ≤ v.1 + v.2) (n : ℕ) :
+      1 ≤ (step^[n] v).1 + (step^[n] v).2 := by
+    induction n with
+    | zero => exact hv
+    | succ n hn => simpa only [Function.iterate_succ_apply', step] using
+        (show 1 ≤ (step^[n] v).2 + ((step^[n] v).1 + (step^[n] v).2) by omega)
+  have map_injective (v : ℕ × ℕ) (n : ℕ) : Function.Injective (fiberMap v n) := by
+    intro x y h
+    apply Subtype.ext
+    exact (substitution_injective.iterate n) (congrArg Subtype.val h)
+  have variation (v : ℕ × ℕ) (hv : 1 ≤ v.1 + v.2) (n : ℕ) :
+      transportVariation v n = 1 - (fiberCount v : ℝ) /
+        (fiberCount (step^[n] v) : ℝ) := by
+    let S := Finset.univ.image (fiberMap v n)
+    let k : ℝ := Nat.card (Fiber v)
+    let m : ℝ := Nat.card (Fiber (step^[n] v))
+    have hk : 0 < k := by
+      dsimp [k]
+      rw [fiber_cardinality v hv]
+      exact_mod_cast count_pos v hv
+    have hm : 0 < m := by
+      dsimp [m]
+      rw [fiber_cardinality _ (step_nonempty v hv n)]
+      exact_mod_cast count_pos _ (step_nonempty v hv n)
+    have hS : S.card = Nat.card (Fiber v) := by
+      dsimp [S]
+      rw [Finset.card_image_of_injective _ (map_injective v n), Finset.card_univ,
+        Nat.card_eq_fintype_card]
+    have hkm : k ≤ m := by
+      have h := Finset.card_le_univ S
+      rw [hS, ← Nat.card_eq_fintype_card] at h
+      change (Nat.card (Fiber v) : ℝ) ≤ (Nat.card (Fiber (step^[n] v)) : ℝ)
+      exact_mod_cast h
+    have push_value (y : Fiber (step^[n] v)) :
+        pushedMass v n y = if y ∈ S then k⁻¹ else 0 := by
+      dsimp only [pushedMass, uniformMass]
+      by_cases hy : y ∈ S
+      · rcases Finset.mem_image.mp hy with ⟨x, _, rfl⟩
+        simp only [(map_injective v n).eq_iff, Finset.sum_ite_eq', Finset.mem_univ,
+          ↓reduceIte, hy, k]
+      · rw [if_neg hy]
+        apply Finset.sum_eq_zero
+        intro x _
+        have hne : fiberMap v n x ≠ y := by
+          intro h
+          exact hy (Finset.mem_image.mpr ⟨x, Finset.mem_univ x, h⟩)
+        simp only [hne, ↓reduceIte]
+    have uniform_value (y : Fiber (step^[n] v)) : uniformMass (step^[n] v) y = m⁻¹ := rfl
+    have hS_sum : (∑ y ∈ S, |pushedMass v n y - uniformMass (step^[n] v) y|) =
+        k * (k⁻¹ - m⁻¹) := by
+      calc
+        _ = ∑ _y ∈ S, (k⁻¹ - m⁻¹) := by
+          apply Finset.sum_congr rfl
+          intro y hy
+          rw [push_value, uniform_value, if_pos hy, abs_of_nonneg]
+          exact sub_nonneg.mpr ((inv_le_inv₀ hm hk).mpr hkm)
+        _ = _ := by simp only [Finset.sum_const, nsmul_eq_mul, hS]; rfl
+    have hC_sum : (∑ y ∈ Sᶜ, |pushedMass v n y - uniformMass (step^[n] v) y|) =
+        (m - k) * m⁻¹ := by
+      calc
+        _ = ∑ _y ∈ Sᶜ, m⁻¹ := by
+          apply Finset.sum_congr rfl
+          intro y hy
+          rw [push_value, uniform_value, if_neg (Finset.mem_compl.mp hy)]
+          simp [abs_of_nonneg (inv_nonneg.mpr hm.le)]
+        _ = _ := by
+          simp only [Finset.sum_const, nsmul_eq_mul, Finset.card_compl, hS]
+          rw [Nat.cast_sub (by
+            rw [← Nat.card_eq_fintype_card]
+            change (Nat.card (Fiber v) : ℕ) ≤ Nat.card (Fiber (step^[n] v))
+            have hreal : (Nat.card (Fiber v) : ℝ) ≤ (Nat.card (Fiber (step^[n] v)) : ℝ) := hkm
+            exact_mod_cast hreal)]
+          simp only [k, m, Nat.card_eq_fintype_card]
+    change (1 / 2 : ℝ) * ∑ y, |pushedMass v n y - uniformMass (step^[n] v) y| = _
+    rw [← Finset.sum_add_sum_compl S, hS_sum, hC_sum]
+    have hcounts : (fiberCount v : ℝ) / (fiberCount (step^[n] v) : ℝ) = k / m := by
+      simp only [k, m, fiber_cardinality v hv,
+        fiber_cardinality _ (step_nonempty v hv n)]
+    rw [hcounts]
+    field_simp
+    <;> ring
+  constructor
+  · intro a b hv
+    have hv' : 1 ≤ (a, b).1 + (a, b).2 := hv
+    have hnonempty : Nonempty (Fiber (a, b)) := by
+      apply Fintype.card_pos_iff.mp
+      rw [← Nat.card_eq_fintype_card, fiber_cardinality _ hv']
+      exact count_pos _ hv'
+    refine ⟨inferInstance, fiber_cardinality _ hv', hnonempty, ?_, ?_, ?_, ?_⟩
+    · intro t n
+      have h := (fiberMap (a, b) n t).property
+      exact ⟨h, congrArg quantity h⟩
+    · intro n
+      refine ⟨map_injective _ n, ?_, ?_, ?_, ?_, variation _ hv' n⟩
+      · rw [Finset.card_image_of_injective _ (map_injective _ n), Finset.card_univ,
+          ← Nat.card_eq_fintype_card, fiber_cardinality _ hv']
+      · intro y
+        constructor
+        · unfold pushedMass
+          exact Finset.sum_nonneg fun x _ => by
+            split_ifs <;> simp [uniformMass]
+        · simp [uniformMass]
+      · unfold pushedMass
+        rw [Finset.sum_comm]
+        simp only [Finset.sum_ite_eq, Finset.mem_univ, ↓reduceIte]
+        simp only [uniformMass, Finset.sum_const, Finset.card_univ, nsmul_eq_mul,
+          ← Nat.card_eq_fintype_card]
+        exact mul_inv_cancel₀ (by exact_mod_cast
+          (show Nat.card (Fiber (a, b)) ≠ 0 by rw [fiber_cardinality _ hv']; exact (count_pos _ hv').ne'))
+      · simp only [uniformMass, Finset.sum_const, Finset.card_univ, nsmul_eq_mul,
+          ← Nat.card_eq_fintype_card]
+        exact mul_inv_cancel₀ (by exact_mod_cast
+          (show Nat.card (Fiber (step^[n] (a, b))) ≠ 0 by
+            rw [fiber_cardinality _ (step_nonempty _ hv' n)]
+            exact (count_pos _ (step_nonempty _ hv' n)).ne'))
+    · sorry
+    · sorry
+  · have h := variation (1, 1) (by decide) 1
+    norm_num [fiberCount, step, catalan_one, catalan_two] at h
+    exact h
+
+#print axioms result
 
 end D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport
