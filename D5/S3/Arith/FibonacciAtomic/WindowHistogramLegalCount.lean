@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Neutral gaps give exact legal-word histograms and terminal label fibers. -/
+   digest: Neutral gaps give exact legal-word histograms, terminal counts and labels. -/
 
 import D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd
 import D5.S3.Combinatorics.ArrowWilfGapData
@@ -535,7 +535,7 @@ private noncomputable def appendEndpointEquiv (h h' : Window → ℕ) (f : Windo
         exact List.dropLast_append_getLast? f (by rw [w.property]; simp) }
 
 /-- Unique neutral-position decomposition and a reversible canonical code
-that counts every histogram and retains exact terminal constraints and labels. -/
+that counts every histogram and exact terminal fiber, with its terminal labels. -/
 theorem result :
     (∀ w : List Window, ∃! p : Cuts, Clean p ∧ join p = w) ∧
     (∀ w : List Window, (split w).2.length = w.count .zero + w.count .middle) ∧
@@ -686,7 +686,8 @@ theorem result :
   refine ⟨decomposition.1, decomposition.2.1, decomposition.2.2, code_language.1,
     fun p => (terminal_shapes p).1, fun p => (terminal_shapes p).2,
     (histogram_encoding (fun _ => 0)).1,
-    (fun h => (histogram_encoding h).2), histogram_count, ?_, ?_, absent, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+    (fun h => (histogram_encoding h).2), histogram_count, ?_, ?_, absent,
+    ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro a b c r s hn
     classical
     letI : Finite (HistogramWords (histogram a b c r s)) := (histogram_count a b c r s).2.1
