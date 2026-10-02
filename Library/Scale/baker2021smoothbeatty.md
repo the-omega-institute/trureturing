@@ -195,3 +195,101 @@ relaxation of an $h=1$ optimizing condition requires its own phase
 transfer instead of assuming that the unit window is preserved.
 Neither this diagnostic nor layer removal supplies the missing
 [same-source signed prime-error estimate](../ArithSums/nicolas2025comparison.md).
+
+## The controlled comparator does not enter the existing slow-norm family
+
+The comparator's eventual unit bit zero does not place it in the known
+uniformly safe FIB family. This can be checked using existing suppliers,
+without assuming a Robin violation or introducing a new prime estimate.
+Write
+
+$$
+\Delta(n)=e^\gamma\log\log n-Z(n).
+$$
+
+First reuse the same-cutoff envelope calculation in the
+[Nicolas note](../ArithSums/nicolas2025comparison.md). For $X\to\infty$,
+put $v=\log X$ and $L=\log v$. The already inspected Dusart inputs give
+
+$$
+\log\frac{\Phi(X)}{e^\gamma L}=O(L^{-2}),
+$$
+
+while Nicolas's Theorem 1.2 at the fixed order $J=1$ gives
+
+$$
+\log\frac{\Phi(X)}{\Sigma(X)}
+=O\!\left(\frac1{\sqrt vL}\right).
+$$
+
+Consequently
+
+$$
+e^\gamma\log\log X-\Sigma(X)=O(1/L)\longrightarrow0.
+$$
+
+This is an application of the existing unconditional envelope and
+prime-product estimates, rather than a new additive asymptotic theorem.
+The [classical record property](../Arith/alaoglu1944highly.md) gives
+$\Sigma(C)=Z(C)$ for every CA $C$, including tied maximizers. Hence
+$\Delta(C_i)\to0$ for every $C_i\to\infty$ used above. A relative
+Grönwall limit alone would not justify this additive conclusion.
+
+For their actual comparators $N_i=t_iC_i$, retain the price bound and
+the same two integers. Since $Z(C_i)=O(\log P_i)$, the response change
+and budget change both satisfy
+
+$$
+\begin{aligned}
+0\le Z(N_i)-Z(C_i)&=O\!\left(\frac{\log\log P_i}{P_i}\right),\\
+0\le e^\gamma\bigl(\log\log N_i-\log\log C_i\bigr)
+&=O\!\left(\frac{\log\log P_i}{P_i}\right).
+\end{aligned}
+$$
+
+Thus $|\Delta(N_i)-\Delta(C_i)|\to0$ and $\Delta(N_i)\to0$ as well.
+Neither additive limit determines a Robin sign.
+
+Now use the eventual canonical $h(N_i)=0$ decomposition, with the
+actual nonnegative nonzero composition $(A_i,B_i)$:
+
+$$
+g_i=\gcd(A_i,B_i),\qquad x_i=(A_i/g_i,B_i/g_i),\qquad
+U_i=2(x_i)_1+3(x_i)_2,\qquad D_i=|Q(x_i)|,\qquad N_i=g_iU_i.
+$$
+
+The existing canonical-strip bound in
+[FIB theory, Corollary 200.6](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)
+gives $g_i<U_i$, so $\sqrt{N_i}<U_i\le N_i$ and $U_i\to\infty$.
+For any fixed $0<\omega<1/2$, that volume's §201.6 supplies a uniform
+positive additive margin on the family
+
+$$
+\log\log(2+D_i)\le(\log\log\log U_i)^\omega,\qquad g_i\le U_i.
+$$
+
+If these comparators belonged to that family infinitely often,
+the same actual subsequence would have
+$\Delta(N_i)\ge\tfrac12e^\gamma(\log2-H(\omega))>0$ eventually,
+contradicting $\Delta(N_i)\to0$. Here
+$H(\omega)=-\omega\log\omega-(1-\omega)\log(1-\omega)$ is binary entropy.
+Therefore, under the analytic inputs of the existing §201.6 paper
+derivation, for each fixed $\omega$ the actual comparators eventually obey
+
+$$
+\log\log(2+D_i)>(\log\log\log U_i)^\omega.
+$$
+
+Section 263 already translates failure of this condition into reduced-core
+and absolute-depth restrictions for hypothetical violations; those
+calculations need not be repeated. Here the additional application is to
+the constructed near-CA comparators, without any violation hypothesis.
+It also applies directly to any subsequence of CA integers having
+canonical unit bit zero. The thresholds may depend on $\omega$;
+no uniform conclusion with $\omega=\omega_i$ is asserted.
+
+This excludes a proposed route that would force these small-benefit
+comparators into the already safe slow-norm region. It leaves unrestricted
+changing norms and the actual signed margin unresolved. The applications
+above are paper-level combinations of cited results, with no new Lean
+verification or literature-priority claim.
