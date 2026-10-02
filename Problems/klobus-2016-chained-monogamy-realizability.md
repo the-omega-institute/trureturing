@@ -112,8 +112,14 @@ $\tfrac1{12}\mathbb Z$ for $M=2,\dots,7$ and
 $\Delta\in\{0,\tfrac13,\tfrac12,1,\tfrac32,2\}$, checking nonnegativity,
 normalization, the common $\langle B_0E\rangle$, all $4M-2$ correlators and
 $R_M$; a box with one entry changed by $1/100$ is rejected by the same
-verifier. On 15827 non-admissible samples the construction gives
-$R_M<2M+\Delta$.
+verifier. A second construction puts $\langle B_0E\rangle=1$ and every $u$
+at its extreme, which gives the largest $R_M$ for the given coordinates,
+$2M+x_B^0+x_B^1-T$; it realizes 1000 further admissible samples by mixing
+with the box for $\langle B_0E\rangle=-1$, and on 15827 non-admissible
+samples its value of $R_M$ is below $2M+\Delta$, as the converse direction
+predicts. (The box of Route step 3 is defined by the formula for $t$ only on
+admissible data: outside them $t$ can exceed $1$ and a probability becomes
+negative.)
 
 The canonical source is
 `D5/S3/QuantumBounds/ChainedMonogamySignalingRealizability.lean`. Its
