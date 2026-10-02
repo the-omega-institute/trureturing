@@ -64,6 +64,24 @@ public sealed class ScribeScriptAdmissionTests
     }
 
     [Fact]
+    public void GeneratedMethodsWithoutInspectableBodiesAreRejected()
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Entry, Definition("_ = new Value(\"scribe\").GetHashCode();")
+            + "internal sealed record Value(string Text);");
+        Reject(ScribeScriptHost.Execute(root.Path, Entry), "M:Value.GetHashCode");
+    }
+
+    [Fact]
+    public void ImplicitBaseConstructorsRequireRegistration()
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Entry, Definition("").Replace("Probe : IScribeDocumentDefinition",
+            "Probe : ArgumentException, IScribeDocumentDefinition", StringComparison.Ordinal));
+        Reject(ScribeScriptHost.Execute(root.Path, Entry), "M:System.ArgumentException.#ctor");
+    }
+
+    [Fact]
     public void UnhandledOperationKindsAreRejected()
     {
         using var root = new TemporaryRoot();

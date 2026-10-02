@@ -21,6 +21,16 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
             // Executable roots include methods, accessors, operators, initializers and nested functions.
             foreach (var node in nodes)
             {
+                if (node is TypeDeclarationSyntax declaration
+                    && model.GetDeclaredSymbol(declaration) is { IsValueType: false } declared)
+                {
+                    foreach (var constructor in declared.InstanceConstructors.Where(method =>
+                        method.IsImplicitlyDeclared && method.Parameters.IsEmpty))
+                    {
+                        var failure = admission.Member(constructor, node);
+                        if (failure is not null) return failure;
+                    }
+                }
                 if (node is AttributeSyntax attribute)
                 {
                     var failure = admission.Member(model.GetSymbolInfo(attribute).Symbol, node);
@@ -235,6 +245,22 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
     private ScribeScriptFailure? Member(ISymbol? symbol, SyntaxNode node)
     {
         if (symbol is null) return null;
+        if (IsScript(symbol) && symbol is IMethodSymbol { IsImplicitlyDeclared: true } generated)
+        {
+            if (generated.MethodKind != MethodKind.Constructor || !generated.Parameters.IsEmpty)
+                return Disallowed(node, $"uninspected generated member {ScribeScriptAllowlist.Id(generated)}");
+            if (!generated.ContainingType.IsValueType && generated.ContainingType.BaseType is { } baseType)
+            {
+                var candidates = baseType.InstanceConstructors.Where(method => method.Parameters.IsEmpty).ToArray();
+                if (candidates.Length == 0)
+                    candidates = baseType.InstanceConstructors.Where(method =>
+                        method.Parameters.All(parameter => parameter.IsOptional || parameter.IsParams)).ToArray();
+                if (candidates.Length != 1)
+                    return Disallowed(node, $"unrecognized implicit base constructor {ScribeScriptAllowlist.Id(baseType)}");
+                var baseFailure = Member(candidates[0], node);
+                if (baseFailure is not null) return baseFailure;
+            }
+        }
         if (!IsScript(symbol) && !allowlist.AllowsMember(symbol))
             return Disallowed(node, ScribeScriptAllowlist.Id(symbol) ?? symbol.ToDisplayString());
         var failure = Type(symbol.ContainingType, node);
