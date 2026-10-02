@@ -24,9 +24,16 @@ internal static class ScribeResourceCommands
             var root = repositoryRoot();
             if (arguments[1] == "pack")
             {
-                var manifest = ScribeResourcePack.Write(path, DocumentDefinitions.Discover(assembly, root));
-                output.WriteLine(FormattableString.Invariant(
-                    $"resources pack: entries={manifest.EntryCount} uncompressedBytes={manifest.TotalUncompressedBytes} totalSha256={manifest.TotalSha256}"));
+                var result = ScribeResourceScriptPacker.Write(root, path);
+                if (!result.Failures.IsEmpty)
+                {
+                    foreach (var failure in result.Failures) error.WriteLine(failure);
+                    return 1;
+                }
+                var manifest = result.Manifest!;
+                var summary = FormattableString.Invariant(
+                    $"resources pack: entries={manifest.EntryCount} uncompressedBytes={manifest.TotalUncompressedBytes} totalSha256={manifest.TotalSha256}");
+                output.WriteLine(summary);
                 return 0;
             }
 

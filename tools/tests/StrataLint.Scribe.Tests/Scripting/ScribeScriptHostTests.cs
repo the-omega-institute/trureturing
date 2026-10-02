@@ -9,6 +9,30 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class ScribeScriptHostTests
 {
+    [Theory]
+    [InlineData(null)]
+    [InlineData("   ")]
+    [InlineData("NET10_0;bad-symbol")]
+    public void InvalidDefineConstantsReturnHostConfiguration(string? constants)
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        WriteDefinition(root.Path, path, "Probe");
+        var result = ScribeScriptHost.ExecuteWithDefineConstants(root.Path, path, constants);
+        Assert.Equal(ScribeScriptFailureCode.HostConfiguration, result.Failure?.Code);
+        Assert.Null(result.Definition);
+    }
+
+    [Fact]
+    public void EscapedNamespaceUsesMetadataNames()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        Write(root, path, "namespace @event.@class; internal sealed class Probe : IScribeDocumentDefinition { public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(\"digest\", H(\"title\"), Blocks(Paragraph(Text(\"content\"))))); }");
+        var result = ScribeScriptHost.Execute(root.Path, path);
+        Assert.True(result.IsSuccess, result.Failure?.ToString());
+    }
+
     [Fact]
     public void ExecutesOneSyntheticDefinition()
     {
@@ -44,6 +68,114 @@ public sealed class ScribeScriptHostTests
     }
 
     [Fact]
+    public void FileReadInDefinitionIsRejectedAsDisallowedSymbol()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        var input = root.Resolve("input.txt");
+        File.WriteAllText(input, "content");
+        Write(root, path, $$"""
+            internal sealed class Probe : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create() => DocumentDefinition.Create(
+                    ScribeNode.Create("digest", H(File.ReadAllText("{{input.Replace("\\", "\\\\", StringComparison.Ordinal)}}")), Blocks(Paragraph(Text("content")))));
+            }
+            """);
+
+        var result = ScribeScriptHost.Execute(root.Path, path);
+
+        Assert.True(result.Failure?.Code == ScribeScriptFailureCode.DisallowedSymbol, result.Failure?.ToString());
+        Assert.True(result.Failure?.Message.Contains("M:System.IO.File.ReadAllText(System.String)", StringComparison.Ordinal), result.Failure?.ToString());
+    }
+
+    [Theory]
+    [InlineData("Environment.GetEnvironmentVariable(\"SCRIBE_INPUT\")", "M:System.Environment.GetEnvironmentVariable(System.String)")]
+    [InlineData("Directory.GetFiles(\".\")", "M:System.IO.Directory.GetFiles(System.String)")]
+    [InlineData("typeof(Probe).Assembly", "P:System.Type.Assembly")]
+    [InlineData("System.Diagnostics.Process.GetCurrentProcess()", "M:System.Diagnostics.Process.GetCurrentProcess")]
+    [InlineData("new System.Net.Http.HttpClient()", "M:System.Net.Http.HttpClient.#ctor")]
+    [InlineData("DateTime.Today", "P:System.DateTime.Today")]
+    [InlineData("System.Globalization.CultureInfo.CurrentCulture", "P:System.Globalization.CultureInfo.CurrentCulture")]
+    [InlineData("ScribeScriptHost.Execute(\".\", \"Blueprint/D5/S0/Test/Other.scribe.cs\")", "M:StrataLint.Scribe.ScribeScriptHost.Execute(System.String,System.String)")]
+    [InlineData("dynamic value = \"input\"; _ = value.ToString()", "T:System.Object")]
+    public void ExternalChannelsAreRejectedByTheAllowlist(string expression, string id)
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        var statement = expression.StartsWith("dynamic ", StringComparison.Ordinal)
+            ? $"{expression};"
+            : $"_ = {expression};";
+        Write(root, path, $$"""
+            internal sealed class Probe : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create()
+                {
+                    {{statement}}
+                    return DocumentDefinition.Create(
+                        ScribeNode.Create("digest", H("title"), Blocks(Paragraph(Text("content")))));
+                }
+            }
+            """);
+
+        var result = ScribeScriptHost.Execute(root.Path, path);
+
+        ScribeScriptAdmissionTests.Reject(result, id);
+    }
+
+    [Fact]
+    public void SharedSourceExternalChannelsAreRejected()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        const string shared = "Blueprint/D5/S0/Test/Shared.scribe.cs";
+        Write(root, shared, "internal static class Shared { internal static string Value => Environment.GetEnvironmentVariable(\"SCRIBE_INPUT\") ?? \"\"; }");
+        Write(root, path, $$"""
+            [ScribeSharedSource("{{shared}}")]
+            internal sealed class Probe : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create() => DocumentDefinition.Create(
+                    ScribeNode.Create("digest", H(Shared.Value), Blocks(Paragraph(Text("content")))));
+            }
+            """);
+
+        var result = ScribeScriptHost.Execute(root.Path, path);
+
+        ScribeScriptAdmissionTests.Reject(result, "M:System.Environment.GetEnvironmentVariable(System.String)");
+    }
+
+    [Fact]
+    public void AllowlistedEnumerableDefinitionExecutes()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        Write(root, path, "internal sealed class Probe : IScribeDocumentDefinition { public DocumentDefinition Create() { var values = Enumerable.Repeat(1, 1).ToArray(); return DocumentDefinition.Create(ScribeNode.Create(\"digest\", H(values.Length.ToString(System.Globalization.CultureInfo.InvariantCulture)), Blocks(Paragraph(Text(\"content\"))))); } }");
+
+        var result = ScribeScriptHost.Execute(root.Path, path);
+
+        Assert.True(result.IsSuccess, result.Failure?.ToString());
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData("X:NotAnEntry")]
+    [InlineData("T:System.String\nT:System.String")]
+    [InlineData("T:Missing.Type")]
+    [InlineData("M:System.Linq.Enumerable::MissingMember")]
+    public void AllowlistConfigurationFailsClosed(string? contents)
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        WriteDefinition(root.Path, path, "Probe");
+        var allowlistPath = root.Resolve("Scripting/ScribeScriptAllowlist.txt");
+        if (contents is not null) TemporaryFileSystem.File.WriteAllText(allowlistPath, contents);
+
+        var result = ScribeScriptHost.ExecuteWithAllowlistPath(root.Path, path, allowlistPath);
+
+        Assert.Equal(ScribeScriptFailureCode.HostConfiguration, result.Failure?.Code);
+    }
+
+    [Fact]
     public void InvalidPathHasANamedFailure()
     {
         using var root = new TemporaryRoot();
@@ -70,6 +202,20 @@ public sealed class ScribeScriptHostTests
         Assert.Equal(ScribeScriptFailureCode.HostConfiguration, result.Failure?.Code);
         Assert.Equal(path, result.Failure!.RelativePath);
         Assert.Equal("banned API analyzer is unavailable", result.Failure.Message);
+        Assert.Null(result.Definition);
+    }
+
+    [Fact]
+    public void TypeLoadFailureCarriesSourcePath()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        WriteDefinition(root.Path, path, "Probe");
+
+        var result = ScribeScriptHost.ExecuteWithEntryType(root.Path, path, "Missing.Entry");
+
+        Assert.Equal(ScribeScriptFailureCode.TypeLoad, result.Failure?.Code);
+        Assert.Contains(path, result.Failure!.ToString(), StringComparison.Ordinal);
         Assert.Null(result.Definition);
     }
 
@@ -113,7 +259,7 @@ public sealed class ScribeScriptHostTests
     [InlineData("internal sealed class Empty { }", ScribeScriptFailureCode.DefinitionMissing)]
     [InlineData("internal sealed class Probe : IScribeDocumentDefinition { public DocumentDefinition Create() => throw new InvalidOperationException(\"fixture failure\"); }", ScribeScriptFailureCode.CreateFailed)]
     [InlineData("internal sealed class Probe : IScribeDocumentDefinition { public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(Header(\"D5/S0/Test/Other\", \"digest\"), H(\"title\"), Blocks(Paragraph(Text(\"content\"))))); }", ScribeScriptFailureCode.GidPathMismatch)]
-    [InlineData("internal sealed class Probe : IScribeDocumentDefinition { public DocumentDefinition Create() { _ = DateTime.Now; return DocumentDefinition.Create(ScribeNode.Create(\"digest\", H(\"title\"), Blocks(Paragraph(Text(\"content\"))))); } }", ScribeScriptFailureCode.BannedSymbol)]
+    [InlineData("internal sealed class Probe : IScribeDocumentDefinition { public DocumentDefinition Create() { _ = DateTime.Now; return DocumentDefinition.Create(ScribeNode.Create(\"digest\", H(\"title\"), Blocks(Paragraph(Text(\"content\"))))); } }", ScribeScriptFailureCode.DisallowedSymbol)]
     [InlineData("internal sealed class Probe : IScribeDocumentDefinition { public DocumentDefinition Create() { string? value = null; _ = value.Length; return DocumentDefinition.Create(ScribeNode.Create(\"digest\", H(\"title\"), Blocks(Paragraph(Text(\"content\"))))); } }", ScribeScriptFailureCode.Compilation)]
     public void NamedFailuresCarrySourceAndReason(string body, ScribeScriptFailureCode expected)
     {
@@ -177,8 +323,7 @@ public sealed class ScribeScriptHostTests
             }
             """);
 
-        Assert.Equal(ScribeScriptFailureCode.BannedSymbol,
-            ScribeScriptHost.Execute(root.Path, path).Failure?.Code);
+        ScribeScriptAdmissionTests.Reject(ScribeScriptHost.Execute(root.Path, path), "P:System.DateTime.Now");
     }
 
     [Fact]
