@@ -42,6 +42,9 @@ internal sealed class LeanCacheChunkFixture : IDisposable
         WriteStub("make",
             """
             printf '%s\n' "$*" >> "$CHUNK_FIXTURE/build-runs"
+            [ "$#" = 3 ] && [ "$1" = "lean-report" ] \
+                && [ "$2" = "LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json" ] \
+                && [ "$3" = "LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build" ] || exit 64
             if [ "$1" = "lean-report" ] && [ "$FAKE_BUILD_EXIT" = "0" ]; then
                 mkdir -p .lake/build/stratalint
                 printf '%s\n' '{"modules":[],"schema":"stratalint-raw-lean-report-v2"}' > .lake/report-fixture-$$
