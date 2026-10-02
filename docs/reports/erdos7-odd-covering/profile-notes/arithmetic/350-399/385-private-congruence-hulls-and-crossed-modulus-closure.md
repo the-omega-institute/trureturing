@@ -21706,6 +21706,11 @@ The result narrows the remaining whole-cover gap but does not close it.
 Section 174 supplies one-direction hull divisibility for a certified
 subset of \(q^2\) sources; it does not force the reciprocal condition,
 the absence of \(K_{d,g}\), or a descendant in the receiving phase.
+For comparable \(d,g\), the old classes are already disjoint, so (RH4)
+is automatic; the existing DR3--DR4 and PI1--PI6 results can supply one
+direction of (RH1) in their stated concentrated branches. They do not
+supply the reverse hull containment, and EB8 does not align a child phase
+with the particular witnesses \(w_d,w_g\) needed for (RH5).
 Section 175 is deliberately not a whole cover and therefore does not
 refute (RH4)--(RH6). A complete solution still needs a whole-cover
 argument forcing one usable reciprocal pair, or a different construction
