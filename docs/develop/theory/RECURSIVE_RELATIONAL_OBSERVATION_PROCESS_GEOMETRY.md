@@ -5345,10 +5345,21 @@ $$
 因此事件次序、档案追加次序和 writer 次序一起运输；不能只运输最终游标再事后补写
 事件词。
 
-前视词的 typed 交换式为
+前视词不能由单步核作未加条件的朴素幂。对统一前视深度可先递归规定
+\(j_\rho^{[0]}(n)=n\)、
+\(j_\rho^{[k+1]}(n)=j_\rho(j_\rho^{[k]}(n))\)；动作依赖的情形则须另给一个
+单调的词级深度并支配每个中间输入。对每个词 \(v\)，把该深度、事件词字母表
+\(L^{v}_{\rho,n}\) 及其 typed composite 声明为合同的一部分：
 \[
-\operatorname{Option.map}(\lambda_{mn}^{v}\times r_{mn,\nu+|v|})\circ (Q^+_{n,\nu})^{v}
-=(Q^+_{m,\nu})^{v}\circ r_{j_\rho(m),j_\rho(n),\nu}.
+(Q^+)^{v}_{n,\nu}:J_{j_\rho^{[|v|]}(n),\nu}
+\longrightarrow
+\operatorname{Option}(L^{v}_{\rho,n}\times J_{n,\nu+|v|}).
+\]
+它的中间提升、参考运输和失败传播必须另有合同；没有这些数据时，不声称
+\((Q^+)^v\) 存在。已有 typed composite 满足的前视交换式为
+\[
+\operatorname{Option.map}(\lambda^{v}_{mn}\times r_{mn,\nu+|v|})\circ (Q^+)^{v}_{n,\nu}
+=(Q^+)^{v}_{m,\nu}\circ r_{j_\rho^{[|v|]}(m),j_\rho^{[|v|]}(n),\nu}.
 \tag{PG.3809+}
 \]
 
