@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/DottedStack/ShiehYangYuTwelveDot.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/DottedStack/ShiehYangYuTwelveDot.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/shieh-yang-yu-twelve-dot-machine-central-binomial` (proved) by `D5/S3/Combinatorics/DottedStack/ShiehYangYuTwelveDot.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"shieh-yang-yu-twelve-dot-machine-central-binomial","declaration_gid":"D5/S3/Combinatorics/DottedStack/ShiehYangYuTwelveDot.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Michael Yang, Hansen Shieh, Ashley Yu (2025). *Stack-Sorting with Dotted-Pattern-Avoiding Stacks*. URL: <https://arxiv.org/abs/2411.11914v2>.
