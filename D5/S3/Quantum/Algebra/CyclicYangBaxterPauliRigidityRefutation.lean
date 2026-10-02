@@ -7,12 +7,14 @@
    digest: A mixed-sign Gaussian at d = 15 refutes Galindo--Rowell Conjecture 10.6. -/
 
 /-
-proof_shape: result: bind-only
-escape_witness: none
+proof_shape: result: content
+escape_witness: form (2): result itself, produced on its live proof path by the Weyl
+  commutation bridge, the coefficient-to-braid bridge and the exponent-translation identity
+  (the non-binding facts preregistered in #11573, kept as local steps of result)
 admission_basis: open-problem-resolution (#11573; Refuted)
-Direct frozen dependencies:
+Frozen dependencies (direct unless marked transitive):
   D5/S3/Observer/WindowRegister.shiftMatrix — statement_id sha256:821649848ffe7ed9f84f11b97d3d1eb176216ccb5d3910dcbd867105b9d070dd
-  D5/S3/Observer/WindowRegister.shiftMatrix_pow_card — statement_id sha256:7a3fbd68d9cbc561393327c7d3ea830003b79cba0759c1d85b75ed0aa3737f9e
+  D5/S3/Observer/WindowRegister.shiftMatrix_pow_card (transitive, through shiftMatrix_pow_mod) — statement_id sha256:7a3fbd68d9cbc561393327c7d3ea830003b79cba0759c1d85b75ed0aa3737f9e
   D5/S3/Observer/WindowRegister.shiftPerm — statement_id sha256:d089316b1edad69647319d26c3a88b94634c9feaa15ca92ee0bb373dbbd98f83
   D5/S3/Observer/WindowRegister.shiftMatrix_eq_permMatrix — statement_id sha256:3c36c8ef2f8c32a3bdfc77ed9e5a8357e39b23d6df504cd7c4eadd09ab8aafe8
   D5/S3/Observer/WindowRegister.shiftPerm_pow_apply — statement_id sha256:4225ef06cfc6c92dcfd365ecab7b7738db3951b60684425b597af4598e55e2c3
