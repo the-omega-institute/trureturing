@@ -14294,3 +14294,71 @@ The statement controls arbitrary local inventories at all admitted
 original heights. It does not establish realizability of any surviving
 count pattern or exclude all such patterns. No new general covering
 theorem, numerical search or Lean verification is asserted.
+
+## 112. The complete two-level obligation has trivial cofactor congruence hull
+
+Keep the same exact joint deletion region E from sections109--111.
+It is nonempty because it contains the original E_T, is supported
+over w modulo3^(H-2), and has full final ternary sibling fibers.
+Let Q_i be the complete original cofactor carrier of the top color,
+and let U be the projection of E to Z/Q_i. Define its COMPLETE
+congruence hull as in PH3--PH4: for any z_0 in U,
+
+    Gamma_i(U)=gcd(Q_i,{z-z_0:z in U}).
+
+Then
+
+    Gamma_i(U)=1.                                  (JH1)
+
+This concerns the entire simultaneous deletion of T union O_w.
+It does not assert that the smaller top-only remainder E_T has
+trivial cofactor hull.
+
+### A nontrivial hull would repair all original liabilities at once
+
+Suppose instead g=Gamma_i(U)>1. The existing hull equivalence
+puts U in one actual class c modg. Consequently
+
+    E subset {x:x=w mod3^(H-2),x=c modg}.
+
+Use LB2's four-root repair with cofactor g: add the four CRT APs
+of moduli5g,15g,45g,135g, with the corresponding prefixes of w,
+cofactor phase c and5-roots1,2,3,4. Retained A_5 covers root zero.
+All prime factors of g belong to the old top color, since g|Q_i.
+CP1 therefore makes all four labels fresh and distinct; their
+prefix constraints are justified by H-2>=3.
+
+These four APs cover the ENTIRE E. The deleted original family
+has k+2>=5 members, so cardinality strictly decreases. This
+contradicts EB1 and proves JH1. Only PH3--PH4 and the existing
+actual joint repair interface are reused; no independent private
+points have been assembled into an artificial common source.
+
+### Every full branch union inherits the restriction
+
+For a local digit branch let W_j be the union of its complete
+cofactor APs in Z/Q_i. LB6 gives U subset W_j, including the
+pure-guard branch when present. If W_j lay in a nonunit cofactor
+AP, U would lie there too, contradicting JH1. Hence
+
+    Gamma_i(W_j)=1 for each local branch j.         (JH2)
+
+For two members c_1 modn_1 and c_2 modn_2, the standard complete
+union-hull formula specializes this to
+
+    gcd(n_1,n_2,c_1-c_2)=1.                        (JH3)
+
+The value is representative-independent because both n_1 and n_2
+enter the gcd. In the remaining(1,2,2) layout, JH3 constrains the
+two actual original suppliers in the branch opposite R. The pair
+consisting of R and its companion already has trivial union hull
+by AC2: a shared nontrivial prime phase in that prefix would violate
+the earlier phase exclusion. It is not counted again as new content.
+
+The projection of E_T lies inside the top M-phase and is a smaller
+set than the U used here. JH1 does not transfer to it. Likewise,
+trivial hull does not mean that U contains every cofactor value,
+has any specified density, or splits into independent coordinates.
+The remaining two-supplier and larger balanced incidences require
+their actual intersection data. No new Lean verification or
+unrestricted noncoverage is asserted.
