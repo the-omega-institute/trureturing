@@ -99,6 +99,12 @@ nonconcentrated prime supplies one two-root law, reducing the crude
 ternary factor from H to (H+1)/2. Deeper distribution and useful joint
 cofactor prices remain unproved.
 
+[Section136](#136-shared-support-shell-demand-stays-at-one-complete-private-source)
+reuses the opposite-color repair with shared support present. Excess
+ternary depth forces R-only mixed suppliers at one unchanged complete
+private source and one late ternary prefix. Their remaining capacity
+or whole-hole repair is not provided by the concentrated-color bound.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -16157,9 +16163,12 @@ joint addition of independently selected repairs or substitution
 of separate private regions for a joint hole.
 
 Thus the all-concentrated branch is excluded at arbitrary heights.
-The nonconcentrated branch R!=empty remains: CP1's two-color support
-separation and the fresh opposite-color repair are not supplied
-there. No original-quantifier covering counterexample or universal
+The nonconcentrated branch R!=empty remains. CP1 still excludes
+multiples joining two opposite concentrated colors, so their pairwise
+repair remains fresh. It does not separate the ENTIRE support into
+two disjoint carriers: R-only originals and originals sharing R with
+a concentrated color remain. Section136 locates their actual shell
+obligation. No original-quantifier covering counterexample or universal
 descent in that remaining branch follows from CT1--CT6.
 
 ## 130. The retained-tree predicate is determined by its first two q-rows
@@ -16824,3 +16833,44 @@ With the older t^(-e) coefficients this same actual two-root source gives q-3<ta
 The exact PS4 price, or PS5 retaining g_(u,beta)(d), remains available for this same sigma. A further inequality forcing that complete price below one is not proved here. LW1 removes the support gap; useful cofactor reserve and stronger distribution across deeper ternary prefixes remain separate obligations.
 
 The literal AP pullback is reused from Report375 LA2--LA3; the common-cofactor avoidance criterion is JL2. The local replacement retains all lower-height originals and the q-axis. The result uses EB1's original modulus-sum minimum and gives an ordinary mathematical proof, not new Lean verification or a resolution of unrestricted Erdős #7.
+
+## 136. Shared-support shell demand stays at one complete private source
+
+Keep one original EB1 cover and the prime-private partition R,S_1,S_2. Here R is the set of nonconcentrated primes, not a q-free residual. Fix S_i nonempty and an opposite concentrated prime p in S_(3-i). Put c=p-2 and C_i=c|S_i|.
+
+CP1 still excludes every original multiple of p*ell for ell in S_i, even when R is nonempty. Therefore the original CD1 repair remains fresh and gives the SAME bound c on every non-own phase group of an original parent3^a ell, a>=c. Its whole-parent-private-hole repair and modulus-sum comparison are unchanged.
+
+Fix one complete nonternary coordinate v and one depth-a ternary prefix alpha in root i, a>=c. Among all actual mixed originals3^b n with b>a, cofactor phase containing v and ternary prefix extending alpha, assign each label whose support meets S_i once to a dividing ell in S_i. Every bucket lies in one non-own phase group of the original parent3^a ell. Consequently
+
+    number of such S_i-bearing originals <= C_i.       (CSH1)
+
+The counted cofactors may also contain arbitrary R factors. An original containing any opposite concentrated prime cannot be active in root i. Hence every remaining mixed original at this source has nonternary support entirely in R.
+
+Let d=3^A n be an original mixed label meeting S_i, and choose ONE complete original private point x=(s,v). For c<=a<A, the altered-child counting step of HH3, now counting ALL mixed originals at this unchanged v, supplies A-a distinct shell suppliers and the owner d. Their heights exceed a and their actual ternary prefixes all extend s modulo3^a. The pure-guard capacity and disjoint-shell argument are unchanged; all three-free originals stay absent at v. Subtracting CSH1 gives
+
+    #{original3^b m: b>a, m>1, supp(m) subset R,
+      v=a_(3^b m) modm,
+      a_(3^b m)=s mod3^a}
+      >= max(0,A-a+1-C_i).                           (CSH2)
+
+This is one actual phase-cone inventory, not a sum of separately optimized sources. If A>c+C_i-1, take a=A-C_i. There is an actual R-only supplier of height at least A-C_i+1 and with the same prefix as x through depth A-C_i. Its own AP avoids x because x is private to d; no equality with an ancestor's old phase is inferred.
+
+For the original pure3^H at GLOBAL ternary height H with first root i, choose its complete original private point. QC2/HC1 supplies at least2(H-a) nonowner labels for c<=a<H, all of height>a and with the same complete cofactor incidence and depth-a ternary prefix. At most H-a-1 are pure-three labels. Thus the same actual R-only count obeys
+
+    R-only count in that phase cone
+       >=max(0,H-a+1-C_i).                          (CSH3)
+
+Let B_i(v) be the largest height of an R-only mixed original in root i incident to the fixed complete cofactor v, with zero for an empty set. CSH2 and CSH3 imply, for their respective private source,
+
+    A <= max(c,B_i(v))+C_i-1,
+    H <= max(c,B_i(v))+C_i-1.                       (CSH4)
+
+For either inequality use a=max(c,B_i(v)) when the left side exceeds a; otherwise it is immediate. The H inequality retains its stated top-pure-root premise.
+
+If both colors are nonempty, set p_i=min(S_(3-i)), c_i=p_i-2, and let B_i be the global maximum R-only mixed height in root i. Applying CSH4 at the highest pure-three private source gives
+
+    H <= max_(i=1,2) [max(c_i,B_i)+c_i|S_i|-1].      (CSH5)
+
+For H=1 this bound is automatic; for H>=2 the highest pure-three class lies in one of the two nonzero roots. When R is empty these expressions recover the existing HH height bounds; that closed branch is reused.
+
+If R misses {5,7,11,13}, GM1 supplies both p_i<=13, so every excess over the resulting concentrated allowances must be carried by actual R-only originals, including the source and late-prefix information in CSH2--CSH3. This does not exclude those suppliers or bound their heights: p*r with r in R need not be fresh. CP20 and CP21 cannot be counted as disjoint inventory in addition to this packet. A usable bound or legal whole-hole repair for the actual R-only packet remains missing. No unrestricted noncoverage or new Lean verification is asserted.
