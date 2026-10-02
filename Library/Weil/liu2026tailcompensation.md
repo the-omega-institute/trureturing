@@ -588,6 +588,69 @@ $$
 
 This condition is not established. All three centers and their supplied errors must belong to the same actual 256-mode embedding. In particular, $B_0$ must approximate $E^*M_9^2E$, rather than $A_0^2$; clipping occurs before composing the shifts. The combined analytic allowance $2^{-206}$ enters $\varepsilon_J$ only under the stated author-moment premise. Source positivity of the original window does not settle (A13). This note reuses the author's support-independent Gamma input, constructs only the new-width kernel and identifies the common 256-mode remaining finite obligation. It supplies no verified finite sign, full bounded or cofinal positivity, originality claim, kernel theorem or RH proof.
 
+## The next FIB layer needs a different prime reference
+
+The source's inverse-residual comparison requires a positive reference operator. Its constant-background splitting is therefore subject to a separate scale condition. At $c>1$, put $a_c=\tfrac12\log c$ and use the actual even space $L^2_{\rm even}((-a_c,a_c);\mathbb C)$. With the same compressed shifts as above, define
+
+$$
+C_{{\rm p},c}=\sum_{n<c}\frac{\Lambda(n)}{\sqrt n}
+(S_{\log n}+S_{-\log n}),\qquad
+M_{c,\beta}=\beta I-C_{{\rm p},c}.
+$$
+
+Only prime powers contribute. The normalized constant vector $u_c=(\log c)^{-1/2}\mathbf1_{(-a_c,a_c)}$ gives the exact overlap identity
+
+$$
+\rho(c):=\langle u_c,C_{{\rm p},c}u_c\rangle
+=2\sum_{n<c}\frac{\Lambda(n)}{\sqrt n}
+\left(1-\frac{\log n}{\log c}\right).
+\tag{A14}
+$$
+
+The endpoint shift is zero almost everywhere. Each positive-part summand increases with $c$, so $\rho$ is nondecreasing. In particular, $M_{c,\beta}\succeq mI$ with $m>0$ requires $\beta\ge\rho(c)+m$. The constant vector belongs to the actual even Hilbert space; density also transports a strictly negative reference quadratic to even smooth compactly supported tests. This tests the reference operator, not the complete Weil form.
+
+At the next FIB cutoff $c=27$, retaining just $n\in\{2,3,4,5,7,8,9,11\}$ already gives $\rho(27)>4$. The other prime-power terms are nonnegative and need no recomputation for this lower comparison. Use the preceding source logarithm enclosures for $2,3,5,7$, the elementary $239/100<\log11<12/5$, and root upper bounds as in the scalar replay below. For $n=p^j$, each retained summand is bounded below by
+
+$$
+\frac{2l_p^-}{r_n^+}
+\left(1-\frac{j l_p^+}{3l_3^-}\right)>0.
+\tag{A15}
+$$
+
+This is an application of the existing compressed-translation formula and scalar test, rather than another prime matrix or certificate. The following exact replay verifies the new downstream comparison and the elementary enclosure for $\log11$; the other logarithm enclosures remain the previously cited analytic inputs.
+
+```python
+from fractions import Fraction as F
+from math import factorial
+
+lo = {2: F(693147, 10**6), 3: F(1098612, 10**6),
+      5: F(1609437, 10**6), 7: F(1945910, 10**6), 11: F(239, 100)}
+hi = {2: F(693148, 10**6), 3: F(1098613, 10**6),
+      5: F(1609438, 10**6), 7: F(1945911, 10**6), 11: F(12, 5)}
+roots = {2: F(1414214, 10**6), 3: F(1732051, 10**6), 4: F(2),
+         5: F(2236068, 10**6), 7: F(2645752, 10**6),
+         8: F(2828428, 10**6), 9: F(3), 11: F(10, 3)}
+powers = {2: (2, 1), 3: (3, 1), 4: (2, 2), 5: (5, 1),
+          7: (7, 1), 8: (2, 3), 9: (3, 2), 11: (11, 1)}
+
+def exp_partial(x, N):
+    return sum((x**k / factorial(k) for k in range(N + 1)), F(0))
+
+N = 12
+x = lo[11]
+exp_upper = (exp_partial(x, N)
+             + x**(N + 1) / factorial(N + 1) / (1 - x / (N + 2)))
+assert exp_upper < 11 < exp_partial(hi[11], N)
+assert all(r * r >= n for n, r in roots.items())
+terms = [2 * lo[p] / roots[n] * (1 - j * hi[p] / (3 * lo[3]))
+         for n, (p, j) in powers.items()]
+assert all(term > 0 for term in terms)
+assert sum(terms, F(0)) > 4
+print('the next FIB layer requires beta > 4 for a positive prime reference')
+```
+
+Consequently every $c\ge27$ requires $\beta>4$ for a strictly positive constant-background reference, including all subsequent cutoffs of the specified FIB sequence. This rules out reusing the $7/2$ prime background; it does not assert negativity of $Q$.
+
 ```python
 from fractions import Fraction as F
 
