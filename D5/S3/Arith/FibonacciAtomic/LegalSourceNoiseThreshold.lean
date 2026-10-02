@@ -104,7 +104,7 @@ private theorem coordinate_invariant (lam ν : ℝ) (hlam : 0 ≤ lam)
         exact (Real.norm_eq_abs _ ▸ norm_le_pi_norm ξ r).trans
           (hnoise (a, ξ) (by simp))
       have action (x : Row) : x ᵥ* matrix a = x (readIndex a) • target a := by
-        simp [matrix, Matrix.vecMul_vecMulVec, dotProduct_single_one]
+        simp [matrix, Matrix.vecMul_vecMulVec]
       have newZero : ∀ r, canonical (some (last a, nonzero a)) r = 0 →
           |(lam • (y ᵥ* matrix a) + ξ) r| ≤ ν := by
         intro r hr
@@ -124,5 +124,92 @@ private theorem coordinate_invariant (lam ν : ℝ) (hlam : 0 ≤ lam)
         (k + 1) tailLegal tailNoise newZero newOne
       simpa [run, step, guard, noisyRun, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
         using h
+
+/-- A single coordinate threshold works at every permitted depth and needs no clock. -/
+private theorem sufficient (lam ν : ℝ) (M : ℕ) (hlam0 : 0 < lam)
+    (hlam1 : lam < 1) (hν : 0 ≤ ν) (hsmall : ν < threshold lam M)
+    (fixed : Bool) :
+    Recovery canonical lam ν M fixed ∧ ClockRecovery canonical lam ν M fixed ∧
+      Recovery endable lam ν M fixed ∧ ClockRecovery endable lam ν M fixed := by
+  classical
+  have sumNonneg (n : ℕ) : 0 ≤ geometric lam n :=
+    Finset.sum_nonneg fun j _ => pow_nonneg hlam0.le j
+  have hden : 0 < geometric lam M + 1 := by linarith [sumNonneg M]
+  have margin : ν < lam ^ M - ν * geometric lam M := by
+    have h := (lt_div_iff₀ hden).mp hsmall
+    nlinarith
+  let τ : ℝ := (ν + (lam ^ M - ν * geometric lam M)) / 2
+  have hτν : ν < τ := by dsimp [τ]; linarith
+  have hτmargin : τ < lam ^ M - ν * geometric lam M := by dsimp [τ]; linarith
+  have hτ0 : 0 < τ := lt_of_le_of_lt hν hτν
+  have hτ1 : τ < 1 := by
+    have hp : lam ^ M ≤ 1 := pow_le_one₀ hlam0.le hlam1.le
+    have hm : 0 ≤ ν * geometric lam M := mul_nonneg hν (sumNonneg M)
+    linarith
+  let decode : Row → Row := fun y r => if τ < y r then 1 else 0
+  have valid : ∀ p : List (Window × Row), p.length ≤ M →
+      legal false (flatten (p.map Prod.fst)) → noiseBound ν p →
+      decode (actual lam p) = canonical (run (some (false, false)) (p.map Prod.fst)) := by
+    intro p hp hl hn
+    have zeroInitial : ∀ r, canonical (some (false, false)) r = 0 →
+        |canonical (some (false, false)) r| ≤ ν := by
+      intro r hr
+      simpa only [hr, abs_zero] using hν
+    have oneInitial : ∀ r, canonical (some (false, false)) r = 1 →
+        lam ^ 0 - ν * geometric lam 0 ≤ canonical (some (false, false)) r := by
+      intro r hr
+      simp [hr, geometric]
+    have bounds := coordinate_invariant lam ν hlam0.le p false false
+      (canonical (some (false, false))) 0 hl hn zeroInitial oneInitial
+    have lower : lam ^ M - ν * geometric lam M ≤
+        lam ^ p.length - ν * geometric lam p.length := by
+      have hpw := pow_le_pow_of_le_one hlam0.le hlam1.le hp
+      have hsum : geometric lam p.length ≤ geometric lam M :=
+        Finset.sum_le_sum_of_subset_of_nonneg (Finset.range_mono hp)
+          (fun j _ _ => pow_nonneg hlam0.le j)
+      have hmul := mul_le_mul_of_nonneg_left hsum hν
+      linarith
+    funext r
+    have binary : canonical (run (some (false, false)) (p.map Prod.fst)) r = 0 ∨
+        canonical (run (some (false, false)) (p.map Prod.fst)) r = 1 := by
+      cases run (some (false, false)) (p.map Prod.fst) with
+      | none => fin_cases r <;> simp [canonical]
+      | some q =>
+          rcases q with ⟨s, E⟩
+          cases s <;> cases E <;> fin_cases r <;> simp [canonical]
+    rcases binary with hz | ho
+    · have hy : actual lam p r ≤ ν :=
+        (le_abs_self _).trans (by simpa [actual] using (bounds r).1 hz)
+      simp only [decode, hz, if_neg (not_lt.mpr (le_trans hy hτν.le))]
+    · have hy : τ < actual lam p r := by
+        have hb := (bounds r).2 ho
+        simp only [Nat.zero_add] at hb
+        exact lt_of_lt_of_le hτmargin (le_trans lower hb)
+      simp only [decode, ho, if_pos hy]
+  have allowed (p : List (Window × Row)) (hp : depthAllowed fixed M p.length) :
+      p.length ≤ M := by
+    cases fixed with
+    | false => exact hp
+    | true => exact hp.le
+  have stateRecovery : Recovery canonical lam ν M fixed :=
+    ⟨decode, fun p hp hl hn => valid p (allowed p hp) hl hn⟩
+  let label : Row → Bool := fun y => decide (y 0 = 1)
+  have labelCanonical (q : State) : label (canonical q) = endable q := by
+    cases q with
+    | none => simp [label, canonical, endable]
+    | some q => rcases q with ⟨s, E⟩; cases E <;> simp [label, canonical, endable]
+  have labelRecovery : Recovery endable lam ν M fixed := by
+    refine ⟨label ∘ decode, ?_⟩
+    intro p hp hl hn
+    change label (decode (actual lam p)) = _
+    rw [valid p (allowed p hp) hl hn, labelCanonical]
+  refine ⟨stateRecovery, ?_, labelRecovery, ?_⟩
+  · obtain ⟨d, hd⟩ := stateRecovery
+    exact ⟨fun _ => d, hd⟩
+  · obtain ⟨d, hd⟩ := labelRecovery
+    exact ⟨fun _ => d, hd⟩
+
+#print axioms coordinate_invariant
+#print axioms sufficient
 
 end D5.S3.Arith.FibonacciAtomic.LegalSourceNoiseThreshold
