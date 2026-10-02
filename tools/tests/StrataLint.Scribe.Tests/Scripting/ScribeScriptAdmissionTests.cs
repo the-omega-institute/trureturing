@@ -154,8 +154,7 @@ public sealed class ScribeScriptAdmissionTests
     }
 
     [Theory]
-    [InlineData("all T:System.String")]
-    [InlineData("all T:System.Collections.Generic.List`1")]
+    [InlineData("all T:StrataLint.Scribe.GidRef")]
     [InlineData("M:System.String.StartsWith(System.String,System.Int32)")]
     [InlineData("M:System.String.StartsWith(System.Char)\nM:System.String.StartsWith(System.Char)")]
     [InlineData("T:System.Int32\nformat T:System.Int32\nformat T:System.Int32")]
@@ -178,6 +177,17 @@ public sealed class ScribeScriptAdmissionTests
         Write(root, Entry, Definition("_ = System.Globalization.CultureInfo.InvariantCulture;"));
         var table = TableWithout(root, "T:System.Globalization.CultureInfo");
         Reject(ScribeScriptHost.ExecuteWithAllowlistPath(root.Path, Entry, table), "T:System.Globalization.CultureInfo");
+    }
+
+    [Fact]
+    public void RemovingRegisteredMemberRejectsItsUse()
+    {
+        using var root = new TemporaryRoot();
+        const string member = "M:StrataLint.Scribe.GidRef.Create(System.String,StrataLint.Scribe.IGidExistenceValidator)";
+        Write(root, Entry, Definition("_ = GidRef.Create(\"D5/S0/Test/Probe\");"));
+        var table = TableWithout(root, member);
+
+        Reject(ScribeScriptHost.ExecuteWithAllowlistPath(root.Path, Entry, table), member);
     }
 
     [Fact]

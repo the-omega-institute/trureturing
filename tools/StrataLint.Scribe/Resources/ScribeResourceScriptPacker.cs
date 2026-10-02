@@ -28,9 +28,12 @@ public static class ScribeResourceScriptPacker
                     RelativePath = result.RelativePath, Message = failure.ToString(),
                 };
             }).ToImmutableArray();
-            var manifest = failures.IsEmpty
-                ? ScribeResourcePack.Write(outputPath, results.Select(result => result.Definition!))
-                : null;
+            if (!failures.IsEmpty)
+            {
+                File.Delete(outputPath);
+                return new ScribeResourceScriptPackResult(null, failures);
+            }
+            var manifest = ScribeResourcePack.Write(outputPath, results.Select(result => result.Definition!));
             return new ScribeResourceScriptPackResult(manifest, failures);
         });
     }

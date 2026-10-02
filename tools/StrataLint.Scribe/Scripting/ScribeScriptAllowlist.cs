@@ -9,7 +9,6 @@ internal sealed class ScribeScriptAllowlist
 {
     private readonly HashSet<string> types = new(StringComparer.Ordinal);
     private readonly HashSet<string> members = new(StringComparer.Ordinal);
-    private readonly HashSet<string> wholeTypes = new(StringComparer.Ordinal);
     private readonly HashSet<string> formattedTypes = new(StringComparer.Ordinal);
 
     private readonly Dictionary<(string Member, string Parameter), HashSet<string>> constants = new();
@@ -66,8 +65,7 @@ internal sealed class ScribeScriptAllowlist
                 }
                 continue;
             }
-            var mode = line.StartsWith("all ", StringComparison.Ordinal) ? "all"
-                : line.StartsWith("format ", StringComparison.Ordinal) ? "format" : "symbol";
+            var mode = line.StartsWith("format ", StringComparison.Ordinal) ? "format" : "symbol";
             var id = mode == "symbol" ? line : line[(mode.Length + 1)..];
             if (!seen.Add(line) || id.Length < 3 || id[1] != ':'
                 || id[0] is not ('T' or 'M' or 'P' or 'F') || mode != "symbol" && id[0] != 'T')
@@ -77,10 +75,6 @@ internal sealed class ScribeScriptAllowlist
             var symbol = resolved[0];
             switch (mode)
             {
-                case "all":
-                    if (symbol is not INamedTypeSymbol || !IsRepository(symbol)) return Invalid();
-                    table.wholeTypes.Add(id);
-                    break;
                 case "format":
                     if (symbol is not INamedTypeSymbol) return Invalid();
                     table.formattedTypes.Add(id);
@@ -94,24 +88,24 @@ internal sealed class ScribeScriptAllowlist
             (ScribeScriptAllowlist?, ScribeScriptFailure?) Invalid() =>
                 (null, Configuration(entry, $"script allowlist line {index + 1} is invalid or unavailable: {line}"));
         }
-        if (table.types.Count + table.members.Count + table.wholeTypes.Count == 0)
+        if (table.types.Count + table.members.Count == 0)
             return (null, Configuration(entry, "script allowlist is empty"));
-        if (table.formattedTypes.Any(id => !table.types.Contains(id) && !table.wholeTypes.Contains(id)))
+        if (table.formattedTypes.Any(id => !table.types.Contains(id)))
             return (null, Configuration(entry, "implicit formatting requires a type-use entry"));
         if (table.constants.Any(item => !table.members.Contains(item.Key.Member)
             || item.Value.Any(id => !table.members.Contains(id))))
             return (null, Configuration(entry, "parameter constants require exact member and constant entries"));
         if (table.typeArguments.Any(item => !table.members.Contains(item.Key.Member)
-            || item.Value.Any(id => !table.types.Contains(id) && !table.wholeTypes.Contains(id))))
+            || item.Value.Any(id => !table.types.Contains(id))))
             return (null, Configuration(entry, "type argument constraints require exact member and type-use entries"));
         return (table, null);
     }
 
     internal bool AllowsType(ITypeSymbol type) => Id(type) is { } id
-        && (types.Contains(id) || wholeTypes.Contains(id));
+        && types.Contains(id);
 
     internal bool AllowsMember(ISymbol symbol) => Id(symbol) is { } id
-        && (members.Contains(id) || symbol.ContainingType is { } type && wholeTypes.Contains(Id(type)!));
+        && members.Contains(id);
 
     internal bool AllowsFormatting(ITypeSymbol type) => Id(type) is { } id && formattedTypes.Contains(id);
 
@@ -145,9 +139,6 @@ internal sealed class ScribeScriptAllowlist
         if (symbol is IMethodSymbol method) symbol = method.ReducedFrom ?? method;
         return symbol.OriginalDefinition.GetDocumentationCommentId();
     }
-
-    internal static bool IsRepository(ISymbol symbol) =>
-        symbol.ContainingAssembly?.Identity.Name is "StrataLint.Scribe" or "StrataLint.Engine";
 
     private static ScribeScriptFailure Configuration(string entry, string message) =>
         new(ScribeScriptFailureCode.HostConfiguration, entry, message);

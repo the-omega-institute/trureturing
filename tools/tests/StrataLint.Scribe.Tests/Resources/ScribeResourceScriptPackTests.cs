@@ -22,6 +22,19 @@ public sealed class ScribeResourceScriptPackTests
     }
 
     [Fact]
+    public void PackRemovesAnExistingOutputOnHostFailure()
+    {
+        using var root = Prepare();
+        Write(root.Path, "Broken", "internal sealed class Broken { }");
+        TemporaryFileSystem.File.WriteAllBytes(root.Resolve("resources.zip"), [1, 2, 3]);
+        var error = new StringWriter();
+
+        Assert.Equal(1, Cli(root.Path, ["resources", "pack", "--out", "resources.zip"], TextWriter.Null, error));
+        Assert.Contains("DefinitionMissing:", error.ToString(), StringComparison.Ordinal);
+        Assert.False(File.Exists(root.Resolve("resources.zip")));
+    }
+
+    [Fact]
     public void PackUsesScriptsAndMatchesDirectCanonicalEncoding()
     {
         using var root = Prepare();
