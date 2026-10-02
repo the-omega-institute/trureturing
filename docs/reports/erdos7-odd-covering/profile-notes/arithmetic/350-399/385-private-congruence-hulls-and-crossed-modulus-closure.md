@@ -187,6 +187,13 @@ two-axis parent, the two escape families cross in their original phases
 whenever both occur. A numerical tail bound applies to each original
 multiple of that parent, not automatically to the whole period.
 
+[Section148](#148-complete-cofactor-private-fans-see-height-one-top-primes)
+uses the full unchanged cofactor of one actual top-q private fan.
+Unlike a lower shadow, its qualified parent counts height-one primes.
+In the small-prime concentrated branch, a group of at least47 suppliers
+has at most seven top-support primes; the number and combined capacity
+of the remaining small-support groups are still uncontrolled.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -18150,3 +18157,94 @@ For an ORIGINAL multiple M of h, every h t with t|M/h is original. Therefore
 This counts distinct original labels, independent of their chosen phases. It does not permit replacing M by the whole period Q, which need not itself be an original label.
 
 CPA2–CPA5 are stronger necessary incidence and inventory constraints on the same actual source. No upper bound on all escaping service has been proved. The uniform exponent bounds OCP9 still leave the original prime support unbounded; those height bounds alone do not force a packet into one qualified parent phase. Thus no contradiction in the unrestricted branch or Lean verification is asserted.
+
+## 148. Complete-cofactor private fans see height-one top primes
+
+Fix one original EB1 whole cover with period Q=product_r r^(H_r), and original numerical labels d and phases a_d. Keep its original CP1 partition R,S_1,S_2. Choose opposite concentrated primes p,ell and a nonconcentrated prime q in R, and put G=H_q. Every object below belongs to that same original family. This is an ordinary mathematical consumer of Library/Arith/lettlsun2008cosets.md TS6 and Report385 OCP2–OCP4, without Lean verification or a claim of unrestricted noncoverage.
+
+### One complete private source and all of its top-q suppliers
+
+Choose ONE complete original private point x of the pure original q^G. The existing TS6 private fan keeps x's entire q-free coordinate and its prefix modulo q^(G-1), and changes only the last q-digit. Each of the q-1 sibling points has an original owner of q-height G, and owners selected at different siblings are distinct. No private source at the other ternary root is required.
+
+Write T_d={r:v_r(d)=H_r}. For a nonempty top support A containing q, define the COMPLETE supplier group
+
+    F_A(x)={d=q^G m != q^G : T_d=A,
+               x=a_d modulo m,
+               x=a_d modulo q^(G-1)},
+    f_A(x)=|F_A(x)|.                                  (FCF1)
+
+Here q does not divide m. These conditions use the full original cofactor modulus m, including top coordinates outside q. Privacy excludes a_d=x modulo q^G for every member; hence each member covers precisely one sibling. More than one member may cover the same sibling. Thus F_A(x) includes every original supplier at this source, rather than just a choice of one owner per sibling. The selected q-1 distinct owners are a subset of their union, so
+
+    q-1 <= sum_(A containing q) f_A(x).                (FCF2)
+
+The inequality alone gives neither one large group nor q-way branching after any other coordinate is varied.
+
+### One common original parent uses full heights away from q
+
+Define
+
+    c_(A,q)=q^(G-1)
+       product_(r in A minus {q,p,ell})r^(H_r),
+    tau(c_(A,q))=G
+       product_(r in A minus {q,p,ell})(H_r+1).        (FCF3)
+
+It is coprime to p ell. If the group is nonempty, c_(A,q) divides each member. A qualifying divisor count makes it nonunit, and original divisor closure supplies the original parent c_(A,q). Every member is a PROPER descendant: its q-height is G, whereas that parent's q-height is G-1. All members share the same residue x modulo c_(A,q). In particular, their possibly different last q-digits are not put into the parent.
+
+This is a non-own parent phase. If x=a_(c_(A,q)) modulo c_(A,q), each counted original class would be contained in the original parent class, contrary to comparable-original disjointness. OCP2–OCP3 therefore give
+
+    N_0=(p-1)(ell-1)-1,
+    tau(c_(A,q))>=N_0 ==> f_A(x)<=N_0-1.              (FCF4)
+
+This bounds the complete group, without requiring its members to cover distinct siblings.
+
+When 3 divides c_(A,q), put
+
+    N_*=max((p-2)(ell-1),(p-1)(ell-2)).
+
+OCP4 gives the sharper uniform implication
+
+    tau(c_(A,q))>=N_* ==> f_A(x)<=N_*-1.              (FCF5)
+
+The OLD parent's own private root determines its actual N_i; x's root need not be that root. Using N_* avoids identifying them. These capacities count the whole non-own descendant group. The pure q^G owner is generally not a multiple of a mixed c_(A,q), so it must not be subtracted as an extra occupied slot. When a chosen parent does divide q^G, including that owner is permissible, but gives the already existing pure-height specialization.
+
+### Actual common cofactor factors strengthen the fixed support core
+
+Let J be any nonempty collection of the suppliers in FCF1, allowing different top supports. Set
+
+    g_J=gcd_(d in J)(d/q^G),
+    c_J=q^(G-1) g_J /
+             [p^(v_p(g_J)) ell^(v_ell(g_J))].
+
+Every member is a proper q-descendant and has phase x modulo c_J. Consequently
+
+    tau(c_J)>=N_0 ==> |J|<=N_0-1,                   (FCF6)
+
+with the N_*-1 version if 3 divides c_J and tau(c_J)>=N_*. For J inside one F_A(x), c_(A,q) divides c_J. This may capture common lower factors outside A that FCF3 omits. The full numerical gcd of the d cannot replace c_J: its extra q-digit need not have a common phase. Removing that last q-digit is essential.
+
+### Uniform small-head constants now count height-one primes
+
+In the OCP7–OCP9 branch R intersect {5,7,11,13}=empty, choose p=5 and one opposite-color ell in {7,11,13}. The largest possible N_0 is47, and the largest N_* is44. For this fixed pair, FCF4 implies
+
+    f_A(x)>=47 ==>
+       G product_(r in A minus {q,5,ell})(H_r+1)<=46. (FCF7)
+
+Thus, if G<=46, any such high group contains at most
+
+    floor(log_2(46/G))
+
+other top primes outside {q,5,ell}, INCLUDING height-one primes. If G>=47, no group at this source has47 members. The cardinality bound is at most five when G=1, at most four when G=2, and at most three when3<=G<=5. Retaining the product inequality is stronger than retaining these rank bounds. CP1 also prevents an original label from containing both5 and ell. Consequently the TOTAL top-support size of such a high group is at most2+floor(log_2(46/G)), and in particular at most7.
+
+For a group with3 in A, FCF5 gives the stronger uniform assertion
+
+    f_A(x)>=44 ==>
+       G product_(r in A minus {q,5,ell})(H_r+1)<=43. (FCF8)
+
+All these are statements at one actual complete private source. The source may additionally be chosen after §140's justified elimination of opposite-color coordinates; that optional modification preserves privacy and does not change the proofs.
+
+### Comparison with existing consumers and exact remaining gap
+
+LSM3 uses only one common LOWER source. Its fixed-core divisor count is product_(r in A minus {p,ell})H_r, so a height-one prime contributes1. FCF3 uses the stronger, already supplied TS6 relation: the entire cofactor is fixed and only the last q-digit varies. Thus q contributes G and every other top prime contributes H_r+1. This removes LSM6's unrestricted number of height-one primes inside a high-multiplicity support group at this source. It does not upgrade every LSM source to a complete-cofactor source.
+
+Section140 TQ1–TQ7 already consumes the same private fan by counting R-only numerical inventories and assigning concentrated labels to CP1/CD1 parent buckets. Its bounds are aggregate counts and can remove the concentrated divisor inventory when G exceeds a color threshold. FCF4–FCF8 instead reuse the opposite-PAIR OCP repair on the complete cofactor support of each supplier group, including R-only groups. They provide phase capacities controlled by the PRODUCT of full-height divisor factors. No new fan lemma, squarefree-cover theorem, KKL theorem, moment estimate or distortion recurrence is needed.
+
+The remaining groups have genuinely small product cores; their original numerical cofactors may still vary on arbitrarily many primes outside their common top support. Neither their number nor their total original lower inventory is uniformly bounded here. FCF2 can distribute q-1 owners among such groups. The selected one-dimensional fan is not a whole cover of the complete top box, and the bound does not supply KKL's uniform numerical multiplicity premise for every active support in such a cover. No bounded head containing an R-prime and no unrestricted contradiction follow from this consumer alone.
