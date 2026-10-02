@@ -126,6 +126,13 @@ a certificate cover of the top-row joint-demand source cannot have a
 label running-intersection tree. The escaped point may have several
 original owners; individual private regions are not substituted for it.
 
+[Section140](#140-one-actual-top-q-fan-pays-concentrated-support-from-an-opposite-color-phase-cap)
+charges the existing full-q private fan against opposite-color phase
+capacity. The coefficient of the ternary height no longer includes
+the concentrated divisor count. An all-depth consumer also bounds
+q-height when the actual R-only inventory is below q-1. Its two-root
+version explicitly requires two private roots of the top q-power.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -17221,3 +17228,117 @@ If the ENTIRE removed family is pairwise disjoint, PH1/PI10 does give E_J=disjoi
 Sections99/101 concern EXACT single-AP inverses. Section113 SCV3--SCV4 explicitly bypasses that stronger requirement by enclosing each required inverse in one fixed AP with checked numerical resources. Those controls do not disprove the enclosing fixed-code repair used here. Reports368/369 distinguish nonempty local menus, matching complete separators, and running intersection. Thus no additional generic SCC/gluing theorem should be introduced. The research obligation is to derive JCE3 and a compatible original-label prefix assignment from actual EB1 constraints, or find one concrete remaining EB1 structural case forcing them. SCE1 by itself supplies neither.
 
 The actual joint escape and the source alternative are ordinary mathematical consumers of the existing replacement and running-intersection results. They do not eliminate the cyclic alternative, establish unrestricted noncoverage, or add Lean verification.
+
+## 140. One actual top-q fan pays concentrated support from an opposite-color phase cap
+
+This is ordinary mathematics on one original EB1 whole cover. It adds no Lean declaration or verification claim. The argument reuses Report371 §2's original top-prime fan, Report385 §73–74 singleton-root elimination, CP1's forbidden opposite-color mixed labels, and CD1's complete-private-hole DR1–DR2 repair. It does not assert unrestricted noncoverage.
+
+### Original source and notation
+
+Use the original prime-private partition R,S_1,S_2; R here is the prime set of nonconcentrated primes. Fix q in R and write
+
+    Q = 3^H q^G Q_0 Q_1 Q_2,
+    Q_0 = product_(r in R minus {q}) r^H_r,
+    Q_i = product_(ell in S_i) ell^H_ell,
+    A = tau(Q_0), D_i = tau(Q_i).
+
+Choose ONE complete original private point of the pure original q^G. Let i in {1,2} be its first-three root. Do not infer that q^G has private points at both roots from q being nonconcentrated; Report385 §71 leaves that inference unavailable when G>1.
+
+For every ell in the opposite color S_(3-i), set the first ell-root to the original 3ell singleton root r_ell=a_(3ell) mod ell; higher ell-digits can be fixed arbitrarily. Keep all other original coordinates of the private point. By §73–74, the original A_(3ell) is the only ell-bearing original at r_ell, and its ternary root is wrong. Thus every opposite-color-bearing original vanishes at the modified source, including originals of ternary height zero. Originals without opposite-color factors are unchanged, and q^G still owns the modified point privately. No phase of an original class has been changed.
+
+Apply the existing top-q private fan: keep this complete q-free cofactor and the prefix modulo q^(G-1), and vary only the last q-digit. Choose an actual original owner at each of the q points, including q^G itself. Each owner has q-height exactly G; an owner of lower height would also cover the original private point. Thus there are q distinct original numerical labels, sharing the full q-free cofactor incidence and the q-prefix through depth G-1, and occupying distinct last q-digits. All opposite-color originals are absent.
+
+The same elementary fan step is valid for G=1; its q-prefix is empty. When G=1, q^G=q and nonconcentration really does give private source points at both ternary roots.
+
+### Existing ternary parent cap consumes the high ternary part
+
+Suppose S_(3-i) is nonempty; choose p in it and set
+
+    c=p-2, C_i=c|S_i|.
+
+The R-only labels in the chosen q-label packet have form 3^a q^G s_0, s_0|Q_0, so there are at most A(H+1).
+
+Among packet labels meeting S_i, those of ternary height at most c number at most A(min(H,c)+1)(D_i-1). If H>c, assign each remaining label once to a dividing ell in S_i. All labels in a bucket have the same original parent phase modulo 3^c ell, namely the source's ternary prefix and ell-root; they are proper descendants. The bucket does not need a common full q-coordinate: this parent has no q factor. CP1 keeps CD1's opposite-color repairs fresh even in the presence of R. Hence each bucket has at most c members and the entire high part at most C_i. Consequently
+
+    q <= A(H+1) + A(min(H,c)+1)(D_i-1)
+                   + 1_(H>c) C_i.                 (TQ1)
+
+For H>c this improves the generic top-fan inventory (H+1)A D_i exactly when
+
+    A(H-c)(D_i-1) > C_i.
+
+At the same actual source and same q^(G-1) prefix, the selected fan contains at least
+
+    max(0, q-A(c+1)(D_i-1)-C_i)
+
+R-only labels, and at least
+
+    max(0, q-A(c+1)D_i-C_i)                         (TQ2)
+
+R-only labels of ternary height greater than c. These formulas are stated for H>c; their nonnegative lower bounds include the pure q^G owner only in the first formula. All labels have q-height exactly G. The numerical inventory for the second group is at most A(H-c).
+
+If H<=c, no high part exists and TQ1 reduces exactly to the generic q<=(H+1)A D_i. If S_i is empty, the direct bound is q<=A(H+1), with no opposite prime needed. If the opposite color is empty, the phase-cap argument is unavailable and only the generic count is claimed.
+
+### The same complete-hole repair on a q-parent removes the whole color inventory when G>c
+
+This uses CD1's repair with the prime axis changed; it is not a new generic repair mechanism. Let the original parent be d=q^a ell, ell in S_i, a>=c. For any non-own phase modulo d, delete its complete original proper-descendant group and move the parent as in DR1. The exact lost region is the whole old P_d. Its points avoid retained A_p and have the entire old d-prefix. The c+1=p-1 APs
+
+    x=a_d mod ell, x=a_d mod q^j, x=j+1 mod p,
+    numerical modulus p ell q^j, j=0,...,p-2,
+
+cover all of P_d, after the original prime-p phase has been normalized to zero. All labels are distinct and fresh by CP1. Their total is
+
+    W = p ell (q^(p-1)-1)/(q-1).
+
+If the deleted group has r>p-1 members, class count decreases. If r=p-1, its modulus sum is at least 3(p-1)q^a ell, while
+
+    W/[3(p-1)q^a ell]
+      < p q/[3(p-1)(q-1)] < 1
+
+because a>=p-2 and p,q>=5. Thus DR2 gives the same phase capacity c=p-2. This changes no original phase or full deletion liability; different bucket repairs are only alternative comparisons, never simultaneous operations.
+
+If G>c, all S_i-bearing labels in the chosen top-q fan share one parent phase modulo q^c ell in each ell-bucket. Their q-height G makes them proper descendants. Therefore the ENTIRE S_i-bearing portion is at most C_i, independent of ternary height and D_i. The stronger necessary bound is
+
+    G>c  ==>  q <= A(H+1)+C_i.                     (TQ3)
+
+At that same source and depth-(G-1) q-prefix, at least max(0,q-C_i) of the q fan labels are R-only originals 3^a q^G s_0. More generally, for each integer b with 0<=b<H, at least
+
+    max(0,q-C_i-A(b+1))                            (TQ4)
+
+have ternary height greater than b. This is actual phase-sensitive original inventory, not an assertion that a fresh repair for those R-only labels exists.
+
+The condition G>c is necessary for this consumer: the q-prefix shared by the fan is only depth G-1. No use of the q-parent cap at depth c is made when G<=c.
+
+The same q-parent cap consumes the existing ALL-DEPTH QC2/HC1 packet without a new fan proof. For any c<=a<G, put k=G-a. At the same modified private source, HC1 supplies at least 1+k(q-1) original labels of q-height greater than a, sharing the source modulo q^a and at their complete q-free cofactors. Assign the S_i-bearing members to q^a ell parents; their total is at most C_i. The remaining R-only labels have q-height in {a+1,...,G}, at most kA(H+1) numerical possibilities. Thus
+
+    1+(G-a)(q-1) <= (G-a)A(H+1)+C_i.               (TQ6)
+
+The actual same-source, depth-a q-prefix packet contains at least
+
+    max(0,1+(G-a)(q-1)-C_i)
+
+R-only original labels. For a=c, if q-1>A(H+1), this gives the conditional height bound
+
+    G <= c + floor((C_i-1)/(q-1-A(H+1))).           (TQ7)
+
+TQ7 is stated when S_i is nonempty (so C_i>=3); if G<=c it holds automatically, and if G>c its derivation is TQ6. For R={q}, the positive-denominator condition is q>H+2 and the denominator is q-H-2. When q-1<=A(H+1), TQ6 remains valid but does not give this upper height bound. TQ3 is precisely TQ6's k=1 case.
+
+### Conditional two-root source combination
+
+Suppose the pure original q^G itself has complete private points at BOTH nonzero first-three roots. This extra hypothesis is automatic for G=1, not for arbitrary G. For each i choose an opposite p_i when available, put c_i=p_i-2 and C_i=c_i|S_i|, and define a valid color bound
+
+    B_i = A(min(H,c_i)+1)(D_i-1)+1_(H>c_i) C_i,
+
+or B_i=C_i if G>c_i; either bound may be used and their minimum is valid. Empty S_i gives B_i=0; an empty opposite color permits only the generic B_i=A(H+1)(D_i-1).
+
+Perform the source-preserving elimination separately at the two actual private sources and form the two original top-q packets. Their full cofactor values need not be equal. Color-i labels appear only in packet i after elimination. An R-only label of positive ternary height has one actual first-three root, so it appears in at most one packet. There are at most HA such numerical labels. R-only labels of ternary height zero may appear in both packets, contributing at most 2A incidences. Hence
+
+    2q <= A(H+2)+B_1+B_2.                          (TQ5)
+
+When G>max(c_1,c_2), this becomes 2q<=A(H+2)+C_1+C_2. This special case requires the stated two-root private-source hypothesis; it is not obtained from prime-q nonconcentration alone.
+
+### Comparison and remaining gap
+
+The top-q fan is existing Report371 §2 / QC2, and CP1 plus CD1 supplies the reusable capacity proof. Report385 HC5 counts a full q-axis shell packet against a different fresh-prime repair; SP4 assumes a numerical second-row vacancy. TC1 uses laws summed over all q-heights and has endpoint coefficient H A D_i. TQ1–TQ4 instead charge one actual full-height-q fan against the concentrated phase caps. The displayed formulas differ from those existing consumers and remove D_i from the coefficient of H; TQ3 removes D_i entirely when G>c. This is not a claim of independence from every consequence elsewhere in the repository, or exclusion of an already settled low-support family.
+
+For R={q}, A=1, TQ3 gives H>=q-1-C_i at the actual top-q private root; TQ5 gives H>=2q-2-C_1-C_2 only under its additional two-root hypothesis. These are necessary constraints. No upper bound on the R-only ternary inventory, no legal joint repair of that inventory, and no unrestricted contradiction has been supplied.
