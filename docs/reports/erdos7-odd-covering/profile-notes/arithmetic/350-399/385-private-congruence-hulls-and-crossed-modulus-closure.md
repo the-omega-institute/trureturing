@@ -22432,3 +22432,63 @@ and both moduli at most
 a reciprocal private-hull pair or pay its complete \(K_{d,g}\) liability. It
 can be used as a bounded-overlap search input; it cannot be substituted for
 (RH1)--(RH6).
+
+## 185. Reusing the squarefree exclusion raises the extremal floors
+
+The published squarefree-modulus exclusion gives one additional unit of
+prime-power depth for the same extremal representative. The nine-support
+result already recorded in Section 180 and the initial-segment normalization
+in Section 350 put the first nine odd primes in the support. If every
+exponent \(H_p\) were one, every original modulus would be squarefree, and
+the Balister--Bollobás--Morris--Sahasrabudhe--Tiba theorem recorded in
+[balister2019erdos](../../../../../../Library/Arith/balister2019erdos.md)
+would exclude the whole cover. Hence some \(H_p\ge2\). Applying Simpson's
+retained prefix inequality (EB22) gives
+
+\[
+ |D|\ge 1+\sum_{p\mid Q}H_p(p-1)
+ \ge 1+\sum_{p\in\{3,5,7,11,13,17,19,23,29\}}(p-1)+(3-1)
+ =\boxed{121}.
+\tag{HF9}
+\]
+
+The extra \(3-1\) is a lower bound even when the repeated prime is not 3;
+the smallest possible increment is two.
+
+There is also a direct modulus-sum consequence of the same floor. Apply
+Simpson's Theorem 2 to \(D_0=Q/29\). Since \(Q\) contains 29, at least
+
+\[
+ 1+f(Q/D_0)=1+(29-1)=29
+\]
+
+original labels do not divide \(D_0\), hence have full 29-adic height and in
+particular are distinct odd multiples of 29. Their sum is at least
+
+\[
+ 29(1+3+\cdots+57)=29^3=24389.
+\]
+
+The remaining \(121-29=92\) labels are distinct odd nonunits. The least
+possible contribution from labels not already used as those 29 multiples is
+the sum of the 92 smallest odd nonmultiples of 29. Any additional multiple
+of 29 after the first 29 is at least \(29\cdot59=1711\), whereas all 92
+listed nonmultiples are at most 191, so replacing one of those nonmultiples
+by an additional multiple can only increase the total. The odd numbers from
+3 through 191 have sum \(95\cdot97=9215\); removing \(29,87,145\) leaves
+
+\[
+ 9215-(29+87+145)=8954.
+\]
+
+Therefore
+
+\[
+ \boxed{\sum_{d\in D}d\ge24389+8954=33343.}
+\tag{HF10}
+\]
+
+This is a reused necessary numerical bound, not a new covering-system
+theorem. It sharpens Sections 181 and 183's bookkeeping while leaving the
+phase-sensitive complete-liability bridge, and hence unrestricted Erdős #7,
+open.
