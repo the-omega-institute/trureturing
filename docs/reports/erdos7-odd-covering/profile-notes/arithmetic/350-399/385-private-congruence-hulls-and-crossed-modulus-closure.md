@@ -15707,3 +15707,198 @@ apply only to this all-concentrated Y_* slice. They neither put it in
 the nonconcentrated blocked set U nor supply a joint cofactor law
 across different w_* or different primes. No new Lean verification or
 unrestricted noncoverage is asserted.
+
+## 127. Retained full-height incidences bound the loss of blocked live fibres
+
+Use the general source in section124 and Report375 JL1, allowing
+arbitrary shared prime support and arbitrary original heights. Write
+
+    Q=3^H*q^G*M, q>3, gcd(M,3q)=1, t=q-2,
+    d=3^a_d*q^e_d*s_d, s_d|M,
+    J={d:e_d>=1, a_d<H},
+    T={d:e_d>=1, a_d=H}, K=D minus J.
+
+Let r_d be the actual original phase. On the non-q carrier
+X=(Z/3^H) times(Z/M), let R be the complete actual q-free residual
+and let L be its ternary projection. For each q-bearing original put
+
+    B_d={(u,v):u=r_d mod3^a_d, v=r_d mods_d}.
+
+For each actual x=(u,v) in R, the retained q-bearing union on its
+complete q-line is
+
+    D_x=union_(d in T, x in B_d)[r_d modq^e_d].
+
+Because x has no q-free owner, its complement is exactly
+
+    E_x=(Z/q^G) minus D_x
+       ={xi:(u,xi,v) in E_J}.                       (RE1)
+
+Thus this construction keeps the full joint deletion region.
+Define
+
+    W={x in R:D_x contains no complete
+                 3-ary depth-G prefix subtree},
+    U_*=projection_3(W).
+
+Then
+
+    U_* subset U,                                  (RE2)
+
+where U is Report375's set of words with no ternary tree avoiding
+the projected E_u. Indeed such an avoiding tree would be contained
+in D_x for every actual cofactor above that word, contrary to any
+witness x in W. The converse has not been established: different
+cofactor fibres can jointly block every avoiding tree. In particular
+U nonempty does not imply U_* nonempty.
+
+### An exceptional actual pair requires a full retained-tree payment
+
+Set
+
+    c(x)=sum_(d in T)3^(-e_d)*1_(B_d)(x).
+
+If x is outside W, D_x contains a complete ternary depth-G tree.
+Its uniform leaf law gives each incident original q-prefix of depth e
+mass at most3^(-e). The retained prefixes cover that whole tree, so
+
+    1_(R minus W)(x)<=c(x).                         (RE3)
+
+The branching factor here is3, while the ambient digit alphabet has q
+symbols. Integrating this pointwise inequality gives, for any finite
+nonnegative measure lambda on R and any subset A of R,
+
+    lambda(A minus W)
+      <=sum_(d in T)3^(-e_d)*lambda(A intersect B_d). (RE4)
+
+For each bad live WORD u in L minus U_*, choose one actual
+v_u in R_u. Every such pair is outside W. Every retained label in T
+has ternary height H, so it can be incident to only ONE of these
+chosen word-pairs. Consequently, for any set P of full ternary words,
+
+    |(L minus U_*) intersect P|
+       <=sum_(d in T, r_d mod3^H in P)3^(-e_d).     (RE5)
+
+Keeping the actual test v_u=r_d mods_d in this sum gives a sharper
+cofactor-sensitive bound. Dropping it gives the displayed upper
+bound, which in particular applies to every ternary prefix cell.
+
+Distinct original numerical labels allow at most one retained
+3^H*q^e*s per pair(e,s). Hence
+
+    |L minus U| <= |L minus U_*|
+       <=sum_(d in T)3^(-e_d)
+       <=tau(M)*(1-3^(-G))/2 < tau(M)/2.             (RE6)
+
+This replaces Report375 LM6's G*tau(M) phase-count estimate by a
+height-uniform retained-incidence bound on an explicitly smaller
+certified set U_*. For example tau(M)=8 permits at most three lost
+live words, independently of G. No lower bound on |L| is supplied.
+
+At any fixed actual pair, labels with ONE fixed cofactor s contribute
+at most sum_(e=1..G)3^(-e)<1/2 to c(x). Therefore every x outside W
+has at least THREE distinct actual numerical cofactors s_d among its
+incident retained labels. Their mere number is not sufficient for
+such an exception.
+
+### One law can preserve the entire actual ternary-cofactor marginal
+
+Suppose ONE probability theta on W is supplied. For each x in W,
+reuse Report375's finite-tree alternative: E_x contains a complete
+t-ary depth-G tree. Choose one such tree and its uniform leaf law.
+Sample x according to theta, then sample its q-leaf from that law.
+The resulting ONE original probability nu satisfies
+
+    support(nu) subset E_J,
+    projection_(u,v)(nu)=theta,
+    nu(A_d)=0 for every d in K,
+    nu(A_d)<=t^(-e_d)*theta(B_d) for every d in J.    (RE7)
+
+The q-prefix estimate is conditional on the unchanged pair x; a
+label is absent unless x belongs to its literal B_d. Whole original
+coverage of E_J now gives
+
+    1<=sum_(d in J)nu(A_d)
+      <=sum_(d in J)t^(-e_d)*theta(B_d).             (RE8)
+
+The ternary marginal sigma is the projection of this SAME theta and
+is supported on U_* subset U. All prefix masses and all cofactor
+incidences must use it. The q-tree kernels may depend on v here:
+this is a probability construction, not the cofactor-independent
+prefix map required to transport original APs.
+
+RE5 supplies a precise conditional certificate for binary prefix
+caps. Suppose a complete binary depth-(H-1) ternary prefix subtree
+has, in every one of its final cells P,
+
+    |L intersect P|
+       >sum_(d in T, r_d mod3^H in P)3^(-e_d).      (RE9)
+
+Every such cell then meets U_*. Choose one actual W-pair over each
+cell and assign equal binary leaf masses. The resulting same theta
+has ternary prefix masses at most2^(-a), simultaneously for all
+0<=a<H. Their sum is at most2*(1-2^(-H))<2. This is a sufficient
+certificate; RE9 has not been forced from EB1 or nonconcentration.
+The two live first roots of L cannot be transferred to U_* without
+checking their retained payments.
+
+A cofactor-sensitive density certificate follows directly from RE4.
+Normalize counting measure on X and write
+
+    delta=|R|/(3^H*M), delta_*=|W|/(3^H*M),
+    eta=(3^H*M)^(-1) sum_(d in T)3^(-e_d)|R intersect B_d|.
+
+Then
+
+    delta_*>=delta-eta,
+    eta<=3^(-H) sum_(d in T)3^(-e_d)/s_d
+        <=[sum_(s|M)1/s]*(1-3^(-G))/(2*3^H).        (RE10)
+
+If delta>eta, the uniform law theta on W exists and simultaneously
+obeys theta(B_d)<=3^(-a_d)/(s_d*delta_*) and the ternary prefix cap
+min(1,3^(-a)/delta_*). These follow from actual cylinder sizes under
+one joint law. The exact ratio |W intersect B_d|/|W| remains the
+more informative price in RE8. The condition delta>eta is unproved
+for a general source.
+
+### Complete-line counting rules out a tempting unconditioned shortcut
+
+For any finite nonnegative lambda on R put
+
+    T(lambda)=sum_(d in T)3^(-e_d)*lambda(B_d),
+    J(lambda)=sum_(d in J)t^(-e_d)*lambda(B_d).
+
+A proposed contradiction obtained by paying T(lambda) and discarding
+all conditioning information would require
+
+    J(lambda)<lambda(R)-T(lambda).
+
+The original whole-cover premise already forbids this inequality.
+For every actual x in R, all q^G points of its full q-line have
+q-bearing owners, so Haar counting gives
+
+    1<=sum_(d in J union T)q^(-e_d)*1_(B_d)(x).
+
+Integrate against the SAME lambda and use q^(-e)<=3^(-e) and
+q^(-e)<=t^(-e). This proves
+
+    T(lambda)+J(lambda)>=lambda(R).                 (RE11)
+
+Thus the shortcut is dominated before forgetting any original phase,
+cofactor incidence or height. This excludes that particular test; it
+does not exclude a useful conditional price on W, a different law on
+the larger U, or a legal whole-hole repair.
+
+The construction complements CF1--CF11. CF first chooses a tree in
+the projected joint fibre and then conditions its complete actual
+cofactor fibres; it remains available outside the certified U_*.
+RE7 first fixes actual(u,v) pairs in W and then chooses their q-trees.
+Neither law is automatically the other. Taking the smaller of their
+prices separately for different original labels would change the
+source and is unjustified.
+
+The unconditional additions are the retained-incidence erasure
+bounds RE3--RE6 on the original source. Their useful distribution
+consumers still need sufficient actual retained-payment margins or
+a suitable single theta. No universal such margin, unrestricted
+Erdos#7 conclusion, or new Lean verification is asserted.
