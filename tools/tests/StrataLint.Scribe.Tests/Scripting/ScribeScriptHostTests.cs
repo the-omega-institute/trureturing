@@ -85,20 +85,20 @@ public sealed class ScribeScriptHostTests
         var result = ScribeScriptHost.Execute(root.Path, path);
 
         Assert.True(result.Failure?.Code == ScribeScriptFailureCode.DisallowedSymbol, result.Failure?.ToString());
-        Assert.True(result.Failure?.Message.Contains("System.IO.File.ReadAllText", StringComparison.Ordinal), result.Failure?.ToString());
+        Assert.True(result.Failure?.Message.Contains("M:System.IO.File.ReadAllText(System.String)", StringComparison.Ordinal), result.Failure?.ToString());
     }
 
     [Theory]
-    [InlineData("Environment.GetEnvironmentVariable(\"SCRIBE_INPUT\")")]
-    [InlineData("Directory.GetFiles(\".\")")]
-    [InlineData("typeof(Probe).Assembly")]
-    [InlineData("System.Diagnostics.Process.GetCurrentProcess()")]
-    [InlineData("new System.Net.Http.HttpClient()")]
-    [InlineData("DateTime.Today")]
-    [InlineData("System.Globalization.CultureInfo.CurrentCulture")]
-    [InlineData("ScribeScriptHost.Execute(\".\", \"Blueprint/D5/S0/Test/Other.scribe.cs\")")]
-    [InlineData("dynamic value = \"input\"; _ = value.ToString()")]
-    public void ExternalChannelsAreRejectedByTheAllowlist(string expression)
+    [InlineData("Environment.GetEnvironmentVariable(\"SCRIBE_INPUT\")", "M:System.Environment.GetEnvironmentVariable(System.String)")]
+    [InlineData("Directory.GetFiles(\".\")", "M:System.IO.Directory.GetFiles(System.String)")]
+    [InlineData("typeof(Probe).Assembly", "P:System.Type.Assembly")]
+    [InlineData("System.Diagnostics.Process.GetCurrentProcess()", "M:System.Diagnostics.Process.GetCurrentProcess")]
+    [InlineData("new System.Net.Http.HttpClient()", "M:System.Net.Http.HttpClient.#ctor")]
+    [InlineData("DateTime.Today", "P:System.DateTime.Today")]
+    [InlineData("System.Globalization.CultureInfo.CurrentCulture", "P:System.Globalization.CultureInfo.CurrentCulture")]
+    [InlineData("ScribeScriptHost.Execute(\".\", \"Blueprint/D5/S0/Test/Other.scribe.cs\")", "M:StrataLint.Scribe.ScribeScriptHost.Execute(System.String,System.String)")]
+    [InlineData("dynamic value = \"input\"; _ = value.ToString()", "T:System.Object")]
+    public void ExternalChannelsAreRejectedByTheAllowlist(string expression, string id)
     {
         using var root = new TemporaryRoot();
         const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
@@ -119,7 +119,7 @@ public sealed class ScribeScriptHostTests
 
         var result = ScribeScriptHost.Execute(root.Path, path);
 
-        Assert.True(result.Failure?.Code == ScribeScriptFailureCode.DisallowedSymbol, result.Failure?.ToString());
+        ScribeScriptAdmissionTests.Reject(result, id);
     }
 
     [Fact]
@@ -140,7 +140,7 @@ public sealed class ScribeScriptHostTests
 
         var result = ScribeScriptHost.Execute(root.Path, path);
 
-        Assert.True(result.Failure?.Code == ScribeScriptFailureCode.DisallowedSymbol, result.Failure?.ToString());
+        ScribeScriptAdmissionTests.Reject(result, "M:System.Environment.GetEnvironmentVariable(System.String)");
     }
 
     [Fact]
@@ -259,7 +259,7 @@ public sealed class ScribeScriptHostTests
     [InlineData("internal sealed class Empty { }", ScribeScriptFailureCode.DefinitionMissing)]
     [InlineData("internal sealed class Probe : IScribeDocumentDefinition { public DocumentDefinition Create() => throw new InvalidOperationException(\"fixture failure\"); }", ScribeScriptFailureCode.CreateFailed)]
     [InlineData("internal sealed class Probe : IScribeDocumentDefinition { public DocumentDefinition Create() => DocumentDefinition.Create(ScribeDocument.Create(Header(\"D5/S0/Test/Other\", \"digest\"), H(\"title\"), Blocks(Paragraph(Text(\"content\"))))); }", ScribeScriptFailureCode.GidPathMismatch)]
-    [InlineData("internal sealed class Probe : IScribeDocumentDefinition { public DocumentDefinition Create() { _ = DateTime.Now; return DocumentDefinition.Create(ScribeNode.Create(\"digest\", H(\"title\"), Blocks(Paragraph(Text(\"content\"))))); } }", ScribeScriptFailureCode.BannedSymbol)]
+    [InlineData("internal sealed class Probe : IScribeDocumentDefinition { public DocumentDefinition Create() { _ = DateTime.Now; return DocumentDefinition.Create(ScribeNode.Create(\"digest\", H(\"title\"), Blocks(Paragraph(Text(\"content\"))))); } }", ScribeScriptFailureCode.DisallowedSymbol)]
     [InlineData("internal sealed class Probe : IScribeDocumentDefinition { public DocumentDefinition Create() { string? value = null; _ = value.Length; return DocumentDefinition.Create(ScribeNode.Create(\"digest\", H(\"title\"), Blocks(Paragraph(Text(\"content\"))))); } }", ScribeScriptFailureCode.Compilation)]
     public void NamedFailuresCarrySourceAndReason(string body, ScribeScriptFailureCode expected)
     {
@@ -323,8 +323,7 @@ public sealed class ScribeScriptHostTests
             }
             """);
 
-        Assert.Equal(ScribeScriptFailureCode.BannedSymbol,
-            ScribeScriptHost.Execute(root.Path, path).Failure?.Code);
+        ScribeScriptAdmissionTests.Reject(ScribeScriptHost.Execute(root.Path, path), "P:System.DateTime.Now");
     }
 
     [Fact]

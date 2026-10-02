@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Globalization;
 using System.Text;
 using System.Text.Json.Nodes;
 
@@ -123,6 +124,38 @@ public sealed class ScribeResourceScriptPackTests
         foreach (var name in new[] { "Alpha", "Beta" })
             Assert.Equal(ScribeResourcePack.Open(root.Resolve("first.zip")).EncodedBytes(GidFor(name)).ToArray(),
                 ScribeResourcePack.Open(root.Resolve("second.zip")).EncodedBytes(GidFor(name)).ToArray());
+    }
+
+    [Fact]
+    public void ThreadCultureChangesPreserveFullAndReusedPackDigests()
+    {
+        using var root = Prepare();
+        Definition(root.Path, "Alpha", expression: "$\"{1234:N0} {-5}\"");
+        var culture = CultureInfo.CurrentCulture;
+        var uiCulture = CultureInfo.CurrentUICulture;
+        try
+        {
+            CultureInfo.CurrentCulture = new CultureInfo("en-US");
+            var first = Pack(root.Path, "first.zip");
+            var selected = (CultureInfo)new CultureInfo("tr-TR").Clone();
+            selected.NumberFormat.NegativeSign = "~";
+            CultureInfo.CurrentCulture = selected;
+            CultureInfo.CurrentUICulture = selected;
+            var reused = Pack(root.Path, "reused.zip", "first.zip");
+            var full = Pack(root.Path, "full.zip");
+            Assert.Empty(reused.Executed);
+            AssertPaths(reused.Reused, "Alpha");
+            AssertPaths(full.Executed, "Alpha");
+            Assert.Equal(first.Manifest.TotalSha256, reused.Manifest.TotalSha256);
+            Assert.Equal(full.Manifest.TotalSha256, reused.Manifest.TotalSha256);
+            Assert.Same(selected, CultureInfo.CurrentCulture);
+            Assert.Same(selected, CultureInfo.CurrentUICulture);
+        }
+        finally
+        {
+            CultureInfo.CurrentCulture = culture;
+            CultureInfo.CurrentUICulture = uiCulture;
+        }
     }
 
     [Fact]
