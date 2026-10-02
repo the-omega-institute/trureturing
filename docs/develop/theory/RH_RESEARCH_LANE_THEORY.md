@@ -10707,3 +10707,169 @@ $$
 本文没有形式化、deposit 或覆盖记录，没有实际加权迹数值和已认证的具体 $\epsilon_0$。RH、全部支撑上的有符号比较以及黄金/FIB 组成与这些物理算子的额外识别均保持未解决。素数二的乘法伸缩 $U=\rho(2)$ 在本章有固定物理定义；它与 FIB 原子递归的黄金尺度作用需要另给对应。
 
 ## 追加锚（本行以下为增补区）
+
+## 17. 有限素数集的混合共振与积分尾界
+
+**定义 17.1（共同物理表示与矩形频率截断）。** 沿用第 14.1 节的 $H,\mathcal F,Q,W,V,P,\rho$。取有限素数集 $\mathcal P$，记 $S=\{\infty\}\cup\mathcal P$，并定义
+
+$$
+q_p=p^{-1/2},\qquad U_p=\rho(p),\qquad
+T=\prod_{p\in\mathcal P}(I-q_pU_p),\qquad
+\mathcal F_S=T\mathcal FT^{-1}.
+$$
+
+此处物理运输及源 Sonin 空间的识别使用 [CCM 的半局部归一化](../../../Library/Weil/connesconsanimoscovici2024semilocal.md)，即 arXiv:2310.18423v2 的式 (57)、Proposition 4.7 与 Theorem 4.6；$T$ 是有界可逆运输。$mathscr L\xi(s)=e^{s/2}\xi(e^s)$ 把 $I-q_pU_p$ 送到 Fourier 乘子 $1-p^{-1/2-i\tau}$。例如
+
+$$
+\mathcal P=\{2,3\}\quad\Longrightarrow\quad
+(T\xi)(x)=\xi(x)-\tfrac12\xi(x/2)-\tfrac13\xi(x/3)+\tfrac16\xi(x/6).
+$$
+
+由 $\mathcal FU_p=U_p^*\mathcal F$，在同一表示中有
+
+$$
+\mathcal F_S=\left(\prod_{p\in\mathcal P}V_p\right)\mathcal F,
+\qquad
+V_p=(I-q_pU_p)(I-q_pU_p^*)^{-1}.
+$$
+
+各 $V_p$ 是互相交换的 unitary；Neumann 展开给出
+
+$$
+V_p=-q_pU_p+(1-q_p^2)\sum_{j\ge0}q_p^j(U_p^*)^j.
+$$
+
+对 $\mathbf j\in\{-1,0,1,\ldots\}^{\mathcal P}$ 定义
+
+$$
+\lambda_{\mathbf j}=\prod_{p\in\mathcal P}p^{j_p},\qquad
+w_{\mathbf j}=\prod_{p\in\mathcal P}r_p(j_p),\qquad
+r_p(-1)=-p^{-1},\quad r_p(j)=1-p^{-1}\ (j\ge0).
+$$
+
+物理伸缩核中的平方根与级数系数相消，因此
+
+$$
+\mathcal F_S(x,y)=2\sum_{\mathbf j}w_{\mathbf j}
+\cos(2\pi\lambda_{\mathbf j}xy)
+$$
+
+首先表示 operator-norm 收敛级数所定义的算子核，或相应的分布核；不预设它处处点态收敛。取整数 $N_p\ge0$，令
+
+$$
+\mathcal I_{\mathbf N}=\prod_{p\in\mathcal P}\{-1,0,\ldots,N_p\},\qquad
+\mathcal F_{\mathbf N}(x,y)=2\sum_{\mathbf j\in\mathcal I_{\mathbf N}}
+w_{\mathbf j}\cos(2\pi\lambda_{\mathbf j}xy).
+$$
+
+**定义 17.2（已积分的线性修正核）。** 取 $r>0$，令 $\operatorname{sinc}z=\sin z/z$，在零点连续延拓。对任意 $a,b>0$，定义
+
+$$
+J_{a,b}(t)=e^{t/2}\int_{e^{-t}}^1
+\left[
+\operatorname{sinc}\bigl(2\pi x(a-be^t)\bigr)
++\operatorname{sinc}\bigl(2\pi x(a+be^t)\bigr)
+\right]dx.
+$$
+
+矩形截断的线性核为
+
+$$
+\mathcal K_{S,\mathbf N}(t)=
+4\sum_{\mathbf j,\mathbf k\in\mathcal I_{\mathbf N}}
+w_{\mathbf j}w_{\mathbf k}J_{\lambda_{\mathbf j},\lambda_{\mathbf k}}(t).
+$$
+
+定义正数
+
+$$
+\begin{aligned}
+L(r)&=\frac{e^{r/4}}{\sqrt\pi}(4\sqrt r+r),\\
+z_p&=p^{-3/4}+\frac{1-p^{-1}}{1-p^{-1/4}},\\
+z_{p,N}&=p^{-3/4}+(1-p^{-1})\frac{1-p^{-(N+1)/4}}{1-p^{-1/4}},\\
+Z_S&=\prod_{p\in\mathcal P}z_p,\qquad
+Z_{S,\mathbf N}=\prod_{p\in\mathcal P}z_{p,N_p},\\
+E_S(r,\mathbf N)&=4L(r)(Z_S^2-Z_{S,\mathbf N}^2).
+\end{aligned}
+$$
+
+**候签定理 17.1（无间距假设的混合共振尾界）。** 对每个固定有限 $\mathcal P$ 和每个固定 $r>0$，双级数
+
+$$
+\mathcal K_S=4\sum_{\mathbf j,\mathbf k}
+w_{\mathbf j}w_{\mathbf k}J_{\lambda_{\mathbf j},\lambda_{\mathbf k}}
+$$
+
+在 $L^1(0,r)$ 中绝对可和，且
+
+$$
+\begin{aligned}
+\|\mathcal K_S\|_{L^1(0,r)}&\le4L(r)Z_S^2,\\
+\|\mathcal K_S-\mathcal K_{S,\mathbf N}\|_{L^1(0,r)}
+&\le E_S(r,\mathbf N)\longrightarrow0
+\quad(\min_{p\in\mathcal P}N_p\longrightarrow\infty).
+\end{aligned}
+$$
+
+不同 $r$ 的极限在交叠区间上一致。此极限分布由 $\mathcal K_S(t)\,dt$ 给出，没有矩形截断中遗漏的 Dirac 质量。结论不要求不同 $\log(\lambda_{\mathbf j}/\lambda_{\mathbf k})$ 之间存在正间距，也不声称整个核在稠密共振处具有统一点态渐近式。
+
+**证明。** 先对任意 $a,b>0$ 积分一对频率。复用标量界 $|\operatorname{sinc}z|\le\min\{1,|z|^{-1}\}\le|z|^{-1/2}$；该 bound 及连续延拓属于标准 sinc 估计。令 $d=\log(a/b)$。精确恒等式和算术—几何平均给出
+
+$$
+\begin{aligned}
+|a-be^t|&=2\sqrt{ab}\,e^{t/2}
+\left|\sinh\frac{d-t}{2}\right|
+\ge\sqrt{ab}\,e^{t/2}|t-d|,\\
+a+be^t&\ge2\sqrt{ab}\,e^{t/2}.
+\end{aligned}
+$$
+
+又有 $\int_{e^{-t}}^1x^{-1/2}dx\le2$。故 difference 项的积分绝对值不超过
+
+$$
+\sqrt{\frac2\pi}(ab)^{-1/4}
+\int_0^r e^{t/4}|t-d|^{-1/2}dt.
+$$
+
+对所有 $d\in\mathbb R$，
+
+$$
+\int_0^r|t-d|^{-1/2}dt\le2\sqrt{2r}.
+$$
+
+当 $d\in[0,r]$，左边为 $2\sqrt d+2\sqrt{r-d}$；区间外的值更小。因此 difference 项至多为 $4e^{r/4}\sqrt r\,(ab)^{-1/4}/\sqrt\pi$。plus 项至多为 $re^{r/4}(ab)^{-1/4}/\sqrt\pi$，于是
+
+$$
+\|J_{a,b}\|_{L^1(0,r)}\le L(r)(ab)^{-1/4}.
+$$
+
+对频率求和时，$j_p=-1$ 的贡献为 $p^{-1}p^{1/4}=p^{-3/4}$，而 $j_p\ge0$ 的贡献是几何级数。因此
+
+$$
+\sum_{\mathbf j}|w_{\mathbf j}|\lambda_{\mathbf j}^{-1/4}=Z_S,\qquad
+\sum_{\mathbf j\in\mathcal I_{\mathbf N}}
+|w_{\mathbf j}|\lambda_{\mathbf j}^{-1/4}=Z_{S,\mathbf N}.
+$$
+
+从而
+
+$$
+4\sum_{\mathbf j,\mathbf k}|w_{\mathbf j}w_{\mathbf k}|
+\|J_{\lambda_{\mathbf j},\lambda_{\mathbf k}}\|_1
+\le4L(r)Z_S^2<\infty.
+$$
+
+矩形外所有 pair 的正权重和恰为 $Z_S^2-Z_{S,\mathbf N}^2$，得到所列误差。绝对 $L^1$ 收敛同时给出有限测度的 total-variation 收敛，所以不存在额外集中质量。单个共振点的无穷 majorant 不改变这一步积分结论。
+
+该乘积尾界还满足
+
+$$
+E_S(r,\mathbf N)\le
+8L(r)Z_S^2\sum_{p\in\mathcal P}
+\frac{(1-p^{-1})p^{-(N_p+1)/4}}
+{(1-p^{-1/4})z_p}.
+$$
+
+这里使用 $1-\prod_p(1-u_p)\le\sum_pu_p$ 和 $1-a^2\le2(1-a)$，其中 $0\le a,u_p\le1$。例如 $\mathcal P=\{2,3\}$、$N_2=N_3=N$ 时，误差为 $O_r(2^{-(N+1)/4}+3^{-(N+1)/4})$，常数由上式确定。证明没有把两个近共振替换成彼此分离的共振。$\square$
+
+## 追加锚（本行以下为增补区）
