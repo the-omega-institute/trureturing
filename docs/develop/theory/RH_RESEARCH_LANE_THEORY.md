@@ -11614,3 +11614,145 @@ $$
 代入第 21.2 节的实际 Hankel 矩界和第 21.1 节的谱配对上界，得到第一式。再应用相位上界与 $\|t^2\widehat f\|_{L^2(d\mu)}=\|f''\|_2$，得到第二式。其常数不含 $\|(I-C^2)^{-1}\|$，但仍明确依赖真实素数集的 $\mathfrak d_S$。这不是 $N_S$ 的绝对值界或统一 TC 定理。$\square$
 
 ## 追加锚（本行以下为增补区）
+## 22. 扩张测试上的预算改进与未闭合的正性比较
+
+本章把第 21 节的单侧上界用于第 19—20 节原有的扩张测试族，不另造数值测试，不重证三个 Fourier 约束或活跃素幂的支撑结论。比较对象是同一实际测试上的两份充分预算；预算改进不意味着实际有符号修正变小，也不意味着已经得到 Weil 正性。
+
+### 22.1 保留原测试与物理素数集
+
+继续取第 19.3 节的实偶 bump $\phi$ 及
+
+$$
+f_{\mathcal R}(x)=\mathcal R^{-1/2}
+\left[\phi'-4\mathcal R^{-2}\phi'''\right](x/\mathcal R).
+$$
+
+其实际支撑为 $[-\mathcal R/2,\mathcal R/2]$，自相关支撑为 $[-\mathcal R,\mathcal R]$，且 $\widehat f_{\mathcal R}(0)=\widehat f_{\mathcal R}(i/2)=\widehat f_{\mathcal R}(-i/2)=0$。这些直接复用第 19.3 节，不把约束在数值意义下放松。所有纯素数幂仍出现在第 21.3 节的完整相位导数中。
+
+取有限实际素数集
+
+$$
+\mathcal P_{\mathcal R}^{\rm act}\subseteq\mathcal P
+\subseteq\{p:p\le e^{\mathcal R}\},\qquad
+S=\{\infty\}\cup\mathcal P.
+$$
+
+左侧保证支撑完整；右侧不是支撑完整的必要条件，而是以下把素数相位预算与 $\chi_S$ 比较所用的额外限制。由于活跃素幂满足 $k\log p\le\mathcal R$，最小活跃素数集确实满足右侧。若另加 $p>e^{\mathcal R}$，第 21.3 节的 $\mathfrak d_S$ 上界仍可使用，但以下 $\mathcal R\log\chi_S$ 替换不再由该论证保证。
+
+记 $u,v,M_*,\mathcal R_0,\eta,c_0,b_S,\chi_S$ 为第 19—20 节原量，并定义固定于 $\phi$ 与 Gamma 因子的常数
+
+$$
+E_\phi=\|\phi'''\|_2+4\|\phi^{(5)}\|_2,\qquad
+C_{\phi,\Gamma}=2a_\Gamma M_*
++2b_\Gamma\sqrt{M_*}\,E_\phi,
+\qquad c_{\rm res}=\frac{u^2\eta^3}{c_0}>0.
+$$
+
+### 22.2 同一测试的明确增长预算
+
+对 $\mathcal R\ge\mathcal R_0\ge1$，支撑和既有 $L^2$ 上界给出
+
+$$
+D(f_{\mathcal R})\le\frac{\mathcal R}{2}M_*,\qquad
+\|xf_{\mathcal R}\|_2\le\frac{\mathcal R}{2}\sqrt{M_*},\qquad
+\|f_{\mathcal R}''\|_2\le\mathcal R^{-2}E_\phi.
+$$
+
+把这些参数代入候签定理 21.1，得到
+
+$$
+N_S(f_{\mathcal R})\le
+C_{\phi,\Gamma}+2M_*\mathcal R+4M_*\mathfrak d_S.
+$$
+
+这个式子适用于任意有限 $\mathcal P$；不把随素数集增长的 $\mathfrak d_S$ 藏进固定常数。对于第 22.1 节限定的素数集，令 $d_0=1-2^{-1/2}>0$。原量的 Euler 定义给出
+
+$$
+\log\chi_S
+=2\sum_{p\in\mathcal P}\log\frac{1+p^{-1/2}}{1-p^{-1/2}}
+\ge4\sum_{p\in\mathcal P}p^{-1/2},
+$$
+
+$$
+\mathfrak d_S
+=\sum_{p\in\mathcal P}\frac{\log p\,p^{-1/2}}{1-p^{-1/2}}
+\le\frac{\mathcal R}{d_0}\sum_{p\in\mathcal P}p^{-1/2}
+\le\frac{\mathcal R\log\chi_S}{4d_0}.
+$$
+
+因此可取非负单侧预算
+
+$$
+\boxed{
+U_{S,\mathcal R}
+=C_{\phi,\Gamma}+M_*\mathcal R
+\left(2+\frac{\log\chi_S}{d_0}\right),\qquad
+N_S(f_{\mathcal R})\le U_{S,\mathcal R}.
+}
+$$
+
+沿增长的支撑完整素数集，预算为 $O(\mathcal R(1+\log\chi_S))$；没有证明它是素数集一致的 $O(\mathcal R)$，也没有证明它能被正迹覆盖。
+
+### 22.3 相对于旧绝对预算的统一比较
+
+**候签定理 22.1（扩张族的充分预算比）。** 假设第 18—21 节的实际表示及迹合同成立。对于第 22.1 节的测试和素数集，当
+
+$$
+\mathcal R\ge\max\{\mathcal R_0,\log2/\eta\}
+$$
+
+时，第 20.2 节已有的旧预算下界与新预算满足
+
+$$
+b_S\|f_{\mathcal R}\|_1^2
+\ge c_{\rm res}\chi_S\mathcal R^4,
+$$
+
+$$
+\boxed{
+\frac{U_{S,\mathcal R}}{b_S\|f_{\mathcal R}\|_1^2}
+\le\frac{C_{\phi,\Gamma}}{c_{\rm res}\mathcal R^4}
++\frac{M_*}{c_{\rm res}\mathcal R^3}
+\left(2+\frac1{e d_0}\right).
+}
+$$
+
+故该预算比随 $\mathcal R\to\infty$ 一致趋于零，一致性范围为第 22.1 节的有限支撑完整素数集。
+
+证明。复用 $b_S\ge\chi_SJ_S^3/c_0$、$J_S^3\ge4\eta^3\mathcal R^3$ 与 $\|f_{\mathcal R}\|_1^2\ge u^2\mathcal R/4$，即得第一式。新预算除以第一式的正下界，再用 $\chi_S\ge1$ 和 $\sup_{x\ge1}(\log x)/x=1/e$，得到所示统一界。常数均独立于 $\mathcal P$ 与 $\mathcal R$，且 $c_{\rm res}>0$。$\square$
+
+这个比较只说明新上界相对于旧上界的损失减少；不是 $|N_S|$ 的小量估计，也没有给出实际 $N_S$ 与任一预算的比值极限。第 20.1 节关于保留旧绝对预算的证书失效结论仍然成立。
+
+### 22.4 新充分证书与仍缺的同一测试下界
+
+令 $U_S(f)$ 为第 21.3 节给出的明确非负上界；对本章限定的扩张族也可取 $U_{S,\mathcal R}$。在原有极点消去、支撑完整及线性迹合同下，复用
+
+$$
+Q_{\rm full}(f)=\sigma_S(f)-D_{\rm lin}(f)-N_S(f),\qquad
+L_S(f)\le\sigma_S(f),\qquad
+|D_{\rm lin}(f)-D_{\rm fin}(f)|
+\le\|f\|_2^2E_S(r,\mathbf N).
+$$
+
+于是新的充分证书为
+
+$$
+\boxed{
+L_S(f)-D_{\rm fin}(f)-\|f\|_2^2E_S(r,\mathbf N)-U_S(f)
+\ge0\quad\Longrightarrow\quad Q_{\rm full}(f)\ge0.
+}
+$$
+
+这只是预算替换后的逻辑接口，不另列新形式化目标。其待证的分析内容仍是实际同一测试上的下界
+
+$$
+\sigma_S(f)-D_{\rm lin}(f)\ge U_S(f)
+$$
+
+或更弱而足够的 $\sigma_S(f)-D_{\rm lin}(f)\ge N_S(f)$。前一个条件是方便使用上界而加入的充分条件，不是 RH 的必要条件；前一个条件失败不能否定后一个条件。要推进完整 Weil 判据，比较还须覆盖全部 constrained 测试及相应支撑完整的增长素数集；本章一个扩张族的预算改善不承担这个全称结论。
+
+Connes–Consani, arXiv:2006.13771v1, Proposition 4.5(iv) 的谱配对、Abusaksaka–Partington, arXiv:1704.00518v1, Proposition 2.5 的 Hankel 核判据及 DLMF 5.7.6 的 digamma 展开均为复用前置。完整物理符号的增长预算及其原测试族消费者是本卷的候选综合推导；限定文献检索未取得供应同一估计的定理，不认证原创性。本文未执行 Lean 构建，未摄入或冻结这些候选，也未给出实际正性数值证书。
+
+FIB 的 $\beta=\rho(\alpha)$、五模式来源及四相观察运输，尚无通向实际 prime-dilation 与本章迹读出的交织定理。Robin 的约数倒数预算也没有由本章 Hankel 上界推出。两条接口与 RH 的完整正性目标均保留为未解义务；不把几何长度守恒、换切面或减少估计损失写成这些义务的解答。
+
+## 追加锚（本行以下为增补区）
