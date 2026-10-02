@@ -184,6 +184,29 @@ theorem execution (s E : Bool) (w : List Window) :
       simp only [step, hguard, Bool.false_eq_true, ↓reduceIte]
       simpa only [h, not_false_eq_true, true_and, flatten] using ih (last b) (nonzero b)
 
+/- The flattened legal-word condition is the seam condition on every
+   adjacent pair of windows. -/
+theorem legal_chain (v : List Window) (b : Window) (s : Bool) :
+    legal s (flatten (b :: v)) ↔
+      ¬ (s = true ∧ first b = true) ∧
+        (b :: v).IsChain (fun a b => ¬ (last a = true ∧ first b = true)) := by
+  have guard (s : Bool) (b : Window) (v : List Window) :
+      legal s (flatten (b :: v)) ↔
+        ¬ (s = true ∧ first b = true) ∧ legal (last b) (flatten v) := by
+    cases s <;> cases b <;>
+      simp [flatten, bits, legal, first, last]
+  induction v generalizing b s with
+  | nil => rw [guard]; simp [flatten, legal]
+  | cons c v ih =>
+    rw [guard]
+    constructor
+    · rintro ⟨hs, hv⟩
+      obtain ⟨hc, hchain⟩ := (ih (b := c) (s := last b)).mp hv
+      exact ⟨hs, List.isChain_cons_cons.mpr ⟨hc, hchain⟩⟩
+    · rintro ⟨hs, hchain⟩
+      obtain ⟨hc, hv⟩ := List.isChain_cons_cons.mp hchain
+      exact ⟨hs, (ih (b := c) (s := last b)).mpr ⟨hc, hv⟩⟩
+
 #print axioms execution
 
 /-- The complete successful literal query family, with its executable numeric

@@ -539,18 +539,9 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) : (∀ P : Profile k A, code
   have projection : ∀ w : Word k, boolean w = decide (task w = ⊤) := by
     intro w
     classical
-    have guard (s : Bool) (b : Window) (v : List Window) : D5.S3.Arith.ZeckendorfFutureKernel.legal s (LiteralWindowEnd.flatten (b :: v)) ↔
-          ¬ (s = true ∧ first b = true) ∧ D5.S3.Arith.ZeckendorfFutureKernel.legal (last b) (LiteralWindowEnd.flatten v) := by
-      cases s <;> cases b <;> simp [LiteralWindowEnd.flatten,LiteralWindowEnd.bits,D5.S3.Arith.ZeckendorfFutureKernel.legal,first,last]
-    have chain (v : List Window) (b : Window) (s : Bool) : D5.S3.Arith.ZeckendorfFutureKernel.legal s (LiteralWindowEnd.flatten (b :: v)) ↔
-          ¬ (s = true ∧ first b = true) ∧ (b :: v).IsChain (fun a b => ¬ (last a = true ∧ first b = true)) := by
-      induction v generalizing b s with
-      | nil => rw [guard]; simp [LiteralWindowEnd.flatten,D5.S3.Arith.ZeckendorfFutureKernel.legal]
-      | cons c v ih =>
-        rw [guard,ih, List.isChain_cons_cons]
     have leg : D5.S3.Arith.ZeckendorfFutureKernel.legal false (LiteralWindowEnd.flatten (List.ofFn w)) ↔
         ∀ i : Fin k, ¬ (last (w (left i)) = true ∧ first (w (right i)) = true) := by
-      rw [List.ofFn_succ,chain]
+      rw [List.ofFn_succ, LiteralWindowEnd.legal_chain]
       simp only [Bool.false_eq_true,false_and,not_false_eq_true,true_and]
       rw [← List.ofFn_succ, List.isChain_ofFn]
       constructor

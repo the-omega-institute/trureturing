@@ -57,58 +57,6 @@ def split : List Window → Cuts
       | .middle => ([], (true, p.1) :: p.2)
       | b => (b :: p.1, p.2)
 
-private theorem gap_language (w : List Window) (hw : Free w) :
-    (legal false (flatten w) ↔ ∃ q : Gap, gap q = w) ∧
-    (legal true (flatten w) ↔ ∃ n : ℕ, w = List.replicate n .high) := by
-  have highs (n : ℕ) (s : Bool) : legal s (flatten (List.replicate n .high)) := by
-    induction n generalizing s with
-    | zero => simp [flatten, legal]
-    | succ n ih => simpa [List.replicate_succ, flatten, bits, legal] using ih true
-  have normal (q : Gap) : legal false (flatten (gap q)) := by
-    rcases q with ⟨a, z, b⟩
-    induction a with
-    | zero =>
-      cases z
-      · simpa [gap] using highs b false
-      · simpa [gap, flatten, bits, legal] using highs b true
-    | succ a ih => simpa [gap, List.replicate_succ, flatten, bits, legal] using ih
-  have forward : ∀ w : List Window, Free w →
-      (legal false (flatten w) → ∃ q : Gap, gap q = w) ∧
-      (legal true (flatten w) → ∃ n : ℕ, w = List.replicate n .high) := by
-    intro v
-    induction v with
-    | nil => intro _; exact ⟨fun _ => ⟨⟨0, false, 0⟩, rfl⟩, fun _ => ⟨0, rfl⟩⟩
-    | cons d v ih =>
-      intro hv
-      have ht : Free v := fun b hb => hv b (List.mem_cons_of_mem d hb)
-      obtain ⟨ihf, iht⟩ := ih ht
-      cases d with
-      | zero => exact (hv .zero (by simp)).1 rfl |>.elim
-      | middle => exact (hv .middle (by simp)).2 rfl |>.elim
-      | low =>
-        constructor
-        · intro h
-          obtain ⟨q, hq⟩ := ihf (by simpa [flatten, bits, legal] using h)
-          exact ⟨⟨q.x + 1, q.z, q.y⟩,
-            by simpa [gap, List.replicate_succ] using congrArg (List.cons .low) hq⟩
-        · simp [flatten, bits, legal]
-      | ends =>
-        constructor
-        · intro h
-          obtain ⟨n, hn⟩ := iht (by simpa [flatten, bits, legal] using h)
-          exact ⟨⟨0, true, n⟩, by simp [gap, hn]⟩
-        · simp [flatten, bits, legal]
-      | high =>
-        constructor
-        · intro h
-          obtain ⟨n, hn⟩ := iht (by simpa [flatten, bits, legal] using h)
-          exact ⟨⟨0, false, n + 1⟩, by simp [gap, List.replicate_succ, hn]⟩
-        · intro h
-          obtain ⟨n, hn⟩ := iht (by simpa [flatten, bits, legal] using h)
-          exact ⟨n + 1, by simp [List.replicate_succ, hn]⟩
-  exact ⟨⟨(forward w hw).1, fun ⟨q, hq⟩ => hq ▸ normal q⟩,
-    ⟨(forward w hw).2, fun ⟨n, hn⟩ => hn ▸ highs n true⟩⟩
-
 private theorem split_properties (w : List Window) :
     join (split w) = w ∧ Clean (split w) ∧
     (split w).2.length = w.count .zero + w.count .middle ∧
@@ -166,6 +114,58 @@ private theorem decomposition :
     rcases q with ⟨a', z', b'⟩
     cases z <;> cases z' <;>
       simp [gap, List.count_replicate] at hx hy hz <;> simp_all
+  have gap_language (w : List Window) (hw : Free w) :
+      (legal false (flatten w) ↔ ∃ q : Gap, gap q = w) ∧
+      (legal true (flatten w) ↔ ∃ n : ℕ, w = List.replicate n .high) := by
+    have highs (n : ℕ) (s : Bool) : legal s (flatten (List.replicate n .high)) := by
+      induction n generalizing s with
+      | zero => simp [flatten, legal]
+      | succ n ih => simpa [List.replicate_succ, flatten, bits, legal] using ih true
+    have normal (q : Gap) : legal false (flatten (gap q)) := by
+      rcases q with ⟨a, z, b⟩
+      induction a with
+      | zero =>
+        cases z
+        · simpa [gap] using highs b false
+        · simpa [gap, flatten, bits, legal] using highs b true
+      | succ a ih => simpa [gap, List.replicate_succ, flatten, bits, legal] using ih
+    have forward : ∀ w : List Window, Free w →
+        (legal false (flatten w) → ∃ q : Gap, gap q = w) ∧
+        (legal true (flatten w) → ∃ n : ℕ, w = List.replicate n .high) := by
+      intro v
+      induction v with
+      | nil => intro _; exact ⟨fun _ => ⟨⟨0, false, 0⟩, rfl⟩, fun _ => ⟨0, rfl⟩⟩
+      | cons d v ih =>
+        intro hv
+        have ht : Free v := fun b hb => hv b (List.mem_cons_of_mem d hb)
+        obtain ⟨ihf, iht⟩ := ih ht
+        cases d with
+        | zero => exact (hv .zero (by simp)).1 rfl |>.elim
+        | middle => exact (hv .middle (by simp)).2 rfl |>.elim
+        | low =>
+          constructor
+          · intro h
+            obtain ⟨q, hq⟩ := ihf (by simpa [flatten, bits, legal] using h)
+            exact ⟨⟨q.x + 1, q.z, q.y⟩,
+              by simpa [gap, List.replicate_succ] using congrArg (List.cons .low) hq⟩
+          · simp [flatten, bits, legal]
+        | ends =>
+          constructor
+          · intro h
+            obtain ⟨n, hn⟩ := iht (by simpa [flatten, bits, legal] using h)
+            exact ⟨⟨0, true, n⟩, by simp [gap, hn]⟩
+          · simp [flatten, bits, legal]
+        | high =>
+          constructor
+          · intro h
+            obtain ⟨n, hn⟩ := iht (by simpa [flatten, bits, legal] using h)
+            exact ⟨⟨0, false, n + 1⟩, by simp [gap, List.replicate_succ, hn]⟩
+          · intro h
+            obtain ⟨n, hn⟩ := iht (by simpa [flatten, bits, legal] using h)
+            exact ⟨n + 1, by simp [List.replicate_succ, hn]⟩
+    exact ⟨⟨(forward w hw).1, fun ⟨q, hq⟩ => hq ▸ normal q⟩,
+      ⟨(forward w hw).2, fun ⟨n, hn⟩ => hn ▸ highs n true⟩⟩
+  
   refine ⟨?_, ?_, ?_⟩
   · intro w
     refine ⟨split w, ⟨(split_properties w).2.1, (split_properties w).1⟩, ?_⟩
@@ -244,7 +244,19 @@ private theorem code_language :
     have hs := split_properties w
     have restore (g : List Window) (hg : Free g) (hl : legal false (flatten g)) :
         gap (readGap g) = g := by
-      obtain ⟨q, hq⟩ := (gap_language g hg).1.mp hl
+      have split_free : ∀ v : List Window, Free v → split v = (v, []) := by
+        intro v
+        induction v with
+        | nil => intro _; rfl
+        | cons b v ih =>
+          intro hv
+          have hb := hv b (by simp)
+          have ht : Free v := fun a ha => hv a (by simp [ha])
+          cases b <;> simp_all [split]
+      have split_free := split_free g hg
+      have hu := ((decomposition).2.2 g).mp hl
+      rw [split_free] at hu
+      obtain ⟨q, hq, _⟩ := hu g (by simp [gaps])
       rw [← hq, reading]
     have hl := hs.2.2.2 false |>.mp hw
     have rebuilt : codeCuts (readCode (split w)) = split w := by
