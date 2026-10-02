@@ -5079,3 +5079,174 @@ $$
 这证明实数比值趋于一。对任意有限组素数精度，取 $B$ 为相应素数幂的乘积即可；若组为空，可取 $B=2$。每个最终点的两端祖先组成为 $(t_N-j_N,j_N)$ 和 $(t_N-j_N-1,j_N+1)$，都是原域内的非空整数组成，全部有完整有序树代表；各自的实际替换像仍由（15.1）计数，每张网格取 $H_{t_N}\ge F_{3k+2}t_N$。种子的域外代入及证明中的实积分都未取代这些最终合法树。所构造的点全部严格非并列，并不确定精确并列是否存在、首深度全部合法整点或增长深度的无界本原方向分类。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 16. 实际树像与尖锐有限路径观察前沿
+
+**定义 16.1（原始路径视界、实际像指标与联合观察）。** 沿用[定义 1.1](#1-有限预算的尺度读出与逆许可分离)的非空有限有序满二叉树集合 $\mathcal T$、叶标记 $\alpha,\beta$、组成 $c$ 及替换 $\rho$。这里的树相等仍是自由语法相等；左地址记为 $\mathtt L=0$，右地址记为 $\mathtt R=1$。对有限地址 $u\in\{\mathtt L,\mathtt R\}^*$，令 $\operatorname{out}_T(u)$ 为沿 $u$ 行走时的原始终点结果：若抵达内节点则记 $\mathsf{branch}$，若抵达 $\alpha$ 或 $\beta$ 叶则分别记 $\mathsf{leaf}_\alpha$ 或 $\mathsf{leaf}_\beta$，若在某个叶处继续行走则记 $\mathsf{absent}$。空地址 $\varepsilon$ 也在定义域内，因而根的实际结果被保留。对原始深度 $h\in\mathbb N_0$，定义完整有限路径窗口
+
+$$
+\Sigma_{\le h}=\{u\in\{\mathtt L,\mathtt R\}^*:|u|\le h\},\qquad
+O_h(T)=\bigl(\operatorname{out}_T(u)\bigr)_{u\in\Sigma_{\le h}}.
+\tag{16.1}
+$$
+
+母卷定理 9.2 的唯一解析码与定理 9.3 的全路径恢复保证：当 $h\ge\operatorname{ht}(T)$ 时，$O_h(T)$ 已确定整个 $T$；这里 $\operatorname{ht}$ 取叶高为 $0$、内节点高为左右子树高的最大值加 $1$。给定替换迭代数 $d=3k$（$k\ge1$），令
+
+$$
+\mathcal I_d=\rho^d(\mathcal T),\qquad
+\iota_d(T)=\mathbf 1_{\{T\in\mathcal I_d\}},\qquad
+\mathcal T_H=\{T\in\mathcal T:|\operatorname{Leaves}(T)|\le H\}.
+\tag{16.2}
+$$
+
+$\iota_d$ 是目标实际像指标；它只判定指定完整树是否属于实际替换像。组成 $c$ 是与 $O_h$ 同时给定的数学观察输入，不是由本节另行取得的物理量。对 $V\in\mathcal T_H$，记联合观察纤维为
+
+$$
+\mathcal F^{c,O}_{H,h}(V)=\{U\in\mathcal T_H:c(U)=c(V),\ O_h(U)=O_h(V)\},
+\tag{16.3}
+$$
+
+并称其在 $\iota_d$ 下单色，当且仅当 $\iota_d$ 在该集合上为常值。原始深度 $h$ 只计地址窗口 $\Sigma_{\le h}$ 的层数；替换迭代 $d$ 只计 $\rho$ 的次数。二者都不是墙钟时间、物理尺度或任何未给定的实现参数。
+
+**定理 16.1（实际像正纤维的尖锐性）。** 设 $V\in\mathcal I_d$，$H\ge|\operatorname{Leaves}(V)|$。则
+
+$$
+\mathcal F^{c,O}_{H,h}(V)\text{ 在 }\iota_d\text{ 下单色}
+\quad\Longleftrightarrow\quad
+h\ge\operatorname{ht}(V).
+\tag{16.4}
+$$
+
+当 $h\ge\operatorname{ht}(V)$ 时，纤维恰为 $\{V\}$。当 $h<\operatorname{ht}(V)$ 时，纤维中存在 $W$ 满足
+
+$$
+\iota_d(W)=0,\qquad c(W)=c(V),\qquad O_h(W)=O_h(V),\qquad
+|\operatorname{Leaves}(W)|=|\operatorname{Leaves}(V)|.
+\tag{16.5}
+$$
+
+证明。规范编译卷命题 4.3 已给出树作用的单射性及其实际像的非满性；这里沿用该作用，只分析固定实际像中的有限路径纤维。先记录一个由替换规则直接得到的像障碍：任何 $\rho$-像中的 $\alpha$ 叶都来自某个 $\beta$ 叶的替换 $\langle\beta,\alpha\rangle$，而任意来源子树的像都不以 $\alpha$ 为根（命题 4.3 的实际像描述）。因此 $\rho(\mathcal T)$ 中不存在以 $\alpha$ 为左孩子的叶。
+
+对任意树 $X$，$\rho^2(X)$ 的每个末端樱桃都是 $\langle\beta,\alpha\rangle$。确实，$\rho^2(\alpha)=\langle\beta,\alpha\rangle$，$\rho^2(\beta)=\langle\langle\beta,\alpha\rangle,\beta\rangle$；若 $X=\langle X_0,X_1\rangle$，则 $\rho^2(X)=\langle\rho^2(X_0),\rho^2(X_1)\rangle$，末端樱桃不会跨过来源二叉节点。因 $d\ge3$，$\mathcal I_d\subseteq\rho^2(\mathcal T)$，故 $V$ 的每个末端樱桃（特别是最深叶所在的那个）均为 $\langle\beta,\alpha\rangle$。
+
+若 $h\ge\operatorname{ht}(V)$，有限窗口已经包含 $V$ 的所有节点。沿根递归比较，另一棵具有相同 $O_h$ 的树在每个已见节点都必须有相同的分支或叶；叶处的结果又禁止继续延伸。因此另一棵树只能等于 $V$，纤维为单点。
+
+反设 $h<\operatorname{ht}(V)=D$。取深度为 $D$ 的一片叶。其兄弟必也是叶，否则会出现更深叶；故其父节点是深度 $D-1$ 的末端樱桃 $\langle\beta,\alpha\rangle$。把该处替换成 $\langle\alpha,\beta\rangle$ 得树 $W$。括号形状、所有叶地址及组成均不变，只有深度 $D>h$ 的两片叶标签互换；所以所有地址的分支和 $\mathsf{absent}$ 结果都不变，且 $O_h(W)=O_h(V)$。新树有一个 $\alpha$ 左孩子，故由上述像障碍 $W\notin\rho(\mathcal T)$，从而 $W\notin\mathcal I_d$。它与 $V$ 叶数相同，故 $W\in\mathcal T_H$，得到（16.5）。证毕。
+
+**定义 16.2（块尺度与首个歧义预算）。** 置 $T_j=\rho^j(\alpha)$，并置
+
+$$
+A_d=\rho^d(\alpha)=T_d,\qquad B_d=\rho^d(\beta)=T_{d+1},\qquad
+a=|\operatorname{Leaves}(A_d)|=F_{d+1},\qquad
+b=|\operatorname{Leaves}(B_d)|=F_{d+2}.
+\tag{16.6}
+$$
+
+母卷定理 3.2--3.4 给出 $T_{j+2}=\langle T_{j+1},T_j\rangle$ 及组成递推；因而
+
+$$
+\operatorname{ht}(A_d)=d-1,\quad \operatorname{ht}(B_d)=d,\quad
+c(A_d)=(F_{d-1},F_d),\quad c(B_d)=(F_d,F_{d+1}),\quad
+b=a+F_d<2a.
+\tag{16.7}
+$$
+
+对 $h\in\mathbb N_0$ 定义实际像的首个歧义预算
+
+$$
+\Lambda_d(h)=\min\{|\operatorname{Leaves}(V)|:V\in\mathcal I_d,\ \operatorname{ht}(V)>h\}.
+\tag{16.8}
+$$
+
+这里的最小值取实际替换像，而非仅取组成可逆或组成祖先许可；定理 12.1 的固定组成纤维公式仍按其原范围使用。
+
+**定理 16.2（加权实际像高度前沿及同组成见证）。** 对每个 $h\in\mathbb N_0$，有
+
+$$
+\boxed{\quad
+\Lambda_d(h)=
+\begin{cases}
+a,&0\le h\le d-2,\\[2pt]
+b+a(h-d+1),&h\ge d-1.
+\end{cases}\quad}
+\tag{16.9}
+$$
+
+而且每个边界都有同组成的实际像/非像见证。若 $0\le h\le d-2$，取 $V=A_d$，在地址 $\mathtt L^{\,d-2}$ 的子树 $\langle\beta,\alpha\rangle$ 换成 $\langle\alpha,\beta\rangle$ 得 $W$。若 $h\ge d-1$，置 $m=h-d+1$，定义右梳来源
+
+$$
+U_0=\beta,\qquad U_{r+1}=\langle\alpha,U_r\rangle,\qquad
+V=\rho^d(U_m).
+\tag{16.10}
+$$
+
+则 $V$ 在地址 $\mathtt R^{\,m}$ 有 $B_d$ 块，在其余 $m$ 个梳侧有 $A_d$ 块；在地址 $\mathtt R^{\,m}\mathtt L^{\,d-1}$ 的末端樱桃换序得到 $W$。两种情形均满足
+
+$$
+V\in\mathcal I_d,\quad W\notin\mathcal I_d,\quad
+c(W)=c(V),\quad O_h(W)=O_h(V),\quad
+|\operatorname{Leaves}(V)|=\Lambda_d(h).
+\tag{16.11}
+$$
+
+证明。由（16.7），每个来源叶在 $d$ 次替换后变成 $A_d$ 或 $B_d$ 块，且来源深度为 $e$ 的 $\alpha$ 叶、$\beta$ 叶所产生的最深输出叶深度分别为 $e+d-1$、$e+d$。沿到该来源叶的路径有 $e$ 个非空兄弟子树；每个兄弟子树的实际像至少含 $a$ 片叶。这给出两种路径成本：$\alpha$ 块的总叶数至少为 $a(e+1)$，$\beta$ 块的总叶数至少为 $b+ea$。
+
+若 $h\le d-2$，每个实际像至少有 $a$ 片叶，而 $A_d$ 的高度为 $d-1>h$，所以 $\Lambda_d(h)=a$。$A_d=T_d$ 在地址 $\mathtt L^{\,d-2}$ 的子树正是 $T_2=\langle\beta,\alpha\rangle$；换序只改深度 $d-1>h$ 的两个叶标签，得到所述 $W$。其组成与 $V$ 都是 $(F_{d-1},F_d)$，且 $W$ 的 $\alpha$ 左孩子障碍由定理 16.1 的证明排除其实际像。
+
+以下设 $h\ge d-1$，置 $m=h-d+1\ge0$。若高度超过 $h$ 的最深叶来自 $\beta$ 块，则其来源深度 $e$ 满足 $e+d>h$，即 $e\ge m$，故总叶数至少为 $b+ea\ge b+ma$。若来自 $\alpha$ 块，则 $e+d-1>h$，即 $e\ge m+1$，总叶数至少为 $a(e+1)\ge a(m+2)>b+ma$，最后的不等式使用 $b<2a$。因此所有候选像都满足 $\lvert V\rvert\ge b+ma$。
+
+右梳 $U_m$ 有 $m$ 片 $\alpha$ 侧叶和地址 $\mathtt R^{\,m}$ 的一片 $\beta$ 叶，故 $V=\rho^d(U_m)$ 的叶数为 $b+ma$，其右端 $B_d=T_{d+1}$ 的高度为 $d$，总高度为 $m+d>h$。它的组成明确为
+
+$$
+c(V)=S^k\binom m1
+=\binom{F_{d-1}m+F_d}{F_dm+F_{d+1}},
+\tag{16.12}
+$$
+
+其中 $S=M^3$；这只是实际来源的组成读数，未把矩阵逆当作语法逆。$B_d=T_{d+1}$ 在地址 $\mathtt L^{\,d-1}$ 的子树为 $\langle\beta,\alpha\rangle$，故在整体地址 $\mathtt R^{\,m}\mathtt L^{\,d-1}$ 换序得到 $W$。两个叶位于深度 $m+d=h+1$，所以全体深度不超过 $h$ 的路径结果相等；组成也不变。换序后的 $\alpha$ 左孩子又给 $W\notin\mathcal I_d$。于是下界达到，得到（16.9）和（16.11）。证毕。
+
+**定义 16.3（联合观察与单独路径观察的统一深度）。** 对整数 $H\ge1$，令 $\nu_d(H)$ 为使 $\iota_d$ 在 $\mathcal T_H$ 的每个联合纤维 $\mathcal F^{c,O}_{H,h}(V)$ 上单色的最小 $h\in\mathbb N_0$；令 $\nu_d^{O}(H)$ 为删去组成条件、只要求 $\iota_d$ 在
+
+$$
+\mathcal F^{O}_{H,h}(V)=\{U\in\mathcal T_H:O_h(U)=O_h(V)\}
+\tag{16.13}
+$$
+
+的每个纤维上单色的最小 $h$。两者都只针对给定有限预算内的实际完整树；不引入墙钟、物理尺度或窗口外的执行权限。
+
+**定理 16.3（严格整数反演与单独路径窗口的同一前沿）。** 对 $d=3k$、$k\ge1$，有
+
+$$
+\boxed{\quad
+\nu_d(H)=\nu_d^{O}(H)=
+\begin{cases}
+0,&1\le H<a,\\[2pt]
+d-1+\left\lfloor\dfrac{H-F_d}{a}\right\rfloor,&H\ge a.
+\end{cases}\quad}
+\tag{16.14}
+$$
+
+在 $H=a$ 处等式预算由 $A_d$ 达到；对每个 $q\ge1$，在严格等式预算 $H=F_d+qa$ 处，右梳 $U_{q-1}$ 的像具有恰好 $H$ 片叶并达到高度 $d-1+q$，所以取整边界属于歧义一侧的下一层。组成 $c$ 在全局统一深度上没有降低该前沿，但在受限纤维中仍可切开只由 $O_h$ 合并的不同组成。
+
+证明。若 $H<a$，任何 $d$ 次实际像至少有 $a$ 片叶，故 $\mathcal T_H$ 内目标指标恒为零，$h=0$ 已足够。设 $H\ge a$，置
+
+$$
+q=\left\lfloor\dfrac{H-F_d}{a}\right\rfloor.
+\tag{16.15}
+$$
+
+考察预算不超过 $H$ 的任意实际像，取其最深输出叶所在的来源叶。若为 $\alpha$ 块，路径成本给 $a(e+1)\le H$，从而 $e\le\lfloor H/a\rfloor-1\le\lfloor(H-F_d)/a\rfloor=q$，其中第二个不等式使用 $0<F_d<a$；其输出深度至多 $e+d-1\le d-1+q$。若为 $\beta$ 块，路径成本给 $b+ea\le H$，即 $e\le q-1$，其输出深度至多 $e+d\le d-1+q$。因此所有预算内实际像的高度至多 $d-1+q$。
+
+反向地，若 $q=0$，$A_d$ 在预算 $a\le H$ 内且高度为 $d-1$；若 $q\ge1$，取 $U_{q-1}$，其像叶数
+
+$$
+b+a(q-1)=F_d+aq\le H
+\tag{16.16}
+$$
+
+且高度为 $d+q-1=d-1+q$。由（16.9）还可直接看出严格的整数反演：当 $q=0$ 时 $\Lambda_d(d-2)=a\le H< b=\Lambda_d(d-1)$；当 $q\ge1$ 时 $\Lambda_d(d-2+q)=F_d+aq\le H< F_d+a(q+1)=\Lambda_d(d-1+q)$。定理 16.1 说明：在 $h$ 小于这个最大高度时，存在同组成的正/负交换见证；在 $h$ 等于或大于最大高度时，每个正像由有限路径窗口唯一确定，所有正纤维均单点，故联合观察的最小深度正是（16.14）。
+
+对只给 $O_h$ 的观察，下界仍由定理 16.2 的同组成见证给出。上界不使用组成：当 $h$ 不小于上述最大实际像高度时，任一与正像 $V$ 具有同一 $O_h$ 的树都因有限路径递归比较而等于 $V$；没有正像的观察纤维则全为负类。因此 $\nu_d^{O}(H)$ 与 $\nu_d(H)$ 相同。这个相等不表示 $c$ 在每个受限纤维上无用。例如 $h=0$ 且 $H\ge a$ 时，$A_d$ 与 $\langle\alpha,\alpha\rangle$ 都只显示根为分支，故具有相同 $O_0$；但它们的组成分别为 $(F_{d-1},F_d)$ 与 $(2,0)$，组成观察把这两个候选分开。证毕。
+
+## 追加锚（本行以下为增补区）
