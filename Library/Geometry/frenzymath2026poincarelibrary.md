@@ -3914,3 +3914,64 @@ Lean 源仍在忽略目录 `.lake`，研究笔记是唯一跟踪交付；没有
 跟踪 Lean、准入、冻结或新颖性声明。逃逸审计仍未完成，登记
 按 CLAUDE 3.9 暂缓：
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+
+
+### 从水平数据构造原 H³ 高度保持映射
+
+`h3HorizontalHeightExtension T` 将实际水平映射 `T : ℂ → ℂ`
+延伸到实际原 H³：水平坐标变为 T 的像，严格正的原高度保持。
+若 C、D 都至少为 1，且所有水平点对 z、w 满足欧氏距离上界
+`dist(T(z),T(w))≤C*dist(z,w)` 与反向界
+`dist(z,w)≤D*dist(T(z),T(w))`，
+`h3_horizontal_height_extension_native_distance_controls` 就在所有
+原 H³ 点对 p、q 上推导原双曲距离双边界：
+`dist(p,q)-arcosh(D²)≤dist(F(p),F(q))≤dist(p,q)+arcosh(C²)`。
+F 是上述同一个实际高度保持延伸；双曲距离控制是推导结论，
+没有作为水平输入条件。证明用原坐标的精确 cosh 距离式、
+复数欧氏距离平方、严格正的高度分母及 cosh 加法公式。
+`h3_horizontal_height_extension_surjective` 还从 T 的实际满射性
+构造同一个 F 的实际原 H³ 满射性；目标高度保持为原正高度。
+这个满射结论本身不需要 C、D 或水平距离控制。
+
+对每一对实际原等距映射 e、e′，若它们在原 Lorentz 表示中
+都将原无穷远零光锥标架射线按同一个 a 缩放，且所有水平点 z
+满足 `T(h3InfinityHorizontalMap(e,z))=h3InfinityHorizontalMap(e′,T(z))`，
+`h3_horizontal_height_extension_intertwines_original_isometries`
+就在每个实际原 H³ 点 p 上推导
+`F(e(p))=e′(F(p))`。它用实际原等距作用的水平坐标与高度律，
+推导原逐点关系，没有再输入 F 的逐点等变性；没有加入定向
+保持条件。同一个缩放 a 的正性由实际原射线固定关系供应。
+这段等变推导自身不需要 T 的双边距离控制或满射性。
+
+`h3PeriodBasisHorizontalEquiv b b′` 从两组实际实基
+`b,b′ : Module.Basis (Fin 2) ℝ ℂ` 构造同一个实际连续实线性
+等价 T；`h3PeriodBasisHeightExtension b b′` 是它的原 H³ 高度
+保持延伸 F。`h3_period_bases_construct_controlled_surjective_translation_map`
+不再输入 T、F 或水平距离控制，而是从这两组有同一索引配对
+的基实际构造它们。T 与 T.symm 的算子范数给出各自的常数
+`C=max(1,‖T‖)`、`D=max(1,‖T.symm‖)`，推导同一个 F 的上述
+所有原 H³ 距离双边界和实际满射性。对每个整数系数族
+`m : Fin 2 → ℤ` 及每个原 H³ 点 p，同一个 F 精确联系实际
+水平平移：源平移向量是 `∑j (m(j):ℝ)•b(j)`，目标平移向量
+是使用同一个 m 的 `∑j (m(j):ℝ)•b′(j)`。这些平移的逐点关系
+来自所构造的同一个基等价的线性性，没有输入该原 F 的
+平移等变性。两组实基及同一索引的配对仍是明示的周期输入，
+本轮没有从原 h/d 构造尖点上的这两组周期基。
+
+三个完整模块串行本地 Lean 成功，四项公理闭包仅含
+`propext`、`Classical.choice`、`Quot.sound`，零警告。
+四次完整失败尝试全部排除；其中的部分标准闭包、`sorryAx`
+诊断及警告均未接收。仅修正距离平方规范化、实基类型的
+命名空间、反向算子范数界的常数推断及原正高度证明的显式参数，不改变数学条件和
+目标陈述，不压制诊断。
+
+前两个模块以实际水平 T 及明示的水平控制、满射或等变条件
+为相应输入；第三个模块从明示的两组实基构造 T、F 及全部
+距离控制、满射性和上述全部整数周期关系。尚未为原给定同伦等价诱导的同一个全甲板群
+同构 d 构造尖点水平映射 T，也没有完成尖点与紧核心的原
+全局等变拼接或迫使原交比保持。完整有限体积 Mostow–Prasad
+仍为 **ACTIVE/INCOMPLETE**，保留非紧尖点、非可定向情形、
+两侧原度量及原 h 所诱导的同一个 d。Lean 源仍在忽略目录
+`.lake`，仅交付研究笔记，没有跟踪 Lean、准入、冻结或新颖性
+声明。逃逸审计仍未完成，登记按 CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
