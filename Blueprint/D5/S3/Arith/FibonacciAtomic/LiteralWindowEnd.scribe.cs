@@ -15,17 +15,6 @@ internal sealed class LiteralWindowEndDocument : IScribeDocumentDefinition
             H("Literal Windows and Positive End"),
             Blocks(
                 Describe.Lean(
-                    DescribeId.Create("literal-window-alphabet-cardinality"),
-                    DeclarationHandle.Create(Prefix + "window_card"),
-                    H("The complete window alphabet has five letters"),
-                    StatementSource.FromAuthor(Disp(Seq(
-                        Call("card", V("Window")), Sp, Eq, Sp, D(5)))),
-                    AssessedProvenance.FromRepo(),
-                    Blocks(Paragraph(Text(
-                        "Window consists of 000, 100, 010, 101 and 001, "
-                            + "written in low-to-high bit order."))),
-                    DescribeRole.Theorem),
-                Describe.Lean(
                     DescribeId.Create("literal-window-execution"),
                     DeclarationHandle.Create(Prefix + "execution"),
                     H("The seam guard recognizes the flattened legal word"),

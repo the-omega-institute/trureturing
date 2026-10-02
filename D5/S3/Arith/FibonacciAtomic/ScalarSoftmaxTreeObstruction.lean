@@ -258,17 +258,25 @@ theorem result (m : ℕ) (t : TreeMessageRealization.Tree (Fin (m + 3))) (ht : F
   let p0 : Fin (m + 3) := ⟨0, by omega⟩
   let p1 : Fin (m + 3) := ⟨1, by omega⟩
   let p2 : Fin (m + 3) := ⟨2, by omega⟩
+  have spec (w : Word m) (j : Fin (m + 3)) :
+      FirstRejectionCutCapacity.task w ≤ (j : FirstRejectionCutCapacity.Label (m + 2)) ↔
+        ∃ i, FirstRejectionCutCapacity.bad w i ∧ i ≤ j := by
+    simp only [FirstRejectionCutCapacity.task, Finset.inf_le_iff (WithTop.coe_lt_top j),
+      Finset.mem_univ, true_and]
+    apply exists_congr
+    intro i
+    by_cases h : FirstRejectionCutCapacity.bad w i <;> simp [h]
   have label0 (w : Word m) :
       FirstRejectionCutCapacity.task w = (p0 : FirstRejectionCutCapacity.Label (m + 2)) ↔
         FirstRejectionCutCapacity.bad w p0 := by
     constructor
     · intro h
-      obtain ⟨i, hi, hip⟩ := (FirstRejectionCutCapacity.task_le_iff w p0).mp h.le
+      obtain ⟨i, hi, hip⟩ := (spec w p0).mp h.le
       have hip' : i.val ≤ 0 := hip
       have he : i = p0 := by apply Fin.ext; change i.val = 0; omega
       simpa only [he] using hi
     · intro h
-      exact le_antisymm ((FirstRejectionCutCapacity.task_le_iff w p0).mpr ⟨p0, h, le_rfl⟩)
+      exact le_antisymm ((spec w p0).mpr ⟨p0, h, le_rfl⟩)
         (show (⊥ : FirstRejectionCutCapacity.Label (m + 2)) ≤ _ from bot_le)
   have label1 (w : Word m) :
       FirstRejectionCutCapacity.task w = (p1 : FirstRejectionCutCapacity.Label (m + 2)) ↔
@@ -283,7 +291,7 @@ theorem result (m : ℕ) (t : TreeMessageRealization.Tree (Fin (m + 3))) (ht : F
         have := congrArg Fin.val he'
         change (1 : ℕ) = 0 at this
         omega
-      · obtain ⟨i, hi, hip⟩ := FirstRejectionCutCapacity.task_le_iff w p1 |>.mp (le_of_eq h)
+      · obtain ⟨i, hi, hip⟩ := spec w p1 |>.mp (le_of_eq h)
         have hval : i.val = 0 ∨ i.val = 1 := by
           have hip' : i.val ≤ 1 := hip
           omega
@@ -296,7 +304,7 @@ theorem result (m : ℕ) (t : TreeMessageRealization.Tree (Fin (m + 3))) (ht : F
           omega
         · simpa [show i = p1 from Fin.ext hv] using hi
     · rintro ⟨h0, h1⟩
-      have hle := FirstRejectionCutCapacity.task_le_iff w p1 |>.mpr ⟨p1, h1, le_rfl⟩
+      have hle := spec w p1 |>.mpr ⟨p1, h1, le_rfl⟩
       apply le_antisymm hle
       by_contra hn
       have hlt : FirstRejectionCutCapacity.task w <
@@ -408,7 +416,7 @@ theorem result (m : ℕ) (t : TreeMessageRealization.Tree (Fin (m + 3))) (ht : F
           (Finset.mem_univ (wa a))
     have prefix_mean (τ : Fin m → Window) : η / 125 ≤
         𝔼 a : Window, 𝔼 b : Window, 𝔼 c : Window, loss (join a b c τ) := by
-      have hw := LiteralWindowEnd.window_card
+      have hw : Fintype.card Window = 5 := by decide
       simp only [Fintype.expect_eq_sum_div_card, hw, Nat.cast_ofNat]
       simp only [← Finset.sum_div, div_div]
       have h := fibre τ
