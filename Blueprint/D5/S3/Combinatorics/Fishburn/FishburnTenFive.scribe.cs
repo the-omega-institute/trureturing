@@ -11,7 +11,7 @@ internal sealed class FishburnTenFiveDocument : IScribeDocumentDefinition
         "Mathematical definitions and results for Fishburn permutations and classical pattern avoidance.",
         H("FishburnTenFive"),
         Blocks(
-            Node("fishburntenfive-result-theorem", "Resolution of Conjecture 10.5", "result", "This theorem proves the Fishburn enumeration statement corresponding to Conjecture 10.5.", DescribeRole.Theorem)
+            Node("fishburntenfive-result-theorem", "Resolution of Conjecture 10.5", "result", "This theorem proves the Fishburn enumeration statement corresponding to Conjecture 10.5.", DescribeRole.Theorem, new OpenProblemResolutionClaim(ProblemSlugRef.Create("egge-fishburn-conjecture-10-5"), ResolutionKind.Proved))
         ), []));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,
