@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/LevelSequence/LevelSequenceCatalan.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/LevelSequence/LevelSequenceCatalan.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mansour-level-sequences-101-102-catalan` (proved) by `D5/S3/Combinatorics/LevelSequence/LevelSequenceCatalan.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mansour-level-sequences-101-102-catalan","declaration_gid":"D5/S3/Combinatorics/LevelSequence/LevelSequenceCatalan.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Toufik Mansour (2026). *Wilf Classes for Level Sequences Avoiding Patterns of Length Three*. DOI: [10.3390/math14111983](https://doi.org/10.3390/math14111983). URL: <https://www.mdpi.com/2227-7390/14/11/1983>.
