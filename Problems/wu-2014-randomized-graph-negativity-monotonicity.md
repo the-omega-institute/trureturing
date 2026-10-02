@@ -125,11 +125,11 @@ public declarations are `Qubits`, `czPhase`, `plusState`, `graphState`,
 `partA` and `result`; the trace norm and its lemmas are frozen in
 `D5/S3/Quantum/Foundation/FiniteTraceDistance`; `k33` carries a decidable
 adjacency instance. The frozen module state has statement identity
-`sha256:c4ca7fc1e2cb102d1b579cf97fbec132ac11e3cbf8394895e04675de737c3f13`. The
+`sha256:1c74679129dce89e4de229b4d3f6fab35215016379b549eb6a54b89a0789e964`. The
 result declaration has statement identity
 `sha256:8699682eb0805d4dcf1355be31c5dac754e3a40e309a3d295ac441cf8ab56906`. The
 Freeze event is
-`sha256:f2e60486de5ae9ee18fb2f6692ae3daf8c526c87387fc421ad311a36a4541d8c`; its
+`sha256:8c1a53d3cd0c351438a23a8bda36ca48c7f24515c83bdbb3b0a6b0e161068bca`; its
 project-level frozen prerequisite is the Freeze event of
 `D5/S3/Quantum/Foundation/FiniteTraceDistance`. The proof uses only the standard axioms `propext`, `Classical.choice` and
 `Quot.sound`; no `sorry`, `native_decide`, or new axiom.

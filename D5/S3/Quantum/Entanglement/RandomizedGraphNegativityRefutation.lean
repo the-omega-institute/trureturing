@@ -18,14 +18,12 @@ proof_shape: k33, partA: definition (the complete bipartite graph K_(3,3) on Fin
 proof_shape: edges9, mism, xi, enc, tab, qvals, nvals, uv, parA, sgnB, u00, u11, u01, u10:
   private definition (edge list, CZ mismatch indicator, integer numerator of the partially
   transposed state, and integer test vectors)
-proof_shape: private theorems: content (kernel evaluation of the edge set, of the
+proof_shape: result: content (kernel evaluation, as local steps, of the edge set, of the
   orthogonality, norms and quadratic forms of the fourteen test vectors against the numerator
   at p = 97/100, of the diagonal entries, of the positive decomposition at p = 1 and of the
-  norm of the subtracted vector)
-proof_shape: result: content (the closed form of the partial transpose at both values of p,
-  the lower bound 2 < ||X||_1 from the unitary I - 2P built on the test vectors, and the upper
-  bound ||X_1||_1 <= 2 from the positive decomposition and the triangle inequality, carried
-  out as local steps)
+  norm of the subtracted vector; the closed form of the partial transpose at both values of
+  p; the lower bound 2 < ||X||_1 from the unitary I - 2P built on the test vectors; and the
+  upper bound ||X_1||_1 <= 2 from the positive decomposition and the triangle inequality)
 escape_witness: result (form (2) of §3.2: both trace-norm bounds are produced by the
   closed-form evaluation, the explicit unitary witness and the positive decomposition; no
   existing statement gives them)
@@ -229,33 +227,27 @@ private def u01 (x : Qubits 6) : ℤ := if parA x = 0 then sgnB x else 0
 
 private def u10 (x : Qubits 6) : ℤ := if parA x = 1 then 1 else 0
 
-private theorem edgeFinset_k33 : k33.edgeFinset = edges9 := by decide +kernel
-
-private theorem uv_ortho : ∀ i j : Fin 14, i ≠ j → ∑ x : Qubits 6, uv i x * uv j x = 0 := by
-  decide +kernel
-
-private theorem uv_norms : ∀ j : Fin 14, ∑ x : Qubits 6, uv j x * uv j x = nvals j := by
-  decide +kernel
-
-private theorem uv_quads : ∀ j : Fin 14,
-    ∑ x : Qubits 6, ∑ y : Qubits 6, uv j x * uv j y * xi (-47) 50 y x = qvals j := by
-  decide +kernel
-
-private theorem xi_diag : ∀ x : Qubits 6, xi (-47) 50 x x = 50 ^ 9 ∧ xi (-1) 1 x x = 1 := by
-  decide +kernel
-
-private theorem decomp_one : ∀ x y : Qubits 6,
-    2 * xi (-1) 1 x y + (u01 x - u10 x) * (u01 y - u10 y) =
-      2 * (u00 x * u00 y + u11 x * u11 y) + (u01 x + u10 x) * (u01 y + u10 y) := by
-  decide +kernel
-
-private theorem w_norm : ∑ x : Qubits 6, (u01 x - u10 x) * (u01 x - u10 x) = 64 := by
-  decide +kernel
-
+set_option maxHeartbeats 2000000 in
 /-- The negativity of the randomized `K_{3,3}` state across its two parts is larger at
 `p = 97/100` than at `p = 1`, so it is not monotone in `p`. -/
 theorem result : ¬ claim := by
   intro hclaim
+  have edgeFinset_k33 : k33.edgeFinset = edges9 := by decide +kernel
+  have uv_ortho : ∀ i j : Fin 14, i ≠ j → ∑ x : Qubits 6, uv i x * uv j x = 0 := by
+    decide +kernel
+  have uv_norms : ∀ j : Fin 14, ∑ x : Qubits 6, uv j x * uv j x = nvals j := by
+    decide +kernel
+  have uv_quads : ∀ j : Fin 14,
+      ∑ x : Qubits 6, ∑ y : Qubits 6, uv j x * uv j y * xi (-47) 50 y x = qvals j := by
+    decide +kernel
+  have xi_diag : ∀ x : Qubits 6, xi (-47) 50 x x = 50 ^ 9 ∧ xi (-1) 1 x x = 1 := by
+    decide +kernel
+  have decomp_one : ∀ x y : Qubits 6,
+      2 * xi (-1) 1 x y + (u01 x - u10 x) * (u01 y - u10 y) =
+        2 * (u00 x * u00 y + u11 x * u11 y) + (u01 x + u10 x) * (u01 y + u10 y) := by
+    decide +kernel
+  have w_norm : ∑ x : Qubits 6, (u01 x - u10 x) * (u01 x - u10 x) = 64 := by
+    decide +kernel
   have closed : ∀ (p : ℝ) (x y : Qubits 6), rgState k33 p x y =
       ((((2 : ℝ) ^ 6)⁻¹ : ℝ) : ℂ) *
         ∏ e ∈ k33.edgeFinset, ((p : ℂ) * (czPhase e x * czPhase e y) + ((1 - p : ℝ) : ℂ)) := by

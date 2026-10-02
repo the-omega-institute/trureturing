@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Wu, Rossi, Kampermann, Severini, Kwek, Macchiavello and Bruss (arXiv:1403.3828, Section V) ask whether the negativity of a randomized graph state, across any bipartition, increases monotonically with the probability p that each edge is present. It does not: for the complete bipartite graph K_(3,3) and the bipartition into its two parts, the negativity is larger than 1/2 at p = 97/100 and equal to 1/2 at p = 1.
+Wu, Rossi, Kampermann, Severini, Kwek, Macchiavello and Bruss (arXiv:1403.3828, Section V) ask whether the negativity of a randomized graph state, across any bipartition, increases monotonically with the probability p that each edge is present. It does not: for the complete bipartite graph K_(3,3) and the bipartition into its two parts, the negativity is larger than 1/2 at p = 97/100 and at most 1/2 at p = 1.
 
 **Definition 1.1 (Controlled-Z phases).**
 

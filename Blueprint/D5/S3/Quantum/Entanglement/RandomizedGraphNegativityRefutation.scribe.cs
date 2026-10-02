@@ -11,7 +11,7 @@ internal sealed class RandomizedGraphNegativityRefutationDocument : IScribeDocum
         LibraryNoteRef.Create("D5/L/QuantumStates/wu2014randomized");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Wu, Rossi, Kampermann, Severini, Kwek, Macchiavello and Bruss (arXiv:1403.3828, Section V) ask whether the negativity of a randomized graph state, across any bipartition, increases monotonically with the probability p that each edge is present. It does not: for the complete bipartite graph K_(3,3) and the bipartition into its two parts, the negativity is larger than 1/2 at p = 97/100 and equal to 1/2 at p = 1.",
+        "Wu, Rossi, Kampermann, Severini, Kwek, Macchiavello and Bruss (arXiv:1403.3828, Section V) ask whether the negativity of a randomized graph state, across any bipartition, increases monotonically with the probability p that each edge is present. It does not: for the complete bipartite graph K_(3,3) and the bipartition into its two parts, the negativity is larger than 1/2 at p = 97/100 and at most 1/2 at p = 1.",
         H("The negativity of randomized graph states is not monotone"),
         Blocks(
             Node("cz", "Controlled-Z phases", CzFormula(),
@@ -132,7 +132,7 @@ internal sealed class RandomizedGraphNegativityRefutationDocument : IScribeDocum
         Formula weight = Mul(Pow(p, Card(f)),
             Pow(Parenthesized(Sub(D(1), p)), Card(Seq(edges, Sp, Setminus, Sp, f))));
         Formula projection = Call(F.Id("vecMulVec"), state, Call(F.Id("star"), state));
-        Formula value = SumOver(Rel(f, FormulaRelationOperator.SubsetOf, edges),
+        Formula value = SumOver(Seq(f, Sp, Subseteq, Sp, edges),
             Mul(weight, projection));
         return Disp(All(n, Nat(), All(g, Call(F.Id("SimpleGraph"), Fin(n)), All(p, Real(),
             EqTo(Call(F.Id("rgState"), g, p), value)))));
