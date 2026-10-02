@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cd1f97bb3fed0870fb53c1a5a5dbe2aae071424f0ec74058084914939acdfeb8
+  normalized_sha256: sha256:cd1f97bb3fed0870fb53c1a5a5dbe2aae071424f0ec74058084914939acdfeb8
+cas_ref: sha256:cd1f97bb3fed0870fb53c1a5a5dbe2aae071424f0ec74058084914939acdfeb8
+coverage_gids:
+  - gid: D5/S3/Quantum/Analysis/DirectionalTranslationDomainWeakStrong.directional_translation_domain_iff
+    target_statement_id: sha256:2f9759ed18cbceaa78f3f3fda9fa15ca252ec08038992dadfaaee157eeee0136
+receipts:
+  unresolved_subitems: []

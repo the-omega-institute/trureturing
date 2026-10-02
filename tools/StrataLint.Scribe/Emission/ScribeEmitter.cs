@@ -157,9 +157,11 @@ public static class ScribeEmitter
     }
 
     internal static VerifiedScribeEmissions? Verify(string repositoryRoot, TextWriter error,
-        LeanAxiomReport report, IReadOnlyList<DocumentDefinition> definitions) =>
+        LeanAxiomReport report, IReadOnlyList<DocumentDefinition> definitions,
+        FrozenStateCatalog? frozenState = null, FrozenStatementIndex? frozenStatements = null) =>
         Run(repositoryRoot, check: true, TextWriter.Null, error, _ => report,
-            validateRepository: true, tolerateAbsentDocuments: false, suppliedDefinitions: definitions).Verification;
+            validateRepository: true, tolerateAbsentDocuments: false, suppliedDefinitions: definitions,
+            frozenState: frozenState, frozenStatements: frozenStatements).Verification;
 
     private static ScribeEmissionRun Run(
         string repositoryRoot,

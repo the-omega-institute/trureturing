@@ -3158,3 +3158,21 @@ $$
 本结论是第一域上的纯向量形式等式。一般正常态的有限二阶矩对应、多模态闭图与完成张量算子域、一般辛实现、Gibbs 及基无关迹仍各需其实际解析桥梁。
 
 ## 追加锚（本行以下为增补区）
+
+## 28. 有限 Euclidean 空间中的最大方向平移域
+
+**定理 28.1（方向弱导数与真实强平移导数）。** 任意 $n\in\mathbb N$（包括 $n=0$），令 $E_n=\mathrm{EuclideanSpace}\;\mathbb R\;(\mathrm{Fin}\,n)$，使用 Lebesgue 测度 $\mathrm{volume}$。任取 $b\in E_n$（包括 $b=0$）及 $f,h:E_n\to\mathbb C$，只假设 $\mathrm{MemLp}(f,2,\mathrm{volume})$ 与 $\mathrm{MemLp}(h,2,\mathrm{volume})$。用 $[f]$、$[h]$ 表示其实际 $L^2$ 等价类。令 $\mathcal T_n$ 为所有实值紧支 $C^\infty$ 测试函数，即 $\mathrm{ContDiff}\;\mathbb R\;(\mathrm{WithTop.some}\;\mathrm{ENat.top})$ 与 $\mathrm{HasCompactSupport}$ 同时成立的函数。记 $D_b\varphi(x)=\mathrm{fderiv}\;\mathbb R\;\varphi\;x\;b$，并令真实正平移 $V_b(t)[f]=[x\mapsto f(x+tb)]$ 为 $\mathrm{DomAddAct.mk}(t\mathbin\bullet b)$ 在实际 $L^2$ 上的作用。则
+
+$$
+\left(\forall\varphi\in\mathcal T_n,\quad
+  \int_{E_n}D_b\varphi(x)f(x)\,dx
+  =-\int_{E_n}\varphi(x)h(x)\,dx\right)
+\quad\Longleftrightarrow\quad
+\mathrm{HasDerivAt}\bigl(t\mapsto V_b(t)[f]\bigr)\;[h]\;0.
+$$
+
+积分中的实测试值和实方向导数均嵌入 $\mathbb C$；右端是以实时间为参数、取值于实际复 $L^2$ 空间的范数导数。结论不要求全局 $L^1$、其他方向的导数、正维数或非零方向。
+
+证明。将测试导数的紧支扩充一个有界方向线段，以局部可积函数控制所有小平移的差商，得到配对积分的导数。对真实平移后的紧支测试应用弱等式，标量微积分基本定理与连续线性映射的 Bochner 区间积分交换给出每个测试配对的积分恒等式。紧支测试分离及 $L^2$ 的几乎处处外延性将其提升为 $V_b(t)[f]-[f]=\int_0^t V_b(r)[h]\,dr$。真实平移作用的强连续性和向量微积分基本定理给出正向结论；反向结论通过配对求导及导数唯一性得到。
+
+此结论识别单个任意方向的最大一阶平移域；多模态能量算子的闭图、完成张量域、辛实现、一般正常态的有限二阶矩和 Gibbs 迹仍需各自的实际解析桥梁。
