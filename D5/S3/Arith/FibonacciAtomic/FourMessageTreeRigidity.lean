@@ -186,6 +186,27 @@ private theorem classify (k : ℕ) (hk : 2 ≤ k) (A : Finset (Fin (k + 1))) (hA
     · right; right
       exact ⟨i,by omega,below i hi,eq⟩
 
+private theorem prefix_height (k j : ℕ) (u : TreeMessageRealization.Tree (Fin (k + 1)))
+    (h : PrefixSpine k j u) : u.height = j ∧ 0 < j := by
+  induction h with
+  | one => simp
+  | peel hj h ih =>
+    simp only [BinaryTree.height,leaf] at *
+    omega
+  | peel_swap hj h ih =>
+    simp only [BinaryTree.height,leaf] at *
+    omega
+private theorem suffix_height (k j : ℕ) (u : TreeMessageRealization.Tree (Fin (k + 1)))
+    (h : SuffixSpine k j u) : u.height = k + 1 - j := by
+  induction h with
+  | one => simp
+  | @peel j u hj h ih =>
+    simp only [BinaryTree.height,leaf] at *
+    omega
+  | @peel_swap j u hj h ih =>
+    simp only [BinaryTree.height,leaf] at *
+    omega
+
 set_option maxHeartbeats 2000000 in
 -- Capacity classification and the two spine inductions are elaborated in one proof.
 /-- Arbitrary leaf - labelled full binary trees whose proper blocks are small
@@ -580,29 +601,9 @@ theorem rigidity_from_implementation (k : ℕ) (hk : 2 ≤ k)
               · omega
           exact ⟨j,hj,hjn,r,l,prefix_force r ht.2.1 j hj hjn hra hrb,
             suffix_force l ht.1 j hj hjn hla hlb,Or.inr rfl⟩
-  have prefix_height (j : ℕ) (u : TreeMessageRealization.Tree (Fin (k + 1)))
-      (h : PrefixSpine k j u) : u.height = j ∧ 0 < j := by
-    induction h with
-    | one => simp
-    | peel hj h ih =>
-      simp only [BinaryTree.height,leaf] at *
-      omega
-    | peel_swap hj h ih =>
-      simp only [BinaryTree.height,leaf] at *
-      omega
-  have suffix_height (j : ℕ) (u : TreeMessageRealization.Tree (Fin (k + 1)))
-      (h : SuffixSpine k j u) : u.height = k + 1 - j := by
-    induction h with
-    | one => simp
-    | @peel j u hj h ih =>
-      simp only [BinaryTree.height,leaf] at *
-      omega
-    | @peel_swap j u hj h ih =>
-      simp only [BinaryTree.height,leaf] at *
-      omega
   obtain ⟨j,hj,hjn,l,r,hl,hr,he⟩ := shape
-  have hL := (prefix_height j l hl).1
-  have hR := suffix_height j r hr
+  have hL := (prefix_height k j l hl).1
+  have hR := suffix_height k j r hr
   have hh : height t = max j (k + 1 - j) := by
     rcases he with rfl | rfl <;>
       simp only [height,BinaryTree.height,hL,hR,Nat.add_sub_cancel,Nat.max_comm]
@@ -627,7 +628,11 @@ theorem result (k : ℕ) (hk : 2 ≤ k) :
           height t = max j (k + 1 - j) ∧ (k + 2) / 2 ≤ height t)) ∧
     (∀ t : TreeMessageRealization.Tree (Fin (k + 1)), DoubleComb t →
       ∃ (m : Implementation (fun _ : Fin (k + 1) => Window)) (read : m.Message t → Bool),
-        Correct boolean t m read ∧ peak m t = 4 ∧ optimum boolean t = 4) := by
+        Correct boolean t m read ∧ peak m t = 4 ∧ optimum boolean t = 4) ∧
+    (∀ t : TreeMessageRealization.Tree (Fin (k + 1)), Full t → leaves t = Finset.univ →
+      optimum boolean t ≤ 4 → (k + 2) / 2 ≤ height t) ∧
+    (∃ t : TreeMessageRealization.Tree (Fin (k + 1)), Full t ∧ leaves t = Finset.univ ∧
+      optimum boolean t = 4 ∧ height t = (k + 2) / 2) := by
   classical
   letI : DecidableEq (Fin (k + 1)) := Classical.decEq _
   have singleton_capacity (i : Fin (k + 1)) (hi : 0 < i.val) (hik : i.val < k) :
@@ -837,8 +842,48 @@ theorem result (k : ℕ) (hk : 2 ≤ k) :
       exact Finset.sup_le hcaps
     have he : peak m u = 4 := le_antisymm hp (lower u hu hall m read hm)
     exact ⟨m,read,hm,he,hpeak.symm.trans he⟩
+  have prefix_exists (j : ℕ) (hj : 0 < j) (hjk : j ≤ k + 1) :
+      ∃ u, PrefixSpine k j u := by
+    induction j with
+    | zero => omega
+    | succ j ih =>
+      by_cases hz : j = 0
+      · subst j; exact ⟨_,PrefixSpine.one⟩
+      · obtain ⟨u,hu⟩ := ih (by omega) (by omega)
+        exact ⟨_,PrefixSpine.peel (by omega) hu⟩
+  have suffix_exists (j : ℕ) (hj : j ≤ k) : ∃ u, SuffixSpine k j u := by
+    apply Nat.decreasingInduction (motive := fun j _ => ∃ u, SuffixSpine k j u) ?_ ?_ hj
+    · intro a ha h
+      obtain ⟨u,hu⟩ := h
+      exact ⟨_,SuffixSpine.peel ha hu⟩
+    · exact ⟨_,SuffixSpine.one⟩
+  have balanced : ∃ t : TreeMessageRealization.Tree (Fin (k + 1)), Full t ∧
+      leaves t = Finset.univ ∧ optimum boolean t = 4 ∧ height t = (k + 2) / 2 := by
+    let j := (k + 1) / 2
+    have hj : 0 < j := by dsimp [j]; omega
+    have hjn : j < k + 1 := by dsimp [j]; omega
+    obtain ⟨l,hl⟩ := prefix_exists j hj (by omega)
+    obtain ⟨r,hr⟩ := suffix_exists j (by omega)
+    have ht : DoubleComb (fork l r) := ⟨j,hj,hjn,l,r,hl,hr,Or.inl rfl⟩
+    obtain ⟨hf,hall,hcap⟩ := comb_data (fork l r) ht
+    obtain ⟨m,read,hm,hpeak,hopt⟩ := realization (fork l r) ht
+    refine ⟨fork l r,hf,hall,hopt,?_⟩
+    have hL := (prefix_height k j l hl).1
+    have hR := suffix_height k j r hr
+    have hh : height (fork l r) = max j (k + 1 - j) := by
+      simp only [height,fork,BinaryTree.height,hL,hR,Nat.add_sub_cancel,Nat.max_comm]
+    rw [hh]
+    dsimp [j]
+    omega
+  have height_lower (t : TreeMessageRealization.Tree (Fin (k + 1))) (ht : Full t)
+      (hall : leaves t = Finset.univ) (hp : optimum boolean t ≤ 4) :
+      (k + 2) / 2 ≤ height t := by
+    obtain ⟨m,read,hm,hsharp,hpeak,hopt⟩ := simultaneous_realization boolean t ht hall
+    obtain ⟨j,hj,hjn,l,r,hl,hr,he,hh,hbound⟩ :=
+      rigidity_from_implementation k hk t ht hall m read hm (hpeak.trans_le hp)
+    exact hbound
   exact ⟨fun A hA hp => ⟨classify k hk A hA hp, sufficient A⟩, singleton_capacity,
     fun t ht hall m read hm => ⟨lower t ht hall m read hm,
-      rigidity_from_implementation k hk t ht hall m read hm⟩, realization⟩
+      rigidity_from_implementation k hk t ht hall m read hm⟩, realization, height_lower, balanced⟩
 
 end D5.S3.Arith.FibonacciAtomic.FourMessageTreeRigidity
