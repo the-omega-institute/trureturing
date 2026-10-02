@@ -48,3 +48,5 @@ The coefficient k is minimal among constants uniform in the capture count: at N 
 - Truth anchor: `D5/S0/Asymptotics/Bonferroni/TailBounds.capture_count_tail_eq_sum_exact`
 - Truth anchor: `D5/S0/Asymptotics/Bonferroni/TailBounds.capture_count_tail_le_binomial_moment`
 - Dependency: [D5/S0/Asymptotics/WeightedProbability/BinomialMomentIdentity](../WeightedProbability/BinomialMomentIdentity.md)
+
+ci-perf negative probe: this hand-written line is not produced by the Scribe definition.
