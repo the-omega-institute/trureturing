@@ -16,6 +16,7 @@ public static class ScribeCli
         "markdown-check",
         "projections",
         "resources",
+        "scripts",
     ];
 
     public static int Run(
@@ -55,6 +56,26 @@ public static class ScribeCli
         {
             return ScribeResourceCommands.Run(documentsAssembly, arguments, workingDirectory,
                 () => FindRepositoryRoot(workingDirectory), output, error);
+        }
+
+        if (command == "scripts")
+        {
+            try
+            {
+                return ScribeScriptVerifyCommands.Run(
+                    documentsAssembly,
+                    arguments,
+                    FindRepositoryRoot(workingDirectory),
+                    input,
+                    output,
+                    error);
+            }
+            catch (Exception exception) when (exception is IOException or UnauthorizedAccessException
+                or ArgumentException or FormatException or InvalidOperationException)
+            {
+                error.WriteLine(exception.Message);
+                return 2;
+            }
         }
 
         if (command == "projections")
@@ -224,7 +245,8 @@ public static class ScribeCli
         + "emit|emit-values|filemap [--check] | describe-report [--json] [--check] "
         + "| projections --check --report <file> "
         + "| markdown-check --report <file> [--paths-from <file|->] "
-        + "| resources pack --out <file> | resources verify --pack <file>";
+        + "| resources pack --out <file> | resources verify --pack <file> "
+        + "| scripts verify [--paths-from <file|->]";
 
     /// <summary>
     /// The paths to judge. `-` reads them from standard input, which keeps the change's

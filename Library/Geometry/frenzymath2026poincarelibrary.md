@@ -2478,3 +2478,150 @@ conjugator and isometric representative existence are still unproved,
 and full finite-volume Mostow-Prasad remains active and incomplete.
 The linked escape audit is unfinished and registration remains paused.
 Only this research note is intended tracked delivery.
+
+
+### Actual inversion-conjugate horizontal contraction and light-null charts
+
+Let J be the existing boundary-centered inversion of ORIGINAL H3,
+T(v) its actual horizontal translation, and D(a) its actual positive
+dilation. The actual coordinate inversion and norm scaling give
+J inverse = J and J D(a) = D(a) inverse J for a > 0. Thus
+J D(a) J inverse = D(a) inverse. Define Uminus(v) = J T(v) J inverse.
+The derived identity
+
+D(r) inverse Uminus(v) D(r) = J (D(r) T(v) D(r) inverse) J inverse
+
+and the existing horizontal contraction imply convergence to identity
+as positive r tends to zero, in the SAME compact-open group topology.
+The original H3 metric and group topology are preserved. Neither the
+inversion/dilation relation nor the opposite contraction is supplied
+as a hypothesis. Here the opposite family means this actual
+inversion-conjugate family; a matrix-unipotent identification and
+its generation of the orientation component remain unproved.
+
+For a jointly continuous isometric action of this actual group on a
+metric space, if ALL positive D(a) fix x, every Uminus(v) fixes x.
+The finite-p domain-pullback version retains a Borel R1 domain with a
+continuous group action, an invariant measure that is locally finite
+and compact inner regular, a normed additive target, and
+1 <= q < infinity. If ALL positive dilation pullbacks fix f in Lp,
+every Uminus(v) pullback fixes f. DomMulAct reverses multiplication:
+this opposite contraction uses the sequence mk(D(r)), whereas the
+preceding horizontal-family argument uses mk(D(r) inverse).
+
+On the SAME actual closed coset quotient G/Gamma with its ORIGINAL
+quotient measurable structure and a finite G-invariant measure nu,
+regularity and the continuous domain action are derived by the
+preceding construction. For a normed additive target and
+1 <= q < infinity, every f in Lp(nu) fixed by ALL positive dilation
+pullbacks is fixed by BOTH T(v) and Uminus(v) pullbacks. The geometric
+real-L2 specialization selects the SAME finite nonzero nu from the
+preceding actual finite-target constructor and preserves total mass
+equal to base intrinsic volume. Its full hypotheses remain: original
+H3 and base Riemannian metrics with original-H3 distance compatibility;
+the base T3/Borel/manifold and H3 manifold structures; a quotient
+covering by the FULL deck group; a local diffeomorphism preserving
+tangent inner products; an injective actual-H3 isometric deck
+representation whose evaluation agrees with the original deck action
+at EVERY point; and finite intrinsic base volume. Closedness of the
+actual deck image is derived from those same data. The selected nu,
+its regularity and its quotient action are not supplied as placeholders.
+For every real L2 f on this SAME nu, ALL-positive-dilation fixing
+implies BOTH horizontal-family invariances. The dilation-fixing
+premise is not obtained from finite volume.
+
+The existing Lorentz light coordinates also now give an explicit
+scaled chart of every future Lorentz-null vector w. Its light
+coordinates are c times either (1,0,0,0) or
+(re(z)^2+im(z)^2,re(z),im(z),1), for c > 0 and z in the complex plane.
+The null equation and positive time coordinate yield a nonnegative
+last light coordinate. If it is zero, the two middle coordinates
+vanish and the first is positive. Otherwise c is the last coordinate
+and z is obtained by dividing the middle coordinates by c. The SAME
+existing infinity frame (1,0,0,1) has light coordinates twice
+(1,0,0,0). Existing actual-isometry future-null-cone preservation
+therefore gives this scaled chart for EVERY actual isometry's image
+of that frame, without supplying null, future or chart data for the
+isometry. Positive scaling is retained; no projective boundary
+topology, boundary action or boundary map between lattices is claimed.
+
+Three serial scoped cache-guarded transient Lean checks exited zero,
+with twelve axiom closures using only propext, Classical.choice and
+Quot.sound. Four haveILetI style warnings in the actual quotient
+application remain unsuppressed; the other two checks have no warnings.
+These are classical reuse and construction under ignored .lake with
+default resources, not a novelty or tracked-Lean claim.
+
+Actual orientation-component identification/generation, invariant-
+function constancy and flow ergodicity remain separate obligations.
+The full disconnected group quotient has two components when the
+lattice preserves orientation; component and orientation-cover
+arguments remain necessary for the nonorientable endpoint. Boundary
+map construction and geometric preservation for the SAME arbitrary-h
+induced deck isomorphism, cusp handling and arbitrary-h ambient
+conjugator/isometric representative existence remain unproved.
+Full finite-volume Mostow-Prasad remains active and incomplete.
+The linked escape audit is unfinished and registration remains paused.
+Only this research note is intended tracked delivery.
+
+
+### Actual two-family words normalize the infinity ray and height
+
+The original horizontal translation and boundary-centered inversion
+now have coordinate-derived linear actions in the SAME Lorentz light
+coordinates. For an arbitrary real four-vector v and complex z,
+T(z) acts by
+
+(v0 + 2 re(z) v1 + 2 im(z) v2 + (re(z)^2+im(z)^2) v3,
+ v1+re(z) v3, v2+im(z) v3, v3).
+
+The original inversion J acts by (v3,v1,v2,v0). These actions are
+derived first on every actual H3 point from the original coordinates,
+height and inversion radius formula, then extended to every vector
+using the SAME spanning Lorentz frame. Neither action is supplied
+as a boundary or matrix hypothesis.
+
+Let H be the algebraic subgroup generated by the two actual families
+T(z) and Uminus(z)=J T(z) J inverse. The concrete actual word
+W=T(1) Uminus(-1) T(1) belongs to H. Its light action is
+(v3,-v1,v2,v0). For every complex z, W T(-z) sends the finite
+light-null chart (re(z)^2+im(z)^2,re(z),im(z),1) to
+(1,0,0,0). The preceding positive scaled-chart constructor therefore
+normalizes the infinity-frame image of EVERY actual original-H3
+isometry e: there are an actual g in this SAME H and c > 0 such that
+the light coordinates of L(g e)(1,0,0,1) are c(1,0,0,0).
+Here H is algebraically generated, and g is an actual word chosen
+from the actual image chart; no density or full-group equality is
+asserted. Positive scale is retained.
+
+For every actual original-H3 isometry k, if its Lorentz action sends
+the SAME original infinity frame (1,0,0,1) to a times that frame for
+a real scalar a, the existing actual future-cone preservation implies
+a > 0. Actual Lorentz pairing preservation and the original identity
+v0-v3=1/height then imply height(k p)=a height(p) at EVERY actual
+point p. Positivity and the height law are derived; neither is an
+additional premise. Applying this to the normalized g e above gives
+a=c/2 > 0, L(g e)(1,0,0,1)=a(1,0,0,1), and uniform positive height
+scaling at every point. This reduces the next classification task
+to the actual infinity-ray stabilizer with a proved height law.
+It does not yet classify the remaining horizontal action.
+
+Two accepted serial scoped cache-guarded transient Lean checks exited
+zero, with eleven axiom closures using only propext, Classical.choice
+and Quot.sound. Two unnecessarySeqFocus style warnings remain
+unsuppressed in the light-action check; the height check has none.
+Failed checks are excluded in full. The original H3 metric/topology
+and default resources are retained. All new Lean remains under
+ignored .lake as classical reuse and construction, without novelty
+or tracked-Lean claims. Only this research note is intended delivery.
+
+The full actual stabilizer classification, orientation-component
+identification/generation, invariant-function constancy and flow
+ergodicity remain unproved. The normalization constructs no boundary
+topology/action or lattice boundary map. The SAME arbitrary-h induced
+deck isomorphism still needs its boundary-map/geometric-preservation
+and ambient-conjugator/isometric-representative existence arguments.
+Cusps, orientation components and covers, and the nonorientable
+endpoint remain in scope. Full finite-volume Mostow-Prasad remains
+active and incomplete; the linked escape audit is unfinished and
+registration remains paused.

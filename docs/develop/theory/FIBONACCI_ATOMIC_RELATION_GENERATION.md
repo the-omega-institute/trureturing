@@ -44231,3 +44231,343 @@ h(T)=M(T+1)+C-\int_0^T F(t)\,dt\ge1\quad(T\ge0).
 **证明。** 这是（316.2）第二项的精确否定。它不指定负平均出现的频率、可计算的截止或任何单个实际整数的违例幅度。
 
 定理315.3排除 $\mathfrak m_L$ 的有限极限，而定理316.1允许、并在 RH 下确定 $\mathfrak a_N$ 的有限极限；两个结论使用不同对象。对索引区间的互斥递归划分，累计贡献 $\sum\omega_L\mathfrak m_L$ 与总对数长度 $\sum\omega_L$ 各自相加，因此该判据的预算可在区间分块之间合并。这个恒等式没有给未展开块的下界，也不允许用均匀计数权重替代（316.1）的对数权重。$\square$
+## 317. CA价格下的临界乘子预算与单向余量运输
+
+本节直接复用 [CA价格与受控比较](../../../Library/Scale/baker2021smoothbeatty.md)、[Nicolas同截断包络](../../../Library/ArithSums/nicolas2025comparison.md) 及其既有素数尺度输入，不重证极大丰数的因子结构或包络渐近。新增内容是将这些输入组合到可增长的乘子范围，保留同一个实际整数的余量比较。全部结论为纸面推导，没有新增 Lean 核验或原创性声明。
+
+令 $C\to\infty$ 沿实际极大丰数（CA）取值，允许正价格处的并列极大点。记
+
+$$
+P=P^+(C),\qquad X=\log C,\qquad Z(n)=\sigma(n)/n,
+\qquad \Delta(n)=e^\gamma\log\log n-Z(n).
+\tag{317.1}
+$$
+
+取任一使 $C$ 在所有正整数上最大化 $Z(n)n^{-\epsilon}$ 的价格 $\epsilon>0$。所引接口给出
+
+$$
+X\sim P,\qquad
+0<\epsilon\le\frac{\log(1+1/P)}{\log P},\qquad
+\Delta(C)\longrightarrow0,\qquad Z(C)\sim e^\gamma\log P.
+\tag{317.2}
+$$
+
+这里的加性收敛复用 Nicolas包络、Dusart误差及 $\Sigma(C)=Z(C)$ 的既有应用；单凭相对 Grönwall极限不足以推出它。$P$ 始终是宿主 $C$ 的最大素因子，不替换为乘积的最大素因子。
+
+**命题 317.1（任意正乘子的同源有限比较）。** 对每个正整数 $t$，记 $\ell=\log t$，则
+
+$$
+\begin{aligned}
+e^\gamma\log(1+\ell/X)-Z(C)(e^{\epsilon\ell}-1)
+&\le\Delta(tC)-\Delta(C)\\
+&\le e^\gamma\log(1+\ell/X).
+\end{aligned}
+\tag{317.3}
+$$
+
+证明。整除关系 $C\mid tC$ 使每个有限Euler因子不减，故 $Z(tC)\ge Z(C)$；同一价格的全局最优性给 $Z(tC)\le Z(C)e^{\epsilon\ell}$。将两端分别代入精确等式
+
+$$
+\Delta(tC)-\Delta(C)
+=e^\gamma\log(1+\ell/X)-[Z(tC)-Z(C)]
+\tag{317.4}
+$$
+
+即可。这不要求 $tC$ 仍为 CA、素指数有序或保持旧素支撑；允许 $t=1$。$\square$
+
+**命题 317.2（固定临界预算的统一单向界）。** 固定实数 $\kappa>0$。存在仅依赖宿主尺度与该固定参数的非负函数 $\eta_\kappa(C)\to0$，使所有
+
+$$
+1\le t\le Q_C:=\left\lfloor e^{\kappa\sqrt P}\right\rfloor
+\tag{317.5}
+$$
+
+同时满足
+
+$$
+\Delta(C)-\frac{\eta_\kappa(C)}{\sqrt P}
+\le\Delta(tC)
+\le\Delta(C)+\frac{e^\gamma\kappa+\eta_\kappa(C)}{\sqrt P}.
+\tag{317.6}
+$$
+
+证明。对上述范围，$0\le\ell\le\kappa\sqrt P$。利用 $\log(1+u)\ge u-u^2/2$（$u\ge0$）及 $e^v-1\le v+O(v^2)$（$0\le v\le1$），命题317.1给
+
+$$
+\Delta(tC)-\Delta(C)
+\ge\ell\left(\frac{e^\gamma}{X}-\epsilon Z(C)\right)
+-O_\kappa\left(\frac{\ell^2}{X^2}+Z(C)(\epsilon\ell)^2\right).
+\tag{317.7}
+$$
+
+同一个宿主的（317.2）给
+
+$$
+\frac{e^\gamma}{X}=\frac{e^\gamma+o(1)}P,
+\qquad
+\epsilon Z(C)\le\frac{e^\gamma+o(1)}P,
+\tag{317.8}
+$$
+
+所以括号中的量有下界 $-o(1/P)$，无需为该量断言正号。两个二次误差分别为 $O_\kappa(1/P)$ 与 $O_\kappa(1/(P\log P))$，均为 $o(P^{-1/2})$。这给（317.6）的下界，且误差对全部允许的 $t$ 统一。上界由
+
+$$
+e^\gamma\log(1+\ell/X)\le e^\gamma\ell/X
+\le\frac{e^\gamma\kappa+o(1)}{\sqrt P}
+\tag{317.9}
+$$
+
+得到。增大共同的非负误差函数即可同时覆盖两端。$\square$
+
+**推论 317.3（归一化余量与次临界范围）。** 记 $W(n)=\sqrt{\log n}\,\Delta(n)$。对固定 $\kappa$ 的全部（317.5），统一有
+
+$$
+W(C)-o(1)\le W(tC)\le W(C)+e^\gamma\kappa+o(1).
+\tag{317.10}
+$$
+
+对任一固定 $0<\nu<1/2$，若改取 $1\le t\le\lfloor e^{P^\nu}\rfloor$，则统一有
+
+$$
+|\Delta(tC)-\Delta(C)|=O(P^{\nu-1})=o(P^{-1/2}),
+\qquad W(tC)-W(C)=o(1).
+\tag{317.11}
+$$
+
+证明。临界范围内 $\log(tC)=X+O_\kappa(\sqrt P)\sim P$，并且
+
+$$
+|\sqrt{X+\ell}-\sqrt X|\le\frac{\ell}{2\sqrt X}=O_\kappa(1).
+\tag{317.12}
+$$
+
+其与 $\Delta(C)\to0$ 的乘积为 $o(1)$。将（317.6）乘以 $\sqrt{X+\ell}$ 即得（317.10）；这一步不假设 $W(C)$ 有界或收敛。次临界范围中，直接使用（317.3）及 $Z(C)=O(\log P)$，预算与响应变化各为 $O(P^{\nu-1})$，故有（317.11）。参数 $\kappa,\nu$ 都固定，不主张随宿主增长的统一阈值。$\square$
+
+## 追加锚（本行以下为增补区）
+## 318. 在Robin半尺度预算内选择实际长空窗来源
+
+沿用 §317 的宿主 $C$、$P=P^+(C)$ 与固定 $\kappa>0$。本节复用经典有限Dirichlet逼近、[规范旋转读数](../../../Library/ArithSums/guloglunevans2008beatty.md)、§151 的互不交叠分支内部及 §182.1、§289.1 的有限来源接口；不重做数位分类、区间极限或逼近定理。
+
+**命题 318.1（临界预算下的规范低位空窗）。** 对每个充分大的实际 CA宿主 $C$，存在 $1\le t_C\le Q_C$，使 $N_C=t_CC$ 的实际规范地址有单位位零及至少
+
+$$
+L_C=\left\lfloor\frac{\kappa\sqrt P}{3\log\varphi}\right\rfloor-2
+\tag{318.1}
+$$
+
+个连续低位 `[null]` 窗口，同时保留（317.6）、（317.10）。这里 $\varphi=(1+\sqrt5)/2$，有限初段取到 $L_C\ge0$ 后才使用公式。后继地址有限、合法并以原正值End终止；不指定第一非空标签或精确空窗深度。
+
+证明。对 $\alpha=C\varphi$ 和整数 $Q_C\ge1$ 应用已有有限Dirichlet定理，选得
+
+$$
+\|N_C\varphi\|\le\frac1{Q_C+1}<e^{-\kappa\sqrt P}.
+\tag{318.2}
+$$
+
+令 $r=\{N_C\varphi\}$。充分大时，$r$ 位于单位位零的低相位或高相位窗。写其真实规范组成为 $N_C=2A_C+3B_C$，令 $y_C=A_C+B_C\psi$、$\psi=1-\varphi$。所引规范读数给
+
+$$
+E_C=4A_C+7B_C-\sqrt5N_C
+=\begin{cases}-2r,&r\text{ 在低相位窗},\\2(1-r),&r\text{ 在高相位窗},\end{cases}
+\qquad E_C=2\psi^3y_C.
+\tag{318.3}
+$$
+
+所以对这个同一实际整数有
+
+$$
+|y_C|=\varphi^3\|N_C\varphi\|
+<\varphi^3e^{-\kappa\sqrt P}
+<\varphi^{-3L_C}.
+\tag{318.4}
+$$
+
+令 $\lambda=\psi^3=-\varphi^{-3}$。区间 $\lambda^{L_C}(-1,\varphi)$ 包含开区间 $(-\varphi^{-3L_C},\varphi^{-3L_C})$，奇数深度自动反转端点次序。因此 $y_C$ 严格处于连续 $L_C$ 个null分支的内部。沿 §151 的分支内部不交性及 §289.1 的有限来源识别逐层读回，即迫使原规范有限地址的前 $L_C$ 个窗口都为 `[null]`。来源始终是正整数 $N_C$ 的真实表示，不能以无限区间中的任意点代替它。该 $t_C$ 属于统一价格范围，所以 §317 的两种余量界同时适用。$\square$
+
+**推论 318.2（次临界深度与所缺的有符号输入）。** 对每个固定 $0<\nu<1/2$，同一构造改用 $Q_C=\lfloor e^{P^\nu}\rfloor$，给出至少 $\lfloor P^\nu/(3\log\varphi)\rfloor-2$ 个实际低位空窗，并保留 $W(N_C)-W(C)\to0$。对固定临界预算，若某列宿主独立满足 $W(C)\ge a>0$ 最终成立，则所选来源满足 $\liminf W(N_C)\ge a$；若某列宿主独立满足 $W(C)\to-\infty$，则所选来源也满足 $W(N_C)\to-\infty$。这些运输只使用（317.10）或（317.11），不独立提供任一宿主的符号前提。
+
+这里得到的是受控大小、真实有限前缀和同源Robin余量的共同实现。§289 的固定完整素支撑、本原组成及精确 `[null]^L,[2]` 来源来自另一份不带命中成本的构造；不把那些额外属性带入当前的临界预算。当前 $N_C$ 允许等于 $C$，也允许引入新素数；不保证CA性、素指数有序、本原组成或完整支撑不变。特别地，$P$ 仍是 $P^+(C)$，不是 $P^+(N_C)$。
+
+删除实际空窗时，组成gcd和黄金范数绝对值按既有递归不变量保持；普通整数数量、约数和与Robin符号不随之保持。因此“很长的低位null前缀”本身还没有给出统一安全性。尚缺的是对该受控实际族的独立有符号估计，而不是更多地址分类或无符号的 $\Delta(N_C)\to0$。
+
+本节及 §317 是仓内既有输入的综合纸面应用；文献结论、来源接口与新增组合步骤分别以上述引用为准。不宣称已经排除任何新的Robin反例范围，不宣称黎曼猜想得到证明，也不将纸面推导计作Lean冻结成果。
+
+## 追加锚（本行以下为增补区）
+## 319. 有符号回传需要覆盖同一乘子的成本
+
+§318 的实际长空窗来源可以作为估计对象，但回传必须使用 §317 的上侧比较。对固定临界参数 $\kappa>0$，独立下界 $W(N_C)\ge b$ 只直接给出
+
+$$
+W(C)\ge b-e^\gamma\kappa-o(1).
+\tag{319.1}
+$$
+
+因此，若希望沿这条接口得到宿主的最终严格正余量，一个足够的供应条件是：对某个固定 $\delta>0$，同一实际来源族最终满足
+
+$$
+W(N_C)\ge e^\gamma\kappa+\delta.
+\tag{319.2}
+$$
+
+在次临界参数 $0<\nu<1/2$ 的版本中，回传成本为 $o(1)$，所以固定正下界 $W(N_C)\ge\delta>0$ 已足够给该族的宿主最终正余量。这里的供应条件尚未建立；它们只列明现有比较所需的估计强度。临界成本不足以推出宿主正号时，不意味着宿主实际余量为负。
+
+这些是（317.10）—（317.11）的直接应用，不是新增的RH等价判据。最终的尾域结论也不自动检查任何有限初段。符号来源仍须属于被选出的同一整数族；无关地址或无关因子配置上的最优下界不能代替（319.2）。
+
+## 追加锚（本行以下为增补区）
+
+## 320. 实际四次5040子族的核诱导累积平均
+
+**定义 320.0。** 沿用 §§314–316 的实际整数 $N_j=T_{j^4}$、解析截止 $\mu_j=3j^4+2$、归一化 Robin 余量 $\mathfrak q_j$、$\kappa=2\sqrt2-2$ 与 $w(x)=\sqrt x\log x$。采用假设302.1及这些章节明确列出的经典解析输入。对整数 $j\ge2$，记 $a=\mu_j,b=\mu_{j+1}$，定义
+\[
+\begin{aligned}
+\alpha_j&=\int_a^b\frac{w(y)}y\frac{b-y}{b-a}\frac{dy}{w(a)},\\
+\beta_j&=\int_a^b\frac{w(y)}y\frac{y-a}{b-a}\frac{dy}{w(b)},\\
+\rho_j&=\alpha_j+\beta_j,\qquad d_j=\log(b/a).
+\end{aligned}
+\tag{320.1}
+\]
+对整数 $J\ge3$ 置
+\[
+R_J=\sum_{j=2}^{J-1}\rho_j,\qquad
+D_J=\sum_{j=2}^{J-1}d_j=\log(\mu_J/50),\qquad
+\mathfrak b_J=\frac1{R_J}\sum_{j=2}^{J-1}
+ (\alpha_j\mathfrak q_j+\beta_j\mathfrak q_{j+1}).
+\tag{320.2}
+\]
+这些权重只依赖解析截止；一个内部端点在相邻两格中的贡献均保留。它们由同一个 $\Phi=I_\psi$ 的弦插值与对数积分诱导，不把实际整数 $N_j$ 当成价格 $\mu_j$。
+
+**定理 320.1（核诱导平均保留四次子族的 RH 强度）。** 在定义320.0的输入下，以下命题等价：
+\[
+\begin{aligned}
+&\mathrm{RH};\\
+&\exists K\ge0\ \exists J_0\ge3\ \forall J\ge J_0:
+       \quad\mathfrak b_J\ge-K;\\
+&\mathfrak b_J\longrightarrow\kappa;\\
+&\exists\ell\in\mathbb R:\quad\mathfrak b_J\longrightarrow\ell.
+\end{aligned}
+\tag{320.3}
+\]
+阈值及指标为整数，$K$ 为固定有限实数。该结论没有证明预算存在，也没有决定 RH。
+
+**证明。** 首先核对归一化。式（314.7）给 $0<w(a)\le w(y)\le w(b)\le8w(a)$。置 $u=(b-y)/(b-a)$、$v=(y-a)/(b-a)$，则 $u,v\ge0$、$u+v=1$，并有
+\[
+\frac18\le u\frac{w(y)}{w(a)}+v\frac{w(y)}{w(b)}\le8.
+\]
+被积函数在正端点区间连续，因此 $\alpha_j,\beta_j\ge0$，且
+\[
+0<d_j/8\le\rho_j\le8d_j,\qquad
+D_J/8\le R_J\le8D_J\longrightarrow\infty.
+\tag{320.4}
+\]
+进一步，$r_j=w(b)/w(a)\to1$，因为 $b/a\to1$ 与 $\log b/\log a\to1$。上述凸组合实际位于 $[r_j^{-1},r_j]$，故
+\[
+\rho_j/d_j\longrightarrow1,\qquad R_J/D_J\longrightarrow1.
+\tag{320.5}
+\]
+第二个极限由固定初段除以 $D_J$ 趋零及尾部逐格相对误差任意小得到，不要求 $d_j$ 有统一正下界。
+
+现在证明第二项推出 RH。定理315.1限制到实际四次指标给
+\[
+\mathfrak q_j=Z(\mu_j)+\kappa-\mathfrak h_{j^4}+\varepsilon_j,
+\qquad Z(x)=w(x)\Phi(x),\quad \mathfrak h_{j^4}\ge0,\quad\varepsilon_j\to0.
+\tag{320.6}
+\]
+正权使双端误差的平均趋零：任取 $\eta>0$，足够晚时两端误差均不超过 $\eta$，所以尾部绝对贡献不超过 $\eta R_J$；有限初段贡献是固定常数。于是（320.3）第二项与非负缺损给固定 $K_1\ge0$，使
+\[
+\sum_{j=2}^{J-1}[\alpha_j Z(\mu_j)+\beta_j Z(\mu_{j+1})]
+\ge-K_1R_J
+\tag{320.7}
+\]
+最终成立。这里删去缺损只用于实际平均下界推出谱平均下界的方向。
+
+经典 Chebyshev 界供应 §314 的 $C\ge1$，同节的 $\Phi$ 双端弦下界及归一化曲率成本 $1701C$ 给
+\[
+Z(y)\ge
+ u\frac{w(y)}{w(a)}Z(a)+v\frac{w(y)}{w(b)}Z(b)-1701C.
+\]
+除以 $y>0$ 并在同一格积分，恰得
+\[
+\int_a^b Z(y)\frac{dy}y
+\ge\alpha_jZ(a)+\beta_jZ(b)-1701C d_j.
+\tag{320.8}
+\]
+求和并用（320.4）、（320.7），连续原函数
+\[
+P(x)=\int_{50}^x\frac{\log y}{\sqrt y}\Phi(y)\,dy
+     =\int_{\log50}^{\log x}Z(e^t)\,dt
+\tag{320.9}
+\]
+在四次端点满足 $P(\mu_J)\ge-(8K_1+1701C)D_J$，最终成立。连续性允许把有限个初段端点纳入一个固定预算，因而可选 $K_2\ge0$ 使
+\[
+P(\mu_j)\ge-K_2(\log\mu_j+1)\qquad(j\ge2).
+\tag{320.10}
+\]
+
+端点预算尚未控制部分格子。为此直接对 $P$ 插值，而不估计末尾部分格子的 $|Z|$。经典有效 PNT 保证 $\Phi$ 连续并有界；取 $B\ge0$ 使 $|\Phi(x)|\le B$ 对所有 $x\ge50$ 成立。同一尾核给几乎处处
+\[
+\Phi'(x)=\frac{\log x+1}{x^2\log^2x}[x-\psi(x)].
+\]
+$\Phi$ 在每个紧区间绝对连续；素数幂处仅其导数的密度跳跃。因此 $P'$ 连续且局部绝对连续，并有几乎处处
+\[
+P''(x)=\frac{2-\log x}{2x^{3/2}}\Phi(x)
+       +\frac{\log x}{\sqrt x}\Phi'(x).
+\tag{320.11}
+\]
+在 $a\le x\le b$ 上，$a\ge50$、$\log b\le2\log a$。第一项上界不超过 $B\log a/a^{3/2}$。又 $\psi(x)\ge0$，故第二项不超过
+\[
+\frac{\log x+1}{x^{3/2}\log x}\le\frac2{a^{3/2}}.
+\]
+因此 $P''\le(B\log a+2)/a^{3/2}$ 几乎处处。经典半凹弦不等式适用于具有局部绝对连续一阶导数的 $P$，得
+\[
+P(x)\ge uP(a)+vP(b)
+ -\frac{B\log a+2}{2a^{3/2}}(x-a)(b-x).
+\tag{320.12}
+\]
+这里原函数的一阶导数在素数幂处连续，无需假定 $P$ 全域二次可微。由（314.7）及 $(x-a)(b-x)\le(b-a)^2/4$，最后的损失不超过
+\[
+\frac{243}{8}(B\log a+2).
+\tag{320.13}
+\]
+两端（320.10）与 $\log b\le2\log a\le2\log x$ 遂给整个格子的一个明确充分预算：
+\[
+P(x)\ge-
+ \left(2K_2+\frac{243B}{8}+\frac{243}{4}\right)(\log x+1).
+\tag{320.14}
+\]
+相邻四次格子覆盖 $[50,\infty)$，所以此预算对全部 $x\ge50$ 成立。置 $A(T)=P(e^T)$，便得 §316 所需的全实数线性累计预算 $A(T)\ge-K_3(T+1)$。复用（316.6）–（316.9）的经典正逆变换、积分显式公式与 Landau 非负变换机制，即得 RH；固定初段常数 $C_0$ 仍须保留。新的承重步骤是（320.8）与（320.11）–（320.14）把实际稀疏双端平均送入这个已有机制。
+
+反向假设 RH。定理315.1及所引 Nicolas 谱渐近给
+\[
+\mathfrak q_j=\kappa-\mathcal W(\log\mu_j)+o(1),
+\quad\mathcal W(t)=W(e^t).
+\tag{320.15}
+\]
+如 §§315、316 所证，$\mathcal W$ 有界、一致连续，且是无零频率的一致绝对收敛三角级数，连续对数平均趋零。这里核平均仍须单独比较，不能把点值的无有限极限变成其平均的障碍。
+
+对格内 $t=\log y$，两端对数距离不超过 $d_j\to0$。置
+\[
+h_j(y)=u\frac{w(y)}{w(a)}+v\frac{w(y)}{w(b)}.
+\]
+若 $M\ge\sup|\mathcal W|$，并以 $\eta_j\to0$ 表示一致连续性在距离 $d_j$ 的模，则
+\[
+\begin{aligned}
+&\left|\alpha_j\mathcal W(\log a)+\beta_j\mathcal W(\log b)
+       -\int_a^b\mathcal W(\log y)\frac{dy}y\right|\\
+&\hspace{1cm}\le\eta_j\rho_j+
+ M\max\{r_j-1,1-r_j^{-1}\}\,d_j=o(d_j).
+\end{aligned}
+\tag{320.16}
+\]
+第一项比较各端点值与格内值，第二项比较 $h_j$ 与一。累计后有限初段除以 $D_J$ 消失，尾部误差任意小。结合 $R_J/D_J\to1$ 与连续谱平均趋零，双端谱平均也趋零。再用（320.15）的正权误差平均，得到 $\mathfrak b_J\to\kappa$。不要求零点纵坐标线性独立。第三项给第四项，任何有限极限给最终有限下界，完成等价链。
+
+最后，对任意把完整格子索引集合 $\{2,\ldots,J-1\}$ 划分为互斥块 $I_1,\ldots,I_r$ 的递归，置
+\[
+C(I)=\sum_{j\in I}(\alpha_j\mathfrak q_j+\beta_j\mathfrak q_{j+1}),
+\qquad R(I)=\sum_{j\in I}\rho_j.
+\]
+便有 $C(\bigcup I_s)=\sum_sC(I_s)$、$R(\bigcup I_s)=\sum_sR(I_s)$；若各块供应 $C(I_s)\ge-K_sR(I_s)$，则父块预算是
+\[
+C(\bigcup I_s)\ge-\sum_sK_sR(I_s).
+\tag{320.17}
+\]
+五块划分是该恒等式的一个取值；需要累加的量是贡献与质量，而非各块平均的等权和。它只合并已有块预算，不供应未展开块的预算，也没有证明普通左端对数权重与（320.1）具有相同反向 RH 强度。$\square$
