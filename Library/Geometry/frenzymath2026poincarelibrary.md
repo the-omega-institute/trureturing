@@ -3458,3 +3458,107 @@ H³ 上半空间的凸坐标域，经已有 `Convex.locallyPathConnectedSpace` �
 无新颖性、跟踪 Lean、准入或冻结声明；Lean 源仍位于忽略目录 `.lake`，
 本笔记是唯一跟踪交付。逃逸审计仍未完成，登记按 CLAUDE 3.9 暂缓：
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+
+
+### 原等距群的紧光锥截面作用与边界交比
+
+`h3NormalizedNullSection` 是原 Lorentz 坐标中的实际截面
+`{v:Fin 4→ℝ | v 0=1 ∧ h3LorentzKernel v v=0}`。
+`h3_normalized_null_section_isCompact` 从连续二次型的闭性与各坐标的
+`[-1,1]` 界证明其紧性，并给出截面类型的 `CompactSpace`。
+这里的紧性属于该截面；原有限体积流形仍允许非紧、带尖点。
+
+`h3NullRayNormalize v=(v 0)⁻¹•v` 对非零标量缩放不变。
+原实际 H³ 等距变换 e 的已有 Lorentz 线性表示保持未来零光锥，
+其正时间坐标 `t(e,b)` 因而给出实际归一化作用
+`h3NullBoundaryAction e b=normalize(Ae b)`。该作用满足单位和乘法律，
+在原等距群的已有 compact-open 拓扑与截面拓扑下联合连续，
+每个 e 均产生以 e⁻¹ 作用为逆的实际截面同胚。原线性作用可精确重构为
+`Ae b=t(e,b)•action(e,b)`，且 t 为正并满足
+`t(e*f,b)=t(e,action(f,b))*t(f,b)`。
+
+`h3_null_boundary_pairing_transform` 保留原二次型的精确变换关系：
+作用后两点的 Lorentz 配对等于原配对除以两点各自的正时间因子之积。
+`h3_null_boundary_pairing_spatial_difference` 进一步证明，原截面两点
+后三个坐标之差的平方和精确等于其 Lorentz 配对的两倍。
+因此配对非负、为零当且仅当两截面点相等、为正当且仅当两点不同。
+
+`h3NullBoundaryCrossRatio(a,b,c,d)` 定义为
+`K(a,c)*K(b,d)/(K(a,d)*K(b,c))`。在 a≠d、b≠c 两个分母点对
+不同的条件下，已有配对正性确保分母非零，原实际 H³ 等距变换的
+归一化作用精确保持这个交比。该定理没有断言尚未构造的、由原 h
+诱导的同一个 d 的边界映射存在，更没有断言该未知映射保持交比。
+
+两个完整模块串行编译通过，共十一项已检查公理闭包只含
+`propext`、`Classical.choice`、`Quot.sound`，没有风格警告抑制。
+第一个模块的整次失败尝试保留并整体排除，只有修正后的完整编译被接受。
+这些是原光锥截面与原等距作用的经典构造和几何事实；没有新增紧性或
+可定向流形前提，也没有构造对应原 h/d 的边界映射、迫使该映射保持几何，
+或给出对应子群上的实际共轭元。完整有限体积 Mostow–Prasad 仍为
+**ACTIVE/INCOMPLETE**，继续包含非紧尖点与非可定向情形。
+Lean 源仍在忽略目录 `.lake`，笔记是唯一跟踪交付；没有新颖性、跟踪 Lean、
+准入或冻结声明。逃逸审计仍未完成，登记按 CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+
+
+### 从保持交比的边界映射构造实际等距映射与同一个群同构的共轭
+
+本轮把原归一化未来零光锥截面上的配对几何接到实际等距存在性，
+没有假设已经给定的配对权重、光锥延伸或环境共轭元。
+`positive_symmetric_four_point_kernel_constructs_weights` 对任意类型上的
+对称核 R，在不同点间严格为正、满足明确非退化四点乘积恒等式且有
+三个不同锚点的条件下，以锚点三角比值的正平方根构造处处正的 w，
+并证明所有不同点对满足 `R(x,y)=w(x)*w(y)`。
+
+对于原截面的单射 φ，若 φ 在 a≠d、b≠c 两个分母点对不同的条件下
+保持已有的 `h3NullBoundaryCrossRatio`，则原配对比值
+`R(x,y)=K(x,y)/K(φ(x),φ(y))` 满足上述恒等式和正性。
+`h3_injective_crossRatio_boundary_map_constructs_positive_pairing_weights`
+从已有原 null frame 内部取得三个实际不同锚点，构造正权重，证明
+`w(x)*w(y)*K(φ(x),φ(y))=K(x,y)` 对所有点对成立，包括相等点的零配对。
+公共结论没有再要求调用者提供锚点或权重。
+
+在同一单射与交比保持条件下，
+`h3_injective_crossRatio_boundary_map_induces_actual_isometry`
+对原未来零光锥向量 v 定义径向延伸
+`F(v)=v(0)*w(normalize(v))*φ(normalize(v))`，并在光锥外取零。
+证明对任意两个原未来零光锥向量，F 保持它们的原 Lorentz 配对，
+且每个原未来零光锥向量的像的时间坐标严格为正，
+再调用此前实际光锥延伸定理构造原 H³ 的实际等距映射 c，
+使其归一化边界作用精确等于原 φ。φ 单射与交比保持是前提；
+没有预先要求 φ 为满射、同胚或提供 c。
+
+`h3_actual_isometry_eq_one_of_boundary_fixed` 以原四向量 null basis 证明
+边界作用恒等的实际等距映射就是单位元：配对保持使不同基向量上的
+正时间因子满足乘积为 1，三个因子的关系迫使首个因子平方为 1，
+正性排除负号，其余因子也等于 1。原线性表示的单射性完成结论。
+`h3_null_boundary_action_faithful` 因而证明相同边界作用确定同一个实际
+等距映射。在上述单射与交比保持条件下，φ 可由唯一实际等距映射实现。
+
+`h3_prescribed_group_isomorphism_boundary_map_constructs_conjugator`
+进一步证明：对于原表示 ρ、σ 和给定群同构 d，若上述 φ 满足
+`φ(action(ρ(g),b))=action(σ(d(g)),φ(b))`，则构造出的同一个 c 满足
+`σ(d(g))=c*ρ(g)*c⁻¹` 对所有 g 成立。边界作用的忠实性直接把边界
+等变关系提升为实际等距映射等式，没有换成另一个可实现的群同构。
+
+在已有 `h3SameDMeasuredCompatibleFlowData` 与上述单射、交比保持
+条件下，`h3_same_d_compatible_boundary_map_constructs_unique_full_conjugator`
+只要求 φ 对原兼容子群 KM 等变，使用原 KM、KN 与 d 的实际限制 r
+先构造限制共轭，再复用原延拓关系得到完整原 d 的共轭。唯一性针对
+同时实现 φ 的共轭元；没有把它冒充一般格子共轭元唯一性的新证明。
+原生数据在本定理中仍显式给定；此前原流形构造供应它，当前定理
+没有凭空构造数据。原给定 h 的同一个 d 与同一个 c 可继续进入此前
+条件下降链；当前仍缺把上述 φ 的前提真正证明出来。
+
+五个完整模块串行编译通过，共十项已检查公理闭包只含
+`propext`、`Classical.choice`、`Quot.sound`，未抑制警告。四个模块的
+初次失败均保留并整次排除，只有各自最终完整成功编译被接受。
+这是经典正核因子分解、原光锥径向延伸、忠实作用及已有原生数据的组合；
+没有新增紧性或可定向流形前提。完整有限体积 Mostow–Prasad 仍为
+**ACTIVE/INCOMPLETE**，包含非紧尖点与非可定向情形。尚未构造原给定
+h 所诱导的同一个 d（或其实际兼容限制 r）的单射等变边界映射，也尚未
+迫使那个未知映射保持交比，因此没有无条件证明对应环境共轭元存在
+或每个原 h 的唯一等距代表存在。
+Lean 源仍在忽略目录 `.lake`，笔记是唯一跟踪交付；没有新颖性、
+跟踪 Lean、准入或冻结声明。逃逸审计仍未完成，登记按 CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549

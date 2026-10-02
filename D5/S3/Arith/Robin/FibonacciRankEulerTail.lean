@@ -20,6 +20,65 @@ noncomputable def rankBucket (d : ℕ) : Finset ℕ := by
   exact (Nat.fib d).primeFactors.filter fun p =>
     ∀ k ∈ Finset.Ico 1 d, ¬ p ∣ Nat.fib k
 
+theorem fibonacci_lt_two_pow : ∀ n : ℕ, Nat.fib n < 2 ^ n := by
+  intro n
+  induction n using Nat.twoStepInduction with
+  | zero => norm_num
+  | one => norm_num
+  | more n ih ih' =>
+    rw [Nat.fib_add_two, pow_add]
+    norm_num
+    have hh : 2 ^ (n + 1) = 2 ^ n * 2 := by rw [pow_succ]
+    nlinarith
+
+theorem rank_bucket_min (d p : ℕ) (hp : p ∈ rankBucket d) (k : ℕ) (hk : 0 < k)
+    (hpk : p ∣ Nat.fib k) : d ≤ k := by
+  by_contra h
+  simp only [rankBucket, Finset.mem_filter] at hp
+  have ht := hp.2 k (Finset.mem_Ico.mpr (by omega))
+  exact ht hpk
+
+theorem rank_bucket_product_dvd (d : ℕ) :
+    (∏ p ∈ rankBucket d, p) ∣ Nat.fib d := by
+  have hs : rankBucket d ⊆ (Nat.fib d).primeFactors := by
+    intro p hp
+    simp only [rankBucket, Finset.mem_filter] at hp
+    exact hp.1
+  exact dvd_trans (Finset.prod_dvd_prod_of_subset _ _ id hs) (Nat.prod_primeFactors_dvd _)
+
+theorem rank_bucket_card_lt (d : ℕ) (hd0 : 0 < d) : (rankBucket d).card < d := by
+  classical
+  have hfib0 : 0 < Nat.fib d := Nat.fib_pos.mpr hd0
+  let s := rankBucket d
+  have hs : s ⊆ (Nat.fib d).primeFactors := by
+    intro p hp
+    simp only [s, rankBucket, Finset.mem_filter] at hp
+    exact hp.1
+  have hprime (p : ℕ) (hp : p ∈ s) : p.Prime :=
+    Nat.prime_of_mem_primeFactors (hs hp)
+  have hfib := fibonacci_lt_two_pow
+  have hlo : 2 ^ s.card ≤ ∏ p ∈ s, p :=
+    Finset.pow_card_le_prod s id 2 (fun p hp => (hprime p hp).two_le)
+  have hdiv : (∏ p ∈ s, p) ∣ Nat.fib d :=
+    rank_bucket_product_dvd d
+  have hpow : 2 ^ s.card < 2 ^ d :=
+    lt_of_le_of_lt (hlo.trans (Nat.le_of_dvd hfib0 hdiv)) (hfib d)
+  exact (Nat.pow_lt_pow_iff_right (by decide : 1 < 2)).mp hpow
+
+theorem euler_log_bounds (p : ℕ) (hp : 2 ≤ p) :
+    0 ≤ Real.log ((p : ℝ) / ((p : ℝ) - 1)) ∧
+    Real.log ((p : ℝ) / ((p : ℝ) - 1)) ≤ 1 / ((p : ℝ) - 1) := by
+  have hpR : (2 : ℝ) ≤ p := by exact_mod_cast hp
+  have hden : 0 < (p : ℝ) - 1 := by linarith
+  have hratio : 0 < (p : ℝ) / ((p : ℝ) - 1) := div_pos (by linarith) hden
+  constructor
+  · apply Real.log_nonneg
+    exact (le_div_iff₀ hden).mpr (by linarith)
+  · calc
+      Real.log ((p : ℝ) / ((p : ℝ) - 1)) ≤ (p : ℝ) / ((p : ℝ) - 1) - 1 :=
+        Real.log_le_sub_one_of_pos hratio
+      _ = 1 / ((p : ℝ) - 1) := by field_simp; ring
+
 /-- The complete bucket, without a bound on its primes, has a harmonic
 Euler logarithm bound and hence an explicit logarithmic tail bound. -/
 theorem result (d : ℕ) (hd : 5 < d) :
@@ -40,12 +99,7 @@ theorem result (d : ℕ) (hd : 5 < d) :
     Nat.prime_of_mem_primeFactors (hs hp)
   have hzero (p : ℕ) (hp : p ∈ s) : p ∣ Nat.fib d :=
     Nat.dvd_of_mem_primeFactors (hs hp)
-  have hmin (p : ℕ) (hp : p ∈ s) (k : ℕ) (hk : 0 < k)
-      (hpk : p ∣ Nat.fib k) : d ≤ k := by
-    by_contra h
-    simp only [s, rankBucket, Finset.mem_filter] at hp
-    have ht := hp.2 k (Finset.mem_Ico.mpr (by omega))
-    exact ht hpk
+  have hmin := rank_bucket_min d
   have hcong (p : ℕ) (hp : p ∈ s) : d ∣ p - 1 ∨ d ∣ p + 1 := by
     have hp5 : p ≠ 5 := by
       intro heq
@@ -58,35 +112,8 @@ theorem result (d : ℕ) (hd : 5 < d) :
     split_ifs at h with hsign
     · exact Or.inl h
     · exact Or.inr h
-  have hfib : ∀ n : ℕ, Nat.fib n < 2 ^ n := by
-    intro n
-    induction n using Nat.twoStepInduction with
-    | zero => norm_num
-    | one => norm_num
-    | more n ih ih' =>
-      rw [Nat.fib_add_two, pow_add]
-      norm_num
-      have hh : 2 ^ (n + 1) = 2 ^ n * 2 := by rw [pow_succ]
-      nlinarith
-  have hcard : s.card < d := by
-    have hlo : 2 ^ s.card ≤ ∏ p ∈ s, p :=
-      Finset.pow_card_le_prod s id 2 (fun p hp => (hprime p hp).two_le)
-    have hdiv : (∏ p ∈ s, p) ∣ Nat.fib d :=
-      dvd_trans (Finset.prod_dvd_prod_of_subset _ _ id hs) (Nat.prod_primeFactors_dvd _)
-    have hpow : 2 ^ s.card < 2 ^ d :=
-      lt_of_le_of_lt (hlo.trans (Nat.le_of_dvd hfib0 hdiv)) (hfib d)
-    exact (Nat.pow_lt_pow_iff_right (by decide : 1 < 2)).mp hpow
-  have flog (p : ℕ) (hp : 2 ≤ p) :
-      0 ≤ f p ∧ f p ≤ 1 / ((p : ℝ) - 1) := by
-    have hpR : (2 : ℝ) ≤ p := by exact_mod_cast hp
-    have hden : 0 < (p : ℝ) - 1 := by linarith
-    have hratio : 0 < (p : ℝ) / ((p : ℝ) - 1) := div_pos (by linarith) hden
-    constructor
-    · apply Real.log_nonneg
-      exact (le_div_iff₀ hden).mpr (by linarith)
-    · calc
-        f p ≤ (p : ℝ) / ((p : ℝ) - 1) - 1 := Real.log_le_sub_one_of_pos hratio
-        _ = 1 / ((p : ℝ) - 1) := by field_simp; ring
+  have hcard := rank_bucket_card_lt d hd0
+  have flog := euler_log_bounds
   let ks := Finset.Icc 1 d
   let plus := ks.image fun k => k * d + 1
   let minus := ks.image fun k => k * d - 1

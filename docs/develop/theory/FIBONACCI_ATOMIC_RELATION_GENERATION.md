@@ -47748,3 +47748,411 @@ $$
 本节没有生产满足（342.9）的实际零点相位序列，也没有证明实际振幅饱和或增加 Robin 的安全整数区间。经典积分存在、分部积分、核矩及有理式归一化只是本新组合的中介；这里承重的新增组合是固定实际证书的明确二阶系数、条件最低相位的正号及其临界抵消判别。有限频率模型的返回速度仍不能代替实际无限谱的速度。
 
 ## 追加锚（本行以下为增补区）
+
+## 343. 实际三角预算的窄相位窗口与稀疏非正截止点
+
+**定义 343.1（固定三角预算与晚期截止集）。** 固定 §§337–339 的同一实际累计证书、起点与块斜率，在本节假设 RH。沿用实际正频率集 $\Gamma$、正权重 $a_\gamma=m_\gamma/[\gamma(1/4+\gamma^2)]$、中心 $c_0$ 与谱函数 $S,F$，其中 $\sum_\gamma a_\gamma<\infty$。定义
+
+$$
+B_\triangle=2\sum_{\gamma\in\Gamma}a_\gamma,\qquad
+D_\triangle=B_\triangle-c_0,\qquad
+\Delta_\triangle(T)=B_\triangle+S(T)
+=2\sum_{\gamma\in\Gamma}a_\gamma[1-\sin(\gamma T)].
+\tag{343.1}
+$$
+
+以下要求 $D_\triangle\ge0$，并使用这一预先固定的预算。它与 §339 的实际临界预算 $D_{\rm crit}=A_*-c_0$ 区别；本节不假设 $A_*=B_\triangle$。记
+
+$$
+M_\triangle(T)=D_\triangle+\mathcal C^{\rm fin}(e^T).
+\tag{343.2}
+$$
+
+这里的“非正截止点”指 $M_\triangle(T)\le0$，包括零余量。它表示该固定累计预算的证书未给出严格正余量，不把这些截止点定义为 Robin 不等式的反例。
+
+由定理339.1，存在固定 $C\ge0$ 和起点 $T_b\ge1$，使全部 $T\ge T_b$ 满足
+
+$$
+M_\triangle(T)=\Delta_\triangle(T)+\frac{F(T)}T+R_1(T),
+\qquad |R_1(T)|\le\frac C{T^2}.
+\tag{343.3}
+$$
+
+取任意实际频率 $\gamma_0\in\Gamma$，记 $a_0=a_{\gamma_0}>0$，并置
+
+$$
+L=\frac{2\pi}{\gamma_0},\quad
+T_0=\max(T_b,L,1),\quad
+E=\{T\ge T_0:M_\triangle(T)\le0\},\quad
+\mathcal B=\{r\in\mathbb N:r\ge2,\ \log r\in E\}.
+\tag{343.4}
+$$
+
+由于 $T_0\ge1$，$\mathcal B$ 中的整数均大于 $1$。累计证书连续，故 $E$ 为可测集。若纳入证书定义域中 $T_0$ 以前的非正截止，以下渐近结论只增加一个有界连续区间或有限整数集。
+
+**定理 343.1（实际证书的单频率窄窗覆盖）。** 在定义343.1的条件下，可取固定常数 $K>0$，使每个 $T\in E$ 均满足 $T\Delta_\triangle(T)\le K$。对 $k\ge1$ 定义
+
+$$
+c_k=L\left(k+\frac14\right),\qquad
+J_k=\left[L\left(k-\frac14\right),L\left(k+\frac34\right)\right],
+$$
+
+$$
+w_k=\sqrt{\frac{KL}{8a_0k}},\qquad
+H=\sqrt{\frac{KL}{2a_0}},\qquad
+I_k=J_k\cap[c_k-w_k,c_k+w_k].
+\tag{343.5}
+$$
+
+则
+
+$$
+E\cap J_k\subseteq I_k,\qquad E\subseteq\bigcup_{k\ge1}I_k.
+\tag{343.6}
+$$
+
+每个非空 $I_k=[\alpha_k,\beta_k]$ 满足
+
+$$
+\alpha_k\ge\frac{Lk}{2},\qquad
+\beta_k\le L\left(k+\frac34\right),\qquad
+0\le\beta_k-\alpha_k\le\frac H{\sqrt k}.
+\tag{343.7}
+$$
+
+证明。$F$ 有界；取 $B_F\ge\sup|F|$，再取 $K>B_F+C$。由（343.3），对非正截止有
+
+$$
+T\Delta_\triangle(T)
+\le-F(T)-TR_1(T)\le B_F+\frac CT\le B_F+C<K.
+\tag{343.8}
+$$
+
+由于（343.1）各项非负，任何一个实际正权重都给
+
+$$
+\Delta_\triangle(T)\ge2a_0[1-\sin(\gamma_0T)].
+\tag{343.9}
+$$
+
+当 $T\in J_k$ 时，令 $d=T-c_k$，则 $|\gamma_0d|\le\pi$，且 $\sin(\gamma_0T)=\cos(\gamma_0d)$。经典 Jordan 正弦界等价地给 $1-\cos x\ge2x^2/\pi^2$（$|x|\le\pi$），故
+
+$$
+\Delta_\triangle(T)\ge\frac{16a_0}{L^2}(T-c_k)^2.
+\tag{343.10}
+$$
+
+同时 $T\ge L(k-1/4)\ge Lk/2$。因此非正截止满足
+
+$$
+\frac{8a_0k}{L}(T-c_k)^2\le T\Delta_\triangle(T)\le K,
+$$
+
+即 $|T-c_k|\le w_k$。这些闭区间 $J_k$ 覆盖 $[L,\infty)$：对任意 $T\ge L$，自然数 $k=\lfloor T/L+1/4\rfloor\ge1$，且 $T\in J_k$。裁剪到 $J_k$ 保证（343.7）的下端界；不裁剪的窄窗在小 $k$ 时可能伸出该单元，不能直接使用这一界。宽度至多 $2w_k=H/\sqrt k$。$\square$
+
+**定理 343.2（连续与整数截止的稀疏性）。** 保持定理343.1的同一实际证书与预算。令 $|\cdot|$ 表示实轴上的 Lebesgue 测度，则
+
+$$
+|E\cap[T_0,R]|=O(\sqrt R),\qquad
+\int_E\frac{dT}{T}<\infty.
+\tag{343.11}
+$$
+
+对实际整数截止点 $\mathcal B$，有
+
+$$
+\sum_{\substack{r\le X\\r\in\mathcal B}}\frac1r
+=O(\sqrt{\log X}),\qquad
+\sum_{r\in\mathcal B}\frac1{r\log r}<\infty,
+\tag{343.12}
+$$
+
+以及普通计数界
+
+$$
+\#\{r\le X:r\in\mathcal B\}
+=O\!\left(\frac X{\sqrt{\log X}}\right).
+\tag{343.13}
+$$
+
+所有隐含常数可以依赖预先固定的证书、$\gamma_0,a_0,K,T_0$，不依赖 $R,X$。因此这个非正证书截止集的连续时间密度、整数自然密度与整数调和密度均为零。
+
+证明。若 $J_k$ 与 $[T_0,R]$ 相交，则 $k\le R/L+1/4$。有限并测度的次可加性及经典求和界 $\sum_{k=1}^N k^{-1/2}\le2\sqrt N$ 给出第一式。由（343.7），
+
+$$
+\int_{E\cap I_k}\frac{dT}{T}
+\le\frac{2H}{Lk^{3/2}}.
+\tag{343.14}
+$$
+
+经典 $p$ 级数的可和性与可数并的积分上界给（343.11）第二式。交叠边界只使这个上界重复计入，不能使它失效。
+
+整数运输需要保留取整项。对任意 $[\alpha,\beta]$、$\alpha>0$，令 $m=\lceil e^\alpha\rceil$、$n=\lfloor e^\beta\rfloor$；若 $m>n$，对应和为空。否则经典递减函数的和积分比较给
+
+$$
+\begin{aligned}
+\sum_{m\le r\le n}\frac1r
+&\le\frac1m+\int_m^n\frac{dx}{x}
+=\frac1m+\log\frac nm\\
+&\le e^{-\alpha}+\beta-\alpha.
+\end{aligned}
+\tag{343.15}
+$$
+
+应用到非空裁剪窗 $I_k$，得到
+
+$$
+\sum_{\log r\in I_k}\frac1r
+\le\frac H{\sqrt k}+e^{-Lk/2},\qquad
+\sum_{\log r\in I_k}\frac1{r\log r}
+\le\frac{2H}{Lk^{3/2}}+\frac{2e^{-Lk/2}}{Lk}.
+\tag{343.16}
+$$
+
+第一式累计至 $N=\lfloor\log X/L+1/4\rfloor$ 即得（343.12）的首式。第二式在全部 $k\ge1$ 可和：首项为 $p=3/2$ 的经典 $p$ 级数，次项由正比率小于 $1$ 的几何级数控制。这也处理了整数取整而产生的离散误差。
+
+对普通计数，$\log r\in[\alpha_k,\beta_k]$ 的整数个数至多 $e^{\beta_k}-e^{\alpha_k}+1$。由指数函数的均值估计和（343.7），
+
+$$
+\#\{r:\log r\in I_k\}
+\le e^{L(k+3/4)}\frac H{\sqrt k}+1.
+\tag{343.17}
+$$
+
+对固定 $L>0$，经典几何加权求和满足
+
+$$
+\sum_{k=1}^N\frac{e^{Lk}}{\sqrt k}
+=O_L\!\left(\frac{e^{LN}}{\sqrt N}\right).
+\tag{343.18}
+$$
+
+具体地，$k>N/2$ 的部分由 $k^{-1/2}\le\sqrt2/\sqrt N$ 及几何和控制；$k\le N/2$ 的部分至多 $2\sqrt N e^{LN/2}$，而 $Ne^{-LN/2}$ 有界，故也被右侧吸收。将（343.17）累计至上述 $N$，利用 $e^{LN}\le e^{L/4}X$、$N\asymp\log X$，并将取整的 $O(N)$ 吸收入 $O(X/\sqrt{\log X})$，得到（343.13）。有限初段不改变这些结论。$\square$
+
+**注记 343.1（三角预算与实际临界预算的分岔）。** 保持定义343.1，并沿用 §338 的实际振幅 $A_*$。若 $A_*<B_\triangle$，则 $M_\triangle(T)$ 对全部充分晚的 $T$ 严格正；若 $A_*=B_\triangle$，则定理343.1–343.2仍成立，但其结论不蕴含最终严格正号。
+
+证明。第一种情形由 $S(T)\ge-A_*$ 及（343.3）直接得
+
+$$
+M_\triangle(T)\ge B_\triangle-A_*-\frac{|F(T)|}{T}-\frac C{T^2},
+$$
+
+其中正的固定间隙保留最终正号。这是 §338 的超临界判据在本预算上的直接应用，不把超临界判据本身作为新结果。第二种情形允许亏损趋零；定理343.1把任何可能的失败限制到窄窗，却没有排除这些窄窗内还存在无穷多个非正点。
+
+这一逻辑边界在 §341 的两频率消费者中确有实现：对任意无理 $\beta>1$，取模型频率 $(14,14\beta)$ 及该节允许的余项 $r(T)\equiv0$。其连续余量在自身三角预算处具有任意晚的负值，同时有限正权重谱满足本节同样的窄窗推导与稀疏界。因此“任意晚失败”和“失败截止集密度零”可以同时成立。选取零余项保证非正集可测；单凭任意实函数的 $r(T)=O(T^{-2})$ 不提供可测性。该模型未被识别为实际 $\zeta$ 谱，不构成对实际证书最终符号的判定。$\square$
+
+本节的相位关系只用一个实际频率的正权重，未使用零点频率的线性独立、振幅饱和或返回速度，也不需要 §342 的二阶正修正。各项非负亏损将同一个累计预算的失败转成二次相位距离，随后由连续单元覆盖运输至整数截止。这与五分递归控制中心和插值亏损相接：递归可改善固定预算的证书，而三角边界附近的符号还受同源相位约束。本节没有把密度零提升为全部截止点严格正，也没有增加已认证的 Robin 安全整数区间。
+
+## 追加锚（本行以下为增补区）
+
+## 344. 移动极小相位的二阶储备与实际频率关系的投影约束
+
+**定义 344.1（同一实际谱的相位包络）。** 固定 §§337–342 的同一实际累计证书，在本节假设 RH，并沿用其实际正频率集 $\Gamma$、重数 $m_\gamma$、正权重 $a_\gamma=m_\gamma/(\gamma D_\gamma)$、$D_\gamma=1/4+\gamma^2$、中心 $c_0$ 与轨道闭包 $H\subseteq\mathbb T^\Gamma$。使用 §339 的实际输入 $\gamma\ge14$。定义
+
+$$
+\begin{aligned}
+b_\gamma&=D_\gamma^{-1}-2,& c_\gamma&=2\gamma/D_\gamma,\\
+g_\gamma&=8\gamma^2/D_\gamma^2,&
+h_\gamma&=-2/\gamma+8\gamma/D_\gamma-4\gamma/D_\gamma^2.
+\end{aligned}
+\tag{344.1}
+$$
+
+将同源谱延拓到整个自由圆环，置
+
+$$
+\begin{aligned}
+s(z)&=-2\sum_\gamma a_\gamma\operatorname{Im}z_\gamma,\\
+f(z)&=\sum_\gamma a_\gamma[b_\gamma\operatorname{Im}z_\gamma+c_\gamma\operatorname{Re}z_\gamma],\\
+g(z)&=\sum_\gamma a_\gamma[g_\gamma\operatorname{Im}z_\gamma+h_\gamma\operatorname{Re}z_\gamma].
+\end{aligned}
+\tag{344.2}
+$$
+
+四族系数绝对值均不超过 $2$，$\sum a_\gamma<\infty$，故这些函数连续。§339 的逐频率公式及 §342 的 $G=-U-4QS+2Q_1S$ 给 $s(\phi(T))=S(T)$、$f(\phi(T))=F(T)$、$g(\phi(T))=G(T)$。记
+
+$$
+B=2\sum_\gamma a_\gamma,\qquad
+f_*:=\sum_\gamma a_\gamma b_\gamma<0,\qquad
+A:=\sum_\gamma a_\gamma\frac{\gamma^2}{D_\gamma^2}>0,
+$$
+
+$$
+J_\varepsilon(z)=B+s(z)+\varepsilon f(z)+\varepsilon^2g(z),\qquad
+\iota=(i)_\gamma,\qquad \varepsilon\longrightarrow0^+.
+\tag{344.3}
+$$
+
+这些常数可和，严格符号使用实际频率非空及全部权重正。特别 $J_\varepsilon(\iota)=f_*\varepsilon+8A\varepsilon^2$。这里 $\varepsilon$ 是独立参数，相位最小化并未要求其极小点恰为时间 $T=1/\varepsilon$ 的实际轨道相位。
+
+**定理 344.1（自由相位移动后的七份二阶储备）。** 对定义344.1，整个自由圆环上的精确下包络为
+
+$$
+\begin{aligned}
+\min_{z\in\mathbb T^\Gamma}J_\varepsilon(z)
+&=B-\sum_\gamma a_\gamma\sqrt{p_\gamma(\varepsilon)^2+q_\gamma(\varepsilon)^2},\\
+p_\gamma(\varepsilon)&=-2+b_\gamma\varepsilon+g_\gamma\varepsilon^2,\\
+q_\gamma(\varepsilon)&=c_\gamma\varepsilon+h_\gamma\varepsilon^2.
+\end{aligned}
+\tag{344.4}
+$$
+
+当 $0\le\varepsilon\le1/8$ 时，
+
+$$
+\left|\min_{z\in\mathbb T^\Gamma}J_\varepsilon(z)
+-f_*\varepsilon-7A\varepsilon^2\right|
+\le21\left(\sum_\gamma a_\gamma\right)\varepsilon^3.
+\tag{344.5}
+$$
+
+因此，在 §343 的同一非负三角预算 $D_\triangle=B-c_0$ 下，存在固定 $C_1\ge0$，使全部充分晚的实际截止满足
+
+$$
+D_\triangle+\mathcal C^{\rm fin}(e^T)
+\ge\frac{f_*}{T}+\frac{7A}{T^2}-\frac{C_1}{T^3}.
+\tag{344.6}
+$$
+
+这个实际下界不要求 $H=\mathbb T^\Gamma$ 或 $\iota\in H$。
+
+证明。实线性函数 $p\sin\theta+q\cos\theta$ 在单位圆上的最小值为 $-\sqrt{p^2+q^2}$。分别选取各坐标的极小相位，一致可和级数给（344.4）；这是经典圆周线性最小化的同源谱应用。
+
+统一余项不能只依靠每个固定频率的 Taylor 展开。对任意 $|b|,|c|,|g|,|h|\le2$，置 $y=2-b\varepsilon+(c^2/4-g)\varepsilon^2$。当 $0\le\varepsilon\le1/8$ 时 $y\ge1$，且
+
+$$
+\begin{aligned}
+&(-2+b\varepsilon+g\varepsilon^2)^2+(c\varepsilon+h\varepsilon^2)^2-y^2\\
+&\qquad=\varepsilon^3\left[\frac{bc^2}{2}+2ch
++\varepsilon\left(h^2+\frac{c^2g}{2}-\frac{c^4}{16}\right)\right].
+\end{aligned}
+\tag{344.7}
+$$
+
+两个方括号系数的绝对值分别至多 $12$、$9$。因 $\sqrt X+y\ge1$，有 $|\sqrt X-y|\le|X-y^2|$，故逐频误差至多 $21\varepsilon^3$。实际系数满足
+
+$$
+g_\gamma-\frac{c_\gamma^2}{4}
+=\frac{7\gamma^2}{D_\gamma^2}.
+\tag{344.8}
+$$
+
+乘以正权重并求和即得（344.5）。将定理342.1的同一实际展开写为 $D_\triangle+\mathcal C^{\rm fin}(e^T)=J_{1/T}(\phi(T))+O(T^{-3})$，再用自由相位下包络，得到（344.6）。静止四分之一相位的 $8A$ 因允许相位移动扣去 $A$；二阶系数仍正。$\square$
+
+**定义 344.2（实际频率关系的有限能量方向）。** 令 $\mathcal E=\ell^2(\Gamma,a;\mathbb R)$ 为实 Hilbert 空间，
+
+$$
+\|v\|_a^2=\sum_\gamma a_\gamma v_\gamma^2,\qquad
+\langle v,w\rangle_a=\sum_\gamma a_\gamma v_\gamma w_\gamma.
+$$
+
+定义 $r_\gamma=\gamma/D_\gamma$，则 $r\in\mathcal E$ 且 $\|r\|_a^2=A$。令
+
+$$
+V=\left\{v\in\mathcal E:
+\sum_\gamma n_\gamma v_\gamma=0\ \text{对每个有限支撑整数族 }n
+\text{ 满足 }\sum_\gamma n_\gamma\gamma=0\right\}.
+\tag{344.9}
+$$
+
+每条有限支撑关系给一个连续实线性泛函，因此 $V$ 为闭子空间，具有经典正交投影 $P_V$。本定义没有断言 $H$ 是局部流形，也没有把实际轨道速度 $(\gamma)_\gamma$ 假定为有限能量向量。
+
+**定理 344.2（实际关系群约束下的投影储备）。** 额外假设实际振幅饱和，即 $\iota\in H$。则
+
+$$
+\min_{z\in H}J_\varepsilon(z)
+=f_*\varepsilon+
+\left(8A-\|P_Vr\|_a^2\right)\varepsilon^2+o(\varepsilon^2),
+\tag{344.10}
+$$
+
+并且
+
+$$
+7A\le8A-\|P_Vr\|_a^2\le8A.
+\tag{344.11}
+$$
+
+特别，没有非零有限整数频率关系时，$V=\mathcal E$，二阶系数为 $7A$；一般关系限制相位的有限能量移动，保留的储备为 $8A-\|P_Vr\|_a^2$。
+
+证明。先建立下界。$H$ 紧且 $J_\varepsilon$ 连续，故存在极小点 $z_\varepsilon$。取主值角 $\theta_{\varepsilon,\gamma}\in[-\pi,\pi]$，使 $z_{\varepsilon,\gamma}=i e^{i\theta_{\varepsilon,\gamma}}$。记
+
+$$
+\delta_\varepsilon=B+s(z_\varepsilon)
+=2\sum_\gamma a_\gamma(1-\cos\theta_{\varepsilon,\gamma}).
+$$
+
+由 $|b_\gamma|\le2$、$c_\gamma=2r_\gamma$、$\sin^2\theta\le2(1-\cos\theta)$ 及经典加权 Cauchy–Schwarz，
+
+$$
+|f(z_\varepsilon)-f_*|
+\le\delta_\varepsilon+2\sqrt{A\delta_\varepsilon}.
+\tag{344.12}
+$$
+
+取 $C_G\ge\sup|g|$。与 $\iota$ 比较给
+
+$$
+(1-\varepsilon)\delta_\varepsilon
+\le2\varepsilon\sqrt{A\delta_\varepsilon}+2C_G\varepsilon^2.
+$$
+
+当 $\varepsilon\le1/2$ 时，Young 不等式 $2\varepsilon\sqrt{A\delta}\le\delta/4+4A\varepsilon^2$ 给
+
+$$
+\delta_\varepsilon\le(16A+8C_G)\varepsilon^2,
+\qquad
+\|\theta_\varepsilon/\varepsilon\|_a=O(1).
+\tag{344.13}
+$$
+
+第二式使用经典 Jordan 界 $2(1-\cos\theta)\ge4\theta^2/\pi^2$。每个固定坐标的主值角因此趋零，故 $z_\varepsilon\to\iota$ 于乘积拓扑，$g(z_\varepsilon)\to8A$。
+
+为控制下极限，先选取归一化极小值实现其下极限的趋零正参数子列；定理344.1与相位 $\iota$ 的比较保证这些值有界。从该子列的有界缩放角中再抽取弱收敛子列，记其弱极限为 $v\in\mathcal E$；这是实 Hilbert 空间的经典弱紧性。对每条固定有限整数关系 $n$，§338 的字符判据及 $z_\varepsilon,\iota\in H$ 给
+
+$$
+\sum_\gamma n_\gamma\theta_{\varepsilon,\gamma}\in2\pi\mathbb Z.
+$$
+
+左边趋零，所以充分晚时恰为零。连续有限坐标泛函的弱收敛给 $v\in V$。对每个固定有限频率集，$2(1-\cos\theta)/\theta^2\to1$；非负项及有限部分和下界遂给
+
+$$
+\liminf\frac{\delta_\varepsilon}{\varepsilon^2}\ge\|v\|_a^2.
+\tag{344.14}
+$$
+
+这里不对整个无限缩放角族使用统一 Taylor 余项。
+
+再写 $f(z_\varepsilon)-f_*=
+\sum a_\gamma b_\gamma(\cos\theta_\gamma-1)
+-2\sum a_\gamma r_\gamma\sin\theta_\gamma$。第一项为 $O(\varepsilon^2)$。第二项用有限坐标的 $\sin\theta-\theta=o(\theta)$、$r\in\mathcal E$ 的可小加权尾及（344.13）的范数界，得到
+
+$$
+\frac{f(z_\varepsilon)-f_*}{\varepsilon}
+\longrightarrow-2\langle r,v\rangle_a.
+$$
+
+结合（344.14），缩放极小值的下极限至少为
+
+$$
+8A+\|v\|_a^2-2\langle r,v\rangle_a
+=8A-\|P_Vr\|_a^2+\|v-P_Vr\|_a^2.
+\tag{344.15}
+$$
+
+子列已实现归一化极小值的下极限，故给出所需的全下极限界。
+
+反向建立上界。对任意 $v\in V$，所有有限关系字符在 $e^{itv}$ 上都为 $1$，故 §338 的完整字符判据给 $e^{itv}\in H$。因此 $z_\varepsilon=\iota e^{i\varepsilon v}\in H$ 是真实允许的群内相位路径。经典支配收敛、$2(1-\cos x)\le x^2$ 与加权 Cauchy–Schwarz 给
+
+$$
+\frac{B+s(z_\varepsilon)}{\varepsilon^2}\to\|v\|_a^2,
+\quad
+\frac{f(z_\varepsilon)-f_*}{\varepsilon}\to-2\langle r,v\rangle_a,
+\quad g(z_\varepsilon)\to8A.
+$$
+
+取 $v=P_Vr$，与（344.15）匹配，即得（344.10）。投影范数不增加，$0\le\|P_Vr\|_a^2\le\|r\|_a^2=A$，所以（344.11）成立。这些 Hilbert 投影与弱紧性是经典前置，本节新增的是它们对同一实际二阶谱及完整有限关系群的组合。$\square$
+
+**注记 344.1（相位约束与实际时间的区别）。** 定理344.2把频率关系对移动相位的影响写成具体投影能量，无需局部流形假设。虽然二阶储备至少为 $7A>0$，但 $f_*<0$，相位下包络仍在充分小的正 $\varepsilon$ 处为负。群内路径 $\iota e^{i\varepsilon P_Vr}$ 未被识别为时间 $T=1/\varepsilon$ 的实际轨道相位；尾轨道稠密性也没有提供随 $T$ 移动的极小点所需的逼近速度。因此本节没有从包络负号推出实际证书余量任意晚为负，也没有从二阶正储备推出全部实际截止点最终为正。五分递归控制中心和插值亏损的关系仍如 §339；本节的新增约束作用于同一谱的一阶移动方向，不把递归分类数识别为零点频率关系数。
+
+## 追加锚（本行以下为增补区）
