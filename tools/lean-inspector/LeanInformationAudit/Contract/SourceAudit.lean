@@ -1,4 +1,15 @@
 import Lean
+import LeanInformationAudit.Contract.RegPolicy
+
+/-!
+Reg command permissions are the exact ordinary kind table, the 84 complete
+catalog syntax fingerprints, three complete local notation fingerprints, and
+bare instance/reducible attributes. Unknown commands and wrapped inner commands
+fail closed. The catalog call resolves uniquely to the fully qualified declare
+constant. P3 deletes catalog and legacy registration/enrollment/seal permissions.
+
+No source command or evaluator is invoked.
+-/
 
 namespace LeanInformationAudit.Contract.SourceAudit
 open Lean
@@ -205,6 +216,7 @@ structure Entry where
   start : String.Pos.Raw
   stop : String.Pos.Raw
   originCommand : Syntax
+  catalogTarget : Option Name := none
 
 /-- Examples emit no named constant; every other author declaration belongs
 to the source inventory, independently of its result-type spelling. -/
@@ -264,75 +276,86 @@ def expansionKeys (entries : Array Entry) (coreDelegates : NameSet := {}) : Name
           for id in ids do unless kinds.contains id do keys := keys.insert id
   return keys
 
-private partial def containsIdentifier (stx : Syntax) (names : Array Name) : Bool :=
-  (stx.isIdent && names.contains stx.getId) || stx.getArgs.any (containsIdentifier · names)
+/-- The complete P0 attribute-name set. Attribute arguments have no permission. -/
+private def allowedRegAttributes : Array Name := #[`instance, `reducible]
 
-private def commandTextKind (command : Syntax) : String := command.getKind.toString.toLower
+private def attributeIssue (attr : Syntax) : Option Name := do
+  let name := if attr.isOfKind ``Parser.Attr.instance then `instance
+    else if attr.isOfKind ``Parser.Attr.simple && attr[0].isIdent then attr[0].getId
+    else attr.getKind
+  if !allowedRegAttributes.contains name then return name
+  if !attr[1].getArgs.isEmpty then return attr.getKind
+  none
 
-private def commandHasAttribute (command : Syntax) : Bool :=
-  (command.find? (·.isOfKind ``Parser.Term.attributes)).isSome
+private partial def attributesIssue (command : Syntax) : Option Name := do
+  if command.isOfKind ``Parser.Term.attributes then
+    command[1].getSepArgs.findSome? fun attr => attributeIssue attr[1]
+  else if command.isOfKind ``Parser.Command.attribute then
+    command[2].getSepArgs.findSome? fun attr => attributeIssue attr[1]
+  else command.getArgs.findSome? attributesIssue
 
-private def onlyReducibleAttribute (command : Syntax) : Bool :=
-  match command.find? (·.isOfKind ``Parser.Term.attributes) with
-  | some attrs => attrs[1].getSepArgs.all fun attr =>
-      let names := identifiers attr
-      !names.isEmpty && names.all (· == `reducible)
-  | none => false
+private def allowedRegRunCommand (owner : Name) (command : Syntax)
+    (target : Option Name) : Bool :=
+  command.getKind == `Lean.runCmd &&
+    target == some `LeanInformationAudit.RootCatalogs.declare &&
+    (RegPolicy.catalogCall command).isSome &&
+    RegPolicy.catalogCommands.contains (owner, RegPolicy.fingerprint command)
 
-private def existingLocalNotationOwner (owner : String) : Bool :=
-  #["Reg.D5.S3.Quantum.Measurement.ExactConditionalPreparationCost",
-    "Reg.D5.S1.Recurrence.Invariants.CloitreActualLeftPlateau",
-    "Reg.D5.S1.Recurrence.Invariants.CloitreActualSpineCarry"].contains owner
+/-- Complete ordinary command-kind table. Wrappers recurse into their commands;
+no term subtree is mistaken for an authorized command. P3 removes the legacy
+registration, enrollment and seal command kinds along with catalogCommands. -/
+private def ordinaryRegCommands : Array Name := #[
+  ``Parser.Command.declaration, ``Parser.Command.end, ``Parser.Command.moduleDoc,
+  ``Parser.Command.namespace, ``Parser.Command.open, ``Parser.Command.printAxioms,
+  ``Parser.Command.section, ``Parser.Command.universe, ``Parser.Command.variable,
+  `LeanInformationAudit.command__,
+  `LeanInformationAudit.registerInformationFiniteSourceTheoremCmd,
+  `LeanInformationAudit.registerInformationSourceTheoremCmd,
+  `LeanInformationAudit.registerInformationTheoremOccurrenceReadoutCmd,
+  `LeanInformationAudit.registerInformationTheoremReadoutCmd,
+  `LeanInformationAudit.sealInformationTheoryCmd,
+  `LeanInformationAudit.«command__Constructors_[_,,]»]
 
-private partial def containsQualifiedIdentifier (command : Syntax) (suffix : String) : Bool :=
-  (command.isIdent && command.getId.toString.endsWith suffix) ||
-    command.getArgs.any (containsQualifiedIdentifier · suffix)
-
-private partial def containsAtom (command : Syntax) (value : String) : Bool :=
-  (command.isAtom && command.getAtomVal == value) ||
-    command.getArgs.any (containsAtom · value)
-
-private def allowedRegRunCommand (command : Syntax) : Bool :=
-  containsQualifiedIdentifier command "RootCatalogs.declare"
-
-private def forbiddenRegAttribute (command : Syntax) : Option Name :=
-  let names := #[`macro, `term_elab, `command_elab, `builtin, `builtin_macro,
-    `builtin_term_elab, `builtin_command_elab]
-  names.find? fun name => containsIdentifier command #[name]
-
-/-- Reg source commands use an explicit, finite policy. Existing catalog and
-snapshot declarations are retained by exact operation class; all other
-repository-owned metaprogramming is rejected before any elaboration is used. -/
-def auditRegCommands (owner : Name) (entries : Array Entry) : Except String Unit := do
-  let ownerText := owner.toString
-  for entry in entries do
-    let command := entry.originCommand
-    let kind := commandTextKind command
-    if let some attrName := forbiddenRegAttribute command then
-      throw s!"contract.reg:metaprogramming_not_allowed:{owner}:{attrName}"
-    if commandHasAttribute command && !onlyReducibleAttribute command then
-      throw s!"contract.reg:metaprogramming_not_allowed:{owner}:attribute"
-    if kind.contains "runcmd" || kind.contains "run_cmd" ||
-        kind.contains "runmeta" || kind.contains "run_meta" ||
-        kind.contains "runelab" || kind.contains "run_elab" then
-      unless allowedRegRunCommand command do
-        throw s!"contract.reg:metaprogramming_not_allowed:{owner}:{command.getKind}"
-    else if kind.contains "eval" || kind.contains "initialize" then
+private partial def auditRegCommand (owner : Name) (command : Syntax)
+    (target : Option Name) (allowPinned : Bool := true) : Except String Unit := do
+  if let some attr := attributesIssue command then
+    throw s!"contract.reg:metaprogramming_not_allowed:{owner}:attribute:{attr}"
+  if command.getKind == `Lean.runCmd then
+    unless allowPinned && allowedRegRunCommand owner command target do
       throw s!"contract.reg:metaprogramming_not_allowed:{owner}:{command.getKind}"
-    else if kind.contains "macro" || kind.contains "syntax" ||
-        kind.contains "elab" || kind.contains "notation" ||
-        kind.contains "infix" || kind.contains "prefix" || kind.contains "postfix" then
-      unless kind.contains "notation" && containsAtom command "local" &&
-          existingLocalNotationOwner ownerText do
-        throw s!"contract.reg:metaprogramming_not_allowed:{owner}:{command.getKind}"
-    else if kind.contains "attribute" then
-      -- Ordinary instance attributes (including `local`/`scoped` blocks) are
-      -- existing Reg infrastructure.  Meta attributes were rejected above.
-      pure ()
-    else if kind.contains "declaration" && commandHasAttribute command then
-      unless onlyReducibleAttribute command do
-        throw s!"contract.reg:metaprogramming_not_allowed:{owner}:{command.getKind}"
-  pure ()
+  else if command.isOfKind ``Parser.Command.notation then
+    unless allowPinned && RegPolicy.localNotations.contains (owner, RegPolicy.fingerprint command) do
+      throw s!"contract.reg:metaprogramming_not_allowed:{owner}:notation_binding"
+  else if command.isOfKind ``Parser.Command.in then
+    auditRegCommand owner command[0] target false
+    auditRegCommand owner command[2] target false
+  else if command.isOfKind ``Parser.Command.mutual then
+    for child in command[1].getArgs do auditRegCommand owner child target false
+  else if command.isOfKind ``Parser.Command.set_option ||
+      command.isOfKind ``Parser.Command.attribute then
+    pure ()
+  else unless ordinaryRegCommands.contains command.getKind do
+    throw s!"contract.reg:metaprogramming_not_allowed:{owner}:{command.getKind}"
+
+/-- Every command must have a finite permission. run_meta/run_elab have none.
+Exact notation/catalog inputs can each occur only once in an audited module. -/
+def auditRegCommands (owner : Name) (entries : Array Entry) : Except String Unit := do
+  let mut catalogs : Nat := 0
+  let mut notations : Nat := 0
+  let mut seen : Array String.Pos.Raw := #[]
+  for entry in entries do
+    let pos := entry.originCommand.getPos?.getD entry.start
+    if seen.contains pos then continue
+    seen := seen.push pos
+    auditRegCommand owner entry.originCommand entry.catalogTarget
+    if entry.originCommand.getKind == `Lean.runCmd then
+      catalogs := catalogs + 1
+      if catalogs > 1 then
+        throw s!"contract.reg:metaprogramming_not_allowed:{owner}:duplicate_catalog"
+    if entry.originCommand.isOfKind ``Parser.Command.notation then
+      notations := notations + 1
+      if notations > 1 then
+        throw s!"contract.reg:metaprogramming_not_allowed:{owner}:duplicate_notation"
 
 /-- Parse every command, so a compiled head filter cannot erase a source entry. -/
 def parse (env : Environment) (source : String) (file : String) : IO (Array Entry) := do
@@ -355,13 +378,18 @@ def parse (env : Environment) (source : String) (file : String) : IO (Array Entr
     if next.pos == state.pos then throw <| IO.userError "contract.discovery:source_progress"
     let some start := command.getPos? | throw <| IO.userError "contract.discovery:source_range"
     let some stop := command.getTailPos? | throw <| IO.userError "contract.discovery:source_range"
+    let catalogTarget := do
+      let call ← RegPolicy.catalogCall command
+      let [(name, [])] := ResolveName.resolveGlobalName parserEnv {} ns opens call[0].getId
+        | none
+      some name
     let authorDeclarations := declarations command
     if authorDeclarations.isEmpty then
-      entries := entries.push ⟨command, none, start, stop, command⟩
+      entries := entries.push ⟨command, none, start, stop, command, catalogTarget⟩
     else
       for declaration in authorDeclarations do
         entries := entries.push ⟨declaration, declarationName ns declaration,
-          declaration.getPos?.getD start, declaration.getTailPos?.getD stop, command⟩
+          declaration.getPos?.getD start, declaration.getTailPos?.getD stop, command, catalogTarget⟩
     if command.isOfKind ``Parser.Command.namespace then
       scopes := (ns, parserEnv, opens) :: scopes
       ns := ns ++ command[1].getId
