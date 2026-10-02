@@ -20276,3 +20276,36 @@ In particular, if R={q} and q>=11, initial-segment support makes5 an original co
     R={q}, q>=11 ==> H_5>=2 and25 is ORIGINAL.        (GCB6)
 
 Together with NTH1, a singleton R consequently has either q in {5,7}, or11<=q<=211 with an actual original25. This does not fix25's phase, exclude either small shared prime, or settle the remaining singleton cases.
+
+### The remaining shared7 branch has at least four opposite primes
+
+Keep the same original EB1 family, and suppose R={7},5 is concentrated and H_5=1. Let S be the concentrated color opposite5. The height-at-least-two and ordinary clauses of HPM7 give
+
+    H_p=1 for every p in S,
+    S subset {11,13,17,19,23}.
+
+Apply the one-root GCB3 budget, which permits arbitrary heights in the eliminated opposite color. If11 is absent from S, monotonicity gives
+
+    J_infinity(S,7)<=J_infinity({13,17,19,23},7)
+      =36541/39270<1,
+
+contrary to GCB3. If13 is absent, the corresponding upper bound is
+
+    J_infinity({11,17,19,23},7)=31351/32130<1.
+
+Thus11 and13 both belong to S. Furthermore every S with at most three primes is bounded by its three largest possible weights:
+
+    J_infinity(S,7)<=J_infinity({11,13,17},7)
+      =2759/2970<1.
+
+Consequently the same actual concentrated color satisfies
+
+    {11,13} subset S subset {11,13,17,19,23}, |S|>=4. (GCB7)
+
+These are monotone palette bounds, not an enumeration of covers or phases.
+
+Since11 is opposite5 and H_11=1, HPM7 controls the other concentrated color as well. Any prime r in5's color with H_r>=2 would satisfy r<11; the only nonternary possibilities are5, whose height is one, and7, which is shared and therefore not in that color. Hence every concentrated nonternary prime in the same original family has height one. Its5-color is supported below121 by the ordinary HPM7 bound. Therefore
+
+    H_p=1 for every p outside {3,7}, P^+(Q)<=113.     (GCB8)
+
+The prime support remains the actual initial odd-prime segment. These are necessary conditions for the remaining R={7},H_5=1 branch. They do not exclude that branch or bound its ternary or shared7 heights by this argument.
