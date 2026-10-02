@@ -24046,7 +24046,7 @@ count; the released label gives only the equal-cost source-phase exchange.
 A complete \(E_B\)-side class with an unused label \(d<R\) would replace the
 occupied \(R\)-class and lower the modulus sum.  Thus the only nontrivial
 case is \(E_B\subseteq C\) with \(E_A\setminus C\ne\varnothing\), for which
-the remaining global bridge is the single inequality
+the formal comparison is the single inequality
 
 \[
  p^e\left(s_p(g_A)-s_p(g_C)\right)\le d-R,
@@ -24056,14 +24056,16 @@ the remaining global bridge is the single inequality
 \tag{MR6}
 \]
 
-for every such legal low class \(C=[w]_d\) in the same frozen source.  If
-\(E_A\subseteq C\), the preceding class-count argument leaves only the
-released \(R\)-label, so no new comparison is needed.  Existing
-EB1 minimality supplies only the non-strict comparison; (MR6) is the missing
-strict-repair bridge.  When the phases are not prefix-separated, (MR5) is
+for every such legal low class \(C=[w]_d\) in the same frozen source.  Section
+205 shows that, under the admissible frozen-\(\mathcal U\) contract, this
+subcase forces \(d=R\) and \(C=B\), so (MR6) is the equality \(0=0\) and
+cannot supply a strict descent.  If \(E_A\subseteq C\), the preceding
+class-count argument leaves only the released \(R\)-label, so no new
+comparison is needed.  When the phases are not prefix-separated, (MR5) is
 unavailable, and the full two-sided responsibility must be retained.  Thus
 (MR1)--(MR6) reduce the mixed branch to an exact finite-period envelope
-comparison, but do not settle unrestricted Erdős #7.
+comparison, with the nontrivial remaining cases outside the branch settled
+in Section 205; they do not settle unrestricted Erdős #7.
 
 ## 204. An equal-count pure high-layer repair has a rigid normal form
 
@@ -24186,3 +24188,83 @@ The joint phase condition (NF4) cannot be replaced by two independently
 chosen pointwise phases. This is a conditional repair interface only: the
 current results do not prove that every hypothetical EB1 whole cover supplies
 such an interface or satisfies (NF6), so unrestricted Erdős #7 remains open.
+
+## 205. Frozen-label admissibility collapses the \(E_B\)-contained low-class branch
+
+The modulus-sum bridge (MR6) has no nontrivial instance in one of its
+apparently remaining \(p=3\) branches.  The same argument works for every
+odd \(p\ge3\).  Keep the source notation of Sections 192 and 203 and write
+the EB1 extremal cover as
+
+\[
+  \mathcal F=\mathcal U\cup\{A,T_1,\ldots,T_p\},
+\]
+
+where \(A=[a_R]_R\) is the occupied class and the \(T_i\) are the original
+top classes.  The source replacement gives
+
+\[
+  \mathbb Z=\bigcup\mathcal U\cup A\cup B,
+  \qquad
+  E=E_A\mathbin{\dot\cup}E_B,
+  \quad E_A\subseteq A,\quad E_B\subseteq B,
+\]
+
+with \(A\) and \(B\) disjoint and \(E_B\ne\varnothing\).
+
+Let \(\mathcal H=\{C,H_1,\ldots,H_p\}\) be an admissible repair of \(E\)
+with \(\mathcal U\) frozen, where \(C=[c]_d\) is the low class and its
+numerical modulus is distinct from every modulus in \(\mathcal U\).  Assume
+
+\[
+  E_B\subseteq C.
+\]
+
+Then
+
+\[
+\boxed{d=R,\qquad C=B.}
+\tag{FR1}
+\]
+
+Indeed, if \(d\ne R\), the family
+
+\[
+  \mathcal U\cup\{A,C\}
+\]
+
+is a distinct odd whole cover: every point outside \(\bigcup\mathcal U\)
+lies in \(E_A\subseteq A\) or in \(E_B\subseteq C\).  The modulus \(R\) is
+not present in \(\mathcal U\), and admissibility excludes \(d\) from its
+modulus inventory.  This family has \(|\mathcal U|+2\) classes, whereas
+\(\mathcal F\) has \(|\mathcal U|+p+1\), contradicting EB1 cardinality
+minimality.  Hence \(d=R\).  Since \(E_B\) is nonempty and both \(B\) and
+\(C\) are residue classes of modulus \(R\), their intersection forces
+\(C=B\).
+
+In the prefix-separated source branch, \(A\cap B=\varnothing\).  Therefore
+
+\[
+  E_A\setminus C=E_A,
+  \qquad
+  g_C=g_A,
+\]
+
+and the proposed MR6 comparison is exactly
+
+\[
+\boxed{
+  p^e\bigl(s_p(g_A)-s_p(g_C)\bigr)=0=d-R.
+}
+\tag{FR2}
+\]
+
+Thus this admissible \(E_B\subseteq C\) branch cannot supply a strict EB1
+descent.  The conclusion depends on frozen-label admissibility and full
+liability.  If a candidate class collides with a retained numerical modulus,
+or if additional occupied labels are released, the simultaneous deleted
+responsibility changes and the two-class restoration argument no longer
+applies.  The remaining unrestricted gap is therefore in the branch
+\(E_B\not\subseteq C\), in the non-prefix-separated two-sided responsibility,
+or in an exchange that releases further occupied labels and pays its enlarged
+joint liability.
