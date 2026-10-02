@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ef00ea58e621f289da4647169552a91ffdf1f1e5577a7a4a4dfb3bf97e7e77ef
+  normalized_sha256: sha256:ef00ea58e621f289da4647169552a91ffdf1f1e5577a7a4a4dfb3bf97e7e77ef
+cas_ref: sha256:ef00ea58e621f289da4647169552a91ffdf1f1e5577a7a4a4dfb3bf97e7e77ef
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/URSComponentParity.fibre_graph_connected
+    target_statement_id: sha256:1570029351ea5f1c6c24a83bafcaa3b9fbb359af11a0e8a31d83bee757d832d3
+receipts:
+  unresolved_subitems: []

@@ -5155,3 +5155,264 @@ ASSUMED-UNVERIFIED；相关实现与逆向动作的可执行性为 open。
 检验这些反例须使用原始有序树的相等，而不能只比较组成数或行为读数。
 
 ## 37.99 追加锚
+
+## 38. `ApplyRho` 的联合取得交换 cube
+
+第36节的跨分辨率自然性给出一般的边界更新交换式；第37节给出纯语义
+\(\rho\)-轨道的中心化与入口恢复。本节把二者接到观察者实际取得的合同：参考、
+权限、游标、档案和 writer 记录必须来自同一实际联合来源，并一起沿分辨率和纪元运输。
+因此本节是对 (PG.3611) 的 `ApplyRho` 结构化特化，不把一个抽象自然方程改称物理
+取得定律。Claim status: open；以下是 repo-derived 的普通数学推导，没有新增 Lean
+声明、消化结算或物理可执行性结论。
+
+### 38.1 实际联合像与部分取得核
+
+固定分辨率 \(n\) 和绝对纪元 \(\nu\)。设实际共同来源的联合像为
+\(J_{n,\nu}\)，其元素写成
+
+$$
+ b=(\xi,\nu,x,r,\pi,A,W),
+ \tag{PG.3801}
+$$
+
+其中 \(\xi\) 是来源身份，\(x\) 是当前游标，\(r\) 是参考与校准状态，\(\pi\)
+是权限／句柄状态，\(A\) 是已取得的分辨率档案，\(W\) 是有序事件和 writer 记录。
+若 \(W\) 能由 \(A\) 在声明任务中确定重算，应把它视为派生字段而不重复计数；否则二者
+均属于联合边界。对 \(m\preceq n\) 给出只在实际像上的限制
+
+$$
+ r_{mn,\nu}:J_{n,\nu}\longrightarrow J_{m,\nu}.
+ \tag{PG.3802}
+$$
+
+事件字母表为 \(L_{\rho,n}\)，并有事件限制
+\(\lambda_{mn}:L_{\rho,n}\to L_{\rho,m}\)。一次 `ApplyRho` 取得不是一个
+无条件总函数，而是部分核
+
+$$
+ Q_{n,\nu}:J_{n,\nu}\longrightarrow
+\operatorname{Option}(L_{\rho,n}\times J_{n,\nu+1}).
+ \tag{PG.3803}
+$$
+
+`None` 表示当前未执行或不合法；`Some(\ell,b')` 才表示已经取得事件 \(\ell\)
+以及同一来源上的新联合状态。若取得需要更细的输入，则另记前视核为
+\[
+ Q^+_{n,\nu}:J_{j_\rho(n),\nu}\longrightarrow
+ \operatorname{Option}(L_{\rho,n}\times J_{n,\nu+1}),
+\]
+并要求 \(m\preceq n\Rightarrow j_\rho(m)\preceq j_\rho(n)\)。本节显示的
+(PG.3804)、(PG.3807)–(PG.3810) 先采用闭合情形 \(j_\rho(n)=n\)；真正前视时，
+所有 \(Q_{n,\nu}\) 按下面的 typed 公式统一替换为 \(Q^+_{n,\nu}\)，输入限制统一替换为
+\(r_{j_\rho(m),j_\rho(n),\nu}\)，不能把前视依赖偷偷当作同层闭合。
+
+### 38.2 交换方程及其字段判据
+
+对事件限制和联合限制定义
+\(\Lambda_{mn}=\lambda_{mn}\times r_{mn,\nu+1}\)。希望取得先在细层执行再粗化，
+与先粗化再执行相同：
+
+$$
+\boxed{
+ \operatorname{Option.map}(\Lambda_{mn})\circ Q_{n,\nu}
+ =
+ Q_{m,\nu}\circ r_{mn,\nu}.
+}
+\tag{PG.3804}
+$$
+
+该等式只在共同实际像上比较；它同时比较 `None` 与 `Some`，所以包含合法性和失败
+分支，而不是只比较成功读数。
+
+前视版本的交换式明确为
+\[
+\operatorname{Option.map}(\Lambda_{mn})\circ Q^+_{n,\nu}
+=Q^+_{m,\nu}\circ r_{j_\rho(m),j_\rho(n),\nu},
+\qquad
+\Lambda_{mn}=\lambda_{mn}\times r_{mn,\nu+1}.
+\tag{PG.3804+}
+\]
+
+为使 (PG.3804) 成为可检验的字段合同，设 `Some` 输出的字段由实际输入 \(b\) 和
+事件 \(\ell\) 写成
+
+$$
+\begin{aligned}
+ \xi'&=\xi,&\nu'&=\nu+1,&x'&=X_n(b),\\
+ r'&=R_n(b),&\pi'&=P_n(b),\\
+ A'&=A\mathbin{\Vert}\operatorname{Rec}^A_n(b,\ell),&
+ W'&=W\mathbin{\Vert}\operatorname{Rec}^W_n(b,\ell).
+\end{aligned}
+\tag{PG.3805}
+$$
+
+在输出元组没有隐藏字段、且所有记录追加都由同一 \((b,\ell)\) 产生的条件下，
+(PG.3804) 等价于以下逐项合同：
+
+这里的每个 \(r_{mn,\nu}\) 都按联合状态
+\((\xi,\nu,x,r,\pi,A,W)\) 的相应字段分解，并假定来源与绝对纪元字段满足
+\(r^\xi_{mn,\nu}(\xi)=\xi\)、\(r^\nu_{mn,\nu}(\nu)=\nu\)；\(\ell_n\) 只在两侧输出都为
+`Some` 时量化，并令 \(\ell_m=\lambda_{mn}(\ell_n)\)。若一侧为 `None`，只比较 `None` 分支及其质量和推前。隐藏字段若会影响后继或记录，必须加入联合状态；否则下面的
+逐字段条件只能给出必要条件。
+
+$$
+\begin{aligned}
+ \operatorname{enabled}_n(b)&=\operatorname{enabled}_m(r_{mn,\nu}b),\\
+ \lambda_{mn}(\ell_n)&=\ell_m,\\
+ r^x_{mn,\nu+1}X_n(b)&=X_m(r_{mn,\nu}b),\\
+ r^r_{mn,\nu+1}R_n(b)&=R_m(r_{mn,\nu}b),\\
+ r^\pi_{mn,\nu+1}P_n(b)&=P_m(r_{mn,\nu}b),\\
+ r^A_{mn,\nu+1}\!\left(A\Vert\operatorname{Rec}^A_n(b,\ell_n)\right)
+ &=r^A_{mn,\nu}(A)\Vert
+   \operatorname{Rec}^A_m(r_{mn,\nu}b,\lambda_{mn}\ell_n),\\
+ r^W_{mn,\nu+1}\!\left(W\Vert\operatorname{Rec}^W_n(b,\ell_n)\right)
+ &=r^W_{mn,\nu}(W)\Vert
+   \operatorname{Rec}^W_m(r_{mn,\nu}b,\lambda_{mn}\ell_n).
+\end{aligned}
+\tag{PG.3806}
+$$
+
+若任意一项只在细输入上变化，或权限域在两个层次不同，(PG.3804) 即失败。正向
+由 `Option` 外延和元组外延逐项得到；反向由所有投影重建 `Some` 输出，`None` 分支
+由第一项的合法性等式重建。若输出存在隐藏字段，逐项条件只是必要条件，必须把隐藏
+字段加入 (PG.3801) 或改写成联合核相等。
+
+### 38.3 与完整历史的取得 cube
+
+令 \(H_\nu\) 是同一实际历史源的当前域。当前历史的边界表示为
+\(a_{n,\nu}:H_\nu\to J_{n,\nu}\)。完整的 `ApplyRho` 过程若可能失败，写成
+
+$$
+\widehat T_{\rho,n}:H_\nu\longrightarrow
+\operatorname{Option}(L_{\rho,n}\times H_{\nu+1}).
+$$
+
+把实际取得后的联合输出记为
+
+$$
+A_{n,\nu}
+:=
+\operatorname{Option.map}
+   (\operatorname{id}\times a_{n,\nu+1})\circ\widehat T_{\rho,n}.
+$$
+
+取得合同要求
+
+$$
+ r_{mn,\nu}\circ a_{n,\nu}=a_{m,\nu},
+ \qquad
+ A_{n,\nu}=Q_{n,\nu}\circ a_{n,\nu}.
+\tag{PG.3807}
+$$
+
+第二式现在两边都取值于同一个 `Option` 输出空间；它只对声明的实际历史和事件标签
+成立。若采用前视版本，则将 \(a_{n,\nu}\) 换成
+\(a_{j_\rho(n),\nu}\)，并把第一式中的粗化换成
+\(r_{j_\rho(m),j_\rho(n),\nu}\)。于是 (PG.3804) 给出真正的跨层、跨 epoch 取得 cube：
+
+$$
+\boxed{
+ \operatorname{Option.map}(\lambda_{mn}\times r_{mn,\nu+1})\circ A_{n,\nu}
+ =A_{m,\nu}
+ =Q_{m,\nu}\circ r_{mn,\nu}\circ a_{n,\nu}.
+}
+\tag{PG.3808}
+$$
+
+这条式子同时保留来源、参考、权限、档案和 writer 的共同见证。只证明语义游标
+\(x' = X_n(b)\) 的更新，不能推出 \(a_{n,\nu}\) 或 \(\widehat T_{\rho,n}\)
+存在；只证明每个字段各自下降，也不能把分别可达的边缘拼成一个实际联合状态。
+前视版本的相应 cube 为
+\[
+\operatorname{Option.map}(\Lambda_{mn})\circ A^+_{n,\nu}
+=A^+_{m,\nu}
+=Q^+_{m,\nu}\circ r_{j_\rho(m),j_\rho(n),\nu}\circ a_{j_\rho(n),\nu},
+\]
+其中 \(A^+_{n,\nu}=Q^+_{n,\nu}\circ a_{j_\rho(n),\nu}\)。
+
+### 38.4 有限 `ApplyRho` 词与概率版本
+
+把单步核按 epoch 递归：零词为恒等；若 \(v\) 后再接一步，先按 \(Q^{v}_{n,\nu}\)
+得到 `Some`，再用 \(Q_{n,\nu+|v|}\) 更新，`None` 继续传播。若事件限制的复合
+写为 \(\lambda_{mn}^{v}\)，归纳 (PG.3804) 得
+
+$$
+\operatorname{Option.map}(\lambda_{mn}^{v}\times r_{mn,\nu+|v|})\circ Q^{v}_{n,\nu}
+ =Q^{v}_{m,\nu}\circ r_{mn,\nu}.
+\tag{PG.3809}
+$$
+
+因此事件次序、档案追加次序和 writer 次序一起运输；不能只运输最终游标再事后补写
+事件词。
+
+前视词不能由单步核作未加条件的朴素幂。对统一前视深度可先递归规定
+\(j_\rho^{[0]}(n)=n\)、
+\(j_\rho^{[k+1]}(n)=j_\rho(j_\rho^{[k]}(n))\)；动作依赖的情形则须另给一个
+单调的词级深度并支配每个中间输入。对每个词 \(v\)，把该深度、事件词字母表
+\(L^{v}_{\rho,n}\) 及其 typed composite 声明为合同的一部分：
+\[
+(Q^+)^{v}_{n,\nu}:J_{j_\rho^{[|v|]}(n),\nu}
+\longrightarrow
+\operatorname{Option}(L^{v}_{\rho,n}\times J_{n,\nu+|v|}).
+\]
+它的中间提升、参考运输和失败传播必须另有合同；没有这些数据时，不声称
+\((Q^+)^v\) 存在。已有 typed composite 满足的前视交换式为
+\[
+\operatorname{Option.map}(\lambda^{v}_{mn}\times r_{mn,\nu+|v|})\circ (Q^+)^{v}_{n,\nu}
+=(Q^+)^{v}_{m,\nu}\circ r_{j_\rho^{[|v|]}(m),j_\rho^{[|v|]}(n),\nu}.
+\tag{PG.3809+}
+\]
+
+概率取得核应写成取值于同一 `Option` 输出空间的全概率核
+\[
+K^\rho_{n,\nu}(b;\cdot)
+\quad\text{on}\quad
+\operatorname{Option}(L_{\rho,n}\times J_{n,\nu+1}),
+\]
+其中 `None` 是失败或未执行标签；若只列成功次概率核，必须另列 `None` 的失败质量。
+对应条件是同一实际联合像上的推前相等：
+
+$$
+\boxed{
+ \operatorname{Option.map}(\Lambda_{mn})_\#K^\rho_{n,\nu}(b;\cdot)
+ =K^\rho_{m,\nu}(r_{mn,\nu}b;\cdot),
+ \qquad
+ \Lambda_{mn}=\lambda_{mn}\times r_{mn,\nu+1}.
+}
+\tag{PG.3810}
+$$
+
+求和必须同时遍历参考、权限、档案、writer 和游标的联合后继；四个边缘分别相同，
+不保证 (PG.3810)。若零概率事件仍进入声明核的字母表，它们也须满足同一推前等式，
+否则后续选择器可能在粗层看到细层没有的分支。
+
+前视概率核把输入写成 \(b\in J_{j_\rho(n),\nu}\)，并将 (PG.3810) 换成
+\[
+\operatorname{Option.map}(\Lambda_{mn})_\#K^{\rho,+}_{n,\nu}(b;\cdot)
+=K^{\rho,+}_{m,\nu}(r_{j_\rho(m),j_\rho(n),\nu}b;\cdot).
+\tag{PG.3810+}
+\]
+
+### 38.5 最小失败对与适用边界
+
+有三类有限失败见证。以下每一对细状态都具有同一个完整粗联合像
+\(r_{mn,\nu}(b_0)=r_{mn,\nu}(b_1)=\bar b\)，所以不是只比较一个显示字段：
+
+1. 在两侧均为 `Some` 的定义域内取 \(b_0,b_1\)，使
+   \(r_{mn,\nu+1}(R_n(b_0))\ne r_{mn,\nu+1}(R_n(b_1))\)；二者粗参考刷新不同，
+   因而任何单值的粗参考更新都无法同时满足 (PG.3806) 的参考行。
+2. 可取 \(Q_{n,\nu}(b_0)=\operatorname{Some}(\ell_0,b'_0)\)、
+   \(Q_{n,\nu}(b_1)=\operatorname{None}\)；虽然输入的完整粗像相同，
+   \(Q_{m,\nu}(\bar b)\) 只能取一个值，故 `Option.map` 后的合法性行失败。
+3. 可取细输入 \(b_0\ne b_1\)，但
+   \(r_{mn,\nu}(b_0)=r_{mn,\nu}(b_1)\)，且语义游标和其他字段的粗后继相同，
+   但 \(r^W_{mn,\nu+1}(W'_0)\ne r^W_{mn,\nu+1}(W'_1)\)，其中
+   \(W'_0,W'_1\) 的事件词只是顺序不同。这可由 `DownL;ApplyRho` 与 `ApplyRho;DownL`
+   产生；若任务读取有序档案，(PG.3806) 的 writer 行失败。
+
+这些反例并不否定 PG.3611；它们说明一般交换式的字段实现条件不能从“同一名称的
+操作”或“当前显示相同”推出。实际刷新合同、权限域、来源完备性、取得成本及概率
+正性仍是 open。若任务只比较语义端点而明确商掉档案次序，可删除相应 writer 行，
+但那已经是较弱的行为合同。
+
+## 38.99 追加锚

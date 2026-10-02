@@ -1,0 +1,5 @@
+source_id = "urs-component-parity"
+path = "docs/develop/theory/URS_COMPONENT_PARITY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
