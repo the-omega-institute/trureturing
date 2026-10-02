@@ -252,6 +252,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/ButterflyLambdaTwoRelativeDesignRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kerenidis-2026-butterfly-lambda-two-relative-design-refutation` (refuted) by `D5/S3/Quantum/QuantumChannels/ButterflyLambdaTwoRelativeDesignRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kerenidis-2026-butterfly-lambda-two-relative-design-refutation","declaration_gid":"D5/S3/Quantum/QuantumChannels/ButterflyLambdaTwoRelativeDesignRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Iordanis Kerenidis (2026). *Scalable Quantum Machine Learning: Trainability, Expressivity and Efficiency*. DOI: [10.48550/arXiv.2607.24014](https://doi.org/10.48550/arXiv.2607.24014). URL: <https://arxiv.org/abs/2607.24014v2>.

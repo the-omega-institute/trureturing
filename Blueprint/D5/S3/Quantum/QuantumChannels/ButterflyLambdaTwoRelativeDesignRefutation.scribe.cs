@@ -73,15 +73,16 @@ internal sealed class ButterflyLambdaTwoRelativeDesignRefutationDocument : IScri
                 sourceQuote: ConjectureQuotation()),
             Node("result", "Refutation in arbitrary dimension", new Formula.Not(F.Id("claim")),
                 "For every K≥2 and every parameter assignment the minor W₀₀W₂₁−W₀₁W₂₀ vanishes. The first layer has stride-one support; the later product preserves bit zero, so the selected columns are proportional on rows zero and two. For Haar unitaries, the continuous fourth power of the minor is nonnegative and equals one at the permutation exchanging modes one and two; Haar positivity on nonempty open sets makes its integral positive. Apply the lower CP bound to the rank-one projector at x=(e₀ wedge e₁) tensor (e₀ wedge e₁) and read the diagonal at u=(e₀ wedge e₂) tensor (e₀ wedge e₂). Its butterfly value is zero, while its Haar value is positive, forcing ε≥1. Powers 2^K exceed any fixed c and threshold, contradicting ε≤c/(2^K). The additive one-copy design statement and the independent-halves ensemble are outside this conclusion.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                resolution: new OpenProblemResolutionClaim(ProblemSlugRef.Create("kerenidis-2026-butterfly-lambda-two-relative-design-refutation"), ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose,
         DescribeRole role = DescribeRole.Definition, AssessedProvenance? provenance = null,
-        DocumentBlock? sourceQuote = null) => Describe.Lean(
+        DocumentBlock? sourceQuote = null, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("butterfly-" + declaration.ToLowerInvariant()), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance ?? AssessedProvenance.FromLiterature(Source),
-            sourceQuote is null ? Blocks(Paragraph(Text(prose))) : Blocks(sourceQuote, Paragraph(Text(prose))), role);
+            sourceQuote is null ? Blocks(Paragraph(Text(prose))) : Blocks(sourceQuote, Paragraph(Text(prose))), role, resolution);
 
     private static Formula Parenthesized(Formula x) => Seq(Open, x, Close);
     private static Formula Call(string name, params Formula[] xs) => new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. xs]);
