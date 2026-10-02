@@ -3499,3 +3499,121 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 Lean 源仍在忽略目录 `.lake`，笔记是唯一跟踪交付；没有新颖性、跟踪 Lean、
 准入或冻结声明。逃逸审计仍未完成，登记按 CLAUDE 3.9 暂缓：
 https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+
+
+### 从保持交比的边界映射构造实际等距映射与同一个群同构的共轭
+
+本轮把原归一化未来零光锥截面上的配对几何接到实际等距存在性，
+没有假设已经给定的配对权重、光锥延伸或环境共轭元。
+`positive_symmetric_four_point_kernel_constructs_weights` 对任意类型上的
+对称核 R，在不同点间严格为正、满足明确非退化四点乘积恒等式且有
+三个不同锚点的条件下，以锚点三角比值的正平方根构造处处正的 w，
+并证明所有不同点对满足 `R(x,y)=w(x)*w(y)`。
+
+对于原截面的单射 φ，若 φ 在 a≠d、b≠c 两个分母点对不同的条件下
+保持已有的 `h3NullBoundaryCrossRatio`，则原配对比值
+`R(x,y)=K(x,y)/K(φ(x),φ(y))` 满足上述恒等式和正性。
+`h3_injective_crossRatio_boundary_map_constructs_positive_pairing_weights`
+从已有原 null frame 内部取得三个实际不同锚点，构造正权重，证明
+`w(x)*w(y)*K(φ(x),φ(y))=K(x,y)` 对所有点对成立，包括相等点的零配对。
+公共结论没有再要求调用者提供锚点或权重。
+
+在同一单射与交比保持条件下，
+`h3_injective_crossRatio_boundary_map_induces_actual_isometry`
+对原未来零光锥向量 v 定义径向延伸
+`F(v)=v(0)*w(normalize(v))*φ(normalize(v))`，并在光锥外取零。
+证明对任意两个原未来零光锥向量，F 保持它们的原 Lorentz 配对，
+且每个原未来零光锥向量的像的时间坐标严格为正，
+再调用此前实际光锥延伸定理构造原 H³ 的实际等距映射 c，
+使其归一化边界作用精确等于原 φ。φ 单射与交比保持是前提；
+没有预先要求 φ 为满射、同胚或提供 c。
+
+`h3_actual_isometry_eq_one_of_boundary_fixed` 以原四向量 null basis 证明
+边界作用恒等的实际等距映射就是单位元：配对保持使不同基向量上的
+正时间因子满足乘积为 1，三个因子的关系迫使首个因子平方为 1，
+正性排除负号，其余因子也等于 1。原线性表示的单射性完成结论。
+`h3_null_boundary_action_faithful` 因而证明相同边界作用确定同一个实际
+等距映射。在上述单射与交比保持条件下，φ 可由唯一实际等距映射实现。
+
+`h3_prescribed_group_isomorphism_boundary_map_constructs_conjugator`
+进一步证明：对于原表示 ρ、σ 和给定群同构 d，若上述 φ 满足
+`φ(action(ρ(g),b))=action(σ(d(g)),φ(b))`，则构造出的同一个 c 满足
+`σ(d(g))=c*ρ(g)*c⁻¹` 对所有 g 成立。边界作用的忠实性直接把边界
+等变关系提升为实际等距映射等式，没有换成另一个可实现的群同构。
+
+在已有 `h3SameDMeasuredCompatibleFlowData` 与上述单射、交比保持
+条件下，`h3_same_d_compatible_boundary_map_constructs_unique_full_conjugator`
+只要求 φ 对原兼容子群 KM 等变，使用原 KM、KN 与 d 的实际限制 r
+先构造限制共轭，再复用原延拓关系得到完整原 d 的共轭。唯一性针对
+同时实现 φ 的共轭元；没有把它冒充一般格子共轭元唯一性的新证明。
+原生数据在本定理中仍显式给定；此前原流形构造供应它，当前定理
+没有凭空构造数据。原给定 h 的同一个 d 与同一个 c 可继续进入此前
+条件下降链；当前仍缺把上述 φ 的前提真正证明出来。
+
+五个完整模块串行编译通过，共十项已检查公理闭包只含
+`propext`、`Classical.choice`、`Quot.sound`，未抑制警告。四个模块的
+初次失败均保留并整次排除，只有各自最终完整成功编译被接受。
+这是经典正核因子分解、原光锥径向延伸、忠实作用及已有原生数据的组合；
+没有新增紧性或可定向流形前提。完整有限体积 Mostow–Prasad 仍为
+**ACTIVE/INCOMPLETE**，包含非紧尖点与非可定向情形。尚未构造原给定
+h 所诱导的同一个 d（或其实际兼容限制 r）的单射等变边界映射，也尚未
+迫使那个未知映射保持交比，因此没有无条件证明对应环境共轭元存在
+或每个原 h 的唯一等距代表存在。
+Lean 源仍在忽略目录 `.lake`，笔记是唯一跟踪交付；没有新颖性、
+跟踪 Lean、准入或冻结声明。逃逸审计仍未完成，登记按 CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
+
+
+### 实际测地线、归一化理想端点与有界距离端点唯一性
+
+本轮在原 H³ 的原距离上构造几何边界工具。
+对原归一化零光锥截面中的 b，定义
+`h3BoundaryGeodesicVector(b,t)=(cosh(t),sinh(t)*b₁,sinh(t)*b₂,sinh(t)*b₃)`。
+原空间方向平方和为 1，故该向量的 Lorentz 自配对为 1，时间坐标
+严格为正。已有原未来单位向量逆构造给出实际点
+`h3BoundaryGeodesicLine b t`，并证明其原 Lorentz 坐标正是上述向量。
+同一条线上的配对为 `cosh(s-t)`；原配对与原距离的恒等式及 cosh
+在非负半轴的单射性给出 `Isometry (h3BoundaryGeodesicLine b)`，因此
+实际距离精确等于 `|s-t|`。时间零的点是原上半空间坐标 `(0,1)`。
+没有要求调用者提供另一条测地线或替代距离。
+
+`real_sinh_div_cosh_tendsto_atTop_one` 以 `exp(-t)` 趋于零和恒等式
+`sinh(t)/cosh(t)=(1-exp(-t)^2)/(1+exp(-t)^2)` 证明该比值趋于 1。
+`h3_boundary_geodesic_normalized_endpoint` 随后证明实际点的原 Lorentz
+坐标经 `h3NullRayNormalize` 归一化后，在 t 趋于正无穷时趋于原 b。
+这里收敛发生在原四维实向量空间；有限时间的归一化内部点并未被
+宣称属于零光锥截面，也没有把归一化坐标收敛冒充一般紧化等价性。
+
+对任意原实际等距映射 e，
+`h3_actual_isometry_normalized_lorentz_equivariance` 证明实际点 e(p)
+的归一化坐标，等于把 p 的归一化坐标送入原 Lorentz 线性表示后
+再次归一化。`h3_actual_isometry_preserves_normalized_boundary_convergence`
+对任意滤子及任意实际点族 P 证明：若 P 的归一化坐标趋于原 b，
+则 e(P) 的归一化坐标趋于原 `h3NullBoundaryAction e b`。
+证明使用原有限维线性表示的连续性和像的严格正时间坐标。
+这个结论描述实际等距映射；没有证明原同伦提升的边界延拓。
+
+`h3_boundary_convergence_forces_inverse_time_to_zero` 由原归一化坐标
+的自配对等于时间坐标倒数的平方、原零光锥极限的零自配对以及
+正时间分支，推出时间坐标的倒数趋于零。
+`h3_bounded_distance_normalized_boundary_endpoints_equal` 则证明：
+对同一个非底滤子 l，若实际点族 P、Q 的归一化坐标分别趋于原
+边界点 b、c，且存在非负实数 C 使每个参数处的原距离都不超过 C，
+则 b=c。原归一化配对非负，并被两条路径时间倒数的乘积乘
+`cosh(C)` 控制，因而趋于零；原配对联合连续性和零配对分离性质
+给出端点相等。`NeBot l` 与两条路径各自的收敛都是明确前提；
+结论没有供应另一条路径的收敛、射线追踪或原提升的几何控制。
+
+四个完整模块串行编译通过，共十二项公理闭包只含
+`propext`、`Classical.choice`、`Quot.sound`，零警告。三个模块初次
+完整失败均保留并整次排除，只有最终完整成功编译被接受。
+这些结论复用原 Lorentz 模型、实际等距作用与经典双曲函数分析，
+没有新增紧性或可定向前提。完整有限体积 Mostow–Prasad 仍为
+**ACTIVE/INCOMPLETE**，范围包含非紧尖点与非可定向情形。
+尚未从原给定同伦等价构造其同一个诱导群同构 d 的单射等变边界
+映射，也尚未迫使那个映射保持原交比。上述端点唯一性是构造该
+映射所需的几何工具，不是该映射存在或完整刚性的证明。
+Lean 源仍在忽略目录 `.lake`，研究笔记是唯一跟踪交付；没有
+新颖性、跟踪 Lean、准入或冻结声明。逃逸审计仍未完成，登记按
+CLAUDE 3.9 暂缓：
+https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-5904703549
