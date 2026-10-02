@@ -14662,3 +14662,180 @@ these controls neither construct nor exclude that completion.
 The missing implication must use those whole-source constraints or
 a different legal replacement, beyond the tested prefix geometry.
 No enumeration, Lean verification or unrestricted conclusion is claimed.
+
+## 116. A single next-row supplier cannot carry the complete top obligation
+
+Return to sections108--112's actual EB1 source: three top originals T,
+opposite prime5, H>=20, M=pr or p^2, top phase alpha modM, common
+prefix u mod3^(H-1), and w=u mod3^(H-2). Let V_i be the projection
+of the COMPLETE top-deletion region E_T to the top-color carrier X_i.
+It is nonempty and contained in alpha modM. It is not section112's
+larger simultaneous-deletion projection U.
+
+For any original mixed class S of height H-1 with lower prefix w,
+write its cofactor phase as c modn, n>1. For EVERY nonunit divisor
+e of n,
+
+    V_i is not contained in c mod e.               (JS1)
+
+### The entire supplier liability pays for a four-class repair
+
+Suppose V_i were contained in c mod e for such an e. Delete the four
+ORIGINAL classes T union {S}. Their exact uncovered set lies in
+E_T union S: a missed point outside S already misses every original
+outside T. Both the entire S and E_T then lie in
+
+    K={x:x=w mod3^(H-2), x=c mod e}.
+
+Reuse LB2's four-root construction with cofactor e: for a=0,1,2,3
+add the CRT AP with prefix w mod3^a, phase c mod e, and5-root a+1.
+Its numerical label is5*3^a*e. Along with retained A_5 these four
+APs cover all of K, so they discharge the supplier's complete old
+liability as well as the top obligation.
+
+All primes of e have the old top color, since S has the same first
+ternary root. CP1 makes all four labels fresh, distinct odd nonunits.
+The class count is unchanged. Their total modulus sum is200e, while
+the deleted S alone costs3^(H-1)n>=3^(H-1)e>200e. Hence the modulus sum strictly
+decreases, contradicting EB1 and proving JS1.
+
+This uses the existing joint-liability and four-root repair, with
+the supplier itself as payer. Unlike AC2, n need not share any prime
+with M; the premise being excluded is containment of the actual V_i.
+Unlike JH1, it places no trivial-hull requirement on the smaller V_i.
+
+### The actual next-row supply needs at least two distinct cofactors
+
+NS3 already supplies one fixed altered sibling whose M-coprime
+original cofactor APs cover the entire V_i. By JS1 no single member
+can cover it. Thus this family contains at least two distinct actual
+cofactors n_1,n_2>1 with gcd(n_j,M)=1. A smallest subfamily covering
+V_i has at least two members; no assertion makes every member of the
+larger original supplier family indispensable.
+
+The global height-H-1 row therefore has at least
+
+    six labels when M=pr, and five when M=p^2.     (JS2)
+
+Indeed its already forced cofactors are1,p,r,pr in the first case
+and1,p,p^2 in the second, together with the two new M-coprime
+cofactors. These are numerical row counts, not a claim that every
+listed class has the same lower ternary prefix.
+
+In the remaining local(1,2,2) layout write the nonpure branches as
+{R,D} and {A,B}, with R=C_M. Let A_i,B_i be the complete cofactor
+APs of A,B and a,b their numerical cofactors. LB6 gives
+V_i subset A_i union B_i. Applying JS1 separately to A and B yields
+
+    V_i intersect(A_i minus B_i)!=empty,
+    V_i intersect(B_i minus A_i)!=empty.           (JS3)
+
+Use PH3--PH4's complete congruence hull on the actual nonempty V_i,
+
+    Gamma_i(V_i)=gcd(Q_i,{z-z_0:z in V_i}), z_0 in V_i.
+
+Every next-row supplier meeting V_i has cofactor coprime to this
+ENTIRE hull. Indeed if a prime ell divided both its cofactor and
+Gamma_i(V_i), the hull would fix one ell-phase throughout V_i.
+An actual intersection point identifies that phase with the
+supplier's phase, contradicting JS1 with e=ell. Thus JS3 implies
+
+    gcd(a,Gamma_i(V_i))=gcd(b,Gamma_i(V_i))=1,
+    in particular gcd(a,M)=gcd(b,M)=1.             (JS4)
+
+The last implication uses M|Gamma_i(V_i), since V_i lies in alpha
+modM. It recovers the earlier AC2 consequence and additionally
+excludes every prime in the full actual top-obligation hull.
+These are requirements on two original APs
+with their actual phases, not two independently optimized choices.
+
+No step forces either supplier's cofactor or phase to agree with
+the other. The remaining compatibility problem is not resolved by
+their separate necessity. No new Lean verification is asserted.
+
+## 117. A local occupied ancestor couples two complete supplier obligations
+
+Keep section116's local(1,2,2) layout. The original occupied ancestor
+A_0 of numerical modulus3^(H-1)M exists by section103. Suppose its
+actual class belongs to O_w. By JS4 it cannot be A or B, and it is
+not the pure guard. Therefore
+
+    A_0=D, and its ternary prefix v equals u.       (JS5)
+
+Write its actual M-phase as beta. AC2 applied at each prime of M
+gives gcd(M,alpha-beta)=1. In particular the two full cofactor APs
+alpha modM and beta modM are disjoint.
+
+### The two centers divide the same complete joint remainder
+
+Let E and U be the entire simultaneous-deletion set and top-color
+projection from section112. Inside prefix w, the retained originals
+are independent of the last two ternary digits. For each point in U,
+take an actual E witness from its defining projection and change
+only the (H-1)-st digit to a selected local branch. The point remains
+in E by its full sibling fibers. This uses the SAME original
+nonternary coordinates, without assembling independent witnesses.
+
+At the branch of R and D, LB6 gives
+
+    U subset(alpha modM) union(beta modM).
+
+After deleting only the top batch, D is still retained. Thus the
+old top-only projection is exactly U minus(beta modM): the reverse
+inclusion follows by moving an actual E witness into the R branch,
+where D is the only local retained original and its phase is absent.
+Consequently
+
+    U=V_alpha disjoint_union V_beta,
+    V_alpha=U intersect(alpha modM)=V_i,
+    V_beta=U intersect(beta modM).                 (JS6)
+
+The first set is nonempty by E_T. The second is nonempty because
+the original D has an actual private point: it avoids every retained
+lower original and the top batch, and lies in its own beta phase.
+
+### The paid exchange leaves the intermediate process unchanged
+
+Reuse section110's exchange: move the occupied original ancestor
+to(u,alpha), and relocate the three top labels over u with compatible
+cofactor phase beta. The whole-cover property, numerical palette,
+N and W are preserved, so the new original family is again EB1.
+
+Its intermediate cover obtained by coarsening the new top batch is
+EXACTLY the old AP multiset F. The two M-classes at u merely exchange
+which one is the original ancestor and which is the artificial
+resolvent. Hence the full joint deletion E and its projection U are
+unchanged, while the new top-only obligation projects to V_beta.
+The two actual suppliers A,B are untouched.
+
+Apply JS1's full-liability repair to each unchanged supplier in this
+exchanged cover. Its own old modulus still pays for the four new
+APs. The unchanged numerical palette guarantees the same CP1
+vacancies; preservation of the private-color classification under
+the exchange is not needed. Together with JS3 this gives
+
+    V_alpha intersect(A_i minus B_i)!=empty,
+    V_alpha intersect(B_i minus A_i)!=empty,
+    V_beta  intersect(A_i minus B_i)!=empty,
+    V_beta  intersect(B_i minus A_i)!=empty.        (JS7)
+
+Each cell lifts to a private point of its supplier in the ORIGINAL
+cover: choose its actual E witness and move only the local digit
+to the branch of A,B. Lower originals remain absent by the full
+sibling property, the other supplier is absent, and the top originals
+lie in the different branch of R,D. Thus each supplier's complete private
+region realizes both alpha and beta modulo M, with distinct first
+residues at every prime dividing M.
+
+The stronger JS4 conclusion also applies at both centers: a and b
+are each coprime to Gamma_i(V_alpha) and to Gamma_i(V_beta). The
+same numerical suppliers must meet both of these whole-obligation
+constraints, rather than one independently selected constraint each.
+
+The four witnesses can have different auxiliary coordinates. JS7
+is not a product rectangle or an independence assertion. If the
+occupied ancestor lies outside O_w, the exchange changes the lower
+prefix and this common-U argument does not apply. Neither its local
+position nor incompatibility of these four cells with all original
+lower constraints has been established. No unrestricted conclusion
+or new Lean verification is asserted.
