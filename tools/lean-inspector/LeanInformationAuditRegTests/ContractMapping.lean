@@ -45,7 +45,7 @@ def run (oldEnv newEnv : Environment) (mapping : NameMapping)
   let .ok (identity, _) ← inEnvironment newEnv <| TemplateAudit.rawIdentity
       newRecord.occurrence.levelParams changed
     | throwError "mutation_fingerprint_failed"
-  let stale ← rejected "stale_target_descriptor" "descriptor.new" <|
+  let stale ← rejected "stale_target_descriptor" "new.current_descriptor|descriptor.new|unregistered_template" <|
     verifyRecord oldEnv newEnv (inlineAuthorization mapping) oldRecord
       { newRecord with descriptor := some changed }
   let rawClaims := TemplateBinding.ownedClaims newEnv
@@ -55,9 +55,9 @@ def run (oldEnv newEnv : Environment) (mapping : NameMapping)
   let changedEnvironment := rawClaims.foldl (fun env (_, claim) => TemplateBinding.addClaim env
     (if claim.key == newRecord.occurrence.key then { claim with descriptor := some changed }
       else claim)) changedEnvironment
-  let environmentClaim ← rejected "stale_environment_claim" "new.current_not_validated|new.certificate_consistency" <|
+  let environmentClaim ← rejected "stale_environment_claim" "new.current_descriptor|new.current_result" <|
     verifyRecord oldEnv changedEnvironment (inlineAuthorization mapping) oldRecord newRecord
-  let readout ← rejected "same_type_readout" "new.certificate_consistency|new.current_not_validated|descriptor.mapped" <|
+  let readout ← rejected "same_type_readout" "new.current_descriptor|new.current_result|descriptor.mapped" <|
     verifyRecord oldEnv newEnv (inlineAuthorization mapping) oldRecord { newRecord with
       descriptor := some changed
       result := .declaredValidated { certificate with descriptorIdentity := identity } }
@@ -66,7 +66,7 @@ def run (oldEnv newEnv : Environment) (mapping : NameMapping)
   inEnvironment newEnv do
     unless ← isDefEq (← inferType actual) (← inferType changed) do
       throwError "primitive_mutation_type_changed"
-  let primitive ← rejected "same_type_primitive" "actual.new|actual.mapped" <|
+  let primitive ← rejected "same_type_primitive" "new.current_result|actual.new|actual.mapped" <|
     verifyRecord oldEnv newEnv (inlineAuthorization mapping) oldRecord { newRecord with
       result := .declaredValidated { certificate with actualIdentity := identity } }
   let alternate := mkAppN (mkConst ``alternativeCut original.getAppFn.constLevels!) original.getAppArgs
@@ -75,11 +75,11 @@ def run (oldEnv newEnv : Environment) (mapping : NameMapping)
       throwError "template_mutation_type_changed"
   let .ok (alternateIdentity, _) ← inEnvironment newEnv <| TemplateAudit.rawIdentity
       newRecord.occurrence.levelParams alternate | throwError "alternate_fingerprint_failed"
-  let template ← rejected "same_type_template_selection" "unregistered_template" <|
+  let template ← rejected "same_type_template_selection" "new.current_descriptor|descriptor.new|unregistered_template" <|
     verifyRecord oldEnv newEnv (inlineAuthorization mapping) oldRecord { newRecord with
       descriptor := some alternate
       result := .declaredValidated { certificate with descriptorIdentity := alternateIdentity } }
-  let owner ← rejected "unauthorized_owner" "dtr.event_owner|unit_algorithm" <|
+  let owner ← rejected "unauthorized_owner" "new.current_event_count|dtr.event_owner|unit_algorithm" <|
     verifyRecord oldEnv newEnv (inlineAuthorization mapping) oldRecord { newRecord with
       occurrence := { newRecord.occurrence with
         unitName := `Reg.ContractPrototype.Other.unit

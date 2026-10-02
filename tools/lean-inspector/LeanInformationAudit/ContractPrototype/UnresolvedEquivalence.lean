@@ -119,6 +119,8 @@ Every dependency and template-plan hash is recomputed by the production encoders
 failure provenance remains evidence about rejected inputs, never a certificate. -/
 def verifyRecord (oldEnv newEnv : Environment) (authorization : Authorization)
     (oldRecord newRecord : BindingRecord) : MetaM Json := do
+  verifyCurrentRecord "old" oldEnv oldRecord
+  verifyCurrentRecord "new" newEnv newRecord
   let .declaredUnresolved oldDiagnostic := oldRecord.result
     | throwError "contract.unresolved_equivalence:original_not_unresolved"
   let .declaredUnresolved newDiagnostic := newRecord.result

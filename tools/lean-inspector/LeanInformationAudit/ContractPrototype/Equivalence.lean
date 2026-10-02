@@ -172,6 +172,42 @@ def mapEscape (oldEnv _newEnv : Environment) (mapping : NameMapping)
     return residual
   return { record.escape with fromObject, continuation }
 
+/-- Join the current occurrence and claim before inspecting the supplied state.
+The supplied record cannot fill any missing current input or assessment field. -/
+def verifyCurrentRecord (side : String) (env : Environment) (record : BindingRecord) :
+    MetaM Unit := inEnvironment env do
+  let key := record.occurrence.key
+  let events := (TemplateBinding.ownedEvents env).filter (·.2.key == key)
+  let claims := (TemplateBinding.ownedClaims env).filter (·.2.key == key)
+  let joined ← result (TemplateBinding.joinClaims events claims)
+  unless joined.size == 1 do throwError "contract.equivalence:{side}.current_event_count"
+  let (event, claim) := joined[0]!
+  TemplateBinding.validateEvent event
+  check s!"{side}.current_event_source" event.registrationSourceIdentity
+    record.occurrence.registrationSourceIdentity
+  let supplied := record.occurrence
+  unless event.key == supplied.key && event.unitName == supplied.unitName &&
+      event.realizationName == supplied.realizationName && event.statement.equal supplied.statement &&
+      event.levelParams == supplied.levelParams && event.statementIdentity == supplied.statementIdentity &&
+      event.arena.equal supplied.arena && event.registrationSource == supplied.registrationSource do
+    throwError "contract.equivalence:{side}.current_event"
+  let current ← withCurrHeartbeats <| TemplateBinding.assess event claim
+  let descriptorsEqual := match current.descriptor, record.descriptor with
+    | none, none => true
+    | some a, some b => a.equal b
+    | _, _ => false
+  unless descriptorsEqual do throwError "contract.equivalence:{side}.current_descriptor"
+  unless current.bindingOwner == record.bindingOwner do
+    throwError "contract.equivalence:{side}.current_binding_owner"
+  unless current.escape == record.escape do throwError "contract.equivalence:{side}.current_escape"
+  unless current.schemaVersion == record.schemaVersion &&
+      current.compatibilityVersion == record.compatibilityVersion do
+    throwError "contract.equivalence:{side}.current_version"
+  if let (.declaredValidated a, .declaredValidated b) := (current.result, record.result) then
+    unless a.escape == b.escape do throwError "contract.equivalence:{side}.current_certificate_escape"
+  unless (← TemplateBinding.recordJson current) == (← TemplateBinding.recordJson record) do
+    throwError "contract.equivalence:{side}.current_result"
+
 /-- Recompute both sides against their own current environments before mapping.
 The current production assessment independently fixes membership, source-scope
 and escape identities; the same encoders check every certificate field. -/
@@ -206,14 +242,6 @@ def verifyCurrentCertificate (side : String) (env : Environment) (record : Bindi
       (record.occurrence.levelParams.map Level.param)
     check s!"source.registration.{side}" (← identity true record.occurrence.levelParams registration)
       (← result (binding.getObjValAs? String "registration_identity"))
-  let claims := (TemplateBinding.ownedClaims env).filter (fun (_, claim) => claim.key == record.occurrence.key)
-  unless claims.size == 1 do throwError "contract.equivalence:{side}.claim_key_count"
-  let current ← withCurrHeartbeats <| TemplateBinding.assess record.occurrence (some claims[0]!.2)
-  let .declaredValidated recomputed := current.result
-    | throwError "contract.equivalence:{side}.current_not_validated"
-  unless (← TemplateBinding.recordJson { record with result := .declaredValidated recomputed }) ==
-      (← TemplateBinding.recordJson record) do
-    throwError "contract.equivalence:{side}.certificate_consistency"
   check s!"evidence.{side}" (← result (bindingIdentity record.occurrence.statementIdentity certificate 524288)).1
     certificate.evidenceRef
 
@@ -256,6 +284,8 @@ membership and producer enumeration are checked after declaration renaming.
 Source scopes and their D5 definitions must remain unchanged in this L0 check. -/
 def verifyRecord (oldEnv newEnv : Environment) (authorization : Authorization)
     (oldRecord newRecord : BindingRecord) : MetaM Json := do
+  verifyCurrentRecord "old" oldEnv oldRecord
+  verifyCurrentRecord "new" newEnv newRecord
   let .declaredValidated oldCert := oldRecord.result
     | throwError "contract.equivalence:original_not_validated"
   let .declaredValidated newCert := newRecord.result
@@ -353,6 +383,8 @@ def verifyRecord (oldEnv newEnv : Environment) (authorization : Authorization)
 normalization can make it look like a validated registration. -/
 def verifyMissingRecord (oldEnv newEnv : Environment) (authorization : Authorization)
     (oldRecord newRecord : BindingRecord) : MetaM Json := do
+  verifyCurrentRecord "old" oldEnv oldRecord
+  verifyCurrentRecord "new" newEnv newRecord
   unless (oldRecord.result matches .undeclared) && (newRecord.result matches .undeclared) &&
       oldRecord.descriptor.isNone && newRecord.descriptor.isNone do
     throwError "contract.equivalence:missing_record_state"
