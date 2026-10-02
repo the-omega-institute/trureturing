@@ -18,13 +18,10 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Arith.FibonacciAtomic.WindowHistogramLegalCount
 
-open LiteralWindowEnd (Window bits first last flatten run endable nonzero execution)
+open LiteralWindowEnd (Window bits first last triple flatten run endable nonzero execution)
 open D5.S3.Arith.ZeckendorfFutureKernel (legal)
 open D5.S3.Combinatorics.ArrowWilfGapData (Gaps)
 open scoped BigOperators
-
-/-- The Boolean records which of the two actual neutral windows occurs. -/
-def neutral (d : Bool) : Window := if d then .middle else .zero
 
 /-- A gap contains no neutral input window. -/
 def Free (g : List Window) : Prop := ∀ b ∈ g, b ≠ .zero ∧ b ≠ .middle
@@ -44,7 +41,7 @@ def gap (q : Gap) : List Window :=
 abbrev Cuts := List Window × List (Bool × List Window)
 
 def join (p : Cuts) : List Window :=
-  p.1 ++ p.2.flatMap (fun dg => neutral dg.1 :: dg.2)
+  p.1 ++ p.2.flatMap (fun dg => triple false dg.1 false :: dg.2)
 
 def gaps (p : Cuts) : List (List Window) := p.1 :: p.2.map Prod.snd
 
@@ -126,7 +123,7 @@ private theorem split_properties (w : List Window) :
     simp only [hp, join, Clean, gaps, List.mem_cons, List.mem_map,
       forall_eq_or_imp, Prod.forall, exists_and_right, exists_eq_right] at he hc hn hl
     cases d <;>
-      simp_all [split, join, Clean, gaps, Free, neutral, flatten, bits, legal,
+      simp_all [split, join, Clean, gaps, Free, triple, flatten, bits, legal,
         List.count_cons, List.mem_map, List.flatMap_cons, List.cons_append]
     all_goals first | exact hc.2 | exact ⟨hc.2, by omega⟩
 
@@ -151,7 +148,7 @@ private theorem split_inverse (p : Cuts) (hp : Clean p) : split (join p) = p := 
       intro v hv
       exact hp.2 v (by simp [hv])
     have hi := ih ⟨hp.1, ht⟩
-    cases d <;> simp_all [List.flatMap_cons, neutral, split, split_prefix h hh]
+    cases d <;> simp_all [List.flatMap_cons, triple, split, split_prefix h hh]
 
 /-- Neutral positions determine a unique decomposition, and each legal gap
 has unique low/end/high exponents. -/
@@ -301,11 +298,11 @@ private theorem histogram_encoding (h : Window → ℕ) :
         simp [codeWord, codeCuts, join, inventory, gap, hz, List.count_replicate]
     | cons dg ds ih =>
       rcases dg with ⟨d, q⟩
-      have he : codeWord (g, (d, q) :: ds) = gap g ++ neutral d :: codeWord (q, ds) := by
+      have he : codeWord (g, (d, q) :: ds) = gap g ++ triple false d false :: codeWord (q, ds) := by
         simp [codeWord, codeCuts, join, List.flatMap_cons]
       rw [he, List.count_append, List.count_cons, ih q]
       cases f <;> cases d <;> cases hz : g.z <;>
-        simp [inventory, gap, neutral, hz, List.count_replicate, List.count_cons,
+        simp [inventory, gap, triple, hz, List.count_replicate, List.count_cons,
           Nat.add_assoc]
   let e : HistogramCodes h ≃ HistogramWords h :=
     { toFun := fun p => ⟨codeWord p.val, (code_language.2 p.val).2,
@@ -544,12 +541,12 @@ theorem result :
       | nil => simp [codeWord, codeCuts, join, terminalGap]
       | cons dg ds ih =>
         rcases dg with ⟨d, h⟩
-        have he : codeWord (g, (d, h) :: ds) = gap g ++ neutral d :: codeWord (h, ds) := by
+        have he : codeWord (g, (d, h) :: ds) = gap g ++ triple false d false :: codeWord (h, ds) := by
           simp [codeWord, codeCuts, join, List.flatMap_cons, List.append_assoc]
         rw [he, List.getLast?_append_of_ne_nil _ (by simp)]
-        have hn : neutral d ≠ f := by
-          rcases hf with rfl | rfl <;> cases d <;> simp [neutral]
-        have ht : (neutral d :: codeWord (h, ds)).getLast? = some f ↔
+        have hn : triple false d false ≠ f := by
+          rcases hf with rfl | rfl <;> cases d <;> simp [triple]
+        have ht : (triple false d false :: codeWord (h, ds)).getLast? = some f ↔
             (codeWord (h, ds)).getLast? = some f := by
           cases codeWord (h, ds) <;> simp [hn]
         rw [ht, ih h]
@@ -631,6 +628,5 @@ theorem result :
         rw [terminal w]
         simp [nonzero, hf]))
 
-#print axioms result
 
 end D5.S3.Arith.FibonacciAtomic.WindowHistogramLegalCount

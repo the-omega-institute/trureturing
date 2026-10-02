@@ -15,10 +15,8 @@ internal sealed class WindowHistogramLegalCountDocument : IScribeDocumentDefinit
                 + "Legal(w) means legal(false,flatten(w)): the incoming seam is zero and "
                 + "there are no adjacent occupied bits. The first window has no extra "
                 + "restriction. U and V each occupy one input position, including when "
-                + "neighboring gaps are empty. End acceptance is a separate condition.")),
-            Node("neutral", "The two neutral letters",
-                "Neutral(false)=U and neutral(true)=V. Both have zero low and high bits.",
-                DescribeRole.Definition),
+                + "neighboring gaps are empty. End acceptance is a separate condition. "
+                + "The existing triple(false,d,false) constructs U for false and V for true.")),
             Node("Free", "Gaps without neutral letters",
                 "Free(g) means that every window in g differs from U and V. "
                 + "Thus g uses only X, Y and Z; the empty gap is allowed.",
@@ -36,7 +34,7 @@ internal sealed class WindowHistogramLegalCountDocument : IScribeDocumentDefinit
                 + "(di,gi), with di Boolean and gi a gap word.", DescribeRole.Definition),
             Node("join", "Reconstructing a word",
                 "Join(g0,[(d1,g1),...,(dt,gt)]) is "
-                + "g0 neutral(d1) g1 ... neutral(dt) gt.", DescribeRole.Definition),
+                + "g0 triple(false,d1,false) g1 ... triple(false,dt,false) gt.", DescribeRole.Definition),
             Node("gaps", "All gaps, including empty gaps",
                 "Gaps(p) is the ordered list [g0,g1,...,gt]. It always contains "
                 + "the first gap, even when the input word is empty.", DescribeRole.Definition),
