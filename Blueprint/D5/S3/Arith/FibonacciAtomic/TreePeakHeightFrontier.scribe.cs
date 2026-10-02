@@ -9,7 +9,7 @@ internal sealed class TreePeakHeightFrontierDocument : IScribeDocumentDefinition
     private static Formula V(string s) => F.Id(s);
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
-    private static Formula Add(Formula a, Formula b) => Seq(a, Plus, b);
+    private static Formula Add(Formula a, Formula b) => Seq(a, Sp, Plus, Sp, b);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The first-rejection task has an exact binary-tree peak and height frontier.",
@@ -31,14 +31,14 @@ internal sealed class TreePeakHeightFrontierDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/TreePeakHeightFrontier.result"),
                 H("Exact Attainable Frontier"),
                 StatementSource.FromAuthor(Seq(
-                    Call("P", V("T")), Eq, Call("maxNodeCapacity", V("T")), Sp, Land, Sp,
-                    Call("minPeak", V("n")), Eq, Add(V("n"), D(1)), Sp, Land, Sp,
-                    Call("minHeight", V("n")), Eq, V("H"), Sp, Land, Sp,
-                    Call("minHeightAtMinPeak", V("n")), Eq, Add(V("H"), V("E")),
-                    Sp, Land, Sp, Call("minPeakAtMinHeight", V("n")), Eq,
+                    Call("P", V("T")), Sp, Eq, Sp, Call("maxNodeCapacity", V("T")), Sp, Land, Sp,
+                    Call("minPeak", V("n")), Sp, Eq, Sp, Add(V("n"), D(1)), Sp, Land, Sp,
+                    Call("minHeight", V("n")), Sp, Eq, Sp, V("H"), Sp, Land, Sp,
+                    Call("minHeightAtMinPeak", V("n")), Sp, Eq, Sp, Add(V("H"), V("E")),
+                    Sp, Land, Sp, Call("minPeakAtMinHeight", V("n")), Sp, Eq, Sp,
                     Add(Add(V("n"), D(1)), V("E")), Sp, Land, Sp,
-                    Grp(Seq(Call("excludesZero", V("A")), Sp, Land, Sp, Call("card", V("A")), Ge, D(2),
-                        Sp, Implies, Sp, Call("capacity", V("A")), Ge,
+                    Grp(Seq(Call("excludesZero", V("A")), Sp, Land, Sp, Call("card", V("A")), Sp, Ge, Sp, D(2),
+                        Sp, Implies, Sp, Call("capacity", V("A")), Sp, Ge, Sp,
                         Add(Seq(D(2), Cdot, Call("card", V("A"))), D(2)))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(

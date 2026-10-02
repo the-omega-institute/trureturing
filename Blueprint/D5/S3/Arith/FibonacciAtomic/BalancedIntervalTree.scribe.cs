@@ -9,7 +9,7 @@ internal sealed class BalancedIntervalTreeDocument : IScribeDocumentDefinition
     private static Formula V(string s) => F.Id(s);
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
-    private static Formula Add(Formula a, Formula b) => Seq(a, Plus, b);
+    private static Formula Add(Formula a, Formula b) => Seq(a, Sp, Plus, Sp, b);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Ordered interval bisection controls all node blocks and attains logarithmic height.",
@@ -23,17 +23,17 @@ internal sealed class BalancedIntervalTreeDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/BalancedIntervalTree.result"),
                 H("Every Node of a Balanced Bisection"),
                 StatementSource.FromAuthor(Seq(
-                    D(0), Lt, V("w"), Sp, Land, Sp,
-                    Add(V("l"), V("w")), Le, Add(V("k"), D(1)), Sp, Implies, Sp,
+                    D(0), Sp, Lt, Sp, V("w"), Sp, Land, Sp,
+                    Add(V("l"), V("w")), Sp, Le, Sp, Add(V("k"), D(1)), Sp, Implies, Sp,
                     Exists, Sp, V("T"), Comma, Sp, Call("Full", V("T")), Sp, Land, Sp,
-                    Call("leaves", V("T")), Eq, Call("interval", V("l"), Add(V("l"), V("w"))),
-                    Sp, Land, Sp, Call("height", V("T")), Eq, Call("clog", D(2), V("w")),
-                    Sp, Land, Sp, Forall, Sp, V("S"), InMacro, Call("subtrees", V("T")), Comma,
+                    Call("leaves", V("T")), Sp, Eq, Sp, Call("interval", V("l"), Add(V("l"), V("w"))),
+                    Sp, Land, Sp, Call("height", V("T")), Sp, Eq, Sp, Call("clog", D(2), V("w")),
+                    Sp, Land, Sp, Forall, Sp, V("S"), Sp, InMacro, Sp, Call("subtrees", V("T")), Comma,
                     Sp, Exists, Sp, V("a"), Comma, V("b"), Comma, Sp,
-                    V("l"), Le, V("a"), Lt, V("b"), Le, Add(V("l"), V("w")),
-                    Sp, Land, Sp, Call("leaves", V("S")), Eq, Call("interval", V("a"), V("b")),
-                    Sp, Land, Sp, Grp(Seq(V("a"), Eq, V("l"), Sp, Lor, Sp,
-                        Seq(V("b"), Minus, V("a")), Le, Call("floorHalf", V("w")))))),
+                    V("l"), Sp, Le, Sp, V("a"), Sp, Lt, Sp, V("b"), Sp, Le, Sp, Add(V("l"), V("w")),
+                    Sp, Land, Sp, Call("leaves", V("S")), Sp, Eq, Sp, Call("interval", V("a"), V("b")),
+                    Sp, Land, Sp, Grp(Seq(V("a"), Sp, Eq, Sp, V("l"), Sp, Lor, Sp,
+                        Seq(V("b"), Minus, V("a")), Sp, Le, Sp, Call("floorHalf", V("w")))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Every subtree has a nonempty adjacent coordinate block inside the "
