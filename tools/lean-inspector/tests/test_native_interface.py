@@ -1,11 +1,11 @@
-"""The declaration package must build with only the installed core toolchain."""
+"""Legacy recorder declarations build with only the installed core toolchain."""
 import json
 import os
 import re
 import shutil
 import tomllib
 
-from test_native_support import ROOT, publication
+from test_native_support import ROOT, publication, copy_recorder_interface
 
 
 class NativeInterfaceTests:
@@ -117,11 +117,13 @@ run_cmd do
         source = ROOT / 'tools/lean-inspector-interface'
         self.assertTrue(source.is_dir(), 'missing standalone declaration Interface package')
         package = self.root / 'interface package'
-        shutil.copytree(source, package, ignore=shutil.ignore_patterns('.lake'))
+        policy = tomllib.loads((source / 'lakefile.toml').read_text())
+        self.assertEqual(policy.get('require', []), [dict(name='trureturing', path='../..')])
+        copy_recorder_interface(source, package)
         shutil.copyfile(ROOT / 'lean-toolchain', package / 'lean-toolchain')
         config = package / 'lakefile.toml'
         policy = tomllib.loads(config.read_text())
-        self.assertEqual(policy.get('require', []), [], 'Interface must have zero requires')
+        self.assertEqual(policy.get('require', []), [], 'Recorder fixture must have zero requires')
         self.assertEqual(json.loads((package / 'lake-manifest.json').read_text())['packages'], [])
         self.assertEqual(len(policy['lean_lib']), 1)
         # The production output is transported under the repository buildDir.

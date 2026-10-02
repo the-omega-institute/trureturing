@@ -8,6 +8,7 @@ open Lean Meta
 
 structure CompanionInput where
   input : RegistrationInput
+  generated : Bool
   bridge : Expr
   target : Expr
   variation : Option Expr
@@ -152,7 +153,7 @@ def registration (owner : Name) (info : DefinitionVal) (source : String)
     input := {
       entry, sourceText := source, options, suppliedPrimitives := primitives, declaration
       realizationSource }
-    bridge, target := typeArgs[1]!, variation := variation.map Prod.snd, positive }
+    generated, bridge, target := typeArgs[1]!, variation := variation.map Prod.snd, positive }
 
 def expectedRow (e : Expr) : MetaM SnapshotOccurrence := do
   let fs ← fields ``Contract.ExpectedOccurrence e 6

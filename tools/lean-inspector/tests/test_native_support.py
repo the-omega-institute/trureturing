@@ -19,6 +19,20 @@ from unittest.mock import patch
 import zipfile
 import zlib
 
+def copy_recorder_interface(source, target):
+    """Core-only recorder fixtures exclude the D5-dependent typed contract ABI."""
+    shutil.copytree(source, target, ignore=shutil.ignore_patterns('.lake', 'Contract'))
+    config = target / 'lakefile.toml'
+    text = config.read_text()
+    start = text.index('[[require]]')
+    stop = text.index('[[lean_lib]]', start)
+    config.write_text(text[:start] + text[stop:])
+    manifest = target / 'lake-manifest.json'
+    data = json.loads(manifest.read_text())
+    data['packages'] = []
+    manifest.write_text(json.dumps(data))
+
+
 try:
     import resource
 except ImportError:
@@ -123,8 +137,8 @@ defaultFacets = ["static"]
         host = json.loads((ROOT / 'tools/lean-inspector-reg/lake-manifest.json').read_text())
         host['packages'] = [p for p in host['packages'] if p['type'] == 'path'] + [dict(git, inherited=True)]
         self.write('tools/lean-inspector-reg/lake-manifest.json', json.dumps(host))
-        shutil.copytree(ROOT / 'tools/lean-inspector-interface',
-                        self.root / 'tools/lean-inspector-interface', ignore=shutil.ignore_patterns('.lake'))
+        copy_recorder_interface(ROOT / 'tools/lean-inspector-interface',
+                                self.root / 'tools/lean-inspector-interface')
         self.write('Fixture.lean', 'import D5.A\ntheorem result : ¬ False := fun h => h\n')
         self.write('D5/A.lean', 'import D5.B\ndef value : Nat := D5.hidden\n')
         self.write('D5/B.lean', 'module\npublic section\nnamespace D5\nprivate def secret : Nat := 1\ndef hidden : Nat := secret\n')
