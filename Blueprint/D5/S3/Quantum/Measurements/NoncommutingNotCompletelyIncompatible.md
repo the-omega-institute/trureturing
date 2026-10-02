@@ -58,6 +58,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/NoncommutingNotCompletelyIncompatible.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/de-bievre-2022-noncommuting-not-coinc-all-dimensions` (proved) by `D5/S3/Quantum/Measurements/NoncommutingNotCompletelyIncompatible.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"de-bievre-2022-noncommuting-not-coinc-all-dimensions","declaration_gid":"D5/S3/Quantum/Measurements/NoncommutingNotCompletelyIncompatible.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Stephan De Bièvre (2023). *Relating incompatibility, noncommutativity, uncertainty and Kirkwood-Dirac nonclassicality*. DOI: [10.1063/5.0110267](https://doi.org/10.1063/5.0110267). URL: <https://arxiv.org/abs/2207.07451v1>.

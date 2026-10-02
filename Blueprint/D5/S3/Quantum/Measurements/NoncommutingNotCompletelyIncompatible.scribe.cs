@@ -28,14 +28,18 @@ internal sealed class NoncommutingNotCompletelyIncompatibleDocument : IScribeDoc
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The conjecture holds in every dimension at least four", Disp(F.Id("claim")),
                 "Take the standard basis and the columns of H = I − (2/q)wwᵀ, where w = (1,2,...,2) and q = 4d−3. This real Householder reflection is unitary over the complex space. For a nonempty proper set T let m = ∑_{k∈T} w_k², so 0 < m < q. Every off-diagonal entry of its coordinate projector equals (2w_iw_j/q²)(2m−q(1_T(i)+1_T(j))). The last factor is nonzero: indicator sums zero and two use the strict mass bounds, and indicator sum one uses the oddness of q. A coordinate inside S and one outside S then give a nonzero commutator entry for every nonempty proper S. Finally 2e₀−e₁ is nonzero and equals 2He₀−He₁, so it lies in both two-coordinate spans for S = T = {0,1}. Their total cardinality is four, which is at most d.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("de-bievre-2022-noncommuting-not-coinc-all-dimensions"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("noncommuting-not-coinc-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Parenthesized(Formula body) => Seq(Open, body, Close);
     private static Formula Call(string name, params Formula[] args) =>
