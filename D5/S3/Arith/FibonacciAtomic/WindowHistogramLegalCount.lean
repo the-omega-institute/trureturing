@@ -8,6 +8,8 @@
 
 import D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd
 import D5.S3.Combinatorics.ArrowWilfGapData
+import Mathlib.Data.List.Chain
+import Mathlib.Data.List.Sort
 import Mathlib.Data.Bool.Count
 import Mathlib.Data.Vector.Basic
 import Mathlib.SetTheory.Cardinal.Finite
@@ -117,55 +119,104 @@ private theorem decomposition :
   have gap_language (w : List Window) (hw : Free w) :
       (legal false (flatten w) ↔ ∃ q : Gap, gap q = w) ∧
       (legal true (flatten w) ↔ ∃ n : ℕ, w = List.replicate n .high) := by
-    have highs (n : ℕ) (s : Bool) : legal s (flatten (List.replicate n .high)) := by
-      induction n generalizing s with
-      | zero => simp [flatten, legal]
-      | succ n ih => simpa [List.replicate_succ, flatten, bits, legal] using ih true
-    have normal (q : Gap) : legal false (flatten (gap q)) := by
-      rcases q with ⟨a, z, b⟩
-      induction a with
-      | zero =>
-        cases z
-        · simpa [gap] using highs b false
-        · simpa [gap, flatten, bits, legal] using highs b true
-      | succ a ih => simpa [gap, List.replicate_succ, flatten, bits, legal] using ih
-    have forward : ∀ w : List Window, Free w →
-        (legal false (flatten w) → ∃ q : Gap, gap q = w) ∧
-        (legal true (flatten w) → ∃ n : ℕ, w = List.replicate n .high) := by
-      intro v
-      induction v with
-      | nil => intro _; exact ⟨fun _ => ⟨⟨0, false, 0⟩, rfl⟩, fun _ => ⟨0, rfl⟩⟩
-      | cons d v ih =>
-        intro hv
-        have ht : Free v := fun b hb => hv b (List.mem_cons_of_mem d hb)
-        obtain ⟨ihf, iht⟩ := ih ht
-        cases d with
-        | zero => exact (hv .zero (by simp)).1 rfl |>.elim
-        | middle => exact (hv .middle (by simp)).2 rfl |>.elim
-        | low =>
-          constructor
-          · intro h
-            obtain ⟨q, hq⟩ := ihf (by simpa [flatten, bits, legal] using h)
-            exact ⟨⟨q.x + 1, q.z, q.y⟩,
-              by simpa [gap, List.replicate_succ] using congrArg (List.cons .low) hq⟩
-          · simp [flatten, bits, legal]
-        | ends =>
-          constructor
-          · intro h
-            obtain ⟨n, hn⟩ := iht (by simpa [flatten, bits, legal] using h)
-            exact ⟨⟨0, true, n⟩, by simp [gap, hn]⟩
-          · simp [flatten, bits, legal]
-        | high =>
-          constructor
-          · intro h
-            obtain ⟨n, hn⟩ := iht (by simpa [flatten, bits, legal] using h)
-            exact ⟨⟨0, false, n + 1⟩, by simp [gap, List.replicate_succ, hn]⟩
-          · intro h
-            obtain ⟨n, hn⟩ := iht (by simpa [flatten, bits, legal] using h)
-            exact ⟨n + 1, by simp [List.replicate_succ, hn]⟩
-    exact ⟨⟨(forward w hw).1, fun ⟨q, hq⟩ => hq ▸ normal q⟩,
-      ⟨(forward w hw).2, fun ⟨n, hn⟩ => hn ▸ highs n true⟩⟩
-  
+    let R : Window → Window → Prop := fun a b =>
+      (a = .low ∧ (b = .low ∨ b = .ends ∨ b = .high)) ∨
+      ((a = .ends ∨ a = .high) ∧ b = .high)
+    have trans : Transitive R := by
+      intro a b c
+      cases a <;> cases b <;> cases c <;> simp only [R, reduceCtorEq, eq_self, ne_eq,
+        or_false, false_or, and_false, false_and, and_true, true_and] <;> tauto
+    letI : IsTrans Window R := ⟨trans⟩
+    have chain (v : List Window) (hv : Free v) (s : Bool) :
+        legal s (flatten v) ↔
+          (∀ b ∈ v.head?, ¬ (s = true ∧ first b = true)) ∧ v.Pairwise R := by
+      cases v with
+      | nil => simp only [flatten, List.flatMap_nil, legal, List.head?_nil,
+          Option.not_mem_none, false_implies, forall_const, List.Pairwise.nil, and_self, iff_self, and_true, implies_true]
+      | cons b v =>
+        rw [LiteralWindowEnd.legal_chain, List.IsChain.iff_of_mem_imp (S := R) (by
+          intro a c ha hc
+          have h₁ := hv a ha
+          have h₂ := hv c hc
+          cases a <;> cases c <;> simp_all only [R, first, last,
+            reduceCtorEq, eq_self, ne_eq, not_true_eq_false, not_false_eq_true, and_false,
+            false_and, and_true, true_and, or_false, false_or]), List.isChain_iff_pairwise]
+        simp only [List.head?_cons, Option.mem_some_iff, forall_eq']
+    have normal (q : Gap) : (gap q).Pairwise R := by
+      rcases q with ⟨a,z,b⟩
+      cases z <;> simp only [gap, Bool.false_eq_true, eq_self,
+        ↓reduceIte, List.pairwise_append, List.pairwise_replicate,
+        List.pairwise_singleton, List.Pairwise.nil, List.mem_replicate,
+        List.mem_append, List.mem_singleton, List.not_mem_nil, R,
+        reduceCtorEq, eq_self, ne_eq, and_true, true_and, or_true, true_or,
+        or_false, false_or, and_false, false_and, not_false_eq_true] <;> tauto
+    have free_gap (q : Gap) : Free (gap q) := by
+      intro b hb
+      cases q with | mk a z c =>
+        cases z <;> cases b <;> simp_all only [Free, gap, Bool.false_eq_true,
+          eq_self, ↓reduceIte, List.mem_append, List.mem_replicate,
+          List.mem_singleton, List.not_mem_nil, reduceCtorEq, eq_self, ne_eq, and_false,
+          false_and, or_false, false_or, not_false_eq_true, and_true]
+    constructor
+    · constructor
+      · intro hl
+        have hp := ((chain w hw false).mp hl).2
+        have hz : w.count .ends ≤ 1 := by
+          have hrep := hp.sublist (List.replicate_sublist_iff.mpr
+            (Nat.le_refl (w.count .ends)))
+          simpa only [List.pairwise_replicate, R, reduceCtorEq, eq_self, ne_eq,
+            and_false, false_and, or_false] using hrep
+        let q : Gap := ⟨w.count .low, decide (w.count .ends = 1), w.count .high⟩
+        have hperm : (gap q).Perm w := by
+          apply List.perm_iff_count.mpr
+          intro b
+          have hzero : w.count .zero = 0 := List.count_eq_zero.mpr (by
+            intro hm; exact (hw .zero hm).1 rfl)
+          have hmiddle : w.count .middle = 0 := List.count_eq_zero.mpr (by
+            intro hm; exact (hw .middle hm).2 rfl)
+          cases b <;> by_cases h : w.count .ends = 1 <;>
+            simp only [gap, q, h, decide_true, decide_false, eq_self,
+              Bool.false_eq_true, ↓reduceIte, List.count_append, List.count_replicate,
+              List.count_nil, List.count_cons, beq_iff_eq, reduceCtorEq, eq_self, ne_eq, ↓reduceIte,
+              Nat.add_zero, Nat.zero_add, hzero, hmiddle] <;> omega
+        exact ⟨q, List.Perm.eq_of_pairwise (by
+          intro a b _ _
+          cases a <;> cases b <;> simp only [R, reduceCtorEq, eq_self, ne_eq,
+            and_false, false_and, or_false, false_or, and_true, true_and] <;> tauto)
+          (normal q) hp hperm⟩
+      · rintro ⟨q, rfl⟩
+        apply (chain _ (free_gap q) false).mpr
+        exact ⟨by simp only [Bool.false_eq_true, false_and, not_false_eq_true,
+          implies_true, forall_const], normal q⟩
+    · constructor
+      · intro hl
+        have hp := (chain w hw true).mp hl
+        cases w with
+        | nil => exact ⟨0, rfl⟩
+        | cons b v =>
+          have hb : b = .high := by
+            have hf := hw b (List.mem_cons_self)
+            have hh := hp.1 b (by simp only [List.head?_cons, Option.mem_some_iff])
+            cases b <;> simp_all only [first, reduceCtorEq, eq_self, ne_eq,
+              and_true, true_and, not_true_eq_false]
+          subst b
+          refine ⟨(.high :: v).length, List.eq_replicate_of_mem ?_⟩
+          intro b hb
+          rcases List.mem_cons.mp hb with rfl | hb
+          · rfl
+          · have h := (List.pairwise_cons.mp hp.2).1 b hb
+            simpa only [R, reduceCtorEq, eq_self, ne_eq, and_false, false_and, or_false,
+              false_or, or_true, true_and] using h
+      · rintro ⟨n, rfl⟩
+        apply (chain _ hw true).mpr
+        refine ⟨?_, ?_⟩
+        · intro b hb
+          have hm := List.mem_of_mem_head? hb
+          obtain ⟨_, rfl⟩ := List.mem_replicate.mp hm
+          simp only [first, Bool.false_eq_true, and_false, not_false_eq_true]
+        · exact List.pairwise_replicate.mpr (Or.inr (by simp only [R,
+            reduceCtorEq, eq_self, ne_eq, and_false, false_and, false_or, or_true, and_self]))
+
   refine ⟨?_, ?_, ?_⟩
   · intro w
     refine ⟨split w, ⟨(split_properties w).2.1, (split_properties w).1⟩, ?_⟩
