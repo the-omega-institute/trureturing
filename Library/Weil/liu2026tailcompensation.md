@@ -5,7 +5,7 @@ year: 2026
 title: "Certified Weil Positivity Beyond the Unit Window: Source-Exact Block-Schur and Tail-Compensation Bounds for the Riemann Zeta Function"
 doi: null
 url: https://github.com/luciferyu666/certified-weil-positivity/releases/tag/v1.0-mcom-submission
-claim: The author-submitted manuscript states full complex Weil-form coercivity at physical half-widths 1 and 17/16. Source-proof parameter applications supply a 4/5 prime-block floor and an actual positive Fourier-tail correction at c=9; the complete retained sign and cofinal positivity remain unproved.
+claim: The author-submitted manuscript states full complex Weil-form coercivity at physical half-widths 1 and 17/16. Source-proof parameter applications supply a 4/5 prime-block floor, an actual positive Fourier-tail correction and even-space complement/coupling bounds at c=9; the retained sign and cofinal positivity remain unproved.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -357,6 +357,80 @@ for j in range(2):
     print(j, lower[j], upper[j])
 ```
 
+## The actual even projection at $c=9$
+
+The existing Appendix C projection and block-error formulas can be applied at the new width after checking their parameter dependencies. This supplies explicit projection, cross and complementary-block inputs for (A4); the retained sign still requires proof.
+
+Let $P_N$ be the full complex Legendre projection onto degrees below $N=448$. On the even Hilbert space take its restriction $P$ and the orthonormal embedding $E$ with columns
+
+$$
+E_j(u)=\sqrt{\frac{4j+1}{2a}}P_{2j}(u/a),\qquad 0\le j<224,
+\qquad a=\log3,
+$$
+
+where $P_{2j}$ is the standard Legendre polynomial. Thus $P=EE^*$ is the actual even projection. The same ellipse of radius $3/2$ has imaginary semiaxis $5/12$. Appendix C's Chebyshev and best-approximation estimate, with the new width, gives
+
+$$
+\sup_{|t|\le256}\|(I-P_N)e^{itu}\|^2
+\le72a\exp((640/3)a)(2/3)^{896}
+<\frac{396}{5}(68/25)^{235}(2/3)^{896}<2^{-178}.
+\tag{A8}
+$$
+
+Here $a<11/10$, $(640/3)(11/10)=704/3<235$ and the source's $e<68/25$ justify the outward comparison; the last step is exact rational arithmetic. Use $r=2^{-89}$, rather than the old-width $2^{-95}$. On the even space the band vectors are $w_t=\Pi_{\rm even}e^{itu}=\cos(tu)$, so
+
+$$
+\|(I-P)w_t\|\le\|(I-P_N)e^{itu}\|<r,
+\qquad \|w_t\|\le\sqrt{2a}<3/2.
+$$
+
+This does not assert a small residual for $e^{itu}$ under the even projection on the full Hilbert space.
+
+The source pole estimate also has explicit width conditions. They remain valid: $a/2<1$, $e^{a/2}<2$ and $\sqrt{2a}<3/2$. Degree-$447$ Taylor approximation of $a_\pm(u)=e^{\pm u/2}$ gives $\|(I-P_N)a_\pm\|<3/448!$ and $\|a_\pm\|<3$. The same rank-one difference estimate therefore yields
+
+$$
+\|K_{\rm pole}-P_NK_{\rm pole}P_N\|
+<36/448!\le36/2^{447}<2^{-440}=:p.
+$$
+
+Restriction gives this upper allowance on the even space. Its pole operator is $2|\cosh(u/2)\rangle\langle\cosh(u/2)|$, hence positive there. The pole allowance $p$ is an upper-error input, not a negative-complement charge.
+
+For the actual $V_9=K_9+U_9$, put $R_9=V_9-PV_9P$. The source's support-independent band-weight input is
+
+$$
+\kappa=\frac1{2\pi}\int_{-256}^{256}|A(t)-7/2|\,dt<896.
+$$
+
+The rank-one band integral and (A8) bound its cross block by $1344r$ and its complementary norm by $896r^2$. Since $v_{0,9}\in\operatorname{ran}P$, the source's Cauchy--Schwarz and Plancherel estimate gives $\|(I-P)h_{0,9}\|<10r$. Thus the actual even tail cross block is bounded by $(810/29)r<28r$, and its complementary norm by $8100r^2$. The pole and tail complementary blocks are both positive. Consequently the following source-proof application pays the actual even blocks:
+
+$$
+\|(R_9)_{10}\|<1372r+p,\qquad
+(R_9)_{11}\succeq-896r^2I,\qquad
+\|(R_9)_{11}\|<8996r^2+p.
+\tag{A9}
+$$
+
+The positivity of the even pole is used only in the lower complementary bound. Its upper allowance remains in the cross and norm bounds. These bounds cover the entire complement inside the even Hilbert space; they do not assert an odd-sector result or supply the finite sign in (A4).
+
+For this common embedding, (A4) can use $e=1372r+p$, $n=896r^2$ and $h=8996r^2+p$, with $n<1/2<4/5$. The source's sharper prime input $m_*=264/325$, $b_*=2011/325$ can also be used directly in its general equations (18)--(22). The actual finite $J_9,D_9$, an upper matrix bound for $G_9$, their directed source errors, and the resulting finite sign test remain unpaid. The ordinary compression $E^*M_9E$ is an upper bound for $G_9^{-1}$, so it cannot replace a lower bound for that inverse compression. The prime-coupling term $D_9$ does not vanish merely because the retained space is finite-dimensional. A positive floating compression would not discharge these obligations.
+
+The following exact scalar replay checks the new ellipse, width and coefficient comparisons. It uses the source analytic suppliers above and does not prove those suppliers or reconstruct a numerical certificate.
+
+```python
+from fractions import Fraction as F
+
+assert F(396, 5) * F(68, 25)**235 * F(2, 3)**896 < F(1, 2**178)
+assert F(68, 25)**11 < 2**20  # e^(a/2) < 2 for a < 11/10
+assert F(22, 10) < F(9, 4)   # sqrt(2a) < 3/2
+assert F(810, 29) < 28
+r, p, m = F(1, 2**89), F(1, 2**440), F(264, 325)
+e, n, h = 1372*r+p, 896*r*r, 8996*r*r+p
+assert 896 + 8100 == 8996
+assert 1344 + 28 == 1372
+assert n < F(1, 2) < F(4, 5) < m
+print('new-width band, even block and pole parameter comparisons passed')
+```
+
 ## The remaining retained-matrix consumer at $c=9$
 
 The source's Certification Theorem, section 6, equations (17)–(22), now has a legitimate prime-block input $m=4/5$, $b=31/5$ at this new window. In particular $M_9$ is boundedly invertible and $\|M_9^{-1}\|\le5/4$. The same already evaluated bound (A3), before rounding, also permits $m_*=264/325$, $b_*=2011/325$ and $\|M_9^{-1}\|\le325/264$; these are parameter substitutions, not another prime-block calculation. The conservative parameters below suffice to state the remaining obligation.
@@ -394,4 +468,4 @@ G_9^{-1}+J_9\succeq
 \tag{A4}
 $$
 
-This condition would imply $M_9+V_9\succeq0$, and (A7) would then give $Q(f)\ge2^{-49162}\|f\|^2$ on the legal tests in this window. It is an application of the published block criterion, not an established inequality (A4). The actual entries of $K_9$ and the filtered-vector columns, source intervals, projection errors, inverse-compression bound and finite sign test remain payable. The tail input itself is supplied by (A5)–(A6). No retained matrix or approximation error from the $17/16$ certificate has been transported to $\log3$; the matching tail numbers have their separate parameter proof above. Using another retained basis requires identifying the same form and transporting all these objects together. Even a completed $c=9$ sign test would still leave the subsequent cofinal support layers required for RH.
+This condition would imply $M_9+V_9\succeq0$, and (A7) would then give $Q(f)\ge2^{-49162}\|f\|^2$ on the legal even tests in this window when all objects are restricted to the even space. It is an application of the published block criterion, not an established inequality (A4). The actual entries of $K_9$ and the filtered-vector columns, their directed source errors, the inverse-compression bound and the finite sign test remain payable. The tail input is supplied by (A5)–(A6), and the explicit even embedding has its cross and complementary-block allowances in (A8)–(A9). No retained matrix or approximation error from the $17/16$ certificate has been transported to $\log3$; the matching tail numbers have their separate parameter proof above. Using another retained basis requires identifying the same form and transporting all these objects together. Even a completed $c=9$ sign test would still leave the subsequent cofinal support layers required for RH.
