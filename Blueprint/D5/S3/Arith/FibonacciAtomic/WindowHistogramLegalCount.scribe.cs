@@ -7,7 +7,7 @@ internal sealed class WindowHistogramLegalCountDocument : IScribeDocumentDefinit
     private const string Prefix = "D5/S3/Arith/FibonacciAtomic/WindowHistogramLegalCount.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Neutral input positions give a unique gap decomposition of the actual five-window language.",
+        "Neutral input positions give a unique legal gap code and exact five-window histogram counts.",
         H("Neutral Gaps and Exact Histogram Counts of Legal Fibonacci Window Words"),
         Blocks(
             Paragraph(Text("Use the literal windows X=100, Y=001, Z=101, U=000 and V=010, "
@@ -96,7 +96,7 @@ internal sealed class WindowHistogramLegalCountDocument : IScribeDocumentDefinit
                 "The first subset specifies U positions, its complement V positions; "
                 + "the second subset specifies Z-bearing gaps, and the two weak compositions "
                 + "specify the X and Y exponents of every gap.", DescribeRole.Definition),
-            Node("result", "Unique decomposition and exact legal gap shape",
+            Node("result", "Unique decomposition, histogram counts and terminal labels",
                 "The assertions hold jointly. For every finite window word w there "
                 + "exists exactly one p in Cuts with Clean(p) and Join(p)=w. For every "
                 + "w, the number of separator-gap pairs in Split(w) is count(U,w)+count(V,w). "
@@ -132,7 +132,22 @@ internal sealed class WindowHistogramLegalCountDocument : IScribeDocumentDefinit
                 + "joining are inverse when the gap alphabet condition holds. Reading the "
                 + "exponents and rebuilding are inverse on all legal words. Since neutral "
                 + "letters differ from X and Z, these endpoints require a nonempty final "
-                + "gap of the stated form."))));
+                + "gap of the stated form.",
+                "Index the neutral positions by Fin(t) and the gaps by Fin(t+1). "
+                + "Their U positions and Z-bearing gaps are independent subsets of the "
+                + "prescribed sizes. The X and Y exponents independently form the existing "
+                + "ordered weak-composition data. Reading and reconstruction give both "
+                + "directions of the literal-word bijection. Apply the pinned subset and "
+                + "weak-composition cardinalities directly. The endpoint sum uses the "
+                + "standard partition by the last window, and the F labels use the public "
+                + "execution theorem and the standard last-item decomposition.",
+                "The standard counting inputs are described by MIT Mathematics for "
+                + "Computer Science, Corollary 15.5.3 and Rule 15.6.3. Flajolet and "
+                + "Sedgewick, Analytic Combinatorics, discuss Smirnov words (pp. 204-205), "
+                + "Carlitz compositions (pp. 262-263), and locally constrained words "
+                + "(pp. 349-350). The inspected sections supply general methods; they "
+                + "do not state this same five-window histogram and terminal-fiber result. "
+                + "This is a bounded literature finding, not a claim of universal novelty."))));
 
     private static DocumentBlock Node(string name, string title, string statement,
         DescribeRole role, params string[] proof) => Describe.Lean(
