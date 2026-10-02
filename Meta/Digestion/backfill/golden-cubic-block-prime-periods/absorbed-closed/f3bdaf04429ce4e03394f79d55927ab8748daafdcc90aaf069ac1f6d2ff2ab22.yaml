@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:f3bdaf04429ce4e03394f79d55927ab8748daafdcc90aaf069ac1f6d2ff2ab22
   normalized_sha256: sha256:f3bdaf04429ce4e03394f79d55927ab8748daafdcc90aaf069ac1f6d2ff2ab22
 cas_ref: sha256:f3bdaf04429ce4e03394f79d55927ab8748daafdcc90aaf069ac1f6d2ff2ab22
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/Dedekind/TameDifferent.prime_power_divides_different_iff
+    target_statement_id: sha256:ea3286cd7021ed192bf815858f90acbe83184cf941152d800ad58c0df0e7c7e0
 receipts:
   unresolved_subitems: []
