@@ -60,11 +60,34 @@ public sealed class ContentCheckCommandTests
     }
 
     [Theory]
+    [InlineData("projections", 1, "pinned statement projection is missing")]
+    [InlineData("describe", 1, "linear-formula-token")]
+    [InlineData("green", 2, "markdown-check --report")]
+    public void DefersWhitespacePathsValidationUntilMarkdown(
+        string mutation, int expectedExit, string diagnostic)
+    {
+        using var fixture = new Fixture(mutation);
+        const string pathsFile = " ";
+        var scope = MarkdownPath + "\0";
+        TemporaryFileSystem.File.WriteAllText(fixture.Root.Resolve(pathsFile), scope);
+        Assert.Equal(scope, TemporaryFileSystem.File.ReadAllText(fixture.Root.Resolve(pathsFile)));
+        var options = new[] { "--paths-from", pathsFile };
+        var individual = Capture((output, error) => RunIndividual(fixture, options, output, error));
+        var combined = Capture((output, error) => ScribeCli.Run(Documents,
+            ["content-check", "--report", fixture.ReportPath, .. options], fixture.Root.Path, output, error));
+
+        Assert.Equal(expectedExit, individual.Exit);
+        Assert.Contains(diagnostic, individual.Output + individual.Error, StringComparison.Ordinal);
+        AssertEquivalent(individual, combined);
+        if (mutation == "projections") Assert.Empty(combined.Output);
+        else Assert.NotEmpty(combined.Output);
+    }
+
+    [Theory]
     [InlineData("content-check")]
     [InlineData("content-check", "--report")]
     [InlineData("content-check", "--report", "")]
     [InlineData("content-check", "--report", "report.json", "--paths-from")]
-    [InlineData("content-check", "--report", "report.json", "--paths-from", " ")]
     [InlineData("content-check", "--report", "report.json", "--bad", "paths.txt")]
     [InlineData("content-check", "--paths-from", "paths.txt", "--report", "report.json")]
     [InlineData("content-check", "--report", "report.json", "extra")]
@@ -125,7 +148,26 @@ public sealed class ContentCheckCommandTests
         AssertEquivalent(individual, combined);
     }
 
-    private static int RunIndividual(Fixture fixture, string[] options, TextWriter output, TextWriter error)
+    [Fact]
+    public void PassesNonEmptyStandardInputScopeToMarkdownOnly()
+    {
+        using var fixture = new Fixture("markdown");
+        using var individualInput = new StringReader(MarkdownPath + "\0");
+        using var combinedInput = new StringReader(MarkdownPath + "\0");
+        var individual = Capture((output, error) => RunIndividual(fixture,
+            ["--paths-from", "-"], output, error, individualInput));
+        var combined = Capture((output, error) => ScribeCli.Run(Documents,
+            ["content-check", "--report", fixture.ReportPath, "--paths-from", "-"],
+            fixture.Root.Path, output, error, combinedInput));
+
+        Assert.Equal(1, individual.Exit);
+        Assert.Contains("Double subscript", individual.Error, StringComparison.Ordinal);
+        Assert.Contains(MarkdownPath, individual.Error, StringComparison.Ordinal);
+        AssertEquivalent(individual, combined);
+    }
+
+    private static int RunIndividual(
+        Fixture fixture, string[] options, TextWriter output, TextWriter error, TextReader? input = null)
     {
         string[][] commands =
         [
@@ -135,7 +177,7 @@ public sealed class ContentCheckCommandTests
         ];
         foreach (var command in commands)
         {
-            var exit = ScribeCli.Run(Documents, command, fixture.Root.Path, output, error, TextReader.Null);
+            var exit = ScribeCli.Run(Documents, command, fixture.Root.Path, output, error, input ?? TextReader.Null);
             if (exit != 0) return exit;
         }
         return 0;

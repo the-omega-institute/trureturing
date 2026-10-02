@@ -85,8 +85,7 @@ public static class ScribeCli
                 || !string.Equals(arguments[1], "--report", StringComparison.Ordinal)
                 || string.IsNullOrWhiteSpace(arguments[2])
                 || (arguments.Count == 5
-                    && (!string.Equals(arguments[3], "--paths-from", StringComparison.Ordinal)
-                        || string.IsNullOrWhiteSpace(arguments[4]))))
+                    && !string.Equals(arguments[3], "--paths-from", StringComparison.Ordinal)))
             {
                 error.WriteLine(Usage);
                 return 2;
