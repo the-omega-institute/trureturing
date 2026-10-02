@@ -163,7 +163,8 @@ of qualified R-only parents, giving actual descendant-phase caps.
 Opposite concentrated primes5 and7 force H_3<=28. If R avoids
 5,7,11,13, the SAME original family satisfies H_3<=64 and every
 nonternary exponent is at most48; concentrated exponents are at most14.
-The number of nonconcentrated primes remains unbounded.
+These height estimates alone do not bound the number of nonconcentrated primes;
+section151 supplies a separate support bound in the stated branch.
 
 [Section145](#145-separate-shallow-row-laminarity-permits-unrestricted-cross-row-intersections)
 requires laminarity only within each shallow depth row; arbitrary
@@ -178,7 +179,8 @@ applies the complete-parent capacity at one actual lower source, even
 when top phases differ. In the small-prime concentrated branch, a
 same-support group of at least47 labels has lower-core divisor count
 at most46, hence at most five deep primes outside the chosen color pair.
-Height-one support and the small-core multiplicities remain unbounded.
+This lower-core estimate alone does not bound height-one support or
+small-core multiplicities.
 
 [Section147](#147-one-qualified-parent-pays-the-combined-original-supplier-demand-across-axes)
 spends one parent-phase allowance across all actual coordinate suppliers,
@@ -207,6 +209,14 @@ cofactor in the first-digit compression. With k nonconcentrated primes
 outside the four-prime head, all concentrated primes are at most
 11+65*49^k; initial-segment support then bounds all primes for fixed k.
 The transported witnesses keep every shared coordinate at full height.
+
+[Section151](#151-height-coded-prime-absorption-bounds-the-entire-original-support)
+encodes each old smaller-prime height in a distinct replacement exponent.
+One common source and one enclosing AP per original give a class-count
+descent whenever q>p^(2H_p+1), including all mixed pq originals.
+Together with OCP8–OCP9, the branch R disjoint from {5,7,11,13}
+has EVERY prime below13^9 and its period divides one explicit finite Q_*.
+That finite branch has not been excluded; unrestricted Erdős#7 is open.
 
 ## 1. Replace only the region that depends on the changed classes
 
@@ -18419,3 +18429,175 @@ For k=1, RSG3 is the concrete concentrated-prime head B_1=3196; the possible ful
 RSG3 can keep the actual product D_R instead of49^k. When R={q}, the stronger q-height bounds QHP4 and OCP5 give further valid substitutions D_R=H_q+1. Bounds on the same family's parameters may be combined; independently optimized private sources are not identified.
 
 The arithmetic addition is the actual shared-cofactor collision count RSG1–RSG2. The source map, matching implication and whole-cover descent are reused. This consumer alone does not bound k, and it does not resolve unrestricted noncoverage or constitute Lean verification.
+
+## 151. Height-coded prime absorption bounds the entire original support
+
+For one original EB1 whole cover with period Q, every original support prime p satisfies
+
+    P^+(Q)<p^(2H_p+1),  H_p=v_p(Q).                  (HPA1)
+
+Consequently, in the branch R intersect {5,7,11,13}=empty, the original OCP8–OCP9 bounds imply
+
+    P^+(Q)<13^9=10604499373.                         (HPA2)
+
+This bounds ALL original support primes in that branch, including every nonconcentrated prime. It does not exclude the resulting finite branch. The proof is ordinary mathematics using the original-source prefix transport of Report375 LA2–LA3, a checked enclosing AP for each original, and EB1's global comparison over distinct odd whole covers. No new Lean verification or literature-priority claim is made.
+
+### One fixed code retains the old smaller-prime coordinate
+
+First consider any finite whole cover by original classes A_d=rho_d modulo d, with pairwise distinct odd numerical moduli d>1 and
+
+    Q=p^H q^G M,
+    H,G>=1, gcd(M,pq)=1,
+
+where p,q are distinct odd primes. Assume the original prime class A_q is present and
+
+    q>p^(2H+1).                                    (HPA3)
+
+No restriction excludes original classes whose moduli contain both p and q. No bound on the number or heights of primes in M is imposed.
+
+Set
+
+    b=H+1,
+    E_e=H+be, 1<=e<=G,
+    E_1=2H+1.
+
+Choose once an injection of the p^(2H+1) possible first E_1 base-p digits into the q-1 first q-roots other than rho_q modulo q. This is possible because p^(2H+1)<=q-1. At every later level, inject the p^b possible blocks of b base-p digits into the q possible digits; p^b<q follows from HPA3. Taking these successive digit codes gives injections
+
+    theta_e:Z/p^E_e -> Z/q^e,
+    theta_G(t) modulo q^e
+       =theta_e(t modulo p^E_e).                    (HPA4)
+
+All first q-roots in their images avoid A_q. The code is fixed for the whole construction; it depends on neither an original label nor a separately chosen M-cofactor witness. It need not be an additive homomorphism or preserve Haar measure.
+
+Use the new complete carrier
+
+    Qtilde=p^E_G M.
+
+For every z modulo Qtilde evaluate the original cover at the ONE CRT source point
+
+    Psi(z)=(z modulo p^H,
+            theta_G(z modulo p^E_G),
+            z modulo M)
+          in Z/p^H times Z/q^G times Z/M.            (HPA5)
+
+This source retains the complete old p^H coordinate and the complete old M coordinate. It correlates those retained p-digits with the selected q-prefix through one fixed map. No independence assumption is used.
+
+### Every original mixed height has one exact inverse or an empty inverse
+
+Keep every q-free original unchanged. Such an original has modulus p^a s with 0<=a<=H and s|M. Its event at Psi(z) is exactly its unchanged AP event at z, since both required coordinates are preserved.
+
+Write a q-bearing original uniquely as
+
+    d=p^a q^e s,
+    0<=a<=H, 1<=e<=G, s|M.
+
+If rho_d modulo q^e is outside image(theta_e), omit d: its full inverse under Psi is empty. Otherwise let c_d modulo p^E_e be its unique inverse. If
+
+    c_d != rho_d modulo p^a,
+
+again omit d, since its old p- and q-conditions are incompatible on the selected source. This test retains the actual old p-phase of every mixed pq original, including all heights below H.
+
+In the remaining case, the complete exact inverse is the single CRT AP
+
+    C_d={z:z=c_d modulo p^E_e,
+             z=rho_d modulo s}.                    (HPA6)
+
+Indeed prefix compatibility in HPA4 makes the original q^e condition equivalent to the first congruence. Its compatible p^a condition is then automatic, while the literal s-congruence supplies the entire cofactor condition. Every later p-digit is free. This is equality for the whole inverse, not merely containment of a sampled point.
+
+Assign this surviving original the ONE enclosing AP
+
+    B_d={z:z=c_d modulo p^(be+a),
+             z=rho_d modulo s},
+    d'=p^(be+a)s.                                  (HPA7)
+
+Since be+a<=be+H=E_e, the full C_d is contained in B_d. Extra points covered by B_d are allowed. This enclosure preserves the original height a in the numerical label; requiring equality with the exact inverse would instead give all original heights at fixed(e,s) the same replacement modulus p^E_e s.
+
+The new modulus divides Qtilde because be+a<=bG+H=E_G and s|M. The unchanged moduli also divide Qtilde. Thus all output events are APs on one common complete carrier.
+
+### The numerical label recovers the entire original triple
+
+Every new modulus has p-height
+
+    be+a>=H+1,
+
+whereas every unchanged original has p-height at most H. Hence a new label cannot equal an unchanged label, regardless of the other prime factors or phases.
+
+For a new label d', put k=v_p(d'). Its original triple is recovered by
+
+    a=k modulo b in {0,...,H},
+    e=(k-a)/b,
+    s=d'/p^k.                                      (HPA8)
+
+The intervals {be,...,be+H} for successive e are disjoint because b=H+1. Thus equality of two new numerical labels forces equality of(a,e,s) and hence equality of the original numerical moduli. Numerical distinctness of the original family proves new–new distinctness.
+
+All output moduli are odd and exceed one. No original produces more than one output AP. Shared cofactors and mixed pq labels do not require separate exceptions.
+
+### One original source proves complete output coverage
+
+Take any output point z and use original whole coverage at Psi(z). If its owner is q-free, the unchanged original covers z. If its owner is q-bearing, that original has a nonempty inverse and z belongs to its C_d, hence to B_d. Therefore the entire output carrier is covered, and periodicity gives coverage of every integer.
+
+This is a pointwise accounting of the whole simultaneous deletion liability. It does not identify the union of individual private regions with a joint hole, choose a different source for each original, or discard an old cofactor condition.
+
+The prime class A_q has empty inverse because every first q-root chosen by HPA4 avoids its actual residue. Hence it is omitted. Every other original contributes at most one output, so the output has at most |D|-1 classes. This proves the strict class-count reduction under HPA3.
+
+For completeness, every transported modulus also obeys
+
+    d'/d=(p^(H+1)/q)^e<1.                           (HPA9)
+
+When A_q is present the class-count reduction already suffices; no sum comparison is needed. If A_q is absent, choose any one first-q root to omit from the code; the same construction still yields a lexicographic improvement: either some original disappears, or all q-bearing originals survive and their moduli strictly decrease at unchanged count.
+
+### EB1 permits the complete comparison class
+
+Now use the original EB1 source. Original divisor closure supplies A_q for every support prime q. If any distinct original support primes p,q satisfied HPA3, the construction would give a distinct odd whole cover with fewer classes, contradicting EB1. Therefore
+
+    q<=p^(2H_p+1).
+
+Equality is impossible because a prime q cannot equal the proper prime power p^(2H_p+1), where H_p>=1. For q=p the strict inequality holds directly. Maximizing q over the original support proves HPA1.
+
+The comparison output may have larger p-exponents, may contain cross-color labels, and need not retain original divisor closure, the original CP1 partition, or an LCM dividing Q. These are allowed properties of the EB1 comparison class: Report350 EB1 minimizes over ALL distinct odd whole covers, and Report385 §135 explicitly retains that scope. The construction has verified precisely that class's requirements. No fixed-palette or fixed-height restriction is imposed on the comparison output.
+
+### Opposite concentrated primes provide a bounded-height anchor
+
+Assume
+
+    R intersect K=empty, K={5,7,11,13}.
+
+The original initial prime support supplies5, which is concentrated in this branch. The existing GM1 choice for the opposite retained root supplies an opposite concentrated prime ell in {7,11,13}, as used in OCP7–OCP9. Apply the existing OCP8 with r=ell and opposite prime5:
+
+    H_ell<=4+floor(2/(ell-1))=4.                     (HPA10)
+
+Use this ORIGINAL ell as p in HPA1. It follows that
+
+    P^+(Q)<ell^(2H_ell+1)<=13^9=10604499373,
+
+proving HPA2. In particular every r in R satisfies17<=r<13^9. This bounds the entire original nonconcentrated support; it does not merely produce one small shared prime or transfer information between separately chosen root quotient covers.
+
+Combine HPA2 with the existing same-family OCP9 bounds H_3<=64 and H_r<=48 for every nonternary original prime. The complete original period then satisfies
+
+    Q divides Q_*:=3^64
+       product_(5<=r<13^9, r prime)r^48.            (HPA11)
+
+The product is finite and uses one absolute cutoff. No enumeration of its primes or candidate covers is needed for this divisibility conclusion. It is a restriction on the same hypothetical EB1 source, not an independently chosen numerical model.
+
+### The existing nine-prime source excludes ternary height one in EB1
+
+The original EB1 initial support contains3. A separate consumer uses the already archived attributed Schroeder edition1.0.1 Theorem1.1, which requires at least nine distinct prime divisors in the LCM of a distinct odd whole cover. If H_3=1, HPA1 with p=3 gives P^+(Q)<27. Its only possible odd support primes would be
+
+    3,5,7,11,13,17,19,23,
+
+at most eight primes. The attributed nine-prime result therefore implies, for the SAME globally extremal EB1 source,
+
+    H_3>=2,
+    9 is an ORIGINAL numerical label.               (HPA12)
+
+The second conclusion uses original divisor closure. It does not assert that every arbitrary hypothetical odd distinct cover itself contains numerical label9.
+
+The evidence boundary remains that of [the archived Schroeder result](../../../../../../Library/Arith/schroeder2026nine.md): its finite geometry and rational-budget certificate were checked locally, while its full arbitrary-height reduction has no completed local Lean/kernel replay. This consumer reuses that attributed result without upgrading its verification status. HPA1–HPA11 do not depend on it.
+
+### Reused transport and the remaining mathematical task
+
+Report375 LA2–LA3 already supplies a common prefix-compatible original source, exact AP pullbacks, preserved q-free events, and fresh higher-prime numerical labels. Its retained q-bearing originals have full smaller-prime height H; lower-height originals are dropped under an additional avoiding-tree premise.
+
+Here the first q-digit encodes the full retained old p^H coordinate together with a new block, so every surviving original p-height has one exact inverse. The enclosing AP HPA7 then uses the disjoint exponent blocks in HPA8 to remember that original height. This supplies the missing collision check across all mixed pq originals without any avoiding-tree premise. It reuses the original transport and the enclosing-AP permission, with this explicit numerical encoding as the additional bridge.
+
+The resulting bound does not place a shared prime in K or below73, prove a suitable simultaneous descendant-phase concentration, or verify a strict whole-family probability estimate. The period Q_* is finite but large, and no exhaustive exclusion of its distinct odd whole covers is supplied. Excluding the bounded original-source branch, and unrestricted Erdős #7 beyond it, remain unresolved.
