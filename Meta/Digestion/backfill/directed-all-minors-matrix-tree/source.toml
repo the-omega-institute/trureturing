@@ -1,5 +1,5 @@
 source_id = "directed-all-minors-matrix-tree"
-path = "docs/develop/theory/DIRECTED_ALL_MINORS_MATRIX_TREE.md"
+path = "Library/Combinatorics/zernik2013allminors.md"
 atomizer = "generic-v1"
 genre_registry_check = "no-registry"
 unregistered_genres = []
