@@ -1,0 +1,9 @@
+## Exact finite-group inputs
+
+- Sylow's theorem gives n3 congruent to 1 modulo 3 and n3 divides |H|/9.
+- A transitive subgroup of S4 whose order is divisible by 3 has order 12 or 24; the order-12 subgroup is A4.
+- The spherical triangle group Delta(3,3,2), with presentation <R,S | R^3=S^3=(RS)^2=1>, is A4.
+- The finite-parabolic orders and faithfulness used above are checked exactly in verify_cycle9_coxeter_local.py (orders 16, 12, 18; K order 6).
+
+The Coxeter-sector hypotheses are documented in PR 12065 (https://github.com/the-omega-institute/trureturing/pull/12065), and the exact finite-quotient audit and double-coset count in PR 12077 (https://github.com/the-omega-institute/trureturing/pull/12077).
+
