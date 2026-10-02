@@ -14362,3 +14362,110 @@ has any specified density, or splits into independent coordinates.
 The remaining two-supplier and larger balanced incidences require
 their actual intersection data. No new Lean verification or
 unrestricted noncoverage is asserted.
+
+## 113. Disjoint safe-root covers permit one enclosing AP per original
+
+Keep one R=empty EB1 original cover and opposite-color primes p<q,
+with the notation t=min(t_p,t_q) from section104. Write its period
+Q=p^A q^B M, gcd(M,pq)=1, and H=v_3(Q). Let Omega be the complete
+ternary words modulo3^H outside the actual original pure-three guards.
+All those guards and every q-free original will remain unchanged.
+
+For c=0,...,t, write the actual collision original A_(3^c q) as
+
+    s=alpha_c mod3^c, first-q root j_c.
+
+Here j_0=0, and j_c!=0 for c>=1 by comparable-class disjointness.
+For each nonzero q-root j define its COMPLETE forbidden and safe sets
+
+    B_j=Omega intersect union_(1<=c<=t, j_c=j)
+                         {s:s=alpha_c mod3^c},
+    U_j=Omega minus B_j.                            (SCV1)
+
+Every occurrence of a repeated root is included. Suppose there are
+p-1 pairwise label-disjoint root sets L_1,...,L_(p-1) such that
+
+    union_(j in L_r) U_j=Omega for each r.           (SCV2)
+
+Then the original cover descends to a distinct odd whole cover with
+at most N-(t+1) classes. Thus SCV2 is impossible in an EB1 source.
+All original heights and all actual cofactor phases are unrestricted.
+
+The new interface permits the entire pullback of an original to be
+CONTAINED in one fixed AP. It does not require equality with that AP.
+The exact source map and numerical label map remain those of IC1;
+the disjoint groups are what make a fixed enclosure possible when
+the chosen first-q root varies with the ternary word.
+
+### One common source and one fixed enclosing AP
+
+For each s in Omega and r!=0, choose theta_s(r) in L_r with
+s in U_(theta_s(r)), for example the least allowed member. The groups
+are disjoint, so theta_s is injective. On the required output domain
+with ternary word s in Omega and first-p root r!=0, use the common
+source in the carrier Q'=p^A q^(B-1)M:
+
+    y modp^A=z modp^A, y modM=z modM,
+    y modq^B=theta_s(r)+q*(z modq^(B-1)).           (SCV3)
+
+All higher q-digits remain literal; B=1 has the one-point tail.
+Outside this required domain, retained A_p or a retained pure-three
+guard already covers the point.
+
+Every old q-bearing modulus has form d=q^a u with a>=1 and
+gcd(u,pq)=1, by CP1. Write its q-phase j_d+q*beta_d moduloq^a.
+If j_d belongs to L_r, its WHOLE required-domain pullback is contained
+in the fixed complete CRT AP
+
+    z=r modp, z=beta_d modq^(a-1), z=a_d modu,
+    numerical modulus p*q^(a-1)*u.                (SCV4)
+
+The exact inverse additionally imposes the mask theta_s(r)=j_d,
+which need not be an AP condition. Dropping that mask enlarges the
+set and preserves the covering implication. Since a root belongs
+to at most one L_r, each original receives at most ONE enclosing AP.
+An unassigned root has empty inverse and needs no output class.
+
+### All numerical collision originals disappear
+
+For c=0 the source never selects root0. For c>=1, membership in
+A_(3^c q) requires s=alpha_c mod3^c and hence s in B_(j_c), while
+selection of j_c requires s in U_(j_c). Thus every one of these
+t+1 originals has empty required-domain inverse. Omit them entirely;
+do not add an enclosure with an occupied numerical label.
+
+For all other originals, q^a u maps injectively to p*q^(a-1)*u.
+If a>=2 the new label contains q and cannot collide with a retained
+q-free original. At a=1, a collision would require the original pair
+qu,pu. CP1 forces u=3^c, and these are exactly the already omitted
+classes. Every output modulus is odd and greater than one. Output
+cross-color labels are allowed; CP1 was used only on the original
+inventory.
+
+At any required point, the old whole cover covers its single witness
+SCV3. A q-free owner remains a covering owner, and a q-bearing owner
+has its whole inverse inside its SCV4 enclosure. An omitted collision
+class cannot own that witness. Together with the unchanged coverage
+outside the required domain, this proves whole coverage. At most one
+AP is assigned per noncollision original, giving the asserted saving.
+Neither exact inverses nor irredundancy of the output are required.
+
+### The earlier exact-inverse obstruction keeps its original scope
+
+Section101's reservation control has p=7,q=11, four always-safe roots
+7,8,9,10, and pairwise disjoint complete forbidden prefixes for roots
+2,3,4,5,6. Its six required output roots can use the disjoint groups
+
+    {7}, {8}, {9}, {10}, {2,3}, {4,5}.
+
+Each group contains a safe root at every ternary word. In the fifth
+output column, the inverse of the control's test11*ell_2 is contained
+in the one AP z=5 mod7, z=1 modell_2. The other selectable root3 has
+its own different cofactor label ell_3, so its enclosure has a distinct
+numerical modulus7*ell_3. Their masks need not be APs.
+
+This does not turn that partial inventory into a whole cover. It
+identifies the exact stronger requirement bypassed by SCV4: section101
+still forbids the asserted exact single-AP inverse, while the present
+descent uses containment with separately checked numerical resources.
+No new Lean verification or unconditional noncoverage is asserted.
