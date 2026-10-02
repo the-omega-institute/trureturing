@@ -46,12 +46,14 @@ def DoubleComb {k : ℕ} (t : TreeMessageRealization.Tree (Fin (k+1))) : Prop :=
   ∃ j, 0 < j ∧ j < k+1 ∧ ∃ l r, PrefixSpine k j l ∧ SuffixSpine k j r ∧
     (t = fork l r ∨ t = fork r l)
 
+set_option maxHeartbeats 2000000 in
 /-- Arbitrary leaf-labelled full binary trees whose proper blocks are small
 have precisely the two peeling spines, with independent child exchanges. -/
-theorem rigidity_from_small_blocks (k : ℕ) (hk : 2 ≤ k)
+theorem rigidity_from_capacities (k : ℕ) (hk : 2 ≤ k)
     (t : TreeMessageRealization.Tree (Fin (k+1))) (ht : Full t)
     (hall : leaves t = Finset.univ)
-    (hsmall : ∀ s ∈ subtrees t, s ≠ t → SmallBlock (leaves s)) : DoubleComb t := by
+    (hcap : ∀ s ∈ subtrees t, s ≠ t →
+      capacity (fun _ => Window) boolean (fun i => i ∈ leaves s) ≤ 4) : DoubleComb t := by
   classical
   let z : Fin (k+1) := ⟨0, by omega⟩
   let e : Fin (k+1) := Fin.last k
@@ -67,6 +69,167 @@ theorem rigidity_from_small_blocks (k : ℕ) (hk : 2 ≤ k)
       | none =>
         obtain ⟨i,hi⟩ := hl hu.1
         exact ⟨i, by simp [leaves, hi]⟩
+  have classify (A : Finset (Fin (k+1))) (hA : A.Nonempty) (hproper : A ≠ Finset.univ)
+      (hwidth : capacity (fun _ => Window) boolean (fun i => i ∈ A) ≤ 4) :
+      SmallBlock A := by
+    rw [(FirstRejectionCutCapacity.result k A).2.2.2.2.2.2.2.2.1] at hwidth
+    have hd : d A ≤ 2 := by
+      apply (pow_le_pow_iff_right₀ (by decide : 1 < (2:ℕ))).mp
+      norm_num
+      omega
+    by_cases heps : Fin.last k ∈ A ∨ (internals A).Nonempty
+    · have hd1 : d A ≤ 1 := by
+        have hp : (2:ℕ)^d A ≤ 2 := by
+          have h := hwidth
+          simp only [epsilon, if_pos heps] at h
+          interval_cases hda : d A <;> norm_num [hda] at *
+        simpa using (pow_le_pow_iff_right₀ (by decide : 1 < (2:ℕ))).mp hp
+      have unique : ∀ a ∈ crossings A, ∀ b ∈ crossings A, a = b :=
+        Finset.card_le_one.mp hd1
+      have crosses : (crossings A).Nonempty := by
+        by_contra hn
+        have no : ∀ i : Fin k, ¬ Cross A i := by
+          intro i hi
+          exact hn ⟨i,by simp [crossings,hi]⟩
+        have constant (j : ℕ) (hj : j ≤ k) :
+            (⟨j,by omega⟩ : Fin (k+1)) ∈ A ↔ z ∈ A := by
+          induction j with
+          | zero => rfl
+          | succ j ih =>
+            have h := no ⟨j,by omega⟩
+            have prev := ih (by omega)
+            simp only [Cross,left,right,Fin.castSucc_mk,Fin.succ_mk] at h
+            tauto
+        obtain ⟨i,hi⟩ := hA
+        have hz : z ∈ A := (constant i.val (by omega)).mp hi
+        apply hproper
+        apply Finset.eq_univ_of_forall
+        intro j
+        exact (constant j.val (by omega)).mpr hz
+      obtain ⟨edge, hedge⟩ := crosses
+      have boundary : Cross A edge := by simpa [crossings] using hedge
+      have pattern (j : ℕ) (hj : j ≤ k) :
+          (⟨j,by omega⟩ : Fin (k+1)) ∈ A ↔ (j ≤ edge.val ↔ z ∈ A) := by
+        induction j with
+        | zero => simp [z]
+        | succ j ih =>
+          have prev := ih (by omega)
+          by_cases je : j = edge.val
+          · have ee : (⟨j,by omega⟩ : Fin k) = edge := Fin.ext je
+            have hc := boundary
+            rw [← ee] at hc
+            simp only [Cross,left,right,Fin.castSucc_mk,Fin.succ_mk] at hc
+            have hjle : j ≤ edge.val := by omega
+            have hjnle : ¬ j+1 ≤ edge.val := by omega
+            simp only [hjle,true_iff] at prev
+            simp only [hjnle,false_iff]
+            tauto
+          · have nc : ¬ Cross A ⟨j,by omega⟩ := by
+              intro hc
+              have eq := unique (⟨j,by omega⟩ : Fin k) (by simp [crossings,hc]) edge hedge
+              exact je (congrArg Fin.val eq)
+            simp only [Cross,left,right,Fin.castSucc_mk,Fin.succ_mk] at nc
+            have step : (j+1 ≤ edge.val) = (j ≤ edge.val) := by
+              apply propext; omega
+            rw [step]
+            tauto
+      by_cases hz : z ∈ A
+      · left
+        refine ⟨edge.val+1,by omega,by omega,?_⟩
+        ext i
+        rw [mem_interval]
+        have h : i ∈ A ↔ i.val ≤ edge.val := by
+          simpa only [hz,iff_true] using pattern i.val (by omega)
+        rw [h]
+        omega
+      · right; left
+        refine ⟨edge.val+1,by omega,by omega,?_⟩
+        ext i
+        rw [mem_interval]
+        have h : i ∈ A ↔ ¬ i.val ≤ edge.val := by
+          simpa only [hz,iff_false] using pattern i.val (by omega)
+        rw [h]
+        omega
+    · have hlast : Fin.last k ∉ A := fun h => heps (Or.inl h)
+      have nointernal : ∀ i : Fin k, ¬ Internal A i := by
+        intro i hi
+        exact heps (Or.inr ⟨i,by simp [internals,hi]⟩)
+      have below (i : Fin (k+1)) (hi : i ∈ A) : i.val < k := by
+        by_contra hn
+        have ie : i = Fin.last k := Fin.ext (by simp; omega)
+        exact hlast (ie ▸ hi)
+      have single : ∀ a ∈ A, ∀ b ∈ A, a = b := by
+        intro a ha b hb
+        by_contra hab
+        wlog hlt : a.val < b.val generalizing a b
+        · exact this b hb a ha (Ne.symm hab) (by
+            have hn : a.val ≠ b.val := fun h => hab (Fin.ext h)
+            omega)
+        have hak := below a ha
+        have hbk := below b hb
+        let x : Fin k := ⟨a.val,hak⟩
+        let y : Fin k := ⟨b.val-1,by omega⟩
+        let q : Fin k := ⟨b.val,hbk⟩
+        have ax : left x = a := Fin.ext rfl
+        have bq : left q = b := Fin.ext rfl
+        have by' : right y = b := Fin.ext (by dsimp [y,right]; omega)
+        have nx : right x ∉ A := fun h => nointernal x ⟨ax ▸ ha,h⟩
+        have nq : right q ∉ A := fun h => nointernal q ⟨bq ▸ hb,h⟩
+        have ny : left y ∉ A := fun h => nointernal y ⟨h,by' ▸ hb⟩
+        have xcross : x ∈ crossings A := by simp [crossings,Cross,ax,ha,nx]
+        have ycross : y ∈ crossings A := by simp [crossings,Cross,by',hb,ny]
+        have qcross : q ∈ crossings A := by simp [crossings,Cross,bq,hb,nq]
+        have gap : a.val+1 < b.val := by
+          by_contra hn
+          have xe : right x = b := Fin.ext (by dsimp [x,right]; omega)
+          exact nx (xe ▸ hb)
+        have xne : x ≠ y := by intro h; have := congrArg Fin.val h; dsimp [x,y] at this; omega
+        have xq : x ≠ q := by intro h; have := congrArg Fin.val h; dsimp [x,q] at this; omega
+        have yq : y ≠ q := by intro h; have := congrArg Fin.val h; dsimp [y,q] at this; omega
+        have ht := Finset.two_lt_card_iff.mpr
+          ⟨x,y,q,xcross,ycross,qcross,xne,xq,yq⟩
+        change 2 < d A at ht
+        omega
+      obtain ⟨i,hi⟩ := hA
+      have eq : A = {i} := Finset.eq_singleton_iff_unique_mem.mpr ⟨hi,fun j hj => single j hj i hi⟩
+      by_cases hz : i.val = 0
+      · left
+        refine ⟨1,by omega,by omega,?_⟩
+        rw [eq]
+        ext j
+        rw [mem_interval,Finset.mem_singleton]
+        constructor
+        · intro h; subst j; omega
+        · intro h; apply Fin.ext; omega
+      · right; right
+        exact ⟨i,by omega,below i hi,eq⟩
+  have proper_subtree (u : TreeMessageRealization.Tree (Fin (k+1))) (hu : Full u)
+      (s : TreeMessageRealization.Tree (Fin (k+1))) (hs : s ∈ subtrees u)
+      (hne : s ≠ u) : leaves s ≠ leaves u := by
+    intro he
+    induction u with
+    | nil => simp [Full] at hu
+    | node a l r hl hr =>
+      cases a with
+      | some i =>
+        have hs' : s = .node (some i) l r := by simpa [subtrees] using hs
+        exact hne hs'
+      | none =>
+        simp only [subtrees,Finset.mem_insert,Finset.mem_union] at hs
+        rcases hs with hs | hs | hs
+        · exact hne hs
+        · obtain ⟨i,hi⟩ := nonempty r hu.2.1
+          have hm : i ∈ leaves s := by rw [he]; simp [leaves,hi]
+          exact Finset.disjoint_left.mp hu.2.2 ((subtree_structure l hu.1 s hs).2 hm) hi
+        · obtain ⟨i,hi⟩ := nonempty l hu.1
+          have hm : i ∈ leaves s := by rw [he]; simp [leaves,hi]
+          exact Finset.disjoint_left.mp hu.2.2 hi ((subtree_structure r hu.2.1 s hs).2 hm)
+  have hsmall : ∀ s ∈ subtrees t, s ≠ t → SmallBlock (leaves s) := by
+    intro s hs hne
+    apply classify _ (nonempty s (subtree_structure t ht s hs).1)
+    · rw [← hall]
+      exact proper_subtree t ht s hs hne
+    · exact hcap s hs hne
   have self (u : TreeMessageRealization.Tree (Fin (k+1))) (hu : Full u) : u ∈ subtrees u := by
     cases u with
     | nil => simp [Full] at hu

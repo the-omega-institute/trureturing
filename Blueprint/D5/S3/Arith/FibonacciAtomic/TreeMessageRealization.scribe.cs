@@ -29,6 +29,17 @@ internal sealed class TreeMessageRealizationDocument : IScribeDocumentDefinition
                 + "over all raw global inputs. Peak(m,T) is the maximum of these counts, including the root. "
                 + "Optimum(F,T) is the infimum of peaks of accurate implementations. A one-leaf task tree "
                 + "has height zero, and each actual fork adds one edge to the longest dependency chain.")),
+            Describe.Lean(DescribeId.Create("tree-message-subtree-structure"),
+                DeclarationHandle.Create(Prefix + "subtree_structure"), H("Subtree Coordinate Blocks"),
+                StatementSource.FromAuthor(Seq(
+                    Call("Full", V("T")), Sp, Implies, Sp, Forall, Sp, V("S"), Sp, InMacro, Sp,
+                    Call("subtrees", V("T")), Comma, Sp, Call("Full", V("S")), Sp, Land, Sp,
+                    Call("A", V("S")), Sp, Subseteq, Sp, Call("A", V("T")))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every subtree is full and its coordinate block is contained in "
+                    + "the ancestor block. At a fork, the two child blocks are disjoint. Induction follows "
+                    + "the child containing the subtree and then includes its block in the parent union."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("tree-message-lower-bound"),
                 DeclarationHandle.Create(Prefix + "implementation_lower_bound"), H("Every Accurate Implementation"),
                 StatementSource.FromAuthor(Seq(
