@@ -114,21 +114,67 @@ Scribe resolution kind is Refuted. The mathematical target is Conjecture 42.
   the minimum and that dual is unique. The failure concerns canonicality,
   not existence or uniqueness of the minimizer.
 - Computed: the canonical dual is (3/14, 1/7, 1/14), with coherence 3/7;
-  the minimizing coherence is 2/5, and the gap is 1/35. Exact rational
-  reproduction command:
-
-  ```sh
-  python3 -c 'from fractions import Fraction as Q; F=[Q(3),Q(2),Q(1)]; G=[Q(1,5),Q(2,15),Q(2,15)]; C=[f/sum(x*x for x in F) for f in F]; mu=lambda H:max(abs(F[i]*H[j]) for i in range(3) for j in range(3) if i!=j); print(C,mu(C),mu(G),mu(C)-mu(G))'
-  ```
-
+  µ(F, F/14) = 3/7 > 2/5 = min over all duals, and the gap is 1/35.
+  Thus the canonical dual does not even form a Grassmannian pair with F
+  under Definition 34. The declarations mu and canonicalDual specify the
+  quantities; result proves the minimizing value and universal lower bound
+  inline, but does not separately prove the canonical coherence 3/7. That
+  coherence and the strict comparison are computed with exact rationals
+  by the command below.
 - Open here: whether a version restricted to normalized vectors or to
   dimensions at least two has a canonicality conclusion. The witness
   does not satisfy a unit-norm restriction and uses dimension one.
-- Open here: Conjecture 43 and any complete classification of exclusive
-  pairs. This delivery asserts no separate settlement of that conjecture.
+- Open here: any complete classification of exclusive pairs.
   The source's proved lemmas and examples are not negated by the refutation
   of Conjecture 42; any conclusion that assumes its universal canonicality
   assertion needs an independent argument or additional hypotheses.
+
+### Co-equidistribution and Conjecture 43
+
+The source's definition is the unnumbered paragraph on p. 16 of
+arXiv:2205.05613v3, immediately before Corollary 40:
+
+> These two frames have another interesting property: For every l, l′ in the index set I, there exists a permutation π of I such that
+>
+> |⟨f_j, f̃_l⟩| = |⟨f_{π(j)}, f̃_{l′}⟩| for all j ∈ I.
+>
+> If a frame F and its dual H satisfy such a permutation property, then we call the frame pair co-equidistributed.
+
+The proof of Corollary 40 explicitly describes this as equality of the
+magnitudes of every column of the cross Gramian, up to permutation.
+Thus the definition compares complete column-magnitude multisets,
+including diagonal entries; it is distinct from the off-diagonal maximum
+used for coherence.
+
+Computed with Python Fraction exact rationals for F = (3, 2, 1) and
+G = (1/5, 2/15, 2/15), the columns of |Gr(F,G)| are:
+
+- Column 0: (3/5, 2/5, 1/5).
+- Column 1: (2/5, 4/15, 2/15).
+- Column 2: (2/5, 4/15, 2/15).
+
+The column 0 multiset has maximum 3/5, while the other two have maximum
+2/5. They cannot be equal up to permutation, so this pair is not
+co-equidistributed (computed). The same script computes the canonical
+coherence comparison above:
+
+```sh
+python3 /tmp/op-f42/cross_gram.py
+```
+
+Conjecture 43 in Section 4.2, p. 17, states verbatim:
+
+> A frame F forms an exclusive Grassmannian pair with a dual frame F̃ if and only if the frame pair (F, F̃) is co-equidistributed. When this is true, the dual frame F̃ is the canonical dual of F.
+
+The witness is an exclusive Grassmannian pair, as proved inline in result,
+and is not co-equidistributed, as computed above. It therefore supplies
+a computed counterexample to the forward implication, exclusivity implies
+co-equidistribution. It does not test the reverse implication,
+co-equidistribution implies exclusivity, or canonicality under a
+co-equidistribution hypothesis, because this pair fails that hypothesis.
+Conjecture 43 remains open in this delivery: co-equidistribution and its
+equivalence with exclusivity are not formalized or separately settled.
+The Lean module settles Conjecture 42 only.
 
 ## ASSUMED-UNVERIFIED
 
