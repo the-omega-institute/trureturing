@@ -24269,3 +24269,73 @@ applies.  The remaining unrestricted gap is therefore in the branch
 \(E_B\not\subseteq C\), in the non-prefix-separated two-sided responsibility,
 or in an exchange that releases further occupied labels and pays its enlarged
 joint liability.
+
+## 206. A cross-side low bridge inside the original period has a finite split
+
+The unresolved equal-prefix mixed envelope can be narrowed further when the odd
+part of a low bridge lies in the original top period.  Assume
+
+\[
+  p^{e-1}\mid(a-b),\qquad
+  R=p^{e-1}L,\qquad
+  E=E_A\mathbin{\dot\cup}E_B,
+\]
+
+with \(E_A\subseteq a\pmod R\), \(E_B\subseteq b\pmod R\), and let
+
+\[
+  C=[c]_d,\qquad d=p^r s,\qquad r<e,\quad p\nmid s,
+\]
+
+be an essential low class in the mixed repair.  As in Section 203, \(d\mid N\).
+Suppose additionally that \(s\mid L\) and that \(C\) meets both \(E_A\) and
+\(E_B\).  Put
+
+\[
+  G=\Gamma_N(E)=p^{e-1}K.
+\]
+
+Then
+
+\[
+\boxed{
+  s\mid\gcd(L,a-b)
+  \quad\text{and}\quad
+  s\nmid K.
+}
+\tag{CB1}
+\]
+
+Indeed, choose \(x_A\in C\cap E_A\) and \(x_B\in C\cap E_B\).  Since
+\(s\mid L\mid R\),
+
+\[
+  x_A\equiv a\pmod s,\qquad
+  x_B\equiv b\pmod s,
+\]
+
+while both points are congruent to \(c\) modulo \(s\).  Hence
+\(s\mid(a-b)\).  If \(s\mid K\), then \(d\mid p^{e-1}K=G\), because
+\(r\le e-1\).  The point \(x_A\) and the definition of the complete
+\(N\)-periodic hull then give \(d\mid y-x_A\) for every \(y\in E\), so
+\(E\subseteq C\).  That makes \(C\) redundant in an inclusion-minimal
+repair, a contradiction.  This proves (CB1).
+
+Consequently, every genuine cross-side low bridge whose odd cofactor is
+internal to \(L\) belongs to the finite set
+
+\[
+\boxed{
+  \operatorname{Div}\!\bigl(\gcd(L,a-b)\bigr)
+  \setminus \operatorname{Div}(K).
+}
+\tag{CB2}
+\]
+
+Membership in (CB2) is only necessary: the \(p^r\)-phase, the actual source
+phase, numerical freshness, and the full mixed-envelope cost still have to be
+checked.  A low bridge with \(s\nmid L\) uses an outside \(Q/L\) coordinate
+and is not covered by (CB1); this is the remaining external-coordinate part
+of the mixed case.  Thus (CB1)--(CB2) reduce the internal cross-side search
+without asserting that any admissible bridge exists or that its cost is
+strictly below the deleted packet.
