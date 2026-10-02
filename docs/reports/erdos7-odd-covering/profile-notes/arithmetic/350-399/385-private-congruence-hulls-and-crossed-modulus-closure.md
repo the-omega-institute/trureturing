@@ -23072,3 +23072,55 @@ cover the entire displayed responsibility.  These are sufficient interfaces,
 not assertions that every EB1 cover satisfies them.  The remaining global
 problem is to force one such budgeted repair, or a different repair that pays
 the complete two-phase liability, for every hypothetical EB1 cover.
+
+### A conditional divisor-supply repair at equal \(p\)-adic depth
+
+The source formula gives one more precise, but conditional, cardinality
+descent.  Assume
+
+\[
+p^{e-1}\mid(a_R-b),\qquad
+g=\gcd\!\left(\operatorname{lcm}(m_1,\ldots,m_p),\,a_R-b\right).
+\tag{PW-Divisor-Data}
+\]
+
+If \(\tau(g)\geq p\), choose \(p\) distinct positive divisors
+\(u_0,\ldots,u_{p-1}\mid g\).  The classes \(A\) and \(B\) have the same
+residue modulo \(p^{e-1}\), so their possible residues modulo \(p^e\) are the
+same \(p\)-element lift set.  Assign these \(p\) lifts to the \(u_\ell\)'s.
+If \(p^e u_\ell\) is already an original top label, use its original phase;
+the occupied top labels have distinct lifts, and the remaining fresh labels
+can be assigned the remaining lifts.  Define
+
+\[
+N_\ell=c_\ell\pmod {p^e u_\ell},\qquad
+c_\ell\equiv\beta_\ell\pmod {p^e},\qquad
+c_\ell\equiv b\pmod {u_\ell}.
+\tag{PW-Divisor-Classes}
+\]
+
+The CRT is valid because \(p\nmid u_\ell\).  Since
+\(u_\ell\mid g\), both \(A\) and \(B\) have the required residue \(b\) modulo
+\(u_\ell\).  The \(p\) classes \(N_\ell\) therefore cover all of
+\(A\cup B\), one class for each common \(p^e\)-lift.  Points of a deleted top
+class that are not covered by \(\mathcal C_0\) lie in \(H\subseteq B\), so
+
+\[
+\mathcal C_0\cup\{N_\ell:0\leq\ell<p\}
+\]
+
+is a whole cover.  Its numerical labels are distinct: an occupied label is
+retained with its original phase, and every fresh \(p^e u_\ell\) has
+\(p\)-height \(e\), so it cannot collide with a retained lower layer.  The new
+cover has \(p\) classes in place of \(A\) and the \(p\) top classes, hence one
+fewer class.  This contradicts EB1.
+
+Consequently, in the equal-\(p\)-adic branch of an EB1 representative,
+\[
+\boxed{\tau(g)\leq p-1.}
+\tag{PW-Divisor-Obstruction}
+\]
+The divisor count is only a conditional bridge: when
+\(p^{e-1}\nmid(a_R-b)\), the two \(R\)-classes have disjoint
+\(p^{e-1}\)-prefixes and this construction does not apply.  The remaining
+branch still requires a repair that pays the full two-phase liability.
