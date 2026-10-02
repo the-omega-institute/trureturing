@@ -1,5 +1,14 @@
 import LeanInformationAudit.Contract.SourceAudit
 
+/-!
+Interfaces use the finite command table and typeSyntaxKinds node table. Only
+identifier/numeral leaves, the listed type applications, arrows/Pi binders,
+Sort/Type/Prop, parentheses, ascriptions, binders, universes and declaration
+containers pass. Defaults, attributes, deriving, quotation, tactic/do/elab nodes
+and all unknown forms fail closed before compiled companion authorization.
+This type syntax permission remains required after P3.
+-/
+
 namespace LeanInformationAudit.Contract.InterfaceGuard
 open Lean
 
@@ -34,9 +43,30 @@ def family (env : Environment) (type : Name) : Except String NameSet := do
 private partial def hasAttribute (command : Syntax) : Bool :=
   (command.find? (·.isOfKind ``Parser.Term.attributes)).isSome
 
-private partial def hasTermElaboration (command : Syntax) : Bool :=
-  (command.find? fun node => node.isOfKind ``Parser.Term.byTactic ||
-    node.isOfKind ``Parser.Term.do || node.getKind.toString.toLower.contains "term_elab").isSome
+/-- Closed syntax table for type declarations. Leaves are identifiers and parser
+atoms; every compound term, binder, level and declaration node is named here.
+Default values and computation/elaboration/quotation nodes have no entry. -/
+private def typeSyntaxKinds : Array Name := #[
+  `null, `hygieneInfo, `num,
+  ``Parser.Command.declaration, ``Parser.Command.declModifiers,
+  ``Parser.Command.docComment, ``Parser.Command.declId,
+  ``Parser.Command.structure, ``Parser.Command.structureTk,
+  ``Parser.Command.structFields, ``Parser.Command.structSimpleBinder,
+  ``Parser.Command.inductive, ``Parser.Command.ctor,
+  ``Parser.Command.optDeclSig, ``Parser.Command.optDeriving,
+  ``Parser.Term.app, ``Parser.Term.arrow, ``Parser.Term.forall,
+  ``Parser.Term.explicit, ``Parser.Term.explicitUniv,
+  ``Parser.Term.paren, ``Parser.Term.hygienicLParen,
+  ``Parser.Term.typeSpec, ``Parser.Term.type, ``Parser.Term.sort, ``Parser.Term.prop,
+  ``Parser.Term.explicitBinder, ``Parser.Term.implicitBinder,
+  ``Parser.Term.strictImplicitBinder, ``Parser.Term.instBinder,
+  ``Parser.Term.binderIdent,
+  ``Parser.Level.addLit, ``Parser.Level.max, ``Parser.Level.imax, ``Parser.Level.paren]
+
+private partial def typeSyntaxIssue (node : Syntax) : Option Name :=
+  if node.isIdent || node.isAtom then none
+  else if !typeSyntaxKinds.contains node.getKind then some node.getKind
+  else node.getArgs.findSome? typeSyntaxIssue
 
 private partial def hasDerivingClause (command : Syntax) : Bool :=
   (command.find? fun node => node.isAtom && node.getAtomVal == "deriving").isSome
@@ -47,7 +77,7 @@ private partial def permittedDeclaration (command : Syntax) : Bool :=
     let declaration := command[1]
     (declaration.isOfKind ``Parser.Command.structure ||
       declaration.isOfKind ``Parser.Command.inductive) &&
-      !hasAttribute command && !hasTermElaboration declaration &&
+      !hasAttribute command && (typeSyntaxIssue command).isNone &&
       !hasDerivingClause declaration
 
 /-- Closed interface command allowlist. It is deliberately lexical and
@@ -68,6 +98,9 @@ private partial def permittedCommand (command : Syntax) : Bool :=
 def audit (env : Environment) (owner : Name) (entries : Array SourceAudit.Entry)
     : Except String Unit := do
   for entry in entries do
+    if entry.originCommand.isOfKind ``Parser.Command.declaration then
+      if let some kind := typeSyntaxIssue entry.originCommand then
+        throw s!"contract.interface:command_not_allowed:{owner}:type_syntax_not_allowed:{kind}"
     unless permittedCommand entry.originCommand do
       throw s!"contract.interface:command_not_allowed:{owner}:{entry.originCommand.getKind}"
   auditSource entries
