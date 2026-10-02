@@ -19,6 +19,7 @@ public enum ScribeScriptFailureCode
     SharedSourceCycle,
     Compilation,
     BannedSymbol,
+    DisallowedSymbol,
     DefinitionMissing,
     MultipleDefinitions,
     GidPathMismatch,
@@ -317,6 +318,13 @@ public static class ScribeScriptHost
             return (null, null, MakeFailure(entry, entryTypes.Length == 0
                 ? ScribeScriptFailureCode.DefinitionMissing : ScribeScriptFailureCode.MultipleDefinitions,
                 $"entry source contains {entryTypes.Length} concrete document definitions"));
+        var allowlist = ReadAllowlist(compilation, entry);
+        if (allowlist.Failure is not null)
+            return (null, null, allowlist.Failure);
+        var symbolFailure = ValidateAllowedSymbols(compilation, sources, allowlist.Table!);
+        if (symbolFailure is not null)
+            return (null, null, symbolFailure);
+
         var image = new MemoryStream();
         var emit = compilation.Emit(image);
         if (!emit.Success)
@@ -329,6 +337,180 @@ public static class ScribeScriptHost
 
         image.Position = 0;
         return (image, entryTypes[0], null);
+    }
+
+    private static (ScriptAllowlist? Table, ScribeScriptFailure? Failure) ReadAllowlist(
+        CSharpCompilation compilation, string entry)
+    {
+        var path = Path.Combine(AppContext.BaseDirectory, "Scripting", "ScribeScriptAllowlist.txt");
+        string[] lines;
+        try
+        {
+            lines = File.ReadAllLines(path);
+        }
+        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
+        {
+            return (null, MakeFailure(entry, ScribeScriptFailureCode.HostConfiguration,
+                $"script allowlist could not be read: {exception.Message}"));
+        }
+
+        var types = new Dictionary<string, HashSet<string>?>(StringComparer.Ordinal);
+        for (var index = 0; index < lines.Length; index++)
+        {
+            var line = lines[index].Trim();
+            if (line.Length == 0 || line.StartsWith('#')) continue;
+            if (line.StartsWith("T:", StringComparison.Ordinal))
+            {
+                var typeName = line[2..];
+                if (!IsMetadataName(typeName) || !types.TryAdd(typeName, null))
+                    return (null, AllowlistFormatFailure(entry, index + 1, line));
+                continue;
+            }
+
+            if (line.StartsWith("M:", StringComparison.Ordinal))
+            {
+                var body = line[2..];
+                var separator = body.IndexOf("::", StringComparison.Ordinal);
+                if (separator <= 0 || separator == body.Length - 2)
+                    return (null, AllowlistFormatFailure(entry, index + 1, line));
+                var typeName = body[..separator];
+                var memberName = body[(separator + 2)..];
+                if (!IsMetadataName(typeName) || !IsMemberName(memberName))
+                    return (null, AllowlistFormatFailure(entry, index + 1, line));
+                if (!types.TryGetValue(typeName, out var members))
+                {
+                    members = new HashSet<string>(StringComparer.Ordinal);
+                    types.Add(typeName, members);
+                }
+                else if (members is null)
+                {
+                    return (null, AllowlistFormatFailure(entry, index + 1, line));
+                }
+                if (!members.Add(memberName))
+                    return (null, AllowlistFormatFailure(entry, index + 1, line));
+                continue;
+            }
+
+            return (null, AllowlistFormatFailure(entry, index + 1, line));
+        }
+
+        if (types.Count == 0)
+            return (null, MakeFailure(entry, ScribeScriptFailureCode.HostConfiguration,
+                "script allowlist is empty"));
+        foreach (var typeName in types.Keys)
+        {
+            var type = compilation.GetTypeByMetadataName(typeName);
+            if (type is null)
+                return (null, MakeFailure(entry, ScribeScriptFailureCode.HostConfiguration,
+                    $"script allowlist names an unavailable type: {typeName}"));
+            if (types[typeName] is { } members && members.Any(member => type.GetMembers(member).Length == 0))
+                return (null, MakeFailure(entry, ScribeScriptFailureCode.HostConfiguration,
+                    $"script allowlist names an unavailable member on {typeName}"));
+        }
+        return (new ScriptAllowlist(types), null);
+    }
+
+    private static ScribeScriptFailure AllowlistFormatFailure(string entry, int line, string text) =>
+        MakeFailure(entry, ScribeScriptFailureCode.HostConfiguration,
+            $"script allowlist line {line} is invalid: {text}");
+
+    private static bool IsMetadataName(string value) =>
+        value.Length > 0 && value.All(character => char.IsLetterOrDigit(character)
+            || character is '.' or '+' or '`' or '_');
+
+    private static bool IsMemberName(string value) =>
+        value.Length > 0 && value.All(character => char.IsLetterOrDigit(character) || character is '_' or '.');
+
+    private static ScribeScriptFailure? ValidateAllowedSymbols(
+        CSharpCompilation compilation, ImmutableArray<string> sources, ScriptAllowlist allowlist)
+    {
+        var sourcePaths = sources.ToHashSet(StringComparer.Ordinal);
+        foreach (var tree in compilation.SyntaxTrees.Where(tree => sourcePaths.Contains(tree.FilePath)))
+        {
+            var model = compilation.GetSemanticModel(tree, ignoreAccessibility: false);
+            foreach (var node in tree.GetRoot().DescendantNodesAndSelf())
+            {
+                if (node is UnsafeStatementSyntax or PointerTypeSyntax or FunctionPointerTypeSyntax
+                    || node is MethodDeclarationSyntax method && method.Modifiers.Any(SyntaxKind.ExternKeyword))
+                    return Disallowed(node, "unsafe, pointer, function-pointer, or extern syntax");
+
+                var symbolInfo = model.GetSymbolInfo(node);
+                ScribeScriptFailure? failure;
+                if (symbolInfo.Symbol is { } symbol)
+                {
+                    failure = CheckSymbol(symbol, node, compilation, sourcePaths, allowlist);
+                    if (failure is not null) return failure;
+                }
+                else if (RequiresResolvedSymbol(node))
+                {
+                    var unresolved = node.ToString();
+                    return Disallowed(node, $"unresolved symbol {unresolved}");
+                }
+
+                var typeInfo = model.GetTypeInfo(node);
+                failure = CheckType(typeInfo.Type, node, compilation, sourcePaths, allowlist)
+                    ?? CheckType(typeInfo.ConvertedType, node, compilation, sourcePaths, allowlist);
+                if (failure is not null) return failure;
+
+                if (typeInfo.Type?.TypeKind == TypeKind.Dynamic
+                    || typeInfo.ConvertedType?.TypeKind == TypeKind.Dynamic)
+                    return Disallowed(node, "dynamic type");
+            }
+        }
+        return null;
+
+        ScribeScriptFailure? CheckType(ITypeSymbol? type, SyntaxNode node, CSharpCompilation current,
+            HashSet<string> paths, ScriptAllowlist table)
+        {
+            if (type is null) return null;
+            if (type.TypeKind == TypeKind.Dynamic)
+                return Disallowed(node, "dynamic type");
+            if (type is IPointerTypeSymbol or IFunctionPointerTypeSymbol)
+                return Disallowed(node, "pointer or function-pointer type");
+            if (type is ITypeParameterSymbol || IsScriptSymbol(type, current, paths)) return null;
+            if (type is IArrayTypeSymbol array)
+                return table.CheckType("System.Array", null, node) ?? CheckType(array.ElementType, node, current, paths, table);
+            if (type is not INamedTypeSymbol named) return null;
+            var failure = table.CheckType(MetadataName(named.OriginalDefinition), null, node);
+            if (failure is not null) return failure;
+            foreach (var argument in named.TypeArguments)
+            {
+                failure = CheckType(argument, node, current, paths, table);
+                if (failure is not null) return failure;
+            }
+            return null;
+        }
+
+        ScribeScriptFailure? CheckSymbol(ISymbol symbol, SyntaxNode node, CSharpCompilation current,
+            HashSet<string> paths, ScriptAllowlist table)
+        {
+            if (symbol is IAliasSymbol alias) symbol = alias.Target;
+            if (symbol is INamespaceSymbol or ITypeParameterSymbol || IsScriptSymbol(symbol, current, paths)) return null;
+            if (symbol is ITypeSymbol type)
+                return CheckType(type, node, current, paths, table);
+            if (symbol.ContainingType is not { } containing) return null;
+            var failure = table.CheckType(MetadataName(containing.OriginalDefinition), null, node);
+            if (failure is not null) return failure;
+            return table.CheckType(MetadataName(containing.OriginalDefinition), symbol.MetadataName, node);
+        }
+
+        static bool RequiresResolvedSymbol(SyntaxNode node) => node is InvocationExpressionSyntax invocation
+            && invocation.Expression is not IdentifierNameSyntax { Identifier.ValueText: "nameof" }
+            || node is ObjectCreationExpressionSyntax
+            or MemberAccessExpressionSyntax or MemberBindingExpressionSyntax
+            or AttributeSyntax;
+
+        static bool IsScriptSymbol(ISymbol symbol, CSharpCompilation current, HashSet<string> paths) =>
+            SymbolEqualityComparer.Default.Equals(symbol.ContainingAssembly, current.Assembly)
+            || symbol.Locations.Any(location => location.SourceTree is { } tree && paths.Contains(tree.FilePath));
+
+        ScribeScriptFailure Disallowed(SyntaxNode node, string symbol)
+        {
+            var span = node.GetLocation().GetLineSpan();
+            var path = span.Path.Replace('\\', '/');
+            return MakeFailure(path, ScribeScriptFailureCode.DisallowedSymbol,
+                $"{path}:{span.StartLinePosition.Line + 1}: disallowed symbol {symbol}");
+        }
     }
 
     private static ImmutableArray<MetadataReference> ReferenceAssemblies()
@@ -356,6 +538,43 @@ public static class ScribeScriptHost
         if (!File.Exists(analyzerPath)) return [];
         var reference = new AnalyzerFileReference(analyzerPath, new ScriptAnalyzerAssemblyLoader());
         return reference.GetAnalyzers(LanguageNames.CSharp).ToImmutableArray();
+    }
+
+    private sealed class ScriptAllowlist(IReadOnlyDictionary<string, HashSet<string>?> entries)
+    {
+        private readonly IReadOnlyDictionary<string, HashSet<string>?> _entries = entries;
+
+        internal ScribeScriptFailure? CheckType(string typeName, string? memberName, SyntaxNode node)
+        {
+            if (!_entries.TryGetValue(typeName, out var members))
+            {
+                var accessedMember = memberName is null
+                    && node.AncestorsAndSelf().OfType<MemberAccessExpressionSyntax>().FirstOrDefault() is { } access
+                    ? $".{access.Name.Identifier.ValueText}"
+                    : string.Empty;
+                if (accessedMember.Length == 0 && memberName is null
+                    && node.Parent?.ToString() is { Length: > 0 } parentText
+                    && parentText.Contains('.', StringComparison.Ordinal))
+                {
+                    var shortName = typeName[(typeName.LastIndexOf('.') + 1)..];
+                    accessedMember = parentText.StartsWith(shortName + ".", StringComparison.Ordinal)
+                        ? parentText[shortName.Length..]
+                        : $".{parentText}";
+                }
+                return Failure($"{typeName}{(memberName is null ? accessedMember : $".{memberName}")}");
+            }
+            if (memberName is not null && members is not null && !members.Contains(memberName))
+                return Failure($"{typeName}.{memberName}");
+            return null;
+
+            ScribeScriptFailure Failure(string symbol)
+            {
+                var span = node.GetLocation().GetLineSpan();
+                var path = span.Path.Replace('\\', '/');
+                return new(ScribeScriptFailureCode.DisallowedSymbol, path,
+                    $"{path}:{span.StartLinePosition.Line + 1}: disallowed symbol {symbol}");
+            }
+        }
     }
 
     private static string MetadataName(INamedTypeSymbol symbol) => symbol.ContainingType is { } parent

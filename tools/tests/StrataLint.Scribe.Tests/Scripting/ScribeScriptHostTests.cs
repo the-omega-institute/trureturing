@@ -68,6 +68,108 @@ public sealed class ScribeScriptHostTests
     }
 
     [Fact]
+    public void FileReadInDefinitionIsRejectedAsDisallowedSymbol()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        var input = root.Resolve("input.txt");
+        File.WriteAllText(input, "content");
+        Write(root, path, $$"""
+            internal sealed class Probe : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create() => DocumentDefinition.Create(
+                    ScribeNode.Create("digest", H(File.ReadAllText("{{input.Replace("\\", "\\\\", StringComparison.Ordinal)}}")), Blocks(Paragraph(Text("content")))));
+            }
+            """);
+
+        var result = ScribeScriptHost.Execute(root.Path, path);
+
+        Assert.True(result.Failure?.Code == ScribeScriptFailureCode.DisallowedSymbol, result.Failure?.ToString());
+        Assert.True(result.Failure?.Message.Contains("System.IO.File.ReadAllText", StringComparison.Ordinal), result.Failure?.ToString());
+    }
+
+    [Theory]
+    [InlineData("Environment.GetEnvironmentVariable(\"SCRIBE_INPUT\")")]
+    [InlineData("Directory.GetFiles(\".\")")]
+    [InlineData("typeof(Probe).Assembly")]
+    [InlineData("System.Diagnostics.Process.GetCurrentProcess()")]
+    [InlineData("new System.Net.Http.HttpClient()")]
+    [InlineData("DateTime.Today")]
+    [InlineData("System.Globalization.CultureInfo.CurrentCulture")]
+    [InlineData("ScribeScriptHost.Execute(\".\", \"Blueprint/D5/S0/Test/Other.scribe.cs\")")]
+    [InlineData("dynamic value = \"input\"; _ = value.ToString()")]
+    public void ExternalChannelsAreRejectedByTheAllowlist(string expression)
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        var statement = expression.StartsWith("dynamic ", StringComparison.Ordinal)
+            ? $"{expression};"
+            : $"_ = {expression};";
+        Write(root, path, $$"""
+            internal sealed class Probe : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create()
+                {
+                    {{statement}}
+                    return DocumentDefinition.Create(
+                        ScribeNode.Create("digest", H("title"), Blocks(Paragraph(Text("content")))));
+                }
+            }
+            """);
+
+        var result = ScribeScriptHost.Execute(root.Path, path);
+
+        Assert.True(result.Failure?.Code == ScribeScriptFailureCode.DisallowedSymbol, result.Failure?.ToString());
+    }
+
+    [Fact]
+    public void SharedSourceExternalChannelsAreRejected()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        const string shared = "Blueprint/D5/S0/Test/Shared.scribe.cs";
+        Write(root, shared, "internal static class Shared { internal static string Value => Environment.GetEnvironmentVariable(\"SCRIBE_INPUT\") ?? \"\"; }");
+        Write(root, path, $$"""
+            [ScribeSharedSource("{{shared}}")]
+            internal sealed class Probe : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create() => DocumentDefinition.Create(
+                    ScribeNode.Create("digest", H(Shared.Value), Blocks(Paragraph(Text("content")))));
+            }
+            """);
+
+        var result = ScribeScriptHost.Execute(root.Path, path);
+
+        Assert.True(result.Failure?.Code == ScribeScriptFailureCode.DisallowedSymbol, result.Failure?.ToString());
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData("X:NotAnEntry")]
+    public void AllowlistConfigurationFailsClosed(string? contents)
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        WriteDefinition(root.Path, path, "Probe");
+        var allowlistPath = Path.Combine(AppContext.BaseDirectory, "Scripting", "ScribeScriptAllowlist.txt");
+        var original = File.ReadAllText(allowlistPath);
+        try
+        {
+            if (contents is null) File.Delete(allowlistPath);
+            else File.WriteAllText(allowlistPath, contents);
+
+            var result = ScribeScriptHost.Execute(root.Path, path);
+
+            Assert.Equal(ScribeScriptFailureCode.HostConfiguration, result.Failure?.Code);
+        }
+        finally
+        {
+            File.WriteAllText(allowlistPath, original);
+        }
+    }
+
+    [Fact]
     public void InvalidPathHasANamedFailure()
     {
         using var root = new TemporaryRoot();
