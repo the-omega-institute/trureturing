@@ -1,0 +1,6 @@
+**Theorem 12.2 (physical iid comparison without zero columns).** In the same field and dimension, let $I$ be any nonempty finite physical alphabet and let $b:I\to V$ have no zero column. Distinct physical indices may have equal or scalar-parallel columns. For every $t\ge0$, the actual uniform iid recovery probability of $b$ is at most that of one representative of every projective ray, sampled uniformly. The physical fiber weights are
+
+$$
+x_p=\frac{|\{i\in I:[b_i]=p\}|}{|I|}.
+$$
+
