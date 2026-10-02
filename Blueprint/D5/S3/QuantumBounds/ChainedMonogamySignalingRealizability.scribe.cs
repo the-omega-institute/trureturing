@@ -14,11 +14,8 @@ internal sealed class ChainedMonogamySignalingRealizabilityDocument : IScribeDoc
         "Kłobus, Oszmaniec, Augusiak and Grudka (arXiv:1408.1223, Section 5) conjecture that every vector of the correlators x_A^i, y_A^i, x_B^i, y_B^i satisfying their inequalities (ElPrat) is realized by a signaling box whose chained Bell expression plus twice the correlator of B_0 and E equals 2M + Delta. This holds for every number of settings M at least 2 and every Delta in [0, 2]: an explicit box realizes the coordinates, has all one- and three-party expectation values zero and a common value of the correlator of B_0 and E, and attains R_M = 2M + Delta exactly.",
         H("The realizability conjecture for chained monogamy relations"),
         Blocks(
-            Node("sgn", "Outcome signs", SgnFormula(),
-                "Outcomes are elements of Bool, and sgn maps true to 1 and false to -1.",
-                "sgn", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("box", "Boxes", BoxFormula(),
-                "A box assigns to each pair of settings (A_i, B_j) a function p(i, j) of the three outcomes a, b, e; Eve has a single setting. IsBox(M, p) says that for all i, j < M this function is a probability distribution. No relation between different setting pairs is imposed, so signaling is allowed.",
+                "A box assigns to each pair of settings (A_i, B_j) a function p(i, j) of the three outcomes a, b, e in Bool; Eve has a single setting. The sign of an outcome is the existing map sgn with sgn(true) = 1 and sgn(false) = -1. IsBox(M, p) says that for all i, j < M this function is a probability distribution. No relation between different setting pairs is imposed, so signaling is allowed.",
                 "IsBox", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("odd", "The class of boxes with vanishing odd moments", OddFormula(),
                 "The paper restricts attention to the convex set of boxes whose one-party expectation values and three-party expectation values all vanish, so that only the bipartite correlators are nonzero.",
@@ -115,12 +112,6 @@ internal sealed class ChainedMonogamySignalingRealizabilityDocument : IScribeDoc
         Call(F.Id("Icc"), lo, hi);
     private static Formula Below(Formula i, Formula m, Formula body) =>
         Imp(LtTo(i, m), body);
-
-    private static Formula SgnFormula()
-    {
-        return Disp(And(EqTo(Call(F.Id("sgn"), F.Id("true")), D(1)),
-            EqTo(Call(F.Id("sgn"), F.Id("false")), Seq(Minus, D(1)))));
-    }
 
     private static Formula BoxFormula()
     {

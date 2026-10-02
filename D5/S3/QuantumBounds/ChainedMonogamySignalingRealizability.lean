@@ -7,10 +7,10 @@
    digest: Every correlator vector obeying ElPrat is realized by a box with R_M = 2M + Delta. -/
 
 /-
-proof_shape: sgn, IsBox, OddMomentsVanish, corrAB, corrAE, corrBE, chainR, ElPrat,
-  CoordinateBounds, Realizes: definition (outcome signs, boxes of conditional distributions,
-  the class with vanishing one- and three-party means, the correlators, R_M, the inequalities
-  (ElPrat), the range of the coordinates and their realization by a box)
+proof_shape: IsBox, OddMomentsVanish, corrAB, corrAE, corrBE, chainR, ElPrat, CoordinateBounds,
+  Realizes: definition (boxes of conditional distributions, the class with vanishing one- and
+  three-party means, the correlators, R_M, the inequalities (ElPrat), the range of the
+  coordinates and their realization by a box; outcome signs are the frozen sgn)
 proof_shape: claim: definition (published conjecture, read over every M >= 2, every Delta in
   [0, 2] and every coordinate vector in [-1, 1] satisfying (ElPrat))
 proof_shape: result: content (an explicit box: the distribution (1 + ab u + ae v + be w) / 8 at
@@ -20,9 +20,11 @@ proof_shape: result: content (an explicit box: the distribution (1 + ab u + ae v
 escape_witness: result (form (2) of §3.2: the realizing box and the value of R_M are produced by
   the construction; no existing statement gives them)
 admission_basis: open-problem-resolution (issue #12401; Proved)
-Direct frozen dependencies: none (pinned Mathlib only)
+Direct frozen dependencies:
+  D5/S3/Combinatorics/IsingUniquenessSets.sgn
 -/
 
+import D5.S3.Combinatorics.IsingUniquenessSets
 import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Data.Fintype.BigOperators
@@ -38,9 +40,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.QuantumBounds.ChainedMonogamySignalingRealizability
 
 open Finset
-
-/-- The value `±1` of a binary outcome. -/
-def sgn (b : Bool) : ℝ := if b then 1 else -1
+open D5.S3.Combinatorics.IsingUniquenessSets (sgn)
 
 /-- A box assigns to every pair of settings `(A_i, B_j)` a function of the outcomes `(a, b, e)`;
 `IsBox M p` says that for all settings `i, j < M` it is a probability distribution. -/

@@ -117,15 +117,17 @@ $R_M<2M+\Delta$.
 
 The canonical source is
 `D5/S3/QuantumBounds/ChainedMonogamySignalingRealizability.lean`. Its
-public declarations are `sgn`, `IsBox`, `OddMomentsVanish`, `corrAB`,
-`corrAE`, `corrBE`, `chainR`, `ElPrat`, `CoordinateBounds`, `Realizes`,
-`claim` and `result`; it imports pinned Mathlib only. The frozen module state has statement identity
-`sha256:b4d6e084d25be04320c8a5da29644303783e8cf84b358f9277c1e855fa585a3c`. The
+public declarations are `IsBox`, `OddMomentsVanish`, `corrAB`, `corrAE`,
+`corrBE`, `chainR`, `ElPrat`, `CoordinateBounds`, `Realizes`, `claim` and
+`result`; the outcome sign is the frozen
+`D5/S3/Combinatorics/IsingUniquenessSets.sgn`. The frozen module state has statement identity
+`sha256:457daf112b0653b47d2b60cd8593fed7c8f4c0b80f3970f0369a70f48cea1665`. The
 result declaration has statement identity
 `sha256:189745a8f3608dc5f2cf3c74b97968e0de7b0d9ee8126daa88b6ff6a30963cba`. The
 Freeze event is
-`sha256:d203d79d6525a8aa33014157a811e5cab269f930855516aafbf55def4507ccda`; it
-has no project-level frozen prerequisite. The proof uses only the standard axioms `propext`, `Classical.choice` and
+`sha256:29c7ef363071c78eeee2044226eeba96ec3dc9f0cc8cc7cb0aeffd286a53bf75`; its
+project-level frozen prerequisite is the Freeze event of
+`D5/S3/Combinatorics/IsingUniquenessSets`. The proof uses only the standard axioms `propext`, `Classical.choice` and
 `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
 
 ## Triage
