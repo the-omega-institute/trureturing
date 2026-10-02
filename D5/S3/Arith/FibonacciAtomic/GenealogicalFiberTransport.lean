@@ -400,6 +400,41 @@ theorem result :
     rw [hcounts]
     field_simp
     <;> ring
+  have catalan_double (j : ℕ) (hj : 1 ≤ j) : 2 * catalan j ≤ catalan (j + 1) := by
+    have h := Nat.succ_mul_centralBinom_succ j
+    rw [← succ_mul_catalan_eq_centralBinom (j + 1),
+      ← succ_mul_catalan_eq_centralBinom j] at h
+    have h' : (j + 1) * ((j + 2) * catalan (j + 1)) =
+        (j + 1) * (2 * (2 * j + 1) * catalan j) := by
+      convert h using 1 <;> ring
+    have heq := Nat.eq_of_mul_eq_mul_left (by omega : 0 < j + 1) h'
+    have hcoeff : 2 * (j + 2) * catalan j ≤ 2 * (2 * j + 1) * catalan j :=
+      Nat.mul_le_mul_right _ (by omega)
+    have hmul : (j + 2) * (2 * catalan j) ≤ (j + 2) * catalan (j + 1) := by
+      nlinarith [heq, hcoeff]
+    exact Nat.le_of_mul_le_mul_left hmul (by omega)
+  have catalan_scale (j k : ℕ) (hj : 1 ≤ j) :
+      2 ^ k * catalan j ≤ catalan (j + k) := by
+    induction k with
+    | zero => simp
+    | succ k hk =>
+      calc
+        2 ^ (k + 1) * catalan j = 2 * (2 ^ k * catalan j) := by ring
+        _ ≤ 2 * catalan (j + k) := Nat.mul_le_mul_left _ hk
+        _ ≤ catalan (j + k + 1) := catalan_double _ (by omega)
+        _ = _ := by congr 1
+  have catalan_lower (j : ℕ) : j ≤ catalan j := by
+    induction j with
+    | zero => omega
+    | succ j hj =>
+      cases j with
+      | zero => simp [catalan_one]
+      | succ k => have hd := catalan_double (k + 1) (by omega); omega
+  have count_lower (v : ℕ × ℕ) : v.1 + v.2 - 1 ≤ fiberCount v := by
+    have hchoose : 1 ≤ Nat.choose (v.1 + v.2) v.1 := Nat.choose_pos (by omega)
+    exact (catalan_lower _).trans (by
+      dsimp [fiberCount]
+      nlinarith)
   constructor
   · intro a b hv
     have hv' : 1 ≤ (a, b).1 + (a, b).2 := hv
@@ -434,8 +469,69 @@ theorem result :
           (show Nat.card (Fiber (step^[n] (a, b))) ≠ 0 by
             rw [fiber_cardinality _ (step_nonempty _ hv' n)]
             exact (count_pos _ (step_nonempty _ hv' n)).ne'))
-    · sorry
-    · sorry
+    · intro hL
+      have hc := catalan_scale (a + b - 1) b (by omega)
+      have hchoose : Nat.choose (a + b) a ≤ Nat.choose (b + (a + b)) b := by
+        rw [Nat.choose_symm_add]
+        simpa only [Nat.add_comm] using Nat.choose_le_add (a + b) b b
+      have hcount : 2 ^ b * fiberCount (a, b) ≤ fiberCount (step (a, b)) := by
+        dsimp only [fiberCount, step]
+        rw [show b + (a + b) - 1 = (a + b - 1) + b by omega]
+        calc
+          2 ^ b * (catalan (a + b - 1) * Nat.choose (a + b) a) =
+              (2 ^ b * catalan (a + b - 1)) * Nat.choose (a + b) a := by ring
+          _ ≤ _ := Nat.mul_le_mul hc hchoose
+      rw [variation _ hv' 1]
+      simp only [Function.iterate_one]
+      have ht : 0 < (fiberCount (step (a, b)) : ℝ) := by
+        exact_mod_cast count_pos _ (step_nonempty _ hv' 1)
+      have hp : 0 < (2 : ℝ) ^ b := by positivity
+      have hr : (fiberCount (a, b) : ℝ) / (fiberCount (step (a, b)) : ℝ) ≤
+          (2 : ℝ)⁻¹ ^ b := by
+        rw [inv_pow]
+        apply (div_le_iff₀ ht).mpr
+        rw [inv_mul_eq_div]
+        apply (le_div_iff₀ hp).mpr
+        have hreal : (2 : ℝ) ^ b * (fiberCount (a, b) : ℝ) ≤
+            (fiberCount (step (a, b)) : ℝ) := by exact_mod_cast hcount
+        nlinarith
+      linarith
+    · let L : ℕ → ℕ := fun n => (step^[n] (a, b)).1 + (step^[n] (a, b)).2
+      have hmono : Monotone L := by
+        apply monotone_nat_of_le_succ
+        intro n
+        dsimp only [L]
+        rw [Function.iterate_succ_apply']
+        dsimp only [step]
+        omega
+      have heven (n : ℕ) : n + 1 ≤ L (2 * n) := by
+        induction n with
+        | zero => simpa [L] using hv
+        | succ n hn =>
+          have hnpos := step_nonempty (a, b) hv' (2 * n)
+          have htwo : L (2 * n) + 1 ≤ L (2 * (n + 1)) := by
+            dsimp only [L]
+            rw [show 2 * (n + 1) = 2 + 2 * n by omega, Function.iterate_add_apply]
+            simp only [Function.iterate_succ_apply', Function.iterate_zero_apply, step]
+            omega
+          omega
+      have hden : Filter.Tendsto (fun n => fiberCount (step^[n] (a, b)))
+          Filter.atTop Filter.atTop := by
+        apply Filter.tendsto_atTop_atTop.mpr
+        intro K
+        refine ⟨2 * (K + 1), fun n hn => ?_⟩
+        have hlarge := (heven (K + 1)).trans (hmono hn)
+        have hbound := count_lower (step^[n] (a, b))
+        dsimp only [L] at hlarge
+        omega
+      have hreal : Filter.Tendsto (fun n => (fiberCount (step^[n] (a, b)) : ℝ))
+          Filter.atTop Filter.atTop := tendsto_natCast_atTop_atTop.comp hden
+      have hinv := tendsto_inv_atTop_zero.comp hreal
+      have hlim : Filter.Tendsto (fun n => 1 - (fiberCount (a, b) : ℝ) /
+          (fiberCount (step^[n] (a, b)) : ℝ)) Filter.atTop (nhds 1) := by
+        simpa only [div_eq_mul_inv, mul_zero, sub_zero, Function.comp_apply] using
+          (tendsto_const_nhds.sub (tendsto_const_nhds.mul hinv))
+      exact hlim.congr' (Filter.Eventually.of_forall fun n => (variation _ hv' n).symm)
   · have h := variation (1, 1) (by decide) 1
     norm_num [fiberCount, step, catalan_one, catalan_two] at h
     exact h
