@@ -1,0 +1,12 @@
+**定理 306.1（同一个缺失素数前缀同时提供高度与权重证书）。** 对 $L\ge16$、正整数 $H$ 满足 $\mathcal O_L(H)=\mathcal O_L(A_L)$，令 $K=\#\mathcal N_L(H)$。则
+\[
+\log H\ge\log N_{L,K},\qquad U_H\le W_{L,K},
+\tag{306.5}
+\]
+所以
+\[
+\Delta(H)\ge E\log\log N_{L,K}-W_{L,K}.
+\tag{306.6}
+\]
+这些有限证书不使用假设306.1，也不对 $H$ 加高度上限。$N_{L,K}$ 与核心同签名，其新增素数恰为前 $K$ 个缺失素数。
+

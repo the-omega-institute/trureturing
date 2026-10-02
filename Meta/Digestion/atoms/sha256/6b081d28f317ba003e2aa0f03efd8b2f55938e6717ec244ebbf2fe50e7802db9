@@ -1,0 +1,27 @@
+**定理 339.3（实际低零点预算强迫最低相位的一阶负修正）。** 消费经典零点总和与已验证的首零点输入：
+
+$$
+2\sum_{\gamma>0}\frac{m_\gamma}{D_\gamma}
+=2+\gamma_E-\log(4\pi)<\frac1{20},\qquad
+\gamma\ge14\ (\gamma\in\Gamma),\qquad
+\exists\gamma_1\in\Gamma:\ \gamma_1\le15.
+\tag{339.10}
+$$
+
+其中 $\gamma_E$ 是 Euler 常数，不是零点纵坐标。置
+
+$$
+\kappa=\frac1{3390}-\frac1{3920}=\frac{53}{1328880}>0.
+$$
+
+则对每个 $z\in H$，均有
+
+$$
+|(QS)_H(z)|<\frac1{3920},\qquad
+A_*\ge\frac1{3390},\qquad
+F_H(z)<A_*+s_H(z)-\kappa.
+\tag{339.11}
+$$
+
+特别地，在每个最低值相位 $s_H(z_*)=-A_*$ 上都有 $F_H(z_*)<-\kappa$。这一实际符号结论不需要频率线性独立。
+

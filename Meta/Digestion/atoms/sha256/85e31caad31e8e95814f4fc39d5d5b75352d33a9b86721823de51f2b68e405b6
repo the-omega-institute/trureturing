@@ -1,0 +1,37 @@
+**引理 290.1（余数取一构造的有限数量下界）。** 设整数 $R\ge6$、$m\ge1$、$L\ge0$，并取 §289 的实际提升
+
+$$
+N=Rm,\qquad r=R\lfloor m/\phi^2\rfloor+1,
+\qquad y=T\left(1-R\{m/\phi^2\}\right)\in J_L.
+\tag{290.1}
+$$
+
+则
+
+$$
+\boxed{m>R/8,\qquad N>R^2/8.}
+\tag{290.2}
+$$
+
+特别地，§289 的 $N=P\#\,2^u6^v$ 满足 $R=\operatorname{rad}N=P\#$，所以
+
+$$
+\log\operatorname{rad}N<\tfrac12\log(8N).
+\tag{290.3}
+$$
+
+证明。令 $\theta=\phi^{-2}=2-\phi$、$j=\lfloor m\theta\rfloor$、$\delta=m\theta-j\in(0,1)$，并取有理数 $z=(2m-j)/m$。它的既约分母 $d$ 不超过 $m$，且 $|\phi-z|=\delta/m$。直接应用仓内既有的 [黄金有理逼近界 `golden_hurwitz_bound`](../../../D5/S1/Depth/GoldenHurwitzBound.lean)，得到
+
+$$
+\frac\delta m
+>\frac1{\sqrt5d^2+d}
+\ge\frac1{\sqrt5m^2+m},
+\qquad
+\delta>\frac1{\sqrt5m+1}>\frac1{4m}.
+\tag{290.4}
+$$
+
+最后一个严格界只用 $m\ge1$ 与 $\sqrt5+1<4$。另一方面，$J_L\subset(-1,\phi)\subset(-T,T)$ 给 $|1-R\delta|<1$，故 $R\delta<2$。合并这两个严格界得到式（290.2）。$\square$
+
+该下界使用了特定的 $r\equiv1\pmod R$ 与收缩命中公式。任意本原组成仅要求 $\gcd(N,r)=1$，不强迫 $r$ 在全部素因子模数上都等于一。因此式（290.3）不是全部本原规范来源的定理，不能把它用于不同提升合同。
+

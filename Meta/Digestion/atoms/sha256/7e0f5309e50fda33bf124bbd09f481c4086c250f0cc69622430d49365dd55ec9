@@ -1,0 +1,29 @@
+**定理 338.1（实际原始证书的精确尾振幅）。** 在定义338.1及 §337 的既有解析输入下，定理337.1的同一常数 $c_0$ 满足
+
+$$
+\limsup_{T\to\infty}\mathcal C^{\rm fin}(e^T)=c_0+A_*,\qquad
+\liminf_{T\to\infty}\mathcal C^{\rm fin}(e^T)=c_0-A_*,
+\qquad 0<A_*\le B_\triangle.
+\tag{338.2}
+$$
+
+因此实际累计量的尾振荡宽度恰为 $2A_*$，由同源零点的频率关系与权重共同决定。
+
+**证明。** 先说明每个正时间尾轨道仍稠密于 $H$。可数个圆的乘积是紧度量群；由序列 $\phi(n)$ 的紧性，可取严格递增的整数 $n_j$ 使 $\phi(n_j)\to z$。于是
+
+$$
+q_j=n_{2j}-n_j\longrightarrow\infty,\qquad
+\phi(q_j)=\phi(n_{2j})\phi(n_j)^{-1}\longrightarrow1.
+$$
+
+对任意固定实数 $t$，$t+q_j\to\infty$ 且 $\phi(t+q_j)\to\phi(t)$。故任意 $R\in\mathbb R$ 都有 $\overline{\phi([R,\infty))}=H$。这一步是经典紧群回归机制，整数 $n$ 只用于构造回归时间，最终稠密性是连续时间尾轨道的稠密性。
+
+定理337.1给
+
+$$
+\mathcal C^{\rm fin}(e^T)=c_0+s_H(\phi(T))+o(1).
+\tag{338.3}
+$$
+
+连续性、紧性及每个尾轨道的稠密性给 $s_H(\phi(T))$ 的上、下极限分别为 $\max_Hs_H$ 和 $\min_Hs_H=-A_*$；趋零误差不改变两端。三角不等式给 $A_*\le B_\triangle$。若 $A_*=0$，反演对称性迫使 $s_H$ 恒为零，从而其沿轨道的所有 Fourier–Bohr 系数都为零，与（337.10）的非零实际零点系数矛盾。因此 $A_*>0$。$\square$
+

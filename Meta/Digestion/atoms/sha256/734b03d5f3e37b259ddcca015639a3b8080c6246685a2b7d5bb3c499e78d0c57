@@ -1,0 +1,6 @@
+## 257. 2025--2026 年 Robin 前沿与 FIB 接口审计
+
+Robin 研究的主线可以按“极值压缩—等价判据—候选类缩减—显式误差”排列：Ramanujan 的高丰数渐近、Alaoglu--Erdős 的极丰数结构、Robin 的 CA 区间归约与 RH 等价，随后是 Lagarias 的初等判据、Akbary--Friggstad 的最小反例为 superabundant 归约，以及 Nicolas 的 primorial/totient 判据。近两年的结果继续压缩候选集，但没有消除点态尾项。
+
+| 来源 | 直接贡献 | 对当前 FIB 主线的实际接口 |
+| --- | --- | --- |

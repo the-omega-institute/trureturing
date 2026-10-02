@@ -1,0 +1,17 @@
+**定义 338.1（实际累计量的频率群与振幅）。** 固定 §337 的实际 Fibonacci 五分证书、起点 $A_0$ 及同一组已证实的块斜率。在本节的谱结论中假设 RH，正零点纵坐标按不同频率组成可数集 $\Gamma$，重数为 $m_\gamma$。置
+
+$$
+a_\gamma=\frac{m_\gamma}{\gamma(1/4+\gamma^2)}>0,\qquad
+B_\triangle=2\sum_{\gamma\in\Gamma}a_\gamma<\infty,
+$$
+
+$$
+\phi(t)=(e^{i\gamma t})_{\gamma\in\Gamma},\qquad
+H=\overline{\phi(\mathbb R)}\subset\mathbb T^\Gamma,\qquad
+s_H(z)=-2\sum_{\gamma\in\Gamma}a_\gamma\operatorname{Im}z_\gamma,
+\qquad A_* =\max_{z\in H}s_H(z).
+\tag{338.1}
+$$
+
+这里 $\mathbb T=\{z\in\mathbb C:|z|=1\}$，乘法逐坐标定义。$\phi$ 是连续群同态，$H$ 是紧闭子群；权重可和使 $s_H$ 一致绝对收敛且连续，故最大值存在。反演 $z\mapsto z^{-1}=\overline z$ 将 $s_H$ 变为 $-s_H$。整数关系均指有限支撑的 $h\in\mathbb Z^{(\Gamma)}$ 满足 $\sum_\gamma h_\gamma\gamma=0$；本节不假设频率有理线性独立。
+

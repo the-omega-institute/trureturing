@@ -1,0 +1,6 @@
+**证明。** 秩界 $3s\mid p-\varepsilon_p$ 给 $p\equiv\varepsilon_p\pmod s$。
+故 $p^a\equiv1$ 在分裂方向恒成立，在非分裂方向则等于 $(-1)^a$。
+$r_+$ 满足 $r_+\equiv1\pmod s$；$r_-$ 满足 $r_-\equiv-1\pmod s$。
+两者均满足式（283.5）对应的正、负系数合同，唯一性给式（283.14）。
+若两者相等，则 $r_+=3s$，但 $s$ 为奇数而 $r_+$ 是六的倍数，矛盾。$\square$
+

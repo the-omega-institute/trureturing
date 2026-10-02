@@ -1,0 +1,18 @@
+### corollary 250.2 对实际储备与目标点值的传递
+
+在同一适用域内，
+
+$$
+R(x)>\frac{c_R+c_2/\log x}{\sqrt x\,\log x}
++\frac1{\sqrt x\,(\log x+2)^3}.
+\tag{250.6}
+$$
+
+此外，只要同一点满足
+
+$$
+W_2(x)\ge-\frac1{\sqrt x\,(\log x+2)^3},
+$$
+
+就有 $\mathfrak D(x)>0$。
+

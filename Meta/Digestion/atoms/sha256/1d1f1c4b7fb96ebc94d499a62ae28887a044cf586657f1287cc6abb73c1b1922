@@ -1,0 +1,17 @@
+### 定理 291.3 千分叉实际树的统一成本与 Robin 后段
+
+对根为十九、每个节点至多一千零二十四个选中子节点的全部有限祖先闭合实际树，以及任意正指数 $a_s$，有
+\[
+\boxed{\quad
+1<Z(M_T)\le\frac{M_T}{\varphi(M_T)}<e^{5/2}.
+\quad}
+\tag{291.8}
+\]
+记 $A_j=\sum_{s\in T_j}s^{-99/100}$。对任意 $J\ge1$，有统一后代尾界
+\[
+\sum_{j=J}^{h}\sum_{s\in T_j}\log\frac{m_s}{\varphi(m_s)}
+\le1600\left(\frac78\right)^{J-1}A_1.
+\tag{291.9}
+\]
+令 $n\ge1$、$B=5040M_TF_n$、$R=n+\sum_{s\in T}a_ss$。则指定树族的归一 Robin 比值随 $R\to\infty$ 一致趋于零。额外根入口仍为式（287.2），不增加新的 Lucas 入口。
+

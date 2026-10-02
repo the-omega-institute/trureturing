@@ -1,0 +1,38 @@
+### 定理 285.6 加入 5040 小素数骨架后的精确递归入口
+
+对素数 $s\ge5$、$a\ge1$，取同一实际来源的系数
+\[
+\widetilde m=1260m_s^a,\qquad
+B_{\widetilde m,n}=5040m_s^aF_n.
+\tag{285.20}
+\]
+则整包与小素数骨架互素，且
+\[
+\gcd(m_s,5040)=1,\qquad
+Z(5040m_s^a)=\frac{403}{105}Z(m_s^a).
+\tag{285.21}
+\]
+其互素扩张入口精确为
+\[
+\boxed{\quad n\in\mathcal E(1260m_s^a)
+\quad\Longleftrightarrow\quad
+24\mid n\quad\text{且}\quad
+\left[3s\mid n\ \text{或}\ \bigl(a=1,\ s\mid1260n-1\bigr)\right].
+\quad}
+\tag{285.22}
+\]
+对 $s=5,7$，这等价于 $n\equiv0\pmod{24s}$，没有额外类。
+对素数 $s\ge11$，令
+\[
+\widetilde r_s=24(30240^{-1}\bmod s),\qquad 0<\widetilde r_s<24s.
+\]
+则式（285.22）等价于
+\[
+n\equiv0\pmod{24s}
+\quad\text{或}\quad
+\bigl(a=1,\ n\equiv\widetilde r_s\pmod{24s}\bigr).
+\tag{285.23}
+\]
+自然密度在 $s\ge11,a=1$ 时为 $1/(12s)$，其余情形为 $1/(24s)$。
+特别地，$s=19$ 的额外类为 $168\pmod{456}$。
+

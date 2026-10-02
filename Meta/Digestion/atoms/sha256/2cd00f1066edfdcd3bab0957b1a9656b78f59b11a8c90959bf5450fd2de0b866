@@ -1,0 +1,6 @@
+**定理 312.1（实际整数的自身漂移积分表示）。** 在假设312.1下，$\mathcal H(x)$ 对充分大的 $x$ 绝对收敛，且
+\[
+\sqrt{m_L}\left[\frac{\Delta(T_L)}E-\mathcal H(m_L)\right]\longrightarrow0.
+\tag{312.3}
+\]
+

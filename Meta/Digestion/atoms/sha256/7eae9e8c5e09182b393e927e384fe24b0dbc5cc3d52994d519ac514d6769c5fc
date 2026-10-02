@@ -1,0 +1,99 @@
+## 273. 把模数锁定到目标整数后，FIB 操作可以实现完整约数探针
+
+§272 的反例固定了模数而改变了数量。若把模数锁定到同一个目标整数，`GraftAffineClosure.result` 给出一个相反方向的精确接口。取原子块 $w=M^j(1,0)$；原定理的原子分支有
+
+$$
+\operatorname{graftGcd}(H,w)=1.
+$$
+
+因此对每个 $z\in\mathbb Z/H\mathbb Z$，存在一个接枝空间元素 $t$ 满足
+
+$$
+\operatorname{quantity}(t)=z,
+$$
+
+并存在一个有限操作词 $W_z$，使其把任意初态的模组成推进到
+
+$$
+\rho_H(\operatorname{run}(w,W_z,v))
+=\rho_H(v)+t.
+$$
+
+若初态满足 $q(v)\equiv0\pmod H$（例如 $q(v)=H$），则这些操作的终端 gcd 读出覆盖完整函数
+
+$$
+P_H(z)=\gcd(\widetilde z,H),
+\qquad z\in\mathbb Z/H\mathbb Z,
+$$
+
+其中 $\widetilde z\in\{0,\ldots,H-1\}$ 是标准代表。也就是说，FIB 接枝并非只能看一个 residue；在模数等于目标的合同下，它可以逐项实现目标整数的所有 gcd 探针。
+
+这个函数确实包含完整的约数格。对每个 $d\mid H$，有
+
+$$
+\#\{z\in\mathbb Z/H\mathbb Z:P_H(z)=d\}
+=\varphi(H/d).
+\tag{273.1}
+$$
+
+证明只用写 $z=d u$：条件变为 $u$ 在模 $H/d$ 下与 $H/d$ 互素，$d=H$ 时约定 $\varphi(1)=1$。因此完整的 $P_H$ 既能恢复全部约数 $d$，也能恢复每个商的 Euler 权重；例如其值域为 $H$ 的约数集合，而每个值 $d$ 的纤维大小给出 $\varphi(H/d)$。
+
+更强的是，约数权重本身就是这张探针表的一个精确平均。记 $\tau(d)$ 为正约数个数，则
+
+$$
+\boxed{
+\frac1H\sum_{z\in\mathbb Z/H\mathbb Z}\tau(P_H(z))
+ =\frac{\sigma(H)}H.
+}
+\tag{273.2}
+$$
+
+因为式（273.1）把左边的未归一化和化为
+
+$$
+\sum_{d\mid H}\varphi(H/d)\tau(d),
+$$
+
+而经典 Dirichlet 卷积恒等式 $\varphi*\tau=\sigma$ 正好给出 $\sigma(H)$。也可逐素数幂验证：两边都是乘法函数，$H=p^a$ 时有限和
+$\sum_{j=0}^{a}\varphi(p^{a-j})(j+1)$ 化为 $1+p+\cdots+p^a$。
+
+所以对 $H>5040$，Robin 严格不等式本身等价于同一个目标整数上的探针平均界
+
+$$
+\boxed{
+\frac1H\sum_{z\in\mathbb Z/H\mathbb Z}\tau(P_H(z))
+<e^\gamma\log\log H.
+}
+\tag{273.3}
+$$
+
+这不是把预算换成另一个函数：式（273.2）逐项把它还原为 $\sigma(H)/H$。新增内容是一个 FIB 操作语义，使 Robin 的完整约数权重成为可执行探针的平均；困难转移为如何从递归来源直接控制该平均。
+
+在中国剩余定理坐标下，这个平均还逐素数幂分解。若 $p^a\parallel H$，均匀 $z\bmod H$ 的局部截断赋值 $J_p=\min(v_p(z),a)$ 满足
+
+$$
+\mathbb P(J_p=j)=
+\begin{cases}
+(1-p^{-1})p^{-j},&0\le j<a,\\
+p^{-a},&j=a,
+\end{cases}
+$$
+
+从而
+
+$$
+\mathbb E\,\tau(p^{J_p})=1+p^{-1}+\cdots+p^{-a}.
+$$
+
+不同素数幂的 $J_p$ 独立，乘起来正好得到式（273.2）。所以现有接枝定理的“全翻译空间”并没有隐藏额外的 FIB 偏置：它实现的是均匀模相位，Robin 困难完整地留在这些局部 Euler 因子的乘积上。若要从五窗分支取得更强的界，必须先指定一个严格的非均匀来源测度，并证明它仍能上界同一个均匀探针平均；单凭分支数量或收缩坐标不能完成这一步。
+
+这是一条真正的正向桥，但它还没有证明 Robin。它把约数和改写成了一个长度为 $H$ 的完整探针表；已知 $H$ 时，直接分解或枚举这张表只是在重算 $\sigma(H)$，未知 $H$ 时，恢复表本身的成本就是目标规模。要推进 §233.5，必须从 FIB 递归直接估计
+
+$$
+\frac1H\sum_{z\in\mathbb Z/H\mathbb Z}\tau(P_H(z))
+$$
+
+或其同一素数幂合同下的严格上包络，而不能先展开全部 $H$ 个接枝词。当前 `GraftAffineClosure` 提供了探针的可实现性与来源保持，也提供了 Robin 权重的精确观测表示；它没有提供这个平均的非平凡统一上界。
+
+因此两种结论应分开保存：固定模行为不足以决定 Robin 价格；目标锁模后可以实现完整 gcd 观察，但从完整观察到 $\sigma(H)/H$ 的低成本统一预算仍是开放义务。这把“FIB 操作是否能看见约数”与“能否证明 Robin 上界”严格分成了可实现性和估计强度两个问题。
+

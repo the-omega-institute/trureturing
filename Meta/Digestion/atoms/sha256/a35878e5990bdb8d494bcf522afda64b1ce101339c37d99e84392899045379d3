@@ -1,0 +1,10 @@
+### 258.3 Möbius 取消诊断确认了真正的符号缺口
+
+[Estrada 的诊断论文](../../../Library/Analytic/estrada2026mobiuscancellationbarrier.md)把路线写成
+
+$$
+\text{素性/CA 正结构}\to\Lambda\to\mu\to\text{带符号抵消}.
+$$
+
+其 Nyman--Beurling 分析要求有限残差之外还要有斜率和系数质量控制；CA-active 加权变体没有消除残差衰减义务。FIB 的五模式同样首先提供正的局部源数据；除非另建到 Möbius 或 $\Phi$ 的带符号运输，并证明平方根尺度的共同误差界，否则不能把它解释成 RH 级抵消。这个来源因此排除了“再加一层正 CA 几何就自动完成”的重复路线。
+

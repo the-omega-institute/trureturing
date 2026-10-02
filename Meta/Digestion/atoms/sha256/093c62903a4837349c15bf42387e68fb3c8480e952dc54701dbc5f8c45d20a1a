@@ -1,0 +1,18 @@
+**定义 344.2（实际频率关系的有限能量方向）。** 令 $\mathcal E=\ell^2(\Gamma,a;\mathbb R)$ 为实 Hilbert 空间，
+
+$$
+\|v\|_a^2=\sum_\gamma a_\gamma v_\gamma^2,\qquad
+\langle v,w\rangle_a=\sum_\gamma a_\gamma v_\gamma w_\gamma.
+$$
+
+定义 $r_\gamma=\gamma/D_\gamma$，则 $r\in\mathcal E$ 且 $\|r\|_a^2=A$。令
+
+$$
+V=\left\{v\in\mathcal E:
+\sum_\gamma n_\gamma v_\gamma=0\ \text{对每个有限支撑整数族 }n
+\text{ 满足 }\sum_\gamma n_\gamma\gamma=0\right\}.
+\tag{344.9}
+$$
+
+每条有限支撑关系给一个连续实线性泛函，因此 $V$ 为闭子空间，具有经典正交投影 $P_V$。本定义没有断言 $H$ 是局部流形，也没有把实际轨道速度 $(\gamma)_\gamma$ 假定为有限能量向量。
+

@@ -1,0 +1,12 @@
+### corollary 256.5 四次采样保留同一单边 RH 强度
+
+在 §92.3 明列的经典有效素数定理、积分显式公式、零点计数与对称性、
+Landau 非负 Laplace 变换输入下，
+
+$$
+\boxed{\mathrm{RH}\iff
+\exists K\ge0\ \exists J\in\mathbb N,\ J\ge2,
+\quad\forall j\ge J,\quad w(j^4)\Phi(j^4)\ge-K.}
+\tag{256.9}
+$$
+

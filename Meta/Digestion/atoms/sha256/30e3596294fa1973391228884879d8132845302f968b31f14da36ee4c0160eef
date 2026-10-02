@@ -1,0 +1,13 @@
+**定理 320.1（核诱导平均保留四次子族的 RH 强度）。** 在定义320.0的输入下，以下命题等价：
+\[
+\begin{aligned}
+&\mathrm{RH};\\
+&\exists K\ge0\ \exists J_0\ge3\ \forall J\ge J_0:
+       \quad\mathfrak b_J\ge-K;\\
+&\mathfrak b_J\longrightarrow\kappa;\\
+&\exists\ell\in\mathbb R:\quad\mathfrak b_J\longrightarrow\ell.
+\end{aligned}
+\tag{320.3}
+\]
+阈值及指标为整数，$K$ 为固定有限实数。该结论没有证明预算存在，也没有决定 RH。
+

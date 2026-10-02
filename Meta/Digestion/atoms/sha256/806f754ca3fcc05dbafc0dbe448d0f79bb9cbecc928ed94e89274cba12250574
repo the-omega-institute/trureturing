@@ -1,0 +1,15 @@
+**定义 311.0。** 沿用 §§305、307、310 的实际整数 $T_L=\widetilde C_L$、$m=m_L=3L+2$、$E=e^\gamma$、$X_L=\log T_L$、$U_L=\sigma(T_L)/T_L$ 与
+\[
+b_L=\frac{U_L}{E\log m}-\frac m{X_L}.
+\tag{311.1}
+\]
+对实数 $x\ge2$，沿用同一素数序列的 $\vartheta(x),P(x)$，并置
+\[
+a(x)=\frac{\vartheta(x)-x}{x},\qquad
+e(x)=\log\frac{P(x)}{E\log x},\qquad
+B(x)=\frac{P(x)}{E\log x}-\frac x{\vartheta(x)}
+=\exp e(x)-\frac1{1+a(x)}.
+\tag{311.2}
+\]
+本节采用假设302.1；所用 Mertens 分部求和、Littlewood 振荡及经典 RH 素数误差判据分别作为已知解析中间步骤。$b_L$ 保留同一个实际整数的权重与高度，$B(x)$ 保留同一素数截断的两项误差；二者均不是独立选择的两个极值。
+

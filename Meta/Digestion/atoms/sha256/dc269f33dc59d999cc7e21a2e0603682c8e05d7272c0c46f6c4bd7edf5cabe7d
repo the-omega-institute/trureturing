@@ -1,0 +1,27 @@
+### theorem 255.2 全部阶数的统一比较与共同辅助阈值
+
+对全部 $t\ge100$、全部 $N\ge0$，有
+
+$$
+\boxed{0\le\mathscr C(t)-\mathscr C_N(t)
+\le8\frac{(10/t)^{N+1}}{1-10/t}
+\le\frac{80}{t-10},}
+\tag{255.2}
+$$
+
+以及共同下界
+
+$$
+\boxed{\mathscr C_N(t)\ge\mathcal Z_t+c_R
+-\frac2t-\frac{40}{t-10}-\frac{2K}{t^2}.}
+\tag{255.3}
+$$
+
+特别地，在任何满足 $t\ge1000$ 与 $\mathcal Z_t\ge-1/2$ 的同一价格点，
+全部阶数同时满足
+
+$$
+\mathscr C_N(t)>\frac14.
+\tag{255.4}
+$$
+

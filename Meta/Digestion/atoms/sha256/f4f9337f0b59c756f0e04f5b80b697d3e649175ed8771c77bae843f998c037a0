@@ -1,0 +1,16 @@
+### 262.1 Fibonacci zeta 的零点边界不是 Riemann zeta 的临界线
+
+[Mantovanelli 的 Fibonacci zeta 预印本](../../../Library/Weil/mantovanelli2026fibonaccizeta.md)确定
+
+$$
+Z_F(s)=\sum_{n\ge1}F_n^{-s}
+$$
+
+在绝对收敛半平面内的零点右边界
+
+$$
+\sigma_F=0.743163398726901648\ldots.
+$$
+
+这里的 Fibonacci 增长与项目的 $M$ 递归有直接的尺度联系，但该级数没有因此获得 Riemann zeta 的 Euler 乘积、von Mangoldt 系数或 Robin 的约数和。它证明的是另一份几乎周期 Dirichlet 级数的零点几何；把 $\sigma_F$ 当作 $\zeta$ 的临界线证据会丢失系数与检验集合的桥接。
+
