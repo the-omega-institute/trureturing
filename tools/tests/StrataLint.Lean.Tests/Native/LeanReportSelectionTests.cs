@@ -377,11 +377,10 @@ public sealed class LeanReportSelectionTests
             "-u", "STRATALINT_LEAN_REPORT_LOG_DIR", "LEAN_REPORT=" + output,
             "LEAN_REPORT_TEST_ARGUMENTS=" + argumentLog,
             "LEAN_REPORT_TEST_EXIT=" + nativeExit,
-            "REBUILD_REPORT_CACHE=1",
         };
         if (logDirectory is not null)
             arguments.Add("STRATALINT_LEAN_REPORT_LOG_DIR=" + logDirectory);
-        arguments.AddRange(["bash", wrapper]);
+        arguments.AddRange(["bash", wrapper, "--rebuild-report-cache", "1"]);
         var result = TestProcessRunner.Run("env", arguments, temporary.Path,
             TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
 

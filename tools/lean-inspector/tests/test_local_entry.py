@@ -123,6 +123,11 @@ with contextlib.nullcontext() if "--writer-owned" in args else cache_guard(root)
                               cwd=cwd or self.root, env=environment or self.environment,
                               text=True, capture_output=True, timeout=30)
 
+    def make_target(self, target, *arguments):
+        return subprocess.run(['make', '--no-print-directory', target, *arguments],
+                              cwd=self.root, env=self.environment,
+                              text=True, capture_output=True, timeout=30)
+
     def assert_continued(self, result, fetched=True, output=None):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn('complete-entry-reused', result.stdout)
@@ -191,6 +196,38 @@ with contextlib.nullcontext() if "--writer-owned" in args else cache_guard(root)
     def test_explicit_rebuild_skips_guard_on_mismatch(self):
         self.current_version(2)
         self.assert_build(self.entry('REBUILD_REPORT_CACHE=1'))
+
+    def test_inherited_policy_cannot_bypass_local_guard_at_any_make_entry(self):
+        shutil.rmtree(self.seed.parent)
+        self.environment['FETCH_RESULT'] = 'unavailable'
+        for policy in ('build', 'reuse-or-build', 'invalid'):
+            for target in ('lean-report', 'test', 'gate'):
+                with self.subTest(policy=policy, target=target):
+                    (self.root / 'fetch-called').unlink(missing_ok=True)
+                    self.environment['LEAN_REPORT_CACHE_MISS_POLICY'] = policy
+                    self.assert_blocked(self.make_target(target), 'unavailable', 1,
+                                        'unavailable', 'fetch-unavailable')
+
+    def test_inherited_rebuild_cannot_bypass_local_guard(self):
+        shutil.rmtree(self.seed.parent)
+        self.environment['FETCH_RESULT'] = 'unavailable'
+        self.environment['REBUILD_REPORT_CACHE'] = '1'
+        self.assert_blocked(self.entry(), 'unavailable', 1, 'unavailable', 'fetch-unavailable')
+
+    def test_explicit_reuse_policy_reaches_nested_make(self):
+        shutil.rmtree(self.seed.parent)
+        for target in ('test', 'gate'):
+            with self.subTest(target=target):
+                self.assert_build(self.make_target(target, 'LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'))
+
+    def test_explicit_rebuild_reaches_nested_make_test(self):
+        self.assert_build(self.make_target('test', 'REBUILD_REPORT_CACHE=1'))
+
+    def test_explicit_build_policy_requires_rebuild_option(self):
+        result = self.entry('LEAN_REPORT_CACHE_MISS_POLICY=build')
+        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+        self.assertIn('REBUILD_REPORT_CACHE=1', result.stderr)
+        self.assertFalse((self.root / 'report-builds').exists())
 
     def test_same_version_input_change_keeps_incremental_path(self):
         self.fixture.write('D5/A.lean', 'def a := 2\n')

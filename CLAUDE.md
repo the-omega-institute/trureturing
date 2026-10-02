@@ -10,7 +10,7 @@
 |---|---|
 | 创建会话 worktree（已有则复用） | `make worktree KIND=<kind> NAME=<任务码> DEST=../trureturing-<session-id>` |
 | 编译指定 Lean 模块及依赖 | `make lean LEAN_TARGETS="<点分模块名>"`（省略 `LEAN_TARGETS` 为全项目） |
-| 生成 Lean 报告 / 发射 Scribe | `make lean-report`（实际复用种子缺失或版本不符时在缓存锁内取 dev 热缓存，仍不兼容即报错） / `make emit`；显式跳过复用并构建：`make lean-report REBUILD_REPORT_CACHE=1` |
+| 生成 Lean 报告 / 发射 Scribe | `make lean-report`（实际复用种子缺失或版本不符时在缓存锁内取 dev 热缓存，仍不兼容即报错） / `make emit`；显式跳过复用并构建：`make lean-report REBUILD_REPORT_CACHE=1`；策略与重建参数只接受 make 命令行赋值（含嵌套 make 传递），忽略环境继承值 |
 | 取回 dev Lean 热缓存（不含 mathlib） | `make lean-cache-from-github-without-mathlib REFRESH_STALE=1`（同分区，刷新过期缓存） |
 | 摄入指定理论源 | `make ingest SOURCE="<source-id 或源文件路径>"` |
 | 查看 atom / 连读上下文 | `make show-atom ATOM_ID=<id>` / `make atom-context ATOM_ID=<id>` |

@@ -9,7 +9,7 @@ CENSUS_PREFIX ?= D5
 .PHONY: help test lean-cache-ensure lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib warm-donor lean lean-report build emit ingest align-digestion-status refresh-source-registry mathlib-reanchor echo-residual-summary digestion-readiness show-atom atom-context truth-export deliver-check deposit deposit-uncovered cover cover-batch decompose quarantine quarantine-clear settle settle-clear worktree worktree-clean worktree-remove pr-open pr-watch gate census census-derivational
 
 help:
-	@printf '%s\n' 'make test  Run lean-report and check-current' 'make worktree KIND=x NAME=y [BASE=origin/dev] [DEST=DIR]  Initialize an isolated worktree; Lean cache is lazy and never symlinked' 'make gate [BASE=origin/dev]  Run independent CI-equivalent commands' 'make lean-report  Produce the canonical raw Lean report'
+	@printf '%s\n' 'make test  Run lean-report and check-current' 'make worktree KIND=x NAME=y [BASE=origin/dev] [DEST=DIR]  Initialize an isolated worktree; Lean cache is lazy and never symlinked' 'make gate [BASE=origin/dev]  Run independent CI-equivalent commands' 'make lean-report  Produce the canonical raw Lean report' 'Report policy and REBUILD_REPORT_CACHE=1 accept only make command-line assignments, including recursive make; inherited environment values are ignored'
 
 test:
 	@set -e; make lean-report; dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -nologo; dotnet tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll check-current --candidate-lean-report "$(LEAN_REPORT)"
@@ -34,10 +34,9 @@ warm-donor:
 lean:
 	@/bin/bash tools/scripts/worktree/lean-cache-run.sh --build $(LEAN_TARGETS)
 
+# GNU make preserves command-line origin through recursive MAKEFLAGS.
 lean-report:
-	@/bin/bash tools/scripts/report/lean-report.sh
-lean-report: export REBUILD_REPORT_CACHE := $(value REBUILD_REPORT_CACHE)
-lean-report: export LEAN_REPORT_CACHE_MISS_POLICY := $(value LEAN_REPORT_CACHE_MISS_POLICY)
+	@/bin/bash tools/scripts/report/lean-report.sh --cache-miss-policy "$(if $(filter command line,$(origin LEAN_REPORT_CACHE_MISS_POLICY)),$(LEAN_REPORT_CACHE_MISS_POLICY),fetch-or-fail)" --rebuild-report-cache "$(if $(filter command line,$(origin REBUILD_REPORT_CACHE)),$(REBUILD_REPORT_CACHE),0)"
 
 build: lean
 
