@@ -45504,3 +45504,172 @@ $|\mathcal T_C|=x^{1/2+o(1)}$。
 这条路线现在保留了完整合同：实际宿主、明确低成本素乘子、全部需要控制的频率、真实null前缀及独立绝对储备。频率上界与储备仍是两个未解义务，没有新增Robin安全范围或RH证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 330. 实际 Robin 有限累计证书的积分误差与五分递归预算
+
+**定义 330.1（有限实际采样与连续累计量）。** 沿用 §325 的实际整数 $T_L$、价格截止 $m_L=3L+2$、归一化 Robin 余量 $\mathfrak m_L$ 与 $\kappa=2\sqrt2-2$。取有限严格递增自然数列 $16\le L_0<\cdots<L_N$，$N\ge1$，置
+\[
+a_i=m_{L_i},\quad q_i=\mathfrak m_{L_i},\quad
+\omega_i=\log(a_{i+1}/a_i),\qquad
+\mathcal I(x)=\int_{a_0}^x Z(y)\frac{dy}{y},
+\quad Z(y)=\sqrt y\log y\,\Phi(y).
+\tag{330.1}
+\]
+对 $0<a\le b$ 记
+\[
+D(a,b)=(b-a)-a\log(b/a).
+\tag{330.2}
+\]
+
+**假设 330.1（逐格可用的实际输入）。** 在所选有限区间上，§315 的有符号分解给
+\[
+q_i=Z(a_i)+\kappa-H_i+\varepsilon_i,\qquad H_i\ge0.
+\tag{330.3}
+\]
+给定每点明确的残差上界 $\varepsilon_i\le e_i$。在每格 $[a_i,a_{i+1}]$ 上，$Z$ 绝对连续，且有明确的 $M_i\ge0$ 使 $|Z'(y)|\le M_i$ 几乎处处成立。以上输入仅针对有限区间；$\varepsilon_i\to0$ 不独自提供这里需要的有限 $e_i$，未给出这些界时不宣称取得数值证书。
+
+**定理 330.1（实际左和到整个有限连续区间的下界证书）。** 在假设330.1下，对每个 $j<N$、$a_j\le x\le a_{j+1}$，有
+\[
+\begin{aligned}
+\mathcal I(x)\ge{}&
+ \sum_{i<j}\bigl[\omega_i(q_i-\kappa-e_i)-M_iD(a_i,a_{i+1})\bigr]\\
+ &+(q_j-\kappa-e_j)\log(x/a_j)-M_jD(a_j,x).
+\end{aligned}
+\tag{330.4}
+\]
+特别地，
+\[
+\mathcal I(a_N)\ge
+\sum_{i<N}\omega_i(q_i-\kappa-e_i)
+-\sum_{i<N}M_iD(a_i,a_{i+1}),
+\qquad
+0\le D(a,b)\le\frac{(b-a)^2}{2a}.
+\tag{330.5}
+\]
+因此（330.4）也在每个 $D$ 项以相应二次上界替代后成立。
+
+**证明。** 使用绝对连续函数的经典微积分基本定理作为中间步骤，几乎处处导数界给
+\[
+|Z(y)-Z(a)|\le M(y-a)\qquad(a\le y\le b).
+\]
+这一步无须在素数幂处逐点可微。由 $a>0$，
+\[
+\begin{aligned}
+\left|\int_a^b Z(y)\frac{dy}{y}-Z(a)\log(b/a)\right|
+&\le M\int_a^b\frac{y-a}{y}\,dy\\
+&=M D(a,b)
+\le M\int_a^b\frac{y-a}{a}\,dy
+=\frac{M(b-a)^2}{2a}.
+\end{aligned}
+\tag{330.6}
+\]
+积分表达同时给 $D\ge0$。这些是经典积分不等式在本证明中的使用，不单独主张其新颖性。实际分解（330.3）给 $Z(a_i)\ge q_i-\kappa-e_i$；对数权重非负，故（330.6）的下边界可以用该实际左端下界替代。对整格求和，末格应用于 $[a_j,x]$，得到（330.4）及（330.5）。
+
+实际递归比较还使用下述经典积分不等式的推论作为中间步骤。取 $0<a=a_0<\cdots<a_b=c$，假设 $Z$ 在 $[a,c]$ 上绝对连续且 $|Z'|\le M$ 几乎处处，$M\ge0$。记
+\[
+S_{\rm fine}=\sum_{s<b}Z(a_s)\log(a_{s+1}/a_s),\qquad
+S_{\rm coarse}=Z(a)\log(c/a),\qquad
+D_{\rm fine}=\sum_{s<b}D(a_s,a_{s+1}).
+\]
+则
+\[
+\begin{aligned}
+\sum_{s<b}\log(a_{s+1}/a_s)&=\log(c/a),\\
+D(a,c)-D_{\rm fine}&=\sum_{s<b}(a_s-a)\log(a_{s+1}/a_s)\ge0,\\
+|S_{\rm fine}-S_{\rm coarse}|&\le M\bigl[D(a,c)-D_{\rm fine}\bigr].
+\end{aligned}
+\tag{330.7}
+\]
+所以谱积分的证书区间在细分时包含关系为
+\[
+[S_{\rm fine}-MD_{\rm fine},\ S_{\rm fine}+MD_{\rm fine}]
+\subseteq
+[S_{\rm coarse}-MD(a,c),\ S_{\rm coarse}+MD(a,c)].
+\tag{330.8}
+\]
+共同导数界与真实谱样值是此包含关系的前提。仅把真实谱样值换成（330.3）的实际余量下界，并不自动保留每次细分的数值单调性。
+
+第一式由对数望远镜求和。第二式由 $D$ 定义与 $\sum(a_{s+1}-a_s)=c-a$ 得到。又
+\[
+S_{\rm fine}-S_{\rm coarse}
+=\sum_{s<b}\log(a_{s+1}/a_s)[Z(a_s)-Z(a)],
+\]
+对每项应用导数界给第三式，继而推出两侧端点的单调性及（330.8）。实际余量下界还含 $H_i$ 与 $e_i-\varepsilon_i$，它们不会因谱函数的同一导数界而在新旧节点间满足所需单调关系；只有分别有效的下界证书可以取最大值继续保持有效。具体而言，在新插入左端点的正权重上，任意增大其合法上界 $e_i$ 仍保持 $\varepsilon_i\le e_i$，却可使细分下界任意降低；固定真实数据也不足以排除这种情况。上述守恒对象是对数质量，普通左端贡献的差仍是（330.7）的第三式所控制的量。$\square$
+
+**定义 330.2（Fibonacci 块上的五分整数叶）。** 取 $k\ge8$，$F=F_k$、$h=F_{k-1}$，于是 $F_{k+1}=F+h$ 且 $F/2\le h\le F$。取满足 $b=5^r\le h$ 的整数深度 $r\ge0$，定义
+\[
+U_s=F+\left\lfloor\frac{sh}{b}\right\rfloor\quad(0\le s\le b),
+\qquad a_s=3U_s+2,
+\qquad \ell_s=U_{s+1}-U_s.
+\tag{330.9}
+\]
+这些节点对应实际整数 $T_{U_s}$。相邻 Fibonacci 块的共同边界只保留一次。这里的五分是采样分割，不额外假定它等同于原有五窗口语法。
+
+**定理 330.2（实际递归块的精确二阶误差预算）。** 在定义330.2下，令 $v=\lfloor h/b\rfloor$、$t=h-bv$，$0\le t<b$。整数叶严格递增，叶长只取 $v$ 与 $v+1$，其中 $v+1$ 恰出现 $t$ 次，并有
+\[
+\sum_{s<b}\ell_s^2
+=bv^2+t(2v+1)
+=\frac{h^2}{b}+t\left(1-\frac tb\right).
+\tag{330.10}
+\]
+若同一块上可以使用共同导数界 $M$，则实际有限证书的积分误差满足
+\[
+M\sum_{s<b}D(a_s,a_{s+1})
+\le\frac{9M}{2(3F+2)}\bigl[bv^2+t(2v+1)\bigr]
+\le\frac{45M h^2}{8(3F+2)b}.
+\tag{330.11}
+\]
+合法相邻深度的节点满足精确祖先关系
+\[
+U^{(r+1)}_{5s}=U^{(r)}_s.
+\tag{330.12}
+\]
+因此在同一共同导数界与真实谱数据下，（330.7）–（330.8）逐父格适用；（330.11）则直接给实际余量证书的显式预算。
+
+**证明。** 用 $h=bv+t$，有
+\[
+\ell_s=v+\left\lfloor\frac{(s+1)t}{b}\right\rfloor
+-\left\lfloor\frac{st}{b}\right\rfloor.
+\]
+最后两项之差为零或一；从 $s=0$ 到 $b-1$ 求和为 $t$。因 $b\le h$，$v\ge1$，所以节点严格递增；展开平方得到（330.10）。将实际价格格宽 $a_{s+1}-a_s=3\ell_s$ 与 $a_s\ge3F+2$ 代入（330.5），得（330.11）的第一界。由
+\[
+0\le t(1-t/b)\le b/4\le h^2/(4b)
+\]
+得第二界。（330.12）只用 $\lfloor5sh/5^{r+1}\rfloor=\lfloor sh/5^r\rfloor$。五分本身不提供唯一的数论意义；任何固定整数分支数至少为二时都有对应的整数分割预算。$\square$
+
+**定理 330.3（递归深度与实际解析改善的接口）。** 对各 Fibonacci 块使用合法深度 $r_k$，记最大整数叶长 $H_k$。则
+\[
+H_k=\left\lceil\frac{F_{k-1}}{5^{r_k}}\right\rceil,
+\qquad
+\log H_k=\log F_{k-1}-r_k\log5+O(1).
+\tag{330.13}
+\]
+从而若 $\eta_*:=\liminf_{k\to\infty}r_k\log5/\log F_k$，有
+\[
+\limsup_{k\to\infty}\frac{\log H_k}{\log F_k}=1-\eta_*.
+\tag{330.14}
+\]
+对每个固定 $0<\eta\le1$，固定幂格宽 $H_k=O(F_k^{1-\eta})$ 等价于
+\[
+r_k\ge\eta\log F_k/\log5-O(1).
+\tag{330.15}
+\]
+$\eta_*>0$ 保证每个严格小于 $\eta_*$ 的正改善指数，不自动保证端点 $\eta=\eta_*$ 的固定常数界。
+
+在 §325 的实际经典解析输入下，初轮共同导数界可取 $M_k=O(\log F_k/\sqrt{F_k})$；取得 $S<1$ 后，每个固定 $S<\theta<1$ 可取 $M_k=O_\theta(F_k^{\theta-3/2})$。因此（330.11）分别生产块误差
+\[
+O\left(\frac{\sqrt{F_k}\log F_k}{5^{r_k}}\right),
+\qquad
+O_\theta\left(\frac{F_k^{\theta-1/2}}{5^{r_k}}\right).
+\tag{330.16}
+\]
+这给 §§325–326 整格误差所用的正幂改善在 Fibonacci 递归采样上的明确来源；末尾部分格子仍由（330.4）独立控制。
+
+**证明。** 定理330.2的叶长分布给最大值为该上取整。合法性使 $u=F_{k-1}/5^{r_k}\ge1$，故 $u\le\lceil u\rceil\le2u$；又 $F_k/2\le F_{k-1}\le F_k$，得（330.13）–（330.15）。若仅有 liminf，则对任意严格更小的指数最终有所需深度下界；端点可失败，例如 $0<\eta<1$ 时取
+\[
+r_k=\max\left\{0,\left\lfloor
+\frac{\eta\log F_k-\sqrt{\log F_k}}{\log5}\right\rfloor\right\}.
+\]
+这给 $\eta_*=\eta$，但 $H_k/F_k^{1-\eta}$ 无界；充分早的深度可另置为零以确保全程合法。共同导数界由（325.8）、（325.18）在 $[3F_k+2,3F_{k+1}+2]$ 上取常数获得，代入（330.11）便得（330.16）。固定深度或 $o(\log F_k)$ 深度不给这条机制固定的正幂改善；这不判定粗 Fibonacci 判据的真假。
+
+若固定整数 $d\ge2$ 并取 $r_k=\lfloor\log_5F_k/d\rfloor$，则 $5^{r_k}\asymp_d F_k^{1/d}$，充分晚时合法；其最大格宽为 $O_d(F_k^{1-1/d})$，截至价格 $X$ 的去重样本数为 $\Theta_d(X^{1/d})$。前者由（330.13）得，后者由 Fibonacci 块的几何增长对每块 $5^{r_k}$ 个新样本求和得。实际样本数量、递归深度、积分预算因此有同一量化关系；这仍没有证明实际平均的最终有限预算存在，也没有消去无限有符号尾项。$\square$
