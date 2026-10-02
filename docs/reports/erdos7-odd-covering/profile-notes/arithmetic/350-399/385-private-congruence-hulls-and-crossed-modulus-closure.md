@@ -22646,3 +22646,124 @@ cases is therefore
 This is a necessary modulus-sum floor under HF1, HF2, EB1, EB2, HF9 and the
 retained Simpson cut. It does not provide the phase-sensitive whole-cover
 repair and does not settle unrestricted Erdős #7.
+
+## 188. Least-LCM digit contraction forces phase-incompatible adjacent labels
+
+There is a separate extremal route that preserves all prime-power heights and
+the original phases. It must be kept distinct from the EB1 route above.
+Assume a distinct odd covering exists and choose, among all such covers, one
+with least numerical LCM \(L\); delete redundant classes first. This is a
+primitive minimum-LCM choice. It need not be the representative obtained by
+first minimizing the number of classes and then the modulus sum, so the
+divisor-closure conclusions used in Sections 180--187 are not imported here.
+
+Write the cover as
+
+\[
+  \mathcal C=\{A_m=a_m+m\mathbb Z:m\in D\},
+  \qquad L=\operatorname{lcm}(D).
+\]
+Fix \(p^e\parallel L\), \(1\le h\le e\), and identify the \(p\)-coordinate
+of \(\mathbb Z/L\mathbb Z\) with \(\mathbb Z/p^e\mathbb Z\). For a digit
+\(t\in\{0,\ldots,p-1\}\), let \(\iota_{h,t}\) insert \(t\) in position
+\(h-1\) of the base-\(p\) coordinate and leave all other digits unchanged.
+The only digit excluded below is
+
+\[
+  h=1,\qquad p\in D,\qquad t\equiv a_p\pmod p,
+\]
+
+because that inverse image of the class modulo \(p\) would have modulus one.
+
+### Digit-contraction obstruction
+
+For every other \(t\), there are actual labels \(m,pm\in D\) such that
+
+\[
+\boxed{
+\begin{aligned}
+  &v_p(m)=h-1,\\
+  &\left\lfloor\frac{a_{pm}\bmod p^h}{p^{h-1}}\right\rfloor=t,\\
+  &a_m\not\equiv a_{pm}\pmod m.
+\end{aligned}}
+\tag{DC}
+\]
+
+Thus \(A_m\) and \(A_{pm}\) are disjoint, but after deleting one \(p\)-digit
+their inverse images have the same numerical modulus \(m\) and different
+phases.
+
+To prove this, write \(L=p^eQ\) with \((p,Q)=1\). The inverse image under
+\(\iota_{h,t}\) of an original class \(n=p^jd\), \(p\nmid d\), is:
+
+\[
+\begin{array}{c|c}
+  j<h & \text{one class of modulus }n\\
+  j\ge h\text{ and the }h\text{-th digit disagrees with }t & \varnothing\\
+  j\ge h\text{ and the digit equals }t & \text{one class of modulus }n/p.
+\end{array}
+\tag{1}
+\]
+
+The surviving inverse images cover \(\mathbb Z/(L/p)\mathbb Z\). Within each
+branch the numerical label map is injective. A collision between branches
+would have
+
+\[
+  p^jd=p^{k-1}d',\qquad j<h,\quad k\ge h,
+\]
+
+and unique factorization forces \(j=h-1\), \(k=h\), and \(d=d'\). Hence every
+repeated output label comes from exactly one pair \(m,pm\) with
+\(v_p(m)=h-1\). The two output phases coincide exactly when
+\(a_m\equiv a_{pm}\pmod m\).
+
+If (DC) failed, every repeated output could be merged as an identical class.
+After omitting the excluded modulus-one fibre, this would give a distinct odd
+cover whose moduli all divide \(L/p\), contradicting the minimum-LCM choice.
+Therefore every nontrivial inserted digit has a phase-incompatible adjacent
+pair. This is a covering-preserving descent with a completely identified
+failure mode.
+
+Define
+
+\[
+ E_{p,h}=\{(m,pm):m,pm\in D,\ v_p(m)=h-1,\ a_m\not\equiv a_{pm}\pmod m\}.
+\]
+
+Each pair has one definite upper digit, so different digits give different
+pairs. Consequently
+
+\[
+\boxed{
+ |E_{p,h}|\ge p-\mathbf 1_{\{h=1,\ p\in D\}},
+}
+\tag{2}
+\]
+
+and, summing over all support primes and levels,
+
+\[
+\boxed{
+ \sum_{p\mid L}\sum_{h=1}^{v_p(L)}|E_{p,h}|
+ \ge
+ \sum_{p\mid L}\bigl(pv_p(L)-\mathbf 1_{\{p\in D\}}\bigr).
+}
+\tag{3}
+\]
+
+This is stronger than merely knowing that some comparable pair exists: it gives
+phase-sensitive adjacent pairs at every height. It still does not produce a
+reciprocal private-hull relation. The two incompatible output phases cannot be
+merged, and treating them as two owners violates numerical distinctness. The
+remaining repair problem is therefore exact: repair all required contraction
+collisions while keeping one representative of each numerical modulus and
+preserving whole coverage.
+
+The minimum-LCM normalization also cannot silently be combined with EB1's
+divisor-closure inventory. A theorem relating those two extremal choices is
+still missing. Thus (DC) is a new global necessary structure and a sharper
+target for the repair step, not a settlement of unrestricted Erdős #7. The
+published Simpson phase-companion and Krukenberg \(p\)-way reduction results
+describe nearby descent mechanisms, but neither supplies the needed repair for
+an occupied, incompatible output label.
