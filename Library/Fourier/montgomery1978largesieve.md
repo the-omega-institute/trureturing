@@ -469,3 +469,48 @@ $$
 $$
 
 When the actual exterior block has a lower bound $D_{\rm ext}\succeq d(c,N)I$ with $d(c,N)>0$, one sufficient next step for this allowance-based Schur argument is to prove that the actual retained form dominates the entire right side of (33), divided by $d(c,N)$, for every retained vector along a cofinal support exhaustion. The common endpoints, the middle shell, the remainder and the form-domain/exhaustion bridges all enter this condition. Failure of these upper allowances to fit would not refute positivity or RH. No source or estimate in this note establishes that domination. For the existing FIB schedule $c_r=3^{F_{r+1}}$, the range $c_r\ge100000$ begins at $r=6$; parameter matching supplies (31) there when $M\ge c_r\log c_r$, and supplies no additional retained-form sign.
+
+## The existing RH route admits an even-sector consumer
+
+The repository's `WeilTestFunction` already means an even smooth compactly supported complex function. Its [Weil-square criterion](../../D5/S3/Weil/Separator/WeilSquarePositivityCriterion.lean) proves that positivity for these tests suffices for RH; the [explicit-formula criterion](../../D5/S3/Weil/Separator/ExplicitFormulaWeilCriterion.lean) transports the same statement to the complete pole-minus-prime-plus-Gamma expression. The existing [canonical zero data](../../D5/S3/Weil/ZeroData/UnconditionalCanonicalZeroData.lean) and [archimedean convergence theorem](../../D5/S3/Weil/Separator/ArchimedeanConvergence.lean) discharge its supplied-data and convergence parameters. Their direct exact application was compiled with only the standard `propext`, `Classical.choice` and `Quot.sound` axioms; the temporary check was removed without adding a named wrapper. Historical module comments describing zero-data existence as open do not override the canonical provider's statement.
+
+Thus this route need not separately establish positivity for every odd test. It still needs positivity of the **complete** form for every admitted even test along a cofinal support exhaustion. The [existing cofinal layer transfer](../../D5/S3/Weil/CofinalSupport/GoldenCofinalPositivity.lean) is reusable; it supplies no layer's positivity. Identifying the Fourier coefficient space and its form domain with these tests remains the stated paper-level bridge.
+
+In the phase-adjusted symmetric-window Fourier basis, reflection sends mode $n$ to mode $-n$. An even complex test therefore corresponds to
+
+$$
+v_{-n}=v_n,
+$$
+
+without complex conjugation. Reuse [the actual symbol's oddness and paired Gram identity](../../D5/S3/Weil/ZetaBridge/WeilArithmeticCouplingParityGram.lean). On a symmetric retained index set this gives $B_0=A_1=0$. Substitution into (9) keeps the $(A_0,B_1)$ block, with exact second-jet energy
+
+$$
+\sum_{|m|>M}|J_2(m)|^2=
+\frac2{\pi^2}\bigl(S_2|A_0|^2+Z_4|B_1|^2
+-2T\Re(\overline{A_0}B_1)\bigr).
+\tag{34}
+$$
+
+The same interval $I=[\ell,u]$ from (28) yields the restricted allowance
+
+$$
+\mathcal J_I^{\rm even}(v)=\frac2{\pi^2}
+\max_{t\in\{\ell,u\}}
+\bigl(U_1|A_0|^2+Z_4|B_1|^2
+-2t\Re(\overline{A_0}B_1)\bigr).
+\tag{35}
+$$
+
+This is the existing allowance's restriction to the actual even coefficient space, not a new moment estimate. The former actual-vector example with $v_{\pm2}=1$ and $v_0=-1$ or $-3$ already lies in this space and has opposite cross signs. Evenness alone therefore does not make negative $T$ favorable for every vector. Every middle mode and the full remainder (11) still enter (33).
+
+For this even-sector Schur route, an actual exterior bound $D_{{\rm ext},{\rm even}}\succeq d_{\rm even}(c,N)I>0$ and domination by the actual retained **even** form of
+
+$$
+\frac{\mathcal E_{\rm mid}(v)+(1+\eta)\mathcal J_I^{\rm even}(v)
++(1+\eta^{-1})\mathcal R_2(v)}{d_{\rm even}(c,N)}
+\tag{36}
+$$
+
+for all symmetric retained vectors are sufficient, with the same form-domain bridge and cofinal support requirement. A lower bound valid on the whole exterior space also restricts to this subspace. A positive finite even compression alone does not pay for its infinite even complement. Neither (34)–(36) nor the existing criterion supplies the missing domination.
+
+The [Liu fixed-window source](../Weil/liu2026tailcompensation.md) gives a different retained positive-tail mechanism at half-width $17/16$. Its even restriction keeps the tail-filtered $h_0$ correction. The first new FIB half-width $\log3$ remains outside that theorem's range; importing its fixed-window matrices or constants there would require new support-dependent estimates.
