@@ -22936,3 +22936,139 @@ The lemma still does not provide a distinct replacement for this second
 \(R\)-residue, nor does it bound the complete joint liability of the two
 phases.  (PW-Phase) therefore sharpens the repair target while leaving the
 unrestricted whole-cover implication open.
+
+## 192. The Dalton--Trifonov replacement phase is source-determined
+
+The phase hidden by the one-class statement can be recovered from the same
+original cover.  This is the phase-explicit form of Dalton--Trifonov,
+[arXiv:1905.07386v2](https://arxiv.org/abs/1905.07386), Lemma 6 and
+Corollary 9; Klein's Lemma 2.2 is the later restatement used in Section 190.
+It is a reuse of that coverage theorem, not a new unrestricted repair.
+
+Let \(Q=\operatorname{lcm}(D)\), let \(p^e\parallel Q\), and suppose the
+top \(p\)-layer consists of exactly
+
+\[
+T_i=a_i\pmod {p^e m_i},\qquad 1\leq i\leq p,\qquad p\nmid m_i.
+\]
+
+Write \(\mathcal C_0\) for the other original classes,
+\(Q_0=Q/p\), \(t_i=p^{e-1}m_i\), and
+
+\[
+R=\operatorname{lcm}(t_1,\ldots,t_p).
+\]
+
+Put \(H=\mathbb Z\setminus\bigcup\mathcal C_0\).  In an irredundant whole
+cover \(H\) is nonempty: if \(\mathcal C_0\) were already a cover, every top
+class would be removable, while if \(\mathcal C_0\) were empty, \(p\)
+distinct classes of moduli \(p^e m_i\) have total density strictly below one
+(the equality case would repeat the modulus \(p\)).  Every class in
+\(\mathcal C_0\) has modulus dividing \(Q_0\), so membership in
+\(\mathcal C_0\) is constant on the \(p\)-point fibre
+
+\[
+\{x+jQ_0:0\leq j<p\}.
+\]
+
+For \(x\in H\), the \(p\) top classes therefore cover those \(p\) points,
+one point per class.  Reducing the corresponding congruences gives
+
+\[
+x\equiv a_i\pmod {t_i}\qquad(1\leq i\leq p).
+\]
+
+Thus the reduced congruences have the actual CRT solution
+
+\[
+\boxed{
+b\equiv a_i\pmod {t_i}\quad(1\leq i\leq p),\qquad b\pmod R,
+}
+\tag{PW-Source}
+\]
+
+and \(H\subseteq B\), where \(B=b\pmod R\).  The phase \(b\) is consequently
+fixed by the original labels and phases; it is not an externally chosen phase.
+Dalton--Trifonov's intersection construction gives
+
+\[
+\mathcal C_0\cup\{B\}\quad\text{as a whole cover}.
+\tag{PW-Source-Cover}
+\]
+
+This also supplies a direct proof of the phase part of (PW-Phase).  If the
+already occupied \(R\)-class is \(A=a_R\pmod R\) and \(b\equiv a_R\pmod R\),
+then all \(p\) top classes can be deleted while retaining \(A\), contradicting
+EB1.  Hence \(A\) and \(B\) are distinct residue classes modulo the same
+occupied label \(R\).
+
+The full repair obligation can now be written without replacing it by one
+private region.  Let
+
+\[
+\mathcal U=\bigcup(\mathcal C_0\setminus\{A\}),\qquad
+E_A=A\setminus\mathcal U,\qquad E_B=B\setminus\mathcal U.
+\]
+
+Since \(A\cap B=\varnothing\) and (PW-Source-Cover) holds,
+
+\[
+\boxed{
+\mathbb Z\setminus\mathcal U=E_A\mathbin{\dot\cup}E_B.
+}
+\tag{PW-Liability}
+\]
+
+Both terms are nonempty by irredundancy: \(E_A=\varnothing\) would make the
+occupied \(R\)-class removable, and \(E_B=\varnothing\) would make the
+deleted top layer removable.  Therefore deleting the top layer and changing
+the occupied \(R\)-phase loses the entire two-phase set in (PW-Liability),
+including points that were jointly covered by \(A\) and a top class.
+
+The overlap with the old \(R\)-class is still computable.  With
+\(\Delta=a_R-b\), put
+
+\[
+I=\{i:t_i\mid\Delta\}.
+\]
+
+Since \(\operatorname{lcm}(t_i)=R\nmid\Delta\), \(|I|\leq p-1\).  For
+\(i\in I\),
+
+\[
+A\cap T_i\ \text{is one class modulo }pR;
+\]
+
+for \(i\notin I\) the intersection is empty.  If a subset \(S\subseteq I\)
+of the original top classes is retained while \(A\) is changed to \(B\), the
+remaining responsibility is exactly
+
+\[
+\boxed{
+K_S=E_A\setminus\bigcup_{i\in S}T_i,
+}
+\tag{PW-Partial-Liability}
+\]
+
+and not the old private region of \(A\) alone.  Consequently, a conditional
+distinct repair using \(B\), the retained classes \(S\), and \(k\) fresh
+classes covering \(K_S\) has the exact EB1 budgets
+
+\[
+|S|+k<p,
+\tag{PW-Count}
+\]
+
+for a class-count descent, or, in the tied-count case,
+
+\[
+\sum_{i\in S}p^e m_i+\sum_{j=1}^k d_j
+<\sum_{i=1}^p p^e m_i.
+\tag{PW-Sum}
+\]
+
+The fresh labels \(d_j\) must be distinct, retain their actual phases, and
+cover the entire displayed responsibility.  These are sufficient interfaces,
+not assertions that every EB1 cover satisfies them.  The remaining global
+problem is to force one such budgeted repair, or a different repair that pays
+the complete two-phase liability, for every hypothetical EB1 cover.
