@@ -3469,6 +3469,7 @@ A卷第1.7节、A卷第2.1节、A卷第2.2节、A卷第2.3节、A卷第2.4节、
 ## 追加锚（本行以下为增补区）
 
 
+
 ## 6. 进位扩张、合法取得与查询—等待边界
 
 在有限阿贝尔滤过中，相同的分次层可以具有不同的整体运算。进位余循环提供层间拼接，截面变换运输整套运算和读数；目标的行为纤维决定哪些区别必须保留，而指定传感器与合法动作决定这些区别如何取得。以下先给出带标记扩张的重建及任务下降，再在同一原初态的高位传感器上分别计算查询数与向前等待。
@@ -8922,3 +8923,623 @@ $$
 本节没有新增 Lean 声明、消化账目或物理时空结论。它把第24节的确定性游标、第12/15节的动态商与 FIB 生成层，以及观察者的信息取得问题接成一个新的条件模型：最小对象是指定策略族下的续接行为商；在概率版本中，其可计算表示是来源、纪元、游标、权限、档案和控制状态的实际联合边界。
 
 ## 追加锚（本行以下为增补区）
+
+## 26. 跨分辨率实际来源上的四视图动态充分性
+
+第12节已经在同一分辨率上给出空间、时间、边界和记忆四种表示的动态图册。
+第25节则把来源、纪元、游标、权限、档案和控制状态放进一个有限策略的联合边界。
+本节补上二者之间的纵向接口：不同分辨率必须来自同一个实际来源，粗化必须与合法
+更新及四种表示的运输交换；只有这样，单层的互相恢复才可沿分辨率塔继续使用。
+
+本节把三个经常混淆的结论分开：行为恢复只要求保留声明任务下的未来转录，来源恢复
+还要求保留指定的来源目标，实际取得则还要有观察者能够执行的读写合同。所有求和和
+恢复器都限制在实际来源像上。Claim status: open；本节是普通数学综合，没有新增 Lean
+声明，也不推出物理时空结论。
+
+### 26.1 分辨率塔与共同实际来源
+
+令 \(\Lambda\) 是有限的有向分辨率偏序，\(\lambda\succeq\mu\) 表示 \(\lambda\)
+比 \(\mu\) 精细。固定非空实际来源 \(\Omega\)，允许 \(\Omega\) 无限。每层有配置集合
+\(S_\lambda\)、实际实现映射
+
+$$
+\sigma_\lambda:\Omega\longrightarrow S_\lambda,
+\qquad
+S_\lambda^0=\sigma_\lambda[\Omega].
+$$
+
+只在实际像 \(S_\lambda^0\) 上定义后续操作。对 \(\lambda\succeq\mu\)，给出层间
+投影
+
+$$
+p_{\lambda\mu}:S_\lambda^0\longrightarrow S_\mu^0,
+$$
+
+并要求
+
+$$
+\boxed{
+p_{\lambda\lambda}=\operatorname{id},\qquad
+p_{\mu\nu}\,p_{\lambda\mu}=p_{\lambda\nu},\qquad
+p_{\lambda\mu}\,\sigma_\lambda=\sigma_\mu.
+}
+\tag{RA.2601}
+$$
+
+最后一个等式是共同来源条件。它排除了一种不合法的拼接：先在细层选择一个实际
+来源，再在粗层任意换成另一个具有相同边缘读数的来源。
+
+每层使用同一个声明动作族 \(A\)。把事件、读数、失败原因、时钟增量和 writer
+记录打包为有限输出字母表 \(O_\lambda\)。动作 \(a\) 的总核记为
+
+$$
+J^a_\lambda(o,s'\mid s),
+\qquad s,s'\in S_\lambda^0, o\in O_\lambda.
+$$
+
+不合法调用也使用显式失败输出和固定的失败后继；不把未定义的非法核行当作零概率
+合法事件。若 \(\lambda\succeq\mu\)，输出的粗化写成
+\(\varepsilon_{\lambda\mu}:O_\lambda\to O_\mu\)，则共同来源上的核自然性为
+
+$$
+\boxed{
+J^a_\mu(o_\mu,t\mid p_{\lambda\mu}s)
+=
+\sum_{\substack{\varepsilon_{\lambda\mu}(o)=o_\mu\\
+                   p_{\lambda\mu}s'=t}}
+J^a_\lambda(o,s'\mid s).
+}
+\tag{RA.2602}
+$$
+
+它同时要求合法性、失败、记录和读数按同一输出映射下降。确定性特例是
+\(p_{\lambda\mu}T_{\lambda,a}=T_{\mu,a}p_{\lambda\mu}\)，并且输出标签也按
+\(\varepsilon_{\lambda\mu}\) 下降。若策略根据输出前缀选择动作，声明的策略族须在
+这些输出投影下闭合。
+
+若动作在分辨率 \(\lambda\) 上需要更细的输入，不能把这个前视依赖省略。给出
+\(j_a(\lambda)\succeq\lambda\)，并要求
+\(\lambda\succeq\mu\Rightarrow j_a(\lambda)\succeq j_a(\mu)\)。把该动作的前视核明确写成
+\[
+J^a_\lambda:S^0_{j_a(\lambda)}\longrightarrow O_\lambda\times S^0_\lambda,
+\]
+或在随机情形写成同一类型上的联合质量核。它从
+\(S_{j_a(\lambda)}^0\) 取输入、把后继放回 \(S_\lambda^0\)；对
+\(s\in S_{j_a(\lambda)}^0\)，粗输入由
+\(p_{j_a(\lambda),j_a(\mu)}s\) 给出，层间相容应写成
+
+$$
+J^a_\mu(o_\mu,t\mid p_{j_a(\lambda),j_a(\mu)}s)
+=
+\sum_{\substack{\varepsilon_{\lambda\mu}(o)=o_\mu\\
+                   p_{\lambda\mu}s'=t}}
+J^a_\lambda(o,s'\mid s).
+\tag{RA.2602a}
+$$
+
+单调性保证输入限制的类型成立；否则右侧的粗输入并不是该动作在 \(\mu\) 层的
+合法前视输入。下文为简洁起见写成同层形式 (RA.2602)，但结论同样适用于
+(RA.2602a)。
+
+### 26.2 四视图的动态充分性
+
+令 \(\Pi_\lambda\) 是层 \(\lambda\) 的有限前缀闭合测试族，\(K^{\pi}_{\lambda,s}\)
+是从 \(s\) 执行测试 \(\pi\) 所得的有限转录核。定义层行为关系
+
+$$
+s\sim_\lambda t
+\iff
+\forall\pi\in\Pi_\lambda,\ \forall\tau,
+\quad
+K^{\pi}_{\lambda,s}(\tau)=K^{\pi}_{\lambda,t}(\tau).
+$$
+
+四个表示的索引集为
+
+$$
+I=\{\mathrm{space},\mathrm{time},\mathrm{boundary},\mathrm{memory}\}.
+$$
+
+各表示是实际像上的读出
+
+$$
+r_{i,\lambda}:S_\lambda^0\longrightarrow Y_{i,\lambda}^0,
+\qquad
+Y_{i,\lambda}^0=r_{i,\lambda}[S_\lambda^0].
+$$
+
+称 \(r_{i,\lambda}\) 动态充分，如果同一读出纤维中的状态具有相同的合法性、失败
+类型和输出，并且对每个新表示纤维的后继质量相同：若
+\(r_{i,\lambda}(s)=r_{i,\lambda}(t)=y\)，则对每个 \(a,o,y'\)，有
+
+$$
+\sum_{r_{i,\lambda}(s')=y'}J_{\lambda,a}(o,s'\mid s)
+=
+\sum_{r_{i,\lambda}(t')=y'}J_{\lambda,a}(o,t'\mid t).
+$$
+
+selector、停止、记录和权限更新还必须只使用该表示及明示的档案。于是可以定义表示
+上的核 \(K^i_{\lambda,a}\)，并得到
+\(\ker r_{i,\lambda}\subseteq\sim_\lambda\)。称其为精确行为表示，当且仅当还满足
+
+$$
+\boxed{
+\ker r_{i,\lambda}=\sim_\lambda.
+}
+\tag{RA.2603}
+$$
+
+右向包含是最小性：表示不把同一行为商中的两个状态永久拆成两个状态。动态充分
+本身只需要左向包含；若只要求一个目标而非全部行为，则应把右侧的行为商换成该目标
+的纤维关系。
+
+### 26.3 跨层表示运输与四视图自然图册
+
+对 \(\lambda\succeq\mu\)，希望每个视图有一个实际像上的粗化
+\(\delta_{i,\lambda\mu}:Y_{i,\lambda}^0\to Y_{i,\mu}^0\)。它必须满足
+
+$$
+\boxed{
+\delta_{i,\lambda\mu}\,r_{i,\lambda}
+=
+r_{i,\mu}\,p_{\lambda\mu}.
+}
+\tag{RA.2604}
+$$
+
+在实际像上，满足 (RA.2604) 的映射存在且唯一，当且仅当
+
+$$
+\ker r_{i,\lambda}
+\subseteq
+\ker(r_{i,\mu}\,p_{\lambda\mu}).
+$$
+
+因此，细层合并的状态不能让粗层重新区分；这是跨层表示可下降的精确条件。层间恒等
+和复合由 (RA.2601) 继承。这个实际像上的唯一因子判据与
+`realized_image_unique_factorization_iff_reverse_kernel` 的形式接口相同。
+
+**定理 26.1（跨分辨率四视图自然图册）。** 假设 (RA.2601)–(RA.2604) 成立，
+四个视图在每层都是精确行为表示，且各视图核由同一个实际核 \(J\) 对后继纤维求和
+得到。则对任意 \(i,j\in I\) 和 \(\lambda\in\Lambda\)，存在唯一双射
+
+$$
+\chi_{ji,\lambda}:Y_{i,\lambda}^0\longrightarrow Y_{j,\lambda}^0,
+\qquad
+\chi_{ji,\lambda}(r_{i,\lambda}s)=r_{j,\lambda}s.
+$$
+
+这些双射满足
+
+$$
+\boxed{
+\chi_{ki,\lambda}=\chi_{kj,\lambda}\chi_{ji,\lambda},
+\quad
+\chi_{ii,\lambda}=\operatorname{id},
+\quad
+\chi_{ij,\lambda}=\chi_{ji,\lambda}^{-1},
+}
+$$
+
+并且与分辨率运输交换：
+
+$$
+\boxed{
+\delta_{j,\lambda\mu}\,\chi_{ji,\lambda}
+=
+\chi_{ji,\mu}\,\delta_{i,\lambda\mu}.
+}
+\tag{RA.2605}
+$$
+
+若 \(K^i_{\lambda,a}(o,y'\mid y)\) 是表示核，则同层换视图保持核：
+
+$$
+\boxed{
+K^j_{\lambda,a}(o,\chi_{ji,\lambda}y'\mid\chi_{ji,\lambda}y)
+=
+K^i_{\lambda,a}(o,y'\mid y).
+}
+\tag{RA.2606}
+$$
+
+跨层核是细层核按输出和后继表示的推前：
+
+$$
+\boxed{
+K^i_{\mu,a}(\varepsilon_{\lambda\mu}o_\lambda,y'_\mu\mid
+              \delta_{i,\lambda\mu}y)
+=
+\sum_{\substack{\varepsilon_{\lambda\mu}(o')=\varepsilon_{\lambda\mu}(o_\lambda)\\
+                  \delta_{i,\lambda\mu}y'=y'_\mu}}
+K^i_{\lambda,a}(o',y'\mid y).
+}
+\tag{RA.2607}
+$$
+
+式 (RA.2607) 中的 \(o_\lambda\) 只是表示所考察的粗输出纤维；若输出已经打包成
+一个标签，求和中的第一条件可省略。因而先换视图再粗化、先粗化再换视图，以及先在
+细层重放再把结果推到粗层，给出同一个有限转录分布。
+
+**证明。** 令 \(q_\lambda:S_\lambda^0\to Q_\lambda=S_\lambda^0/\sim_\lambda\)
+是行为商。由 (RA.2603)，每个 \(r_{i,\lambda}\) 在 \(q_\lambda\) 上诱导唯一双射
+\(\widehat r_{i,\lambda}:Q_\lambda\to Y_{i,\lambda}^0\)。置
+
+$$
+\chi_{ji,\lambda}
+=
+\widehat r_{j,\lambda}\,\widehat r_{i,\lambda}^{-1}.
+$$
+
+双射的复合律和唯一性随即成立。对任意 \(s\in S_\lambda^0\)，(RA.2604) 的左右
+两边在 \(r_{i,\lambda}s\) 上都等于 \(r_{j,\mu}(p_{\lambda\mu}s)\)，得到
+(RA.2605)。
+
+将同一个 \(J_{\lambda,a}\) 在两个表示的后继纤维上有限求和，使用
+\(r_{j,\lambda}=\chi_{ji,\lambda}r_{i,\lambda}\)，得到 (RA.2606)。对输出纤维和
+层间纤维再求和，(RA.2602) 给出 (RA.2607)。最后对策略树深度归纳：根的停止、合法性
+和失败标签由这些核保持；给定相同的已见前缀，selector 因子化而选择同一个动作，
+下一输出及后继边界质量由 (RA.2606) 或 (RA.2607) 相同，再对子策略使用归纳假设。
+证毕。
+
+### 26.4 行为恢复、来源恢复与实际取得
+
+三种“恢复”使用不同的量词。令 \(q_\lambda:S_\lambda^0\to Q_\lambda\) 为指定
+行为商，令 \(\theta:\Omega\to\Theta\) 是真正要恢复的来源目标；\(\theta=\operatorname{id}\)
+时表示完整来源身份。对视图定义来源层读出
+
+$$
+\widehat r_{i,\lambda}=r_{i,\lambda}\,\sigma_\lambda:
+\Omega\to Y_{i,\lambda}^0.
+$$
+
+**行为恢复**是存在 \(B_{i,\lambda}:Y_{i,\lambda}^0\to Q_\lambda\) 使
+
+$$
+q_\lambda\sigma_\lambda=B_{i,\lambda}\widehat r_{i,\lambda};
+$$
+
+等价地，\(\ker\widehat r_{i,\lambda}\subseteq
+\ker(q_\lambda\sigma_\lambda)\)。它只保证指定未来实验的转录可以重放。精确行为表示
+还要求反向包含，即 (RA.2603) 在实际状态层成立。
+
+**来源恢复**是存在 \(R_{i,\lambda}:Y_{i,\lambda}^0\to\Theta\) 使
+
+$$
+\theta=R_{i,\lambda}\widehat r_{i,\lambda};
+$$
+
+等价地，\(\ker\widehat r_{i,\lambda}\subseteq\ker\theta\)。完整来源的无损恢复
+取 \(\theta=\operatorname{id}\)，此时要求 \(\widehat r_{i,\lambda}\) 单射；若只关心
+来源的某个商，则只要求它在该商的纤维上恒定。即使四个视图都精确行为，行为等价
+仍可能合并来源目标不同的状态，因此不自动给出来源恢复。
+
+**实际取得**还需要一个观察合同。设 \(c\) 是当前记录、权限和参考，写
+\(\mathsf{Acq}_{i,\lambda}(c;\omega\Downarrow y)\) 表示存在一条合法有限协议，
+在同一个实际来源 \(\omega\) 上取得输出 \(y\)。视图可实际取得，要求对声明域中的每个
+\((\omega,c)\)，协议输出唯一且
+
+$$
+y=\widehat r_{i,\lambda}(\omega),
+$$
+
+并把协议的计算、校准、权限、参考、时钟和费用写入同一记录与控制状态。数学双射
+\(\chi\)、行为解码器 \(B\) 或来源解码器 \(R\) 只作用于已经取得的表示值；它们本身
+不证明观察者已经取得该值。
+
+若存在各层来源目标 \(\theta_\lambda:S_\lambda^0\to\Theta\)，满足
+\(\theta_\lambda\sigma_\lambda=\theta\) 且 \(\theta_\mu p_{\lambda\mu}=\theta_\lambda\)，并且
+两层解码器都存在，则在实际像上自动满足
+
+$$
+R_{i,\mu}\delta_{i,\lambda\mu}=R_{i,\lambda}.
+$$
+
+这只是来源目标的运输方程；它没有把来源恢复升级成实际读取权限。
+
+### 26.5 无限分辨率与线程恢复
+
+若分辨率为 \(\mathbb N\)，先区分环境层
+\(Y_{i,n}\) 与实际像 \(Y_{i,n}^0\subseteq Y_{i,n}\)。环境限制为
+\(\delta_{i,n}:Y_{i,n+1}\to Y_{i,n}\)，并满足
+\(\delta_{i,n}(Y_{i,n+1}^0)\subseteq Y_{i,n}^0\)；其在实际像上的限制才是实际来源所运输的
+映射。令
+\[
+L_i=\varprojlim(Y_{i,n},\delta_{i,n}),
+\]
+则实际来源给出落在 \(L_i\) 中的线程
+
+$$
+\operatorname{Thread}_i(\omega)
+=
+\bigl(\widehat r_{i,0}(\omega),
+       \widehat r_{i,1}(\omega),\ldots\bigr),
+$$
+
+并由 (RA.2604) 满足全部相容方程。由于 (RA.2605) 的每个分量都是双射，四种实际线程
+有相同的核：
+
+$$
+\operatorname{Thread}_i(\omega)=\operatorname{Thread}_i(\omega')
+\iff
+\operatorname{Thread}_j(\omega)=\operatorname{Thread}_j(\omega').
+$$
+
+这只说明四种表示在全部分辨率上保留同一线程区别。要把线程称作来源，仍需两项
+独立条件：
+
+1. **分离**：所有层读数相同的两个实际来源相等（或具有同一指定来源目标）；
+2. **完备**：每个环境逆极限中的相容线程都来自某个实际来源，即
+   \(\operatorname{Thread}_i(\Omega)=L_i\)（或在指定来源目标的商上满足相应满射）。
+
+前者是来源到线程的单射，后者是满射。二者同时成立时，来源与环境相容线程之间才有
+双射。没有分离时只能恢复行为线程；没有完备时，逆极限中还可能有数学上相容但
+实际来源没有实现的幽灵线程。这正是 `stateThread_bijective_iff_complete_and_separates`
+与 `local_global_atlas_exactness` 所分开的两个条件。
+
+若环境层等于实际像，即 \(Y_{i,n}=Y_{i,n}^0\)，且 \(\Omega\) 有限、每层实际像也有限，
+限制映射由共同来源条件满射，基数最终稳定，稳定段上的限制为双射，完备性可由此
+另行推出。环境层含有额外候选值时，这个有限稳定性不推出环境逆极限完备性；下面的
+反例刻意使用无限来源，避免把有限稳定性误当作一般逆极限完备性。
+
+### 26.6 四个边界反例
+
+**反例 26.A（行为恢复不等于来源恢复）。** 取
+\(\Omega=\{0,1\}\)，唯一动作是 `Stop`，两个来源都返回同一个 `ok`，没有后续动作。
+于是 \(\sim=\Omega\times\Omega\)。四个视图都取常值 \(*\)，满足精确行为表示，
+视图之间的运输是恒等；但 \(\theta(\omega)=\omega\) 不可能经由常值读出因子化，
+来源不可恢复。
+
+**反例 26.B（跨层投影不自然）。** 细层为
+\(S_f=\{a,b\}\)，粗层为 \(S_c=\{*\}\)，且 \(p(a)=p(b)=*\)。唯一动作在两层
+都是自环，但细层在 \(a,b\) 上分别输出标签 \(0,1\)。若声明的粗任务保留这两个标签，
+(RA.2602) 要求粗状态 \(*\) 同时给出两个不同输出，因而不存在粗层动态核。当前
+粗读数相同不能替代跨层动态充分性。
+
+**反例 26.C（数学互逆不等于实际取得）。** 取
+\(\Omega=\{0,1\}\)，四个抽象视图及其 \(\chi\) 都是恒等，来源解码器也存在；但
+所有合法读取协议只返回常量 `ok`，或者当前权限为空。抽象的行为和来源恢复成立，
+\(\mathsf{Acq}\) 不成立，观察者不能实际取得该坐标。
+
+**反例 26.D（相容线程不一定是真实来源）。** 取
+\(\Omega=\{0,1\}^{\mathbb N}\setminus\{g\}\)，其中
+\(g=(0,1,0,1,\ldots)\)。令环境层
+\(Y_0=\{*\}\)、\(Y_n=\{0,1\}^n\ (n\ge1)\)，限制映射删除最后一位；实际像取
+\(Y_n^0=Y_n\)，因为每个有限二进制前缀都有不等于 \(g\) 的延拓。于是环境逆极限
+\(L=\{0,1\}^{\mathbb N}\) 含有 \(g\)，但 \(g\) 不来自任何实际来源。它满足全部
+环境相容方程，却不在实际线程像中；无限层相容因此不推出实际来源存在，必须另加
+完备性。这里的幽灵是环境逆极限元素，不是实际像中的值。
+
+### 26.7 与既有章节及 Lean 支点的去重
+
+第12节 TM.1201–1207 已处理同一分辨率上的四视图唯一运输、核交换以及“联合读出
+完整不等于每个单页都可递归”。第25节 RA.2501–2517 已处理有限策略树、实际联合
+后验、来源／纪元／游标／档案的联合边界和零即时互信息。本节只增加分辨率指标、
+共同实际来源、层间实际像投影、输出推前以及四视图—分辨率交换，不重复这些单层
+证明。有效分辨率卷第10—11节已给具体投影与仿射模边界；本节只抽象其自然性，不
+重算那些整数公式。
+
+可直接对应的既有形式化支点为：
+
+* `D5/S3/ConceptDynamics/RefinementFactorization/RealizedImageKernelFactorization.lean` 的 `realized_image_unique_factorization_iff_reverse_kernel`：实际像上的唯一跨层因子与反向核包含等价；
+* `D5/S3/ConceptDynamics/Sufficiency/UniversalSufficiencyFactorization.lean` 的 `universal_sufficiency_factorization`：目标因子化与读出纤维恒定等价；
+* `D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.lean` 的 `target_recovery_criterion`：指定来源目标恢复与目标在读出纤维上恒定等价；
+* `D5/S3/ConceptDynamics/Transport/EffectiveImageNaturality.lean` 的 `effective_image_naturality`：源运输、读出因子化和目标因子化推出实际像上的自然交换；
+* `D5/S3/ConceptDynamics/Sufficiency/DescentCompositionLaw.lean` 的 `descent_composition_law`：连续层间半共轭的复合；
+* `D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean` 的 `stateThread_injective_iff_separates`、`stateThread_bijective_iff_complete_and_separates`，以及 `LocalGlobalAtlasExactness.lean`：线程来源恢复所需的分离与完备双条件；
+* 若要把单层确定更新压到最小前向商，可复用 `MinimalPredictiveCompletionQuotient.lean` 的 `minimal_predictive_completion_quotient`，不必另造最小商定义。
+
+本节的新增组织是把这些支点放进同一实际来源的分辨率塔，并明确行为恢复、来源恢复和实际取得的不同量词；它没有把普通数学综合冒充 Lean 核验。
+
+## 26.99 追加锚
+
+## 27. 完整未来行为商与四视图的最小预测边界
+
+第26节证明了一个共同实际来源上的空间、时间、边界和记忆视图可以同时对指定任务动态充分，并且能够沿分辨率投影交换。本节补上一个不同的问题：**动态充分的表示是否已经是最小的表示**。四个视图可以彼此精确恢复，却仍共同保留了对未来任务没有作用的历史细节；反过来，只比较当前读数也可能删掉之后才会被读出的关联。最小性必须相对于声明的未来实验族定义。
+
+### 27.1 类型化未来行为与最小预测商
+
+令 \(H\) 是同一个实际来源合同下的历史集合。历史可以包含来源、端口、档案、参考、权限、事件和工作记忆；它不是把分别可达的边缘状态任意拼起来的笛卡尔积。令 \(\mathcal V\) 是前缀闭合的有限类型化动作词族。一个词 \(v\) 只有在其前缀的输出接口与下一动作的输入接口相容时才属于 \(\mathcal V\)。
+
+把一项未来实验的全部指定结果记为
+
+$$
+\operatorname{Resp}:\{(h,v):h\in H, v\in\mathcal V\}
+\longrightarrow \mathcal O_v .
+$$
+
+\(\mathcal O_v\) 的标签必须保留当前任务要求区分的合法性、失败、读数、事件、writer、记录和终止信息；概率模型中把单个结果换成相应的结果分布。定义完整未来行为等价
+
+$$
+ h\mathrel{\sim_{\mathcal V}}h'
+ \quad\Longleftrightarrow\quad
+ \forall v\in\mathcal V,
+ \quad
+ \operatorname{Resp}(h,v)=\operatorname{Resp}(h',v).
+ \tag{TM.2701}
+$$
+
+若比较的输出带有后继边界，则等式按相同类型的后继行为理解；若动作失败，则失败标签本身也是响应的一部分，不能静默删去。反身性、对称性和传递性逐词成立，所以可以定义最小预测商
+
+$$
+ C_{\mathcal V}=H/{\sim_{\mathcal V}},
+ \qquad
+ q_{\mathcal V}:H\to C_{\mathcal V},
+ \qquad
+ q_{\mathcal V}(h)=[h].
+ \tag{TM.2702}
+$$
+
+“最小”在这里是划分意义下的最小，而不是先验地声称商有限、容易计算或实际可取得。它只合并在全部声明续接中都没有可见差别的历史。
+
+**命题 27.1（最小预测商的因子化性质）。** 设 \(q:H\to Q\) 是一个候选边界，并且存在
+
+$$
+ \widehat{\operatorname{Resp}}:\operatorname{im}(q)\times\mathcal V
+ \longrightarrow \mathcal O_v
+$$
+
+使得
+
+$$
+ \operatorname{Resp}(h,v)
+ =
+ \widehat{\operatorname{Resp}}(q(h),v)
+ \qquad(h\in H, v\in\mathcal V).
+ \tag{TM.2703}
+$$
+
+则存在唯一满射
+
+$$
+ d_q:\operatorname{im}(q)\twoheadrightarrow C_{\mathcal V},
+ \qquad
+ d_q(q(h))=[h],
+ \tag{TM.2704}
+$$
+
+满足 \(d_q\circ q=q_{\mathcal V}\)。若 \(\ker q=\sim_{\mathcal V}\)，则 \(d_q\) 是双射；若 \(\ker q\) 严格细于 \(\sim_{\mathcal V}\)，则 \(q\) 动态充分但保留了可被任务商掉的额外历史。
+
+**证明。** 若 \(q(h)=q(h')\)，由（TM.2703）对每个 \(v\) 有相同响应，故 \(h\sim_{\mathcal V}h'\)，于是 \(q(h)\mapsto[h]\) 良定义。它的像包含每个 \([h]\)，所以满射。由 \(d_q(q(h))=[h]\) 唯一确定。若两边的核相等，\(d_q\) 同时单射；若候选核更细，则至少有两个候选边界值落在同一个行为类上。证毕。
+
+这个命题把“当前读数相同”与“未来可继续使用的边界相同”分开。一个只保留目标后验、单个端点或某个互信息数值的摘要，只有在它满足（TM.2703）时才是动态充分的；第25.5节的 \(X\oplus K\) 例子已经给出当前目标边缘相同而后续读 \(K\) 不同的反例。
+
+### 27.2 前向执行与行为商的区别
+
+式（TM.2701）比较的是完整有限续接的结果。若希望在商上逐步执行，而不是只在词的末端比较，还需要一个前缀闭合的更新合同。对每个可执行动作 \(a\)，要求同一行为类的代表具有相同的合法／失败标签、同类型的一步读数，并且每个正概率读数的后继行为质量能按行为类求和。确定性情形写成
+
+$$
+ q_{\mathcal V}(T_a h)
+ =
+ \overline T_a(q_{\mathcal V}(h)),
+ \tag{TM.2705}
+$$
+
+概率情形则把右侧替换为后继类上的推前核。若这个一步条件失败，完整词的某个前缀仍能把两个代表区分开，因而不能把它们当作同一个可执行边界。反过来，在动作族对后继类质量完备时，对词长归纳可由（TM.2705）恢复（TM.2701）的所有有限响应。
+
+因此有两个不同的对象：
+
+* \(C_{\mathcal V}\) 是指定未来任务的最小预测商；
+* 满足一步闭合的商才是可以继续驱动选择器和记录器的最小可执行边界。
+
+第25节的策略树续接核给出了概率版的一步合同；本节只把它抽象成商的普适性质，不把迹等价自动冒充成 Markov 更新。
+
+### 27.3 四视图的精确恢复、过度细化与最小性
+
+令
+
+$$
+ E_{\mathrm{sp}},E_{\mathrm{tm}},E_{\partial},E_{\mathrm{mem}}:H\to X_i
+$$
+
+分别表示空间、时间、边界和记忆视图。若每个 \(E_i\) 都满足（TM.2703），则命题27.1给出唯一的满射
+
+$$
+ d_i:\operatorname{im}(E_i)\twoheadrightarrow C_{\mathcal V},
+ \qquad d_i(E_i(h))=[h].
+ \tag{TM.2706}
+$$
+
+若某个视图的核正好是 \(\sim_{\mathcal V}\)，则 \(d_i\) 是双射；两个精确视图之间有唯一运输
+
+$$
+ R_{ij}=d_j^{-1}\circ d_i,
+ \qquad
+ R_{jk}\circ R_{ij}=R_{ik},
+ \qquad
+ R_{ii}=\mathrm{id}.
+ \tag{TM.2707}
+$$
+
+若四个视图都精确，四视图运输由同一个 \(C_{\mathcal V}\) 唯一决定。这说明“互相可恢复”与“已经最小”是两个命题：前者只要求视图间存在双射或指定运输，后者还要求它们的核等于完整未来行为等价。
+
+例如在只有 `Stop` 且所有历史都返回同一个 `ok` 的任务中，取 \(H=\{h_0,h_1,h_2\}\)。原始历史身份 \(E(h_i)=h_i\) 与另一个复制身份的视图彼此可以恢复，且都动态充分；但
+
+$$
+ C_{\mathcal V}=\{[h_0]\}
+$$
+
+只有一个行为类。两个身份视图的运输存在，却都不是最小边界。相反，若一个视图把两个有不同未来响应的历史合并，它连动态充分都不是。因而不能由“四张图能互相翻译”推出“图中没有冗余”，也不能由“当前端点相同”推出“未来行为相同”。
+
+把第39节的二叶 FIB 历史放入同一判据，可以得到更具体的分界。两条三步动作词若端点和长度相同，但事件词、档案或策略状态不同，则只有在声明的 \(\mathcal V\) 不读取这些差别时才属于同一行为类；一旦允许后续动作读取 writer 或由记忆选择下一步，它们就被（TM.2701）分开。第39节的有限顺序反例因此是行为商的一个测试样例，而不是仅凭端点恢复就可以删除的历史。
+
+### 27.4 分辨率投影何时下降到最小商
+
+设 \(H_s,H_r\) 是两个分辨率上的实际历史集合，\(p_{sr}:H_s\to H_r\) 是只在实际像上声明的投影。记对应行为等价为 \(\sim_s,\sim_r\)。在实际像闭合的前提下，下面的条件等价于存在唯一映射
+
+$$
+ \overline p_{sr}:C_s\to C_r,
+ \qquad
+ \overline p_{sr}([h]_s)=[p_{sr}(h)]_r,
+ \tag{TM.2708}
+$$
+
+使得
+
+$$
+ \overline p_{sr}\circ q_s=q_r\circ p_{sr}:
+ H_s\to C_r:
+$$
+
+$$
+ h\sim_s h'
+ \Longrightarrow
+ p_{sr}(h)\sim_r p_{sr}(h').
+ \tag{TM.2709}
+$$
+
+**证明。** （TM.2709）保证（TM.2708）的右侧与代表无关，故给出良定义的下降；满射性只需把 \(C_r\) 限制为 \(p_{sr}\) 的实际像行为类。反向地，若下降存在，\(q_s(h)=q_s(h')\) 时两边经 \(\overline p_{sr}\) 相等，立即得到（TM.2709）。唯一性由 \(q_s\) 的满射性确定。证毕。
+
+若分辨率还带动作词运输 \(p_{sr}(T^s_a h)=T^r_{\bar a}p_{sr}(h)\)，并且读数／失败标签有相应推前，则（TM.2708）进一步给出商上的自然交换；只在状态集合上存在投影，不足以保证未来响应的自然性。连续投影的下降满足
+
+$$
+ \overline p_{rt}\circ\overline p_{sr}=\overline p_{st}
+$$
+
+但必须先检查每一层的实际像闭合及（TM.2709）。无限分辨率时，商线程的分离仍是单射条件，环境逆极限中的每条相容线程都来自实际来源则是完备条件；这两个条件不能由有限层下降自动推出。第26.5—26.6节的幽灵线程反例正说明了这一边界。
+
+### 27.5 观察者记忆与可见端点回路
+
+令 \(M:H\to M_0\) 是观察者当前记忆，\(p:M_0\to A\) 是由该记忆确定下一动作的策略读出，\(E:H\to X\) 是一个端点或时间视图。若存在两个合法动作词 \(u,v\) 使
+
+$$
+ E(T_u h)=E(T_v h),
+ \qquad
+ p(M(T_u h))\ne p(M(T_v h)),
+ \tag{TM.2710}
+$$
+
+则 \(T_u h\) 与 \(T_v h\) 在包含下一步策略的未来族中不可能属于同一行为类。否则同一行为类会要求相同的下一动作合同，却给出两个不同的实际选择。若 writer 或记录读取本身区分 \(u\) 与 \(v\)，即使策略读出相同，也有同样结论。
+
+这给出一个有限的记忆下界：端点视图可以把两条路径放回同一位置，但只要未来策略或记录仍能读取路径差别，完整预测边界就必须保留该差别，或保留一个在任务上等价的摘要。若策略完全经由端点因子化，即 \(p\circ M=\widehat p\circ E\)，则（TM.2710）的策略差别不再出现；这只消除了这一种区分，不能自动删除 writer、权限或其它未来读数。
+
+第39节的二叶动作顺序提供了（TM.2710）的具体候选：两条顺序相反的三步词可以有相同端点和相同长度，而事件词或最后一步策略不同。第42节已经讨论一般有向回路和固定点；本节的增加点是把回路是否可商掉直接交给观察者的未来行为商，而不是把所有几何回路都当作同一种 holonomy。
+
+### 27.6 有限反例与结论范围
+
+有三个容易混淆的量应分开：
+
+1. **当前信息量**，如 \(I(X;M)\) 或一个边缘后验；
+2. **动态充分性**，即是否存在（TM.2703）这样的全部续接因子化；
+3. **最小性**，即候选边界的核是否正好等于（TM.2701）。
+
+第25.5节已经证明第一项相同不推出第二项；本节命题27.1证明第二项只推出候选到最小商的满射，不推出候选本身最小。一个候选边界可以因为保留档案、事件词或权限历史而过度细化，同时仍然完全正确。
+
+因此本节的统一结论是
+
+$$
+\boxed{
+\begin{gathered}
+\text{完整未来行为商是指定任务下的最小预测边界；}\\
+\text{动态充分候选都唯一下降到它，但可能保留冗余；}\\
+\text{四视图互恢复要求共同商上的运输，最小性还要求核相等；}\\
+\text{分辨率运输要先满足行为核的下降条件，逆极限仍须另验分离与完备。}
+\end{gathered}}
+\tag{TM.2711}
+$$
+
+这里的“最小”不等于有限、低成本或已被观察者实际取得；这里的“全息”也只表示对声明的 \(\mathcal V\) 足够。若扩大动作词、读数、writer 或权限合同，行为等价可能变细，原来的最小边界不再自动适用。反之，若任务明确不读取某类事件，则这些事件可以被行为商安全地合并。
+
+本节可复用的形式化近邻包括 `ControlledBehaviorUniversality.lean` 的有限词行为与唯一因子化、`PredictiveMemoryMinimalQuotient.lean` 的最小预测记忆商、`MinimalPredictiveCompletionQuotient.lean` 的普适商，以及第26节列出的实际像下降和逆极限声明。本节新增的是把它们接到 FIB 四视图和观察者记忆的同一最小性判据上；上述组织和反例是理论正文推导，不计作新增 Lean 核验，也不构成物理时空定律。
+
+## 27.99 追加锚

@@ -44914,3 +44914,1493 @@ $$
 加权选择没有降低回传上侧成本：较小响应使预算增长留在差额中。绝对的 $W(C)$ 下界、或超过同一乘子已认证回传成本的独立 $W(N_C)$ 下界，仍是 §319 的未解义务。原子的有限地址、非负价格损失与统一增长矩可以共同落实到同一整数，但这不把两个整数的差额正号升级为Robin判据或RH证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 325. 任意固定多项式5040子族的普通对数平均与指数自举
+
+**定义 325.0。** 沿用 §§313、315、316 的实际整数 $T_L$、$m_L=3L+2$、归一化 Robin 余量 $\mathfrak m_L$、$\kappa=2\sqrt2-2$ 与同源尾项 $\Phi=I_\psi$。采用假设302.1及这些章节列明的经典解析输入；本节还在证明内部使用 von Mangoldt 截断显式公式、标准零点计数及其幂次 PNT 推论。对固定整数 $d\ge1$、整数 $j\ge16$ 定义
+\[
+N_j^{(d)}=T_{j^d},\quad a_j^{(d)}=3j^d+2,\quad
+q_j^{(d)}=\mathfrak m_{j^d},\quad
+\omega_j^{(d)}=\log a_{j+1}^{(d)}-\log a_j^{(d)}.
+\tag{325.1}
+\]
+对整数 $J\ge17$ 置
+\[
+D_J^{(d)}=\sum_{j=16}^{J-1}\omega_j^{(d)}
+=\log(a_J^{(d)}/a_{16}^{(d)}),\qquad
+A_J^{(d)}=\frac1{D_J^{(d)}}
+\sum_{j=16}^{J-1}\omega_j^{(d)}q_j^{(d)}.
+\tag{325.2}
+\]
+这些平均仅使用左端实际整数的归一化余量。$j^d\ge16$，故同一5040整除性与饱和签名仍由（305.3）给出。固定 $d$ 不随 $j$ 或截止增长。
+
+**定理 325.1（普通稀疏平均的全多项式次数判据）。** 在定义325.0的输入下，对每个固定整数 $d\ge1$，以下命题等价：
+\[
+\begin{aligned}
+&\mathrm{RH};\\
+&\exists K\ge0\ \exists J_0\ge17\ \forall J\ge J_0:
+       \quad A_J^{(d)}\ge-K;\\
+&A_J^{(d)}\longrightarrow\kappa;\\
+&\exists\ell\in\mathbb R:\quad A_J^{(d)}\longrightarrow\ell.
+\end{aligned}
+\tag{325.3}
+\]
+其中阈值、指标为整数，预算为固定有限实数。它没有提供预算存在的独立证明。
+
+**证明。** 固定 $d$，以下省略上标。置 $\eta=1/d>0$。实际截止严格递增、趋于无穷，$\omega_j>0$、$D_J\to\infty$，并有
+\[
+a_j\sim3j^d,\quad h_j=a_{j+1}-a_j=O_d(a_j^{1-\eta}),
+\quad a_{j+1}/a_j\to1,\quad \omega_j\le h_j/a_j.
+\tag{325.4}
+\]
+例如经典幂差估计给 $(j+1)^d-j^d\le d(j+1)^{d-1}$，因 $j+1\le2j$ 得 $h_j/a_j\le d2^{d-1}/j$；全部常数允许依赖固定 $d$。
+
+记 $Z(x)=\sqrt x\log x\,\Phi(x)$。定理315.1给实际端点恒等式
+\[
+q_j=Z(a_j)+\kappa-\mathfrak h_{j^d}+\varepsilon_j,
+\qquad \mathfrak h_{j^d}\ge0,\quad\varepsilon_j\to0.
+\tag{325.5}
+\]
+若（325.3）第二项成立，正权误差的平均趋零，非负缺损遂给固定 $K_1\ge0$ 使
+\[
+\sum_{j=16}^{J-1}\omega_jZ(a_j)\ge-K_1D_J
+\tag{325.6}
+\]
+最终成立。收敛误差以固定初段贡献除以 $D_J$ 加上任意小的尾预算控制；不要求缺损的平均预先趋零。
+
+先取得一个严格小于一的零点实部上界。经典有效 PNT 保证 $\Phi$ 在 $[a_{16},\infty)$ 上连续、有界且局部绝对连续，同一尾核给几乎处处
+\[
+Z'(x)=\frac{\log x+2}{2\sqrt x}\Phi(x)
++\frac{\log x+1}{x^{3/2}\log x}[x-\psi(x)].
+\tag{325.7}
+\]
+Chebyshev 界与 $\Phi$ 有界于是给
+\[
+Z(x)=O(\sqrt x\log x),\qquad
+Z'(x)=O(\log x/\sqrt x).
+\tag{325.8}
+\]
+$Z$ 自身局部绝对连续，素数幂处的密度变化不妨碍用 $Z'$ 的几乎处处界积分。在充分晚的格子上 $a_j\le y\le a_{j+1}\le2a_j$，由（325.4）、（325.8）得
+\[
+\sup_{a_j\le y\le a_{j+1}}|Z(y)-Z(a_j)|
+=O_d(a_j^{1/2-\eta}\log a_j).
+\tag{325.9}
+\]
+乘以 $\omega_j$ 并求和，比较 $\sum\omega_j a_j^{1/2-\eta}\log a_j$ 与相应的 $\int x^{-1/2-\eta}\log x\,dx$，得到对每个固定
+\[
+\max\{1/2-\eta,0\}<\lambda<1/2
+\tag{325.10}
+\]
+有
+\[
+\left|\int_{a_{16}}^{a_J}Z(x)\frac{dx}x
+ -\sum_{j=16}^{J-1}\omega_jZ(a_j)\right|=O_{d,\lambda}(a_J^\lambda).
+\tag{325.11}
+\]
+正指数时原误差为 $O(a_J^{1/2-\eta}\log a_J)$，零指数时至多 $O(\log^2a_J)$，负指数时有界；（325.10）统一吸收这些情形。
+
+任意末尾部分格子的积分也须控制。由 $|Z(x)|=O(\sqrt x\log x)$ 与对数长度不超过 $h_j/a_j$，其绝对值是 $O_d(a_j^{1/2-\eta}\log a_j)$，同样被 $O(a_j^\lambda)$ 吸收。有限初段可用连续性纳入常数。因此（325.6）、（325.11）给全部 $T\ge t_0=\log a_{16}>0$ 上的累计下界
+\[
+\mathcal A(T)=\int_{t_0}^T Z(e^t)\,dt\ge-K_\lambda e^{\lambda T}
+\tag{325.12}
+\]
+其中 $K_\lambda\ge0$ 固定。这一步允许增长误差，尚未将它判成线性累计预算。
+
+把指数预算接到同一个经典正逆变换。沿用（316.6）–（316.7）的 $b,c,g$，置 $p=-g'$、$r=c/2-c'$，并以本节 $t_0$ 为积分起点。对 $u\ge0$ 有 $0\le b(u)\le1$、$0\le p(u)\le5$、$0\le2r(u)\le8$。正逆累计恒等式给
+\[
+\mathcal B(T)=b(T)\mathcal A(T)
++\int_{t_0}^T p(u)\mathcal A(u)\,du
++2\int_T^\infty e^{-(u-T)/2}r(u)\mathcal A(u)\,du-C_0,
+\tag{325.13}
+\]
+其中 $\mathcal B(T)=\int_{t_0}^T e^{t/2}J(e^t)\,dt$，$C_0$ 是改变起点后的固定有限常数。所需 Fubini、分部积分及绝对收敛仍由 §316 使用的无条件有效 PNT 给出；指数下界本身只用于估计正系数项。
+
+对任意 $0<\lambda<1/2$，准确的未来比较核积分为
+\[
+\int_T^\infty e^{-(u-T)/2}e^{\lambda u}\,du
+=\frac{e^{\lambda T}}{1/2-\lambda}.
+\]
+有限过去的比较积分不超过 $e^{\lambda T}/\lambda$。因此由（325.12）得到
+\[
+\mathcal B(T)\ge-
+\left[K_\lambda\left(1+\frac5\lambda+
+\frac8{1/2-\lambda}\right)+|C_0|\right]e^{\lambda T}.
+\tag{325.14}
+\]
+$e^{\lambda T}\ge1$ 使固定常数得以吸收；严格条件 $\lambda<1/2$ 保证未来比较积分收敛。
+
+经典积分显式公式于是给 $\int_0^T F(t)\,dt\le M e^{\lambda T}+C_1$，其中 $F$ 是 §316 的零点轮廓。可增大常数使
+\[
+h(T)=M e^{\lambda T}+C-\int_0^T F(t)\,dt\ge1\quad(T\ge0).
+\]
+复用经典 Landau 非负变换定理。在 $\Re z>1/2$，逐项积分给
+\[
+\mathcal Lh(z)=\frac M{z-\lambda}+\frac Cz
+-\sum_\rho\frac1{z\rho(1-\rho)[z-(\rho-1/2)]}.
+\tag{325.15}
+\]
+同一标准零点计数保证级数在避开极点的紧集上正常收敛。$h\ge1$ 与 $F(t)=O(e^{t/2})$ 使其真 Laplace 收敛横坐标 $\sigma$ 位于 $[0,1/2]$。右侧唯一可能的正实极点是 $\lambda$，因为 $0<\Re\rho<1$ 内没有实零点。因此若 $\sigma>\lambda$，右侧在正实 $\sigma$ 解析，与 Landau 相矛盾；所以 $\sigma\le\lambda$。这里不能把存在辅助实极点的公式直接解释为 $\sigma=0$。
+
+若某个零点 $\rho_0$ 满足 $\Re\rho_0>1/2+\lambda$，则其非实极点 $z_0=\rho_0-1/2$ 位于实际 Laplace 解析域，留数仍为 $-m_{\rho_0}/[z_0\rho_0(1-\rho_0)]\ne0$；辅助项在该点解析，不能抵消它。故（325.12）推出
+\[
+S:=\sup_\rho\Re\rho\le1/2+\lambda.
+\tag{325.16}
+\]
+经典零点存在、临界带与反射对称性给 $1/2\le S\le1$。由于（325.10）的区间非空，首轮（325.16）已经给 $S<1$。不要求上确界由某个零点取到。
+
+现在利用这个已取得的上界改善同一格子的估计。对每个固定 $S<\theta<1$，经典 von Mangoldt 截断显式公式与零点计数给
+\[
+\psi(x)-x=O_\theta(x^\theta).
+\tag{325.17}
+\]
+具体可先在半整数处取可用于标准截断公式的高度 $T\asymp x^2$，使用每个零点的 $\Re\rho\le S$ 与 $\sum_{|\Im\rho|\le T}|\rho|^{-1}=O(\log^2T)$，得 $O(x^S\log^2x)$ 及较小截断项；单调性把估计送到任意实数，$\theta>S$ 吸收对数。此处只复用经典幂次 PNT 推导，不要求常数在 $\theta\downarrow S$ 时一致。
+
+同一尾积分及（325.7）遂给
+\[
+\Phi(x)=O_\theta(x^{\theta-1}/\log x),\quad
+Z(x)=O_\theta(x^{\theta-1/2}),\quad
+Z'(x)=O_\theta(x^{\theta-3/2})
+\tag{325.18}
+\]
+最后一式几乎处处成立。$\theta<1$ 保证尾积分收敛。于是（325.9）的格内误差改进为 $O_{d,\theta}(a_j^{\theta-1/2-\eta})$；乘以 $\omega_j$ 后的整格积分误差也可写成 $O(h_j^2a_j^{\theta-5/2})$。累计比较与部分格子估计因此给，对每个
+\[
+\max\{\theta-1/2-\eta,0\}<\lambda<1/2,
+\]
+（325.12）重新成立。累计误差至多为常数、对数与 $x^{\max\{\theta-1/2-\eta,0\}}$ 的和；部分格子使用（325.18）的点值界，同样损失一个 $\eta$。此轮估计仍从同一个（325.6）出发。
+
+再次用（325.13）–（325.16），再令允许的 $\lambda$ 下降到其下端，得
+\[
+S\le\max\{\theta-\eta,1/2\}\quad(S<\theta<1).
+\]
+由于首轮已保证 $S<1$，可以令 $\theta\downarrow S$，得到
+\[
+S\le\max\{S-\eta,1/2\}.
+\tag{325.19}
+\]
+若 $S>1/2$，右侧两项都严格小于 $S$，矛盾。故 $S\le1/2$，零点反射对称性给 RH。这个收紧使用正的网格指数 $\eta$，没有以更细的同形地址分类代替解析误差控制。
+
+反向假设 RH。定理315.1给 $q_j=\kappa-\mathcal W(\log a_j)+o(1)$。§316 的连续谱对数平均为零；$\mathcal W$ 有界且一致连续，而（325.4）给 $\omega_j\to0$。因此每格普通左端谱和与其连续积分之差不超过 $\omega_j$ 乘以趋零的一致连续模，累计除以 $D_J$ 后趋零。正权残差平均也趋零，故 $A_J\to\kappa$。任一有限极限给最终有限下界，完成（325.3）的等价链。
+
+对截止 $X\ge a_{16}$，本族采样数精确为
+\[
+\#\{j\ge16:a_j\le X\}
+=\left\lfloor((X-2)/3)^{1/d}\right\rfloor-15
+\sim(X/3)^{1/d}.
+\tag{325.20}
+\]
+因此任何固定多项式稀疏程度都由同一实际平均判据覆盖。$d=4$ 的普通权重版本补上 §320 末尾未建立的运输关系；这里不把两套平均的差无条件断言为趋零，而是分别通过同源谱预算与指数自举得到 RH 强度。
+
+整个推导依赖 $\eta>0$。几何增长的截止，如直接以 Fibonacci 数作指数网格，通常只有 $h_j\asymp a_j$，不供应本证明的正指数改善。当前结论既没有覆盖这种网格，也没有证明其相应判据为假。$\square$
+
+## 326. 实际稀疏平均的负部增长指数与零点实部上确界
+
+**定义 326.0。** 沿用 §325 的实际整数 $T_{j^d}$、截止 $a_j=3j^d+2$、普通左端对数平均 $A_J^{(d)}$，并采用同节的假设302.1与明列经典解析输入。固定整数 $d\ge1$，记 $\eta=1/d>0$，定义
+\[
+S=\sup\{\Re\rho:\rho\text{ 为 }\zeta\text{ 的非平凡零点}\},\qquad
+R_d=\limsup_{J\to\infty}
+\frac{\log(1+\max\{-A_J^{(d)},0\})}{\log a_J}.
+\tag{326.1}
+\]
+指标 $J\ge17$ 为整数；经典零点存在、临界带及反射对称性给 $1/2\le S\le1$。这里的增长尺度是解析截止 $a_J$，不是实际整数 $T_{J^d}$ 的大小。
+
+**定理 326.1（负部增长率读回零点区域）。** 在定义326.0的输入下，$R_d$ 是有限实数，且对每个固定 $d\ge1$ 有
+\[
+R_d=S-1/2.
+\tag{326.2}
+\]
+因此同一个增长指数由全部固定多项式次数读到。对任意固定 $0\le\nu\le1/2$，还有
+\[
+S\le1/2+\nu
+\quad\Longleftrightarrow\quad
+\forall\epsilon>0\ \exists K_\epsilon\ge0\ \exists J_\epsilon\ge17\
+\forall J\ge J_\epsilon:\quad
+A_J^{(d)}\ge-K_\epsilon a_J^{\nu+\epsilon}.
+\tag{326.3}
+\]
+预算和阈值可依赖固定的 $d,\nu,\epsilon$，不要求一致常数。这是同一实际平均的单边增长判据，不预先假设任一具体预算存在。
+
+**证明。** 先给出双边上增长控制，尤其保留 §315 的非负端点缺损。该节的实际恒等式是
+\[
+q_j=Z(a_j)+\kappa-\mathfrak h_{j^d}+\varepsilon_j,
+\quad \varepsilon_j\to0,\quad
+\mathfrak h_L=\sqrt{m_L}\,[q_a(m_L)+\log m_L\,q_e(m_L)].
+\tag{326.4}
+\]
+经典 PNT 给 $a(x)\to0,e(x)\to0$。在充分大的尾域上，经典二次余项界 $0\le q_a\le2a^2$、$0\le q_e\le e^2$，加上 §325 的无条件 $Z=O(\sqrt x\log x)$，得到
+\[
+|q_j|=O_d(\sqrt{a_j}\log a_j),\qquad
+|A_J^{(d)}|=O_d(\sqrt{a_J}\log a_J).
+\tag{326.5}
+\]
+第二式利用正权重总质量恰等于分母；有限初段可放大常数。于是（326.1）的比值非负，且其 limsup 在 $[0,1/2]$ 内，确为有限实数。
+
+若 $S<1$，取任意固定 $S<\theta<1$。§325 已引用的经典截断显式公式给 $\psi(x)-x=O_\theta(x^\theta)$。由于 $\theta>1/2$，经典素幂余项 $\psi-\vartheta=O(\sqrt x\log^2x)$ 可被吸收，故 $a(x)=O_\theta(x^{\theta-1})$。同截断 Abel 式
+\[
+e(x)=a(x)/\log x-I_\vartheta(x)-\tau(x)
+\]
+及其正尾核与 $\tau(x)=O(1/x)$ 给 $e(x)=O_\theta(x^{\theta-1}/\log x)$。因此
+\[
+\mathfrak h_L=O_\theta(m_L^{2\theta-3/2}),\qquad
+Z(x)=O_\theta(x^{\theta-1/2}).
+\tag{326.6}
+\]
+缺损项没有被删为小 $o(1)$：当 $\theta>3/4$ 它可以增长，但 $\theta<1$ 使 $2\theta-3/2<\theta-1/2$，所以它的增长阶仍低于谱项。由（326.4）及正权重，得到
+\[
+|A_J^{(d)}|=O_{d,\theta}(a_J^{\theta-1/2}).
+\tag{326.7}
+\]
+令 $\theta\downarrow S$，有 $R_d\le S-1/2$。若 $S=1$，同一不等式由（326.5）的 $R_d\le1/2$ 给出。这一步不需要 $S$ 被某个零点取得。
+
+反向从一个允许增长的单边预算出发。固定 $0\le\nu<1/2$，假设
+\[
+A_J^{(d)}\ge-Ka_J^\nu\quad\text{最终成立},\qquad K\ge0.
+\tag{326.8}
+\]
+（326.4）的非负缺损与收敛误差的正权平均给
+\[
+\sum_{j=16}^{J-1}\omega_jZ(a_j)
+\ge-K_1a_J^\nu\log(a_J/a_{16})
+\tag{326.9}
+\]
+最终成立；$a_J^\nu\ge1$ 将固定常数吸收进 $K_1$。
+
+§325 的无条件整格积分误差和部分格子估计遂对每个固定
+\[
+\max\{\nu,1/2-\eta,0\}<\lambda<1/2
+\tag{326.10}
+\]
+给全部实数尾域上的累计下界 $\mathcal A(T)\ge-K_\lambda e^{\lambda T}$。预算中的对数因子由严格条件 $\lambda>\nu$ 吸收。沿同一个正逆累计恒等式（325.13），其指数下界运输保持 $\lambda$，再由同一个带辅助实极点的 Landau 论证（325.15）–（325.16）得 $S\le1/2+\lambda<1$。因此此轮预算先取得严格的零点区域。
+
+现在取任意 $S<\theta<1$，以改善后的 $Z,Z'$ 幂界重做同源整格与部分格子估计。允许指数变为
+\[
+\max\{\nu,\theta-1/2-\eta,0\}<\lambda<1/2.
+\tag{326.11}
+\]
+该区间非空；重新使用指数正逆变换与 Landau，并令 $\lambda$ 下降到其下端，得到
+\[
+S\le\max\{1/2+\nu,\theta-\eta\}.
+\]
+再令 $\theta\downarrow S$，有
+\[
+S\le\max\{1/2+\nu,S-\eta\}.
+\tag{326.12}
+\]
+若 $S>1/2+\nu$，右侧两项都小于 $S$，矛盾。因此（326.8）推出
+\[
+S\le1/2+\nu.
+\tag{326.13}
+\]
+这里网格指数 $\eta$ 决定每轮改善，预算指数 $\nu$ 决定收紧的下限；两者不能互相替代。$\nu=0$ 恢复 §325 的 RH 反向，但尚未由 $S\le1/2+\nu$ 推出端点预算 $A_J^{(d)}\ge-Ka_J^\nu$；这里只得到全部严格更大的预算指数。
+
+若 $R_d<1/2$，对每个固定 $R_d<\nu<1/2$，limsup 的定义使
+\[
+\log(1+\max\{-A_J^{(d)},0\})\le\nu\log a_J
+\]
+最终成立，因此 $A_J^{(d)}\ge-a_J^\nu$ 最终成立。由（326.13），$S\le1/2+\nu$。令 $\nu\downarrow R_d$ 得 $S\le1/2+R_d$。若 $R_d=1/2$，这项不等式直接由 $S\le1$ 成立。结合已得 $R_d\le S-1/2$，证明（326.2）；也覆盖 $S=1$ 的边界情形。
+
+最后，非负序列的对数 limsup 与全部严格上指数预算等价。若 $R_d\le\nu$，对每个 $\epsilon>0$ 最终有 $1+\max\{-A_J^{(d)},0\}\le a_J^{\nu+\epsilon}$，从而得到（326.3）右侧。反之，对每个固定 $\epsilon>0$，右侧使
+\[
+1+\max\{-A_J^{(d)},0\}
+\le(1+K_\epsilon)a_J^{\nu+\epsilon}
+\]
+最终成立；常数的对数除以 $\log a_J\to\infty$ 后趋零，故 $R_d\le\nu+\epsilon$。令 $\epsilon\downarrow0$ 得 $R_d\le\nu$，再用（326.2）完成（326.3）。$\square$
+
+**推论 326.2（缓慢负增长不能独立脱离 RH）。** 在同一输入下，RH 等价于 $R_d=0$，也等价于（326.3）在 $\nu=0$ 时的全正指数预算。若 RH 不成立，则 $R_d>0$，而且对每个固定 $0\le r<S-1/2$、任意 $K\ge0$ 与任意整数 $J_0\ge17$，都有整数 $J\ge J_0$ 使
+\[
+A_J^{(d)}<-Ka_J^r.
+\tag{326.14}
+\]
+
+**证明。** 零点反射对称性使 RH 等价于 $S=1/2$，代入定理326.1。若 RH 不成立而（326.14）失败，就会有某个最终预算 $A_J^{(d)}\ge-Ka_J^r$。由于 $r<S-1/2\le1/2$，有 $r<1/2$，可用（326.13）得 $S\le1/2+r$，矛盾。
+
+这确定的是任意晚负值的临界幂指数，不确定出现频率、某个可计算的违例、端点指数处的大小，或未归一化余量的无界性。只有将全部正指数预算作为同一实际平均的前提，才得到 RH；固定一个正指数只给相应零点区域。几何或 Fibonacci 截止仍没有本证明使用的 $\eta>0$，不能把（326.2）移到这些网格。$\square$
+## 追加锚（本行以下为增补区）
+
+## 327. 紧邻宿主截止的低成本素乘子族
+
+本节采用 §§317–319、324 的实际 CA宿主与余量运输接口，直接接用文献研究提供的素带构造。它供应大量低成本的实际整数候选，尚不供应相位命中或绝对余量。下面的构造及组合属于纸面推导，没有Lean核验或原创性声明。
+
+令 $C$ 为实际极大丰数，$P=P^+(C)$，$S=\sqrt P$，固定 $\kappa>0$。沿用
+
+$$
+F_C(t)=\frac{Z(Ct)}{Z(C)},\qquad
+\mathcal A_P=P\log P,\qquad
+\mathcal D_C(t)=\log t-\mathcal A_P\log F_C(t).
+\tag{327.1}
+$$
+
+全局价格及 $\mathcal A_P\epsilon<1$ 已给 $0\le\mathcal D_C(t)\le\log t$。定义
+
+$$
+U_P=P+\frac P{\log P},\quad
+\mathcal P_P=\{p\text{ 素数}:P<p\le U_P\},\quad
+m_P=|\mathcal P_P|,\quad
+r_P=\left\lfloor\frac{\kappa S}{\log U_P}\right\rfloor,
+\quad Q_C=\lfloor e^{\kappa S}\rfloor,
+\tag{327.2}
+$$
+
+以及实际平方自由乘子族
+
+$$
+\mathcal T_C=
+\left\{\prod_{p\in E}p:
+E\subseteq\mathcal P_P,\ |E|=r_P\right\}.
+\tag{327.3}
+$$
+
+这里只增加原宿主没有的素数；$P$ 始终指 $P^+(C)$，不是新整数的最大素因子。
+
+**命题 327.1（统一小损失与候选数量）。** 充分大的每个实际宿主都有 $1\le r_P\le m_P$，族中所有乘子同时满足
+
+$$
+\begin{gathered}
+1\le t\le Q_C,\qquad
+\log t=(\kappa+o(1))S,\\
+0\le\mathcal D_C(t)\le
+b_P:=r_P\left(1+\frac1{\log P}+\frac{\log P}{2P}\right)
+=(\kappa+o(1))\frac S{\log P}=o(S),\\
+|\mathcal T_C|
+=\exp\left(\left(\frac\kappa2+o(1)\right)S\right).
+\end{gathered}
+\tag{327.4}
+$$
+
+所有误差对同一宿主的整族乘子统一，不依赖宿主的详细指数或并列最优价格。
+
+证明。若 $p>P$，则它与 $C$ 互素，第一次加入给精确因子 $F_C(p)=1+1/p$，从而
+
+$$
+d_P(p):=\mathcal D_C(p)
+=\log p-P\log P\log(1+1/p)>0.
+\tag{327.5}
+$$
+
+严格正号也直接由 $\log(1+1/p)<1/p$、$p>P$ 得到。写 $p=P(1+h)$，$0<h\le1/\log P$，用 $\log(1+x)\ge x-x^2/2$ 得
+
+$$
+\begin{aligned}
+d_P(p)
+&\le \frac h{1+h}\log P+\log(1+h)
+     +\frac{P\log P}{2p^2}\\
+&\le1+\frac1{\log P}+\frac{\log P}{2P}.
+\end{aligned}
+\tag{327.6}
+$$
+
+因这些素数不同且都不在宿主中，同一 $t$ 有
+$\mathcal D_C(t)=\sum_{p\mid t}d_P(p)$。同时
+$r_P\log P\le\log t\le r_P\log U_P\le\kappa S$；
+整数性给 $t\le Q_C$，且两端除以 $S$ 均趋于 $\kappa$。于是得到损失和大小的统一界。
+
+素数数量直接使用仓内已经核对的
+[Dusart Theorem5.2](../../../Library/Weil/dusart2010estimates.md)，
+即 $\vartheta(x)=x+O(x/\log^2x)$。由于 $U_P-P=P/\log P$，
+
+$$
+\vartheta(U_P)-\vartheta(P)\sim\frac P{\log P},
+\qquad m_P\sim\frac P{\log^2P}.
+\tag{327.7}
+$$
+
+每个带内素数的对数在 $\log P$ 与 $\log U_P$ 之间，故第二式由第一式夹出，不要求异常短区间素数定理。于是
+$r_P\sim\kappa S/\log P$、$r_P/m_P\to0$，最终 $1\le r_P\le m_P$。唯一分解给 $|\mathcal T_C|=\binom{m_P}{r_P}$，经典阶乘估计给
+
+$$
+\log\binom{m_P}{r_P}
+=r_P\log(m_P/r_P)+O(r_P+r_P^2/m_P)
+=\left(\frac\kappa2+o(1)\right)S.
+\tag{327.8}
+$$
+
+这里 $r_P^2/m_P=O_\kappa(1)$，其余误差均为 $o(S)$。$\square$
+
+**推论 327.2（同一整数上的一阶抵消）。** 对全部 $t\in\mathcal T_C$，既有 CA输入及（324.9）给统一关系
+
+$$
+\begin{gathered}
+Z(Ct)-Z(C)=\frac{e^\gamma\kappa+o(1)}S,\\
+e^\gamma\log\left(1+\frac{\log t}{\log C}\right)
+=\frac{e^\gamma\kappa+o(1)}S,\\
+W(Ct)-W(C)=o(1),\qquad
+W(n)=\sqrt{\log n}\,[e^\gamma\log\log n-Z(n)].
+\end{gathered}
+\tag{327.9}
+$$
+
+证明。$\mathcal A_P\log F_C(t)=\log t-\mathcal D_C(t)
+=(\kappa+o(1))S$。所以 $\log F_C(t)
+=(\kappa+o(1))/(S\log P)$，由 $Z(C)\sim e^\gamma\log P$ 得第一式。第二式用 $\log C\sim P$；第三式直接复用（324.9）及 $\mathcal D_C(t)=o(S)$。这不要求 $W(C)$ 有界，也不给任一绝对符号。$\square$
+
+若固定 $0<\eta<\kappa/2$、$\delta_C=e^{-\eta S}$，在均匀相位观察下确有
+
+$$
+\int_0^1\#\{t\in\mathcal T_C:\|t\theta\|<\delta_C\}\,d\theta
+=2\delta_C|\mathcal T_C|
+=\exp\left(\left(\frac\kappa2-\eta+o(1)\right)S\right).
+\tag{327.10}
+$$
+
+这只是整数乘法保持圆上均匀长度的既有性质。它不认证实际相位 $\theta=C\varphi$ 的命中。对两个候选作差也不能自动补上缺口，因为差不再保留（327.3）的素因子结构。
+
+因此这里已经控制每个候选的成本，但尚未在候选族内构造真实低位null前缀；规范来源、单位位和接缝仍须由同一整数的严格相位命中读回。整族中也未建立任何独立的正 $W(Ct)$ 下界。
+
+## 追加锚（本行以下为增补区）
+
+## 328. 有理相位弧对更低回传成本的阻碍
+
+固定 $0<2\eta<\kappa$，沿用 $S,Q_C$，置 $\delta_C=e^{-\eta S}$。既有 §318 的有限Dirichlet输入只需把预算改为 $R_C=\lceil\delta_C^{-1}\rceil$，就供应
+
+$$
+1\le t\le R_C<Q_C,\qquad
+\|tC\varphi\|<\delta_C,\qquad
+\mathcal D_C(t)\le\eta S+o(1).
+\tag{328.1}
+$$
+
+它的上侧归一化回传成本为 $e^\gamma\eta+o(1)$。这是旧输入的参数取值，不是新增选择定理。更低成本需要另外控制实际相位，下面给出斜率统一方法的明确边界。
+
+**命题 328.1（有理弧内的最小命中成本）。** 充分大 $P$ 时，选一素数
+
+$$
+\frac1{8\delta_C}\le q\le\frac1{4\delta_C}.
+\tag{328.2}
+$$
+
+对任意与 $q$ 互素的整数 $a$，若实相位 $\theta$ 满足
+
+$$
+\left\|\theta-\frac aq\right\|_{\mathbb T}
+\le\frac{\delta_C}{2Q_C},
+\tag{328.3}
+$$
+
+则每个 $1\le t\le Q_C$、$\|t\theta\|<\delta_C$ 的命中都被 $q$ 整除，并有
+
+$$
+\mathcal D_C(t)\ge\eta S+O(1).
+\tag{328.4}
+$$
+
+同时 $t=q$ 是一个命中，且
+$\mathcal D_C(q)=\eta S+O(1)$。式中成本仍按同一个实际 CA宿主 $C$ 计算；相位允许改变。
+
+证明。经典 Bertrand输入保证（328.2）的素数最终存在。此时 $q>P$、$q\le Q_C$、$\log q=\eta S+O(1)$。若 $q\nmid t$，圆上三角不等式给
+
+$$
+\|t\theta\|\ge
+\left\|\frac{at}{q}\right\|
+-t\left\|\theta-\frac aq\right\|_{\mathbb T}
+\ge\frac1q-\frac{\delta_C}2>\delta_C.
+\tag{328.5}
+$$
+
+所以命中必有 $t=q^v u$、$v\ge1$、$(q,u)=1$。
+由 $q>P$ 和
+$1+q^{-1}+\cdots+q^{-v}\le(1+q^{-1})^v$，得到
+
+$$
+\begin{aligned}
+\mathcal D_C(t)
+&=\mathcal D_C(q^v)+\mathcal D_C(u)\\
+&\ge v\mathcal D_C(q)\ge\mathcal D_C(q)\\
+&=\log q-\mathcal A_P\log(1+1/q)
+=\eta S+O(1).
+\end{aligned}
+\tag{328.6}
+$$
+
+这里 $\mathcal D_C(u)\ge0$ 来自同源价格，$\mathcal A_P/q\to0$。另一方面，
+$\|q\theta\|\le q\delta_C/(2Q_C)\le1/(8Q_C)<\delta_C$，
+故 $q$ 本身命中，给出相同上界。$\square$
+
+这证明（328.1）的首项成本系数对任意斜率的统一断言不能降低。它没有证明任何实际 CA相位 $C\varphi$ 落入（328.3），因此不是实际CA低成本命中的反例，更不是Robin反例。
+
+黄金数的经典坏逼近下界，在乘以 $C$ 后只给
+
+$$
+\|qC\varphi\|\ge\frac{c_\varphi}{Cq},\qquad
+\left\|C\varphi-\frac aq\right\|_{\mathbb T}
+\ge\frac{c_\varphi}{Cq^2}.
+\tag{328.7}
+$$
+
+它的下界尺度为 $\exp(-(1+o(1))P-2\eta S+O(1))$，
+小于（328.3）的弧宽 $\exp(-(\kappa+\eta)S+O(1))$，
+因而这份下界不能排除该弧。逐个 $C\varphi$ 都是二次无理数，也不供应宿主族统一的有界部分商常数。
+
+§327 的廉价候选使用的素数全小于 $q$，故在（328.3）的相位弧中全部不命中。这把候选数量与真实相位交叠明确分开；下一步需要实际 $C\varphi$ 的联合算术输入。
+
+## 追加锚（本行以下为增补区）
+
+## 329. 保留廉价来源与独立储备的有限频率接口
+
+对每个宿主，先独立指定一个比较类 $\mathscr K_C$，保留
+
+$$
+\mathcal G_C=\{t\in\mathcal T_C:Ct\in\mathscr K_C\},
+\qquad H_C=\lceil\delta_C^{-1}\rceil,\qquad e(x)=e^{2\pi ix}.
+\tag{329.1}
+$$
+
+需要的是同一实际整数满足的联合计数
+
+$$
+\sum_{1\le t\le Q_C}
+\mathbf1_{\{\mathcal D_C(t)\le b_C\}}
+\mathbf1_{\{\|tC\varphi\|<\delta_C\}}
+\mathbf1_{\{Ct\in\mathscr K_C\}}>0,
+\qquad b_C=o(S).
+\tag{329.2}
+$$
+
+§327 已为 $\mathcal T_C$ 供应 $b_C=b_P$，尚未供应命中和比较类的绝对储备。
+
+直接使用 Roger Baker,
+*Diophantine approximation with smooth numbers*，
+[arXiv:2007.05823v2，Lemma3](https://arxiv.org/html/2007.05823v2)，
+可以把命中转为一份足够的有限证书：
+
+$$
+\sum_{h=1}^{H_C}
+\left|\sum_{t\in\mathcal G_C}e(htC\varphi)\right|
+<\frac{|\mathcal G_C|}{6}.
+\tag{329.3}
+$$
+
+Lemma3 的原文对任意有限实序列成立：若每项到整数的距离均不小于 $1/H$，左侧不少于项数的六分之一。故（329.3）强迫非空 $\mathcal G_C$ 中某项满足
+$\|tC\varphi\|<1/H_C\le\delta_C$。
+这里只应用既有有限结论，不新增一般频率定理，也没有证明（329.3）。
+
+一旦这份证书与同一个独立比较类实现，既有 §318 的实际有限来源接口给
+
+$$
+h(Ct)=0,\qquad
+\text{实际低位null窗数}\ge
+\left\lfloor\frac{\eta S}{3\log\varphi}\right\rfloor-2,
+\tag{329.4}
+$$
+
+且保留合法接缝、有限后继与正值End；（327.9）同时给 $W(Ct)-W(C)=o(1)$。若另有独立、统一的固定储备 $W(n)\ge a>0$ 对全部相关 $n\in\mathscr K_C$ 最终成立，才可回传 $W(C)\ge a-o(1)$。储备前提与频率证书都尚未建立，不能由宿主运输恒等式自己供应。
+
+### 329.1 可直接复用的文献与未满足的范围
+
+在 $x=Q_C$、$y\asymp P$ 下，有
+$y\asymp(\log x)^2$、
+$\delta_C=x^{-\eta/\kappa+o(1)}$、
+$|\mathcal T_C|=x^{1/2+o(1)}$。
+以下核对仅针对原文定理的范围，不重复其解析证明。
+
+| 原始结果 | 与当前目标的对应及仍缺条件 |
+|---|---|
+| Baker, arXiv:2007.05823v2，§1 未编号定理及式（1.2），Lemma3 | 固定平滑指数 $B>2$ 的逼近指数是 $1/3-2/(3B)$；$B=2$ 不给正指数，也不允许把固定参数改为 $B(P)\downarrow2$。Lemma3 则已直接用于（329.3），无需固定斜率渐近。 |
+| Drappeau–Shparlinski, [arXiv:2404.10278v2，Corollary1.2](https://arxiv.org/html/2404.10278v2) | 结果确实对实相位统一。其全平滑集合上界在 $y\asymp\log^2x$ 时含 $x^{3/4+o(1)}$ 的保证精度，已大于当前整族 $x^{1/2+o(1)}$。全集合的取消也不能未经运输直接当成带比较类筛选的子集取消。 |
+| Nath–Rahaman, [arXiv:2603.17732v2，Theorem1](https://arxiv.org/html/2603.17732v2) | 给固定无理斜率上的无限多平滑逼近，并把指数改进到 $6/17$ 以下；平滑截止要求足够大的固定对数幂。它不供应临界幂二、指定宿主尺度、指定窄素带或全部 $hC\varphi$ 的统一频率证书。 |
+| Granville–Lamzouri, [arXiv:2604.02306v1，Theorem1.2、Corollary1.2](https://arxiv.org/html/2604.02306v1) | 支持模不超过一的乘法系数。其固定常数 $B$ 的条件 $(2q)^{\log(u+1)/B}\le y$，$u=\log x/\log y$，在当前尺度迫使 $\log(2q)\le(2+o(1))B$。因此不能静默纳入增长分母；比较类筛选也未证明是该乘法系数。 |
+| Baier–Roy, [arXiv:2512.02174v3，Theorem1 条件（2）–（4）、Corollary2](https://arxiv.org/html/2512.02174v3) | 对 $X\asymp P$、$Y\asymp P/\log P$ 的素带，其允许的最小窗宽仍不小于多项式尺度 $P^{-1/4+10\epsilon}\sqrt{\log P}$，大于 $e^{-\eta S}$；有界部分商推论还缺宿主统一常数。 |
+
+这些原文范围没有供应（329.3）；这不是所有可能文献或方法都失败的断言。表中版本均用于其明确的条件，未把预印本提升为独立验证或原创性依据。仓内 [Musin 条目](../../../Library/Analytic/musin2026higherorder.md) 的递归接触保留与固定整数整除结论也不供应实际 CA后继的深相位命中；更换最优对象仍需同源运输，不能直接换成所需比较类。
+
+这条路线现在保留了完整合同：实际宿主、明确低成本素乘子、全部需要控制的频率、真实null前缀及独立绝对储备。频率上界与储备仍是两个未解义务，没有新增Robin安全范围或RH证明。
+
+## 追加锚（本行以下为增补区）
+
+## 330. 实际 Robin 有限累计证书的积分误差与五分递归预算
+
+**定义 330.1（有限实际采样与连续累计量）。** 沿用 §325 的实际整数 $T_L$、价格截止 $m_L=3L+2$、归一化 Robin 余量 $\mathfrak m_L$ 与 $\kappa=2\sqrt2-2$。取有限严格递增自然数列 $16\le L_0<\cdots<L_N$，$N\ge1$，置
+\[
+a_i=m_{L_i},\quad q_i=\mathfrak m_{L_i},\quad
+\omega_i=\log(a_{i+1}/a_i),\qquad
+\mathcal I(x)=\int_{a_0}^x Z(y)\frac{dy}{y},
+\quad Z(y)=\sqrt y\log y\,\Phi(y).
+\tag{330.1}
+\]
+对 $0<a\le b$ 记
+\[
+D(a,b)=(b-a)-a\log(b/a).
+\tag{330.2}
+\]
+
+**假设 330.1（逐格可用的实际输入）。** 在所选有限区间上，§315 的有符号分解给
+\[
+q_i=Z(a_i)+\kappa-H_i+\varepsilon_i,\qquad H_i\ge0.
+\tag{330.3}
+\]
+给定每点明确的残差上界 $\varepsilon_i\le e_i$。在每格 $[a_i,a_{i+1}]$ 上，$Z$ 绝对连续，且有明确的 $M_i\ge0$ 使 $|Z'(y)|\le M_i$ 几乎处处成立。以上输入仅针对有限区间；$\varepsilon_i\to0$ 不独自提供这里需要的有限 $e_i$，未给出这些界时不宣称取得数值证书。
+
+**定理 330.1（实际左和到整个有限连续区间的下界证书）。** 在假设330.1下，对每个 $j<N$、$a_j\le x\le a_{j+1}$，有
+\[
+\begin{aligned}
+\mathcal I(x)\ge{}&
+ \sum_{i<j}\bigl[\omega_i(q_i-\kappa-e_i)-M_iD(a_i,a_{i+1})\bigr]\\
+ &+(q_j-\kappa-e_j)\log(x/a_j)-M_jD(a_j,x).
+\end{aligned}
+\tag{330.4}
+\]
+特别地，
+\[
+\mathcal I(a_N)\ge
+\sum_{i<N}\omega_i(q_i-\kappa-e_i)
+-\sum_{i<N}M_iD(a_i,a_{i+1}),
+\qquad
+0\le D(a,b)\le\frac{(b-a)^2}{2a}.
+\tag{330.5}
+\]
+因此（330.4）也在每个 $D$ 项以相应二次上界替代后成立。
+
+**证明。** 使用绝对连续函数的经典微积分基本定理作为中间步骤，几乎处处导数界给
+\[
+|Z(y)-Z(a)|\le M(y-a)\qquad(a\le y\le b).
+\]
+这一步无须在素数幂处逐点可微。由 $a>0$，
+\[
+\begin{aligned}
+\left|\int_a^b Z(y)\frac{dy}{y}-Z(a)\log(b/a)\right|
+&\le M\int_a^b\frac{y-a}{y}\,dy\\
+&=M D(a,b)
+\le M\int_a^b\frac{y-a}{a}\,dy
+=\frac{M(b-a)^2}{2a}.
+\end{aligned}
+\tag{330.6}
+\]
+积分表达同时给 $D\ge0$。这些是经典积分不等式在本证明中的使用，不单独主张其新颖性。实际分解（330.3）给 $Z(a_i)\ge q_i-\kappa-e_i$；对数权重非负，故（330.6）的下边界可以用该实际左端下界替代。对整格求和，末格应用于 $[a_j,x]$，得到（330.4）及（330.5）。
+
+实际递归比较还使用下述经典积分不等式的推论作为中间步骤。取 $0<a=a_0<\cdots<a_b=c$，假设 $Z$ 在 $[a,c]$ 上绝对连续且 $|Z'|\le M$ 几乎处处，$M\ge0$。记
+\[
+S_{\rm fine}=\sum_{s<b}Z(a_s)\log(a_{s+1}/a_s),\qquad
+S_{\rm coarse}=Z(a)\log(c/a),\qquad
+D_{\rm fine}=\sum_{s<b}D(a_s,a_{s+1}).
+\]
+则
+\[
+\begin{aligned}
+\sum_{s<b}\log(a_{s+1}/a_s)&=\log(c/a),\\
+D(a,c)-D_{\rm fine}&=\sum_{s<b}(a_s-a)\log(a_{s+1}/a_s)\ge0,\\
+|S_{\rm fine}-S_{\rm coarse}|&\le M\bigl[D(a,c)-D_{\rm fine}\bigr].
+\end{aligned}
+\tag{330.7}
+\]
+所以谱积分的证书区间在细分时包含关系为
+\[
+[S_{\rm fine}-MD_{\rm fine},\ S_{\rm fine}+MD_{\rm fine}]
+\subseteq
+[S_{\rm coarse}-MD(a,c),\ S_{\rm coarse}+MD(a,c)].
+\tag{330.8}
+\]
+共同导数界与真实谱样值是此包含关系的前提。仅把真实谱样值换成（330.3）的实际余量下界，并不自动保留每次细分的数值单调性。
+
+第一式由对数望远镜求和。第二式由 $D$ 定义与 $\sum(a_{s+1}-a_s)=c-a$ 得到。又
+\[
+S_{\rm fine}-S_{\rm coarse}
+=\sum_{s<b}\log(a_{s+1}/a_s)[Z(a_s)-Z(a)],
+\]
+对每项应用导数界给第三式，继而推出两侧端点的单调性及（330.8）。实际余量下界还含 $H_i$ 与 $e_i-\varepsilon_i$，它们不会因谱函数的同一导数界而在新旧节点间满足所需单调关系；只有分别有效的下界证书可以取最大值继续保持有效。具体而言，在新插入左端点的正权重上，任意增大其合法上界 $e_i$ 仍保持 $\varepsilon_i\le e_i$，却可使细分下界任意降低；固定真实数据也不足以排除这种情况。上述守恒对象是对数质量，普通左端贡献的差仍是（330.7）的第三式所控制的量。$\square$
+
+**定义 330.2（Fibonacci 块上的五分整数叶）。** 取 $k\ge8$，$F=F_k$、$h=F_{k-1}$，于是 $F_{k+1}=F+h$ 且 $F/2\le h\le F$。取满足 $b=5^r\le h$ 的整数深度 $r\ge0$，定义
+\[
+U_s=F+\left\lfloor\frac{sh}{b}\right\rfloor\quad(0\le s\le b),
+\qquad a_s=3U_s+2,
+\qquad \ell_s=U_{s+1}-U_s.
+\tag{330.9}
+\]
+这些节点对应实际整数 $T_{U_s}$。相邻 Fibonacci 块的共同边界只保留一次。这里的五分是采样分割，不额外假定它等同于原有五窗口语法。
+
+**定理 330.2（实际递归块的精确二阶误差预算）。** 在定义330.2下，令 $v=\lfloor h/b\rfloor$、$t=h-bv$，$0\le t<b$。整数叶严格递增，叶长只取 $v$ 与 $v+1$，其中 $v+1$ 恰出现 $t$ 次，并有
+\[
+\sum_{s<b}\ell_s^2
+=bv^2+t(2v+1)
+=\frac{h^2}{b}+t\left(1-\frac tb\right).
+\tag{330.10}
+\]
+若同一块上可以使用共同导数界 $M$，则实际有限证书的积分误差满足
+\[
+M\sum_{s<b}D(a_s,a_{s+1})
+\le\frac{9M}{2(3F+2)}\bigl[bv^2+t(2v+1)\bigr]
+\le\frac{45M h^2}{8(3F+2)b}.
+\tag{330.11}
+\]
+合法相邻深度的节点满足精确祖先关系
+\[
+U^{(r+1)}_{5s}=U^{(r)}_s.
+\tag{330.12}
+\]
+因此在同一共同导数界与真实谱数据下，（330.7）–（330.8）逐父格适用；（330.11）则直接给实际余量证书的显式预算。
+
+**证明。** 用 $h=bv+t$，有
+\[
+\ell_s=v+\left\lfloor\frac{(s+1)t}{b}\right\rfloor
+-\left\lfloor\frac{st}{b}\right\rfloor.
+\]
+最后两项之差为零或一；从 $s=0$ 到 $b-1$ 求和为 $t$。因 $b\le h$，$v\ge1$，所以节点严格递增；展开平方得到（330.10）。将实际价格格宽 $a_{s+1}-a_s=3\ell_s$ 与 $a_s\ge3F+2$ 代入（330.5），得（330.11）的第一界。由
+\[
+0\le t(1-t/b)\le b/4\le h^2/(4b)
+\]
+得第二界。（330.12）只用 $\lfloor5sh/5^{r+1}\rfloor=\lfloor sh/5^r\rfloor$。五分本身不提供唯一的数论意义；任何固定整数分支数至少为二时都有对应的整数分割预算。$\square$
+
+**定理 330.3（递归深度与实际解析改善的接口）。** 对各 Fibonacci 块使用合法深度 $r_k$，记最大整数叶长 $H_k$。则
+\[
+H_k=\left\lceil\frac{F_{k-1}}{5^{r_k}}\right\rceil,
+\qquad
+\log H_k=\log F_{k-1}-r_k\log5+O(1).
+\tag{330.13}
+\]
+从而若 $\eta_*:=\liminf_{k\to\infty}r_k\log5/\log F_k$，有
+\[
+\limsup_{k\to\infty}\frac{\log H_k}{\log F_k}=1-\eta_*.
+\tag{330.14}
+\]
+对每个固定 $0<\eta\le1$，固定幂格宽 $H_k=O(F_k^{1-\eta})$ 等价于
+\[
+r_k\ge\eta\log F_k/\log5-O(1).
+\tag{330.15}
+\]
+$\eta_*>0$ 保证每个严格小于 $\eta_*$ 的正改善指数，不自动保证端点 $\eta=\eta_*$ 的固定常数界。
+
+在 §325 的实际经典解析输入下，初轮共同导数界可取 $M_k=O(\log F_k/\sqrt{F_k})$；取得 $S<1$ 后，每个固定 $S<\theta<1$ 可取 $M_k=O_\theta(F_k^{\theta-3/2})$。因此（330.11）分别生产块误差
+\[
+O\left(\frac{\sqrt{F_k}\log F_k}{5^{r_k}}\right),
+\qquad
+O_\theta\left(\frac{F_k^{\theta-1/2}}{5^{r_k}}\right).
+\tag{330.16}
+\]
+这给 §§325–326 整格误差所用的正幂改善在 Fibonacci 递归采样上的明确来源；末尾部分格子仍由（330.4）独立控制。
+
+**证明。** 定理330.2的叶长分布给最大值为该上取整。合法性使 $u=F_{k-1}/5^{r_k}\ge1$，故 $u\le\lceil u\rceil\le2u$；又 $F_k/2\le F_{k-1}\le F_k$，得（330.13）–（330.15）。若仅有 liminf，则对任意严格更小的指数最终有所需深度下界；端点可失败，例如 $0<\eta<1$ 时取
+\[
+r_k=\max\left\{0,\left\lfloor
+\frac{\eta\log F_k-\sqrt{\log F_k}}{\log5}\right\rfloor\right\}.
+\]
+这给 $\eta_*=\eta$，但 $H_k/F_k^{1-\eta}$ 无界；充分早的深度可另置为零以确保全程合法。共同导数界由（325.8）、（325.18）在 $[3F_k+2,3F_{k+1}+2]$ 上取常数获得，代入（330.11）便得（330.16）。固定深度或 $o(\log F_k)$ 深度不给这条机制固定的正幂改善；这不判定粗 Fibonacci 判据的真假。
+
+若固定整数 $d\ge2$ 并取 $r_k=\lfloor\log_5F_k/d\rfloor$，则 $5^{r_k}\asymp_d F_k^{1/d}$，充分晚时合法；其最大格宽为 $O_d(F_k^{1-1/d})$，截至价格 $X$ 的去重样本数为 $\Theta_d(X^{1/d})$。前者由（330.13）得，后者由 Fibonacci 块的几何增长对每块 $5^{r_k}$ 个新样本求和得。实际样本数量、递归深度、积分预算因此有同一量化关系；这仍没有证明实际平均的最终有限预算存在，也没有消去无限有符号尾项。$\square$
+## 追加锚（本行以下为增补区）
+
+## 331. 实际 CA 素赋值对辅助黄金范数的排除界
+
+沿用 §317 的实际 CA 宿主、完整素支撑和同源最优价格，将这些输入与既有黄金单位分类及 Fibonacci 赋值公式组合。
+
+记 $P=P^+(C)$，$a_p=v_p(C)$。取使 $C$ 最大化 $Z(n)n^{-\epsilon}$ 的任一正价格，允许并列极大点。既有接口给
+
+$$
+p\le P\Longrightarrow a_p\ge1,\qquad
+\epsilon P\log P<1,\qquad \log C\sim P.
+\tag{331.1}
+$$
+
+设正整数 $n$ 被 $C$ 整除，$m$ 为 $n\varphi$ 的最近整数，定义
+
+$$
+E=|m-n\varphi|=\|n\varphi\|,\qquad
+K=m^2-mn-n^2,\qquad \varphi=\frac{1+\sqrt5}{2}.
+\tag{331.2}
+$$
+
+这里 $K=Q(m-n,n)$，其中 $Q(a,b)=a^2+ab-b^2$ 是项目已有的黄金范数。组成 $(m-n,n)$ 是为相位误差构造的辅助黄金整数，不是数量 $n$ 的规范五窗口组成；不能把两份来源未经证明地认成同一个地址。
+
+**命题 331.1（受控高度下的实际范数下界）。** 对每个固定 $A>0$，存在宿主阈值，使充分大的全部实际 CA 宿主及全部满足
+
+$$
+C\mid n,\qquad n\ge1,\qquad \log n\le AP
+\tag{331.3}
+$$
+
+的整数同时有
+
+$$
+|K|\ge P,\qquad
+\|n\varphi\|\ge \frac{P}{\sqrt5\,n+1/2}.
+\tag{331.4}
+$$
+
+证明。先从同一宿主的价格比较取得所需赋值，不另作 CA 分类。比较 $C$ 与 $Cp$，对 $p\le P$ 有
+
+$$
+\begin{aligned}
+\epsilon\log p
+&\ge \log\frac{Z(Cp)}{Z(C)}\\
+&=\log\left(1+\frac{p-1}{p(p^{a_p+1}-1)}\right)
+\ge \frac{p-1}{p^{a_p+2}-1}.
+\end{aligned}
+\tag{331.5}
+$$
+
+最后一步使用 $\log(1+x)\ge x/(1+x)$。结合（331.1）给
+
+$$
+p^{a_p}>
+\frac{p-1}{p^2\log p}\,P\log P,
+\qquad
+2^{a_2}5^{a_5}>
+\frac{P^2(\log P)^2}{25\log2\log5}.
+\tag{331.6}
+$$
+
+还可对全部支撑素数同时得到
+
+$$
+p^{a_p}>\sqrt P\qquad(p\le P).
+\tag{331.7}
+$$
+
+若 $p>\sqrt P$，这由 $a_p\ge1$ 得出。若 $p\le\sqrt P$，（331.5）给
+$p^{a_p+1}>(1-1/p)P\log P/\log p\ge P$，而 $2a_p\ge a_p+1$，故（331.7）仍成立。
+
+假设 $0<|K|<P$，写
+
+$$
+d=\gcd(m,n),\qquad m=dm_0,\quad n=dn_0,\quad
+K_0=m_0^2-m_0n_0-n_0^2=K/d^2.
+\tag{331.8}
+$$
+
+由于 $d^2\mid K$，有 $d<\sqrt P$。式（331.7）保证 $d$ 不能删去 $C$ 中任何支撑素数的完整幂，因此每个 $p\le P$ 仍整除 $n_0$。又
+
+$$
+(K_0,n_0)=(m_0^2,n_0)=1,\qquad 0<|K_0|<P.
+\tag{331.9}
+$$
+
+若 $|K_0|>1$，其某个素因子不超过 $P$，因而整除 $n_0$，与（331.9）矛盾。故 $K_0=\pm1$。
+
+只有现在才接用已有的
+[黄金单位分类](../../../D5/S1/Scale/UnitGroup.lean)及
+[黄金 Pell 接口](../../../D5/S3/Arith/GoldenPell.lean)。
+辅助组成 $(m_0-n_0,n_0)$ 的两坐标充分晚时均为正，所以单位分类给
+
+$$
+(m_0,n_0)=(F_{k+1},F_k),\qquad k\ge2.
+\tag{331.10}
+$$
+
+本节取 $F_0=0,F_1=1$。经典 Fibonacci 增长及 $n_0\le n$、（331.3）给 $k=O_A(P)$。
+
+另一边，（331.6）及 $d<\sqrt P$ 使 $v_2(n_0)\ge3$ 最终成立。直接复用
+[Lengyel 的 Lemmas 1–2](../../../Library/Scale/lengyel1995fibonacciorder.md)：
+$v_2(F_k)\ge3$ 强迫 $6\mid k$，在这一类上
+$v_2(F_k)=v_2(k)+2$，且对正 $k$ 总有 $v_5(F_k)=v_5(k)$。于是
+
+$$
+\begin{aligned}
+k
+&\ge 2^{v_2(k)}5^{v_5(k)}
+=\frac{2^{v_2(F_k)}5^{v_5(F_k)}}4\\
+&\ge \frac{2^{a_2}5^{a_5}}
+ {4\,2^{v_2(d)}5^{v_5(d)}}
+\ge \frac{2^{a_2}5^{a_5}}{4d}
+\gg P^{3/2}(\log P)^2.
+\end{aligned}
+\tag{331.11}
+$$
+
+这与 $k=O_A(P)$ 矛盾。$K$ 不会为零，因为 $\varphi$ 无理，故已证 $|K|\ge P$。令 $e=m-\varphi n$，已有黄金共轭给精确分解
+
+$$
+K=e(\sqrt5\,n+e),\qquad |e|\le1/2.
+\tag{331.12}
+$$
+
+由此 $P\le |K|\le E(\sqrt5\,n+1/2)$，得到（331.4）。所有阈值只依赖固定 $A$ 和宿主尺度，未假设 $(m,n)=1$。$\square$
+
+### 331.1 与实际有理相位弧的尺度比较
+
+固定 $0<2\eta<\kappa$，沿用 §§327–329 的
+$S=\sqrt P$、$Q=\lfloor e^{\kappa S}\rfloor$、$\delta=e^{-\eta S}$。若素数
+
+$$
+\frac1{8\delta}\le q\le\frac1{4\delta},
+\tag{331.13}
+$$
+
+则 $n=Cq$ 满足（331.3），对任意固定 $A>1$ 最终成立。由
+$\|qC\varphi\|\le q\|C\varphi-a/q\|_{\mathbb T}$，命题331.1给所有整数 $a$ 的统一下界
+
+$$
+\left\|C\varphi-\frac aq\right\|_{\mathbb T}
+\ge \frac{P}{q(\sqrt5\,Cq+1/2)}.
+\tag{331.14}
+$$
+
+它较普通坏逼近界多出一个 $P$ 因子，但与 §328 的危险弧半径比较仍有
+
+$$
+\log\frac{P/[q(\sqrt5\,Cq+1/2)]}{\delta/(2Q)}
+=-\log C+(\kappa-\eta)\sqrt P+\log P+O(1)
+\longrightarrow-\infty.
+\tag{331.15}
+$$
+
+这里始终保留真实 $\log C$；$\log C\sim P$ 不供应 $\log C=P+o(\sqrt P)$。
+因此（331.14）没有排除实际宿主进入该弧，也没有证明进入。
+
+若该弧真实发生，最近整数对的范数仍可能落在当前两界未能排除的范围
+
+$$
+P\le |K|\le O\!\left(Ce^{-(\kappa-\eta)\sqrt P}\right).
+\tag{331.16}
+$$
+
+这只是剩余允许范围，不是实际实现声明。原分母 $Cq$ 本身不能在该受控高度中等于某个 $F_k$：Lengyel 的两条赋值公式会给
+$k\ge 2^{a_2}5^{a_5}/4\gg P^2(\log P)^2$，与高度给出的 $k=O(P)$ 矛盾；一般约分后的近整数对仍不能据此送入固定 Fibonacci 轨道。
+
+完整素支撑在本证明中迫使约分后的足够小范数成为单位，两个固定素数的大赋值随后排除单位情形。这两个作用来自同一整数对，而不是把独立可达的局部极值拼接起来。所需危险弧排除、廉价乘子命中与独立 Robin 正储备仍未获得。
+
+### 331.2 单位位零时接回同一规范 FIB 来源
+
+若同一个 $n$ 的规范单位位为零，写其实际五窗口组成为 $x=(A,B)$、$n=2A+3B$，令 $y=A+B\psi$。§182.1 已给出 $-1<y<\varphi$，§318 的规范相位接口则给
+
+$$
+m'=3A+5B,\qquad
+m'-\varphi n=\psi^3y\in(\varphi-2,\,2\varphi-3)\subset(-1/2,1/2).
+\tag{331.17}
+$$
+
+因此这里的 $m'$ 正是（331.2）的最近整数 $m$，而不是另选的黄金逼近对。既有三步递归及范数变号律给
+
+$$
+(m-n,n)=M^3x,\qquad
+K=-Q(x),\qquad
+\gcd(m,n)=\gcd(A,B).
+\tag{331.18}
+$$
+
+所以，对满足（331.3）的这份实际规范来源，命题331.1直接供应
+
+$$
+|Q(x)|\ge P,\qquad
+|y|\ge\frac{\varphi^3P}{\sqrt5\,n+1/2}.
+\tag{331.19}
+$$
+
+这里同时保留了数量读出、单位初始化与同源相位，且没有重新分类五窗口或黄金单位。§318 在 Robin 半尺度成本内取得的实际单位位零来源也适用此接口；（331.19）仍只是多项式增益，未与该来源的独立有符号 Robin 余量建立估计关系。
+
+## 追加锚（本行以下为增补区）
+
+## 332. CA 赋值可接入量化子空间定理，但方向计数不排除实际点
+
+本节直接使用 Evertse–Ferretti，
+*A further improvement of the Quantitative Subspace Theorem*，
+Annals of Mathematics 177 (2013), 513–590，
+[DOI:10.4007/annals.2013.177.2.4](https://doi.org/10.4007/annals.2013.177.2.4)，
+[原文 pp.523–525，§3、Theorems 3.1、3.3 与 Corollary 3.2](https://annals.math.princeton.edu/wp-content/uploads/annals-v177-n2-p04-p.pdf)。
+以下给出实际 CA 参数的对应与尚缺的点态排除。
+
+仍记 $L=\log C$、$S=\sqrt P$。假定 §328 的危险弧发生，对其约化素分母 $q$ 与分子 $a$ 取整数提升 $j$，定义
+
+$$
+m=qj+a,\qquad n=Cq,\qquad
+E=|n\varphi-m|\le B_q:=\frac{q\delta}{2Q}.
+\tag{332.1}
+$$
+
+因 $(a,q)=1$，有 $(m,q)=1$；若 $d=(m,n)$，则 $d\mid C$。约分改变分母为 $(C/d)q$，并可能删去 CA 赋值，不能直接把它当成 $Cq$。
+式（331.13）给
+
+$$
+\frac1{16Q}\le B_q\le\frac1{8Q},\qquad
+E<e^{-\kappa S}\quad\text{最终成立}.
+\tag{332.2}
+$$
+
+危险弧给出的范数上界仍是
+$|K|\le B_q(\sqrt5\,Cq+B_q)$，其上端对数为
+$L-(\kappa-\eta)S+O(1)$；它没有强迫 $K=\pm1$。
+
+### 332.1 保留共因子的乘积形式
+
+令 $\mathcal P_P=\{p:p\le P\}$，
+$[m]_{\mathcal P_P}=\prod_{p\le P}p^{v_p(m)}$。在基域 $\mathbb Q$ 上采用以下两种局部线性形式：
+
+$$
+\begin{array}{c|cc}
+v&L_1^{(v)}&L_2^{(v)}\\ \hline
+\infty&X_1-\varphi X_2&X_2\\
+p\le P&X_1&X_2 .
+\end{array}
+\tag{332.3}
+$$
+
+每处行列式为一。实际向量 $\boldsymbol x=(m,n)$ 的射影高度充分晚时为
+$H(\boldsymbol x)=m/d$。两形式的未归一化局部范数乘积为
+$qE/[m]_{\mathcal P_P}$，各处向量范数的乘积为 $m/d$，因此
+
+$$
+\prod_{v\in\{\infty\}\cup\mathcal P_P}
+\prod_{i=1}^{2}
+\frac{|L_i^{(v)}(m,n)|_v}
+ {\max(|m|_v,|n|_v)}
+=H(\boldsymbol x)^{-2}\frac{qE}{[m]_{\mathcal P_P}}.
+\tag{332.4}
+$$
+
+这是保留同一个未约分整数对的精确公式。取
+
+$$
+q_{\max}=\frac{e^{\eta S}}4,\qquad
+U=2Cq_{\max},\qquad
+\varepsilon_0=\frac{(\kappa-\eta)S}{\log U}.
+\tag{332.5}
+$$
+
+实际候选有 $H<U$、$qE<e^{-(\kappa-\eta)S}$，所以（332.4）满足原文（3.11）相应的 $H^{-2-\varepsilon_0}$ 乘积不等式，
+$\varepsilon_0\sim(\kappa-\eta)/\sqrt P$。其 Corollary 3.2 方向计数中保留了支持大小
+$s=\pi(P)+1$ 的因子
+
+$$
+(36/\varepsilon_0)^{2s},\qquad
+\log\big((36/\varepsilon_0)^{2s}\big)=(1+o(1))P.
+\tag{332.6}
+$$
+
+这里只核对乘积假设和计数中的支持因子，不把方向数量界当成点态距离下界。
+
+### 332.2 处方 CA 赋值后的较强接口
+
+现在明确另加 $(m,n)=1$。于是每个 $p\le P$ 处，$m$ 是单位且
+$|n|_p=p^{-a_p}$。对原文 Theorem 3.1 处方局部指数
+
+$$
+\begin{aligned}
+d_{1,\infty}&=-1-\frac{\kappa S}{\log U},
+&d_{2,\infty}&=0,\\
+d_{1,p}&=0,
+&d_{2,p}&=-\frac{a_p\log p}{\log U}.
+\end{aligned}
+\tag{332.7}
+$$
+
+式（332.2）与 $H=m<U$ 给无穷处的两个归一化局部不等式；有限处由实际赋值直接给出。指数全非正，而且
+
+$$
+\sum_{v,i}d_{i,v}=-2-\varepsilon_C,\qquad
+\varepsilon_C=\frac{(\kappa-\eta)S+\log2}{\log U}
+\sim\frac{\kappa-\eta}{\sqrt P}.
+\tag{332.8}
+$$
+
+所以原文（3.1）–（3.7）的参数可取
+
+$$
+\text{维数}=2,\qquad
+R=3,\qquad D=2,\qquad H^*\le2.
+\tag{332.9}
+$$
+
+$R$ 数的是不同形式 $X_1,X_2,X_1-\varphi X_2$，不等于观察处数。
+系数扩张度不超过二；原文允许形式系数在基域之外。因为实际向量在 $\mathbb Q^2$，原文对其 Galois 共轭取最大值不改变局部读数。
+
+直接代入 Theorem 3.1，候选超过的初始高度门槛是
+
+$$
+C_1=\max(2^{1/18},2^{2/\varepsilon_C}),\qquad
+\log C_1=O_{\eta,\kappa}(\sqrt P).
+\tag{332.10}
+$$
+
+此时所有相应大高度解处于至多
+
+$$
+10^9\,2^{18}\varepsilon_C^{-3}
+\log(18/\varepsilon_C)
+\log\!\left(\varepsilon_C^{-1}\log18\right)
+=O_{\eta,\kappa}\!\left(P^{3/2}(\log P)^2\right)
+\tag{332.11}
+$$
+
+个真有理子空间中。实际本原候选有 $\log H\sim P$，故确实高于（332.10）。
+因此不能把本次文献接口的障碍笼统归为支持增长使定理无法应用，或初始高度门槛太大。处方完整 CA 赋值已经消去了（332.6）的指数级支持计数损失，但仍允许那个实际例外方向。
+
+对同一个固定宿主，初等分数间隔甚至已给出危险弧中的候选约化分数至多一个：
+两个不同分母不超过 $q_{\max}$ 的约化分数在圆上的距离至少为 $1/q_{\max}^2$，而
+$\delta/Q<1/q_{\max}^2$ 最终成立。
+这个至多一个结论同样没有判定候选是否存在。允许任意一个例外的方向计数不能把它排除。
+
+Theorem 3.3 给一个可有效取得、来自有限集合的真子空间 $T$ 以及有限多个高度区间；除 $T$ 外的解须落入
+
+$$
+[1,C_1)\ \cup\ \bigcup_i[H_i,H_i^{\omega_1}),
+\qquad
+H_i\ge C_1,\qquad
+\omega_1=6\varepsilon_C^{-1}\log18=O(\sqrt P).
+\tag{332.12}
+$$
+
+所引陈述没有给这些 $H_i$ 的有效统一上位置。$C_1$ 是大解区的开始，不是例外解高度的上限；不能因实际高度远大于 $C_1$ 就宣告安全。
+一般 $d>1$ 时，本节只使用保留共因子的乘积接口（332.4）；（332.7）–（332.11）的全 CA 处方不能原样搬到约分后的分母。
+
+若改走固定 $\varphi$ 的 convergent 或 Pell 方法，Legendre 的充分条件需
+
+$$
+\left|\varphi-\frac{m/d}{n/d}\right|
+<\frac1{2(n/d)^2}
+\quad\Longleftrightarrow\quad
+2nE<d^2.
+\tag{332.13}
+$$
+
+危险弧没有供应这一条件。本原情形允许的 $nE$ 上尺度仍为
+$Ce^{-(\kappa-\eta)S}\to\infty$。
+相反，弧中的 $m/q$ 确实是 $C\varphi$ 的 convergent，因为 $q^2\delta/Q\to0$；该二次无理数的多项式是
+$X^2-CX-C^2$，其递推数据随宿主变化，不能保留固定 $\varphi$ 的 Fibonacci 递推常数后继续套用。
+
+目前需要的是这些例外方向或高度区间的实际位置控制，或在同一个整数对上把黄金范数下界从 §331 的 $P$ 提升到危险弧上端
+$Ce^{-(\kappa-\eta)\sqrt P}$ 的尺度。
+这两条均未取得；排除某种弧以后还须控制完整未命中集合及独立比较类，不能将本节升格为廉价相位命中、Robin 正储备或 RH 证明。
+
+## 追加锚（本行以下为增补区）
+
+## 333. 平方密度的可求和谱积分误差与实际单边递归证书
+
+**定义 333.1（实际平方密度的两种网格）。** 沿用 §§315、325、330 的实际 $T_L$、$m_L=3L+2$、$\mathfrak m_L$、$\kappa$、$\Phi=I_\psi$ 与 $Z(x)=\sqrt x\log x\,\Phi(x)$。第一种网格取 $L_j=j^2$、$a_j=3j^2+2$，$j\ge16$。第二种网格使用定义330.2的 Fibonacci 块，取
+\[
+r_k=\left\lfloor\frac{\log_5 F_k}{2}\right\rfloor,
+\qquad b_k=5^{r_k},\qquad
+U_{k,s}=F_k+\left\lfloor\frac{sF_{k-1}}{b_k}\right\rfloor,
+\qquad a_{k,s}=3U_{k,s}+2.
+\tag{333.1}
+\]
+从充分晚的合法块开始，相邻块边界只计一次。两种网格均按实际截止递增枚举为 $a_i=m_{L_i}$，记 $\omega_i=\log(a_{i+1}/a_i)$。对 $X\ge a_0$，只使用已完成格子的谱左和
+\[
+\mathcal S(X)=\sum_{a_{i+1}\le X}\omega_i Z(a_i),\qquad
+\mathcal Q(X)=\int_{a_0}^X Z(x)\frac{dx}{x}-\mathcal S(X).
+\tag{333.2}
+\]
+
+**假设 333.1（已有有效 PNT 输入）。** 采用假设302.1及 §325 的经典解析输入，明确使用其无条件有效素数定理的如下既有形式：存在 $A,c>0$ 与 $x_0>1$，对全部实数 $x\ge x_0$ 有
+\[
+|\psi(x)-x|\le A x e^{-c\sqrt{\log x}}.
+\tag{333.3}
+\]
+这是经典零点自由区域所给的有效 PNT，不是本节新证明的零点结论；不预设 RH 或 $S<1$。$Z$ 局部绝对连续，其几乎处处导数使用（325.7）。
+
+**定理 333.1（实际平方密度的有限总谱误差）。** 在假设333.1下，对定义333.1的两种网格均有
+\[
+\sum_i\left|\int_{a_i}^{a_{i+1}}Z(x)\frac{dx}{x}
+-\omega_iZ(a_i)\right|<\infty,
+\qquad
+\mathcal Q(X)\longrightarrow Q_\infty\in\mathbb R
+\quad(X\to\infty).
+\tag{333.4}
+\]
+有限常数允许依赖网格初点。这将 §325 平方分支的粗积分误差加强为具有有限极限的误差。
+
+**证明。** 先从同一经典 PNT 生产导数预算，而非只使用 Chebyshev 粗界。置 $v=\sqrt{\log x}$。当 $x\ge\max\{x_0,e\}$ 时，对 $t\ge x$，核 $k(t)=(1+\log t)/(t^2\log^2t)$ 满足
+\[
+|\psi(t)-t|k(t)
+\le\frac{2A}{\sqrt{\log x}}
+\frac{e^{-c\sqrt{\log t}}}{t\sqrt{\log t}}.
+\]
+经典换元或微积分基本定理给
+\[
+\int_x^\infty\frac{e^{-c\sqrt{\log t}}}{t\sqrt{\log t}}\,dt
+=\frac2c e^{-c\sqrt{\log x}},
+\]
+因为被积函数是 $-(2/c)e^{-c\sqrt{\log t}}$ 的导数，且该原函数趋零。因此尾积分绝对收敛，且
+\[
+|\Phi(x)|\le\frac{4A}{c}
+\frac{e^{-c\sqrt{\log x}}}{\sqrt{\log x}}.
+\tag{333.5}
+\]
+代入（325.7），利用 $\log x+2\le3\log x$、$\log x+1\le2\log x$，得到同源点值及几乎处处导数界
+\[
+|Z(x)|\le C\sqrt{x\log x}\,e^{-c\sqrt{\log x}},
+\qquad
+|Z'(x)|\le C\frac{\sqrt{\log x}}{\sqrt x}
+ e^{-c\sqrt{\log x}}.
+\tag{333.6}
+\]
+可取 $C$ 大于 $4A/c$ 及 $A(6/c+2)$；有限初段的积分误差由连续性保证有限；如需共同有限导数界，则另用（325.7）及局部 $\psi$ 有界性，不从绝对连续性单独推断导数有界。
+
+普通平方网格满足 $a_j\asymp j^2$、$a_{j+1}-a_j\asymp j$、$a_{j+1}\le2a_j$。由（333.6）在每格取共同导数界，再使用（330.6），逐格绝对误差至多
+\[
+C'\frac{\sqrt{\log j}}j e^{-c'\sqrt{\log j}}
+\tag{333.7}
+\]
+其中 $c'>0$ 固定。此正函数充分晚时递减，经典积分比较及 $u=\sqrt{\log t}$ 给可和性，因为相应尾积分等于 $2\int u^2e^{-c'u}\,du$ 的尾部，有限。
+
+Fibonacci 块上 $x\asymp F_k$、$\log x\asymp\log F_k$，故可统一取
+\[
+M_k=C_0\frac{\sqrt{\log F_k}}{\sqrt{F_k}}
+ e^{-c_0\sqrt{\log F_k}},\qquad C_0,c_0>0.
+\tag{333.8}
+\]
+本块使用同一个 $M_k$。由 $b_k\asymp\sqrt{F_k}$ 和（330.11），全部叶的绝对谱误差之和至多
+\[
+\beta_k=C_1\sqrt{\log F_k}\,e^{-c_0\sqrt{\log F_k}}.
+\tag{333.9}
+\]
+经典 Fibonacci 几何增长给 $\log F_k\asymp k$，从而 $\sum\beta_k<\infty$。例如按 $n^2\le k<(n+1)^2$ 分组，每组至多 $2n+1$ 项，每项不超过 $C(n+1)e^{-c_2n}$，组总量为 $O((n+1)^2e^{-c_2n})$，由指数级数乘多项式的经典可和性得出。
+
+这些比较只是在实际网格上应用经典积分与级数估计。绝对可和的逐格误差使完整格子截止的 $\mathcal Q$ 趋于有限常数。还需处理所有实数 $X$：由（333.6）及两种网格的最大格宽 $O(\sqrt x)$，任一末格的部分积分绝对值至多
+\[
+C_2\sqrt{\log a_i}\,e^{-c_3\sqrt{\log a_i}}\longrightarrow0.
+\tag{333.10}
+\]
+在 Fibonacci 块内部，尚未加到完整块末的误差绝对总和不超过 $\beta_k\to0$。所以完成格左和的任意实数截止也趋于同一个误差常数，得到（333.4）。$\square$
+
+**推论 333.1（平方分支不需先做误差指数自举）。** 在同一输入下，若实际平方网格的普通 Robin 对数平均最终有固定有限下界，则其连续谱累计量直接满足
+\[
+\int_{a_0}^{X}Z(x)\frac{dx}{x}\ge-K(1+\log X)
+\quad\text{对全部充分大的 }X.
+\tag{333.11}
+\]
+因此可直接复用 §316 的正逆累计变换与经典 Landau 论证推出 RH；不需要先取得 $S<1$ 再重做平方网格的导数预算。
+
+**证明。** 按（315.2），非负 $H_i$ 及 $\varepsilon_i\to0$ 将实际平均的最终有限下界送到 $\sum\omega_iZ(a_i)\ge-K\log(a_N/a_0)$。定理333.1的有界误差和末格趋零把它延伸到全部实数，有限初段纳入常数。之后使用 §316 已有的同一连续累计预算推导。（333.11）的前提仍是未证明存在的最终预算；本推论不证明 RH。$\square$
+
+**定义 333.2（实际单边谱证书）。** 在定义333.1的一个 Fibonacci 块上，保留全部节点，包括右端点。取实际分解
+\[
+q_{k,s}=\mathfrak m_{U_{k,s}}
+=Z(a_{k,s})+\kappa-H_{k,s}+\varepsilon_{k,s},
+\qquad H_{k,s}\ge0,
+\]
+以及每点明确的有限上界 $\varepsilon_{k,s}\le e_{k,s}$，置
+\[
+\ell_{k,s}=q_{k,s}-\kappa-e_{k,s}\le Z(a_{k,s}),
+\qquad
+\mathcal E_k(x)=\max_{0\le s\le b_k}
+[\ell_{k,s}-M_k|x-a_{k,s}|].
+\tag{333.12}
+\]
+$M_k$ 采用（333.8）；有限早段可取其它已证实的共同导数界。对块端点 $A_k=3F_k+2$、$A_{k+1}=3F_{k+1}+2$，记
+\[
+\mathcal C_K=\sum_{k=k_0}^{K-1}
+\int_{A_k}^{A_{k+1}}\mathcal E_k(x)\frac{dx}{x},
+\qquad
+\mathcal C(X)=\mathcal C_K+\int_{A_K}^{X}\mathcal E_K(x)\frac{dx}{x}
+\quad(A_K\le X\le A_{K+1}),\qquad
+\overline{\mathcal C}(X)=\frac{\mathcal C(X)}{\log(X/A_{k_0})}
+\quad(X>A_{k_0}).
+\tag{333.13}
+\]
+每块单独使用其共同 $M_k$，不跨块把不同斜率混成全局共同常数。
+
+**定理 333.2（实际单边数据的递归继承与条件 RH 强度）。** 在同一解析输入及有限残差上界下，$\mathcal E_k\le Z$。在固定块、固定共同 $M_k$ 下，加密节点且保留旧的有效 $\ell_{k,s}$，使 $\mathcal E_k$ 逐点不减，其积分下界也不减；新节点的残差上界可以宽，不损坏已保留的旧证书。
+
+若再有
+\[
+\max_{0\le s\le b_k}|e_{k,s}|\longrightarrow0,
+\tag{333.14}
+\]
+则 RH 蕴含 $\overline{\mathcal C}(X)\to0$。反之，不要求（333.14），只要 $\overline{\mathcal C}(X)$ 在全部充分大实数 $X$ 上有固定有限下界，就由同一连续累计预算推出 RH。于是，在（333.14）与其余明确输入均满足时，RH 等价于该证书平均趋零，也等价于它最终有固定有限下界。
+
+**证明。** 使用经典实值 Lipschitz 锥包络作为中间步骤：共同几乎处处导数界和绝对连续性给 $Z(x)\ge Z(a)-M_k|x-a|$，故（333.12）每项都不超过 $Z$。保留旧项的最大值只会增大；这直接关闭 §330 中单独替换普通左和所没有的实际代理单调性。零斜率时包络为节点下界的常数最大值，同样成立。
+
+在有限节点上，经典包络还给一个闭合操作
+\[
+\ell_s\longmapsto c_s=\mathcal E_k(a_s).
+\]
+它保持序、增加下界，且二次闭合等于一次闭合：$c_s-M_k|x-a_s|\le\mathcal E_k(x)$ 来自包络自身的 Lipschitz 性，反向来自 $c_s\ge\ell_s$。这是证书信息的闭合，不给可逆群操作。包络是只保留这些单边样值与共同 Lipschitz 界时的最小兼容函数；这个极小性仅在该函数信息类内使用，不把它当成可实现的素数误差或另一条 $\zeta$ 函数。
+
+RH 下 §315 给 $H_L\to0$、$\varepsilon_L\to0$。与（333.14）合并，节点偏差
+\[
+B_{k,s}=Z(a_{k,s})-\ell_{k,s}
+=H_{k,s}+e_{k,s}-\varepsilon_{k,s}\ge0,
+\qquad \max_sB_{k,s}\to0.
+\tag{333.15}
+\]
+任取最近节点 $a_s$，共同导数界给
+\[
+0\le Z(x)-\mathcal E_k(x)
+\le B_{k,s}+2M_k|x-a_s|.
+\tag{333.16}
+\]
+每格两个端点均保留，最近节点距离至多半格宽。由最大价格格宽 $O(\sqrt{F_k})$ 与（333.8），右侧在晚块上一致趋零；其几何项的块积分甚至被可和的 $O(\beta_k)$ 控制。有限初段除以趋于无穷的对数总长趋零，晚块的一致小偏差也使其平均趋零。RH 下 §316 的连续谱对数平均为零，于是证书平均趋零。
+
+反向只用 $\mathcal E_k\le Z$：全部实数上的证书预算直接给 $\int_{A_{k_0}}^X Z(x)dx/x\ge-K\log(X/A_{k_0})$。复用 §316 的连续正逆变换与经典 Landau 论证即得 RH。不把只在 Fibonacci 块端点成立的预算当成全实数预算；本结论没有补上这种粗端点运输。证书预算的存在性与有限 $e_{k,s}$、$M_k$ 的数值实现仍需独立给出。$\square$
+
+## 334. 同一素数截止生产实际残差上界与五分谱证书
+
+**定义 334.1（有限素数幂修正）。** 沿用 §§313、315、333 的实际 $T_L$、$m=3L+2\ge50$、$E=e^\gamma$、$X_L=\log T_L$、$U_L=\sigma(T_L)/T_L$、$\kappa=2\sqrt2-2$、$w(m)=\sqrt m\log m$、$D(m)=\log\vartheta(m)-P(m)/E$、$Z=wI_\psi$ 和非负端点缺损 $\mathfrak h_L$。置
+\[
+V(t)=\frac1{t\log t},\qquad
+\mathcal P_m=\{(p,r):p\text{ 为素数},\ r\ge2,\ p^r\le m^2\},
+\]
+\[
+K_m=w(m)\sum_{(p,r)\in\mathcal P_m}\log p
+\,[V(\max\{m,p^r\})-V(m^2)],\qquad
+ d_m=\frac{w(m)}{2(m-1)}.
+\tag{334.1}
+\]
+集合 $\mathcal P_m$ 有限，且每个素数底数 $p\le m$。定义同一个实际整数的有限核心修正及残差上界候选
+\[
+R_L=\sqrt m\left[\log\frac{X_L}{\vartheta(m)}
+ +\frac{P(m)-U_L}{E}\right],\qquad
+ e_L^{\rm cut}=R_L-\kappa+d_m-K_m.
+\tag{334.2}
+\]
+这些量只使用截止 $m$ 内的素数及实际 $T_L$ 的有限因子；不从 $\varepsilon_L\to0$ 选择不可计算的阈值。
+
+**假设 334.1（已有同截断解析身份）。** 使用 §§313、315 的同截断 Abel 恒等式、实际核心修正 $R_L\to2\sqrt2$ 和普通素数幂分解。置 $R(t)=\psi(t)-\vartheta(t)\ge0$、$k(t)=(1+\log t)/(t^2\log^2t)$、$J_m=\int_m^\infty R(t)k(t)dt$，则 $I_\psi-I_\vartheta=J_m$。$\tau(m)=\sum_{p>m}\sum_{r\ge2}1/(rp^r)$ 采用原来的同截断定义。经典几何级数比较给 $0\le\tau(m)\le1/[2(m-1)]$；经典 Chebyshev 素幂估计给 $0\le R(t)\le2\sqrt t\log t$（$t\ge1$），可直接复用 Mathlib `Chebyshev.psi_sub_theta_le`。这些是已知中间输入，不是新的素数分布结论。
+
+**定理 334.1（有限同截止残差证书与核心消去）。** 在假设334.1及原有解析输入下，对每个实际 $L\ge16$，将（315.2）的误差按精确恒等式选择为
+\[
+\varepsilon_L=R_L-\kappa+w(m)\tau(m)-w(m)J_m.
+\tag{334.3}
+\]
+则 $\mathfrak m_L=Z(m)+\kappa-\mathfrak h_L+\varepsilon_L$，并有
+\[
+0\le e_L^{\rm cut}-\varepsilon_L
+\le9\frac{\log m}{\sqrt m},\qquad
+ e_L^{\rm cut}\longrightarrow0.
+\tag{334.4}
+\]
+尤其有限下标签精确消去实际核心修正：
+\[
+\ell_L^{\rm cut}:=\mathfrak m_L-\kappa-e_L^{\rm cut}
+=\sqrt mD(m)+K_m-d_m\le Z(m),
+\]
+\[
+Z(m)-\ell_L^{\rm cut}
+=\mathfrak h_L+(e_L^{\rm cut}-\varepsilon_L).
+\tag{334.5}
+\]
+因此下标签本身只需素数截止 $m$，无需分别计算巨大整数 $T_L$ 的绝对余量与核心修正再相减。$\kappa$ 的平方层储备没有被设为零；它在同一个实际标签的消去式中准确抵消。
+
+**证明。** 同一个实际整数满足 $\mathfrak m_L=\sqrt mD(m)+R_L$，由 $X_L,\vartheta(m)>0$ 和经典 $\log(X_L/\vartheta)=\log X_L-\log\vartheta$ 得到。将同截断 Abel 恒等式（313.10）代入，并保留 $\mathfrak h_L$，给
+\[
+\sqrt mD(m)=Z(m)-\mathfrak h_L+w(m)\tau(m)-w(m)J_m.
+\tag{334.6}
+\]
+与上一式相加得到（334.3）的精确分解，不对端点缺损作无条件消失断言。
+
+先核对有限修正，避免把尾积分当作有限观测。$-V'(t)=k(t)$；在 $[m,m^2]$ 上，经典素幂分解给
+$R(t)=\sum_{p^r\le t,\ r\ge2}\log p$。有限和逐项积分得到
+\[
+K_m=w(m)\int_m^{m^2}R(t)k(t)dt.
+\tag{334.7}
+\]
+端点 $p^r=m$、$p^r=m^2$ 的单点不影响积分；末端对应项为零。因为 $r\ge2$，$p^r\le m^2$ 蕴含 $p\le m$，所以该修正不要求枚举 $(m,m^2]$ 中的新素数。
+
+由 $\log t\ge1$，$k(t)\le2/(t^2\log t)$。用假设334.1的经典上界，得到 $0\le R(t)k(t)\le4t^{-3/2}$。经典幂积分与正性给尾积分绝对收敛，并有
+\[
+0\le w(m)J_m-K_m
+\le w(m)\int_{m^2}^\infty4t^{-3/2}dt
+=8\frac{\log m}{\sqrt m}.
+\tag{334.8}
+\]
+同时，$m\ge2$ 给 $0\le d_m-w(m)\tau(m)\le d_m\le\log m/\sqrt m$。二式相加就是（334.4）的有限误差界。原来的（315.2）给精确选择的 $\varepsilon_L\to0$，再用 $\log m/\sqrt m\to0$，得 $e_L^{\rm cut}\to0$，不需要 RH。代入（334.2）及 $\mathfrak m_L=\sqrt mD+R_L$ 得（334.5）；其中右端非负来自端点缺损与正尾。$\square$
+
+**定理 334.2（原五分证书的残差输入由有限素数生产）。** （334.5）的有限下标签可用于 §333 的两种实际平方密度网格；以下在 Fibonacci 块上保留原来的共同导数界与全部端点，并定义
+\[
+\mathcal E_k^{\rm cut}(x)=\max_s[
+\ell_{U_{k,s}}^{\rm cut}-M_k|x-a_{k,s}|].
+\tag{334.9}
+\]
+则它仍是 $Z$ 的逐点下界，保留旧标签及同一 $M_k$ 的递归加密仍单调增强。§333 条件（333.14）现在由定理334.1自动供应。在其余原解析输入下，RH 等价于该有限素数证书的归一化连续累计平均趋零，也等价于其在全部充分大实数截止上有固定有限下界。
+
+**证明。** 所有晚块的节点 $U_{k,s}\ge F_k\to\infty$，故完整整数序列上的 $e_L^{\rm cut}\to0$ 给本块最大绝对误差上界趋零；不要求节点数固定。套用定理333.2。在任一节点，证书信息误差现在满足
+\[
+0\le Z(a_{k,s})-\ell_{U_{k,s}}^{\rm cut}
+\le\mathfrak h_{U_{k,s}}+9\frac{\log a_{k,s}}{\sqrt{a_{k,s}}}.
+\tag{334.10}
+\]
+RH 下原端点估计使 $\mathfrak h_L\to0$，几何格误差按 §333 处理。反向仍要求全部充分大实数截止上的累计预算，未将 Fibonacci 粗端点预算自动延伸为它。本节生产了有限残差标签及其一致消失的误差，未生产累计预算的存在性、共同导数界的数值常数表或无限有符号尾项的下界，也未证明 RH。$\square$
+
+## 335. 有限真谱节点的五分包络与无条件有限累计亏损
+
+**定义 335.1（沿用有限真谱值的实际证书）。** 沿用 §§87、92、313、330、333 的同源 $Z(x)=\sqrt x\log x\,I_\psi(x)$，区分本节的有限素数幂和
+\[
+A(x)=\sum_{\substack{p\text{ 素数},\ r\ge1\\p^r\le x}}\frac1{rp^r}
+=\sum_{1<n\le x}\frac{\Lambda(n)}{n\log n}
+\]
+与 §§313、334 的 Euler 乘积 $P(x)$。复用 §87.3、§92 及《黄金分层算术观察理论》“定理1.1：尾积分的有限算式”的经典同截断表达
+\[
+z_{\rm fin}(x)=\sqrt x\log x\left[
+\gamma+\log\log x-A(x)+\frac{\psi(x)-x}{x\log x}\right]=Z(x),\qquad x>1.
+\tag{335.1}
+\]
+该已知表达由有效素数定理、Stieltjes 分部求和及 Mertens 常数得出；其文献背景与适用核已在 §87.3 注明，这里不另立有限谱公式为新定理。每个素数幂 $p^r\le x$ 的底数均 $p\le x$。
+
+取定义333.1的实际 Fibonacci 五分平方密度网格，块端点为 $A_k=3F_k+2$，节点为 $a_{k,s}=3U_{k,s}+2$，包括每块两端。固定 §333 的同一有效 PNT 输入及已证实的共同导数界 $M_k\ge0$。定义
+\[
+\mathcal E_k^{\rm fin}(x)=\max_s[
+ z_{\rm fin}(a_{k,s})-M_k|x-a_{k,s}|],\qquad A_k\le x\le A_{k+1}.
+\tag{335.2}
+\]
+在每个块上固定节点及共同 $M_k$，令 $\mathcal E^{\rm fin}$ 为这些块函数的拼接，并记
+\[
+\mathcal C^{\rm fin}(X)=\int_{A_{k_0}}^X\mathcal E^{\rm fin}(x)\frac{dx}{x},\qquad
+\mathcal S(X)=\int_{A_{k_0}}^XZ(x)\frac{dx}{x},\qquad
+\mathcal L(X)=\mathcal S(X)-\mathcal C^{\rm fin}(X),\quad X\ge A_{k_0}.
+\tag{335.3}
+\]
+两侧块在共同端点都等于 $Z$，故拼接连续。早块可以采用另外的已证实有限共同导数界，不从绝对连续性单独推出它的存在。
+
+**定理 335.1（实际五分谱证书的全实数有限累计亏损）。** 在上述已有解析输入下，不预设 RH，有
+\[
+\mathcal E^{\rm fin}(x)\le Z(x),\qquad
+0\le\mathcal L(X)\nearrow\mathcal L_\infty<\infty
+\quad(X\to\infty\text{，遍及全部实数截止}).
+\tag{335.4}
+\]
+更具体地，在块 $k$ 的相邻节点 $a\le b$ 上，
+\[
+0\le Z(x)-\mathcal E_k^{\rm fin}(x)
+\le2M_k\min\{x-a,b-x\},\qquad a\le x\le b,
+\]
+\[
+0\le\int_a^b[Z(x)-\mathcal E_k^{\rm fin}(x)]\frac{dx}{x}
+\le\frac{M_k(b-a)^2}{2a}.
+\tag{335.5}
+\]
+存在只依赖已固定输入的常数 $C,c>0$，使所有充分晚的块及 $X\ge A_k$ 满足
+\[
+0\le\mathcal L_\infty-\mathcal L(X)
+\le C(1+k)e^{-c\sqrt k}.
+\tag{335.6}
+\]
+保留旧节点及同一 $M_k$ 的五分递归加密使 $\mathcal E_k^{\rm fin}$ 逐点不减，从而在同一截止 $X$ 的亏损不增。此加密方向与固定证书下 $\mathcal L(X)$ 随截止增长不减的方向不同。
+
+**证明。** 同一块上的绝对连续性和共同几乎处处导数界给 $|Z(x)-Z(y)|\le M_k|x-y|$。将既有有限表达（335.1）代入每个锥，得 $\mathcal E_k^{\rm fin}\le Z$。在任一保留节点取其自身锥，给 $\mathcal E_k^{\rm fin}(a_{k,s})\ge Z(a_{k,s})$，故恰好插值真实谱值。分别使用相邻两个端点的锥，得第一条（335.5）；两端都保留是取得最近距离的必要输入。经典有限最大值的 Lipschitz 性保证每块连续。
+
+因 $x\ge a>0$，将非负误差除以 $x$ 后不超过 $2M_k\min(x-a,b-x)/a$。经典初等积分给
+\[
+\int_a^b\min\{x-a,b-x\}\,dx=\frac{(b-a)^2}4,
+\]
+得到第二条（335.5）。这些 Lipschitz 锥与初等积分是已知中间步骤，新的对象是定义335.1的实际有限真谱证书。
+
+§333 的实际网格预算给 $\sum_sM_k(a_{k,s+1}-a_{k,s})^2/(2a_{k,s})\le\beta_k$，其中 $\sum_k\beta_k<\infty$，并可取充分晚时 $\beta_k\le C_0\sqrt k\,e^{-c_0\sqrt k}$。所以正误差的整个积分被有限早段及这份可和预算控制。固定拼接证书下，$\mathcal L(Y)-\mathcal L(X)$ 是 $[X,Y]$ 上的非负误差积分，故单调不减并有界。经典单调收敛给有限极限；对任意实数截止的部分末块也由完整块的非负预算控制，因而没有粗端点运输缺口。
+
+若 $X\ge A_k$，剩余误差不超过 $\sum_{j\ge k}\beta_j$。充分晚时 $\sqrt t\,e^{-c_0\sqrt t}$ 递减，经典积分比较及 $u=\sqrt t$ 给
+\[
+\int_k^\infty\sqrt t\,e^{-c_0\sqrt t}dt
+=2e^{-c_0\sqrt k}\left(\frac{k}{c_0}
+ +\frac{2\sqrt k}{c_0^2}+\frac2{c_0^3}\right).
+\]
+加入起始项得到（335.6）。保留旧锥取更大最大值即得加密单调性。$\square$
+
+**定理 335.2（与实际 Robin 下标签的精确关系及剩余预算）。** 对 §334 的同一 $m=3L+2$，沿用其 $R(t),k,J_m,\tau,w,D,\mathfrak h_L$，置有限同截断修正
+\[
+B_m=w(m)\left[\frac{\psi(m)-\vartheta(m)}{m\log m}
+ +\log P(m)-A(m)\right].
+\tag{335.7}
+\]
+既有素数幂分解与经典对数级数给 $B_m=w(m)[J_m-\tau(m)]$。因此
+\[
+\ell_L^*:=\sqrt mD(m)+B_m=Z(m)-\mathfrak h_L,
+\qquad z_{\rm fin}(m)=\ell_L^*+\mathfrak h_L.
+\tag{335.8}
+\]
+对原 §334 的标签，精确有
+\[
+0\le\ell_L^*-\ell_L^{\rm cut}
+=e_L^{\rm cut}-\varepsilon_L
+\le9\frac{\log m}{\sqrt m}.
+\tag{335.9}
+\]
+在原有 §316、§333 的解析输入下，RH 等价于
+\[
+\frac{\mathcal C^{\rm fin}(X)}{\log(X/A_{k_0})}\longrightarrow0,
+\]
+也等价于这个归一化证书在全部充分大实数截止上有固定有限下界。此处证书是 $Z$ 的谱下界；加回 $\mathfrak h_L$ 不给实际 Robin 余量更强下界。
+
+**证明。** 对正核使用经典素数幂分解和非负换序，
+\[
+J_m=\frac{\psi(m)-\vartheta(m)}{m\log m}
+ +\sum_{\substack{p^r>m\\r\ge2}}\frac1{rp^r}.
+\]
+其中 $p>m$ 的全部项恰好是 $\tau(m)$。对剩余 $p\le m$，经典 $-\log(1-1/p)=\sum_{r\ge1}1/(rp^r)$ 减去 $p^r\le m$ 的有限前缀，得到（335.7）；$r=1$ 对每个 $p\le m$ 均已被减去，素数幂恰等于 $m$ 的端点项保留在首项中。将它代入既有（334.6）得到（335.8）。同一实际余量仍为 $\mathfrak m_L=\ell_L^*+R_L-B_m$，所以它与谱证书的关系保留实际核心修正。由 §334 的精确差额得到（335.9），未把未受无条件控制的 $\mathfrak h_L$ 设为零。
+
+由定理335.1，$\mathcal S(X)-\mathcal C^{\rm fin}(X)$ 在全部实数截止上一致有界。除以趋于无穷的对数长度，两者归一化平均的差无条件趋零。RH 下 §316 给连续谱平均为零；反向的最终有限下界给同一个连续累计预算，复用 §316 的正逆变换及经典 Landau 论证即得 RH。
+
+本节的有限总亏损控制了由有限真谱节点到连续谱累计量的损失，未证明任一证书累计值的最终有限下预算。旧 §334 标签还含非负端点缺损，其无条件累计贡献不由本节消除；这里改用既有精确谱观察器，并没有改善实际整数的 Robin 余量。无限有符号预算和 RH 仍待证。$\square$
