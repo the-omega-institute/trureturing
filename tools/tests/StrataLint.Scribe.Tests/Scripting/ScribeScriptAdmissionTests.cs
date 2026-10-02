@@ -172,6 +172,8 @@ public sealed class ScribeScriptAdmissionTests
             List<int> copy = [..values];
             System.Collections.Immutable.ImmutableArray<int> immutable = [..copy];
             _ = immutable.Length;
+            _ = "range"[1..];
+            _ = "range"[..1];
             var sum = 0;
             foreach (var value in (IEnumerable<int>)values) sum += value;
             var pair = (Name: "sum", Total: values.Select(value => value + sum).ToArray()[0]);

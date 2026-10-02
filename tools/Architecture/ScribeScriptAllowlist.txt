@@ -523,3 +523,5 @@ P:System.Collections.Immutable.ImmutableArray`1.Enumerator.Current
 M:System.Collections.Immutable.ImmutableArray.Create``1(System.ReadOnlySpan{``0})
 T:System.ReadOnlySpan`1
 P:System.Collections.Immutable.ImmutableArray`1.Length
+M:System.Range.StartAt(System.Index)
+M:System.Range.EndAt(System.Index)
