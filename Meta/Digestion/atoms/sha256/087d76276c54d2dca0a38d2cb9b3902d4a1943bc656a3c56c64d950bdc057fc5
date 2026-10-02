@@ -1,0 +1,20 @@
+**定义 306.0。** 沿用 §§302–305 的 $A_L$、$m=3L+2$、$E=e^\gamma$、$U_H$、$\Delta(H)$、$\mathcal N_L(H)$ 与预算纤维 $\mathcal B_L(\eta)$。置
+\[
+\ell=\log m,\qquad c=1-\log2>0,\qquad
+k_L=\left\lfloor\frac{m}{4\ell}\right\rfloor,
+\qquad \kappa=\frac{Ec^2}{32}>0.
+\tag{306.1}
+\]
+将全部不整除 $A_L$ 的素数按全局大小递增排列为 $q_{L,1},q_{L,2},\ldots$。对整数 $K\ge0$，置
+\[
+T_{L,K}=\prod_{j=1}^Kq_{L,j},\qquad
+N_{L,K}=A_LT_{L,K},\qquad
+W_{L,K}=\mathscr F_L\prod_{j=1}^K(1-q_{L,j}^{-1})^{-1}.
+\tag{306.2}
+\]
+空乘积取一，$\mathscr F_L=\prod_{p\mid A_L}(1-p^{-1})^{-1}$。这里 $W_{L,K}$ 是同一素支撑的 Euler 上包络，不是 $U_{N_{L,K}}$ 的定义。记端点的实际填充族为
+\[
+N_L^*=N_{L,k_L}.
+\tag{306.3}
+\]
+

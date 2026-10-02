@@ -1,0 +1,50 @@
+**证明。** 使用经典简单连分数的相邻收敛子 $P_n/Q_n$ 与 $P_{n-1}/Q_{n-1}$。其分子、分母为整数，且对充分大的 $n$，
+
+$$
+0<Q_{n-1}\le Q_n,\quad Q_{n-1}\to\infty,\quad
+|Q_n\beta-P_n|\le Q_{n+1}^{-1}\le Q_n^{-1},\quad
+|Q_{n-1}\beta-P_{n-1}|\le Q_n^{-1},
+$$
+
+以及 $d_n=Q_nP_{n-1}-Q_{n-1}P_n\in\{1,-1\}$。这些是经典连分数行列式、误差界和分母增长定理；一般书目指引为 Khinchin，*Continued Fractions*，本证明采用上面明确写出的形式。模条件逼近也是经典数论主题，以下构造只作为本临界消费者的中间步骤，不宣称该逼近定理本身为新结果。
+
+取整数余数代表
+
+$$
+u_n=d_n(P_{n-1}-Q_{n-1})\bmod4,\qquad
+v_n=d_n(Q_n-P_n)\bmod4,\qquad 0\le u_n,v_n\le3.
+$$
+
+直接展开原整数式得
+
+$$
+d_n(P_{n-1}-Q_{n-1})Q_n+
+d_n(Q_n-P_n)Q_{n-1}=d_n^2=1;
+$$
+
+将末两因子 $Q_n,Q_{n-1}$ 分别换为 $P_n,P_{n-1}$，仍得到 $1$。故
+
+$$
+q_n=u_nQ_n+v_nQ_{n-1},\qquad
+p_n=u_nP_n+v_nP_{n-1}
+$$
+
+都为 $1\bmod4$，且 $u_n,v_n$ 不能同时为零。于是
+
+$$
+Q_{n-1}\le q_n\le6Q_n,\qquad
+|q_n\beta-p_n|\le\frac{u_n+v_n}{Q_n}\le\frac6{Q_n}\le\frac{36}{q_n}.
+$$
+
+$\beta>1$ 使这些整数对充分晚时为正；丢去有限初段不影响结论。该序列不要求严格递增，$q_n\ge Q_{n-1}\to\infty$ 已足以给 $T_n\to\infty$。
+
+令 $\varepsilon_n=(\pi/2)(q_n\beta-p_n)$。在 $T_n$ 时刻，第一相位精确为 $\pi/2\bmod2\pi$，第二相位为 $\pi/2+\varepsilon_n\bmod2\pi$，其中误差允许正、负。因此
+
+$$
+\Delta(T_n)=2a_1(1-\cos\varepsilon_n)
+\le a_1\varepsilon_n^2
+\le\frac{324a_1\pi^2}{q_n^2}.
+$$
+
+乘以 $\pi q_n/28$ 给（341.3）。由 $\varepsilon_n\to0$ 和（340.3）的有限三角表达式得到（341.4）的极限；每个 $D_j>1/2$，所以 $f_*<0$。又 $T_nr(T_n)\to0$，故 $T_n\mathfrak M(T_n)\to f_*<0$。这证明同一预固定余项下全部充分晚的该序列余量严格负。$\square$
+

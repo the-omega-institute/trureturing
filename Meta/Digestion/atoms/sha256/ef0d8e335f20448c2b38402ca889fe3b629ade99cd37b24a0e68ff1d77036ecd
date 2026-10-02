@@ -1,0 +1,8 @@
+**定义 308.0。** 沿用定义307.0的实际整数与素数集合，令 $L\ge16$、$m/2\le z\le m$、$D=m-z$，仍记 $\ell=\log m$、$X_L=\log T_L$、$\lambda_L=U_L/E$。在 $h_L,s_L,M_L$ 之外定义
+\[
+J_{2,L}=\sum_{p\in\mathcal T_L(z)}(m-p)^2\log p,
+\qquad \rho_L=m^{1/4}.
+\tag{308.1}
+\]
+所有和均沿实际删除集合取值；空集时四个和均为零。
+

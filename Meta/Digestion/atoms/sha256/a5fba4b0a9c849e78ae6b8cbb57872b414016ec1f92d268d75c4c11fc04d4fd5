@@ -1,0 +1,19 @@
+**定理 309.3（实际刚性曲线上的中心化响应）。** 在定理309.2的质量极限之外，若实际核心比值满足
+\[
+U_L/(E\ell)\longrightarrow1,\qquad m/X_L\longrightarrow1,
+\tag{309.16}
+\]
+则
+\[
+\sqrt m\left[
+\frac{\Delta(H_L(z_L))-\Delta(T_L)}E-rac{h_L}m b_L
+\right]\longrightarrow\frac{a^2}{2}.
+\tag{309.17}
+\]
+若 $D_L/\rho^3\to d\ge0$，则 $h_L/\rho^3\to d/2$，相应系数为 $d^2/8$。在 $d>0$ 时，§307 的短边一致规律（307.9）由（309.4）得到。若再采用假设302.1，从而可应用（305.8），则有
+\[
+\sqrt m\left[\Delta(H_L(z_L))-S(m)-E\frac{h_L}m b_L\right]
+\longrightarrow E\left(2\sqrt2+\frac{a^2}{2}\right).
+\tag{309.18}
+\]
+

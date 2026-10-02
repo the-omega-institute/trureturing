@@ -48277,3 +48277,391 @@ $$
 本节组合来自同一实际谱与经典正交几何、有理恒等式。定理338.4的五分递归加密平移证书中心 $c_0$，而这里的 $Q_n$、$L_n$ 和 $R_2$ 取决于零点频率与权重；在该节固定斜率和同源节点加密的比较中，它们保持不变。递归改善中心与频率关系限制相位移动，作用于同一累计储备的不同数学坐标。
 
 ## 追加锚（本行以下为增补区）
+
+## 346. 实际时间流的奇异曲率、对数频带能量与更细的相位收益
+
+**定义 346.1（实际时间路径及其能量）。** 沿用定义344.1的实际正频率集 $\Gamma$、重数 $m_\gamma$、$D_\gamma=1/4+\gamma^2$ 和 $a_\gamma=m_\gamma/(\gamma D_\gamma)$。令
+
+$$
+\delta(t)=2\sum_{\gamma\in\Gamma}a_\gamma(1-\cos\gamma t),\qquad
+K=\sum_{\gamma\in\Gamma}a_\gamma\frac{\gamma^2}{D_\gamma}
+=\sum_{\gamma\in\Gamma}\frac{m_\gamma\gamma}{D_\gamma^2}>0.
+\tag{346.1}
+$$
+
+在 $0<|t|<1$ 时记 $L_t=\log(1/|t|)$。谱计数包含全部非平凡零点的正纵坐标，同一纵坐标的重数相加，使用经典重数约定
+
+$$
+N(Y)=\sum_{0<\gamma\le Y}m_\gamma
+=\frac{Y}{2\pi}\log Y+O(Y).
+\tag{346.2}
+$$
+
+这是 Riemann–von Mangoldt 公式的粗余项形式，其系数对应正纵坐标，不能换成双边零点数。以下谱能量计算仅使用这些纵坐标、正重数与（346.2）；将它们解释为 §§337–345 的同一 Robin 相位谱时仍使用该路线的 RH 假设。
+
+**定理 346.1（实际时间速度的无限能量与一阶奇异渐近）。** 同一实际谱满足
+
+$$
+\begin{aligned}
+\sum_{\gamma\le Y}a_\gamma\gamma^2
+&=\frac1{4\pi}\log^2Y+O(\log Y),\\
+\delta(t)&=\frac{t^2}{4\pi}L_t^2+O(t^2L_t),\\
+\delta'(t)&=\frac{t}{2\pi}L_t^2+O(|t|L_t).
+\end{aligned}
+\tag{346.3}
+$$
+
+函数 $\delta$ 为 $C^1$，$\delta(0)=\delta'(0)=0$，但不存在有限的 $\delta''(0)$；时间速度 $(\gamma)_\gamma$ 不属于定义344.2的加权 Hilbert 空间。
+
+证明。将经典实纵坐标分部求和应用于（346.2），有
+
+$$
+\sum_{\gamma\le Y}\frac{m_\gamma}{\gamma}
+=\frac{N(Y)}Y+\int_{\gamma_0}^Y\frac{N(u)}{u^2}\,du
+=\frac1{4\pi}\log^2Y+O(\log Y),
+\tag{346.4}
+$$
+
+其中 $0<\gamma_0\le\min\Gamma$ 固定；首个频率处的跳跃由 $N(Y)/Y$ 与积分共同计入，不另删去端点重数。差项
+
+$$
+\frac{m_\gamma}{\gamma}-a_\gamma\gamma^2
+=\frac{m_\gamma}{4\gamma D_\gamma}
+$$
+
+绝对可和，所以（346.3）的首式成立。相同分部求和给
+
+$$
+\sum_{\gamma\le Y}a_\gamma\gamma^4=O(Y^2\log Y),\qquad
+\sum_{\gamma>Y}a_\gamma=O(Y^{-2}\log Y),\qquad
+\sum_{\gamma>Y}a_\gamma\gamma=O(Y^{-1}\log Y).
+\tag{346.5}
+$$
+
+这些步骤复用经典计数分部求和与幂衰减尾界，不把它们作为独立新定理。由于 $\sum a_\gamma\gamma<\infty$，相位级数可以绝对一致地作一次求导。以 $Y=1/|t|$ 分割，低频使用 $2(1-\cos x)=x^2+O(x^4)$ 和 $\sin x=x+O(x^3)$，高频使用有界三角函数。两个低频误差分别被 $t^4\sum_{\gamma\le Y}a_\gamma\gamma^4=O(t^2L_t)$ 和 $|t|^3\sum_{\gamma\le Y}a_\gamma\gamma^4=O(|t|L_t)$ 控制；两个高频尾分别由（346.5）的第二、三式控制。这给余下两式。最后 $\delta'(t)/t\to+\infty$，故不能再在零点处交换二次求导；首式亦直接给 $\sum a_\gamma\gamma^2=\infty$。$\square$
+
+**定理 346.2（对数频带的统一能量分布）。** 对全部充分小的 $t\ne0$，$\delta(t)>0$。定义
+
+$$
+P_t(s)=\frac{2}{\delta(t)}
+\sum_{\gamma\le |t|^{-s}}a_\gamma(1-\cos\gamma t),\qquad 0\le s\le1.
+$$
+
+则
+
+$$
+\sup_{0\le s\le1}|P_t(s)-s^2|=O(L_t^{-1}).
+\tag{346.6}
+$$
+
+特别，每个固定有限频率集承载的相位能量比例趋零，而把频率投到 $\log\gamma/L_t$ 后，其能量概率测度弱收敛到 $[0,1]$ 上具有密度 $2s\,ds$ 的概率测度。若
+
+$$
+u_{t,\gamma}=\frac{e^{i\gamma t}-1}{\sqrt{\delta(t)}},
+$$
+
+则在复加权空间 $\ell^2(\Gamma,a;\mathbb C)$ 中 $\|u_t\|_a=1$，但 $u_t\rightharpoonup0$。
+
+证明。取实际频率 $\gamma_*>0$，并限制 $0<|t|<2\pi/\gamma_*$，它的一项严格正，因此总能量严格正。选择 $1<\gamma_0\le\min\Gamma$，令 $Y_s=|t|^{-s}=e^{sL_t}$。将矩与尾渐近的固定早段吸收入统一常数后，对全部 $Y_s\ge\gamma_0$ 和 $s\in[0,1]$ 使用同一个低频展开及（346.5），得到
+
+$$
+\begin{aligned}
+2\sum_{\gamma\le Y_s}a_\gamma(1-\cos\gamma t)
+&=\frac{t^2}{4\pi}s^2L_t^2
+ +O\!\left(t^2(sL_t+1)+t^4Y_s^2\log Y_s\right)\\
+&=\frac{t^2}{4\pi}s^2L_t^2+O(t^2L_t).
+\end{aligned}
+\tag{346.7}
+$$
+
+隐含常数不依赖 $s$，因为 $|t|Y_s\le1$。若 $Y_s<\gamma_0\le\min\Gamma$，和为空且 $sL_t<\log\gamma_0$，所以同一个统一误差界仍成立。除以定理346.1的总能量即得（346.6），包括 $s\to0$ 的端点，而不是只对固定非零 $s$ 成立。
+
+在 $s=1$ 处 $P_t(1)\to1$，故该对数坐标之外的高频能量比例趋零；$\gamma>1$ 保证没有负对数坐标的质量。区间内的统一分布函数极限给上述弱极限，这是经典概率分布函数收敛判据的应用。对固定有限频率集，三角函数的二次上界与 $t^2/\delta(t)=O(L_t^{-2})$ 给其能量比例趋零。范数恒等式使用 $|e^{ix}-1|^2=2(1-\cos x)$。每个固定坐标 $u_{t,\gamma}\to0$；对任意加权平方可和测试向量，先将其分成有限坐标与任意小的平方范数尾，再用 Cauchy–Schwarz 及 $\|u_t\|_a=1$，即得弱收敛。$\square$
+
+**定理 346.3（饱和相位附近实际时间路径的对数收益）。** 额外假设 $\iota\in H$，置 $z(t)=\iota\phi(t)\in H$，并沿用定义344.1的 $J_\varepsilon,f_*,A$。存在充分小的固定 $t_0>0$，使
+
+$$
+\min_{|t|\le t_0}J_\varepsilon(z(t))
+=f_*\varepsilon+8A\varepsilon^2
+-\frac{4\pi K^2\varepsilon^2}{\log^2(1/\varepsilon)}
++o\!\left(\frac{\varepsilon^2}{\log^2(1/\varepsilon)}\right).
+\tag{346.8}
+$$
+
+对该固定区间的任意极小点选取 $t_\varepsilon$，都有
+
+$$
+t_\varepsilon\sim\frac{4\pi K\varepsilon}{\log^2(1/\varepsilon)},\qquad
+t_\varepsilon>0\quad\text{充分晚时成立}.
+\tag{346.9}
+$$
+
+不要求极小点唯一，也不要求有限能量方向空间 $V$ 为零。
+
+证明。群闭包 $H$ 包含 $\phi(t)$，故振幅饱和使整条平移路径允许。将（344.1）的实际系数代入，得
+
+$$
+\begin{aligned}
+J_\varepsilon(z(t))&=\delta(t)+\varepsilon F_\iota(t)+\varepsilon^2G_\iota(t),\\
+F_\iota(t)&=\sum_\gamma a_\gamma[b_\gamma\cos\gamma t-c_\gamma\sin\gamma t],\\
+G_\iota(t)&=\sum_\gamma a_\gamma[g_\gamma\cos\gamma t-h_\gamma\sin\gamma t].
+\end{aligned}
+\tag{346.10}
+$$
+
+系数有界且 $\sum a_\gamma\gamma<\infty$，所以 $F_\iota,G_\iota$ 为 $C^1$，并且
+
+$$
+F_\iota(0)=f_*,\quad F_\iota'(0)=-2K,\quad G_\iota(0)=8A.
+\tag{346.11}
+$$
+
+取 $t_0<2\pi/\gamma_*$，使 $\delta$ 在 $[-t_0,t_0]$ 上仅于零点为零。紧区间上存在极小点；与 $t=0$ 的目标值比较及 $F_\iota,G_\iota$ 的一致有界性给 $\delta(t_\varepsilon)=O(\varepsilon)$。唯一零点及紧性迫使所有极小点选取趋零，边界最终被排除。零点处目标导数为 $-2K\varepsilon+O(\varepsilon^2)<0$，故它也不是极小点。一阶驻点方程为
+
+$$
+\delta'(t_\varepsilon)
+=-\varepsilon F_\iota'(t_\varepsilon)-\varepsilon^2G_\iota'(t_\varepsilon)
+=2K\varepsilon(1+o(1)).
+\tag{346.12}
+$$
+
+由定理346.1，充分近零处的 $\delta'(t)$ 与 $t$ 同号，因此极小点在正侧，并满足
+
+$$
+t_\varepsilon\log^2(1/t_\varepsilon)=4\pi K\varepsilon(1+o(1)).
+$$
+
+取对数并用 $\log L/L\to0$，先得到 $\log(1/t_\varepsilon)/\log(1/\varepsilon)\to1$，再得（346.9）；这里没有先假定极小点尺度。将它与 $F_\iota(t)=f_*-2Kt+o(t)$、$G_\iota(t)=8A+O(t)$ 代入（346.10），二次相位成本给 $+4\pi K^2\varepsilon^2/\log^2(1/\varepsilon)$，一阶驱动给其负两倍，余项均更小，即得（346.8）。$\square$
+
+**定理 346.4（有限能量切向储备与奇异时间路径的相容边界）。** 在定理346.3的假设下，（346.8）给 $\min_{z\in H}J_\varepsilon(z)$ 的上界。即使另外 $V=\{0\}$，定理344.2的二阶系数 $8A$ 与本节严格更低的时间路径值仍相容，因为收益是 $o(\varepsilon^2)$，其归一化弦方向弱逃逸到高频。这些结论不蕴含时间 $T=1/\varepsilon$ 的实际轨道达到该极小路径，也不蕴含实际 Robin 累计证书最终正或负。
+
+证明。允许的路径是 $H$ 的子集，取极小值得到上界；当 $V=\{0\}$ 时，（344.10）的二阶项为 $8A\varepsilon^2$，而（346.8）多减去的量除以 $\varepsilon^2$ 趋零，故没有矛盾。定理346.2进一步给出这一时间路径在加权空间中没有非零的归一化弱切向极限。包络的独立相位参数 $t_\varepsilon$ 与实际证书截止 $T=1/\varepsilon$ 没有被识别，正储备亦不能消除仍为负的一阶项 $f_*\varepsilon$。因此这些谱结构没有增加已认证的 $n>5040$ 安全区间，也没有把 Fibonacci 递归的五分类或 $7!=5040$ 识别为零点频率关系。$\square$
+
+
+**定理 346.5（原始实频率计数产生的统一相位界）。** 设指标集 $I$ 任意，实频率 $\gamma_i$、实重数 $m_i$ 满足 $\gamma_i\ge L>1$、$m_i\ge0$，且每个严格截断 $\{i:\gamma_i<Y\}$ 有限。令 $c\ge0$、$C\in\mathbb R$，假设对每个 $u\ge L$ 均有
+
+$$
+\left|N_<(u)-cu\log u\right|\le Cu,\qquad N_<(u)=\sum_{\gamma_i<u}m_i.
+$$
+
+置 $a_i=m_i/[\gamma_i(1/4+\gamma_i^2)]$、$A=\sum_i a_i$、$M(Y)=\sum_{\gamma_i<Y}a_i\gamma_i^2$，并定义
+
+$$
+\delta(t)=\sum_i2a_i(1-\cos\gamma_it),\quad v(t)=\sum_i2a_i\gamma_i\sin\gamma_it,
+$$
+
+$$
+R(L,Y)=c\log Y+C+\frac c2\log^2L+C(\log Y-\log L)+\frac A4.
+$$
+
+则 $\sum_i a_i$ 与 $\sum_i a_i\gamma_i$ 绝对可和，$\delta'(t)=v(t)$ 对每个实 $t$（包括零）成立，且 $v$ 连续。对 $0<|t|$、$L|t|\le1$ 和 $Y=1/|t|$，同时有
+
+$$
+\begin{aligned}
+|\delta(t)-t^2M(Y)|&\le t^2(9c\log Y+8c+9C),\\
+|v(t)-2tM(Y)|&\le |t|(5c\log Y+4c+5C),\\
+|\delta(t)-\tfrac c2t^2\log^2Y|&\le t^2(9c\log Y+8c+9C+R(L,Y)),\\
+|v(t)-ct\log^2Y|&\le |t|(5c\log Y+4c+5C+2R(L,Y)).
+\end{aligned}
+$$
+
+证明。严格截断的有限层积分给出精确恒等式
+
+$$
+\sum_{\gamma_i<Y}\frac{m_i}{\gamma_i}
+=\frac{N_<(Y)}Y+\int_L^Y\frac{N_<(u)}{u^2}\,du.
+$$
+
+计数误差除以 $u^2$ 后积分，其绝对值不超过 $C(\log Y-\log L)$。恒等式 $m_i/\gamma_i-a_i\gamma_i^2=a_i/4$ 给出 $|M(Y)-(c/2)\log^2Y|\le R(L,Y)$。对任意有限高频集合使用同一层积分，得到包含截断端点的界
+
+$$
+\sum_{\gamma_i\ge Y}\frac{m_i}{\gamma_i^2}
+\le\frac{2[c(\log Y+1)+C]}Y,\qquad
+\sum_{\gamma_i\ge Y}\frac{m_i}{\gamma_i^3}
+\le\frac{2[c(\log Y+1)+C]}{Y^2}.
+$$
+
+有限集合和的一致上界先产生无限可和性，再允许无限和比较。这两界控制 $\sum_{\gamma_i\ge Y}a_i\gamma_i$ 与 $\sum_{\gamma_i\ge Y}a_i$；低频四阶矩满足 $\sum_{\gamma_i<Y}a_i\gamma_i^4\le Y^2(c\log Y+C)$。在 $Y=1/|t|$ 分割，低频的四阶余弦余项和三阶正弦余项与高频有界三角函数给出前两式，随后代入矩界得到后两式。导数项的一致可和主控为 $2a_i\gamma_i$，而相位在零时逐项为零，因此在全部实时间可以作一次求导并取得连续导数；本论证不交换二次求导。$\square$
+
+**定理 346.6（完整正纵坐标零点模型的主项与有限早段恢复）。** 令 $I_+$ 为所有满足 $\zeta(\rho)=0$、$0<\Re\rho<1$、$\Im\rho>0$ 的不同复零点，$m_\rho$ 为解析零点阶数，$\gamma_\rho=\Im\rho$，$a_\rho=m_\rho/[\gamma_\rho(1/4+\gamma_\rho^2)]$。以此指标集定义 $\delta_+(t)=\sum_{\rho\in I_+}2a_\rho(1-\cos\gamma_\rho t)$ 和 $v_+(t)=\sum_{\rho\in I_+}2a_\rho\gamma_\rho\sin\gamma_\rho t$。无需 RH，$\sum a_\rho$、$\sum a_\rho\gamma_\rho$ 绝对可和，且 $\delta_+'(t)=v_+(t)$ 对所有实 $t$ 成立，$v_+$ 连续。存在 $L\ge2$、$B\ge0$，使对每个 $0<|t|$ 且 $L|t|\le1$ 均有
+
+$$
+\begin{aligned}
+\left|\delta_+(t)-\frac{t^2}{4\pi}\log^2(1/|t|)\right|
+&\le t^2B[\log(1/|t|)+1],\\
+\left|v_+(t)-\frac{t}{2\pi}\log^2(1/|t|)\right|
+&\le |t|B[\log(1/|t|)+1].
+\end{aligned}
+$$
+
+同一纵坐标上不同复零点分别计数，其解析重数均被保留。本定理规定的是纵坐标相位模型；将其与 §§337–345 中涉及实际 $\rho$ 的 Robin 相位表达式识别，仍采用那条路线的 RH 假设。
+
+证明。复用无条件 dyadic Riemann–von Mangoldt 计数源。记 $c=1/(2\pi)$、$N(Y)=\sum_{0<\Im\rho\le Y}m_\rho$。其 dyadic 余项给 $E(T)=N(T)-cT\log T$ 满足 $|E(2T)-E(T)|\le KT$，固定基环带内 $|E(u)|\le D_0u$。取 $D\ge\max(K,D_0)$，倍增归纳给 $|E(2^nu)|\le D2^nu$；任意充分大实高度均可写成 $2^nu$、$u$ 在该基环带中，故累计粗界成立。
+
+选择 $L\ge2$ 位于粗界有效域，令 $S_L(Y)=\sum_{L<\Im\rho<Y}m_\rho$。对 $Y\ge L+1$，精确的端点夹逼为
+
+$$
+N(Y-1)-N(L)\le S_L(Y)\le N(Y).
+$$
+
+由于 $Y\log Y-(Y-1)\log(Y-1)\le2Y$，粗界 $|N(Y)-cY\log Y|\le DY$ 直接给严格高频计数的 $O(Y)$ 误差。区间 $L\le Y<L+1$ 用非负性控制；一个可用常数为 $C=D+2c+N(L)/L+c\log(L+1)$。因此无需另求 $O(\log Y)$ 的单位窗口误差，就能应用定理346.5。所需精度在这里决定了接口的证明成本：$O(Y)$ 计数余项经 $u^{-2}$ 积分已经足以给 $O(\log Y)$ 的矩余项。
+
+有限早段 $0<\Im\rho\le L$ 的二阶矩和记为 $M_0$，则其相位和与斜率和分别不超过 $t^2M_0$、$2|t|M_0$。这些界把高频结论恢复到完整正纵坐标谱，不需要假定第一零点的数值高度。令高频总权重为 $A_h$，取 $P=10c+2C$、$Q=8c+10C+c\log^2L+A_h/2+2M_0$、$B=P+Q+1$，高频的两个误差依次被 $t^2(P\log Y+Q-M_0)$、$|t|(P\log Y+Q-2M_0)$ 控制；加入早段后，使用 $P\log Y+Q\le B(\log Y+1)$ 即得两式。早段有限性与定理346.5的一阶可和主控同时给全部实时间的连续导数。$\square$
+
+## 追加锚（本行以下为增补区）
+
+## 347. 奇异时间极小路径的双重对数校正
+
+**定义 347.1（极小位移的两个对数尺度）。** 沿用定义344.1和定理346.3的同一谱、相位包络及固定允许区间。置
+
+$$
+c=\frac1{2\pi},\qquad C_* = \frac{2K}{c}=4\pi K,
+\qquad D_* = \frac{2K^2}{c}=4\pi K^2,
+\qquad L_\varepsilon=\log(1/\varepsilon).
+$$
+
+对于该固定区间的任意极小点选取 $t_\varepsilon$，其充分晚时为正，置
+$\ell_\varepsilon=\log(1/t_\varepsilon)$。
+
+**定理 347.1（同源极小路径的普适双重对数项）。** 在定理346.3的全部假设下，对每个极小点选取，同时有
+
+$$
+\ell_\varepsilon=L_\varepsilon+2\log L_\varepsilon-\log C_*
++O\!\left(\frac{\log L_\varepsilon}{L_\varepsilon}\right),
+\tag{347.1}
+$$
+
+$$
+t_\varepsilon=\frac{C_*\varepsilon}{L_\varepsilon^2}
+\left[1-\frac{4\log L_\varepsilon}{L_\varepsilon}
++O\!\left(\frac1{L_\varepsilon}\right)\right],
+\tag{347.2}
+$$
+
+$$
+\min_{|t|\le t_0}J_\varepsilon(z(t))
+=f_*\varepsilon+8A\varepsilon^2
+-\frac{D_*\varepsilon^2}{L_\varepsilon^2}
+\left[1-\frac{4\log L_\varepsilon}{L_\varepsilon}
++O\!\left(\frac1{L_\varepsilon}\right)\right].
+\tag{347.3}
+$$
+
+各隐含常数可对全部极小点共同选择，不要求极小点唯一。
+这些渐近使用同一谱给出的驱动导数模连续性；仅假设驱动为 $C^1$ 时不能据此保留双重对数项。
+
+证明。定理346.1给总相位和斜率的量化余项
+
+$$
+\delta(t)=\frac c2 t^2\log^2(1/|t|)+O(t^2\log(1/|t|)),\qquad
+\delta'(t)=ct\log^2(1/|t|)+O(|t|\log(1/|t|)).
+\tag{347.4}
+$$
+
+先补足驱动的余项，而不将连续性自动视为所需速率。
+同源系数 $b_\gamma=D_\gamma^{-1}-2$、$c_\gamma=2\gamma/D_\gamma$
+给出精确分解。记 $M_0=\sum_\gamma a_\gamma$，置
+
+$$
+R(t)=\sum_\gamma\frac{a_\gamma}{D_\gamma}\cos\gamma t
+-\sum_\gamma\frac{2a_\gamma\gamma}{D_\gamma}\sin\gamma t,
+\qquad F_\iota(t)=\delta(t)-2M_0+R(t).
+\tag{347.5}
+$$
+
+$R(0)=f_*+2M_0$、$R'(0)=-2K$，其中
+$K=\sum_\gamma a_\gamma\gamma^2/D_\gamma
+=\sum_\gamma m_\gamma\gamma/D_\gamma^2\le M_0$。
+一阶导数的级数主控为可和权重 $a_\gamma\gamma/D_\gamma$
+及 $2a_\gamma\gamma^2/D_\gamma$。
+经典 $|\sin x|\le|x|$、$|1-\cos x|\le|x|$ 与
+$\gamma^2/D_\gamma\le1$ 给全部实数 $t$ 上
+
+$$
+|R'(t)-R'(0)|
+\le |t|\left(K+2\sum_\gamma a_\gamma\gamma\right).
+$$
+
+因而 $R(t)=R(0)-2Kt+O(t^2)$，并且
+
+$$
+F_\iota(t)=f_*+\delta(t)-2Kt+O(t^2),\qquad
+F_\iota'(t)=\delta'(t)-2K+O(|t|),\qquad
+G_\iota(t)=8A+O(|t|),\qquad G_\iota'(t)=O(1).
+\tag{347.6}
+$$
+
+这些结论复用可和权重和已知相位的一阶导数；无需重新取得累计计数或矩尾的速率。
+
+复用定理346.3的极小点存在、内点性、正性及初阶尺度结论。
+这些结论可以对任意极小点选取使用。驻点方程与（347.6）给
+
+$$
+(1+\varepsilon)\delta'(t_\varepsilon)
+=2K\varepsilon+O(\varepsilon|t_\varepsilon|)
++O(\varepsilon^2).
+$$
+
+已有初阶尺度给 $t_\varepsilon=O(\varepsilon)$，
+所以除以 $1+\varepsilon$ 后右侧仍为 $2K\varepsilon+O(\varepsilon^2)$。
+再由（347.4）并利用 $\varepsilon=O(1/\ell_\varepsilon)$，得到
+
+$$
+t_\varepsilon\ell_\varepsilon^2
+=C_*\varepsilon[1+O(1/\ell_\varepsilon)].
+\tag{347.7}
+$$
+
+经典对数反演可由 Lambert $W$ 的负分支实现；精确模型
+$t\log^2(1/t)=C_*\varepsilon$ 的大对数解为
+$\ell=-2W_{-1}(-\sqrt{C_*\varepsilon}/2)$。
+这里使用 [DLMF §4.13](https://dlmf.nist.gov/4.13) 及 [Corless 等（1996），§4](https://cs.uwaterloo.ca/research/tr/1993/03/W.pdf) 的经典反演机制，
+不将该已知反演另列为新结论。对本式也可直接取对数：
+
+$$
+\ell_\varepsilon
+=L_\varepsilon+2\log\ell_\varepsilon-\log C_*
++O(1/\ell_\varepsilon).
+\tag{347.8}
+$$
+
+定理346.3已给 $\ell_\varepsilon/L_\varepsilon\to1$，
+故先得 $\ell_\varepsilon-L_\varepsilon=O(\log L_\varepsilon)$，
+再用 $\log\ell_\varepsilon-\log L_\varepsilon
+=O(\log L_\varepsilon/L_\varepsilon)$ 得（347.1）。
+将（347.1）代入（347.7）的
+$t_\varepsilon=C_*\varepsilon\ell_\varepsilon^{-2}
+[1+O(1/\ell_\varepsilon)]$，得到（347.2）。
+未知的斜率余项只影响相对 $O(1/L_\varepsilon)$，
+小于已显示的 $\log L_\varepsilon/L_\varepsilon$ 项。
+
+最后将（347.6）代入 $J_\varepsilon$，并用驻点尺度替换二次相位成本：
+
+$$
+\frac c2 t_\varepsilon^2\ell_\varepsilon^2
+-2K\varepsilon t_\varepsilon
+=-K\varepsilon t_\varepsilon
++O(t_\varepsilon^2\ell_\varepsilon)
++O(\varepsilon^2t_\varepsilon).
+$$
+
+来自（347.4）的成本余项也是 $O(t_\varepsilon^2\ell_\varepsilon)
+=O(\varepsilon^2/L_\varepsilon^3)$；
+驱动中的 $\varepsilon\delta(t_\varepsilon)$ 为
+$O(\varepsilon t_\varepsilon^2\ell_\varepsilon^2)$，
+$R$ 的余项为 $O(\varepsilon t_\varepsilon^2)$，
+以及 $\varepsilon^2[G_\iota(t_\varepsilon)-G_\iota(0)]$
+均为 $O(\varepsilon^3/L_\varepsilon^2)$，
+被同一余项吸收。于是目标偏移为
+$-K\varepsilon t_\varepsilon+O(\varepsilon^2/L_\varepsilon^3)$。
+代入（347.2）且 $KC_*=D_*$，得到（347.3）。
+
+所有谱界、函数余项、初阶极小点排除和驻点比较均在固定区间上共同控制；
+若某个共同结论失败，可选择违反它的极小点列，与以上逐选择推导矛盾，
+故可采用对全部极小点共同的常数。$\square$
+
+本命题保留 $\iota\in H$ 的相位相容假设。
+独立平移参数 $t_\varepsilon$ 与实际截止 $T=1/\varepsilon$ 仍未被识别；
+该细化不给实际 Robin 累计证书的最终符号，也不改变 $n>5040$ 的已认证范围。
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,62 @@
+**证明。** 先记 $m=m_L$。由（302.7），一次素因子的对数总和为
+\[
+\vartheta_1(m/2)+\vartheta_2(m)=\tfrac34m+o(m).
+\tag{302.19}
+\]
+高次素数幂仅涉及 $p\le\sqrt m$，每个素数的附加对数不超过 $\log m$，总计 $O(\sqrt m\log m)=o(m)$；三轴贡献 $O(\log L)$。故得到（302.16）的大小渐近。它也是 Bateman–Kalb–Stenger 等差数列 lcm 渐近在本种子上的情形（该公式见 Qian–Hong，arXiv:1204.5415v2，Introduction 及 Corollary 1.2；此处取斜率 $3$、常数项 $2$，系数为 $\frac32(1+\frac12)=9/4$）；本节只把此大小渐近用作 Robin 余量计算的中间步骤。
+
+置
+\[
+Z_m=\sum_{\substack{m/2<p\le m\\p\equiv1\pmod3}}
+\log(1-p^{-1})^{-1}.
+\tag{302.20}
+\]
+固定剩余类的分部求和、（302.4）及平方项界给
+\[
+Z_m=\tfrac12\bigl(\log\log m-\log\log(m/2)\bigr)
++O((\log m)^{-3}+m^{-1})
+=\frac{\log2}{2\log m}+O((\log m)^{-2}).
+\tag{302.21}
+\]
+这条估计的误差强度是计算正常数所需的一部分。
+
+设 $v_p=v_p(A_L)$，并在 $A_L$ 的素支撑上置
+\[
+\delta(A_L)=\prod_{p\mid A_L}(1-p^{-v_p-1}).
+\tag{302.22}
+\]
+充分大 $L$ 时，三在支撑中，（302.7）使饱和 Euler 乘积恰为 $P(m)e^{-Z_m}$。由 $D_L\mid A_L$，对 $p\le\sqrt L$ 有 $p^{-v_p-1}<1/L$；对支撑中 $p>\sqrt L$ 有 $v_p\ge1$，故其截断误差不超过 $p^{-2}$。有限乘积的并合界因此给
+\[
+0\le1-\delta(A_L)
+\le L^{-1}\#\{p\le\sqrt L\}+\sum_{n>\sqrt L}n^{-2}
+=O(L^{-1/2}).
+\tag{302.23}
+\]
+局部几何级数公式遂给
+\[
+U_{A_L}=P(m)e^{-Z_m}\delta(A_L)
+=E\log m-\tfrac E2\log2+o(1).
+\tag{302.24}
+\]
+用 $\log A_L/m\to3/4$，可得 $\log\log A_L=\log m+\log(3/4)+o(1)$。相减后
+\[
+\Delta(A_L)\to E\bigl(\log(3/4)+\tfrac12\log2\bigr)
+=E\log\frac3{2\sqrt2}>0,
+\tag{302.25}
+\]
+其中正性来自 $9>8$。
+
+对于高素块，$\log T_L=\vartheta_1(x_L)+\vartheta_2(x_L)
+-\vartheta_1(m)-\vartheta_2(m)\sim x_L$；因为 $m/x_L\to0$，得到 $\log H_L\sim x_L$。乘法公式还给精确表达式
+\[
+U_{H_L}=P(x_L)e^{-Z_m}\delta(A_L)
+\prod_{m<p\le x_L}(1-p^{-2}).
+\tag{302.26}
+\]
+最后乘积与一之差为 $O(1/m)$，乘以 $P(x_L)=O(\log x_L)$ 后仍为 $o(1)$；（302.23）的误差也仍为 $o(1)$。因 $\log x_L/\log m\to1$，式（302.21）给
+\[
+P(x_L)e^{-Z_m}=E\log x_L-\tfrac E2\log2+o(1).
+\tag{302.27}
+\]
+与 $\log\log H_L=\log x_L+o(1)$ 合并即得（302.18）。正的极限给最终严格不等式；5040整除性与大小渐近确保目标最终超过5040。$\square$
+

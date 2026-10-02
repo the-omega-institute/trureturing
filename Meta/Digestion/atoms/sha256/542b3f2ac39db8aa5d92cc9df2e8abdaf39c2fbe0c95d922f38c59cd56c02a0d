@@ -1,0 +1,20 @@
+**证明。** 相邻 Fibonacci 项互素，故 $\gcd(C_k,F_{k+4})=1$。使用经典仿射同余计数：当 $\gcd(C,B)=1$、$d\mid H$ 时，同余 $Ca+B\equiv0\pmod d$ 在完整 $H$ 个种子中有
+\[
+\#\{0\le a<H:d\mid Ca+B\}
+=\begin{cases}
+H/d,&\gcd(C,d)=1,\\
+0,&\gcd(C,d)>1.
+\end{cases}
+\tag{300.4}
+\]
+第二分支中，一个共同素因子若整除 $Ca+B$，便也整除 $B$，违反互素性；第一分支中，$C$ 在模 $d$ 下可逆，所以每个长度 $d$ 的完整块恰有一个解。一般算术函数的 gcd 和及算术级数推广是经典背景，参见 László Tóth，*A Survey of Gcd-Sum Functions*，Journal of Integer Sequences 13（2010），Article 10.8.1，第二节的 Cesàro 公式及第三节，https://cs.uwaterloo.ca/journals/JIS/VOL13/Toth/toth10.pdf；这里仅将该计数作为自然 Fibonacci 来源结论的中间步骤。
+
+展开约数指示函数，得
+\[
+\tau(\gcd(H,C_ka+F_{k+4}))
+=\sum_{d\mid H}\mathbf1_{d\mid C_ka+F_{k+4}}.
+\]
+交换两个有限和，再代入式（300.4），得到式（300.2）的首个等式。经典倒数约数展开 $U_H=\sum_{d\mid H}1/d$ 逐素数幂分解；互素限制恰好强制 $p\mid C_k$ 的约数指数取零，故第二个等式成立。
+
+每个被删除的实际素轴因子 $U_p(v_p(H))$ 严格大于一。若没有被删素轴，$D_H(k)=1$；若存在被删素轴，则 $D_H(k)>1$，证明式（300.3）。最后，$H\mid F_L$ 与 $\gcd(F_L,F_{L+1})=1$ 给 $\gcd(H,F_{L+1})=1$；在 $k=L-2$ 时，$C_k=F_{L+1}$，故平均相等。$\square$
+

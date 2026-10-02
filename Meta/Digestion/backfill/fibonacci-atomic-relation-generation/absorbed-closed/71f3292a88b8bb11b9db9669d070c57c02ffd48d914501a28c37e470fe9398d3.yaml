@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:71f3292a88b8bb11b9db9669d070c57c02ffd48d914501a28c37e470fe9398d3
+  normalized_sha256: sha256:71f3292a88b8bb11b9db9669d070c57c02ffd48d914501a28c37e470fe9398d3
+cas_ref: sha256:71f3292a88b8bb11b9db9669d070c57c02ffd48d914501a28c37e470fe9398d3
+coverage_gids:
+  - gid: D5/S3/Weil/ZeroData/ZetaOrdinatePhaseStiffness.actual_zeta_phase_stiffness
+    target_statement_id: sha256:4606183e3eb4bbea4e82e4dc097057b2b5a38c5cf07ef2c7c6778a1f5f2b0b7f
+receipts:
+  unresolved_subitems: []

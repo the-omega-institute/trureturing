@@ -1,0 +1,20 @@
+### 定理 282.2 骨架同步子域的最小公倍数律与实际规模
+
+定义
+\[
+C_m=\operatorname{lcm}\bigl(\{6\}\cup\{z(p):p\mid m,\ p\ne2,5\}\bigr).
+\tag{282.10}
+\]
+则 $C_m\mid n$ 保证式（282.2），且全部需要双路分类的系数奇素数 $p\ne5$ 均走骨架供给；
+五方向由独立赋值公式自动匹配。
+对正整数 $u,v$ 与 $a\ge1$，
+\[
+C_{uv}=\operatorname{lcm}(C_u,C_v),\qquad C_{m^a}=C_m.
+\tag{282.11}
+\]
+对每个固定 $m\ge1$，沿 $n\to\infty$ 还有
+\[
+\frac{\log A_{m,n}}{\log B_{m,n}}\longrightarrow4m.
+\tag{282.12}
+\]
+

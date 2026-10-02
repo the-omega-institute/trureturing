@@ -1,0 +1,31 @@
+### 定理 285.2 素指标 Lucas 整包保留全部首次深度并消去集体负相位
+
+对素数 $s\ge5$，定义实际整数
+\[
+m_s=\frac{L_s^2+1}{2}=\frac{F_{3s}}{2F_s}.
+\tag{285.4}
+\]
+则 $m_s>1$ 为奇整数，它的素因子集合恰为 $\{p:z(p)=3s\}$，并且
+\[
+\boxed{\quad v_p(m_s)=h_p\quad\text{对每个 }p\mid m_s.\quad}
+\tag{285.5}
+\]
+还有
+\[
+m_s\equiv1\pmod s,\qquad
+\prod_{p\mid m_s}\varepsilon_p^{h_p}=1.
+\tag{285.6}
+\]
+因此，对每个正整数 $a$，
+\[
+\boxed{\quad
+n\in\mathcal E(m_s^a)
+\quad\Longleftrightarrow\quad
+n\equiv0\pmod{6s}
+\ \text{或}\ 
+\left(a=1,\quad n\equiv r_+\pmod{6s}\right).
+\quad}
+\tag{285.7}
+\]
+本判据不需要假设任一 $h_p$ 等于一。对全部幂次，候选额外相位均为 $r_+$；其实际存在性只保留在一次整包系数中。
+

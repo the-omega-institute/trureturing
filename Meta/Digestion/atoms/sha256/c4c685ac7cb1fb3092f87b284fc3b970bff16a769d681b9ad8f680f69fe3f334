@@ -1,0 +1,24 @@
+**证明。** 固定任意 $0<\varepsilon<1$，取 $y=\lceil k^\varepsilon\rceil$。
+两个实际 Fibonacci 指标均为 $O(k)$，且趋于无穷。
+使用引理204.3的证明中的经典 $\tau(r)\le C_\eta r^\eta$，令 $\eta=\varepsilon/4$，
+§184.1给两个实际素因子集合在 $p>y$ 上的对数尾总和为
+$O_\varepsilon(k^{-\varepsilon/4})$。
+式（280.2）因此给
+\[
+Z(N_{k,a})
+\le\prod_{p\le y}\left(1-\frac1p\right)^{-1}
+\exp\!\bigl(O_\varepsilon(k^{-\varepsilon/4})\bigr).
+\]
+重复的素数只出现一次，新增素方向仍来自相同的两个实际指标。
+经典 Mertens 公式给右端为 $e^\gamma\varepsilon\log k\,(1+o(1))$；
+参见 Lichtman, *Mertens' prime product formula, dissected*，
+[Theorem 1.1](https://arxiv.org/html/2002.03361v3)。
+§265 的增长式给 $\log\log N_{k,a}=\log k+O(1)$，故比值的上极限至多为 $\varepsilon$。
+$\varepsilon$ 可任意减小且比值非负，得到第一个极限；第二个极限由差额定义给出。$\square$
+
+§265 对任意受控乘子套用单位范数预算时只保留固定正储备；
+本节对真实 Lucas 乘子保留 $d_k\mid F_{3k}$ 这份额外来源关系，得到旧两因子合同的来源回接、增长的加性余量以及趋零比值。
+四次乘子成本的边界可达性、实际本原范数为一与这种 Robin 安全性同时成立。
+它们不能推广为任意单位范数乘子来源的相同比值极限：§186 的实际阶乘乘子族已有 Robin 比值趋于一。
+两指标载体合同也不覆盖一般五窗加法来源；本节没有证明一般 Robin 不等式或 RH。
+

@@ -1,0 +1,61 @@
+**定理 310.1（有限代表与完整半区间上的余量下界）。** $I_L$ 存在且由 $\mathcal C_L$ 中的一个截止取得。取非负参数 $\epsilon_L,\delta_L$，并假定该实际 $L$ 上（309.4）对全部半区间截止及其 $v$ 域成立。若另有
+\[
+\ell\ge10000,\quad 0\le\epsilon_L\le10^{-3},\quad
+0\le\delta_L\le\rho/1000,\quad
+\frac{99}{100}\le\alpha_L,\chi_L\le\frac{101}{100},
+\tag{310.4}
+\]
+则对全部 $m/2\le z\le m$，一致有
+\[
+G_L(z)\ge q_L(z)\beta_L+\frac{t_L(z)^2}{32}
+-3\delta_Lt_L(z)-\delta_L^2-\frac6{\rho^2}.
+\tag{310.5}
+\]
+这里的下界覆盖完整半区间，不预先限制 $t_L(z)$。
+
+**证明。** 每个 $z\in[m/2,m]$ 都可用 $\mathcal C_L$ 中不超过它的最大元素 $w$ 表示。若一个缺失素数在 $(w,z]$ 内，它也是候选且不超过 $z$，与 $w$ 的最大性矛盾。因此两点删去的素数集合相同，$H_L(w)=H_L(z)$。候选集有限非空，有限实数集合的最小值存在，故（310.3）的两个取最小值方式相同。严格下端约定在素数截止处仍保持这一代表关系；两个边界保证空带也被覆盖。
+
+为证明下界，暂记 $D=m-z$、$h=h_L(z)$、$M=M_L(z)$、$s=s_L(z)$，$t=D/\rho^3$、$q=h/\rho^3$、$j=M/\rho^6$。实际有限正权重与（309.4）–（309.6）给
+\[
+0\le q\le(1/2+\epsilon_L)t+\delta_L,\qquad
+j\ge t^2/4-2t(\epsilon_Lt+\delta_L),\qquad j\ge0.
+\tag{310.6}
+\]
+又 $0\le t\le\rho/2$，故（310.4）使 $q\le503\rho/2000$，特别是 $q\le\rho/3$ 且 $0\le q\chi_L/\rho\le1/3$。
+
+以下光滑核与 Taylor 界都是经典中间步骤。对 $m/2\le p\le m$，$\log p\le\ell$ 与 $m^2\ge p(2m-p)$ 给
+\[
+\frac{\log p}{m\ell}+\frac{(m-p)\log p}{m^2\ell}\le\frac1p.
+\]
+同时 $\log p\ge\ell/2$、$p\ge m/2$ 及
+$|\log(1+1/p)-1/p|\le2/p^2$ 给
+\[
+0\le\log(1+1/p)\le\frac{4\log p}{m\ell},
+\]
+\[
+\log(1+1/p)\ge\frac{\log p}{m\ell}
++\frac{(m-p)\log p}{m^2\ell}-\frac{16\log p}{m^2\ell}.
+\]
+实际删除集合上求和得到
+\[
+0\le s\le\frac{4h}{m\ell},\qquad
+\ell s\ge\frac q\rho+\frac j{\rho^2}-\frac{16q}{\rho^5}.
+\tag{310.7}
+\]
+由上述界，$s\le4q/(\rho\ell)\le503/(500\ell)<1$。对 $0\le x\le1/3$，对数 Taylor 式及其四阶截断余项给
+$\log(1-x)\ge-x-3x^2/4$；对 $0\le s\le1$，指数 Taylor 界给 $1-e^{-s}\ge s-s^2$。取 $x=q\chi_L/\rho$，代入实际响应（307.7），再用（310.7），得到
+\[
+G_L(z)\ge q\beta_L+\alpha_Lj
+-\left(\frac{3\chi_L^2}{4}+\frac{16\alpha_L}{\ell}\right)q^2
+-\frac{16\alpha_Lq}{\rho^3}.
+\tag{310.8}
+\]
+（310.4）保证括号内不超过 $4/5$，$16\alpha_L\le17$，而 $q\le\rho/3$ 给 $17q/\rho^3\le6/\rho^2$。最后，（310.6）与 $\epsilon_L\le1/1000$ 蕴含
+\[
+\alpha_Lj-\frac45q^2
+\ge\frac{t^2}{32}-3\delta_Lt-\delta_L^2.
+\tag{310.9}
+\]
+具体地，$q\le501t/1000+\delta_L$，且
+$j\ge248t^2/1000-2\delta_Lt$。将二者代入 $\alpha_Lj\ge99j/100$，展开平方后，$t^2$ 系数大于 $1/32$，混合项系数大于 $-3$，$\delta_L^2$ 系数大于 $-1$。这给（310.9），与（310.8）合并即得（310.5）。$\square$
+

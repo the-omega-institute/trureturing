@@ -1,0 +1,33 @@
+### 定理 298.2 同一标准来源无法承担全部 5040 倍数的严格 Robin 上界
+
+令 $T(H)=e^\gamma\log\log H$。对每个正整数 $X$，存在 $H>\max(X,5040)$，满足 $5040\mid H$ 且
+\[
+\boxed{\qquad A(H)>T(H).\qquad}
+\tag{298.13}
+\]
+所以不存在一个对全部 $H>5040$、$5040\mid H$ 成立的严格上预算 $A(H)<T(H)$。
+
+**证明。** Gronwall 的经典极值定理为
+\[
+\limsup_{n\to\infty}\frac{U_n}{e^\gamma\log\log n}=1
+\]
+（Gronwall，1913，doi:10.1090/s0002-9947-1913-1500940-6）。使用它只作本来源结论的中间步骤。该上极限沿 $5040$ 的倍数仍为一：令 $H=5040n$；经典倒数约数展开与约数集包含关系给出 $U_H\ge U_n$，而
+\[
+\frac{\log\log(5040n)}{\log\log n}\longrightarrow1.
+\]
+沿 Gronwall 的趋近极值子序列，$U_H/T(H)$ 的下极限至少为一；全体整数的 Gronwall 上界同时给出该子序列的上极限至多为一。因此有趋近一的倍数子序列，不声称全部倍数的比值趋近一。
+
+更具体地，可在任意大的 $n$ 上同时取
+\[
+\frac{U_n}{e^\gamma\log\log n}\ge\frac{999}{1000},
+\qquad
+\frac{\log\log(5040n)}{\log\log n}\le\frac{1001}{1000}.
+\]
+由定理298.1，
+\[
+\frac{A(H)}{T(H)}
+>\frac{201}{200}\frac{999}{1001}
+=\frac{200799}{200200}>1,
+\]
+证明式（298.13）。$\square$
+

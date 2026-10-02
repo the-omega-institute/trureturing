@@ -1,0 +1,19 @@
+**定理 308.1（实际有限权重的矩证书）。** 对定义308.0中的每个 $L,z$，置
+\[
+r_L=s_L-\frac{h_L}{m\ell}
+-\frac{(1+1/\ell)M_L}{m^2\ell}.
+\tag{308.2}
+\]
+则
+\[
+J_{2,L}\le DM_L\le D^2h_L,
+\tag{308.3}
+\]
+\[
+|r_L|\le\frac{16J_{2,L}}{m^3\ell}
++\frac{16h_L}{m^2\ell}
+\le\frac{16DM_L}{m^3\ell}+\frac{16h_L}{m^2\ell}
+\le\frac{16h_LD^2}{m^3\ell}+\frac{16h_L}{m^2\ell}.
+\tag{308.4}
+\]
+

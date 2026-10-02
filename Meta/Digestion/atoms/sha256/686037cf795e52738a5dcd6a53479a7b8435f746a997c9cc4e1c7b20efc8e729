@@ -1,0 +1,16 @@
+### 258.1 Ramanujan 变换只给平滑控制
+
+[Danesh 的工作论文](../../../Library/Analytic/danesh2026ramanujanrobin.md)用约数 Lambert 级数
+
+$$
+S(x)=\sum_{n\ge1}\sigma(n)e^{-nx}
+$$
+
+及 Ramanujan 变换研究 Robin 缺陷的 Laplace 表达。它明确区分平滑后的正性与每个整数的系数正性，并把潜在问题集中到 CA 或最高丰数等除数丰富整数。这个区分与 §250 的点值条件完全同向：对 FIB 家族证明某种平滑平均为正，不会自动给出同一整数上的
+
+$$
+\Phi(x)+R(x)>0.
+$$
+
+五窗递归没有给出 Lambert 系数的逐项正下界，也没有把 FIB 整数识别成其极值检验集合。因此这里是障碍的独立文献确认，不是新的 Robin 估计。
+

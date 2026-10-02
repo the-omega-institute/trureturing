@@ -1,0 +1,13 @@
+**定义 309.0。** 沿用 §§307–308 的实际整数 $T_L,H_L(z_L)$、$m=3L+2$、$E=e^\gamma$、$\ell=\log m$、$\rho=m^{1/4}$ 及 $h_L,M_L,b_L$。对 $L\ge16$、$m/2\le z_L\le m$，置 $D_L=m-z_L$，定义实际累积质量
+\[
+F_L(v)=\sum_{p\in\mathcal T_L(z_L),\ m-p<v}\log p.
+\tag{309.1}
+\]
+在 $0\le v\le D_L$ 上，
+\[
+F_L(v)=\vartheta_1(m)-\vartheta_1(m-v),\qquad
+F_L(0)=0,\quad F_L(D_L)=h_L.
+\tag{309.2}
+\]
+严格条件 $m-p<v$ 与 §307 的严格下端一致。
+

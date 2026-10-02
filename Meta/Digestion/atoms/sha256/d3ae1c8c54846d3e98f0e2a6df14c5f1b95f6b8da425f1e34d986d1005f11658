@@ -1,0 +1,23 @@
+**定理 302.2（每个固定正高度域内的加性反差）。** 假设302.1成立。对每个固定 $C>0$，置
+\[
+\kappa=C/256,\qquad x_L=\kappa m_L\log m_L,\qquad
+T_L=\prod_{m_L<p\le x_L}p,\qquad H_L=A_LT_L.
+\tag{302.8}
+\]
+则充分大 $L$ 时，$A_L,H_L$ 都是正的5040倍数，且
+\[
+A_L,H_L\le\exp(C L\log L),\qquad
+\mathcal O_L(H_L)=\mathcal O_L(A_L),\qquad
+B_L(H_L)=B_L(A_L)=A_L.
+\tag{302.9}
+\]
+并且
+\[
+\left(\frac{U_{H_L}}{U_{A_L}}-1\right)
+\frac{\log L}{\log\log L}\longrightarrow1,
+\qquad
+\frac{U_{H_L}-U_{A_L}}{E\log\log L}\longrightarrow1.
+\tag{302.10}
+\]
+因此，若估计器的读数仅由 $L$、固定高度参数 $C$ 以及 $\mathcal O_L(H)$ 决定，则它在（302.9）的整个高度域上不可能有与 $L$ 无关的有界加性误差。
+

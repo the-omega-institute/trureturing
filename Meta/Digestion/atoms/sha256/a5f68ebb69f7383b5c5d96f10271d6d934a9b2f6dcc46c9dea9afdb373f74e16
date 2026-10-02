@@ -1,0 +1,8 @@
+**假设 310.1。** 采用定理309.1提供的完整半区间校准，且假设实际核心与实际漂移满足
+\[
+\alpha_L\longrightarrow1,\qquad \chi_L\longrightarrow1,
+\qquad \beta_L\longrightarrow\beta\in\mathbb R.
+\tag{310.10}
+\]
+最后一个有限极限是独立前提；前两个比值极限不蕴含它。
+

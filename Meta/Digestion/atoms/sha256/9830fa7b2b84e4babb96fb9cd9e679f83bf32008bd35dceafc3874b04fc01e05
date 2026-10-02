@@ -1,0 +1,55 @@
+**定理 339.3（实际低零点预算强迫最低相位的一阶负修正）。** 消费经典零点总和与已验证的首零点输入：
+
+$$
+2\sum_{\gamma>0}\frac{m_\gamma}{D_\gamma}
+=2+\gamma_E-\log(4\pi)<\frac1{20},\qquad
+\gamma\ge14\ (\gamma\in\Gamma),\qquad
+\exists\gamma_1\in\Gamma:\ \gamma_1\le15.
+\tag{339.10}
+$$
+
+其中 $\gamma_E$ 是 Euler 常数，不是零点纵坐标。置
+
+$$
+\kappa=\frac1{3390}-\frac1{3920}=\frac{53}{1328880}>0.
+$$
+
+则对每个 $z\in H$，均有
+
+$$
+|(QS)_H(z)|<\frac1{3920},\qquad
+A_*\ge\frac1{3390},\qquad
+F_H(z)<A_*+s_H(z)-\kappa.
+\tag{339.11}
+$$
+
+特别地，在每个最低值相位 $s_H(z_*)=-A_*$ 上都有 $F_H(z_*)<-\kappa$。这一实际符号结论不需要频率线性独立。
+
+**证明。** 经典零点总和见 Nicolas，*Small values of the Euler function and the Riemann hypothesis*，[arXiv:1202.0729v2](https://arxiv.org/abs/1202.0729v2)，式（1.3），其值为 $0.0461914179\ldots<1/20$；本卷 §92 已使用同一总和。首零点范围消费 [LMFDB 首零点数据](https://www.lmfdb.org/zeros/zeta/list?limit=1&N=0) 及其 [来源与可靠性说明](https://www.lmfdb.org/zeros/zeta/Source)：索引 $1$ 的纵坐标为 $14.1347251417346937904572519835625$，说明页给出 Platt 算法、绝对精度 $\pm2^{-102}$，以及严格 Turing 方法对列表完整性的验证；算法来源为 [Platt，Math. Comp.，DOI 10.1090/S0025-5718-2014-02884-6](https://doi.org/10.1090/S0025-5718-2014-02884-6)。这里使用已验证外部输入，没有重新执行该零点计算或把普通舍入表当作本地新证书。
+
+因 $\gamma\sqrt{D_\gamma}\ge196$，（339.8）及（339.10）给
+
+$$
+|(QS)_H(z)|
+\le2\sum_\gamma\frac{m_\gamma}{\gamma D_\gamma\sqrt{D_\gamma}}
+\le\frac2{196}\sum_\gamma\frac{m_\gamma}{D_\gamma}
+<\frac1{3920}.
+$$
+
+§337 的 Fourier–Bohr 系数在频率 $\gamma_1$ 上的模为 $a_{\gamma_1}$，而 $|S(T)|\le A_*$；平均积分的模不超过 $A_*$，取极限得到
+
+$$
+A_*\ge a_{\gamma_1}
+=\frac{m_{\gamma_1}}{\gamma_1D_{\gamma_1}}
+\ge\frac1{15\cdot226}=\frac1{3390}.
+$$
+
+这里仅用重数至少为 $1$，不需要首零点单纯性。于是对 $\Delta_H(z)=A_*+s_H(z)$，
+
+$$
+F_H(z)=\Delta_H(z)-A_*-(QS)_H(z)
+<\Delta_H(z)-\kappa,
+$$
+
+给出全相位界和最低值处的严格负号。$\square$
+

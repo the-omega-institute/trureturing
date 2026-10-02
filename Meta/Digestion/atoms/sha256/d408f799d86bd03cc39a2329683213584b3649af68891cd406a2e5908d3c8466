@@ -1,0 +1,57 @@
+### theorem 261.4 精确 Fibonacci 端点近零与连续负谷无界
+
+记 $F_n$ 为标准 Fibonacci 数，$w(x)=\sqrt x\log x$。
+对全部满足 $F_n\ge X$ 的指标，有
+
+$$
+\boxed{|w(F_n)\Phi^*(F_n)|
+\le2\omega\varphi^{-7n/4}+F_n^{-1/2}\longrightarrow0.}
+\tag{261.11}
+$$
+
+但对 $j\ge0$ 定义
+
+$$
+x_j=\frac{\varphi^{2j+3/2}}{\sqrt5},
+$$
+
+则全部充分大的 $j$ 满足 $x_j\ge X$，且
+
+$$
+w(x_j)\Phi^*(x_j)\le-x_j^{1/4}\longrightarrow-\infty.
+\tag{261.12}
+$$
+
+因此不存在固定有限 $K$，使 $w(x)\Phi^*(x)\ge-K$ 在连续半轴上最终成立。
+这个失败与在全部精确 Fibonacci 端点上的归一尾项趋零同时发生。
+
+**证明。** 经典 Binet 公式及 $\psi=-\varphi^{-1}$ 给
+
+$$
+F_n=\frac{\varphi^n}{\sqrt5}(1-\delta_n),\qquad
+\delta_n=(-1)^n\varphi^{-2n}.
+$$
+
+$F_n\ge X\ge4$ 保证 $n\ge1$，且 $|\delta_n|\le\varphi^{-2}<1/2$。
+于是
+
+$$
+\theta(F_n)=n\pi+\omega\log(1-\delta_n).
+\tag{261.13}
+$$
+
+由 $|\log(1-v)|\le2|v|$ 对 $|v|\le1/2$ 的经典对数界，
+以及 $|\sin(n\pi+r)|\le|r|$，得到
+
+$$
+|\sin\theta(F_n)|\le2\omega\varphi^{-2n}.
+$$
+
+又 $F_n\le\varphi^n$，且 $w(x)f(x)=x^{1/4}\sin\theta(x)$，
+所以 $|w(F_n)f(F_n)|\le2\omega\varphi^{-7n/4}$。
+式（261.9）另给 $w(x)|\Phi^*(x)-f(x)|\le x^{-1/2}$，
+即得式（261.11）。$F_n\to\infty$ 与 $\varphi>1$ 给显示极限。
+
+对所列 $x_j$，有 $\theta(x_j)=(2j+3/2)\pi$，故正弦为 $-1$。
+利用 $\Phi^*\le f$ 得式（261.12），其增长给最终有限下界的否定。$\square$
+

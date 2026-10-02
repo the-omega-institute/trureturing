@@ -1,0 +1,25 @@
+**定理 342.2（实际四分之一最低相位的二阶正号）。** 额外假设 §338 的实际三角振幅上界饱和，即 $A_*=B_\triangle=2\sum_\gamma a_\gamma$；等价地，全四分之一相位 $\iota=(i)_\gamma$ 属于实际轨道闭包 $H$。则同源连续函数 $G_H$ 在该相位满足
+
+$$
+(U_H)(\iota)=0,\qquad
+(QS)_H(\iota)=-\sum_\gamma\frac{a_\gamma}{D_\gamma},
+\qquad
+(Q_1S)_H(\iota)=2\sum_\gamma a_\gamma\frac{\gamma^2-1/4}{D_\gamma^2},
+$$
+
+$$
+G_*:=G_H(\iota)=8\sum_{\gamma\in\Gamma}a_\gamma\frac{\gamma^2}{D_\gamma^2}>0,
+\qquad D_\gamma=\frac14+\gamma^2.
+\tag{342.8}
+$$
+
+证明。指数核在频率 $\gamma$ 上的乘子为 $(1/2-i\gamma)^{-1}$，含 $v$ 的核乘子为 $(1/2-i\gamma)^{-2}$。在 $e^{i\gamma T}=i$ 的相位代入 $S=-2\sum a_\gamma\operatorname{Im}(e^{i\gamma T})$ 即得前三个式子。可和权重及零频空洞允许交换积分与求和，并使 $U_H,G_H$ 连续。逐频率合并时
+
+$$
+\frac{4a_\gamma}{D_\gamma}
++\frac{4a_\gamma(\gamma^2-1/4)}{D_\gamma^2}
+=\frac{8a_\gamma\gamma^2}{D_\gamma^2}.
+$$
+
+各项为正且谱非空，故总和严格正。这里的饱和条件没有由 RH 自动推出；§338 的频率关系限制仍然存在。$\square$
+

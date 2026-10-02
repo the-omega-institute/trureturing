@@ -1,0 +1,18 @@
+**定理 311.1（实际整数修正与全实数截断）。** 有
+\[
+\sqrt m\,[b_L-B(m)]\longrightarrow\sqrt2.
+\tag{311.3}
+\]
+因此对每个固定 $0<\lambda<1/2$，
+\[
+m^\lambda[b_L-B(m)]\longrightarrow0.
+\tag{311.4}
+\]
+在同一指数域内，对任意有限 $c$，
+\[
+m_L^\lambda b_L\longrightarrow c
+\quad\Longleftrightarrow\quad
+x^\lambda B(x)\longrightarrow c\quad(x\to\infty\text{ 为实数}).
+\tag{311.5}
+\]
+

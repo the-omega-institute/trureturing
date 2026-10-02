@@ -1,0 +1,67 @@
+### theorem 253.2 保留积分尾部时的全阶统一 Robin 条件预算
+
+令 $K=2461/1000$，并对每个整数 $N\ge0$ 定义
+
+$$
+\begin{aligned}
+\mathcal M_N(t)&=\frac{e^{-t/2}}t
+\left[\mathcal J(1/t)+\sum_{n=0}^{N}\frac{h_n}{t^n}\right],\\
+E_N(t)&=\frac{Ce^{-t/2}}t
+\frac{(q/t)^{N+1}}{1-q/t},\qquad
+B(t)=\frac{2Ke^{-t/2}}{t^3}.
+\end{aligned}
+\tag{253.4}
+$$
+
+在 §251 同一实际价格源与其 Dusart 输入下，
+对全部同时满足 $t\ge100$、$1/t<\varepsilon$、$q<t$ 的 $t$，
+以及全部 $N\ge0$，有
+
+$$
+\boxed{|\mathcal M(t)-\mathcal M_N(t)|\le E_N(t),\qquad
+R(e^t)>\mathcal M_N(t)-B(t)-E_N(t).}
+\tag{253.5}
+$$
+
+特别地，同一点的条件
+
+$$
+\Phi(e^t)+\mathcal M_N(t)\ge B(t)+E_N(t)
+\tag{253.6}
+$$
+
+蕴含 $\mathfrak D(e^t)>0$。
+对每个上述固定 $t$，$E_N(t)\to0$，全部阶数使用同一 $C,q$。
+若该点满足严格条件 $\Phi(e^t)+\mathcal M(t)>B(t)$，
+则所有充分大的 $N$ 均满足式（253.6）。
+
+**证明。** 保留 $\mathcal J$ 不作幂展开，模型误差只来自解析修正：
+
+$$
+\left|\mathcal H(1/t)-\sum_{n=0}^{N}h_nt^{-n}\right|
+\le\sum_{n=N+1}^\infty C(q/t)^n
+=C\frac{(q/t)^{N+1}}{1-q/t}.
+$$
+
+乘以 $e^{-t/2}/t>0$ 即得式（253.5）的第一式。
+式（251.4）给 $R(e^t)>\mathcal M(t)-B(t)$，
+而第一式给 $\mathcal M(t)\ge\mathcal M_N(t)-E_N(t)$，
+故第二式成立。
+再加上式（253.6），由 $\mathfrak D=\Phi+R$ 得到严格正性。
+固定 $t$ 时 $0<q/t<1$，故几何预算趋于零。
+
+最后的有限阶断言也由同一预算给出：置
+$\delta=\Phi(e^t)+\mathcal M(t)-B(t)>0$，
+对充分大的 $N$ 有 $2E_N(t)\le\delta$，从而
+$\Phi(e^t)+\mathcal M_N(t)\ge B(t)+\delta-E_N(t)\ge B(t)+E_N(t)$。$\square$
+
+式（253.5）是保留完整积分尾部、只递归解析修正的预算。
+它与式（252.2）的阶乘增长不矛盾，因为 $\mathcal J$ 未被截成幂多项式。
+未给出 $C,q,\varepsilon$ 的显式数值时，本条件不提供新增的有效起点或整数覆盖。
+即使令 $N\to\infty$，实际源预算 $B(t)$ 仍保留；
+该极限只将式（253.6）恢复为式（251.5），不证明其对所有 $t$ 成立。
+这里是条件阈值的极限；在式（251.5）恰取等号的点，不保证存在有限阶证书。
+Borel 极点属于归一化连续模型，不是黎曼 $\zeta$ 的零点，
+也不由上述单阶实际误差推出离散储备 $R$ 的全阶 Borel 变换。
+本节没有证明实际有符号 $\Phi$ 的所需单侧界、Robin 全称不等式或 RH。
+
