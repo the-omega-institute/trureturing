@@ -24064,3 +24064,125 @@ strict-repair bridge.  When the phases are not prefix-separated, (MR5) is
 unavailable, and the full two-sided responsibility must be retained.  Thus
 (MR1)--(MR6) reduce the mixed branch to an exact finite-period envelope
 comparison, but do not settle unrestricted Erdős #7.
+
+## 204. An equal-count pure high-layer repair has a rigid normal form
+
+The mixed interface in Section 203 leaves one further finite case that can be
+classified without replacing any source phase. Keep the notation there. Let
+
+\[
+  N=Q/p,
+  \qquad E=E_A\mathbin{\dot\cup}E_B,
+\]
+
+and suppose that \(E\) is nonempty and \(N\)-periodic, \(v_p(N)=e-1\), and
+the two source phases have the same prefix modulo \(p^{e-1}\). Consider an
+inclusion-minimal repair of \(E\) by exactly \(p+1\) pairwise distinct odd
+labels, all of \(p\)-height at least \(e\). The labels are also assumed to be
+distinct from the retained labels. Inclusion-minimal means that every repair
+class is needed for covering \(E\); in the EB1 application this is forced by
+the absence of a \(p\)-class repair.
+
+Write
+
+\[
+  G=\Gamma_N(E)=p^{e-1}K.
+\]
+
+Then the repair has the following necessary form:
+
+\[
+\boxed{\tau(K)=p-1.}
+\tag{NF1}
+\]
+
+All repair labels are \(p^e s\) with \(s\mid Q/p^e\). After grouping them
+by their \(p\)-digit, \(p-1\) digits have one class each while one digit has
+exactly two classes. The \(p-1\) singleton cofactors are precisely the
+divisors of \(K\):
+
+\[
+  \{s_1,\ldots,s_{p-1}\}=\operatorname{Div}(K).
+\tag{NF2}
+\]
+
+The two cofactors \(s,t\) on the doubled digit satisfy
+
+\[
+  s,t\mid Q/p^e,\qquad s\ne t,
+  \qquad s,t\notin\operatorname{Div}(K),
+\tag{NF3}
+\]
+
+and their actual reduced phases must jointly cover the responsibility set:
+
+\[
+\boxed{E\subseteq(c_s\bmod s)\cup(c_t\bmod t).}
+\tag{NF4}
+\]
+
+The total modulus sum of this repair is therefore
+
+\[
+  p^e\bigl(\sigma(K)+s+t\bigr),
+  \qquad \sigma(K)=\sum_{u\mid K}u.
+\tag{NF5}
+\]
+
+### Proof
+
+Fix an \(N\)-fibre \(x+N\mathbb Z\). A repair class of modulus \(d\) restricts
+to a residue class with modulus
+
+\[
+  q_d=d/\gcd(d,N).
+\]
+
+Since \(v_p(d)\ge e>v_p(N)\), \(p\mid q_d\), and every such class has
+relative density at most \(1/p\) on the fibre. If one of the \(p\) next
+digits has no class with \(q_d=p\), each class meeting that digit is a proper
+odd-index class and has relative density at most \(1/3\). Covering that digit
+then needs at least three classes, while the other \(p-1\) digits need at
+least one each. This requires \(p+2\) classes, contradicting the \(p+1\)
+budget. Hence every digit has a \(q_d=p\) class. Any class with \(q_d>p\)
+is redundant on \(E\), because the \(q_d=p\) class for the same digit already
+covers the whole digit branch; inclusion-minimality excludes it.
+
+It follows that every label has the form \(p^e s\) with
+
+\[
+  s\mid Q/p^e.
+\]
+
+Two different prefixes modulo \(p^{e-1}\) would require at least \(2p\)
+classes, so all of \(E\) has one prefix. Thus \(G=p^{e-1}K\). The \(p+1\)
+classes must consequently distribute as \(p-1\) singleton digits and one
+doubled digit. A singleton class covers all of \(E\) on its digit, so its
+cofactor divides \(K\). The \(p-1\) singleton cofactors are distinct.
+
+In the EB1 setting, a \(p\)-class repair exists whenever
+\(\tau(K)\ge p\), by the complete high-layer criterion of Section 194.
+That would replace the deleted \(p+1\)-class packet by \(p\) classes and give
+a strict class descent. Hence \(\tau(K)\le p-1\), while the singleton
+cofactors already give \(\tau(K)\ge p-1\), proving (NF1) and (NF2).
+If either doubled-digit cofactor divided \(K\), its class would contain the
+whole responsibility on that digit and the other class would be redundant.
+This proves (NF3), and the two classes must satisfy the genuine joint
+coverage condition (NF4). Summing the labels gives (NF5). \(\square\)
+
+Consequently, a strict EB1 descent from this normal form has the explicit
+certificate
+
+\[
+\boxed{
+  p^e\bigl(\sigma(K)+s+t\bigr)
+  < R+p^e\sum_{i=1}^{p}m_i.
+}
+\tag{NF6}
+\]
+
+where \(R\) and \(p^e m_i\) are the occupied label and the deleted top packet.
+The joint phase condition (NF4) cannot be replaced by two independently
+chosen pointwise phases. This is a conditional repair interface only: the
+current results do not prove that every hypothetical EB1 whole cover supplies
+such an interface or satisfies (NF6), so unrestricted Erdős #7 remains open.
