@@ -245,6 +245,12 @@ def verifyCurrentCertificate (side : String) (env : Environment) (record : Bindi
   check s!"evidence.{side}" (← result (bindingIdentity record.occurrence.statementIdentity certificate 524288)).1
     certificate.evidenceRef
 
+/-- Repository data bodies include opaque implementations. Proof bodies and
+pinned upstream implementations are omitted by the same rule in every phase. -/
+private def actualDependencyBody (info : ConstantInfo) (owner : Name) : MetaM (Option Expr) := do
+  if (← isProp info.type) || !Repository.isModule owner then return none
+  return info.value? (allowOpaque := true)
+
 /-- Actuals and supplied roots keep their raw expression shape after proof erasure.
 Repository data/type dependencies are followed; proof bodies are omitted and
 upstream implementations remain pinned. The fixed walk has no candidate rules. -/
@@ -268,17 +274,16 @@ def actualDependencies (env : Environment) (event : TemplateOccurrenceEvent)
     let (type, work) ← eraseProofs info.type remaining
     remaining := remaining - work
     pending := type.getUsedConstants.toList ++ pending
-    if Repository.isModule owner && !(← isProp info.type) then
-      if let some body := info.value? then
-        let (body, work) ← eraseProofs body remaining
-        remaining := remaining - work
-        pending := body.getUsedConstants.toList ++ pending
+    if let some body ← actualDependencyBody info owner then
+      let (body, work) ← eraseProofs body remaining
+      remaining := remaining - work
+      pending := body.getUsedConstants.toList ++ pending
   (seen.toArray.qsort Name.quickLt).mapM fun name => withCurrHeartbeats do
     let info ← getConstInfo name
     let owner := (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule
     let typeIdentity ← identity false info.levelParams info.type
-    let bodyIdentity ← if (← isProp info.type) || !Repository.isModule owner then pure ""
-      else pure ((← info.value?.mapM (identity false info.levelParams)).getD "")
+    let bodyIdentity ← (← actualDependencyBody info owner).mapM (identity false info.levelParams)
+    let bodyIdentity := bodyIdentity.getD ""
     return { name, owner, typeIdentity, bodyIdentity }
 
 /-- Independently extract both actuals and their fixed data/type closures.
@@ -299,10 +304,10 @@ def verifyActualDependencies (label : String) (oldEnv newEnv : Environment)
     -- The closure fingerprints upstream types but omits pinned upstream bodies.
     let info ← inEnvironment oldEnv <| getConstInfo input.name
     let typeIdentity ← inEnvironment newEnv <| identity false info.levelParams (renameExpr mapping info.type)
-    let bodyIdentity ← inEnvironment newEnv do
-      if input.bodyIdentity.isEmpty then return ""
-      let some body := info.value? | throwError "contract.equivalence:actual_dependency_body"
-      identity false info.levelParams (renameExpr mapping body)
+    let body ← inEnvironment oldEnv <| actualDependencyBody info input.owner
+    let bodyIdentity ← inEnvironment newEnv <| body.mapM fun value =>
+      identity false info.levelParams (renameExpr mapping value)
+    let bodyIdentity := bodyIdentity.getD ""
     return { input with
       name := renameName mapping input.name
       owner := renameName mapping input.owner
