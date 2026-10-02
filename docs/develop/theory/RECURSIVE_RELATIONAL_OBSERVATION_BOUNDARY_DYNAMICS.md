@@ -17271,3 +17271,244 @@ $$
 [FIB 白盒卷§51](FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md)已经在另一 iid 模型中使用 Hoeffding 和第一 Borel–Cantelli 引理；[素数观察卷§§218–223、228、231、250](FORMAL_PRIME_OBSERVER_DYNAMICS.md)承担一般乘积完成、等价律障碍及有限状态后验停止的相关范围。本节仅在第81–82节实际 FIB 二值族上构造式（83.3）–（83.7）的共同有效规则，并用推论82.6承担有限能量反向；不另立通用浓缩、共同分割或后验收敛定理。极限识别与联合置信的概念已有成熟文献，此处陈述的是这个特定生产合同的综合推导，不作原创性主张。
 
 ## 83.99 追加锚
+
+## 84. 有限能量的完整律聚点与一致正误差停止阈值
+
+第83.4节给出能量发散时的共同正误差停止规则，并将必要性留在其结论之外。本节在同一实际来源族与固定调度合同下，用完整四格档案律的定量聚集补足这一方向。损失始终是精确返回隐藏整数 $m$；来源遍历全部 $m\ge2$。
+
+### 84.1 同一原始档案上的比较律
+
+**定义 84.1（可观察四格边界比较律）。** 沿用第81–82节的实际树 $c(t_m)=(m,m)$、整数 $m\ge2$ 及来源独立的固定确定性调度 $r$。每个深度 $k\ge0$ 的 $r_k\in\mathbb N$ 有限，生产者依次执行这些 $\mathrm{PairRead}$，每次恢复两叶，再执行一次 $\rho$；跨调用使用独立的新随机性。调度无需可计算，除第84.4节的操作结论外不要求给定程序。合同不允许来源相关的种子、建议、时钟、成本、地址或其他侧信道。
+
+记 $\mathcal A=\{aa,ab,ba,bb\}$，$I_r=\{(k,i):k\ge0,\ 1\le i\le r_k\}$，在共同原始乘积可测空间 $(\Omega_r,\mathcal F_r)=(\mathcal A^{I_r},\bigotimes_{I_r}2^{\mathcal A})$ 上沿用
+
+$$
+\begin{aligned}
+n_k&=F_{k+3},& p_k&=\frac{F_{k+1}}{n_k},&
+v_k&=p_k(1-p_k),& h_{m,k}&=\frac1{mn_k-1},\\
+P_{m,k}&=\bigl(p_k^2-v_kh_{m,k},\ v_k(1+h_{m,k}),\ v_k(1+h_{m,k}),\ (1-p_k)^2-v_kh_{m,k}\bigr),\\
+\mu_m^r&=\bigotimes_{(k,i)\in I_r}P_{m,k},&
+S_K&=\sum_{k=0}^K\frac{r_k}{n_k^2},& S&=S(r)=\sum_{k\ge0}\frac{r_k}{n_k^2}.
+\end{aligned}
+\tag{84.1}
+$$
+
+命题82.2给出 $p_k\in[1/3,1/2]$、$v_k\in[2/9,1/4]$ 和每个实际四格质量至少 $1/27$。定义辅助比较律
+
+$$
+P_{\infty,k}=\bigl(p_k^2,\ v_k,\ v_k,\ (1-p_k)^2\bigr),
+\qquad
+\mu_\infty^r=\bigotimes_{(k,i)\in I_r}P_{\infty,k}.
+\tag{84.2}
+$$
+
+四格质量均为正，且 $p_k^2+2v_k+(1-p_k)^2=1$。$\mu_\infty^r$ 只是在同一个原始档案空间上的可观察比较概率律，不代表实际无限树，不向合同加入来源 $m=\infty$，也不向观察者提供比较律查询原语。各律均不采用来源分别决定的测度补全。
+
+只要 $r_k>0$，任取该深度的活动坐标，其 $ab$ 边缘满足
+
+$$
+P_{m,k}(ab)-P_{\infty,k}(ab)=\frac{v_k}{mn_k-1}>0,
+\tag{84.3}
+$$
+
+故 $\mu_m^r\ne\mu_\infty^r$。若没有活动坐标，则档案为单点，全部实际律与比较律相等。这里的比较对象与实际来源合同的区别在两种情形下都保留。
+
+### 84.2 从有限异质乘积到完整档案的定量边界
+
+**定理 84.2（FIB 完整律的能量边界与聚集）。** 对上述任意固定调度，采用第82.3引理所用的归一化 $H^2=1-\mathsf A$，并令
+
+$$
+\operatorname{TV}(\mu,\nu)=\sup_{E\in\mathcal F_r}|\mu(E)-\nu(E)|.
+\tag{84.4}
+$$
+
+在有限空间上，这等于半个 $\ell^1$ 距离。设 $P_m^{\le K}$、$P_\infty^{\le K}$ 分别为深度 $k\le K$ 的实际与比较档案律。则
+
+$$
+\begin{aligned}
+\frac{2}{81m^2n_k^2}
+&\le e_{m,k}:=H^2(P_{m,k},P_{\infty,k})
+\le\frac{8}{3m^2n_k^2},\\
+H^2(P_m^{\le K},P_\infty^{\le K})
+&=1-\prod_{k=0}^K(1-e_{m,k})^{r_k}
+\le\frac{8S_K}{3m^2},\\
+\operatorname{TV}(P_m^{\le K},P_\infty^{\le K})
+&\le\min\left(1,\frac4{\sqrt3}\frac{\sqrt{S_K}}m\right),\\
+\operatorname{TV}(\mu_m^r,\mu_\infty^r)
+&=\sup_{K\ge0}\operatorname{TV}(P_m^{\le K},P_\infty^{\le K}).
+\end{aligned}
+\tag{84.5}
+$$
+
+空乘积取 $1$。完整律由此满足
+
+$$
+\begin{aligned}
+S<\infty&\ \Longrightarrow\
+\operatorname{TV}(\mu_m^r,\mu_\infty^r)
+\le\min\left(1,\frac4{\sqrt3}\frac{\sqrt S}m\right)
+\xrightarrow[m\to\infty]{}0,\\
+S=\infty&\ \Longrightarrow\
+\mu_m^r\perp\mu_\infty^r,\qquad
+\operatorname{TV}(\mu_m^r,\mu_\infty^r)=1\quad(m\ge2).
+\end{aligned}
+\tag{84.6}
+$$
+
+两种能量区域中，每个固定有限深度前缀的 TV 都随整数 $m\to\infty$ 趋于零。
+
+**证明。** 固定 $m,k$，在引理82.3中令不同于 $m$ 的整数 $m'\to\infty$。四格质量收敛到式（84.2）；有限个平方根的连续性使 $H^2(P_{m,k},P_{m',k})\to e_{m,k}$，而 $|1/m-1/m'|\to1/m$。直接取式（82.9）的极限即得第一行，不另证明通用 Hellinger 估计。
+
+[素数观察卷定理211.1](FORMAL_PRIME_OBSERVER_DYNAMICS.md#211-独立乘积实验的精确分解)允许任意有限个独立而非同分布的坐标，其亲和度相乘。用于全部 $(k,i)$、$k\le K$，即得式（84.5）的乘积公式；再用 $1-\prod_a(1-e_a)\le\sum_a e_a$ 和第一行得到能量上界。这里跨深度为异质乘积；仅对相同单格律取幂不能替代这一步。
+
+[波粒子事件卷定义371.1](RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md#371-fisher-张量的全局-hellinger-几何)及式（82.8）使用 $H^2=1-\mathsf A$。既有 [Hellinger](../../../D5/S3/TotalVariation/Hellinger.lean) 的 `total_variation_sq_le_hellinger_sq_sub_quarter` 对非负、总质量为 $1$ 的有限质量函数给出 $\operatorname{TV}^2\le E-E^2/4$，其中源码的 `hellingerSq` 是 $E=2H^2$。因此在此归一化下
+
+$$
+\operatorname{TV}^2\le2H^2-(H^2)^2\le2H^2,
+\tag{84.7}
+$$
+
+代入有限前缀能量上界并取平方根，得到常数 $4/\sqrt3$；再与概率律的 TV 至多 $1$ 合并。
+
+有限前缀的界还需接到完整原始 $\sigma$-代数。具体复用 [InverseLimitEventTotalVariation](../../../D5/S3/Estimation/DataProcessing/InverseLimitEventTotalVariation.lean) 的 `total_variation_eq_iSup_level`，以下给出其空间与测度的对应。令
+
+$$
+\begin{aligned}
+J_l&=\{(k,i)\in I_r:k<l\},& B_l&=\mathcal A^{J_l},\\
+q_l:B_{l+1}&\longrightarrow B_l,& q_l(b)&=b|_{J_l},\\
+\mathsf T_r&=\{x\in\prod_{l\ge0}B_l:\ q_l(x_{l+1})=x_l\text{ 对全部 }l\}.
+\end{aligned}
+\tag{84.8}
+$$
+
+每个 $J_l$ 有限，因为只有有限个深度且每个 $r_k$ 有限；给 $B_l$ 全部子集的可测结构，便满足供应定理的有限层空间和可测单点条件。$\mathsf T_r$ 取乘积可测结构在兼容线程子集上的限制，不添入新的事件。
+
+档案到线程的映射和逆映射为
+
+$$
+\Phi(\omega)=(\omega|_{J_l})_{l\ge0},
+\qquad
+\Psi(x)(k,i)=x_{k+1}(k,i).
+\tag{84.9}
+$$
+
+限制的复合给出 $\Phi(\omega)$ 的兼容性。反向迭代 $q_l(x_{l+1})=x_l$ 得：若 $a\le b$，则 $x_b|_{J_a}=x_a$；特别对 $k<l$ 取 $a=k+1,b=l$，得到 $\Psi(x)|_{J_l}=x_l$。故 $\Psi\Phi$ 与 $\Phi\Psi$ 都是恒等映射。$\Phi$ 的每个分量是有限坐标限制，因而可测；$\Psi$ 的每个坐标是线程的第 $k+1$ 层评价后再取 $(k,i)$，也可测。两者组成原始可测空间的双向可测同构。
+
+供应定理的载体是有限元组 `Fin n → Thread B q`。此处取其元组参数 $n=1$，通过 $x\mapsto(j\mapsto x)$ 及在唯一指标 $j=0$ 的评价，将 $\mathsf T_r$ 与 $\operatorname{Fin}(1)\to\mathsf T_r$ 双向可测地对应；这个 $n=1$ 与 Fibonacci 总数系数 $n_k$ 无关。把 $\mu_m^r,\mu_\infty^r$ 经该对应和 $\Phi$ 推前，得到供应定理的两份测度 $M_m,M_\infty$。它们是概率测度，因而满足有限测度前件。
+
+其第 $l$ 层投影取各线程的 $x_l$；在上述推前下，实际就是 $\omega|_{J_l}$ 再经单元素元组对应。因此层测度是实际有限档案律的推前：$l\ge1$ 时等于深度 $k\le l-1$ 的联合律在该同构下的表示，$l=0$ 时是共同单点律。双向可测同构使事件与其概率逐一对应，故保持事件上确界 TV。
+
+供应声明的 `measurableTotalVariation` 取 ENNReal 中两个截断方向差的最大值再取可测事件上确界。概率测度的事件质量均在 $[0,1]$，该最大值转成实数正是绝对事件差；全部值及其上确界均至多 $1$，故可转成这里的实数 TV。于是该声明给出
+
+$$
+\operatorname{TV}(\mu_m^r,\mu_\infty^r)
+=\sup_{l\ge0}\operatorname{TV}(\mu_m^r|_{J_l},\mu_\infty^r|_{J_l})
+=\sup_{K\ge0}\operatorname{TV}(P_m^{\le K},P_\infty^{\le K}).
+\tag{84.10}
+$$
+
+这里只记 $\mu|_{J_l}$ 为坐标限制的推前。有限活动坐标时塔最终恒定，无活动坐标时整个塔为单点，上述对应和供应前件仍成立。式（84.10）承担完整事件的桥梁，并非把柱集界直接宣布为任意无限事件的界。若 $S<\infty$，代入 $S_K\le S$ 即得式（84.6）的第一行。
+
+若 $S=\infty$，活动坐标必有无限多个。每个坐标两份四格质量都严格正，故局部双向绝对连续，且亲和度 $1-e_{m,k}>0$。固定 $m$ 时，第一行估计使
+
+$$
+\sum_{(k,i)\in I_r}e_{m,k}
+=\sum_{k\ge0}r_ke_{m,k}
+\ge\frac{2}{81m^2}S=\infty,
+\qquad
+\prod_{k\ge0}(1-e_{m,k})^{r_k}=0.
+\tag{84.11}
+$$
+
+最后一步沿用第82.4定理的正亲和度乘积判据，亦可由 $1-e\le e^{-e}$ 得到。按深度与批内编号枚举 $I_r$，把四个标签嵌入实数，即满足同一 [Durrett, Version 5, Theorem 4.3.8](https://services.math.duke.edu/~rtd/PTE/PTE5_011119.pdf)（印刷页229–230）的独立非同分布、局部绝对连续与正密度条件；零亲和度乘积给出 $\mu_m^r\perp\mu_\infty^r$。原始可测分离事件在两律下分别具有质量 $1,0$，所以 TV 为 $1$。最后，每个 $S_K$ 都有限，式（84.5）给出固定前缀的收敛。证毕。
+
+特别在 $S=\infty$ 时，有限视图与完整档案满足
+
+$$
+\lim_{m\to\infty}\sup_{K\ge0}\operatorname{TV}(P_m^{\le K},P_\infty^{\le K})=1,
+\qquad
+\sup_{K\ge0}\lim_{m\to\infty}\operatorname{TV}(P_m^{\le K},P_\infty^{\le K})=0.
+\tag{84.12}
+$$
+
+这是同一档案上固定有限视图与完整事件的区别，未改变来源族或任意扩大可测事件类。
+
+### 84.3 共同随机解码器的最大一致风险
+
+**定理 84.3（有限能量下精确标签的一致错误上确界）。** 若 $S<\infty$，取任意一个共同、来源独立的可测概率核 $Q:\Omega_r\to\operatorname{Prob}(\mathcal M)$，其中 $\mathcal M=\{2,3,\ldots\}\cup\{\bot\}$ 取离散可测结构。记解码输出为 $D$，其来源 $m$ 下的分布为 $\mu_m^rQ$，并把拒答和不终止都记为 $\bot$、计入无条件错误。则
+
+$$
+\begin{aligned}
+\Pr_m(D=m)&\longrightarrow0, &\Pr_m(D\ne m)&\longrightarrow1,\\
+\sup_{m\ge2}\Pr_m(D\ne m)&=1,&
+\inf_D\sup_{m\ge2}\Pr_m(D\ne m)&=1.
+\end{aligned}
+\tag{84.13}
+$$
+
+下确界遍历上述全部共同核，包含确定性规则以及使用共同独立种子的随机规则，且允许读取整个无限四格档案。上确界不必由某个有限 $m$ 取得，结论也不声称每个固定来源的错误率都是 $1$。
+
+**证明。** 在同一个比较律下置 $\nu_\infty=\mu_\infty^rQ$，并令 $f_m(\omega)=Q(\omega,\{m\})\in[0,1]$。核的可测性使 $\{f_m>t\}$ 是共同原始可测事件。对 $[0,1]$ 上的层蛋糕积分，直接复用 TV 的事件界：
+
+$$
+\begin{aligned}
+\left|\int f_m\,d\mu_m^r-\int f_m\,d\mu_\infty^r\right|
+&=\left|\int_0^1\bigl[\mu_m^r\{f_m>t\}-\mu_\infty^r\{f_m>t\}\bigr]\,dt\right|\\
+&\le\operatorname{TV}(\mu_m^r,\mu_\infty^r).
+\end{aligned}
+\tag{84.14}
+$$
+
+这是证明内部的普通 TV 数据处理步骤，不另立通用核定理。正确输出事件随 $m$ 变化，但 TV 对全部共同可测事件的一致界仍适用。因此
+
+$$
+\Pr_m(D=m)
+\le\nu_\infty(\{m\})+\frac4{\sqrt3}\frac{\sqrt S}m
+\longrightarrow0,
+\qquad
+\sum_{m\ge2}\nu_\infty(\{m\})\le1.
+\tag{84.15}
+$$
+
+可和的非负原子质量趋于零，故右端两项都趋于零。原子项不能丢掉；这里不给每个解码器一个普遍的 $O(1/m)$ 成功率界。错误率为 $1-\Pr_m(D=m)$，于是每个共同核的错误上确界等于 $1$；再对全部核取下确界，仍为 $1$。证毕。
+
+共同独立种子 $s\sim\lambda$ 和共同可测输出 $d(\omega,s)$ 诱导同一个核 $Q(\omega,C)=\lambda\{s:d(\omega,s)\in C\}$。对停止规则，每个有限停止输出事件可测，且
+
+$$
+\{d(\omega,s)=m\}
+=\bigcup_{t\ge0}\{\tau=t,\ \widehat m=m\};
+\qquad d(\omega,s)=\bot\ \text{于永不停止或拒答时}.
+\tag{84.16}
+$$
+
+这给出全域可测输出和共同核，即使该规则在 $\mu_\infty^r$ 下不几乎必然停止也成立。共同种子不得改成携带 $m$ 的建议或来源依赖种子。因此有限能量障碍涵盖随机停止程序、确定性规则与全档案程序，也涵盖任何先把四格压缩为异色位的规则。
+
+### 84.4 给定全可计算调度的操作阈值
+
+**推论 84.4（统一正误差的有效有限停止充要条件）。** 现在另给定义83.1所要求的一份全可计算调度程序：每个输入 $k$ 均在有限计算后返回有限非负整数 $r_k$。对任意固定 $\varepsilon\in(0,1)$，有
+
+$$
+S(r)=\infty
+\quad\Longleftrightarrow\quad
+\exists\text{一个共同有效停止解码器 }(\tau,\widehat m):
+\ \forall m\ge2,\ \Pr_m(\tau<\infty)=1,
+\quad
+\sup_{m\ge2}\Pr_m(\text{错误})\le\varepsilon.
+\tag{84.17}
+$$
+
+错误仍按定理84.3无条件计入，目标仍为精确整数标签；生产者的配置动作及实际律保持不变。
+
+**证明。** 必要性不使用可计算性：若 $S<\infty$，任何共同停止规则都按式（84.16）诱导定理84.3的核，错误上确界等于 $1>\varepsilon$，与要求矛盾。
+
+充分性取一个预先给定的整数 $\ell\ge1$，满足 $2^{-\ell}\le\varepsilon$。从四格结果计算 $Z_{k,i}=\mathbf1\{\text{两叶类型不同}\}$，复用第83.4节的第一唯一候选停止规则。所给全可计算程序保证每次配置求值终止，$S=\infty$ 保证所需完整块逐一完成；该规则对每个固定 $m$ 几乎必然有限停止，错误率一致至多 $2^{-\ell}\le\varepsilon$。由四格逐坐标得到这些位不改变生产者的读取、恢复和替换。证毕。
+
+整数 $\ell$ 的存在不等于从任意不可计算实数 $\varepsilon$ 自动计算它；操作输入可以直接供应满足不等式的 $\ell$。停止保证逐来源几乎处处成立，不给统一有限截止、预期停止时间或存储界。$\varepsilon=0$ 仍由定理81.10排除共同几乎必然有限停止；第82.5节在发散能量下的无限档案可测零误差恢复属于另一个取得要求。完整四格的有限能量障碍与二值流的操作充分性共同给出本合同下的精确阈值。
+
+### 84.5 来源与结论范围
+
+本节为上述实际 FIB 族的 repo-derived 普通数学桥接。通用积律聚点统计、亲和度乘法、TV 数据处理与 Kakutani 二分均为成熟结果；本节不主张新的通用概率框架或原创性。承重来源是引理82.3、素数观察卷§211.1、波粒子事件卷§371.1、上述 Hellinger 与逆极限 TV 声明、Durrett 的同一 Theorem 4.3.8，以及操作方向的推论83.4。既有 Lean 地址给出数学供应及前件对应，不构成本节精确应用的编译或内核认证。
+
+无界整数族与精确标签损失是定理84.3的条件。若只保留有限的 $M$ 个参数，不看数据而均匀随机输出就对各来源有 $1/M$ 的成功率；本节不排除有限参数推断。这里也不给先验平均风险、近似倒数估计的相同不可能性结论，不处理未知、反馈或相关调度及相关生产者随机性，不结算物理时空、观察者记忆最优或更广的树形恢复。所有结论只连接已声明抽样合同、其实际完整档案与精确尺度任务。
+
+## 84.99 追加锚
