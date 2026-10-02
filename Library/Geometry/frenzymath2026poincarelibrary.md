@@ -2336,3 +2336,78 @@ nonorientable manifolds, remains active and incomplete; arbitrary-h
 isometric representative existence remains unproved. The linked escape
 audit is unfinished and registration remains paused. Only this research
 note is intended tracked delivery.
+
+
+### Actual H3 horizontal contraction and the Mautner mechanism
+
+For a jointly continuous isometric action of a group on a metric space,
+let a_i act asymptotically trivially on x along a nonempty filter. If
+a_i*g*a_i^-1 tends to the identity along the same filter, then g fixes x.
+The pseudometric version gives dist(g*x,x)=0; metric separation yields
+point equality. This local Mautner argument needs neither a Hilbert
+space nor compactness, properness or finite volume. The nonempty-filter
+condition is essential: for the actual continuous isometric translation
+action of the additive real line, the bottom filter satisfies both
+convergence conditions, while translation by 1 moves 0.
+
+This mechanism applies to the SAME actual original-H3 isometry group
+with its previously constructed compact-open topology. Horizontal
+translation T(u), u in C, is jointly continuous in u and the H3 point,
+using the original coordinate homeomorphism. Consequently u -> T(u) is
+continuous into that compact-open isometry group. For positive r_i
+with r_i -> 0, the actual identity
+
+    D(r_i)*T(u)*D(r_i)^-1 = T(r_i*u)
+
+and this continuity derive convergence to the identity. Conjugation
+convergence is proved for the original H3 translations and dilations;
+it is not an extra premise supplied to the H3 application. Any jointly
+continuous isometric action of this SAME group on a metric space
+therefore satisfies: if D(r_i)*x -> x along a nonempty filter, every
+horizontal translation fixes x. In particular, invariance under all
+positive dilations implies invariance under all horizontal translations,
+using r_n=(1/2)^n.
+
+There is also an exact finite-p Lp application of the continuous
+isometric domain-pullback action. Its domain action must be continuous
+and measure preserving, the measure locally finite and inner regular
+on compact sets below infinite mass, and the domain must carry the
+stated Borel and R1 structures. The target is a normed additive group,
+and 1 <= p < infinity. These hypotheses remain explicit. Pullback uses
+DomMulAct, whose multiplication reverses the original group product.
+Accordingly choose a_i=mk(D(r_i)^-1). Its conjugation of mk(T(u)) is
+mk(D(r_i)*T(u)*D(r_i)^-1), so the actual H3 contraction proves contraction
+in this opposite group too. Asymptotic inverse-dilation pullback
+invariance of f then implies every horizontal pullback fixes f.
+Invariance under every positive dilation supplies the required inverse
+invariance by the actual dilation inverse formula. No contraction
+hypothesis is supplied to these H3 Lp conclusions.
+
+The original-H3 isometry-group topology, joint evaluation, topological
+group structure and finite nonzero invariant group-quotient measures
+were already constructed. They are available inputs, rather than
+missing constructions. The new Lp application is checked for domain
+actions satisfying its explicit hypotheses; it has not yet been
+instantiated with the previously constructed actual quotient measure
+and its required regularity. Neither finite quotient mass alone nor
+horizontal invariance alone proves the needed ergodicity.
+
+Five accepted serial scoped cache-guarded transient Lean checks exited
+zero, with eleven axiom closures using only propext, Classical.choice
+and Quot.sound and no warning headers. Failed checks are excluded from
+these accepted readings. All new Lean remains under ignored .lake;
+these are classical reuse and construction, with original metrics and
+default resources, no novelty or tracked-Lean claim.
+
+Subgroup generation, the actual quotient Lp specialization, flow
+ergodicity and the boundary rigidity argument remain separate
+obligations. Unipotent generation concerns the identity component:
+for an orientation-preserving lattice, the full disconnected isometry
+group quotient has two components. Full-group ergodicity cannot be
+inferred from the geodesic flow on that quotient; an orientation
+component or orientation-cover argument is still required. The boundary
+map and its geometric preservation for the SAME arbitrary-h induced
+deck isomorphism remain unconstructed. Full finite-volume
+Mostow-Prasad, including cusps and nonorientable manifolds, remains
+active and incomplete. The linked escape audit is unfinished and
+registration remains paused. Only this research note is tracked.
