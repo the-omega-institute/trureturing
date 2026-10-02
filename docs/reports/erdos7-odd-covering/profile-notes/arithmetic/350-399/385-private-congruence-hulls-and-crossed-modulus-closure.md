@@ -23520,3 +23520,42 @@ retained class in \(U\), use a label outside \(V\), or pay the complete
 responsibility created by that alteration. Therefore (FW1) is a search
 boundary, not a resolution of the occupied-\(R\) branch or of unrestricted
 Erdős #7.
+
+## 198. Prefix-separated responsibility needs \(2p\) high-layer classes
+
+There is a separate lower bound when the two source phases are already
+different one level below the top layer. Assume
+
+\[
+ p^{e-1}\nmid(a_R-b).
+ \tag{PS-HL0}
+\]
+
+Let \(S=E_A\mathbin{\dot\cup}E_B\), and consider any family of distinct odd
+classes covering \(S\) whose moduli \(d\) all satisfy \(v_p(d)\ge e\). Then
+
+\[
+ \boxed{\text{the family has at least }2p\text{ classes}.}
+ \tag{PS-HL1}
+\]
+
+Indeed, choose \(x_A\in E_A\) and \(x_B\in E_B\). The \(N\)-periodicity from
+Section 192 gives the two sets
+
+\[
+ F_A=\{x_A+jN:0\le j<p\},\qquad
+ F_B=\{x_B+jN:0\le j<p\}.
+\]
+
+Every point of \(F_A\cup F_B\) belongs to \(S\). The \(p\) points in each
+set have distinct residues modulo \(p^e\), while (PS-HL0) makes the two
+sets of residues disjoint. A class with \(v_p(d)\ge e\) has one fixed
+residue modulo \(p^e\), and hence meets \(F_A\cup F_B\) in at most one point.
+Covering these \(2p\) points therefore requires at least \(2p\) classes.
+
+Since \(p\ge3\), \(2p>p+1\). Thus the prefix-separated branch cannot obtain
+either a class-count descent or an equal-count repair by replacing the
+original \(A,T_1,\ldots,T_p\) block with high-layer classes alone. Any descent
+in this branch must use a lower \(p\)-height label, alter the frozen outside
+family, or pay a larger complete liability. This is a branch restriction,
+not a proof of unrestricted noncoverage.
