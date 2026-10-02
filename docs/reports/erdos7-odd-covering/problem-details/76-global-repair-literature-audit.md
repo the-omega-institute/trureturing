@@ -191,10 +191,47 @@ The following sources were checked against (G1)--(G2).
 
 Recent odd-cover constructions allowing repeated labels, including Bispels et
 al., [arXiv:2507.16135](https://arxiv.org/abs/2507.16135), likewise do not meet
-the distinct-label condition.  A 2026 Zenodo deposit by Giovanni Esposito
-advertises a “Distinctness Allocation Lemma”, but its available description
-does not expose the phase-preserving and complete-liability quantifiers in
-(G1)--(G2); it is therefore not counted as a verified resolution.
+the distinct-label condition.
+
+### The Esposito Zenodo claim does not close the gap
+
+The primary record [Zenodo 18440762](https://zenodo.org/records/18440762),
+DOI [10.5281/zenodo.18440762](https://doi.org/10.5281/zenodo.18440762),
+contains a three-page `Paper_I.pdf` whose Theorem 1 claims unrestricted
+nonexistence.  Its proof has two checkable problems.
+
+First, the base theorem is not supplied by the cited artifact.  Paper I invokes
+a “certified” obstruction in \(\mathbb Z/11025\mathbb Z\) and calls it Paper D,
+but the Zenodo record [18438201](https://zenodo.org/records/18438201) labelled
+“Finite--Radical Obstructions ...” attaches a file whose first page is instead
+arXiv:2012.01677, *On the Critical Exponent for \(k\)-Primitive Sets* by Chan,
+Duker Lichtman and Pomerance.  That PDF contains no covering-system LP or
+11025 dual certificate.  Consequently Paper I's Theorem 2.1 has no inspected
+primary proof or certificate.
+
+Second, the advertised allocation lemma is conditional on exactly that missing
+base deficit.  It considers \(U\times\mathbb Z/q\mathbb Z\) and partitions the
+available divisor labels among the new fibres; it does not prove that an
+arbitrary hypothetical ODCS contains a kernel with a deficit \(U\), nor that
+the proposed kernel obstruction is valid for the full divisor palette.  The
+closing sentence “by known reductions ... any ODCS admits a finite kernel” is
+not a stated theorem with the required phase and label quantifiers.
+
+The companion [Paper G, Zenodo 18439460](https://zenodo.org/records/18439460)
+and [Paper H, Zenodo 18439562](https://zenodo.org/records/18439562) only claim
+eventual bounded-radical non-liftability from a \(\beta_e<1\) dual field.  Their
+displayed decay argument does not provide an all-scale base obstruction for
+every finite exponent, and Paper H explicitly leaves infinite prime incidence
+as an escape.  The general framework [Paper J, Zenodo
+18445853](https://zenodo.org/records/18445853) likewise assumes an obstructed
+configuration with \(\beta<1\); it does not derive that assumption from an
+arbitrary ODCS.
+
+Thus the Esposito deposit is useful as a precise formulation of the same
+allocation idea, but it is not a verified proof of (G1)--(G2) or of the
+unrestricted conjecture.  The missing object remains an inspected finite
+obstruction together with a valid extension theorem that covers every allowed
+phase-labelled modulus.
 
 ## 5. Exact next interface
 

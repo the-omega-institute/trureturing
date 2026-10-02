@@ -22760,10 +22760,96 @@ remaining repair problem is therefore exact: repair all required contraction
 collisions while keeping one representative of each numerical modulus and
 preserving whole coverage.
 
-The minimum-LCM normalization also cannot silently be combined with EB1's
-divisor-closure inventory. A theorem relating those two extremal choices is
-still missing. Thus (DC) is a new global necessary structure and a sharper
+The minimum-LCM normalization is a separate route, but Section 189 below shows
+that the same digit obstruction already holds for an EB1 extremal
+representative. Thus (DC) is a new global necessary structure and a sharper
 target for the repair step, not a settlement of unrestricted Erdős #7. The
 published Simpson phase-companion and Krukenberg \(p\)-way reduction results
 describe nearby descent mechanisms, but neither supplies the needed repair for
 an occupied, incompatible output label.
+
+## 189. EB1 lexicographic extremality also forces every digit-contraction collision
+
+The minimum-LCM choice above can be made compatible with the EB1 extremal
+choice. Choose an EB1 representative minimizing \((K,S)\), and, if a
+canonical representative is desired, choose the least LCM among those ties:
+
+\[
+\boxed{(K,S,L)=\left(|D|,\sum_{d\in D}d,
+                  \operatorname{lcm}(D)\right)}
+\tag{EB3}
+\]
+
+in lexicographic order. The existing EB1 arguments first minimize \((K,S)\),
+so the divisor-closure and phase-inheritance conclusions of Sections 180--187
+still apply. The digit argument below in fact uses only the first two
+coordinates; the LCM tie-break is bookkeeping rather than an extra hypothesis.
+
+Fix \(p^e\parallel L\), a level \(1\le h\le e\), and an inserted digit \(t\),
+excluding only the modulus-one fibre
+
+\[
+h=1,\qquad p\in D,\qquad t\equiv a_p\pmod p.
+\tag{EB4}
+\]
+
+Use the digit pullback \(\iota_{h,t}\) from Section 188. Every surviving
+original class has one inverse image modulo \(L/p\): a class with
+\(v_p(n)<h\) keeps modulus \(n\), while a class with \(v_p(n)\ge h\) and
+matching digit \(t\) becomes a class of modulus \(n/p\). A mismatching high
+class disappears. The only possible repeated numerical output is the pair
+
+\[
+m,\;pm,\qquad v_p(m)=h-1,
+\tag{EB5}
+\]
+
+and the two output phases coincide exactly when
+\(a_m\equiv a_{pm}\pmod m\), as in (DC).
+
+Assume for contradiction that the selected digit has no phase-incompatible
+pair. Merge every repeated output whose phases coincide. The resulting classes
+are distinct odd nonunits and cover the quotient \(\mathbb Z/(L/p)\mathbb Z\).
+They give a strict contradiction to EB1 in every possible case:
+
+* If a high class survives, its output modulus is \(n/p<n\). All other
+  output moduli are no larger than their source labels, and merging can only
+  remove additional labels. Hence the new modulus sum is strictly smaller:
+  \(S'<S\).
+* If no high class survives, at least one high class disappears because
+  \(p^e\parallel L\) guarantees an original label with \(v_p(n)=e\ge h\).
+  Thus the number of classes decreases: \(K'<K\). (If one also uses the
+  optional third tie-break, the remaining all-low case would instead give
+  \(L'\mid L/p<L\).)
+
+The excluded fibre (EB4) is exactly the only case in which a surviving
+modulus-\(p\) class would become the forbidden modulus one. Thus the
+contradiction is valid for every other digit. Consequently the Section 188
+obstruction holds for the EB1 representative itself:
+
+\[
+\boxed{
+\forall p^e\parallel L,\ \forall h\le e,\ \forall t\text{ allowed by (EB4)},
+\ \exists m,pm\in D:
+\ v_p(m)=h-1,\quad a_m\not\equiv a_{pm}\pmod m,
+}
+\tag{EB-DC}
+\]
+
+with the upper \(p\)-adic digit of \(a_{pm}\) equal to \(t\). In particular
+
+\[
+|E_{p,h}|\ge p-\mathbf 1_{\{h=1,\ p\in D\}},
+\]
+
+while the same EB1 representative retains the divisor-closure inventory used
+for the 34547 modulus-sum floor.
+
+This removes the former incompatibility between the two extremal selections;
+indeed no extra LCM minimality assumption is needed for (EB-DC).
+It does **not** repair the collisions: (EB-DC) says precisely that every
+allowed contraction has an occupied, phase-incompatible output somewhere. A
+complete proof still needs a source-preserving way to replace or jointly repair
+those outputs while keeping distinct numerical labels and whole coverage. The
+result is therefore a stronger necessary structure for the same EB1
+representative, not a settlement of unrestricted Erdős #7.
