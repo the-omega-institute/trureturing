@@ -80,6 +80,13 @@ noncomputable def interval (k l r : ℕ) : Finset (Fin (k + 1)) := by
 def x (k : ℕ) : Word k := fun r => if r.val = 0 then .high else if r.val = 1 then .low else .middle
 def y (k : ℕ) : Word k := fun r => if r = Fin.last k then .zero else .middle
 
+/-- A singleton coordinate is its unit interval. -/
+theorem singleton_interval (k : ℕ) (i : Fin (k + 1)) :
+    ({i} : Finset (Fin (k + 1))) = interval k i.val (i.val+1) := by
+  classical
+  ext j
+  simp only [Finset.mem_singleton,interval,Finset.mem_filter,Finset.mem_univ,true_and,Fin.ext_iff]
+  omega
 theorem interval_data (k l r : ℕ) (hlr : l < r) (hr : r ≤ k + 1) :
     d (interval k l r) = (if l = 0 then 0 else 1) + (if r = k + 1 then 0 else 1) ∧ (internals (interval k l r)).card = r-l-1 ∧
     (∀ j ∈ internals (interval k l r), c (interval k l r) j = if l = 0 then 0 else 1) ∧
@@ -895,9 +902,7 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) : (∀ P : Profile k A, code
     omega
   have last_cap (hk : 1 ≤ k) (he : A = {Fin.last k}) : cap = 3 := by
     have hI : ({Fin.last k} : Finset (Fin (k + 1))) = interval k k (k + 1) := by
-      ext i
-      simp only [Finset.mem_singleton,interval,Finset.mem_filter,Finset.mem_univ,true_and,Fin.ext_iff,Fin.val_last]
-      omega
+      exact singleton_interval k (Fin.last k)
     have h := int_cap k (k + 1) (by omega) le_rfl (he.trans hI)
     have hk0 : k ≠ 0 := by omega
     simp [hk0,show 0 < k by omega] at h
@@ -930,15 +935,10 @@ theorem result (k : ℕ) (A : Finset (Fin (k + 1))) : (∀ P : Profile k A, code
         omega
       simpa [hk] using full_cap hfull
     · have hI : ({(0 : Fin (k + 1))} : Finset (Fin (k + 1))) = interval k 0 1 := by
-        ext i
-        simp only [Finset.mem_singleton,interval,Finset.mem_filter,Finset.mem_univ,true_and,Fin.ext_iff,Fin.val_zero]
-        omega
+        exact singleton_interval k 0
       exact prefix_cap 1 le_rfl (by omega) (he.trans hI)
   have singleton_cap (i : Fin (k + 1)) (hi0 : 0 < i.val) (hik : i.val < k) (he : A = {i}) : cap = 4 := by
-    have hI : ({i} : Finset (Fin (k + 1))) = interval k i.val (i.val+1) := by
-      ext j
-      simp only [Finset.mem_singleton,interval,Finset.mem_filter,Finset.mem_univ,true_and,Fin.ext_iff]
-      omega
+    have hI := singleton_interval k i
     have h := internal_cap i.val (i.val+1) hi0 (by omega) (by omega) (he.trans hI)
     simpa using h
   have n1_cap (hk : k = 0) : (A = ∅ → cap = 1) ∧ (A = Finset.univ → cap = 2) := ⟨empty_cap, fun he => by simpa [hk] using full_cap he⟩

@@ -296,10 +296,7 @@ theorem result (k : ℕ) :
       simp only [if_true]
       by_cases he : r = n
       · have hset : interval k 0 r = Finset.univ := by
-          ext i
-          simp only [interval, Finset.mem_filter, Finset.mem_univ, true_and, iff_true]
-          have hi : i.val < n := i.isLt
-          omega
+          simpa only [he, n] using (FourMessageTreeRigidity.univ_interval k).symm
         have hc := hfull hset
         dsimp [cap, n] at *
         omega
@@ -310,21 +307,15 @@ theorem result (k : ℕ) :
       · have hr1 : r = l + 1 := by omega
         by_cases hend : r = n
         · have hA : interval k l r = {Fin.last k} := by
-            ext i
-            simp only [interval, Finset.mem_filter, Finset.mem_univ, true_and,
-              Finset.mem_singleton, Fin.ext_iff, Fin.val_last]
-            dsimp [n] at *
-            omega
+            have hlk : l = k := by dsimp [n] at *; omega
+            simpa only [hlk, hend, n, Fin.val_last] using
+              (FirstRejectionCutCapacity.singleton_interval k (Fin.last k)).symm
           have hc := hlast (by dsimp [n] at *; omega) hA
           dsimp [cap] at *
           omega
         · let i : Fin (k + 1) := ⟨l, by dsimp [n] at *; omega⟩
           have hA : interval k l r = {i} := by
-            ext j
-            simp only [interval, Finset.mem_filter, Finset.mem_univ, true_and,
-              Finset.mem_singleton, Fin.ext_iff]
-            dsimp [i]
-            omega
+            simpa only [hr1] using (FirstRejectionCutCapacity.singleton_interval k i).symm
           have hc := hmiddle i (by dsimp [i]; omega) (by dsimp [i, n] at *; omega) hA
           dsimp [cap] at *
           omega
@@ -332,12 +323,8 @@ theorem result (k : ℕ) :
       Full t ∧ leaves t = Finset.univ ∧ height t = H ∧ optimum task t ≤ n + 2 := by
     obtain ⟨t, ht, hall, hh, hnodes⟩ := BalancedIntervalTree.result k 0 n (by dsimp [n]; omega) (by dsimp [n]; omega)
     have hall' : leaves t = Finset.univ := by
-      rw [hall]
-      ext i
-      simp only [interval, Finset.mem_filter, Finset.mem_univ, true_and, iff_true]
-      have hi := i.isLt
-      dsimp [n]
-      omega
+      rw [hall, Nat.zero_add]
+      exact (FourMessageTreeRigidity.univ_interval k).symm
     refine ⟨t, ht, hall', hh, ?_⟩
     rw [opt_formula t ht hall']
     apply Finset.sup_le

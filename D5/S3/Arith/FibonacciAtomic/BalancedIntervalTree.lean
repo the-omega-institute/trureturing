@@ -33,11 +33,7 @@ theorem result (k l w : ℕ) (hw : 0 < w) (hbound : l + w ≤ k + 1) :
     · subst w
       let i : Fin (k + 1) := ⟨l, by omega⟩
       have hleaves : leaves (leaf i) = interval k l (l + 1) := by
-        ext j
-        simp only [leaves, Finset.mem_singleton, interval, Finset.mem_filter,
-          Finset.mem_univ, true_and, Fin.ext_iff]
-        dsimp [i]
-        omega
+        exact FirstRejectionCutCapacity.singleton_interval k i
       refine ⟨leaf i, by simp [Full], hleaves, by simp [height], ?_⟩
       intro s hs
       have he : s = leaf i := by simpa [subtrees] using hs

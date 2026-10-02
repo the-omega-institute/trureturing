@@ -208,6 +208,13 @@ private theorem suffix_height (k j : ℕ) (u : TreeMessageRealization.Tree (Fin 
     omega
 
 
+/-- The full coordinate set is its full interval. -/
+theorem univ_interval (k : ℕ) :
+    (Finset.univ : Finset (Fin (k + 1))) = interval k 0 (k + 1) := by
+  classical
+  ext i
+  simp [interval, Nat.le_of_lt_succ i.isLt]
+
 /-- A full task tree occurs among its own message nodes. -/
 theorem full_subtree_self (k : ℕ) (u : TreeMessageRealization.Tree (Fin (k + 1))) (hu : Full u) : u ∈ subtrees u := by
   cases u with
@@ -643,13 +650,7 @@ theorem result (k : ℕ) (hk : 2 ≤ k) :
   have singleton_capacity (i : Fin (k + 1)) (hi : 0 < i.val) (hik : i.val < k) :
       capacity (fun _ => Window) boolean (fun j => j ∈ ({i} : Finset _)) = 4 := by
     have he : ({i} : Finset (Fin (k + 1))) = interval k i.val (i.val + 1) := by
-      apply Eq.symm
-      apply Finset.eq_singleton_iff_unique_mem.mpr
-      refine ⟨by simp [interval],?_⟩
-      intro j hj
-      apply Fin.ext
-      have hb : i.val ≤ j.val ∧ j.val < i.val + 1 := by simpa [interval] using hj
-      omega
+      exact FirstRejectionCutCapacity.singleton_interval k i
     rw [he, (FirstRejectionCutCapacity.result k _).2.2.2.2.2.2.2.2.1]
     obtain ⟨hd,hj,hc,ht,hdel⟩ := FirstRejectionCutCapacity.interval_data k i.val (i.val + 1) (by omega) (by omega)
     have hint : internals (interval k i.val (i.val + 1)) = ∅ := Finset.card_eq_zero.mp (by omega)
@@ -700,9 +701,7 @@ theorem result (k : ℕ) (hk : 2 ≤ k) :
     rw [he,singleton_capacity i (by simp [i]) (by dsimp [i]; omega)] at hc
     exact hc.trans (Finset.le_sup hs)
   have full_capacity : capacity (fun _ : Fin (k + 1) => Window) boolean (fun i => i ∈ (Finset.univ : Finset _)) ≤ 4 := by
-    have he : (Finset.univ : Finset (Fin (k + 1))) = interval k 0 (k + 1) := by
-      ext i
-      simp [interval, Nat.le_of_lt_succ i.isLt]
+    have he := univ_interval k
     rw [he,(FirstRejectionCutCapacity.result k _).2.2.2.2.2.2.2.2.1]
     have hd := (FirstRejectionCutCapacity.interval_data k 0 (k + 1) (by omega) le_rfl).1
     norm_num [hd]
