@@ -12204,3 +12204,188 @@ $$
 固定乘法区间的 PNT、Fourier 平移、普通加权度量界、已发表谱配对与 CC 小支撑正性均是复用前置；本章的候选综合内容是实际非活跃素数簇对正角预算的失效以及被它强迫的大量配对抵消，不认证世界原创性。该构造使用超出当前测试活跃支撑的大素数，因此没有决定第 22 节 $\mathcal P_{\mathcal R}^{\mathrm{act}}\subseteq\mathcal P\subseteq\{p:p\le e^{\mathcal R}\}$ 的扩张族，也没有排除精心选择有限素数集或直接保留 $E_S^+-E_S^-$ 的方法。完整 constrained 同一测试正性、FIB 来源到实际素数伸缩的交织及 Robin 的全整数估计均未由此构造解决。
 
 ## 追加锚（本行以下为增补区）
+
+## 26. 精确最小活跃素数集上的正角预算障碍
+
+本章沿用第 18—21 节的实际物理投影、完整迹与普通加权评价合同，并保留 archimedean 对角输入
+
+$$
+\sigma_{\{\infty\}}(f)=\mathcal T_0(f)
+=\int_{\mathbb R}|\widehat f(t)|^2d(t)\,d\mu(t),\qquad
+0\le d(t),\qquad \frac{d(t)}{\log|t|}\longrightarrow1,
+$$
+
+其中 $d$ 局部有界。只使用这一 archimedean 对角输入及 $d_S\le\chi_Sd$，不要求变动 $S$ 的密度渐近式。实际普通投影始终是 $P_S=TPK_S^{-1}PT^*$；所有算术响应均按全部纯素数幂计数。
+
+**定义 26.1（收缩总权重的远端素数簇）。** 令 $f_0=\phi_0'-4\phi_0'''$ 为定义 25.1 的固定测试，记 $M=\|f_0\|_2^2$、$J_1=\|f_0'\|_2$、$q_0=Q_{\rm full}(f_0)$。取
+
+$$
+a=\frac14,\quad b=\frac13,\quad c=a+b=\frac7{12},\quad
+\delta_0=\min\left\{\frac1{12},\frac{\sqrt M}{128J_1}\right\},\quad
+\varepsilon_L=L^{-1/4}.
+$$
+
+对充分大的整数 $L$，按递增顺序从 $[e^L,e^{L+\delta_0}]$ 中选择素数，直到 $\sum p^{-1/2}$ 第一次达到 $\varepsilon_L$，所得集合记为 $\mathcal P_L$，令 $S_L=\{\infty\}\cup\mathcal P_L$。记全部位于交叉响应开带内的纯素数幂时刻为
+
+$$
+\mathcal R_L=\{k\log p:L-c<k\log p<L+c,\ p\text{ 为素数},\ k\ge1\}.
+$$
+
+这个集合有限，包括不属于 $\mathcal P_L$ 的素数及高次幂。
+
+**候签定理 26.1（微小尾部、精确活跃性与发散角能量）。** 在本章明确保留的合同下，存在实函数 $f_L\in C_c^\infty(\mathbb R)$ 与正数 $h_L$，使
+
+$$
+\widehat f_L(0)=\widehat f_L(i/2)=\widehat f_L(-i/2)=0,
+\qquad f_L\longrightarrow f_0\quad\text{于 Schwartz 拓扑},
+$$
+
+且对每个素数 $p$ 与每个 $k\ge1$，精确成立
+
+$$
+H_{f_L}(k\log p)=
+\begin{cases}
+h_L,&p\in\mathcal P_L,\ k=1,\\
+0,&\text{其余情形}.
+\end{cases}
+$$
+
+因此 $S_{\rm act}(f_L)=S_L$ 恰为最小活跃集，没有额外非活跃素数。在这同一份测试与实际切面上，
+
+$$
+\begin{aligned}
+\chi_{S_L}&\longrightarrow1,\\
+\sigma_{S_L}(f_L)&\longrightarrow\sigma_{\{\infty\}}(f_0),\\
+D_{{\rm lin},S_L}(f_L)&\longrightarrow D_{{\rm lin},\{\infty\}}(f_0),\\
+Q_{\rm full}(f_L)&\longrightarrow q_0>0,\\
+N_{S_L}(f_L)&\longrightarrow N_{\{\infty\}}(f_0),\\
+E^+_{S_L}(f_L)&\ge\frac{M\sqrt L}{128}\longrightarrow\infty,\\
+E^-_{S_L}(f_L)&=E^+_{S_L}(f_L)-N_{S_L}(f_L)\longrightarrow\infty.
+\end{aligned}
+$$
+
+能量下界在充分大的 $L$ 上成立。这里 $E^-$ 是第 25.1 节已发表谱配对所确定的实际负角能量；每个固定 $L$ 的两份能量都有限。
+
+证明。固定乘法区间的素数定理及第 25 节贪心选择直接给出
+
+$$
+\varepsilon_L\le s_L:=\sum_{p\in\mathcal P_L}p^{-1/2}
+\le\varepsilon_L+e^{-L/2},\qquad
+\log\chi_{S_L}\le16\varepsilon_L\longrightarrow0.
+$$
+
+这一选择没有使用变窄素数区间的假设。对所有充分大的 $L$，$\varepsilon_L\le1/64$ 且 $e^{-L/2}\le\varepsilon_L^2$。第 25 节完整 Euler 相位比较于是仍给出
+
+$$
+h_{S_L,f_0}(u)=h_0(u)+\varepsilon_Lh_0(u+L)
+-\varepsilon_Lh_0(u-L)+r_L(u),
+\qquad
+\|r_L\|_2\le\frac18\varepsilon_L\sqrt M,
+$$
+
+其中 $h_0=\mathscr F^{-1}(m_\infty\widehat f_0(-t))$，完整 Gamma 乘子与全部高次素数幂均保留。
+
+因为 $\varepsilon_L$ 趋于零，原先仅用 $L^2$ 尾部趋零的步骤须补充速率。第 21.3 节 Gamma 相位导数界及 $\widehat f_0$ 的快速下降给出 $m_\infty\widehat f_0(-t)\in H^1$，故 $u h_0\in L^2$。选固定 $A>0$ 使 $\|\mathbf1_{[-A,A]}h_0\|_2\ge3\sqrt M/4$，则
+
+$$
+\|\mathbf1_{(-\infty,-L+A]}h_0\|_2
+\le\frac{\|u h_0\|_2}{L-A}
+=O(L^{-1})=o(\varepsilon_L).
+$$
+
+背景及反向平移因此满足第 25 节同一个延迟窗口估计；继而
+
+$$
+\mathcal H_{S_L}(f_0)\ge\frac{\varepsilon_L^2ML}{8},\qquad
+E^+_{S_L}(f_0)\ge\frac{\varepsilon_L^2ML}{32}
+=\frac{M\sqrt L}{32}.
+$$
+
+现在构造真正激活这些素数的尾部。对 $t\in\mathcal R_L$，在 $(-b,b)$ 上令
+
+$$
+v_t(y)=f_0(y-(t-L)),
+$$
+
+并加入三个极点约束核 $1,e^{y/2},e^{-y/2}$。这些有限个实函数在 $(-b,b)$ 上线性独立。每个平移 bump 至少有一个支撑端点严格落在这个区间内，因为 $|t-L|<a+b$ 且 $b>a$。同侧端点相撞要求相同的 $t$；异侧相撞要求 $t_i-t_j=\pm2a=\pm1/2$。后者不可能：$e^{t_i-t_j}$ 是有理素数幂比，而标准 Hermite–Lindemann 定理给出 $e^{\pm1/2}$ 超越。
+
+在每个核的这个独有内部端点，其他核及三个指数核均解析。该 bump 自身平坦但不解析，并在端点内侧任意邻域非零；其非零性来自 $f_0$ 的显式解析公式及内部恒等原理。如果一个线性组合为零，则其他项组成的解析函数在该 bump 为零的一侧恒为零，因而在整个小邻域为零；该 bump 的系数随即为零。逐个消去这些系数后，三个不同指数的核也线性独立。
+
+将全部核列为 $(v_i)$，取 $\eta_b\in C_c^\infty(\mathbb R)$ 在 $(-b,b)$ 上严格正且支撑于 $[-b,b]$。标准有限加权 Gram 构造给出正定矩阵
+
+$$
+\mathsf G_{ij}=\int_{-b}^b\eta_b(y)v_i(y)v_j(y)\,dy.
+$$
+
+令响应向量 $z$ 在三个极点核上取零，在 $t=\log p$、$p\in\mathcal P_L$ 上取一，在 $\mathcal R_L$ 的全部其余时刻取零，并设
+
+$$
+g_L(y)=\eta_b(y)\sum_i(\mathsf G^{-1}z)_iv_i(y).
+$$
+
+于是 $g_L$ 实、光滑、支撑于 $[-b,b]$，三个指数矩为零，而且
+
+$$
+\int f_0(x)g_L(x+t-L)\,dx
+=\begin{cases}1,&t=\log p,\ p\in\mathcal P_L,\\0,&t\in\mathcal R_L\text{ 的其余时刻}.\end{cases}
+$$
+
+矩阵大小与条件数没有统一界；此处只主张有限系统的精确可解性，不主张计算资源估计。这份响应 Gram 矩阵不是普通 Sonin 度量 $K_{S_L}$。
+
+写 $w_L(x)=g_L(x-L)$、$f_L=f_0+h_Lw_L$。零指数矩在平移后仍为零，所以三个 Fourier 约束精确成立。$f_L$ 实，故其自相关实偶；没有要求 $f_L$ 本身仍为奇函数。两个自相关岛分别支撑于 $[-2a,2a]$ 与 $[-2b,2b]$，且 $2b<\log2$，所以都不贡献任何正素数幂响应。正的交叉岛支撑于 $[L-c,L+c]$，反向交叉岛支撑于其负像。正岛内的响应就是上述插值；端点因平坦支撑自动为零。带外响应也为零，这就证明了所有 $p,k$ 的精确公式。
+
+严格正的基准值直接复用 Connes–Consani, arXiv:2006.13771v1, Theorem 6.11、式 (141)，包括该来源的小支撑及其源前提。参数对应为 $g_0(\rho)=f_0(\log\rho)$，支撑 $[e^{-1/4},e^{1/4}]\subset[2^{-1/2},2^{1/2}]$，源要求的 $\widehat g_0(-i/2)=0$ 与消去秩一误差的 $\widehat g_0(0)=0$ 均精确满足。固定 $f_0$ 的全部有限素数项与极点项为零，故
+
+$$
+q_0\ge\operatorname{Tr}(A_{f_0}P)=\mathcal T_0(f_0)>0.
+$$
+
+最后一步使用本章显式对角输入：$d$ 在充分高的频率上为正，而非零紧支撑 $f_0$ 的整个 Fourier 变换不可能在一个实开区间恒为零。这不将小支撑正性外推到 $f_L$ 的扩大支撑。
+
+对每个固定 $L$，所有待缩放的光滑紧支撑范数与实际平滑后迹量均有限；$Q_{\rm full}(f_0+h w_L)$ 是在 $h=0$ 取值 $q_0$ 的有限实二次多项式。因此可以选严格正的 $h_L$，同时满足
+
+$$
+\begin{aligned}
+\|h_Lw_L\|_2&\le L^{-2},\\
+\mathcal T_0(h_Lw_L)^{1/2}&\le L^{-1},\\
+\|C_{S_L}X_{h_Lw_L}\|_{\rm HS}&\le L^{-1},\\
+\sup_x(1+|x|)^m|(h_Lw_L)^{(n)}(x)|&\le L^{-1}
+\quad(m,n\ge0,\ m+n\le L),\\
+|Q_{\rm full}(f_L)-q_0|&\le\min\{q_0/2,L^{-1}\}.
+\end{aligned}
+$$
+
+最后一项单独控制实际全形式；没有从 Schwartz 收敛推断变动支撑上 Weil 形式的连续性。正的 $h_L$ 再小也不改变精确活跃集。Hilbert–Schmidt 反向三角不等式给出
+
+$$
+\sqrt{E^+_{S_L}(f_L)}
+\ge\sqrt{M\sqrt L/32}-L^{-1},
+$$
+
+从而得到所述正角能量下界。
+
+为处理普通迹的极限，$s_L\to0$ 给出 $\|T_L-I\|\le\beta_{S_L}-1\to0$，且由完整 Euler 相位 $\|\mathcal F_{S_L}-\mathcal F_\infty\|\to0$。因此 $K_L\to I_V$、$K_L^{-1}\to I_V$，并保留精确运输
+
+$$
+A_{f_0}P_{S_L}=T_L(A_{f_0}P)K_L^{-1}PT_L^*.
+$$
+
+第 18 节供应的 $A_{f_0}P$ 迹类接口于是给出这份式子的迹范数收敛。再对实际正迹使用 Cauchy–Schwarz 及 $\sigma_{S_L}(h_Lw_L)\le\chi_{S_L}\mathcal T_0(h_Lw_L)$，得到变动测试的 $\sigma_{S_L}(f_L)\to\sigma_{\{\infty\}}(f_0)$。
+
+所有相关自相关均支撑于 $[-r,r]$、$r=L+c$。第 18 节共同条带分解的两个 Hilbert–Schmidt 因子给出
+
+$$
+\|B_{f_L}-B_{f_0}\|_1
+\le (L+c)(\|f_L\|_2+\|f_0\|_2)\|f_L-f_0\|_2
+=O(L^{-1}).
+$$
+
+结合 $C_{S_L}\to C_\infty$、$\mathcal F_{S_L}\to\mathcal F_\infty$ 的算子范数收敛，这证明线性迹收敛。全部素数幂已精确控制，故同一实际载体的完整恒等式为
+
+$$
+N_{S_L}(f_L)=\sigma_{S_L}(f_L)-D_{{\rm lin},S_L}(f_L)-Q_{\rm full}(f_L).
+$$
+
+其右侧逐项收敛，极限就是 $N_{\{\infty\}}(f_0)$。最后复用第 25.1 节的有限性及已发表谱配对 $N=E^+-E^-$，得到负角能量的发散；没有使用 $[A_f,C]=0$ 或 $C^2$ 迹类假设。$\square$
+
+## 追加锚（本行以下为增补区）
