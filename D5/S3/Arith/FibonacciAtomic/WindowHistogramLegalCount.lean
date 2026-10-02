@@ -205,27 +205,58 @@ theorem result :
     simpa only [P, List.foldr_cons_nil, ← folded] using h
 
   have split_inverse (p : Cuts) (hp : Clean p) : split (join p) = p := by
-    have split_prefix (g : List Window) (hg : Free g) (w : List Window) :
-        split (g ++ w) = (g ++ (split w).1, (split w).2) := by
-      induction g with
-      | nil => simp
-      | cons d g ih =>
-        have hd := hg d (by simp)
-        have ht : Free g := fun b hb => hg b (List.mem_cons_of_mem d hb)
-        cases d <;> simp_all [split, List.cons_append]
+    let S : Window → Cuts → Cuts := fun b p => match b with
+      | .zero => ([], (false, p.1) :: p.2)
+      | .middle => ([], (true, p.1) :: p.2)
+      | b => (b :: p.1, p.2)
+    have folded (v : List Window) : split v = v.foldr S ([], []) := by
+      have h := List.foldr_hom split (g₁ := List.cons) (g₂ := S)
+        (l := v) (init := []) (by intro b u; cases b <;> rfl)
+      simpa only [List.foldr_cons_nil, split] using h.symm
+    have prefix_fold (g : List Window) (hg : Free g) (p : Cuts) :
+        g.foldr S p = (g ++ p.1, p.2) := by
+      let L := {b : Window // b ≠ .zero ∧ b ≠ .middle}
+      have h := List.foldr_hom (fun v : List L => (v.map Subtype.val ++ p.1, p.2))
+        (g₁ := List.cons) (g₂ := fun b q => S b.val q)
+        (l := g.attachWith (fun b => b ≠ .zero ∧ b ≠ .middle) hg) (init := []) (by
+          intro b v
+          rcases b with ⟨b, hb⟩
+          cases b with
+          | zero => exact (hb.1 rfl).elim
+          | middle => exact (hb.2 rfl).elim
+          | low => rfl
+          | ends => rfl
+          | high => rfl)
+      have hm := List.attachWith_map_subtype_val hg
+      simpa only [List.foldr_cons_nil, List.map_nil, List.nil_append,
+        ← List.foldr_map, hm, Prod.eta] using h
     rcases p with ⟨g, ds⟩
-    simp only [Clean, gaps, List.mem_cons, forall_eq_or_imp] at hp
-    rw [join, split_prefix g hp.1]
-    induction ds with
-    | nil => simp [split]
-    | cons dg ds ih =>
-      rcases dg with ⟨d, h⟩
-      have hh : Free h := hp.2 h (by simp)
-      have ht : ∀ v ∈ ds.map Prod.snd, Free v := by
-        intro v hv
-        exact hp.2 v (by simp [hv])
-      have hi := ih ⟨hp.1, ht⟩
-      cases d <;> simp_all [List.flatMap_cons, triple, split, split_prefix h hh]
+    have hg : Free g := hp g (by simp only [gaps, List.mem_cons, true_or])
+    have hd : ∀ dg ∈ ds, Free dg.2 := by
+      intro dg hdg
+      exact hp dg.2 (List.mem_cons_of_mem _ (List.mem_map.mpr ⟨dg, hdg, rfl⟩))
+    let B : (Bool × List Window) → Cuts → Cuts := fun dg p =>
+      S (triple false dg.1 false) (dg.2.foldr S p)
+    let L := {dg : Bool × List Window // Free dg.2}
+    have h := List.foldr_hom (fun v : List L => (([] : List Window), v.map Subtype.val))
+      (g₁ := List.cons) (g₂ := fun dg p => B dg.val p)
+      (l := ds.attachWith (fun dg => Free dg.2) hd) (init := []) (by
+        intro dg v
+        rcases dg with ⟨⟨d, h⟩, hh⟩
+        dsimp only [B]
+        rw [prefix_fold h hh]
+        cases d <;> simp only [S, triple, List.map_cons, List.append_nil])
+    have hm := List.attachWith_map_subtype_val hd
+    have hblocks : ds.foldr B ([], []) = ([], ds) := by
+      simpa only [List.foldr_cons_nil, List.map_nil, ← List.foldr_map,
+        hm] using h
+    rw [folded, join, List.foldr_append, prefix_fold g hg]
+    have hj : (ds.flatMap (fun dg => triple false dg.1 false :: dg.2)).foldr S
+        ([], []) = ([], ds) := by
+      rw [List.foldr_flatMap]
+      simpa only [List.foldr_cons, B] using hblocks
+    rw [hj]
+    simp only [List.append_nil]
 
   have decomposition :
       (∀ w : List Window, ∃! p : Cuts, Clean p ∧ join p = w) ∧
@@ -409,17 +440,12 @@ theorem result :
       have hs := split_properties w
       have restore (g : List Window) (hg : Free g) (hl : legal false (flatten g)) :
           gap (readGap g) = g := by
-        have split_free : ∀ v : List Window, Free v → split v = (v, []) := by
-          clear split_properties split_inverse decomposition reading clean inverse legal_code
-          intro v
-          induction v with
-          | nil => intro _; rfl
-          | cons b v ih =>
-            intro hv
-            have hb := hv b (by simp)
-            have ht : Free v := fun a ha => hv a (by simp [ha])
-            cases b <;> simp_all [split]
-        have split_free := split_free g hg
+        have split_free : split g = (g, []) := by
+          have hc : Clean (g, []) := by
+            simpa only [Clean, gaps, List.map_nil, List.mem_cons,
+              List.not_mem_nil, or_false, forall_eq] using hg
+          simpa only [join, List.flatMap_nil, List.append_nil]
+            using split_inverse (g, []) hc
         have hu := ((decomposition).2.2 g).mp hl
         rw [split_free] at hu
         obtain ⟨q, hq, _⟩ := hu g (by simp [gaps])
