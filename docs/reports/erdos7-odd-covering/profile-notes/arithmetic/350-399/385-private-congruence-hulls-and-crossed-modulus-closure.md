@@ -133,6 +133,14 @@ the concentrated divisor count. An all-depth consumer also bounds
 q-height when the actual R-only inventory is below q-1. Its two-root
 version explicitly requires two private roots of the top q-power.
 
+[Section141](#141-laminar-shallow-cofactor-traces-force-an-actual-surviving-source)
+uses one fixed two-depth prefix code per original label on the laminar
+forest of ACTUAL joint-source cofactor traces. Complete joint-hole
+repair then forces shallow weight below one at an actual W point.
+Divisibility-chain cofactors qualify, including powers of any one
+cofactor prime; deeper retained originals remain unrestricted. General
+crossing traces and a period-independent density are not settled.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -17342,3 +17350,79 @@ When G>max(c_1,c_2), this becomes 2q<=A(H+2)+C_1+C_2. This special case requires
 The top-q fan is existing Report371 §2 / QC2, and CP1 plus CD1 supplies the reusable capacity proof. Report385 HC5 counts a full q-axis shell packet against a different fresh-prime repair; SP4 assumes a numerical second-row vacancy. TC1 uses laws summed over all q-heights and has endpoint coefficient H A D_i. TQ1–TQ4 instead charge one actual full-height-q fan against the concentrated phase caps. The displayed formulas differ from those existing consumers and remove D_i from the coefficient of H; TQ3 removes D_i entirely when G>c. This is not a claim of independence from every consequence elsewhere in the repository, or exclusion of an already settled low-support family.
 
 For R={q}, A=1, TQ3 gives H>=q-1-C_i at the actual top-q private root; TQ5 gives H>=2q-2-C_1-C_2 only under its additional two-root hypothesis. These are necessary constraints. No upper bound on the R-only ternary inventory, no legal joint repair of that inventory, and no unrestricted contradiction has been supplied.
+
+## 141. Laminar shallow cofactor traces force an actual surviving source
+
+Fix one original EB1 whole cover, Q=3^H q^G M, q>3, gcd(M,3q)=1. Keep the exact q-free residual R, full retained q-union D_(u,v), and W from §127; all original depths remain in D_(u,v). Fix a full ternary word u and put m=min(G,2). Let B_u consist of exactly the original shallow top labels
+
+    d=3^H q^e s, 1<=e<=m, a_d=u modulo3^H.
+
+Retain EVERY original outside B_u, including all deeper top labels and all low-ternary labels. Define the complete simultaneous-deletion hole and its actual cofactor projection by
+
+    E_B=Z/Q minus union_(d outside B_u) A_d,
+    P_B={v modulo M:exists xi,(u,xi,v) in E_B}.
+
+For each d in B_u keep its literal cofactor cylinder C_d={v:v=a_d modulo s_d}. Write
+
+    c_u(v)=sum_(d in B_u, v in C_d)3^(-e_d).
+
+Assume B_u is nonempty and that the ACTUAL traces C_d intersect P_B are laminar: any two are disjoint or one contains the other. Equal traces are allowed and retain their separate original labels. Then
+
+    exists v in P_B, c_u(v)<1.                         (LCW1)
+
+In particular (u,v) belongs to the actual W. For G>=2 the same point has c_u(v)<=8/9; at G=1 it has c_u(v)<=2/3. This conclusion needs no comparison between q and the cofactor primes, no independent cofactor law and no uniform cofactor reserve.
+
+### The complete joint source is nonempty and q-free-live
+
+Every original in B_u has a complete private point, which remains uncovered after the whole B_u is deleted. Thus P_B is nonempty, and every trace C_d intersect P_B is nonempty. Every q-free original is retained, so P_B is contained in R_u. Whole original coverage puts E_B entirely at the word u.
+
+No equality between E_B and the union of individual private regions is used. Original shallow classes at different cofactor phases may overlap. The full projected joint source is the one required by §139 JCE1--JCE2 and PH1.
+
+### A fixed two-depth code on the laminar inclusion forest
+
+Suppose c_u(v)>=1 for every v in P_B. Group equal traces into one node and order the distinct nonempty traces by inclusion. Laminarity makes their immediate strict-containment relation a forest. At each node process its original labels in any fixed order, after all its strict ancestors. Different children inherit their common ancestor assignments; they assign only labels attached to that child's subtree. Each original is processed once.
+
+For G>=2 use the nine new ternary depth-two slots, divided into their three first-digit groups of three slots. An e=1 label receives one whole group (a depth-one prefix); an e=2 label receives one slot (a depth-two prefix). On a branch maintain the union of all assigned code slots in the form
+
+    some completely filled groups, at most one partially filled group,
+    and the remaining groups empty.
+
+Initially all groups are empty. Assign the next original as follows.
+
+* For e=2, fill an unfilled slot of the partially filled group if one exists; otherwise use a slot of an empty group.
+* For e=1, use an empty group if one exists. If no group is empty and the code is not yet full, fill the unique partially filled group; every other group is already full.
+* Once all nine slots are full, assign any permitted prefix to later originals on that branch.
+
+The invariant is preserved. Before the first full code, a single-slot assignment adds one new slot and a whole-group assignment adds three new slots, except that its only possible overlap fills the unique last partial group and completes all nine slots immediately. Therefore a branch whose accumulated original weight is at least one has a full code. This is a finite two-depth allocation, not an assertion of an unrestricted variable-depth online Kraft rule.
+
+For each v in P_B, all traces containing v form one chain in this forest. The codes of its incident original labels are exactly the codes assigned along that chain. Its total weight c_u(v)>=1 therefore makes those fixed code cylinders cover every new depth-two tail. The same original code is used at ALL v in its trace; no cofactor-dependent relabeling occurs.
+
+At G=1 use three first-digit slots and assign each label an unfilled slot until all three are full. The inequality c_u(v)>=1 means at least three incident labels along that same chain. No depth-two slot is introduced.
+
+### Fresh APs repair the whole hole and strictly lower the sum
+
+Let c_d modulo3^(e_d) be the one code assigned to original d. Use the same numerical map as JCE1:
+
+    B'_d={z:z=u+3^H c_d modulo3^(H+e_d),
+               z=a_d modulo s_d},
+    modulus(B'_d)=3^(H+e_d)s_d.                       (LCW2)
+
+The code construction implies JCE1 on P_B, so these APs cover the COMPLETE E_B and all its integer lifts. They need not be restricted to the trace C_d intersect P_B: their full original cofactor cylinders only add harmless coverage. Keep the old q-axis and use the common carrier3^(H+m) q^G M.
+
+Every output modulus has ternary height above the original global H. Thus it is fresh relative to every retained original, including the deeper q-labels. Distinct original numerical labels have distinct pairs(e_d,s_d), so the output map is injective regardless of code coincidences or overlapping traces. Each original supplies exactly one output AP, and each modulus decreases by the factor(3/q)^(e_d). PH1 gives a whole cover with the same count and a strictly smaller modulus sum, contradicting EB1. This proves LCW1.
+
+By the existing SH3 implication, every actual source outside W has c_u(v)>=1, because its original shallow certificate has total weight one. The point in LCW1 is therefore in W, with ALL deeper retained deletions still present. The stated 8/9 and2/3 bounds follow from the denominators of the two finite shallow sums; they are pointwise slack, not probability or density bounds.
+
+### Which original palettes satisfy the condition
+
+If the full cofactor cylinders of B_u are laminar on Z/M, their intersections with P_B are laminar. In particular this holds when their numerical cofactors form a divisibility chain: two compatible APs with comparable moduli are nested, and incompatible ones are disjoint. Powers of ANY ONE original prime ell different from3,q give such a chain. No condition ell>q is needed. More general palettes can qualify through their actual traces even when their unrestricted cofactor cylinders cross.
+
+If B_u is empty, c_u is zero and SH2 puts every q-free-live pair at u directly in W. Thus, if the trace-laminar hypothesis holds for each nonempty B_u, one has
+
+    projection_3(W)=L=projection_3(R).               (LCW3)
+
+This supplies an actual W point over every live word, strengthening LW1's projected U=L under the explicit laminar hypothesis. For a nonconcentrated q, one may take one such point in each first-three root and mix them equally; this is ONE theta on W, so the existing same-marginal DT3--DT6 construction applies. It is no longer necessary to check a separate retained-payment margin for those two words.
+
+Section132's one-larger-prime argument gives a quantitative reserve under its specific actual law. LCW1 does not replace that stronger measure estimate: it supplies a point, allows cofactor primes below q, and only constrains the shallow traces at the chosen word. Arbitrary multi-prime cofactor incidences need not be laminar, and no such hypothesis is established for every EB1 family.
+
+Section114's laminar-prefix application supplies a two-Helly matching criterion for different safe-root sets. It does not allocate these mixed depth-one/depth-two codes. The present finite allocation is used only inside the existing whole-hole replacement, with actual cofactor traces and original label ownership. These are ordinary mathematical deductions, not new Lean verification or unrestricted noncoverage.
