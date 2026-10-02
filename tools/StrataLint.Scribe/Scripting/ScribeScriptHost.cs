@@ -25,6 +25,7 @@ public enum ScribeScriptFailureCode
     CreateFailed,
     HostConfiguration,
     SourceRead,
+    TypeLoad,
 }
 
 public sealed record ScribeScriptFailure(
@@ -61,6 +62,15 @@ public static class ScribeScriptHost
 
     private static ScribeScriptResult ExecuteCore(string repositoryRoot, string relativePath,
         ImmutableArray<MetadataReference> references, ImmutableArray<DiagnosticAnalyzer> analyzers)
+        => ExecutePrepared(repositoryRoot, relativePath, references, analyzers, ScriptParseOptions);
+
+    internal static ScribeScriptResult ExecuteWithDefineConstants(string repositoryRoot, string relativePath,
+        string? constants) => ExecutePrepared(repositoryRoot, relativePath, ReferenceAssemblies(), AnalyzerReferences(),
+            ReadScriptParseOptions(constants));
+
+    private static ScribeScriptResult ExecutePrepared(string repositoryRoot, string relativePath,
+        ImmutableArray<MetadataReference> references, ImmutableArray<DiagnosticAnalyzer> analyzers,
+        CSharpParseOptions? parseOptions)
     {
         var normalized = NormalizePath(relativePath);
         if (normalized is null)
@@ -70,18 +80,18 @@ public static class ScribeScriptHost
         }
 
         var root = Path.GetFullPath(repositoryRoot);
-        if (ScriptParseOptions is null)
+        if (parseOptions is null)
             return FailureResult(normalized, ScribeScriptFailureCode.HostConfiguration,
                 "Documents DefineConstants metadata is unavailable or invalid");
         try
         {
-            var sourceGraph = ReadSourceGraph(root, normalized);
+            var sourceGraph = ReadSourceGraph(root, normalized, parseOptions);
             if (sourceGraph.Failure is not null)
             {
                 return new(normalized, null, sourceGraph.Failure);
             }
     
-            var compilation = Compile(root, normalized, sourceGraph.Sources!.Value, references, analyzers);
+            var compilation = Compile(root, normalized, sourceGraph.Sources!.Value, references, analyzers, parseOptions);
             if (compilation.Failure is not null)
             {
                 return new(normalized, null, compilation.Failure);
@@ -91,8 +101,17 @@ public static class ScribeScriptHost
             try
             {
                 using var image = compilation.Image!;
-                var assembly = loadContext.LoadFromStream(image);
-                var type = assembly.GetType(compilation.EntryType!, throwOnError: true)!;
+                Type type;
+                try
+                {
+                    var assembly = loadContext.LoadFromStream(image);
+                    type = assembly.GetType(compilation.EntryType!, throwOnError: true)!;
+                }
+                catch (Exception exception) when (exception is TypeLoadException or FileLoadException
+                    or FileNotFoundException or BadImageFormatException)
+                {
+                    return FailureResult(normalized, ScribeScriptFailureCode.TypeLoad, FirstMessage(exception));
+                }
                 DocumentDefinition definition;
                 try
                 {
@@ -146,9 +165,10 @@ public static class ScribeScriptHost
         return results.OrderBy(result => result.RelativePath, StringComparer.Ordinal).ToImmutableArray();
     }
 
-    private static (ImmutableArray<string>? Sources, ScribeScriptFailure? Failure) ReadSourceGraph(
+    internal static (ImmutableArray<string>? Sources, ScribeScriptFailure? Failure) ReadSourceGraph(
         string root,
-        string entry)
+        string entry,
+        CSharpParseOptions? parseOptions = null)
     {
         var sources = new List<string>();
         var visiting = new HashSet<string>(StringComparer.Ordinal);
@@ -174,7 +194,7 @@ public static class ScribeScriptHost
             }
 
             var text = File.ReadAllText(full);
-            var tree = CSharpSyntaxTree.ParseText(text, ScriptParseOptions, path: path);
+            var tree = CSharpSyntaxTree.ParseText(text, parseOptions ?? ScriptParseOptions, path: path);
             foreach (var declaration in tree.GetRoot().DescendantNodes().OfType<TypeDeclarationSyntax>())
             {
                 foreach (var attribute in declaration.AttributeLists.SelectMany(list => list.Attributes))
@@ -248,15 +268,16 @@ public static class ScribeScriptHost
         string entry,
         ImmutableArray<string> sources,
         ImmutableArray<MetadataReference> references,
-        ImmutableArray<DiagnosticAnalyzer> analyzers)
+        ImmutableArray<DiagnosticAnalyzer> analyzers,
+        CSharpParseOptions parseOptions)
     {
         var trees = sources.Select(path => CSharpSyntaxTree.ParseText(
             File.ReadAllText(Path.Combine(root, path.Replace('/', Path.DirectorySeparatorChar))),
-            ScriptParseOptions,
+            parseOptions,
             path: path)).Append(CSharpSyntaxTree.ParseText(
                 "global using System; global using System.Collections.Generic; global using System.IO; "
                 + "global using System.Linq; global using System.Net.Http; global using System.Threading; "
-                + "global using System.Threading.Tasks;", ScriptParseOptions, path: "ScriptGlobalUsings.cs")).ToImmutableArray();
+                + "global using System.Threading.Tasks;", parseOptions, path: "ScriptGlobalUsings.cs")).ToImmutableArray();
         var compilation = CSharpCompilation.Create(
             "StrataLint.Scribe.Documents",
             trees,
@@ -339,7 +360,11 @@ public static class ScribeScriptHost
 
     private static string MetadataName(INamedTypeSymbol symbol) => symbol.ContainingType is { } parent
         ? MetadataName(parent) + "+" + symbol.MetadataName
-        : (symbol.ContainingNamespace.IsGlobalNamespace ? string.Empty : symbol.ContainingNamespace + ".") + symbol.MetadataName;
+        : NamespaceMetadataName(symbol.ContainingNamespace) + symbol.MetadataName;
+
+    private static string NamespaceMetadataName(INamespaceSymbol symbol) => symbol.IsGlobalNamespace
+        ? string.Empty
+        : NamespaceMetadataName(symbol.ContainingNamespace) + symbol.MetadataName + ".";
 
     private sealed class RuleText(string path) : AdditionalText
     {
@@ -347,12 +372,12 @@ public static class ScribeScriptHost
         public override SourceText GetText(CancellationToken cancellationToken = default) => SourceText.From(File.ReadAllText(path));
     }
 
-    private static readonly CSharpParseOptions? ScriptParseOptions = ReadScriptParseOptions();
+    private static readonly CSharpParseOptions? ScriptParseOptions = ReadScriptParseOptions(
+        typeof(ScribeScriptHost).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>()
+            .FirstOrDefault(attribute => attribute.Key == "ScribeScriptDefineConstants")?.Value);
 
-    private static CSharpParseOptions? ReadScriptParseOptions()
+    private static CSharpParseOptions? ReadScriptParseOptions(string? constants)
     {
-        var constants = typeof(ScribeScriptHost).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>()
-            .FirstOrDefault(attribute => attribute.Key == "ScribeScriptDefineConstants")?.Value;
         if (string.IsNullOrWhiteSpace(constants)) return null;
         var symbols = constants.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
             .Distinct(StringComparer.Ordinal).ToArray();
