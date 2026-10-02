@@ -9,9 +9,7 @@
 import D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport
 import D5.S1.Scale.Fibonacci
 import D5.S3.Divergence.MeanKernels.LogarithmicMeanSandwich
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Analysis.SumIntegralComparisons
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Tactic
 
@@ -44,7 +42,7 @@ noncomputable def H (k j : ℕ) (t : ℝ) : ℝ :=
   rising (a k j t + 1) (E k) * rising (b k j t + 1) (A k) /
     ((4 : ℝ) ^ D k * rising (n k j t - 1 / 2) (D k))
 
-/-- Adjacent density ratio on the integer grid, extended by real finite products. -/
+/-- Real finite-product ratio with auxiliary nonintegral arguments. -/
 noncomputable def q (k j : ℕ) (t : ℝ) : ℝ :=
   (t - j) * H k j t / (j + 1)
 
@@ -172,7 +170,7 @@ noncomputable def lowerEnvelope (k j : ℕ) (t : ℝ) : ℝ :=
     (D k : ℝ) * A k / (2 * b k j t * (b k j t + A k)) -
     (L k : ℝ) * D k / ((n k j t - 1 / 2) * (n k j t + D k - 1 / 2))
 
-/-- The common affine coordinates give the three-block logarithmic derivative bound. -/
+/-- Strict increase, asymptotic slope, and the unique bounded crossing of the real ratio. -/
 theorem result (k : ℕ) (hk : 1 ≤ k) (j : ℕ) :
     0 < c k ∧
     (∀ t : ℝ, (j : ℝ) + 1 ≤ t →
@@ -180,7 +178,14 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (j : ℕ) :
       HasDerivAt (fun z : ℝ => Real.log (q k j z)) (g k j t) t ∧
       lowerEnvelope k j t ≤ g k j t) ∧
     StrictMonoOn (q k j) (Ici ((j : ℝ) + 1)) ∧
-    Tendsto (fun t : ℝ => q k j t / t) atTop (nhds (c k / (j + 1))) := by
+    Tendsto (fun t : ℝ => q k j t / t) atTop (nhds (c k / (j + 1))) ∧
+    (∃! τ : ℝ, τ ∈ Ici ((j : ℝ) + 1) ∧ q k j τ = 1) ∧
+    (∃ τ : ℝ, τ ∈ Ici ((j : ℝ) + 1) ∧ q k j τ = 1 ∧
+      2 * j + 1 < τ ∧ τ < j + (j + 1) / c k ∧
+      ∀ t : ℕ, j + 1 ≤ t →
+        (q k j t < 1 ↔ (t : ℝ) < τ) ∧
+        (q k j t = 1 ↔ (t : ℝ) = τ) ∧
+        (1 < q k j t ↔ τ < (t : ℝ))) := by
   have reciprocal_block_bounds (x : ℝ) (hx : 0 < x) (m : ℕ) :
       Real.log (x + m) - Real.log x - m / (2 * x * (x + m)) ≤
         ∑ i ∈ Finset.range m, 1 / (x + 1 + i) ∧
@@ -393,14 +398,11 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (j : ℕ) :
       exact_mod_cast (Nat.fib_mono (show 3 * k - 2 ≤ 3 * k - 1 by omega))
     have coarse (v : ℕ) : 3 * Nat.fib (v + 2) ≤ 2 * Nat.fib (v + 3) ∧
         Nat.fib (v + 3) ≤ 2 * Nat.fib (v + 2) := by
-      induction v with
-      | zero => norm_num [Nat.fib]
-      | succ v ih =>
-        have h := Nat.fib_add_two (n := v + 2)
-        have hm := Nat.fib_mono (show v + 2 ≤ v + 3 by omega)
-        rw [show v + 2 + 2 = v + 4 by omega, show v + 2 + 1 = v + 3 by omega] at h
-        rw [show v + 1 + 2 = v + 3 by omega, show v + 1 + 3 = v + 4 by omega]
-        omega
+      have h1 := Nat.fib_add_two (n := v)
+      have h2 := Nat.fib_add_two (n := v + 1)
+      have hm := Nat.fib_mono (show v ≤ v + 1 by omega)
+      rw [show v + 1 + 2 = v + 3 by omega, show v + 1 + 1 = v + 2 by omega] at h2
+      omega
     have hAD : (3 : ℝ) * A k ≤ 2 * D k := by
       have h := (coarse (3 * k - 3)).1
       rw [show 3 * k - 3 + 2 = 3 * k - 1 by omega,
@@ -560,7 +562,6 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (j : ℕ) :
     intro t ht z hz htz
     have h := logmono ht hz htz
     exact (Real.log_lt_log_iff (analytic t ht).1 (analytic z hz).1).mp h
-  refine ⟨by dsimp [c]; positivity, analytic, monotonic, ?_⟩
   have scaled_product (α β : ℝ) (m : ℕ) :
       Tendsto (fun t : ℝ => rising (α * t + β) m / t ^ m) atTop (nhds (α ^ m)) := by
     have individual (i : ℕ) :
@@ -592,17 +593,255 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (j : ℕ) :
     simp only [pow_add]
     field_simp
     <;> ring
-  have hlin : Tendsto (fun t : ℝ => (t - j) / t) atTop (nhds 1) := by
-    have h : Tendsto (fun t : ℝ => 1 - (j : ℝ) * t⁻¹) atTop (nhds 1) := by
-      simpa using (tendsto_const_nhds (x := (1 : ℝ))).sub ((tendsto_const_nhds (x := (j : ℝ))).mul tendsto_inv_atTop_zero)
-    apply h.congr'
+  have asymptotic : Tendsto (fun t : ℝ => q k j t / t) atTop (nhds (c k / (j + 1))) := by
+    have hlin : Tendsto (fun t : ℝ => (t - j) / t) atTop (nhds 1) := by
+      have h : Tendsto (fun t : ℝ => 1 - (j : ℝ) * t⁻¹) atTop (nhds 1) := by
+        simpa using (tendsto_const_nhds (x := (1 : ℝ))).sub ((tendsto_const_nhds (x := (j : ℝ))).mul tendsto_inv_atTop_zero)
+      apply h.congr'
+      filter_upwards [eventually_gt_atTop (0 : ℝ)] with t ht
+      field_simp <;> ring
+    have hlim := (hlin.mul hH).div_const ((j : ℝ) + 1)
+    simp only [one_mul] at hlim
+    apply hlim.congr'
     filter_upwards [eventually_gt_atTop (0 : ℝ)] with t ht
-    field_simp <;> ring
-  have hlim := (hlin.mul hH).div_const ((j : ℝ) + 1)
-  simp only [one_mul] at hlim
-  apply hlim.congr'
-  filter_upwards [eventually_gt_atTop (0 : ℝ)] with t ht
-  dsimp [q]
-  ring
+    dsimp [q]
+    ring
+  have Hpos (z : ℝ) (hz : (j : ℝ) + 1 / 2 < z) : 0 < H k j z := by
+    obtain ⟨ha, hb, hn, _⟩ := coords z hz
+    dsimp [H]
+    exact div_pos (mul_pos (product_pos _ (by linarith) _) (product_pos _ (by linarith) _))
+      (mul_pos (by positivity) (product_pos _ hn _))
+  have riemann (x : ℝ) (hx : 0 < x) (m : ℕ) :
+      (∑ i ∈ Finset.range m, 1 / (x + 1 + i)) ≤ Real.log (x + m) - Real.log x ∧
+      Real.log (x + m) - Real.log x ≤ (∑ i ∈ Finset.range m, 1 / (x + i)) := by
+    have unit (x : ℝ) (hx : 0 < x) :
+        1 / (x + 1) ≤ Real.log (x + 1) - Real.log x ∧
+        Real.log (x + 1) - Real.log x ≤ 1 / x := by
+      have h1 := Real.one_sub_inv_le_log_of_pos (div_pos (by linarith : 0 < x + 1) hx)
+      have h2 := Real.log_le_sub_one_of_pos (div_pos (by linarith : 0 < x + 1) hx)
+      rw [Real.log_div (by positivity) hx.ne'] at h1 h2
+      constructor
+      · convert h1 using 1 <;> field_simp <;> ring
+      · convert h2 using 1 <;> field_simp <;> ring
+    induction m with
+    | zero => simp
+    | succ m ih =>
+      rw [Finset.sum_range_succ, Finset.sum_range_succ, Nat.cast_add_one]
+      have h := unit (x + m) (by positivity)
+      simp only [← add_assoc] at h ⊢
+      have heq : x + 1 + (m : ℝ) = x + m + 1 := by ring
+      rw [heq]
+      constructor <;> linarith only [ih.1, ih.2, h.1, h.2]
+  have Hnegative (t : ℝ) (ht : (j : ℝ) + 1 ≤ t) : g k j t - 1 / (t - j) < 0 := by
+    have ht0 : 0 < t := by have := Nat.cast_nonneg (α := ℝ) j; linarith
+    obtain ⟨ha, hb, hn, _⟩ := coords t (by linarith)
+    let aa := fun z : ℝ => (A k : ℝ) * t + E k * (j + z)
+    let bb := fun z : ℝ => (D k : ℝ) * t + A k * (j + z)
+    let nn := fun z : ℝ => (L k : ℝ) * t + D k * (j + z)
+    let f := fun z : ℝ => (A k : ℝ) * Real.log (aa z) +
+      D k * Real.log (bb z) - L k * Real.log (nn z)
+    have hd (z : ℝ) (hz : 0 ≤ z) :
+        HasDerivAt f (-t * (j + z) / (aa z * bb z * nn z)) z := by
+      have hj : (0 : ℝ) ≤ j := Nat.cast_nonneg j
+      have ha' : 0 < aa z := by dsimp [aa]; positivity
+      have hb' : 0 < bb z := by dsimp [bb]; positivity
+      have hn' : 0 < nn z := by dsimp [nn]; positivity
+      have da : HasDerivAt aa (E k) z := by
+        simpa [aa] using (((hasDerivAt_id z).const_add (j : ℝ)).const_mul (E k : ℝ)).const_add ((A k : ℝ) * t)
+      have db : HasDerivAt bb (A k) z := by
+        simpa [bb] using (((hasDerivAt_id z).const_add (j : ℝ)).const_mul (A k : ℝ)).const_add ((D k : ℝ) * t)
+      have dn : HasDerivAt nn (D k) z := by
+        simpa [nn] using (((hasDerivAt_id z).const_add (j : ℝ)).const_mul (D k : ℝ)).const_add ((L k : ℝ) * t)
+      have raw : HasDerivAt f ((A k : ℝ) * (E k / aa z) + D k * (A k / bb z) - L k * (D k / nn z)) z :=
+        (((da.log ha'.ne').const_mul (A k : ℝ)).add
+          ((db.log hb'.ne').const_mul (D k : ℝ))).sub ((dn.log hn'.ne').const_mul (L k : ℝ))
+      have hδeqR : (D k : ℝ) = E k + A k := by exact_mod_cast hδeq
+      have hℓeqR : (L k : ℝ) = A k + D k := by exact_mod_cast hℓeq
+      have identity :
+          (A k : ℝ) * E k * (bb z * nn z) + D k * A k * (aa z * nn z) -
+            L k * D k * (aa z * bb z) =
+              -(((A k : ℝ) ^ 2 - D k * E k) ^ 2) * t * (j + z) := by
+        dsimp [aa, bb, nn]
+        rw [hℓeqR, hδeqR]
+        ring
+      have heq : (A k : ℝ) * (E k / aa z) + D k * (A k / bb z) - L k * (D k / nn z) =
+          -t * (j + z) / (aa z * bb z * nn z) := by
+        apply (eq_div_iff (by positivity : aa z * bb z * nn z ≠ 0)).mpr
+        field_simp
+        rw [hcassini] at identity
+        nlinarith only [identity]
+      rwa [heq] at raw
+    have hm : AntitoneOn f (Ici 0) :=
+      antitoneOn_of_hasDerivWithinAt_nonpos (convex_Ici _)
+        (fun z hz => (hd z hz).continuousAt.continuousWithinAt)
+        (fun z hz => (hd z (interior_subset hz)).hasDerivWithinAt)
+        (fun z hz => by
+          have hj : (0 : ℝ) ≤ j := Nat.cast_nonneg j
+          have hz' : 0 ≤ z := interior_subset hz
+          have hden : 0 < aa z * bb z * nn z := by dsimp [aa, bb, nn]; positivity
+          exact div_nonpos_of_nonpos_of_nonneg (by nlinarith [mul_nonneg ht0.le (add_nonneg hj hz')]) hden.le)
+    have hcomp := hm (by simp) (by norm_num) (by norm_num : (0 : ℝ) ≤ 1)
+    dsimp [f, aa, bb, nn] at hcomp
+    simp only [add_zero] at hcomp
+    have hleft := (riemann (a k j t) ha (E k)).1
+    have hright := (riemann (b k j t) hb (A k)).1
+    have hden := (riemann (n k j t) (by linarith) (D k)).2
+    have hshift : (∑ i ∈ Finset.range (D k), 1 / (n k j t + i)) <
+        ∑ i ∈ Finset.range (D k), 1 / (n k j t - 1 / 2 + i) := by
+      apply Finset.sum_lt_sum_of_nonempty ⟨0, Finset.mem_range.mpr hdNat⟩
+      intro i _
+      exact one_div_lt_one_div_of_lt (by positivity) (by linarith)
+    have hdenstrict := hden.trans_lt hshift
+    have heqa : (A k : ℝ) * t + E k * (j + 1) = a k j t + E k := by dsimp [a]; ring
+    have heqb : (D k : ℝ) * t + A k * (j + 1) = b k j t + A k := by dsimp [b]; ring
+    have heqn : (L k : ℝ) * t + D k * (j + 1) = n k j t + D k := by dsimp [n]; ring
+    rw [heqa, heqb, heqn] at hcomp
+    change (A k : ℝ) * Real.log (a k j t + E k) + D k * Real.log (b k j t + A k) -
+      L k * Real.log (n k j t + D k) ≤
+      A k * Real.log (a k j t) + D k * Real.log (b k j t) - L k * Real.log (n k j t) at hcomp
+    have hl := mul_le_mul_of_nonneg_left hleft hα.le
+    have hr := mul_le_mul_of_nonneg_left hright hδ.le
+    have hn' := mul_lt_mul_of_pos_left hdenstrict hℓ
+    dsimp [g]
+    nlinarith only [hcomp, hl, hr, hn']
+  have logH_deriv (t : ℝ) (ht : (j : ℝ) + 1 ≤ t) :
+      HasDerivAt (fun z : ℝ => Real.log (H k j z)) (g k j t - 1 / (t - j)) t := by
+    have htj : 0 < t - j := by linarith
+    have raw := ((analytic t ht).2.1.sub (((hasDerivAt_id t).sub_const (j : ℝ)).log htj.ne')).add_const
+      (Real.log (j + 1))
+    apply raw.congr_of_eventuallyEq
+    filter_upwards [eventually_gt_nhds (show (j : ℝ) + 1 / 2 < t by linarith)] with z hz
+    have hzj : 0 < z - j := by linarith
+    dsimp [q]
+    rw [Real.log_div (mul_pos hzj (Hpos z hz)).ne' (by positivity),
+      Real.log_mul hzj.ne' (Hpos z hz).ne']
+    ring
+  have Hanti : StrictAntiOn (H k j) (Ici ((j : ℝ) + 1)) := by
+    have hlog : StrictAntiOn (fun t : ℝ => Real.log (H k j t)) (Ici ((j : ℝ) + 1)) := by
+      apply strictAntiOn_of_deriv_neg (convex_Ici _)
+      · intro t ht
+        exact (logH_deriv t ht).continuousAt.continuousWithinAt
+      · intro t ht
+        have hm := interior_subset ht
+        rw [(logH_deriv t hm).deriv]
+        exact Hnegative t hm
+    intro t ht z hz htz
+    change (j : ℝ) + 1 ≤ t at ht
+    change (j : ℝ) + 1 ≤ z at hz
+    exact (Real.log_lt_log_iff (Hpos z (by linarith [hz])) (Hpos t (by linarith [ht]))).mp
+      (hlog ht hz htz)
+  have Hlower (t : ℝ) (ht : (j : ℝ) + 1 ≤ t) : c k < H k j t := by
+    have hlimit : c k ≤ H k j (t + 1) := by
+      apply le_of_tendsto hH
+      filter_upwards [eventually_ge_atTop (t + 1)] with z hz
+      apply Hanti.antitoneOn (show (j : ℝ) + 1 ≤ t + 1 by linarith)
+        (show (j : ℝ) + 1 ≤ z by linarith) hz
+    exact hlimit.trans_lt (Hanti ht (show (j : ℝ) + 1 ≤ t + 1 by linarith)
+      (by linarith : t < t + 1))
+  have Hupper (t : ℝ) (ht : (j : ℝ) + 1 ≤ t) : H k j t < 1 := by
+    have hj : (0 : ℝ) ≤ j := Nat.cast_nonneg j
+    have ht1 : 1 ≤ t := by linarith
+    have ht0 : 0 < t := by linarith
+    obtain ⟨ha, hb, hn, _⟩ := coords t (by linarith)
+    have hab : a k j t + b k j t = n k j t := by
+      dsimp [a, b, n]
+      simp only [hℓeq, hδeq, Nat.cast_add]
+      ring
+    have haA : (A k : ℝ) ≤ a k j t := by
+      dsimp [a]
+      nlinarith only [mul_le_mul_of_nonneg_left ht1 hα.le, mul_nonneg he.le hj]
+    have hbE : (E k : ℝ) ≤ b k j t := by
+      have hED : E k ≤ D k := by omega
+      have hEDR : (E k : ℝ) ≤ D k := by exact_mod_cast hED
+      dsimp [b]
+      nlinarith only [hEDR, mul_le_mul_of_nonneg_left ht1 hδ.le, mul_nonneg hα.le hj]
+    have hn3 : 3 ≤ n k j t := by
+      dsimp [n]
+      nlinarith only [hL3, mul_le_mul_of_nonneg_left ht1 hℓ.le, mul_nonneg hδ.le hj]
+    have hp1 : rising (a k j t + 1) (E k) ≤ n k j t ^ E k := by
+      have h := Finset.prod_le_prod (s := Finset.range (E k))
+        (f := fun i : ℕ => a k j t + 1 + (i : ℝ)) (g := fun _ : ℕ => n k j t)
+        (fun i _ => by positivity) (by
+          intro i hi
+          have hi' : (i : ℝ) + 1 ≤ E k := by
+            exact_mod_cast (Nat.add_one_le_iff.mpr (Finset.mem_range.mp hi))
+          linarith only [hi', hbE, hab])
+      simpa only [rising, Finset.prod_const, Finset.card_range] using h
+    have hp2 : rising (b k j t + 1) (A k) ≤ n k j t ^ A k := by
+      have h := Finset.prod_le_prod (s := Finset.range (A k))
+        (f := fun i : ℕ => b k j t + 1 + (i : ℝ)) (g := fun _ : ℕ => n k j t)
+        (fun i _ => by positivity) (by
+          intro i hi
+          have hi' : (i : ℝ) + 1 ≤ A k := by
+            exact_mod_cast (Nat.add_one_le_iff.mpr (Finset.mem_range.mp hi))
+          linarith only [hi', haA, hab])
+      simpa only [rising, Finset.prod_const, Finset.card_range] using h
+    have hnum : rising (a k j t + 1) (E k) * rising (b k j t + 1) (A k) ≤ n k j t ^ D k := by
+      rw [hδeq, pow_add]
+      exact mul_le_mul hp1 hp2 (product_pos _ (by linarith) _).le (by positivity)
+    have hden : n k j t ^ D k < (4 : ℝ) ^ D k * rising (n k j t - 1 / 2) (D k) := by
+      have h := Finset.prod_lt_prod_of_nonempty
+        (s := Finset.range (D k)) (f := fun _ : ℕ => n k j t)
+        (g := fun i : ℕ => 4 * (n k j t - 1 / 2 + i))
+        (fun _ _ => by linarith)
+        (fun i _ => by nlinarith only [hn3, Nat.cast_nonneg (α := ℝ) i])
+        ⟨0, Finset.mem_range.mpr hdNat⟩
+      simpa only [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_range, rising] using h
+    exact (div_lt_one (mul_pos (by positivity) (product_pos _ hn _))).mpr (hnum.trans_lt hden)
+  have hcpos : 0 < c k := by dsimp [c]; positivity
+  have hc1 : c k < 1 := (Hlower ((j : ℝ) + 1) le_rfl).trans (Hupper _ le_rfl)
+  let U : ℝ := j + (j + 1) / c k
+  have hU : 2 * j + 1 < U := by
+    dsimp [U]
+    have hj1 : 0 < (j : ℝ) + 1 := by positivity
+    have hdiv : (j : ℝ) + 1 < (j + 1) / c k := (lt_div_iff₀ hcpos).mpr (by nlinarith)
+    linarith
+  have hq2 : q k j (2 * j + 1) < 1 := by
+    have h := Hupper (2 * j + 1) (by have := Nat.cast_nonneg (α := ℝ) j; linarith)
+    have heq : q k j (2 * j + 1) = H k j (2 * j + 1) := by
+      dsimp [q]
+      field_simp
+      <;> ring
+    rwa [heq]
+  have hqU : 1 < q k j U := by
+    have h := Hlower U (by have := Nat.cast_nonneg (α := ℝ) j; linarith)
+    have heq : q k j U = H k j U / c k := by dsimp [q, U]; field_simp <;> ring
+    rw [heq]
+    exact (one_lt_div hcpos).mpr h
+  have qcontinuous : ContinuousOn (q k j) (Ici ((j : ℝ) + 1)) := by
+    intro t ht
+    change (j : ℝ) + 1 ≤ t at ht
+    have hexp := (analytic t ht).2.1.exp.continuousAt
+    have hq : ContinuousAt (q k j) t := by
+      apply hexp.congr_of_eventuallyEq
+      filter_upwards [eventually_gt_nhds (show (j : ℝ) + 1 / 2 < t by linarith)] with z hz
+      exact (Real.exp_log (positive z hz)).symm
+    exact hq.continuousWithinAt
+  have h2legal : (j : ℝ) + 1 ≤ 2 * j + 1 := by have := Nat.cast_nonneg (α := ℝ) j; linarith
+  obtain ⟨τ, hτ, hroot⟩ := intermediate_value_Icc hU.le
+    (qcontinuous.mono (fun z hz => h2legal.trans hz.1)) ⟨hq2.le, hqU.le⟩
+  have hτlegal : (j : ℝ) + 1 ≤ τ := h2legal.trans hτ.1
+  have hτlow : 2 * j + 1 < τ := by
+    rcases hτ.1.lt_or_eq with h | h
+    · exact h
+    · rw [← h] at hroot; linarith
+  have hτhigh : τ < U := by
+    rcases hτ.2.lt_or_eq with h | h
+    · exact h
+    · rw [h] at hroot; linarith
+  refine ⟨hcpos, analytic, monotonic, asymptotic, ?_, ?_⟩
+  · refine ⟨τ, ⟨hτlegal, hroot⟩, ?_⟩
+    intro z hz
+    exact monotonic.injOn hz.1 hτlegal (hz.2.trans hroot.symm)
+  · refine ⟨τ, hτlegal, hroot, hτlow, hτhigh, ?_⟩
+    intro t ht
+    have htlegal : (j : ℝ) + 1 ≤ (t : ℝ) := by exact_mod_cast ht
+    refine ⟨?_, ?_, ?_⟩
+    · simpa only [hroot] using monotonic.lt_iff_lt htlegal hτlegal
+    · constructor
+      · intro h
+        exact monotonic.injOn htlegal hτlegal (h.trans hroot.symm)
+      · rintro h; simpa only [h] using hroot
+    · simpa only [hroot] using monotonic.lt_iff_lt hτlegal htlegal
 
 end D5.S3.Arith.FibonacciAtomic.SourceDensityCrossing

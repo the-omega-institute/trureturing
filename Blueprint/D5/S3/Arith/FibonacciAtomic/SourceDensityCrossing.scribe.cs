@@ -21,7 +21,7 @@ internal sealed class SourceDensityCrossingDocument : IScribeDocumentDefinition
         AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The real finite-product ratio is strictly increasing and has a positive asymptotic slope.",
+        "Each real finite-product ratio increases strictly and crosses one at a unique bounded point.",
         H("Real Extension of Fibonacci Source Density Ratios"),
         Blocks(
             Paragraph(Text("F denotes the natural Fibonacci sequence with F(0)=0 and F(1)=1. "
@@ -40,24 +40,52 @@ internal sealed class SourceDensityCrossingDocument : IScribeDocumentDefinition
                 + "/ (4^D rising(n-1/2,D)), where all coefficients and coordinates have the same k,j,t."),
             Def("q", "Real extension", "q(k,j,t)=(t-j)H(k,j,t)/(j+1)."),
             Def("c", "Leading coefficient", "c(k)=A(k)^E(k) D(k)^A(k)/(4^D(k) L(k)^D(k))."),
+            Def("sourceDensity", "Composition count ratio", "sourceDensity(k,t,i) is the ratio of "
+                + "fiberCount(t-i,i) to fiberCount(step iterated 3k times on (t-i,i)). "
+                + "The subtraction is natural subtraction."),
+            Def("Conclusion", "Crossing and integer bridge", "Conclusion(k,j) asserts positivity "
+                + "of c, strict increase, the asymptotic slope, the unique crossing with its "
+                + "bounds and integer comparisons, and equality with the adjacent sourceDensity "
+                + "ratio at every legal integer. The theorem below proves the real crossing "
+                + "clauses; equality with the composition count ratio is a separate condition."),
             Def("g", "Logarithmic derivative", "g(k,j,t)=1/(t-j)+A sum(1/(a+1+i),i<E) "
                 + "+D sum(1/(b+1+i),i<A)-L sum(1/(n-1/2+i),i<D)."),
             Def("lowerEnvelope", "Three-block lower envelope", "The lower envelope is "
                 + "1/(t-j)-(j+1/2)/(LADt^2)-AE/(2a(a+E))-DA/(2b(b+A)) "
                 + "-LD/((n-1/2)(n+D-1/2)). Its coordinates share the same k,j,t."),
             Describe.Lean(DescribeId.Create("source-density-estimate"),
-                DeclarationHandle.Create(Prefix + "result"), H("Strict increase and asymptotic slope"),
+                DeclarationHandle.Create(Prefix + "result"), H("Strict increase and unique crossing"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The derivative is taken on the whole real line at each "
                     + "legal t, including the endpoint j+1. The reciprocal endpoint bounds "
                     + "follow from the logarithmic-mean kernel sandwich. Cassini's squared "
                     + "determinant identity links the three affine coordinates, so their "
-                    + "logarithmic errors are estimated together."))), DescribeRole.Theorem))));
+                    + "logarithmic errors are estimated together.")),
+                    Paragraph(Text("The finite-product factor H decreases strictly to c and lies "
+                        + "strictly between c and one on the legal half-line. Hence q(2j+1)<1 "
+                        + "and q(j+(j+1)/c)>1. Continuity gives the crossing between these two "
+                        + "points, and strict increase gives uniqueness and the three integer "
+                        + "comparison equivalences for the real finite-product ratio."))), DescribeRole.Theorem))));
 
     private static Formula ResultFormula()
     {
         var k = V("k"); var j = V("j"); var t = V("t");
+        var tau = V("tau"); var z = V("z");
         var qt = Call("q", k, j, t); var gt = Call("g", k, j, t);
+        var qtau = Call("q", k, j, tau);
+        var legalRoot = Both(LeOf(Add(j, D(1)), tau), Seq(qtau, Sp, Eq, Sp, D(1)));
+        var uniqueRoot = Seq(Exists, Sp, tau, Sp, InMacro, Sp, V("R"), Comma, Sp,
+            Both(legalRoot, Seq(Forall, Sp, z, Sp, InMacro, Sp, V("R"), Comma, Sp,
+                Par(Both(LeOf(Add(j, D(1)), z), Seq(Call("q", k, j, z), Sp, Eq, Sp, D(1)))),
+                Sp, Implies, Sp, z, Sp, Eq, Sp, tau)));
+        var comparisons = Seq(Forall, Sp, t, Sp, InMacro, Sp, V("N"), Comma, Sp,
+            Par(LeOf(Add(j, D(1)), t)), Sp, Implies, Sp,
+            Both(Seq(Par(LtOf(qt, D(1))), Sp, Iff, Sp, Par(LtOf(t, tau))),
+                Seq(Par(Seq(qt, Sp, Eq, Sp, D(1))), Sp, Iff, Sp, Par(Seq(t, Sp, Eq, Sp, tau))),
+                Seq(Par(LtOf(D(1), qt)), Sp, Iff, Sp, Par(LtOf(tau, t)))));
+        var boundedRoot = Seq(Exists, Sp, tau, Sp, InMacro, Sp, V("R"), Comma, Sp,
+            Both(legalRoot, LtOf(Add(Seq(D(2), j), D(1)), tau),
+                LtOf(tau, Add(j, new Formula.Fraction(Add(j, D(1)), Call("c", k)))), comparisons));
         var analytic = Seq(Forall, Sp, t, Sp, InMacro, Sp, V("R"), Comma, Sp,
             Par(LeOf(Add(j, D(1)), t)), Sp, Implies, Sp,
             Both(LtOf(D(0), qt), Call("HasDerivAt", Call("log_q", k, j), gt, t),
@@ -67,6 +95,7 @@ internal sealed class SourceDensityCrossingDocument : IScribeDocumentDefinition
             Both(LtOf(D(0), Call("c", k)), analytic,
                 Call("StrictMonoOn", Call("q", k, j), Call("Ici", Add(j, D(1)))),
                 Call("Tendsto", Call("q_over_t", k, j), Call("atTop"),
-                    Call("nhds", new Formula.Fraction(Call("c", k), Add(j, D(1))))))));;
+                    Call("nhds", new Formula.Fraction(Call("c", k), Add(j, D(1))))),
+                uniqueRoot, boundedRoot)));
     }
 }
