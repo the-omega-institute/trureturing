@@ -1,0 +1,30 @@
+**Proof.** Put $V=K^k$ and $P=\mathbb P(K,V)$. The projective cardinality formula gives $|P|=(q^k-1)/(q-1)=n>0$. Fix $v_0\ne0$ and define $G'_i=v_0$ when $G_i=0$, and $G'_i=G_i$ otherwise. All $G'_i$ are nonzero. For every physical sample sequence and natural horizon $t$,
+
+$$
+\operatorname{span}_K\{G_{X_j}:j<t\}
+\subseteq\operatorname{span}_K\{G'_{X_j}:j<t\}.
+$$
+
+Indeed each old generator is either zero, which lies in every subspace, or an unchanged new generator. This is subspace containment, not a claim that the old set of vector values is contained in the new set. The same argument over all positions shows that $G'$ spans $V$, since matrix rank $k$ identifies the old column span with $V$.
+
+Let $e:\operatorname{Fin}(n)\to P$ be the bijection $i\mapsto[S_i]$, and choose $a_p=S_{e^{-1}(p)}$. These representatives span $V$: a nonzero vector $v$ belongs to the singleton span of $a_{[v]}$, because that singleton span is the line of $v$; zero belongs automatically. Thus $S$ also spans $V$. For every $p\in P$, the physical fiber of $S$ contains exactly one position, so its uniform ray weight is $1/n=1/|P|$. The physical word identity of Section 12.2, applied to this actual bijection, therefore identifies uniform projective recovery with uniform physical simplex recovery. It does not require scalar representative choices to be equivariant.
+
+On the original physical sample space, prefix containment and Sections 12.1–12.2 give, for every $t\in\mathbb N$,
+
+$$
+\Pr(T_G\le t)\le\Pr(T_{G'}\le t)\le\Pr(T_S\le t).
+$$
+
+Each recovery event is measurable: it is the inverse image of the set of spanning length-$t$ words under the measurable prefix map, and that finite word space has measurable singletons. Complementing under probability-one measures gives
+
+$$
+\Pr(T_S>t)\le\Pr(T_G>t).
+$$
+
+These statements include the empty prefix and every horizon below $k$; no positive recovery probability at a particular horizon is assumed. For either full-span generator $C=G,S$, uniform iid sampling has finite expectation: failure by time $t$ implies that at least one of the $n$ positions has not appeared, so its probability is at most $n(1-1/n)^t$. Summation gives finiteness. The nonnegative stopping time satisfies the exact tail identity
+
+$$
+\mathbb E[T_C]=\sum_{t=0}^{\infty}\Pr(T_C>t).
+$$
+
+Comparing the nonnegative extended-real sums first gives the claimed order. Their finiteness makes conversion to the ordinary real expectations order-preserving and gives integrability of both stopping times. This proves the assertion for the original physical sampling law without deleting, conditioning away or renormalizing any position. All projective averaging and physical transport deductions are local steps of this argument.
