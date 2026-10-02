@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/PopStack/PopStackSimple.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PopStack/PopStackSimple.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cioni-ferrari-smith-pop-stack-simple` (proved) by `D5/S3/Combinatorics/PopStack/PopStackSimple.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cioni-ferrari-smith-pop-stack-simple","declaration_gid":"D5/S3/Combinatorics/PopStack/PopStackSimple.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Lapo Cioni, Luca Ferrari, Rebecca Smith (2025). *Sorting permutations using a pop stack with a bypass*. DOI: [10.1016/j.disc.2025.114964](https://doi.org/10.1016/j.disc.2025.114964). URL: <https://arxiv.org/abs/2503.08285v1>.
