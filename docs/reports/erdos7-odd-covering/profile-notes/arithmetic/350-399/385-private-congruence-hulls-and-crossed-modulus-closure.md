@@ -21725,3 +21725,150 @@ refute (RH4)--(RH6). A complete solution still needs a whole-cover
 argument forcing one usable reciprocal pair, or a different construction
 that pays the complete joint liability \(K_{d,g}\) while satisfying both
 EB1 comparisons.
+
+## 177. An occupied lcm transfers a reciprocal swap to complete private liability
+
+Keep the EB1-selected whole cover and the notation of Section 176. Assume
+
+\[
+g\mid\Gamma_d,\qquad d\mid\Gamma_g,\qquad
+J=J_d\cup J_g,\qquad r:=|J|\ge 2,
+\]
+
+and put \(L=\operatorname{lcm}(d,g)\). Then
+
+\[
+\boxed{K_{d,g}\ne\varnothing,\qquad L\in D\setminus J.}
+\tag{OL1}
+\]
+
+Moreover, after choosing \(c\in K_{d,g}\), replacing the two parent
+classes by \(B_d,B_g\), replacing \(A_L\) by \(c\bmod L\), and deleting
+all labels in \(J\), the exact remaining hole is the original complete
+private region \(P_L\).
+
+Consequently, every legal repair \(\mathcal R\) of \(P_L\) whose moduli
+are distinct odd nonunits outside \(D\setminus J\) satisfies
+
+\[
+|\mathcal R|\ge r,
+\qquad
+|\mathcal R|=r\Longrightarrow
+\sum_{R\in\mathcal R}\operatorname{mod}(R)
+\ge \sum_{m\in J}m.
+\tag{OL2}
+\]
+
+In particular,
+
+\[
+\boxed{
+\{e>1:e\mid\Gamma_L\}\subseteq D\setminus J,
+\qquad \Gamma_L\ne Q.
+}
+\tag{OL3}
+\]
+
+Here “outside \(D\setminus J\)” is the post-exchange label palette: labels in
+\(J\) have been freed and may be reused, while every label retained in
+\(D\setminus J\) is unavailable to a repair.
+
+### Proof
+
+Since \(r\ge2\), (RH6) gives \(K_{d,g}\ne\varnothing\). Choose
+\(c\in K_{d,g}\). The two old classes meet in the single residue class
+\(c\bmod L\). If \(L\notin D\setminus J\), then this label is either unused
+or has just been freed, so after the reciprocal swap and deletion of \(J\)
+we may add \(c\bmod L\). The swap leaves only \(K_{d,g}\) uncovered, and
+this addition gives a whole cover with \(|D|-r+1<|D|\) classes. EB1 therefore
+forces \(L\in D\setminus J\).
+
+The nonempty intersection and irredundancy make \(d\) and \(g\)
+incomparable, so \(L\ne d,g\). Since \(d\mid L\) and \(g\mid L\), an
+intersection of \(A_L\) with \(A_d\) or \(A_g\) would make \(L\)'s old class
+redundant; hence both intersections are empty. If \(A_L\cap B_d\) were
+nonempty, then \(d\mid L\) and the phase equality would put \(L\in J_d\),
+contrary to \(L\in D\setminus J\); the same argument applies to \(B_g\).
+
+Now perform all three rephasings and delete \(J\). The new \(L\)-class
+covers \(K_{d,g}\). Points private to \(d\) and \(g\) are covered by the
+opposite exchanged parent, and points with any other old owner retain that
+owner. Every deleted class lies inside \(B_d\cup B_g\), so its deletion
+loses no point outside those exchanged parents. On the old \(A_L\), neither
+exchanged parent nor any deleted class has an owner; the new class
+\(c\bmod L\subseteq A_d\) is disjoint from \(A_L\). Thus precisely the
+points private to \(L\), namely \(P_L\), remain uncovered.
+
+Adding a repair \(\mathcal R\) consequently gives a whole cover with
+\(|D|-r+|\mathcal R|\) classes. EB1 yields the first inequality in (OL2),
+and its equal-cardinality modulus-sum comparison yields the second.
+
+If \(e>1\) divides \(\Gamma_L\) but \(e\notin D\setminus J\), then
+\(P_L\subseteq w_L\bmod e\) by the definition of the complete private hull.
+The single class \(w_L\bmod e\) is therefore a legal repair, contradicting
+\(r\ge2\). This proves the inclusion in (OL3). Every element of \(J\) divides
+\(Q\); if \(\Gamma_L=Q\), each such element would belong to the left-hand
+side of (OL3), contradicting \(J\cap(D\setminus J)=\varnothing\). Hence
+\(\Gamma_L\ne Q\). \(\square\)
+
+This is a complete-liability transfer, not a universal forcing theorem. It
+only applies after a reciprocal pair with at least two receiving descendants
+has been found. The unrestricted problem still requires a whole-cover
+argument forcing such a pair, or another strict descent that handles the
+remaining joint-owner obstruction.
+
+### Full ternary height bounds the two-sided receiving packet
+
+The existing [Hough--Nielsen Theorem 1](https://arxiv.org/pdf/1703.02133v2),
+already recorded in the repository, says that every finite distinct covering
+system with moduli greater than one has a modulus divisible by \(2\) or
+\(3\). Therefore a hypothetical all-odd cover has \(3\mid Q\).
+
+Let \(H=v_3(Q)\), \(T=3^H\), and suppose the reciprocal pair above also
+satisfies
+
+\[
+v_3(d)=v_3(g)=H,\qquad J_d\ne\varnothing,\qquad J_g\ne\varnothing.
+\]
+
+Then
+
+\[
+\boxed{|J_d\cup J_g|\le2.}
+\tag{OL4}
+\]
+
+Indeed, if \(r:=|J_d\cup J_g|\ge3\), (OL1)--(OL2) apply. Write
+\(d=Tu\) and \(g=Tv\). The nonempty joint owner set and irredundancy make
+the parents incomparable, so \(u,v>1\) are distinct odd integers not
+divisible by \(3\). Let \(\rho=a_L\bmod T\), and define three CRT classes
+\[
+\begin{array}{c|c|c}
+j & \text{cofactor condition} & \text{new modulus}\\ \hline
+0 & \text{none} & 3T\\
+1 & x\equiv a_L\pmod u & 3d\\
+2 & x\equiv a_L\pmod v & 3g
+\end{array}
+\]
+Their residues modulo \(3T\) are respectively
+\(\rho,\rho+T,\rho+2T\). Every point of \(A_L\) has exactly one of these
+three next ternary digits and satisfies both cofactor congruences inherited
+from \(L\), so these three fresh classes cover all of \(A_L\), hence \(P_L\).
+Their ternary exponent is \(H+1\), so none is an original label.
+
+If \(r>3\), this is a repair with fewer than \(r\) classes, contradicting
+(OL2). If \(r=3\), choose distinct \(M_d\in J_d\) and \(M_g\in J_g\);
+the union-size assumption guarantees such a choice even when the two
+receiving sets overlap. Since \(d\) and \(g\) already have the full
+ternary height of \(Q\), each proper descendant ratio is an odd integer
+greater than one and not divisible by \(3\), hence at least \(5\). Thus
+\[
+\sum_{m\in J}m\ge M_d+M_g\ge5(d+g)>3(T+d+g),
+\]
+where the last inequality follows from \(d=Tu,g=Tv\) and the distinct
+odd \(u,v>1\). This contradicts the equal-cardinality modulus-sum bound in
+(OL2), because the three fresh repair moduli have sum \(3(T+d+g)\).
+
+This consequence is still conditional on finding a reciprocal pair with
+both receiving sets nonempty. It supplies a sharper obstruction inside the
+full-ternary branch, not the missing universal forcing statement.
