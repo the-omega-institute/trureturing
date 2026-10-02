@@ -92,3 +92,94 @@ $$
 Theorem B does not cover this window. At the exact $c=9$ endpoint, the shift $\log9=2a_9$ has zero overlap, so the same prime-power list $\{2,3,4,5,7,8\}$ applies. The missing step is an estimate for the enlarged interval's actual operator, retained matrix and infinite complement. An unchanged prime list does not transport the old certificate or its tiny margin. The next FIB cutoff $c_3=27$, with $a_{27}=3\log3/2$, also lies outside the stated range.
 
 The [existing same-symbol coupling allowance](../Fourier/montgomery1978largesieve.md) keeps a common signed cross interval, every middle mode and the second-jet remainder. A sufficient consumer still needs the actual retained form to dominate their complete Schur cost. The source's positive-tail correction suggests retaining an available arithmetic-compatible positive contribution in that form; it does not establish that domination at $c=9$, an induction step or cofinal support positivity. Failure of a particular upper allowance to fit would not refute positivity or RH.
+
+## A source-formula application to the actual prime block at $c=9$
+
+The source's weighted Schur formula in Appendix B.2 can be reused without its old support-dependent constants. At the new physical half-width $a=\log3$, let $I=(-a,a)$, $\mathcal H=L^2(I;\mathbb C)$ and
+
+$$
+(S_df)(u)=\mathbf1_I(u+d)f(u+d),\qquad
+C_{\rm p}=\sum_{n\in\{2,3,4,5,7,8\}}w_n(S_{\log n}+S_{-\log n}),
+\qquad w_n=\frac{\Lambda(n)}{\sqrt n}.
+$$
+
+These are the actual compressed translations on the whole Hilbert space, with $S_d^*=S_{-d}$. The $n=9$ endpoint translation is zero almost everywhere. Put $M_9=(7/2)I-C_{\rm p}$. The following application gives a lower bound for this **prime comparison block**, not for $Q$.
+
+Choose $q(u)=1+(5/8)(u/a)^2$. The source formula bounds the absolute quadratic form by the weighted row sum:
+
+$$
+|\langle f,C_{\rm p}f\rangle|
+\le\int_I r_q(u)|f(u)|^2\,du,
+\qquad
+r_q(u)=\sum_nw_n
+\frac{\mathbf1_I(u+\log n)q(u+\log n)
++\mathbf1_I(u-\log n)q(u-\log n)}{q(u)}.
+\tag{A1}
+$$
+
+This formula uses complex weighted Young and translation of the adjoint term; its validity does not require the source's $17/16$ width, finite-dimensional tests or RH. The function $r_q$ is even. New outward support cells and rational bounds are required at $a=\log3$.
+
+Use the source's logarithm grid endpoints $l_p^-<\log p<l_p^+$ and root lower endpoints $k_n/10^6\le\sqrt n$:
+
+| $p$ | $10^6l_p^-$ | $10^6l_p^+$ |
+|---|---:|---:|
+| $2$ | $693147$ | $693148$ |
+| $3$ | $1098612$ | $1098613$ |
+| $5$ | $1609437$ | $1609438$ |
+| $7$ | $1945910$ | $1945911$ |
+
+For $n=2,3,4,5,7,8$, the respective $k_n$ are $1414213,1732050,2000000,2236067,2645751,2828427$. For $n=p^j$, define
+
+$$
+w_n^+=\frac{l_p^+}{k_n/10^6},\qquad
+t_n^-=\frac{j l_p^-}{l_3^+},\qquad
+t_n^+=\frac{j l_p^+}{l_3^-}.
+$$
+
+Set $t_3^-=t_3^+=1$ instead: this shift equals the actual half-width exactly. The weight remains $\log3/\sqrt3$. Define
+
+$$
+x_1=t_4^--1,\quad x_2=1-t_2^-,\quad
+x_3=t_5^--1,\quad x_4=t_7^--1,\quad x_5=t_8^--1.
+$$
+
+They are, respectively, $287681/1098613$, $405466/1098613$, $510824/1098613$, $847297/1098613$, $980828/1098613$, in increasing order inside $(0,1)$. On $x=u/a\in[0,1]$, the following outward lists activate negative shifts early and retain positive shifts late:
+
+| Cell | Negative shifts | Positive shifts | Lower bound for the quadratic minimum |
+|---|---|---|---:|
+| $[0,x_1]$ | $2,3$ | $2$ | $2/5$ |
+| $[x_1,x_2]$ | $2,3,4$ | $2$ | $13/100$ |
+| $[x_2,x_3]$ | $2,3,4$ | none | $11/10$ |
+| $[x_3,x_4]$ | $2,3,4,5$ | none | $4/25$ |
+| $[x_4,x_5]$ | $2,3,4,5,7$ | none | $1/50$ |
+| $[x_5,1]$ | $2,3,4,5,7,8$ | none | $4/25$ |
+
+The positive $n=3$ shift is present only at the single endpoint $x=0$ under a closed-interval convention, hence contributes nothing to the $L^2$ integral. The rows cover every other support switch; no prime-power weight is deleted.
+
+For each row, with $b=5/8$ and $R=27/10$, sum its listed terms with multiplicity to form
+
+$$
+W=\sum w_n^+,\quad
+B=\sum_{\rm negative}w_n^+t_n^--\sum_{\rm positive}w_n^+t_n^+,
+\quad D=\sum w_n^+(t_n^+)^2.
+$$
+
+Then, on that whole cell,
+
+$$
+(1+bx^2)(R-r_q(ax))\ge
+P(x):=b(R-W)x^2+2bBx+(R-W-bD).
+\tag{A2}
+$$
+
+The listed quadratic-minimum bounds were evaluated using exact fractions, at both endpoints and any interior vertex of a convex quadratic. Each minimum strictly exceeds $1/50$. Since $1+bx^2\le13/8$, (A1)–(A2) give
+
+$$
+|\langle f,C_{\rm p}f\rangle|
+\le\left(\frac{27}{10}-\frac4{325}\right)\|f\|^2,
+\qquad
+\boxed{\frac45 I\preceq M_9\preceq\frac{31}{5}I.}
+\tag{A3}
+$$
+
+The bound applies to the complete complex Hilbert space, and therefore its even subspace. This is a paper application of an existing weighted Schur formula with a new exact scalar parameter calculation; it is not a new kernel theorem, reproduction of a fixed-window certificate or claim of priority. The pole and Gamma band are still in $K$, and the positive exterior-frequency contribution remains in $T_{\rm tail}$. Neither $M_9\succ0$ nor its invertibility establishes positivity of $M_9+K+U$ or $Q$.
