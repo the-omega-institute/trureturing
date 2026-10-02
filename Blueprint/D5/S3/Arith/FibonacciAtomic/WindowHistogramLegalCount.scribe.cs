@@ -165,13 +165,14 @@ internal sealed class WindowHistogramLegalCountDocument : IScribeDocumentDefinit
                 + "positive-gap equivalence; count the Z subsets by the standard "
                 + "powerset-cardinality formulas. These operations retain all "
                 + "remaining independent factors and yield the X and Z formulas.",
-                "The standard counting inputs are described by MIT Mathematics for "
-                + "Computer Science, Corollary 15.5.3 and Rule 15.6.3. Flajolet and "
-                + "Sedgewick, Analytic Combinatorics, discuss Smirnov words (pp. 204-205), "
-                + "Carlitz compositions (pp. 262-263), and locally constrained words "
-                + "(pp. 349-350). The inspected sections supply general methods; they "
-                + "do not state this same five-window histogram and terminal-fiber result. "
-                + "This is a bounded literature finding, not a claim of universal novelty."))));
+                "The six closed forms are applications of the published generalized "
+                + "Goulden-Jackson cluster method: Zhuang, arXiv:1508.02793v3, §2 "
+                + "Theorem 1, and Kupin-Yuster, arXiv:0810.5113, §4 (7) and §7.2. "
+                + "Those sources provide the general constrained-word enumeration framework; "
+                + "the new content here is only the kernel-verified correspondence between "
+                + "actual legal words, marked neutral cuts, and factor data. The splitOnP "
+                + "specification in the pinned Lean core was audited, but the Bool-marked "
+                + "Cuts inverse and cleanliness obligations remain specific to this module."))));
 
     private static DocumentBlock Node(string name, string title, string statement,
         DescribeRole role, params string[] proof) => Describe.Lean(

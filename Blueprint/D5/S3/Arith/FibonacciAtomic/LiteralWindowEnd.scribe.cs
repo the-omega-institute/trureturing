@@ -32,8 +32,19 @@ internal sealed class LiteralWindowEndDocument : IScribeDocumentDefinition
                             "A live transition rejects an incoming seam 1 followed by a low "
                                 + "bit 1. Otherwise it takes the high bit as the new seam and "
                                 + "records whether the current window is nonzero as End. "
-                                + "Legal(s,flatten(w)) includes the incoming seam and excludes "
-                                + "adjacent ones in the complete flattened word."))),
+                            + "Legal(s,flatten(w)) includes the incoming seam and excludes "
+                            + "adjacent ones in the complete flattened word."))),
+                    DescribeRole.Theorem),
+                Describe.Lean(
+                    DescribeId.Create("literal-window-legal-chain"),
+                    DeclarationHandle.Create(Prefix + "legal_chain"),
+                    H("Legal flattened words are window seam chains"),
+                    StatementSource.WithoutFormula(),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text(
+                        "This interface exposes the adjacent-window chain form of the legal "
+                        + "flattened language. It is reused by the gap histogram module and "
+                        + "does not introduce a new counting claim."))),
                     DescribeRole.Theorem),
                 Describe.Lean(
                     DescribeId.Create("literal-window-success-bijection"),
