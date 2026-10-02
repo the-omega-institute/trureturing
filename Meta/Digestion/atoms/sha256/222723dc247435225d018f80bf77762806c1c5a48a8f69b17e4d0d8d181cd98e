@@ -1,0 +1,36 @@
+### 52.5. 错误教师的真实 proper-risk 费用
+
+对任意真实 $\theta$、候选 $\eta$ 和 $\alpha,\beta\in[0,1]$，置
+
+$$
+J_{\theta\eta}=\mathbb E_X\|w_{C_\theta(X)}-w_{C_\eta(X)}\|_2^2
+=T(\theta,\eta).
+$$
+
+若部署后验为 $q_\beta(C_\eta(X))$，则在同一三类质量（52.2）下有精确的跨律恒等式
+
+$$
+\begin{aligned}
+\Delta_B(\theta,\alpha;q_\beta\circ C_\eta)
+ &=S(\alpha-\beta)^2+\alpha\beta J_{\theta\eta},\\
+\Delta_{\log}(\theta,\alpha;q_\beta\circ C_\eta)
+ &=D_F(\alpha,\beta)
+ +\frac{\alpha}{\beta}
+ \mathrm{KL}(P_{\theta,\beta}\Vert P_{\eta,\beta}),\qquad \beta>0.
+\end{aligned}
+\tag{52.23}
+$$
+
+其中 $D_F$ 是式（51.17）的参数 Bregman 项；当 $\beta=0$ 时第二式的结构项按连续意义为零，实际后验是均匀向量。式（52.23）把噪声估计误差和教师位置误差分开，且第二项在 $\alpha\beta>0$、$\theta\ne\eta$ 时严格为正。由（52.11），它至少包含 $\alpha\beta d_0$ 的 Brier 结构费用。
+
+例如 $\theta=(1,2,3)$、$\eta=(1,2,4)$、$\beta=\alpha>0$ 时，
+
+$$
+\Delta_B=\frac{192\chi}{625}\alpha^2,qquad
+\Delta_{\log}=\frac{96}{625}\alpha A\lambda(\alpha)>0.
+\tag{52.24}
+$$
+
+在 $\alpha=1$，两数分别为 $0.0527071872780\ldots$ 与
+$0.1121516216098\ldots$。所以即使噪声标量完全已知，错误的学习三元组也会在真实测试律上付出结构费用；它不能被已知教师的条件保证静默吸收。
+

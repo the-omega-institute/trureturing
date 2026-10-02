@@ -1,0 +1,149 @@
+**引理 48.3（两个截距几何及实际词的统一分离）。** 以下目标与预测均使用曲线通道。记
+
+$$
+\begin{aligned}
+h_0&=(k-t,-2t),\qquad \mathcal H(\zeta)=(k+\zeta,2\zeta),\\
+H^\star(X)=H(\rho^{\mathrm{c}}(X))
+&=h_0+t(1,2)(G_1+2G_2)
+=\mathcal H(-t+tG_1+2tG_2).
+\end{aligned}
+\tag{48.13}
+$$
+
+准确根一维头的偏置 $\beta$ 必须位于整条目标直线 $\mathcal H(\mathbb R)$ 上；该线上的最小实际截距跨度为 $k$，且只在 $\beta=\mathcal H(0)=(k,0)$ 达到。记 $U_2$ 为两个目标坐标在全部外部补全下所得中窗截面的联合实张成。任意准确预测的中窗共同路径空间必须包含
+
+$$
+U_2(H^\star-\beta)=
+\begin{cases}
+\operatorname{span}\{1,b,c,bc\},&\beta\ne h_0,\\
+\operatorname{span}\{b,c,bc\},&\beta=h_0.
+\end{cases}
+\tag{48.14}
+$$
+
+两行的维数分别为四、三；唯一消去中窗常数方向的偏置 $h_0$ 有费用 $\mathfrak b(h_0)=2t>k$。
+
+这些维数障碍有下列不限制学习参数的定量版本。对于每个固定尾赋值 $\tau=(w_4,\ldots,w_n)$：若 $m\le3$ 且 $B<2t$，存在一个实际三窗词，其 log-odds 误差至少为 $\delta_M$；若 $m\le2$，不论 $B$ 多大，存在一个实际三窗词，其误差至少为 $\delta_2$。根方面，若 $q\le1$ 且 $B<k$，存在 $C=0$ 或 $C=2$ 的一个整类，其每个输入的误差至少为 $\delta_R$；若 $q=0$，不论 $B$ 多大，也有一个这样的整类，其每个输入的误差至少为 $\delta_0$。常数为
+
+$$
+\delta_M=\frac{2t-B}{4\sqrt5},\qquad
+\delta_2=\frac{t}{2\sqrt3},\qquad
+\delta_R=\sqrt{\frac25}(k-B),\qquad
+\delta_0=t\sqrt5.
+\tag{48.15}
+$$
+
+误差均指 $\|H(p)-H^\star\|_2$；中窗见证在该尾下的条件质量为 $1/125$，根整类质量至少为 $16/125$。
+
+证明。三个目标后验的 logits 可取 $(-\zeta,k,\zeta)$，消去第0类 logit 后得到式（48.13）。三个目标点是 $\mathcal H(-t),\mathcal H(0),\mathcal H(t)$，且彼此不同。若 $q=1$ 且准确，$H(p)=\beta+Az$ 的仿射像必须包含这三个点，故其整条直线与目标线重合，$\beta=\mathcal H(\zeta_0)$。该偏置的费用为
+
+$$
+\mathfrak b(\mathcal H(\zeta_0))
+=\max\{|k+\zeta_0|,|2\zeta_0|,|k-\zeta_0|\}
+=\max\{k+|\zeta_0|,2|\zeta_0|\}.
+\tag{48.16}
+$$
+
+最小值恰为 $k$，仅在 $\zeta_0=0$ 达到。根维数零的仿射像为点，不能包含这三个目标。
+
+固定中窗叶之外的全部输入，沿该叶到根的每次双线性合并都成为对当前消息的齐次线性映射。再与头斜率复合，两个预测 log-odds 减去 $\beta$ 都属于中窗叶坐标函数的同一个张成空间；任意有符号、非线性叶编码也服从这个约束。第二目标坐标减偏置的四个外部 $(a,d)=00,10,01,11$ 截面为
+
+$$
+a_0\mathbf1,\quad a_0\mathbf1+2tb,\quad
+ a_0\mathbf1+4tc,\quad a_0\mathbf1+2tb+4tc-4tbc,
+\qquad a_0=-2t-\beta_2.
+\tag{48.17}
+$$
+
+作差得到 $b,c,bc$；当 $a_0\ne0$ 时还得到1。第一坐标有同样的非恒定方向，常数系数为 $k-t-\beta_1$。所以恰在 $\beta=h_0$ 时两者都不需要常数。$1,b,c,bc$ 在实际中窗 $000,100,001,101$ 上独立；原字母 $010$ 不被删去，只是其目标截面与 $000$ 相同。又 $k-t<0$、$-2t<k-t$，故 $\mathfrak b(h_0)=2t$，证明式（48.14）。
+
+定量证书仍取这些四个中窗，首窗取 $000,001$，第三窗取 $000,100$，外部列依次为 $(a,d)=00,10,01,11$。十六个不同实际词各有条件质量 $1/125$。令
+
+$$
+V=\begin{pmatrix}
+1&0&0&0\\1&1&0&0\\1&0&1&0\\1&1&1&1
+\end{pmatrix}.
+$$
+
+式（48.17）的实际第二坐标目标矩阵是
+
+$$
+\begin{aligned}
+M(a_0)&=V\operatorname{diag}(a_0,2t,4t,-4t)V^{\mathsf T}\\
+&=\begin{pmatrix}
+a_0&a_0&a_0&a_0\\
+a_0&a_0+2t&a_0&a_0+2t\\
+a_0&a_0&a_0+4t&a_0+4t\\
+a_0&a_0+2t&a_0+4t&a_0+2t
+\end{pmatrix},\qquad
+\det M(a_0)=-32a_0t^3.
+\end{aligned}
+\tag{48.18}
+$$
+
+对于 $a_0\ne0$，直接逆为
+
+$$
+\begin{aligned}
+M(a_0)^{-1}&=\begin{pmatrix}
+\frac1{a_0}+\frac1{2t}&-\frac1{4t}&0&-\frac1{4t}\\
+-\frac1{4t}&\frac1{4t}&-\frac1{4t}&\frac1{4t}\\
+0&-\frac1{4t}&0&\frac1{4t}\\
+-\frac1{4t}&\frac1{4t}&\frac1{4t}&-\frac1{4t}
+\end{pmatrix},\\
+\|M(a_0)^{-1}\|_F^2&=\frac1{a_0^2}+\frac1{a_0t}+\frac1{t^2}.
+\end{aligned}
+\tag{48.19}
+$$
+
+任意预测的对应矩阵 $N$ 可分解为四行实际叶编码乘四列路径系数，故 $\operatorname{rank}N\le m$。秩至多三时，取单位核向量 $u$，得到
+
+$$
+\|M-N\|_F\ge\|(M-N)u\|_2=\|Mu\|_2
+\ge\frac1{\|M^{-1}\|_{\mathrm{op}}}\ge\frac1{\|M^{-1}\|_F}.
+\tag{48.20}
+$$
+
+十六个元中有一个误差至少为右端的四分之一。若 $B<2t$，实际偏置限制给 $a_0<0$、$|a_0|\ge2t-B$。式（48.19）的交叉项非正，且 $2t-B\le2t$，所以
+
+$$
+\|M(a_0)^{-1}\|_F^2
+\le\frac1{(2t-B)^2}+\frac1{t^2}
+\le\frac5{(2t-B)^2}.
+\tag{48.21}
+$$
+
+这证明 $\delta_M$。若 $m\le2$，不移去偏置的预测矩阵为 $N+\beta_2\mathbf1\mathbf1^{\mathsf T}$，秩仍至多三。未移去偏置的目标是 $M(-2t)$，其逆 Frobenius 范数平方恰为 $3/(4t^2)$；式（48.20）给 $\delta_2=t/(2\sqrt3)$，无需控制偏置。
+
+根证书使用目标端点相对实际偏置的两列
+
+$$
+R_\beta=
+\begin{pmatrix}
+k-t-\beta_1&k+t-\beta_1\\
+-2t-\beta_2&2t-\beta_2
+\end{pmatrix}.
+\tag{48.22}
+$$
+
+当 $B<k$ 时，偏置六边形的限制给
+
+$$
+\begin{aligned}
+\det R_\beta&=2t(2k-2\beta_1+\beta_2)\ge4t(k-B)>0,\\
+\|R_\beta\|_F^2&=2(k-\beta_1)^2+2\beta_2^2+10t^2
+\le2(k+B)^2+2B^2+10t^2<20t^2.
+\end{aligned}
+\tag{48.23}
+$$
+
+第一行用 $2\beta_1-\beta_2=\beta_1+(\beta_1-\beta_2)\le2B$，第二行用 $B<k<t$。根至多一维时，所有 $H(p)-\beta$ 落在同一至多一维线性空间。将两目标列正交投影到此空间得到秩至多一的矩阵。该矩阵与 $R_\beta$ 的 Frobenius 距离至少为最小奇异值，而
+
+$$
+\sigma_{\min}(R_\beta)
+=\frac{|\det R_\beta|}{\sigma_{\max}(R_\beta)}
+\ge\frac{4t(k-B)}{\sqrt{20}\,t}.
+$$
+
+两列中至少一列到该空间的距离不小于此值的 $1/\sqrt2$，即 $\delta_R$；该端点类的全部预测都在同一个仿射空间内，故整个类保留此误差。若 $q=0$，预测为固定点；两个目标端点的距离为 $2t\sqrt5$，三角不等式使至少一个端点到固定点的距离不小于 $t\sqrt5$。两个端点类的真实质量分别为 $89/125,16/125$，均至少为 $16/125$。所有证书只限制目标、实际偏置及秩，没有对预测矩阵或消息设置紧致性。$\square$
+

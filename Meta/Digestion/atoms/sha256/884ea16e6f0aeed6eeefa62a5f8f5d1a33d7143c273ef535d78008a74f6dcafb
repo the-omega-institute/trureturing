@@ -1,0 +1,9 @@
+**例 51.12（一个预算中三个实际根）。** 取 $\epsilon=10^{-4}$、$\delta=1/20$，式（51.24）允许 $m=900048$。在估计值 $\beta=0$ 处，$U_0=Kr^2\le\epsilon/4$，选根零；在 $\beta=1$ 处，$U_0=K>\epsilon$、$g_1=0$，选根一。中点 $g_{1/2}=\log(125/98)$，于是
+$U_1\ge\log(125/98)^2/200>10^{-4}$，且 $U_0\ge K/4>10^{-4}$，选根二。式（51.3）在这个样本数上 $\beta=0,1/2,1$ 分别由匹配计数 $300016,375020,450024$ 取得。这个实例说明分支确实可用；每个真实律的高概率保证仍由定理51.8的共同事件承担，不由这些估计值的展示承担。
+
+§16 已处理无噪声未见原子的两目标识别风险；本节使用任意接近的严格正标签律和不连续的准确根相位。更广的既有供应还包括[恢复几何卷](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md)§14 的同一联合置信事件与数据依赖合法拟合，以及[机器学习观察卷](CONTEXTUAL_SPACETIME_ARITHMETIC_ML_OBSERVATION.md)§50 的有限候选辨识、一次选择和独立计费控制。它们分别提供成熟的置信组织与有限模型机制，不提供这里的连续根相图、两种带符号 secant 跨律系数或同一 $0/1/2$ 根选择证书。一般二点检验、KL 数据处理、指数浓缩和 proper-score 恒等式仍是原供应者的工具；Gneiting、Raftery，[*Strictly Proper Scoring Rules, Prediction, and Estimation*](https://sites.stat.washington.edu/raftery/Research/PDF/Gneiting2007jasa.pdf)，JASA 102(477):359–378，§3 Examples 1、3 的负评分分别给本节的完整 Brier 与自然对数约定。
+
+数据依赖选择后的保证必须保留其实际概率对象。Liang、Zhu、Barber，[*Conformal prediction after data-dependent model selection*](https://arxiv.org/abs/2408.07066v3)，Theorem 3.1 在交换性和预训练评分族下给边缘预测集覆盖；该结论没有给出式（51.2）的训练条件总体 proper 超额，也不替代这里的同一事件证明。本节不要求候选经选模后仍交换，只要求真实参数在那份训练的区间中。
+
+始终输出根二的 plug-in 后验已经由引理51.6给有用风险上界；本节在其相同的参数生成信息上，用式（51.22）添加低根资格而不另建拟合问题。实际新连接是这个具体 FIB 正实验的严格有限相位底、完整记录样本尺度、带符号跨律恒等式与共同选择路径，属于仓内普通综合推导。它不主张一般统计工具或边界选模现象的新原创性，不具有新增 Lean kernel 证明身份，不认证未知教师学习、一般神经网络训练、梯度优化、因果发现、隐藏标签多视图恢复、有限精度或总资源最优性。准确相位、参数识别和有限容差预测三个要求始终分开。
+
