@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Arith/FibonacciAtomic/ShortCommonCoefficientProbe
    mirror-E: none(waiver:uniform-short-canonical-probes)
-   anchors: [D5/S3/Analytic/GoldenEulerBetaZeckendorf, D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd]
+   anchors: []
    utility: none
    digest: Short canonical words realize every coefficient pair on all rows and legal prefixes. -/
 
