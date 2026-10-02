@@ -180,6 +180,13 @@ same-support group of at least47 labels has lower-core divisor count
 at most46, hence at most five deep primes outside the chosen color pair.
 Height-one support and the small-core multiplicities remain unbounded.
 
+[Section147](#147-one-qualified-parent-pays-the-combined-original-supplier-demand-across-axes)
+spends one parent-phase allowance across all actual coordinate suppliers,
+forcing weighted escape through omitted parent coordinates. For a
+two-axis parent, the two escape families cross in their original phases
+whenever both occur. A numerical tail bound applies to each original
+multiple of that parent, not automatically to the whole period.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -18050,3 +18057,96 @@ for the published absolute constant c. To turn this into a bound on a nonconcent
 The uniform exponent caps do not restore the unrestricted Gamma73 premise either. The existing star obstruction already allows H_3=31 and every other H_r=8, within OCP9's numerical upper bounds. That noncover does not satisfy the original EB1 vacancy and irredundancy conditions and is not a counterexample under those conditions; it shows why a deduction using only the height box still fails. A successful head consumer must use the actual CP1-restricted inventory and original source relations in its joint-load bound.
 
 No new moment theorem, distortion recurrence, top-shadow theorem or enumeration is needed for these conclusions. The new reusable arithmetic input is the actual lower-source phase capacity LSM3–LSM5. A uniform cap on the remaining small-core support groups, or another same-source estimate consuming them, remains missing; no bounded head containing an R-prime or unrestricted odd noncoverage is established.
+
+## 147. One qualified parent pays the combined original supplier demand across axes
+
+This is an ordinary consumer of Library/Arith/lettlsun2008cosets.md QC1–QC2 and Report385 §144 OCP2. It does not supply a new generic private-point or exchange theorem. All labels, heights, phases and private points come from one original EB1 whole cover.
+
+### One original parent and one original private source
+
+Let h be an ORIGINAL numerical label with a proved OCP2 phase capacity N-1: each non-own phase modulo h contains at most N-1 original proper multiples of h. Its pair container and N belong to the COMPLETE private region of the OLD parent h. The phase subsequently used below need not have the parent's own ternary root. In the explicit opposite-color applications N>=18; only N>=2 is needed in the following counting consumer.
+
+Let M be an original proper multiple of h, and choose ONE complete original private point x of A_M. Put
+
+    a_r=v_r(h), e_r=v_r(M),
+    T={r prime:e_r>a_r},
+    f(M/h)=sum_(r in T)(e_r-a_r)(r-1).
+
+By original comparable-class disjointness, x modulo h differs from the original h-phase. In particular M itself occupies one slot in that same non-own h-phase group.
+
+For each r in T, take the COMPLETE original QC1 supplier set
+
+    S_r={d in D:
+        d/r^v_r(d) divides a_d-x,
+        a_r<=b_(r,d):=v_r(a_d-x)<v_r(d)}.
+
+Give d in S_r the exact original service
+
+    w_(r,d)=r^(1-v_r(d)+b_(r,d)) <=1.
+
+The valuation is taken only when it is strictly below the modulus height, as in QC1; it is therefore representative-independent. The owner M is in none of these sets. QC2 gives
+
+    sum_(d in S_r)w_(r,d)>=(e_r-a_r)(r-1).         (CPA1)
+
+No selected cofactor line is substituted for this original private source.
+
+### The capacity is shared by ALL directions
+
+Reuse the cross-direction disjointness argument preceding Library OB3–OB4, with the full-depth defect description in QC1: the sets S_r for different primes r are pairwise disjoint as sets of ORIGINAL labels. In the present parameters, for d in S_r its entire congruence defect
+
+    delta_d(x)=d/gcd(d,a_d-x)
+
+is a nontrivial power of r, so it cannot be a nontrivial power of another prime. Equivalently, an original AP covering changed points on two different complete coordinate axes through x would also cover x, contradicting privacy.
+
+If d in S_r is divisible by h, QC1 supplies a_d=x modulo h: agreement away from r is complete, and its r-prefix agrees through a_r. Also d>h, because v_r(d)>a_r. Thus ALL h-divisible suppliers from ALL directions lie in the SAME non-own original phase group modulo h. Together with M they have at most N-1 labels. Their total service is therefore at most N-2, counting the owner once and using w<=1.
+
+Let
+
+    E_h(x)=union_(r in T){d in S_r:h does not divide d}.
+
+The original supplier direction r(d) of each member is unique. Subtracting the one common capacity from the sum of CPA1 gives
+
+    sum_(d in E_h(x)) w_(r(d),d)
+       >=max(0,f(M/h)-N+2),
+    |E_h(x)|>=max(0,f(M/h)-N+2).                  (CPA2)
+
+Every such escape label omits at least one prime-power coordinate of h OTHER THAN its own supplier direction: its own r-height is already greater than a_r. Thus CPA2 forces actual cross-coordinate omissions, with their original shell phases and weights, not merely numerical labels outside a divisor ideal.
+
+Applying the parent cap separately in each direction would pay the same N-2 supplier allowance repeatedly. CPA2 spends it once. When h and M are powers of the same prime, no escape is possible, recovering the existing one-axis height consumer. For composite parents the escape arm is real and is not set to zero.
+
+### Two-axis escapes intersect across the two families when both occur
+
+Take an original prime q>3 and h=3^a q^b with a,b>=1, and an original owner M divisible by h with A=v_3(M)>a and B=v_q(M)>b. Apply only the two QC directions3 and q; other factors and directions of M need not be removed. The same proof gives the bound
+
+    sum of escape service in those two directions
+       >=max(0,2(A-a)+(q-1)(B-b)-N+2).            (CPA3)
+
+A ternary-direction escape has v_3(d)>a and v_q(d)<b. A q-direction escape has v_q(d)>b and v_3(d)<a. These are exact consequences of h not dividing d and the directional height requirement.
+
+EVERY original AP from the first escape family intersects EVERY original AP from the second. To verify this using their unchanged phases, let d be a ternary-direction escape and e a q-direction escape. At the3-coordinate, e has depth below a and agrees with x, whereas d agrees with x through depth a; hence the phases agree modulo their common3-part. At q the roles reverse, with agreement through depth b. At every other prime both phases match x through their entire tested depths. CRT therefore gives
+
+    A_d intersect A_e !=empty.                    (CPA4)
+
+Their numerical labels are incomparable: d has greater3-height and smaller q-height than e. Their common points need not be private and are not identified with x. The positive TOTAL escape bound CPA3 alone does not force both direction families to be nonempty. Both are forced, for example, if separately
+
+    2(A-a)>N-2 and (q-1)(B-b)>N-2,
+
+since either direction alone can spend at most N-2 of the shared parent slots. When both families occur, CPA4 supplies their complete actual original cross-intersection relation at the combined changed coordinates. It does not provide branching on either one-cofactor q-line or license a repair of that overlap without its full joint obligation.
+
+The same two-axis statement holds with3 replaced by another prime; the displayed coefficient2 is its existing QC2 factor3-1. No new numerical noncover control is used.
+
+### Minimal qualified divisors and the numerical tail bound
+
+For any original M admitting a divisor h satisfying OCP2, original divisor closure supplies that parent. One may choose a divisibility-minimal qualified divisor; CPA1–CPA4 then use that actual h and its old private-pair container. Minimality does not remove the escape labels: they can fail qualification precisely by omitting one of h's prime-power coordinates. No assertion says every original M has such a divisor.
+
+There is also a direct numerical consequence of the same parent capacity. No proper original multiple of h has the old own h-phase, by comparable disjointness; the other h-1 phases each contain at most N-1. Hence
+
+    #{d in D:h divides d,d>h}<=(N-1)(h-1).
+
+For an ORIGINAL multiple M of h, every h t with t|M/h is original. Therefore
+
+    tau(M/h)<=1+(N-1)(h-1).                       (CPA5)
+
+This counts distinct original labels, independent of their chosen phases. It does not permit replacing M by the whole period Q, which need not itself be an original label.
+
+CPA2–CPA5 are stronger necessary incidence and inventory constraints on the same actual source. No upper bound on all escaping service has been proved. The uniform exponent bounds OCP9 still leave the original prime support unbounded; those height bounds alone do not force a packet into one qualified parent phase. Thus no contradiction in the unrestricted branch or Lean verification is asserted.
