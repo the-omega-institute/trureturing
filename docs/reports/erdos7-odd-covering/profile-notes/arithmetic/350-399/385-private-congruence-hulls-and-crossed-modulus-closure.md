@@ -25131,3 +25131,64 @@ initial-support results, and it does not force a phase-compatible exchange or
 settle unrestricted Erdős #7. Its use is that any later occupied-top repair
 may assume every smaller odd prime is already present in the common period,
 without reopening the partially occupied-layer case.
+
+## 215. The two-vacancy mixed-modulus route must leave the top cofactor
+
+The strict source-compatible route from Section 212 uses an original
+3-free label \(h>1\), two distinct nonunit divisors \(f,g\mid h\), and the
+vacancies
+
+\[
+  3f\notin D,\qquad 3g\notin D.
+  \tag{MV0}
+\]
+
+In the occupied-top-\(p\) branch with \(p>3\), this route has an additional
+inventory restriction that is not visible in FC1128 alone. Assume
+
+\[
+  3\nmid L.
+  \tag{MV1}
+\]
+
+Then \(R=p^{e-1}L\) is 3-free, and Section 213 (PV3) gives
+
+\[
+  d\mid R,\ d<R\quad\Longrightarrow\quad 3d\in D.
+  \tag{MV2}
+\]
+
+Consequently,
+
+\[
+  \boxed{h\nmid R.}
+  \tag{MV3}
+\]
+
+Indeed, if \(h\mid R\), at most one of the two distinct divisors \(f,g\)
+can equal \(R\). The other one is a proper divisor of \(R\), so (MV2)
+puts its label \(3f\) or \(3g\) in \(D\), contradicting (MV0). The same
+argument covers \(h<R\), where both divisors are proper.
+
+The conclusion can be stated directly at the level of the two vacant
+labels:
+
+\[
+  \boxed{\{f,g\}\nsubseteq\operatorname{Div}(R).}
+  \tag{MV4}
+\]
+
+If one of \(f,g\) lies in \(\operatorname{Div}(R)\), it must therefore be
+the boundary value \(R\) itself; the other divisor must use a factor outside
+the top-cofactor lattice. Since every original label divides \(Q\), this
+means that any FC1128 exchange in the \(3\nmid L\) branch must expose a
+genuine \(Q/R\) coordinate (or use the single boundary label \(3R\)).
+For \(p>3\), Section 214 also supplies \(3\mid Q\), so this is an actual
+coordinate of the common period rather than an absent-prime artifact.
+
+This narrows the remaining forcing problem: a proof that all FC1128
+eligible \(h\)'s are divisors of \(R\) would immediately exclude the whole
+two-vacancy route in this branch; conversely, any use of that route here
+must pay an external-coordinate phase and its full source liability. The
+result does not force such an \(h\), nor does it prove a global exchange or
+settle unrestricted Erdős #7.
