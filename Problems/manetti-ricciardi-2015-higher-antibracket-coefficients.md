@@ -103,9 +103,9 @@ and a perturbed target $\Phi^6+\Phi^{6,1}$ has no solution (issue #12104).
 The canonical source is
 `D5/S3/HomologicalAlgebra/HigherAntibracketCoefficients.lean`. Its public
 declarations are `phi`, `koszul`, `rho`, `formula`, `claim` and `result`.
-The frozen module state has statement identity `sha256:9467ba11e9dbe68a08f53713bc1d3e73dfe92bc06e1b024fda43ed17b5e82a38`. The
+The frozen module state has statement identity `sha256:a1799f7aed0194de9658980bce17316c6fd02a3e8715bf7ff4bac8f99b06537a`. The
 result declaration has statement identity `sha256:bee22258d60b9bfd38ae17b3a86112a02384da8fdd4fa30347e9519cd18b3b73`. The Freeze
-event is `sha256:013ea09b0a72d8875e0ac4ae5a95d0a53dd886c680636b50411d1defe72ab117`. It has no project-level frozen prerequisites
+event is `sha256:6e7d967129516156cf1bcb0c59abb7c726c88d11031bca9074571be46429f30b`. It has no project-level frozen prerequisites
 (pinned Mathlib only). The proof uses only the standard axioms `propext`,
 `Classical.choice` and `Quot.sound`; no `sorry`, `native_decide`, or new
 axiom.
