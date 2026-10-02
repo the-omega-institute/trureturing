@@ -1,0 +1,1 @@
+| 全 `fullMap` 二次律是否成立？ | **已形式化** | `MonsterShortSupportSpin.labelQuadratic_fullMap`；证明消耗七段支持集合归纳、单截面值和两两极化值。 

@@ -1844,3 +1844,415 @@ general homotopic-isometry existence, global target uniqueness and the full
 Mostow–Prasad endpoint remain unfinished, including cusps and nonorientable
 manifolds. All supplied compatible original-H3 geometric inputs of the
 complete-target constructor remain explicit in that earlier result.
+
+
+### The lift-induced deck homomorphism is the fundamental-group isomorphism
+
+For the same coverings `F:X→M`, `P:Y→N`, continuous maps `φ:M→N`,
+`L:X→Y` and all-point identity `P(L(x))=φ(F(x))`, mapping the actual lifted
+path by `L` proves monodromy naturality. For the same quotient-covering
+actions and a homomorphism `τ:G→H` satisfying `L(a•x)=τ(a)•L(x)`, this
+identifies the opposite-group map of `τ` with the map on fundamental groups
+through the two covering correspondences. When both covering spaces are
+simply connected and `φ` is the forward map of an actual homotopy
+equivalence, the existing induced fundamental-group equivalence and those
+same covering equivalences prove that this same `τ` is bijective. Neither
+bijectivity nor replacement by another deck homomorphism is assumed.
+
+For the same actual original-H3 full-deck quotient coverings `FM,FN`, an
+actual homotopy equivalence `h:M≃ₕN`, a supplied compatible H3 chart and any
+source point `pHM`, target-cover surjectivity selects `pHN` with
+`FN(pHN)=h(FM(pHM))`. The existing continuous lift constructor supplies
+`L,τ`; the proved bijectivity promotes that very `τ` to a deck-group
+isomorphism `d`, with `d.toMonoidHom=τ`. The same chosen lift retains its
+basepoint, all-point projection and equivariance identities. The same `d`
+implements `FundamentalGroup.map h.toFun (FM pHM)` through the two actual
+covering fundamental-group equivalences. It is unique among deck-group
+isomorphisms implementing that binding with those same chosen points.
+
+A separate exact check compares this with the earlier binding written using
+`FundamentalGroup.mapOfEq h.toFun rfl`: the reflexive endpoint cast equals
+the ordinary induced map. For the same actual covers, compatible basepoints,
+continuous lift, projection and equivariance, any deck isomorphism satisfying
+that earlier binding has underlying homomorphism exactly `τ`. This closes
+the previously recorded lift-induced deck-isomorphism binding gap; it does
+not assert uniqueness of isometries on the target manifold.
+
+Three serial scoped transient cache-guarded checks exited zero and printed
+six axiom closures using only `propext`, `Classical.choice` and `Quot.sound`.
+One rejected monodromy source/log pair and one rejected exact-binding pair
+are preserved and excluded. Typed heterogeneous path equalities and the
+existing reflexive-cast identity repair endpoint elaboration; explicit
+homomorphism extensionality compares deck elements. Statements, endpoints,
+actions and resource limits are retained. Two `haveILetI` style warnings
+are recorded, one in each actual-H3 check; they are not proof exceptions.
+These are classical compositions with no tracked Lean or novelty claim.
+The linked escape audit remains unfinished.
+
+An ambient lattice conjugator, general homotopic-isometry existence, global
+target uniqueness and the full Mostow–Prasad endpoint remain unfinished,
+including cusps and nonorientable manifolds. The supplied compatible
+original-H3 geometric inputs of the complete-target constructor remain
+explicit. The present result supplies the actual lift/deck-isomorphism
+connection; it does not obtain an ambient isometry from an abstract lattice
+isomorphism.
+
+
+### A supplied conjugator yields the prescribed homotopic isometry
+
+For an actual group isomorphism and isometric representations, the existing
+conjugator-induced orbit map is continuous in the quotient topologies:
+its composition with the source quotient projection is the target
+projection composed with the same ambient isometry. Transporting that map
+through the same supplied quotient homeomorphisms gives a continuous base
+map `ψ`, with the all-point identity `FN(a(x))=ψ(FM(x))`.
+
+For the same actual original-H3 full-deck quotient coverings, prescribed
+homotopy equivalence `h`, continuous lift `L`, equivariant homomorphism `τ`
+and deck isomorphism `d` with `d.toMonoidHom=τ`, suppose the actual
+representations evaluate to those same deck actions and the supplied ambient
+isometry `a` implements their conjugacy through that same `d`. The maps `L`
+and `a` are then equivariant for the same source action and representation
+`ρN∘d`. The target covering is invariant under that representation. The
+already proved original-H3 interpolation descent therefore constructs a
+homotopy from `h.toFun` to this same projected `ψ`. No desired base-map
+homotopy is assumed, and no different deck isomorphism is substituted.
+
+With properly discontinuous representations, the same ambient conjugator
+maps each whole source orbit onto the corresponding target orbit; reverse
+inclusion uses surjectivity of the same group isomorphism. Preservation of
+point-to-set distance proves the existing orbit equivalence is an isometry
+for the same orbit metrics. For metric bases with supplied quotient
+isometries `eM,eN` satisfying `eM(qM(x))=FM(x)` and
+`eN(qN(x))=FN(x)` at every actual H3 point, composition transports that very
+orbit isometry to `e:M≃ᵢN`. Its all-point projection is
+`FN(a(x))=e(FM(x))`, and its continuous map is homotopic to the prescribed
+`h.toFun`. These quotient-to-base isometries remain supplied; no new target
+metric or automatic geometric compatibility is asserted.
+
+An exact application first selects the original-H3 lift, target fiber
+point and fundamental-group-bound deck isomorphism from the previously
+proved same-cover constructor, retaining its basepoint, all-point
+projection, equivariance and fundamental-group binding. For those same
+selected objects, every supplied pair of actual deck representations,
+proper-action witnesses, compatible quotient isometries and ambient
+conjugator has the stated homotopic isometry representative. A compatible
+H3 chart remains supplied to the lift constructor.
+
+Three serial scoped transient cache-guarded checks exited zero and printed
+five axiom closures using only `propext`, `Classical.choice` and `Quot.sound`.
+Two rejected orbit-isometry source/log pairs are preserved and excluded.
+Repairs restore the existing metric/covering namespaces and explicitly
+normalize the reverse orbit-image application before applying conjugacy;
+statements, original-H3 metric, actions and resource limits are retained.
+Five `haveILetI` style warnings and one unused-variable-name warning remain;
+they are not proof exceptions. The latter names a conjugacy premise that
+is used in the proof; the proposition does not explicitly reference the
+name of that proof. These are classical compositions with no tracked Lean
+or novelty claim. The linked escape audit remains unfinished.
+
+This closes the conditional connection from the actual lift-induced deck
+isomorphism and a supplied ambient conjugator to the prescribed homotopic
+isometry. Ambient lattice conjugator existence and global target uniqueness
+remain unfinished, as does the full Mostow–Prasad endpoint including cusps
+and nonorientable manifolds. Compatible original-H3 geometric inputs of
+the complete-target constructor remain explicit supplied premises. The
+conditional construction does not prove the ambient conjugator exists.
+
+
+### The same lift of a base map preserving distance is locally isometric
+
+For metric covering spaces `X,Y`, extended metric bases `M,N`, maps
+`F:X→M`, `P:Y→N`, a continuous lift `L:X→Y` and a base map `φ:M→N`
+preserving distance, the all-point identity `P(L(x))=φ(F(x))` now proves
+that `L` preserves every pairwise distance on a ball at each source point,
+provided `F` and `P` themselves preserve all pairwise distances on a ball
+at each of their points. Choose the source projection's ball and the
+target projection's ball at `L(a)`; continuity of the same `L` provides a
+source ball mapping into the latter. On the intersection radius, the same
+projection identity and distance preservation of `φ,F,P` compare every
+pair of lifted points. No global distance preservation of `L` is assumed.
+
+An exact application uses the same actual original H3 on both covering
+spaces, the same full-deck quotient coverings and their actual
+representations evaluating to the deck actions. With supplied compatible
+H3 and base manifold structures, base `T3Space` hypotheses, the same
+Riemannian metrics, compatibility of the H3 intrinsic distance with the
+original metric, local diffeomorphism of both coverings and preservation
+of their tangent inner products, the existing covering distance theorem
+supplies both local projection properties. A supplied continuous lift of
+a base map preserving the actual intrinsic distances therefore has the
+stated local distance property in the original H3 metric. No smoothness
+of the base map or of the lift is assumed for this implication.
+
+A further exact application takes a prescribed actual homotopy equivalence
+whose forward map preserves those intrinsic distances. The earlier
+same-cover constructor selects the target fiber point, continuous lift,
+equivariant deck homomorphism and its deck isomorphism. Their same
+basepoint, projection, all-point equivariance and fundamental-group binding
+are retained, and that very selected lift now satisfies the local pairwise
+distance conclusion. This covers the isometry case of the prescribed map;
+it does not yet identify that lift as a full ambient H3 isometry.
+
+Three serial scoped transient cache-guarded checks exited zero and printed
+three axiom closures using only `propext`, `Classical.choice` and
+`Quot.sound`. One rejected actual-H3 source/log pair is preserved and
+excluded. Its first proposed telescope lacked the base `T3Space` instances
+required to form the existing intrinsic extended metrics; those explicit
+premises, already required in the earlier complete-target constructor,
+were added in the accepted exact application. This telescope change is
+recorded, and the earlier proposal is not accepted. Seven `haveILetI`
+style warnings are recorded; they are not proof exceptions. The original
+H3 metric, covering identities, actions and resource limits are retained.
+These are classical compositions with no tracked Lean or novelty claim.
+The linked escape audit remains unfinished.
+
+The new result is local preservation of distance by the same actual lift.
+Promoting such a lift to a full ambient isometry, proving general target
+uniqueness, constructing the ambient lattice conjugator and completing the
+full Mostow–Prasad endpoint remain unfinished, including cusps and
+nonorientable manifolds. The compatible original-H3 geometric inputs
+remain explicit supplied premises.
+
+
+### A Lorentz linear equivalence induces an actual H3 isometry
+
+A real linear equivalence of the same four-dimensional Lorentz coordinates
+that preserves the bilinear kernel and maps one supplied actual H3 point
+to another now yields a full isometric bijection of the original H3, with
+that same linear equivalence agreeing with its coordinates at every point.
+Neither an ambient isometry nor positivity at every point is assumed.
+
+The original H3 contractibility supplies connectedness. For every H3
+point the transformed coordinate vector has self-kernel one; its light
+difference cannot vanish, since vanishing would make that self-kernel the
+negative sum of two squares. Continuity of the same linear equivalence
+and the established coordinate map, together with the intermediate value
+theorem and positivity at the supplied mapped point, forces positive
+light difference everywhere. Kernel preservation by the inverse and the
+same mapped-point identity give the inverse positivity statement. The
+established future-unit inverse therefore constructs both maps. Their
+coordinate identities and the existing coordinate injectivity prove both
+inverse laws. The same Lorentz kernel/cosh-distance identity and cosh
+injectivity on nonnegative distances prove preservation of the original
+H3 metric.
+
+One serial scoped transient cache-guarded check exited zero with two axiom
+closures containing only propext, Classical.choice and Quot.sound. One
+haveILetI style warning is recorded, with no rejected converse source.
+Default resources and the original metric are retained. This is classical
+reuse/composition; no tracked Lean or novelty claim.
+
+This is a converse model interface. It does not yet construct a Lorentz
+linear equivalence extending an arbitrary locally distance-preserving
+lift; small spanning frames inside arbitrary neighborhoods and their
+local extensions remain to be proved. Global lift identification, general
+target uniqueness, ambient lattice conjugator existence and the full
+finite-volume cusped/nonorientable Mostow–Prasad endpoint remain open.
+The linked escape audit remains unfinished; new registrations are paused
+by the synchronized repository instructions.
+
+
+### From local distance preservation to the same full ambient H3 isometry
+
+The local-to-global metric obligation is now discharged in the original
+H3: any map that preserves every pairwise distance on some positive ball
+at every point equals a unique full original-H3 isometric bijection at
+all points. No smoothness, global distance preservation, injectivity,
+surjectivity, orientation or supplied linear extension is assumed. The
+map need not be supplied as continuous for this implication. Uniqueness
+here concerns the full ambient isometry agreeing with this same map.
+
+The small-frame gap identified above is now closed. At the reference
+point, the four coordinate points (0,1), (0,1+d²), (d,1) and (di,1) vary
+continuously with the real parameter d and coincide at d=0. For d>0,
+their Lorentz vectors are independent: the two horizontal coordinates
+detect two coefficients, the nonzero vertical coordinate detects the
+third, and the time coordinate detects the fourth. A sufficiently small
+positive parameter places all four in any reference ball. The existing
+actual H3 transitivity and its Lorentz representation transport this
+frame into any positive-radius ball without changing the metric.
+
+For a map preserving all pairwise distances on such a ball, the image
+frame has the same Lorentz Gram matrix. Basis expansion and the same
+nondegenerate kernel prove its independence. The resulting real linear
+basis equivalence preserves the kernel everywhere, and distances to the
+frame prove its coordinate agreement with the map at every point of the
+same ball. The preceding Lorentz converse supplies a full ambient
+isometry agreeing there. Two actual ambient isometries agreeing on any
+positive ball agree everywhere, by the contained spanning frame and the
+existing coordinate representation. Choose one local extension; the
+points where it agrees with the map on a neighborhood form a nonempty
+open and closed set. At a closure point, another local extension overlaps
+one of those neighborhoods; ball agreement forces the two extensions
+equal. Original H3 contractibility supplies connectedness, giving the
+same full isometry at every point. This propagates neighborhood agreement
+rather than only equality at one point.
+
+The exact application retains the previously constructed target fiber
+point, continuous lift L, homomorphism tau and deck isomorphism d for the
+prescribed intrinsic-distance-preserving homotopy equivalence. It keeps
+d.toMonoidHom=tau, the basepoint equality, projection, equivariance,
+fundamental-group binding and local extended-distance identities. The
+latter are converted to distances in the original metric. The new full
+ambient isometry equals that same L at every point, and its exact
+conjugacy of the supplied actual full-deck representations follows from
+that same equivariance. Uniqueness is only among ambient isometries
+pointwise equal to this selected L; it is not general uniqueness of
+isometric representatives in a homotopy class. Compatible original-H3/base
+structures, T3Spaces, intrinsic metric compatibility, local covering
+diffeomorphisms, tangent inner preservation and forward intrinsic
+distance preservation remain supplied in this application.
+
+Five serial scoped transient cache-guarded checks, including the earlier
+reviewed Lorentz converse, exited zero and printed twelve axiom closures
+using only propext, Classical.choice and Quot.sound. 3 style warnings
+are recorded. Two rejected small-frame source/log pairs are preserved
+and excluded; normalized zero equations produced disjunctions, and a
+local parameter-continuity helper needed explicit real-domain types. The
+repairs keep the theorem telescopes and original metric unchanged. No
+resource increase, suppression, tracked Lean or novelty claim is made.
+
+This closes the metric local-to-global lift step, including its exact
+same-lift/deck-isomorphism application for an already distance-preserving
+prescribed map. It does not prove an arbitrary homotopy equivalence has
+an isometric representative, ambient lattice conjugator existence,
+general target uniqueness or the full finite-volume cusped/nonorientable
+Mostow–Prasad endpoint. The compatible original geometric inputs remain
+explicit. The linked escape audit is unfinished; new registration work
+remains paused by the repository instructions.
+
+
+### Homotopic actual isometries are unique for the same compatible covers
+
+The homotopy-class uniqueness step is now proved under the same explicit
+compatible original-H3/base geometric and full-deck-cover hypotheses.
+For ordinary metric bases whose distances agree with the supplied
+intrinsic metrics, and finite intrinsic volume of the source, every
+prescribed homotopy equivalence has at most one actual isometric
+bijection homotopic to it. The prescribed homotopy equivalence need not
+itself preserve distance in this final statement. The theorem is exactly
+the existing UniqueIsometryRepresentative predicate. It does not assert
+that an isometric representative exists. No compactness, orientation,
+dense-orbit, separately supplied centralizer or separately supplied
+faithfulness premise is added to that final statement.
+
+A generic covering-homotopy composition starts with the same supplied
+continuous lift and equivariant deck homomorphism. The actual base
+homotopy pulls back along the source projection and lifts continuously
+through the target covering. At every source point, uniqueness of lifted
+paths on the unit interval compares source deck action with target action
+through that same homomorphism; their initial equality is precisely the
+original equivariance. Consequently the lifted homotopy retains that same
+homomorphism at every time and point, and its endpoint projects to the
+other base map. No based or relative homotopy condition is assumed.
+
+The exact H3 composition first treats a prescribed intrinsic-distance-
+preserving homotopy equivalence and another continuous intrinsic-distance-
+preserving map homotopic to it. The earlier constructor supplies the same
+lift/tau/d and its full ambient isometry. The lifted base homotopy starts
+from that lift and keeps tau, so its endpoint becomes another full H3
+isometry through the established local metric and global extension
+theorems. Both ambient isometries realize the same d and actual deck
+representations. The existing actual finite-volume centralizer theorem
+and existing conjugator-uniqueness theorem make them equal; source-cover
+surjectivity then makes the two base maps equal. The finite-volume
+centralizer is proved by the earlier library result, not supplied as a
+new hypothesis.
+
+For two ordinary base isometries homotopic to an arbitrary prescribed
+homotopy equivalence, compose their actual homotopies, use the first
+isometry's homotopy equivalence, and obtain intrinsic distance preservation
+from the explicit metric compatibility. The faithful source representation
+is derived from the same full-deck-cover evaluation injectivity and its
+all-point evaluation identity. The resulting base-map equality is the
+required actual isometry equality. Compatible H3/base smooth structures,
+original/intrinsic distance compatibility, metric covering local
+diffeomorphisms, tangent inner preservation, base measurability/Borel
+structure and source finite intrinsic volume remain explicit.
+
+Two accepted serial scoped transient cache-guarded checks exited zero
+with three axiom closures using only propext, Classical.choice and
+Quot.sound. 7 warning headers are recorded, including one unused-
+tactic warning and the remaining haveILetI style warnings. Two exact
+failed source/log pairs are preserved and excluded; direct evaluation
+and composition expressions required explicit beta-normalization before
+rewriting. The prior accepted final statement with separately supplied
+source faithfulness is preserved, while the stronger accepted final
+statement discharges that premise from the same cover rather than
+supplying it. Its validity delta and the unchanged first implication's
+scope are recorded. Default resources and all original metrics are
+retained; no suppression, tracked Lean or novelty claim.
+
+This closes homotopy-class isometry uniqueness for the supplied compatible
+actual covers. Existence of an isometric representative for an arbitrary
+homotopy equivalence, existence of its ambient lattice conjugator and
+discharge of canonical original-H3 geometry remain open. The full
+finite-volume cusped/nonorientable Mostow–Prasad endpoint remains active
+and incomplete. The linked escape audit is unfinished, and new
+registration work remains paused.
+
+
+### Complete negative-curvature bases: uniqueness with constructed H3 covers
+
+The canonical original-H3 geometry and actual target covers constructed
+earlier are now integrated into the homotopy-class uniqueness statement.
+For connected smooth three-dimensional Riemannian metric bases M and N,
+with actual Levi-Civita data, complete intrinsic metrics, sectional
+curvature -1 on every nondegenerate tangent two-plane, finite intrinsic
+volume of M, and ordinary distances agreeing with both intrinsic metrics,
+every prescribed homotopy equivalence has at most one actual isometric
+bijection homotopic to it. M also carries a measurable/Borel structure.
+This proves the existing UniqueIsometryRepresentative predicate and
+asserts no existence of an isometric representative. No compactness,
+orientation, target finite-volume, dense-orbit, separately supplied
+centralizer or separately supplied faithfulness premise is used.
+
+The final statement supplies no H3 chart or Riemannian metric, original-H3
+distance identity, covering maps, full-deck quotient structure, covering
+local diffeomorphisms, tangent inner-preservation identities, actual deck
+representations or all-point evaluation identities. Those objects and
+facts are obtained together from the earlier
+hyperbolicRiemannianSourceAndCompleteOrbitIsometricDeckBridge. Choose the
+constructed H3 smooth structure and metric, and apply that same
+constructor's actual full-deck-cover clause to M and N, using connected
+nonemptiness and an actual H3 point. Its intrinsic-distance identity is
+the original hyperbolic distance; the original metric's edist_dist gives
+the required ordinary/intrinsic equality on H3. Apply the previously
+accepted same-cover uniqueness theorem to these exact constructed
+objects. The prescribed homotopy equivalence need not preserve distance.
+This is classical reuse and exact composition of existing results, not
+a new rigidity theorem or a tracked Lean declaration.
+
+Actual LeviCivitaData for both base metrics remains an explicit geometric
+input, together with its sectional-curvature hypotheses. The upstream
+global exists_leviCivitaData API requires T2Space and
+SecondCountableTopology; MetricSpace alone does not supply second
+countability. This composition neither silently adds that hypothesis nor
+claims global connection existence without it. The stated completeness,
+curvature, source volume, measurable/Borel and metric-compatibility
+conditions remain in the exact theorem telescope.
+
+One accepted serial scoped transient cache-guarded Lean check exited zero.
+The exact complete_negative_three_manifold_isometry_homotopy_class_unique
+declaration has a single axiom closure using only propext,
+Classical.choice and Quot.sound. Four haveILetI style warnings are
+retained. An earlier exact source/log pair exited one because an unused
+finite-tail index universe in the old constructor was unresolved; that
+attempt is preserved and excluded. The repair explicitly instantiates
+the constructor at universes u and 0, keeping geometric target types in
+Type u. The theorem telescope and consequent are byte-identical before
+and after this repair. Default resources and original metrics are
+retained, with no suppression or compiler replay claim. All new Lean
+remains transient under ignored .lake; only this research note is tracked.
+
+The preceding appendix's reference to an open canonical-H3 geometry
+obligation described integration into its then-current supplied-cover
+statement. It did not mean the earlier source geometry and actual target
+covers were absent. This composition closes that integration for the
+uniqueness half under the base geometric conditions above. Existence of
+an isometric representative for an arbitrary homotopy equivalence and
+existence of its ambient lattice conjugator remain open. The full
+finite-volume Mostow-Prasad endpoint, including cusps and nonorientable
+manifolds, remains active and incomplete. The linked escape audit is
+unfinished, and new registration work remains paused.

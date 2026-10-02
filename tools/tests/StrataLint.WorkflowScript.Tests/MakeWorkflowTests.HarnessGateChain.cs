@@ -6,9 +6,6 @@ namespace StrataLint.WorkflowScript.Tests;
 
 public sealed partial class MakeWorkflowTests
 {
-    private const string GateForkSha = "0000000000000000000000000000000000000001";
-    private const string GateCandidateSha = "0000000000000000000000000000000000000002";
-
     [Fact]
     public void ScribeContentChecksUseTheExplicitNonEmptyReport()
     {

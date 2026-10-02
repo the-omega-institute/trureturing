@@ -1,0 +1,1 @@
+| 七段系数是否有唯一短支持代表？ | **已形式化** | `MonsterShortSupport.unique_short_support`；支持界为 3。 

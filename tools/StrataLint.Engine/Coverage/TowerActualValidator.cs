@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using System.Text.Json;
-using Trureturing.Truth;
 
 namespace StrataLint.Engine;
 
@@ -120,39 +119,26 @@ internal static class TowerActualValidator
     private static ImmutableDictionary<string, string> CiChecks(RepositorySnapshot snapshot)
     {
         var jobs = ImmutableDictionary.CreateBuilder<string, string>(StringComparer.Ordinal);
-        var pr = Read(RepositoryPathPolicy.PrWorkflowPath);
-        var push = Read(RepositoryPathPolicy.PushWorkflowPath);
-        if (pr?.HasDeltaGate("dev") == true)
+        foreach (var file in snapshot.Files.Values.Where(item =>
+                     item.Path.Value.StartsWith(".github/workflows/ci-", StringComparison.Ordinal)
+                     && item.Path.Value.EndsWith(".yml", StringComparison.Ordinal)))
         {
-            jobs[CiWorkflowDocument.DeltaJobName] = RepositoryPathPolicy.PrWorkflowPath;
-        }
-
-        if (push?.RunsOnBranch("push", "dev") == true)
-        {
-            var nested = push.HasEvent("workflow_call")
-                && pr?.RunsOnBranch("pull_request", "dev") == true
-                && pr.Jobs.Values.Count(job => job.Name == CiWorkflowDocument.PushCallName
-                    && job.Uses == "./" + RepositoryPathPolicy.PushWorkflowPath) == 1;
-            foreach (var name in TruthReleaseManifestReader.RequiredCheckNames)
+            var workflow = CiWorkflowDocument.Parse(file.Text);
+            if (workflow?.RunsOnBranch("pull_request", "dev") != true
+                || !workflow.RunsOnBranch("push", "dev")) continue;
+            foreach (var job in workflow.Jobs.Values)
             {
-                if (!push.Jobs.TryGetValue(name, out var job) || job.Name != name || job.Uses is not null)
-                {
-                    continue;
-                }
-
-                jobs[name] = RepositoryPathPolicy.PushWorkflowPath;
-                if (nested)
-                {
-                    jobs[CiWorkflowDocument.PushCallName + " / " + name] = RepositoryPathPolicy.PushWorkflowPath;
-                }
+                if (job.Name == CiWorkflowDocument.DeltaJobName
+                    && (file.Path.Value != AdmissionWorkflowPath
+                        || !workflow.HasDeltaGate("dev"))) continue;
+                jobs[job.Name] = file.Path.Value;
             }
         }
 
         return jobs.ToImmutable();
-
-        CiWorkflowDocument? Read(string path) =>
-            snapshot.TryGetFile(path, out var file) ? CiWorkflowDocument.Parse(file.Text) : null;
     }
+
+    private const string AdmissionWorkflowPath = ".github/workflows/ci-current.yml";
 
     private static void ValidateFiles(
         TowerComponentSyntax component,

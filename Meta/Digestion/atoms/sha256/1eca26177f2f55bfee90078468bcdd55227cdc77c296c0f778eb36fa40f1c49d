@@ -1,0 +1,6 @@
+* `labelQuadratic_fullMap` 将七段系数和的二次值形式化为
+  \(\binom{\operatorname{shortWeight}(c)+1}{2}\bmod 2\)。证明先对有限支持集合归纳，
+  再使用每个地面截面的二次值为 1、不同截面的极化值为 1，以及七段补集关系。
+
+这些声明的 `#print axioms` 只包含 Lean 的 `propext`、`Classical.choice` 和 `Quot.sound`，没有 `sorryAx`、自定义公理或 `native_decide`。
+

@@ -1250,3 +1250,22 @@ $$
 则 $c=0$。这里包含 $r=0$ 和 $r=1$；限制条件遍历全部非零元素生成的循环子群。
 
 ## 追加锚（本行以下为增补区）
+
+## 38. 多项式 Fock 空间的秩一共形算子
+
+**命题 38.1（秩一 Sugawara 中心关系）。** 令 $\mathcal F=\mathbb C[x_0,x_1,\ldots]$，每个状态为只含有限项的多项式。对 $j\ge0$ 定义 $J_{j+1}=(j+1)\partial_{x_j}$、$J_{-j-1}=x_j\cdot$，并令 $J_0=0$。以较大的指标先作用定义 $:J_iJ_j:$，并令
+
+$$
+L_n p=\frac12\sum_{k\in\mathbb Z}:J_{n-k}J_k:p.
+$$
+
+该和对每个多项式状态只有有限个非零项。对所有整数 $m,n$，作为 $\mathbb C$ 线性自同态有
+
+$$
+L_mL_n-L_nL_m=(m-n)L_{m+n}
+ +\delta_{m+n,0}\frac{m^3-m}{12}\operatorname{id}_{\mathcal F}.
+$$
+
+这是 Kytölä 的秩一玻色 Sugawara 关系在实际多项式空间上的实现，中心荷为 $1$。原始证明为 `VirasoroProject/Sugawara.lean` 的 `commutator_sugawaraGen`，固定修订 `5ff4245383b2cdd4eea7a0524bc1274c32041eb4`；整数区间二次求和使用同项目 `CentralChargeCalc.lean`。此命题不构造 VOA，不断言 Monster 模块、中心荷 $24$、融合规则、最低共形权或 OPE 系数。
+
+## 追加锚（本行以下为增补区）
