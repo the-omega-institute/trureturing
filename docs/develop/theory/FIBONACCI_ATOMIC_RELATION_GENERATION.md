@@ -45310,3 +45310,74 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
+## 328. 保留廉价来源与独立储备的有限频率接口
+
+对每个宿主，先独立指定一个比较类 $\mathscr K_C$，保留
+
+$$
+\mathcal G_C=\{t\in\mathcal T_C:Ct\in\mathscr K_C\},
+\qquad H_C=\lceil\delta_C^{-1}\rceil,\qquad e(x)=e^{2\pi ix}.
+\tag{328.1}
+$$
+
+需要的是同一实际整数满足的联合计数
+
+$$
+\sum_{1\le t\le Q_C}
+\mathbf1_{\{\mathcal D_C(t)\le b_C\}}
+\mathbf1_{\{\|tC\varphi\|<\delta_C\}}
+\mathbf1_{\{Ct\in\mathscr K_C\}}>0,
+\qquad b_C=o(S).
+\tag{328.2}
+$$
+
+§326 已为 $\mathcal T_C$ 供应 $b_C=b_P$，尚未供应命中和比较类的绝对储备。
+
+直接使用 Roger Baker,
+*Diophantine approximation with smooth numbers*，
+[arXiv:2007.05823v2，Lemma3](https://arxiv.org/html/2007.05823v2)，
+可以把命中转为一份足够的有限证书：
+
+$$
+\sum_{h=1}^{H_C}
+\left|\sum_{t\in\mathcal G_C}e(htC\varphi)\right|
+<\frac{|\mathcal G_C|}{6}.
+\tag{328.3}
+$$
+
+Lemma3 的原文对任意有限实序列成立：若每项到整数的距离均不小于 $1/H$，左侧不少于项数的六分之一。故（328.3）强迫非空 $\mathcal G_C$ 中某项满足
+$\|tC\varphi\|<1/H_C\le\delta_C$。
+这里只应用既有有限结论，不新增一般频率定理，也没有证明（328.3）。
+
+一旦这份证书与同一个独立比较类实现，既有 §318 的实际有限来源接口给
+
+$$
+h(Ct)=0,\qquad
+\text{实际低位null窗数}\ge
+\left\lfloor\frac{\eta S}{3\log\varphi}\right\rfloor-2,
+\tag{328.4}
+$$
+
+且保留合法接缝、有限后继与正值End；（326.9）同时给 $W(Ct)-W(C)=o(1)$。若另有独立、统一的固定储备 $W(n)\ge a>0$ 对全部相关 $n\in\mathscr K_C$ 最终成立，才可回传 $W(C)\ge a-o(1)$。储备前提与频率证书都尚未建立，不能由宿主运输恒等式自己供应。
+
+### 328.1 可直接复用的文献与未满足的范围
+
+在 $x=Q_C$、$y\asymp P$ 下，有
+$y\asymp(\log x)^2$、
+$\delta_C=x^{-\eta/\kappa+o(1)}$、
+$|\mathcal T_C|=x^{1/2+o(1)}$。
+以下核对仅针对原文定理的范围，不重复其解析证明。
+
+| 原始结果 | 与当前目标的对应及仍缺条件 |
+|---|---|
+| Baker, arXiv:2007.05823v2，§1 未编号定理及式（1.2），Lemma3 | 固定平滑指数 $B>2$ 的逼近指数是 $1/3-2/(3B)$；$B=2$ 不给正指数，也不允许把固定参数改为 $B(P)\downarrow2$。Lemma3 则已直接用于（328.3），无需固定斜率渐近。 |
+| Drappeau–Shparlinski, [arXiv:2404.10278v2，Corollary1.2](https://arxiv.org/html/2404.10278v2) | 结果确实对实相位统一。其全平滑集合上界在 $y\asymp\log^2x$ 时含 $x^{3/4+o(1)}$ 的保证精度，已大于当前整族 $x^{1/2+o(1)}$。全集合的取消也不能未经运输直接当成带比较类筛选的子集取消。 |
+| Nath–Rahaman, [arXiv:2603.17732v2，Theorem1](https://arxiv.org/html/2603.17732v2) | 给固定无理斜率上的无限多平滑逼近，并把指数改进到 $6/17$ 以下；平滑截止要求足够大的固定对数幂。它不供应临界幂二、指定宿主尺度、指定窄素带或全部 $hC\varphi$ 的统一频率证书。 |
+| Granville–Lamzouri, [arXiv:2604.02306v1，Theorem1.2、Corollary1.2](https://arxiv.org/html/2604.02306v1) | 支持模不超过一的乘法系数。其固定常数 $B$ 的条件 $(2q)^{\log(u+1)/B}\le y$，$u=\log x/\log y$，在当前尺度迫使 $\log(2q)\le(2+o(1))B$。因此不能静默纳入增长分母；比较类筛选也未证明是该乘法系数。 |
+| Baier–Roy, [arXiv:2512.02174v3，Theorem1 条件（2）–（4）、Corollary2](https://arxiv.org/html/2512.02174v3) | 对 $X\asymp P$、$Y\asymp P/\log P$ 的素带，其允许的最小窗宽仍不小于多项式尺度 $P^{-1/4+10\epsilon}\sqrt{\log P}$，大于 $e^{-\eta S}$；有界部分商推论还缺宿主统一常数。 |
+
+这些原文范围没有供应（328.3）；这不是所有可能文献或方法都失败的断言。表中版本均用于其明确的条件，未把预印本提升为独立验证或原创性依据。仓内 [Musin 条目](../../../Library/Analytic/musin2026higherorder.md) 的递归接触保留与固定整数整除结论也不供应实际 CA后继的深相位命中；更换最优对象仍需同源运输，不能直接换成所需比较类。
+
+这条路线现在保留了完整合同：实际宿主、明确低成本素乘子、全部需要控制的频率、真实null前缀及独立绝对储备。频率上界与储备仍是两个未解义务，没有新增Robin安全范围或RH证明。
+
+## 追加锚（本行以下为增补区）
