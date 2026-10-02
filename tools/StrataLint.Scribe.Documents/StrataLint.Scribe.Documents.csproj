@@ -15,4 +15,10 @@
     <AdditionalFiles Include="../Architecture/BannedSymbols.Determinism.txt" />
     <AdditionalFiles Include="../Architecture/BannedSymbols.Guid.txt" />
   </ItemGroup>
+  <Target Name="GetScribeScriptDefineConstants" DependsOnTargets="AddImplicitDefineConstants"
+          Returns="@(_ScribeScriptDefineConstant)">
+    <ItemGroup>
+      <_ScribeScriptDefineConstant Include="$(DefineConstants)" />
+    </ItemGroup>
+  </Target>
 </Project>

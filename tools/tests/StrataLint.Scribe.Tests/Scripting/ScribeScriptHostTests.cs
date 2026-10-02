@@ -66,6 +66,29 @@ public sealed class ScribeScriptHostTests
         Assert.Equal(ScribeScriptFailureCode.MultipleDefinitions, ScribeScriptHost.Execute(root.Path, path).Failure?.Code);
     }
 
+    [Fact]
+    public void FrameworkConditionalBannedSymbolIsRejected()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        Write(root, path, """
+            internal sealed class Probe : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create()
+                {
+            #if NET10_0_OR_GREATER
+                    _ = DateTime.Now;
+            #endif
+                    return DocumentDefinition.Create(
+                        ScribeNode.Create("digest", H("title"), Blocks(Paragraph(Text("content")))));
+                }
+            }
+            """);
+
+        Assert.Equal(ScribeScriptFailureCode.BannedSymbol,
+            ScribeScriptHost.Execute(root.Path, path).Failure?.Code);
+    }
+
     [Theory]
     [InlineData("\"Blueprint/D5/S0/Test/Missing.scribe.cs\"", ScribeScriptFailureCode.SharedSourceMissing)]
     [InlineData("\"Outside/Shared.scribe.cs\"", ScribeScriptFailureCode.SharedSourceOutsideBlueprint)]

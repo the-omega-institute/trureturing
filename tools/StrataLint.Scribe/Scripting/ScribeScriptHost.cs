@@ -66,6 +66,9 @@ public static class ScribeScriptHost
         }
 
         var root = Path.GetFullPath(repositoryRoot);
+        if (ScriptParseOptions is null)
+            return FailureResult(normalized, ScribeScriptFailureCode.HostConfiguration,
+                "Documents DefineConstants metadata is unavailable or invalid");
         try
         {
             var sourceGraph = ReadSourceGraph(root, normalized);
@@ -338,10 +341,20 @@ public static class ScribeScriptHost
         public override SourceText GetText(CancellationToken cancellationToken = default) => SourceText.From(File.ReadAllText(path));
     }
 
-    private static readonly CSharpParseOptions ScriptParseOptions = new(
-        LanguageVersion.CSharp14,
-        DocumentationMode.Parse,
-        SourceCodeKind.Regular);
+    private static readonly CSharpParseOptions? ScriptParseOptions = ReadScriptParseOptions();
+
+    private static CSharpParseOptions? ReadScriptParseOptions()
+    {
+        var constants = typeof(ScribeScriptHost).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>()
+            .FirstOrDefault(attribute => attribute.Key == "ScribeScriptDefineConstants")?.Value;
+        if (string.IsNullOrWhiteSpace(constants)) return null;
+        var symbols = constants.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Distinct(StringComparer.Ordinal).ToArray();
+        return symbols.Length == 0 || symbols.Any(symbol => !SyntaxFacts.IsValidIdentifier(symbol))
+            ? null
+            : new CSharpParseOptions(LanguageVersion.CSharp14, DocumentationMode.Parse,
+                SourceCodeKind.Regular, symbols);
+    }
 
     private static readonly CSharpCompilationOptions ScriptCompilationOptions = new(
         OutputKind.DynamicallyLinkedLibrary,
