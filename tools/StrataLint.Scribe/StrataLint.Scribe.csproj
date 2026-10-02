@@ -21,16 +21,12 @@
     <AdditionalFiles Include="../Architecture/BannedSymbols.Determinism.txt" />
     <AdditionalFiles Include="../Architecture/BannedSymbols.Guid.txt" />
   </ItemGroup>
-  <Target Name="ExportScribeScriptDefineConstants" BeforeTargets="GetAssemblyAttributes">
-    <MSBuild Projects="../StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"
-             Targets="GetScribeScriptDefineConstants"
-             Properties="Configuration=$(Configuration);TargetFramework=$(TargetFramework)">
-      <Output TaskParameter="TargetOutputs" ItemName="_ScribeScriptDefineConstant" />
-    </MSBuild>
-    <Error Condition="'@(_ScribeScriptDefineConstant)' == ''"
-           Text="Documents DefineConstants are unavailable." />
+  <Target Name="ExportScribeScriptDefineConstants" BeforeTargets="GetAssemblyAttributes"
+          DependsOnTargets="AddImplicitDefineConstants">
+    <Error Condition="'$(DefineConstants)' == ''"
+           Text="Scribe DefineConstants are unavailable." />
     <ItemGroup>
-      <AssemblyMetadata Include="ScribeScriptDefineConstants" Value="@(_ScribeScriptDefineConstant)" />
+      <AssemblyMetadata Include="ScribeScriptDefineConstants" Value="$(DefineConstants)" />
     </ItemGroup>
   </Target>
 </Project>
