@@ -1,0 +1,5 @@
+source_id = "rowmotion-endpoint-transport"
+path = "docs/develop/theory/ROWMOTION_ENDPOINT_TRANSPORT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
