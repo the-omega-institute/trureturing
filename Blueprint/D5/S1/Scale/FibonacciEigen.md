@@ -32,7 +32,7 @@ GTC computes the dyadic splitting and exact local generator counts of the same g
 
 GGL in the same finite-generator companion adds the ramified three-adic decomposition and constructs one common integer generating tuple. It determines the exact global generator counts of both golden towers and the exact change after inverting three. The local-order boundary audit credits the parallel GoldenPrimePeriodBounds and GoldenPrimePowerOrder sources without treating their starting depth as one. These ordinary proofs do not add a Lean conclusion or a WSS prime-family decision to this declaration.
 
-OSE returns to the original odd-depth prime support. `D5/L/Recurrence/andrejic2006fibonaccipowers` supplies a finite rank-closure descent and an explicit cardinality bound for powerful Fibonacci indices covered by any fixed finite odd-super-depth support. It credits the older ZBD/PBC witness and classical square-class classification, and records both exact-rank channels. Finiteness of the full exceptional set is not assumed without disclosure. These ordinary proofs add neither a WSS example nor a conclusion to this Lean declaration.
+OSE returns to the original odd-depth prime support. `D5/L/Factorization/andrejic2006fibonaccipowers` supplies a finite rank-closure descent and an explicit cardinality bound for powerful Fibonacci indices covered by any fixed finite odd-super-depth support. It credits the older ZBD/PBC witness and classical square-class classification, and records both exact-rank channels. Finiteness of the full exceptional set is not assumed without disclosure. These ordinary proofs add neither a WSS example nor a conclusion to this Lean declaration.
 
 ## References
 

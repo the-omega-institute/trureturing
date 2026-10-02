@@ -100,7 +100,7 @@ Blocks(
                             + "prime-family decision to this declaration.")),
                     Paragraph(
                         Text("OSE returns to the original odd-depth prime support. "),
-                        Ref(LibraryNoteRef.Create("D5/L/Recurrence/andrejic2006fibonaccipowers").Value),
+                        Ref(LibraryNoteRef.Create("D5/L/Factorization/andrejic2006fibonaccipowers").Value),
                         Text(" supplies a finite rank-closure descent and an explicit "
                             + "cardinality bound for powerful Fibonacci indices covered "
                             + "by any fixed finite odd-super-depth support. It credits "

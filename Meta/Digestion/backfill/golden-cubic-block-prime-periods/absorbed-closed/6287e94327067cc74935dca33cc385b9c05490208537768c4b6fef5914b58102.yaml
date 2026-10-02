@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:6287e94327067cc74935dca33cc385b9c05490208537768c4b6fef5914b58102
   normalized_sha256: sha256:6287e94327067cc74935dca33cc385b9c05490208537768c4b6fef5914b58102
 cas_ref: sha256:6287e94327067cc74935dca33cc385b9c05490208537768c4b6fef5914b58102
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/FibonacciPrimePowerLayer.fibonacci_prime_power_layer
+    target_statement_id: sha256:a43a4e14a2d52ca35b1d2115ee9a4f1fc1c23d02c96178a9fbf13d40c96235e0
 receipts:
   unresolved_subitems: []

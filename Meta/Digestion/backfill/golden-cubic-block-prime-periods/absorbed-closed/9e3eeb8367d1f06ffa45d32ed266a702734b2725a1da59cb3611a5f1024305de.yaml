@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:9e3eeb8367d1f06ffa45d32ed266a702734b2725a1da59cb3611a5f1024305de
   normalized_sha256: sha256:9e3eeb8367d1f06ffa45d32ed266a702734b2725a1da59cb3611a5f1024305de
 cas_ref: sha256:9e3eeb8367d1f06ffa45d32ed266a702734b2725a1da59cb3611a5f1024305de
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/GoldenFiniteSupportSquarePeriod.golden_finite_support_square_period
+    target_statement_id: sha256:015b746d499c675879c92d49fe179b4b9fc2085eae4b8611f24f0f23a75da24b
 receipts:
   unresolved_subitems: []

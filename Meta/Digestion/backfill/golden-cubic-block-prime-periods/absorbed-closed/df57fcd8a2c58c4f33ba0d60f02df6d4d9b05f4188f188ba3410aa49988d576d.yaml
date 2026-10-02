@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:df57fcd8a2c58c4f33ba0d60f02df6d4d9b05f4188f188ba3410aa49988d576d
   normalized_sha256: sha256:df57fcd8a2c58c4f33ba0d60f02df6d4d9b05f4188f188ba3410aa49988d576d
 cas_ref: sha256:df57fcd8a2c58c4f33ba0d60f02df6d4d9b05f4188f188ba3410aa49988d576d
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/GoldenFiniteSupportStrideMasking.golden_finite_support_stride_masking
+    target_statement_id: sha256:c919c78d78c5194a172d0a4c9e904cf97be8ba00293f394e6df37f4fa4d1a179
 receipts:
   unresolved_subitems: []

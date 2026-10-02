@@ -340,7 +340,7 @@ indices whose ratio is $25$ never have square-equivalent Fibonacci
 values. These classical results are inputs, not new proofs of square-class
 rigidity or consequences of the coordinate-ring formalization.
 The source scopes are recorded in
-`Library/Recurrence/ribenboim2005squareclasses.md`.
+`Library/Factorization/ribenboim2005squareclasses.md`.
 
 ### 10.2 Support descent for a specified square-class subgroup
 

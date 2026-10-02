@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:26c076e6b964c1f4462fb4d3ccd3cb1290ae884d328855df5e92c498b4ee038f
   normalized_sha256: sha256:26c076e6b964c1f4462fb4d3ccd3cb1290ae884d328855df5e92c498b4ee038f
 cas_ref: sha256:26c076e6b964c1f4462fb4d3ccd3cb1290ae884d328855df5e92c498b4ee038f
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/GoldenLargestPrimePeriodIteration.golden_largest_prime_period_iteration
+    target_statement_id: sha256:7254c8ffb2c5982ef5e0931b6e724350dfe63b00f8b296b2bcb5c62aff1f0542
 receipts:
   unresolved_subitems: []

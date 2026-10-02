@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:905e68e5fd732eca40754b8e8218d39a064e6f66d352d137598fbb39181364b7
   normalized_sha256: sha256:905e68e5fd732eca40754b8e8218d39a064e6f66d352d137598fbb39181364b7
 cas_ref: sha256:905e68e5fd732eca40754b8e8218d39a064e6f66d352d137598fbb39181364b7
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/QuadraticIdeals/InertEisensteinFrobenius.inert_eisenstein_quotient_frobenius
+    target_statement_id: sha256:6821ab5f0f8b99701d71b7c2da92a73bedaea3ae35acdc0bd396f328ba0072ff
 receipts:
   unresolved_subitems: []

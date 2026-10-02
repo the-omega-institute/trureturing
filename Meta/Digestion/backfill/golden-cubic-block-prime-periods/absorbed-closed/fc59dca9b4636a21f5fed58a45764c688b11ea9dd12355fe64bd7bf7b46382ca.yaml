@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:fc59dca9b4636a21f5fed58a45764c688b11ea9dd12355fe64bd7bf7b46382ca
   normalized_sha256: sha256:fc59dca9b4636a21f5fed58a45764c688b11ea9dd12355fe64bd7bf7b46382ca
 cas_ref: sha256:fc59dca9b4636a21f5fed58a45764c688b11ea9dd12355fe64bd7bf7b46382ca
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Primes/LucasSquareClassification.lucas_square_classifications
+    target_statement_id: sha256:1b8d8218c8e85f4388e82185760cb1b5a3e1e80884e1d0826c27ab80bfb477ca
 receipts:
   unresolved_subitems: []
