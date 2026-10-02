@@ -634,3 +634,215 @@ for example $b=1/5$ permits an upper scale $Y^5$. The count comparison
 excludes a larger conductor range than (T7), but supplies neither a
 reciprocal-prime deficit nor the required signed Robin margin. Unit-bit
 zero, square $D$ and the larger remaining conductors stay unresolved.
+
+## All odd layers strengthen the signed-character restriction
+
+Together with a fixed contradiction assumption $q\le P^\eta$, the
+numerical bound (T10) supplies the compact parameter range needed to use [Szabó's published Proposition 6](szabo2024primeproducts.md)
+with the actual alternating CA layers. Reuse (T3), the classical
+thresholds and the literature estimate (S1); no new analytic theorem,
+originality claim or Lean verification is made.
+
+Continue with the same actual CA integer, its canonical $h=1$,
+nonsquare signed $D$, primitive quadratic character $\chi$ of conductor
+$q$, and $P=P^+(n)$. Put $L=\log P$. All asymptotics below hold along
+every sequence of such actual maximizers with $P\to\infty$, including
+intermediate tied choices; this quantification asserts no branch
+infinitude. For every fixed $k\ge1$, the classical activation formula gives
+
+$$
+\frac{\log\xi_k}{L}\longrightarrow\frac1k.
+\tag{T11}
+$$
+
+Indeed, $F(x,k)\sim1/(x^k\log x)$, and
+$F(\xi_k,k)=F(\xi_1,1)$ gives $\xi_k^k\sim k\xi_1$, with
+$\xi_1\sim P$. This is a fixed-layer consequence of the existing CA
+formula. A prime of exponent $k$ lies between $\xi_{k+1}$ and $\xi_k$,
+apart from the tied endpoints. In the logarithmic coordinate
+$u=\log p/L$, the odd layers therefore approach
+
+$$
+\mathcal O=\bigcup_{j\ge0}
+\left(\frac1{2j+2},\frac1{2j+1}\right),\qquad
+\int_{\mathcal O}du=\log2,\quad
+\int_{\mathcal O}u\,du=\frac{\pi^2}{24}.
+$$
+
+For each fixed $r\ge1$, Mertens' first theorem and partial summation give
+
+$$
+A_r(n):=\sum_{\substack{p\le P\\v_p(n)\ \mathrm{odd}}}
+\frac{\log p}{p}\left(r-\frac{\log p}{L}\right)
+=\left(r\log2-\frac{\pi^2}{24}+o(1)\right)L.
+\tag{T12}
+$$
+
+Here $\mathrm{odd}$ means the exponent $v_p(n)$ is odd. First fix
+$K$ and let $P\to\infty$ on the finitely many retained layers, then
+let $K\to\infty$. Their tied endpoint primes contribute
+$o(L)$ regardless of the intermediate maximizing choice. All omitted
+layers lie below $\xi_{K+1}$ and have total weight at most
+$r\log\xi_{K+1}+O_r(1)=O_r(L/(K+1))+o(L)$. Letting $K$ grow after
+$P$ proves (T12), without a uniform-in-$k$ threshold asymptotic.
+
+At every odd-exponent support prime other than two and five, (T3)
+prohibits $\chi(p)=-1$. Thus its value is $1$ unless $p\mid q$, when
+it is zero. The latter correction is bounded by
+
+$$
+r\sum_{p\mid q}\frac{\log p}{p}
+=O_r(\log\log(q+3)).
+\tag{T13}
+$$
+
+For large $q$, split at $p=\log q$: the smaller-prime contribution is
+$O(\log\log q)$ by Mertens, and the remaining contribution is at most
+$(\log q)^{-1}\sum_{p\mid q}\log p\le1$. The fixed primes two and
+five cost $O_r(1)$. In a range $q\le P^\eta$ with fixed $\eta>0$,
+these corrections are $o(L)$.
+
+Define the same-character sum over all primes, including those beyond
+$P$,
+
+$$
+S_r(\chi;P)=\sum_p\frac{\chi(p)\log p}{p}
+\left(r-\frac{\log p}{L}\right)_+.
+$$
+
+Its total unsigned weight is $(r^2/2+o(1))L$. Give all primes outside
+the protected odd layers the worst permissible value $-1$; keep the
+ramified corrections (T13). This yields
+
+$$
+S_r(\chi;P)\ge
+\left(2r\log2-\frac{\pi^2}{12}-\frac{r^2}{2}+o(1)\right)L.
+\tag{T14}
+$$
+
+To compare (S1), put $t=L/\log q$ and $\alpha=rt$. Then
+$f_\alpha(\log p/\log q)=t(r-\log p/L)_+$. In a contradiction range
+$P^{1/8}<q\le P^\eta$, supplied by (T10), $\alpha$ lies in a fixed
+compact interval. For fixed order bound two, the error in (S1) is
+uniform over the varying characters and moduli at each fixed mesh value
+of $\alpha$, as noted in the source citation. To make it uniform over
+this compact interval, use a finite mesh, the bound $|f_\alpha-f_\beta|\le|\alpha-\beta|$,
+and $\sum_{p\le q^A}\log p/p=O_A(\log q)$. First take $q\to\infty$
+for this finite mesh, then let its spacing tend to zero. Consequently
+
+$$
+S_r(\chi;P)\le\frac r8\log q+o_{r,\eta}(L).
+\tag{T15}
+$$
+
+Combining (T14)–(T15) gives
+
+$$
+\frac{\log q}{\log P}\ge
+16\log2-\frac{2\pi^2}{3r}-4r-o(1).
+$$
+
+The right side is maximized for $r\ge1$ at $r=\pi/\sqrt6$. Hence, with
+
+$$
+c_*:=16\log2-\frac{8\pi}{\sqrt6}
+=0.829956247664\ldots,
+$$
+
+one obtains the paper-level necessary condition
+
+$$
+\boxed{q>P^\eta\quad\text{eventually for every fixed }0<\eta<c_*}
+\tag{T16}
+$$
+
+for every actual CA source in this canonical branch, including
+intermediate ties. For $\eta\le1/8$, (T10) already suffices; the
+compact-parameter contradiction proves the remaining range.
+No endpoint $\eta=c_*$, branch infinitude or effective onset is claimed.
+The constant is the optimum of this particular triangular weight family,
+not an optimum over all explicit-formula weights.
+
+The later odd layers are material. Keeping only the terminal logarithmic
+band $(1/2,1]$ would instead give the lower coefficient
+$r-3/4-r^2/2=-(r-1)^2/2-1/4<0$, so this weight supplies no contradiction
+from that band alone. No square-depth distribution estimate is supplied here.
+
+Even (T16) leaves the sufficient faithful-mask cutoff compatible:
+$c_*b<1$ for $\beta_0<b<1/4$. This proves neither $q^b\le P$ nor
+the faithful-mask condition. No weighted missing-prime deficit,
+signed Robin margin, h=0 exclusion, square-$D$ exclusion or RH proof
+follows. Every character and layer in the comparison belongs to the
+same actual integer; no separately realized raw-$D$ witnesses are joined.
+
+### A quantified same-source eligibility condition that would cross the cutoff
+
+The preceding bound alone does not cross the sufficient cutoff. The
+existing set $\mathcal E_1$, however, gives a specific missing FIB readout
+for this signed supplier. For fixed $r\ge1$, define its actual moment
+
+$$
+M_r(n)=\sum_{\substack{p\le P,\ p\ne2,5\\v_p(n)\ \mathrm{even}\\p^{v_p(n)/2}\mid c}}
+\frac{\log p}{p}\left(r-\frac{\log p}{L}\right).
+\tag{T17}
+$$
+
+This is the weight of the same source's supported potential exceptions,
+not the weight of an independently selected residue class. Its membership
+is determined by the existing readout $c\bmod H_1$.
+The total support weight is $(r-1/2+o(1))L$. Every negative support
+prime outside two and five belongs to this set. Keeping the conductor-zero
+cost (T13), one can therefore replace (T14) by
+
+$$
+S_r(\chi;P)\ge
+\left(2r-1-\frac{r^2}{2}+o(1)\right)L-2M_r(n).
+\tag{T18}
+$$
+
+In any fixed power range $q\le P^C$, (T15) then gives the conditional
+comparison
+
+$$
+\frac{\log q}{L}\ge
+16-\frac8r-4r-\frac{16M_r(n)}{rL}-o(1).
+\tag{T19}
+$$
+
+The range is available whenever the same source satisfies
+$m_1^b\le Y=\log n$, since $q\le m_1$ and $Y\sim P$.
+Fix $b=6/25$, which lies in $\beta_0<b<1/4$, and $r=\sqrt2$.
+For any fixed coefficient
+
+$$
+0\le\mu<\frac{71\sqrt2}{96}-1
+=0.045928780505\ldots,
+$$
+
+the two conditions
+
+$$
+M_{\sqrt2}(n)\le\mu\log P,\qquad m_1^{6/25}\le\log n
+\tag{T20}
+$$
+
+are incompatible at every sufficiently large actual CA source in the
+$h=1$, nonsquare-$D$ branch. Indeed, (T19)'s lower coefficient exceeds
+$25/6$, whereas the cutoff gives
+$\log q/L\le25/6+o(1)$. The strict fixed gap absorbs both errors.
+This is a conditional application of the same published signed estimate;
+neither condition in (T20) is established for all remaining candidates.
+
+The unrestricted even-layer envelope is only
+
+$$
+M_r(n)\le
+\left(r(1-\log2)-\frac12+\frac{\pi^2}{24}+o(1)\right)L,
+$$
+
+whose coefficient at $r=\sqrt2$ is $0.345188935617\ldots$. It does
+not imply the required $0.045928\ldots$ bound. The missing work is an
+actual-source upper estimate for square-depth membership in
+$c=4A+7B$, sufficiently strong at this weighted scale, together with
+coverage of sources outside the cutoff. No distribution law, h=0 or
+square-$D$ exclusion, reciprocal-prime deficit or RH proof is supplied.
