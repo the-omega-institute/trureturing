@@ -44231,3 +44231,186 @@ h(T)=M(T+1)+C-\int_0^T F(t)\,dt\ge1\quad(T\ge0).
 **证明。** 这是（316.2）第二项的精确否定。它不指定负平均出现的频率、可计算的截止或任何单个实际整数的违例幅度。
 
 定理315.3排除 $\mathfrak m_L$ 的有限极限，而定理316.1允许、并在 RH 下确定 $\mathfrak a_N$ 的有限极限；两个结论使用不同对象。对索引区间的互斥递归划分，累计贡献 $\sum\omega_L\mathfrak m_L$ 与总对数长度 $\sum\omega_L$ 各自相加，因此该判据的预算可在区间分块之间合并。这个恒等式没有给未展开块的下界，也不允许用均匀计数权重替代（316.1）的对数权重。$\square$
+## 317. CA价格下的临界乘子预算与单向余量运输
+
+本节直接复用 [CA价格与受控比较](../../../Library/Scale/baker2021smoothbeatty.md)、[Nicolas同截断包络](../../../Library/ArithSums/nicolas2025comparison.md) 及其既有素数尺度输入，不重证极大丰数的因子结构或包络渐近。新增内容是将这些输入组合到可增长的乘子范围，保留同一个实际整数的余量比较。全部结论为纸面推导，没有新增 Lean 核验或原创性声明。
+
+令 $C\to\infty$ 沿实际极大丰数（CA）取值，允许正价格处的并列极大点。记
+
+$$
+P=P^+(C),\qquad X=\log C,\qquad Z(n)=\sigma(n)/n,
+\qquad \Delta(n)=e^\gamma\log\log n-Z(n).
+\tag{317.1}
+$$
+
+取任一使 $C$ 在所有正整数上最大化 $Z(n)n^{-\epsilon}$ 的价格 $\epsilon>0$。所引接口给出
+
+$$
+X\sim P,\qquad
+0<\epsilon\le\frac{\log(1+1/P)}{\log P},\qquad
+\Delta(C)\longrightarrow0,\qquad Z(C)\sim e^\gamma\log P.
+\tag{317.2}
+$$
+
+这里的加性收敛复用 Nicolas包络、Dusart误差及 $\Sigma(C)=Z(C)$ 的既有应用；单凭相对 Grönwall极限不足以推出它。$P$ 始终是宿主 $C$ 的最大素因子，不替换为乘积的最大素因子。
+
+**命题 317.1（任意正乘子的同源有限比较）。** 对每个正整数 $t$，记 $\ell=\log t$，则
+
+$$
+\begin{aligned}
+e^\gamma\log(1+\ell/X)-Z(C)(e^{\epsilon\ell}-1)
+&\le\Delta(tC)-\Delta(C)\\
+&\le e^\gamma\log(1+\ell/X).
+\end{aligned}
+\tag{317.3}
+$$
+
+证明。整除关系 $C\mid tC$ 使每个有限Euler因子不减，故 $Z(tC)\ge Z(C)$；同一价格的全局最优性给 $Z(tC)\le Z(C)e^{\epsilon\ell}$。将两端分别代入精确等式
+
+$$
+\Delta(tC)-\Delta(C)
+=e^\gamma\log(1+\ell/X)-[Z(tC)-Z(C)]
+\tag{317.4}
+$$
+
+即可。这不要求 $tC$ 仍为 CA、素指数有序或保持旧素支撑；允许 $t=1$。$\square$
+
+**命题 317.2（固定临界预算的统一单向界）。** 固定实数 $\kappa>0$。存在仅依赖宿主尺度与该固定参数的非负函数 $\eta_\kappa(C)\to0$，使所有
+
+$$
+1\le t\le Q_C:=\left\lfloor e^{\kappa\sqrt P}\right\rfloor
+\tag{317.5}
+$$
+
+同时满足
+
+$$
+\Delta(C)-\frac{\eta_\kappa(C)}{\sqrt P}
+\le\Delta(tC)
+\le\Delta(C)+\frac{e^\gamma\kappa+\eta_\kappa(C)}{\sqrt P}.
+\tag{317.6}
+$$
+
+证明。对上述范围，$0\le\ell\le\kappa\sqrt P$。利用 $\log(1+u)\ge u-u^2/2$（$u\ge0$）及 $e^v-1\le v+O(v^2)$（$0\le v\le1$），命题317.1给
+
+$$
+\Delta(tC)-\Delta(C)
+\ge\ell\left(\frac{e^\gamma}{X}-\epsilon Z(C)\right)
+-O_\kappa\left(\frac{\ell^2}{X^2}+Z(C)(\epsilon\ell)^2\right).
+\tag{317.7}
+$$
+
+同一个宿主的（317.2）给
+
+$$
+\frac{e^\gamma}{X}=\frac{e^\gamma+o(1)}P,
+\qquad
+\epsilon Z(C)\le\frac{e^\gamma+o(1)}P,
+\tag{317.8}
+$$
+
+所以括号中的量有下界 $-o(1/P)$，无需为该量断言正号。两个二次误差分别为 $O_\kappa(1/P)$ 与 $O_\kappa(1/(P\log P))$，均为 $o(P^{-1/2})$。这给（317.6）的下界，且误差对全部允许的 $t$ 统一。上界由
+
+$$
+e^\gamma\log(1+\ell/X)\le e^\gamma\ell/X
+\le\frac{e^\gamma\kappa+o(1)}{\sqrt P}
+\tag{317.9}
+$$
+
+得到。增大共同的非负误差函数即可同时覆盖两端。$\square$
+
+**推论 317.3（归一化余量与次临界范围）。** 记 $W(n)=\sqrt{\log n}\,\Delta(n)$。对固定 $\kappa$ 的全部（317.5），统一有
+
+$$
+W(C)-o(1)\le W(tC)\le W(C)+e^\gamma\kappa+o(1).
+\tag{317.10}
+$$
+
+对任一固定 $0<\nu<1/2$，若改取 $1\le t\le\lfloor e^{P^\nu}\rfloor$，则统一有
+
+$$
+|\Delta(tC)-\Delta(C)|=O(P^{\nu-1})=o(P^{-1/2}),
+\qquad W(tC)-W(C)=o(1).
+\tag{317.11}
+$$
+
+证明。临界范围内 $\log(tC)=X+O_\kappa(\sqrt P)\sim P$，并且
+
+$$
+|\sqrt{X+\ell}-\sqrt X|\le\frac{\ell}{2\sqrt X}=O_\kappa(1).
+\tag{317.12}
+$$
+
+其与 $\Delta(C)\to0$ 的乘积为 $o(1)$。将（317.6）乘以 $\sqrt{X+\ell}$ 即得（317.10）；这一步不假设 $W(C)$ 有界或收敛。次临界范围中，直接使用（317.3）及 $Z(C)=O(\log P)$，预算与响应变化各为 $O(P^{\nu-1})$，故有（317.11）。参数 $\kappa,\nu$ 都固定，不主张随宿主增长的统一阈值。$\square$
+
+## 追加锚（本行以下为增补区）
+## 318. 在Robin半尺度预算内选择实际长空窗来源
+
+沿用 §317 的宿主 $C$、$P=P^+(C)$ 与固定 $\kappa>0$。本节复用经典有限Dirichlet逼近、[规范旋转读数](../../../Library/ArithSums/guloglunevans2008beatty.md)、§151 的互不交叠分支内部及 §182.1、§289.1 的有限来源接口；不重做数位分类、区间极限或逼近定理。
+
+**命题 318.1（临界预算下的规范低位空窗）。** 对每个充分大的实际 CA宿主 $C$，存在 $1\le t_C\le Q_C$，使 $N_C=t_CC$ 的实际规范地址有单位位零及至少
+
+$$
+L_C=\left\lfloor\frac{\kappa\sqrt P}{3\log\varphi}\right\rfloor-2
+\tag{318.1}
+$$
+
+个连续低位 `[null]` 窗口，同时保留（317.6）、（317.10）。这里 $\varphi=(1+\sqrt5)/2$，有限初段取到 $L_C\ge0$ 后才使用公式。后继地址有限、合法并以原正值End终止；不指定第一非空标签或精确空窗深度。
+
+证明。对 $\alpha=C\varphi$ 和整数 $Q_C\ge1$ 应用已有有限Dirichlet定理，选得
+
+$$
+\|N_C\varphi\|\le\frac1{Q_C+1}<e^{-\kappa\sqrt P}.
+\tag{318.2}
+$$
+
+令 $r=\{N_C\varphi\}$。充分大时，$r$ 位于单位位零的低相位或高相位窗。写其真实规范组成为 $N_C=2A_C+3B_C$，令 $y_C=A_C+B_C\psi$、$\psi=1-\varphi$。所引规范读数给
+
+$$
+E_C=4A_C+7B_C-\sqrt5N_C
+=\begin{cases}-2r,&r\text{ 在低相位窗},\\2(1-r),&r\text{ 在高相位窗},\end{cases}
+\qquad E_C=2\psi^3y_C.
+\tag{318.3}
+$$
+
+所以对这个同一实际整数有
+
+$$
+|y_C|=\varphi^3\|N_C\varphi\|
+<\varphi^3e^{-\kappa\sqrt P}
+<\varphi^{-3L_C}.
+\tag{318.4}
+$$
+
+令 $\lambda=\psi^3=-\varphi^{-3}$。区间 $\lambda^{L_C}(-1,\varphi)$ 包含开区间 $(-\varphi^{-3L_C},\varphi^{-3L_C})$，奇数深度自动反转端点次序。因此 $y_C$ 严格处于连续 $L_C$ 个null分支的内部。沿 §151 的分支内部不交性及 §289.1 的有限来源识别逐层读回，即迫使原规范有限地址的前 $L_C$ 个窗口都为 `[null]`。来源始终是正整数 $N_C$ 的真实表示，不能以无限区间中的任意点代替它。该 $t_C$ 属于统一价格范围，所以 §317 的两种余量界同时适用。$\square$
+
+**推论 318.2（次临界深度与所缺的有符号输入）。** 对每个固定 $0<\nu<1/2$，同一构造改用 $Q_C=\lfloor e^{P^\nu}\rfloor$，给出至少 $\lfloor P^\nu/(3\log\varphi)\rfloor-2$ 个实际低位空窗，并保留 $W(N_C)-W(C)\to0$。对固定临界预算，若某列宿主独立满足 $W(C)\ge a>0$ 最终成立，则所选来源满足 $\liminf W(N_C)\ge a$；若某列宿主独立满足 $W(C)\to-\infty$，则所选来源也满足 $W(N_C)\to-\infty$。这些运输只使用（317.10）或（317.11），不独立提供任一宿主的符号前提。
+
+这里得到的是受控大小、真实有限前缀和同源Robin余量的共同实现。§289 的固定完整素支撑、本原组成及精确 `[null]^L,[2]` 来源来自另一份不带命中成本的构造；不把那些额外属性带入当前的临界预算。当前 $N_C$ 允许等于 $C$，也允许引入新素数；不保证CA性、素指数有序、本原组成或完整支撑不变。特别地，$P$ 仍是 $P^+(C)$，不是 $P^+(N_C)$。
+
+删除实际空窗时，组成gcd和黄金范数绝对值按既有递归不变量保持；普通整数数量、约数和与Robin符号不随之保持。因此“很长的低位null前缀”本身还没有给出统一安全性。尚缺的是对该受控实际族的独立有符号估计，而不是更多地址分类或无符号的 $\Delta(N_C)\to0$。
+
+本节及 §317 是仓内既有输入的综合纸面应用；文献结论、来源接口与新增组合步骤分别以上述引用为准。不宣称已经排除任何新的Robin反例范围，不宣称黎曼猜想得到证明，也不将纸面推导计作Lean冻结成果。
+
+## 追加锚（本行以下为增补区）
+## 319. 有符号回传需要覆盖同一乘子的成本
+
+§318 的实际长空窗来源可以作为估计对象，但回传必须使用 §317 的上侧比较。对固定临界参数 $\kappa>0$，独立下界 $W(N_C)\ge b$ 只直接给出
+
+$$
+W(C)\ge b-e^\gamma\kappa-o(1).
+\tag{319.1}
+$$
+
+因此，若希望沿这条接口得到宿主的最终严格正余量，一个足够的供应条件是：对某个固定 $\delta>0$，同一实际来源族最终满足
+
+$$
+W(N_C)\ge e^\gamma\kappa+\delta.
+\tag{319.2}
+$$
+
+在次临界参数 $0<\nu<1/2$ 的版本中，回传成本为 $o(1)$，所以固定正下界 $W(N_C)\ge\delta>0$ 已足够给该族的宿主最终正余量。这里的供应条件尚未建立；它们只列明现有比较所需的估计强度。临界成本不足以推出宿主正号时，不意味着宿主实际余量为负。
+
+这些是（317.10）—（317.11）的直接应用，不是新增的RH等价判据。最终的尾域结论也不自动检查任何有限初段。符号来源仍须属于被选出的同一整数族；无关地址或无关因子配置上的最优下界不能代替（319.2）。
+
+## 追加锚（本行以下为增补区）
