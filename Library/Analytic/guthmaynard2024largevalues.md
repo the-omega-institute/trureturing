@@ -5,7 +5,7 @@ year: 2024
 title: New large value estimates for Dirichlet polynomials
 doi: null
 url: https://arxiv.org/abs/2405.20552v2
-claim: Corollary 1.3 supplies uniform prime counts in short intervals; together with monotonicity of the Chebyshev function and the existing global one-sided integral criterion, it shows why testing all prime-index Fibonacci window cutoffs is still an RH-strength requirement. No such estimate is established on the unknown subset of actual low-loss candidates.
+claim: Corollary 1.3 supplies uniform prime counts in short intervals, while Theorem 1.2 supplies the zero-density exponent used in cumulative spectral-tail estimates. The FIB applications retain the actual source and do not establish the full signed Robin budget.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -13,7 +13,7 @@ triage: anchor
 
 # Short intervals and the Fibonacci sampling boundary
 
-The primary source is Guth–Maynard, *New large value estimates for Dirichlet polynomials*, [arXiv:2405.20552v2](https://arxiv.org/abs/2405.20552v2), with [versioned HTML](https://arxiv.org/html/2405.20552v2). Corollary 1.3 and its parameter range were checked in the original text. This note uses that corollary as a literature input; it does not independently audit the complete large-values and zero-density proof. The interpolation and FIB parameter comparison below are paper applications, without an originality or Lean-verification claim.
+The primary source is Guth–Maynard, *New large value estimates for Dirichlet polynomials*, [arXiv:2405.20552v2](https://arxiv.org/abs/2405.20552v2), with [versioned HTML](https://arxiv.org/html/2405.20552v2) and [versioned PDF](https://arxiv.org/pdf/2405.20552v2). The title page identifies this version as 7 April 2026. Theorem 1.2 and Corollary 1.3 were checked in the original text. They are literature inputs; this note does not independently audit the complete large-values and zero-density proof. The applications below are paper derivations, without an originality or full Lean-verification claim.
 
 ## The short-interval input
 
@@ -155,3 +155,23 @@ The exact endpoint $Q(x)$ in the Nicolas note is nonnegative, since $\log(1+t)\l
 The FIB window theorem only allows **at most one** integer with a low-loss divisor in each window; it does not assert existence. The set of cutoffs of actually existing candidates may omit windows, and no bound on its gaps has been established. Equations (1)–(3) cannot be applied to that subset merely because the full set of window cutoffs has small gaps.
 
 An estimate restricted to the actual candidates must still obtain its sign from an independent arithmetic property, or use a positive lower bound for the actual envelope deficit $\log(\Sigma(N)/Z(N))$. A theorem that the required estimate holds for all window cutoffs would be sufficient but already RH-strength. None of these applications proves the candidate estimate, the full Robin criterion, or a bridge from the special FIB family to every required integer.
+
+## The zero-density input for cumulative contributions
+
+Theorem 1.2, printed p.2 of the same version, concerns the actual nontrivial zeros of $\zeta$, counted with multiplicity. With
+
+$$
+N(\sigma,T)=\#\{\rho:\Re\rho\ge\sigma,\ |\Im\rho|\le T\},
+\qquad a(\sigma)=\frac{15(1-\sigma)}{3+5\sigma},
+$$
+
+it gives $N(\sigma,T)\le T^{a(\sigma)+o(1)}$ as $T\to\infty$. No RH hypothesis is present. A use at finitely many fixed $\sigma$ values permits separate constants and thresholds; it need not assume an additional uniformity of the $o(1)$ over a moving real-part parameter.
+
+For comparison, the original paper's equations (1.2) and (1.3), on the same page, record the Ingham and Huxley exponents
+
+$$
+a_{\rm I}(\sigma)=\frac{3(1-\sigma)}{2-\sigma},
+\qquad a_{\rm H}(\sigma)=\frac{3(1-\sigma)}{3\sigma-1}.
+$$
+
+On $1/2\le\sigma\le3/4$, the smaller of these two is $a_{\rm I}$, and at $3/4$ the two coincide with value $3/5$. Theorem 1.2 gives $a(3/4)=5/9$. This is a comparison with these named bounds, not a claim about every other zero-density refinement.
