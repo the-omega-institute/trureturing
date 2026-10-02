@@ -289,7 +289,8 @@ repair labels. The exact odd-quotient price lowers q-parent depth to
 (p-3)/2 and pure colored-parent depth to(p-1)/2, retaining capacity p-2.
 Opposite5 forces the other anchor's height at most2; all concentrated
 heights in the small-anchor branch are at most8. The specified MTR
-q=53 branch now has H_q=1, with no assertion that H_3 is one.
+q=53 branch has every nonternary height one, maximum support prime53
+and H_3<=28, with no assertion that H_3 is one.
 
 [Section162](#162-a-unique-nonconcentrated-prime-is-at-most211)
 forces an actual near-top colored owner and retains the discounted
@@ -19694,7 +19695,13 @@ using A=1, the unchanged OCP6 bound H_3<=28, and HPM7's7-color list {7,11,13,17,
 
     q=53 and H_q=1.                                (TCP9)
 
-The source and every original label remain those of the same EB1 family. This is a height-one conclusion for q; H_3 and the other original prime heights are not thereby squarefree. The remaining q=53 branch is not excluded by this consumer, and no unrestricted odd noncoverage follows.
+Together with HPM7, this determines every nonternary height in the same branch. Name the colors of5 and7 S_5 and S_7. If r in S_7 had H_r>=2, the height-at-least-two version of HPM7 with opposite5 would give r<5, impossible. For r in S_5 it gives r<7, leaving only r=5, whose height is already assumed one. TCP9 handles the sole shared prime53. Thus all nonternary heights are one.
+
+The ordinary HPM7 bound gives r<25 in S_7 and r<49 in S_5. Since R={53}, the maximum support prime is exactly53. Combining this with the unchanged OCP6 bound on H_3 gives the finite carrier
+
+    Q divides 3^28 product_(5<=p<=53, p prime)p.   (TCP10)
+
+There are14 nonternary prime factors in that product. Every original label, phase and source remains unchanged. The squarefree noncoverage theorem in [BBMST, arXiv:1901.11465v1](https://arxiv.org/abs/1901.11465v1), including the closing relaxation after Lemma5.4, still requires the3-height to be at most one; TCP10 does not supply that hypothesis. No enumeration or exclusion of this finite carrier is asserted. The q=53 branch and unrestricted odd noncoverage remain unresolved.
 
 ## 162. A unique nonconcentrated prime is at most211
 
