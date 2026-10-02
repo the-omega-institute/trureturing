@@ -11409,3 +11409,350 @@ FIB 的 $\beta=\rho(\alpha)$、五模式分辨和四相运输仍提供独立的�
 本文新增桥接未摄入 atom、未 deposit 或 cover，未执行 Lean 构建，未给出实际加权迹数值证书。上述失效结论始终受第 19.1 节明列的纸面合同约束；RH 及其完整 Robin/Weil 判据目标保持未解决。
 
 ## 追加锚（本行以下为增补区）
+## 21. 有符号非线性项与完整散射核的平滑估计
+
+本章沿用第 18 节的实际物理表示与迹合同，研究非线性修正 $N_S(f)$ 的单侧上界。局部 Blaschke 分解、普通 Sonin 投影、Schatten 理想和 Hankel 平滑判据均作为既有工具复用，不将其重述计作新结果。以下是对同一实际测试的纸面候选综合估计，未作 Lean 核验；其作用是替换第 19—20 节的分离非线性预算，不是证明完整 Weil 正性或 RH。
+
+### 21.1 共同来源与有符号谱配对
+
+取第 18 节的有限素数集 $S=\{\infty\}\cup\mathcal P$，保持实际普通正交投影 $P_S=TPK^{-1}PT^*$。在 unitary logarithmic 坐标中，$H=L^2(\mathbb R,dx)$、$Q=\mathbf1_{(-\infty,0)}$、$W=I-Q$，$\mathcal F_S$ 为完整物理酉对合。沿用
+
+$$
+C=Q\mathcal F_SQ,\qquad
+Z=(I-C^2)^{1/2},\qquad
+J_{\rm ang}=W\mathcal F_SQZ^{-1}.
+$$
+
+$C,Z$ 在 $QH$ 上取值；出现 $CX_f$ 时将 $C$ 在 $WH$ 上延为零。有限 $S$ 的紧性及 $\|C\|<1$ 仍是既有合同，故 $Z^{-1}$ 有界，$J_{\rm ang}$ 是 $QH\to WH$ 的等距映射。这里的 $J_{\rm ang}$ 与 FIB 黄金共轭无识别关系。
+
+令 $f\in C_c^\infty(\mathbb R;\mathbb C)$ 的自相关实且偶，$X_f$ 为卷积 $f$ 的有界算子，$A_f=X_fX_f^*$，$B_f=QA_fW$。实偶自相关给出 $[A_f,\mathcal F_S]=0$；不假设 $[A_f,C]=0$。第 18 节的截断条带分解保证 $B_f$ 迹类。非线性项为
+
+$$
+N_S(f)=2\operatorname{Re}\operatorname{Tr}
+\left(C^3(I-C^2)^{-1}B_f\mathcal F_SQ\right).
+$$
+
+复用 Connes–Consani, arXiv:2006.13771v1, Proposition 4.5(iv)、式 (77)、印刷页 25—26 的二维谱配对关系。这里的参数对应为源的 $\lambda_n=c_j$、$\tau_n=c_j/z_j$，实偶测试积分后的三个矩阵元素为 $a_j,d_j,b_j$。原关系承担以下配对消去；有限 $S$ 的实际酉对合、测试交换性及平滑后求和条件由本章合同另行承担。
+
+**谱配对上界的应用。** 在上述共同表示与迹合同下，若 $CX_f$ 为 Hilbert–Schmidt，则
+
+$$
+\boxed{N_S(f)\le\|CX_f\|_{\rm HS}^2.}
+$$
+
+第 21.2—21.3 节独立验证本章测试的 Hilbert–Schmidt 前提。这个上界不控制 $|N_S(f)|$，也不要求随 $S$ 增长的统一逆角范数；不将配对恒等式重新列为新形式化目标。
+
+证明。选取紧自伴 $C$ 的正交本征基 $(e_j)$，包含其核的正交基。记
+
+$$
+Ce_j=c_je_j,\quad z_j=(1-c_j^2)^{1/2},\quad
+u_j=J_{\rm ang}e_j.
+$$
+
+酉对合关系给出同一二维对上的作用
+
+$$
+\mathcal F_Se_j=c_je_j+z_ju_j,\qquad
+\mathcal F_Su_j=z_je_j-c_ju_j.
+$$
+
+定义实数
+
+$$
+a_j=\langle e_j,A_fe_j\rangle,\qquad
+d_j=\langle u_j,A_fu_j\rangle,\qquad
+b_j=\operatorname{Re}\langle e_j,A_fu_j\rangle.
+$$
+
+$A_f\ge0$ 给出 $a_j,d_j\ge0$。将 $[A_f,\mathcal F_S]=0$ 在这一对上配对，得到
+
+$$
+2c_jb_j=z_j(a_j-d_j).
+$$
+
+由 $W\mathcal F_SQ=J_{\rm ang}Z$ 和迹循环性，
+
+$$
+N_S(f)=2\operatorname{Re}\operatorname{Tr}
+\left(C^3Z^{-1}B_fJ_{\rm ang}\right).
+$$
+
+迹循环所用各因子在固定有限 $S$ 上有界，$B_fJ_{\rm ang}$ 迹类。第 $j$ 个对角贡献精确等于
+
+$$
+2c_j^3z_j^{-1}b_j=c_j^2(a_j-d_j).
+$$
+
+因此任意有限谱和不超过 $\sum_jc_j^2a_j$。右侧的完整非负和为
+
+$$
+\sum_jc_j^2a_j
+=\sum_j\|X_f^*Ce_j\|^2
+=\|CX_f\|_{\rm HS}^2<\infty.
+$$
+
+左侧按已经存在的迹类算子收敛，故可取完整谱极限。证明没有先写两个未验证有限性的迹再作差，也没有假设 $C^2$ 迹类。$\square$
+
+### 21.2 物理截断与完整 Hankel 核
+
+采用 $\widehat h(t)=\int h(x)e^{-itx}dx$、$d\mu(t)=dt/(2\pi)$ 以及未完成的物理 Mellin 归一化。完整散射为
+
+$$
+\widehat{\mathcal F_Sh}(t)=m_S(t)\widehat h(-t),\qquad
+m_S(t)=\frac{\gamma(1/2-it)}{\gamma(1/2+it)}
+\prod_{p\in\mathcal P}\frac{1-p^{-1/2-it}}{1-p^{-1/2+it}},\qquad
+\gamma(s)=\pi^{-s/2}\Gamma(s/2).
+$$
+
+这保留实际 Gamma 因子，不把完成 Mellin 的评价密度直接用于物理 Fourier 乘子。有限 Euler 比值可按既有局部内函数方法写为 $e^{-it\sum_p\log p}B_S(t)$；这里不将平移和内函数分别估计，也不将 $B_S$ 识别为完整物理散射或有限维圆盘模型。
+
+定义
+
+$$
+g_{S,f}(t)=m_S(t)\widehat f(-t),\qquad
+h_{S,f}=\mathscr F^{-1}g_{S,f},\qquad
+D(f)=\int_{\mathbb R}|x|\,|f(x)|^2dx.
+$$
+
+$Q\mathcal F_SX_fQ$ 的实际核为 $\mathbf1_{x<0}\mathbf1_{y<0}h_{S,f}(x+y)$。标准 Hankel Hilbert–Schmidt 核积分给出
+
+$$
+\mathcal H_S(f):=\|Q\mathcal F_SX_fQ\|_{\rm HS}^2
+=\int_{-\infty}^0(-u)|h_{S,f}(u)|^2du.
+$$
+
+这与 Abusaksaka–Partington, arXiv:1704.00518v1, Proposition 2.5 的无权 Hankel 判据对应；这里只使用核积分部分，不借用其额外正测度表示条件。卷积截断的直接核积分与算子恒等式给出
+
+$$
+\|[Q,X_f]\|_{\rm HS}^2=D(f),\qquad
+CX_f=Q\mathcal F_SX_fQ+Q\mathcal F_S[Q,X_f].
+$$
+
+在 $g_{S,f}\in H^1(\mathbb R)$ 时，Cauchy–Schwarz 与 Plancherel 提供独立的有限性证明：
+
+$$
+\mathcal H_S(f)
+\le\|h_{S,f}\|_2\|u h_{S,f}\|_2
+=\|f\|_2\|g_{S,f}'\|_{L^2(d\mu)}<\infty.
+$$
+
+由第 21.1 节的谱配对上界得到同一测试上的单侧估计
+
+$$
+N_S(f)\le
+\left(\sqrt{\mathcal H_S(f)}+\sqrt{D(f)}\right)^2
+\le2\mathcal H_S(f)+2D(f).
+$$
+
+### 21.3 保留全部素数幂的明确上界
+
+令 $\Psi=\Gamma'/\Gamma$ 为 digamma 函数，与 FIB 共轭数的记号分开。完整相位导数为
+
+$$
+\frac{m_S'(t)}{i m_S(t)}
+=\omega_\infty(t)+\omega_{\mathcal P}(t),\qquad
+\omega_\infty(t)=\log\pi-\operatorname{Re}\Psi(1/4+it/2),
+$$
+
+$$
+\omega_{\mathcal P}(t)
+=2\sum_{p\in\mathcal P}\log p
+\sum_{k\ge1}p^{-k/2}\cos(kt\log p).
+$$
+
+每个纯素数幂均保留；固定有限 $\mathcal P$ 的该级数绝对收敛。平移与内函数的共同相位给出以上公式，不能额外收费一个未消去的 $\sum_p\log p$。定义
+
+$$
+\mathfrak d_S=\sum_{p\in\mathcal P}\frac{\log p}{\sqrt p-1},\qquad
+a_\Gamma=|\log\pi-\Psi(1/4)|,\qquad
+b_\Gamma=\frac14\sum_{n\ge0}(n+1/4)^{-3}.
+$$
+
+复用 NIST DLMF 5.7.6 的 digamma 部分分式展开，在固定正实部 $1/4$ 上得到
+
+$$
+0\le\operatorname{Re}\Psi(1/4+it/2)-\Psi(1/4)
+\le b_\Gamma t^2,
+\qquad |\omega_\infty(t)|\le a_\Gamma+b_\Gamma t^2,
+\qquad |\omega_{\mathcal P}(t)|\le2\mathfrak d_S.
+$$
+
+$f$ 紧支撑光滑、$\widehat f$ 为 Schwartz，故 $g_{S,f}\in H^1$；Gamma 相位及有限素数相位的上界足以验证其导数的平方可积性。
+
+**候签定理 21.1（完整相位的有符号预算）。** 在第 21.1 节合同下，
+
+$$
+\boxed{
+N_S(f)\le2D(f)+2\|f\|_2\left(
+\|xf\|_2+
+\|(\omega_\infty+\omega_{\mathcal P})\widehat f\|_{L^2(d\mu)}
+\right).
+}
+$$
+
+特别地，得到完全明确的上界
+
+$$
+\boxed{
+\begin{aligned}
+N_S(f)\le{}&2D(f)+2\|f\|_2\|xf\|_2
++2a_\Gamma\|f\|_2^2\\
+&+2b_\Gamma\|f\|_2\|f''\|_2
++4\mathfrak d_S\|f\|_2^2.
+\end{aligned}
+}
+$$
+
+证明。微分 $g_{S,f}=m_S\widehat f(-t)$，利用两种相位导数均为实偶函数及 Plancherel，得到
+
+$$
+\|g_{S,f}'\|_{L^2(d\mu)}
+\le\|xf\|_2+
+\|(\omega_\infty+\omega_{\mathcal P})\widehat f\|_{L^2(d\mu)}.
+$$
+
+代入第 21.2 节的实际 Hankel 矩界和第 21.1 节的谱配对上界，得到第一式。再应用相位上界与 $\|t^2\widehat f\|_{L^2(d\mu)}=\|f''\|_2$，得到第二式。其常数不含 $\|(I-C^2)^{-1}\|$，但仍明确依赖真实素数集的 $\mathfrak d_S$。这不是 $N_S$ 的绝对值界或统一 TC 定理。$\square$
+
+## 追加锚（本行以下为增补区）
+## 22. 扩张测试上的预算改进与未闭合的正性比较
+
+本章把第 21 节的单侧上界用于第 19—20 节原有的扩张测试族，不另造数值测试，不重证三个 Fourier 约束或活跃素幂的支撑结论。比较对象是同一实际测试上的两份充分预算；预算改进不意味着实际有符号修正变小，也不意味着已经得到 Weil 正性。
+
+### 22.1 保留原测试与物理素数集
+
+继续取第 19.3 节的实偶 bump $\phi$ 及
+
+$$
+f_{\mathcal R}(x)=\mathcal R^{-1/2}
+\left[\phi'-4\mathcal R^{-2}\phi'''\right](x/\mathcal R).
+$$
+
+其实际支撑为 $[-\mathcal R/2,\mathcal R/2]$，自相关支撑为 $[-\mathcal R,\mathcal R]$，且 $\widehat f_{\mathcal R}(0)=\widehat f_{\mathcal R}(i/2)=\widehat f_{\mathcal R}(-i/2)=0$。这些直接复用第 19.3 节，不把约束在数值意义下放松。所有纯素数幂仍出现在第 21.3 节的完整相位导数中。
+
+取有限实际素数集
+
+$$
+\mathcal P_{\mathcal R}^{\rm act}\subseteq\mathcal P
+\subseteq\{p:p\le e^{\mathcal R}\},\qquad
+S=\{\infty\}\cup\mathcal P.
+$$
+
+左侧保证支撑完整；右侧不是支撑完整的必要条件，而是以下把素数相位预算与 $\chi_S$ 比较所用的额外限制。由于活跃素幂满足 $k\log p\le\mathcal R$，最小活跃素数集确实满足右侧。若另加 $p>e^{\mathcal R}$，第 21.3 节的 $\mathfrak d_S$ 上界仍可使用，但以下 $\mathcal R\log\chi_S$ 替换不再由该论证保证。
+
+记 $u,v,M_*,\mathcal R_0,\eta,c_0,b_S,\chi_S$ 为第 19—20 节原量，并定义固定于 $\phi$ 与 Gamma 因子的常数
+
+$$
+E_\phi=\|\phi'''\|_2+4\|\phi^{(5)}\|_2,\qquad
+C_{\phi,\Gamma}=2a_\Gamma M_*
++2b_\Gamma\sqrt{M_*}\,E_\phi,
+\qquad c_{\rm res}=\frac{u^2\eta^3}{c_0}>0.
+$$
+
+### 22.2 同一测试的明确增长预算
+
+对 $\mathcal R\ge\mathcal R_0\ge1$，支撑和既有 $L^2$ 上界给出
+
+$$
+D(f_{\mathcal R})\le\frac{\mathcal R}{2}M_*,\qquad
+\|xf_{\mathcal R}\|_2\le\frac{\mathcal R}{2}\sqrt{M_*},\qquad
+\|f_{\mathcal R}''\|_2\le\mathcal R^{-2}E_\phi.
+$$
+
+把这些参数代入候签定理 21.1，得到
+
+$$
+N_S(f_{\mathcal R})\le
+C_{\phi,\Gamma}+2M_*\mathcal R+4M_*\mathfrak d_S.
+$$
+
+这个式子适用于任意有限 $\mathcal P$；不把随素数集增长的 $\mathfrak d_S$ 藏进固定常数。对于第 22.1 节限定的素数集，令 $d_0=1-2^{-1/2}>0$。原量的 Euler 定义给出
+
+$$
+\log\chi_S
+=2\sum_{p\in\mathcal P}\log\frac{1+p^{-1/2}}{1-p^{-1/2}}
+\ge4\sum_{p\in\mathcal P}p^{-1/2},
+$$
+
+$$
+\mathfrak d_S
+=\sum_{p\in\mathcal P}\frac{\log p\,p^{-1/2}}{1-p^{-1/2}}
+\le\frac{\mathcal R}{d_0}\sum_{p\in\mathcal P}p^{-1/2}
+\le\frac{\mathcal R\log\chi_S}{4d_0}.
+$$
+
+因此可取非负单侧预算
+
+$$
+\boxed{
+U_{S,\mathcal R}
+=C_{\phi,\Gamma}+M_*\mathcal R
+\left(2+\frac{\log\chi_S}{d_0}\right),\qquad
+N_S(f_{\mathcal R})\le U_{S,\mathcal R}.
+}
+$$
+
+沿增长的支撑完整素数集，预算为 $O(\mathcal R(1+\log\chi_S))$；没有证明它是素数集一致的 $O(\mathcal R)$，也没有证明它能被正迹覆盖。
+
+### 22.3 相对于旧绝对预算的统一比较
+
+**候签定理 22.1（扩张族的充分预算比）。** 假设第 18—21 节的实际表示及迹合同成立。对于第 22.1 节的测试和素数集，当
+
+$$
+\mathcal R\ge\max\{\mathcal R_0,\log2/\eta\}
+$$
+
+时，第 20.2 节已有的旧预算下界与新预算满足
+
+$$
+b_S\|f_{\mathcal R}\|_1^2
+\ge c_{\rm res}\chi_S\mathcal R^4,
+$$
+
+$$
+\boxed{
+\frac{U_{S,\mathcal R}}{b_S\|f_{\mathcal R}\|_1^2}
+\le\frac{C_{\phi,\Gamma}}{c_{\rm res}\mathcal R^4}
++\frac{M_*}{c_{\rm res}\mathcal R^3}
+\left(2+\frac1{e d_0}\right).
+}
+$$
+
+故该预算比随 $\mathcal R\to\infty$ 一致趋于零，一致性范围为第 22.1 节的有限支撑完整素数集。
+
+证明。复用 $b_S\ge\chi_SJ_S^3/c_0$、$J_S^3\ge4\eta^3\mathcal R^3$ 与 $\|f_{\mathcal R}\|_1^2\ge u^2\mathcal R/4$，即得第一式。新预算除以第一式的正下界，再用 $\chi_S\ge1$ 和 $\sup_{x\ge1}(\log x)/x=1/e$，得到所示统一界。常数均独立于 $\mathcal P$ 与 $\mathcal R$，且 $c_{\rm res}>0$。$\square$
+
+这个比较只说明新上界相对于旧上界的损失减少；不是 $|N_S|$ 的小量估计，也没有给出实际 $N_S$ 与任一预算的比值极限。第 20.1 节关于保留旧绝对预算的证书失效结论仍然成立。
+
+### 22.4 新充分证书与仍缺的同一测试下界
+
+令 $U_S(f)$ 为第 21.3 节给出的明确非负上界；对本章限定的扩张族也可取 $U_{S,\mathcal R}$。在原有极点消去、支撑完整及线性迹合同下，复用
+
+$$
+Q_{\rm full}(f)=\sigma_S(f)-D_{\rm lin}(f)-N_S(f),\qquad
+L_S(f)\le\sigma_S(f),\qquad
+|D_{\rm lin}(f)-D_{\rm fin}(f)|
+\le\|f\|_2^2E_S(r,\mathbf N).
+$$
+
+于是新的充分证书为
+
+$$
+\boxed{
+L_S(f)-D_{\rm fin}(f)-\|f\|_2^2E_S(r,\mathbf N)-U_S(f)
+\ge0\quad\Longrightarrow\quad Q_{\rm full}(f)\ge0.
+}
+$$
+
+这只是预算替换后的逻辑接口，不另列新形式化目标。其待证的分析内容仍是实际同一测试上的下界
+
+$$
+\sigma_S(f)-D_{\rm lin}(f)\ge U_S(f)
+$$
+
+或更弱而足够的 $\sigma_S(f)-D_{\rm lin}(f)\ge N_S(f)$。前一个条件是方便使用上界而加入的充分条件，不是 RH 的必要条件；前一个条件失败不能否定后一个条件。要推进完整 Weil 判据，比较还须覆盖全部 constrained 测试及相应支撑完整的增长素数集；本章一个扩张族的预算改善不承担这个全称结论。
+
+Connes–Consani, arXiv:2006.13771v1, Proposition 4.5(iv) 的谱配对、Abusaksaka–Partington, arXiv:1704.00518v1, Proposition 2.5 的 Hankel 核判据及 DLMF 5.7.6 的 digamma 展开均为复用前置。完整物理符号的增长预算及其原测试族消费者是本卷的候选综合推导；限定文献检索未取得供应同一估计的定理，不认证原创性。本文未执行 Lean 构建，未摄入或冻结这些候选，也未给出实际正性数值证书。
+
+FIB 的 $\beta=\rho(\alpha)$、五模式来源及四相观察运输，尚无通向实际 prime-dilation 与本章迹读出的交织定理。Robin 的约数倒数预算也没有由本章 Hankel 上界推出。两条接口与 RH 的完整正性目标均保留为未解义务；不把几何长度守恒、换切面或减少估计损失写成这些义务的解答。
+
+## 追加锚（本行以下为增补区）
