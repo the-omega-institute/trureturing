@@ -240,7 +240,7 @@ public static class ScribeScriptHost
                 } => member,
             _ => null,
         };
-        return identifier?.Identifier.ValueText is "ScribeSharedSource" or "ScribeSharedSourceAttribute";
+        return identifier?.Identifier.ValueText is "ScribeSharedSource" or nameof(ScribeSharedSourceAttribute);
     }
 
     private static (MemoryStream? Image, string? EntryType, ScribeScriptFailure? Failure) Compile(
