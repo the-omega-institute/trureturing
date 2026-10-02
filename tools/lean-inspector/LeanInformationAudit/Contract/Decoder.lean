@@ -63,14 +63,13 @@ private def continuation (e : Expr) : MetaM (Bool × Option Expr) := do
     return (false, some (← ref e.getAppArgs.back!).2)
   throwError "unclassified_form:contract.continuation"
 
-private def checkTarget (name : Name) (value : Expr) : MetaM ConstantInfo := do
+def checkTarget (name : Name) (value : Expr) : MetaM ConstantInfo := do
   unless value.isConst && value.constName! == name do
     throwError "unclassified_form:contract.target_identity:{name}"
   let info ← getConstInfo name
   unless info.isTheorem && Literal.closed info.type do
     throwError "unclassified_form:contract.target_theorem:{name}"
-  unless ← isDefEq (← inferType value)
-      (info.type.instantiateLevelParams info.levelParams value.constLevels!) do
+  unless value.constLevels!.length == info.levelParams.length do
     throwError "unclassified_form:contract.target_statement:{name}"
   return info
 
