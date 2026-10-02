@@ -25716,3 +25716,23 @@ By contrast, the representative notation in Section 218 has
 representative-only hull formula, not a whole-cover counterexample: the ten
 classes \(U_r\) are a retained source family for the displayed liability, but
 they do not by themselves cover all integers.
+
+The construction can also be embedded in the standard three-class top packet.
+Put (b=1+P), and add
+
+\[
+ T_0=[b]_{3^e},\qquad T_1=[b+R]_{5\cdot3^e},qquad
+ T_2=[b+2R]_{7\cdot3^e}.
+\]
+
+For (x=b+Rk), the congruence (x\in T_j) is equivalent to
+
+\[
+ 3m_j\mid35(k-j),\qquad (m_0,m_1,m_2)=(1,5,7),
+\]
+
+and hence to (k\equiv j\pmod3).  These three actual phases therefore
+partition (B), while their odd numerical labels are distinct from one
+another, from (A,B), and from all (U_r) when (e\ge10).  The enlarged
+family still leaves integers uncovered, so it remains a source-compatible
+hull counterexample rather than a covering-system counterexample.
