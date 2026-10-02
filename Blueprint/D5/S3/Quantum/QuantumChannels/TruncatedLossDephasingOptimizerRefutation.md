@@ -140,7 +140,7 @@ $$\neg claim$$
 
 *Commentary.*
 
-Take K=2, N=3/2, epsilon=6/7, t=(7/2)log(2), and psi=(|1>+|2>)/sqrt(2). The only binomial candidate is M=2, mu=3/4. Every kappa phase is covered by diagonal unitary conjugation. The psi output has an eigenvalue above 1/2 and one below 1/8, whereas all eigenvalues of each candidate output lie strictly between 1/8 and 1/2. Trace-one strict majorization and strict concavity of -x log(x) give smaller entropy for psi. The defining Kraus equations give the kappa output's off-diagonal coefficient sqrt(3)/32768; the displayed section-III coefficient in the source differs from those equations. The result excludes these candidate families as minimizers; it does not assert global optimality of psi. The proof has proof_shape: bind-only and escape_witness: none; it applies the exponential-series, positive-definiteness and strict-concavity results to the displayed instance.
+Take K=2, N=3/2, epsilon=6/7, t=(7/2)log(2), and psi=(|1>+|2>)/sqrt(2). The only binomial candidate is M=2, mu=3/4. Every kappa phase is covered by diagonal unitary conjugation. The psi output has an eigenvalue above 1/2 and one below 1/8, whereas all eigenvalues of each candidate output lie strictly between 1/8 and 1/2. Trace-one strict majorization and strict concavity of -x log(x) give smaller entropy for psi. The defining Kraus equations give the kappa output's off-diagonal coefficient sqrt(3)/32768; the displayed section-III coefficient in the source differs from those equations. The result excludes these candidate families as minimizers; it does not assert global optimality of psi. The proof applies the exponential-series, positive-definiteness and strict-concavity results to the displayed instance.
 
 ## References
 
