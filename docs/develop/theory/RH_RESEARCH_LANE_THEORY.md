@@ -10197,3 +10197,167 @@ previous records. The local exact synthesis checks the named remote sector
 and readout fields as semantic projections, not an attestation or replay of
 their full spectral producers. All scripts, precise inputs and results are
 retained in the accompanying reproducibility archive.
+## 14. 素数二的实际 Sonin 投影与算术项
+
+本章固定一个实际测试函数、物理 cutoff 和素数集合，研究完整 Weil 形式与真实正交 Sonin 迹之间的差额。文献中的投影、运输与迹恒等式作为供应结果复用。新增的半局部迹桥接为 `ASSUMED-UNVERIFIED`：尚无对应的 Lean 声明、内核核验或实际加权迹数值证书。下面的计算合同与推导供后续证明核对，不声明 RH 或较强迹支配条件已经解决。
+
+### 14.1 共同来源与观察合同
+
+物理空间取
+
+$$
+H=L^2((0,\infty),dx),\qquad
+(\mathcal F\xi)(x)=2\int_0^\infty\cos(2\pi xy)\xi(y)\,dy.
+$$
+
+它是源文献中偶物理函数空间的半轴写法。定义 $Q=\mathbf1_{(0,1)}$、$W=I-Q$，以及
+
+$$
+V=\{\xi\in H:Q\xi=Q\mathcal F\xi=0\}.
+$$
+
+记 $P$ 为到 $V$ 的正交投影。[Burnol 的投影公式](../../../Library/Weil/burnol2002sonine.md)在此使用 cutoff $1$；不把物理向量与积分伸缩作用的测试函数混为同一对象。
+
+对 $f\in C_c^\infty(\mathbb R)$，取
+
+$$
+g(u)=f(\log u),\quad h=g*g^*,\quad
+H_f(t)=h(e^t),\quad A_f=\rho(h).
+$$
+
+其中 $g^*(u)=\overline{g(u^{-1})}$，$d^*u=du/u$，物理伸缩为
+
+$$
+(\rho(u)\xi)(x)=u^{-1/2}\xi(u^{-1}x).
+$$
+
+于是其积分核写作
+
+$$
+A_f(x,y)=(xy)^{-1/2}H_f(\log x-\log y).
+$$
+
+采用固定的三个 Fourier 零约束 $\widehat f(0)=\widehat f(i/2)=\widehat f(-i/2)=0$，其中 $\widehat f(t)=\int f(x)e^{-itx}\,dx$。若完整算术项只有素数 $2$ 的一次幂，则
+
+$$
+\mathcal A_2(f)=\sqrt2\log2\,\operatorname{Re}H_f(\log2),
+\qquad Q_{\rm full}(f)=W_\infty(h)-\mathcal A_2(f).
+$$
+
+高次幂与其他素数只有在同一实际测试的支撑确实使其配对为零时才可去掉。一般支撑下仍使用完整的 prime-power 和 pole 约定。
+
+### 14.2 运输物理 Fourier 与正交投影
+
+令 $\ell=\log2$、$q=2^{-1/2}$、$U=\rho(2)$，定义
+
+$$
+T=I-qU,\qquad G=T^*T=\tfrac32I-q(U+U^*),
+\qquad K=(PGP)|_V.
+$$
+
+这里 $T$ 是[半局部源的 $\theta_{\{\infty,2\}}$](../../../Library/Weil/connesconsanimoscovici2024semilocal.md)在共同 unitary 物理表示中的候选实现。需要一起核对源 Mellin 约定与 Fourier 运输，而不能只核对乘子模。
+
+设
+
+$$
+\mathcal F_2=T\mathcal FT^{-1},\qquad
+V_2=TV=\{\xi:Q\xi=Q\mathcal F_2\xi=0\}.
+$$
+
+由 $\mathcal F U\mathcal F=U^*$ 得 $[G,\mathcal F]=0$，这是把 $\mathcal F_2$ 当作自伴 unitary involution 所需的关系。$T$ 与 $T^{-1}$ 保持 $WH$；$T^{-*}$ 保持 $QH$。候选的闭直和运输为
+
+$$
+QH+\mathcal F_2QH=T^{-*}(QH+\mathcal FQH).
+$$
+
+记 $C_2=Q\mathcal F_2Q$。在紧性、闭直和与 $\gamma=\|C_2\|<1$ 的合同下，$R_2=(I-C_2^2)^{-1}$ 作用于 $QH$，实际正交投影写作
+
+$$
+\begin{aligned}
+P_2&=TPK^{-1}PT^*\\
+&=I-R_2(Q-C_2\mathcal F_2)
+-\mathcal F_2R_2(Q\mathcal F_2-C_2).
+\end{aligned}
+$$
+
+这是要与源 Sonin 投影识别的对象。混合配对幂等算子 $TPT^{-1}$ 具有不同的合同。
+
+### 14.3 伸缩级数与可复用的紧性
+
+物理 Fourier 的候选展开为
+
+$$
+\mathcal F_2=-qU\mathcal F
++(1-q^2)\sum_{n\ge0}q^nU^{*n}\mathcal F.
+$$
+
+它在 operator norm 中收敛；截到 $n=N$ 的余项界为 $(1+q)q^{N+1}$。物理核的写法是
+
+$$
+k_2(x,y)=-\cos(\pi xy)+\sum_{n\ge0}\cos(2\pi2^nxy).
+$$
+
+此处是 operator/distributional 级数，未断言逐点余弦和收敛。核展开、迹配对与极限之间的交换各有单独的证明义务。
+
+[局部因子的 quasi-inner 供应定理](../../../Library/Weil/connesconsani2020quasiinner.md)对一个有限素数给出 off-diagonal Hardy block 的 order $1/2$。经共同 Mellin 表示与 Hardy/物理 cutoff 对应后，$C_2\in\mathfrak S_3$ 的结论应优先复用该结果。这个对应仍需逐算子核对；不能把源 Hardy projection 直接写成物理 $P$。
+
+用于量化余项的一种候选直接估计是：核 $\cos(2\pi2^nxy)$ 在 $(0,1)^2$ 上的 operator norm 至多 $q^n/2$，Hilbert–Schmidt 范数至多 $1$，从而
+
+$$
+\|C_2\|_3\le J_3:=q^{1/3}+\frac{2^{-1/3}}{1-q^{1/3}},
+\qquad
+\|C_2^3R_2\|_1\le\frac{J_3^3}{1-\gamma^2}.
+$$
+
+定性 Schatten 性质与这个显式常数承担不同用途；已有定性供应结果不作为新的项目定理重复交付。
+
+### 14.4 精确保留算术尺度上的集中项
+
+令 $\widetilde Q$ 为到 $T^{-1}QH$ 的正交投影。候选关系为 $\mathcal F_2Q\mathcal F_2=\mathcal F\widetilde Q\mathcal F$。在长度 $\ell$ 的 logarithmic fibre 中，$Q$ 保留指标 $n\le0$；$T^{-1}QH$ 在 $n\ge0$ 的尾部由 $v_n=q^n$ 生成。在尾部指标上，投影差写成
+
+$$
+\widetilde Q-Q=(1-q^2)|v\rangle\langle v|-|e_0\rangle\langle e_0|.
+$$
+
+fibre 上还含恒等作用，故不能把它说成整个物理空间上的有限秩或紧算子。对同一个伸缩平滑核，待核对的精确配对为
+
+$$
+\operatorname{Tr}\bigl(A_f(\widetilde Q-Q)\bigr)
+=\ell\sum_{k\ne0}q^{|k|}H_f(k\ell).
+$$
+
+零阶系数由 $(1-q^2)\sum_{n\ge0}q^{2n}-1=0$ 消去。这个推导必须在 trace-class 的差上完成，不能相减两个未定义的无限迹。[局部散射的源合同](../../../Library/Weil/burnol1999scattering.md)也要求保留完整 local factor 的符号与恒等修正。
+
+在只激活 $2^1$ 的真实测试上，上式就是 $\mathcal A_2(f)$。设 $J_2=W-\mathcal F_2Q\mathcal F_2$；由[源 archimedean 迹约定](../../../Library/Weil/connesconsani2021archimedean.md)运输而来的待核对等式为
+
+$$
+Q_{\rm full}(f)=\operatorname{Tr}(A_fJ_2).
+$$
+
+### 14.5 剩余投影差额的计算合同
+
+定义 $\sigma_2(g)=\operatorname{Tr}(A_fP_2)$，并记
+
+$$
+D_2(f)=\sigma_2(g)-Q_{\rm full}(f),\qquad
+\delta_2(g)=\sigma_2(g)-\sigma_\infty(g).
+$$
+
+源 archimedean 恒等式写作 $\sigma_\infty=W_\infty+E_\infty$，故同一测试上的差额应满足
+
+$$
+D_2=E_\infty+\delta_2+\mathcal A_2.
+$$
+
+较强的候选充分条件为 $D_2\le0$；完整 Weil 正性实际需要 $D_2\le\sigma_2$。这两种门槛分别等价于 $Q_{\rm full}\ge\sigma_2$ 与 $Q_{\rm full}\ge0$，不可混用。
+
+**候签定理 14.1（实际 cross-cutoff 修正）。** 在本章共同来源、投影识别与 trace-class 合同全部成立时，若 $H_f$ 实且偶，设 $B_f=QA_fW$，则候选公式为
+
+$$
+D_2(f)=2\operatorname{Re}\operatorname{Tr}_{QH}
+\bigl[C_2R_2B_f\mathcal F_2Q\bigr].
+$$
+
+推导纲要：在 $C_2$ 的本征向量 $\xi$ 上写 $\mathcal F_2\xi=\lambda\xi+\sqrt{1-\lambda^2}\,\zeta$，其中 $\zeta\in WH$。利用 $[A_f,\mathcal F_2]=0$，对应二维对的迹贡献化为 $2\lambda\operatorname{Re}\langle\xi,A_f\zeta\rangle/\sqrt{1-\lambda^2}$。还需验证完整谱分解、收敛与源算术识别，才可把这个逐对计算提升为实际迹恒等式。
+
+## 追加锚（本行以下为增补区）
