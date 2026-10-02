@@ -7,7 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic;
 internal sealed class TreeMessageRealizationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/FibonacciAtomic/TreeMessageRealization.";
-    private const string Source = "kowshik2011functioncomputation";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Observer/kowshik2011functioncomputation");
     private static Formula V(string s) => F.Id(s);
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
@@ -31,7 +32,7 @@ internal sealed class TreeMessageRealizationDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("tree-message-lower-bound"),
                 DeclarationHandle.Create(Prefix + "implementation_lower_bound"), H("Every Accurate Implementation"),
                 StatementSource.FromAuthor(Seq(
-                    Call("Full", V("T")), Sp, Wedge, Sp,
+                    Call("Full", V("T")), Sp, Land, Sp,
                     Call("Correct", V("F"), V("T"), V("m"), V("g")), Sp, Implies, Sp,
                     Forall, Sp, V("S"), Sp, InMacro, Sp, Call("subtrees", V("T")), Comma, Sp,
                     Call("capacity", V("F"), Call("A", V("S"))), Sp, Le, Sp,
@@ -46,9 +47,9 @@ internal sealed class TreeMessageRealizationDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("tree-message-simultaneous-realization"),
                 DeclarationHandle.Create(Prefix + "simultaneous_realization"), H("Simultaneously Sharp Response Messages"),
                 StatementSource.FromAuthor(Seq(
-                    Call("Full", V("T")), Sp, Wedge, Sp, Call("A", V("T")), Sp, Eq, Sp, V("I"),
+                    Call("Full", V("T")), Sp, Land, Sp, Call("A", V("T")), Sp, Eq, Sp, V("I"),
                     Sp, Implies, Sp, Exists, Sp, V("m"), Comma, V("g"), Comma, Sp,
-                    Call("Correct", V("F"), V("T"), V("m"), V("g")), Sp, Wedge, Sp,
+                    Call("Correct", V("F"), V("T"), V("m"), V("g")), Sp, Land, Sp,
                     Forall, Sp, V("S"), Sp, InMacro, Sp, Call("subtrees", V("T")), Comma, Sp,
                     Call("reachable", V("m"), V("S")), Sp, Eq, Sp,
                     Call("capacity", V("F"), Call("A", V("S"))))),

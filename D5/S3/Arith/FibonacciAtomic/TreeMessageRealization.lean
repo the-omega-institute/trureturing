@@ -19,8 +19,8 @@ open D5.S3.Observer.Separation.SurjectiveColumnSharpWidth (response capacity)
 /-- Terminal nodes carry coordinates; binary forks carry no coordinate. -/
 abbrev Tree (I : Type) := BinaryTree (Option I)
 
-def leaf {I : Type} (i : I) : Tree I := .node (some i) .nil .nil
-def fork {I : Type} (l r : Tree I) : Tree I := .node none l r
+abbrev leaf {I : Type} (i : I) : Tree I := .node (some i) .nil .nil
+abbrev fork {I : Type} (l r : Tree I) : Tree I := .node none l r
 
 noncomputable def leaves {I : Type} (t : Tree I) : Finset I := by
   classical
@@ -74,6 +74,29 @@ noncomputable def optimum {I O : Type} {X : I → Type} (F : (∀ i, X i) → O)
     (t : Tree I) : ℕ := sInf {p | ∃ (m : Implementation X) (read : m.Message t → O),
       Correct F t m read ∧ peak m t = p}
 
+/-- Every actual subtree of a fully labelled task tree is fully labelled,
+and all its coordinates belong to its ancestor's coordinate block. -/
+theorem subtree_structure {I : Type} (t : Tree I) (ht : Full t) :
+    ∀ s ∈ subtrees t, Full s ∧ leaves s ⊆ leaves t := by
+  classical
+  intro s hs
+  induction t with
+  | nil => simp [Full] at ht
+  | node a l r hl hr =>
+    cases a with
+    | some i =>
+      have he : s = .node (some i) l r := by simpa [subtrees] using hs
+      subst s
+      exact ⟨ht, Finset.Subset.refl _⟩
+    | none =>
+      simp only [subtrees, Finset.mem_insert, Finset.mem_union] at hs
+      rcases hs with he | hs | hs
+      · subst s; exact ⟨ht, Finset.Subset.refl _⟩
+      · exact ⟨(hl ht.1 hs).1, (hl ht.1 hs).2.trans
+          (by intro i hi; simp [leaves, hi])⟩
+      · exact ⟨(hr ht.2.1 hs).1, (hr ht.2.1 hs).2.trans
+          (by intro i hi; simp [leaves, hi])⟩
+
 /-- Every accurate implementation separates the full completion responses at
 every actual subtree. No restriction is placed on the leaf-label order or input words. -/
 theorem implementation_lower_bound {I O : Type} [Finite I] {X : I → Type}
@@ -93,20 +116,6 @@ theorem implementation_lower_bound {I O : Type} [Finite I] {X : I → Type}
         exact congrArg₂ (m.combine l r)
           (hl (fun i hi => h i (by simp [leaves, hi])))
           (hr (fun i hi => h i (by simp [leaves, hi])))
-  have contained (u s : Tree I) (hs : s ∈ subtrees u) : leaves s ⊆ leaves u := by
-    induction u with
-    | nil => simp [subtrees] at hs
-    | node a l r hl hr =>
-      cases a with
-      | some i =>
-        have he : s = .node (some i) l r := by simpa [subtrees] using hs
-        rw [he]
-      | none =>
-        simp only [subtrees, Finset.mem_insert, Finset.mem_union] at hs
-        rcases hs with he | hs | hs
-        · rw [he]
-        · exact (hl hs).trans (by intro i hi; simp [leaves, hi])
-        · exact (hr hs).trans (by intro i hi; simp [leaves, hi])
   have context (u : Tree I) (hu : Full u) (s : Tree I) (hs : s ∈ subtrees u)
       (x y : ∀ i, X i) (hout : ∀ i ∉ leaves s, x i = y i)
       (heq : evaluate m s x = evaluate m s y) : evaluate m u x = evaluate m u y := by
@@ -129,13 +138,13 @@ theorem implementation_lower_bound {I O : Type} [Finite I] {X : I → Type}
             intro i hi
             apply hout i
             intro his
-            exact Finset.disjoint_left.mp hu.2.2 (contained l s hs his) hi
+            exact Finset.disjoint_left.mp hu.2.2 ((subtree_structure l hu.1 s hs).2 his) hi
         · apply congrArg₂ (m.combine l r)
           · apply locality l x y
             intro i hi
             apply hout i
             intro his
-            exact Finset.disjoint_left.mp hu.2.2 hi (contained r s hs his)
+            exact Finset.disjoint_left.mp hu.2.2 hi ((subtree_structure r hu.2.1 s hs).2 his)
           · exact hr hu.2.1 s hs x y hout heq
   intro s hs
   let A := leaves s
@@ -227,6 +236,15 @@ theorem simultaneous_realization {I O : Type} [Fintype I] {X : I → Type}
     congr 1
     funext i
     exact h i.val i.property
+  have view (A : Finset I) (x : ∀ i, X i)
+      (b : ∀ i : {i // i ∉ A}, X i.val) :
+      response X F (fun i => i ∈ A) (fun i => x i.val) b =
+        F (fun i => if h : i ∈ A then x i else b ⟨i,h⟩) := by
+    unfold response
+    congr 1
+    funext i
+    by_cases hi : i ∈ A <;>
+      simp [Equiv.piEquivPiSubtypeProd, Equiv.coe_fn_symm_mk, hi]
   have substitute (A : Finset I) (x y : ∀ i, X i)
       (h : response X F (fun i => i ∈ A) (fun i => x i.val) =
         response X F (fun i => i ∈ A) (fun i => y i.val)) (z : ∀ i, X i) :
@@ -298,27 +316,11 @@ theorem simultaneous_realization {I O : Type} [Fintype I] {X : I → Type}
         have assembled :
             F ((leaves l : Set I).piecewise xl ((leaves r : Set I).piecewise xr z)) = F z :=
           first.trans second
-        unfold response
+        rw [view, view]
         convert assembled using 1 <;> congr 1 <;> funext i
         · by_cases hil : i ∈ leaves l <;> by_cases hir : i ∈ leaves r <;>
-            simp [m, responseImplementation, responseMessage, response,
-              Equiv.piEquivPiSubtypeProd, Equiv.coe_fn_mk, Equiv.coe_fn_symm_mk, Set.piecewise, fork, leaves, xl, xr, z, hil, hir]
-        · by_cases hi : i ∈ leaves (fork l r) <;>
-            simp [responseMessage, response, Equiv.piEquivPiSubtypeProd, Equiv.coe_fn_mk, Equiv.coe_fn_symm_mk, z, hi]
-  have all_full (u s : Tree I) (hu : Full u) (hs : s ∈ subtrees u) : Full s := by
-    induction u with
-    | nil => simp [Full] at hu
-    | node a l r hl hr =>
-      cases a with
-      | some i =>
-        have he : s = .node (some i) l r := by simpa [subtrees] using hs
-        simpa [he] using hu
-      | none =>
-        simp only [subtrees, Finset.mem_insert, Finset.mem_union] at hs
-        rcases hs with he | hs | hs
-        · simpa [he] using hu
-        · exact hl hu.1 hs
-        · exact hr hu.2.1 hs
+            simp [m, responseImplementation, responseMessage, Set.piecewise,
+              fork, leaves, xl, xr, z, hil, hir]
   let read : m.Message t → O := fun q => q.val (fun i => x₀ i.val)
   refine ⟨m, read, ?_, ?_⟩
   · intro x
@@ -332,7 +334,7 @@ theorem simultaneous_realization {I O : Type} [Fintype I] {X : I → Type}
     have surj : Function.Surjective (evaluate m s) := by
       intro q
       refine ⟨nominal F x₀ s q, ?_⟩
-      exact (evaluates s (all_full t s ht hs) _).trans (nominal_response s q)
+      exact (evaluates s (subtree_structure t ht s hs).1 _).trans (nominal_response s q)
     rw [reachable, surj.range_eq]
     simp only [Nat.card_univ]
     rfl
