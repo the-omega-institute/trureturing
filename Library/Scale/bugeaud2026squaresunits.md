@@ -5,7 +5,7 @@ year: 2026
 title: "On the difference between squares and integral S-units"
 doi: 10.4171/pm/2145
 url: https://ems.press/journals/pm/articles/14298883
-claim: "Theorem 1.4 bounds the height of solutions to a fixed-support square-minus-unit equation; the actual CA golden norm has this shape, but its growing support needs a uniform height-relative constant estimate."
+claim: "Theorem 1.4 applies to the actual CA golden norm, but its universal exponent exceeds 3 on every support containing 2 and 5; its literal power bound cannot exclude the dangerous arc, so a useful strengthening must restrict the solution family or change the bound."
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -20,8 +20,9 @@ The [publisher page](https://ems.press/journals/pm/articles/14298883)
 records online publication on 13 June 2025; 2026 is the printed volume year.
 The inspected [publisher PDF](https://ems.press/content/serial-article-files/53394)
 gives Theorem 1.2 on p.224 and Corollary 1.3 and Theorem 1.4 on p.225.
-This note checks those statements and their parameter interface, without
-an independent audit of their complete analytic proofs or Lean verification.
+This note checks those statements and their parameter interface. Transient
+Lean applications check the finite witness and exponent comparison below;
+the analytic theorems and the full CA asymptotic bridge are not formalized here.
 
 ## Two different outputs of the same paper
 
@@ -107,9 +108,37 @@ $$
 The left bound is a lower bound for the same $|K|$; the right is its
 allowed upper bound. If the chosen constant is normalized to $c(T)\ge1$,
 this comparison requires $1-1/c(T)=O(P^{-1/2})$, since $L\sim P$.
-The quoted fixed-support statement does not supply this growing-support
-estimate. This is a missing quantitative input, not a claim that no
-other argument can exclude the arc.
+The literal universal exponent has a stronger obstruction than an unknown
+dependence on the growing support. Every support here contains $2$ and $5$,
+and Theorem 1.4's solution family therefore includes
+
+$$
+z=9,\qquad Y=2^4\cdot5=80,\qquad K=9^2-80=1.
+$$
+
+Thus $9\le2^{c(T)}$, which forces $c(T)>3$. This witness already has
+squarefree part $5$, so keeping the quadratic field fixed does not remove it.
+Consequently the lower bound furnished by this literal theorem satisfies
+
+$$
+\frac{\log|z|}{c(T)}-\log2
+\le\frac{L+\eta S_0+O(1)}3-\log2,
+$$
+
+for the actual large pair, whereas the dangerous-arc upper allowance has
+logarithm $L-(\kappa-\eta)S_0+O(1)$. Since $L\sim P$ and $S_0=\sqrt P$,
+the latter exceeds this guaranteed lower bound by a quantity tending to
+infinity. Optimizing the exponent in the quoted universal power bound cannot
+make the required comparison hold.
+
+The small witness belongs to the theorem's full solution family; it is not
+an actual CA host pair or an instance of the dangerous arc. Restrictions on
+the solution family, including complete CA valuations or coprimality with
+the full support, can exclude that witness and must be assessed on the actual
+pair, preserving any common divisors. Bounds with additional prefactors or
+height thresholds must retain those parameters in the comparison. No
+exclusion of such alternative arguments, and no actual CA incidence in
+the arc, is claimed.
 
 The prime $q$ here is the rational-obstruction denominator and a costly
 multiplier in §328. It is not a member of §327's cheap family: that family
