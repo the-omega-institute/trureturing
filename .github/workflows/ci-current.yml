@@ -349,8 +349,6 @@ jobs:
             [tests-cache]
             tools/scripts/workflow/elan-cache-inventory.sh
             Meta/ci-cache-paths.json
-            tools/tests/StrataLint.ScriptTests/Fixtures/cache_fixture.py
-            tools/tests/StrataLint.ScriptTests/Fixtures/cache_snapshot_contract.py
             tools/tests/StrataLint.ScriptTests/Fixtures/lean_input_contract.py
             tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_support.py
             tools/TestSupport/StrataLint.ScriptProcessTestSupport/*

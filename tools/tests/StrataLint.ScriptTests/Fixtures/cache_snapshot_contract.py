@@ -5,10 +5,12 @@ import io
 import json
 import os
 import pathlib
+import queue
 import shutil
 import sys
 import subprocess
 import tempfile
+import threading
 import unittest
 from unittest import mock
 import urllib.error
@@ -19,7 +21,7 @@ from cache_fixture import CACHE, REV, CacheFixture
 
 
 class SnapshotContracts(CacheFixture, unittest.TestCase):
-    def lookup_keys(self, responses=(), **environment):
+    def lookup_keys(self, responses=(), *, wait=None, **environment):
         owner = self.restore_owner()
         env = dict(self.env, GH_TOKEN="synthetic-token", GITHUB_REPOSITORY="owner/repository",
                    GITHUB_API_URL="https://cache.example.test/api/v3")
@@ -27,6 +29,8 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         with mock.patch.dict(os.environ, env, clear=True):
             publication = owner.actions_keys(self.root)["project"]
             with mock.patch.object(urllib.request, "urlopen", side_effect=responses) as opened, \
+                    mock.patch.object(owner, "wait_for_seed_lookup", create=True,
+                        side_effect=wait or (lambda completed, seconds: completed.wait())), \
                     mock.patch.object(sys, "argv", [str(CACHE), "keys", "--repository", str(self.root)]), \
                     contextlib.redirect_stdout(io.StringIO()) as result:
                 code = owner.main()
@@ -47,7 +51,8 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         owner = self.restore_owner()
         with mock.patch.dict(os.environ, self.env):
             prefix = prefix or owner.actions_keys(self.root)["project"]["restore_prefix"]
-        return dict(key=prefix + suffix, ref=ref, **fields)
+        self.cache_id = getattr(self, "cache_id", 274839100) + 1
+        return dict(id=self.cache_id, key=prefix + suffix, ref=ref) | fields
 
     def cache_page(self, rows=(), total=None, link=None, status=200, body=None):
         response = mock.MagicMock()
@@ -61,7 +66,7 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
 
     def next_page(self, number, ref="refs/heads/dev"):
         prefix = self.cache_row("")["key"]
-        query = urllib.parse.urlencode(dict(key=prefix, ref=ref, per_page=100, page=number))
+        query = urllib.parse.urlencode(dict(key=prefix, ref=ref, per_page=100, sort="created_at", direction="desc", page=number))
         return "https://cache.example.test/api/v3/repos/owner/repository/actions/caches?" + query
 
     def assert_lookup_fallback(self, responses, reason, **environment):
@@ -91,6 +96,64 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                 opened = self.assert_lookup_fallback([failure], reason)
                 self.assertEqual(1, opened.call_count)
 
+    def test_project_lookup_hang_guard_abandons_blocked_transport_at_any_stage(self):
+        for stage in ("open", "headers", "body", "second-page"):
+            with self.subTest(stage=stage):
+                entered = queue.Queue()
+                never = threading.Event()
+
+                def blocked(*args, **kwargs):
+                    self.assertTrue(threading.current_thread().daemon)
+                    entered.put(stage)
+                    never.wait()
+
+                def expired(completed, seconds):
+                    self.assertEqual(10, seconds)
+                    self.assertEqual(stage, entered.get())
+                    self.assertFalse(completed.is_set())
+                    return False
+
+                response = self.cache_page([self.cache_row("999-1")])
+                if stage == "open":
+                    transport = blocked
+                elif stage == "headers":
+                    response.__enter__.side_effect = blocked
+                    transport = [response]
+                elif stage == "body":
+                    response.read.side_effect = blocked
+                    transport = [response]
+                else:
+                    response = self.cache_page([self.cache_row("999-1")], total=2,
+                        link='<' + self.next_page(2) + '>; rel="next"')
+                    transport = lambda *args, **kwargs: (
+                        blocked() if "page=2" in args[0].full_url else response)
+                opened = self.assert_lookup_fallback(transport, "lookup-transport-hang-guard", wait=expired)
+                self.assertEqual(2 if stage == "second-page" else 1, opened.call_count)
+                self.assertFalse(never.is_set())
+
+    def test_project_lookup_hang_guard_abandons_a_forever_trickling_body(self):
+        chunks, advance = queue.Queue(), queue.Queue()
+
+        def trickle():
+            self.assertTrue(threading.current_thread().daemon)
+            while True:
+                chunks.put(b" ")
+                advance.get()
+
+        def expired(completed, seconds):
+            self.assertEqual(10, seconds)
+            for _ in range(3):
+                self.assertEqual(b" ", chunks.get())
+                advance.put(None)
+            self.assertEqual(b" ", chunks.get())
+            self.assertFalse(completed.is_set())
+            return False
+
+        response = self.cache_page()
+        response.read.side_effect = trickle
+        opened = self.assert_lookup_fallback([response], "lookup-transport-hang-guard", wait=expired)
+        self.assertEqual(1, opened.call_count)
+
     def test_project_lookup_invalid_json_and_malformed_listings_are_optional(self):
         for body in (b"{", b"\xff", b"[]", b"{}",
                 b'{"total_count":true,"actions_caches":[]}',
@@ -113,6 +176,38 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                 (self.cache_page([self.cache_row("1000-1")], total=3), "lookup-incomplete-listing")):
             with self.subTest(reason=reason):
                 self.assert_lookup_fallback([first, second], reason)
+
+    def test_project_lookup_rejects_overlapping_pages_even_when_row_count_matches(self):
+        rows = [self.cache_row(str(run) + "-1", id=274839200 + run) for run in range(1, 101)]
+        first = self.cache_page(rows, total=101, link='<' + self.next_page(2) + '>; rel="next"')
+        second = self.cache_page([rows[-1]], total=101)
+        opened = self.assert_lookup_fallback([first, second], "lookup-incomplete-listing")
+        self.assertEqual(2, opened.call_count)
+
+    def test_project_lookup_rejects_missing_invalid_or_repeated_cache_ids(self):
+        for invalid in (None, True, False, 0, -1, "274839201", 1.5, [], {}):
+            with self.subTest(id=invalid):
+                self.assert_lookup_fallback([self.cache_page([self.cache_row("100-1", id=invalid)])],
+                    "lookup-incomplete-listing")
+        missing = self.cache_row("100-1")
+        del missing["id"]
+        self.assert_lookup_fallback([self.cache_page([missing])], "lookup-incomplete-listing")
+        rows = [self.cache_row("100-1", id=274839201), self.cache_row("101-1", id=274839201)]
+        self.assert_lookup_fallback([self.cache_page(rows)], "lookup-incomplete-listing")
+
+    def test_project_lookup_complete_distinct_two_page_listing_selects_numeric_maximum(self):
+        rows = [self.cache_row(str(run) + "-1", id=274839200 + run) for run in range(1, 101)]
+        maximum = self.cache_row("100-12", id=274839301)
+        responses = [self.cache_page(rows, total=101, link='<' + self.next_page(2) + '>; rel="next"'),
+                     self.cache_page([maximum], total=101)]
+        values, receipt, opened = self.lookup_keys(responses)
+        self.assertEqual(maximum["key"], values["project_restore_key"])
+        self.assertEqual("restore-preference", receipt["status"])
+        self.assertEqual(2, opened.call_count)
+        for call in opened.call_args_list:
+            query = urllib.parse.parse_qs(urllib.parse.urlsplit(call.args[0].full_url).query)
+            self.assertEqual(["created_at"], query.get("sort"))
+            self.assertEqual(["desc"], query.get("direction"))
 
     def test_project_lookup_rejects_broken_or_cyclic_pagination_without_following_it(self):
         for link in ("broken", '<' + self.next_page(1) + '>; rel="next"',
@@ -180,7 +275,8 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                 request = opened.call_args.args[0]
                 url = urllib.parse.urlsplit(request.full_url)
                 self.assertEqual("/api/v3/repos/owner/repository/actions/caches", url.path)
-                self.assertEqual(dict(key=[values["project_restore_prefix"]], ref=[expected], per_page=["100"]),
+                self.assertEqual(dict(key=[values["project_restore_prefix"]], ref=[expected], per_page=["100"],
+                    sort=["created_at"], direction=["desc"]),
                                  urllib.parse.parse_qs(url.query))
                 self.assertEqual("GET", request.get_method())
                 self.assertEqual("Bearer synthetic-token", request.get_header("Authorization"))
