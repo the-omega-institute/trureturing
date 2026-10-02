@@ -227,7 +227,7 @@ private def u01 (x : Qubits 6) : ℤ := if parA x = 0 then sgnB x else 0
 
 private def u10 (x : Qubits 6) : ℤ := if parA x = 1 then 1 else 0
 
-set_option maxHeartbeats 2000000 in
+set_option maxHeartbeats 2000000 in -- the seven kernel evaluations share this declaration
 /-- The negativity of the randomized `K_{3,3}` state across its two parts is larger at
 `p = 97/100` than at `p = 1`, so it is not monotone in `p`. -/
 theorem result : ¬ claim := by
