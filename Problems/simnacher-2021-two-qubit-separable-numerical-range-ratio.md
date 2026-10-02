@@ -110,14 +110,15 @@ The canonical source is
 declarations are `separableStates`, `numericalRange`, `claim` and `result`;
 states are the frozen `D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation.IsDensity`
 at `d = 2`. The frozen module state has statement identity
-`sha256:ad9f39c042bc8c66c3f49d5e7591844b00204df42e745402b5e1df9e5ed191d7`. The
+`sha256:8d89638351ff9e36c9f931fce5e088ab93cc308c8d733623bc0d1c9c9a92ee1f`. The
 result declaration has statement identity
 `sha256:8c35814a5581b8dd85f6068c299608bb3ab6358ca90eb7b729ad3bb8ebd2a1e0`. The
 Freeze event is
-`sha256:914b5b5f88db539920b49ca32941a150c277dcf0f10248d8d2ae017eac123a1c`; its
-project-level frozen prerequisite is the Freeze event of
+`sha256:efd937da6ba0de445d31603562f7d3eded02963f281f6bbf4a1a1254b47107c2`; its
+project-level frozen prerequisites are the Freeze events of
 `D5/S3/Resource/EntanglementWitness` (through which the module imports
-`CompositeCones` and `CompositeConeDuality`). The proof uses only the standard
+`CompositeCones` and `CompositeConeDuality`) and of
+`D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation`. The proof uses only the standard
 axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`,
 `native_decide`, or new axiom.
 
