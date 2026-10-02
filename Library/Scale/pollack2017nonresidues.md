@@ -557,8 +557,8 @@ $q>P^{1/14}$ eventually. The effective existential version (T5) is
 retained independently; no comparison of its unnamed exponent with
 $5/67$ is asserted.
 
-This numerical rate still leaves the useful faithful-mask cutoff
-compatible. For example $b=1/5$ allows $m_1\le Y^5$, while the lower
+This numerical conductor bound alone does not cross the faithful-mask
+cutoff. Its inequalities permit $m_1\le Y^5$ at $b=1/5$, while the lower
 bound is only $m_1>P^{1/14}$ and $P\sim Y$. A conductor lower bound
 $q>P^\eta$ would contradict $m_1^b\le Y$ by powers alone if
 $\eta b>1$; equality requires further constant or lower-order
@@ -629,8 +629,8 @@ $$
 P^{1/8}<q\le m_1\le Y^{1/b},\qquad Y=\log n\sim P.
 $$
 
-This is still compatible with the existing $\beta_0<b<1/4$ cutoff;
-for example $b=1/5$ permits an upper scale $Y^5$. The count comparison
+The conductor-only comparison does not rule out that cutoff by powers
+alone; the additional actual-mask constraint is supplied in (T22). The count comparison
 excludes a larger conductor range than (T7), but supplies neither a
 reciprocal-prime deficit nor the required signed Robin margin. Unit-bit
 zero, square $D$ and the larger remaining conductors stay unresolved.
@@ -768,8 +768,9 @@ band $(1/2,1]$ would instead give the lower coefficient
 $r-3/4-r^2/2=-(r-1)^2/2-1/4<0$, so this weight supplies no contradiction
 from that band alone. No square-depth distribution estimate is supplied here.
 
-Even (T16) leaves the sufficient faithful-mask cutoff compatible:
-$c_*b<1$ for $\beta_0<b<1/4$. This proves neither $q^b\le P$ nor
+Bound (T16) alone does not cross the sufficient faithful-mask cutoff:
+$c_*b<1$ for $\beta_0<b<1/4$. The full mask has the additional
+restriction (T22). The conductor-only bound proves neither $q^b\le P$ nor
 the faithful-mask condition. No weighted missing-prime deficit,
 signed Robin margin, h=0 exclusion, square-$D$ exclusion or RH proof
 follows. Every character and layer in the comparison belongs to the
@@ -830,8 +831,10 @@ are incompatible at every sufficiently large actual CA source in the
 $h=1$, nonsquare-$D$ branch. Indeed, (T19)'s lower coefficient exceeds
 $25/6$, whereas the cutoff gives
 $\log q/L\le25/6+o(1)$. The strict fixed gap absorbs both errors.
-This is a conditional application of the same published signed estimate;
-neither condition in (T20) is established for all remaining candidates.
+This is a conditional application of the same published signed estimate.
+Formula (T21) supplies its moment hypothesis whenever the actual cutoff
+holds; formula (T22) rules out that cutoff at sufficiently large sources
+in this branch.
 
 The unrestricted even-layer envelope is only
 
@@ -841,10 +844,10 @@ M_r(n)\le
 $$
 
 whose coefficient at $r=\sqrt2$ is $0.345188935617\ldots$. It does
-not imply the required $0.045928\ldots$ bound. The missing work is an
-actual-source upper estimate for square-depth membership in
-$c=4A+7B$, sufficiently strong at this weighted scale, together with
-coverage of sources outside the cutoff. No distribution law, h=0 or
+not imply the required $0.045928\ldots$ bound without further conditions.
+The unrestricted actual-source upper estimate for square-depth membership
+in $c=4A+7B$ remains missing. The full large-mask signed budget and
+remaining branches require their own estimates. No distribution law, h=0 or
 square-$D$ exclusion, reciprocal-prime deficit or RH proof is supplied.
 
 ## The actual mask pays the moment and leaves the reachable cutoff
