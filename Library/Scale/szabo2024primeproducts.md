@@ -40,11 +40,21 @@ prime-product theorems have their own conditions. Quadratic characters
 have the required bounded order two. Primes dividing $q$ have value zero.
 No GRH or deletion of an exceptional character is imposed in (S1).
 
-The source applies Heath-Brown's Lemma 5.2 at $s=1$, using the bounded
-order parameter $1/4$. Its nonnegative real Laplace transform lets the
-zero terms be discarded with the required sign, while higher prime powers
-cost $O_\alpha(1)$. These are the source's proof ingredients, not a new
+The source applies Heath-Brown's Lemma 5.2 with $s=1$; bounded
+character order permits $\phi=1/4$. The Laplace transform satisfies
+$\operatorname{Re}F(z)\ge0$ for $\operatorname{Re}z\ge0$, so zero terms,
+including a possible exceptional real zero, have the required sign and
+can be discarded. Higher prime powers cost $O_\alpha(1)$. These are the source's proof ingredients, not a new
 spectral correspondence between finite FIB frequencies and zeta zeros.
+
+At each fixed $\alpha$ and fixed order bound two, the error in (S1)
+is uniform over the varying quadratic characters and moduli. The
+character-independent threshold is explicit in the restatement of the
+referenced lemma in [Xylouris, arXiv:0906.2749v1](https://arxiv.org/pdf/0906.2749v1),
+Lemma 2.2, printed p.15: its $q_0(f,\varepsilon)$ and auxiliary radius
+do not depend on the character. That restatement and the source's use
+of the lemma were inspected; the original 1992 analytic proof was not
+independently audited.
 
 The [actual CA application](pollack2017nonresidues.md#all-odd-layers-strengthen-the-signed-character-restriction)
 uses (S1) with a triangular weight transported from the scale $P^+(n)$.

@@ -637,16 +637,18 @@ zero, square $D$ and the larger remaining conductors stay unresolved.
 
 ## All odd layers strengthen the signed-character restriction
 
-The numerical bound (T10) also supplies the compact parameter range
-needed to use [Szabó's published Proposition 6](szabo2024primeproducts.md)
+Together with a fixed contradiction assumption $q\le P^\eta$, the
+numerical bound (T10) supplies the compact parameter range needed to use [Szabó's published Proposition 6](szabo2024primeproducts.md)
 with the actual alternating CA layers. Reuse (T3), the classical
 thresholds and the literature estimate (S1); no new analytic theorem,
 originality claim or Lean verification is made.
 
 Continue with the same actual CA integer, its canonical $h=1$,
 nonsquare signed $D$, primitive quadratic character $\chi$ of conductor
-$q$, and $P=P^+(n)$. Put $L=\log P$. For every fixed $k\ge1$, the
-classical activation formula gives
+$q$, and $P=P^+(n)$. Put $L=\log P$. All asymptotics below hold along
+every sequence of such actual maximizers with $P\to\infty$, including
+intermediate tied choices; this quantification asserts no branch
+infinitude. For every fixed $k\ge1$, the classical activation formula gives
 
 $$
 \frac{\log\xi_k}{L}\longrightarrow\frac1k.
@@ -676,8 +678,9 @@ A_r(n):=\sum_{\substack{p\le P\\v_p(n)\ \mathrm{odd}}}
 \tag{T12}
 $$
 
-Here $\mathrm{odd}$ means the exponent $v_p(n)$ is odd. First retain
-finitely many fixed layers. Their tied endpoint primes contribute
+Here $\mathrm{odd}$ means the exponent $v_p(n)$ is odd. First fix
+$K$ and let $P\to\infty$ on the finitely many retained layers, then
+let $K\to\infty$. Their tied endpoint primes contribute
 $o(L)$ regardless of the intermediate maximizing choice. All omitted
 layers lie below $\xi_{K+1}$ and have total weight at most
 $r\log\xi_{K+1}+O_r(1)=O_r(L/(K+1))+o(L)$. Letting $K$ grow after
@@ -720,13 +723,15 @@ $$
 To compare (S1), put $t=L/\log q$ and $\alpha=rt$. Then
 $f_\alpha(\log p/\log q)=t(r-\log p/L)_+$. In a contradiction range
 $P^{1/8}<q\le P^\eta$, supplied by (T10), $\alpha$ lies in a fixed
-compact interval. The fixed-$\alpha$ estimate (S1) is uniform there:
-use a finite mesh, the bound $|f_\alpha-f_\beta|\le|\alpha-\beta|$,
+compact interval. For fixed order bound two, the error in (S1) is
+uniform over the varying characters and moduli at each fixed mesh value
+of $\alpha$, as noted in the source citation. To make it uniform over
+this compact interval, use a finite mesh, the bound $|f_\alpha-f_\beta|\le|\alpha-\beta|$,
 and $\sum_{p\le q^A}\log p/p=O_A(\log q)$. First take $q\to\infty$
 for this finite mesh, then let its spacing tend to zero. Consequently
 
 $$
-S_r(\chi;P)\le\frac r8\log q+o(L).
+S_r(\chi;P)\le\frac r8\log q+o_{r,\eta}(L).
 \tag{T15}
 $$
 
@@ -761,11 +766,11 @@ not an optimum over all explicit-formula weights.
 The later odd layers are material. Keeping only the terminal logarithmic
 band $(1/2,1]$ would instead give the lower coefficient
 $r-3/4-r^2/2=-(r-1)^2/2-1/4<0$, so this weight supplies no contradiction
-from that band alone. The same-source square-depth eligibility set could
-further strengthen (T14), but no such distribution estimate has been proved.
+from that band alone. No square-depth distribution estimate is supplied here.
 
 Even (T16) leaves the sufficient faithful-mask cutoff compatible:
-$c_*b<1$ for $\beta_0<b<1/4$. No weighted missing-prime deficit,
+$c_*b<1$ for $\beta_0<b<1/4$. This proves neither $q^b\le P$ nor
+the faithful-mask condition. No weighted missing-prime deficit,
 signed Robin margin, h=0 exclusion, square-$D$ exclusion or RH proof
 follows. Every character and layer in the comparison belongs to the
 same actual integer; no separately realized raw-$D$ witnesses are joined.
