@@ -22,6 +22,28 @@ namespace D5.S3.Arith.Congruence.PrimePowerAffineBehavior
 /-- Saturated prime depth, with the zero residue assigned the full depth. -/
 def depth (p h : ℕ) (x : ℤ) : ℕ := Nat.log p (Int.gcd x ((p : ℤ) ^ h))
 
+/-- Saturated depth records the exact prime-power gcd. -/
+theorem depth_data (p h : ℕ) (hp : p.Prime) (x : ℤ) : depth p h x ≤ h ∧
+    Int.gcd x ((p : ℤ) ^ h) = p ^ depth p h x := by
+  have hd : Int.gcd x ((p : ℤ) ^ h) ∣ p ^ h := by
+    have := Int.gcd_dvd_right x ((p : ℤ) ^ h)
+    exact_mod_cast this
+  obtain ⟨j, hj, hg⟩ := (Nat.dvd_prime_pow hp).mp hd
+  have hr : depth p h x = j := by simp [depth, hg, Nat.log_pow hp.one_lt]
+  exact ⟨hr ▸ hj, hr ▸ hg⟩
+
+/-- Dividing a coordinate and the modulus by their exact gcd leaves coprime integers. -/
+theorem normalized_coprime (p h : ℕ) (hp : p.Prime) (x : ℤ) :
+    IsCoprime (x / (p : ℤ) ^ depth p h x) ((p : ℤ) ^ (h - depth p h x)) := by
+  have hnorm := Int.gcd_ediv_gcd_ediv_gcd (show 0 < Int.gcd x ((p : ℤ) ^ h) by
+    rw [(depth_data p h hp x).2]; exact pow_pos hp.pos _)
+  have hN : (p : ℤ) ^ h = (p : ℤ) ^ (h - depth p h x) *
+      (p : ℤ) ^ depth p h x := by
+    rw [← pow_add, Nat.sub_add_cancel (depth_data p h hp x).1]
+  rw [(depth_data p h hp x).2, Nat.cast_pow, hN,
+    Int.mul_ediv_cancel _ (pow_ne_zero _ (Int.natCast_ne_zero.mpr hp.ne_zero))] at hnorm
+  exact Int.isCoprime_iff_gcd_eq_one.mpr hnorm
+
 /-- Disjoint low `S(r,u)` and high `D(z)` coordinates. Unit membership of the
 low residue is established by the classification theorem, including modulus one. -/
 def eta (p h e : ℕ) (x : ℤ) : (ℕ × ZMod (p ^ (h - e))) ⊕ ZMod (p ^ (h - e)) :=
@@ -67,13 +89,7 @@ theorem local_classification (p h e : ℕ) (hp : p.Prime) (he : e ≤ h) :
   have hpz : (0 : ℤ) < p := by exact_mod_cast hp0
   have hpow (j : ℕ) : (0 : ℤ) < (p : ℤ) ^ j := pow_pos hpz j
   have hdepth (x : ℤ) : depth p h x ≤ h ∧
-      Int.gcd x ((p : ℤ) ^ h) = p ^ depth p h x := by
-    have hd : Int.gcd x ((p : ℤ) ^ h) ∣ p ^ h := by
-      have := Int.gcd_dvd_right x ((p : ℤ) ^ h)
-      exact_mod_cast this
-    obtain ⟨j, hj, hg⟩ := (Nat.dvd_prime_pow hp).mp hd
-    have hr : depth p h x = j := by simp [depth, hg, Nat.log_pow hp.one_lt]
-    exact ⟨hr ▸ hj, hr ▸ hg⟩
+      Int.gcd x ((p : ℤ) ^ h) = p ^ depth p h x := depth_data p h hp x
   have hdiv (x : ℤ) (j : ℕ) :
       (p : ℤ) ^ j ∣ x ∧ j ≤ h ↔ j ≤ depth p h x := by
     constructor
@@ -214,14 +230,9 @@ theorem local_classification (p h e : ℕ) (hp : p.Prime) (he : e ≤ h) :
     (Int.ediv_mul_cancel ((hdiv x j).mpr hj).1).symm
   have hunit (x : ℤ) (hx : depth p h x < e) :
       IsUnit ((x / (p : ℤ) ^ depth p h x : ℤ) : ZMod (p ^ (h - e))) := by
-    have hnorm := Int.gcd_ediv_gcd_ediv_gcd (show 0 < Int.gcd x ((p : ℤ) ^ h) by
-      rw [(hdepth x).2]; exact pow_pos hp.pos _)
-    have hN : (p : ℤ) ^ h = (p : ℤ) ^ (h - depth p h x) *
-        (p : ℤ) ^ depth p h x := by
-      rw [← pow_add, Nat.sub_add_cancel (hdepth x).1]
-    rw [(hdepth x).2, Nat.cast_pow, hN, Int.mul_ediv_cancel _ (ne_of_gt (hpow _))] at hnorm
+    have hnorm := normalized_coprime p h hp x
     have hc : IsCoprime (x / (p : ℤ) ^ depth p h x) ((p : ℤ) ^ (h - e)) :=
-      (Int.isCoprime_iff_gcd_eq_one.mpr hnorm).of_isCoprime_of_dvd_right
+      hnorm.of_isCoprime_of_dvd_right
         (pow_dvd_pow _ (by omega : h - e ≤ h - depth p h x))
     have hz := hc.intCast (R := ZMod (p ^ (h - e)))
     have hzero : (((p : ℤ) ^ (h - e) : ℤ) : ZMod (p ^ (h - e))) = 0 := by

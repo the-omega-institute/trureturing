@@ -40,6 +40,18 @@ internal sealed class PrimePowerAffineBehaviorDocument : IScribeDocumentDefiniti
                 "For natural p,h and integer x, depth(p,h,x) is log base p of gcd(x,p^h). "
                     + "At prime p the theorem identifies it with min(v_p(x),h) for x!=0, "
                     + "and assigns depth h to every zero residue modulo p^h."),
+            Describe.Lean(DescribeId.Create("prime-power-affine-depth-data"),
+                DeclarationHandle.Create(Prefix + "depth_data"), H("Exact saturated-depth data"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every prime p, natural h and integer x, "
+                    + "depth(p,h,x)<=h and gcd(x,p^h)=p^depth(p,h,x)."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("prime-power-affine-normalized-coprime"),
+                DeclarationHandle.Create(Prefix + "normalized_coprime"), H("Coprime normalized coordinate"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every prime p, natural h and integer x, "
+                    + "put r=depth(p,h,x). The integers x/p^r and p^(h-r) are coprime. "
+                    + "The division removes their exact common gcd, including the zero residue."))),
+                DescribeRole.Theorem),
             Definition("eta", "Disjoint quotient coordinates",
                 "Put N=p^h, D=p^e and M=p^(h-e). Write r(x)=depth(p,h,x). "
                     + "The coordinate E(x)=eta(p,h,e,x) is S(r(x),[x/p^r(x)]_M) when r(x)<e, "
