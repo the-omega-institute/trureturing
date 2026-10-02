@@ -22492,3 +22492,36 @@ This is a reused necessary numerical bound, not a new covering-system
 theorem. It sharpens Sections 181 and 183's bookkeeping while leaving the
 phase-sensitive complete-liability bridge, and hence unrestricted Erdős #7,
 open.
+
+## 186. Reusing the finite CRT certificate raises the period floor
+
+The repository already contains an independent finite-height CRT certificate
+for the same original quantifiers. Its pure-coordinate budget, with the
+two-block refinement at the sole exceptional abundant candidate, excludes
+every odd period
+
+\[
+ 1\le N\le 11\,486\,474
+\]
+
+as the least common multiple of a distinct odd whole cover. Consequently any
+hypothetical counterexample in the present EB1 branch satisfies
+
+\[
+\boxed{Q=\operatorname{lcm}(D)>11\,486\,474.}
+\tag{HF11}
+\]
+
+The fixed certificate reports 23,758 odd abundant candidates in this interval:
+23,757 are excluded by the pure-coordinate bound and the remaining candidate
+\(N=6\,891\,885\) is excluded by the exact two-block refinement. The next
+abundant value, \(11\,486\,475\), is the first value not covered by that
+certificate. These counts are finite arithmetic evidence for the existing
+ordinary proof, not a new Lean theorem or an unrestricted search claim.
+
+This strengthens the weaker \(Q>10\,000\) citation in Section 180 without
+altering its other conclusions. The certificate and its checked result are
+maintained at
+[`verify_lcm_10000_bridge.py`](../../../verify_lcm_10000_bridge.py) and
+[`lcm_10000_bridge_certificate.json`](../../../certificates/lcm_10000_bridge_certificate.json).
+The phase-sensitive complete-liability bridge remains open.
