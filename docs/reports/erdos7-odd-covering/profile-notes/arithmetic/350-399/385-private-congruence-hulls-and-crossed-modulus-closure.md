@@ -25368,27 +25368,47 @@ prime to $p$.
 
 ### The complete two-sided hull
 
-The gcd of the union of two nonempty periodic sets is the gcd of their two
-individual hulls and one cross difference.  Consequently,
+The cross term must come from an actual pair of source witnesses.  Choose
+$x_A\in E_A$ and $x_B\in E_B$ and put
+
+\[
+ \delta_*:=\frac{x_A-x_B}{p^{e-1}}.
+\]
+
+Then the gcd of the union of the two nonempty periodic sets is
 
 \[
  \boxed{
  \frac{\gamma_N(E)}{p^{e-1}}
-   =\gcd(K_A,K_B,\Delta).
+   =\gcd(K_A,K_B,\delta_*).
  }
  \tag{EP1}
 \]
 
-Indeed, if $x_A\in E_A$ and $x_B\in E_B$, then
+Indeed, after dividing all differences by $p^{e-1}$, the within-side
+differences generate $K_A$ and $K_B$, while every cross difference is
+congruent to $\delta_*$ modulo $L$.  Since $L\mid K_A,K_B$, taking the gcd
+over all cross witnesses gives exactly the displayed gcd.
+
+The value is independent of the chosen witnesses because two choices differ
+by a multiple of $L$, and $L\mid K_A,K_B$.  In terms of the displayed
+representatives, write
 
 \[
- \frac{x_B-x_A}{p^{e-1}}= -\Delta+Lz
+ x_A=a_R+Ru_A,\qquad x_B=b+Ru_B.
 \]
 
-for some integer $z$.  Taking the gcd with $K_A,K_B$ removes the $Lz$
-term because $L$ divides both $K_A$ and $K_B$; the reverse inclusion follows
-from the individual hulls and the same cross differences.  This is an identity
-of the actual source sets, not a comparison of separately optimized phases.
+Then
+
+\[
+ \boxed{\delta_*=\Delta+L(u_A-u_B).}
+\]
+
+The $L(u_A-u_B)$ term cannot be discarded in general.  Replacing
+$\delta_*$ by $\Delta$ is guaranteed whenever the additional divisibility
+condition $\gcd(K_A,K_B)/L\mid u_A-u_B$ holds; without it, the replacement
+is not valid in general.  This is an identity of the actual source
+sets, not a comparison of separately optimized phases.
 
 Equal-prefix also gives
 
@@ -25401,7 +25421,7 @@ within-side difference is divisible by $p^{e-1}$.  Applying (HL2) from
 Section 194 to (EP1) therefore yields
 
 \[
- \boxed{\tau\!\left(\gcd(K_A,K_B,\Delta)\right)\le p-1.}
+ \boxed{\tau\!\left(\gcd(K_A,K_B,\delta_*)\right)\le p-1.}
  \tag{EP2}
 \]
 
@@ -25412,7 +25432,7 @@ are the top cofactors by (NF1).
 
 ### Internal cross-side low bridges are impossible
 
-Within an inclusion-minimal mixed repair of $E$ by at most $p+1$ classes, consider its low repair class
+Within an inclusion-minimal mixed repair of $E$ by at most $p+1$ classes, consider its essential low repair class
 
 \[
  C=[c]_d,\qquad d=p^r s,\quad r<e,\quad p\nmid s,
@@ -25433,8 +25453,9 @@ $R$-classes,
  s\mid(a_R-b).
 \]
 
-As $p\nmid s$, this is $s\mid\Delta$.  Together with $s\mid L$ and
-$L\mid K_A,K_B$, (EP1) implies $s\mid\gamma_N(E)/p^{e-1}$.  Therefore
+As $p\nmid s$, this is $s\mid\Delta$.  Since also $s\mid L$, every actual
+cross witness has $s\mid\delta_*$.  Together with $L\mid K_A,K_B$, (EP1)
+therefore implies $s\mid\gamma_N(E)/p^{e-1}$.  Therefore
 
 \[
  d=p^r s\mid p^{e-1}\frac{\gamma_N(E)}{p^{e-1}}=\gamma_N(E).
@@ -25634,3 +25655,64 @@ stronger proposed forcing lemma: (EP2) and the internal-bridge exclusion
 (EP3) cannot by themselves rule out the external-coordinate bridge or the
 strictly larger deleted-point hull.  Any unrestricted proof must add a
 whole-cover source-compatibility argument at this point.
+
+## 221. A common retained source separates the representative difference from the hull
+
+The witness term in (EP1) is necessary even when both sides come from one
+fixed retained family.  For every \(e\ge10\), take
+
+\[
+ P=3^{e-1},\qquad L=35,\qquad R=35P,\qquad
+ N=385P,\qquad Q=3N,
+\]
+
+and the two occupied classes
+
+\[
+ A=[1]_R,\qquad B=[1+P]_R.
+\]
+
+Let
+
+\[
+ (c_0,c_1,\ldots,c_9)=(0,2,3,4,5,6,7,8,9,10)
+\]
+
+and retain the ten distinct odd classes
+
+\[
+ U_r=\{x:x\equiv1\pmod{3^r},\ x\equiv c_r\pmod{11}\},
+ \qquad 0\le r\le9.
+\]
+
+The source phases are common to both occupied classes.  Since \(P\) and \(R\)
+are divisible by \(3^9\), every point of either occupied \(R\)-class satisfies
+the first congruence in each \(U_r\).  Along \(A\), the \(11\) points in one
+\(N\)-fibre run through all residues modulo \(11\), and the retained phases omit
+only residue \(1\).  Hence
+
+\[
+ E_A=[1]_N.
+\]
+
+Along \(B\), the surviving point is obtained from
+\(1+P+kR\equiv1\pmod{11}\), namely \(k\equiv5\pmod{11}\), so
+
+\[
+ E_B=[1+176P]_N.
+\]
+
+Thus \(K_A=K_B=385\), while the actual cross witness gives
+
+\[
+ \frac{\gamma_N(E_A\cup E_B)}P
+ =\gcd(385,176)=11.
+\]
+
+By contrast, the representative notation in Section 218 has
+\(\Delta=(1-(1+P))/P=-1\), and the unsourced replacement would give
+\(\gcd(385,-1)=1\).  The missing factor is exactly the term
+\(L(u_A-u_B)\) in (EP1).  This construction is a counterexample to the
+representative-only hull formula, not a whole-cover counterexample: the ten
+classes \(U_r\) are a retained source family for the displayed liability, but
+they do not by themselves cover all integers.
