@@ -143,6 +143,18 @@ public sealed class ScribeScriptHostTests
         Assert.True(result.Failure?.Code == ScribeScriptFailureCode.DisallowedSymbol, result.Failure?.ToString());
     }
 
+    [Fact]
+    public void AllowlistedEnumerableDefinitionExecutes()
+    {
+        using var root = new TemporaryRoot();
+        const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
+        Write(root, path, "internal sealed class Probe : IScribeDocumentDefinition { public DocumentDefinition Create() { var values = Enumerable.Repeat(1, 1).ToArray(); return DocumentDefinition.Create(ScribeNode.Create(\"digest\", H(values.Length.ToString(System.Globalization.CultureInfo.InvariantCulture)), Blocks(Paragraph(Text(\"content\"))))); } }");
+
+        var result = ScribeScriptHost.Execute(root.Path, path);
+
+        Assert.True(result.IsSuccess, result.Failure?.ToString());
+    }
+
     [Theory]
     [InlineData(null)]
     [InlineData("")]
