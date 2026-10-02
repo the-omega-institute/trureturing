@@ -86,3 +86,42 @@ $$
 **Proof.** For the rank obstruction, induct on degree. At degree zero a positive quotient dimension excludes $U=V$. At successor degree, every one-column contraction has quotient dimension at least $\dim(V/U)-1$, so each contracted polynomial vanishes by induction. Euler then gives $(m+1)F_{U,m+1}=0$, and the nonzero rational scalar cancels. For an unspanned family, every represented support span is contained in the span of the entire represented family together with $U$, hence cannot be the whole space. The exact coefficient formula makes every coefficient zero. This includes empty carriers, repeated columns, loops, and all zero derivative-polynomial contractions satisfying these obstructions.
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Actual higher-degree reverse Hessian inequality
+
+**Theorem 9.1 (represented reverse Hessian bound).** Let $K$ be any field, $V$ a finite-dimensional $K$-vector space, $I$ any finite physical index set, $a:I\to V$, and $U\le V$. For every integer $d\ge2$, every strictly positive real coordinate vector $x$, and every signed real vector $y$, put $f=F_{U,d}$, $g_i=(\partial_i f)(x)$, and $H_{ij}=(\partial_i\partial_j f)(x)$. Then
+
+$$
+d f(x)\sum_{i,j\in I}y_iH_{ij}y_j
+\le (d-1)\left(\sum_{i\in I}g_i y_i\right)^2.
+$$
+
+Empty index sets, unspanned families, loops, repeated columns, and scalar-parallel columns are included. At degrees zero and one the Hessian vanishes; the same displayed inequality holds, with the degree-zero gradient also zero. There is no finite-field restriction on $K$, and no full-spanning premise in the conclusion.
+
+**Proof.** Induct on degree with $U$ generalized. Homogeneity and Euler give $x\cdot g=df(x)$, $Hx=(d-1)g$, and $\sum_i x_iH_i=(d-2)H$, where $H_i$ is the Hessian of the actual contraction $F_{U+\operatorname{span}\{a_i\},d-1}$. The degree-two inequality is the quotient-rank classification bound. An unspanned family has zero polynomial. At zero evaluation the left side is zero and the right side nonnegative.
+
+For $d\ge3$ and $f(x)>0$, let $A=\{i:g_i>0\}$. Euler makes $A$ nonempty. The exact positive-evaluation criterion and rank obstruction imply that every inactive contracted polynomial is identically zero, hence its Hessian row vanishes. For each active $i$, the induction hypothesis for its actual contraction gives $(d-1)g_i y^TH_i y\le(d-2)(Hy)_i^2$. Multiply by $x_i/((d-1)g_i)$ and sum. Third-derivative Euler and $d-2>0$ give $y^THy\le y^THDH y$, where $D_i=x_i/((d-1)g_i)>0$ on $A$.
+
+Set $a_i=\sqrt{D_i}$, $S_{ij}=a_iH_{ij}a_j$, and $v_i=x_i/a_i$ on $A$. The actual contraction identities supply symmetry and nonnegative Hessian entries. Euler gives $Sv=v$; positive diagonal factors preserve the actual active-support cut connectivity. Substituting $y_i=a_i z_i$ into the preceding quadratic estimate proves $z^TSz\le z^TS^2z$. The connected normalization theorem therefore gives $y^THy\le0$ whenever $g\cdot y=0$, since $(y/a)\cdot v=(d-1)g\cdot y$.
+
+Finally replace arbitrary $y$ by $y-(g\cdot y)/(df(x))\,x$. Euler makes this vector gradient-orthogonal, while $x^THx=d(d-1)f(x)$ and $x^THy=(d-1)g\cdot y$. Expanding its nonpositive quadratic form and multiplying by the positive denominator yields the displayed division-free inequality. This polynomial statement alone asserts neither analytic root concavity nor a sampling or expected-time optimizer.
+
+## 追加锚（本行以下为增补区）
+
+## 10. Analytic identification and closed-orthant root concavity
+
+**Theorem 10.1 (analytic line derivatives).** For every finite index set $I$, rational multivariate polynomial $f$, and real coordinate vectors $x,y$, define $z(t)_i=x_i+t y_i$ and $A(t)=f(z(t))$ using the coefficient homomorphism $\mathbb Q\to\mathbb R$. Then $A'(t)=\sum_i y_i(\partial_i f)(z(t))$. The derivative of this displayed first derivative is $\sum_j\sum_i y_j y_i(\partial_i\partial_j f)(z(t))$. In particular, for the actual represented spanning polynomial it equals $y^TH(z(t))y$, with the formal Hessian orientation of Theorem 9.1 and no mixed-partial interchange assumption.
+
+**Proof.** Structural polynomial induction treats constants, addition, and multiplication by one variable. The last case is the ordinary product rule; the formal product rule and the Kronecker delta for the derivative of a variable identify the same finite sum. Apply this result to each $\partial_j f$ and use the finite-sum derivative rule. Interchange finite sums and commute real scalar factors to identify the quadratic form. No nonempty-index assumption is used.
+
+**Theorem 10.2 (actual root concavity on the entire nonnegative orthant).** Let $K$ be any field, $V$ any finite-dimensional $K$-vector space, $I$ any finite physical index set, $a:I\to V$, $U\le V$, and $d\ge1$. Then $x\mapsto F_{U,d}(x)^{1/d}$, with the nonnegative real root, is concave on $\{x\in\mathbb R^I:\forall i,\ x_i\ge0\}$. All universes are independent. The statement has no full-spanning, nonempty-index, positive-evaluation, Hessian, derivative, or concavity premise. Zero, repeated, and scalar-parallel columns are retained.
+
+**Proof.** The zero-polynomial branch is constant. Empty $I$ forces every natural exponent vector to be zero, so the exact coefficient formula makes every positive-degree polynomial zero. For nonempty $I$, the rank obstruction and unspanned-family theorem give the zero branch unless the family spans and $\dim(V/U)\le d$. The exact positivity theorem then gives strictly positive evaluation throughout the positive orthant. Put $p=1/d$. Along any segment there, Theorem 10.1 and the real-power derivative rule give the second derivative
+$$p A^{p-2}\bigl(A A''+(p-1)(A')^2\bigr).$$
+Theorem 9.1 implies that the parenthesis is nonpositive, since multiplying it by $d>0$ gives $d A A''-(d-1)(A')^2$. The prefactor is positive. The line function is continuous at both endpoints and twice differentiable in the open segment, hence concave on the closed unit interval. This includes degree one. For arbitrary nonnegative endpoints, add the same strictly positive constant to every coordinate, apply the positive-orthant inequality, and let this constant decrease to zero. Polynomial evaluation is globally continuous, as is the real $p$-power for $p>0$, so the Jensen inequality survives the limit. No fractional root is differentiated at zero.
+
+**Boundary 10.3.** Analytic root concavity is a dependency of the full named simplex optimizer, not its settlement. The actual all-horizon iid physical sampling identities, probability comparison, and expected-time comparison remain separate obligations.
+
+**Theorem 10.4 (finite-quotient scope).** Theorem 10.2 holds for an arbitrary $K$-vector space $V$ whenever $V/U$ is finite dimensional; finite dimensionality of $V$ itself is unnecessary. The same physical index set, original columns, subspace $U$, all degrees $d\ge1$, and entire nonnegative orthant are retained.
+
+**Proof.** Keep every index and replace only its represented vector by its image in $V/U$. For each exponent vector, its original support spans together with $U$ if and only if its quotient support spans $V/U$, by the quotient map's span and top-image identities. The exact coefficient formula therefore identifies the original spanning polynomial with the actual quotient spanning polynomial over the same variables and rational coefficients. Their analytic evaluations and formal derivatives are identical. Apply the actual reverse-Hessian induction and positivity suppliers in the finite-dimensional quotient, and carry out the analytic line and boundary argument of Theorem 10.2 for this common polynomial.

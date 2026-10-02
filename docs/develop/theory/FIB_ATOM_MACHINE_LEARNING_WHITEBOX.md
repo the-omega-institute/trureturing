@@ -4040,3 +4040,851 @@ $$
 以上署名不把通用符号秩、凸锥或 proper score 框架称作新理论，不主张全局文献优先权。这里只给普通理论证明，没有新增 Lean kernel 核验身份。结论不覆盖完整 $T_n$ 的最小诊断资源、一般机器学习模型、概率张量的错误秩推断、唯一隐藏基、物理神经元或比特下界、训练收敛、泛化、因果结论、有限精度实现或无条件运行时间；也未求出不足宽度时的精确总体最优风险。
 
 ## 追加锚（本行以下为增补区）
+## 47. 内点噪声后验的交互方向：相对偏置阈值与共同树的正超额风险
+
+### 47.1. 新联合律、准确后验与实际资源
+
+§§45–46 在同一三类教师上区分分类与 proper prediction；这里另行固定一个带对称标签噪声的联合律。目标是准确的 Bayes 后验，或 proper 风险相对 Bayes 值的零超额下确界。普通可靠性校准是较弱的目标，命题47.9给出两者的具体区别。
+
+**定义 47.1（内点噪声与有界相对截距合同）。** 固定 $n\ge3$、任意一棵二叉树，以及在目标声明之前选定的
+
+$$
+0<\varepsilon<\frac13,\qquad B\ge0,\qquad
+\gamma=\log\frac{1-2\varepsilon}{\varepsilon}>0.
+\tag{47.1}
+$$
+
+保留 $X=(w_1,\ldots,w_n)\sim P_n=\operatorname{Unif}(\Sigma)^{\otimes n}$，其中 $\Sigma=\{000,100,010,101,001\}$；独立因子是整窗。沿用式（45.1）–（45.3）的三类粗化 $C=C_n$、位 $a=h(w_1),b=\ell(w_2),c=h(w_2),d=\ell(w_3)$，以及
+
+$$
+G_1=ab,\qquad G_2=(1-ab)cd,\qquad
+\pi=P_n(C=0,1,2)=\frac1{125}(89,20,16).
+\tag{47.2}
+$$
+
+中窗 $(b,c)$ 四种位对 $00,10,01,11$ 的质量仍为 $(2,1,1,1)/5$，不能把 $b,c$ 当作独立变量。新联合律明确规定
+
+$$
+r(X)=P_\varepsilon(Y=\,\cdot\mid X)
+=\varepsilon\mathbf1+(1-3\varepsilon)e_C,
+\qquad Y\in\{0,1,2\}.
+\tag{47.3}
+$$
+
+即真教师类的条件概率为 $1-2\varepsilon$，另两类各为 $\varepsilon$。它没有重写原来的无噪声联合律或完整诊断 $T_n$。教师类仍是唯一的条件概率最大类，预测观测噪声标签的 Bayes 零一风险为 $2\varepsilon$，准确率为 $1-2\varepsilon$。
+
+每片叶只接收一个完整窗口，原始编码可以是任意非线性、有符号实函数；内部合并在整个环境消息空间上分别双线性。没有免费内部仿射常数、跨子树输入、携带输入的控制或时序。树、编码、合并及读出参数固定且与输入无关。所有实际叶、非根、忽略子树中的常数坐标和根坐标均计费，峰值记为 $w$，实际根维数记为 $q$。头取三个有限实仿射 logits
+
+$$
+L_y(z)=u_y\cdot z+v_y,\qquad
+p_y(X)=\frac{e^{L_y(z)}}{\sum_{k=0}^2e^{L_k(z)}},\qquad
+B_v=\max_yv_y-\min_yv_y\le B.
+\tag{47.4}
+$$
+
+头参数槽与概率输出另计，不暗作内部消息。除声明的相对截距资源外，不对消息、斜率、合并系数或其他参数施加范数或紧致性假设。置
+
+$$
+\beta=(v_1-v_0,v_2-v_0),\qquad
+H(p)=\left(\log\frac{p_1}{p_0},\log\frac{p_2}{p_0}\right).
+\tag{47.5}
+$$
+
+可行相对偏置恰为 $|\beta_1|,|\beta_2|,|\beta_1-\beta_2|\le B$：三者分别是三对截距差；反之取 $(v_0,v_1,v_2)=(0,\beta_1,\beta_2)$ 即可。概率内点性使 log-odds 有限，准确目标为
+
+$$
+H^\star=H(r)=\gamma(2G_1+G_2-1,\ G_1+2G_2-1).
+\tag{47.6}
+$$
+
+三类对应的目标点依次是 $(-\gamma,-\gamma),(\gamma,0),(0,\gamma)$。
+
+**约定 47.2（两种完整 proper excess）。** 以下总体期望都使用式（47.3）的同一联合律，对数为自然对数，Brier 不按类平均：
+
+$$
+\begin{aligned}
+R_{\log,\varepsilon}(p)&=\mathbb E[-\log p_Y(X)],&
+R_{2,\varepsilon}(p)&=\mathbb E\sum_{y=0}^2(p_y(X)-\mathbf1_{\{Y=y\}})^2,\\
+h_\varepsilon&=-(1-2\varepsilon)\log(1-2\varepsilon)-2\varepsilon\log\varepsilon,&
+b_\varepsilon&=4\varepsilon-6\varepsilon^2,\\
+\Delta_{\log}(p)&=R_{\log,\varepsilon}(p)-h_\varepsilon
+=\mathbb E\,\mathrm{KL}(r\Vert p),&
+\Delta_2(p)&=R_{2,\varepsilon}(p)-b_\varepsilon
+=\mathbb E\|p-r\|_2^2.
+\end{aligned}
+\tag{47.7}
+$$
+
+这里直接复用 §14 的条件均值风险分解、§34 的条件 Bayes 决策及严格 proper score 恒等式。具体地，给定 $X$，对数风险减去 $-\sum_y r_y\log r_y$ 得 $\sum_y r_y\log(r_y/p_y)$；平方风险展开为 $1-\|r\|_2^2+\|p-r\|_2^2$，而 $1-\|r\|_2^2=4\varepsilon-6\varepsilon^2$。因此两个 Bayes 风险均由 $p=r$ 唯一达到；有限域上每个原始词质量为正，任一个零超额都等价于逐词准确后验。这里追求零的是超额，不是带噪声的完整 proper 风险。
+
+### 47.2. 齐次路径与中窗的精确必要空间
+
+**引理 47.3（任意叶编码下的共同路径空间）。** 令中窗叶的 $m$ 个坐标函数张成 $V\subseteq\mathbb R^\Sigma$。固定该叶之外的所有输入后，预测的每个 log-odds 坐标减去相应 $\beta_i$ 都属于同一个 $V$。若预测准确，则它必须包含目标所有外部截面；其联合张成恰为
+
+$$
+U_2(H^\star-\beta)=
+\begin{cases}
+\operatorname{span}\{1,b,c,bc\},&\beta\ne(-\gamma,-\gamma),\\
+\operatorname{span}\{b,c,bc\},&\beta=(-\gamma,-\gamma).
+\end{cases}
+\tag{47.8}
+$$
+
+两行维数分别为四、三。唯一使常数方向消失的相对偏置，其跨度正好是 $\gamma$。
+
+证明。沿中窗叶到根的路径，固定另一子树的消息后，每次分别双线性合并成为对当前消息的齐次线性映射；与头斜率复合仍齐次线性。头只在最后加入实际 $\beta$，所以所有外部环境共用叶坐标空间 $V$。这一步约束的是 log-odds，未把 softmax 概率当作线性张量。
+
+写 $t_i=-\gamma-\beta_i$。第一坐标的四个外部 $(a,d)=00,10,01,11$ 截面为
+
+$$
+t_1\mathbf1,\quad t_1\mathbf1+2\gamma b,\quad
+ t_1\mathbf1+\gamma c,\quad
+ t_1\mathbf1+2\gamma b+\gamma c-\gamma bc.
+\tag{47.9}
+$$
+
+作差得到 $b,c,bc$；若 $t_1\ne0$，还得到1。第二坐标把 $2\gamma b,\gamma c,-\gamma bc$ 分别换为 $\gamma b,2\gamma c,-2\gamma bc$，所以 $t_2\ne0$ 时同样得到四维空间。四个函数在实际中窗 $000,100,001,101$ 上独立；原始符号 $010$ 与 $000$ 的目标截面相同，但任意编码仍可区分这两个符号。当两个 $t_i$ 均为零，联合输出为 $\gamma(2G_1+G_2,G_1+2G_2)$，其二乘二系数矩阵行列式为3，故其截面空间等于 $(G_1,G_2)$ 的截面空间，即 $\operatorname{span}\{b,c,bc\}$。相对偏置 $(-\gamma,-\gamma)$ 对应截距 $(0,-\gamma,-\gamma)$，跨度为 $\gamma$。$\square$
+
+这个必要空间不是关于信息状态数的下界：二维非线性编码可以给有限中窗状态安排不同实数值。这里恢复的 $bc$ 是完成所有外部环境下准确后验所需的关系响应方向；它连同是否需传输1，由齐次运算和实际头截距共同决定。维数下界也不要求隐藏坐标恰叫 $b,c,bc$。
+
+### 47.3. 十六个实际词的逆矩阵证书
+
+**命题 47.4（不限制学习参数的中窗定量分离）。** 对每个固定尾赋值 $\tau=(w_4,\ldots,w_n)$，考虑首窗 $w_1\in\{000,001\}$、第三窗 $w_3\in\{000,100\}$，以及中窗依次为 $000,100,001,101$。外部列按 $(a,d)=00,10,01,11$ 排列。令 $t=-\gamma-\beta_1$，第一目标 log-odds 减偏置的实际四乘四矩阵为
+
+$$
+M(t)=
+\begin{pmatrix}
+t&t&t&t\\
+t&t+2\gamma&t&t+2\gamma\\
+t&t&t+\gamma&t+\gamma\\
+t&t+2\gamma&t+\gamma&t+2\gamma
+\end{pmatrix},\qquad
+\det M(t)=-2t\gamma^3.
+\tag{47.10}
+$$
+
+当 $t\ne0$，所选逆及其 Frobenius 范数恒等式是
+
+$$
+\begin{aligned}
+M(t)^{-1}&=
+\begin{pmatrix}
+\frac1t+\frac1{2\gamma}&\frac1{2\gamma}&0&-\frac1\gamma\\
+\frac1{2\gamma}&-\frac1{2\gamma}&-\frac1\gamma&\frac1\gamma\\
+0&-\frac1\gamma&0&\frac1\gamma\\
+-\frac1\gamma&\frac1\gamma&\frac1\gamma&-\frac1\gamma
+\end{pmatrix},\\
+\|M(t)^{-1}\|_F^2&=\frac1{t^2}+\frac1{\gamma t}+\frac{10}{\gamma^2}.
+\end{aligned}
+\tag{47.11}
+$$
+
+若中窗叶 $m\le3$ 且 $B<\gamma$，每个尾下都有一个上述实际词满足
+
+$$
+\|H(p)-H^\star\|_2\ge\delta_B:=\frac{\gamma-B}{4\sqrt{11}}.
+\tag{47.12}
+$$
+
+若 $m\le2$，不论偏置大小，每个尾下都有一个上述实际词满足
+
+$$
+\|H(p)-H^\star\|_2\ge\delta_2:=\frac{\gamma}{4\sqrt{10}}.
+\tag{47.13}
+$$
+
+证明。首、第三窗选取确实实现所列四个位对，中窗行实现全部四种 $b,c$；因此十六个矩阵元都是不同的原始三窗词，给定尾时各有质量 $1/125$。逐式代入式（47.6）得到 $M(t)$；直接乘法给式（47.11）的左右逆，平方求和给其范数。第二目标坐标对应矩阵是
+
+$$
+M_2(t_2)=
+\begin{pmatrix}
+t_2&t_2&t_2&t_2\\
+t_2&t_2+\gamma&t_2&t_2+\gamma\\
+t_2&t_2&t_2+2\gamma&t_2+2\gamma\\
+t_2&t_2+\gamma&t_2+2\gamma&t_2+\gamma
+\end{pmatrix},\qquad \det M_2(t_2)=-4t_2\gamma^3,
+\tag{47.14}
+$$
+
+也给出式（47.8）的例外判据。
+
+由引理47.3，第一预测坐标减偏置的矩阵 $N$ 可分解为四行叶编码乘四列路径系数，故 $\operatorname{rank}N\le m$。任意秩至多三的 $N$ 都有单位向量 $x\in\ker N$，而
+
+$$
+\|M-N\|_F\ge\|(M-N)x\|_2=\|Mx\|_2
+\ge\frac1{\|M^{-1}\|_{\rm op}}\ge\frac1{\|M^{-1}\|_F}.
+\tag{47.15}
+$$
+
+十六个元中至少一个误差不小于此值的四分之一。若 $B<\gamma$，有 $t<0$、$|t|\ge\gamma-B$，式（47.11）的交叉项非正，因而
+
+$$
+\|M(t)^{-1}\|_F^2
+\le\frac1{(\gamma-B)^2}+\frac{10}{\gamma^2}
+\le\frac{11}{(\gamma-B)^2}.
+\tag{47.16}
+$$
+
+这给式（47.12），不需控制 $N$。当 $m\le2$，第一预测 log-odds 本身的矩阵为 $N+\beta_1\mathbf1\mathbf1^{\mathsf T}$，秩至多三；与未移去偏置的目标 $M(-\gamma)$ 比较。式（47.11）给 $\|M(-\gamma)^{-1}\|_F^2=10/\gamma^2$，故式（47.15）给式（47.13），也不需限制 $\beta$。$\square$
+
+### 47.4. 根三角形与内点误差转换
+
+**引理 47.5（根一维距离与统一 proper 转换）。** 若实际根 $q\le1$，不论传输峰值与偏置大小，都有一整个教师类上的所有输入满足
+
+$$
+\|H(p)-H^\star\|_2\ge\delta_q:=\frac{\gamma}{\sqrt3};
+\qquad P_n(\text{该类})\ge\frac{16}{125}.
+\tag{47.17}
+$$
+
+对任意本节的后验 $r$ 和有限 softmax 预测 $p$，若 log-odds 误差至少为 $\delta\ge0$，则
+
+$$
+\begin{aligned}
+\|p-r\|_2^2&\ge\Phi_\varepsilon(\delta)
+:=\varepsilon^2\min\left\{\frac14,\frac{\delta^2}{12}\right\},\\
+\mathrm{KL}(r\Vert p)&\ge\|p-r\|_2^2.
+\end{aligned}
+\tag{47.18}
+$$
+
+证明。根至多一维意味着 $H(p)=Az+\beta$ 的实际像落在同一固定仿射直线上；像为点时把它包含在任意直线上。设直线的单位法向量为 $(u,v)$、法向偏移为 $t$。三个目标点的未加权质心为零，它们到该线的平方距离平均为
+
+$$
+\frac{(-\gamma u-\gamma v-t)^2+(\gamma u-t)^2+(\gamma v-t)^2}{3}
+=\frac{2\gamma^2}{3}(u^2+uv+v^2)+t^2
+\ge\frac{\gamma^2}{3},
+\tag{47.19}
+$$
+
+其中 $u^2+v^2=1$、$uv\ge-1/2$。至少一个目标点到直线距离为 $\gamma/\sqrt3$ 或更大；属于该类的所有预测仍在这条线上，得到式（47.17）。此处未加权几何只用来找整类，积分时用该类的真实质量。
+
+令 $e=\|p-r\|_2$。若 $e\le\varepsilon/2$，每个 $p_y\ge r_y-e\ge\varepsilon/2$，连接 $p,r$ 的线段每个坐标也至少为 $\varepsilon/2$。对数逐坐标的导数模至多 $2/\varepsilon$；差矩阵
+
+$$
+A=\begin{pmatrix}-1&1&0\\-1&0&1\end{pmatrix},\qquad
+AA^{\mathsf T}=\begin{pmatrix}2&1\\1&2\end{pmatrix},\qquad
+\|A\|_{\rm op}=\sqrt3
+\tag{47.20}
+$$
+
+给出沿线段积分后的 $\|H(p)-H(r)\|_2\le(2\sqrt3/\varepsilon)e$。因此此分支有 $e^2\ge\varepsilon^2\delta^2/12$；若 $e>\varepsilon/2$，直接有 $e^2>\varepsilon^2/4$。合并得式（47.18）的第一行，覆盖无界 log-odds。
+
+自然对数 Pinsker 给 $\mathrm{KL}(r\Vert p)\ge\|r-p\|_1^2/2$。差向量的坐标和为零；正分量总和与负分量绝对值总和同为 $s$，故 $\|r-p\|_2^2\le2s^2=\|r-p\|_1^2/2$。得到第二行，未引入按三类平均的因子。$\square$
+
+**定理 47.6（同一预测器的参数、长度与树统一正下界）。** 在定义47.1下，总有 $\Delta_{\log}\ge\Delta_2$。以下每个适用条件都为两种超额提供同一个严格正的数值下界：
+
+$$
+\begin{aligned}
+m\le3,\ B<\gamma:\quad
+\Delta_{\log},\Delta_2&\ge
+\frac{\varepsilon^2}{125}\min\left\{\frac14,\frac{(\gamma-B)^2}{2112}\right\},\\
+m\le2:\quad
+\Delta_{\log},\Delta_2&\ge
+\frac{\varepsilon^2}{125}\min\left\{\frac14,\frac{\gamma^2}{1920}\right\},\\
+q\le1:\quad
+\Delta_{\log},\Delta_2&\ge
+\frac{16\varepsilon^2}{125}\min\left\{\frac14,\frac{\gamma^2}{36}\right\}.
+\end{aligned}
+\tag{47.21}
+$$
+
+第二行允许任意偏置，第三行还允许任意峰值。特别地，$w\le3$ 使第一行的中窗条件成立，$w\le2$ 使第二行成立。
+
+证明。每个尾赋值都由命题47.4找到一个条件质量为 $1/125$ 的实际三窗词；将式（47.12）或（47.13）代入式（47.18），给每个尾相同的条件超额下界。再对全部尾积分，尾质量之和为1，得到前两行。见证词可以随尾改变，所以这里没有 $5^{-(n-3)}$ 损失。根一维使用引理47.5的整个类及其至少 $16/125$ 的质量，得到第三行。式（47.7）、（47.18）给两种风险的同一数值底及其顺序。所有证书约束同一预测器、同一联合律；多个条件同时成立时可以取这些下界的最大值，未断言它们可相加。这些是正分离证书，不是不足资源时的精确最优风险。$\square$
+
+### 47.5. 同一完整输入上的两套相容构造
+
+**定理 47.7（每棵树的有限参数准确后验）。** 对每个 $n\ge3$ 和每棵固定树，零相对头偏置下可用峰值四、实际根二准确实现 $r$；当 $B\ge\gamma$ 时，可用峰值三、实际根二准确实现 $r$。每套构造都是一个共同预测器，同时达到两种 proper Bayes 风险。
+
+证明。节点叶集为 $A$，固定活动集 $S=A\cap\{1,2,3\}$。以下是非根节点实际发送的全部坐标，常数1及其每份副本均计费：
+
+| §47 活动集 $S$ | 零偏置构造的消息 | 足够偏置构造的消息 |
+| --- | --- | --- |
+| $\varnothing$ | $(1)$ | $(1)$ |
+| $\{1\}$ | $(1,a)$ | $(1,a)$ |
+| $\{2\}$ | $(1,b,c,bc)$ | $(b,c,bc)$ |
+| $\{3\}$ | $(1,d)$ | $(1,d)$ |
+| $\{1,2\}$ | $(1,ab,c-abc)$ | $(ab,c-abc)$ |
+| $\{1,3\}$ | $(1,a,d,ad)$ | $(a,d,ad)$ |
+| $\{2,3\}$ | $(1,b,cd,bcd)$ | $(b,cd,bcd)$ |
+| $\{1,2,3\}$ | $(1,G_1,G_2)$ | $(G_1,G_2)$ |
+
+非根的六种非空无序分拆恰为 $1+2,1+3,2+3,12+3,13+2,23+1$。第一套逐项使用式（45.7），第二套逐项使用式（44.22）；这里复用的是已给出的多项式恒等式，不是定理44.5的 $n\ge12$ 最优性结论。将子消息代入六式，各自得到本表的父消息。空活动子消息用其一个实标量乘另一消息的每个坐标，两个空活动标量相乘；反向子序交换实参。这些公式在整个环境空间上分别双线性。叶消息满足本表，合并保持它，因而树结构归纳覆盖非连续叶集、忽略叶先进入活动子树及任意忽略子树插入。
+
+实际根必须直接给两个坐标。为明确这一点，以下 $u,v$ 按表中相应左右子活动集取值，坐标从零编号。第一套在三种最终非空分拆上直接输出
+
+$$
+\begin{aligned}
+12+3:&\quad\gamma(-u_0v_0+2u_1v_0+u_2v_1,\ -u_0v_0+u_1v_0+2u_2v_1),\\
+13+2:&\quad\gamma(-u_0v_0+2u_1v_1+u_2v_2-u_3v_3,\ -u_0v_0+u_1v_1+2u_2v_2-2u_3v_3),\\
+23+1:&\quad\gamma(-u_0v_0+2u_1v_1+u_2v_0-u_3v_1,\ -u_0v_0+u_1v_1+2u_2v_0-2u_3v_1).
+\end{aligned}
+\tag{47.22}
+$$
+
+若全部活动叶已在一个真子树中，其实际消息为 $r'=(r'_0,r'_1,r'_2)$，另一子树为空活动标量 $s$，根直接输出
+
+$$
+\gamma s(-r'_0+2r'_1+r'_2,\ -r'_0+r'_1+2r'_2).
+\tag{47.23}
+$$
+
+故实际根为 $z=H^\star$，头取 $(L_0,L_1,L_2)=(0,z_1,z_2)$、三个真实截距均为零。式（47.22）–（47.23）是两坐标的双线性根映射，没有先传输三坐标根再让头压缩。
+
+第二套在相应三种最终分拆直接输出
+
+$$
+\begin{aligned}
+12+3:&\quad(u_0v_0,u_1v_1),\\
+13+2:&\quad(u_0v_0,u_1v_1-u_2v_2),\\
+23+1:&\quad(u_0v_1,u_1v_0-u_2v_1).
+\end{aligned}
+\tag{47.24}
+$$
+
+完整活动子树吸收空活动标量时，根直接输出 $s(r'_0,r'_1)$。所以实际根是 $z=(G_1,G_2)$，固定头为
+
+$$
+(L_0,L_1,L_2)=
+(0,\ \gamma(2z_1+z_2)-\gamma,\ \gamma(z_1+2z_2)-\gamma).
+\tag{47.25}
+$$
+
+它的相对截距是 $(-\gamma,-\gamma)$，跨度恰为 $\gamma$，包括 $B=\gamma$ 的等号情形。
+
+两套均使三类 logits 分别为 $(0,-\gamma,-\gamma),(0,\gamma,0),(0,0,\gamma)$。因 $e^\gamma=(1-2\varepsilon)/\varepsilon$，三者 softmax 都逐词等于式（47.3）。非根峰值分别为四、三，实际根均只有二；所有概率与参数在固定内点 $\varepsilon$ 下有限。$\square$
+
+**推论 47.8（准确达到与零超额下确界的同一尖锐前沿）。** 固定定义47.1中的 $\varepsilon,B,n$ 和树。对根与峰值上限 $(Q,W)$，以下三个要求有同一必要充分条件：准确后验存在；对数超额的下确界为零；完整 Brier 超额的下确界为零。条件为
+
+$$
+Q\ge2,\qquad W\ge W_B,
+\qquad
+W_B=\begin{cases}4,&0\le B<\gamma,\\3,&B\ge\gamma.\end{cases}
+\tag{47.26}
+$$
+
+在可行侧，还可用同一个有限参数预测器同时达到两种 Bayes 风险，所以要求两种超额同时趋零也给相同前沿。
+
+证明。定理47.6在各个不可行区域保留统一严格正下界，排除精确达到和任何参数序列的零超额下确界；定理47.7在可行侧给共同精确达到。准确后验的中窗必要空间及偏置例外另外由引理47.3给出。$\square$
+
+资源数字与系数规模分别计量。第一套所有非根坐标的绝对值至多1，实际根坐标绝对值至多 $\gamma$；头有九个仿射实参数槽、两个非零，截距均零。第二套所有实际消息坐标绝对值至多1；头同样有九个槽、六个非零，最大系数绝对值为 $2\gamma$、截距跨度为 $\gamma$。两套实际 logit 跨度都是 $\gamma$。固定有理合并模板与一个共享实数 $\gamma$ 足以描述所列构造；任意实数 $\varepsilon$ 不因此获得有限数字描述，且 $\varepsilon\downarrow0$ 时 $\gamma\to\infty$。共享参数描述没有免去重复常数与消息坐标的费用，准确实数结论也没有给出量化精度保证。
+
+### 47.6. 普通校准的常数反例与端点
+
+**命题 47.9（可靠性校准不足以要求中窗交互）。** 若可靠性校准指 $P_\varepsilon(Y=y\mid p(X))=p_y(X)$，则本节有一个合法的峰值一、根一、零头偏置的校准预测器，却有严格正的 Brier 超额
+
+$$
+\Delta_2=(1-3\varepsilon)^2\frac{7048}{15625}>0.
+\tag{47.27}
+$$
+
+证明。置 $\bar p=\varepsilon\mathbf1+(1-3\varepsilon)\pi=P_\varepsilon(Y=\,\cdot)$。每片叶发送计费标量1，内部相乘至根1，头取 $L_y(z)=(\log\bar p_y)z$，截距全零；softmax 输出恒为 $\bar p$。因此条件于该常值预测的标签律就是 $\bar p$，满足校准。另一方面
+
+$$
+\mathbb E\|\bar p-r(X)\|_2^2
+=(1-3\varepsilon)^2\left(1-\sum_y\pi_y^2\right)
+=(1-3\varepsilon)^2\frac{7048}{15625},
+\tag{47.28}
+$$
+
+由式（47.7）得结论。$\square$
+
+所以“校准的 Bayes 概率预测”在本节必须保留准确 Bayes 后验或零 Bayes 超额的限定。类频率校准没有保留每个原始词的条件概率，不能替代式（47.26）的目标。
+
+两个端点另行区分：$\varepsilon=0$ 的目标是 one-hot，有限 softmax 不能精确输出它；§46 的固定有限偏置、峰值三、根二族给的是无噪声 proper 风险的零下确界。这里的内点逆链常数不延伸到该端点。$\varepsilon=1/3$ 时目标恒为 $(1/3,1/3,1/3)$、$\gamma=0$，一个计费常数树与零 logits 即可达到它，式（47.26）的非退化前沿不适用。
+
+### 47.7. W 族的有限最优置信度
+
+**命题 47.10（同一 Bayes 分类下的过度置信）。** 取 §46.5 式（46.16）的实际族
+
+$$
+W=2ab-cd,\qquad z=(\lambda W,\lambda),\qquad
+(L_0,L_1,L_2)=\lambda(1/2,W,-W),\qquad \lambda>0.
+\tag{47.29}
+$$
+
+它仍在每棵树上使用峰值三、实际根二与零头偏置。对式（47.3）的噪声律，它对每个 $\lambda>0$ 都有 Bayes 分类风险 $2\varepsilon$。令 $R_{\log,0}(\lambda),R_{2,0}(\lambda)$ 专指式（46.24）的这个严格分类 W 族，则
+
+$$
+R_{\log,\varepsilon}(\lambda)
+=R_{\log,0}(\lambda)+\frac{227\varepsilon}{125}\lambda.
+\tag{47.30}
+$$
+
+该族的对数风险有唯一有限正极小点 $\lambda_\star\in(0,\infty)$；越过它继续提高置信度，分类不变，对数风险严格增加。完整 Brier 风险则满足
+
+$$
+\begin{aligned}
+R_{2,\varepsilon}(\lambda)
+&=R_{2,0}(\lambda)+2\varepsilon\bigl(3\mathbb E_{P_n}[p_C(\lambda)]-1\bigr),\\
+\lim_{\lambda\to\infty}R_{2,\varepsilon}(\lambda)&=4\varepsilon,\qquad
+\lim_{\lambda\to\infty}\Delta_2(\lambda)=6\varepsilon^2>0.
+\end{aligned}
+\tag{47.31}
+$$
+
+证明。式（46.18）–（46.22）已经给共同树的三通道搬运与直接二坐标根。此族在所有词上教师类严格最大，故在新噪声律下仍作条件 Bayes 分类。两个未缩放真类差 $(g,h)$ 的实际词数分别是 $(1/2,1/2)$ 上89词、$(1/2,2)$ 上20词、$(3/2,4)$ 上16词。第二组包括4个类1、$W=1$ 的词与16个类2的词，第三组是16个类1、$W=2$ 的词；这些计数不能与类质量表逐行等同。它们的差之和均值为
+
+$$
+\mathbb E[g+h]=\frac{89+50+88}{125}=\frac{227}{125}.
+\tag{47.32}
+$$
+
+逐词噪声对数损失与无噪声损失之差为 $\varepsilon[(L_C-L_j)+(L_C-L_k)]$，得到式（47.30）。式（46.24）的每个 $\log(1+e^{-\lambda g}+e^{-\lambda h})$ 二阶导数，是三种斜率 $0,-g,-h$ 在其正指数权重下的方差；至少两个斜率不同，故严格为正。加上线性噪声项后仍严格凸，且延伸至 $\lambda=0$ 的右导数与无穷处导数分别为
+
+$$
+R'_{\log,\varepsilon}(0)=\frac{227(3\varepsilon-1)}{375}<0,
+\qquad
+\lim_{\lambda\to\infty}R'_{\log,\varepsilon}(\lambda)
+=\frac{227\varepsilon}{125}>0.
+\tag{47.33}
+$$
+
+连续严格递增导数因此恰过零一次，得到唯一有限正族内极小点。平方风险逐词展开，噪声相对无噪声的改变量为 $-2(r-e_C)\cdot p=2\varepsilon(3p_C-1)$，给式（47.31）。该族所有真类差为正，所以 $p_C\to1$、$R_{2,0}\to0$，完整风险极限为 $4\varepsilon$；减去 $4\varepsilon-6\varepsilon^2$ 得超额极限。$\square$
+
+这里的唯一性限于 W 的单参数族。零偏置、峰值三在本节内点噪声目标下已有定理47.6的正超额底，故该族的对数极小值也不能成为整个允许模型的 Bayes 值。保持分类的优先顺序不等于准确概率：无噪声时可把置信尺度推向无穷，这里两个竞争类的正条件质量会对过大的 logit 差收费。
+
+### 47.8. 工具来源与关系结论的范围
+
+风险恒等式与条件 Bayes 原理复用 §§14、34；整窗三类律、实际消息和 W 族复用 §§44–46。这里的具体综合推导是内点噪声 log-odds 对中窗 $bc$ 的必要响应、相对偏置 $\gamma$ 消去常数方向的唯一例外、任意参数下的正超额证书，以及两套同一输入上的全树相容达到。它改变的是所声明条件概率目标所需的关系接口：$bc$ 恢复交叠接缝的响应，计费的1或足额固定截距承载常数方向；同一个较薄分类分数仍可保持类序，却不能满足这个后验目标。
+
+成熟工具按其假设署名。Yang、Dai、Salakhutdinov、Cohen，[*Breaking the Softmax Bottleneck: A High-Rank RNN Language Model*](https://arxiv.org/pdf/1711.03953)，§2.1 Proposition 1、Corollary 1 给 log-probability 矩阵模逐上下文共同平移的秩视角；其充分性使用 universal-approximator 假设。本节以 log-odds 消去共同平移，并单独证明有界相对截距和齐次树的达到性，不借该假设。Nouy，[*Higher-order principal component analysis for the approximation of tensors in tree-based low-rank formats*](https://arxiv.org/pdf/1705.00880v2)，§3 的最小子空间等于展平秩、§5.1 的单展平 SVD 用于乘积测度 Hilbert 空间；本节的独立因子是完整窗口，窗内 $b,c$ 相关，其根秩约定也不能替代实际二坐标根的证明。逆矩阵、核向量距离和树归纳在本节直接给出必要与充分证书，未拼接分别最优的切面。
+
+Gneiting、Raftery，[*Strictly Proper Scoring Rules, Prediction, and Estimation*](https://sites.stat.washington.edu/raftery/Research/PDF/Gneiting2007jasa.pdf)，§3 Examples 1、3 供应完整平方和的 Brier divergence 与正确方向的 KL；本节取负评分损失。Reid、Williamson，[*Information, Divergence and Risk for Binary Experiments*](https://jmlr.org/papers/volume12/reid11a/reid11a.pdf)，§3.2 与 Appendix E 的变差定义对应有限分布 $L^1$ 距离，自然对数 Pinsker 为 $\mathrm{KL}\ge\|r-p\|_1^2/2$。式（47.18）的特定局部逆 log-odds 常数则由内点线段直接证明。
+
+Müller、Kornblith、Hinton，[*When Does Label Smoothing Help?*](https://arxiv.org/pdf/1906.02629)，§1.1 的软目标 $(1-\alpha)e_C+(\alpha/K)\mathbf1$ 在 $K=3,\alpha=3\varepsilon$ 时等于式（47.3），§2 已讨论由目标决定的有限正确类／竞争类 logit 差；有限软目标置信度不是本节另创的原则。Olmin、Lindsten，[*Robustness and Reliability When Training With Noisy Labels*](https://proceedings.mlr.press/v151/olmin22a/olmin22a.pdf)，Lemma 3.1、Propositions 3.1–3.3 在其对称噪声条件下给概率变换和类序保留；取 $K=3,\omega=2\varepsilon$ 得本节的 $(1-3\varepsilon)e_C+\varepsilon\mathbf1$。其对干净标签的校准比较不改成本节的评分对象：这里始终对明确的噪声联合律评分。
+
+本节给指定精确实数模型的普通数学证明与显式资源证书，未求不足预算时的精确最优风险。有限族极小点不替代总体模型极小点，坐标数不等于物理神经元或比特，所列基也不具有唯一隐藏表示身份；这里没有训练、泛化、因果或运行时间结论。
+
+## 追加锚（本行以下为增补区）
+
+## 48. 同一响应商与分类误差下的两重偏置阈值：根截距和中窗系数空间
+
+### 48.1. 两个明确的标签通道与各自的 Bayes 基线
+
+**定义 48.1（等分类难度的对称通道与曲线通道）。** 固定 $n\ge3$、任意一棵二叉树及 $B\ge0$。原始输入仍为
+
+$$
+X=(w_1,\ldots,w_n)\sim P_n=\operatorname{Unif}(\Sigma)^{\otimes n},
+\qquad \Sigma=\{000,100,010,101,001\}.
+$$
+
+独立单位是整窗。令 $\ell,h$ 分别取窗口的最低位、最高位，沿用定义45.1的首次诊断粗化 $C=C_n$，并写
+
+$$
+a=h(w_1),\quad b=\ell(w_2),\quad c=h(w_2),\quad d=\ell(w_3),
+\qquad G_1=ab,\quad G_2=(1-ab)cd,
+\qquad C=G_1+2G_2.
+\tag{48.1}
+$$
+
+$G_1,G_2$ 不同时为一；类0包括原诊断中没有被单独保留的全部标签。固定
+
+$$
+\begin{aligned}
+\frac13<r<1,\qquad e&=\frac{1-r}{2},\qquad K=\frac re=\frac{2r}{1-r},\qquad k=\log K,\\
+x&=\frac{K^2+\sqrt{K^4+8K}}4,\qquad t=\log x,\qquad
+A=\frac{Kr}{x},\qquad D=\frac r{x^2},\qquad \eta=D.
+\end{aligned}
+\tag{48.2}
+$$
+
+这里是两个不同的联合律 $P^{\mathrm{s}}$、$P^{\mathrm{c}}$，两者均有输入边缘 $P_n$，标签均为 $Y\in\{0,1,2\}$。按标签顺序 $0,1,2$，分别规定
+
+$$
+\rho^{\mathrm{s}}(X)=e\mathbf1+(r-e)e_C,
+\qquad
+\rho^{\mathrm{c}}(X)=
+\begin{cases}
+(r,A,D),&C=0,\\
+(e,r,e),&C=1,\\
+(D,A,r),&C=2.
+\end{cases}
+\tag{48.3}
+$$
+
+$\rho^j=P^j(Y=\,\cdot\mid X)$ 是相应通道的后验；不把两套条件律置于同一个未声明的联合律内。
+
+每片叶接收恰一个完整窗口，原始编码可为任意有符号、非线性实函数。每个内部合并在整个环境实向量空间上分别双线性，没有免费内部仿射常数、跨子树输入或携带输入的控制／时序。树、所有映射及参数固定且与输入无关。所有实际叶、非根、根及忽略子树中的常数坐标均计费；峰值 $w$ 包括根，实际根维数为 $q$，中窗叶维数为 $m$。维数零也纳入比较。固定头为
+
+$$
+L_y(z)=u_y\cdot z+v_y,\qquad
+p_y(X)=\frac{e^{L_y(z)}}{\sum_{j=0}^2e^{L_j(z)}},\qquad
+B_v=\max_yv_y-\min_yv_y\le B.
+\tag{48.4}
+$$
+
+头的 $3(q+1)$ 个仿射实参数槽及三个概率输出另计，不充作内部消息。除实际相对截距跨度外，不限制斜率、编码、消息或合并系数的范数，也不假定学习参数紧致。令
+
+$$
+H(p)=\left(\log\frac{p_1}{p_0},\log\frac{p_2}{p_0}\right),\qquad
+\beta=(v_1-v_0,v_2-v_0),\qquad
+\mathfrak b(\beta)=\max\{0,\beta_1,\beta_2\}-\min\{0,\beta_1,\beta_2\}.
+\tag{48.5}
+$$
+
+$\mathfrak b(\beta)=B_v$，可行性等价于 $|\beta_1|,|\beta_2|,|\beta_1-\beta_2|\le B$；共同平移三个截距不改变这个费用。
+
+对 $j\in\{\mathrm{s},\mathrm{c}\}$，自然对数损失、完整且不按类平均的 Brier 损失，以及各自的 Bayes 基线和超额，约定为
+
+$$
+\begin{aligned}
+R_{\log}^{j}(p)&=\mathbb E_{P^j}[-\log p_Y(X)],&
+h_j&=\mathbb E_{P_n}\left[-\sum_y\rho_y^j\log\rho_y^j\right],\\
+R_2^{j}(p)&=\mathbb E_{P^j}\sum_y(p_y(X)-\mathbf1_{\{Y=y\}})^2,&
+b_j&=\mathbb E_{P_n}[1-\|\rho^j\|_2^2],\\
+\Delta_{\log}^{j}(p)&=R_{\log}^{j}(p)-h_j,&
+\Delta_2^{j}(p)&=R_2^{j}(p)-b_j.
+\end{aligned}
+\tag{48.6}
+$$
+
+准确后验是逐原始词 $p=\rho^j$；零超额下确界则对本定义允许的全部有限实参数预测器取下确界。本节关于准确后验或零超额下确界的陈述，均不以可靠性校准 $P^j(Y=y\mid p(X))=p_y(X)$ 替换。
+
+**引理 48.2（正通道、有限像重编码与不同 proper 基线）。** 式（48.2）满足
+
+$$
+t>k>0,\qquad r>A>e>D>0,\qquad A+D=2e.
+\tag{48.7}
+$$
+
+两个通道都严格以 $C$ 为唯一后验最大类，每个对角概率都为 $r$，两者对各自观测标签的 Bayes 零一风险同为 $1-r$。两组三点后验像之间有双射
+
+$$
+\rho_C^{\mathrm{s}}\longmapsto\rho_C^{\mathrm{c}},
+\qquad \rho_C^{\mathrm{c}}\longmapsto\rho_C^{\mathrm{s}}.
+\tag{48.8}
+$$
+
+对于任意切面 $J\subseteq\{1,\ldots,n\}$，两种后验任务与教师 $C$ 的补全响应等价关系完全相同，故有相同的任务响应商及相容拼接。式（48.8）只定义在这两组三点像上，不宣称全概率单纯形上的仿射等价、随机后处理或 Blackwell 等价。
+
+置 $h_E=-r\log r-A\log A-D\log D$、$b_E=1-r^2-A^2-D^2$。各自的 proper 基线为
+
+$$
+\begin{aligned}
+h_{\mathrm{s}}&=-r\log r-2e\log e,&
+b_{\mathrm{s}}&=1-r^2-2e^2,\\
+h_{\mathrm{c}}&=\frac{21}{25}h_E+\frac4{25}h_{\mathrm{s}},&
+b_{\mathrm{c}}&=\frac{21}{25}b_E+\frac4{25}b_{\mathrm{s}},\\
+h_{\mathrm{s}}-h_{\mathrm{c}}
+&=\frac{21}{25}\left[A\log\frac Ae+D\log\frac De\right]>0,&
+b_{\mathrm{s}}-b_{\mathrm{c}}&=\frac{21}{50}(A-D)^2>0.
+\end{aligned}
+\tag{48.9}
+$$
+
+并且每个通道独立满足
+
+$$
+\Delta_{\log}^{j}(p)=\mathbb E_{P_n}\mathrm{KL}(\rho^j\Vert p),\qquad
+\Delta_2^{j}(p)=\mathbb E_{P_n}\|p-\rho^j\|_2^2.
+\tag{48.10}
+$$
+
+证明。$K>1$，$x$ 是 $2x^2-K^2x-K=0$ 的唯一正根；两根乘积为 $-K/2$。该多项式在 $x=K$ 处为 $-K(K-1)^2<0$，故 $x>K>1$，即 $t>k>0$。又 $r=K/(K+2)$，根方程等价于
+
+$$
+\frac{x}{x^{-1}+K+x}=r.
+\tag{48.11}
+$$
+
+所以在 $\zeta=-t,0,t$ 处，$\operatorname{softmax}(-\zeta,k,\zeta)$ 依次给式（48.3）的三个曲线行，其中两端的正确类概率由式（48.11）给 $r$，中间为 $K/(K+2)=r$。两端的竞争概率分别为 $A,D$，因而行和为一、$A+D=1-r=2e$。$x>K$ 给 $A<r$；$A/D=Kx>1$ 与竞争概率之和给 $A>e>D$，而 $r>e$。故两通道严格保留教师赢家，且曲线通道的所有后验坐标至少为 $\eta=D$。
+
+整窗独立与实际中窗关系给 $\mathbb E[a]=\mathbb E[b]=\mathbb E[c]=\mathbb E[d]=2/5$、$\mathbb E[bc]=1/5$。于是
+
+$$
+P_n(C=1)=\frac4{25},\qquad
+P_n(C=2)=\frac25\left(\frac25-\frac25\frac15\right)=\frac{16}{125},\qquad
+P_n(C=0)=\frac{89}{125}.
+\tag{48.12}
+$$
+
+这里没有把中窗两位当成独立样本。每个输入的最大后验都为 $r$，积分得到 Bayes 零一风险 $1-r$。
+
+三行各有不同的唯一最大类，故两种类到后验的映射均单射，其逆在各自三点像上就是 $\arg\max$。这证明式（48.8）。对于局部赋值 $u,u'$，逐一对全部补全 $v$ 应用这些单射，得到
+
+$$
+\rho^j(u,v)=\rho^j(u',v)\ \Longleftrightarrow\ C(u,v)=C(u',v).
+$$
+
+因此任意切面的响应等价关系相同；在代表元上拼接给相同的商运算。这是 §21 输出单射重编码原则在指定后验像上的应用，也可由观察边界代数卷定理19的任务细化映射分别沿两个方向得到。
+
+曲线边缘类0、2的总质量为 $105/125=21/25$，中间类1的质量为 $20/125=4/25$，故条件熵与 $1-\|\rho\|_2^2$ 的积分给式（48.9）的前两行。对数基线之差由 $A+D=2e$ 化简；其中方括号内的量等于 $2e$ 乘概率对 $(A/(2e),D/(2e))$ 相对 $(1/2,1/2)$ 的 KL，且 $A\ne D$，故严格正。平方基线之差用 $A^2+D^2-2e^2=(A-D)^2/2$。给定输入时，对数风险减熵为 $\mathrm{KL}(\rho^j\Vert p)$，平方风险展开为 $1-\|\rho^j\|_2^2+\|p-\rho^j\|_2^2$，证明式（48.10）。因此两个 proper Bayes 值均由相应后验唯一达到，不能用一个通道的完整风险代替另一个通道的超额。
+
+这些评分恒等式使用 Gneiting、Raftery，[*Strictly Proper Scoring Rules, Prediction, and Estimation*](https://sites.stat.washington.edu/raftery/Research/PDF/Gneiting2007jasa.pdf)，§3 Examples 1、3 的负评分损失约定：完整 Brier divergence 是平方欧氏距离，logarithmic divergence 的顺序是 $\mathrm{KL}(\rho\Vert p)$。$\square$
+
+### 48.2. 根可选截距与中窗唯一消常截距
+
+**引理 48.3（两个截距几何及实际词的统一分离）。** 以下目标与预测均使用曲线通道。记
+
+$$
+\begin{aligned}
+h_0&=(k-t,-2t),\qquad \mathcal H(\zeta)=(k+\zeta,2\zeta),\\
+H^\star(X)=H(\rho^{\mathrm{c}}(X))
+&=h_0+t(1,2)(G_1+2G_2)
+=\mathcal H(-t+tG_1+2tG_2).
+\end{aligned}
+\tag{48.13}
+$$
+
+准确根一维头的偏置 $\beta$ 必须位于整条目标直线 $\mathcal H(\mathbb R)$ 上；该线上的最小实际截距跨度为 $k$，且只在 $\beta=\mathcal H(0)=(k,0)$ 达到。记 $U_2$ 为两个目标坐标在全部外部补全下所得中窗截面的联合实张成。任意准确预测的中窗共同路径空间必须包含
+
+$$
+U_2(H^\star-\beta)=
+\begin{cases}
+\operatorname{span}\{1,b,c,bc\},&\beta\ne h_0,\\
+\operatorname{span}\{b,c,bc\},&\beta=h_0.
+\end{cases}
+\tag{48.14}
+$$
+
+两行的维数分别为四、三；唯一消去中窗常数方向的偏置 $h_0$ 有费用 $\mathfrak b(h_0)=2t>k$。
+
+这些维数障碍有下列不限制学习参数的定量版本。对于每个固定尾赋值 $\tau=(w_4,\ldots,w_n)$：若 $m\le3$ 且 $B<2t$，存在一个实际三窗词，其 log-odds 误差至少为 $\delta_M$；若 $m\le2$，不论 $B$ 多大，存在一个实际三窗词，其误差至少为 $\delta_2$。根方面，若 $q\le1$ 且 $B<k$，存在 $C=0$ 或 $C=2$ 的一个整类，其每个输入的误差至少为 $\delta_R$；若 $q=0$，不论 $B$ 多大，也有一个这样的整类，其每个输入的误差至少为 $\delta_0$。常数为
+
+$$
+\delta_M=\frac{2t-B}{4\sqrt5},\qquad
+\delta_2=\frac{t}{2\sqrt3},\qquad
+\delta_R=\sqrt{\frac25}(k-B),\qquad
+\delta_0=t\sqrt5.
+\tag{48.15}
+$$
+
+误差均指 $\|H(p)-H^\star\|_2$；中窗见证在该尾下的条件质量为 $1/125$，根整类质量至少为 $16/125$。
+
+证明。三个目标后验的 logits 可取 $(-\zeta,k,\zeta)$，消去第0类 logit 后得到式（48.13）。三个目标点是 $\mathcal H(-t),\mathcal H(0),\mathcal H(t)$，且彼此不同。若 $q=1$ 且准确，$H(p)=\beta+Az$ 的仿射像必须包含这三个点，故其整条直线与目标线重合，$\beta=\mathcal H(\zeta_0)$。该偏置的费用为
+
+$$
+\mathfrak b(\mathcal H(\zeta_0))
+=\max\{|k+\zeta_0|,|2\zeta_0|,|k-\zeta_0|\}
+=\max\{k+|\zeta_0|,2|\zeta_0|\}.
+\tag{48.16}
+$$
+
+最小值恰为 $k$，仅在 $\zeta_0=0$ 达到。根维数零的仿射像为点，不能包含这三个目标。
+
+固定中窗叶之外的全部输入，沿该叶到根的每次双线性合并都成为对当前消息的齐次线性映射。再与头斜率复合，两个预测 log-odds 减去 $\beta$ 都属于中窗叶坐标函数的同一个张成空间；任意有符号、非线性叶编码也服从这个约束。第二目标坐标减偏置的四个外部 $(a,d)=00,10,01,11$ 截面为
+
+$$
+a_0\mathbf1,\quad a_0\mathbf1+2tb,\quad
+ a_0\mathbf1+4tc,\quad a_0\mathbf1+2tb+4tc-4tbc,
+\qquad a_0=-2t-\beta_2.
+\tag{48.17}
+$$
+
+作差得到 $b,c,bc$；当 $a_0\ne0$ 时还得到1。第一坐标有同样的非恒定方向，常数系数为 $k-t-\beta_1$。所以恰在 $\beta=h_0$ 时两者都不需要常数。$1,b,c,bc$ 在实际中窗 $000,100,001,101$ 上独立；原字母 $010$ 不被删去，只是其目标截面与 $000$ 相同。又 $k-t<0$、$-2t<k-t$，故 $\mathfrak b(h_0)=2t$，证明式（48.14）。
+
+定量证书仍取这些四个中窗，首窗取 $000,001$，第三窗取 $000,100$，外部列依次为 $(a,d)=00,10,01,11$。十六个不同实际词各有条件质量 $1/125$。令
+
+$$
+V=\begin{pmatrix}
+1&0&0&0\\1&1&0&0\\1&0&1&0\\1&1&1&1
+\end{pmatrix}.
+$$
+
+式（48.17）的实际第二坐标目标矩阵是
+
+$$
+\begin{aligned}
+M(a_0)&=V\operatorname{diag}(a_0,2t,4t,-4t)V^{\mathsf T}\\
+&=\begin{pmatrix}
+a_0&a_0&a_0&a_0\\
+a_0&a_0+2t&a_0&a_0+2t\\
+a_0&a_0&a_0+4t&a_0+4t\\
+a_0&a_0+2t&a_0+4t&a_0+2t
+\end{pmatrix},\qquad
+\det M(a_0)=-32a_0t^3.
+\end{aligned}
+\tag{48.18}
+$$
+
+对于 $a_0\ne0$，直接逆为
+
+$$
+\begin{aligned}
+M(a_0)^{-1}&=\begin{pmatrix}
+\frac1{a_0}+\frac1{2t}&-\frac1{4t}&0&-\frac1{4t}\\
+-\frac1{4t}&\frac1{4t}&-\frac1{4t}&\frac1{4t}\\
+0&-\frac1{4t}&0&\frac1{4t}\\
+-\frac1{4t}&\frac1{4t}&\frac1{4t}&-\frac1{4t}
+\end{pmatrix},\\
+\|M(a_0)^{-1}\|_F^2&=\frac1{a_0^2}+\frac1{a_0t}+\frac1{t^2}.
+\end{aligned}
+\tag{48.19}
+$$
+
+任意预测的对应矩阵 $N$ 可分解为四行实际叶编码乘四列路径系数，故 $\operatorname{rank}N\le m$。秩至多三时，取单位核向量 $u$，得到
+
+$$
+\|M-N\|_F\ge\|(M-N)u\|_2=\|Mu\|_2
+\ge\frac1{\|M^{-1}\|_{\mathrm{op}}}\ge\frac1{\|M^{-1}\|_F}.
+\tag{48.20}
+$$
+
+十六个元中有一个误差至少为右端的四分之一。若 $B<2t$，实际偏置限制给 $a_0<0$、$|a_0|\ge2t-B$。式（48.19）的交叉项非正，且 $2t-B\le2t$，所以
+
+$$
+\|M(a_0)^{-1}\|_F^2
+\le\frac1{(2t-B)^2}+\frac1{t^2}
+\le\frac5{(2t-B)^2}.
+\tag{48.21}
+$$
+
+这证明 $\delta_M$。若 $m\le2$，不移去偏置的预测矩阵为 $N+\beta_2\mathbf1\mathbf1^{\mathsf T}$，秩仍至多三。未移去偏置的目标是 $M(-2t)$，其逆 Frobenius 范数平方恰为 $3/(4t^2)$；式（48.20）给 $\delta_2=t/(2\sqrt3)$，无需控制偏置。
+
+根证书使用目标端点相对实际偏置的两列
+
+$$
+R_\beta=
+\begin{pmatrix}
+k-t-\beta_1&k+t-\beta_1\\
+-2t-\beta_2&2t-\beta_2
+\end{pmatrix}.
+\tag{48.22}
+$$
+
+当 $B<k$ 时，偏置六边形的限制给
+
+$$
+\begin{aligned}
+\det R_\beta&=2t(2k-2\beta_1+\beta_2)\ge4t(k-B)>0,\\
+\|R_\beta\|_F^2&=2(k-\beta_1)^2+2\beta_2^2+10t^2
+\le2(k+B)^2+2B^2+10t^2<20t^2.
+\end{aligned}
+\tag{48.23}
+$$
+
+第一行用 $2\beta_1-\beta_2=\beta_1+(\beta_1-\beta_2)\le2B$，第二行用 $B<k<t$。根至多一维时，所有 $H(p)-\beta$ 落在同一至多一维线性空间。将两目标列正交投影到此空间得到秩至多一的矩阵。该矩阵与 $R_\beta$ 的 Frobenius 距离至少为最小奇异值，而
+
+$$
+\sigma_{\min}(R_\beta)
+=\frac{|\det R_\beta|}{\sigma_{\max}(R_\beta)}
+\ge\frac{4t(k-B)}{\sqrt{20}\,t}.
+$$
+
+两列中至少一列到该空间的距离不小于此值的 $1/\sqrt2$，即 $\delta_R$；该端点类的全部预测都在同一个仿射空间内，故整个类保留此误差。若 $q=0$，预测为固定点；两个目标端点的距离为 $2t\sqrt5$，三角不等式使至少一个端点到固定点的距离不小于 $t\sqrt5$。两个端点类的真实质量分别为 $89/125,16/125$，均至少为 $16/125$。所有证书只限制目标、实际偏置及秩，没有对预测矩阵或消息设置紧致性。$\square$
+
+### 48.3. 两种 proper 超额的共同尖锐前沿与相容达到
+
+**定理 48.4（双阈值的同时根／峰值前沿）。** 固定定义48.1的 $r,B,n$ 及树。对根和峰值上限 $Q,W\in\mathbb Z_{\ge0}$，曲线通道的下列要求有同一个必要充分条件：存在准确后验预测器；$\inf\Delta_{\log}^{\mathrm{c}}=0$；$\inf\Delta_2^{\mathrm{c}}=0$；存在一列共同预测器使两种超额同时趋零。条件为 $Q\ge q_B,W\ge w_B$，其中
+
+$$
+(q_B,w_B)=
+\begin{cases}
+(2,4),&0\le B<k,\\
+(1,4),&k\le B<2t,\\
+(1,3),&B\ge2t.
+\end{cases}
+\tag{48.24}
+$$
+
+三个前沿点均由每棵固定树上的一个有限实参数预测器同时达到两种 proper Bayes 风险；等号 $B=k$、$B=2t$ 分别属于第二、第三行。
+
+不充分预算下，令
+
+$$
+\Phi_\eta(\delta)=\eta^2\min\left\{\frac14,\frac{\delta^2}{12}\right\}.
+\tag{48.25}
+$$
+
+对于任意同一预测器，总有 $\Delta_{\log}^{\mathrm{c}}\ge\Delta_2^{\mathrm{c}}$，并有以下参数、长度、树统一的正超额底：
+
+$$
+\begin{aligned}
+m\le3,\ B<2t:&\quad
+\Delta_{\log}^{\mathrm{c}},\Delta_2^{\mathrm{c}}
+\ge\frac1{125}\Phi_\eta\!\left(\frac{2t-B}{4\sqrt5}\right),\\
+m\le2:&\quad
+\Delta_{\log}^{\mathrm{c}},\Delta_2^{\mathrm{c}}
+\ge\frac1{125}\Phi_\eta\!\left(\frac{t}{2\sqrt3}\right),\\
+q\le1,\ B<k:&\quad
+\Delta_{\log}^{\mathrm{c}},\Delta_2^{\mathrm{c}}
+\ge\frac{16}{125}\Phi_\eta\!\left(\sqrt{\frac25}(k-B)\right),\\
+q=0:&\quad
+\Delta_{\log}^{\mathrm{c}},\Delta_2^{\mathrm{c}}
+\ge\frac{16}{125}\Phi_\eta(t\sqrt5).
+\end{aligned}
+\tag{48.26}
+$$
+
+第二、第四行允许任意偏置；根证书允许任意峰值。多个条件同时成立时取适用下界的最大值，不将它们相加。这些是固定内点 $r$、固定 $B$ 下的严格正证书，不声称是不足预算时的精确最优风险，也不声称关于 $r$ 的端点一致性。
+
+证明。先把引理48.3的 log-odds 证书转成两种 proper 超额。曲线目标的最小坐标为 $\eta$。若 $s=\|p-\rho^{\mathrm{c}}\|_2\le\eta/2$，两者连线的每个概率坐标至少为 $\eta/2$。对数导数模至多 $2/\eta$，log-odds 差矩阵
+
+$$
+\begin{pmatrix}-1&1&0\\-1&0&1\end{pmatrix}
+$$
+
+的算子范数为 $\sqrt3$，故沿线段积分给
+
+$$
+\|H(p)-H^\star\|_2\le\frac{2\sqrt3}{\eta}s.
+\tag{48.27}
+$$
+
+若 $s>\eta/2$，直接有 $s^2>\eta^2/4$。两个分支合并，任意 log-odds 误差 $\delta$ 都迫使 $s^2\ge\Phi_\eta(\delta)$，包括无界 log-odds 的情形。这复用引理47.5的内点线段方法，所需前提只是当前真实后验下界 $\eta$，没有把曲线后验替换为对称律。
+
+自然对数 Pinsker 给 $\mathrm{KL}(\rho^{\mathrm{c}}\Vert p)\ge\|\rho^{\mathrm{c}}-p\|_1^2/2$。差向量坐标和为零，正、负部分的总质量相同，故 $\|\rho^{\mathrm{c}}-p\|_2^2\le\|\rho^{\mathrm{c}}-p\|_1^2/2$。于是两种超额满足所述顺序及同一数值底。这里使用 Reid、Williamson，[*Information, Divergence and Risk for Binary Experiments*](https://jmlr.org/papers/volume12/reid11a/reid11a.pdf)，§3.2 的变差约定和 Appendix E 的 Pinsker 常数；其变差在有限域上为完整 $L^1$ 距离。
+
+每个尾赋值由中窗证书得到至少一个条件质量 $1/125$ 的见证词，再对全部尾积分，得到式（48.26）的前两行。见证可随尾改变，条件下界相同，故不损失 $5^{-(n-3)}$ 因子。根证书在整个端点类上成立，真实类质量至少为 $16/125$，得到后两行。这些量化底排除全部任意参数序列的零超额下确界，而不只是排除精确达到。特别地，$w\le3,B<2t$ 触发第一行，$w\le2$ 触发第二行，$q\le1,B<k$ 触发第三行，$q=0$ 总触发第四行；这给式（48.24）的全部必要性，包括维数零、一、二。
+
+充分性直接复用已有相容多项式传输。对每个非根节点，令其叶集为 $J$、活动集为 $S=J\cap\{1,2,3\}$。前两种构造逐节点使用定理45.2的常数增广基及式（45.7）；第三种使用定理44.5的 $G$ 共同基及式（44.22）。这里仅使用这些基与合并恒等式，不调用定理44.5限定 $n\ge12$ 的最优性结论。所有 $S=\varnothing$ 子树都发送一个实际、计费的标量1；空活动合并用该标量乘另一子消息的每个坐标，两个空活动标量相乘，逆子序交换实参。
+
+叶消息满足对应基值不变量。非空、不交的活动子集恰有 $1+2,1+3,2+3,12+3,13+2,23+1$ 六种无序分拆；所引供应式的每项都是一个左坐标乘一个右坐标的固定线性组合，代入子基逐式给父基。空活动乘法也保持不变量。因此整树归纳同时覆盖所有节点，不要求叶集连续，也覆盖忽略叶先进入活动子树和全部活动叶先在真子树中汇合的情形。前两种非根峰值为四，第三种为三，中窗叶分别已经达到四、三；非根各坐标实际值均在 $[0,1]$。
+
+为直接产生实际根，不在根处先发送供应式的完整向量。对于常数增广构造，记 $(T_0,T_1,T_2)$ 为式（45.7）在最终非空分拆 $12+3,13+2,23+1$ 上的三个双线性表达式；这仅是表达式记号，不是额外根消息。它们在实际子基上取值 $(1,G_1,G_2)$。当完整活动子树与空活动子树在根汇合时，若前者实际消息为 $(c_0,c_1,c_2)$、后者为标量 $s$，同一记号改取 $T_j=sc_j$。于是第一种根直接输出两坐标
+
+$$
+z_{\mathrm{low}}=
+\bigl((k-t)T_0+tT_1+2tT_2,\ -2tT_0+2tT_1+4tT_2\bigr),
+\qquad (L_0,L_1,L_2)=(0,z_{\mathrm{low},1},z_{\mathrm{low},2}).
+\tag{48.28}
+$$
+
+其根就是 $H^\star$，实际根二，截距均零，适用于全部 $B\ge0$。第二种根直接输出一个标量
+
+$$
+z_{\mathrm{mid}}=-tT_0+tT_1+2tT_2,
+\qquad (L_0,L_1,L_2)=(-z_{\mathrm{mid}},k,z_{\mathrm{mid}}).
+\tag{48.29}
+$$
+
+实际根一，取值 $-t,0,t$；实际截距为 $(0,k,0)$，跨度恰为 $k$。式（48.11）及引理48.2证明其逐词后验准确，包括 $B=k$。
+
+对于第三种构造，记 $(P_1,P_2)$ 为式（44.22）在最终三种非空分拆上的两个双线性表达式，它们在实际子基上取值 $(G_1,G_2)$。完整活动子树与空活动子树在根汇合时，改取 $P_i=sg_i$，其中前者实际消息为 $(g_1,g_2)$、后者为 $s$。根直接输出
+
+$$
+u=tP_1+2tP_2,
+\qquad (L_0,L_1,L_2)=(-u+t,k,u-t).
+\tag{48.30}
+$$
+
+实际根一，取值 $0,t,2t$。头的截距为 $(t,k,-t)$，因为 $t>k>0$，实际跨度恰为 $2t$，相对偏置恰为 $h_0$。令 $\zeta=u-t$，头又是 $(-\zeta,k,\zeta)$，故逐词后验准确，包括 $B=2t$。
+
+式（48.28）–（48.30）把固定线性组合直接作用于供应的双线性表达式，故仍在整个相应环境空间上分别双线性；没有先物化三坐标根再由头压缩。尤其非连续分拆 $13+2$ 的增广表达式是 $T_0=u_0v_0,T_1=u_1v_1,T_2=u_2v_2-u_3v_3$，非增广表达式是 $P_1=u_0v_0,P_2=u_1v_1-u_2v_2$，直接代入上述根式即可。完整活动加空活动的 $sc_j,sg_i$ 也在全环境上双线性，所有常数来源都已由实际非根坐标计费。这样每套构造都是同一个完整输入上的共同预测器，其准确后验由式（48.10）同时达到两种 Bayes 风险，完成充分性。
+
+所给构造的资源分别核算如下：实际 $(q,w,B_v)$ 为 $(2,4,0),(1,4,k),(1,3,2t)$；非根合并系数均为 $0,\pm1$，三种直接根合并系数的绝对值分别至多 $4t,2t,2t$。实际根坐标的绝对值分别至多 $2t,t,2t$。三种头分别有九、六、六个仿射实参数槽，其中非零数为二、三、五；所列头参数的最大绝对值分别为 $1,\max\{1,k\},\max\{1,t\}$。实际 logits 的最大跨度均为 $2t$，中间类的跨度为 $k$。固定有理供应模板与共享实参数 $k,t$ 描述这些表达式，或由一个共享 $r$ 通过式（48.2）指定它们；共享描述不免除每份实际常数、坐标及头参数槽的费用。这里的有限实参数不为任意实数 $r$ 提供有限数字描述，所给基的系数上界也不是换基不变量或所有模型的范数下界。$\square$
+
+### 48.4. 同商通道的交叉资源前沿
+
+**推论 48.5（等 Bayes 分类、等响应商与不等概率接口）。** 在定义48.1的同一输入域、整窗律、教师及树合同下，对称通道的准确后验和两种零 proper 超额下确界的同时最小根／峰值为
+
+$$
+(q_B^{\mathrm{s}},w_B^{\mathrm{s}})=
+\begin{cases}
+(2,4),&0\le B<k,\\
+(2,3),&B\ge k.
+\end{cases}
+\tag{48.31}
+$$
+
+因而在非空区间 $k\le B<2t$，对称通道需要 $(2,3)$，曲线通道需要 $(1,4)$。两个通道的 Bayes 零一风险同为 $1-r$，全部切面响应商相同，却有互不弱支配的最小根／峰值资源。曲线通道内部的根一维阈值 $k$ 与中窗三维阈值 $2t$ 也严格不同。
+
+证明。取 §47 的 $\varepsilon=e$；因 $0<e<1/3$、$1-2e=r$，其实际通道恰为式（48.3）的对称通道，且 $\gamma=\log(r/e)=k$。定理47.6、47.7及推论47.8分别给参数统一的正超额底、每棵树的共同有限参数达到，以及式（48.31）。每个通道都使用式（48.9）中自己的 Bayes 基线。引理48.2给相同分类风险和响应商，定理48.4给曲线前沿，$t>k$ 保证所列交叉区间非空。
+
+两种几何要求可以明确分开：根一维只要求三个目标 log-odds 点处于同一经过实际 $\beta$ 的仿射线，允许在整条目标线上选择费用最小的截距；中窗三维则要求全部外部补全的共同齐次系数空间不再含1，强制唯一偏置 $h_0$。在曲线通道中，前者由中间点 $(k,0)$ 达到费用 $k$，后者由端点 $(k-t,-2t)$ 达到费用 $2t$。有限后验像上的单射重编码保留补全响应相等关系，却不承诺保留这些齐次系数空间或允许头的截距几何。
+
+因此 FIB 五种实际整窗模式及其接缝关系的语义响应结构，不决定指定概率头合同的坐标前沿；所需 $bc$ 方向与计费常数是完成全部补全响应的运算条件，不能按类型数解释为坐标数。结论只涉及上述精确实数、齐次双线性、固定有限相对头偏置模型的准确后验和 Bayes 超额；它没有给节点逐一或总存储最优性、物理神经元／比特下界、训练、泛化、因果、运行时间或有限精度结论，也没有给全局文献优先权。$\square$
+
+## 追加锚（本行以下为增补区）
