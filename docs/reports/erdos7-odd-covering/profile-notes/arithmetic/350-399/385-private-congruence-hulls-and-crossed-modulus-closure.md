@@ -15902,3 +15902,101 @@ bounds RE3--RE6 on the original source. Their useful distribution
 consumers still need sufficient actual retained-payment margins or
 a suitable single theta. No universal such margin, unrestricted
 Erdos#7 conclusion, or new Lean verification is asserted.
+
+## 128. One full color cofactor bounds every original ternary height
+
+In one all-concentrated EB1 original cover, every color-i mixed original has ternary height at most
+
+    p-3+(p-2)|S_i|                                 (HH1)
+
+for every opposite-color prime p. The more informative source statement is a first-owner cutoff depending on the ACTUAL active inventory in one fixed full color cofactor. This uses CD1, CP4–CP5 and the complete altered-child capacity argument. The inventory includes all cofactor primes, including any previously distinguished q. These are ordinary mathematical deductions, not new Lean verification.
+
+### Fix the complete actual three-free remainder
+
+Keep the original full color carriers X_i and X_o from CP4, and let C_i,C_o be their actual three-free unions. Put
+
+    R_i=X_i minus C_i, R_o=X_o minus C_o,
+    R_3=R_i times R_o.
+
+Both factors are nonempty. Fix ONE z_i in the complete actual R_i, and retain any x_o in the SAME R_o. Thus all three-free originals are absent. At first ternary root i, all opposite-color mixed originals are inactive. CP5 says that every complete ternary word in root i is covered, at this same(z_i,x_o), by an original pure-three guard or by an ACTUAL color-i mixed original whose complete cofactor congruence contains z_i. This assertion holds simultaneously for every x_o in R_o; no different cofactor witness is chosen at different words.
+
+The coordinate z_i includes EVERY original prime-power coordinate in X_i, including all digits of any previously distinguished q. We now count all color-i mixed labels, including q-bearing ones. This is different from the q-free inventory underlying Y_*.
+
+### The complete mixed inventory uses CD1, without a surviving-Y premise
+
+Fix an absolute ternary depth a0>=p-2 with a0<H and a prefix alpha of depth a0 in root i. Define
+
+    W(alpha,z_i)={original3^b n:
+      b>=a0+1, n>1, supp(n) subset S_i,
+      z_i belongs to the original cofactor AP,
+      the original ternary cylinder is contained in[alpha]},
+    N=|W(alpha,z_i)|, K_i=(p-2)|S_i|.
+
+Then
+
+    N<=K_i.                                         (HH2)
+
+The following application of CD1 extends the inventory to every cofactor prime; CD2 itself only states the q-free-Y case. For each ell in S_i with a nonempty bucket, divisor closure supplies the original parent3^a0 ell. Every bucket member is a proper descendant in the ONE actual phase(alpha,z_i mod ell). Comparable-original disjointness makes this a non-own phase of the parent, so CD1 gives at most p-2 members. Assign each mixed label once to any dividing cofactor prime and sum.
+
+No assumption says that[alpha] has a surviving point after ALL these mixed classes are removed. Indeed CP5 supplies complete coverage after they and the other actual owners are included. The phase-group bound itself only needs actual divisor ownership and the shared phase; it does not need Y_*, a q-free label, or a private point of the parent in this slice.
+
+### The first mixed owner on a guard-free word appears within N-1 levels
+
+Take any complete ternary word s in[alpha] that avoids every original pure-three guard. Since z_i is three-free-live, CP5 supplies a mixed original covering(s,z_i). Let A be the LEAST ternary height of any such mixed owner.
+
+If A<=a0, this already is a lower-height original owner. Suppose instead A>a0. Then
+
+    A-a0+1<=N,
+    A<=a0+N-1<=a0+K_i-1.                           (HH3)
+
+To verify the first inequality on the same source, for each
+
+    h=a0+1,...,A
+
+consider the two complete altered children D_h which first differ from s at digit h. Every point in D_h at the SAME z_i,x_o is covered by the pure guards or actual color-i mixed originals.
+
+No pure guard of height below h meets D_h: it would also cover s. No mixed original of height below h with cofactor containing z_i meets D_h: it would also cover s at height below A. Consequently only classes of height at least h need be considered on these two full children. The existing AS pure-guard calculation gives total pure capacity at most
+
+    sum_(b=h..H)3^(H-b)=(3^(H-h+1)-1)/2
+       <2*3^(H-h)=|D_h|.
+
+Thus some actual mixed original with cofactor containing z_i covers a point of D_h. Its height is at least h, so its whole ternary cylinder is contained in D_h and it belongs to W(alpha,z_i). For different h these D_h are disjoint; therefore the suppliers just found are distinct ORIGINAL labels. This gives A-a0 suppliers.
+
+Choose one actual owner at the minimal height A. Its ternary cylinder follows s through digit A, so it is disjoint from every preceding D_h, including h=A. It is an additional member of W(alpha,z_i). This proves the extra+1 and hence HH3. The argument does not require this selected point to be private, and it never counts a merely numerical divisor as an owner.
+
+If no height<=a0 mixed original is active at(z_i,alpha), then every guard-free word of[alpha] satisfies the HH3 cutoff under the SAME N. All its higher mixed classes can therefore be omitted when covering the guard-free part of this particular full-cofactor slice. Pure-guarded words remain covered by their original guards. This is a statement about actual coverage on the slice, not yet an authorization to move phases or reuse projected numerical labels.
+
+In this no-low-owner case, a guard-free word exists whenever no pure guard of height<=a0 contains alpha: the higher pure guards have total relative mass less than1/2. Then HH3 in particular forces N>=2. The finite pure-capacity argument, not an assumed surviving law after all color classes, supplies this fact.
+
+### Apply the cutoff at an actual mixed private point
+
+Let d=3^A n be ANY color-i mixed original. Choose an actual ORIGINAL private point of d. Its ternary word avoids every pure guard, its full color cofactor belongs to R_i, and its opposite cofactor belongs to R_o. Moreover its least mixed-owner height is exactly A, because d is its only original owner.
+
+Choose a0=p-2. If A>a0, its actual prefix alpha and full cofactor give HH3 and HH2:
+
+    A<=a0+N-1<=p-3+(p-2)|S_i|.
+
+If A<=a0 the same displayed bound is automatic because S_i is nonempty and p>=5. This proves HH1 for every original mixed class of that color. The source variables used for the proof may depend on d; the resulting deterministic height bound applies simultaneously to all the original labels. No separately optimized probabilities or repairs are added together.
+
+### The same cutoff bounds every pure guard in that color
+
+Let T_i=p-3+(p-2)|S_i|. The cutoff also applies to every original pure-three class whose first ternary root is i. Suppose such an original3^h has h>T_i, and choose one of its complete ORIGINAL private points. Fix ALL its nonternary coordinates and its prefix modulo3^T_i.
+
+Every three-free original stays absent because its coordinates have not changed. Every color-i mixed original has height at most T_i by HH1, so its membership is constant on this full prefix cylinder and remains absent. Every pure guard of height at most T_i likewise remains absent. Opposite-color mixed originals are inactive at the unchanged first ternary root i. Thus whole coverage of this fixed-cofactor cylinder could only come from the pure guards of heights T_i+1,...,H.
+
+There is at most one original pure guard at each height, and their total relative capacity is at most
+
+    sum_(j=T_i+1..H)3^(T_i-j)
+       =(1-3^(T_i-H))/2 <1/2.
+
+They cannot cover the entire cylinder, contradicting whole coverage. Consequently every color-i pure-three original also has height at most T_i. This uses the same complete private source, including absence of all three-free originals; it does not require those deep pure guards to share a favorable phase.
+
+Taking the least prime p_i in the opposite color is strongest. Put
+
+    T_i=(p_i-2)|S_i|+p_i-3.
+
+Then every mixed original of color i, and every pure-three original with first root i, has ternary height at most T_i. Original A_3 is the separate height-one root-zero guard; a higher pure-three class cannot meet that root by comparable-original disjointness. Thus
+
+    H<=max(T_1,T_2).                                (HH4)
+
+This uniform pure-guard argument includes the highest pure3^H case, already accessible through the existing QC2/HC8 common-private-source consumer, and avoids repeating its fan proof. No upper bound on either color support size is supplied here.
