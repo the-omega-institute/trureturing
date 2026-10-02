@@ -7,6 +7,8 @@
    digest: Informationally complete local records obstruct finite local exact recovery. -/
 
 import D5.S3.Quantum.Recovery.PurifiedLocalPath
+import D5.S3.Quantum.Recovery.FiniteLocalProtocol
+import D5.S3.Quantum.Recovery.ProductPrefixRigidity
 import D5.S3.Quantum.Recovery.KrausLeftInverseNecessity
 import Mathlib.LinearAlgebra.UnitaryGroup
 
@@ -19,9 +21,6 @@ open Matrix
 noncomputable section
 variable {A S : Type} [Fintype A] [DecidableEq A] [Fintype S] [DecidableEq S]
 
-noncomputable def recordTrace {d : A → ℕ} (X : State S d) : Matrix S S ℂ :=
-  fun i j => ∑ r : Coordinates d, X (i,r) (j,r)
-
 /-- Feedback occurs only after termination and acts only on the system. -/
 noncomputable def corrected (z : Terminal (Matrix.unitaryGroup S ℂ) S A) :
     Matrix S S ℂ :=
@@ -31,11 +30,6 @@ noncomputable def corrected (z : Terminal (Matrix.unitaryGroup S ℂ) S A) :
 noncomputable def correctedTotal {d : A → ℕ}
     (T : Tree (Matrix.unitaryGroup S ℂ) d) (X : State S d) : Matrix S S ℂ :=
   ((terminalOutputs T X).map corrected).sum
-
-/-- Prepare common-label records without restricting the system matrix. -/
-noncomputable def commonPreparation {H : A → ℕ}
-    (s : (a : A) → S → Fin (H a) → ℂ) (X : Matrix S S ℂ) : State S H :=
-  fun p q => X p.1 q.1 * ∏ a, s a p.1 (p.2 a) * star (s a q.1 (q.2 a))
 
 noncomputable def Protocol.correctedRun {H : A → ℕ}
     (P : Protocol (Matrix.unitaryGroup S ℂ) H)
@@ -47,35 +41,6 @@ def Protocol.ExactRecovery {H : A → ℕ}
     (P : Protocol (Matrix.unitaryGroup S ℂ) H)
     (s : (a : A) → S → Fin (H a) → ℂ) : Prop :=
   ∀ X : Matrix S S ℂ, P.correctedRun s X = X
-
-/-- Input-independent observed leaf addresses. Hidden Kraus labels are absent. -/
-def Tree.Leaves {d : A → ℕ} : Tree (Matrix.unitaryGroup S ℂ) d → Type
-  | .leaf _ => Unit
-  | .node J child => (y : Fin J.outcomes) × (child y).Leaves
-
-noncomputable instance Tree.fintypeLeaves {d : A → ℕ}
-    (T : Tree (Matrix.unitaryGroup S ℂ) d) : Fintype T.Leaves := by
-  induction T with
-  | leaf => exact inferInstanceAs (Fintype Unit)
-  | node J child ih =>
-    letI := ih
-    exact inferInstanceAs (Fintype ((y : Fin J.outcomes) × (child y).Leaves))
-
-/-- Execute the original coarse maps down one observed leaf address. -/
-noncomputable def Tree.branch {d : A → ℕ}
-    (T : Tree (Matrix.unitaryGroup S ℂ) d) (X : State S d) :
-    T.Leaves → Terminal (Matrix.unitaryGroup S ℂ) S A :=
-  match T with
-  | .leaf U => fun _ => ⟨[], U, d, X⟩
-  | .node J child => fun w =>
-      let z := (child w.1).branch (step J w.1 X) w.2
-      { z with history := w.1.val :: z.history }
-
-/-- The retained path selected by an actual observed leaf address. -/
-def Tree.leafPath {d : A → ℕ} (T : Tree (Matrix.unitaryGroup S ℂ) d) :
-    T.Leaves → ObservedPath T := match T with
-  | .leaf _ => fun _ => .here
-  | .node _ child => fun w => .next w.1 ((child w.1).leafPath w.2)
 
 def Tree.leafUnitary {d : A → ℕ} (T : Tree (Matrix.unitaryGroup S ℂ) d) :
     T.Leaves → Matrix.unitaryGroup S ℂ := match T with
