@@ -15,7 +15,7 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, ReleaseTransp
     def test_publication_requires_current_report_before_transport(self):
         result = self.transport("publish")
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-        self.assertEqual(["lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], (self.root / "build-runs").read_text().splitlines())
+        self.assertEqual(["lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build"], (self.root / "build-runs").read_text().splitlines())
 
     def test_fetch_cannot_widen_partition_compatibility(self):
         self.assertEqual(0, self.transport("publish").returncode)
