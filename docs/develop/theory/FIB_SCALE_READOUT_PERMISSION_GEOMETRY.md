@@ -5324,3 +5324,157 @@ $$
 两者组成都是 $(1,2)$。$V$ 的唯一末端樱桃位于地址 $0$，其左端地址为 $00$；取 $Q=\{00\}$ 虽然命中了这个樱桃，却有 $\operatorname{out}_V(00)=\operatorname{out}_U(00)=\mathsf{leaf}_\beta$。树 $U$ 的根右侧 $\alpha$ 叶的左兄弟是内节点而不是 $\beta$ 叶，故 $U\notin\rho(\mathcal T)$，从而 $Q$ 不有声。相反，$\{01\}$ 在 $h\ge2=\operatorname{ht}(V)$ 时按定理 17.1 给出大小为一的尖锐证书；在 $h<2$ 时则不存在任何证书。
 
 ## 追加锚（本行以下为增补区）
+
+## 18. 精确组成最优证书的唯一性与无承诺叶前沿
+
+**定义 18.1（正实例的两类叶地址）。** 沿用定义 16.1、17.1 的自由有序满二叉树、实际替换像与地址查询。固定 $d=3k$、$k\ge1$，以及已知的完整正实例 $V\in\mathcal I_d$，记
+
+$$
+\begin{gathered}
+c(V)=(a,b)^{\mathsf T},\qquad n=a+b,\qquad D=\operatorname{ht}(V),\\
+A(V)=\{u:\operatorname{out}_V(u)=\mathsf{leaf}_\alpha\},\\
+L(V)=\{u:\operatorname{out}_V(u)\in
+\{\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta\}\}.
+\end{gathered}
+\tag{18.1}
+$$
+
+因而 $|A(V)|=a$、$|L(V)|=n$，且 $A(V)$ 就是定理 17.1 证明中的 $Q_\alpha(V)$。对任意整数 $j\ge1$，仍记 $\mathcal I_j=\rho^j(\mathcal T)$。查询地址集合始终是某个 $\Sigma_{\le h}$ 的有限子集，结果仍为 $\mathsf{leaf}_\alpha$、$\mathsf{leaf}_\beta$、$\mathsf{branch}$、$\mathsf{absent}$ 四值；选择在完整 $V$ 已知后进行，查询基数只数不同地址，深度只限制地址长度，不计地址描述位数与定位成本，也不要求地址集合前缀闭合。
+
+**定理 18.1（精确组成最优证书的唯一性）。** 对定义 18.1 的每个 $V$，每个 $h\ge D$ 与每个有限集合 $Q\subseteq\Sigma_{\le h}$，有
+
+$$
+\boxed{\quad
+Q\text{ 按定义 17.1 有声且 }|Q|=a
+\quad\Longleftrightarrow\quad Q=A(V).
+\quad}
+\tag{18.2}
+$$
+
+因此定理 17.1 的有限最小值 $a$ 只有这一组地址达到；$h<D$ 时的无证书结论仍直接取自定理 17.1。
+
+**证明。** 定理 17.1 已证明 $A(V)$ 有声、其基数为 $a$，并在证明中给出 $a$ 个两两不交的末端樱桃端点对
+
+$$
+\{r\mathtt L,r\mathtt R\},\qquad
+V|_r=\langle\beta,\alpha\rangle.
+\tag{18.3}
+$$
+
+这些端点对包含全部 $\alpha$ 叶；任一有声集合都必须命中每一对。于是有声且大小为 $a$ 的 $Q$ 必须在每一对中恰取一个端点，且不能含有这些端点之外的地址。
+
+严格的 $\beta$ 盈余由同一实际来源给出。写 $V=\rho^d(T)=\rho^3(Z)$，其中 $Z=\rho^{d-3}(T)\in\mathcal T$，并记 $c(Z)=(x,y)^{\mathsf T}$。由定义 1.1 的组成作用 $M^3$，
+
+$$
+a=x+2y,\qquad b=2x+3y,\qquad
+b-a=x+y\ge1.
+\tag{18.4}
+$$
+
+因此除（18.3）中的 $a$ 片 $\beta$ 左端叶外，还有 $b-a$ 片不属于任何末端樱桃端点对的 $\beta$ 叶；它们都不在 $Q$ 中。式（18.4）也给出 $n=3x+5y\ge3$，所以 $V$ 的根不是叶。
+
+若 $Q\ne A(V)$，取一片未查询的 $\alpha$ 叶地址 $s=r\mathtt R$，并取一片上述未配对的 $\beta$ 叶地址 $t$。只把 $s$ 的标签改成 $\beta$、把 $t$ 的标签改成 $\alpha$，得到合法完整树 $W$。形状和叶地址保持相同，且
+
+$$
+c(W)=c(V),\qquad
+\operatorname{out}_W(u)=\operatorname{out}_V(u)\quad
+(u\notin\{s,t\}).
+\tag{18.5}
+$$
+
+后一等式覆盖全部有限地址：内节点不变，除两片叶外的叶标签不变，在任何叶处继续行走仍为 $\mathsf{absent}$。故 $W$ 匹配 $Q$ 的全部四值结果。
+
+[运输记忆完成卷命题 22.2 的式（RA.2207）](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#22-一次全局替换的实际节点单孔边界与来源恢复)给出的实际一步像语法要求，每片 $\alpha$ 叶都是扩张块 $\langle\beta,\alpha\rangle$ 的右端。若 $t$ 是左孩子，$W$ 的新 $\alpha$ 叶立即违反该要求。若 $t$ 是右孩子，其左兄弟在 $V$ 中必为内节点：否则 $t$ 所在末端樱桃的右端为 $\beta$，与定理 16.1、17.1 证明中全部末端樱桃均为 $\langle\beta,\alpha\rangle$ 的性质矛盾。改标保持形状，所以该左兄弟在 $W$ 中仍为内节点；新 $\alpha$ 叶也违反一步像语法。因此
+
+$$
+W\notin\mathcal I_1,\qquad W\notin\mathcal I_d.
+\tag{18.6}
+$$
+
+这与 $Q$ 的有声性矛盾，故 $Q=A(V)$。这里直接使用既有像语法；树替换的单射性由[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)供应，完整树编码由[母卷定理 9.2](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)供应。证毕。
+
+**定义 18.2（无组成与叶数承诺的有声性）。** 对定义 18.1 的 $V$、$h\in\mathbb N_0$ 与有限集合 $Q\subseteq\Sigma_{\le h}$，称 $Q$ **无承诺有声**，若
+
+$$
+\forall U\in\mathcal T,\qquad
+\bigl(\forall u\in Q,\ \operatorname{out}_U(u)=\operatorname{out}_V(u)\bigr)
+\quad\Longrightarrow\quad U\in\mathcal I_d.
+\tag{18.7}
+$$
+
+定义相应最小查询基数
+
+$$
+\tau_d^{\mathrm{un}}(V,h)=
+\min\{|Q|:Q\subseteq\Sigma_{\le h}\text{ 无承诺有声}\},
+\qquad \min\varnothing=+\infty.
+\tag{18.8}
+$$
+
+$V$ 仍是选址时的已知正实例，成本仍按定义 17.1 计算。竞争树 $U$ 遍历全部 $\mathcal T$，既不要求 $c(U)=c(V)$，也不要求任何叶数上界；$c(V)$ 在此仅用于记下 $V$ 自身的叶数。实际像目标仍取完整树的 $U\in\mathcal I_d$，不取组成祖先许可，且不附加实际逆执行动作。
+
+**定理 18.2（无承诺证书的完整叶条件与唯一最优解）。** 对每个定义 18.1 的 $V$，每个 $h\in\mathbb N_0$ 与每个有限集合 $Q\subseteq\Sigma_{\le h}$，有
+
+$$
+\boxed{\quad Q\text{ 无承诺有声}\quad\Longleftrightarrow\quad L(V)\subseteq Q.\quad}
+\tag{18.9}
+$$
+
+特别地，
+
+$$
+\boxed{\qquad
+\tau_d^{\mathrm{un}}(V,h)=
+\begin{cases}
++\infty,&h<D,\\[2pt]
+n,&h\ge D,
+\end{cases}
+\qquad}
+\tag{18.10}
+$$
+
+而 $h\ge D$ 时唯一达到最小值的集合是 $Q=L(V)$。
+
+**证明。** 先证每片叶均必须被查询。设 $s\in L(V)\setminus Q$。若 $s\in A(V)$，只将该 $\alpha$ 标签改成 $\beta$ 得 $W$。它把 $s$ 所在的 $\langle\beta,\alpha\rangle$ 末端樱桃改成 $\langle\beta,\beta\rangle$。定理 16.1、17.1 的结构桥接说明，每棵 $\mathcal I_2$ 中的树的全部末端樱桃都为 $\langle\beta,\alpha\rangle$，所以
+
+$$
+W\notin\mathcal I_2,\qquad W\notin\mathcal I_d.
+\tag{18.11}
+$$
+
+此处只需要排除二步像，并不声称改标后一定离开一步像。
+
+若 $s\in L(V)\setminus A(V)$，只将该 $\beta$ 标签改成 $\alpha$。由（18.4），$s$ 不是根。若它是左孩子，新的 $\alpha$ 左孩子违反（RA.2207）；若它是右孩子，原来的左兄弟必为内节点，否则原末端樱桃的右端将是 $\beta$。改标后左兄弟仍为内节点，所以新的 $\alpha$ 右孩子也违反（RA.2207）。因此这一次有
+
+$$
+W\notin\mathcal I_1,\qquad W\notin\mathcal I_d.
+\tag{18.12}
+$$
+
+两种改标都只改变地址 $s$ 的四值结果；形状相同，所有严格后代地址仍为 $\mathsf{absent}$，其余地址的结果相同。因为 $s\notin Q$，$W$ 匹配全部查询而在实际像外，故 $Q$ 不无承诺有声。这证明（18.9）的必要性。
+
+反之，设 $L(V)\subseteq Q$，且 $U\in\mathcal T$ 匹配 $Q$。每片 $V$ 叶在 $U$ 中必须位于同一地址且标签相同。$V$ 的每个内节点都是某片叶地址的真前缀，所以该地址在 $U$ 中也必须是分支。另一方面，$U$ 不能越过任何已强制为叶的 $V$ 叶地址继续产生节点；有限满二叉树中的每条延伸路径都会经过这些叶中的一片。因此两树的全部节点、叶标签及不存在地址的结果相同。直接应用[母卷定理 9.3 的全路径恢复](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)，得到 $U=V\in\mathcal I_d$，故 $Q$ 无承诺有声。
+
+无承诺有声必然蕴含定义 17.1 的同组成有声，因而 $h<D$ 的无证书结论也直接由定理 17.1 的高度障碍给出。若 $h\ge D$，$L(V)$ 已在允许地址域中；（18.9）说明每个有声集合都至少含有这 $n$ 个地址，而且 $L(V)$ 本身有声。因此最小基数为 $n$，大小为 $n$ 的有声集合只能等于 $L(V)$，得到（18.10）及唯一性。证毕。
+
+**命题 18.3（平衡二步像与单叶改标的边界）。** 有如下两个实例。
+
+1. 将定义 17.1 的证书合同取为 $d=2$、$V=\rho^2(\alpha)=\langle\beta,\alpha\rangle$、精确组成 $(1,1)^{\mathsf T}$ 时，$h\ge1$ 的最小查询基数为一，且恰有两个最优集合 $\{\mathtt L\}$、$\{\mathtt R\}$；$h=0$ 时不存在有声集合。因此没有严格 $b-a>0$ 时，定理 18.1 的唯一性不能按此方式延伸到全部二步像。
+2. 对 $V=\rho^3(\alpha)$，把地址 $\mathtt L\mathtt R$ 的 $\alpha$ 改成 $\beta$ 得到 $W$，满足 $W\in\mathcal I_1\setminus\mathcal I_2$。所以定理 18.2 的 $\alpha\mapsto\beta$ 反例只能按其所用障碍排除二步像，不能据此排除一步像。
+
+**证明。** 第一项中，同组成的完整树只有 $\langle\beta,\alpha\rangle$ 与 $\langle\alpha,\beta\rangle$。后者含有 $\alpha$ 左孩子，故不在 $\mathcal I_1$，从而不在 $\mathcal I_2$。查询左叶的 $\mathsf{leaf}_\beta$ 或右叶的 $\mathsf{leaf}_\alpha$ 均排除后者，因此两个单地址集合都有声。空集合不能区分它们；其余单地址要么是两树共有的根分支，要么在两树中都不存在，也不能区分。因此恰有上述两个一查询最优解；$h=0$ 的全部查询集合也都不能区分。此例的 $b-a=0$。
+
+第二项明确为
+
+$$
+\begin{gathered}
+V=\langle\langle\beta,\alpha\rangle,\beta\rangle,\qquad
+W=\langle\langle\beta,\beta\rangle,\beta\rangle,\\
+W=\rho\bigl(\langle\langle\alpha,\alpha\rangle,\alpha\rangle\bigr).
+\end{gathered}
+\tag{18.13}
+$$
+
+后一等式给出 $W\in\mathcal I_1$ 的实际完整来源；其 $\langle\beta,\beta\rangle$ 末端樱桃排除 $W\in\mathcal I_2$。两树的组成分别为 $(1,2)^{\mathsf T}$ 与 $(0,3)^{\mathsf T}$，所以这个单叶改标见证属于定义 18.2 的无承诺竞争域，不是定义 17.1 的同组成竞争见证。证毕。
+
+## 追加锚（本行以下为增补区）
