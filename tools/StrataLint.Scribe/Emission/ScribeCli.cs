@@ -245,7 +245,7 @@ public static class ScribeCli
         + "emit|emit-values|filemap [--check] | describe-report [--json] [--check] "
         + "| projections --check --report <file> "
         + "| markdown-check --report <file> [--paths-from <file|->] "
-        + "| resources pack --out <file> | resources verify --pack <file> "
+        + "| resources pack --out <file> [--reuse-from <file>] | resources verify --pack <file> "
         + "| scripts verify [--paths-from <file|->]";
 
     /// <summary>

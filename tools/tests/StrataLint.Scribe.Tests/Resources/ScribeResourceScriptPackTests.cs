@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Reflection;
 using System.Text;
 using System.Text.Json.Nodes;
 
@@ -76,6 +75,39 @@ public sealed class ScribeResourceScriptPackTests
     }
 
     [Fact]
+    public void CliAcceptsExplicitReuseAndReportsZeroExecutions()
+    {
+        using var root = Prepare();
+        Definition(root.Path, "Alpha");
+        Assert.Equal(0, Cli(root.Path, ["resources", "pack", "--out", "first.zip"], TextWriter.Null, new StringWriter()));
+        var output = new StringWriter();
+        var error = new StringWriter();
+        Assert.Equal(0, Cli(root.Path,
+            ["resources", "pack", "--out", "second.zip", "--reuse-from", "first.zip"], output, error));
+        Assert.Empty(error.ToString());
+        Assert.Contains("executed=0 reused=1", output.ToString(), StringComparison.Ordinal);
+        Assert.Equal(ScribeResourcePack.Open(root.Resolve("first.zip")).Manifest.TotalSha256,
+            ScribeResourcePack.Open(root.Resolve("second.zip")).Manifest.TotalSha256);
+    }
+
+    [Fact]
+    public void InputKeysAndCliAreIndependentOfRepositoryLocationAndWorkingDirectory()
+    {
+        using var root = Prepare();
+        Definition(root.Path, "Alpha");
+        var expected = Pack(root.Path, "expected.zip").Manifest;
+        var other = root.Resolve("repository space");
+        TemporaryFileSystem.Directory.CreateDirectory(other);
+        TemporaryFileSystem.File.WriteAllText(System.IO.Path.Combine(other, "global.json"), "{}");
+        Definition(other, "Alpha");
+        var working = System.IO.Path.Combine(other, "nested working directory");
+        TemporaryFileSystem.Directory.CreateDirectory(working);
+        Assert.Equal(0, Cli(working, ["resources", "pack", "--out", "resources.zip"], TextWriter.Null, new StringWriter()));
+        var actual = ScribeResourcePack.Open(System.IO.Path.Combine(working, "resources.zip")).Manifest;
+        Assert.Equal(expected.TotalSha256, actual.TotalSha256);
+    }
+
+    [Fact]
     public void UnchangedInputsReuseEveryPathAndPreserveManifestDigest()
     {
         using var root = Prepare();
@@ -144,8 +176,10 @@ public sealed class ScribeResourceScriptPackTests
         using var root = Prepare();
         Definition(root.Path, "Alpha");
         Definition(root.Path, "Beta");
-        var first = Pack(root.Path, "first.zip", version: 41);
-        var second = Pack(root.Path, "second.zip", "first.zip", version: 42);
+        var first = Pack(root.Path, "first.zip");
+        Assert.Equal(first.Manifest.TotalSha256,
+            Pack(root.Path, "explicit.zip", version: ScribeScriptSemantics.ResourceSemanticVersion).Manifest.TotalSha256);
+        var second = Pack(root.Path, "second.zip", "first.zip", version: ScribeScriptSemantics.ResourceSemanticVersion + 1);
         AssertPaths(second.Executed, "Alpha", "Beta");
         Assert.Empty(second.Reused);
         Assert.NotEqual(first.Manifest.TotalSha256, second.Manifest.TotalSha256);
@@ -182,20 +216,13 @@ public sealed class ScribeResourceScriptPackTests
 
     private static PackObservation Pack(string root, string output, string? reuse = null, int? version = null)
     {
-        var type = typeof(ScribeResourcePack).Assembly.GetType("StrataLint.Scribe.ScribeResourceScriptPacker");
-        Assert.NotNull(type);
-        object? value;
-        if (version is null)
-            value = type.GetMethod("Write", BindingFlags.Public | BindingFlags.Static)!
-                .Invoke(null, [root, System.IO.Path.Combine(root, output), reuse is null ? null : System.IO.Path.Combine(root, reuse)]);
-        else
-            value = type.GetMethod("WriteCore", BindingFlags.NonPublic | BindingFlags.Static)!
-                .Invoke(null, [root, System.IO.Path.Combine(root, output), reuse is null ? null : System.IO.Path.Combine(root, reuse), version.Value]);
-        Assert.NotNull(value);
-        T Get<T>(string name) => Assert.IsType<T>(value.GetType().GetProperty(name)!.GetValue(value));
-        Assert.Empty(Get<ImmutableArray<ScribeScriptFailure>>("Failures"));
-        return new(Get<ScribeResourcePackManifest>("Manifest"),
-            Get<ImmutableArray<string>>("ExecutedPaths"), Get<ImmutableArray<string>>("ReusedPaths"));
+        var path = System.IO.Path.Combine(root, output);
+        var prior = reuse is null ? null : System.IO.Path.Combine(root, reuse);
+        var result = version is null ? ScribeResourceScriptPacker.Write(root, path, prior)
+            : ScribeResourceScriptPacker.WriteCore(root, path, prior, version.Value);
+        Assert.Empty(result.Failures);
+        Assert.NotNull(result.Manifest);
+        return new(result.Manifest, result.ExecutedPaths, result.ReusedPaths);
     }
 
     private sealed record PackObservation(ScribeResourcePackManifest Manifest, ImmutableArray<string> Executed, ImmutableArray<string> Reused);

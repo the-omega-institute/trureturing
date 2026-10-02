@@ -18,9 +18,7 @@ public sealed class ScribeScriptHostTests
         using var root = new TemporaryRoot();
         const string path = "Blueprint/D5/S0/Test/Probe.scribe.cs";
         WriteDefinition(root.Path, path, "Probe");
-        var execute = typeof(ScribeScriptHost).GetMethod("ExecuteWithDefineConstants", BindingFlags.NonPublic | BindingFlags.Static);
-        Assert.NotNull(execute);
-        var result = Assert.IsType<ScribeScriptResult>(execute.Invoke(null, [root.Path, path, constants]));
+        var result = ScribeScriptHost.ExecuteWithDefineConstants(root.Path, path, constants);
         Assert.Equal(ScribeScriptFailureCode.HostConfiguration, result.Failure?.Code);
         Assert.Null(result.Definition);
     }

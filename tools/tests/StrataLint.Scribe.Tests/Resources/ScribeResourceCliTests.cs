@@ -9,6 +9,15 @@ public sealed class ScribeResourceCliTests
 {
     private static readonly Assembly Documents = new FixtureAssembly();
 
+    [Fact]
+    public void GeneralUsageIncludesTheResourceReuseOption()
+    {
+        using var root = Prepare();
+        var error = new StringWriter();
+        Assert.Equal(2, ScribeCli.Run(Documents, [], root.Path, TextWriter.Null, error));
+        Assert.Contains("resources pack --out <file> [--reuse-from <file>]", error.ToString(), StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData("resources")]
     [InlineData("resources", "pack")]
