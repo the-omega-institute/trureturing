@@ -5871,3 +5871,191 @@ $$
 本节的真实新增仅是 (PG.4101)–(PG.4103) 的 typed 历史嵌入与实际像闭合，以及 (PG.4106a) 的核商到带类型实际像桥；实例满足性、来源完备性、跨纪元刷新、取得成本、四视图物理解释和 Lean 核验均为 ASSUMED-UNVERIFIED/open。本节没有新增 Lean 声明、消化、freeze、coverage 或判官变更。
 
 ## 41.99 追加锚
+
+## 42. 实际历史响应到 typed 路径视图的自然性桥
+
+**本节导航与边界。** §41 给出了实际历史到带类型状态和部分后继的嵌入，但其中的实际行为
+\(\beta(h)\) 还没有递归定义，也没有把实际根读出与 typed 根读出接上。本节只补这一个
+自然性接口：在 PG.4101--PG.4103 的前提上定义实际路径响应，保留失败、标签顺序和起始类型，
+然后把有限核和完整行为核拉回实际历史。它引用
+[TypedFiniteViewKernel.lean](../../../D5/S3/ObserverMemory/RefinementClosure/TypedFiniteViewKernel.lean)
+的抽象核以及
+[ControlledBehaviorUniversality.lean](../../../D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean)
+的行为商思想；后者是总动作词版本，不能冒充本节的有类型部分后继实例。以下仍是理论接口，
+没有新增 Lean 声明或具体 FIB 实例。
+
+### 42.1 根读出和实际递归响应
+
+PG.4102 的 typed 根读出记为 \(r_i:S_i\to O_i\)，并令 \(r:=(r_i)_i\)。在每个实际纤维定义
+
+$$
+r_i^{\mathrm{act}}:=r_i\circ\iota_i.
+\tag{PG.4201}
+$$
+
+对可组合路径按 `TypedFiniteViewKernel.Path` 的方向递归定义实际响应；若 \(p:i\rightsquigarrow k\)，则其值域明确为
+\(\operatorname{Option}(\mathrm{Labels}\,\mathrm{Label}\,p\times O_k)\)。空路径满足
+
+$$
+\operatorname{resp}^{\mathrm{act}}_{\varepsilon_i}(h)
+ :=\operatorname{some}(\mathrm{PUnit.unit},r_i^{\mathrm{act}}(h)).
+$$
+
+若路径为 `cons(p',e)`，其中 \(e:i\to j\)、\(p':j\rightsquigarrow k\)，则
+
+$$
+\begin{aligned}
+T_{\varepsilon}^{\mathrm{act}}(h)&:=\operatorname{some}(\mathrm{PUnit.unit},h),\\
+T_{\operatorname{cons}(p',e)}^{\mathrm{act}}(h)&:=(T_e^{\mathrm{act}}h).\operatorname{bind}\!\left(\lambda(\ell,h_1).\,T_{p'}^{\mathrm{act}}(h_1).\operatorname{map}\!\left(\lambda(\Lambda,h_2).((\ell,\Lambda),h_2)\right)\right).
+\end{aligned}
+\tag{PG.4202}
+$$
+
+这里的 `cons(p',e)` 先执行 \(e\)、再执行 \(p'\)；`none` 是吸收的失败，成功标签按执行顺序
+嵌套，且空标签明确属于 `PUnit`。定义
+
+$$
+\operatorname{actualResponse}(p,h):=
+T_p^{\mathrm{act}}(h).\operatorname{map}\!\left(\lambda(\Lambda,h').(\Lambda,r_k^{\mathrm{act}}(h'))\right),
+\qquad p:i\rightsquigarrow k.
+\tag{PG.4203}
+$$
+
+### 42.2 路径响应自然性与视图定义
+
+对每个 \(h\in H_i^{\mathrm{act}}\) 和每条 \(p:i\to k\)，有
+
+$$
+\operatorname{actualResponse}(p,h)
+=\operatorname{response}\ \mathrm{Label}\ r\ \mathrm{step}\ p\ (\iota_i h).
+\tag{PG.4204}
+$$
+
+证明按路径结构归纳：空词使用 PG.4201；`cons(p',e)` 情形先用 PG.4103 将
+`step e (ι_i h)` 改写为 `Option.map (id × ι_j) (T_e^act h)`，再对成功后继应用归纳假设。
+`Option.bind` 的同态性同时处理 `none`、标签和后继，故不会把非法边改成失败标签或正常状态。
+递归构造中的标签嵌套与 typed `response` 完全相同，所以事件顺序、终点读出和目标类型一起保留。
+
+令 \(H^{\mathrm{act},\Sigma}:=\Sigma_{i:I}H_i^{\mathrm{act}}\)，并定义实际历史载体到 typed
+载体的带类型映射
+
+$$
+\widehat\iota:H^{\mathrm{act},\Sigma}\to\Sigma_{i:I}S_i,
+\qquad
+\widehat\iota(\langle i,h\rangle):=\langle i,\iota_i(h)\rangle.
+\tag{PG.4205}
+$$
+
+对 \(h\in H_i^{\mathrm{act}}\)，实际有限视图和完整行为分别**直接**定义为
+
+$$
+\begin{aligned}
+\operatorname{actualFiniteView}_n(h)
+  &:=\left\langle i,\ (j,p,h_p)\mapsto
+      \operatorname{actualResponse}(p,h)\right\rangle,\\
+\operatorname{actualBehavior}(h)
+  &:=\left\langle i,\ (j,p)\mapsto
+      \operatorname{actualResponse}(p,h)\right\rangle.
+\end{aligned}
+\tag{PG.4206}
+$$
+
+第一式的 \(h_p\) 只表示 \(p.length\le n\) 的证书参数，并非额外状态字段。由 PG.4204，逐坐标有
+
+$$
+\operatorname{actualFiniteView}_n(h)
+ =\operatorname{finiteView}\ \mathrm{Label}\ r\ \mathrm{step}\ n\ \bigl(\widehat\iota\langle i,h\rangle\bigr),
+\qquad
+\operatorname{actualBehavior}(h)
+ =\operatorname{behavior}\ \mathrm{Label}\ r\ \mathrm{step}\ \bigl(\widehat\iota\langle i,h\rangle\bigr).
+\tag{PG.4207}
+$$
+
+这里 \(\widehat\iota\) 只保留实际历史的起始类型和 typed 状态；它不是把非实际的 ambient 状态
+加入实际来源。
+
+### 42.3 有限核和完整核的拉回
+
+先区分三种关系。令
+
+$$
+E_n^{\mathrm{amb}}:=E\ \mathrm{Label}\ r\ \mathrm{step}\ n,
+\qquad
+B_{\mathrm{amb}}:=\mathrm{behaviorKernel}\ \mathrm{Label}\ r\ \mathrm{step}.
+\tag{PG.4208}
+$$
+
+PG.4103 的实际像闭合保证，§41.2 中把 `E` 限制到实际载体所得的关系，与
+\(E_n^{\mathrm{amb}}\) 在 \(\widehat\iota\) 下的限制相同；PG.4207 又给出
+\(\beta(h)=\operatorname{actualBehavior}(h)\) 的外延识别。因此定义
+
+$$
+\begin{aligned}
+E_n^{\mathrm{act}}(h,h')&\Longleftrightarrow
+ E_n^{\mathrm{amb}}\bigl(\widehat\iota\langle i,h\rangle,\widehat\iota\langle i',h'\rangle\bigr),\\
+K_{\mathrm{act}}(h,h')&\Longleftrightarrow
+ B_{\mathrm{amb}}\bigl(\widehat\iota\langle i,h\rangle,\widehat\iota\langle i',h'\rangle\bigr).
+\end{aligned}
+\tag{PG.4209}
+$$
+
+这里 \(h\in H_i^{\mathrm{act}}\)、\(h'\in H_{i'}^{\mathrm{act}}\)；若起始类型不同，typed
+行为的外层 \(\Sigma\) 标签已经使关系失败。于是，在二元拉回记号下
+
+$$
+K_{\mathrm{act}}=(\widehat\iota\times\widehat\iota)^{-1}(B_{\mathrm{amb}}),
+\qquad
+E_n^{\mathrm{act}}=(\widehat\iota\times\widehat\iota)^{-1}(E_n^{\mathrm{amb}}).
+\tag{PG.4210}
+$$
+
+PG.4207 和 `typed_finite_view_kernel` 的有限视图等式给出
+
+$$
+E_n^{\mathrm{act}}(h,h')
+\Longleftrightarrow
+\operatorname{actualFiniteView}_n(h)=\operatorname{actualFiniteView}_n(h'),
+\qquad
+K_{\mathrm{act}}=\bigcap_nE_n^{\mathrm{act}}.
+\tag{PG.4211}
+$$
+
+其中 §41 的 \(B(h,h')\Longleftrightarrow\beta(h)=\beta(h')\) 现在可写成
+\(B=K_{\mathrm{act}}\)，但这个等号是外延识别，不是把实际关系与 \(B_{\mathrm{amb}}\) 混用。
+若存在全 ambient 载体上的平台
+
+$$
+E_n^{\mathrm{amb}}=E_{n+1}^{\mathrm{amb}}
+\quad\text{on all }\Sigma_{i:I}S_i,
+\tag{PG.4212}
+$$
+
+则拉回后
+
+$$
+E_n^{\mathrm{act}}=E_{n+1}^{\mathrm{act}}=K_{\mathrm{act}},
+\qquad
+E_{n+k}^{\mathrm{act}}=E_n^{\mathrm{act}}\quad(k\in\mathbb N).
+\tag{PG.4213}
+$$
+
+反向不成立：实际像上的限制关系可能已经稳定，而 ambient typed 状态在实际像外仍继续分裂。
+例如实际像只有一个根历史时，所有拉回核都可能相等，而未取得的 ambient 状态仍可在下一层被区分，故
+\(E_n^{\mathrm{act}}=E_{n+1}^{\mathrm{act}}\) 不能推出
+\(E_n^{\mathrm{amb}}=E_{n+1}^{\mathrm{amb}}\)。
+
+### 42.4 缺项反例与适用边界
+
+PG.4201 不能省略。令只有一个类型，typed 状态为 \(S=\{0,1\}\)，唯一边为恒等自环且标签
+恒定，typed 根读出为常值零；取实际历史 \(a,b\) 分别嵌入 \(0,1\)，并让实际根读出满足
+\(r^{\mathrm{act}}(a)=0\)、\(r^{\mathrm{act}}(b)=1\)。PG.4101 和 PG.4103 仍可成立，
+但实际空路径已经把 \(a,b\) 分开，而 typed `behavior` 将它们合并；于是 PG.4204--4211
+均失败。反之，缺少 PG.4101 的非单射嵌入会把不同共同来源历史压成同一 typed 状态，即使所有
+响应都自然，也不能恢复实际档案身份。
+
+本节只处理实际像上的确定性部分路径。它不推出来源完备、紧性或跨分辨率限制的存在，不授予
+失败边以外的执行权限，也不把 `ControlledBehaviorUniversality` 的总动作词结果扩展为本节的
+有类型 `Option` 语义。若实际像不是全部 typed 状态，§36.6 的幽灵线程边界仍然存在；实例的
+PG.4101--PG.4103、PG.4201 满足性、取得成本和物理解释均保持 `ASSUMED-UNVERIFIED/open`。
+
+## 42.99 追加锚
