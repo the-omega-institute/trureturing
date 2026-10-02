@@ -7,10 +7,11 @@
    digest: A mixed-sign Gaussian at d = 15 refutes Galindo--Rowell Conjecture 10.6. -/
 
 /-
-proof_shape: result: content
-escape_witness: form (2): result itself, produced on its live proof path by the Weyl
-  commutation bridge, the coefficient-to-braid bridge and the exponent-translation identity
-  (the non-binding facts preregistered in #11573, kept as local steps of result)
+proof_shape: result: bind-only (the Weyl commutation step instantiates AddChar.map_add_eq_mul,
+  the coefficient step reindexes by Equiv.addRight and closes a shift identity by ring,
+  and the remaining steps instantiate Mathlib and frozen lemmas; CLAUDE.md §3.2 counts
+  these as normalization)
+escape_witness: none
 admission_basis: open-problem-resolution (#11573; Refuted)
 Frozen dependencies (direct unless marked transitive):
   D5/S3/Observer/WindowRegister.shiftMatrix — statement_id sha256:821649848ffe7ed9f84f11b97d3d1eb176216ccb5d3910dcbd867105b9d070dd
