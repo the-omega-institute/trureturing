@@ -964,7 +964,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           STRATALINT_ACCEPT_COLD_BUILD: '1'
-        run: make lean-report
+        run: make lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build
       - name: Build the judge
         if: steps.judge.outputs.cache-hit != 'true'
         run: dotnet build $JUDGE_BUILD_ARGS

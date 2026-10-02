@@ -33,6 +33,22 @@ def evidence_fixture(manifest):
         inventory=[], registered=[], records=[])
 
 
+def writer_fixture(write):
+    repository = Path(publication.__file__).resolve().parents[2]
+    for name in ('lean_cache_release.py', 'lean_cache.py', 'cache_material.py'):
+        path = 'tools/scripts/worktree/' + name
+        write(path, (repository / path).read_text())
+    write('tools/scripts/worktree/lean-cache-run.sh',
+          '#!/bin/sh\nexec python3 -B "$(dirname "$0")/writer_fixture.py" "$@"\n')
+    write('tools/scripts/worktree/writer_fixture.py', '''import subprocess, sys
+from pathlib import Path
+from lean_cache_release import cache_guard
+root = Path(__file__).resolve().parents[3]
+with cache_guard(root):
+    raise SystemExit(subprocess.run(sys.argv[1:]).returncode)
+''')
+
+
 class ManifestVersionTests(unittest.TestCase):
     def test_manifest_only_bump_accepts_nine_and_rejects_eight(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -616,7 +632,7 @@ raise SystemExit(37)
             write(path, (repository / path).read_text())
         write('tools/scripts/lib/resource-observation-lib.sh', 'resource_observe() { :; }\n')
         write('tools/scripts/worktree/lean-cache-ensure.sh', '#!/bin/sh\nexit 0\n')
-        write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\nexec "$@"\n')
+        writer_fixture(write)
         request = write('batch.json', json.dumps([['produce', row] for row in self.requests]))
         # Lake is the boundary stub; the shell entry, Python batch producer and
         # failing executable are real, including all their failure cleanup.
@@ -724,7 +740,7 @@ class EntryPointTests(unittest.TestCase):
                     + 'printf "ensure %s\\n" "${STRATALINT_LEAN_PRODUCER_DLL##*/}" >> "$CALLS"\nexit '
                     + str(38 if phase == 'ensure' else 0) + '\n')
                 shell_phase('bin/lake', 'report', 39 if phase == 'report' else 0)
-                write('tools/scripts/worktree/lean-cache-run.sh', '#!/bin/sh\nexec "$@"\n')
+                writer_fixture(write)
                 write('tools/scripts/lib/resource-observation-lib.sh', 'resource_observe() { :; }\n')
                 write('tools/lean-inspector/native.py',
                     'import os\nfrom pathlib import Path\nwith Path(os.environ["CALLS"]).open("a") as out: out.write("publish\\n")\nraise SystemExit(40)\n')

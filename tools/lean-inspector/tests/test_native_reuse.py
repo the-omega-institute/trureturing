@@ -13,6 +13,7 @@ class NativeReportConsumerTests:
                    'leanInspectorInterface/LeanInformationAuditInterface', 'reg/Reg',
                    'regInspector/LeanInformationAuditRegTests']
         self.reg_package()
+        self.copy('tools/scripts/worktree/lean_cache_release.py')
         self.build()  # Restore the native fixture's private compiler stage.
         root_config = self.root / 'lakefile.toml'
         root_config.write_text(root_config.read_text().replace(
@@ -52,7 +53,8 @@ class NativeReportConsumerTests:
         output = self.root / '.lake/build/stratalint/raw-lean-report.json'
 
         def entry(phase):
-            result = self.guarded_command(['make', 'lean-report'], env=self.env)
+            arguments = ['REBUILD_REPORT_CACHE=1'] if phase == 'production-initial' else []
+            result = self.guarded_command(['make', 'lean-report', *arguments], env=self.env)
             logs = Path(str(output) + '.logs')
             paths = [path for path in logs.iterdir() if path.is_file()]
             self.record_result(phase, dict(exit_code=result.returncode,
@@ -256,3 +258,8 @@ class NativeReportConsumerTests:
         invalid = self.inspect(success=False, phase='invalid-execution-registration')
         self.assertIn('LEAN_INSPECTOR_FAILED phase=inputs', invalid.stderr)
         self.assertNotIn('phase=report status=started', invalid.stderr)
+
+
+def load_tests(loader, tests, pattern):
+    from test_native import NativeReportTests
+    return loader.loadTestsFromTestCase(NativeReportTests)

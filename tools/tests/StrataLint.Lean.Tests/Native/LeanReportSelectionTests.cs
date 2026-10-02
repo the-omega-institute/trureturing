@@ -220,6 +220,7 @@ public sealed class LeanReportSelectionTests
               */reuse.py) phase="$2" ;;
               *) exit 97 ;;
             esac
+            case "$phase" in claim-receipt|cleanup-receipt) exit 0 ;; esac
             printf '%s\n' "$phase" >> "$INSPECTOR_TEST_PHASES"
             [[ "$phase" != "$INSPECTOR_TEST_FAILURE" ]] || exit 23
             [[ "$phase" != reuse ]] || exit 3
@@ -350,6 +351,7 @@ public sealed class LeanReportSelectionTests
                 --repository) repository="$2" ;;
                 --output) output="$2" ;;
                 --log-dir) log_dir="$2" ;;
+                --cache-miss-policy) [[ "$2" == build ]] || exit 98 ;;
                 *) exit 97 ;;
               esac
               shift 2
@@ -379,7 +381,7 @@ public sealed class LeanReportSelectionTests
         };
         if (logDirectory is not null)
             arguments.Add("STRATALINT_LEAN_REPORT_LOG_DIR=" + logDirectory);
-        arguments.AddRange(["bash", wrapper]);
+        arguments.AddRange(["bash", wrapper, "--rebuild-report-cache", "1"]);
         var result = TestProcessRunner.Run("env", arguments, temporary.Path,
             TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
 
@@ -387,7 +389,7 @@ public sealed class LeanReportSelectionTests
         var recorded = ScriptHarnessScratch.ReadRecordedCalls(argumentLog);
         Assert.True(recorded.Length >= 4, Encoding.UTF8.GetString(result.StandardError));
         Assert.Equal(fixture, ScriptHarnessScratch.ReadScratchText(Path.Combine(recorded[1], "fixture.identity")));
-        var expected = new List<string> { "--repository", recorded[1], "--output", output };
+        var expected = new List<string> { "--repository", recorded[1], "--output", output, "--cache-miss-policy", "build" };
         if (!string.IsNullOrEmpty(logDirectory)) expected.AddRange(["--log-dir", logDirectory]);
         Assert.Equal(expected, recorded);
         var expectedLogDirectory = string.IsNullOrEmpty(logDirectory) ? output + ".logs" : logDirectory;

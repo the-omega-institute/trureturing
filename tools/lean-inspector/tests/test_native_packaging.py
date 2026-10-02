@@ -22,6 +22,7 @@ sys.path.insert(0, str(HERE))
 import publication
 import materials
 import native
+from test_reuse import EXECUTION
 
 
 
@@ -31,6 +32,9 @@ class NativeReleaseSupport:
     def release_fixture(self):
         """Real publisher/Inspector/Lake, with only GitHub transport replaced."""
         self.reg_package()
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['report_execution'] = dict(EXECUTION)
+        self.write('lean-report-inputs.json', json.dumps(policy))
         for name in ('lean-cache-publish.sh', 'lean_cache_release.py'):
             self.copy('tools/scripts/worktree/' + name)
         self.env['STRATALINT_LEAN_BUILD_TARGETS'] = json.dumps(
@@ -98,9 +102,12 @@ else:
 ''')
         (self.root / 'bin/gh').chmod(0o755)
 
-    def release_run(self, verb, success=True):
-        result = self.guarded_command(['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-publish.sh'),
-            verb, '--repository', str(self.root)], cwd=self.root.parent, env=self.env)
+    def release_run(self, verb, success=True, refresh_stale=False):
+        command = ['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-publish.sh'),
+            verb, '--repository', str(self.root)]
+        if refresh_stale:
+            command.append('--refresh-stale')
+        result = self.guarded_command(command, cwd=self.root.parent, env=self.env)
         self.assertEqual(result.returncode == 0, success, result.stdout + result.stderr)
         return result
 
@@ -408,13 +415,13 @@ class NativePackageConsumerTests(NativeReleaseSupport):
             manifest = (clone / 'lean-report-inputs.json').read_text()
             self.write('lean-report-inputs.json', manifest.replace('"report_cache_release_semantic_version": 1',
                                                                  '"report_cache_release_semantic_version": 0'))
-            rejected = subprocess.run(['make', 'lean-report'], cwd=clone, env=self.env,
+            rejected = subprocess.run(['make', 'lean-report', 'REBUILD_REPORT_CACHE=1'], cwd=clone, env=self.env,
                 text=True, capture_output=True, timeout=120)
             self.assertNotEqual(rejected.returncode, 0, rejected.stdout + rejected.stderr)
             self.assertIn('report_cache_release_semantic_version', rejected.stderr)
             self.assertFalse((clone / '.lake').exists(), 'rejected inputs must preserve donor eligibility')
             self.write('lean-report-inputs.json', manifest)
-            result = subprocess.run(['make', 'lean-report'], cwd=clone, env=self.env,
+            result = subprocess.run(['make', 'lean-report', 'REBUILD_REPORT_CACHE=1'], cwd=clone, env=self.env,
                 text=True, capture_output=True, timeout=120)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             output = clone / '.lake/build/stratalint/raw-lean-report.json'
@@ -472,7 +479,7 @@ class NativePackageConsumerTests(NativeReleaseSupport):
         (directory / 'release.json').write_text(json.dumps(dict(tag_name=legacy, draft=False,
             target_commitish=self.env['GITHUB_SHA'], published_at='fixture')))
         shutil.rmtree(self.root / '.lake/build')
-        restored = self.release_run('fetch')
+        restored = self.release_run('fetch', refresh_stale=True)
         self.assertIn('"resolved":"' + legacy + '"', restored.stdout)
         self.assertFalse((self.root / '.lake/build/lean-inspector/report.zip').exists())
         first = self.guarded_command(['make', 'lean-cache-to-github-without-mathlib'], env=self.env)
@@ -493,7 +500,8 @@ class NativePackageConsumerTests(NativeReleaseSupport):
         self.assertEqual('4242', manifest['workflow_run_id'])
         self.assertEqual('1', manifest['workflow_run_attempt'])
         shutil.rmtree(self.root / '.lake/build')
-        restored = self.release_run('fetch')
+        self.env['STRATALINT_ACTIONS_CACHE_SEEDED'] = '0'
+        restored = self.release_run('fetch', refresh_stale=True)
         self.assertIn('"resolved":"' + tag + '"', restored.stdout)
         self.assertEqual(expected, {suffix: publication.member(output, suffix).read_bytes()
             for suffix in publication.SUFFIXES})
@@ -502,9 +510,14 @@ class NativePackageConsumerTests(NativeReleaseSupport):
         self.assertTrue((self.root / '.lake/build/lean-inspector/producer/bin/reportInspector').is_file())
         restored_stamps = self.stamps()
         self.env['GITHUB_RUN_ID'] = '4243'
+        logs = Path(str(output) + '.logs')
+        for path in logs.glob('report.*'):
+            path.unlink()
         unchanged = self.release_run('publish')
         self.assertIn('"status":"published"', unchanged.stdout)
         self.assertIn('LEAN_INSPECTOR_WORK extracted_modules=0 aggregates=0', unchanged.stdout)
+        self.assertFalse((logs / 'report.exit.log').exists(), 'complete publisher reuse must skip :report')
+        self.assertTrue((logs / 'programs.exit.log').is_file(), 'complete publisher reuse must run program targets')
         self.assertEqual(restored_stamps, self.stamps())
         self.assertEqual({k: v[1] for k, v in stamps.items()}, {k: v[1] for k, v in self.stamps().items()})
         self.assertEqual(origins, self.origins())
@@ -520,7 +533,8 @@ class NativePackageConsumerTests(NativeReleaseSupport):
         # Even an already published run cannot bypass registered program builds.
         self.write('Audit.lean', 'this is not valid Lean\n')
         failed = self.release_run('publish', success=False)
-        self.assertIn('LEAN_INSPECTOR_FAILED phase=report', failed.stderr)
+        self.assertIn('LEAN_INSPECTOR_FAILED phase=programs', failed.stderr)
+        self.assertNotIn('LEAN_INSPECTOR_FAILED phase=report', failed.stderr)
         self.assertNotIn('LEAN_CACHE_PUBLISH ', failed.stdout)
         self.assertEqual(releases, {p.name for p in (self.root / 'releases').iterdir()})
         self.write('Audit.lean', 'def audit : Nat := 1\n')

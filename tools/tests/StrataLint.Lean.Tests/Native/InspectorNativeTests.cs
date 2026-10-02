@@ -11,6 +11,7 @@ public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IC
     [Theory]
     [InlineData("test_streaming")]
     [InlineData("test_reuse")]
+    [InlineData("test_local_entry")]
     [InlineData("test_guarded_command.GuardedCommandTests")]
     [InlineData("test_native.NativeTests.test_coordinates_use_private_temporary_memo_and_clean_up_failures")]
     public void InspectorArtifactBehavior(string suite) => InspectorNativeTestRunner.Run(compiler, suite);

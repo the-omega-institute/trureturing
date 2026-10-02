@@ -43,7 +43,7 @@ class NativeRegTests(NativeRegSupport):
         self.assertIn('REG-MANIFEST-GIT-AGREEMENT', result.stdout + result.stderr)
         self.assertFalse((self.root / 'Reg/.lake').exists())
         self.assertFalse((self.root / '.lake/packages/mathlib').exists())
-        result = self.guarded_command(['make', 'lean-report'], cwd=self.root, env=self.env, timeout=120)
+        result = self.guarded_command(['make', 'lean-report', 'REBUILD_REPORT_CACHE=1'], cwd=self.root, env=self.env, timeout=120)
         self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn('REG-MANIFEST-GIT-AGREEMENT', result.stdout + result.stderr)
         self.assertFalse((self.root / 'Reg/.lake').exists())
@@ -90,7 +90,7 @@ class NativeRegConsumerTests(NativeRegSupport):
         self.assertFalse(any(r['module'].startswith('Reg.') for r in self.report()[0]))
         self.write('Reg/Support/Entry.lean', 'import D5.A\nimport LeanInformationAuditInterface.Records\n'
                    'def registrationValue := value\n')
-        result = self.guarded_command(['make', 'lean-report'], cwd=self.root, env=self.env, timeout=120)
+        result = self.guarded_command(['make', 'lean-report', 'REBUILD_REPORT_CACHE=1'], cwd=self.root, env=self.env, timeout=120)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         published = json.loads((self.root / '.lake/build/stratalint/raw-lean-report.json').read_text())
         self.assertIn('Reg.Support.Entry', [r['module'] for r in published['modules']])

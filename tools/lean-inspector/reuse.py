@@ -8,6 +8,7 @@ part of the seal; the semantic version is their compatibility contract. A receip
 to the normal Lake entry; malformed authored registration remains an error.
 """
 import argparse
+import contextlib
 import json
 import os
 from pathlib import Path
@@ -107,7 +108,7 @@ def bundle_hashes(report):
     return {suffix: publication.digest(publication.member(report, suffix)) for suffix in publication.SUFFIXES}
 
 
-def read_receipt(report, captured):
+def load_receipt(report):
     path = publication.member(report, SUFFIX)
     if path.is_symlink() or not path.is_file():
         raise ValueError('reuse receipt is absent or nonregular')
@@ -115,6 +116,26 @@ def read_receipt(report, captured):
     materials.require_keys(receipt, {'schema', 'completed', 'inputs', 'bundle'}, 'reuse receipt')
     if receipt['schema'] != SCHEMA or receipt['completed'] != COMPLETED:
         raise ValueError('reuse receipt lacks complete entry success')
+    return receipt
+
+
+def seed_version(repository, report):
+    """Read seed availability/version only; Lake still owns same-version changes."""
+    current = publication.selection.Selection(repository).data['report_cache_release_semantic_version']
+    try:
+        receipt = load_receipt(report)
+        publication._require_bundle_files(report)
+        local = receipt['inputs']['semantic_version']
+        if type(local) is not int or local <= 0:
+            raise ValueError('seed semantic version is absent or invalid')
+    except INVALID_SEED:
+        return dict(local_version='unavailable', current_version=current, reason='seed-unavailable')
+    return dict(local_version=local, current_version=current,
+                reason='version-matched' if local == current else 'version-mismatch')
+
+
+def read_receipt(report, captured):
+    receipt = load_receipt(report)
     if receipt['inputs'] != captured:
         raise InputMismatch(receipt['inputs'], captured)
     if receipt['bundle'] != bundle_hashes(report):
@@ -156,17 +177,21 @@ def write_receipt(report, captured):
         Path(temporary).unlink(missing_ok=True)
 
 
-def seal(repository, report, captured):
+def seal(repository, report, captured, owner_snapshot=None):
     current = capture(repository)
     if current != captured:
-        publication.member(report, SUFFIX).unlink(missing_ok=True)
+        if owner_snapshot is not None:
+            cleanup_receipt(repository, report, owner_snapshot, writer_owned=True)
         raise ValueError('registered inputs changed during report entry')
     if not captured['eligible']:
-        publication.member(report, SUFFIX).unlink(missing_ok=True)
+        if owner_snapshot is not None:
+            cleanup_receipt(repository, report, owner_snapshot, writer_owned=True)
         return
     # The caller reaches this only after Lake's default+report facet and normal
     # private publication have succeeded. Bind the exact published five pieces.
     write_receipt(report, captured)
+    if owner_snapshot is not None:
+        claim_receipt(report, owner_snapshot)
 
 
 def reuse(repository, report, output):
@@ -195,33 +220,129 @@ def reuse(repository, report, output):
     return dict(needs_lake=False, reason='complete-entry-reused')
 
 
+class CacheIncompatible(ValueError):
+    def __init__(self, local, current, dev, reason):
+        super().__init__(f'LEAN_REPORT_CACHE_INCOMPATIBLE local_version={local} '
+                         f'current_version={current} dev_seed_version={dev} reason={reason}\n'
+                         'Rebuild explicitly with make lean-report REBUILD_REPORT_CACHE=1')
+
+
+def cache_guard(repository):
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/worktree'))
+    from lean_cache_release import cache_guard as guard
+    return guard(repository)
+
+
+def receipt_identity(report):
+    try:
+        info = publication.member(report, SUFFIX).lstat()
+    except FileNotFoundError:
+        return None
+    return [info.st_dev, info.st_ino, info.st_mtime_ns, info.st_size]
+
+
+def claim_receipt(report, snapshot):
+    """Record a receipt's identity while the caller holds writer ownership."""
+    snapshot.write_text(json.dumps(receipt_identity(report)))
+
+
+def cleanup_receipt(repository, report, snapshot, writer_owned=False):
+    """Invalidate only the claimed receipt, without racing a subsequent writer."""
+    if not snapshot.is_file():
+        return
+    identity = json.loads(snapshot.read_text())
+    if identity is None:
+        return
+    try:
+        with contextlib.nullcontext() if writer_owned else cache_guard(repository):
+            if receipt_identity(report) == identity:
+                publication.member(report, SUFFIX).unlink(missing_ok=True)
+    except BlockingIOError:
+        # Another writer owns the current output; this caller cannot invalidate it.
+        return
+
+
+def recover_and_reuse(repository, report, output, owner_snapshot=None):
+    """Check, restore and consume the actual seed under private-cache ownership."""
+    current = publication.selection.Selection(repository).data['report_cache_release_semantic_version']
+    try:
+        with cache_guard(repository):
+            status = seed_version(repository, report)
+            local = status['local_version']
+            if status['reason'] != 'version-matched':
+                # The parent owns the same exclusive guard used by Release fetch
+                # and LeanCacheGuard. Its child must not reacquire that lock.
+                recovery_environment = os.environ.copy()
+                # A local recovery is an explicit fetch request.  Do not let
+                # an inherited Actions seed marker turn it into a skipped
+                # fetch before the release reader examines the dev snapshot.
+                recovery_environment['STRATALINT_ACTIONS_CACHE_SEEDED'] = '0'
+                fetched = subprocess.run(['/bin/bash', str(repository / 'tools/scripts/worktree/lean-cache-publish.sh'),
+                                          'fetch', '--mode', 'production', '--refresh-stale', '--writer-owned'],
+                                         cwd=repository, env=recovery_environment)
+                if fetched.returncode:
+                    raise CacheIncompatible(local, current, 'unavailable', 'fetch-unavailable')
+                report = repository / '.lake/build/stratalint/raw-lean-report.json'
+                status = seed_version(repository, report)
+                if status['reason'] != 'version-matched':
+                    raise CacheIncompatible(local, current, status['local_version'], status['reason'])
+            # Same-version misses retain the existing Lake incremental path.
+            # Snapshot/publish the checked seed before releasing ownership.
+            result = reuse(repository, report, output)
+            if not result['needs_lake'] and owner_snapshot is not None:
+                claim_receipt(output, owner_snapshot)
+            return result
+    except BlockingIOError as error:
+        raise CacheIncompatible('unavailable', current, 'unavailable', 'cache-busy') from error
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=('probe', 'reuse', 'capture', 'seal'))
+    parser.add_argument('command', choices=('probe', 'reuse', 'capture', 'seal',
+                                           'claim-receipt', 'cleanup-receipt'))
     parser.add_argument('--repository', required=True, type=Path)
     parser.add_argument('--report', type=Path)
     parser.add_argument('--output', type=Path)
     parser.add_argument('--snapshot', type=Path)
+    parser.add_argument('--owner-snapshot', type=Path)
+    parser.add_argument('--writer-owned', action='store_true',
+                        help='cleanup runs inside the native writer guard')
     parser.add_argument('--diagnostics', action='store_true',
                         help='emit probe mismatch warnings to stderr while retaining JSON stdout')
+    parser.add_argument('--cache-miss-policy', choices=('reuse-or-build', 'fetch-or-fail'),
+                        default='reuse-or-build', help='policy for the reuse consumer')
     args = parser.parse_args()
-    if args.command in ('probe', 'reuse', 'seal') and args.report is None:
+    if args.command in ('probe', 'reuse', 'seal', 'claim-receipt', 'cleanup-receipt') and args.report is None:
         parser.error('--report is required')
     if args.command == 'reuse' and args.output is None:
         parser.error('--output is required')
     if args.command in ('capture', 'seal') and args.snapshot is None:
         parser.error('--snapshot is required')
-    if args.command == 'capture':
+    if args.command in ('claim-receipt', 'cleanup-receipt') and args.owner_snapshot is None:
+        parser.error('--owner-snapshot is required')
+    if args.command == 'claim-receipt':
+        claim_receipt(args.report, args.owner_snapshot)
+    elif args.command == 'cleanup-receipt':
+        cleanup_receipt(args.repository, args.report, args.owner_snapshot, args.writer_owned)
+    elif args.command == 'capture':
         args.snapshot.write_bytes(materials.canonical_json(capture(args.repository)))
     elif args.command == 'seal':
-        seal(args.repository, args.report, publication.read_json(args.snapshot.read_bytes()))
+        with cache_guard(args.repository):
+            seal(args.repository, args.report, publication.read_json(args.snapshot.read_bytes()),
+                 args.owner_snapshot)
     elif args.command == 'probe':
         result = probe(args.repository, args.report)
         print(json.dumps(result, separators=(',', ':')))
         if args.diagnostics:
             warn_mismatch(result, sys.stderr)
     else:
-        result = reuse(args.repository, args.report, args.output)
+        if args.cache_miss_policy == 'fetch-or-fail':
+            result = recover_and_reuse(args.repository, args.report, args.output, args.owner_snapshot)
+        else:
+            with cache_guard(args.repository):
+                result = reuse(args.repository, args.report, args.output)
+                if not result['needs_lake'] and args.owner_snapshot is not None:
+                    claim_receipt(args.output, args.owner_snapshot)
         print('LEAN_INSPECTOR_REUSE ' + json.dumps(result, separators=(',', ':')))
         warn_mismatch(result, sys.stdout)
         if result['needs_lake']:
@@ -234,6 +355,9 @@ def main():
 if __name__ == '__main__':
     try:
         raise SystemExit(main())
+    except CacheIncompatible as error:
+        print(error, file=sys.stderr)
+        raise SystemExit(4)
     except INVALID_SEED as error:
         print(f'lean-inspector-reuse: {error}', file=sys.stderr)
         raise SystemExit(1)

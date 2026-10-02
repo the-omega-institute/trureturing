@@ -152,7 +152,7 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
         self.assertIn('"status":"unpacked"', fetched.stdout)
         self.assertIn(tag, fetched.stdout)
         self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
-        self.assertEqual(["lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json", "lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], (self.root / "build-runs").read_text().splitlines())
+        self.assertEqual(["lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build", "lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build"], (self.root / "build-runs").read_text().splitlines())
 
     def test_verification_failure_never_falls_back_or_clobbers_tags(self):
         self.verification_fixture()
@@ -231,6 +231,33 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
     def test_verification_local_preparation_deadline_is_nonzero_before_release_creation(self):
         environment = self.preparation_deadline_probe("archive")
         self.verification_fixture()
+        # Source verification has separate native Git/API contracts. This test
+        # advances the fake clock only at archive reads and replays the fixture
+        # source/API responses without a wall-clock subprocess deadline.
+        commands = [["rev-parse", "--verify", "HEAD"], ["status", "--porcelain", "--untracked-files=no"]]
+        readbacks = {json.dumps(args): subprocess.run(["git", "-C", str(self.root), *args],
+            check=True, capture_output=True, text=True).stdout for args in commands}
+        environment["FAKE_VERIFICATION_GIT_READBACKS"] = json.dumps(readbacks)
+        with (self.bin / "sitecustomize.py").open("a") as fixture:
+            fixture.write('''
+preparation_run = subprocess.run
+def readback_run(args, *rest, **kwargs):
+    readbacks = json.loads(os.environ["FAKE_VERIFICATION_GIT_READBACKS"])
+    key = json.dumps(args[3:])
+    if args[0] == "git" and key in readbacks:
+        return subprocess.CompletedProcess(args, 0, readbacks[key], "")
+    if args[:2] == ["gh", "api"]:
+        responses = json.loads(pathlib.Path(os.environ["FAKE_VERIFICATION_API"]).read_text())
+        with pathlib.Path(os.environ["FAKE_GH_LOG"]).open("a") as log:
+            log.write(json.dumps(args[1:]) + "\\n")
+        if args[2] in responses:
+            return subprocess.CompletedProcess(args, 0, json.dumps(responses[args[2]]), "")
+        if "/releases/tags/" in args[2]:
+            raise subprocess.CalledProcessError(1, args,
+                output=json.dumps({"message": "Not Found", "status": "404"}), stderr="")
+    return preparation_run(args, *rest, **kwargs)
+subprocess.run = readback_run
+''')
         self.assert_preparation_stopped(self.verification("publish", **environment), 1)
         self.assertFalse(any(call[:2] == ["release", "create"] for call in self.verification_calls()))
 
@@ -249,7 +276,7 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
         self.assertNotEqual(0, result.returncode)
         self.assertIn('"status":"failed"', result.stdout)
         self.assertNotIn('"status":"published"', result.stdout)
-        self.assertEqual(["lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], (self.root / "build-runs").read_text().splitlines())
+        self.assertEqual(["lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build"], (self.root / "build-runs").read_text().splitlines())
 
     def test_verification_truncated_gzip_normalizes_fetch_and_publish_failures(self):
         self.verification_fixture()

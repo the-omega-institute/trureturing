@@ -43,7 +43,8 @@ class ReuseTests(unittest.TestCase):
             self.write(path, value)
         self.write_policy()
         for name in ['tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
-                'tools/scripts/worktree/lean-cache-input.sh']:
+                'tools/scripts/worktree/lean-cache-input.sh', 'tools/scripts/worktree/lean_cache_release.py',
+                'tools/scripts/worktree/lean_cache.py', 'tools/scripts/worktree/cache_material.py']:
             path = self.root / name
             path.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / name, path)
@@ -390,11 +391,14 @@ class ReuseTests(unittest.TestCase):
 
     def test_missing_execution_contract_disables_only_reuse(self):
         api = self.receipt()
+        owner = self.root / 'receipt-owner.json'
+        api.claim_receipt(self.report, owner)
         del self.policy['report_execution']
         self.write_policy()
         captured = api.capture(self.root)
         self.assertTrue(api.probe(self.root, self.report)['needs_lake'])
-        api.seal(self.root, self.report, captured)
+        with api.cache_guard(self.root):
+            api.seal(self.root, self.report, captured, owner)
         self.assertFalse(publication.member(self.report, '.reuse.json').exists())
         self.policy['report_execution'] = dict(EXECUTION, tools=['arbitrary-command'])
         self.write_policy()
@@ -421,9 +425,19 @@ class ReuseTests(unittest.TestCase):
                           + 'printf "%s\\n" "${STRATALINT_LEAN_PRODUCER_DLL##*/}" >> ensure-producer\n')
         runner = self.root / 'tools/scripts/worktree/lean-cache-run.sh'
         runner.write_text('#!/bin/bash\nset -euo pipefail\n'
-                          'printf "%s\\n" "$*" >> build-calls\n'
-                          'exit ' + str(build_exit) + '\n')
+                          'exec python3 -B "$(dirname "$0")/program_writer_fixture.py" "$@"\n')
         runner.chmod(0o755)
+        self.write('tools/scripts/worktree/program_writer_fixture.py', '''import subprocess, sys
+from pathlib import Path
+from lean_cache_release import cache_guard
+root = Path(__file__).resolve().parents[3]
+with cache_guard(root):
+    raise SystemExit(subprocess.run(sys.argv[1:]).returncode)
+''')
+        self.lake.write_text('#!/bin/bash\nset -euo pipefail\n'
+                             'if [[ "$1" == --version ]]; then printf "fixture lake 1\\n"; exit 0; fi\n'
+                             'printf "%s\\n" "$LAKE_BIN $*" >> build-calls\n'
+                             'exit ' + str(build_exit) + '\n')
         api = self.receipt()
         self.output = self.root / '.lake/build/stratalint' / publication.RAW
         if existing_output:

@@ -77,7 +77,7 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("run_phase report \"$LAKE\"", inspector, StringComparison.Ordinal);
         Assert.Contains(LeanCacheRunScriptPath, inspector, StringComparison.Ordinal);
         Assert.Contains(
-            $"run_phase report \"$REPOSITORY/{LeanCacheRunScriptPath}\" \"$LAKE\" \"${{workspace[@]}}\" build :report",
+            $"run_phase report \"$REPOSITORY/{LeanCacheRunScriptPath}\" \"$OWNED_LAKE\" \"${{workspace[@]}}\" build :report",
             inspector,
             StringComparison.Ordinal);
 
