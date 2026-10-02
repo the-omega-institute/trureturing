@@ -218,6 +218,12 @@ Together with OCP8–OCP9, the branch R disjoint from {5,7,11,13}
 has EVERY prime below13^9 and its period divides one explicit finite Q_*.
 That finite branch has not been excluded; unrestricted Erdős#7 is open.
 
+[Section152](#152-a-primitive-cofactor-triangle-forces-a-private-escape-and-two-constrained-original-suppliers)
+uses three saturated original parent phases to constrain two owners
+forced at one complete escaped cofactor. A squarefree three-prime
+cofactor carrier and q-height two force an aligned low-ternary owner.
+That owner is still allowed; its further exclusion or payment is open.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -18601,3 +18607,81 @@ Report375 LA2–LA3 already supplies a common prefix-compatible original source,
 Here the first q-digit encodes the full retained old p^H coordinate together with a new block, so every surviving original p-height has one exact inverse. The enclosing AP HPA7 then uses the disjoint exponent blocks in HPA8 to remember that original height. This supplies the missing collision check across all mixed pq originals without any avoiding-tree premise. It reuses the original transport and the enclosing-AP permission, with this explicit numerical encoding as the additional bridge.
 
 The resulting bound does not place a shared prime in K or below73, prove a suitable simultaneous descendant-phase concentration, or verify a strict whole-family probability estimate. The period Q_* is finite but large, and no exhaustive exclusion of its distinct odd whole covers is supplied. Excluding the bounded original-source branch, and unrestricted Erdős #7 beyond it, remain unresolved.
+
+## 152. A primitive cofactor triangle forces a private escape and two constrained original suppliers
+
+Keep one original EB1 whole cover, Q=3^H q^G M with G>=2, q>3, and gcd(M,3q)=1. Let p,r,t be three distinct primes dividing M. Suppose the original shallow top row contains
+
+    d_pr=3^H q^2 pr, d_pt=3^H q^2 pt, d_rt=3^H q^2 rt,
+
+all at the same full ternary word u and first-q root omega, with pairwise different second-q prefixes beta_pr,beta_pt,beta_rt. Assume their literal cofactor phases have the SAME actual source v modulo M. This is one particular primitive triple permitted by RLC4; no claim says every gcd-one triple has this numerical shape.
+
+This configuration forces two further original suppliers at a single actual escaped cofactor, with a precise alternative on their ternary heights and cofactor supports. It does not by itself contradict whole coverage.
+
+### The triangle saturates three original parent phases
+
+The two labels d_pr,d_pt share the original-parent phase
+
+    3^H q p: (u,omega,v modulo p).
+
+They are distinct proper descendants. Divisor closure supplies that parent, and §130's existing second ancestor restriction bounds its proper-descendant phase group by two. Consequently these are the ONLY originals in that group. The analogous statements hold for the r-parent with d_pr,d_rt and the t-parent with d_pt,d_rt.
+
+Thus any further original with full ternary height H, q-height at least two, first-q root omega, and a cofactor divisible by p must avoid v modulo p. The same statement holds for r and t, with the corresponding two triangle labels excepted. This is an actual original-phase vacancy, not absence of all numerical multiples of p. It directly reuses the existing parent capacity.
+
+### One triangle owner has a complete private escape
+
+There exists a triangle label d and a point x in its COMPLETE original private region such that
+
+    x != v modulo prt.                              (PTE1)
+
+To see this, reuse OHL6–OHL7, rather than introduce another exchange theorem. The three original classes are globally pairwise disjoint because their q^2 prefixes differ. Their complete simultaneous-deletion hole is therefore the disjoint union of their complete private regions. If every such region lay in v modulo prt, its full cofactor projection would lie in all three original cofactor cylinders. Giving the three labels distinct ternary colors satisfies OHL6. The fresh OHL7 APs then repair that ENTIRE hole with the same count and strictly smaller modulus sum, contradicting EB1.
+
+This is the first-q-prefix version of the complete private escape in §137. It uses three depth-two labels in one first-q root, not a full SH2 certificate across three roots. The substantive additional consequence below comes from the triangle's saturated parent phases.
+
+Relabel p,r,t if necessary so that the escaping owner is d_pr. Write w=x modulo M. Since x lies in the owner's class,
+
+    w=v modulo p, w=v modulo r, w!=v modulo t.       (PTE2)
+
+The whole cofactor w is an ACTUAL private-source coordinate. Its other prime coordinates and higher digits need not equal those of v. No assertion changes only the t coordinate of the original source v.
+
+### Two second-q changes force new owners at the SAME escaped cofactor
+
+Form x_pt from x by changing only its second q-digit to the one in beta_pt, and form x_rt similarly. Keep the entire ternary word u, the first-q root omega, every higher q-digit, and the COMPLETE cofactor w unchanged.
+
+Whole original coverage supplies an owner e_pt of x_pt and an owner e_rt of x_rt. Each owner has q-height at least two: an original of q-height zero or one has the same truth value at x and the modified point, and hence would contradict privacy of x. Its second-q prefix equals the selected target prefix. Thus the two owners are distinct original labels.
+
+Neither is a triangle label. At the modified point d_pr has the wrong second-q digit; the matching d_pt or d_rt fails because w differs from v modulo t; and the third triangle label has the other second-q digit.
+
+For either new owner write its numerical modulus as
+
+    m_e=3^a q^b s_e, a<=H, b>=2, s_e|M.
+
+If a=H and p divides s_e, it lies in the already saturated phase of 3^H q p: the modified point still has (u,omega,v modulo p). It is different from both d_pr and d_pt, giving a forbidden third descendant. The r-parent gives the same contradiction when r divides s_e. Therefore EACH owner satisfies
+
+    a<H, OR [a=H and gcd(s_e,pr)=1].                (PTE3)
+
+Both alternatives refer to the same original family and the same actual w. The two observations differ only in their specified second-q digits. They are not separately optimized source points, and they are not asserted to be simultaneously true at one complete integer point.
+
+In particular the escape cannot be repaired at both specified q-prefixes solely by full-height top labels whose cofactors all contain p or r. It requires lower-ternary activity or actual top labels using different cofactor directions.
+
+### A squarefree three-prime cofactor carrier forces an aligned low-row original
+
+Suppose additionally that G=2, that M has no prime divisors outside {p,r,t}, and that the missing prime t in PTE2 has height one in M. Then at least ONE of e_pt,e_rt has a<H.
+
+Indeed, if both had full height H, PTE3 would leave only s_e in {1,t}. The unit cofactor is impossible at either selected prefix: its numerical label would be 3^H q^2. This original label is an ancestor of d_pt and d_rt. If its literal phase were (u,beta_pt) or (u,beta_rt), respectively, the corresponding triangle original would be contained in it, contrary to comparable-original disjointness. Thus each hypothetical full-height owner must have the same numerical modulus 3^H q^2 t. Numerical uniqueness allows that original only once, and its one second-q prefix cannot cover both different modified points. This contradiction proves the assertion.
+
+A source-independent sufficient version of these extra height conditions is
+
+    G=2 and M=prt.
+
+Whichever triangle owner supplies the private escape, its missing prime then has height one. Hence the triangle forces an ACTUAL original
+
+    3^a q^2 s, a<H, s|prt,                            (PTE4)
+
+whose ternary phase agrees with u modulo3^a, whose literal second-q prefix is one of the other two triangle prefixes, and whose cofactor cylinder contains the SAME private-escape coordinate w. This is an original phase-aligned lower-row requirement, not just divisor closure or the existence of some numerical low-row label elsewhere.
+
+### Scope of the remaining obligation
+
+RLC5's primitive triple alone supplies neither G=2 nor the stated cofactor carrier. At larger q-height, deeper unit-cofactor moduli fall outside that ancestor argument; with additional cofactor primes or a higher missing-prime exponent, numerical uniqueness alone no longer excludes two different full-height labels avoiding p and r. The current result does not claim that any of those numerical possibilities have actual covering phases.
+
+Even under PTE4 the forced low-row original is allowed by the original problem. A contradiction requires a further same-source exclusion or complete-liability budget for that aligned low-row activity. No complete joint-hole repair for arbitrary primitive triples, no forced W point, and no unrestricted odd noncoverage follows here. The reusable increment is the exact private escape followed by the two original-source supplier restrictions PTE2–PTE4, using the existing OHL and phase-capacity interfaces.
