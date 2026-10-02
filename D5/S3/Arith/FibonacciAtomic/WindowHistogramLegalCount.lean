@@ -571,7 +571,10 @@ theorem result :
     (∀ a b c r s : ℕ, Nat.card (EndpointWords (histogram a b c r s) .middle) =
       if s = 0 then 0 else Nat.card (HistogramWords (histogram a b c r (s-1)))) ∧
     (∀ a b c r s : ℕ, Nat.card (EndpointWords (histogram a b c r s) .high) =
-      if b = 0 then 0 else Nat.card (HistogramWords (histogram a (b-1) c r s))) := by
+      if b = 0 then 0 else Nat.card (HistogramWords (histogram a (b-1) c r s))) ∧
+    (∀ a b c r s : ℕ, Nat.card (EndpointWords (histogram a b c r s) .low) =
+      if a = 0 then 0 else (r+s).choose r * (r+s).choose c *
+        (r+s+1).multichoose (a-1) * (r+s).multichoose b) := by
   have terminal_shapes (p : Code) :
       ((codeWord p).getLast? = some .low ↔
         0 < (terminalGap p).x ∧ (terminalGap p).z = false ∧ (terminalGap p).y = 0) ∧
@@ -604,10 +607,65 @@ theorem result :
         List.getLast?_nil]
     all_goals by_cases ha : a = 0 <;> by_cases hb : b = 0 <;>
       simp [ha, hb, Nat.pos_iff_ne_zero]
+  have absent (h : Window → ℕ) (f : Window) (hf : h f = 0) :
+      IsEmpty (EndpointWords h f) := by
+    refine ⟨fun w => ?_⟩
+    have hp := List.count_pos_iff.mpr (List.mem_of_getLast? w.property)
+    rw [w.val.property.2 f, hf] at hp
+    exact Nat.not_lt_zero _ hp
+  have raw_terminal {t : ℕ} (q : (Fin t → Bool) × (Fin (t+1) → Gap)) :
+      terminalGap (rawCode q) = q.2 (Fin.last t) := by
+    cases t with
+    | zero => simp [terminalGap, rawCode]
+    | succ t =>
+      simp only [terminalGap, rawCode]
+      rw [List.ofFn_succ_last, List.foldl_append]
+      simp
+  have zero_gap_card (t b : ℕ) :
+      Nat.card {g : Gaps (t+1) b // g.val (Fin.last t) = 0} = t.multichoose b := by
+    classical
+    let e : {g : Gaps (t+1) b // g.val (Fin.last t) = 0} ≃
+        ↑((Finset.univ.erase (Fin.last t)).finsuppAntidiag b) :=
+      (Equiv.subtypeSubtypeEquivSubtypeInter
+        (fun g : Fin (t+1) →₀ ℕ => g ∈ Finset.univ.finsuppAntidiag b)
+        (fun g => g (Fin.last t) = 0)).trans
+        (Equiv.subtypeEquivRight (q := fun g =>
+          g ∈ (Finset.univ.erase (Fin.last t)).finsuppAntidiag b) (fun g => by
+          simp only [Finset.mem_finsuppAntidiag', Finset.subset_erase,
+            Finset.subset_univ, true_and, and_true, Finsupp.notMem_support_iff]))
+    rw [Nat.card_congr e, Nat.card_eq_fintype_card, Fintype.card_coe,
+      Finset.card_finsuppAntidiag_nat_eq_multichoose]
+    simp
+  have avoid_card (t c : ℕ) :
+      Nat.card {Z : {Z : Finset (Fin (t+1)) // Z.card = c} // Fin.last t ∉ Z.val} =
+        t.choose c := by
+    classical
+    let e : {Z : {Z : Finset (Fin (t+1)) // Z.card = c} // Fin.last t ∉ Z.val} ≃
+        ↑((Finset.univ.erase (Fin.last t)).powersetCard c) :=
+      (Equiv.subtypeSubtypeEquivSubtypeInter
+        (fun Z : Finset (Fin (t+1)) => Z.card = c)
+        (fun Z => Fin.last t ∉ Z)).trans
+        (Equiv.subtypeEquivRight (q := fun Z =>
+          Z ∈ (Finset.univ.erase (Fin.last t)).powersetCard c) (fun Z => by
+          simp [Finset.mem_powersetCard, Finset.subset_erase, and_comm]))
+    rw [Nat.card_congr e, Nat.card_eq_fintype_card, Fintype.card_coe,
+      Finset.card_powersetCard]
+    simp
+  have positive_gap_card (t a : ℕ) (ha : 0 < a) :
+      Nat.card {g : Gaps (t+1) a // 0 < g.val (Fin.last t)} =
+        (t+1).multichoose (a-1) := by
+    classical
+    let e := (Equiv.subtypeEquivRight (p := fun g : Gaps (t+1) a =>
+      0 < g.val (Fin.last t)) (q := fun g => ∀ i ∈ ({Fin.last t} : Finset _),
+      0 < g.val i) (fun _ => by simp)).trans
+        (D5.S3.Combinatorics.ArrowWilfGapData.positiveGapsEquiv (by simp; omega))
+    rw [Nat.card_congr e, Nat.card_eq_fintype_card, Fintype.card_coe]
+    simpa using Finset.card_finsuppAntidiag_nat_eq_multichoose
+      (s := (Finset.univ : Finset (Fin (t+1)))) (a-1)
   refine ⟨decomposition.1, decomposition.2.1, decomposition.2.2, code_language.1,
     fun p => (terminal_shapes p).1, fun p => (terminal_shapes p).2,
     (histogram_encoding (fun _ => 0)).1,
-    (fun h => (histogram_encoding h).2), histogram_count, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+    (fun h => (histogram_encoding h).2), histogram_count, ?_, ?_, absent, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro a b c r s hn
     classical
     letI : Finite (HistogramWords (histogram a b c r s)) := (histogram_count a b c r s).2.1
@@ -641,11 +699,6 @@ theorem result :
       have hp := List.count_pos_iff.mpr hf
       rw [w.property.2 f] at hp
       cases f <;> simp [histogram] at hp
-  · intro h f hf
-    refine ⟨fun w => ?_⟩
-    have hp := List.count_pos_iff.mpr (List.mem_of_getLast? w.property)
-    rw [w.val.property.2 f, hf] at hp
-    exact Nat.not_lt_zero _ hp
   · intro a b c r s hc
     letI : Finite (HistogramWords (histogram a b c r s)) := (histogram_count a b c r s).2.1
     letI : Fintype (HistogramWords (histogram a b c r s)) := Fintype.ofFinite _
@@ -675,10 +728,7 @@ theorem result :
   · intro a b c r s
     cases r with
     | zero =>
-      letI : IsEmpty (EndpointWords (histogram a b c 0 s) .zero) := ⟨fun w => by
-        have hp := List.count_pos_iff.mpr (List.mem_of_getLast? w.property)
-        rw [w.val.property.2 .zero] at hp
-        simp [histogram] at hp⟩
+      letI := absent (histogram a b c 0 s) .zero rfl
       simp
     | succ r =>
       simp only [Nat.add_one_ne_zero, ↓reduceIte, Nat.add_sub_cancel]
@@ -687,10 +737,7 @@ theorem result :
   · intro a b c r s
     cases s with
     | zero =>
-      letI : IsEmpty (EndpointWords (histogram a b c r 0) .middle) := ⟨fun w => by
-        have hp := List.count_pos_iff.mpr (List.mem_of_getLast? w.property)
-        rw [w.val.property.2 .middle] at hp
-        simp [histogram] at hp⟩
+      letI := absent (histogram a b c r 0) .middle rfl
       simp
     | succ s =>
       simp only [Nat.add_one_ne_zero, ↓reduceIte, Nat.add_sub_cancel]
@@ -699,14 +746,42 @@ theorem result :
   · intro a b c r s
     cases b with
     | zero =>
-      letI : IsEmpty (EndpointWords (histogram a 0 c r s) .high) := ⟨fun w => by
-        have hp := List.count_pos_iff.mpr (List.mem_of_getLast? w.property)
-        rw [w.val.property.2 .high] at hp
-        simp [histogram] at hp⟩
+      letI := absent (histogram a 0 c r s) .high rfl
       simp
     | succ b =>
       simp only [Nat.add_one_ne_zero, ↓reduceIte, Nat.add_sub_cancel]
       exact Nat.card_congr (appendEndpointEquiv (histogram a b c r s)
         (histogram a (b+1) c r s) .high rfl (fun g => by cases g <;> simp [histogram])).symm
+
+  · intro a b c r s
+    classical
+    by_cases ha : a = 0
+    · subst a
+      letI := absent (histogram 0 b c r s) .low rfl
+      simp
+    · rw [if_neg ha]
+      obtain ⟨e, he⟩ := (histogram_count a b c r s).1
+      let restricted := {p : Factors a b c r s //
+        0 < p.2.2.1.val (Fin.last (r+s)) ∧
+          Fin.last (r+s) ∉ p.2.1.val ∧ p.2.2.2.val (Fin.last (r+s)) = 0}
+      let ends : restricted ≃ EndpointWords (histogram a b c r s) .low :=
+        e.subtypeEquiv (fun p => by
+          rw [he p, (terminal_shapes _).1, raw_terminal]
+          simp [factorRaw])
+      let separate : restricted ≃
+          {R : Finset (Fin (r+s)) // R.card = r} ×
+          {Z : {Z : Finset (Fin (r+s+1)) // Z.card = c} // Fin.last (r+s) ∉ Z.val} ×
+          {g : Gaps (r+s+1) a // 0 < g.val (Fin.last (r+s))} ×
+          {g : Gaps (r+s+1) b // g.val (Fin.last (r+s)) = 0} :=
+        { toFun := fun p => (p.val.1, ⟨p.val.2.1, p.property.2.1⟩,
+            ⟨p.val.2.2.1, p.property.1⟩, ⟨p.val.2.2.2, p.property.2.2⟩)
+          invFun := fun p => ⟨(p.1, p.2.1.val, p.2.2.1.val, p.2.2.2.val),
+            p.2.2.1.property, p.2.1.property, p.2.2.2.property⟩
+          left_inv := fun _ => rfl
+          right_inv := fun _ => rfl }
+      rw [Nat.card_congr (ends.symm.trans separate)]
+      simp only [Nat.card_prod, avoid_card, zero_gap_card,
+        positive_gap_card (r+s) a (Nat.pos_of_ne_zero ha)]
+      simp [Nat.card_eq_fintype_card, Fintype.card_finset_len, Nat.mul_assoc]
 
 end D5.S3.Arith.FibonacciAtomic.WindowHistogramLegalCount
