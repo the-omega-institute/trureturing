@@ -17,7 +17,7 @@ The inspected primary manuscript is [arXiv:2006.13771v1](https://arxiv.org/pdf/2
 
 ## Keep the source normalization
 
-The physical Hilbert space is $H_\infty=L^2(\mathbb R)_{\rm ev}$ with inner product $\frac12\int_{\mathbb R}\overline{\eta(x)}\xi(x)\,dx$. Equation (17), manuscript p.7, identifies it unitarily with multiplicative $L^2$ through $w\xi(u)=u^{1/2}\xi(u)$, using $d^*u=du/u$. Equation (61), p.24, gives the unitary scaling action
+The physical Hilbert space is $H_\infty=L^2(\mathbb R)_{\rm ev}$ with inner product $\frac12\int_{\mathbb R}\overline{\eta(x)}\xi(x)\,dx$. Equation (17), manuscript p.7, identifies it unitarily with multiplicative $L^2$ through $w\xi(u)=u^{1/2}\xi(u)$, using $d^*u=du/u$. Equation (61), p.23, gives the unitary scaling action
 
 $$
 (\vartheta(u)\xi)(x)=u^{-1/2}\xi(u^{-1}x).
