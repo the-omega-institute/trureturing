@@ -496,9 +496,43 @@ private theorem histogram_count (a b c r s : ℕ) :
     simp only [Factors, Nat.card_prod, cg]
     simp [Nat.card_eq_fintype_card, Fintype.card_finset_len, Nat.mul_assoc]
 
-example (q : Option (Bool × Bool)) (w : List Window) :
-    run q w = w.foldl LiteralWindowEnd.step q := by
-  rfl
+private noncomputable def appendEndpointEquiv (h h' : Window → ℕ) (f : Window)
+    (hf : first f = false) (hh : ∀ g, h' g = h g + if f = g then 1 else 0) :
+    HistogramWords h ≃ EndpointWords h' f := by
+  have run_fold (q : Option (Bool × Bool)) (w : List Window) :
+      run q w = w.foldl LiteralWindowEnd.step q := by
+    induction w generalizing q with
+    | nil => rfl
+    | cons b w ih => simpa only [run, List.foldl_cons] using ih _
+  have extension (w : List Window) :
+      legal false (flatten (w ++ [f])) ↔ legal false (flatten w) := by
+    have dead : run (some (false, false)) (w ++ [f]) = none ↔
+        run (some (false, false)) w = none := by
+      simp only [run_fold, List.foldl_append, List.foldl_cons, List.foldl_nil]
+      cases w.foldl LiteralWindowEnd.step (some (false, false)) with
+      | none => rfl
+      | some q => cases q; simp [LiteralWindowEnd.step, hf]
+    exact not_iff_not.mp
+      ((execution false false (w ++ [f])).2.symm.trans
+        (dead.trans (execution false false w).2))
+  exact
+    { toFun := fun w => ⟨⟨w.val ++ [f], extension w.val |>.mpr w.property.1,
+        fun g => by simp [List.count_append, w.property.2 g, hh g, List.count_singleton]⟩,
+        by simp⟩
+      invFun := fun w => ⟨w.val.val.dropLast, by
+        have he : w.val.val.dropLast ++ [f] = w.val.val :=
+          List.dropLast_append_getLast? f (by rw [w.property]; simp)
+        refine ⟨(extension _).mp (he.symm ▸ w.val.property.1), ?_⟩
+        intro g
+        have hg := w.val.property.2 g
+        rw [← he, List.count_append, List.count_singleton, hh g] at hg
+        simp only [beq_iff_eq] at hg
+        exact Nat.add_right_cancel hg⟩
+      left_inv := fun w => by apply Subtype.ext; simp
+      right_inv := fun w => by
+        apply Subtype.ext
+        apply Subtype.ext
+        exact List.dropLast_append_getLast? f (by rw [w.property]; simp) }
 
 /-- Unique neutral-position decomposition and a reversible canonical code
 that counts every histogram and retains exact terminal constraints and labels. -/
@@ -531,7 +565,13 @@ theorem result :
     (∀ a b c r s : ℕ, r + s + 1 < c → IsEmpty (HistogramWords (histogram a b c r s))) ∧
     (∀ h : Window → ℕ, ∀ f : Window,
       Nat.card (PositiveEndpointWords h f) =
-        if f = .zero then 0 else Nat.card (EndpointWords h f)) := by
+        if f = .zero then 0 else Nat.card (EndpointWords h f)) ∧
+    (∀ a b c r s : ℕ, Nat.card (EndpointWords (histogram a b c r s) .zero) =
+      if r = 0 then 0 else Nat.card (HistogramWords (histogram a b c (r-1) s))) ∧
+    (∀ a b c r s : ℕ, Nat.card (EndpointWords (histogram a b c r s) .middle) =
+      if s = 0 then 0 else Nat.card (HistogramWords (histogram a b c r (s-1)))) ∧
+    (∀ a b c r s : ℕ, Nat.card (EndpointWords (histogram a b c r s) .high) =
+      if b = 0 then 0 else Nat.card (HistogramWords (histogram a (b-1) c r s))) := by
   have terminal_shapes (p : Code) :
       ((codeWord p).getLast? = some .low ↔
         0 < (terminalGap p).x ∧ (terminalGap p).z = false ∧ (terminalGap p).y = 0) ∧
@@ -567,7 +607,7 @@ theorem result :
   refine ⟨decomposition.1, decomposition.2.1, decomposition.2.2, code_language.1,
     fun p => (terminal_shapes p).1, fun p => (terminal_shapes p).2,
     (histogram_encoding (fun _ => 0)).1,
-    (fun h => (histogram_encoding h).2), histogram_count, ?_, ?_, ?_, ?_, ?_⟩
+    (fun h => (histogram_encoding h).2), histogram_count, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro a b c r s hn
     classical
     letI : Finite (HistogramWords (histogram a b c r s)) := (histogram_count a b c r s).2.1
@@ -632,5 +672,41 @@ theorem result :
         rw [terminal w]
         simp [nonzero, hf]))
 
+  · intro a b c r s
+    cases r with
+    | zero =>
+      letI : IsEmpty (EndpointWords (histogram a b c 0 s) .zero) := ⟨fun w => by
+        have hp := List.count_pos_iff.mpr (List.mem_of_getLast? w.property)
+        rw [w.val.property.2 .zero] at hp
+        simp [histogram] at hp⟩
+      simp
+    | succ r =>
+      simp only [Nat.add_one_ne_zero, ↓reduceIte, Nat.add_sub_cancel]
+      exact Nat.card_congr (appendEndpointEquiv (histogram a b c r s)
+        (histogram a b c (r+1) s) .zero rfl (fun g => by cases g <;> simp [histogram])).symm
+  · intro a b c r s
+    cases s with
+    | zero =>
+      letI : IsEmpty (EndpointWords (histogram a b c r 0) .middle) := ⟨fun w => by
+        have hp := List.count_pos_iff.mpr (List.mem_of_getLast? w.property)
+        rw [w.val.property.2 .middle] at hp
+        simp [histogram] at hp⟩
+      simp
+    | succ s =>
+      simp only [Nat.add_one_ne_zero, ↓reduceIte, Nat.add_sub_cancel]
+      exact Nat.card_congr (appendEndpointEquiv (histogram a b c r s)
+        (histogram a b c r (s+1)) .middle rfl (fun g => by cases g <;> simp [histogram])).symm
+  · intro a b c r s
+    cases b with
+    | zero =>
+      letI : IsEmpty (EndpointWords (histogram a 0 c r s) .high) := ⟨fun w => by
+        have hp := List.count_pos_iff.mpr (List.mem_of_getLast? w.property)
+        rw [w.val.property.2 .high] at hp
+        simp [histogram] at hp⟩
+      simp
+    | succ b =>
+      simp only [Nat.add_one_ne_zero, ↓reduceIte, Nat.add_sub_cancel]
+      exact Nat.card_congr (appendEndpointEquiv (histogram a b c r s)
+        (histogram a (b+1) c r s) .high rfl (fun g => by cases g <;> simp [histogram])).symm
 
 end D5.S3.Arith.FibonacciAtomic.WindowHistogramLegalCount
