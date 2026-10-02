@@ -156,3 +156,74 @@ an estimate uniform over the moving prime powers, their joint membership
 in this actual lift, and the CA test set, strong enough to cross the
 same-source signed Robin budget. No such estimate, general Robin
 inequality or RH conclusion is supplied by this source application.
+
+
+## A fixed finite-state selector cannot retain an infinite CA family
+
+This is a structural application of ordinary regular-language pumping,
+finite permutation periodicity and the classical CA support. It is not
+a theorem attributed to Schaeffer–Shallit–Zorcic or a new analytic bound.
+The existing [five-window word interface](../../docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md),
+§§7.2, 14.1 and 17.2–17.3, supplies the canonical coding and affine
+pumping scaffold; no new generic pumping theorem is needed.
+
+Use the **unique** high-to-low canonical word with no leading
+$\mathrm{null}$, the independent unit bit in exactly one terminal
+symbol, and all existing End and adjacency restrictions. Arbitrary
+high-end padding and freely positioned End symbols are outside this
+contract. Every regular language contained entirely in positive CA
+words under this coding is finite.
+
+To see this, an infinite regular language would contain all words
+$uv^kw$, $k\ge0$, for some nonempty pump block $v$. The terminal symbol
+cannot occur in $v$, since deletion or duplication would violate the
+one-terminal-symbol condition. Thus $v$ consists of windows. All the
+pumped words remain canonical; with $H_k=H_0+k|v|$ windows their
+positive values satisfy $n_k\ge F_{3H_k}$ and tend to infinity.
+
+The Horner map of $v$ is
+
+$$
+F_v(x)=Ax+b,\qquad A=S^{|v|},\quad S=M^3,\quad\det S=-1.
+$$
+
+If $z=F_u(0)$ and $F_w(x)=Bx+d$ denotes only the window part of the
+suffix, its unit bit $h$ is fixed and
+
+$$
+n_k=h+q\bigl(BF_v^k(z)+d\bigr),\qquad q=(2,3).
+$$
+
+For each fixed prime $p$, $F_v$ is a permutation of
+$(\mathbb Z/p\mathbb Z)^2$. The orbit of $z$ is consequently purely
+periodic from $k=0$, and so is $n_k\bmod p$.
+
+The [classical CA support](../Arith/alaoglu1944highly.md) contains every
+prime through the actual $P^+(n_k)$, including every tied choice.
+The only additional fact needed is $P^+(n_k)\to\infty$ when
+$n_k\to\infty$ within the CA set. This follows from the classical
+optimizing objective: if support is bounded by $T$, the next omitted
+prime forces a fixed positive lower bound on the optimizing price.
+At that price each included prime exponent is bounded, since its last
+local gain tends to one as the exponent grows. Only finitely many
+profiles have that bounded support. This uses the existing
+[CA price interface](../ArithSums/nicolas2025comparison.md), without
+importing a branch-restricted discriminant assumption or a new
+prime-distribution estimate.
+
+It follows that $p\mid n_k$ for all sufficiently large $k$.
+Periodicity then implies $p\mid n_0$. Since this holds for every prime,
+it contradicts $n_0$ being a finite positive integer. This proves the
+finite-language assertion. The classical CA family is infinite: as the
+price tends to zero, every fixed prime's positive first local gain
+forces its eventual inclusion. Hence its full canonical language is
+not regular either.
+
+The scope is exact finite-state selection of an infinite CA family.
+A regular **superset** of candidates, a finite verification range,
+and a recursive algorithm whose state or working memory grows are
+not excluded. The five letters remain a valid unbounded address
+alphabet, and the fixed-prime-power predicates above remain regular.
+This application gives no Robin sign and excludes no actual CA
+integer; it identifies why a fixed number of states cannot replace the
+moving arithmetic information needed by the full candidate test set.
