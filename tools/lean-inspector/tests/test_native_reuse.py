@@ -258,3 +258,8 @@ class NativeReportConsumerTests:
         invalid = self.inspect(success=False, phase='invalid-execution-registration')
         self.assertIn('LEAN_INSPECTOR_FAILED phase=inputs', invalid.stderr)
         self.assertNotIn('phase=report status=started', invalid.stderr)
+
+
+def load_tests(loader, tests, pattern):
+    from test_native import NativeReportTests
+    return loader.loadTestsFromTestCase(NativeReportTests)
