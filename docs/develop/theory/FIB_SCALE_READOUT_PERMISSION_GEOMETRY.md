@@ -4344,3 +4344,738 @@ $$
 把（13.34）、（13.35）、（13.37）合并，$e^{-\mu}M(\mu)=\Pi(\mu)$ 正好留下（13.16）的前因子。该证明始终使用同一 $(k,t,j)$ 的完整来源树和实际替换像；局部误差、可和尾、临界选择及连续速率转换全部在这些原对象上成立。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 14. 完整来源网格的严格横向穿越与少数叶临界读出
+
+**定义 14.1（固定祖先少数坐标的实有限乘积延拓）。** 固定整数 $k\ge1$、$j\ge0$，置
+
+$$
+ d=3k,\qquad E=F_{d-2},\quad A=F_{d-1},\quad D=F_d=E+A,\quad L=F_{d+1}=A+D.
+$$
+
+对实数 $t\ge j+1$ 定义
+
+$$
+ a=At+Ej,\qquad b=Dt+Aj,\qquad n=Lt+Dj,
+$$
+
+并用 $(x)_m=\prod_{h=0}^{m-1}(x+h)$、$(x)_0=1$ 记上升乘积。置
+
+$$
+ H_{k,j}(t)=\frac{(a+1)_E(b+1)_A}{4^D(n-\tfrac12)_D},
+ \qquad q_{k,j}(t)=\frac{t-j}{j+1}H_{k,j}(t).
+ \tag{14.1}
+$$
+
+在整数 $t\ge j+1$ 上，定义 13.1 的相邻密度比为 $Q_{k,t,j}=q_{k,j}(t)$。这是因为
+
+$$
+ (2n-1)_{2D}=4^D(n-\tfrac12)_D(n)_D,
+ \tag{14.2}
+$$
+
+而（13.5）中的 $(n)_D$ 正好约去。故 $q$ 在非整数处只是有限乘积的实辅助延拓，那里没有实叶数的树；整数网格仍由完整有序树、其组成祖先和替换像给出。由（12.3）、（12.15）及[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)，每个整数网格使用同一个来源计数和生产者单射性；若同时保留 $0\le j\le t$ 的整张网格，可取共同预算
+
+$$
+ H_t\ge F_{d+2}t.
+ \tag{14.3}
+$$
+
+**定理 14.2（全实域严格增加与唯一穿越）。** 定义 14.1 中 $q_{k,j}$ 在 $[j+1,\infty)$ 上严格增加，并且
+
+$$
+ \frac{q_{k,j}(t)}t\longrightarrow\frac{c_k}{j+1},\qquad
+ c_k=\frac{A^E D^A}{4^D L^D}>0.
+ \tag{14.4}
+$$
+
+存在唯一实数 $\tau_{k,j}$ 使 $q_{k,j}(\tau_{k,j})=1$，且
+
+$$
+ 2j+1<\tau_{k,j}<U_{k,j}:=j+\frac{j+1}{c_k}.
+ \tag{14.5}
+$$
+
+对所有合法整数 $t\ge j+1$，$Q_{k,t,j}<1$、$=1$ 或 $>1$ 分别当且仅当 $t<\tau_{k,j}$、$t=\tau_{k,j}$ 或 $t>\tau_{k,j}$。因此每个 $(k,j)$ 至多有一个整数并列。
+
+证明。先记 $g(t)=(\log q_{k,j})'(t)$。对 $x>0$ 和整数 $m\ge1$，凸性和梯形求积给出
+
+$$
+ \sum_{i=1}^{m}\frac1{x+i}\ge
+ \int_0^m\frac{ds}{x+s}-\frac{m}{2x(x+m)}.
+ \tag{14.6}
+$$
+
+对 $n\ge3$，中点求积先给出
+$\sum_{h=0}^{D-1}(n+h+\tfrac12)^{-1}\le\int_0^D(n+s)^{-1}ds$。把采样点向左移一格后，各差分在求和时望远镜相消，且
+
+$$
+ \sum_{h=0}^{D-1}\left((n+h-\tfrac12)^{-1}-(n+h+\tfrac12)^{-1}\right)
+ =\frac{D}{(n-\tfrac12)(n+D-\tfrac12)},
+$$
+
+得到
+
+$$
+ \sum_{h=0}^{D-1}\frac1{n+h-\tfrac12}\le
+ \int_0^D\frac{ds}{n+s}+\frac{D}{(n-\tfrac12)(n+D-\tfrac12)}.
+ \tag{14.7}
+$$
+
+对 $0\le s\le1$ 置
+
+$$
+ a_s=At+E(j+s),\quad b_s=Dt+A(j+s),\quad n_s=Lt+D(j+s).
+$$
+
+Cassini 等式 $(A^2-DE)^2=1$ 的直接展开给出
+
+$$
+ \frac{AE}{a_s}+\frac{AD}{b_s}-\frac{LD}{n_s}
+ =-\frac{t(j+s)}{a_sb_sn_s}.
+ \tag{14.8}
+$$
+
+由于 $a_s\ge At$、$b_s\ge Dt$、$n_s\ge Lt$，三项未移位积分的总和至少为
+
+$$
+ -\frac{\kappa_k(j+\tfrac12)}{t^2},\qquad \kappa_k=\frac1{LAD}.
+ \tag{14.9}
+$$
+
+由（14.6）–（14.9），对全部 $t\ge j+1$ 有
+
+$$
+\begin{aligned}
+ g(t)\ge{}&\frac1{t-j}-\frac{\kappa_k(j+\tfrac12)}{t^2}
+ -\frac{AE}{2a(a+E)}-\frac{AD}{2b(b+A)}\\
+ &-\frac{LD}{(n-\tfrac12)(n+D-\tfrac12)}.
+ \tag{14.10}
+\end{aligned}
+$$
+
+当 $t\ge2$ 时，Fibonacci 比值给
+$E/A\le1$、$A/D\le2/3$、$D/L\le2/3$、$L\ge3$、$\kappa_k\le1/6$。因而
+
+$$
+ \frac{AE}{2a(a+E)}\le\frac1{2t^2},\qquad
+ \frac{AD}{2b(b+A)}\le\frac1{3t^2},\qquad
+ \frac{LD}{(n-\tfrac12)(n+D-\tfrac12)}\le
+ \frac8{11t^2}.
+ \tag{14.11}
+$$
+
+最后一个界使用 $n-\tfrac12\ge L(t-\tfrac16)$、$n+D-\tfrac12\ge Lt$ 以及 $t\ge2$。在 $j\le t-1$ 下，故
+
+$$
+ g(t)\ge\frac1t-\frac{t-\tfrac12}{6t^2}-\frac{103}{66t^2}
+ =\frac{5}{6t}-\frac{65}{44t^2}>0.
+ \tag{14.12}
+$$
+
+还剩 $j=0$、$1\le t<2$。当 $k\ge2$ 时，递推给
+
+$$
+ \frac35\le\frac EA,\frac AD,\frac DL\le\frac58,\qquad L\ge13,\qquad \kappa_k\le\frac1{520}.
+ \tag{14.13}
+$$
+
+于是（14.10）的两个分子修正各不超过 $25/(128t)$。置 $u=(2L)^{-1}$、$r=D/L$；函数 $t\mapsto t/[(t-u)(t+r-u)]$ 在 $t\ge1$ 上下降，且（14.13）给出
+
+$$
+ \frac{LD}{(n-\tfrac12)(n+D-\tfrac12)}\le\frac{13}{30t},\qquad
+ \frac{\kappa_k}{2t^2}\le\frac1{1040t}.
+ \tag{14.14}
+$$
+
+所以
+
+$$
+ g(t)\ge\frac1t-\frac{25}{64t}-\frac{13}{30t}-\frac1{1040t}
+ =\frac{437}{2496t}>0.
+ \tag{14.15}
+$$
+
+当 $k=1$、$j=0$ 时，$E=A=1,D=2,L=3$，故
+
+$$
+ q_{1,0}(t)=\frac{t(t+1)(2t+1)}{4(36t^2-1)},
+$$
+
+其导数的正分母之外的符号为
+$72t^4-42t^2-6t-1$。对 $t\ge1$，
+
+$$
+ 72t^4-42t^2-6t-1
+ =23t^2+(t-1)(72t^3+72t^2+7t+1)>0.
+ \tag{14.16}
+$$
+
+这覆盖了端点 $t=1$，从而 $g>0$ 的全域证明完成。
+
+在 $t=2j+1$ 时，$q$ 是完整目标纤维的相邻密度比。令
+$V(a,b)=C_{a+b-1}\binom{a+b}{a}$；已有完整树计数给出[（12.15）](#12-完整树替换像的计数密度祖先混合与共轭来源偏差)，而
+
+$$
+ \frac{V(a+1,b)}{V(a,b)}=\frac{2(2(a+b)-1)}{a+1}>1,\qquad
+ \frac{V(a,b+1)}{V(a,b)}=\frac{2(2(a+b)-1)}{b+1}>1.
+ \tag{14.17}
+$$
+
+从而 $q_{k,j}(2j+1)<(2j+1-j)/(j+1)=1$。另一方面（14.1）的最高次项给（14.4），故连续性和严格增加性产生唯一根，并给出根的下界。
+
+为证更强的上界，令
+
+$$
+ H(t)=\frac{(a+1)_E(b+1)_A}{4^D(n-\tfrac12)_D},\qquad
+ H_0(t)=\frac{a^Eb^A}{4^Dn^D}.
+$$
+
+右端点求积和左移半步的单调性给
+
+$$
+ \log\frac{H(t)}{H_0(t)}\ge
+ \int_0^1\!\left[E\log\left(1+\frac{Es}{a}\right)+A\log\left(1+\frac{As}{b}\right)-D\log\left(1+\frac{Ds}{n}\right)\right]ds.
+ \tag{14.18}
+$$
+
+括号内函数在 $s=0$ 为零，且其导数为
+
+$$
+ \frac{E^2}{a+Es}+\frac{A^2}{b+As}-\frac{D^2}{n+Ds}
+ =\frac{(Eb-Aa)^2}{(a+Es)(b+As)(n+Ds)}>0,
+ \tag{14.19}
+$$
+
+因为 $Eb-Aa=t(ED-A^2)$ 且 $|ED-A^2|=1$。故 $H(t)>H_0(t)$。令 $z=j/t$；同一 Cassini 展开给
+
+$$
+ \frac{d}{dz}\log\frac{(A+Ez)^E(D+Az)^A}{(L+Dz)^D}
+ =\frac1{(L+Dz)(A+Ez)(D+Az)}>0.
+ \tag{14.20}
+$$
+
+于是 $H_0(t)\ge c_k$，且严格不等式 $H(t)>c_k$ 在整个合法域成立。由（14.1），在 $U_{k,j}$ 处
+$q_{k,j}(U_{k,j})>c_k(U_{k,j}-j)/(j+1)=1$，这证明（14.5）及全部整数比较。证毕。
+
+**定理 14.3（有限精确阈值与整数边界）。** 定义
+
+$$
+\begin{aligned}
+ \mathsf P_{k,j}(T):={}&(T-j)\prod_{i=1}^{E}(AT+Ej+i)\prod_{s=1}^{A}(DT+Aj+s)\\
+ &-(j+1)2^D\prod_{h=0}^{D-1}(2LT+2Dj+2h-1).
+ \tag{14.21}
+\end{aligned}
+$$
+
+并令
+
+$$
+ T_{k,j}=\min\left\{T\in\mathbb Z:\ 2j+2\le T\le\lceil U_{k,j}\rceil,\quad
+ \mathsf P_{k,j}(T)\ge0\right\}.
+ \tag{14.22}
+$$
+
+该集合非空，且 $T_{k,j}=\lceil\tau_{k,j}\rceil$。所有合法 $t<T_{k,j}$ 满足 $Q_{k,t,j}<1$，所有 $t>T_{k,j}$ 满足 $Q_{k,t,j}>1$；在 $T_{k,j}$ 处，恰当且仅当 $\mathsf P_{k,j}(T_{k,j})=0$ 时有整数并列 $Q_{k,T_{k,j},j}=1$。因此这是有限的精确 tie 决定，而不是对所有 $(k,j)$ 的无并列分类。
+
+证明。由（14.1）、（14.2）清除正分母，得到
+
+$$
+ \operatorname{sgn}(q_{k,j}(T)-1)=\operatorname{sgn}\mathsf P_{k,j}(T).
+ \tag{14.23}
+$$
+
+定理 14.2 给出根在 $2j+1$ 与 $U_{k,j}$ 之间，且在 $\lceil U_{k,j}\rceil$ 处符号为正，所以集合非空。严格增加性说明第一个非负整数正是 $\lceil\tau_{k,j}\rceil$，并给出两个分支及至多一个等号。证毕。
+
+**定理 14.4（固定 $j$ 的横向位移）。** 对每个固定 $j\ge0$，令
+
+$$
+ \kappa_k=\frac1{LAD},\qquad
+ \sigma_k=\frac DL+\frac E{2A}+\frac A{2D},\qquad
+ B_{k,j}=\sigma_k+\kappa_k\left(j+\tfrac12\right).
+$$
+
+则 $k\to\infty$ 时
+
+$$
+ \tau_{k,j}=\frac{j+1}{c_k}+j-\sigma_k-\kappa_k\left(j+\tfrac12\right)+O_j(Dc_k).
+ \tag{14.24}
+$$
+
+这里的余项对固定 $j$ 给出完整有限乘积控制：若 $t\ge2(j+1)$，则
+
+$$
+ \log\frac{H(t)}{c_k}=\frac{B_{k,j}}t+\mathcal R_{k,j}(t),\qquad
+ |\mathcal R_{k,j}(t)|\le\frac{2D(j+1)^2}{t^2}.
+ \tag{14.25}
+$$
+
+证明。把每个有限因子按 $t$ 归一化，置
+
+$$
+ \alpha_i=\frac{Ej+i}{A}\ (1\le i\le E),\quad
+ \beta_s=\frac{Aj+s}{D}\ (1\le s\le A),\quad
+ \gamma_h=\frac{Dj+h-\tfrac12}{L}\ (0\le h<D).
+$$
+
+则
+
+$$
+ \frac{H(t)}{c_k}=\frac{\prod_i(1+\alpha_i/t)\prod_s(1+\beta_s/t)}{\prod_h(1+\gamma_h/t)},
+$$
+
+且直接求和得到
+
+$$
+ \sum_i\alpha_i+\sum_s\beta_s-\sum_h\gamma_h
+ =\sigma_k+\kappa_k\left(j+\tfrac12\right)=B_{k,j}.
+ \tag{14.26}
+$$
+
+这里 $E^2/A+A^2/D-D^2/L=\kappa_k$，仍是 Cassini 恒等式。所有这些偏移的绝对值不超过 $j+1$。当 $t\ge2(j+1)$ 时，$|x|\le1/2$ 且
+$|\log(1+x)-x|\le x^2$；分子、分母合计 $2D$ 个因子，故得（14.25）。
+
+令 $M=(j+1)/c_k$。有 $c_k\le4^{-D}$，所以 $Dc_k\to0$。由（14.25），$q_{k,j}(M/2)<1$ 对充分大的 $k$ 成立，而定理 14.2 给 $\tau_{k,j}<M+j$；故 $\tau_{k,j}\asymp M$，并可在根处使用（14.25）。精确根方程为
+
+$$
+ \left|\log\frac{\tau_{k,j}-j}{M}+\frac{B_{k,j}}{\tau_{k,j}}\right|\le
+ \frac{2D(j+1)^2}{\tau_{k,j}^2}.
+ \tag{14.27}
+$$
+
+在 $\log(1+u)=u+O(u^2)$ 中令
+$u=(\tau_{k,j}-M-j)/M$，并用 $\tau_{k,j}\asymp M$，即得
+$\tau_{k,j}=M+j-B_{k,j}+O_j(D/M)$，这就是（14.24）。证明中的 $O_j(D/M)$ 完全由（14.27）及（14.25）给出，而 $1/M=c_k/(j+1)$。证毕。
+
+为比较（14.24）与连续少数坐标，以下在本章另记
+$r_k:=1-x_k$；它只表示定义 12.1 的连续最小点少数比例，不表示定义 2.1 的许可斜率。由（13.12）及其驻点方程，若
+$\Delta_k=\delta-K'(r_k)$，则
+
+$$
+ \frac{c_k}{r_k}=(1-r_k)^{-1}e^{-\Delta_k},\qquad
+ 0\le\Delta_k\le\kappa_k r_k.
+ \tag{14.28}
+$$
+
+因此 $r_k\to0$、$\kappa_k\to0$、$\sigma_k\to2/\phi$，并且
+
+$$
+ \frac1{c_k}-\frac1{r_k}\longrightarrow-1,\qquad
+ \tau_{k,j}-\frac{j+1}{r_k}\longrightarrow
+ -1-\frac2\phi=-\sqrt5.
+ \tag{14.29}
+$$
+
+这个极限固定 $j$；它是加性穿越位移，不是把 $j$ 或 $t$ 一起增长的均匀估计。
+
+**定理 14.5（固定正整数临界中心的整网格唯一模式）。** 对每个固定正整数 $m$，令
+
+$$
+ t_k^-=\left\lfloor\frac m{r_k}\right\rfloor,\qquad
+ t_k^+=\left\lceil\frac m{r_k}\right\rceil.
+ \tag{14.30}
+$$
+
+充分大的 $k$ 下，二者均为合法整数，且
+
+$$
+ t_k^\pm>\tau_{k,m-1}.
+ \tag{14.31}
+$$
+
+于是 $Q_{k,t_k^\pm,m-1}>1$；结合（13.14）的固定 $m$ 临界范围，两个整网格的唯一极值指标均为 $m$。两条序列最终都严格避开整数 tie。
+
+证明。由（14.29），
+$\frac m{r_k}-\tau_{k,m-1}\to\sqrt5$。故
+$t_k^--\tau_{k,m-1}\ge\frac m{r_k}-1-\tau_{k,m-1}\to$ 一个严格大于零的下界 $\sqrt5-1$，而 $t_k^+\ge m/r_k$；（14.31）成立。又 $t_k^\pm r_k\to m$，所以可对两条序列应用（13.14）：有限极值指标只能是 $m-1$ 或 $m$。严格不等式 $Q_{k,t_k^\pm,m-1}>1$ 排除 $m-1$，故唯一指标为 $m$。定义 14.1 的实延拓不把实数树引入结论；所有模式结论都回到整数来源网格和（12.3）的完整树像。证毕。
+
+**推论 14.6（可核验的无并列子族与剩余整数边界）。** 当 $k=1$ 且 $j\equiv0\pmod3$ 时，不存在合法整数 $t$ 使 $Q_{1,t,j}=1$。任意其他 $(k,j)$ 的整数 tie 恰由（14.21）的正整数方程
+
+$$
+ (t-j)(a+1)_E(b+1)_A
+ =(j+1)2^D\prod_{h=0}^{D-1}(2n+2h-1)
+ \tag{14.32}
+$$
+
+决定；本章不把该剩余的参数集合分类为全无并列。
+
+证明。在 $k=1$ 时 $E=A=1,D=2,L=3$，（14.32）化为
+
+$$
+ (t-j)(t+j+1)(2t+j+1)
+ =4(j+1)\bigl(4(3t+2j)^2-1\bigr).
+ \tag{14.33}
+$$
+
+若 $j\equiv0\pmod3$，左边模 $3$ 为 $t(t+1)(2t+1)\equiv0$，右边模 $3$ 为 $-1\equiv2$，矛盾。其余情形仍由（14.22）给出逐个有限的精确判定。证毕。
+
+本章的 $q_{k,j}(t)$ 只是在完整树密度比的整数值上方延拓的有限乘积；它不表示实大小树、概率律、物理时间、Lorentz 含义或指定树的实际逆执行许可。上述跨越、阈值和唯一模式均限于定义 12.1 的组成、完整有序树计数与实际替换像。
+
+## 追加锚（本行以下为增补区）
+
+## 15. 完整来源密度的整数并列、本原尺度与首深度有限性
+
+**定义 15.1（完整树来源与原整数域的并列多项式）。** 沿用[定义 1.1](#1-有限预算的尺度读出与逆许可分离)、[定义 2.1](#2-许可预算阶梯与深层碰撞前沿)及[定义 12.1](#12-完整树替换像的计数密度祖先混合与共轭来源偏差)。$\mathcal T$ 是所有非空有限自由有序完全二叉树，每片叶标记为 $\alpha$ 或 $\beta$，二元构造不附加交换律或结合律；组成 $c(T)$ 只计数两类叶，保留树本身的全部括号与从左到右叶序。替换仍为
+
+$$
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,\qquad
+\rho(\langle U,V\rangle)=\langle\rho(U),\rho(V)\rangle.
+$$
+
+完整序列化复用[母卷定理 9.2](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)：
+$\operatorname{code}(\alpha)=\alpha\alpha$、$\operatorname{code}(\beta)=\alpha\beta$、$\operatorname{code}(\langle U,V\rangle)=\beta\operatorname{code}(U)\operatorname{code}(V)$，其唯一解析与前缀自由刻画原始树。全部路径观察复用同节定理 9.3：对每个有限左右词，包括空词所指的根，读取 $\alpha$、$\beta$、分支或不存在；这些读数共同恢复原始树。它们不成为定义 1.1 的单个末端数量报告的附加输入。
+
+固定任意整数 $k\ge1$，仍记
+
+$$
+d=3k,\qquad E=F_{d-2},\quad A=F_{d-1},\quad
+D=F_d=E+A,\quad L=F_{d+1}=A+D.
+$$
+
+对每个整数 $t\ge1$，整张网格取 $0\le j\le t$，祖先组成为 $(t-j,j)$，目标组成为
+$a_j=At+Ej$、$b_j=Dt+Aj$，目标叶数为 $n_j=Lt+Dj$。由[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的树替换单射性及（12.3）、（12.15），所比较的密度准确为
+
+$$
+R_{k,t-j,j}
+=\frac{|\rho^{3k}(\mathcal T_{t-j,j})|}{|\mathcal T_{a_j,b_j}|}
+=\frac{C_{t-1}\binom tj}{C_{n_j-1}\binom{n_j}{a_j}},\qquad
+Q_{k,t,j}=\frac{R_{k,t-j-1,j+1}}{R_{k,t-j,j}}\quad(0\le j<t).
+\tag{15.1}
+$$
+
+每张 $(k,t)$ 网格若保留有限预算，使用自己的共同预算 $H_t\ge F_{3k+2}t$，包含全部目标树纤维。组成祖先许可 $S^{-k}c\in\mathbb N_0^2$、指定树属于 $\rho^{3k}(\mathcal T)$、以及允许的实际逆执行是三个不同关系；（15.1）只比较第二个关系在许可组成纤维内的实际集合计数。这里 $L$ 只缩写 Fibonacci 数，密度不指定实际来源的概率律，环境坐标的代数守恒也不提供物理对应。
+
+对相邻比较置 $m=j+1$，故原整数域准确为 $m\ge1,t\ge m$。在整数多项式环 $\mathbb Z[T,m]$ 中定义
+
+$$
+\begin{aligned}
+\mathcal A_k(T,m)
+&=(T-m+1)\prod_{r=0}^{E-1}(AT+Em-r)
+                    \prod_{s=0}^{A-1}(DT+Am-s),\\
+\mathcal B_k(T,m)
+&=2^D m\prod_{h=0}^{D-1}(2LT+2Dm-2D+2h-1),\\
+\mathsf P_k(T,m)&=\mathcal A_k(T,m)-\mathcal B_k(T,m),\\
+G_k&=AD(E-1)!(A-1)!,\qquad
+K_k=2^D\prod_{h=0}^{D-1}(2h+3).
+\end{aligned}
+\tag{15.2}
+$$
+
+这两个新常数不改变第14章的 $\kappa_k$。多项式的原点及其他域外代入只作辅助代数，不表示合法树。对素数 $p$，$v_p$ 表示非零有理数的通常 $p$ 进赋值，并约定 $v_p(0)=+\infty$。
+
+**定理 15.2（原域精确等价与全深度共同素数约束）。** 对全部合法整数 $k\ge1,m\ge1,t\ge m$，有
+
+$$
+\mathcal B_k(t,m)>0,\qquad
+Q_{k,t,m-1}=\frac{\mathcal A_k(t,m)}{\mathcal B_k(t,m)},\qquad
+\operatorname{sgn}(Q_{k,t,m-1}-1)=\operatorname{sgn}\mathsf P_k(t,m).
+\tag{15.3}
+$$
+
+特别地，原树网格的精确并列当且仅当 $\mathsf P_k(t,m)=0$。此外
+
+$$
+\mathsf P_k(T,m)=G_kT^2-K_km+\mathcal R_k(T,m),\qquad
+\mathcal R_k\in(T^3,Tm,m^2)\subset\mathbb Z[T,m].
+\tag{15.4}
+$$
+
+若合法点精确并列，且素数 $p>2D+1$ 同时整除 $t,m$，置 $f=v_p(t)\ge1$、$e=v_p(m)\ge1$，则
+
+$$
+e=2f,\qquad
+G_k\left(\frac{t}{p^f}\right)^2
+\equiv K_k\frac{m}{p^{2f}}\pmod p.
+\tag{15.5}
+$$
+
+$p>2D+1$ 是下述单位系数比较所需的范围，不得从该证明省去；本结论不对遗漏的小素数或非共同素数作同一推断。
+
+证明。将（14.21）中的 $j$ 换成 $m-1$，两个分子块分别反向编号为
+$\prod_{r=0}^{E-1}(AT+Em-r)$ 与 $\prod_{s=0}^{A-1}(DT+Am-s)$，分母块得到（15.2）。在合法域，$n=Lt+D(m-1)\ge Lt\ge3$，所以每个分母因子 $2n+2h-1$ 都为正；$m>0$。于是（14.1）、（14.2）直接给（15.3），没有改变树网格的定义域。
+
+由 $M^3=\left(\begin{smallmatrix}1&2\\2&3\end{smallmatrix}\right)\equiv I\pmod2$，其迭代的非对角元 $D=F_{3k}$ 为偶数。在 $(T,m)=(0,0)$，两个分子块各恰有一个零端点，其余常数的乘积为
+$(-1)^{D-2}(E-1)!(A-1)!=(E-1)!(A-1)!$。因而模理想 $(T^3,Tm,m^2)$，分子恰为 $G_kT^2$。分母除去 $m$ 后的常数因子是 $-3,-5,\ldots,-(2D+1)$；$D$ 偶数使其乘积为正，故分母恰为 $K_km$ 模同一理想。这证明（15.4）。在首深度 $E=A=1,D=2,L=3$，直接展开同一个多项式还得到
+
+$$
+\mathsf P_1(t,m)
+=2t^3+(2-143m)t^2+(-194m^2+195m)t
+ -65m^3+129m^2-60m.
+\tag{15.6}
+$$
+
+若 $p>2D+1$，$G_k$ 的全部素因子来自 $A,D$ 及两个阶乘，$K_k$ 的全部素因子来自 $2$ 和不超过 $2D+1$ 的奇数，故两者都是 $p$ 进单位。将（15.4）代入并列点，两个显示项的赋值分别为 $2f,e$；余项每个单项式的赋值至少为
+$\min\{3f,f+e,2e\}$。若 $e<2f$，只有 $-K_km$ 的赋值最小；若 $e>2f$，只有 $G_kt^2$ 的赋值最小。有限和中唯一最低赋值项不能被其他项消去，两种情形都与等于零矛盾。因此 $e=2f$。此时余项的赋值至少为 $3f>2f$，除以 $p^{2f}$ 后模 $p$ 即得（15.5）。小素数处显示系数可能不为单位，故上述唯一最低赋值论证不适用。证毕。
+
+**定理 15.3（本原方向与共同尺度的严格约束）。** 对任意合法精确并列，置
+
+$$
+x=t-j=t-m+1,\qquad y=j+1=m,\qquad
+g=\gcd(x,y)=\gcd(t+1,m),\qquad u=x/g,\quad v=y/g,
+$$
+
+并定义仅依赖固定 $k$ 的正整数
+
+$$
+B_k^*=\frac{(L-1)!}{(A-1)!},\qquad
+C_k^*=2^D\prod_{h=0}^{D-1}(2L+2h+3).
+\tag{15.7}
+$$
+
+则 $u>v\ge1$、$\gcd(u,v)=1$，且
+
+$$
+1<\frac uv<\frac1{c_k}<\frac{C_k^*}{B_k^*},\qquad
+g\mid(C_k^*v-B_k^*u),\qquad
+0<g\le C_k^*v-B_k^*u,
+\tag{15.8}
+$$
+
+其中 $c_k$ 是（14.4）的原常数。尤其
+
+$$
+g^2<(C_k^*-B_k^*)y,\qquad
+y<(C_k^*-B_k^*)v^2.
+\tag{15.9}
+$$
+
+对每个固定 $k$ 和整数 $V\ge1$，约分后分母 $v\le V$ 的全部合法并列点只有有限多个，并且 $j+1<(C_k^*-B_k^*)V^2$；一个固定互素方向 $(u,v)$ 不能在无界共同尺度上并列。在 $k=1$ 时，这些约束具体为
+
+$$
+B_1^*=2,\quad C_1^*=396,\qquad
+g\mid2(198v-u),\qquad g^2<394(j+1).
+\tag{15.10}
+$$
+
+证明。复用定理 14.2 的严格根区间，精确并列满足
+$2j+1<t<j+(j+1)/c_k$，所以 $1<u/v<1/c_k$。将
+$t=g(u+v)-1$、$j=gv-1$ 代入，目标坐标准确为
+
+$$
+a=g(Au+Dv)-D,\qquad
+b=g(Du+Lv)-L,\qquad
+n=g(Lu+(L+D)v)-(L+D).
+$$
+
+（14.32）的两边各含同一个因子 $g>0$。约去后，将剩余式写为整数多项式 $\Phi(z)$ 在 $z=g$ 处等于零，其中
+
+$$
+\begin{aligned}
+\Phi(z)={}&u\prod_{i=1}^{E}\bigl(z(Au+Dv)-D+i\bigr)
+              \prod_{s=1}^{A}\bigl(z(Du+Lv)-L+s\bigr)\\
+&-v2^D\prod_{h=0}^{D-1}
+ \bigl(2z(Lu+(L+D)v)-2(L+D)+2h-1\bigr).
+\end{aligned}
+\tag{15.11}
+$$
+
+在 $z=0$，两个分子块合为
+$(-1)^D(D-1)!/(A-1)!\cdot(L-1)!/(D-1)!=B_k^*$。分母块反向编号后合为 $C_k^*$。因此
+$\Phi(0)=uB_k^*-vC_k^*$，而 $\Phi(g)=0$ 蕴含 $g\mid\Phi(0)$。这里的 $z=0$ 只是整数多项式常数项，不是树来源。
+
+为统一确定常数项的符号，令 $s=ED-A^2\in\{1,-1\}$。Cassini 与递推给
+$AD=EL-s$、$D^2=AL+s$。将带重数的 $D$ 个分数
+
+$$
+\left\{\frac iA:0\le i<E\right\}
+\mathbin{\sqcup}\left\{\frac rD:0\le r<A\right\}
+$$
+
+按非降次序写成 $z_0,\ldots,z_{D-1}$。对 $0\le h\le D-1$，有
+
+$$
+\frac{Ah}{L}\le E-\frac{A+s}{L}<E,\qquad
+\frac{Dh}{L}\le A-\frac{D-s}{L}<A.
+\tag{15.12}
+$$
+
+两处严格性分别用 $A+s>0$、$D-s>0$；$k=1$ 时 $s=1,A=1,D=2$ 也成立。因此计数没有端点截断，小于等于 $h/L$ 的上述分数数目准确为
+$\lfloor Ah/L\rfloor+\lfloor Dh/L\rfloor+2\ge h+1$，因为 $A+D=L$。故 $z_h\le h/L$。相同的两个连续整数块给
+
+$$
+\frac{B_k^*}{A^ED^A}=\prod_{h=0}^{D-1}(1+z_h)
+<\prod_{h=0}^{D-1}\left(1+\frac{h+3/2}{L}\right)
+=\frac{C_k^*}{4^DL^D}.
+\tag{15.13}
+$$
+
+每个匹配因子都严格小于右侧因子，于是 $C_k^*/B_k^*>1/c_k$。特别地 $C_k^*>B_k^*$，因为 $c_k<1$。结合并列方向的 $u/v<1/c_k$，得 $C_k^*v-B_k^*u>0$；正整数被 $g$ 整除便至少为 $g$，证明（15.8）。又 $u>v$，分别将尺度上界乘以 $g$ 和 $v$，得到
+
+$$
+g^2\le g(C_k^*v-B_k^*u)<(C_k^*-B_k^*)gv,
+\qquad
+y=gv\le C_k^*v^2-B_k^*uv<(C_k^*-B_k^*)v^2.
+$$
+
+这就是（15.9）及严格平方根界 $g<\sqrt{(C_k^*-B_k^*)y}$。固定 $k,V$ 后，$y$ 有统一整数上界，且定理 14.2 再给 $t<y-1+y/c_k$，所以两个原整数参数均有界。固定 $(u,v)$ 的尺度上界则直接来自（15.8）。代入首深度的四个 Fibonacci 数即得（15.10）。本定理的共同因子是 $\gcd(t+1,m)$，与定理 15.2 的 $\gcd(t,m)$ 不同。证毕。
+
+**定理 15.4（首深度的联合有限性与整网格最终唯一模式）。** 原整数域中的集合
+
+$$
+\mathcal Z_1=\{(t,j)\in\mathbb Z^2:j\ge0,\ t\ge j+1,\ Q_{1,t,j}=1\}
+\tag{15.14}
+$$
+
+是有限集。这是同时遍历 $t,j$ 的有限性，未对 $j$ 预设上界。因而存在整数 $T_0\ge1$，使每个整数 $t\ge T_0$ 的整个 $k=1$ 来源网格都恰有一个最大密度指标。该结论不提供有效截止或例外点列表；$\mathcal Z_1$ 是否非空及其全部合法整数点仍未由此确定，也不推出 $k\ge2$ 或增长深度下的联合有限性。
+
+证明。由（15.3）、（15.6），将 $m=j+1$ 代回原整数坐标，合法并列恰是下列三次式的合法整数零点：
+
+$$
+\begin{aligned}
+P(t,j)={}&2t^3-(143j+141)t^2+(-194j^2-193j+1)t\\
+&-65j^3-66j^2+3j+4.
+\end{aligned}
+\tag{15.15}
+$$
+
+它的射影齐次化可直接从（14.33）写为
+
+$$
+F(T,J,Z)=(T-J)(T+J+Z)(2T+J+Z)
+ -4(J+Z)\bigl(4(3T+2J)^2-Z^2\bigr).
+\tag{15.16}
+$$
+
+其 $Z=1$ 仿射嵌入就是 $(t,j)$，没有作有理坐标变换。模 $11$ 的三个偏导准确为
+
+$$
+\begin{aligned}
+\overline F_T&=6T^2+4J^2+4TZ+5JZ+Z^2,\\
+\overline F_J&=8TJ+5TZ+3J^2+3Z^2,\\
+\overline F_Z&=2T^2+5TJ+2TZ+6JZ+Z^2.
+\end{aligned}
+\tag{15.17}
+$$
+
+以下消去在 $\overline{\mathbb F}_{11}$ 上进行。在 $Z=0$，若 $J=0$，$\overline F_T=0$ 迫使 $T=0$，不能给射影点。若 $J\ne0$，置 $x=T/J$；$\overline F_J=0$ 迫使 $8x+3=0$，即 $x=1$，但这时 $\overline F_T/J^2=6+4=10\ne0$。所以无穷远处没有共同偏导零点。在 $Z\ne0$，缩放为 $Z=1$，偏导的恒等式
+
+$$
+\overline F_J-6\overline F_Z+2\overline F_T=T-4J-1
+$$
+
+迫使任何共同零点满足 $T=4J+1$。代入后
+
+$$
+\overline F_T=J(J+3),\qquad
+\overline F_J=2J(J+3)+8,
+\tag{15.18}
+$$
+
+两式不能同时为零。因此该射影三次曲线模 $11$ 光滑；这不是只检查有限域有理点，而是排除了代数闭包中的全部奇点。
+
+若特征零曲线存在代数奇点，其坐标落在某个数域。在一个位于 $11$ 上方的离散赋值环中，将齐次坐标共同缩放为全体整且至少一项为单位。整数系数的 $F$ 及其三个齐次偏导仍全部为零，约化便给模 $11$ 代数闭包中一个非零射影共同零点，与上述消去矛盾。因此 $F=0$ 在 $\overline{\mathbb Q}$ 上也光滑。
+
+此非零三次式定义平面 Cartier 曲线，故等维为一且无嵌入点。[Stacks Project，Plane curves，Lemma 53.9.3（tag 0BYA）](https://stacks.math.columbia.edu/tag/0BYA)在 $\overline{\mathbb Q}$ 上给 $H^0(\mathcal O)=\overline{\mathbb Q}$ 及亏格 $(3-1)(3-2)/2=1$。第一式使曲线连通，光滑性使其约化；不同不可约分量若相交，交点局部环便不是正则的一维局部环，故光滑曲线的分量互不相交。连通性于是给几何不可约，从而它是几何整的光滑射影亏格一曲线。$Z=0$ 上的非零齐次三次式有代数零点，所以 $Z=1$ 部分是删去非空无穷远边界所得的光滑仿射曲线，其光滑射影完成仍是这条曲线。
+
+现在将 [Aaron Levin，*Integral points of bounded degree on affine curves*，arXiv:1402.2346v1，引言及 Theorem 1.1](https://arxiv.org/pdf/1402.2346v1)所述的 Siegel 正亏格仿射整点有限性直接用于此原仿射嵌入。数域取 $\mathbb Q$，有限位集取 $S=\{\infty\}$；$\mathcal O_{\mathbb Q,S}=\mathbb Z$，故其 $S$ 整点准确是 $P(t,j)=0$ 的原坐标整数点。同文定理 1.2 后的正规化说明与这里相容：已经光滑的仿射曲线就是自身的正规化，不需从另一个有理模型运输整性。亏格为一使该整数点集有限，合法子集 $\mathcal Z_1$ 因而有限。
+
+取 $T_0$ 严格大于 $\mathcal Z_1$ 的全部 $t$ 坐标；若该集为空可取 $T_0=1$。对 $t\ge T_0$，全网格没有任何相邻比值等于一。复用定理 13.1（一）的严格相邻比下降与端点交叉，最大密度指标便唯一；$t=1$ 的唯一性也已在该定理内。每张网格仍取共同预算 $H_t\ge F_5t=5t$。Siegel 的有限性在此未附带可计算的高度上界，故不能据此枚举例外，也不能把首深度结论外推到其他深度。证毕。
+
+**定理 15.5（首深度互素排除与平方自由无并列族）。** 每个合法 $k=1$ 精确并列都满足 $\gcd(t,j+1)>1$。因此，对所有 $j\ge0$，若 $m=j+1$ 平方自由且 $\gcd(m,30)=1$，则每个合法整数 $t\ge m$ 都有 $Q_{1,t,j}\ne1$。
+
+证明。假设 $\gcd(t,m)=1$ 且存在合法并列。（15.6）模 $m$ 为 $2t^2(t+1)$，故 $m\mid2(t+1)$。直接代入同一个三次式给
+
+$$
+\begin{aligned}
+\mathsf P_1(71m-1,m)&=m(-18880m^2+14310m-256)<0,\\
+\mathsf P_1(73m-1,m)&=m(1760m^2+14120m-252)>0
+\qquad(m\ge1).
+\end{aligned}
+\tag{15.19}
+$$
+
+第一行括号至多为 $-4570m-256$；第二行括号至少为 $1760+14120-252>0$。两个横坐标都在 $t\ge m$ 的合法实延拓域内。由（15.3）及定理 14.2 的唯一穿越，任何并列必须严格满足 $71m-1<t<73m-1$。于是
+$r=2(t+1)/m$ 是严格位于 $142$ 与 $146$ 之间的整数，只能取 $143,144,145$。这是整除性强制的三个方向。
+
+在这些方向，原三次式准确化为
+
+$$
+\begin{array}{c|c}
+r=143,\ t=143m/2-1
+&\mathsf P_1(t,m)=\dfrac m2(-27872m^2+28531m-510)\\[3pt]
+r=144,\ t=72m-1
+&\mathsf P_1(t,m)=m(-8849m^2+14219m-254)\\[3pt]
+r=145,\ m=2h,\ t=145h-1
+&\mathsf P_1(t,2h)=2h(-14470h^2+28341h-253).
+\end{array}
+\tag{15.20}
+$$
+
+第一行中 $t$ 整数迫使 $m$ 为偶数，故 $m\ge2$；括号至多为 $-27213m-510<0$。第二行的二次式在 $m\ge1$ 严格下降，在 $1,2$ 处分别为 $5116,-7212$，所以没有正整数零点。第三行中 $h\ge1$，二次式也严格下降，在 $1,2$ 处分别为 $13618,-1451$，也没有正整数零点。三个方向都不能并列，证明互素排除。
+
+若 $m$ 平方自由且与 $30$ 互素，任何同时整除 $t,m$ 的素数 $p$ 都大于 $5=2D+1$，且 $v_p(m)=1$。定理 15.2 却要求 $1=2v_p(t)$，矛盾。因此精确并列会迫使 $\gcd(t,m)=1$，又被刚证的首深度互素排除否定。$m=1$ 也由该互素排除涵盖。这一无界族包括 $m=11,j=10$，但没有排除全部非平方自由参数或全部与 $30$ 不互素的参数。证毕。
+
+**定理 15.6（联合实精度与任意固定有限素数精度的严格非并列）。** 对每个固定整数 $k\ge1$ 和 $B\ge2$，存在无穷多个不同合法整数对 $(t_N,j_N)$，使
+
+$$
+Q_{k,t_N,j_N}>1,\qquad Q_{k,t_N,j_N}\longrightarrow1,
+\qquad
+v_p(Q_{k,t_N,j_N}-1)\ge v_p(B)\quad\text{对每个 }p\mid B.
+\tag{15.21}
+$$
+
+因此，对任意给定实误差 $\epsilon>0$ 和任意给定有限组素数及其正整数精度，同时满足 $0<Q-1<\epsilon$ 与这些 $p$ 进精度的合法点仍可严格非并列。这些固定精度条件不蕴含精确等号；本结论不否定定理 14.3 对每个 $(k,j)$ 的自适应精确整数判定。
+
+证明。先在（15.4）的辅助整数多项式中代入
+$T=K_k Z$、$m=G_kK_kZ^2$。两个显示的二次项相消，理想中的三个生成元分别带至少三次的 $Z$，所以存在 $U,V\in\mathbb Z[Z]$，使
+
+$$
+\mathsf P_k(K_kZ,G_kK_kZ^2)=Z^3U(Z),\qquad
+\mathcal B_k(K_kZ,G_kK_kZ^2)=Z^2V(Z),\qquad
+V(0)=V_0:=G_kK_k^2>0.
+\tag{15.22}
+$$
+
+最后的常数再次由 $D$ 偶数及分母奇数块的常数项得到。取 $Z_0=V_0B$，定义整数 $t_0=K_kZ_0$、$m_0=G_kK_kZ_0^2$。这只是代数剩余类种子，不要求 $t_0\ge m_0$，不把它当作合法树网格。因为 $t_0,m_0\ge1$，$Lt_0+D(m_0-1)\ge L$，故其分母值
+$b_0:=\mathcal B_k(t_0,m_0)>0$。
+
+对每个 $p\mid B$，写 $b=v_p(B)\ge1$、$v_0=v_p(V_0)$。由 $V(Z)=V_0+ZW(Z)$、$W\in\mathbb Z[Z]$ 及 $v_p(Z_0)=v_0+b>v_0$，得到 $v_p(V(Z_0))=v_0$。因而（15.22）给
+
+$$
+v_p\left(\frac{\mathsf P_k(t_0,m_0)}{b_0}\right)
+\ge v_p(Z_0)-v_0=b.
+\tag{15.23}
+$$
+
+这一步对整除 $G_k,K_k$ 的小素数也成立，没有要求分母在 $p$ 处为单位。
+
+令 $\Lambda=Bb_0>0$。对每个整数 $N\ge0$，取
+
+$$
+\begin{gathered}
+m_N=m_0+\Lambda N,\qquad j_N=m_N-1,\\
+t_N=t_0+\Lambda\left(
+\left\lfloor\frac{\tau_{k,j_N}-t_0}{\Lambda}\right\rfloor+1\right).
+\end{gathered}
+\tag{15.24}
+$$
+
+定理 14.2 给 $\tau_{k,j_N}>2m_N-1\ge m_N$，取整公式给
+$\tau_{k,j_N}<t_N\le\tau_{k,j_N}+\Lambda$。所以 $t_N$ 是合法整数且严格在穿越右侧，$Q_{k,t_N,j_N}>1$。不同 $N$ 的 $m_N$ 不同，所得合法对无穷多个。
+
+同时 $(t_N,m_N)\equiv(t_0,m_0)\pmod\Lambda$，两个整数多项式的值都保持该同余。固定 $p\mid B$，置 $d_0=v_p(b_0)$，则 $v_p(\Lambda)=d_0+b>d_0$，从而
+$v_p(\mathcal B_k(t_N,m_N))=d_0$。由（15.23），$v_p(\mathsf P_k(t_0,m_0))\ge d_0+b$，而同余进一步给
+$v_p(\mathsf P_k(t_N,m_N))\ge d_0+b$。用（15.3）相除即得（15.21）的全部赋值条件。这里保留了每个模数素因子处的真实分母赋值，而不是只对未约分的分子作同余比较。
+
+最后固定 $m=m_N$，在 $\tau_{k,m-1}\le t\le t_N$ 上使用（14.1）的实辅助延拓。它的对数导数为
+
+$$
+\frac1{t-m+1}
++\sum_{i=1}^{E}\frac A{At+E(m-1)+i}
++\sum_{s=1}^{A}\frac D{Dt+A(m-1)+s}
+-\sum_{h=0}^{D-1}\frac{2L}{2Lt+2D(m-1)+2h-1}.
+$$
+
+丢去最后的负项；前面两块共有 $E+A=D$ 项，每项至多为 $1/t\le1/m$，而 $t>2m-1$ 给 $1/(t-m+1)<1/m$。定理 14.2 又保证对数导数为正，所以从根处 $\log q=0$ 积分得到
+
+$$
+0<\log Q_{k,t_N,j_N}
+\le\frac{(D+1)(t_N-\tau_{k,j_N})}{m_N}
+\le\frac{(D+1)\Lambda}{m_N}\longrightarrow0.
+\tag{15.25}
+$$
+
+这证明实数比值趋于一。对任意有限组素数精度，取 $B$ 为相应素数幂的乘积即可；若组为空，可取 $B=2$。每个最终点的两端祖先组成为 $(t_N-j_N,j_N)$ 和 $(t_N-j_N-1,j_N+1)$，都是原域内的非空整数组成，全部有完整有序树代表；各自的实际替换像仍由（15.1）计数，每张网格取 $H_{t_N}\ge F_{3k+2}t_N$。种子的域外代入及证明中的实积分都未取代这些最终合法树。所构造的点全部严格非并列，并不确定精确并列是否存在、首深度全部合法整点或增长深度的无界本原方向分类。证毕。
+
+## 追加锚（本行以下为增补区）
