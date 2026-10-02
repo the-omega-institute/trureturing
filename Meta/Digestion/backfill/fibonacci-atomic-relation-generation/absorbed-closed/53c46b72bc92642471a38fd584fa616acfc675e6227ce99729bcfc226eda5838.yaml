@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:53c46b72bc92642471a38fd584fa616acfc675e6227ce99729bcfc226eda5838
   normalized_sha256: sha256:53c46b72bc92642471a38fd584fa616acfc675e6227ce99729bcfc226eda5838
 cas_ref: sha256:53c46b72bc92642471a38fd584fa616acfc675e6227ce99729bcfc226eda5838
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/Robin/EulerValuationMomentComparison.result
+    target_statement_id: sha256:8e9ea223f9ec44687ca2d864e306a566b1c0998a7603ff6e80004f55dac9cf49
 receipts:
   unresolved_subitems: []
