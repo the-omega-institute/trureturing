@@ -74,7 +74,7 @@ $$\frac{\operatorname{conditionalEntropy}\left(\operatorname{Uniform}\left(G\rig
 
 *Commentary.*
 
-The deterministic profile decomposition subtracts the realized profile entropy from the uniform source entropy. This is the second boxed conclusion of FPOD Corollary 90.1.
+The deterministic profile decomposition subtracts the realized profile entropy from the uniform source entropy.
 
 **Theorem 1.7 (A zero character family carries no profile information).**
 
