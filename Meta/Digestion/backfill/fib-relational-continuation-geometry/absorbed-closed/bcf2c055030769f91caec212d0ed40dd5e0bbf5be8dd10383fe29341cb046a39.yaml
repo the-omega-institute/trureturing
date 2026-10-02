@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:bcf2c055030769f91caec212d0ed40dd5e0bbf5be8dd10383fe29341cb046a39
   normalized_sha256: sha256:bcf2c055030769f91caec212d0ed40dd5e0bbf5be8dd10383fe29341cb046a39
 cas_ref: sha256:bcf2c055030769f91caec212d0ed40dd5e0bbf5be8dd10383fe29341cb046a39
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Recurrence/Invariants/CloitreActualUnweightedCone.full30_2
+    target_statement_id: sha256:0e6bdb93f42b62a6c8ddd48c587c23c0ad3bc152c8bc932d0eb39a5870054fec
 receipts:
   unresolved_subitems: []
