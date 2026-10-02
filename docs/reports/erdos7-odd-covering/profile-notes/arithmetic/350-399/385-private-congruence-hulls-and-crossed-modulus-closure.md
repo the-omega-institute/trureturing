@@ -25192,3 +25192,79 @@ two-vacancy route in this branch; conversely, any use of that route here
 must pay an external-coordinate phase and its full source liability. The
 result does not force such an \(h\), nor does it prove a global exchange or
 settle unrestricted Erdős #7.
+
+## 216. The full-height prefix-separated ternary branch has a single cofactor prime
+
+There is a further reduction in one of the remaining \(p=3\) branches. Assume
+that the occupied top layer has exactly three classes
+
+\[
+  9m_1,\quad 9m_2,\quad 9m_3,
+  \qquad 3\nmid m_i,
+  \tag{TR1}
+\]
+
+that \(e=2=v_3(Q)\), and that the source phase is prefix-separated from the
+occupied label \(R=3L\) modulo \(3\). Here
+
+\[
+  L=\operatorname{lcm}(m_1,m_2,m_3),
+  \qquad
+  N=Q/3.
+\]
+
+Section 193 identifies the occupied class's liability with its complete
+private region \(P_R\). Reusing its private-hull identity and the notation
+of Section 192 gives
+
+\[
+  \Gamma_R=9K_A,\qquad L\mid K_A,
+  \tag{TR2}
+\]
+
+where \(\Gamma_R\) is the complete private hull computed on the original
+period. The prefix-separated hull-occupancy conclusion (PS-Hull-Occupancy)
+therefore forces
+
+\[
+  9d\in D\qquad(d\mid L).
+  \tag{TR3}
+\]
+
+Indeed, every \(9d\) in (TR3) is an odd nonunit divisor of \(\Gamma_R\), so
+it cannot be a fresh numerical label in an EB1 comparison.
+
+Since \(v_3(Q)=2\), the labels in (TR3) are exactly the original labels at
+3-height two. The top layer in (TR1) has only three members, so
+
+\[
+  \tau(L)\le 3.
+  \tag{TR4}
+\]
+
+The three distinct cofactors \(m_i\mid L\) already give
+\(\tau(L)\ge3\). Hence equality holds. The only positive integer with exactly
+three divisors is the square of a prime, and \(3\nmid L\), so
+
+\[
+  \boxed{
+  L=r^2,\qquad
+  \{m_1,m_2,m_3\}=\{1,r,r^2\}
+  }
+  \tag{TR5}
+\]
+
+for one odd prime \(r\). Divisor closure and (TR3) consequently occupy all
+of
+
+\[
+  3,\ 3r,\ 3r^2,\ 9,\ 9r,\ 9r^2.
+  \tag{TR6}
+\]
+
+This is a genuine branch reduction: none of the labels in (TR6) may be
+reused as a fresh repair label in the prefix-separated \(e=2\) branch. It
+does not apply when \(v_3(Q)>2\), because the \(p^e\parallel Q\) hypothesis
+behind Sections 192--194 then fails. It also leaves the equal-prefix branch,
+the \(\lvert I_-\rvert=2\) phase liability, and the resulting \(r\)-phase
+problem open; no unrestricted Erdős #7 conclusion follows.
