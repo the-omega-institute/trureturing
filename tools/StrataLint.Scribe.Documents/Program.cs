@@ -5,7 +5,9 @@ namespace StrataLint.Scribe.Documents;
 public static class Program
 {
     public static int Main(string[] args) => ScribeCli.Run(
-        DocumentAssembly.Value,
+        args is ["resources", "verify-source", "--tree-from", _]
+            ? typeof(Program).Assembly
+            : DocumentAssembly.Value,
         args,
         Directory.GetCurrentDirectory(),
         Console.Out,

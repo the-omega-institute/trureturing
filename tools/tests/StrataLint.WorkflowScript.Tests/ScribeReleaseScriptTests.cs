@@ -10,8 +10,10 @@ public sealed class ScribeReleaseScriptTests
     [InlineData("untracked", "UntrackedFiles")]
     [InlineData("ignored-blueprint", "UntrackedReleaseInput")]
     [InlineData("ignored-projection", "UntrackedReleaseInput")]
-    [InlineData("staged", "DirtyIndex")]
-    [InlineData("unstaged", "DirtyTrackedWorktree")]
+    [InlineData("staged", "SourceContentMismatch")]
+    [InlineData("unstaged", "SourceContentMismatch")]
+    [InlineData("assume-unchanged", "SourceContentMismatch")]
+    [InlineData("skip-worktree", "SourceContentMismatch")]
     public void DirtyRepositoryNeverInvokesRelease(string change, string reason)
     {
         if (OperatingSystem.IsWindows()) return;
@@ -20,7 +22,8 @@ public sealed class ScribeReleaseScriptTests
         var result = fixture.Run();
         Assert.Equal(1, result.ExitCode);
         Assert.Contains(reason + ":", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
-        Assert.Empty(fixture.Calls);
+        Assert.DoesNotContain("release", fixture.Calls);
+        Assert.DoesNotContain("verify-release", fixture.Calls);
     }
 
     [Fact]
@@ -30,9 +33,20 @@ public sealed class ScribeReleaseScriptTests
         using var fixture = new ReleaseFixture();
         var result = fixture.Run();
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
-        Assert.Equal(new[] { "release", "verify-release" }, fixture.Calls);
+        Assert.Equal(new[] { "verify-source", "release", "verify-release" }, fixture.Calls);
         Assert.Equal(ReleaseFixture.Definition + "\n", fixture.ExpectedPaths);
         Assert.False(File.Exists(fixture.PathsFile));
+    }
+
+    [Fact]
+    public void StagedOnlyChangeWithHeadBytesOnDiskReachesRelease()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ReleaseFixture();
+        fixture.Change("staged-only");
+        var result = fixture.Run();
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        Assert.Equal(new[] { "verify-source", "release", "verify-release" }, fixture.Calls);
     }
 
     private sealed class ReleaseFixture : IDisposable
@@ -74,6 +88,10 @@ public sealed class ScribeReleaseScriptTests
                 shift
                 command="$1"
                 shift
+                if [[ "$command" == verify-source ]]; then
+                  printf '%s\n' "$command" >> "$RELEASE_CALLS"
+                  exec "$RELEASE_DOTNET" "$RELEASE_HOST" resources verify-source "$@"
+                fi
                 printf '%s\n' "$command" >> "$RELEASE_CALLS"
                 while [[ $# -gt 0 ]]; do
                   case "$1" in
@@ -112,12 +130,24 @@ public sealed class ScribeReleaseScriptTests
                     Write(Definition, "staged definition\n");
                     Git("add", Definition);
                     break;
+                case "staged-only":
+                    Write(Definition, "staged definition\n");
+                    Git("add", Definition);
+                    Write(Definition, "neutral definition\n");
+                    break;
+                case "assume-unchanged":
+                case "skip-worktree":
+                    Git("update-index", "--" + change, Definition);
+                    Write(Definition, "modified definition\n");
+                    break;
                 case "unstaged": Write(Definition, "unstaged definition\n"); break;
             }
         }
 
         internal ProcessOutput Run() => TestProcessRunner.Run("env",
             [$"PATH={bin}:{Environment.GetEnvironmentVariable("PATH")}", $"RELEASE_CALLS={calls}",
+                $"RELEASE_DOTNET={Path.Combine(Environment.GetEnvironmentVariable("DOTNET_ROOT")!, "dotnet")}",
+                $"RELEASE_HOST={Path.Combine(TestRepositoryLayout.FindRoot(), "tools/StrataLint.Scribe.Documents/bin/Release/net10.0/StrataLint.Scribe.Documents.dll")}",
                 $"RELEASE_PATHS_COPY={pathsCopy}", $"RELEASE_PATHS_FILE={pathsFile}", "/bin/bash", Path.Combine(root, Script)],
             root, TestBudgets.ScriptProcessHangGuard, 64 * 1024);
 

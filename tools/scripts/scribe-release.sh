@@ -19,20 +19,6 @@ cd "$ROOT"
 git --version >/dev/null || fail 2 'GitUnavailable'
 dotnet --version >/dev/null || fail 2 'SdkUnavailable: install the SDK selected by global.json'
 [[ "$(git rev-parse --show-toplevel)" == "$ROOT" ]] || fail 2 'InvalidRepositoryRoot'
-if git diff --quiet --no-ext-diff --no-textconv --ignore-submodules=none --; then
-  :
-else
-  code="$?"
-  [[ "$code" -eq 1 ]] || fail 2 'GitWorktreeDiffFailed'
-  fail 1 'DirtyTrackedWorktree: commit or remove tracked worktree changes before release'
-fi
-if git diff --cached --quiet --no-ext-diff --no-textconv --ignore-submodules=none HEAD --; then
-  :
-else
-  code="$?"
-  [[ "$code" -eq 1 ]] || fail 2 'GitIndexDiffFailed'
-  fail 1 'DirtyIndex: commit or remove staged changes before release'
-fi
 untracked="$(git ls-files --others --exclude-standard)" || fail 2 'GitUntrackedFilesFailed'
 [[ -z "$untracked" ]] || fail 1 'UntrackedFiles: commit or remove untracked files before release'
 inputs="$(git ls-files --others -- Blueprint Golden/Projection)" || fail 2 'GitReleaseInputsFailed'
@@ -41,7 +27,12 @@ SOURCE_COMMIT="$(git rev-parse --verify HEAD)" || fail 2 'SourceCommitUnavailabl
 [[ "$SOURCE_COMMIT" =~ ^[0-9a-f]{40}$ ]] || fail 2 'InvalidSourceCommit'
 DIRECTORY="$ROOT/Generated/scribe-release/$SOURCE_COMMIT"
 PATHS_FILE="$(mktemp "${TMPDIR:-/tmp}/scribe-paths.XXXXXX")" || fail 2 'DefinitionPathsTemporaryFileFailed'
-trap 'rm -f "$PATHS_FILE"' EXIT
+TREE_FILE="$(mktemp "${TMPDIR:-/tmp}/scribe-tree.XXXXXX")" || fail 2 'SourceTreeTemporaryFileFailed'
+trap 'rm -f "$PATHS_FILE" "$TREE_FILE"' EXIT
+git ls-tree -r -z "$SOURCE_COMMIT" > "$TREE_FILE" || fail 2 'GitSourceTreeFailed'
+dotnet run --project "$PROJECT" --configuration Release -- \
+    resources verify-source --tree-from "$TREE_FILE" \
+  || fail "$?" 'SourceContentMismatch: disk bytes do not match source commit'
 tree_paths="$(git ls-tree -r --name-only "$SOURCE_COMMIT" -- Blueprint)" || fail 2 'GitDefinitionPathsFailed'
 while IFS= read -r path; do
   case "$path" in *.scribe.cs) printf '%s\n' "$path" ;; esac

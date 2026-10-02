@@ -6,11 +6,15 @@ internal static class ScribeResourceCommands
 {
     internal const string Usage = "usage: resources pack --out <file> | resources verify --pack <file>"
         + " | resources release --source-commit <commit> --out <directory>"
-        + " | resources verify-release --dir <directory> [--source-commit <commit>] [--total-sha256 <digest>] [--paths-from <file>]";
+        + " | resources verify-release --dir <directory> [--source-commit <commit>] [--total-sha256 <digest>] [--paths-from <file>]"
+        + " | resources verify-source --tree-from <file>";
 
     internal static int Run(Assembly assembly, IReadOnlyList<string> arguments, string workingDirectory,
         Func<string> repositoryRoot, TextWriter output, TextWriter error)
     {
+        if (arguments.Count > 1 && arguments[1] == "verify-source")
+            return ScribeSourceCommands.Run(arguments, workingDirectory, repositoryRoot, output, error);
+
         if (arguments.Count > 1 && arguments[1] is "release" or "verify-release")
             return ScribeReleaseCommands.Run(arguments, workingDirectory, repositoryRoot, output, error);
 
