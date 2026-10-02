@@ -509,3 +509,17 @@ format T:System.UIntPtr
 M:StrataLint.Scribe.DefinitionDsl.Header(System.String,System.String,StrataLint.Engine.Anchor[])
 M:System.Range.#ctor(System.Index,System.Index)
 M:StrataLint.Scribe.ScribeDocument.Create(StrataLint.Scribe.DocumentHeader,StrataLint.Scribe.Heading,StrataLint.Scribe.BlockSequence,System.Collections.Generic.IEnumerable{StrataLint.Scribe.DocumentEdge})
+
+T:System.Collections.Generic.List`1.Enumerator
+M:System.Collections.Generic.List`1.GetEnumerator
+M:System.Collections.Generic.List`1.Enumerator.MoveNext
+M:System.Collections.Generic.List`1.Enumerator.Dispose
+P:System.Collections.Generic.List`1.Enumerator.Current
+T:System.Collections.Immutable.ImmutableArray
+T:System.Collections.Immutable.ImmutableArray`1.Enumerator
+M:System.Collections.Immutable.ImmutableArray`1.GetEnumerator
+M:System.Collections.Immutable.ImmutableArray`1.Enumerator.MoveNext
+P:System.Collections.Immutable.ImmutableArray`1.Enumerator.Current
+M:System.Collections.Immutable.ImmutableArray.Create``1(System.ReadOnlySpan{``0})
+T:System.ReadOnlySpan`1
+P:System.Collections.Immutable.ImmutableArray`1.Length

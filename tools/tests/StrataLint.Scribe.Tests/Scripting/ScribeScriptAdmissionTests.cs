@@ -42,7 +42,8 @@ public sealed class ScribeScriptAdmissionTests
         using var root = new TemporaryRoot();
         Write(root, Entry, Definition("foreach (var value in new Values()) { _ = value; }")
             + "internal sealed class Values : List<int> { }");
-        Reject(ScribeScriptHost.Execute(root.Path, Entry), "M:System.Collections.Generic.List`1.GetEnumerator");
+        var table = TableWithout(root, "T:System.Collections.Generic.List`1.Enumerator");
+        Reject(ScribeScriptHost.ExecuteWithAllowlistPath(root.Path, Entry, table), "T:System.Collections.Generic.List`1.Enumerator");
     }
 
     [Fact]
@@ -166,7 +167,11 @@ public sealed class ScribeScriptAdmissionTests
     {
         using var root = new TemporaryRoot();
         Write(root, Entry, Definition("""
-            int[] values = [1, 2];
+            IEnumerable<int> source = [1, 2];
+            int[] values = [..source];
+            List<int> copy = [..values];
+            System.Collections.Immutable.ImmutableArray<int> immutable = [..copy];
+            _ = immutable.Length;
             var sum = 0;
             foreach (var value in (IEnumerable<int>)values) sum += value;
             var pair = (Name: "sum", Total: values.Select(value => value + sum).ToArray()[0]);

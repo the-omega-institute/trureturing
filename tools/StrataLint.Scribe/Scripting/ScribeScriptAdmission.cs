@@ -176,6 +176,11 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
         var failure = Member(collection.ConstructMethod, collection.Syntax);
         if (failure is not null || collection.Type is IArrayTypeSymbol) return failure;
         if (collection.Type is not INamedTypeSymbol type) return Disallowed(collection.Syntax, "unrecognized collection type");
+        if (collection.ConstructMethod is null && ScribeScriptAllowlist.Id(type) is
+            "T:System.Collections.Generic.IEnumerable`1" or "T:System.Collections.Generic.IReadOnlyList`1"
+            or "T:System.Collections.Generic.IReadOnlyCollection`1") return null;
+        if (collection.ConstructMethod is { IsStatic: true }
+            && ScribeScriptAllowlist.Id(type) == "T:System.Collections.Immutable.ImmutableArray`1") return null;
         if (ScribeScriptAllowlist.Id(type) != "T:System.Collections.Generic.List`1")
             return Disallowed(collection.Syntax, $"unrecognized collection construction {ScribeScriptAllowlist.Id(type)}");
         var add = model.LookupSymbols(collection.Syntax.SpanStart, type, "Add").OfType<IMethodSymbol>()
@@ -193,17 +198,25 @@ internal sealed class ScribeScriptAdmission(CSharpCompilation compilation, Scrib
             SymbolEqualityComparer.Default.Equals(candidate.OriginalDefinition, enumerable));
         if (contract is null) return Disallowed(node, $"unrecognized spread enumeration {ScribeScriptAllowlist.Id(named)}");
         // Pattern enumeration can override the interface contract; refuse it unless every selected member is registered.
-        var get = model.LookupSymbols(node.SpanStart, named, "GetEnumerator").OfType<IMethodSymbol>()
-            .SingleOrDefault(method => !method.IsStatic && method.Parameters.Length == 0)
-            ?? contract.GetMembers("GetEnumerator").OfType<IMethodSymbol>().Single();
+        var candidates = model.LookupSymbols(node.SpanStart, named, "GetEnumerator").OfType<IMethodSymbol>()
+            .Where(method => !method.IsStatic && method.Parameters.Length == 0
+                && method.DeclaredAccessibility == Accessibility.Public).ToArray();
+        var declared = candidates.Where(method => SymbolEqualityComparer.Default.Equals(method.ContainingType, named)).ToArray();
+        if (declared.Length != 0) candidates = declared;
+        if (named.TypeKind == TypeKind.Interface)
+            candidates = candidates.Where(method => SymbolEqualityComparer.Default.Equals(
+                method.ReturnType, contract.GetMembers("GetEnumerator").OfType<IMethodSymbol>().Single().ReturnType)).ToArray();
+        if (candidates.Length > 1) return Disallowed(node, "ambiguous spread GetEnumerator");
+        var get = candidates.SingleOrDefault() ?? contract.GetMembers("GetEnumerator").OfType<IMethodSymbol>().Single();
         var failure = Member(get, node);
         if (failure is not null) return failure;
         var enumerator = get.ReturnType;
         foreach (var name in new[] { "MoveNext", "Current", "Dispose" })
         {
-            var symbols = model.LookupSymbols(node.SpanStart, enumerator, name);
+            var symbols = enumerator.GetMembers(name);
             if (symbols.IsEmpty && enumerator is INamedTypeSymbol enumType)
                 symbols = enumType.AllInterfaces.SelectMany(item => item.GetMembers(name)).ToImmutableArray();
+            if (symbols.IsEmpty && name == "Dispose") continue;
             if (symbols.Length != 1) return Disallowed(node, $"unrecognized enumeration member {name}");
             failure = Member(symbols[0], node);
             if (failure is not null) return failure;
