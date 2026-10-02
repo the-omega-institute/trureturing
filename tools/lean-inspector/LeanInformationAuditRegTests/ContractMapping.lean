@@ -57,7 +57,8 @@ def run (oldEnv newEnv : Environment) (mapping : NameMapping)
       else claim)) changedEnvironment
   let environmentClaim ← rejected "stale_environment_claim" "new.current_descriptor|new.current_result" <|
     verifyRecord oldEnv changedEnvironment (inlineAuthorization mapping) oldRecord newRecord
-  let readout ← rejected "same_type_readout" "new.current_descriptor|new.current_result|descriptor.mapped" <|
+  let readout ← rejected "same_type_readout"
+      "new.current_descriptor|new.current_result|descriptor.mapped|evidence.new" <|
     verifyRecord oldEnv newEnv (inlineAuthorization mapping) oldRecord { newRecord with
       descriptor := some changed
       result := .declaredValidated { certificate with descriptorIdentity := identity } }
