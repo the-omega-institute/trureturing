@@ -43,7 +43,8 @@ class ReuseTests(unittest.TestCase):
             self.write(path, value)
         self.write_policy()
         for name in ['tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
-                'tools/scripts/worktree/lean-cache-input.sh']:
+                'tools/scripts/worktree/lean-cache-input.sh', 'tools/scripts/worktree/lean_cache_release.py',
+                'tools/scripts/worktree/lean_cache.py', 'tools/scripts/worktree/cache_material.py']:
             path = self.root / name
             path.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / name, path)

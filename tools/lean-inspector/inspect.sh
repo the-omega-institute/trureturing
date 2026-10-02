@@ -7,7 +7,6 @@ REPOSITORY="" OUTPUT="" LOG_DIR=""
 CACHE_MISS_POLICY=reuse-or-build
 BUILD_TARGETS=()
 PROGRAM_BUILD_PENDING=0
-CLEAR_OUTPUT_ON_FAILURE=1
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --repository|--output|--log-dir|--cache-miss-policy)
@@ -46,11 +45,13 @@ resource_observe lean-inspector-start "$REPOSITORY" || true
 FINAL_LOG_DIR="$LOG_DIR"
 STARTUP_LOG_DIR="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-inspector-startup.XXXXXXXX")"
 LOG_DIR="$STARTUP_LOG_DIR"
+OWNER_SNAPSHOT="$STARTUP_LOG_DIR/.receipt-owner.json"
 finish() {
   local rc=$?
   trap - EXIT
-  if [[ ( "$rc" != 0 && "$CLEAR_OUTPUT_ON_FAILURE" == 1 ) || "$PROGRAM_BUILD_PENDING" == 1 ]]; then
-    rm -f -- "${OUTPUT}.reuse.json"
+  if [[ "$rc" != 0 || "$PROGRAM_BUILD_PENDING" == 1 ]]; then
+    python3 -B "$SCRIPT_DIR/reuse.py" cleanup-receipt --repository "$REPOSITORY" \
+      --report "$OUTPUT" --owner-snapshot "$OWNER_SNAPSHOT" || true
   fi
   rm -rf -- "$STARTUP_LOG_DIR" || true
   resource_observe lean-inspector-finish "$REPOSITORY" || true
@@ -131,6 +132,25 @@ require_lake() {
     || { echo 'inspect.sh: an absolute executable lake path is required (LAKE_BIN)' >&2; return 2; }
   export LAKE_BIN="$LAKE"
 }
+owned_lake() {
+  # The native cache runner invokes this executable only under its writer guard.
+  # Toolchain version queries preserve their normal behavior without claiming output.
+  export STRATALINT_RECEIPT_LAKE="$LAKE" STRATALINT_RECEIPT_INSPECTOR="$SCRIPT_DIR"
+  export STRATALINT_RECEIPT_REPOSITORY="$REPOSITORY" STRATALINT_RECEIPT_OUTPUT="$OUTPUT"
+  export STRATALINT_RECEIPT_OWNER_SNAPSHOT="$OWNER_SNAPSHOT"
+  OWNED_LAKE="$STARTUP_LOG_DIR/.owned-lake"
+  cat > "$OWNED_LAKE" <<'SH_OWNED_LAKE'
+#!/bin/bash
+set -euo pipefail
+if [[ "${1:-}" != --version ]]; then
+  python3 -B "$STRATALINT_RECEIPT_INSPECTOR/reuse.py" claim-receipt \
+    --repository "$STRATALINT_RECEIPT_REPOSITORY" --report "$STRATALINT_RECEIPT_OUTPUT" \
+    --owner-snapshot "$STRATALINT_RECEIPT_OWNER_SNAPSHOT"
+fi
+exec "$STRATALINT_RECEIPT_LAKE" "$@"
+SH_OWNED_LAKE
+  chmod 700 "$OWNED_LAKE"
+}
 # A standalone call builds the producer once; every later step runs that DLL
 # instead of refreshing the project through `dotnet run`.
 require_producer() {
@@ -162,7 +182,8 @@ reuse_report() {
   local seed="${STRATALINT_LEAN_REPORT_REUSE:-$OUTPUT}"
   [[ "$seed" == /* ]] || seed="$REPOSITORY/$seed"
   python3 -B "$SCRIPT_DIR/reuse.py" reuse --repository "$REPOSITORY" \
-    --report "$seed" --output "$OUTPUT" --cache-miss-policy "$CACHE_MISS_POLICY" || status=$?
+    --report "$seed" --output "$OUTPUT" --cache-miss-policy "$CACHE_MISS_POLICY" \
+    --owner-snapshot "$OWNER_SNAPSHOT" || status=$?
   printf '%s\n' "$status" > "$STARTUP_LOG_DIR/reuse.status"
   # An optional seed miss is normal. Parser/registration failures still block.
   if [[ "$status" == 0 || "$status" == 3 ]]; then return 0; fi
@@ -170,10 +191,7 @@ reuse_report() {
 }
 if [[ "$CACHE_MISS_POLICY" == fetch-or-fail ]]; then
   # Refuse incompatible seeds before provisioning any selected program build.
-  # A denied owner must not remove another owner's in-use receipt.
-  CLEAR_OUTPUT_ON_FAILURE=0
   run_phase reuse reuse_report
-  CLEAR_OUTPUT_ON_FAILURE=1
 fi
 if [[ ${#BUILD_TARGETS[@]} -gt 0 ]]; then
   require_lake
@@ -185,8 +203,9 @@ if [[ "$(cat "$STARTUP_LOG_DIR/reuse.status")" == 0 ]]; then
   open_logs
   if [[ ${#BUILD_TARGETS[@]} -gt 0 ]]; then
     PROGRAM_BUILD_PENDING=1
+    owned_lake
     run_phase programs "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" \
-      "$LAKE" "${workspace[@]}" build "${BUILD_TARGETS[@]}"
+      "$OWNED_LAKE" "${workspace[@]}" build "${BUILD_TARGETS[@]}"
     PROGRAM_BUILD_PENDING=0
   fi
   cat "$LOG_DIR/reuse.stdout.log"
@@ -203,13 +222,11 @@ fi
 open_logs
 # The package facet owns report modules; explicit targets own program checks.
 # The writer owns the private clonefile-seeded .lake through the native build.
-# Keep any receipt produced by a concurrent refresh until the writer guard is
-# acquired.  A failed report is cleared by finish(), while a successful report
-# is replaced by seal(); unlinking here could delete another caller's receipt
-# in the miss-to-Lake handoff window.
-run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" "${workspace[@]}" build :report \
+# Receipt cleanup is enabled only by the command running under writer ownership.
+owned_lake
+run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$OWNED_LAKE" "${workspace[@]}" build :report \
   ${BUILD_TARGETS[@]+"${BUILD_TARGETS[@]}"}
 run_phase publish python3 "$SCRIPT_DIR/native.py" publish "$REPOSITORY" "$OUTPUT"
 run_phase seal python3 -B "$SCRIPT_DIR/reuse.py" seal --repository "$REPOSITORY" \
-  --report "$OUTPUT" --snapshot "$LOG_DIR/entry-inputs.json"
+  --report "$OUTPUT" --snapshot "$LOG_DIR/entry-inputs.json" --owner-snapshot "$OWNER_SNAPSHOT"
 cat "$LOG_DIR/publish.stdout.log"

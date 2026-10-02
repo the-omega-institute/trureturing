@@ -222,10 +222,43 @@ class CacheIncompatible(ValueError):
                          'Rebuild explicitly with make lean-report REBUILD_REPORT_CACHE=1')
 
 
-def recover_and_reuse(repository, report, output):
-    """Check, restore and consume the actual seed under private-cache ownership."""
+def cache_guard(repository):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/worktree'))
-    from lean_cache_release import cache_guard
+    from lean_cache_release import cache_guard as guard
+    return guard(repository)
+
+
+def receipt_identity(report):
+    try:
+        info = publication.member(report, SUFFIX).lstat()
+    except FileNotFoundError:
+        return None
+    return [info.st_dev, info.st_ino, info.st_mtime_ns, info.st_size]
+
+
+def claim_receipt(report, snapshot):
+    """Record a receipt's identity while the caller holds writer ownership."""
+    snapshot.write_text(json.dumps(receipt_identity(report)))
+
+
+def cleanup_receipt(repository, report, snapshot):
+    """Invalidate only the claimed receipt, without racing a subsequent writer."""
+    if not snapshot.is_file():
+        return
+    identity = json.loads(snapshot.read_text())
+    if identity is None:
+        return
+    try:
+        with cache_guard(repository):
+            if receipt_identity(report) == identity:
+                publication.member(report, SUFFIX).unlink(missing_ok=True)
+    except BlockingIOError:
+        # Another writer owns the current output; this caller cannot invalidate it.
+        return
+
+
+def recover_and_reuse(repository, report, output, owner_snapshot=None):
+    """Check, restore and consume the actual seed under private-cache ownership."""
     current = publication.selection.Selection(repository).data['report_cache_release_semantic_version']
     try:
         with cache_guard(repository):
@@ -250,33 +283,47 @@ def recover_and_reuse(repository, report, output):
                     raise CacheIncompatible(local, current, status['local_version'], status['reason'])
             # Same-version misses retain the existing Lake incremental path.
             # Snapshot/publish the checked seed before releasing ownership.
-            return reuse(repository, report, output)
+            result = reuse(repository, report, output)
+            if not result['needs_lake'] and owner_snapshot is not None:
+                claim_receipt(output, owner_snapshot)
+            return result
     except BlockingIOError as error:
         raise CacheIncompatible('unavailable', current, 'unavailable', 'cache-busy') from error
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=('probe', 'reuse', 'capture', 'seal', 'seed-version'))
+    parser.add_argument('command', choices=('probe', 'reuse', 'capture', 'seal', 'seed-version',
+                                           'claim-receipt', 'cleanup-receipt'))
     parser.add_argument('--repository', required=True, type=Path)
     parser.add_argument('--report', type=Path)
     parser.add_argument('--output', type=Path)
     parser.add_argument('--snapshot', type=Path)
+    parser.add_argument('--owner-snapshot', type=Path)
     parser.add_argument('--diagnostics', action='store_true',
                         help='emit probe mismatch warnings to stderr while retaining JSON stdout')
     parser.add_argument('--cache-miss-policy', choices=('reuse-or-build', 'fetch-or-fail'),
                         default='reuse-or-build', help='policy for the reuse consumer')
     args = parser.parse_args()
-    if args.command in ('probe', 'reuse', 'seal', 'seed-version') and args.report is None:
+    if args.command in ('probe', 'reuse', 'seal', 'seed-version', 'claim-receipt', 'cleanup-receipt') and args.report is None:
         parser.error('--report is required')
     if args.command == 'reuse' and args.output is None:
         parser.error('--output is required')
     if args.command in ('capture', 'seal') and args.snapshot is None:
         parser.error('--snapshot is required')
-    if args.command == 'capture':
+    if args.command in ('claim-receipt', 'cleanup-receipt') and args.owner_snapshot is None:
+        parser.error('--owner-snapshot is required')
+    if args.command == 'claim-receipt':
+        claim_receipt(args.report, args.owner_snapshot)
+    elif args.command == 'cleanup-receipt':
+        cleanup_receipt(args.repository, args.report, args.owner_snapshot)
+    elif args.command == 'capture':
         args.snapshot.write_bytes(materials.canonical_json(capture(args.repository)))
     elif args.command == 'seal':
-        seal(args.repository, args.report, publication.read_json(args.snapshot.read_bytes()))
+        with cache_guard(args.repository):
+            seal(args.repository, args.report, publication.read_json(args.snapshot.read_bytes()))
+            if args.owner_snapshot is not None:
+                claim_receipt(args.report, args.owner_snapshot)
     elif args.command == 'seed-version':
         result = seed_version(args.repository, args.report)
         # Three whitespace-free fields for the local shell entry; no writes.
@@ -287,8 +334,13 @@ def main():
         if args.diagnostics:
             warn_mismatch(result, sys.stderr)
     else:
-        consumer = recover_and_reuse if args.cache_miss_policy == 'fetch-or-fail' else reuse
-        result = consumer(args.repository, args.report, args.output)
+        if args.cache_miss_policy == 'fetch-or-fail':
+            result = recover_and_reuse(args.repository, args.report, args.output, args.owner_snapshot)
+        else:
+            with cache_guard(args.repository):
+                result = reuse(args.repository, args.report, args.output)
+                if not result['needs_lake'] and args.owner_snapshot is not None:
+                    claim_receipt(args.output, args.owner_snapshot)
         print('LEAN_INSPECTOR_REUSE ' + json.dumps(result, separators=(',', ':')))
         warn_mismatch(result, sys.stdout)
         if result['needs_lake']:

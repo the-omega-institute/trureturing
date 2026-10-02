@@ -37,11 +37,21 @@ class LocalReportEntryTests(unittest.TestCase):
         # Publication/sealing are intentionally unreachable after that failure;
         # selected program builds remain successful and are recorded separately.
         self.executable('tools/scripts/worktree/lean-cache-run.sh',
-                        'if [[ "$*" == *" :report"* ]]; then\n'
-                        '  printf "%s\\n" "$*" >> report-builds\n'
-                        '  exit 73\n'
-                        'fi\n'
-                        'printf "%s\\n" "$*" >> program-builds\n')
+                        'exec python3 -B "$(dirname "$0")/native_fixture.py" "$@"\n')
+        self.fixture.write('tools/scripts/worktree/native_fixture.py', '''import os, subprocess, sys
+from pathlib import Path
+from lean_cache_release import cache_guard
+root = Path(__file__).resolve().parents[3]
+args = sys.argv[1:]
+with cache_guard(root):
+    result = subprocess.run(args)
+    if result.returncode:
+        raise SystemExit(result.returncode)
+    report = ':report' in args
+    with (root / ('report-builds' if report else 'program-builds')).open('a') as log:
+        log.write(' '.join(args) + '\\n')
+    raise SystemExit(73 if report else int(os.environ.get('PROGRAM_EXIT', '0')))
+''')
         self.executable('tools/scripts/worktree/lean-cache-ensure.sh', 'exit 0\n')
         self.executable('tools/scripts/worktree/lean-cache-publish.sh',
                         'exec python3 -B "$(dirname "$0")/fetch_fixture.py" "$@"\n')
@@ -440,6 +450,111 @@ exit 73
             stdout, stderr = first.communicate(timeout=30)
         self.assertEqual(first.returncode, 2, stdout + stderr)
         self.assertEqual((self.root / 'lake-entry-receipt').read_text(), 'present\n')
+
+    def handoff_failure_preserves_receipt(self, failure):
+        self.fixture.write('D5/A.lean', 'def a := 2\n')
+        self.dev_seed(1)
+        ready, release = self.root / 'ready.fifo', self.root / 'release.fifo'
+        os.mkfifo(ready)
+        os.mkfifo(release)
+        ready_fd = os.open(ready, os.O_RDWR | os.O_NONBLOCK)
+        release_fd = os.open(release, os.O_RDWR | os.O_NONBLOCK)
+        self.addCleanup(os.close, ready_fd)
+        self.addCleanup(os.close, release_fd)
+        self.executable('bin/python3', '''real="${PYTHON_REAL:?}"
+if [[ "$*" == *"reuse.py reuse"* ]]; then
+  set +e
+  "$real" "$@"
+  rc=$?
+  set -e
+  if [[ "$rc" == 3 ]]; then
+    printf r > "$HANDOFF_READY"
+    read -r -n 1 < "$HANDOFF_RELEASE"
+  fi
+  exit "$rc"
+fi
+exec "$real" "$@"
+''')
+        if failure == 'require-lake':
+            self.environment['LAKE_BIN'] = str(self.root / 'absent-lake')
+        else:
+            self.executable('tools/scripts/worktree/lean-cache-run.sh',
+                            'exec "$PYTHON_REAL" -B "$(dirname "$0")/writer_probe.py"\n')
+            self.fixture.write('tools/scripts/worktree/writer_probe.py', '''from pathlib import Path
+from lean_cache_release import cache_guard
+root = Path(__file__).resolve().parents[3]
+try:
+    with cache_guard(root):
+        (root / 'unexpected-writer-entry').write_text('entered')
+except BlockingIOError:
+    print('PROBE_WRITER_BUSY', flush=True)
+    raise SystemExit(73)
+''')
+        environment = dict(self.environment, PATH=str(self.root / 'bin') + os.pathsep + os.environ['PATH'],
+                           PYTHON_REAL=sys.executable, HANDOFF_READY=str(ready), HANDOFF_RELEASE=str(release))
+        sys.path.insert(0, str(fixtures.ROOT / 'tools/scripts/worktree'))
+        from lean_cache_release import cache_guard
+        with subprocess.Popen(['make', '--no-print-directory', 'lean-report'], cwd=self.root,
+                              env=environment, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) as first:
+            try:
+                self.assertTrue(select.select([ready_fd], [], [], 20)[0], 'reuse miss barrier not reached')
+                os.read(ready_fd, 1)
+                with cache_guard(self.root):
+                    for source in (self.root / 'dev-seed').iterdir():
+                        shutil.copyfile(source, self.seed.parent / source.name)
+                    receipt = Path(str(self.seed) + '.reuse.json')
+                    refreshed = receipt.read_bytes()
+                    os.write(release_fd, b'r')
+                    stdout, stderr = first.communicate(timeout=20)
+                    self.assertEqual(first.returncode, 2, stdout + stderr)
+                    self.assertTrue(receipt.is_file(), 'denied caller removed competing writer receipt')
+                    self.assertEqual(receipt.read_bytes(), refreshed)
+                    self.assertFalse((self.root / 'unexpected-writer-entry').exists())
+                    self.assertIn('absolute executable lake' if failure == 'require-lake'
+                                  else 'PROBE_WRITER_BUSY', stderr)
+            finally:
+                os.write(release_fd, b'r')
+                if first.poll() is None:
+                    first.kill()
+                    first.communicate(timeout=10)
+
+    def test_same_version_handoff_writer_denial_preserves_competing_receipt(self):
+        self.handoff_failure_preserves_receipt('writer-busy')
+
+    def test_same_version_handoff_require_lake_failure_preserves_competing_receipt(self):
+        self.handoff_failure_preserves_receipt('require-lake')
+
+    def test_owned_report_failure_clears_claimed_receipt(self):
+        self.assert_build(self.entry('REBUILD_REPORT_CACHE=1'))
+        self.assertFalse(Path(str(self.seed) + '.reuse.json').exists())
+
+    def test_owned_selected_program_failure_clears_published_receipt(self):
+        self.environment['STRATALINT_LEAN_BUILD_TARGETS'] = '["D5/A"]'
+        self.environment['PROGRAM_EXIT'] = '71'
+        result = self.entry()
+        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+        self.assertIn('phase=programs exit=71', result.stderr)
+        self.assertFalse(Path(str(self.seed) + '.reuse.json').exists())
+
+    def test_cleanup_preserves_receipt_replaced_after_owned_program_failure(self):
+        self.environment['STRATALINT_LEAN_BUILD_TARGETS'] = '["D5/A"]'
+        self.executable('tools/scripts/worktree/lean-cache-run.sh', '''"$@"
+exec python3 -B "$(dirname "$0")/replace_receipt_fixture.py"
+''')
+        self.fixture.write('tools/scripts/worktree/replace_receipt_fixture.py', '''import os
+from pathlib import Path
+from lean_cache_release import cache_guard
+root = Path(__file__).resolve().parents[3]
+receipt = root / '.lake/build/stratalint/raw-lean-report.json.reuse.json'
+with cache_guard(root):
+    replacement = receipt.with_suffix('.replacement')
+    replacement.write_bytes(receipt.read_bytes())
+    os.replace(replacement, receipt)
+raise SystemExit(71)
+''')
+        result = self.entry()
+        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+        self.assertTrue(Path(str(self.seed) + '.reuse.json').is_file())
 
 
 if __name__ == '__main__':
