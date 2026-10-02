@@ -65,7 +65,7 @@ private theorem windowRoot_pow_mod (n : ℕ) :
   rw [pow_add, pow_mul, (windowRoot_isPrimitiveRoot M).pow_eq_one, one_pow, one_mul]
 
 /-- The cyclic update only sees its exponent modulo the window cardinality. -/
-private theorem shiftMatrix_pow_mod (n : ℕ) :
+theorem shiftMatrix_pow_mod (n : ℕ) :
     shiftMatrix M ^ (n % M) = shiftMatrix M ^ n := by
   conv_rhs => rw [← Nat.div_add_mod n M]
   rw [pow_add, pow_mul, shiftMatrix_pow_card, one_pow, one_mul]
