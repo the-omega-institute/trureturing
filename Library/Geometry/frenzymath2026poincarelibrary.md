@@ -3142,3 +3142,78 @@ representative existence remain unfinished. Full finite-volume
 Mostow-Prasad, including cusps and nonorientable manifolds, stays
 active and incomplete. The linked escape audit remains unfinished;
 registration remains paused under CLAUDE section 3.9.
+
+
+### Levi-Civita existence from complete intrinsic geometry
+
+For ANY finite dimension n and preconnected smooth T3 Riemannian
+manifold M with a specified metric g, intrinsic MetricComplete g now
+supplies SecondCountableTopology M and Nonempty (LeviCivitaData g).
+No ordinary MetricSpace, second-countability, connection, curvature,
+volume, compactness or orientation data is supplied to this application.
+The original topology and the specified intrinsic metric are retained.
+
+The accepted finite-distance theorem supplies g.edist(x,y) != infinity
+from preconnectedness. Install the specified metric's intrinsic
+EMetricSpace, and convert it to a MetricSpace using that finite-distance
+fact; the topology and extended distance are definitionally the original
+ones. The accepted complete-ball theorem makes
+{y | g.edist(x,y) <= ofReal(r)} compact. Each actual metric closed ball is
+a closed subset of this set, for EVERY real r. This containment handles
+negative r without incorrectly identifying a negative-radius closed
+ball with an ofReal-radius zero ball. Thus the intrinsic metric space
+is proper. Mathlib derives second countability from properness, and
+the accepted upstream exists_leviCivitaData supplies actual compatible
+torsion-free connection data using T2 from the original T3 assumption.
+
+For every real k, under these same completeness assumptions, requiring
+sectional curvature k on every nondegenerate tangent two-plane for ALL
+actual LeviCivitaData is equivalent to the existence of ONE such datum.
+Derived connection nonemptiness makes the universal condition nonvacuous;
+the accepted curvatureTensor_eq for two connections of the SAME metric
+makes their sectional curvatures equal. Degenerate tangent pairs are
+not added to the curvature hypothesis.
+
+The complete negative-curvature native-flow application now constructs
+its LeviCivitaData internally. Its final inputs are the original
+connected smooth three-dimensional T3 Borel manifold, gM, intrinsic
+completeness, connection-independent sectional curvature -1 on all
+nondegenerate planes, and finite intrinsic volume. No connection witness
+or second-countability instance is supplied. The SAME previous canonical
+H3/full-deck construction gives actual F and rho, ONE target-normalized
+Haar mu, SAME intersection E and ONE nu on the ORIGINAL natural H
+quotient. Its inverse-comap relation, H invariance, finite nonzero exact
+mass mu(E intersect H), bound twice the target volume and continuous
+ergodic exp-time dilation action are retained. No separate ordinary
+MetricSpace M or compactness/orientation premise is added.
+
+The complete negative-curvature uniqueness application likewise
+constructs both DM and DN internally for the SAME original gM and gN.
+It retains the original connected smooth three-dimensional metric bases,
+Borel structure on M, completeness and connection-independent curvature
+-1 on both bases, finite intrinsic source volume, and BOTH ordinary/
+intrinsic extended-distance compatibility identities. For EVERY original
+prescribed homotopy equivalence h, any two isometries homotopic to h are
+equal. This is exactly the uniqueness half; it constructs no isometry.
+
+Three complete first-attempt serial default-resource scoped transient
+Lean checks exited zero. The general module has three standard-three
+axiom closures and six unsuppressed haveILetI style warnings. The flow
+and uniqueness applications each have one standard-three closure and
+zero warnings. There are no failed whole modules in these three checks.
+All new Lean stays ignored under .lake; this is classical reuse and exact
+application, without a novelty, tracked-Lean, admission or freeze claim.
+Only the research note is the intended tracked mathematical delivery.
+
+Connection existence and second-countability premises are discharged
+for these complete intrinsic geometric applications. Their stated
+smooth/T3/Borel/completeness/curvature/volume and, for uniqueness,
+ordinary-distance compatibility conditions remain explicit. Geometric
+unit-tangent/geodesic-flow identification, orientation and prescribed-h
+finite-cover compatibility, the boundary map and geometric preservation
+for the SAME arbitrary prescribed-h induced deck/lattice isomorphism,
+the ambient conjugator and prescribed isometric representative existence
+remain unfinished. Full finite-volume Mostow-Prasad, including cusps
+and nonorientable manifolds, remains active and incomplete. The linked
+escape audit remains unfinished; registration stays paused under
+CLAUDE section 3.9.
