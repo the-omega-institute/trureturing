@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:89035d2c12bbc6400b3bed16fcd45d239c9a9ff941dfdc93b10d20e0b5d547a5
   normalized_sha256: sha256:89035d2c12bbc6400b3bed16fcd45d239c9a9ff941dfdc93b10d20e0b5d547a5
 cas_ref: sha256:89035d2c12bbc6400b3bed16fcd45d239c9a9ff941dfdc93b10d20e0b5d547a5
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/Recovery/FiniteLocalPhysicalGap.full_source_finite_recovery_gap
+    target_statement_id: sha256:74acb4e88226d801c9ca8d3a737314befaf949f979ee207fe40eac80161cc46c
 receipts:
   unresolved_subitems: []
