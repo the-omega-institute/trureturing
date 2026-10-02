@@ -1,0 +1,2 @@
+**Theorem 2.2 (homogeneous interval basis of a finite diagram).** Every finite diagram over $K$ has a finite occurrence set $A$, indices $b_a\le j_a$, and vectors $w_{a,i}\in V_i$ that vanish outside $b_a\le i\le j_a$. At every vertex the supported vectors form a basis. For every actual arrow $F_{ik}$ with $i\le k$, the image of $w_{a,i}$ is $w_{a,k}$ if $b_a\le i$ and $k\le j_a$, and zero otherwise. The set $A$ is empty for a zero or empty diagram. Last-vertex survivors are allowed.
+

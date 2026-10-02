@@ -1,0 +1,12 @@
+**Theorem 2.1 (earliest live interval splitting).** In a nonzero finite diagram with actual maps $F_{ik}$, there are indices $b\le j$, vectors $w_i\in V_i$ and linear functionals $p_i:V_i\to K$ satisfying the following properties. The support is exactly $b\le i\le j$. Outside it, $w_i=0$ and $p_i=0$. On it, $p_i(w_i)=1$. For $i\le k$,
+
+$$
+F_{ik}(w_i)=\begin{cases}w_k&b\le i\text{ and }k\le j,\\0&\text{otherwise},\end{cases}
+\qquad
+p_k\circ F_{ik}=\begin{cases}p_i&b\le i\text{ and }k\le j,\\0&\text{otherwise}.\end{cases}
+$$
+
+Consequently $x\mapsto p_i(x)w_i$ is a natural idempotent projection, its image is the supported one-dimensional interval, and its kernels form the complementary diagram. Vertexwise, the isomorphism to the interval coefficient space and the kernel sends $x$ to $(p_i(x),x-p_i(x)w_i)$, with inverse $(a,y)\mapsto aw_i+y$. The total kernel dimension is strictly less than $\sum_i\dim_K V_i$. If $j=n-1$, the summand gives an essential interval on the real extension.
+
+**Proof.** Choose the earliest nonzero vertex $b$ and a nonzero $v\in V_b$. Let $j$ be the greatest index with $F_{bj}(v)\ne0$. On the support put $w_i=F_{bi}(v)$. Any zero image would force every later image to vanish, so every supported $w_i$ is nonzero. The scalar map $a\mapsto aw_j$ is injective. A linear left inverse gives a functional $\lambda_j$ with $\lambda_j(w_j)=1$. Set $p_i=\lambda_j\circ F_{ij}$ on the support and zero elsewhere. The composition laws prove the displayed equations. For an arrow entering the support from before $b$, its source space is zero. For an arrow leaving the support, maximality of $j$ kills the chosen vector. The splitting formulas follow from $p_i(w_i)=1$; rank-nullity removes one dimension at each supported vertex and none elsewhere.
+

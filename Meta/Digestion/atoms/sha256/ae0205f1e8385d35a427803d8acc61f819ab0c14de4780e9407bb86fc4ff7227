@@ -1,0 +1,2 @@
+**Theorem 3.1 (finite-chain classification with arbitrary competing decompositions).** The real extension of every chain above is naturally isomorphic to a finite direct sum of positive-length intervals. The finite multiset of intervals is unique against all competing finite positive-length interval decompositions, even when their endpoints differ from the input breakpoints.
+

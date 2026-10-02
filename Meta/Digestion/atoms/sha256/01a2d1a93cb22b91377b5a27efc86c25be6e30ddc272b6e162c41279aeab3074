@@ -1,0 +1,3 @@
+**Theorem 5.1 (exact interleaving iff occurrence matching).** For every $\epsilon\ge0$, two real extensions above admit actual natural maps $M\to N(\epsilon)$ and $N\to M(\epsilon)$ whose shifted composites equal the actual $2\epsilon$ structure maps if and only if their finite interval multisets admit an occurrence-level partial matching with all the following properties:
+
+- Matched finite births and finite deaths differ by at most $\epsilon$.
