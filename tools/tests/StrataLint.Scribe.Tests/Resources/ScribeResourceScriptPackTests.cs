@@ -13,25 +13,41 @@ public sealed class ScribeResourceScriptPackTests
         Definition(root.Path, "Gamma");
         var error = new StringWriter();
         Assert.Equal(1, Cli(root.Path, ["resources", "pack", "--out", "resources.zip"], TextWriter.Null, error));
-        var lines = error.ToString().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
-        Assert.Equal(2, lines.Length);
-        Assert.Contains(PathFor("Alpha"), lines[0], StringComparison.Ordinal);
-        Assert.Contains(PathFor("Beta"), lines[1], StringComparison.Ordinal);
-        Assert.All(lines, line => Assert.StartsWith("DefinitionMissing:", line, StringComparison.Ordinal));
+        AssertHostFailures(error);
         Assert.False(File.Exists(root.Resolve("resources.zip")));
     }
 
     [Fact]
-    public void PackRemovesAnExistingOutputOnHostFailure()
+    public void PackPreservesAnExistingOutputOnHostFailure()
     {
         using var root = Prepare();
-        Write(root.Path, "Broken", "internal sealed class Broken { }");
-        TemporaryFileSystem.File.WriteAllBytes(root.Resolve("resources.zip"), [1, 2, 3]);
+        Write(root.Path, "Alpha", "internal sealed class Alpha { }");
+        Write(root.Path, "Beta", "internal sealed class Beta { }");
+        Definition(root.Path, "Gamma");
+        var path = root.Resolve(PathFor("Gamma"));
+        var bytes = File.ReadAllBytes(path);
+        var error = new StringWriter();
+
+        Assert.Equal(1, Cli(root.Path, ["resources", "pack", "--out", PathFor("Gamma")], TextWriter.Null, error));
+        AssertHostFailures(error);
+        Assert.True(File.Exists(path));
+        Assert.Equal(bytes, File.ReadAllBytes(path));
+    }
+
+    [Fact]
+    public void PackPreservesAnExistingOutputDirectoryOnHostFailure()
+    {
+        using var root = Prepare();
+        Write(root.Path, "Alpha", "internal sealed class Alpha { }");
+        Write(root.Path, "Beta", "internal sealed class Beta { }");
+        Definition(root.Path, "Gamma");
+        var path = root.Resolve("resources.zip");
+        TemporaryFileSystem.Directory.CreateDirectory(path);
         var error = new StringWriter();
 
         Assert.Equal(1, Cli(root.Path, ["resources", "pack", "--out", "resources.zip"], TextWriter.Null, error));
-        Assert.Contains("DefinitionMissing:", error.ToString(), StringComparison.Ordinal);
-        Assert.False(File.Exists(root.Resolve("resources.zip")));
+        AssertHostFailures(error);
+        Assert.True(Directory.Exists(path));
     }
 
     [Fact]
@@ -149,6 +165,15 @@ public sealed class ScribeResourceScriptPackTests
 
     private static int Cli(string root, string[] arguments, TextWriter output, TextWriter error) =>
         ScribeCli.Run(typeof(ScribeResourcePack).Assembly, arguments, root, output, error);
+
+    private static void AssertHostFailures(StringWriter error)
+    {
+        var lines = error.ToString().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+        Assert.Equal(2, lines.Length);
+        Assert.Contains(PathFor("Alpha"), lines[0], StringComparison.Ordinal);
+        Assert.Contains(PathFor("Beta"), lines[1], StringComparison.Ordinal);
+        Assert.All(lines, line => Assert.StartsWith("DefinitionMissing:", line, StringComparison.Ordinal));
+    }
 
     private static string PathFor(string name) => "Blueprint/" + GidFor(name) + ".scribe.cs";
     private static string GidFor(string name) => "D5/S0/Test/" + name;

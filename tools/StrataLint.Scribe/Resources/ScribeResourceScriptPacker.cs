@@ -30,7 +30,6 @@ public static class ScribeResourceScriptPacker
             }).ToImmutableArray();
             if (!failures.IsEmpty)
             {
-                File.Delete(outputPath);
                 return new ScribeResourceScriptPackResult(null, failures);
             }
             var manifest = ScribeResourcePack.Write(outputPath, results.Select(result => result.Definition!));

@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.Operations;
 
 namespace StrataLint.Scribe;
 
-/// <summary>Declaration IDs distinguish type use, individual members and audited repository types.</summary>
+/// <summary>Entries describe type use, members, format, constant and type-argument constraints.</summary>
 internal sealed class ScribeScriptAllowlist
 {
     private readonly HashSet<string> types = new(StringComparer.Ordinal);
