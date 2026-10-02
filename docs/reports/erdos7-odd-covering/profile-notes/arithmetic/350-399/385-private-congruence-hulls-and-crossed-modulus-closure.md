@@ -24339,3 +24339,83 @@ and is not covered by (CB1); this is the remaining external-coordinate part
 of the mixed case.  Thus (CB1)--(CB2) reduce the internal cross-side search
 without asserting that any admissible bridge exists or that its cost is
 strictly below the deleted packet.
+
+## 207. A selected periodic liability defeats a source-free mixed descent
+
+The price formula (MR4) cannot by itself imply that every mixed repair has
+cost at least the deleted occupied packet.  The following finite periodic
+example isolates the missing source condition.  It is deliberately a
+responsibility-set example; it does not claim that the displayed set is the
+complement of a distinct retained covering family.
+
+Take
+
+\[
+ p=3,\qquad e=2,\qquad Q=3465=3^2\cdot5\cdot7\cdot11,
+\]
+
+and put
+
+\[
+ N=Q/3=1155,\qquad L=385,\qquad R=3L=105.
+\]
+
+Use the deleted top labels $9,45,63$, and let the two responsibility pieces
+be
+
+\[
+ E_A=[0]_{1155}\mathbin{\dot\cup}[105]_{1155},\qquad
+ E_B=[330]_{1155}\mathbin{\dot\cup}[435]_{1155}.
+\]
+
+They lie in $A=[0]_{105}$ and $B=[15]_{105}$, respectively.  Consider the
+low class $C=[0]_{33}$.  It hits the $0$ and $330$ components and misses the
+$105$ and $435$ components, so
+
+\[
+ F=E\setminus C=[105]_{1155}\mathbin{\dot\cup}[435]_{1155},
+ \qquad
+ \Gamma_N(F)=\gcd(1155,435-105)=165=3\cdot55.
+\]
+
+The three high classes
+
+\[
+ [3]_9,\qquad [15]_{45},\qquad [72]_{99}
+\]
+
+cover $F$.  For $x=105+1155k$, the residues modulo $9,45,99$ are
+respectively $(6,0,3)$, $(15,0,30)$, and $(6,72,39)$ as $k$ runs modulo
+$3$.  For $x=435+1155k$, they are $(3,6,0)$, $(30,15,0)$, and
+$(39,6,72)$.  Thus the three phases cover both fibres, and the witnesses
+$435$, $105$, and $1260$ show that the three high classes are essential.
+The point $0$ witnesses that $C$ is essential.  The four labels are pairwise
+distinct and the repair is inclusion-minimal for this selected liability.
+
+Here $g(F)=\Gamma_N(F)/3=55$, whose three smallest distinct divisors are
+$1,5,11$.  The mixed price is therefore
+
+\[
+ 33+9(1+5+11)=186,
+\]
+
+whereas the deleted occupied packet has price
+
+\[
+ 105+9(1+5+7)=222.
+\]
+
+The strict gap is $36$.  This is an exact finite counterexample to any
+comparison derived only from the periodic set $E$, its hull, and (MR4), even
+when the low class meets both responsibility pieces and contains neither one
+completely.
+
+It is not an Erdős #7 covering counterexample.  The selected four-residue
+liability has not been realized as $\mathbb Z\setminus\bigcup\mathcal U$
+for a distinct retained source family; in particular, freshness of the
+moduli $33$ and $99$, divisor closure, actual phases, and EB1 extremality have
+not been supplied.  The complete-source audit also shows that replacing the
+selected liability by the complement of a few displayed $1155$-classes does
+not preserve the repair.  Consequently this example only proves a
+methodological boundary: a global strict comparison must use the common
+source and whole-liability constraints, not the congruence-hull price alone.
