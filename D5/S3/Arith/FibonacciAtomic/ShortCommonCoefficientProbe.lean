@@ -406,9 +406,13 @@ theorem result (H : Nat) (hH : 2 ≤ H) :
       have hpad := hbits sw
       rw [he] at hpad
       have hwlen : 2 ≤ (flatten w).length := by
-        cases hw : w with
-        | nil => exact False.elim (hnonempty hw)
-        | cons b bs => cases b <;> simp [flatten, bits] <;> omega
+        have hb : (fun b => (bits b).length) = (fun _ : Window => 3) := by
+          funext b
+          cases b <;> rfl
+        have hl : (flatten w).length = w.length * 3 := by
+          rw [flatten, List.length_flatMap, hb, List.map_const', List.sum_replicate_nat]
+        have hp := List.length_pos_iff.mpr hnonempty
+        omega
       rw [hpad, pad, flatten, List.flatMap_append] at htake
       change List.take 2 (flatten w ++ _) = [false, false] at htake
       rw [List.take_append_of_le_length hwlen] at htake
