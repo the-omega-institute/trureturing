@@ -9,6 +9,7 @@
     "7": false
   },
   "divisor_closed": true,
+  "exact_two_owner_noncoprime_point_count": 0,
   "holes": 62415,
   "irredundant": true,
   "minimum_owner_count_on_noncoprime_intersections": 3,

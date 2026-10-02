@@ -30,6 +30,7 @@ def main():
 
     noncoprime_pairs = []
     minimum_owner_count = None
+    exact_two_owner_points = 0
     pair_owner_sets = {}
     for d, e in combinations(MODULI, 2):
         if gcd(d, e) == 1:
@@ -47,6 +48,7 @@ def main():
         ) if minimum_owner_count is None else min(
             minimum_owner_count, *(len(owners(x)) for x in points)
         )
+        exact_two_owner_points += sum(len(owners(x)) == 2 for x in points)
         noncoprime_pairs.append((d, e, points))
 
     divisor_closed = all(
@@ -71,6 +73,7 @@ def main():
         "divisor_closed": divisor_closed,
         "irredundant": all(private.values()),
         "noncoprime_intersection_pair_count": len(noncoprime_pairs),
+        "exact_two_owner_noncoprime_point_count": exact_two_owner_points,
         "minimum_owner_count_on_noncoprime_intersections": minimum_owner_count,
         "all_noncoprime_intersections_have_at_least_three_owners": (
             minimum_owner_count is not None and minimum_owner_count >= 3
@@ -84,6 +87,7 @@ def main():
     assert result["irredundant"]
     assert result["holes"] > 0
     assert len(noncoprime_pairs) == 60
+    assert exact_two_owner_points == 0
     assert minimum_owner_count == 3
     assert result["all_noncoprime_intersections_have_at_least_three_owners"]
     assert crowded_stars["3"]
