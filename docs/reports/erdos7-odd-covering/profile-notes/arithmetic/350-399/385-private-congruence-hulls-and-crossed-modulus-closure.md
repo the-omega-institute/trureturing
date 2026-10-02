@@ -24595,3 +24595,100 @@ statement
 
 That universal comparison, larger exchanges, and the unrestricted Erdős #7
 assertion remain open.
+
+## 209. The four-for-four comparison separates source cost from hull cost
+
+There is an exact distinction between an arithmetic repair price and the price
+of a repair that can actually replace four classes in an EB1 cover.  Keep the
+EB1 cover and frozen family from Section 192, and remove
+
+\[
+ \mathcal A=\{A_R,T_1,T_2,T_3\}.
+\]
+
+Write the complete joint hole as
+
+\[
+ E_{\mathcal A}=\mathbb Z\setminus
+ \bigcup_{D\in\mathcal C_\star\setminus\mathcal A}D.
+\]
+
+Suppose four pairwise distinct odd classes
+
+\[
+ \mathcal B=\{C=[c]_d,H_1=[h_1]_{3^en_1},
+                    H_2=[h_2]_{3^en_2},H_3=[h_3]_{3^en_3}\}
+\]
+
+use the actual phases tied to the same source, avoid every retained numerical
+label, and satisfy the complete-hole condition
+
+\[
+ E_{\mathcal A}\subseteq C\cup H_1\cup H_2\cup H_3.
+\]
+
+Replacing \(\mathcal A\) by \(\mathcal B\) gives another whole cover with
+exactly the same class count.  EB1 therefore gives the exact inequality
+
+\[
+\boxed{
+ d+3^e(n_1+n_2+n_3)
+ \ge R+3^e(m_1+m_2+m_3).
+}
+\]
+
+This is a direct reuse of the whole-hole replacement principle and EB1
+lexicographic extremality.  It applies to every realized four-class repair,
+including non-prefix-separated responsibilities and a low class that meets
+both sides.  A strict reverse inequality would itself be an EB1 contradiction.
+
+The remaining issue is that the price in (MR4) is an arithmetic hull price.
+For a fixed low class \(C\), write
+
+\[
+ s_3^{\mathrm{arith}}(C)=
+ s_3\!\left(\frac{\Gamma_N(E_{\mathcal A}\setminus C)}{3^{e-1}}\right),
+\]
+
+when the displayed quotient is defined.  Define the source-constrained price
+
+\[
+ s_3^{\mathrm{src}}(C)=
+ \min\left\{n_1+n_2+n_3:
+ \begin{array}{l}
+ (C,H_1,H_2,H_3)\text{ is a full-hole,}\
+ \text{same-source, fresh, distinct repair of }E_{\mathcal A}
+ \end{array}\right\},
+\]
+
+with value \(+\infty\) when no such repair exists.  The hull construction
+only gives
+
+\[
+ s_3^{\mathrm{arith}}(C)\le s_3^{\mathrm{src}}(C).
+\]
+
+Consequently EB1 proves
+
+\[
+ d+3^e s_3^{\mathrm{src}}(C)
+ \ge R+3^e\sum_i m_i,
+\]
+
+but this inequality does not transfer to the unconstrained arithmetic value.
+It transfers exactly when the arithmetic minimum is attained by a full source
+repair, or when an independent argument proves the same lower bound for the
+arithmetic value.
+
+Thus the unresolved interface is an attainment statement:
+
+\[
+\text{every allowed low }C\text{ has }
+ s_3^{\mathrm{src}}(C)=s_3^{\mathrm{arith}}(C),
+\]
+
+or a weaker direct comparison sufficient for the old packet price.  Without
+that statement, the finite hull candidate can be cheaper while no legal
+whole-cover replacement exists.  This is why the selected periodic example in
+Section 207 does not contradict EB1, and why the unrestricted Erdős #7
+question remains open.
