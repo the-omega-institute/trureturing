@@ -1001,6 +1001,80 @@ jobs:
           # Exit 3: protected-surface change (SL-022) with every content check passed.
           if [ "$rc" -eq 3 ]; then echo "::notice title=SL-022::protected surface change; content checks passed"; exit 0; fi
           exit "$rc"
+      - name: 'PROBE: resource use of the three checks, serial and overlapped'
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        env:
+          CHANGED_PATHS: ${{ runner.temp }}/changed-paths
+          PROBE_DIR: ${{ runner.temp }}/probe
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, re, subprocess, sys, threading, time
+          cli, scribe, report = os.environ["CLI"], os.environ["SCRIBE"], os.environ["REPORT"]
+          changed, out = os.environ["CHANGED_PATHS"], os.environ["PROBE_DIR"]
+          base = subprocess.run(["git", "rev-parse", "HEAD^1"], capture_output=True, text=True).stdout.strip()
+          members = {
+              "current": f'dotnet "{cli}" check-current --candidate-lean-report "{report}"',
+              "scribe": (f'tools/scripts/workflow/scribe-content-checks.sh "{report}" "{scribe}" "{changed}"'
+                         if os.path.isfile(changed) else f'tools/scripts/workflow/scribe-content-checks.sh "{report}"'),
+              "delta": f'dotnet "{cli}" check-delta --protected-base "{base}" --candidate-lean-report "{report}"',
+          }
+          child = r"""
+          import json, resource, subprocess, sys, time
+          name, command, log = sys.argv[1:4]
+          start = time.monotonic()
+          with open(log, "wb") as stream:
+              rc = subprocess.run(["bash", "-c", command], stdout=stream, stderr=subprocess.STDOUT).returncode
+          usage = resource.getrusage(resource.RUSAGE_CHILDREN)
+          print(json.dumps({"member": name, "rc": rc, "wall_s": round(time.monotonic() - start, 1),
+                            "cpu_s": round(usage.ru_utime + usage.ru_stime, 1), "max_rss_kb": usage.ru_maxrss}))
+          """
+          child = "\n".join(line[10:] if line.startswith(" " * 10) else line for line in child.splitlines())
+          def meminfo(key):
+              for line in open("/proc/meminfo"):
+                  if line.startswith(key + ":"):
+                      return int(line.split()[1])
+          def read(path):
+              try:
+                  return open(path).read().strip()
+              except OSError:
+                  return "unavailable"
+          print("CI_PROBE " + json.dumps({"static": {"nproc": os.cpu_count(), "mem_total_kb": meminfo("MemTotal"),
+              "swap_total_kb": meminfo("SwapTotal"), "cgroup_memory_max": read("/sys/fs/cgroup/memory.max"),
+              "cgroup_cpu_max": read("/sys/fs/cgroup/cpu.max")}}), flush=True)
+          def digest(path):
+              text = open(path, errors="replace").read()
+              kept = [line for line in text.splitlines() if "gate_stage_timing" not in line]
+              return {"lines": len(kept), "sha256": hashlib.sha256("\n".join(kept).encode()).hexdigest()[:16]}
+          def layout(label, names):
+              directory = os.path.join(out, label)
+              os.makedirs(directory, exist_ok=True)
+              low = {"available_kb": meminfo("MemAvailable")}
+              stop = threading.Event()
+              def sample():
+                  while not stop.wait(1.0):
+                      low["available_kb"] = min(low["available_kb"], meminfo("MemAvailable"))
+              sampler = threading.Thread(target=sample, daemon=True)
+              sampler.start()
+              start = time.monotonic()
+              running = [(name, subprocess.Popen([sys.executable, "-c", child, name, members[name],
+                          os.path.join(directory, name + ".log")], stdout=subprocess.PIPE, text=True)) for name in names]
+              results = []
+              for name, process in running:
+                  stdout, _ = process.communicate()
+                  record = json.loads(stdout.strip().splitlines()[-1])
+                  record.update(digest(os.path.join(directory, name + ".log")))
+                  results.append(record)
+              stop.set()
+              sampler.join()
+              print("CI_PROBE " + json.dumps({"layout": label, "wall_s": round(time.monotonic() - start, 1),
+                    "min_mem_available_kb": low["available_kb"], "members": results}), flush=True)
+          for name in members:
+              layout("serial-" + name, [name])
+          layout("overlap-current-scribe-delta", ["current", "scribe", "delta"])
+          layout("overlap-current-scribe", ["current", "scribe"])
+          layout("overlap-scribe-delta", ["scribe", "delta"])
+          PY
       # Caches are written only after every check above succeeded; the snapshot
       # program decides per layer whether the archive is ready to publish.
       - id: snapshot
