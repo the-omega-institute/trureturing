@@ -23124,3 +23124,309 @@ The divisor count is only a conditional bridge: when
 \(p^{e-1}\nmid(a_R-b)\), the two \(R\)-classes have disjoint
 \(p^{e-1}\)-prefixes and this construction does not apply.  The remaining
 branch still requires a repair that pays the full two-phase liability.
+
+## 193. A prefix-separated source phase reduces the repair to one complete private hull
+
+The other branch has a sharper local form than the equal-prefix case.  Keep
+the notation of Section 192 and assume
+
+\[
+  p^{e-1}\nmid(a_R-b).
+  \tag{PS0}
+\]
+
+Every source congruence \(t_i=p^{e-1}m_i\) divides the modulus of its top
+class, and the source construction gives \(a_i\equiv b\pmod {t_i}\).  Hence
+the phase of every \(T_i\) is \(b\) modulo \(p^{e-1}\), whereas the occupied
+class \(A=a_R\pmod R\) has phase \(a_R\not\equiv b\pmod {p^{e-1}}\).  Therefore
+
+\[
+  \boxed{A\cap T_i=\varnothing\quad(1\leq i\leq p).}
+  \tag{PS1}
+\]
+
+In particular the index set from Section 192 is empty:
+
+\[
+  I=\{i:t_i\mid(a_R-b)\}=\varnothing.
+  \tag{PS2}
+\]
+
+Let \(P_R\) be the complete original private region of \(A\), and retain
+the notation \(\mathcal U=\bigcup(\mathcal C_0\setminus\{A\})\) and
+\(E_A=A\setminus\mathcal U\).  Because (PS1) removes the top layer from
+the intersection with \(A\),
+
+\[
+  \boxed{E_A=P_R.}
+  \tag{PS3}
+\]
+
+Thus every partial repair in (PW-Partial-Liability) has the same obligation
+
+\[
+  K_S=P_R\qquad(S\subseteq I=\varnothing).
+  \tag{PS4}
+\]
+
+This is an exact set identity, not a density estimate: the top classes cannot
+pay any point of \(A\), so retaining a top class cannot reduce the remaining
+repair.
+
+### A missing private-hull divisor gives an unconditional descent in this branch
+
+Choose \(w_R\in P_R\) and let \(\Gamma_R\) be the complete private hull,
+so that every divisor \(u\mid\Gamma_R\) satisfies
+
+\[
+  P_R\subseteq w_R\pmod u.
+  \tag{PS5}
+\]
+
+Suppose that \(u>1\) is odd, \(u\mid\Gamma_R\), and \(u\notin D\).  Delete
+the occupied class \(A\) and all \(p\) top classes.  Insert the
+source-determined class \(B=b\pmod R\) and the fresh class
+
+\[
+  W=w_R\pmod u.
+\]
+
+The class \(B\) covers the complement of \(\mathcal C_0\) by
+(PW-Source-Cover), while (PS3) and (PS5) show that \(W\) covers exactly the
+only remaining liability \(P_R\).  All retained classes are those in
+\(\mathcal U\), so the new family is a whole cover.  Its labels are distinct:
+\(u\notin D\), \(R\in D\), and \(W\) is not the modulus-\(R\) class \(B\).
+The old block contained \(p+1\) classes and the new block contains two, so
+the cardinality is lowered by \(p-1>0\).  This contradicts EB1.
+
+Consequently the prefix-separated branch of an EB1 whole cover must satisfy
+
+\[
+  \boxed{
+  u>1,\ u\mid\Gamma_R
+  \Longrightarrow
+  u\in D.
+  }
+  \tag{PS-Hull-Occupancy}
+\]
+
+More generally, any fresh distinct odd family \(\mathcal R\) covering
+\(P_R\), with labels outside the retained family, would give a strict
+cardinality descent whenever \(|\mathcal R|<p\).  When \(|\mathcal R|=p\),
+the exact tied-count comparison is
+
+\[
+  \sum_{C\in\mathcal R}\operatorname{mod}(C)
+  <
+  \sum_{i=1}^{p}p^e m_i,
+  \tag{PS-Sum}
+\]
+
+because the old and new modulus-\(R\) labels cancel.  These are the precise
+budgets for the prefix-separated repair; no contribution from a top class can
+be credited toward \(P_R\).
+
+This does not settle the branch.  The occupied labels in (PS-Hull-Occupancy)
+may already contain every divisor of \(\Gamma_R\), and a repair may require
+at least \(p\) fresh classes or a non-hull construction.  The result does,
+however, remove the two-phase ambiguity from (PS0): the remaining global
+obligation is one actual complete private region, while the equal-prefix
+branch is the only branch in which top classes can intersect that region.
+
+## 194. High-layer repairs of the complete two-phase responsibility have a sharp minimum
+
+The source-determined phase also gives a finite classification of repairs
+that use only moduli of (p)-height at least (e). This tests the whole
+responsibility, rather than replacing it by one of the two private regions.
+
+Keep the notation of Section 192, put
+
+\[
+  N=Q/p,\qquad
+  E=E_A\mathbin{\dot\cup}E_B=\mathbb Z\setminus\mathcal U,
+\]
+
+and let (S\ne\varnothing) be any (N)-periodic set. Write
+
+\[
+  \gamma_N(S)=\gcd\bigl(N,\{x-w:x\in S\}\bigr),
+  \qquad w\in S.
+\]
+
+Assume (p^e\Vert Q), so (v_p(N)=e-1). If distinct odd classes
+(c_j\pmod {d_j}), with (v_p(d_j)\ge e), cover (S), then at least
+(p) classes are necessary. Moreover, exactly (p) classes exist if and
+only if
+
+\[
+  \boxed{
+  v_p(\gamma_N(S))=e-1,
+  \qquad
+  \tau\!\left(\frac{\gamma_N(S)}{p^{e-1}}\right)\ge p.
+  }
+  \tag{HL1}
+\]
+
+When equality holds, every class has the form
+
+\[
+  d_j=p^e s_j,
+  \qquad
+  s_j\mid\frac{\gamma_N(S)}{p^{e-1}},
+\]
+
+with the (s_j) distinct; their cofactor phases agree on (S), and their
+(p)-adic digits run through all (p) lifts of the common (p^{e-1})-prefix.
+
+To prove this, restrict every class to a fibre (x+N\mathbb Z\subseteq S).
+Its induced modulus is (d_j/\gcd(d_j,N)), an odd multiple of (p), so its
+relative density is at most (1/p). A cover by at most (p) classes must
+attain equality on every fibre: there are exactly (p) classes, every induced
+modulus is (p), and every class meets every fibre. The last condition says
+(d_j/p\mid\gamma_N(S)). Conversely, any (p) distinct divisors (s_j)
+in (HL1), combined with the (p) CRT lifts of one actual point of (S),
+cover every (N)-fibre. This also shows that the equality labels divide
+(pN=Q).
+
+Apply this classification to (S=E). If (HL1) held, deleting (A) and
+the (p) top classes and inserting the (p) high-layer classes would lower
+the EB1 class count. Their height is exactly (e), so they cannot collide
+with the retained lower layer. Therefore every EB1 representative obeys
+
+\[
+  \boxed{
+  v_p(\gamma_N(E))=e-1
+  \Longrightarrow
+  \tau\!\left(\frac{\gamma_N(E)}{p^{e-1}}\right)\le p-1.
+  }
+  \tag{HL2}
+\]
+
+The first condition in (HL1) has the phase interpretation
+
+\[
+  v_p(\gamma_N(E))=e-1
+  \quad\Longleftrightarrow\quad
+  a_R\equiv b\pmod {p^{e-1}},
+\]
+
+because both nonempty responsibility pieces are fixed by their respective
+occupied (R)-phases. Thus (HL2) strengthens the earlier conditional divisor
+test from Section 192 by using the complete two-sided responsibility.
+
+## 195. EB1 forces the top cofactors into a common minimum-divisor normal form
+
+Write
+
+\[
+  \mathcal M=\{m_1,\ldots,m_p\},
+  \qquad L=\operatorname{lcm}(m_1,\ldots,m_p),
+  \qquad R=p^{e-1}L.
+\]
+
+For a positive integer (z), let (S_p(z)) denote its (p) smallest
+positive divisors. Define
+
+\[
+  \gamma_N(E_A)=p^{e-1}K_A,
+  \qquad
+  \gamma_N(E_B)=p^{e-1}K_B.
+\]
+
+Both (K_A,K_B) are prime to (p): the responsibility sets are nonempty
+unions of complete (N)-fibres and are each contained in one fixed
+(R)-class, while (v_p(N)=e-1). They are also multiples of (L), because
+(E_A\subseteq A) and (E_B\subseteq B).
+
+The EB1 modulus-sum tie-break forces
+
+\[
+  \boxed{
+  \mathcal M=S_p(K_A)=S_p(K_B)=S_p(L).
+  }
+  \tag{NF1}
+\]
+
+For the (B)-side, choose any (p) distinct divisors (s_j\mid K_B),
+replace the top packet by the (p) classes (p^e s_j) with the common
+actual cofactor phase from a point of (E_B), and retain (A). This is a
+whole cover with the same number of classes, so EB1 gives
+\(\sum_i m_i\le\sum_j s_j\). Since
+\(\mathcal M\subseteq\operatorname{Div}(K_B)\), it must be the set of the
+smallest (p) divisors of (K_B). The analogous comparison replacing (A)
+and the top packet by (B) and (p) high-layer classes covering (E_A)
+gives \(\mathcal M=S_p(K_A)\). Finally (L\mid K_A,K_B) and
+\(\mathcal M\subseteq\operatorname{Div}(L)\), so the same minimum argument
+gives (S_p(L)).
+
+This is a necessary normal form, not a claim that every divisor choice gives a
+legal repair: the phases must remain the actual CRT phases of the common
+source, and retained numerical labels must stay distinct.
+
+## 196. A unique incompatible top digit gives a strict modulus-sum descent
+
+There is a repair that keeps every top class and every other original phase,
+so it does not incur the two-phase deletion liability. Assume the equal-prefix
+branch
+
+\[
+  a_R\equiv b\pmod {p^{e-1}},
+\]
+
+and define
+
+\[
+  I_- =\{i:m_i\nmid(a_R-b)\}.
+\]
+
+It is nonempty because (R\nmid(a_R-b)). If (I_-={i_*\}), then the
+original complete private region of (A) is
+
+\[
+  P_R=E_A\cap(a_{i_*}\pmod {p^e}).
+  \tag{UD1}
+\]
+
+The reason is that a top class with (m_i\mid(a_R-b)) meets (A) on its
+single corresponding (p^e)-digit, while the unique incompatible top class
+is disjoint from (A). Since (E_A) is (N)-periodic, its original private
+hull satisfies \(\Gamma_R=pG_A\), where
+\(G_A=\gamma_N(E_A)=p^{e-1}K_A\).
+
+Suppose there is a divisor
+
+\[
+  t\mid K_A,\qquad t\notin\mathcal M,\qquad pt<L.
+  \tag{UD2}
+\]
+
+Choose (w_A\in E_A). CRT gives
+
+\[
+  C=c\pmod {p^e t},
+  \qquad c\equiv a_{i_*}\pmod {p^e},
+  \qquad c\equiv w_A\pmod t.
+\]
+
+By (UD1) and (t\mid K_A), (C) contains all of (P_R). Replace only
+the original class (A) by (C). Every top class and every other original
+class remains unchanged, so the whole cover is preserved. The new numerical
+label is distinct: it has height (e), is not one of the top labels because
+(t\notin\mathcal M), and cannot equal a lower-layer label. The strict sum
+comparison is exactly
+
+\[
+  p^e t<R=p^{e-1}L
+  \quad\Longleftrightarrow\quad pt<L.
+\]
+
+Thus (UD2) contradicts EB1. A sufficient version uses (t\mid L), since
+(L\mid K_A). For example, (p=5),
+\(\mathcal M=\{1,3,9,11,27\}\), (L=297), and (t=33) meet the numerical
+conditions; that unique-bad-digit phase pattern is excluded for every genuine
+EB1 whole cover.
+
+Sections 194--196 still leave the unrestricted problem open. They reduce the
+occupied (R) branch to explicit responsibility-hull and minimum-factor
+conditions, and isolate a concrete phase family that cannot occur, but they do
+not force one of these descent certificates for every hypothetical cover.
