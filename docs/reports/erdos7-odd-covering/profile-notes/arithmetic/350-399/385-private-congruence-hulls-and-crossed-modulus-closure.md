@@ -15513,3 +15513,118 @@ If the cofactor incidence is discarded, the five original prefixes meeting this 
 ### Scope of the result
 
 The additional reusable content is the actual-fibre charge CF3–CF5 for the existing joint-liability tree, its conditional divisor-sum replacement CF7–CF9, and the exact strict comparison CF10–CF11 on the existing control. The general conditional normalization, tree duality and selected-source union bound are explicitly reused. No positivity of the complete survivor, independent cofactor law, two-copy projection, useful uniform delta, or successful descent for every nonconcentrated source is asserted.
+
+## 125. One original phase bounds the cumulative deep supplier inventory
+
+Keep one all-concentrated EB1 original cover, with opposite-color
+primes p in S_o and q in S_i. The original prime phases are normalized
+to zero. The following bounds reuse DR1--DR2 and the vacant
+opposite-color repair RG4. They concern actual original phase groups,
+not numerical divisibility alone.
+
+### A deep mixed parent has at most p-2 descendants in one phase
+
+Let ell be a prime of S_i, and let the original label
+
+    d=3^a ell, a>=p-2
+
+be present. For a non-own actual phase c modulo d, let J_c be ALL
+proper original multiples of d with that phase, and put r=|J_c|.
+Then
+
+    r<=p-2.                                         (CD1)
+
+For a nonempty group, use DR1 to move the original parent to c and
+remove its entire J_c. The exact whole-cover hole is the complete
+original P_d. Apply RG4 with the original d-prefix and cofactor ell:
+for j=0,...,p-2, the repair AP has conditions
+
+    x=a_d modell, x=a_d mod3^j, x=j+1 modp,
+    numerical modulus p*ell*3^j.
+
+Every private point avoids retained A_p and has the original d-prefix,
+so these p-1 classes cover all of P_d. Each label is fresh by CP1,
+because it contains opposite-color primes p and ell. Their total is
+
+    W_rep=p*ell*(3^(p-1)-1)/2.
+
+If r>p-1, DR2 gives a class-count contradiction. If r=p-1, every
+removed label is a proper odd multiple of d and is at least3d. Hence
+
+    sum_(e in J_c)e >=3*(p-1)*d
+       >=(p-1)*3^(p-1)*ell > W_rep,
+
+contradicting DR2's modulus-sum budget at unchanged class count.
+This proves CD1. The repair uses the parent's entire P_d; no private
+region of a descendant is substituted for it.
+
+### All deep suppliers in one actual live cylinder share the budget
+
+Fix the actual same-color auxiliary coordinate w_* and divided
+q-tail v_* from section118, with the nonempty residual slice
+
+    Y_*={s:(s,w_*,v_*) in Y}.
+
+Choose h_0 with p-1<=h_0<=H, put a_0=h_0-1, and choose an actual
+ternary prefix alpha modulo3^a_0 with
+
+    Y_* intersect[alpha]!=empty.
+
+Let W_alpha be ALL original same-color q-free mixed labels
+3^b n with b>=h_0 whose cofactor AP contains w_* and whose whole
+ternary cylinder is contained in[alpha]. Here n>1, gcd(n,3q)=1,
+and every prime of n lies in S_i minus {q}. Put N_alpha=|W_alpha|.
+Then
+
+    N_alpha <= (p-2)*|S_i minus {q}|.                 (CD2)
+
+For each prime ell in S_i minus {q}, collect the members whose
+cofactor is divisible by ell. If this collection is nonempty,
+divisor closure supplies the ONE original parent
+
+    d_ell=3^a_0*ell.
+
+Every collected label is a proper multiple of d_ell. Its actual
+phase modulo d_ell is the same pair(alpha,w_* modell). Thus the
+whole collection lies in one actual descendant phase group of that
+parent. Since a_0>=p-2, CD1 bounds it by p-2. Assign each supplier
+once to any one of its dividing cofactor primes and sum these
+bounds. This proves CD2 without counting a higher power of ell as
+another prime slot, and without executing different repairs together.
+
+The original parent phase need not equal(alpha,w_* modell); a
+nonempty descendant group makes them different by comparable
+class disjointness. No phase is copied onto the original parent.
+
+### Complete losses at different depths cannot reuse suppliers
+
+For any live s_* in Y_* intersect[alpha], let D_h be its two
+complete altered children at depth h, as in section122. Define
+
+    L_*={h:h_0<=h<=H, D_h intersect Y_*=empty}.
+
+Every h in L_* requires at least one actual mixed supplier by AS3.
+All of its suppliers lie in W_alpha. Each supplier's whole ternary
+cylinder is inside D_h, and the D_h are pairwise disjoint: their
+words first differ from s_* at different digits. Thus suppliers
+at different lost depths are distinct original labels, giving
+
+    |L_*| <= sum_(h in L_*)|S_h|
+          <= N_alpha
+          <= (p-2)*|S_i minus {q}|.                 (CD3)
+
+In particular, among the H-h_0+1 depths there are at least
+
+    max(0,H-h_0+1-N_alpha)
+
+at which some actual word in an altered child remains in Y_*.
+This supplies surviving words only; it does not say that a whole
+altered child survives or that those words share their higher digits.
+When h_0>H there are no depths to count, so no existence claim follows.
+
+The inventory statement CD2 applies to every actual live prefix at
+this fixed source, and CD3 to every live reference word in that
+prefix. They do not pool different auxiliary coordinates or transfer
+private constraints to a different parent. No strict descent for every
+all-concentrated cover, no nonconcentrated-source distribution, and
+no new Lean verification is asserted.
