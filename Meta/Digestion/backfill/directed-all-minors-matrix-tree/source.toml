@@ -1,0 +1,5 @@
+source_id = "directed-all-minors-matrix-tree"
+path = "Library/Combinatorics/zernik2013allminors.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

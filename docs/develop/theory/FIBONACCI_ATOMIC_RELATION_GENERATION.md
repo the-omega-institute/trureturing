@@ -46207,3 +46207,91 @@ B_{k,s}=Z(a_{k,s})-\ell_{k,s}
 每格两个端点均保留，最近节点距离至多半格宽。由最大价格格宽 $O(\sqrt{F_k})$ 与（333.8），右侧在晚块上一致趋零；其几何项的块积分甚至被可和的 $O(\beta_k)$ 控制。有限初段除以趋于无穷的对数总长趋零，晚块的一致小偏差也使其平均趋零。RH 下 §316 的连续谱对数平均为零，于是证书平均趋零。
 
 反向只用 $\mathcal E_k\le Z$：全部实数上的证书预算直接给 $\int_{A_{k_0}}^X Z(x)dx/x\ge-K\log(X/A_{k_0})$。复用 §316 的连续正逆变换与经典 Landau 论证即得 RH。不把只在 Fibonacci 块端点成立的预算当成全实数预算；本结论没有补上这种粗端点运输。证书预算的存在性与有限 $e_{k,s}$、$M_k$ 的数值实现仍需独立给出。$\square$
+
+## 334. 同一素数截止生产实际残差上界与五分谱证书
+
+**定义 334.1（有限素数幂修正）。** 沿用 §§313、315、333 的实际 $T_L$、$m=3L+2\ge50$、$E=e^\gamma$、$X_L=\log T_L$、$U_L=\sigma(T_L)/T_L$、$\kappa=2\sqrt2-2$、$w(m)=\sqrt m\log m$、$D(m)=\log\vartheta(m)-P(m)/E$、$Z=wI_\psi$ 和非负端点缺损 $\mathfrak h_L$。置
+\[
+V(t)=\frac1{t\log t},\qquad
+\mathcal P_m=\{(p,r):p\text{ 为素数},\ r\ge2,\ p^r\le m^2\},
+\]
+\[
+K_m=w(m)\sum_{(p,r)\in\mathcal P_m}\log p
+\,[V(\max\{m,p^r\})-V(m^2)],\qquad
+ d_m=\frac{w(m)}{2(m-1)}.
+\tag{334.1}
+\]
+集合 $\mathcal P_m$ 有限，且每个素数底数 $p\le m$。定义同一个实际整数的有限核心修正及残差上界候选
+\[
+R_L=\sqrt m\left[\log\frac{X_L}{\vartheta(m)}
+ +\frac{P(m)-U_L}{E}\right],\qquad
+ e_L^{\rm cut}=R_L-\kappa+d_m-K_m.
+\tag{334.2}
+\]
+这些量只使用截止 $m$ 内的素数及实际 $T_L$ 的有限因子；不从 $\varepsilon_L\to0$ 选择不可计算的阈值。
+
+**假设 334.1（已有同截断解析身份）。** 使用 §§313、315 的同截断 Abel 恒等式、实际核心修正 $R_L\to2\sqrt2$ 和普通素数幂分解。置 $R(t)=\psi(t)-\vartheta(t)\ge0$、$k(t)=(1+\log t)/(t^2\log^2t)$、$J_m=\int_m^\infty R(t)k(t)dt$，则 $I_\psi-I_\vartheta=J_m$。$\tau(m)=\sum_{p>m}\sum_{r\ge2}1/(rp^r)$ 采用原来的同截断定义。经典几何级数比较给 $0\le\tau(m)\le1/[2(m-1)]$；经典 Chebyshev 素幂估计给 $0\le R(t)\le2\sqrt t\log t$（$t\ge1$），可直接复用 Mathlib `Chebyshev.psi_sub_theta_le`。这些是已知中间输入，不是新的素数分布结论。
+
+**定理 334.1（有限同截止残差证书与核心消去）。** 在假设334.1及原有解析输入下，对每个实际 $L\ge16$，将（315.2）的误差按精确恒等式选择为
+\[
+\varepsilon_L=R_L-\kappa+w(m)\tau(m)-w(m)J_m.
+\tag{334.3}
+\]
+则 $\mathfrak m_L=Z(m)+\kappa-\mathfrak h_L+\varepsilon_L$，并有
+\[
+0\le e_L^{\rm cut}-\varepsilon_L
+\le9\frac{\log m}{\sqrt m},\qquad
+ e_L^{\rm cut}\longrightarrow0.
+\tag{334.4}
+\]
+尤其有限下标签精确消去实际核心修正：
+\[
+\ell_L^{\rm cut}:=\mathfrak m_L-\kappa-e_L^{\rm cut}
+=\sqrt mD(m)+K_m-d_m\le Z(m),
+\]
+\[
+Z(m)-\ell_L^{\rm cut}
+=\mathfrak h_L+(e_L^{\rm cut}-\varepsilon_L).
+\tag{334.5}
+\]
+因此下标签本身只需素数截止 $m$，无需分别计算巨大整数 $T_L$ 的绝对余量与核心修正再相减。$\kappa$ 的平方层储备没有被设为零；它在同一个实际标签的消去式中准确抵消。
+
+**证明。** 同一个实际整数满足 $\mathfrak m_L=\sqrt mD(m)+R_L$，由 $X_L,\vartheta(m)>0$ 和经典 $\log(X_L/\vartheta)=\log X_L-\log\vartheta$ 得到。将同截断 Abel 恒等式（313.10）代入，并保留 $\mathfrak h_L$，给
+\[
+\sqrt mD(m)=Z(m)-\mathfrak h_L+w(m)\tau(m)-w(m)J_m.
+\tag{334.6}
+\]
+与上一式相加得到（334.3）的精确分解，不对端点缺损作无条件消失断言。
+
+先核对有限修正，避免把尾积分当作有限观测。$-V'(t)=k(t)$；在 $[m,m^2]$ 上，经典素幂分解给
+$R(t)=\sum_{p^r\le t,\ r\ge2}\log p$。有限和逐项积分得到
+\[
+K_m=w(m)\int_m^{m^2}R(t)k(t)dt.
+\tag{334.7}
+\]
+端点 $p^r=m$、$p^r=m^2$ 的单点不影响积分；末端对应项为零。因为 $r\ge2$，$p^r\le m^2$ 蕴含 $p\le m$，所以该修正不要求枚举 $(m,m^2]$ 中的新素数。
+
+由 $\log t\ge1$，$k(t)\le2/(t^2\log t)$。用假设334.1的经典上界，得到 $0\le R(t)k(t)\le4t^{-3/2}$。经典幂积分与正性给尾积分绝对收敛，并有
+\[
+0\le w(m)J_m-K_m
+\le w(m)\int_{m^2}^\infty4t^{-3/2}dt
+=8\frac{\log m}{\sqrt m}.
+\tag{334.8}
+\]
+同时，$m\ge2$ 给 $0\le d_m-w(m)\tau(m)\le d_m\le\log m/\sqrt m$。二式相加就是（334.4）的有限误差界。原来的（315.2）给精确选择的 $\varepsilon_L\to0$，再用 $\log m/\sqrt m\to0$，得 $e_L^{\rm cut}\to0$，不需要 RH。代入（334.2）及 $\mathfrak m_L=\sqrt mD+R_L$ 得（334.5）；其中右端非负来自端点缺损与正尾。$\square$
+
+**定理 334.2（原五分证书的残差输入由有限素数生产）。** （334.5）的有限下标签可用于 §333 的两种实际平方密度网格；以下在 Fibonacci 块上保留原来的共同导数界与全部端点，并定义
+\[
+\mathcal E_k^{\rm cut}(x)=\max_s[
+\ell_{U_{k,s}}^{\rm cut}-M_k|x-a_{k,s}|].
+\tag{334.9}
+\]
+则它仍是 $Z$ 的逐点下界，保留旧标签及同一 $M_k$ 的递归加密仍单调增强。§333 条件（333.14）现在由定理334.1自动供应。在其余原解析输入下，RH 等价于该有限素数证书的归一化连续累计平均趋零，也等价于其在全部充分大实数截止上有固定有限下界。
+
+**证明。** 所有晚块的节点 $U_{k,s}\ge F_k\to\infty$，故完整整数序列上的 $e_L^{\rm cut}\to0$ 给本块最大绝对误差上界趋零；不要求节点数固定。套用定理333.2。在任一节点，证书信息误差现在满足
+\[
+0\le Z(a_{k,s})-\ell_{U_{k,s}}^{\rm cut}
+\le\mathfrak h_{U_{k,s}}+9\frac{\log a_{k,s}}{\sqrt{a_{k,s}}}.
+\tag{334.10}
+\]
+RH 下原端点估计使 $\mathfrak h_L\to0$，几何格误差按 §333 处理。反向仍要求全部充分大实数截止上的累计预算，未将 Fibonacci 粗端点预算自动延伸为它。本节生产了有限残差标签及其一致消失的误差，未生产累计预算的存在性、共同导数界的数值常数表或无限有符号尾项的下界，也未证明 RH。$\square$
