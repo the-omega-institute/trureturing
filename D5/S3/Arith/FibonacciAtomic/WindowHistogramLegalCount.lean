@@ -59,194 +59,6 @@ def split : List Window → Cuts
       | .middle => ([], (true, p.1) :: p.2)
       | b => (b :: p.1, p.2)
 
-private theorem split_properties (w : List Window) :
-    join (split w) = w ∧ Clean (split w) ∧
-    (split w).2.length = w.count .zero + w.count .middle ∧
-    (∀ s : Bool, legal s (flatten w) ↔
-      legal s (flatten (split w).1) ∧
-        ∀ dg ∈ (split w).2, legal false (flatten dg.2)) := by
-  induction w with
-  | nil => simp [split, join, Clean, gaps, Free, flatten, legal]
-  | cons d w ih =>
-    obtain ⟨he, hc, hn, hl⟩ := ih
-    rcases hp : split w with ⟨g, ds⟩
-    simp only [hp, join, Clean, gaps, List.mem_cons, List.mem_map,
-      forall_eq_or_imp, Prod.forall, exists_and_right, exists_eq_right] at he hc hn hl
-    cases d <;>
-      simp_all [split, join, Clean, gaps, Free, triple, flatten, bits, legal,
-        List.count_cons, List.mem_map, List.flatMap_cons, List.cons_append]
-    all_goals first | exact hc.2 | exact ⟨hc.2, by omega⟩
-
-private theorem split_inverse (p : Cuts) (hp : Clean p) : split (join p) = p := by
-  have split_prefix (g : List Window) (hg : Free g) (w : List Window) :
-      split (g ++ w) = (g ++ (split w).1, (split w).2) := by
-    induction g with
-    | nil => simp
-    | cons d g ih =>
-      have hd := hg d (by simp)
-      have ht : Free g := fun b hb => hg b (List.mem_cons_of_mem d hb)
-      cases d <;> simp_all [split, List.cons_append]
-  rcases p with ⟨g, ds⟩
-  simp only [Clean, gaps, List.mem_cons, forall_eq_or_imp] at hp
-  rw [join, split_prefix g hp.1]
-  induction ds with
-  | nil => simp [split]
-  | cons dg ds ih =>
-    rcases dg with ⟨d, h⟩
-    have hh : Free h := hp.2 h (by simp)
-    have ht : ∀ v ∈ ds.map Prod.snd, Free v := by
-      intro v hv
-      exact hp.2 v (by simp [hv])
-    have hi := ih ⟨hp.1, ht⟩
-    cases d <;> simp_all [List.flatMap_cons, triple, split, split_prefix h hh]
-
-/-- Neutral positions determine a unique decomposition, and each legal gap
-has unique low/end/high exponents. -/
-private theorem decomposition :
-    (∀ w : List Window, ∃! p : Cuts, Clean p ∧ join p = w) ∧
-    (∀ w : List Window, (split w).2.length = w.count .zero + w.count .middle) ∧
-    (∀ w : List Window, legal false (flatten w) ↔
-      ∀ g ∈ gaps (split w), ∃! q : Gap, gap q = g) := by
-  have injective : Function.Injective gap := by
-    intro p q h
-    have hx : (gap p).count .low = (gap q).count .low := congrArg (List.count .low) h
-    have hy : (gap p).count .high = (gap q).count .high := congrArg (List.count .high) h
-    have hz : (gap p).count .ends = (gap q).count .ends := congrArg (List.count .ends) h
-    rcases p with ⟨a, z, b⟩
-    rcases q with ⟨a', z', b'⟩
-    cases z <;> cases z' <;>
-      simp [gap, List.count_replicate] at hx hy hz <;> simp_all
-  have gap_language (w : List Window) (hw : Free w) :
-      (legal false (flatten w) ↔ ∃ q : Gap, gap q = w) ∧
-      (legal true (flatten w) ↔ ∃ n : ℕ, w = List.replicate n .high) := by
-    let R : Window → Window → Prop := fun a b =>
-      (a = .low ∧ (b = .low ∨ b = .ends ∨ b = .high)) ∨
-      ((a = .ends ∨ a = .high) ∧ b = .high)
-    have trans : Transitive R := by
-      intro a b c
-      cases a <;> cases b <;> cases c <;> simp only [R, reduceCtorEq, eq_self, ne_eq,
-        or_false, false_or, and_false, false_and, and_true, true_and] <;> tauto
-    letI : IsTrans Window R := ⟨trans⟩
-    have chain (v : List Window) (hv : Free v) (s : Bool) :
-        legal s (flatten v) ↔
-          (∀ b ∈ v.head?, ¬ (s = true ∧ first b = true)) ∧ v.Pairwise R := by
-      cases v with
-      | nil => simp only [flatten, List.flatMap_nil, legal, List.head?_nil,
-          Option.not_mem_none, false_implies, forall_const, List.Pairwise.nil, and_self, iff_self, and_true, implies_true]
-      | cons b v =>
-        rw [LiteralWindowEnd.legal_chain, List.IsChain.iff_of_mem_imp (S := R) (by
-          intro a c ha hc
-          have h₁ := hv a ha
-          have h₂ := hv c hc
-          cases a <;> cases c <;> simp_all only [R, first, last,
-            reduceCtorEq, eq_self, ne_eq, not_true_eq_false, not_false_eq_true, and_false,
-            false_and, and_true, true_and, or_false, false_or]), List.isChain_iff_pairwise]
-        simp only [List.head?_cons, Option.mem_some_iff, forall_eq']
-    have normal (q : Gap) : (gap q).Pairwise R := by
-      rcases q with ⟨a,z,b⟩
-      cases z <;> simp only [gap, Bool.false_eq_true, eq_self,
-        ↓reduceIte, List.pairwise_append, List.pairwise_replicate,
-        List.pairwise_singleton, List.Pairwise.nil, List.mem_replicate,
-        List.mem_append, List.mem_singleton, List.not_mem_nil, R,
-        reduceCtorEq, eq_self, ne_eq, and_true, true_and, or_true, true_or,
-        or_false, false_or, and_false, false_and, not_false_eq_true] <;> tauto
-    have free_gap (q : Gap) : Free (gap q) := by
-      intro b hb
-      cases q with | mk a z c =>
-        cases z <;> cases b <;> simp_all only [Free, gap, Bool.false_eq_true,
-          eq_self, ↓reduceIte, List.mem_append, List.mem_replicate,
-          List.mem_singleton, List.not_mem_nil, reduceCtorEq, eq_self, ne_eq, and_false,
-          false_and, or_false, false_or, not_false_eq_true, and_true]
-    constructor
-    · constructor
-      · intro hl
-        have hp := ((chain w hw false).mp hl).2
-        have hz : w.count .ends ≤ 1 := by
-          have hrep := hp.sublist (List.replicate_sublist_iff.mpr
-            (Nat.le_refl (w.count .ends)))
-          simpa only [List.pairwise_replicate, R, reduceCtorEq, eq_self, ne_eq,
-            and_false, false_and, or_false] using hrep
-        let q : Gap := ⟨w.count .low, decide (w.count .ends = 1), w.count .high⟩
-        have hperm : (gap q).Perm w := by
-          apply List.perm_iff_count.mpr
-          intro b
-          have hzero : w.count .zero = 0 := List.count_eq_zero.mpr (by
-            intro hm; exact (hw .zero hm).1 rfl)
-          have hmiddle : w.count .middle = 0 := List.count_eq_zero.mpr (by
-            intro hm; exact (hw .middle hm).2 rfl)
-          cases b <;> by_cases h : w.count .ends = 1 <;>
-            simp only [gap, q, h, decide_true, decide_false, eq_self,
-              Bool.false_eq_true, ↓reduceIte, List.count_append, List.count_replicate,
-              List.count_nil, List.count_cons, beq_iff_eq, reduceCtorEq, eq_self, ne_eq, ↓reduceIte,
-              Nat.add_zero, Nat.zero_add, hzero, hmiddle] <;> omega
-        exact ⟨q, List.Perm.eq_of_pairwise (by
-          intro a b _ _
-          cases a <;> cases b <;> simp only [R, reduceCtorEq, eq_self, ne_eq,
-            and_false, false_and, or_false, false_or, and_true, true_and] <;> tauto)
-          (normal q) hp hperm⟩
-      · rintro ⟨q, rfl⟩
-        apply (chain _ (free_gap q) false).mpr
-        exact ⟨by simp only [Bool.false_eq_true, false_and, not_false_eq_true,
-          implies_true, forall_const], normal q⟩
-    · constructor
-      · intro hl
-        have hp := (chain w hw true).mp hl
-        cases w with
-        | nil => exact ⟨0, rfl⟩
-        | cons b v =>
-          have hb : b = .high := by
-            have hf := hw b (List.mem_cons_self)
-            have hh := hp.1 b (by simp only [List.head?_cons, Option.mem_some_iff])
-            cases b <;> simp_all only [first, reduceCtorEq, eq_self, ne_eq,
-              and_true, true_and, not_true_eq_false]
-          subst b
-          refine ⟨(.high :: v).length, List.eq_replicate_of_mem ?_⟩
-          intro b hb
-          rcases List.mem_cons.mp hb with rfl | hb
-          · rfl
-          · have h := (List.pairwise_cons.mp hp.2).1 b hb
-            simpa only [R, reduceCtorEq, eq_self, ne_eq, and_false, false_and, or_false,
-              false_or, or_true, true_and] using h
-      · rintro ⟨n, rfl⟩
-        apply (chain _ hw true).mpr
-        refine ⟨?_, ?_⟩
-        · intro b hb
-          have hm := List.mem_of_mem_head? hb
-          obtain ⟨_, rfl⟩ := List.mem_replicate.mp hm
-          simp only [first, Bool.false_eq_true, and_false, not_false_eq_true]
-        · exact List.pairwise_replicate.mpr (Or.inr (by simp only [R,
-            reduceCtorEq, eq_self, ne_eq, and_false, false_and, false_or, or_true, and_self]))
-
-  refine ⟨?_, ?_, ?_⟩
-  · intro w
-    refine ⟨split w, ⟨(split_properties w).2.1, (split_properties w).1⟩, ?_⟩
-    intro p hp
-    rw [← split_inverse p hp.1, hp.2]
-  · intro w
-    exact (split_properties w).2.2.1
-  · intro w
-    rw [(split_properties w).2.2.2 false]
-    have characterize (g : List Window) (hg : Free g) :
-        legal false (flatten g) ↔ ∃! q : Gap, gap q = g := by
-      rw [(gap_language g hg).1]
-      exact ⟨fun ⟨q, hq⟩ => ⟨q, hq, fun p hp => injective (hp.trans hq.symm)⟩,
-        fun ⟨q, hq, _⟩ => ⟨q, hq⟩⟩
-    have hc := (split_properties w).2.1
-    unfold Clean at hc
-    constructor
-    · rintro ⟨hg, ht⟩ g h
-      apply (characterize g (hc g h)).mp
-      rcases List.mem_cons.mp h with he | h
-      · simpa [he] using hg
-      · obtain ⟨dg, hdg, rfl⟩ := List.mem_map.mp h
-        exact ht dg hdg
-    · intro h
-      refine ⟨(characterize _ (hc _ (by simp [gaps]))).mpr (h _ (by simp [gaps])), ?_⟩
-      intro dg hdg
-      have hg : dg.2 ∈ gaps (split w) :=
-        List.mem_cons_of_mem _ (List.mem_map.mpr ⟨dg, hdg, rfl⟩)
-      exact (characterize dg.2 (hc _ hg)).mpr (h _ hg)
-
 
 
 
@@ -261,72 +73,6 @@ def readCode (p : Cuts) : Code :=
   (readGap p.1, p.2.map fun dg => (dg.1, readGap dg.2))
 def terminalGap (p : Code) : Gap := p.2.foldl (fun _ dg => dg.2) p.1
 
-private theorem code_language :
-    (∀ w : List Window, legal false (flatten w) ↔ ∃! p : Code, codeWord p = w) ∧
-    (∀ p : Code, readCode (split (codeWord p)) = p ∧ legal false (flatten (codeWord p))) := by
-  have reading (q : Gap) : readGap (gap q) = q := by
-    rcases q with ⟨a, z, b⟩
-    cases z <;> simp [readGap, gap, List.count_replicate]
-  have clean (p : Code) : Clean (codeCuts p) := by
-    rcases p with ⟨g, ds⟩
-    simp only [Clean, gaps, codeCuts, List.map_map]
-    intro h hh
-    rcases List.mem_cons.mp hh with rfl | hh
-    · intro b hb
-      cases b <;> simp_all [gap, List.mem_append, List.mem_replicate]
-    · obtain ⟨dg, _, rfl⟩ := List.mem_map.mp hh
-      intro b hb
-      cases b <;> simp_all [gap, List.mem_append, List.mem_replicate]
-  have inverse (p : Code) : readCode (split (codeWord p)) = p := by
-    rw [codeWord, split_inverse _ (clean p)]
-    rcases p with ⟨g, ds⟩
-    simp [readCode, codeCuts, List.map_map, Function.comp_def, reading]
-  have legal_code (p : Code) : legal false (flatten (codeWord p)) := by
-    rw [(decomposition).2.2, codeWord, split_inverse _ (clean p)]
-    intro g hg
-    simp only [gaps, codeCuts, List.map_map, List.mem_cons, List.mem_map] at hg
-    rcases hg with rfl | ⟨dg, _, rfl⟩
-    · exact ⟨p.1, rfl, fun q hq => by simpa [reading] using congrArg readGap hq⟩
-    · exact ⟨dg.2, rfl, fun q hq => by simpa [reading] using congrArg readGap hq⟩
-  refine ⟨?_, fun p => ⟨inverse p, legal_code p⟩⟩
-  intro w
-  constructor
-  · intro hw
-    have hs := split_properties w
-    have restore (g : List Window) (hg : Free g) (hl : legal false (flatten g)) :
-        gap (readGap g) = g := by
-      have split_free : ∀ v : List Window, Free v → split v = (v, []) := by
-        intro v
-        induction v with
-        | nil => intro _; rfl
-        | cons b v ih =>
-          intro hv
-          have hb := hv b (by simp)
-          have ht : Free v := fun a ha => hv a (by simp [ha])
-          cases b <;> simp_all [split]
-      have split_free := split_free g hg
-      have hu := ((decomposition).2.2 g).mp hl
-      rw [split_free] at hu
-      obtain ⟨q, hq, _⟩ := hu g (by simp [gaps])
-      rw [← hq, reading]
-    have hl := hs.2.2.2 false |>.mp hw
-    have rebuilt : codeCuts (readCode (split w)) = split w := by
-      apply Prod.ext
-      · exact restore _ (hs.2.1 _ (by simp [Clean, gaps])) hl.1
-      · simp only [codeCuts, readCode, List.map_map, Function.comp_def]
-        conv_rhs => rw [← List.map_id (split w).2]
-        apply List.map_congr_left
-        intro dg hdg
-        have hg : dg.2 ∈ gaps (split w) :=
-          List.mem_cons_of_mem _ (List.mem_map.mpr ⟨dg, hdg, rfl⟩)
-        simp only [restore _ (hs.2.1 _ hg) (hl.2 _ hdg), Prod.eta, id_eq]
-    refine ⟨readCode (split w), ?_, ?_⟩
-    · change join (codeCuts (readCode (split w))) = w
-      rw [rebuilt, hs.1]
-    · intro p hp
-      rw [← inverse p, hp]
-  · rintro ⟨p, hp, _⟩
-    simpa [← hp] using legal_code p
 
 /-- The five letter multiplicities read directly from a canonical code. -/
 def inventory (p : Code) : Window → ℕ
@@ -350,40 +96,6 @@ def EndpointWords (h : Window → ℕ) (f : Window) :=
 def PositiveEndpointWords (h : Window → ℕ) (f : Window) :=
   {w : EndpointWords h f // endable (run (some (false, false)) w.val.val) = true}
 
-private theorem histogram_encoding (h : Window → ℕ) :
-    (∀ p : Code, ∀ f, (codeWord p).count f = inventory p f) ∧
-    (∃ e : HistogramCodes h ≃ HistogramWords h,
-      ∀ p, (e p).val = codeWord p.val) := by
-  have counts (p : Code) (f : Window) : (codeWord p).count f = inventory p f := by
-    rcases p with ⟨g, ds⟩
-    induction ds generalizing g with
-    | nil => cases f <;> cases hz : g.z <;>
-        simp [codeWord, codeCuts, join, inventory, gap, hz, List.count_replicate]
-    | cons dg ds ih =>
-      rcases dg with ⟨d, q⟩
-      have he : codeWord (g, (d, q) :: ds) = gap g ++ triple false d false :: codeWord (q, ds) := by
-        simp [codeWord, codeCuts, join, List.flatMap_cons]
-      rw [he, List.count_append, List.count_cons, ih q]
-      cases f <;> cases d <;> cases hz : g.z <;>
-        simp [inventory, gap, triple, hz, List.count_replicate, List.count_cons,
-          Nat.add_assoc]
-  let e : HistogramCodes h ≃ HistogramWords h :=
-    { toFun := fun p => ⟨codeWord p.val, (code_language.2 p.val).2,
-        fun f => (counts p.val f).trans (p.property f)⟩
-      invFun := fun w => ⟨readCode (split w.val), by
-        obtain ⟨p, hp, _⟩ := (code_language.1 w.val).mp w.property.1
-        have hr : readCode (split w.val) = p := by
-          rw [← hp, (code_language.2 p).1]
-        intro f
-        rw [hr, ← counts p f, hp]
-        exact w.property.2 f⟩
-      left_inv := fun p => Subtype.ext (code_language.2 p.val).1
-      right_inv := fun w => by
-        apply Subtype.ext
-        obtain ⟨p, hp, _⟩ := (code_language.1 w.val).mp w.property.1
-        change codeWord (readCode (split w.val)) = w.val
-        rw [← hp, (code_language.2 p).1] }
-  exact ⟨counts, e, fun _ => rfl⟩
 
 def rawCode {t : ℕ} (q : (Fin t → Bool) × (Fin (t + 1) → Gap)) : Code :=
   (q.2 0, List.ofFn fun i => (q.1 i, q.2 i.succ))
@@ -400,165 +112,9 @@ def factorRaw {a b c r s : ℕ} (p : Factors a b c r s) :
     ⟨p.2.2.1.val i, decide (i ∈ p.2.1.val), p.2.2.2.val i⟩)
 
 
-private theorem histogram_count (a b c r s : ℕ) :
-    (∃ e : Factors a b c r s ≃ HistogramWords (histogram a b c r s),
-      ∀ p, (e p).val = codeWord (rawCode (factorRaw p))) ∧
-    Finite (HistogramWords (histogram a b c r s)) ∧
-    Nat.card (HistogramWords (histogram a b c r s)) =
-      (r + s).choose r * (r + s + 1).choose c *
-        (r + s + 1).multichoose a * (r + s + 1).multichoose b := by
-  let rawEquiv (t : ℕ) :
-      {p : Code // p.2.length = t} ≃ (Fin t → Bool) × (Fin (t + 1) → Gap) := by
-    let e : {p : Code // p.2.length = t} ≃ (Fin t → Bool) × (Fin (t + 1) → Gap) :=
-      { toFun := fun p =>
-          let v : List.Vector (Bool × Gap) t := ⟨p.val.2, p.property⟩
-          (fun i => (v.get i).1, Fin.cons p.val.1 (fun i => (v.get i).2))
-        invFun := fun q => ⟨rawCode q, by simp [rawCode]⟩
-        left_inv := fun p => by
-          apply Subtype.ext
-          dsimp [rawCode]
-          apply Prod.ext
-          · simp
-          · have hv := congrArg List.Vector.toList
-              (List.Vector.ofFn_get (⟨p.val.2, p.property⟩ : List.Vector (Bool × Gap) t))
-            simpa [List.Vector.toList_ofFn] using hv
-        right_inv := fun q => by
-          apply Prod.ext
-          · funext i
-            change ((List.ofFn fun j => (q.1 j, q.2 j.succ)).get
-              ⟨i.val, by simpa using i.isLt⟩).1 = q.1 i
-            rw [List.get_ofFn]
-            congr 1
-          · funext i
-            refine Fin.cases ?_ (fun j => ?_) i
-            · simp [rawCode]
-            · change ((List.ofFn fun j => (q.1 j, q.2 j.succ)).get
-                ⟨j.val, by simpa using j.isLt⟩).2 = q.2 j.succ
-              rw [List.get_ofFn]
-              congr 1 }
-    exact e
-  let factorEquiv (a b c r s : ℕ) :
-      {q : (Fin (r + s) → Bool) × (Fin (r + s + 1) → Gap) //
-        ∀ f, inventory (rawCode q) f = histogram a b c r s f} ≃ Factors a b c r s := by
-    have counts {n : ℕ} (d : Fin n → Bool) (f : Bool) :
-        (List.ofFn d).count f = ∑ i, if d i = f then 1 else 0 := by
-      calc
-        _ = ((List.ofFn d).flatMap fun x => [x]).count f := by simp
-        _ = ((List.ofFn d).map fun x => if x = f then 1 else 0).sum := by
-          rw [List.count_flatMap]
-          simp [Function.comp_def, List.count_singleton]
-        _ = _ := by simp [List.map_ofFn, List.sum_ofFn, Function.comp_def]
-    have totals (q : (Fin (r + s) → Bool) × (Fin (r + s + 1) → Gap)) :
-        inventory (rawCode q) .low = ∑ i, (q.2 i).x ∧
-        inventory (rawCode q) .high = ∑ i, (q.2 i).y ∧
-        inventory (rawCode q) .ends = ∑ i, if (q.2 i).z then 1 else 0 := by
-      refine ⟨?_, ?_, ?_⟩
-      · simpa only [rawCode, inventory, List.map_ofFn, List.sum_ofFn, Function.comp_def]
-          using (Fin.sum_univ_succ (fun i => (q.2 i).x)).symm
-      · simpa only [rawCode, inventory, List.map_ofFn, List.sum_ofFn, Function.comp_def]
-          using (Fin.sum_univ_succ (fun i => (q.2 i).y)).symm
-      · simp only [rawCode, inventory, List.map_ofFn, List.sum_ofFn, Function.comp_def]
-        rw [Fin.sum_univ_succ]
-        apply congrArg₂ Nat.add
-        · by_cases hz : (q.2 0).z = true <;> simp [hz]
-        · apply Finset.sum_congr rfl
-          intro i _
-          by_cases hz : (q.2 i.succ).z = true <;> simp [hz]
-    let e : {q : (Fin (r + s) → Bool) × (Fin (r + s + 1) → Gap) //
-        ∀ f, inventory (rawCode q) f = histogram a b c r s f} ≃ Factors a b c r s :=
-      { toFun := fun q =>
-          (⟨Finset.univ.filter (fun i => q.val.1 i = false), by
-            have h := q.property .zero
-            simpa [inventory, rawCode, List.map_ofFn, counts, Finset.sum_boole, histogram] using h⟩,
-          ⟨Finset.univ.filter (fun i => (q.val.2 i).z = true), by
-            have h := (totals q.val).2.2.symm.trans (q.property .ends)
-            simpa [Finset.sum_boole, histogram] using h⟩,
-          ⟨Finsupp.equivFunOnFinite.symm (fun i => (q.val.2 i).x), by
-            simp only [Finset.mem_finsuppAntidiag]
-            exact ⟨(totals q.val).1.symm.trans (q.property .low), Finset.subset_univ _⟩⟩,
-          ⟨Finsupp.equivFunOnFinite.symm (fun i => (q.val.2 i).y), by
-            simp only [Finset.mem_finsuppAntidiag]
-            exact ⟨(totals q.val).2.1.symm.trans (q.property .high), Finset.subset_univ _⟩⟩)
-        invFun := fun p => ⟨factorRaw p, by
-          intro f
-          have hx := (Finset.mem_finsuppAntidiag.mp p.2.2.1.property).1
-          have hy := (Finset.mem_finsuppAntidiag.mp p.2.2.2.property).1
-          cases f with
-          | low => simpa [histogram, factorRaw] using (totals (factorRaw p)).1.trans hx
-          | high => simpa [histogram, factorRaw] using (totals (factorRaw p)).2.1.trans hy
-          | ends =>
-            rw [(totals (factorRaw p)).2.2]
-            simpa [histogram, factorRaw, Finset.sum_boole] using p.2.1.property
-          | zero => simpa [histogram, inventory, rawCode, factorRaw, List.map_ofFn,
-              counts, Finset.sum_boole] using p.1.property
-          | middle =>
-            have hn := List.count_false_add_count_true (List.ofFn (factorRaw p).1)
-            have hz : (List.ofFn (factorRaw p).1).count false = r := by
-              simpa [factorRaw, counts, Finset.sum_boole] using p.1.property
-            simp only [List.length_ofFn] at hn
-            have ht : (List.ofFn (factorRaw p).1).count true = s := by omega
-            simpa [inventory, rawCode, List.map_ofFn, histogram, Function.comp_def] using ht⟩
-        left_inv := fun q => by
-          apply Subtype.ext
-          apply Prod.ext
-          · funext i
-            dsimp [factorRaw]
-            cases hi : q.val.1 i <;> simp [hi]
-          · funext i
-            cases hgi : q.val.2 i with
-            | mk x z y => cases z <;> simp [factorRaw, hgi]
-        right_inv := fun p => by
-          apply Prod.ext
-          · apply Subtype.ext; ext i; simp [factorRaw]
-          · apply Prod.ext
-            · apply Subtype.ext; ext i; simp [factorRaw]
-            · apply Prod.ext <;> apply Subtype.ext <;> ext i <;> rfl }
-    exact e
-  let codesRawEquiv (a b c r s : ℕ) :
-      HistogramCodes (histogram a b c r s) ≃
-        {q : (Fin (r + s) → Bool) × (Fin (r + s + 1) → Gap) //
-          ∀ f, inventory (rawCode q) f = histogram a b c r s f} := by
-    have length (p : HistogramCodes (histogram a b c r s)) : p.val.2.length = r + s := by
-      calc
-        _ = (p.val.2.map Prod.fst).length := by simp
-        _ = (p.val.2.map Prod.fst).count false + (p.val.2.map Prod.fst).count true :=
-          (List.count_false_add_count_true _).symm
-        _ = r + s := by
-          change inventory p.val .zero + inventory p.val .middle = r + s
-          rw [p.property .zero, p.property .middle]
-          rfl
-    let e := rawEquiv (r + s)
-    exact
-      { toFun := fun p => ⟨e ⟨p.val, length p⟩, by
-          have hr := congrArg Subtype.val (e.symm_apply_apply ⟨p.val, length p⟩)
-          change rawCode (e ⟨p.val, length p⟩) = p.val at hr
-          rw [hr]
-          exact p.property⟩
-        invFun := fun q => ⟨rawCode q.val, q.property⟩
-        left_inv := fun p => by
-          apply Subtype.ext
-          have hr := congrArg (fun q : {p : Code // p.2.length = r + s} => q.val)
-            (e.symm_apply_apply ⟨p.val, length p⟩)
-          change rawCode (e ⟨p.val, length p⟩) = p.val at hr
-          exact hr
-        right_inv := fun q => by
-          apply Subtype.ext
-          exact e.apply_symm_apply q.val }
-  obtain ⟨words, hw⟩ := (histogram_encoding (histogram a b c r s)).2
-  let e := ((codesRawEquiv a b c r s).trans (factorEquiv a b c r s)).symm.trans words
-  refine ⟨⟨e, ?_⟩, Finite.of_equiv _ e, ?_⟩
-  · intro p
-    change (words _).val = codeWord (rawCode (factorRaw p))
-    exact hw _
-  · classical
-    rw [Nat.card_congr e.symm]
-    have cg (n k : ℕ) : Nat.card (Gaps n k) = n.multichoose k := by
-      rw [Nat.card_eq_fintype_card, Fintype.card_coe]
-      simpa using Finset.card_finsuppAntidiag_nat_eq_multichoose
-        (s := (Finset.univ : Finset (Fin n))) k
-    simp only [Factors, Nat.card_prod, cg]
-    simp [Nat.card_eq_fintype_card, Fintype.card_finset_len, Nat.mul_assoc]
 
+set_option maxRecDepth 2048 in
+set_option maxHeartbeats 2000000 in
 /-- Unique neutral-position decomposition and a reversible canonical code
 that counts every histogram and exact terminal fiber, with its terminal labels. -/
 theorem result :
@@ -603,6 +159,483 @@ theorem result :
     (∀ a b c r s : ℕ, Nat.card (EndpointWords (histogram a b c r s) .ends) =
       if c = 0 then 0 else (r+s).choose r * (r+s).choose (c-1) *
         (r+s+1).multichoose a * (r+s).multichoose b) := by
+  have split_properties (w : List Window) :
+      join (split w) = w ∧ Clean (split w) ∧
+      (split w).2.length = w.count .zero + w.count .middle ∧
+      (∀ s : Bool, legal s (flatten w) ↔
+        legal s (flatten (split w).1) ∧
+          ∀ dg ∈ (split w).2, legal false (flatten dg.2)) := by
+    let S : Window → Cuts → Cuts := fun b p => match b with
+      | .zero => ([], (false, p.1) :: p.2)
+      | .middle => ([], (true, p.1) :: p.2)
+      | b => (b :: p.1, p.2)
+    have folded (v : List Window) : split v = v.foldr S ([], []) := by
+      have h := List.foldr_hom split (g₁ := List.cons) (g₂ := S)
+        (l := v) (init := []) (by intro b u; cases b <;> rfl)
+      simpa only [List.foldr_cons_nil, split] using h.symm
+    let P : Cuts → List Window → Prop := fun p v =>
+      join p = v ∧ Clean p ∧ p.2.length = v.count .zero + v.count .middle ∧
+      (∀ s : Bool, legal s (flatten v) ↔
+        legal s (flatten p.1) ∧ ∀ dg ∈ p.2, legal false (flatten dg.2))
+    have h := List.foldr_rel (l := w) (f := S) (g := List.cons) (r := P)
+      (a := ([], [])) (b := []) (by
+        simp only [P, join, Clean, gaps, Free, flatten, legal, List.flatMap_nil,
+          List.append_nil, List.map_nil, List.count_nil, List.length_nil,
+          Nat.zero_add, List.mem_cons, List.not_mem_nil, or_false, forall_eq,
+          false_implies, forall_const, and_self, iff_self, and_true, implies_true]) (by
+        intro d _ p v ih
+        obtain ⟨he, hc, hn, hl⟩ := ih
+        rcases p with ⟨g, ds⟩
+        simp only [join, Clean, gaps, List.mem_cons, List.mem_map,
+          forall_eq_or_imp, Prod.forall, exists_and_right, exists_eq_right] at he hc hn hl
+        cases d <;>
+          simp_all only [P, S, join, Clean, gaps, Free, triple, flatten, bits, legal,
+            List.mem_map, List.flatMap_cons, List.cons_append, List.mem_cons,
+            List.nil_append, List.not_mem_nil, List.flatMap_nil, IsEmpty.forall_iff,
+            List.length_cons, List.count_cons_self, List.count_cons_of_ne,
+            reduceCtorEq, ne_eq, not_false_eq_true, Bool.false_eq_true,
+            Bool.true_eq_false, Bool.forall_bool, Bool.exists_bool,
+            Prod.forall, Prod.exists, Prod.mk.injEq, exists_eq_right,
+            forall_eq_or_imp, or_imp, forall_and, forall_eq,
+            and_true, true_and, and_false, false_and, false_or, and_self,
+            implies_true, not_true_eq_false, Nat.add_left_cancel_iff, and_assoc, iff_self]
+        all_goals rcases hc with ⟨hg0, hgm, h0, h1, h2, h3⟩
+        all_goals repeat' constructor
+        all_goals first | assumption | omega | tauto)
+    simpa only [P, List.foldr_cons_nil, ← folded] using h
+
+  have split_inverse (p : Cuts) (hp : Clean p) : split (join p) = p := by
+    have split_prefix (g : List Window) (hg : Free g) (w : List Window) :
+        split (g ++ w) = (g ++ (split w).1, (split w).2) := by
+      induction g with
+      | nil => simp
+      | cons d g ih =>
+        have hd := hg d (by simp)
+        have ht : Free g := fun b hb => hg b (List.mem_cons_of_mem d hb)
+        cases d <;> simp_all [split, List.cons_append]
+    rcases p with ⟨g, ds⟩
+    simp only [Clean, gaps, List.mem_cons, forall_eq_or_imp] at hp
+    rw [join, split_prefix g hp.1]
+    induction ds with
+    | nil => simp [split]
+    | cons dg ds ih =>
+      rcases dg with ⟨d, h⟩
+      have hh : Free h := hp.2 h (by simp)
+      have ht : ∀ v ∈ ds.map Prod.snd, Free v := by
+        intro v hv
+        exact hp.2 v (by simp [hv])
+      have hi := ih ⟨hp.1, ht⟩
+      cases d <;> simp_all [List.flatMap_cons, triple, split, split_prefix h hh]
+
+  have decomposition :
+      (∀ w : List Window, ∃! p : Cuts, Clean p ∧ join p = w) ∧
+      (∀ w : List Window, (split w).2.length = w.count .zero + w.count .middle) ∧
+      (∀ w : List Window, legal false (flatten w) ↔
+        ∀ g ∈ gaps (split w), ∃! q : Gap, gap q = g) := by
+    have injective : Function.Injective gap := by
+      clear split_properties split_inverse
+      intro p q h
+      have hx : (gap p).count .low = (gap q).count .low := congrArg (List.count .low) h
+      have hy : (gap p).count .high = (gap q).count .high := congrArg (List.count .high) h
+      have hz : (gap p).count .ends = (gap q).count .ends := congrArg (List.count .ends) h
+      rcases p with ⟨a, z, b⟩
+      rcases q with ⟨a', z', b'⟩
+      cases z <;> cases z' <;>
+        simp [gap, List.count_replicate] at hx hy hz <;> simp_all
+    have gap_language (w : List Window) (hw : Free w) :
+        (legal false (flatten w) ↔ ∃ q : Gap, gap q = w) ∧
+        (legal true (flatten w) ↔ ∃ n : ℕ, w = List.replicate n .high) := by
+      clear split_properties split_inverse injective
+      let R : Window → Window → Prop := fun a b =>
+        (a = .low ∧ (b = .low ∨ b = .ends ∨ b = .high)) ∨
+        ((a = .ends ∨ a = .high) ∧ b = .high)
+      have trans : Transitive R := by
+        intro a b c
+        cases a <;> cases b <;> cases c <;> simp only [R, reduceCtorEq, eq_self, ne_eq,
+          or_false, false_or, and_false, false_and, and_true, true_and] <;> tauto
+      letI : IsTrans Window R := ⟨trans⟩
+      have chain (v : List Window) (hv : Free v) (s : Bool) :
+          legal s (flatten v) ↔
+            (∀ b ∈ v.head?, ¬ (s = true ∧ first b = true)) ∧ v.Pairwise R := by
+        cases v with
+        | nil => simp only [flatten, List.flatMap_nil, legal, List.head?_nil,
+            Option.not_mem_none, false_implies, forall_const, List.Pairwise.nil, and_self, iff_self, and_true, implies_true]
+        | cons b v =>
+          rw [LiteralWindowEnd.legal_chain, List.IsChain.iff_of_mem_imp (S := R) (by
+            intro a c ha hc
+            have h₁ := hv a ha
+            have h₂ := hv c hc
+            cases a <;> cases c <;> simp_all only [R, first, last,
+              reduceCtorEq, eq_self, ne_eq, not_true_eq_false, not_false_eq_true, and_false,
+              false_and, and_true, true_and, or_false, false_or]), List.isChain_iff_pairwise]
+          simp only [List.head?_cons, Option.mem_some_iff, forall_eq']
+      have normal (q : Gap) : (gap q).Pairwise R := by
+        rcases q with ⟨a,z,b⟩
+        cases z <;> simp only [gap, Bool.false_eq_true, eq_self,
+          ↓reduceIte, List.pairwise_append, List.pairwise_replicate,
+          List.pairwise_singleton, List.Pairwise.nil, List.mem_replicate,
+          List.mem_append, List.mem_singleton, List.not_mem_nil, R,
+          reduceCtorEq, eq_self, ne_eq, and_true, true_and, or_true, true_or,
+          or_false, false_or, and_false, false_and, not_false_eq_true] <;> tauto
+      have free_gap (q : Gap) : Free (gap q) := by
+        intro b hb
+        cases q with | mk a z c =>
+          cases z <;> cases b <;> simp_all only [Free, gap, Bool.false_eq_true,
+            eq_self, ↓reduceIte, List.mem_append, List.mem_replicate,
+            List.mem_singleton, List.not_mem_nil, reduceCtorEq, eq_self, ne_eq, and_false,
+            false_and, or_false, false_or, not_false_eq_true, and_true]
+      constructor
+      · constructor
+        · intro hl
+          have hp := ((chain w hw false).mp hl).2
+          have hz : w.count .ends ≤ 1 := by
+            have hrep := hp.sublist (List.replicate_sublist_iff.mpr
+              (Nat.le_refl (w.count .ends)))
+            simpa only [List.pairwise_replicate, R, reduceCtorEq, eq_self, ne_eq,
+              and_false, false_and, or_false] using hrep
+          let q : Gap := ⟨w.count .low, decide (w.count .ends = 1), w.count .high⟩
+          have hperm : (gap q).Perm w := by
+            apply List.perm_iff_count.mpr
+            intro b
+            have hzero : w.count .zero = 0 := List.count_eq_zero.mpr (by
+              intro hm; exact (hw .zero hm).1 rfl)
+            have hmiddle : w.count .middle = 0 := List.count_eq_zero.mpr (by
+              intro hm; exact (hw .middle hm).2 rfl)
+            cases b <;> by_cases h : w.count .ends = 1 <;>
+              simp only [gap, q, h, decide_true, decide_false, eq_self,
+                Bool.false_eq_true, ↓reduceIte, List.count_append, List.count_replicate,
+                List.count_nil, List.count_cons, beq_iff_eq, reduceCtorEq, eq_self, ne_eq, ↓reduceIte,
+                Nat.add_zero, Nat.zero_add, hzero, hmiddle] <;> omega
+          exact ⟨q, List.Perm.eq_of_pairwise (by
+            intro a b _ _
+            cases a <;> cases b <;> simp only [R, reduceCtorEq, eq_self, ne_eq,
+              and_false, false_and, or_false, false_or, and_true, true_and] <;> tauto)
+            (normal q) hp hperm⟩
+        · rintro ⟨q, rfl⟩
+          apply (chain _ (free_gap q) false).mpr
+          exact ⟨by simp only [Bool.false_eq_true, false_and, not_false_eq_true,
+            implies_true, forall_const], normal q⟩
+      · constructor
+        · intro hl
+          have hp := (chain w hw true).mp hl
+          cases w with
+          | nil => exact ⟨0, rfl⟩
+          | cons b v =>
+            have hb : b = .high := by
+              have hf := hw b (List.mem_cons_self)
+              have hh := hp.1 b (by simp only [List.head?_cons, Option.mem_some_iff])
+              cases b <;> simp_all only [first, reduceCtorEq, eq_self, ne_eq,
+                and_true, true_and, not_true_eq_false]
+            subst b
+            refine ⟨(.high :: v).length, List.eq_replicate_of_mem ?_⟩
+            intro b hb
+            rcases List.mem_cons.mp hb with rfl | hb
+            · rfl
+            · have h := (List.pairwise_cons.mp hp.2).1 b hb
+              simpa only [R, reduceCtorEq, eq_self, ne_eq, and_false, false_and, or_false,
+                false_or, or_true, true_and] using h
+        · rintro ⟨n, rfl⟩
+          apply (chain _ hw true).mpr
+          refine ⟨?_, ?_⟩
+          · intro b hb
+            have hm := List.mem_of_mem_head? hb
+            obtain ⟨_, rfl⟩ := List.mem_replicate.mp hm
+            simp only [first, Bool.false_eq_true, and_false, not_false_eq_true]
+          · exact List.pairwise_replicate.mpr (Or.inr (by simp only [R,
+              reduceCtorEq, eq_self, ne_eq, and_false, false_and, false_or, or_true, and_self]))
+
+    refine ⟨?_, ?_, ?_⟩
+    · intro w
+      refine ⟨split w, ⟨(split_properties w).2.1, (split_properties w).1⟩, ?_⟩
+      intro p hp
+      rw [← split_inverse p hp.1, hp.2]
+    · intro w
+      exact (split_properties w).2.2.1
+    · intro w
+      rw [(split_properties w).2.2.2 false]
+      have characterize (g : List Window) (hg : Free g) :
+          legal false (flatten g) ↔ ∃! q : Gap, gap q = g := by
+        rw [(gap_language g hg).1]
+        exact ⟨fun ⟨q, hq⟩ => ⟨q, hq, fun p hp => injective (hp.trans hq.symm)⟩,
+          fun ⟨q, hq, _⟩ => ⟨q, hq⟩⟩
+      have hc := (split_properties w).2.1
+      unfold Clean at hc
+      constructor
+      · rintro ⟨hg, ht⟩ g h
+        apply (characterize g (hc g h)).mp
+        rcases List.mem_cons.mp h with he | h
+        · simpa [he] using hg
+        · obtain ⟨dg, hdg, rfl⟩ := List.mem_map.mp h
+          exact ht dg hdg
+      · intro h
+        refine ⟨(characterize _ (hc _ (by simp [gaps]))).mpr (h _ (by simp [gaps])), ?_⟩
+        intro dg hdg
+        have hg : dg.2 ∈ gaps (split w) :=
+          List.mem_cons_of_mem _ (List.mem_map.mpr ⟨dg, hdg, rfl⟩)
+        exact (characterize dg.2 (hc _ hg)).mpr (h _ hg)
+
+  have code_language :
+      (∀ w : List Window, legal false (flatten w) ↔ ∃! p : Code, codeWord p = w) ∧
+      (∀ p : Code, readCode (split (codeWord p)) = p ∧ legal false (flatten (codeWord p))) := by
+    have reading (q : Gap) : readGap (gap q) = q := by
+      rcases q with ⟨a, z, b⟩
+      cases z <;> simp [readGap, gap, List.count_replicate]
+    have clean (p : Code) : Clean (codeCuts p) := by
+      clear split_properties split_inverse decomposition reading
+      rcases p with ⟨g, ds⟩
+      simp only [Clean, gaps, codeCuts, List.map_map]
+      intro h hh
+      rcases List.mem_cons.mp hh with rfl | hh
+      · intro b hb
+        cases b <;> simp_all [gap, List.mem_append, List.mem_replicate]
+      · obtain ⟨dg, _, rfl⟩ := List.mem_map.mp hh
+        intro b hb
+        cases b <;> simp_all [gap, List.mem_append, List.mem_replicate]
+    have inverse (p : Code) : readCode (split (codeWord p)) = p := by
+      rw [codeWord, split_inverse _ (clean p)]
+      rcases p with ⟨g, ds⟩
+      simp [readCode, codeCuts, List.map_map, Function.comp_def, reading]
+    have legal_code (p : Code) : legal false (flatten (codeWord p)) := by
+      rw [(decomposition).2.2, codeWord, split_inverse _ (clean p)]
+      intro g hg
+      simp only [gaps, codeCuts, List.map_map, List.mem_cons, List.mem_map] at hg
+      rcases hg with rfl | ⟨dg, _, rfl⟩
+      · exact ⟨p.1, rfl, fun q hq => by simpa [reading] using congrArg readGap hq⟩
+      · exact ⟨dg.2, rfl, fun q hq => by simpa [reading] using congrArg readGap hq⟩
+    refine ⟨?_, fun p => ⟨inverse p, legal_code p⟩⟩
+    intro w
+    constructor
+    · intro hw
+      have hs := split_properties w
+      have restore (g : List Window) (hg : Free g) (hl : legal false (flatten g)) :
+          gap (readGap g) = g := by
+        have split_free : ∀ v : List Window, Free v → split v = (v, []) := by
+          clear split_properties split_inverse decomposition reading clean inverse legal_code
+          intro v
+          induction v with
+          | nil => intro _; rfl
+          | cons b v ih =>
+            intro hv
+            have hb := hv b (by simp)
+            have ht : Free v := fun a ha => hv a (by simp [ha])
+            cases b <;> simp_all [split]
+        have split_free := split_free g hg
+        have hu := ((decomposition).2.2 g).mp hl
+        rw [split_free] at hu
+        obtain ⟨q, hq, _⟩ := hu g (by simp [gaps])
+        rw [← hq, reading]
+      have hl := hs.2.2.2 false |>.mp hw
+      have rebuilt : codeCuts (readCode (split w)) = split w := by
+        apply Prod.ext
+        · exact restore _ (hs.2.1 _ (by simp [Clean, gaps])) hl.1
+        · simp only [codeCuts, readCode, List.map_map, Function.comp_def]
+          conv_rhs => rw [← List.map_id (split w).2]
+          apply List.map_congr_left
+          intro dg hdg
+          have hg : dg.2 ∈ gaps (split w) :=
+            List.mem_cons_of_mem _ (List.mem_map.mpr ⟨dg, hdg, rfl⟩)
+          simp only [restore _ (hs.2.1 _ hg) (hl.2 _ hdg), Prod.eta, id_eq]
+      refine ⟨readCode (split w), ?_, ?_⟩
+      · change join (codeCuts (readCode (split w))) = w
+        rw [rebuilt, hs.1]
+      · intro p hp
+        rw [← inverse p, hp]
+    · rintro ⟨p, hp, _⟩
+      simpa [← hp] using legal_code p
+
+  have histogram_encoding (h : Window → ℕ) :
+      (∀ p : Code, ∀ f, (codeWord p).count f = inventory p f) ∧
+      (∃ e : HistogramCodes h ≃ HistogramWords h,
+        ∀ p, (e p).val = codeWord p.val) := by
+    have counts (p : Code) (f : Window) : (codeWord p).count f = inventory p f := by
+      rcases p with ⟨g, ds⟩
+      induction ds generalizing g with
+      | nil => cases f <;> cases hz : g.z <;>
+          simp [codeWord, codeCuts, join, inventory, gap, hz, List.count_replicate]
+      | cons dg ds ih =>
+        rcases dg with ⟨d, q⟩
+        have he : codeWord (g, (d, q) :: ds) = gap g ++ triple false d false :: codeWord (q, ds) := by
+          simp [codeWord, codeCuts, join, List.flatMap_cons]
+        rw [he, List.count_append, List.count_cons, ih q]
+        cases f <;> cases d <;> cases hz : g.z <;>
+          simp [inventory, gap, triple, hz, List.count_replicate, List.count_cons,
+            Nat.add_assoc]
+    let e : HistogramCodes h ≃ HistogramWords h :=
+      { toFun := fun p => ⟨codeWord p.val, (code_language.2 p.val).2,
+          fun f => (counts p.val f).trans (p.property f)⟩
+        invFun := fun w => ⟨readCode (split w.val), by
+          obtain ⟨p, hp, _⟩ := (code_language.1 w.val).mp w.property.1
+          have hr : readCode (split w.val) = p := by
+            rw [← hp, (code_language.2 p).1]
+          intro f
+          rw [hr, ← counts p f, hp]
+          exact w.property.2 f⟩
+        left_inv := fun p => Subtype.ext (code_language.2 p.val).1
+        right_inv := fun w => by
+          apply Subtype.ext
+          obtain ⟨p, hp, _⟩ := (code_language.1 w.val).mp w.property.1
+          change codeWord (readCode (split w.val)) = w.val
+          rw [← hp, (code_language.2 p).1] }
+    exact ⟨counts, e, fun _ => rfl⟩
+
+  have histogram_count (a b c r s : ℕ) :
+      (∃ e : Factors a b c r s ≃ HistogramWords (histogram a b c r s),
+        ∀ p, (e p).val = codeWord (rawCode (factorRaw p))) ∧
+      Finite (HistogramWords (histogram a b c r s)) ∧
+      Nat.card (HistogramWords (histogram a b c r s)) =
+        (r + s).choose r * (r + s + 1).choose c *
+          (r + s + 1).multichoose a * (r + s + 1).multichoose b := by
+    let rawEquiv (t : ℕ) :
+        {p : Code // p.2.length = t} ≃ (Fin t → Bool) × (Fin (t + 1) → Gap) := by
+      let e : {p : Code // p.2.length = t} ≃ (Fin t → Bool) × (Fin (t + 1) → Gap) :=
+        { toFun := fun p =>
+            let v : List.Vector (Bool × Gap) t := ⟨p.val.2, p.property⟩
+            (fun i => (v.get i).1, Fin.cons p.val.1 (fun i => (v.get i).2))
+          invFun := fun q => ⟨rawCode q, by simp [rawCode]⟩
+          left_inv := fun p => by
+            apply Subtype.ext
+            dsimp [rawCode]
+            apply Prod.ext
+            · simp
+            · have hv := congrArg List.Vector.toList
+                (List.Vector.ofFn_get (⟨p.val.2, p.property⟩ : List.Vector (Bool × Gap) t))
+              simpa [List.Vector.toList_ofFn] using hv
+          right_inv := fun q => by
+            apply Prod.ext
+            · funext i
+              change ((List.ofFn fun j => (q.1 j, q.2 j.succ)).get
+                ⟨i.val, by simpa using i.isLt⟩).1 = q.1 i
+              rw [List.get_ofFn]
+              congr 1
+            · funext i
+              refine Fin.cases ?_ (fun j => ?_) i
+              · simp [rawCode]
+              · change ((List.ofFn fun j => (q.1 j, q.2 j.succ)).get
+                  ⟨j.val, by simpa using j.isLt⟩).2 = q.2 j.succ
+                rw [List.get_ofFn]
+                congr 1 }
+      exact e
+    let factorEquiv (a b c r s : ℕ) :
+        {q : (Fin (r + s) → Bool) × (Fin (r + s + 1) → Gap) //
+          ∀ f, inventory (rawCode q) f = histogram a b c r s f} ≃ Factors a b c r s := by
+      have counts {n : ℕ} (d : Fin n → Bool) (f : Bool) :
+          (List.ofFn d).count f = ∑ i, if d i = f then 1 else 0 := by
+        calc
+          _ = ((List.ofFn d).flatMap fun x => [x]).count f := by simp
+          _ = ((List.ofFn d).map fun x => if x = f then 1 else 0).sum := by
+            rw [List.count_flatMap]
+            simp [Function.comp_def, List.count_singleton]
+          _ = _ := by simp [List.map_ofFn, List.sum_ofFn, Function.comp_def]
+      have totals (q : (Fin (r + s) → Bool) × (Fin (r + s + 1) → Gap)) :
+          inventory (rawCode q) .low = ∑ i, (q.2 i).x ∧
+          inventory (rawCode q) .high = ∑ i, (q.2 i).y ∧
+          inventory (rawCode q) .ends = ∑ i, if (q.2 i).z then 1 else 0 := by
+        refine ⟨?_, ?_, ?_⟩
+        · simpa only [rawCode, inventory, List.map_ofFn, List.sum_ofFn, Function.comp_def]
+            using (Fin.sum_univ_succ (fun i => (q.2 i).x)).symm
+        · simpa only [rawCode, inventory, List.map_ofFn, List.sum_ofFn, Function.comp_def]
+            using (Fin.sum_univ_succ (fun i => (q.2 i).y)).symm
+        · simp only [rawCode, inventory, List.map_ofFn, List.sum_ofFn, Function.comp_def]
+          rw [Fin.sum_univ_succ]
+          apply congrArg₂ Nat.add
+          · by_cases hz : (q.2 0).z = true <;> simp [hz]
+          · apply Finset.sum_congr rfl
+            intro i _
+            by_cases hz : (q.2 i.succ).z = true <;> simp [hz]
+      let e : {q : (Fin (r + s) → Bool) × (Fin (r + s + 1) → Gap) //
+          ∀ f, inventory (rawCode q) f = histogram a b c r s f} ≃ Factors a b c r s :=
+        { toFun := fun q =>
+            (⟨Finset.univ.filter (fun i => q.val.1 i = false), by
+              have h := q.property .zero
+              simpa [inventory, rawCode, List.map_ofFn, counts, Finset.sum_boole, histogram] using h⟩,
+            ⟨Finset.univ.filter (fun i => (q.val.2 i).z = true), by
+              have h := (totals q.val).2.2.symm.trans (q.property .ends)
+              simpa [Finset.sum_boole, histogram] using h⟩,
+            ⟨Finsupp.equivFunOnFinite.symm (fun i => (q.val.2 i).x), by
+              simp only [Finset.mem_finsuppAntidiag]
+              exact ⟨(totals q.val).1.symm.trans (q.property .low), Finset.subset_univ _⟩⟩,
+            ⟨Finsupp.equivFunOnFinite.symm (fun i => (q.val.2 i).y), by
+              simp only [Finset.mem_finsuppAntidiag]
+              exact ⟨(totals q.val).2.1.symm.trans (q.property .high), Finset.subset_univ _⟩⟩)
+          invFun := fun p => ⟨factorRaw p, by
+            intro f
+            have hx := (Finset.mem_finsuppAntidiag.mp p.2.2.1.property).1
+            have hy := (Finset.mem_finsuppAntidiag.mp p.2.2.2.property).1
+            cases f with
+            | low => simpa [histogram, factorRaw] using (totals (factorRaw p)).1.trans hx
+            | high => simpa [histogram, factorRaw] using (totals (factorRaw p)).2.1.trans hy
+            | ends =>
+              rw [(totals (factorRaw p)).2.2]
+              simpa [histogram, factorRaw, Finset.sum_boole] using p.2.1.property
+            | zero => simpa [histogram, inventory, rawCode, factorRaw, List.map_ofFn,
+                counts, Finset.sum_boole] using p.1.property
+            | middle =>
+              have hn := List.count_false_add_count_true (List.ofFn (factorRaw p).1)
+              have hz : (List.ofFn (factorRaw p).1).count false = r := by
+                simpa [factorRaw, counts, Finset.sum_boole] using p.1.property
+              simp only [List.length_ofFn] at hn
+              have ht : (List.ofFn (factorRaw p).1).count true = s := by omega
+              simpa [inventory, rawCode, List.map_ofFn, histogram, Function.comp_def] using ht⟩
+          left_inv := fun q => by
+            apply Subtype.ext
+            apply Prod.ext
+            · funext i
+              dsimp [factorRaw]
+              cases hi : q.val.1 i <;> simp [hi]
+            · funext i
+              cases hgi : q.val.2 i with
+              | mk x z y => cases z <;> simp [factorRaw, hgi]
+          right_inv := fun p => by
+            apply Prod.ext
+            · apply Subtype.ext; ext i; simp [factorRaw]
+            · apply Prod.ext
+              · apply Subtype.ext; ext i; simp [factorRaw]
+              · apply Prod.ext <;> apply Subtype.ext <;> ext i <;> rfl }
+      exact e
+    let codesRawEquiv (a b c r s : ℕ) :
+        HistogramCodes (histogram a b c r s) ≃
+          {q : (Fin (r + s) → Bool) × (Fin (r + s + 1) → Gap) //
+            ∀ f, inventory (rawCode q) f = histogram a b c r s f} := by
+      have length (p : HistogramCodes (histogram a b c r s)) : p.val.2.length = r + s := by
+        calc
+          _ = (p.val.2.map Prod.fst).length := by simp
+          _ = (p.val.2.map Prod.fst).count false + (p.val.2.map Prod.fst).count true :=
+            (List.count_false_add_count_true _).symm
+          _ = r + s := by
+            change inventory p.val .zero + inventory p.val .middle = r + s
+            rw [p.property .zero, p.property .middle]
+            rfl
+      let e := rawEquiv (r + s)
+      exact
+        { toFun := fun p => ⟨e ⟨p.val, length p⟩, by
+            have hr := congrArg Subtype.val (e.symm_apply_apply ⟨p.val, length p⟩)
+            change rawCode (e ⟨p.val, length p⟩) = p.val at hr
+            rw [hr]
+            exact p.property⟩
+          invFun := fun q => ⟨rawCode q.val, q.property⟩
+          left_inv := fun p => by
+            apply Subtype.ext
+            have hr := congrArg (fun q : {p : Code // p.2.length = r + s} => q.val)
+              (e.symm_apply_apply ⟨p.val, length p⟩)
+            change rawCode (e ⟨p.val, length p⟩) = p.val at hr
+            exact hr
+          right_inv := fun q => by
+            apply Subtype.ext
+            exact e.apply_symm_apply q.val }
+    obtain ⟨words, hw⟩ := (histogram_encoding (histogram a b c r s)).2
+    let e := ((codesRawEquiv a b c r s).trans (factorEquiv a b c r s)).symm.trans words
+    refine ⟨⟨e, ?_⟩, Finite.of_equiv _ e, ?_⟩
+    · intro p
+      change (words _).val = codeWord (rawCode (factorRaw p))
+      exact hw _
+    · classical
+      rw [Nat.card_congr e.symm]
+      have cg (n k : ℕ) : Nat.card (Gaps n k) = n.multichoose k := by
+        rw [Nat.card_eq_fintype_card, Fintype.card_coe]
+        simpa using Finset.card_finsuppAntidiag_nat_eq_multichoose
+          (s := (Finset.univ : Finset (Fin n))) k
+      simp only [Factors, Nat.card_prod, cg]
+      simp [Nat.card_eq_fintype_card, Fintype.card_finset_len, Nat.mul_assoc]
   have terminal_shapes (p : Code) :
       ((codeWord p).getLast? = some .low ↔
         0 < (terminalGap p).x ∧ (terminalGap p).z = false ∧ (terminalGap p).y = 0) ∧
