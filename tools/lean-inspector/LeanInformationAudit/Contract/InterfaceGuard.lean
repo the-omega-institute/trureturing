@@ -28,9 +28,30 @@ def family (env : Environment) (type : Name) : Except String NameSet := do
     allowed := allowed.insert ctor
     for suffix in #[`inj, `injEq, `noConfusion, `elim, `sizeOf_spec, `_flat_ctor] do
       allowed := allowed.insert (ctor ++ suffix)
-  for projection in getStructureFields env type do
-    allowed := allowed.insert (type ++ projection)
+  if isStructure env type then
+    for projection in getStructureFields env type do
+      allowed := allowed.insert (type ++ projection)
   return allowed
+
+/-- Pure type source uses only lexical scaffolding and type declarations.
+Retaining the original command prevents wrappers from hiding code generation.
+This also excludes injected constants forged under a compiler companion name. -/
+private partial def permittedCommand (command : Syntax) : Bool :=
+  if command.isOfKind ``Parser.Command.declaration then
+    let declaration := command[1]
+    (declaration.isOfKind ``Parser.Command.structure ||
+      declaration.isOfKind ``Parser.Command.inductive ||
+      declaration.isOfKind ``Parser.Command.coinductive ||
+      declaration.isOfKind ``Parser.Command.classInductive) &&
+      (declaration.find? fun node => node.isOfKind ``Parser.Term.byTactic ||
+        node.isOfKind ``Parser.Term.do).isNone
+  else if command.isOfKind ``Parser.Command.namespace ||
+      command.isOfKind ``Parser.Command.section || command.isOfKind ``Parser.Command.end ||
+      command.isOfKind ``Parser.Command.open || command.isOfKind ``Parser.Command.universe ||
+      command.isOfKind ``Parser.Command.variable then true
+  else if command.isOfKind ``Parser.Command.mutual || command.getKind == `null then
+    command.getArgs.all fun node => node.isAtom || permittedCommand node
+  else false
 
 /-- Inventory is read from the imported compiled module; no user command runs. -/
 def audit (env : Environment) (owner : Name) (entries : Array SourceAudit.Entry)
@@ -49,5 +70,9 @@ def audit (env : Environment) (owner : Name) (entries : Array SourceAudit.Entry)
   for name in names do
     unless allowed.contains name do
       throw s!"contract.interface:compiled_non_type:{owner}:{name}"
+
+  for entry in entries do
+    unless permittedCommand entry.originCommand do
+      throw s!"contract.interface:unattributed_command:{owner}:{entry.originCommand.getKind}"
 
 end LeanInformationAudit.Contract.InterfaceGuard

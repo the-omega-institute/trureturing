@@ -59,6 +59,9 @@ The four Contract interface modules are checked against their compiled constant
 inventories. Each constant must belong to a source structure/inductive family:
 kernel types and constructors, recorded projections, or the pinned compiler’s
 explicit recursor, noConfusion, constructor and sizeOf companion names.
+The source retains original command containers and permits only lexical
+scaffolding and type declarations without tactic or do blocks. Generated
+constants cannot gain permission by forging a companion name from a command.
 Unexpected products receive `contract.interface:compiled_non_type`; no command
 is executed by the audit. Unrecognized future compiler products fail closed.
 

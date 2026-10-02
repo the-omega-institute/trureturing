@@ -130,6 +130,7 @@ structure Entry where
   sourceName : Option Name
   start : String.Pos.Raw
   stop : String.Pos.Raw
+  originCommand : Syntax
 
 /-- Examples emit no named constant; every other author declaration belongs
 to the source inventory, independently of its result-type spelling. -/
@@ -212,11 +213,11 @@ def parse (env : Environment) (source : String) (file : String) : IO (Array Entr
     let some stop := command.getTailPos? | throw <| IO.userError "contract.discovery:source_range"
     let authorDeclarations := declarations command
     if authorDeclarations.isEmpty then
-      entries := entries.push ⟨command, none, start, stop⟩
+      entries := entries.push ⟨command, none, start, stop, command⟩
     else
       for declaration in authorDeclarations do
         entries := entries.push ⟨declaration, declarationName ns declaration,
-          declaration.getPos?.getD start, declaration.getTailPos?.getD stop⟩
+          declaration.getPos?.getD start, declaration.getTailPos?.getD stop, command⟩
     if command.isOfKind ``Parser.Command.namespace then
       scopes := (ns, parserEnv, opens) :: scopes
       ns := ns ++ command[1].getId
