@@ -341,6 +341,9 @@ word. Their joint deletion hole still requires a compatible repair.
 reuses the four fresh rows with two cofactor-gcd enclosures. At one
 actual cofactor point, full-height originals in a single first-q root
 have cofactor intersection graph of matching number at most one.
+Their nonunit cofactors occupy at most omega(M)+1 original labels;
+the actual pure-top shell demands therefore require a quantified
+contribution from lower ternary rows at the same private point.
 This constrains each actual source; it does not make the global
 incidence matrix balanced or close the joint-deletion obligation.
 
@@ -20634,6 +20637,40 @@ and have the same literal phase modulo h. Divisor closure makes h an original la
 This argument permits e_i=1. An exponent-one label can equal h only in the parent case just handled; no assumption that every selected original is a deeper q-descendant is needed.
 
 Every hypothetical matching of size two in the stated graph is excluded by one of these two cases. The additional arithmetic consumer is the four-row repair with two different cofactor gcds. The common-parent capacity, complete-deletion rule, fresh-row construction and elementary graph classification are reused. No Lean verification, global incidence-matrix conclusion or unrestricted noncoverage is asserted.
+
+### A same-source bound for nonunit top cofactors
+
+Keep section167's ONE original EB1 whole cover and fixed actual source `(u,omega,v)`. Let `N` be the number of original labels
+
+    d=3^H q^e s, e>=1, s>1, s|M,
+
+whose literal phases match that source. Let `r` be the number of distinct primes dividing at least one of their cofactors s. Then
+
+    N<=r+1<=omega(M)+1.                                  (SNC1)
+
+If their cofactor-gcd graph is edgeless or contains a triangle, the stronger bound `N<=r` holds.
+
+First, each prime ell divides the cofactors of at most two counted labels. Three such labels would share the actual phase modulo the original parent `h=3^H q ell`. If one equals h, comparable-class disjointness excludes the others. Otherwise all three are proper descendants in that phase, contradicting DR8 since `tau(q ell)=4`. This also covers q-height one.
+
+By section167 the graph is a star or a triangle together with isolated vertices. In a nonempty star, the leaves and isolated vertices have pairwise coprime nonunit cofactors; choosing one prime from each gives `N-1<=r`. In a triangle, choose a prime from each edge gcd. These three primes are distinct, since no prime occurs in three vertices. Each isolated vertex supplies another distinct prime, giving `N<=r`. The edgeless case follows by choosing one prime from each of its pairwise coprime nonunit cofactors. The empty family is immediate.
+
+This counts all q-heights at the ONE fixed complete ternary word, first-q root and complete cofactor point. Unit cofactors `s=1` are excluded. It gives no bound for originals with ternary height below H, no uniform bound on `omega(M)`, and no whole-cover contradiction by itself. It is an ordinary mathematical consequence of the existing graph and parent capacities, not new Lean verification.
+
+### The same pure-top source requires lower-ternary shell service
+
+Keep ONE EB1 original whole cover with Q=3^H q^G M, H>=1, G>=2, q>=5 prime and gcd(M,3q)=1. Choose one COMPLETE original private point x of pure q^G. For every original d=3^a q^e s, s|M, that agrees with x modulo3^a s and has
+
+    1<=b_d=v_q(a_d-x)<e,
+
+give d its existing QC3 weight q^(1-e+b_d). Let L(x) be the sum of these weights over the selected originals with a<H. Then
+
+    L(x)>=(G-1)(q-2)-omega(M)-1.                    (SNC2)
+
+Indeed, QC3's individual-shell identity gives F_b(x,q)>=(q-1) for every b=1,...,G-1, since the unique owner has q-height G and the original family covers the whole shell. Their total service is at least(G-1)(q-1). Every selected original belongs to exactly one shell, determined by its actual valuation b_d<e, and has weight at most one. In particular e>=2; no q-height-one label is selected. The owner q^G itself is not a directional supplier.
+
+All full-ternary-height suppliers have the SAME complete ternary word x modulo3^H, first-q root x modulo q, and complete cofactor incidence at x modulo M. By SNC1, their nonunit cofactors s>1 account for at most omega(M)+1 labels and hence that much total weight. Their unit-cofactor labels are among3^H q^e with2<=e<=G, so numerical distinctness bounds this disjoint part by G-1. Subtracting these two upper bounds from the same shell-service sum proves SNC2.
+
+This reuses QC3 and the same-source top count. It retains all q-heights and all actual lower-ternary suppliers, supplies no upper bound on L(x), and makes no assertion about another private source. A negative right side is simply a vacuous lower bound; no whole-cover contradiction or Lean verification follows by itself.
 
 ## 168. An actual63 overlap excludes shared7 at height one
 
