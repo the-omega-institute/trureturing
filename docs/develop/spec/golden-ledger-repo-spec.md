@@ -434,7 +434,7 @@ PR 检出固定 `GITHUB_SHA=M`，验证 M 有两个父提交，第二父是触�
 | `make lean-report` | 经受保护的 Lean 缓存入口和原生 Lake 增量生产规范报告。 |
 | `check-current --candidate-lean-report FILE` | 当前树有效性；context 无 base 或 changes，可在根提交、无 remote 的仓库中独立运行。 |
 | `check-delta --protected-base <40-hex-sha> --candidate-lean-report FILE` | 读取固定 base 数据，验证跨树保护、分区、首次冻结、棘轮及候选测试拓扑；删除测试项目不因基线登记缺失而阻断。 |
-| `tools/scripts/workflow/scribe-content-checks.sh FILE` | 消费显式报告，编译并验证当前 Scribe 内容。 |
+| `tools/scripts/workflow/scribe-content-checks.sh REPORT [SCRIBE_DLL] [PATHS_FILE]` | 调用 `content-check --report REPORT [--paths-from PATHS_FILE]`，在一个进程中加载一次显式报告，依次运行 `projections --check`、`describe-report --check` 与 `markdown-check`；保留各检查的输出与首个失败退出码。 |
 | `filemap-conform` | 独立核对当前 FILEMAP、路径、producer/verifier 与生成物契约。 |
 
 `make test` 运行 lean-report 与 check-current。`make gate BASE=<sha>` 在本地依次运行 lean-report、check-current、Scribe、filemap-conform、带显式 base 的 check-delta；`make -C tools check-fast` 只提供快速 .NET 结构反馈，不声称 Lean 或完整准入通过。不同程序仍可独立运行；本地检查不能替代远端 required checks。

@@ -14,14 +14,8 @@ if [[ $# -eq 3 ]] && [[ ! -f "$PATHS_FILE" || ! -r "$PATHS_FILE" ]]; then
   echo "scribe-content-checks: PATHS_FILE must be a readable regular file: $PATHS_FILE" >&2
   exit 2
 fi
-run_scribe() {
-  STRATALINT_LEAN_REPORT="$REPORT" dotnet "$SCRIBE_DLL" "$@"
-}
-# The pins are an authoritative projection test corpus, not generated Markdown freshness.
-run_scribe projections --check --report "$REPORT"
-run_scribe describe-report --check
 if [[ -n "$PATHS_FILE" ]]; then
-  run_scribe markdown-check --report "$REPORT" --paths-from "$PATHS_FILE"
+  STRATALINT_LEAN_REPORT="$REPORT" dotnet "$SCRIBE_DLL" content-check --report "$REPORT" --paths-from "$PATHS_FILE"
 else
-  run_scribe markdown-check --report "$REPORT"
+  STRATALINT_LEAN_REPORT="$REPORT" dotnet "$SCRIBE_DLL" content-check --report "$REPORT"
 fi
