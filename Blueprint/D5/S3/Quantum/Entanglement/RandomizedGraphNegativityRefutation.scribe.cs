@@ -26,11 +26,8 @@ internal sealed class RandomizedGraphNegativityRefutationDocument : IScribeDocum
             Node("rg", "Randomized graph states", RgFormula(),
                 "Each edge of G is present independently with probability p. The randomized graph state is the mixture, over the subsets F of the edge set of G, of the projections onto the graph states of F, with weights p^|F| (1 - p)^(|E(G)| - |F|).",
                 "rgState", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
-            Node("merge", "Mixing two basis labels", MergeFormula(),
-                "merge(A, u, v) is the basis label that agrees with u on the qubits in A and with v on the others.",
-                "merge", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("pt", "Partial transposition", PtFormula(),
-                "The partial transposition on the qubits in A exchanges the A parts of the row and column labels: the entry of M^Gamma_A at (x, y) is the entry of M at the row label with A part from y and remaining part from x, and the column label with A part from x and remaining part from y.",
+                "The partial transposition on the qubits in A exchanges the A parts of the row and column labels: the entry of M^Gamma_A at (x, y) is the entry of M at the row label with A part from y and remaining part from x, and the column label with A part from x and remaining part from y. Here piecewise(A, u, v) is the label that agrees with u on A and with v elsewhere (Mathlib Finset.piecewise).",
                 "partialTranspose", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("neg", "Negativity", NegFormula(),
                 "The negativity across the bipartition A versus its complement is (||rho^Gamma_A|| - 1)/2, with the trace norm ||X|| = Re Tr sqrt(X^* X) of the existing finite trace-distance module.",
@@ -138,22 +135,12 @@ internal sealed class RandomizedGraphNegativityRefutationDocument : IScribeDocum
             EqTo(Call(F.Id("rgState"), g, p), value)))));
     }
 
-    private static Formula MergeFormula()
-    {
-        Formula n = F.Id("n"), a = F.Id("A"), u = F.Id("u"), v = F.Id("v"), i = F.Id("i");
-        Formula entry = Call(F.Id("merge"), a, u, v, i);
-        Formula inside = Imp(Member(i, a), EqTo(entry, Call(u, i)));
-        Formula outside = Imp(Seq(Neg, Sp, Parenthesized(Member(i, a))), EqTo(entry, Call(v, i)));
-        return Disp(All(n, Nat(), All(a, VertexSets(n), All(u, Qubits(n), All(v, Qubits(n),
-            All(i, Fin(n), Logic(inside, FormulaLogicOperator.And, outside)))))));
-    }
-
     private static Formula PtFormula()
     {
         Formula n = F.Id("n"), a = F.Id("A"), m = F.Id("M"), x = F.Id("x"), y = F.Id("y");
         Formula left = Call(F.Id("entry"), Call(F.Id("partialTranspose"), a, m), x, y);
-        Formula right = Call(F.Id("entry"), m, Call(F.Id("merge"), a, y, x),
-            Call(F.Id("merge"), a, x, y));
+        Formula right = Call(F.Id("entry"), m, Call(F.Id("piecewise"), a, y, x),
+            Call(F.Id("piecewise"), a, x, y));
         return Disp(All(n, Nat(), All(a, VertexSets(n), All(m, Matrices(n),
             All(x, Qubits(n), All(y, Qubits(n), EqTo(left, right)))))));
     }

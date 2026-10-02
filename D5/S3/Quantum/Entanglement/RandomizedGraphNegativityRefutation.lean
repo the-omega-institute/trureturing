@@ -7,10 +7,10 @@
    digest: The randomized K_(3,3) graph state has larger negativity at p = 97/100 than at p = 1. -/
 
 /-
-proof_shape: Qubits, czPhase, plusState, graphState, rgState, merge, partialTranspose,
-  negativity: definition (computational basis, CZ phases, the product state |+>^n, graph
-  states, the randomized graph state, partial transposition, and the negativity with the
-  frozen trace norm)
+proof_shape: Qubits, czPhase, plusState, graphState, rgState, partialTranspose, negativity:
+  definition (computational basis, CZ phases, the product state |+>^n, graph states, the
+  randomized graph state, partial transposition by Finset.piecewise, and the negativity with
+  the frozen trace norm)
 proof_shape: claim: definition (published open question, read as a universal statement over
   graphs, bipartitions and 0 <= p <= q <= 1)
 proof_shape: k33, partA: definition (the complete bipartite graph K_(3,3) on Fin 6 and one of
@@ -72,15 +72,12 @@ noncomputable def rgState {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Ad
     (((p ^ F.card * (1 - p) ^ (G.edgeFinset \ F).card : ℝ)) : ℂ) •
       vecMulVec (graphState F) (star (graphState F))
 
-/-- The basis label with the coordinates in `A` taken from `u` and the others from `v`. -/
-def merge {n : ℕ} (A : Finset (Fin n)) (u v : Qubits n) : Qubits n :=
-  fun i => if i ∈ A then u i else v i
-
 /-- The partial transposition on the qubits in `A`:
-`⟨x_A x_B| M^{Γ_A} |y_A y_B⟩ = ⟨y_A x_B| M |x_A y_B⟩`. -/
+`⟨x_A x_B| M^{Γ_A} |y_A y_B⟩ = ⟨y_A x_B| M |x_A y_B⟩`, where `A.piecewise y x` takes the
+coordinates in `A` from `y` and the others from `x`. -/
 def partialTranspose {n : ℕ} (A : Finset (Fin n)) (M : Matrix (Qubits n) (Qubits n) ℂ) :
     Matrix (Qubits n) (Qubits n) ℂ :=
-  fun x y => M (merge A y x) (merge A x y)
+  fun x y => M (A.piecewise y x) (A.piecewise x y)
 
 /-- The negativity `N(ρ) = (‖ρ^{Γ_A}‖ - 1) / 2` with the trace norm `Tr √(X† X)`. -/
 noncomputable def negativity {n : ℕ} (A : Finset (Fin n)) (ρ : Matrix (Qubits n) (Qubits n) ℂ) :
@@ -113,7 +110,7 @@ private def mism (e : Sym2 (Fin 6)) (u v : Qubits 6) : Bool :=
     dsimp only; rw [Nat.mul_comm (u a).val, Nat.mul_comm (v a).val]⟩ e
 
 private def xi (a b : ℤ) (x y : Qubits 6) : ℤ :=
-  ∏ e ∈ edges9, if mism e (merge partA y x) (merge partA x y) then a else b
+  ∏ e ∈ edges9, if mism e (partA.piecewise y x) (partA.piecewise x y) then a else b
 
 
 /-- The binary index of a basis label. -/
@@ -291,8 +288,9 @@ theorem result : ¬ claim := by
     simp only [partialTranspose]
     rw [closed, edgeFinset_k33]
     have hfac : ∀ e ∈ edges9,
-        (p : ℂ) * (czPhase e (merge partA y x) * czPhase e (merge partA x y)) + ((1 - p : ℝ) : ℂ) =
-          ((if mism e (merge partA y x) (merge partA x y) then a else b : ℤ) : ℂ) / b := by
+        (p : ℂ) * (czPhase e (partA.piecewise y x) * czPhase e (partA.piecewise x y)) +
+            ((1 - p : ℝ) : ℂ) =
+          ((if mism e (partA.piecewise y x) (partA.piecewise x y) then a else b : ℤ) : ℂ) / b := by
       intro e _
       rw [hcc]
       split_ifs

@@ -121,15 +121,15 @@ two in each mixed sector, four in the standard–standard sector).
 The canonical source is
 `D5/S3/Quantum/Entanglement/RandomizedGraphNegativityRefutation.lean`. Its
 public declarations are `Qubits`, `czPhase`, `plusState`, `graphState`,
-`rgState`, `merge`, `partialTranspose`, `negativity`, `claim`, `k33`,
+`rgState`, `partialTranspose`, `negativity`, `claim`, `k33`,
 `partA` and `result`; the trace norm and its lemmas are frozen in
 `D5/S3/Quantum/Foundation/FiniteTraceDistance`; `k33` carries a decidable
 adjacency instance. The frozen module state has statement identity
-`sha256:1c74679129dce89e4de229b4d3f6fab35215016379b549eb6a54b89a0789e964`. The
+`sha256:e6b7c60cb6c1860ae73bb8c939e895f78caaea0453eb3bca8ad5d4e2c47fed0a`. The
 result declaration has statement identity
 `sha256:8699682eb0805d4dcf1355be31c5dac754e3a40e309a3d295ac441cf8ab56906`. The
 Freeze event is
-`sha256:8c1a53d3cd0c351438a23a8bda36ca48c7f24515c83bdbb3b0a6b0e161068bca`; its
+`sha256:7b4331af2c3bbbd8cf354609e89d5137abeb2a7daaf7722b9d52a233f58ca751`; its
 project-level frozen prerequisite is the Freeze event of
 `D5/S3/Quantum/Foundation/FiniteTraceDistance`. The proof uses only the standard axioms `propext`, `Classical.choice` and
 `Quot.sound`; no `sorry`, `native_decide`, or new axiom.
