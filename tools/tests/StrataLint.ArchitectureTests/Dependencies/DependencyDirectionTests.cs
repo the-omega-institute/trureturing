@@ -71,7 +71,7 @@ public sealed class DependencyDirectionTests
     public void ScribeReferencesExactlyEngineJintQuestPdfTomlynAndTruth()
     {
         Assert.Equal(
-            ["Jint", "QuestPDF", "StrataLint.Engine", "Tomlyn", "Trureturing.Truth"],
+            ["Jint", "Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "QuestPDF", "StrataLint.Engine", "Tomlyn", "Trureturing.Truth"],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(ScribeEmitter).Assembly));
     }
 
