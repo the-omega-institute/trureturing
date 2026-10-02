@@ -54,7 +54,31 @@ $$\forall previous \in \operatorname{Bool}\left(\right), \forall r \in \operator
 
 For a common incoming bit, two triples (r,u,v) and (r',u',v') are equivalent when every finite continuation has the same legal-and-zero-residue acceptance answer. This is an entire future-language condition, not equality of a current output.
 
-**Theorem 1.5 (Constructive saturation and exact fixed-boundary quotient).**
+**Definition 1.5 (The outgoing bit boundary).**
+
+Lean statement: `D5/S3/Arith/ZeckendorfFutureKernel.flag`
+
+*Formalization.* `D5/S3/Arith/ZeckendorfFutureKernel.flag` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+flag(previous,w) is the last bit of w, or previous when w is empty.
+
+**Theorem 1.6 (Legality through the actual concatenation boundary).**
+
+Lean statement: `D5/S3/Arith/ZeckendorfFutureKernel.legal_append`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/ZeckendorfFutureKernel.legal_append` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+legal(b,w++w') holds exactly when legal(b,w) and legal(flag(b,w),w') both hold. The same boundary computed by the first word is passed into the second.
+
+**Theorem 1.7 (Constructive saturation and exact fixed-boundary quotient).**
 
 $$\forall M \in \mathbb{N}, \forall T \in \mathbb{N}, \forall previous \in \operatorname{Bool}\left(\right), \forall r \in \operatorname{ZMod}\left(M\right), \forall u \in \operatorname{ZMod}\left(M\right), \forall v \in \operatorname{ZMod}\left(M\right), \forall rp \in \operatorname{ZMod}\left(M\right), \forall up \in \operatorname{ZMod}\left(M\right), \forall vp \in \operatorname{ZMod}\left(M\right), \forall e \in \operatorname{ZMod}\left(M\right), \forall f \in \operatorname{ZMod}\left(M\right), \forall ep \in \operatorname{ZMod}\left(M\right), \forall fp \in \operatorname{ZMod}\left(M\right), \operatorname{Implies}\left(\operatorname{And}\left(\operatorname{Le}\left(2, M\right), \operatorname{And}\left(\operatorname{Le}\left(3, T\right), \operatorname{And}\left(\operatorname{castToZMod}\left(M, \operatorname{NatFib}\left(T\right)\right) = 0, \operatorname{And}\left(\operatorname{castToZMod}\left(M, \operatorname{NatFib}\left(T + 1\right)\right) = 1, \operatorname{And}\left(e \cdot u + f \cdot v = 1, ep \cdot up + fp \cdot vp = 1\right)\right)\right)\right)\right), \operatorname{And}\left(\forall A \in \operatorname{ZMod}\left(M\right), \forall B \in \operatorname{ZMod}\left(M\right), \exists w \in \operatorname{List}\left(\operatorname{Bool}\left(\right)\right), \operatorname{And}\left(\forall b \in \operatorname{Bool}\left(\right), \operatorname{legal}\left(b, w\right), \forall x \in \operatorname{ZMod}\left(M\right), \forall y \in \operatorname{ZMod}\left(M\right), \operatorname{value}\left(x, y, w\right) = A \cdot x + B \cdot y\right), \operatorname{Iff}\left(\operatorname{sameFuture}\left(previous, r, u, v, rp, up, vp\right), \exists a \in \operatorname{ZMod}\left(M\right), \exists aInv \in \operatorname{ZMod}\left(M\right), \operatorname{And}\left(a \cdot aInv = 1, \operatorname{And}\left(rp = a \cdot r, \operatorname{And}\left(up = a \cdot u, vp = a \cdot v\right)\right)\right)\right)\right)\right)$$
 
@@ -73,7 +97,9 @@ The common incoming bit is explicit. The separate-boundary distinction, reachabi
 ## References
 
 - Truth anchor: `D5/S3/Arith/ZeckendorfFutureKernel.advance`
+- Truth anchor: `D5/S3/Arith/ZeckendorfFutureKernel.flag`
 - Truth anchor: `D5/S3/Arith/ZeckendorfFutureKernel.legal`
+- Truth anchor: `D5/S3/Arith/ZeckendorfFutureKernel.legal_append`
 - Truth anchor: `D5/S3/Arith/ZeckendorfFutureKernel.result`
 - Truth anchor: `D5/S3/Arith/ZeckendorfFutureKernel.sameFuture`
 - Truth anchor: `D5/S3/Arith/ZeckendorfFutureKernel.value`
