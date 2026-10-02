@@ -27,6 +27,12 @@ def envelope (L : Nat) : Nat :=
   (Nat.fib (3 * (L / 2) + 2) - 1) +
     (Nat.fib (3 * (L - L / 2) + 1) - 1)
 
+theorem run_zeros (n : Nat) :
+    run (some (false, false)) (List.replicate n .zero) = some (false, false) := by
+  induction n with
+  | zero => rfl
+  | succ n ih => simpa [List.replicate_succ, run, step, first, last, nonzero] using ih
+
 set_option maxHeartbeats 1000000 in
 -- This single proof combines signed sums, a modular recurrence and a finite scan.
 /-- A strict center deficit on any complete prime-power factor supplies two
@@ -243,11 +249,6 @@ theorem result (H p a L : Nat) (hH : 2 ≤ H) (hp : p.Prime)
       induction a generalizing q with
       | nil => rfl
       | cons c cs ih => exact ih (step q c)
-    have run_zeros (n : Nat) :
-        run (some (false, false)) (List.replicate n .zero) = some (false, false) := by
-      induction n with
-      | zero => rfl
-      | succ n ih => simpa [List.replicate_succ, run, step, first, last, nonzero] using ih
     let source : ActualPrefix := ⟨false, List.replicate (j - 1) .zero ++ [.high], by
       rw [run_append, run_zeros]
       rfl⟩

@@ -7,6 +7,7 @@
    digest: Legal five-window sources have a sharp current-row update-noise threshold. -/
 
 import D5.S3.Arith.FibonacciAtomic.LiteralWindowEnd
+import D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue
 import D5.S3.Observer.SymbolicStability.SmoothFiniteMachineRealization
 import Mathlib.Data.Matrix.Mul
 import Mathlib.Algebra.Field.GeomSum
@@ -353,13 +354,14 @@ theorem result (decay : ℚ) (hdecay0 : 0 < decay) (hdecay1 : decay < 1) :
   have fidelity : ∀ (w : List Window) (q : State),
       noisyRun (fun a y => y ᵥ* matrix a) (canonical q)
         (w.map (fun a => (a, (0 : Row)))) = canonical (run q w) := by
-    intro w
-    induction w with
-    | nil => intro q; rfl
+    intro w q
+    simp only [noisyRun, List.foldl_map, add_zero]
+    rw [List.foldl_hom canonical (g₂ := fun x a => x ᵥ* matrix a)
+      (H := fun x a => singleState x a)]
+    induction w generalizing q with
+    | nil => rfl
     | cons a w ih =>
-        intro q
-        simp only [List.map_cons, noisyRun, List.foldl_cons, run]
-        rw [singleState, add_zero]
+        simp only [List.foldl_cons, run]
         exact ih (step q a)
   have rowInjective : Function.Injective canonical := by
     intro q q' h
@@ -398,10 +400,7 @@ theorem result (decay : ℚ) (hdecay0 : 0 < decay) (hdecay1 : decay < 1) :
     exact Function.iterate_fixed hfixed n
   have zeroRun (n : ℕ) : run (some (false, false)) (List.replicate n .zero) =
       some (false, false) := by
-    apply rowInjective
-    rw [← fidelity, List.map_replicate]
-    exact repeatFixed .zero (some (false, false)) (by
-      simpa [step, first, last, nonzero] using (singleState (some (false, false)) .zero)) n
+    exact D5.S3.Arith.FibonacciAtomic.BalancedPhaseMissingResidue.run_zeros n
   have lowRun (n : ℕ) : run (some (false, false)) (List.replicate (n + 1) .low) =
       some (false, true) := by
     apply rowInjective

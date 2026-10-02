@@ -35,5 +35,6 @@ At depth zero there is no update and a constant decoder works for every budget. 
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/LegalSourceNoiseThreshold.result`
+- Dependency: [D5/S3/Arith/FibonacciAtomic/BalancedPhaseMissingResidue](BalancedPhaseMissingResidue.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/LiteralWindowEnd](LiteralWindowEnd.md)
 - Dependency: [D5/S3/Observer/SymbolicStability/SmoothFiniteMachineRealization](../../Observer/SymbolicStability/SmoothFiniteMachineRealization.md)
