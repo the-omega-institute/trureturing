@@ -80,12 +80,7 @@ public sealed class ScribeResourceCorpusTests
         {
             var path = Path.Combine(directory.FullName, "resources.zip");
             var definitions = CorpusDefinitions();
-            var written = ScribeResourcePack.WriteEncoded(path, definitions.Select(definition =>
-                (definition.Document.Header.Gid.Value, new string('a', 64), ScribeResourceCodec.Encode(definition),
-                    References(definition.Document).Select(item => item.Reference.Value)
-                        .Distinct(StringComparer.Ordinal)
-                        .Select(declaration => new ScribeProjectionRead(declaration, new string('a', 64)))
-                        .ToImmutableArray())));
+            var written = ScribeResourcePack.Write(path, definitions);
             var pack = ScribeResourcePack.Open(path);
             Assert.Equal(definitions.Length, pack.Manifest.EntryCount);
             Assert.Equal(written.TotalSha256, pack.Manifest.TotalSha256);

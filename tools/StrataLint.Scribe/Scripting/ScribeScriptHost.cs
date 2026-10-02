@@ -43,7 +43,6 @@ public sealed record ScribeScriptResult(
     DocumentDefinition? Definition,
     ScribeScriptFailure? Failure)
 {
-    public ImmutableArray<ScribeProjectionRead> ReadSet { get; init; } = [];
     public bool IsSuccess => Definition is not null && Failure is null;
 }
 
@@ -128,9 +127,6 @@ public static class ScribeScriptHost
                     return FailureResult(normalized, ScribeScriptFailureCode.TypeLoad, FirstMessage(exception));
                 }
                 DocumentDefinition definition;
-                var reads = new Dictionary<string, string>(StringComparer.Ordinal);
-                ImmutableArray<ScribeProjectionRead> ReadSet() => reads.OrderBy(item => item.Key, StringComparer.Ordinal)
-                    .Select(item => new ScribeProjectionRead(item.Key, item.Value)).ToImmutableArray();
                 var culture = CultureInfo.CurrentCulture;
                 var uiCulture = CultureInfo.CurrentUICulture;
                 try
@@ -143,12 +139,12 @@ public static class ScribeScriptHost
                             as IScribeDocumentDefinition
                             ?? throw new InvalidOperationException("definition needs a parameterless constructor");
                         return instance.Create();
-                    }, reads)
+                    })
                         ?? throw new InvalidOperationException("definition returned null");
                 }
                 catch (Exception exception) when (exception is not OutOfMemoryException)
                 {
-                    return FailureResult(normalized, ScribeScriptFailureCode.CreateFailed, FirstMessage(exception)) with { ReadSet = ReadSet() };
+                    return FailureResult(normalized, ScribeScriptFailureCode.CreateFailed, FirstMessage(exception));
                 }
                 finally
                 {
@@ -163,9 +159,9 @@ public static class ScribeScriptHost
                 }
                 catch (InvalidOperationException exception)
                 {
-                    return FailureResult(normalized, ScribeScriptFailureCode.GidPathMismatch, exception.Message) with { ReadSet = ReadSet() };
+                    return FailureResult(normalized, ScribeScriptFailureCode.GidPathMismatch, exception.Message);
                 }
-                return new(normalized, definition, null) { ReadSet = ReadSet() };
+                return new(normalized, definition, null);
             }
             finally
             {
@@ -192,10 +188,10 @@ public static class ScribeScriptHost
         return results.OrderBy(result => result.RelativePath, StringComparer.Ordinal).ToImmutableArray();
     }
 
-    internal static (ImmutableArray<string>? Sources, ScribeScriptFailure? Failure) ReadSourceGraph(
+    private static (ImmutableArray<string>? Sources, ScribeScriptFailure? Failure) ReadSourceGraph(
         string root,
         string entry,
-        CSharpParseOptions? parseOptions = null)
+        CSharpParseOptions parseOptions)
     {
         var sources = new List<string>();
         var visiting = new HashSet<string>(StringComparer.Ordinal);
@@ -221,7 +217,7 @@ public static class ScribeScriptHost
             }
 
             var text = File.ReadAllText(full);
-            var tree = CSharpSyntaxTree.ParseText(text, parseOptions ?? ScriptParseOptions, path: path);
+            var tree = CSharpSyntaxTree.ParseText(text, parseOptions, path: path);
             foreach (var declaration in tree.GetRoot().DescendantNodes().OfType<TypeDeclarationSyntax>())
             {
                 foreach (var attribute in declaration.AttributeLists.SelectMany(list => list.Attributes))

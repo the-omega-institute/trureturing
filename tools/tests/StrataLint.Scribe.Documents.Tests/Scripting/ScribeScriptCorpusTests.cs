@@ -13,7 +13,7 @@ public sealed class ScribeScriptCorpusTests
     public ScribeScriptCorpusTests(ITestOutputHelper output) => this.output = output;
 
     [Fact]
-    public void ScriptPackMatchesAssemblyAndReusesEntireCorpus()
+    public void IndependentFullScriptPacksMatchAssemblyAndDigest()
     {
         var root = FindRepositoryRoot();
         var directory = Directory.CreateTempSubdirectory("scribe-script-pack-");
@@ -23,21 +23,21 @@ public sealed class ScribeScriptCorpusTests
             var secondPath = Path.Combine(directory.FullName, "second.zip");
             var firstResult = ScribeResourceScriptPacker.Write(root, firstPath);
             Assert.Empty(firstResult.Failures);
-            var secondResult = ScribeResourceScriptPacker.Write(root, secondPath, firstPath);
+            var secondResult = ScribeResourceScriptPacker.Write(root, secondPath);
             Assert.Empty(secondResult.Failures);
             var first = ScribeResourcePack.Open(firstPath);
             var second = ScribeResourcePack.Open(secondPath);
             var definitions = DocumentAssembly.Definitions;
             Assert.Equal(definitions.Length, first.Manifest.EntryCount);
-            Assert.Equal(definitions.Length, firstResult.ExecutedPaths.Length);
-            Assert.Empty(firstResult.ReusedPaths);
-            Assert.Empty(secondResult.ExecutedPaths);
-            Assert.Equal(definitions.Length, secondResult.ReusedPaths.Length);
+            Assert.Equal(definitions.Length, second.Manifest.EntryCount);
             Assert.Equal(first.Manifest.TotalSha256, second.Manifest.TotalSha256);
             foreach (var definition in definitions)
-                Assert.Equal(ScribeResourceCodec.Encode(definition),
-                    first.EncodedBytes(definition.Document.Header.Gid.Value).ToArray());
-            output.WriteLine($"script pack definitions={definitions.Length}; firstExecuted={firstResult.ExecutedPaths.Length}; firstReused={firstResult.ReusedPaths.Length}; secondExecuted={secondResult.ExecutedPaths.Length}; secondReused={secondResult.ReusedPaths.Length}; firstSha256={first.Manifest.TotalSha256}; secondSha256={second.Manifest.TotalSha256}; readDefinitions={first.Manifest.Entries.Count(entry => !entry.ReadSet.IsEmpty)}; readItems={first.Manifest.Entries.Sum(entry => entry.ReadSet.Length)}; firstFileBytes={new FileInfo(firstPath).Length}; secondFileBytes={new FileInfo(secondPath).Length}");
+            {
+                var gid = definition.Document.Header.Gid.Value;
+                Assert.Equal(ScribeResourceCodec.Encode(definition), first.EncodedBytes(gid).ToArray());
+                Assert.Equal(ScribeResourceCodec.Encode(definition), second.EncodedBytes(gid).ToArray());
+            }
+            output.WriteLine($"script pack definitions={definitions.Length}; hostFailures={firstResult.Failures.Length + secondResult.Failures.Length}; mismatches=0; firstSha256={first.Manifest.TotalSha256}; secondSha256={second.Manifest.TotalSha256}; firstFileBytes={new FileInfo(firstPath).Length}; secondFileBytes={new FileInfo(secondPath).Length}");
         }
         finally { directory.Delete(recursive: true); }
     }
@@ -62,7 +62,7 @@ public sealed class ScribeScriptCorpusTests
                     .SequenceEqual(ScribeResourceCodec.Encode(definition)))
             .ToArray();
 
-        output.WriteLine($"corpus paths={paths.Length}; hostFailures={failures.Length}; mismatches={mismatches.Length}; readDefinitions={results.Count(result => !result.ReadSet.IsEmpty)}; readItems={results.Sum(result => result.ReadSet.Length)}");
+        output.WriteLine($"corpus paths={paths.Length}; hostFailures={failures.Length}; mismatches={mismatches.Length}");
         Assert.True(failures.Length == 0, string.Join(Environment.NewLine, failures.Take(8)));
         Assert.True(mismatches.Length == 0, string.Join(Environment.NewLine,
             mismatches.Take(8).Select(static result => $"{result.RelativePath}: CanonicalContentMismatch")));

@@ -12,12 +12,6 @@ internal static class ScribeResourcePackManifestCodec
             ["schema"] = manifest.Schema,
             ["version"] = manifest.Version,
             ["entryCount"] = manifest.EntryCount,
-            ["executionEnvironment"] = new JsonObject
-            {
-                ["dotnetRuntimeVersion"] = manifest.ExecutionEnvironment.DotnetRuntimeVersion,
-                ["globalizationBackend"] = manifest.ExecutionEnvironment.GlobalizationBackend,
-                ["globalizationBackendDataVersion"] = manifest.ExecutionEnvironment.GlobalizationBackendDataVersion,
-            },
             ["entries"] = EntriesNode(manifest.Entries),
             ["totalSha256"] = manifest.TotalSha256,
         });
@@ -32,12 +26,6 @@ internal static class ScribeResourcePackManifestCodec
             ["path"] = entry.Path,
             ["gid"] = entry.Gid,
             ["sha256"] = entry.Sha256,
-            ["inputKey"] = entry.InputKey,
-            ["readSet"] = new JsonArray(entry.ReadSet.Select(read => (JsonNode)new JsonObject
-            {
-                ["declaration"] = read.Declaration,
-                ["sha256"] = read.Sha256,
-            }).ToArray()),
         }).ToArray());
 
     internal static ScribeResourcePackManifest Decode(byte[] bytes)
@@ -46,29 +34,17 @@ internal static class ScribeResourcePackManifestCodec
         {
             using var json = JsonDocument.Parse(bytes);
             var root = json.RootElement;
-            RequireFields(root, "schema", "version", "entryCount", "executionEnvironment", "entries", "totalSha256");
+            RequireFields(root, "schema", "version", "entryCount", "entries", "totalSha256");
             var schema = String(root, "schema");
             if (schema != ScribeResourcePack.SchemaName)
                 throw Error(ScribeResourcePackErrorCode.SchemaMismatch, "Unsupported resource pack schema.");
             var version = root.GetProperty("version").GetInt32();
             if (version != ScribeResourcePack.SemanticVersion)
                 throw Error(ScribeResourcePackErrorCode.VersionMismatch, "Unsupported resource pack semantic version.");
-            var environmentValue = root.GetProperty("executionEnvironment");
-            RequireFields(environmentValue, "dotnetRuntimeVersion", "globalizationBackend", "globalizationBackendDataVersion");
-            var environment = new ScribeResourcePackExecutionEnvironment(
-                String(environmentValue, "dotnetRuntimeVersion"),
-                String(environmentValue, "globalizationBackend"),
-                String(environmentValue, "globalizationBackendDataVersion"));
             var entries = root.GetProperty("entries").EnumerateArray().Select(item =>
             {
-                RequireFields(item, "path", "gid", "sha256", "inputKey", "readSet");
-                var reads = item.GetProperty("readSet").EnumerateArray().Select(read =>
-                {
-                    RequireFields(read, "declaration", "sha256");
-                    return new ScribeProjectionRead(String(read, "declaration"), String(read, "sha256"));
-                }).ToImmutableArray();
-                ValidateReads(reads);
-                return new ScribeResourcePackEntry(String(item, "path"), String(item, "gid"), String(item, "sha256"), String(item, "inputKey"), reads);
+                RequireFields(item, "path", "gid", "sha256");
+                return new ScribeResourcePackEntry(String(item, "path"), String(item, "gid"), String(item, "sha256"));
             }).ToImmutableArray();
             var count = root.GetProperty("entryCount").GetInt32();
             if (count != entries.Length)
@@ -80,37 +56,20 @@ internal static class ScribeResourcePackManifestCodec
             {
                 if (entry.Path != ScribeResourcePack.ResourcePath(entry.Gid)
                     || previous is not null && StringComparer.Ordinal.Compare(previous, entry.Path) >= 0
-                    || !IsDigest(entry.Sha256) || !IsDigest(entry.InputKey))
+                    || !IsDigest(entry.Sha256))
                     throw Error(ScribeResourcePackErrorCode.InvalidManifest, "Entries require canonical paths, ascending path order and lowercase SHA-256 digests.");
                 previous = entry.Path;
             }
             var total = String(root, "totalSha256");
             if (!IsDigest(total) || total != ScribeResourcePack.Digest(EncodeEntries(entries)))
                 throw Error(ScribeResourcePackErrorCode.TotalDigestMismatch, "Ordered entry list digest differs.");
-            return new ScribeResourcePackManifest(schema, version, count, entries, total)
-            {
-                ExecutionEnvironment = environment,
-            };
+            return new ScribeResourcePackManifest(schema, version, count, entries, total);
         }
         catch (ScribeResourcePackException) { throw; }
         catch (Exception exception) when (exception is JsonException or InvalidOperationException or FormatException or ArgumentException)
         {
             throw new ScribeResourcePackException(ScribeResourcePackErrorCode.InvalidManifest,
                 "The manifest is not a valid resource pack manifest.", exception);
-        }
-    }
-
-    internal static void ValidateReads(ImmutableArray<ScribeProjectionRead> reads)
-    {
-        string? previous = null;
-        foreach (var read in reads)
-        {
-            _ = LeanDeclarationRef.Create(read.Declaration);
-            if (!IsDigest(read.Sha256)
-                || previous is not null && StringComparer.Ordinal.Compare(previous, read.Declaration) >= 0)
-                throw Error(ScribeResourcePackErrorCode.InvalidManifest,
-                    "Projection reads require unique ascending declarations and lowercase SHA-256 digests.");
-            previous = read.Declaration;
         }
     }
 
@@ -128,7 +87,7 @@ internal static class ScribeResourcePackManifestCodec
     private static string String(JsonElement value, string name) => value.GetProperty(name).GetString()
         ?? throw Error(ScribeResourcePackErrorCode.InvalidManifest, $"Manifest field {name} cannot be null.");
 
-    internal static bool IsDigest(string value) => value.Length == 64
+    private static bool IsDigest(string value) => value.Length == 64
         && value.All(character => character is >= '0' and <= '9' or >= 'a' and <= 'f');
 
     private static ScribeResourcePackException Error(ScribeResourcePackErrorCode reason, string message) => new(reason, message);

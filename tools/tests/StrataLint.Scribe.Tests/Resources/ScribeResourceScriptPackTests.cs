@@ -1,7 +1,4 @@
-using System.Collections.Immutable;
 using System.Globalization;
-using System.Text;
-using System.Text.Json.Nodes;
 
 namespace StrataLint.Scribe.Tests;
 
@@ -13,60 +10,15 @@ public sealed class ScribeResourceScriptPackTests
         using var root = Prepare();
         Write(root.Path, "Alpha", "internal sealed class Alpha { }");
         Write(root.Path, "Beta", "internal sealed class Beta { }");
+        Definition(root.Path, "Gamma");
         var error = new StringWriter();
         Assert.Equal(1, Cli(root.Path, ["resources", "pack", "--out", "resources.zip"], TextWriter.Null, error));
-        Assert.Contains(PathFor("Alpha"), error.ToString(), StringComparison.Ordinal);
-        Assert.Contains(PathFor("Beta"), error.ToString(), StringComparison.Ordinal);
-        Assert.Contains("DefinitionMissing", error.ToString(), StringComparison.Ordinal);
+        var lines = error.ToString().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+        Assert.Equal(2, lines.Length);
+        Assert.Contains(PathFor("Alpha"), lines[0], StringComparison.Ordinal);
+        Assert.Contains(PathFor("Beta"), lines[1], StringComparison.Ordinal);
+        Assert.All(lines, line => Assert.StartsWith("DefinitionMissing:", line, StringComparison.Ordinal));
         Assert.False(File.Exists(root.Resolve("resources.zip")));
-    }
-
-    [Theory]
-    [InlineData("missing")]
-    [InlineData("malformed")]
-    [InlineData("version")]
-    [InlineData("entry-digest")]
-    [InlineData("missing-environment")]
-    [InlineData("malformed-environment")]
-    [InlineData("missing-backend-data-version")]
-    [InlineData("empty-backend-data-version")]
-    public void InvalidReusePackReturnsTwoWithoutOutput(string kind)
-    {
-        using var root = Prepare();
-        Definition(root.Path, "Alpha");
-        var old = root.Resolve("input.zip");
-        if (kind == "malformed") TemporaryFileSystem.File.WriteAllBytes(old, [0xff]);
-        if (kind is "version" or "entry-digest" or "missing-environment" or "malformed-environment"
-            or "missing-backend-data-version" or "empty-backend-data-version")
-        {
-            ScribeResourcePackTests.WritePack(old, [ScribeResourcePackTests.Definition("Alpha")]);
-            var entries = ScribeResourcePackTests.ReadZip(old);
-            if (kind == "entry-digest") entries[0].Bytes[0] ^= 1;
-            else if (kind is "missing-environment" or "malformed-environment"
-                or "missing-backend-data-version" or "empty-backend-data-version")
-            {
-                var index = entries.FindIndex(item => item.Name == "manifest.json");
-                var manifest = JsonNode.Parse(entries[index].Bytes)!;
-                if (kind == "missing-environment") manifest.AsObject().Remove("executionEnvironment");
-                else if (kind == "malformed-environment") manifest["executionEnvironment"] = "icu";
-                else if (kind == "missing-backend-data-version") manifest["executionEnvironment"]!.AsObject().Remove("globalizationBackendDataVersion");
-                else manifest["executionEnvironment"]!["globalizationBackendDataVersion"] = "";
-                entries[index] = ("manifest.json", Encoding.UTF8.GetBytes(manifest.ToJsonString()));
-            }
-            else
-            {
-                var index = entries.FindIndex(item => item.Name == "manifest.json");
-                var manifest = JsonNode.Parse(entries[index].Bytes)!;
-                manifest["version"] = 2;
-                entries[index] = ("manifest.json", Encoding.UTF8.GetBytes(manifest.ToJsonString()));
-            }
-            ScribeResourcePackTests.RewriteZip(old, entries);
-        }
-        var error = new StringWriter();
-        Assert.Equal(2, Cli(root.Path,
-            ["resources", "pack", "--out", "output.zip", "--reuse-from", "input.zip"], TextWriter.Null, error));
-        Assert.NotEmpty(error.ToString());
-        Assert.False(File.Exists(root.Resolve("output.zip")));
     }
 
     [Fact]
@@ -79,10 +31,11 @@ public sealed class ScribeResourceScriptPackTests
         var error = new StringWriter();
         Assert.Equal(0, Cli(root.Path, ["resources", "pack", "--out", "resources.zip"], output, error));
         Assert.Empty(error.ToString());
-        Assert.Contains("executed=2 reused=0", output.ToString(), StringComparison.Ordinal);
-        Assert.Single(output.ToString().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries));
         var pack = ScribeResourcePack.Open(root.Resolve("resources.zip"));
         Assert.Equal(2, pack.Manifest.EntryCount);
+        Assert.Equal(FormattableString.Invariant(
+            $"resources pack: entries=2 uncompressedBytes={pack.TotalUncompressedBytes} totalSha256={pack.Manifest.TotalSha256}")
+            + Environment.NewLine, output.ToString());
         foreach (var name in new[] { "Alpha", "Beta" })
         {
             var result = ScribeScriptHost.Execute(root.Path, PathFor(name));
@@ -92,121 +45,45 @@ public sealed class ScribeResourceScriptPackTests
     }
 
     [Fact]
-    public void CliAcceptsExplicitReuseAndReportsZeroExecutions()
+    public void CliIsIndependentOfRepositoryLocationAndWorkingDirectory()
     {
         using var root = Prepare();
         Definition(root.Path, "Alpha");
-        Assert.Equal(0, Cli(root.Path, ["resources", "pack", "--out", "first.zip"], TextWriter.Null, new StringWriter()));
-        var output = new StringWriter();
-        var error = new StringWriter();
-        Assert.Equal(0, Cli(root.Path,
-            ["resources", "pack", "--out", "second.zip", "--reuse-from", "first.zip"], output, error));
-        Assert.Empty(error.ToString());
-        Assert.Contains("executed=0 reused=1", output.ToString(), StringComparison.Ordinal);
-        Assert.Equal(ScribeResourcePack.Open(root.Resolve("first.zip")).Manifest.TotalSha256,
-            ScribeResourcePack.Open(root.Resolve("second.zip")).Manifest.TotalSha256);
-    }
-
-    [Fact]
-    public void InputKeysAndCliAreIndependentOfRepositoryLocationAndWorkingDirectory()
-    {
-        using var root = Prepare();
-        Definition(root.Path, "Alpha");
-        var expected = Pack(root.Path, "expected.zip").Manifest;
+        var expected = Pack(root.Path, "expected.zip");
         var other = root.Resolve("repository space");
         TemporaryFileSystem.Directory.CreateDirectory(other);
-        TemporaryFileSystem.File.WriteAllText(System.IO.Path.Combine(other, "global.json"), "{}");
+        TemporaryFileSystem.File.WriteAllText(Path.Combine(other, "global.json"), "{}");
         Definition(other, "Alpha");
-        var working = System.IO.Path.Combine(other, "nested working directory");
+        var working = Path.Combine(other, "nested working directory");
         TemporaryFileSystem.Directory.CreateDirectory(working);
         Assert.Equal(0, Cli(working, ["resources", "pack", "--out", "resources.zip"], TextWriter.Null, new StringWriter()));
-        var actual = ScribeResourcePack.Open(System.IO.Path.Combine(working, "resources.zip")).Manifest;
+        var actual = ScribeResourcePack.Open(Path.Combine(working, "resources.zip")).Manifest;
         Assert.Equal(expected.TotalSha256, actual.TotalSha256);
     }
 
     [Fact]
-    public void UnchangedInputsReuseEveryPathAndPreserveManifestDigest()
-    {
-        using var root = Prepare();
-        Definition(root.Path, "Alpha");
-        Definition(root.Path, "Beta");
-        var first = Pack(root.Path, "first.zip");
-        var second = Pack(root.Path, "second.zip", "first.zip");
-        AssertPaths(first.Executed, "Alpha", "Beta");
-        Assert.Empty(first.Reused);
-        Assert.Empty(second.Executed);
-        AssertPaths(second.Reused, "Alpha", "Beta");
-        Assert.Equal(first.Manifest.TotalSha256, second.Manifest.TotalSha256);
-        foreach (var name in new[] { "Alpha", "Beta" })
-            Assert.Equal(ScribeResourcePack.Open(root.Resolve("first.zip")).EncodedBytes(GidFor(name)).ToArray(),
-                ScribeResourcePack.Open(root.Resolve("second.zip")).EncodedBytes(GidFor(name)).ToArray());
-    }
-
-    [Theory]
-    [InlineData("dotnetRuntimeVersion")]
-    [InlineData("globalizationBackend")]
-    [InlineData("globalizationBackendDataVersion")]
-    public void EnvironmentMismatchExecutesEveryPathAndNamesTheChangedField(string field)
-    {
-        using var root = Prepare();
-        Definition(root.Path, "Alpha");
-        Definition(root.Path, "Beta");
-        var baseline = new ScribeResourcePackExecutionEnvironment("runtime-a", "icu", "data-a");
-        var changed = field switch
-        {
-            "dotnetRuntimeVersion" => baseline with { DotnetRuntimeVersion = "runtime-b" },
-            "globalizationBackend" => baseline with { GlobalizationBackend = "invariant" },
-            _ => baseline with { GlobalizationBackendDataVersion = "data-b" },
-        };
-        Pack(root.Path, "first.zip", environment: baseline);
-        var result = Pack(root.Path, "second.zip", "first.zip", environment: changed);
-        AssertPaths(result.Executed, "Alpha", "Beta");
-        Assert.Empty(result.Reused);
-        Assert.Equal(field, result.ReuseSkippedReason);
-        Assert.Equal(Pack(root.Path, "full.zip", environment: changed).Manifest.TotalSha256,
-            result.Manifest.TotalSha256);
-    }
-
-    [Fact]
-    public void EnvironmentFieldsRoundTripInStableOrder()
-    {
-        using var root = Prepare();
-        Definition(root.Path, "Alpha");
-        var environment = new ScribeResourcePackExecutionEnvironment("runtime-a", "icu", "data-a");
-        var written = Pack(root.Path, "first.zip", environment: environment).Manifest;
-        var reopened = ScribeResourcePack.Open(root.Resolve("first.zip")).Manifest;
-        Assert.Equal(environment, written.ExecutionEnvironment);
-        Assert.Equal(environment, reopened.ExecutionEnvironment);
-        var manifest = JsonNode.Parse(ScribeResourcePackTests.ReadZip(root.Resolve("first.zip")
-            ).Single(item => item.Name == "manifest.json").Bytes)!.AsObject();
-        Assert.Equal(["schema", "version", "entryCount", "executionEnvironment", "entries", "totalSha256"],
-            manifest.Select(property => property.Key));
-        Assert.Equal(["dotnetRuntimeVersion", "globalizationBackend", "globalizationBackendDataVersion"],
-            manifest["executionEnvironment"]!.AsObject().Select(property => property.Key));
-    }
-
-    [Fact]
-    public void ThreadCultureChangesPreserveFullAndReusedPackDigests()
+    public void IndependentFullPacksPreserveDigestAcrossThreadCultures()
     {
         using var root = Prepare();
         Definition(root.Path, "Alpha", expression: "$\"{1234:N0} {-5}\"");
+        Definition(root.Path, "Beta");
         var culture = CultureInfo.CurrentCulture;
         var uiCulture = CultureInfo.CurrentUICulture;
         try
         {
             CultureInfo.CurrentCulture = new CultureInfo("en-US");
+            CultureInfo.CurrentUICulture = CultureInfo.CurrentCulture;
             var first = Pack(root.Path, "first.zip");
+            var second = Pack(root.Path, "second.zip");
+            Assert.Equal(first.TotalSha256, second.TotalSha256);
             var selected = (CultureInfo)new CultureInfo("tr-TR").Clone();
             selected.NumberFormat.NegativeSign = "~";
+            Assert.NotEqual(CultureInfo.CurrentCulture.TextInfo.ToUpper("i"), selected.TextInfo.ToUpper("i"));
+            Assert.NotEqual((-5).ToString(CultureInfo.CurrentCulture), (-5).ToString(selected));
             CultureInfo.CurrentCulture = selected;
             CultureInfo.CurrentUICulture = selected;
-            var reused = Pack(root.Path, "reused.zip", "first.zip");
-            var full = Pack(root.Path, "full.zip");
-            Assert.Empty(reused.Executed);
-            AssertPaths(reused.Reused, "Alpha");
-            AssertPaths(full.Executed, "Alpha");
-            Assert.Equal(first.Manifest.TotalSha256, reused.Manifest.TotalSha256);
-            Assert.Equal(full.Manifest.TotalSha256, reused.Manifest.TotalSha256);
+            var third = Pack(root.Path, "third.zip");
+            Assert.Equal(first.TotalSha256, third.TotalSha256);
             Assert.Same(selected, CultureInfo.CurrentCulture);
             Assert.Same(selected, CultureInfo.CurrentUICulture);
         }
@@ -217,198 +94,37 @@ public sealed class ScribeResourceScriptPackTests
         }
     }
 
-    [Fact]
-    public void EntryChangeExecutesOnlyThatPath()
+    private static ScribeResourcePackManifest Pack(string root, string output)
     {
-        using var root = Prepare();
-        Definition(root.Path, "Alpha");
-        Definition(root.Path, "Beta");
-        Pack(root.Path, "first.zip");
-        Definition(root.Path, "Alpha", "changed");
-        var second = Pack(root.Path, "second.zip", "first.zip");
-        AssertPaths(second.Executed, "Alpha");
-        AssertPaths(second.Reused, "Beta");
-        Assert.Equal(Pack(root.Path, "full.zip").Manifest.TotalSha256, second.Manifest.TotalSha256);
-    }
-
-    [Fact]
-    public void SharedClosureChangeExecutesOnlyItsTransitiveDependents()
-    {
-        using var root = Prepare();
-        SharedTree(root.Path, "first");
-        Pack(root.Path, "first.zip");
-        SharedTree(root.Path, "second");
-        var second = Pack(root.Path, "second.zip", "first.zip");
-        AssertPaths(second.Executed, "Alpha", "Leaf", "Shared");
-        AssertPaths(second.Reused, "Beta");
-        Assert.Equal(Pack(root.Path, "full.zip").Manifest.TotalSha256, second.Manifest.TotalSha256);
-    }
-
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void ProjectionAssessmentChangeExecutesOnlyItsReferencingPath(bool unprojectable)
-    {
-        using var root = new StatementProjectionTestRepository();
-        TemporaryFileSystem.File.WriteAllText(System.IO.Path.Combine(root.Path, "global.json"), "{}");
-        ProjectionFixture(root, 1, unprojectable);
-        Definition(root.Path, "Alpha", projection: true, unprojectable: unprojectable);
-        Definition(root.Path, "Beta");
-        Pack(root.Path, "first.zip");
-        ProjectionFixture(root, 2, unprojectable);
-        var second = Pack(root.Path, "second.zip", "first.zip");
-        AssertPaths(second.Executed, "Alpha");
-        AssertPaths(second.Reused, "Beta");
-        Assert.Equal(Pack(root.Path, "full.zip").Manifest.TotalSha256, second.Manifest.TotalSha256);
-    }
-
-    [Fact]
-    public void DiscardedProjectionChangeExecutesAndMatchesFullPack()
-    {
-        using var root = ProjectionReader();
-        var first = Pack(root.Path, "first.zip");
-        ProjectionFixture(root, 2, false);
-        var reused = Pack(root.Path, "reused.zip", "first.zip");
-        AssertPaths(reused.Executed, "Alpha");
-        AssertPaths(reused.Reused, "Beta");
-        Assert.Equal(Pack(root.Path, "full.zip").Manifest.TotalSha256, reused.Manifest.TotalSha256);
-        Assert.NotEqual(first.Manifest.TotalSha256, reused.Manifest.TotalSha256);
-    }
-
-    [Fact]
-    public void DiscardedUnprojectableReadFailsForReuseAndFullExecution()
-    {
-        using var root = ProjectionReader();
-        Pack(root.Path, "first.zip");
-        ProjectionFixture(root, 2, true);
-        var reused = ScribeResourceScriptPacker.Write(root.Path, System.IO.Path.Combine(root.Path, "reused.zip"), System.IO.Path.Combine(root.Path, "first.zip"));
-        var full = ScribeResourceScriptPacker.Write(root.Path, System.IO.Path.Combine(root.Path, "full.zip"));
-        Assert.Null(reused.Manifest);
-        Assert.Null(full.Manifest);
-        Assert.Equal(full.Failures.ToArray(), reused.Failures.ToArray());
-        Assert.Equal(PathFor("Alpha"), Assert.Single(reused.Failures).RelativePath);
-        Assert.Equal(ScribeScriptFailureCode.CreateFailed, reused.Failures[0].Code);
-        Assert.False(File.Exists(System.IO.Path.Combine(root.Path, "reused.zip")));
-        Assert.False(File.Exists(System.IO.Path.Combine(root.Path, "full.zip")));
-    }
-
-    [Fact]
-    public void DiscardedProjectionReadsAreRecordedOnceAndReuseWhenUnchanged()
-    {
-        using var root = ProjectionReader();
-        Pack(root.Path, "first.zip");
-        var manifest = JsonNode.Parse(ScribeResourcePackTests.ReadZip(System.IO.Path.Combine(root.Path, "first.zip"))
-            .Single(item => item.Name == "manifest.json").Bytes)!;
-        var reads = manifest["entries"]![0]!["readSet"]!.AsArray();
-        var read = Assert.Single(reads)!;
-        Assert.Equal(GidFor("Alpha") + ".claim", read["declaration"]!.GetValue<string>());
-        Assert.Equal(64, read["sha256"]!.GetValue<string>().Length);
-        Assert.Empty(manifest["entries"]![1]!["readSet"]!.AsArray());
-        var reused = Pack(root.Path, "reused.zip", "first.zip");
-        Assert.Empty(reused.Executed);
-        AssertPaths(reused.Reused, "Alpha", "Beta");
-    }
-
-    [Fact]
-    public async Task ConcurrentBatchesKeepProjectionReadsSeparate()
-    {
-        using var first = ProjectionReader();
-        using var second = ProjectionReader();
-        ProjectionFixture(second, 2, false);
-        var batches = await Task.WhenAll(
-            Task.Run(() => ScribeScriptHost.ExecuteBatch(first.Path, [PathFor("Alpha"), PathFor("Beta")])),
-            Task.Run(() => ScribeScriptHost.ExecuteBatch(second.Path, [PathFor("Alpha"), PathFor("Beta")])));
-        foreach (var batch in batches)
-        {
-            Assert.All(batch, result => Assert.True(result.IsSuccess, result.Failure?.ToString()));
-            Assert.Single(batch[0].ReadSet);
-            Assert.Empty(batch[1].ReadSet);
-        }
-        Assert.NotEqual(batches[0][0].ReadSet[0].Sha256, batches[1][0].ReadSet[0].Sha256);
-    }
-
-    private static StatementProjectionTestRepository ProjectionReader()
-    {
-        var root = new StatementProjectionTestRepository();
-        TemporaryFileSystem.File.WriteAllText(System.IO.Path.Combine(root.Path, "global.json"), "{}");
-        ProjectionFixture(root, 1, false);
-        Write(root.Path, "Alpha", $$"""
-            internal sealed class Alpha : IScribeDocumentDefinition
-            {
-                public DocumentDefinition Create()
-                {
-                    for (var index = 0; index < 2; index++)
-                        _ = Describe.Lean(DescribeId.Create("claim"), DeclarationHandle.Create("{{GidFor("Alpha")}}.claim"),
-                            H("Claim"), StatementSource.FromLean(), AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("content"))), DescribeRole.Theorem);
-                    return DocumentDefinition.Create(ScribeNode.Create("digest", H("title"), Blocks(Paragraph(Text("content")))));
-                }
-            }
-            """);
-        Definition(root.Path, "Beta");
-        return root;
-    }
-
-    [Fact]
-    public void SemanticVersionChangeInvalidatesEveryInputKey()
-    {
-        using var root = Prepare();
-        Definition(root.Path, "Alpha");
-        Definition(root.Path, "Beta");
-        var first = Pack(root.Path, "first.zip");
-        Assert.Equal(first.Manifest.TotalSha256,
-            Pack(root.Path, "explicit.zip", version: ScribeScriptSemantics.ResourceSemanticVersion).Manifest.TotalSha256);
-        var second = Pack(root.Path, "second.zip", "first.zip", version: ScribeScriptSemantics.ResourceSemanticVersion + 1);
-        AssertPaths(second.Executed, "Alpha", "Beta");
-        Assert.Empty(second.Reused);
-        Assert.NotEqual(first.Manifest.TotalSha256, second.Manifest.TotalSha256);
-        var before = InputKeys(root.Resolve("first.zip"));
-        var after = InputKeys(root.Resolve("second.zip"));
-        Assert.All(before.Keys, key => Assert.NotEqual(before[key], after[key]));
-    }
-
-    [Fact]
-    public void AddedPathExecutesAndDeletedPathIsAbsent()
-    {
-        using var root = Prepare();
-        Definition(root.Path, "Alpha");
-        Definition(root.Path, "Beta");
-        Pack(root.Path, "first.zip");
-        TemporaryFileSystem.File.Delete(root.Resolve(PathFor("Alpha")));
-        Definition(root.Path, "Gamma");
-        var second = Pack(root.Path, "second.zip", "first.zip");
-        AssertPaths(second.Executed, "Gamma");
-        AssertPaths(second.Reused, "Beta");
-        Assert.Equal(new[] { GidFor("Beta"), GidFor("Gamma") }, second.Manifest.Entries.Select(item => item.Gid));
-    }
-
-    private static void ProjectionFixture(StatementProjectionTestRepository root, int number, bool unprojectable) =>
-        root.WriteFixture("pilot", new StatementProjectionTestRepository.Pin("Fixture.claim", GidFor("Alpha") + ".lean",
-            unprojectable ? "unregistered-" + number : StatementProjectionResolutionTests.Equality(number)));
-
-    private static Dictionary<string, string> InputKeys(string path)
-    {
-        var manifest = JsonNode.Parse(ScribeResourcePackTests.ReadZip(path).Single(item => item.Name == "manifest.json").Bytes)!;
-        return manifest["entries"]!.AsArray().ToDictionary(item => item!["path"]!.GetValue<string>(),
-            item => item!["inputKey"]!.GetValue<string>(), StringComparer.Ordinal);
-    }
-
-    private static PackObservation Pack(string root, string output, string? reuse = null, int? version = null,
-        ScribeResourcePackExecutionEnvironment? environment = null)
-    {
-        var path = System.IO.Path.Combine(root, output);
-        var prior = reuse is null ? null : System.IO.Path.Combine(root, reuse);
-        var result = environment is null && version is null
-            ? ScribeResourceScriptPacker.Write(root, path, prior)
-            : ScribeResourceScriptPacker.WriteCore(root, path, prior,
-                version ?? ScribeScriptSemantics.ResourceSemanticVersion,
-                environment ?? ScribeResourcePackExecutionEnvironment.Current);
+        var result = ScribeResourceScriptPacker.Write(root, Path.Combine(root, output));
         Assert.Empty(result.Failures);
         Assert.NotNull(result.Manifest);
-        return new(result.Manifest, result.ExecutedPaths, result.ReusedPaths, result.ReuseSkippedReason);
+        return result.Manifest;
     }
 
-    private sealed record PackObservation(ScribeResourcePackManifest Manifest, ImmutableArray<string> Executed,
-        ImmutableArray<string> Reused, string? ReuseSkippedReason = null);
+    [Fact]
+    public void EachFullPackLoadsCurrentProjectionFixtures()
+    {
+        using var root = new StatementProjectionTestRepository();
+        TemporaryFileSystem.File.WriteAllText(Path.Combine(root.Path, "global.json"), "{}");
+        Write(root.Path, "Alpha", """
+            internal sealed class Alpha : IScribeDocumentDefinition
+            {
+                public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create("digest", H("title"),
+                    Blocks(new DocumentBlock.Section(H("Section"), Blocks(Describe.Lean(DescribeId.Create("claim"),
+                        DeclarationHandle.Create("D5/S0/Test/Alpha.claim"), H("Claim"), StatementSource.FromLean(),
+                        AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("content"))), DescribeRole.Theorem))))));
+            }
+            """);
+        void Fixture(int number) => root.WriteFixture("pilot", new StatementProjectionTestRepository.Pin(
+            "Fixture.claim", "D5/S0/Test/Alpha.lean", StatementProjectionResolutionTests.Equality(number)));
+        Fixture(1);
+        var first = Pack(root.Path, "first.zip");
+        Fixture(2);
+        var second = Pack(root.Path, "second.zip");
+        Assert.NotEqual(first.TotalSha256, second.TotalSha256);
+        Assert.Equal(second.TotalSha256, Pack(root.Path, "third.zip").TotalSha256);
+    }
 
     private static TemporaryRoot Prepare()
     {
@@ -421,41 +137,24 @@ public sealed class ScribeResourceScriptPackTests
     private static int Cli(string root, string[] arguments, TextWriter output, TextWriter error) =>
         ScribeCli.Run(typeof(ScribeResourcePack).Assembly, arguments, root, output, error);
 
-    private static void AssertPaths(IEnumerable<string> paths, params string[] names) =>
-        Assert.Equal(names.Select(PathFor), paths);
-
     private static string PathFor(string name) => "Blueprint/" + GidFor(name) + ".scribe.cs";
     private static string GidFor(string name) => "D5/S0/Test/" + name;
 
-    private static void SharedTree(string root, string content)
+    private static void Definition(string root, string name, string content = "content", string? expression = null)
     {
-        Definition(root, "Leaf", extra: $"internal const string Value = \"{content}\";");
-        Definition(root, "Shared", expression: "Leaf.Value", shared: "Leaf", extra: "internal static string Value => Leaf.Value;");
-        Definition(root, "Alpha", expression: "Shared.Value", shared: "Shared");
-        Definition(root, "Beta");
-    }
-
-    private static void Definition(string root, string name, string content = "content", string? expression = null,
-        string? shared = null, string extra = "", bool projection = false, bool unprojectable = false)
-    {
-        var block = projection
-            ? $"new DocumentBlock.Section(H(\"Section\"), Blocks(Describe.Lean(DescribeId.Create(\"claim\"), DeclarationHandle.Create(\"{GidFor(name)}.claim\"), H(\"Claim\"), StatementSource.{(unprojectable ? "FromAuthor(Num(7))" : "FromLean()")}, AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(\"content\"))), DescribeRole.Theorem)))"
-            : $"Paragraph(Text({expression ?? "\"" + content + "\""}))";
         Write(root, name, $$"""
-            {{(shared is null ? "" : $"[ScribeSharedSource(\"{PathFor(shared)}\")]")}}
             internal sealed class {{name}} : IScribeDocumentDefinition
             {
-                {{extra}}
                 public DocumentDefinition Create() => DocumentDefinition.Create(
-                    ScribeNode.Create("digest", H("title"), Blocks({{block}})));
+                    ScribeNode.Create("digest", H("title"), Blocks(Paragraph(Text({{expression ?? "\"" + content + "\""}})))));
             }
             """);
     }
 
     private static void Write(string root, string name, string body)
     {
-        var full = System.IO.Path.Combine(root, PathFor(name));
-        TemporaryFileSystem.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(full)!);
-        TemporaryFileSystem.File.WriteAllText(full, "using StrataLint.Engine; using StrataLint.Scribe; using static StrataLint.Scribe.DefinitionDsl; " + body);
+        var full = Path.Combine(root, PathFor(name));
+        TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(full)!);
+        TemporaryFileSystem.File.WriteAllText(full, "using StrataLint.Scribe; using static StrataLint.Scribe.DefinitionDsl; " + body);
     }
 }

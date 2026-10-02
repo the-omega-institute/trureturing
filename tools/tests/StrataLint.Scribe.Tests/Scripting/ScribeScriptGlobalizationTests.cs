@@ -8,55 +8,25 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class ScribeScriptGlobalizationTests(ITestOutputHelper output)
 {
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public async Task BackendDataVersionIsStableAcrossProcesses(bool invariant)
-    {
-        using var root = new TemporaryRoot();
-        var worker = CreateWorker(root);
-        WriteDefinition(root, "System.StringComparison.Ordinal");
-        var first = await Pack(root, worker, invariant, "first.zip");
-        var second = await Pack(root, worker, invariant, "second.zip");
-        Assert.True(first.Exit == 0, first.Output + first.Error);
-        Assert.True(second.Exit == 0, second.Output + second.Error);
-        var firstVersion = Assert.Single(first.Output.Split('\n'), line => line.StartsWith("backendDataVersion=", StringComparison.Ordinal));
-        var secondVersion = Assert.Single(second.Output.Split('\n'), line => line.StartsWith("backendDataVersion=", StringComparison.Ordinal));
-        Assert.Equal(firstVersion, secondVersion);
-        Assert.Equal(firstVersion["backendDataVersion=".Length..].Trim(),
-            ScribeResourcePack.Open(root.Resolve("first.zip")).Manifest.ExecutionEnvironment.GlobalizationBackendDataVersion);
-        Assert.Equal(ScribeResourcePack.Open(root.Resolve("first.zip")).Manifest.ExecutionEnvironment,
-            ScribeResourcePack.Open(root.Resolve("second.zip")).Manifest.ExecutionEnvironment);
-        output.WriteLine($"invariant={invariant}; {firstVersion.Trim()}");
-    }
-
     [Fact]
-    public async Task OrdinalPacksMatchAcrossGlobalizationBackendsForFreshAndReuse()
+    public async Task OrdinalFullPacksMatchAcrossGlobalizationBackends()
     {
         using var root = new TemporaryRoot();
         var worker = CreateWorker(root);
         WriteDefinition(root, "System.StringComparison.Ordinal");
         var icu = await Pack(root, worker, false, "icu.zip");
         var invariant = await Pack(root, worker, true, "invariant.zip");
-        var reused = await Pack(root, worker, true, "reused.zip", "icu.zip");
         Assert.True(icu.Exit == 0, icu.Output + icu.Error);
         Assert.True(invariant.Exit == 0, invariant.Output + invariant.Error);
-        Assert.True(reused.Exit == 0, reused.Output + reused.Error);
         Assert.Contains("globalizationInvariant=False", icu.Output, StringComparison.Ordinal);
         Assert.Contains("globalizationInvariant=True", invariant.Output, StringComparison.Ordinal);
         output.WriteLine("icu: " + icu.Output.Trim());
         output.WriteLine("invariant: " + invariant.Output.Trim());
-        output.WriteLine("reuse: " + reused.Output.Trim());
-        Assert.Contains("executed=1 reused=0", icu.Output, StringComparison.Ordinal);
-        Assert.Contains("executed=1 reused=0", invariant.Output, StringComparison.Ordinal);
-        Assert.Contains("executed=1 reused=0", reused.Output, StringComparison.Ordinal);
-        Assert.Contains("reuseSkipped=globalizationBackend", reused.Output, StringComparison.Ordinal);
         var expected = ScribeResourcePack.Open(root.Resolve("icu.zip")).Manifest.TotalSha256;
         Assert.Equal(expected, ScribeResourcePack.Open(root.Resolve("invariant.zip")).Manifest.TotalSha256);
-        Assert.Equal(expected, ScribeResourcePack.Open(root.Resolve("reused.zip")).Manifest.TotalSha256);
         WriteDefinition(root, "(System.StringComparison)0");
         var rejectedIcu = await Pack(root, worker, false, "rejected-icu.zip");
-        var rejectedInvariant = await Pack(root, worker, true, "rejected-invariant.zip", "icu.zip");
+        var rejectedInvariant = await Pack(root, worker, true, "rejected-invariant.zip");
         Assert.Equal(1, rejectedIcu.Exit);
         Assert.Equal(1, rejectedInvariant.Exit);
         Assert.Contains("DisallowedSymbol", rejectedIcu.Error, StringComparison.Ordinal);
@@ -85,9 +55,6 @@ public sealed class ScribeScriptGlobalizationTests(ITestOutputHelper output)
                     };
                     AppContext.TryGetSwitch("System.Globalization.Invariant", out var invariant);
                     Console.WriteLine("globalizationInvariant=" + invariant);
-                    var version = System.Globalization.CultureInfo.InvariantCulture.CompareInfo.Version;
-                    Console.WriteLine("backendDataVersion=" + version.FullVersion.ToString(System.Globalization.CultureInfo.InvariantCulture)
-                        + ":" + version.SortId.ToString("D"));
                     return Run(args);
                 }
                 [MethodImpl(MethodImplOptions.NoInlining)]
@@ -111,7 +78,7 @@ public sealed class ScribeScriptGlobalizationTests(ITestOutputHelper output)
     }
 
     private static async Task<(int Exit, string Output, string Error)> Pack(TemporaryRoot root, string worker,
-        bool invariant, string output, string? reuse = null)
+        bool invariant, string output)
     {
         TemporaryFileSystem.File.WriteAllText(root.Resolve("worker/GlobalizationWorker.runtimeconfig.json"),
             JsonSerializer.Serialize(new
@@ -128,11 +95,6 @@ public sealed class ScribeScriptGlobalizationTests(ITestOutputHelper output)
         };
         foreach (var argument in new[] { worker, AppContext.BaseDirectory, root.Path, "resources", "pack", "--out", output })
             start.ArgumentList.Add(argument);
-        if (reuse is not null)
-        {
-            start.ArgumentList.Add("--reuse-from");
-            start.ArgumentList.Add(reuse);
-        }
         using var process = Process.Start(start)!;
         var stdout = process.StandardOutput.ReadToEndAsync();
         var stderr = process.StandardError.ReadToEndAsync();

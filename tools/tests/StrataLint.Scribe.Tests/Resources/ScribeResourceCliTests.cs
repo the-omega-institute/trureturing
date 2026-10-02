@@ -10,12 +10,12 @@ public sealed class ScribeResourceCliTests
     private static readonly Assembly Documents = new FixtureAssembly();
 
     [Fact]
-    public void GeneralUsageIncludesTheResourceReuseOption()
+    public void GeneralUsageIncludesTheResourcePackCommand()
     {
         using var root = Prepare();
         var error = new StringWriter();
         Assert.Equal(2, ScribeCli.Run(Documents, [], root.Path, TextWriter.Null, error));
-        Assert.Contains("resources pack --out <file> [--reuse-from <file>]", error.ToString(), StringComparison.Ordinal);
+        Assert.Contains("resources pack --out <file>", error.ToString(), StringComparison.Ordinal);
     }
 
     [Theory]
@@ -41,7 +41,7 @@ public sealed class ScribeResourceCliTests
     {
         using var root = Prepare();
         var path = root.Resolve("resources.zip");
-        ScribeResourcePackTests.WritePack(path, [ScribeResourcePackTests.Definition("First"), ScribeResourcePackTests.Definition("Second")]);
+        ScribeResourcePack.Write(path, [ScribeResourcePackTests.Definition("First"), ScribeResourcePackTests.Definition("Second")]);
         var entries = ScribeResourcePackTests.ReadZip(path);
         entries[0].Bytes[0] ^= 1;
         ScribeResourcePackTests.RewriteZip(path, entries);
@@ -78,7 +78,7 @@ public sealed class ScribeResourceCliTests
             definitions[0] = DocumentDefinition.Create(
                 ScribeDocument.Create(document.Header, DefinitionDsl.H("Changed"), document.Content), definitions[0].SourcePath);
         }
-        ScribeResourcePackTests.WritePack(path, definitions);
+        ScribeResourcePack.Write(path, definitions);
         var output = new StringWriter();
         var error = new StringWriter();
 
@@ -96,7 +96,7 @@ public sealed class ScribeResourceCliTests
     {
         using var root = Prepare();
         var path = root.Resolve("resources.zip");
-        ScribeResourcePackTests.WritePack(path, [ScribeResourcePackTests.Definition("First"), ScribeResourcePackTests.Definition("Second")]);
+        ScribeResourcePack.Write(path, [ScribeResourcePackTests.Definition("First"), ScribeResourcePackTests.Definition("Second")]);
         var entries = ScribeResourcePackTests.ReadZip(path);
         var text = Encoding.UTF8.GetString(entries[0].Bytes);
         entries[0] = (entries[0].Name, Encoding.UTF8.GetBytes(change == "formatting" ? " " + text :
@@ -119,7 +119,7 @@ public sealed class ScribeResourceCliTests
     {
         using var root = Prepare();
         var path = root.Resolve("resources.zip");
-        ScribeResourcePackTests.WritePack(path, [ScribeResourceCodecTests.ClaimDefinition()]);
+        ScribeResourcePack.Write(path, [ScribeResourceCodecTests.ClaimDefinition()]);
         var entries = ScribeResourcePackTests.ReadZip(path);
         var resource = JsonNode.Parse(entries[0].Bytes)!;
         resource["document"]!["content"]![0]!["construction"]!["statementFormula"] = null;

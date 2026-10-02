@@ -4,17 +4,15 @@ namespace StrataLint.Scribe;
 
 internal static class ScribeResourceCommands
 {
-    private const string Usage = "usage: resources pack --out <file> [--reuse-from <file>] | resources verify --pack <file>";
+    private const string Usage = "usage: resources pack --out <file> | resources verify --pack <file>";
 
     internal static int Run(Assembly assembly, IReadOnlyList<string> arguments, string workingDirectory,
         Func<string> repositoryRoot, TextWriter output, TextWriter error)
     {
-        if (arguments.Count is not (4 or 6)
+        if (arguments.Count != 4
             || arguments[1] is not ("pack" or "verify")
             || arguments[2] != (arguments[1] == "pack" ? "--out" : "--pack")
-            || string.IsNullOrWhiteSpace(arguments[3])
-            || arguments.Count == 6 && (arguments[1] != "pack" || arguments[4] != "--reuse-from"
-                || string.IsNullOrWhiteSpace(arguments[5])))
+            || string.IsNullOrWhiteSpace(arguments[3]))
         {
             error.WriteLine(Usage);
             return 2;
@@ -26,8 +24,7 @@ internal static class ScribeResourceCommands
             var root = repositoryRoot();
             if (arguments[1] == "pack")
             {
-                var result = ScribeResourceScriptPacker.Write(root, path, arguments.Count == 6
-                    ? Path.GetFullPath(arguments[5], workingDirectory) : null);
+                var result = ScribeResourceScriptPacker.Write(root, path);
                 if (!result.Failures.IsEmpty)
                 {
                     foreach (var failure in result.Failures) error.WriteLine(failure);
@@ -35,10 +32,8 @@ internal static class ScribeResourceCommands
                 }
                 var manifest = result.Manifest!;
                 var summary = FormattableString.Invariant(
-                    $"resources pack: entries={manifest.EntryCount} executed={result.ExecutedPaths.Length} reused={result.ReusedPaths.Length} uncompressedBytes={manifest.TotalUncompressedBytes} totalSha256={manifest.TotalSha256}");
-                output.WriteLine(summary + (result.ReuseSkippedReason is null
-                    ? ""
-                    : " reuseSkipped=" + result.ReuseSkippedReason));
+                    $"resources pack: entries={manifest.EntryCount} uncompressedBytes={manifest.TotalUncompressedBytes} totalSha256={manifest.TotalSha256}");
+                output.WriteLine(summary);
                 return 0;
             }
 
