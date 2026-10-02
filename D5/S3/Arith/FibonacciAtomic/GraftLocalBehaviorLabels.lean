@@ -21,15 +21,6 @@ namespace D5.S3.Arith.FibonacciAtomic.GraftLocalBehaviorLabels
 open GraftAffineClosure (step)
 open TimeSampling (readout zeroRank)
 
-private theorem iterate_coprime {R : Type*} [CommRing R] (x : R × R)
-    (hx : IsCoprime x.1 x.2) (i : ℕ) :
-    IsCoprime (step^[i] x).1 (step^[i] x).2 := by
-  induction i with
-  | zero => exact hx
-  | succ i ih =>
-    rw [Function.iterate_succ_apply']
-    simpa only [step, mul_one] using ih.symm.add_mul_left_right (1 : R)
-
 /-- Every primitive state that hits zero has exactly one zero phase. -/
 theorem primitive_hit_phase (p m : ℕ) (hp : p.Prime)
     (x : ZMod (p ^ m) × ZMod (p ^ m)) (hx : IsUnit x.1 ∨ IsUnit x.2)
@@ -43,7 +34,16 @@ theorem primitive_hit_phase (p m : ℕ) (hp : p.Prime)
     · exact (isCoprime_zero_right.mpr h).of_isCoprime_of_dvd_right (dvd_zero _)
     · exact (isCoprime_zero_left.mpr h).of_isCoprime_of_dvd_left (dvd_zero _)
   have hit_unit : IsUnit (step^[t] x).2 := by
-    have h := iterate_coprime x hcop t
+    let g : ZMod (p ^ m) × ZMod (p ^ m) → Prop := fun z => IsCoprime z.1 z.2
+    have hg : g ∘ step = g := by
+      funext z
+      apply propext
+      change IsCoprime z.2 (z.1 + z.2) ↔ IsCoprime z.1 z.2
+      simpa only [mul_one] using
+        (IsCoprime.add_mul_left_right_iff (x := z.2) (y := z.1)
+          (z := (1 : ZMod (p ^ m)))).trans isCoprime_comm
+    have h : IsCoprime (step^[t] x).1 (step^[t] x).2 :=
+      (congrFun (Function.iterate_invariant hg t) x).mpr hcop
     rw [ht] at h
     exact isCoprime_zero_left.mp h
   have ranks := (PrimePowerGcdHorizon.sharp_prime_power_gcd_horizon p 2 hp le_rfl).1 m
@@ -143,7 +143,16 @@ theorem primitive_no_hit_profile (p H m : ℕ) (hp : p.Prime) (hm : m ≤ H)
       rcases hz with h | h
       · exact (isCoprime_zero_right.mpr h).of_isCoprime_of_dvd_right (dvd_zero _)
       · exact (isCoprime_zero_left.mpr h).of_isCoprime_of_dvd_left (dvd_zero _)
-    have h := iterate_coprime z cop k
+    let g : ZMod (p ^ i) × ZMod (p ^ i) → Prop := fun w => IsCoprime w.1 w.2
+    have hg : g ∘ step = g := by
+      funext w
+      apply propext
+      change IsCoprime w.2 (w.1 + w.2) ↔ IsCoprime w.1 w.2
+      simpa only [mul_one] using
+        (IsCoprime.add_mul_left_right_iff (x := w.2) (y := w.1)
+          (z := (1 : ZMod (p ^ i)))).trans isCoprime_comm
+    have h : IsCoprime (step^[k] z).1 (step^[k] z).2 :=
+      (congrFun (Function.iterate_invariant hg k) z).mpr cop
     rw [zero] at h
     exact isCoprime_zero_left.mp h
   have scale_iter (i k : ℕ) (u : (ZMod (p ^ i))ˣ)

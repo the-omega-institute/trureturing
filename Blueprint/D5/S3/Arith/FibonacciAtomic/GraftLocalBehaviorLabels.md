@@ -54,7 +54,7 @@ Let p be any prime and m be any natural number. The step S(a,b)=(b,a+b) acts on 
 
 If the first coordinate of S^t(x) is zero, then the first coordinate of S^k(x) is zero exactly when k and t have the same residue modulo r. Both t and k are arbitrary natural numbers, including zero. There is no restriction to odd primes and no assumption that the zero rank grows at every precision.
 
-The coordinates of a primitive pair remain coprime under the step. At a zero hit, the second coordinate is consequently a unit. Forward from this hit, the first coordinate is F(d) times that unit, so its zeros are precisely the multiples of r. A finite common return period transfers this criterion to times before the chosen hit.
+The coordinates of a primitive pair remain coprime under the step by direct application of mathlib's Function.iterate_invariant and IsCoprime.add_mul_left_right_iff. At a zero hit, the second coordinate is consequently a unit. Forward from this hit, the first coordinate is F(d) times that unit, so its zeros are precisely the multiples of r. A finite common return period transfers this criterion to times before the chosen hit.
 
 **Theorem 1.5 (The low divisibility profile).**
 
