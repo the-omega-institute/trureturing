@@ -44414,3 +44414,160 @@ $$
 这些是（317.10）—（317.11）的直接应用，不是新增的RH等价判据。最终的尾域结论也不自动检查任何有限初段。符号来源仍须属于被选出的同一整数族；无关地址或无关因子配置上的最优下界不能代替（319.2）。
 
 ## 追加锚（本行以下为增补区）
+
+## 320. 实际四次5040子族的核诱导累积平均
+
+**定义 320.0。** 沿用 §§314–316 的实际整数 $N_j=T_{j^4}$、解析截止 $\mu_j=3j^4+2$、归一化 Robin 余量 $\mathfrak q_j$、$\kappa=2\sqrt2-2$ 与 $w(x)=\sqrt x\log x$。采用假设302.1及这些章节明确列出的经典解析输入。对整数 $j\ge2$，记 $a=\mu_j,b=\mu_{j+1}$，定义
+\[
+\begin{aligned}
+\alpha_j&=\int_a^b\frac{w(y)}y\frac{b-y}{b-a}\frac{dy}{w(a)},\\
+\beta_j&=\int_a^b\frac{w(y)}y\frac{y-a}{b-a}\frac{dy}{w(b)},\\
+\rho_j&=\alpha_j+\beta_j,\qquad d_j=\log(b/a).
+\end{aligned}
+\tag{320.1}
+\]
+对整数 $J\ge3$ 置
+\[
+R_J=\sum_{j=2}^{J-1}\rho_j,\qquad
+D_J=\sum_{j=2}^{J-1}d_j=\log(\mu_J/50),\qquad
+\mathfrak b_J=\frac1{R_J}\sum_{j=2}^{J-1}
+ (\alpha_j\mathfrak q_j+\beta_j\mathfrak q_{j+1}).
+\tag{320.2}
+\]
+这些权重只依赖解析截止；一个内部端点在相邻两格中的贡献均保留。它们由同一个 $\Phi=I_\psi$ 的弦插值与对数积分诱导，不把实际整数 $N_j$ 当成价格 $\mu_j$。
+
+**定理 320.1（核诱导平均保留四次子族的 RH 强度）。** 在定义320.0的输入下，以下命题等价：
+\[
+\begin{aligned}
+&\mathrm{RH};\\
+&\exists K\ge0\ \exists J_0\ge3\ \forall J\ge J_0:
+       \quad\mathfrak b_J\ge-K;\\
+&\mathfrak b_J\longrightarrow\kappa;\\
+&\exists\ell\in\mathbb R:\quad\mathfrak b_J\longrightarrow\ell.
+\end{aligned}
+\tag{320.3}
+\]
+阈值及指标为整数，$K$ 为固定有限实数。该结论没有证明预算存在，也没有决定 RH。
+
+**证明。** 首先核对归一化。式（314.7）给 $0<w(a)\le w(y)\le w(b)\le8w(a)$。置 $u=(b-y)/(b-a)$、$v=(y-a)/(b-a)$，则 $u,v\ge0$、$u+v=1$，并有
+\[
+\frac18\le u\frac{w(y)}{w(a)}+v\frac{w(y)}{w(b)}\le8.
+\]
+被积函数在正端点区间连续，因此 $\alpha_j,\beta_j\ge0$，且
+\[
+0<d_j/8\le\rho_j\le8d_j,\qquad
+D_J/8\le R_J\le8D_J\longrightarrow\infty.
+\tag{320.4}
+\]
+进一步，$r_j=w(b)/w(a)\to1$，因为 $b/a\to1$ 与 $\log b/\log a\to1$。上述凸组合实际位于 $[r_j^{-1},r_j]$，故
+\[
+\rho_j/d_j\longrightarrow1,\qquad R_J/D_J\longrightarrow1.
+\tag{320.5}
+\]
+第二个极限由固定初段除以 $D_J$ 趋零及尾部逐格相对误差任意小得到，不要求 $d_j$ 有统一正下界。
+
+现在证明第二项推出 RH。定理315.1限制到实际四次指标给
+\[
+\mathfrak q_j=Z(\mu_j)+\kappa-\mathfrak h_{j^4}+\varepsilon_j,
+\qquad Z(x)=w(x)\Phi(x),\quad \mathfrak h_{j^4}\ge0,\quad\varepsilon_j\to0.
+\tag{320.6}
+\]
+正权使双端误差的平均趋零：任取 $\eta>0$，足够晚时两端误差均不超过 $\eta$，所以尾部绝对贡献不超过 $\eta R_J$；有限初段贡献是固定常数。于是（320.3）第二项与非负缺损给固定 $K_1\ge0$，使
+\[
+\sum_{j=2}^{J-1}[\alpha_j Z(\mu_j)+\beta_j Z(\mu_{j+1})]
+\ge-K_1R_J
+\tag{320.7}
+\]
+最终成立。这里删去缺损只用于实际平均下界推出谱平均下界的方向。
+
+经典 Chebyshev 界供应 §314 的 $C\ge1$，同节的 $\Phi$ 双端弦下界及归一化曲率成本 $1701C$ 给
+\[
+Z(y)\ge
+ u\frac{w(y)}{w(a)}Z(a)+v\frac{w(y)}{w(b)}Z(b)-1701C.
+\]
+除以 $y>0$ 并在同一格积分，恰得
+\[
+\int_a^b Z(y)\frac{dy}y
+\ge\alpha_jZ(a)+\beta_jZ(b)-1701C d_j.
+\tag{320.8}
+\]
+求和并用（320.4）、（320.7），连续原函数
+\[
+P(x)=\int_{50}^x\frac{\log y}{\sqrt y}\Phi(y)\,dy
+     =\int_{\log50}^{\log x}Z(e^t)\,dt
+\tag{320.9}
+\]
+在四次端点满足 $P(\mu_J)\ge-(8K_1+1701C)D_J$，最终成立。连续性允许把有限个初段端点纳入一个固定预算，因而可选 $K_2\ge0$ 使
+\[
+P(\mu_j)\ge-K_2(\log\mu_j+1)\qquad(j\ge2).
+\tag{320.10}
+\]
+
+端点预算尚未控制部分格子。为此直接对 $P$ 插值，而不估计末尾部分格子的 $|Z|$。经典有效 PNT 保证 $\Phi$ 连续并有界；取 $B\ge0$ 使 $|\Phi(x)|\le B$ 对所有 $x\ge50$ 成立。同一尾核给几乎处处
+\[
+\Phi'(x)=\frac{\log x+1}{x^2\log^2x}[x-\psi(x)].
+\]
+$\Phi$ 在每个紧区间绝对连续；素数幂处仅其导数的密度跳跃。因此 $P'$ 连续且局部绝对连续，并有几乎处处
+\[
+P''(x)=\frac{2-\log x}{2x^{3/2}}\Phi(x)
+       +\frac{\log x}{\sqrt x}\Phi'(x).
+\tag{320.11}
+\]
+在 $a\le x\le b$ 上，$a\ge50$、$\log b\le2\log a$。第一项上界不超过 $B\log a/a^{3/2}$。又 $\psi(x)\ge0$，故第二项不超过
+\[
+\frac{\log x+1}{x^{3/2}\log x}\le\frac2{a^{3/2}}.
+\]
+因此 $P''\le(B\log a+2)/a^{3/2}$ 几乎处处。经典半凹弦不等式适用于具有局部绝对连续一阶导数的 $P$，得
+\[
+P(x)\ge uP(a)+vP(b)
+ -\frac{B\log a+2}{2a^{3/2}}(x-a)(b-x).
+\tag{320.12}
+\]
+这里原函数的一阶导数在素数幂处连续，无需假定 $P$ 全域二次可微。由（314.7）及 $(x-a)(b-x)\le(b-a)^2/4$，最后的损失不超过
+\[
+\frac{243}{8}(B\log a+2).
+\tag{320.13}
+\]
+两端（320.10）与 $\log b\le2\log a\le2\log x$ 遂给整个格子的一个明确充分预算：
+\[
+P(x)\ge-
+ \left(2K_2+\frac{243B}{8}+\frac{243}{4}\right)(\log x+1).
+\tag{320.14}
+\]
+相邻四次格子覆盖 $[50,\infty)$，所以此预算对全部 $x\ge50$ 成立。置 $A(T)=P(e^T)$，便得 §316 所需的全实数线性累计预算 $A(T)\ge-K_3(T+1)$。复用（316.6）–（316.9）的经典正逆变换、积分显式公式与 Landau 非负变换机制，即得 RH；固定初段常数 $C_0$ 仍须保留。新的承重步骤是（320.8）与（320.11）–（320.14）把实际稀疏双端平均送入这个已有机制。
+
+反向假设 RH。定理315.1及所引 Nicolas 谱渐近给
+\[
+\mathfrak q_j=\kappa-\mathcal W(\log\mu_j)+o(1),
+\quad\mathcal W(t)=W(e^t).
+\tag{320.15}
+\]
+如 §§315、316 所证，$\mathcal W$ 有界、一致连续，且是无零频率的一致绝对收敛三角级数，连续对数平均趋零。这里核平均仍须单独比较，不能把点值的无有限极限变成其平均的障碍。
+
+对格内 $t=\log y$，两端对数距离不超过 $d_j\to0$。置
+\[
+h_j(y)=u\frac{w(y)}{w(a)}+v\frac{w(y)}{w(b)}.
+\]
+若 $M\ge\sup|\mathcal W|$，并以 $\eta_j\to0$ 表示一致连续性在距离 $d_j$ 的模，则
+\[
+\begin{aligned}
+&\left|\alpha_j\mathcal W(\log a)+\beta_j\mathcal W(\log b)
+       -\int_a^b\mathcal W(\log y)\frac{dy}y\right|\\
+&\hspace{1cm}\le\eta_j\rho_j+
+ M\max\{r_j-1,1-r_j^{-1}\}\,d_j=o(d_j).
+\end{aligned}
+\tag{320.16}
+\]
+第一项比较各端点值与格内值，第二项比较 $h_j$ 与一。累计后有限初段除以 $D_J$ 消失，尾部误差任意小。结合 $R_J/D_J\to1$ 与连续谱平均趋零，双端谱平均也趋零。再用（320.15）的正权误差平均，得到 $\mathfrak b_J\to\kappa$。不要求零点纵坐标线性独立。第三项给第四项，任何有限极限给最终有限下界，完成等价链。
+
+最后，对任意把完整格子索引集合 $\{2,\ldots,J-1\}$ 划分为互斥块 $I_1,\ldots,I_r$ 的递归，置
+\[
+C(I)=\sum_{j\in I}(\alpha_j\mathfrak q_j+\beta_j\mathfrak q_{j+1}),
+\qquad R(I)=\sum_{j\in I}\rho_j.
+\]
+便有 $C(\bigcup I_s)=\sum_sC(I_s)$、$R(\bigcup I_s)=\sum_sR(I_s)$；若各块供应 $C(I_s)\ge-K_sR(I_s)$，则父块预算是
+\[
+C(\bigcup I_s)\ge-\sum_sK_sR(I_s).
+\tag{320.17}
+\]
+五块划分是该恒等式的一个取值；需要累加的量是贡献与质量，而非各块平均的等权和。它只合并已有块预算，不供应未展开块的预算，也没有证明普通左端对数权重与（320.1）具有相同反向 RH 强度。$\square$
