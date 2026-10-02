@@ -33,9 +33,14 @@ class LocalReportEntryTests(unittest.TestCase):
         self.copy('Makefile')
         self.fixture.write('producer.dll', 'native execution fixture')
         # The native runner records report-facet entry and returns a sentinel.
-        # Publication/sealing are intentionally unreachable after that failure.
+        # Publication/sealing are intentionally unreachable after that failure;
+        # selected program builds remain successful and are recorded separately.
         self.executable('tools/scripts/worktree/lean-cache-run.sh',
-                        'printf "%s\\n" "$*" >> report-builds\nexit 73\n')
+                        'if [[ "$*" == *" :report"* ]]; then\n'
+                        '  printf "%s\\n" "$*" >> report-builds\n'
+                        '  exit 73\n'
+                        'fi\n'
+                        'printf "%s\\n" "$*" >> program-builds\n')
         self.executable('tools/scripts/worktree/lean-cache-ensure.sh', 'exit 0\n')
         self.executable('tools/scripts/worktree/lean-cache-publish.sh',
                         'exec python3 -B "$(dirname "$0")/fetch_fixture.py" "$@"\n')
@@ -59,7 +64,11 @@ with contextlib.nullcontext() if "--writer-owned" in args else cache_guard(root)
     for source in (root / "dev-seed").iterdir():
         shutil.copyfile(source, destination / source.name)
 ''')
-        self.executable('bin/lake', '[[ "$1" == --version ]] || exit 91\nprintf "%s\\n" "fixture lake 1"\n')
+        self.executable('bin/lake', 'if [[ "$1" == --version ]]; then\n'
+                        '  printf "%s\\n" "fixture lake 1"\n'
+                        'else\n'
+                        '  printf "%s\\n" "$*" >> lake-calls\n'
+                        'fi\n')
         self.environment = dict(os.environ, LAKE_BIN=str(self.root / 'bin/lake'),
                                 STRATALINT_INSPECTOR_SUPERVISED='1',
                                 STRATALINT_LEAN_BUILD_TARGETS='[]',
@@ -190,7 +199,11 @@ with contextlib.nullcontext() if "--writer-owned" in args else cache_guard(root)
         self.assert_continued(self.entry(), fetched=False)
 
     def test_ci_reuse_or_build_matching_seed_skips_report_facet(self):
+        self.environment['STRATALINT_LEAN_BUILD_TARGETS'] = '["D5/A"]'
         self.assert_continued(self.entry('LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build'), fetched=False)
+        program_builds = (self.root / 'program-builds').read_text().splitlines()
+        self.assertEqual(len(program_builds), 1)
+        self.assertTrue(program_builds[0].endswith('tools/lean-inspector-reg build D5/A'))
 
     def test_ci_reuse_or_build_input_miss_enters_report_facet(self):
         self.fixture.write('D5/A.lean', 'def a := 2\n')
