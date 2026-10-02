@@ -15133,3 +15133,79 @@ The remaining obligation is survival of altered-child demand or
 another legal coupling that yields strict whole-cover descent.
 SF1--SF2 identify the slice exactly but do not supply that obligation.
 No new Lean verification or unrestricted noncoverage is asserted.
+
+## 121. Arbitrary heights force a common bundle of collision-private points
+
+Retain section118's ONE actual source, complete private traces H_j,
+active-root count k, collision-root set T and all original heights.
+No root-distinctness or minimum-height assumption is imposed. Put
+
+    f=q-|T|, m=|T|-1=q-1-f, ell=k-f,
+    b(y)=#{j in T minus {0}:y in H_j}, B=max_(y in Y)b(y).
+
+AD8 gives f<=k-1, so ell>=1. Since k<=p-1<q-1, m>=ell.
+Then
+
+    B>=ceil(m/ell)
+      >=ceil((q-1)/k)
+      >=ceil((q-1)/(p-1)).                         (PB1)
+
+Thus at every height a single original base supports private lifts
+for A_q and at least ceil(m/ell) DIFFERENT collision originals.
+All lifts retain the same complete ternary word, full q-tail and
+all other coordinates. The owner associated with a repeated root
+is its unique actual collision occurrence at that base.
+
+### Reuse the forced singleton root before partitioning
+
+DP9 and [Report364, SI1--SI2](../../321-384/364-singleton-cofactor-ideal-and-forced-colors.md#1-actual-singleton-roots-and-a-common-cofactor-ideal)
+already give the unique q-bearing original3q at its first-q root
+j_1, with its private region equal to the entire original q-private
+cofactor region times the full q-tail at that root. In AD5's notation,
+
+    H_(j_1)=Y.                                    (PB2)
+
+This is a whole-source singleton fact, not merely SF1's identity
+on one auxiliary slice. Its safe set is empty, so its root provides
+no safe covering group. No new singleton theorem is being proved.
+
+Let d=floor((m-1)/ell). If d=0, PB2 already gives B>=1=d+1.
+Otherwise partition the m-1 other nonfree roots into ell groups,
+each with at least d members. If B<d+1, no group can have a point
+in all its complete H_j: such a point would belong to those at
+least d traces AND the additional universal H_(j_1).
+
+Consequently every group would cover Y by its safe sets. Together
+with the f free singleton roots they would supply ell+f=k disjoint
+safe covers, contradicting AD8. Hence
+
+    B>=d+1=ceil(m/ell).
+
+The uniform bounds in PB1 follow from
+
+    m/ell-(q-1)/k=f*(q-1-k)/(k*(k-f))>=0,
+
+and k<=p-1. The universal3q root is what strengthens the direct
+balanced-partition floor bound to the stated ceiling bound.
+
+### The counted owners are simultaneously private in the original cover
+
+Choose y attaining B. For each root j counted by b(y), AD5 supplies
+an actual private owner A_(3^c q) at that root. The original collision
+classes are pairwise disjoint, so there is exactly one such owner
+at this base. Different roots give different original labels.
+AD5's independence from x then gives these private relations
+simultaneously for EVERY x in the same complete actual R_o.
+H_0=Y supplies the additional private A_q lift. In particular the
+bundle includes the private3q lift, without identifying other
+repeated-root occurrences or adding their private regions together.
+
+At |T|=q-k+1 one has ell=1 and PB1 forces B=m, recovering AD11's
+common intersection. Away from that boundary, PB1 guarantees only
+the displayed number of simultaneous owners; it does not put all
+nonempty H_j through one point or concentrate the entire P_q.
+Their membership yields compatible ternary prefixes along the
+selected common word, with distinct actual heights for distinct
+owners. It supplies no additional numerical modulus or whole-cover
+repair by itself. No new Lean verification or unrestricted
+noncoverage is asserted.
