@@ -173,6 +173,13 @@ fails W, that same point carries simultaneous gcd-one depth-two root
 triples. Two numerical divisor chains supply a concrete balanced case.
 The unrestricted within-row crossings and primitive triples remain open.
 
+[Section146](#146-shared-lower-cores-bound-actual-top-shadow-multiplicity)
+applies the complete-parent capacity at one actual lower source, even
+when top phases differ. In the small-prime concentrated branch, a
+same-support group of at least47 labels has lower-core divisor count
+at most46, hence at most five deep primes outside the chosen color pair.
+Height-one support and the small-core multiplicities remain unbounded.
+
 ## 1. Replace only the region that depends on the changed classes
 
 Use the lexicographically minimal hypothetical cover of
@@ -17935,3 +17942,111 @@ partitioned into chains by b, for distinct cofactor primes p,r. Every subpalette
 CP1 vacancy and §144's individual exponent bounds do not supply these chain partitions or exclude the gcd-one root triples. In particular bounded prime exponents do not bound divisibility width when the prime support remains unbounded. The unresolved arithmetic step is to exclude or legally repair the actual within-row crossings and simultaneous gcd-one triples, retaining their complete original deletion obligations.
 
 Whenever one of the W conclusions above holds, its actual point mass is a valid input to §133's existing complete-tail law. The tail must still be taken in the genuine deep-retained complement. The shallow deletion hole E_B is not identified with that law's low-row deletion hole, and no uniform cofactor density or total price below one follows here.
+
+## 146. Shared lower cores bound actual top-shadow multiplicity
+
+Keep one original EB1 whole cover with period Q=product_r r^(H_r), original classes A_s=a_s modulo m_s, and the original CP1 colors. Choose original primes p,ell in opposite concentrated colors. The following consumes §144's complete-parent phase capacity OCP2–OCP4 on the actual lower sources of the existing global top-shadow construction. It does not need the uniform upper bounds on H_r for its primary conclusion.
+
+### Original lower shadows and numerical top multiplicity
+
+Use the global top decomposition from Library/Arith/lettlsun2008cosets.md. Put N=Q/rad(Q), and identify the lower-digit carrier B with Z/N. For each original label let
+
+    T_s={r:v_r(m_s)=H_r},
+    P_A=product_(r in A)r,
+    bar_m_s=m_s/P_(T_s),
+    D_s={z in B:z=a_s modulo bar_m_s}.
+
+At an ACTUAL lower source z, a label is active exactly when z belongs to D_s. Its top slice fixes the original top digits on T_s. For nonempty A define
+
+    n_A(z)=|{s:T_s=A and z in D_s}|.                  (LSM1)
+
+This counts original labels, including different labels with identical top phase vectors. Thus it bounds numerical multiplicity at the squarefree top modulus P_A before any duplicate top APs are removed. Equal support does not assert equal top phases.
+
+Every such lower modulus contains the same fixed core
+
+    C_A=product_(r in A)r^(H_r-1).
+
+Remove the FULL p- and ell-parts of this lower core:
+
+    c_A=C_A/[p^(v_p(C_A)) ell^(v_ell(C_A))],
+    tau(c_A)=product_(r in A minus {p,ell})H_r.        (LSM2)
+
+A prime of global height one contributes exponent zero to C_A and factor one to this divisor count.
+
+### The whole active support group shares one parent phase
+
+Let N_0=(p-1)(ell-1)-1 as in OCP3. Then
+
+    tau(c_A)>=N_0 ==> n_A(z)<=N_0-1
+      for every actual lower source z.              (LSM3)
+
+If there are no active labels the assertion is immediate. Otherwise c_A is a nonunit divisor of an original m_s, so original divisor closure supplies its original parent class. Every label counted in n_A(z) is a PROPER descendant of c_A: its nonempty top support contributes P_A beyond bar_m_s, whereas c_A divides bar_m_s. All counted labels have the SAME actual residue z modulo c_A, regardless of their top phases.
+
+That common residue differs from the OLD parent phase a_(c_A). Equality would put a counted original class inside the original parent class, contrary to comparable-original disjointness. OCP2 therefore applies to this one non-own parent phase, using the complete private-pair container OCP3. It bounds the ENTIRE proper-descendant group by N_0-1. The active shadow group is a subset of that one group. No full-point intersection of the top hyperplanes, no shared top phase and no independently chosen source is needed.
+
+There is a sharper version when 3 divides c_A. Put
+
+    N_*=max((p-2)(ell-1),(p-1)(ell-2)).
+
+If tau(c_A)>=N_* then
+
+    n_A(z)<=N_*-1.                                  (LSM4)
+
+The parent has its own fixed ternary root. OCP4 supplies the corresponding N_i<=N_* private-pair container and OCP2 bounds its non-own descendant phase by N_i-1. The source z may have a different ternary root; it is the OLD parent's private region that determines the repair container. The divisor-count premise makes c_A different from3.
+
+These statements count proper descendants before restricting their other coordinates. They are stronger than a bound on the number of original APs simultaneously true at one complete integer point. In particular, they apply when the active top hyperplanes are mutually disjoint because their top phase vectors differ.
+
+### A selected collision group can share more than the fixed core
+
+For any nonempty collection J of original labels with NONEMPTY top supports and with one common actual lower source z in intersection_(s in J)D_s, put
+
+    g_J=gcd_(s in J)bar_m_s,
+    c_J=g_J/[p^(v_p(g_J)) ell^(v_ell(g_J))].
+
+The same original-parent argument gives
+
+    tau(c_J)>=N_0 ==> |J|<=N_0-1,                   (LSM5)
+
+and the N_*-1 version when 3 divides c_J and tau(c_J)>=N_*. This allows different top supports within J. All the original classes remain proper descendants because every T_s is nonempty.
+
+For a same-support group, C_A divides g_J. Thus LSM5 can strengthen LSM3 using actual common lower factors OUTSIDE A. It is not legitimate to insert the numerical gcd of the full m_s in place of g_J without checking its additional top phases: the lower source fixes only the bar_m_s congruences. Conversely, no equality of complete shadow APs is required; their actual common lower source already fixes the needed parent phase.
+
+### What remains when the four small primes are concentrated
+
+Assume R intersects {5,7,11,13} trivially, as in OCP7–OCP9. Choose p=5 and an opposite-color ell in {7,11,13}. The actual constants are
+
+| ell | N_0 | N_* |
+| --- | ---: | ---: |
+| 7 | 23 | 20 |
+| 11 | 39 | 36 |
+| 13 | 47 | 44 |
+
+Consequently any active same-support group with at least47 original labels satisfies
+
+    product_(r in A minus {5,ell})H_r <=46.           (LSM6)
+
+In particular, A minus {5,ell} contains at most FIVE primes of global height at least two. Six such factors would give a divisor count at least64. The number of height-one primes in A is unrestricted. For a selected group of47 labels, LSM5 also bounds its actual common lower gcd after removing5 and ell; the additional shared factors outside A cannot be ignored.
+
+If 3 belongs to A and H_3>=44, then tau(c_A)>=H_3>=44 and 3 divides c_A, so LSM4 gives n_A(z)<=43. This applies, in particular, to that part of OCP9's remaining range44<=H_3<=64. The general LSM3–LSM6 statements are not dependent on those upper bounds; OCP9 makes the remaining exponent choices finite at any fixed prime head.
+
+Thus high top multiplicity is confined to supports whose fixed lower core has a small divisor count, with at most five contributing deep primes outside the chosen opposite pair. It is not removed altogether.
+
+### Exact boundary for the squarefree and bounded-multiplicity inputs
+
+At the lower source of an original private point whose owner has nonempty top support, the existing top-shadow argument supplies a whole cover of the top box by proper hyperplanes. An empty-support active label would cover that private point, so none is present there. BBMST's squarefree theorem therefore supplies a same-support, different-top-phase pair at THAT source. LSM3–LSM5 constrain the actual multiplicity of those support groups without moving that source or changing any original phase.
+
+The old numerical inventory bound is
+
+    n_A(z)<=product_(r outside A)H_r.
+
+It can now be combined with the relevant LSM cap whenever its shared lower core qualifies. Merely substituting H_r<=64 into the old product does not give a support-independent bound. The new cap also does not cover every A: cores with small divisor count, including C_A=1, remain.
+
+If an actual proper top-fibre cover separately satisfies n_A(z)<=s for EVERY active nonempty support A, then KKL's existing bounded-numerical-multiplicity theorem legitimately applies to its squarefree AP realization. It gives a top modulus
+
+    P_A <= exp(c log^2(s+1)/log log(s+2))
+
+for the published absolute constant c. To turn this into a bound on a nonconcentrated prime, one must additionally show that the obtained small top modulus contains such a prime, or supply a whole quotient cover whose EVERY numerical modulus does. Neither follows from CP1 or LSM3 alone. The cited theorem as recorded here also has no instantiated numerical c, so it does not itself provide an explicit numerical head.
+
+The uniform exponent caps do not restore the unrestricted Gamma73 premise either. The existing star obstruction already allows H_3=31 and every other H_r=8, within OCP9's numerical upper bounds. That noncover does not satisfy the original EB1 vacancy and irredundancy conditions and is not a counterexample under those conditions; it shows why a deduction using only the height box still fails. A successful head consumer must use the actual CP1-restricted inventory and original source relations in its joint-load bound.
+
+No new moment theorem, distortion recurrence, top-shadow theorem or enumeration is needed for these conclusions. The new reusable arithmetic input is the actual lower-source phase capacity LSM3–LSM5. A uniform cap on the remaining small-core support groups, or another same-source estimate consuming them, remains missing; no bounded head containing an R-prime or unrestricted odd noncoverage is established.
