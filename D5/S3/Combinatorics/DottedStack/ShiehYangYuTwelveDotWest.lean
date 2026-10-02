@@ -1,6 +1,6 @@
-/- GID: D5/S1/Words/Patterns/ShiehYangYuTwelveDotWest
+/- GID: D5/S3/Combinatorics/DottedStack/ShiehYangYuTwelveDotWest
    generality: G
-   mirror-B: D5/B/S1/Words/Patterns/ShiehYangYuTwelveDotWest
+   mirror-B: D5/B/S3/Combinatorics/DottedStack/ShiehYangYuTwelveDotWest
    mirror-E: none(waiver:stack-and-peak-run-structure)
    anchors: []
    utility: none
@@ -15,7 +15,9 @@ set_option relaxedAutoImplicit false
 open private westRun westRun_perm s_split_max from
   D5.S1.Words.Patterns.ShiehYangYuMachineConvergence
 
-namespace D5.S1.Words.Patterns.ShiehYangYuTwelveDotWest
+namespace D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDotWest
+
+open D5.S1.Words.Patterns
 
 open D5.S1.Words.Patterns.ShiehYangYuMachineConvergence
 open D5.S1.Words.Patterns.ShiehYangYuTwelveDotDefs
@@ -158,4 +160,4 @@ theorem peak_structure (word : List ℕ) :
       · exact (body_bound entry member).trans_lt large
 
 
-end D5.S1.Words.Patterns.ShiehYangYuTwelveDotWest
+end D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDotWest

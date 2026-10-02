@@ -1,24 +1,26 @@
-/- GID: D5/S1/Words/Patterns/ShiehYangYuTwelveDot
+/- GID: D5/S3/Combinatorics/DottedStack/ShiehYangYuTwelveDot
    generality: G
-   mirror-B: D5/B/S1/Words/Patterns/ShiehYangYuTwelveDot
+   mirror-B: D5/B/S3/Combinatorics/DottedStack/ShiehYangYuTwelveDot
    mirror-E: none(waiver:machine-permutation-count)
    anchors: [mathlib/module/Mathlib.Data.Finset.Powerset, mathlib/module/Mathlib.Data.List.OfFn]
    utility: none
    digest: Excursion reflection and up-step subsets count all permutations sorted by the machine. -/
 
-import D5.S1.Words.Patterns.ShiehYangYuTwelveDotPaths
+import D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDotPaths
 import Mathlib.Data.Finset.Powerset
 import Mathlib.Data.List.OfFn
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-namespace D5.S1.Words.Patterns.ShiehYangYuTwelveDot
+namespace D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDot
+
+open D5.S1.Words.Patterns
 
 open D5.S1.Words.Patterns.ShiehYangYuTwelveDotDefs
-open D5.S1.Words.Patterns.ShiehYangYuTwelveDotDyck
-open D5.S1.Words.Patterns.ShiehYangYuTwelveDotPaths
-open D5.S1.Words.Patterns.ShiehYangYuTwelveDotWest
+open D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDotDyck
+open D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDotPaths
+open D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDotWest
 open D5.S1.Words.Patterns.ShiehYangYuMachineConvergence
-open D5.S1.Words.Patterns.ShiehYangYuTwelveDotFibre
+open D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDotFibre
 open D5.S3.Combinatorics.Nonnesting.NonnestingDefs
 open private westRun westRun_perm from
   D5.S1.Words.Patterns.ShiehYangYuMachineConvergence
@@ -946,4 +948,4 @@ theorem result : ShiehYangYuTwelveDotDefs.claim := by
     Finset.card_powersetCard, Finset.card_univ, Fintype.card_fin] at cardinal
   change (sortable (length + 1)).ncard = (2 * (length + 1) - 2).choose (length + 1 - 1)
   exact cardinal
-end D5.S1.Words.Patterns.ShiehYangYuTwelveDot
+end D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDot

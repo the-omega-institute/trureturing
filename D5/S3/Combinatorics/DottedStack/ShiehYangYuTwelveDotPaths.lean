@@ -1,21 +1,23 @@
-/- GID: D5/S1/Words/Patterns/ShiehYangYuTwelveDotPaths
+/- GID: D5/S3/Combinatorics/DottedStack/ShiehYangYuTwelveDotPaths
    generality: G
-   mirror-B: D5/B/S1/Words/Patterns/ShiehYangYuTwelveDotPaths
+   mirror-B: D5/B/S3/Combinatorics/DottedStack/ShiehYangYuTwelveDotPaths
    mirror-E: none(waiver:colored-excursion-bijections)
    anchors: [mathlib/module/Mathlib.Data.Finset.Sort]
    utility: none
    digest: Unique signed primitive excursions reconstruct and reflect arbitrary balanced bridges. -/
 
-import D5.S1.Words.Patterns.ShiehYangYuTwelveDotDyck
+import D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDotDyck
 import Mathlib.Data.Finset.Sort
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S1.Words.Patterns.ShiehYangYuTwelveDotPaths
+namespace D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDotPaths
 
-open D5.S1.Words.Patterns.ShiehYangYuTwelveDotDyck
-open D5.S1.Words.Patterns.ShiehYangYuTwelveDotFibre
+open D5.S1.Words.Patterns
+
+open D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDotDyck
+open D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDotFibre
 open D5.S3.Combinatorics.Nonnesting.NonnestingDefs
 
 theorem bridge_first_return (tail : List DyckStep)
@@ -306,4 +308,4 @@ noncomputable def signed_bridge_equiv (size : ℕ) :
       right_inv := fun word => rfl }
   exact restricted.trans flatten
 
-end D5.S1.Words.Patterns.ShiehYangYuTwelveDotPaths
+end D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDotPaths

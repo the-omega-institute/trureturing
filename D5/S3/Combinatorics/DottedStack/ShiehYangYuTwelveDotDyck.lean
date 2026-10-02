@@ -1,20 +1,22 @@
-/- GID: D5/S1/Words/Patterns/ShiehYangYuTwelveDotDyck
+/- GID: D5/S3/Combinatorics/DottedStack/ShiehYangYuTwelveDotDyck
    generality: G
-   mirror-B: D5/B/S1/Words/Patterns/ShiehYangYuTwelveDotDyck
+   mirror-B: D5/B/S3/Combinatorics/DottedStack/ShiehYangYuTwelveDotDyck
    mirror-E: none(waiver:avoiding-permutation-record-grammar)
    anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.DyckWord]
    utility: none
    digest: Maximum splitting constructs the unique avoiding grammar and its record statistic. -/
 
-import D5.S1.Words.Patterns.ShiehYangYuTwelveDotFibre
+import D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDotFibre
 import Mathlib.Combinatorics.Enumerative.DyckWord
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S1.Words.Patterns.ShiehYangYuTwelveDotDyck
+namespace D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDotDyck
 
-open D5.S1.Words.Patterns.ShiehYangYuTwelveDotFibre
+open D5.S1.Words.Patterns
+
+open D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDotFibre
 open D5.S3.Combinatorics.Nonnesting.NonnestingDefs
 open D5.S3.Combinatorics.Fishburn.FishburnTenNineClassicalSplit
 
@@ -794,4 +796,4 @@ def excursion_equiv : DyckWord ≃ List DyckWord where
         DyckWord.outsidePart_add DyckWord.nest_ne_zero, DyckWord.outsidePart_nest,
         zero_add, induction]
 
-end D5.S1.Words.Patterns.ShiehYangYuTwelveDotDyck
+end D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDotDyck

@@ -1,21 +1,23 @@
-/- GID: D5/S1/Words/Patterns/ShiehYangYuTwelveDotFibre
+/- GID: D5/S3/Combinatorics/DottedStack/ShiehYangYuTwelveDotFibre
    generality: G
-   mirror-B: D5/B/S1/Words/Patterns/ShiehYangYuTwelveDotFibre
+   mirror-B: D5/B/S3/Combinatorics/DottedStack/ShiehYangYuTwelveDotFibre
    mirror-E: none(waiver:record-endpoint-cut-reconstruction)
    anchors: [mathlib/module/Mathlib.Data.List.SplitBy]
    utility: none
    digest: Ordered peak partitions describe entire fibres and recover selected cut endpoints. -/
 
-import D5.S1.Words.Patterns.ShiehYangYuTwelveDotWest
+import D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDotWest
 import D5.S3.Combinatorics.ArrowWilfDefs
 import Mathlib.Data.List.SplitBy
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S1.Words.Patterns.ShiehYangYuTwelveDotFibre
+namespace D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDotFibre
 
-open ShiehYangYuTwelveDotDefs ShiehYangYuTwelveDotWest
+open D5.S1.Words.Patterns
+
+open D5.S1.Words.Patterns.ShiehYangYuTwelveDotDefs D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDotWest
 
 def fibre_equiv (output : List ℕ) :
     {input : List ℕ // s12 input = output} ≃
@@ -106,4 +108,4 @@ def recordCuts (word : List ℕ) : Finset ℕ :=
     D5.S3.Combinatorics.ArrowWilfDefs.IsLtrMax word (word.idxOf value)
 
 
-end D5.S1.Words.Patterns.ShiehYangYuTwelveDotFibre
+end D5.S3.Combinatorics.DottedStack.ShiehYangYuTwelveDotFibre
