@@ -22086,3 +22086,39 @@ force a composite reciprocal pair, control arbitrary prime-power heights, or
 supply the complete phase-sensitive liability repair missing after Section
 179. It is a scope reduction for the same whole-cover problem, not its
 resolution.
+
+## 181. The extremal representative has at least 119 original classes
+
+The preceding reduction also gives a cardinality floor once the standard
+extremal representative is fixed. This is a direct combination of the
+extremal support normalization in Section 350, the published nine-support
+bound, and Simpson's prefix-saturation inequality; it introduces no new
+covering-system theorem.
+
+Let a distinct odd whole cover exist, and choose one minimizing
+\((|D|,\sum_{d\in D}d)\) lexicographically as in (EB1). Section 350 shows
+that the odd prime support of this representative is an initial segment of
+the odd primes. Section 180, using Schroeder's published support theorem,
+gives at least nine support primes. Hence the support contains
+
+\[
+3,5,7,11,13,17,19,23,29.
+\]
+
+Writing \(Q=\prod_p p^{H_p}\), every one of these nine exponents satisfies
+\(H_p\ge1\). Simpson's already retained bound (EB22) therefore yields
+
+\[
+|D|
+\;\ge\;
+1+\sum_{p\mid Q}H_p(p-1)
+\;\ge\;
+1+\sum_{p\in\{3,5,7,11,13,17,19,23,29\}}(p-1)
+\;=\;119.
+\tag{HF3}
+\]
+
+This does not bound the exponents or the total support, and it does not
+exclude a 119-class (or larger) extremal cover. It only makes the remaining
+branch explicit: any such representative simultaneously has (HF1), (HF2),
+and (HF3), while the phase-sensitive joint-liability bridge is still open.
