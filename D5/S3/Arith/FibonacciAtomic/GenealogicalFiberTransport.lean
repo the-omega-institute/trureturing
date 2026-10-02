@@ -111,48 +111,6 @@ def labelsEquiv : (s : BinaryTree Unit) → TreeLabels s ≃ (Fin s.numLeaves �
 def indexedEquiv : Source ≃ Σ s : BinaryTree Unit, Fin s.numLeaves → Bool :=
   sourceEquiv.trans (Equiv.sigmaCongrRight labelsEquiv)
 
-/-- The native substitution has no collisions between leaves and compound sources. -/
-private theorem substitution_injective : Function.Injective substitution := by
-  have no_alpha (t : Source) : substitution t ≠ .of true := by
-    cases t with
-    | of b =>
-      cases b <;> simp only [substitution, FreeMagma.lift_of, Bool.false_eq_true,
-        ↓reduceIte] <;> intro h <;> injection h <;> contradiction
-    | mul s t => intro h; change FreeMagma.mul _ _ = .of true at h; cases h
-  intro s
-  induction s with
-  | of b =>
-    intro t h
-    cases b with
-    | false =>
-      cases t with
-      | of c => cases c <;> simp_all [substitution]
-      | mul t u =>
-        change FreeMagma.mul (.of false) (.of true) =
-          FreeMagma.mul (substitution t) (substitution u) at h
-        injection h with ht hu
-        exact False.elim (no_alpha u hu.symm)
-    | true =>
-      cases t with
-      | of c => cases c <;> simp_all [substitution]
-      | mul t u => change .of false = FreeMagma.mul _ _ at h; cases h
-  | mul s u hs hu =>
-    intro t h
-    cases t with
-    | of b =>
-      cases b with
-      | false =>
-        change FreeMagma.mul (substitution s) (substitution u) =
-          FreeMagma.mul (.of false) (.of true) at h
-        injection h with h1 h2
-        exact False.elim (no_alpha u h2)
-      | true => change FreeMagma.mul _ _ = .of false at h; cases h
-    | mul t v =>
-      change FreeMagma.mul (substitution s) (substitution u) =
-        FreeMagma.mul (substitution t) (substitution v) at h
-      injection h with h1 h2
-      exact congrArg₂ FreeMagma.mul (hs h1) (hu h2)
-
 /-- The actual tree is encoded by its shape and its alpha positions. -/
 noncomputable def positionedEquiv : Source ≃ Σ s : BinaryTree Unit, Finset (Fin s.numLeaves) :=
   indexedEquiv.trans (Equiv.sigmaCongrRight fun s => supportEquiv (ι := Fin s.numLeaves))
@@ -292,6 +250,57 @@ theorem result :
       Filter.Tendsto (transportVariation (a, b)) Filter.atTop (nhds 1)) ∧
     transportVariation (1, 1) 1 = (2 / 3 : ℝ) := by
   classical
+  have substitution_injective : Function.Injective substitution := by
+    have no_alpha (t : Source) : substitution t ≠ .of true := by
+      cases t with
+      | of b =>
+        cases b <;> simp only [substitution, FreeMagma.lift_of, Bool.false_eq_true,
+          ↓reduceIte] <;> intro h <;> injection h <;> contradiction
+      | mul s t => intro h; change FreeMagma.mul _ _ = .of true at h; cases h
+    intro s
+    induction s with
+    | of b =>
+      intro t h
+      cases b with
+      | false =>
+        cases t with
+        | of c => cases c <;> simp_all [substitution]
+        | mul t u =>
+          change FreeMagma.mul (.of false) (.of true) =
+            FreeMagma.mul (substitution t) (substitution u) at h
+          injection h with ht hu
+          exact False.elim (no_alpha u hu.symm)
+      | true =>
+        cases t with
+        | of c => cases c <;> simp_all [substitution]
+        | mul t u => change .of false = FreeMagma.mul _ _ at h; cases h
+    | mul s u hs hu =>
+      intro t h
+      cases t with
+      | of b =>
+        cases b with
+        | false =>
+          change FreeMagma.mul (substitution s) (substitution u) =
+            FreeMagma.mul (.of false) (.of true) at h
+          injection h with h1 h2
+          exact False.elim (no_alpha u h2)
+        | true => change FreeMagma.mul _ _ = .of false at h; cases h
+      | mul t v =>
+        change FreeMagma.mul (substitution s) (substitution u) =
+          FreeMagma.mul (substitution t) (substitution v) at h
+        injection h with h1 h2
+        exact congrArg₂ FreeMagma.mul (hs h1) (hu h2)
+  have uniform_law (v : ℕ × ℕ) (hne : Nonempty (Fiber v)) :
+      (∀ x, 0 ≤ uniformMass v x) ∧ (∑ x, uniformMass v x) = 1 := by
+    letI := hne
+    have cardPositive : (0 : ℝ) < (Nat.card (Fiber v) : ℝ) := by
+      rw [Nat.card_eq_fintype_card]
+      exact_mod_cast Fintype.card_pos
+    constructor
+    · intro _x
+      dsimp [uniformMass]
+      exact (inv_pos.mpr cardPositive).le
+    · simp [uniformMass, Nat.card_eq_fintype_card]
   have fiber_cardinality (v : ℕ × ℕ) (hv : 1 ≤ v.1 + v.2) :
       Nat.card (Fiber v) = fiberCount v := by
     classical
@@ -445,27 +454,9 @@ theorem result :
     · intro n
       letI : Nonempty (Fiber (a, b)) := hnonempty
       letI : Nonempty (Fiber (step^[n] (a, b))) := hnonempty.map (fiberMap (a, b) n)
-      have source_law : (∀ x, 0 ≤ uniformMass (a, b) x) ∧
-          (∑ x, uniformMass (a, b) x) = 1 := by
-        have cardPositive : (0 : ℝ) < (Nat.card (Fiber (a, b)) : ℝ) := by
-          rw [Nat.card_eq_fintype_card]
-          exact_mod_cast Fintype.card_pos
-        constructor
-        · intro _x
-          dsimp [uniformMass]
-          exact (inv_pos.mpr cardPositive).le
-        · simp [uniformMass, Nat.card_eq_fintype_card]
-      have target_law : (∀ y, 0 ≤ uniformMass (step^[n] (a, b)) y) ∧
-          (∑ y, uniformMass (step^[n] (a, b)) y) = 1 := by
-        have cardPositive :
-            (0 : ℝ) < (Nat.card (Fiber (step^[n] (a, b))) : ℝ) := by
-          rw [Nat.card_eq_fintype_card]
-          exact_mod_cast Fintype.card_pos
-        constructor
-        · intro _y
-          dsimp [uniformMass]
-          exact (inv_pos.mpr cardPositive).le
-        · simp [uniformMass, Nat.card_eq_fintype_card]
+      have source_law := uniform_law (a, b) hnonempty
+      have target_law := uniform_law (step^[n] (a, b))
+        (hnonempty.map (fiberMap (a, b) n))
       have pushed_law := pushforward_is_law (uniformMass (a, b))
         (fiberMap (a, b) n) source_law
       refine ⟨map_injective _ n, ?_, ?_, pushed_law.2, target_law.2, variation _ hv' n⟩
