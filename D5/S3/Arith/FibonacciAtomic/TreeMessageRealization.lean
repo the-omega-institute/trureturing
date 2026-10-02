@@ -189,8 +189,7 @@ theorem implementation_lower_bound {I O : Type} [Finite I] {X : I → Type}
 noncomputable def responseMessage {I O : Type} {X : I → Type}
     (F : (∀ i, X i) → O) (t : Tree I) (x : ∀ i, X i) :
     Set.range (response X F (fun i => i ∈ leaves t)) :=
-  ⟨response X F (fun i => i ∈ leaves t) (fun i => x i.val),
-    ⟨(fun i => x i.val), rfl⟩⟩
+  Set.rangeFactorization (response X F (fun i => i ∈ leaves t)) (fun i => x i.val)
 
 /-- Choose a nominal input realizing a response, with the supplied background
 outside its coordinate block. -/
