@@ -22,7 +22,7 @@ run_cmd do
     if finiteModules.contains name then
       throwError "ImportCost: structural dependency in finite seal closure: {name}"
 -- M3 needs StructuralCatalog for its zero-capture certificates, but no census modules.
--- Keep the remaining registration-free dependencies out of its trigger set (#7266).
+-- Keep the remaining registration-free dependencies out of its trigger set.
 run_cmd do
   for name in [`LeanInformationAudit.Census.Query,
       `LeanInformationAudit.Census.Certificate,
@@ -42,13 +42,14 @@ run_cmd do
     name != `LeanInformationAudit.Tests.Seal.M3 &&
       LeanInformationAudit.Repository.isModule name
   logInfo m!"DTR_M3_MODULE_SET {(toJson (inRepo.map Name.toString |>.qsort (· < ·))).compress}"
-  -- The source-bound closure includes Registry.SourceScope, SourceOperands and
-  -- SourceContract through Assessment, plus Interface.SourceSelection through Records.
-  -- It also includes infinite-domain support, the test helper
-  -- `LeanInformationAudit.Tests.Assessment` used to assess M3's recorded inputs,
-  -- and `D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates`.
-  -- The repository closure is bounded by 144 modules and includes 6 Interface modules.
+  -- M3 has at most 144 core modules, including 6 Interface modules,
+  -- and five implementation modules containing assessment records.
+  let recordModules := #[`LeanInformationAudit.BindingRecords,
+    `LeanInformationAudit.CatalogRecords, `LeanInformationAudit.EscapeEvidence,
+    `LeanInformationAudit.StructuralProvenance, `LeanInformationAudit.Registry.SourceBinder]
+  let coreModules := inRepo.filter (!recordModules.contains ·)
   let interface := inRepo.filter ((`LeanInformationAuditInterface).isPrefixOf ·)
-  if inRepo.size > 144 || interface.size != 6 then
+  if coreModules.size > 144 || interface.size != 6 || !recordModules.all inRepo.contains then
     throwError "ImportCost: M3 closure changed: modules={inRepo.size} interface={interface.size}"
-  logInfo m!"DTR_M3_IMPORTS modules={inRepo.size} limit=144 interface={interface.size}"
+  logInfo m!"DTR_M3_IMPORTS modules={inRepo.size} core={coreModules.size} \
+    core_limit=144 interface={interface.size}"

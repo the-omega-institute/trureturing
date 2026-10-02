@@ -1,4 +1,4 @@
-"""Stable declaration ownership and import persistence without the judge."""
+"""Raw input and assessment record ownership and import persistence."""
 import re
 
 from test_native_support import ROOT
@@ -9,17 +9,40 @@ class NativeRecordTests:
         interface = ROOT / 'tools/lean-inspector-interface/LeanInformationAuditInterface/Records.lean'
         self.assertTrue(interface.is_file(), 'missing Interface record owner')
         declarations = r'(?m)^(?:structure|inductive|abbrev)\s+(\w+)\b'
-        moved = set(re.findall(declarations, interface.read_text()))
-        self.assertIn('TemplateOccurrenceEvent', moved)
-        self.assertIn('TemplateBindingClaim', moved)
-        self.assertTrue({'DependencyIdentity', 'TemplateBindingCertificate',
-                         'TemplateBindingResult', 'BindingRecord'} <= moved)
+        raw_records = set(re.findall(declarations, interface.read_text()))
+        self.assertTrue({'EscapeRecordInput', 'InformationRegistryEntry',
+                         'AutoDerivedSemanticCertificate', 'CatalogKind'} <= raw_records)
+        outputs = {
+            'BindingRecords.lean': {'TemplateOccurrenceKey', 'TemplateOccurrenceEvent',
+                                    'TemplateBindingClaim', 'DependencyIdentity',
+                                    'TemplateBindingCertificate', 'TemplateBindingResult',
+                                    'BindingRecord'},
+            'EscapeEvidence.lean': {'EscapeFromIdentity', 'EscapeContinuationIdentity',
+                                    'EscapeRecordEvidence'},
+            'CatalogRecords.lean': {'CatalogUnitRecord', 'CatalogRecord',
+                                   'OccurrenceCertificate', 'CatalogVerdict',
+                                   'ZeroCaptureContext', 'ZeroCaptureRecord',
+                                   'SealTheoremRecord', 'SealArenaRecord'},
+            'StructuralProvenance.lean': {'StructuralProvenanceEntry'},
+            'Registry/SourceBinder.lean': {'SourceBinder'},
+        }
         implementation = ROOT / 'tools/lean-inspector/LeanInformationAudit'
+        owners = {}
         for path in implementation.rglob('*.lean'):
             if 'Tests' in path.parts:
                 continue
-            duplicates = moved & set(re.findall(declarations, path.read_text()))
+            declared = set(re.findall(declarations, path.read_text()))
+            duplicates = raw_records & declared
             self.assertFalse(duplicates, f'[FAIL] {path}: duplicate Interface types: {duplicates}')
+            for name in declared:
+                owners.setdefault(name, []).append(path.relative_to(implementation).as_posix())
+        interface_types = set()
+        for path in interface.parent.glob('*.lean'):
+            interface_types.update(re.findall(declarations, path.read_text()))
+        for owner, names in outputs.items():
+            for name in names:
+                self.assertNotIn(name, interface_types)
+                self.assertEqual(owners.get(name), [owner], f'{name}: wrong output owner')
 
     def test_interface_store_cross_module_persistence(self):
         package, env = self.interface_package()
@@ -113,29 +136,27 @@ unsafe def main : IO Unit := do
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
 class NativeInterfaceConsumerTests:
-    def test_interface_edit_rebuilds_implementation_consumer(self):
+    def test_raw_interface_edit_breaks_reg_consumer(self):
         self.reg_package()
         self.run_lake('build', 'Fixture')
-        # A module reading the real Interface dependency identity must re-elaborate
-        # when that field type changes; D5 content does not rebuild. Reg is the
-        # fixture's Interface consumer (Impl consumers depend on it the same way).
+        # A raw registration field type change forces its actual Reg consumer
+        # to re-elaborate; the imported D5 content remains unchanged.
         self.write('Reg/Support/Entry.lean', 'import D5.A\nimport LeanInformationAuditInterface.Records\n'
-                   'def dependencyType (d : LeanInformationAudit.TemplateAudit.DependencyIdentity) : String :=\n'
-                   '  d.typeIdentity\n')
+                   'def entryTheorem (d : LeanInformationAudit.InformationRegistryEntry) : Lean.Name :=\n'
+                   '  d.theoremName\n')
         self.make_lean('Reg.Support.Entry')
         content = self.root / '.lake/build/lib/lean/D5/A.olean'
         before = (content.stat().st_mtime_ns, content.read_bytes())
         interface = self.root / 'tools/lean-inspector-interface/LeanInformationAuditInterface/Records.lean'
         original = interface.read_text()
-        prefix, dependency = original.split('structure DependencyIdentity where\n', 1)
-        fields, rest = dependency.split('  deriving Inhabited', 1)
-        self.assertIn('  typeIdentity : String\n', fields)
-        interface.write_text(prefix + 'structure DependencyIdentity where\n' +
-                             fields.replace('  typeIdentity : String\n', '  typeIdentity : Nat\n') +
-                             '  deriving Inhabited' + rest)
+        prefix, entry = original.split('structure InformationRegistryEntry where\n', 1)
+        self.assertIn('  theoremName : Name\n', entry)
+        interface.write_text(prefix + 'structure InformationRegistryEntry where\n' +
+                             entry.replace('  theoremName : Name\n',
+                                           '  theoremName : String\n', 1))
         failed = self.make_lean('Reg.Support.Entry', success=False)
         self.assertIn('Reg/Support/Entry.lean', failed.stdout + failed.stderr)
-        self.assertIn('typeIdentity', failed.stdout + failed.stderr)
+        self.assertIn('theoremName', failed.stdout + failed.stderr)
         self.assertEqual((content.stat().st_mtime_ns, content.read_bytes()), before)
         interface.write_text(original)
         self.make_lean('Reg.Support.Entry')

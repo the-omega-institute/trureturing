@@ -16,6 +16,10 @@ class NativeInterfaceTests:
             target = package / 'LeanInformationAudit' / relative
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(source, target)
+        for relative in ('BindingRecords.lean', 'EscapeEvidence.lean'):
+            source = ROOT / 'tools/lean-inspector/LeanInformationAudit' / relative
+            target = package / 'LeanInformationAudit' / relative
+            shutil.copyfile(source, target)
         # This core-only audit fixture needs the real capability type, but does
         # not execute catalog construction. Copy its exact declaration; private
         # construction and all field types stay identical to the producer.
@@ -23,7 +27,7 @@ class NativeInterfaceTests:
         start = catalog.index('structure ValidatedSourceSnapshot where\n')
         stop = catalog.index('\ndef ValidatedSourceSnapshot.sourceEntries', start)
         (package / 'LeanInformationAudit/CatalogBuilder.lean').write_text(
-            'import LeanInformationAuditInterface.Records\n'
+            'import LeanInformationAudit.BindingRecords\n'
             'import LeanInformationAudit.Registry.Repository\n'
             'namespace LeanInformationAudit\nopen Lean\n' +
             catalog[start:stop] + '\nend LeanInformationAudit\n')
