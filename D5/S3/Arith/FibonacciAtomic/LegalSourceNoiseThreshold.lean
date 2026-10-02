@@ -236,8 +236,8 @@ theorem result (decay : ℚ) (hdecay0 : 0 < decay) (hdecay1 : decay < 1) :
     Filter.Tendsto (threshold (decay : ℝ)) Filter.atTop (nhds 0) := by
   classical
   let lam : ℝ := decay
-  have hlam : 0 < lam := by exact_mod_cast hdecay0
-  have hlam1 : lam < 1 := by exact_mod_cast hdecay1
+  have hlam : 0 < lam := by dsimp [lam]; exact_mod_cast hdecay0
+  have hlam1 : lam < 1 := by dsimp [lam]; exact_mod_cast hdecay1
   have collision (n : ℕ) :
       let c := threshold lam (n + 1)
       ∃ p q : List (Window × Row),
@@ -283,7 +283,7 @@ theorem result (decay : ℚ) (hdecay0 : 0 < decay) (hdecay1 : decay < 1) :
             (-c) • target a = _
           rw [ih, action]
           ext r
-          simp only [Nat.succ_eq_add_one, Pi.add_apply, Pi.smul_apply, smul_eq_mul, ha,
+          simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, ha,
             mul_one, pow_succ]
           rw [show geometric lam (k + 1 + 1) = lam * geometric lam (k + 1) + 1 from
             geom_sum_succ]
@@ -333,7 +333,7 @@ theorem result (decay : ℚ) (hdecay0 : 0 < decay) (hdecay1 : decay < 1) :
         simpa only [heq] using zeroNoise
       · have heq : e = (.zero, ![c, -c, -c]) := List.mem_singleton.mp he
         simpa only [heq] using lastNoise
-
+  -- The matrix actions reproduce the symbolic machine on every word.
   have action (a : Window) (x : Row) : x ᵥ* matrix a = x (readIndex a) • target a := by
     simp [matrix, Matrix.vecMul_vecMulVec]
   have singleState (q : State) (a : Window) :
@@ -365,10 +365,18 @@ theorem result (decay : ℚ) (hdecay0 : 0 < decay) (hdecay1 : decay < 1) :
     | none =>
         cases q' with
         | none => rfl
-        | some v => have h2 := congrFun h 2; norm_num [canonical] at h2
+        | some v =>
+            rcases v with ⟨s, E⟩
+            have h2 := congrFun h 2
+            change (0 : ℝ) = 1 at h2
+            norm_num at h2
     | some v =>
         cases q' with
-        | none => have h2 := congrFun h 2; norm_num [canonical] at h2
+        | none =>
+            rcases v with ⟨s, E⟩
+            have h2 := congrFun h 2
+            change (1 : ℝ) = 0 at h2
+            norm_num at h2
         | some v' =>
             rcases v with ⟨s, E⟩
             rcases v' with ⟨s', E'⟩
@@ -381,22 +389,24 @@ theorem result (decay : ℚ) (hdecay0 : 0 < decay) (hdecay1 : decay < 1) :
       noisyRun (fun b y => y ᵥ* matrix b) (canonical q)
         (List.replicate n (a, (0 : Row))) = canonical q := by
     unfold noisyRun
-    rw [List.foldl_replicate]
-    exact Function.iterate_fixed (by simp [hfixed]) n
+    rw [show List.replicate n (a, (0 : Row)) =
+      (List.replicate n ()).map (fun _ => (a, (0 : Row))) by simp]
+    rw [List.foldl_map]
+    simp only [add_zero, List.foldl_const, List.length_replicate]
+    exact Function.iterate_fixed hfixed n
   have zeroRun (n : ℕ) : run (some (false, false)) (List.replicate n .zero) =
       some (false, false) := by
     apply rowInjective
     rw [← fidelity, List.map_replicate]
-    exact repeatFixed .zero (some (false, false)) (by simpa [step, first, last, nonzero]
-      using singleState (some (false, false)) .zero) n
+    exact repeatFixed .zero (some (false, false)) (by
+      simpa [step, first, last, nonzero] using (singleState (some (false, false)) .zero)) n
   have lowRun (n : ℕ) : run (some (false, false)) (List.replicate (n + 1) .low) =
       some (false, true) := by
     apply rowInjective
     rw [← fidelity, List.map_replicate, List.replicate_succ]
     simp only [noisyRun, List.foldl_cons]
     rw [singleState, add_zero]
-    exact repeatFixed .low (some (false, true)) (by simpa [step, first, last, nonzero]
-      using singleState (some (false, true)) .low) n
+    exact repeatFixed .low (some (false, true)) (singleState (some (false, true)) .low) n
   have asClock {Y : Type} (out : State → Y) (ν : ℝ) (M : ℕ) (fixed : Bool) :
       Recovery out lam ν M fixed → ClockRecovery out lam ν M fixed := by
     rintro ⟨d, hd⟩
@@ -498,11 +508,13 @@ theorem result (decay : ℚ) (hdecay0 : 0 < decay) (hdecay1 : decay < 1) :
       · exact Or.inr (clockNecessary endable labelDistinct ν M (Nat.pos_of_ne_zero hM) fixed h)
   refine ⟨contracts, fun ν _ fixed => zeroRecovery ν fixed, ?_, ?_, ?_⟩
   · intro ν hν fixed
-    simpa [threshold, geometric] using contracts ν hν 1 fixed
+    have h := contracts ν hν 1 fixed
+    norm_num [threshold, geometric, lam] at h
+    exact h
   · intro M hM
     have lower : 1 + lam ≤ geometric lam M := by
       calc
-        1 + lam = geometric lam 2 := by simp [geometric, Finset.sum_range_succ]; ring
+        1 + lam = geometric lam 2 := by simp [geometric, Finset.sum_range_succ]
         _ ≤ geometric lam M := Finset.sum_le_sum_of_subset_of_nonneg (Finset.range_mono hM)
           (fun j _ _ => pow_nonneg hlam.le j)
     unfold threshold
@@ -519,7 +531,5 @@ theorem result (decay : ℚ) (hdecay0 : 0 < decay) (hdecay1 : decay < 1) :
             dsimp [geometric]
             linarith))
     exact tendsto_pow_atTop_nhds_zero_of_lt_one hlam.le hlam1
-
-#print axioms result
 
 end D5.S3.Arith.FibonacciAtomic.LegalSourceNoiseThreshold
