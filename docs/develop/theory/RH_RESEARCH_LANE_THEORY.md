@@ -10323,6 +10323,8 @@ $$
 \widetilde Q-Q=(1-q^2)|v\rangle\langle v|-|e_0\rangle\langle e_0|.
 $$
 
+上述 Fourier 关系可在子空间层核对：$T$ 正规、$\mathcal FT=T^*\mathcal F$，且 $T^*QH=QH$。故 $\mathcal F_2QH=\mathcal FT^*T^{-1}QH=\mathcal FT^{-1}QH$；两侧正交投影分别是 $\mathcal F_2Q\mathcal F_2$ 与 $\mathcal F\widetilde Q\mathcal F$。
+
 fibre 上还含恒等作用，故不能把它说成整个物理空间上的有限秩或紧算子。对同一个伸缩平滑核，待核对的精确配对为
 
 $$
@@ -10528,12 +10530,16 @@ $$
 
 后一界由逐项积分 $\min\{1,C2^{-k}/|t-\ell|\}$ 后求尾和得到。非共振部分一致收敛、共振部分 $L^1$ 收敛，与有限截断的迹极限共同给出核配对；没有额外端点原子。仅有 operator-norm 收敛不承担这个结论。
 
+端点结论依赖这份有限截断迹配对到 $L^1$ 核的收敛合同：$t=0$ 的已积分 diagonal 项趋零，且当前测试有 $2L<r_*$ 的严格支撑包含。不能脱离这两个端点条件和迹配对极限，单凭共振点的局部可积性宣告没有集中项。
+
 **候签定理 15.1（共同测试上的共振分解）。** 若上述迹识别、矩形截断与连续余项合同成立，则存在固定 $\kappa\in C([0,r_*])$，使
 
 $$
 D_2(f_\epsilon)=\int_0^{r_*}H_\epsilon(t)
 \bigl[\mathcal L(t)+\kappa(t)\bigr]dt.
 $$
+
+这里总余项 $\kappa$ 包含 $\kappa_{\rm nl}$、$j=k$ 的 diagonal 族、全部非共振 difference 与 plus 族，以及有限项 $(j,k)=(0,-1)$；它不只表示非线性 resolvent 贡献。
 
 这里是几乎处处及 $L^1$ 的核等式；$\mathcal L(\ell)$ 的定义级数正向发散，不是处处有限函数。积分忽略单点值。算术尺度上的集中项已在第 14 章单独配平；这里剩下的是 locally integrable 的对数共振，不能预先把整个投影修正当成连续核。
 
@@ -10649,7 +10655,32 @@ $$
 
 ### 16.1 同一测试的正性范围
 
-在共同 Gamma-energy 约定确实成立时，记 $c_\Gamma=\operatorname{digamma}(1/4)-\log\pi$，固定四脉冲测试具有候选下界
+本节以任意紧支撑光滑 additive 测试 $v$ 的完整双极点显式公式为前提；不调用只覆盖偶测试的 Lean 实现。沿用[完整 Weil 形式的归一化](../../../Library/Weil/frankliebseiringer2006hardy.md)，设
+
+$$
+\begin{aligned}
+E_t(v)&=\int_{\mathbb R}|v(x)-v(x-t)|^2dx,\\
+A_\pm(v)&=\int_{\mathbb R}e^{\pm x/2}v(x)dx,\\
+P_{\rm full}(v)&=2\operatorname{Re}\bigl(A_+(v)\overline{A_-(v)}\bigr),\\
+k_\Gamma(t)&=\frac{e^{-t/2}}{1-e^{-2t}},\qquad
+c_\Gamma=\operatorname{Re}\operatorname{digamma}(1/4)-\log\pi,\\
+w_n&=\frac{\Lambda(n)}{\sqrt n},\qquad
+c_L=2\sum_{2\le n\le e^{2L}}w_n-c_\Gamma.
+\end{aligned}
+$$
+
+所需合同是对 $\operatorname{supp}v\subset[-L,L]$ 使用同一素数幂与质量归一化的等式
+
+$$
+Q_{\rm full}(v)=P_{\rm full}(v)
++\int_0^\infty k_\Gamma(t)E_t(v)dt
++\sum_{2\le n\le e^{2L}}w_nE_{\log n}(v)
+-c_L\|v\|_2^2.
+$$
+
+当前 $f_\epsilon$ 的 $A_\pm(f_\epsilon)=0$ 精确成立：四脉冲使用同一个 $\int e^{\pm\epsilon u/2}\beta(u)du$，中心项由 $c=\sinh(a/2)/\sinh(b/2)$ 抵消。这里没有把缩放脉冲矩替换成 $\beta_0$，也没有把一般双极点项改为偶测试专用的 $2|A_+|^2$。
+
+在这份完整合同下，固定四脉冲测试具有候选下界
 
 $$
 Q_{\rm full}(f_\epsilon)\ge
@@ -10659,7 +10690,7 @@ $$
 
 其来源是平移区间 $2\epsilon\le t\le\ell/10$ 上的脉冲不相交，使 translation-square 等于 $2M$，并保留正 Gamma-energy 的这一段。一般复杂测试的能量桥需要独立核对；不能无条件调用只覆盖偶 additive 测试的实现。这个正性下界与本章 actual projection 仍都缺 Lean 接回。
 
-若下界与候签定理 15.2 均经核验，则同一测试上将有
+在所列合同、下界与候签定理 15.2 均成立时，对全部充分小的 $\epsilon>0$，同一测试上将有
 
 $$
 0<D_2(f_\epsilon)<\sigma_2(g_\epsilon).
